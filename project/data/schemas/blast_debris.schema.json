@@ -2,6 +2,11 @@
   "$id": "gtai.blast-debris/1",
   "additionalProperties": false,
   "properties": {
+    "chunk_big": {
+      "maximum": 32,
+      "minimum": 0,
+      "type": "integer"
+    },
     "chunk_m": {
       "items": {
         "maximum": 2,

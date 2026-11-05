@@ -28,3 +28,20 @@ func test_slabs_end_past_the_fireball() -> void:
 	var end: float = WeaponFxDebris.fly(3.5, 1.0, 1.0)
 	assert_almost_eq(start, 3.5 * r.fly_k.x, 0.001)
 	assert_gt(end, 3.5, "the last slab lands outside the splash radius")
+
+
+func test_big_slabs_are_spread_and_the_rest_small() -> void:
+	var r: WeaponFxDebris = WeaponFxDebris.new()
+	r.chunks = 9
+	r.chunk_big = 3
+	var big: Array[int] = []
+	for i: int in r.chunks:
+		if WeaponFxDebris._size_k(r, i, 0.0) >= 0.75:
+			big.append(i)
+		else:
+			assert_lte(
+				WeaponFxDebris._size_k(r, i, 1.0), 0.6, "a small slab stays in the lower 60 %"
+			)
+	assert_eq(big, [0, 3, 6] as Array[int], "three big slabs, a third of the ring apart")
+	r.chunk_big = 0
+	assert_eq(WeaponFxDebris._size_k(r, 4, 0.37), 0.37, "chunk_big 0 = the uniform sizes")

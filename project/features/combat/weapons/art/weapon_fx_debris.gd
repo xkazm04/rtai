@@ -14,6 +14,9 @@ static var _rules: WeaponFxDebris = null
 
 var chunks: int = 0
 var chunk_m: Vector2 = Vector2.ZERO
+## chunk_big slabs (spread round the blast) take the top quarter of chunk_m, the rest its lower 60 %
+## (0 = uniform).
+var chunk_big: int = 0
 var fly_k: Vector2 = Vector2.ZERO
 var fill: Color = Color.GRAY
 var edge_px: float = 0.0
@@ -28,6 +31,8 @@ static func rules() -> WeaponFxDebris:
 		var t: DataTable = DataTable.open(TABLE, SCHEMA)
 		_rules.chunks = t.integer(t.raw, "chunks")
 		_rules.chunk_m = t.vec(t.raw, "chunk_m")
+		if t.raw.has("chunk_big"):
+			_rules.chunk_big = t.integer(t.raw, "chunk_big")
 		_rules.fly_k = t.vec(t.raw, "fly_k")
 		_rules.fill = Color(t.text(t.raw, "fill"))
 		_rules.edge_px = t.num(t.raw, "edge_px")
@@ -64,7 +69,7 @@ static func draw(ci: CanvasItem, b: Vector3, age: int) -> void:
 	for i: int in r.chunks:
 		var h: float = hash01(key, i)
 		var dir: Vector2 = Vector2.from_angle(TAU * (float(i) + 0.6 * h) / float(r.chunks))
-		var size: float = lerpf(r.chunk_m.x, r.chunk_m.y, hash01(key, i + 40))
+		var size: float = lerpf(r.chunk_m.x, r.chunk_m.y, _size_k(r, i, hash01(key, i + 40)))
 		_slab(ci, c + dir * fly(b.z, k, h), size, h * TAU + k * (3.0 + 4.0 * h), key + i, fade)
 	var ink: Color = Color(Ink.INK, fade)
 	for j: int in r.specks:
@@ -87,3 +92,13 @@ static func _slab(
 	ci.draw_colored_polygon(PackedVector2Array(pts), Color(r.fill, fade))
 	pts.append(pts[0])
 	ci.draw_polyline(PackedVector2Array(pts), Color(Ink.INK, fade), r.edge_px, true)
+
+
+## Where slab i sits in chunk_m (0..1) for its hash h: every (chunks / chunk_big)-th slab is a big
+## one (spread round the blast: slab i flies at angle i / chunks), the rest small.
+static func _size_k(r: WeaponFxDebris, i: int, h: float) -> float:
+	if r.chunk_big <= 0:
+		return h
+	var step: int = maxi(r.chunks / r.chunk_big, 1)
+	var big: bool = i % step == 0 and i / step < r.chunk_big
+	return lerpf(0.75, 1.0, h) if big else h * 0.6
