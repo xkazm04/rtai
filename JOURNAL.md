@@ -724,3 +724,21 @@ part sheet (the open item of the crowd). Two Godot processes running at 01:03 (P
   and jacket looks); every reaction, death and corpse reads, cops identical.
   Now from straight above: coat, jacket, vest, overalls, felt hat, hair, hood, beanie and cap are plan-view art;
   the hoodie torso, the bald head, the limbs and the shoes are still the 3/4-view art.
+- 01:35 EVIDENCE GATE on eec9e750 (no edits during it): lint 13/13, unit 942/0, scenarios PASS, parity PASS, look
+  goldens 11/11 (worst 0.92), block 5/5 (worst 0.96): no re-bless. Director reel on the final parts: 16/16 chapters
+  down, 0 SCRIPT ERROR. REPORT gates line updated. frames.json 15 (+ crowd-r6-ab-32-64ppm), every file exists.
+  Registry rules applied (`sprite-and-atlas-production`, `generated-asset-world-scale`): judge each generated part at
+  32 px/m first and keep the footprint, not the generator's size (torsos fitted to the shipped widths, heads to the
+  old heads' size so one render scale serves the whole plan); a part that loses its read at game zoom is not shipped
+  even when the sheet is better art (the hoodie).
+
+NEXT (iteration 13):
+1. The crowd item's art is now plan-view for coat, jacket, vest, overalls and five heads (f4910eca, cc744d85,
+   0bcd2ce9). Open: (a) a plan-view hoodie that keeps a pale head mark (a pale-grey hood ring on a mid-grey hoodie,
+   not charcoal; the r6 cut is `masters:n5/cast/gen/r6/cut/torso_hoodie.png`); (b) the D5 tier: the new parts have no
+   D5 hatching, so at 64 px/m they are flat fill beside hatched limbs; a D5 restyle (Codex edit of r5/r6 in the d5
+   hatched style, sliced with the D4 alpha lock like slice_d5.py) would match; (c) the street board and quest 1 at
+   48 px/m are not re-shot on the r6 parts (render only; the react board and lineups are).
+2. Calls 1-6 stand; REPORT section 5 current to eec9e750. REPORT rewrite at 08:40.
+Session end ~01:40: tree clean after this commit, image.lock and bench.lock released / never taken, no Godot process
+  of mine running, scratch-cast/i12 deleted.

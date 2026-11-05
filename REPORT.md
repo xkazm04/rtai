@@ -116,8 +116,9 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   (it printed as a dark slab and lost the head mark). Three-way board: `M/frames/crowd-r6-ab-32-64ppm.png`; the react
   board clip and still above show the final parts.
 
-### Gates (iteration 12, `tools/evidence/run.mjs --no-bench` on b722cb84: lint 13/13, unit 942/0, scenarios 46, parity
-exact (mutation caught at 629), look goldens 11/11 (worst 0.83) and block 5/5 (worst 0.86) with no re-bless, world lock holds.)
+### Gates (iteration 12, `tools/evidence/run.mjs --no-bench` on eec9e750 (all plan-view parts): lint 13/13, unit 942/0,
+scenarios, parity exact, look goldens 11/11 (worst 0.92) and block 5/5 (worst 0.96) with no re-bless; on b722cb84 (r5
+only) the same with worst 0.83 / 0.86. Director reel 16/16 chapters down on both.)
 ### Gates (iteration 11, `tools/evidence/run.mjs --no-bench` on 1d4abaa6: lint 13/13, unit 941/1 where the 1 is the
 known flake `test_noir_shadows` (2/2 alone, twice), scenarios 46, parity exact (mutation caught at 629), selftest
 look goldens 11/11 and block 5/5 (worst mean 0.00, after the one re-bless for the plan-view peds), world lock holds.)
