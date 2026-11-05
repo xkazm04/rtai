@@ -1,0 +1,215 @@
+class_name BossFight
+extends RefCounted
+## The boss state machine on the 60 Hz tick (lane n7-king framework, shared with servo):
+## IDLE (walk, gap) -> WINDUP (the tell: aim tracks, then locks `lock` ticks before) -> ACTIVE
+## (the zone or the charge lands, at most once per attack) -> RECOVER (the first `punish` ticks
+## take punish_k) -> IDLE. Phases are entered by hp fraction, one at a time: damage past the next
+## threshold is held there until that phase begins (no skipped phase). A phase change cuts a
+## tell, never an active attack or its recovery, then plays TRANSITION (invulnerable). Hits never
+## cancel an attack. Attack picks come from the boss's named RNG stream (replay-safe).
+
+signal phase_changed(index: int, id: StringName)
+signal attack_windup(attack: StringName)
+signal attack_active(attack: StringName)
+signal attack_recovered(attack: StringName)
+signal adds_wanted(archetype: StringName, count: int)
+signal defeated
+
+enum State { IDLE, WINDUP, ACTIVE, RECOVER, TRANSITION, DEFEATED }
+
+var spec: BossSpec
+var body: Fighter
+var moves: BossMoves
+var state: State = State.IDLE
+var phase: int = 0
+## Ticks spent in the current state.
+var t: int = 0
+var attack: BossAttack = null
+## The aim (unit) and origin; frozen at the lock.
+var aim: Vector2 = Vector2.RIGHT
+var origin: Vector2 = Vector2.ZERO
+var locked: bool = false
+## Fault plant for the tests: the aim never locks (it tracks through the whole tell).
+var plant_no_lock: bool = false
+var hits: int = 0
+var landed: bool = false
+var _rng: RandomNumberGenerator
+var _ready_at: Dictionary[StringName, int] = {}
+var _pending: int = -1
+var _tick: int = 0
+var _adds_t: int = 0
+
+
+func _init(p_spec: BossSpec, rng: RandomNumberGenerator, at: Vector2) -> void:
+	spec = p_spec
+	_rng = rng
+	body = Fighter.make(Fighter.Kind.BOSS, 900, at, spec.hp)
+	body.radius_m = spec.radius_m
+	moves = BossMoves.make(spec.script_path)
+
+
+## Starts the fight in phase `index` (0-based; --phase=N is N-1) at that phase's hp.
+func start(index: int = 0) -> void:
+	phase = clampi(index, 0, spec.phases.size() - 1)
+	body.hp = spec.hp * spec.phases[phase].hp_below
+	_enter(State.IDLE)
+	_begin_phase()
+
+
+func step(tick: int, target: Vector2, target_r: float) -> float:
+	_tick = tick
+	if state == State.DEFEATED:
+		return 0.0
+	t += 1
+	_step_adds()
+	match state:
+		State.IDLE:
+			moves.idle_step(self, target)
+			if t >= spec.phases[phase].gap:
+				_try_attack(target)
+		State.WINDUP:
+			_step_windup(target)
+		State.ACTIVE:
+			return _step_active(target, target_r)
+		State.RECOVER:
+			if t >= attack.recovery:
+				attack_recovered.emit(attack.id)
+				_after_attack()
+		State.TRANSITION:
+			if t >= spec.phases[_pending].transition:
+				phase = _pending
+				_pending = -1
+				_enter(State.IDLE)
+				_begin_phase()
+	return 0.0
+
+
+## A hit on the boss; returns the hp it took (0 in a transition or once defeated).
+func hurt(amount: float) -> float:
+	if state == State.TRANSITION or state == State.DEFEATED or amount <= 0.0:
+		return 0.0
+	if state == State.RECOVER and t <= attack.punish:
+		amount *= attack.punish_k
+	var floor_hp: float = _floor_hp()
+	var before: float = body.hp
+	body.hp = maxf(body.hp - amount, floor_hp)
+	body.hurt_tick = _tick
+	if body.hp <= 0.0:
+		_enter(State.DEFEATED)
+		defeated.emit()
+	elif body.hp <= floor_hp and _pending < 0 and phase + 1 < spec.phases.size():
+		_pending = phase + 1
+		if state == State.IDLE or state == State.WINDUP:
+			_enter(State.TRANSITION)
+	return before - body.hp
+
+
+func hp_frac() -> float:
+	return body.hp / spec.hp
+
+
+## Ticks left in the tell (0 outside WINDUP): views grow the telegraph with it.
+func tell_left() -> int:
+	return attack.windup - t if state == State.WINDUP else 0
+
+
+func write_state(out: StreamPeerBuffer) -> void:
+	out.put_32(state)
+	out.put_32(phase)
+	out.put_32(t)
+	out.put_float(body.pos.x)
+	out.put_float(body.pos.y)
+	out.put_float(body.hp)
+	out.put_32(hits)
+	moves.write_state(out)
+
+
+func _floor_hp() -> float:
+	var next: int = _pending if _pending >= 0 else phase + 1
+	return spec.hp * spec.phases[next].hp_below if next < spec.phases.size() else 0.0
+
+
+func _try_attack(target: Vector2) -> void:
+	var dist: float = body.pos.distance_to(target)
+	var total: float = 0.0
+	var pool: Array[BossAttack] = []
+	for a_id: StringName in spec.phases[phase].attacks:
+		var a: BossAttack = spec.attacks.get(a_id)
+		if a != null and a.fits(dist) and _tick >= _ready_at.get(a_id, 0):
+			pool.append(a)
+			total += a.weight
+	if pool.is_empty():
+		return
+	var roll: float = _rng.randf() * total
+	for a: BossAttack in pool:
+		roll -= a.weight
+		if roll <= 0.0 or a == pool.back():
+			attack = a
+			break
+	locked = false
+	landed = false
+	_ready_at[attack.id] = _tick + attack.length() + attack.cooldown
+	_enter(State.WINDUP)
+	_track(target)
+	attack_windup.emit(attack.id)
+
+
+func _step_windup(target: Vector2) -> void:
+	if not locked:
+		_track(target)
+		locked = t >= attack.windup - attack.lock and not plant_no_lock
+	if t >= attack.windup:
+		if plant_no_lock:
+			_track(target)
+		_enter(State.ACTIVE)
+		if attack.adds_count > 0:
+			adds_wanted.emit(attack.adds_archetype, attack.adds_count)
+		attack_active.emit(attack.id)
+
+
+func _step_active(target: Vector2, target_r: float) -> float:
+	var struck: bool = moves.active_step(self, target, target_r)
+	var dealt: float = 0.0
+	if struck and not landed and attack.damage > 0.0:
+		landed = true
+		hits += 1
+		dealt = attack.damage
+	if t >= attack.active:
+		_enter(State.RECOVER)
+	return dealt
+
+
+func _track(target: Vector2) -> void:
+	var d: Vector2 = target - body.pos
+	if d.length() > 0.01:
+		aim = d.normalized()
+		body.facing = aim
+	origin = body.pos
+
+
+func _after_attack() -> void:
+	_enter(State.TRANSITION if _pending >= 0 else State.IDLE)
+
+
+func _begin_phase() -> void:
+	_adds_t = 0
+	moves.phase_entered(self, phase)
+	phase_changed.emit(phase, spec.phases[phase].id)
+	var p: BossSpec.Phase = spec.phases[phase]
+	if p.adds_count > 0:
+		adds_wanted.emit(p.adds_archetype, p.adds_count)
+
+
+func _step_adds() -> void:
+	var p: BossSpec.Phase = spec.phases[phase]
+	if p.adds_every <= 0 or p.adds_count <= 0 or state == State.TRANSITION:
+		return
+	_adds_t += 1
+	if _adds_t >= p.adds_every:
+		_adds_t = 0
+		adds_wanted.emit(p.adds_archetype, p.adds_count)
+
+
+func _enter(s: State) -> void:
+	state = s
+	t = 0

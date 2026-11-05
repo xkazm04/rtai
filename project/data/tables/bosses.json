@@ -1,0 +1,176 @@
+{
+  "arenas": {
+    "king_boulevard": {
+      "add_spawns": [
+        [
+          12,
+          -8
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          -12,
+          -8
+        ],
+        [
+          -12,
+          8
+        ]
+      ],
+      "area": "pit",
+      "boss_at": [
+        10,
+        0
+      ],
+      "doc": "King's district: a long boulevard for the procession, its plaza for phases 2-3 (first pass: the arena pit).",
+      "rivet_at": [
+        -8,
+        0
+      ]
+    }
+  },
+  "bosses": {
+    "king": {
+      "arena": "king_boulevard",
+      "attacks": {
+        "charge": {
+          "active_s": 0.9,
+          "aim_lock_s": 0.35,
+          "cooldown_s": 4,
+          "damage": 24,
+          "doc": "He drops his shoulder, cape flares, then barrels along the locked line.",
+          "max_m": 18,
+          "min_m": 4,
+          "move_mps": 11,
+          "punish_k": 1.5,
+          "punish_s": 1,
+          "range_m": 10,
+          "recovery_s": 1.4,
+          "shape": "charge",
+          "weight": 2,
+          "width_m": 2,
+          "windup_s": 1
+        },
+        "coin_fan": {
+          "active_s": 0.6,
+          "aim_lock_s": 0.3,
+          "arc_deg": 50,
+          "cooldown_s": 2.5,
+          "damage": 14,
+          "doc": "The hood cannon swings to Rivet and glows; the cone locks and a hail of coins sprays the fan.",
+          "max_m": 16,
+          "min_m": 0,
+          "punish_k": 1.25,
+          "punish_s": 0.6,
+          "range_m": 14,
+          "recovery_s": 0.9,
+          "shape": "cone",
+          "weight": 2,
+          "windup_s": 1
+        },
+        "decree": {
+          "active_s": 0.5,
+          "aim_lock_s": 0,
+          "cooldown_s": 9,
+          "damage": 0,
+          "doc": "King raises the megaphone and shouts a decree: the gang hits harder and faster for a while. Long recovery: the best punish window.",
+          "max_m": 99,
+          "min_m": 0,
+          "punish_k": 1.5,
+          "punish_s": 1.8,
+          "range_m": 0,
+          "recovery_s": 1.8,
+          "shape": "none",
+          "weight": 1,
+          "windup_s": 1.2
+        },
+        "press_slam": {
+          "active_s": 0.25,
+          "aim_lock_s": 0.35,
+          "cooldown_s": 2,
+          "damage": 28,
+          "doc": "Both press plates rise over the head (ring drawn on the floor), then slam: a shockwave ring that showers coins.",
+          "max_m": 6,
+          "min_m": 0,
+          "punish_k": 1.5,
+          "punish_s": 1,
+          "radius_m": 3.2,
+          "range_m": 2.5,
+          "recovery_s": 1.3,
+          "shape": "circle",
+          "weight": 3,
+          "windup_s": 1.1
+        },
+        "ram": {
+          "active_s": 1.4,
+          "aim_lock_s": 0.45,
+          "cooldown_s": 3.5,
+          "damage": 30,
+          "doc": "Engine rev and headlights flare, the car backs up, then rams along the locked line; it skids to a stop and the gang has to push.",
+          "max_m": 40,
+          "min_m": 5,
+          "move_mps": 15,
+          "punish_k": 1.5,
+          "punish_s": 1.2,
+          "range_m": 22,
+          "recovery_s": 1.6,
+          "shape": "charge",
+          "weight": 3,
+          "width_m": 3.2,
+          "windup_s": 1.3
+        }
+      },
+      "doc": "Act 1: REG-1 the press king on his gilded throne-car (targets-2026-11-05-bosses/img/boss_king.jpg). Moveset: docs/bosses/king.md.",
+      "hp": 4000,
+      "move_mps": 2.2,
+      "phases": [
+        {
+          "attacks": [
+            "ram",
+            "coin_fan"
+          ],
+          "doc": "The throne-car rams down the boulevard; the hood cannon sprays coins; the gang rides along.",
+          "gap_s": 1.2,
+          "hp_below": 1,
+          "id": "procession",
+          "transition_s": 0
+        },
+        {
+          "adds": {
+            "archetype": "robot_thug",
+            "count": 4,
+            "every_s": 14
+          },
+          "attacks": [
+            "coin_fan",
+            "decree"
+          ],
+          "doc": "The car is wrecked; the gang leaps off to brawl; King shouts decrees that buff the gang.",
+          "gap_s": 1.4,
+          "hp_below": 0.66,
+          "id": "court",
+          "transition_s": 2.5
+        },
+        {
+          "attacks": [
+            "press_slam",
+            "charge",
+            "coin_fan"
+          ],
+          "doc": "King steps down: press-plate slams that shower coins, and a charge.",
+          "gap_s": 0.9,
+          "hp_below": 0.33,
+          "id": "on_foot",
+          "transition_s": 2.5
+        }
+      ],
+      "radius_m": 1.1,
+      "rng": "boss_king",
+      "script": "res://features/bosses/king/king_moves.gd"
+    }
+  },
+  "doc": "Act bosses as data (lane n7-king framework). A boss: hp, phases (entered by hp fraction), attacks with a tell (windup_s, aim_lock_s), an active window, a recovery whose first punish_s takes punish_k damage. Interface: n7-king JOURNAL REQUEST 1. One boss's special case lives in its script (features/bosses/<id>/), never here.",
+  "schema": "gtai.bosses/1"
+}
