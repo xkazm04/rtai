@@ -55,7 +55,7 @@ func sample(tick: int) -> TickInput:
 	var foe: Vector2 = _target(me, f.body.pos) - me  # the nearest add inside ADD_M, else King
 	var aim: Vector2 = _read(f, foe.normalized() if foe.length() > 0.01 else Vector2.RIGHT, tick)
 	var fire: bool = foe.length() <= FIRE_M and f.state != BossFight.State.DEFEATED
-	var car: Vector2 = _ghost.car_goal(stage.cars(), me) if _ghost != null else Vector2.INF
+	var car: Vector2 = _ghost.car_goal(stage.cars(), me, hook.bounds) if _ghost else Vector2.INF
 	_bits = _ghost.buttons(tick, hook, me, actions) if _ghost != null else 0
 	var band: float = to_boss.length() - (_ghost.hold_m(f, HOLD_M) if _ghost != null else HOLD_M)
 	if car != Vector2.INF:  # Dent: walk to a car, take the soul, aim and fire to seize it

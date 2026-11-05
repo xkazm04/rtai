@@ -1,6 +1,6 @@
 // The King fight's numbers (encounter-balance-simulation): full fights, seeds x bots, headless,
 // three at a time. Writes evidence/king/numbers/<bot>-s<seed>.json and evidence/king/boss-numbers.json.
-// node evidence/king/boss_numbers.mjs [--seeds=1,2,3,4,5] [--bots=dodge,human,stand] [--quit=18000]
+// node evidence/king/boss_numbers.mjs [--seeds=1,2,3,4,5] [--bots=dodge,human,stand] [--quit=18000] [--ghost=dent] [--out=dir]
 import { spawn } from 'node:child_process';
 import { mkdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs';
 const arg = (k, d) => (process.argv.find(a => a.startsWith(`--${k}=`)) || `=${d}`).split('=')[1];
@@ -8,7 +8,8 @@ const seeds = arg('seeds', '1,2,3,4,5').split(',');
 const bots = arg('bots', 'dodge,human,stand').split(',');
 const quit = arg('quit', '18000');
 const G = process.env.GODOT_BIN || 'C:/Users/kazda/kiro/gtai-spike/tools/godot/Godot_v4.7.2-stable_win64_console.exe';
-const out = 'evidence/king/numbers';
+const ghost = arg('ghost', '');
+const out = arg('out', 'evidence/king/numbers');
 mkdirSync(out, { recursive: true });
 const flags = { dodge: [], human: ['--bot-human'], stand: ['--bot-stand'] };
 const jobs = [];
@@ -16,7 +17,7 @@ for (const s of seeds) for (const b of bots) jobs.push({ s, b });
 const run = ({ s, b }) => new Promise(res => {
   const tel = `${process.cwd()}/${out}/${b}-s${s}.json`.replaceAll(String.fromCharCode(92), '/');
   const a = ['--headless', '--path', 'project', 'res://dev/arena/arena.tscn', '--quit-after', quit, '--',
-    '--rigs', '--boss=king', '--bot=boss', `--seed=${s}`, `--telemetry=${tel}`, ...flags[b]];
+    '--rigs', '--boss=king', '--bot=boss', `--seed=${s}`, `--telemetry=${tel}`, ...flags[b], ...(ghost ? [`--ghost=${ghost}`] : [])];
   const p = spawn(G, a, { stdio: ['ignore', 'pipe', 'pipe'] });
   let log = '';
   p.stdout.on('data', d => (log += d)); p.stderr.on('data', d => (log += d));
@@ -49,6 +50,6 @@ for (const [b, rs] of Object.entries(rows)) {
     taken_mean: mean(rs.map(r => r.taken)), deaths: rs.reduce((a, r) => a + r.deaths, 0),
     adds_landed_tries: rs.reduce((a, r) => [a[0] + r.adds[0], a[1] + r.adds[1]], [0, 0]), per_attack: per };
 }
-writeFileSync('evidence/king/boss-numbers.json', JSON.stringify({ schema: 'gtai.boss-numbers/1', boss: 'king',
+writeFileSync(`${out}/boss-numbers.json`, JSON.stringify({ schema: 'gtai.boss-numbers/1', boss: 'king', ghost: ghost || null,
   contended: true, quit_after: +quit, summary: sum, runs: rows }, null, 2) + '\n');
 console.log(JSON.stringify(sum, null, 1));
