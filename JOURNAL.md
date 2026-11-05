@@ -366,3 +366,8 @@ riders hanging on the car's sides rather than standing at its corners.
   delta in views). `Fighter.body_class` (ArenaBodies reads it).
 - New dev-arena area `boulevard` (arena.json + the arena_station schema enum): if you add a depot
   area, add it to that enum too.
+
+### 20:35: gates on the head (1fe158d7, code as of b0ee403d)
+lint 13/13; unit 1128/0 (`unit-it2c.log`, at 2f012dea; b0ee403d is a drawn-car view change);
+scenarios 52 ran / 0 failed (`scenarios-it2b.log`); director reel 19/19 (at 745ce3cf; the shared
+combat code has not changed since). Session stops here; NEXT is the iteration-3 list above.
