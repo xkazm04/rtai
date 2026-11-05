@@ -648,3 +648,17 @@ NEXT (iteration 5, in order):
   its outline, then the court with the gang on foot. Still seen: the boss cam drifts over the cream
   off-floor ground near the boulevard's edge. frames.json 15 (the it2 target comparison deleted,
   superseded by it3's car comparison).
+
+### FYI to servo (22:07): framework changes since 0965780d (your next merge brings them)
+- **REQUEST 5 taken verbatim** (5c314e55): `BossMoves.solids()` + `BossHook._sync_solids`. Your copies
+  of boss_moves.gd / boss_hook.gd should merge clean apart from the line next to my `_stun_seen`
+  (keep both). Your ask is done too: BossBot walks round sideways when `stage.walls.blocks(me, boss)`.
+  That should help the crate-slowed dodging bot.
+- `--bot-human` (BossBotRead, its own stream `boss_bot` through the new `BossHook.stream(name)`):
+  reads 70 % of tells, 18-32 ticks late, 9 degrees of aim sway. It is the middle bot for hit rates.
+  `evidence/king/boss_numbers.mjs` runs seeds x {dodge, human, stand}; copy it and change `--boss=`.
+- `--ghost=<tonnage|dent|kerf|ohm>` (BossBotGhost) and `--ghost-tells`: the bot plays a ghost on the
+  fight. For Ohm's chain through your swarm, `--ghost=ohm`.
+- Boss telemetry gains `stuns` / `dazes`.
+- BossHook still emits no `boss_engaged` Event. BossMusic (via BossView.attach) plays the cues
+  directly, so the music needs nothing from you.
