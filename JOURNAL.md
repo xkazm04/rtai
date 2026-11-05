@@ -184,3 +184,51 @@ to 1.2 px. Then the rest of the 20:00 NEXT list, items 2-6.
 test and "every `class` names a class row" (data integrity). Add your rows (`kerf_slice` ->
 `slice`, `dent_blast` -> `blast`, ...) in your branch; I add no ghost rows, so we do not collide.
 Merge `n7-ranged` for it.
+
+### MILESTONE 20:30: `b2af1801` + `eb1d4f1c` the Gatling spin-up tremor (brief item 5)
+- Found: the 0.5 s spin-up (`Trigger.spin` up to `spec.spin_ticks`) showed nothing in the view:
+  no barrel animation reads `spin` (only the walk slow does), no spin cue in the audio set. The
+  anticipation cell was empty.
+- Built: hit_feel.json gatling `spin_rumble_px` 1.5 (schema + `HitFeel.spin_row`),
+  `FeelCam.spin_tremor(tick)`: amplitude = px x spin/spin_ticks while 0 < spin < full (spin-up and
+  wind-down), zero at firing speed (the fire kick takes over), inside the kick_px_max cap. A fixed
+  function of the tick (no RNG). Unit `test_feel_spin` 2/2; planted faults (no stop at speed,
+  ignore `enabled`) -> 2 failing.
+- MEASURE (64 px/m, phase correlation, 9-frame high-pass, crop 640x400): `--feel=off` flat 0.1-0.3
+  px/frame over the spin-up; on, it grows 0.3 -> 2-3 px/frame over frames 284-310, then the fire
+  kick. The first build used 22 Hz: near the 30 Hz frame Nyquist (a blur), retuned to ~10/15 Hz
+  (`eb1d4f1c`). Kill ticks 320/629 identical on and off (sim untouched).
+- DECISION (docs/decisions.md 2026-11-05): tremor on the camera, not barrel art (held-gun look is
+  an owner call) and not a new sound (art). Off: `--feel=off` or `spin_rumble_px` 0.
+- CLIP `masters n7/ranged/gatling_spinup-ab-32ppm.mp4` (11.7 s, real time + 4x slow of the
+  spin-up), frames.json row added (5 rows). LOOK: stills only (frame 55 of the clip, side by side):
+  the motion is frame-to-frame and does not show in a still; the measure is the evidence. NOT
+  judged by eye in motion.
+- FRICTION: at 64 px/m `--cam=fight` frames Rivet half off the bottom edge (frame 300 of
+  `scratch/ranged/spin/g64-on2.avi`), so a 64 px/m close-up of Rivet needs FightCam work first.
+
+### FINDING 20:50: owner item 1 (electro gun / plasma rifle reaction), where the read is thin
+- Electro struck: `human_reactions.json` `stun` 1.2 s, travel 0.08 m, played by `ShockJolt.pose`
+  (the hard stepped convulsion, combat night). It jolts in place: nothing goes along the bolt on
+  the hit frame, so the victim-sync cell stays 2 ("on the frame, not along the hit"). Plan: a
+  hit snap along `r.dir` in the first ~10 % of the family (a `ShockJolt` constant, `--soft-shock`
+  keeps the old), film the struck cop at 48 px/m before/after.
+- Electro kill: brutality `electro_shock` (stand 42 ticks, X-ray strobe, drops stiff); reads.
+- Plasma kill: brutality `plasma_hole` (launch 1.4-2.2 m/s, hole 0.3 m). In the pit audit sheet
+  the body barely travels and sits on the frame edge. Plasma struck (shielded only, 150 dmg kills
+  any unarmored human): `weapon_wound` -> `stagger`. Next: check whether the gib launch is sim or
+  view (RNG stream) before touching `launch_mps`; if view only, try 2.4-3.2 as a flag pair.
+
+GATES 20:50 head `eb1d4f1c`: lint 13/13; unit feel 12/12 + hit_feel 2 new tests (full unit
+suite last at `2691917e`: 1120/0). Director reel on head running at stop (see below).
+
+NEXT (iteration 3):
+1. Read the it2 director reel result (`evidence/ranged/it2-reel-director.log`, started 20:50 on
+   `eb1d4f1c`): 19/19 down, 0 SCRIPT ERROR, or fix. Then full unit + scenarios on head.
+2. Owner item 1: electro stun hit snap along the bolt (above), plasma_hole launch check; film both
+   at 32 + 48 px/m before/after (`--weapon=electro_gun` / `plasma_rifle --lone --cam=fight`).
+3. FightCam framing (capture only): Rivet half off at 64 px/m, blasts half off at 32 px/m. Needed
+   for every close-up.
+4. Audit gaps: gloria, assault-rifle (`--loadout`), flamer ignition, molotov throw.
+5. Sound on the frame (cue log vs struck tick); shard `grind_ticks` call; quest 1 table guns;
+   city-block combined clip; exe by 08:30.
