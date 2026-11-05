@@ -62,16 +62,15 @@ func num(key: StringName) -> float:
 
 ## One tick: `power` = the G press, `melee` = the overload command, `aim` = Rivet's aim (unit).
 func drive(stage: CollectCallStage, power: bool, melee: bool, aim: Vector2) -> void:
-	var arena_stage: ArenaStage = stage as ArenaStage
 	var rivet: Fighter = stage.arena.rivet
 	var reticle: Vector2 = rivet.pos + aim.normalized() * num(&"aim_m")
-	if arena_stage == null or arena_stage.vehicles == null:
-		# no car service here (quest 1): the form still answers the press with a reach that misses
+	if stage.vehicles == null:
+		# no car service here (the invented quest arena): the press still lashes out and misses
 		if power and _shared and rivet.alive() and powers.is_active(ID):
 			_miss(stage, reticle)
 		return
 	if power and car == null and rivet.alive() and _may_seize():
-		_seize(arena_stage, reticle)
+		_seize(stage, reticle)
 	if not _shared:
 		powers.tick()
 	if car == null:
@@ -80,7 +79,7 @@ func drive(stage: CollectCallStage, power: bool, melee: bool, aim: Vector2) -> v
 		_let_go()
 		return
 	link.step(reticle)
-	var wall: bool = _wall(arena_stage)
+	var wall: bool = _wall(stage)
 	car.pos = link.pos
 	car.head = Vector2.from_angle(link.heading)
 	car.vel = car.head * link.speed
@@ -90,7 +89,7 @@ func drive(stage: CollectCallStage, power: bool, melee: bool, aim: Vector2) -> v
 	heat = minf(1.0, heat + SimClock.TICK_DT / maxf(0.1, num(&"overload_s")))
 	var hit: bool = _strike(stage) or wall
 	if heat >= 1.0 or (heat >= num(&"arm_k") and (hit or melee)):
-		_blast(arena_stage)
+		_blast(stage)
 
 
 ## True while Dent rides the seized car (ghost_attacks.json dent.ride): the pilot stops his walk.
@@ -109,7 +108,7 @@ func _may_seize() -> bool:
 	return powers.try_activate(ID) == &"ok"
 
 
-func _seize(stage: ArenaStage, reticle: Vector2) -> void:
+func _seize(stage: CollectCallStage, reticle: Vector2) -> void:
 	var spots: PackedVector2Array = PackedVector2Array()
 	var live: Array[VehicleBody] = []
 	for b: VehicleBody in stage.cars():
@@ -155,9 +154,10 @@ func pick_on_line(rivet: Vector2, reticle: Vector2, cars: PackedVector2Array) ->
 	return best
 
 
-## The arena's walls stop the car (it slides along them); true on a contact this tick.
-func _wall(stage: ArenaStage) -> bool:
-	var out: Vector2 = stage.walls.push_out(link.pos, num(&"car_reach_m") * 0.5)
+## The stage's walls (the arena's, the city's buildings and kerbs) stop the car (it slides along
+## them); true on a contact this tick.
+func _wall(stage: CollectCallStage) -> bool:
+	var out: Vector2 = push_out(stage, link.pos, num(&"car_reach_m") * 0.5)
 	if out == link.pos:
 		return false
 	link.pos = out
@@ -180,7 +180,7 @@ func _strike(stage: CollectCallStage) -> bool:
 	return hit
 
 
-func _blast(stage: ArenaStage) -> void:
+func _blast(stage: CollectCallStage) -> void:
 	blast_tick = stage.tick
 	blast_at = car.pos
 	blasts += 1
@@ -205,18 +205,26 @@ func _blast(stage: ArenaStage) -> void:
 
 ## Where Dent lands: ride_hop_m behind the blown car, else to its left or right, the first spot
 ## with no other live car within HOP_CLEAR_M (a parked car is not a wall); walls push it out.
-func _hop_spot(stage: ArenaStage) -> Vector2:
+func _hop_spot(stage: CollectCallStage) -> Vector2:
 	var hop: float = num(&"ride_hop_m")
 	var side: Vector2 = car.head.orthogonal()
 	var spots: Array[Vector2] = [-car.head * hop, side * hop, -side * hop]
 	for off: Vector2 in spots:
-		var p: Vector2 = stage.walls.push_out(blast_at + off, stage.arena.rivet.radius_m)
+		var p: Vector2 = push_out(stage, blast_at + off, stage.arena.rivet.radius_m)
 		if _clear(stage, p):
 			return p
-	return stage.walls.push_out(blast_at + spots[0], stage.arena.rivet.radius_m)
+	return push_out(stage, blast_at + spots[0], stage.arena.rivet.radius_m)
 
 
-func _clear(stage: ArenaStage, p: Vector2) -> bool:
+## `p` pushed out of the stage's solids: the arena's walls, else the city's cells, else as is.
+static func push_out(stage: CollectCallStage, p: Vector2, r: float) -> Vector2:
+	var arena: ArenaStage = stage as ArenaStage
+	if arena != null:
+		return arena.walls.push_out(p, r)
+	return stage.cells.push_out(p, r) if stage.cells != null else p
+
+
+func _clear(stage: CollectCallStage, p: Vector2) -> bool:
 	for b: VehicleBody in stage.cars():
 		if b != car and b.state != VehicleBody.State.WRECK and b.pos.distance_to(p) < HOP_CLEAR_M:
 			return false

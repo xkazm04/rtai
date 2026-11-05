@@ -22,18 +22,6 @@ const CRATES: Texture2D = preload("res://features/city/art/props/crate_stack.png
 const CRATE_PX: Rect2 = Rect2(0.0, 0.0, 80.0, 80.0)
 const DUMPSTER: Texture2D = preload("res://features/city/art/props/dumpster.png")
 const CONE: Texture2D = preload("res://features/city/art/props/traffic_cone.png")
-## The powers pad's cars in the city's traffic print: one atlas per VehicleBody.State (intact, d1,
-## d2, the soul-hijacked teal plate, the burnt wreck), cell = the car's art id, nose to +x
-## (CrowdLayers TRAFFIC_CELL_PX on a 3 x 3 grid), the car-shaped ink shadow under it.
-const CAR_ATLAS: Array[Texture2D] = [
-	preload("res://features/city/art/vehicles/traffic_atlas.png"),
-	preload("res://features/city/art/vehicles/traffic_atlas_d1.png"),
-	preload("res://features/city/art/vehicles/traffic_atlas_d2.png"),
-	preload("res://features/city/art/vehicles/traffic_atlas_hijack.png"),
-	preload("res://features/vehicles/art/traffic_atlas_wreck.png"),
-]
-const CAR_CELL_PX: Vector2 = Vector2(512.0, 256.0)
-const CAR_COLS: int = 3
 ## On the city block a pit wall is a row of inked concrete barrier segments (still solid), not
 ## the arena's flat ink bar: the street's warm grey, a cream top edge, a joint every BARRIER_M.
 const BARRIER_FILL: Color = Color("#8E867C")
@@ -133,18 +121,3 @@ func _track(t: ArenaTargets.Target) -> void:
 	else:
 		b = t.home - Vector2(t.spawn.span_m, 0.0)
 	draw_line(Ink.px(a), Ink.px(b), Ink.WASH, Ink.LINE_PX)
-
-
-## One car: its shadow offset down-right, then its body cell, both turned to its heading.
-func _car(b: VehicleBody) -> void:
-	var size: Vector2 = Vector2(VehicleView.CAR_L, VehicleView.CAR_W) / SimConst.PX_PER_M
-	var r: Rect2 = Rect2(-size * 0.5 * Ink.PX_PER_M, size * Ink.PX_PER_M)
-	var shadow: Vector2 = VehicleView.SHADOW_OFF / SimConst.PX_PER_M
-	var cell: Rect2 = Rect2(
-		Vector2(b.art % CAR_COLS, floorf(float(b.art) / CAR_COLS)) * CAR_CELL_PX, CAR_CELL_PX
-	)
-	var tex: Texture2D = CAR_ATLAS[clampi(b.state, 0, CAR_ATLAS.size() - 1)]
-	draw_set_transform(Ink.px(b.pos + shadow), b.head.angle())
-	draw_texture_rect_region(tex, r, cell, VehicleView.SHADOW)
-	draw_set_transform(Ink.px(b.pos), b.head.angle())
-	draw_texture_rect_region(tex, r, cell)

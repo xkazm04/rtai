@@ -30,6 +30,23 @@ static func attach(world: World, stage: ArenaStage) -> ArenaCars:
 	return cars
 
 
+## Quest 1's ghost cars (collect_call_city.json ghost_cars): the same parked service at `spots`
+## (world metres, nose east), added after the stage; returns the cars' world.
+static func attach_at(
+	world: World, stage: CollectCallStage, spots: PackedVector2Array
+) -> ArenaCars:
+	var cars: ArenaCars = ArenaCars.new()
+	var svc: VehicleService = VehicleService.new()
+	svc.world = cars
+	cars.service = svc
+	world.add_system(svc)
+	stage.vehicles = svc
+	for i: int in spots.size():
+		@warning_ignore("return_value_discarded")
+		svc.spawn_parked(KIND, spots[i], Vector2.RIGHT, i % ART_IDS)
+	return cars
+
+
 ## Parks one car per "car" spawn (nose east, +x) under `base`; returns how many were parked.
 func park(stations: ArenaStations, base: Vector2) -> int:
 	var n: int = 0
@@ -41,6 +58,32 @@ func park(stations: ArenaStations, base: Vector2) -> int:
 			service.spawn_parked(KIND, base + sp.at, Vector2.RIGHT, n % ART_IDS)
 			n += 1
 	return n
+
+
+## `p` (a circle of radius r) pushed out of every parked or wrecked car's drawn box (VehicleView
+## CAR_L x CAR_W, turned to its heading); a seized car (soul-hijacked, not yet a wreck) is not
+## solid: Dent rides its roof. Quest 1 keeps Rivet and the guards out of its ghost cars.
+static func push_out(cars: Array[VehicleBody], p: Vector2, r: float) -> Vector2:
+	var half: Vector2 = Vector2(VehicleView.CAR_L, VehicleView.CAR_W) * 0.5 / SimConst.PX_PER_M
+	var out: Vector2 = p
+	for b: VehicleBody in cars:
+		if b.soul_hijacked and b.state != VehicleBody.State.WRECK:
+			continue
+		var x: Vector2 = b.head.normalized()
+		var d: Vector2 = out - b.pos
+		var local: Vector2 = Vector2(d.dot(x), d.dot(x.orthogonal()))
+		var near: Vector2 = local.clamp(-half, half)
+		var gap: Vector2 = local - near
+		if gap.length() >= r:
+			continue
+		if gap.length() > 1e-6:
+			local = near + gap.normalized() * r
+		elif half.x - absf(local.x) < half.y - absf(local.y):
+			local.x = signf(local.x if local.x != 0.0 else 1.0) * (half.x + r)
+		else:
+			local.y = signf(local.y if local.y != 0.0 else 1.0) * (half.y + r)
+		out = b.pos + x * local.x + x.orthogonal() * local.y
+	return out
 
 
 func player_pos() -> Vector2:

@@ -111,12 +111,11 @@ func _stomp(stage: CollectCallStage) -> void:
 ## Every car whose centre is within car_crush_m of the press head is flattened: wrecked outright
 ## (the vehicles lane's damage rules, so its wreck smoke, fire and contacts follow).
 func _crush_cars(stage: CollectCallStage, at: Vector2) -> void:
-	var arena_stage: ArenaStage = stage as ArenaStage
-	if arena_stage == null or arena_stage.vehicles == null:
+	if stage.vehicles == null:
 		return
-	var rules: VehicleDamage = arena_stage.vehicles.rules
+	var rules: VehicleDamage = stage.vehicles.rules
 	var reach: float = attacks.num(GHOST, &"car_crush_m")
-	for b: VehicleBody in arena_stage.cars():
+	for b: VehicleBody in stage.cars():
 		if b.state == VehicleBody.State.WRECK or b.pos.distance_to(at) > reach:
 			continue
 		b.hp_lost = maxf(b.hp_lost, rules.hp)

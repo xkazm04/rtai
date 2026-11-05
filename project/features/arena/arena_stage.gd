@@ -17,8 +17,6 @@ var pit: ArenaPit
 var dodges: ArenaDodges = ArenaDodges.new()
 ## Other lanes' code, from their stations' `script` (ArenaHook), in station-file order.
 var hooks: Array[ArenaHook] = []
-## The powers pad's cars (ArenaCars), or null when no station brings a "car" spawn.
-var vehicles: VehicleService = null
 var _shots_before: int = 0
 
 
@@ -162,11 +160,6 @@ func telemetry_dict() -> Dictionary:
 ## station (the showcase's ReelDirector: `--telemetry` with `--reel=director` crashed at quit).
 func _telemetry_key(hook: ArenaHook) -> String:
 	return String(hook.station.id) if hook.station != null else "hook_%d" % hooks.find(hook)
-
-
-## Every car on the floor (parked, driven by a power, wrecked); empty without a car spawn.
-func cars() -> Array[VehicleBody]:
-	return vehicles.cars if vehicles != null else ([] as Array[VehicleBody])
 
 
 ## The cars by state for the telemetry: total, soul-hijacked, damaged, wrecked.

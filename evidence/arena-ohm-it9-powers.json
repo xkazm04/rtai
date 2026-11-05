@@ -1,0 +1,104 @@
+{
+  "brutality_pit": {
+    "by_style": {
+      "shock": 4
+    },
+    "kill_cut_us": [
+      662,
+      595,
+      534,
+      983
+    ],
+    "kill_ticks": [
+      149,
+      149,
+      149,
+      299
+    ],
+    "signature_kills": 4,
+    "view_avg_us": 122,
+    "view_frames": 600,
+    "view_over_2ms": 0,
+    "view_worst_tick": 149,
+    "view_worst_us": 1837
+  },
+  "cars": {
+    "damaged": 0,
+    "hijacked": 0,
+    "total": 3,
+    "wrecked": 1
+  },
+  "corpse_decay": {
+    "bodies_cap": 16,
+    "bodies_now": 1,
+    "bodies_peak": 5,
+    "died": 5,
+    "early_fades": 0,
+    "forced": 0,
+    "forced_alpha": 0.0,
+    "peak_dead_listed": 5,
+    "pruned": 4,
+    "stains_now": 5
+  },
+  "damage_taken": 5.99999999999994,
+  "deaths": 0,
+  "dodges": 8,
+  "hit_rate": 0.0,
+  "hits": 0,
+  "hook_8": {
+    "dent": {
+      "blasts": 0,
+      "rides": 0,
+      "seizes": 0,
+      "strikes": 0
+    },
+    "ghost_dead": 5,
+    "ghost_victims": 5,
+    "kerf": {
+      "blinks": 0,
+      "slices": 0,
+      "transforms": 1
+    },
+    "ohm": {
+      "bolts": 15,
+      "cars_hit": 5,
+      "struck": 12
+    },
+    "tonnage": {
+      "activations": 0,
+      "cars_crushed": 0,
+      "ram_hits": 0,
+      "rivet_hp": 100.0,
+      "slam_hits": 0,
+      "slams": 0,
+      "ticks_on": 0
+    }
+  },
+  "input_latency_mean_ticks": 0.0,
+  "input_latency_ticks": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "knockdowns": 0,
+  "pit_kills": 0,
+  "pit_waves": 0,
+  "rivet_claw_cops": {
+    "claw_hits": 0,
+    "claw_kills": 0,
+    "claw_swings": 1,
+    "claw_whiffs": 1,
+    "shock_discharges": 0,
+    "shock_landed": 0
+  },
+  "schema": "gtai.arena-telemetry/1",
+  "shots": 0,
+  "ticks": 599,
+  "top_speed_mps": 2.6810634881258,
+  "ttk_s": {},
+  "turn_rate_peak_dps": 720.000071262244,
+  "weapon_art_rack": {
+    "rack": true
+  }
+}

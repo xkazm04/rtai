@@ -87,6 +87,9 @@ func _add_city() -> void:
 	city.target = city.focus
 	world.add_system(CityScare.new(stage, city))  # lane human-reactions: the street hears the fight
 	world.add_system(city)
+	if not stage.layout.ghost_cars.is_empty():  # after the stage, so a seized car moves this tick
+		@warning_ignore("return_value_discarded")
+		ArenaCars.attach_at(world, stage, stage.layout.ghost_cars)
 	# the chunks around Rivet resident before tick 0, so the first frame after Start has a street
 	# (live, replay and resume all open here, so the run stays deterministic)
 	city.residency.update(city.focus)

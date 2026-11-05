@@ -1,5 +1,19 @@
 {
-  "doc": "Where quest 1's stage (collect_call_stage.json + collect_call_places.json, stage metres) sits on the generated city: world = origin + stage * squash. The stage is laid along one east-west street so every leg Rivet walks stays on it; origin found by res://dev/quest1_city_fit.gd (re-fit 2026-11-03 for the 12 m streets, was 276, 265.85; the 12 m kerb strip moved the clear y) (every place and walked leg clear of buildings, props and parked cars).",
+  "doc": "Where quest 1's stage (collect_call_stage.json + collect_call_places.json, stage metres) sits on the generated city: world = origin + stage * squash. The stage is laid along one east-west street so every leg Rivet walks stays on it; origin found by res://dev/quest1_city_fit.gd (re-fit 2026-11-03 for the 12 m streets, was 276, 265.85; the 12 m kerb strip moved the clear y) (every place and walked leg clear of buildings, props and parked cars). ghost_cars: parked cars (world metres, nose east) on the street for the ghost powers (Dent seizes them; quest 1 had no car); fit with res://dev/ghost-powers/ghost_cars_fit.gd (clear of buildings, props, kerbs and the baked parked cars).",
+  "ghost_cars": [
+    [
+      279,
+      260.5
+    ],
+    [
+      364,
+      260
+    ],
+    [
+      386,
+      266
+    ]
+  ],
   "origin": [
     276,
     263.85
