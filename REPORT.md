@@ -80,6 +80,10 @@ The owner's order for this lane: "create these characters, animate transformatio
 - Proof: `M:frames/voices-four-64ppm-keys.png` and `M:ghost-voices-arena-64ppm.mp4` (all four in turn),
   `M:ghost-voices-city-32ppm.mp4` (they hold on asphalt at 32), and the before/after at the same tick,
   `M:frames/voice-dent-ab-64ppm.png`. Unit test_ghost_apparition (envelope, one body, the whisper cue).
+- On quest 1's real whispers: `M:frames/voice-quest1-real-whispers-48ppm.png`
+  (`dev/ghost-forms/voice_quest1.gd`). Quest 1 is played by CollectCallBot as the scenario does, and the
+  apparition is bound to the play's own event bus. The b1 dumpster whisper (tick 123) and Kilohm's line ("Hold
+  still. You've been mutter...", tick 9626) both bring Tonnage's apparition up inside the whisper rings.
 - Dent at 32 px/m (iteration 4's open point): he already carries CutRig's cream halo like the cops, so no change
   was needed (`M:frames/dent-city-halo-32ppm-x3.png`).
 
@@ -99,8 +103,8 @@ The owner's order for this lane: "create these characters, animate transformatio
 - On d4996f44 (the draw-order fix): scenario_ghost_attacks 1/0.
 
 ## What does not work / is open
-- The apparition has not been filmed on a real whisper in quest 1 (only the dev cue). The live cue is wired and
-  unit-tested. Quest 1 shows it only under `-- --rigs`: the shipping sprite cast has no ghost view.
+- In the shipped quest 1 path (the sprite cast) GhostFormView is not attached, so the voices show there only
+  under `-- --rigs` or in the dev grabber below. Attaching the ghost view to the sprite cast is not done.
 
 ## Calls for the owner
 - **Rust steel on a teal pool, or fully teal ghosts?** The targets draw the ghosts teal all over. Ours print
@@ -115,5 +119,6 @@ The owner's order for this lane: "create these characters, animate transformatio
   to cue them only from the scientist's questline lines; that change is one connect in GhostApparition.bind.
 
 ## Next steps
-- Film the apparition on a real quest 1 whisper (b1, the dumpster).
+- Give the shipped sprite-cast quest 1 a ghost view (or at least the apparition), if the owner wants the
+  voices there.
 - Final gates on a still tree (the evidence runner).

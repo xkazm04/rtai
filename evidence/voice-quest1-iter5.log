@@ -1,0 +1,13 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+D3D12 12_0 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce RTX 4090
+
+[INFO] souls: ghost voice: tonnage beside Rivet
+[INFO] frames: voice 0 at tick 123 (tonnage)
+[INFO] payphone: Patch connected the call at Factory Row corner
+[INFO] souls: ghost voice: tonnage beside Rivet
+[INFO] frames: voice 1 at tick 9626 (tonnage)
+[INFO] frames: voice frames: ["voice0_00.png tick 123 (0)", "voice0_01.png tick 133 (0)", "voice0_02.png tick 143 (0)", "voice0_03.png tick 153 (0)", "voice0_04.png tick 163 (0)", "voice0_05.png tick 173 (0)", "voice0_06.png tick 183 (0)", "voice0_07.png tick 193 (0)", "voice0_08.png tick 203 (0)", "voice0_09.png tick 213 (0)", "voice0_10.png tick 223 (0)", "voice0_11.png tick 233 (0)", "voice1_00.png tick 9626 (0)", "voice1_01.png tick 9636 (0)", "voice1_02.png tick 9646 (0)", "voice1_03.png tick 9656 (0)", "voice1_04.png tick 9666 (0)", "voice1_05.png tick 9676 (0)", "voice1_06.png tick 9686 (0)", "voice1_07.png tick 9696 (0)", "voice1_08.png tick 9706 (0)", "voice1_09.png tick 9716 (0)", "voice1_10.png tick 9726 (0)", "voice1_11.png tick 9736 (0)"]
+WARNING: 157 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 31 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

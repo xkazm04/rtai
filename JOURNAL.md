@@ -476,3 +476,26 @@ Session state 02:59: head = this commit, tree clean, no Godot process of mine ru
   copied in after: `E/evidence-run-iter5.log`): PASS lint 13/13, unit 981/0, scenarios 47, parity bit-exact
   (mutation caught at 629), selftest look goldens 11/11 within tolerance (worst 1.21): no re-bless. Closes
   iteration 4's NEXT 2.
+- 03:25 PROOF the voice on quest 1's REAL whispers: `dev/ghost-forms/voice_quest1.gd` (+ `_main` entry) plays quest 1
+  with CollectCallBot exactly as the scenario does, draws CollectCallView, and binds a GhostApparition to the play's
+  own event bus (the bot has no StagePilot, so the apparition is stepped there at Rivet's spot, base, first ghost
+  selected). Whispers at tick 123 (b1, Rivet in the dumpster) and 9626 (Kilohm: "Hold still. You've been
+  mutter..."); 24 PNGs, 0 SCRIPT ERROR (`E/voice-quest1-iter5.log`); composite
+  `M:frames/voice-quest1-real-whispers-48ppm.png`. Judged: Tonnage's teal apparition rises beside the dumpster
+  inside the whisper rings, and at Kilohm's line, in the Toner Room. It reads as the voice. The 0.6-scale press
+  is still large next to the sprite-cast Rivet at 48 px/m.
+- frames.json (15): + the quest 1 still first; the voice A/B named in the four-voices entry (file kept).
+- 03:12 FOUND quest 1 shows the apparitions only under `-- --rigs` (quest1_game._dev_rigs loads ArenaRigs, which
+  attaches GhostFormView); the shipping sprite cast has no ghost view at all, so no voice either. There is no
+  recorded quest 1 replay in tests/; CollectCallBot (the scenario's player) hides in the b1 dumpster, so the b1
+  whisper is reachable by a bot run (dev/frames/frame_grabber.gd plays it, but draws CollectCallView without rigs).
+
+NEXT (iteration 6):
+1. Merge n5-cast / n6-ghost-powers if they moved (JOURNAL/REPORT keep ours; attack files theirs).
+2. Film the apparition on a REAL whisper: quest 1 with `--rigs` driven by CollectCallBot (or `--record` a bot run
+   and `--replay` it windowed with `--rigs`), the b1 dumpster whisper; a "ghost voice" log line proves the cue.
+   If quest 1 cannot run the bot windowed, film the arena's tazer whisper instead (combat_arena tazer_hit_now).
+3. Weakest item after that: Ohm's apparition is the smallest read at 32 px/m (0.8 m shell): try 1.15 scale for
+   the light forms' apparitions (a constant), A/B at 32 in the city.
+4. Keep REPORT.md current (gates of this iteration are in section "Gates").
+Session state 03:26: head = this commit, tree clean, no Godot process of mine running, no lock held (image.lock not taken this session), masters scratch holds only film.sh.
