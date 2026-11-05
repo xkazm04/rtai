@@ -40,7 +40,7 @@ Rivet (`KingMoves.CAR_KEEP_M`) so the ram has room.
 | Attack | Tell (windup / lock) | Active | Recovery (punish) | Counterplay | Punish |
 |---|---|---|---|---|---|
 | **Ram** (charge, 22 m x 3.2 m lane, 15 m/s, 30 dmg) | 1.3 s / 0.45 s: the engine revs (body shake), headlights flare, the car backs off 1 m; the lane draws from the grille | 1.4 s along the locked line | 1.6 s (1.2 s x1.5): the car skids, the gang hops off to push it straight | step sideways out of the lane after the lock; walls stop the car | shoot the stalled car; Tonnage's slam or Kerf's chain on the pushing gang |
-| **Coin fan** (cone, 14 m, 50 deg, 14 dmg) | 1.0 s / 0.3 s: the hood cannon swings to Rivet and glows | 0.6 s: a hail of gold coins down the cone | 0.9 s (0.6 s x1.25) | get inside 3 m (under the barrel) or out of the cone's side | close in during the recovery |
+| **Coin fan** (cone, 14 m, 50 deg, 10 dmg per hit; was 14, tuned it5) | 1.0 s / 0.3 s: the hood cannon swings to Rivet and glows | 0.6 s: a hail of gold coins down the cone | 0.9 s (0.6 s x1.25) | get inside 3 m (under the barrel) or out of the cone's side | close in during the recovery |
 
 ## Phase 2: the court (hp 66-33 %)
 **Transition (2.5 s):** the car hits a hydrant and stalls (wrecked, smoking); the gang leaps off

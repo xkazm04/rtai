@@ -4,26 +4,26 @@
     "alley_waves": 0
   },
   "boss_fight": {
-    "adds_landed": 0,
+    "adds_landed": 1,
     "adds_spawned": 8,
-    "adds_tries": 13,
+    "adds_tries": 14,
     "boss": "king",
-    "dazes": 0,
-    "dealt": 0.0,
-    "defeated_tick": 4377,
+    "dealt": 24.0,
+    "defeated_tick": 4793,
     "hp_frac": 0.0,
-    "landed": {},
+    "landed": {
+      "charge": 1
+    },
     "moves": {},
     "phase": 3,
     "rolled": {
       "coin_fan": 1
     },
-    "stuns": 0,
     "tries": {
-      "charge": 1,
-      "coin_fan": 7,
+      "charge": 2,
+      "coin_fan": 8,
       "decree": 3,
-      "press_slam": 3,
+      "press_slam": 2,
       "ram": 2
     }
   },
@@ -32,11 +32,11 @@
     "kill_cut_us": [],
     "kill_ticks": [],
     "signature_kills": 0,
-    "view_avg_us": 90,
+    "view_avg_us": 49,
     "view_frames": 18000,
-    "view_over_2ms": 12,
-    "view_worst_tick": 3756,
-    "view_worst_us": 4353
+    "view_over_2ms": 0,
+    "view_worst_tick": 2990,
+    "view_worst_us": 1886
   },
   "cars": {
     "damaged": 0,
@@ -77,8 +77,8 @@
     "shock_landed": 0
   },
   "schema": "gtai.arena-telemetry/1",
-  "shots": 175,
-  "ticks": 7539,
+  "shots": 193,
+  "ticks": 7462,
   "top_speed_mps": 69.3296813964844,
   "ttk_s": {},
   "turn_rate_peak_dps": 7737.7571129598,
