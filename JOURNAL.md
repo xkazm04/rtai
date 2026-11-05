@@ -95,3 +95,34 @@ Melee and the ghosts will call the layer you own; proposed shape, your answer wi
   before has none there; all later runs shift by 11-12 frames. LOOK at 48 (frames 66-89 every 2nd):
   the contact pose (claw in the cop, first drops out) holds, then the spray releases; the floor lines
   offset (the kick). CLIP `M/melee_feel_claw_ab_32ppm_48slow.mp4` (6.9 s, 415 frames).
+
+### REQUEST 2 -> n7-ranged (20:00): an optional `class` on hit_feel.json `weapons` rows
+The ghost attacks land like melee: through `CombatArena.damage`, no `struck` (`kerf_slice`, `dent_car`,
+`dent_blast`, Ohm's bolt; the Hauler's stomp and `ram` keep HaulerKick). I want MeleeFeel to route any
+`kill_landed`/`wounded` whose weapon has a row with a `class` to `FeelCam.hit(weapon, row.class, ...)`,
+so the per-cut feel of Kerf's chain (a short stop, no shake: each cut its own beat) and Dent's blast are
+rows, not a code map. Please add `"class": {"type": "string"}` (optional, a `classes` id) to the weapons
+item schema and `HitFeel.weapon_class(weapon) -> StringName` (&"" when none). If you prefer I add it,
+say so here and I will, in one commit touching only those two lines.
+- CHECK 20:02 director reel on `432cb02d` (windowed, `--fixed-fps 60 --quit-after 8200`, 32 px/m):
+  19/19 chapters down, 0 SCRIPT ERROR (scratch `director.log`).
+- GATES 20:02 on `432cb02d`: lint 13/13, unit 1131/1131 but flagged FAIL "tree changed during run: M
+  JOURNAL.md" (I appended REQUEST 2 mid-run: my error, not a test), scenarios 52/52, parity bit-exact
+  (step 629), selftest pass (look goldens 11/11, block 5/5). Re-run below on the committed head.
+
+NEXT (written 20:03, for iteration 2):
+1. Read n7-ranged's JOURNAL for the answer to REQUEST 2 (`class` on weapons rows); merge any new feel
+   commits (record each). Then Kerf's chain (rank 1): route `kerf_slice` through MeleeFeel -> FeelCam
+   with a per-cut short stop and no shake, so each cut is its own beat; consider a cut-frame flash in
+   KerfView (ink/white, not teal on the world). Film the chain at 32 real + 64 at 0.4x vs `--feel=off`.
+2. Then: plasma sword deflect (rank 2: a bigger deflect spark, tie the return to the swing), Ohm's
+   bolt tell (rank 4), chainsaw kill read at 32 (rank 5), Tonnage slam impact (debris + capped shake via
+   a `stomp`/slam weapons row; check HaulerKick does not double it), Dent blast in frame.
+3. Score the 48 px/m audit films (`scratch/melee/audit_*_48.avi`, kept for this), Tonnage plates/ram,
+   Dent's blow, Ohm's mass arc; add to `docs/polish/melee.md`.
+4. City block check: `--arena=city --bot=reel --reel=director` result (started 20:03, see below).
+5. Quest 1 melee (brief item 5): quest 1 has no RivetCarry (claw only); a carried blade there changes
+   quest 1's state hash -> decision line + deliberate re-bless. Do it after the ghost items.
+6. Calls for the owner so far: none needing a verdict (past_slab and no-shake-on-melee are DECISIONs
+   with one-value alternatives). Sound: no per-attack cues exist; needs sound assets (REPORT).
+7. Never touch the worktree while `tools/evidence/run.mjs` runs (it checks cleanliness after unit).
