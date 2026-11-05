@@ -9,8 +9,9 @@ extends RefCounted
 ## FxView asks `edge()` per round and draws `draw()` on the print layer. Data: ghost_attacks.json
 ## tonnage plate_r_m, plate_spark_ticks (0 = none), plate_sparks_per_tick; --feel=off = none (the
 ## rounds draw through as before). View only: never read by the sim, no RNG (turns from the tick).
-## Only once the press is drawn (GhostPilot.settled_in tonnage, and the tank grown in: morph_k >=
-## MORPH_MIN): in the city film the first sparks printed round the teal morph disc before it was.
+## Only once the press is drawn (Tonnage settled, or the transformation into it PRESS_K through,
+## and the tank grown in: morph_k >= MORPH_MIN): the city film printed the first sparks round the
+## teal morph disc before the press was drawn.
 
 const INK: Color = SlamDebris.INK
 const CREAM: Color = SlamDebris.CREAM
@@ -25,6 +26,8 @@ const CORE_PX: float = 4.0
 const DASH_M: float = 0.25
 ## The tank's grow (HaulerForm.morph_k) from which the plates stop rounds: the press is drawn.
 const MORPH_MIN: float = 0.95
+## How far through the transformation into Tonnage the press is drawn (GhostForms.k).
+const PRESS_K: float = 0.8
 
 var hauler: HaulerStage
 ## The ghost forms' pilot (null: the morph gate alone): no plates until Tonnage has settled in.
@@ -74,7 +77,9 @@ func edge(s: Shot, c: Vector2, tail_m: float, tick: int) -> Vector2:
 
 func _plated() -> bool:
 	if pilot != null and not pilot.settled_in(&"tonnage"):
-		return false
+		var f: GhostForms = pilot.forms
+		if f.to_id != &"tonnage" or f.phase == GhostForms.EXITING or f.k() < PRESS_K:
+			return false
 	return hauler.form.morph_k() >= MORPH_MIN
 
 
