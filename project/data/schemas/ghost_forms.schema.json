@@ -121,6 +121,9 @@
     "schema": {
       "const": "gtai.ghost_forms/1"
     },
+    "story_voice": {
+      "type": "boolean"
+    },
     "switch_s": {
       "maximum": 0.9,
       "minimum": 0.1,
