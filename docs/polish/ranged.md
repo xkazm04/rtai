@@ -122,5 +122,10 @@ scratch audit folder: `<w>-off.avi`, `sheets/<w>-off-k2.png`.
   arm is already at its reach). `7326b53b`: the torso leans into the release (THROW_LEAN 0.5): the
   diff peaks at 1763 px at frame 301, a few px of body shift toward the target over about 15 frames.
 - Verdict: SUBTLE at 48 px/m and practically invisible at 32 px/m (a 1-2 px shift for 3 frames,
-  diff 607 px peak); anticipation stays 1 (still no wind-up). To tune: THROW_LEAN up, a longer hold. Clip
-  `molotov_throw_lean-ab-48ppm.mp4`.
+  diff 607 px peak); anticipation stays 1 (still no wind-up).
+- it6 tuning at 32 px/m: THROW_LEAN 1.0 and 1.5 changed the peak diff only 754 -> 890 px (the body
+  translation saturates). `9b351ab4` adds the top-down read of a throw instead: the torso turns the
+  gun shoulder through (THROW_TWIST 0.3 rad per unit of negative recoil, so 0.48 rad at the release,
+  decaying with the recoil in 0.27 s). At 32 px/m the shoulder line visibly turns for about 15 frames
+  (diff 500-800 px per frame, frames 301-315). Verdict: MODEST, a real follow-through now; still no
+  anticipation. Clip `molotov_throw_twist-ab-32-48ppm.mp4` (32 px/m, then 48 px/m).

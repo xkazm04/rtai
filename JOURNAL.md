@@ -624,3 +624,21 @@ unit 1138/0, lint 13/13, pit reel 19/19; evidence run (scenarios, parity, selfte
   same args, `--ppm=32`): diff 607 px at frame 301, 291 at 302, 171 at 303, then 10-45 px. About a
   1-2 px shift for 3 frames: practically INVISIBLE at 32 px/m. At 48 px/m it is a few px over about
   15 frames. Verdict: an honest small gain at close-up zoom only; tune in iteration 6 (NEXT 2).
+
+## Iteration 6 (BUILD, 22:40-23:40)
+Read: JOURNAL NEXT, git log, the other lanes' journals (no new REQUEST for ranged).
+
+### MILESTONE 22:58: `9b351ab4` a throw whips the gun shoulder through (NEXT 2)
+- MEASURE first (32 px/m, `--reach=7`, kill tick 458 on every take, `molo/lean_multi.sh`):
+  THROW_LEAN 0 vs 1.0 vs 1.5: peak diff 754 / 890 px (607 at 0.5): the lean saturates; the grid
+  (frames 298-312, x3 crops) shows no visible difference even at 1.5. Kept 0.5.
+- Instead `RigClips.THROW_TWIST` 0.3 rad per unit of negative recoil, in `RigPose` beside the
+  strike's `reach_tw` (same sign convention: the gun shoulder leads). A/B vs no follow-through:
+  diff 500-800 px per frame over frames 301-315 at 32 px/m; 48 px/m from frame 289 (the release),
+  peak 2210 px. LOOK (grids `tw_grid32.png`, `tw_grid48.png`): the shoulder line turns toward the
+  throw and back; no stumble. MODEST but visible at 32. Anticipation stays 1 (no wind-up).
+- Test `test_a_throw_whips_the_gun_shoulder_through`; planted THROW_TWIST 0 -> exactly that test
+  fails (1138/1139); unit 1139/1139 with it; lint 13/13 (940 files).
+- Clip `masters .../molotov_throw_twist-ab-32-48ppm.mp4` replaces the lean clip (frames.json row 2,
+  still 15 rows). Decision line written. Registry rule applied: motion-quality-gating (measure the
+  candidate values on the live path, judge the grid, keep the channel that reads at 32 px/m).
