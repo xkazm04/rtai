@@ -389,3 +389,5 @@ reels 19/19 with the loadout); since then only data rows (gloria kick) + docs, f
 NEXT is the 20:52 list above, with: item 1 re-run the evidence run + reels on the new head
 first; item 6 adds assault-rifle and molotov-throw scoring only (Gloria done). Owner calls so far
 for REPORT: the shard pop (36 default vs `--shard-pop=12`, clip in masters).
+- GATE 21:08: pit director reel with `--loadout=pistol` on head `b5f5c7c5`: 19/19 fully down,
+  0 SCRIPT ERROR, nothing skipped (`evidence/ranged/it3-reel-director-loadout-b5f5.log`).
