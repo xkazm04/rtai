@@ -23,6 +23,8 @@ var blast_at: Vector2 = Vector2.ZERO
 var strikes: int = 0
 var blasts: int = 0
 var seizes: int = 0
+## Ticks Dent spent riding a seized car's roof (ghost_attacks.json dent.ride).
+var rides: int = 0
 var _struck: Dictionary[int, bool] = {}
 ## ghost-forms: GhostPilot owns the shared SoulPowers; the Dent form is the running gearbox power,
 ## so a seize needs it running and a let-go never ends it (the form keeps its own clock).
@@ -72,10 +74,18 @@ func drive(stage: CollectCallStage, power: bool, melee: bool, aim: Vector2) -> v
 	car.pos = link.pos
 	car.head = Vector2.from_angle(link.heading)
 	car.vel = car.head * link.speed
+	if riding() and rivet.alive():
+		rivet.pos = car.pos  # the bucking-bull ride: Dent sits on the roof it steers
+		rides += 1
 	heat = minf(1.0, heat + SimClock.TICK_DT / maxf(0.1, num(&"overload_s")))
 	var hit: bool = _strike(stage) or wall
 	if heat >= 1.0 or (heat >= num(&"arm_k") and (hit or melee)):
 		_blast(arena_stage)
+
+
+## True while Dent rides the seized car (ghost_attacks.json dent.ride): the pilot stops his walk.
+func riding() -> bool:
+	return car != null and num(&"ride") > 0.0
 
 
 ## True while a car is seized (the pilot skips the jab: melee is the overload command).
@@ -170,6 +180,9 @@ func _blast(stage: ArenaStage) -> void:
 	car.hp_lost = maxf(car.hp_lost, stage.vehicles.rules.hp)
 	car.state = stage.vehicles.rules.state_for(car.hp_lost, car.soul_hijacked)
 	car.vel = Vector2.ZERO
+	if riding():  # he jumps clear behind it as it goes up
+		var hop: Vector2 = blast_at - car.head * num(&"ride_hop_m")
+		stage.arena.rivet.pos = stage.walls.push_out(hop, stage.arena.rivet.radius_m)
 	link.crashed = true
 	_let_go()
 

@@ -84,7 +84,9 @@ func telemetry() -> Dictionary:
 		}
 	var d: DentStage = _stage.pilot.dent if _stage != null and _stage.pilot != null else null
 	if d != null:
-		out["dent"] = {"seizes": d.seizes, "strikes": d.strikes, "blasts": d.blasts}
+		out["dent"] = {
+			"seizes": d.seizes, "strikes": d.strikes, "blasts": d.blasts, "rides": d.rides
+		}
 	var k: KerfStage = _stage.pilot.kerf if _stage != null and _stage.pilot != null else null
 	if k != null:
 		var forms: int = _stage.pilot.ghosts.transforms

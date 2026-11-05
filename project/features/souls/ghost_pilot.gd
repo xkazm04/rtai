@@ -65,6 +65,8 @@ func drive(
 	dent.drive(stage, seize, press and in_dent, stage.arena.rivet.facing)
 	if in_dent:
 		stage.intent.fire_at = Vector2.INF  # Dent's hands are on the car, not on the gun
+	if dent.riding():
+		move_by = Vector2.ZERO  # he rides the car (DentStage puts him on its roof)
 	move_by = kerf.drive(stage, false, press and settled_in(KerfStage.GHOST), c.aim, move_by)
 	ohm.drive(stage, false, press and settled_in(OhmStage.GHOST), c.aim)
 	var walk: float = stage.arena.tuning.rivet["walk_mps"]
