@@ -657,3 +657,5 @@ NEXT (iteration 8, replaces the list above; item 2 there is done in d5e9091a):
 3. Director reel on the head after any change; final gates before the 08:30 freeze; REPORT for 08:40.
 Session state 05:05: head = this commit, tree clean, no Godot process of mine running, no lock held (image.lock not
   taken this session); masters scratch holds film.sh, journal-it7.txt, ohm_x3.png and logs.
+- 05:08 COMBAT CHECK director reel on 5019d2f8 (the head with the folding card): 16/16 chapters down, 0 SCRIPT ERROR
+  (E:director-reel-it7-final.log). Session ends: tree clean after this commit, no Godot process of mine running.

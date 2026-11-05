@@ -153,7 +153,8 @@ The owner's order for this lane: "create these characters, animate transformatio
   SCRIPT ERROR (`E:director-reel-it7.log`).
 - **Final, on 1f717c6f** (the forms on the shipped quest 1, Ohm's seams, the folding card), still tree: evidence
   runner `--no-bench` all PASS: lint 13/13, unit 1002/0, scenarios 47, parity bit-exact (mutation caught at 629),
-  look goldens and block goldens in tolerance, no re-bless (`E:evidence-run-it7-final.log`).
+  look goldens and block goldens in tolerance, no re-bless (`E:evidence-run-it7-final.log`). Director reel on
+  5019d2f8: 16/16 chapters down, 0 SCRIPT ERROR (`E:director-reel-it7-final.log`).
 - On 457e9551 (Ohm's seams): lint 13/13, unit 1001/0; director reel 16/16 chapters down, 0 SCRIPT ERROR
   (`E:director-reel-it7-seams.log`).
 
