@@ -1,5 +1,23 @@
 [
   {
+    "file": "tonnage_slam_ab_32ppm_48slow.mp4",
+    "title": "Tonnage's press slam lands with debris: a landing flash, paper chips, dust",
+    "source": "game-arena",
+    "branch": "n7-melee 4c6c6bf5",
+    "ppm": 32,
+    "before": "--feel=off on the same head (left; the slam's HaulerKick shake/stop runs in both); 32 px/m real time, then 48 px/m at 0.4x",
+    "note": "SlamDebris via HaulerMarks (all callers). First pass had ink chips that vanished on the asphalt and a flash hidden under the press body; re-cut to paper chips edged in ink and a 2 m flash. Looked at frames 157-171 full res."
+  },
+  {
+    "file": "plasma_deflect_ab_32ppm_48slow.mp4",
+    "title": "Plasma sword deflect: a parry beat, a cream burst at the blade and a streak along the return",
+    "source": "game-arena",
+    "branch": "n7-melee 2502aaa7",
+    "ppm": 32,
+    "before": "--feel=off on the same head (left); 32 px/m real time, then 48 px/m at 0.4x",
+    "note": "CombatArena.deflected -> DeflectMarks (melee_marks.json) + MeleeFeel parry (4-tick stop, kick toward the shooter). Looked at 48 px/m frames 126-148: before only the ink spark scribble; after a cream star edged in ink and a streak. The streak greys as its ink fades."
+  },
+  {
     "file": "kerf_chain_ab_32ppm_64slow.mp4",
     "title": "Kerf's blink-slice chain cut by cut: a hold and a cream-and-ink flare on every cut",
     "source": "game-arena",

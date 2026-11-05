@@ -137,28 +137,82 @@ NEXT (written 20:03, for iteration 2):
 - STOP 20:10 iteration 1. NEXT is the 20:03 entry above, unchanged.
 
 ## Iteration 2 (20:10-21:10), phase BUILD
-- MERGE 20:15 `6d614652`: n7-ranged 5535aad2 (classes melee_heavy/slam/ram/slice/chain), eebc82f7
+- MERGE 20:12 `6d614652`: n7-ranged 5535aad2 (classes melee_heavy/slam/ram/slice/chain), eebc82f7
   (`class` on weapons rows + HitFeel.weapon_class: my REQUEST 2, answered 20:12), 2691917e/016966b2
   (fire kick), audit docs. Conflicts: JOURNAL.md (kept ours), hit_feel.json weapons (both sides' rows
   kept, sorted by id).
-- FINDING 20:30: camera.json `hitstop_cooldown_ticks` 20 > Kerf `gap_s` 0.3 (18 ticks): at full
+- FINDING 20:14: camera.json `hitstop_cooldown_ticks` 20 > Kerf `gap_s` 0.3 (18 ticks): at full
   player cadence the shared stop marks every other cut only. Not changing sim timing (gap_s) nor the
   shared cooldown (it governs every gun). So each cut carries a kick (no cooldown) and a view flare.
-- DECISION 20:35: Kerf's cut flare prints in cream and ink (a world impact; teal stays the soul's own
+- DECISION 20:15: Kerf's cut flare prints in cream and ink (a world impact; teal stays the soul's own
   path, afterimages and hanging cut line). One value: `ghost_attacks.json kerf.cut_flare_s` (0 = none).
-- MILESTONE 20:48 `cb3e5caa`: MeleeFeel routes any kill_landed/wounded whose weapons row has a
+- MILESTONE 20:18 `cb3e5caa`: MeleeFeel routes any kill_landed/wounded whose weapons row has a
   `class` (ghost attacks) to FeelCam; ghost hits kick along `arena.hit_dir`. Rows kerf_slice (slice,
   kick 2.5) and dent_blast (blast, crash shake). KerfView cut flare 0.15 s. Tests: kerf cut felt by
   its row class, planted: a ghost weapon with no class row is not felt. Unit 1136/1136, lint 13/13.
   Not added: ohm_bolt (it already emits `struck`, so FeelCam feels it; a row class would double it).
-- LOOK 20:45 (kerf, after 32, frames 94-105 full-res 480x270 crops): frames 96-102 hold still on the
+- LOOK 20:17 (kerf, after 32, frames 94-105 full-res 480x270 crops): frames 96-102 hold still on the
   first cut; a cream slash edged in ink with ink sparks across the cop. 64 px/m A/B frames 320/345 of
   the clip: the flare plain beside the before's thin white cut line.
 - CLIP `M/kerf_chain_ab_32ppm_64slow.mp4` (8.3 s).
-- MEASURE 20:55 (dent, shift.py on a 600x300 floor crop, frames 160-200): before 0.0 px through the
+- MEASURE 20:21 (dent, shift.py on a 600x300 floor crop, frames 160-200): before 0.0 px through the
   blast; after 17.9 px first-frame jolt, settling in 12 frames (165-177). LOOK (crops 520x320 frames
   162-180 every 2nd): the burst prints as before, the frame jolts; the blast still sits at the right
   edge (camera on Dent: owner call, untouched). CLIP `M/dent_blast_ab_32ppm.mp4` (3.5 s).
 - Registry rules applied (realtime-combat-semantics, motion-quality-gating): the feel is keyed to the
   hit event frame (sync), strength-scaled and capped by the shared budget; every change judged A/B in
   motion vs `--feel=off` on the same head.
+- CHECK 20:22 director reel (arena) on the working tree = `cb3e5caa` code: 19/19 chapters fully down, 0 SCRIPT ERROR.
+- CHECK 20:24 director reel (city block, `--arena=city`) on `cb3e5caa` code: 19/19 chapters fully down, 0 SCRIPT ERROR (`evidence/n7-melee/director-{arena,city}-cb3e5caa.log`).
+- MEASURE 20:30 (Tonnage, `--bot=ghosts --ghost=tonnage` at 32, before `--feel=off` / after, shift.py
+  on a 700x300 floor crop, frames 120-240): the two films are bit-identical (same numbers): the slam's
+  camera is HaulerKick (powers.json stomp_shake `crash`, stomp_hitstop `boss_hit`), outside FeelCam, so
+  `--feel=off` does not touch it. Both shake on the slam (frames 142-160, jolts to 15 px). CORRECTION
+  to the audit: the slam has a shake and a stop; at 32 px/m with the camera already moving they do not
+  read as a beat. What is missing is debris (and a landing mark). Not routing stomp through FeelCam
+  (it would double the HaulerKick shake).
+- FRICTION 20:28: a new class_name (SlamDebris) is unknown to films until `--import` refreshes the global
+  class cache: 3 Tonnage films came out with 447 SCRIPT ERRORs (discarded). Rule: `--import` after
+  adding a class, before any film.
+- MILESTONE 20:30 `2502aaa7` plasma sword deflect (rank 2): `CombatArena.deflected(at, back)` (view
+  only) from `PlayerDeflect.bat`; MeleeFeel parry beat (row `plasma_deflect`: melee_heavy, 4-tick stop,
+  3 px kick toward the shooter, no shake); DeflectMarks (new table `melee_marks.json` `deflect`): cream
+  starburst edged in ink on the bat frame (8 ticks) and a cream streak 2.5 m along the return (10 ticks);
+  drawn in FxView. Off: flash_ticks 0 or `--feel=off`. test_deflect_marks 5/5 incl. planted; unit
+  1141/1141.
+- LOOK 20:29 (director `--chapter=plasma_sword_deflect` 48 px/m, frames 126-148 every 2nd, 520x220 crops,
+  before over after): before = the small ink spark scribble at the blade tip; after = a cream star edged
+  in ink at the tip plus the streak toward the cop, and the bat holds (the after runs ~5 frames behind;
+  the cop drops later). The streak reads greyish once the ink fades (a tuning note, not fixed).
+- CLIP `M/plasma_deflect_ab_32ppm_48slow.mp4` (5.8 s).
+- MILESTONE 20:37 `4c6c6bf5` Tonnage slam debris (rank 6): SlamDebris inside HaulerMarks.draw (arena, city
+  block, quest 1's CastView all get it): a cream landing flash edged in ink (slam_flash_s 0.08), 16 paper
+  chips edged in ink in low arcs with shadows (slam_debris, slam_debris_s 0.55), paper-dust puffs. Seeded
+  from the stomp tick. Off: slam_debris 0 or --feel=off.
+- LOOK 20:33 first pass (frames 157-171, 420x320 full-res crops): the dust read, the ink chips vanished
+  on the dark asphalt and the 1.1 m flash hid under the 3x press body. DECISION 20:34: chips in paper
+  edged in ink, 0.16-0.32 m; flash 2.0 m. LOOK 20:36 second pass: the landing frame prints a cream disc
+  round the press, dust rolls out, chips land at the edge. CLIP `M/tonnage_slam_ab_32ppm_48slow.mp4` (5.8 s).
+- LOOK 20:38 Ohm tell pass 1 (NOT committed): after each bolt the fingertip glow (tell_glow_m 0.22) charges
+  back over bolt_gap_s to a white ready glint, white flash at the tips on the fire frame. Looked at frames
+  140-180 every 4th, 240x160 crops x1.5, before over after: at 32 px/m the Ohm form is ~20 px inside its
+  own teal aura; the glow does not separate from it. No visible change = not done. Patch kept in
+  `gtai-n7p/scratch/melee/ohm_tell_pass1.patch`; `tell_glow_m` stays in the data (inert: nothing reads it).
+
+NEXT (written 20:40, for iteration 3):
+1. Read the gate result appended below (evidence run on the head after this commit); if a known flake
+   fails, re-run it alone.
+2. Ohm bolt tell (rank 4), pass 2: pass 1 (scratch `ohm_tell_pass1.patch`) did not read at 32. Try a
+   tell outside the form's teal aura: a short cream/ink spark arc reaching from the tips toward the aim
+   as the charge fills, or a bigger white ready glint; judge at 32 before committing.
+3. Chainsaw kill read at 32 (rank 5): the kill is a red blob under Rivet; the grind gets no stop per
+   bite by design; look at a spray direction / a kill-frame mark.
+4. Deflect streak greys as its ink fades: try cream over a thinner ink, re-look at 48.
+5. Score the unscored attacks from the 48 px/m audit films (Tonnage plates/ram, Dent's blow, Ohm's
+   mass arc) in `docs/polish/melee.md`.
+6. Quest 1 melee (brief 5): a carried blade on quest 1's path changes its state hash -> decision line
+   + deliberate re-bless; do it once the ghost items stand.
+7. Calls for the owner (REPORT): Kerf at full player cadence holds every other cut (camera.json
+   `hitstop_cooldown_ticks` 20 > kerf `gap_s` 18 ticks); options: as built / cooldown 18 (shared with
+   guns, n7-ranged's call) / gap_s 0.34 (sim). The Tonnage stomp's HaulerKick ignores `--feel=off`.
+8. City-block combined clip of the polished set (30-90 s) before freeze; exe by 08:30.

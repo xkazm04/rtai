@@ -54,22 +54,32 @@ ghost-powers beats, telemetry overlay on).
 By the craft columns (impact and read at 32 weigh most: they are what the owner judges), weakest first:
 1. **Kerf's chain**: one blur at 32 (the brief's own warning). View-only fix candidates: a cut mark held
    on each victim from its cut frame, and a short hold per cut through FeelCam (`slice` row, no shake).
-   **Done 20:50 (`cb3e5caa`)**: kerf_slice rides FeelCam (class `slice`; a kill takes the 6-tick kill stop)
+   **Done 20:18 (`cb3e5caa`)**: kerf_slice rides FeelCam (class `slice`; a kill takes the 6-tick kill stop)
    and KerfView draws a 0.15 s cream-and-ink cut flare per cut (`cut_flare_s`). Limit: the camera's
    20-tick stop cooldown is longer than the 18-tick `gap_s`, so at full player cadence only every other
    cut can hold (the reel presses every 20 ticks: every cut holds); the kick and the flare mark all.
    `M/kerf_chain_ab_32ppm_64slow.mp4`.
 2. **Plasma sword deflect**: the deflect spark is tiny and the return is not tied to the swing; the
    placeholder blade (asset only after every item, backlog 3).
+   **Done 20:30 (`2502aaa7`)**: a parry beat (row `plasma_deflect`: 4-tick stop, kick toward the shooter)
+   and DeflectMarks (`melee_marks.json`): a cream starburst edged in ink on the bat frame and a streak
+   along the return. `M/plasma_deflect_ab_32ppm_48slow.mp4`.
 3. **Claw combo**: no hold on the hit frame (systemic 1), small jab at 32; melee weight (brief item 3).
    **Done 19:55 (`65dd07e1`)**: every melee hit now reaches FeelCam (MeleeFeel); measured holds on the
    claw's hit frames (6 frames at the kill, 5 at the second cop; none in the `--feel=off` before);
    `M/melee_feel_claw_ab_32ppm_48slow.mp4`.
 4. **Ohm's bolt**: no tell; thin at 32.
+   **Tried 20:38, not landed**: a fingertip charge glow over bolt_gap_s does not separate from the form's
+   own teal aura at 32 px/m (the form is ~20 px). Next: a tell outside the aura (an ink/cream spark arc
+   reaching toward the aim) or a bigger white ready glint.
 5. **Chainsaw**: the kill is a red blob under Rivet at 32.
 6. **Tonnage slam**: a clear tell, but the impact frame has no hold, shake or debris.
+   **Correction 20:30**: measured, the slam does shake and stop (HaulerKick: `crash` + `boss_hit`, outside
+   FeelCam, so `--feel=off` films are identical); what is missing is debris on the landing.
+   **Done 20:37 (`4c6c6bf5`)**: SlamDebris (landing flash, paper chips, dust) in HaulerMarks for every
+   caller. `M/tonnage_slam_ab_32ppm_48slow.mp4`.
 7. **Dent's blast**: lands at the frame edge at 32 (camera call open: polish only the impact).
-   **Impact done 20:55 (`cb3e5caa`)**: dent_blast row (class blast, crash shake), kick outward from the
+   **Impact done 20:21 (`cb3e5caa`)**: dent_blast row (class blast, crash shake), kick outward from the
    car; measured 0.0 px -> 17.9 px first-frame jolt settling in 12 frames. `M/dent_blast_ab_32ppm.mp4`.
 8. **Electro baton**, 9. **Katana**: read well; they get the shared hit-stop with item 3 only.
 
