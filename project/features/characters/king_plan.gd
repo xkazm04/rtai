@@ -17,5 +17,6 @@ static func build(size_k: float = SIZE_K) -> BodyPlan:
 	p.art_dir = "king"
 	p.size_k = size_k
 	p.hose_tex = ""
+	p.head_visor = false  # the star crown has no visor slot (n5-cast)
 	p.d5_warm = 0.0  # the warm tan close-up steel is Rivet's own read (n5-cast)
 	return p

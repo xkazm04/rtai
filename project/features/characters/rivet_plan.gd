@@ -101,6 +101,7 @@ static func build(p_form: StringName = &"") -> BodyPlan:
 	_legs(p, legs.x)
 	p.leg_w = legs.y
 	p.leg_rim = true
+	p.head_visor = true
 	p.d5_warm = d5_warm
 	_arms(p, f.y, f.z)
 	_proportion(p, arms.x, arms.y)
