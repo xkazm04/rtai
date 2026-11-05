@@ -330,7 +330,7 @@ NEXT (iteration 3, in order):
 
   Dodging, per attack landed/tried over seeds 1-3: rotor dash 9/27 (33 %), hot dash 4/8, bay hop
   5/10, carpet 0/13 direct (its parcels count under `servo`: 5 hits on seed 2). Standing: dash
-  27/44, bay hop 11/11, parcels 104 hits. Crates made the fight longer (dodge mean 161 s, was
+  27/44, bay hop 11/11, parcels 103 hits (12 + 52 + 39). Crates made the fight longer (dodge mean 161 s, was
   122 s) and stand-s1 now wins (crates shield a stander from the rotor dash's line? not checked).
   The bot never seeks a line of sight round a crate; a player would. NOT measured: human aim.
 - FRICTION 21:02: `--telemetry=<relative path>` resolves against `project/`, not the cwd: the
@@ -347,3 +347,16 @@ when `stage.walls.blocks(me, boss)` (no line of sight); a player would, and my c
 straight-line bot slow (seed 2: 205 s). And: BossHook does not emit `boss_engaged` yet, so the
 boss loop/stinger in AudioHooks never start under `--boss` (your item 3; Servo needs nothing
 special).
+- 21:06 FILM `M/servo_drone_wave_scan_drop_dodge_48ppm_it3.mp4` (the brief's full-wave clip on
+  the real rigs, replacing the graybox one): `--ppm=48 --seed=2`, 4.5-11.5 s. **Looked at** the
+  keys (`M/servo_drone_wave_keys_48ppm_it3.png`): the beam sweeps and locks on Rivet, three dashed
+  rings on the marked spot, the bot steps off after the lock, one bomb blasts inside its ring, two
+  CS crates land beside him. The wave reads at 48 px/m.
+- 21:09 FIX b588d8b1 the defeat blob (first-pass weakness above): lighter empty bays, one thinner
+  plume, deeper slump. Re-filmed (`--phase=3 --seed=2`, crates solid now: down at tick 1723) and
+  **looked at** `M/servo_defeat_beat_keys_32ppm_it3.png`: the spilled drones fan out as separate
+  wrecks round a slumped grey body; reads as "down" at 32 px/m.
+- 21:09 GATES (tree b5d8fc43 + render-only b588d8b1): lint 13/13; unit 1146/1, the one failure
+  `test_noir_shadows` (the known flake), 2/2 re-run alone (`unit-it3b-noir-rerun.log`); scenarios
+  52 ran / 1 failed: `scenario_rig_stress` 50 people rig p50 1.105 ms > 1.0 ms, CONTENDED (my GPU
+  film and the gate ran together); re-run alone below.
