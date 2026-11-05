@@ -164,6 +164,24 @@ func kill(d: ServoDrone) -> void:
 	_finish(d, &"shot")
 
 
+## The hub went down (the defeat beat): every drone in the air crashes where it flies (a carried
+## crate lands there, a bomb is a dud), falling bombs are duds and falling crates land now. Returns
+## the crash spots (the view's wrecks).
+func ground() -> Array[Vector2]:
+	var spots: Array[Vector2] = []
+	for d: ServoDrone in drones:
+		if not d.alive():
+			continue
+		if d.parcel == ServoParcels.CRATE:
+			parcels.drop(d.pos, ServoParcels.CRATE, 1)
+		d.parcel = &""
+		spots.append(d.pos)
+		_finish(d, &"grounded")
+	drones = []
+	parcels.settle()
+	return spots
+
+
 ## Phase 3: kamikaze drones to a standoff ring round `mark` (the ring turned by the stream).
 func launch_dives(mark: Vector2) -> int:
 	return ServoDive.launch(self, mark, tuning.phase(phase).wave, _rng.randf() * TAU)

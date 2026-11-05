@@ -25,6 +25,7 @@ var _spin: float = 0.0
 var _seen_hurt: int = -1000000
 var _flash: int = 0
 var _pal: PaletteTokens = PaletteTokens.shared()
+var _fall: ServoFall = ServoFall.new()
 
 
 func _ready() -> void:
@@ -35,6 +36,7 @@ func _ready() -> void:
 ## Called once per sim tick by the view: advances the gait and the pad spin, then redraws.
 func pose(p_tick: int) -> void:
 	tick = p_tick
+	_fall.px = px
 	var moved: float = fight.body.pos.distance_to(_last_pos)
 	_last_pos = fight.body.pos
 	_walk = fmod(_walk + moved / STRIDE_M * TAU, TAU)
@@ -42,32 +44,51 @@ func pose(p_tick: int) -> void:
 		_seen_hurt = fight.body.hurt_tick
 		_flash = FLASH_TICKS
 	_flash = maxi(_flash - 1, 0)
-	_spin += 0.9 if _stage(&"windup", true) or _stage(&"active", true) else 0.15
+	if _down() >= 0:
+		_spin += ServoFall.spin(_down())
+	else:
+		_spin += 0.9 if _stage(&"windup", true) or _stage(&"active", true) else 0.15
 	queue_redraw()
+
+
+## Sim ticks since he went down, or -1 while he stands.
+func _down() -> int:
+	var m: ServoMoves = fight.moves as ServoMoves
+	if m == null or m.defeated_at < 0:
+		return -1
+	return maxi(fight.now() - m.defeated_at, 0)
 
 
 func _draw() -> void:
 	var fwd: Vector2 = fight.body.facing
 	var side: Vector2 = fwd.orthogonal()
-	var o: Vector2 = fight.body.pos + fwd * _lean()
-	var k: float = 1.0 + 0.015 * sin(_walk * 2.0)
-	if fight.state == BossFight.State.DEFEATED:
-		k = 0.92
-	var tint: Color = _tint()
+	var dt: int = _down()
+	var o: Vector2 = fight.body.pos + fwd * (_lean() if dt < 0 else ServoFall.slump_m(dt))
+	var k: float = 1.0 + 0.015 * sin(_walk * 2.0) if dt < 0 else ServoFall.scale_k(dt)
+	var tint: Color = _tint() if dt < 0 else ServoFall.tint(dt)
 	for s: float in [-1.0, 1.0]:
 		_leg(o, fwd, side, s, tint)
+	var pad_w: float = 2.6 - (ServoFall.pad_in_m(dt) if dt >= 0 else 0.0)
+	var pad_k: float = k * (ServoFall.pad_k(dt) if dt >= 0 else 1.0)
 	for s: float in [-1.0, 1.0]:
-		var pad: Vector2 = o + side * s * 2.6 + fwd * 1.2
+		var pad: Vector2 = o + side * s * pad_w + fwd * 1.2
 		_strut(&"arm", o + side * s * 0.9 + fwd * 0.2, pad, tint)
-		_part(&"pad", pad, fwd.angle() - PI / 2 + _spin * s * 0.1, k, tint)
+		_part(&"pad", pad, fwd.angle() - PI / 2 + _spin * s * 0.1, pad_k, tint)
 		if _stage(&"recovery", false):
 			_steam(pad)
 	_part(&"pelvis", o + fwd * 0.5, fwd.angle() - PI / 2, k, tint)
 	_wings(o, fwd, side, k, tint)
+	if dt >= 0:
+		_fall.spill(self, rack, dt)
+		_fall.crashes(self, (fight.moves as ServoMoves).crashes, dt)
 	_part(&"torso", o + fwd * 0.3, fwd.angle() - PI / 2, k, tint)
 	var head_rot: float = (fight.aim if _stage(&"windup", false) else fwd).angle() - PI / 2
-	_part(&"head", o + fwd * 1.2, head_rot, k, tint)
+	if dt >= 0:
+		head_rot += ServoFall.head_droop(dt)
+	_part(&"head", o + fwd * (1.2 if dt < 0 else 1.0), head_rot, k, tint)
 	_visor(o + fwd * 1.2, head_rot)
+	if dt >= 0:
+		_fall.smoke(self, rack, dt)
 
 
 func _leg(o: Vector2, fwd: Vector2, side: Vector2, s: float, tint: Color) -> void:
@@ -84,8 +105,8 @@ func _wings(o: Vector2, fwd: Vector2, side: Vector2, k: float, tint: Color) -> v
 	var rot: float = fwd.angle() - PI / 2
 	var wing: Texture2D = _tex[&"rack"]
 	for s: float in [-1.0, 1.0]:
-		if s < 0.0 and rack.count(ServoRack.Cell.BROKEN) > 0:
-			continue  # phase 3: this wing blew off
+		if s > 0.0 and rack.count(ServoRack.Cell.BROKEN) > 0:
+			continue  # phase 3: the wing of ServoRack.break_wing (its across < 0 is our side +1)
 		var at: Vector2 = o + side * s * 1.305 - fwd * 0.765
 		var flip: float = -1.0 if s > 0.0 else 1.0
 		draw_set_transform(at * px, rot, Vector2(flip, 1.0) * k * px / ART_PPM)

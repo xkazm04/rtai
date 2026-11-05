@@ -79,6 +79,15 @@ func _land(p: Parcel) -> void:
 	crates.append(p)
 
 
+## Everything still falling lands at once and harmless (the defeat): crates stay, bombs are duds.
+func settle() -> void:
+	for p: Parcel in falling:
+		if p.kind == CRATE:
+			_land(p)
+	falling = []
+	blasts.clear()
+
+
 ## A hit on whatever crate covers `pos`; true if one took it.
 func hit_crate(pos: Vector2, damage: int) -> bool:
 	for c: Parcel in crates:

@@ -30,6 +30,9 @@ var dives: int = 0
 ## The bay hop's landing ring once its tell locked (the bot's read), else none.
 ## The arena record's centre (the depot's dressing is laid round it): set once by bind().
 var depot_origin: Vector2 = Vector2.ZERO
+## The defeat beat: the tick he went down (-1 while he stands) and where his flying drones crashed.
+var defeated_at: int = -1
+var crashes: Array[Vector2] = []
 var _hop_locked: bool = false
 var _hop_r: float = 0.0
 var _armed: bool = false
@@ -58,6 +61,17 @@ func idle_step(f: BossFight, target: Vector2) -> void:
 func bind(f: BossFight, rng: RngRegistry) -> void:
 	depot_origin = f.body.pos - f.spec.arena.boss_at
 	setup_swarm(rng.stream(ServoSwarm.STREAM))
+	var err: Error = f.defeated.connect(_on_defeated.bind(f))
+	assert(err == OK)
+
+
+## The fight stops ticking the moves once he is down, so the swarm is grounded here, at once:
+## nothing stays frozen in the air, and the drones' bodies leave the hostiles on the next sync.
+func _on_defeated(f: BossFight) -> void:
+	defeated_at = f.now()
+	if _armed:
+		crashes = swarm.ground()
+		drone_bodies.sync(swarm)
 
 
 ## The swarm's own stream. Without it the rack never launches: no hidden unseeded dice.
