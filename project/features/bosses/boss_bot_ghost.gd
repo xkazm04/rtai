@@ -27,6 +27,13 @@ func _init(p_ghost: StringName) -> void:
 	ghost = p_ghost if ORDER.has(p_ghost) else &"ohm"
 
 
+## The band the bot holds: a short-reach ghost (Tonnage's slam) closes in to strike once the soul
+## is taken; otherwise the bot's own band.
+func hold_m(f: BossFight, band_m: float) -> float:
+	var reach: float = REACH_M[ghost] + f.body.radius_m - 0.6
+	return reach if _start >= 0 and reach < band_m else band_m
+
+
 ## The ghost's buttons this tick (a bit mask over PlayerActions).
 func buttons(tick: int, hook: BossHook, me: Vector2, actions: PlayerActions) -> int:
 	if _start < 0:

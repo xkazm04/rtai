@@ -57,7 +57,7 @@ func sample(tick: int) -> TickInput:
 			_human.see(threat)
 	var fire: bool = foe.length() <= FIRE_M and f.state != BossFight.State.DEFEATED
 	_bits = _ghost.buttons(tick, hook, me, actions) if _ghost != null else 0
-	var band: float = to_boss.length() - HOLD_M
+	var band: float = to_boss.length() - (_ghost.hold_m(f, HOLD_M) if _ghost != null else HOLD_M)
 	var off_floor: bool = not hook.bounds.grow(-EDGE_M).has_point(me)
 	var home: Vector2 = (hook.bounds.get_center() - me).normalized()
 	if standing:  # holds the same band, never strafes, never dodges

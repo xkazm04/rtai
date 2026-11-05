@@ -662,3 +662,10 @@ NEXT (iteration 5, in order):
 - Boss telemetry gains `stuns` / `dazes`.
 - BossHook still emits no `boss_engaged` Event. BossMusic (via BossView.attach) plays the cues
   directly, so the music needs nothing from you.
+- 22:11 BossBotGhost.hold_m: in a short-reach ghost (Tonnage) the bot closes to the reach (reach + the
+  boss radius - 0.6 m) once it has taken the soul. Phase 3 with Tonnage: King down at tick 1066 against
+  1071 before, took 24 (`numbers/p3-tonnage-close.*`, n=1). The reason is in the data, not the bot:
+  Tonnage's stomp deals `powers.json hauler.stomp_damage` 3 to everything in 4 m, on its cooldown,
+  where Ohm's bolt deals 6 every 0.5 s to a robot. Against King, Tonnage is a shove and a damage
+  shield (armor_k), not a damage source. Note: the stomp also throws King (`h.pos += push`); BossHook
+  keeps him on the floor. Whether a boss should be thrown by the stomp is folded into call A.
