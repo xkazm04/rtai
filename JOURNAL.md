@@ -488,14 +488,20 @@ Session state 02:59: head = this commit, tree clean, no Godot process of mine ru
 - 03:22 FOUND (before the quest 1 proof above): quest 1 attaches GhostFormView only under `-- --rigs`
   (quest1_game._dev_rigs loads ArenaRigs); the shipping sprite cast has no ghost view, so no voice there either.
 
+- 03:28 A/B Tonnage's apparition 0.6 (2.1 m out, as built) vs 0.5 (1.9 m out), same quest 1 ticks (9626 + 40,
+  123 + 80) via voice_quest1: `M:frames/voice-tonnage-scale-ab-48ppm.png` (top as built, bottom 0.5). Judged:
+  at 0.5 the press sinks into the whisper rings over Rivet and Kilohm; at 0.6 it stands clear beside him. Rejected,
+  0.6 stays (file reverted, nothing committed). Light forms stay at their true size (Ohm is meant to be small).
+
 NEXT (iteration 6):
 1. Merge n5-cast / n6-ghost-powers if they moved (JOURNAL/REPORT keep ours; attack files theirs).
 2. The shipped quest 1 (sprite cast, no `--rigs`) has no ghost view, so no voices there. Either give it the
    apparition (one GhostApparition on print_stage.actor_layer() bound to stage.events() and stepped at Rivet,
    the wiring voice_quest1.gd shows) or leave it to the owner's call in REPORT. Pick, record a DECISION.
-3. Weakest after that: the apparitions' scale. Tonnage at 0.6 is still large beside the sprite-cast Rivet at
-   48 px/m; Ohm's is the smallest read at 32 px/m. Try Tonnage 0.5 and light forms 1.1 (constants), A/B at the
-   same ticks (arena 32 city and voice_quest1 48).
+3. Apparition scale is settled (0.6 Tonnage, A/B 03:28). Weakest left: the forms' 32 px/m read of Ohm's arms
+   (thin even with the rim) and the owner's call on fully teal forms (the apparition shader is the ready
+   alternative: a `--teal-forms` dev flag that gives the form rigs the apparition material at alpha 1 would make
+   that Call a same-tick A/B).
 4. Keep REPORT.md current (iteration 5 gates are in "Gates (iteration 5)").
-Session state 03:28: head = this commit, tree clean, no Godot process of mine running, no lock held (image.lock
+Session state 03:29: head = this commit, tree clean, no Godot process of mine running, no lock held (image.lock
   not taken this session), masters scratch holds only film.sh.
