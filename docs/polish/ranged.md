@@ -28,7 +28,7 @@ Anticipation / Impact / Read 32 / Victim sync / Sound (arena). `?` = not looked 
 |---|---|---|---|---|---|---|---|
 | 1 | mini_nuke | 1 | 2 | 2 | 3 | 0 | the biggest hit in the game and the frame does not move: a huge ink burst, no stop, kick or shake; half off frame |
 | 2 | rocket_launcher | 2 | 2 | 3 | 3 | 0 | strong ink blast, debris, smoke, crater; the camera ignores it (no weight) |
-| 3 | gatling | 1 | 2 | 2 | 2 | 0 | casing/spark spray and blood read; sustained fire has no weight at all; the 0.5 s spin-up shows nothing (no barrel turn, no cue) |
+| 3 | gatling | 1 -> 3 | 2 | 2 | 2 | 0 | casing/spark spray and blood read; sustained fire has no weight at all; the 0.5 s spin-up shows nothing (no barrel turn, no cue) |
 | 4 | plasma_rifle | 2 | 2 | 2 | 3 | 0 | impact star and a cream glow at the cop; it3 at 48 px/m: a 3-frame burst, the hole, the body thrown about 1.7 m along the bolt on the hit frame (the it1 "barely answers" was a misread at the frame edge) |
 | 5 | electro_gun | 2 | 2 | 2 | 3 | 0 | zigzag bolt, star, skeleton flicker, yellow burst; the kill reads; it3 `9c140ffb`: the struck (stunned) body is thrown 0.3 m along the bolt on the hit frame, then convulses |
 | 6 | homing_shard | 2 | 2 | 2 | 2 | 0 | the lozenge shards read in flight, a star on the hit frame and a small jolt/turn; the pop and the blood come at about T+40 (owner item 4: 3 + 36 grind ticks, JOURNAL) |
@@ -72,6 +72,16 @@ scratch audit folder: `<w>-off.avi`, `sheets/<w>-off-k2.png`.
   px/frame at 64 px/m, ~10/15 Hz), then a 1.8 px recoil kick per round (0.48 px rms, max 1.59).
   Measured, not yet judged by eye in motion. Clips `gatling-ab-32ppm.mp4`,
   `gatling_spinup-ab-32ppm.mp4`.
+- it9 LOOK at 48 px/m (head, lone, `--reach=6`, kill 333): for the ~30 frames of spin-up the gun
+  just points; the tremor is a camera move, nothing on the gun says "winding up". `d99106f4` +
+  `ce923514` WeaponFxSpin: three ink-and-cream arcs turn about the barrel tip while
+  0 < spin < spin_ticks (longer, bolder, faster with the spin; one turn step per sim tick, under
+  60 deg so it never strobes backwards; frozen under hit-stop), gone on the tick the barrels reach
+  speed, where the first flash prints on the same spot (frame ~330). hit_feel.json gatling
+  `spin_whirl_m` 0.8 (0.6 read faint at 32 px/m). Verdict: the wind-up READS at 32 and 48 px/m
+  (anticipation 3: a readable spin-up). Limit: the whirl and the flash sit on WeaponFxArt's flash
+  spot, a claw width beside the drawn barrel of the heavy two-hand hold (GUN_SIDE_M); the hold is
+  an owner call, so not moved. Clip `gatling_whirl-ab-32-48ppm.mp4`.
 
 ### electro_gun struck (owner item 1, `9c140ffb`)
 - Before: the stun (`human_reactions.json` stun, 1.2 s, travel 0.08 m) jolts in place

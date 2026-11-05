@@ -10,8 +10,9 @@ cut from main `763f8fba`. Clips and stills: `C:\Users\kazda\kiro\gtai-masters\n7
 |---|---|---|---|
 | The shared feel layer reaches the live paths: FeelCam (shake, directional kick, hit-stop) + FeelBudget (caps per frame and per second), per-weapon rows on top of the damage class, a kill keeps the longer stop; view only (parity bit-exact) | `779cdd3d`, `e88ebcfe`, `5535aad2`, `eebc82f7` | `--feel=off` | `mini_nuke-ab-32ppm.mp4`, `heavy_feel-ab-48ppm.mp4` (rocket stop and shake) |
 | The arena voices its guns (quest 1's StageAudio; the arena was digitally silent) | `0f8e4f5f` | `--silent` | `rocket_blast_sound-ab-32ppm.mp4` (with sound) |
-| Recoil kick per round Rivet fires (Gatling 1.8 px, Gloria 1.5 px, hand cannon 2 px) | `2691917e`, `016966b2`, `078e83ab` | `--feel=off` | `gatling_spinup-ab-32ppm.mp4`, `gloria_kick-ab-32ppm.mp4` |
+| Recoil kick per round Rivet fires (Gatling 1.8 px, Gloria 1.5 px, hand cannon 2 px) | `2691917e`, `016966b2`, `078e83ab` | `--feel=off` | `gatling_spinup-ab-32ppm.mp4` (Gloria's 1.5 px kick measured; its clip dropped to keep frames.json at 15) |
 | The Gatling's 0.5 s spin-up tremor (about 10/15 Hz, grows with the spin) | `b2af1801`, `eb1d4f1c` | `--feel=off` | `gatling_spinup-ab-32ppm.mp4` |
+| The Gatling winds up visibly: a whirl of three ink-and-cream arcs turns at the barrel tip while the barrels spin up (and wind down), growing with the spin; the first round's flash takes the same spot (it7 audit: the spin-up showed nothing on the gun) | `d99106f4`, `ce923514` | `--feel=off` (or gatling `spin_whirl_m` 0) | `gatling_whirl-ab-32-48ppm.mp4` |
 | Electro stun: the struck body is thrown 0.3 m along the bolt on the hit frame (owner note item 1) | `9c140ffb` | `--react-snap=off` | `electro_snap-ab-48ppm.mp4` |
 | Rocket and mini-nuke boom on the blast frame | `da508e6b` | `--end-cue=off` | `rocket_blast_sound-ab-32ppm.mp4` |
 | Flamethrower ignition: a 3 px kick plus a fireball flare at the nozzle on the round that lights the stream (reads at 32 px/m for about 4 frames) | `e32720c4`, `5ef1c584` | `--feel=off` | `flamer_ignite_flare-ab-32-48ppm.mp4` |

@@ -835,7 +835,7 @@ Read: JOURNAL NEXT, git log, n7-melee / n7-king / n7-servo journals (melee cherr
 Read: JOURNAL NEXT (it7 list; it8 closed Gloria in Dock 9), git log, n7-melee journal to its end
 (`f593aac4` hit cues for melee and ghost hits, no REQUEST to ranged), n7-king/servo (none new).
 
-### MILESTONE 00:45: `193bc529` the machine pistol's flicker reads at 32 px/m (it7 NEXT 3)
+### MILESTONE 00:32: `193bc529` the machine pistol's flicker reads at 32 px/m (it7 NEXT 3)
 - FILM first (head, `--weapon=machine_pistol --bot=gunplay --lone --cam=fight --ppm=32 --clean
   --reach=6`, kill tick 306, 0 SCRIPT ERROR; scratch `mp/`). x1.5 crops 296-319: Rivet's flash a
   6-8 px speck at the gun on 302, 306, 310-316. rof 14 Hz = a round every 4 ticks with
@@ -853,3 +853,33 @@ Read: JOURNAL NEXT (it7 list; it8 closed Gloria in Dock 9), git log, n7-melee jo
 - Registry rule applied: motion-quality-gating (film before deciding; size against the burst's
   duty cycle, not a single frame); combat-pacing-and-dramatic-arc (a rapid weapon's per-round
   effect stays below a single heavy shot's, so weight follows the hit, not the rate).
+
+### MILESTONE 00:44: `d99106f4` + `ce923514` the Gatling winds up visibly (audit row 3, it7 NEXT 4)
+- LOOK first (head, `--weapon=gatling --bot=gunplay --lone --cam=fight --ppm=48 --clean
+  --reach=6`, kill tick 333, 0 SCRIPT ERROR; scratch `gat/`): for the ~30 frames of spin-up the
+  gun just points; the it2 tremor is a camera move, invisible in any still and nothing on the gun.
+- Built WeaponFxSpin (new, 81 lines): three ink-and-cream arcs turning about the barrel tip while
+  0 < spin < spin_ticks, longer, bolder and faster with the spin; one turn step per sim tick
+  (TURN_MAX 0.8 rad < 60 deg: the three-fold whirl never strobes backwards), frozen under
+  hit-stop, no RNG. Gone on the tick the barrels reach speed: the first flash prints on the same
+  spot. hit_feel.json gatling `spin_whirl_m` (+ schema, `HitFeel.spin_whirl_m`, 0 under
+  --feel=off); hooked in GunFxArt._claw_state beside the charge crackle (one line).
+- First take drew it at `fx.muzzle(r, 0.45)`: mid-barrel on the long Gatling, under the gun
+  sprite, only slivers showed. Moved onto WeaponFxArt's flash spot pulled back to the tip
+  (`WeaponFxSpin.tip`). Width A/B at 32 px/m (same sim): 0 / 0.6 / 0.8 m -> 0.6 faint, 0.8 reads
+  as a whirl and stays off Rivet (`ce923514`). 48 px/m: whirr arcs at the tip, then the flash.
+- Tests `test_weapon_fx_spin` 4; planted faults (drawn at full speed; the off switch ignored) ->
+  exactly their two tests fail (`it9-unit-spin-planted.log`). Unit 1150/1150, lint 13/13.
+- Clip `masters .../gatling_whirl-ab-32-48ppm.mp4` (frames.json row 0; dropped and deleted
+  `gloria_kick-ab-32ppm.mp4`; REPORT rows repointed). Audit anticipation 1 -> 3.
+- FINDING: the muzzle flash (and so the whirl) sits on WeaponFxArt's flash spot, GUN_SIDE_M
+  (0.35 m) to the aim side, which matches the one-hand hold; on the heavy two-hand Gatling and the
+  machine pistol it prints a claw width beside the drawn barrel. Holds are owner calls tonight, so
+  not moved; the robust fix is the muzzle FX reading the drawn barrel tip from RivetHeldView
+  (any hold verdict then carries the flash with it). Candidate for a later iteration.
+- DECISION (docs/decisions.md): the spin-up reads on the gun, not only the camera; rejected a
+  bigger tremor (noise, invisible in a still) and a sim wind-up cue (timing). Alternative = one
+  data value (`spin_whirl_m` 0).
+- Registry rules applied: realtime-combat-semantics (a wind-up must be legible before the action
+  it announces, and hand over to it in place); motion-quality-gating (judged per frame at 32 and
+  48, width chosen by a same-sim A/B, the first misplaced take rejected on film).
