@@ -1,0 +1,20 @@
+[
+  {
+    "file": "melee_feel_claw_ab_32ppm_48slow.mp4",
+    "title": "Melee weight: the claw combo on the shared hit feel (hit-stop on the contact frame, kick along the blow)",
+    "source": "game-arena",
+    "branch": "n7-melee 65dd07e1",
+    "ppm": 32,
+    "before": "--feel=off on the same head (left); 32 px/m real time, then 48 px/m at 0.4x",
+    "note": "MeleeFeel sends every melee hit to n7-ranged's FeelCam. Measured: the after holds 6 frames at the first kill and 5 at the second cop (still-frame runs in a 400x240 actor crop); the before holds none. No shake on melee hits (restraint)."
+  },
+  {
+    "file": "melee_wound_riot_ab_48ppm_64slow.mp4",
+    "title": "The non-lethal melee wound: a claw jab on a riot cop now twists him away",
+    "source": "game-arena",
+    "branch": "n7-melee a1716c1d",
+    "ppm": 48,
+    "before": "--soft-swing on the same head (left): the riot cop stands untouched through the first jab",
+    "note": "Director chapter claw_combo with --riot-victims. 48 px/m real time, then 64 px/m at 0.4x. The wound plays on the body, not the shield (the first pass played the block sparks: rejected, it said 'blocked' while the sim took his hp)."
+  }
+]

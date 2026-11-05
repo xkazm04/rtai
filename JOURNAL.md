@@ -126,3 +126,12 @@ NEXT (written 20:03, for iteration 2):
 6. Calls for the owner so far: none needing a verdict (past_slab and no-shake-on-melee are DECISIONs
    with one-value alternatives). Sound: no per-attack cues exist; needs sound assets (REPORT).
 7. Never touch the worktree while `tools/evidence/run.mjs` runs (it checks cleanliness after unit).
+- CHECK 20:05 city block director reel on `48fea0c2` (`--arena=city`, same flags): 19/19 chapters fully
+  down, 0 SCRIPT ERROR (`evidence/n7-melee/director-city-48fea0c2.log`; the arena run's chapter lines
+  are in `director-arena-432cb02d.log`, the head before was code-identical).
+- GATES 20:08 on `48fea0c2` (nothing touched during the run): lint 13/13 over 938 files, unit 1131/1131,
+  scenarios 52/52, parity bit-exact (mutation caught at step 629), selftest pass (look goldens 11/11,
+  block 5/5). `evidence/n7-melee/gates-48fea0c2.log`. No bench: no performance claim.
+- 20:09 REQUEST 2 not yet answered by n7-ranged. Masters: 2 clips + `frames.json` (copy in
+  `evidence/n7-melee/`). Scratch cleaned (kept: the 48 px/m audit AVIs for NEXT 3).
+- STOP 20:10 iteration 1. NEXT is the 20:03 entry above, unchanged.
