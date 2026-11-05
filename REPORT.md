@@ -1,4 +1,4 @@
-# n5-look REPORT (draft 2026-11-05 03:30; rewritten at the 08:40 report)
+# n5-look REPORT (draft 2026-11-05 03:48; rewritten at the 08:40 report)
 
 Branch `n5-look`, cut from main `a1275c82`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n5\look\` (`frames.json`, 15 entries).
 Detail and every measurement: `JOURNAL.md`. Decisions: `docs/decisions.md` (lines tagged n5-look).
@@ -26,7 +26,7 @@ Detail and every measurement: `JOURNAL.md`. Decisions: `docs/decisions.md` (line
    - Iteration 10: the blast's smoke ring carries 9 ragged fire pockets with hot yellow cores toward the centre, as in r2_w4, instead of a continuous orange band (`tools/art/fx_colour.json` blast_smoke `pockets`; drop it = the band). Evidence: last row of `fx-colour-arena-64ppm-vs-r2w4.png`.
    - Iteration 11: the pockets' edges are lumpy (`pockets.wobble` 0.2, r_px 30-52; 0 = round), so they read as r2_w4's ragged fire tongues instead of discs; a white-hot tier inside each yellow core grades them orange -> yellow -> white toward the blast centre (`pockets.hot`). Evidence: the last two rows of `fx-colour-arena-64ppm-vs-r2w4.png`.
    - Iteration 12: the smoke-ring frame keeps r2_w4's white-hot core and yellow radial spikes through the smoke, where it printed a hollow grey ring (`fx_colour.json` blast_smoke `flash`, painted by `tools/art/fx_flash.py`; drop it = the hollow ring). Evidence: `fx-flash-it12-64ppm-vs-r2w4.png` (before | after at ticks 1216 and 1220 | r2_w4).
-   - Blast debris: concrete slabs 0.35-1.3 m and ink specks fly out over 30 ticks (`blast_debris.json`).
+   - Blast debris: concrete slabs and ink specks fly out over 30 ticks (`blast_debris.json`). Iteration 12: three big chunks (up to 1.5 m), a third of the ring apart, among six small slabs, as in r2_w4 (`chunk_big` 3; 0 = the uniform 0.35-1.3 m slabs). Evidence: `fx-debris-it12-64ppm-vs-r2w4.png`.
    - Evidence: `fx-colour-reel-ab-32ppm.mp4`, `fx-colour-arena-64ppm-vs-r2w4.png`, `fx-colour-energy-ab-32ppm-2x.png`, `fx-colour-lineup-64ppm-vs-r2w4.png`.
 4. **The held gun follows Rivet's size** (answers n5-cast REQUEST 19:08). `rivet_arsenal.json held_size_ref` is 1.2; the cast lane's 0.97 Rivet carries 0.81x guns.
    - Evidence: `held-size-ab-cast-merge.png`.
@@ -45,14 +45,14 @@ Detail and every measurement: `JOURNAL.md`. Decisions: `docs/decisions.md` (line
    - Evidence: `pickup-ring-ab-48ppm-vs-r2w8.png` (second row: the span before and after; third row: the edge 1 over 2 beside r2_w8).
 8. **Tooling:** lint now runs gdformat/gdlint in batches of 200. Before, past ~810 files the file list overran the Windows command line and both tools failed with no output.
 
-**Combat did not regress.** The director reel (`--bot=reel --reel=director --loadout=pistol`, 7200 ticks) brings down every one of its 16 chapters, last checked on b59dfb73 (the hairline cracks and the blast flash), 0 script errors.
+**Combat did not regress.** The director reel (`--bot=reel --reel=director --loadout=pistol`, 7200 ticks) brings down every one of its 16 chapters, last checked on c7f2b352 (the hairline cracks, the blast flash and the big chunks), 0 script errors.
 
 **Gates on 192b7e8c:**
 - lint 13/13;
 - unit 949/950 (the one failure is the known `test_noir_shadows` flake; it passes 2/2 alone);
 - scenarios 46/0.
 
-The last full evidence gate was green on c0ad9fd7 (2026-11-05 03:25, the cracks and the blast flash): lint 13/13, unit 957/0, scenarios 46, parity bit-exact, look goldens 11/11 (worst mean 0.91 of 4) + block 5/5 (worst 1.07), world lock 0.00 %.
+The last full evidence gate was green on f8cdc77c (2026-11-05 03:44, the cracks, the blast flash and the big chunks): lint 13/13, unit 958/0, scenarios 46, parity bit-exact, look goldens 11/11 (worst mean 0.91 of 4) + block 5/5 (worst 1.07), world lock 0.00 %.
 
 ## What doesn't (yet)
 - **Pickups:** the ring and the fill now follow r2_w8 (see item 7 above); the side views themselves (gunmetal tone) do not yet.
@@ -60,7 +60,7 @@ The last full evidence gate was green on c0ad9fd7 (2026-11-05 03:25, the cracks 
 - **The Gatling:**
   - its housing prints grey (the 1.3x `cross_k` fixed the slim silhouette). The grey is by design: the held parts print through `print_part`, whose only inks are paper, ink, vermilion and cop blue. The cast lane's warm ramp is Rivet's D5 close-up only, so the merge will not change it (see Calls);
   - there is no director-reel chapter for it (left out on purpose, so the approved reel keeps its timings).
-- **FX gap to r2_w4:** the blast's slabs are smaller than the sheet's biggest chunks, and the white-hot tier prints cream through the FX print's paper snap (the smoke frame's flash, b59dfb73, carries the white-hot core now) (the lumpy edge landed cd654482, the grade 986da3b6). (Debris landed f0987078, the smoke ring c53cbbfa; the white-hot first frame c1a6cdaa; the ray rings' olive tail e7bccb95.)
+- **FX gap to r2_w4:** the white-hot tier prints cream through the FX print's paper snap (the smoke frame's flash, b59dfb73, carries the white-hot core now) (the lumpy edge landed cd654482, the grade 986da3b6). (Debris landed f0987078, the smoke ring c53cbbfa; the white-hot first frame c1a6cdaa; the ray rings' olive tail e7bccb95.)
 - **Fixed in shared code:** `--telemetry` together with `--reel=director` crashed at quit. The ReelDirector hook has no station and `ArenaStage.telemetry_dict` read `hook.station.id`. Main has the bug too. A hook without a station is now keyed `hook_<n>`.
 - **Unmeasured:** the frame cost of the riso layer and of `look_d5_fx` with nothing else running. No bench lock was taken; the machine is shared.
 
