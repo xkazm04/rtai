@@ -704,3 +704,8 @@ NEXT (iteration 9, ghost-powers):
    if the Director wants it judged), session-state line.
 Session state 05:47: head = this commit, tree clean, no Godot process of mine running, no lock held (image.lock and
 bench.lock never taken), masters scratch holds only film.sh, reel.sh and two logs, frames.json 15 (all present).
+- 05:50 Dent's miss at 64 px/m in quest 1 (quest_ghost_rec --ghost=dent --ppm=64, 12 misses, 0 SCRIPT ERROR):
+  `M/frames/quest1-dent-miss-keys-64ppm.png`, `M/quest1-dent-miss-64ppm-halfspeed.mp4`. Judged: the lash leaves the
+  crash-test body's hands, crosses the guards and breaks into dashes; the end sparks are small at 64.
+Session state 05:51: head = this commit, tree clean, no Godot process of mine running, no lock held, masters scratch
+holds only film.sh, reel.sh and two logs, frames.json 15 (all present).
