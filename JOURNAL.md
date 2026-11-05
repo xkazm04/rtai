@@ -811,3 +811,11 @@ Session end 01:54: tree clean after this commit, image.lock released (3 jobs ton
   (`look_golden.tscn -- --out=res://../build/evidence`, 22 s, exit 0): 11/11 within tolerance (worst mean 1.20, d1
   48 px/m; d5-64 0.68), no re-bless needed. FRICTION: a transient look-golden exit under load; re-run the whole gate
   on a clean tree (below).
+- 02:29 EVIDENCE GATE on d6d89921 (clean tree, no edits during it): lint 13/13, unit 942/0, scenarios 46, parity exact
+  (mutation caught at 629), look goldens 11/11 (worst 1.20), block 5/5 (worst 1.36), world lock holds. ALL PASS, no
+  re-bless.
+- 02:30 COMBAT CHECK director reel headless (`--fixed-fps 60 --quit-after 7200 ... --bot=reel --reel=director
+  --loadout=pistol`): 16/16 chapters down (claw 2/2, pistol 2/2, machine pistol 4/4 .. mini nuke 4/4), 0 SCRIPT ERROR.
+  frames.json 15 (+ cast-ingame-vs-r2c6 re-shot, crowd-d5-hatch, quest1-hoodie-sleeve, react-street-d5peds,
+  city-r7peds at the top; dropped from the list, files kept as REPORT cites them: city-r5peds, cop-crown-sleeve-trial,
+  quest1-dock9-32, crowd-r5, react-board-r5peds).
