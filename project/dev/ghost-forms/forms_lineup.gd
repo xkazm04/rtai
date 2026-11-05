@@ -22,6 +22,8 @@ func _initialize() -> void:
 			node.set("_zoom_base", float(arg.substr(7)))
 		elif arg.begins_with("--hold="):
 			node.set("hold_ticks", int(arg.substr(7)))
+		elif arg == "--dent":
+			node.set("dent", true)
 		elif arg == "--walk":
 			node.set("walk", true)
 		elif arg == "--print":

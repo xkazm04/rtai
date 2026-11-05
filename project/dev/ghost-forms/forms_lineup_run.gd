@@ -18,6 +18,8 @@ var frames: int = 0
 var print_parts: bool = false
 ## --full: save the whole viewport (the HUD in frame), not the body crop.
 var full: bool = false
+## --dent: Dent's CutRig (DentPlan) stands where Tonnage would (the form beside base Rivet).
+var dent: bool = false
 ## The sequence zoom (1 = 32 px/m, 2 = 64 px/m) for --frames runs.
 var _zoom_base: float = 1.0
 var _world: CanvasLayer = CanvasLayer.new()
@@ -28,6 +30,7 @@ var _rigs: CharacterRigs = CharacterRigs.new()
 var _bus: EventBus = EventBus.new()
 var _data: DataStore = DataStore.new()
 var _tonnage: TonnageRig = TonnageRig.new()
+var _dent: CutRig = null
 
 
 func _ready() -> void:
@@ -52,6 +55,8 @@ func _ready() -> void:
 	_tonnage.position = Vector2(TONNAGE_X_M * 0.5, 0.0) * PX
 	_tonnage.rotation = -PI * 0.5
 	_tonnage.unfold = unfold
+	if dent:
+		_add_dent()
 	var f: RigFeed = _rigs.feed
 	f.count = 0
 	@warning_ignore("return_value_discarded")
@@ -93,7 +98,19 @@ func _tick() -> void:
 	_rigs.step_ticks(1)
 	_tonnage.speed_mps = 2.2 if walk else 0.0
 	_tonnage.advance(SimClock.TICK_DT)
+	if _dent != null:
+		_dent.vel_in = Vector2(0.0, -1.4 * PX) if walk else Vector2.ZERO
+		_dent.drive(SimClock.TICK_DT)
 	await get_tree().process_frame
+
+
+func _add_dent() -> void:
+	_tonnage.visible = false
+	_dent = CutRig.new()
+	_actors.add_child(_dent)
+	_dent.setup(DentPlan.build(), RigVariant.rivet())
+	_dent.position = Vector2(TONNAGE_X_M * 0.5 - 1.0, 0.0) * PX
+	_dent.reset_state(-PI * 0.5)
 
 
 func _frame(z: float) -> void:
