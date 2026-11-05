@@ -1,6 +1,6 @@
 class_name ServoFall
 extends RefCounted
-## Servo's defeat beat on the rig's canvas (docs/bosses/servo.md section 6), timed in sim ticks
+## Servo's defeat beat on the rig's canvas (docs/bosses/servo.md section 4), timed in sim ticks
 ## since he went down (ServoMoves.defeated_at): a white flash and a spark burst off the rack, the
 ## pads spin down and sag in, the body slumps forward with a settling bounce and greys out, the
 ## head droops, the drones still docked spill off the rack and tumble to the floor, the drones in

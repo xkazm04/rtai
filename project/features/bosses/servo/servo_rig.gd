@@ -26,6 +26,7 @@ var _seen_hurt: int = -1000000
 var _flash: int = 0
 var _pal: PaletteTokens = PaletteTokens.shared()
 var _fall: ServoFall = ServoFall.new()
+var _shift: ServoShift = ServoShift.new()
 
 
 func _ready() -> void:
@@ -37,6 +38,8 @@ func _ready() -> void:
 func pose(p_tick: int) -> void:
 	tick = p_tick
 	_fall.px = px
+	_shift.px = px
+	_shift.observe(fight)
 	var moved: float = fight.body.pos.distance_to(_last_pos)
 	_last_pos = fight.body.pos
 	_walk = fmod(_walk + moved / STRIDE_M * TAU, TAU)
@@ -47,7 +50,8 @@ func pose(p_tick: int) -> void:
 	if _down() >= 0:
 		_spin += ServoFall.spin(_down())
 	else:
-		_spin += 0.9 if _stage(&"windup", true) or _stage(&"active", true) else 0.15
+		var rev: bool = fight.state == BossFight.State.TRANSITION or _stage(&"active", true)
+		_spin += 0.9 if rev or _stage(&"windup", true) else 0.15
 	queue_redraw()
 
 
@@ -65,6 +69,7 @@ func _draw() -> void:
 	var dt: int = _down()
 	var o: Vector2 = fight.body.pos + fwd * (_lean() if dt < 0 else ServoFall.slump_m(dt))
 	var k: float = 1.0 + 0.015 * sin(_walk * 2.0) if dt < 0 else ServoFall.scale_k(dt)
+	k *= ServoShift.lift_k(fight)
 	var tint: Color = _tint() if dt < 0 else ServoFall.tint(dt)
 	for s: float in [-1.0, 1.0]:
 		_leg(o, fwd, side, s, tint)
@@ -78,6 +83,7 @@ func _draw() -> void:
 			_steam(pad)
 	_part(&"pelvis", o + fwd * 0.5, fwd.angle() - PI / 2, k, tint)
 	_wings(o, fwd, side, k, tint)
+	_shift.draw(self, fight, rack)
 	if dt >= 0:
 		_fall.spill(self, rack, dt)
 		_fall.crashes(self, (fight.moves as ServoMoves).crashes, dt)
@@ -108,6 +114,7 @@ func _wings(o: Vector2, fwd: Vector2, side: Vector2, k: float, tint: Color) -> v
 		if s > 0.0 and rack.count(ServoRack.Cell.BROKEN) > 0:
 			continue  # phase 3: the wing of ServoRack.break_wing (its across < 0 is our side +1)
 		var at: Vector2 = o + side * s * 1.305 - fwd * 0.765
+		at += ServoShift.shake(fight) if s > 0.0 else Vector2.ZERO
 		var flip: float = -1.0 if s > 0.0 else 1.0
 		draw_set_transform(at * px, rot, Vector2(flip, 1.0) * k * px / ART_PPM)
 		draw_texture(wing, -wing.get_size() * 0.5, tint)
