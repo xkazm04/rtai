@@ -173,3 +173,23 @@
   (`--export-release windows-showcase ../build/export/windows/RTAI.exe`, `windows-slice
   ../build/export/windows-quest1/RTAI.exe`) and boot-test them.
 - 17:25 MEASURE scenarios on 2a28d331: 52 ran, 0 failed (evidence/scenarios-it5-flags.log). Session ends here.
+
+## Iteration 5b (BUILD, 17:26-18:26; freeze 18:30)
+- 17:26 Started. Tree clean at 339397ef; branch complete per NEXT. Held lane: no new REQUEST for calls (their
+  17:09 merge took ecb8a675; exe at 5bbc95b5). Picked NEXT (2): the Gatling's dark small art (REPORT call 8).
+- Rules applied (sprite-and-atlas-production / motion-quality-gating): fix at the asset that is drawn at the
+  judged zoom, judge at 32 and 48 px/m in the game path, same tick before/after, keep the old art one git show away.
+- FINDING root cause (two): `held_small.py` EDGE 9 part px inked the ~14 px barrels solid (63 % near-black), and
+  the 4 px transparent gaps between barrels let the print's `gun_edge` probe (held textures: no mipmaps) ink the
+  whole bundle. Fixing only the edge (3 px) changed nothing at 32 px/m: the gaps did it.
+- DECISION per-weapon `EDGE_OF {"gatling": 3}`, `CLOSE_OF {"gatling": 6}` (closing fills the barrel gaps with
+  the body's median steel before the re-tone). Gatling only; pistol re-run byte-identical; the tool reproduces
+  the old Gatling with the old values. FRICTION: combo_clip.gd is melee-only (6077 SCRIPT ERROR with a gun, not
+  my change); the plain `dev/arena/arena.tscn -- --loadout=gatling --ppm=<p> --shot=<abs> --shot-tick=120` works.
+- 17:36 MILESTONE 6179bf2d. 48 px/m: tan steel bundle inside one ink outline (was ink/cream stripes). 32 px/m:
+  only a sliver of tan (the ~6 px bundle loses 2.2 px outline per side). Probe gun_edge 1.4: tan reads at
+  32 px/m but the outline breaks and every gun changes: not built, a call. Lint 13/13, unit 1098/0.
+  Evidence M/frames/look-8-gatling-small-ab-32ppm.png, -ab-48ppm.png, look-8-gatling-edge-steps-32ppm.png.
+- REQUEST held: 6179bf2d regenerates `gatling/held_small.png` via `tools/art/held_small.py` (new per-weapon
+  EDGE_OF / CLOSE_OF; Gatling only, every other small art unchanged). Neither file is in your diff; if you
+  re-run held_small.py for any weapon, keep those two dicts.
