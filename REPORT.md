@@ -1,6 +1,6 @@
 # REPORT: lane n5-cast (branch `n5-cast`), night run 2026-11-04 -> 11-05
 
-**DRAFT, current to iteration 23 (08:15).** The REPORT phase rewrites this at 08:40. Every number below
+**Final for the run, iteration 24 (08:20; the freeze is 08:30; no code changed after 2cc15c5f).** Every number below
 was measured on this branch; the last full gate (`tools/evidence/run.mjs --no-bench`) is ALL PASS on 09570a2e (code as of
 2cc15c5f, the last code commit). Bench: never run tonight (other lanes' Godot processes held the machine all night), so frame cost is
 UNMEASURED, not zero. Masters (clips, stills, `frames.json`, 15 entries) are in
@@ -8,8 +8,12 @@ UNMEASURED, not zero. Masters (clips, stills, `frames.json`, 15 entries) are in
 
 In one line: the cops are on the crowd's footprint (28becde8), Rivet is the lanky + android hybrid at 1.2x the crowd's
 span (516475c9 .. fa395f74), the crowd is plan-view and pale-topped, and the 32 px/m stickers (collar hazard, visor slot,
-tan core) carry the targets' read at game zoom, in the arena, the city and quest 1 (its sprite cast since b68665b1 and
-02e4295c). Combat holds: director reel 16/16 chapters down on every code commit checked.
+tan core) carry the targets' read at game zoom, in the arena, the city and quest 1. Quest 1's sprite cast follows:
+b68665b1 (the quest sprites re-captured from the slim rigs), 02e4295c (sprite Rivet and the peek drop to the 32 px/m
+sticker tier), cf64342e (the grown Hauler keeps the full art) and 10607e11 (the Hauler cross-fades between the two over
++-12 % of the drawn size instead of a one-frame pop; `LOD_FADE = 0` is the hard swap). Combat holds: director reel 16/16
+chapters down on every code commit checked. Merging with the n6 lanes gives one expected textual conflict in
+`CastView._rivet`'s Hauler block; the resolution is in the merge note at the end.
 
 The owner's ask: "too heavy and thick main characters and cops which should be both closer to crowd in their default
 state." Targets: r2_c3 (Rivet as the lanky + android hybrid), r2_c5 (cops), r1_c6/r1_c7 (one footprint, the size

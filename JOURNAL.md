@@ -1450,3 +1450,16 @@ NEXT (the report at 08:40):
 3. Calls 1-9 stand. No code is open. Last gate ALL PASS on 09570a2e; docs only since.
 Session end 08:16: tree clean after this commit, no Godot process of mine running, image.lock and bench.lock never
   taken. Scratch `gtai-n5/scratch-cast/i23` holds logs only (PNG sequences deleted).
+
+## Iteration 24 (08:17 - freeze 08:30)
+- 08:17 read JOURNAL NEXT and log. 13 min to the freeze: too short for a code change plus its gate and combat
+  check, so no code this session (depth before breadth: nothing half-built left behind). Two Godot processes
+  running (PIDs 22368, 51340), neither mine; bench and image locks not taken.
+- 08:20 did NEXT 1 now, since this session may be the last: REPORT header goes from DRAFT to final, and the
+  summary names b68665b1, 02e4295c, cf64342e and 10607e11 (quest 1's sprite cast) and points to the n6 merge
+  note. The last gate stands: ALL PASS on 09570a2e, and the code is unchanged since 2cc15c5f.
+
+NEXT (if a REPORT session runs at 08:40):
+1. The REPORT is final as committed. Just confirm `git status` is clean and the header says iteration 24.
+2. Calls 1-9 and the merge note stand. Nothing is open in code.
+Session end 08:21: tree clean after this commit, no Godot process of mine running.
