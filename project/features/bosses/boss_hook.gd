@@ -79,6 +79,7 @@ func step(stage: ArenaStage, tick: int) -> void:
 	if not _hooks_cleared:  # hooks set up after this one (station files load in name order)
 		_hooks_cleared = true
 		_clear_claw_cops(stage)
+		_park(stage, fight.spec.arena)  # the car service is attached after the stage's setup
 	BossAdds.route(fight, _last_hp)
 	_last_hp = fight.body.hp
 	adds.step(_arena, tick)
@@ -155,6 +156,15 @@ func _keep_in(f: BossFight) -> void:
 
 
 ## The boss owns the floor: the stations' dummies leave and the pit's own waves never start.
+## The arena record's parked vehicles into the stage's car service (Dent seizes them), once.
+func _park(stage: ArenaStage, a: BossSpec.Arena) -> void:
+	if stage.vehicles == null:
+		return
+	for pk: BossSpec.Parked in a.parked:
+		@warning_ignore("return_value_discarded")
+		stage.vehicles.spawn_parked(pk.kind, origin + pk.at, pk.head, pk.art)
+
+
 func _clear_floor(stage: ArenaStage) -> void:
 	for t: ArenaTargets.Target in stage.targets.targets:
 		_arena.hostiles.erase(t.fighter)

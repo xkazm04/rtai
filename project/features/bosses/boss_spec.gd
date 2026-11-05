@@ -33,6 +33,17 @@ class Arena:
 	## Optional `adds_from`: `boss` puts add_spawns round the boss (King's gang leaps off the car),
 	## `area` (default) round the area's centre.
 	var adds_from_boss: bool = false
+	## Optional `parked`: vehicles the hook parks in the stage's car service at the start (a kind,
+	## an offset from the area's centre, a heading, a traffic atlas cell): the ghosts' cars.
+	var parked: Array[Parked] = []
+
+
+class Parked:
+	extends RefCounted
+	var kind: StringName = &"sedan"
+	var at: Vector2 = Vector2.ZERO
+	var head: Vector2 = Vector2.RIGHT
+	var art: int = 0
 
 
 var id: StringName = &""
@@ -119,6 +130,14 @@ static func _arena(t: DataTable, p_id: String, row: Dictionary) -> Arena:
 	for v: Variant in t.array(row, "add_spawns"):
 		a.add_spawns.append(t.vec({"v": v}, "v"))
 	a.adds_from_boss = str(row.get("adds_from", "area")) == "boss"
+	for v: Variant in row.get("parked", []):
+		var c: Dictionary = v
+		var pk: Parked = Parked.new()
+		pk.kind = StringName(t.text(c, "kind"))
+		pk.at = t.vec(c, "at")
+		pk.head = t.vec(c, "head").normalized()
+		pk.art = roundi(t.num(c, "art"))
+		a.parked.append(pk)
 	return a
 
 

@@ -7,7 +7,21 @@
         9,
         0
       ],
-      "doc": "The CS courier depot: loading bays, a conveyor and stacked CS crates, room for the drones (first pass: the arena pit).",
+      "doc": "The CS courier depot: loading bays, a conveyor and stacked CS crates, room for the drones (first pass: the arena pit). parked: the delivery van backed into bay 3, nose to the yard (a vehicle_handling.json kind and a traffic atlas art cell; Dent's soul seizes it and rams Servo).",
+      "parked": [
+        {
+          "art": 4,
+          "at": [
+            4,
+            -9.9
+          ],
+          "head": [
+            0,
+            1
+          ],
+          "kind": "van"
+        }
+      ],
       "rivet_at": [
         -8,
         0
