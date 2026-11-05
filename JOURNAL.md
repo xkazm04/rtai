@@ -280,3 +280,8 @@ Branch `d7-held`, cut from main `1028c15d`. Evidence: `evidence/` + `C:\Users\ka
   0 SCRIPT ERROR). Looked at six tiles each: the pistol reads as a short tan gun in the gun claw; the chainsaw
   sits in both claws ahead of the hips, blade forward, through walk and grind. Replaced the pixel-identical
   `chainsaw_two_claw_ab_64ppm.png` in frames.json (15 entries) and in REPORT.
+- 17:58 PROOF every REPORT call exe line run in RTAI.exe (headless, 240 ticks): katana, pistol, plasma_rifle,gatling,
+  plasma_rifle,rocket_launcher, gatling: exit 0, 0 SCRIPT ERROR, no unknown arg, Rivet carries the named weapons.
+  CORRECTION: REPORT's slot list was wrong (katana is slot 2 with the long guns, rocket launcher slot 3): fixed from
+  `rivet_arsenal.json` classes. DECISION (time): the darker off-claw tone is NOT started at 17:57 (needs its own
+  material, A/B, full gate and a re-export in 30 min); left as the first next step.

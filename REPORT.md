@@ -60,8 +60,11 @@ Every A/B flag below was run in this exe (`--arena=city --rigs --loadout=plasma_
 ## Calls for the owner
 
 Each: options, the default built, how to see it. Exe lines assume `build/export/windows/RTAI.exe` (showcase preset,
-boots into the arena; args after `--`). Rivet carries one weapon per slot (sidearm, long, heavy/melee,
-thrown/tube), so a loadout keeps the last of each slot; every other weapon lies on the arena hub floor (ArenaArmory).
+boots into the arena; args after `--`). Rivet carries one weapon per slot (`rivet_arsenal.json` classes: 1 sidearm,
+2 two-hand long, 3 heavy/shoulder/hip, 4 thrown; the katana goes in slot 2 and the rocket launcher in slot 3).
+A loadout keeps the last weapon of each slot, and every other weapon lies on the arena hub floor (ArenaArmory).
+Every line below was run in this exe at 17:58 (headless, 240 ticks): 0 script errors, no unknown-arg warning, and
+Rivet carried the named weapons.
 
 1. **Blade wrist angle.** A: 0.45 rad in toward the centre line (built). B: 0 (straight ahead along the forearm).
    One value: `held_classes.json blade.wrist_rad`. See `blade_hold_ab_48ppm_target.png`;
