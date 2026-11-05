@@ -30,6 +30,8 @@ var car_presses: int = 0
 var ghosts: GhostPilot = GhostPilot.shipped()
 var hauler: HaulerStage = ghosts.hauler
 var dent: DentStage = ghosts.dent
+var kerf: KerfStage = ghosts.kerf
+var ohm: OhmStage = ghosts.ohm
 ## The tick the last input arrived and the tick its first move or claw started (latency probe).
 var last_press_tick: int = -1
 var _previous: int = 0

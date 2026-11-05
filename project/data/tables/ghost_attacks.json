@@ -12,6 +12,37 @@
     "upgrade_tier": 0
   },
   "doc": "Lane ghost-powers: each ghost form's attack set beyond the powers.json row (the form's timing, Madness cost and the old hauler/gearbox tuning stay there). One block per ghost (tonnage, dent, kerf, ohm), each with upgrade_tier (0 = base; the per-act quest upgrades raise it later, nothing reads above 0 yet). Metres, seconds, damage in hp (a patrol cop has 1, a riot cop 2 x the pit's armour, a robot thug 6). Anchors are body-local metres (+x = facing, +y = right) until the forms lane's form rows carry them.",
+  "kerf": {
+    "behind_m": 0.9,
+    "charges": 3,
+    "cone_deg": 35,
+    "cut_hang_s": 0.6,
+    "dash_m": 4,
+    "doc": "Kerf (the freed laser-cutter head): power row kerf (Q while the forms lane's switch has Kerf selected; the arena's --ghost=kerf until then). While on, Rivet walks at speed_k. The melee press blinks: the live hostile nearest the aim inside cone_deg (half-angle) and range_m, with a clear line (no wall between), is the target; Rivet blinks along the straight line to behind_m beyond it and the cutting beam slices it (weapon kerf_slice: human_damage on a human = the one-shot split kill with a teal-white cauterised edge, signature_kills.json kerf_split; robot_damage on a robot). No target in the cone: a plain blink dash_m along the aim (the speed move). Each blink spends one of charges; one comes back every recharge_s; blinks are at least gap_s apart. The cut line hangs in the air for cut_hang_s (view only).",
+    "gap_s": 0.3,
+    "human_damage": 99,
+    "range_m": 9,
+    "recharge_s": 1,
+    "robot_damage": 4,
+    "speed_k": 1.5,
+    "upgrade_tier": 0
+  },
+  "ohm": {
+    "bolt_damage": 2,
+    "bolt_gap_s": 0.5,
+    "car_damage": 20,
+    "cone_deg": 30,
+    "doc": "Ohm (the elder spot-welder, the mage): power row ohm (Q while StagePilot.ohm is set: the reel's --ghost=ohm until the forms lane's switch selects it). While on, the melee press (every bolt_gap_s) throws a forked bolt from the electrode fingertips: the live hostile nearest the aim inside cone_deg (half-angle) and range_m is struck, then the bolt forks to up to forks more within fork_radius_m of the last one (MeleeShock.chain_path, the claw shock's walk). Each body struck is stunned stun_s (the electro gun's FightAreas stun) and takes human_damage (a human: stun and burns; the kill is the electro gun's X-ray shock, weapon ohm_bolt) or bolt_damage x machine_k (a robot). Nothing in the cone: the car nearest the aim in the cone takes car_damage (machines burn out). upgrade_tier 1 (the act quest, data hook only): the mass arc, up to mass_targets bodies within mass_radius_m of the first.",
+    "fork_radius_m": 3,
+    "forks": 2,
+    "human_damage": 0.5,
+    "machine_k": 3,
+    "mass_radius_m": 8,
+    "mass_targets": 6,
+    "range_m": 11,
+    "stun_s": 1.2,
+    "upgrade_tier": 0
+  },
   "schema": "gtai.ghost_attacks/1",
   "tonnage": {
     "armor_k": 0.3,

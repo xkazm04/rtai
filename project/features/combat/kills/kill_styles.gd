@@ -73,7 +73,7 @@ func parts(
 ) -> Array[Node2D]:
 	var split: bool = row.style == &"split" and rig != null  # the blade's halves, cut along dir
 	var groups: Array[Node2D] = (
-		KillSplitFx.cut(rig, dir, _ppm, row.spray == 0)
+		KillSplitFx.cut(rig, dir, _ppm, row.spray == 0, row.edge == &"soul")
 		if split
 		else GibCut.parts(rig, row.whole_body(), _ppm)
 	)

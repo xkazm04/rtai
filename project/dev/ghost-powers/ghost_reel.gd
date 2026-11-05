@@ -25,9 +25,11 @@ var victims: Array[Fighter] = []
 var car: VehicleBody = null
 var car_two: VehicleBody = null
 var wave: int = 1
-## The ghost whose beat runs (--ghost=<tonnage|dent>, default tonnage).
+## The ghost whose beat runs (--ghost=<tonnage|dent|kerf|ohm>, default tonnage).
 var ghost: StringName = &"tonnage"
 var dent_beat: DentBeat = null
+var kerf_beat: KerfBeat = null
+var ohm_beat: OhmBeat = null
 ## False plants the scenario's fault: every button off (aim and walk only).
 var trigger: bool = true
 var _anchor: Vector2 = Vector2.ZERO
@@ -42,6 +44,8 @@ func _init(p_actions: PlayerActions) -> void:
 func step(stage: ArenaStage, tick: int) -> void:
 	if started_tick < 0:
 		_begin(stage, tick)
+	elif ohm_beat != null:
+		ohm_beat.hold()
 	elif ghost == &"tonnage" and wave == 1 and _nearest(stage.arena.rivet.pos) == null:
 		_wave_two(stage, tick)
 
@@ -81,6 +85,12 @@ func telemetry() -> Dictionary:
 	var d: DentStage = _stage.pilot.dent if _stage != null and _stage.pilot != null else null
 	if d != null:
 		out["dent"] = {"seizes": d.seizes, "strikes": d.strikes, "blasts": d.blasts}
+	var k: KerfStage = _stage.pilot.kerf if _stage != null and _stage.pilot != null else null
+	if k != null:
+		out["kerf"] = {"activations": k.activations, "blinks": k.blinks, "slices": k.slices}
+	var o: OhmStage = _stage.pilot.ohm if _stage != null and _stage.pilot != null else null
+	if o != null:
+		out["ohm"] = {"bolts": o.bolts, "struck": o.struck, "cars_hit": o.cars_hit}
 	return out
 
 
@@ -90,8 +100,8 @@ func sample(stage: ArenaStage, tick: int) -> TickInput:
 	var local: int = tick - started_tick
 	if started_tick < 0 or local < LOOK_TICKS:
 		return _input(Vector2.ZERO, Vector2.RIGHT, 0)
-	if dent_beat != null:
-		var w: Array = dent_beat.want(stage, local)
+	if dent_beat != null or kerf_beat != null or ohm_beat != null:
+		var w: Array = _beat_want(stage, local)
 		var move: Vector2 = w[0]
 		var look: Vector2 = w[1]
 		var act: StringName = w[2]
@@ -111,6 +121,13 @@ func sample(stage: ArenaStage, tick: int) -> TickInput:
 	return _input(aim * (1.0 if slammed else STALK), aim, 0)  # stalk under ram speed, then charge
 
 
+## The scripted ghost beat's (move, aim, action) for this tick.
+func _beat_want(stage: ArenaStage, local: int) -> Array:
+	if dent_beat != null:
+		return dent_beat.want(stage, local)
+	return kerf_beat.want(stage, local) if kerf_beat != null else ohm_beat.want(stage, local)
+
+
 func _begin(stage: ArenaStage, tick: int) -> void:
 	started_tick = tick
 	_stage = stage
@@ -122,6 +139,16 @@ func _begin(stage: ArenaStage, tick: int) -> void:
 		dent_beat = DentBeat.new()
 		dent_beat.begin(self, stage, _anchor)
 		Log.info("ghosts", "ghost reel: dent beat at tick %d" % tick)
+		return
+	if ghost == &"kerf":
+		kerf_beat = KerfBeat.new()
+		kerf_beat.begin(self, stage, _anchor)
+		Log.info("ghosts", "ghost reel: kerf beat at tick %d" % tick)
+		return
+	if ghost == &"ohm":
+		ohm_beat = OhmBeat.new()
+		ohm_beat.begin(self, stage, _anchor)
+		Log.info("ghosts", "ghost reel: ohm beat at tick %d" % tick)
 		return
 	for off: Vector2 in CLUSTER:
 		victims.append(spawn(stage, _anchor + off, false))

@@ -6,7 +6,7 @@ extends RefCounted
 
 const PATH: String = "res://data/tables/ghost_attacks.json"
 const SCHEMA: String = "gtai.ghost_attacks/1"
-const GHOSTS: Array[StringName] = [&"tonnage", &"dent"]
+const GHOSTS: Array[StringName] = [&"tonnage", &"dent", &"kerf", &"ohm"]
 
 var blocks: Dictionary[StringName, Dictionary] = {}
 var _errors: Array[String] = []
