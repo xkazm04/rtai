@@ -71,6 +71,12 @@
       "freq_hz": 20,
       "id": "crash",
       "ticks": 14
+    },
+    {
+      "amp_px": 14,
+      "freq_hz": 16,
+      "id": "nuke",
+      "ticks": 36
     }
   ],
   "zoom_ease_ticks": 36

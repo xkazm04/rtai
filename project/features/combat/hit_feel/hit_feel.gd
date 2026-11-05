@@ -114,7 +114,8 @@ func flash(target_id: int, tick: int) -> float:
 
 ## The camera side of one hit (lane n7-ranged): the class row with the weapon's override on top
 ## (hit_feel.json `weapons`): hitstop and shake ids, kick_px (screen px along the hit) and
-## kick_ticks. A lethal hit takes kill_hitstop (beat_kill_hitstop in a beat) and a harder kick.
+## kick_ticks. A lethal hit adds kill_hitstop (beat_kill_hitstop in a beat; the caller holds the
+## longer of the two, so a rocket kill keeps its blast stop) and a harder kick.
 func camera_row(weapon: StringName, hit_class: StringName, lethal: bool) -> Dictionary:
 	var row: Dictionary = _rows.get(hit_class, _rows.get(&"light", {}))
 	var out: Dictionary = {
@@ -133,8 +134,9 @@ func camera_row(weapon: StringName, hit_class: StringName, lethal: bool) -> Dict
 	if over.has("kick_ticks"):
 		var ticks: float = over["kick_ticks"]
 		out["kick_ticks"] = roundi(ticks)
+	out["kill_hitstop"] = &""
 	if lethal:
 		var kpx: float = out["kick_px"]
-		out["hitstop"] = beat_kill_hitstop if beat_mode else kill_hitstop
+		out["kill_hitstop"] = beat_kill_hitstop if beat_mode else kill_hitstop
 		out["kick_px"] = kpx * kill_kick_scale
 	return out

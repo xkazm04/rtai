@@ -68,7 +68,7 @@ func test_a_weapon_override_sits_on_top_of_its_class() -> void:
 	var feel: HitFeel = HitFeel.shipped()
 	var plasma: StringName = feel.camera_row(&"plasma_rifle", &"medium", false)["hitstop"]
 	var gat: StringName = feel.camera_row(&"gatling", &"medium", false)["hitstop"]
-	var gat_kill: StringName = feel.camera_row(&"gatling", &"medium", true)["hitstop"]
+	var gat_kill: StringName = feel.camera_row(&"gatling", &"medium", true)["kill_hitstop"]
 	assert_eq(plasma, &"rivet_hit")
 	assert_eq(gat, &"")
 	assert_eq(gat_kill, feel.kill_hitstop)
@@ -99,3 +99,12 @@ func test_the_budget_window_refills_after_a_second() -> void:
 	assert_true(b.take_shake(1))
 	assert_false(b.take_shake(2))
 	assert_true(b.take_shake(61))
+
+
+func test_a_blast_kill_keeps_the_longer_blast_stop() -> void:
+	var rig: CameraRig = CameraRig.new()
+	var cam: FeelCam = _cam(SimClock.new())
+	var blast: int = cam.hit(&"rocket_launcher", &"blast", Vector2.RIGHT, true, 100)
+	assert_eq(blast, rig.hitstop_ticks(&"boss_hit"), "not the shorter kill stop")
+	var light: int = cam.hit(&"pistol", &"light", Vector2.RIGHT, true, 1000)
+	assert_eq(light, rig.hitstop_ticks(&"kill"), "a light kill takes the kill stop")

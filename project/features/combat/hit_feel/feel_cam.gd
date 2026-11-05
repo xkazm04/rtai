@@ -55,6 +55,9 @@ func hit(weapon: StringName, hit_class: StringName, dir: Vector2, lethal: bool, 
 	if shake != &"" and budget.take_shake(tick):
 		_rig.kick(shake, tick)
 	var stop: StringName = row["hitstop"]
+	var kill_stop: StringName = row["kill_hitstop"]
+	if _rig.hitstop_ticks(kill_stop) > _rig.hitstop_ticks(stop):
+		stop = kill_stop
 	if stop == &"":
 		return 0
 	var ticks: int = budget.take_stop(tick, _rig.hitstop(stop, tick))

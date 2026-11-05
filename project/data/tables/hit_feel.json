@@ -122,11 +122,12 @@
       "kick_ticks": 10
     },
     {
-      "doc": "The biggest hit in the arsenal: the long stop and the full kick.",
+      "doc": "The biggest hit in the arsenal: the long stop, the full kick and its own deeper, longer shake (camera.json nuke).",
       "hitstop": "boss_hit",
       "id": "mini_nuke",
       "kick_px": 10,
-      "kick_ticks": 18
+      "kick_ticks": 18,
+      "shake": "nuke"
     }
   ]
 }
