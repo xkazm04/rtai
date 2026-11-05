@@ -28,6 +28,7 @@ Detail and every measurement: `JOURNAL.md`. Decisions: `docs/decisions.md` (line
    - The hold (`hip_belt`): hip-held, with a box on his back and a brass ammo belt.
    - The art was generated from text plus a non-gun style reference, because moderation blocks gun edits.
    - It is in the armory, the weapon wall and `--weapon=gatling`.
+   - Its body draws 1.3x across the bore (`weapon_art.json cross_k`; 1 = before), so at 32 px/m it reads as r1_w6's heavy gun instead of a thin bar.
    - Evidence: `gatling-128ppm-vs-r1w6.png`, `gatling-pit-32ppm.mp4` (3 waves, 8 kills, 0 deaths), `gatling-belt-tracer-ab-128ppm.png`.
 7. **Pickups lie inside a dashed paper loot ring** over a faint wash, as in r2_w8, instead of an opaque paper disc. `--pickup-disc=on` brings the disc back for A/B.
    - The small pickups draw at least 1.05 m (`weapon_art.json pickup_min_span_m`), so they fill the ring as on the sheet; the big ones keep their length. 0 gives true size.
@@ -42,13 +43,13 @@ Detail and every measurement: `JOURNAL.md`. Decisions: `docs/decisions.md` (line
 - unit 949/950 (the one failure is the known `test_noir_shadows` flake; it passes 2/2 alone);
 - scenarios 46/0.
 
-The last full evidence gate was green on b03368a5 (2026-11-05 00:04).
+The last full evidence gate was green on d7c8ee58 (2026-11-05 01:24): lint 13/13, unit 957/0, scenarios 46, parity bit-exact, look goldens 11/11 + block 5/5.
 
 ## What doesn't (yet)
 - **Pickups:** the ring and the fill now follow r2_w8 (see item 7 above); the side views themselves (gunmetal tone) do not yet.
 - **Held parts:** in design they are close to r1_w1-w3 (the hand cannon's cylinder, the SMG's feed box, the pistol's slide); only the tone differs, rust-tan against gunmetal.
 - **The Gatling:**
-  - its housing prints grey and slimmer than the target's chunky tan body. The grey is by design: the held parts print through `print_part`, whose only inks are paper, ink, vermilion and cop blue. The cast lane's warm ramp is Rivet's D5 close-up only, so the merge will not change it (see Calls);
+  - its housing prints grey (the 1.3x `cross_k` fixed the slim silhouette). The grey is by design: the held parts print through `print_part`, whose only inks are paper, ink, vermilion and cop blue. The cast lane's warm ramp is Rivet's D5 close-up only, so the merge will not change it (see Calls);
   - there is no director-reel chapter for it (left out on purpose, so the approved reel keeps its timings).
 - **FX gap to r2_w4:** the blast's slabs are smaller than the sheet's biggest chunks, and the smoke frame is a fire band inside dark smoke but not yet r2_w4's ragged orange pockets. (Debris landed f0987078, the smoke ring c53cbbfa; the white-hot first frame c1a6cdaa; the ray rings' olive tail e7bccb95.)
 - **Fixed in shared code:** `--telemetry` together with `--reel=director` crashed at quit. The ReelDirector hook has no station and `ArenaStage.telemetry_dict` read `hook.station.id`. Main has the bug too. A hook without a station is now keyed `hook_<n>`.
@@ -62,10 +63,11 @@ The last full evidence gate was green on b03368a5 (2026-11-05 00:04).
 - **Pickup look:** the dashed ring vs the paper disc (`pickup-ring-ab-48ppm-vs-r2w8.png`, `--pickup-disc=on`).
 - **A warm item ink:** held weapons print grey because the part print has no tan ink. Adding one would warm every held gun toward r1_w1-w6, not just the Gatling (`gatling-128ppm-vs-r1w6.png`). Not built.
 - **Grain:** `world_riso.speck_k` 0.4 vs 0 (before) or higher toward r2_a5 (`print-speck-it9-2x-vs-r2a5.png`).
+- **The Gatling's bulk:** `cross_k` 1.3 vs 1.0 (bottom row of `gatling-128ppm-vs-r1w6.png`).
 - **The Gatling's feel:** `spin_s` 0.5 and `fire_move_mult` 0.45 (`gatling-pit-32ppm.mp4`). Setting them to 0 and 1 makes it a plain auto gun.
 
 ## Next steps
 - **Merge:** after the n5-cast + n5-look merge, re-bless the look goldens once (the branches conflict only in the goldens and JOURNAL; the toner speckle's in-gate drift is folded into that re-bless).
-- **Weapon art:** a chunkier Gatling housing (silhouette, not tone: the tone waits on the warm-ink Call). In design the held parts are already close to r1_w1-w3 (only the tone differs), so redraw them only if the owner asks.
+- **Weapon art:** the Gatling's tone waits on the warm-ink Call (its silhouette is done, `cross_k` 1.3). In design the held parts are already close to r1_w1-w3 (only the tone differs), so redraw them only if the owner asks.
 - **FX:** the blast's smoke ring from a clean band toward r2_w4's ragged orange pockets.
 - **Costs:** measure the frame cost under the bench lock.
