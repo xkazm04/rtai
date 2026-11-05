@@ -212,3 +212,11 @@
   frames.json lead Gatling entry now the city pair (game-city). FRICTION: the weapon PNGs are Git LFS:
   `git show <sha>:<png> > file` writes the pointer text (Godot: ERR_FILE_CORRUPT, .import goes valid=false); use
   `git show <sha>:<png> | git lfs smudge > file`. The first before pair was void and discarded.
+- 18:00 Session wrap. Branch head is docs-only since 6179bf2d (the last project/ change); exes exported on
+  6179bf2d are current; full evidence run green on f41346c2; city reel 19/19 on a4af468e.
+- NEXT (any later session, freeze 18:30, report 18:40): (1) nothing owed: REPORT complete, exes current. (2) If
+  `project/` moves: gates, re-export both exes (`--export-release windows-showcase ../build/export/windows/RTAI.exe`,
+  `windows-slice ../build/export/windows-quest1/RTAI.exe`), boot-test, update the REPORT exe sha. (3) Only on the
+  owner's call 8 B: a per-weapon gun outline (new appended PartKind + a weapon_art.json value, set from HeldLod or
+  WeaponArt.make_held, NOT rivet_held_view.gd: it is at 299 lines and the held lane's file). (4) Old weapon PNGs:
+  `git show <sha>:<png> | git lfs smudge`.
