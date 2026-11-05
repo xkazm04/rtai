@@ -154,6 +154,8 @@ static func _arms(p: BodyPlan, guard_k: float, hand_z: float) -> void:
 	p.endon_fore_len = 37.0
 	p.endon_upper = PackedStringArray(["l_upperarm_endon", "r_upperarm_endon"])
 	p.endon_fore = PackedStringArray(["l_forearm_endon", "r_forearm_endon"])
+	p.off_grip_fore = RigOffClaw.FORE if RigOffClaw.enabled else ""
+	p.off_grip_hand = RigOffClaw.CLAW if RigOffClaw.enabled else ""
 	var g: Vector3 = Vector3(guard_k, lerpf(1.0, guard_k, 0.5), 1.0)
 	p.hand_ready = [Vector3(300, -205, hand_z) * g, Vector3(285, 205, hand_z) * g]
 	p.hand_relax = [Vector3(60, -180, -300), Vector3(60, 180, -300)]

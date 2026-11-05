@@ -74,14 +74,17 @@ func _process(_delta: float) -> void:
 	var id: StringName = arsenal.art_id(pilot.hold.held) if pilot != null else &""
 	if rig != null and pilot != null:
 		var grip: ArsenalTable.Grip = arsenal.grip_of(pilot.hold.held)
-		rig.grip = RigGrip.kind_of(grip.id) if grip != null else RigGrip.Kind.ONE_HAND
-		rig.reload_k = _reload_k()
-		rig.two_hand_melee = MeleeSwing.two_handed(pilot.hold.held) and pilot.wielding()
+		var hold: HeldTable.Hold = HeldTable.shipped().hold_of(pilot.hold.held)
+		rig.hold = hold.id if hold != null else &""
+		rig.grip = hold.kind if hold != null else RigGrip.Kind.ONE_HAND
+		rig.reload_k = arsenal.reload_phase(arena.gun if arena != null else null)
 		var mag: bool = grip != null and not NO_MAG.has(grip.id)  # a bottle or a tank: no magazine
 		mag = mag and not (art.has(id) and art.part_texture(id, "mag") != null)  # weapon-art's own
 		var now: int = arena.tick if arena != null else 0
 		_mag_view().feed(rig, rig.reload_k if mag else -1.0, now, id)
 		_back_tank(rig, grip != null and ON_BACK.has(grip.id))
+	if rig != null and not rig.gun_out:
+		rig.held_shift = Vector2.ZERO
 	if rig == null or not rig.gun_out or not art.has(id):
 		if _sprite != null:
 			_sprite.visible = false
@@ -98,13 +101,9 @@ func _process(_delta: float) -> void:
 	var tex: Vector2 = hand.texture.get_size()
 	var local: Vector2 = Vector2(tex.x * GRIP_U, tex.y * 0.5) + hand.offset
 	_sprite.global_position = hand.global_transform * local
-	_sprite.global_rotation = hand.global_rotation
-	if rig.aiming and rig.grip != RigGrip.Kind.ONE_HAND:  # the barrel on the aim line
-		_sprite.global_rotation = (rig.aim_at - _sprite.global_position).angle()
+	_sprite.global_rotation = _held_angle(rig, hand)
 	_place_long(rig)
 	_pose_melee(rig)
-	var blade: Vector2 = Vector2.from_angle(_sprite.global_rotation)
-	rig.hilt_dir = rig.torso.global_transform.basis_xform_inv(blade).normalized()
 	_feed_smear(rig)
 	_sprite.visible = rig.grip != RigGrip.Kind.THROWN or rig.reload_k < 0.0 or rig.reload_k >= 1.0
 	_light_rag(rig, id)
@@ -122,6 +121,16 @@ func _swap(id: StringName, weapon: StringName, size_k: float) -> void:
 	_shown_size = size_k
 
 
+## The held weapon's angle: along the claw; a two-claw weapon's barrel on the aim line; a blade
+## on the guard's line, turned in at the wrist (d7-held).
+func _held_angle(rig: CutRig, hand: Sprite2D) -> float:
+	if rig.grip == RigGrip.Kind.BLADE:
+		return RigGrip.blade_angle(rig)
+	if rig.aiming and rig.grip != RigGrip.Kind.ONE_HAND:
+		return (rig.aim_at - _sprite.global_position).angle()
+	return hand.global_rotation
+
+
 ## A long gun or a tube: carried across the front of the body, and always beside the helmet.
 func _place_long(rig: CutRig) -> void:
 	var across: bool = RivetCarryAngle.applies(rig.grip) and not rig.aiming and not pilot.wielding()
@@ -130,32 +139,10 @@ func _place_long(rig: CutRig) -> void:
 	_sprite.global_rotation += _carry.step(
 		across, fwd, g, rig.torso.global_position, _sprite.global_rotation
 	)
-	if RivetCarryAngle.applies(rig.grip) and not pilot.wielding():
-		_sprite.global_position += _beside(rig)
-
-
-## The shift that puts a long gun or a tube beside Rivet's helmet (RivetCarryAngle.beside_head).
-func _beside(rig: CutRig) -> Vector2:
-	var head: Sprite2D = rig.head_spr
-	var head_half: float = head.texture.get_width() * absf(head.global_scale.x) * 0.5
-	var gun_half: float = _sprite.texture.get_height() * absf(_sprite.global_scale.y) * 0.5
-	var at: Vector2 = _sprite.global_position
-	var rot: float = _sprite.global_rotation
-	return RivetCarryAngle.beside_head(at, rot, head.global_position, head_half, gun_half)
-
-
-## The gun's reload as the rig's phase + fraction (rivet_arsenal.json out/in/cock), or -1.
-func _reload_k() -> float:
-	var gun: GunHand = arena.gun if arena != null else null
-	if gun == null or not gun.trigger.reloading() or gun.trigger.spec.reload_ticks <= 0:
-		return -1.0
-	var t: float = 1.0 - float(gun.trigger.reload_left) / float(gun.trigger.spec.reload_ticks)
-	if t < arsenal.out_k:
-		return t / arsenal.out_k
-	t -= arsenal.out_k
-	if t < arsenal.in_k:
-		return 1.0 + t / arsenal.in_k
-	return 2.0 + minf((t - arsenal.in_k) / maxf(arsenal.cock_k, 0.001), 0.999)
+	if not RivetCarryAngle.applies(rig.grip) or pilot.wielding():
+		rig.held_shift = Vector2.ZERO
+		return
+	RivetCarryAngle.place_beside(rig, _sprite)
 
 
 ## The blade's angle off the aim line during a strike (MeleeSwing: anticipation, the cut,

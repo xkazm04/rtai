@@ -51,11 +51,18 @@ func _reload_gap(k: float) -> float:
 ## (distance of the off claw from the barrel line through the gun claw, how far ahead of the
 ## gun claw along it), part px
 ## in the torso's frame (RigLimbs joints).
+## d7-held: where the off claw holds, off the line it holds: with the off claw shown (RigOffClaw)
+## its jaws' middle off the drawn barrel (through the gun claw's grip point), else the off hand
+## point off the line from the gun shoulder.
 func _off_hand(kind: int) -> Vector2:
 	var rig: CutRig = _aimed(kind)
 	var gun: Vector2 = rig.sides[rig.plan.gun_arm].j_hand
-	var off: Vector2 = rig.sides[1 - rig.plan.gun_arm].j_hand
 	var sh: Vector2 = rig.sides[rig.plan.gun_arm].j_shoulder
+	var off: Vector2 = rig.sides[1 - rig.plan.gun_arm].j_hand
+	if rig.sides[1 - rig.plan.gun_arm].grip.visible:  # the drawn barrel, through the grip point
+		gun = RigOffClaw.grip_point(rig)
+		sh = gun
+		off = RigOffClaw.jaw_point(rig, 1 - rig.plan.gun_arm)
 	var aim: Vector2 = rig.torso.global_transform.affine_inverse() * rig.aim_at
 	var dir: Vector2 = (aim - sh).normalized()
 	var across: float = absf((off - gun).cross(dir))
@@ -83,3 +90,31 @@ func _aimed(kind: int, reload_k: float = -1.0) -> CutRig:
 		rig.face_to = -PI * 0.5
 		rig.drive(SimClock.TICK_DT)
 	return rig
+
+
+## d7-held: a held class's walk (RigGrip.walk) comes from its held_classes.json row while the
+## weapon is out; nothing out walks as before. Planted: the heavy row read with the gun stowed.
+func test_heavy_class_walks_shorter_and_leans_back_only_while_out() -> void:
+	var rig: CutRig = _aimed(RigGrip.Kind.HIP)
+	rig.hold = &"heavy"
+	var heavy: HeldTable.Hold = HeldTable.shipped().holds[&"heavy"]
+	assert_eq(RigGrip.walk(rig), Vector2(heavy.stride_k, heavy.lean_px), "the heavy row's walk")
+	assert_lt(RigGrip.walk(rig).x, 1.0, "the heavy class takes shorter steps")
+	rig.gun_out = false
+	assert_eq(RigGrip.walk(rig), Vector2(1.0, 0.0), "planted: stowed, the plain walk")
+
+
+## d7-held: the drawn long gun is shifted beside the helmet (RivetHeldView, rig.held_shift); both
+## claws' aim targets take the same shift so they stay on the gun. Planted: with follow_shift off
+## (`--gun-off-claw`) the claws ignore it and the gun floats the shift's length off them.
+func test_claws_follow_the_guns_shift_beside_the_helmet() -> void:
+	var rig: CutRig = _aimed(RigGrip.Kind.TWO_HAND_LONG)
+	var shift: Vector2 = Vector2(0.0, 40.0)
+	var plain: Vector3 = RigGrip.target(rig, Vector3.ZERO, true, 180.0)
+	rig.held_shift = shift
+	var moved: Vector3 = RigGrip.target(rig, Vector3.ZERO, true, 180.0)
+	assert_almost_eq(moved.y - plain.y, shift.y, 0.01, "the gun claw takes the gun's shift")
+	RigGrip.follow_shift = false
+	var off: Vector3 = RigGrip.target(rig, Vector3.ZERO, true, 180.0)
+	RigGrip.follow_shift = true
+	assert_almost_eq(off.y, plain.y, 0.01, "planted: --gun-off-claw leaves the claw behind")

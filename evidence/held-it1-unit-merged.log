@@ -1,0 +1,3 @@
+unit-tests: gut exit 1; 1 failing (1094 passed, 1 failed, 0 skipped)
+exit 1
+# 15:52 re-run alone: test_noir_shadows (the brief's known flake) 2/2 twice on d7-held, 2/2 on main 1028c15d; the full run before the reload_phase move was 1095/0.

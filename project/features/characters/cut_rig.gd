@@ -37,14 +37,14 @@ var aim_at: Vector2 = Vector2.ZERO
 var gun_out: bool = false
 ## rivet-arsenal: how both arms hold the weapon while aiming (RigGrip.Kind; 0 = one hand).
 var grip: int = 0
-## combat-notes: a two-handed melee weapon is held: the off claw rides the hilt (RigGrip).
-var two_hand_melee: bool = false
-## The held blade's direction in the torso frame (RivetHeldView writes it after the pose, so the
-## off claw follows it one frame late).
-var hilt_dir: Vector2 = Vector2.RIGHT
+## d7-held: the hold class (held_classes.json id) posing the arms; &"" = the first of `grip`'s kind.
+var hold: StringName = &""
 ## rivet-arsenal: the reload pantomime (RigGrip): -1 none, else phase + fraction (0 magazine out,
 ## 1 magazine in, 2 the cock or charge).
 var reload_k: float = -1.0
+## d7-held: the drawn weapon's shift beside the helmet (RivetHeldView, torso-local px); the two
+## claws' aim targets take it too, so the claws stay on the gun instead of a claw-width off it.
+var held_shift: Vector2 = Vector2.ZERO
 var dead: bool = false
 
 var c_tuck: float = 0.0
@@ -130,8 +130,7 @@ func reset_state(at_facing: float) -> void:
 	gun_out = false
 	aiming = false
 	grip = 0
-	two_hand_melee = false
-	hilt_dir = Vector2.RIGHT
+	hold = &""
 	reload_k = -1.0
 	vel_in = Vector2.ZERO
 	clips.reset()

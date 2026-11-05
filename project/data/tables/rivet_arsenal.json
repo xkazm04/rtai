@@ -35,7 +35,7 @@
     "one_hand": {
       "doc": "pistol grip in the claw, low ready at the hip; aims with the claw arm only",
       "draw_ticks": 12,
-      "held_scale": 1.5,
+      "held_scale": 1.2,
       "kick": 0.8,
       "move_mult": 1,
       "slot": 1,
@@ -70,8 +70,8 @@
       "stow_ticks": 14
     }
   },
-  "doc": "How Rivet holds each weapon (rivet-arsenal, night 2026-11-04). Ticks are 60 Hz frames. classes = the grip classes (weapon-art's weapon_art.json grip_class names, plus heavy_two_hand for the chainsaw): stow_ticks puts the held weapon away, draw_ticks brings the next one up (a switch is stow then draw; no shot leaves until the draw ends), kick scales the rig's recoil, move_mult scales the walk while it is held, held_scale draws weapon-art's held part larger in Rivet's claw (the claw covers a human-size grip). reload splits a weapon's reload_s (weapons.json) into the magazine out, the magazine in and the cock or charge, as fractions that sum to 1. weapons maps every weapon id (guns from weapons.json, melee from melee_weapons.json) to its grip class. The live tuning panel edits these rows. art_stand_in draws a weapon without its own held art (weapon_art.json) with another's until it lands. slot is the carry slot a class sits in (1 sidearm, 2 long, 3 heavy, 4 thrown): number keys 1-4 pick a slot, the wheel cycles the carried slots (RivetCarry). held_size_ref (n5-look, 2026-11-04): the held part follows Rivet's body size, held_scale x size_k / held_size_ref (1.2 = the approved combat night's size_k, so that Rivet is unchanged); the slimmer default Rivet carries proportionate guns, a grown form larger ones; 0 = held_scale alone.",
-  "held_size_ref": 1.2,
+  "doc": "How Rivet holds each weapon (rivet-arsenal, night 2026-11-04). Ticks are 60 Hz frames. classes = the grip classes (weapon-art's weapon_art.json grip_class names, plus heavy_two_hand for the chainsaw): stow_ticks puts the held weapon away, draw_ticks brings the next one up (a switch is stow then draw; no shot leaves until the draw ends), kick scales the rig's recoil, move_mult scales the walk while it is held, held_scale draws weapon-art's held part larger in Rivet's claw (the claw covers a human-size grip). reload splits a weapon's reload_s (weapons.json) into the magazine out, the magazine in and the cock or charge, as fractions that sum to 1. weapons maps every weapon id (guns from weapons.json, melee from melee_weapons.json) to its grip class. The live tuning panel edits these rows. art_stand_in draws a weapon without its own held art (weapon_art.json) with another's until it lands. slot is the carry slot a class sits in (1 sidearm, 2 long, 3 heavy, 4 thrown): number keys 1-4 pick a slot, the wheel cycles the carried slots (RivetCarry). held_size_ref (n5-look, 2026-11-04): the held part follows Rivet's body size, held_scale x size_k / held_size_ref (1.2 = the approved combat night's size_k, so that Rivet is unchanged); the slimmer default Rivet carries proportionate guns, a grown form larger ones; 0 = held_scale alone. Shipped 0 since the owner's look-4 pick (2026-11-05, over cast-3): held guns keep their class size.",
+  "held_size_ref": 0,
   "reload": {
     "cock_k": 0.25,
     "in_k": 0.45,

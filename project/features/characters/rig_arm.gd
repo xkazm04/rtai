@@ -48,7 +48,8 @@ static func solve(rig: CutRig, s: int, ph: float, walk01: float) -> void:
 		side.upper.scale.y = p.arm_w
 		side.fore.scale.y = p.arm_w
 	_hand(rig, side, fore_draw)
-	var behind: bool = h2.x < sh.x - 40.0 and not hilt_hand(rig, s)
+	RigOffClaw.place(rig, s)
+	var behind: bool = h2.x < sh.x - 40.0
 	var lift: int = STRIKE_Z if strike_over and striking(rig, s) and rig.c_reach > 0.0 else 0
 	side.upper.z_index = (p.arm_below if behind else p.arm_above) + lift
 	side.fore.z_index = (p.arm_below if behind else p.arm_above + 1) + lift
@@ -57,11 +58,6 @@ static func solve(rig: CutRig, s: int, ph: float, walk01: float) -> void:
 ## The arm a timed strike drives (RigClips.strike: one side, or 2 = both).
 static func striking(rig: CutRig, s: int) -> bool:
 	return rig.strike_arm == s or rig.strike_arm == 2
-
-
-## combat-notes: the off claw on a two-handed melee hilt (drawn side-on, over the torso).
-static func hilt_hand(rig: CutRig, s: int) -> bool:
-	return rig.two_hand_melee and s != rig.plan.gun_arm and rig.plan.gun_arm >= 0
 
 
 static func _pole(p: BodyPlan, s: int) -> Vector3:
@@ -89,9 +85,9 @@ static func _target(rig: CutRig, s: int, ph: float, walk01: float, aim_arm: bool
 		tgt = Vector3(sh.x + dv.x * reach * 0.97, sh.y + dv.y * reach * 0.97, -10.0)
 		tgt.x -= 60.0 * rig.c_recoil
 	tgt = RigGrip.target(rig, tgt, aim_arm, reach)  # rivet-arsenal: two-hand, shoulder, hip
+	tgt = RigOffClaw.target(rig, s, tgt)  # d7-held: the off claw clamps the drawn barrel
 	if (striking(rig, s) or (rig.strike_arm < 0 and s == p.melee_arm)) and rig.c_reach > 0.0:
 		tgt = tgt.lerp(Vector3(sh.x + reach * 0.99, sh.y * 0.2, 0.0), rig.c_reach)
-	tgt = RigGrip.melee_hilt(rig, s, tgt, reach)  # combat-notes: both claws on a two-hand hilt
 	if rig.c_hands_up > 0.0:
 		tgt = tgt.lerp(Vector3(sh.x + 30.0, sh.y * 0.55, 160.0), rig.c_hands_up)
 	if rig.c_tuck > 0.0:
@@ -112,15 +108,15 @@ static func _place(rig: CutRig, s: int, aim_arm: bool) -> float:
 	var e2: Vector2 = side.j_elbow
 	var h2: Vector2 = side.j_hand
 	var fore_cell: String = p.gun_cell if aim_arm and p.gun_cell != "" else p.fore_part[s]
+	fore_cell = RigOffClaw.fore_cell(rig, s, fore_cell)  # d7-held: the off claw's plain forearm
 	var d2: float = p.fore_draw[s]
 	if not p.has_endon():
 		_cell(rig, side.fore, fore_cell, 1, side)
 		RigGait.place(side.upper, s2, e2, p.upper_draw)
 		RigGait.place(side.fore, e2, h2, d2)
 		return d2
-	var side_on: bool = aim_arm or hilt_hand(rig, s)  # a claw on a hilt keeps its side cells
-	var end1: bool = e2.distance_to(s2) / p.upper_len < p.endon_below and not side_on
-	var end2: bool = h2.distance_to(e2) / p.fore_len[s] < p.endon_below and not side_on
+	var end1: bool = e2.distance_to(s2) / p.upper_len < p.endon_below and not aim_arm
+	var end2: bool = h2.distance_to(e2) / p.fore_len[s] < p.endon_below and not aim_arm
 	_cell(rig, side.upper, p.endon_upper[s] if end1 else p.upper_part[s], 0, side)
 	_cell(rig, side.fore, p.endon_fore[s] if end2 else fore_cell, 1, side)
 	RigGait.place(side.upper, s2, e2, p.endon_upper_len if end1 else p.upper_draw)

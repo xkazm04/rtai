@@ -25,3 +25,11 @@ func test_the_old_default_flags_reach_the_game() -> void:
 	assert_true(LaunchArgs.has("--ghosts-free"), "ghost-powers-5's old default must not be dropped")
 	assert_eq(LaunchArgs.value("--rivet-tan"), "1")
 	assert_eq(LaunchArgs.unknown().size(), 0)
+
+
+func test_the_hold_ab_flags_are_known() -> void:
+	# d7-held: the befores of the hold A/Bs must not be warned about as misspelt at boot
+	LaunchArgs.parse(PackedStringArray(["--torch-off-arm", "--gun-off-claw"]))
+	assert_true(LaunchArgs.has("--torch-off-arm"), "the off-claw A/B's before is a known flag")
+	assert_true(LaunchArgs.has("--gun-off-claw"), "the claw-follow A/B's before is a known flag")
+	assert_eq(LaunchArgs.unknown().size(), 0)

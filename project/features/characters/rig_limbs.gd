@@ -9,6 +9,8 @@ var upper: Sprite2D = null
 var fore: Sprite2D = null
 var hand: Sprite2D = null
 var shield: Sprite2D = null
+## d7-held: the off claw on a two-claw weapon (a torso child, shown by RigOffClaw).
+var grip: Sprite2D = null
 
 ## The foot in world px, where the current step started, and the step's progress.
 var foot_w: Vector2 = Vector2.ZERO

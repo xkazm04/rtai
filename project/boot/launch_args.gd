@@ -19,6 +19,9 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--rivet-visor",
 	"--rivet-tan",
 	"--gun-grey",
+	# d7-held: the befores of the hold A/Bs (read straight from the OS args by RigOffClaw / RigGrip)
+	"--torch-off-arm",
+	"--gun-off-claw",
 ]
 
 var _values: Dictionary[String, String] = {}
