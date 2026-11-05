@@ -46,6 +46,10 @@ uniform float tan_k = 0.0;         // the ground's light neutral print toned tow
 uniform vec3 tan_tone = vec3(0.92, 0.875, 0.8); // the sheet tone tan_k multiplies the light ground by
 uniform float speck_k = 0.0;       // riso toner speckle: sparse 1 px ink specks on the paper and light fills (0 = off)
 uniform float speck_density = 0.05; // the share of light pixels that take a speck where the cluster noise peaks
+uniform float splat_k = 0.0;        // small sharp grime splats with satellite drops on the paper and light fills (r2_a5; 0 = off)
+uniform float splat_scale = 0.05;  // splat lattice frequency per screen px (a splat is about 0.5 / splat_scale px across)
+uniform float splat_cut = 0.8;     // the splat field threshold: higher = fewer, smaller splats
+uniform vec3 splat_tone = vec3(0.62, 0.58, 0.54); // the splat multiply (a neutral grey-brown dirt, never a red)
 
 // the print inks from palette.json (visual-engine's LookOverlay sets them, like look_d4's tones)
 uniform vec3 paper_tone = vec3(0.949, 0.910, 0.835);
@@ -119,6 +123,14 @@ vec3 riso_print(vec3 o, vec3 c, float d, vec2 w, vec2 uv, vec2 tx) {
 		float st = smoothstep(0.6, 0.68, sn) * (0.5 + 0.5 * vnoise(w * 0.11 + 2.9));
 		st += smoothstep(0.02, 0.0, abs(sn - 0.6)) * 0.7;
 		o = mix(o, o * vec3(0.84, 0.81, 0.78), clamp(st, 0.0, 1.0) * stain_k * riso * (1.0 - smoothstep(0.3, 0.5, d)));
+	}
+	// grime splats: a high threshold on a ragged value field = small hard-edged blots, satellite drops round them
+	if (splat_k > 0.0 && d < 0.5) {
+		float m = vnoise(w * splat_scale + 31.7) * (0.74 + 0.26 * vnoise(w * splat_scale * 4.3 + 3.3));
+		float blot = smoothstep(splat_cut, splat_cut + 0.012, m);
+		float near = smoothstep(splat_cut - 0.16, splat_cut - 0.04, m);
+		blot = max(blot, smoothstep(0.8, 0.82, vnoise(w * splat_scale * 7.0 + 17.1)) * near);
+		o = mix(o, o * splat_tone, blot * splat_k * riso * (1.0 - smoothstep(0.3, 0.5, d)));
 	}
 	return o;
 }

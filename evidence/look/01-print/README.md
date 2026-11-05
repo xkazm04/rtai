@@ -17,3 +17,6 @@
 - `after-it10/`: the same city_frame shots (`--zooms=1,2 --foci=0,4`) on 9a448a83 (speck + patchy, the iteration 2 tan). `after-it10-tone/`: with `world_riso.tan_tone` [1.02, 0.99, 0.94].
 - Paper measured (PIL, crop 100,20-1200,150 of city-0-32, mean / median): today 222/205/183 / 238/220/197; it10 197/178/150 / 212/193/162; it10-tone 219/201/173 / 238/218/187. Target r2_a5 tiled sidewalk (crop 900,250-1600,650 of the 1672x942 image): 216/192/159 / 250/218/177. The iteration 2 sample (149/131/109) was not the sheet: the tan had darkened the paper below both ends. The new tone sits between today and the target. Asphalt unchanged (86/76/75 -> 88/78/77 mean).
 - Composite: `gtai-masters/n5/look/print-3way-city-32ppm-it10.png` (today | it10 old tan | it10 tone | r2_a5 at 32 px/m; below, 64 px/m crops today | old tan | tone).
+
+## Iteration 11 (2026-11-05 02:25-02:40)
+- `after-it11-splat/`: the same city_frame shots (`--zooms=1,2 --foci=0,4`) with `world_riso.splat_k` 0.8 (splat_scale 0.07, splat_cut 0.79, splat_tone 0.5/0.48/0.47). Before = `after-it10-tone/`. Composite: `gtai-masters/n5/look/print-splat-it11-city0-vs-r2a5.png` (top: before | splat | r2_a5 at 32 px/m, 2x crops of city-0; below: before | splat at 64 px/m).
