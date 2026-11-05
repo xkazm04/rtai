@@ -136,3 +136,46 @@ NEXT (iteration 2, ghost-powers):
 Session state 00:39: head = this commit, tree clean, image.lock never taken, bench never run, no Godot
 process of mine running. NEXT (iteration 2) is the 00:31 list above (item 1 done: unit 954/0; the Dent blast
 colour from item 2 done at 00:34).
+
+## Iteration 2 (00:39 - 01:39)
+- 00:40 read JOURNAL, git log, the forms lane's JOURNAL (no new REQUEST to ghost-powers; their NEXT wires
+  GhostForms into StagePilot), n5-cast tip. MERGE n6-ghost-forms 833babb8 (054fd5c0: morph v2, their merge of
+  n5-cast) and n5-cast b38ab980 (db4043c8: plan-view peds, look goldens re-blessed by n5-cast); only JOURNAL.md /
+  REPORT.md conflicted (kept ours); lint 13/13 on both.
+- Rules applied (registry `motion-quality-gating`, `shader-budget-authoring` from iteration 1): judge in motion
+  at 32 px/m with a 64 px/m slow close-up, every effect drawn on the actor layer with canvas draw calls only (no
+  new shader, no per-frame allocation beyond the draw lists), reduced motion = no flicker / afterimages.
+
+### Kerf (item 3)
+- MILESTONE 56705eec KerfStage (features/souls): Q takes the soul when `StagePilot.kerf` is set (the reel
+  sets it for `--ghost=kerf`; Tonnage keeps Q otherwise), walk x1.5, melee = blink: target = live hostile
+  nearest the aim inside 35 deg / 9 m with no arena wall between, Rivet lands 0.9 m (+ radius) past it,
+  weapon kerf_slice (99 human, 4 robot); no target = 4 m dash; 3 charges, 0.3 s apart, one back per 1 s.
+  Kill row kerf_split (the plasma sword's split, slower halves) + new optional row field `edge: soul`
+  (brutality's SignatureKill/KillSplitFx/KillCutEdge: the cauterised band white with a teal bloom).
+  KerfView: teal path + 3 afterimage rings, the hanging white cut line in a teal glow (0.6 s), the charge pips.
+- FRICTION the first film booted the city: the arena is `res://dev/arena/arena.tscn -- ...`, not `--arena`
+  (the gunplay REPORT said so). Telemetry needs `--shot-tick` (written on that quit) and an absolute path.
+- First run 4/5: recharge 1.5 s left the robot with one cut when the 6 s ran out -> 1.0 s: 5/5 (4 split,
+  robot in 2 cuts), 8 blinks, first kill 0.5 s after Q (`evidence/ghosts-kerf-32.json`).
+- Judged (frames looked at): the path, afterimages, cut line and the teal-edged halves read at 32 and 64 px/m;
+  the rig draws Rivet one frame behind the overlay on the blink tick (feed order; next frame he is past the
+  target): left as is. Clips `kerf-arena-32ppm.mp4` (8 s), `kerf-64ppm-halfspeed.mp4`; `frames/kerf-vs-target.png`,
+  `frames/kerf-beat-32ppm.png`.
+- scenario_ghost_attacks + Kerf: replay identical, same seed same state, planted human_damage 0 (dead 5 -> 1)
+  caught. Unit test_kerf_attacks 3/3.
+
+### Ohm (item 4)
+- MILESTONE ef3a186a OhmStage: Q (with `StagePilot.ohm`), melee = forked bolt every 0.5 s from the fingertips
+  (0.45 m ahead): 30 deg / 11 m, forks 2 within 3 m (MeleeShock.chain_path reused), PlayerShock.stun_on 1.2 s,
+  0.5 to humans (electro X-ray kill: `ohm_bolt` added to electro_shock's also_weapons), 2 x machine_k 3 to robots,
+  no body in the cone = the car nearest the aim burns 20. Mass = upgrade_tier 1 (6 bodies within 8 m), data only.
+  OhmView: jagged teal bolt, white core, ink rim, white flash at each body, fingertip sparks while on.
+- FINDING the robot stand-in (quest boss brain, Kind.BOSS) is only exposed while its tazer is spent; Ohm's stun
+  freezes the brain, so 0 kills on the first run. OhmBeat.hold() (sim-side, dev beat only) keeps it exposed;
+  logged as a FINDING in decisions. It is drawn as a cop and dies with a red splat (no robot rig in the arena).
+- Measured: 5/5, robot to the first bolt, cops in 2 bolts, riot in 5, cruiser wrecked in 5 more; Rivet 100 hp
+  (stunned cops do not fire). Clips `ohm-arena-32ppm.mp4` (9 s), `ohm-64ppm-halfspeed.mp4`, `frames/ohm-vs-target.png`.
+- scenario + Ohm: replay identical, same seed, planted machine_k 0 (dead 5 -> 0) caught; _judge became a NEEDS
+  table (gdlint max-returns). Unit test_ohm_attacks 2/2. Unit gate 960/0 on ef3a186a (`evidence/unit-it2.log`).
+- DECISIONs in docs/decisions.md (Kerf, Ohm, the robot FINDING); role/TTK table holds all four ghosts.
