@@ -525,3 +525,33 @@ NEXT (written 22:55, for iteration 6):
   director arena 19/19 and city 19/19 on `454490ce` (later commits touch only PlateSparks' gate).
   Scratch cleaned (this iteration's films; the 48 px/m audit AVIs kept). NEXT is the 22:55 entry,
   item 2 done (`d97a976d`); open on it: quest 1 with Tonnage under fire.
+
+## Iteration 6 (23:09-00:09), phase BUILD
+- READ 23:10 JOURNAL NEXT, git log, n7-ranged JOURNAL: no reply to REQUEST 4 (stun marks under a
+  mass arc); their new feel commit 5ef1c584 (the flamer flare, hit_feel.json ignite_flare_k).
+- MERGE 23:11 cherry-picked n7-ranged `5ef1c584` (-x; a full merge would land their JOURNAL.md and
+  REPORT.md here). One conflict in hit_feel.json `weapons`: kept my rows (chainsaw, claw,
+  dent_blast, dent_car, electro_baton), took their flamethrower doc. e32720c4 was already in.
+- DECISION 23:12 REQUEST 4 unanswered for 20 min: I build the stun cap myself on the reaction views
+  (not the hit_feel module), as data with an off value (docs/decisions.md).
+- REGISTRY applied: realtime-combat-semantics (the mark scales with what the player must read:
+  the newest victims keep the full read, the rest stay readable as stunned); depth-ordered-layered-
+  art (the marks no longer cover the blue uniform layer of a crowd).
+- FINDING 23:15 first pass capped only ShockJolt's crawl: the 32 px/m crop showed that most of the
+  cream in the cluster is WeaponFxElectro.stun's two head sparks per body (FightAreasArt), which the
+  cap did not touch. Moved the ranking into StunCrowd so both views share it.
+- MILESTONE 23:25 `7ce7b33d` human_reactions.json stun_crowd (StunCrowd, view only): the 2 newest
+  stunned bodies draw the full marks; the rest 0 arcs, 1 spit, 1 head spark. full 0 or `--feel=off`
+  = the before. test_stun_crowd 4/4 (planted: full 0 and few bodies give no cap). Unit 1178/1178
+  (the one red in the first run was test_noir_shadows, the known flake: green alone and in the
+  re-run); lint 13/13.
+- LOOK 23:24 arena `--bot=ghosts --ghost=ohm --tier=1 --rigs`, 32 px/m, 3 films (full 0 | arcs 1 |
+  arcs 0), cluster crops frames 96-131 every 7th side by side: arcs 1 still left a cream crawl on
+  every body; arcs 0 lets the six cops and the riot shield read blue, each still stunned (a spark
+  circling the head, a spit). Shipped arcs 0. CLIP `M/ohm_stun_crowd_ab_32ppm_04x.mp4`; frames.json
+  top entry (the deflect streak dropped to keep 15).
+- CHECK 23:30 director reels on `7ce7b33d` (`--bot=reel --reel=director --loadout=pistol
+  --quit-after 7400`): arena 19/19 and city 19/19 fully down, 0 SCRIPT ERROR
+  (`evidence/n7-melee/director-{arena,city}-loadout-7ce7b33d.log`). electro_chain 4/4 down.
+- GATES 23:33 scenarios on `7ce7b33d`: 52 ran, 0 failed, 0 SCRIPT ERROR, exit 0
+  (`evidence/n7-melee/scenarios-7ce7b33d.log`).

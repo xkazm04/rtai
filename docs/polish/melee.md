@@ -138,3 +138,8 @@ jolt held through a 7-frame stop, the shake settling by frame 130; before 0 px.
    `--feel=off` = the old look. Looked at: the bolt keeps its weight, the branches thin, the cops'
    blue shows through. Read 2 -> 3. Still open: the stun squiggles (the reaction view, not the arc)
    are most of the clutter. `M/ohm_mass_arc_ab_32ppm_04x.mp4`, `M/ohm_mass_arc_48ppm_04x.mp4`.
+   **Done 23:25 (`7ce7b33d`, the squiggles)**: human_reactions.json stun_crowd (StunCrowd, view only):
+   past the 2 newest stunned bodies the rest draw 1 spit and 1 head spark, no crawling arc (from 3
+   arcs, 3 spits, 2 sparks each). full 0 or `--feel=off` = the before. A 1-arc pass was still busy.
+   Looked at: the six cops read blue, each still visibly stunned (the spark circling, the spit).
+   Read 3 -> 4. `M/ohm_stun_crowd_ab_32ppm_04x.mp4`.
