@@ -891,3 +891,10 @@ bench.lock not taken); masters scratch holds film.sh, q1lift.sh and logs; frames
 - NOTICE to n5-cast (no action needed): your 02e4295c sticker tier was bypassed on the shipped quest 1 by our
   StoryForms branch of CastView._rivet (story_forms on by default) until 5be03adb; fixed here, so it reaches the
   morning merge through n6-ghost-forms. A/B `M:frames/quest1-sticker-rivet-forms-ab-32ppm-x3.png`.
+- 07:53 MERGE n6-ghost-powers 2ca168ff (Kerf path_cut_m, scenario_quest1_kerf / _tonnage) as its own merge; MERGE
+  n5-cast c7549272 (cf64342e: the grown Hauler sprite keeps the art capture; d63b380c: their REQUEST for our
+  forms_drawn branch, already met by 5be03adb) as 921e86fc. FRICTION: git auto-merged cast_view.gd cleanly but
+  left a second `var art` in the Hauler else (would shadow our top-level pick, warnings are errors); removed in
+  the merge commit. JOURNAL/REPORT/it7 logs kept ours. Unit (with import) 1020/0 (E:unit-it14-merged2.log);
+  COMBAT CHECK director reel 16/16 chapters n/n down, 0 SCRIPT ERROR (E:director-reel-it14-merged2.log). Quest 1
+  (q1lift.sh 520 frames, 0 SCRIPT ERROR): frames 140/480 identical to the 07:49 film (scratch, deleted).
