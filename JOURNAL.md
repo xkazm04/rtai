@@ -449,3 +449,23 @@ film.sh and reel.sh, frames.json 15 (all present).
   cut line hangs. scenario --filter=ghost 1/0 (`evidence/scenario-ghost-it5.log`). DECISIONs in decisions.md.
 - Rules applied: `motion-quality-gating` (A/B pairs at the same tick and zoom from deterministic runs, judged in
   motion at 32 px/m); `depth-ordered-layered-art` (the robot rig on the rigs' own z, under the ghost body's +60).
+- 03:20 COMBAT CHECK director reel on 5dde79e8 (robot rig + dry Kerf kill): 16/16 chapters down, 0 SCRIPT ERROR
+  (`E/director-reel-it5.log`).
+- 03:25 MILESTONE 06908631 Dent rides the seized car (NEXT 3, the optional bucking-bull vignette): sim side,
+  `ghost_attacks.json dent.ride` 1 puts Rivet on the car's roof each tick it is seized (GhostPilot zeroes his walk;
+  the car still steers by his facing) and hops him `ride_hop_m` 4 behind it at the blast (the blast hits hostiles
+  only). DECISION: ride on by default (the concept vignette; the car stays in his frame); `ride 0` is the old
+  stand-off seize; Call for the owner with `M/frames/dent-ride-ab-32ppm.png`. scenario_ghost_attacks needs
+  `rides >= 30`; planted ride 0 caught (`E/scenario-ghost-it5-planted-ride0.log`).
+- 03:29 FIX 89eda6e5 in the city block the hop stood Dent on a parked ambulance's hood: the hop now tries behind, left,
+  right for a spot with no live car within 2.6 m. Re-filmed: he lands on the street beside it.
+- 03:36 Clips: `M/dent-arena-32ppm.mp4`, `M/dent-city-32ppm.mp4`, `M/dent-64ppm-halfspeed.mp4` (64 px/m ride + hop,
+  half speed). REEL `M/ghost-attacks-reel-it5-32ppm.mp4` (33 s; Dent's segment re-timed onto the ride, Ohm's onto the
+  robot falling) replaces it4. Judged 6 stills. frames.json 15, all present.
+
+### REQUEST 7 -> n6-ghost-forms (03:37)
+Dent now rides the seized car (06908631; `DentStage.riding()` true while on the roof, Rivet's position = the car's).
+DentBody feeds the car's speed as Rivet's velocity, so on the roof Dent runs his walk cycle at ~8 m/s with the full
+lurch. Please, in DentBody (yours): while `pilot.dent.riding()` feed `vel_in` zero (or a crouch), and add a buck (a
+short yaw/roll kick or a scale pop) on each car strike (`pilot.dent.strikes` rising) and a jump on the hop
+(`blasts` rising). I will not edit DentBody.
