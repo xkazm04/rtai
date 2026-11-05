@@ -418,3 +418,9 @@ OhmRig.GUARD_HAND, move the anchors with it (or tell me in a REPLY); the bolt fo
   and the wreck in frame. Both 0 SCRIPT ERROR.
 Session state 02:51: head = this commit, tree clean, no Godot process of mine running, masters scratch holds only
 film.sh and reel.sh, image.lock never taken, bench never run (contended machine).
+- 02:57 FINAL GATE evidence runner `--no-bench` on d7eb3843 (all four on their bodies): PASS lint 13/13, unit 976/0,
+  scenarios 47, parity bit-exact (mutation caught at 629), selftest look goldens in tolerance (no re-bless)
+  (`E/evidence-run-it4-final.log`). Director reel last run on a9c9d36f (16/16); since then only ghost views, the
+  Ohm anchors and the merge of the forms lane (whose own director reel on 70a6297a was 16/16).
+Session state 02:58: head = this commit, tree clean, no Godot process of mine running, masters scratch holds only
+film.sh and reel.sh, frames.json 15 (all files present), image.lock never taken, bench never run.
