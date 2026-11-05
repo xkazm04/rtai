@@ -3,6 +3,7 @@ extends GutTest
 ## gun, a second press puts it away and Gloria comes back; when the story swaps the weapon (a
 ## picked-up rifle) the blade counts as put away, so the next press draws it again.
 ## Control: without sheathe (the arena's carry), a second press keeps the katana drawn.
+## The Dock 9 hint names the blade's key only when quest 1 carries one.
 
 var _arena: CombatArena
 var _actions: PlayerActions
@@ -77,3 +78,19 @@ func test_quest_blade_flag() -> void:
 	assert_eq(Quest1Game.blade_of(""), &"katana")
 	assert_eq(Quest1Game.blade_of("off"), &"")
 	assert_eq(Quest1Game.blade_of("electro_baton"), &"electro_baton")
+
+
+func test_dock_hint_names_the_blade_key_only_with_a_blade() -> void:
+	var stage: CollectCallStage = CollectCallStage.new(StageLayout.shipped())
+	var bus: EventBus = autofree(EventBus.new())
+	var data: DataStore = autofree(DataStore.new())
+	stage.setup(World.build_context(bus, data, 1))
+	stage.pilot = StagePilot.new(_actions)
+	var plain: ObjectiveHint = ObjectiveHint.new()
+	plain._dock(stage)
+	assert_false(plain.text.contains("blade"), "no carried blade, no blade hint")
+	stage.pilot.carry = _carry(true)
+	var h: ObjectiveHint = ObjectiveHint.new()
+	h._dock(stage)
+	assert_string_contains(h.text, "[slot2] for the blade")
+	assert_string_contains(ObjectiveHint.with_keys(h.text), "[2] for the blade")
