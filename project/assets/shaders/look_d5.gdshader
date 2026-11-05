@@ -50,6 +50,10 @@ uniform float splat_k = 0.0;        // small sharp grime splats with satellite d
 uniform float splat_scale = 0.05;  // splat lattice frequency per screen px (a splat is about 0.5 / splat_scale px across)
 uniform float splat_cut = 0.8;     // the splat field threshold: higher = fewer, smaller splats
 uniform vec3 splat_tone = vec3(0.62, 0.58, 0.54); // the splat multiply (a neutral grey-brown dirt, never a red)
+uniform float crack_k = 0.0;       // hairline ink cracks on the paper and light fills (r2_a5's cracked tiles; 0 = off)
+uniform float crack_scale = 0.012; // crack family frequency per screen px (lines of one family ~1 / crack_scale px apart)
+uniform float crack_run = 0.55;    // the run mask threshold: higher = fewer, shorter cracks
+uniform float crack_w = 1.0;       // line width in screen px
 
 // the print inks from palette.json (visual-engine's LookOverlay sets them, like look_d4's tones)
 uniform vec3 paper_tone = vec3(0.949, 0.910, 0.835);
@@ -83,6 +87,15 @@ float halftone(vec2 w, float cov) {
 // ridged value noise: thin wandering strands where the lattice crosses its mid value
 float strand(vec2 p) {
 	return smoothstep(0.92, 0.985, 1.0 - abs(vnoise(p) * 2.0 - 1.0));
+}
+
+// one crack family: the half-integer isolines of a warped linear coordinate across `dir` (straight-ish,
+// jagged), each line kept only where its own run mask is up (floor(x) is constant along a line)
+float crack(vec2 w, vec2 dir, float seed) {
+	vec2 q = w * crack_scale;
+	float x = dot(q, dir) + 0.3 * vnoise(q * 0.6 + seed) + 0.07 * vnoise(q * 13.0 + seed * 1.7);
+	float ln = 1.0 - smoothstep(0.5, 1.0, abs(fract(x) - 0.5) / max(fwidth(x) * crack_w, 1e-4));
+	return ln * smoothstep(crack_run, crack_run + 0.08, vnoise(q * 1.1 + seed * 3.1 + floor(x) * 7.3));
 }
 
 // the riso layer: halftone in the mid-tone fills, the colour plate off register, paper fibre
@@ -131,6 +144,11 @@ vec3 riso_print(vec3 o, vec3 c, float d, vec2 w, vec2 uv, vec2 tx) {
 		float near = smoothstep(splat_cut - 0.16, splat_cut - 0.04, m);
 		blot = max(blot, smoothstep(0.8, 0.82, vnoise(w * splat_scale * 7.0 + 17.1)) * near);
 		o = mix(o, o * splat_tone, blot * splat_k * riso * (1.0 - smoothstep(0.3, 0.5, d)));
+	}
+	// hairline cracks: two diagonal families of wandering, jagged lines, each line broken into its own runs
+	if (crack_k > 0.0 && d < 0.5) {
+		float cr = max(crack(w, vec2(0.8, 0.6), 1.3), crack(w, vec2(-0.5, 0.866), 7.9));
+		o = mix(o, ink_tone, cr * crack_k * riso * (1.0 - smoothstep(0.3, 0.5, d)));
 	}
 	return o;
 }
