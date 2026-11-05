@@ -106,5 +106,16 @@ guess on a sprite that does not turn with his arm (the blade starts at his shoul
 does not draw the blade, so only a player (or the dev pad) sees it.
 `M/quest1_katana_ab_32ppm.mp4` (before `--quest-blade=off` | after).
 
-Not yet scored: Tonnage's plates, Dent's blow, Ohm's mass arc, and the 48 px/m look of each
-(films `audit_*_48` ran; strips next iteration).
+7c. **Dent's blow** (the seized car striking a body, weapon `dent_car`; scored 22:00 from the
+48 px/m audit film and an arena ghost reel at 32): antic. 4 (the tether, the car swinging round),
+impact 1, read 3, victim sync 4 (thrown off the bonnet with blood on the strike tick), sound 1.
+Measured: the strike frame was identical to `--feel=off` (0 px differ): the blow had no feel row.
+In the 48 px/m audit film the car leaves the frame before it strikes (camera on Dent, owner call).
+**Done 22:03 (`4a522dfe`)**: hit_feel.json `dent_car` row, class `ram` (the melee stop, the crash
+shake, a kick along the car's nose). Measured at 32 px/m (arena ghost reel, tick 117): a 13 px
+jolt held through a 7-frame stop, the shake settling by frame 130; before 0 px.
+`M/dent_car_blow_ab_32ppm_04x.mp4`.
+
+Not yet scored: Tonnage's plates (small arms sparking off the press; the audit sheet sampled every
+20th frame shows no spark mark at 48 px/m, not measured frame by frame), Ohm's mass arc (upgrade_tier
+1 is not in the ghosts reel's beat).

@@ -312,3 +312,49 @@ NEXT (written 21:40, for iteration 4):
    ranged (cooldown 16).
 - STOP 21:40 iteration 3. Gates on `19c92dd9` full green; scenarios on `0c4161d8` 52/52; later commits
   are view-only (deflect streak alpha, a data doc line): lint 13/13 at each commit hook.
+
+## Iteration 4 (21:38-22:38), phase BUILD
+- MERGE 21:41 n7-ranged 48679f03 (quest 1 table guns: StageGuns in collect_call_stage/quest1_session,
+  `--quest-guns=off`), 078e83ab (Gloria recoil kick row), docs. Conflict: JOURNAL.md only (kept ours);
+  hit_feel.json auto-merged (gloria row, parses). Ranged's NOTE: my quest 1 blade moves the same quest 1
+  hash; no committed golden.
+- FINDING 21:45: the shipped quest 1 draws Rivet as a sprite (CastView); the held weapon, the swing
+  and the smear exist only on the rig cast (dev `--rigs`, debug builds only; hosting the rigs in the
+  default quest is rivet-arsenal Call 1, open). So a carried blade in the sim alone would be invisible
+  in the shipped quest: the brief's "seen in the shipped quest" needs a sprite-path blade view.
+- MILESTONE 21:47 `fbc5a982` quest 1 carries the katana (brief 5, sim): RivetCarry.sheathe (key 2 draws
+  it over the story's gun, again puts it away; a story swap = put away), Quest1Session.blade (rng
+  stream `quest_blade`), `--quest-blade=off|<id>` in LaunchArgs. test_quest_blade 4/4 (incl. the
+  no-sheathe control); unit 1164/1164. DECISION line in docs/decisions.md (quest 1 hash moves, no golden).
+- BUILD 21:50 (not committed yet): CastBladeView (boot/collect_call/view) = MeleeWeaponView on the
+  sprite's hand point (track_at split out of track), attached in Quest1Game._casts on the sprite path;
+  dev: CollectCallInputDriver.blade_ticks + quest1_clip `--blade=<from>-<to>` (the pad draws the
+  blade, closes on the bot's target, the held trigger swings, key 2 puts it away).
+- MILESTONE 21:54 `8237d411` CastBladeView (the shipped sprite cast draws the carried blade) +
+  `3c19d6f8` dev pad `--blade=<from>-<to>`. GATES 21:52 scenarios on `fbc5a982`: 52 ran, 0 failed,
+  0 SCRIPT ERROR; quest1 input: beats b1-b6, 49 kills, 65 shots, 0 deaths, 316.58 s, replay identical
+  (unchanged); final hash 4aab804f.. -> 589fbbf6.. (the carry state). `evidence/n7-melee/scenarios-fbc5a982.log`.
+- LOOK 21:56 quest 1 Dock 9, 32 px/m, ticks 13560-13900 (`--blade=13570-13880`), sheet every 14th
+  frame + frames 92-110 every 2nd at x2: the blade is out from frame ~18, lifts (102), cuts down
+  (104-106), settles (110); contractors split with blood on the cut. The steel smear (0.4 alpha) is
+  invisible on the cream pavement. 48 px/m (frames 40-76 every 4th): the blade reads on the art-tier
+  sprite; it starts at his shoulder side (the sprite does not turn with an arm: a guessed hand point).
+  CLIP `M/quest1_katana_ab_32ppm.mp4` (before `--quest-blade=off` | after; the before's Rivet shoots
+  from range, the after's pad walks him in).
+- MILESTONE 21:58 `becfeb7f` the sprite cast's blade smear is cream edged in ink (MeleeWeaponView
+  `smear_ink`, set by CastBladeView; the rig path keeps steel). LOOK 48 px/m (steel48 vs ink48, the
+  frames that differ: 3, 26, 83; crops x2): steel is a faint grey wedge on asphalt, the cream wedge
+  with its ink edge reads. CLIP `M/quest1_katana_smear_ab_48ppm_half.mp4`; the 32 px/m A/B re-rendered
+  with the final smear.
+- AUDIT 22:00 Dent's blow (NEXT 2): the strike had no feel (hit_feel.json had no `dent_car` row; the
+  MeleeFeel class route skips a weapon with no class). Tonnage plates: no spark seen at 48 in the
+  every-20th sheet (not measured frame by frame). Ohm mass arc: not in the reel's beat.
+- MILESTONE 22:03 `4a522dfe` dent_car row (class ram). MEASURE (arena `--bot=ghosts --ghost=dent`,
+  32 px/m, 420 frames; on vs `--feel=off` vs the pre-row data; phase correlation on a 900x600 crop
+  against off frame 117): on: (-12, 5) px held frames 117-123 (the stop holds tick 117), then
+  (1,-7) (-4,5) (-7,-5) (2,3) ... settling by 130; pre-row = feel-off exactly (0 px differ, frames
+  114-130). LOOK (clip frame at the strike): the car, the thrown cop and blood in frame; cops blue.
+  CLIP `M/dent_car_blow_ab_32ppm_04x.mp4`. Registry rule applied (realtime-combat-semantics: feel
+  keyed to the contact tick and scaled by the hit's class; the cap via FeelBudget stays ranged's).
+- DECISION 22:03: Dent's blow takes the `ram` class (a vehicle striking a body = a ram), not `blast`
+  (that is the car's explosion, a separate, bigger beat). Alternative: delete the row (not felt).
