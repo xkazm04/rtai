@@ -5,7 +5,7 @@ the two unbuilt picks. Branch `d7-calls`, cut from main `1028c15d`. Evidence: `M
 `C:\Users\kazda\kiro\gtai-masters\d7\calls\` (`frames.json` lists the stills and clips, newest first).
 Every old default stays one flag or one data value away.
 
-**Status (iteration 5, 17:45): complete.** Every call in the brief is built, gated and filmed; the exe is
+**Status (iteration 6, 18:08): complete.** Every call in the brief is built, gated and filmed; the exe is
 exported. After that, the weakest item was raised: the Gatling now prints tan steel, not an ink bar (6179bf2d).
 
 ## What works (with evidence)
@@ -106,7 +106,8 @@ chapters fully down, 0 SCRIPT ERROR (`evidence/reel-director-arena-it6.log`).
    side and every gun changes. C: the old ink-bar Gatling (`git show 2a28d331:<its held_small.png> | git lfs smudge`, the PNGs are in LFS; or re-run `held_small.py gatling` without the two dict rows). See
    `M/frames/look-8-gatling-city-ab-48ppm.png` and `-city-ab-32ppm.png` (city block: at 32 px/m A is a clean ink
    rod with a tan sliver where the old one broke into ink/cream dashes), `M/frames/look-8-gatling-edge-steps-32ppm.png` (old | A | B),
-   `RTAI.exe -- --loadout=gatling --weapon=gatling --bot=range --ppm=48`.
+   `RTAI.exe -- --loadout=gatling --weapon=gatling --bot=range --ppm=48`; in motion in the city block:
+   `M/look-8-gatling-city-32ppm.mp4` (`RTAI.exe -- --arena=city --loadout=gatling --weapon=gatling --bot=gunplay --ppm=32`).
 
 ## Next steps
 - The owner's verdicts on the calls above; each flips with the flag or value named there.
