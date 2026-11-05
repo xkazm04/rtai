@@ -80,7 +80,7 @@
       "solid": false
     },
     {
-      "art": "res://features/city/art/ground/curb_straight_tone.png",
+      "art": "res://features/city/art/ground/curb_straight_tone_jt.png",
       "class": "ground",
       "id": 7,
       "name": "curb_straight_tone",
@@ -91,7 +91,7 @@
       "solid": false
     },
     {
-      "art": "res://features/city/art/ground/curb_straight_tone_b.png",
+      "art": "res://features/city/art/ground/curb_straight_tone_b_jt.png",
       "class": "ground",
       "id": 8,
       "name": "curb_straight_tone_b",
@@ -102,7 +102,7 @@
       "solid": false
     },
     {
-      "art": "res://features/city/art/ground/curb_straight_tone_c.png",
+      "art": "res://features/city/art/ground/curb_straight_tone_c_jt.png",
       "class": "ground",
       "id": 9,
       "name": "curb_straight_tone_c",
@@ -113,7 +113,7 @@
       "solid": false
     },
     {
-      "art": "res://features/city/art/ground/curb_corner_tone.png",
+      "art": "res://features/city/art/ground/curb_corner_tone_jt.png",
       "class": "ground",
       "id": 10,
       "name": "curb_corner_tone",
@@ -146,7 +146,7 @@
       "solid": false
     },
     {
-      "art": "res://features/city/art/ground/sidewalk_tone.png",
+      "art": "res://features/city/art/ground/sidewalk_tone_jt.png",
       "class": "ground",
       "id": 13,
       "name": "sidewalk_tone",
@@ -905,7 +905,7 @@
       "solid": true
     },
     {
-      "art": "res://features/city/art/ground/curb12_straight_tone.png",
+      "art": "res://features/city/art/ground/curb12_straight_tone_jt.png",
       "class": "ground",
       "id": 82,
       "name": "curb12_straight_tone",
@@ -916,7 +916,7 @@
       "solid": false
     },
     {
-      "art": "res://features/city/art/ground/curb12_straight_tone_b.png",
+      "art": "res://features/city/art/ground/curb12_straight_tone_b_jt.png",
       "class": "ground",
       "id": 83,
       "name": "curb12_straight_tone_b",
@@ -927,7 +927,7 @@
       "solid": false
     },
     {
-      "art": "res://features/city/art/ground/curb12_straight_tone_c.png",
+      "art": "res://features/city/art/ground/curb12_straight_tone_c_jt.png",
       "class": "ground",
       "id": 84,
       "name": "curb12_straight_tone_c",
@@ -938,7 +938,7 @@
       "solid": false
     },
     {
-      "art": "res://features/city/art/ground/curb12_corner_tone.png",
+      "art": "res://features/city/art/ground/curb12_corner_tone_jt.png",
       "class": "ground",
       "id": 85,
       "name": "curb12_corner_tone",

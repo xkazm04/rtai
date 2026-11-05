@@ -20,3 +20,4 @@
 
 ## Iteration 11 (2026-11-05 02:25-02:40)
 - `after-it11-splat/`: the same city_frame shots (`--zooms=1,2 --foci=0,4`) with `world_riso.splat_k` 0.8 (splat_scale 0.07, splat_cut 0.79, splat_tone 0.5/0.48/0.47). Before = `after-it10-tone/`. Composite: `gtai-masters/n5/look/print-splat-it11-city0-vs-r2a5.png` (top: before | splat | r2_a5 at 32 px/m, 2x crops of city-0; below: before | splat at 64 px/m).
+- `after-it13-joint/`: the same city_frame shots (`--zooms=1,2 --foci=0,4`) with the paving joints re-inked (`tools/art/joint_tone.py`, city_textures.json -> `*_jt.png`). Before = `after-it12-crack/`. Heavy joint at 32 px/m (city-0, x=30): (37,32,32) -> (86,78,74); r2_a5's joints about (95,82,70). Composite: `gtai-masters/n5/look/print-joint-it13-city0-vs-r2a5.png` (rows: 32 px/m 2x crop, 32 px/m 1x, 64 px/m; before | after | r2_a5).
