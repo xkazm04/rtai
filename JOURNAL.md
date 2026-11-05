@@ -371,3 +371,52 @@ riders hanging on the car's sides rather than standing at its corners.
 lint 13/13; unit 1128/0 (`unit-it2c.log`, at 2f012dea; b0ee403d is a drawn-car view change);
 scenarios 52 ran / 0 failed (`scenarios-it2b.log`); director reel 19/19 (at 745ce3cf; the shared
 combat code has not changed since). Session stops here; NEXT is the iteration-3 list above.
+
+## Iteration 3 (session from 20:36)
+
+Read: JOURNAL, git log, servo's JOURNAL (REQUEST 4 open), BOSSES.md target image again.
+Registry rules applied: `combat-pacing-and-dramatic-arc` (the phase-3 signature move must
+actually happen, or phase 3 has no new beat), `encounter-balance-simulation` (a stander and a
+dodger as the two ends; numbers with n stated), `motion-quality-gating` (judge in motion, at
+48 px/m, frame strips, not one still).
+
+### 20:38 REQUEST 4 from servo taken (d86e36fe)
+Cherry-picked servo's 567ef26b (`bodies()`, `threat_away()`, `telemetry()` on BossMoves; BossHook
+syncs the bodies; BossBot reads threat_away; dev `--seed=<n>`). Conflict in boss_moves.gd taken
+from servo's c37ea648 (which already holds both sides: their hooks + my write_state detour).
+
+### MILESTONE 20:44: King's gold at game zoom (a02406bb)
+- DECISION: no image generation for King's wealth tonight. At 32 px/m the rig prints flat
+  stickers (PartMaterials LOD), so a new gold part sheet would not show at game zoom (the gang's
+  gold chains proved it in iteration 2). Instead a print swap: `print_part` swap 5 = gold leaf
+  (paper and wash print GOLD..GOLD_DK, ink kept), at every zoom; `BodyPlan.arm_swap` (forearms +
+  hand). `KingRigs.king_plan()` gilds the chest and press arms; KingPlan (the enemy-ai thug's base)
+  and ThugPlan stay steel (unit test_king_gold 3/3). Alternative = `KingRigs.GOLD_SWAP = -1`.
+- Looked at it: `evidence/king/shots/gold_ab_p3_32ppm_2x.png` (32 px/m, 2x crop; left the first
+  darker gold mapping, right the shipped one). The press arms read gold beside the vermilion
+  cape and the drawn gold crown; the torso is mostly under the crown at this zoom.
+- Each attack now plays on King's rig from its windup (RigClips.strike on the attack's own
+  timing: twist back through the tell, strike on active, ease back over recovery; the slam lifts
+  both plates through the tell via the hands-up envelope). Per-attack arm in `ATTACK_ARMS`.
+- unit 1131/0 (`evidence/king/unit-it3a.log`).
+
+### FOUND 20:47: the press slam never fires against either bot
+Both bots hold an 8 m band; the slam reached 6 m and its ring sat on King himself. So phase 3
+was charge + coin fan only and the slam was unmeasured.
+### MILESTONE 20:52: the leaping slam (376d3875)
+- Generic `BossAttack.leap_m` (bosses.json, schema `leap_m` 0-20): a circle's ring tracks Rivet up
+  to leap_m out, locks, and the boss hops onto it during the lock, landing as the windup ends.
+  King's slam: leap_m 6, max_m 10. `test_boss_leap` 3/3 incl. planted leap_m 0 (misses the stander).
+- `KingShock`: on impact an ink-and-gold shockwave ring runs out to the hit radius with 22 coins
+  bursting out (render only, golden-ratio scatter, no RNG).
+- `--boss-cam` (BossCam, view only): camera 0.45 of the way from Rivet to the boss, for clips.
+- Looked at it in motion: `evidence/king/shots/slam_frames_48ppm_it3.png` (8 fps strip, 48 px/m):
+  thin ring tracking ahead of King, plates up, ring fills at the lock, the hop, the shockwave and
+  coins, plates down-forward in the recovery. Reads.
+- Numbers (CONTENDED, n=1, phase 3 only, 900 ticks): stander slam 1/1 landed, charge 1/2, coin 1/1,
+  66 dmg; dodger slam 0/1, charge 0/2, coin 0/1, 0 dmg (`evidence/king/slam-{stand,dodge}-it3.json`).
+  With leap_m 5 the band-holding stander backed out of the ring (0/1): 6 is the value that lands.
+- Clips: `gtai-masters/n7/king/king_slam_stand_48ppm_it3.mp4` (telegraph, hop, hit),
+  `king_phase3_dodge_48ppm_it3.mp4` (15 s, all three phase-3 attacks dodged).
+- Note: I amended 376d3875's message once (two staged changes went into one commit after a lint
+  fail); lint re-run on the tree after: 13/13.
