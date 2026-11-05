@@ -691,3 +691,9 @@ Session state 05:05: head = this commit, tree clean, no Godot process of mine ru
 - 05:41 GATES evidence runner `--no-bench` on 95aa969e, still tree (E:evidence-run-it9.log): PASS lint 13/13, unit
   1008/0, scenarios 47, parity bit-exact (mutation caught at 629), look goldens 11/11 (worst 1.22), block 5/5 (worst
   1.38): no re-bless.
+- 05:45 MERGE n6-ghost-powers cefbcf8b (Dent's missed reach: the teal tether lashes out and frays with no car;
+  Tonnage's 4 m stomp ring on the street) as dd93a89d; their it7 log copies match our saved `*-powers.log`, ours
+  kept. MERGE n5-cast 551ed9c6 (dark ped heads: coat-hat crown, coat-hood) as 9b0b616c. JOURNAL/REPORT keep ours.
+  Unit (with import) and the director reel on 9b0b616c running.
+- 05:47 On the merged head 9b0b616c: unit (with import) 1010/0 (E:unit-it9-merged.log); COMBAT CHECK director reel
+  16/16 chapters down, 0 SCRIPT ERROR (E:director-reel-it9-merged.log).
