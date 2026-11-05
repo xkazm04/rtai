@@ -57,7 +57,7 @@ Detail and every measurement: `JOURNAL.md`. Decisions: `docs/decisions.md` (line
 - unit 949/950 (the one failure is the known `test_noir_shadows` flake; it passes 2/2 alone);
 - scenarios 46/0.
 
-The last full evidence gate was green on 4677e177 (2026-11-05 04:58, the muzzle flash, the comet tracer and the violet arc): lint 13/13, unit 958/0, scenarios 46, parity bit-exact, look goldens 11/11 (worst 0.00, re-blessed at ef4dda00 for the joints) + block 5/5, world lock 0.00 %.
+The last full evidence gate was green on 9cc56a51 (2026-11-05 05:10, the muzzle flash, the comet tracer, the violet arc and the plasma comet; `scenario_rig_stress` failed its 1 ms timing budget once under contention and passed 2/2 alone): lint 13/13, unit 958/0, scenarios 46, parity bit-exact, look goldens 11/11 (worst 0.00, re-blessed at ef4dda00 for the joints) + block 5/5, world lock 0.00 %.
 
 ## What doesn't (yet)
 - **Pickups:** the ring and the fill now follow r2_w8 (see item 7 above); the side views themselves (gunmetal tone) do not yet.
