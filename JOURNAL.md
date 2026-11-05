@@ -743,3 +743,10 @@ Session state 05:56: head = this commit, tree clean after it, no Godot process o
   13/13. frames.json 15: + the lift A/B third; the card-fold A/B named in it (file kept). Seen, not ours: the
   longest quest 1 line overflows its subtitle box (REPORT note for the HUD owner).
   Registry rule applied (motion-quality-gating): same input, same frames A/B on the shipped path.
+- 06:19 GATES evidence runner `--no-bench` on 9d610364, still tree (E:evidence-run-it11.log): PASS lint 13/13, unit
+  1013/0, scenarios 47, parity bit-exact, look goldens 11/11 (worst 1.32), block 5/5 (worst 1.52); no re-bless.
+- 06:20 PROOF the all-four cycle re-filmed on 9d610364 (`film.sh` arena `--bot=forms --form=all`, 900 frames, 0
+  SCRIPT ERROR): `M:forms-cycle-all-32ppm.mp4` replaces the 02:27 cut. Same-frame A/B x3 centre crops (225 Tonnage,
+  450 Dent, 525 Kerf, 675 Ohm, 825 base): `M:frames/forms-cycle-all-ab-32ppm-x3.png`. Judged: Tonnage and Dent
+  unchanged; Kerf's limbs now read as limbs (were hairlines); Ohm reads as a teal-seamed shell with arms (was a
+  brown blob); base Rivet the merged slim body. frames.json 15 (the cycle entry names the A/B).

@@ -186,6 +186,14 @@ about 0.8 m for Tonnage at 64 px/m. A/B same input: `M:frames/tonnage-subtitle-l
 (before, the press's lower legs sit under the box's tape; after, the whole press reads). `ghost_forms.json`
 `story_lift` false = before. Unit 1013/0; director reel 16/16 on the merged head.
 
+### Gates (iteration 11)
+On 9d610364, still tree (E:evidence-run-it11.log): evidence runner `--no-bench` all PASS: lint 13/13, unit
+1013/0, scenarios 47, parity bit-exact (mutation caught at 629), look goldens 11/11 (worst 1.32), block goldens
+5/5 (worst 1.52): no re-bless. Director reel 16/16 chapters down, 0 SCRIPT ERROR on the merged head
+(E:director-reel-it11-merged.log). The all-four cycle `M:forms-cycle-all-32ppm.mp4` re-filmed on this head
+(it dated from 02:27, before Ohm's and Kerf's limb fixes, the seams and the cast merges); same-frame A/B
+`M:frames/forms-cycle-all-ab-32ppm-x3.png`.
+
 ## What does not work / is open
 - Nothing open in this lane's list. Dent's attack in quest 1 is a no-op (no vehicles there); that row belongs to
   the ghost-powers REPORT.
