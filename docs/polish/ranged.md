@@ -34,7 +34,7 @@ Anticipation / Impact / Read 32 / Victim sync / Sound (arena). `?` = not looked 
 | 6 | homing_shard | 2 | 2 | 2 | 2 | 0 | the lozenge shards read in flight, a star on the hit frame and a small jolt/turn; the pop and the blood come at about T+40 (owner item 4: 3 + 36 grind ticks, JOURNAL) |
 | 7 | hand_cannon | 2 | 2 | 3 | 3 | 0 | ring at the muzzle, ink star + blood on the hit frame, body thrown; no camera answer for the heaviest single shot |
 | 8 | ray_gun | 2 | 2 | 2 | 2 | 0 | ink bolt and star on the hit frame, a pale ring at the body; the kill reads as a faint flash, the body barely answers at 32 px/m |
-| 9 | flamethrower | ? | 2 | 2 | 3 | 0 | burn death: star and a charred black body on the kill frame, scorch marks stay; the stream itself was not in the sampled frames |
+| 9 | flamethrower | 2 | 3 | 3 | 3 | 0 | it3 48 px/m: the vermilion/cream tongues grow from the nozzle over about 12 frames and light the cop on contact, patches stay; the ignition had no beat -> `e32720c4` a 3 px kick on the first puff |
 | 10 | molotov | ? | 3 | 3 | 3 | 0 | the fire patch reads at a glance (vermilion and cream flame cluster), the burning cop dies charred with a star; the throw not judged |
 | 11 | pistol | 1 | 2 | 2 | 3 | 0 | Rivet's round is a 1-2 frame streak (the muzzle hardly reads at 32 px/m); blood spurt on T+1, the fall reads |
 | 12 | machine_pistol | 1 | 2 | 2 | 3 | 0 | each round sprays sparks and the body bleeds on the hit frames; the burst reads, Rivet's muzzle hardly does |
@@ -104,3 +104,13 @@ scratch audit folder: `<w>-off.avi`, `sheets/<w>-off-k2.png`.
 - How sync works for every gun (read, not measured per weapon): StageAudio cues the shot on the
   frame a round appears in `CombatArena.shots` and the impact on the frame it leaves, in the same
   `_process` as the view; so impact sound is on the hit frame by construction (+0..1 frame).
+
+### flamethrower ignition (brief item 5, `e32720c4`)
+- Before: the stream grows from the nozzle (about 12 frames to the cop at 4 m); nothing marks the
+  moment it lights (anticipation 2 at best).
+- After: hit_feel.json `weapons` flamethrower `ignite_kick_px` 3 (`fire_kick_ticks` 9): the first
+  puff after a 20-tick rest (`FeelCam.IGNITE_IDLE_TICKS`) kicks the camera back against the
+  stream; the puffs themselves never kick (about 20 a second would blur).
+- Measured (phase correlation, floor crop, frames 36-65): one 2.9 px jump at frame 45, eased back
+  by frame 52, then still while the stream fires; `--feel=off` 0.0. Clip
+  `flamer_ignite-ab-32ppm.mp4`. Subtle at 32 px/m; not judged by eye in motion yet.

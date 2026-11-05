@@ -314,3 +314,35 @@ so "19/19" proved the reactions and kills, not the arsenal's own paths. Re-runni
 `--loadout=pistol` (below). From now on the reel gate runs both ways.
 - FRICTION 20:47: `--arena=city --chapter=<id>` alone fires the rocket short onto the road (0/1
   down in 380 frames); single-chapter city films are not the city reel. Deleted them.
+
+### GATE 20:49: pit director reel WITH `--loadout=pistol` on `0d4089f1`
+19/19 chapters fully down, 0 SCRIPT ERROR, no "skipped" line (`evidence/ranged/it3-reel-director-loadout.log`):
+the first reel of the night that fired Rivet's own arsenal in every gun chapter.
+
+### MILESTONE 20:50: 48 px/m close-up of the heavy feel (`heavy_feel-ab-48ppm.mp4`)
+Hand cannon kill on movie frame 49, stop held 51-55; rocket blast on frame 64, stop held 65-72;
+`--feel=off --end-cue=off` vs on, director chapters with the loadout. LOOK (stills): the after
+holds the impact star / the first blast frame where the before has already moved on; the after
+runs behind by the stop, so side by side shows different phases (noted in frames.json).
+
+### MILESTONE 20:52: `e32720c4` the flamer's ignition kick (brief item 5)
+`ignite_kick_px` (optional) on hit_feel weapons rows; flamethrower 3 px / 9 ticks on the first
+puff after a 20-tick rest; puffs do not kick. Unit `test_feel_ignite` 2/2; planted fault
+(IGNITE_IDLE_TICKS 0: every puff kicks) -> 1 failing. MEASURE: one 2.9 px jump at frame 45, back
+by 52, still after; `--feel=off` 0.0. Clip `flamer_ignite-ab-32ppm.mp4` (frames.json now 10
+rows). Audit row 9 scored (2/3/3/3). Not judged by eye in motion.
+
+NEXT (iteration 4):
+1. Gates on head (last full unit 1129/0 at `0d4089f1`, scenarios 52/0 at `015517e2`): full unit +
+   scenarios + the city reel (`--arena=city --bot=reel --reel=director`, both with and without
+   `--loadout=pistol`); then `node tools/evidence/run.mjs --no-bench` (tree untouched during it).
+2. City-block combined clip (30-90 s, 32 px/m) of the polished set: record ONE full city reel with
+   `--loadout=pistol --write-movie` and cut chapters by the "director chapter <id> at tick N" log
+   lines (single `--chapter` city films do not frame: the rocket lands short).
+3. Judge by eye in motion what is only measured: Gatling rumble + spin-up, flamer ignition (3 px
+   may be too timid at 32 px/m: try 4-5), electro snap. If timid, tune by data, re-measure.
+4. Brief item 6: quest 1 fires the table guns (GunHand + LiveInput.px_per_m in quest 1); expect a
+   quest 1 replay re-bless with a decision line. Biggest remaining brief item.
+5. FightCam framing at 64 px/m (Rivet half off frame; blasts half off at 32 on wave 2): capture only.
+6. Audit gaps: gloria, assault-rifle (`--loadout`), molotov throw anticipation.
+7. REPORT calls so far: shard pop (36 vs `--shard-pop=12`, clip in masters). Exe by 08:30.
