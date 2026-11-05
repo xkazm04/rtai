@@ -11,6 +11,8 @@ extends RefCounted
 
 const ID: StringName = &"gearbox"
 const GHOST: StringName = &"dent"
+## A landing spot this close to another car's centre is on that car (a car is ~4.6 x 1.9 m).
+const HOP_CLEAR_M: float = 2.6
 
 var powers: SoulPowers
 var link: GearboxLink
@@ -181,10 +183,29 @@ func _blast(stage: ArenaStage) -> void:
 	car.state = stage.vehicles.rules.state_for(car.hp_lost, car.soul_hijacked)
 	car.vel = Vector2.ZERO
 	if riding():  # he jumps clear behind it as it goes up
-		var hop: Vector2 = blast_at - car.head * num(&"ride_hop_m")
-		stage.arena.rivet.pos = stage.walls.push_out(hop, stage.arena.rivet.radius_m)
+		stage.arena.rivet.pos = _hop_spot(stage)
 	link.crashed = true
 	_let_go()
+
+
+## Where Dent lands: ride_hop_m behind the blown car, else to its left or right, the first spot
+## with no other live car within HOP_CLEAR_M (a parked car is not a wall); walls push it out.
+func _hop_spot(stage: ArenaStage) -> Vector2:
+	var hop: float = num(&"ride_hop_m")
+	var side: Vector2 = car.head.orthogonal()
+	var spots: Array[Vector2] = [-car.head * hop, side * hop, -side * hop]
+	for off: Vector2 in spots:
+		var p: Vector2 = stage.walls.push_out(blast_at + off, stage.arena.rivet.radius_m)
+		if _clear(stage, p):
+			return p
+	return stage.walls.push_out(blast_at + spots[0], stage.arena.rivet.radius_m)
+
+
+func _clear(stage: ArenaStage, p: Vector2) -> bool:
+	for b: VehicleBody in stage.cars():
+		if b != car and b.state != VehicleBody.State.WRECK and b.pos.distance_to(p) < HOP_CLEAR_M:
+			return false
+	return true
 
 
 func _let_go() -> void:
