@@ -7,7 +7,8 @@ extends MeleeWeaponView
 ## dead, no ghost form standing in). The rig cast (dev `--rigs`) has RivetHeldView instead.
 ## View only: headless runs attach nothing, so scenarios and replay are untouched.
 
-## The hand point off the sprite's centre (m): ahead along the facing and out to his gun side.
+## The hand point off the sprite's centre (m): ahead along the facing and out to the side (+ =
+## facing.orthogonal(), where the sprite draws his claw; - = the other side).
 const HAND_AHEAD_M: float = 0.45
 const HAND_SIDE_M: float = 0.4
 ## A two-hand blade sweeps wider than a one-hand one (the rig clip's values).
@@ -45,5 +46,5 @@ func _process(_delta: float) -> void:
 		length_px = table.length_m * ppm
 		sweep_rad = SWEEP_TWO_HAND if table.grip == &"two_hand" else SWEEP_ONE_HAND
 	var face: Vector2 = rivet.facing if rivet.facing != Vector2.ZERO else Vector2.RIGHT
-	var hand: Vector2 = rivet.pos + face * HAND_AHEAD_M + face.orthogonal() * -HAND_SIDE_M
+	var hand: Vector2 = rivet.pos + face * HAND_AHEAD_M + face.orthogonal() * HAND_SIDE_M
 	track_at(hand * ppm, face, pilot.melee.combo)
