@@ -959,3 +959,9 @@ Session end 03:30: tree clean after this commit, no Godot process of mine runnin
   frames.json 15 (+ rivet-visor-slot-ab and visor-slot-quest1-ab on top; dropped from the list, files kept as REPORT
   cites them: collar-ticks-lineup-32ppm, crowd-r7-hoodie-ab). REPORT: section 3 bullet, section 4 composite, Call 8
   (B built), gates line for iteration 15.
+- 03:52 FINDING (scope check for the visor): KingPlan and ThugPlan are built from `RivetPlan.build()`. Thugs drop the
+  collar (PART heads, no slot), but King keeps the collar core, so 26c1e08a put a dark slot on his symmetric star crown
+  at 32 px/m (no visor in his art). FIX 18b74bd8: `BodyPlan.head_visor` (Rivet true; King and thug false), the HEAD kind
+  only when set; unit 949/0 (+ only-Rivet test); Rivet's lineup pixel-identical to 26c1e08a. Decisions line.
+  - FRICTION: one unit run without GODOT_BIN exported printed "exit -1 ... (948 passed)" from the cached evidence; the
+    count in that line is stale when the exits are -1. Always export GODOT_BIN in the same command.
