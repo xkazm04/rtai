@@ -410,3 +410,11 @@ NEXT (written 22:20, for iteration 5):
   prints where they meet the plates; the press shows no reaction. Not yet checked frame by frame
   (a spark could fall between samples): next iteration, diff frames 80-120 one by one against
   `--feel=off`, then build an ink spark per deflected round if nothing is there.
+- FINDING 22:27 (plates, frame by frame 84-113, 360x220 crops at the press's cop side): the cops'
+  tracers fly onto the press and their dashes draw ON the press body (frames ~93-104) with no spark,
+  no glance and no mark: at 48 px/m the rounds read as passing through Tonnage. Plates scores (48):
+  antic. n/a, impact 1, read 1, victim sync n/a, sound 1. NEXT 3 is now a build item: an ink-and-
+  cream spark at the plate edge per round that armor_k turns, the tracer cut at the plate (view
+  only, data row in ghost_attacks.json tonnage with an off value), gated with a per-tick cap (a
+  Gatling cop must not blur the press).
+- STOP 22:28 iteration 4 (final). NEXT is the 22:20 entry, with item 3 updated by this finding.
