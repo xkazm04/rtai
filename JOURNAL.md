@@ -404,3 +404,9 @@ NEXT (written 22:20, for iteration 5):
 - STOP 22:24 iteration 4. Head: gates full green on `29d44643`; since then a view constant, a hint
   (unit 1165/1165), docs; scenarios 52/52 with the rig flake re-run alone; director arena 19/19
   (`29d44643`) and city 19/19 (`806a657e`). NEXT is the 22:20 entry above (item 2 is done: `5f80e67c`).
+- FINDING 22:28 (NEXT 3, measurement only): Tonnage under fire, arena `--bot=ghosts --ghost=tonnage
+  --ppm=48`, 330 frames (`scratch/melee/plates_48.avi`), sheet frames 60-180 every 6th, 640x400
+  crops: the cops' tracers (small vermilion dashes) reach the press on frames ~84-114 and nothing
+  prints where they meet the plates; the press shows no reaction. Not yet checked frame by frame
+  (a spark could fall between samples): next iteration, diff frames 80-120 one by one against
+  `--feel=off`, then build an ink spark per deflected round if nothing is there.
