@@ -8,6 +8,7 @@ Detail and every measurement: `JOURNAL.md`. Decisions: `docs/decisions.md` (line
 1. **The print, toward the riso middle ground** (r2_a5 + r1_a1). It's a riso layer inside `look_d5`, set by one dial (`world_riso.riso`); `--look=today` gives the old print for A/B.
    - What's in the layer: world-locked fine halftone, small per-plate misregistration, paper fibre, the tan stained sheet (`tan_k`, `stain_k`), and grain toned down (0.5 -> 0.3, not removed).
    - Iteration 9: r2_a5's grain is back, toned down: sparse world-locked 1 px toner specks on the paper and light fills (`world_riso.speck_k` 0.4, `speck_density` 0.07; 0 = before). The it2 sheet had gone smooth. The pan residual on light ground is 3.39 % with the specks off vs 3.47 % on, so they are world-locked. The goldens stay inside the gate (worst mean 0.59), so they were not re-blessed. Evidence: `print-speck-it9-2x-vs-r2a5.png` (today | it2 | it9 | target, 2x crops) and `arena-speck-ab-32ppm-it9.mp4` (20 s, off | on).
+   - Iteration 9: uneven riso inking. The halftone's contrast dips in soft world-locked patches (`world_riso.dot_patchy` 0.7; 0 = even), so the alley lane's dot screen stops reading as a mechanical pattern (last row of `alley-it7-ab-48ppm-vs-r2a6.png`).
    - The building cast shadow went from 1.1 m to 0.45 m, so there are no long casts.
    - Blood stays the only deep red: the tan and the stains apply to neutral pixels only.
    - Evidence: `print-3way-city-32ppm-it2.png` (today | ours | target), `print-pan-today-vs-riso-32ppm.mp4` (the shimmer check: the residual after the camera shift matches today's, 1.29 %), `arena-reel-today-vs-riso-it2-32ppm.mp4` (the fight is identical tick for tick).
@@ -43,7 +44,7 @@ Detail and every measurement: `JOURNAL.md`. Decisions: `docs/decisions.md` (line
 - unit 949/950 (the one failure is the known `test_noir_shadows` flake; it passes 2/2 alone);
 - scenarios 46/0.
 
-The last full evidence gate was green on d7c8ee58 (2026-11-05 01:24): lint 13/13, unit 957/0, scenarios 46, parity bit-exact, look goldens 11/11 + block 5/5.
+The last full evidence gate was green on f55af327 (2026-11-05 01:35): lint 13/13, unit 957/0, scenarios 46, parity bit-exact, look goldens 11/11 + block 5/5 (worst mean 1.29 of 4), world lock 0.00 %.
 
 ## What doesn't (yet)
 - **Pickups:** the ring and the fill now follow r2_w8 (see item 7 above); the side views themselves (gunmetal tone) do not yet.
