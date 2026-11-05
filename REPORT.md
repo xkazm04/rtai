@@ -65,6 +65,12 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   so Rivet's head carries r2_c7's dark slot and shows where he faces at game zoom (the 2 px art visor merged into the
   outline). 64 px/m is pixel-identical. `M/frames/rivet-visor-slot-ab-32ppm.png`, `M/cast-visor-director-ab-32.mp4`; quest 1
   Dock 9, same ticks: `M/frames/visor-slot-quest1-ab-32ppm.png`. Director reel 16/16 down, 0 script errors. Call 8.
+- Tan work plates at 32 px/m (3ceb3e30, iteration 16-17): Rivet's torso, pelvis and helmet stickers print a pale tan
+  (`PartMaterials.CORE_TAN` 0.6) instead of cream, toward the tan-grey Rivet of r2_c3/r2_c6/r2_c7. On the cream slab the
+  cream core had vanished; on asphalt the change is quiet (warm beige for white). Rivet only (`BodyPlan.core_tan`); King
+  keeps cream; 48 px/m and up pixel-identical. `M/frames/rivet-core-tan-ab-vs-targets-32ppm.png`,
+  `M/frames/rivet-core-tan-director-crops-32ppm.png`, `M/cast-tan-director-ab-32.mp4`, `M/cast-tan-city-ab-32.mp4`.
+  Director reel 16/16 down, 0 script errors. Call 9.
 - Torch tip cream (iteration 14): Rivet's torch tip printed teal (teal is for souls only; r2_c3's tip is pale); now a
   cream ramp at its own value, D4 and D5: `M/frames/rivet-torch-cream-ab.png` (32/64 px/m, slab and road),
   `M/frames/rivet-torch-cream-director-32ppm.png`.
@@ -146,6 +152,10 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   Live city block on the final parts, same sim as e1f848a5: `M/frames/city-r7peds-ab-32ppm.png` (`M/cast-r7-city-32.mp4`);
   the target composite `M/frames/cast-ingame-vs-r2c6.png` is re-shot on them.
 
+### Gates (iteration 17, final `tools/evidence/run.mjs --no-bench` on 08b1f7bc (the tan core, 3ceb3e30): ALL PASS:
+lint 13/13, unit 954/0, scenarios 46, parity exact (mutation caught at 629), look goldens 11/11 (worst 1.22); no re-bless.
+Director reel headless `--loadout=pistol` 16/16 chapters down, 0 script errors. Bench not run (other lanes' Godot
+running: frame cost CONTENDED/unmeasured).
 ### Gates (iteration 15, final `tools/evidence/run.mjs --no-bench` on c3a9ebf2 (the visor slot scoped to Rivet, 18b74bd8):
 ALL PASS: lint 13/13, unit 949/0, scenarios 46, parity exact, look goldens 11/11 (worst 1.22), block 5/5 (worst 1.38).
 Before it, on e7c055be (the visor slot): ALL PASS: lint 13/13, unit 948/0,
@@ -247,6 +257,15 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
    Rivet only (`BodyPlan.head_visor`): King's symmetric star crown, built on Rivet's plan, keeps the plain head.
    Tried and not built: two 1 px cream eye glints in the slot (r2_c3's slits): eyes at x7, speckle at 1x
    (`M/frames/visor-glint-trial-32ppm.png`).
+
+9. Rivet's body tone at 32 px/m: A, tan work plates (built, 3ceb3e30, iteration 16-17): below the sticker threshold
+   his torso, pelvis and helmet print `mix(CREAM, TAN, PartMaterials.CORE_TAN)` with CORE_TAN 0.6 (`PartKind.TAN_CORE`,
+   Rivet only via `BodyPlan.core_tan`; King keeps cream), toward the tan-grey Rivet of r2_c3/r2_c6/r2_c7; or B, the
+   cream core (`CORE_TAN` 0.0), which vanishes on the cream slab and reads as a white dot on asphalt; or C, the full
+   tan (`CORE_TAN` 1.0), closer to r2_c7's brown but muddy against the collar on asphalt. The limbs stay cream rods
+   (the lanky read); 48 px/m and up is pixel-identical (the art tier, Call 5 governs it). Same ticks, B | A | C
+   beside the targets: `M/frames/rivet-core-tan-ab-vs-targets-32ppm.png`; lineup slab and road at 0 / 0.5 / 1.0:
+   `M/frames/rivet-core-tan-lineup-32ppm.png`; live A/B: `M/cast-tan-director-ab-32.mp4`, `M/cast-tan-city-ab-32.mp4`.
 
 ## Next steps
 See the last `NEXT` entry in `JOURNAL.md`.

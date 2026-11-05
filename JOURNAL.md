@@ -1002,3 +1002,15 @@ Session end 04:09: tree clean after this commit, no Godot process of mine runnin
   fix matches the 0.6 trial (scratch i17/check.png, 0 / 0.5 / built / 1.0, slab and road). Lint 13/13, unit 954/0.
   Registry rule (`shader-budget-authoring`): one mix in the existing sticker branch, no fetch, no pass.
 - MILESTONE 3ceb3e30: Rivet's core sticker prints tan at 32 px/m (revert = CORE_TAN 0.0). Decisions line.
+- 04:31 EVIDENCE GATE on 08b1f7bc (clean tree): ALL PASS: lint 13/13, unit 954/0, scenarios 46, parity exact
+  (mutation caught at 629), look goldens 11/11 (worst 1.22). No re-bless. Bench skipped (other lanes' Godot running).
+  COMBAT CHECK director reel headless (`res://dev/arena/arena.tscn -- --bot=reel --reel=director --clean --rigs
+  --loadout=pistol`, 7200 frames): 16/16 chapters down, 0 SCRIPT ERROR. (FRICTION: without the scene path the args
+  are ignored by boot and nothing runs; always pass `res://dev/arena/arena.tscn`.)
+- 04:40 clean live A/B: re-filmed the before clip at CORE_TAN 0 by a local edit, reverted with git checkout (never
+  committed); the iteration 16 before clip carried the telemetry HUD. `M/cast-tan-director-ab-32.mp4` (19 s),
+  `M/cast-tan-city-ab-32.mp4` (15 s), crops `M/frames/rivet-core-tan-director-crops-32ppm.png`. Honest read: on the
+  grey concrete and asphalt the change is quiet (warm beige for white); it matters most on the cream slab, where the
+  cream core had vanished. Deleted the six single tan clips (both sides live in the A/B clips) and the i16/i17 scratch
+  renders. frames.json 15 (+3 tan on top; dropped from the list, files kept: crowd-r6-ab, city-r7peds-ab,
+  crowd-quest1-vs-r1c6). REPORT: section 3 bullet, Call 9, gates line for iteration 17.
