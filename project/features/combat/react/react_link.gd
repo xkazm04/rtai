@@ -33,7 +33,8 @@ const HOLD: Dictionary[StringName, Vector3] = {
 	&"knockdown": Vector3(0.3, 0.6, 0.78),
 }
 
-## False (`--soft-swing`): a melee kill plays no death here (the night's; the A/B's before).
+## False (`--soft-swing`): a melee kill plays no death here and a melee hit that does not kill no
+## wound (MeleeWound): the night's, the A/B's before.
 static var melee_deaths: bool = not OS.get_cmdline_user_args().has("--soft-swing")
 var pipe: DeathPipe
 ## Rounds that fly past a human make it duck (render only).
@@ -45,6 +46,8 @@ var signatures: int = 0
 ## combat-notes: the scorch marks of the non-lethal weapon_wound hits, by fighter id
 ## (PlasmaScorchView draws and keeps them).
 var scorched: Dictionary[int, Array] = {}
+## n7-melee: the non-lethal melee wound, once per strike (CombatArena.wounded).
+var melee_wound: MeleeWound = MeleeWound.new()
 var _arena: CombatArena
 var _weapons: WeaponTable
 ## Hits since the last apply(): [victim id, dir, lethal, hit class, in cover, weapon]. Cover is
@@ -70,6 +73,8 @@ static func make(arena: CombatArena, p_pipe: DeathPipe = null) -> ReactLink:
 	arena.struck.connect(link._on_struck)
 	@warning_ignore("return_value_discarded")
 	arena.kill_landed.connect(link._on_kill)
+	@warning_ignore("return_value_discarded")
+	arena.wounded.connect(link._on_wounded)
 	return link
 
 
@@ -252,6 +257,13 @@ func _melee_kill(victim: Fighter, weapon: StringName) -> void:
 	var d: Vector2 = victim.pos - _arena.rivet.pos
 	d = d.normalized() if d.length() > 0.001 else -victim.facing
 	_pending.append([victim.id, d, true, &"melee", false, weapon])
+
+
+func _on_wounded(victim: Fighter, weapon: StringName) -> void:
+	if weapon in MELEE_IDS and melee_deaths:
+		var h: Array = melee_wound.hit(_arena, victim, weapon)
+		if not h.is_empty():
+			_pending.append(h)
 
 
 func _on_struck(victim: Fighter, dir: Vector2, lethal: bool, weapon: StringName) -> void:
