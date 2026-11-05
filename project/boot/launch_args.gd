@@ -22,6 +22,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	# d7-held: the befores of the hold A/Bs (read straight from the OS args by RigOffClaw / RigGrip)
 	"--torch-off-arm",
 	"--gun-off-claw",
+	# n7-ranged: --feel=off turns the shared hit feel's camera effects off (before clips)
+	"--feel",
 ]
 
 var _values: Dictionary[String, String] = {}
