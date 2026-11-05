@@ -1209,3 +1209,11 @@ Session end 05:50: tree clean after this commit, no Godot process of mine runnin
 - 06:08 brief item 5 composite re-shot on 2329c483 (`M/frames/cast-ingame-vs-r2c6.png`, from the D city clip t=12 s).
   REPORT section 2, section 4, Call 4 (D built, A = revert) and the gates line. frames.json 15 (the two Call 4 stills on
   top; torch-cream and visor-slot-quest1 dropped from the list, files kept, REPORT cites them).
+- 06:09 FINDING after D: at 32 px/m the riot head (~5 px) printed two 1 px bright slivers around its navy band, the
+  patrol cap one bright dot. Trial E: the D4 `head_helmet.png` band painted the crown blue inside the crown's width,
+  ink outside (`masters:n5/cast/tools/riot_band_hi.py`; the first pass let a bright bar cross the ink ring, fixed by
+  the per-row crown span). Lineup slab / road 32 px/m and 64 px/m (0 SCRIPT ERROR): one solid bright dot like the
+  patrol, r2_c6's plain helmets; 64 px/m (D5) keeps the band, pixel-identical. Still
+  `M/frames/riot-crown-plain-ab-32ppm.png`. DECISION build (revert = D4 head_helmet.png from 2329c483).
+- MILESTONE f4381f32: the riot crown plain bright at 32/48 px/m. Decisions line. Filming the director reel to the
+  riot_cop chapter (tick 5040) at 32 px/m for the live path.
