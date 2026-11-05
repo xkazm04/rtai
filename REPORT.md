@@ -18,7 +18,7 @@ cut from main `763f8fba`. Clips and stills: `C:\Users\kazda\kiro\gtai-masters\n7
 | Hit-stop cooldown 20 -> 16 ticks (every Kerf cut gets its stop; n7-melee call 7) | `0d4089f1` | - | n7-melee's clips |
 | Quest 1 fires the table guns (Gloria as her weapons.json row; the rifle stays on combat.json) | `48679f03` | `--quest-guns=off` | `quest1_table_gloria-ab-32ppm.mp4`, `quest1_table_gloria_dock9-ab-48ppm.mp4` |
 | Muzzle flash, smoke and shells leave along the shot's aim, not a facing the walk turned between shots (found by filming quest 1) | `1ce1b11e`, `ed60713e` | - (bug fix) | `quest1_gloria_muzzle_side-48ppm.png` |
-| Molotov throw follow-through: the torso leans into the release (subtle: a few px at 48 px/m); the arm-only version `41bb90e7` moved no pixel | `41bb90e7`, `7326b53b` | - (THROW_LEAN 0 in `rig_clips.gd` or drop the molotov `rig_kick` row) | `molotov_throw_lean-ab-48ppm.mp4` |
+| Molotov throw follow-through: the torso leans into the release (subtle: a few px at 48 px/m, practically invisible at 32 px/m: to tune); the arm-only version `41bb90e7` moved no pixel | `41bb90e7`, `7326b53b` | - (THROW_LEAN 0 in `rig_clips.gd` or drop the molotov `rig_kick` row) | `molotov_throw_lean-ab-48ppm.mp4` |
 | Combined clip of the polished set in the city block, 32 px/m, with sound | - | - | `city_block_polished_set-32ppm.mp4` |
 
 Gates (iteration 5): evidence run on `41bb90e7`: lint 13/13, scenarios 52/52, parity bit-exact

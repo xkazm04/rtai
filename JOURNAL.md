@@ -603,8 +603,9 @@ Read: JOURNAL, git log, the other lanes' journals (no new REQUEST for ranged; me
 NEXT (iteration 6):
 1. A clean `node tools/evidence/run.mjs --no-bench` on head, touching NOTHING during it (the
    it5 run on `41bb90e7` was flagged by the tree guard for my docs commits).
-2. Judge the throw lean at 32 px/m (probably invisible there); try THROW_LEAN 0.8 if timid, by
-   the same A/B script (`scratch/ranged/molo/lean_ab.sh`, before frames in `molo/fb/`).
+2. The throw lean is TIMID at 32 px/m (MEASURE 22:38 below). Try THROW_LEAN 1.0 (and maybe a
+   longer hold: the lean follows the recoil's 0.27 s decay) with the same A/B (`lean_ab.sh`, swap
+   `--ppm=32`); keep the value that reads at 32 without looking like a stumble; re-run unit + pit reel.
 3. Judge at 48 px/m every frame: Gatling spin-up rumble, flamer ignition (3 px; maybe 4-5), electro
    snap. Tune by data only if timid.
 4. City combined clip retake with `--cam=fight`, `--quit-after 6200` (whole nuke blast).
@@ -619,3 +620,7 @@ NEXT (iteration 6):
 STOP 22:37 iteration 5. Head after this commit. Code commits: `ed60713e` (gun_fx aim), `41bb90e7`
 (negative rig_kick, no visible effect alone), `7326b53b` (throw lean, subtle). Gates on `7326b53b`:
 unit 1138/0, lint 13/13, pit reel 19/19; evidence run (scenarios, parity, selftest) on `41bb90e7`.
+- MEASURE 22:38: the throw lean at 32 px/m (`7326b53b` vs THROW_LEAN 0 set locally and restored,
+  same args, `--ppm=32`): diff 607 px at frame 301, 291 at 302, 171 at 303, then 10-45 px. About a
+  1-2 px shift for 3 frames: practically INVISIBLE at 32 px/m. At 48 px/m it is a few px over about
+  15 frames. Verdict: an honest small gain at close-up zoom only; tune in iteration 6 (NEXT 2).

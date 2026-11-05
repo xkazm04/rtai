@@ -121,5 +121,6 @@ scratch audit folder: `<w>-off.avi`, `sheets/<w>-off-k2.png`.
 - `41bb90e7` (a negative rig_kick: the arm forward on the release): zero pixels changed (the aimed
   arm is already at its reach). `7326b53b`: the torso leans into the release (THROW_LEAN 0.5): the
   diff peaks at 1763 px at frame 301, a few px of body shift toward the target over about 15 frames.
-- Verdict: SUBTLE, an honest small gain; anticipation stays 1 (still no wind-up). Clip
+- Verdict: SUBTLE at 48 px/m and practically invisible at 32 px/m (a 1-2 px shift for 3 frames,
+  diff 607 px peak); anticipation stays 1 (still no wind-up). To tune: THROW_LEAN up, a longer hold. Clip
   `molotov_throw_lean-ab-48ppm.mp4`.
