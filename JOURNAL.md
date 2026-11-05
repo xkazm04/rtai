@@ -156,8 +156,12 @@ Branch `d7-held`, cut from main `1028c15d`. Evidence: `evidence/` + `C:\Users\ka
      tone on `claw_grip` (cheap first try). Re-film the long-gun A/B at 32 px/m.
   2. The centre-line long-gun hold toward r2_w5: a real rework of RivetCarryAngle + the
      beside-the-helmet shift together with across/gun_reach (the 3-number try failed, 16:19).
-  3. Chainsaw class end to end (both claws at the hip: the off claw on the top handle, fore_u 0.3);
-     it already gets the off claw (HIP kind), so film it and check the grind judder.
+  3. Chainsaw class end to end. FINDING 16:37 (`chainsaw_hold_now_48ppm_strip.png`): it rides ONE
+     claw like a blade, because RigGrip.target's two-claw poses and RigOffClaw.holds need
+     rig.aiming and melee never aims. Fix: a held_classes.json value (e.g. `two_claw_out`: true for
+     chainsaw; schema + HeldTable + RigGrip.target + RigOffClaw.holds), the off claw on the top
+     handle (fore_u 0.3), a test with a planted fault, film A/B incl. the grind judder. Do this
+     FIRST next iteration (it is the brief's chainsaw item and small).
   4. Heavy walk: strengthen if the owner wants it felt (lean_px 10 -> 25?); film at 64 px/m first.
   5. Read registry `realtime-combat-semantics` + `depth-ordered-layered-art` (still owed).
   6. REPORT calls so far: (a) blade wrist_rad 0.45; (b) look-4 over cast-3; (c) sidearm held_scale
