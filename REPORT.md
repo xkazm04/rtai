@@ -141,7 +141,8 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   Live city block on the final parts, same sim as e1f848a5: `M/frames/city-r7peds-ab-32ppm.png` (`M/cast-r7-city-32.mp4`);
   the target composite `M/frames/cast-ingame-vs-r2c6.png` is re-shot on them.
 
-### Gates (iteration 14, `tools/evidence/run.mjs --no-bench` on 4f9a2ead (the hazard collar): ALL PASS: lint 13/13,
+### Gates (iteration 14, final on f7cc15b5 (torch tip): ALL PASS: lint 13/13, unit 945/0, scenarios 46, parity exact,
+look goldens 11/11 (worst 1.22), block 5/5 (worst 1.38), no re-bless. Before it, on 4f9a2ead (the hazard collar): lint 13/13,
 unit 945/0, scenarios 46, parity exact (mutation caught at 629), look goldens 11/11 (worst 1.21), block 5/5 (worst
 1.38), world lock holds; no re-bless. Director reel 16/16 down, 0 script errors.)
 ### Gates (iteration 13, final `tools/evidence/run.mjs --no-bench` on 621c0d3f (hoodie sleeves, r8/r8b D5 ped parts, cap size): all

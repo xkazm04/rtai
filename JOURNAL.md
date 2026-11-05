@@ -892,3 +892,23 @@ Session end 02:46: tree clean after this commit, image.lock released (2 jobs thi
   `M/frames/rivet-torch-cream-ab.png`; director reel 0-1140 at 32 px/m, same sim: `M/frames/rivet-torch-cream-director-32ppm.png`
   (clip `M/cast-torch-director-32.mp4`). Lint 13/13, unit 945/0. Provenance lines 1050/1058 updated (sha + note).
   Not touched: the 1 px teal in the helmet art (25,51) and in the D5 claw (171,56), both below a printed pixel.
+- 03:23 EVIDENCE GATE on f7cc15b5 (clean tree): ALL PASS: lint 13/13, unit 945/0, scenarios 46, parity exact (mutation
+  caught at 629), look goldens 11/11 (worst 1.22), block 5/5 (worst 1.38), world lock holds. No re-bless. REPORT gates
+  line updated. frames.json 15 (+ rivet-torch-cream-ab; dropped from the list, file kept as REPORT cites it:
+  director-loadout-16ch-32ppm; every listed file exists).
+
+NEXT (iteration 15), replaces the 02:35 list:
+1. Rivet vs r2_c3 at 32 px/m, what's left after the collar and the torch: (a) the welder visor cannot read at 32 px/m
+   at today's head size (the 2 px visor merges with the sticker outline; trial reverted, JOURNAL 03:12); the option is a
+   design call: a visor drawn wider than the art in the sticker tier, or a larger head (Rivet's size_k is Call 1);
+   (b) the claw art's rust specks print vermilion at 64 px/m (`M/frames/rivet-torch-cream-ab.png`, the claw tips); the
+   verdict keeps vermilion for danger, objectives and the collar. Measured at 03:24 on the art (px over verm_gate 62,
+   alpha > 0.45): D5 claws 3.9-4.4 % (rust, d5 close-up tier only; from 24d2e20a, d5-close), D5 pistol 1.9 %, D5 hose
+   0.9 %; D4 and D5 helmet 6.4 % (the orange hose arc, 0bcc34c6 kept it), torso 2.2 % (rust); limbs <= 0.4 %; D4
+   claws 0. Judge the D5 claws at 64 px/m in motion first, then decide between the torch_cream approach (rust hue -> brown below `verm_gate`) and leaving
+   it as r2_c3's rust (r2_c3 shows orange rust specks all over).
+2. Calls 1-7 stand (7 = the hazard collar, new). REPORT section 3 and the gates line are current to f7cc15b5. REPORT
+   rewrite at 08:40. frames.json 15 (every file exists).
+3. Scratch kept: `scratch-cast/i14/visor_patch.py` (the reverted visor trial).
+Session end 03:26: tree clean after this commit, image.lock and bench.lock never taken, no Godot process of mine
+  running, scratch-cast/i14 renders deleted (visor_patch.py kept).
