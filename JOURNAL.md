@@ -600,3 +600,27 @@ electrode anchors whatever body draws, so on the sprite cast they start beside t
   `M/quest1-ohm-64ppm-halfspeed.mp4`, keys `M/frames/quest1-kerf-ohm-keys-64ppm.png`), 0 SCRIPT ERROR, 5/5 kills each.
   Judged: Kerf's teal-white cut lines and afterimages read over the sprite cast; Ohm's bolt leaves the sprite's hand
   and forks to the zap star on each cop.
+- 04:56 MERGE n6-ghost-forms f76274fc (StoryForms: the form bodies, morph and HUD on the shipped quest 1; Ohm's teal
+  seams): quest1_game.gd merged clean (our `_casts()` calls their `_dev_rigs()`, which now attaches StoryForms).
+  FRICTION: both lanes name evidence logs alike (`evidence/director-reel-it7.log`, `evidence-run-it7.log`): add/add
+  conflicts; kept ours, theirs saved as `*-forms.log`. MERGE n5-cast d7bf12ce (core tan sticker, print_part shader).
+  JOURNAL/REPORT keep ours at both. `--import` once.
+- 05:02 GATES evidence runner `--no-bench` on the merged head d44c84cb, still tree: PASS lint 13/13, unit 1006/0,
+  scenarios 47, parity bit-exact (mutation caught at 629), selftest look goldens 11/11 and block 5/5 in tolerance,
+  no re-bless (`E/evidence-run-it7-merged.log`).
+- 05:04 quest 1 on the merged head, Kerf and Ohm through real input: the forms lane's bodies and my attack views
+  draw together (Kerf body + blink/cut lines; Ohm body + forked bolts), 5/5 kills each, 0 SCRIPT ERROR.
+  `M/frames/quest1-forms-and-attacks-merged-32ppm.png`, clips `M/quest1-kerf-32ppm.mp4`, `M/quest1-ohm-32ppm.mp4`
+  re-filmed; reel re-cut (42.7 s). frames.json 15 (all present).
+
+NEXT (iteration 8, ghost-powers):
+1. Merge n6-ghost-forms / n5-cast if they moved (`--no-ff --no-commit`, restore JOURNAL/REPORT, `--import`).
+   Evidence log names: suffix ours with `-powers` from now on to stop add/add conflicts with the forms lane.
+2. Dent in quest 1 (REPORT "does not work"): DentStage needs a VehicleService on the stage; quest 1 has none. Design
+   first: a quest-side car source over the city's parked cars, or keep Dent out of quest 1's selection (one data
+   value) until its act quest. Either changes quest 1's sim or selection: replay goldens, decisions line.
+3. Combat check again after any merge (`--bot=reel --reel=director` headless, `--quit-after 24000`).
+4. Quality: the quest 1 Tonnage film on the merged head (StoryForms now silences the voice in a form: the
+   telegraph should be clear of the apparition), then a 64 px/m Tonnage telegraph still in quest 1.
+Session state 05:05: no Godot process of mine running, no lock held (image.lock and bench.lock never taken),
+masters scratch holds only film.sh, reel.sh and two logs, frames.json 15 (all present).
