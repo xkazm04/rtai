@@ -54,6 +54,11 @@ ghost-powers beats, telemetry overlay on).
 By the craft columns (impact and read at 32 weigh most: they are what the owner judges), weakest first:
 1. **Kerf's chain**: one blur at 32 (the brief's own warning). View-only fix candidates: a cut mark held
    on each victim from its cut frame, and a short hold per cut through FeelCam (`slice` row, no shake).
+   **Done 20:50 (`cb3e5caa`)**: kerf_slice rides FeelCam (class `slice`; a kill takes the 6-tick kill stop)
+   and KerfView draws a 0.15 s cream-and-ink cut flare per cut (`cut_flare_s`). Limit: the camera's
+   20-tick stop cooldown is longer than the 18-tick `gap_s`, so at full player cadence only every other
+   cut can hold (the reel presses every 20 ticks: every cut holds); the kick and the flare mark all.
+   `M/kerf_chain_ab_32ppm_64slow.mp4`.
 2. **Plasma sword deflect**: the deflect spark is tiny and the return is not tied to the swing; the
    placeholder blade (asset only after every item, backlog 3).
 3. **Claw combo**: no hold on the hit frame (systemic 1), small jab at 32; melee weight (brief item 3).
@@ -64,6 +69,8 @@ By the craft columns (impact and read at 32 weigh most: they are what the owner 
 5. **Chainsaw**: the kill is a red blob under Rivet at 32.
 6. **Tonnage slam**: a clear tell, but the impact frame has no hold, shake or debris.
 7. **Dent's blast**: lands at the frame edge at 32 (camera call open: polish only the impact).
+   **Impact done 20:55 (`cb3e5caa`)**: dent_blast row (class blast, crash shake), kick outward from the
+   car; measured 0.0 px -> 17.9 px first-frame jolt settling in 12 frames. `M/dent_blast_ab_32ppm.mp4`.
 8. **Electro baton**, 9. **Katana**: read well; they get the shared hit-stop with item 3 only.
 
 Not yet scored: Tonnage's plates and ram, Dent's blow, Ohm's mass arc, and the 48 px/m look of each

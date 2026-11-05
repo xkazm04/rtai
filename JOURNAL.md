@@ -135,3 +135,30 @@ NEXT (written 20:03, for iteration 2):
 - 20:09 REQUEST 2 not yet answered by n7-ranged. Masters: 2 clips + `frames.json` (copy in
   `evidence/n7-melee/`). Scratch cleaned (kept: the 48 px/m audit AVIs for NEXT 3).
 - STOP 20:10 iteration 1. NEXT is the 20:03 entry above, unchanged.
+
+## Iteration 2 (20:10-21:10), phase BUILD
+- MERGE 20:15 `6d614652`: n7-ranged 5535aad2 (classes melee_heavy/slam/ram/slice/chain), eebc82f7
+  (`class` on weapons rows + HitFeel.weapon_class: my REQUEST 2, answered 20:12), 2691917e/016966b2
+  (fire kick), audit docs. Conflicts: JOURNAL.md (kept ours), hit_feel.json weapons (both sides' rows
+  kept, sorted by id).
+- FINDING 20:30: camera.json `hitstop_cooldown_ticks` 20 > Kerf `gap_s` 0.3 (18 ticks): at full
+  player cadence the shared stop marks every other cut only. Not changing sim timing (gap_s) nor the
+  shared cooldown (it governs every gun). So each cut carries a kick (no cooldown) and a view flare.
+- DECISION 20:35: Kerf's cut flare prints in cream and ink (a world impact; teal stays the soul's own
+  path, afterimages and hanging cut line). One value: `ghost_attacks.json kerf.cut_flare_s` (0 = none).
+- MILESTONE 20:48 `cb3e5caa`: MeleeFeel routes any kill_landed/wounded whose weapons row has a
+  `class` (ghost attacks) to FeelCam; ghost hits kick along `arena.hit_dir`. Rows kerf_slice (slice,
+  kick 2.5) and dent_blast (blast, crash shake). KerfView cut flare 0.15 s. Tests: kerf cut felt by
+  its row class, planted: a ghost weapon with no class row is not felt. Unit 1136/1136, lint 13/13.
+  Not added: ohm_bolt (it already emits `struck`, so FeelCam feels it; a row class would double it).
+- LOOK 20:45 (kerf, after 32, frames 94-105 full-res 480x270 crops): frames 96-102 hold still on the
+  first cut; a cream slash edged in ink with ink sparks across the cop. 64 px/m A/B frames 320/345 of
+  the clip: the flare plain beside the before's thin white cut line.
+- CLIP `M/kerf_chain_ab_32ppm_64slow.mp4` (8.3 s).
+- MEASURE 20:55 (dent, shift.py on a 600x300 floor crop, frames 160-200): before 0.0 px through the
+  blast; after 17.9 px first-frame jolt, settling in 12 frames (165-177). LOOK (crops 520x320 frames
+  162-180 every 2nd): the burst prints as before, the frame jolts; the blast still sits at the right
+  edge (camera on Dent: owner call, untouched). CLIP `M/dent_blast_ab_32ppm.mp4` (3.5 s).
+- Registry rules applied (realtime-combat-semantics, motion-quality-gating): the feel is keyed to the
+  hit event frame (sync), strength-scaled and capped by the shared budget; every change judged A/B in
+  motion vs `--feel=off` on the same head.

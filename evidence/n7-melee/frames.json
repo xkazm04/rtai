@@ -1,5 +1,23 @@
 [
   {
+    "file": "kerf_chain_ab_32ppm_64slow.mp4",
+    "title": "Kerf's blink-slice chain cut by cut: a hold and a cream-and-ink flare on every cut",
+    "source": "game-arena",
+    "branch": "n7-melee cb3e5caa",
+    "ppm": 32,
+    "before": "--feel=off on the same head (left); 32 px/m real time, then 64 px/m at 0.4x",
+    "note": "kerf_slice rides the shared feel (class slice, kick 2.5; a kill takes the 6-tick kill stop) and KerfView draws a 0.15 s cut flare across each target. Looked at: frames 96-102 of the after hold still on the first cut with the flare across the cop; the before runs straight through."
+  },
+  {
+    "file": "dent_blast_ab_32ppm.mp4",
+    "title": "Dent's seized-car blast now lands with the blast feel (kick outward from the car, crash shake, stop)",
+    "source": "game-arena",
+    "branch": "n7-melee cb3e5caa",
+    "ppm": 32,
+    "before": "--feel=off on the same head (left)",
+    "note": "Measured by phase correlation on a 600x300 floor crop: before 0.0 px camera motion through the blast; after a 17.9 px first-frame jolt settling over 12 frames (165-177). The blast still lands at the right edge: the camera stays on Dent (open owner call)."
+  },
+  {
     "file": "melee_feel_claw_ab_32ppm_48slow.mp4",
     "title": "Melee weight: the claw combo on the shared hit feel (hit-stop on the contact frame, kick along the blow)",
     "source": "game-arena",
