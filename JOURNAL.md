@@ -308,3 +308,42 @@ NEXT (iteration 3, in order):
   the rack reloads in a ripple; overtime = the failing wing shakes and sparks through the 2 s,
   blows off in six debris pieces + a ring on the phase's first tick, the socket smokes after.
   docs/bosses/servo.md section 4 "As built" paragraph.
+- 21:00 FILM `M/servo_fight_bot_dodge_32ppm_it3.mp4` (tree 2507cc33, seed 2, 32 px/m): Servo down
+  at tick 6591 (109.8 s), the same tick as iteration 2 (the beats are render only). Phase 2 at
+  ~34 s, phase 3 at ~85 s (read off the HUD's phase counter, tiled once a second). **Looked at**
+  `M/servo_transitions_keys_32ppm_it3.png`: the reload ripple runs across the bays into rush
+  hour; into overtime the sparks sit on the wing that then blows off (ring + debris), the other
+  wing stays: matches the sim's broken cells now.
+- 21:01 MILESTONE b5d8fc43 **crates are solid** (generic `BossMoves.solids()`, REQUEST 5 below;
+  `servo.json parcels.crates_solid`, default true). Unit `test_servo_crates` 3/3.
+- 21:01 MEASURED (tree b5d8fc43, `--bot=boss --boss=servo --rigs`, 240 s cap,
+  `evidence/servo/bots-it3/`):
+
+  | bot | seed | Servo down at | Rivet took | deaths | drones up / shot | parcel hits | dives / hits |
+  |---|---|---|---|---|---|---|---|
+  | dodge | 1 | 134.2 s | 80 | 0 | 62 / 46 | 0 | 6 / 0 |
+  | dodge | 2 | 205.3 s | 240 | 0 | 115 / 77 | 5 | 4 / 0 |
+  | dodge | 3 | 142.8 s | 280 | 0 | 51 / 33 | 0 | 4 / 0 |
+  | stand | 1 | 163.9 s | 522 | 0 | 62 / 57 | 12 | 6 / 1 |
+  | stand | 2 | alive | 1524 | 8 | 139 / 112 | 52 | 0 / 0 |
+  | stand | 3 | alive | 1376 | 5 | 110 / 91 | 39 | 2 / 1 |
+
+  Dodging, per attack landed/tried over seeds 1-3: rotor dash 9/27 (33 %), hot dash 4/8, bay hop
+  5/10, carpet 0/13 direct (its parcels count under `servo`: 5 hits on seed 2). Standing: dash
+  27/44, bay hop 11/11, parcels 104 hits. Crates made the fight longer (dodge mean 161 s, was
+  122 s) and stand-s1 now wins (crates shield a stander from the rotor dash's line? not checked).
+  The bot never seeks a line of sight round a crate; a player would. NOT measured: human aim.
+- FRICTION 21:02: `--telemetry=<relative path>` resolves against `project/`, not the cwd: the
+  sweep's JSONs landed in `project/evidence/`; moved, and the stray folder deleted. Use absolute
+  paths.
+
+### REQUEST 5 to n7-king (21:05): one more generic BossMoves hook, on my branch in b5d8fc43
+`solids() -> Array[Rect2]` (default `[]`): solid boxes the boss script owns this tick; BossHook
+`_sync_solids(stage.walls)` (right after `_sync_bodies`) keeps exactly these in the stage's
+ArenaWalls (erase last tick's, append this tick's), so they push Rivet / adds / boss out and stop
+shots both ways like the arena's cover. Servo returns his landed crates. Please take it verbatim
+(boss_moves.gd +7, boss_hook.gd +11), or tell me your shape. Also an ask: BossBot could strafe
+when `stage.walls.blocks(me, boss)` (no line of sight); a player would, and my crates make the
+straight-line bot slow (seed 2: 205 s). And: BossHook does not emit `boss_engaged` yet, so the
+boss loop/stinger in AudioHooks never start under `--boss` (your item 3; Servo needs nothing
+special).
