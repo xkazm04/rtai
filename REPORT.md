@@ -54,6 +54,11 @@ The owner's order for this lane: "create these characters, animate transformatio
 - Proof: `M:ohm-tour-city-32ppm.mp4` (with the rim), `M:ohm-morph-64ppm-slow3x.mp4`,
   `M:frames/ohm-live-vs-target-64ppm.png`. The arena clip was filmed (0 SCRIPT ERROR) but dropped at the
   frames.json cap.
+- **The kick per bolt** (iteration 6, for ghost-powers, REQUEST 8): on each bolt the guard hand thrusts 0.2 m into
+  the prongs and eases back over 0.25 s, the shell twists 16 deg and recoils 0.1 m, and the cane holds its plant.
+  Halved under reduced motion. The request's size (0.12 m, 9 deg) did not read at 64 px/m, so it was raised.
+  Before/after at the same ticks: `M:frames/ohm-bolt-kick-ab-64ppm.png`; clips
+  `M:ohm-bolt-kick-64ppm-halfspeed.mp4` and `M:ohm-bolt-kick-city-32ppm.mp4` (the twist reads at 32 on every bolt).
 
 ### 5. All four
 - `M:forms-cycle-all-32ppm.mp4` (15 s, `--bot=forms --form=all`): base, Tonnage, Dent, Kerf, Ohm, base.
@@ -84,6 +89,14 @@ The owner's order for this lane: "create these characters, animate transformatio
   (`dev/ghost-forms/voice_quest1.gd`). Quest 1 is played by CollectCallBot as the scenario does, and the
   apparition is bound to the play's own event bus. The b1 dumpster whisper (tick 123) and Kilohm's line ("Hold
   still. You've been mutter...", tick 9626) both bring Tonnage's apparition up inside the whisper rings.
+- **On the shipped quest 1** (iteration 6, DECISION): the sprite-cast quest 1 had no ghost view, so the whisper
+  showed only rings. `StoryVoice` (`boot/collect_call/view/story_voice.gd`) now draws the apparition there, in the
+  city's actor layer. It is view only: headless runs have no view, so scenarios and replay are untouched. Proof:
+  `quest1.tscn` as shipped, played through real pad events (`dev/ghost-forms/quest1_shipped_main.gd`). At b1's
+  dumpster whisper Tonnage rises in teal beside Rivet inside the rings, then fades:
+  `M:story-voice-quest1-shipped-32ppm.mp4`, and the same-frame A/B (flag off/on)
+  `M:frames/story-voice-quest1-shipped-ab-32ppm-x2.png`. The alternative is one data value: `ghost_forms.json`
+  `story_voice` false. The apparition draws over a cop walking past.
 - Dent at 32 px/m (iteration 4's open point): he already carries CutRig's cream halo like the cops, so no change
   was needed (`M:frames/dent-city-halo-32ppm-x3.png`).
 
@@ -111,8 +124,8 @@ The owner's order for this lane: "create these characters, animate transformatio
 - On d4996f44 (the draw-order fix): scenario_ghost_attacks 1/0.
 
 ## What does not work / is open
-- In the shipped quest 1 path (the sprite cast) GhostFormView is not attached, so the voices show there only
-  under `-- --rigs` or in the dev grabber below. Attaching the ghost view to the sprite cast is not done.
+- The shipped quest 1 (the sprite cast) still has no ghost FORMS: transformations draw only under `-- --rigs`.
+  The voices do show there now (StoryVoice, iteration 6).
 
 ## Calls for the owner
 - **Rust steel on a teal pool, or fully teal ghosts?** The targets draw the ghosts teal all over. Ours print
@@ -126,8 +139,8 @@ The owner's order for this lane: "create these characters, animate transformatio
 - **Should the voice apparitions show in quest 1?** They are cued by every whisper while Rivet is in base,
   including quest 1's whisper beats, where the player has not yet met the ghosts by name. The alternative is
   to cue them only from the scientist's questline lines; that change is one connect in GhostApparition.bind.
+  Since iteration 6 they show on the shipped quest 1 as well; `ghost_forms.json` `story_voice` false turns that
+  off (A/B `M:frames/story-voice-quest1-shipped-ab-32ppm-x2.png`).
 
 ## Next steps
-- Give the shipped sprite-cast quest 1 a ghost view (or at least the apparition), if the owner wants the
-  voices there.
 - Final gates on a still tree (the evidence runner).

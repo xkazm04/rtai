@@ -548,3 +548,26 @@ Session state 03:49: head = this commit, tree clean, no Godot process of mine ru
   the shell turn and the guard arm reaching into the bolt read on every bolt; it is the first motion the old
   welder makes with his casting hand (closes NEXT 3's "Ohm's arms at 32": a motion read, not a size one).
 - frames.json 15: + the kick A/B first; the ohm rim A/B named in the ohm city tour's note (file kept).
+- 04:11 MILESTONE 26289451 the ghost voice on the SHIPPED quest 1 (closes NEXT 2). DECISION (decisions.md): the sprite-cast
+  quest 1 gets StoryVoice (boot/collect_call/view): one GhostApparition in the printed actors' layer, bound to the
+  stage's bus, stepped by the sim ticks since the last frame (held while paused), view only (headless: no view, no
+  voice, so scenarios and replay are untouched). Alternative = one data value: ghost_forms.json `story_voice` false.
+  The `--rigs` cast keeps GhostFormView's own apparition (quest1_game._dev_rigs attaches StoryVoice only on the
+  sprite path: no double ghost).
+  FRICTION 1: the first film showed the rings but no ghost. A debug line showed z 0 under an anonymous Node2D: on
+  the city, CollectCallView has no print_stage (it draws in city_view.actor_layer()), so the voice fell to the
+  unprinted fallback. Fixed: the city view's actor layer first, then the print stage's.
+  FRICTION 2: a SceneTree `-s` entry that names class types compiles before the autoloads (Identifier not found:
+  Log); dev/ghost-forms/quest1_shipped_main.gd loads the input driver by path and calls it untyped.
+  PROOF quest1.tscn as shipped, started past the title card, played through real pad events by
+  CollectCallInputDriver (dev quest1_shipped_main.gd): "ghost voice: tonnage beside Rivet" at b1's dumpster
+  whisper, 0 SCRIPT ERROR. `M:story-voice-quest1-shipped-32ppm.mp4` (7 s), A/B at the same frames with the flag
+  off/on `M:frames/story-voice-quest1-shipped-ab-32ppm-x2.png`. Judged: before, the rings alone; after, the teal
+  press rises beside the dumpster inside the rings and fades. It draws over a cop walking past (frame 200):
+  acceptable for a ghost, noted. test_story_voice 2/2 (table on; a whisper raises it; paused frames hold it; ticks
+  run it out). frames.json 15: + this A/B first; the dev-path quest 1 still named in its note (file kept).
+- 04:12 GATES evidence runner `--no-bench` started on 26289451 (log outside the tree while it runs).
+- 04:24 GATES evidence runner `--no-bench` on 26289451 (`E:evidence-run-it6.log`): PASS lint 13/13, scenarios 47,
+  parity bit-exact (mutation caught at 629), selftest (look goldens 11/11 worst 1.22, block 5/5 worst 1.38: no
+  re-bless). Unit 993 passed / 0 failed but marked FAIL: "tree changed during run (M JOURNAL.md)": my own
+  JOURNAL append at 04:12 (same slip as iteration 4). Re-running the unit suite alone on a still tree next.
