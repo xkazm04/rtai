@@ -97,7 +97,8 @@
     },
     {
       "also_weapons": [
-        "claw_shock"
+        "claw_shock",
+        "ohm_bolt"
       ],
       "bounce": 0.1,
       "cone_deg": 10,

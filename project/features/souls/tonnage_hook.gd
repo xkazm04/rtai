@@ -10,6 +10,8 @@ var view: TonnageView = null
 var dent_view: DentView = null
 ## Kerf's blink paths and cut lines (reads stage.pilot.kerf when the reel sets it).
 var kerf_view: KerfView = null
+## Ohm's bolts (reads stage.pilot.ohm when the reel sets it).
+var ohm_view: OhmView = null
 var _stage: ArenaStage = null
 
 
@@ -49,3 +51,9 @@ func attach_view(p_view: Node) -> void:
 	kerf_view.reduced_motion = view.reduced_motion
 	kerf_view.stage = _stage
 	layer.add_child(kerf_view)
+	ohm_view = OhmView.new()
+	ohm_view.z_index = RenderLayers.z(&"actors") + 2
+	ohm_view.ppm = SimConst.PX_PER_M
+	ohm_view.reduced_motion = view.reduced_motion
+	ohm_view.stage = _stage
+	layer.add_child(ohm_view)

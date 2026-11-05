@@ -41,8 +41,20 @@ Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
 [INFO] arena: arena open: 17 stations
 [INFO] ghosts: ghost reel: kerf beat at tick 0
 [INFO] arena: Rivet destroyed: back at the hub (deaths 1)
+[INFO] arena: powers pad: 2 cars parked
+[INFO] arena: arena open: 17 stations
+[INFO] ghosts: ghost reel: ohm beat at tick 0
+[INFO] arena: powers pad: 2 cars parked
+[INFO] arena: arena open: 17 stations
+[INFO] ghosts: ghost reel: ohm beat at tick 0
+[INFO] arena: powers pad: 2 cars parked
+[INFO] arena: arena open: 17 stations
+[INFO] ghosts: ghost reel: ohm beat at tick 0
+[INFO] arena: powers pad: 2 cars parked
+[INFO] arena: arena open: 17 stations
+[INFO] ghosts: ghost reel: ohm beat at tick 0
 run_scenarios: 1 ran, 0 failed
-WARNING: 5082 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+WARNING: 6787 ObjectDB instances were leaked at exit (run with `--verbose` for details).
    at: cleanup (core/object/object.cpp:2536)
-ERROR: 78 resources still in use at exit (run with --verbose for details).
+ERROR: 82 resources still in use at exit (run with --verbose for details).
    at: clear (core/io/resource.cpp:822)

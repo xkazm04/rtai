@@ -44,6 +44,31 @@
       "ticks_on": 0
     }
   },
+  "ohm": {
+    "crush": 0,
+    "dent": {
+      "blasts": 0,
+      "seizes": 0,
+      "strikes": 0
+    },
+    "ghost_dead": 5,
+    "ghost_victims": 5,
+    "ohm": {
+      "bolts": 16,
+      "cars_hit": 5,
+      "struck": 12
+    },
+    "split": 0,
+    "tonnage": {
+      "activations": 0,
+      "cars_crushed": 0,
+      "ram_hits": 0,
+      "rivet_hp": 100.0,
+      "slam_hits": 0,
+      "slams": 0,
+      "ticks_on": 0
+    }
+  },
   "planted_dent": {
     "crush": 0,
     "dent": {
@@ -84,6 +109,31 @@
       "cars_crushed": 0,
       "ram_hits": 0,
       "rivet_hp": 100.0,
+      "slam_hits": 0,
+      "slams": 0,
+      "ticks_on": 0
+    }
+  },
+  "planted_ohm": {
+    "crush": 0,
+    "dent": {
+      "blasts": 0,
+      "seizes": 0,
+      "strikes": 0
+    },
+    "ghost_dead": 0,
+    "ghost_victims": 5,
+    "ohm": {
+      "bolts": 16,
+      "cars_hit": 0,
+      "struck": 18
+    },
+    "split": 0,
+    "tonnage": {
+      "activations": 0,
+      "cars_crushed": 0,
+      "ram_hits": 0,
+      "rivet_hp": 73.0000000000003,
       "slam_hits": 0,
       "slams": 0,
       "ticks_on": 0
