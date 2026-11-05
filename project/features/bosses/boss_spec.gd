@@ -33,6 +33,8 @@ class Arena:
 var id: StringName = &""
 var hp: float = 1.0
 var move_mps: float = 0.0
+## The distance the default walk stops at (optional `keep_m`; BossMoves' own default without it).
+var keep_m: float = -1.0
 var radius_m: float = 1.0
 var rng: StringName = &""
 var script_path: String = ""
@@ -64,6 +66,7 @@ static func from_table(t: DataTable, boss_id: StringName) -> BossSpec:
 	s.id = boss_id
 	s.hp = t.num(row, "hp")
 	s.move_mps = t.num(row, "move_mps")
+	s.keep_m = BossAttack.opt(row, "keep_m", -1.0)
 	s.radius_m = t.num(row, "radius_m")
 	s.rng = StringName(t.text(row, "rng"))
 	s.script_path = str(row.get("script", ""))

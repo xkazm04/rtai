@@ -39,7 +39,7 @@ func _fight(seed_v: int, phase: int) -> Object:
 		spec, reg.call("stream", spec.get("rng")), arena.get("boss_at")
 	)
 	var m: Object = f.get("moves")
-	m.call("setup_swarm", reg.call("stream", &"servo_swarm"))
+	m.call("bind", f, reg)
 	f.call("start", phase - 1)
 	return f
 

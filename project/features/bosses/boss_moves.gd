@@ -31,6 +31,18 @@ func active_step(f: BossFight, target: Vector2, target_r: float) -> bool:
 	return BossZone.hits(a, f.origin, f.aim, target, target_r)
 
 
+## Once, by whoever builds the fight (BossHook): a boss script takes its own named RNG streams
+## here (Servo's swarm), never a global or an unnamed one.
+func bind(_f: BossFight, _rng: RngRegistry) -> void:
+	pass
+
+
+## Every tick in every state but DEFEATED, before the state's own step: damage that lands outside
+## the active window (Servo's parcels, a late coin hail). The fight adds it to what it returns.
+func tick(_f: BossFight, _target: Vector2, _target_r: float) -> float:
+	return 0.0
+
+
 ## The phase changed (after its transition): a boss swaps its body or arena here.
 func phase_entered(_f: BossFight, _phase: int) -> void:
 	pass

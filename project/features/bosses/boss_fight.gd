@@ -46,6 +46,8 @@ func _init(p_spec: BossSpec, rng: RandomNumberGenerator, at: Vector2) -> void:
 	body = Fighter.make(Fighter.Kind.BOSS, 900, at, spec.hp)
 	body.radius_m = spec.radius_m
 	moves = BossMoves.make(spec.script_path)
+	if spec.keep_m >= 0.0:
+		moves.keep_m = spec.keep_m
 
 
 ## Starts the fight in phase `index` (0-based; --phase=N is N-1) at that phase's hp.
@@ -62,6 +64,7 @@ func step(tick: int, target: Vector2, target_r: float) -> float:
 		return 0.0
 	t += 1
 	_step_adds()
+	var extra: float = moves.tick(self, target, target_r)  # late hits (parcels, falling coins)
 	match state:
 		State.IDLE:
 			moves.idle_step(self, target)
@@ -70,7 +73,7 @@ func step(tick: int, target: Vector2, target_r: float) -> float:
 		State.WINDUP:
 			_step_windup(target)
 		State.ACTIVE:
-			return _step_active(target, target_r)
+			return _step_active(target, target_r) + extra
 		State.RECOVER:
 			if t >= attack.recovery:
 				attack_recovered.emit(attack.id)
@@ -81,7 +84,7 @@ func step(tick: int, target: Vector2, target_r: float) -> float:
 				_pending = -1
 				_enter(State.IDLE)
 				_begin_phase()
-	return 0.0
+	return extra
 
 
 ## A hit on the boss; returns the hp it took (0 in a transition or once defeated).
@@ -102,6 +105,12 @@ func hurt(amount: float) -> float:
 		if state == State.IDLE or state == State.WINDUP:
 			_enter(State.TRANSITION)
 	return before - body.hp
+
+
+## What a hit landed this tick is credited to: the active attack, else the boss itself (a late
+## hit from BossMoves.tick, outside any active window).
+func hit_id() -> StringName:
+	return attack.id if attack != null and state == State.ACTIVE else spec.id
 
 
 func hp_frac() -> float:

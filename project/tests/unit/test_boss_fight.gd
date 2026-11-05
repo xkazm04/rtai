@@ -139,3 +139,23 @@ func test_same_seed_same_fight() -> void:
 			f.write_state(out)
 		digests.append(out.data_array)
 	assert_eq(digests[0], digests[1])
+
+
+class LateHits:
+	extends BossMoves
+
+	func tick(_f: BossFight, _target: Vector2, _target_r: float) -> float:
+		return 1.0
+
+
+func test_moves_tick_lands_in_every_state_but_defeated() -> void:
+	var f: BossFight = _fight()
+	f.moves = LateHits.new()
+	var dealt: float = 0.0
+	for i: int in 30 + 60 + 30 + 60:  # idle, windup, active (+ the jab's 10), recovery
+		dealt += f.step(i, Vector2(5, 0), 0.5)
+	assert_eq(dealt, 180.0 + 10.0)
+	f.start(2)
+	@warning_ignore("return_value_discarded")
+	f.hurt(999.0)
+	assert_eq(f.step(999, Vector2(5, 0), 0.5), 0.0, "nothing once defeated")

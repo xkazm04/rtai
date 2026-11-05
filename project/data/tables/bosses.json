@@ -68,8 +68,8 @@
         },
         "coin_fan": {
           "active_s": 0.6,
-          "aim_lock_s": 0.3,
-          "arc_deg": 50,
+          "aim_lock_s": 0.5,
+          "arc_deg": 36,
           "cooldown_s": 2.5,
           "damage": 14,
           "doc": "The hood cannon swings to Rivet and glows; the cone locks and a hail of coins sprays the fan.",
@@ -77,11 +77,11 @@
           "min_m": 0,
           "punish_k": 1.25,
           "punish_s": 0.6,
-          "range_m": 14,
+          "range_m": 13,
           "recovery_s": 0.9,
           "shape": "cone",
           "weight": 2,
-          "windup_s": 1
+          "windup_s": 1.1
         },
         "decree": {
           "active_s": 0.5,
@@ -136,7 +136,7 @@
         }
       },
       "doc": "Act 1: REG-1 the press king on his gilded throne-car (targets-2026-11-05-bosses/img/boss_king.jpg). Moveset: docs/bosses/king.md.",
-      "hp": 4000,
+      "hp": 120,
       "move_mps": 2.2,
       "phases": [
         {
@@ -152,7 +152,7 @@
         },
         {
           "adds": {
-            "archetype": "robot_thug",
+            "archetype": "king_gang",
             "count": 4,
             "every_s": 14
           },
@@ -182,6 +182,47 @@
       "radius_m": 1.1,
       "rng": "boss_king",
       "script": "res://features/bosses/king/king_moves.gd"
+    },
+    "king_gang": {
+      "arena": "king_boulevard",
+      "attacks": {
+        "swipe": {
+          "active_s": 0.35,
+          "aim_lock_s": 0.2,
+          "cooldown_s": 1.2,
+          "damage": 8,
+          "doc": "The claw rears back (windup), the aim locks, a 3 m lunge along it; sidestep after the lock.",
+          "max_m": 3.4,
+          "min_m": 0,
+          "move_mps": 9,
+          "punish_k": 1,
+          "punish_s": 0.8,
+          "range_m": 3,
+          "recovery_s": 0.8,
+          "shape": "charge",
+          "weight": 1,
+          "width_m": 0.9,
+          "windup_s": 0.8
+        }
+      },
+      "doc": "King's bodyguard bots (the rich robot thug: gold chains, visor shades). Phase 2's adds. The swipe is enemy-ai's thug claw: a 0.8 s windup, the aim locks 0.2 s before, a 3 m lunge along the locked aim.",
+      "hp": 6,
+      "keep_m": 1.6,
+      "move_mps": 3.2,
+      "phases": [
+        {
+          "attacks": [
+            "swipe"
+          ],
+          "doc": "Walk at Rivet, swipe.",
+          "gap_s": 0.5,
+          "hp_below": 1,
+          "id": "brawl",
+          "transition_s": 0
+        }
+      ],
+      "radius_m": 0.5,
+      "rng": "boss_king_gang"
     },
     "servo": {
       "arena": "depot",

@@ -4,7 +4,7 @@ extends BossMoves
 ## brawler), and his attacks launch his own drone swarm (ServoSwarm). The framework's tell tracks
 ## Rivet and locks; the spot Rivet stood on at the lock is the MARK every drone attack drops on,
 ## so moving after the lock dodges. The parcels land after the attack window, so their damage
-## comes through tick() (n7-servo REQUEST 2: the per-tick hook every state), not active_step.
+## comes through tick() (BossFight calls it every tick in every state), not active_step.
 
 const KEEP_M: float = 9.0
 ## The idle band round KEEP_M he walks to hold.
@@ -42,8 +42,12 @@ func idle_step(f: BossFight, target: Vector2) -> void:
 		f.body.pos -= d / dist * step
 
 
-## The swarm's own stream (`ServoSwarm.STREAM`, from the world's RngRegistry). Without it the
-## rack never launches (logged once): no hidden unseeded dice.
+## BossHook binds once: the swarm takes its own named stream (`ServoSwarm.STREAM`).
+func bind(_f: BossFight, rng: RngRegistry) -> void:
+	setup_swarm(rng.stream(ServoSwarm.STREAM))
+
+
+## The swarm's own stream. Without it the rack never launches: no hidden unseeded dice.
 func setup_swarm(rng: RandomNumberGenerator, tuning: ServoTuning = null) -> void:
 	swarm.setup(tuning if tuning != null else ServoTuning.shipped(), rng)
 	_armed = true

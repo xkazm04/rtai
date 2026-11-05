@@ -82,7 +82,6 @@ func _step() -> void:
 	_was_locked = fight.locked
 	rivet = rivet.move_toward(_goal, RIVET_MPS * SimClock.TICK_DT)
 	_taken += fight.step(_tick, rivet, RIVET_R)
-	_taken += moves().tick(fight, rivet, RIVET_R)
 	if _rig != null:
 		_rig.pose(_tick)
 	_tick += 1

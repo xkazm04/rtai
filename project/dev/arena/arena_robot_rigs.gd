@@ -31,7 +31,11 @@ var _ticks: int = -1
 
 ## True for the fighters this view draws (ArenaRigs leaves them out of the cop feed).
 static func takes(h: Fighter) -> bool:
-	return h.kind == Fighter.Kind.BOSS and not OS.get_cmdline_user_args().has("--no-robot-rig")
+	return (
+		h.kind == Fighter.Kind.BOSS
+		and not h.brain_owned
+		and not OS.get_cmdline_user_args().has("--no-robot-rig")
+	)
 
 
 ## The robot rig for fighter `id` (null when it has none yet).

@@ -12,14 +12,14 @@ func _servo(seed_v: int) -> BossFight:
 	var spec: BossSpec = BossSpec.shipped(&"servo")
 	var reg: RngRegistry = RngRegistry.new(seed_v)
 	var f: BossFight = BossFight.new(spec, reg.stream(spec.rng), spec.arena.boss_at)
-	(f.moves as ServoMoves).setup_swarm(reg.stream(ServoSwarm.STREAM))
+	f.moves.bind(f, reg)
 	return f
 
 
-## Steps the fight and Servo's tick; the target sidesteps DODGE_M when the tell locks if `dodge`.
+## Steps the fight (which steps Servo's tick); the target sidesteps DODGE_M when the tell
+## locks if `dodge`.
 ## Returns the damage the target took.
 func _run(f: BossFight, ticks: int, dodge: bool) -> float:
-	var m: ServoMoves = f.moves as ServoMoves
 	var at: Vector2 = SPOT
 	var taken: float = 0.0
 	var was_locked: bool = false
@@ -31,7 +31,6 @@ func _run(f: BossFight, ticks: int, dodge: bool) -> float:
 			at = SPOT + Vector2(0.0, DODGE_M) if at.y < 1.0 else SPOT
 		was_locked = f.locked
 		taken += f.step(i, at, 0.6)
-		taken += m.tick(f, at, 0.6)
 	gut.p("attacks: %s" % [seen])
 	return taken
 
