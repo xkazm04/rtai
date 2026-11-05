@@ -911,3 +911,6 @@ NEXT (the 08:40 report session / the Director's merge):
    quest 1 (`story_voice`).
 Session state 08:06: tree clean after this commit, no Godot process of mine running, no lock held (image.lock and
 bench.lock not taken); masters scratch holds film.sh, q1lift.sh and logs; frames.json 15, all present.
+- 08:08 CHECK the shipped quest 1 at 64 px/m on dc9af2e6 (q1lift.sh `--ppm=64`, 620 frames, 0 SCRIPT ERROR): frame
+  140 base Rivet keeps the art capture (above flat_below, as n5-cast intends), 300 Tonnage, 600 Dent; no change
+  from the merges. Scratch deleted.
