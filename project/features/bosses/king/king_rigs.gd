@@ -28,6 +28,10 @@ const ATTACK_ARMS: Dictionary[StringName, int] = {
 }
 ## Attacks whose tell lifts both arms over the head (the press plates up before the slam).
 const RAISE_IN_TELL: Array[StringName] = [&"press_slam"]
+## A downed add lies this long, then inks out and sinks into its oil over ADD_FADE_S (the
+## arena's CorpseFade look: never alpha, the part print discards it), then leaves the floor.
+const ADD_LINGER_S: float = 6.0
+const ADD_FADE_S: float = 1.5
 ## Pose steps caught up in one frame at most (a hitch never fast-forwards a long clip).
 const MAX_STEPS: int = 4
 
@@ -35,6 +39,7 @@ var _rigs: Dictionary[int, CutRig] = {}
 var _last: Dictionary[int, Vector2] = {}
 var _hurt_seen: Dictionary[int, int] = {}
 var _was: Dictionary[int, int] = {}
+var _down_at: Dictionary[int, int] = {}
 var _tick: int = -1
 var _steps: int = 0
 
@@ -61,6 +66,7 @@ func pose(fight: BossFight, adds: BossAdds, windup_px: Vector2) -> void:
 		var g: CutRig = _rig(f.body.id, false, Ink.px(f.body.pos), f.body.facing)
 		_place(g, f.body.id, Ink.px(f.body.pos), f.body.facing, Vector2.INF)
 		_react(g, f.body, f)
+		_fade_down(g, f, fight.now())  # a downed add is no longer stepped: the boss's clock
 
 
 func _rig(id: int, is_king: bool, at: Vector2, facing: Vector2) -> CutRig:
@@ -74,6 +80,22 @@ func _rig(id: int, is_king: bool, at: Vector2, facing: Vector2) -> CutRig:
 		_rigs[id] = rig
 		_last[id] = at
 	return _rigs[id]
+
+
+## A downed add inks out and sinks after ADD_LINGER_S, then hides.
+func _fade_down(rig: CutRig, f: BossFight, now: int) -> void:
+	if f.state != BossFight.State.DEFEATED:
+		return
+	var at: int = _down_at.get(f.body.id, -1)
+	if at < 0:
+		_down_at[f.body.id] = now
+		return
+	var k: float = (float(now - at) * SimClock.TICK_DT - ADD_LINGER_S) / ADD_FADE_S
+	if k <= 0.0:
+		return
+	rig.visible = k < 1.0
+	rig.modulate = Color.WHITE.lerp(Ink.INK, clampf(k, 0.0, 1.0))
+	rig.scale = Vector2.ONE * CutRig.SC * rig.plan.size_k * lerpf(1.0, 0.45, clampf(k, 0.0, 1.0))
 
 
 ## King's boss plan: KingPlan at boss size with the gold leaf (KingPlan itself stays the plain
