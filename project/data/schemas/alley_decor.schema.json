@@ -216,6 +216,19 @@
           "pattern": "^(#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?)?$",
           "type": "string"
         },
+        "bag_dark": {
+          "pattern": "^(#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?)?$",
+          "type": "string"
+        },
+        "bag_pale": {
+          "pattern": "^(#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?)?$",
+          "type": "string"
+        },
+        "bag_pale_every": {
+          "maximum": 9,
+          "minimum": 1,
+          "type": "integer"
+        },
         "brick": {
           "pattern": "^(#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?)?$",
           "type": "string"

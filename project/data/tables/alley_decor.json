@@ -446,8 +446,11 @@
   ],
   "tones": {
     "asphalt": "#A39C91",
+    "bag_dark": "#55505A",
+    "bag_pale": "#C9BCA4",
+    "bag_pale_every": 2,
     "brick": "#6A3A2A",
-    "doc": "n5-look iteration 7 (toward r2_a6: a light concrete lane between dark brick): ground and roof fills, the brick lip width in m, the puddle fill (\"\" = the city puddle decal), the oil-stain alpha and the dumpster tint. Before (iteration 3): asphalt #6F6964, tar #C9AB8A, brick #A4664A, mortar #17131B8C, lip_m 0.95, puddle \"\", stain_a 0.8, dumpster #FFFFFF. Iteration 21: dumpster_lid + dumpster_body draw r2_a6's ribbed lidded bin (AlleyProps.dumpster: a dark ribbed lid over a green-grey front face toward the lane); dumpster_lid \"\" = the tinted city art before.",
+    "doc": "n5-look iteration 7 (toward r2_a6: a light concrete lane between dark brick): ground and roof fills, the brick lip width in m, the puddle fill (\"\" = the city puddle decal), the oil-stain alpha and the dumpster tint. Before (iteration 3): asphalt #6F6964, tar #C9AB8A, brick #A4664A, mortar #17131B8C, lip_m 0.95, puddle \"\", stain_a 0.8, dumpster #FFFFFF. Iteration 21: dumpster_lid + dumpster_body draw r2_a6's ribbed lidded bin (AlleyProps.dumpster: a dark ribbed lid over a green-grey front face toward the lane); dumpster_lid \"\" = the tinted city art before. bag_dark / bag_pale / bag_pale_every: the sack fills (every Nth sack of a pile pale); before #2E2833 / #C9BCA4 / 3 (the dark sacks printed as solid ink blobs).",
     "dumpster": "#7E8E86",
     "dumpster_body": "#80907A",
     "dumpster_lid": "#34332F",

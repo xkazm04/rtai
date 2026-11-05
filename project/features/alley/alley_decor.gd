@@ -123,11 +123,14 @@ func _bags(r: Rect2) -> void:
 		var tall: bool = r.size.y > r.size.x
 		offs.append(Vector2(0.2, 0.95) if tall else Vector2(0.95, 0.2))
 		offs.append(Vector2(-0.3, -0.95) if tall else Vector2(-0.95, -0.3))
+	var dark: Color = tone(_rows, "bag_dark", BAG_DARK)
+	var pale: Color = tone(_rows, "bag_pale", BAG_PALE)
+	var tones: Dictionary = _rows.get("tones", {})
+	var every: int = tones.get("bag_pale_every", 3)
 	for i: int in offs.size():
 		var rad: float = s * (0.66 if i % 2 == 0 else 0.56)
-		AlleyProps.sack(
-			self, c + offs[i] * s, rad, BAG_DARK if i % 3 != 1 else BAG_PALE, 1.3 + i * 2.1
-		)
+		var fill: Color = pale if i % every == 1 else dark
+		AlleyProps.sack(self, c + offs[i] * s, rad, fill, 1.3 + i * 2.1)
 
 
 ## A chain-link run: a fine diamond mesh between two rails, posts every 1.5 m (drawn along x;
