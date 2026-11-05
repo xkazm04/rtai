@@ -517,3 +517,35 @@ NEXT (iteration 5), replaces the 21:49 list:
 STOP 21:57 iteration 4. Head after this commit; code gates last on `1ce1b11e`: lint 13/13, unit
 1135/0; scenarios 52 (flake re-run green) and pit reel 19/19 on `48679f03`/`43622ec7` (the muzzle fix
 is view only and changes no sim path).
+
+## Iteration 5 (BUILD, 21:55-22:55)
+Read: JOURNAL, git log, the other lanes' journals (no new REQUEST for ranged; melee merged
+`48679f03` at 21:41).
+
+### MILESTONE 22:05: `ed60713e` smoke, shells and the fallback flash follow the shot's aim
+- NEXT item 1: `GunFx.aim` (= `GunHand.last_aim`, taken in `step`), `GunFx.aim_of(r)` (facing
+  before the first shot); used by `muzzle`, `_eject`, `_reload_drop` and `GunFxArt._muzzle`. Every
+  `GunFx.muzzle` caller passes `arena.rivet`, so no hostile path changes. View only.
+- All 13 weapons.json guns have weapon art (checked), so the fallback star never draws for a table
+  gun; the visible part of this fix is the smoke puff and the shell kick side.
+- `test_gun_fx_aim.gd` 2 tests; planted fault (`aim_of` returns facing) -> 1 failing. Unit
+  1135/0 before the test (`evidence/ranged/it5-unit-gunfx-aim.log`), 1137/0 with it; lint 13/13.
+- FRICTION: Python text-mode writes on Windows put CRLF into .gd files; `sed -i 's/\r$//'` after.
+
+### FILM 22:08: quest 1 Dock 9 at 32 px/m retaken on head (NEXT item 2)
+- `quest1_clip.gd --ppm=32 --cam=fight --ticks=13580-13860` on vs `--quest-guns=off`
+  (`it5-q1-on.log`/`it5-q1-off.log`, exit 0 both). LOOK (frames 44-92, every frame round the
+  launches): frame 47 Gloria's cream star with the vermilion core sits on the nail line on the shot
+  side at 32 px/m, then the nail flies; a smoke puff on the aim side at frames 90-92. Replaced
+  `masters .../quest1_table_gloria-ab-32ppm.mp4` and its frames.json row (still 15 rows).
+
+### FINDING 22:20: molotov throw at 48 px/m (audit gap, NOT scored)
+- Film: `--weapon=molotov --bot=gunplay --lone --cam=fight --ppm=48`, 600 frames; 1 throw, 1 burn
+  kill at tick 447, 0 SCRIPT ERROR (scratch `molo/`).
+- LOOK: frames 270-298 a dashed then solid vermilion line through Rivet with a black ring ahead
+  (I take it for a telegraph or aim aid; not identified); a vertical vermilion stick that stays put
+  in world (no spin, so not the spinning bottle; probably the weapon rack's molotov on the floor);
+  the fire burst and the burning cop at frames 340-365 read strongly. I did NOT find the spinning
+  bottle in flight in 2- and 4-frame samples. Throw anticipation stays "?" in the audit.
+- Next time: log the Shot's tick (or film `--reach=6` so the throw and the patch share the frame)
+  before judging the throw.
