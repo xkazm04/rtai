@@ -30,7 +30,7 @@ const king = {
       cooldown_s: 2.5, damage: 14, range_m: 13, arc_deg: 36, min_m: 0, max_m: 16, weight: 2,
       doc: 'The hood cannon swings to Rivet and glows; the cone locks and a hail of coins sprays the fan.' },
     decree: { shape: 'none', windup_s: 1.2, aim_lock_s: 0, active_s: 0.5, recovery_s: 1.8, punish_s: 1.8, punish_k: 1.5,
-      cooldown_s: 9, damage: 0, range_m: 0, min_m: 0, max_m: 99, weight: 1,
+      cooldown_s: 9, damage: 0, range_m: 0, min_m: 0, max_m: 99, weight: 1, buff_adds: { damage_k: 1.3, speed_k: 1.2, s: 6 },
       doc: 'King raises the megaphone and shouts a decree: the gang hits harder and faster for a while. Long recovery: the best punish window.' },
     press_slam: { shape: 'circle', windup_s: 1.1, aim_lock_s: 0.35, active_s: 0.25, recovery_s: 1.3, punish_s: 1.0, punish_k: 1.5,
       cooldown_s: 2.0, damage: 28, range_m: 2.5, radius_m: 3.2, leap_m: 6, min_m: 0, max_m: 10, weight: 3,
@@ -69,12 +69,14 @@ const id = { type: 'string', pattern: '^[a-z][a-z0-9_]*$' };
 const adds = { type: 'object', additionalProperties: false, required: ['archetype', 'count'],
   properties: { archetype: id, count: { type: 'integer', minimum: 1, maximum: 12 }, every_s: num(0, 120),
     max_total: { type: 'integer', minimum: 0, maximum: 60 } } };
+const buff_adds = { type: 'object', additionalProperties: false, required: ['damage_k', 'speed_k', 's'],
+  properties: { damage_k: num(1, 3), speed_k: num(1, 3), s: num(0.5, 30) } };
 const attack = { type: 'object', additionalProperties: false,
   required: ['shape', 'windup_s', 'aim_lock_s', 'active_s', 'recovery_s', 'punish_s', 'punish_k', 'cooldown_s', 'damage', 'range_m', 'min_m', 'max_m', 'weight', 'doc'],
   properties: { shape: { enum: ['charge', 'circle', 'cone', 'line', 'none'] }, windup_s: num(0.4, 5), aim_lock_s: num(0, 2),
     active_s: num(0.05, 10), recovery_s: num(0.2, 10), punish_s: num(0, 10), punish_k: num(1, 4), cooldown_s: num(0, 60),
     damage: num(0, 100), range_m: num(0, 60), width_m: num(0.2, 10), arc_deg: num(5, 360), radius_m: num(0.5, 20),
-    move_mps: num(0, 40), leap_m: num(0, 20), min_m: num(0, 100), max_m: num(0, 100), weight: num(0, 10), adds, doc } };
+    move_mps: num(0, 40), leap_m: num(0, 20), buff_adds, min_m: num(0, 100), max_m: num(0, 100), weight: num(0, 10), adds, doc } };
 const phase = { type: 'object', additionalProperties: false, required: ['id', 'hp_below', 'attacks', 'gap_s', 'transition_s', 'doc'],
   properties: { id, hp_below: num(0, 1), attacks: { type: 'array', minItems: 1, items: id }, gap_s: num(0, 10),
     transition_s: num(0, 10), adds, doc } };

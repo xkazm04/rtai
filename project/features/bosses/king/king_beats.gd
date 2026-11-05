@@ -18,9 +18,18 @@ static func king_px(f: BossFight, windup_px: Vector2) -> Vector2:
 	var at: Vector2 = Ink.px(b.pos) + windup_px
 	if f.phase >= 2:
 		return at
-	var throne: Vector2 = at + b.facing * KingRigs.THRONE_M * Ink.PX_PER_M
+	var dir: Vector2 = car_dir(f)
+	var throne: Vector2 = at + dir * KingRigs.THRONE_M * Ink.PX_PER_M
 	var s: float = step_k(f)
-	return throne.lerp(Ink.px(b.pos + KingMoves.step_down(b.facing)), s) if s > 0.0 else throne
+	return throne.lerp(Ink.px(b.pos + KingMoves.step_down(dir)), s) if s > 0.0 else throne
+
+
+## The car's heading: the body's while it drives, the stall's once it stops (the court).
+static func car_dir(f: BossFight) -> Vector2:
+	var km: KingMoves = f.moves as KingMoves
+	if f.phase >= 1 and km != null and km.stall_facing != Vector2.INF:
+		return km.stall_facing
+	return f.body.facing
 
 
 ## 0..1 through the step-down (court -> on foot); 0 outside it.

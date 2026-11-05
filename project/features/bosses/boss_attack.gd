@@ -38,6 +38,11 @@ var max_m: float = 100.0
 var weight: float = 1.0
 var adds_archetype: StringName = &""
 var adds_count: int = 0
+## A buff the attack's active window gives the boss's standing adds (`buff_adds`: damage_k,
+## speed_k, s); 0 ticks = none.
+var buff_damage_k: float = 1.0
+var buff_speed_k: float = 1.0
+var buff_ticks: int = 0
 
 
 static func from_row(t: DataTable, p_id: String, row: Dictionary) -> BossAttack:
@@ -64,6 +69,10 @@ static func from_row(t: DataTable, p_id: String, row: Dictionary) -> BossAttack:
 	var adds: Dictionary = opt_object(row, "adds")
 	a.adds_archetype = StringName(str(adds.get("archetype", "")))
 	a.adds_count = roundi(opt(adds, "count", 0.0))
+	var buff: Dictionary = opt_object(row, "buff_adds")
+	a.buff_damage_k = opt(buff, "damage_k", 1.0)
+	a.buff_speed_k = opt(buff, "speed_k", 1.0)
+	a.buff_ticks = ticks(opt(buff, "s", 0.0))
 	return a
 
 

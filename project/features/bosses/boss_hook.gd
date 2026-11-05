@@ -30,6 +30,7 @@ var _hooks_cleared: bool = false
 var _extra: Array[Fighter] = []
 ## The boss script's solid boxes in the stage's walls now (BossMoves.solids()).
 var _solids: Array[Rect2] = []
+var _stun_seen: int = 0
 
 
 func setup(stage: ArenaStage, ctx: WorldContext) -> void:
@@ -76,6 +77,7 @@ func step(stage: ArenaStage, tick: int) -> void:
 	var r: Fighter = _arena.rivet
 	if not r.alive():
 		return
+	_stun_check()
 	var hit: float = fight.step(tick, r.pos, r.radius_m)
 	_sync_bodies()
 	_sync_solids(stage.walls)
@@ -95,6 +97,15 @@ func step(stage: ArenaStage, tick: int) -> void:
 		dealt += hit
 	if fight.state == BossFight.State.DEFEATED and defeated_tick < 0:
 		defeated_tick = tick
+
+
+## A new stun on the boss's body (FightAreas: Ohm's bolt, the electro gun) dazes the fight.
+func _stun_check() -> void:
+	var fx: FighterFx = _arena.areas.fx.get(fight.body.id) if _arena.areas != null else null
+	var s: int = fx.stun_ticks if fx != null else 0
+	if s > _stun_seen and fight.daze(s):
+		Log.info("bosses", "%s dazed %d ticks" % [fight.spec.id, fight.dazed])
+	_stun_seen = s
 
 
 ## rivet-arsenal's claw cops (real guards that walk at Rivet and respawn) leave the boss floor:
@@ -173,6 +184,7 @@ func attach_view(view: Node) -> void:
 func _connect() -> void:
 	var errs: Array[Error] = [
 		fight.attack_windup.connect(_on_windup),
+		fight.attack_active.connect(_on_active),
 		fight.adds_wanted.connect(_on_adds),
 		fight.phase_changed.connect(_on_phase),
 		fight.defeated.connect(_on_defeated),
@@ -183,6 +195,12 @@ func _connect() -> void:
 func _on_windup(attack: StringName) -> void:
 	tries[attack] = tries.get(attack, 0) + 1
 	_arena.announce_tell(attack)
+
+
+## An attack with `buff_adds` (King's decree) buffs the standing adds from its active window.
+func _on_active(_attack: StringName) -> void:
+	if fight.attack != null and fight.attack.buff_ticks > 0:
+		adds.buff(fight.attack, fight.now())
 
 
 func _on_phase(index: int, id: StringName) -> void:

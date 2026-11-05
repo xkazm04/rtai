@@ -159,3 +159,27 @@ func test_moves_tick_lands_in_every_state_but_defeated() -> void:
 	@warning_ignore("return_value_discarded")
 	f.hurt(999.0)
 	assert_eq(f.step(999, Vector2(5, 0), 0.5), 0.0, "nothing once defeated")
+
+
+func test_a_stun_cancels_the_tell_and_dazes_at_most_the_cap() -> void:
+	var f: BossFight = _fight()
+	var target: Vector2 = Vector2(5, 0)
+	@warning_ignore("return_value_discarded")
+	_until(f, BossFight.State.WINDUP, target)
+	assert_true(f.daze(120), "a tell can be stunned")
+	assert_eq(f.state, BossFight.State.IDLE, "the tell is cancelled")
+	assert_eq(f.dazed, BossFight.DAZE_MAX, "capped at 0.6 s")
+	for i: int in BossFight.DAZE_MAX:
+		@warning_ignore("return_value_discarded")
+		f.step(1000 + i, target, 0.5)
+	assert_eq(f.state, BossFight.State.IDLE, "no attack while dazed")
+	assert_eq(f.dazed, 0)
+
+
+func test_a_stun_never_cancels_an_active_attack() -> void:
+	var f: BossFight = _fight()
+	@warning_ignore("return_value_discarded")
+	_until(f, BossFight.State.ACTIVE, Vector2(5, 0))
+	assert_false(f.daze(30), "the active window runs on")
+	assert_eq(f.state, BossFight.State.ACTIVE)
+	assert_eq(f.dazed, 0)

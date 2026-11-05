@@ -54,3 +54,14 @@ func test_adds_swipe_hits_a_standing_rivet_and_misses_after_a_sidestep() -> void
 				arena.rivet.pos = Vector2(2.0, 2.5)
 			adds.step(arena, tick)
 		assert_eq(arena.rivet.hp < hp0, not sidestep, "sidestep %s" % sidestep)
+
+
+func test_the_decree_buffs_the_standing_adds_for_its_seconds() -> void:
+	var decree: BossAttack = BossSpec.shipped(&"king").attacks[&"decree"]
+	assert_eq(decree.buff_ticks, 360, "6 s")
+	var adds: BossAdds = BossAdds.new()
+	adds.buff(decree, 100)
+	assert_true(adds.buffed(459))
+	assert_almost_eq(adds.damage_k, 1.3, 0.001)
+	assert_almost_eq(adds.speed_k, 1.2, 0.001)
+	assert_false(adds.buffed(460), "the buff ends on time")

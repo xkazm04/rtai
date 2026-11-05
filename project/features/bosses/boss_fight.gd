@@ -17,6 +17,9 @@ signal defeated
 
 enum State { IDLE, WINDUP, ACTIVE, RECOVER, TRANSITION, DEFEATED }
 
+## A stun dazes a boss this many ticks at most (0.6 s: a read, never a lock-down).
+const DAZE_MAX: int = 36
+
 var spec: BossSpec
 var body: Fighter
 var moves: BossMoves
@@ -31,6 +34,8 @@ var origin: Vector2 = Vector2.ZERO
 var locked: bool = false
 ## Fault plant for the tests: the aim never locks (it tracks through the whole tell).
 var plant_no_lock: bool = false
+## Ticks of daze left (a stun: the boss stands, no walk, no new attack).
+var dazed: int = 0
 var hits: int = 0
 var landed: bool = false
 var _rng: RandomNumberGenerator
@@ -67,6 +72,9 @@ func step(tick: int, target: Vector2, target_r: float) -> float:
 	t += 1
 	_step_adds()
 	var extra: float = moves.tick(self, target, target_r)  # late hits (parcels, falling coins)
+	if dazed > 0:
+		dazed -= 1
+		return extra
 	match state:
 		State.IDLE:
 			moves.idle_step(self, target)
@@ -87,6 +95,17 @@ func step(tick: int, target: Vector2, target_r: float) -> float:
 				_enter(State.IDLE)
 				_begin_phase()
 	return extra
+
+
+## A stun (Ohm's bolt, the electro gun): cancels a tell (never an active attack, its recovery or
+## a transition) and dazes the boss for at most DAZE_MAX ticks. Returns whether it took.
+func daze(ticks: int) -> bool:
+	if state != State.IDLE and state != State.WINDUP:
+		return false
+	if state == State.WINDUP:
+		_enter(State.IDLE)
+	dazed = maxi(dazed, mini(ticks, DAZE_MAX))
+	return true
 
 
 ## A hit on the boss; returns the hp it took (0 in a transition or once defeated).

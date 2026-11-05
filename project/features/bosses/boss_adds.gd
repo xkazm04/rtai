@@ -12,6 +12,10 @@ var fights: Array[BossFight] = []
 var cap: int = 6
 var tries: int = 0
 var landed: int = 0
+## The boss's buff on its standing adds (an attack's `buff_adds`) and the tick it ends.
+var damage_k: float = 1.0
+var speed_k: float = 1.0
+var buff_until: int = -1
 var _last_hp: Dictionary[int, float] = {}
 var _next_id: int = FIRST_ID
 
@@ -39,6 +43,17 @@ func spawn(
 	return maxi(n, 0)
 
 
+## The boss's attack buffs its adds from `tick` for the attack's buff_ticks.
+func buff(a: BossAttack, tick: int) -> void:
+	damage_k = a.buff_damage_k
+	speed_k = a.buff_speed_k
+	buff_until = tick + a.buff_ticks
+
+
+func buffed(tick: int) -> bool:
+	return tick < buff_until
+
+
 func standing() -> int:
 	var n: int = 0
 	for f: BossFight in fights:
@@ -49,6 +64,9 @@ func standing() -> int:
 ## Every add's tick after the stage's: route the hits it took, step it, land its swipe on Rivet.
 func step(arena: CombatArena, tick: int) -> void:
 	var r: Fighter = arena.rivet
+	if tick >= buff_until:
+		damage_k = 1.0
+		speed_k = 1.0
 	for f: BossFight in fights:
 		if f.state == BossFight.State.DEFEATED:
 			continue
@@ -57,7 +75,8 @@ func step(arena: CombatArena, tick: int) -> void:
 			_last_hp[f.body.id] = f.body.hp
 			continue
 		var was: BossFight.State = f.state
-		var hit: float = f.step(tick, r.pos, r.radius_m)
+		f.moves.speed_k = speed_k
+		var hit: float = f.step(tick, r.pos, r.radius_m) * damage_k
 		tries += 1 if was == BossFight.State.IDLE and f.state == BossFight.State.WINDUP else 0
 		if hit > 0.0 and r.exposed:
 			arena.hit_dir = f.aim
