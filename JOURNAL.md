@@ -621,3 +621,25 @@ NEXT (written 23:55, for iteration 7):
   frames.json top. Kept the melee wound clip (brief item 2) in frames.json, dropped the quest 1 katana
   smear close-up (quest 1 is covered by its 32 px/m A/B) to stay at 15.
 - Audit: systemic finding 2 marked partly done; sound re-scored 1 -> 3 for every attack.
+- STOP (iteration 7, written by iteration 8 at 00:25): iteration 7 ended without a NEXT; it left
+  ClawMarks (NEXT 5, the claw jab) staged and uncommitted, and its scenarios run on `f593aac4` cut off
+  (no summary line). Director arena + city on `f593aac4`: 19/19 + 19/19, 0 SCRIPT ERROR.
+
+## Iteration 8 (00:23-01:23), phase BUILD
+- READ 00:23 JOURNAL tail, git log, the staged diff (ClawMarks + test + melee_marks `claw` row).
+- FRICTION 00:27 the staged work failed lint (a 107-char comment line; melee_marks.json not canonical
+  after a hand edit): fixed, `node tools/art/canon_json.mjs` rewrites a table canonically.
+- GATES 00:30 lint 13/13, unit 1191/1191 (`evidence/n7-melee/{lint,unit}-it8.log`). Planted fault
+  (the claw weapon check widened to any weapon) -> exactly test_another_weapon_prints_none fails
+  (3/4); restored.
+- MILESTONE 00:38 `f45ad8e6` ClawMarks: the claw's jab prints three cream rakes edged in ink across
+  the victim on the hit frame (melee_marks.json `claw`: rake_m 1, gap_m 0.22, flash_ticks 10).
+  flash_ticks 0 or `--feel=off` = the before. A data-only "before" for the film (flash_ticks 0 on
+  the same head) so the pair differs by the rakes alone, not by the whole feel layer.
+- LOOK 00:36 director `--chapter=claw_combo` at 32 px/m, after vs before, 2x crops of frames 72-79
+  and 104-111: the rakes print on frame 74 (first blood 75) and 106, square to Rivet -> cop, held by
+  the hit-stop; at real 32 px/m (640x360 crop) the three stripes read over the cop. The rakes cover
+  the cop's blue for ~10 frames: accepted (it is the claw's signature on the hit, short). 48 px/m
+  close-up at 0.4x looked at (both kills). CLIPs `M/claw_rake_ab_32ppm.mp4` (3.9 s),
+  `M/claw_rake_48ppm_04x.mp4`; frames.json top (dropped the older melee_feel_claw clip, superseded).
+- Audit: claw row re-scored impact 2 -> 3, read 3 -> 4 (ranked item 3).

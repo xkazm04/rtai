@@ -74,6 +74,11 @@ By the craft columns (impact and read at 32 weigh most: they are what the owner 
    **Done 19:55 (`65dd07e1`)**: every melee hit now reaches FeelCam (MeleeFeel); measured holds on the
    claw's hit frames (6 frames at the kill, 5 at the second cop; none in the `--feel=off` before);
    `M/melee_feel_claw_ab_32ppm_48slow.mp4`.
+   **Small jab done 00:40 (`f45ad8e6`)**: ClawMarks (`melee_marks.json claw`): three cream rakes edged
+   in ink across the struck cop, square to the blow, printed whole on the hit frame (74, one frame
+   before first blood; 106) and fading over 10 ticks. Looked at in 2x crops of frames 72-79 and
+   104-111, before (flash_ticks 0) over after: the before shows only the arm over a blue cop. Re-scored
+   impact 2 -> 3, read 3 -> 4. `M/claw_rake_ab_32ppm.mp4`, `M/claw_rake_48ppm_04x.mp4`.
 4. **Ohm's bolt**: no tell; thin at 32.
    **Tried 20:38, not landed**: a fingertip charge glow over bolt_gap_s does not separate from the form's
    own teal aura at 32 px/m (the form is ~20 px). Next: a tell outside the aura (an ink/cream spark arc
