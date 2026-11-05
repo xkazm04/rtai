@@ -12,6 +12,11 @@ const STALLED_KEEP_M: float = 1000.0
 const CAR_RADIUS_M: float = 2.0
 ## Phase 3: King steps down off the car's right side this far; the car stays where it stalled.
 const STEP_DOWN_M: float = 2.4
+## Phase 3: the stalled wreck is cover (true: it pushes bodies out and stops shots both ways, as
+## the arena's cover; false: paint only, an owner call). Three boxes along the car's length.
+const WRECK_SOLID: bool = true
+const WRECK_BOX_M: float = 2.3
+const WRECK_STEP_M: float = 2.15
 
 ## Where the stalled car rests from phase 3 on (KingBodyView draws the wreck there).
 var car_at: Vector2 = Vector2.INF
@@ -33,6 +38,17 @@ func phase_entered(f: BossFight, phase: int) -> void:
 		car_at = f.body.pos
 		car_facing = stall_facing if stall_facing != Vector2.INF else f.body.facing
 		f.body.pos += step_down(car_facing)
+
+
+## The wreck's solid boxes from phase 3 on (BossHook keeps them in the stage's walls).
+func solids() -> Array[Rect2]:
+	var out: Array[Rect2] = []
+	if not WRECK_SOLID or car_at == Vector2.INF:
+		return out
+	var half: Vector2 = Vector2.ONE * WRECK_BOX_M * 0.5
+	for k: int in [-1, 0, 1]:
+		out.append(Rect2(car_at + car_facing * WRECK_STEP_M * k - half, half * 2.0))
+	return out
 
 
 ## The step-down offset from the car's centre (the throne's right-hand side).

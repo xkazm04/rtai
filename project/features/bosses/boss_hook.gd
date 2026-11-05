@@ -22,6 +22,9 @@ var tries: Dictionary[StringName, int] = {}
 var landed: Dictionary[StringName, int] = {}
 var rolled: Dictionary[StringName, int] = {}
 var dealt: float = 0.0
+## New stuns on the boss body, and those that dazed it (telemetry: Ohm's bolt on the fight).
+var stuns: int = 0
+var dazes: int = 0
 var _arena: CombatArena = null
 var _last_hp: float = 0.0
 var _rng: RngRegistry = null
@@ -58,6 +61,11 @@ func setup(stage: ArenaStage, ctx: WorldContext) -> void:
 	_last_hp = fight.body.hp
 	_arena.announce_boss(boss_id)
 	Log.info("bosses", "%s engaged in %s, phase %d" % [boss_id, spec.arena.id, fight.phase + 1])
+
+
+## A named stream of the fight's RNG registry (the human-like bot's reads: BossBotRead).
+func stream(system: StringName) -> RandomNumberGenerator:
+	return _rng.stream(system)
 
 
 ## Rivet's position now (view helpers: BossCam).
@@ -103,7 +111,9 @@ func step(stage: ArenaStage, tick: int) -> void:
 func _stun_check() -> void:
 	var fx: FighterFx = _arena.areas.fx.get(fight.body.id) if _arena.areas != null else null
 	var s: int = fx.stun_ticks if fx != null else 0
+	stuns += 1 if s > _stun_seen else 0
 	if s > _stun_seen and fight.daze(s):
+		dazes += 1
 		Log.info("bosses", "%s dazed %d ticks" % [fight.spec.id, fight.dazed])
 	_stun_seen = s
 
@@ -169,6 +179,8 @@ func telemetry() -> Dictionary:
 		"landed": landed.duplicate(),
 		"rolled": rolled.duplicate(),
 		"dealt": dealt,
+		"stuns": stuns,
+		"dazes": dazes,
 		"adds_spawned": adds.fights.size(),
 		"adds_tries": adds.tries,
 		"adds_landed": adds.landed,

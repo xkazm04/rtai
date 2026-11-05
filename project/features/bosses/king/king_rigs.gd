@@ -3,7 +3,7 @@ extends Node2D
 ## King and his gang on the cutout rigs (render only, SIM-03: posed from the fights every frame).
 ## King is KingPlan (Rivet's skeleton, King's parts, art/d5/king) at boss size: enthroned on the
 ## car in phases 1-2 (seated: no stride, facing the car's nose), on foot in phase 3. The gang is the
-## robot thug's rig in the rich dress (GangPlan): four push the throne-car from its corners in
+## robot thug's rig in the rich dress (GangPlan): two push the throne-car, two ride its sides in
 ## phase 1 (they stride with the car), then the adds fight on foot. A hit shoves the frame (never
 ## cancels an attack); the active window plays the strike; a downed add powers down on its rig.
 ## Child of KingBodyView, so it draws over the car (the parent's own _draw).
@@ -11,10 +11,13 @@ extends Node2D
 ## King's boss scale over Rivet's skeleton (target: about 1.6x Rivet's bulk; KingPlan.SIZE_K 1.3).
 const KING_SIZE_K: float = 1.55
 const HIT_SHOVE: float = 30.0
-## The gang's places on the car in phase 1, metres from its centre along (nose, right).
+## The gang's places on the car in phase 1, metres from its centre along (nose, right): two push
+## from the back corners (they stride with the car), two ride the running boards mid-car, still and
+## facing out to the street (the target's gang hanging off the sides).
 const RIDERS: Array[Vector2] = [
-	Vector2(-2.9, -1.55), Vector2(-2.9, 1.55), Vector2(2.0, -1.55), Vector2(2.0, 1.55)
+	Vector2(-2.9, -1.55), Vector2(-2.9, 1.55), Vector2(0.7, -1.6), Vector2(0.7, 1.6)
 ]
+const RIDING: Array[bool] = [false, false, true, true]
 ## Where King sits on the car (the throne), metres back from its centre.
 const THRONE_M: float = -0.55
 const RIDER_ID: int = 9190
@@ -59,9 +62,11 @@ func pose(fight: BossFight, adds: BossAdds, windup_px: Vector2) -> void:
 		var id: int = RIDER_ID + i
 		var ride: Vector2 = b.facing * RIDERS[i].x + b.facing.orthogonal() * RIDERS[i].y
 		var r_at: Vector2 = Ink.px(b.pos + ride) + windup_px
-		var r: CutRig = _rig(id, false, r_at, b.facing)
+		var out: Vector2 = b.facing.orthogonal() * signf(RIDERS[i].y)
+		var r_face: Vector2 = out if RIDING[i] else b.facing
+		var r: CutRig = _rig(id, false, r_at, r_face)
 		r.visible = fight.phase == 0
-		_place(r, id, r_at, b.facing, Vector2.INF)
+		_place(r, id, r_at, r_face, Vector2.ZERO if RIDING[i] else Vector2.INF)
 	for f: BossFight in adds.fights if adds != null else []:
 		var g: CutRig = _rig(f.body.id, false, Ink.px(f.body.pos), f.body.facing)
 		_place(g, f.body.id, Ink.px(f.body.pos), f.body.facing, Vector2.INF)
