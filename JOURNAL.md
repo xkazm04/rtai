@@ -502,3 +502,33 @@ NEXT (iteration 5, in order):
 5. The rack seam (a 3-row wing part sheet under the image lock), bigger pads; horn + bay doors
    rolling up at rush hour; the defeat's visor flicker.
 6. Windows export `build/export/windows/RTAI.exe` (by 08:30) and REPORT.md.
+- 22:04 MILESTONE 15346f87 **the rotor dash smashes the crates in its lane** (servo.md promised
+  it): `ServoParcels.smash`, 2 ticks ahead of the body so a crate never stops him;
+  `servo.json parcels.dash_smash` (default true, false = a crate stops him like a wall).
+  MEASURED (seeds 1-3, `evidence/servo/bots-it4s/`, 0 SCRIPT ERROR): dodging dash 12/26 (46 %; 54 %
+  without), hot dash 1/12, bay hop 1/10, 0 deaths, Rivet took 78 / 280 / 180, down at
+  163 / 171 / 169 s (over the 150 s envelope). Standers die 3-6 times (s1 downs him at 202 s after
+  3 deaths). The flag build reproduces the sweep exactly (seed 1: tick 9773, 78 dmg, 21 smashed).
+  Still above the dodging target: not called fair. DECISION in docs/decisions.md.
+- 22:07 **Looked at** `evidence/servo/shots/dash_smash_keys_48ppm_it4.png` (p2 seed 2, the dash
+  at tick 1679, 6 fps): a CS crate sits in the locked lane, Servo crosses, the crate is gone;
+  Rivet stepped out of the lane. FOUND: the crate vanishes with no debris (render-only fix next).
+- 22:08 GATES on 15346f87: lint 13/13; unit 1161/0 (`unit-it4c.log`). Scenarios (52/0) and the
+  director reel (19/19) last ran on 135528a5; everything since is Servo-only (live only under
+  --boss).
+
+Call 6 for the owner (for REPORT): the dash smashes crates (default) vs crates stop him:
+`servo.json parcels.dash_smash`; `RTAI.exe -- --boss=servo --phase=2`.
+
+NEXT (iteration 5, in order; replaces the list above):
+1. Smash read: a crate the dash smashes bursts into CS cardboard debris + dust (render only, in
+   ServoBodyView from a smashed list); film it at 48 px/m.
+2. Dash fairness: BossBot rolls when its sidestep is blocked by a wall/crate (a generic ask to
+   n7-king, or Servo-side through threat_away); re-measure the dodging dash toward <= 25-35 % and
+   the fight toward <= 150 s (phase hp or the carpet cadence if still long).
+3. Kamikaze dive on film (a lock before the bot shoots the drone), 48 px/m.
+4. Kerf's blink through a line of drones on film; Dent seizing a drone is NOT built: build or drop
+   it from servo.md.
+5. Human-aim bot and per-attack rates over seeds 1-5.
+6. The rack seam (a 3-row wing part sheet under the image lock), bigger pads, horn + bay doors.
+7. Windows export `build/export/windows/RTAI.exe` by 08:30 and REPORT.md (calls 1-6).
