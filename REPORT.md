@@ -156,6 +156,10 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   Live city block on the final parts, same sim as e1f848a5: `M/frames/city-r7peds-ab-32ppm.png` (`M/cast-r7-city-32.mp4`);
   the target composite `M/frames/cast-ingame-vs-r2c6.png` is re-shot on them.
 
+### Gates (iteration 18 final, `tools/evidence/run.mjs --no-bench` on 0f6ce11a (the dark hat crown): lint 13/13,
+scenarios 46, parity exact (mutation at 629), look goldens 11/11 (worst 1.13), no re-bless; unit 953/1 where the 1 is
+the known flake `test_noir_shadows` ("Parameter t is null"), re-run twice standalone: 954/0 both times.
+
 ### Gates (iteration 18, final `tools/evidence/run.mjs --no-bench` on 550b000d (Call 9 C, CORE_TAN 1.0): ALL PASS:
 lint 13/13, unit 954/0, scenarios 46, parity exact (mutation caught at 629), look goldens 11/11 (worst 1.22), no
 re-bless. Bench skipped (shared machine, other lanes' Godot running). Director reel headless 16/16 down, 0 script errors.
@@ -194,6 +198,11 @@ parity exact (mutation caught at 629), selftest look goldens 11/11 (worst 1.06),
 parity exact, selftest with look goldens 11/11 (worst 1.07) and block 5/5, no re-bless; iteration 6 on 850c543a:)
 lint 13/13, unit 940/0, scenarios 46/0, parity exact (planted mutation caught at 629), look goldens junction 11/11
 and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; decisions line). Bench not run.
+- Built (iteration 18, 0f6ce11a): the coat-hat ped's hat crown prints dark (D4 and D5 `head_hat.png` crown x0.40,
+  brim and ink ring kept). In the live city that ped had been a faint cream outline on the cream slab; it now carries
+  a 3-4 px ink head mark at 32 px/m, the dark-head read of r1_c6, and a mid-grey hatched crown at 64 px/m:
+  `M/frames/ped-hat-crown-ab-32ppm.png` (lineup slab/asphalt/64 px/m + live city, before | after),
+  `M/cast-hat-city-ab-32.mp4`.
 
 ## What does not work / is open
 - Fixed (85b912e5): Rivet's thin pale legs were faint on dark asphalt at 32 px/m (`M/frames/rivet-legs-motion-32ppm.png`).
@@ -252,7 +261,8 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
    (`M/frames/ped-pale-on-slab-city-32ppm.png`). On asphalt A reads well. There is no middle value at
    32 px/m: the print is two-tone there (a fill below lum ~0.58 prints ink, `ped_pale.py`'s note), so the choice is
    pale or a dark blob. Walking peds already show dark legs (the walking row of `M/frames/crowd-planview-ab-vs-r2a5.png`);
-   a standing ped is all coat from above. If you keep A, the next trial is a dark hair or head mark that reads on the slab.
+   a standing ped is all coat from above. Built in iteration 18: the coat-hat look, the faintest, now prints a dark
+   hat crown (0f6ce11a, `M/frames/ped-hat-crown-ab-32ppm.png`); coat-hood stays the palest look.
 
 7. Rivet's collar at 32 px/m: A, vermilion with 6 ink hazard breaks (built, `PartMaterials.COLLAR_LOD_FILL` 3,
    `print_part.gdshader` `collar_stripes` 6 / `collar_ink` 0.3), or B, the flat vermilion ring (`COLLAR_LOD_FILL`

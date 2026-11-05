@@ -1125,14 +1125,30 @@ Session end 05:02: tree clean after this commit, no Godot process of mine runnin
   now names a dark head mark on the slab as the next trial; walking peds already show dark legs.
 
 NEXT (iteration 19), replaces the 04:40 list:
-1. Calls 1-9 stand. Call 9 is now C built (550b000d, CORE_TAN 1.0; A = 0.6, B = 0.0). REPORT sections 3/4, Calls 6
-   and 9 and the gates line are current to 550b000d (docs commits after it touch no project file). frames.json 15,
+1. Calls 1-9 stand. Call 9 is now C built (550b000d, CORE_TAN 1.0; A = 0.6, B = 0.0). REPORT sections 3/4/5, Calls 6
+   and 9 and the gates line are current to 0f6ce11a (docs commits after it touch no project file). frames.json 15,
    every file exists. REPORT rewrite at 08:40.
 2. Weakest left vs the targets, all owner calls with evidence: (a) the cops' bright-blue pads at 32 px/m vs r2_c6's
    navy bodies (Call 4 C/D); (b) pale standing peds faint on the cream slab in the live city (Call 6 A's cost,
-   `M/frames/ped-pale-on-slab-city-32ppm.png`; the 32 px/m print is two-tone, so no middle value exists). Trial if time:
-   a dark head mark for the pale looks (coat-hat, coat-hood, vest-hair, overalls-bald) on `cast_lineup -- --crowd`
-   slab and road at 32 px/m, then the live city; judge lossless (PNG-sequence capture `--write-movie f.png`, not AVI).
+   `M/frames/ped-pale-on-slab-city-32ppm.png`; the 32 px/m print is two-tone, so no middle value exists). The
+   coat-hat look got its dark crown (0f6ce11a, 05:28 entry); coat-hood is the palest look left (its hood is the
+   head): a darker hood crown is the next trial, the same way (lineup lossless, then the live city).
 3. Before the 08:30 freeze: re-run `tools/evidence/run.mjs --no-bench` on the final head.
 Session state 05:28: tree clean after this commit, no Godot process of mine running, locks never taken, scratch
   `gtai-n5/scratch-cast/i18` holds logs and label files only (PNG sequences deleted).
+- 05:28 NEXT 2(b) TRIAL then BUILT: `cast_lineup -- --crowd` slab 32 px/m lossless showed the two pale looks with no
+  dark head mark: coat-hat (pale hat crown) and coat-hood (pale hood); jacket, hoodie-cap and vest-hair carry dark
+  heads, overalls-bald a grey one. r1_c6 draws the crowd's heads dark from above. Trial: the hat's crown (flood from
+  centre inside the inner ink ring, ~3800 px) x0.40 in D4 `art/ped/head_hat.png`: a 3-4 px ink head mark inside
+  the pale brim at 32 px/m, on slab and asphalt (not a 1 px speck: `motion-quality-gating` holds). Applied to the D5
+  hat too (64 px/m: a mid-grey hatched crown, the cap look's weight), so the zoom tiers agree. Live city
+  (`film.sh cast-hat-city-32 ... --clean`, 0 SCRIPT ERROR) A | B: the faint ped of 05:25 was the coat-hat look and
+  now reads (`M/cast-hat-city-ab-32.mp4`, still `M/frames/ped-hat-crown-ab-32ppm.png`). Script
+  `masters:n5/cast/tools/ped_hat_crown.py`. Colour only: rig, parts geometry, gibs and reactions untouched (the
+  director reel has no hat peds; 16/16 at 05:09 holds for the code). Rejected: the whole hat dark (a disc larger
+  than every other head); a print rule (HEAD kind is shared with Rivet's visor slot). Coat-hood left pale.
+- MILESTONE 0f6ce11a: the coat-hat ped's dark hat crown (revert = both PNGs from 550b000d). Decisions line.
+- 05:37 EVIDENCE GATE on 0f6ce11a: lint 13/13, scenarios 46, parity exact, look goldens 11/11 (worst 1.13), no
+  re-bless; unit 953/1 = the known flake test_noir_shadows ("Parameter t is null"); re-run twice (the `-gtest`
+  filter ran the full suite): 954/0 both. REPORT section 5 bullet, Call 6, gates line; frames.json 15 (hat still on
+  top; react-street-d5peds dropped from the list, file kept, REPORT cites it). Scratch renders deleted.
