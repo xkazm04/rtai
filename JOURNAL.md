@@ -388,7 +388,7 @@ Session state 02:22: head = this commit, tree clean, no Godot process of mine ru
 
 NEXT (iteration 5, ghost-powers):
 1. Merge n6-ghost-forms / n5-cast if they moved (one `--import` after the merge before filming).
-2. When the Ohm rig lands: re-film Ohm on it (arena 32, city 32, 64 slow), check the prongs leave the drawn
+2. Ohm on its body: city 32 not re-filmed on the body yet (arena, 64, mass done 02:50); then the drawn
    fingertips, a target composite, and re-cut the reel's Ohm segments.
 3. Dent `--cam=car` in the city block (64 px/m close-up there; arena done b575c591).
 4. Weakest left: the robot victim (no robot fighter in the arena; the brain stands in drawn as a cop). Look for a
@@ -396,3 +396,19 @@ NEXT (iteration 5, ghost-powers):
    machine multipliers (Ohm machine_k, Kerf robot_damage) read on screen.
 5. Kerf under `--gore=reduced`: the red pool under a cauterised cut (a reduced-gore Kerf death without blood).
 Session state 02:44: head = this commit, tree clean, no Godot process of mine running, masters scratch holds only film.sh and reel.sh, image.lock never taken, bench never run.
+- 02:44 MERGE n6-ghost-forms 19ae646c (31c06cc9: the Ohm body OhmRig, GhostRim cream rims on Kerf/Ohm; JOURNAL/REPORT
+  keep ours) + one `--import`. Kerf's echoes inherit the rim: a pale mint outline under the teal wash (judged at 64:
+  reads as the target's ghost outline; kept).
+- 02:46 MILESTONE 898bbf1a Ohm on its body: the full-weight prongs from (0.38, -+0.1) buried the guard arm (and the
+  right anchor sat on the cane side). Moved `electrode_l/r` in ghost_forms.json to the drawn copper fingers (0.52,
+  -0.17 / -0.07; OhmRig.GUARD_HAND is (0.5, -0.12)), prongs thin (x0.5) for 0.9 m then one full bolt. A/B
+  `M/frames/ohm-prongs-on-body-ab-64ppm.png`. DECISION in decisions.md (the forms lane's file: data only; REQUEST 6).
+  Unit test_ohm* 8/8, test_ghost* 15/15, scenario_ghost_attacks 1/0 (`E/scenario-ghost-it4b.log`).
+- 02:50 Ohm re-filmed on the body: arena 4 kills + cruiser (`E/ghosts-ohm-body-32.json`), 64 px/m half speed, the
+  mass arc tier 1 (knot down at tick 119, `E/ghosts-ohm-mass-body-32.json`), target composite
+  `M/frames/ohm-vs-target.png`. Reel `M/ghost-attacks-reel-it4-32ppm.mp4` re-cut: all four ghosts on their bodies.
+
+### REQUEST 6 -> n6-ghost-forms (02:52)
+I moved Ohm's `electrode_l/electrode_r` in your `ghost_forms.json` to the copper fingers your OhmRig draws on the
+guard hand: (0.52, -0.17) and (0.52, -0.07) (898bbf1a; data only, nothing else in the file). If you move
+OhmRig.GUARD_HAND, move the anchors with it (or tell me in a REPLY); the bolt follows the data.
