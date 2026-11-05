@@ -1,4 +1,4 @@
-# n5-look REPORT (draft 2026-11-05 05:52; rewritten at the 08:40 report)
+# n5-look REPORT (draft 2026-11-05 05:56; rewritten at the 08:40 report)
 
 Branch `n5-look`, cut from main `a1275c82`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n5\look\` (`frames.json`, 15 entries).
 Detail and every measurement: `JOURNAL.md`. Decisions: `docs/decisions.md` (lines tagged n5-look).
@@ -34,6 +34,7 @@ Detail and every measurement: `JOURNAL.md`. Decisions: `docs/decisions.md` (line
    - Iteration 14: the electro arc prints a white-hot core inside a violet edge, as r2_w4's bolt does, instead of one lavender fill; it reads stronger on cream at 32 px/m too (`fx_colour.json` arc rim 4 px). Evidence: `fx-arc-it14-vs-r2w4.png`.
    - Iteration 16: the homing shard is r2_w4's barbed crystal arrowhead with three ink speed dashes, instead of a long pale lozenge on a charcoal tail (`tools/art/shard_arrow.py`; `weapon_art.json` shard row `art` shard_arrow.png at 190x64, back = shard.png at 190x44). Evidence: `fx-shard-arrow-it16-vs-r2w4.png` (64 and 32 px/m).
    - Iteration 16: the ray gun fires r2_w4's straight acid-green beam with a pale core and green tendrils that re-crackle every tick, instead of a train of green hoops (`tools/art/ray_beam.py`, `WeaponFxRay.draw_beam`; `weapon_art.json` ray_gun `projectile_fx` "ray_beam", back = "ray_ring"). Evidence: `fx-ray-beam-it16-vs-r2w4.png` (64 and 32 px/m). Its core prints white-hot inside the green edge (`fx_colour.json` family `ray_beam`; drop = the pale green core): `fx-ray-core-it16-vs-r2w4.png`. In motion: `fx-ray-shard-range-48ppm-it16.mp4`.
+   - Iteration 16: the flame cells grade hot yellow under an orange rim (`fx_colour.json` family `flame`; drop = the explosion family's amber): `fx-flame-rim-it16-64ppm-vs-r2w4.png`. The flame's shape is still a train of teardrops, not r2_w4's continuous cone (see What doesn't).
    - Evidence: `fx-colour-reel-ab-32ppm.mp4`, `fx-colour-arena-64ppm-vs-r2w4.png`, `fx-colour-energy-ab-32ppm-2x.png`, `fx-colour-lineup-64ppm-vs-r2w4.png`.
 4. **The held gun follows Rivet's size** (answers n5-cast REQUEST 19:08). `rivet_arsenal.json held_size_ref` is 1.2; the cast lane's 0.97 Rivet carries 0.81x guns.
    - Evidence: `held-size-ab-cast-merge.png`.
@@ -68,6 +69,7 @@ The last full evidence gate was green on 9cc56a51 (2026-11-05 05:10, the muzzle 
   - its housing prints grey (the 1.3x `cross_k` fixed the slim silhouette). The grey is by design: the held parts print through `print_part`, whose only inks are paper, ink, vermilion and cop blue. The cast lane's warm ramp is Rivet's D5 close-up only, so the merge will not change it (see Calls);
   - there is no director-reel chapter for it (left out on purpose, so the approved reel keeps its timings).
 - **FX gap to r2_w4:** the white-hot tier prints cream through the FX print's paper snap (the smoke frame's flash, b59dfb73, carries the white-hot core now) (the lumpy edge landed cd654482, the grade 986da3b6). (Debris landed f0987078, the smoke ring c53cbbfa; the white-hot first frame c1a6cdaa; the ray rings' olive tail e7bccb95.)
+- **The flame's shape (iteration 16):** the flamethrower draws a train of separate teardrop blobs; r2_w4's flame is one continuous widening cone with ragged tongues. The colour now grades yellow -> orange; the shape is the next FX item.
 - **FX gaps left to r2_w4 (iteration 14):** the arc's many small side twigs (tried: at game scale they turn the bolt into a scribble; the ink ring cannot carry hairlines at 0.2 cell scale); the sheet's ink speed dashes behind the bullet rounds (under 1 px at 32 px/m; the shard carries its own since iteration 16); the ray's tendril halo is thinner than the sheet's; the plasma comet lacks the sheet's loose ember flecks (sub-pixel at 32 px/m).
 - **Fixed in shared code:** `--telemetry` together with `--reel=director` crashed at quit. The ReelDirector hook has no station and `ArenaStage.telemetry_dict` read `hook.station.id`. Main has the bug too. A hook without a station is now keyed `hook_<n>`.
 - **Unmeasured:** the frame cost of the riso layer and of `look_d5_fx` with nothing else running. No bench lock was taken; the machine is shared.
