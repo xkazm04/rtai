@@ -30,6 +30,8 @@ var markers: WorldMarkers = WorldMarkers.new()
 ## The camera's world offset in screen px this frame (every print shader's world lock).
 var world_px: Vector2 = Vector2.ZERO
 var look_params: LookParams = null
+## Stage-local print overrides (LookZone, a close-up stage's own floor level); empty = as before.
+var look_zones: Array[LookZone] = []
 var _look_rect: ColorRect = ColorRect.new()
 var _look_mat: ShaderMaterial = ShaderMaterial.new()
 var _item_mat: ShaderMaterial = ShaderMaterial.new()
@@ -88,7 +90,7 @@ func place(focus_m: Vector2) -> void:
 	camera.position = focus_m * SimConst.PX_PER_M + offset
 	fx_triggers.rig = rig
 	fx_triggers.focus_px = focus_m * SimConst.PX_PER_M
-	_update_look()
+	_update_look(focus_m)
 	world_px = _print_px() - get_viewport_rect().size * 0.5
 	_item_mat.set_shader_parameter(&"world_px", world_px)
 	_look_mat.set_shader_parameter(&"world_px", world_px)
@@ -102,8 +104,10 @@ func place(focus_m: Vector2) -> void:
 	markers.step(tick)
 
 
-func _update_look() -> void:
+func _update_look(focus_m: Vector2) -> void:
 	var p: LookParams = LookProfiles.shared().resolve(look_id, zoom * SimConst.PX_PER_M)
+	for z: LookZone in look_zones:
+		p = z.apply_to(p, z.weight(focus_m))
 	if p == look_params or p.equals(look_params):
 		return
 	look_params = p

@@ -71,6 +71,17 @@ func attach_view(view: Node) -> void:
 	over.z_index = RenderLayers.z(&"roof_occluders")
 	over.scale = v.cast_view.scale
 	v.print_stage.actor_layer().add_child(over)
+	_add_print_zone(v.print_stage)
+
+
+## The alley's own floor level in the print (alley_decor.json `print`); --alley-print=off = before.
+func _add_print_zone(ps: PrintStage) -> void:
+	var row: Dictionary = decor.get("print", {})
+	if row.is_empty() or OS.get_cmdline_user_args().has("--alley-print=off"):
+		return
+	var fade: float = row["fade_m"]
+	var world: Dictionary = row["world"]
+	ps.look_zones.append(LookZone.create(_floor_m, fade, world))
 
 
 func _lay(v: CollectCallView, node: Node2D, z: int, s: Vector2) -> void:

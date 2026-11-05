@@ -134,6 +134,32 @@
       },
       "type": "array"
     },
+    "print": {
+      "additionalProperties": false,
+      "properties": {
+        "doc": {
+          "type": "string"
+        },
+        "fade_m": {
+          "maximum": 40,
+          "minimum": 0,
+          "type": "number"
+        },
+        "world": {
+          "additionalProperties": {
+            "maximum": 4,
+            "minimum": -4,
+            "type": "number"
+          },
+          "type": "object"
+        }
+      },
+      "required": [
+        "fade_m",
+        "world"
+      ],
+      "type": "object"
+    },
     "puddles": {
       "items": {
         "items": {

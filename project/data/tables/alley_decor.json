@@ -290,6 +290,13 @@
       -10
     ]
   ],
+  "print": {
+    "doc": "n5-look iteration 21 (toward r2_a6's mid concrete): look_d4 world uniforms the alley sets for its own floor (core/render/look_zone.gd), weight 1 while the camera's focus is on the alley floor, fading out over fade_m metres outside it. wash_lo 0.30 -> 0.6: the light-wash fill (the alley floor) prints a mid warm grey, under look_d5's grime gate so the cracks and splats stay. Empty world or --alley-print=off = the before (pale paper floor); the city and the other stations never see it.",
+    "fade_m": 6,
+    "world": {
+      "wash_lo": 0.6
+    }
+  },
   "puddles": [
     [
       11.5,
