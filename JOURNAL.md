@@ -961,3 +961,13 @@ FREEZE 08:26: tree clean after this commit, no Godot process of mine running, no
 NEXT (Director): branch tip is fully gated (all PASS). Merge as is. Calls for the owner unchanged (`--teal-forms`,
 `story_voice`). If n5-cast/ghost-powers land code before merge, re-run `node tools/evidence/run.mjs --no-bench`.
 FREEZE 08:37: no Godot process of mine running, no lock held; frames.json 15, all present.
+
+## Iteration 18 (08:40-, REPORT)
+- 08:42 CHECK every `M:`/`E:` path in REPORT.md (73 + 19): one missing, `M:dent-morph-64ppm-slow3x.mp4` (deleted at
+  the frames.json cap in iteration 4, line 391 above, but still cited). REPORT now cites the Tonnage -> Dent 64 px/m
+  switch clip instead and lists the missing base -> Dent close-up under "What does not work". Added "What blocked"
+  (none; frictions summarised). frames.json 15, all present. Deleted the unreferenced scratch render
+  `M:scratch/ohm_x3.png`. No code change, no Godot run, no lock held.
+
+NEXT (Director): branch tip is fully gated (iteration 17, all PASS); this commit is REPORT/JOURNAL only. Merge as is.
+Optional: re-film a base -> Dent 64 px/m slow close-up. Calls for the owner unchanged (`--teal-forms`, `story_voice`).

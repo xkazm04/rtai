@@ -1,6 +1,6 @@
 # REPORT: lane n6-ghost-forms (branch `n6-ghost-forms`), night run 2026-11-04 -> 11-05
 
-Written through the night (first draft in iteration 4, 02:30); final as of the 08:30 freeze (iteration 14), gate line updated in iteration 17 (08:37). Until iteration 4 the
+Written through the night (first draft in iteration 4, 02:30); final as of the 08:30 freeze (iteration 14), gate line updated in iteration 17 (08:37); every `M:`/`E:` path re-checked in iteration 18 (08:42). Until iteration 4 the
 root REPORT.md on this branch was n5-cast's (it came in through a merge); n5-cast's own copy is on its
 branch. `M:` = `C:\Users\kazda\kiro\gtai-masters\n6\ghost-forms\`, `E:` = `evidence/` here.
 
@@ -38,8 +38,9 @@ The owner's order for this lane: "create these characters, animate transformatio
 ### 2. Dent (the lurching brawler)
 - DentPlan on base Rivet's CutRig with its own raw parts (yellow crash-test discs). DentLurch is the stagger:
   roll and yaw per stride, a limp. GhostAura is the breathing teal pool under the light forms.
-- Proof: `M:dent-gait-ab-32ppm.mp4` (before | after), `M:dent-morph-64ppm-slow3x.mp4`,
-  `M:frames/dent-live-vs-target-64ppm.png`.
+- Proof: `M:dent-gait-ab-32ppm.mp4` (before | after), `M:frames/dent-live-vs-target-64ppm.png`; Dent's
+  transformation at 64 px/m only as form to form (`M:forms-switch-64ppm-slow3x.mp4`, Tonnage -> Dent). The
+  base -> Dent slow close-up was filmed but deleted at the frames.json cap in iteration 4 (see "What does not work").
 
 ### 3. Kerf (the fast one)
 - KerfRig from a Codex part sheet: an arrow hull, emitter arms held in guard, blade legs trailing and sweeping
@@ -261,9 +262,19 @@ unit 1020/0, scenarios 51, parity bit-exact (mutation caught at 629), look golde
 (worst 1.53); no re-bless. **The tip is the lane's final gated head.**
 
 ## What does not work / is open
-- Nothing open in this lane's list. Dent in quest 1 now has ghost-powers' three parked ghost cars (merged
+- Evidence gap: no base -> Dent 64 px/m slow close-up survives (filmed in iteration 3, deleted at the 15-entry
+  frames.json cap in iteration 4; found by the iteration 18 path check). Re-film with the other morph clips'
+  recipe if the owner wants one per ghost; the other three ghosts have theirs.
+- Otherwise nothing open in this lane's list. Dent in quest 1 now has ghost-powers' three parked ghost cars (merged
   97f49bf0): our Dent body seizes, rides braced and blows them on the shipped path
   (`M:frames/dent-ride-quest1-32ppm-x2.png`), so Dent stays selectable there (their NOTICE of 05:46 answered).
+
+## What blocked, and for how long
+- Nothing blocked the lane (no BLOCKED entry in JOURNAL across 18 iterations). The frictions, each costing one
+  re-run (minutes, not hours): strict warnings-as-errors in dev film scripts (a discarded return gave 1086 SCRIPT
+  ERRORs once; `--check-only` first fixed it), headless reels needing about 3x `--quit-after`, `-s` scripts
+  compiling before the autoloads, the evidence runner refusing a dirty tree (logs now go under `build/` first),
+  and the 15-entry frames.json cap forcing clip deletions (the Dent gap above).
 
 ## Calls for the owner
 - **Rust steel on a teal pool, or fully teal ghosts?** The targets draw the ghosts teal all over. Ours print
