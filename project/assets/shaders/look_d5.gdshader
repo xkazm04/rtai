@@ -43,6 +43,8 @@ uniform float stain_k = 0.0;       // low-frequency grey-brown stains on the pap
 uniform float stain_scale = 0.011; // stain lattice frequency per screen px
 uniform float tan_k = 0.0;         // the ground's light neutral print toned toward the target's tan sheet (actors untouched)
 const vec3 TAN = vec3(0.92, 0.875, 0.8);
+uniform float speck_k = 0.0;       // riso toner speckle: sparse 1 px ink specks on the paper and light fills (0 = off)
+uniform float speck_density = 0.05; // the share of light pixels that take a speck where the cluster noise peaks
 
 // the print inks from palette.json (visual-engine's LookOverlay sets them, like look_d4's tones)
 uniform vec3 paper_tone = vec3(0.949, 0.910, 0.835);
@@ -99,6 +101,13 @@ vec3 riso_print(vec3 o, vec3 c, float d, vec2 w, vec2 uv, vec2 tx) {
 	float f2 = strand(w.yx * fibre_scale * 1.6 + 9.1) * smoothstep(0.55, 0.8, vnoise(w * 0.05 + 4.2));
 	o = mix(o, ink_tone, f1 * fibre_k * riso * 0.2 * (1.0 - d));
 	o = mix(o, paper_tone, f2 * fibre_k * riso * 0.18 * (0.35 + d));
+	// toner speckle (r2_a5's grain, toned down): a per-pixel lattice hash, thinned by a cluster mottle
+	if (speck_k > 0.0 && d < 0.45) {
+		vec2 p = floor(w);
+		float h = fract(texture(grime_tex, (p + 0.5) / 128.0).r * 7.31 + texture(grime_tex, (floor(p / 3.0) + 37.5) / 128.0).r * 13.7);
+		float cl = smoothstep(0.3, 0.75, vnoise(w * 0.06 + 8.3));
+		o = mix(o, ink_tone, step(1.0 - speck_density * cl, h) * speck_k * riso * (1.0 - d / 0.45));
+	}
 	// tan sheet: only the light neutral ground (the cream actors draw above this layer and pop more)
 	float neu = 1.0 - smoothstep(0.12, 0.22, chroma(o));
 	o = mix(o, o * TAN, tan_k * riso * neu * (1.0 - smoothstep(0.3, 0.7, d)));
