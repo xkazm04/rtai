@@ -669,3 +669,6 @@ NEXT (iteration 5, in order):
   where Ohm's bolt deals 6 every 0.5 s to a robot. Against King, Tonnage is a shove and a damage
   shield (armor_k), not a damage source. Note: the stomp also throws King (`h.pos += push`); BossHook
   keeps him on the floor. Whether a boss should be thrown by the stomp is folded into call A.
+- 22:10 unit on a9ec2ba8: 1146/0 (`evidence/king/unit-it4b.log`). The session ends with everything
+  committed. NEXT for iteration 5 stands as written above (22:10 block). Item 2 is partly done:
+  the ghost bot closes in for Tonnage. Still open: Dent's cars, and a Kerf clip.
