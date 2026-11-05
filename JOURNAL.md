@@ -1121,5 +1121,18 @@ Session end 05:02: tree clean after this commit, no Godot process of mine runnin
   faint cream shape held only by its ink outline (`M/frames/ped-pale-on-slab-city-32ppm.png`, mp4 frame x2); r2_a5 keeps
   dark trousers and hair. The iteration 11 lineup judged it on slab with the outline; in the live city it reads weaker.
   Not reopened at 05:25 (a judged Call, ~30 min left); added to REPORT Call 6 as the cost of A, with the next trial
-  named. CORRECTION 05:27: no middle value exists at 32 px/m (the print is two-tone, ink below lum ~0.58); REPORT
+  named. CORRECTION 05:26: no middle value exists at 32 px/m (the print is two-tone, ink below lum ~0.58); REPORT
   now names a dark head mark on the slab as the next trial; walking peds already show dark legs.
+
+NEXT (iteration 19), replaces the 04:40 list:
+1. Calls 1-9 stand. Call 9 is now C built (550b000d, CORE_TAN 1.0; A = 0.6, B = 0.0). REPORT sections 3/4, Calls 6
+   and 9 and the gates line are current to 550b000d (docs commits after it touch no project file). frames.json 15,
+   every file exists. REPORT rewrite at 08:40.
+2. Weakest left vs the targets, all owner calls with evidence: (a) the cops' bright-blue pads at 32 px/m vs r2_c6's
+   navy bodies (Call 4 C/D); (b) pale standing peds faint on the cream slab in the live city (Call 6 A's cost,
+   `M/frames/ped-pale-on-slab-city-32ppm.png`; the 32 px/m print is two-tone, so no middle value exists). Trial if time:
+   a dark head mark for the pale looks (coat-hat, coat-hood, vest-hair, overalls-bald) on `cast_lineup -- --crowd`
+   slab and road at 32 px/m, then the live city; judge lossless (PNG-sequence capture `--write-movie f.png`, not AVI).
+3. Before the 08:30 freeze: re-run `tools/evidence/run.mjs --no-bench` on the final head.
+Session state 05:28: tree clean after this commit, no Godot process of mine running, locks never taken, scratch
+  `gtai-n5/scratch-cast/i18` holds logs and label files only (PNG sequences deleted).
