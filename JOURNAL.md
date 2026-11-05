@@ -1081,3 +1081,9 @@ NEXT (iteration 18) addition: if the owner has not answered Call 9 by the next B
   quest1_clip PNG stills or a PNG-sequence capture, not AVI/mp4.
 Session state 04:53: tree clean after this commit, no Godot process of mine running, locks never taken, scratch i17
   holds logs only.
+- 04:57 report-phase prep: all 105 `M/` paths REPORT cites exist; frames.json 15, every file exists. Masters files
+  cited nowhere (REPORT, frames.json, JOURNAL): cast-before-city-32, cast-before-director-32 (halves of the
+  cast-city-ab-32 / cast-director-ab-32 proof clips), cast-legrim-before-city-32, cast-legrim-city-32 (~85 MB). Kept
+  (masters evidence, not scratch); the 08:40 REPORT phase may cite or drop them.
+Session end 04:57: tree clean after this commit, no Godot process of mine running, locks never taken, scratch
+  `gtai-n5/scratch-cast/i17` logs only. NEXT (iteration 18): the 04:40 list + the Call 9 C addition (04:51).
