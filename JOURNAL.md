@@ -431,3 +431,18 @@ NEXT addendum (iteration 22): 6. The exit CanvasItem leak (low): see 08:10.
 Session state 08:08: head = this commit, tree clean, no Godot or Node process of mine running, locks never taken, scratch emptied, frames.json 15.
 - 08:10 CHECKED the exit leak: `WARNING: 1 RID of type "CanvasItem" was leaked` shows on every arena run (`--weapon=pistol --bot=gunplay` and `--arena=alley --bot=alley`, 400 frames each), always beside ~500 leaked ObjectDB instances: the dev arena exits without freeing its tree, so the RID frees that hang on NOTIFICATION_PREDELETE (kill_ground.gd _smears, on main since 47e38261) never run. Exit-only, not this lane's code, not a gameplay leak; not fixed. Left for whoever owns the dev arena's quit path.
 Session state 08:11: head = this commit, tree clean, no Godot or Node process of mine running, locks never taken, scratch emptied, frames.json 15.
+
+## Iteration 22 (08:07-08:30, BUILD)
+- 08:07 READ JOURNAL NEXT (iteration 22), git log. Tree clean at 09704441, no locks, no Godot of mine. With 20 min to the freeze, picked NEXT 3 (the dumpster footprint) as one data change.
+- 08:08 FRICTION: `--arena=alley` without a scene path boots the city (boot warns "unknown launch arg"); the arena needs `res://dev/arena/arena.tscn` before `--`.
+- 08:13 MILESTONE 176c48f4 (NEXT 3, the alley dumpsters vs r2_a6): the three cover_high props 2 x 1.2 -> 2.4 x 1.4 m, centres 0.1 m toward their walls (-39.3 -> -39.2, -35.7 -> -35.8), so each still sits at the wall (the walls are y -40 / -35) with >= 2 m of lane clear; the bags beside them do not overlap. Before/after from the same seed (`--arena=alley --bot=alley --clean`, 1200 frames windowed at 48 px/m, the before from HEAD's table restored after): the fight is the same at tick 900 (the same positions and the same corpses), 3 waves, 0 script errors each. The bins fill more of the lane toward r2_a6's but are still smaller (the sheet is a 3/4 view). Evidence: `alley-dumpster-it22-vs-r2a6.png`, `alley-dumpster-it22-48ppm-ab.mp4`; frames.json 15 (dropped from the list, files kept, REPORT cites them: alley-floor-it21-48ppm-ab.mp4, fx-flame-embers-it20-48ppm-ab.mp4). DECISION in docs/decisions.md. Registry `depth-ordered-layered-art`: the bins stay ground props under the cast, with no cast shadow added.
+- 08:16 EVIDENCE GATE green on 176c48f4 (`--no-bench`): lint 13/13, unit 964/0, scenarios 46, parity bit-exact (mutation at 629), look goldens 11/11 worst 0.00, block 5/5, world lock holds. No golden moved, so no re-bless. Bench skipped: frame cost CONTENDED/unmeasured (data-only change).
+- 08:17 COMBAT CHECK director reel on 176c48f4 (headless, --fixed-fps 60, 7200, `--loadout=pistol`): 16/16 chapters down, 0 SCRIPT ERROR.
+- 08:19 REPORT.md: iteration 22 (the dumpster bullet, the What-doesn't line, the exit warning).
+
+NEXT (iteration 23 / the morning):
+1. The gate is green on 176c48f4 and the reel 16/16; the last data change is 176c48f4.
+2. The tell under the colour fire: still unseen. Stage it at a gunplay station with contractors (data/tables/arena_stations/gunplay.json) plus a molotov; draw the tells on an over canvas only if the frame shows them hidden.
+3. The alley's remaining gap to r2_a6 is hue (the world print keeps value only): the green dumpster face and the blue-grey pools. A per-stage chroma pass through LookZone is the likely route; measure it before building.
+4. Weapon art: the warm-ink Call stays open.
+Session state 08:20: head = this commit, tree clean, no Godot or Node process of mine running, locks never taken, scratch (gtai-n5/look-scratch-it22) holds only logs and pngs (no AVIs), frames.json 15 (every file exists).
