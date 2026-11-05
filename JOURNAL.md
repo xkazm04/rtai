@@ -384,3 +384,8 @@ NEXT (iteration 4, in order):
 5. Body to target: rack wings 3 rows, bigger pads; the defeat's visor flicker; the horn and the
    bay doors rolling up at rush hour.
 6. Windows export `build/export/windows/RTAI.exe` (by 08:30, the int-day recipe).
+- 21:12 MERGE n7-king 0965780d as e73d8032 (BossMusic: every boss's stinger + loop from
+  BossView.attach, so Servo has his music with no Servo code; --boss-cam; leap_m, unused by
+  Servo; KingBeats). JOURNAL ours. Unit on the merged tree 1156/0 (`unit-it3c.log`). Servo seed 1
+  dodging on the merged tree: down at 134.2 s, Rivet took 80, 0 SCRIPT ERROR: identical to before
+  the merge (`bots-it3/merged-dodge-s1.*`). NEXT 1's music half is done.
