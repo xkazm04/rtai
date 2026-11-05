@@ -156,3 +156,10 @@ func fire_row(weapon: StringName) -> Vector2:
 	var px: float = over.get("fire_kick_px", 0.0)
 	var ticks: float = over.get("fire_kick_ticks", 1.0)
 	return Vector2(px, ticks)
+
+
+## The spin-up tremor of `weapon` (hit_feel.json `weapons` spin_rumble_px, screen px at full spin
+## below firing speed; FeelCam.spin_tremor). Zero = none.
+func spin_row(weapon: StringName) -> float:
+	var over: Dictionary = _weapons.get(weapon, {})
+	return over.get("spin_rumble_px", 0.0)

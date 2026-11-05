@@ -83,9 +83,25 @@ func offset_px(tick: int, zoom: float) -> Vector2:
 			_kicks.remove_at(i)
 			continue
 		sum += Vector2(k.x, k.y) * (1.0 - clampf(t, 0.0, 1.0)) * (1.0 - clampf(t, 0.0, 1.0))
+	sum += spin_tremor(tick)
 	var cap_px: float = feel.cap.get("kick_px_max", 8.0)
 	var screen: Vector2 = sum.limit_length(cap_px) + _rig.offset_px(SimConst.PX_PER_M)
 	return screen / maxf(zoom, 0.01)
+
+
+## The spin-up's anticipation (hit_feel.json `weapons` spin_rumble_px): while Rivet's barrels turn
+## below full speed (spinning up, or winding down after the trigger lets go), a tremor that grows
+## with the spin. Screen px; a fixed function of the tick (view only, no RNG); zero when off.
+func spin_tremor(tick: int) -> Vector2:
+	if not feel.enabled or reduced_motion or _arena == null or _arena.gun == null:
+		return Vector2.ZERO
+	var trig: Trigger = _arena.gun.trigger
+	var full: int = trig.spec.spin_ticks
+	var px: float = feel.spin_row(trig.spec.id)
+	if px <= 0.0 or full <= 0 or trig.spin <= 0 or trig.spin >= full:
+		return Vector2.ZERO
+	var amp: float = px * float(trig.spin) / float(full)
+	return Vector2(sin(tick * 2.3), cos(tick * 3.1)) * amp
 
 
 func _on_struck(victim: Fighter, dir: Vector2, lethal: bool, weapon: StringName) -> void:

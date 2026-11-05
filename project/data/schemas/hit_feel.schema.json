@@ -153,6 +153,10 @@
           },
           "shake": {
             "type": "string"
+          },
+          "spin_rumble_px": {
+            "minimum": 0,
+            "type": "number"
           }
         },
         "required": [
