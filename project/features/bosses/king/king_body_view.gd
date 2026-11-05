@@ -20,7 +20,7 @@ func _draw() -> void:
 	if fight == null:
 		return
 	draw_set_transform(Ink.px(fight.body.pos), fight.body.facing.angle(), Vector2.ONE)
-	if fight.phase == 0:
+	if fight.phase <= 1:  # the procession, then the court on the stalled car
 		_car()
 	else:
 		_on_foot()

@@ -8,6 +8,8 @@ extends Node2D
 
 var fight: BossFight = null
 var adds: BossAdds = null
+## The view's blood: the boss and its adds are robots (they leak oil, never red).
+var blood: CombatBlood = null
 
 
 static func attach(view: Node, hook: BossHook) -> void:
@@ -20,6 +22,7 @@ static func attach(view: Node, hook: BossHook) -> void:
 	var body: BossView = make(hook.fight.spec.id)
 	body.fight = hook.fight
 	body.adds = hook.adds
+	body.blood = v.blood
 	if v.print_stage != null:  # on the actors' layer like the cast rigs: true colours, no ink snap
 		tell.z_index = RenderLayers.z(&"actors") - 1
 		tell.scale = v.cast_view.scale
@@ -51,6 +54,10 @@ static func make(boss_id: StringName) -> BossView:
 
 
 func _process(_delta: float) -> void:
+	if blood != null and fight != null:
+		blood.victims.robot_ids[fight.body.id] = true
+		for f: BossFight in adds.fights if adds != null else []:
+			blood.victims.robot_ids[f.body.id] = true
 	queue_redraw()
 
 
