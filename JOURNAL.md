@@ -258,3 +258,10 @@ Branch `d7-held`, cut from main `1028c15d`. Evidence: `evidence/` + `C:\Users\ka
   (PSNR 46.2 / 40.4 dB, not identical); `evidence/held-it4-exe-flags-ab.png` (default | torch | off-claw).
   The off-claw run faces differently by t=5.5 s: no bot was driving, so Rivet's facing follows the real
   mouse in the window (cops identical in all three), not a sim divergence.
+- 17:39 MEASURE scenarios on acb70e5f (run alongside the exe filming): 52 ran, 1 failed:
+  `scenario_rig_stress` 50 people rig p50 1.174 ms > 1.0 ms (CONTENDED: three GPU runs at the same time).
+  Re-run alone: 1 ran, 0 failed. `evidence/held-it4-scenarios.log`, `evidence/held-it4-rigstress-rerun.log`.
+- 17:43 EVIDENCE the whole-arsenal clip now has all 18 weapons: three more `--bot=arsenal --ppm=32` city runs
+  (gloria + assault-rifle, electro_gun, homing_shard; 0 SCRIPT ERROR each) spliced onto
+  `arsenal_cycle_32ppm_city.mp4` (180 s); the sheet has 9 rows. Looked: the electro gun is shouldered with the
+  off claw on it; the homing shard is held in the long-gun hold; gloria is in one claw. frames.json notes updated.

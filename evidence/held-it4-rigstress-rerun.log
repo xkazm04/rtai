@@ -1,0 +1,7 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[INFO] characters: prewarmed 33 rigs in 114.1 ms
+[INFO] rig_stress: 50 people: {"bakedLookupMsAvg":0.118746296296296,"fullRigsMax":16.0,"people":50.0,"poolGrown":0.0,"prewarmMs":114.072,"rigMsAvg":0.80227962962963,"rigMsMax":1.61,"rigMsP50":0.801,"rigMsP99":1.254,"rigsBuilt":33.0,"ticks":540.0}
+[INFO] characters: prewarmed 33 rigs in 6.3 ms
+[INFO] rig_stress: 200 people: {"bakedLookupMsAvg":0.571122222222222,"fullRigsMax":16.0,"people":200.0,"poolGrown":0.0,"prewarmMs":6.316,"rigMsAvg":0.833218518518518,"rigMsMax":2.728,"rigMsP50":0.824,"rigMsP99":1.336,"rigsBuilt":33.0,"ticks":540.0}
+run_scenarios: 1 ran, 0 failed
