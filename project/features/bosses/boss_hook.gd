@@ -102,7 +102,8 @@ func step(stage: ArenaStage, tick: int) -> void:
 		_arena.hit_dir = fight.aim
 		_arena.hit_at = r.pos
 		_arena.damage(r, hit, fight.body.id, StringName("boss_%s" % fight.hit_id()))
-		landed[fight.hit_id()] = landed.get(fight.hit_id(), 0) + 1
+		var own: StringName = fight.hit_id() if hit > fight.late_hit else fight.spec.id
+		landed[own] = landed.get(own, 0) + 1  # a late hit alone is the boss's, not the attack's
 		dealt += hit
 	if fight.state == BossFight.State.DEFEATED and defeated_tick < 0:
 		defeated_tick = tick
