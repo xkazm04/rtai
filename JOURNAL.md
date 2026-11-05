@@ -830,3 +830,26 @@ Read: JOURNAL NEXT, git log, n7-melee / n7-king / n7-servo journals (melee cherr
   updated (still 15 rows).
 - FRICTION: the fight cam pans every frame, so frame diffs cannot find the shot; a per-frame count
   of vermilion pixels (scratch `findstar.py`) found the spike at 47 in seconds.
+
+## Iteration 9 (BUILD, 00:24-01:24)
+Read: JOURNAL NEXT (it7 list; it8 closed Gloria in Dock 9), git log, n7-melee journal to its end
+(`f593aac4` hit cues for melee and ghost hits, no REQUEST to ranged), n7-king/servo (none new).
+
+### MILESTONE 00:45: `193bc529` the machine pistol's flicker reads at 32 px/m (it7 NEXT 3)
+- FILM first (head, `--weapon=machine_pistol --bot=gunplay --lone --cam=fight --ppm=32 --clean
+  --reach=6`, kill tick 306, 0 SCRIPT ERROR; scratch `mp/`). x1.5 crops 296-319: Rivet's flash a
+  6-8 px speck at the gun on 302, 306, 310-316. rof 14 Hz = a round every 4 ticks with
+  FLASH_TICKS 3: the cell is up 3 ticks of 4, so a burst is a steady flicker.
+- hit_feel.json machine_pistol `muzzle_k` 1.3 (under the pistol's 1.6). A/B (same sim, kill 306
+  on both), x3 zooms of 302/306/310/312/314: an ink-edged cream star with a vermilion core about
+  the gun's size, Rivet clear. 48 px/m `--feel=off` vs on: the same, read to the kill (after the
+  kill the two drift apart by the kill stop, so the clip stops there).
+- Test: `test_muzzle_k` asserts 1 < k < pistol; planted k = 1.6 -> exactly that test fails (4/5,
+  `evidence/ranged/it9-unit-mp-planted.log`); unit 1146/1146 (`it9-unit-mp-muzzle.log`), lint 13/13.
+- Clip `masters .../machine_pistol_muzzle-ab-32-48ppm.mp4` (frames.json row 0; dropped and deleted
+  `rocket_launcher-ab-32ppm.mp4`, covered by heavy_feel + rocket_blast_sound; REPORT row repointed).
+- Seen in passing: the flash sits to the aim side of the drawn barrel (GUN_SIDE_M vs the hold
+  pose). Holds are an owner call: not touched.
+- Registry rule applied: motion-quality-gating (film before deciding; size against the burst's
+  duty cycle, not a single frame); combat-pacing-and-dramatic-arc (a rapid weapon's per-round
+  effect stays below a single heavy shot's, so weight follows the hit, not the rate).

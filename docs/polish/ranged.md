@@ -37,7 +37,7 @@ Anticipation / Impact / Read 32 / Victim sync / Sound (arena). `?` = not looked 
 | 9 | flamethrower | 2 | 3 | 3 | 3 | 0 | it3 48 px/m: the vermilion/cream tongues grow from the nozzle over about 12 frames and light the cop on contact, patches stay; the ignition had no beat -> `e32720c4` a 3 px kick on the first puff |
 | 10 | molotov | 1 | 3 | 3 | 3 | 0 | it5 at 48 px/m, `--reach=7`: no wind-up on Rivet (the only cue is the next lit bottle in his claw); the bottle flies as a thin dark stick with a vermilion wick, readable at 48 px/m, thin at 32; the burst (ink, cream and vermilion star) and the burning cop read at a glance |
 | 11 | pistol | 1 -> 2 | 2 | 2 | 3 | 0 | Rivet's round is a 1-2 frame streak (the muzzle hardly reads at 32 px/m); blood spurt on T+1, the fall reads; it7 `d79c5278` muzzle_k 1.6: his flash now reads before the cop's |
-| 12 | machine_pistol | 1 | 2 | 2 | 3 | 0 | each round sprays sparks and the body bleeds on the hit frames; the burst reads, Rivet's muzzle hardly does |
+| 12 | machine_pistol | 1 -> 2 | 2 | 2 | 3 | 0 | each round sprays sparks and the body bleeds on the hit frames; the burst reads, Rivet's muzzle hardly did; it9 `193bc529` muzzle_k 1.3: the burst flickers as a cream star at the gun |
 | 13 | gloria | 1 | 2 | 3 | 3 | 0 | it3 (sheet `sheets/gloria-off-k2.png`, kill 2 at tick 562): a long dashed vermilion/ink tracer from the claw reads at a glance; blood on T+1, the body folds along the shot by T+12; no muzzle or kick of its own beyond the tracer; the victim at the frame edge (capture framing) |
 | - | assault-rifle | ? | ? | ? | ? | ? | in rivet_arsenal.json, not in weapons.json (`--weapon` cannot arm it); film via `--loadout` |
 
@@ -142,8 +142,13 @@ scratch audit folder: `<w>-off.avi`, `sheets/<w>-off-k2.png`.
 - After: hit_feel.json `weapons` pistol `muzzle_k` 1.6 (WeaponFxArt.muzzle's cell scale; 1 and
   `--feel=off` = before): an ink-edged cream star with a vermilion core about one body wide on
   298-299. At 48 px/m it does not swamp Rivet. Clip `pistol_muzzle-ab-32-48ppm.mp4`.
-- Not done: the machine pistol (row 12, the same "muzzle hardly reads") stays at 1: at about 10
-  rounds a second a bigger cell every round is noise, not weight; judge it on film first.
+- it9 machine pistol (`193bc529`): filmed first (32 px/m, `--reach=6`, kill tick 306): at 14
+  rounds a second (rof_hz 14, interval 4 ticks, FLASH_TICKS 3) the flash_smg cell is up 3 ticks of
+  every 4, a 6-8 px flicker at the gun that hardly reads. muzzle_k 1.3 (under the pistol's 1.6):
+  an ink-edged cream star with a vermilion core about the gun's size on every round of the burst,
+  Rivet still clear (x3 crops of frames 302-314, both builds; kill 306 on both). Clip
+  `machine_pistol_muzzle-ab-32-48ppm.mp4`. Seen in passing: the flash sits to the aim side of the
+  held gun's drawn barrel (GUN_SIDE_M vs the hold pose), an owner call (holds), not touched.
 
 ### ray_gun kill (it7): no change
 - The it6 note ("the body does not answer the beam") was a misread: the kill is the approved
