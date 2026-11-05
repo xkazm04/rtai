@@ -23,7 +23,7 @@ exported. After that, the weakest item was raised: the Gatling now prints tan st
 | look-18 Gatling true width | 42feb65c | `cross_k` 1.0 | `cross_k` 1.3 | `frames/look-18-gatling-ab-32ppm.png` |
 | ghost-powers-3 Dent steers from afar | e419a047 | `ghost_attacks.json dent.ride` 0, the car drives to the aimed point | `dent.ride` 1 | `frames/ghost-powers-3-dent-ride-ab-32ppm.png`, `dent-standoff-city-32ppm.mp4`, `-64ppm-halfspeed.mp4`, `frames/ghost-powers-3-dent-tether-32ppm.png` |
 | ghost-powers-5 Dent locked until his act | e419a047 | `ghost_forms.json` `unlock` per ghost (dent `act_dent`); lock on only in quest 1; quest 1 `ghost_cars` [] | `--ghosts-free`; the old car list is `Quest1GhostStreet.CARS` | `frames/ghost-powers-5-quest1-live.png` + `quest1-dent-locked-live.mp4` (shipped quest 1, real input: G goes Tonnage -> Kerf, Dent's slot a padlock), `frames/ghost-powers-5-hud-lock-ab.png` (vs `--ghosts-free`); scenario `scenario_quest1_dent_lock` (planted `plant_ignore` caught), unit `test_ghost_locks` 6/6 |
-| look-8 x Gatling small art (follow-up) | 6179bf2d | `held_small.py` `EDGE_OF`/`CLOSE_OF` gatling 3/6: barrels print tan steel inside one ink outline | the old art at 2a28d331 (`git show`) | `frames/look-8-gatling-small-ab-48ppm.png`, `-ab-32ppm.png`, `look-8-gatling-edge-steps-32ppm.png`, `look-8-gatling-firing-48ppm-closeup.png`, `look-8-gatling-range-{32,48}ppm.mp4` |
+| look-8 x Gatling small art (follow-up) | 6179bf2d | `held_small.py` `EDGE_OF`/`CLOSE_OF` gatling 3/6: barrels print tan steel inside one ink outline | the old art at 2a28d331 (`git show`) | `frames/look-8-gatling-city-ab-48ppm.png`, `-city-ab-32ppm.png` (city block), `look-8-gatling-small-ab-48ppm.png`, `-ab-32ppm.png` (arena), `look-8-gatling-edge-steps-32ppm.png`, `look-8-gatling-firing-48ppm-closeup.png`, `look-8-gatling-range-{32,48}ppm.mp4` |
 | look-8 warm tan ink for held guns | 83fe0d5c | `PartKind.GUN`, `print_part gun_tan` 1, `gun_ink_hi` 0.90, `gun_edge` 2.2 px ink outline | `--gun-grey` | `frames/look-8-gun-tan-ab-32ppm.png`, `-ab-48ppm.png`, `look-8-gun-tan-closeup-steps.png`, `look-8-gun-tan-reel-32ppm.mp4` |
 
 Combined clip: `M/today-defaults-city-32ppm.mp4` (28 s, city block, director reel, pistol to flamethrower).
@@ -101,7 +101,8 @@ ERROR (`evidence/reel-director-city-it5b.log`).
    tan steel inside one ink outline at 48 px/m, a sliver of tan at 32 px/m. B: also thin every gun's outline
    (`print_part.gdshader gun_edge` 2.2 -> 1.4): the Gatling reads tan at 32 px/m, but the outline breaks on one
    side and every gun changes. C: the old ink-bar Gatling (`git show 2a28d331:` its `held_small.png`). See
-   `M/frames/look-8-gatling-small-ab-48ppm.png`, `M/frames/look-8-gatling-edge-steps-32ppm.png` (old | A | B),
+   `M/frames/look-8-gatling-city-ab-48ppm.png` and `-city-ab-32ppm.png` (city block: at 32 px/m A is a clean ink
+   rod with a tan sliver where the old one broke into ink/cream dashes), `M/frames/look-8-gatling-edge-steps-32ppm.png` (old | A | B),
    `RTAI.exe -- --loadout=gatling --weapon=gatling --bot=range --ppm=48`.
 
 ## Next steps

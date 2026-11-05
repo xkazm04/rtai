@@ -205,3 +205,10 @@
 - 17:42 full evidence run (--no-bench) on f41346c2 started (last one was on 83fe0d5c).
 - 17:47 MEASURE full evidence run on f41346c2 green (evidence/evidence-it5b-head.log): lint 13/13, unit 1098/0, scenarios 52, parity exact (planted 629), goldens 11/11 worst 0.27 + block 5/5 worst 0.22. No re-bless.
 - 17:52 MEASURE city director reel on a4af468e (`res://dev/arena/arena.tscn -- --arena=city --bot=reel --reel=director --loadout=pistol`, --fixed-fps 60 --quit-after 7000): 19/19 chapters down, 0 SCRIPT ERROR. FRICTION: without the scene path the args go to the boot scene (unknown launch arg).
+- 17:58 MILESTONE Gatling in the city block (`res://dev/arena/arena.tscn -- --arena=city --loadout=gatling --ppm=<p>
+  --shot=<abs> --shot-tick=150`), before = the 2a28d331 art swapped in, then restored and re-imported (md5 checked):
+  M/frames/look-8-gatling-city-ab-48ppm.png (ink bar with cream dashes -> tan steel, one ink outline: clear win),
+  -city-ab-32ppm.png (broken dashes -> a clean ink rod with a tan sliver: cleaner, still mostly ink = call 8).
+  frames.json lead Gatling entry now the city pair (game-city). FRICTION: the weapon PNGs are Git LFS:
+  `git show <sha>:<png> > file` writes the pointer text (Godot: ERR_FILE_CORRUPT, .import goes valid=false); use
+  `git show <sha>:<png> | git lfs smudge > file`. The first before pair was void and discarded.
