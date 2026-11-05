@@ -274,3 +274,10 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
 
 ## Next steps
 See the last `NEXT` entry in `JOURNAL.md`.
+
+Merge note for the Director (trial `git merge-tree` of n5-cast 02a1d172+ with n5-look cb34af73, 2026-11-05 04:50):
+every code, data and art path merges clean. The conflicts are the lane docs (`JOURNAL.md`, `REPORT.md`, add/add) and
+16 look goldens under `project/tests/golden/look/`, which both lanes re-blessed for their own changes (cast:
+92e8c3fb, 618d6eb8, 91aac1aa; look: its own re-bless lines in `docs/decisions.md`). Take either side's PNGs, then run
+`tools/evidence/run.mjs --no-bench` on the merged tree and re-bless once, with one dated decisions line naming both
+lanes' changes (cast: slim cops, hybrid Rivet, plan-view peds, the 32 px/m collar, visor and tan core stickers).

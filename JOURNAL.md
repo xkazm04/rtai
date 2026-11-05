@@ -1052,3 +1052,7 @@ Session end 04:44: tree clean after this commit, no Godot process of mine runnin
   needed. The 48 px/m claim holds: the sticker threshold is parts_flat_below 0.13 screen px per part px (~42 px/m).
 Session end 04:44: tree clean after this commit, no Godot process of mine running, locks never taken, scratch
   `gtai-n5/scratch-cast/i17` keeps logs only. NEXT (iteration 18) as written above; 2(b) is closed (see 04:42).
+- 04:50 (session continues; the 04:44 "session end" line was early) MERGE CHECK for the Director: `git merge-tree
+  --write-tree --name-only HEAD n5-look` (cb34af73): code, data and art merge clean; conflicts only in JOURNAL.md,
+  REPORT.md (add/add) and 16 look goldens both lanes re-blessed. REPORT "Merge note for the Director": take either
+  side's goldens, gate the merged tree, re-bless once with one decisions line. No n5-look REQUEST to cast.
