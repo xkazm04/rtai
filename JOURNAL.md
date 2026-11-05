@@ -373,3 +373,25 @@ Session state 02:11: head = this commit, tree clean, no Godot process of mine ru
   rust steel on a teal pool, not a fully teal ghost (Call for the owner).
 - frames.json rebuilt (15: cycle and Ohm first); the dropped files deleted (Dent arena/city clips and stills, Kerf
   limbs A/B, Ohm beard A/B).
+- 02:32 GATES on 25b040bb: unit 974/0 (`E/unit-iter4.log`), scenarios 47/0 (`E/scenarios-iter4.log`), lint 13/13.
+- MILESTONE 70a6297a GhostRim: the characters' own cream sticker rim (RigBuild halo = HALO part material, a cream
+  silhouette) under Kerf's and Ohm's limbs (+50 % across) and hull/shell (+7 %), z -16 so the rims merge into one
+  outline. A/B at 32 px/m, same frames (`--no-rim` = before): `M:frames/kerf-rim-ab-32ppm-x2.png`,
+  `M:frames/ohm-rim-ab-32ppm-x2.png`, clips `M:kerf-rim-ab-32ppm.mp4`, `M:ohm-rim-ab-32ppm.mp4`. Judged: Kerf's claws
+  and emitter arms and Ohm's arms now hold on asphalt like the cops' limbs (closes iteration 3's NEXT 2 "pale rim").
+  DECISION in decisions.md (rejected: thicker limbs again, a lighter-steel repaint). FRICTION: a new class_name needs
+  `--import` before a film (the first rim film had "GhostRim not declared").
+- 02:40 COMBAT CHECK director reel on 70a6297a (`--quit-after 24000` headless): 16/16 chapters down, 0 SCRIPT ERROR
+  (`E/director-reel-iter4.log`).
+- 02:42 PROOF Tonnage re-filmed on the live path (NEXT 5 of iteration 3): `M:tonnage-morph-64ppm-slow3x.mp4`,
+  `M:tonnage-tour-city-32ppm.mp4` (0 SCRIPT ERROR each). FOUND in the city clip: a cop draws over the press. Cause:
+  GhostFormView sits at rigs.z + 1 while every rig stacks its parts' own z offsets (the held gun uses + 60 for this
+  reason), so a human's upper parts cover the ghost body. Fix queued: the view at rigs.z + 60.
+- frames.json: + the rim A/Bs and the two Tonnage clips; dropped and deleted kerf-tour-arena (pre-rim),
+  dent-morph-64 slow, ohm-morph keys, tonnage-live-arena (superseded by the cycle and city clips).
+- REPORT.md is now this lane's draft (the root REPORT.md on this branch had been n5-cast's, merged in).
+- 02:48 GATES evidence runner `--no-bench` on 19ae646c (`E/evidence-run-iter4.log`): lint PASS, scenarios 47 PASS,
+  parity PASS (1200 steps exact, planted mutation caught), selftest PASS (look goldens 11/11 and block 5/5 within
+  tolerance: no re-bless needed). unit-tests marked FAIL only because I appended to JOURNAL.md during the run ("tree
+  changed during run"); the suite itself was 974 passed / 0 failed. Lesson: touch nothing in the tree while the
+  runner runs (its first try also refused: the log file was inside the tree).
