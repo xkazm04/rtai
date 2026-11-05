@@ -61,6 +61,9 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   Director reel and city at 32 px/m, same ticks, before | after: `M/cast-collar-director-ab-32.mp4`,
   `M/cast-collar-city-ab-32.mp4`; still with the targets `M/frames/collar-hazard-ab-vs-r2c7-32ppm.png`; trials
   (6/8/14 breaks, the art's own stripes) `M/frames/collar-ticks-lineup-32ppm.png`, `M/frames/collar-trials-city-32ppm.png`.
+- Welder visor at 32 px/m (26c1e08a, iteration 15): the helmet sticker prints an ink visor slot over the head's front,
+  so Rivet's head carries r2_c7's dark slot and shows where he faces at game zoom (the 2 px art visor merged into the
+  outline). 64 px/m is pixel-identical. `M/frames/rivet-visor-slot-ab-32ppm.png`, `M/cast-visor-director-ab-32.mp4`. Call 8.
 - Torch tip cream (iteration 14): Rivet's torch tip printed teal (teal is for souls only; r2_c3's tip is pale); now a
   cream ramp at its own value, D4 and D5: `M/frames/rivet-torch-cream-ab.png` (32/64 px/m, slab and road),
   `M/frames/rivet-torch-cream-director-32ppm.png`.
@@ -227,11 +230,13 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
    In quest 1 the objective marker is itself a flat vermilion ring, so B is the same mark as an objective:
    `M/frames/collar-vs-objective-quest1-32ppm.png` (Dock 9, ticks 13600-13720).
 
-8. Rivet's welder visor at 32 px/m (not built): r2_c7 reads a dark visor slot on his head at game scale; ours is a
-   cream head whose 2 px visor merges into the front outline (a print-only trial changed nothing visible:
-   `M/frames/visor-sticker-trial-32ppm.png`, JOURNAL 03:12). Options: A, as built (the visor reads from 48 px/m up,
-   `M/frames/rivet-visor-ab-64ppm.png`); B, a sticker-tier visor drawn wider than the art (about 3-4 px, a facing
-   mark); C, a larger head, tied to Call 1's size. My pick for a next run: B.
+8. Rivet's welder visor at 32 px/m: B built (26c1e08a, iteration 15): below the sticker threshold the helmet prints
+   an ink visor slot over its front (`PartMaterials.HEAD_LOD_FILL` 4, print_part `visor_x0` 0.66 / `visor_hy` 0.25),
+   r2_c7's dark slot and a facing mark at game zoom. A, the plain cream head whose 2 px art visor merges into the
+   outline (`HEAD_LOD_FILL` 2.0; the visor then reads from 48 px/m up, `M/frames/rivet-visor-ab-64ppm.png`); C, a
+   larger head, tied to Call 1's size. Same ticks, before | after, lineup and live reel beside r2_c7:
+   `M/frames/rivet-visor-slot-ab-32ppm.png`, `M/cast-visor-director-ab-32.mp4`; the iteration 14 print-only trial
+   that changed nothing: `M/frames/visor-sticker-trial-32ppm.png`.
 
 ## Next steps
 See the last `NEXT` entry in `JOURNAL.md`.
