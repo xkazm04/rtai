@@ -3,8 +3,9 @@ extends SceneTree
 ## Usage: <godot> --rendering-driver d3d12 --resolution 1280x720 --path project
 ##   -s res://dev/servo/servo_fight_run.gd -- --out=<dir> [--seconds=20] [--seed=7] [--every=2]
 ##   [--zoom=1.0 (1.0 = 32 px/m, 1.5 = 48)] [--phase=1..3] [--stand (no dodging)]
+##   [--graybox (stand-in shapes instead of ServoRig: the before)]
 
-const KEYS: Array[String] = ["out", "seconds", "seed", "every", "zoom", "phase", "stand"]
+const KEYS: Array[String] = ["out", "seconds", "seed", "every", "zoom", "phase", "stand", "graybox"]
 
 
 func _initialize() -> void:
@@ -22,6 +23,7 @@ func _initialize() -> void:
 	node.set("every", int(_a(args, "every", "2")))
 	node.set("zoom", float(_a(args, "zoom", "1.0")))
 	node.set("dodge", not args.has("stand"))
+	node.set("graybox", args.has("graybox"))
 	node.set("fight", _fight(int(_a(args, "seed", "7")), int(_a(args, "phase", "1"))))
 	root.add_child(node)
 	_run(node)

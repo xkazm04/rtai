@@ -2,14 +2,15 @@
 keyed parts, recolour them to the palette rules, and assemble the top-down (90 degree) body for a
 look against the target.
 
-  python tools/art/servo_parts.py <sheet.png> <out_dir>
+  python tools/art/servo_parts.py <core_sheet.png> <limbs_sheet.png> <out_dir> [<install_art_dir>]
 
-Cells (row-major, 3 x 2): [ref] head pad / pelvis torso rack. The top-left cell is the template's
-scale reference and is skipped. Palette (data/tables/palette.json gates): vermilion is
+Cells (row-major, 3 x 2), core: [ref] head pad / pelvis torso rack; limbs: [ref] drone crate /
+thigh shin arm. The top-left cell is the template's scale reference and is skipped. Palette (data/tables/palette.json gates): vermilion is
 r - max(g, b) >= 0.31, reserved for danger; the sheet's orange (hazard stripes, hoses) is pulled to
 a muted orange-brown at <= MUTED (0.24), and the head's glowing visor slot to ink (the game tints
 the visor vermilion only during a tell). Writes <out_dir>/<part>.png + parts.json (sizes) and
-<out_dir>/servo_top_<ppm>ppm.png (the assembled body at 32 and 64 px/m).
+<out_dir>/servo_top_<ppm>ppm.png (the assembled body at 32 and 64 px/m). With an install dir, each
+part is also written there at INSTALL_PPM (the game scales it to metres from parts.json).
 """
 
 import json
@@ -19,11 +20,15 @@ from pathlib import Path
 import numpy as np
 from PIL import Image
 
-NAMES = [None, "head", "pad", "pelvis", "torso", "rack"]
+CORE = [None, "head", "pad", "pelvis", "torso", "rack"]
+LIMBS = [None, "drone", "crate", "thigh", "shin", "arm"]
+INSTALL_PPM = 96
 MUTED = 0.24
 INK_2 = np.array([81, 71, 72]) / 255.0
 # Metres across (the width on the page): the rack wing is half of the 5.4 m rack bar.
-METRES = {"rack": 2.6, "torso": 1.7, "pelvis": 1.5, "head": 0.9, "pad": 1.3}
+METRES = {"rack": 2.6, "torso": 1.7, "pelvis": 1.5, "head": 0.9, "pad": 1.3, "drone": 0.7, "crate": 0.9}
+# The limb struts are sized by their length (down the page).
+LENGTH = {"thigh": 1.7, "shin": 1.9, "arm": 1.9}
 
 
 def key(img):
@@ -50,11 +55,11 @@ def mute(a, visor=False):
     return out
 
 
-def cut(sheet):
+def cut(sheet, names):
     a, alpha = key(sheet)
     h, w = alpha.shape
     parts = {}
-    for i, name in enumerate(NAMES):
+    for i, name in enumerate(names):
         if name is None:
             continue
         y0, x0 = (i // 3) * h // 2, (i % 3) * w // 3
@@ -67,8 +72,8 @@ def cut(sheet):
     return parts
 
 
-def fit(im, metres, ppm):
-    k = metres * ppm / im.width
+def fit(im, metres, ppm, along=False):
+    k = metres * ppm / (im.height if along else im.width)
     return im.resize((max(1, round(im.width * k)), max(1, round(im.height * k))), Image.LANCZOS)
 
 
@@ -92,18 +97,27 @@ def assemble(parts, ppm):
     return canvas
 
 
+def sized(name, im, ppm):
+    return fit(im, LENGTH[name], ppm, True) if name in LENGTH else fit(im, METRES[name], ppm)
+
+
 def main():
-    sheet, out = Image.open(sys.argv[1]), Path(sys.argv[2])
+    out = Path(sys.argv[3])
     out.mkdir(parents=True, exist_ok=True)
-    parts = cut(sheet)
+    parts = cut(Image.open(sys.argv[1]), CORE)
+    parts.update(cut(Image.open(sys.argv[2]), LIMBS))
     meta = {}
     for name, im in parts.items():
         im.save(out / f"{name}.png")
-        meta[name] = {"size": list(im.size), "metres_across": METRES[name]}
+        art = sized(name, im, INSTALL_PPM)
+        meta[name] = {"px": list(art.size), "ppm": INSTALL_PPM}
+        if len(sys.argv) > 4:
+            Path(sys.argv[4]).mkdir(parents=True, exist_ok=True)
+            art.save(Path(sys.argv[4]) / f"{name}.png")
     (out / "parts.json").write_text(json.dumps(meta, indent=1, sort_keys=True) + "\n")
     for ppm in (32, 64):
         assemble(parts, ppm).save(out / f"servo_top_{ppm}ppm.png")
-    print("parts:", {k: v["size"] for k, v in meta.items()})
+    print("parts:", {k: v["px"] for k, v in meta.items()})
 
 
 if __name__ == "__main__":

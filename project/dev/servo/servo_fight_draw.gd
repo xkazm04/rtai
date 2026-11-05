@@ -7,6 +7,9 @@ const PX: float = 32.0
 const SHADOW: Vector2 = Vector2(0.25, 0.35)
 
 var pal: PaletteTokens = PaletteTokens.shared()
+## The cut parts (ServoRig.ART), drawn at ART_PPM; null = the stand-in shapes.
+var drone_tex: Texture2D = load(ServoRig.ART % "drone") as Texture2D
+var crate_tex: Texture2D = load(ServoRig.ART % "crate") as Texture2D
 
 
 func ground(c: CanvasItem, half_m: float) -> void:
@@ -34,6 +37,12 @@ func parcels(c: CanvasItem, s: ServoSwarm) -> void:
 	for cr: ServoParcels.Parcel in s.parcels.crates:
 		var half: float = s.tuning.crate_m * 0.5 * PX
 		var box: Rect2 = Rect2(cr.pos * PX - Vector2(half, half), Vector2(half, half) * 2.0)
+		if crate_tex != null:
+			_sprite(c, crate_tex, cr.pos * PX, 0.0)
+			c.draw_string(
+				ThemeDB.fallback_font, box.position + Vector2(5, half + 4), "CS", 0, -1, 10
+			)
+			continue
 		c.draw_rect(box, pal.color(&"steel"))
 		c.draw_rect(box, pal.color(&"ink"), false, 2.0)
 		c.draw_string(ThemeDB.fallback_font, box.position + Vector2(3, half + 4), "CS", 0, -1, 11)
@@ -106,6 +115,11 @@ func drones(c: CanvasItem, s: ServoSwarm) -> void:
 		var sh: Vector2 = (d.pos + SHADOW * d.height) * PX
 		c.draw_circle(sh, 0.35 * PX, Color(pal.color(&"ink"), 0.35))
 		var p: Vector2 = d.pos * PX
+		if drone_tex != null:
+			_sprite(c, drone_tex, p, d.vel.angle() - PI / 2 if d.vel.length() > 0.5 else 0.0)
+			if d.carrying():
+				c.draw_rect(Rect2(p + Vector2(-4, -4), Vector2(8, 8)), pal.color(&"paper_2"))
+			continue
 		for q: Vector2 in [Vector2(1, 1), Vector2(-1, 1), Vector2(1, -1), Vector2(-1, -1)]:
 			c.draw_arc(p + q * 0.22 * PX, 0.14 * PX, 0.0, TAU, 12, pal.color(&"ink"), 1.5)
 		var body: Rect2 = Rect2(p - Vector2(4, 4), Vector2(8, 8))
@@ -113,6 +127,12 @@ func drones(c: CanvasItem, s: ServoSwarm) -> void:
 		c.draw_rect(body, pal.color(&"ink"), false, 1.0)
 		if d.carrying():
 			c.draw_rect(Rect2(p + Vector2(-3, 4), Vector2(6, 5)), pal.color(&"paper_2"))
+
+
+func _sprite(c: CanvasItem, t: Texture2D, at_px: Vector2, rot: float) -> void:
+	c.draw_set_transform(at_px, rot, Vector2.ONE * PX / ServoRig.ART_PPM)
+	c.draw_texture(t, -t.get_size() * 0.5)
+	c.draw_set_transform(Vector2.ZERO)
 
 
 func _dashed_ring(c: CanvasItem, at: Vector2, r_m: float, col: Color, w: float) -> void:

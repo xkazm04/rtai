@@ -16,6 +16,8 @@ var ticks: int = 1200
 var every: int = 2
 var zoom: float = 1.0
 var dodge: bool = true
+## true = the stand-in shapes (the before), false = ServoRig on the cut parts.
+var graybox: bool = false
 var fight: BossFight = null
 var rivet: Vector2 = Vector2(-8.0, 0.0)
 var stats: Dictionary = {}
@@ -27,9 +29,19 @@ var _taken: float = 0.0
 var _frame_no: int = 0
 var _cam: Camera2D = Camera2D.new()
 var _paint: ServoFightDraw = ServoFightDraw.new()
+var _rig: ServoRig = null
+var _over: Node2D = Node2D.new()
 
 
 func _ready() -> void:
+	if not graybox:
+		_rig = ServoRig.new()
+		_rig.fight = fight
+		_rig.rack = moves().swarm.rack
+		add_child(_rig)
+	add_child(_over)
+	@warning_ignore("return_value_discarded")
+	_over.draw.connect(_draw_over)
 	add_child(_cam)
 	_cam.zoom = Vector2(zoom, zoom)
 	_cam.make_current()
@@ -49,6 +61,7 @@ func shoot() -> int:
 			_step()
 		_cam.position = (rivet + fight.body.pos) * 0.5 * PX
 		queue_redraw()
+		_over.queue_redraw()
 		await get_tree().process_frame
 		await RenderingServer.frame_post_draw
 		ok = _save_frame() and ok
@@ -70,6 +83,8 @@ func _step() -> void:
 	rivet = rivet.move_toward(_goal, RIVET_MPS * SimClock.TICK_DT)
 	_taken += fight.step(_tick, rivet, RIVET_R)
 	_taken += moves().tick(fight, rivet, RIVET_R)
+	if _rig != null:
+		_rig.pose(_tick)
 	_tick += 1
 
 
@@ -77,12 +92,17 @@ func _draw() -> void:
 	_paint.ground(self, HALF_M)
 	_paint.parcels(self, moves().swarm)
 	_paint.tells(self, fight, moves())
-	_paint.servo(self, fight, moves().swarm.rack)
-	_paint.rivet(self, rivet, RIVET_R)
-	_paint.drones(self, moves().swarm)
+	if graybox:
+		_paint.servo(self, fight, moves().swarm.rack)
+
+
+## Above the rig: Rivet's stand-in, the drones and the HUD line.
+func _draw_over() -> void:
+	_paint.rivet(_over, rivet, RIVET_R)
+	_paint.drones(_over, moves().swarm)
 	var a: String = String(fight.attack.id) if fight.attack != null else "-"
 	var line: String = (
-		"servo graybox  phase %d  %s %s  hp %.0f  rivet took %.0f  t %.1f s"
+		"servo dev view  phase %d  %s %s  hp %.0f  rivet took %.0f  t %.1f s"
 		% [
 			fight.phase + 1,
 			a,
@@ -93,7 +113,7 @@ func _draw() -> void:
 		]
 	)
 	var top_left: Vector2 = _cam.position - get_viewport_rect().size * 0.5 / zoom
-	draw_string(
+	_over.draw_string(
 		ThemeDB.fallback_font, top_left + Vector2(8, 20) / zoom, line, 0, -1, int(14 / zoom)
 	)
 

@@ -39,9 +39,9 @@
     }
   ],
   "rack": {
-    "cell_dx_m": 0.9,
+    "cell_dx_m": 0.87,
     "cells": 12,
-    "row_dy_m": 0.5
+    "row_dy_m": 0.73
   },
   "schema": "gtai.servo/1"
 }
