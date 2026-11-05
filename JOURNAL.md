@@ -188,3 +188,10 @@ re-run both bots and re-film.
 NEXT (iteration 2): as above (1. claw cops + boss body class; 2. human-like bot + n-seed numbers;
 3. Ohm stun / decree / transitions / defeat / music; 4. part sheets + rig; 5. arena + clips;
 6. re-film the director reel before calling an item done).
+
+### 19:44: claw cops off the boss floor
+`BossHook._clear_claw_cops` (first step: their hook sets up after mine) takes rivet-arsenal's claw
+cops out of the hostiles under `--boss`. Dodging bot (`bot-dodge-it1f.json`): King down at 91.8 s
+(tick 5508), 0 King hits, gang 3 / 15. Standing bot (`bot-stand-it1f.json`): **unchanged stall**
+(King 65 % in phase 2, gang 0 tries): the claw cops were not its cause. Still open: NEXT 1.
+Not re-filmed: the film in masters is the 0dd8d7b2 cut (claw cops visible in it).

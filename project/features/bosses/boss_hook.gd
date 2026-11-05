@@ -25,6 +25,7 @@ var dealt: float = 0.0
 var _arena: CombatArena = null
 var _last_hp: float = 0.0
 var _rng: RngRegistry = null
+var _hooks_cleared: bool = false
 
 
 func setup(stage: ArenaStage, ctx: WorldContext) -> void:
@@ -54,9 +55,12 @@ func setup(stage: ArenaStage, ctx: WorldContext) -> void:
 	Log.info("bosses", "%s engaged in %s, phase %d" % [boss_id, spec.arena.id, fight.phase + 1])
 
 
-func step(_stage: ArenaStage, tick: int) -> void:
+func step(stage: ArenaStage, tick: int) -> void:
 	if fight == null:
 		return
+	if not _hooks_cleared:  # hooks set up after this one (station files load in name order)
+		_hooks_cleared = true
+		_clear_claw_cops(stage)
 	BossAdds.route(fight, _last_hp)
 	_last_hp = fight.body.hp
 	adds.step(_arena, tick)
@@ -79,6 +83,15 @@ func step(_stage: ArenaStage, tick: int) -> void:
 		dealt += hit
 	if fight.state == BossFight.State.DEFEATED and defeated_tick < 0:
 		defeated_tick = tick
+
+
+## rivet-arsenal's claw cops (real guards that walk at Rivet and respawn) leave the boss floor:
+## out of the hostiles, nothing steps, draws or hits them (their hook still ticks, harmlessly).
+func _clear_claw_cops(stage: ArenaStage) -> void:
+	for h: ArenaHook in stage.hooks:
+		if h is ArenaClawCops:
+			for f: Fighter in (h as ArenaClawCops).cops:
+				_arena.hostiles.erase(f)
 
 
 ## A body stays on the fight's floor (a ram or a charge stops at its edge).
