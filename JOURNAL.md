@@ -221,3 +221,18 @@ Session state 00:38: head = this commit, tree clean, no Godot process of mine ru
   comes off Dent's body. Weak: no stagger gait yet (Rivet's walk cycle on Dent's parts), shins show the thigh's knee
   disc at the ankle, no 32 px/m clip or city clip yet, no Dent transformation close-up. Unit: test_dent 3/3,
   test_ghost* 15/15, test_rig* 36/36 (the raw flag touches RigBuild/CutRig).
+
+NEXT (iteration 3), Dent to done, then Kerf:
+1. Merge n5-cast's tip and n6-ghost-powers' if they moved (JOURNAL/REPORT: keep ours). Tell ghost-powers (their
+   JOURNAL is not ours to edit; my REPLY above) that DentBeat and test_tonnage_attacks were re-timed here.
+2. Dent polish: the stagger gait (a lurch: RigGait phase jitter + a hip sway on the plan, e.g. BodyPlan.hip_follow
+   up and a stride limp on one side), a real shin (cut the thigh's knee disc off the shin copy, or a shin cell in a
+   second sheet), the raw parts at 32 px/m are busy: try a pre-shrunk 0.5x set or mipmaps on the dent textures.
+3. Dent proof: 32 px/m arena clip (15-20 s), `--arena=city` clip, a 64 px/m slow close-up of the transformation,
+   still beside the target (frames/dent-sheet-vs-target.png is the sheet, not the rig: redo with the live frame).
+   The Tonnage <-> Dent switch (G in a form) through the teal flash, filmed (a GhostReel variant or forms_lineup
+   --morph with a switch: hold, G, hold, Q).
+4. Kerf (item 3): part sheet (laser-cutter head from above: lens, twin emitter arms, jointed trailing limbs, teal
+   beam slots), its own rig (hover: TonnageRig-like Node2D or a CutRig plan with legs folded), the anchors
+   emitter_l/r + lens already in ghost_forms.json. Then Ohm.
+5. Gates at the end: unit full, scenarios, evidence runner, director reel (this session's started 01:20).
