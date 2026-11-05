@@ -49,6 +49,16 @@
           "minimum": 0,
           "type": "number"
         },
+        "ride": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "ride_hop_m": {
+          "maximum": 10,
+          "minimum": 0,
+          "type": "number"
+        },
         "upgrade_tier": {
           "maximum": 5,
           "minimum": 0,

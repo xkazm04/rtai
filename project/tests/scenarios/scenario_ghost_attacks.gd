@@ -19,7 +19,8 @@ const FAULTS: Dictionary[StringName, StringName] = {
 ## Each beat's floor: [telemetry block ("" = top level), key, minimum].
 const NEEDS: Dictionary[StringName, Array] = {
 	&"tonnage": [["tonnage", "slams", 2], ["tonnage", "cars_crushed", 2], ["", "crush", 3]],
-	&"dent": [["dent", "seizes", 1], ["dent", "strikes", 1], ["dent", "blasts", 1]],
+	&"dent":
+	[["dent", "seizes", 1], ["dent", "strikes", 1], ["dent", "blasts", 1], ["dent", "rides", 30]],
 	&"kerf": [["kerf", "slices", 6], ["", "split", 4], ["", "ghost_dead", 5]],
 	&"ohm": [["ohm", "struck", 8], ["ohm", "cars_hit", 1], ["", "ghost_dead", 5]],
 }

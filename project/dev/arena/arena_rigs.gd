@@ -36,6 +36,8 @@ var gone: Dictionary[int, bool] = {}
 var crowd: CrowdReact = null
 ## ghost-forms: the bound player's ghost form over the rigs (null without a pilot).
 var ghost_view: GhostFormView = null
+## ghost-powers: the arena's robot on the robot thug's rig (null in quest 1).
+var robots: ArenaRobotRigs = null
 var _last: Dictionary[int, Vector2] = {}
 var _print: PrintStage = null
 var _city: CityView = null
@@ -80,6 +82,7 @@ func attach(p_stage: CollectCallStage, view: CollectCallView, ctx: WorldContext)
 	ShieldSparks.wire(react, p_stage.arena, func() -> CombatBlood: return view.blood)
 	if arena_stage == null:
 		return true
+	_add_robots(layer, p_stage.arena, view.blood)
 	for t: ArenaTargets.Target in arena_stage.targets.targets:
 		var look: Vector2i = ReactLineBot.look_of(t.spawn.id)
 		if look.x >= 0:
@@ -107,6 +110,18 @@ func _add_hand_views(layer: CanvasLayer, p_stage: CollectCallStage) -> void:
 	ghost_view = GhostFormView.attach(layer, p_stage, rigs, cam)  # ghost-forms: the ghost bodies
 
 
+func _add_robots(layer: CanvasLayer, arena: CombatArena, blood: CombatBlood) -> void:
+	robots = ArenaRobotRigs.new()
+	robots.blood = blood
+	robots.arena = arena
+	robots.rigs = rigs
+	robots.pipe = react.pipe
+	robots.consumed = hidden
+	robots.gone = gone
+	robots.z_index = rigs.z_index
+	layer.add_child(robots)
+
+
 func _process(_delta: float) -> void:
 	if stage == null:
 		return
@@ -121,7 +136,7 @@ func _process(_delta: float) -> void:
 	for h: Fighter in stage.arena.hostiles:
 		if h.kind == Fighter.Kind.BOSS and not stage is ArenaStage:
 			continue  # quest 1's Mertz keeps the cast view's own drawing (no boss rig yet)
-		if hidden.has(h.id) or gone.has(h.id):
+		if hidden.has(h.id) or gone.has(h.id) or (robots != null and ArenaRobotRigs.takes(h)):
 			continue
 		var look: Vector2i = _looks.get(h.id, Vector2i(BodyPlan.Kind.COP, _pit_look(h.id)))
 		_put(i, h, look.x as BodyPlan.Kind)

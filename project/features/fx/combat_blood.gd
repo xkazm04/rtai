@@ -23,12 +23,14 @@ const MATCH_M: float = 1.5
 const MAX_STEPS: int = 4
 ## Kill kinds (events.json) that leave no red (lane human-reactions): a body burned to death lies
 ## charred (HumanReact's char tint), its spray and soak read as a red blob over the char.
-const DRY_KILLS: Array[StringName] = [&"burned"]
+const DRY_KILLS: Array[StringName] = [&"burned", &"cauterised"]
 
 var mode: String = "noir"
 var blood: BloodFx = null
 ## Rivet's own fluid (blood_fx.json `player`: oil, sparks then black).
 var oil: BloodFx = null
+## ghost-powers: actor ids drawn as robots (ArenaRobotRigs): their death leaks oil, never red.
+var robot_ids: Dictionary[int, bool] = {}
 ## Optional Callable(px: Vector2) -> bool: true inside a building or prop (wall splats).
 var solid: Callable = Callable():
 	set = set_solid
@@ -159,7 +161,7 @@ func _on_cue(id: StringName, pos_px: Vector2, angle: float, tick: int) -> void:
 
 
 func _on_killed(killer: int, victim: int, _kind: StringName) -> void:
-	if _kind in DRY_KILLS:  # a burned kill leaves no red (human-reactions)
+	if _kind in DRY_KILLS and not robot_ids.has(victim):  # burned or cut dry: no red (a robot leaks)
 		return
 	if veto.is_valid():  # the signature kill lands after actor_killed: ask once the step is done
 		_bleed_killed.call_deferred(killer, victim)
@@ -177,6 +179,9 @@ func _bleed_killed(killer: int, victim: int) -> void:
 	var dir: Vector2 = at - from if from != Vector2.INF else Vector2.RIGHT
 	if victim == _player:
 		hit_robot(at * SimConst.PX_PER_M)
+	elif robot_ids.has(victim):
+		var fx: BloodFx = oil if oil != null else blood
+		fx.splash(at * SimConst.PX_PER_M, dir.normalized(), "robot_hit")
 	else:
 		kill_human(at * SimConst.PX_PER_M, dir)
 		bled_body.emit(victim, dir.normalized())
