@@ -715,3 +715,39 @@ named), combat-pacing-and-dramatic-arc (the fight's length set by the phases, no
   (only the gold visor arcs survive), steel only from 56 px/m where the D5 overlay prints. Not the
   car's shadow: on foot in phase 2, far from the car, they are black too (`p2` still). The cause is
   the thug's dark D4 steel (median luminance 74). The target's gang is steel grey with gold chains.
+
+### 22:33 MILESTONE coin fan tuned: 14 -> 10 per hit (f045e4cf, d6a2857d)
+- Same seeds 1-5, human + standing (CONTENDED, 0 script errors; `evidence/king/numbers/`, the
+  dodge runs are it4's: that bot takes no hail, so it4 equals the tuned fight).
+- The human's hits are **identical** to it4 (coin fan 14/44, ram 4/10, slam 2/12, charge 2/8):
+  the lever moved damage only. Damage taken 84 -> **72.8** (40-102), 0 deaths, King down 81.2 s.
+  Share: coin fan **0.38** (was 0.47), ram 0.33, slam 0.15, charge 0.13. Standing: 222 -> 190,
+  still one death per fight (5/5). Dodging: 4.8 taken, 75.9 s (unchanged).
+- Not under 0.35: at 8-9 per hit the ram's share becomes the top. The damage is now phase 1's
+  pair (ram + coin fan), not one attack. DECISION in docs/decisions.md.
+
+### 22:41 MILESTONE the gang read as steel at 48 px/m (854d7dab)
+- `tools/art/gang_parts.py`: the D4 set's grey steel (low saturation, luminance > 40) x1.55
+  (LIFT_K; 1.0 = the old print), ink and gold kept; the black visor narrowed to a front band
+  (VISOR_FROM 0.60, was 0.30). The generator now keeps Godot's `.import` files (its rewrite dropped
+  their uid: FRICTION, restored from git before it was committed).
+- **Looked at** `evidence/king/shots/gang_steel_before_after_48ppm.png` (car and on foot):
+  before, ink blobs with a gold arc; after, grey domes, dark front shades, gold arcs and the arms'
+  steel joints, like the sheet's bodyguards. At 32 px/m they were already grey (the inking is a
+  48 px/m effect of the D4 print, where the D5 tier is off) and stay so. At 64 px/m (D5 on) unchanged
+  but for the narrower visor.
+- FYI (not mine, for REPORT): the plain robot thug has the same dark D4 steel; it may ink at 48 px/m
+  too. Not checked tonight.
+
+### 22:45 gates on 854d7dab, the full fight filmed
+- Lint 13/13 (pre-commit). Unit **1147/0** (`evidence/king/unit-it5.log`). Scenarios 52 ran, 1
+  failed: `scenario_rig_stress` 50 people rig p50 1.142 ms > 1.0 ms, while my full-fight film was
+  rendering on the same machine (CONTENDED). Re-run alone twice: **1 ran, 0 failed** each
+  (`scenarios-it5-rigstress-rerun.log`). So 52/0 with the timing scenario re-run alone.
+- FILM `gtai-masters/n7/king/king_fight_bot_human_32ppm_it5.mp4` (90 s, 32 px/m, --bot-human
+  --seed=2 --boss-cam, music, 0 script errors): King down at tick 4592 (76.5 s), Rivet took 102:
+  **the same as the headless sweep's human-s2** (a deterministic film). **Looked at** the contact sheet
+  (`evidence/king/shots/fight_human_32ppm_it5_sheet.png`, one frame every 4 s): the procession, the
+  court brawl under the coin-fan cones, King on foot (cone, charge lane, slam ring), the defeat.
+  The boss cam still drifts over the cream off-floor ground (known, open). frames.json 15 (the it3
+  dodge fight deleted, superseded).
