@@ -138,3 +138,36 @@ NEXT (iteration 2, in order):
 Also new since your merge: `BossAdds` (adds are one-phase bosses.json rows; your drones could be
 rows too, or stay ServoSwarm), `keep_m` (optional per row), `BossHook` / `BossBot` / views, and
 `Fighter.brain_owned`. Your next merge of n7-king brings them.
+
+### MILESTONE 19:37: first full-fight film, bounds, coin hail (c474aca5)
+- Film `gtai-masters/n7/king/king_fight_bot_dodge_32ppm_it1.mp4` (81.7 s, 32 px/m, the dodging bot,
+  on 0dd8d7b2) + contact sheet + two stills; `frames.json` (4 entries, first pass, labelled).
+- **Looked at it.** Found and FIXED: the fight left the floor (the car and King drove onto blank
+  paper): `BossHook` now clamps the boss and adds to the arena area, the bot heads back in near the
+  edge. ADDED (view only): the coin fan's gold hail in its active window; the charge's rock-back
+  and shake through the tell (anticipation).
+- **Found, NOT fixed (iteration 2 first):**
+  1. Killed gang bots show as **blue cop bodies** in the film (some hostile-reader outside the
+     skipped ArenaRigs feed draws a dead brain_owned GUARD-kind fighter as a cop: suspects
+     `features/bodies/arena_bodies.gd`, `corpse_decay_hook`, `brutality_hook`; or make adds
+     Kind.BOSS and teach the robot death path). Blue is police only: a palette breach.
+  2. The standing bot stalls in phase 2 after the bounds change (`bot-stand-it1e.json`: King at
+     65 %, the gang never swings, 0 tries): the still `evidence/king/shots/stand_t3200.png` shows
+     the gang pinned at the floor's edge rows and Rivet left of the car. Not understood yet.
+  3. Dodging bot after bounds (`bot-dodge-it1e.json`): King down at 105.4 s, 1 gang hit, 0 King
+     hits: the reader still takes almost nothing; the fight is long for a perfect reader.
+- Gates on c474aca5's parent e92b3d8b: lint 13/13 (every commit), scenarios 52/0
+  (`evidence/king/scenarios-it1b.log`), boss unit files 11/11 + 3/3; full unit 1120/0 on
+  0dd8d7b2 (`evidence/king/unit-it1b.log`). Combat no-regress: `scenario_showcase_director` (the
+  director cut's chapters) is inside the 52; the windowed `--bot=reel --reel=director` reel was NOT
+  re-filmed this iteration.
+
+NEXT (iteration 2), replacing the list above:
+1. Fix the blue gang corpses (palette) and the standing-bot stall; re-run both bots.
+2. Human-like bot (reads ~70 % of tells, own RNG stream) + n-seed runner -> boss-numbers.json;
+   tune to the envelope in docs/bosses/king.md (reader TTK 60-120 s; every attack under 35 % on the
+   reader and over 60 % on the stander; no hit over 30 % of Rivet's hp).
+3. Ohm's stun on a boss, the decree buff, transition beats, the defeat beat, boss music.
+4. Body: part sheets on KingPlan (image lock), the rich gang on the thug rig, the throne-car art.
+5. The arena (boulevard + plaza), per-attack 48 px/m clips, the target hstack, the procession clip.
+6. Re-film `--bot=reel --reel=director` on the branch before calling any item done.
