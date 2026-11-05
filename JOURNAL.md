@@ -530,3 +530,21 @@ NEXT (iteration 6):
    last ran on 8b6327f3 (all PASS); re-run after the next change.
 Session state 03:49: head = this commit, tree clean, no Godot process of mine running, no lock held (image.lock
   not taken this session), masters scratch holds only film.sh.
+
+## Iteration 6 (03:49 - 04:49)
+- 03:50 READ JOURNAL NEXT, git log, the other lanes' JOURNALs: ghost-powers REQUEST 8 (Ohm's kick per bolt) is open.
+- 03:51 MERGE n5-cast e7c055be (visor slot at 32 px/m) and n6-ghost-powers a92d4fef (REQUEST 8, robot victim in
+  the city); JOURNAL/REPORT keep ours; lint 13/13 at each merge (hook).
+- 03:57 REPLY to ghost-powers REQUEST 8, done in afe11fe8: OhmRig gets `bolts` (fed from pilot.ohm.bolts in
+  GhostFormView) and `reduced_motion`. A rise kicks: the guard hand snaps 0.2 m out (first fifth) and eases back
+  over 0.25 s, the shell recoils 0.1 m and twists 16 deg (the left shoulder thrusts), the cane holds its plant (the
+  cycle pauses through the kick); halved under reduced motion. `OhmRig.kick_m()` is the hand's throw now (metres
+  forward, body frame). The prongs need no offset: the hand thrusts forward INTO the prongs, so they start under
+  it (seen in the stills). test_ohm_rig 5/5 (+2: kick/hold/settle, reduced motion halves), lint 13/13.
+  A/B FIRST TRY 0.12 m / 9 deg / 0.05 m recoil (the request's size) did not read at 64 px/m (x2 crop: rows nearly
+  identical); raised to 0.2 m / 16 deg / 0.1 m, which does. PROOF `M:frames/ohm-bolt-kick-ab-64ppm.png` (same
+  ticks 86..104, before | after), `M:ohm-bolt-kick-64ppm-halfspeed.mp4`, `M:ohm-bolt-kick-city-32ppm.mp4` (14 s,
+  `--bot=ghosts --ghost=ohm --arena=city`), 0 SCRIPT ERROR each. Judged a 42-frame sheet of the city clip: at 32
+  the shell turn and the guard arm reaching into the bolt read on every bolt; it is the first motion the old
+  welder makes with his casting hand (closes NEXT 3's "Ohm's arms at 32": a motion read, not a size one).
+- frames.json 15: + the kick A/B first; the ohm rim A/B named in the ohm city tour's note (file kept).
