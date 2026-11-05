@@ -697,3 +697,11 @@ Session state 05:05: head = this commit, tree clean, no Godot process of mine ru
   Unit (with import) and the director reel on 9b0b616c running.
 - 05:47 On the merged head 9b0b616c: unit (with import) 1010/0 (E:unit-it9-merged.log); COMBAT CHECK director reel
   16/16 chapters down, 0 SCRIPT ERROR (E:director-reel-it9-merged.log).
+- 05:55 MILESTONE (this commit) Rivet's health bar eases between body heights through a transformation
+  (StoryForms.bar_lift_m: lerp from the leaving body's bar_m to the coming one's on smoothstep(0.3, 0.7, k));
+  form to form (Kerf 1.9 -> Ohm 1.2) eases the same way. Before, it held at 1.2 m through the burst and jumped to
+  2.35 m at the midpoint. A/B same input, lossless frames 164-200 every 4 of quest1_forms_main (Tonnage entry):
+  `M:frames/bar-ease-tonnage-entry-ab-32ppm-x2.png` (named in the kerf-bar frames.json entry). Judged: before, one
+  step of about 32 px; after, the bar rises with the burst over about 16 ticks. 0 SCRIPT ERROR both runs; new
+  test_the_bar_eases_through_a_transformation (rises only, no step above a quarter of the range); unit 1011/0,
+  lint 13/13. (Before frames filmed with HEAD's story_forms.gd swapped in temporarily, restored after.)

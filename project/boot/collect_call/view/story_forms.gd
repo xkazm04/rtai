@@ -60,12 +60,19 @@ static func stands_in(forms: GhostForms) -> bool:
 
 ## How far above Rivet's spot (m) his health bar rides: clear of the body that stands in for him
 ## (ghost_forms.json bar_m: Kerf's front blades reach past the old 1.2 m, Tonnage's press past
-## its radius).
+## its radius). Through a transformation it eases from the leaving body's height to the coming
+## one's around the in-between pose (k 0.3 -> 0.7), so it no longer snaps at the midpoint.
 static func bar_lift_m(forms: GhostForms) -> float:
-	if not stands_in(forms):
+	if forms == null:
 		return BAR_LIFT_M
-	var id: StringName = forms.to_id if forms.to_id != GhostForms.BASE else forms.from_id
-	var d: GhostFormDef = forms.table.form(id)
+	var from_m: float = _bar_of(forms, forms.from_id)
+	if forms.settled():
+		return from_m
+	return lerpf(from_m, _bar_of(forms, forms.to_id), smoothstep(0.3, 0.7, forms.k()))
+
+
+static func _bar_of(forms: GhostForms, id: StringName) -> float:
+	var d: GhostFormDef = forms.table.form(id) if id != GhostForms.BASE else null
 	return maxf(BAR_LIFT_M, d.bar_m) if d != null else BAR_LIFT_M
 
 

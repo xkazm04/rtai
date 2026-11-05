@@ -93,3 +93,21 @@ func test_each_forms_bar_rides_clear_of_its_drawn_body() -> void:
 	assert_gt(t.form(&"tonnage").bar_m, t.form(&"tonnage").radius_m * 1.7, "over the press")
 	for id: StringName in t.order:
 		assert_gte(t.form(id).bar_m, StoryForms.BAR_LIFT_M, "never below base Rivet's bar")
+
+
+func test_the_bar_eases_through_a_transformation() -> void:
+	var g: GhostForms = GhostForms.new(
+		GhostFormTable.load_default(), SoulPowers.new(PowerTable.load_default())
+	)
+	var f: GhostFormDef = g.table.form(g.table.order[0])
+	assert_eq(g.press_transform(), SoulPowers.OK)
+	var last: float = StoryForms.bar_lift_m(g)
+	var top_step: float = 0.0
+	for i: int in f.enter_ticks:
+		_run(g, 1)
+		var now: float = StoryForms.bar_lift_m(g)
+		assert_gte(now, last, "rises only")
+		top_step = maxf(top_step, now - last)
+		last = now
+	assert_almost_eq(last, f.bar_m, 0.001, "settled at the form's height")
+	assert_lt(top_step, (f.bar_m - StoryForms.BAR_LIFT_M) * 0.25, "no snap at the midpoint")

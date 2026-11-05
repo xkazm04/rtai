@@ -149,6 +149,8 @@ The owner's order for this lane: "create these characters, animate transformatio
 - **Rivet's health bar clears each body** (iteration 9, DECISION): Kerf's front blades reach about 1.6 m forward
   and crossed the bar at 1.2 m. The bar height is now one data value per form, `ghost_forms.json` `bar_m` (Kerf
   1.9, Tonnage 2.35, Dent and Ohm 1.2). Before/after at the same frames: `M:frames/kerf-bar-quest1-ab-32ppm-x3.png`.
+  Through a transformation the bar eases between the two bodies' heights instead of snapping at the midpoint
+  (`M:frames/bar-ease-tonnage-entry-ab-32ppm-x2.png`).
 - **The 64 px/m close-up on the shipped path** (iteration 9): the same driver with `-- --ppm=64` (the game's own
   zoom). `M:frames/story-forms-quest1-keys-64ppm.png` (Rivet, the teal burst, the press settled; Dent, Kerf and Ohm
   settled), `M:story-forms-quest1-shipped-64ppm.mp4` (19 s) and `M:story-forms-quest1-tonnage-64ppm-slow3x.mp4`
@@ -195,6 +197,5 @@ The owner's order for this lane: "create these characters, animate transformatio
 ## Next steps
 - Final gates on a still tree before the 08:30 freeze (the evidence runner, the director reel) after any
   further merge.
-- Polish candidates: ease Rivet's health bar between heights across the morph (it snaps at the midpoint, hidden
-  by the burst so far); Tonnage at 64 px/m sits partly under quest 1's subtitle box while a line is up (HUD
+- Polish candidate: Tonnage at 64 px/m sits partly under quest 1's subtitle box while a line is up (HUD
   layout).
