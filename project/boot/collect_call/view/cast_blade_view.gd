@@ -26,6 +26,7 @@ static func attach(cc: CollectCallView, p_stage: CollectCallStage) -> CastBladeV
 		return null
 	var v: CastBladeView = CastBladeView.new()
 	v.stage = p_stage
+	v.smear_ink = true
 	v.z_index = RenderLayers.z(&"actors") + 2
 	layer.add_child(v)
 	return v

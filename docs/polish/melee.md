@@ -94,5 +94,17 @@ By the craft columns (impact and read at 32 weigh most: they are what the owner 
    unchanged. `M/tonnage_ram_ab_32ppm_48slow.mp4`.
 8. **Electro baton**, 9. **Katana**: read well; they get the shared hit-stop with item 3 only.
 
+## Quest 1 shows melee (brief item 5)
+**Done 21:47-22:05 (`fbc5a982`, `8237d411`)**: quest 1's pilot carries the katana on key 2
+(RivetCarry.sheathe: a press draws it over the story's gun, a second press puts it away; a story swap
+counts as put away). The shipped quest draws Rivet as a sprite, where no held weapon or swing existed
+(the rigs are dev `--rigs` only), so CastBladeView draws the blade on the sprite's hand point with the
+combo's sweep and a smear. Seen at Dock 9 (quest1_clip `--blade=13570-13880`, the pad closes on the
+bot's target): the blade lifts, cuts down and settles at 32 px/m; contractors split on the cut frame
+with the katana's halves and blood, the shared melee hit-stop holds. Limits: the hand point is a
+guess on a sprite that does not turn with his arm (the blade starts at his shoulder side); the bot
+does not draw the blade, so only a player (or the dev pad) sees it.
+`M/quest1_katana_ab_32ppm.mp4` (before `--quest-blade=off` | after).
+
 Not yet scored: Tonnage's plates, Dent's blow, Ohm's mass arc, and the 48 px/m look of each
 (films `audit_*_48` ran; strips next iteration).

@@ -14,12 +14,16 @@ const STEEL: Color = Color("c4c9d0")
 const GRIP: Color = Color("2b2622")
 const SHAFT: Color = Color("7d8794")
 const SPARK: Color = Color("e6eeff")
+const CREAM: Color = Color("f4ecd8")
 const SMEAR_TICKS: int = 4
 const INK_PX: float = 1.5
 
 var kind: StringName = &"katana"
 var length_px: float = 32.0
 var sweep_rad: float = 1.0
+## n7-melee: the smear in cream with an ink edge along the tip's path (quest 1's sprite cast: the
+## steel smear at 0.4 is lost on the cream pavement); false = the steel smear.
+var smear_ink: bool = false
 var _grip: Vector2 = Vector2.ZERO
 var _tip: Vector2 = Vector2.RIGHT
 var _smear: PackedVector2Array = PackedVector2Array()
@@ -78,10 +82,12 @@ func sweep_of(combo: MeleeCombo) -> float:
 
 
 func _draw() -> void:
-	var smear: Color = Color(STEEL, 0.4)
+	var smear: Color = Color(CREAM, 0.8) if smear_ink else Color(STEEL, 0.4)
 	for i: int in range(1, _smear.size()):
 		var tri: PackedVector2Array = PackedVector2Array([_grip, _smear[i - 1], _smear[i]])
 		draw_primitive(tri, PackedColorArray([smear, smear, smear]), PackedVector2Array())
+	if smear_ink and _smear.size() > 1:
+		draw_polyline(_smear, INK, INK_PX * 2.0)
 	if _zap_ticks > 0 and _zap_ticks % 4 < 3:
 		_draw_zap()
 	var dir: Vector2 = (_tip - _grip).normalized()
