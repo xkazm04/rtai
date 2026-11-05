@@ -566,3 +566,28 @@ scratch holds only film.sh and reel.sh, frames.json 15 (all present).
   at the cut (404) and the line is gone. `M/kerf-arena-32ppm.mp4` re-filmed on the fix (0 SCRIPT ERROR).
   FRICTION (mine): restoring a planted edit with `git checkout -- file` also wiped the uncommitted fix in that file;
   re-applied. Plant from a scratch copy and copy it back.
+- 04:45 MILESTONE 708d5672 the ghosts' attacks draw in quest 1. FINDING: quest 1 ran every ghost attack in the sim
+  (StagePilot -> GhostPilot) but only the arena's TonnageHook drew them, so in the shipped quest 1 Kerf's blink was a
+  bare teleport and Ohm's bolt invisible. GhostAttackViews (features/souls, mine) is now the one attacher; the arena
+  hook and Quest1Game._casts (both casts) call it; TonnageView.marks false in quest 1 (CastView draws the crack
+  there already). DECISION in decisions.md. Proof through real bound input (new dev quest_ghost_rec, extends my
+  quest_hauler_rec: G taps, Q, right stick, melee): Kerf 6 blinks 5 slices 5 kills, Ohm 6 bolts 10 struck 5 kills,
+  0 SCRIPT ERROR. A/B `M/frames/quest1-kerf-views-ab-32ppm.png` (same frames 80/100/120/260; before = the attach line
+  removed), clips `M/quest1-kerf-32ppm.mp4`, `M/quest1-ohm-32ppm.mp4` (5 s each), `M/frames/quest1-ohm-bolt-keys-32ppm-x2.png`,
+  `M/frames/quest1-tonnage-telegraph-keys-32ppm.png` (the die-plate telegraph, then one crack). Unit 996/0
+  (`E/unit-it7.log`). gd-size caught _begin at 42 lines: the call went to a new `_casts()` at the file's end
+  (keeps clear of the forms lane's `_dev_rigs` hunk).
+- 04:47 COMBAT CHECK director reel headless on 708d5672: 16/16 chapters down, the same counts as iteration 6,
+  0 SCRIPT ERROR (`E/director-reel-it7.log`). Tonnage re-filmed in the arena on the refactored hook
+  (`M/tonnage-arena-32ppm.mp4`, 16 s, 0 SCRIPT ERROR): crack, crushed cruisers, flattened cops, all as before.
+- 04:50 reel re-cut `M/ghost-attacks-reel-it7-32ppm.mp4` (41 s: + Kerf's robot cut, + Kerf and Ohm in quest 1);
+  it6 reel deleted, frames.json updated (15).
+
+### NOTICE -> n6-ghost-forms (04:51)
+For your StoryForms on the shipped quest 1: my attack views now attach there too, in `Quest1Game._casts()` (a new
+function at the end of quest1_game.gd that calls your `_dev_rigs()` then `GhostAttackViews.attach_quest(...)`;
+`_begin` calls `_casts()` instead of `_dev_rigs()`, the only line I changed in `_begin`). They draw in the same
+printed actors' layer as your body (Tonnage's telegraph at actors-2, Dent/Kerf at +1, Ohm at +2). Two notes from
+the film: (1) in the Tonnage quest film the voice apparition (StoryVoice) stands over Rivet while he is in the form
+and hides the telegraph; your StoryForms "silent in a form" should fix it. (2) Ohm's prongs come from your
+electrode anchors whatever body draws, so on the sprite cast they start beside the Rivet sprite's hand.
