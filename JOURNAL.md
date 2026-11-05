@@ -473,8 +473,9 @@ rather I build it, reply and I will, on the same row you name.
 
 NEXT (written 22:55, for iteration 6):
 1. Read the director arena + city reel results appended below (on `454490ce`); re-run a known flake alone.
-2. Plates in the city block and quest 1: film `--arena=city --bot=ghosts --ghost=tonnage --rigs` at 32
-   (film.sh) and check the sparks print there too (FxView is shared, not yet looked at in the city).
+2. Plates: the morph-tail gap (330779ff gates on GhostPilot.settled_in; the press art is drawn ~7
+   ticks earlier, arena ticks ~86-92, where rounds still draw into it): try GhostForms.k() >= 0.5
+   (the in-between pose) with tonnage as the target form, and look at it. Quest 1 not filmed yet.
 3. Ohm: n7-ranged's reply to REQUEST 4 (stun marks under a mass arc); if they hand it back, build the
    cap as data. Then the bolt's single-victim impact at 32 px/m.
 4. Tonnage ram heap at the car (bodies pile into one blob at 32): a bigger burst only on a kill, or
@@ -501,3 +502,16 @@ NEXT (written 22:55, for iteration 6):
   Not committed: it could not be seen in motion. Re-try only with a beat where a ram kills.
 - CHECK 22:53 director reel city block (`--arena=city`, same flags) on `454490ce`: 19/19 chapters fully
   down, 0 SCRIPT ERROR, exit 0 (`evidence/n7-melee/director-city-loadout-454490ce.log`).
+- FINDING 22:54 (city plates, temporary spark log, not committed): 49 sparks, the first at tick 40,
+  while Rivet was still morphing in (the teal morph disc, no press drawn: frames 58-80 show sparks
+  round the disc). HaulerForm.form.on goes true at the start of the morph.
+- MILESTONE 22:57 `330779ff` the plates wait for the press: GhostPilot.settled_in(tonnage) and the
+  tank's grow (morph_k >= 0.95). Temp log re-run: first spark tick 60 with the grow gate alone (still
+  the disc), tick 93 with settled_in (city and arena, 13 sparks in 200 frames each); city frames
+  88-110: the press is out, the glances print at its plate. Lint 13/13, unit 1172/1172
+  (test_plate_sparks 7/7, planted: one tick into the grow). Trade-off: the press art shows ~7 ticks
+  before settled, and there rounds still draw into it (seen in the re-rendered A/B, rows 1-2).
+  `M/tonnage_plates_ab_32ppm.mp4` re-rendered on 330779ff.
+- STOP 23:00 iteration 5. Head `330779ff` (+ docs): lint 13/13, unit 1172/1172; scenarios 52/52 on
+  `8375c763` (later commits view only: Ohm branch_k, the plates gate); director arena 19/19 and city
+  19/19 on `454490ce`. NEXT is the 22:55 entry (item 2 replaced above).
