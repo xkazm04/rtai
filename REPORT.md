@@ -21,6 +21,9 @@ final hash moved once, deliberately, when quest 1 started carrying the katana (`
 | Ohm mass arc | `454490ce`, `7ce7b33d` | the branches draw at 0.55 of the bolt; a stunned crowd keeps full marks on the 2 newest bodies only, so the cops' blue reads through | `M/ohm_mass_arc_ab_32ppm_04x.mp4`, `M/ohm_stun_crowd_ab_32ppm_04x.mp4` |
 | Quest 1 shows melee (brief 5) | `fbc5a982`, `8237d411`, `becfeb7f`, `806a657e`, `5f80e67c` | Rivet carries the katana on key 2 in quest 1; the shipped sprite cast draws the blade, the swing and the smear | `M/quest1_katana_ab_32ppm.mp4` (before `--quest-blade=off`) |
 
+The whole polished set in the city block at 32 px/m, with the game audio:
+`M/melee_polished_set_city_32ppm.mp4` (53 s).
+
 Gates on the last build commit `7ce7b33d`:
 - lint 13/13;
 - unit 1178/1178 (`test_noir_shadows` flaked once, green alone);

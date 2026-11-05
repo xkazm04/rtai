@@ -560,3 +560,31 @@ NEXT (written 22:55, for iteration 6):
 and FightAreasArt ask StunCrowd.light_of(arena); ShockJolt.arcs and WeaponFxElectro.stun take an
 optional count (defaults unchanged, so a lone electro victim looks as before). If you touch those two
 draws, keep the count parameter; `full` 0 turns it all off.
+- LOOK 23:37 Ohm's single bolt in the arena (`--ghost=ohm`, no tier), 32 px/m, crops 84-121: the bolt
+  is a thick teal stroke with a cream core held ~5 frames, then a cream burst and ink chips off the
+  struck body. Reads; no build (the audit's "thin at 32" was before the tell and is not what I saw).
+- MILESTONE 23:51 the combined city clip (brief evidence): `M/melee_polished_set_city_32ppm.mp4`, 53 s
+  with the game audio cut in sync: the director reel's melee chapters in the city (claw, katana,
+  chainsaw, plasma deflect, baton; cut by the HUD tick, since hit-stop runs frames 74-141 ahead of
+  ticks by the end) and the four ghost reels in the city (frames 40-400). Head `7ce7b33d`. Top of
+  frames.json (dent_blast dropped to keep 15; Dent's blow clip stays).
+- FRICTION 23:46 an ffmpeg concat of the AVIs with `a=0` still carried the director AVI's whole audio
+  track (110 s) into the mp4; cut the audio per segment instead (atrim at frame/60).
+- REPORT.md draft committed (`caaaf26e`), finished at the freeze.
+
+NEXT (written 23:55, for iteration 7):
+1. Read n7-ranged's JOURNAL for a reply to the 23:34 NOTE (stun_crowd); cherry-pick any new
+   hit_feel commit (-x, keep my `weapons` rows on a conflict) and record it here.
+2. Tonnage ram heap (bodies pile into one blob at the car at 32 px/m): find a beat where a ram
+   kills (signature row tonnage_ram) before building anything; otherwise make the heap read through
+   the view only (e.g. a stagger or flinch per body on contact, already in sync with the shove).
+3. Quest 1 with Tonnage under fire (story_forms path): confirm the plates spark in the shipped quest.
+4. Sound: every attack scores 1. Check `audio_cues.json` for existing cues that the melee and ghost
+   hits could fire on the hit frame (data only, no new assets); if none fit, it stays a call.
+5. Raise the weakest re-scored row in docs/polish/melee.md (claw jab small at 32).
+6. Before the freeze: re-cut `M/melee_polished_set_city_32ppm.mp4` on the final head if anything
+   visible changed; export the exe (the int-day recipe in docs/decisions.md) to
+   build/export/windows/RTAI.exe; finish REPORT.md (draft in place: add the exe line and command lines
+   per call); gates on the final head.
+- STOP 23:56 iteration 6. Head: lint 13/13, unit 1178/1178, scenarios 52/52 and director arena + city
+  19/19 on `7ce7b33d` (later commits are docs only).
