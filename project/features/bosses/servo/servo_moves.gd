@@ -33,6 +33,8 @@ var depot_origin: Vector2 = Vector2.ZERO
 ## The defeat beat: the tick he went down (-1 while he stands) and where his flying drones crashed.
 var defeated_at: int = -1
 var crashes: Array[Vector2] = []
+## Every attack begun, as "tick:attack" (telemetry only: the films are cut on these ticks).
+var windups: Array[String] = []
 var _hop_locked: bool = false
 var _hop_r: float = 0.0
 var _armed: bool = false
@@ -62,6 +64,10 @@ func bind(f: BossFight, rng: RngRegistry) -> void:
 	depot_origin = f.body.pos - f.spec.arena.boss_at
 	setup_swarm(rng.stream(ServoSwarm.STREAM))
 	var err: Error = f.defeated.connect(_on_defeated.bind(f))
+	assert(err == OK)
+	err = f.attack_windup.connect(
+		func(a: StringName) -> void: windups.append("%d:%s" % [f.now(), a])
+	)
 	assert(err == OK)
 
 
@@ -141,6 +147,7 @@ func telemetry() -> Dictionary:
 		"parcel_hits": blast_hits - dive_hits,
 		"dives": dives,
 		"dive_hits": dive_hits,
+		"windups": windups,
 	}
 
 

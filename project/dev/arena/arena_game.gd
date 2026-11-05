@@ -107,11 +107,18 @@ func _open(args: ArenaArgs) -> void:
 	elif args.text("--bot") == "react_line":  # lane human-reactions: each look from four sides
 		session.world.loop().set_input(_react_line_bot(args))
 	elif args.text("--bot") == "boss":  # n7-king: plays the --boss fight (dodges; --bot-stand)
-		session.world.loop().set_input(BossBot.new(session.stage, session.actions))
+		session.world.loop().set_input(_boss_bot(args))
 	add_child(session.world)
 	for a: ArenaPlan.Area in session.plan.areas:
 		if a.id == args.text("--start") or (a.id == "alley" and args.text("--arena") == "alley"):
 			teleport(a)
+
+
+## `--bot=boss` (n7-king); with `--ghost=<id>` (n7-servo, dev) a ghost's attack at the drones.
+func _boss_bot(args: ArenaArgs) -> InputSource:
+	var bot: BossBot = BossBot.new(session.stage, session.actions)
+	var ghost: String = args.text("--ghost")
+	return ServoGhostBot.wrap(bot, ghost) if ghost != "" else bot
 
 
 ## lane gunplay: the pit bot at the --weapon's own reach (--lone films the burn death).
