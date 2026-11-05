@@ -7,6 +7,11 @@ extends Node2D
 ## row's anchors) meeting in the first body, and forking on
 ## along OhmStage.bolt_path, re-jagged every other tick, with a white flash disc at each body.
 ## Reduced motion: one still jag, no flicker.
+## n7-melee: the tell. After each bolt the fingertip sparks go dark and charge back over bolt_gap_s
+## (a teal glow growing at each electrode, and outside the form's own aura a white spark edged in
+## ink reaching from each tip toward the aim, 0.25 -> 0.9 m) to a white "ready" glint, and the fire
+## frame flashes white at the tips: the next bolt is seen coming. ghost_attacks.json ohm
+## tell_glow_m (0 = the old steady sparks); --feel=off = the old sparks too.
 
 const TEAL: Color = HaulerLook.TEAL
 const INK: Color = Color(0.09, 0.08, 0.07)
@@ -27,6 +32,7 @@ const PRONG_M: float = 0.9
 var stage: CollectCallStage = null
 var ppm: float = 32.0
 var reduced_motion: bool = false
+var tell: bool = HitFeel.feel_flag() != "off"
 
 
 func _process(_delta: float) -> void:
@@ -92,9 +98,46 @@ func _sparks() -> void:
 	var f: Vector2 = rivet.facing.normalized()
 	var tips: PackedVector2Array = ohm().tips(rivet.pos, f)
 	var beat: int = 0 if reduced_motion else stage.tick / 3
+	var k: float = _charge()
 	for i: int in 2:
 		var side: float = -1.0 if i == 0 else 1.0
 		var at: Vector2 = tips[i] * ppm
-		var tip: Vector2 = at + f.rotated(side * (0.4 + 0.3 * float(beat % 3))) * 0.3 * ppm
+		_glow(at, k)
+		_reach(at, f, side, k, beat)
+		var tip: Vector2 = at + f.rotated(side * (0.4 + 0.3 * float(beat % 3))) * 0.3 * ppm * k
 		draw_line(at, tip, TEAL, 2.0, true)
-		draw_circle(at, 2.5, WHITE)
+		draw_circle(at, 2.5 if k < 1.0 else 3.5, WHITE)
+
+
+## 0 right after a bolt, 1 when the next one is ready (1 with the tell off or before any bolt).
+func _charge() -> float:
+	var o: OhmStage = ohm()
+	if not tell or o.num(&"tell_glow_m") <= 0.0 or o.bolt_tick < 0:
+		return 1.0
+	var age: float = (stage.tick - o.bolt_tick) * SimClock.TICK_DT
+	return clampf(age / maxf(o.num(&"bolt_gap_s"), 0.01), 0.0, 1.0)
+
+
+func _glow(at: Vector2, k: float) -> void:
+	var o: OhmStage = ohm()
+	var r: float = o.num(&"tell_glow_m") * ppm
+	if not tell or r <= 0.0:
+		return
+	var age: int = stage.tick - o.bolt_tick
+	if o.bolt_tick >= 0 and age < 3:  # the fire frame: a white flash at the tips
+		draw_circle(at, r * 1.4, Color(WHITE, 0.9 * (1.0 - age / 3.0)))
+		return
+	draw_circle(at, r * k, Color(TEAL, 0.35 * k))
+	if k >= 1.0:
+		draw_circle(at, r * 0.45, Color(WHITE, 0.5))
+
+
+## The reach (pass 2: the glow alone sank into the form's teal aura at 32 px/m): a white spark
+## edged in ink from the fingertip toward the aim, growing with the charge, crackling.
+func _reach(at: Vector2, f: Vector2, side: float, k: float, beat: int) -> void:
+	if not tell or ohm().num(&"tell_glow_m") <= 0.0:
+		return
+	var tip: Vector2 = at + f.rotated(side * 0.25) * (0.25 + 0.65 * k) * ppm
+	var pts: PackedVector2Array = _jag(at, tip, beat * 5 + int(side * 3.0))
+	draw_polyline(pts, Color(INK, 0.8 * k), 4.0, true)
+	draw_polyline(pts, Color(WHITE, k), 1.8, true)
