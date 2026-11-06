@@ -4,9 +4,11 @@ extends RefCounted
 ## card at its feet (the library's ped_*_70 top row: five facings, the left three mirrored by
 ## RigHeadCard.frame_of) instead of a head card over top-down parts, which read as a sack on pills
 ## under the tilt. The parts are hidden, not freed; the card is the person's head card with its
-## strip swapped. A gait bob and sway (rig.phase) carry the walk until the library's stride frames
-## land (REQUEST to assets, n8 it4). Hit or dead (rig.react, rig.dead) the person drops back to
-## the parts and the head card for good, so knock-back, the fall and the corpse draw as before.
+## strip swapped. Where the library has a WALK strip (WALKS: 5 facings x 4 stride frames,
+## street_walk.py) the card steps through the frames by rig.phase; the others keep a gait bob and
+## sway until their strips land (REQUEST to assets, n8 it4). Hit or dead (rig.react, rig.dead)
+## the person drops back to the parts and the head card for good, so knock-back, the fall and
+## the corpse draw as before.
 ## No strip for the view (p55, top) = nothing here runs. ENABLED false = the head cards (before).
 
 const ENABLED: bool = true
@@ -26,6 +28,27 @@ const STRIPS: Dictionary[String, Dictionary] = {
 		"ped/head_worker": "ped_worker_full.png",
 	},
 }
+## view art -> card row -> stride grid (5 facings across, 4 frames down: contact, pass, contact,
+## pass). A row here draws its frames instead of STRIPS' still figure; FRAMES_ON false = the bob.
+const FRAMES_ON: bool = true
+const WALKS: Dictionary[String, Dictionary] = {
+	"p70":
+	{
+		"ped/head_hair": "ped_suit_walk.png",
+		"ped/head_hood": "ped_hood_walk.png",
+		"ped/head_worker": "ped_worker_walk.png",
+	},
+}
+## A grid's cell carries stride headroom, so its figures fill less of it than the still strip's:
+## the size step (still figure height / walk figure height, per cell, the mean of the facings).
+const WALK_FILL: Dictionary[String, float] = {
+	"ped_suit_walk.png": 1.06,
+	"ped_hood_walk.png": 1.07,
+	"ped_worker_walk.png": 1.11,
+}
+const STRIDE_FRAMES: int = 4
+## The frame a person stands in (pass: the feet together).
+const STAND_FRAME: int = 1
 ## The standing figure's height on the ground plane (m), before the person's crowd scale.
 const HEIGHT_M: float = 1.7
 ## The feet's height in the cell (from the top): street_head.py pads 2 px under the shoes.
@@ -34,6 +57,8 @@ const FOOT_Y: float = 0.985
 const BOB_PX: float = 1.6
 const SWAY: float = 0.05
 const WALK_SPEED: float = 1.2
+## RigGait's own "moving" floor (px/s): below it the phase stands still.
+const MOVING: float = 6.0
 const ON: StringName = &"street_walker"
 const HID: StringName = &"street_walker_hid"
 const WAS: StringName = &"street_walker_was"
@@ -60,9 +85,18 @@ static func strip_of(rig: CutRig) -> String:
 		return ""
 	if rig.dead or rig.react != null:
 		return ""
-	var rows: Dictionary = STRIPS.get(ViewMode.shared().art, {})
+	var art: String = ViewMode.shared().art
 	var key: String = row_of(rig)
-	return DIR + ViewMode.shared().art + "/" + rows[key] if rows.has(key) else ""
+	var walks: Dictionary = WALKS.get(art, {}) if FRAMES_ON else {}
+	if walks.has(key):
+		return DIR + art + "/" + walks[key]
+	var rows: Dictionary = STRIPS.get(art, {})
+	return DIR + art + "/" + rows[key] if rows.has(key) else ""
+
+
+## The stride frame for a gait phase (one cycle = two steps); STAND_FRAME when not moving.
+static func stride_frame(phase: float, moving: bool) -> int:
+	return posmod(floori(phase * STRIDE_FRAMES), STRIDE_FRAMES) if moving else STAND_FRAME
 
 
 ## The card row the person's head card draws (StreetCrowdCards' pick, else the look's head).
@@ -91,8 +125,10 @@ static func _build(rig: CutRig, card: Sprite2D, path: String) -> void:
 	if not _tex.has(path):
 		_tex[path] = load(path) as Texture2D
 	card.texture = _tex[path]
+	card.vframes = STRIDE_FRAMES if path.ends_with("_walk.png") else 1
 	var cell: Vector2 = Vector2(
-		card.texture.get_width() / float(RigHeadCard.FRAMES), card.texture.get_height()
+		card.texture.get_width() / float(RigHeadCard.FRAMES),
+		card.texture.get_height() / float(card.vframes)
 	)
 	card.offset = Vector2(-cell.x * 0.5, -cell.y * FOOT_Y)
 	card.set_meta(ON, true)
@@ -110,8 +146,16 @@ static func _build(rig: CutRig, card: Sprite2D, path: String) -> void:
 
 static func _place(rig: CutRig, card: Sprite2D) -> void:
 	var k: float = 1.0 + StreetCrowdCards.SCALE_VAR * StreetCrowdCards.vary(rig.actor_id, 3)
-	var s: float = HEIGHT_M * CharacterRigs.PX_PER_M * k / card.texture.get_height()
+	if card.vframes > 1:
+		k *= WALK_FILL.get(card.texture.resource_path.get_file(), 1.0)
+	var s: float = HEIGHT_M * CharacterRigs.PX_PER_M * k * card.vframes / card.texture.get_height()
 	var walk: float = clampf(rig.speed_now / WALK_SPEED, 0.0, 1.0)
+	if card.vframes > 1:
+		var moving: bool = rig.speed_now > MOVING
+		card.frame_coords = Vector2i(
+			card.frame % RigHeadCard.FRAMES, stride_frame(rig.phase, moving)
+		)
+		walk = 0.0
 	var stride: float = sin(TAU * rig.phase)
 	card.global_rotation = stride * SWAY * walk
 	card.global_scale = Vector2(s, s)

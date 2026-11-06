@@ -33,3 +33,29 @@ func test_release_without_a_walker_is_a_no_op() -> void:
 	var rig: CutRig = autofree(CutRig.new())
 	StreetWalkerCards.release(rig)
 	assert_null(rig.head_card)
+
+
+func test_every_walk_grid_loads_as_five_facings_by_four_frames() -> void:
+	for art: String in StreetWalkerCards.WALKS:
+		var rows: Dictionary = StreetWalkerCards.WALKS[art]
+		assert_true(
+			StreetWalkerCards.STRIPS[art].has_all(rows.keys()), "%s walks have stills" % art
+		)
+		for key: String in rows:
+			var path: String = StreetWalkerCards.DIR + art + "/" + str(rows[key])
+			assert_true(path.ends_with("_walk.png"), path)
+			assert_true(StreetWalkerCards.WALK_FILL.has(str(rows[key])), "%s has a fill" % path)
+			var tex: Texture2D = load(path) as Texture2D
+			assert_not_null(tex, path)
+			if tex != null:
+				assert_eq(tex.get_width() % RigHeadCard.FRAMES, 0, "%s whole facings" % path)
+				assert_eq(tex.get_height() % StreetWalkerCards.STRIDE_FRAMES, 0, "%s frames" % path)
+
+
+func test_stride_frame_steps_four_frames_per_cycle_and_stands_on_pass() -> void:
+	assert_eq(StreetWalkerCards.stride_frame(0.0, true), 0)
+	assert_eq(StreetWalkerCards.stride_frame(0.26, true), 1)
+	assert_eq(StreetWalkerCards.stride_frame(0.51, true), 2)
+	assert_eq(StreetWalkerCards.stride_frame(0.99, true), 3)
+	assert_eq(StreetWalkerCards.stride_frame(1.3, true), 1, "the cycle wraps")
+	assert_eq(StreetWalkerCards.stride_frame(0.6, false), StreetWalkerCards.STAND_FRAME)
