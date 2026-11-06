@@ -1552,3 +1552,15 @@ NEXT (written 06:45, for iteration 18; supersedes the 05:59 list):
   exit 0; lint 13/13, unit 1241/1241 (test_noir_shadows green), scenarios 52/52, parity bit-exact
   (planted caught at 629), look 11/11, block 5/5 (`evidence/n7-melee/evidence-run-dfb60a40.log`).
   The freeze's evidence step is done for this head; re-run only if code moves. STOP 07:00.
+
+## Iteration 18 (07:01, BUILD; session ends 08:01, freeze 08:30 falls in iteration 19)
+- READ 07:01 n7-ranged: one new commit `1b1c8402` (fx: shot trail on four guns) is weapon FX, not
+  the feel layer: not merged. Nothing new for melee in their NEXT.
+- EXE 07:02 on `75845b61` (code `d7b73363`), freeze de-risk while the session still has time:
+  bake_city exit 0 (256 chunks), `--export-release windows-showcase ../build/export/windows/RTAI.exe`
+  exit 0, `--export-release windows-slice ../build/export/windows-slice/RTAI.exe` exit 0, 0 ERROR
+  lines (`evidence/n7-melee/it18-{bake,export,export-slice}.log`). Booted the showcase exe:
+  `RTAI.exe --screen 0 --rendering-driver d3d12 -- --arena=city --bot=ghosts --ghost=dent --rigs
+  --ppm=32 --kerf-glide=off --wound-hold=off` (Movie Maker, 260 frames): exit 0, 0 SCRIPT ERROR, no
+  unknown flag; frames 100 (the seized car on its teal tether) and 200 (the blast, debris, blood)
+  looked at. The slice exe: exit 0, 0 SCRIPT ERROR, frame 110 = the Quest 1 title card.
