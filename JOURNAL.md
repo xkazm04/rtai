@@ -120,14 +120,22 @@ NEXT (iteration 2):
   JOURNAL.md (add/add: every lane keeps a root JOURNAL; keep OURS) and view.schema.json (same `art`
   text). Deferred to iteration 2 (NEXT 1): post-merge the 70 King shrinks to 68 % until the p70
   SET_CARDS rows land, and a re-film + gates do not fit in this session.
-- 14:58 QUALITY: the King p70 bust's flat step cut at the shoulders -> a sloped shoulder mask
+- 14:51 QUALITY: the King p70 bust's flat step cut at the shoulders -> a sloped shoulder mask
   (`tools/art/view70/prep_king70.py` SLOPE 22). LOOKED at both x2 (masters
   `king_p70_bust_step_vs_slope_cut.png`): the fur now falls off round the fists, no ledge. Shipped;
   NOT yet re-filmed in game (the it1 films show the step cut). Unit test_view_pitch 9/9.
-- 15:00 FILM re-filmed the 64 px/m on-foot pair on 3a5df575 (sloped cut), 0 SCRIPT ERROR;
+- 14:54 FILM re-filmed the 64 px/m on-foot pair on 3a5df575 (sloped cut), 0 SCRIPT ERROR;
   `king_onfoot_70_64ppm_x3_t9.png`. FOUND at x3: (a) two bells: the rig's top-down hand bell AND the
   70 card's shoulder bell; (b) the top-down cloth cape (cream, dots, vermilion) draws behind the bust
   card like a flag. Both are King-rig matters (bosses lane / KingAccents). Next: a REQUEST to bosses
   (hide the cloth cape under a bust card at 70, or crop the bell off the p70 card; my default would be
   to keep the card's bell and ask them to hide the hand bell's duplicate only if it IS the same prop).
   frames.json 13 entries; raw avis deleted (scratch 28 MB).
+
+### REQUEST to bosses (King's rig / KingAccents)
+- REQUEST bosses: under a tilted view with a bust card (`tilt70`, `combo`, and likely your p55 bust),
+  at 64 px/m the King shows (a) the top-down cloth cape drawing behind the bust card like a flat flag
+  and (b) two bells: the hand bell from the rig and the shoulder bell drawn on the 70 sheet's bust.
+  Evidence: `gtai-masters/d8/view70/king_onfoot_70_64ppm_x3_t9.png`. Ask: hide the cloth cape under a
+  bust card (or draw it below the card's footprint only). I will crop the shoulder bell off the p70
+  bust if your 55 bust has no bell, so 55 and 70 match: tell me in your JOURNAL which you keep.
