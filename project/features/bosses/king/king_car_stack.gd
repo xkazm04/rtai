@@ -45,6 +45,8 @@ static func draw(ci: CanvasItem, at: Vector2, heading: float, l: float, w: float
 	if view.cast_k > 0.0:  # the cast shadow by height, thrown from the roof line (top_lift)
 		var off: Vector2 = view.cast_dir().rotated(-heading) * ROOF_M * view.cast_k * p
 		RigCastShadows.sweep(ci, _corners(l, w), off)
+	if KingCarWalls.draw(ci, at, heading, l, w):  # d8: the walls from art for this pitch
+		return
 	for i: int in SLICES:
 		var k: float = float(i) / float(SLICES - 1)
 		var z: float = ROOF_M * k
@@ -151,6 +153,8 @@ static func far_box(host: Node2D, car: Vector2, dir: Vector2) -> Rect2:
 ## px), `up` = the car-local lift per metre: the arch stacked in slices (ink silhouette, then gold
 ## from dark at the seat to bright at the top), the light line, ball finials and crest on top.
 static func throne(ci: CanvasItem, at: Vector2, p: float, up: Vector2) -> void:
+	if KingCarWalls.throne(ci, at, p, up):  # d8: the throne's card from art for this pitch
+		return
 	var r: float = KingCarTrim.THRONE_HW_M * p
 	var w: float = 0.16 * p
 	var a0: float = PI - KingCarTrim.THRONE_ARC

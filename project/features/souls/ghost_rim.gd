@@ -84,3 +84,22 @@ static func sync_keyline(rig: CutRig) -> void:
 			var k: Sprite2D = h.get_child(0) as Sprite2D
 			k.texture = h.texture
 			k.offset = h.offset
+
+
+## A light ghost's soul pool under it: a soft radial disc of `teal` (centre alpha `a`) `across_px`
+## wide, as a Sprite2D (OhmRig's glow).
+static func soft_glow(teal: Color, a: float, across_px: float) -> Sprite2D:
+	var g: GradientTexture2D = GradientTexture2D.new()
+	g.width = 64
+	g.height = 64
+	g.fill = GradientTexture2D.FILL_RADIAL
+	g.fill_from = Vector2(0.5, 0.5)
+	g.fill_to = Vector2(1.0, 0.5)
+	var grad: Gradient = Gradient.new()
+	grad.set_color(0, Color(teal, a))
+	grad.set_color(1, Color(teal, 0.0))
+	g.gradient = grad
+	var s: Sprite2D = Sprite2D.new()
+	s.texture = g
+	s.scale = Vector2.ONE * across_px / 64.0
+	return s

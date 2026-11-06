@@ -18,6 +18,19 @@
       "items": {
         "additionalProperties": false,
         "properties": {
+          "art": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "boss_art": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "boss_pitch_deg": {
+            "maximum": 90,
+            "minimum": 30,
+            "type": "number"
+          },
           "cards": {
             "type": "boolean"
           },
@@ -26,8 +39,18 @@
             "minimum": 0,
             "type": "number"
           },
+          "ease_s": {
+            "maximum": 5,
+            "minimum": 0,
+            "type": "number"
+          },
           "eye_h_m": {
             "maximum": 200,
+            "minimum": 0,
+            "type": "number"
+          },
+          "fade_deg": {
+            "maximum": 30,
             "minimum": 0,
             "type": "number"
           },
@@ -48,6 +71,11 @@
             "type": "boolean"
           },
           "pitch_deg": {
+            "maximum": 90,
+            "minimum": 30,
+            "type": "number"
+          },
+          "swap_deg": {
             "maximum": 90,
             "minimum": 30,
             "type": "number"

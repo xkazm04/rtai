@@ -1,6 +1,6 @@
 {
   "default": "top",
-  "doc": "View lab (docs/view-lab/PLAN.md): the camera's projection per view id, picked by the launch flag --view=<id> (default `top`, the shipped 90-degree orthographic view, bit-identical: no transform is applied). pitch_deg is the camera's angle above the ground (90 = straight down); the ground plane is foreshortened by sin(pitch) on screen y (Camera2D zoom.y), so the mouse unprojects onto the ground through the same canvas transform. height_k scales how far a part's height lifts it up the screen (cos(pitch), the 2.5D actors; 0 = flat). Render only: a view never writes to the sim. cards (optional, default false) draws the upright facing cards (the head/bust drawn for the raised camera, 5 facings drawn + 3 mirrored, features/characters/art/view/) over the top-down head under a tilt. eye_h_m (optional, top_lift) makes a straight-down view a perspective camera that high above the ground: heights lean away from the screen centre. cast_k (optional, default 0) casts a ground shadow per height down-right (RigCastShadows: bodies, King's car, the arena props): its length per unit of height. occlude (optional, default true under a tilt) draws the arena's standing props over a body behind them with the body as an ink silhouette (PropOcclusion); false = the body draws over the prop (the it12 tilt).",
+  "doc": "View lab (docs/view-lab/PLAN.md): the camera's projection per view id, picked by the launch flag --view=<id> (default `top`, the shipped 90-degree orthographic view, bit-identical: no transform is applied). pitch_deg is the camera's angle above the ground (90 = straight down); the ground plane is foreshortened by sin(pitch) on screen y (Camera2D zoom.y), so the mouse unprojects onto the ground through the same canvas transform. height_k scales how far a part's height lifts it up the screen (cos(pitch), the 2.5D actors; 0 = flat). Render only: a view never writes to the sim. cards (optional, default false) draws the upright facing cards (the head/bust drawn for the raised camera, 5 facings drawn + 3 mirrored, features/characters/art/view/) over the top-down head under a tilt. eye_h_m (optional, top_lift) makes a straight-down view a perspective camera that high above the ground: heights lean away from the screen centre. art (optional, default none) names the cards' art folder for this pitch (features/characters/art/view/<art>/, e.g. p55 = cut from the 55-degree angle sheets: a card file found there replaces the base strip, RigHeadCard.SET_CARDS rows replace whole rows), so each pitch's art sits beside the others. cast_k (optional, default 0) casts a ground shadow per height down-right (RigCastShadows: bodies, King's car, the arena props): its length per unit of height. occlude (optional, default true under a tilt) draws the arena's standing props over a body behind them with the body as an ink silhouette (PropOcclusion); false = the body draws over the prop (the it12 tilt).",
   "schema": "gtai.view/1",
   "views": [
     {
@@ -26,11 +26,20 @@
       "pitch_deg": 90
     },
     {
+      "art": "p55",
       "cards": true,
       "cast_k": 1.2,
       "height_k": 1,
       "id": "tilt",
-      "note": "the main candidate (DECISION it5): 55 degrees with the upright facing cards (Rivet, King, gang, patrol cop); picked from the 65 / 55 / 45 stills at 32 px/m: 65 barely differs from top, 45 squashes the ground to 71 % and the top-down limbs read squat; cast shadows by height (cast_k 1.2, DECISION it12: they ground the car and the bodies on the foreshortened road)",
+      "note": "the main candidate (DECISION it5): 55 degrees with the upright facing cards (Rivet, King, gang, patrol cop); picked from the 65 / 55 / 45 stills at 32 px/m: 65 barely differs from top, 45 squashes the ground to 71 % and the top-down limbs read squat; cast shadows by height (cast_k 1.2, DECISION it12: they ground the car and the bodies on the foreshortened road); d8: art p55 (the facing cards cut from the owner's 55-degree angle sheets, art/view/p55/: Rivet's bust)",
+      "pitch_deg": 55
+    },
+    {
+      "cards": true,
+      "cast_k": 1.2,
+      "height_k": 1,
+      "id": "tilt_basecards",
+      "note": "study (d8 before): tilt with the n7 base cards (no art: Rivet's head-only card)",
       "pitch_deg": 55
     },
     {
@@ -93,6 +102,71 @@
       "note": "study: tilt without the prop occlusion (a body behind a barrier draws over it; the it12 tilt)",
       "occlude": false,
       "pitch_deg": 55
+    },
+    {
+      "art": "p70",
+      "cards": true,
+      "cast_k": 1.2,
+      "height_k": 1,
+      "id": "tilt70",
+      "note": "lane d8-view70: the tilt row's switches (cards, cast shadows, occlusion) at 70 degrees, with the 70-degree card art (art p70: features/characters/art/view/p70/, else the base card)",
+      "pitch_deg": 70
+    },
+    {
+      "art": "p70",
+      "boss_art": "p55",
+      "boss_pitch_deg": 55,
+      "cards": true,
+      "cast_k": 1.2,
+      "ease_s": 1,
+      "fade_deg": 0,
+      "height_k": 1,
+      "id": "combo",
+      "note": "lane d8-view70, the combined view: 70 degrees in play (art p70), easing to boss_pitch_deg 55 over ease_s when a boss engages (Events.boss_engaged) and back to 70 when it is defeated (ViewPitchEase; eased on sim ticks, so it holds during a hit-stop); the cards draw the p70 art above swap_deg and boss_art (p55) below it, swapped hard at swap_deg (fade_deg 0, picked at 48 px/m: a cross-fade draws a double head for ~4 frames; combo_fade keeps the 5-degree cross-fade)",
+      "pitch_deg": 70,
+      "swap_deg": 62.5
+    },
+    {
+      "art": "p70",
+      "boss_art": "p55",
+      "boss_pitch_deg": 55,
+      "cards": true,
+      "cast_k": 1.2,
+      "ease_s": 0.8,
+      "fade_deg": 0,
+      "height_k": 1,
+      "id": "combo_ease08",
+      "note": "lane d8-view70 study (owner call: the transition length): combo with a 0.8 s ease",
+      "pitch_deg": 70,
+      "swap_deg": 62.5
+    },
+    {
+      "art": "p70",
+      "boss_art": "p55",
+      "boss_pitch_deg": 55,
+      "cards": true,
+      "cast_k": 1.2,
+      "ease_s": 1.2,
+      "fade_deg": 0,
+      "height_k": 1,
+      "id": "combo_ease12",
+      "note": "lane d8-view70 study (owner call: the transition length): combo with a 1.2 s ease",
+      "pitch_deg": 70,
+      "swap_deg": 62.5
+    },
+    {
+      "art": "p70",
+      "boss_art": "p55",
+      "boss_pitch_deg": 55,
+      "cards": true,
+      "cast_k": 1.2,
+      "ease_s": 1,
+      "fade_deg": 5,
+      "height_k": 1,
+      "id": "combo_fade",
+      "note": "lane d8-view70 study (owner call: cross-fade or swap): combo with the cards cross-faded over 5 degrees around swap_deg",
+      "pitch_deg": 70,
+      "swap_deg": 62.5
     }
   ]
 }

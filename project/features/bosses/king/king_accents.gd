@@ -35,6 +35,9 @@ const SHOUT_ARC_M: float = 1.15
 ## The slam tell's raised plates either side of the crown (it10, see _raised_plates).
 const RAISED_PLATES: bool = true
 const PLATE_OUT_M: float = 0.62
+## d8: under a tilt the raised plates rise this high (m) over the tell, over the bust card's crown
+## (straight down the lift is zero: the it10 plates either side of the crown, unchanged).
+const PLATE_UP_M: float = 5.5
 ## The gang's gold chain (it14): a rope this wide (m) round the chest at CHAIN_R_M, links and a
 ## medallion at the front, on the car's riders too. CHAIN_W_M 0 = the it2-it13 3 px arc on the
 ## brawlers only (a 2 px line at 32 px/m, lost under the buff ring).
@@ -70,12 +73,15 @@ func _draw() -> void:
 		_crown(at + Vector2(fall.x, fall.y), CROWN_M * Ink.PX_PER_M, fall.z)
 	_shout(f, at)
 	var buffed: bool = view.adds != null and view.adds.buffed(f.now())
+	# d8: the court's gang card for this view's pitch wears its own gold chain (KingArt)
+	var chains: bool = KingArt.strip_path(GangPlan.ART_DIR, ViewMode.shared().pitch_deg).is_empty()
 	for g: BossFight in view.standing_adds():
 		var c: Vector2 = Ink.px(g.body.pos)
 		if buffed:  # the decree's buff: a danger ring on every gang bot until it ends
 			draw_arc(c, 0.52 * Ink.PX_PER_M, 0.0, TAU, 20, Ink.VERMILION, 2.5)
-		_chain(c, g.body.facing.angle())
-	if CHAIN_W_M > 0.0 and rigs != null:
+		if chains:
+			_chain(c, g.body.facing.angle())
+	if CHAIN_W_M > 0.0 and rigs != null and chains:
 		for mark: Vector3 in rigs.rider_marks():
 			_chain(Vector2(mark.x, mark.y), mark.z)
 
@@ -131,8 +137,13 @@ func _raised_plates(f: BossFight, at: Vector2) -> void:
 	var p: float = 1.0 - float(f.tell_left()) / float(maxi(f.attack.windup, 1))
 	var side: Vector2 = f.body.facing.orthogonal() * PLATE_OUT_M * Ink.PX_PER_M
 	var half: Vector2 = Vector2(0.17, 0.21) * Ink.PX_PER_M * (0.8 + 0.45 * p)
+	var up: Vector2 = ViewMode.shared().lift_px(PLATE_UP_M * p)
+	var plate: Texture2D = KingArt.part("press_plate")
 	for s: float in [-1.0, 1.0]:
-		var c: Vector2 = at + side * s
+		var c: Vector2 = at + side * s + up
+		if plate != null:  # d8: the court's engraved plate art under a court pitch
+			draw_texture_rect(plate, Rect2(c - half * 1.4, half * 2.8), false)
+			continue
 		draw_rect(Rect2(c - half - Vector2(3, 3), half * 2.0 + Vector2(6, 6)), Ink.INK)
 		draw_rect(Rect2(c - half, half * 2.0), GOLD)
 		draw_rect(Rect2(c - half * 0.6, half * 0.7), GOLD_HI)

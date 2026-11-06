@@ -9,10 +9,8 @@ extends RefCounted
 ## its drawn aspect; it anchors on the collar ring. Rotation stays free for the rest of the rig.
 ## Render only. Straight down (or a row without cards) nothing here runs: bit-identical.
 
-## art_dir -> [strip, anchor y (fraction of the card height from the top where the anchor sits),
-## width over the anchor part's width, bust (the card covers the chest too: the torso hides),
-## raw (the strip is pre-printed by tools/art/cut_facings.py --snap: gold would print vermilion)].
-## Rivet anchors on his collar ring, King's bust on his torso.
+## art_dir -> [strip, anchor y (card height fraction from the top), width over the anchor part's,
+## bust (covers the chest: the torso hides), raw (pre-printed: cut_facings.py --snap)].
 const CARDS: Dictionary[String, Array] = {
 	"rivet": ["res://features/characters/art/view/rivet_head_card.png", 0.86, 1.0, false, true],
 	"king": ["res://features/characters/art/view/king_bust_card.png", 0.80, 2.4, true, true],
@@ -22,16 +20,52 @@ const CARDS: Dictionary[String, Array] = {
 	"cop/head_helmet":
 	["res://features/characters/art/view/cop_riot_card.png", 0.86, 1.2, false, false],
 }
+## Per view art (view.json `art`: "p55" cut from the 55-degree sheets, "p70" the 70): a file of the
+## same name under ART_DIR/<art>/ swaps the strip; SET_CARDS[<art>] rows replace whole rows (an
+## empty path keeps the strip, changes the rest). p55: Rivet's bust (rivet_bust.py), Dent's tan bust
+## (ghost_card_tone.py; teal kept as dent_bust_card_teal.png), the street heads (street_head.py).
+const ART_DIR: String = "res://features/characters/art/view/"
+const SET_CARDS: Dictionary[String, Dictionary] = {
+	"p55":
+	{
+		"rivet":
+		["res://features/characters/art/view/p55/rivet_bust_card.png", 0.66, 1.25, true, true],
+		"dent":
+		["res://features/characters/art/view/p55/dent_bust_card.png", 0.75, 1.75, true, true],
+		"cop/head_swat":
+		["res://features/characters/art/view/p55/swat_head_card.png", 0.8, 1.68, false, true],
+		"cop/head_cap":
+		["res://features/characters/art/view/p55/cop_cap_card.png", 0.78, 1.73, false, true],
+		"cop/head_helmet":
+		["res://features/characters/art/view/p55/cop_riot_card.png", 0.82, 1.32, false, true],
+		"ped/head_hair":
+		["res://features/characters/art/view/p55/ped_hair_card.png", 0.74, 2.0, false, true],
+		"ped/head_bald":
+		["res://features/characters/art/view/p55/ped_bald_card.png", 0.74, 1.9, false, true],
+		"thug":
+		["res://features/characters/art/view/p55/thug_head_card.png", 0.86, 1.0, false, true],
+	},
+	"p70":
+	{
+		"rivet": ["", 0.86, 1.17, false, true],
+		"king": ["", 0.80, 3.53, true, true],
+	},
+}
 const FRAMES: int = 5
 ## Card frame and mirror per screen octant of the look (0 = screen right, +1 = 45 deg clockwise,
 ## toward the camera; the camera sits south, so octant 2 is the face).
 const OCT_FRAME: PackedInt32Array = [2, 1, 0, 1, 2, 3, 4, 3]
 const OCT_FLIP: PackedByteArray = [0, 0, 0, 1, 1, 1, 0, 0]
 static var _tex: Dictionary[String, Texture2D] = {}
+static var _merged: Dictionary[String, Array] = {}
+static var _merged_art: String = "-"
 
 
-## Each pose step under a tilt (CutRig.drive): build the card once, then face and place it.
+## Each pose step under a tilt (CutRig.drive): build the card once, then face and place it. A
+## card built under other art (ViewMode.art changed live, the combined view) is rebuilt.
 static func step(rig: CutRig) -> void:
+	if rig.head_card != null and str(rig.head_card.get_meta(&"art", "")) != ViewMode.shared().art:
+		drop(rig)
 	if rig.head_card == null:
 		if not ViewMode.shared().cards or _key(rig).is_empty():
 			return
@@ -44,16 +78,17 @@ static func step(rig: CutRig) -> void:
 static func on_tint(rig: CutRig, on: bool) -> void:
 	if rig.head_card == null:
 		return
-	var raw: bool = CARDS[_key(rig)][4] == true
+	var raw: bool = rows()[_key(rig)][4] == true
 	var mat: ShaderMaterial = PartMaterials.get_mat(PartMaterials.PartKind.PART, on, 0)
 	rig.head_card.material = null if raw and not on else mat
 
 
-## A variant swap (CutRig.apply_variant, a pooled rig re-dressed) drops the card: the next step
-## builds the new head's card, or none, and the top-down parts draw again meanwhile.
+## A variant swap (CutRig.apply_variant) or an art change drops the card; renamed first, so a card
+## rebuilt this frame keeps the name `head_card`. The top-down parts draw until the next step.
 static func drop(rig: CutRig) -> void:
 	if rig.head_card == null:
 		return
+	rig.head_card.name = &"head_card_dropped"
 	rig.head_card.queue_free()
 	rig.head_card = null
 	_hide(rig.head, rig.head_spr, true)
@@ -70,10 +105,40 @@ static func _key(rig: CutRig) -> String:
 ## The card row a head draws: "art_dir/head" (a head variant, e.g. the patrol cop's cap), else
 ## the art_dir (every head of the set), else "" (no card).
 static func key_of(plan: BodyPlan, head: String) -> String:
+	var all: Dictionary[String, Array] = rows()
 	var k: String = "%s/%s" % [plan.art_dir, head]
-	if CARDS.has(k):
+	if all.has(k):
 		return k
-	return plan.art_dir if CARDS.has(plan.art_dir) else ""
+	return plan.art_dir if all.has(plan.art_dir) else ""
+
+
+## The card rows this run's view draws now: CARDS under its art (rows_of).
+static func rows() -> Dictionary[String, Array]:
+	var want: String = ViewMode.shared().art
+	if want != _merged_art:
+		_merged = rows_of(want)
+		_merged_art = want
+	return _merged
+
+
+## CARDS with each strip found under ART_DIR/<art>/ swapped in, then SET_CARDS[art]'s rows.
+static func rows_of(art: String) -> Dictionary[String, Array]:
+	if art == "":
+		return CARDS
+	var out: Dictionary[String, Array] = {}
+	for key: String in CARDS:
+		var row: Array = CARDS[key].duplicate()
+		var alt: String = ART_DIR.path_join(art).path_join(str(row[0]).get_file())
+		if ResourceLoader.exists(alt):
+			row[0] = alt
+		out[key] = row
+	for key: String in SET_CARDS.get(art, {}):
+		var set_row: Array = SET_CARDS[art][key]
+		var row: Array = set_row.duplicate()
+		if str(row[0]) == "" and out.has(key):
+			row[0] = out[key][0]
+		out[key] = row
+	return out
 
 
 static func frame_of(look: float) -> Vector2i:
@@ -82,7 +147,7 @@ static func frame_of(look: float) -> Vector2i:
 
 
 static func _build(rig: CutRig) -> void:
-	var row: Array = CARDS[_key(rig)]
+	var row: Array = rows()[_key(rig)]
 	var path: String = row[0]
 	if not _tex.has(path):
 		_tex[path] = load(path) as Texture2D
@@ -97,6 +162,7 @@ static func _build(rig: CutRig) -> void:
 	if row[4] != true or rig.is_tinted():
 		card.material = PartMaterials.get_mat(PartMaterials.PartKind.PART, rig.is_tinted(), 0)
 	card.z_index = rig.plan.head_z
+	card.set_meta(&"art", ViewMode.shared().art)
 	rig.head.add_child(card)
 	rig.head_card = card
 	_hide(rig.head, rig.head_spr)
@@ -118,7 +184,7 @@ static func _place(rig: CutRig) -> void:
 	var card: Sprite2D = rig.head_card
 	var src: Sprite2D = _anchor(rig)
 	var at: Vector2 = src.global_position
-	var k: float = CARDS[_key(rig)][2]
+	var k: float = rows()[_key(rig)][2]
 	var w_world: float = src.texture.get_width() * absf(src.global_scale.x) * k
 	var f: Vector2i = frame_of(rig.head.global_rotation)
 	card.frame = f.x
