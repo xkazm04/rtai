@@ -447,3 +447,82 @@ WITH THE VAN (row 4). sedan_between_70: A, B, D read right; C is wrong (turned p
 3/4-away), so take C from sedan_between_c_70 (one large drawing, nose right and up, under-turned
 ~8-10 deg on screen, camera ~47 like the side redo); police the same pattern. Expect the C cell to
 snap more than the others; judge on the turn film at 64 before committing it.
+
+## Iteration 8 (2026-11-06 23:55 - 00:55), BUILD
+
+Read: JOURNAL (my NEXT for this session was written as "iteration 6"; the runner counts 8), git log,
+the lane journals: no new REQUEST to vehicles. Took NEXT 1, the 22.5-deg in-betweens.
+MILESTONE 00:18 8d139438 the nine-view p70 set. tools/art/vehicle_cards.py: BETWEEN = True, atlas
+9 columns (4032 x 4032, 6.8 MB PNG in LFS; the p55 atlas stays 5 x 9), columns 5-8 = A-D for rows
+0 1 2 7 (sedan_between_70 B, C from sedan_between_c_70 B), 8 (police_car_between_70 B, C from
+police_car_between_c_70 B), 4 (van_between_70 A); taxi, pickup, ambulance have none (five views).
+Scale: first try box geometry (target width L|cos| + W|sin|): A and D came out ~1.5x their
+neighbours (the sheets' own 3/4 views are drawn ~2/3 of the box width): REJECTED, looked at the
+preview. Then: A B D at the sheet's own k (the between sheets share the sheet's canvas: raw widths
+272 / 334 / 369 / 500 / 527 run in order for the sedan), the C redo scaled to the mean of the side
+and the 3/4-away widths. Runtime: VehicleViews (new, 50 lines: view_of(a, fine), nose_deg,
+cols_of(tex) = atlas width / 448, FINE per art key, fine_rows); VehicleCards reads the grid when
+the atlas changes (the combo swap re-reads it) and steps 22.5 on a FINE row; the shader's nose
+angle knows columns 5-8 (the dents' crumple zone). Unit: test_vehicle_views 4 (the nine columns,
+the rest <= 11.25 and nose_deg agrees, the p70 atlas really holds in-betweens in exactly the FINE
+rows, a 5-column atlas has none) + test_vehicle_cards 9: 13/0.
+FILM (vehicle_turn, tilt70, 400 frames, 64 and 32 px/m): before = this head with the HEAD atlas
+swapped in (5 columns: identical to the old code path). framemd5: 392 of 400 frames differ, the 8
+equal ones every 45 frames (the drawn views' own headings): the expected pattern. Judged the sedan
+through one swap at 64 (frames 54-78, every 3): before the 3/4-toward drawing turns ~20 deg then
+snaps to the nose view; after the A drawing takes over halfway, each jump is half, and the card
+stays over its footprint (the flat footprint no longer shows at mid-turn). masters:
+turn360_tilt70_{64,32}ppm_between_before_after.mp4, turn_between_sedan_64ppm_swap_before_after.png,
+between_atlas_rows_sedan_van_police_p70.png (the nine views in angle order). frames.json 15 (the
+side-redo turn clip, now superseded, and the 55 siren still out).
+Seen, not fixed: the police C redo is a lighter, brighter blue than its neighbours (a colour pop
+at ~22 deg past the side); the sedan's C is under-turned (as the catalog notes say).
+FRICTION: the atlas PNGs are git LFS: `git show HEAD:<png>` gives the 132-byte pointer; use
+`git show HEAD:<png> | git lfs smudge > file`. Importing the pointer left the .import at
+valid=false and a stale .md5 that a plain --import did not clear: `git checkout` the .import, delete
+`.godot/imported/<name>-<hash>.*`, then --import. The first "before" film drew no cards (caught by
+looking at the strip, not by an exit code: the run printed one ERROR line, no SCRIPT ERROR).
+FRICTION: gdformat on Windows rewrote vehicle_cards.gd with CRLF; sed 's/\r$//' before staging.
+Rules applied: motion-quality-gating (judged on the 360 film through a swap, not on atlas stills;
+framemd5 confirms where the two differ), sprite-and-atlas-production (one cutter, scale rule
+measured and the rejected one recorded, provenance line with each sheet's round + prompt_hash,
+the FINE list checked against the atlas by a test), generative-artifact-gating (B sheets used per
+their notes: the cars' wrong C cells replaced by the _c redos, never integrated), depth-ordered-
+layered-art (the in-betweens keep the ground-centre anchor, so the depth sort is unchanged).
+DECISION vehicles: nine views a half turn on p70 (docs/decisions.md).
+00:22 GATE full unit on 8d139438: 1505 passed, 0 failed (67.8 s), no FLAKY.
+MILESTONE 00:26 a265dfba the police C graded to its neighbours. Measured the blue paint (b > r+25)
+per cell of row 8: the C redo V 0.52 / S 0.85 against 0.34-0.35 / 0.53-0.74 beside it (the colour
+pop I saw). vehicle_cards.py MATCH_C: the C redo's saturated pixels within 30 deg of the
+neighbours' median paint hue take the neighbours' mean S and V (weighted by saturation). First
+cut matched EVERY saturated pixel: the light bar's amber lens went towards red-orange (red is
+blood's): caught on the film strip, narrowed to the paint hue; after: blue V 0.32 / S 0.63, the
+amber lens mean (219,141,12) vs (219,142,11) before, 388 px both. Changed elsewhere: only the four
+sedan C cells, mean delta 1.2 / 765 (the HSV round trip). framemd5 vs the unmatched film: only
+frames 191-212 and 326-347 differ (the C window, both halves). Honest read: in the game's grade
+the difference is small (the scene pulls the police blue dark); the drawing now measures in line.
+masters police_c_match_64ppm_before_top_after_bottom.png (not in frames.json).
+00:28 GATE `top` bit-identity: main scene `--arena=city --bot=rivet --seed=2 --rigs`, 301 frames,
+framemd5 of HEAD a265dfba vs iteration 5's top_head.md5 (f3762816, itself identical to 97334804
+and the merge base): IDENTICAL (301 video + 301 audio), 0 SCRIPT ERROR.
+00:30 FILM the drive (vehicle_frame --clip --view=tilt70, the car camera at 48 px/m: full
+throttle, the S-bend, the handbrake slide, the kerb crash and its standing fire): 0 SCRIPT ERROR,
+301 frames; masters drive_tilt70_48ppm_nine_views.mp4 (no before: the turn films are the A/B).
+
+## Calls for the owner (add to REPORT)
+- Rotation set density: nine views a half turn on p70 (built) vs five (BETWEEN = False in
+  tools/art/vehicle_cards.py, then re-cut). See turn360_tilt70_64ppm_between_before_after.mp4. Cost:
+  the p70 atlas 4032 x 4032 (65 MB of VRAM uncompressed, lossless import) vs 2240 x 4032 (36 MB).
+- The C in-between (just past the side view) is the weakest drawing (under-turned ~8-10 deg, a
+  little smaller); a REQUEST for a third C could fix it, or FINE could skip column 7 only.
+
+NEXT (iteration 9, in order):
+1. The rows without in-betweens: taxi (3), pickup (5), ambulance (6) still turn through five.
+   REQUEST to assets: taxi_between_70, parked_pickup_between_70, ambulance_between_70 (the four
+   22.5-deg in-betweens of each 70 sheet; same scale family and canvas as the sheet; C = nose right
+   and a little UP, ~22.5 past the side view, the angle both cars missed). Then add their rows to
+   VehicleViews.FINE (the unit test checks the atlas against it).
+2. The 55 set (boss arenas under combo): no 55 in-betweens; low priority (traffic is rare in a boss
+   arena); leave five.
+3. Exe at the freeze (int-day recipe in docs/decisions.md), REPORT.md by 08:40 with the Calls above
+   and the earlier ones (bike, wreck fire size).
