@@ -849,3 +849,14 @@ NEXT (written 01:53, for iteration 10):
   again + test_slice_closure). Docs: call (h), set_clip.sh + the 44 s city clip, trial exes, the
   REQUEST on Kerf's cooldown. NEXT is the 01:53 entry (items 1-4). Scratch: this iteration's AVIs
   deleted; 13 older AVIs kept.
+
+## Iteration 10 (02:05-03:05), phase BUILD
+- READ 02:05 JOURNAL NEXT (01:53), git log, n7-ranged JOURNAL to its end (it11 stop 01:56): no new
+  hit_feel / feel_cam / camera commits since `ce923514` (merged it9). Their it11 code (`9054e346`
+  muzzle on the drawn tip, `8766508f`/`cb98ccd4` molotov wind-up, `63d2a29e` bad --weapon) is
+  ranged-weapon art, not the feel layer: not merged (the Director merges branches).
+- WITHDRAWN 02:08 my 01:49 REQUEST (Kerf's cuts vs the stop cooldown): stale. n7-ranged decided it
+  at 20:46 (`0d4089f1`, camera.json `hitstop_cooldown_ticks` 16), merged here as `20f2263d`; this
+  branch's camera.json reads 16 (CameraRig.stop_cooldown loads it; the 20 at camera_rig.gd:21 is
+  only the pre-load default), so every 18-tick cut gets its stop. REPORT's "does not" line on it
+  removed.

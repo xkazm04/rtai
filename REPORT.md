@@ -49,8 +49,6 @@ The logs are in `evidence/n7-melee/`.
   mark can show a body under it. That is call (h).
 - Tonnage's plates in quest 1 are on the same view path as in the arena, but they are not filmed:
   the quest bot never takes Tonnage.
-- Kerf at full player cadence: the camera's 20-tick stop cooldown means only every other cut holds.
-  The kick and the flare still mark every cut.
 
 ## Calls for the owner
 (a) Quest 1 carries the katana on key 2.
