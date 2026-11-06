@@ -2184,3 +2184,13 @@ NEXT (iteration 25 = the freeze and the REPORT; supersedes the it22 list):
   chapters down, 0 SCRIPT ERROR, 72 s, mean -22.3 dB, peak -1.1 dB (same as 07:09). LOOK: sheet every
   300 frames: every tile an attack, blood red, the nuke ring whole. Master replaced, frames.json row
   branch `n7-ranged 5ed859c4`. Scratch avi deleted.
+
+### LOOK 07:48 the Gatling against a riot cop (weak cell Gatling R/V 2, no build)
+- `--weapon=gatling --bot=gunplay --cam=fight --ppm=32 --clean --reach=8` on `5ed859c4` (no `--lone`,
+  900 frames, exit 0, 0 SCRIPT ERROR). Frames 470-565 every 4, then 516-547 every frame (tight crop):
+  the tracers arrive on 523, sparks spray on the shield on 528, blood under the sparks on 529-530, the
+  kill stop holds it 531-537, he turns and falls away from Rivet from 538, pool and casings stay.
+  The block, the hit and the kill read apart: audit R 2 -> 3. V stays 2 (a living body under
+  sustained fire is still unjudged). Stills `evidence/ranged/it25-gatling-riot-cop-32ppm.jpg`,
+  `it25-gatling-riot-cop-frames-516-547-32ppm.jpg`. Avi deleted. Rules applied:
+  motion-quality-gating (judged frame by frame in motion, at 32 px/m, on the live arena path).
