@@ -15,7 +15,13 @@ const FUR: Color = Color("#EFE6D2")
 const CAR_LEN_M: float = 6.6
 const CAR_W_M: float = 2.5
 const WINDUP_BACK_M: float = 0.6
-const COINS: int = 30
+## it10: 48 coins (was 30) in staggered launches over the first LAUNCH_SPREAD of the window; the
+## R2 sequence constants (1/g and 1/g^2, g = 1.3247, the plastic number) scatter them in 2D.
+const COINS: int = 48
+const LAUNCH_SPREAD: float = 0.45
+const R2_A1: float = 0.7548777
+const R2_A2: float = 0.5698403
+const GOLD_HI: Color = Color("#F6D678")
 ## The cape on the throne-car spreads near the car's width (the target's fur-trimmed fan).
 const CAPE_ON_CAR_K: float = 1.3
 
@@ -80,20 +86,34 @@ func _windup_px() -> Vector2:
 	return Ink.px(-fight.aim * WINDUP_BACK_M * k) + shake
 
 
-## The coin fan's hail in its active window: gold coins flying out down the locked cone, spread by
-## a fixed golden-ratio scatter (render only, no RNG).
+## The coin fan's hail in its active window: gold coins spraying down the locked cone in staggered
+## launches, scattered by the R2 low-discrepancy sequence (render only, no RNG). it10: the it2-it9
+## scatter took the reach from i * 0.382, which is 1 - the angle's i * 0.618, so every coin sat on
+## one diagonal arc (a thin dotted line at 48 px/m); the sheet shows a dense spray.
 func _coins() -> void:
 	var a: BossAttack = fight.attack
 	if a == null or a.shape != BossAttack.Shape.CONE or fight.state != BossFight.State.ACTIVE:
 		return
 	var k: float = float(fight.t) / float(maxi(a.active, 1))
 	var half: float = deg_to_rad(a.arc_deg) * 0.5
+	var from: Vector2 = fight.origin
+	if fight.phase <= 1:  # out of the hood cannon's muzzle (see _car / _cannon), not the car's middle
+		var heading: Vector2 = KingBeats.car_dir(fight)
+		from = fight.body.pos + (heading * 0.2 + fight.aim * 0.22) * CAR_LEN_M
+	var span: float = maxf(a.range_m - from.distance_to(fight.origin), 0.5)
 	for i: int in COINS:
-		var ang: float = -half + 2.0 * half * fposmod(float(i) * 0.618034, 1.0)
-		var reach: float = clampf(k * (0.6 + 0.8 * fposmod(float(i) * 0.381966, 1.0)), 0.0, 1.0)
-		var at: Vector2 = Ink.px(fight.origin + fight.aim.rotated(ang) * a.range_m * reach)
+		var u: float = fposmod(0.5 + float(i) * R2_A1, 1.0)
+		var v: float = fposmod(0.5 + float(i) * R2_A2, 1.0)
+		var launch: float = LAUNCH_SPREAD * fposmod(float(i) * 0.618034, 1.0)
+		var fly: float = clampf((k - launch) / (1.0 - launch), 0.0, 1.0)
+		if fly <= 0.0:
+			continue
+		var reach: float = fly * (0.35 + 0.65 * sqrt(v))
+		var dir: Vector2 = fight.aim.rotated(-half + 2.0 * half * u)
+		var at: Vector2 = Ink.px(from + dir * span * reach)
 		draw_circle(at, 5.0, Ink.INK)
 		draw_circle(at, 3.8, GOLD)
+		draw_circle(at + Vector2(-1.2, -1.2), 1.4, GOLD_HI)
 
 
 ## The throne-car along +x (its nose), centred on the body.

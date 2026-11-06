@@ -24,7 +24,7 @@ The moveset is `docs/bosses/king.md`; the full log is `JOURNAL.md`.
   - the gilded plum throne-car, a boss-owned vehicle with drapes and a hood cannon;
   - the gang: the rich robot thug with gold chains, a steel helmet and shades.
 - **Three phases** (`king_phase{1,2,3}_*_32ppm_it6.mp4`):
-  - phase 1, the procession: ram lanes and the hood cannon's coin fan, with the gang pushing and riding;
+  - phase 1, the procession: ram lanes and the hood cannon's coin fan (since it10 a spray of 48 coins out of the muzzle, `evidence/king/shots/it10/coin_spray_before_after_48ppm.png`), with the gang pushing and riding;
   - phase 2, the court: the car stops, the gang brawls, and decrees buff them;
   - phase 3, on foot: the press slam (a leap onto the ring, shockwave plus coin ring) and the charge.
 
@@ -39,7 +39,7 @@ The moveset is `docs/bosses/king.md`; the full log is `JOURNAL.md`.
   - the ghosts on King (Dent, Kerf, Tonnage, Ohm).
 - **Combat holds**: the director reel was 19/19 chapters down with 0 SCRIPT ERROR on the branch
   (`evidence/king/director-reel-it6.log`).
-- **Gates** (it10): lint 13/13, unit 1160/0 (`evidence/king/unit-it10b.log`), scenarios 52/0
+- **Gates** (it10): lint 13/13, unit 1160/0 (`evidence/king/unit-it10c.log`), scenarios 52/0
   (`evidence/king/scenarios-it10.log`).
 - **The boss camera** (it10): n7-servo's `BossCam` bar band and `keep_in` are ported to this branch
   as identical files, so King stays whole below the boss bar at the boulevard's top edge.
@@ -64,7 +64,6 @@ and in the exported exe.
   read as light steel domes with a gold frame (`evidence/king/shots/it10/gang_head_before_after_32ppm_3x.png`). They
   are still smaller and less blocky than the target's bodyguards.
 - The shoulder megaphone is a small gold cone at 32 px/m; it reads from 48 px/m.
-- At 48 px/m the hood cannon's coins are a thin dotted gold arc, not the target's dense spray.
 - From straight above, the raised plates in the slam tell hide under the crown (the warning ring
   carries the tell).
 - The plain robot thug (the enemy-ai lane's, not King's) prints as solid ink at 48 px/m. The gang's
