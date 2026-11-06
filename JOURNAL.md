@@ -145,3 +145,22 @@ NEXT (iteration 2, in order):
 - 15:40 GATES on a412f1ad: scenarios 52/52 (run_scenarios.mjs, no contended miss this time); unit
   1421/1421 (full run); lint 15/15. Phase 2 (court on the stalled car) at 48 px/m looks right: the King
   on the gilded throne card, the car's art walls and roof (scratch car/shots/late.png).
+- 15:46 Close combat (item 5), Servo: `--loadout=katana` at 64 px/m, ticks 400/900/1500/2100; the bot
+  never closed to contact, nearest ~3 m at 2100 (gtai-masters/d8/bosses/servo_vs_katana_64_close.png):
+  the p55 parts hold (no mush). A true contact frame for Servo is still owed (a scripted melee or
+  `--bot=rivet` duel). frames.json: 15 entries (combined clip bosses_d8_it2_combined.mp4, 37 s).
+- Calls for the owner (add to REPORT): (4) the throne card's size: 3.0 m face-on, towering a head over
+  the crown like the sheet (`KingCarWalls.THRONE_W_M`; 2.3 hid behind the bust); (5) the hood cannon
+  moved onto the roof art's laurel ring under tilt (0.33 of the car vs 0.2; view only, coins follow;
+  `KingCarWalls.ART_MOUNT_K`); (6) the car's walls are flush art (the wheels painted), main's drawn
+  tyres stood proud of the body: same seed side by side in king_car_64_t720_before_after.png.
+
+NEXT (iteration 3, in order):
+1. Kerf? no (chars). Gang on foot at 64 px/m vs the claw, and the King on foot at 64 (press slam) with
+   the new car parked behind: one before/after per figure for REPORT.
+2. The hood cannon barrel from art (a gilded barrel strip, top view, in the r5 palette), and the
+   car's bumper protrusion (KingCarStack.bumpers are skipped under the art stack).
+3. Servo contact frame at 64 (claw and katana); the crate (kraft box) in the 55 palette via ServoArt.
+4. Fold the court card strips into chars' `ViewMode.art` route once merged (rows in 14:47 entry).
+5. Watch item: the King's arm over the bust card at melee range (RigDepthSort, chars').
+6. At the freeze (18:30): export build/export/windows/RTAI.exe (int-day recipe), REPORT.md.
