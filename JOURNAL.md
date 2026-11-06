@@ -305,3 +305,11 @@ NEXT (iteration 6, in brief order):
   (ViewMode.lift_px of the boss's drawn height), and cap the boss-cam zoom so both stay in. A
   Call candidate: "boss camera at close range: keep Rivet in frame (built) vs the boss's close-up".
   This goes to the top of NEXT (a combat-readability fault under combo at 48-64 px/m).
+- CORRECTION 22:53: `BossCam` is the DEV clip camera (`--boss-cam`, features/bosses/boss_cam.gd);
+  the shipped game follows Rivet. So the 64 px/m finding above hurts our close-range FILMS, not the
+  player. Its keep_in keeps BOSS_MARGIN_M round the boss's ground centre: under a tilt add the
+  boss's lifted height (ViewMode.lift_px) to the top margin, and at 64 px/m FRAME_K 0.45 leaves Rivet
+  out past ~9 m. Lower priority than the NEXT list's items 2-5; do it before filming close-ups.
+- 22:53 cleaned: scratch renders kept only where frames.json or JOURNAL point; raw AVIs deleted.
+  Session ends here (23:03 stop). Head at the JOURNAL commit; lint 15/15; unit 1500/0 and
+  scenarios 52/0 on 89cac319 (code after it: the dev probe only).
