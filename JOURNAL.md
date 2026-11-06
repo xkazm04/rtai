@@ -387,3 +387,15 @@ arena path), `sprite-and-atlas-production` (stack slices from existing art, no n
   1181/0, scenarios 52 passed, parity bit-exact (mutation caught at step 629), selftest look goldens
   11/11 + block goldens 5/5 (`evidence/view/it12/evidence-run.log`). Bench not run (lock not taken).
   FRICTION: the runner refuses a dirty tree; logs must go outside the tree (scratch) while it runs.
+- MILESTONE d7573153: `top_lift` casts shadows by height (`RigCastShadows` + view.json `cast_k`):
+  a tapered figure per body thrown down-right (the city's building-shadow direction), the King's
+  car and the arena props swept from footprint to roof. DECISION cast_k 1.2 (a low evening sun):
+  LOOKED at 0.7 first, bodies' shadows came out ~1.1 m, half under the body, unreadable at 32 px/m
+  (`it12/toplift_cast_car_x2_t2040_k07.png`: only the car read). At 1.2 Rivet throws a readable
+  figure, the car and crate rows read as standing volumes (`it12/toplift_cast_before_after_32_t900.png`).
+  `top` md5 unchanged (b5ed2b94 tick 900, c66f823d tick 2040). Unit 1186/0, lint 13/13.
+  Streaming bubble (cost table, computed from code, not a bench): residency is sim-driven,
+  R_SIM 190 m around the focus (`city_residency.gd`), vs the visible ground at 32 px/m 1920x1080:
+  60 x 33.75 m straight down, 60 x 41.2 m at 55 (1/sin 55 = 1.22x), plus a tall roof's lift from
+  south of the screen (cot 55 x 40 m = 28 m): far inside 190 m, so a tilt adds NO chunks; the
+  draw cost of 1.22x ground is NOT measured.
