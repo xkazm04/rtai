@@ -1679,3 +1679,14 @@ in REPORT "Next steps" / the 07:37 NEXT (ObjectiveView vs forms_lift_m; real rec
   `weapons` (both sides added rows at the top): kept both, re-sorted by id (assault_rifle first, as
   on n7-ranged); the diff against HEAD is their 8 lines exactly. No melee or ghost row touched.
 - GATES 08:14 lint 13/13 on `2dd19210`; unit and reels + scenarios running; then bake + both exes.
+- GATES 08:23 on `2dd19210`: unit 1245/0; director reels arena 19/19, city 19/19 (38 lines each),
+  0 SCRIPT ERROR; scenarios 52 ran, 0 failed. Evidence run `--allow-dirty` on `b9e93606`: lint,
+  scenarios, parity (planted caught 629), selftest (look 11/11, block 5/5) PASS; unit 1245/0 but
+  marked FAIL by the tree-changed guard because I edited REPORT.md mid-run (FRICTION: my edit, not
+  code). Clean re-run started 08:24 on the commit after this one.
+- EXE 08:15 both re-baked and re-exported on `b9e93606` (code `2dd19210`): bake 0, exports 0, 0 ERROR;
+  booted each 240 frames (showcase with `--bot=ghosts --ghost=tonnage --rigs --ppm=32`): exit 0,
+  0 SCRIPT ERROR, no unknown flag. Not filmed (the change is the quest rifle's camera kick, n7-ranged's).
+NEXT (08:24, freeze): nothing left to build. REPORT at 08:40 is written; only fill in the clean
+evidence re-run's result if a session runs. The Director merges n7-melee (merge notes in REPORT
+Next steps: audio_cues.json tail, hit_feel.json weapons top). Morning: the owner's calls (a)-(q).

@@ -1,6 +1,6 @@
 # n7-melee REPORT (night 2026-11-05/06): Rivet's melee and the four ghosts' attacks
 
-Final, written at the freeze (iteration 21, 08:10; code head `48cb43d2`, evidence and both exes on `798b4960`). Clips are under `C:\Users\kazda\kiro\gtai-masters\n7\melee\` (`M/` below); the shortlist is in
+Final, written at the freeze (iteration 22, 08:25; code head `2dd19210` = `48cb43d2` + n7-ranged's `f13aa9cc` feel row cherry-picked, both exes on `b9e93606`). Clips are under `C:\Users\kazda\kiro\gtai-masters\n7\melee\` (`M/` below); the shortlist is in
 `M/frames.json`. Every change below is view only: no sim tick, replay or parity hash moved. Quest 1's
 final hash moved once, deliberately, when quest 1 started carrying the katana (`fbc5a982`).
 
@@ -41,17 +41,20 @@ card whole; last re-cut on `3fd49218` for Kerf's camera glide; the five melee se
 other ghost segments from `5c4219b2` on; nothing filmed in it changed since: the later code is Dent's miss lash,
 and the city Dent beat seizes a car, so it never misses).
 
-Gates on the code head `48cb43d2` (08:01-08:08):
-- director reel 19/19 in the arena and 19/19 in the city block (every chapter fully down), 0 SCRIPT ERROR;
-- the full `node tools/evidence/run.mjs --no-bench` on `798b4960` (clean tree): lint 13/13, unit 1242/1242,
-  scenarios 52/52, parity bit-exact over 1200 steps with the planted mutation caught at 629, look goldens 11/11,
-  block goldens 5/5 (`evidence/n7-melee/evidence-run-798b4960.log`).
+Gates on the code head `2dd19210` (08:14-08:25; iteration 22 cherry-picked n7-ranged's `f13aa9cc`, the quest
+rifle's `assault_rifle` row in hit_feel.json + the hyphen alias in hit_feel.gd; no melee or ghost row moved):
+- lint 13/13, unit 1245/1245 (the 3 new ones are n7-ranged's `test_feel_quest_rifle`);
+- director reel 19/19 in the arena (0 SCRIPT ERROR), 19/19 in the city block (0 SCRIPT ERROR), scenarios 52/52 (`evidence/n7-melee/{director-arena-loadout,director-city-loadout}-2dd19210.log`);
+- `node tools/evidence/run.mjs --no-bench --allow-dirty` on `b9e93606` (08:17-08:23; the dirt: the two reel logs being written): lint 13/13, unit 1245/0, scenarios 52/52, parity bit-exact over 1200 steps (planted caught at 629), look 11/11, block 5/5. The gate printed FAIL on unit-tests only because I edited REPORT.md during the run (its tree-changed guard); a clean re-run started at the freeze, result in JOURNAL (`evidence/n7-melee/evidence-run-b9e93606.log`);
+- the previous full run on `798b4960` (code `48cb43d2`, clean tree): lint 13/13, unit 1242/1242, scenarios 52/52,
+  parity bit-exact over 1200 steps (planted mutation caught at 629), look 11/11, block 5/5
+  (`evidence/n7-melee/evidence-run-798b4960.log`).
 Bench not run: contended machine, no lock taken.
 
 The logs are in `evidence/n7-melee/`.
 
-Exes (both exported on `798b4960`, code `48cb43d2`, at 08:08; bake + export exit 0, 0 ERROR lines; each booted once:
-exit 0, 0 SCRIPT ERROR):
+Exes (both exported on `b9e93606`, code `2dd19210`, at 08:15; bake + export exit 0, 0 ERROR lines; each booted once
+for 240 frames: exit 0, 0 SCRIPT ERROR, no unknown flag):
 - `build/export/windows/RTAI.exe`: the showcase build (arena, city block, every reel and ghost beat). The "See it"
   lines below are for it; add the before flag named in each call.
 - `build/export/windows-slice/RTAI.exe`: the shipped quest 1 (title card, then the quest). Call (a).
@@ -219,4 +222,6 @@ head spark.
 ## Next steps
 - Merge note: `05b0e51c` (ghost_lash) and n7-ranged's `5ed859c4` (shot_rivet_rifle) both append a row at the end of
   `audio_cues.json` `cues`: a textual conflict only; keep both rows.
+- Merge note: n7-ranged's `f13aa9cc` is on this branch as `2dd19210` (cherry-pick -x); its hit_feel.json `weapons`
+  rows met mine at the top of the list: kept both, sorted by id. git should see it as already applied.
 See the last NEXT entry in `JOURNAL.md`.
