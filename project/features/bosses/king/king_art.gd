@@ -23,6 +23,10 @@ const STRIPS: Dictionary[String, Array] = {
 	"gang": ["gang_head_card", 0.84, 1.25],
 }
 const META: StringName = &"court_card"
+## d8 A/B: true = under a court strip the King's bust card wears his cape (its front facings show
+## the cape's edges, its back facings the whole cape) and KingCape's drawn fan stands down; false =
+## the drawn fan stays behind him (flat on the ground under the tilt: the it18 read).
+const CARD_CAPE: bool = true
 ## The rig's shoulder megaphone part (KingRigs): the court card draws its own, so the part hides.
 const HORN: StringName = &"horn"
 
@@ -30,6 +34,11 @@ static var _tex: Dictionary[String, Texture2D] = {}
 static var _exists: Dictionary[String, bool] = {}
 ## A part texture's path -> the court's part for this view's pitch (null: none, keep the print).
 static var _parts: Dictionary[String, Texture2D] = {}
+
+
+## KingCape stands down: the King's court strip for this view wears the cape (CARD_CAPE).
+static func card_wears_cape() -> bool:
+	return CARD_CAPE and not strip_path("king", ViewMode.shared().pitch_deg).is_empty()
 
 
 ## The strip a rig's card draws at a pitch ("" = none: the shared card stays).

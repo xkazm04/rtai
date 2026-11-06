@@ -40,6 +40,8 @@ const DRAPE_BACK_M: float = 1.6
 static func draw(
 	ci: CanvasItem, at: Vector2, p: float, fight: BossFight, up: Vector2 = Vector2.ZERO
 ) -> void:
+	if KingArt.card_wears_cape():
+		return
 	var hem: PackedVector2Array = _hem(at, p, fight)
 	var shoulder_l: Vector2 = at + Vector2(0.1, -0.7) * p
 	var shoulder_r: Vector2 = at + Vector2(0.1, 0.7) * p
