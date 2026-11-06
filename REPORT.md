@@ -5,6 +5,10 @@ Branch `n7-king`, cut from main `763f8fba`. Clips and stills are in
 `C:\Users\kazda\kiro\gtai-masters\n7\king\` (see `frames.json`, newest and best first).
 The moveset is `docs/bosses/king.md`; the full log is `JOURNAL.md`.
 
+**Where to start:** watch `king_fight_bot_human_32ppm_it16.mp4` (95 s, the whole fight at game zoom),
+then look at `king_target_vs_game_32ppm_it16.png`, then play `build/export/windows/RTAI.exe -- --rigs
+--boss=king`. The calls A-N below are the verdicts the lane needs; each default is built.
+
 ## What works (with its evidence)
 
 - **The shared boss framework** (`project/features/bosses/`, servo merged it all night):
@@ -64,9 +68,9 @@ Re-measured in it15 on b2e71b83 (the same 15 runs, `evidence/king/numbers-it15/`
 every number in the table is identical, so nothing since it5d has moved the fight.
 
 Every attack is dodgeable (the dodging bot takes 0) and every attack lands on a stander. The
-easy band is as built (call C). The it8 body change is render-only: King still goes down at tick
-4933 for the human bot on seed 2 and 5315 for the standing bot, the same as before, in the editor
-and in the exported exe.
+easy band is as built (call C). Every body and look change since it8 (through it16's chain) is
+render only: King still goes down at tick 4933 for the human bot on seed 2 and 5315 for the
+standing bot, the same as before, in the editor and in the exported exe (it16 smoke on f4df4438).
 
 ## What does not work yet / gaps against the target
 
