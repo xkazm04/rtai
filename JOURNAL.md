@@ -425,3 +425,6 @@ NEXT (iteration 4, 16:50-17:50):
   default then: re-film the King trio under the new default in iteration 4 (NEXT 2/3 still apply).
 NEXT addendum (iteration 4): FIRST re-run the full unit + reel combo on the swap default, re-film
   `king_55_70_combo_32ppm_46s_it3.mp4` (combo panel) and the ease clip with fade 0, update frames.json.
+- 16:40 GATES on eb243621 (the swap default): unit full (no-arg) 1449 passed, 0 failed; director reel
+  `--view=combo` 19/19 chapters all down, 0 SCRIPT ERROR (`evidence/it3/reel_combo_swap.log`).
+  So NEXT addendum's first item is done except the re-films (King trio combo panel, ease clip).
