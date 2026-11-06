@@ -34,11 +34,11 @@
     "kill_cut_us": [],
     "kill_ticks": [],
     "signature_kills": 0,
-    "view_avg_us": 84,
+    "view_avg_us": 78,
     "view_frames": 5700,
     "view_over_2ms": 0,
-    "view_worst_tick": 3653,
-    "view_worst_us": 356
+    "view_worst_tick": 4036,
+    "view_worst_us": 247
   },
   "cars": {
     "damaged": 0,

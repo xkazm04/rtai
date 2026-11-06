@@ -1083,3 +1083,34 @@ encounter-balance-simulation (render only: the gameplay numbers must not move).
   A/B (the same image is in the repo; REPORT call I points there). frames.json 15.
 - Note: the it10 full-fight film and the ram/coin/charge clips predate the camera port; their
   framing had King on screen (looked at), so they stand.
+
+### 01:47 MILESTONE 2f205c3d the coin fan sprays (the gap found at 01:41)
+- Cause (read the code): `KingBodyView._coins` took each coin's angle from fposmod(i * 0.618)
+  and its reach from fposmod(i * 0.382) = 1 - the same fraction, so reach was a function of
+  angle: all 30 coins lay on one diagonal arc sweeping the cone.
+- FIX: R2 low-discrepancy scatter (decorrelated angle and reach), 48 coins, staggered launches
+  over the first 45 % of the active window, out of the hood cannon's muzzle on the car (King on
+  foot: from him). Render only, no RNG; the hit zone is the locked cone as before.
+- **Looked at** `evidence/king/shots/it10/coin_spray_before_after_48ppm.png` (phase 1 seed 2
+  stander, 7.95 / 8.1 / 8.25 s): before a thin dotted line; after a burst from the muzzle that
+  spreads into a cloud over the stander, as the sheet's spray. The phase 1 attacks clip re-cut on
+  this head (`M/king_ram_coin_fan_48ppm_it10.mp4`; looked at the sheet: the dodger walks out and
+  the coins land in empty road). Unit **1160/0** (`unit-it10c.log`), lint 13/13.
+- The director reel is not re-run this iteration: every it10 change is King's render
+  (KingAccents, KingBodyView, the gang helmet PNG) or BossCam (attached only under `--boss`).
+- 01:48 the full fight re-filming on 2f205c3d (the camera port + the spray).
+- 01:52 FILM `M/king_fight_bot_human_32ppm_it10.mp4` re-shot on 2f205c3d (95 s): King down at
+  tick **4933**, Rivet took **88**, identical telemetry. **Looked at** the keys every 6 s
+  (`shots/it10/fight_human_32ppm_it10_keys.png`): the coin spray fills the cones at 30 s and 60 s;
+  the decree and the court; King on foot; the defeat. keep_in's price shows at 60-66 s (a cream
+  off-floor band under King at the floor's bottom edge), servo's accepted trade.
+
+NEXT (iteration 11, in order):
+1. Per-phase 32 px/m clips re-filmed on the current head (all are it6: before the plates, the
+   domes, the decree arc, the spray and keep_in), and the procession-entering clip.
+2. The slam's raised plates hidden under the crown from straight above (REPORT gap): lift the
+   plates' z or push them out in the tell; before/after at 48 px/m.
+3. The gang at 32 px/m against the sheet's bodyguards (still small); a render-only size step
+   is the lever, but the drawn body must not outgrow the hit body (fairness): measure first.
+4. Director reel once more before the freeze; re-export the exe at the freeze (the it8 recipe in
+   REPORT); finalize REPORT (remove DRAFT, Next steps).
