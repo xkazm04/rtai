@@ -897,9 +897,12 @@ numbers; f448dbce car_goal on the floor, ad428713 gang helmets). No REQUEST to s
 NEXT (iteration 9, in order):
 1. Merge n7-king if it moved; tell king about `BossCam.keep_in` + `FOOT_PX` (FYI above; the
    signature is now `keep_in(focus, half_m, p, margin_m, band_m: Vector2)`).
-2. The spine heavier, toward the sheet's rounded central body (wider at the hub, ~0.8 m; it may
-   cover the inner bay column's edge: check the docked drones still read), and the pads lower and
-   further out (render only: `_draw` pad_w 2.6 / fwd 1.2).
+2. The spine heavier. Measured on the sheet (01:10): its spine is ~1.5 m wide with the wings set
+   apart by it; ours is 0.56 m over the wings' inner panels. The pads already match (sheet 2.65 m
+   out, 1.23 m forward; ours 2.6 / 1.2: dropped). A true match needs a centre gap in
+   `ServoRack.cell_pos` (+ the wing art offset 1.305 m): the drones' launch points move, so it is
+   a sim change: build it as a `servo.json rack.spine_m` value (0 = today), re-measure seeds 1-5,
+   and make it a call (spine 0.56 render-only vs a 1.5 m gap).
 3. Re-film the per-attack 48 px/m clips on the current tree (all are it4/it5: before the 3-row
    frame, the spine, the fireball): rotor dash, carpet, bay hop, hot dash.
 4. Windows export `build/export/windows/RTAI.exe` (`windows-showcase` preset, docs/decisions.md
