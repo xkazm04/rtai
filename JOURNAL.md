@@ -488,3 +488,14 @@ NEXT: unchanged from iteration 14 (0: film the tilt70 street cards after the vie
 NEXT: unchanged from iteration 16 (0: film the tilt70 street cards after the view70 merge; 1: the cap card
   in game; 2: re-film tank/tube chapters when weapons' REQUEST lands; 3: death beat if Call 8 is taken;
   4: draw order level cap and the King's accents in the probe).
+
+## Iteration 18 (18:35-18:40, STABILIZE; past freeze)
+- 18:35 Read JOURNAL tail, git log (HEAD 70db9851, clean), the other lanes' JOURNALs: no new REQUEST to
+  chars (bosses' card_set and view70's p70 street rows were answered earlier, 860fd3d8).
+- No code has changed since it16, so its gates still hold (lint 15/15, unit 1423/0). REPORT.md, the
+  masters `frames.json` (15 entries) and the 18:05 exe were all checked in it17. No build and no new
+  frames this iteration (STABILIZE, 5 min left).
+- Registry rules applied: motion-quality-gating (no new claim without a frame; none made).
+NEXT: unchanged from iteration 16 (0: film the tilt70 street cards after the view70 merge; 1: the cap card
+  in game; 2: re-film tank/tube chapters when weapons' REQUEST lands; 3: death beat if Call 8 is taken;
+  4: draw order level cap and the King's accents in the probe).
