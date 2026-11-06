@@ -1412,3 +1412,33 @@ film: Gloria A 1 -> 2, plasma I 2 -> 3, electro I 2 -> 3, nuke R 2 -> 3. Call 6 
 - Boss lanes: if your BossCam.keep_in also offsets the arena camera, the two add; a nuke fired at a
   boss will pull the view toward the boss for about 2 s. Tell me (REQUEST) if keep_in should win.
 - Melee: merge when you next take feel commits; nothing to change on your side.
+
+## Iteration 15 (BUILD, 03:26-04:26)
+Read: JOURNAL NEXT (it14, 03:21 list), git log, REPORT, audit, n7-melee / n7-king / n7-servo journal
+tails (no new REQUEST for ranged). Picked NEXT 5's weakest cell that is buildable without new art:
+Sound (homing shard S 1; the rocket, nuke and hand cannon borrowing a lighter gun's shot).
+Registry rules applied: realtime-combat-semantics (the sound is part of the hit's weight: a heavy
+gun must not sound like a pistol), motion-quality-gating (judged against a same-build before,
+measured where it cannot be listened to; unmeasured is not zero, so "not listened to" stays in the
+scores and becomes call 7).
+
+### MILESTONE 03:33: `d4559823` the heavy guns and the shard voice a shot of their own
+- Data only (no new asset): audio_cues.json `shot_tube` (rifle_shot pitch 0.5, -2 dB, 80 m; the
+  rocket and nuke launch), `shot_hand_cannon` (rifle_shot 0.72, -1 dB, 70 m), `shot_shard`
+  (nailgun_shot 1.7, -5 dB). weapons.json shot_cue: rocket shot -> shot_tube, mini_nuke servo ->
+  shot_tube, hand_cannon shot_gloria -> shot_hand_cannon, homing_shard shot -> shot_shard.
+- MEASURED on the samples as played (first 150 ms centroid, peak after gain): pistol 3.1 kHz -6 dBFS,
+  servo 9.5 kHz -19 dBFS, nail gun 6.0 kHz -4 dBFS -> tube 1.2 kHz -5 dBFS (1.6 s), hand cannon
+  1.7 kHz -4 dBFS (1.1 s), shard 10.2 kHz -8 dBFS (0.32 s).
+- FILM lone cop, 32 px/m, fight cam, 540 frames, before (weapons.json at HEAD~, temporary, restored,
+  tree checked) and after, all 8 0 SCRIPT ERROR, kill ticks identical (301/312/361/322). Movie audio,
+  Rivet's first shot at 4.94 s in all: onset centroid hand cannon 3.7 -> 2.4 kHz, nuke 2.6 -> 2.0 kHz
+  and -11 -> -4 dB peak, rocket 2.6 -> 2.4 kHz (masked by the bed and the cop's shots), shard 2.6 ->
+  5.1 kHz. A spectrogram sheet did not separate them (the bed dominates; scratch `cue/spect.png`).
+- LOOK: sheet of the A/B clip every 0.5 s: the picture is the same build (sound only); every segment
+  shows the shot and the hit. No close-up: a sound change has nothing to see at 48 px/m.
+- TEST `test_weapon_shot_cues` 2/2 (planted mini_nuke -> servo: 3 asserts fail). Lint 13/13.
+- Clip `shot_cues-ab-32ppm.mp4` (17.6 s, with sound, mean -16.8 dB), frames.json entry 2
+  (mini_nuke-ab-32ppm dropped from frames.json; its file stays, REPORT cites it). REPORT row + call 7,
+  audit rows 1/2/6/7 + the sound paragraph (shard S 1 -> 2, hand cannon S 2 -> 3), decisions.md line.
+- Not listened to: no audio device on this machine. That is call 7.
