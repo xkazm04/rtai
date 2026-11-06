@@ -608,3 +608,14 @@ do REPORT "Next steps" 1-6 in order.
 - Iterations 22-23 left no journal entry; git log shows no commits from them, so nothing was lost.
 
 NEXT: REPORT.md is final. If the owner picks `tilt`, do REPORT "Next steps" 1-6 in order.
+
+## Iteration 25 (08:40, REPORT phase)
+
+- No code, no re-export. REPORT.md re-read in full: it has every section (question, watch-first,
+  works, does not work, cost table, 4 calls with exe lines, gates, blockers, next steps).
+- CHECK: a scripted pass over every `evidence/`, `docs/`, `project/`, `build/export/` and
+  `gtai-masters/` path in REPORT. All exist; the only hits were false positives (the
+  `exe_*.log` glob, the `tools/evidence/run.mjs` tool path, a folder name in a heading).
+  RTAI.exe is in place (248 MB, 08:04, built from 78d652d7).
+
+NEXT: lane done. If the owner picks `tilt`, do REPORT "Next steps" 1-6 in order.
