@@ -236,3 +236,21 @@ NEXT:
 - IMAGE round4 staged + started 16:03 (image.want touched, lock held by assets-lane): Kerf v2 in the
   GAME palette (warm-grey steel, teal seams, amber hazard band, white-cyan blade edges), 5 facings,
   magenta. Refs: the v2 sheet's facing row + the game's kerf parts.
+- IMAGE round4 (lock 16:03-16:05, 84 s, first try): `round4/out/kerf_55_body_magenta.png`, Kerf v2 in
+  the game palette. Cut 5 x 108x256 (ghost_bust.py, then ghost_card_hue.py: 504 px rust-red -> copper,
+  4939 px violet -> teal). LOOKED: all five facings turn right, thin limbs inked, blade edges bright.
+- MILESTONE f2e781dc: Kerf's v2 card (`art/view/p55/kerf_card.png`, 0.8 m wide = 1.9 m tall incl. the
+  cable loop, anchor 0.97 at the ground point, halo 0.4) replaces the hover body (hull, cables, 8 limbs)
+  under tilt. The blink after-images draw the same biped in teal. GATE `top` Kerf ghost reel
+  framemd5-identical with main over 400 frames. LOOKED at 32 (thin, ~60 px tall; the halo carries it)
+  and 64 (head box, hazard shoulders, cyan blades read).
+- MILESTONE 34651864 (draw order, owed by the view REPORT): `--order-probe` now counts ghost card vs
+  rig pairs; RigDepthSort sorts ghost cards with the rigs (`levels_w`, per-body half widths; the card's
+  z moved to its level's band). MEASURED ghost reel 600 ticks, tilt: Tonnage wrong 18/26 -> 3/26, Kerf
+  28/28 -> 0/28, Ohm 0 pairs; rig pairs 0 wrong before and after (Tonnage run: mixed 0 -> 1, the level
+  cap). Still at the ghost view's fixed z: Tonnage's walking legs and the ghost FX (by design: FX over).
+  GATES on 34651864's tree: full unit 1421/1421; director reel tilt headless 19/19 chapters down, 0
+  SCRIPT ERROR. Debt: dev_loc +35 accepted (the probe).
+- EVIDENCE masters: kerf before|after 32 clip + x2 stills, kerf 64 draw order before/after still.
+  frames.json 15.
+- NOT DONE: the King's accents in the probe (bosses own KingAccents; the probe already sorts the car).
