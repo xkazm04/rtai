@@ -118,3 +118,12 @@ NEXT (iteration 4, in brief order):
 4. Read the lane journals again: street (card_sets JSON answer given), city (occlusion answer
    given); answer any new REQUEST.
 5. Before calling the night done: the director reel 19/19 in top and combo; evidence run --no-bench.
+
+### Calls for the owner (draft, for REPORT)
+- The King's bust size: built 2.0x (`KingArt.STRIPS["king"][2]`); option 1.75x (one value).
+  See `gtai-masters/n8/view/king_bust_abc_32ppm.png` / `_64ppm.png`; exe
+  `RTAI.exe -- --rigs --boss=king --phase=3 --view=combo` (add `--ppm=64` for close range).
+- The attack lock: built "frozen at the windup start" for every boss attack (`bosses.json`
+  `aim_lock_at_windup` true); option false = d8's late lock. Note it makes every King/Servo attack
+  easier to dodge (the whole windup is reaction time); if the fights get too easy, the next lever is
+  a shorter windup, not a later lock. See `king_ring_lock_before_after_combo_32ppm.mp4`.
