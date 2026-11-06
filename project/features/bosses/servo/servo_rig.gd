@@ -22,6 +22,8 @@ const PAD_ART: StringName = &"pad_hazard"
 ## drones in the bays (the wing art alone printed them as dark cells). The flying drone's whole
 ## sprite there was 18 rotor crosses: noise at 32 px/m. 0 = off.
 const DOCKED_M: float = 0.34
+## The docked drone's rotor discs (metres radius, ink rings on its corners); 0 = the plain body.
+const DOCKED_ROTOR_M: float = 0.0
 ## The hover pads, out from the centre and ahead of it: the sheet's top view hangs them in front
 ## of the wings' outer corners (render only; it8-it9: 2.6 out, 1.2 ahead, beside the wings).
 const PAD_OUT_M: float = 2.35
@@ -180,6 +182,9 @@ func _docked(at: Vector2, rot: float, k: float, tint: Color) -> void:
 	draw_set_transform(at * px, rot)
 	draw_rect(Rect2(-h - 1.5, -h - 1.5, h * 2.0 + 3.0, h * 2.0 + 3.0), _pal.color(&"ink") * tint)
 	draw_rect(Rect2(-h, -h, h * 2.0, h * 2.0), _pal.color(&"paper_2") * tint)
+	for c: Vector2 in [Vector2(-h, -h), Vector2(h, -h), Vector2(-h, h), Vector2(h, h)]:
+		if DOCKED_ROTOR_M > 0.0:
+			draw_arc(c, DOCKED_ROTOR_M * k * px, 0.0, TAU, 12, _pal.color(&"ink") * tint, 1.5)
 	draw_set_transform(Vector2.ZERO)
 
 

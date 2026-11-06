@@ -1344,12 +1344,19 @@ idempotent tool; palette gate held), depth-ordered-layered-art (no layer change)
   frames.json is now on the it14 body** (hazard pads, parallel legs) or an A/B of it.
   Session ends with everything committed (scratch avis deleted).
 
+- 04:46 MEASURED (NEXT 3, landed off) `ServoRig.DOCKED_ROTOR_M`: four ink rotor rings (r 0.08 m,
+  1.5 px) on each docked drone's corners. A/B `spine14.sh rot32|rot48 1 300` (0 SCRIPT ERROR),
+  **looked at** (`scratch/servo/it14/docked_rotor_ab_008.png`: 32 px/m legs | rotors, 48 px/m
+  legs | rotors): at 48 px/m a quad-rotor hint; at 32 px/m each bay turns into a rounded white
+  blob, busier and not clearer. Landed at 0.0 (render identical); unit 1190/0
+  (`unit-it14d.log`). Judge next session: try 0.06 m in paper_2-dark rings, or only at >= 48 px/m.
+
 NEXT (iteration 15, in order):
 1. Merge n7-king if it moved (last merged 9a207b0b as 04164ce1; JOURNAL/REPORT add/add: ours).
 2. (done) every clip is on the it14 body. If the body changes again, the scripts are
    `scratch/servo/{full32,phase32,film48,ghost48,spine}_14.sh` + `post_{full,phase}14.sh`.
 3. Weakest by the target still: the sheet's bays hold quad-rotor drones with packages, ours cream
-   squares (DOCKED_M; the full sprite was noise at 32 px/m): try a 2-rotor hint on the cream body
-   at 48 px/m only if it stays quiet at 32. Render only, A/B.
+   squares. `ServoRig.DOCKED_ROTOR_M` exists (0.0 = off; 0.08 measured at 04:46: a blob at 32
+   px/m). Try smaller or lower-contrast rings; keep it off unless it reads at 32 px/m.
 4. At the freeze (08:30): re-export `windows-showcase`, smoke (expect down 7036, 188), final gates
    (lint, unit, scenarios, evidence/run.mjs, director reel), REPORT final (drop DRAFT, Next steps).
