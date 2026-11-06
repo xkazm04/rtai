@@ -1109,3 +1109,7 @@ without 5 seeds x bots).
 - 02:46 GATES director reel on a93af6cf (`scratch/servo/reel10.sh`: `--bot=reel --reel=director
   --loadout=pistol --rigs`, headless, --fixed-fps 60): **19/19 chapters fully down, 0 SCRIPT
   ERROR** (`evidence/servo/director-reel-it10.log`). Combat holds after the merge and the body work.
+- 02:49 EXE re-exported on f430d3a2 (`--export-release "windows-showcase"`, exit 0), smoke `RTAI.exe
+  --headless --fixed-fps 60 --quit-after 7400 -- --rigs --boss=servo --bot=boss --bot-human
+  --seed=2`: **down 7036, 188 on Rivet, 0 SCRIPT ERROR** = the editor
+  (`evidence/servo/exe-smoke-it10.json`). REPORT exe line and DRAFT header updated.

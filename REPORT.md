@@ -1,6 +1,6 @@
 # REPORT: lane `servo`, night 2026-11-05/06 (Act 2's Servo)
 
-DRAFT (iteration 9, 01:36): to be finalized at 08:40. The exe line and the final gates are still open.
+DRAFT (iteration 10, 02:47): to be finalized at 08:40. The exe is re-exported at the freeze; the final gates are still open.
 
 Branch `n7-servo` (from main `763f8fba`, with `n7-king`'s framework merged in at every move; the
 last merge was `73543d25`, iteration 10). Clips and stills: `C:\Users\kazda\kiro\gtai-masters\n7\servo\` (M below),
@@ -59,12 +59,12 @@ The rotor dash checked against a reading player (it6): every tell read but 18-32
 13. The hover pads hang in front of the wings like the sheet (default) vs beside the wings' front corners (it9): `ServoRig.PAD_OUT_M` / `PAD_AHEAD_M` 2.35 / 2.0 vs 2.6 / 1.2 (render only). Still: `M/frames/servo_pads_ahead_ab_it10.png`.
 14. A hazard-striped ledge along each rack wing's front edge, copper and ink like the sheet's rack base (default) vs the plain wing front: `ServoWingBand.ON` (render only). Still: `M/frames/servo_wing_band_ab_it10.png`.
 
-Exe (exported it9 on 8e34d545, re-exported at the freeze): `build/export/windows/RTAI.exe` in the
+Exe (exported it10 on f430d3a2, re-exported at the freeze): `build/export/windows/RTAI.exe` in the
 worktree (`windows-showcase` preset, boots into the arena). Lines: `RTAI.exe -- --rigs --boss=servo`,
 `RTAI.exe -- --rigs --boss=servo --phase=2` (or 3), `RTAI.exe -- --rigs --boss=servo --bot=boss`
 (the bot plays; add `--bot-human` for the human-like one). Headless smoke `RTAI.exe --headless
 --fixed-fps 60 --quit-after 7400 -- --rigs --boss=servo --bot=boss --bot-human --seed=2`: Servo down at
-tick 7036, 188 on Rivet, 0 SCRIPT ERROR, the editor's numbers (`evidence/servo/exe-smoke-it9.json`).
+tick 7036, 188 on Rivet, 0 SCRIPT ERROR, the editor's numbers (`evidence/servo/exe-smoke-it10.json`).
 
 ## What does not work / open
 - The horn has not been heard (every run was headless or filmed without listening).
