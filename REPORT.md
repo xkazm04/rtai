@@ -83,7 +83,11 @@ because I edited docs during the run). City-block director reel with `--loadout=
    aim (`--throw-windup=off` / `windup_px` 0, the before). It changes how the ready molotov is held
    (the thrown class is not among tonight's open hold calls, but it is a hold). Built default: cocked.
    See `molotov_windup-ab-32-48ppm.mp4`, or `RTAI.exe -- --weapon=molotov --bot=gunplay --lone
-   --cam=fight` vs the same with `--throw-windup=off`.
+   --cam=fight` vs the same with `--throw-windup=off`. That `--weapon=molotov` path is a table gun
+   with no wind-up; the shipped arsenal path (the wheel, the director reel, the city) winds up 14
+   ticks, and since `3243a483` its claw carries the bottle out on the release frame:
+   `RTAI.exe -- --bot=reel --reel=director --loadout=pistol --chapter=molotov --ppm=48` vs the same
+   with `--throw-sync=off` (the whip 2 frames late; `molotov_release_sync-ab-32-48ppm.mp4`).
 
 6. **The camera follows the mini-nuke.** Options: the view leads toward the shell and holds on
    its ring (built: `blast_lead_k` 0.8, at most 10 m and 300 screen px, held 60 ticks), a gentler
