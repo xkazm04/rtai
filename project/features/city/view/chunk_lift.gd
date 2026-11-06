@@ -5,9 +5,6 @@ extends RefCounted
 ## by south edge, nearer over farther. null under a flat view (`top` untouched). Render only.
 
 const TABLE: String = "res://data/tables/city_facades.json"
-## The face's ink edges (left, right, ground line), px at zoom 1.
-const INK_W: float = 2.0
-const INK: Color = Color(0.09, 0.075, 0.106, 1.0)
 ## Frames a live pitch (combo) must hold before the chunks redraw at it.
 const SETTLE_FRAMES: int = 12
 
@@ -19,9 +16,7 @@ var occlude: bool = true
 var cards: PropCards = null
 var _tex: CityTextures
 var _is_building: Array[bool] = []
-var _strips: Array[Texture2D] = []
-var _bays: Array[int] = []
-var _bay_px: Array[float] = []
+var _faces: FacadeStrips = FacadeStrips.new()
 var _order: PackedInt32Array = PackedInt32Array()
 var _rev: int = -1
 ## Kerb-parked cars VehicleParked draws as cards (n8 vehicles), handed over by chunk key on order.
@@ -58,11 +53,9 @@ func _setup(d: Dictionary, tex: CityTextures, is_building: Array[bool], art: Str
 		var row: Dictionary = styles[style]
 		names.append(style)
 		var fallback: Dictionary = d["art_fallback"]
-		_strips.append(PropCards.art_texture(str(row["art"]), art, fallback))
 		var bays: int = row["bays"]
 		var bay_m: float = row["bay_m"]
-		_bays.append(bays)
-		_bay_px.append(bay_m * SimConst.PX_PER_M)
+		_faces.add(PropCards.art_texture(str(row["art"]), art, fallback), bays, bay_m)
 	occlude = d.get("occlude", true)
 	var props: Dictionary = d.get("props", {})
 	var fb: Dictionary = d["art_fallback"]
@@ -113,10 +106,11 @@ func order(chunk: CityChunk) -> void:
 	var roofs: Array[Vector3] = []
 	_parked = PackedVector4Array()
 	_order_of = chunk
+	var hand: bool = _carded and VehicleParked.live  # drawn(): carded at setup, live per chunk
 	for k: int in chunk.command_count():
 		var t: int = chunk.tex[k]
 		var o: int = k * CityChunk.XF_STRIDE
-		if _carded and chunk.xf[o + 3] <= 0.5 and VehicleParked.row(t) >= 0:
+		if hand and chunk.xf[o + 3] <= 0.5 and VehicleParked.row(t) >= 0:
 			@warning_ignore("return_value_discarded")
 			_parked.append(Vector4(chunk.xf[o], chunk.xf[o + 1], chunk.xf[o + 2], t))
 		elif stands(t) and chunk.xf[o + 3] <= 0.5:
@@ -125,7 +119,7 @@ func order(chunk: CityChunk) -> void:
 		else:
 			@warning_ignore("return_value_discarded")
 			out.append(k)
-	if _carded:
+	if hand:
 		VehicleParked.park(chunk.key(), _parked)
 	roofs.sort()
 	for r: Vector3 in roofs:
@@ -168,33 +162,6 @@ func lift_of(t: int) -> Vector2:
 func face(item: RID, t: int, rot: float, at: Vector2) -> Vector2:
 	var lift: float = -lift_of(t).y
 	var s: int = style_of[t]
-	if lift < 1.0 or _strips[s] == null:
-		return at + lift_of(t)
-	var ext: Vector2 = extent(t, rot)
-	var base: float = at.y + ext.y * 0.5
-	var x0: float = at.x - ext.x * 0.5
-	var n: int = maxi(1, roundi(ext.x / _bay_px[s]))
-	var w: float = ext.x / n
-	var strip: Texture2D = _strips[s]
-	var cell: Vector2 = Vector2(strip.get_width() / float(_bays[s]), strip.get_height())
-	RenderingServer.canvas_item_add_set_transform(item, Transform2D.IDENTITY)
-	for i: int in n:
-		var pick: int = _bay_pick(at, i, n, _bays[s])
-		var src: Rect2 = Rect2(Vector2(cell.x * pick, 0.0), cell)
-		var dst: Rect2 = Rect2(x0 + w * i, base - lift, w, lift)
-		RenderingServer.canvas_item_add_texture_rect_region(item, dst, strip.get_rid(), src)
-	var box: Rect2 = Rect2(x0, base - lift, ext.x, lift)
-	RenderingServer.canvas_item_add_rect(item, Rect2(box.position, Vector2(INK_W, lift)), INK)
-	RenderingServer.canvas_item_add_rect(
-		item, Rect2(box.end.x - INK_W, box.position.y, INK_W, lift), INK
-	)
-	RenderingServer.canvas_item_add_rect(item, Rect2(x0, base - INK_W, ext.x, INK_W), INK)
+	if lift >= 1.0 and _faces.has_strip(s):
+		_faces.draw(item, s, extent(t, rot), at, lift)
 	return at + lift_of(t)
-
-
-## A bay's strip cell by a stable place hash (no sim RNG): doors on some middle bays.
-static func _bay_pick(at: Vector2, i: int, n: int, cells: int) -> int:
-	var h: int = absi(roundi(at.x * 0.37 + at.y * 0.61)) % 7
-	if cells < 2 or i != (n >> 1) or h < 3:
-		return 0
-	return 1 + h % (cells - 1)
