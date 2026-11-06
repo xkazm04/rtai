@@ -1106,3 +1106,6 @@ without 5 seeds x bots).
   (2x), no noise. `M/frames/servo_wing_band_ab_it10.png`. New class: `--import` first, then 0
   SCRIPT ERROR in both renders. Unit 1186/0 (`evidence/servo/unit-it10c.log`). Decisions; REPORT
   call 14.
+- 02:46 GATES director reel on a93af6cf (`scratch/servo/reel10.sh`: `--bot=reel --reel=director
+  --loadout=pistol --rigs`, headless, --fixed-fps 60): **19/19 chapters fully down, 0 SCRIPT
+  ERROR** (`evidence/servo/director-reel-it10.log`). Combat holds after the merge and the body work.
