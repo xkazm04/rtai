@@ -17,9 +17,8 @@ const STRIDE_RUN: float = 92.0
 const COLLAR_K: float = 0.22
 ## The sticker rim (cream halo under each part), as a fraction of its old width (0.5 = halved).
 const RIM_K: float = 0.5
-## n5-cast: the leg rim's extra width across the bone at gameplay scale (1 = twice the
-## part's width): the lean piston legs print ~2 screen px at 32 px/m, mostly outline,
-## so they vanish on asphalt.
+## n5-cast: the leg rim's extra width across the bone at gameplay scale (1 = twice the part's
+## width): the lean piston legs print ~2 screen px at 32 px/m, mostly outline, so they vanish.
 const LEG_RIM_W: float = 0.9
 
 var plan: BodyPlan = null
@@ -179,6 +178,7 @@ func drive(dt: float) -> void:
 	if tilt_up != Vector2.ZERO:
 		RigTilt.lift_upper(self)
 		RigHeadCard.step(self)
+		RiotShieldCard.step(self)
 	if react != null:
 		react.post(self)
 	if hose != null:

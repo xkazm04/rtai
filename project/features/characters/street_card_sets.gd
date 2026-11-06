@@ -7,7 +7,14 @@ extends RefCounted
 ## (keyed/street/<id>_70.png); widths keep each head's on-screen width equal to its p55 card's
 ## (the head's share of the cell measured on both strips). p55 rows stay in RigCardSets for now.
 
+const P55: String = "res://features/characters/art/view/p55/"
 const P70: String = "res://features/characters/art/view/p70/"
+## The riot shield's upright plate per art (RiotShieldCard), cut by shield_cut.py from the
+## library's keyed cop_riot sheets (the front-on plate of the advance pose).
+const SHIELD: Dictionary[String, String] = {
+	"p55": P55 + "riot_shield_card.png",
+	"p70": P70 + "riot_shield_card.png",
+}
 
 const SETS: Dictionary[String, Dictionary] = {
 	"p70":
@@ -23,3 +30,8 @@ const SETS: Dictionary[String, Dictionary] = {
 ## The rows this lane registers for one art key (empty for an art it has none for).
 static func rows_for(art: String) -> Dictionary:
 	return SETS.get(art, {})
+
+
+## The shield plate's strip for one art ("" = none: the crescent part draws).
+static func shield_for(art: String) -> String:
+	return SHIELD.get(art, "")
