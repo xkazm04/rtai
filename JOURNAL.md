@@ -969,3 +969,17 @@ the wings, under the torso).
     the it5 clip stays.
   The it4 clips and keys deleted; frames.json updated (4 clips, the spine A/B still replaces the
   it8 rack3-seam still).
+- 01:34 TRIED a generic BossCam keep for Rivet +- 2 m (for the bay-hop ring under the bar):
+  no change on film (Rivet +- 2 m already fit; the ring is 3 m, and with Rivet 6 m above the boss
+  the 12 m between the HUD bands cannot hold both margins; the boss wins). Reverted: it is the
+  dev clip cam only; in play the camera centres Rivet, so his rings are always on screen. Noted
+  under "open" in REPORT.
+- 01:37 FILM `M/servo_fight_bot_human_32ppm_it9.mp4` on ad9b80c0 (human bot, seed 2, 32 px/m,
+  boss cam): down at tick **7036 (117 s, inside the brief's 60-120 s)**, 188 on Rivet, 0 deaths,
+  0 SCRIPT ERROR, tick-identical to the headless numbers run. **Looked at** the 12 keys
+  (`M/frames/servo_fight_keys_32ppm_it9.png`): the three phases, the dash lanes, the last hot dash
+  and blast. STILL `M/frames/servo_target_vs_game_32ppm_it9.png` (sheet | 1x | 2x, tick 1800):
+  **looked at**: wing | wide spine | wing now matches the sheet's blocks; gaps: the sheet's spine
+  is grey panelled steel with orange hoses (ours a cream column), its docked drones read cream
+  with rotors (ours dark cells). it8 fight clip, keys and target still deleted (superseded).
+- REPORT numbers moved to the shipped tree (it9-spine94); stale paths fixed.

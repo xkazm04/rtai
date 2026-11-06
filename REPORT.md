@@ -17,7 +17,7 @@ indexed in `M/frames.json`. Design: `docs/bosses/servo.md`. Journal: `JOURNAL.md
   only during a tell. The rack is its own animated layer: drones dock, launch and refill. Phase 3
   blows a wing off. The defeat: a flash, the pads spin down, the body slumps and greys out, the
   drones spill, the visor flickers out in cream.
-  See `M/frames/servo_target_vs_game_32ppm_it8.png` and `M/frames/servo_spine_gap_ab_48ppm_it9.png`.
+  See `M/frames/servo_target_vs_game_32ppm_it9.png` and `M/frames/servo_spine_gap_ab_48ppm_it9.png`.
 - **The drone swarm** (`features/bosses/servo/`): flocking on the 60 Hz tick from the
   `servo_swarm` stream, drop rings, a max-alive cap per phase, despawn, parcels (a bomb or a CS
   crate obstacle), and armoured kamikaze dives in phase 3. The drones are shootable. Dent seizes
@@ -28,22 +28,26 @@ indexed in `M/frames.json`. Design: `docs/bosses/servo.md`. Journal: `JOURNAL.md
 - **The framework** (n7-king's) carries Servo: the boss bar and phase marks, the music and stinger,
   `--boss=servo [--phase=N]`, and `--bot=boss`.
 
-## Numbers (the bot; `evidence/servo/numbers-it6a/`, seeds 1-5, CONTENDED wall time, tick-exact)
+## Numbers (the bot; `evidence/servo/numbers-it9-spine94/` + `-stand/`, seeds 1-5, CONTENDED wall time, tick-exact)
+On the shipped tree (rack.spine_m 0.94); `numbers-it6a/` is the same fight with the wings touching.
+
 | bot | downed | time to kill | took | deaths | rotor dash | hot dash | bay hop |
 |---|---|---|---|---|---|---|---|
-| dodge | 5/5 | 114-140 s (127) | 62 | 0 | 2/35 | 1/17 | 5/8 |
-| human | 5/5 | 121-138 s (129) | 128 | 0 | 15/38 | 5/15 | 0/8 |
-| stand | 1/5 | 204 s | 1388 | 25 | 86/95 | 3/3 | 14/14 |
+| dodge | 5/5 | 110-159 s (124) | 16 | 0 | 2/36 | 0/14 | 0/9 |
+| human | 5/5 | 116-169 s (134) | 168 | 0 | 17/38 | 5/15 | 2/10 |
+| stand | 0/5 (240 s cap) | - | 1398 | 28 | 81/90 | 6/6 | 17/17 |
 
-The rotor dash checked against a reading player: every tell read but 18-32 ticks late, it lands
-2/40. The human bot's 39 % comes from its 30 % unread tells (`numbers-it6-read1-*`).
+(it6a, wings touching: dodge 127 s / 62, human 129 s / 128, stand 1/5 / 1388: the gap re-rolls
+every wave, so single seeds move both ways; the hit rates hold. n = 5: not called balanced.)
+The rotor dash checked against a reading player (it6): every tell read but 18-32 ticks late, it lands
+2/40. The human bot's ~40 % comes from its 30 % unread tells (`numbers-it6-read1-*`).
 
 ## Calls for the owner
 1. Drop rings show from the drone's launch (default) vs only over its hover: `servo.json drone.ring_from_launch`.
 2. Should a CS crate landing on Rivet hurt? Today it does not.
 3. Drones die to one round (default) vs tougher drones, so that waves land more often.
 4. CS crates are solid (default) vs paint only: `servo.json parcels.crates_solid`. Clip: `M/servo_drone_wave_scan_drop_dodge_48ppm_it8.mp4`.
-5. Rack depth: 3 rows / 18 cells (default) vs 2 / 12: `servo.json rack.rows` + `cells`. Still: `M/frames/servo_target_vs_game_32ppm_it8.png`.
+5. Rack depth: 3 rows / 18 cells (default) vs 2 / 12: `servo.json rack.rows` + `cells`. Still: `M/frames/servo_target_vs_game_32ppm_it9.png`.
 6. The rotor dash smashes crates in its lane (default) vs crates stop him: `servo.json parcels.dash_smash`.
 7. Kamikaze armour: 3 rounds (default) vs 1: `servo.json kamikaze.hp`. Clip: `M/servo_attack_kamikaze_dive_lands_48ppm_it5.mp4`.
 8. Dent's van is parked from the start (default) vs none: `bosses.json arenas.depot.parked`. Clip: `M/servo_ghost_dent_van_48ppm_it5.mp4`.
