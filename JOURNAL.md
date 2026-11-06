@@ -220,3 +220,20 @@ REQUEST to assets: fx_fire, 70 (and 55): a standing flame loop seen at the pitch
 flame rising from a car bonnet, + 2 smoke puff cells), same 2.5 m cells as features/fx/art/fx_fire.png
 (4 x 2). Why: today's fire is the top-down burst stretched 0.7 x 1.4; it reads as fire at 32 px/m
 but as a splash at 64.
+
+22:10 gate: scenarios 52 ran, 0 failed (city replay, replay_60s, quest1, vehicle drive: identical).
+22:16 the city at tilt70 64 px/m (main scene `-- --arena=city --view=tilt70 --seed=7 --ppm=64`,
+600 frames, 0 SCRIPT ERROR): still city_tilt70_64ppm_it3_f300.png (frames.json 13).
+FRICTION: `res://dev/arena/arena.tscn -- --arena=city` opens the arena HUB (no traffic): the city
+block with traffic is the MAIN scene with `-- --arena=city` (boot warns "unknown launch arg", but
+the arena reads it). Lost one 600-frame run to it twice.
+
+NEXT (iteration 4, in order):
+1. Director reel 19/19 in top and tilt70 on this head (headless, as iteration 2) - owed.
+2. The depth film: a dev scene with a rig (or the crowd) walking north past a parked card, before
+   (`--no-front` / VehicleFront.off) vs after, tilt70 at 32 + 64 px/m.
+3. City REQUEST follow-up (VehicleParked hook) - read n8-city JOURNAL; film the kerb rows.
+4. Police light bar flash on the card (blue/amber, the lens cells only) for the chase.
+5. The driven car + hijack at tilt70 (vehicle_frame default scene), and `--view=combo` boss check.
+6. A framemd5 of the city block in `top` vs main (bit identity, measured).
+7. Traffic density cost under bench.lock (tilt70 vs top). 8. Bike.

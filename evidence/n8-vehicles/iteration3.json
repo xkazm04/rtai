@@ -1,0 +1,25 @@
+{
+  "branch": "n8-vehicles",
+  "evidence_dir": "C:/Users/kazda/kiro/gtai-masters/n8/vehicles",
+  "gates": {
+    "city_tilt70_64ppm": "main scene -- --arena=city --view=tilt70 --seed=7 --ppm=64, 600 frames: 0 SCRIPT ERROR (on c4e756df)",
+    "director_reel": "NOT re-run this iteration (owed: top + tilt70 on the iteration-3 head)",
+    "lint": "15/15 (pre-commit, every commit)",
+    "scenarios": "52 ran, 0 failed; city replay, replay_60s, quest1 and vehicle drive replays identical (on c4e756df)",
+    "top_bit_identity": "by construction (cards, wear, under layer and the standing flame only run when VehicleCards.atlas() is non-null, null in top); scenario goldens pass; a framemd5 against main still owed",
+    "unit_full": "1494 passed, 0 failed, 0 SCRIPT ERROR (on the c4e756df tree)"
+  },
+  "head_before_this_file": "1043db10",
+  "iteration": 3,
+  "measured": {
+    "wreck_value": "0.42 lost the wreck's outline at 64 px/m (looked at the still); 0.56 keeps it",
+    "depth_film": "vehicle_frame yield before/after differs across the whole frame (traffic timing): not usable as a depth demo, film owed"
+  },
+  "new": [
+    "VehicleCards.wear + card shader: D1/D2/wreck painted on the card",
+    "VehicleCards back_to_front: cards drawn north to south",
+    "VehicleFire.STAND: the flame stands on a card's bonnet",
+    "VehicleFront + VehicleCards.under: a card with someone in front drops under the actors",
+    "dev/showcase/vehicle_states.tscn: the damage/fire/skid film scene"
+  ]
+}
