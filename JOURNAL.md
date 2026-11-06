@@ -338,3 +338,7 @@ NEXT (iteration 8, in order):
 5. The cost (brief item 5): the city drive at tilt70 vs top under the bench lock; chunk load
    times before/after (PropCards adds one rect per prop per chunk, no per-frame cost).
 6. Split ChunkLift (200 lines): the facade face drawing into its own class before more features.
+- 22:58 combo check (NEXT 1, partly): `--boss=king --rigs --seed=2 --view=combo`, 900 frames, 0 SCRIPT
+  ERROR: the dressing cards are short at 70 (frame 30) and rise at 55 after the engage ease (frames
+  450, 880): they follow ground_k on each ViewMode revision. Still: `it7_king_dressing_combo_70_to_55.jpg`.
+  Still owed: 48 px/m, and the depot under combo.
