@@ -2229,3 +2229,21 @@ NEXT (after the night; the freeze is done at 07:49):
   fixed-crop strip (`evidence/ranged/it26-quest1-rifle-kick-32ppm-14430-14442.jpg`): muzzle stars
   on 14432/14438, the street slides against the grid and is back by 14442. Audit I 2 -> 3.
 - DECISION docs/decisions.md (feel n7-ranged, the quest rifle's own row). REPORT row + call 10.
+- GATES 08:09 on `f13aa9cc` (clean tree, docs head `e6435d04`): full evidence `--no-bench`: lint
+  13/13, unit 1197/0, scenarios 52/52, parity bit-exact (629), selftest pass
+  (`evidence/ranged/it26-evidence-e6435d04.log`). The first run (07:56) was green but its unit stage
+  was marked FAIL for tree churn: my strip jpg landed in the worktree mid-run (FRICTION: write
+  evidence stills outside the tree while a gate runs, copy them in after). Reels pit 19/19 + city
+  19/19, 0 SCRIPT ERROR (scratch `it26-reel-{director,city}-f13aa9cc.log`).
+- EXE re-baked + re-exported on `f13aa9cc` 08:03 (bake 0, export 0, 0 ERROR). Booted
+  `RTAI.exe --screen 0 --rendering-driver d3d12 --quit-after 600 -- --weapon=pistol --bot=gunplay
+  --lone --cam=fight --ppm=32 --clean --reach=5`: exit 0, 0 SCRIPT ERROR, lone kill tick 332.
+- FILM `quest1_clip.gd --ppm=32 --cam=fight --ticks=14400-14480` (41 frames, 0 SCRIPT ERROR):
+  frame-to-frame phase correlation shows the hit kicks (3,0), (-3,-4), (-3,0), (-5,0) px on frames
+  18/20/32/39 over the follow's 1 px jitter. 1.4 s after-only: not added to frames.json (15 kept
+  rows are before/after pairs); mp4 and frames deleted.
+- REPORT: code head, gates and exe lines on `f13aa9cc`; city clip stays the `5ed859c4` take (the
+  city reel never fires the quest rifle).
+
+NEXT (after the night): as it25's NEXT, plus: quest1_clip needs a `--feel` flag so quest-path feel
+changes get a before take; listen to call 10's kick in a played Dock 9 (a 3 px value is one edit).
