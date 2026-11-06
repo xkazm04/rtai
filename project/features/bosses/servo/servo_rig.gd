@@ -26,6 +26,10 @@ const DOCKED_M: float = 0.34
 ## of the wings' outer corners (render only; it8-it9: 2.6 out, 1.2 ahead, beside the wings).
 const PAD_OUT_M: float = 2.35
 const PAD_AHEAD_M: float = 2.0
+## The legs' stance: how far each foot steps out past its hip, and the knee's outward bow
+## (metres). The sheet's top view has two parallel legs under the torso (it13: 0.9 / 0.5, splayed).
+const LEG_SPLAY_M: float = 0.25
+const KNEE_OUT_M: float = 0.2
 
 ## Pixels per metre of the canvas (32 in the dev view, Ink.PX_PER_M in the arena).
 var px: float = 32.0
@@ -121,8 +125,8 @@ func _leg(o: Vector2, fwd: Vector2, side: Vector2, s: float, tint: Color) -> voi
 	# The target's top view: the legs step out in front of the rack, between the pads.
 	var hip: Vector2 = o + side * s * 0.6 + fwd * 0.5
 	var swing: float = sin(_walk + (PI if s > 0.0 else 0.0))
-	var foot: Vector2 = hip + side * s * 0.9 + fwd * (1.9 + 0.7 * swing)
-	var knee: Vector2 = (hip + foot) * 0.5 + side * s * 0.5
+	var foot: Vector2 = hip + side * s * LEG_SPLAY_M + fwd * (1.9 + 0.7 * swing)
+	var knee: Vector2 = (hip + foot) * 0.5 + side * s * KNEE_OUT_M
 	_strut(&"thigh", hip, knee, tint)
 	_strut(&"shin", knee, foot, tint)
 
