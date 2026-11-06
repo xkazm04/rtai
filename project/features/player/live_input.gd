@@ -3,7 +3,8 @@ extends InputSource
 ## Live devices into one TickInput per tick (SIM-05: the sim sees only these ints, so a recorded
 ## run replays bit-identically). The move stick from the move_* actions (keys, d-pad or the left
 ## stick), the buttons from the bit-carrying actions, and the aim heading from the right stick
-## when it is pushed, else from the mouse relative to `origin_px` (Rivet on screen).
+## when it is pushed, else from the mouse relative to `origin_px` (Rivet on screen), unprojected
+## onto the ground under a tilted --view (ViewMode.ground_of).
 
 var actions: PlayerActions
 ## Rivet's position in viewport pixels; the mouse aim is the heading from here to the cursor.
@@ -65,7 +66,7 @@ func _aim() -> Vector2:
 	var from: Vector2 = origin_px.call()
 	if not mouse_aims or viewport == null or from == Vector2.INF:
 		return Vector2.ZERO
-	var d: Vector2 = viewport.get_mouse_position() - from
+	var d: Vector2 = ViewMode.shared().ground_of(viewport.get_mouse_position() - from)
 	return d.normalized() if d.length() > 4.0 else Vector2.ZERO
 
 
@@ -92,7 +93,7 @@ func _reach_m() -> float:
 	var ppm: float = px_per_m.call()
 	if not mouse_aims or viewport == null or from == Vector2.INF or ppm <= 0.0:
 		return 0.0
-	return viewport.get_mouse_position().distance_to(from) / ppm
+	return ViewMode.shared().ground_of(viewport.get_mouse_position() - from).length() / ppm
 
 
 ## Lane gunplay: a pad throws by how far the right stick is pushed: just past the deadzone lands

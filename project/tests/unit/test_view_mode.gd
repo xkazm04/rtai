@@ -51,3 +51,13 @@ func test_the_shipped_view_has_no_lift() -> void:
 	var v: ViewMode = ViewMode.of("top")
 	assert_false(v.has_lift())
 	assert_eq(v.lift_at(Vector2(500.0, 0.0), 2.0), Vector2.ZERO)
+
+
+func test_the_mouse_unprojects_onto_the_ground() -> void:
+	var top: ViewMode = ViewMode.of("top")
+	assert_eq(top.ground_of(Vector2(3.0, -7.0)), Vector2(3.0, -7.0), "straight down: unchanged")
+	var v: ViewMode = ViewMode.of("tilt")
+	var ground: Vector2 = Vector2(30.0, 40.0)  # a cursor 50 px out on the ground
+	var screen: Vector2 = Vector2(ground.x, ground.y * v.ground_k())  # where the tilt draws it
+	assert_almost_eq(v.ground_of(screen).x, ground.x, 1e-4)
+	assert_almost_eq(v.ground_of(screen).y, ground.y, 1e-4)

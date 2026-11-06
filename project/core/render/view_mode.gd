@@ -73,6 +73,12 @@ func ground_k() -> float:
 	return 1.0 if is_flat() else sin(deg_to_rad(pitch_deg))
 
 
+## A screen offset over the ground (e.g. Rivet to the cursor) unprojected onto the ground plane, in
+## screen px at the x scale: the tilt squashed its y by ground_k (straight down: unchanged, exact).
+func ground_of(screen_d: Vector2) -> Vector2:
+	return Vector2(screen_d.x, screen_d.y / ground_k())
+
+
 ## Screen y per metre of height, in world px at 1x zoom (0 straight down).
 func lift_k() -> float:
 	return 0.0 if is_flat() else cos(deg_to_rad(pitch_deg)) * height_k

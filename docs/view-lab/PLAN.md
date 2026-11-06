@@ -17,8 +17,12 @@ screen = (x, y sin(p) - z cos(p)) for pitch p above the ground (90 = straight do
 
 - **Ground (y sin p):** the camera's zoom is `Vector2(z, z sin p)` (`ViewMode.zoom_of`), so the floor,
   decals, FX, lights and world markers foreshorten with no per-system work. The mouse goes through
-  the same canvas transform, so `get_global_mouse_position()` already lands on the ground plane:
-  aim unprojection is free while the aim target is on the ground.
+  the same canvas transform, so `get_global_mouse_position()` already lands on the ground plane.
+  CORRECTION it7: the live aim (`LiveInput._aim`, `_reach_m`) reads the SCREEN offset from Rivet
+  to the cursor, not the canvas one, so under a tilt it aimed and threw short off the ground by
+  sin(p) in y (at 55: a cursor whose ground point lies 50.7 deg down-right aimed at 45 deg, 5.7 deg off;
+  the reach north-south 18 % short).
+  Fixed: `ViewMode.ground_of` divides the screen y by sin(p) (exact identity straight down).
 - **Height (- z cos p):** a node at height z draws `ViewMode.lift_px(z)` up the screen (pre-zoom it
   is z cos p / sin p). Only things with height need code: the rig joints, the car's stack, walls.
 - **Top / top_lift:** pitch 90, no transform at all (`is_flat()`); `top_lift` adds height cues only.
@@ -45,6 +49,23 @@ Under a tilt, things nearer the camera (larger ground y) must draw over farther 
 by ground y (`y_sort` on the actor canvas or z by ground y). Measured, not eyeballed (registry
 `measured-draw-order`): count pairs of overlapping actor bounding boxes drawn in the wrong order
 per frame over a seeded fight.
+
+MEASURED it7 (`dev/view/draw_order_probe.gd`, arena `--order-probe`, seed 2 King fight, 60 s at
+32 px/m, a sample every 6 ticks; logs `evidence/view/it7/order_*.log`):
+
+| View | Overlapping rig pairs | Reversed | Mixed (parts interleave) | Rig-vs-car pairs | Car reversed |
+|---|---|---|---|---|---|
+| top | 212 | 0 | 212 (harmless: no depth straight down) | 0 | 0 |
+| tilt (55) | 304 | 48 (16 %) | 215 (71 %) | 391 | 2 (0.5 %) |
+
+The car is sorted (KingCarStack.sort_rigs). Rig against rig is not: every actor rig draws at the
+same z with its parts at their own offsets (0 to about 12), so two overlapping people interleave
+part by part (a far thug's head over a near one's torso), and Rivet (ArenaRigs) against the gang
+(KingRigs) falls to tree order. The fix is a z band per rig by ground depth (band height under the
+body's screen height, PART_SPAN 16 z per band); it collides with the fixed z offsets laid over the
+rigs (the held weapon at rigs + 60, KingAccents OVER_RIG_Z, the cards), which must ride the band
+of their rig. That is the biggest code risk of the tilt: every overlay that sits "over the rigs"
+today must become "over its own rig".
 
 ## Ranking (iteration 2, before the art round)
 
