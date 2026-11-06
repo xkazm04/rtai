@@ -180,3 +180,5 @@ NEXT (iteration 3):
 6. The cream ped torsos on cream pavement (city note); the cop blue call (navy vs police blue
    side by side); a combined 30-90 s clip of the street set.
 - GATE unit no-arg on the clean head 8f60301d (tree still): 1501 passed, 0 failed, no FLAKY (twice).
+- GATE director reel under tilt70 on 13f1c5f7 (the it1 command): 19/19 chapters, every chapter all
+  down, 0 SCRIPT ERROR (exit 0). Combo and top reels on this head: owed (top ran on def405b4: 19/19).
