@@ -28,8 +28,18 @@ func test_empty_area_keeps_focus() -> void:
 func test_keep_in_holds_the_boss_on_screen() -> void:
 	# planted: the boss 1 m inside the bottom edge of a 20 x 12.5 half view centred at the origin
 	var half: Vector2 = Vector2(20, 12.5)
-	var shifted: Vector2 = BossCam.keep_in(Vector2.ZERO, half, Vector2(0, 11.5), 3.0, 2.0)
+	var shifted: Vector2 = BossCam.keep_in(
+		Vector2.ZERO, half, Vector2(0, 11.5), 3.0, Vector2(2.0, 0.0)
+	)
 	assert_eq(shifted, Vector2(0, 2.0), "the view moves down until 3 m below the boss shows")
-	assert_eq(BossCam.keep_in(Vector2.ZERO, half, Vector2(5, 0), 3.0, 2.0), Vector2.ZERO)
+	assert_eq(
+		BossCam.keep_in(Vector2.ZERO, half, Vector2(5, 0), 3.0, Vector2(2.0, 0.0)), Vector2.ZERO
+	)
 	# near the top, the bar's band counts: 3 m above the boss lies below the bar
-	assert_eq(BossCam.keep_in(Vector2.ZERO, half, Vector2(0, -9), 3.0, 2.0), Vector2(0, -1.5))
+	assert_eq(
+		BossCam.keep_in(Vector2.ZERO, half, Vector2(0, -9), 3.0, Vector2(2.0, 0.0)),
+		Vector2(0, -1.5)
+	)
+	# the ghost card's band at the bottom counts too: 3 m below the boss lies above the card
+	var card: Vector2 = Vector2(0.0, 6.0)
+	assert_eq(BossCam.keep_in(Vector2.ZERO, half, Vector2(0, 5), 3.0, card), Vector2(0, 1.5))

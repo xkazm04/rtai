@@ -869,3 +869,13 @@ numbers; f448dbce car_goal on the floor, ad428713 gang helmets). No REQUEST to s
   clamps to the floor, then keeps the boss's centre +- 3 m on screen below the bar. King on the
   plaza's edges is held on screen too; `BOSS_MARGIN_M` 0 = your clamp alone. Unit test_boss_cam
   `test_keep_in_holds_the_boss_on_screen`.
+- 00:56 FILM re-shot with keep_in: the fight is tick-identical (down at 8264, dealt 210 to Rivet:
+  `boss_fight.dealt` is the damage on Rivet; the arena block's damage_taken 0.0 is the pit's, not
+  the boss's). Looked at: ticks 5400 and 6000 now show Servo whole at the bottom edge; tick 3000
+  still hid him. A debug log (not committed) at 2910-3090: boss (1.1, 30.4) on the floor (bounds
+  y 6..32), focus y 20.9, half 12.5: keep_in held him exactly 3 m inside the bottom edge, but at
+  x 1.1 m that is **under the ghost card** (GhostFormHud, bottom-left, 158 px + margin); only his
+  pads peeked out below it. CORRECTION: he was never off the floor or off the screen.
+- 01:02 keep_in takes HUD bands (`band_m`: top = the bar's HUD_PX, bottom = FOOT_PX =
+  GhostFormHud.MARGIN + 162 px, the whole width), so the boss stays between the bar and the card.
+  Unit test extended (a bottom-band case). Third full-fight film running.
