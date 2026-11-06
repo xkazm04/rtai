@@ -17,6 +17,8 @@ const CARDS: Dictionary[String, Array] = {
 	"rivet": ["res://features/characters/art/view/rivet_head_card.png", 0.86, 1.0, false, true],
 	"king": ["res://features/characters/art/view/king_bust_card.png", 0.80, 2.4, true, true],
 	"gang": ["res://features/characters/art/view/gang_head_card.png", 0.84, 1.4, false, true],
+	"cop/head_cap":
+	["res://features/characters/art/view/cop_head_card.png", 0.86, 1.15, false, false],
 }
 const FRAMES: int = 5
 ## Card frame and mirror per screen octant of the look (0 = screen right, +1 = 45 deg clockwise,
@@ -29,7 +31,7 @@ static var _tex: Dictionary[String, Texture2D] = {}
 ## Each pose step under a tilt (CutRig.drive): build the card once, then face and place it.
 static func step(rig: CutRig) -> void:
 	if rig.head_card == null:
-		if not ViewMode.shared().cards or not CARDS.has(rig.plan.art_dir):
+		if not ViewMode.shared().cards or _key(rig).is_empty():
 			return
 		_build(rig)
 	_place(rig)
@@ -40,9 +42,36 @@ static func step(rig: CutRig) -> void:
 static func on_tint(rig: CutRig, on: bool) -> void:
 	if rig.head_card == null:
 		return
-	var raw: bool = CARDS[rig.plan.art_dir][4] == true
+	var raw: bool = CARDS[_key(rig)][4] == true
 	var mat: ShaderMaterial = PartMaterials.get_mat(PartMaterials.PartKind.PART, on, 0)
 	rig.head_card.material = null if raw and not on else mat
+
+
+## A variant swap (CutRig.apply_variant, a pooled rig re-dressed) drops the card: the next step
+## builds the new head's card, or none, and the top-down parts draw again meanwhile.
+static func drop(rig: CutRig) -> void:
+	if rig.head_card == null:
+		return
+	rig.head_card.queue_free()
+	rig.head_card = null
+	_hide(rig.head, rig.head_spr, true)
+	_hide(rig.torso, rig.torso_spr, true)
+	if rig.collar_spr != null:
+		rig.collar_spr.visible = true
+
+
+static func _key(rig: CutRig) -> String:
+	var v: RigVariant = rig.variant
+	return key_of(rig.plan, v.head if v != null and v.head != "" else rig.plan.head_part)
+
+
+## The card row a head draws: "art_dir/head" (a head variant, e.g. the patrol cop's cap), else
+## the art_dir (every head of the set), else "" (no card).
+static func key_of(plan: BodyPlan, head: String) -> String:
+	var k: String = "%s/%s" % [plan.art_dir, head]
+	if CARDS.has(k):
+		return k
+	return plan.art_dir if CARDS.has(plan.art_dir) else ""
 
 
 static func frame_of(look: float) -> Vector2i:
@@ -51,7 +80,7 @@ static func frame_of(look: float) -> Vector2i:
 
 
 static func _build(rig: CutRig) -> void:
-	var row: Array = CARDS[rig.plan.art_dir]
+	var row: Array = CARDS[_key(rig)]
 	var path: String = row[0]
 	if not _tex.has(path):
 		_tex[path] = load(path) as Texture2D
@@ -76,18 +105,18 @@ static func _build(rig: CutRig) -> void:
 
 
 ## Hides a body part and its readability halo (a HALO sibling under the same node).
-static func _hide(node: Node2D, spr: Sprite2D) -> void:
-	spr.visible = false
+static func _hide(node: Node2D, spr: Sprite2D, shown: bool = false) -> void:
+	spr.visible = shown
 	for c: Node in node.get_children():
 		if c.name == RigBuild.HALO and c is CanvasItem:
-			(c as CanvasItem).visible = false
+			(c as CanvasItem).visible = shown
 
 
 static func _place(rig: CutRig) -> void:
 	var card: Sprite2D = rig.head_card
 	var src: Sprite2D = _anchor(rig)
 	var at: Vector2 = src.global_position
-	var k: float = CARDS[rig.plan.art_dir][2]
+	var k: float = CARDS[_key(rig)][2]
 	var w_world: float = src.texture.get_width() * absf(src.global_scale.x) * k
 	var f: Vector2i = frame_of(rig.head.global_rotation)
 	card.frame = f.x

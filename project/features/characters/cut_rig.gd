@@ -120,6 +120,7 @@ func setup(p_plan: BodyPlan, p_variant: RigVariant) -> void:
 ## Texture swaps only (head, torso, shield): no re-plan, no new nodes.
 func apply_variant(v: RigVariant) -> void:
 	variant = v
+	RigHeadCard.drop(self)
 	if v.head != "":
 		set_part_tex(head_spr, v.head)
 	if v.torso != "":

@@ -46,3 +46,13 @@ func test_no_card_no_flash_work() -> void:
 	var rig: CutRig = autofree(CutRig.new())
 	RigHeadCard.on_tint(rig, true)
 	assert_null(rig.head_card)
+
+
+func test_a_head_variant_row_wins_over_the_set_row() -> void:
+	var cop: BodyPlan = BodyPlan.new()
+	cop.art_dir = "cop"
+	assert_eq(RigHeadCard.key_of(cop, "head_cap"), "cop/head_cap", "the patrol cop: the cap card")
+	assert_eq(RigHeadCard.key_of(cop, "head_helmet"), "", "the riot helmet keeps its own head")
+	var thug: BodyPlan = BodyPlan.new()
+	thug.art_dir = "gang"
+	assert_eq(RigHeadCard.key_of(thug, "head"), "gang", "every gang head shares one card")
