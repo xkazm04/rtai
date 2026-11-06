@@ -46,7 +46,7 @@ func _init(p_actions: PlayerActions) -> void:
 	var only: String = ArenaArgs.parse().text("--chapter")
 	if not only.is_empty():  # one fresh run per chapter: a clean floor under every kill
 		var keep: PackedStringArray = only.split(",", false)
-		chapters = chapters.filter(
+		chapters = (chapters + ReelChapters.extras()).filter(
 			func(c: ReelChapters.Chapter) -> bool: return keep.has(String(c.id))
 		)
 
