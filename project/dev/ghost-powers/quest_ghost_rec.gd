@@ -41,9 +41,11 @@ func _run() -> void:
 	for off: Vector2 in GROUP:
 		var g: Fighter = stage.arena.spawn_guard(at + off)
 		g.pos = at + off
-	var picks: int = ORDER.find(ghost)
+	var forms: GhostForms = stage.pilot.ghosts.forms
 	for t: int in OHM_TICKS if ghost == &"ohm" else TICKS:
-		_tap(&"power_gearbox", t >= 10 and t < 10 + 4 * picks and (t - 10) % 4 == 0)
+		# G until the ghost is picked (quest 1 may start on any of them): a tap every 4th tick
+		var pick: bool = t >= 10 and t < TAKE_AT and (t - 10) % 4 == 0
+		_tap(&"power_gearbox", pick and forms.selected != ghost)
 		_tap(&"power_hauler", t == TAKE_AT)
 		var beat: bool = t >= FIRST_PRESS and (t - FIRST_PRESS) % CADENCE == 0
 		_tap(&"fire" if ghost == &"dent" else &"melee", beat)
