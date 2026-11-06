@@ -1676,3 +1676,6 @@ NEXT (iteration 17, in order):
 3. Optional: the sheet's gems are orange and King's crown jewel is ink; a gold-hi or plum jewel in
    the crown's centre (KingAccents._crown), A/B at 32 px/m. Render only.
 4. At the freeze (08:30): REPORT read-through once more (calls A-N), commit. The REPORT is final now.
+- 05:45 frames.json tidy: the phase clip titles give their real lengths (19.5 / 42 / 38.5 s, they
+  said 30 / 30 / 25); every `before` names the deleted predecessor and what it lacked (King's chain;
+  the it15 ones also the plum lining). REPORT gets a "where to start" line for the owner.
