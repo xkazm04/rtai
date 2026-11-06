@@ -998,3 +998,22 @@ the wings, under the torso).
   `RTAI.exe --headless --fixed-fps 60 --quit-after 7400 -- --rigs --boss=servo --bot=boss
   --bot-human --seed=2`: **down at 7036, 188 on Rivet, 0 SCRIPT ERROR** = the editor
   (`evidence/servo/exe-smoke-it9.json`). REPORT exe lines written. Re-export at the freeze.
+- 01:50 MILESTONE 8e34d545 **docked drones read in the rack** (render only, `ServoRig.DOCKED_M`
+  0.34): a cream body with an ink rim in each FULL cell, the sheet's cream drones in dark bays;
+  the gaps are the drones out. First try, the flying drone's whole sprite per bay at 0.95: 18
+  rotor crosses, a dot field at 32 px/m (noise; rejected). **Looked at** p2 seed 2 at 32 and 48
+  px/m (I first took the gaps for a misalignment with the bays; checked the arithmetic: the cell
+  pitch 0.87 x 0.73 m matches the art's 2.6 m / 3 bays and 2.125 m / 3 rows, and the bodies sit in
+  the bays; the gaps are the 5 drones in flight), and the defeat (p3 seed 2 human, down at 1930,
+  `phase32_9.sh`): standing at 1900 the bodies sit in the remaining wing; from the flash at 1932
+  the spill owns the bays (the bodies are hidden once down), no body left behind. REPORT call 11,
+  decisions line. Still `M/frames/servo_rack_spine_docked_ab_it9.png` (top: spine 0 | 0.94 |
+  plated at 48; bottom: plated | docked at 32) replaces the spine A/B; the unreferenced it3
+  defeat clip deleted.
+- 01:55 Unit on 8e34d545 **1186/0** (`unit-it9d.log`). FILM `M/servo_drone_wave_scan_drop_dodge_48ppm_it9.mp4`
+  (the brief's wave clip on 8e34d545, dodging bot, seed 2, 4.5-11.5 s). **Looked at** the keys
+  (`M/frames/servo_drone_wave_keys_48ppm_it9.png`): beam tracks, locks, rings on Rivet's spot, he
+  steps off, a bomb blasts in its ring; the rack empties as the wave launches and refills (the
+  docked bodies make it read on the body). it8 wave clip + keys deleted.
+- 01:58 EXE re-exported on 8e34d545 (exit 0), smoke again: down 7036, 188 on Rivet, 0 SCRIPT
+  ERROR (`evidence/servo/exe-smoke-it9.json`; render-only changes since, as expected).

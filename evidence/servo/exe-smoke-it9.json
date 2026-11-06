@@ -76,11 +76,11 @@
     "kill_cut_us": [],
     "kill_ticks": [],
     "signature_kills": 0,
-    "view_avg_us": 29,
+    "view_avg_us": 31,
     "view_frames": 7400,
     "view_over_2ms": 0,
-    "view_worst_tick": 6597,
-    "view_worst_us": 393
+    "view_worst_tick": 5479,
+    "view_worst_us": 139
   },
   "cars": {
     "damaged": 0,
