@@ -1679,3 +1679,4 @@ NEXT (iteration 17, in order):
 - 05:45 frames.json tidy: the phase clip titles give their real lengths (19.5 / 42 / 38.5 s, they
   said 30 / 30 / 25); every `before` names the deleted predecessor and what it lacked (King's chain;
   the it15 ones also the plum lining). REPORT gets a "where to start" line for the owner.
+- 05:46 Session closes: everything committed, scratch16 holds only the scripts (shot/film/film32/cut.sh). NEXT above stands.
