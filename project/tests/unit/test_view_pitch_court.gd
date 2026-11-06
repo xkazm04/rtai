@@ -86,10 +86,12 @@ func test_only_a_folder_with_an_own_horn_strip_needs_dressing_unblended() -> voi
 	assert_false(ViewPitchCourt.dresses(""))
 
 
-func test_the_p70_slot_holds_the_court_cards_and_limbs() -> void:
-	# view70: at 70 the King's and the gang's cards and limbs are the court's (the limbs are the
-	# p55 top-down parts), so 55 vs 70 differ by pitch. The car stays bosses' (p55 only).
+func test_the_p70_slot_holds_the_court_set_so_70_compares_the_pitch_alone() -> void:
+	# view70: at 70 the King's and the gang's cards and limbs and the throne-car are the court's
+	# (the limbs top-down parts, the car a lifted stack: the p55 art), so 55 vs 70 differ by pitch.
 	assert_false(KingArt.strip_path("gang", 70.0).is_empty(), "the gang's card")
+	for wall: String in ["car_side", "car_front", "car_rear", "car_roof", "throne_front", "cannon"]:
+		assert_true(ResourceLoader.exists(KingCarWalls.DIR % [70, wall]), wall)
 	for set_dir: String in ["parts", "gang_parts"]:
 		var p: String = KingArt.PARTS_DIR % [70, set_dir, "l_foot"]
 		assert_true(ResourceLoader.exists(p), p)
