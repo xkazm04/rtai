@@ -1293,3 +1293,6 @@ idempotent tool; palette gate held), depth-ordered-layered-art (no layer change)
   SCRIPT ERROR, identical. **Looked at** the 12 keys (framed as before) and the tick-1800 target
   still: pad | leg | leg | pad now reads at 1x and 2x like the sheet's top view. Clip, keys and
   still replaced in place (same it14 names).
+- 04:28 GATES scenarios on 5f9ed433 (the legs): **52 ran, 0 failed**, 0 SCRIPT ERROR, exit 0
+  (`evidence/servo/scenarios-it14.log`; CONTENDED: a film ran beside it). Lint 13/13 (hooks),
+  unit 1190/0.
