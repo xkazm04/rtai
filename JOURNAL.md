@@ -1354,3 +1354,12 @@ the clock); the "STOP 03:03" line was not a stop. The session went on; entries b
   same-build before).
 - FRICTION: I started the reels on `8efe76ca` before filming 48 px/m; the 48 film showed the bug, so
   I killed my two reel Godots (PIDs by start time 03:05:07 under my script) and re-ran on `a63bd8e0`.
+
+### GATES 03:13 on the blast lead
+- Reels on `a63bd8e0`: pit 19/19 + city 19/19, 0 SCRIPT ERROR
+  (`evidence/ranged/it14-reel-{director,city}-a63bd8e0.log`). Headless: these logs do not show
+  whether FeelCam (made by the view) ran; the windowed lone films (0 SCRIPT ERROR) and the city
+  movie retake below exercise it.
+- Unit 1168/1168 on `2fccff62` (scratch `it14-unit-2fccff62.log`; +4 test_blast_lead).
+- Not run on the new head: the full evidence run (parity). BlastLead only reads arena.shots and
+  writes a camera offset; parity was bit-exact on `994f8feb`. Run it first next iteration.
