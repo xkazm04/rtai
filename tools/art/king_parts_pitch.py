@@ -1,6 +1,6 @@
 """d8 bosses: cut the King's boss-palette part sheet into rig parts for one view pitch.
 
-usage: python -I tools/art/king_parts_pitch.py <sheet.png> <king art dir> <out dir>
+usage: python -I tools/art/king_parts_pitch.py <sheet.png> <today's art dir> <out dir> [--set=gang]
 
 The sheet (Codex, chroma #00B140) holds 7 parts seen from straight above, pointing right, in two
 rows: plate, piston forearm, upper arm, thigh / shin, foot, megaphone. Each is keyed (the
@@ -8,7 +8,8 @@ cut_facings key), cropped to its own box and resized to EXACTLY the size of toda
 same name (features/characters/art/king/), so parts.json's pivots and the rig's offsets hold.
 The right press forearm is composed: the piston up to the plate's pin, then the plate. Raw
 colours (no print snap): the court draws these raw under the court's pitch (KingArt).
-Deterministic.
+--set=gang: the bodyguard's sheet (torso, upper arm, forearm, fist / thigh, shin, boot, hips)
+cut to features/characters/art/gang/'s boxes. Deterministic.
 """
 
 import os
@@ -43,6 +44,18 @@ DRESS = {
     "r_foot_toeoff": "foot",
 }
 
+GANG_ORDER = ["torso", "upperarm", "forearm", "fist", "thigh", "shin", "foot", "pelvis"]
+GANG_DRESS = {
+    "torso": "torso",
+    "pelvis": "pelvis",
+    "claw_closed": "fist",
+    "claw_open": "fist",
+    **{f"{s}_{p}": p for s in "lr" for p in ("upperarm", "forearm", "thigh", "shin", "foot")},
+    **{f"{s}_upperarm_endon": "upperarm" for s in "lr"},
+    **{f"{s}_forearm_endon": "forearm" for s in "lr"},
+    **{f"{s}_foot_toeoff": "foot" for s in "lr"},
+}
+
 
 def blobs(rgba: np.ndarray) -> list[Image.Image]:
     solid = rgba[:, :, 3] > 128
@@ -58,12 +71,16 @@ def blobs(rgba: np.ndarray) -> list[Image.Image]:
 
 def main() -> None:
     sheet, king_dir, out_dir = sys.argv[1], sys.argv[2], sys.argv[3]
+    gang = "--set=gang" in sys.argv[4:]
     rgba = key_out(Image.open(sheet), 40.0)
-    parts = dict(zip(ORDER, blobs(rgba)))
+    parts = dict(zip(GANG_ORDER if gang else ORDER, blobs(rgba)))
     os.makedirs(out_dir, exist_ok=True)
-    for name, src in DRESS.items():
+    for name, src in (GANG_DRESS if gang else DRESS).items():
         size = Image.open(os.path.join(king_dir, name + ".png")).size
         parts[src].resize(size, Image.LANCZOS).save(os.path.join(out_dir, name + ".png"))
+    if gang:
+        print("parts:", len(GANG_DRESS), "->", out_dir)
+        return
     size = Image.open(os.path.join(king_dir, "r_forearm_press.png")).size
     out = Image.new("RGBA", size, (0, 0, 0, 0))
     arm_h = int(size[1] * 0.57)

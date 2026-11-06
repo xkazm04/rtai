@@ -10,7 +10,9 @@ extends RefCounted
 const DIR: String = "res://features/bosses/king/art/p%d/%s.png"
 ## The King's limb parts in the boss palette for a pitch (tools/art/king_parts_pitch.py: today's
 ## part boxes, so the pivots hold), drawn raw; a part with no file here keeps today's print.
-const PARTS_DIR: String = "res://features/bosses/king/art/p%d/parts/%s.png"
+const PARTS_DIR: String = "res://features/bosses/king/art/p%d/%s/%s.png"
+## art_dir -> its part folder under art/p<pitch>/ (the King's limbs, the gang's bodies).
+const PART_SETS: Dictionary[String, String] = {"king": "parts", "gang": "gang_parts"}
 const COURT_ROOT: String = "res://features/bosses/king/art/"
 ## art_dir -> [strip name, anchor y (fraction of the cell height from the top), width over the
 ## shared card's width]. 5 facings as RigHeadCard.FRAMES (front .. back, turned right). The King's
@@ -78,10 +80,11 @@ static func _swap(card: Sprite2D, rig: CutRig) -> Vector2:
 	return Vector2(old_cell_w / cell.x, width_k)
 
 
-## The King's limbs: each step (the rig swaps end-on and toe-off textures as it moves), a part with
+## The court's limbs: each step (the rig swaps end-on and toe-off textures as it moves), a part with
 ## a court texture for this pitch takes it, raw (no print material) unless the hit flash is lit.
 static func _dress_parts(rig: CutRig) -> void:
-	if rig.plan.art_dir != "king" or ViewMode.shared().pitch_deg >= 90.0:
+	var set_dir: String = PART_SETS.get(rig.plan.art_dir, "")
+	if set_dir.is_empty() or ViewMode.shared().pitch_deg >= 90.0:
 		return
 	var raw: bool = not rig.is_tinted()
 	for spr: Sprite2D in rig.sprites:
@@ -89,7 +92,7 @@ static func _dress_parts(rig: CutRig) -> void:
 			continue
 		var path: String = spr.texture.resource_path
 		if not path.begins_with(COURT_ROOT):
-			var court: Texture2D = _court_part(path)
+			var court: Texture2D = _court_part(set_dir, path)
 			if court == null:
 				continue
 			spr.texture = court
@@ -101,13 +104,13 @@ static func _dress_parts(rig: CutRig) -> void:
 static func part(name: String) -> Texture2D:
 	if ViewMode.shared().pitch_deg >= 90.0:
 		return null
-	return _court_part(PartLibrary.ART_ROOT + "king/" + name + ".png")
+	return _court_part(PART_SETS["king"], PartLibrary.ART_ROOT + "king/" + name + ".png")
 
 
-static func _court_part(path: String) -> Texture2D:
-	if not _parts.has(path):
-		var p: String = (
-			PARTS_DIR % [roundi(ViewMode.shared().pitch_deg), path.get_file().get_basename()]
-		)
-		_parts[path] = load(p) as Texture2D if ResourceLoader.exists(p) else null
-	return _parts[path]
+static func _court_part(set_dir: String, path: String) -> Texture2D:
+	var key: String = set_dir + ":" + path
+	if not _parts.has(key):
+		var pitch: int = roundi(ViewMode.shared().pitch_deg)
+		var p: String = PARTS_DIR % [pitch, set_dir, path.get_file().get_basename()]
+		_parts[key] = load(p) as Texture2D if ResourceLoader.exists(p) else null
+	return _parts[key]

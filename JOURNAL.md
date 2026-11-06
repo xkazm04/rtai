@@ -23,3 +23,20 @@
 - REQUEST to chars (RigHeadCard owner): resolve card strips per view row (e.g. a `card_set` /
   pitch folder `art/view/p<pitch>/<name>.png`, fallback to today's path) so boss strips need no
   swap hook in the bosses lane. Until then bosses swap the King/gang card texture after `_build`.
+- 14:20 MILESTONE King bust card (p55): Codex strip from king_55.png (85 s, usable first try), cut
+  5 x 218x256 raw (no print snap: the wider palette survives), crimson cap -> plum (hue shift, 17k px).
+  Width 1.5x the shared card (1.0 drew the bust narrower than his press arms at 64 px/m).
+  The rig's shoulder megaphone part hides under the card (the card draws its own horn).
+- 14:25 MILESTONE gang head card (p55): steel helmet, plum band, gold-framed shades, gold rope chain
+  with an emerald medallion (71 s, first try); width 1.25. KingAccents skips its drawn gang chain
+  when the court strip exists (the card wears it). Commit 3bf2f0d9.
+- 14:30 MILESTONE King limbs (p55): a top-view part sheet (plate, piston, plum sleeve, thigh, shin,
+  boot, horn; 87 s, first try) cut to today's part boxes (tools/art/king_parts_pitch.py, 19 parts)
+  so the pivots hold; drawn raw, re-dressed each step (the rig swaps end-on / toe-off textures).
+  The slam tell's drawn plates now use the engraved plate art and rise 5.5 m with the tell under
+  a tilt (they lay flat at his feet before). Commit 3f2c7d68.
+- Draw order measured by eye per frame in the 64 px/m slam strip: the plates (z 40, KingAccents)
+  draw over the bust card (head z) - intended, the plates are raised in front of him; the cape fan
+  (KingCape) still draws flat on the ground behind him under tilt: owed.
+- FRICTION `node tools/godot/check.mjs` fails on unchanged files too ("Failed to compile depended
+  scripts") in this worktree; used the live arena runs (0 SCRIPT ERROR) and GUT instead.
