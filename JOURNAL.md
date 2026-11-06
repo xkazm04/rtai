@@ -94,3 +94,54 @@ NEXT (iteration 2):
    the crescent; check the corpse lands where the body was under tilt70.
 6. Crowd cost (brief 6) under the bench lock: city crowd 400, tilt70 vs top.
 7. 32 px/m before/after pairs for each subject (only 48/64 so far); a combined clip.
+
+## Iteration 2 (2026-11-06 21:19, BUILD)
+
+Read: JOURNAL, git log, the other lanes' journals (no REQUEST to street; view answered card sets,
+city asked view for building occlusion, vehicles asked city about parked cars). Library: all nine
+ped types have A sheets at 55 and 70 (catalog), so no REQUEST to assets.
+
+- FRICTION: `node tools/evidence/run.mjs` refuses a dirty tree; my first try logged into the
+  worktree (`evidence/`): moved the log to scratch. A second run I stopped myself (I was editing
+  under it); the third runs on e97d19fd (+ the variety commit landing under it, see GATE below).
+- FRICTION: `node tools/godot/check.mjs` fails on any features script here ("Failed to compile
+  depended scripts", also on the unchanged riot_shield_card.gd): judged by --import + the unit run.
+- FRICTION: in a GUT test, `StreetCrowdCards.POOLS[tag]` (a typed const Dictionary[String,
+  PackedStringArray] of another class) iterated as 24 empty strings; `.get(tag)` is right. The code
+  always used `.get`.
+- MILESTONE 1e7776b4: `dev/showcase/street_crowd` board: 16 pedestrians of every look (the pooled
+  looks three times, actor ids 1-16) walking a road through the real CharacterRigs under `--view`,
+  at `--ppm`, three stills. Why: no arena start puts Rivet among walking peds (the city block's
+  nearest 16 rigs are the hub's cops). Debt ratchet accepted (+126 dev lines, 1 cmdline read).
+  LOOKED: on the pavement tile the cream ped torsos vanish into the cream pavement (city note below).
+- MILESTONE e97d19fd (brief 3): the nine library pedestrian types under the card views.
+  StreetCrowdCards (StreetView hook): jacket-hair draws suit|punk, vest-hair shopper|jogger,
+  overalls-bald elder|worker, by actor id; 8 new strips (punk/shopper/jogger/worker at p70 from the
+  20:40 A sheets, at p55 from the 15:00/16:40 A sheets), cut by street_head.py (bands 0.32-0.36), no
+  colour fix. Widths: skull width matched to the suit head's (median run at 30-50 % of the content
+  height; the measure reproduces bald 1.95 vs its 1.93 row at 70): p70 punk 2.5 (measured 2.83, the
+  mohawk's narrow skull; capped so the studded shoulders do not outgrow the body), shopper 1.64,
+  jogger 1.84, worker 2.3; p55 punk 2.4, shopper 1.58, jogger 1.77, worker 2.5. Unit 11/11 (new
+  test_street_crowd_cards + the card-set count 9 -> 13). LOOKED at 32 (x2), 48 (x2), 64 px/m tilt70
+  and 64 px/m tilt (p55): every type reads (bun, ponytail, mohawk, worker's straps, elder's fringe).
+- MILESTONE def405b4: per-person variety (card scale +-8 %, grey value +-7 %, by actor id, peds
+  only). LOOKED at 64 px/m: subtle; the two hats and two hoods now differ in size, the value step is
+  barely visible. Kept mild (a call for the owner: how much variety).
+- SCOUT (brief 4): quest 1's dock contractors draw as the flat `dock_guard` sprite in
+  `boot/collect_call/view/cast_view.gd` (the shipped path; GUARD_DRAW 1.7), and as COP rigs under the
+  dev `--rigs` (arena_rigs.gd: "the contractor plan lands with enemy-ai"). Plan: a standing
+  contractor card (contractor_70 A / _55 A, whole figure, five facings) drawn by a street hook that
+  cast_view calls for "dock_guard" under card art only (top keeps the sprite).
+- NOTE for city/view (no REQUEST yet): on the cream pavement the ped torsos (cream) melt into the
+  ground at tilt70; at 70 the head card covers most of the torso, so it shows as legs under a head.
+
+EVIDENCE masters n8/street (it2): peds9_before_after_tilt70_{32,48}ppm_x2_board_t2.png,
+peds9_before_after_tilt70_64ppm_board_t2.png, peds9_p55_tilt_64ppm_board_t2.png,
+peds_variety_before_after_tilt70_64ppm_board_t2.png. Before = POOLS emptied (a filming-only local
+edit, restored and checked: the committed file holds the pools).
+
+Registry rules applied this iteration: sprite-and-atlas-production (equal-cell 5-frame strips cut by
+script from keyed A sheets, whole frames unit-tested, provenance per file), render-submission-economy
+(no new nodes or draw calls: the swap is a texture on the existing card sprite, the variety a
+modulate and a scale), concept-scene-parity (judged in CharacterRigs frames, before/after on one
+deterministic board), generative-artifact-gating (A sheets only; no colour fix needed).
