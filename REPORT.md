@@ -33,7 +33,8 @@ Evidence: `C:\Users\kazda\kiro\gtai-masters\d8\view70\` (`frames.json`, 15 entri
   (checked on the stills); the width is the same.
 - **Frame cost** (exported bench, city drive_dense, 2 x 30 s, CONTENDED):
   - average frame 1.08/1.18 ms at 70 vs 1.15/1.10 ms at 55, a wash;
-  - draw calls 372 vs 575. The likely cause is a step in visible chunk rows, but this is unverified.
+  - draw calls 372 vs 575. They follow the visible area: tilt70 zoomed out to 55's depth draws 602-606
+    calls, repeated twice. No feature is switched off at 70.
   - 70 sees 10 % fewer people (25.4 vs 28.4 visible on average).
 
 ## Not done / owed
