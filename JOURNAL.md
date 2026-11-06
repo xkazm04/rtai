@@ -1431,3 +1431,22 @@ Read: JOURNAL NEXT (it13), git log, frames.json. `king_car_trim.gd` showed `M` w
   **Looked at**: the arc lands on the dome's own ink edge, so it adds nothing at 32 px/m. A bar
   across the dome would read as shades but undo the light-dome read (call I). DECISION: no shades
   accent; code reverted (no commit of it). The gap stays in REPORT.
+
+### 04:12 EXE re-exported on 2c1fa18f (the chains and the slam cape) and smoked
+- `windows-showcase` export 0 errors (`build/export-it14b.log`); headless smoke seed 2 human:
+  King down at tick **4933**, took **88**, coin_fan 3 / press_slam 1 / ram 1, 0 SCRIPT ERROR.
+
+NEXT (iteration 15, in order):
+1. The ram/coin-fan clip is the last it12 clip (`king_ram_coin_fan_48ppm_it12.mp4`: no chains on
+   the riders); re-film it on the current head (phase 1 seed 2, stander then dodger, 1.4-4.4 s and
+   6.6-9.0 s of each run, 1280x800: `build/scratch14/film.sh` takes RES). Then the charge and
+   decree clips (it13) if the chains should show there (decree: the brawlers wear them).
+2. The gang's shades: the drawn arc failed (journal 04:12). Next try is in the part art: the
+   gang sheet's visor cell darker at 32 px/m (`tools/art/gang_parts.py`), A/B against call I's
+   light dome; or leave it as a REPORT gap.
+3. The car's top view against the sheet's 90-degree panel: the target's car has rounded gold
+   bumpers at both ends and a gilded throne back behind King; ours is a square-ended box. A
+   KingCarTrim pass (render only), A/B at 32 px/m.
+4. At the freeze: re-export the exe (REPORT "The exe"), smoke it, finalize REPORT (remove DRAFT).
+- Session ends ~04:15, everything committed. Scratch: `build/scratch14` (git-ignored) holds the
+  AVIs; delete them at the start of it15 (film.sh / shot.sh are worth keeping).
