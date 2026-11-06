@@ -160,11 +160,7 @@ func _wreck() -> void:
 ## The hood cannon about its mount `p` (car px), swivelled `rot` off the car's nose.
 func _cannon(p: Vector2, l: float, rot: float) -> void:
 	var a: Vector2 = Vector2.from_angle(rot)
-	var n: Vector2 = a.orthogonal() * 10.0
-	var tail: Vector2 = p - a * l * 0.08
-	var tip: Vector2 = p + a * l * 0.22
-	draw_colored_polygon(PackedVector2Array([tail - n, tip - n, tip + n, tail + n]), GOLD)
-	draw_circle(tip, 13.0, GOLD_DARK)
+	KingCarTrim.cannon(self, p - a * l * 0.08, p + a * l * 0.22)
 
 
 ## King on foot: the squat press body, plates out to the sides, cape behind.

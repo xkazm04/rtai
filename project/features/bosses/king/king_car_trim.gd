@@ -5,6 +5,20 @@ extends RefCounted
 ## tassels hung along both sides). Drawn on the car's canvas, nose along +x, in px.
 
 const PLUM: Color = Color("#5A2335")
+const GOLD_DARK: Color = Color("#8A6418")
+const GOLD_HI: Color = Color("#F6D678")
+const INK: Color = Color("#1B1517")
+## it12: the hood cannon's profile from straight above (boss_king.jpg's 90-degree panel: a fat gold
+## barrel on a round swivel mount, banded, flared at the muzzle): [along the barrel 0..1, half
+## width px at the 48 px/m base]. The muzzle stays where the coins leave (KingBodyView._coins).
+const CANNON_PROFILE: Array[Vector2] = [
+	Vector2(0.0, 12.0),
+	Vector2(0.72, 8.5),
+	Vector2(0.86, 8.5),
+	Vector2(0.9, 12.5),
+	Vector2(1.0, 12.5)
+]
+const CANNON_BANDS: Array[float] = [0.3, 0.55]
 const PLUM_DARK: Color = Color("#3B1522")
 const GOLD: Color = Color("#D9A933")
 ## The swags along each side: how many, and how far each bellies out past the body (at 32 px/m
@@ -24,6 +38,40 @@ static func draw(ci: CanvasItem, l: float, w: float, p: float) -> void:
 		ci.draw_rect(Rect2(r.end.x, -w * 0.5 + 6.0, 3.0, w - 12.0), GOLD)  # the gold cross-bar after it
 	for sy: float in [-1.0, 1.0]:
 		_swags(ci, l, w, p, sy)
+
+
+## The hood cannon from `tail` to `tip` (car px): ink-edged, shaded, banded, on its mount.
+static func cannon(ci: CanvasItem, tail: Vector2, tip: Vector2) -> void:
+	var a: Vector2 = (tip - tail).normalized()
+	var n: Vector2 = a.orthogonal()
+	var span: float = tail.distance_to(tip)
+	ci.draw_circle(tail + a * span * 0.2, 17.0, INK)  # the swivel mount under the breech
+	ci.draw_circle(tail + a * span * 0.2, 14.5, GOLD_DARK)
+	ci.draw_colored_polygon(_barrel(tail - a * 3.0, a, n, span + 6.0, 3.0), INK)
+	ci.draw_colored_polygon(_barrel(tail, a, n, span, 0.0), GOLD)
+	ci.draw_line(tail + a * span * 0.05 + n * 5.0, tail + a * span * 0.84 + n * 3.5, GOLD_HI, 3.0)
+	ci.draw_line(tail + a * span * 0.05 - n * 8.0, tail + a * span * 0.84 - n * 6.0, GOLD_DARK, 2.5)
+	for s: float in CANNON_BANDS:
+		var hw: float = lerpf(12.0, 8.5, s / 0.72)
+		ci.draw_line(tail + a * span * s + n * hw, tail + a * span * s - n * hw, GOLD_DARK, 3.0)
+	ci.draw_line(tail + a * span * 0.88 + n * 10.0, tail + a * span * 0.88 - n * 10.0, INK, 2.0)
+	ci.draw_line(tip - a * 1.5 + n * 7.0, tip - a * 1.5 - n * 7.0, INK, 3.5)  # the bore's lip
+	ci.draw_circle(tail - a * 4.0, 7.5, INK)  # the breech knob
+	ci.draw_circle(tail - a * 4.0, 5.5, GOLD)
+
+
+static func _barrel(
+	at: Vector2, a: Vector2, n: Vector2, k: float, grow: float
+) -> PackedVector2Array:
+	var pts: PackedVector2Array = PackedVector2Array()
+	for q: Vector2 in CANNON_PROFILE:
+		@warning_ignore("return_value_discarded")
+		pts.append(at + a * k * q.x + n * (q.y + grow))
+	for i: int in range(CANNON_PROFILE.size() - 1, -1, -1):
+		var q: Vector2 = CANNON_PROFILE[i]
+		@warning_ignore("return_value_discarded")
+		pts.append(at + a * k * q.x - n * (q.y + grow))
+	return pts
 
 
 ## Plum swags from the rear wheel to the front door along one side, a gold tassel between each.

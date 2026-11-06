@@ -21,7 +21,7 @@ The moveset is `docs/bosses/king.md`; the full log is `JOURNAL.md`.
   - (it8) **two flat gold press plates and a shoulder megaphone**, replacing the claw and the megaphone
     forearm he inherited (`king_press_plates_before_after_48ppm_it8.png`);
   - a jewelled crown and the ermine collar over the vermilion cape;
-  - the gilded plum throne-car, a boss-owned vehicle with drapes and a hood cannon;
+  - the gilded plum throne-car, a boss-owned vehicle with drapes and a hood cannon (banded gold barrel on a swivel mount since it12, `evidence/king/shots/it12/hood_cannon_before_after_48ppm_2x.png`);
   - the gang: the rich robot thug with gold chains, a steel helmet and shades.
 - **Three phases** (`king_phase{1,2,3}_*_32ppm_it10.mp4`, cut from the it10 full fight):
   - phase 1, the procession: ram lanes and the hood cannon's coin fan (since it10 a spray of 48 coins out of the muzzle, `evidence/king/shots/it10/coin_spray_before_after_48ppm.png`), with the gang pushing and riding;
@@ -61,8 +61,11 @@ and in the exported exe.
 ## What does not work yet / gaps against the target
 
 - The gang at 32 px/m: bulkier since it8 (size 1.2, arm width 1.7), and since it10 their heads
-  read as light steel domes with a gold frame (`evidence/king/shots/it10/gang_head_before_after_32ppm_3x.png`). They
-  are still smaller and less blocky than the target's bodyguards.
+  read as light steel domes with a gold frame (`evidence/king/shots/it10/gang_head_before_after_32ppm_3x.png`). In
+  the top view their size matches the target's 90-degree panel (measured in it12: ~1.6 m across the
+  shoulders beside the ~6 m car, over a 1.0 m hit circle); they are less blocky and look smaller than
+  the target's 3/4 view, where its bodyguards are drawn tall (call J).
+- At 64 px/m (the D5 close-up set) the gang print near-black steel; the target's are light steel.
 - The shoulder megaphone is a small gold cone at 32 px/m; it reads from 48 px/m.
 - The plain robot thug (the enemy-ai lane's, not King's) prints as solid ink at 48 px/m. The gang's
   lift would fix it (`evidence/king/shots/it7/plain_thug_48ppm_ink_x2.png`).
@@ -93,6 +96,12 @@ Each call names its options, the default that is built, and how to see it.
   VISOR_FROM 0.60). At 32 px/m the print gives a head only paper or ink, with no grey between
   (measured: `evidence/king/shots/it10/dome_158_148_204_32ppm_4x.png`). See
   `evidence/king/shots/it10/gang_head_before_after_32ppm_3x.png`.
+
+- **J. Gang bulk (it12).** The gang as built (drawn ~1.6 m across over a 1.0 m hit circle,
+  `GangPlan.SIZE_K` 1.2), or bigger bodyguards whose hit grows with the drawing (`bosses.json
+  king_gang.radius_m` 0.58 with `SIZE_K` 1.4: a gameplay change, harder to dodge round, not built
+  and not measured). A size step that only changes the drawing is rejected: it would draw a wider
+  robot than Rivet can hit. See `evidence/king/shots/it12/gang_d5_p2_64ppm_t120.png`.
 
 ## The exe
 
