@@ -227,3 +227,66 @@ NEXT (session 5, in order):
 5. Parked cars: when vehicles answers the REQUEST (VehicleParked.live), AND it in ChunkLift and set
    `parked_cards` true; film the main city boot (`--seed=2 --view=tilt70`), not the arena city.
 6. Combo engage film (the 12-frame settle redraw).
+
+## Iteration 7 (2026-11-06 22:10-23:10, BUILD)
+
+Read: JOURNAL, git log, the lane journals (no new REQUEST to city; vehicles still waits on nothing
+from me; street notes the cream pavement melts cream torsos at 70: not a REQUEST), the catalog
+(every street prop now has a 70 twin: 11 A + 4 B among the ones I use; lamp 70 B 2250).
+(Iterations 5-6 left no commits or journal lines: picked up from iteration 4's NEXT.)
+Chose brief item 3 (props) over NEXT 1 (p70 strip evidence): a whole brief item was untouched.
+
+- MILESTONE 14dc7a5c **street props stand up under a tilt** (brief item 3). `PropCards`
+  (features/city/view/prop_cards.gd): a city_textures prop named in `city_facades.json` `props`
+  draws as a card from its five-facing strip instead of its flat art. Strips cut by
+  `tools/art/city_prop_cut.py <lib> <out> <55|70> name=lib_id ...` (the top row's five facings by
+  alpha column runs, bottom-aligned in five equal cells, 256 px cell height, mipmapped: AST-03).
+  15 props x 2 pitches: payphone, hydrant, trash can, mailbox, bench, newsstand, bus stop, vending
+  machine, planter, dumpster, barrel cluster, crate stack, cone, police barrier + barricade
+  (barrier sheet, `turn` 1: their flat art is long north-south). Facing from the command's turn
+  (front = south at turn 0; the 3/4 and side views mirrored for the other hand, back never);
+  foot on the footprint's south edge; height = cell aspect / ground_k. ChunkLift orders them
+  with the roofs by south edge (roofs band), so a building in front covers a prop behind it and a
+  prop on the sidewalk stands over the face behind it. The flat hatched shadow stays the ground
+  shadow. Stretch or two-layer? NEITHER: the 70 twins are drawn at the pitch, so the card IS the
+  prop at 70 (DECISION in docs/decisions.md). Lamp posts / traffic lights stay flat (their light
+  pools and arms are placed from the flat art); street sign, bollard, fire escape have no sheet.
+  - BUG found on film and fixed before commit: a mirrored facing drawn as a negative-width rect is
+    SHIFTED a card width right by Godot, not flipped (the dumpster stood 2 m east of its shadow).
+    Now a flipped basis.
+  - B fixes per the notes: bus_stop's teal glass is already greyed in keyed/ (assets); bench 70
+    views 2-4 are shallower than 1/5 and vending 70 views 3-5 read as a cream crate: both mostly
+    face the street (turn 0) in the city, left as drawn; trash can rim not squashed (reads fine).
+  - Provenance: 30 lines (round + prompt_hash per sheet); the cut lamp/traffic-light strips were
+    removed again (c38ca241: not wired, no provenance).
+- EVIDENCE (same seed before = `props` key renamed in a scratch edit of the table, restored; the
+  frames differ only at the props): `gtai-masters/n8/city/it7_props_48ppm_before_after_dumpster_x3.png`,
+  `..._mailbox_x3.png` (48 px/m, frame 600), `it7_props_32ppm_before_after_planter_newsstand_payphone_x2.png`
+  (frame 350), `it7_props_32ppm_before_after_dumpster_x3.png` (frame 500), `it7_prop_cards_p70_strips.png`.
+  frames.json now 13. Judged: the dumpster (lid, bag) and the mailbox dome read as objects on the
+  kerb at 48; at 32 the payphone is a small hooded box on a post, readable but small. The print
+  greys every card into the world's ink palette (as it does the roofs). 0 SCRIPT ERROR each film.
+- Quest 1's payphone: quest 1's stage (boot/collect_call/view/stage_view.gd) does NOT read ViewMode
+  at all (flat Node2D sprites at Ink's 48 px/m), so there is no angled quest 1 to put a card in yet.
+  5c05e079 adds `PropCards.named()` (null under a flat view) + `draw_named(ci, name, foot_px,
+  px_per_m)` so the stage (and the arena's cover) can draw the cards in one line when they get a view.
+- REQUEST to view: ArenaFloorView._prop under a tilt (not top_lift) draws the city's cones,
+  dumpsters (cover_high) and crate rows (cover_low) as a lifted face + flat top. When you want them
+  standing like the city's: `var cards: PropCards = PropCards.named()` once, then
+  `cards.draw_named(ci, "dumpster" | "crate_stack" | "traffic_cone", foot_px, Ink.PX_PER_M)` with
+  the foot at the prop rect's south-edge centre (returns false = draw as today). Your file and your
+  PropOcclusion redraw, so yours to wire; I do not edit arena_floor_view.gd.
+- GATE `top` bit-identity on 14dc7a5c: `--arena=city --bot=rivet --seed=2 --rigs`, 301 frames,
+  framemd5 vs the base 8e9eeb78's (scratch/city/top_base.md5 from iteration 4): IDENTICAL, 0 SCRIPT ERROR.
+- GATE unit full no-arg on 14dc7a5c: 1502 passed, 0 failed (101 s). Lint 15/15 on every commit.
+- FRICTION: chunk_lift.gd and chunk_view.gd sit at the 200-line soft cap (the debt ratchet failed
+  the first commit at 206): trimmed comments; the next feature in ChunkLift needs a split first
+  (the facade face drawing -> its own class).
+
+Registry rules applied: depth-ordered-layered-art (props join the buildings' one painter order by
+south edge, in the band above the faces, under the actors canvas), sprite-and-atlas-production
+(one strip per prop, equal cells, bottom-aligned foot, mipmaps for 6x minification),
+generative-artifact-gating (A first, B fixes per notes, never C: lamp 55 C rounds unused),
+concept-scene-parity + motion-quality-gating (judged on the real course at 32 and 48 px/m, same
+seed before/after, diffs localized), render-submission-economy (a card is one textured rect per
+prop, recorded once per chunk; nothing per frame).
