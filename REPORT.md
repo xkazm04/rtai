@@ -1,7 +1,7 @@
 # n7-melee REPORT (night 2026-11-05/06): Rivet's melee and the four ghosts' attacks
 
-DRAFT written 23:40 (iteration 6), updated 03:22 (iteration 11). The final version lands at 08:40, after the freeze and the exe
-export. Clips are under `C:\Users\kazda\kiro\gtai-masters\n7\melee\` (`M/` below); the shortlist is in
+DRAFT written 23:40 (iteration 6), updated 07:40 (iteration 18; code head `fca3ba52`, evidence and both exes on it).
+The final version lands at 08:40, after the freeze. Clips are under `C:\Users\kazda\kiro\gtai-masters\n7\melee\` (`M/` below); the shortlist is in
 `M/frames.json`. Every change below is view only: no sim tick, replay or parity hash moved. Quest 1's
 final hash moved once, deliberately, when quest 1 started carrying the katana (`fbc5a982`).
 
@@ -37,19 +37,25 @@ final hash moved once, deliberately, when quest 1 started carrying the katana (`
 | Plasma sword asset (backlog 3) | `4540d259`, `9a2d3137` | a new top-down held part from one image round: the blade tapers to a point from a pronged emitter collar, with ink arc strokes along a paper-white core (it was a square-ended cream plank); same hilt, same length and grip; the floor pickup and the HUD icon follow it. A shape gain at 48 px/m and up; at 32 px/m the two are close to identical | `M/plasma_sword_blade_ab_32ppm_48slow.mp4`, `M/plasma_sword_blade_ab_48ppm_3x.png` (before: the old `held_long.png`) |
 
 The whole polished set in the city block at 32 px/m, with the game audio:
-`M/melee_polished_set_city_32ppm.mp4` (44 s, re-cut on code `791ea71a`: the five melee segments refilmed for the strike sync; the ghost segments from `5c4219b2` with `evidence/n7-melee/set_clip.sh`: no dev
-telemetry box, the ghost card whole; it is re-cut once more on the final head at the freeze).
+`M/melee_polished_set_city_32ppm.mp4` (44 s, with `evidence/n7-melee/set_clip.sh`: no dev telemetry box, the ghost
+card whole; last re-cut on `3fd49218` for Kerf's camera glide; the five melee segments are from `791ea71a`, the
+other ghost segments from `5c4219b2` on; nothing filmed in it changed since: the later code is Dent's miss lash,
+and the city Dent beat seizes a car, so it never misses).
 
-Gates on the last build commit `a6c2797b` (05:21):
-- lint 13/13; unit 1229/1229 (incl. `test_slice_closure`, `test_tell_cues`);
-- scenarios 52/52 with 0 SCRIPT ERROR;
-- director reel 19/19 in the arena and 19/19 in the city block (every chapter fully down), 0 SCRIPT ERROR.
-The full `node tools/evidence/run.mjs --no-bench` (lint 13/13, unit 1229, scenarios 52, parity
-bit-exact over 1200 steps with the planted mutation caught at 629, look goldens 11/11, block 5/5)
-last ran green on `7da9f3d6` (code `a6c2797b`, 05:31); it re-runs on the final head at the freeze.
+Gates on the code head `fca3ba52` (07:28-07:35):
+- director reel 19/19 in the arena and 19/19 in the city block (every chapter fully down), 0 SCRIPT ERROR;
+- the full `node tools/evidence/run.mjs --no-bench` on `9e246820` (clean tree): lint 13/13, unit 1242/1242,
+  scenarios 52/52, parity bit-exact over 1200 steps with the planted mutation caught at 629, look goldens 11/11,
+  block goldens 5/5 (`evidence/n7-melee/evidence-run-9e246820.log`).
 Bench not run: contended machine, no lock taken.
 
 The logs are in `evidence/n7-melee/`.
+
+Exes (both exported on `9e246820`, code `fca3ba52`, at 07:35; bake + export exit 0, 0 ERROR lines; each booted once:
+exit 0, 0 SCRIPT ERROR):
+- `build/export/windows/RTAI.exe`: the showcase build (arena, city block, every reel and ghost beat). The "See it"
+  lines below are for it; add the before flag named in each call.
+- `build/export/windows-slice/RTAI.exe`: the shipped quest 1 (title card, then the quest). Call (a).
 
 ## What does not (yet)
 - The claw's second blow shows no wind-up of its own: its sim windup is 4 ticks and the view
