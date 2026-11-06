@@ -247,3 +247,44 @@ NEXT (final for iteration 1, supersedes the list above where they differ):
   tell me the file name and cell size you pick; I have a p70 legless body strip staged (5 x 178x192,
   bottom-aligned, same convention as your ghost_bust.py output) and will drop it in `p70/` under your
   name. Also: should its plating get your ghost_card_tone print (gunmetal crown), as Dent's did?
+- 15:29 FILM re-filmed the deliverable on the chars merge (f6f5a05b), 0 SCRIPT ERROR each, raw avis
+  deleted: masters `king_55_70_combo_32ppm_45s_merged.mp4` (46 s, three panels, labels bottom right),
+  `city_55_vs_70_32ppm_45s_merged.mp4` (46 s; dev HUD still on), `king_rivet_onfoot_55_vs_70_64ppm_15s_merged.mp4`
+  (+ stills `*_merged.png`). LOOKED at 64 px/m t9: Rivet p55 bust (55) vs p70 head (70); the King p70
+  bust (plum crown, emerald) vs the LAB bust at 55 on this branch (bosses' p55 King not merged); the
+  cloth-cape flag behind the bust and the doubled bell are still there (REQUEST bosses, it1).
+  The pre-merge it1 films are deleted from masters (superseded); frames.json 15 entries.
+- 15:28 FINDING (frame cost): a city_bench frame at tilt vs tilt70 (`scratch/view70/bench/cb_cmp.png`)
+  shows the same kinds of draws at both (cards, cast shadows, props): the tilt70 draw-call drop looks like
+  a step in visible chunk rows (55 sees 3.9 m more depth), NOT a feature off. Hypothesis, unverified.
+- 15:33 READ chars a743199e `GhostCard` (non-CutRig ghost card: `features/souls/art/view/<art>/
+  <name>_card.png`, width/anchor per rig) and 4eb02025 (Tonnage p55 card: gunmetal, teal seams, amber
+  hazard band). MILESTONE e1d0a6c2 merged d8-chars again (JOURNAL ours, no other conflict).
+- 15:34 IMAGE r3 (image.want, lock queued behind chars, my gen.mjs copy, 92 s, first try):
+  `tonnage_70_card_magenta.png` with refs tonnage_70.png (angle) + chars' p55 tonnage_card.png
+  (palette). The r2 all-teal strip is dropped (it clashed with the p55 card). Keyed with ghost_bust.py
+  -> `features/souls/art/view/p70/tonnage_card.png` (5 x 164x192). LOOKED: p55 over p70 strips x2
+  (masters `tonnage_card_p55_vs_p70_strips_x2.png`): one design, 70 steeper.
+- 15:36 MILESTONE 419610f7 Tonnage's p70 card + provenance. FILM ghost reel 55 vs 70 at 48 px/m
+  (masters `tonnage_card_55_vs_70_48ppm_x2_ghostreel_t150.png`), 0 SCRIPT ERROR: the 70 card stands
+  over the walking feet, matched to the 55 one.
+- 15:39 MILESTONE cb85b405 ViewPitchCards cross-fades `ghost_card` sprites too (the other folder's
+  strip of the same name, same width and anchor; folder read from the strip's path). Unit
+  test_view_pitch/test_ghost_card/test_rig_head_card 25/0. NOT seen live: in the King fight the combo
+  swaps at tick 32, before Tonnage is summoned (~tick 60), and the ghost bot never defeats the King, so
+  the ease-back with Tonnage on screen is owed (needs a boss-down + Tonnage beat).
+
+NEXT (iteration 3):
+1. Read bosses' JOURNAL: if their court strips moved into chars' route (`art/view/p55/king_bust_card.png`
+   + SET_CARDS p55 king row), merge d8-chars/d8-bosses (ordinary merges; JOURNAL ours) and re-film the
+   King trio + the 64 px/m pair, so 55 shows bosses' King. If not, merge d8-bosses anyway before the
+   freeze and check combo at 55 draws their bust (KingArt keys by roundi(pitch): a card built at 62 deg
+   keeps the shared strip - my REQUEST it2); film the result either way.
+2. Bell/cape at 70: per bosses' answer, crop the bell off the p70 bust (prep_king70.py) or keep it.
+3. City clip without the dev HUD (find the HUD flag or F1-off in the arena; `--hud`?), re-film 55 vs 70.
+4. Verify the draw-call step (city_bench frames at tilt / tilt70: count visible chunks per frame).
+5. Combo ease-back with Tonnage on screen (boss down + ghost beat), measure the ghost fade per frame.
+6. 18:30 freeze: exe (int-day recipe in docs/decisions.md) -> build/export/windows/RTAI.exe; REPORT.md
+   with Calls: 70 vs 55 vs combo (city/boss), ease 0.8/1.0/1.2 (clip ready), cross-fade vs swap
+   (fade_deg 5 vs 0), bell on the p70 bust. Exe lines: `RTAI.exe -- --view=tilt70`, `--view=combo`,
+   `--view=combo_ease08`, `--boss=king --view=combo`.
