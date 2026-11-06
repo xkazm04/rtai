@@ -1,6 +1,6 @@
 # n7-melee REPORT (night 2026-11-05/06): Rivet's melee and the four ghosts' attacks
 
-Final, written at the freeze (iteration 22, 08:25; code head `2dd19210` = `48cb43d2` + n7-ranged's `f13aa9cc` feel row cherry-picked, both exes on `b9e93606`). Clips are under `C:\Users\kazda\kiro\gtai-masters\n7\melee\` (`M/` below); the shortlist is in
+Final, written at the freeze (iteration 22, 08:25; re-checked in iteration 25 at 08:40, when every cited path existed and nothing had changed since; code head `2dd19210` = `48cb43d2` + n7-ranged's `f13aa9cc` feel row cherry-picked, both exes on `b9e93606`). Clips are under `C:\Users\kazda\kiro\gtai-masters\n7\melee\` (`M/` below); the shortlist is in
 `M/frames.json`. Every change below is view only: no sim tick, replay or parity hash moved. Quest 1's
 final hash moved once, deliberately, when quest 1 started carrying the katana (`fbc5a982`).
 
@@ -85,6 +85,19 @@ for 240 frames: exit 0, 0 SCRIPT ERROR, no unknown flag):
   (`be78d440`), but not the older view-only camera offsets (`forms_lift_m` under a ghost subtitle,
   the dev `--cam=fight` lean): with those the ring sits that far off its goal. Not changed this
   late, because the lift is a judged quest 1 look; it is one line (`cam_off_m` = all three).
+
+## What blocked or slowed me (nothing blocked; all FRICTION, from JOURNAL)
+- Nothing was BLOCKED tonight. The feel layer from n7-ranged arrived in time; I merged its commits as they landed
+  (each merge is in JOURNAL).
+- The worst merge cost about 15 min (01:21-01:36): n7-ranged's `d99106f4` needed their `1ce1b11e` (`GunHand.last_aim`),
+  and their FYI did not list it. Unit failed to parse (`evidence/n7-melee/unit-b915e863-red-missing-last_aim.log`), so I
+  redid the merge in order.
+- The evidence gate refuses a dirty tree. That cost about 5-10 min, five times (19:40, 01:51, 04:02, 06:31, 08:23): a
+  JOURNAL or REPORT edit, or an untracked log, landed mid-run. The fix was to commit docs before a gate run.
+- Contention, a few minutes each time: one before film segfaulted at startup with 3 Godots running (it passed when re-run
+  alone). A new `class_name` stayed unknown to films until `--import` refreshed it. Background reels picked up files I
+  was editing. Gate runs took about 10 min (unit, both director reels, scenarios).
+- The pre-commit lint caught over-long lines twice. Each time the commit was redone at once.
 
 ## Calls for the owner
 (a) Quest 1 carries the katana on key 2.

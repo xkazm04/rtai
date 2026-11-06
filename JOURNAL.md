@@ -1715,3 +1715,13 @@ audio_cues.json tail, hit_feel.json weapons top). Morning: the owner's calls (a)
 NEXT (08:33): nothing to build. The Director merges `n7-melee` (merge notes in REPORT Next steps:
 audio_cues.json tail, hit_feel.json weapons top). Morning: the owner's calls (a)-(q) in REPORT.
 - STOP 08:33 iteration 24.
+
+## Iteration 25 (08:40-08:45): REPORT
+
+- READ 08:40 JOURNAL NEXT (08:33 it24), git log (head `158e81ba`, tree clean). There has been no code change since `2dd19210`.
+- REPORT 08:42: every `M/` clip and still cited in REPORT exists. So do the `evidence/n7-melee/` logs, both exes and
+  `M/frames.json` (15 rows, every file present). Added the missing "What blocked or slowed me" section (built from the
+  night's FRICTION lines; nothing was BLOCKED), and noted the iteration-25 re-check in the header.
+NEXT (08:45): done for the night. The Director merges `n7-melee` (the merge notes are in REPORT's Next steps). In the
+morning the owner rules on calls (a)-(q).
+- STOP 08:45 iteration 25.
