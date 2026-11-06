@@ -156,7 +156,7 @@ NEXT (iteration 2, in order):
   tyres stood proud of the body: same seed side by side in king_car_64_t720_before_after.png.
 
 NEXT (iteration 3, in order):
-1. Kerf? no (chars). Gang on foot at 64 px/m vs the claw, and the King on foot at 64 (press slam) with
+1. The gang on foot at 64 px/m vs the claw, and the King on foot at 64 (press slam) with
    the new car parked behind: one before/after per figure for REPORT.
 2. The hood cannon barrel from art (a gilded barrel strip, top view, in the r5 palette), and the
    car's bumper protrusion (KingCarStack.bumpers are skipped under the art stack).
