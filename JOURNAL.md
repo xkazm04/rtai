@@ -1838,3 +1838,15 @@ NEXT (iteration 19, in order):
 - DECISION keep the easy band as built; "fair" needs a law change (a hit over 30, or a boss-only
   repair delay field in the framework), the owner's call. REPORT call C, Numbers and next step 2
   updated; decisions.md.
+
+NEXT (iteration 21, in order):
+1. Nothing under `project/` has changed since 71e76b3f (`git diff 71e76b3f HEAD -- project` is empty).
+   The exe (it18 06:10), every clip in frames.json, the numbers and the gates (lint 13/13, unit
+   1168/0, scenarios 52/0, reel 19/19) still stand. No re-export is needed unless a look change lands.
+2. If time is left before the freeze, a candidate for call C (framework, data-driven, default off so
+   nothing moves): `bosses.json <id>.rivet_repair_delay_s` (optional; absent = combat.json's 3 s), read
+   by the boss hook; unit test with a planted fault; then `boss_numbers.mjs --bots=human
+   --seeds=1,...,10` at e.g. 6 s and 8 s to find the fair band. Also tell servo in a REQUEST (shared field).
+   Only if it is landed, tested and measured by 08:20; otherwise leave the REPORT's next step 2.
+3. At the freeze (08:30): REPORT read-through (calls A-P, call C now has the it20 numbers), commit.
+- 07:27 Session closes: everything committed; scratch20 holds only scripts and run outputs.
