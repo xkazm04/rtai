@@ -1716,3 +1716,33 @@ NEXT (iteration 17, in order):
   jewel reads in the crown on the throne (ram tell) and on foot.
 - it16 versions of these six deleted; frames.json 15 (all exist; befores name what they lacked);
   REPORT paths and the exe line moved to it17.
+- 05:58 GATES on 09f94abd (the crown's jewel): director reel **19/19 chapters down**, 0 SCRIPT ERROR
+  (`evidence/king/director-reel-it17.log`, finished at the start of it18).
+
+## Iteration 18 (06:01-07:01), BUILD
+
+### 06:01 START
+- Read JOURNAL NEXT (it17), git log. it17's director reel was still running (my worktree, PID
+  64180); it finished 19/19 on its own. Order: NEXT 2 (the gang's shades as a separate drawn part,
+  timeboxed), then re-export, smoke, re-film what it touches. Scratch `build/scratch18`.
+
+### 06:12 MILESTONE the gang's shades as their own part (call P)
+- Registry: depth-ordered-layered-art (from straight above the head is the highest part, so it
+  draws over the chest's chain), sprite-and-atlas-production and motion-quality-gating (judge at
+  32 px/m first, 48 for detail).
+- Why the part art loses them: the gang helmet (`art/gang/helmet.png`) has a black visor crescent
+  with a gold frame at its +x side, but the D1 sticker print at 32 px/m keeps the cream dome only.
+- `GangShades` (`features/bosses/king/gang_shades.gd`): a Node2D on each gang rig's head sprite
+  (KingRigs dresses non-King rigs only; the enemy-ai thug never gets it), drawing an ink crescent at
+  the dome's front with a gold frame and a cream glint. It turns, shoves, falls and inks out with
+  the head (a child of the head sprite).
+- First try at z 1 over the head: **looked at** the 48 px/m 5x crop, hidden under the gang's chain
+  (the accents draw at OVER_RIG_Z 40), the 05:11 finding again. Second: z OVER_RIG_Z + 1. **Looked
+  at** `evidence/king/shots/it18/gang_shades_0_1_p1_32ppm_4x.png`, `..._p1_48ppm_3x.png`,
+  `..._p2_48ppm_2x.png` (left 0, right 1): at 48 px/m the riders and brawlers wear a dark visor
+  with a gold rim turned toward where they face; at 32 px/m a 2-3 px dark brow that still shows
+  facing (useful in the brawl: which bot is turned on Rivet). Not Rivet's slot (gold rim, crescent).
+  DECISION keep MODE 1 (decisions.md; REPORT call P, the gap paragraph and next step 3 updated).
+- Unit: 4 new tests (`test_gang_shades.gd`: dressed once, over the chain, the plain thug stays
+  plain, the crescent inside the dome). Full run 1167/1: the known flake `test_noir_shadows`
+  ("Parameter t is null"); re-run **1168/0** (`evidence/king/unit-it18-rerun.log`). Lint 13/13.

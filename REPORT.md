@@ -7,7 +7,7 @@ The moveset is `docs/bosses/king.md`; the full log is `JOURNAL.md`.
 
 **Where to start:** watch `king_fight_bot_human_32ppm_it17.mp4` (95 s, the whole fight at game zoom),
 then look at `king_target_vs_game_32ppm_it17.png`, then play `build/export/windows/RTAI.exe -- --rigs
---boss=king`. The calls A-N below are the verdicts the lane needs; each default is built.
+--boss=king`. The calls A-P below are the verdicts the lane needs; each default is built.
 
 ## What works (with its evidence)
 
@@ -34,7 +34,9 @@ then look at `king_target_vs_game_32ppm_it17.png`, then play `build/export/windo
   - the gilded plum throne-car, a boss-owned vehicle with drapes and a hood cannon (banded gold barrel on a swivel mount since it12, `evidence/king/shots/it12/hood_cannon_before_after_48ppm_2x.png`); (it14) rounded gold bumpers past both ends (`evidence/king/shots/it14/car_bumpers_before_after_p1_32_48ppm.png`); (it15) a gilded throne back, a gold arch with ball finials round King's back over the cape, left empty on the car when he steps down (`evidence/king/shots/it15/car_throne_before_after_p1_32_48ppm.png`, `evidence/king/shots/it15/car_throne_empty_p3_step_48ppm.png`);
   - the gang: the rich robot thug with gold chains, a steel helmet and shades; (it14) the chain is a
     gold rope with a medallion that reads at 32 px/m, on the car's riders and pushers too (it was a
-    2 px arc on the brawlers only: `evidence/king/shots/it14/gang_chain_before_after_p1_p2_32ppm_3x.png`).
+    2 px arc on the brawlers only: `evidence/king/shots/it14/gang_chain_before_after_p1_p2_32ppm_3x.png`);
+    (it18) black wraparound shades with a gold frame drawn over the helmet's front, over the chain
+    (`evidence/king/shots/it18/gang_shades_0_1_p1_32ppm_4x.png`, `..._p1_48ppm_3x.png`, `..._p2_48ppm_2x.png`).
 - **Three phases** (`king_phase1_procession_32ppm_it17.mp4`, `king_phase2_court_32ppm_it17.mp4`, `king_phase3_on_foot_32ppm_it17.mp4`, cut from the it17 full fight):
   - phase 1, the procession: ram lanes and the hood cannon's coin fan (since it10 a spray of 48 coins out of the muzzle, `evidence/king/shots/it10/coin_spray_before_after_48ppm.png`), with the gang pushing and riding;
   - phase 2, the court: the car stops, the gang brawls, and decrees buff them;
@@ -80,9 +82,11 @@ standing bot, the same as before, in the editor and in the exported exe (it16 sm
   the top view their size matches the target's 90-degree panel (measured in it12: ~1.6 m across the
   shoulders beside the ~6 m car, over a 1.0 m hit circle); they are less blocky and look smaller than
   the target's 3/4 view, where its bodyguards are drawn tall (call J). Since it14 they wear a gold
-  chain that reads at 32 px/m, on the car too; their shades are still a dark band, not the target's
-  black visor glasses. Tried and rejected: a wider visor band in the part art prints the head as a
-  black disc at 32 px/m (it7/it10, call I) and a drawn visor arc lands on the dome's ink edge (it14).
+  chain that reads at 32 px/m, on the car too. Since it18 their shades are a drawn part (call P): a
+  black crescent with a gold frame at the dome's front. At 32 px/m it is 2-3 px, a dark brow that
+  shows which way each bot faces rather than the target's glasses; at 48 px/m it reads as shades.
+  Tried and rejected: a wider visor band in the part art prints the head as a black disc at 32 px/m
+  (it7/it10, call I); a drawn arc under the chain is hidden by it (it14, and it18's first try).
 - The target's throne back is plum-quilted inside a gold frame; ours is the gold arch with a thin
   plum lining (it16): the rest is under the cape from straight above.
 - The plain robot thug (the enemy-ai lane's, not King's) prints as solid ink at 48 px/m. The gang's
@@ -150,6 +154,11 @@ Each call names its options, the default that is built, and how to see it.
   point too (2, rejected: the points read as a cog). See
   `evidence/king/shots/it17/crown_gems_0_1_2_p1_p3_32_48ppm.png` (rows 0, 1, 2; columns: phase 1 on
   the throne at 32 px/m, phase 3 on foot at 32, phase 3 at 48); in play `RTAI.exe -- --rigs --boss=king`.
+- **P. The gang's shades (it18).** A black wraparound crescent with a gold frame and a cream glint,
+  drawn on the helmet over the gang's chain (built: `GangShades.MODE` 1), or the bare light dome of
+  it10-it17 (0). See `evidence/king/shots/it18/gang_shades_0_1_p1_32ppm_4x.png` (the car's riders,
+  left 0, right 1), `..._p1_48ppm_3x.png` and `..._p2_48ppm_2x.png` (the court brawl); in play
+  `RTAI.exe -- --rigs --boss=king --phase=2`.
 
 ## The exe
 
@@ -167,12 +176,12 @@ same as the editor run). It is re-exported at the freeze.
 
 ## Next steps
 
-1. The owner's verdicts on calls A-N; each default is one data value or flag (named in the call).
+1. The owner's verdicts on calls A-P; each default is one data value or flag (named in the call).
 2. Difficulty (call C): if "fair" is picked, re-tune the coin fan's spread and the charge's lane
    width in `bosses.json` and re-run `node evidence/king/boss_numbers.mjs` until about 7 in 10
    human-bot fights survive; never call it balanced without the table.
-3. The gang's shades (the last look gap): needs a separate dark visor part drawn over the dome in the
-   rig, not the part sheet's band (two part-art tries failed at 32 px/m, call I).
+3. The gang's shades (call P, it18): the drawn part is built; if the owner wants the target's two
+   lenses, they need about 64 px/m to read (a gang head is about 10 px across at 32 px/m).
 4. The plain enemy-ai robot thug: give it the gang's D4 lift (it prints as ink at 48 px/m).
 5. Merge order for the Director: `n7-king` (the framework) before `n7-servo`, which merged it.
 
