@@ -98,10 +98,10 @@
     "rig_kick": {
       "additionalProperties": {
         "maximum": 1.6,
-        "minimum": 0.4,
+        "minimum": -1.6,
         "type": "number"
       },
-      "description": "--rigs render only: the SHOOT recoil strength per weapon id (RigClips.shoot clamps to 0.4-1.6; a weapon not listed kicks 1.0).",
+      "description": "--rigs render only: the SHOOT recoil strength per weapon id (RigClips.shoot clamps to 0.4-1.6; a weapon not listed kicks 1.0). Negative (n7-ranged, a throw): the arm swings forward by that much on the release (follow-through), clamped to -1.6..-0.4.",
       "type": "object"
     },
     "rivet_start": {

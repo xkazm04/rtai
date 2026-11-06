@@ -43,6 +43,7 @@ func boot() -> void:
 		settings = PlayerSettings.load_or_default(settings_path)
 	settings.reduced_motion = settings.reduced_motion or LaunchArgs.has("--reduced-motion")
 	Quest1Session.ghost_locks = not LaunchArgs.has("--ghosts-free")  # ghost-powers-5's old default
+	Quest1Session.table_guns = LaunchArgs.value("--quest-guns") != "off"  # n7-ranged's before
 	add_child(card)
 	@warning_ignore("return_value_discarded")
 	card.start_pressed.connect(start)
@@ -121,9 +122,7 @@ func _begin(opened: Quest1Session) -> void:
 		_audio = StageAudio.attach(
 			self, session.stage, session.system, Events, Quest1Session.MASTER_SEED
 		)
-		session.live.viewport = get_viewport()
-		session.live.origin_px = func() -> Vector2:
-			return get_viewport().get_visible_rect().size / 2.0
+		_bind_live()
 	if view != null:
 		view.notice.show(Save.take_notice())
 	card.hide_all()
@@ -250,3 +249,11 @@ func _casts() -> void:
 	_dev_rigs()
 	@warning_ignore("return_value_discarded")
 	GhostAttackViews.attach_quest(view, session.stage, settings.reduced_motion)
+
+
+## The live input's screen frame: Rivet at the centre, and the view's px/m so a thrown aim lands
+## where the cursor is in metres (n7-ranged, quest 1's table guns).
+func _bind_live() -> void:
+	session.live.viewport = get_viewport()
+	session.live.origin_px = func() -> Vector2: return get_viewport().get_visible_rect().size / 2.0
+	session.live.px_per_m = func() -> float: return view.px_per_m

@@ -98,7 +98,7 @@
     "thrown": {
       "across": 1,
       "claw": "closed",
-      "doc": "one bottle in the claw; the wind-up and throw are RigGrip's thrown kind",
+      "doc": "one bottle in the claw; the wind-up and throw are RigGrip's thrown kind. n7-ranged: windup_px = a ready bottle held cocked this far (part px) back past the gun shoulder, by the helmet (RigThrow); the throw whips the claw out to its aim; 0 or --throw-windup=off = held out at the aim (the before). windup_rise_s = the first aim lifts the claw from its ready spot to cocked over this long (it snapped there in one frame; 0 = the snap)",
       "fore_u": -1,
       "gun_reach": 0.97,
       "hand_z": -10,
@@ -110,6 +110,8 @@
       "weapons": [
         "molotov"
       ],
+      "windup_px": 110,
+      "windup_rise_s": 0.22,
       "wrist_rad": 0
     },
     "tube": {

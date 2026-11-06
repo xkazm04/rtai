@@ -45,6 +45,10 @@ var reload_k: float = -1.0
 ## d7-held: the drawn weapon's shift beside the helmet (RivetHeldView, torso-local px); the two
 ## claws' aim targets take it too, so the claws stay on the gun instead of a claw-width off it.
 var held_shift: Vector2 = Vector2.ZERO
+## n7-ranged: a ready molotov's rise to cocked (RigThrow.held_ready): 0 hanging, 1 cocked, and
+## the t_alive it was last posed at (a rest longer than RigThrow.REST_S starts the rise again).
+var throw_cock: float = 0.0
+var throw_t: float = -1.0
 var dead: bool = false
 
 var c_tuck: float = 0.0

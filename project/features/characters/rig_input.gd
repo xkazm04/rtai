@@ -22,7 +22,7 @@ static func apply(rig: CutRig, feed: RigFeed, i: int) -> void:
 			var roll_s: float = feed.clip_arg[i]
 			rig.clips.roll(roll_s if roll_s > 0.0 else RigClips.ROLL_S)
 		RigClips.Clip.SHOOT:
-			rig.clips.shoot(feed.clip_arg[i] if feed.clip_arg[i] > 0.0 else 1.0)
+			rig.clips.shoot(feed.clip_arg[i] if feed.clip_arg[i] != 0.0 else 1.0)
 		RigClips.Clip.HIT:
 			rig.clips.hit(rig, Vector2.from_angle(feed.clip_arg[i]))
 		RigClips.Clip.DEATH:

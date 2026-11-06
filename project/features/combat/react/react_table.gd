@@ -9,6 +9,8 @@ const SCHEMA: String = "gtai.human_reactions/1"
 
 var _len: Dictionary[StringName, float] = {}
 var _travel: Dictionary[StringName, float] = {}
+## snap_m (n7-ranged): how far the hit throws the body along the blow on its first frames.
+var _snap: Dictionary[StringName, float] = {}
 var _map: Dictionary[StringName, StringName] = {}
 var _death: Dictionary[StringName, StringName] = {}
 ## weapon_wound: a weapon id whose wounding hit plays its own family (the plasma bolt's stagger).
@@ -24,6 +26,8 @@ static func shipped(path: String = TABLE) -> ReactTable:
 		var id: StringName = StringName(t.text(r, "id"))
 		rt._len[id] = t.num(r, "len_s")
 		rt._travel[id] = t.num(r, "travel_m")
+		if r.has("snap_m") and snap_on():
+			rt._snap[id] = t.num(r, "snap_m")
 	var m: Dictionary = t.object(t.raw, "map")
 	for k: Variant in m:
 		rt._map[StringName(str(k))] = StringName(str(m[k]))
@@ -49,6 +53,15 @@ func length(kind: StringName) -> float:
 
 func travel(kind: StringName) -> float:
 	return _travel.get(kind, 0.0)
+
+
+## The hit snap of `kind` (m; 0 when the family has none or `--react-snap=off`).
+func snap(kind: StringName) -> float:
+	return _snap.get(kind, 0.0)
+
+
+static func snap_on() -> bool:
+	return not OS.get_cmdline_user_args().has("--react-snap=off")
 
 
 ## The wound family for a hit of `hit_class` arriving along `local_dir` (rig space, +x = the

@@ -19,6 +19,8 @@ extends Node
 ## --armored[=k]: the pit's humans take gunplay's armored hp (2.5 hits, or k), so the limp plays;
 ## Rivet's hp scales by as much (the fight lasts longer, its balance holds).
 ## Lane showcase: --riot makes each pit wave's first guard (from wave 2) a riot cop with a shield.
+## n7-ranged: the arena has quest 1's sound (StageAudio: each gun's shot, the hit, the bed);
+## --silent keeps the old silent arena.
 
 const TUNE_TICK: int = 300
 
@@ -63,10 +65,7 @@ func _ready() -> void:
 	if args.has("--horde"):  # corpse decay: the bodies on the floor against the cap
 		HordeOverlay.attach(layer, session.stage)
 	FightFrames.attach(self, args, session.world)  # perf-city: --frames=<json> frame log
-	# --clean: a clip of the game only (the owner's sample); a boss fight hides it too (it covers
-	# the boss bar), unless --hud
-	var boss: bool = args.text("--boss") != "" and not args.has("--hud")
-	hud.visible = not args.has("--clean") and not boss
+	_audio_and_hud(args)
 	tuning = ArenaTuning.new(session.actions, session.stage.arena.tuning)
 	tuning.hooks = session.stage.hooks
 	panel.tick_now = session.tick
@@ -77,6 +76,17 @@ func _ready() -> void:
 	session.live.viewport = get_viewport()
 	session.live.origin_px = func() -> Vector2: return get_viewport().get_visible_rect().size / 2.0
 	session.live.px_per_m = func() -> float: return px_per_m
+
+
+## The arena voices its guns like quest 1 (n7-ranged, StageAudio; --silent drops it). --clean is a
+## clip of the game only (the owner's sample); a boss fight hides the HUD too (it covers the boss
+## bar), unless --hud.
+func _audio_and_hud(args: ArenaArgs) -> void:
+	if not args.has("--silent"):
+		@warning_ignore("return_value_discarded")
+		StageAudio.attach(self, session.stage, null, Events, ArenaSession.MASTER_SEED)
+	var boss: bool = args.text("--boss") != "" and not args.has("--hud")
+	hud.visible = not args.has("--clean") and not boss
 
 
 ## The session (the dev arena, or the city proving block with --arena=city) and the bot.
@@ -130,7 +140,10 @@ func _boss_bot(args: ArenaArgs) -> InputSource:
 ## lane gunplay: the pit bot at the --weapon's own reach (--lone films the burn death).
 func _gunplay_bot(args: ArenaArgs) -> GunplayBot:
 	var w_id: StringName = StringName(args.text("--weapon", "pistol"))
-	var w: WeaponSpec = WeaponTable.shipped().weapon(w_id)
+	var table: WeaponTable = WeaponTable.shipped()
+	if not table.weapons.has(w_id):  # a mistyped id: GunplayHook warns and keeps Gloria
+		w_id = &"gloria"
+	var w: WeaponSpec = table.weapon(w_id)
 	var bot: GunplayBot = GunplayBot.new(session.stage, session.actions, w.range_m)
 	bot.follow_burning = args.has("--lone")  # the lone capture films the burn death
 	bot.reach_m = minf(bot.reach_m, args.number("--reach", bot.reach_m))

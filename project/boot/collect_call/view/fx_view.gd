@@ -22,6 +22,8 @@ var _colour: WeaponFxColour = null
 var _colour_tried: bool = false
 ## perf-city: the retained ground marks (FxGround.enabled; null = drawn here every frame).
 var _ground: FxGround = null
+## n7-ranged it24: the shot trail of the picked-up rifle's hits (no GunFx on that path).
+var _bare_trail: BareGunTrail = BareGunTrail.new()
 
 
 func _ready() -> void:
@@ -50,10 +52,15 @@ func _draw() -> void:
 			if s.spec == null or not FightAreasArt.shot(self, s, stage.tick):
 				GunFxArt.tracer(self, _gun_fx, s, ENEMY_TAIL_M)
 			continue
+		if BareGunFx.shot(self, s, arena):  # n7-ranged: the picked-up rifle's flash and tracer
+			continue
 		var tail: Vector2 = s.pos - s.vel.normalized() * (0.5 if s.from_rivet else 0.25)
 		draw_line(Ink.px(tail), Ink.px(s.pos), Ink.INK if s.from_rivet else Ink.VERMILION, 4.0)
 	if arena.gun != null:
 		_gun_over(arena)
+	else:
+		_bare_trail.step(arena, stage.tick)
+		_bare_trail.draw(self)
 	if arena.guard_tell != null:
 		for h: Fighter in arena.hostiles:
 			if h.alive() and GuardTell.telling(h):

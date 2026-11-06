@@ -9,9 +9,22 @@ extends SceneTree
 ##   [--rigs] (rivet-arsenal: the quest drawn on the cast rigs, Quest1Game._dev_rigs)
 ##   [--cam=fight] (rivet-arsenal: the camera leans toward the cop Rivet fights, render only)
 ##   [--ticks=<from>-<to>] (rivet-arsenal: clip only these ticks, e.g. Dock 9's 13600-13840)
+##   [--quest-guns=off] (n7-ranged: the evening gun path, the before of the table guns)
+##   [--weapon-fx=shapes] (n7-ranged it16: no weapon-art cells, e.g. the rifle's dashes: the before)
+##   [--feel=off] (n7-ranged it26: no camera feel, HitFeel.feel_flag: the before of a feel row)
 
 const KNOWN_FLAGS: PackedStringArray = [
-	"--out", "--ppm", "--stills", "--save", "--continue", "--rigs", "--cam", "--ticks"
+	"--out",
+	"--ppm",
+	"--stills",
+	"--save",
+	"--continue",
+	"--rigs",
+	"--cam",
+	"--ticks",
+	"--quest-guns",
+	"--weapon-fx",
+	"--feel",
 ]
 const RECORDER: String = "res://dev/frames/quest1_clip_rec.gd"
 const COUNTER: String = "res://tests/support/error_counter.gd"

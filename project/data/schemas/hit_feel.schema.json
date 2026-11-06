@@ -5,6 +5,39 @@
     "beat_kill_hitstop": {
       "type": "string"
     },
+    "cap": {
+      "additionalProperties": false,
+      "properties": {
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "hitstop_ticks_per_second": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "kick_px_max": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "kicks_per_tick": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "shakes_per_second": {
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "doc",
+        "hitstop_ticks_per_second",
+        "kick_px_max",
+        "kicks_per_tick",
+        "shakes_per_second"
+      ],
+      "type": "object"
+    },
     "classes": {
       "items": {
         "additionalProperties": false,
@@ -20,9 +53,22 @@
           "hitstop": {
             "type": "string"
           },
+          "hold_delay_ticks": {
+            "maximum": 4,
+            "minimum": 0,
+            "type": "number"
+          },
           "id": {
             "pattern": "^[a-z][a-z0-9_]*$",
             "type": "string"
+          },
+          "kick_px": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "kick_ticks": {
+            "minimum": 1,
+            "type": "number"
           },
           "knockback_scale": {
             "minimum": 0,
@@ -49,6 +95,8 @@
           "flash_ticks",
           "hitstop",
           "id",
+          "kick_px",
+          "kick_ticks",
           "knockback_scale",
           "reaction",
           "shake",
@@ -66,16 +114,121 @@
     "kill_hitstop": {
       "type": "string"
     },
+    "kill_kick_scale": {
+      "minimum": 0,
+      "type": "number"
+    },
     "schema": {
       "const": "gtai.hit_feel/1"
+    },
+    "weapons": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "blast_lead_hold_ticks": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "blast_lead_k": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "blast_lead_max_m": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "blast_lead_max_px": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "class": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "doc": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "fire_kick_px": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "fire_kick_ticks": {
+            "minimum": 1,
+            "type": "number"
+          },
+          "hitstop": {
+            "type": "string"
+          },
+          "hold_delay_ticks": {
+            "maximum": 4,
+            "minimum": 0,
+            "type": "number"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "ignite_flare_k": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "ignite_flare_ticks": {
+            "minimum": 1,
+            "type": "number"
+          },
+          "ignite_kick_px": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "kick_px": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "kick_ticks": {
+            "minimum": 1,
+            "type": "number"
+          },
+          "muzzle_k": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "shake": {
+            "type": "string"
+          },
+          "spin_rumble_px": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "spin_whirl_m": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "trail_ticks": {
+            "maximum": 20,
+            "minimum": 0,
+            "type": "number"
+          }
+        },
+        "required": [
+          "doc",
+          "id"
+        ],
+        "type": "object"
+      },
+      "type": "array"
     }
   },
   "required": [
     "beat_kill_hitstop",
+    "cap",
     "classes",
     "doc",
     "kill_hitstop",
-    "schema"
+    "kill_kick_scale",
+    "schema",
+    "weapons"
   ],
   "type": "object"
 }

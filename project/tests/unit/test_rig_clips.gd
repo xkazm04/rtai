@@ -53,6 +53,27 @@ func test_shoot_recoil_decays() -> void:
 	assert_eq(_rig.c_recoil, 0.0)
 
 
+func test_a_throw_swings_the_arm_forward_and_settles() -> void:
+	_rig.clips.shoot(-1.6)  # arena.json rig_kick molotov: the release's follow-through
+	_tick(SimClock.TICK_DT)
+	assert_lt(_rig.c_recoil, -1.4, "a negative kick swings forward, not back")
+	assert_gt(_rig.c_lean, 0.7, "the torso leans into the release")
+	assert_eq(_rig.clips.active(), RigClips.Clip.SHOOT)
+	_tick(0.3)
+	assert_eq(_rig.c_recoil, 0.0, "and settles back to the aim")
+
+
+func test_a_throw_whips_the_gun_shoulder_through() -> void:
+	_tick(SimClock.TICK_DT)
+	var rest: float = _rig.torso.rotation
+	_rig.clips.shoot(-1.6)
+	_tick(SimClock.TICK_DT)
+	var lead: float = -1.0 if _rig.plan.gun_arm == BodyPlan.R else 1.0
+	assert_gt((_rig.torso.rotation - rest) * lead, 0.4, "the gun shoulder leads the release")
+	_tick(0.3)
+	assert_almost_eq(_rig.torso.rotation, rest, 0.02, "and turns back with the recoil")
+
+
 func test_hit_shoves_and_flashes() -> void:
 	_rig.clips.hit(_rig, Vector2.LEFT)
 	_tick(SimClock.TICK_DT * 2)
