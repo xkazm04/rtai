@@ -1798,3 +1798,8 @@ REPORT row + call 5 exe line, audit rows 3 and 10, decisions.md line. NEXT is th
   that was a round through the dead, not a hit on a live target. Audit row back to I `?`, V `?`.
   NEXT 4 stands: find a contractor's hit tick first (the HUD kill count, or Log the
   struck events in a dev-only probe), then crop there.
+- 05:27 one more crop (x 1400-1720, y 400-620, ticks 14368-14402, rerun exit 0, 0 SCRIPT ERROR):
+  the live contractor by the crossing stands at the edge of a blood pool that grows from 14368 to
+  14378 and shifts about 1 body width left, then rocks in place; he does not fall in the window.
+  At 24 px/m (a body about 12 px) whether that pool is his own wound or the heap's cannot be
+  told from the frames: unscored. Leave I/V `?` until a struck-event probe gives the tick.
