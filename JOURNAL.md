@@ -1985,3 +1985,15 @@ at 64 px/m, D4 lift for the plain thug, merge n7-king before n7-servo).
 NEXT (next night): unchanged from iteration 24: the owner's verdicts on calls A-P (call C: 16 s is
 the gentler fair pick, same deaths as 20 s over seeds 1-15), then REPORT next steps 3-5 (gang lenses
 at 64 px/m, D4 lift for the plain thug, merge n7-king before n7-servo).
+
+## Iteration 28 (08:40, REPORT)
+
+- Every evidence path cited in REPORT.md checked on disk: all exist (masters clips/stills, `evidence/king/shots/*`,
+  the `numbers-it*` dirs, logs, the exe, `docs/bosses/king.md`, `evidence/king/boss_numbers.mjs`).
+- REPORT gains "What blocked or slowed the lane" (nothing blocked over one iteration; gold at game zoom,
+  the shades' tries, call C's fair band, contention, small FRICTIONs). Header notes the it28 check.
+  No code change; `project/` unchanged since 1aaeb122, so the exe (07:43) stays current.
+
+NEXT (next night): the owner's verdicts on calls A-P (call C: 16 s is the gentler fair pick, same deaths
+as 20 s over seeds 1-15), then REPORT next steps 3-5 (gang lenses at 64 px/m, D4 lift for the plain thug,
+merge n7-king before n7-servo).

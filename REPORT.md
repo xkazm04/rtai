@@ -2,6 +2,8 @@
 
 Final pass in iteration 16 (05:05); the exe line, the gates and call C are brought up to iteration 22
 (08:05, the exe on 1aaeb122). Freeze re-checked at it25-it27 (08:30): `project/` unchanged since 1aaeb122, so the exe (07:43) is current.
+it28 (08:40, REPORT phase): every evidence path cited below was re-checked and exists (masters folder,
+`evidence/king/`, the `numbers-it*` dirs, the exe, `docs/bosses/king.md`).
 Branch `n7-king`, cut from main `763f8fba`. Clips and stills are in
 `C:\Users\kazda\kiro\gtai-masters\n7\king\` (see `frames.json`, newest and best first).
 The moveset is `docs/bosses/king.md`; the full log is `JOURNAL.md`.
@@ -235,6 +237,24 @@ With `--repair-delay=20` on seed 3 the exe gives exactly the editor run (one dea
 - `build/export/windows/RTAI.exe -- --rigs --boss=king --phase=3`
 - `build/export/windows/RTAI.exe -- --rigs --boss=king --repair-delay=20` (call C's fair option)
 - `build/export/windows/RTAI.exe -- --rigs --boss=king --bot=boss --bot-human --boss-cam` (watch the bot)
+
+## What blocked or slowed the lane
+
+Nothing blocked the lane for longer than one iteration; no lock was ever held against it. What cost time:
+- **Gold at game zoom (iteration 2-3, about one hour).** At 32 px/m the rigs print flat stickers
+  (PartMaterials LOD), so gold drawn into part art does not show. DECISION (20:44, JOURNAL): no
+  image generation for King's wealth; a gold print swap (`KingRigs.GOLD_SWAP`) plus drawn accents
+  (crown, chain, cape, throne, shades) instead. So no codex part sheet was made tonight; the gang's parts are derived from the thug's rows by
+  `tools/art/gang_parts.py`, with their provenance lines in `steam/ai-provenance/2026-11.jsonl` (2f012dea).
+- **The gang's shades (it7, it10, it14, it18).** Three tries failed at 32 px/m (a black disc, then
+  hidden under the chain) before the drawn crescent of call P. The target's two lenses still need 64 px/m.
+- **Call C's "fair" band (it20-it24).** Data tuning under King's 30-hp hit floor could not reach it;
+  Rivet's repair hides it. The fix was a framework field (repair delay), measured over 6 rows.
+- **Machine contention.** All numbers are CONTENDED; the bench never ran (no idle window with the
+  bench lock). Headless `--quit-after` counts frames, so exe smokes need `--fixed-fps 60`.
+- **Small own-goals** (JOURNAL FRICTION): one deleted masters still that call D cites (the same image
+  is in `evidence/king/shots/`), a pre-commit lint that lints the working tree, a 1280x720 vs
+  1280x800 clip crop mismatch. Each was fixed in the same iteration.
 
 ## Next steps
 
