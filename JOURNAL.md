@@ -1209,9 +1209,16 @@ edges, under the torso).
 - REQUEST king (FYI, framework view, no action): `BossCam.BOSS_MARGIN_X_M` 5.5 on n7-servo
   (2667c047). `--boss-cam` only; your clips frame the same unless King stands within 5.5 m of a
   side edge of the screen, where the view now keeps more of him in. 3.0 restores it11.
-- 03:33 MEASURED (REPORT open item: the bay-hop ring under the boss bar in the 48 px/m clip):
+- 03:25 MEASURED (REPORT open item: the bay-hop ring under the boss bar in the 48 px/m clip):
   tried `BossCam.RIVET_MARGIN_M` 3.0 (keep_in round Rivet before the boss's). Re-filmed
   `hop48_12.sh 2 2 900`, keys 10.5-15 s **looked at**: keys 1-5 identical to it10 (the ring still
   cut at the top). Cause: at 48 px/m the screen holds ~11.9 m between the bar and the ghost card,
   Rivet stood 7.7 m above Servo, so 3 + 7.7 + 3 m cannot fit and the boss wins. Reverted (no
   code change); the measurement is in REPORT's open item. In play the camera centres on Rivet.
+- 03:31 FILM the full fight re-filmed on 2667c047 (`full32_12.sh`: the horseshoe spine and the
+  5.5 m side margin): down **7036, 188**, 0 SCRIPT ERROR, tick-identical to it10.
+  **Looked at** the 12 keys beside it10's: key 4 (Servo at the yard's left edge) now whole, the
+  rest framed the same. `M/servo_fight_bot_human_32ppm_it12.mp4` + keys replace it10's; the target
+  still re-shot at tick 1800 (`M/frames/servo_target_vs_game_32ppm_it12.png`), **looked at**: the
+  copper loops beside the cap and the rail along the column read at 2x. frames.json 15 (all files
+  exist); REPORT paths. Scratch avis deleted.
