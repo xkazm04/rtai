@@ -218,9 +218,13 @@ NEXT (iteration 3, in order):
   NOT RUN this session: evidence --no-bench (owed at the freeze with the export).
 - 16:27 Evidence: bosses_d8_it3_combined.mp4 (30 s: the gang + throne-car at 64 px/m in phase 2, then
   Servo standing at 48 vs the katana); frames.json 15 (servo_tilt48_drones_x3.png out). NEXT item 4 done.
+- 16:30 MILESTONE the slung parcel under a flying drone is the same standing box under tilt (2637e2e0),
+  so the drop no longer pops flat -> box. ServoDraw held at 200 (comments trimmed). GATE top md5
+  7189d363... at tick 1100 (= HEAD before). Unit --changed (full suite) 1408/1408; lint 15/15. Still in
+  scratch: contact/sling_crop.png (not shipped to masters; frames.json is full at 15).
 NEXT (iteration 6, in order; freeze 18:30):
-1. (done 16:22: parcels fall as boxes.) The slung parcel under a flying drone is still flat (it
-   turns with the drone; ServoCrateStack is axis-aligned): a turned box if it reads flat at 64.
+1. (done 16:22 and 16:30: falling and slung parcels are boxes.) Gates owed on 2637e2e0: scenarios
+   and the tilt/top director reel (render-only Servo change; last run on 7fffea59/d5765239).
 2. The hood cannon barrel from art (a gilded barrel strip in the r5 palette) and the car's bumpers
    (KingCarStack.bumpers are skipped under the art stack).
 3. (done 16:24.) Servo's hit radius is on the ground under the lifted body: watch whether a katana
