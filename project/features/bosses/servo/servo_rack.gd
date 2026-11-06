@@ -25,12 +25,13 @@ func setup(tuning: ServoTuning) -> void:
 
 
 ## Where cell `i` sits on the ground: columns run across the back (perpendicular to facing),
-## the rows behind the body, row_dy_m apart.
+## the rows behind the body, row_dy_m apart; the wings stand spine_m apart.
 func cell_pos(i: int) -> Vector2:
 	var per_row: int = cols()
 	var col: int = i % per_row
 	var row: int = floori(float(i) / per_row)
 	var across: float = (col - (per_row - 1) * 0.5) * _tuning.cell_dx_m
+	across += signf(across) * _tuning.spine_m * 0.5
 	var back: float = -0.4 - row * _tuning.row_dy_m
 	var fwd: Vector2 = Vector2.from_angle(facing)
 	var side: Vector2 = Vector2(-fwd.y, fwd.x)
@@ -84,6 +85,11 @@ func step() -> void:
 ## Rows of cells (servo.json rack.rows; 2 before the target pass) and cells per row.
 func rows() -> int:
 	return maxi(_tuning.rows, 1) if _tuning != null else 2
+
+
+## The extra gap between the wings (servo.json rack.spine_m).
+func spine_m() -> float:
+	return _tuning.spine_m if _tuning != null else 0.0
 
 
 func cols() -> int:

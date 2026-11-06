@@ -62,6 +62,8 @@ var cells: int = 12
 var rows: int = 2
 var cell_dx_m: float = 0.9
 var row_dy_m: float = 0.5
+## Metres the two rack wings sit further apart for the central spine (0 = they meet).
+var spine_m: float = 0.0
 var phases: Array[Phase] = []
 var errors: Array[String] = []
 
@@ -99,6 +101,7 @@ static func from_table(t: DataTable) -> ServoTuning:
 	s.rows = t.integer(r, "rows")
 	s.cell_dx_m = t.num(r, "cell_dx_m")
 	s.row_dy_m = t.num(r, "row_dy_m")
+	s.spine_m = t.num(r, "spine_m")
 	for row: Variant in t.array(t.raw, "phases"):
 		var p: Phase = Phase.new()
 		var pd: Dictionary = row if row is Dictionary else {}

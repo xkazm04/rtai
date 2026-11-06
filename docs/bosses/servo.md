@@ -27,7 +27,9 @@ mistaken for a cop (no blue), a car (legs and pads move) or the crowd.
   Each 3-row wing is one frame (`rack3.png`, composed by `tools/art/servo_rack3.py` from the cut
   2-row wing). Since iteration 8 a **central spine** (`ServoSpine`, render only) splits the wings
   from their back edge to the belly, its back capped by a panel box whose copper hose loops break
-  the rack's back edge: the sheet's wing | spine | wing read.
+  the rack's back edge: the sheet's wing | spine | wing read. Since iteration 9 the wings stand
+  `servo.json rack.spine_m` apart (0.94 m: the spine 1.5 m wide, the sheet's heavy body; the
+  cells move with the wings, so the drones launch from there; 0 = the it8 narrow column).
 - The drone: a small quad-rotor with a CS parcel slung below; ~0.7 m across (22 px at 32 px/m),
   four rotor discs read as a + shape; its **shadow on the ground** is the read of where it is,
   offset by its height.

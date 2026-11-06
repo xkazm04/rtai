@@ -36,6 +36,22 @@ func test_three_rows_sit_one_row_dy_apart_and_one_wing_breaks() -> void:
 	assert_true(t.ring_from_launch, "the shipped default: rings from the launch (owner call)")
 
 
+func test_spine_gap_sets_the_wings_apart_not_the_bays() -> void:
+	var t: ServoTuning = ServoTuning.new()
+	t.cells = 18
+	t.rows = 3
+	t.cell_dx_m = 0.87
+	t.spine_m = 1.0
+	var r: ServoRack = ServoRack.new()
+	r.setup(t)
+	var inner: float = r.cell_pos(3).y - r.cell_pos(2).y
+	assert_almost_eq(inner, 0.87 + 1.0, 0.001, "the spine opens the centre")
+	assert_almost_eq(
+		r.cell_pos(1).y - r.cell_pos(0).y, 0.87, 0.001, "a wing's bays keep their pitch"
+	)
+	assert_almost_eq(r.cell_pos(0).y, -r.cell_pos(5).y, 0.001, "symmetric about the spine")
+
+
 func test_wave_drops_on_its_rings_then_docks() -> void:
 	var s: ServoSwarm = _swarm(7)
 	assert_eq(s.launch_wave(MARK), 3)

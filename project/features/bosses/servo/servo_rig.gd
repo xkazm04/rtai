@@ -45,6 +45,7 @@ func pose(p_tick: int) -> void:
 	_fall.px = px
 	_shift.px = px
 	_spine.px = px
+	_spine.gap_m = rack.spine_m()
 	_shift.observe(fight)
 	var moved: float = fight.body.pos.distance_to(_last_pos)
 	_last_pos = fight.body.pos
@@ -120,7 +121,7 @@ func _wings(o: Vector2, fwd: Vector2, side: Vector2, k: float, tint: Color) -> v
 	for s: float in [-1.0, 1.0]:
 		if s > 0.0 and rack.count(ServoRack.Cell.BROKEN) > 0:
 			continue  # phase 3: the wing of ServoRack.break_wing (its across < 0 is our side +1)
-		var at: Vector2 = o + side * s * 1.305 - fwd * 0.765
+		var at: Vector2 = o + side * s * (1.305 + rack.spine_m() * 0.5) - fwd * 0.765
 		at += ServoShift.shake(fight) if s > 0.0 else Vector2.ZERO
 		var flip: float = -1.0 if s > 0.0 else 1.0
 		draw_set_transform(at * px, rot, Vector2(flip, 1.0) * k * px / ART_PPM)

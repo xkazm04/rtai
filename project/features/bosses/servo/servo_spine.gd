@@ -26,6 +26,8 @@ const SHADE: Color = Color8(192, 159, 126)
 const INK: Color = Color8(27, 22, 26)
 
 var px: float = 32.0
+## The wings' extra gap (servo.json rack.spine_m): the column widens by it to fill the gap.
+var gap_m: float = 0.0
 ## The cap art (ServoRig's head part).
 var cap: Texture2D = null
 
@@ -34,7 +36,8 @@ func draw(c: CanvasItem, o: Vector2, fwd: Vector2, k: float, tint: Color) -> voi
 	var side: Vector2 = fwd.orthogonal()
 	var back: Vector2 = o - fwd * BACK_M * k
 	var front: Vector2 = o + fwd * FRONT_M * k
-	var half: Vector2 = side * WIDTH_M * 0.5 * k
+	var w: float = WIDTH_M + gap_m
+	var half: Vector2 = side * w * 0.5 * k
 	var grow: Vector2 = side * RIM_M * k
 	c.draw_colored_polygon(_quad(back, front, half + grow, fwd * RIM_M * k), INK * tint)
 	c.draw_colored_polygon(_quad(back, front, half, Vector2.ZERO), SHADE * tint)
@@ -45,10 +48,10 @@ func draw(c: CanvasItem, o: Vector2, fwd: Vector2, k: float, tint: Color) -> voi
 	for i: int in range(2, n):
 		var p: Vector2 = back + fwd * RIVET_STEP_M * i * k
 		for s: float in [-1.0, 1.0]:
-			var at: Vector2 = p + side * s * (WIDTH_M * 0.5 - BAND_M * 0.5) * k
+			var at: Vector2 = p + side * s * (w * 0.5 - BAND_M * 0.5) * k
 			c.draw_circle(at * px, 0.028 * k * px, INK * tint)
 	if cap != null:
-		var ck: float = CAP_W_M / (cap.get_width() / ART_PPM) * k
+		var ck: float = (CAP_W_M + gap_m * 0.6) / (cap.get_width() / ART_PPM) * k
 		c.draw_set_transform(
 			(back + fwd * CAP_IN_M * k) * px, fwd.angle() - PI / 2, Vector2(ck, ck) * px / ART_PPM
 		)
