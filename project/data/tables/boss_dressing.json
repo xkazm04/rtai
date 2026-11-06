@@ -67,43 +67,43 @@
       },
       {
         "at": [
-          -12,
-          12.5
+          -16.6,
+          10.9
         ],
         "piece": "depot_dressing_02",
-        "w_m": 3.2
+        "w_m": 2.6
       },
       {
         "at": [
-          -7.5,
-          12.5
+          16.6,
+          10.9
         ],
         "piece": "depot_dressing_03",
-        "w_m": 3.2
+        "w_m": 2.6
       },
       {
         "at": [
-          6,
-          12.5
-        ],
-        "piece": "depot_dressing_10",
-        "w_m": 1.6
-      },
-      {
-        "at": [
-          10,
-          12.5
+          16.5,
+          -10.5
         ],
         "piece": "depot_dressing_11",
         "w_m": 1.5
       },
       {
         "at": [
-          15,
-          12.5
+          -16.6,
+          -7.6
         ],
         "piece": "depot_dressing_13",
         "w_m": 1.3
+      },
+      {
+        "at": [
+          16.6,
+          -7.6
+        ],
+        "piece": "depot_dressing_10",
+        "w_m": 1.6
       }
     ],
     "king_boulevard": [
@@ -209,6 +209,6 @@
   "art_fallback": {
     "p70": "p55"
   },
-  "doc": "The boss arenas' dressing under an angled view (night n8, lane city; BossDressing): per BossSpec arena id, the pieces cut from the assets library's dressing kits (tools/art/city_prop_cut.py --kit: depot_dressing_55 B, king_district_55 A, round 20261106-1640/1920) as standing cards. at = the piece's foot (its front-bottom centre) in m from the arena area's centre, w_m = its drawn width. Placed along the area's north and south edges, clear of the fight's lanes and the depot's van bay (bay 3 has the open door). art: <art> = the view row's art key, <piece> = the piece id; art_fallback: p70 draws the 55 kit until 70 twins exist. A flat view draws none (top untouched); delete an arena's row to undress it.",
+  "doc": "The boss arenas' dressing under an angled view (night n8, lane city; BossDressing): per BossSpec arena id, the pieces cut from the assets library's dressing kits (tools/art/city_prop_cut.py --kit: depot_dressing_55 B, king_district_55 A, round 20261106-1640/1920) as standing cards. at = the piece's foot (its front-bottom centre) in m from the arena area's centre, w_m = its drawn width. Placed along the area's north and south edges, clear of the fight's lanes: the depot's doors stand in the back wall behind servo.json's bays (bay 3, the van's, has the open door), its conveyors feed the CS belt's two ends and the parcels stand by the side walls near the bays (south of the belt they hide under it: the belt draws above the world). art: <art> = the view row's art key, <piece> = the piece id; art_fallback: p70 draws the 55 kit until 70 twins exist. A flat view draws none (top untouched); delete an arena's row to undress it.",
   "schema": "gtai.boss-dressing/1"
 }
