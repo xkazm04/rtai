@@ -306,3 +306,30 @@ NEXT (iteration 8):
 - EVIDENCE masters: cop_cap55 before|after pit clip (seed 3, 20 s), cop_cap_riot55 react_line x3 still
   (patrol, riot, SWAT), and the owed COMBINED clip `chars_d8_set_tilt_combined.mp4` (74 s: Rivet 64,
   Rivet reel, Tonnage, Dent, Ohm, Kerf, cops). frames.json 15; unreferenced files deleted.
+- MILESTONE 0d417c52: Kerf's p55 card leans into the glide (`GhostCard.lean`, 12 deg x sweep x the
+  facing's screen x, about the ground anchor; the halo turns with it). MEASURED it changes 500-1900 px
+  per frame of the 48 px/m ghost reel; it shows mostly on the blink after-images (they run at full
+  sweep: each leans into the dart); the standing/blinking card stays upright. 0 SCRIPT ERROR.
+- MILESTONE e5f2a9bd (draw order): a ghost card's whole HOST takes the card's level (was the card
+  alone). FOUND while filming: since 34651864 the card sat below its own host, so Tonnage's soft teal
+  glow and walking legs drew OVER his card (a teal wash on the steel) and over cops south of him.
+  Probe unchanged by design (ghost reel 600 ticks, tilt: Tonnage 3/26, Kerf 0/28, Ohm 0 pairs, rigs
+  0 wrong, mixed 1); LOOKED at 4 stills: cops south of Tonnage stand clean, the card reads steel with
+  the teal halo rim. Note: at level 2 (z 64) the host passes the ghost FX (Z_OVER_RIGS 60).
+- GATE+EVIDENCE director reel at 48 px/m `--view=tilt` on e5f2a9bd: 19/19 chapters down, 0 SCRIPT
+  ERROR (`reel10_tilt.log`). Contact sheet of Rivet in all 19 chapters (masters
+  `rivet_bust55_all_holds_tilt_48ppm_director_reel.png`). LOOKED: the bust card stands over the claw
+  hand in every hold; arms and guns read. FAULTS: the flamethrower's back tank and the rocket tube's
+  breech draw OVER the visor (masters `rivet_bust55_tank_tube_over_visor_tilt_48ppm_x4.png`).
+
+### REQUEST to weapons (iteration 10)
+- REQUEST weapons: under `--view=tilt` (bust card on), two held parts draw over Rivet's visor while
+  he faces screen right (director reel 48 px/m, chapters flamethrower and rocket_launcher, still
+  above): (1) `RivetHeldView._back_tank`: the tank sits at the torso ground point minus fwd, i.e.
+  under the lifted bust card's head on screen, at a z over the card. Suggest: under a tilt
+  (`ViewMode.shared().cards`), draw it under the card when its ground point is not south of the
+  torso (`_tank.z_index` below `rig.plan.head_z`, or `show_behind_parent`), else over; or lift it
+  with `RigTilt` to shoulder height. (2) the rocket tube: its breech end covers the whole head
+  (shoulder-fired, near side), maybe right for a near shoulder, but the visor is lost; a held-pitch
+  row (your weapon_held_pitch.json) that slides the tube forward/down under tilt would keep the face.
+  Your file (you edit rivet_held_view.gd today), so chars does not touch it.
