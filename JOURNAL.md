@@ -415,3 +415,14 @@ NEXT: unchanged from iteration 8 (court strips into `ViewMode.art`, emerald gems
   every file exists. 0 raw .avi in scratch. Tree clean apart from this entry.
 NEXT: unchanged from iteration 8 (court strips into `ViewMode.art`, emerald gems on magenta + a p70 set,
   the train under the telegraph fill if the owner asks).
+
+## Iteration 11 by the runner (2026-11-06 18:30-18:32, STABILIZE, past the freeze)
+
+- 18:30 Read JOURNAL (it10 NEXT), git log. Past the freeze: no feature work.
+- 18:30 CHECK: `git diff --stat 02b11a53 HEAD` = JOURNAL.md, REPORT.md, docs/decisions.md only, so
+  `build/export/windows/RTAI.exe` (18:10) is still HEAD's code. Masters frames.json 15 entries, 0 missing.
+  0 raw .avi in scratch. REPORT.md (18:16) has every required section; no change needed.
+- 18:31 GATE `node tools/lint/lint.mjs` on HEAD: all 15 checks pass over 1096 GDScript files. The rest of
+  the gates stand from 02b11a53 (no code change since; REPORT "Gates" section).
+NEXT: unchanged from iteration 8 (court strips into `ViewMode.art`, emerald gems on magenta + a p70 set,
+  the train under the telegraph fill if the owner asks).
