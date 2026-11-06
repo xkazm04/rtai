@@ -1867,3 +1867,29 @@ NEXT (iteration 21, in order):
 - `tests/unit/test_boss_repair.gd`: the field sets the delay; absent keeps 3 s (and King has none);
   planted fault (the field ignored) is caught; `CombatArena.step` does not heal 5 s after a hit under
   a 6 s delay and heals after 6 s. Lint 13/13, unit 1172/0. Commit dedf4fa0.
+
+### 07:42 `--repair-delay=<s>` dev flag + `rivet_hp_min` telemetry (commit 1aaeb122)
+- The 6 s run (data edit, `numbers-it22-delay6`, n=10, 0 SCRIPT ERROR) came back 10/10, identical
+  to the default in every field: survive/die is the only thing hp changes, so the table could not
+  say how close a run came. Added `boss_fight.rivet_hp_min` (lowest hp sampled per tick until King
+  is down) and `repair_delay_s` to the telemetry, and `--repair-delay=<s>` in `BossHook.setup` so the
+  owner can try the lever in the exe without a data edit (and the runs need no data edit).
+  `boss_numbers.mjs --delay=<s>` passes it; the summary has `hp_min` and `hp_min_mean`.
+- Data edit reverted (`bosses.json` back from `build/scratch20/bosses.json.it22orig`; git clean).
+
+### 07:48 Exe re-exported on 1aaeb122, smoked; gates
+- `--export-release "windows-showcase"`: exit 0, 0 errors (`build/export-it22.log`).
+- Smoke (`RTAI.exe --headless --fixed-fps 60 --quit-after 5400 -- --rigs --boss=king --bot=boss
+  --seed=2 --bot-human`): King down at 4933, Rivet took 88, 0 SCRIPT ERROR (as it18). With
+  `--repair-delay=8`: same 4933 / 88, `repair_delay_s` 8, lowest hp 60 (67 at the default).
+- Scenarios 52/0 (`evidence/king/scenarios-it22.log`). Director reel 19/19 down, 0 SCRIPT ERROR
+  (`evidence/king/director-reel-it22.log`). Unit 1171/1: the known `test_noir_shadows` flake
+  ("Parameter t is null", `evidence/king/unit-it22-full.log`); alone 2/2
+  (`evidence/king/unit-it22-noir-rerun.log`); the dedf4fa0 full run was 1172/0. Lint 13/13.
+
+### 07:51 NUMBERS the repair delay as call C's lever (human-like bot, seeds 1-10, n=10 each)
+- Registry: encounter-balance-simulation (n with every rate; 10 runs resolve 10-point steps;
+  CONTENDED; the margin, not only the outcome: `hp_min`), difficulty-design-and-adaptation.
+- base (3 s): 10/10, took 74.4, lowest hp 56 (mean of run minima 66.6).
+- 8 s: 10/10, lowest 44 (mean 54.6). 12 s: **9/10** (seed 10 died in phase 2, King at 45 %),
+  lowest 2 (mean 31.5). Hits and outcomes otherwise identical (King's hits do not depend on hp).
