@@ -1593,3 +1593,27 @@ same-build before in the live quest path, the quest's own clip window), depth-or
 - Clip `gatling_shot_cue-ab-32ppm.mp4` (8 s with sound, before then after); not in frames.json
   (a sound pair; frames.json keeps 15, `shot_cues-ab-32ppm.mp4` is the sound entry). REPORT row,
   call 7, audit row, decisions.md line.
+
+### GATES 04:31: unit 1174/1174 on `6520414f` (caveat)
+- `node tools/tests/run_unit.mjs` 1174 passed, 0 failed (`evidence/ranged/it16-unit-6520414f.log`),
+  but the run overlapped my uncommitted cue edits (`4e8860c3`'s data), so it is a mixed tree: re-run
+  on the final head at the freeze.
+
+### FIND + MILESTONE 04:32: `4e8860c3` the zap guns stop firing Rivet's hurt cue (audit S 2 -> 3 x2)
+- FIND: electro_gun, plasma_rifle and ray_gun had weapons.json shot_cue `player_hit_robo_tazer`,
+  the cue AudioHooks plays when the tazer hits Rivet (max_m 0, cooldown 10, priority 5). The ray gun
+  fires 10/s (every 6 ticks), so the cooldown voiced every other round; any of them could mute a
+  real tazer hit for 10 ticks after Rivet fired (quest 1 has the tazer). Sound only (StageAudio
+  service.cue; no fx_trigger fires from a shot_cue).
+- Data only: audio_cues.json `shot_electro` (crackle 1.0, -1 dB, 60 m, cooldown 4: sounds as
+  before), `shot_plasma` (0.72, -2 dB, 65 m, cooldown 4), `shot_ray` (1.35, -4 dB, 55 m, cooldown 3,
+  4 voices). Test `test_weapon_shot_cues` +1 (4/4): no gun's shot_cue begins with player_hit, plasma
+  < electro < ray, ray cooldown < 6; planted (ray back on the hurt cue): 3 asserts fail. Lint 13/13.
+- FILM range (`--weapon=<w> --bot=range --ppm=32`, 600 frames, before = HEAD~ weapons.json, restored,
+  tree checked), all 4 exit 0, 0 SCRIPT ERROR. 3 s of fire: centroid ray 8046 -> 10084 Hz, plasma
+  7954 -> 6366 Hz. My onset counter is not valid on a crackle (it fires on the sample's own
+  transients: ray "14 -> 11"), so "every ray round voices" rests on the cooldown arithmetic and the
+  test, not the film. Not listened to: call 7 extended.
+- Clip `zap_cues-ab-32ppm.mp4` (12 s with sound: ray before, after, plasma before, after); a still
+  checked (label, ray bolt in flight). Not in frames.json (sound pair). REPORT row, call 7, audit
+  rows, decisions.md line.
