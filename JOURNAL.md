@@ -1032,3 +1032,18 @@ NEXT (iteration 10, in order):
 6. At the freeze (08:30): re-export `windows-showcase`, smoke `RTAI.exe --headless --fixed-fps 60
    --quit-after 7400 -- --rigs --boss=servo --bot=boss --bot-human --seed=2` (expect down 7036, 188),
    final gates (lint, unit, scenarios, evidence/run.mjs, director reel), REPORT final (drop DRAFT).
+- 02:08 GATES director reel on c8ff4375 (`--bot=reel --reel=director --loadout=pistol --rigs`,
+  headless, --fixed-fps 60): **19/19 chapters fully down, 0 SCRIPT ERROR**
+  (`evidence/servo/director-reel-it9.log`). The wrapper was stopped by the tool's 600 s
+  background limit after the last chapter (it idles to the 700 s cap, as in it6/it8); my Godot
+  process had exited (checked by command line; the other reel processes are another lane's).
+- 02:09 FILMS the phase clips at 32 px/m on 8e34d545 (human bot, seed 2, boss cam, `phase32_9.sh`;
+  p1/p2 2400 ticks, p3 2300, 0 SCRIPT ERROR): `M/servo_p{1,2,3}_*_32ppm_it9.mp4`, replacing the it7
+  ones (deleted). **Looked at** the 12-key sheets (`M/frames/servo_p{1,2,3}_keys_32ppm_it9.png`):
+  p2: beam, rings, the running conveyor, Servo hopping to the bays and back to the yard's
+  bottom-right corner; p3: one wing, hot-dash lanes, down at 1930 with the spill. FOUND: at the
+  defeat he stands in the yard's top-left corner, half off the screen's left edge (the boss cam's
+  keep_in holds him only between the HUD bands vertically; the x margin loses to the floor clamp
+  there?). To check in it10 (view only, framework BossCam).
+- NEXT 2 above is done (the phase re-films are in frames.json). Add to NEXT: 2b. the boss cam at
+  the yard's left edge (p3 defeat, tick ~1930-2300): measure, then keep_in's x if it is the cause.
