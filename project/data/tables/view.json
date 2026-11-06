@@ -16,9 +16,16 @@
       "pitch_deg": 90
     },
     {
+      "cards": true,
       "height_k": 1,
       "id": "tilt",
-      "note": "the slight angle change, the main candidate (pitch picked from the 75 / 65 / 55 stills)",
+      "note": "the main candidate (DECISION it5): 55 degrees with the upright facing cards (Rivet, King, gang, patrol cop); picked from the 65 / 55 / 45 stills at 32 px/m: 65 barely differs from top, 45 squashes the ground to 71 % and the top-down limbs read squat",
+      "pitch_deg": 55
+    },
+    {
+      "height_k": 1,
+      "id": "tilt65",
+      "note": "pitch study: 65 degrees, no cards (the it2 `tilt`)",
       "pitch_deg": 65
     },
     {
