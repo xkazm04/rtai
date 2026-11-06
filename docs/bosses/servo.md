@@ -39,7 +39,10 @@ mistaken for a cop (no blue), a car (legs and pads move) or the crowd.
   as before). Since iteration 14 the pads' rims ring in the sheet's ink and copper hazard stripes
   (`ServoRig.PAD_ART`, `tools/art/servo_pad_rim.py`), and the legs stand parallel under the torso
   between the pads, pad | leg | leg | pad like the sheet's top view (`ServoRig.LEG_SPLAY_M` 0.25,
-  `KNEE_OUT_M` 0.2; were 0.9 / 0.5, splayed).
+  `KNEE_OUT_M` 0.2; were 0.9 / 0.5, splayed). Since iteration 19 the pads hold square to the
+  body, octagons like the sheet's, and the rotor's spin-up (any tell, a dash, the transition,
+  the defeat's wind-down) shows as pale blades blurring inside them (`ServoPad.TURN` false; true
+  = it8-it18, the whole pad turning, a round wheel at 32 px/m).
 - The drone: a small quad-rotor with a CS parcel slung below; ~0.7 m across (22 px at 32 px/m),
   four rotor discs read as a + shape; its **shadow on the ground** is the read of where it is,
   offset by its height.

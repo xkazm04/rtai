@@ -13,7 +13,7 @@ indexed in `M/frames.json`. Design: `docs/bosses/servo.md`. Journal: `JOURNAL.md
   ghosts and Rivet's weapons play on him.
 - **The body**: a cutout rig from Codex part sheets (`tools/art/servo_parts.py`). The 3-row rack
   wings are each one frame (`tools/art/servo_rack3.py`), set 0.94 m apart (`servo.json
-  rack.spine_m`) by a heavy 1.5 m central spine of tan steel with stacked plated boxes and its hose cap, the sheet's top view; round hover pads on long arms, walker legs, and a visor head that glows vermilion
+  rack.spine_m`) by a heavy 1.5 m central spine of tan steel with stacked plated boxes and its hose cap, the sheet's top view; octagonal hover pads square to the body on long arms (their rotors blur inside them when he revs for a tell), walker legs, and a visor head that glows vermilion
   only during a tell. The rack is its own animated layer: each full bay holds a docked quad drone (a cream hub and rotor rings on the art's bays, the sheet's look; the flying drone is the same hub and four rotors, a kraft parcel slung under it toward its shadow, which falls into its ring as the same box), drones launch from it, their bays go dark, and refill. Phase 3
   blows a wing off. The defeat: a flash, the pads spin down, the body slumps and greys out, the
   drones spill, the visor flickers out in cream.
@@ -62,6 +62,7 @@ The rotor dash checked against a reading player (it6): every tell read but 18-32
 16. The hover pads ring in the sheet's ink and copper hazard stripes (default) vs the it13 cut's copper on mid brown, which read as one brown band at 32 px/m: `ServoRig.PAD_ART` &"pad_hazard" / &"pad" (render only; `tools/art/servo_pad_rim.py` re-inks the installed cut, no image job). Still: `M/frames/servo_pad_hazard_ab_it14.png` (the sheet; 32 px/m before | after; 48 px/m before | after).
 17. The legs stand parallel under the torso like the sheet's top view, pad | leg | leg | pad (default) vs splayed out toward the pads, crossing the pad arms (it13): `ServoRig.LEG_SPLAY_M` / `KNEE_OUT_M` 0.25 / 0.2 vs 0.9 / 0.5 (render only). Still: `M/frames/servo_legs_stance_ab_it14.png` (the sheet; 32/48 px/m before | after; the walk's keys).
 18. The carried parcel is a kraft box slung under each drone, shown round the hub toward its shadow, and a dropped parcel falls into its ring as the same box over a closing shadow (default, it18) vs the it16 cream square on the hub, nothing seen falling: `ServoDraw.SLUNG_PARCEL` true / false (render only; `PARCEL_M` 0.62, `SLING_M` 0.5). Still: `M/frames/servo_slung_parcel_ab_it18.png` (48 px/m at 2x, it16 left, it18 right; then 32 px/m 1x); clip `M/servo_drone_wave_scan_drop_dodge_48ppm_it18.mp4`.
+19. The hover pads hold square to the body, the sheet's octagons, and the rotor's spin-up shows as pale blades inside them on every tell, dash and wind-down (default, it19) vs the it18 pads turning whole with the rotor, a round wheel at 32 px/m: `ServoPad.TURN` false / true (render only). Still: `M/frames/servo_pad_square_ab_it19.png` (48 px/m at 1.5x, it18 left, it19 right, at the scan and dash windups; then it19 at 32 px/m).
 
 Exe (exported it10 on f430d3a2, re-exported at the freeze): `build/export/windows/RTAI.exe` in the
 worktree (`windows-showcase` preset, boots into the arena). Lines: `RTAI.exe -- --rigs --boss=servo`,

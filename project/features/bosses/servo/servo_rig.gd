@@ -50,12 +50,14 @@ var _fall: ServoFall = ServoFall.new()
 var _shift: ServoShift = ServoShift.new()
 var _spine: ServoSpine = ServoSpine.new()
 var _bays: ServoBays = ServoBays.new()
+var _pad: ServoPad = ServoPad.new()
 
 
 func _ready() -> void:
 	for n: StringName in PARTS:
 		_tex[n] = load(ART % n) as Texture2D
 	_tex[PAD_ART] = load(ART % PAD_ART) as Texture2D
+	_pad.tex = _tex[PAD_ART]
 	_spine.cap = _tex[&"head"]
 
 
@@ -75,10 +77,11 @@ func pose(p_tick: int) -> void:
 		_flash = FLASH_TICKS
 	_flash = maxi(_flash - 1, 0)
 	if _down() >= 0:
-		_spin += ServoFall.spin(_down())
+		_pad.rate = ServoFall.spin(_down())
 	else:
 		var rev: bool = fight.state == BossFight.State.TRANSITION or _stage(&"active", true)
-		_spin += 0.9 if rev or _stage(&"windup", true) else 0.15
+		_pad.rate = 0.9 if rev or _stage(&"windup", true) else 0.15
+	_spin += _pad.rate
 	queue_redraw()
 
 
@@ -102,12 +105,15 @@ func _draw() -> void:
 		_leg(o, fwd, side, s, tint)
 	var pad_w: float = PAD_OUT_M - (ServoFall.pad_in_m(dt) if dt >= 0 else 0.0)
 	var pad_k: float = k * (ServoFall.pad_k(dt) if dt >= 0 else 1.0)
+	_pad.px = px
+	_pad.spin = _spin
+	_pad.tint = tint
 	for s: float in [-1.0, 1.0]:
 		var pad: Vector2 = o + side * s * pad_w + fwd * PAD_AHEAD_M
 		_strut(&"arm", o + side * s * 0.9 + fwd * 0.2, pad, tint)
-		_part(PAD_ART, pad, fwd.angle() - PI / 2 + _spin * s * 0.1, pad_k, tint)
+		_pad.draw(self, pad, fwd.angle() - PI / 2, s, pad_k)
 		if _stage(&"recovery", false):
-			_steam(pad)
+			_pad.steam(self, pad, tick)
 	_part(&"pelvis", o + fwd * 0.5, fwd.angle() - PI / 2, k, tint)
 	_wings(o, fwd, side, k, tint)
 	_spine.draw(self, o, fwd, k, tint)
@@ -238,13 +244,6 @@ func _visor(at: Vector2, rot: float) -> void:
 	var c: Vector2 = (at + dir * 0.32) * px
 	var half: Vector2 = dir.orthogonal() * 0.25 * px
 	draw_line(c - half, c + half, _pal.color(&"vermilion"), w)
-
-
-func _steam(at: Vector2) -> void:
-	var a: float = 0.35 + 0.15 * sin(tick * 0.4)
-	for j: int in 3:
-		var off: Vector2 = Vector2.from_angle(tick * 0.05 + j * TAU / 3.0) * 0.5
-		draw_circle((at + off) * px, (0.3 + 0.08 * j) * px, Color(_pal.color(&"paper"), a))
 
 
 ## Anticipation and follow-through along the facing, metres.
