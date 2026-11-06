@@ -1256,3 +1256,10 @@ NEXT (written 04:48, for iteration 15):
    whether a pullback row for `chainsaw` with arm_back 0 reads, or leave it); the claw's second
    blow (windup 4: almost no cock visible, a sim limit); Dent read 3 (the camera call); the ram heap
    (call h, not view-buildable). Call (b) only on the owner's word.
+- TRIED 04:52, not landed: the chainsaw's anticipation via `swing.pullback.chainsaw` 0.7 (arm_back
+  0; a working-tree data edit, never committed). 48 px/m lone chapter, `--pullback=off` over the
+  after, frames 54-72 every 2nd: near identical. The saw's raised arc (MeleeSwing from strike_t)
+  carries the wind-up, the torso twist under it does not show. Reverted (`git checkout HEAD --
+  melee_marks.json`, my own edit). A real chainsaw lever would be the swing arc's lift
+  (MeleeSwing), i.e. the d7 blade arc: leave it (the brief keeps the arc measured from the forearm).
+  Films deleted. NEXT 4 updated: drop the chainsaw pullback idea.
