@@ -424,3 +424,8 @@ arena path), `sprite-and-atlas-production` (stack slices from existing art, no n
   300, 0 SCRIPT ERROR each; replaces it5). LOOKED: tilt cops capped and upright, barrier south
   faces, props cast shadows; ped heads without a card still top-down; parked sedans flat.
 - GATE director reel started 06:39 on 16d83cbd (log in scratch, snapshot into it12 when 19 land).
+- GATE director reel on 16d83cbd (switch off, headless; started 06:36, not 06:39): 19/19 chapters
+  fully down, 0 SCRIPT ERROR (`evidence/view/it12/director-reel-19of19.log`, snapshot once all 19
+  landed; the reel idles to its 840 s timeout). It12 gates on HEAD's code: lint 13/13, unit 1186/0,
+  reel 19/19; evidence/run.mjs all PASS on 52e72590 (before the cast shadows). Scenarios on the
+  cast-shadow code NOT re-run yet.

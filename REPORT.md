@@ -77,4 +77,4 @@ fully down, 0 SCRIPT ERROR. Iteration 12: `node tools/evidence/run.mjs --no-benc
 PASS (lint, unit 1181, scenarios 52, parity bit-exact, selftest look goldens 11/11 + block 5/5;
 `evidence/view/it12/evidence-run.log`); unit 1186/0 after the cast shadows. An earlier run at
 06:02 (no commit) hit the known `scenario_city_chase` nav-budget flake; the re-run passed.
-To re-run on the final HEAD: scenarios, the director reel, evidence/run.mjs. Bench: not run.
+Director reel on 16d83cbd (it12, cast shadows in): 19/19 fully down, 0 SCRIPT ERROR. To re-run on the final HEAD: scenarios, evidence/run.mjs. Bench: not run.
