@@ -1236,11 +1236,15 @@ edges, under the torso).
   it10's (deleted); every phase clip and the target still are it12; frames.json 15 (all exist).
   The full fight clip shows the 0.42 m loops (same tick-exact fight).
 
+- 03:56 FILM the full fight re-filmed on d7617e57 (the 0.55 m loops): down **7036, 188**, 0 SCRIPT
+  ERROR, identical. **Looked at** the 12 keys: same framing as the 03:31 cut (key 4 whole at the
+  left edge). `M/servo_fight_bot_human_32ppm_it12.mp4` + keys replaced; NEXT 2 below is done.
+  Session ends with everything committed (scratch avis deleted).
+
 NEXT (iteration 13, in order):
 1. Merge n7-king if it moved (last merged 3e3c0d61 as f28e1ad1; JOURNAL/REPORT add/add: ours).
    Its JOURNAL has my FYI REQUEST on `BossCam.BOSS_MARGIN_X_M` 5.5.
-2. Optional: re-film the full fight on the 0.55 m loops (`scratch/servo/full32_12.sh` then
-   `post_full12.sh`; expect 7036, 188), look at 12 keys.
+2. (done at 03:56) the full fight is on the final it12 body.
 3. Weakest item by the target still: the rail's round bottom is hidden under the torso, and the
    sheet's pads carry bright hazard stripes round their rims (ours are copper-ringed discs):
    compare `M/frames/servo_target_vs_game_32ppm_it12.png` and pick one, render only, A/B at 48/32.
