@@ -4,10 +4,13 @@
 // then the look golden frames (dev/selftest/look_golden.gd, --fixed-fps 60): every look profile at
 // 32 / 48 / 64 px/m diffed against tests/golden/look.
 //   node tools/selftest/run.mjs
-import { existsSync, mkdirSync, readFileSync, rmSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { ROOT, godotBin, run } from '../lib/repo.mjs';
+import { ROOT } from '../lib/repo.mjs';
+import { removeStale, runGodot } from '../lib/godot.mjs';
+
+const windowed = (args) => runGodot(args, { headless: false, timeoutMs: 180000 });
 
 export const RESULT_NAME = 'selftest-result.json';
 export const GOLDEN_NAME = 'look-golden-result.json';
@@ -20,11 +23,11 @@ function siteDirs(outDir, out, site) {
 }
 
 /** The look golden frames: { ok, frames, summary }; frames is [] when it did not run. */
-export function runLookGolden(outDir0, out0, site = 'junction') {
+export async function runLookGolden(outDir0, out0, site = 'junction') {
   const [outDir, out, siteArg] = siteDirs(outDir0, out0, site);
-  rmSync(join(outDir, GOLDEN_NAME), { force: true });
-  const res = run(godotBin(), ['--fixed-fps', '60', '--path', 'project', 'res://dev/selftest/look_golden.tscn', '--',
-    `--out=${out}`, ...siteArg], { cwd: ROOT, timeout: 180000 });
+  removeStale(join(outDir, GOLDEN_NAME));
+  const res = await windowed(['--fixed-fps', '60', 'res://dev/selftest/look_golden.tscn', '--',
+    `--out=${out}`, ...siteArg]);
   const file = join(outDir, GOLDEN_NAME);
   if (!existsSync(file)) return { ok: false, frames: [], summary: `look goldens: no result (exit ${res.status})` };
   const r = JSON.parse(readFileSync(file, 'utf8'));
@@ -53,11 +56,11 @@ export function judgeAccents(offenders, debtRows) {
 
 /** The colour-doctrine audit (dev/selftest/accent_audit.gd). Gating: an offender not covered by
  *  accent_debt.json (or above its max_px) fails the selftest. { ok, frames, offenders, summary }. */
-export function runAccentAudit(outDir0, out0, site = 'junction') {
+export async function runAccentAudit(outDir0, out0, site = 'junction') {
   const [outDir, out, siteArg] = siteDirs(outDir0, out0, site);
-  rmSync(join(outDir, 'accent-audit.json'), { force: true });
-  run(godotBin(), ['--fixed-fps', '60', '--path', 'project', 'res://dev/selftest/accent_audit.tscn', '--', `--out=${out}`,
-    ...siteArg], { cwd: ROOT, timeout: 180000 });
+  removeStale(join(outDir, 'accent-audit.json'));
+  await windowed(['--fixed-fps', '60', 'res://dev/selftest/accent_audit.tscn', '--', `--out=${out}`,
+    ...siteArg]);
   const file = join(outDir, 'accent-audit.json');
   if (!existsSync(file)) return { ok: false, frames: [], offenders: [], summary: 'accent audit: no result' };
   const r = JSON.parse(readFileSync(file, 'utf8'));
@@ -83,10 +86,10 @@ export function runAccentAudit(outDir0, out0, site = 'junction') {
 
 /** The print pass's world lock (dev/selftest/world_lock.gd): the paused junction panned by a whole
  *  number of px at 32 / 48 / 64 px/m must move rigidly (world_px fed every frame). Gating. */
-export function runWorldLock(outDir, out) {
-  rmSync(join(outDir, 'world-lock.json'), { force: true });
-  run(godotBin(), ['--path', 'project', 'res://dev/selftest/world_lock.tscn', '--', `--out=${out}`],
-    { cwd: ROOT, timeout: 180000 });
+export async function runWorldLock(outDir, out) {
+  removeStale(join(outDir, 'world-lock.json'));
+  await windowed(['res://dev/selftest/world_lock.tscn', '--', `--out=${out}`]);
+
   const file = join(outDir, 'world-lock.json');
   if (!existsSync(file)) return { ok: false, frames: [], summary: 'world lock: no result' };
   const r = JSON.parse(readFileSync(file, 'utf8'));
@@ -96,14 +99,14 @@ export function runWorldLock(outDir, out) {
     summary: `world lock ${r.ok ? 'holds' : 'SWIMS'} (${detail} of the overlap differs after a pan, max ${r.max_share * 100} %)` };
 }
 
-export function runSelftest(outDir) {
+export async function runSelftest(outDir) {
   mkdirSync(outDir, { recursive: true });
   const out = outDir.replace(/\\/g, '/');
   for (const stale of [RESULT_NAME, 'selftest-32ppm.png', 'selftest-48ppm.png']) {
-    rmSync(join(outDir, stale), { force: true });
+    removeStale(join(outDir, stale));
   }
-  const res = run(godotBin(), ['--path', 'project', 'res://dev/selftest/city_selftest.tscn', '--', `--out=${out}`],
-    { cwd: ROOT, timeout: 180000 });
+  const res = await windowed(['res://dev/selftest/city_selftest.tscn', '--', `--out=${out}`]);
+
   const file = join(outDir, RESULT_NAME);
   if (!existsSync(file)) {
     return { ok: false, summary: `selftest: no result (exit ${res.status}; needs a display)` };
@@ -114,13 +117,13 @@ export function runSelftest(outDir) {
   const cityOk = res.status === 0 && r.ok === true && pngs.length === frames.length && frames.length > 0;
   const detail = frames.map((f) => `${f.ppm} px/m ${f.ok ? 'ok' : `FAIL (${f.why})`}, ${f.visible_actors} actors, `
     + `${f.distinct_colours} colours`).join('; ');
-  const gold = runLookGolden(outDir, out);
-  const accents = runAccentAudit(outDir, out);
+  const gold = await runLookGolden(outDir, out);
+  const accents = await runAccentAudit(outDir, out);
   // the same gates at a street between two built blocks (roofs, cast shadows, kerb props): the
   // junction alone never saw a prop's vermilion or a roof's shadow
-  const blockGold = runLookGolden(outDir, out, 'block');
-  const blockAccents = runAccentAudit(outDir, out, 'block');
-  const lock = runWorldLock(outDir, out);
+  const blockGold = await runLookGolden(outDir, out, 'block');
+  const blockAccents = await runAccentAudit(outDir, out, 'block');
+  const lock = await runWorldLock(outDir, out);
   const summary = `selftest: D4 city frames ${cityOk ? 'rendered' : 'FAILED'} (${detail}); ${r.art_loaded} art textures, `
     + `${r.placeholders} placeholders, prewarm ${Math.round(r.prewarm_ms)} ms; ${gold.summary}; ${accents.summary}; `
     + `${blockGold.summary}; ${blockAccents.summary}; ${lock.summary}`;
@@ -144,7 +147,7 @@ export function runSelftest(outDir) {
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  const r = runSelftest(join(ROOT, 'build', 'selftest'));
+  const r = await runSelftest(join(ROOT, 'build', 'selftest'));
   console.log(r.summary);
   process.exit(r.ok ? 0 : 1);
 }

@@ -3,6 +3,7 @@ import { execFileSync, spawnSync } from 'node:child_process';
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { resolveGodot } from './godot.mjs';
 
 export const ROOT = fileURLToPath(new URL('../..', import.meta.url)).replace(/[\\/]$/, '');
 export const PROJECT = join(ROOT, 'project');
@@ -40,9 +41,10 @@ export function git(...args) {
 /** Tracked or untracked-but-not-ignored changes, as porcelain lines. */
 export const dirtyLines = () => git('status', '--porcelain').split('\n').filter(Boolean);
 
-/** GODOT_BIN, then POF_GODOT_BIN, then `godot` on PATH. */
+/** The resolved Godot binary (discovery lives in godot.mjs); the env/`godot` fallback when none verified. */
 export function godotBin() {
-  return process.env.GODOT_BIN || process.env.POF_GODOT_BIN || 'godot';
+  const g = resolveGodot();
+  return g.ok ? g.bin : process.env.GODOT_BIN || process.env.POF_GODOT_BIN || 'godot';
 }
 
 export function godotVersion(bin = godotBin()) {

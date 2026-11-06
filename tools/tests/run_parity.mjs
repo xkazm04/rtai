@@ -5,17 +5,20 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { ROOT, godotBin, run } from '../lib/repo.mjs';
+import { ROOT } from '../lib/repo.mjs';
+import { describe, removeStale, runGodot } from '../lib/godot.mjs';
 
 export const RESULT_NAME = 'parity-result.json';
 export const LOG_NAME = 'parity.log';
 
-export function runParity(outDir, steps = 1200) {
+export async function runParity(outDir, steps = 1200) {
   mkdirSync(outDir, { recursive: true });
   const out = join(outDir, RESULT_NAME).replace(/\\/g, '/');
-  const res = run(godotBin(), ['--headless', '--path', 'project', '-s', 'res://tests/parity/run_parity.gd',
-    '--', `--steps=${steps}`, `--out=${out}`], { cwd: ROOT });
-  writeFileSync(join(outDir, LOG_NAME), res.out, 'utf8');
+  removeStale(join(outDir, RESULT_NAME));
+  const res = await runGodot(['-s', 'res://tests/parity/run_parity.gd', '--', `--steps=${steps}`, `--out=${out}`],
+    { name: 'parity' });
+  writeFileSync(join(outDir, LOG_NAME), `===== parity (${describe(res)})\n${res.out}`, 'utf8');
+  if (res.timedOut) return { ok: false, summary: `parity: ${describe(res)}`, artifacts: [LOG_NAME] };
   if (res.status === 2 || !existsSync(out)) {
     return { ok: false, summary: 'parity: native CitySim not loaded (build native/ and --import first)', artifacts: [LOG_NAME] };
   }
@@ -38,7 +41,7 @@ export function runParity(outDir, steps = 1200) {
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  const r = runParity(join(ROOT, 'build', 'test-results'));
+  const r = await runParity(join(ROOT, 'build', 'test-results'));
   console.log(r.summary);
   process.exit(r.ok ? 0 : 1);
 }

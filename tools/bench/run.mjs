@@ -7,7 +7,8 @@
 import { existsSync, mkdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { ROOT, godotBin, run } from '../lib/repo.mjs';
+import { ROOT } from '../lib/repo.mjs';
+import { describe, runGodot, runProcess } from '../lib/godot.mjs';
 
 // Hard limits that fail the job (section 20); worstFrameMs has none (TEL-03 records > 25 ms).
 export const LIMITS = { p99CpuMs: 7, low1Fps: 45, worstSwapMs: 50 };
@@ -25,27 +26,27 @@ const SCENARIOS = [
 const EXE = join(ROOT, 'build', 'export', 'windows-bench', 'RTAI-bench.exe');
 const NATIVE_DLL = join(ROOT, 'project', 'native', 'bin', 'gtai_sim.windows.template_release.x86_64.dll');
 
-const godot = (args, opts = {}) => run(godotBin(), args, { cwd: ROOT, ...opts });
+const godot = (args, opts = {}) => runGodot(args, { headless: false, ...opts });
 
-function prepare(headless) {
-  const bake = godot(['--headless', '--path', 'project', '-s', 'res://dev/bake_city.gd']);
+async function prepare(headless) {
+  const bake = await godot(['--headless', '-s', 'res://dev/bake_city.gd']);
   if (bake.status !== 0) return { error: `bake failed: ${bake.out.slice(-300)}` };
   if (headless) return { mode: 'headless' };
   mkdirSync(join(ROOT, 'build', 'export', 'windows-bench'), { recursive: true }); // Godot will not create it
-  const exp = godot(['--headless', '--path', 'project', '--export-release', 'windows-bench',
+  const exp = await godot(['--headless', '--export-release', 'windows-bench',
     '../build/export/windows-bench/RTAI-bench.exe']);
   if (exp.status !== 0 || !existsSync(EXE)) return { error: `export failed: ${exp.out.slice(-300)}` };
   return { mode: 'exported' };
 }
 
-function runScenario(sc, mode, secs, outDir) {
+async function runScenario(sc, mode, secs, outDir) {
   const out = join(outDir, `bench-${sc.name}.json`).replace(/\\/g, '/');
   const user = ['--', `--scenario=${sc.scenario}`, `--label=${sc.name}`, `--secs=${secs}`, `--zoom=${sc.zoom}`, `--vsync=${sc.vsync ?? 'disabled'}`, `--out=${out}`];
   const res = mode === 'exported'
-    ? run(EXE, user, { cwd: join(ROOT, 'build', 'export', 'windows-bench'), timeout: (secs + 120) * 1000 })
-    : godot(['--headless', '--fixed-fps', '60', '--path', 'project', 'res://dev/bench/city_bench.tscn', ...user],
-      { timeout: (secs + 120) * 1000 });
-  if (res.status !== 0 || !existsSync(out)) return { error: `${sc.name} exit ${res.status}` };
+    ? await runProcess(EXE, user, { cwd: join(ROOT, 'build', 'export', 'windows-bench'), timeoutMs: (secs + 120) * 1000 })
+    : await godot(['--headless', '--fixed-fps', '60', 'res://dev/bench/city_bench.tscn', ...user],
+      { timeoutMs: (secs + 120) * 1000 });
+  if (res.status !== 0 || !existsSync(out)) return { error: `${sc.name} ${describe(res)}` };
   return { data: JSON.parse(readFileSync(out, 'utf8')), file: `bench-${sc.name}.json` };
 }
 
@@ -86,11 +87,11 @@ function combine(runs, mode) {
 }
 
 /** One pass over every scenario; {byName, files} or {error}. */
-function onePass(mode, secs, outDir, pass) {
+async function onePass(mode, secs, outDir, pass) {
   const byName = {};
   const files = [];
   for (const sc of SCENARIOS) {
-    const r = runScenario({ ...sc, name: sc.name }, mode, secs, outDir);
+    const r = await runScenario({ ...sc, name: sc.name }, mode, secs, outDir);
     if (r.error) return { error: `${r.error} (${mode}, run ${pass})` };
     if (r.data.backend !== 'native') return { error: `${sc.name} ran on ${r.data.backend}` };
     byName[sc.name] = r.data;
@@ -100,17 +101,17 @@ function onePass(mode, secs, outDir, pass) {
 }
 
 // Gate: section 20 hard limits on every run, and F-07's "no unexplained frame over 50 ms".
-export function runBench(outDir, { headless = false, secs = 60, runs = 3 } = {}) {
+export async function runBench(outDir, { headless = false, secs = 60, runs = 3 } = {}) {
   mkdirSync(outDir, { recursive: true });
   if (!existsSync(NATIVE_DLL)) {
     return { ok: false, summary: 'bench: native release library not built (scons in native/)' };
   }
-  const prep = prepare(headless || process.platform !== 'win32');
+  const prep = await prepare(headless || process.platform !== 'win32');
   if (prep.error) return { ok: false, summary: `bench: ${prep.error}` };
   const passes = [];
   let artifacts = [];
   for (let pass = 1; pass <= runs; pass += 1) {
-    const r = onePass(prep.mode, secs, outDir, pass);
+    const r = await onePass(prep.mode, secs, outDir, pass);
     if (r.error) return { ok: false, summary: `bench: ${r.error}` };
     passes.push(r.byName);
     artifacts = r.files;
@@ -134,7 +135,7 @@ export function runBench(outDir, { headless = false, secs = 60, runs = 3 } = {})
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const arg = (name, dflt) => Number((process.argv.find((a) => a.startsWith(`${name}=`)) ?? `=${dflt}`).split('=')[1]);
-  const res = runBench(join(ROOT, 'build', 'bench'), {
+  const res = await runBench(join(ROOT, 'build', 'bench'), {
     headless: process.argv.includes('--headless'), secs: arg('--secs', 60), runs: arg('--runs', 3),
   });
   console.log(res.summary);

@@ -27,3 +27,4 @@ project/data/generated/city/
 
 # /perfect loop vault (local working memory; overlay is .claude/perfect/)
 .perfect/
+/tools/local.json

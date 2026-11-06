@@ -26,7 +26,7 @@ const FLAGS = ['--allow-dirty', '--no-parity', '--no-bench', '--bench-headless',
 const allowDirty = process.argv.includes('--allow-dirty');
 const unknown = process.argv.slice(2).filter((a) => !FLAGS.includes(a));
 
-function main() {
+async function main() {
   if (unknown.length) {
     console.error(`evidence: unknown argument(s) ${unknown.join(' ')}`);
     return 2;
@@ -58,7 +58,7 @@ function main() {
 
   let unit;
   if (version) {
-    unit = runUnit(OUT);
+    unit = await runUnit(OUT);
     const churn = dirtyLines().filter((l) => !before.includes(l));
     if (churn.length) {
       unit.ok = false;
@@ -68,7 +68,7 @@ function main() {
     unit = { ok: false, summary: `unit-tests: Godot not found (GODOT_BIN=${godotBin()})` };
   }
   envelopes.push(makeEnvelope({ ...base, kind: 'unit-tests', ...unit, summary: unit.summary + dirtyNote }));
-  for (const [kind, res] of laterKinds(version)) {
+  for (const [kind, res] of await laterKinds(version)) {
     envelopes.push(makeEnvelope({ ...base, kind, ...res, summary: res.summary + dirtyNote }));
   }
 
@@ -83,16 +83,16 @@ function main() {
 }
 
 /** scenario-tests, then parity and bench unless skipped. */
-function laterKinds(version) {
+async function laterKinds(version) {
   const missing = (k) => ({ ok: false, summary: `${k}: Godot not found (GODOT_BIN=${godotBin()})` });
   if (!version) return [['scenario-tests', missing('scenario-tests')], ['parity', missing('parity')]];
-  const out = [['scenario-tests', runScenarios(OUT)]];
-  if (!process.argv.includes('--no-parity')) out.push(['parity', runParity(OUT)]);
-  if (!process.argv.includes('--no-selftest')) out.push(['selftest', runSelftest(OUT)]);
+  const out = [['scenario-tests', await runScenarios(OUT)]];
+  if (!process.argv.includes('--no-parity')) out.push(['parity', await runParity(OUT)]);
+  if (!process.argv.includes('--no-selftest')) out.push(['selftest', await runSelftest(OUT)]);
   if (!process.argv.includes('--no-bench')) {
-    out.push(['bench', runBench(OUT, { headless: process.argv.includes('--bench-headless') })]);
+    out.push(['bench', await runBench(OUT, { headless: process.argv.includes('--bench-headless') })]);
   }
   return out;
 }
 
-process.exit(main());
+process.exit(await main());

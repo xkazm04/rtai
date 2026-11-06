@@ -3,16 +3,16 @@
 //   node tools/tests/run_unit.mjs
 // Guards GUT's silent-green hazard (a test file that fails to parse is skipped and GUT exits 0):
 // any SCRIPT ERROR / Parse Error line, or zero tests run, is a failure.
-import { mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { ROOT, godotBin, run } from '../lib/repo.mjs';
+import { ROOT } from '../lib/repo.mjs';
+import { SCRIPT_ERROR, describe, removeStale, runGodot } from '../lib/godot.mjs';
 
 export const JUNIT_NAME = 'unit-tests.junit.xml';
 export const LOG_NAME = 'unit-tests.log';
-const SCRIPT_ERROR = /SCRIPT ERROR|Parse Error|Compile Error|Failed to load script/;
 
-const godot = (args) => run(godotBin(), ['--headless', '--path', 'project', ...args], { cwd: ROOT });
+const godot = (name, args) => runGodot(args, { name });
 
 function junitCounts(xml) {
   const attr = (name) => [...xml.matchAll(new RegExp(`<testsuite [^>]*\\b${name}="(\\d+)"`, 'g'))]
@@ -23,27 +23,27 @@ function junitCounts(xml) {
   return { passed: tests - failed - skipped, failed, skipped };
 }
 
-export function runUnit(outDir) {
+export async function runUnit(outDir) {
   mkdirSync(outDir, { recursive: true });
   const junit = join(outDir, JUNIT_NAME).replace(/\\/g, '/');
-  rmSync(junit, { force: true }); // never read a previous run's tally
-  const probe = godot(['--version']);
+  removeStale(join(outDir, JUNIT_NAME)); // never read a previous run's tally
+  const probe = await godot('version', ['--version']);
   if (probe.status !== 0) {
-    const first = probe.out.split('\n')[0];
-    const summary = `unit-tests: Godot not runnable, set GODOT_BIN to the Godot 4.7.2 console binary (${first}); 0 passed, 0 failed, 0 skipped`;
+    const summary = `unit-tests: ${probe.out.split('\n')[0]}; 0 passed, 0 failed, 0 skipped`;
     return { ok: false, counts: { passed: 0, failed: 0, skipped: 0 }, summary, artifacts: [] };
   }
   const steps = [
-    ['import', godot(['--import'])],
-    ['load_all', godot(['-s', 'res://tests/load_all.gd'])],
-    ['gut', godot(['-s', 'res://addons/gut/gut_cmdln.gd', '-gconfig=res://.gutconfig.json',
+    ['import', await godot('import', ['--import'])],
+    ['load_all', await godot('load_all', ['-s', 'res://tests/load_all.gd'])],
+    ['gut', await godot('gut', ['-s', 'res://addons/gut/gut_cmdln.gd', '-gconfig=res://.gutconfig.json',
       `-gjunit_xml_file=${junit}`])],
   ];
-  const log = steps.map(([name, r]) => `===== ${name} (exit ${r.status})\n${r.out}`).join('\n');
+  const log = steps.map(([name, r]) => `===== ${name} (${describe(r)})\n${r.out}`).join('\n');
   writeFileSync(join(outDir, LOG_NAME), log, 'utf8');
   const problems = [];
   for (const [name, r] of steps) {
-    if (r.status !== 0) problems.push(`${name} exit ${r.status}`);
+    if (r.timedOut) problems.push(`${name} timed out`);
+    else if (r.status !== 0) problems.push(`${name} exit ${r.status}`);
     if (SCRIPT_ERROR.test(r.out)) problems.push(`${name} reported script errors`);
   }
   let counts = { passed: 0, failed: 0, skipped: 0 };
@@ -57,11 +57,12 @@ export function runUnit(outDir) {
   const ok = problems.length === 0;
   const tally = `${counts.passed} passed, ${counts.failed} failed, ${counts.skipped} skipped`;
   const summary = ok ? `unit-tests: ${tally} (GUT, headless)` : `unit-tests: ${problems.join('; ')} (${tally})`;
-  return { ok, counts, summary, artifacts: [JUNIT_NAME, LOG_NAME] };
+  const durationMs = steps.reduce((a, [, r]) => a + r.durationMs, 0);
+  return { ok, counts, summary, artifacts: [JUNIT_NAME, LOG_NAME], durationMs };
 }
 
 if (import.meta.url === pathToFileURL(process.argv[1]).href) {
-  const result = runUnit(join(ROOT, 'build', 'test-results'));
+  const result = await runUnit(join(ROOT, 'build', 'test-results'));
   console.log(result.summary);
   process.exit(result.ok ? 0 : 1);
 }

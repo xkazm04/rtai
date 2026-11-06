@@ -5,11 +5,11 @@
 // at least one slot must always be a valid container, the sequence numbers must never go
 // backwards across rounds, and nothing but the two slots, meta.json and a tmp may exist.
 //   node tools/tests/save_crash.mjs [rounds=12]
-import { spawn, spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { ROOT, godotBin } from '../lib/repo.mjs';
+import { ROOT } from '../lib/repo.mjs';
+import { runGodot } from '../lib/godot.mjs';
 
 const rounds = Number(process.argv[2] ?? 12);
 const dir = join(ROOT, 'build', 'save-crash');
@@ -44,11 +44,9 @@ const rows = [];
 let lastSeq = 0;
 let failures = 0;
 for (let r = 1; r <= rounds; r++) {
-  const child = spawn(godotBin(), ['--headless', '--path', 'project', '-s', 'res://dev/save_crash_writer.gd',
-    '--', `--root=${dir}`], { cwd: ROOT, stdio: 'ignore' });
+  // the launcher's timeout (process-tree kill) IS the crash, after a random moment
   const wait = 2500 + Math.floor(Math.random() * 2500);
-  await new Promise((res) => setTimeout(res, wait));
-  spawnSync('taskkill', ['/F', '/T', '/PID', String(child.pid)]);
+  await runGodot(['-s', 'res://dev/save_crash_writer.gd', '--', `--root=${dir}`], { timeoutMs: wait });
   killedAt.push(wait);
   await new Promise((res) => setTimeout(res, 300));
   const a = readSlot(join(dir, 'auto_a', 'state.sav'));
