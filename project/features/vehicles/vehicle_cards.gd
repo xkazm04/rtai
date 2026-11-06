@@ -19,8 +19,7 @@ const VIEW_DEG: float = 45.0
 ## The cross-fade window around a view boundary (degrees of heading); 0 = hard swap.
 const BLEND_DEG: float = 0.0
 const CAP: int = 256
-## Distinct dent patterns (the wear's seed range).
-const WEAR_SEEDS: int = 64
+const WEAR_SEEDS: int = 64  # distinct dent patterns (the wear's seed range)
 ## Added to a wear(): the car's light bar flashes (the shader's siren_bit; police on duty).
 const SIREN: int = 4 * WEAR_SEEDS
 ## The police cruiser's art row, and the speed (m/s) over which its light bar flashes.
@@ -28,7 +27,7 @@ const POLICE_ART: int = 8
 const DUTY_SPEED: float = 1.0
 
 static var _tex: Dictionary[String, Texture2D] = {}
-## The live cross-fade window (dev scenes try other values; the game keeps BLEND_DEG).
+## The live cross-fade window (dev scenes try others; the game keeps BLEND_DEG).
 static var blend_deg: float = BLEND_DEG
 ## How upright the card's vertical stays as it turns by the rest: 0 = the card rotates rigidly,
 ## 1 = only its long axis turns and its verticals stay screen-vertical (a yaw shear, no roll).
@@ -36,9 +35,10 @@ static var upright_k: float = 0.0
 
 ## Who stands in front of a card this frame (empty: every card in the vehicles band).
 var front: VehicleFront = VehicleFront.new()
-## The cards with someone in front of them, drawn just under the actors band. The owner parents
-## it at that z (VehicleView); unparented, begin() keeps it as this node's child.
+## The cards with someone in front, drawn just under the actors (VehicleView parents it there).
 var under: MultiMeshInstance2D = null
+## Skip cars whose ground point is off screen by more than a cell (VehicleView sets it).
+var cull: bool = false
 var _mm: MultiMesh = null
 var _mm_under: MultiMesh = null
 var _node: MultiMeshInstance2D = null
@@ -50,6 +50,7 @@ var _xfs: Array[Transform2D] = []
 var _cs: PackedColorArray = PackedColorArray()
 var _cds: PackedColorArray = PackedColorArray()
 var _below: PackedByteArray = PackedByteArray()
+var _seen: Rect2 = Rect2()
 
 
 func _init() -> void:
@@ -84,11 +85,11 @@ func begin(tex: Texture2D) -> void:
 	_cs.clear()
 	_cds.clear()
 	_below.clear()
+	_seen = VehicleCull.screen_m(self, CELL_M) if cull else Rect2()
 
 
-## The shader's wear for a car in damage state `state` (VehicleBody.State): level 0 intact (and
-## hijacked), 1 dented (D1), 2 smashed (D2), 3 burnt wreck, plus 4 x a seed from the car's `id`
-## so two damaged cars do not wear the same dents.
+## The shader's wear for VehicleBody.State `state`: 0 intact (and hijacked), 1 dented (D1), 2
+## smashed (D2), 3 burnt wreck, plus 4 x a seed from `id` (two wrecks wear different dents).
 static func wear(state: int, id: int) -> int:
 	var level: int = 0
 	match state:
@@ -106,9 +107,10 @@ static func duty(art: int, speed: float) -> int:
 	return SIREN if art == POLICE_ART and speed > DUTY_SPEED else 0
 
 
-## A car of art id `art` at `pos` (m) facing `head` (ground unit vector), tinted `tint`, worn
-## `worn` (wear(); 0 = intact).
+## A car of art id `art` at `pos` (m) facing `head` (ground unit), tinted `tint`, worn `worn`.
 func put(art: int, pos: Vector2, head: Vector2, tint: Color, worn: int = 0) -> void:
+	if _seen.has_area() and not _seen.has_point(pos):
+		return
 	var a: float = rad_to_deg(atan2(head.y, head.x))
 	var pick: Vector3 = view_of(a)
 	var turn: float = wrapf(a - pick.z, -180.0, 180.0)
@@ -122,9 +124,8 @@ func put(art: int, pos: Vector2, head: Vector2, tint: Color, worn: int = 0) -> v
 	_one(Vector2i(art, worn), pos, pick, turn, Color(tint, tint.a * w))
 
 
-## Writes the cards back to front (north to south on the ground: a car nearer the camera covers
-## the one behind it, whatever order they were put in); a card with someone in front goes to the
-## under layer.
+## Writes the cards back to front (north to south: a nearer car covers the one behind it, in any
+## put order); a card with someone in front goes to the under layer.
 func finish() -> void:
 	var order: Array[int] = back_to_front(_ys)
 	var n: Vector2i = Vector2i.ZERO
@@ -150,12 +151,11 @@ static func back_to_front(ys: PackedFloat32Array) -> Array[int]:
 	return order
 
 
-## The cards drawn this frame.
+## The cards drawn this frame (all), and those drawn under the actors (someone in front).
 func count() -> int:
 	return _n
 
 
-## The cards drawn under the actors this frame (someone in front of them).
 func count_under() -> int:
 	return _n_under
 

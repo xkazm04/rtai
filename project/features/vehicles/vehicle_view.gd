@@ -14,8 +14,7 @@ const SHADOW: Color = Color(0.09, 0.075, 0.106, 0.45)
 const WRECK_TINT: Color = Color(0.62, 0.6, 0.58, 1.0)
 const PARKED_M: float = 60.0  # n8: kerb-parked cards drawn this near the player (m)
 const CAP: int = 32
-## View lab (view.json cast_k): the roof height a cast shadow is thrown from (m).
-const CAR_H_M: float = 1.4
+const CAR_H_M: float = 1.4  # view lab (cast_k): the roof height a cast shadow is thrown from (m)
 
 var service: VehicleService = null
 ## Tyre marks under the cars (a child, drawn below the shadows).
@@ -60,6 +59,7 @@ func setup(
 	_crowd_car = car
 	cards = VehicleCards.new()
 	cards.z_index = car.z_index
+	cards.cull = true
 	add_child(cards)
 	cards.under.z_index = RenderLayers.z(&"actors") - 1
 	add_child(cards.under)
