@@ -168,6 +168,8 @@ func _parse_args() -> bool:
 			VehicleFrameSetup.grade = StringName(arg.substr(8))
 		elif arg.begins_with("--look="):
 			_look = StringName(arg.substr(7))
+		elif arg.begins_with(ViewMode.FLAG + "="):
+			pass  # read by ViewMode.shared() (n8: the cars under a tilted view)
 		else:
 			printerr("vehicle_frame: unknown argument %s" % arg)
 			return false

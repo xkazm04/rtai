@@ -20,6 +20,8 @@ const EMBER_SCALE: float = 1.3
 const FPS: float = 10.0
 const LIGHT_KIND: StringName = &"fire"
 const DAY: StringName = &"day"
+## n8: the bonnet's height (m): the fire sits on it when the car draws as a card (VehicleCards).
+const HOOD_H_M: float = 1.0
 
 var service: VehicleService = null
 ## The page's lights (optional): one held `fire` light per burning wreck.
@@ -67,10 +69,17 @@ func _draw() -> void:
 		var f: float = flame(b.wreck_t)
 		if f <= 0.0:
 			continue
-		var at: Vector2 = (b.pos + b.head * NOSE_M) * SimConst.PX_PER_M
+		var at: Vector2 = (b.pos + b.head * NOSE_M) * SimConst.PX_PER_M + hood_lift()
 		var frame: int = int(b.wreck_t * FPS) % 4
 		_cell(Vector2i((frame + b.id) % 2, 1), at - b.head * 16.0, EMBER_SCALE * f)
 		_cell(Vector2i(frame, 0), at, FLAME_SCALE * (0.75 + 0.25 * f))
+
+
+## The fire's lift onto the bonnet: only when the cars draw as cards (else ZERO: flat bodies).
+static func hood_lift() -> Vector2:
+	if VehicleCards.atlas() == null:
+		return Vector2.ZERO
+	return ViewMode.shared().lift_px(HOOD_H_M)
 
 
 ## One 2.5 m cell of the sheet centred on `at` (world px), `scale` x its size.

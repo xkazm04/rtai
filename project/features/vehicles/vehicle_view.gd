@@ -15,6 +15,8 @@ const CAR_W: float = 102.4
 const SHADOW_OFF: Vector2 = Vector2(5.12, 5.12)
 const SHADOW: Color = Color(0.09, 0.075, 0.106, 0.45)
 const WRECK_TINT: Color = Color(0.62, 0.6, 0.58, 1.0)
+## n8: the kerb-parked cards drawn around the player (m; the camera sees ~40 m across at 32 px/m).
+const PARKED_M: float = 60.0
 const CAP: int = 32
 ## View lab (view.json cast_k): the roof height a cast shadow is thrown from (m).
 const CAR_H_M: float = 1.4
@@ -24,12 +26,16 @@ var service: VehicleService = null
 var skids: VehicleSkids = VehicleSkids.new()
 ## Burning wrecks (a child, drawn over the car bodies).
 var fire: VehicleFire = VehicleFire.new()
+## n8: every car as a rotation set from art under a tilted view (null until setup).
+var cards: VehicleCards = null
 var _bodies: Array[MultiMesh] = []
 var _shadow: MultiMesh = null
 ## True when the burnt wreck atlas was handed in (else wrecks draw d2, darkened).
 var _burnt: bool = false
 ## [our node, the crowd node it mirrors]: the look may swap the crowd's material at runtime.
 var _mirrors: Array[Array] = []
+var _crowd_car: MultiMeshInstance2D = null
+var _carded: bool = false
 
 
 ## textures: one per VehicleBody.State (intact, d1, d2, hijacked, wreck); a null or missing entry
@@ -56,6 +62,10 @@ func setup(
 	fire.service = svc
 	fire.z_index = car.z_index + 1
 	add_child(fire)
+	_crowd_car = car
+	cards = VehicleCards.new()
+	cards.z_index = car.z_index
+	add_child(cards)
 
 
 func _layer(like: MultiMeshInstance2D, tex: Texture2D, z: int) -> MultiMesh:
@@ -106,6 +116,36 @@ func _process(_delta: float) -> void:
 	for k: int in _bodies.size():
 		_bodies[k].visible_instance_count = counts[k]
 	_shadow.visible_instance_count = ns
+	_draw_cards()
+
+
+## Under a tilt with art for its pitch: every car (the service's and the sim's traffic) as a card,
+## the flat body layers (ours and the crowd's) hidden; their ground shadows stay. Never touches the
+## layers in a view with no card atlas (`top` stays bit-identical).
+func _draw_cards() -> void:
+	var tex: Texture2D = VehicleCards.atlas()
+	var on: bool = tex != null
+	if on != _carded:
+		_carded = on
+		_crowd_car.visible = not on
+		for m: Array in _mirrors:
+			var mine: MultiMeshInstance2D = m[0]
+			if m[1] == _crowd_car:
+				mine.visible = not on
+	if not on:
+		return
+	cards.begin(tex)
+	for b: VehicleBody in service.cars:
+		var wreck: bool = b.state == VehicleBody.State.WRECK
+		cards.put(b.art, b.pos, b.head, WRECK_TINT if wreck else Color.WHITE)
+	var recs: PackedFloat64Array = service.world.cars_near(service.world.player_pos(), 1e6)
+	for r: int in range(0, recs.size(), VehicleWorld.CAR_STRIDE):
+		var art: int = int(recs[r + 7])
+		cards.put(
+			art, Vector2(recs[r + 2], recs[r + 3]), Vector2(recs[r + 4], recs[r + 5]), Color.WHITE
+		)
+	VehicleParked.put_near(cards, service.world.player_pos(), PARKED_M, WRECK_TINT)
+	cards.finish()
 
 
 ## The car shadow's offset: SHADOW_OFF, plus under a view's cast shadows (cast_k) the roof's
