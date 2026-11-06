@@ -59,8 +59,8 @@ var _pad: ServoPad = ServoPad.new()
 
 func _ready() -> void:
 	for n: StringName in PARTS:
-		_tex[n] = load(ART % n) as Texture2D
-	_tex[PAD_ART] = load(ART % PAD_ART) as Texture2D
+		_tex[n] = load(ServoArt.path(n)) as Texture2D  # d8: the view pitch's parts
+	_tex[PAD_ART] = load(ServoArt.path(PAD_ART)) as Texture2D
 	_pad.tex = _tex[PAD_ART]
 	_spine.cap = _tex[&"head"]
 
