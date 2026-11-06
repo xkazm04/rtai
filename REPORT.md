@@ -35,6 +35,9 @@ Gates (iteration 5, on a7f6e29d): the director reel headless went `top` 19/19 an
 chapter all down, 0 SCRIPT ERROR. Unit: 1409 passed, 0 failed. Lint: 15/15. Re-run on 81548c4e: see the
 journal; FREEZE: put the final numbers and the evidence run here.
 
+5. **Molotov (iteration 5, cddcc340):** the 55 bottle is drawn at 1.2x; at 1x it read tiny in the claw at
+   48 px/m, and at 1.35x it read as a club (`molotov_tilt_48_size_k.png`).
+
 ## What does not work / open
 - **Electro baton:** none of the 55 parts beats the top-down part at 48 px/m. That is an owner call (below).
 - **Long guns at 32 px/m:** the two-tone cells are better than the re-tone, but still larger than the
@@ -72,5 +75,4 @@ FREEZE: re-export on the final head and name it here.
 
 ## Next steps
 - Baton: a pale-wrap regeneration with a brass band, filmed in its chapter; or take the owner's pick.
-- Molotov at 48: the bottle in the claw is small. Try size_k 1.2 on its row.
 - Electro arc: score the shock's origin frame by frame in the electro_chain chapter.
