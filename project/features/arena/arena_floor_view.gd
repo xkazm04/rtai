@@ -110,19 +110,18 @@ func _props(ci: CanvasItem, arena: ArenaStage) -> void:
 
 func _prop(ci: CanvasItem, at: Vector2, p: ArenaStation.Prop) -> void:
 	var fill: Color = PROP_FILL.get(p.kind, Ink.WASH)
+	var side: Color = (BARRIER_FILL if _city and p.kind == "wall_high" else fill).darkened(0.45)
 	var r: Rect2 = Rect2(Ink.px(at - p.size * 0.5), p.size * Ink.PX_PER_M)
 	var h_m: float = PROP_H_M.get(p.kind, 0.0)
 	var up: Vector2 = ViewMode.shared().lift_at(ci.get_global_transform() * r.get_center(), h_m)
 	if ViewMode.shared().eye_h_m > 0.0 and up != Vector2.ZERO:  # top_lift: swept, leaning out
 		for i: int in PROP_SLICES:
-			ci.draw_rect(
-				Rect2(r.position + up * (float(i) / PROP_SLICES), r.size), fill.darkened(0.45)
-			)
+			ci.draw_rect(Rect2(r.position + up * (float(i) / PROP_SLICES), r.size), side)
 		r.position += up
 		ci.draw_rect(r.grow(1.0), Ink.INK, false, Ink.LINE_PX)
 	elif up != Vector2.ZERO:  # view lab: the south face, then the top at the prop's height
 		var face: Rect2 = Rect2(r.position.x, r.end.y + up.y, r.size.x, -up.y)
-		ci.draw_rect(face, fill.darkened(0.45), true)
+		ci.draw_rect(face, side, true)  # the city barrier's face is its own concrete
 		ci.draw_rect(face, Ink.INK, false, Ink.LINE_PX)
 		r.position += up
 	if _city and p.kind == "wall_high":
