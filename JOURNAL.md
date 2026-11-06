@@ -94,7 +94,7 @@ NEXT (superseded below):
   wall-clock nav budget (max 4003 us). Render-only changes; re-run alone via `node tools/tests/run_scenarios.mjs
   --only=scenario_city_chase` (contention-aware) owed.
 
-NEXT:
+NEXT (superseded below):
 1. Re-run city_chase alone (contention-aware runner); full scenarios result in JOURNAL.
 2. Image round (when the lock is free): Dent and Tonnage 55 production sheets on MAGENTA (heads/busts
    5 facings), despilled wisps; then Dent's card (SET_CARDS["p55"]["dent"]) and a Tonnage south face.
@@ -102,3 +102,26 @@ NEXT:
 4. Rivet bust: trim the arm sliver in facing 1 (collar's left) and check facing 3's shoulder disc; a
    64 px/m pistol close-up (`--bot=reel` chapter pistol at --ppm=64).
 5. Ohm lift (split ohm_rig.gd first), Kerf last from v2; then order-probe for the King accents / overlays.
+
+### 14:46-14:55 (same session)
+- GATE city_chase re-run alone via `node tools/tests/run_scenarios.mjs --only=scenario_city_chase`: PASS.
+  So scenarios = 52 ran, 51 pass + the contended budget miss passing alone.
+- MILESTONE 1fcba322: Rivet's p55 bust re-inked: `rivet_bust.py` closes every edge the mask cut through
+  opaque art with a 4 px ink line (the chest's lower edge, the arm/shoulder cuts); facing 1's collar band
+  no longer takes the right shoulder's top. LOOKED at 64 px/m (x4 still in gtai-masters/d8/chars/).
+- STAGED image round `gtai-d8/scratch/chars/round1/` (jobs.json + refs; gen.mjs copied to
+  scratch/chars/gen.mjs): Dent's 55 bust sheet and Tonnage's 55 legless body sheet, both on MAGENTA. Not
+  run: the lock was held by `assets-lane` (14:33, 14:41, 14:49).
+- frames.json: 10 entries.
+
+NEXT:
+1. If `gtai-n5/image.lock` is free: `IMAGE_LOCK=C:/Users/kazda/kiro/gtai-n5/image.lock node
+   gtai-d8/scratch/chars/gen.mjs gtai-d8/scratch/chars/round1` in the background (gen.mjs waits on the
+   lock forever: check the lock first, stop it after 10 min). Then a magenta key (cut_facings keys green
+   only: add a --key=magenta option or a key in rivet_bust-like dent_bust.py), despill the wisps, and
+   wire `SET_CARDS["p55"]["dent"]` (Dent is a CutRig, art_dir from DentPlan). Tonnage: a south-face card
+   over the lifted crown.
+2. ViewMode.revision + floor/PropOcclusion redraw for view70's combo (offered in ANSWERS).
+3. Ohm lift (split ohm_rig.gd, 209 lines, first); Kerf last from v2.
+4. Draw order: `--order-probe` before/after for the King's accents and the ghost/kill overlays.
+5. Rivet 64 px/m pistol close-up (`--bot=reel --reel=director --chapter=pistol --ppm=64`).
