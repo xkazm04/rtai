@@ -41,9 +41,9 @@ Gates on the last build commit `a6c2797b` (05:21):
 - lint 13/13; unit 1229/1229 (incl. `test_slice_closure`, `test_tell_cues`);
 - scenarios 52/52 with 0 SCRIPT ERROR;
 - director reel 19/19 in the arena and 19/19 in the city block (every chapter fully down), 0 SCRIPT ERROR.
-The full `node tools/evidence/run.mjs --no-bench` (lint 13/13, unit 1223, scenarios 52, parity
+The full `node tools/evidence/run.mjs --no-bench` (lint 13/13, unit 1229, scenarios 52, parity
 bit-exact over 1200 steps with the planted mutation caught at 629, look goldens 11/11, block 5/5)
-last ran green on `91b3f06e` (code `791ea71a`, 04:47); it re-runs on the final head at the freeze.
+last ran green on `7da9f3d6` (code `a6c2797b`, 05:31); it re-runs on the final head at the freeze.
 Bench not run: contended machine, no lock taken.
 
 The logs are in `evidence/n7-melee/`.

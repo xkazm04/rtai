@@ -1342,6 +1342,12 @@ NEXT (written 04:48, for iteration 15):
 - MILESTONE 05:16 combined city clip re-cut on `a6c2797b`: the 4 ghost segments refilmed (0 SCRIPT
   ERROR each), the 5 melee segments reused (no melee code since 791ea71a), 44.2 s; a 1-per-2 s sheet
   shows every segment. frames.json row updated. NEXT 3 below is done.
+- GATES 05:31 `node tools/evidence/run.mjs --no-bench` on `7da9f3d6` (code `a6c2797b`), tree clean,
+  log in /tmp copied in after: exit 0; lint 13/13, unit 1229/1229, scenarios 52/52, parity bit-exact
+  over 1200 steps (planted caught at 629), look goldens 11/11, block 5/5
+  (`evidence/n7-melee/evidence-run-7da9f3d6.log`). Bench not run (contended, no lock).
+- CLEAN 05:25 this iteration's scratch films and sheets deleted (the set_*.avi kept: set_clip's
+  RECUT reuses them).
 NEXT (written 05:15, for iteration 16; supersedes the 04:48 list):
 1. Read n7-ranged's JOURNAL to its end: cherry-pick new hit_feel / feel_cam / camera commits -x
    (check prerequisites), unit with GODOT_BIN exported. Last merged: `8efe76ca`, `a63bd8e0` (their
@@ -1359,3 +1365,8 @@ NEXT (written 05:15, for iteration 16; supersedes the 04:48 list):
    quest 1 Tonnage path might show one); Dent's miss lash (DentStage.miss_tick) is silent (no fitting
    sound in the bank: leave unless one fits); chainsaw read 3 (the lower half under his feet); Dent
    read 3 (the camera call); the ram heap (call h). Call (b) only on the owner's word.
+- STOP 05:33 iteration 15. Code: `690ec813` (TellCues: Tonnage's press tell whine, the whiff
+  thud, Dent's seize clunk), `a6c2797b` (Ohm's car/empty bolt crackle); `--tell-cues=off`. Gates on
+  it: unit 1229, reels 19/19 x2, scenarios 52, full evidence run green on `7da9f3d6`. Clip
+  `M/ghost_tell_cues_ab_32ppm.mp4` (8.1 s, with sound), city set re-cut. Call (o). NEXT is the 05:15
+  entry above (item 3 done).
