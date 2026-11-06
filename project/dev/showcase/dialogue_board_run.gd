@@ -4,6 +4,8 @@ extends Node
 ## "$GODOT_BIN" --rendering-driver d3d12 --path project -s res://dev/showcase/dialogue_board.gd --
 ##   --out=<abs dir> --size=1920x1080
 ## Writes <out>/dialogue_<w>x<h>_<nn>_<speaker>.png; the 0.18 s rise is past when it shoots.
+## Then <out>/hud_<w>x<h>_full.png: every panel up at once (heat 2 of 3, Gloria with its showcase
+## icon and a count, the notice, a line), over --ground (a game frame) when given.
 
 const QUEST: String = "res://quests/collect-call/quest.json"
 const LINES: Array[String] = [
@@ -21,6 +23,7 @@ const SETTLE: int = 30
 
 var out_dir: String = "user://"
 var size_px: Vector2i = Vector2i(1920, 1080)
+var ground_png: String = ""
 var _hud: HudView = HudView.new()
 var _feed: HudFeed = HudFeed.new()
 
@@ -32,6 +35,13 @@ func _ready() -> void:
 	ground.color = Color("6e6a66")
 	ground.size = Vector2(size_px)
 	add_child(ground)
+	if ground_png != "":
+		var shot: TextureRect = TextureRect.new()
+		shot.texture = ImageTexture.create_from_image(Image.load_from_file(ground_png))
+		shot.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		shot.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+		shot.size = Vector2(size_px)
+		add_child(shot)
 	var layer: CanvasLayer = CanvasLayer.new()
 	add_child(layer)
 	layer.add_child(_hud)
@@ -63,4 +73,23 @@ func _run(out: String, px: Vector2i) -> void:
 			_hud.state.silent()
 			for i: int in 20:
 				await get_tree().process_frame
+	await _full(out, px)
 	get_tree().quit(0)
+
+
+func _full(out: String, px: Vector2i) -> void:
+	var s: HudState = _hud.state
+	s.head = "4/6  Get Gloria back"
+	s.heat = 2
+	s.cash = 12450
+	s.weapon = "Gloria"
+	s.weapon_icon = _feed.icon_of(&"gloria")
+	s.ammo = 12
+	s.notice = "Saved."
+	s.say("Brass Halloran", "Bring her back. If you lose Gloria, I lose you.")
+	_feed.face(s, "gunsmith", "brass-gloria")
+	for i: int in SETTLE:
+		await get_tree().process_frame
+	var img: Image = get_tree().root.get_texture().get_image()
+	@warning_ignore("return_value_discarded")
+	img.save_png("%s/hud_%dx%d_full.png" % [out, px.x, px.y])

@@ -12,6 +12,9 @@ const MARGIN: float = 36.0
 const INK: Color = Color("17131b")
 ## n8-hud: the weapon icon's box width left of the ammo ticket (screen px at 1080p).
 const ICON_W: float = 190.0
+## n8-hud: the narrowest notice paper (its tape strip needs the width) and the ticket's name size.
+const NOTICE_MIN_W: float = 240.0
+const WEAPON_SIZE: int = 24
 
 var state: HudState = HudState.new()
 var art: HudArt = null
@@ -58,9 +61,13 @@ func _top_left() -> void:
 		draw_texture_rect(art.texture(id), pip, false)
 
 
-## The one-line notice: centred just above the subtitle box, clear of the objective prompt.
+## The one-line notice: centred just above the subtitle box, clear of the objective prompt; n8-hud:
+## as wide as its words (a short "Saved." no longer spans a 900 px strip), at most 900 px.
 func _notice(screen: Vector2) -> void:
-	var box: Rect2 = Rect2(screen.x * 0.5 - 450.0, screen.y - MARGIN - 236.0 - 84.0, 900, 52)
+	var font: Font = ThemeDB.fallback_font
+	var w: float = font.get_string_size(state.notice, HORIZONTAL_ALIGNMENT_LEFT, -1, 24).x + 36.0
+	w = clampf(w, NOTICE_MIN_W, 900.0)
+	var box: Rect2 = Rect2(screen.x * 0.5 - w * 0.5, screen.y - MARGIN - 236.0 - 84.0, w, 52)
 	_panel(box)
 	_say(box.position + Vector2(18, 38), state.notice, 24)
 
@@ -81,7 +88,7 @@ func _ammo_ticket(r: Rect2) -> void:
 	draw_texture_rect(art.texture(&"ammo_ticket"), r, false)
 	var k: float = r.size.x / art.size_px(&"ammo_ticket").x
 	var at: Vector2 = r.position + Vector2(140.0 * k, r.size.y * 0.5)
-	_say(at, state.weapon.to_upper(), 20)
+	_say(at, state.weapon.to_upper(), WEAPON_SIZE)
 	if state.weapon_icon != null:
 		_icon(
 			state.weapon_icon, Rect2(r.position.x - ICON_W, r.position.y + 14.0, ICON_W - 8.0, 96.0)

@@ -46,3 +46,22 @@ func test_state_silent_hides_the_subtitle() -> void:
 	s.silent()
 	assert_eq(s.speaker, "")
 	assert_eq(s.words, "")
+
+
+## n8-hud: red is only for blood. The panels HudView draws carry no signal red (the ammo ticket's
+## bullet was red until it was re-hued to brass by tools/art/hud_recolor.py).
+func test_the_drawn_panels_carry_no_red() -> void:
+	var art: HudArt = HudArt.new()
+	for id: StringName in [&"ammo_ticket", &"cash_frame", &"memo_frame", &"wanted_pip_police"]:
+		var img: Image = art.texture(id).get_image()
+		if img.is_compressed():
+			@warning_ignore("return_value_discarded")
+			img.decompress()
+		var red: int = 0
+		for y: int in range(0, img.get_height(), 2):
+			for x: int in range(0, img.get_width(), 2):
+				var c: Color = img.get_pixel(x, y)
+				var hue_off: float = minf(c.h, 1.0 - c.h)
+				if c.a > 0.5 and c.s > 0.45 and c.v > 0.35 and hue_off < 0.04:
+					red += 1
+		assert_lt(red, 40, "%s has %d red px (sampled)" % [id, red])
