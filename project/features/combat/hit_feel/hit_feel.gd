@@ -46,6 +46,7 @@ static func shipped(rig: CameraRig = null, path: String = TABLE) -> HitFeel:
 			"stagger": t.integer(r, "stagger_ticks"),
 			"kick_px": t.num(r, "kick_px"),
 			"kick_ticks": t.integer(r, "kick_ticks"),
+			"hold_delay": t.integer(r, "hold_delay_ticks") if r.has("hold_delay_ticks") else 0,
 		}
 	hf.kill_kick_scale = t.num(t.raw, "kill_kick_scale")
 	hf.cap = t.object(t.raw, "cap")
@@ -57,6 +58,12 @@ static func shipped(rig: CameraRig = null, path: String = TABLE) -> HitFeel:
 	if not hf.ok():
 		Log.error("hit_feel", str(hf._errors))
 	return hf
+
+
+## n7-ranged it21: `--wound-hold=off` starts every stop on the hit tick (the before of
+## hold_delay_ticks).
+static func wound_hold() -> bool:
+	return not OS.get_cmdline_user_args().has("--wound-hold=off")
 
 
 ## The `--feel=<on|off>` launch value (OS args: the dev arena reads them raw too); "on" if absent.
@@ -123,6 +130,7 @@ func camera_row(weapon: StringName, hit_class: StringName, lethal: bool) -> Dict
 		"shake": row.get("shake", &""),
 		"kick_px": row.get("kick_px", 0.0),
 		"kick_ticks": row.get("kick_ticks", 1),
+		"hold_delay": row.get("hold_delay", 0) if wound_hold() else 0,
 	}
 	var over: Dictionary = _weapons.get(weapon, {})
 	for key: String in ["hitstop", "shake"]:

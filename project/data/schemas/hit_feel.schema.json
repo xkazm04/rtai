@@ -53,6 +53,11 @@
           "hitstop": {
             "type": "string"
           },
+          "hold_delay_ticks": {
+            "maximum": 4,
+            "minimum": 0,
+            "type": "number"
+          },
           "id": {
             "pattern": "^[a-z][a-z0-9_]*$",
             "type": "string"

@@ -38,6 +38,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--throw-windup",
 	# n7-ranged: --throw-sync=off starts the throw clip from 0 when the view sees it (the before)
 	"--throw-sync",
+	# n7-ranged: --wound-hold=off starts a light kill's stop on the hit tick (the before)
+	"--wound-hold",
 ]
 
 var _values: Dictionary[String, String] = {}

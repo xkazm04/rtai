@@ -30,6 +30,8 @@ var _kicks: Array[Vector4] = []
 var _seen: Dictionary[Shot, bool] = {}
 ## The tick each weapon last fired (the ignition kick waits for a rest of IGNITE_IDLE_TICKS).
 var _last_fire: Dictionary[StringName, int] = {}
+## A stop waiting for its tick: (ticks, tick it starts); x 0 = none.
+var _pending: Vector2i = Vector2i.ZERO
 
 
 static func attach(arena: CombatArena, p_clock: SimClock, p_feel: HitFeel = null) -> FeelCam:
@@ -70,10 +72,21 @@ func hit(weapon: StringName, hit_class: StringName, dir: Vector2, lethal: bool, 
 	if stop == &"":
 		return 0
 	var ticks: int = budget.take_stop(tick, _rig.hitstop(stop, tick))
-	if ticks > 0 and clock != null:
-		clock.hold(ticks * SimClock.TICK_DT)
-		held_ticks += ticks
+	if ticks > 0:  # a class's hold_delay_ticks lets the wound show before the frame freezes
+		var delay: int = row["hold_delay"]
+		var at: int = tick + delay
+		_pending = Vector2i(maxi(_pending.x, ticks), mini(at, _pending.y) if _pending.x > 0 else at)
+		_release_hold(tick)
 	return ticks
+
+
+func _release_hold(tick: int) -> void:
+	if _pending.x <= 0 or tick < _pending.y:
+		return
+	if clock != null:
+		clock.hold(_pending.x * SimClock.TICK_DT)
+		held_ticks += _pending.x
+	_pending = Vector2i.ZERO
 
 
 ## The camera offset now in world px for a camera at `zoom` (screen px per world px): the shake
@@ -81,6 +94,7 @@ func hit(weapon: StringName, hit_class: StringName, dir: Vector2, lethal: bool, 
 ## 48 or 64 px/m. Zero when nothing runs (bit-identical framing).
 func offset_px(tick: int, zoom: float) -> Vector2:
 	_watch_fire(tick)
+	_release_hold(tick)
 	_rig.step(tick, Vector2.ZERO)
 	var sum: Vector2 = Vector2.ZERO
 	for i: int in range(_kicks.size() - 1, -1, -1):
