@@ -1545,3 +1545,28 @@ depth-ordered-layered-art (the blades drawn over the pad, under the pelvis and r
   06:22 junit as "1197 passed"; the re-run with `GODOT_BIN` is the real one (junit 06:43).
   Decisions; REPORT call 20. Every clip re-filming on 987c3439 (same scripts and cut points; the
   it19 names are overwritten in place), the director reel after them (`director-reel-it19b.log`).
+- 06:45-06:50 FILMS every clip re-shot on 987c3439 (chunky struts), 0 SCRIPT ERROR each, same
+  scripts and cut points (the it19 names overwritten in place). The full fight: down **7036,
+  188** (sim identical). The target still re-composed on its own it19 base (`compose_target19b.py`,
+  the crop at 110,35 found by it19's match; the it18 base is gone). **Looked at** the target still
+  (arms and legs visibly heavier, closer to the sheet's blocks), wave, bay hop, kamikaze, Dent,
+  Ohm and the p3 keys: every read as before. Scratch avis deleted.
+- 06:50 GATES director reel on 987c3439: **19/19 chapters fully down, 0 SCRIPT ERROR**
+  (`director-reel-it19b.log`; the process runs on to its 780 s timeout, ~07:03).
+- 06:54 GATES scenarios on 987c3439: **52 ran, 0 failed**, 0 SCRIPT ERROR (`scenarios-it19b.log`).
+  REPORT header on the it19b gates; every frames.json and REPORT M/ path exists.
+
+NEXT (iteration 20, in order):
+1. Merge n7-king if it moved (last merged 71e76b3f as 98f8e820; JOURNAL/REPORT add/add: ours).
+   After a merge: unit, scenarios, director reel (`reel19.sh` writes director-reel-it19b.log:
+   rename per iteration).
+2. Export `GODOT_BIN` before `run_unit.mjs` (it19 FRICTION: without it the summary reads a stale
+   junit).
+3. Weakest by the target still now: the spine's rail bottom under the torso; the pads are still
+   smaller than the sheet's (pad 1.3 m vs the sheet's ~a wing column). Low value: prefer play
+   checks, or stop changing the body before the freeze so the exe and clips stay on one head.
+   Film scripts: `scratch/servo/{film48,film32,full32,phase32,ghost48}_19.sh`, `post_{full,phase}19.sh`,
+   `cut16.sh` (cut points in the 06:26 entry), `compose_target19b.py`, `swap19.py` (renames it18->it19:
+   copy to swap20.py with it19->it20 for a new body).
+4. At the freeze (08:30): re-export `windows-showcase`, smoke (expect down 7036, 188), final gates
+   (lint, unit 1197, scenarios, evidence/run.mjs, director reel), REPORT final (drop DRAFT).
