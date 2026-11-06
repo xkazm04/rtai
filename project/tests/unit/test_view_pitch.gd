@@ -109,3 +109,23 @@ func test_no_overlay_when_the_other_folder_draws_the_same_strip() -> void:
 	assert_eq(card.get_child_count(), 0, "no p70 or p55 gang card: one base strip")
 	assert_eq(card.self_modulate.a, 1.0)
 	card.free()
+
+
+func test_a_ghost_card_cross_fades_to_the_other_folder_as_wide_and_anchored_alike() -> void:
+	var card: Sprite2D = Sprite2D.new()
+	card.name = &"ghost_card"
+	card.texture = load("res://features/souls/art/view/p70/tonnage_card.png") as Texture2D
+	card.hframes = RigHeadCard.FRAMES
+	card.centered = false
+	card.offset = Vector2(0.0, -card.texture.get_height() * 0.6)
+	assert_eq(ViewPitchCards.art_of(card), "p70", "a ghost card's folder is its strip's")
+	ViewPitchCards.dress(card, "p55", 0.4)
+	var o: Sprite2D = card.get_node_or_null(NodePath(String(ViewPitchCards.OVERLAY))) as Sprite2D
+	assert_not_null(o, "the p55 Tonnage card over the p70 one")
+	assert_eq(o.texture.resource_path, "res://features/souls/art/view/p55/tonnage_card.png")
+	var w70: float = card.texture.get_width() / float(RigHeadCard.FRAMES)
+	var w55: float = o.texture.get_width() / float(RigHeadCard.FRAMES)
+	assert_almost_eq(o.scale.x * w55, w70, 0.001, "drawn as wide as the card")
+	assert_almost_eq(o.offset.y / o.texture.get_height(), -0.6, 0.001, "the same anchor")
+	assert_almost_eq(card.self_modulate.a, 0.6, 0.001)
+	card.free()

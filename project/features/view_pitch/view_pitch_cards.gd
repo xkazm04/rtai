@@ -11,6 +11,8 @@ extends RefCounted
 ## only; straight down no card is ever built, so nothing here runs.
 
 const OVERLAY: StringName = &"pitch_art"
+## GhostCard's sprite (Tonnage): one strip per folder, the same width and anchor in every folder.
+const GHOST: String = "ghost_card"
 
 static var _tex: Dictionary[String, Texture2D] = {}
 
@@ -19,9 +21,11 @@ static var _tex: Dictionary[String, Texture2D] = {}
 static func apply(root: Node, pitch: ViewPitch, mix: float) -> void:
 	if root == null:
 		return
-	for n: Node in root.find_children("head_card", "Sprite2D", true, false):
+	var cards: Array[Node] = root.find_children("head_card", "Sprite2D", true, false)
+	cards.append_array(root.find_children(GHOST, "Sprite2D", true, false))
+	for n: Node in cards:
 		var card: Sprite2D = n as Sprite2D
-		var built: String = str(card.get_meta(&"art", ""))
+		var built: String = art_of(card)
 		var other: String = pitch.boss_art if built == pitch.art else pitch.art
 		dress(card, other, mix if other == pitch.art else 1.0 - mix)
 
@@ -45,6 +49,15 @@ static func dress(card: Sprite2D, other: String, other_a: float) -> void:
 	card.self_modulate.a = 1.0 - other_a
 
 
+## The art folder a card was built under: RigHeadCard's meta, else its strip's folder (GhostCard).
+static func art_of(card: Sprite2D) -> String:
+	if card.has_meta(&"art"):
+		return str(card.get_meta(&"art"))
+	if card.texture == null:
+		return ""
+	return card.texture.resource_path.get_base_dir().get_file()
+
+
 ## The card row (RigHeadCard.rows_of) drawing `path` under the folder `art`, or "".
 static func key_of(path: String, art: String) -> String:
 	var rows: Dictionary[String, Array] = RigHeadCard.rows_of(art)
@@ -57,6 +70,8 @@ static func key_of(path: String, art: String) -> String:
 static func _build(card: Sprite2D, other: String) -> Sprite2D:
 	if card.texture == null:
 		return null
+	if card.name == GHOST:
+		return _build_ghost(card, other)
 	var art: String = str(card.get_meta(&"art", ViewMode.shared().art))
 	var key: String = key_of(card.texture.resource_path, art)
 	var rows: Dictionary[String, Array] = RigHeadCard.rows_of(other)
@@ -68,13 +83,7 @@ static func _build(card: Sprite2D, other: String) -> Sprite2D:
 	if not _tex.has(path):
 		_tex[path] = load(path) as Texture2D
 	var tex: Texture2D = _tex[path]
-	var o: Sprite2D = Sprite2D.new()
-	o.name = OVERLAY
-	o.texture = tex
-	o.hframes = RigHeadCard.FRAMES
-	o.centered = false
-	o.use_parent_material = true
-	o.set_meta(&"art", other)
+	var o: Sprite2D = _sprite(tex, other)
 	var cell: Vector2 = Vector2(tex.get_width() / float(RigHeadCard.FRAMES), tex.get_height())
 	var mine_w: float = card.texture.get_width() / float(RigHeadCard.FRAMES)
 	# RigHeadCard scales a card to (width k x anchor width) / cell width: the ratio of the two.
@@ -85,4 +94,35 @@ static func _build(card: Sprite2D, other: String) -> Sprite2D:
 	o.scale = Vector2(s, s)
 	o.offset = Vector2(-cell.x * 0.5, -cell.y * anchor)
 	card.add_child(o)
+	return o
+
+
+## A ghost card's overlay: the other folder's strip of the same name, as wide and anchored alike.
+static func _build_ghost(card: Sprite2D, other: String) -> Sprite2D:
+	var mine: String = card.texture.resource_path
+	var root: String = mine.get_base_dir().get_base_dir()
+	var path: String = root.path_join(other).path_join(mine.get_file())
+	if other.is_empty() or path == mine or not ResourceLoader.exists(path):
+		return null
+	if not _tex.has(path):
+		_tex[path] = load(path) as Texture2D
+	var tex: Texture2D = _tex[path]
+	var o: Sprite2D = _sprite(tex, other)
+	var cell: Vector2 = Vector2(tex.get_width() / float(RigHeadCard.FRAMES), tex.get_height())
+	var mine_w: float = card.texture.get_width() / float(RigHeadCard.FRAMES)
+	var anchor: float = -card.offset.y / float(card.texture.get_height())
+	o.scale = Vector2.ONE * (mine_w / cell.x)
+	o.offset = Vector2(-cell.x * 0.5, -cell.y * anchor)
+	card.add_child(o)
+	return o
+
+
+static func _sprite(tex: Texture2D, art: String) -> Sprite2D:
+	var o: Sprite2D = Sprite2D.new()
+	o.name = OVERLAY
+	o.texture = tex
+	o.hframes = RigHeadCard.FRAMES
+	o.centered = false
+	o.use_parent_material = true
+	o.set_meta(&"art", art)
 	return o
