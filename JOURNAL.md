@@ -349,3 +349,18 @@ NEXT (iteration 8, in order):
   FRICTION: run the suite through run_scenarios.mjs (it labels and re-runs contended budgets),
   not the raw .gd, when films are running.
 - Session end 23:05. Head 355a26aa + this JOURNAL line. NEXT stands as written above.
+
+## Iteration 10 (2026-11-06 23:04 - 00:04), BUILD
+Read: JOURNAL, git log, the lane journals. Open answer to city: vehicles ee045433 (`VehicleParked.live`
++ `drawn()`; AND it per chunk at order time, not at setup). No other REQUEST to city.
+- MILESTONE 51844aa8 merge n8-vehicles (34018b19; JOURNAL.md ours).
+- MILESTONE 037d295c NEXT 6: `FacadeStrips` (features/city/view/facade_strips.gd) takes the south
+  face's strip tiling + ink out of ChunkLift (200 -> 167 lines). Same draw calls, same order.
+- MILESTONE 848ff5a5 the kerb-parked cars as cards: `parked_cards` true; ChunkLift.order hands a
+  chunk's cars over only while `VehicleParked.live` (carded() is already taken at setup), so the
+  arena city (no VehicleView) keeps its flat cars. Unit: test_chunk_lift 5/5 incl. the new
+  "stay flat without a live view" (17/0 over chunk_lift, vehicle_parked, prop_cards, occlusion).
+  EVIDENCE `gtai-masters/n8/city/it10_kerb_cars_tilt70_32ppm_before_after.jpg`
+  (vehicle_frame --scene=yield --view=tilt70, tick 180; before = parked_cards false in a scratch
+  edit, restored; 5.1 % of pixels differ, all at the kerb rows). Judged: the top-down police car,
+  pickup and white van beside the traffic cards now stand as the same cards; 0 SCRIPT ERROR both.
