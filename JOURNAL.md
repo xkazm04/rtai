@@ -1570,3 +1570,8 @@ NEXT (iteration 20, in order):
    copy to swap20.py with it19->it20 for a new body).
 4. At the freeze (08:30): re-export `windows-showcase`, smoke (expect down 7036, 188), final gates
    (lint, unit 1197, scenarios, evidence/run.mjs, director reel), REPORT final (drop DRAFT).
+- 06:56 EXE re-exported on 987c3439 (`--export-release "windows-showcase"`, exit 0) as a safety net
+  before the freeze; smoke `RTAI.exe --headless --fixed-fps 60 --quit-after 7400 -- --rigs
+  --boss=servo --bot=boss --bot-human --seed=2`: **down 7036, 188 on Rivet, 0 SCRIPT ERROR** = the
+  editor (`evidence/servo/exe-smoke-it19.json`). REPORT exe line updated. (NEXT 4 still re-exports
+  at the freeze if the head moves.)

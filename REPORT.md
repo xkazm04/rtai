@@ -65,12 +65,12 @@ The rotor dash checked against a reading player (it6): every tell read but 18-32
 19. The hover pads hold square to the body, the sheet's octagons, and the rotor's spin-up shows as pale blades inside them on every tell, dash and wind-down (default, it19) vs the it18 pads turning whole with the rotor, a round wheel at 32 px/m: `ServoPad.TURN` false / true (render only). Still: `M/frames/servo_pad_square_ab_it19.png` (48 px/m at 1.5x, it18 left, it19 right, at the scan and dash windups; then it19 at 32 px/m).
 20. The pad arms and legs drawn wider than their art, the sheet's chunky blocks (default, it19b: arms 1.6, legs 1.3) vs the art's width, a thin 0.25 m piston at 32 px/m: `ServoRig.ARM_W_K` / `LEG_W_K` 1.6 / 1.3 vs 1.0 (render only). Still: `M/frames/servo_chunky_struts_ab_it19.png` (48 px/m then 32 px/m, both at 1.5x; 1.0 left, it19b right). Every clip is re-shot on it (987c3439).
 
-Exe (exported it10 on f430d3a2, re-exported at the freeze): `build/export/windows/RTAI.exe` in the
+Exe (re-exported it19 on 987c3439, again at the freeze): `build/export/windows/RTAI.exe` in the
 worktree (`windows-showcase` preset, boots into the arena). Lines: `RTAI.exe -- --rigs --boss=servo`,
 `RTAI.exe -- --rigs --boss=servo --phase=2` (or 3), `RTAI.exe -- --rigs --boss=servo --bot=boss`
 (the bot plays; add `--bot-human` for the human-like one). Headless smoke `RTAI.exe --headless
 --fixed-fps 60 --quit-after 7400 -- --rigs --boss=servo --bot=boss --bot-human --seed=2`: Servo down at
-tick 7036, 188 on Rivet, 0 SCRIPT ERROR, the editor's numbers (`evidence/servo/exe-smoke-it10.json`).
+tick 7036, 188 on Rivet, 0 SCRIPT ERROR, the editor's numbers (`evidence/servo/exe-smoke-it19.json`, on 987c3439).
 
 ## What does not work / open
 - The horn has not been heard (every run was headless or filmed without listening).
