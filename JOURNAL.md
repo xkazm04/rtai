@@ -211,3 +211,28 @@ NEXT:
    plan like Dent (KerfPlan on RivetPlan) or a GhostCard over the hover rig; owner look pending.
 5. Draw order: `--order-probe` before/after for the King's accents and the ghost/kill overlays.
 6. Rivet 64 px/m pistol close-up (`--bot=reel --reel=director --chapter=pistol --ppm=64`).
+
+## Iteration 7 (15:48-16:48)
+- Read: JOURNAL, git log, the other lanes' JOURNALs: no open REQUEST to chars (view70's Tonnage
+  card ask is met by a743199e/4eb02025 and their own p70 strip; bosses' watch item "the King's arm over
+  the bust card at melee range" noted for the draw-order item). Registry rules applied: generative-
+  artifact-gating (reserved hues checked and moved per pixel, keyed strip looked at per facing,
+  provenance line), concept-scene-parity (judged in the live ghost reel, not on the sheet), motion-
+  quality-gating (judged in 10 s clips), depth-ordered-layered-art (halo show_behind_parent; card over
+  the arms as the last child).
+- MILESTONE 12b205eb: Ohm's p55 card (`features/souls/art/view/p55/ohm_card.png`, round3 sheet).
+  `tools/art/ghost_card_hue.py` moved 370 px of red beard tips to copper and 2476 px of violet wisp
+  fringe to teal. The card hides shell+beard+hose; arms and feet stay on the ground (bolt prongs still
+  leave the fingertips). ohm_rig.gd split first: the glow moved to `GhostRim.soft_glow` (209 -> 201).
+  GATE `top` Ohm ghost reel framemd5-identical with main 0bea8b93 over 400 frames.
+- MILESTONE f0ce9dd5: `GhostCard.halo` (soul-teal silhouette, 1.12x, behind the card); Ohm 0.45,
+  card 1.2 m. 93bd317e: Tonnage's card carries it at 0.35. DECISION in docs/decisions.md.
+- EVIDENCE masters: ohm before|after 32 px/m clip (10 s) + x3 stills, 64 px/m close-up, Tonnage halo
+  stills at 48. 0 SCRIPT ERROR every run. LOOKED: at 32 the before is a teal blob, the after a
+  dome-goggles-beard silhouette with a teal rim; at 64 rivets and goggles read. frames.json 15
+  (dropped 3 superseded stills).
+- FRICTION: `--bot=ghosts` needs `res://dev/arena/arena.tscn` on the command line (else the flags are
+  ignored and the main game boots; the first Ohm film was wasted).
+- IMAGE round4 staged + started 16:03 (image.want touched, lock held by assets-lane): Kerf v2 in the
+  GAME palette (warm-grey steel, teal seams, amber hazard band, white-cyan blade edges), 5 facings,
+  magenta. Refs: the v2 sheet's facing row + the game's kerf parts.
