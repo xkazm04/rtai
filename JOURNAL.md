@@ -941,7 +941,6 @@ NEXT (written 02:35, for iteration 11):
    drop "DRAFT").
 3. Build candidates, weakest first (all small; the big ones are owner calls): Tonnage's plates in
    quest 1 are unproven (does the quest_hauler_rec ring fire? if not, a dev variant with shooting
-   guards, film only); the plasma sword's pickup/icon still show the old plank blade (side views;
-   a re-cut from the new top-down part only if it reads at the pickup's size); call (b) (route the
+   guards, film only); (the plasma sword's pickup and icon: done 02:44, `9a2d3137`); call (b) (route the
    stomp's stop and shake through FeelCam so --feel=off covers it) if the owner's page wants it.
 4. `test_slice_closure` is the check for any merge onto quest 1's path.
