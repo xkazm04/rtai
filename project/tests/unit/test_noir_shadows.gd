@@ -36,9 +36,20 @@ func test_only_shadow_commands_with_a_length_are_swept() -> void:
 			c.xf.append(v)
 	var table: Dictionary = _table()
 	var root: RID = RenderingServer.canvas_item_create()
-	var sh: NoirShadows = NoirShadows.new(root, CityTextures.new(table), table, _params())
+	var sh: NoirShadows = NoirShadows.new(root, CityTextures.new(_artless(table)), table, _params())
 	var item: RID = sh._record(c)
 	assert_eq(sh.stamps, 1, "one swept quad: the hydrant's shadow (not the lamp, not the hydrant)")
 	RenderingServer.free_rid(item)
 	sh.dispose()
 	RenderingServer.free_rid(root)
+
+
+## The table with every `art` path dropped: CityTextures then builds flat placeholders and never
+## touches the threaded ResourceLoader (which races under machine load). The sweep reads only
+## the table's sizes and names, not the pixels.
+func _artless(table: Dictionary) -> Dictionary:
+	var out: Dictionary = table.duplicate(true)
+	for row: Dictionary in out.get("textures", []):
+		@warning_ignore("return_value_discarded")
+		row.erase("art")
+	return out
