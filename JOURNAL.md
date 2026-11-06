@@ -1042,3 +1042,17 @@ NEXT (written 03:17, for iteration 12):
   hang (ohm_view.gd INK_W/TEAL_W/CORE_W, HANG_S): a thicker bolt is not the lever. The likely gap
   at 32 px/m is the world mark where the bolt lands (ink-and-paper scorch/burst on the struck
   body or car, as RamMarks/DeflectMarks do); film the bolt at 48 px/m first and score it.
+- LOOK 03:33 (prep for NEXT 4) Ohm beat at 48 px/m (`--bot=ghosts --ghost=ohm --rigs --clean`, 0
+  SCRIPT ERROR; crop 760x420 frames 84-131 every 3rd): the bolt reads strongly (thick jagged teal on
+  ink, ~13 frames of hang, then the tell's white reach sparks rebuild); the second bolt (129) lands
+  on the cop cluster with ink-and-white star sparks and the x-ray. The first bolt (90-111) runs past
+  the cops to the right edge of the crop: its landing (a car? the beat's no-body-in-cone press)
+  was not in frame. Next: a full-frame look at frames 90-115 to see what it strikes and whether
+  that landing prints a world mark; score Ohm bolt impact/read again before building anything.
+- STOP 03:34 iteration 11 (runner 12). Code commits: `4c2cc4a2` + `ce8c039b` (n7-ranged merge:
+  mini-nuke launch kick), `96e1abe6` (Kerf's sight), `bc788d09` (Tonnage's ram wake). Gates: full
+  evidence run green on `af4eff02` (code `bc788d09`); reels 19/19 x2, scenarios 52/52, unit 1208 on
+  `bc788d09`. Clips: `kerf_sight_ab_32ppm_48slow.mp4`, `tonnage_ram_wake_ab_32ppm_48slow.mp4` (+
+  stills, quest 1 ram wake still), city clip re-cut. Calls (j), (k) added. NEXT is the 03:17 entry
+  (item 2 done at 03:21; item 4: Ohm per the 03:33 look). Scratch: this iteration's AVIs deleted;
+  the set_* AVIs are current for a RECUT.
