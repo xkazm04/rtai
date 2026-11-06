@@ -1239,3 +1239,9 @@ NEXT (iteration 13, in order):
 4. The bay-hop ring under the boss bar in the 48 px/m clip stays open (measured: no room).
 5. At the freeze (08:30): re-export `windows-showcase`, smoke (expect down 7036, 188), final gates
    (lint, unit, scenarios, evidence/run.mjs, director reel), REPORT final (drop DRAFT, Next steps).
+- 03:47 MILESTONE (NEXT 2 of it13, done early) **the hose loops bigger and lighter**:
+  `ServoSpine.LOOP_R_M` 0.55 (was 0.42), `LOOP_COPPER` 208,116,56, 0.08 m. **Looked at** 48 and
+  32 px/m beside the sheet (`M/frames/servo_spine_loops_ab_it12.png`): they arc out over both
+  wings' back corners like the sheet's; at 32 the left loop reads larger. Render only. Unit
+  1189/0 (`unit-it12d.log`). Decisions; REPORT call 15 and gap. The full fight and target still
+  show the 0.42 loops (filmed before); re-shoot with NEXT 3 of it13 (the p1/p2 re-films).

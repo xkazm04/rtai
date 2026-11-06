@@ -48,7 +48,10 @@ const BOXES: Array[Vector3] = [
 const HORSESHOE: bool = true
 const U_FROM: float = 0.38
 const U_SHARE: float = 0.84
-const LOOP_R_M: float = 0.42
+const LOOP_R_M: float = 0.55
+## The loops' copper, lighter than the hoses' (the sheet's loops are its brightest orange; not
+## vermilion, which is reserved).
+const LOOP_COPPER: Color = Color8(208, 116, 56)
 
 var px: float = 32.0
 ## The wings' extra gap (servo.json rack.spine_m): the column widens by it to fill the gap.
