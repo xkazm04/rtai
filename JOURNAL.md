@@ -432,3 +432,28 @@ NEXT (iteration 11, in order):
 4. Bench / vending per their B notes (a per-row `facings` remap) only if a turned one shows on film.
 5. Quest 1's payphone: still blocked on the quest stage having no angled view (not city's file);
    re-read street/view journals for a stage view and wire PropCards.draw_named when it lands.
+
+## Iteration 11 (2026-11-06 23:56 - 00:56), BUILD
+Read: JOURNAL, git log, the lane journals (no new REQUEST to city; vehicles: "nothing owed").
+- MILESTONE brief item 5 part 2, **the city DRIVE cost**: `dev/bench/city_bench.tscn --scenario=drive`
+  already takes `--view` and logs draw calls + render CPU, so no probe change was needed. Windowed
+  d3d12, vsync off, 60 s, bench zoom 0.4, ~400 actors, bench.lock HELD for every run.
+  `evidence/drive-cost-it11.json`:
+  | run | avg frame | p99 CPU | draw calls | render CPU avg | hitches >25 ms |
+  | top d9f8db90 | 1.27 ms | 2.63 ms | 825 | 0.55 ms | 7 |
+  | tilt70 d9f8db90 | 2.22 ms | 6.01 ms | 970 | 0.61 ms | 20 |
+  | tilt70 9e51667b | 1.76 / 1.85 ms | 4.57 / 5.00 ms | 959 | 0.68 ms | 8 / 17 |
+  `--spans` (30 s) named the cost: **CityOcclusion 0.76 ms mean, p99 3.95, max 11.2 ms** (this lane's):
+  every body, every frame, scanned the whole command list of up to 4 chunks for buildings.
+- MILESTONE 9e51667b `CityOccluders` (features/city/view/city_occluders.gd): the occlusion's
+  building index split out; each chunk's buildings are scanned once and kept (by instance id,
+  dropped past 48 chunks), only the drawn area is re-lifted per query (combo eases the lift).
+  CityOcclusion 210 -> 146 lines. After: **CityOcclusion 0.21 ms mean, p99 0.66 ms** (from 0.76 /
+  3.95). New unit test: scanned once, the area follows the lift (70 -> 55), past REACH_M nothing.
+  Picture unchanged (same rects; the cache only skips the rescan).
+  Remaining tilt70 overhead vs top ~0.5 ms/frame: occlusion 0.21, city_view +0.05, render CPU
+  +0.1, rigs +0.09; draw calls +16 % (faces, cards). At 60 Hz (16.7 ms) no budget is near.
+- The worst frames (29-72 ms) in every run, top included, are `present` (draw_ms 45 ms at the
+  swapchain) or `unexplained` with game_ms ~0: OS/driver stalls with other lanes on the machine,
+  not city code. `worstSwapMs` 29 ms after vs 8 before is such a present stall landing on a swap
+  frame (two runs, both `present`), not the record cost (that is per chunk, it 10: 3.8 ms p50).

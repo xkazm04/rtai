@@ -1,0 +1,121 @@
+{
+  "bench_lock": "held (gtai-n5/bench.lock, n8-city) for every run; other lanes' non-bench work may have run: wall-clock",
+  "command": "godot --rendering-driver d3d12 --path project res://dev/bench/city_bench.tscn -- --scenario=drive --secs=60 --view=<top|tilt70> --out=<json> [--spans=<json>, 30 s runs]",
+  "spans_30s": {
+    "tilt70_9e51667b": {
+      "city_occlusion.gd": {
+        "max_ms": 4.843,
+        "mean_ms": 0.21,
+        "p99_ms": 0.661
+      },
+      "city_view.gd": {
+        "max_ms": 3.844,
+        "mean_ms": 0.237,
+        "p99_ms": 1.622
+      },
+      "draw: Node2D in city_occlusion.gd": {
+        "max_ms": 13.843,
+        "mean_ms": 0.029,
+        "p99_ms": 0.143
+      },
+      "world.gd": {
+        "max_ms": 186.894,
+        "mean_ms": 0.063,
+        "p99_ms": 0.481
+      }
+    },
+    "tilt70_d9f8db90": {
+      "city_occlusion.gd": {
+        "max_ms": 11.215,
+        "mean_ms": 0.763,
+        "p99_ms": 3.947
+      },
+      "city_view.gd": {
+        "max_ms": 3.719,
+        "mean_ms": 0.249,
+        "p99_ms": 1.575
+      },
+      "draw: Node2D in city_occlusion.gd": {
+        "max_ms": 30.33,
+        "mean_ms": 0.042,
+        "p99_ms": 0.149
+      },
+      "world.gd": {
+        "max_ms": 195.503,
+        "mean_ms": 0.069,
+        "p99_ms": 0.453
+      }
+    },
+    "top_d9f8db90": {
+      "city_bench.gd": {
+        "max_ms": 92.147,
+        "mean_ms": 0.026,
+        "p99_ms": 0.077
+      },
+      "city_view.gd": {
+        "max_ms": 7.708,
+        "mean_ms": 0.183,
+        "p99_ms": 1.129
+      },
+      "draw: world_markers.gd": {
+        "max_ms": 32.552,
+        "mean_ms": 0.033,
+        "p99_ms": 0.142
+      },
+      "world.gd": {
+        "max_ms": 146.512,
+        "mean_ms": 0.044,
+        "p99_ms": 0.454
+      }
+    }
+  },
+  "tilt70_9e51667b": {
+    "actorsAvg": 398.758,
+    "avgFrameMs": 1.757,
+    "drawCallsAvg": 959.217,
+    "framesMeasured": 33933.0,
+    "hitches25": 8.0,
+    "hitchesOver50": 0.0,
+    "low1Fps": 156.048,
+    "p99CpuMs": 4.566,
+    "renderCpuMsAvg": 0.681,
+    "renderCpuMsP99": 2.643,
+    "swapFrames": 246.0,
+    "visibleAvg": 29.155,
+    "worstFrameMs": 46.216,
+    "worstSwapMs": 29.163
+  },
+  "tilt70_d9f8db90": {
+    "actorsAvg": 398.72,
+    "avgFrameMs": 2.219,
+    "drawCallsAvg": 969.523,
+    "framesMeasured": 26817.0,
+    "hitches25": 20.0,
+    "hitchesOver50": 4.0,
+    "low1Fps": 92.903,
+    "p99CpuMs": 6.007,
+    "renderCpuMsAvg": 0.607,
+    "renderCpuMsP99": 0.908,
+    "swapFrames": 234.0,
+    "visibleAvg": 28.409,
+    "worstFrameMs": 72.066,
+    "worstSwapMs": 8.021
+  },
+  "top_d9f8db90": {
+    "actorsAvg": 398.741,
+    "avgFrameMs": 1.269,
+    "drawCallsAvg": 825.037,
+    "framesMeasured": 47020.0,
+    "hitches25": 7.0,
+    "hitchesOver50": 2.0,
+    "low1Fps": 204.542,
+    "p99CpuMs": 2.627,
+    "renderCpuMsAvg": 0.545,
+    "renderCpuMsP99": 0.783,
+    "swapFrames": 164.0,
+    "visibleAvg": 27.379,
+    "worstFrameMs": 80.487,
+    "worstSwapMs": 6.113
+  },
+  "what": "n8 city brief item 5 part 2: the city DRIVE (dev/bench/city_bench.tscn --scenario=drive, 60 s, bench zoom 0.4, ~400 actors), windowed d3d12, vsync off, uncapped, RTX 4090; top vs tilt70, and tilt70 before/after CityOccluders (9e51667b)"
+}
