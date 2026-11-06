@@ -1055,12 +1055,13 @@ NEXT (iteration 12):
 1. Retake the city-block combined clip on the final head (it now carries the muzzle on the drawn
    tip and the molotov wind-up): same recipe as it9 (JOURNAL 01:02, frames 360-2700, 3810-5100,
    5460-6150, crop 960x560), replace in place, LOOK at the molotov and rocket segments.
-2. Rounds still leave from the GUN_SIDE_M side (WeaponFxArt.shot converges from 0.35 m beside the
-   aim line over CONVERGE_M), while the flash now sits on the drawn tip. At 48 px/m on the rocket,
-   plasma rifle and Gatling check whether the first drawn frame of a round (1.1 m out) sits off the
-   barrel line; if so, start the convergence from HeldMuzzle's side offset (the published tip
-   minus the body line), with `--flash-at=side` as the before. Casings (WeaponCasings.track, the
-   same GUN_SIDE_M spot) likewise.
+2. (Measured 01:58, closed without code for the rocket and plasma rifle: on `cb98ccd4` at 48 px/m,
+   lone, frames 298-309, the rocket's first drawn frame (301) and the plasma bolt's sit within a
+   few px of the drawn barrel's line; the GUN_SIDE_M convergence matches those holds.) Still to
+   look at: the Gatling's rounds and the casings (WeaponCasings.track, the GUN_SIDE_M spot) at
+   48 px/m. Seen in passing: after the rocket fires its tube flips to point back over Rivet's head
+   for the reload (frames 301-309); existing reload pose, not tonight's change, not a hold call of
+   mine; mention to the owner only if it reads wrong at 32 px/m.
 3. Rocket flash: a ~0.3 m gap between the tube's mouth and the flash_tube star (the cell's own back
    edge). Only if it reads on film at 32 px/m: a per-weapon `muzzle_back_m` in hit_feel.json.
 4. Molotov: the first draw snaps from the hanging claw to cocked when aiming starts; lerp it over
