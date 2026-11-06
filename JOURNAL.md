@@ -254,3 +254,32 @@ NEXT:
 - EVIDENCE masters: kerf before|after 32 clip + x2 stills, kerf 64 draw order before/after still.
   frames.json 15.
 - NOT DONE: the King's accents in the probe (bosses own KingAccents; the probe already sorts the car).
+- GATE scenarios (`node tools/tests/run_scenarios.mjs`, tree with 34651864): 52 passed.
+- MILESTONE d58d379a: SWAT's p55 helmet card (`cop/head_swat`, SWAT had no card row at all), cut by
+  the new `tools/art/street_head.py` from the assets library's keyed `swat_55` sheet (no image job);
+  156 px of orange shoulder patch knocked to slate. FILM react_line before|after (masters still).
+- MILESTONE 69574457: p55 head cards for `ped/head_hair` (library ped_suit), `ped/head_bald`
+  (ped_elder) and `thug` (the robot thug sheet). LOOKED in the city block at 48 px/m (seed 2, t6.5):
+  sizes match the cop cards; 0 SCRIPT ERROR. Hat, hood and cap ped heads have no library sheet yet.
+  All rows are SET_CARDS p55 only: `top` and `tilt_basecards` draw no new card.
+- frames.json 15 (masters).
+
+### REQUEST to assets (library)
+- REQUEST assets: 55-degree street-cast game view sheets (5 standing facings in the top row, keyed,
+  like `swat_55`) for the three ped heads the game has and the library lacks: a coat with a felt
+  HAT (`head_hat`), a coat with a HOOD up (`head_hood`), a hoodie with a baseball CAP (`head_cap`).
+  Also a 70 sheet of `swat` for view70 when convenient. chars cuts them with tools/art/street_head.py.
+
+NEXT (iteration 8):
+1. Gates owed on HEAD before the freeze: `node tools/evidence/run.mjs --no-bench`, director reel
+   top + tilt (19/19), a `top` md5 (city block seed 2 tick 300 vs main) after the street cards.
+2. Street cards: the hat/hood/cap heads when assets delivers (REQUEST above); film the react_line
+   ped dummy (look 0 = coat-hat) and a 64 px/m close-up of SWAT facing the camera.
+3. Tonnage: the walking legs still ride the ghost view's fixed z (3/26 wrong pairs left); the near
+   front leg over the card. Kerf: a lean into the glide (the card is static while it darts).
+4. Ohm: lift the arms with OhmView's prongs (lift_at the hand height) if the ground arms read flat.
+5. Draw order: the King's accents in the probe (bosses own KingAccents: REQUEST if a fix is theirs).
+6. Freeze 18:30: export build/export/windows/RTAI.exe (int-day recipe in docs/decisions.md); REPORT.md
+   with Calls: Dent tan vs teal; ghost halo strength (Ohm 0.45, Tonnage 0.35, Kerf 0.4; 0 = none);
+   Kerf v2 card at 32 px/m (thin) vs a wider card; Ohm's arms on the ground vs lifted; card facing
+   count 5+3.
