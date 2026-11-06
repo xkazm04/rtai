@@ -1226,3 +1226,31 @@ kick), `311684d4` (its test). Evidence green on `3b2e7c5c`; reels 19/19 + 19/19 
 `5c171ed8`; unit 1161/1161 on `444b003e`. Clips: `molotov_draw_rise-ab-32-48ppm.mp4`,
 `mini_nuke_launch-ab-32-48ppm.mp4`, city set retaken, `gatling_spinup-ab-32ppm.mp4` re-filmed.
 NEXT for iteration 14 is the list above.
+
+## Iteration 14 (02:39, BUILD)
+Read: JOURNAL NEXT, git log. Registry rules applied: motion-quality-gating (judge the frame
+sequence, not a still; A/B at 32 then 48 px/m), depth-ordered-layered-art (a held prop keeps
+its side of the body across poses).
+
+### MILESTONE 02:44: `5586a80e` the tube keeps the gun shoulder's side (it13 LOOK 02:31, NEXT 3)
+- CONFIRMED by a temporary log in place_beside (reverted): the tube's axis is 5.2 px off the
+  head's centre while aimed, -0.1 on frame 266 (the reload's first posed frame), then within
+  0.2 px either side for the whole reload; the gun-arm shoulder sits +16 px on the same normal
+  throughout. beside_head took the nearer side, so it flipped: 19 frames over a rocket reload,
+  21 over a nuke's (266, 277, 297-305, 345-354). The long guns (plasma, ray, electro, shard)
+  differ only on their first aim frame (f10, dist -4.5), so the centre-line long-gun hold (an
+  owner call) is untouched in play.
+- FIX: beside_head takes a side (0 = nearer, as before); place_beside passes the gun shoulder's
+  side while aiming (RivetCarryAngle.aim_side). Not a flag: a bug fix, before = main (the tube
+  reload path is identical to `763f8fba`).
+- TEST: test_rivet_carry_angle 8/8; planted fault (side ignored) -> 7/8, "gun side" fails.
+  Full unit 1164/1164 (the -gtest run picked up the whole suite). Lint 13/13.
+- FILM lone cop, fight cam, `--reach=9 --clean`: rocket 32, nuke 32, nuke 48 on `5586a80e`, 0
+  SCRIPT ERROR, kill ticks 289 / 330 (unchanged). Before = `r32.avi` (311684d4) and the nuke
+  films on `5c171ed8` (same tube code). LOOK (strips frames 262-273 and 265-307 at 3x): before,
+  frame 266 the tube on Rivet's left, and the nuke on the left for 297-305; after, on the right
+  in every frame. Clip `tube_side-ab-32-48ppm.mp4` (12 s), frames.json entry 0 (gloria_muzzle
+  dropped from frames.json to stay at 15; its file stays, REPORT cites it).
+- FRICTION: a local `gun_side` in step() shadowed my first name for the new function (warnings
+  as errors, 423 SCRIPT ERRORs in the test run): renamed aim_side. Python on Windows writes CRLF
+  in text mode: write with newline='' / strip \r.

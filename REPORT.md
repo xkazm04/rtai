@@ -27,6 +27,7 @@ cut from main `763f8fba`. Clips and stills: `C:\Users\kazda\kiro\gtai-masters\n7
 | Molotov wind-up: a ready bottle is held cocked behind the gun shoulder (lit, by the helmet), and the throw whips the claw out to the aim from there; the next bottle cocks back in the reload's last phase (before: held out at the aim, no wind-up; audit anticipation 1 -> 3). The release tick is unchanged (render only) | `8766508f`, `cb98ccd4` | `--throw-windup=off` (or held_classes.json thrown `windup_px` 0) | `molotov_windup-ab-32-48ppm.mp4` |
 | Molotov first aim: the lit bottle lifts from the ready claw to cocked over 0.22 s (smoothstep, about 13 frames) instead of jumping behind the helmet in one frame; straight out of a reload it is already cocked (no second rise). Render only | `9df494f6` | held_classes.json thrown `windup_rise_s` 0 (the snap) | `molotov_draw_rise-ab-32-48ppm.mp4` |
 | Mini-nuke launch weight: a 4 px camera kick against the aim on the launch, easing out over 7-9 frames (measured at 32 and 48 px/m; the rocket's is 3 px, the nuke had none). Restrained on purpose: the blast keeps its own stop, kick and shake. A harder rig kick (arena.json rig_kick 2.0) was filmed and dropped: it did not separate at 32 px/m (the tube swings into its reload pose on the next frame) and the schema caps it at 1.6 | `5c171ed8` | hit_feel.json mini_nuke `fire_kick_px` 0, or `--feel=off` | `mini_nuke_launch-ab-32-48ppm.mp4` |
+| Rocket and mini-nuke tube stays on the gun shoulder: on every launch the tube jumped to Rivet's left for a frame, and the nuke sat on the left again for about 9 frames of its reload (present on main: the reload poses the claw on the centre line, so the tube's axis passed within 0.2 px of the head's centre and the helmet clearance took the nearer side, flipping 19 times over a rocket reload and 21 over a nuke's). Aimed, it now keeps the gun shoulder's side. View only (lone kill ticks unchanged) | `5586a80e` | - (bug fix; before = main) | `tube_side-ab-32-48ppm.mp4` |
 | Combined clip of the polished set in the city block, 32 px/m, fight camera, with sound (72 s, retaken on `42f74955`: every ranged chapter plus the whole nuke ring) | `42f74955` | - | `city_block_polished_set-32ppm.mp4` |
 
 Gates (iteration 5): evidence run on `41bb90e7`: lint 13/13, scenarios 52/52, parity bit-exact
@@ -35,7 +36,6 @@ because I edited docs during the run). City-block director reel with `--loadout=
 `ed60713e` 19/19, 0 SCRIPT ERROR. On `7326b53b`: unit 1138/0, lint 13/13, pit director reel with the loadout 19/19, 0 SCRIPT ERROR.
 
 ## What does not work / not done
-- The rocket and the mini-nuke tube pops to Rivet's left shoulder for one frame right after each launch (32 px/m, lone film frame 266; found it13, not yet diagnosed or compared with main). See JOURNAL LOOK 02:31.
 - Molotov throw: the wind-up landed in iteration 11 as a cocked ready pose (`8766508f`), not as a
   timed wind-up before each release: the throw fires on the button press (semi, 50-tick interval
   over a 42-tick reload), so nothing in the sim announces the release; a wind-up that plays

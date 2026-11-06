@@ -28,7 +28,7 @@ Anticipation / Impact / Read 32 / Victim sync / Sound (arena). `?` = not looked 
 | # | Weapon | A | I | R | V | S | Why it ranks here |
 |---|---|---|---|---|---|---|---|
 | 1 | mini_nuke | 1 -> 2 | 2 -> 3 | 2 | 3 | 0 -> 3 | it13 `5c171ed8`: the launch kicks the camera 4 px against the aim (it had none; `mini_nuke_launch-ab-32-48ppm.mp4`); a harder rig kick did not read at 32 px/m and was dropped. the biggest hit in the game and the frame does not move: a huge ink burst, no stop, kick or shake; half off frame |
-| 2 | rocket_launcher | 2 | 2 -> 3 | 3 | 3 | 0 -> 3 | strong ink blast, debris, smoke, crater; the camera ignores it (no weight) |
+| 2 | rocket_launcher | 2 | 2 -> 3 | 3 | 3 | 0 -> 3 | it14 `5586a80e`: the tube no longer pops to Rivet's off shoulder on the launch (`tube_side-ab-32-48ppm.mp4`; the nuke had the same, plus a held swap mid-reload). strong ink blast, debris, smoke, crater; the camera ignores it (no weight) |
 | 3 | gatling | 1 -> 3 | 2 | 2 | 2 | 0 -> 2 | casing/spark spray and blood read; sustained fire has no weight at all; the 0.5 s spin-up shows nothing (no barrel turn, no cue) |
 | 4 | plasma_rifle | 2 | 2 | 2 | 3 | 0 -> 2 | impact star and a cream glow at the cop; it3 at 48 px/m: a 3-frame burst, the hole, the body thrown about 1.7 m along the bolt on the hit frame (the it1 "barely answers" was a misread at the frame edge) |
 | 5 | electro_gun | 2 | 2 | 2 | 3 | 0 -> 3 | zigzag bolt, star, skeleton flicker, yellow burst; the kill reads; it3 `9c140ffb`: the struck (stunned) body is thrown 0.3 m along the bolt on the hit frame, then convulses |
