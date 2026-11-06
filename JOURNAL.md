@@ -179,3 +179,4 @@ NEXT (iteration 3):
 5. Crowd cost (brief 6) under the bench lock: city crowd 400, tilt70 vs top.
 6. The cream ped torsos on cream pavement (city note); the cop blue call (navy vs police blue
    side by side); a combined 30-90 s clip of the street set.
+- GATE unit no-arg on the clean head 8f60301d (tree still): 1501 passed, 0 failed, no FLAKY (twice).
