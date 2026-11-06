@@ -74,7 +74,9 @@ func _draw() -> void:
 	_shout(f, at)
 	var buffed: bool = view.adds != null and view.adds.buffed(f.now())
 	# d8: the court's gang card for this view's pitch wears its own gold chain (KingArt)
-	var chains: bool = KingArt.strip_path(GangPlan.ART_DIR, ViewMode.shared().pitch_deg).is_empty()
+	var chains: bool = (
+		KingArt.strip_path(GangPlan.ART_DIR, ViewMode.shared().art_pitch()).is_empty()
+	)
 	for g: BossFight in view.standing_adds():
 		var c: Vector2 = Ink.px(g.body.pos)
 		if buffed:  # the decree's buff: a danger ring on every gang bot until it ends

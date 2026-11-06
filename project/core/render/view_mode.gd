@@ -89,6 +89,15 @@ func set_pitch(deg: float) -> void:
 
 
 ## True for a straight-down view (no projection at all: today's game).
+## The pitch the drawn art is keyed by: the art key's own (`p55` -> 55, `p70` -> 70), else the live
+## pitch. Under combo the key hard-swaps while the live pitch eases, so art picked by this never
+## asks for a folder between the two (a rounded 63 has none).
+func art_pitch() -> float:
+	if art.length() > 1 and art.begins_with("p") and art.substr(1).is_valid_int():
+		return float(art.substr(1).to_int())
+	return pitch_deg
+
+
 func is_flat() -> bool:
 	return pitch_deg >= 90.0
 

@@ -54,10 +54,13 @@ func test_a_live_pitch_change_re_dresses_the_card() -> void:
 	ViewMode._shared.pitch_deg = 55.0
 	KingArt.dress(rig)
 	assert_eq(card.texture.resource_path, KingArt.strip_path("king", 55.0), "55: the court strip")
+	# n8: the art key picks the folder (ViewMode.art_pitch); a row without a key falls back to
+	# the live pitch, and 65 has no strip
+	ViewMode._shared.art = ""
 	ViewMode._shared.pitch_deg = 65.0
 	KingArt.dress(rig)
 	assert_eq(card.texture, shared, "a pitch without a strip: the shared card again")
-	ViewMode._shared.pitch_deg = 55.0
+	ViewMode._shared.art = "p55"
 	KingArt.dress(rig)
 	assert_eq(card.texture.resource_path, KingArt.strip_path("king", 55.0), "back at 55")
 	ViewMode._shared = was
