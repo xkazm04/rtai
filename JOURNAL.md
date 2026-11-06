@@ -598,3 +598,13 @@ do REPORT "Next steps" 1-6 in order.
 
 NEXT (report phase, 08:40): no code, no re-export. REPORT.md is final. If the owner picks `tilt`,
 do REPORT "Next steps" 1-6 in order.
+
+## Iteration 24 (08:30-08:40, STABILIZE, past freeze)
+
+- No code, no re-export: the exe (78d652d7, built 08:04) still matches the game code;
+  `git diff --name-only 78d652d7..HEAD` lists only JOURNAL.md, REPORT.md and evidence/view/it18 logs.
+- CHECK: lint passes (13/13 checks, 980 GDScript files). frames.json has 15 entries, 0 missing in
+  gtai-masters/n7/view/. RTAI.exe is in place (248 MB). REPORT.md has all its sections.
+- Iterations 22-23 left no journal entry; git log shows no commits from them, so nothing was lost.
+
+NEXT: REPORT.md is final. If the owner picks `tilt`, do REPORT "Next steps" 1-6 in order.
