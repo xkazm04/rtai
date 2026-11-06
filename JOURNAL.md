@@ -1408,3 +1408,10 @@ live arena path at 32/48 px/m), sprite-and-atlas-production, depth-ordered-layer
   (`M/frames/servo_target_vs_game_32ppm_it16.png`, `scratch/servo/compose_target16.py` keeps the
   it14 framing), **looked at**: the wings now read as the sheet's dark bays of quad drones at 1x
   and 2x. it14 clip, keys and still deleted; REPORT and frames.json paths moved to it16.
+- 05:22 FILMS the p1/p2/p3 32 px/m clips re-filmed on the bay fix (`phase32_16.sh 1|2 2 2400`,
+  `3 2 2300`; 0 SCRIPT ERROR each). **Looked at** the three key sheets: framed as it14 (p1 the
+  top-left, p2 the bottom-right yard with carpet rings and CS crates, p3 the hot dash, dives and
+  the defeat in the top-left corner) on the docked bays. it14 clips and keys deleted; every M/
+  path in REPORT checked to exist; frames.json 15 entries, all on disk.
+- 05:22 GATES scenarios on the bay fix: **52 ran, 0 failed**, 0 SCRIPT ERROR, exit 0
+  (`evidence/servo/scenarios-it16.log`; CONTENDED: films ran beside it). Unit 1193/0. Lint 13/13.
