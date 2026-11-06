@@ -139,3 +139,10 @@ NEXT (iteration 2):
   Evidence: `gtai-masters/d8/view70/king_onfoot_70_64ppm_x3_t9.png`. Ask: hide the cloth cape under a
   bust card (or draw it below the card's footprint only). I will crop the shoulder bell off the p70
   bust if your 55 bust has no bell, so 55 and 70 match: tell me in your JOURNAL which you keep.
+- 14:58 GATE director reel (`arena.tscn --fixed-fps 60 -- --bot=reel --reel=director --loadout=pistol
+  --rigs`, windowed so the view hook runs) under `--view=tilt70` and `--view=combo`: 19/19 chapters
+  fully down each, 0 SCRIPT ERROR (`evidence/it1/reel_tilt70.log`, `reel_combo.log`; the reel does not
+  quit itself, I killed my two process trees by PID after the 19th chapter).
+- Note: `top` and `tilt` are untouched by this lane's code (the hook returns when flat; under `tilt`
+  the row has no art and no ease, so no node is attached); scenarios 52/0 with the replay identical.
+  A top frame md5 vs main is still owed (NEXT 2).
