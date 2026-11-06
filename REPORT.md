@@ -25,7 +25,7 @@ The moveset is `docs/bosses/king.md`; the full log is `JOURNAL.md`.
   - a jewelled crown and the ermine collar over the vermilion cape; (it13) the cape is folded cloth
     under an ermine border that sways and trails his charge (`evidence/king/shots/it13/cape_before_after_32_48ppm.png`),
     and (it14) lands wide with the press slam's shockwave (`evidence/king/shots/it14/cape_slam_land_before_after_48ppm.png`);
-  - the gilded plum throne-car, a boss-owned vehicle with drapes and a hood cannon (banded gold barrel on a swivel mount since it12, `evidence/king/shots/it12/hood_cannon_before_after_48ppm_2x.png`); (it14) rounded gold bumpers past both ends (`evidence/king/shots/it14/car_bumpers_before_after_p1_32_48ppm.png`);
+  - the gilded plum throne-car, a boss-owned vehicle with drapes and a hood cannon (banded gold barrel on a swivel mount since it12, `evidence/king/shots/it12/hood_cannon_before_after_48ppm_2x.png`); (it14) rounded gold bumpers past both ends (`evidence/king/shots/it14/car_bumpers_before_after_p1_32_48ppm.png`); (it15) a gilded throne back, a gold arch with ball finials round King's back over the cape, left empty on the car when he steps down (`evidence/king/shots/it15/car_throne_before_after_p1_32_48ppm.png`, `..._empty_p3_step_48ppm.png`);
   - the gang: the rich robot thug with gold chains, a steel helmet and shades; (it14) the chain is a
     gold rope with a medallion that reads at 32 px/m, on the car's riders and pushers too (it was a
     2 px arc on the brawlers only: `evidence/king/shots/it14/gang_chain_before_after_p1_p2_32ppm_3x.png`).
@@ -72,7 +72,10 @@ and in the exported exe.
   shoulders beside the ~6 m car, over a 1.0 m hit circle); they are less blocky and look smaller than
   the target's 3/4 view, where its bodyguards are drawn tall (call J). Since it14 they wear a gold
   chain that reads at 32 px/m, on the car too; their shades are still a dark band, not the target's
-  black visor glasses.
+  black visor glasses. Tried and rejected: a wider visor band in the part art prints the head as a
+  black disc at 32 px/m (it7/it10, call I) and a drawn visor arc lands on the dome's ink edge (it14).
+- The target's throne back is plum-quilted inside a gold frame; ours is the gold arch only (from
+  straight above the cape covers the seat, measured it15).
 - The plain robot thug (the enemy-ai lane's, not King's) prints as solid ink at 48 px/m. The gang's
   lift would fix it (`evidence/king/shots/it7/plain_thug_48ppm_ink_x2.png`).
 
@@ -125,8 +128,8 @@ Each call names its options, the default that is built, and how to see it.
 
 Export it with
 `"$GODOT_BIN" --headless --path project --export-release "windows-showcase" <worktree>/build/export/windows/RTAI.exe`.
-The showcase preset boots the arena, so the boss flags reach the fight. Last exported in it14 on
-f614cdf6 (04:17, with the gang chains, the slam cape and the car bumpers; 0 export errors, `build/export-it14c.log`) and smoke-tested headless
+The showcase preset boots the arena, so the boss flags reach the fight. Last exported in it15 on
+889cc825 (04:26, with the gang chains, the slam cape, the car bumpers and the throne back; 0 export errors, `build/export-it15.log`) and smoke-tested headless
 (`RTAI.exe --headless --fixed-fps 60 --quit-after 5400 -- --rigs --boss=king --bot=boss --seed=2
 --bot-human --telemetry=<json>`): King down at tick 4933, Rivet took 88, 0 SCRIPT ERROR (the
 same as the editor run). It is re-exported at the freeze.

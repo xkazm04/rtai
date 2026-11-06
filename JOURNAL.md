@@ -1490,3 +1490,11 @@ matter at 32 px/m, finalize REPORT.
   still read round it. Phase 2 tick 360 at 32: present on the stalled car. Phase 3 tick 30 at 48
   (`..._empty_p3_step_48ppm.png`): King stepping off, the empty gold arch left on the car.
 - DECISION THRONE_HW_M 0.95 (0 = it14). Unit **1164/0** (`evidence/king/unit-it15.log`), lint 13/13.
+
+### 04:26 EXE re-exported on 889cc825 (the throne back) and smoked
+- `windows-showcase` export exit 0, 0 errors (`build/export-it15.log`); headless smoke seed 2
+  human: King down at tick **4933**, took **88**, coin_fan 3 / press_slam 1 / ram 1, 0 SCRIPT
+  ERROR (render only: identical to it14).
+- NEXT 1 (shades in the part art) left as a REPORT gap: it7/it10 already measured that a wider
+  visor band prints the head as a black disc at 32 px/m (call I), and it14's drawn arc failed.
+  REPORT gap line updated.
