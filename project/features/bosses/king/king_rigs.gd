@@ -32,7 +32,8 @@ const PRESS_PLATES: bool = true
 ## shoulder pointing forward and a touch out, over the arms: rig px, radians, scale, z.
 const HORN_AT: Vector2 = Vector2(10.0, 215.0)
 const HORN_TURN: float = 0.35
-const HORN_K: float = 1.6
+## n7-king it12: 2.2 (was 1.6, a dark smudge under the plate at 32 px/m; 2.6 covers the plate).
+const HORN_K: float = 2.2
 const HORN_Z: int = 40
 ## Which arm strikes per attack (BodyPlan.L / R, 2 = both press plates); others: by body id.
 const ATTACK_ARMS: Dictionary[StringName, int] = {

@@ -30,6 +30,10 @@ GLINT = (233, 220, 195, 255)
 ## ink lines and gold keep their values. LIFT_K 1.0 is the old dark gang.
 LIFT_FROM = 40
 LIFT_K = 1.55
+## n7-king it12: the D5 close-up set (from 56 px/m) printed the gang near-black at 64 px/m, where
+## the target's are light steel. LIFT_K_D5 lifts the D5 set's grey steel the same way: 1.3 reads as
+## plated steel, 1.6 washes pale (measured A/B at 64 px/m); 1.0 = the old dark close-up.
+LIFT_K_D5 = 1.3
 ## Where the visor band starts across the helmet (0.30 = the old full visor; it7 0.60).
 ## n7-king it10: 0.70, a thinner shade strip, so the dome reads at 32 px/m (the 0.60 band plus the
 ## ink rims printed the head as a dark disc there).
@@ -101,14 +105,14 @@ def claw(img):
     return img
 
 
-def lift(img):
+def lift(img, k=None):
     """Brighten the grey steel (low saturation, above LIFT_FROM), never the ink or the gold."""
     a = np.array(img).astype(np.float32)
     rgb = a[..., :3]
     lum = rgb.mean(axis=2)
     sat = rgb.max(axis=2) - rgb.min(axis=2)
     m = (lum > LIFT_FROM) & (sat < 40)
-    rgb[m] = np.clip(rgb[m] * LIFT_K, 0, 255)
+    rgb[m] = np.clip(rgb[m] * (LIFT_K if k is None else k), 0, 255)
     a[..., :3] = rgb
     return Image.fromarray(a.astype(np.uint8), "RGBA")
 
@@ -123,7 +127,8 @@ def main():
         (d / "parts.json").write_bytes((s / "parts.json").read_bytes())
         for png in sorted(s.glob("*.png")):
             src = Image.open(png).convert("RGBA")
-            img = lift(src.copy()) if dst_dir == "gang" else src.copy()
+            k = LIFT_K if dst_dir == "gang" else LIFT_K_D5
+            img = lift(src.copy(), k) if k != 1.0 else src.copy()
             if png.stem in EXTRA:
                 img = clip_to(EXTRA[png.stem](img), src)
             img.save(d / png.name)

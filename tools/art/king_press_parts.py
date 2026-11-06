@@ -27,6 +27,11 @@ RIVET = (214, 196, 194, 255)
 ## The plate: length along the arm and span across it (px of the cell), and the ram stub's length.
 ## Seen from straight above a press plate shows its broad striking face (it presses down), so it is
 ## a near-square block (the target's square fists), not the thin bar of its edge (58 x 196, it8a).
+## n7-king it13: the horn printed near-ink at 32 px/m (its steel sits at the print's ink end and its
+## red rim printed vermilion, the cape's colour). HORN_LIFT scales its grey steel (as the gang's
+## LIFT_K) and its red is greyed first, so the gold swap gilds it; 1.0 = the it12 dark horn.
+HORN_LIFT = 1.55
+HORN_LIFT_FROM = 40
 PLATE_LEN = 150
 PLATE_SPAN = 186
 STUB_LEN = 34
@@ -101,9 +106,26 @@ def megaphone() -> dict:
     """The horn and its clamp from r_forearm.png (x >= 290), pivot at the clamp (the shoulder)."""
     src = Image.open(ART / "r_forearm.png").convert("RGBA")
     horn = src.crop((292, 0, src.width, src.height))
-    horn = horn.crop(horn.getbbox())
+    horn = _lift_horn(horn.crop(horn.getbbox()), HORN_LIFT)
     horn.save(ART / "megaphone.png")
     return _entry(horn.size, (8.0, horn.height / 2), (float(horn.width), horn.height / 2))
+
+
+def _lift_horn(img: Image.Image, k: float) -> Image.Image:
+    """Grey the red rim to its own luminance, then brighten the grey steel; the ink keeps."""
+    if k == 1.0:
+        return img
+    px = img.load()
+    for y in range(img.height):
+        for x in range(img.width):
+            r, g, b, a = px[x, y]
+            if r - max(g, b) > 40:  # the vermilion rim: grey at its luminance
+                r = g = b = int(0.299 * r + 0.587 * g + 0.114 * b)
+            lum = (r + g + b) / 3
+            if lum > HORN_LIFT_FROM and max(r, g, b) - min(r, g, b) < 40:
+                r, g, b = (min(255, int(c * k)) for c in (r, g, b))
+            px[x, y] = (r, g, b, a)
+    return img
 
 
 def _entry(size: tuple, pa: tuple, pb: tuple) -> dict:
