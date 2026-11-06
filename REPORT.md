@@ -44,9 +44,9 @@ The moveset is `docs/bosses/king.md`; the full log is `JOURNAL.md`.
   - the target sheet beside the game at 32 px/m (`king_target_vs_game_32ppm_it14.png`);
   - the ghosts on King, phase 3 at 48 px/m on the current body (`king_{dent,kerf,tonnage}_p3_48ppm_it14.mp4`, `king_ohm_daze_tells_48ppm_it13.mp4`).
 - **Combat holds**: the director reel was 19/19 chapters down with 0 SCRIPT ERROR on the branch
-  (it13, on 756993a8: `evidence/king/director-reel-it13.log`).
-- **Gates** (it13): lint 13/13 (`evidence/king/lint-it13c.log`), unit 1160/0 (`test_noir_shadows`
-  flaked once and re-ran green), scenarios 52/0 (`evidence/king/scenarios-it13.log`).
+  (it14, on dafbb40a: `evidence/king/director-reel-it14.log`).
+- **Gates** (it14): lint 13/13, unit 1164/0 (`evidence/king/unit-it14.log`), scenarios 52/0
+  (`evidence/king/scenarios-it14.log`).
 - **The boss camera** (it10): n7-servo's `BossCam` bar band and `keep_in` are ported to this branch
   as identical files, so King stays whole below the boss bar at the boulevard's top edge.
 

@@ -1419,3 +1419,7 @@ Read: JOURNAL NEXT (it13), git log, frames.json. `king_car_trim.gd` showed `M` w
   comparison (12 s / 72 s crops at 2x beside the sheet, no labels). **Looked at** the comparison:
   gold chains on the car's riders beside the sheet's chained bodyguards. it13 versions deleted;
   frames.json 15, full fight / comparison / slam / procession first; REPORT points at it14.
+- 04:08 GATES on dafbb40a: scenarios **52 ran, 0 failed** (`evidence/king/scenarios-it14.log`);
+  director reel (headless, `--rigs --bot=reel --reel=director --loadout=pistol`): **19/19 chapters
+  fully down**, 0 SCRIPT ERROR (`evidence/king/director-reel-it14.log`). Combat holds after the
+  slam cape and the gang chains.
