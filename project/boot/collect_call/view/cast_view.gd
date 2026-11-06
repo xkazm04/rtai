@@ -72,8 +72,9 @@ func _draw() -> void:
 		if h.kind == Fighter.Kind.BOSS:
 			_mertz(h)
 		elif h.alive():
-			var lean: Vector2 = hit_link.lean(h) if hit_link != null else Vector2.ZERO
-			_sprite("dock_guard", h.pos + lean, Vector2(0.9, 0.9) * GUARD_DRAW, h.facing)
+			var at: Vector2 = h.pos + (hit_link.lean(h) if hit_link != null else Vector2.ZERO)
+			if not StreetQuestCards.draw_guard(self, Ink.px(at), h.facing, Ink.PX_PER_M):  # n8 cards
+				_sprite("dock_guard", at, Vector2(0.9, 0.9) * GUARD_DRAW, h.facing)
 		else:
 			_sprite("guard_down", h.pos, Vector2(1.6, 1.6), h.facing, DOWN_FADE)
 	_rivet(stage.arena.rivet)

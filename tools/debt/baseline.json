@@ -3,7 +3,8 @@
     "dev_loc": {
       "accepted": [
         "2026-11-06: d8 chars: --order-probe measures ghost-card vs rig pairs (the brief's draw-order item, measured before/after) (dev_loc 18080 -> 18115)",
-        "2026-11-06: n8 street: dev/showcase/street_crowd board (16 peds of every look under --view; the evidence for the crowd's nine pedestrian card types), dev only, excluded from release (dev_loc 18115 -> 18241)"
+        "2026-11-06: n8 street: dev/showcase/street_crowd board (16 peds of every look under --view; the evidence for the crowd's nine pedestrian card types), dev only, excluded from release (dev_loc 18115 -> 18241)",
+        "2026-11-06: n8 street: cast_view +1 line (the StreetQuestCards hook: quest 1's contractors stand as cards under card views) and quest1_clip +1 (--view for filming quest 1 under a tilt) (dev_loc 18241 -> 18242)"
       ],
       "files": {
         "project/dev/arena": 1034,
@@ -12,7 +13,7 @@
         "project/dev/bench": 1388,
         "project/dev/bots": 399,
         "project/dev/enemy_ai": 662,
-        "project/dev/frames": 462,
+        "project/dev/frames": 463,
         "project/dev/ghost-forms": 616,
         "project/dev/ghost-powers": 1137,
         "project/dev/gunplay": 674,
@@ -31,7 +32,7 @@
         "project/dev/view": 158,
         "project/dev/weapon_art": 506
       },
-      "total": 18241
+      "total": 18242
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -199,9 +200,12 @@
       "total": 15
     },
     "files_past_soft_cap": {
+      "accepted": [
+        "2026-11-06: n8 street: cast_view +1 line (the StreetQuestCards hook: quest 1's contractors stand as cards under card views) and quest1_clip +1 (--view for filming quest 1 under a tilt) (files_past_soft_cap 68 -> 68)"
+      ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 266,
-        "project/boot/collect_call/view/cast_view.gd": 225,
+        "project/boot/collect_call/view/cast_view.gd": 226,
         "project/boot/collect_call/view/collect_call_view.gd": 236,
         "project/boot/collect_call/view/fx_view.gd": 271,
         "project/boot/collect_call/view/stage_view.gd": 201,

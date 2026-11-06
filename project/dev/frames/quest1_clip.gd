@@ -4,7 +4,7 @@ extends SceneTree
 ## Needs a window (the headless display has no renderer); dev-only, never shipped.
 ## Usage: godot --path project --resolution 1920x1080 -s res://dev/frames/quest1_clip.gd
 ##   -- --out=<abs dir> [--ppm=32] [--stills=<tick,tick,...>] (stills only: no clip, no title)
-##   [--save=<abs file>] (the game writes its beat checkpoints there)
+##   [--save=<abs file>] (the game writes its beat checkpoints there) [--view=<id>] (n8 street)
 ##   [--continue] (with --save: press Continue on the title, save the first frames, quit)
 ##   [--rigs] (rivet-arsenal: the quest drawn on the cast rigs, Quest1Game._dev_rigs)
 ##   [--cam=fight] (rivet-arsenal: the camera leans toward the cop Rivet fights, render only)
@@ -30,6 +30,7 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--feel",
 	"--quest-blade",
 	"--blade",
+	"--view",
 ]
 const RECORDER: String = "res://dev/frames/quest1_clip_rec.gd"
 const COUNTER: String = "res://tests/support/error_counter.gd"
