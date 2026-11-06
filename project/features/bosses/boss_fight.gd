@@ -38,6 +38,9 @@ var plant_no_lock: bool = false
 var dazed: int = 0
 var hits: int = 0
 var landed: bool = false
+## The boss script's late hits in this step's return (BossMoves.tick: parcels, coins), so the
+## hook credits them to the boss, not to the attack whose active window they fell in.
+var late_hit: float = 0.0
 var _rng: RandomNumberGenerator
 var _ready_at: Dictionary[StringName, int] = {}
 var _pending: int = -1
@@ -72,6 +75,7 @@ func step(tick: int, target: Vector2, target_r: float) -> float:
 	t += 1
 	_step_adds()
 	var extra: float = moves.tick(self, target, target_r)  # late hits (parcels, falling coins)
+	late_hit = extra
 	if dazed > 0:
 		dazed -= 1
 		return extra

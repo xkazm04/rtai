@@ -1,0 +1,733 @@
+{
+  "schema": "gtai.boss-numbers/1",
+  "boss": "servo",
+  "contended": true,
+  "quit_after": 14400,
+  "summary": {
+    "dodge": {
+      "n": 5,
+      "downed": 5,
+      "ttk_mean_s": 127.3,
+      "ttk_range_s": [
+        114,
+        139.9
+      ],
+      "taken_mean": 62,
+      "deaths": 0,
+      "adds_landed_tries": [
+        0,
+        0
+      ],
+      "per_attack": {
+        "kamikaze": {
+          "tries": 12,
+          "landed": 0,
+          "rolled": 0,
+          "hit_rate": 0
+        },
+        "package_carpet": {
+          "tries": 13,
+          "landed": 0,
+          "rolled": 0,
+          "hit_rate": 0
+        },
+        "rotor_dash": {
+          "tries": 35,
+          "landed": 2,
+          "rolled": 3,
+          "hit_rate": 0.06
+        },
+        "rotor_dash_hot": {
+          "tries": 17,
+          "landed": 1,
+          "rolled": 0,
+          "hit_rate": 0.06
+        },
+        "scan_drop": {
+          "tries": 55,
+          "landed": 0,
+          "rolled": 0,
+          "hit_rate": 0
+        },
+        "bay_hop": {
+          "tries": 8,
+          "landed": 5,
+          "rolled": 0,
+          "hit_rate": 0.63
+        }
+      }
+    },
+    "human": {
+      "n": 5,
+      "downed": 5,
+      "ttk_mean_s": 129,
+      "ttk_range_s": [
+        121.3,
+        137.7
+      ],
+      "taken_mean": 128,
+      "deaths": 0,
+      "adds_landed_tries": [
+        0,
+        0
+      ],
+      "per_attack": {
+        "kamikaze": {
+          "tries": 15,
+          "landed": 0,
+          "rolled": 0,
+          "hit_rate": 0
+        },
+        "package_carpet": {
+          "tries": 12,
+          "landed": 0,
+          "rolled": 0,
+          "hit_rate": 0
+        },
+        "rotor_dash": {
+          "tries": 38,
+          "landed": 15,
+          "rolled": 3,
+          "hit_rate": 0.39
+        },
+        "rotor_dash_hot": {
+          "tries": 15,
+          "landed": 5,
+          "rolled": 1,
+          "hit_rate": 0.33
+        },
+        "scan_drop": {
+          "tries": 57,
+          "landed": 0,
+          "rolled": 0,
+          "hit_rate": 0
+        },
+        "bay_hop": {
+          "tries": 8,
+          "landed": 0,
+          "rolled": 0,
+          "hit_rate": 0
+        }
+      }
+    },
+    "stand": {
+      "n": 5,
+      "downed": 1,
+      "ttk_mean_s": 204,
+      "ttk_range_s": [
+        204,
+        204
+      ],
+      "taken_mean": 1388.4,
+      "deaths": 25,
+      "adds_landed_tries": [
+        0,
+        0
+      ],
+      "per_attack": {
+        "bay_hop": {
+          "tries": 14,
+          "landed": 14,
+          "rolled": 0,
+          "hit_rate": 1
+        },
+        "kamikaze": {
+          "tries": 4,
+          "landed": 0,
+          "rolled": 0,
+          "hit_rate": 0
+        },
+        "package_carpet": {
+          "tries": 23,
+          "landed": 0,
+          "rolled": 0,
+          "hit_rate": 0
+        },
+        "rotor_dash": {
+          "tries": 95,
+          "landed": 86,
+          "rolled": 0,
+          "hit_rate": 0.91
+        },
+        "rotor_dash_hot": {
+          "tries": 3,
+          "landed": 3,
+          "rolled": 0,
+          "hit_rate": 1
+        },
+        "scan_drop": {
+          "tries": 113,
+          "landed": 0,
+          "rolled": 0,
+          "hit_rate": 0
+        }
+      }
+    }
+  },
+  "runs": {
+    "dodge": [
+      {
+        "seed": 1,
+        "down_s": 138.5,
+        "hp_left": 0,
+        "phase": 3,
+        "taken": 104,
+        "deaths": 0,
+        "tries": {
+          "kamikaze": 2,
+          "package_carpet": 3,
+          "rotor_dash": 9,
+          "rotor_dash_hot": 4,
+          "scan_drop": 12
+        },
+        "landed": {
+          "rotor_dash": 1,
+          "rotor_dash_hot": 1,
+          "servo": 2
+        },
+        "rolled": {
+          "rotor_dash": 2
+        },
+        "moves": {
+          "crates_smashed": 17,
+          "dive_hits": 0,
+          "dives": 4,
+          "drones_launched": 59,
+          "drones_shot": 40,
+          "marks": 16,
+          "parcel_hits": 2,
+          "parcels_landed": 55
+        },
+        "adds": [
+          0,
+          0
+        ],
+        "ticks": 14399,
+        "script_errors": 0
+      },
+      {
+        "seed": 2,
+        "down_s": 114,
+        "hp_left": 0,
+        "phase": 3,
+        "taken": 68,
+        "deaths": 0,
+        "tries": {
+          "bay_hop": 1,
+          "kamikaze": 2,
+          "package_carpet": 2,
+          "rotor_dash": 7,
+          "rotor_dash_hot": 3,
+          "scan_drop": 10
+        },
+        "landed": {
+          "bay_hop": 1,
+          "rotor_dash": 1,
+          "servo": 1
+        },
+        "rolled": {},
+        "moves": {
+          "crates_smashed": 10,
+          "dive_hits": 1,
+          "dives": 4,
+          "drones_launched": 48,
+          "drones_shot": 35,
+          "marks": 13,
+          "parcel_hits": 0,
+          "parcels_landed": 44
+        },
+        "adds": [
+          0,
+          0
+        ],
+        "ticks": 14399,
+        "script_errors": 0
+      },
+      {
+        "seed": 3,
+        "down_s": 116.1,
+        "hp_left": 0,
+        "phase": 3,
+        "taken": 20,
+        "deaths": 0,
+        "tries": {
+          "bay_hop": 2,
+          "kamikaze": 2,
+          "package_carpet": 3,
+          "rotor_dash": 5,
+          "rotor_dash_hot": 3,
+          "scan_drop": 10
+        },
+        "landed": {
+          "bay_hop": 1
+        },
+        "rolled": {},
+        "moves": {
+          "crates_smashed": 3,
+          "dive_hits": 0,
+          "dives": 4,
+          "drones_launched": 52,
+          "drones_shot": 41,
+          "marks": 15,
+          "parcel_hits": 0,
+          "parcels_landed": 48
+        },
+        "adds": [
+          0,
+          0
+        ],
+        "ticks": 14399,
+        "script_errors": 0
+      },
+      {
+        "seed": 4,
+        "down_s": 139.9,
+        "hp_left": 0,
+        "phase": 3,
+        "taken": 56,
+        "deaths": 0,
+        "tries": {
+          "bay_hop": 3,
+          "kamikaze": 3,
+          "package_carpet": 4,
+          "rotor_dash": 7,
+          "rotor_dash_hot": 4,
+          "scan_drop": 11
+        },
+        "landed": {
+          "bay_hop": 1,
+          "servo": 2
+        },
+        "rolled": {
+          "rotor_dash": 1
+        },
+        "moves": {
+          "crates_smashed": 4,
+          "dive_hits": 2,
+          "dives": 6,
+          "drones_launched": 65,
+          "drones_shot": 38,
+          "marks": 18,
+          "parcel_hits": 0,
+          "parcels_landed": 59
+        },
+        "adds": [
+          0,
+          0
+        ],
+        "ticks": 14399,
+        "script_errors": 0
+      },
+      {
+        "seed": 5,
+        "down_s": 128.2,
+        "hp_left": 0,
+        "phase": 3,
+        "taken": 62,
+        "deaths": 0,
+        "tries": {
+          "bay_hop": 2,
+          "kamikaze": 3,
+          "package_carpet": 1,
+          "rotor_dash": 7,
+          "rotor_dash_hot": 3,
+          "scan_drop": 12
+        },
+        "landed": {
+          "bay_hop": 2,
+          "servo": 1
+        },
+        "rolled": {},
+        "moves": {
+          "crates_smashed": 4,
+          "dive_hits": 0,
+          "dives": 6,
+          "drones_launched": 58,
+          "drones_shot": 38,
+          "marks": 16,
+          "parcel_hits": 1,
+          "parcels_landed": 52
+        },
+        "adds": [
+          0,
+          0
+        ],
+        "ticks": 14399,
+        "script_errors": 0
+      }
+    ],
+    "human": [
+      {
+        "seed": 1,
+        "down_s": 128.9,
+        "hp_left": 0,
+        "phase": 3,
+        "taken": 120,
+        "deaths": 0,
+        "tries": {
+          "kamikaze": 2,
+          "package_carpet": 3,
+          "rotor_dash": 9,
+          "rotor_dash_hot": 2,
+          "scan_drop": 12
+        },
+        "landed": {
+          "rotor_dash": 4
+        },
+        "rolled": {
+          "rotor_dash": 1
+        },
+        "moves": {
+          "crates_smashed": 7,
+          "dive_hits": 0,
+          "dives": 4,
+          "drones_launched": 60,
+          "drones_shot": 32,
+          "marks": 17,
+          "parcel_hits": 0,
+          "parcels_landed": 56
+        },
+        "adds": [
+          0,
+          0
+        ],
+        "ticks": 14399,
+        "script_errors": 0
+      },
+      {
+        "seed": 2,
+        "down_s": 137.7,
+        "hp_left": 0,
+        "phase": 3,
+        "taken": 210,
+        "deaths": 0,
+        "tries": {
+          "bay_hop": 2,
+          "kamikaze": 3,
+          "package_carpet": 2,
+          "rotor_dash": 8,
+          "rotor_dash_hot": 4,
+          "scan_drop": 12
+        },
+        "landed": {
+          "rotor_dash": 6,
+          "rotor_dash_hot": 1
+        },
+        "rolled": {
+          "rotor_dash": 1
+        },
+        "moves": {
+          "crates_smashed": 14,
+          "dive_hits": 0,
+          "dives": 6,
+          "drones_launched": 57,
+          "drones_shot": 31,
+          "marks": 16,
+          "parcel_hits": 0,
+          "parcels_landed": 51
+        },
+        "adds": [
+          0,
+          0
+        ],
+        "ticks": 14399,
+        "script_errors": 0
+      },
+      {
+        "seed": 3,
+        "down_s": 121.3,
+        "hp_left": 0,
+        "phase": 3,
+        "taken": 120,
+        "deaths": 0,
+        "tries": {
+          "bay_hop": 3,
+          "kamikaze": 3,
+          "package_carpet": 2,
+          "rotor_dash": 7,
+          "rotor_dash_hot": 3,
+          "scan_drop": 10
+        },
+        "landed": {
+          "rotor_dash": 3,
+          "rotor_dash_hot": 1
+        },
+        "rolled": {
+          "rotor_dash": 1
+        },
+        "moves": {
+          "crates_smashed": 8,
+          "dive_hits": 0,
+          "dives": 6,
+          "drones_launched": 48,
+          "drones_shot": 26,
+          "marks": 14,
+          "parcel_hits": 0,
+          "parcels_landed": 42
+        },
+        "adds": [
+          0,
+          0
+        ],
+        "ticks": 14399,
+        "script_errors": 0
+      },
+      {
+        "seed": 4,
+        "down_s": 132.2,
+        "hp_left": 0,
+        "phase": 3,
+        "taken": 60,
+        "deaths": 0,
+        "tries": {
+          "bay_hop": 1,
+          "kamikaze": 4,
+          "package_carpet": 4,
+          "rotor_dash": 7,
+          "rotor_dash_hot": 3,
+          "scan_drop": 11
+        },
+        "landed": {
+          "rotor_dash": 1,
+          "rotor_dash_hot": 1
+        },
+        "rolled": {},
+        "moves": {
+          "crates_smashed": 14,
+          "dive_hits": 0,
+          "dives": 6,
+          "drones_launched": 60,
+          "drones_shot": 41,
+          "marks": 17,
+          "parcel_hits": 0,
+          "parcels_landed": 54
+        },
+        "adds": [
+          0,
+          0
+        ],
+        "ticks": 14399,
+        "script_errors": 0
+      },
+      {
+        "seed": 5,
+        "down_s": 124.7,
+        "hp_left": 0,
+        "phase": 3,
+        "taken": 130,
+        "deaths": 0,
+        "tries": {
+          "bay_hop": 2,
+          "kamikaze": 3,
+          "package_carpet": 1,
+          "rotor_dash": 7,
+          "rotor_dash_hot": 3,
+          "scan_drop": 12
+        },
+        "landed": {
+          "rotor_dash": 1,
+          "rotor_dash_hot": 2,
+          "servo": 2
+        },
+        "rolled": {
+          "rotor_dash_hot": 1
+        },
+        "moves": {
+          "crates_smashed": 5,
+          "dive_hits": 1,
+          "dives": 6,
+          "drones_launched": 53,
+          "drones_shot": 36,
+          "marks": 15,
+          "parcel_hits": 1,
+          "parcels_landed": 47
+        },
+        "adds": [
+          0,
+          0
+        ],
+        "ticks": 14399,
+        "script_errors": 0
+      }
+    ],
+    "stand": [
+      {
+        "seed": 1,
+        "down_s": 204,
+        "hp_left": 0,
+        "phase": 3,
+        "taken": 1132,
+        "deaths": 3,
+        "tries": {
+          "bay_hop": 4,
+          "kamikaze": 4,
+          "package_carpet": 6,
+          "rotor_dash": 12,
+          "rotor_dash_hot": 3,
+          "scan_drop": 17
+        },
+        "landed": {
+          "bay_hop": 4,
+          "rotor_dash": 9,
+          "rotor_dash_hot": 3,
+          "servo": 32
+        },
+        "rolled": {},
+        "moves": {
+          "crates_smashed": 19,
+          "dive_hits": 3,
+          "dives": 8,
+          "drones_launched": 101,
+          "drones_shot": 78,
+          "marks": 26,
+          "parcel_hits": 29,
+          "parcels_landed": 93
+        },
+        "adds": [
+          0,
+          0
+        ],
+        "ticks": 14399,
+        "script_errors": 0
+      },
+      {
+        "seed": 2,
+        "down_s": null,
+        "hp_left": 0.335227272727273,
+        "phase": 2,
+        "taken": 1554,
+        "deaths": 6,
+        "tries": {
+          "bay_hop": 5,
+          "package_carpet": 11,
+          "rotor_dash": 14,
+          "scan_drop": 21
+        },
+        "landed": {
+          "bay_hop": 5,
+          "rotor_dash": 14,
+          "servo": 47
+        },
+        "rolled": {},
+        "moves": {
+          "crates_smashed": 23,
+          "dive_hits": 0,
+          "dives": 0,
+          "drones_launched": 150,
+          "drones_shot": 120,
+          "marks": 32,
+          "parcel_hits": 47,
+          "parcels_landed": 150
+        },
+        "adds": [
+          0,
+          0
+        ],
+        "ticks": 14399,
+        "script_errors": 0
+      },
+      {
+        "seed": 3,
+        "down_s": null,
+        "hp_left": 0.772727272727273,
+        "phase": 1,
+        "taken": 1356,
+        "deaths": 5,
+        "tries": {
+          "rotor_dash": 25,
+          "scan_drop": 26
+        },
+        "landed": {
+          "rotor_dash": 21,
+          "servo": 33
+        },
+        "rolled": {},
+        "moves": {
+          "crates_smashed": 13,
+          "dive_hits": 0,
+          "dives": 0,
+          "drones_launched": 78,
+          "drones_shot": 70,
+          "marks": 26,
+          "parcel_hits": 33,
+          "parcels_landed": 78
+        },
+        "adds": [
+          0,
+          0
+        ],
+        "ticks": 14399,
+        "script_errors": 0
+      },
+      {
+        "seed": 4,
+        "down_s": null,
+        "hp_left": 0.327272727272727,
+        "phase": 2,
+        "taken": 1322,
+        "deaths": 4,
+        "tries": {
+          "bay_hop": 5,
+          "package_carpet": 6,
+          "rotor_dash": 19,
+          "scan_drop": 23
+        },
+        "landed": {
+          "bay_hop": 5,
+          "rotor_dash": 18,
+          "servo": 31
+        },
+        "rolled": {},
+        "moves": {
+          "crates_smashed": 24,
+          "dive_hits": 0,
+          "dives": 0,
+          "drones_launched": 116,
+          "drones_shot": 94,
+          "marks": 28,
+          "parcel_hits": 31,
+          "parcels_landed": 116
+        },
+        "adds": [
+          0,
+          0
+        ],
+        "ticks": 14399,
+        "script_errors": 0
+      },
+      {
+        "seed": 5,
+        "down_s": null,
+        "hp_left": 0.815909090909091,
+        "phase": 1,
+        "taken": 1578,
+        "deaths": 7,
+        "tries": {
+          "rotor_dash": 25,
+          "scan_drop": 26
+        },
+        "landed": {
+          "rotor_dash": 24,
+          "servo": 39
+        },
+        "rolled": {},
+        "moves": {
+          "crates_smashed": 13,
+          "dive_hits": 0,
+          "dives": 0,
+          "drones_launched": 78,
+          "drones_shot": 70,
+          "marks": 26,
+          "parcel_hits": 39,
+          "parcels_landed": 78
+        },
+        "adds": [
+          0,
+          0
+        ],
+        "ticks": 14399,
+        "script_errors": 0
+      }
+    ]
+  }
+}

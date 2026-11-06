@@ -33,6 +33,17 @@ class Arena:
 	## Optional `adds_from`: `boss` puts add_spawns round the boss (King's gang leaps off the car),
 	## `area` (default) round the area's centre.
 	var adds_from_boss: bool = false
+	## Optional `parked`: vehicles the hook parks in the stage's car service at the start (a kind,
+	## an offset from the area's centre, a heading, a traffic atlas cell): the ghosts' cars.
+	var parked: Array[Parked] = []
+
+
+class Parked:
+	extends RefCounted
+	var kind: StringName = &"sedan"
+	var at: Vector2 = Vector2.ZERO
+	var head: Vector2 = Vector2.RIGHT
+	var art: int = 0
 
 
 var id: StringName = &""
@@ -44,6 +55,9 @@ var radius_m: float = 1.0
 ## The share of the hp the boss takes while Rivet is settled in a ghost form (optional `ghost_k`,
 ## default 1: the ghosts' full machine damage). Owner call A (n7-king): e.g. 0.5 for a tougher boss.
 var ghost_k: float = 1.0
+## Kerf's blink line also cuts the boss script's own bodies (Servo's drones) within this many
+## metres of it (optional `kerf_line_m`, default 0 = the blink cuts its one target only).
+var kerf_line_m: float = 0.0
 ## Rivet's repair delay during this fight (optional `rivet_repair_delay_s`; -1 = combat.json's).
 ## Owner call C (n7-king): a longer delay lets spaced boss hits add up without a hit over 30 hp.
 var rivet_repair_delay_s: float = -1.0
@@ -82,6 +96,7 @@ static func from_table(t: DataTable, boss_id: StringName) -> BossSpec:
 	s.keep_m = BossAttack.opt(row, "keep_m", -1.0)
 	s.radius_m = t.num(row, "radius_m")
 	s.ghost_k = BossAttack.opt(row, "ghost_k", 1.0)
+	s.kerf_line_m = BossAttack.opt(row, "kerf_line_m", 0.0)
 	s.rivet_repair_delay_s = BossAttack.opt(row, "rivet_repair_delay_s", -1.0)
 	s.body_class = StringName(str(row.get("body_class", "boss")))
 	s.rng = StringName(t.text(row, "rng"))
@@ -127,6 +142,14 @@ static func _arena(t: DataTable, p_id: String, row: Dictionary) -> Arena:
 	for v: Variant in t.array(row, "add_spawns"):
 		a.add_spawns.append(t.vec({"v": v}, "v"))
 	a.adds_from_boss = str(row.get("adds_from", "area")) == "boss"
+	for v: Variant in row.get("parked", []):
+		var c: Dictionary = v
+		var pk: Parked = Parked.new()
+		pk.kind = StringName(t.text(c, "kind"))
+		pk.at = t.vec(c, "at")
+		pk.head = t.vec(c, "head").normalized()
+		pk.art = roundi(t.num(c, "art"))
+		a.parked.append(pk)
 	return a
 
 

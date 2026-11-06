@@ -19,6 +19,9 @@ const REACT_TICKS: int = 18
 const CLEAR_M: float = 1.2
 ## Still in the zone this close to the active window: roll (its i-frames cover the hit).
 const ROLL_LEFT: int = 8
+## A charge is rolled on its body, not its tell: pressed when the body is this many ticks away,
+## so it meets the roll's i-frames (rivet_motion.json roll iframe_from 2 .. iframe_to 14).
+const CHARGE_ROLL_TICKS: int = 7
 ## Closer than this to the fight floor's edge, the bot heads back toward its middle.
 const EDGE_M: float = 3.0
 ## How far ahead a sidestep looks for cover.
@@ -160,10 +163,19 @@ func _unblock(dodge: Vector2, me: Vector2) -> Vector2:
 
 
 ## Roll: still in the zone just before the active window, or walled in on an active attack.
-func _rolls(threat: BossFight, me: Vector2, dodge: Vector2) -> bool:
-	if threat.state == BossFight.State.WINDUP:
-		return threat.tell_left() <= ROLL_LEFT
-	return threat.state == BossFight.State.ACTIVE and walled(stage.walls, me, dodge)
+## A charge is rolled on its body, CHARGE_ROLL_TICKS away along the lane (a dash crosses 14 m:
+## the tell's end is too early).
+func _rolls(f: BossFight, me: Vector2, dodge: Vector2) -> bool:
+	var charge: bool = f.attack.shape == BossAttack.Shape.CHARGE
+	if f.state == BossFight.State.WINDUP:
+		return not charge and f.tell_left() <= ROLL_LEFT
+	if f.state != BossFight.State.ACTIVE:
+		return false
+	if charge:
+		var gap: float = (me - f.body.pos).dot(f.aim) - f.body.radius_m
+		if gap >= -0.5 and gap <= f.attack.move_mps / 60.0 * float(CHARGE_ROLL_TICKS):
+			return true
+	return walled(stage.walls, me, dodge)
 
 
 ## `dodge`, or its opposite when cover stands within BLOCK_M along it and the other side is open.

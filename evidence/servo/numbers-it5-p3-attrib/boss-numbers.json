@@ -1,0 +1,149 @@
+{
+  "schema": "gtai.boss-numbers/1",
+  "boss": "servo",
+  "contended": true,
+  "quit_after": 3600,
+  "summary": {
+    "stand": {
+      "n": 3,
+      "downed": 3,
+      "ttk_mean_s": 34.8,
+      "ttk_range_s": [
+        26.7,
+        42.3
+      ],
+      "taken_mean": 159.3,
+      "deaths": 0,
+      "adds_landed_tries": [
+        0,
+        0
+      ],
+      "per_attack": {
+        "kamikaze": {
+          "tries": 11,
+          "landed": 0,
+          "rolled": 0,
+          "hit_rate": 0
+        },
+        "rotor_dash_hot": {
+          "tries": 8,
+          "landed": 8,
+          "rolled": 0,
+          "hit_rate": 1
+        },
+        "scan_drop": {
+          "tries": 8,
+          "landed": 0,
+          "rolled": 0,
+          "hit_rate": 0
+        }
+      }
+    }
+  },
+  "runs": {
+    "stand": [
+      {
+        "seed": 1,
+        "down_s": 26.7,
+        "hp_left": 0,
+        "phase": 3,
+        "taken": 114,
+        "deaths": 0,
+        "tries": {
+          "kamikaze": 2,
+          "rotor_dash_hot": 2,
+          "scan_drop": 3
+        },
+        "landed": {
+          "rotor_dash_hot": 2,
+          "servo": 3
+        },
+        "rolled": {},
+        "moves": {
+          "crates_smashed": 3,
+          "dive_hits": 3,
+          "dives": 4,
+          "drones_launched": 8,
+          "drones_shot": 5,
+          "marks": 4,
+          "parcel_hits": 0,
+          "parcels_landed": 4
+        },
+        "adds": [
+          0,
+          0
+        ],
+        "ticks": 3599,
+        "script_errors": 0
+      },
+      {
+        "seed": 2,
+        "down_s": 42.3,
+        "hp_left": 0,
+        "phase": 3,
+        "taken": 202,
+        "deaths": 0,
+        "tries": {
+          "kamikaze": 5,
+          "rotor_dash_hot": 3,
+          "scan_drop": 3
+        },
+        "landed": {
+          "rotor_dash_hot": 3,
+          "servo": 6
+        },
+        "rolled": {},
+        "moves": {
+          "crates_smashed": 1,
+          "dive_hits": 5,
+          "dives": 10,
+          "drones_launched": 16,
+          "drones_shot": 9,
+          "marks": 8,
+          "parcel_hits": 1,
+          "parcels_landed": 6
+        },
+        "adds": [
+          0,
+          0
+        ],
+        "ticks": 3599,
+        "script_errors": 0
+      },
+      {
+        "seed": 3,
+        "down_s": 35.5,
+        "hp_left": 0,
+        "phase": 3,
+        "taken": 162,
+        "deaths": 0,
+        "tries": {
+          "kamikaze": 4,
+          "rotor_dash_hot": 3,
+          "scan_drop": 2
+        },
+        "landed": {
+          "rotor_dash_hot": 3,
+          "servo": 4
+        },
+        "rolled": {},
+        "moves": {
+          "crates_smashed": 1,
+          "dive_hits": 4,
+          "dives": 8,
+          "drones_launched": 12,
+          "drones_shot": 8,
+          "marks": 6,
+          "parcel_hits": 0,
+          "parcels_landed": 4
+        },
+        "adds": [
+          0,
+          0
+        ],
+        "ticks": 3599,
+        "script_errors": 0
+      }
+    ]
+  }
+}

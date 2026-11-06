@@ -26,6 +26,8 @@ var dealt: float = 0.0
 var rivet_hp_min: float = INF
 ## New stuns on the boss body, and those that dazed it (telemetry: Ohm's bolt on the fight).
 var stuns: int = 0
+## Kerf's blink line on the boss script's bodies (bosses.json kerf_line_m).
+var kerf_line: BossKerfLine = BossKerfLine.new()
 var dazes: int = 0
 var _arena: CombatArena = null
 var _last_hp: float = 0.0
@@ -33,9 +35,9 @@ var _rng: RngRegistry = null
 var _hooks_cleared: bool = false
 ## The boss script's extra bodies in the hostiles now (BossMoves.bodies()).
 var _extra: Array[Fighter] = []
-var _stun_seen: int = 0
 ## The boss script's solid boxes in the stage's walls now (BossMoves.solids()).
 var _solids: Array[Rect2] = []
+var _stun_seen: int = 0
 
 
 func setup(stage: ArenaStage, ctx: WorldContext) -> void:
@@ -85,12 +87,14 @@ func step(stage: ArenaStage, tick: int) -> void:
 	if not _hooks_cleared:  # hooks set up after this one (station files load in name order)
 		_hooks_cleared = true
 		_clear_claw_cops(stage)
+		_park(stage, fight.spec.arena)  # the car service is attached after the stage's setup
 	BossAdds.route(fight, _last_hp, _ghost_k(stage))
+	@warning_ignore("return_value_discarded")
+	kerf_line.step(stage, fight)
 	_last_hp = fight.body.hp
 	adds.step(_arena, tick)
 	var r: Fighter = _arena.rivet
-	if defeated_tick < 0:
-		rivet_hp_min = minf(rivet_hp_min, r.hp)
+	rivet_hp_min = minf(rivet_hp_min, r.hp) if defeated_tick < 0 else rivet_hp_min
 	if not r.alive():
 		return
 	_stun_check()
@@ -109,7 +113,8 @@ func step(stage: ArenaStage, tick: int) -> void:
 		_arena.hit_dir = fight.aim
 		_arena.hit_at = r.pos
 		_arena.damage(r, hit, fight.body.id, StringName("boss_%s" % fight.hit_id()))
-		landed[fight.hit_id()] = landed.get(fight.hit_id(), 0) + 1
+		var own: StringName = fight.hit_id() if hit > fight.late_hit else fight.spec.id
+		landed[own] = landed.get(own, 0) + 1  # a late hit alone is the boss's, not the attack's
 		dealt += hit
 	if fight.state == BossFight.State.DEFEATED and defeated_tick < 0:
 		defeated_tick = tick
@@ -169,6 +174,15 @@ func _keep_in(f: BossFight) -> void:
 
 
 ## The boss owns the floor: the stations' dummies leave and the pit's own waves never start.
+## The arena record's parked vehicles into the stage's car service (Dent seizes them), once.
+func _park(stage: ArenaStage, a: BossSpec.Arena) -> void:
+	if stage.vehicles == null:
+		return
+	for pk: BossSpec.Parked in a.parked:
+		@warning_ignore("return_value_discarded")
+		stage.vehicles.spawn_parked(pk.kind, origin + pk.at, pk.head, pk.art)
+
+
 func _clear_floor(stage: ArenaStage) -> void:
 	for t: ArenaTargets.Target in stage.targets.targets:
 		_arena.hostiles.erase(t.fighter)
@@ -198,6 +212,7 @@ func telemetry() -> Dictionary:
 		"rivet_hp_min": rivet_hp_min if rivet_hp_min < INF else -1.0,
 		"repair_delay_s": _arena.tuning.rivet["repair_delay_s"],
 		"stuns": stuns,
+		"kerf_line_cuts": kerf_line.cuts,
 		"dazes": dazes,
 		"adds_spawned": adds.fights.size(),
 		"adds_tries": adds.tries,
@@ -208,7 +223,7 @@ func telemetry() -> Dictionary:
 
 func attach_view(view: Node) -> void:
 	if fight != null:
-		BossView.attach(view, self)
+		BossView.attach(view, self, _arena)
 
 
 func _connect() -> void:

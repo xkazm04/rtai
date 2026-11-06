@@ -34,6 +34,44 @@
           "minLength": 1,
           "type": "string"
         },
+        "parked": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "art": {
+                "maximum": 8,
+                "minimum": 0,
+                "type": "integer"
+              },
+              "at": {
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 2,
+                "type": "array"
+              },
+              "head": {
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 2,
+                "type": "array"
+              },
+              "kind": {
+                "pattern": "^[a-z][a-z0-9_]*$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "kind",
+              "at",
+              "head",
+              "art"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
         "rivet_at": {
           "items": {
             "type": "number"
@@ -261,6 +299,11 @@
         },
         "keep_m": {
           "maximum": 40,
+          "minimum": 0,
+          "type": "number"
+        },
+        "kerf_line_m": {
+          "maximum": 3,
           "minimum": 0,
           "type": "number"
         },

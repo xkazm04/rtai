@@ -1,0 +1,114 @@
+{
+  "alley": {
+    "alley_kills": 0,
+    "alley_waves": 0
+  },
+  "boss_fight": {
+    "adds_landed": 0,
+    "adds_spawned": 0,
+    "adds_tries": 0,
+    "boss": "servo",
+    "dealt": 1524.0,
+    "defeated_tick": -1,
+    "hp_frac": 0.520454545454546,
+    "landed": {
+      "bay_hop": 4,
+      "rotor_dash": 10,
+      "servo": 52
+    },
+    "moves": {
+      "dive_hits": 0,
+      "dives": 0,
+      "drones_launched": 139,
+      "drones_shot": 112,
+      "marks": 31,
+      "parcel_hits": 52,
+      "parcels_landed": 139
+    },
+    "phase": 2,
+    "rolled": {},
+    "tries": {
+      "bay_hop": 4,
+      "package_carpet": 10,
+      "rotor_dash": 17,
+      "scan_drop": 21
+    }
+  },
+  "brutality_pit": {
+    "by_style": {},
+    "kill_cut_us": [],
+    "kill_ticks": [],
+    "signature_kills": 0,
+    "view_avg_us": 62,
+    "view_frames": 14400,
+    "view_over_2ms": 2,
+    "view_worst_tick": 12747,
+    "view_worst_us": 2330
+  },
+  "cars": {
+    "damaged": 0,
+    "hijacked": 0,
+    "total": 2,
+    "wrecked": 0
+  },
+  "corpse_decay": {
+    "bodies_cap": 16,
+    "bodies_now": 0,
+    "bodies_peak": 0,
+    "died": 0,
+    "early_fades": 0,
+    "forced": 0,
+    "forced_alpha": 0.0,
+    "peak_dead_listed": 0,
+    "pruned": 0,
+    "stains_now": 0
+  },
+  "damage_taken": 0.0,
+  "deaths": 8,
+  "dodges": 0,
+  "hit_rate": 0.0,
+  "hits": 0,
+  "input_latency_mean_ticks": 0.0,
+  "input_latency_ticks": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "knockdowns": 0,
+  "pit_kills": 0,
+  "pit_waves": 0,
+  "rivet_claw_cops": {
+    "claw_hits": 0,
+    "claw_kills": 0,
+    "claw_swings": 0,
+    "claw_whiffs": 0,
+    "shock_discharges": 0,
+    "shock_landed": 0
+  },
+  "schema": "gtai.arena-telemetry/1",
+  "shots": 587,
+  "ticks": 14399,
+  "top_speed_mps": 1261.87225341797,
+  "ttk_s": {},
+  "turn_rate_peak_dps": 720.000327394338,
+  "weapon_art_rack": {
+    "rack": true
+  }
+}

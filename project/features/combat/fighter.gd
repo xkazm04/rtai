@@ -28,6 +28,9 @@ var damage_k: float = 1.0
 var brain_owned: bool = false
 ## Lane n7-king: the bodies.json class Rivet meets this fighter as (ArenaBodies); empty = a person.
 var body_class: StringName = &""
+## Lane n7-servo: a machine that is not the boss (Servo's drones): its death is a robot's (sparks
+## and oil, never a human signature kill). Kind stays GUARD for every other rule.
+var machine: bool = false
 
 
 static func make(p_kind: Kind, p_id: int, at: Vector2, hp_max: float) -> Fighter:

@@ -1,0 +1,340 @@
+{
+  "$id": "gtai.servo/1",
+  "additionalProperties": false,
+  "properties": {
+    "depot": {
+      "additionalProperties": false,
+      "properties": {
+        "bay_w_m": {
+          "maximum": 12,
+          "minimum": 1,
+          "type": "number"
+        },
+        "bays": {
+          "items": {
+            "items": {
+              "maximum": 60,
+              "minimum": -60,
+              "type": "number"
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "type": "array"
+        },
+        "belt_mps": {
+          "maximum": 10,
+          "minimum": 0,
+          "type": "number"
+        },
+        "belt_w_m": {
+          "maximum": 4,
+          "minimum": 0.4,
+          "type": "number"
+        },
+        "conveyor": {
+          "items": {
+            "items": {
+              "maximum": 60,
+              "minimum": -60,
+              "type": "number"
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        }
+      },
+      "required": [
+        "bay_w_m",
+        "bays",
+        "belt_mps",
+        "belt_w_m",
+        "conveyor"
+      ],
+      "type": "object"
+    },
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "drone": {
+      "additionalProperties": false,
+      "properties": {
+        "accel_mps2": {
+          "maximum": 200,
+          "minimum": 1,
+          "type": "number"
+        },
+        "arrive_m": {
+          "maximum": 2,
+          "minimum": 0.05,
+          "type": "number"
+        },
+        "cruise_mps": {
+          "maximum": 40,
+          "minimum": 1,
+          "type": "number"
+        },
+        "fly_h_m": {
+          "maximum": 10,
+          "minimum": 0.5,
+          "type": "number"
+        },
+        "hover_s": {
+          "maximum": 3,
+          "minimum": 0.3,
+          "type": "number"
+        },
+        "hp": {
+          "maximum": 2000,
+          "minimum": 1,
+          "type": "number"
+        },
+        "launch_s": {
+          "maximum": 3,
+          "minimum": 0,
+          "type": "number"
+        },
+        "life_s": {
+          "maximum": 60,
+          "minimum": 2,
+          "type": "number"
+        },
+        "radius_m": {
+          "maximum": 2,
+          "minimum": 0.1,
+          "type": "number"
+        },
+        "refill_s": {
+          "maximum": 30,
+          "minimum": 0,
+          "type": "number"
+        },
+        "ring_from_launch": {
+          "type": "boolean"
+        },
+        "sep_m": {
+          "maximum": 5,
+          "minimum": 0.2,
+          "type": "number"
+        }
+      },
+      "required": [
+        "accel_mps2",
+        "arrive_m",
+        "cruise_mps",
+        "fly_h_m",
+        "hover_s",
+        "hp",
+        "launch_s",
+        "life_s",
+        "radius_m",
+        "refill_s",
+        "ring_from_launch",
+        "sep_m"
+      ],
+      "type": "object"
+    },
+    "kamikaze": {
+      "additionalProperties": false,
+      "properties": {
+        "blast_m": {
+          "maximum": 6,
+          "minimum": 0.5,
+          "type": "number"
+        },
+        "damage": {
+          "maximum": 200,
+          "minimum": 0,
+          "type": "number"
+        },
+        "dive_mps": {
+          "maximum": 60,
+          "minimum": 2,
+          "type": "number"
+        },
+        "hp": {
+          "maximum": 20,
+          "minimum": 1,
+          "type": "number"
+        },
+        "lock_s": {
+          "maximum": 2,
+          "minimum": 0.1,
+          "type": "number"
+        },
+        "standoff_m": {
+          "maximum": 15,
+          "minimum": 1,
+          "type": "number"
+        },
+        "track_s": {
+          "maximum": 3,
+          "minimum": 0.1,
+          "type": "number"
+        }
+      },
+      "required": [
+        "blast_m",
+        "damage",
+        "dive_mps",
+        "hp",
+        "lock_s",
+        "standoff_m",
+        "track_s"
+      ],
+      "type": "object"
+    },
+    "parcels": {
+      "additionalProperties": false,
+      "properties": {
+        "bomb_damage": {
+          "maximum": 100,
+          "minimum": 0,
+          "type": "number"
+        },
+        "bomb_share": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "crate_damage": {
+          "maximum": 100,
+          "minimum": 0,
+          "type": "number"
+        },
+        "crate_hp": {
+          "maximum": 20,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "crate_life_s": {
+          "maximum": 120,
+          "minimum": 0,
+          "type": "number"
+        },
+        "crate_m": {
+          "maximum": 3,
+          "minimum": 0.3,
+          "type": "number"
+        },
+        "crates_solid": {
+          "type": "boolean"
+        },
+        "dash_smash": {
+          "type": "boolean"
+        },
+        "fall_s": {
+          "maximum": 2,
+          "minimum": 0.1,
+          "type": "number"
+        },
+        "ring_m": {
+          "maximum": 5,
+          "minimum": 0.3,
+          "type": "number"
+        }
+      },
+      "required": [
+        "bomb_damage",
+        "bomb_share",
+        "crate_damage",
+        "crate_hp",
+        "crate_life_s",
+        "crate_m",
+        "fall_s",
+        "ring_m"
+      ],
+      "type": "object"
+    },
+    "phases": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "max_alive": {
+            "maximum": 8,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "spread_m": {
+            "maximum": 6,
+            "minimum": 0.5,
+            "type": "number"
+          },
+          "wave": {
+            "maximum": 8,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "max_alive",
+          "spread_m",
+          "wave"
+        ],
+        "type": "object"
+      },
+      "maxItems": 3,
+      "minItems": 3,
+      "type": "array"
+    },
+    "rack": {
+      "additionalProperties": false,
+      "properties": {
+        "cell_dx_m": {
+          "maximum": 3,
+          "minimum": 0.2,
+          "type": "number"
+        },
+        "cells": {
+          "maximum": 24,
+          "minimum": 2,
+          "type": "integer"
+        },
+        "row_dy_m": {
+          "maximum": 3,
+          "minimum": 0,
+          "type": "number"
+        },
+        "rows": {
+          "maximum": 4,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "spine_m": {
+          "maximum": 2,
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "cell_dx_m",
+        "cells",
+        "row_dy_m",
+        "rows"
+      ],
+      "type": "object"
+    },
+    "schema": {
+      "const": "gtai.servo/1"
+    }
+  },
+  "required": [
+    "depot",
+    "doc",
+    "drone",
+    "kamikaze",
+    "parcels",
+    "phases",
+    "rack",
+    "schema"
+  ],
+  "type": "object"
+}
