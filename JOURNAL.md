@@ -733,3 +733,16 @@ NEXT (written 00:58, for iteration 9):
   during run"; 1197 passed); re-run with the tree untouched. Bench not run (contended; no lock taken).
 - STOP 01:18 iteration 8 (final). NEXT = the 00:58 entry (1-4) plus the 01:00 hit_dir note and the
   01:09 scout.
+
+## Iteration 9 (01:19-02:19), phase BUILD
+- READ 01:19 JOURNAL tail (NEXT 00:58 + 01:00 hit_dir note + 01:09 scout), git log, n7-ranged JOURNAL
+  to its end (FYI 00:49: three feel commits; `193bc529` already in as `f17890ef`), king/servo: no
+  REQUEST to melee.
+- MERGE 01:21 cherry-picked n7-ranged `d99106f4` (weapon_fx_spin, `spin_whirl_m`) as `7ec7ac46` and
+  `ce923514` (gatling whirl 0.8) as `b915e863`, both clean (-x).
+- FRICTION 01:27 unit on the merge went red (`evidence/n7-melee/unit-b915e863-red-missing-last_aim.log`:
+  load_all parse error, weapon_fx_spin.gd reads `GunHand.last_aim`, added by n7-ranged `1ce1b11e`,
+  which their FYI did not list). Redid the merge in order with `git reset --keep 70d12961` (tree
+  clean bar JOURNAL) and cherry-picked `1ce1b11e d99106f4 ce923514` -x as `ac548347 c955172e
+  ab8cf8d0`, so no broken commit sits on the branch. Lint 13/13, unit 1201/1201 on `ab8cf8d0`
+  (`evidence/n7-melee/{lint,unit}-ab8cf8d0.log`).

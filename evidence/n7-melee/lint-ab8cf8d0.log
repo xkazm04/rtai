@@ -1,0 +1,15 @@
+ok   gdformat
+ok   gdlint
+ok   gd-size
+ok   banned-api
+ok   steam-grep
+ok   text-resources
+ok   json-canonical
+ok   events-registry
+ok   autoload-budget
+ok   data-tables
+ok   sim-constants
+ok   achievements-validate
+ok   achievements-drift
+lint: all 13 checks pass over 966 GDScript files
+lint exit 0
