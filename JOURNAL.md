@@ -188,8 +188,8 @@ vehicles REQUESTs the kerb-parked cars hook into `ChunkView`, `VehicleParked` on
   rows measured on the keyed sheets: tenement 326-600, shop 338-570). Strips 768 x 297 / 768 x 189
   (p55: 768 x 524 / 303). Looked at: three clean bays each, butt-joined (strips70.png in scratch).
   Provenance: 2 lines (round 2110, prompt hashes fdc084cee41e / 16c8a532077f).
-- Not done: the scenario suite was started on 4fa48c45 headless (scratch/city/scen.log); it was still
-  running at the end of the session (it shares the machine with my films). Result OWED.
+- GATE scenarios on 4fa48c45 (headless, `res://tests/run_scenarios.gd`, my films running alongside):
+  `run_scenarios: 52 ran, 0 failed`, exit 0 (vehicle drive timing labelled CONTENDED by the suite).
 - FRICTION: a 720-frame film at 32 px/m takes 3-9 min on this machine with another Godot running;
   the 48 px/m close-up of occlusion was stopped unfinished (my own process tree, by command line).
 
@@ -206,8 +206,8 @@ NEXT (session 5, in order):
    --ppm=32` frame 899 vs `it1_height_k_1_vs_05_tilt70_32ppm.jpg` right half (p55 squashed, same
    frame); then at 48/64. Then `facade_tall` (B, 2210) for the 17-21 m landmarks: add a `tall` style
    (city_facades.json + STYLES/STYLES_70 rows), read its notes for the B fix.
-2. The scenario suite on the head (headless, alone); the director reel under tilt70 + combo (19/19,
-   0 SCRIPT ERROR): the BackBufferCopy is new on the city's actors canvas.
+2. The director reel under tilt70 + combo (19/19, 0 SCRIPT ERROR): the BackBufferCopy is new on the
+   city's actors canvas; scenarios again on the final head.
 3. Occlusion at 48/64 px/m (same course run, frames 620-710); a short clip.
 4. Props (brief item 3): payphone first (payphone_70 A + payphone_55 A 1920), then barriers, dumpsters,
    crates (70 A), hydrants (70 A), lamps (55 B 2210 / 70 B 2250). Find where the city draws the prop
