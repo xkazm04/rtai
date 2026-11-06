@@ -213,5 +213,13 @@ NEXT (iteration 4):
 - Electro gun at 48 tilt (director chapter electro_gun): the arc leaves the drawn coil tip at gun height
   and the shock lands on the body (2). But the CHARGE crackle (FightChargeArt.crackle: gathering arcs + a
   cream core) drew at the ground muzzle point by Rivet's feet (scratch arc/shots.png). Fix: ShotLift.claw_at
-  (HeldMuzzle under tilt, the ground point under top). The reload ring (1.5 m up the screen) sat on the tall
-  rig's face under tilt: it is raised by 1.2 gun-height lifts (ZERO under top).
+  (HeldMuzzle under tilt, the ground point under top). Renamed from tip() (a local var shadowed it).
+- MILESTONE ddf61c87: the charge crackle gathers on the drawn coil tip at gun height; same fight, before vs
+  after: gtai-masters/d8/weapons/electro_gun_tilt_48_charge_before_after.png.
+- REVERTED (unfilmed): raising the reload ring above the tall rig's head under tilt. No reload showed in the
+  filmed pistol fight (collar-cropped frames, scratch arc2/ring_crops.png), so it is left as an open item.
+- Katana smear (melee/katana_48_after.mp4): drawn in the squashed ground plane about the grip, i.e. the
+  tilted plane at hand height; only faintly visible under the hit star at 48 px/m (F 1). No change.
+- 32 px/m long guns (NEXT 4): two small-cell variants from the raw cut (scratch tt32 = held_small.two_tone,
+  mix32 = 55 % two-tone over the re-tone), filmed one data state at a time (vary.sh: copy, --import, film).
+  FRICTION: films after a PNG swap need `--import` first (the run uses the .godot cache).
