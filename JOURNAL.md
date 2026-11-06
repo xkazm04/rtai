@@ -2203,3 +2203,11 @@ NEXT (after the night; the freeze is done at 07:49):
   under sustained fire, V 2); the homing shard after call 1; a sim-side molotov wind-up only with a
   decision and a re-bless; the bench under the lock.
 - FYI n7-melee: nothing to merge from it25 (StageAudio and audio_cues.json only).
+
+### MEASURE 07:52 quest 1's rifle camera answer (weak cell assault-rifle I 2, no build)
+- `quest1_clip.gd --ppm=32 --cam=fight --stills=14432,...,14446` (every 2 ticks) on `5ed859c4`, exit 0,
+  0 SCRIPT ERROR. Whole-frame phase correlation between consecutive stills: 0, (+1,+1), (-1,-1),
+  (0,-1), (0,+1), 0, 0 px: the hits at 14434 and 14438 move the frame 1 px and back, at rest by
+  14442. That is the light class's 1 px kick, measured now, and it does not read at 32 px/m: I stays 2.
+  A bigger kick would be a light-class change for every light gun (or a stand-in row of its own):
+  next night. Stills deleted (the crop missed the contractor; nothing kept).
