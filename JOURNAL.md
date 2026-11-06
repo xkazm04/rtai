@@ -1925,3 +1925,10 @@ NEXT (iteration 23 / the freeze, in order):
    --seeds=11,...,20 --bots=human --delay=20 --out=evidence/king/numbers-it23-delay20`), and the
    standing and dodging bots at 20 s (the dodger must still take 0); update REPORT's table.
 3. At the freeze (08:30): REPORT read-through, commit.
+
+### 08:15 NUMBERS call C's fair row widened (NEXT 2 done in this session)
+- 20 s, human seeds 11-15: 3/5 without a death (10/15 over seeds 1-15), King down 4/5. Dodging bot
+  seeds 1-5: 5/5, took **0** (every attack still dodgeable). Standing bot seeds 1-5: 0/5, 10 deaths,
+  took 202. 0 SCRIPT ERROR. REPORT table rows added. NEXT 2 above is done except a wider seed
+  sweep at 16 s; NEXT 1 and 3 stand.
+- 08:16 Session closes: everything committed; scratch20 holds only scripts, run outputs, smokes.
