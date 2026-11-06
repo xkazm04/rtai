@@ -16,6 +16,9 @@ const BOTTOM_CLEAR: float = 340.0
 var stage: CollectCallStage
 var system: QuestSystem
 var px_per_m: float = 32.0
+## n7-melee: where the camera sits off Rivet this frame (m; KerfGlide's whip after a blink), so
+## the ring stays on its goal while the camera travels. Zero = the old Rivet-centred mark.
+var cam_off_m: Vector2 = Vector2.ZERO
 ## true when the prompts should name the pad's buttons (the player used a pad last).
 var pad_prompts: Callable = func() -> bool: return false
 var _text: QuestText = QuestText.new()
@@ -49,14 +52,14 @@ func _prompt(words: String) -> void:
 func _goal(goal_m: Vector2) -> void:
 	var screen: Vector2 = get_viewport_rect().size
 	var centre: Vector2 = screen / 2.0
-	var at: Vector2 = centre + (goal_m - stage.arena.rivet.pos) * px_per_m
+	var at: Vector2 = centre + (goal_m - stage.arena.rivet.pos - cam_off_m) * px_per_m
 	# the clear band between the top panels and the subtitle box
 	var top: float = minf(TOP_CLEAR, centre.y - 40.0)
 	var clear_below: float = BOTTOM_CLEAR if _subtitled() else EDGE_INSET
 	var bottom: float = maxf(screen.y - clear_below, centre.y + 40.0)
 	var inner: Rect2 = Rect2(EDGE_INSET, top, screen.x - EDGE_INSET * 2.0, bottom - top)
 	if inner.has_point(at):
-		if at.distance_to(centre) > RING_PX:
+		if at.distance_to(centre - cam_off_m * px_per_m) > RING_PX:  # Rivet is not on it
 			draw_arc(at, RING_PX, 0.0, TAU, 32, Ink.VERMILION, 4.0, true)
 		return
 	var dir: Vector2 = (at - centre).normalized()
