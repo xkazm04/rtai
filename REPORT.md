@@ -1,4 +1,4 @@
-# d8 lane view70: the 70-degree sample and the combined view (DRAFT, iteration 2, 15:45)
+# d8 lane view70: the 70-degree sample and the combined view (DRAFT, iteration 3, 16:28)
 
 DRAFT: the freeze iteration (18:30) updates the numbers, adds the exe and finalises this file.
 Evidence: `C:\Users\kazda\kiro\gtai-masters\d8\view70\` (`frames.json`, 15 entries, best first).
@@ -37,22 +37,54 @@ Evidence: `C:\Users\kazda\kiro\gtai-masters\d8\view70\` (`frames.json`, 15 entri
     calls, repeated twice. No feature is switched off at 70.
   - 70 sees 10 % fewer people (25.4 vs 28.4 visible on average).
 
+## Iteration 3 (bosses merged)
+- **combo at 55 now equals tilt**: bosses' court King, throne-car and gang (d8-bosses merged,
+  5639148f; `ViewPitchCourt`, ae847c59). After landing, combo and tilt frames differ in about 1000
+  pixels out of 1 million (mean 0.025).
+- **The return trip cross-fades too.** Until ae847c59, every card rebuilt after a swap was missed:
+  the rebuilt card is renamed while the old one frees. So the 55 -> 70 return was a hard swap.
+  Measured now: no spike above the motion floor
+  (`combo_return_fade_king_frames1150-1186_x2.png`).
+- **One bell at 70** (4eca94b0): the p70 King bust draws the bell, so the rig's horn part hides.
+- **Gates on 4eca94b0**:
+  - unit 1447/0;
+  - scenarios 52 passed;
+  - director reel 19/19 all down, 0 SCRIPT ERROR, under tilt70 and under combo;
+  - `top` 900/900 frames identical with main;
+  - lint 15/15;
+  - a trial exe export and smoke run under combo.
+
 ## Not done / owed
-- **The King's 55 art in the films** is still the lab bust on this branch: bosses' p55 King is on
-  their branch, keyed by `roundi(pitch)` (REQUEST in JOURNAL). Under combo, a card rebuilt at 62
-  degrees would keep the shared strip.
-- **The King at 70 close up**: the cloth cape draws like a flag behind the bust card, and the bell
-  shows twice (REQUEST to bosses).
-- **Tonnage's ghost cross-fade** under combo is unit-tested, but not yet seen live.
+- **The 70 sample is narrower than the 55 cast.** At 70 the King's limbs, car and gang are today's
+  art: bosses' court parts exist for p55 only. The 70 sample is Rivet's head, the King's bust and
+  Tonnage's card.
+- **The King at 70 close up**: bosses' flat drawn cape fan still shows behind the p70 bust. The
+  stand-down sits in their `KingArt.card_wears_cape` (REQUEST in JOURNAL).
+- **Under combo, the court limbs, cape and gang chains switch late.** They switch when the live
+  pitch rounds to 55, about 0.9 s into the 1 s ease, not with the bust at 62.5. This is a small late
+  pop, and bosses' fix is 3 lines (REQUEST).
+- **Tonnage's ghost cross-fade** under combo is unit-tested, but not seen live: no seeded fight has
+  Tonnage on screen when the King goes down.
 
 ## Calls for the owner (default built, how to see it)
 1. **Pitch per situation**: 55 vs 70 vs combo, for the city and for boss fights. Built: all three rows;
    `top` stays the default.
-   - See: `king_55_70_combo_32ppm_45s_merged.mp4` and `city_55_vs_70_32ppm_45s_merged.mp4`.
+   - See: `king_55_70_combo_32ppm_46s_it3.mp4` and `city_55_vs_70_32ppm_45s_merged.mp4`.
    - Exe: `RTAI.exe -- --view=tilt`, `--view=tilt70`, `--view=combo`.
 2. **Transition length**: 0.8 / 1.0 / 1.2 s. Default 1.0.
-   - See: `combo_ease_08_10_12_defeat_55to70_32ppm.mp4`.
+   - See: `combo_ease_08_10_12_defeat_55to70_32ppm_it3.mp4`.
    - Exe: `--view=combo_ease08` / `combo_ease12`.
 3. **Cross-fade or hard swap** of the cards. Default: cross-fade (`fade_deg` 5); `fade_deg` 0 is the
-   swap. Mid-fade, the p70 head and the p55 bust draw together for about 5 frames.
-4. **The bell on the p70 King bust**: keep it, or crop it. Waiting on bosses' answer.
+   swap. Mid-fade, the two strips draw together for about 5 frames, which ghosts the King's bust.
+   - See: `combo_return_fade_king_frames1150-1186_x2.png`.
+4. **The bell on the p70 King bust**: built as the strip's own bell, with the rig's horn hidden (one
+   bell, as bosses' 55 court bust does). The alternative is to crop the bell off the strip and show
+   the rig's horn.
+   - See: `king_rivet_onfoot_55_vs_70_64ppm_t9_it3.png`.
+
+## The exe (trial export at 16:22; the freeze re-exports)
+- Export: `"$GODOT_BIN" --headless --path project --export-release windows-showcase ../build/export/windows/RTAI.exe`
+- See the same King fight in all three:
+  `RTAI.exe -- --boss=king --bot=boss --bot-human --seed=2 --rigs --view=tilt` (55), `--view=tilt70`
+  (70), `--view=combo` (70 in play, easing to 55 when the boss engages).
+- Close range: add `--ppm=64 --phase=3` (the King on foot). The city: `RTAI.exe -- --arena=city --bot=rivet --seed=2 --rigs --view=tilt|tilt70`.
