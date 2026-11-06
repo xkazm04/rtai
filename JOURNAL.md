@@ -534,3 +534,43 @@ identical, timing CONTENDED as labelled). Evidence json: evidence/n8-vehicles/it
 test_vehicle_cards, 10 sampled of 49): score 100 % = killed 10 / (10 + 0 survived), 197 s.
 Session end 00:40; NEXT as written above (iteration 9: the REQUEST for the taxi / pickup /
 ambulance in-betweens, then their FINE rows; exe + REPORT at the freeze).
+
+## Iteration 11 (2026-11-07 00:43 - 01:43), BUILD
+
+Read: JOURNAL, git log (iterations 9-10 left no commits or entries), the lane journals: no new
+REQUEST to vehicles. The library has NEW bike sheets: bike_v3 70 B and 55 B (round 20261107-0035,
+a geometry-guide method; "do not ask for more bike sheets" was kept: the asset lane made them on its
+own). That reopens the bike (the brief's scope; my "no bike art" DECISION rested on all-C sheets).
+REQUEST to assets: taxi_between_70, parked_pickup_between_70, ambulance_between_70: the four 22.5-deg
+in-betweens of each 70 sheet (same canvas and scale family as the sheet; A between the nose view and
+the 3/4 toward, B between the 3/4 toward and the side, C nose right and a little UP ~22.5 past the
+side view (the cars' C was under-turned: the asked angle), D between the 3/4 away and the tail);
+amber tails, no red. They complete the nine-view p70 set (VehicleViews.FINE rows 3 5 6).
+FRICTION: keyed/vehicle/bike_{70,55}_v3.png carry the side view on an OPAQUE BLACK box (the post-fix
+squash_facing.py lost its alpha); the green original (sheets/vehicle/) is clean. Keyed it here.
+NOTE to assets (not a REQUEST): the keyed bike_v3 side views sit on black boxes (both pitches).
+MILESTONE 00:55 b3d21e7d the bike as card row 9 (p70 + p55). vehicle_cards.py: BIKE = True, the
+row cut from the green original with green_key (alpha by green excess over max(r, b), tol 24; spill
+pixels go neutral grey: the first cut left 64 teal-ish px in the spoke gaps, teal is the souls',
+now 4 / 13), side view scaled to 2.1 m, ground centre at the cell centre like the cars. The p55
+atlas is 5 columns again when no row has in-betweens (the cutter now crops; the committed p55 was
+already 5 wide). Rows 0-8 of both atlases re-cut BIT-EXACT against HEAD (0 px differ). Runtime:
+VehicleViews.grid_of(tex, rows) (columns and rows from the atlas size), VehicleCardMesh.set_grid
+sets both shader uniforms on both layers, VehicleCards keeps the grid (still 199 lines); BIKE_ART 9.
+No sim bike: only the turn film draws row 9 (dev/showcase/vehicle_turn: the bike below the police
+car). Unit: test_vehicle_views +3 (both atlases hold the bike row's five views after the nine, a
+null atlas keeps (5, 9), both layers' shaders read the atlas rows): vehicle files 24/0.
+FILM vehicle_turn tilt70 at 64 and 32 px/m, 400 frames, 0 ERROR: masters
+turn360_tilt70_{64,32}ppm_with_bike.mp4, bike_turn_strip_tilt70_64ppm.png (in frames.json, the
+superseded side-redo still out). LOOKED: the bike turns through all eight facings over its
+footprint; the side views read best, the end views are long narrow strips (right for 70); no pop
+worse than the cars'. Seen, not fixed: the showcase's grade pulls the mustard tank stripe to orange
+(atlas 211,138,41 -> frame 179,85,21; the cars' amber lamps go the same way): the scene's, not the
+art's; check it in the city grade before calling it vermilion.
+DECISION vehicles: the bike as atlas row 9 (docs/decisions.md; supersedes "no bike art tonight").
+Rules applied: generative-artifact-gating (B used with its named fix already applied by the asset
+lane; the keyed sheet's defect found by looking and routed around, never integrated as is),
+sprite-and-atlas-production (one cutter, rows 0-8 proven unchanged bit-exact, provenance with
+round + prompt_hash per pitch, the grid read from the atlas not hard-coded), motion-quality-gating
+(judged on the 360 film at both zooms), depth-ordered-layered-art (ground-centre anchor: the bike
+sorts like a car).
