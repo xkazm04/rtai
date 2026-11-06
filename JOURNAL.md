@@ -1367,3 +1367,18 @@ throne back and crest; no new REQUEST for servo). Rules kept: motion-quality-gat
 live arena path at 32/48 px/m), sprite-and-atlas-production, depth-ordered-layered-art.
 - 04:50 MERGE n7-king 296cce50 as 71fa77a2 (16 commits: King's throne back and crest; king-only
   files). JOURNAL/REPORT add/add: ours; decisions auto-merged. Lint 13/13 (hook).
+- 05:12 MILESTONE (NEXT 3) 5992f678 **the docked drones sit on the art's bays** (render only).
+  First a variant of it14's idea (`DOCKED_ROTOR_M` 0.09: tan discs round a 0.2 m hub): at 48 px/m
+  a quad hint, but **looked at** 2x it showed the real fault: the wing art (`rack3.png`) already
+  prints the sheet's quad drone (hub + four rotors) in every bay, and the it14 cream squares sat
+  on the sim's launch cells (rows 0.5 m apart, the art's 0.65 m; columns 0.9 vs 0.73 m), up to
+  0.36 m off the art's bays, covering its rotors. `ServoBays` (new, 75 lines): bay centres
+  measured from rack3.png's hubs (numpy, per bay), the same wing transform as `_wings` (flip,
+  phase-3 shake), a 0.22 m cream hub + four 1 px paper_2 rotor rings over the art's; the empty
+  bay disc moves with them. Launch points unchanged (sim cells). `DOCKED_ROTOR_M` removed;
+  `DOCKED_ON_BAYS` false = it14. A/B `spine16.sh off|on 1 300 32|48` (0 SCRIPT ERROR), **looked
+  at**: at 32 px/m 1x the wings read as dark bays of quad drones like the sheet (it14: a grid of
+  white squares); at 48 px/m crisp. Launch check `wave32` (900 ticks, keys at 1 fps): the emptied
+  bays go solid dark, full ones keep their drones; the change reads. Unit 1190/0
+  (`evidence/servo/unit-it16.log`). `M/frames/servo_docked_bays_ab_it16.png`; frames.json 15 (hot
+  dash clip dropped from the list, kept on disk). Decisions; REPORT call 11 rewritten.
