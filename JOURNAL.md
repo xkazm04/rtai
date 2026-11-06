@@ -1089,3 +1089,11 @@ NEXT (written 03:17, for iteration 12):
 - CLIP `M/ohm_bolt_rim_ab_32ppm_48slow.mp4` (3.3 s) + still `M/ohm_bolt_rim_ab_32_48ppm.png`;
   frames.json row 0 (tonnage_slam dropped from the list to stay at 15; its file stays, REPORT names
   it). REPORT row + call (l), decision line.
+- GATES 04:00 on `a27fb59c` (the Ohm rim), tree untouched by code during them: director reels arena
+  19/19 and city 19/19 fully down (14x 1/1, 2x 2/2, 3x 4/4 each), 0 SCRIPT ERROR; scenarios 52 ran,
+  0 failed, 0 SCRIPT ERROR (`evidence/n7-melee/{director-arena-loadout,director-city-loadout,
+  scenarios}-a27fb59c.log`). Unit 1216/1216 with test_ohm_rim (the 03:39 run).
+- LOOK 03:52 Dent's beat at 32 px/m (`--bot=ghosts --ghost=dent --rigs --clean`, every 20th frame):
+  the blast is a 0.45 s fireball and ink ring over the car, which then lies dark among the bodies;
+  nothing of the car leaves the blast. The lever is debris (the press slam's lesson), not the camera
+  (the owner's open call). Drafted BlastDebris in scratch while the gate ran.
