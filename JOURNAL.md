@@ -1617,3 +1617,22 @@ same-build before in the live quest path, the quest's own clip window), depth-or
 - Clip `zap_cues-ab-32ppm.mp4` (12 s with sound: ray before, after, plasma before, after); a still
   checked (label, ray bolt in flight). Not in frames.json (sound pair). REPORT row, call 7, audit
   rows, decisions.md line.
+
+### GATES 04:38: reels 19/19 x2 on `4e8860c3` (the zap cues)
+- `evidence/ranged/it16b-reel-{director,city}-4e8860c3.log`, 0 SCRIPT ERROR (sound-only data).
+
+### MILESTONE 04:37: `b66880c1` the molotov's fire burst lands with a whoomp (audit S 2 -> 3)
+- FIND: the molotov row had no end_cue, so its landing played only StageAudio's `projectile_end`
+  (impact_concrete, -9 dB, priority 1) under the fire burst.
+- Data only: audio_cues.json `bottle_burst` (car_wreck pitch 1.45, -8 dB, 60 m, cooldown 6,
+  2 voices); weapons.json molotov `end_cue` = `bottle_burst` (the rocket's end_cue path;
+  `--end-cue=off` = before). Test +1 (5/5): it exists, pitch over the blast's, 4+ dB under it;
+  planted (no end_cue): 1 fails. Lint 13/13.
+- FILM lone (`--weapon=molotov --bot=gunplay --lone --cam=fight --ppm=32 --reach=6`), same build,
+  `--end-cue=off` vs on, both exit 0, 0 SCRIPT ERROR, kill tick 465 on both. The audio first
+  differs at 5.55 s (the landing); 5.50-6.10 s: peak -14.9 -> -11.5 dBFS, rms -34.2 -> -21.7 dB,
+  centroid 6.7 -> 4.0 kHz, share under 250 Hz 8% -> 78%. Later differences (to 8.95 s) are the next
+  bottles plus the audio dice drawing one more value (render side, not the replay).
+- LOOK: the still at the clip's after landing shows the ink-and-vermilion fire burst on the frame
+  the whoomp starts. Clip `molotov_burst_cue-ab-32ppm.mp4` (6 s, with sound). Not in frames.json
+  (sound pair). REPORT row, call 7, audit row, decisions.md line.
