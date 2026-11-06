@@ -1448,3 +1448,29 @@ NEXT (iteration 17, in order):
 4. At the freeze (08:30): re-export `windows-showcase`, smoke (expect down 7036, 188), final gates
    (lint, unit 1193, scenarios, evidence/run.mjs, director reel), REPORT final (drop DRAFT; Next
    steps drafted at it16).
+
+## Iteration 18 (05:37-06:37, BUILD)
+Read: JOURNAL NEXT (it16; no it17 entry on this branch), git log -30, n7-king's JOURNAL (it16:
+throne lining and King's chain; no REQUEST for servo), REPORT open items. Rules kept:
+motion-quality-gating (A/B in the live arena path at 48 and 32 px/m, judged at 1x),
+depth-ordered-layered-art (the slung box drawn between the drone's shadow and its sprite).
+Scratch moved to `gtai-n7/scratch/servo/it18` (the it16 scripts live there; none in the worktree).
+- 05:38 MERGE n7-king 8ee305fc as 6f083a5a (King's throne lining and chain; king-only files).
+  JOURNAL/REPORT add/add: ours; decisions auto-merged. Lint 13/13 (hook).
+- 05:45 MILESTONE (NEXT 3) 69445eac **the carried parcels are slung kraft boxes** (render only).
+  The sheet's drones carry kraft boxes under them; ours had a 0.4 m cream square on the hub, the
+  hub's own colour, and a drop showed only the ring's fill. Now the crate art (0.62 m, 1 px ink
+  edge) is drawn under the drone sprite, hung 0.5 m toward the shadow (`ServoDraw.SLUNG_PARCEL`,
+  `PARCEL_M`, `SLING_M`), and a dropped parcel falls into its ring as the same box, growing to the
+  crate's 0.9 m while its own shadow closes in (`_falling_box`). First cut straight under the hub:
+  **looked at** at 48 px/m 2x, a 1-2 px kraft rim merged with the hub; hence the hang and the ink
+  edge. A/B `film48_18.sh 1 2 720` before/after (0 SCRIPT ERROR each), **looked at** t 8.0/8.2 s at
+  48 px/m 2x and the same wave at 32 px/m 1x (`film32_18.sh`): the carriers read as quad drones with
+  a parcel off the shadow side; the box sinks into the filling ring over its shadow, then blasts.
+  `M/frames/servo_slung_parcel_ab_it18.png` (frames.json 15: replaces the it14 legs A/B in the list,
+  file kept, REPORT call 17 cites it). Unit **1193/0** (`evidence/servo/unit-it18.log`), lint 13/13.
+  Decisions; REPORT call 18.
+- 05:47 FILMS the drone wave (`film48_18.sh 1 2 720`, cut 4.5 + 7 s) and the package carpet
+  (`film48_18.sh 2 2 900`, cut 0.5 + 6 s) at 48 px/m on 69445eac, 0 SCRIPT ERROR. **Looked at** both
+  key sheets: beam, lock, rings, carriers with kraft boxes, boxes dropping into the rings, blasts,
+  CS crates; the dodge. it16 clips and keys deleted; frames.json and REPORT paths moved.

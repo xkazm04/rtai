@@ -27,7 +27,7 @@ indexed in `M/frames.json`. Design: `docs/bosses/servo.md`. Journal: `JOURNAL.md
   from rush hour on, stacked CS crates). Rush hour opens with the depot's shift horn.
 - **The framework** (n7-king's) carries Servo: the boss bar and phase marks, the music and stinger,
   `--boss=servo [--phase=N]`, and `--bot=boss`.
-- **The full fight by the bot** at 32 px/m: `M/servo_fight_bot_human_32ppm_it16.mp4` (121 s, down at 117 s; keys `M/frames/servo_fight_keys_32ppm_it16.png`). Per attack (48 px/m): `M/servo_attack_*`; the drone wave from the lock to the dodge: `M/servo_drone_wave_scan_drop_dodge_48ppm_it16.mp4`; per phase (32 px/m): `M/servo_p{1,2,3}_*_32ppm_it16.mp4`; ghosts: `M/servo_ghost_*`. Index: `M/frames.json`.
+- **The full fight by the bot** at 32 px/m: `M/servo_fight_bot_human_32ppm_it16.mp4` (121 s, down at 117 s; keys `M/frames/servo_fight_keys_32ppm_it16.png`). Per attack (48 px/m): `M/servo_attack_*`; the drone wave from the lock to the dodge: `M/servo_drone_wave_scan_drop_dodge_48ppm_it18.mp4`; per phase (32 px/m): `M/servo_p{1,2,3}_*_32ppm_it16.mp4`; ghosts: `M/servo_ghost_*`. Index: `M/frames.json`.
 
 ## Numbers (the bot; `evidence/servo/numbers-it9-spine94/` + `-stand/`, seeds 1-5, CONTENDED wall time, tick-exact)
 On the shipped tree (rack.spine_m 0.94); `numbers-it6a/` is the same fight with the wings touching.
@@ -47,7 +47,7 @@ The rotor dash checked against a reading player (it6): every tell read but 18-32
 1. Drop rings show from the drone's launch (default) vs only over its hover: `servo.json drone.ring_from_launch`.
 2. Should a CS crate landing on Rivet hurt? Today it does not.
 3. Drones die to one round (default) vs tougher drones, so that waves land more often.
-4. CS crates are solid (default) vs paint only: `servo.json parcels.crates_solid`. Clip: `M/servo_drone_wave_scan_drop_dodge_48ppm_it16.mp4`.
+4. CS crates are solid (default) vs paint only: `servo.json parcels.crates_solid`. Clip: `M/servo_drone_wave_scan_drop_dodge_48ppm_it18.mp4`.
 5. Rack depth: 3 rows / 18 cells (default) vs 2 / 12: `servo.json rack.rows` + `cells`. Still: `M/frames/servo_target_vs_game_32ppm_it16.png`.
 6. The rotor dash smashes crates in its lane (default) vs crates stop him: `servo.json parcels.dash_smash`.
 7. Kamikaze armour: 3 rounds (default) vs 1: `servo.json kamikaze.hp`. Clip: `M/servo_attack_kamikaze_dive_lands_48ppm_it16.mp4`.
@@ -61,6 +61,7 @@ The rotor dash checked against a reading player (it6): every tell read but 18-32
 15. The spine's horseshoe rail and the big copper hose loops off its back cap, like the sheet's top view (default) vs the it10 spine (the cap's small loops, no rail): `ServoSpine.HORSESHOE` true / false (render only; subtle at 32 px/m, the loops show beside the cap and the rail along the column). Still: `M/frames/servo_spine_horseshoe_ab_it12.png`; the loops then grew to 0.55 m in a lighter copper (`ServoSpine.LOOP_R_M` 0.55 / 0.42): `M/frames/servo_spine_loops_ab_it12.png`.
 16. The hover pads ring in the sheet's ink and copper hazard stripes (default) vs the it13 cut's copper on mid brown, which read as one brown band at 32 px/m: `ServoRig.PAD_ART` &"pad_hazard" / &"pad" (render only; `tools/art/servo_pad_rim.py` re-inks the installed cut, no image job). Still: `M/frames/servo_pad_hazard_ab_it14.png` (the sheet; 32 px/m before | after; 48 px/m before | after).
 17. The legs stand parallel under the torso like the sheet's top view, pad | leg | leg | pad (default) vs splayed out toward the pads, crossing the pad arms (it13): `ServoRig.LEG_SPLAY_M` / `KNEE_OUT_M` 0.25 / 0.2 vs 0.9 / 0.5 (render only). Still: `M/frames/servo_legs_stance_ab_it14.png` (the sheet; 32/48 px/m before | after; the walk's keys).
+18. The carried parcel is a kraft box slung under each drone, shown round the hub toward its shadow, and a dropped parcel falls into its ring as the same box over a closing shadow (default, it18) vs the it16 cream square on the hub, nothing seen falling: `ServoDraw.SLUNG_PARCEL` true / false (render only; `PARCEL_M` 0.62, `SLING_M` 0.5). Still: `M/frames/servo_slung_parcel_ab_it18.png` (48 px/m at 2x, it16 left, it18 right; then 32 px/m 1x); clip `M/servo_drone_wave_scan_drop_dodge_48ppm_it18.mp4`.
 
 Exe (exported it10 on f430d3a2, re-exported at the freeze): `build/export/windows/RTAI.exe` in the
 worktree (`windows-showcase` preset, boots into the arena). Lines: `RTAI.exe -- --rigs --boss=servo`,
@@ -79,7 +80,7 @@ tick 7036, 188 on Rivet, 0 SCRIPT ERROR, the editor's numbers (`evidence/servo/e
 - Listen to the horn and the boss loop in the exe (never heard tonight).
 - Play the fight by hand at 32 px/m (`RTAI.exe -- --boss=servo`): the numbers are the bots'.
 - Body: the docked bays now match the sheet; what remains by the target still is the spine's rail
-  bottom under the torso and the drones' packages (the sheet's are slung, ours sit on the hub).
+  bottom under the torso (the drones' packages are slung since it18).
 - The sim's rack cells (the drones' launch points) could move onto the art's bays
   (`servo.json rack.row_dy_m` 0.65, `cell_dx_m` 0.73); it moves the fight's numbers, so it needs a
   re-measure with the bot first.
