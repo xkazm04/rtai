@@ -65,6 +65,15 @@ By the craft columns (impact and read at 32 weigh most: they are what the owner 
    cooldown is 16 ticks (n7-ranged `0d4089f1`, merged), under the 18-tick `gap_s`, so every cut holds
    at full player cadence too.
    `M/kerf_chain_ab_32ppm_64slow.mp4`.
+   **Anticipation 03:00 (`96e1abe6`)**: the blink arrived from nowhere (antic. 2). KerfView's sight:
+   a dashed teal sighting line from Kerf to the body the next press cuts (KerfStage.pick on the last
+   aim, view only) and a white lock of two brackets outside that body at the cut line's ends, at
+   `sight_k` x (0.4 + 0.6 x the gap's refill); none without a charge. Looked at (32 px/m frames
+   94-146, 48 px/m 94/110): the first cut is called across 6 m; in the close cluster the line is too
+   short to show, the lock on the next cop reads from 4 frames after the previous cut. First pass
+   drew a cut tick on the target: hidden under the body, replaced by the brackets; a squared ramp
+   from 0.25 read faint mid-gap, now linear from 0.4. Antic. 2 -> 4.
+   `M/kerf_sight_ab_32ppm_48slow.mp4`.
 2. **Plasma sword deflect**: the deflect spark is tiny and the return is not tied to the swing; the
    placeholder blade (asset only after every item, backlog 3).
    **Done 20:30 (`2502aaa7`)**: a parry beat (row `plasma_deflect`: 4-tick stop, kick toward the shooter)

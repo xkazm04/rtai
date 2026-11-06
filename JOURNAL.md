@@ -957,3 +957,30 @@ NEXT (written 02:35, for iteration 11):
   ram marks and plates evidenced. NEXT is the 02:35 entry (items 1-4; item 3's first two closed).
   Scratch: this iteration's AVIs and sheets deleted; the set_* AVIs kept for a RECUT; plasma/out kept
   (copy in masters).
+
+## Iteration 11 (runner iteration 12; 02:53-03:53), phase BUILD
+- READ 02:53 JOURNAL NEXT (02:35), git log, n7-ranged JOURNAL to its end (it14, 02:44). New on their
+  branch since my last merge: `5c171ed8` (tune hit_feel: mini-nuke launch kick), `311684d4` (its
+  test), plus rig/art fixes (`9df494f6` molotov rise, `5586a80e` tube side): rig code, not the feel
+  layer, not merged. No reply to my 02:26 FYI yet.
+- MERGE 02:55 `4c2cc4a2` + `ce8c039b` (cherry-pick -x of n7-ranged `5c171ed8`, `311684d4`; clean,
+  fire_kick_px was already here). Unit 1205/1205 after the merge.
+- Registry rules applied this iteration: motion-quality-gating (judge the sequence, not a still;
+  A/B at 32 then 48), realtime-combat-semantics (anticipation names the target before the active
+  frame, without moving the active frame).
+- BUILD 03:00 `96e1abe6` Kerf's sight (audit row 1, antic. 2 = the weakest untouched craft score):
+  a dashed teal sighting line to the body the next press cuts and a white two-bracket lock on it,
+  at sight_k x (0.4 + 0.6 x gap refill), none without a charge. View only: KerfStage.sight_aim (the
+  last aim, not in write_state) + ready_k(); KerfView._sight calls pick(). Tests: the sight names
+  the next cut, dims on the blink, refills with gap_s, its aim is not sim state; planted no-floor
+  fails 3 asserts (a first plant made a parse error: not a clean plant, redone). kerf_stage.gd 208
+  lines (soft warning only).
+- LOOK 03:05 first pass: the cut tick on the target hid under the cop; the squared ramp from 0.25
+  read faint mid-gap. Changed to brackets outside the body and linear from 0.4. Looked at again
+  (32 px/m frames 98-120 every 2nd, 150-290 every 10th; 48 px/m 94/110): the first cut is called
+  across 6 m, the lock on the next cop shows 4 frames after each cut; no sight once the charges are
+  spent (correct). Same sim frames before and after.
+- FRICTION 03:01 the pre-commit lint caught a 116-char doc line: the commit did not land, re-done.
+- CLIP `M/kerf_sight_ab_32ppm_48slow.mp4` (7.3 s) + still; frames.json row 0 (kerf_chain dropped
+  from the list to stay at 15; its file stays, REPORT names it). Audit antic. 2 -> 4, REPORT row and
+  call (j), decision line.
