@@ -719,3 +719,10 @@ NEXT (written 00:58, for iteration 9):
   `f1e9c76e` + `f17890ef`. Head gates on `f17890ef`: lint 13/13, unit 1197/1197, scenarios 52/52
   (city_chase flake green alone), director arena + city 19/19, 0 SCRIPT ERROR. Later commits are docs
   only. NEXT is the 00:58 entry above (items 1-4).
+- SCOUT 01:09 (for NEXT 2, no build): HitLink (CastView's cream impact star behind the victim via
+  `hit_link.flash(f)`, and HitLink knockback) hears `struck` only; MeleeFeel lands melee and ghost
+  hits on FeelCam (camera) only, never on HitFeel.land, so the victim flash rows (`ram` flash_ticks 8,
+  `melee` 6...) never light a melee or ghost victim. Candidate for the ram heap: call HitFeel.land's
+  flash part (no reaction signal: ReactLink already plays the wound) from MeleeFeel for ghost hits,
+  so each rammed body gets its own star on the contact. Check first whether the arena rig path draws
+  `_impact` at all (CastView is quest 1's sprite cast; the arena films use `--rigs`).
