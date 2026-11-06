@@ -256,3 +256,36 @@ stands on the legs' anchor at 70, width set over the wider 70 cell).
   actor at 70: the view covers more ground); render CPU within run noise. The p99 / low-1 % rows are
   the known vsync-off present stalls (~32 ms trios, bench run.mjs note), present in BOTH views, not a
   view cost. NOT measured: the King fight (the bench export runs the city only; needs an arena bench).
+- MILESTONE 22:40 item 7 (part): `--order-probe` counts the King's accents (commit e1c4d9b9). Under
+  the card views KingAccents draws only the press tell's raised plates, the decree's buff rings,
+  the shout and the falling crown at OVER_RIG_Z (the cards wear crown, ermine and chains). The
+  plates rise to 5.5 m, so drawing them over a body is right once they clear BODY_H_M; the probe
+  counts a plate still below body height beside the King against a rig south of him.
+  MEASURED (seed 2, 3000 ticks, `evidence/n8-view/order-probe-it5/`): phases 1-3 under combo, with
+  and without `--bot-stand`, phases 2-3 under tilt: accent pairs 0 in every run = UNMEASURED (the
+  plates clear head height within the windup's first third; no rig stood that close south).
+  FOUND: phase 3 car pairs wrong 10/10 (combo) and 12/12 (tilt), every other phase 0 wrong
+  (phase 1: 993 pairs 0 wrong). Hypothesis: in phase 3 the wreck is drawn by KingCarStack /
+  KingCarWalls, not at the KingBodyView rank the probe reads (a probe artifact), OR the wreck
+  really draws over a Rivet south of it. Check with a still at a car-pair tick next iteration.
+  Tonnage's legs: RigDepthSort._with_cards already moves the card's HOST z (legs and all) to the
+  card's level (comment and code agree); re-measure Tonnage with the ghost reel's probe to close it.
+
+NEXT (iteration 6, in brief order):
+1. The phase-3 car pairs 10/10 wrong: film a still at a car-pair tick (log the tick from the probe:
+   add the tick of the first car_wrong to the summary), decide artifact vs real, fix the side
+   that is wrong (KingCarStack z vs RigDepthSort under a tilt).
+2. Item 7 close: `--bot=ghosts --ghost=tonnage --order-probe` at tilt and combo (ghost wrong vs
+   d8's 3/26); the accent pairs need a scripted stand south of the King in a press windup (a
+   `--bot-stand` start position) or stay reported as unmeasured.
+3. Item 6 rest: the boss camera's zoom-in under combo at 64 px/m (`--boss-cam --ppm=64`), quest 1
+   (`collect-call`) scenes at tilt70; film each.
+4. Item 5 rest: the Tonnage cross-fade under combo seen live (a seeded fight where the bot holds
+   Tonnage on screen at the defeat: try `--ghost=tonnage` with `--phase=3 --seed=` 3..6, read the
+   defeat tick from the log first, headless).
+5. Item 8 rest: the King fight frame cost combo vs top (no arena in the bench export: a windowed
+   editor run of the arena with the bench's frame metrics, labelled as such) under bench.lock.
+6. Weakest item to raise: Dent's p70 bust prints darker than p55 (lift the tone's low quantiles);
+   Kerf p70 lacks the p55's amber shoulder rings.
+7. Before the freeze: director reel 19/19 top + combo, evidence run --no-bench, export the exe,
+   REPORT with the Calls (King bust size, death beat length, attack lock, camera lead at speed).
