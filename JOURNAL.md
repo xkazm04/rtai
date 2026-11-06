@@ -1932,3 +1932,20 @@ NEXT (iteration 23 / the freeze, in order):
   took 202. 0 SCRIPT ERROR. REPORT table rows added. NEXT 2 above is done except a wider seed
   sweep at 16 s; NEXT 1 and 3 stand.
 - 08:16 Session closes: everything committed; scratch20 holds only scripts, run outputs, smokes.
+
+## Iteration 24 (08:16-08:30, BUILD at the freeze)
+
+### 08:21 NUMBERS 16 s widened; REPORT table fixed
+- REPORT call C table had a blank line before the it23 rows, so they rendered as loose text; removed
+  (d6f8fafa).
+- 16 s, human seeds 11-15: 3/5 without a death (**11/15 over seeds 1-15**, vs 20 s 10/15), King down
+  4/5 at 86.1 s, took 72.4, lowest hp mean 30.1 (20 s: 21.4), 0 SCRIPT ERROR. The same seeds die at
+  16 s and 20 s (11, 12); only the lowest hp differs. So 16 s and 20 s give the same outcomes on these
+  seeds; 20 s only leaves Rivet lower. REPORT row and note added.
+- `git diff 1aaeb122 HEAD -- project` still empty: the exe (07:43) is current, no re-export.
+
+NEXT (after the freeze / next night):
+1. The owner's verdicts on calls A-P (REPORT). Call C: if fair, 16 s and 20 s give the same outcomes
+   over seeds 1-15 (11/15 vs 10/15); 16 s is the gentler pick with the same death pattern.
+2. The REPORT next steps 3-5 stand (gang lenses at 64 px/m, D4 lift for the plain thug, merge
+   n7-king before n7-servo).

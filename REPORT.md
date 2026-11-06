@@ -107,13 +107,14 @@ run's lowest hp, the new `rivet_hp_min` telemetry):
 | 12 s | 9/10 | 9/10, 84.3 s | 70.6 | 31.5 | `numbers-it22-delay12` |
 | 16 s | 8/10 | 9/10, 85.4 s | 69.6 | 24.9 | `numbers-it22-delay16` |
 | 20 s | **7/10** | 9/10, 88.0 s | 72.4 | 20.3 | `numbers-it22-delay20` |
+| 16 s, human seeds 11-15 | 3/5 (so 11/15 over seeds 1-15) | 4/5 | 72.4 | 30.1 | `numbers-it22-delay16-s11` |
 | 20 s, human seeds 11-15 | 3/5 (so 10/15 over seeds 1-15) | 4/5 | 72.4 | 21.4 | `numbers-it22-delay20-s11` |
 | 20 s, dodging bot, seeds 1-5 | 5/5 | 5/5 | **0** | 82.1 | `numbers-it22-delay20-dodge` |
 | 20 s, standing bot, seeds 1-5 | 0/5 (10 deaths) | 5/5 | 202 | 2.4 | `numbers-it22-delay20-stand` |
 
 King's hits do not change (no hit over 30 stays); only the heal between them does. 20 s is the
 first row at "about 7 in 10" (10/15 over 15 human seeds); every attack stays dodgeable (the dodger
-takes 0). With n=10 the 16 s and 20 s rows are inside one another's noise.
+takes 0). With n=10 the 16 s and 20 s rows are inside one another's noise; over seeds 1-15 they are 11/15 and 10/15, with the same seeds dying (only the lowest hp differs: 30 vs 21 on seeds 11-15).
 
 Every attack is dodgeable (the dodging bot takes 0) and every attack lands on a stander. The
 easy band is as built (call C). Every body and look change since it8 (through it18's gang shades)
