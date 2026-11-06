@@ -145,3 +145,37 @@ script from keyed A sheets, whole frames unit-tested, provenance per file), rend
 (no new nodes or draw calls: the swap is a texture on the existing card sprite, the variety a
 modulate and a scale), concept-scene-parity (judged in CharacterRigs frames, before/after on one
 deterministic board), generative-artifact-gating (A sheets only; no colour fix needed).
+
+- GATE evidence `node tools/evidence/run.mjs --no-bench` on e97d19fd: lint PASS 15/15, scenarios
+  52 passed, parity PASS (1200 steps, planted mutation caught at step 629), selftest PASS (look
+  goldens 11/11, block goldens 5/5: `top` holds), export-audit PASS (557 loaded, 0 failed); unit
+  1499 passed 0 failed but marked FAIL "tree changed during run" (my def405b4 variety commit landed
+  under it). Rerun owed on the head.
+- GATE director reel under `top` on def405b4 (headless, the it1 command without --view): 19/19
+  chapters all down, 0 SCRIPT ERROR (exit 0; the usual "resources still in use at exit" note, as in
+  the tilt70/combo logs).
+- MILESTONE 7b3ff9e3 (brief 4): quest 1's dock contractors stand as a whole-figure card under the
+  card views (StreetQuestCards, called by CastView for each live guard; contractor_70 A / _55 A cut
+  by street_head.py band 1.0, 192 px). First film: mirrored frames drew one card width to the right
+  (a negative-width rect is drawn shifted, not flipped in place): fixed with a mirrored transform about
+  the feet. LOOKED at 48 px/m tilt70 Dock 9 tick 13700 (x3 crop): the guard stands on its spot.
+  quest1_clip.gd learned `--view`. Debt +1 line each in cast_view / quest1_clip accepted.
+  NOTE: under tilt70 the rest of quest 1 (Rivet's sprite, cops, allies) still draws top-down
+  sprites; the contractor is the only standing figure. The quest stills differ run to run (blood,
+  dialogue), so a quest before/after is "same tick", not pixel-identical.
+- CALL (owner): the contractor's hi-vis orange (hat + vest) is saturated and near vermilion; kept
+  as the approved concept and the in-game sprite's vest. Alternative: tone the hat to a dull ochre.
+- CALL (owner): crowd variety: built mild (scale +-8 %, value +-7 %); stronger = raise
+  StreetCrowdCards.SCALE_VAR / VALUE_VAR.
+
+NEXT (iteration 3):
+1. Rerun the evidence gate on the head (unit was flagged for tree churn only); keep the tree still.
+2. Contractors: the knocked-out `guard_down` sprite under tilt (the body lies flat: probably right,
+   check); the p55 contractor under `--view=combo` in a boss fight; a clip of Dock 9 at tilt70.
+3. Cultists / Torque's gang: still nothing in game names them; ask the Director (REPORT) or build
+   their cards behind a registration so a later lane can draw them.
+4. Hit reactions/deaths at height (brief 5): ragdoll and corpse placement under tilt70 (react_line
+   and the city fight), corpse decay unchanged.
+5. Crowd cost (brief 6) under the bench lock: city crowd 400, tilt70 vs top.
+6. The cream ped torsos on cream pavement (city note); the cop blue call (navy vs police blue
+   side by side); a combined 30-90 s clip of the street set.
