@@ -45,6 +45,8 @@ const BOB_K: float = 0.035
 const CARD_M: float = 0.8
 const CARD_ANCHOR: float = 0.97
 const CARD_HALO_A: float = 0.4
+## The card's lean into the glide at full sweep (GhostCard.lean, by the facing's screen x).
+const CARD_LEAN: float = deg_to_rad(12.0)
 
 var unfold: float = 1.0
 ## Ground speed (m/s), fed by the host each tick.
@@ -113,6 +115,7 @@ func pose() -> void:
 		_place(_limbs[i + 2], hip, knee, LEG_THICK_M)
 		_place(_limbs[i + 3], knee, tip, LEG_THICK_M)
 	_card.size_k = _body.scale.x
+	_card.lean = CARD_LEAN * _swept * cos(global_rotation)
 	_card.step(self, _hide, Vector2.ZERO, PX_PER_M)
 
 

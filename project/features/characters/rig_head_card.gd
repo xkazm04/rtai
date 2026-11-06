@@ -11,7 +11,6 @@ extends RefCounted
 
 ## art_dir -> [strip, anchor y (card height fraction from the top), width over the anchor part's,
 ## bust (covers the chest: the torso hides), raw (pre-printed: cut_facings.py --snap)].
-## Rivet anchors on his collar ring, King's bust on his torso.
 const CARDS: Dictionary[String, Array] = {
 	"rivet": ["res://features/characters/art/view/rivet_head_card.png", 0.86, 1.0, false, true],
 	"king": ["res://features/characters/art/view/king_bust_card.png", 0.80, 2.4, true, true],
@@ -21,14 +20,10 @@ const CARDS: Dictionary[String, Array] = {
 	"cop/head_helmet":
 	["res://features/characters/art/view/cop_riot_card.png", 0.86, 1.2, false, false],
 }
-## Per view art (view.json `art`, ViewMode.art, e.g. "p55" = cut from the 55-degree angle sheets,
-## "p70" from the 70): a card whose file name exists under ART_DIR/<art>/ draws that file with its
-## base row's fields; SET_CARDS[<art>] rows replace or add whole rows (new anchor, width or bust);
-## a set row with an empty path keeps the strip found above and only changes the other fields.
-## A view without art draws CARDS. p55: Rivet's bust (rivet_bust.py) on the collar, 1.25 x; Dent
-## on his torso, 1.75 x its depth, printed to his tan (ghost_card_tone.py; the sheet's teal is
-## p55/dent_bust_card_teal.png). p70 (view70) keeps the folder strips, each as tall as its 55 card.
-## SWAT, hair/bald peds, robot thug: tools/art/street_head.py from the assets library's 55 sheets.
+## Per view art (view.json `art`: "p55" cut from the 55-degree sheets, "p70" the 70): a file of the
+## same name under ART_DIR/<art>/ swaps the strip; SET_CARDS[<art>] rows replace whole rows (an
+## empty path keeps the strip, changes the rest). p55: Rivet's bust (rivet_bust.py), Dent's tan bust
+## (ghost_card_tone.py; teal kept as dent_bust_card_teal.png), the street heads (street_head.py).
 const ART_DIR: String = "res://features/characters/art/view/"
 const SET_CARDS: Dictionary[String, Dictionary] = {
 	"p55":
@@ -39,6 +34,10 @@ const SET_CARDS: Dictionary[String, Dictionary] = {
 		["res://features/characters/art/view/p55/dent_bust_card.png", 0.75, 1.75, true, true],
 		"cop/head_swat":
 		["res://features/characters/art/view/p55/swat_head_card.png", 0.8, 1.68, false, true],
+		"cop/head_cap":
+		["res://features/characters/art/view/p55/cop_cap_card.png", 0.78, 1.73, false, true],
+		"cop/head_helmet":
+		["res://features/characters/art/view/p55/cop_riot_card.png", 0.82, 1.32, false, true],
 		"ped/head_hair":
 		["res://features/characters/art/view/p55/ped_hair_card.png", 0.74, 2.0, false, true],
 		"ped/head_bald":
@@ -84,11 +83,12 @@ static func on_tint(rig: CutRig, on: bool) -> void:
 	rig.head_card.material = null if raw and not on else mat
 
 
-## A variant swap (CutRig.apply_variant, a pooled rig re-dressed) drops the card: the next step
-## builds the new head's card, or none, and the top-down parts draw again meanwhile.
+## A variant swap (CutRig.apply_variant) or an art change drops the card; renamed first, so a card
+## rebuilt this frame keeps the name `head_card`. The top-down parts draw until the next step.
 static func drop(rig: CutRig) -> void:
 	if rig.head_card == null:
 		return
+	rig.head_card.name = &"head_card_dropped"
 	rig.head_card.queue_free()
 	rig.head_card = null
 	_hide(rig.head, rig.head_spr, true)

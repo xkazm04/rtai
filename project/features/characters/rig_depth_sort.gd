@@ -64,7 +64,8 @@ func _process(_delta: float) -> void:
 
 
 ## Ghost cards (GhostCard, d8 chars) sort with the rigs: each card's z is moved so its effective z
-## sits at its own level's band over the cast's rigs (it rides the ghost view's fixed z otherwise).
+## sits at its own level's band over the cast's rigs; its host rig moves with it (Tonnage's walking
+## legs, Ohm's ground arms), else they ride the ghost view's fixed z.
 func _with_cards(rigs: Array[CutRig], cards: Array[Sprite2D]) -> Dictionary[CutRig, int]:
 	var bodies: Array[Node2D] = []
 	var half: Array[float] = []
@@ -83,7 +84,8 @@ func _with_cards(rigs: Array[CutRig], cards: Array[Sprite2D]) -> Dictionary[CutR
 	for j: int in cards.size():
 		var c: Sprite2D = cards[j]
 		var want: int = base + mini(lv[rigs.size() + j], MAX_LEVEL) * STEP
-		c.z_index += want - eff_z(c)
+		var host: Node2D = c.get_parent() as Node2D  # the whole ghost (legs, arms) moves with it
+		host.z_index += want - eff_z(c)
 	return out
 
 

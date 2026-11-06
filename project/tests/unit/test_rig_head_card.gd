@@ -106,3 +106,23 @@ func test_a_set_row_without_a_path_keeps_the_strip_and_takes_its_width() -> void
 	assert_almost_eq(king_w, 3.53, 0.001, "the p70 row's width")
 	assert_almost_eq(rivet_w, 1.17, 0.001)
 	assert_eq(str(RigHeadCard.SET_CARDS["p70"]["king"][0]), "", "the set table is untouched")
+
+
+func test_a_dropped_card_gives_up_its_name_for_the_rebuild() -> void:
+	var rig: CutRig = autofree(CutRig.new())
+	rig.head = Node2D.new()
+	rig.torso = Node2D.new()
+	rig.head_spr = Sprite2D.new()
+	rig.torso_spr = Sprite2D.new()
+	rig.add_child(rig.head)
+	rig.add_child(rig.torso)
+	rig.head.add_child(rig.head_spr)
+	rig.torso.add_child(rig.torso_spr)
+	var card: Sprite2D = Sprite2D.new()
+	card.name = &"head_card"
+	rig.head.add_child(card)
+	rig.head_card = card
+	RigHeadCard.drop(rig)
+	assert_null(rig.head_card)
+	assert_eq(String(card.name), "head_card_dropped", "a card rebuilt this frame keeps head_card")
+	assert_true(rig.head_spr.visible, "the top-down head draws again")
