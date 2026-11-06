@@ -1147,3 +1147,20 @@ NEXT (iteration 11, in order):
   crates by bay 4 and the landing (this seed lands it, as in it9). `M/servo_attack_rotor_dash_48ppm_it10.mp4`,
   `M/servo_attack_bay_hop_48ppm_it10.mp4` + keys replace the it9 ones (deleted); frames.json 15;
   REPORT paths. The it11 NEXT 2 is done.
+- 03:01 FILMS the package carpet (p2, windup 47), the hot dash (p3, windup 35) and the full drone
+  wave (seed 2, 4.5-11.5 s) re-filmed at 48 px/m on the it10 body (dodging bot, 0 SCRIPT ERROR).
+  **Looked at** each key sheet: carpet (scanner, ring lane, step out, launch, blasts and CS
+  crates); hot dash (one wing with its ledge, lock, step out, dash, the long vent); wave (lock,
+  rings, step off, bays empty, a bomb in its ring). The it9 clips and keys deleted; frames.json 15;
+  REPORT paths. Every per-attack, per-phase and full-fight clip is now on the it10 body; only the
+  ghost clips (Kerf it7, Dent it5, Ohm it4) show older bodies.
+
+NEXT (iteration 11, replaces the 02:50 list):
+1. Merge n7-king if it moved (last merged 73543d25 as 91f94504; JOURNAL/REPORT add/add: ours).
+2. Re-film the ghost clips on the it10 body (`scratch/servo/filmghost.sh`: Kerf cut halves, Dent's
+   van, Ohm's chain; read the script for their flags and windows), look at the keys, replace.
+3. The spine's horseshoe frame and hose loops (render only, `ServoSpine`): only if they show past
+   the torso from above; A/B at 48/32 beside the sheet.
+4. The clip cam at the yard's left edge stays open in REPORT (framework file, shared with king).
+5. At the freeze (08:30): re-export `windows-showcase`, smoke (expect down 7036, 188), final gates
+   (lint, unit, scenarios, evidence/run.mjs, director reel), REPORT final (drop DRAFT, Next steps).
