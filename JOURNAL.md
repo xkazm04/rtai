@@ -216,6 +216,8 @@ NEXT (iteration 3, in order):
   --quit-after 8000`: top 19/19 fully down 0 SCRIPT ERROR (7fffea59), tilt 19/19 0 SCRIPT ERROR
   (d5765239); lint 15/15 per commit; top md5 identity measured for every change (16:07, 16:22).
   NOT RUN this session: evidence --no-bench (owed at the freeze with the export).
+- 16:27 Evidence: bosses_d8_it3_combined.mp4 (30 s: the gang + throne-car at 64 px/m in phase 2, then
+  Servo standing at 48 vs the katana); frames.json 15 (servo_tilt48_drones_x3.png out). NEXT item 4 done.
 NEXT (iteration 6, in order; freeze 18:30):
 1. (done 16:22: parcels fall as boxes.) The slung parcel under a flying drone is still flat (it
    turns with the drone; ServoCrateStack is axis-aligned): a turned box if it reads flat at 64.
@@ -223,6 +225,6 @@ NEXT (iteration 6, in order; freeze 18:30):
    (KingCarStack.bumpers are skipped under the art stack).
 3. (done 16:24.) Servo's hit radius is on the ground under the lifted body: watch whether a katana
    hit reads as landing on his legs at 64 px/m (a hit spark at the lifted torso is view-only).
-4. A combined clip of the it3 set (Servo standing, crates, gang at 64) for frames.json.
+4. (done 16:27.) A gang-on-foot clip at 64 vs the claw (the gang in this clip mostly ride the car).
 5. At the freeze (18:30): export build/export/windows/RTAI.exe (int-day recipe in docs/decisions.md),
    evidence --no-bench, REPORT.md with Calls 1-7 (JOURNAL).
