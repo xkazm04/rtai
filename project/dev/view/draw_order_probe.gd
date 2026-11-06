@@ -25,6 +25,12 @@ var car_wrong: int = 0
 ## it, a card south of a rig over every part of the rig.
 var ghost_pairs: int = 0
 var ghost_wrong: int = 0
+## n8: the King's accents (KingAccents, drawn over every rig at OVER_RIG_Z). Under the card views
+## only the press tell's raised plates stand (the cards wear the crown, ermine and chains): a plate
+## still lower than a body (BODY_H_M) beside the King must draw under a rig south of him.
+var accent_pairs: int = 0
+var accent_wrong: int = 0
+var _accents: Array[KingAccents] = []
 var _order: Dictionary[Node, int] = {}
 
 
@@ -36,6 +42,7 @@ func sample(root: Node, tick: int) -> void:
 	var rigs: Array[CutRig] = []
 	var cars: Array[KingBodyView] = []
 	var cards: Array[Sprite2D] = []
+	_accents.clear()
 	_walk(root, rigs, cars, cards)
 	var p: float = SimConst.PX_PER_M
 	var h: float = absf(ViewMode.shared().lift_px(BODY_H_M).y)
@@ -48,13 +55,16 @@ func sample(root: Node, tick: int) -> void:
 	for card: Sprite2D in cards:
 		for rig: CutRig in rigs:
 			_ghost_pair(card, rig, p, h)
+	for acc: KingAccents in _accents:
+		for rig: CutRig in rigs:
+			_accent_pair(acc, rig, p, h)
 
 
 func summary() -> String:
 	return (
 		(
 			"order-probe view=%s samples %d rig pairs %d wrong %d mixed %d car pairs %d"
-			+ " car wrong %d ghost pairs %d ghost wrong %d"
+			+ " car wrong %d ghost pairs %d ghost wrong %d accent pairs %d accent wrong %d"
 		)
 		% [
 			ViewMode.shared().id,
@@ -66,6 +76,8 @@ func summary() -> String:
 			car_wrong,
 			ghost_pairs,
 			ghost_wrong,
+			accent_pairs,
+			accent_wrong,
 		]
 	)
 
@@ -80,6 +92,8 @@ func _walk(n: Node, rigs: Array[CutRig], cars: Array[KingBodyView], cards: Array
 		rigs.append(n as CutRig)
 	elif n is KingBodyView:
 		cars.append(n as KingBodyView)
+	elif n is KingAccents:
+		_accents.append(n as KingAccents)
 	for c: Node in n.get_children():
 		_walk(c, rigs, cars, cards)
 
@@ -141,6 +155,22 @@ func _ghost_pair(card: Sprite2D, rig: CutRig, p: float, h: float) -> void:
 	var dz: int = eff_z(rig) - eff_z(card)
 	if (d.y > 0.0 and dz <= 0) or (d.y < 0.0 and dz > -PART_SPAN):
 		ghost_wrong += 1
+
+
+func _accent_pair(acc: KingAccents, rig: CutRig, p: float, h: float) -> void:
+	var f: BossFight = acc.view.fight if acc.view != null else null
+	if f == null or f.state != BossFight.State.WINDUP or f.attack == null:
+		return
+	if not KingAccents.RAISED_PLATES or not KingRigs.RAISE_IN_TELL.has(f.attack.id):
+		return
+	var rise: float = 1.0 - float(f.tell_left()) / float(maxi(f.attack.windup, 1))
+	var d: Vector2 = rig.global_position - acc.to_global(Ink.px(f.body.pos))
+	var reach: float = (KingAccents.PLATE_OUT_M + BODY_W_M) * p
+	if KingAccents.PLATE_UP_M * rise >= BODY_H_M or d.y <= 0.0 or d.y >= h or absf(d.x) >= reach:
+		return
+	accent_pairs += 1
+	if _rank(acc) > _rank(rig):
+		accent_wrong += 1
 
 
 func _rank(n: CanvasItem) -> int:

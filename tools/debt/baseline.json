@@ -2,7 +2,8 @@
   "metrics": {
     "dev_loc": {
       "accepted": [
-        "2026-11-06: d8 chars: --order-probe measures ghost-card vs rig pairs (the brief's draw-order item, measured before/after) (dev_loc 18080 -> 18115)"
+        "2026-11-06: d8 chars: --order-probe measures ghost-card vs rig pairs (the brief's draw-order item, measured before/after) (dev_loc 18080 -> 18115)",
+        "2026-11-06: n8-view: the order probe counts the King's accents (brief item 7, dev-only measurement) (dev_loc 18115 -> 18145)"
       ],
       "files": {
         "project/dev/arena": 1034,
@@ -27,10 +28,10 @@
         "project/dev/selftest": 1446,
         "project/dev/servo": 434,
         "project/dev/showcase": 5452,
-        "project/dev/view": 158,
+        "project/dev/view": 188,
         "project/dev/weapon_art": 506
       },
-      "total": 18115
+      "total": 18145
     },
     "direct_cmdline_reads": {
       "files": {
@@ -179,8 +180,8 @@
         "project/dev/arena/arena_game.gd": 294,
         "project/dev/arena/arena_rigs.gd": 291,
         "project/dev/showcase/city_fight.gd": 300,
-        "project/features/bosses/boss_hook.gd": 282,
-        "project/features/bosses/servo/servo_rig.gd": 288,
+        "project/features/bosses/boss_hook.gd": 281,
+        "project/features/bosses/servo/servo_rig.gd": 287,
         "project/features/combat/combat_arena.gd": 300,
         "project/features/combat/kills/kill_view.gd": 286,
         "project/features/combat/react/react_link.gd": 286,
@@ -225,11 +226,11 @@
         "project/features/arena/prop_occlusion.gd": 206,
         "project/features/bosses/boss_bot.gd": 202,
         "project/features/bosses/boss_fight.gd": 269,
-        "project/features/bosses/boss_hook.gd": 282,
+        "project/features/bosses/boss_hook.gd": 281,
         "project/features/bosses/king/king_body_view.gd": 235,
         "project/features/bosses/king/king_rigs.gd": 202,
         "project/features/bosses/servo/servo_moves.gd": 223,
-        "project/features/bosses/servo/servo_rig.gd": 288,
+        "project/features/bosses/servo/servo_rig.gd": 287,
         "project/features/bosses/servo/servo_swarm.gd": 208,
         "project/features/characters/cut_rig.gd": 264,
         "project/features/city/gen/tile_painter.gd": 243,

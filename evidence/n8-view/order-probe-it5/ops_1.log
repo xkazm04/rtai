@@ -1,0 +1,5 @@
+[INFO] view: tick 0 order-probe view=combo samples 1 rig pairs 0 wrong 0 mixed 0 car pairs 0 car wrong 0 ghost pairs 0 ghost wrong 0 accent pairs 0 accent wrong 0
+[INFO] view: tick 600 order-probe view=combo samples 101 rig pairs 0 wrong 0 mixed 0 car pairs 400 car wrong 0 ghost pairs 0 ghost wrong 0 accent pairs 0 accent wrong 0
+[INFO] view: tick 1200 order-probe view=combo samples 201 rig pairs 0 wrong 0 mixed 0 car pairs 800 car wrong 0 ghost pairs 0 ghost wrong 0 accent pairs 0 accent wrong 0
+[INFO] view: tick 1800 order-probe view=combo samples 301 rig pairs 73 wrong 0 mixed 0 car pairs 965 car wrong 0 ghost pairs 0 ghost wrong 0 accent pairs 0 accent wrong 0
+[INFO] view: tick 2400 order-probe view=combo samples 401 rig pairs 185 wrong 0 mixed 11 car pairs 993 car wrong 0 ghost pairs 0 ghost wrong 0 accent pairs 0 accent wrong 0
