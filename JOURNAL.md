@@ -217,3 +217,27 @@ Read: JOURNAL, git log, the other lanes' journals (no REQUEST to street).
   (a local edit, reverted, checked clean) 0.865 / 1.077 vs with it 0.947 / 1.086: under the noise
   floor (<= 0.08 ms, about 5 us a rig). The tilt cost is view's (RigTilt + RigHeadCard) plus the
   card draws. JSONs: masters n8/street/bench/.
+- EVIDENCE (combined clip, owed since it1): city block `res://dev/arena/arena.tscn -- --arena=city
+  --bot=rivet --seed=5 --rigs --ppm=48 --view=tilt70|top`, `--fixed-fps 60 --quit-after 2400`, 0
+  SCRIPT ERROR each: street_city_tilt70_48ppm_seed5_40s.mp4 and the top|tilt70 side by side
+  street_city_top_vs_tilt70_48ppm_seed5_40s.mp4 (same tick, same layout). LOOKED at 5/15/25/35 s:
+  police-blue-on-navy cops with p70 cards, the riot plate, hat/hood/hair peds, cop corpses lying
+  with their heads on. frames.json now 15 entries (the two clips, the death pair and the cop-tone
+  call in; three near-duplicate stills out, their files kept).
+- CALL evidence (cop tone, chars call 7): p70 cop_cap / cop_riot re-cut by street_head.py with the
+  committed args (navy re-cut = the committed strips, 0 px differ) and without `navy` (police blue);
+  filmed on the react line (`--bot=react_line --ppm=48 --view=tilt70 --rigs --seed=4`) with a local
+  swap. FRICTION: the first swap filmed identical frames: the game reads the import cache, so a
+  swapped PNG needs `--import` first (then restored + `--import`; the restored film is identical to
+  the first navy film). LOOKED: navy reads as one uniform with the navy body; police blue pops the
+  head but splits the figure two-tone (the body parts stay navy). Built: navy (unchanged).
+  call_cop_tone_navy_vs_policeblue_tilt70_48ppm_x1.5_reactline_t{2,5}.png.
+- SCOUT (brief 4) cultists / Torque's gang: library has cultist 55 A, 70 A (21:20 redo), torque_gang
+  55 A, 70 A; nothing in game spawns them (no plan, look or actor; grep cultist|kronk|torque in
+  features/ and data/: nothing). Cut in scratch only (street_head.py band 1.0, 192 px, the
+  contractor recipe): clean five-facing whole-figure strips at both pitches. The `orange` fix is
+  WRONG for them (rejected on sight): it turns the cultist's rust robe and Torque's eye glow pale
+  blue (and blue is police only). Cut with no fix. Not committed: art with no consumer. Masters:
+  robots_cultist_torquegang_strips_70_55_nofix_scout_t3.png, robots_strips_70_orangefix_REJECTED_t3.png.
+  NOTE: keyed/street/torque_gang_55.png is dated 16:36 but the catalog's A is round 1705: check
+  which drawing the keyed file holds before integrating the 55.
