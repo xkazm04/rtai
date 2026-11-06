@@ -15,12 +15,10 @@ const FLASH_TICKS: int = 5
 const PARTS: Array[StringName] = [
 	&"head", &"pad", &"pelvis", &"torso", &"rack", &"rack3", &"thigh", &"shin", &"arm"
 ]
-## The pads' art: pad_hazard (tools/art/servo_pad_rim.py: the sheet's ink and copper hazard rim)
-## or pad (the it13 cut: copper on mid brown, one brown band at 32 px/m).
+## The pads' art: pad_hazard (tools/art/servo_pad_rim.py: the sheet's hazard rim) or pad (it13).
 const PAD_ART: StringName = &"pad_hazard"
-## A docked drone: a cream body (metres square, ink rim) in each full rack cell, the sheet's cream
-## drones in the bays (the wing art alone printed them as dark cells). The flying drone's whole
-## sprite there was 18 rotor crosses: noise at 32 px/m. 0 = off.
+## A docked drone: a cream body (metres square, ink rim) in each full rack cell (the wing art alone
+## printed dark cells; the flying drone's sprite there was noise at 32 px/m). 0 = off.
 const DOCKED_M: float = 0.34
 ## The docked drones on the art's bays (ServoBays: a hub and rotor rings over the art's printed
 ## quad drone, the sheet's bays); false = the it14 cream squares on the sim's cells.
@@ -33,8 +31,7 @@ const PAD_AHEAD_M: float = 2.0
 ## (metres). The sheet's top view has two parallel legs under the torso (it13: 0.9 / 0.5, splayed).
 const LEG_SPLAY_M: float = 0.25
 const KNEE_OUT_M: float = 0.2
-## The struts' width against their art: the sheet's pad arms and legs are chunky blocks (it19:
-## 1.0, the art's 0.25 m piston). Render only.
+## The struts' width against their art: the sheet's chunky pad arms and legs (it19: 1.0).
 const ARM_W_K: float = 1.6
 const LEG_W_K: float = 1.3
 
@@ -55,6 +52,7 @@ var _shift: ServoShift = ServoShift.new()
 var _spine: ServoSpine = ServoSpine.new()
 var _bays: ServoBays = ServoBays.new()
 var _pad: ServoPad = ServoPad.new()
+var _up: Vector2 = Vector2.ZERO  # d8: the upper body's lift (m; ServoArt.stand); ZERO in top
 
 
 func _ready() -> void:
@@ -105,6 +103,7 @@ func _draw() -> void:
 	var k: float = 1.0 + 0.015 * sin(_walk * 2.0) if dt < 0 else ServoFall.scale_k(dt)
 	k *= ServoShift.lift_k(fight)
 	var tint: Color = _tint() if dt < 0 else ServoFall.tint(dt)
+	_up = ServoArt.stand(self, o, fwd, px) * (1.0 if dt < 0 else ServoFall.stand_k(dt))
 	for s: float in [-1.0, 1.0]:
 		_leg(o, fwd, side, s, tint)
 	var pad_w: float = PAD_OUT_M - (ServoFall.pad_in_m(dt) if dt >= 0 else 0.0)
@@ -113,11 +112,12 @@ func _draw() -> void:
 	_pad.spin = _spin
 	_pad.tint = tint
 	for s: float in [-1.0, 1.0]:
-		var pad: Vector2 = o + side * s * pad_w + fwd * PAD_AHEAD_M
-		_strut(&"arm", o + side * s * 0.9 + fwd * 0.2, pad, tint, ARM_W_K)
+		var pad: Vector2 = o + _up * 0.5 + side * s * pad_w + fwd * PAD_AHEAD_M
+		_strut(&"arm", o + _up + side * s * 0.9 + fwd * 0.2, pad, tint, ARM_W_K)
 		_pad.draw(self, pad, fwd.angle() - PI / 2, s, pad_k)
 		if _stage(&"recovery", false):
 			_pad.steam(self, pad, tick)
+	o += _up  # the upper body stands over the feet
 	_part(&"pelvis", o + fwd * 0.5, fwd.angle() - PI / 2, k, tint)
 	_wings(o, fwd, side, k, tint)
 	_spine.draw(self, o, fwd, k, tint)
@@ -137,9 +137,9 @@ func _draw() -> void:
 
 func _leg(o: Vector2, fwd: Vector2, side: Vector2, s: float, tint: Color) -> void:
 	# The target's top view: the legs step out in front of the rack, between the pads.
-	var hip: Vector2 = o + side * s * 0.6 + fwd * 0.5
+	var hip: Vector2 = o + _up + side * s * 0.6 + fwd * 0.5
 	var swing: float = sin(_walk + (PI if s > 0.0 else 0.0))
-	var foot: Vector2 = hip + side * s * LEG_SPLAY_M + fwd * (1.9 + 0.7 * swing)
+	var foot: Vector2 = hip - _up + side * s * LEG_SPLAY_M + fwd * (1.9 + 0.7 * swing)
 	var knee: Vector2 = (hip + foot) * 0.5 + side * s * KNEE_OUT_M
 	_strut(&"thigh", hip, knee, tint, LEG_W_K)
 	_strut(&"shin", knee, foot, tint, LEG_W_K)
