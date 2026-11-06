@@ -7,7 +7,8 @@ head (front = right), 3-row rack / pad, arm, thigh, shin, pelvis, drone. Each is
 turned to the rig's convention (front down the page: the head turns 90 degrees) and resized to
 EXACTLY today's part of the same name, so ServoRig's sizes (ART_PPM) and struts hold. The 2-row
 rack is the 3-row rack with its bottom shelf row cut out (top frame + two rows, then the bottom
-frame); the drone keeps today's art. Deterministic.
+frame). The drone turns 180 degrees (its sensor head to the front, down the page, like today's).
+Deterministic.
 """
 
 import os
@@ -30,6 +31,7 @@ DRESS = {
     "thigh": ("thigh", 0),
     "shin": ("shin", 0),
     "pelvis": ("pelvis", 0),
+    "drone": ("drone", 180),
 }
 
 

@@ -22,7 +22,7 @@ const SLING_M: float = 0.5
 ## Pixels per metre of the canvas drawn on (32 in the dev view, Ink.PX_PER_M in the arena).
 var px: float = 32.0
 var pal: PaletteTokens = PaletteTokens.shared()
-var drone_tex: Texture2D = load(ServoRig.ART % "drone") as Texture2D
+var drone_tex: Texture2D = load(ServoArt.path(&"drone")) as Texture2D
 var crate_tex: Texture2D = load(ServoRig.ART % "crate") as Texture2D
 
 
