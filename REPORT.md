@@ -54,7 +54,9 @@ The logs are in `evidence/n7-melee/`.
 (a) Quest 1 carries the katana on key 2.
 - Options: katana (built), electro baton, none.
 - Clip: `M/quest1_katana_ab_32ppm.mp4`.
-- Exe: `RTAI.exe -- --quest-blade=off` (before), `--quest-blade=electro_baton` (the baton instead).
+- Exe (quest 1 is the slice build): `build/export/windows-slice/RTAI.exe -- --quest-blade=off`
+  (before), `-- --quest-blade=electro_baton` (the baton instead); no flag = the katana. The arena exe
+  `build/export/windows/RTAI.exe` cannot open quest 1 (release templates take no scene path).
 
 (b) Tonnage's stomp ignores `--feel=off`. The stomp's stop and shake come from HaulerKick, outside
 the shared layer.
