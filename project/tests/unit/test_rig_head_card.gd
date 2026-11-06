@@ -59,3 +59,50 @@ func test_a_head_variant_row_wins_over_the_set_row() -> void:
 	var thug: BodyPlan = BodyPlan.new()
 	thug.art_dir = "gang"
 	assert_eq(RigHeadCard.key_of(thug, "head"), "gang", "every gang head shares one card")
+
+
+func test_an_art_folder_overrides_only_its_own_rows() -> void:
+	assert_eq(RigHeadCard.rows_of(""), RigHeadCard.CARDS, "no set: the base cards")
+	var none_king: String = RigHeadCard.rows_of("none_such")["king"][0]
+	assert_eq(none_king, str(RigHeadCard.CARDS["king"][0]), "no such folder: the base strip")
+	var r55: Dictionary[String, Array] = RigHeadCard.rows_of("p55")
+	assert_eq(str(r55["rivet"][0]), "res://features/characters/art/view/p55/rivet_bust_card.png")
+	var bust: bool = r55["rivet"][3]
+	assert_true(bust, "Rivet's 55 card is a bust: the torso hides")
+	var king: Array = r55["king"]
+	var king_base: Array = RigHeadCard.CARDS["king"]
+	assert_eq(king, king_base, "rows the set does not name stay the base")
+	assert_eq(
+		str(RigHeadCard.CARDS["rivet"][0]),
+		"res://features/characters/art/view/rivet_head_card.png",
+		"the base table is untouched by the merge"
+	)
+
+
+func test_every_set_card_strip_loads() -> void:
+	for art: String in RigHeadCard.SET_CARDS:
+		for key: String in RigHeadCard.SET_CARDS[art]:
+			var path: String = RigHeadCard.SET_CARDS[art][key][0]
+			if path == "":
+				continue
+			var t: Texture2D = load(path) as Texture2D
+			assert_not_null(t, path)
+			assert_eq(t.get_width() % RigHeadCard.FRAMES, 0, "%s splits into equal frames" % path)
+
+
+func test_the_tilt_row_draws_the_55_set_and_top_none() -> void:
+	assert_eq(ViewMode.of("tilt").art, "p55")
+	assert_eq(ViewMode.of("top").art, "", "top draws no cards at all")
+	assert_eq(ViewMode.of("tilt_basecards").art, "", "the d8 before: the base cards")
+
+
+func test_a_set_row_without_a_path_keeps_the_strip_and_takes_its_width() -> void:
+	var r70: Dictionary[String, Array] = RigHeadCard.rows_of("p70")
+	var base: Array = RigHeadCard.CARDS["king"]
+	assert_ne(str(r70["king"][0]), "", "the empty path is filled from the folder or the base")
+	assert_eq(str(r70["king"][0]).get_file(), str(base[0]).get_file())
+	var king_w: float = r70["king"][2]
+	var rivet_w: float = r70["rivet"][2]
+	assert_almost_eq(king_w, 3.53, 0.001, "the p70 row's width")
+	assert_almost_eq(rivet_w, 1.17, 0.001)
+	assert_eq(str(RigHeadCard.SET_CARDS["p70"]["king"][0]), "", "the set table is untouched")

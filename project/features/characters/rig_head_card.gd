@@ -22,16 +22,43 @@ const CARDS: Dictionary[String, Array] = {
 	"cop/head_helmet":
 	["res://features/characters/art/view/cop_riot_card.png", 0.86, 1.2, false, false],
 }
+## Per view art (view.json `art`, ViewMode.art, e.g. "p55" = cut from the 55-degree angle sheets,
+## "p70" from the 70): a card whose file name exists under ART_DIR/<art>/ draws that file with its
+## base row's fields; SET_CARDS[<art>] rows replace or add whole rows (new anchor, width or bust);
+## a set row with an empty path keeps the strip found above and only changes the other fields.
+## A view without art draws CARDS. Rivet's p55 card is a bust (head, hazard
+## collar and chest plate from rivet_55.png, tools/art/rivet_bust.py): anchored on the collar's
+## middle, 1.25 x the collar wide (the cell is wider than the collar by the chest's shoulders).
+const ART_DIR: String = "res://features/characters/art/view/"
+const SET_CARDS: Dictionary[String, Dictionary] = {
+	"p55":
+	{
+		"rivet":
+		["res://features/characters/art/view/p55/rivet_bust_card.png", 0.66, 1.25, true, true],
+	},
+	## The 70 sheets' cells are wider than the 55 ones: widths that keep each 70 card as tall as
+	## its 55 card (view70 lane: king 2.4 * 169/115, rivet 1.0 * 105/90).
+	"p70":
+	{
+		"rivet": ["", 0.86, 1.17, false, true],
+		"king": ["", 0.80, 3.53, true, true],
+	},
+}
 const FRAMES: int = 5
 ## Card frame and mirror per screen octant of the look (0 = screen right, +1 = 45 deg clockwise,
 ## toward the camera; the camera sits south, so octant 2 is the face).
 const OCT_FRAME: PackedInt32Array = [2, 1, 0, 1, 2, 3, 4, 3]
 const OCT_FLIP: PackedByteArray = [0, 0, 0, 1, 1, 1, 0, 0]
 static var _tex: Dictionary[String, Texture2D] = {}
+static var _merged: Dictionary[String, Array] = {}
+static var _merged_art: String = "-"
 
 
-## Each pose step under a tilt (CutRig.drive): build the card once, then face and place it.
+## Each pose step under a tilt (CutRig.drive): build the card once, then face and place it. A
+## card built under other art (ViewMode.art changed live, the combined view) is rebuilt.
 static func step(rig: CutRig) -> void:
+	if rig.head_card != null and str(rig.head_card.get_meta(&"art", "")) != ViewMode.shared().art:
+		drop(rig)
 	if rig.head_card == null:
 		if not ViewMode.shared().cards or _key(rig).is_empty():
 			return
@@ -44,7 +71,7 @@ static func step(rig: CutRig) -> void:
 static func on_tint(rig: CutRig, on: bool) -> void:
 	if rig.head_card == null:
 		return
-	var raw: bool = CARDS[_key(rig)][4] == true
+	var raw: bool = rows()[_key(rig)][4] == true
 	var mat: ShaderMaterial = PartMaterials.get_mat(PartMaterials.PartKind.PART, on, 0)
 	rig.head_card.material = null if raw and not on else mat
 
@@ -70,10 +97,40 @@ static func _key(rig: CutRig) -> String:
 ## The card row a head draws: "art_dir/head" (a head variant, e.g. the patrol cop's cap), else
 ## the art_dir (every head of the set), else "" (no card).
 static func key_of(plan: BodyPlan, head: String) -> String:
+	var all: Dictionary[String, Array] = rows()
 	var k: String = "%s/%s" % [plan.art_dir, head]
-	if CARDS.has(k):
+	if all.has(k):
 		return k
-	return plan.art_dir if CARDS.has(plan.art_dir) else ""
+	return plan.art_dir if all.has(plan.art_dir) else ""
+
+
+## The card rows this run's view draws now: CARDS under its art (rows_of).
+static func rows() -> Dictionary[String, Array]:
+	var want: String = ViewMode.shared().art
+	if want != _merged_art:
+		_merged = rows_of(want)
+		_merged_art = want
+	return _merged
+
+
+## CARDS with each strip found under ART_DIR/<art>/ swapped in, then SET_CARDS[art]'s rows.
+static func rows_of(art: String) -> Dictionary[String, Array]:
+	if art == "":
+		return CARDS
+	var out: Dictionary[String, Array] = {}
+	for key: String in CARDS:
+		var row: Array = CARDS[key].duplicate()
+		var alt: String = ART_DIR.path_join(art).path_join(str(row[0]).get_file())
+		if ResourceLoader.exists(alt):
+			row[0] = alt
+		out[key] = row
+	for key: String in SET_CARDS.get(art, {}):
+		var set_row: Array = SET_CARDS[art][key]
+		var row: Array = set_row.duplicate()
+		if str(row[0]) == "" and out.has(key):
+			row[0] = out[key][0]
+		out[key] = row
+	return out
 
 
 static func frame_of(look: float) -> Vector2i:
@@ -82,7 +139,7 @@ static func frame_of(look: float) -> Vector2i:
 
 
 static func _build(rig: CutRig) -> void:
-	var row: Array = CARDS[_key(rig)]
+	var row: Array = rows()[_key(rig)]
 	var path: String = row[0]
 	if not _tex.has(path):
 		_tex[path] = load(path) as Texture2D
@@ -97,6 +154,7 @@ static func _build(rig: CutRig) -> void:
 	if row[4] != true or rig.is_tinted():
 		card.material = PartMaterials.get_mat(PartMaterials.PartKind.PART, rig.is_tinted(), 0)
 	card.z_index = rig.plan.head_z
+	card.set_meta(&"art", ViewMode.shared().art)
 	rig.head.add_child(card)
 	rig.head_card = card
 	_hide(rig.head, rig.head_spr)
@@ -118,7 +176,7 @@ static func _place(rig: CutRig) -> void:
 	var card: Sprite2D = rig.head_card
 	var src: Sprite2D = _anchor(rig)
 	var at: Vector2 = src.global_position
-	var k: float = CARDS[_key(rig)][2]
+	var k: float = rows()[_key(rig)][2]
 	var w_world: float = src.texture.get_width() * absf(src.global_scale.x) * k
 	var f: Vector2i = frame_of(rig.head.global_rotation)
 	card.frame = f.x
