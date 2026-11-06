@@ -157,3 +157,44 @@ NEXT (final for iteration 1, supersedes the list above where they differ):
    a card-region pop metric; frame cost 70 vs 55 (bench lock or CONTENDED); city clip labels.
 5. At 18:30: the exe (int-day recipe in docs/decisions.md) and REPORT.md with the Calls for the owner
    (70 vs 55 vs combo for city and bosses; transition length; cross-fade vs swap = fade_deg 5 vs 0).
+
+## Iteration 2 (2026-11-06 15:00-16:00, BUILD)
+
+- 15:00 READ chars (e0e73ffc `SET_CARDS["p70"]` rows king 3.53 / rivet 1.17 = my REQUEST; 01387fb6
+  `ViewMode.set_pitch` + `revision`) and bosses (KingArt court strips keyed by `roundi(pitch)` under
+  `features/bosses/king/art/p<pitch>/`, part cache keyed by pitch, CARD_CAPE A/B; no answer yet on the
+  two-bells REQUEST).
+- 15:03 MILESTONE d0c2edf8 merge d8-chars (ordinary merge): conflicts only JOURNAL.md (kept ours) and
+  view.schema.json (kept both: their `art`, my boss_pitch/ease/fade/swap). Lint 15/15.
+- 15:12 MILESTONE b3cf4418 combo on chars' route: ViewPitchEase writes `ViewMode.set_pitch` (bumps
+  `revision`) and sets `ViewMode.art` = `art` (p70) at mix >= 0.5, else the new row key `boss_art`
+  (p55); RigHeadCard rebuilds every card from that folder (its rows_of: p70 rows, p55 Rivet bust).
+  ViewPitchCards now only overlays the OTHER folder's row inside the fade window, sized by that row's
+  own width (`(k_o/cell_o)/(k_mine/cell_mine)`) and anchor, picked per card from the art it was built
+  under (a card not yet rebuilt after a swap still fades right). tilt70 needs no node any more
+  (RigHeadCard draws p70 itself). Unit test_view_pitch/test_rig_head_card/test_view_mode 28/0.
+- 15:14 FILM King seed 2 at combo/tilt70/tilt, 32 px/m, 1500 ticks (`scratch/view70/it2`), 0 SCRIPT
+  ERROR; log: `pitch ease 70.0 -> boss at tick 1`, `cards art p55 (pitch 62.1) at tick 32`.
+  LOOKED at frames 20-43 x3 (masters `combo_fade_p70_to_p55_rivet_frames20-43_x3.png`): Rivet's p70
+  head card fades into chars' p55 bust over ~6 frames; mid-fade both draw (a short double image: the
+  p55 bust's chest under the p70 head). MEASURED card-region pop (`scratch/view70/card_pop.py`, crop
+  80x70 on Rivet, frames 10-60): max 33.9 at frame 11 (the ease's first frames: the ground moves),
+  median 19.9, fade window frames 27-36 all 17.4-20.9: no spike above the moving-ground floor.
+- 15:16 LOOKED tilt vs tilt70 at tick 1400 (King on the car, cone tell): the 70 bust now draws as
+  tall as the 55 one through chars' p70 rows (it drew at 68 % before).
+- FINDING (integration, bosses x view70): KingArt picks `art/p<roundi(pitch)>/` and dresses a card
+  once. Under combo the card is rebuilt at 62 deg (my art swap) -> no `p62` strip -> it keeps the
+  shared strip forever, so the combo boss fight at 55 would show the base King, not bosses' p55 bust.
+  Not merging bosses this iteration for that reason.
+
+### REQUEST to bosses (iteration 2)
+- REQUEST bosses: please do your NEXT 2 (fold the court strips into chars' route) soon: put
+  `king_bust_card.png` / `gang_head_card.png` under `features/characters/art/view/p55/` and ask chars
+  for `SET_CARDS["p55"]["king"]` = [, 0.80, 3.6, true, true] and `["gang"]` = [, 0.84, 1.75, false,
+  true] (your 14:47 numbers). Then `--view=combo` draws your 55 bust in the fight and my p70 bust in
+  play, cross-faded, with no KingArt hook. If you keep the KingArt swap instead, key it by
+  `ViewMode.shared().art` (the folder name, "p55") not by `roundi(pitch)`, and re-dress a card when
+  its art meta changes (combo eases 70 -> 55 live; a card built at 62 deg never swaps today).
+  Your part sets (limbs, gang bodies) keyed by pitch are fine as they are under combo: please make
+  the lookup `>= 55 and < 62.5 -> p55` or key it by `ViewMode.art` too, so the limbs switch with the
+  bust at swap_deg 62.5 and not only once the pitch lands exactly on 55.
