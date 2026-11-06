@@ -79,9 +79,10 @@ because I edited docs during the run). City-block director reel with `--loadout=
 
 6. **The camera follows the mini-nuke.** Options: the view leads toward the shell and holds on
    its ring (built: `blast_lead_k` 0.8, at most 10 m and 300 screen px, held 60 ticks), a gentler
-   lead (`blast_lead_k` 0.5, not filmed), or the camera stays on Rivet
+   lead (`blast_lead_k` 0.5: about the ring's upper two thirds, Rivet well inside the frame), or the camera stays on Rivet
    (`blast_lead_k` 0, the before: the ring runs off the screen). It moves the camera away from
-   Rivet for about 2 s per nuke. Built default: 0.8. See `nuke_blast_lead-ab-32-48ppm.mp4`, or
+   Rivet for about 2 s per nuke. Built default: 0.8 (the whole ring at 32 px/m, Rivet at the top edge). See
+   `nuke_blast_lead-call-3way-32ppm.mp4` (0 / 0.5 / 0.8 side by side), `nuke_blast_lead-ab-32-48ppm.mp4`, or
    `RTAI.exe -- --weapon=mini_nuke --bot=gunplay --lone` vs the same with `--feel=off` (off also
    drops the kicks and the stop).
 

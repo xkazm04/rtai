@@ -1395,3 +1395,10 @@ STOP 03:21 iteration 14 (true time). Code commits: `5586a80e` (tube keeps the gu
 on `13e0e050`; reels 19/19 x2 on `5586a80e` and on `a63bd8e0`; unit 1168/1168. Clips:
 `tube_side-ab-32-48ppm.mp4`, `nuke_blast_lead-ab-32-48ppm.mp4`, city set retaken. Re-scored from
 film: Gloria A 1 -> 2, plasma I 2 -> 3, electro I 2 -> 3, nuke R 2 -> 3. Call 6 added.
+
+### LOOK 03:25: call 6's middle option filmed (NEXT 2 done)
+- Lone, live camera, 32 px/m, the same build with blast_lead_k 0 / 0.5 / 0.8 (temporary data
+  edits, reverted, tree clean), kill tick 330 in all, 0 SCRIPT ERROR. Frame at the ring's peak: 0 =
+  the top arc; 0.5 = about the upper two thirds, Rivet well inside; 0.8 = the whole ring, Rivet at
+  the top edge. Clip `masters .../nuke_blast_lead-call-3way-32ppm.mp4` (3.5 s; REPORT call 6, not in
+  frames.json). NEXT 2 closed; the rest of the NEXT list above stands.
