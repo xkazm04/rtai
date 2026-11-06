@@ -296,3 +296,12 @@ NEXT (iteration 6, in brief order):
   10/10 is a PROBE ARTIFACT (it pairs Rivet with an undrawn car), not a draw fault. Fix for the
   probe next: skip the car when the wreck is not drawn (read the wreck's visibility from KingBodyView).
   NEXT item 1 above is answered; keep the probe fix as a small item.
+- 22:50 item 6 (part): the boss camera under combo at close range (`--boss=king --phase=2 --bot=boss
+  --bot-human --seed=2 --boss-cam`, tick 600): `gtai-masters/n8/view/boss_cam_combo_32_64_vs_tilt64_king_p2.png`
+  (combo 32 | combo 64 | tilt 64). combo and tilt frame identically once engaged (55 both). FOUND at
+  64 px/m: the frame holds the King's GROUND point, so his raised bust (2.0x, on the car) rises into
+  the HP bar, and Rivet ~10 m to the right is OFF SCREEN (20 x 12.5 m of view). At 32 both fit.
+  Fix to try next: under a tilt frame the midpoint of Rivet and the boss's LIFTED top
+  (ViewMode.lift_px of the boss's drawn height), and cap the boss-cam zoom so both stay in. A
+  Call candidate: "boss camera at close range: keep Rivet in frame (built) vs the boss's close-up".
+  This goes to the top of NEXT (a combat-readability fault under combo at 48-64 px/m).
