@@ -42,6 +42,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--pullback",
 	# n7-melee: --strike-sync=off starts Rivet's view strike from 0 when it is seen (the before)
 	"--strike-sync",
+	# n7-melee: --melee-dir=off leaves a melee kill the last round's line (the before)
+	"--melee-dir",
 ]
 
 var _values: Dictionary[String, String] = {}
