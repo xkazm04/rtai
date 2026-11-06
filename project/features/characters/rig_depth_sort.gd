@@ -58,6 +58,12 @@ func _process(_delta: float) -> void:
 		_follow(f)
 
 
+## How far a ground-level view just under the actors (the boss's tell zones) drops under a tilt,
+## so a body behind the King's car (BEHIND_Z) still stands over it; 0 straight down.
+static func ground_dz() -> int:
+	return 0 if ViewMode.shared().is_flat() else KingCarStack.BEHIND_Z
+
+
 ## The depth level of every rig (see the class doc); `box` = the body box in screen px.
 static func levels(rigs: Array[CutRig], box: Vector2) -> Dictionary[CutRig, int]:
 	var order: Array[CutRig] = rigs.duplicate()

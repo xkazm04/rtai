@@ -24,7 +24,7 @@ static func attach(view: Node, hook: BossHook) -> void:
 	body.adds = hook.adds
 	body.blood = v.blood
 	if v.print_stage != null:  # on the actors' layer like the cast rigs: true colours, no ink snap
-		tell.z_index = RenderLayers.z(&"actors") - 1
+		tell.z_index = RenderLayers.z(&"actors") - 1 + RigDepthSort.ground_dz()
 		tell.scale = v.cast_view.scale
 		v.print_stage.actor_layer().add_child(tell)
 		body.z_index = RenderLayers.z(&"actors")
