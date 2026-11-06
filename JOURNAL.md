@@ -1637,3 +1637,9 @@ NEXT (iteration 21: the freeze at 08:30, report 08:40):
   transition: the telemetry has no transition tick): depot 54 s, rush hour 49-52 s, overtime
   28-31 s for both moving bots. REPORT numbers section. (A framework `phase_ticks` field in the
   boss_fight telemetry would make it exact: a REQUEST for king's lane next night, not tonight.)
+
+NEXT (iteration 21, re-stated at 07:36; the 07:23 list stands): `project/` has not moved since
+88e192a1, which the 07:20 exe and its smoke cover, so the exe is final unless n7-king's merge brings
+code. Gates on that tree: lint, unit 1199/0, scenarios 52/0, director reel 19/19, evidence run all
+PASS. At 08:40: REPORT drop DRAFT (header line 3), nothing else owed. If time remains before the
+freeze: play checks only (no body or sim change); clips stay on 987c3439 (same frames).
