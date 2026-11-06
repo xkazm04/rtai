@@ -726,3 +726,10 @@ NEXT (written 00:58, for iteration 9):
   flash part (no reaction signal: ReactLink already plays the wound) from MeleeFeel for ghost hits,
   so each rammed body gets its own star on the contact. Check first whether the arena rig path draws
   `_impact` at all (CastView is quest 1's sprite cast; the arena films use `--rigs`).
+- GATES 01:17 `node tools/evidence/run.mjs --no-bench` on `470c8e33` (code = `f17890ef`): exit 0, lint
+  13/13, unit 1197/1197, scenarios 52/52, parity bit-exact over 1200 steps (planted mutation caught at
+  629), selftest look goldens 11/11, block 5/5 (`evidence/n7-melee/evidence-run-470c8e33.log`). The
+  first run (01:11) marked unit FAIL only because I appended to JOURNAL during it ("tree changed
+  during run"; 1197 passed); re-run with the tree untouched. Bench not run (contended; no lock taken).
+- STOP 01:18 iteration 8 (final). NEXT = the 00:58 entry (1-4) plus the 01:00 hit_dir note and the
+  01:09 scout.
