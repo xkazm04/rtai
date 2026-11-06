@@ -1195,3 +1195,10 @@ must keep the drawn body honest to the hit body).
   commit is King's render only (drawn under `--boss`), so it stands for b5213dc7.
 - Python on Windows writes CRLF: the committed blobs are LF (`* text=auto eol=lf`), the working
   copies converted back.
+- 02:27 FILM `M/king_ram_coin_fan_48ppm_it12.mp4` (10.8 s, music) on b5213dc7: phase 1 seed 2,
+  stander then dodger, windows 1.4-4.4 s (ram) and 6.6-9.0 s (coin fan) of each 30 s run, 0 SCRIPT
+  ERROR. **Looked at** the 2 fps sheet: the ram lane (stander hit, dodger steps off), the coin
+  spray out of the new cannon (stander in it, dodger outside the locked cone). The it10 clip and
+  the scratch AVIs deleted; frames.json 15.
+- 02:28 the full fight re-filming on b5213dc7 (32 px/m, human bot, seed 2) for the phase 1,
+  procession and target-comparison re-cuts.
