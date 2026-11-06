@@ -383,3 +383,7 @@ NEXT (iteration 10), replaces the list above:
 No iteration 10/11 sessions ran (it9 ended 05:55; the runner numbers this one 12). Starting from
 it9's NEXT. Rules applied: registry `measured-draw-order`, `concept-scene-parity` (judge in the live
 arena path), `sprite-and-atlas-production` (stack slices from existing art, no new image round).
+- GATE `node tools/evidence/run.mjs --no-bench` on 52e72590 (switch off): lint 13/13, unit
+  1181/0, scenarios 52 passed, parity bit-exact (mutation caught at step 629), selftest look goldens
+  11/11 + block goldens 5/5 (`evidence/view/it12/evidence-run.log`). Bench not run (lock not taken).
+  FRICTION: the runner refuses a dirty tree; logs must go outside the tree (scratch) while it runs.
