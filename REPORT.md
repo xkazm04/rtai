@@ -1,6 +1,6 @@
 # REPORT: lane `servo`, night 2026-11-05/06 (Act 2's Servo)
 
-DRAFT (iteration 19, 06:55): to be finalized at 08:40. The exe is re-exported at the freeze; the final gates are still open. Gates on the it19 head (987c3439, the square pads and chunky struts): lint 13/13, unit 1197/0 (`evidence/servo/unit-it19b.log`), scenarios 52 ran / 0 failed (`evidence/servo/scenarios-it19b.log`); director reel 19/19 chapters fully down, 0 SCRIPT ERROR (`evidence/servo/director-reel-it19b.log`). Every clip and still is on 987c3439.
+DRAFT (iteration 20, 07:25): to be finalized at 08:40. Gates on the it20 head (1445b7c5: the it19 body plus the sim-neutral `parcels.crate_damage` key): lint 13/13, unit 1199/0 (`evidence/servo/unit-it20.log`), scenarios 52 ran / 0 failed (`evidence/servo/scenarios-it20.log`); director reel 19/19 chapters fully down, 0 SCRIPT ERROR (`evidence/servo/director-reel-it20.log`); the bot's numbers re-measured at n = 10 (seeds 1-5 identical to it9). Every clip and still is on the it19 body (987c3439), which the it20 head draws identically (no render change).
 
 Branch `n7-servo` (from main `763f8fba`, with `n7-king`'s framework merged in at every move; the
 last merge was `a9bf2e2d` = n7-king `40f834c3`, iteration 20). Clips and stills: `C:\Users\kazda\kiro\gtai-masters\n7\servo\` (M below),
@@ -68,12 +68,12 @@ The rotor dash checked against a reading player (it6): every tell read but 18-32
 19. The hover pads hold square to the body, the sheet's octagons, and the rotor's spin-up shows as pale blades inside them on every tell, dash and wind-down (default, it19) vs the it18 pads turning whole with the rotor, a round wheel at 32 px/m: `ServoPad.TURN` false / true (render only). Still: `M/frames/servo_pad_square_ab_it19.png` (48 px/m at 1.5x, it18 left, it19 right, at the scan and dash windups; then it19 at 32 px/m).
 20. The pad arms and legs drawn wider than their art, the sheet's chunky blocks (default, it19b: arms 1.6, legs 1.3) vs the art's width, a thin 0.25 m piston at 32 px/m: `ServoRig.ARM_W_K` / `LEG_W_K` 1.6 / 1.3 vs 1.0 (render only). Still: `M/frames/servo_chunky_struts_ab_it19.png` (48 px/m then 32 px/m, both at 1.5x; 1.0 left, it19b right). Every clip is re-shot on it (987c3439).
 
-Exe (re-exported it19 on 987c3439, again at the freeze): `build/export/windows/RTAI.exe` in the
+Exe (re-exported it20 on 1445b7c5+, again at the freeze if the head moves): `build/export/windows/RTAI.exe` in the
 worktree (`windows-showcase` preset, boots into the arena). Lines: `RTAI.exe -- --rigs --boss=servo`,
 `RTAI.exe -- --rigs --boss=servo --phase=2` (or 3), `RTAI.exe -- --rigs --boss=servo --bot=boss`
 (the bot plays; add `--bot-human` for the human-like one). Headless smoke `RTAI.exe --headless
 --fixed-fps 60 --quit-after 7400 -- --rigs --boss=servo --bot=boss --bot-human --seed=2`: Servo down at
-tick 7036, 188 on Rivet, 0 SCRIPT ERROR, the editor's numbers (`evidence/servo/exe-smoke-it19.json`, on 987c3439).
+tick 7036, 188 on Rivet, 0 SCRIPT ERROR, the editor's numbers (`evidence/servo/exe-smoke-it20.json`, on the it20 head; the code since 987c3439 is the sim-neutral `crate_damage` key).
 
 ## What does not work / open
 - The horn has not been heard (every run was headless or filmed without listening).

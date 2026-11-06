@@ -1603,3 +1603,11 @@ NEXT (iteration 20, in order):
   inside the 1.6 m ring); stand seeds 1-3 (`-stand/`) parcel hits 50/53/43 vs it9's 39/48/32, so
   the value reaches the fight. DECISION (decisions.md): keep 0. REPORT call 2 and 3 (now with the
   data keys) and the numbers table on it20.
+- 07:18 GATES on 1445b7c5: scenarios **52 ran, 0 failed**, exit 0, 0 SCRIPT ERROR
+  (`scenarios-it20.log`). FRICTION: my "until grep ran" watcher matched an unrelated log line;
+  waited on the task itself instead.
+- 07:20 EXE re-exported on the it20 head (`--export-release "windows-showcase"`, exit 0), smoke
+  seed 2 human: **down 7036, 188, 0 SCRIPT ERROR** = the editor (`exe-smoke-it20.json`).
+- 07:24 GATES director reel (`scratch/servo/reel20.sh`): **19/19 chapters fully down, 0 SCRIPT
+  ERROR** (`director-reel-it20.log`; the process runs on to its 780 s timeout, ~07:30). REPORT
+  header on the it20 gates; exe line.
