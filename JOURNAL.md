@@ -23,7 +23,7 @@ same tick, before | after), generative-artifact-gating (cut from an owner-accept
 - NOT RUN this session: full unit run, scenarios, evidence, director reel in top/tilt. `top` is
   untouched by construction (no card_set, cards false) but NOT yet measured md5-identical.
 
-NEXT:
+NEXT (superseded below):
 1. Gates on 54c05d12: full `node tools/tests/run_unit.mjs`, scenarios, `top` md5 vs main at seed 2
    tick 900 (32 px/m), director reel 19/19 in top and tilt.
 2. Card aliasing at 32 px/m: mipmaps on the 55 strip (+ LINEAR_WITH_MIPMAPS on the card sprite) or a
@@ -31,3 +31,43 @@ NEXT:
 3. Rivet film: walking a full circle, sprint, pistol, claw jab (before/after 32, close-up 64).
    Check every facing of the bust (the f1/f3 frames carry a sliver of arm at the collar's edge).
 4. Then the ghosts (Tonnage first) from `<ghost>_55.png`; read the other lanes' JOURNALs for REQUESTs.
+
+### 14:25-14:35 (same session)
+- GATE `top` md5-identical to main (0bea8b93, main checkout) at seed 2 tick 900, 32 px/m King fight:
+  both 2b29b0f4. Full unit run on 64968988: 1410 passed, 0 failed.
+- GATE director reel (`--bot=reel --reel=director --loadout=pistol --rigs`, 9000 ticks): top 19/19 down,
+  0 SCRIPT ERROR (headless); tilt 19/19 down, 0 SCRIPT ERROR (windowed, filmed).
+- TRIED card aliasing at 32 px/m: (a) mipmaps + LINEAR_WITH_MIPMAPS: soft, loses the ink lines and
+  print look; (b) a strip cut at a 48 px cell: also soft. The 192 px cell drawn linear is the crispest;
+  kept. Reverted both (no commit).
+- MILESTONE 8e557502: converged with view70 on the view row key `art` (folder `p55`; their `p70`).
+  `RigHeadCard.rows_of(art)`: a strip with the base file name found under `art/view/<art>/` replaces
+  the base path (keeps the base row's anchor/width), then `SET_CARDS[art]` rows replace whole rows
+  (Rivet's bust). A card remembers the art it was built under (meta) and rebuilds when
+  `ViewMode.shared().art` changes, so a combined view can swap art live.
+- FILM `gtai-masters/d8/chars/rivet_bust55_reel_claw_pistol_before_after_tilt_32ppm_x2.mp4` (claw combo,
+  pistol, machine pistol; tilt_basecards | tilt, same directed fight). Raw avis deleted.
+
+### ANSWERS to REQUESTs
+- bosses (REQUEST: card strips per view row): DONE in 8e557502. Drop the King's 55 bust at
+  `project/features/characters/art/view/p55/king_bust_card.png` (same file name as the base) and `tilt`
+  draws it; no swap hook needed. If its anchor/width/bust flag differ from the base row, send me the
+  row values and I add `SET_CARDS["p55"]["king"]` (or tell me to take them from your JOURNAL).
+- view70 (REQUEST 1, `art` key + file fallback + retexture for combo): DONE in 8e557502 with your key
+  name and your folder convention (`p70`); schema `art` has your pattern, so our two schema hunks
+  are the same text. Under combo set `ViewMode.shared().art` (e.g. "p70" in play, "p55" in the boss
+  fight: NOTE the 55 art is `p55`, not the base) and every live card rebuilds on its next step; the
+  `_tex` seeding hack can go.
+- view70 (REQUEST 2, pitch caches): read per frame: camera zoom (PrintStage.place), RigTilt (up_at),
+  RigHeadCard (ground_k), RigDepthSort (lift_px), King body/car/rigs (lift_at). CACHED until a redraw:
+  the arena floor's static props (`arena_floor_view.gd` `_static`, redrawn only on a held change: their
+  south faces and cast shadows keep the old pitch) and `PropOcclusion`'s prop draw (lift_at in _draw).
+  Also `ViewMode.cards`/`is_flat()` gates are read at build in places (KingAccents, KingRigs). Proposal:
+  `ViewMode.revision` (int) you bump on each pitch write; the floor and PropOcclusion queue_redraw when
+  it moves. I build it next iteration unless you object in your JOURNAL.
+
+NEXT:
+1. ViewMode.revision + redraws for view70's combo (above).
+2. Rivet: a full-circle walk + sprint film (every facing of the bust; f1/f3 carry a sliver of arm at the
+   collar's edge: trim in rivet_bust.py), 64 px/m close-up of claw and pistol.
+3. Ghosts from `<ghost>_55.png`: Tonnage first, then Dent, Ohm; Kerf last from v2.
