@@ -2033,3 +2033,50 @@ NEXT (iteration 22; supersedes the 06:25 list and its 2b addendum):
   change since is the Gatling's weapons row, and the director reel has no Gatling chapter.
   Scratch for this iteration (`gtai-n7p/scratch/ranged/wh/`, `city21/`) holds only logs and the
   scripts; every avi deleted.
+
+## Iteration 24 (06:47-07:47), BUILD
+- READ 06:48: JOURNAL to the it22 NEXT, git log, REPORT; n7-melee / king / servo journals: no
+  REQUEST to ranged since 06:29 (melee merged `49cfe6c4`).
+- PICK: the weakest cell left that is mine and not an owner call: Read at 32 px/m = 2 on the pistol
+  (audit: "Rivet's round is a 1-2 frame streak"). FILM `tr/film.sh pistol 32 on` on `d85fb768`
+  (kill 332): Rivet's round is a pale cream needle on frames 330-331 only (5 m fight range, 60 m/s:
+  the round lives 4 ticks and the flash covers the first), while the cop's vermilion round reads
+  for 6 frames (322-327). Rivet's own shot reads weaker than the enemy's.
+- Rules applied (registry `realtime-combat-semantics`, `motion-quality-gating`, read on iteration 1):
+  presentation never feeds back into the sim (the trail is recorded from GunFx's view-side round
+  tracking); judge in motion on the live path at 32 px/m against a same-build before.
+
+### MILESTONE 07:00 the shot trail, `1b1c8402`
+- WeaponFxTrail (new, `features/combat/weapons/art/weapon_fx_trail.gd`): when Rivet's round stops
+  in a body (GunFxRounds._impact, BODY), its path from the held gun (1.1 m out, the tracer's gun
+  side) to the wound stays as an ink line with a cream core, fading over hit_feel.json `weapons`
+  `trail_ticks` while the tail draws in 60% toward the wound. pistol 8, gloria 8, hand_cannon 10,
+  machine_pistol 4; Gatling, flamer, bolts, throws none; misses none; at most 8 at once.
+  `--shot-trail=off` (LaunchArgs), `--feel=off` or the row's 0 = before. View only.
+- FRICTION: first take stored trails as untyped Arrays: warnings-as-errors parse failures (23 unit
+  failures cascading). A typed inner class `WeaponFxTrail.Trail` fixed it.
+- Unit 1188/1188 (3 new: life and fade and expiry; Gatling none and feel-off none; 30 hits in one
+  tick hold the cap of 8). Lint 13/13. Reels pit 19/19 + city 19/19 (`--loadout=pistol`), 0 SCRIPT
+  ERROR (scratch `it24-reel-{director,city}-trail.log`).
+- FILM (`tr/film.sh <w> <ppm> on|off`, lone, `--reach=5`): pistol 32 and 48 on/off (kill 332 in all
+  four: sim unchanged), machine pistol 32 on (kill 336: two hits, a short trail each), hand cannon
+  32 on (kill 331: the trail runs to where the blowback starts). 0 SCRIPT ERROR all.
+- LOOK (2x crops 328-343 at 32, frames at 48): from the hit tick a cream line in an ink casing joins
+  Rivet's gun to the wound and holds through the kill stop (332-342), the tail closing in and
+  thinning to ink at the end; at 32 px/m the core is about 2 px: a thread, not a rod (restraint).
+  Before: nothing joins the shot to the hit once the needle is gone.
+- CLIP `pistol_shot_trail-ab-32-48ppm.mp4` (masters, frames.json entry 0; the quest1 Gloria pair
+  dropped from the index to keep 15, file kept). Stills `evidence/ranged/it24-pistol-shot-trail-off-on-{32,48}ppm.jpg`.
+- DECISION docs/decisions.md (fx n7-ranged, the shot trail).
+- GATES on `1b1c8402` (07:05): full `node tools/evidence/run.mjs --no-bench` on the clean tree:
+  lint 13/13, unit 1188/0, scenarios 52/52, parity bit-exact (mutation caught at 629), selftest
+  pass (`evidence/ranged/it24-evidence-1b1c8402.log`). The trail is view only: parity unmoved.
+- EXE re-baked + re-exported on `1b1c8402` at 07:05 (bake exit 0, export exit 0, 0 ERROR lines).
+  Booted `RTAI.exe --screen 0 --rendering-driver d3d12 -- --weapon=pistol --bot=gunplay --lone
+  --cam=fight --ppm=32 --clean --reach=5` (Movie Maker): exit 0, 0 SCRIPT ERROR, kill 332, frames
+  330-341 looked at: the trail from the hit tick to 341, as in the editor take.
+- REPORT: what-works row, gates line, exe section, call 9 (the shot trail). Audit: pistol R 2 -> 3;
+  machine pistol R stays 2 (no crowd take yet).
+- FYI n7-melee: `1b1c8402` touches GunFx (Rivet's guns only), not hit_feel.gd; the hit_feel.json
+  `weapons` rows gained an optional `trail_ticks` (schema 0-20). Nothing to merge for melee unless
+  you want the data table in sync (a JSON merge, no code of yours reads it).
