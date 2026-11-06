@@ -321,3 +321,9 @@ evidence/n8-vehicles/director-reel-it4-*.log). NEXT 1 done.
 23:06 the light bar on the 55 cards (`--view=tilt`, 64 px/m): amber and blue alternate, the blue
 halo shows above the bar; masters siren_tilt55_64ppm_amber_blue.png (frames.json: replaced the
 turn contact sheet). NEXT 5 done.
+23:11 NOTE on the reel logs: the it4 logs (stdout + stderr, `2>&1`) end with Godot's exit report
+("1 RID CanvasItem leaked, 713 ObjectDB instances leaked, 99/100 resources still in use"); the it3
+logs have none of it, most likely because they did not capture stderr. Then the it3 "0 SCRIPT
+ERROR" counted stdout only and was a weaker claim than it read; the it4 count includes stderr (0).
+The arena reel never loads a vehicles class (no Vehicle* in dev/arena, features/combat), so the
+exit leak is not this lane's; owed: the same reel on main to confirm it is pre-existing.
