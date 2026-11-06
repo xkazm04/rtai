@@ -106,6 +106,7 @@ func _process(_delta: float) -> void:
 	_pose_melee(rig)
 	_feed_smear(rig)
 	_sprite.visible = rig.grip != RigGrip.Kind.THROWN or rig.reload_k < 0.0 or rig.reload_k >= 1.0
+	_sprite.visible = _sprite.visible or RigThrow.lag_frame(rig)  # n7-ranged: cocked, then out
 	_light_rag(rig, id)
 	HeldMuzzle.publish(_sprite, art.muzzle_px(id) + _sprite.offset)  # the flash's spot (n7-ranged)
 

@@ -13,6 +13,9 @@ extends RefCounted
 const OUT_K: float = 1.5
 const UP_PX: float = 40.0
 
+## A reload phase this young (out phase share) still counts as the release's first frame.
+const LAG_K: float = 0.2
+
 static var on: bool = not OS.get_cmdline_user_args().has("--throw-windup=off")
 
 
@@ -35,6 +38,12 @@ static func in_reload(rig: CutRig, hold: HeldTable.Hold, chest: Vector3, aimed: 
 	if rig.reload_k >= 2.0:
 		h = chest.lerp(_back(rig, px), smoothstep(0.0, 1.0, clampf(rig.reload_k - 2.0, 0.0, 1.0)))
 	return h.lerp(aimed, release(rig))
+
+
+## The frame the throw's reload starts before the rig has posed the release (it posed with last
+## frame's state): the bottle stays drawn in the cocked claw, so it never leaves from behind.
+static func lag_frame(rig: CutRig) -> bool:
+	return on and rig.reload_k >= 0.0 and rig.reload_k < LAG_K and release(rig) <= 0.0
 
 
 ## The class's wind-up (part px), 0 when off.

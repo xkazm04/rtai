@@ -58,3 +58,16 @@ func _aimed(reload_k: float) -> CutRig:
 		rig.face_to = -PI * 0.5
 		rig.drive(SimClock.TICK_DT)
 	return rig
+
+
+func test_the_bottle_stays_in_the_cocked_claw_until_the_release_is_posed() -> void:
+	var rig: CutRig = _aimed(-1.0)
+	rig.reload_k = 0.05
+	assert_true(RigThrow.lag_frame(rig), "the reload started, the release not posed yet")
+	rig.clips.recoil = -1.6
+	rig.drive(SimClock.TICK_DT)
+	assert_false(RigThrow.lag_frame(rig), "once the release is posed the bottle is gone")
+	RigThrow.on = false
+	rig.clips.recoil = 0.0
+	rig.drive(SimClock.TICK_DT)
+	assert_false(RigThrow.lag_frame(rig), "off: the before (hidden at once)")
