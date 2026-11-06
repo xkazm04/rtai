@@ -3,7 +3,7 @@
 //   node tools/tests/run_unit.mjs
 // Guards GUT's silent-green hazard (a test file that fails to parse is skipped and GUT exits 0):
 // any SCRIPT ERROR / Parse Error line, or zero tests run, is a failure.
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { ROOT, godotBin, run } from '../lib/repo.mjs';
@@ -26,6 +26,13 @@ function junitCounts(xml) {
 export function runUnit(outDir) {
   mkdirSync(outDir, { recursive: true });
   const junit = join(outDir, JUNIT_NAME).replace(/\\/g, '/');
+  rmSync(junit, { force: true }); // never read a previous run's tally
+  const probe = godot(['--version']);
+  if (probe.status !== 0) {
+    const first = probe.out.split('\n')[0];
+    const summary = `unit-tests: Godot not runnable, set GODOT_BIN to the Godot 4.7.2 console binary (${first}); 0 passed, 0 failed, 0 skipped`;
+    return { ok: false, counts: { passed: 0, failed: 0, skipped: 0 }, summary, artifacts: [] };
+  }
   const steps = [
     ['import', godot(['--import'])],
     ['load_all', godot(['-s', 'res://tests/load_all.gd'])],
