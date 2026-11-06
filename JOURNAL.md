@@ -211,6 +211,11 @@ NEXT (iteration 3, in order):
 - 16:24 Checked the windup at 48 px/m (clip frame 100): the dash lane's tell starts at his lifted
   front, the visor line sits on the lifted head. NEXT item 3 closed.
 
+- 16:24 GATES on 7fffea59 (the code tip): unit full no-arg run 1424/1424; scenarios 52/52 (on fc539407,
+  run_scenarios.mjs; 7fffea59 is render-only Servo); director reel headless `--loadout=pistol --rigs
+  --quit-after 8000`: top 19/19 fully down 0 SCRIPT ERROR (7fffea59), tilt 19/19 0 SCRIPT ERROR
+  (d5765239); lint 15/15 per commit; top md5 identity measured for every change (16:07, 16:22).
+  NOT RUN this session: evidence --no-bench (owed at the freeze with the export).
 NEXT (iteration 6, in order; freeze 18:30):
 1. (done 16:22: parcels fall as boxes.) The slung parcel under a flying drone is still flat (it
    turns with the drone; ServoCrateStack is axis-aligned): a turned box if it reads flat at 64.
