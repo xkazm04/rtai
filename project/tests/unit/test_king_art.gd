@@ -26,3 +26,15 @@ func test_strips_hold_five_facings() -> void:
 		var tex: Texture2D = load(KingArt.strip_path(dir, 55.0)) as Texture2D
 		assert_not_null(tex, dir)
 		assert_eq(tex.get_width() % RigHeadCard.FRAMES, 0, dir)
+
+
+func test_straight_down_dresses_no_court_part() -> void:
+	assert_true(ViewMode.shared().is_flat(), "the unit run draws the default top view")
+	assert_null(KingArt.part("press_plate"))
+
+
+func test_court_parts_keep_todays_part_boxes() -> void:
+	for name: String in ["press_plate", "l_thigh", "r_shin", "l_foot", "r_forearm_press"]:
+		var court: Texture2D = load("res://features/bosses/king/art/p55/parts/%s.png" % name)
+		var today: Texture2D = PartLibrary.texture("king", name)
+		assert_eq(court.get_size(), today.get_size(), name)

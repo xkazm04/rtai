@@ -8,6 +8,10 @@ extends RefCounted
 ## card is built, so nothing here runs: the 90-degree game is untouched.
 
 const DIR: String = "res://features/bosses/king/art/p%d/%s.png"
+## The King's limb parts in the boss palette for a pitch (tools/art/king_parts_pitch.py: today's
+## part boxes, so the pivots hold), drawn raw; a part with no file here keeps today's print.
+const PARTS_DIR: String = "res://features/bosses/king/art/p%d/parts/%s.png"
+const COURT_ROOT: String = "res://features/bosses/king/art/"
 ## art_dir -> [strip name, anchor y (fraction of the cell height from the top), width over the
 ## shared card's width]. 5 facings as RigHeadCard.FRAMES (front .. back, turned right). The King's
 ## 1.5: the 55 sheet's bust is the boss's bulk (1.0 drew it a head narrower than his press arms);
@@ -22,6 +26,8 @@ const HORN: StringName = &"horn"
 
 static var _tex: Dictionary[String, Texture2D] = {}
 static var _exists: Dictionary[String, bool] = {}
+## A part texture's path -> the court's part for this view's pitch (null: none, keep the print).
+static var _parts: Dictionary[String, Texture2D] = {}
 
 
 ## The strip a rig's card draws at a pitch ("" = none: the shared card stays).
@@ -36,6 +42,7 @@ static func strip_path(art_dir: String, pitch_deg: float) -> String:
 
 ## After each drive step: dress a freshly built card once, then rescale it by the strip's width.
 static func dress(rig: CutRig) -> void:
+	_dress_parts(rig)
 	var card: Sprite2D = rig.head_card
 	if card == null:
 		return
@@ -69,3 +76,38 @@ static func _swap(card: Sprite2D, rig: CutRig) -> Vector2:
 	card.offset = Vector2(-cell.x * 0.5, -cell.y * anchor_y)
 	var width_k: float = row[2]  # RigHeadCard scales by the cell width: the drawn width holds
 	return Vector2(old_cell_w / cell.x, width_k)
+
+
+## The King's limbs: each step (the rig swaps end-on and toe-off textures as it moves), a part with
+## a court texture for this pitch takes it, raw (no print material) unless the hit flash is lit.
+static func _dress_parts(rig: CutRig) -> void:
+	if rig.plan.art_dir != "king" or ViewMode.shared().pitch_deg >= 90.0:
+		return
+	var raw: bool = not rig.is_tinted()
+	for spr: Sprite2D in rig.sprites:
+		if spr.texture == null:
+			continue
+		var path: String = spr.texture.resource_path
+		if not path.begins_with(COURT_ROOT):
+			var court: Texture2D = _court_part(path)
+			if court == null:
+				continue
+			spr.texture = court
+		if raw and spr.material != null:
+			spr.material = null
+
+
+## The court's part `name` for this view's pitch (null: none, or straight down).
+static func part(name: String) -> Texture2D:
+	if ViewMode.shared().pitch_deg >= 90.0:
+		return null
+	return _court_part(PartLibrary.ART_ROOT + "king/" + name + ".png")
+
+
+static func _court_part(path: String) -> Texture2D:
+	if not _parts.has(path):
+		var p: String = (
+			PARTS_DIR % [roundi(ViewMode.shared().pitch_deg), path.get_file().get_basename()]
+		)
+		_parts[path] = load(p) as Texture2D if ResourceLoader.exists(p) else null
+	return _parts[path]
