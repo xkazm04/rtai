@@ -1883,3 +1883,46 @@ NEXT (iteration 21; supersedes the iteration 19 list):
 4. Melee merge note (unchanged): n7-melee `791ea71a` and my `3243a483` touch different lines of
    ArenaRigs._rivet_clips.
 5. Weak cells left: homing_shard I/R/V 2 (call 1, owner); Gatling R/V 2 (crowds only, a sim matter).
+
+## Iteration 21 (BUILD, 06:01-07:01)
+Read: JOURNAL to its it20 NEXT, git log, n7-melee/king/servo journals (no REQUEST to ranged;
+n7-melee it17 READ 06:02 is waiting on exactly this feel commit). Found the it20 FINDING half built
+and uncommitted in the tree (hold_delay_ticks in hit_feel.json/.gd, feel_cam.gd, a launch flag,
+a unit test): finished it rather than drop it.
+
+### MILESTONE 06:10 the kill stop holds on the wound, `49cfe6c4` (NEXT 3)
+- Fixed before commit: two typed-Variant casts that failed the parse (warnings are errors: the
+  test run showed every script depending on hit_feel.gd failing to compile), a doc comment that
+  had slid from feel_flag onto wound_hold, gdformat on the test.
+- What it does: hit_feel.json `light` row `hold_delay_ticks` 2 (schema: optional, 0-4). FeelCam.hit
+  queues the stop (`_pending`: ticks, start tick; merges by max ticks / earliest start) and
+  `_release_hold` fires the SimClock.hold from offset_px once tick >= hit + 2. Every other class
+  keeps 0, so melee, ghosts, heavy and blast are untouched (unit test). `--wound-hold=off` (in
+  LaunchArgs.KNOWN_FLAGS) = the before. View only: SimClock.hold paces real time, never sim state.
+- FILM (`gtai-n7p/scratch/ranged/wh/film.sh`: `--weapon=<w> --bot=gunplay --lone --cam=fight
+  --clean --reach=5 --feel=on --wound-hold=on|off`, 420 frames; all 6 takes exit 0, 0 SCRIPT
+  ERROR, kill tick identical on and off: pistol 332 at 32 and 48 px/m, machine pistol 336).
+  LOOK (2x crops, frames 331-342): before, 332-338 hold the darkened cop standing with his gun arm
+  up and no blood, the spurt only at 340; after, the spurt is out on 333 and the held frames
+  334-340 show it with the arms flung (the death pose); the fall lands on 342 in both. Same at
+  48 px/m and on the machine pistol (336-344). It reads as a kill frame now, not a pause.
+  Stills `evidence/ranged/it21-{pistol-wound-hold-off-on-32ppm,pistol-wound-hold-off-on-48ppm,
+  smg-wound-hold-off-on-32ppm}.jpg`; clip `gtai-masters/n7/ranged/pistol_wound_hold-ab-32-48ppm.mp4`
+  (32 px/m real time + 4x slow kill, then 48 px/m half speed), first in frames.json (dropped the
+  oldest molotov detail entry, `molotov_draw_rise`, to stay at 15; its file stays).
+- Not filmed: Gloria (same class, same code path) and quest 1's rifle in the live game (the
+  quest1_clip capture steps the sim itself, so no SimClock hold shows there; it20 note).
+- GATES on `49cfe6c4`: lint 13/13; unit 1184/1184 (`test_noir_shadows` failed once in a single GUT
+  run while gut_cmdln ignored -gtest; the known flake, green in both full runs); director reels
+  pit 19/19 and city 19/19 (`--loadout=pistol`), 0 SCRIPT ERROR; full
+  `node tools/evidence/run.mjs --no-bench` on the clean tree: lint, unit 1184/0, scenarios 52/52,
+  parity bit-exact (mutation caught at 629), selftest (look 11/11, block 5/5). Log
+  `evidence/ranged/it21-evidence-49cfe6c4.log`.
+- DECISION (docs/decisions.md 2026-11-06 feel n7-ranged): light class only, delay 2; REPORT call 8.
+- Rules applied: realtime-combat-semantics (feedback on the confirmed hit frame: the held frame
+  now carries the consequence, not the pre-hit pose); motion-quality-gating (judged on before/after
+  frames at 32 and 48 px/m, the unfilmed Gloria and quest cells said so, not scored).
+- FYI -> n7-melee (feel-layer commit to merge, no answer needed): `49cfe6c4` touches hit_feel.json
+  (light row), hit_feel.schema.json, hit_feel.gd, feel_cam.gd, launch_args.gd. Your classes keep
+  delay 0, so nothing changes for melee until you choose to: set `hold_delay_ticks` (0-4) on a
+  class row (data only) if your kill stops also freeze before the wound shows.

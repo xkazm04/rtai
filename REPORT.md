@@ -40,6 +40,7 @@ cut from main `763f8fba`. Clips and stills: `C:\Users\kazda\kiro\gtai-masters\n7
 | Combined clip of the polished set in the city block, 32 px/m, fight camera, with sound (72 s, retaken on `13e0e050`: every ranged chapter plus the whole nuke ring, with the tube fix and the nuke's camera lead) | `13e0e050` | - | `city_block_polished_set-32ppm.mp4` |
 
 | Impact re-scored on film with the feel layer on vs off (same build, same kill tick): the pistol, machine pistol, Gloria and the Gatling kill now hold the struck body for about 6 frames before the blood and the fall (off: the blood is out 2 ticks after the hit and nothing answers it); audit I 2 -> 3 for all four. The homing shard's hit star holds the same way, but its blood waits for the pop (call 1) | `779cdd3d` (it1, the feel layer) | `--feel=off` | `evidence/ranged/it20-pistol-kill-feel-on-off-32ppm.jpg`, `it20-smg-gloria-kill-feel-on-off-32ppm.jpg`, `it20-gatling-shard-kill-feel-on-off-32ppm.jpg` (in the repo) |
+| A light-class kill's hit-stop now freezes on the wound: the stop starts 2 ticks after the hit, so the held frame shows the blood spurt and the death pose (arms flung) instead of the darkened body still standing gun up, with the blood only after the hold. Pistol, machine pistol, Gloria (and quest 1's table-less rifle); heavy, blast, melee and ghost stops unchanged. The fall lands on the same frame either way | `49cfe6c4` | `--wound-hold=off` (or hit_feel.json light `hold_delay_ticks` 0) | `pistol_wound_hold-ab-32-48ppm.mp4`; `evidence/ranged/it21-pistol-wound-hold-off-on-{32,48}ppm.jpg`, `it21-smg-wound-hold-off-on-32ppm.jpg` |
 | Quest 1's rifle judged on its real hit ticks: a struck probe finds 10 rifle hits in Dock 9, every one a one-hit kill; at 32 px/m the tracer runs to the contractor, he is down on the next frame along the shot, and the blood sprays along the shot and stays (audit V ? -> 3, I ? -> 2) | - (judging only) | - | `evidence/ranged/it20-quest1-rifle-kills-32ppm.png` |
 
 Gates (iteration 5): evidence run on `41bb90e7`: lint 13/13, scenarios 52/52, parity bit-exact
@@ -117,6 +118,8 @@ because I edited docs during the run). City-block director reel with `--loadout=
    `RTAI.exe -- --weapon=machine_pistol --bot=range`; the flamer: `flamer_jet_cue-ab-32ppm.mp4` or
    `RTAI.exe -- --weapon=flamethrower --bot=range`. The before is one data value per gun (weapons.json
    `shot_cue`).
+
+8. **Where a light gun's kill stop freezes.** Options: on the wound, 2 ticks after the hit (built: the spurt and the flung arms hold for about 6 frames), or on the contact tick (the before: the body still standing, gun up, darkened; blood after). One value: hit_feel.json light `hold_delay_ticks` (0-4). See `pistol_wound_hold-ab-32-48ppm.mp4`, or `RTAI.exe -- --weapon=pistol --bot=gunplay --lone --cam=fight` vs the same with `--wound-hold=off`.
 
 (More calls may be added by later iterations.)
 
