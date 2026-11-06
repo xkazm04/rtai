@@ -10,8 +10,8 @@ extends RefCounted
 
 ## Rivet's held gun and a cop's sidearm sit about a metre up (Rivet's hip 0.78 m + the arm).
 const GUN_H_M: float = 1.0
-const SHADOW: Color = Color(0.090, 0.075, 0.106, 0.22)
-const SHADOW_PX: float = 3.0
+const SHADOW: Color = Color(0.090, 0.075, 0.106, 0.38)
+const SHADOW_PX: float = 5.0
 
 
 ## The lift of a point at gun height, in metres of the FX layer (ZERO straight down or off).
