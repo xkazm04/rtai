@@ -386,6 +386,9 @@ NEXT (after the merge, a later run):
   (scratch it8/smoke_strip.png): the p55 art draws in the exe. Scratch .avi deleted.
 - 18:15 REPORT.md updated (gates on 02b11a53 with the rig_stress margin miss named, the train gap closed, exe
   18:10); decision line in docs/decisions.md.
+- 18:18 LOOK the train fix at the shipped 32 px/m from the 18:10 exe (phase 3 seed 2, 3.4-4.6 s, the charge):
+  the train reads as a dark-rooted sheet with a thin ink edge inside the lane, not heavy. Masters:
+  king_p3_cape_train_charge_tilt32_exe.png (named in REPORT; frames.json stays at 15). 0 SCRIPT ERROR.
 NEXT (after the merge, a later run):
 1. Fold the court strips into chars' `ViewMode.art` route (rows in the 14:47 entry); KingArt keeps the
    limbs, the cape and the pitch re-dress (8dbbbcf0).

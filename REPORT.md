@@ -24,7 +24,8 @@ All under `--view=tilt` (55 degrees), seed 2, the live arena (`--boss=king` / `-
   `king_p3_cape_train_tilt48_sheet.png`. Session 6 (02b11a53): in the charge the train lay inside the
   vermilion charge lane and its cloth melted into it; now ink side edges run root to hem and the root is
   darker (`KingCape.TRAIN_ROOT_DARK` 0.55, `TRAIN_SIDE_INK`), the hem stays vermilion with its ermine.
-  Same seed and ticks, before | after: `king_p3_cape_train_charge_tilt48_before_after.png` (frames.json #5).
+  Same seed and ticks, before | after: `king_p3_cape_train_charge_tilt48_before_after.png` (frames.json #5); at the shipped 32 px/m, from the exe: `king_p3_cape_train_charge_tilt32_exe.png`
+  (the edge is a thin line there, not heavy).
 
 ### The throne-car
 - **Walls from the approved car sheet:** a 40-slice stack (`KingCarWalls`) drawing the side, front and
