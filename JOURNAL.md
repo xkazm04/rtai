@@ -552,3 +552,10 @@ NEXT (iteration 16 = the freeze; freeze 08:30, report 08:40):
   done 08:08 (`evidence/view/it18/director-reel-19of19-ae9b1502.log`); my reel killed by PID
   42192 after (another lane's reel left alone). REPORT gates updated. REPORT calls 1-2: full exe
   lines (pitch study via `tilt_cards` / `tilt45_cards`, which have cards but no cast shadows).
+- Session end 08:10, tree clean. The freeze is DONE: REPORT.md final, exe
+  `build/export/windows/RTAI.exe` on 78d652d7 (later commits docs only), gates all PASS with the
+  switch off (run.mjs on 8b7a5982, reel 19/19 on ae9b1502), frames.json 15 entries, all present.
+
+NEXT (report phase, 08:40): no code. REPORT.md is final; only re-read it against frames.json
+and `evidence/view/it18/`, and fix wording. Do not re-export (the exe matches the final code).
+If a session runs past 09:00 and the owner picks `tilt`: REPORT "Next steps" 1-6 in order.
