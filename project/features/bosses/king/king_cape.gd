@@ -148,9 +148,12 @@ static func _train(ci: CanvasItem, at: Vector2, p: float, fight: BossFight, up: 
 		hem[i] = root.lerp(hem[i], t)
 		roots[i] = root + up * TRAIN_ROOT_H_M
 	var dark: Color = Ink.VERMILION.darkened(0.4)
-	for i: int in n:  # a quad per hem segment: root (dark) to hem (bright)
-		var q: PackedVector2Array = [roots[i], roots[i + 1], hem[i + 1], hem[i]]
-		ci.draw_polygon(q, PackedColorArray([dark, dark, Ink.VERMILION, Ink.VERMILION]))
+	var lit: Color = Ink.VERMILION
+	for i: int in n:  # two triangles per hem segment, root (dark) to hem (bright); a quad can twist
+		var a: PackedVector2Array = [roots[i], roots[i + 1], hem[i + 1]]
+		ci.draw_primitive(a, PackedColorArray([dark, dark, lit]), PackedVector2Array())
+		var b: PackedVector2Array = [roots[i], hem[i + 1], hem[i]]
+		ci.draw_primitive(b, PackedColorArray([dark, lit, lit]), PackedVector2Array())
 	for i: int in range(1, n, 2):  # a fold line into each trough
 		ci.draw_line(roots[i].lerp(hem[i], 0.3), hem[i], dark, maxf(FOLD_INK_W * p, 1.0))
 	ci.draw_polyline(hem, Ink.INK, FUR_W * p * 0.6 + 3.0)
