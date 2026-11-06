@@ -36,7 +36,10 @@ mistaken for a cop (no blue), a car (legs and pads move) or the crowd.
   lighter boxes, `ServoSpine.STEEL_TONE`), each wing's front edge carries the sheet's hazard
   ledge in copper and ink (`ServoWingBand`), and the pads hang in front of the wings like the
   sheet's (`ServoRig.PAD_OUT_M` 2.35 / `PAD_AHEAD_M` 2.0; render only, outside the 1.6 m hit body
-  as before).
+  as before). Since iteration 14 the pads' rims ring in the sheet's ink and copper hazard stripes
+  (`ServoRig.PAD_ART`, `tools/art/servo_pad_rim.py`), and the legs stand parallel under the torso
+  between the pads, pad | leg | leg | pad like the sheet's top view (`ServoRig.LEG_SPLAY_M` 0.25,
+  `KNEE_OUT_M` 0.2; were 0.9 / 0.5, splayed).
 - The drone: a small quad-rotor with a CS parcel slung below; ~0.7 m across (22 px at 32 px/m),
   four rotor discs read as a + shape; its **shadow on the ground** is the read of where it is,
   offset by its height.

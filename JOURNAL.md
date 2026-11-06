@@ -1277,3 +1277,15 @@ idempotent tool; palette gate held), depth-ordered-layered-art (no layer change)
   Target still re-shot at tick 1800 (`M/frames/servo_target_vs_game_32ppm_it14.png`), **looked
   at**: at 1x the pads ring ink and copper like the sheet's. it12 fight clip, keys and still
   deleted (frames.json `before` names them); REPORT paths moved to it14.
+- 04:13 GATES director reel on 939453f5 (after the n7-king merge and the pads; headless,
+  `reel14.sh`): **19/19 chapters fully down, 0 SCRIPT ERROR**; the 780 s timeout fell after the
+  last chapter (CONTENDED: two film jobs ran beside it) (`evidence/servo/director-reel-it14.log`).
+- 04:19 MILESTONE 5f9ed433 **the legs stand parallel** (render only). By the target still the
+  legs splayed out toward the pads (foot 0.9 m past the hip, knee bowed 0.5 m), crossing the pad
+  arms: a spidery silhouette, where the sheet's top view has pad | leg | leg | pad. Strut widths
+  measured first: ~0.56 m, the sheet's, so no art change. `ServoRig.LEG_SPLAY_M` 0.25,
+  `KNEE_OUT_M` 0.2. A/B `spine14.sh legs32|legs48 1 300` (0 SCRIPT ERROR), **looked at** 32/48 px/m
+  and the walk's keys (1.2 fps, the dash and the walk): parallel legs stride between the pads, the
+  pad arms read on their own. `M/frames/servo_legs_stance_ab_it14.png`; frames.json: it replaces
+  the pad A/B entry (that file stays, REPORT call 16). Unit 1190/0 (`unit-it14c.log`). Decisions;
+  REPORT call 17; moveset doc body paragraph.
