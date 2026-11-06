@@ -313,3 +313,48 @@ NEXT (iteration 6, in brief order):
 - 22:53 cleaned: scratch renders kept only where frames.json or JOURNAL point; raw AVIs deleted.
   Session ends here (23:03 stop). Head at the JOURNAL commit; lint 15/15; unit 1500/0 and
   scenarios 52/0 on 89cac319 (code after it: the dev probe only).
+
+## Iteration 6 (22:54-23:54)
+Read: JOURNAL, git log, the other journals. New REQUEST to view from city (it7): the arena's cover
+as city's standing prop cards (`PropCards.named().draw_named`). street / vehicles / hud: none.
+- ANSWERED city (commits c1a0e777, 7cfd96d7): `ArenaPropCards` (features/arena, mine) is called from
+  `ArenaFloorView._prop` under a tilt card view (not top_lift, not top): cone -> traffic_cone,
+  cover_high -> dumpster, cover_low -> crate_stack (one stack sized to the row's width on an
+  east-west row; one per square cell down a north-south row). PropCards is looked up BY PATH
+  (`res://features/city/view/prop_cards.gd`), so my branch compiles without city and draws today's
+  face until the Director merges n8-city; walls stay architecture. PropOcclusion redraws through
+  `_prop`, so the cards are redrawn over a body behind them for free.
+  VERIFIED on a throwaway merge (scratch worktree, my HEAD + n8-city, never committed):
+  `--bot=course --rigs --view=tilt70 --seed=2`, frame 150, 0 SCRIPT ERROR:
+  `gtai-masters/n8/view/arena_cover_cards_before_after_tilt70_32ppm.png` (before: lifted face +
+  flat crates | first cut: three crate_stack cards per row, 1.8x wider than the cover the player
+  collides with | built: one stack spanning the row). DECISION: the stack fits the collision box
+  (readability of cover beats a chunkier cargo pile); the alternative is the per-cell loop.
+- MILESTONE 23:13 item 5 close: the Tonnage swap under combo SEEN LIVE (owed since it3). New dev
+  flag `--ghost-at=<tick>` (commit 5a5ef6e6; BossBotGhost holds the soul until that tick; default
+  0 = today): the 8 s form was over long before the defeat at ~1160. `--boss=king --phase=3
+  --bot=boss --ghost=tonnage --ghost-at=700 --seed=2 --view=combo --rigs`: Tonnage's slam speeds
+  the kill (defeat tick 948, ease back from 948, cards p70 at tick 978), Tonnage in form through
+  both. Same ticks headless and windowed. Evidence: `tonnage_king_down_swap_combo_32ppm.mp4`,
+  `_64ppm.mp4`, `tonnage_king_swap_ticks970-1004_combo_64ppm.png`. Judged: the King swaps hard at
+  978 (bust -> p70 strip); Tonnage's back card p55 -> p70 is near seamless (the two strips are the
+  same press drawing); the larger change at ~990 is Tonnage TURNING (back -> three-quarter away), not
+  the swap. No double draw, 0 SCRIPT ERROR.
+- MILESTONE 23:28 item 7 close for Tonnage's legs: `--bot=ghosts --ghost=tonnage --order-probe
+  --seed=2`, 2400 ticks (`evidence/n8-view/order-probe-it6/`): tilt70 0/9 ghost pairs wrong, combo
+  (no boss: 70) 0/9, tilt 3/26 (d8's count, unchanged). The probe now logs each wrong pair (commit
+  cf6bed71): ticks 360/366/372, a cop 0.7-1.0 m NORTH of the press with dz 0 (a tie the probe calls
+  wrong because its rule wants the north rig a full part span under). Filmed at 64 px/m
+  (`tonnage_order_probe_ticks354-372_tilt_64ppm.png`): the press draws over the cops north of it,
+  as it should (tree order resolves the tie right). Verdict: not a draw fault; the legs follow the
+  card's host z (RigDepthSort._with_cards). Not changing the sort for a tie that draws right.
+- frames.json: 15 (Tonnage swap clip at 5th, arena cover cards at 9th; dropped the King swap crop
+  and the Kerf/Ohm close-up, both still on disk and in JOURNAL).
+- Registry rules applied this iteration: depth-ordered-layered-art (the cover card's foot on the
+  prop's south edge, drawn in the floor's prop pass so PropOcclusion's redraw keeps it in front of
+  bodies north of it; the dz-0 tie judged on film, not by the probe's count), concept-scene-parity
+  (the cover card judged in the arena at 32 px/m against the face it replaces and against its
+  collision box), sprite-and-atlas-production (the stack sized from city's own cell_w_m, not a
+  guessed scale), motion-quality-gating (the swap judged frame by frame at 64 px/m; a turn told
+  apart from a swap), combat-pacing-and-dramatic-arc (cover must read at its real size: the
+  player's cover decisions follow the drawn size).
