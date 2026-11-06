@@ -1209,3 +1209,9 @@ edges, under the torso).
 - REQUEST king (FYI, framework view, no action): `BossCam.BOSS_MARGIN_X_M` 5.5 on n7-servo
   (2667c047). `--boss-cam` only; your clips frame the same unless King stands within 5.5 m of a
   side edge of the screen, where the view now keeps more of him in. 3.0 restores it11.
+- 03:33 MEASURED (REPORT open item: the bay-hop ring under the boss bar in the 48 px/m clip):
+  tried `BossCam.RIVET_MARGIN_M` 3.0 (keep_in round Rivet before the boss's). Re-filmed
+  `hop48_12.sh 2 2 900`, keys 10.5-15 s **looked at**: keys 1-5 identical to it10 (the ring still
+  cut at the top). Cause: at 48 px/m the screen holds ~11.9 m between the bar and the ghost card,
+  Rivet stood 7.7 m above Servo, so 3 + 7.7 + 3 m cannot fit and the boss wins. Reverted (no
+  code change); the measurement is in REPORT's open item. In play the camera centres on Rivet.
