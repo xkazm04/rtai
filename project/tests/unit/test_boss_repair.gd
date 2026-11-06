@@ -32,7 +32,7 @@ func test_absent_field_keeps_combat_json_delay() -> void:
 	var before: float = tuning.rivet["repair_delay_s"]
 	_spec("").apply_repair(tuning)
 	assert_eq(tuning.rivet["repair_delay_s"], before)
-	assert_eq(BossSpec.shipped(&"king").rivet_repair_delay_s, -1.0, "King ships without it")
+	assert_eq(BossSpec.shipped(&"king").rivet_repair_delay_s, 20.0, "King: fair")
 
 
 ## Planted fault: a spec that reads -1 (the field ignored) must not reach the 6.5 s delay.

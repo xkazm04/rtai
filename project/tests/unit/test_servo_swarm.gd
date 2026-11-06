@@ -33,7 +33,7 @@ func test_three_rows_sit_one_row_dy_apart_and_one_wing_breaks() -> void:
 	assert_almost_eq(r.cell_pos(0).x - r.cell_pos(12).x, 2.0 * t.row_dy_m, 0.001)
 	r.break_wing()
 	assert_eq(r.count(ServoRack.Cell.BROKEN), 9, "half of every row")
-	assert_true(t.ring_from_launch, "the shipped default: rings from the launch (owner call)")
+	assert_false(t.ring_from_launch, "owner 2026-11-06: rings only over the hover")
 
 
 func test_spine_gap_sets_the_wings_apart_not_the_bays() -> void:

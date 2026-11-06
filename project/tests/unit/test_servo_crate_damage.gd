@@ -15,8 +15,10 @@ func _land_crate(damage: float) -> ServoParcels:
 	return p
 
 
-func test_shipped_crates_are_harmless() -> void:
-	assert_eq(ServoTuning.shipped().crate_damage, 0.0, "the default: crates do not hurt")
+func test_harmless_crates_land_without_a_hit() -> void:
+	assert_eq(
+		ServoTuning.shipped().crate_damage, 12.0, "owner 2026-11-06: a landing crate deals 12"
+	)
 	var p: ServoParcels = _land_crate(0.0)
 	assert_eq(p.blasts.size(), 0, "no hit from a landing crate")
 	assert_eq(p.crates.size(), 1, "the crate still lands")
