@@ -1415,12 +1415,12 @@ live arena path at 32/48 px/m), sprite-and-atlas-production, depth-ordered-layer
   path in REPORT checked to exist; frames.json 15 entries, all on disk.
 - 05:15 GATES scenarios on the bay fix: **52 ran, 0 failed**, 0 SCRIPT ERROR, exit 0
   (`evidence/servo/scenarios-it16.log`; CONTENDED: films ran beside it). Unit 1193/0. Lint 13/13.
-- 05:18 FILM the 48 px/m rotor dash re-cut from the it16 p1 run (the wave's film, 5992f678 body
+- 05:17 FILM the 48 px/m rotor dash re-cut from the it16 p1 run (the wave's film, 5992f678 body
   = the current look, 0 SCRIPT ERROR; cut 0.6 + 4.4 s as it14). **Looked at** the 4 fps keys: the
   tracking lane, the lock, the sidestep, the crossing, the vent steam, on the docked bays.
   `M/servo_attack_rotor_dash_48ppm_it16.mp4` + keys replace it14's (deleted). p2/p3 and the three
   ghost runs re-filming (`film48_16.sh`, `ghost48_16.sh`).
-- 05:22 FILMS on the docked bays at 48 px/m (`film48_16.sh 2 2 900`, `3 2 1000`, `ghost48_16.sh
+- 05:19 FILMS on the docked bays at 48 px/m (`film48_16.sh 2 2 900`, `3 2 1000`, `ghost48_16.sh
   dent 1 1 600`; 0 SCRIPT ERROR each), cut as it14 (`scratch/servo/cut16.sh`): the package carpet
   (0.5 + 6 s), the bay hop (10.5 + 4.5), the hot dash (0.3 + 4.8), the kamikaze (5.0 + 5.8),
   Dent's van (1.5 + 4.5). **Looked at** every key sheet: carpet (the ring lane, blasts, CS
@@ -1428,7 +1428,7 @@ live arena path at 32/48 px/m), sprite-and-atlas-production, depth-ordered-layer
   the lane, the step out, the vent), kamikaze (lock rings, a dive in its ring, the sidestep), Dent
   (the teal tether, the van onto the rack, the blast, the wreck). it14 clips and keys deleted;
   REPORT and frames.json paths moved; every frames.json file exists. Kerf and Ohm filming.
-- 05:26 FILMS Kerf (1.5 + 8 s) and Ohm (1.5 + 7.5 s) re-filmed at 48 px/m on the docked bays
+- 05:21 FILMS Kerf (1.5 + 8 s) and Ohm (1.5 + 7.5 s) re-filmed at 48 px/m on the docked bays
   (`ghost48_16.sh kerf 2 2 720`, `ohm 2 2 540`, 0 SCRIPT ERROR). **Looked at** both key sheets:
   the blinks slice teal across the swarm and the rack; the bolt jumps drone to drone, then the
   rack. it14 clips and keys deleted. **Every clip and still in frames.json is now on the it16
