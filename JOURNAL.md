@@ -1706,3 +1706,6 @@ fba95dea) is final; `project/` has not moved since. Owner calls 1-21 in REPORT (
 `RTAI.exe -- --rigs --boss=servo --repair-delay=<s>`). If call 21 picks a harder band, bisect the
 delay between 6 and 30 s at n = 10 with the human bot; ask the framework for `phase_ticks` in the
 boss_fight telemetry and a hp_min that counts the falling tick. Merge n7-king again if it moves.
+- 08:22 MERGE n7-king d6f8fafa (docs/evidence only, incl. king's REQUEST to servo at it22: already
+  done, both code merges are in and the lever is measured on Servo). JOURNAL/REPORT ours.
+  `project/` unchanged: the 08:09 exe and the fba95dea gates stand. Freeze.
