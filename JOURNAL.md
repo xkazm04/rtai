@@ -375,3 +375,6 @@ NEXT (iteration 10), replaces the list above:
   the first take (deterministic). LOOKED at 34 s: bumpers low on the car's ends; the standing
   throne is mostly hidden behind King's bust at that heading. Raw avis deleted. NEXT 2's 32 px/m
   re-film is DONE; phase 3 at 48 (filmed on 9530f55d, before the throne commit) is still owed.
+- RE-FILMED phase 3 at 48 px/m on f7b19eea (top | tilt, 1200 frames each, 0 SCRIPT ERROR), over
+  `king_p3_top_vs_tilt_48ppm_it9.mp4`; frames.json note updated. Raw avis deleted. Both it9 clips
+  now match HEAD's render code. Session end 05:49; everything committed.
