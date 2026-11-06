@@ -1696,3 +1696,36 @@ replay identical on `01a482d1`. Clips: `quest1_rifle_flash-ab-32ppm.mp4` (frames
 `quest1_rifle_flash-48ppm.mp4`, and five sound pairs (`gatling_shot_cue`, `zap_cues`,
 `molotov_burst_cue`, `smg_shot_cue`, `flamer_jet_cue`, all `-ab-32ppm.mp4`). Audit: rifle A 0 -> 2,
 R 1 -> 3; S -> 3 for the Gatling, plasma, ray, molotov; the SMG and flamer now own their cues.
+
+## Iteration 18 (BUILD, 04:54-05:54)
+Read: JOURNAL NEXT (iteration 17 list; iteration 17 left no entry), git log -30, n7-melee JOURNAL
+tail (FYI 04:45: the molotov's wind-up may start ~2 ticks late in ArenaRigs; fix shape
+`RigInput.pack_strike(..., late)` in n7-melee `791ea71a`), n7-king / n7-servo: no REQUEST to ranged.
+
+### MILESTONE 05:06: `3243a483` the molotov's claw whips through on the sim's release tick
+- FIND: in the arsenal path (wheel, director reel, city) ArenaRigs starts the throw's STRIKE clip
+  when it sees `PlayerThrow.winds` change, by when `wound` is already 1, and the rig draws one
+  frame behind: the whip trailed the release by 2 ticks (n7-melee's 04:45 FYI was right).
+  NOTE: `--weapon=molotov --bot=gunplay --lone` has NO wind-up (a table gun, grip null; the release
+  there is the rig_kick recoil on the shot): my earlier molotov lone films never showed this path.
+  A first lone A/B was pixel-identical; the director chapter (`--chapter=molotov`) is the path.
+- TRIED: cherry-pick n7-melee `791ea71a` (`pack_strike(..., late)`): conflicts, melee_marks.json
+  is not on this branch; aborted. Built instead RigThrow.windup_left / pack_wind (the wind-up
+  left = 14 - (wound + 1)); one ArenaRigs line, merge-safe. `--throw-sync=off` = the before.
+- Test `test_throw_sync` 3/3 (planted: off is 2 ticks late). Unit 1181/1181 (pre-refactor tree,
+  same logic), lint 13/13 (first run failed gd-size: `_rivet_clips` 41 lines; folded into
+  pack_wind).
+- FILM director chapter molotov, 430 frames, 32 and 48 px/m, off vs on, all exit 0, 0 SCRIPT
+  ERROR, 1/1 down. Pixel diffs only in frames 47-90 and 110-150 (the two throws). LOOK: before,
+  the bottle stays cocked behind the helmet through frame 58 and the claw is out empty on 59;
+  after, it arcs over the head on 57 and sits at the forward claw on 58 (both ppm). The refactored
+  build's 48 px/m take is pixel-identical to the first. Clip `molotov_release_sync-ab-32-48ppm.mp4`
+  (7.9 s, 0.4x), frames.json entry 0 (rocket_blast_sound dropped, a sound pair; file kept).
+- GATES: reels pit 19/19 + city 19/19, 0 SCRIPT ERROR (`evidence/ranged/it18-reel-*-3243a483.log`).
+- Docs: REPORT row, audit row 10 note, decisions.md line. FYI to n7-melee below.
+- FYI to n7-melee (no answer needed): your molotov FYI is built on n7-ranged `3243a483`, without
+  your `late` bits (RigThrow.windup_left shortens the 14-tick cock by wound + 1 instead). It
+  touches one line in ArenaRigs._rivet_clips (the winds branch), not your strike line.
+- Registry rules applied: motion-quality-gating (A/B in the live arena path at 32 and 48 px/m,
+  same build with a flag, frame-exact diff), realtime-combat-semantics (the view follows the sim's
+  release tick, never the reverse).
