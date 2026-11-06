@@ -1509,3 +1509,9 @@ matter at 32 px/m, finalize REPORT.
   tell with the arch behind King; King on foot beside Rivet, the empty gilded throne on the wreck.
   it14 versions deleted; frames.json 15 (all exist); REPORT points at it15. Scratch PNGs and AVI
   deleted.
+
+### 04:37 GATES on aaf47854 (the throne back)
+- Director reel (headless, `--rigs --bot=reel --reel=director --loadout=pistol`, 31200 ticks):
+  **19/19 chapters fully down**, 0 SCRIPT ERROR (`evidence/king/director-reel-it15.log`).
+- Scenarios **52 ran, 0 failed**, 0 SCRIPT ERROR (`evidence/king/scenarios-it15.log`; the exit
+  PagedAllocator line is in it14's log too). Unit 1164/0 and lint 13/13 at 889cc825. Combat holds.
