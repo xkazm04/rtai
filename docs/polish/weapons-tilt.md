@@ -115,3 +115,15 @@ The director reel on 8c64bdeb: top 19/19 and tilt 19/19 chapters, all down, 0 SC
 | floor pickups (iteration 5) | 2 | - | - | Before: the side-view gun lay on its paper disc, squashed by the ground plane (82 %), flat as a decal. After (tilt only): it hovers 0.35 m over the disc with a 0.05 m bob, its side view stood up for the raised camera (sway halved, a turned card shears), and a soft ink shadow sits on the disc. `--armory` at 48 tilt, frame 150, `--shot-lift=off` = before. `pickups_tilt_48_hover_before_after.png`. Top unchanged (unit test). |
 | molotov (48, iteration 5) | 2 | - | - | The bottle read tiny in the claw. size_k 1 / 1.2 / 1.35 filmed (gunplay bot, same seed): 1.2 shows the neck, body and lit rag, carried and raised; 1.35 reads as a club against the head. Default 1.2. `molotov_tilt_48_size_k.png`. |
 | electro gun, chain hop (iteration 6) | 2 | 2 | 2 | The `electro_chain` director chapter (five cops staggered in depth), 48 tilt, frames 108/168/180/216, `--shot-lift=off` = before. The bolt leaves the coil tip at gun height and the hop arcs run cop to cop at chest height in both films; a hop that ends on a fallen cop drops to the floor with him, which is right. The lift moves the bolt a few px only: nothing to fix. `electro_chain_tilt_48_arc_before_after.png` (top row before). |
+
+## 64 px/m, every gun (iteration 6)
+
+The close-combat zoom. Every gun filmed with the gunplay bot at 64 px/m under tilt, aimed (frame 500) and
+carried (frame 380): `held_all_tilt_64_aimed.png`, `held_all_tilt_64_carry.png` (gtai-masters). 0 SCRIPT ERROR.
+
+| weapon(s) | H | F | L | note |
+|---|---|---|---|---|
+| sidearms, electro gun, ray gun, homing shard, Gatling, tubes | 2 | - | - | In the claw with grip, body and tip readable; the carry hangs along the leg, nose down. |
+| plasma rifle | 1 | - | - | Rides above the claw when aimed (known since iteration 2). |
+| molotov | 2 | - | - | The 1.2x bottle raised overhead reads as a bottle. |
+| flame wand (back tank) | 1 -> 2 | - | - | **Found here:** facing the camera, the back tank (behind the torso on the ground plane = up the screen) drew over the visor (the held view rides 60 z over the rigs). Now `ShotLift.back_z` drops it under the rig when Rivet faces down the screen under a lift; `--shot-lift=off` = the before; top unchanged (unit). `flamethrower_tilt_64_tank_behind_before_after.png`. The Gatling's belt box rides the same path. |
