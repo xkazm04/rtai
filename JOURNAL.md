@@ -1704,3 +1704,14 @@ Next steps: audio_cues.json tail, hit_feel.json weapons top). Morning: the owner
 NEXT (08:32): nothing to build. The Director merges `n7-melee` (merge notes in REPORT Next steps:
 audio_cues.json tail, hit_feel.json weapons top). Morning: the owner's calls (a)-(q) in REPORT.
 - STOP 08:32 iteration 23.
+
+## Iteration 24 (08:31-08:40): stabilize, past the freeze
+
+- READ 08:31 JOURNAL NEXT (08:32 it23), git log (head `a40486b5`, tree clean). n7-ranged since
+  `bd42aade`: docs only (`e7e4328a`, `f3f8dcd1`, `33057619`, `1275ec51`); no feel-layer code to merge.
+  No REQUEST for melee in n7-ranged, n7-king or n7-servo.
+- No code change since `2dd19210`: the clean evidence run on `3c54f494` (all five PASS) and the exe
+  `build/export/windows/RTAI.exe` (08:15, code `2dd19210`) still match the build. Nothing re-run.
+NEXT (08:33): nothing to build. The Director merges `n7-melee` (merge notes in REPORT Next steps:
+audio_cues.json tail, hit_feel.json weapons top). Morning: the owner's calls (a)-(q) in REPORT.
+- STOP 08:33 iteration 24.
