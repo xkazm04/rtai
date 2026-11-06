@@ -1437,10 +1437,8 @@ Read: JOURNAL NEXT (it13), git log, frames.json. `king_car_trim.gd` showed `M` w
   King down at tick **4933**, took **88**, coin_fan 3 / press_slam 1 / ram 1, 0 SCRIPT ERROR.
 
 NEXT (iteration 15, in order):
-1. The ram/coin-fan clip is the last it12 clip (`king_ram_coin_fan_48ppm_it12.mp4`: no chains on
-   the riders); re-film it on the current head (phase 1 seed 2, stander then dodger, 1.4-4.4 s and
-   6.6-9.0 s of each run, 1280x800: `build/scratch14/film.sh` takes RES). Then the charge and
-   decree clips (it13) if the chains should show there (decree: the brawlers wear them).
+1. (done 04:16, below: the ram/coin-fan clip.) The decree clip (it13) shows the brawlers' old
+   2 px chain arcs; re-film it on the current head (phase 2 seed 2 stander, 16.2-20.6 s, 1280x800).
 2. The gang's shades: the drawn arc failed (journal 04:12). Next try is in the part art: the
    gang sheet's visor cell darker at 32 px/m (`tools/art/gang_parts.py`), A/B against call I's
    light dome; or leave it as a REPORT gap.
@@ -1450,3 +1448,8 @@ NEXT (iteration 15, in order):
 4. At the freeze: re-export the exe (REPORT "The exe"), smoke it, finalize REPORT (remove DRAFT).
 - Session ends ~04:15, everything committed. Scratch: `build/scratch14` (git-ignored) holds the
   AVIs; delete them at the start of it15 (film.sh / shot.sh are worth keeping).
+- 04:16 FILM `M/king_ram_coin_fan_48ppm_it14.mp4` on 026e6720 (phase 1 seed 2, 1280x800, stander
+  and dodger, ram 1.4-4.4 s then fan 6.6-9.0 s of each run, 10.8 s, music, 0 SCRIPT ERROR).
+  **Looked at** the 2.5 fps sheet and a full frame at 7.0 s: the lane outlined then filled, the car
+  runs it, the dodger steps off; the cone, the coin burst, the dodger out of the cone; gold chains
+  on all four car gang. it12 clip deleted; frames.json 15; REPORT points at it14. Session ends.
