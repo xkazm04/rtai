@@ -7,6 +7,9 @@ maps to one ground width in game (city_facades.json `props`: cell_w_m). Prints e
 size and the facing-0 content width as a fraction of the cell (to set cell_w_m from a real width).
 
 usage: python tools/art/city_prop_cut.py <library_root> <out_dir> <55|70> <game_name>=<lib_id> ...
+       python tools/art/city_prop_cut.py <library_root> <out_dir> <55|70> --kit <lib_id>
+(--kit: a dressing kit sheet of single-view pieces in rows; every piece of every row is cut to
+its own tight PNG, <out_dir>/p<pitch>/<lib_id>_<row><col>.png, for the boss arenas' dressing.)
 """
 
 import sys
@@ -32,12 +35,33 @@ def runs(values, gap):
     return out
 
 
-def top_band(alpha):
+def bands_of(alpha):
     w, h = alpha.size
     px = alpha.load()
     rows = [any(px[x, y] >= ALPHA_MIN for x in range(0, w, 2)) for y in range(h)]
-    bands = [r for r in runs(rows, GAP) if r[1] - r[0] > 40]
-    return bands[0]
+    return [r for r in runs(rows, GAP) if r[1] - r[0] > 40]
+
+
+def top_band(alpha):
+    return bands_of(alpha)[0]
+
+
+def cut_kit(sheet: Path, out_dir: Path, lib_id: str):
+    im = Image.open(sheet).convert("RGBA")
+    alpha = im.getchannel("A")
+    px = alpha.load()
+    out_dir.mkdir(parents=True, exist_ok=True)
+    for r, (y0, y1) in enumerate(bands_of(alpha)):
+        cols = [any(px[x, y] >= ALPHA_MIN for y in range(y0, y1 + 1, 2)) for x in range(im.width)]
+        pieces = [c for c in runs(cols, GAP) if c[1] - c[0] > 40]
+        for c, (x0, x1) in enumerate(pieces):
+            part = im.crop((x0, y0, x1 + 1, y1 + 1))
+            part = part.crop(part.getchannel("A").getbbox())
+            k = min(1.0, MAX_CELL_H / part.height)
+            part = part.resize((round(part.width * k), round(part.height * k)), Image.LANCZOS)
+            name = f"{lib_id}_{r}{c}.png"
+            part.save(out_dir / name)
+            print(f"{name}: {part.width}x{part.height}")
 
 
 def facings(alpha, band):
@@ -74,6 +98,10 @@ def cut(sheet: Path, out: Path):
 
 def main():
     lib, out_dir, pitch = Path(sys.argv[1]), Path(sys.argv[2]), sys.argv[3]
+    if sys.argv[4] == "--kit":
+        lib_id = sys.argv[5]
+        cut_kit(lib / "keyed" / "prop" / f"{lib_id}_{pitch}.png", out_dir / f"p{pitch}", lib_id)
+        return
     for pair in sys.argv[4:]:
         name, lib_id = pair.split("=")
         cut(lib / "keyed" / "prop" / f"{lib_id}_{pitch}.png", out_dir / f"p{pitch}" / f"prop_{name}.png")
