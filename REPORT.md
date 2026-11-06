@@ -22,7 +22,9 @@ today's game, bit-identical: `top` frames are md5-identical with the King lane's
 3. `king_p2_top_vs_tilt_32ppm_x2_it12_t34s.png`: phase 2 still, top vs tilt, 32 px/m shown x2.
    `king_tilt_noshadow_vs_cast_32ppm_x2_it12.png`: the cast shadows under tilt, off vs on.
    `city_block_top_vs_tilt_32ppm_it12.png`: the city block (`--arena=city`), top vs tilt.
-4. `king_depth_sort_before_after_48ppm_x2_it9.png`: draw order under tilt, before | after.
+4. `king_views_grid_32ppm_it12_t12s.png`: every view at one tick (top / top_lift / tilt65 / tilt /
+   tilt45_cards), 32 px/m unscaled crops.
+5. `king_depth_sort_before_after_48ppm_x2_it9.png`: draw order under tilt, before | after.
 
 ## What works (evidence)
 
