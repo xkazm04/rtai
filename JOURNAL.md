@@ -1251,3 +1251,24 @@ NEXT (iteration 13, in order):
 4. The bay-hop ring under the boss bar in the 48 px/m clip stays open (measured: no room).
 5. At the freeze (08:30): re-export `windows-showcase`, smoke (expect down 7036, 188), final gates
    (lint, unit, scenarios, evidence/run.mjs, director reel), REPORT final (drop DRAFT, Next steps).
+
+## Iteration 14 (03:56-04:56, BUILD)
+Read: JOURNAL NEXT (it12/13), git log -15, n7-king's JOURNAL (it14: cape slam, gang chain; no
+REQUEST for servo). Rules kept: motion-quality-gating (A/B in the live arena path at 32/48 px/m,
+same tick), sprite-and-atlas-production (derived art from the installed cut by a reproducible,
+idempotent tool; palette gate held), depth-ordered-layered-art (no layer change).
+- 03:58 MERGE n7-king 9a207b0b as 04164ce1 (12 commits: King's cape on the slam, the gang's gold
+  chain). JOURNAL/REPORT add/add: ours; decisions auto-merged. Lint 13/13 (hook), unit **1190/0**
+  (`evidence/servo/unit-it14a.log`).
+- 04:02 MILESTONE (NEXT 3) 204d2ba1 **the pads' hazard rim** (render only). Looked at the pad cut
+  at 4x beside the sheet: the rim already holds diagonal stripes, but copper (182,121,80) on a mid
+  brown (102,82,67): one brown band at 32 px/m. `tools/art/servo_pad_rim.py` re-inks the rim band
+  (2-15 px from the edge, distance seeded past the image border too: the octagon touches it; the
+  first pass missed that and inked only the corners, **looked at** and fixed): mid-brown stripes
+  to ink, copper lifted 10 % under the 0.24 gate; idempotent (second pass: no pixel changed).
+  `ServoRig.PAD_ART` &"pad_hazard" (&"pad" = it13). FRICTION: gdformat exploded the PARTS list
+  to one name per line when the new name pushed it past 100 chars; loaded PAD_ART on its own line.
+  A/B `spine14.sh before|after 1 300 32|48` (0 SCRIPT ERROR each), **looked at**: at 32 px/m the
+  pads ring ink and copper like the wing ledges and the sheet; at 48 px/m the stripes are crisp.
+  `M/frames/servo_pad_hazard_ab_it14.png`; frames.json 15 (it10 steel A/B dropped, kept on disk
+  for REPORT call 12). DECISION in docs/decisions.md; REPORT call 16.
