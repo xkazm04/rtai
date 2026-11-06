@@ -1321,9 +1321,9 @@ Read: JOURNAL it12 tail + NEXT, git log -12. Rules kept from it12: motion-qualit
   `build/scratch13` (trials, AVIs) deleted.
 
 NEXT (iteration 14, in order):
-1. The decree and slam clips at 48 px/m are it10 (the flat cape, the dark horn): re-film both on
-   the current head (`king_decree_48ppm_it10.mp4`: phase 2 seed 2 stander 16.2-20.6 s;
-   `king_slam_plates_48ppm_it10.mp4`: phase 3 seed 2, stander then dodger, 6.4-9.6 s each).
+1. (done 03:31-03:33: the slam and decree clips re-filmed, below.) All REPORT clips are now
+   it12-it13 except the ghost clips (Dent it6, Tonnage/Kerf it5, Ohm it4: the flat cape, dark
+   horn); re-film those four on the current head (their commands are in the frames.json notes).
 2. The cape on the car in phase 1 does not react to the ram (CHARGING has `ram`, but on the car the
    cape sits at CAPE_ON_CAR_K 1.3 over the trunk; check the ram tell/active in a 48 px/m still that
    the gather/flare reads there and does not overhang the car's rear bumper oddly).
@@ -1332,3 +1332,12 @@ NEXT (iteration 14, in order):
 4. Before the freeze: re-export the exe (the it8 recipe in REPORT) and smoke it (King down 4933);
    finalize REPORT (remove DRAFT, Next steps).
 - Session ends ~03:45, everything committed.
+- 03:31 FILM `M/king_slam_plates_48ppm_it13.mp4` (phase 3 seed 2, stander then dodger, 6.4-9.6 s
+  each, music, 0 SCRIPT ERROR). **Looked at** the 4 fps sheet: the ring outlines and fills, King
+  hops onto the stander, shockwave and coin ring; the dodger outside the ring; the folded cape and
+  gold horn throughout. it10 clip deleted. FRICTION: a failed `rm` (cwd inside the scratch dir)
+  short-circuited the journal edit; c0ab7e20 carried REPORT only, this entry lands later.
+- 03:33 FILM `M/king_decree_48ppm_it13.mp4` (phase 2 seed 2 stander, 16.2-20.6 s, captioned as
+  the it10 one, 0 SCRIPT ERROR). **Looked at** the 4 fps sheet and a frame beside the it10 clip at
+  1.5 s: the same framing (BossCam unchanged), the decree rings round King on the stalled car, the
+  gang brawling; the new cape and horn. it10 deleted; frames.json 15; REPORT points at it13.
