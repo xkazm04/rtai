@@ -64,20 +64,6 @@ vec3 flash(vec3 c, float phase) {
 	return lit ? mix(c, hot, 0.7) : c * 0.4;
 }
 
-// The lit lens's glow round it (rgb = its hue, a = its strength): 16 taps on two rings.
-vec4 glow(sampler2D tex, vec2 uv, vec2 px, float phase) {
-	float want = phase < 0.5 ? 1.0 : 2.0;
-	float hits = 0.0;
-	for (int i = 0; i < 16; i++) {
-		float a = float(i) * 0.785398 + (i < 8 ? 0.0 : 0.392699);
-		vec2 o = vec2(cos(a), sin(a)) * px * glow_px * (i < 8 ? 0.5 : 1.0);
-		vec4 t = texture(tex, uv + o);
-		hits += (t.a > 0.5 && abs(lens(t.rgb) - want) < 0.5) ? 1.0 : 0.0;
-	}
-	vec3 hue = want < 1.5 ? vec3(0.45, 0.7, 1.0) : vec3(1.0, 0.75, 0.3);
-	return vec4(hue, min(hits / 3.0, 1.0) * glow_k);
-}
-
 void vertex() {
 	float cell = floor(INSTANCE_CUSTOM.x + 0.5);
 	float c = mod(cell, float(cols));
@@ -129,11 +115,22 @@ void fragment() {
 		}
 	}
 	if (siren > 0.5 && local.y < lens_band) {
+		// The lit lens's glow round it: 16 taps on two rings (TEXTURE is a stage built-in, so the
+		// taps sit here, not in a function).
 		float phase = fract(TIME * siren_hz + seed * 0.37);
-		vec4 g = glow(TEXTURE, UV, TEXTURE_PIXEL_SIZE, phase);
-		col.rgb = mix(flash(col.rgb, phase), g.rgb, g.a * 0.6 * col.a);
-		col.rgb = mix(g.rgb, col.rgb, col.a);
-		col.a = max(col.a, g.a * 0.7 * COLOR.a);
+		float want = phase < 0.5 ? 1.0 : 2.0;
+		float hits = 0.0;
+		for (int i = 0; i < 16; i++) {
+			float a = float(i) * 0.785398 + (i < 8 ? 0.0 : 0.392699);
+			vec2 o = vec2(cos(a), sin(a)) * TEXTURE_PIXEL_SIZE * glow_px * (i < 8 ? 0.5 : 1.0);
+			vec4 t = texture(TEXTURE, UV + o);
+			hits += (t.a > 0.5 && abs(lens(t.rgb) - want) < 0.5) ? 1.0 : 0.0;
+		}
+		vec3 hue = want < 1.5 ? vec3(0.45, 0.7, 1.0) : vec3(1.0, 0.75, 0.3);
+		float g = min(hits / 3.0, 1.0) * glow_k;
+		col.rgb = mix(flash(col.rgb, phase), hue, g * 0.6 * col.a);
+		col.rgb = mix(hue, col.rgb, col.a);
+		col.a = max(col.a, g * 0.7 * COLOR.a);
 	}
 	COLOR = col;
 }
