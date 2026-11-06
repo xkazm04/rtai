@@ -22,16 +22,18 @@ const CARDS: Dictionary[String, Array] = {
 	"cop/head_helmet":
 	["res://features/characters/art/view/cop_riot_card.png", 0.86, 1.2, false, false],
 }
-## Per view art set (view.json `card_set`, e.g. "55" = the 55-degree angle sheets, art under
-## art/view/<set>/): rows that replace or add to CARDS for that set only, so the 70 art can sit
-## beside the 55 art and a view without a set draws CARDS. Rivet's 55 card is a bust (head, hazard
+## Per view art (view.json `art`, ViewMode.art, e.g. "p55" = cut from the 55-degree angle sheets,
+## "p70" from the 70): a card whose file name exists under ART_DIR/<art>/ draws that file with its
+## base row's fields; SET_CARDS[<art>] rows replace or add whole rows (new anchor, width or bust).
+## A view without art draws CARDS. Rivet's p55 card is a bust (head, hazard
 ## collar and chest plate from rivet_55.png, tools/art/rivet_bust.py): anchored on the collar's
 ## middle, 1.25 x the collar wide (the cell is wider than the collar by the chest's shoulders).
+const ART_DIR: String = "res://features/characters/art/view/"
 const SET_CARDS: Dictionary[String, Dictionary] = {
-	"55":
+	"p55":
 	{
 		"rivet":
-		["res://features/characters/art/view/55/rivet_bust_card.png", 0.66, 1.25, true, true],
+		["res://features/characters/art/view/p55/rivet_bust_card.png", 0.66, 1.25, true, true],
 	},
 }
 const FRAMES: int = 5
@@ -41,11 +43,14 @@ const OCT_FRAME: PackedInt32Array = [2, 1, 0, 1, 2, 3, 4, 3]
 const OCT_FLIP: PackedByteArray = [0, 0, 0, 1, 1, 1, 0, 0]
 static var _tex: Dictionary[String, Texture2D] = {}
 static var _merged: Dictionary[String, Array] = {}
-static var _merged_set: String = "-"
+static var _merged_art: String = "-"
 
 
-## Each pose step under a tilt (CutRig.drive): build the card once, then face and place it.
+## Each pose step under a tilt (CutRig.drive): build the card once, then face and place it. A
+## card built under other art (ViewMode.art changed live, the combined view) is rebuilt.
 static func step(rig: CutRig) -> void:
+	if rig.head_card != null and str(rig.head_card.get_meta(&"art", "")) != ViewMode.shared().art:
+		drop(rig)
 	if rig.head_card == null:
 		if not ViewMode.shared().cards or _key(rig).is_empty():
 			return
@@ -91,21 +96,28 @@ static func key_of(plan: BodyPlan, head: String) -> String:
 	return plan.art_dir if all.has(plan.art_dir) else ""
 
 
-## The card rows this run's view draws: CARDS with its card_set's rows over them.
+## The card rows this run's view draws now: CARDS under its art (rows_of).
 static func rows() -> Dictionary[String, Array]:
-	var want: String = ViewMode.shared().card_set
-	if want != _merged_set:
+	var want: String = ViewMode.shared().art
+	if want != _merged_art:
 		_merged = rows_of(want)
-		_merged_set = want
+		_merged_art = want
 	return _merged
 
 
-static func rows_of(card_set: String) -> Dictionary[String, Array]:
-	if not SET_CARDS.has(card_set):
+## CARDS with each strip found under ART_DIR/<art>/ swapped in, then SET_CARDS[art]'s rows.
+static func rows_of(art: String) -> Dictionary[String, Array]:
+	if art == "":
 		return CARDS
-	var out: Dictionary[String, Array] = CARDS.duplicate()
-	for key: String in SET_CARDS[card_set]:
-		out[key] = SET_CARDS[card_set][key]
+	var out: Dictionary[String, Array] = {}
+	for key: String in CARDS:
+		var row: Array = CARDS[key].duplicate()
+		var alt: String = ART_DIR.path_join(art).path_join(str(row[0]).get_file())
+		if ResourceLoader.exists(alt):
+			row[0] = alt
+		out[key] = row
+	for key: String in SET_CARDS.get(art, {}):
+		out[key] = SET_CARDS[art][key]
 	return out
 
 
@@ -130,6 +142,7 @@ static func _build(rig: CutRig) -> void:
 	if row[4] != true or rig.is_tinted():
 		card.material = PartMaterials.get_mat(PartMaterials.PartKind.PART, rig.is_tinted(), 0)
 	card.z_index = rig.plan.head_z
+	card.set_meta(&"art", ViewMode.shared().art)
 	rig.head.add_child(card)
 	rig.head_card = card
 	_hide(rig.head, rig.head_spr)

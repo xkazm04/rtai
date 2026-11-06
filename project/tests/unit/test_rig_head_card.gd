@@ -61,11 +61,12 @@ func test_a_head_variant_row_wins_over_the_set_row() -> void:
 	assert_eq(RigHeadCard.key_of(thug, "head"), "gang", "every gang head shares one card")
 
 
-func test_a_card_set_overrides_only_its_own_rows() -> void:
+func test_an_art_folder_overrides_only_its_own_rows() -> void:
 	assert_eq(RigHeadCard.rows_of(""), RigHeadCard.CARDS, "no set: the base cards")
-	assert_eq(RigHeadCard.rows_of("none_such"), RigHeadCard.CARDS, "an unknown set: the base cards")
-	var r55: Dictionary[String, Array] = RigHeadCard.rows_of("55")
-	assert_eq(str(r55["rivet"][0]), "res://features/characters/art/view/55/rivet_bust_card.png")
+	var none_king: String = RigHeadCard.rows_of("none_such")["king"][0]
+	assert_eq(none_king, str(RigHeadCard.CARDS["king"][0]), "no such folder: the base strip")
+	var r55: Dictionary[String, Array] = RigHeadCard.rows_of("p55")
+	assert_eq(str(r55["rivet"][0]), "res://features/characters/art/view/p55/rivet_bust_card.png")
 	var bust: bool = r55["rivet"][3]
 	assert_true(bust, "Rivet's 55 card is a bust: the torso hides")
 	var king: Array = r55["king"]
@@ -79,15 +80,15 @@ func test_a_card_set_overrides_only_its_own_rows() -> void:
 
 
 func test_every_set_card_strip_loads() -> void:
-	for card_set: String in RigHeadCard.SET_CARDS:
-		for key: String in RigHeadCard.SET_CARDS[card_set]:
-			var path: String = RigHeadCard.SET_CARDS[card_set][key][0]
+	for art: String in RigHeadCard.SET_CARDS:
+		for key: String in RigHeadCard.SET_CARDS[art]:
+			var path: String = RigHeadCard.SET_CARDS[art][key][0]
 			var t: Texture2D = load(path) as Texture2D
 			assert_not_null(t, path)
 			assert_eq(t.get_width() % RigHeadCard.FRAMES, 0, "%s splits into equal frames" % path)
 
 
 func test_the_tilt_row_draws_the_55_set_and_top_none() -> void:
-	assert_eq(ViewMode.of("tilt").card_set, "55")
-	assert_eq(ViewMode.of("top").card_set, "", "top draws no cards at all")
-	assert_eq(ViewMode.of("tilt_basecards").card_set, "", "the d8 before: the base cards")
+	assert_eq(ViewMode.of("tilt").art, "p55")
+	assert_eq(ViewMode.of("top").art, "", "top draws no cards at all")
+	assert_eq(ViewMode.of("tilt_basecards").art, "", "the d8 before: the base cards")
