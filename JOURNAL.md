@@ -2080,3 +2080,17 @@ NEXT (iteration 22; supersedes the 06:25 list and its 2b addendum):
 - FYI n7-melee: `1b1c8402` touches GunFx (Rivet's guns only), not hit_feel.gd; the hit_feel.json
   `weapons` rows gained an optional `trail_ticks` (schema 0-20). Nothing to merge for melee unless
   you want the data table in sync (a JSON merge, no code of yours reads it).
+
+### FILM 07:09 the shot trail in quest 1 (the shipped path) and the city clip retaken
+- `quest1_clip.gd --ppm=32 --cam=fight --ticks=13580-13860` on `1b1c8402` (141 frames, exit 0,
+  0 SCRIPT ERROR). LOOK: Gloria's nails hit two contractors on the Dock 9 kerb about 15 m from
+  Rivet (frames 43-44 and 55-56): a cream line in its ink casing runs from Rivet to the contractor
+  on the hit, over the blood bloom, its tail closing in over the next 3 frames. On the dark asphalt
+  it reads better than in the arena. Still `evidence/ranged/it24-quest1-gloria-shot-trail-32ppm.jpg`
+  (frames 42-45, every 2 ticks). No before take: quest1_clip's KNOWN_FLAGS lack `--shot-trail`;
+  the arena pair is the before/after.
+- City combined clip retaken on `1b1c8402` (city24/city.sh, the MILESTONE 06:22 recipe): 16
+  chapters down, 0 SCRIPT ERROR, 72 s, mean -22.3 dB, peak -1.1 dB (same as 06:22). LOOK: sheet
+  every 300 frames, every tile an attack, blood red, the nuke ring whole. The pistol chapter's hits
+  are point blank (under 2 m, frames 362-456 looked at), so the trail barely shows in the city
+  reel: an honest limit, written in the frames.json row. Master replaced in place; avi deleted.
