@@ -6,17 +6,14 @@ extends RefCounted
 ## x `px`. Vermilion only for danger (beam, rings, lanes); ink shadows. Render only (SIM-03).
 
 const SHADOW: Vector2 = Vector2(0.25, 0.35)
-## The drone sprite drawn this much over its art size (a 0.7 m drone is ~22 px at 32 px/m: too
-## small to read over the yard).
+## The drone sprite drawn this much over its art size (a 0.7 m drone at 32 px/m is too small).
 const DRONE_K: float = 1.4
-## The carried parcel is a kraft box slung under the drone (the sheet's), drawn under the sprite so
-## it shows round the hub and through the rotors, and it falls into its ring as the same box (its
-## shadow closing in as it lands). false = it16: a cream square on the hub, no falling box.
+## The carried parcel: a kraft box slung under the drone, drawn under the sprite, falling into its
+## ring as the same box (its shadow closing in). false = it16: a cream square on the hub.
 const SLUNG_PARCEL: bool = true
 ## The slung box's side (m); the landed crate is ServoTuning.crate_m.
 const PARCEL_M: float = 0.62
-## How far the slung box hangs under the drone (m): drawn that much toward the drone's shadow, so
-## it peeks out from under the hub on the shadow side.
+## How far the slung box hangs under the drone (m), toward the drone's shadow.
 const SLING_M: float = 0.5
 
 ## Pixels per metre of the canvas drawn on (32 in the dev view, Ink.PX_PER_M in the arena).
@@ -138,8 +135,9 @@ func drones(c: CanvasItem, s: ServoSwarm) -> void:
 	for d: ServoDrone in s.drones:
 		var p: Vector2 = d.pos * px
 		var rot: float = d.vel.angle() - PI / 2 if d.vel.length() > 0.5 else 0.0
-		if SLUNG_PARCEL and d.carrying():
-			_box(c, p + SHADOW * SLING_M * px, rot, PARCEL_M)
+		var sling: Vector2 = p + SHADOW * SLING_M * px  # d8: under a tilt the falling box's start
+		if SLUNG_PARCEL and d.carrying() and not _tilt_box(c, sling, PARCEL_M):
+			_box(c, sling, rot, PARCEL_M)
 		_sprite(c, drone_tex, p, rot, DRONE_K)
 		if d.dive:  # the broken rack's drones spark (danger)
 			var spark: Vector2 = Vector2.from_angle(float(d.age) * 2.3) * px * 0.3
@@ -160,8 +158,13 @@ func _falling_box(c: CanvasItem, at: Vector2, k: float, t: ServoTuning) -> void:
 	var half: Vector2 = Vector2.ONE * side * 0.5 * px
 	c.draw_rect(Rect2(sh - half, half * 2.0), Color(pal.color(&"ink"), 0.3 + 0.2 * k))
 	var box: Vector2 = (at + SHADOW * SLING_M * (1.0 - k)) * px  # d8: a box under a tilt
-	if not ServoCrateStack.box(c, box, side * px, crate_tex, px / SimConst.PX_PER_M):
+	if not _tilt_box(c, box, side):
 		_box(c, box, 0.0, side)
+
+
+## Under a view with lift: the parcel as a standing kraft box (ServoCrateStack.box), true if drawn.
+func _tilt_box(c: CanvasItem, at_px: Vector2, side_m: float) -> bool:
+	return ServoCrateStack.box(c, at_px, side_m * px, crate_tex, px / SimConst.PX_PER_M)
 
 
 ## A kraft parcel `side_m` wide at `at_px`: an ink edge, then the crate art.
