@@ -9,10 +9,16 @@ extends RefCounted
 ## cards with the roofs by south edge. Render only.
 
 const FACINGS: int = 5
+const TABLE: String = "res://data/tables/city_facades.json"
+
+## The by-name set for drawers outside the streamed city (the arena's cover, quest 1's stage).
+static var _named: PropCards = null
+static var _named_art: String = "-"
 
 var _strip: Dictionary[int, Texture2D] = {}
 var _cell_w_px: Dictionary[int, float] = {}
 var _turn: Dictionary[int, float] = {}
+var _names: Array[String] = []
 
 
 ## props: the table's `props` rows by city_textures name; names: the texture names by id.
@@ -20,6 +26,7 @@ static func make(
 	props: Dictionary, names: Array[String], art: String, fallback: Dictionary
 ) -> PropCards:
 	var out: PropCards = PropCards.new()
+	out._names = names
 	for t: int in names.size():
 		if not props.has(names[t]):
 			continue
@@ -33,6 +40,39 @@ static func make(
 		out._cell_w_px[t] = w_m * SimConst.PX_PER_M
 		out._turn[t] = turns * PI * 0.5
 	return out
+
+
+## The table's props by name for this run's view (its art key), built once per art; null under a
+## flat view or a perspective top_lift (those keep their own prop drawing).
+static func named() -> PropCards:
+	var view: ViewMode = ViewMode.shared()
+	if view.is_flat() or view.eye_h_m > 0.0:
+		return null
+	if _named_art != view.art:
+		var parser: JSON = JSON.new()
+		if parser.parse(FileAccess.get_file_as_string(TABLE)) != OK:
+			return null
+		var d: Dictionary = parser.data
+		var props: Dictionary = d.get("props", {})
+		var names: Array[String] = []
+		names.assign(props.keys())
+		var fb: Dictionary = d["art_fallback"]
+		_named = make(props, names, view.art, fb)
+		_named_art = view.art
+	return _named
+
+
+## Draws the card of the prop called `name` facing the camera on `ci` (from its _draw), its foot at
+## `foot` px, at `px_per_m`; false (nothing drawn) when the table has no such card. Leaves the
+## canvas transform at identity.
+func draw_named(ci: CanvasItem, name: String, foot: Vector2, px_per_m: float) -> bool:
+	var t: int = _names.find(name)
+	if t < 0 or not _strip.has(t):
+		return false
+	var item: RID = ci.get_canvas_item()
+	draw(item, t, 0.0, foot, _cell_w_px[t] * px_per_m / SimConst.PX_PER_M)
+	RenderingServer.canvas_item_add_set_transform(item, Transform2D.IDENTITY)
+	return true
 
 
 ## The art at `path` with `<art>` set to the view's art key, else its fallback key's; null if none.
@@ -70,11 +110,12 @@ func facing(t: int, rot: float) -> Vector2i:
 	return Vector2i(idx, 1 if ang < -0.01 and idx > 0 and idx < FACINGS - 1 else 0)
 
 
-## Draws prop t's card into `item`; `foot` is the footprint's south-edge centre in world px.
-func draw(item: RID, t: int, rot: float, foot: Vector2) -> void:
+## Draws prop t's card into `item`; `foot` is the footprint's south-edge centre in world px; `w`
+## the cell's width in px (default: the table's, at the city's scale).
+func draw(item: RID, t: int, rot: float, foot: Vector2, w: float = -1.0) -> void:
 	var strip: Texture2D = _strip[t]
 	var cell: Vector2 = Vector2(strip.get_width() / float(FACINGS), strip.get_height())
-	var w: float = _cell_w_px[t]
+	w = _cell_w_px[t] if w < 0.0 else w
 	var h: float = w * cell.y / cell.x / ViewMode.shared().ground_k()
 	var f: Vector2i = facing(t, rot)
 	var src: Rect2 = Rect2(Vector2(cell.x * f.x, 0.0), cell)

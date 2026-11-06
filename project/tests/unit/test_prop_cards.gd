@@ -37,3 +37,16 @@ func test_cards_move_to_the_roofs_band() -> void:
 func test_missing_art_falls_back_to_the_named_key() -> void:
 	var tex: Texture2D = PropCards.art_texture(ART, "p99", {"p99": "p55"})
 	assert_not_null(tex, "p99 has no strip: the p55 one draws")
+
+
+func test_named_is_null_under_the_flat_view() -> void:
+	if ViewMode.shared().is_flat():
+		assert_null(PropCards.named(), "top keeps every drawer's own props")
+	else:
+		assert_not_null(PropCards.named())
+
+
+func test_draw_named_skips_an_unknown_prop() -> void:
+	var ci: Node2D = autofree(Node2D.new())
+	assert_false(_cards().draw_named(ci, "lamp_post", Vector2.ZERO, 48.0))
+	assert_true(_cards().draw_named(ci, "payphone", Vector2.ZERO, 48.0))
