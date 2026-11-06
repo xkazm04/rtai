@@ -421,3 +421,24 @@ hud; city's occlusion and arena-cover REQUESTs answered in it2/it6).
   move the rig cast (ArenaRigs' attach path) out of dev/ into features/ and pick it in Quest1Game when
   `ViewMode.shared().cards` is true; `top` keeps the sprite cast (goldens). A Call for the owner:
   quest 1's cast under the angled view, sprites (today's ship) vs the rig cast (the dev path, filmed).
+- MILESTONE 00:15 quest 1 ships the rig cast under a card view (commit ebd77c13, DECISION in
+  docs/decisions.md): `Quest1Game._dev_rigs` takes the rig cast when `RIGS_UNDER_CARDS and
+  ViewMode.shared().cards` (combo, tilt70, tilt), or on `--rigs` in a debug build as before; `top`
+  keeps the sprite cast + StoryForms (no golden, replay or parity input moves). `ArenaRigs` and
+  `ArenaRobotRigs` moved dev/arena -> features/arena (git mv, class names kept) so a release export
+  carries them; the 2026-11-04 decision rejected the move only for night-lane merge conflicts, and
+  `git diff main...n8-<lane>` shows no n8 lane touches either file. release_compile: 558 loaded, 0
+  failed. Targeted unit (slice closure, arena rigs, flamer sway, boss cam) 18/0. Debt: dev_loc
+  -392 (the move), files_near_cap/cmdline reads re-keyed to the new paths, quest1_game +1 line
+  (accepted with a reason). Evidence: `gtai-masters/n8/view/quest1_dock9_shipped_before_after_tilt70_32ppm.png`
+  (left: flat sprites, right: the same release path now on the rigs, Rivet's card, cops lifted with
+  shadows; log "quest1: cast rigs: true" with no --rigs), 0 SCRIPT ERROR. frames.json: added at 3rd,
+  dropped city_foot (still on disk).
+  Owner Call (REPORT): quest 1's cast under the angled view, rig cast (built) vs sprites
+  (`RIGS_UNDER_CARDS` false). The rig cast's Rivet is today's frozen Rivet; it changes with the
+  owner's whole-figure Rivet.
+- Registry rules applied it7: concept-scene-parity (quest 1 judged on its real scene, the shipped
+  path, not the dev flag the lane filmed before), depth-ordered-layered-art (the boss's drawn top is
+  his lifted height, not his ground point), motion-quality-gating (stills at the same tick and seed,
+  before/after differ only in the change), perf-regression-gating (not measured this iteration: the
+  quest's rig cast vs sprites frame cost is UNMEASURED, owed).
