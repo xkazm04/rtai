@@ -1586,3 +1586,20 @@ NEXT (iteration 20, in order):
 - 07:00 NUMBERS started on a9bf2e2d: `boss_numbers.mjs --seeds=1..10 --bots=dodge,human
   --tag=it20` (CONTENDED: other lanes' Godot runs alive). Seeds 1-5 must equal it9's
   `numbers-it9-spine94` (every change since it9 was render only); seeds 6-10 double n.
+- 07:03 FRICTION: the first numbers run overlapped my crate_damage edit (a `float(Variant)` parse
+  error lived ~1 min): seeds 5-9 logged ~35k SCRIPT ERRORs each. Deleted, re-run after the commit.
+  Lesson: never edit `project/` while a Godot batch runs from this worktree.
+- 07:05 MILESTONE 88e192a1 **owner call 2 as one data value**: `servo.json parcels.crate_damage`
+  (schema 0-100, required). 0 = harmless, the default (sim identical); above 0, the crate's 0.9 m
+  footprint lands as a Blast with `fire` false (no fireball); the defeat's settle clears it. Test
+  `test_servo_crate_damage.gd` (2). Lint 13/13, unit **1199/0** (`unit-it20.log`, junit fresh).
+- 07:10 NUMBERS on 88e192a1 (`numbers-it20/`, 20 runs, 0 SCRIPT ERROR, CONTENDED): seeds 1-5 give
+  **the same boss_fight record as it9, all ten** (the it10-it19 body work moved nothing in the sim).
+  n = 10: dodge 10/10 down, 110-159 s (130), took 26, 0 deaths, rotor 4/74, hot 1/26, hop 1/18,
+  dives 5/44, 0 parcel hits; human 10/10, 116-169 s (137), took 159, 0 deaths, rotor 33/81, hot
+  8/29, hop 6/16, dives 6/56, 6 parcel hits.
+- 07:14 NUMBERS crate_damage 12 (temporary data edit, reverted; `numbers-it20-crate12/`): dodge and
+  human seeds 1-10 **identical to 0** (no crate ever lands on a ring-reading bot: the 0.9 m box is
+  inside the 1.6 m ring); stand seeds 1-3 (`-stand/`) parcel hits 50/53/43 vs it9's 39/48/32, so
+  the value reaches the fight. DECISION (decisions.md): keep 0. REPORT call 2 and 3 (now with the
+  data keys) and the numbers table on it20.
