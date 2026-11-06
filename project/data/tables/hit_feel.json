@@ -160,6 +160,14 @@
   "schema": "gtai.hit_feel/1",
   "weapons": [
     {
+      "doc": "Rivet's picked-up rifle (quest 1, combat.json's assault-rifle; the loader matches the hyphen). n7-ranged it26: its hits are light class, whose 1 px kick measured 1 px on film and did not read at 32 px/m (audit I 2), so kick_px 2 over 6 ticks pushes the frame along each round that lands, and fire_kick_px 1.2 over 4 ticks kicks it back against the aim on each round of the 4-round burst (recoil; the 1-kick-per-tick cap holds it). No stop, no shake (a burst would stutter). View only; --feel=off = before.",
+      "fire_kick_px": 1.2,
+      "fire_kick_ticks": 4,
+      "id": "assault_rifle",
+      "kick_px": 2,
+      "kick_ticks": 6
+    },
+    {
       "doc": "The flamer lighting up (brief item 5, the ignition read): its puffs do not kick (about 20 a second would blur), but the first puff after the trigger has rested (FeelCam.IGNITE_IDLE_TICKS) kicks the camera back against the stream, a whump as it lights; the same round draws the nozzle lick as a flare (ignite_flare_k, the stream's lick is 0.45) shrinking back over ignite_flare_ticks (WeaponFxIgnite).",
       "fire_kick_ticks": 9,
       "id": "flamethrower",
