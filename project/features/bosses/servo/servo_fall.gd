@@ -30,6 +30,11 @@ static func slump_m(dt: int) -> float:
 	return 0.6 * (1.0 - exp(-dt / 16.0))
 
 
+## d8: the stood body's lift (ServoArt.stand) as he goes down: it sinks onto the floor (1 .. 0).
+static func stand_k(dt: int) -> float:
+	return exp(-dt / 16.0)
+
+
 ## How far the pads sag in toward the body (metres) and their scale (dropping to the floor).
 static func pad_in_m(dt: int) -> float:
 	return 0.5 * (1.0 - exp(-dt / 20.0))

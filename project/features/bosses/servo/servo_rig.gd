@@ -103,7 +103,7 @@ func _draw() -> void:
 	var k: float = 1.0 + 0.015 * sin(_walk * 2.0) if dt < 0 else ServoFall.scale_k(dt)
 	k *= ServoShift.lift_k(fight)
 	var tint: Color = _tint() if dt < 0 else ServoFall.tint(dt)
-	_up = ServoArt.stand(self, o, fwd, px)
+	_up = ServoArt.stand(self, o, fwd, px) * (1.0 if dt < 0 else ServoFall.stand_k(dt))
 	for s: float in [-1.0, 1.0]:
 		_leg(o, fwd, side, s, tint)
 	var pad_w: float = PAD_OUT_M - (ServoFall.pad_in_m(dt) if dt >= 0 else 0.0)
