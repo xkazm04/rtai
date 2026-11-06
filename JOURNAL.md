@@ -1114,3 +1114,8 @@ NEXT (iteration 11, in order):
    is the lever, but the drawn body must not outgrow the hit body (fairness): measure first.
 4. Director reel once more before the freeze; re-export the exe at the freeze (the it8 recipe in
    REPORT); finalize REPORT (remove DRAFT, Next steps).
+- 01:57 NEXT 1 done early: the per-phase 32 px/m clips cut real-time from the it10 full fight
+  (`M/king_phase{1,2,3}_*_32ppm_it10.mp4`: 0-19.5, 17.5-59.5, 56.5-95 s); **looked at** the first,
+  middle and last frames of each (phase flash, King stepping down, the defeat). The it6 phase
+  clips deleted; frames.json 15. NEXT for it11 is now items 2-4 (+ re-cut the procession-entering
+  clip on the current head).

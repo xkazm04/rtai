@@ -23,7 +23,7 @@ The moveset is `docs/bosses/king.md`; the full log is `JOURNAL.md`.
   - a jewelled crown and the ermine collar over the vermilion cape;
   - the gilded plum throne-car, a boss-owned vehicle with drapes and a hood cannon;
   - the gang: the rich robot thug with gold chains, a steel helmet and shades.
-- **Three phases** (`king_phase{1,2,3}_*_32ppm_it6.mp4`):
+- **Three phases** (`king_phase{1,2,3}_*_32ppm_it10.mp4`, cut from the it10 full fight):
   - phase 1, the procession: ram lanes and the hood cannon's coin fan (since it10 a spray of 48 coins out of the muzzle, `evidence/king/shots/it10/coin_spray_before_after_48ppm.png`), with the gang pushing and riding;
   - phase 2, the court: the car stops, the gang brawls, and decrees buff them;
   - phase 3, on foot: the press slam (a leap onto the ring, shockwave plus coin ring) and the charge.
