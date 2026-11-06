@@ -157,3 +157,39 @@ NEXT:
   frames.json 14 entries.
 - FRICTION: gdformat moves `##` comments inside a const Dictionary literal to the wrong row; keep the
   row comments in the doc block above the const.
+- GATE full unit (no-arg) on 91f99888: 1414 passed, 0 failed (46 s). GATE `top` Dent ghost reel
+  (`--bot=ghosts --ghost=dent --rigs --ppm=32`) md5-identical with main 0bea8b93 at frames 150 and 299.
+- IMAGE round2 (lock taken 15:23, released 15:24): `tonnage_55_gunmetal_magenta.png`, Tonnage in the
+  GAME palette (gunmetal, teal seams, hazard-striped press head at the front). Refs: round1 sheet +
+  the game's crown/press_head parts. First try usable. (Re-toning round1 lost the hazard stripes.)
+- MILESTONE a743199e + 4eb02025: `GhostCard` (features/souls/ghost_card.gd), the facing card for a
+  non-CutRig ghost; Tonnage draws `art/view/p55/tonnage_card.png` (3.1 m wide, anchor 0.42 at the
+  lifted crown) and hides crown/head/hoses; the pistons still walk under it. Unit test_ghost_card (4).
+- EVIDENCE `tonnage_card55_before_after_tilt_48ppm_ghostreel.mp4` + x3 stills. LOOKED: the press stands
+  in 3/4 view, the hazard head turns with the heading (profile and back-3/4 mirrored correctly).
+  The near front leg draws under the card (card is the last child): reads as behind the press body.
+- FRICTION: `node tools/godot/check.mjs <script>` FAILS ("Failed to compile depended scripts") even on
+  untouched scripts (rig_head_card.gd) in this worktree; the unit run compiles them fine. Not mine to fix.
+- GATE `top` Tonnage ghost reel md5-identical with main 0bea8b93 at frames 150 and 299; 0 SCRIPT
+  ERROR in every run this session. 32 px/m Tonnage pair filmed. frames.json 14 entries (the superseded
+  tonnage_lifted/slam stills removed from masters).
+- NOT RUN this session: scenarios, evidence, director reel (top/tilt) on 4eb02025. Render-only, p55-
+  keyed changes, but owed before the freeze.
+
+## Calls for the owner (collected for REPORT)
+- Dent under tilt: tan crash dummy (the game's Dent, built) vs the 55 sheet's all-teal Dent
+  (`p55/dent_bust_card_teal.png`, one SET_CARDS path; the limbs would need teal parts too).
+
+NEXT:
+1. Gates on 4eb02025: scenarios (`node tools/tests/run_scenarios.mjs`), director reel 19/19 in top and
+   tilt (`--bot=reel --reel=director --loadout=pistol --rigs`), evidence --no-bench.
+2. Tonnage card quality: the slam telegraph ring vs the card (does the card hide the ring at height?),
+   the near front leg under the card (a near-leg z above the card when the leg is south of the crown),
+   the card's transform-in at unfold < 1 (size_k only, no fold art). The teal glow at height (aura only
+   on the ground today): a soft teal rim on the card?
+3. Ohm: OhmRig (209 lines: split first) -> a GhostCard from an ohm_55 MAGENTA production sheet in the
+   game palette (image round: refs = gtai-art/angle-r1/out/ohm_55.png + the game's ohm parts).
+4. Kerf last, from the v2 sheet (kerf_55.png, already on magenta): v2 is a tall lanky biped = a CutRig
+   plan like Dent (KerfPlan on RivetPlan) or a GhostCard over the hover rig; owner look pending.
+5. Draw order: `--order-probe` before/after for the King's accents and the ghost/kill overlays.
+6. Rivet 64 px/m pistol close-up (`--bot=reel --reel=director --chapter=pistol --ppm=64`).
