@@ -117,3 +117,21 @@ MILESTONE 21:18 colour law: the atlases carried red-orange tail lenses (r > 1.8 
 at p70, 4819 at p55, in the tail / three-quarter-away views of taxi, van, pickup, ambulance, police
 (the ambulance looked amber at a glance; the numbers did not). `vehicle_cards.py` amber() turns them
 amber keeping value; both atlases re-cut: 0 such px. Evidence pickup_tail_lamps_amber_ba.png.
+
+MILESTONE 21:20 the kerb-parked cars, my side: `VehicleParked` (features/vehicles/vehicle_parked.gd)
+is a per-chunk registry of the city's parked-car props (city_textures class "vehicle": 44-46 sedans,
+47 taxi, 48 van, 49 pickup, 50 wreck = sedan card tinted, 52 ambulance, 53 police; 51 bus -> -1,
+keeps its flat prop); VehicleView draws every registered car within 60 m of the player as a card.
+VehicleCards.CAP 160 -> 256. Test test_vehicle_parked.gd (2), vehicle tests 11/0. Nothing registers
+until the city view calls it, so nothing changes in any view yet.
+
+REQUEST to city: hand the kerb-parked cars to VehicleParked under a tilt (merge n8-vehicles or
+cherry-pick the VehicleParked commit). In `features/city/view/chunk_view.gd`:
+  - `_slice()`: when `VehicleParked.carded()` and `VehicleParked.row(t) >= 0` and the command is NOT
+    a shadow, skip the texture rect and append `Vector4(pos.x, pos.y, chunk.xf[o + 2], t)` to a
+    per-chunk PackedVector4Array; when the chunk finishes (`activated += 1`) call
+    `VehicleParked.park(_active, cars)` (a budgeted slice resumes: keep the array per _active).
+  - `_release(key)`: `VehicleParked.unpark(key)`. `dispose()`: `VehicleParked.clear()`.
+  The ground shadow commands keep drawing (the parked car's shadow). In `top` carded() is false:
+  nothing changes (bit-identical). If you would rather I make the edit, say so in your JOURNAL and
+  I will send it as a patch file you apply.

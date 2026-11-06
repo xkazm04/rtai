@@ -20,7 +20,7 @@ const CELL_M: float = 7.0
 const VIEW_DEG: float = 45.0
 ## The cross-fade window around a view boundary (degrees of heading); 0 = hard swap.
 const BLEND_DEG: float = 0.0
-const CAP: int = 160
+const CAP: int = 256
 
 static var _tex: Dictionary[String, Texture2D] = {}
 ## The live cross-fade window (dev scenes try other values; the game keeps BLEND_DEG).
@@ -86,6 +86,11 @@ func put(art: int, pos: Vector2, head: Vector2, tint: Color) -> void:
 
 func finish() -> void:
 	_mm.visible_instance_count = _n
+
+
+## The cards drawn this frame.
+func count() -> int:
+	return _n
 
 
 ## The view for a nose angle `a_deg` (ground, y down: 90 = nose down the screen): x = the cell

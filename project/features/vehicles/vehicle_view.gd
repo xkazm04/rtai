@@ -15,6 +15,8 @@ const CAR_W: float = 102.4
 const SHADOW_OFF: Vector2 = Vector2(5.12, 5.12)
 const SHADOW: Color = Color(0.09, 0.075, 0.106, 0.45)
 const WRECK_TINT: Color = Color(0.62, 0.6, 0.58, 1.0)
+## n8: the kerb-parked cards drawn around the player (m; the camera sees ~40 m across at 32 px/m).
+const PARKED_M: float = 60.0
 const CAP: int = 32
 ## View lab (view.json cast_k): the roof height a cast shadow is thrown from (m).
 const CAR_H_M: float = 1.4
@@ -142,6 +144,7 @@ func _draw_cards() -> void:
 		cards.put(
 			art, Vector2(recs[r + 2], recs[r + 3]), Vector2(recs[r + 4], recs[r + 5]), Color.WHITE
 		)
+	VehicleParked.put_near(cards, service.world.player_pos(), PARKED_M, WRECK_TINT)
 	cards.finish()
 
 
