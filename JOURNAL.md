@@ -528,3 +528,9 @@ NEXT (iteration 9, in order):
    and the earlier ones (bike, wreck fire size).
 00:32 GATE scenarios on a265dfba: 52 ran, 0 failed, exit 0, 0 SCRIPT ERROR (vehicle drive replay
 identical, timing CONTENDED as labelled). Evidence json: evidence/n8-vehicles/iteration8.json.
+00:37 f29b7a0e a unit test that the card grid follows the atlas across a combined view's pitch swap
+(nine columns -> five -> nine; VehicleCards.cols()). Vehicle files 18/0.
+00:40 MUTATE features/vehicles/vehicle_views.gd at f29b7a0e (tests test_vehicle_views +
+test_vehicle_cards, 10 sampled of 49): score 100 % = killed 10 / (10 + 0 survived), 197 s.
+Session end 00:40; NEXT as written above (iteration 9: the REQUEST for the taxi / pickup /
+ambulance in-betweens, then their FINE rows; exe + REPORT at the freeze).
