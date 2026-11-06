@@ -1080,3 +1080,12 @@ without 5 seeds x bots).
   alone, twice); scenarios exit 0, 0 SCRIPT ERROR (`evidence/servo/*-it10.log`); decisions.
   The pads lower/further out (the other half of NEXT 4) left: it moves the arms' reach (a fight
   read), not tonight's last half hour.
+- 02:35 FILM the full fight on the steel spine (`full32_10.sh`, 8d8c3cae tree, human bot, seed 2,
+  32 px/m, boss cam): down at **7036, 188 on Rivet, 0 deaths, 0 SCRIPT ERROR**: tick-identical to
+  it9 (render-only since). `M/servo_fight_bot_human_32ppm_it10.mp4` (121 s). **Looked at** the 12
+  keys (`M/frames/servo_fight_keys_32ppm_it10.png`): the beam, bay hops, the belt, the dash lanes,
+  carpet rings, hot dash lanes, the spill at the defeat. STILL `M/frames/servo_target_vs_game_32ppm_it10.png`
+  (sheet | 1x | 2x, tick 1800): **looked at**: the steel spine's stacked boxes read beside the
+  sheet's; remaining gaps: the sheet's hazard-striped rack bases, the spine's horseshoe frame, and
+  the pads hanging in front of the wings (ours beside them). it9 fight clip, keys, still deleted;
+  frames.json 15; REPORT paths.
