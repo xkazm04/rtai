@@ -27,6 +27,16 @@ const SWAGS: int = 5
 const BELLY_M: float = 0.22
 const PANELS_X: Array[float] = [-0.44, -0.28, 0.0]
 const PANEL_W: Array[float] = [0.14, 0.18, 0.12]
+## it14: the rounded gold bumpers at both ends (the 90-degree panel's bars past the nose and the
+## trunk), standing out this far (m); 0 = the it13 square-ended box.
+const BUMPER_M: float = 0.18
+## it15: the gilded throne's back (the sheet's 3/4 view: a gold scrolled back behind King; the
+## 90-degree panel: a gold frame round him): the arch's radius (m) round his seat and its half
+## angle (rad) either side of straight back. THRONE_HW_M 0 = no throne (it14).
+const THRONE_HW_M: float = 0.95
+const THRONE_ARC: float = 1.15
+## The scrolled crest at the arch's back centre (the sheet's carved top), its radius (m); 0 = none.
+const CREST_M: float = 0.17
 
 
 static func draw(ci: CanvasItem, l: float, w: float, p: float) -> void:
@@ -38,6 +48,48 @@ static func draw(ci: CanvasItem, l: float, w: float, p: float) -> void:
 		ci.draw_rect(Rect2(r.end.x, -w * 0.5 + 6.0, 3.0, w - 12.0), GOLD)  # the gold cross-bar after it
 	for sy: float in [-1.0, 1.0]:
 		_swags(ci, l, w, p, sy)
+
+
+## The gold bumpers, drawn under the body: a rounded bar across each end, past the outline.
+static func bumpers(ci: CanvasItem, l: float, w: float, p: float) -> void:
+	if BUMPER_M <= 0.0:
+		return
+	var t: float = BUMPER_M * p
+	var h: float = w * 0.78
+	for sx: float in [-1.0, 1.0]:
+		var x: float = sx * (l * 0.5 + t * 0.5)
+		for edge: float in [3.0, 0.0]:  # the ink edge, then the gold
+			var col: Color = INK if edge > 0.0 else GOLD
+			ci.draw_rect(Rect2(x - t * 0.5 - edge, -h * 0.5, t + edge * 2.0, h), col)
+			for sy: float in [-1.0, 1.0]:
+				ci.draw_circle(Vector2(x, sy * h * 0.5), t * 0.5 + edge, col)
+		ci.draw_line(Vector2(x, -h * 0.45), Vector2(x, h * 0.45), GOLD_HI, maxf(t * 0.18, 1.5))
+
+
+## The throne's back at `at` (car px, King's seat), drawn over the cape and under the rig: a gold
+## arch round King's back (the cape drapes from his shoulders through it), an ink edge, a light
+## line, ball finials at its ends. Stays on the car, empty, when King steps down.
+static func throne(ci: CanvasItem, at: Vector2, p: float) -> void:
+	if THRONE_HW_M <= 0.0:
+		return
+	var r: float = THRONE_HW_M * p
+	var w: float = 0.16 * p
+	ci.draw_arc(at, r, PI - THRONE_ARC, PI + THRONE_ARC, 24, INK, w + 4.0)
+	ci.draw_arc(at, r, PI - THRONE_ARC, PI + THRONE_ARC, 24, GOLD, w)
+	ci.draw_arc(at, r + w * 0.2, PI - THRONE_ARC * 0.9, PI + THRONE_ARC * 0.9, 24, GOLD_HI, 1.5)
+	for s: float in [-1.0, 1.0]:  # the ball finials on the arch's ends
+		var fin: Vector2 = at + Vector2.from_angle(PI + s * THRONE_ARC) * r
+		ci.draw_circle(fin, 0.15 * p + 2.0, INK)
+		ci.draw_circle(fin, 0.15 * p, GOLD)
+		ci.draw_circle(fin - Vector2(0.05, 0.05) * p, 0.055 * p, GOLD_HI)
+	if CREST_M > 0.0:  # the crest: a gold boss with two scrolls, past the arch's back
+		var c: Vector2 = at + Vector2(-r - CREST_M * 0.6 * p, 0.0)
+		for k: Vector2 in [Vector2(0.0, 0.0), Vector2(0.25, -0.9), Vector2(0.25, 0.9)]:
+			var q: Vector2 = c + Vector2(k.x, k.y) * CREST_M * p
+			var rr: float = CREST_M * p * (1.0 if k == Vector2.ZERO else 0.6)
+			ci.draw_circle(q, rr + 2.0, INK)
+			ci.draw_circle(q, rr, GOLD)
+		ci.draw_circle(c, CREST_M * p * 0.45, PLUM_DARK)  # a plum gem (vermilion is the cape's)
 
 
 ## The hood cannon from `tail` to `tip` (car px): ink-edged, shaded, banded, on its mount.
