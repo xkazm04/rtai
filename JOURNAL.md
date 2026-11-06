@@ -1178,3 +1178,20 @@ must keep the drawn body honest to the hit body).
   pale, both losing the edge. DECISION: keep x1.55 (regenerated and re-imported back to it; the
   tree is byte-identical). The near-black gang seen at 64 px/m is the D5 close-up set (from 56
   px/m, its own grime, not lifted by design); a D5 lift is a close-up-only item, listed in NEXT.
+
+### 02:20 MILESTONE b5213dc7 the hood cannon reads as a cannon
+- Found by looking at the it10 target comparison beside the sheet's 90-degree panel: the hood
+  cannon, phase 1's coin source, was a flat gold quad with a dull brown disc, read as a stripe on
+  the black hood (a "T") at 32 and 48 px/m.
+- FIX (render only, the muzzle point unchanged so the coins still leave it): `KingCarTrim.cannon`
+  draws an ink-edged tapered barrel (`CANNON_PROFILE`), two bands, a highlight and a shade
+  stripe, a flared muzzle with a bore lip, a breech knob, on a round swivel mount.
+- **Looked at** `evidence/king/shots/it12/hood_cannon_before_after_48ppm_2x.png` (phase 1 seed 2,
+  ticks 60 and 485: the coins leave the new muzzle) and `_32ppm_3x.png`: a gold cannon on the
+  hood at both zooms. Before frames taken on HEAD's two files (the edits set aside in scratch).
+- Gates: lint 13/13 (`lint-it12.log`), unit **1160/0** (`unit-it12.log`).
+- Director reel on 73543d25 (headless, `--rigs --bot=reel --reel=director --loadout=pistol`, 500 s
+  timeout): **19/19 chapters fully down** (`evidence/king/director-reel-it12.log`). The cannon
+  commit is King's render only (drawn under `--boss`), so it stands for b5213dc7.
+- Python on Windows writes CRLF: the committed blobs are LF (`* text=auto eol=lf`), the working
+  copies converted back.
