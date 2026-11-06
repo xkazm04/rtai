@@ -1665,20 +1665,34 @@ same-build before in the live quest path, the quest's own clip window), depth-or
   -28.4 -> -23.4 dB, centroid 5875 -> 5361 Hz. Clip `flamer_jet_cue-ab-32ppm.mp4` (6 s with sound),
   still checked (the jet and its burst on the dummy). REPORT row, call 7, audit row, decisions line.
 
+### GATES 04:52 on head `8ca50ecb`
+- Unit 1178/1178 (`evidence/ranged/it16-unit-8ca50ecb.log`), reels pit 19/19 + city 19/19, 0
+  SCRIPT ERROR (`evidence/ranged/it16d-reel-{director,city}-8ca50ecb.log`). Lint 13/13.
+
 NEXT (iteration 17; supersedes the 04:08 list):
 1. Freeze (by 08:30): full evidence run on the final head (`node tools/evidence/run.mjs`; last
    full green `13e0e050`; since then render-only `01a482d1` (scenarios 52/0, quest 1 replay
    identical) and sound-only data `d4559823`, `6e50068c`, `4e8860c3`, `b66880c1`, `51cb1194`, `e63c186e`); last
-   unit 1176/1176 + reels 19/19 x2 on `2d63f305`; re-bake + export
+   unit 1178/1178 + reels 19/19 x2 on `8ca50ecb`; re-bake + export
    `windows-showcase` -> `build/export/windows/RTAI.exe`; REPORT exe lines for calls 4-7 (call 7 now
    lists the Gatling, zap and molotov cues with their exe commands); drop DRAFT.
 2. City combined clip: retake at the freeze (the sound changed for the SMG, flamer, Gatling, electro, plasma,
    ray, molotov, rocket and nuke chapters; the picture did not).
-3. Sound pass: done for every gun's shot (SMG `51cb1194`, flamer `e63c186e`). Run unit + reels on
-   the head (`e63c186e` and later): the last full unit and reels are on `2d63f305`.
+3. Sound pass: done for every gun's shot (SMG `51cb1194`, flamer `e63c186e`); unit 1178/1178 and
+   reels 19/19 x2 on `8ca50ecb`. Every Rivet gun now voices a cue of its own (unit-tested: none
+   plays a hurt cue or the contractors' rifle). Nothing of it has been listened to (call 7).
 4. Quest 1's rifle: I and V still `?` (its hits land at the clip frame's right edge). If time, a
    wider `quest1_clip --ppm=24`-style framing is not a flag; try `--cam=fight` stills at the ticks
    a contractor drops (the HUD kill count) instead. Rifle fire kick: no hit_feel row can key
    `assault-rifle` (the schema's id pattern has no hyphen); leave it unless a stand-in lookup is
    added to FeelCam.fire (view only, keyed by the arsenal's art_stand_in).
 5. Remaining weak cells: homing_shard V 2 (call 1, owner); Gatling I/R/V 2 (crowds only).
+
+STOP 04:53 iteration 16. Code commits: `01a482d1` (quest 1 rifle flash + tracer, render only),
+`6e50068c` (Gatling cue), `4e8860c3` (zap guns off Rivet's hurt cue), `b66880c1` (molotov burst
+whoomp), `51cb1194` (SMG cue), `e63c186e` (flamer jet cue); each with a test and a planted fault.
+Gates on `8ca50ecb`: lint 13/13, unit 1178/1178, reels 19/19 x2; scenarios 52/0 with quest 1
+replay identical on `01a482d1`. Clips: `quest1_rifle_flash-ab-32ppm.mp4` (frames.json entry 0) +
+`quest1_rifle_flash-48ppm.mp4`, and five sound pairs (`gatling_shot_cue`, `zap_cues`,
+`molotov_burst_cue`, `smg_shot_cue`, `flamer_jet_cue`, all `-ab-32ppm.mp4`). Audit: rifle A 0 -> 2,
+R 1 -> 3; S -> 3 for the Gatling, plasma, ray, molotov; the SMG and flamer now own their cues.
