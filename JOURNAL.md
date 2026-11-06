@@ -387,3 +387,33 @@ NEXT:
 - Optional: a true 1080p live capture needs the viewport overridden (Movie Maker records at the
   project's 1280x800), e.g. a dev-only override.cfg copy; the board covers 1080p meanwhile.
 - 23:57 Session end. All committed.
+
+## Iteration 6 (BUILD, 23:58-00:58)
+
+- 00:00 Read JOURNAL, git log, the other lanes' journals (no REQUEST to hud). The assets lane's
+  round 2215 chain B landed: `showcase_mini_nuke_{70,55}` (A, A) and `showcase_plasma_sword_{70,55}`
+  (A, A) in `rivet-final/out/` (23:41-23:58).
+- 00:05 MILESTONE 54ef2527 the mini nuke's and the plasma cleaver's showcase from the assets sheets
+  (`design_cut.py --showcase`): looked at beside the interim cuts (`gtai-n8/scratch/hud/it6/
+  nuke_sword_compare.png`): the same designs, now the one lying side view the other 15 have (the
+  interim nuke p55 was a 3/4, the cleaver's p55 a diagonal). Armory re-filmed at 48 px/m tilt70 and
+  tilt (seed 1, frame 89, 0 SCRIPT ERROR): the nuke on the floor and the rack, the cleaver standing
+  on the rack. 4 provenance lines (prompt hashes ada84edabbd4 / 4267ae870f2c / ce9f6b87abf4 /
+  afbed06b43ea). `--select` showcase/crate/pickup/armory 19/0, lint 15/15. All 5 redesigned
+  weapons now come from the assets lane's showcase sheets (electro gun p70 from its A 55 sheet).
+- 00:08 FINDING (corrects my it4 NEXT): quest 1 HAS a bot that films: `dev/frames/quest1_clip.gd`
+  (CollectCallInputDriver, the real Quest1Game + HUD). It rejected `--view`; added it (dev only).
+  The payphone beat: the call's lines run ticks ~2200-4100 (`--stills` sweep, 0 SCRIPT ERROR).
+- 00:14 FRICTION: under `--rigs` (dev-only, debug builds) quest 1's ghost card never folds while a
+  line is up (the rig cast's own GhostFormView; only StoryForms sets `GhostFormHud.compact`), so the
+  subtitle paper covers its 3 other chips. The shipped path folds right. Filmed the shipped path.
+- 00:28 FIXED: `StoryForms.fold_rigs` (Quest1Game._dev_rigs calls it after the rig cast attaches):
+  the rig cast's card folds the same way (no lift, no voice). Unit test_story_forms 10/0 (a planted
+  RigCast with a ghost_view; a cast without one adds nothing); a `--rigs` still at tick 4000 shows
+  the folded card beside Don Fax's box (`gtai-n8/scratch/hud/it6/q1rigs_fold.png`). Debt: accepted
+  +3 lines (quest1_clip --view +2, quest1_game +1), reason in tools/debt/baseline.json.
+- 00:24 MILESTONE the payphone call filmed LIVE in quest 1 under tilt70 at 32 px/m (shipped path,
+  CollectCallInputDriver through real InputEvents, ticks 2150-4100, 0 SCRIPT ERROR):
+  `gtai-masters/n8/hud/quest1_payphone_call_live_tilt70.mp4` (32 s): Patch's payphone rises in,
+  Rivet's line (no face: proposal only), Don Fax's payphone; the ghost card folded beside the box.
+  Stills `quest1_payphone_{patch,fax}_live_tilt70_32.png`. Looked at a contact sheet of 8 frames.

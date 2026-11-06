@@ -125,3 +125,30 @@ func test_the_subtitle_lift_is_zero_at_32_ppm_and_clears_tonnage_at_64() -> void
 
 func test_the_shipped_table_turns_the_subtitle_lift_on() -> void:
 	assert_true(GhostFormTable.load_default().story_lift)
+
+
+## Stands in for dev ArenaRigs (tests never name dev classes): the cast's own ghost view.
+class RigCast:
+	extends Node
+	var ghost_view: GhostFormView = null
+
+
+func test_the_rig_casts_card_folds_while_a_line_is_up_too() -> void:
+	var view: CollectCallView = _view()
+	var cast: RigCast = RigCast.new()
+	cast.ghost_view = GhostFormView.make(_stage(true), null, null)
+	add_child_autofree(cast)
+	cast.add_child(cast.ghost_view)
+	var host: Node = _host()
+	StoryForms.fold_rigs(host, cast, view)
+	assert_eq(host.get_child_count(), 1, "one folder")
+	var s: StoryForms = host.get_child(0) as StoryForms
+	view.hud_view.state.say("Patch", "Gooood evening.")
+	s._process(0.0)
+	assert_true(cast.ghost_view.hud.compact, "a line is up: the rig cast's card folds")
+	view.hud_view.state.silent()
+	s._process(0.0)
+	assert_false(cast.ghost_view.hud.compact, "the line closed")
+	var bare: Node = autofree(Node.new())
+	StoryForms.fold_rigs(host, bare, view)
+	assert_eq(host.get_child_count(), 1, "a cast with no ghost view: nothing")

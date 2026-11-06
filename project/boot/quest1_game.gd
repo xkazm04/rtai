@@ -242,6 +242,7 @@ func _dev_rigs() -> void:
 	add_child(cast)
 	var ok: Variant = cast.call("attach", session.stage, view, session.world.context())
 	Log.info("quest1", "cast rigs: %s" % ok)
+	StoryForms.fold_rigs(self, cast, view)  # n8-hud: the card clears the subtitle box
 
 
 ## The cast (_dev_rigs), then the ghosts' attack views over either cast (lane ghost-powers,

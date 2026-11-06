@@ -55,6 +55,19 @@ static func attach(
 	return s
 
 
+## n8-hud: the dev `--rigs` cast brings its own GhostFormView (`cast.ghost_view`): its card folds
+## beside the subtitle box the same way (no lift, no voice: the rig cast keeps its own camera).
+static func fold_rigs(host: Node, cast: Node, view: CollectCallView) -> void:
+	var found: Object = cast.get("ghost_view") if cast != null else null
+	var rigs_view: GhostFormView = found as GhostFormView
+	if view == null or rigs_view == null:
+		return
+	var s: StoryForms = StoryForms.new()
+	s.form_view = rigs_view
+	s._hud = view.hud_view
+	host.add_child(s)
+
+
 ## The form card folds to one chip while the story's subtitle box is up (it takes the bottom
 ## centre), and the camera lifts the body clear of the box.
 func _process(_delta: float) -> void:

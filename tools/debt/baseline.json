@@ -4,7 +4,8 @@
       "accepted": [
         "2026-11-06: d8 chars: --order-probe measures ghost-card vs rig pairs (the brief's draw-order item, measured before/after) (dev_loc 18080 -> 18115)",
         "2026-11-06: n8-hud: the dialogue evidence board (dev/showcase/dialogue_board*.gd, the asset_board launcher pattern: a -s launcher reads its own args) (dev_loc 18115 -> 18206)",
-        "2026-11-06: n8-hud dialogue board grows a full-HUD still (every panel up over a game frame): dev-only evidence code (dev_loc 18206 -> 18239)"
+        "2026-11-06: n8-hud dialogue board grows a full-HUD still (every panel up over a game frame): dev-only evidence code (dev_loc 18206 -> 18239)",
+        "2026-11-06: 2026-11-07: n8-hud: quest1_clip takes --view (film the payphone call under tilt70, dev only, +2) and Quest1Game._dev_rigs folds the rig cast's ghost card beside the subtitle box (StoryForms.fold_rigs, +1) (dev_loc 18239 -> 18241)"
       ],
       "files": {
         "project/dev/arena": 1034,
@@ -13,7 +14,7 @@
         "project/dev/bench": 1388,
         "project/dev/bots": 399,
         "project/dev/enemy_ai": 662,
-        "project/dev/frames": 462,
+        "project/dev/frames": 464,
         "project/dev/ghost-forms": 616,
         "project/dev/ghost-powers": 1137,
         "project/dev/gunplay": 674,
@@ -32,7 +33,7 @@
         "project/dev/view": 158,
         "project/dev/weapon_art": 506
       },
-      "total": 18239
+      "total": 18241
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -180,8 +181,12 @@
       "total": 154
     },
     "files_near_cap": {
+      "accepted": [
+        "2026-11-06: 2026-11-07: n8-hud: quest1_clip takes --view (film the payphone call under tilt70, dev only, +2) and Quest1Game._dev_rigs folds the rig cast's ghost card beside the subtitle box (StoryForms.fold_rigs, +1) (files_near_cap 15 -> 16)"
+      ],
       "files": {
         "project/boot/collect_call/view/fx_view.gd": 271,
+        "project/boot/quest1_game.gd": 270,
         "project/dev/arena/arena_game.gd": 294,
         "project/dev/arena/arena_rigs.gd": 291,
         "project/dev/showcase/city_fight.gd": 300,
@@ -197,16 +202,19 @@
         "project/features/fx/noir/blood_fx.gd": 275,
         "project/features/player/rivet_held_view.gd": 288
       },
-      "total": 15
+      "total": 16
     },
     "files_past_soft_cap": {
+      "accepted": [
+        "2026-11-06: 2026-11-07: n8-hud: quest1_clip takes --view (film the payphone call under tilt70, dev only, +2) and Quest1Game._dev_rigs folds the rig cast's ghost card beside the subtitle box (StoryForms.fold_rigs, +1) (files_past_soft_cap 68 -> 68)"
+      ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 266,
         "project/boot/collect_call/view/cast_view.gd": 225,
         "project/boot/collect_call/view/collect_call_view.gd": 236,
         "project/boot/collect_call/view/fx_view.gd": 271,
         "project/boot/collect_call/view/stage_view.gd": 201,
-        "project/boot/quest1_game.gd": 269,
+        "project/boot/quest1_game.gd": 270,
         "project/dev/arena/arena_game.gd": 294,
         "project/dev/arena/arena_rigs.gd": 291,
         "project/dev/audio/audio_riot.gd": 201,
