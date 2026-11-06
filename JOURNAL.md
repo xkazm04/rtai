@@ -290,3 +290,51 @@ generative-artifact-gating (A first, B fixes per notes, never C: lamp 55 C round
 concept-scene-parity + motion-quality-gating (judged on the real course at 32 and 48 px/m, same
 seed before/after, diffs localized), render-submission-economy (a card is one textured rect per
 prop, recorded once per chunk; nothing per frame).
+
+- GATE scenarios on 5c05e079: `run_scenarios: 52 ran, 0 failed`, exit 0.
+- GATE director reel at tilt70 on 5c05e079 (headless, `--fixed-fps 60 --quit-after 7600
+  res://dev/arena/arena.tscn -- --bot=reel --reel=director --loadout=pistol --rigs --view=tilt70`):
+  19/19 chapters all down, 0 SCRIPT ERROR (log `evidence/director-reel-it7-tilt70.log`). The `top`
+  reel was not re-run this session (top is bit-identical by the framemd5 above).
+- MILESTONE 6a491f50 + follow-up **the boss arenas' dressing** (brief item 4). `BossDressing`
+  (features/city/view/boss_dressing.gd, a Node2D): BossView.attach (one line, the hook's arena id
+  and origin) adds it as a sibling of the arena floor (printed world canvas, the floor's scale,
+  the props band) under any angled view; flat = none. `data/tables/boss_dressing.json`
+  (gtai.boss-dressing/1 + schema): per BossSpec arena id, pieces (`piece`, `at` foot m from the
+  area's centre, `w_m`), drawn north to south as standing cards (aspect / ground_k, redrawn on a
+  ViewMode revision: the combined view's ease). Art `features/city/art/view/<art>/dress_<piece>.png`,
+  16 pieces cut by `city_prop_cut.py --kit` from king_district_55 (A, 1640) and depot_dressing_55
+  (B, 1920; the B is about the doors' pitch vs the conveyors': used as is), p70 falls back to p55.
+  - King's boulevard: gear heaps, tyre stacks, the claw arm, the crown-crate barricade, the crown
+    on a crate, crate pairs, cable reels, a drain grate, along the north and south edges (the
+    20 m street between stays clear).
+  - Depot: closed roller doors in the back wall behind servo.json's bays 1, 2 and 4, the OPEN door
+    behind the van's bay 3, bollards between the bays, feeder conveyors at the CS belt's two ends,
+    parcels/pallet/cage by the side walls. FIRST placement put the parcels and conveyors ON the
+    belt, then south of it where the belt (drawn above the world) hid them: filmed both, moved.
+  - Evidence: `it7_king_district_dressing_tilt55_before_after.jpg`,
+    `it7_depot_dressing_tilt55_before_after.jpg` (`--boss=<king|servo> --rigs --seed=2 --view=tilt`,
+    frame 400; before = the table's arena rows renamed in a scratch edit, restored). 0 SCRIPT ERROR.
+    Judged: the dressing reads as the King's scrapyard street and a loading dock at the edges; at
+    the 55 boss framing the depot doors sit at the top edge under the boss bar (half seen) and the
+    west conveyor under the ghost HUD: placement is data, fix by eye next session at combo.
+  - Known gaps: no collision (paint only, at the edges on purpose); bodies always draw over the
+    dressing (actors canvas), so a cop north of a door draws over it; no p70 kits yet.
+- REQUEST to assets: king_district, 70 and depot_dressing, 70 (the 70 twins of the two kits, same
+  eight pieces, for the combined view's play pitch before a boss engages); low priority (the
+  fights are at 55).
+- EVIDENCE set clip: `gtai-masters/n8/city/it7_city_set_tilt70_32ppm_35s.mp4` (the arena-city course,
+  tilt70, 32 px/m, 2100 frames: facades p70, occlusion, standing props).
+
+NEXT (iteration 8, in order):
+1. Judge the boss dressing at `--view=combo` (the ease to 55 on engage; the cards redraw on the
+   revision) and at 48 px/m; nudge the depot's door row and the west conveyor into the framing.
+2. Lamp posts and traffic lights as cards: the lamp 70 B (2250) + lamp 55 B (2210) strips with
+   the light pool kept at the lamp head (CityPropLights reads the flat art's arm: find its anchor).
+3. p70 strips on an open south face (iteration 4's NEXT 1), and facade_tall (B 2210) for the
+   17-21 m landmarks (a `tall` style).
+4. The bench (B: use views 1 and 5 only) and vending machine (B: views 1-2 face the street) per
+   their notes: a per-row `facings` map in `props`.
+5. The cost (brief item 5): the city drive at tilt70 vs top under the bench lock; chunk load
+   times before/after (PropCards adds one rect per prop per chunk, no per-frame cost).
+6. Split ChunkLift (200 lines): the facade face drawing into its own class before more features.
