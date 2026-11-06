@@ -202,11 +202,14 @@ func _hauler_kick() -> void:
 	if city_view != null and city_view.clock != null:
 		clock = city_view.clock
 	var h: HaulerStage = _stage.pilot.hauler
+	var glide_m: Vector2 = KerfGlide.offset_m(_stage.pilot.kerf, _stage.tick)
 	if city_view != null:
-		var lean_px: Vector2 = (city_lean_m + Vector2(0.0, forms_lift_m)) * SimConst.PX_PER_M
+		var lean_px: Vector2 = (
+			(city_lean_m + glide_m + Vector2(0.0, forms_lift_m)) * SimConst.PX_PER_M
+		)
 		city_view.kick_px = hauler_kick.step(h, _stage.tick, clock, city_view.rig) + lean_px
 	else:
-		var lift_px: Vector2 = Vector2(0.0, forms_lift_m * SimConst.PX_PER_M)
+		var lift_px: Vector2 = (glide_m + Vector2(0.0, forms_lift_m)) * SimConst.PX_PER_M
 		print_stage.kick_px = hauler_kick.step(h, _stage.tick, clock, print_stage.rig) + lift_px
 
 

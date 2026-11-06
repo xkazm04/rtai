@@ -46,6 +46,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--saw-part",
 	# n7-melee: --melee-dir=off leaves a melee kill the last round's line (the before)
 	"--melee-dir",
+	# n7-melee: --kerf-glide=off snaps the camera with each Kerf blink (the before)
+	"--kerf-glide",
 ]
 
 var _values: Dictionary[String, String] = {}

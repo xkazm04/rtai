@@ -96,6 +96,11 @@
           "minimum": 0,
           "type": "number"
         },
+        "cam_glide_s": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
         "charges": {
           "maximum": 9,
           "minimum": 0,
