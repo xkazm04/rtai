@@ -15,6 +15,9 @@ const FLASH_TICKS: int = 5
 const PARTS: Array[StringName] = [
 	&"head", &"pad", &"pelvis", &"torso", &"rack", &"rack3", &"thigh", &"shin", &"arm"
 ]
+## The pads' art: pad_hazard (tools/art/servo_pad_rim.py: the sheet's ink and copper hazard rim)
+## or pad (the it13 cut: copper on mid brown, one brown band at 32 px/m).
+const PAD_ART: StringName = &"pad_hazard"
 ## A docked drone: a cream body (metres square, ink rim) in each full rack cell, the sheet's cream
 ## drones in the bays (the wing art alone printed them as dark cells). The flying drone's whole
 ## sprite there was 18 rotor crosses: noise at 32 px/m. 0 = off.
@@ -44,6 +47,7 @@ var _spine: ServoSpine = ServoSpine.new()
 func _ready() -> void:
 	for n: StringName in PARTS:
 		_tex[n] = load(ART % n) as Texture2D
+	_tex[PAD_ART] = load(ART % PAD_ART) as Texture2D
 	_spine.cap = _tex[&"head"]
 
 
@@ -93,7 +97,7 @@ func _draw() -> void:
 	for s: float in [-1.0, 1.0]:
 		var pad: Vector2 = o + side * s * pad_w + fwd * PAD_AHEAD_M
 		_strut(&"arm", o + side * s * 0.9 + fwd * 0.2, pad, tint)
-		_part(&"pad", pad, fwd.angle() - PI / 2 + _spin * s * 0.1, pad_k, tint)
+		_part(PAD_ART, pad, fwd.angle() - PI / 2 + _spin * s * 0.1, pad_k, tint)
 		if _stage(&"recovery", false):
 			_steam(pad)
 	_part(&"pelvis", o + fwd * 0.5, fwd.angle() - PI / 2, k, tint)
