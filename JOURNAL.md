@@ -395,3 +395,21 @@ one reads as a car on fire from 32 px/m, with smoke from the hood (brief item 3)
 masters frames.json: 15 (fire close-up, kerb cards, fire in the city crash, fire clip in; the two
 turn-compare stills and the 32 turn clip out: their DECISIONs stand on the files).
 REQUEST to city: none new. ANSWER: the kerb cards read on your head (film above); nothing owed.
+23:41 GATE full unit on 2252f1cd: 1501 passed, 0 failed. 23:47 GATE scenarios (same head): 52 ran,
+0 failed, exit 0, 0 SCRIPT ERROR (vehicle drive replay identical, timing CONTENDED as labelled).
+NOTE: I swapped the p70 atlas + re-imported at 23:44 while the scenarios ran (for the turn before
+film); the scenarios run `top` (no p70 atlas read) and passed, but that overlap was careless.
+MILESTONE 23:46 the redrawn side views (43abc325): the asset lane served my side-view REQUEST
+(sedan_side_70 B ~47 deg, police_car_side_70 B ~52 deg; the sheets' own sides are ~35). The atlas
+cutter takes keyed/vehicle/<id>_side_<pitch>.png when it exists (SIDE_REDO), scaled to the
+footprint on its own; sedan rows 0 1 2 7 and police row 8 take it; the van (A) and the others keep
+theirs. Film: vehicle_turn 64 px/m, the before = the same head with the previous atlas swapped in
+(the masters iteration-1 clip had an older, brighter grade: not a clean A/B, not used). Judged at
+the swap (frames 20/22/23/25): the last side frame now shows the roof plane, so the jump to the 3/4
+is smaller, not gone (47-52 vs the 3/4s' 65-70). masters turn_side_redo_64ppm_swap_*.png,
+turn360_tilt70_64ppm_side_redo_before_after.mp4 (frames.json: replace the iteration-1 turn clip
+and the iteration-1 city 64 still).
+Rules applied (this iteration, also): generative-artifact-gating (B sheets used with the notes'
+faults measured in motion; C cells never; a red check on the fire cells), sprite-and-atlas-
+production (one cutter, one anchor rule for the redraws, provenance per atlas sha),
+concept-scene-parity (the kerb cards judged in the real city scene, not a lab).
