@@ -1164,3 +1164,13 @@ NEXT (written 04:09, for iteration 13):
   n5-look's own flag (read from the OS args, not in KNOWN_FLAGS; boot only warns on unknown flags),
   so calls (l) and (m) need no new flag.
 - STOP 04:13 iteration 12 (final). NEXT is the 04:09 entry (items 1-4) plus the 04:12 claw scout.
+- LOOK 04:15 (closes the 04:12 scout early) the claw alone (`film.sh claw48 48 200 --bot=reel
+  --reel=director --chapter=claw_combo --loadout=pistol --lone --clean`, 0 SCRIPT ERROR; 1.5x crop of
+  frames 62-100 every 2nd): the jab's wind-up is a small pull of the claw arm in to the chest over
+  about frames 64-70 (~10 px at 48 px/m), then the arm crosses the cop at 72 and the rakes print on
+  74; the second blow (the kill) has the same short pull. Antic. 3 holds: it reads at 48 and barely
+  at 32. Build idea for NEXT 4: a deeper view-only pull-back of the claw arm (and a shoulder turn)
+  in the frames before the hit, the hit frame unchanged (realtime-combat-semantics: anticipation
+  without moving the active frame); find where the rig poses the jab (MeleeSwing / the claw rig
+  part) and check it against the d7 hold (the off claw is an open owner call: touch only the main
+  claw's jab). Film deleted (scratch).
