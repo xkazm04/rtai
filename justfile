@@ -38,3 +38,6 @@ export:
 
 audit:
     @echo "audit: tools/pck_audit lands with the first export ticket (EXP-05)" && exit 1
+
+mutate *args="":
+    node tools/mutate/mutate.mjs {{args}}
