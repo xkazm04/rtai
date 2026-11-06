@@ -56,6 +56,7 @@ The rotor dash checked against a reading player (it6): every tell read but 18-32
 10. The spine: the wings 0.94 m apart for a 1.5 m spine, the sheet's measure (default) vs touching wings with a 0.56 m column over them (it8): `servo.json rack.spine_m` 0.94 / 0. It moves the drones' launch cells; measured, the fight stays inside the seeds' spread (`evidence/servo/numbers-it9-spine94/`). Still: `M/frames/servo_rack_spine_docked_ab_it9.png` (top row: 0 | 0.94 | 0.94 plated).
 11. Docked drones: a cream body in each full rack bay, gaps where drones are out (default) vs the wing art alone (dark bays): `ServoRig.DOCKED_M` 0.34 / 0. The flying drone's full sprite in the bays was tried and rejected (18 rotor crosses: noise at 32 px/m). Still: the same file, bottom row (32 px/m).
 12. The spine's tone: tan steel under stacked lighter boxes, sampled from the sheet (default) vs the it9 cream column with a near-white plate: `ServoSpine.STEEL_TONE` true / false (render only). Still: `M/frames/servo_spine_steel_ab_it10.png` (48 px/m before | after | the sheet; 32 px/m before | after).
+13. The hover pads hang in front of the wings like the sheet (default) vs beside the wings' front corners (it9): `ServoRig.PAD_OUT_M` / `PAD_AHEAD_M` 2.35 / 2.0 vs 2.6 / 1.2 (render only). Still: `M/frames/servo_pads_ahead_ab_it10.png`.
 
 Exe (exported it9 on 8e34d545, re-exported at the freeze): `build/export/windows/RTAI.exe` in the
 worktree (`windows-showcase` preset, boots into the arena). Lines: `RTAI.exe -- --rigs --boss=servo`,
@@ -67,7 +68,6 @@ tick 7036, 188 on Rivet, 0 SCRIPT ERROR, the editor's numbers (`evidence/servo/e
 ## What does not work / open
 - The horn has not been heard (every run was headless or filmed without listening).
 - The spine is procedural: since it10 it has the sheet's width and tan steel with stacked boxes, but not its rounded horseshoe frame or the hose loops over the top.
-- The hover pads hang on the arms beside the body; the sheet hangs them lower and further out at the corners (moving them moves the arms' reach, a fight read: not done).
 - The `--boss-cam` clip camera frames Rivet and the boss together; a bay-hop landing ring on a Rivet by the bays can sit under the boss bar in a clip (`M/servo_attack_bay_hop_48ppm_it9.mp4`). In play the camera centres on Rivet, so the ring stays on screen.
 - The same clip camera at the phase-3 defeat in the yard's top-left corner: Servo's centre stays 3.1-3.5 m inside the screen edge (`BossCam.BOSS_MARGIN_M` 3.0), but turned sideways his rack reaches 3.07 m out, so half the body leaves the left edge (`M/servo_p3_overtime_defeat_32ppm_it9.mp4`, ~32 s). A 3.5 margin changed nothing; ~4.5 would hold the body but pushes the view off the floor elsewhere (unmeasured). The framework file is shared with `n7-king`: left as is.
 

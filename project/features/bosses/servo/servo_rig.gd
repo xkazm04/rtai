@@ -19,6 +19,10 @@ const PARTS: Array[StringName] = [
 ## drones in the bays (the wing art alone printed them as dark cells). The flying drone's whole
 ## sprite there was 18 rotor crosses: noise at 32 px/m. 0 = off.
 const DOCKED_M: float = 0.34
+## The hover pads, out from the centre and ahead of it: the sheet's top view hangs them in front
+## of the wings' outer corners (render only; it8-it9: 2.6 out, 1.2 ahead, beside the wings).
+const PAD_OUT_M: float = 2.35
+const PAD_AHEAD_M: float = 2.0
 
 ## Pixels per metre of the canvas (32 in the dev view, Ink.PX_PER_M in the arena).
 var px: float = 32.0
@@ -84,10 +88,10 @@ func _draw() -> void:
 	var tint: Color = _tint() if dt < 0 else ServoFall.tint(dt)
 	for s: float in [-1.0, 1.0]:
 		_leg(o, fwd, side, s, tint)
-	var pad_w: float = 2.6 - (ServoFall.pad_in_m(dt) if dt >= 0 else 0.0)
+	var pad_w: float = PAD_OUT_M - (ServoFall.pad_in_m(dt) if dt >= 0 else 0.0)
 	var pad_k: float = k * (ServoFall.pad_k(dt) if dt >= 0 else 1.0)
 	for s: float in [-1.0, 1.0]:
-		var pad: Vector2 = o + side * s * pad_w + fwd * 1.2
+		var pad: Vector2 = o + side * s * pad_w + fwd * PAD_AHEAD_M
 		_strut(&"arm", o + side * s * 0.9 + fwd * 0.2, pad, tint)
 		_part(&"pad", pad, fwd.angle() - PI / 2 + _spin * s * 0.1, pad_k, tint)
 		if _stage(&"recovery", false):

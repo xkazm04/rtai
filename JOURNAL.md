@@ -1089,3 +1089,12 @@ without 5 seeds x bots).
   sheet's; remaining gaps: the sheet's hazard-striped rack bases, the spine's horseshoe frame, and
   the pads hanging in front of the wings (ours beside them). it9 fight clip, keys, still deleted;
   frames.json 15; REPORT paths.
+- 02:39 MILESTONE NEXT 4 (rest): **the pads hang in front of the wings** (`ServoRig.PAD_OUT_M`
+  2.35, `PAD_AHEAD_M` 2.0; were 2.6 / 1.2), measured on the sheet's top view (pads ~1.5 m ahead
+  of the rack's front edge, at ~3/4 of the half-width). Render only: no hit test reads the pads
+  (hit body 1.6 m; pads drawn at 3.1 m from the centre, were 2.86: outside it as before).
+  **Looked at** 48 px/m before | after | sheet and 32 px/m before | after (p2 seed 2 tick 420,
+  `M/frames/servo_pads_ahead_ab_it10.png`): the front now reads pad | leg | leg | pad ahead of the
+  rack, the sheet's four limbs; before, the pads touched the wings' front corners. The target still
+  re-shot at tick 1800 with it (`M/frames/servo_target_vs_game_32ppm_it10.png`, 0 SCRIPT ERROR).
+  Unit 1186/0 (`evidence/servo/unit-it10b.log`). Decisions; REPORT call 13.
