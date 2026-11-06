@@ -783,3 +783,35 @@ the kerf_slice value and film it.
   frame 0, 59.5 s) spent ~4.5 s per melee chapter on the walk-up (in the city the cops come in
   first: claw kills ~330-360, katana ~330, chainsaw ~390-450, baton ~330, on 30-frame sheets); trimmed
   to the kill windows. Sheet every 2 s: every tile shows an attack. frames.json entry updated.
+- CHECK 01:40 reels + scenarios on `bd36c37c` (code = `c48b2806`): director arena 19/19 and city
+  19/19 fully down (14x 1/1, 2x 2/2, 3x 4/4), 0 SCRIPT ERROR; scenarios 52 ran, 0 failed
+  (`evidence/n7-melee/{director-arena,director-city,scenarios}-*bd36c37c.log`).
+- TRIED, not built 01:38 (the ram's anticipation, 2): an ink speed wake behind the press while
+  HaulerForm.ramming(). The city beat has no charge to show it on: the press morphs over frames
+  60-90, then creeps ~1 m in 35 frames into the cops (charge sheet). Needs a beat that charges first.
+- TRIAL EXE 01:38 (NEXT 4 de-risk): bake_city + `--export-release windows-showcase
+  ../build/export/windows/RTAI.exe` exit 0, 245 MB (`evidence/n7-melee/it9-{bake,export}.log`).
+  Booted call (h)'s line `RTAI.exe --screen 0 --rendering-driver d3d12 -- --arena=city --bot=ghosts
+  --ghost=tonnage --rigs --ppm=32` under Movie Maker: exit 0, no unknown flag, 0 SCRIPT ERROR, the ram
+  star at 138 and the slam at 170 as in the editor (react 1 wound vs the editor's 2: not chased).
+  `--quest-blade=off|electro_baton`, `--hit-cues=off --feel=off`: accepted, 0 SCRIPT ERROR. But the
+  showcase exe boots the arena hub; quest 1 is the slice feature's main scene, and a release
+  template refuses a scene path ("compiled without support for path overrides").
+- BLOCKER FOUND + FIXED 01:44 (`87d7dc2b`): the windows-slice exe (the shipped quest 1) on this branch
+  failed to compile quest1_game.gd: 5 SCRIPT ERROR, `Could not find type "ArenaRigs"` at
+  plasma_scorch_view.gd:24, through collect_call_view -> melee_feel -> react_link. dev/ is not in
+  the slice export. My `65dd07e1` (MeleeFeel in CollectCallView, iteration 2) put that chain on the
+  quest path; ReactLink -> PlasmaScorchView -> ArenaRigs is combat-notes' (on main). MeleeFeel used
+  ReactLink only for MELEE_IDS: the list moves to MeleeWound and ReactLink aliases it. Re-exported
+  to `build/export/windows-slice/RTAI.exe`: the title card loads, 0 SCRIPT ERROR (no autostart flag
+  to go past it; GDScript resolves class names at compile, so quest1_game's static closure compiled).
+  Guard: `test_slice_closure.gd` walks quest 1's class-name closure (comments and strings stripped)
+  and fails on any res://dev/ script; planted fault (MeleeFeel back on ReactLink) -> fails with
+  exactly `ArenaRigs <- plasma_scorch_view.gd`. Lint 13/13, unit 1204/1204.
+- FYI to the Director and every lane (01:46): the slice export drops dev/; a dev class name anywhere
+  on quest 1's static path kills the shipped game at load, and no gate caught it (the gates run in
+  the editor, where dev/ exists). `test_slice_closure.gd` now catches it in the unit gate; run it on
+  each merge. corpse_fade.gd and brutality_hook.gd also name ArenaRigs but are off quest 1's path today.
+- DECISION 01:46: two exes at the freeze. `build/export/windows/RTAI.exe` (windows-showcase: the arena
+  and city calls b-h) and `build/export/windows-slice/RTAI.exe` (windows-slice: quest 1, call a).
+  Both presets default to the same path; the slice one is redirected on the command line.
