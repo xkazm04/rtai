@@ -464,3 +464,11 @@ NEXT (unchanged from it13, plus):
 - Registry rules applied: motion-quality-gating (no new claim without a frame; none made).
 
 NEXT: unchanged from iteration 14 (0: film tilt70 street cards after the view70 merge; 1-4 as it13).
+
+## Iteration 16 (18:30-18:40, STABILIZE; past freeze)
+- 18:30 Read JOURNAL tail, git log (HEAD 4c31b40b, clean), the other lanes' JOURNALs: no new REQUEST to
+  chars (bosses it1 card_set and view70 it5 p70 street rows both answered earlier).
+- REPORT.md checked against HEAD: it names 860fd3d8 (data-only p70 rows), the 18:05 exe on 247b82ef and
+  the evidence run; still current. No new feature work (STABILIZE).
+- GATE lint on 4c31b40b: 15/15 over 1092 files. Exe present (`build/export/windows/RTAI.exe`, 242 MB,
+  18:05). Full unit no-arg started 18:31 (result below).
