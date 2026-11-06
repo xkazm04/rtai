@@ -1112,11 +1112,18 @@ Read: JOURNAL NEXT (it11; no it12 entries), git log, n7-melee / n7-king / n7-ser
   `scratch/` in the worktree is not git-ignored and shows untracked. `reel.sh <log> [args]` there
   runs a headless director reel and kills its own PID when electro_chain is down.
 
+### LOOK 02:11: the Gatling's brass (it11 NEXT 2, look only, closed without code)
+- On the re-filmed `gon.avi` (`9df494f6`, lone, 32 px/m), frames 330-399 at 3x: each round's casing
+  flips out from beside the receiver to the gun-claw side and lies about 1 m right of the barrel's
+  line, a small pile by frame 399; the heavy two-hand hold's centre-line barrel sits left of the
+  ejection spot, which reads as a side port, not as brass from mid-air. No change (the casing spot is
+  the receiver, not the muzzle, so HeldMuzzle is not its anchor).
+
 NEXT (iteration 14):
 1. Retake the city-block combined clip on the final head (it11 NEXT 1 recipe: JOURNAL 01:02,
    frames 360-2700, 3810-5100, 5460-6150, crop 960x560; replace in place; LOOK at the molotov
    (now with the rise) and rocket segments).
-2. Gatling rounds and casings at 48 px/m (WeaponCasings.track at GUN_SIDE_M): look only.
+2. (done 02:11, see LOOK above.)
 3. Rocket flash ~0.3 m gap to the tube mouth: only if it reads at 32 px/m (`muzzle_back_m`).
 4. Exe at the freeze: re-bake + re-export `windows-showcase` -> `build/export/windows/RTAI.exe`;
    REPORT exe lines for calls 4 (`--flash-at=side`) and 5 (`--throw-windup=off`).
