@@ -1789,3 +1789,18 @@ NEXT (iteration 17, in order):
   190.4 / 5 deaths; per-attack hit rates the same; 0 SCRIPT ERROR in 15. Per run, every fight field
   matches; only `ticks` (the run's total length after the fight, up to --quit-after) differs.
   The shades are render only, as built. REPORT numbers section notes it.
+
+NEXT (iteration 19, in order):
+1. Nothing is pending: the exe (06:10), every clip in frames.json and the numbers are on 71e76b3f
+   (the gang's shades); gates green there (lint 13/13, unit 1168/0, scenarios 52/0, reel 19/19).
+   If a look change lands: re-export, smoke (4933 / 88), re-film with `build/scratch18/film32.sh` +
+   `cut.sh` + `cmp.py` (full fight, re-cuts, comparison), and the 48 px/m clips it touches (decree:
+   `film.sh dec 1300 --phase=2 --seed=2 --bot-stand`, 16.2-20.6 s + the drawtext caption, consolas
+   24; ram/coin fan: `film.sh ram_s|ram_d 620 --phase=1 --seed=2 [--bot-stand]`, 1.4-4.4 + 6.6-9.0 s
+   of each, one concat). Long background jobs: pass `timeout` 900000.
+2. Look items left are the owner's calls (J gang bulk vs the 3/4 view; the throne's quilt under the
+   cape). A candidate if time is left: the shades at 32 px/m a touch wider (`GangShades.BAND_W`
+   0.5), A/B against 0.44 on the riders and brawlers; keep 0.44 unless it reads clearly better and
+   the dome stays light (call I).
+3. At the freeze (08:30): REPORT read-through (calls A-P), commit. REPORT is final otherwise.
+- 06:46 Session closes: everything committed; scratch18 holds only the scripts. NEXT above stands.
