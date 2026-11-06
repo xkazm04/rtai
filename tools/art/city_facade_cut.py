@@ -4,7 +4,7 @@ Each style is one horizontal strip of wall bays (the top-row pieces' walls, belo
 plane, inside the pieces' side outlines), so a building's south face is tiled bay by bay
 (FacadeArt). The roof itself stays the game's top-down roof art, lifted by the view.
 
-usage: python tools/art/city_facade_cut.py <library_root> <out_dir>
+usage: python tools/art/city_facade_cut.py <library_root> <out_dir> [55|70]
 """
 
 import sys
@@ -27,12 +27,29 @@ STYLES = {
         12,
     ),
 }
+# the 70 twins (round 2110, A): same four-piece layout; the wall band starts under the roof's
+# front ink and ends at the ground ink, as the 55 cut does (rows measured on the keyed sheets)
+STYLES_70 = {
+    "tenement": (
+        "keyed/building/facade_kit_70_untapered.png",
+        [(83, 349), (451, 717), (818, 1084)],
+        (326, 600),
+        15,
+    ),
+    "shop": (
+        "keyed/building/facade_shop_70_untapered.png",
+        [(42, 381), (412, 752), (783, 1125)],
+        (338, 570),
+        12,
+    ),
+}
 BAY_W = 256
 
 
-def cut(lib: Path, out: Path) -> None:
+def cut(lib: Path, out: Path, pitch: str = "55") -> None:
     out.mkdir(parents=True, exist_ok=True)
-    for style, (sheet, bays, (y0, y1), inset) in STYLES.items():
+    styles = STYLES_70 if pitch == "70" else STYLES
+    for style, (sheet, bays, (y0, y1), inset) in styles.items():
         src = Image.open(lib / sheet).convert("RGBA")
         h = round((y1 - y0) * BAY_W / (bays[0][1] - bays[0][0] - 2 * inset))
         strip = Image.new("RGBA", (BAY_W * len(bays), h), (0, 0, 0, 0))
@@ -53,4 +70,4 @@ def cut(lib: Path, out: Path) -> None:
 
 
 if __name__ == "__main__":
-    cut(Path(sys.argv[1]), Path(sys.argv[2]))
+    cut(Path(sys.argv[1]), Path(sys.argv[2]), sys.argv[3] if len(sys.argv) > 3 else "55")
