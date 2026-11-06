@@ -26,6 +26,8 @@ static func attach(view: Node, hook: BossHook, p_arena: CombatArena = null) -> v
 	body.adds = hook.adds
 	body.blood = v.blood
 	body.arena = p_arena
+	@warning_ignore("return_value_discarded")  # n8 city: the arena's dressing under a tilt
+	BossDressing.attach(v.stage_view, String(hook.fight.spec.arena.id), hook.origin)
 	if v.print_stage != null:  # on the actors' layer like the cast rigs: true colours, no ink snap
 		tell.z_index = RenderLayers.z(&"actors") - 1 + RigDepthSort.ground_dz()
 		tell.scale = v.cast_view.scale

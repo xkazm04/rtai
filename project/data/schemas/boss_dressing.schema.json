@@ -1,0 +1,67 @@
+{
+  "$id": "gtai.boss-dressing/1",
+  "additionalProperties": false,
+  "properties": {
+    "arenas": {
+      "additionalProperties": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "at": {
+              "items": {
+                "type": "number"
+              },
+              "maxItems": 2,
+              "minItems": 2,
+              "type": "array"
+            },
+            "piece": {
+              "pattern": "^[a-z][a-z0-9_]*$",
+              "type": "string"
+            },
+            "w_m": {
+              "exclusiveMinimum": 0,
+              "maximum": 12,
+              "type": "number"
+            }
+          },
+          "required": [
+            "at",
+            "piece",
+            "w_m"
+          ],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "propertyNames": {
+        "pattern": "^[a-z][a-z0-9_]*$"
+      },
+      "type": "object"
+    },
+    "art": {
+      "pattern": "^res://",
+      "type": "string"
+    },
+    "art_fallback": {
+      "additionalProperties": {
+        "pattern": "^p[0-9]+$",
+        "type": "string"
+      },
+      "type": "object"
+    },
+    "doc": {
+      "type": "string"
+    },
+    "schema": {
+      "const": "gtai.boss-dressing/1"
+    }
+  },
+  "required": [
+    "schema",
+    "art",
+    "art_fallback",
+    "arenas"
+  ],
+  "type": "object"
+}
