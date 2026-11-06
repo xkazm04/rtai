@@ -1078,3 +1078,49 @@ STOP 01:56 iteration 11. Code commits: `9054e346` (muzzle FX on the drawn barrel
 (a mistyped --weapon boots with Gloria). Evidence on `2cb85d5b` all green; reels 19/19 on every
 code commit. Clips: `muzzle_on_drawn_tip-ab-48-32ppm.mp4`, `molotov_windup-ab-32-48ppm.mp4`
 (frames.json rows 0-1). REPORT rows + calls 4-5. NEXT for iteration 12 is the list above.
+
+## Iteration 13 (BUILD, 01:57-02:57)
+Read: JOURNAL NEXT (it11; no it12 entries), git log, n7-melee / n7-king / n7-servo journals.
+- REPLY to n7-melee REQUEST 01:49 (Kerf's cuts at player cadence): already done by `0d4089f1`
+  (camera.json hitstop_cooldown_ticks 20 -> 16, every 18-tick cut gets its stop; FeelBudget's
+  12 ticks/s stays the cap), which melee merged at 21:01 (`20f2263d`, their JOURNAL line 234) and
+  is 16 on melee's head. Nothing to build; the per-weapon stop cooldown (their option 1) stays
+  unbuilt unless a weapon needs a cadence under 16 ticks.
+
+### MILESTONE 02:02: `9df494f6` the first molotov aim lifts the bottle to cocked (it11 NEXT 4)
+- RigThrow.rise: smoothstep from the plan's ready claw (hand_ready) to the cocked spot over
+  held_classes.json thrown `windup_rise_s` 0.22 s, stepped on the rig's own t_alive (CutRig
+  `throw_cock`, `throw_t`); a claw not posed cocked for REST_S 0.1 s rises again; in_reload sets
+  it to 1 (the cock phase already drew it back). 0 = the snap (the before).
+- Test `test_rig_throw` 6/6 (first aimed frame 184 px ahead of cocked -110, cocked a third of a
+  second later); planted windup_rise_s 0 -> 1 fail. Unit 1161/1161. Lint 13/13 (the schema key had
+  to sit after windup_px: json-canonical; the pre-commit hook refused the first commit).
+- FILM lone cop range, `--weapon=molotov --bot=gunplay --lone --cam=fight --reach=7 --clean`,
+  48 and 32 px/m, same build with windup_rise_s 0.22 vs 0, 0 SCRIPT ERROR in all 4 takes. Diff
+  frames 4-16 only (the rise). LOOK: before, frame 4 the lit bottle jumps behind the helmet; after,
+  it travels up from the claw over ~13 frames with the claw on it; at 32 px/m it reads as a lift.
+- Clip `masters .../molotov_draw_rise-ab-32-48ppm.mp4` (8 s; frames.json row 1). REPORT row,
+  audit row 10 note, DECISION line in docs/decisions.md.
+- GATES on `9df494f6`: pit + city director reels 19/19 + 19/19, 0 SCRIPT ERROR
+  (`evidence/ranged/it13-reel-{director,city}-9df494f6.log`, summary `it13-reels-summary.txt`).
+- FRICTION/MISTAKE 02:06: to keep frames.json at 15 I deleted `gatling_spinup-ab-32ppm.mp4`, but
+  REPORT rows 13-14 cite it (recoil kick + spin tremor A/B). Re-filmed it on `9df494f6` (lone cop,
+  32 px/m, `--feel=off` vs on, 0 SCRIPT ERROR, lone kill tick 320 both) and re-cut it under the same
+  name (7 s, real time then 1/2 speed); frames.json's gatling_whirl entry now names it as its
+  companion clip. Lesson: grep REPORT and the audit for a clip name before deleting it.
+- Scratch now lives outside the worktree (`C:\Users\kazda\kiro\gtai-n7p\scratch\ranged\`):
+  `scratch/` in the worktree is not git-ignored and shows untracked. `reel.sh <log> [args]` there
+  runs a headless director reel and kills its own PID when electro_chain is down.
+
+NEXT (iteration 14):
+1. Retake the city-block combined clip on the final head (it11 NEXT 1 recipe: JOURNAL 01:02,
+   frames 360-2700, 3810-5100, 5460-6150, crop 960x560; replace in place; LOOK at the molotov
+   (now with the rise) and rocket segments).
+2. Gatling rounds and casings at 48 px/m (WeaponCasings.track at GUN_SIDE_M): look only.
+3. Rocket flash ~0.3 m gap to the tube mouth: only if it reads at 32 px/m (`muzzle_back_m`).
+4. Exe at the freeze: re-bake + re-export `windows-showcase` -> `build/export/windows/RTAI.exe`;
+   REPORT exe lines for calls 4 (`--flash-at=side`) and 5 (`--throw-windup=off`).
+5. Full evidence run (`node tools/evidence/run.mjs`) on the head (last full run on `2cb85d5b`);
+   commit any untracked log first.
+6. Calls 1-5 stay open in REPORT.
+
