@@ -186,3 +186,30 @@ NEXT:
   showcase weapon goes INTO the crate (the brief's "open crate" display and the pickup-hover call);
   the library crates are closed piles. Until it lands the crate display waits; pickups keep the
   hover.
+- 22:19 Director reel (headless, `arena.tscn --fixed-fps 60 --quit-after 14000 -- --bot=reel
+  --reel=director --loadout=pistol --rigs --view=<v>`) at 3f3d5281: `top` 19/19 chapters all down,
+  `tilt70` 19/19 all down, 0 SCRIPT ERROR both (`evidence/director-reel-n8hud-it3-{top,tilt70}.log`).
+  The one engine `custom_samplers` shader ERROR (kill_char_fx.gd:189) is pre-existing (same line in
+  `evidence/director-reel-it13-final.log`), not this lane.
+- Masters `frames.json` now 14 entries (bossbar crop + Servo, hud_full 1080/1280 after + before).
+
+Registry rules applied this iteration: `short-form-cards-and-barks` (the boss's face beside its
+bar: who you fight is read in one glance, no words added), `accessibility` (the HUD judged at
+1080p and 1280x800; the ticket name raised to 24 px; colour meaning kept: blue = police, vermilion =
+danger, teal = souls, red = blood only), `sprite-and-atlas-production` (crests cut by tool from the
+shipped approved card, never scaled up; a one-command recolour tool, guarded by a test),
+`generative-artifact-gating` (no new AI image entered the repo this iteration: the crests are
+shipped art, so no provenance line), `motion-quality-gating` (the reel in top + tilt70).
+
+NEXT:
+- Crate display: waits for the REQUEST above (weapon_crate_open 70/55); then an open crate in the
+  arena armory + a vendor counter holding a showcase drawing, filmed at tilt70 / tilt, 48 px/m.
+- The 5 redesigned weapons: watch `gtai-art/rivet-final/out/showcase_<id>_{70,55}.png` (absent at
+  22:20); import with `tools/art/showcase_import.py`, provenance lines, re-film the armory.
+- Long guns' true p70 (Gloria, plasma rifle, gatling still use the 55 cut): watch the assets JOURNAL.
+- Film the HUD live in quest 1 (collect-call) at tilt70 instead of the board: the payphone opening.
+- Boss bar: consider the crest at 1080p in the live arena (filmed only at the 1280x800 window).
+- Freeze 08:30: export `build/export/windows/RTAI.exe` (int-day recipe in docs/decisions.md), REPORT
+  Calls: hover vs crate, portrait side/size, dialogue never pauses play, Don Fax payphone vs bust,
+  boss crest as a disc vs a bust above the bar.
+- 22:21 Session end. All committed.
