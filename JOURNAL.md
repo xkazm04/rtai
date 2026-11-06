@@ -298,3 +298,31 @@ NEXT:
   --reel=director --loadout=pistol --rigs --view=<v>`) at 62096f63: `tilt70` 19/19 chapters all down,
   `top` 19/19 all down, 0 SCRIPT ERROR both (`evidence/director-reel-n8hud-it4-{tilt70,top}.log`).
 - 23:08 Session end. All committed; masters `frames.json` 15 entries (32 px/m armory pair second).
+
+## Iteration 5 (BUILD, 23:09-00:09)
+
+- 23:12 Read JOURNAL, git log, the other journals (no REQUEST to hud), the assets JOURNAL: DELIVERED
+  to hud `weapon_crate_open_70` (B: thin outline, the straw the wood's value) and `_55` (A) in
+  `library/keyed/prop/` (my 22:12 REQUEST, served 23:05-23:06); `showcase_electro_gun_70` (B, design
+  drift) and `_55` (A) in `rivet-final/out/` (23:00). Round 2215 stopped after the electro gun (exit
+  4, spawn failures): the other 4 showcase sheets are not made yet.
+- 23:25 MILESTONE 1a22bfcb the crate display (work item 1, "in an open crate"): `ShowcaseCrate` +
+  `tools/art/crate_cut.py` (70 = rotation 1, 55 = rotation 5: the lid always leans BEHIND the hollow;
+  the 70's straw darkened warm 0.86/0.72/0.6, its notes' fix: a flat 0.78 read olive). PickupsView
+  under `--pickup-crate=on`: the crate stood up for its camera, 1.6 m long, an ink shadow under it,
+  the gun still with its bottom edge on the straw's front edge (first try centred it on the hollow:
+  at 55 the 3/4 drawings covered the crate's front wall), at most 1.3 m long, the molotov's standing
+  bottle at most 0.7 m. Unit `test_showcase_crate` (5) + pickups/showcase `--select` 15/0, lint 15/15.
+  New flag `--pickup-crate` in LaunchArgs.
+- DECISION (docs/decisions.md hud/pickup crate): the hover stays the DEFAULT; the crate is
+  `--pickup-crate=on` and a Call for the owner. Judged side by side at the shipped 32 px/m (tilt70 +
+  tilt, the armory): the paper disc pops "loot" off the grey floor at a glance; the 16 tan crates
+  merge into one band at 32 (they read as a stocked armory, best at 48). Alternative = one flag
+  (or `ShowcaseCrate.DEFAULT_ON`).
+- 23:27 MILESTONE e90a4514 the electro gun's showcase from the assets sheet: p55 AND p70 = the middle
+  (side) cut of `showcase_electro_gun_55` (A, the owner's design exact); the 70 sheet (B) is not used
+  (no tape band, no back cap, a glyph: drift from the owner's pick). `design_cut.py` SHOWCASE_SOURCE.
+  4 provenance lines (crates round 20261106-2300 hashes 23a5dcfacb7a / 545a35569fdd; electro gun
+  round 20261106-2215 e8b793d29d8a).
+- Stills: `gtai-masters/n8/hud/armory_crate_48_tilt70_tilt_crop2x.png` (crates at 70 top / 55 bottom,
+  48 px/m, seed 1, frame 89, 0 SCRIPT ERROR).
