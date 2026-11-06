@@ -12,8 +12,7 @@ const CAR_W: float = 102.4
 const SHADOW_OFF: Vector2 = Vector2(5.12, 5.12)
 const SHADOW: Color = Color(0.09, 0.075, 0.106, 0.45)
 const WRECK_TINT: Color = Color(0.62, 0.6, 0.58, 1.0)
-## n8: the kerb-parked cards drawn around the player (m; the camera sees ~40 m across at 32 px/m).
-const PARKED_M: float = 60.0
+const PARKED_M: float = 60.0  # n8: kerb-parked cards drawn this near the player (m)
 const CAP: int = 32
 ## View lab (view.json cast_k): the roof height a cast shadow is thrown from (m).
 const CAR_H_M: float = 1.4
@@ -143,7 +142,8 @@ func _draw_cards() -> void:
 	if service.driving == null:
 		cards.front.add(me)
 	for b: VehicleBody in service.cars:
-		cards.put(b.art, b.pos, b.head, Color.WHITE, VehicleCards.wear(b.state, b.id))
+		var on_duty: int = VehicleCards.duty(b.art, b.vel.length())
+		cards.put(b.art, b.pos, b.head, Color.WHITE, VehicleCards.wear(b.state, b.id) + on_duty)
 	var book: Dictionary[int, int] = service.traffic.state if service.traffic != null else {}
 	var recs: PackedFloat64Array = service.world.cars_near(me, 1e6)
 	for r: int in range(0, recs.size(), VehicleWorld.CAR_STRIDE):
@@ -151,14 +151,15 @@ func _draw_cards() -> void:
 		var st: int = book.get(id, VehicleBody.State.INTACT)
 		var at: Vector2 = Vector2(recs[r + 2], recs[r + 3])
 		var head: Vector2 = Vector2(recs[r + 4], recs[r + 5])
-		cards.put(int(recs[r + 7]), at, head, Color.WHITE, VehicleCards.wear(st, id))
+		var art: int = int(recs[r + 7])
+		var worn: int = VehicleCards.wear(st, id) + VehicleCards.duty(art, recs[r + 6])
+		cards.put(art, at, head, Color.WHITE, worn)
 	VehicleParked.put_near(cards, me, PARKED_M)
 	cards.finish()
 
 
-## The car shadow's offset: SHADOW_OFF, plus under a view's cast shadows (cast_k) the roof's
-## shadow thrown down-right; the car-shaped quad is moved, not swept, so half the roof's throw
-## keeps it joined to the car (top: exactly SHADOW_OFF).
+## The car shadow's offset: SHADOW_OFF (top), plus under cast shadows (cast_k) half the roof's
+## throw down-right (the quad is moved, not swept: half keeps it joined to the car).
 static func shadow_off() -> Vector2:
 	var view: ViewMode = ViewMode.shared()
 	if view.cast_k <= 0.0:
@@ -178,8 +179,7 @@ static func _put(mm: MultiMesh, i: int, xf: Transform2D, c: Color, b: VehicleBod
 	mm.set_instance_custom_data(i, Color(float(b.art), float(b.state), 0.0, 0.0))
 
 
-## Overlays for the marked sim traffic (VehicleTraffic.state D1 / HIJACKED), at the sim's own
-## car transform (CitySimRender: x axis head * CAR_L, y axis its left normal * CAR_W).
+## Overlays for the marked sim traffic (VehicleTraffic.state D1 / HIJACKED) at its car_xf.
 func _marked_traffic(counts: PackedInt32Array) -> void:
 	var book: VehicleTraffic = service.traffic
 	if book == null or book.state.is_empty():

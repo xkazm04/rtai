@@ -2,14 +2,12 @@ class_name VehicleCards
 extends Node2D
 ## n8 vehicles: every car under a tilted view as a ROTATION SET from art (render only). The atlas
 ## (tools/art/vehicle_cards.py, art/<view art key>/traffic_cards.png) holds, per sim car art id, the
-## five rotations of the library's turntable sheet for that pitch (nose to the camera, three-quarter
-## toward, side, three-quarter away, tail), the car's ground centre at each cell's centre; the three
-## other eighths are those mirrored. A car draws the view nearest its heading, turned by the rest
-## (at most VIEW_DEG / 2), as an upright card: the camera squashes the world canvas by ground_k, so
-## the card is stretched back by 1 / ground_k and prints at the art's own proportions. Within
-## `blend_deg` of a view boundary the two neighbouring views cross-fade (0 = a hard swap). The cards
-## are keyed by ViewMode.art (p70 / p55), so a combined view swaps sets with its pitch; a pitch
-## with no atlas (and `top`) draws nothing here and the flat crowd car layer stays on.
+## library turntable's five rotations for that pitch (nose to the camera, three-quarter toward,
+## side, three-quarter away, tail), the car's ground centre at each cell's centre; the three other
+## eighths are those mirrored. A car draws the view nearest its heading, turned by the rest (at most
+## VIEW_DEG / 2), as an upright card stretched back by 1 / ground_k (the art's own proportions).
+## Within `blend_deg` of a view boundary the neighbours cross-fade (0 = a hard swap). Keyed by
+## ViewMode.art (p70 / p55): a combined view swaps sets with its pitch; no atlas (and `top`) = none.
 
 const DIR: String = "res://features/vehicles/art/%s/traffic_cards.png"
 const SHADER: String = "res://features/vehicles/vehicle_cards.gdshader"
@@ -23,6 +21,11 @@ const BLEND_DEG: float = 0.0
 const CAP: int = 256
 ## Distinct dent patterns (the wear's seed range).
 const WEAR_SEEDS: int = 64
+## Added to a wear(): the car's light bar flashes (the shader's siren_bit; police on duty).
+const SIREN: int = 4 * WEAR_SEEDS
+## The police cruiser's art row, and the speed (m/s) over which its light bar flashes.
+const POLICE_ART: int = 8
+const DUTY_SPEED: float = 1.0
 
 static var _tex: Dictionary[String, Texture2D] = {}
 ## The live cross-fade window (dev scenes try other values; the game keeps BLEND_DEG).
@@ -96,6 +99,11 @@ static func wear(state: int, id: int) -> int:
 		VehicleBody.State.WRECK:
 			level = 3
 	return level + 4 * (absi(id) % WEAR_SEEDS)
+
+
+## SIREN for a police card moving faster than DUTY_SPEED (a kerb-parked one stays dark), else 0.
+static func duty(art: int, speed: float) -> int:
+	return SIREN if art == POLICE_ART and speed > DUTY_SPEED else 0
 
 
 ## A car of art id `art` at `pos` (m) facing `head` (ground unit vector), tinted `tint`, worn

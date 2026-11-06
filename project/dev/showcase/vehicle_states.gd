@@ -1,11 +1,10 @@
 extends Node2D
 ## n8 vehicles: the damage film. Four sedans turn slowly in place in a row, intact, dented (D1),
 ## smashed (D2) and a burning wreck (VehicleFire on the bonnet), while a police car drifts a
-## circle south of them laying tyre marks (VehicleSkids on the ground), under --view= (no sim).
-##   godot --rendering-driver d3d12 --fixed-fps 60 --path project
-##     res://dev/showcase/vehicle_states.tscn
+## circle south of them laying tyre marks, its light bar flashing, under --view= (no sim).
+##   godot --rendering-driver d3d12 --fixed-fps 60 --path project <this scene's res:// .tscn>
 ##     --write-movie <abs>.avi --quit-after 600 -- --view=tilt70 --ppm=32 [--wear=0]
-## --wear=0: the "before" (iteration 2): every state draws the intact card, the wreck tinted.
+## --wear=0: the "before" (iteration 2): intact cards, the wreck tinted, no light bar flash.
 
 const STATES: Array[int] = [0, 1, 2, 4]  # VehicleBody.State INTACT, D1, D2, WRECK
 const GAP_M: float = 6.0
@@ -72,7 +71,8 @@ func _process(_delta: float) -> void:
 	_cards.begin(tex)
 	for b: VehicleBody in _svc.cars:
 		if _wear:
-			_cards.put(b.art, b.pos, b.head, Color.WHITE, VehicleCards.wear(b.state, b.id))
+			var worn: int = VehicleCards.wear(b.state, b.id)
+			_cards.put(b.art, b.pos, b.head, Color.WHITE, worn + VehicleCards.duty(b.art, 9.0))
 			continue
 		var wreck: bool = b.state == VehicleBody.State.WRECK
 		_cards.put(b.art, b.pos, b.head, VehicleView.WRECK_TINT if wreck else Color.WHITE)

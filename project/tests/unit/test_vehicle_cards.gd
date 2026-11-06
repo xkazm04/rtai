@@ -86,3 +86,10 @@ func test_a_card_with_someone_in_front_drops_under_the_actors() -> void:
 	cards.finish()
 	assert_eq(cards.count(), 2)
 	assert_eq(cards.count_under(), 1)
+
+
+func test_only_a_moving_police_card_flashes_its_bar() -> void:
+	assert_eq(VehicleCards.duty(VehicleCards.POLICE_ART, 8.0), VehicleCards.SIREN)
+	assert_eq(VehicleCards.duty(VehicleCards.POLICE_ART, 0.0), 0, "a parked cruiser stays dark")
+	assert_eq(VehicleCards.duty(0, 8.0), 0, "a sedan has no bar")
+	assert_true(VehicleCards.SIREN > VehicleCards.wear(VehicleBody.State.WRECK, 63), "a bit apart")
