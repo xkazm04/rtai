@@ -467,3 +467,13 @@ NEXT (iteration 6):
 4. Walkers at p55 (boss arenas under combo): cut the 55 top rows, a "p55" STRIPS entry.
 5. Crowd cost with the walkers under the bench lock on a quiet machine (city_bench riot, top vs
    tilt70), and the combo reel on this head.
+- NEXT 1 lead (00:46): CrowdBaker bakes the far crowd by `rig.drive(TICK)` (crowd_baker.gd:100),
+  and drive runs StreetView under a card view, so the baked atlas may hold walker cards (one frozen
+  stride frame) and baked people cast no RigCastShadows shadow (it draws rigs only). Check first
+  whether the shadowless walker is a baked sprite (CharacterRigs.MAX_FULL 16 per kind), then
+  whether the bake should draw the walker figure (and which frame) or the parts.
+- GATE director reel under tilt70 on c1e8cf2f (stride frames + the death hold; headless, the it1
+  command): 19/19 chapters, every chapter all down (2/2, 4/4, 1/1 ...), 0 SCRIPT ERROR at the 19th
+  chapter (the process runs on to its 14000-frame end). Unit no-arg 1507/0 was on afe22e3b; the
+  `--changed` run on c1e8cf2f passed 1492/0 (its fast suite), lint 15/15. Owed: unit no-arg and the
+  combo reel on c1e8cf2f, scenarios on the it5 head.
