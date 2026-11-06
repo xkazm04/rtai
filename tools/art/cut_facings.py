@@ -1,13 +1,16 @@
 """View lab: cut a chroma-green facing sheet (N copies of one part in a row) into a game strip.
 
 usage: python -I tools/art/cut_facings.py <sheet.png> <out.png> <frames> <cell_h> [tol] [--snap | --tan]
+       [--glass]
 
 Keys out the flat #00B140 background (distance tolerance `tol`, default 70, with a soft edge),
 finds the N largest column runs of opaque pixels, crops each to its own box, bottom-aligns every
 copy in a common cell (the widest and tallest copy), scales the cells to cell_h px tall and writes
 one horizontal strip, frame i at x = i * cell_w. --snap prints every pixel to the nearest part
 print ink (print_part.gdshader: cream, ink, the two wash tints, vermilion, gold, dark gold) for a
-card drawn raw (its gold would print vermilion through the part shader). Deterministic.
+card drawn raw (its gold would print vermilion through the part shader). --glass fills the keyed
+holes enclosed by the part (a clear visor the chroma showed through) with an opaque pale steel, so
+the head has no see-through hole. Deterministic.
 """
 
 import sys
@@ -68,6 +71,20 @@ def tan(rgba: np.ndarray) -> np.ndarray:
     return res
 
 
+GLASS = np.array([196, 204, 214], dtype=np.uint8)
+
+
+def glass(rgba: np.ndarray) -> np.ndarray:
+    from scipy.ndimage import binary_fill_holes
+
+    solid = rgba[:, :, 3] > 128
+    hole = binary_fill_holes(solid) & ~solid
+    out = rgba.copy()
+    out[hole, :3] = GLASS
+    out[hole, 3] = 255
+    return out
+
+
 def runs(mask_cols: np.ndarray) -> list:
     spans, start = [], None
     for x, on in enumerate(mask_cols):
@@ -86,6 +103,8 @@ def main() -> None:
     rest = [a for a in sys.argv[5:] if not a.startswith("--")]
     tol = float(rest[0]) if rest else 70.0
     rgba = key_out(Image.open(src), tol)
+    if "--glass" in sys.argv:
+        rgba = glass(rgba)
     solid = rgba[:, :, 3] > 128
     spans = sorted(runs(solid.sum(axis=0) > 2), key=lambda s: s[1] - s[0], reverse=True)[:n]
     spans.sort()

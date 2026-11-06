@@ -19,6 +19,8 @@ const CARDS: Dictionary[String, Array] = {
 	"gang": ["res://features/characters/art/view/gang_head_card.png", 0.84, 1.4, false, true],
 	"cop/head_cap":
 	["res://features/characters/art/view/cop_head_card.png", 0.86, 1.15, false, false],
+	"cop/head_helmet":
+	["res://features/characters/art/view/cop_riot_card.png", 0.86, 1.2, false, false],
 }
 const FRAMES: int = 5
 ## Card frame and mirror per screen octant of the look (0 = screen right, +1 = 45 deg clockwise,
