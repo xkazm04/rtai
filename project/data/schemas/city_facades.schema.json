@@ -50,6 +50,10 @@
       "minimum": 0,
       "type": "number"
     },
+    "occlude": {
+      "description": "CityOcclusion: redraw a building over a body behind it, the body as an ink silhouette (night n8 city); false = the body draws over the lifted roof",
+      "type": "boolean"
+    },
     "schema": {
       "const": "gtai.city-facades/1"
     },

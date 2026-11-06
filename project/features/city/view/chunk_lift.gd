@@ -17,6 +17,8 @@ const SETTLE_FRAMES: int = 12
 var height_m: PackedFloat32Array = PackedFloat32Array()
 var style_of: PackedInt32Array = PackedInt32Array()
 var drawn_pitch: float = 0.0
+## The table's `occlude`: CityOcclusion redraws a building over a body behind it.
+var occlude: bool = true
 var _tex: CityTextures
 var _is_building: Array[bool] = []
 var _strips: Array[Texture2D] = []
@@ -59,6 +61,7 @@ func _setup(d: Dictionary, tex: CityTextures, is_building: Array[bool], art: Str
 		_bays.append(bays)
 		@warning_ignore("return_value_discarded")
 		_bay_px.append(bay_m * SimConst.PX_PER_M)
+	occlude = d.get("occlude", true)
 	var k: float = d["height_k"]
 	var dflt: Dictionary = d["default"]
 	var by_name: Dictionary = d["by_name"]
@@ -111,7 +114,7 @@ func order(chunk: CityChunk) -> void:
 		var t: int = chunk.tex[k]
 		var o: int = k * CityChunk.XF_STRIDE
 		if _is_building[t] and chunk.xf[o + 3] <= 0.5:
-			var south: float = chunk.xf[o + 1] + _extent(t, chunk.xf[o + 2]).y * 0.5
+			var south: float = chunk.xf[o + 1] + extent(t, chunk.xf[o + 2]).y * 0.5
 			roofs.append(Vector3(south, chunk.xf[o], k))
 		else:
 			@warning_ignore("return_value_discarded")
@@ -124,9 +127,13 @@ func order(chunk: CityChunk) -> void:
 
 
 ## The footprint's size on the ground in px (a quarter turn swaps it).
-func _extent(t: int, rot: float) -> Vector2:
+func extent(t: int, rot: float) -> Vector2:
 	var sz: Vector2 = _tex.size_px[t]
 	return Vector2(sz.y, sz.x) if absf(sin(rot)) > 0.5 else sz
+
+
+func is_building_tex(t: int) -> bool:
+	return _is_building[t]
 
 
 ## The roof's lift (world px) for texture t.
@@ -141,7 +148,7 @@ func face(item: RID, t: int, rot: float, at: Vector2) -> Vector2:
 	var s: int = style_of[t]
 	if lift < 1.0 or _strips[s] == null:
 		return at + lift_of(t)
-	var ext: Vector2 = _extent(t, rot)
+	var ext: Vector2 = extent(t, rot)
 	var base: float = at.y + ext.y * 0.5
 	var x0: float = at.x - ext.x * 0.5
 	var n: int = maxi(1, roundi(ext.x / _bay_px[s]))
