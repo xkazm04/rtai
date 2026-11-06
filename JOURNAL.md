@@ -1131,10 +1131,14 @@ NEXT (iteration 11, in order):
   out wide in the rig) is the deeper fix, left as the alternative. Decisions line; REPORT gap removed.
 - Unit **1160/0** (`unit-it10d.log`), lint 13/13.
 
-NEXT (iteration 11, replaces the 01:52 list; the session ends ~01:58, everything committed):
-1. The slam tell in motion: film the slam at 48 px/m on the current head (the it8 clip predates
-   the raised plates) and look at the plates rising through the 1.2 s tell; re-cut the
-   procession-entering clip on the current head.
+- 02:01 FILM `M/king_slam_plates_48ppm_it10.mp4` (phase 3, seed 2, stander then dodger, 0
+  SCRIPT ERROR). **Looked at** the 4 fps sheet (`shots/it10/slam_48ppm_it10_sheet.png`): the
+  plates rise beside the crown while the ring fills, King hops onto it, shockwave + coin ring;
+  the dodger is clear. The it8 slam clip deleted; frames.json 15.
+
+NEXT (iteration 11, replaces the 01:52 list; the session ends ~02:03, everything committed):
+1. Re-cut the procession-entering clip on the current head (the it6 one predates the plates,
+   domes, decree arc, spray and keep_in).
 2. The gang at 32 px/m against the sheet's bodyguards (still small); measure the drawn body
    against the hit body before any size step (fairness).
 3. Director reel once more before the freeze; re-export the exe at the freeze (the it8 recipe in
