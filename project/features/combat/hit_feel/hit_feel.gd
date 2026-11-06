@@ -139,6 +139,9 @@ func camera_row(weapon: StringName, hit_class: StringName, lethal: bool) -> Dict
 	if over.has("kick_px"):
 		var px: float = over["kick_px"]
 		out["kick_px"] = px
+	if over.has("hold_delay_ticks") and wound_hold():  # n7-ranged it21: a weapon's own wound-hold
+		var delay: float = over["hold_delay_ticks"]
+		out["hold_delay"] = roundi(delay)
 	if over.has("kick_ticks"):
 		var ticks: float = over["kick_ticks"]
 		out["kick_ticks"] = roundi(ticks)
