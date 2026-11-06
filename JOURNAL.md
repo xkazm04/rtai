@@ -164,3 +164,19 @@ NEXT (iteration 3, in order):
 4. Fold the court card strips into chars' `ViewMode.art` route once merged (rows in 14:47 entry).
 5. Watch item: the King's arm over the bust card at melee range (RigDepthSort, chars').
 6. At the freeze (18:30): export build/export/windows/RTAI.exe (int-day recipe), REPORT.md.
+
+## Iteration 5 by the runner (session 3; 2026-11-06 15:47-16:47, BUILD)
+
+- 15:47 Read JOURNAL, git log, chars' JOURNAL tail. Rules applied: `depth-ordered-layered-art` (the
+  crate: shadow, ink pass, face slices, lid art last), `concept-scene-parity` (kraft parcels are cubes
+  on the Servo sheet), `motion-quality-gating` (judged in the live arena, seed 2, 32 and 64 px/m).
+- 15:50 The r4 Servo sheet holds no loose crate, and today's crate.png is already kraft (212,151,93,
+  tape 244,205,154): no recolour owed. What was wrong under tilt is the SHAPE: the landed CS crates
+  (cover, obstacles) lay flat as floor tiles beside the depot's standing crate stacks.
+- 15:57 MILESTONE CS crates stand up under tilt (ServoCrateStack, 1091a211 + 0fa4b259): a lifted
+  prism (12 solid slices, shaded 0.58 -> 0.8, the tape down the near face), the crate art as the lid
+  at 0.9 m, the "CS" stencil on the lid, a cast shadow through RigCastShadows.sweep (the arena props'
+  sweep). ServoDraw 202 -> 195 lines (the stencil moved out; debt baseline tightened).
+  GATE top identity measured: Servo `--view=top` tick 1800 at 64 px/m md5 b1f14925... with the HEAD
+  ServoDraw and with the new one. Unit --select test_servo_crate_stack,test_servo_art 6/6; lint 15/15.
+  Evidence: gtai-masters/d8/bosses/servo_crates_tilt64_before_after.png, _tilt32_before_after.png.
