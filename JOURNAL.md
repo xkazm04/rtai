@@ -1225,3 +1225,17 @@ edges, under the torso).
 - 03:41 GATES director reel on 4a4e810c (after the n7-king merge and the it12 changes;
   `scratch/servo/reel12.sh`, headless, --fixed-fps 60): **19/19 chapters fully down, 0 SCRIPT
   ERROR** (`evidence/servo/director-reel-it12.log`). Combat holds.
+- 03:44 GATES scenarios on eb111830: **52 ran, 0 failed**, 0 SCRIPT ERROR, exit 0
+  (`evidence/servo/scenarios-it12.log`). Lint 13/13 (every commit's hook), unit 1189/0.
+
+NEXT (iteration 13, in order):
+1. Merge n7-king if it moved (last merged 3e3c0d61 as f28e1ad1; JOURNAL/REPORT add/add: ours).
+   Its JOURNAL has my FYI REQUEST on `BossCam.BOSS_MARGIN_X_M` 5.5.
+2. The target still's remaining gap: the sheet's hose loops are bigger and more orange than ours
+   (`ServoSpine.LOOP_R_M` 0.42, COPPER 178,92,48). Try r 0.55 and a lighter copper (not vermilion),
+   A/B at 48/32 beside the sheet (`scratch/servo/spine12.sh before48 1 240 48`, crop 340x300+340+60).
+3. Re-film the p1/p2 32 px/m clips on the it12 body (`phase32_12.sh 1 2 2400`, `2 2 2400`), look,
+   replace the it10 ones (the p3 and full fight are already it12).
+4. The bay-hop ring under the boss bar in the 48 px/m clip stays open (measured: no room).
+5. At the freeze (08:30): re-export `windows-showcase`, smoke (expect down 7036, 188), final gates
+   (lint, unit, scenarios, evidence/run.mjs, director reel), REPORT final (drop DRAFT, Next steps).
