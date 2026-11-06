@@ -11,12 +11,23 @@ func test_tilt70_row_draws_the_p70_art_without_an_ease() -> void:
 	assert_true(ViewMode.of("tilt70").cards)
 
 
-func test_combo_eases_from_70_to_the_boss_pitch_and_swaps_art_at_swap_deg() -> void:
+func test_combo_eases_from_70_to_the_boss_pitch_and_cross_fades_the_art() -> void:
 	var p: ViewPitch = ViewPitch.of("combo")
 	assert_true(p.eases())
 	assert_eq(p.boss_pitch, 55.0)
-	assert_eq(p.art_at(70.0), "p70")
-	assert_eq(p.art_at(p.swap_deg - 0.1), "", "below the swap the base (55) cards")
+	assert_eq(p.mix_at(70.0), 1.0, "70: the p70 art only")
+	assert_eq(p.mix_at(55.0), 0.0, "55: the base (55) cards only")
+	assert_almost_eq(p.mix_at(p.swap_deg), 0.5, 0.001, "half way at swap_deg")
+	assert_eq(p.mix_at(p.swap_deg + p.fade_deg * 0.5), 1.0)
+
+
+func test_a_zero_fade_is_a_hard_swap_and_tilt70_is_all_p70() -> void:
+	var p: ViewPitch = ViewPitch.of("combo")
+	p.fade_deg = 0.0
+	assert_eq(p.mix_at(p.swap_deg - 0.01), 0.0)
+	assert_eq(p.mix_at(p.swap_deg), 1.0)
+	assert_eq(ViewPitch.of("tilt70").mix_at(70.0), 1.0)
+	assert_eq(ViewPitch.of("tilt").mix_at(55.0), 0.0, "tilt: no art folder, base cards")
 
 
 func test_tilt_and_top_have_no_art_folder() -> void:
@@ -56,3 +67,34 @@ func test_ease_turns_back_mid_ease_without_a_jump() -> void:
 	assert_eq(e.step(31, false), mid, "a turn back starts where it is")
 	view.pitch_deg = keep
 	e.free()
+
+
+func test_overlay_draws_the_p70_strip_as_tall_as_the_card_and_fades() -> void:
+	var card: Sprite2D = Sprite2D.new()
+	card.name = &"head_card"
+	card.texture = load(RigHeadCard.CARDS["king"][0]) as Texture2D
+	card.hframes = RigHeadCard.FRAMES
+	card.offset = Vector2(-50.0, -card.texture.get_height() * 0.8)
+	card.frame = 3
+	card.flip_h = true
+	ViewPitchCards.dress(card, "p70", 0.25)
+	var o: Sprite2D = card.get_node_or_null(NodePath(String(ViewPitchCards.OVERLAY))) as Sprite2D
+	assert_not_null(o, "the p70 King bust overlay")
+	assert_eq(o.frame, 3)
+	assert_true(o.flip_h)
+	assert_almost_eq(o.texture.get_height() * o.scale.y, float(card.texture.get_height()), 0.01)
+	assert_almost_eq(o.offset.y / o.texture.get_height(), -0.8, 0.001, "the same anchor fraction")
+	assert_almost_eq(o.modulate.a, 0.25, 0.001)
+	assert_almost_eq(card.self_modulate.a, 0.75, 0.001)
+	ViewPitchCards.dress(card, "p70", 0.0)
+	assert_false(o.visible)
+	card.free()
+
+
+func test_no_overlay_without_a_folder_strip() -> void:
+	var card: Sprite2D = Sprite2D.new()
+	card.texture = load(RigHeadCard.CARDS["gang"][0]) as Texture2D
+	ViewPitchCards.dress(card, "p70", 1.0)
+	assert_eq(card.get_child_count(), 0, "no p70 gang card: the base card draws")
+	assert_eq(card.self_modulate.a, 1.0)
+	card.free()

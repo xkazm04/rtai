@@ -45,6 +45,11 @@
             "minimum": 0,
             "type": "number"
           },
+          "fade_deg": {
+            "maximum": 30,
+            "minimum": 0,
+            "type": "number"
+          },
           "height_k": {
             "maximum": 2,
             "minimum": 0,

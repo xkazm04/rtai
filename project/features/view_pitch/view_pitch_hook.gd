@@ -1,9 +1,10 @@
 extends ArenaHook
 ## Lane d8-view70 (data/tables/arena_stations/view-pitch.json, station-only): under a tilted view
 ## whose row names an `art` folder (tilt70, combo) the facing cards draw that folder's strips
-## (ViewPitchCards); under the combined view it adds ViewPitchEase to the dev view, which eases
-## the pitch to the boss pitch from Events.boss_engaged until the boss is defeated. Nothing is
-## written to the sim or the replay hash; straight down (`top`) it does nothing at all.
+## (ViewPitchCards, stepped by ViewPitchEase on the dev view); under the combined view that node
+## also eases the pitch to the boss pitch while a boss fight is live (Events.boss_engaged until the
+## boss is defeated). Nothing is written to the sim or the replay hash; straight down (`top`) it
+## does nothing at all.
 
 var _pitch: ViewPitch = null
 var _clock: SimClock = null
@@ -18,14 +19,13 @@ func setup(stage: ArenaStage, ctx: WorldContext) -> void:
 	_pitch = ViewPitch.of(String(view.id))
 	_stage = stage
 	_clock = ctx.clock
-	ViewPitchCards.apply(null, _pitch.art_at(view.pitch_deg))
 	if _pitch.eases():
 		var err: Error = ctx.events.boss_engaged.connect(_on_engaged)
 		assert(err == OK)
 
 
 func attach_view(view: Node) -> void:
-	if _pitch == null or not _pitch.eases():
+	if _pitch == null or (_pitch.art.is_empty() and not _pitch.eases()):
 		return
 	var ease: ViewPitchEase = ViewPitchEase.new()
 	ease.name = &"view_pitch_ease"

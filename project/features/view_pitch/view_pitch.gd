@@ -5,7 +5,8 @@ extends RefCounted
 ## (features/characters/art/view/<art>/, a card missing there falls back to the base card), so
 ## the 55 and 70 art live side by side and a row picks one. The combined view (`combo`) adds
 ## `boss_pitch_deg` (the pitch while a boss is engaged), `ease_s` (the ease between the two) and
-## `swap_deg` (below it the cards draw the base art, above it the row's `art`). Render only.
+## `swap_deg` (below it the cards draw the base art, above it the row's `art`) and `fade_deg` (the
+## cards cross-fade over this many degrees centred on swap_deg; 0 = a hard swap). Render only.
 
 const ART_DIR: String = "res://features/characters/art/view/"
 
@@ -16,6 +17,7 @@ var play_pitch: float = 90.0
 var boss_pitch: float = 90.0
 var ease_s: float = 0.0
 var swap_deg: float = 0.0
+var fade_deg: float = 0.0
 
 
 ## The extras of the view row `want` (ViewMode.of reads the same table).
@@ -37,6 +39,8 @@ static func of(want: String) -> ViewPitch:
 		p.ease_s = e
 		var s: float = row.get("swap_deg", 0.0)
 		p.swap_deg = s
+		var f: float = row.get("fade_deg", 0.0)
+		p.fade_deg = f
 	return p
 
 
@@ -45,9 +49,15 @@ func eases() -> bool:
 	return not is_equal_approx(boss_pitch, play_pitch)
 
 
-## The art folder the cards draw at `pitch`: the row's `art` at or above swap_deg, else the base.
-func art_at(pitch: float) -> String:
-	return art if pitch >= swap_deg else ""
+## How much of the row's `art` the cards draw at `pitch` (0 = the base card, 1 = the art):
+## 1 at or above swap_deg (a hard swap), or a smoothstep over fade_deg centred on it.
+func mix_at(pitch: float) -> float:
+	if art.is_empty():
+		return 0.0
+	if fade_deg <= 0.0:
+		return 1.0 if pitch >= swap_deg else 0.0
+	var t: float = clampf((pitch - swap_deg) / fade_deg + 0.5, 0.0, 1.0)
+	return t * t * (3.0 - 2.0 * t)
 
 
 ## The card strip `base` (a RigHeadCard.CARDS path) drawn from the art folder `folder`, or `base`
