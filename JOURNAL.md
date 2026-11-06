@@ -233,3 +233,22 @@ NEXT:
   ERROR): `gtai-masters/n8/hud/armory_{tilt70,tilt}_48_after17.png` + `_after17_crop2x.png` (it2 vs it4).
   Look: the floor is now one inked family; the drum mini-nuke is the biggest piece (sized by its long
   side; a bulky launcher, reads as heavy, kept).
+- 22:39 MILESTONE 23ca86f1 quest 1 filmed LIVE for the first time (new debug flag `--autostart`:
+  Quest1Card emits Start; `res://boot/quest1.tscn -- --view=tilt70 --seed=1 --autostart`). FOUND on
+  the live frame at 1280x800: the subtitle box's paper (inset MARGIN*4 = 144, paper -10) lay over the
+  ghost-form card's edge in every quest-1 line (pre-existing geometry). Fix: `HudDialogue.SIDE_X` 166 +
+  `box_of(screen)`; unit `test_the_box_paper_clears_the_folded_ghost_card` (planted the old 144: FAILS
+  134 < 148; 166 passes). `--select=test_hud_dialogue,test_story_forms,test_hud_art` 23/0, lint 15/15.
+  Stills: `gtai-masters/n8/hud/quest1_dialogue_card_before_after_crop2x.png` (before / after --rigs /
+  after shipped), `quest1_opening_tilt70_1280x800_after.png`, `..._rigs_1280x800_before.png`.
+  FINDING (dev path, not shipped): under `--rigs` quest 1's form card never folds (StoryForms has no
+  form view there; quest1_game.gd l.29 "null under --rigs"). FINDING for `view`: quest 1 under
+  `--view=tilt70` still draws its street top-down (dumpster, props, Rivet); no REQUEST from hud, the
+  view lane owns the call.
+  FINDING: Rivet speaks quest 1's opening lines with NO face (no PortraitBook row: his look is in
+  triage). Proposal for the owner only (never in the game): `gtai-masters/n8/hud/
+  proposal_rivet_dialogue_face.png`, the bottom-left bust of the approved `rivet-final/refs/
+  rivet_v01_amber_visor.png` beside today's live box.
+- DECISION lines: hud/showcase redesign, hud/dialogue layout (docs/decisions.md).
+- Masters `frames.json` rebuilt to 15 entries (after17 crops at 70/55, quest-1 card crop and live
+  opening added; the it2 full-frame afters replaced by the after17 one).
