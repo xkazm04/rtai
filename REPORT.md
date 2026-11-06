@@ -105,8 +105,24 @@ Smoke, 600 frames each (King phase 3 at 64 px/m tilt, Servo at 48 tilt, the King
 - The same fight in `top` (today's art): drop `--view=tilt`.
 
 ## What blocked
-- Nothing blocked. Friction: this lane's appdata had no export-templates junction (fixed 17:13). I also edited the tree
-  while `evidence` ran once, which tripped its tree-changed guard (re-run clean).
+- Nothing blocked the lane for longer than a few minutes. Image jobs never waited: each round touched
+  `image.want` and the asset lane yielded within its job (e.g. r5 at 15:13, 97 s, first try).
+- Friction and its cost:
+  - this lane's appdata had a plain empty `export_templates` folder, not the junction. Found and fixed at
+    17:13 before the export, about 5 min lost. chars' and weapons' appdata folders looked the same (FYI in JOURNAL).
+  - `tools/godot/check.mjs` fails on unchanged files in this worktree ("Failed to compile depended scripts").
+    I parse-checked through the live arena runs and GUT instead, so no time was lost.
+  - Wall-clock budgets with 4 lanes running: `scenario_corpse_horde` (with the reel running beside it) and
+    `scenario_rig_stress` (at the freeze) missed their budgets under contention. Each passed when re-run alone.
+    About 15 min of re-runs in total.
+  - I once edited the tree while `evidence` ran, which tripped its tree-changed guard. One re-run (about 10 min).
+
+## Where the evidence is
+Stills, clips and `frames.json` are in `C:\Users\kazda\kiro\gtai-masters\d8\bosses\` (the brief's folder), not in
+the repo's `evidence/`. Path check at 18:42: every still and clip this REPORT names exists there. `frames.json`
+has 15 entries, 0 missing. The source sheets `king_55.png` and `servo_55.png` are in `gtai-art\angle-r1\out\`.
+The four cutters in `tools/art/` and the `art/p55/` folders exist. `build/export/windows/RTAI.exe` is from 18:10.
+Since 02b11a53 only JOURNAL.md, REPORT.md and docs/decisions.md have changed, so the exe is built from HEAD's code.
 
 ## Next steps
 - Fold the court card strips into chars' `ViewMode.art` route after the merge (rows in JOURNAL 14:47); KingArt keeps the limbs and the cape.
