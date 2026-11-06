@@ -472,3 +472,7 @@ NEXT: unchanged from iteration 14 (0: film tilt70 street cards after the view70 
   the evidence run; still current. No new feature work (STABILIZE).
 - GATE lint on 4c31b40b: 15/15 over 1092 files. Exe present (`build/export/windows/RTAI.exe`, 242 MB,
   18:05). Full unit no-arg started 18:31 (result below).
+- GATE unit no-arg on 7f089f5a (code = 860fd3d8): 1423 passed, 0 failed, 0 skipped (38 s), no FLAKY.
+NEXT: unchanged from iteration 14 (0: film the tilt70 street cards after the view70 merge; 1: the cap card
+  in game; 2: re-film tank/tube chapters when weapons' REQUEST lands; 3: death beat if Call 8 is taken;
+  4: draw order level cap and the King's accents in the probe).

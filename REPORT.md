@@ -146,3 +146,7 @@ Final head `247b82ef` (the hat card re-toned; art only, p55 set only):
   - Re-run alone at 18:19 (`node tools/tests/run_scenarios.mjs --only=scenario_rig_stress`): 1 passed.
   - These commits change only p55 rows and art, which `top` (the scenario view) never loads.
   - Re-check on an idle machine at the merge.
+
+## Stabilize check (18:31, head 7f089f5a; the code is the same as 860fd3d8)
+- Lint 15/15 (1092 files). Unit no-arg: 1423 passed, 0 failed, 0 skipped, no FLAKY.
+- The exe is still the 18:05 export on 247b82ef. Every commit after it is data only (unreachable p70 rows) or docs, so the exe draws what the head draws.
