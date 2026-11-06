@@ -109,3 +109,54 @@ NEXT (iteration 3):
   the full unit run is 1418 passed, 0 failed. (6) 094a0661: the sidearms are print-prepped (a small
   gain at 48 px/m, gtai-masters/d8/weapons/pistol_tilt_48_prep_zoom4x.png).
   The rest of NEXT stands (2, 3, 4, 5, 7).
+## 15:28 iteration 3 (BUILD)
+- 15:28 Read JOURNAL, git log. Image lock held by the assets lane: touched image.want, gen.mjs waited.
+- gen55d (image.want + lock, 82 s + 75 s): heavy_55d (chainsaw, gatling, flame wand: the ref strip
+  had the tanks masked out so only the wand is drawn) and tubes_55d (rocket tube, mini-nuke, molotov),
+  both from the shipped pickups. Looked at both sheets: designs match the pickups, three-quarter, clean
+  green, vermilion only on the warhead stripes / hazard plate / rag (as on the shipped art).
+- Cut (cut.py tol 14), grips by eye on a 50 px grid (chainsaw on the engine at the bar line, gatling
+  and flame wand on the pistol grip, tubes on the pistol grip, molotov mid-bottle), prep.py 0.17 2.
+  Tubes get an `empty` part (warhead cut away right of the front ring) so HeldTube's spent-tube swap
+  works on the pitch part (it would have put the top-down empty texture on the 55 sprite).
+- 32 px/m read (NEXT 2): `small` held_55 parts (tools/art/held_pitch_small.py: held_small.py's
+  re-tone on the UNPREPPED cut; re-toning the prepped part keeps its grown ink and stays a blob, seen
+  in the print sim) swapped by HeldLod below held_small_below_ppm (56), as for `top`.
+  Filmed at 32 tilt, same seed, `--held-small=off` = before (scratch lod32/cmp32.png): pistol and
+  plasma rifle nearly identical; Gloria goes two-tone dark (as under top). HONEST: a marginal gain;
+  the 32 px/m issue is the part's size and silhouette (a pale club), not its tones.
+- Row moved to its own class HeldPitchRow (held_pitch_art.gd stayed under 200 lines).
+- NOTE for chars: features/player/held_tube.gd: HeldTube.apply asks HeldPitchArt.row_of first (a
+  pitch part swaps to its own empty part); top unchanged (no pitch rows under top).
+- MILESTONE 7d93ac4a: the six heavy/tube/thrown 55 parts + tube empties + small cells (16 films at 48 and
+  32 tilt, all 0 SCRIPT ERROR). Seen at 48: rocket tube and mini-nuke clearly better (flared back, sight,
+  grip, fins); flame wand better (hose); chainsaw reads at the hip (director chapter); Gatling WORSE
+  (a fat tan tube); baton no gain.
+- FOUND: the D4 print sim in held_small.py does not model the gun print the held parts use; judge
+  held parts only in the live path.
+- MILESTONE 8c64bdeb: the 55 plasma sword's coil hilt printed as an ink blob at 48; its small cell fixes
+  it (gtai-masters/d8/weapons/plasma_sword_tilt_48_full_vs_small_zoom.png).
+- Melee films: director chapters with `--chapter=<id>` (scratch melee.sh), not the gunplay bot (which
+  never wields a blade: the frames show a gun in the claw and the chainsaw at the hip).
+- Gates on 8c64bdeb: full unit 1420 passed / 0 failed; director reel headless top 19/19 and tilt 19/19,
+  every chapter all down, 0 SCRIPT ERROR; lint 15/15.
+- 58981c79: weapons-tilt.md iteration 3 table + DECISION (small cells for pitch parts) in docs/decisions.md.
+- Evidence: gtai-masters/d8/weapons/frames.json now 14 entries (tubes, blades, heavy, plasma sword zoom first).
+- MILESTONE f0651a19: the Gatling keeps its top-down part under tilt (55 row `enabled: false`, the art
+  stays). Filmed 3 variants at 48 (size_k 1, 0.85, small without close_gaps): all a pale club; the slim
+  top-down bundle reads more as a rotary gun (gtai-masters/d8/weapons/gatling_tilt_48_variants.png).
+  DECISION in docs/decisions.md.
+- Flame jet at 48 tilt (scratch heavy48/fl_zoom.png): on a nose-down aim the jet leaves the wand's tip
+  by Rivet's legs; body flames on the cop, the burst on the ground. F = 2.
+- 32 px/m size A/B (plasma rifle, size_k 1 vs 0.8; gtai-masters/d8/weapons/plasma_rifle_tilt_32_size_k.png):
+  0.8 a touch slimmer, still a pale club. Kept 1 (detail at close range is the brief's weight). Call for
+  the owner: size_k per zoom, or a slimmer drawn part for 32.
+- FRICTION: I queued a "size_k 1" film after a data edit to 0.8 in one chain; it read 0.8. Discarded it.
+  Rule: one data state per film chain.
+- Registry rules applied this session: motion-quality-gating (judged in motion on the live path, `?` for
+  unseen dims, a regression found and reverted to the before: Gatling); generative-artifact-gating
+  (looked at every sheet before cutting; masked the tanks out of the flame reference; rejected the D4
+  sim as a judge for gun-print parts); concept-scene-parity (every call made on filmed frames, not on
+  the sheet); sprite-and-atlas-production (mipmaps on every new import; same-canvas LOD cells so grip
+  and muzzle stay valid); depth-ordered-layered-art (the rim copies swap with the LOD cell, Rim%d names).
+- 15:58: gen55g: a regenerated 55 Gatling (dark barrels with gaps, compact receiver), image.want + lock.
