@@ -1522,3 +1522,13 @@ rifle row filmed and scored. Call 7 added.
   frame per tick (quest1_clip has no per-tick switch: check) or at 48/64 px/m, and find GunFx's
   Rivet flash size in gun_fx.json before choosing between "scale GunFx's flash" and "route the
   rifle through the art stand-in".
+
+### CORRECTION 04:13 to the 04:11 note: no flash is drawn at all for the quest 1 rifle
+- `boot/collect_call/view/fx_view.gd:47, 55, 72-80`: FxView steps GunFx and calls `_gun_over` (both
+  Rivet's flash paths) only `if arena.gun != null`. StageGuns nulls it for the rifle, so the rifle
+  gets no flash, no table tracer, no casings; its rounds are the evening path's thin dashes. The
+  04:05 finding stands; the 04:11 "GunFx owns its flash" was wrong (I had not read the call site).
+- NEXT 1 is then: while Rivet holds a weapon without a weapons.json row, give FxView a flash from
+  his latest Shot (render only), using rivet_arsenal.json `art_stand_in` (assault-rifle ->
+  machine_pistol) for the cell and the gun_fx.json look; do not arm `arena.gun` (that would move
+  the sim and quest 1's replay: the rifle's magazine must still run dry into Gloria).

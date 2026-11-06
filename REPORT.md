@@ -43,7 +43,7 @@ because I edited docs during the run). City-block director reel with `--loadout=
   over a 42-tick reload), so nothing in the sim announces the release; a wind-up that plays
   between press and release would need the release to wait in the sim (a gameplay timing change,
   not done).
-- Quest 1's assault rifle (combat.json, not a table gun): filmed in it15 (Dock 9, ticks 14363-14721) and it reads weakly: thin dark dashes, no muzzle flash, no rifle drawn in Rivet's claw (`evidence/ranged/it15-quest1-rifle-32ppm-2x.png`). It fires on the quest's combat.json path (`arena.gun` null), so GunFx, not the table guns' WeaponFxArt, draws its flash, and that flash does not show in the frames (taken every 2 ticks). Not fixed.
+- Quest 1's assault rifle (combat.json, not a table gun): filmed in it15 (Dock 9, ticks 14363-14721) and it reads weakly: thin dark dashes, no muzzle flash, no rifle drawn in Rivet's claw (`evidence/ranged/it15-quest1-rifle-32ppm-2x.png`). It fires on the quest's combat.json path with `arena.gun` null, and quest 1's FxView draws Rivet's flash (GunFx or WeaponFxArt) only while `arena.gun` is set (fx_view.gd:55), so no flash is drawn at all. Not fixed.
 - Quest 1's table-gun change is small at 32 px/m in the windows filmed so far (Rivet fires few
   nails in Dock 9).
 - No performance claim: no bench was run under the bench lock.
