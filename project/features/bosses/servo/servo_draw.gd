@@ -9,6 +9,15 @@ const SHADOW: Vector2 = Vector2(0.25, 0.35)
 ## The drone sprite drawn this much over its art size (a 0.7 m drone is ~22 px at 32 px/m: too
 ## small to read over the yard).
 const DRONE_K: float = 1.4
+## The carried parcel is a kraft box slung under the drone (the sheet's), drawn under the sprite so
+## it shows round the hub and through the rotors, and it falls into its ring as the same box (its
+## shadow closing in as it lands). false = it16: a cream square on the hub, no falling box.
+const SLUNG_PARCEL: bool = true
+## The slung box's side (m); the landed crate is ServoTuning.crate_m.
+const PARCEL_M: float = 0.62
+## How far the slung box hangs under the drone (m): drawn that much toward the drone's shadow, so
+## it peeks out from under the hub on the shadow side.
+const SLING_M: float = 0.5
 
 ## Pixels per metre of the canvas drawn on (32 in the dev view, Ink.PX_PER_M in the arena).
 var px: float = 32.0
@@ -30,6 +39,8 @@ func parcels(c: CanvasItem, s: ServoSwarm) -> void:
 		var k: float = 1.0 - float(p.fall_left) / p.fall_total
 		c.draw_circle(p.pos * px, s.tuning.ring_m * px * k, Color(verm, 0.28))
 		_dashed_ring(c, p.pos, s.tuning.ring_m, verm, 3.0)
+		if SLUNG_PARCEL:
+			_falling_box(c, p.pos, k, s.tuning)
 	for b: ServoParcels.Blast in s.parcels.booms:
 		_boom(c, b.pos * px, b.radius_m * px, 1.0 - float(b.life_left) / ServoParcels.BOOM_TICKS)
 	for d: ServoParcels.Parcel in s.parcels.debris:
@@ -134,16 +145,39 @@ func drones(c: CanvasItem, s: ServoSwarm) -> void:
 	for d: ServoDrone in s.drones:
 		var p: Vector2 = d.pos * px
 		var rot: float = d.vel.angle() - PI / 2 if d.vel.length() > 0.5 else 0.0
+		if SLUNG_PARCEL and d.carrying():
+			_box(c, p + SHADOW * SLING_M * px, rot, PARCEL_M)
 		_sprite(c, drone_tex, p, rot, DRONE_K)
 		if d.dive:  # the broken rack's drones spark (danger)
 			var spark: Vector2 = Vector2.from_angle(float(d.age) * 2.3) * px * 0.3
 			c.draw_circle(p + spark, px * 0.07, pal.color(&"vermilion"))
-		if d.carrying():
+		if d.carrying() and not SLUNG_PARCEL:
 			var h: float = px * 0.2
 			c.draw_rect(Rect2(p - Vector2(h, h), Vector2(h, h) * 2.0), pal.color(&"paper_2"))
 			c.draw_rect(
 				Rect2(p - Vector2(h, h), Vector2(h, h) * 2.0), pal.color(&"ink"), false, 1.0
 			)
+
+
+## A dropped parcel, k 0..1 through its fall: the slung box grows to the crate's size over its
+## shadow, which closes in from where the drone's was.
+func _falling_box(c: CanvasItem, at: Vector2, k: float, t: ServoTuning) -> void:
+	var side: float = lerpf(PARCEL_M, t.crate_m, k)
+	var sh: Vector2 = (at + SHADOW * t.fly_h_m * (1.0 - k)) * px
+	var half: Vector2 = Vector2.ONE * side * 0.5 * px
+	c.draw_rect(Rect2(sh - half, half * 2.0), Color(pal.color(&"ink"), 0.3 + 0.2 * k))
+	_box(c, (at + SHADOW * SLING_M * (1.0 - k)) * px, 0.0, side)
+
+
+## A kraft parcel `side_m` wide at `at_px`: an ink edge, then the crate art.
+func _box(c: CanvasItem, at_px: Vector2, rot: float, side_m: float) -> void:
+	if crate_tex == null:
+		return
+	var half: Vector2 = Vector2.ONE * (side_m * 0.5 * px + 1.0)
+	c.draw_set_transform(at_px, rot)
+	c.draw_rect(Rect2(-half, half * 2.0), pal.color(&"ink"))
+	c.draw_set_transform(Vector2.ZERO)
+	_sprite(c, crate_tex, at_px, rot, side_m * ServoRig.ART_PPM / crate_tex.get_width())
 
 
 func _sprite(c: CanvasItem, t: Texture2D, at_px: Vector2, rot: float, k: float) -> void:
