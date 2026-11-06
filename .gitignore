@@ -24,3 +24,6 @@ __pycache__/
 Thumbs.db
 project/data/generated/city/
 /.scons-cache/
+
+# /perfect loop vault (local working memory; overlay is .claude/perfect/)
+.perfect/
