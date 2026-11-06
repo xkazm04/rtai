@@ -21,6 +21,8 @@ const VIEW_DEG: float = 45.0
 ## The cross-fade window around a view boundary (degrees of heading); 0 = hard swap.
 const BLEND_DEG: float = 0.0
 const CAP: int = 256
+## Distinct dent patterns (the wear's seed range).
+const WEAR_SEEDS: int = 64
 
 static var _tex: Dictionary[String, Texture2D] = {}
 ## The live cross-fade window (dev scenes try other values; the game keeps BLEND_DEG).
@@ -32,6 +34,11 @@ static var upright_k: float = 0.0
 var _mm: MultiMesh = null
 var _node: MultiMeshInstance2D = null
 var _n: int = 0
+## This frame's cards before the depth sort: ground y (m), transform, colour, custom data.
+var _ys: PackedFloat32Array = PackedFloat32Array()
+var _xfs: Array[Transform2D] = []
+var _cs: PackedColorArray = PackedColorArray()
+var _cds: PackedColorArray = PackedColorArray()
 
 
 func _init() -> void:
@@ -68,10 +75,30 @@ static func atlas() -> Texture2D:
 func begin(tex: Texture2D) -> void:
 	_node.texture = tex
 	_n = 0
+	_ys.clear()
+	_xfs.clear()
+	_cs.clear()
+	_cds.clear()
 
 
-## A car of art id `art` at `pos` (m) facing `head` (ground unit vector), tinted `tint`.
-func put(art: int, pos: Vector2, head: Vector2, tint: Color) -> void:
+## The shader's wear for a car in damage state `state` (VehicleBody.State): level 0 intact (and
+## hijacked), 1 dented (D1), 2 smashed (D2), 3 burnt wreck, plus 4 x a seed from the car's `id`
+## so two damaged cars do not wear the same dents.
+static func wear(state: int, id: int) -> int:
+	var level: int = 0
+	match state:
+		VehicleBody.State.D1:
+			level = 1
+		VehicleBody.State.D2:
+			level = 2
+		VehicleBody.State.WRECK:
+			level = 3
+	return level + 4 * (absi(id) % WEAR_SEEDS)
+
+
+## A car of art id `art` at `pos` (m) facing `head` (ground unit vector), tinted `tint`, worn
+## `worn` (wear(); 0 = intact).
+func put(art: int, pos: Vector2, head: Vector2, tint: Color, worn: int = 0) -> void:
 	var a: float = rad_to_deg(atan2(head.y, head.x))
 	var pick: Vector3 = view_of(a)
 	var turn: float = wrapf(a - pick.z, -180.0, 180.0)
@@ -80,12 +107,31 @@ func put(art: int, pos: Vector2, head: Vector2, tint: Color) -> void:
 	if blend_deg > 0.0 and edge < blend_deg * 0.5:
 		w = 0.5 + edge / blend_deg
 		var nb: Vector3 = view_of(a + signf(turn) * VIEW_DEG)
-		_one(art, pos, nb, wrapf(a - nb.z, -180.0, 180.0), Color(tint, tint.a * (1.0 - w)))
-	_one(art, pos, pick, turn, Color(tint, tint.a * w))
+		var c: Color = Color(tint, tint.a * (1.0 - w))
+		_one(Vector2i(art, worn), pos, nb, wrapf(a - nb.z, -180.0, 180.0), c)
+	_one(Vector2i(art, worn), pos, pick, turn, Color(tint, tint.a * w))
 
 
+## Writes the cards back to front (north to south on the ground: a car nearer the camera covers
+## the one behind it, whatever order they were put in).
 func finish() -> void:
+	var order: Array[int] = back_to_front(_ys)
+	for i: int in _n:
+		var k: int = order[i]
+		_mm.set_instance_transform_2d(i, _xfs[k])
+		_mm.set_instance_color(i, _cs[k])
+		_mm.set_instance_custom_data(i, _cds[k])
 	_mm.visible_instance_count = _n
+
+
+## The draw order for cards at ground y `ys`: north first, ties in put order.
+static func back_to_front(ys: PackedFloat32Array) -> Array[int]:
+	var order: Array[int] = []
+	order.assign(range(ys.size()))
+	order.sort_custom(
+		func(a: int, b: int) -> bool: return ys[a] < ys[b] or (ys[a] == ys[b] and a < b)
+	)
+	return order
 
 
 ## The cards drawn this frame.
@@ -116,13 +162,18 @@ static func card_xf(pos: Vector2, turn_deg: float) -> Transform2D:
 	return Transform2D(x, y, pos * SimConst.PX_PER_M)
 
 
-func _one(art: int, pos: Vector2, pick: Vector3, turn: float, c: Color) -> void:
+## `aw`: the art id and the wear.
+func _one(aw: Vector2i, pos: Vector2, pick: Vector3, turn: float, c: Color) -> void:
 	if _n >= CAP or c.a <= 0.0:
 		return
-	_mm.set_instance_transform_2d(_n, card_xf(pos, turn))
-	_mm.set_instance_color(_n, c)
-	var cell: float = float(clampi(art, 0, ROWS - 1) * COLS) + pick.x
-	_mm.set_instance_custom_data(_n, Color(cell, pick.y, 0.0, 0.0))
+	var cell: float = float(clampi(aw.x, 0, ROWS - 1) * COLS) + pick.x
+	@warning_ignore("return_value_discarded")
+	_ys.append(pos.y)
+	_xfs.append(card_xf(pos, turn))
+	@warning_ignore("return_value_discarded")
+	_cs.append(c)
+	@warning_ignore("return_value_discarded")
+	_cds.append(Color(cell, pick.y, float(aw.y), 0.0))
 	_n += 1
 
 

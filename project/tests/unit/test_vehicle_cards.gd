@@ -47,3 +47,20 @@ func test_the_wreck_fire_stays_on_the_ground_without_cards() -> void:
 		assert_eq(VehicleFire.hood_lift(), Vector2.ZERO)
 	else:
 		assert_lt(VehicleFire.hood_lift().y, 0.0, "a card's bonnet is up the screen")
+
+
+func test_wear_levels_follow_the_damage_state_and_seed_per_car() -> void:
+	assert_eq(VehicleCards.wear(VehicleBody.State.INTACT, 0), 0)
+	assert_eq(VehicleCards.wear(VehicleBody.State.HIJACKED, 0), 0, "hijacked: no dents")
+	assert_eq(VehicleCards.wear(VehicleBody.State.D1, 0) % 4, 1)
+	assert_eq(VehicleCards.wear(VehicleBody.State.D2, 5) % 4, 2)
+	assert_eq(VehicleCards.wear(VehicleBody.State.WRECK, 9) % 4, 3)
+	var a: int = VehicleCards.wear(VehicleBody.State.D1, 1)
+	var b: int = VehicleCards.wear(VehicleBody.State.D1, 2)
+	assert_ne(a, b, "two dented cars wear different dents")
+	assert_lt(VehicleCards.wear(VehicleBody.State.WRECK, -77), 4 * VehicleCards.WEAR_SEEDS)
+
+
+func test_cards_draw_north_to_south_whatever_the_put_order() -> void:
+	var ys: PackedFloat32Array = PackedFloat32Array([5.0, -5.0, 0.0, -5.0])
+	assert_eq(VehicleCards.back_to_front(ys), [1, 3, 2, 0] as Array[int])

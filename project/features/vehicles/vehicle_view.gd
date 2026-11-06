@@ -136,15 +136,18 @@ func _draw_cards() -> void:
 		return
 	cards.begin(tex)
 	for b: VehicleBody in service.cars:
-		var wreck: bool = b.state == VehicleBody.State.WRECK
-		cards.put(b.art, b.pos, b.head, WRECK_TINT if wreck else Color.WHITE)
+		cards.put(b.art, b.pos, b.head, Color.WHITE, VehicleCards.wear(b.state, b.id))
+	var book: Dictionary[int, int] = {}
+	if service.traffic != null:
+		book = service.traffic.state
 	var recs: PackedFloat64Array = service.world.cars_near(service.world.player_pos(), 1e6)
 	for r: int in range(0, recs.size(), VehicleWorld.CAR_STRIDE):
-		var art: int = int(recs[r + 7])
-		cards.put(
-			art, Vector2(recs[r + 2], recs[r + 3]), Vector2(recs[r + 4], recs[r + 5]), Color.WHITE
-		)
-	VehicleParked.put_near(cards, service.world.player_pos(), PARKED_M, WRECK_TINT)
+		var id: int = int(recs[r])
+		var st: int = book.get(id, VehicleBody.State.INTACT)
+		var at: Vector2 = Vector2(recs[r + 2], recs[r + 3])
+		var head: Vector2 = Vector2(recs[r + 4], recs[r + 5])
+		cards.put(int(recs[r + 7]), at, head, Color.WHITE, VehicleCards.wear(st, id))
+	VehicleParked.put_near(cards, service.world.player_pos(), PARKED_M)
 	cards.finish()
 
 

@@ -7,7 +7,7 @@ extends RefCounted
 ## flat prop: the bus, which has no card yet). Nothing registers in `top` (no card atlas): unused.
 
 ## city_textures id -> VehicleCards art row (the sim car art ids): 44-46 sedans, 47 taxi, 48 van,
-## 49 pickup, 50 the wreck (a sedan, WRECK_TINT), 52 ambulance, 53 police cruiser.
+## 49 pickup, 50 the wreck (a sedan worn as a burnt wreck), 52 ambulance, 53 police cruiser.
 const ROWS: Dictionary[int, int] = {44: 0, 45: 1, 46: 2, 47: 3, 48: 4, 49: 5, 50: 0, 52: 6, 53: 8}
 const WRECK_ID: int = 50
 
@@ -39,7 +39,7 @@ static func clear() -> void:
 
 
 ## Every registered car within `radius` m of `at`, put on `cards` (between begin and finish).
-static func put_near(cards: VehicleCards, at: Vector2, radius: float, wreck: Color) -> void:
+static func put_near(cards: VehicleCards, at: Vector2, radius: float) -> void:
 	var r2: float = radius * radius
 	for cars: PackedVector4Array in _chunks.values():
 		for c: Vector4 in cars:
@@ -47,5 +47,7 @@ static func put_near(cards: VehicleCards, at: Vector2, radius: float, wreck: Col
 			var art: int = row(int(c.w))
 			if art < 0 or p.distance_squared_to(at) > r2:
 				continue
-			var tint: Color = wreck if int(c.w) == WRECK_ID else Color.WHITE
-			cards.put(art, p, Vector2.from_angle(c.z), tint)
+			var worn: int = 0
+			if int(c.w) == WRECK_ID:
+				worn = VehicleCards.wear(VehicleBody.State.WRECK, int(c.x * 7.0 + c.y * 13.0))
+			cards.put(art, p, Vector2.from_angle(c.z), Color.WHITE, worn)
