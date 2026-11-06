@@ -2264,3 +2264,14 @@ changes get a before take; listen to call 10's kick in a played Dock 9 (a 3 px v
 
 NEXT (after the night): it25's NEXT stands; plus judge call 10 in a played Dock 9 (2 px vs 3 px is
 one value), and a `--feel` before take is now possible in quest1_clip for any quest-path feel row.
+
+### FREEZE 08:21 iteration 27 (BUILD, 9 min to freeze)
+- READ: tree clean at `e7e4328a`; last project/ commit `bd42aade` (dev only), last game-code commit
+  `f13aa9cc`. REPORT names gates on `bd42aade` + `f13aa9cc`, exe on `f13aa9cc` (08:03, booted exit 0).
+  No REQUEST to ranged in n7-melee, n7-king or n7-servo journals.
+- No new change started: one more gated, filmed item does not fit before 08:30 (a gate run alone is
+  about 12 min under contention). The freeze build stands as `build/export/windows/RTAI.exe` on
+  `f13aa9cc`; nothing in the tree moved after it except dev/ and docs.
+
+NEXT (after the night): it26's NEXT stands: judge call 10 in a played Dock 9 (2 px vs 3 px is one
+value in hit_feel.json `assault_rifle`); n7-melee to merge `f13aa9cc`'s hit_feel loader alias + row.
