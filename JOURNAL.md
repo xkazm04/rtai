@@ -149,3 +149,26 @@ vehicles REQUESTs the kerb-parked cars hook into `ChunkView`, `VehicleParked` on
     body can stand inside a footprint: it is not counted (feet must be north of the north edge).
   - Test `test_city_occlusion.gd` (3: only buildings collected with the lift above them, the patch is
     the body inside the drawn area only, the silhouette at city scale).
+
+- MILESTONE (evidence) occlusion at 32 px/m, same seed before (`occlude` false) / after:
+  `gtai-masters/n8/city/it4_occlusion_32ppm_before_after_x3.png` (frames 640 and 690, x3) and
+  `it4_occlusion_32ppm_before_after_full.jpg` (frame 690). Before: Rivet's legs and gun draw ON the
+  union block's lifted roof. After: the roof covers everything below its north edge, the hidden legs
+  read as the ink silhouette, head and chest stay above the edge. The frames differ ONLY in a
+  ~60 x 15 px box at his feet (PIL bbox per frame 620-710): the rest is the world, bit-identical.
+  Log: 144 body-frames hidden over 720 frames. Judged: it reads as "standing behind the block";
+  the silhouette is a short dark bar at this size (legs only): fine at 32, judge at 48/64 next.
+- MERGE 244e9fbd: n8-vehicles (VehicleParked, for its REQUEST to city); JOURNAL.md kept ours.
+- The parked-car hand-off (vehicles' REQUEST): built in ChunkLift, not ChunkView (ChunkView stays at
+  200 lines): `order()` (tilt only) leaves the carded parked cars out of the draw order and hands
+  them to `VehicleParked.park(chunk.key(), cars)` as it orders the chunk; `make()` clears the registry;
+  `count()` gives ChunkView the drawn length. Shadows keep drawing. Test in test_chunk_lift.gd.
+  FILMED and found a REGRESSION: in `--arena=city` the flat cars vanished and NO card replaced them
+  (only their shadows; `scratch/city/cmp_parked.png`): VehicleView exists only in the main city boot
+  (boot/city_vehicle_world.gd), so in the arena nobody draws VehicleParked. DECISION: gated by
+  `city_facades.json` `parked_cards` (default FALSE: no regression anywhere; the main city's cards
+  are one value away). FRICTION: no way to ask VehicleParked whether a view draws it.
+- REQUEST to vehicles: add `static var live: bool` (or `static func drawn() -> bool`) to
+  VehicleParked, set true by VehicleView while it draws cards (false on exit). ChunkLift will AND it
+  into the hand-off (`parked_cards` then defaults true): the main city gets cards, the arena city
+  (no VehicleView) keeps its flat cars. Or put a VehicleView in the arena city.
