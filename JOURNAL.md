@@ -1601,3 +1601,18 @@ NEXT (iteration 16, in order):
   known flake; it ran while the export, the exe smoke and the film encode loaded the machine.
   Re-run alone: **1 ran, 0 failed** (`evidence/king/scenarios-it16.log`,
   `evidence/king/scenarios-it16-city-chase.log`). 0 SCRIPT ERROR in both. Combat holds.
+
+### 05:23 MILESTONE King's own gold chain (the weakest item by the target's top view)
+- Looked at the sheet's 90-degree panel zoomed (`build/scratch16/tgt_top.png`, scratch): King
+  from above is the jewelled crown inside the ermine ring, with a gold chain and gem medallions over
+  his chest in the ring's front opening. Ours had the collar's front gap empty: the gang wore chains,
+  King did not (the brief's "gold chains and rings").
+- `KingAccents._king_chain`: KING_CHAIN_W_M 0.08 on a 0.56 m ring (+-0.78 rad round the facing),
+  ink edge, four light links, a 0.1 m gold medallion with a plum gem (the sheet's orange gem is
+  vermilion-adjacent: vermilion stays the cape's).
+- A/B phase 1 tick 60 and phase 3 tick 240 at 32 px/m
+  (`evidence/king/shots/it16/king_chain_before_after_p1_p3_32ppm.png`), phase 3 tick 30 at 48
+  (`..._chain_p3_48ppm_4x.png`). **Looked at**: on the throne the collar now closes into a ring with
+  the medallion at the front against the plum, the top-view read of the sheet; on foot at 32 it is
+  subtler where it crosses the gold arm; at 48 the medallion and its plum gem read clearly.
+  DECISION keep 0.08. Unit **1164/0** (`evidence/king/unit-it16b.log`), lint 13/13.

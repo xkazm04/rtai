@@ -22,7 +22,8 @@ The moveset is `docs/bosses/king.md`; the full log is `JOURNAL.md`.
     forearm he inherited (`king_press_plates_before_after_48ppm_it8.png`);
   - (it13) the megaphone prints gold with a dark bell mouth at 32 px/m (it was an ink smudge with
     vermilion flecks: `evidence/king/shots/it13/horn_lift_10_155_19_p3_p1_32ppm_4x.png`);
-  - a jewelled crown and the ermine collar over the vermilion cape; (it13) the cape is folded cloth
+  - a jewelled crown and the ermine collar over the vermilion cape; (it16) his own gold chain across
+    the collar's front with a plum-gem medallion (`evidence/king/shots/it16/king_chain_before_after_p1_p3_32ppm.png`); (it13) the cape is folded cloth
     under an ermine border that sways and trails his charge (`evidence/king/shots/it13/cape_before_after_32_48ppm.png`),
     and (it14) lands wide with the press slam's shockwave (`evidence/king/shots/it14/cape_slam_land_before_after_48ppm.png`);
   - the gilded plum throne-car, a boss-owned vehicle with drapes and a hood cannon (banded gold barrel on a swivel mount since it12, `evidence/king/shots/it12/hood_cannon_before_after_48ppm_2x.png`); (it14) rounded gold bumpers past both ends (`evidence/king/shots/it14/car_bumpers_before_after_p1_32_48ppm.png`); (it15) a gilded throne back, a gold arch with ball finials round King's back over the cape, left empty on the car when he steps down (`evidence/king/shots/it15/car_throne_before_after_p1_32_48ppm.png`, `evidence/king/shots/it15/car_throne_empty_p3_step_48ppm.png`);
@@ -135,6 +136,11 @@ Each call names its options, the default that is built, and how to see it.
   `PAD_M` 0.12, 0 = the bare arch): `evidence/king/shots/it16/throne_pad_before_after_p1_48_32ppm.png`. Stills:
   `evidence/king/shots/it15/car_throne_before_after_p1_32_48ppm.png`,
   `evidence/king/shots/it15/car_throne_empty_p3_step_48ppm.png`; in play `RTAI.exe -- --rigs --boss=king`.
+- **N. King's chain (it16).** A gold chain across the ermine collar's front gap with a gold
+  medallion and a plum gem (built: `KingAccents.KING_CHAIN_W_M` 0.08), or none (0, the it15 King).
+  The sheet's gem is orange; plum here because vermilion stays the cape's (a gold gem is the other
+  option, `KingAccents.GEM`). See `evidence/king/shots/it16/king_chain_before_after_p1_p3_32ppm.png`
+  and `evidence/king/shots/it16/king_chain_p3_48ppm_4x.png`; in play `RTAI.exe -- --rigs --boss=king --phase=3`.
 
 ## The exe
 
@@ -152,7 +158,7 @@ same as the editor run). It is re-exported at the freeze.
 
 ## Next steps
 
-1. The owner's verdicts on calls A-M; each default is one data value or flag (named in the call).
+1. The owner's verdicts on calls A-N; each default is one data value or flag (named in the call).
 2. Difficulty (call C): if "fair" is picked, re-tune the coin fan's spread and the charge's lane
    width in `bosses.json` and re-run `node evidence/king/boss_numbers.mjs` until about 7 in 10
    human-bot fights survive; never call it balanced without the table.
