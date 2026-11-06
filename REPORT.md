@@ -1,6 +1,6 @@
 # REPORT: lane `servo`, night 2026-11-05/06 (Act 2's Servo)
 
-DRAFT (iteration 16, 05:25): to be finalized at 08:40. The exe is re-exported at the freeze; the final gates are still open. Gates on the it16 head: lint 13/13, unit 1193/0, scenarios 52 ran / 0 failed (`evidence/servo/scenarios-it16.log`); director reel 19/19 chapters fully down, 0 SCRIPT ERROR (`evidence/servo/director-reel-it16.log`).
+DRAFT (iteration 19, 06:40): to be finalized at 08:40. The exe is re-exported at the freeze; the final gates are still open. Gates on the it19 head (05c403e5, the square pads): lint 13/13, unit 1197/0 (`evidence/servo/unit-it19.log`), scenarios 52 ran / 0 failed (`evidence/servo/scenarios-it19.log`); director reel 19/19 chapters fully down, 0 SCRIPT ERROR (`evidence/servo/director-reel-it19.log`).
 
 Branch `n7-servo` (from main `763f8fba`, with `n7-king`'s framework merged in at every move; the
 last merge was `6f083a5a` = n7-king `8ee305fc`, iteration 18). Clips and stills: `C:\Users\kazda\kiro\gtai-masters\n7\servo\` (M below),

@@ -1518,3 +1518,19 @@ depth-ordered-layered-art (the blades drawn over the pad, under the pelvis and r
   list; the file stays, REPORT call 11 cites it).
 - 06:24 GATES/FILMS started on 05c403e5: the director reel (`reel19.sh`) and the full fight
   (`full32_19.sh`).
+- 06:25 GATES director reel on 05c403e5: **19/19 chapters fully down, 0 SCRIPT ERROR**
+  (`evidence/servo/director-reel-it19.log`). Combat holds.
+- 06:26-06:35 FILMS every clip re-shot on 05c403e5 (the square pads), 0 SCRIPT ERROR each, cut at
+  the it16 points (`scratch/servo/{film48,full32,phase32,ghost48}_19.sh`, `cut16.sh`,
+  `post_{full,phase}19.sh`, `compose_target19.py`; `swap19.py` moves frames.json and REPORT paths
+  from it18 and deletes the it18 twin). The full fight: down **7036, 188**, sim identical to it18
+  (render only). **Looked at** every key sheet: the wave (beam, lock, rings, drops, dodge), rotor
+  dash (lane, lock, crossing, vent), carpet (ring lane, blasts, CS crates), bay hop (ring by bay
+  4, landing), hot dash (one wing, lane, vent), kamikaze (lock rings, a dive, the sidestep), Dent
+  (tether, van onto the rack), Kerf (blinks across swarm and rack), Ohm (bolt drone to drone),
+  the 12 fight keys, p1/p2/p3 keys, and the target still (the frame at 30 s is a dash windup: the
+  pads are octagons in line with their arms, blades showing). **Every clip and still in
+  frames.json is on the it19 body** but the it18 slung-parcel A/B (an A/B by design). Scratch avis
+  deleted.
+- 06:40 GATES scenarios on 05c403e5: **52 ran, 0 failed**, 0 SCRIPT ERROR
+  (`evidence/servo/scenarios-it19.log`). REPORT header on the it19 gates.
