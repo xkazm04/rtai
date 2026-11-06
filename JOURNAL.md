@@ -2286,3 +2286,17 @@ value in hit_feel.json `assault_rifle`); n7-melee to merge `f13aa9cc`'s hit_feel
 
 NEXT (after the night): judge call 10 in a played Dock 9 (2 px vs 3 px is one value in
 hit_feel.json `assault_rifle`); the rest of it25's NEXT list stands as written.
+
+### STABILIZE 08:31 iteration 31 (past freeze)
+- READ: tree clean at `33057619`; the only project/ change since game-code head `f13aa9cc` is
+  `bd42aade` (dev/frames/quest1_clip.gd, excluded from release exports). No REQUEST to ranged in
+  n7-melee, n7-king or n7-servo (melee merged `f13aa9cc` as `2dd19210` at 08:13).
+- Exe sanity: `build/export/windows/RTAI.exe` (08:03, `f13aa9cc`) booted `--headless --quit-after 120`
+  exit 0, 0 SCRIPT ERROR (`evidence/ranged/it31-exe-boot.log`). The two stderr lines ("91 resources
+  still in use at exit", the custom_samplers condition) are the usual engine exit noise seen in
+  earlier gate logs (JOURNAL line 954, evidence/arena/*), not new.
+- No fix needed and no new feature (STABILIZE). REPORT's gates (`bd42aade`), exe (`f13aa9cc`),
+  evidence and Calls for the owner stand as written.
+
+NEXT (after the night): judge call 10 in a played Dock 9 (2 px vs 3 px is one value in
+hit_feel.json `assault_rifle`); the rest of it25's NEXT list stands as written.
