@@ -81,6 +81,8 @@ var xf: Transform2D = Transform2D.IDENTITY
 var xf_inv: Transform2D = Transform2D.IDENTITY
 ## View lab: screen-up per part px of height under a tilted --view (RigTilt); ZERO straight down.
 var tilt_up: Vector2 = Vector2.ZERO
+## View lab: the upright facing card over the head under a tilted --view with cards (RigHeadCard).
+var head_card: Sprite2D = null
 
 var body: Node2D = null
 var torso: Node2D = null
@@ -169,6 +171,7 @@ func drive(dt: float) -> void:
 	RigPose.step(self)
 	if tilt_up != Vector2.ZERO:
 		RigTilt.lift_upper(self)
+		RigHeadCard.step(self)
 	if react != null:
 		react.post(self)
 	if hose != null:

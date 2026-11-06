@@ -16,6 +16,8 @@ static var _shared: ViewMode = null
 var id: StringName = &"top"
 var pitch_deg: float = 90.0
 var height_k: float = 0.0
+## The upright facing cards (RigHeadCard) under a tilt; false = the top-down head art only.
+var cards: bool = false
 var ids: Array[String] = []
 
 
@@ -40,6 +42,7 @@ static func of(want: String) -> ViewMode:
 			v.id = StringName(pick)
 			v.pitch_deg = row["pitch_deg"]
 			v.height_k = row["height_k"]
+			v.cards = row.get("cards", false) == true and v.pitch_deg < 90.0
 	if want != "" and not v.ids.has(want):
 		Log.warn("view", "unknown --view=%s; drawing %s" % [want, v.id])
 	return v

@@ -1,6 +1,6 @@
 {
   "default": "top",
-  "doc": "View lab (docs/view-lab/PLAN.md): the camera's projection per view id, picked by the launch flag --view=<id> (default `top`, the shipped 90-degree orthographic view, bit-identical: no transform is applied). pitch_deg is the camera's angle above the ground (90 = straight down); the ground plane is foreshortened by sin(pitch) on screen y (Camera2D zoom.y), so the mouse unprojects onto the ground through the same canvas transform. height_k scales how far a part's height lifts it up the screen (cos(pitch), the 2.5D actors; 0 = flat). Render only: a view never writes to the sim.",
+  "doc": "View lab (docs/view-lab/PLAN.md): the camera's projection per view id, picked by the launch flag --view=<id> (default `top`, the shipped 90-degree orthographic view, bit-identical: no transform is applied). pitch_deg is the camera's angle above the ground (90 = straight down); the ground plane is foreshortened by sin(pitch) on screen y (Camera2D zoom.y), so the mouse unprojects onto the ground through the same canvas transform. height_k scales how far a part's height lifts it up the screen (cos(pitch), the 2.5D actors; 0 = flat). Render only: a view never writes to the sim. cards (optional, default false) draws the upright facing cards (the head/bust drawn for the raised camera, 5 facings drawn + 3 mirrored, features/characters/art/view/) over the top-down head under a tilt.",
   "schema": "gtai.view/1",
   "views": [
     {
@@ -37,6 +37,27 @@
       "height_k": 1,
       "id": "tilt45",
       "note": "pitch study: 45 degrees, the stronger three-quarter end of the range",
+      "pitch_deg": 45
+    },
+    {
+      "cards": true,
+      "height_k": 1,
+      "id": "tilt_cards",
+      "note": "tilt 65 with the upright facing cards (Rivet head, King bust)",
+      "pitch_deg": 65
+    },
+    {
+      "cards": true,
+      "height_k": 1,
+      "id": "tilt55_cards",
+      "note": "tilt 55 with the upright facing cards",
+      "pitch_deg": 55
+    },
+    {
+      "cards": true,
+      "height_k": 1,
+      "id": "tilt45_cards",
+      "note": "tilt 45 with the upright facing cards",
       "pitch_deg": 45
     }
   ]
