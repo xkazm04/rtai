@@ -33,6 +33,13 @@ The gate numbers are in the last section.
 - `top` is unchanged: the city block (`--arena=city --bot=rivet --seed=2 --rigs`, 301 frames of video and audio) matches main 0bea8b93's framemd5, and so does the Kerf ghost reel (400 frames).
 - The director reel goes 19/19 chapters down with 0 SCRIPT ERROR, in `top` (headless) and in `tilt` (48 px/m, rendered).
 
+## Last commit after the gates (860fd3d8, 18:23)
+
+- **view70's it5 REQUEST is answered.** `RigCardSets.SETS["p70"]` now has the 9 street head rows. Each one points at its p55 strip, anchor and width, so 55 vs 70 in the city compares the pitch and not two street art sets.
+- **It is data only.** This branch has no `art: "p70"` view row, so `top` and `tilt` cannot change. The exe (18:05, 247b82ef) therefore draws the same.
+- **Gates:** lint 15/15; unit 1407 passed, 0 failed.
+- **Not filmed:** the rows show only after the merge with view70. Judge them then at tilt70, 48 px/m (JOURNAL NEXT 0).
+
 ## What does not work / not done
 
 - **Rivet has no death pose to judge.** The quest stage (`collect_call_stage.gd _respawn`) and the dev arena both respawn him the same tick his hp hits 0. His rig has a DEATH sprawl clip (`RigClips.die`), but nothing calls it for Rivet. Raised as a call below.
