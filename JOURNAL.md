@@ -2003,3 +2003,29 @@ NEXT (addendum to the iteration 22 list, after item 2):
     (a gatling kill holds 2 ticks on, the plasma rifle still on the hit tick), lint, reels 19/19 x2,
     the Gatling lone kill filmed on vs off (`--wound-hold=off`) at 32 px/m, then the full evidence
     run and the re-export (freeze item 1). Skip it if it cannot all land before 08:15.
+
+### MILESTONE 06:38 the Gatling's kill stop holds on the wound, `d85fb768` (NEXT 2b, built now)
+- hit_feel.json `weapons` rows may carry `hold_delay_ticks` (schema 0-4); HitFeel.camera_row puts
+  it over the class's value (still `--wound-hold=off` aware). The gatling row sets 2; `medium`
+  keeps 0 (plasma rifle already on its contact frame, MEASURE 06:36). New unit test: a Gatling
+  kill holds 2 ticks on, a plasma rifle kill on the hit tick.
+- FILM `wh/film.sh gatling 32 on|off` (kill tick 364 both, exit 0, 0 SCRIPT ERROR). LOOK (2.5x
+  crops 363-374): before, 364-370 hold the darkened cop standing, no blood, blood at 372; after, the
+  blood is out at 366 and held to 372; the fall on 374 in both. Still
+  `evidence/ranged/it21-gatling-wound-hold-off-on-32ppm.jpg`.
+- GATES on `d85fb768`: lint 13/13, unit 1185/1185, reels pit 19/19 + city 19/19 (`--loadout=pistol`),
+  0 SCRIPT ERROR; full `node tools/evidence/run.mjs --no-bench` on the clean tree: lint, unit 1185/0, scenarios 52/52, parity bit-exact (mutation caught at 629), selftest pass (`evidence/ranged/it21-evidence-d85fb768.log`).
+- EXE re-baked + re-exported on `d85fb768` at 06:44 (bake exit 0, export exit 0, 0 ERROR lines). Booted `RTAI.exe --screen 0 --rendering-driver d3d12 -- --weapon=gatling --bot=gunplay --lone --cam=fight --ppm=32 --clean --reach=5`: exit 0, 0 SCRIPT ERROR, kill 364, frames 363-374 looked at: blood 366 held to 372, the fall on 374 (as the editor take).
+- DECISION docs/decisions.md (feel n7-ranged, the Gatling per-weapon wound-hold).
+
+NEXT (iteration 22; supersedes the 06:25 list and its 2b addendum):
+1. Freeze (by 08:30). Code head is `d85fb768`; the exe and the full evidence are on it (above).
+   Only docs since. If code lands after it: lint, unit, reels 19/19 x2, the full evidence run on
+   a clean tree (no tracked edits during it), re-bake + re-export + boot, retake the city clip
+   (recipe MILESTONE 06:22).
+2. REPORT at 08:40: drop the DRAFT line, refresh the top; call 8 now covers the light guns and the
+   Gatling (one value each: the light row and the gatling weapons row).
+3. FYI n7-melee: merge `49cfe6c4` and `d85fb768` (feel layer). Melee classes keep delay 0; a
+   weapons row can now carry `hold_delay_ticks` too (data only).
+4. Weak cells left: homing_shard I/R/V 2 (call 1, owner); Gatling R/V 2 (crowds only, a sim matter).
+5. Not a build: the hand cannon's upright flight is the approved blowback signature (06:31).
