@@ -1423,3 +1423,11 @@ Read: JOURNAL NEXT (it13), git log, frames.json. `king_car_trim.gd` showed `M` w
   director reel (headless, `--rigs --bot=reel --reel=director --loadout=pistol`): **19/19 chapters
   fully down**, 0 SCRIPT ERROR (`evidence/king/director-reel-it14.log`). Combat holds after the
   slam cape and the gang chains.
+
+### 04:12 TRIAL the gang's shades as a drawn visor arc: rejected, reverted
+- `KingAccents._shades` (a black arc across the head's front at 0.16 m, a light glint), widths 0 /
+  0.07 / 0.1 m, phase 1 tick 60 at 32 px/m and phase 2 tick 360 at 64 px/m
+  (`evidence/king/shots/it14/gang_shades_trial_0_007_01_p1_32ppm_6x.png`, a rider at 6x).
+  **Looked at**: the arc lands on the dome's own ink edge, so it adds nothing at 32 px/m. A bar
+  across the dome would read as shades but undo the light-dome read (call I). DECISION: no shades
+  accent; code reverted (no commit of it). The gap stays in REPORT.
