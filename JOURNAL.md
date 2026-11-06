@@ -175,7 +175,7 @@ NEXT (iteration 3):
 ## Calls for the owner (for REPORT)
 - Gatling under tilt: the regenerated 55 part (default, 5c71e55e) vs the top-down part (`enabled: false` in
   weapon_held_pitch.json). See gtai-masters/d8/weapons/gatling_tilt_48_regen_before_after.png.
-  Exe: `RTAI.exe -- --arena=pit --weapon=gatling --view=tilt --ppm=48 --rigs` (check the flags against the exe).
+  Exe (showcase preset, main scene = the arena): `RTAI.exe -- --weapon=gatling --bot=gunplay --lone --cam=fight --ppm=48 --view=tilt --rigs` (+ `--held-pitch=off` for the before); these are the flags of every film here (scratch film2.sh), not yet run on an exported exe.
 - Long guns at 32 px/m: size_k 1 (default) vs 0.8 (slimmer, still a pale club):
   gtai-masters/d8/weapons/plasma_rifle_tilt_32_size_k.png. One value per row.
 
