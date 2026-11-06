@@ -134,6 +134,7 @@ func _wings(o: Vector2, fwd: Vector2, side: Vector2, k: float, tint: Color) -> v
 		var flip: float = -1.0 if s > 0.0 else 1.0
 		draw_set_transform(at * px, rot, Vector2(flip, 1.0) * k * px / ART_PPM)
 		_wing_art(wing, tint)
+		ServoWingBand.draw(self, wing.get_height() * 0.5, wing.get_width() * 0.5, tint)
 	draw_set_transform(Vector2.ZERO)
 	var bay: Color = Color(_pal.color(&"ink"), 0.85)
 	for i: int in rack.state.size():

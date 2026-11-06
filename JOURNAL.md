@@ -1098,3 +1098,11 @@ without 5 seeds x bots).
   rack, the sheet's four limbs; before, the pads touched the wings' front corners. The target still
   re-shot at tick 1800 with it (`M/frames/servo_target_vs_game_32ppm_it10.png`, 0 SCRIPT ERROR).
   Unit 1186/0 (`evidence/servo/unit-it10b.log`). Decisions; REPORT call 13.
+- 02:44 MILESTONE (target gap from the it10 still): **the rack wings carry the sheet's hazard
+  base**: `ServoWingBand`, a copper and ink striped ledge along each wing's front edge, drawn in
+  the wing's art space (turns, flips, shakes, hidden with the blown wing). Copper, not vermilion
+  (palette verdict). Step 1 (15 px, half copper) **looked at** 48 px/m 2x: thin, ink-heavy; step 2
+  (22 px, 60 % copper 196,112,60): reads as the sheet's ledge at 48, a clean striped edge at 32
+  (2x), no noise. `M/frames/servo_wing_band_ab_it10.png`. New class: `--import` first, then 0
+  SCRIPT ERROR in both renders. Unit 1186/0 (`evidence/servo/unit-it10c.log`). Decisions; REPORT
+  call 14.
