@@ -31,7 +31,7 @@ The moveset is `docs/bosses/king.md`; the full log is `JOURNAL.md`.
   Then a defeat beat: the crown falls off and rolls away.
 - **Clips**:
   - the full fight played by the human-like bot on the current body (`king_fight_bot_human_32ppm_it10.mp4`, 95 s; King down at tick 4933, the headless run's tick);
-  - the procession entering, from the gang's first appearance to King stepping down (`king_procession_enter_32ppm_it6.mp4`);
+  - the procession entering, from the gang's first appearance to King stepping down (`king_procession_enter_32ppm_it10.mp4`);
   - the press slam, telegraph (the plates raised beside the crown), hit and dodge (`king_slam_plates_48ppm_it10.mp4`);
   - the charge, telegraph lane, hit and dodge (`king_charge_48ppm_it10.mp4`);
   - the ram and the coin fan, hit and dodge (`king_ram_coin_fan_48ppm_it10.mp4`), and the decree's windup arc and buff (`king_decree_48ppm_it10.mp4`);

@@ -1143,3 +1143,15 @@ NEXT (iteration 11, replaces the 01:52 list; the session ends ~02:03, everything
    against the hit body before any size step (fairness).
 3. Director reel once more before the freeze; re-export the exe at the freeze (the it8 recipe in
    REPORT); finalize REPORT (remove DRAFT, Next steps).
+
+## Iteration 12 (02:02-03:02): BUILD
+
+Read: JOURNAL (NEXT of it10/it11; no it11 entry: the runner's numbering skips), git log. Rules
+applied: motion-quality-gating (look at every cut), encounter-balance-simulation (any size step
+must keep the drawn body honest to the hit body).
+
+- 02:06 NEXT 1 done: `M/king_procession_enter_32ppm_it10.mp4` (62.5 s) cut from the it10 full fight
+  (2f205c3d), 0 s to King off the wreck. **Looked at** one frame every 5 s
+  (and 54-65 s every 1 s to place the cut): the domed gang ride the car at 0 s, ram lanes, coin
+  sprays, the court brawl, the phase-3 flash (white bar) at 58 s, King on foot beside the wreck at
+  60-61 s. The it6 cut deleted; frames.json 15; REPORT points at the new file.
