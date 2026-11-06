@@ -1514,7 +1514,8 @@ NEXT (written 05:59, for iteration 17; supersedes the 05:15 list):
 NEXT (written 06:45, for iteration 18; supersedes the 05:59 list):
 1. Read n7-ranged's JOURNAL to its end: cherry-pick new hit_feel / feel_cam / camera commits -x
    (check prerequisites; LaunchArgs.KNOWN_FLAGS conflicts: keep only the merged commit's flag),
-   unit with GODOT_BIN exported. Merged so far: `8efe76ca`, `a63bd8e0`, `49cfe6c4` (= `1166c418`).
+   unit with GODOT_BIN exported. Merged so far: `8efe76ca`, `a63bd8e0`, `49cfe6c4` (= `1166c418`),
+   `d85fb768` (= `d7b73363`).
 2. Freeze (by 08:30), in order: gates on the final head (lint, unit, `bash evidence/n7-melee/reels.sh
    <head>`, then `node tools/evidence/run.mjs --no-bench > /tmp/<log>` on a clean tree, log copied
    in after; never edit the worktree while a gate runs, docs included: the unit churn guard counts
@@ -1537,3 +1538,13 @@ NEXT (written 06:45, for iteration 18; supersedes the 05:59 list):
   (ranged's wound-hold). Gates on it: reels 19/19 x2, scenarios 52, full evidence green. Clips
   `M/kerf_cam_glide_ab_32ppm_48slow.mp4`, `M/quest1_kerf_cam_glide_ab_32ppm.mp4`; city set re-cut.
   Call (q). NEXT is the 06:45 entry above.
+- MERGE 06:46 n7-ranged `d85fb768` (feat(feel): per-weapon hold_delay_ticks, the Gatling row 2)
+  cherry-picked -x as `d7b73363`, clean. test_feel_wound_hold 4/4. Weapon rows only: no melee or
+  ghost row carries hold_delay_ticks.
+- GATES 06:53 on `d7b73363` (worktree untouched through the runs): director reels arena 19/19 and
+  city 19/19 (38 lines each), 0 SCRIPT ERROR; scenarios 52 ran, 0 failed
+  (`evidence/n7-melee/{director-arena-loadout,director-city-loadout,scenarios}-d7b73363.log`).
+  Unit 1240 passed, 1 failed (`evidence/n7-melee/unit-d7b73363.log`): `test_noir_shadows`
+  (the known flake, run in parallel with the reels); re-run alone twice: 2/2 green both times.
+  The full evidence run was not repeated on this head (last green: `f93d4857`, code `1166c418`):
+  first thing in iteration 18's freeze list.
