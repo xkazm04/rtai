@@ -201,10 +201,16 @@ all under `top`), concept-scene-parity + motion-quality-gating (judged on the re
 course run at 32 px/m, same seed before/after, frame-diff bbox checked), generative-artifact-gating
 (70 sheets graded A used as is; the corner piece 4 still unused).
 
+- p70 strips filmed (22:05, course frame 899, tilt70, 32 px/m, 0 SCRIPT ERROR) beside the same frame
+  with the p55 strips: NO visible difference. That framing shows no south face (the helipad block's
+  face is behind the block south of it; the only face is a thin dark band). The strips are NOT yet
+  evidenced in game: next session needs a framing with an open south face (a block across a street
+  from the camera: the main city boot or a course frame where Rivet walks south of a block).
+
 NEXT (session 5, in order):
-1. Judge the p70 strips in motion: `--arena=city --bot=course --seed=2 --rigs --clean --view=tilt70
-   --ppm=32` frame 899 vs `it1_height_k_1_vs_05_tilt70_32ppm.jpg` right half (p55 squashed, same
-   frame); then at 48/64. Then `facade_tall` (B, 2210) for the 17-21 m landmarks: add a `tall` style
+1. Evidence the p70 strips: find a frame with an open south face (frame 899 of the course has none),
+   film it with p70 vs the p55 strips (move p70/ aside in a scratch copy, or a temporary
+   art_fallback), at 32 and 48/64. Then `facade_tall` (B, 2210) for the 17-21 m landmarks: add a `tall` style
    (city_facades.json + STYLES/STYLES_70 rows), read its notes for the B fix.
 2. The director reel under tilt70 + combo (19/19, 0 SCRIPT ERROR): the BackBufferCopy is new on the
    city's actors canvas; scenarios again on the final head.
