@@ -414,3 +414,14 @@ NEXT (iteration 4, 16:50-17:50):
 5. 18:30 freeze (iteration 5?): export `windows-showcase` (command in REPORT), smoke `--view=combo`,
    finalise REPORT (drop DRAFT), JOURNAL, commit. Gates before: lint, full unit, scenarios, reel
    tilt70+combo, top 900-frame identity vs main.
+- 16:36 FILM the engage at 48 px/m, combo vs combo_swap, frames 22-42 (Rivet, the King off screen at
+  the engage in this seed): masters `combo_engage_fade_vs_swap_rivet_48ppm_frames22-42_x2.png`
+  (replaces it2's fade-only strip). LOOKED: the fade draws a double head for frames 29-33; the swap
+  changes once at 31, during the pitch move, and reads cleaner.
+- 16:40 DECISION (fork, close range wins): `combo` and the ease studies now swap hard (`fade_deg` 0);
+  the 5-degree cross-fade is the `combo_fade` row (`combo_swap` renamed). Decision line in
+  docs/decisions.md; REPORT call 3 updated. Unit view_pitch/view_mode/court/ghost_card/rig_head_card
+  40/0. The it3 films (King trio, ease clip, return strip top row) were filmed with the fade, the
+  default then: re-film the King trio under the new default in iteration 4 (NEXT 2/3 still apply).
+NEXT addendum (iteration 4): FIRST re-run the full unit + reel combo on the swap default, re-film
+  `king_55_70_combo_32ppm_46s_it3.mp4` (combo panel) and the ease clip with fade 0, update frames.json.

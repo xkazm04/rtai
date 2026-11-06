@@ -12,7 +12,7 @@ func test_tilt70_row_draws_the_p70_art_without_an_ease() -> void:
 
 
 func test_combo_eases_from_70_to_the_boss_pitch_and_cross_fades_the_art() -> void:
-	var p: ViewPitch = ViewPitch.of("combo")
+	var p: ViewPitch = ViewPitch.of("combo_fade")
 	assert_true(p.eases())
 	assert_eq(p.boss_pitch, 55.0)
 	assert_eq(p.mix_at(70.0), 1.0, "70: the p70 art only")
@@ -22,7 +22,7 @@ func test_combo_eases_from_70_to_the_boss_pitch_and_cross_fades_the_art() -> voi
 
 
 func test_a_zero_fade_is_a_hard_swap_and_tilt70_is_all_p70() -> void:
-	var p: ViewPitch = ViewPitch.of("combo")
+	var p: ViewPitch = ViewPitch.of("combo_fade")
 	p.fade_deg = 0.0
 	assert_eq(p.mix_at(p.swap_deg - 0.01), 0.0)
 	assert_eq(p.mix_at(p.swap_deg), 1.0)
@@ -131,9 +131,11 @@ func test_a_ghost_card_cross_fades_to_the_other_folder_as_wide_and_anchored_alik
 	card.free()
 
 
-func test_combo_swap_is_combo_with_a_hard_card_swap() -> void:
-	var p: ViewPitch = ViewPitch.of("combo_swap")
-	assert_true(p.eases())
-	assert_eq(p.fade_deg, 0.0, "the owner call's alternative: no cross-fade")
-	assert_eq(p.ease_s, ViewPitch.of("combo").ease_s)
+func test_combo_swaps_hard_and_combo_fade_is_the_cross_fade_alternative() -> void:
+	var p: ViewPitch = ViewPitch.of("combo")
+	assert_eq(p.fade_deg, 0.0, "the default: one clean change at swap_deg")
 	assert_eq(p.mix_at(p.swap_deg - 0.01), 0.0)
+	var f: ViewPitch = ViewPitch.of("combo_fade")
+	assert_true(f.eases())
+	assert_eq(f.fade_deg, 5.0, "the owner call's alternative")
+	assert_eq(f.ease_s, p.ease_s)
