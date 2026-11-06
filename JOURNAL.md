@@ -275,3 +275,42 @@ NEXT (iteration 8):
   bands are taken relative to the car), and the remaining mixed pairs (157) say most overlaps sit
   within 0.3 m of ground depth, or Rivet's rig (ArenaRigs) is not getting a band: check which
   pairs stay mixed before tuning BAND_M.
+
+## Iteration 9 (04:55-05:55), BUILD
+Iteration 8 left no journal entry and no commit (as iteration 6); this session worked it7's NEXT.
+Rules applied: registry `measured-draw-order` (probe before and after the sort, not eyeballed);
+`concept-scene-parity` (the hardest element, the King and his car, judged in the live arena path).
+- MERGE 3625f68a: `n7-king` (b2e71b83) merged with an ordinary merge, because King's lane landed
+  art that changes the comparison (KingCape cloth cape, KingCarTrim bumpers/throne/crest/cannon,
+  gang chains, gold megaphone). Conflicts: JOURNAL.md (kept ours), king_body_view.gd (straight
+  down calls KingCarTrim.cannon / KingCape.draw exactly as n7-king; under a tilt the King lane's
+  cannon is drawn lifted BARREL_M, and the cape drapes via KingCape.draw's new `up` argument).
+  PROOF switch off: `top` seed 2 32 px/m frames md5-identical with n7-king's two files swapped in
+  (tick 900 b5ed2b94, tick 2040 c66f823d). LOOKED at tilt 48 px/m: the cloth cape on King's
+  card, the lifted gold barrel, the gold trim. NOT DONE: the bumpers and the throne back are drawn
+  in the roof plane (they float at roof height / lie flat on the cape under a tilt).
+- EXE (freeze prep, early): `windows-showcase` exported on 3625f68a to build/export/windows/RTAI.exe
+  (0 errors, build/export-it9.log). Smoke headless `RTAI.exe --headless --fixed-fps 60
+  --quit-after 5400 -- --rigs --boss=king --bot=boss --seed=2 --bot-human --view=tilt`: King down
+  tick 4933, 0 SCRIPT ERROR (the King lane's top smoke is also 4933: the view does not touch the
+  sim). Re-export at the freeze.
+- MILESTONE dd43e5e6: depth sort under tilt (`RigDepthSort`, tilt-only node on the actor layer,
+  attached in ArenaRigs.attach). Levels by overlap far to near, z = depth_base + level x 32,
+  2 levels max; Rivet's held weapon + magazine ride his level. FOUND: the 48 reversed pairs were
+  ALL gang adds vs Rivet: KingCarStack.sort_rigs put any King rig north of the car's centre line
+  (anywhere on the map) at BEHIND_Z -64. Now only inside `KingCarStack.far_box` (the car's
+  screen footprint north of its centre, widened by a body, up past the roof), for every rig.
+  Probe seed 2 60 s 32 px/m: reversed 48 -> 6, interleaved 215 -> 13, car reversed 2 -> 2
+  (`evidence/view/it9/order_tilt_sort.log`). Unit 1181/1181 0 SCRIPT ERROR (+test_rig_depth_sort).
+- MILESTONE 9c0a1215: the boss tell view drops under the behind-car band under a tilt
+  (`RigDepthSort.ground_dz`). LOOKED (tick 2200, 48 px/m, crop x2): I first misread the downscaled
+  before/after as a regression; at full size it is the opposite: before, the tell rectangles print
+  over the gang's bodies; with the sort the bodies stand over the ground zones. The tell drop
+  changes nothing in that frame. `top` md5 c66f823d (tick 2040) unchanged.
+- FILM `gtai-masters/n7/view/king_top_toplift_tilt_32ppm_it9.mp4` (45 s, 3840x800 unscaled, seed 2,
+  0 SCRIPT ERROR each, on the merged art; tilt with the depth sort; labels below the boss bar).
+  LOOKED at 34 s (x2 crop `king_p2_top_vs_tilt_32ppm_x2_it9_t34s.png`): top = plum and gold
+  rectangle with a disc crest, Rivet a disc; tilt = King's crowned bust on the throne-car with a
+  side wall, round gold-hubbed wheels, raised cannon, Rivet's visor and collar. frames.json 14
+  (4 new; the it7 + it5 clips and stills superseded, deleted). Raw .avi deleted.
+- TIMING: films are fast tonight (45 s of 32 px/m in about 2 min each).
