@@ -412,3 +412,23 @@ bottom-aligned cells, mipmaps), generative-artifact-gating (lamp B fixes read: t
 right, the plate shallow: used; traffic_light 55 B only where 55 shows), render-submission-economy
 (cards are one rect per prop recorded once per chunk; measured the record cost per view),
 motion-quality-gating + concept-scene-parity (same scene, same tick, before/after; night checked).
+
+- GATE scenarios on fe8cc0db (node tools/tests/run_scenarios.mjs, a combo film running alongside): 52 passed, 0 failed.
+- Session end 23:55. Head = this JOURNAL commit.
+
+NEXT (iteration 11, in order):
+1. The cost, part 2: the city DRIVE at tilt70 vs top (vehicle_frame's route or the bench's drive
+   course through chunk_cost.gd: add `--scene=` passthrough if the probe needs another scene) and
+   the GPU side (RenderingServer draw calls / primitives per frame, top vs tilt70), under bench.lock.
+   If an angled chunk's record overshoots, lower BUDGET_US's check granularity for the lift path.
+2. The depot under combo at 48 px/m: 23:50 I filmed `--boss=servo` on the MAIN scene by mistake (it
+   ignores --boss: that showed the city crossroads, still deleted). Use `res://dev/arena/arena.tscn
+   -- --boss=servo --view=combo --ppm=48`, then nudge the door row and the west conveyor into the
+   boss framing (data: boss_dressing.json `at`). SEEN in that wrong film: under `combo` on the main
+   scene the lamps were still FLAT at frame 28 and cards by frame 596: check whether the city view
+   is set up while combo still reads flat (ChunkLift.make returns null when flat at setup and never
+   comes back) or whether combo eases in from top; at tilt70 they are cards from the first frame.
+3. facade_tall (B 2210, untapered) as a `tall` style for the 17-21 m landmarks (by_name rows).
+4. Bench / vending per their B notes (a per-row `facings` remap) only if a turned one shows on film.
+5. Quest 1's payphone: still blocked on the quest stage having no angled view (not city's file);
+   re-read street/view journals for a stage view and wire PropCards.draw_named when it lands.
