@@ -358,3 +358,9 @@ NEXT (iteration 11, the freeze at 18:30):
    sheets are in the library now but match no head part the game has (ponytail, mohawk, bun, short
    hair): a new ped head variant would be a parts change, not a card.
 - Provenance: two lines for cop_cap_card.png and cop_riot_card.png (steam/ai-provenance/2026-11.jsonl).
+- GATES on b8d04b9e (17:13-17:21): `node tools/evidence/run.mjs --no-bench` on 72ec9cbb: lint 15/15,
+  scenarios 52, parity bit-exact + mutation caught at step 629, selftest look goldens 11/11 + block
+  5/5, export-audit 539/0; its unit step said FAIL only because I committed docs mid-run ("tree
+  changed during run"; 1422 passed 0 failed). Re-run on a clean tree: unit 1422/1422. Director reel
+  headless `top` 19/19 chapters down, 0 SCRIPT ERROR; `tilt` 19/19 at 48 px/m (rendered, above).
+  FRICTION: never commit while evidence runs.
