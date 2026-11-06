@@ -59,6 +59,9 @@ The moveset is `docs/bosses/king.md`; the full log is `JOURNAL.md`.
 | standing (it5d) | 87.6 s | 190 | 5 | 10/10 | 36/40 | 7/7 | 3/8 |
 | human + Dent (it7) | 90.8 s | 78.8 | 0 | 4/15 | 11/45 | 5/12 | 1/9 |
 
+Re-measured in it15 on b2e71b83 (the same 15 runs, `evidence/king/numbers-it15/`, 0 SCRIPT ERROR):
+every number in the table is identical, so nothing since it5d has moved the fight.
+
 Every attack is dodgeable (the dodging bot takes 0) and every attack lands on a stander. The
 easy band is as built (call C). The it8 body change is render-only: King still goes down at tick
 4933 for the human bot on seed 2 and 5315 for the standing bot, the same as before, in the editor

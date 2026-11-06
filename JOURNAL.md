@@ -1528,3 +1528,20 @@ matter at 32 px/m, finalize REPORT.
 - 04:43 EXE re-exported on b2e71b83 (the crest; `build/export-it15b.log`, 0 errors); smoke seed 2
   human: King down 4933, took 88, coin_fan 3 / press_slam 1 / ram 1, 0 SCRIPT ERROR. The full
   fight film (889cc825) is not re-shot for the crest (about 5 px at 32 px/m); the A/B still shows it.
+
+### 05:03 MEASURE the numbers re-run on b2e71b83 (encounter-balance-simulation)
+- `node evidence/king/boss_numbers.mjs --out=evidence/king/numbers-it15`: seeds 1-5 x {dodge,
+  human, stand}, full fights, headless, CONTENDED, **0 SCRIPT ERROR in 15**. Every number equals
+  the it5d table: dodge 80.1 s (71.8-85.8), took 0, 0/all attacks; human 83.9 s (77.9-90.6), took
+  78, ram 4/10, coin fan 13/48, slam 5/12 (2 rolled), charge 0/6; stand 87.6 s, took 190, 5 deaths,
+  ram 10/10, coin fan 36/40, slam 7/7, charge 3/8. The it6-it15 body and look work is render only.
+  REPORT numbers section notes it.
+
+NEXT (iteration 16, in order):
+1. The REPORT final pass (remove DRAFT, check every path in it exists, the calls A-M read as a
+   verdict page); frames.json is at 15 and all exist.
+2. Weakest look item by the target comparison now: the gang's shades (still a dark strip; two tries
+   failed, see 04:12 it14 and 04:26 it15) or the target's quilted plum inside the throne arch (a
+   plum fill between the arch and the collar, A/B at 32 px/m).
+3. If any change moves the look: re-film the full fight (film32.sh in build/scratch15) and re-cut.
+4. At the freeze: re-export the exe (last: b2e71b83, 04:43, smoke 4933 / 88), smoke, commit.
