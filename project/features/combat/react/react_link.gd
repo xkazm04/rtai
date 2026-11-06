@@ -22,9 +22,7 @@ const LIMP_GAIN: float = 1.6
 ## chars, a blast kill throws; `shot` keeps the weapon's own class.
 const KILL_KIND_CLASS: Dictionary[StringName, StringName] = {&"burned": &"burn", &"blown": &"blast"}
 ## Rivet's melee weapons (rivet-arsenal's PlayerMelee ids; absent from weapons.json) hit as melee.
-const MELEE_IDS: Array[StringName] = [
-	&"claw", &"chainsaw", &"electro_baton", &"katana", &"plasma_sword"
-]
+const MELEE_IDS: Array[StringName] = MeleeWound.MELEE_IDS
 ## The lasting area states (FightAreas FighterFx) hold their family while they last: the share
 ## of the family the hold loops inside (start, end) and where the release resumes.
 const HOLD: Dictionary[StringName, Vector3] = {

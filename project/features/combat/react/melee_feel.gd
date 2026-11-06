@@ -58,7 +58,7 @@ func _on_deflected(_at: Vector2, back: Vector2) -> void:
 ## The feel class of a hit by `weapon`: `melee` for Rivet's melee weapons, else the weapons row's
 ## `class` (a ghost attack), else &"" (not felt here).
 func class_of(weapon: StringName) -> StringName:
-	if weapon in ReactLink.MELEE_IDS:
+	if weapon in MeleeWound.MELEE_IDS:
 		return &"melee"
 	return cam.feel.weapon_class(weapon)
 

@@ -10,6 +10,12 @@ extends RefCounted
 ## About one strike's active window plus its follow-through (the chainsaw grind restarts the
 ## wound at most every 12 ticks, 5 a second, instead of 60).
 const GAP_TICKS: int = 12
+## Rivet's melee weapons (rivet-arsenal's PlayerMelee ids; absent from weapons.json). Kept here,
+## not on ReactLink: quest 1's slice build loads MeleeFeel, and ReactLink pulls PlasmaScorchView,
+## which names the dev-only ArenaRigs (dev/ is not in the slice export: quest 1 failed to load).
+const MELEE_IDS: Array[StringName] = [
+	&"claw", &"chainsaw", &"electro_baton", &"katana", &"plasma_sword"
+]
 
 ## DECISION n7-melee 2026-11-05: a melee hit that lands damage plays a body wound even on a riot
 ## cop's front (the claw reaches past the slab). The shield family with its sparks said "blocked"
