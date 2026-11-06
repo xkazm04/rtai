@@ -440,3 +440,10 @@ NEXT (iteration 6, in order):
    vs ~21): judge on the turn film at 64. Check the shader's cols uniform and VehicleCardMesh.
 2. Film the 360 turn before/after at 32 + 64; the city drive at 32.
 3. Exe at the freeze (int-day recipe in docs/decisions.md), REPORT.
+23:56 LOOKED at the in-between sheets (read-only, scratch between_look.png, deleted): van_between_70
+(A) all four read right (nose down a little right; nose right a little down; nose right a little
+up, rear doors a sliver; rear toward the camera turned ~15-20), one steep camera: START NEXT 1
+WITH THE VAN (row 4). sedan_between_70: A, B, D read right; C is wrong (turned past the side, a
+3/4-away), so take C from sedan_between_c_70 (one large drawing, nose right and up, under-turned
+~8-10 deg on screen, camera ~47 like the side redo); police the same pattern. Expect the C cell to
+snap more than the others; judge on the turn film at 64 before committing it.
