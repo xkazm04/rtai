@@ -1214,3 +1214,11 @@ NEXT (written 04:09, for iteration 13):
 - Registry rules applied: realtime-combat-semantics (anticipation never moves the active frame:
   the hit tick and every jab frame are as before; the fix puts the view's active frame back on the
   sim's), motion-quality-gating (judged on film at 32 and 48, a planted fault per test).
+- LOOK 04:36 the sync moves the blades too (MeleeSwing reads strike_t): katana and baton chapters
+  at 48 px/m, `--strike-sync=off` over the after, frames 54-70 every 2nd. Before, the hit-stop held
+  the katana lifted over the cut burst (and the baton over the shock star) and the sweep came after
+  the hold; after, the held frames show the blade swept through the cop with its smear (the cut and
+  the burst together). Kept (realtime-combat-semantics: the active pose on the impact frame); the
+  blade's lift loses the 2 ticks the sim had already spent. Stills `M/katana_strike_sync_ab_48ppm_
+  still.png`, `M/baton_strike_sync_ab_48ppm_still.png`, clip `M/katana_strike_sync_ab_48ppm_04x.mp4`;
+  noted under call (n).

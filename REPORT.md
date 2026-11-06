@@ -151,7 +151,12 @@ head spark.
 (n) The claw cocks back deeper before the jab.
 - Options: pullback 0.7 with the arm drawn back (built); the night's 0.35 torso twist only (the
   before); any depth 0-1 is one value (`melee_marks.json swing.pullback.claw`, `arm_back.claw`).
-  The strike sync under it (the claw out on the held hit frame) is a fix, not a call.
+  The strike sync under it (the claw out on the held hit frame) is a fix, not a call; it also
+  moves the katana and the baton: their sweep and smear now land on the held hit frame (before, the
+  hit-stop held the blade lifted over the burst and the sweep came after the hold). Stills
+  `M/katana_strike_sync_ab_48ppm_still.png`, `M/baton_strike_sync_ab_48ppm_still.png`, clip
+  `M/katana_strike_sync_ab_48ppm_04x.mp4` (top/left before `--strike-sync=off`). If the owner
+  prefers the lifted blade over the burst, `--strike-sync=off` is the whole before.
 - Clip: `M/claw_strike_sync_ab_32ppm_48slow.mp4` (32 real time, then 48 at 0.4x), still
   `M/claw_strike_sync_ab_still.png` (rows: 32 before, 32 after, 48 before, 48 after).
 - Before: `--pullback=off` (the depth only), `--strike-sync=off --pullback=off` (the whole before).
