@@ -49,17 +49,10 @@ func parcels(c: CanvasItem, s: ServoSwarm) -> void:
 		var half: float = s.tuning.crate_m * 0.5 * px
 		var box: Rect2 = Rect2(cr.pos * px - Vector2(half, half), Vector2(half, half) * 2.0)
 		c.draw_rect(box.grow(2.0), Color(pal.color(&"ink"), 0.35))
-		_sprite(c, crate_tex, cr.pos * px, 0.0, 1.0)
-		var font_px: int = int(px * 0.32)
-		c.draw_string(
-			ThemeDB.fallback_font,
-			box.get_center() + Vector2(-font_px * 0.6, font_px * 0.35),
-			"CS",
-			0,
-			-1,
-			font_px,
-			pal.color(&"ink")
-		)
+		var k: float = px / SimConst.PX_PER_M  # d8: under a tilt the crate stands up as a box
+		if not ServoCrateStack.draw(c, cr.pos * px, half * 2.0, crate_tex, k):
+			_sprite(c, crate_tex, cr.pos * px, 0.0, 1.0)
+		ServoCrateStack.label(c, box, px, pal.color(&"ink"), k)
 
 
 ## A crate the rotor dash smashed: six cardboard shards fly out over a dust puff, k 0..1.

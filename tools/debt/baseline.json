@@ -222,7 +222,6 @@
         "project/features/bosses/boss_hook.gd": 282,
         "project/features/bosses/king/king_body_view.gd": 235,
         "project/features/bosses/king/king_rigs.gd": 202,
-        "project/features/bosses/servo/servo_draw.gd": 202,
         "project/features/bosses/servo/servo_moves.gd": 223,
         "project/features/bosses/servo/servo_rig.gd": 288,
         "project/features/bosses/servo/servo_swarm.gd": 208,
@@ -262,7 +261,7 @@
         "project/tests/unit/test_gun_fx.gd": 213,
         "project/tests/unit/test_weapon_art.gd": 223
       },
-      "total": 69
+      "total": 68
     },
     "lane_named_dev_dirs": {
       "files": {
