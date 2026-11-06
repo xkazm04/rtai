@@ -1239,16 +1239,20 @@ NEXT (iteration 13, superseded by the list at the end of it12):
   (`evidence/king/shots/it12/horn_16_22_26_p3_32ppm_4x.png`, `horn_before_after_p1_32ppm_4x.png`):
   **looked at**: 1.6 a dark smudge under the right plate; 2.2 a cone with a bell rim, on foot and on
   the car; 2.6 covers the plate. DECISION: 2.2 (render only). It still prints dark, not gold.
-- FOUND in the phase 3 still: the district title "KING'S BOULEVARD" overlaps the boss bar's "3/3"
-  phase mark at the top right while the title shows (32 px/m, tick 300 of `--phase=3`).
+- FOUND in the phase 3 still: "KING'S BOULEVARD" overlaps the boss bar's "3/3" phase mark at the
+  top right (32 px/m, tick 300 of `--phase=3`). Traced at 02:46: it is not a HUD title but the
+  arena's dev area name painted on the floor at the area's corner
+  (`features/arena/arena_floor_view.gd` `_draw`, `Ink.label` over the props, from `arena.json
+  areas[boulevard].name`); the boss bar covers it when the camera frames the boulevard's top edge.
 - Lint 13/13 (`lint-it12c.log`), unit **1160/0** (`unit-it12c.log`).
 
 NEXT (iteration 13, in order):
-1. The district title overlapping the boss bar's phase mark (top right, `--boss=king --phase=3`,
-   while the title shows): move the title below the bar band or the phase mark inside the bar;
-   before/after at 32 px/m.
+1. The floor's area name under the boss bar (top right, `--boss=king --phase=3`): the dev arena
+   paints area names on the floor (`arena_floor_view.gd`); under `--boss` either skip the names
+   or paint them at the area's bottom-left, away from the bar band. It is framework-shared
+   (the arena view), so one flag; tell servo. Before/after at 32 px/m.
 2. Re-film the phase 3 clip / full fight if the horn should show in the evidence (render only:
    tick 4933 holds); the slam clip at 48 px/m shows the horn too.
 3. Director reel once more before the freeze; re-export the exe at the freeze (the it8 recipe in
    REPORT) and smoke it (King down 4933); finalize REPORT (remove DRAFT, Next steps).
-- Session ends ~02:45, everything committed.
+- Session ends ~02:48, everything committed.
