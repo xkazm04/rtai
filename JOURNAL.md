@@ -364,3 +364,26 @@ Read: JOURNAL, git log, the lane journals. Open answer to city: vehicles ee04543
   (vehicle_frame --scene=yield --view=tilt70, tick 180; before = parked_cards false in a scratch
   edit, restored; 5.1 % of pixels differ, all at the kerb rows). Judged: the top-down police car,
   pickup and white van beside the traffic cards now stand as the same cards; 0 SCRIPT ERROR both.
+- FRICTION/GATE 23:33 `top` bit-identity: HEAD 7a5f9137 vs the iteration-4 base hashes (top_base.md5) moved
+  in all 301 video + 264 audio frames. Bisected in a throwaway detached worktree (removed): the
+  merge 51844aa8, my pre-merge head fa729435 and even 14dc7a5c (IDENTICAL at iteration 7) all give
+  the new hashes, and the base 8e9eeb78 RE-RECORDED NOW gives them too: HEAD == base, 0 frames
+  differ. So the machine drifted since iteration 7 (driver/audio), not the code: re-record the base
+  in the same session as the head, always. One run in five (fa729435) moved frame 29 only: a
+  1-frame flake (streaming timing?), not reproduced at HEAD. top_base.md5 now = the 23:30 base.
+- MILESTONE ca7f9a0f a real ordering bug: ChunkLift's south-edge key added a footprint size in px to
+  a y in metres, so a deep building drew late whatever its place (a card in front of it could be
+  covered). Now px; test_south_edge_is_in_px_not_metres_plus_px fails on the old key.
+- MILESTONE 7a5f9137 NEXT 2: **street lamps and traffic lights stand as cards** (lamp 70 B 2250 /
+  55 B 2210, traffic_light 70 A 2115 / 55 B 2000). The flat art is a 3.2 m arm (post at -x, head
+  at +x), so a props row now takes `foot_m` (the card's foot in the flat frame: the post base,
+  -1.27 / -1.3 m), `mirror` (the strip's side view has the arm to the right) and turn 3: the arm
+  points where the flat arm pointed (south = toward the camera, north = the back view). At night
+  CityPropLights puts the lamp's light under the drawn head (`light_m` -0.45 m, angled views only;
+  lights.json `at_m` untouched for top). The flat arm's hatched shadow stays as the cast shadow.
+  B notes: lamp 70 foot plate ~45 deg (pole right): used as is; traffic_light 55 camera ~30 deg:
+  only the boss arenas' 55 would show it (no traffic lights there). Mipmaps on (AST-03).
+  EVIDENCE `it10_lamps_tilt70_32ppm_before_after_night.jpg` (yield scene, tick 180: before, after,
+  after at --grade=night), `it10_lamp_kerb_cars_tilt70_48ppm.png` (--car-zoom). Judged: the lamps
+  read as bronze-grey posts with a bell head on the kerb at 32, the swan neck reads at 48; the pool
+  sits on the pavement under the head. 0 SCRIPT ERROR in the 4 films.
