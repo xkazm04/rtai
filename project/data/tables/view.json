@@ -125,6 +125,34 @@
       "note": "lane d8-view70, the combined view: 70 degrees in play (art p70), easing to boss_pitch_deg 55 over ease_s when a boss engages (Events.boss_engaged) and back to 70 when it is defeated (ViewPitchEase; eased on sim ticks, so it holds during a hit-stop); the cards draw the p70 art above swap_deg and boss_art (p55) below it, cross-fading over fade_deg centred on swap_deg (fade_deg 0 = a hard swap)",
       "pitch_deg": 70,
       "swap_deg": 62.5
+    },
+    {
+      "art": "p70",
+      "boss_art": "p55",
+      "boss_pitch_deg": 55,
+      "cards": true,
+      "cast_k": 1.2,
+      "ease_s": 0.8,
+      "fade_deg": 5,
+      "height_k": 1,
+      "id": "combo_ease08",
+      "note": "lane d8-view70 study (owner call: the transition length): combo with a 0.8 s ease",
+      "pitch_deg": 70,
+      "swap_deg": 62.5
+    },
+    {
+      "art": "p70",
+      "boss_art": "p55",
+      "boss_pitch_deg": 55,
+      "cards": true,
+      "cast_k": 1.2,
+      "ease_s": 1.2,
+      "fade_deg": 5,
+      "height_k": 1,
+      "id": "combo_ease12",
+      "note": "lane d8-view70 study (owner call: the transition length): combo with a 1.2 s ease",
+      "pitch_deg": 70,
+      "swap_deg": 62.5
     }
   ]
 }
