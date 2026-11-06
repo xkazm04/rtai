@@ -774,3 +774,12 @@ pick since the cooldown gates every gun's stop too: (1) a per-weapon `stop_coold
 hit_feel.json `weapons` (kerf_slice 16) passed to `CameraRig.hitstop`; (2) camera.json cooldown 18
 (stops at most 3.3 a second instead of 3.0, for every gun). I build neither; if you land (1) I add
 the kerf_slice value and film it.
+- MILESTONE 01:36 combined city clip re-cut on `bd36c37c` (NEXT 4's first part, early):
+  `M/melee_polished_set_city_32ppm.mp4`, 44 s, game audio cut per segment, 0 SCRIPT ERROR in all
+  9 films. New and re-runnable: `evidence/n7-melee/set_clip.sh <tag>` films each melee chapter
+  alone (`--chapter=<id>`: frame 0 = the chapter start, so hit-stop drift never moves a cut; the old
+  cut read HUD ticks off one long director film) and each ghost reel, then concats with atrim per
+  segment; `RECUT=1` re-cuts the scratch AVIs without filming. LOOK: the first cut (chapters from
+  frame 0, 59.5 s) spent ~4.5 s per melee chapter on the walk-up (in the city the cops come in
+  first: claw kills ~330-360, katana ~330, chainsaw ~390-450, baton ~330, on 30-frame sheets); trimmed
+  to the kill windows. Sheet every 2 s: every tile shows an attack. frames.json entry updated.
