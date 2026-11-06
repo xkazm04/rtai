@@ -499,3 +499,12 @@ NEXT: unchanged from iteration 16 (0: film the tilt70 street cards after the vie
 NEXT: unchanged from iteration 16 (0: film the tilt70 street cards after the view70 merge; 1: the cap card
   in game; 2: re-film tank/tube chapters when weapons' REQUEST lands; 3: death beat if Call 8 is taken;
   4: draw order level cap and the King's accents in the probe).
+
+## Iteration 19 (18:40-18:45, REPORT)
+- REPORT.md finalized: full file names replace the three shortened evidence paths; every cited masters file checked
+  with ls (all present), plus the exe, tools and test. Weapons answered the tank REQUEST on their branch (6533af0e
+  ShotLift.back_z), so REPORT now says this and adds a re-film after the merge. Blocked durations added.
+  No build, no new frames.
+NEXT: 0: film tilt70 street cards after the view70 merge; 1: re-film flamethrower/rocket chapters after the weapons
+  merge (6533af0e), tube breech; 2: the cap card in game; 3: death beat if Call 8 is taken; 4: draw-order level cap and
+  the King's accents in the probe.
