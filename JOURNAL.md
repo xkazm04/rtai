@@ -190,9 +190,14 @@ NEXT:
 - NOTE: image.want is shared: I deleted it after my round3 job while view70 had also touched it (they
   held the lock already, so no harm). Next time only delete it when nobody else touched it after me.
 
+- GATE `node tools/evidence/run.mjs --no-bench` on 488f71e5: ALL PASS (lint 15/15, unit 1418/0,
+  scenarios 52, parity bit-exact + mutation caught, selftest look goldens 11/11 and block 5/5,
+  export-audit 539 loaded 0 failed). Selftest says three debt rows are no longer seen (delete them):
+  blood_flicker_cop_block_64, blood_flicker_cop_vermilion_32, blood_flicker_vehicles_vermilion_32
+  (not this lane's rows; left alone).
+
 NEXT:
-1. `node tools/evidence/run.mjs --no-bench` on the tip (the only gate not run on it).
-1b. Ohm: split `ohm_rig.gd` (209 lines) first, then `GhostCard.new("ohm", ...)` over its lifted body
+1. Ohm: split `ohm_rig.gd` (209 lines) first, then `GhostCard.new("ohm", ...)` over its lifted body
    (hide shell + beard; arms and feet stay rig parts so the attack telegraphs keep moving); ship the
    round3 strip as `features/souls/art/view/p55/ohm_card.png` after the copper-tip fix; provenance
    line (prompt_ref round3/jobs.json#ohm_55_body_magenta).
