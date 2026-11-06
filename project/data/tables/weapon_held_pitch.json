@@ -1,0 +1,63 @@
+{
+  "doc": "d8-weapons: Rivet's held weapons drawn for a raised camera (HeldPitchArt). Keyed by the view row's camera pitch in whole degrees (\"55\" = `tilt`; a \"70\" block can sit beside it), then by weapon_art id: art = a three-quarter part showing the gun's top and its side body, +x along the barrel (mirrored about the barrel line while it points left on screen), grip_px = where the gun claw closes, muzzle_px = the bore tip (the flash and the shot start here), length_px = the tail-to-tip span, drawn weapon_art's length_m long. A weapon without a row keeps weapon_art's top-down part; `top` (90) never reads this table. `--held-pitch=off` = the before.",
+  "pitches": {
+    "55": {
+      "doc": "55 degrees (the `tilt` row): generated 2026-11-06 with the image tool from the shipped pickups as the design reference, keyed off #00B140 (steam/ai-provenance/2026-11.jsonl)",
+      "weapons": {
+        "gloria": {
+          "art": "res://features/combat/weapons/art/held_55/gloria.png",
+          "grip_px": [
+            323,
+            236
+          ],
+          "length_px": 589,
+          "muzzle_px": [
+            596,
+            150
+          ],
+          "size_k": 0.85
+        },
+        "hand_cannon": {
+          "art": "res://features/combat/weapons/art/held_55/hand_cannon.png",
+          "grip_px": [
+            88,
+            219
+          ],
+          "length_px": 536,
+          "muzzle_px": [
+            543,
+            147
+          ],
+          "size_k": 0.85
+        },
+        "machine_pistol": {
+          "art": "res://features/combat/weapons/art/held_55/machine_pistol.png",
+          "grip_px": [
+            39,
+            233
+          ],
+          "length_px": 594,
+          "muzzle_px": [
+            601,
+            140
+          ],
+          "size_k": 0.85
+        },
+        "pistol": {
+          "art": "res://features/combat/weapons/art/held_55/pistol.png",
+          "grip_px": [
+            130,
+            212
+          ],
+          "length_px": 349,
+          "muzzle_px": [
+            356,
+            107
+          ],
+          "size_k": 0.85
+        }
+      }
+    }
+  },
+  "schema": "gtai.weapon-held-pitch/1"
+}

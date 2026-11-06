@@ -108,13 +108,13 @@ func _process(_delta: float) -> void:
 	_sprite.visible = rig.grip != RigGrip.Kind.THROWN or rig.reload_k < 0.0 or rig.reload_k >= 1.0
 	_sprite.visible = _sprite.visible or RigThrow.lag_frame(rig)  # n7-ranged: cocked, then out
 	_light_rag(rig, id)
-	HeldMuzzle.publish(_sprite, art.muzzle_px(id) + _sprite.offset)  # the flash's spot (n7-ranged)
+	HeldPitchArt.publish_muzzle(_sprite, art.muzzle_px(id))  # the flash (n7), the 55 part faced (d8)
 
 
 func _swap(id: StringName, weapon: StringName, size_k: float) -> void:
 	if _sprite != null:
 		_sprite.queue_free()
-	_sprite = art.make_held(id)
+	_sprite = HeldPitchArt.shipped().held(id, art)  # d8-weapons: the tilt's own part, else top-down
 	_sprite.scale *= arsenal.held_k(weapon, size_k)
 	_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	_sprite.material = PartMaterials.get_mat(_print_kind(), false, 0)
