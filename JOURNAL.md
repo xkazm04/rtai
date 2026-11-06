@@ -40,3 +40,29 @@ Registry rules applied (read the index; per slug): `sprite-and-atlas-production`
 per subject per pitch, cuts derived by tool, never hand-painted variants), `depth-ordered-layered-art`
 (the pickup's shadow draws under the art, the art over the disc), `generative-artifact-gating` (no C
 sheet enters; design proposals stay on contact sheets).
+- 20:58 MILESTONE `WeaponShowcase` (d5db8300): showcase drawings keyed by the view's art key
+  (`showcase/<p70|p55|icon>/<id>.png`); PickupsView rebuilds on the form (combo swaps live), stands a
+  drawing up without the spin; HudFeed fills `HudState.weapon_icon` (showcase icon, else the shipped
+  `icon.png`) and HudView draws it left of the ammo ticket. `--showcase=off`, `--pickup-hover=off`
+  in KNOWN_FLAGS. Lint 15/15, unit `--select=test_weapon_showcase,test_hud_art,test_arena_armory` 14/14.
+- 21:00 FRICTION: `OS.get_cmdline_user_args()` in new code trips the debt ratchet
+  (direct_cmdline_reads); read flags through the `LaunchArgs` autoload (`LaunchArgs.value(flag)`).
+- 21:05 FRICTION: filming `--armory` needs the scene arg `res://dev/arena/arena.tscn` (the editor's
+  main scene is the city; the showcase export's main scene is the arena).
+- 21:10 Evidence: `gtai-masters/n8/hud/armory_{tilt70,tilt}_48_before.png` (frame 89, seed 1, 0 SCRIPT
+  ERROR, 16 weapons laid). Every gun is a stand-in (no showcase drawing exists yet): honest BEFORE.
+- DECISION hud/showcase: see docs/decisions.md (the route, the stand-in rule, hover kept).
+- Not yet run this iteration: the full unit run, scenarios, evidence (only the selected tests + lint).
+
+NEXT:
+- Read `gtai-art/library/JOURNAL.md` for the answer to the showcase REQUEST; when sheets land: a cut
+  tool `tools/art/showcase_cut.py` (3x3 grid -> `showcase/p70|p55|icon/<id>.png`, key tol >= 12,
+  trim, declared anchor = the drawing's ground contact centre), provenance lines in
+  `steam/ai-provenance/2026-11.jsonl`, then film the armory after (same seed, frame 89) at 70/55, 48 px/m.
+- WeaponRackView: under a form, hang the showcase drawings horizontally on pegs (a vendor rack) and
+  rebuild on the form; add a crate prop (library `crates_55` B) for an open-crate display.
+- Film quest 1 with the HUD icon on the ticket (res://boot/quest1.tscn, gloria) at 1080p and 1280x800.
+- Item 2: the dialogue box with a face (HudView._subtitle): portrait only for approved looks
+  (gunsmith, nurse, scientist, mertz, dock_guard = quest-1 concept-matched; krump boss), device frames
+  for Don Fax / Patch; the 7 DESIGN PROPOSAL portraits go on a contact sheet for the owner only.
+- Run the full gates (unit no-arg, scenarios, evidence --no-bench) before calling anything done.
