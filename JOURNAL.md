@@ -324,3 +324,10 @@ NEXT (iteration 5):
   gtai-masters/d8/weapons/pickups_tilt_48_hover_before_after.png (48 + 32 pairs). DECISION in decisions.md;
   alternative HOVER_M 0. Unit test test_pickups_hover (top flat).
 - frames.json: + pickups (6th), - longguns_tilt_48_stand_edge_zoom3x.png (iteration-1 study; deleted). 15.
+- Gates on 81548c4e: full unit 1428 passed / 0 failed; scenarios 52 ran, 0 failed (headless); director reel
+  headless top 19/19 and tilt 19/19, every chapter all down, 0 SCRIPT ERROR (scratch reel8_*.log); lint 15/15.
+- Exe smoke (17:13 export, pre-hover): `--weapon=gatling --bot=gunplay --lone --cam=fight --ppm=48 --view=tilt
+  --rigs` = a lone kill, 0 SCRIPT ERROR; `--armory --ppm=48 --view=tilt --rigs` = 16 weapons on the hub
+  floor, 0 SCRIPT ERROR. The owner-call exe lines run on a real export.
+- REPORT.md drafted (committed): what works, open items, blocks, four Calls for the owner (Gatling, 32 long
+  guns, baton, pickup hover), exe command. The freeze session fills the final gate numbers and re-exports.
