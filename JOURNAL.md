@@ -498,3 +498,7 @@ NEXT (iteration 16 = the freeze; freeze 08:30, report 08:40):
    `--view=top` headless, finish REPORT (add call: `--view=tilt` vs `--view=tilt_noocclude`).
 3. If time: lift Rivet's held weapon with him when PropOcclusion lifts his rig (it follows his z
    in RigDepthSort before the lift, so it can stay under a redrawn prop).
+- GATE director reel on a56fc835 (switch off, headless): 19/19 chapters fully down, 0 SCRIPT ERROR
+  (`evidence/view/it15/director-reel-19of19.log`; my idle reel process killed by PID after the
+  snapshot, another lane's reel left alone). GATE unit 1190/0 on a44486b4+ (scratch unit2.log).
+  NEXT 1 is DONE.
