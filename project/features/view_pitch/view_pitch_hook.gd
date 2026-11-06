@@ -25,7 +25,7 @@ func setup(stage: ArenaStage, ctx: WorldContext) -> void:
 
 
 func attach_view(view: Node) -> void:
-	if _pitch == null or not _pitch.eases():
+	if _pitch == null or not (_pitch.eases() or ViewPitchCourt.dresses(_pitch.art)):
 		return
 	var ease: ViewPitchEase = ViewPitchEase.new()
 	ease.name = &"view_pitch_ease"

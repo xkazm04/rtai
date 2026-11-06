@@ -62,3 +62,9 @@ func test_a_p70_card_is_left_alone() -> void:
 	ViewPitchCourt.dress(card)
 	assert_eq(card.texture.resource_path, path)
 	assert_eq(card.scale, Vector2.ONE)
+
+
+func test_only_a_folder_with_an_own_horn_strip_needs_dressing_unblended() -> void:
+	assert_true(ViewPitchCourt.dresses("p70"), "the p70 King bust draws its own bell")
+	assert_false(ViewPitchCourt.dresses("p55"), "tilt: KingArt hides the horn itself")
+	assert_false(ViewPitchCourt.dresses(""))

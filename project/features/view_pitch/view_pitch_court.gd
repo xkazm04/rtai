@@ -6,7 +6,12 @@ extends RefCounted
 ## shared strip. Here a folder ("p55") stands for its pitch: rows_of is RigHeadCard.rows_of with
 ## each court strip of that pitch in its card row (KingArt's anchor, the shared width times the
 ## court's width factor), and a card built under a court folder takes the court strip as
-## KingArt._swap would. Render only; used by ViewPitchCards on combo rows alone.
+## KingArt._swap would. Render only; used by ViewPitchCards on combo rows and on rows drawing a
+## strip that wears its own megaphone (OWN_HORN: then the rig's horn part hides, as KingArt does
+## under a court strip, so the King at 70 shows one bell, not two).
+
+## Card strips that draw the King's megaphone themselves (cut from the 70 sheet with the bell).
+const OWN_HORN: Array[String] = ["res://features/characters/art/view/p70/king_bust_card.png"]
 
 
 ## The pitch a card folder was cut for ("p55" -> 55; 90 for none: no court strip).
@@ -44,6 +49,8 @@ static func court_row(key: String, art: String) -> Array:
 static func dress(card: Sprite2D) -> void:
 	if card.texture == null or card.name == ViewPitchCards.GHOST:
 		return
+	if OWN_HORN.has(card.texture.resource_path):
+		_hide_horn(card)
 	var art: String = str(card.get_meta(&"art", ""))
 	for key: String in KingArt.STRIPS:
 		var row: Array = court_row(key, art)
@@ -67,10 +74,23 @@ static func _swap(card: Sprite2D, row: Array, width_k: float) -> void:
 	var was: float = card.get_meta(KingArt.META, 1.0)
 	card.scale *= old_cell_w / cell.x * width_k / was
 	card.set_meta(KingArt.META, width_k)
+	_hide_horn(card)
+
+
+## A row whose art folder holds an OWN_HORN strip (p70): its cards need dressing even unblended.
+static func dresses(art: String) -> bool:
+	for path: String in OWN_HORN:
+		if path.get_base_dir().get_file() == art:
+			return true
+	return false
+
+
+static func _hide_horn(card: Sprite2D) -> void:
 	var rig: Node = card.get_parent()
 	while rig != null and not rig is CutRig:
 		rig = rig.get_parent()
-	if rig != null:
-		var horn: Node = rig.find_child(KingArt.HORN, true, false)
-		if horn is CanvasItem:
-			(horn as CanvasItem).visible = false
+	if rig == null:
+		return
+	var horn: Node = rig.find_child(KingArt.HORN, true, false)
+	if horn is CanvasItem and (horn as CanvasItem).visible:
+		(horn as CanvasItem).visible = false
