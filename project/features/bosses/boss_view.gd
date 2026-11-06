@@ -41,6 +41,7 @@ static func attach(view: Node, hook: BossHook, p_arena: CombatArena = null) -> v
 	v.add_child(layer)
 	var bar: BossBar = BossBar.new()
 	bar.fight = hook.fight
+	bar.crest = PortraitBook.new().face(String(hook.fight.spec.id))
 	layer.add_child(bar)
 	@warning_ignore("return_value_discarded")
 	BossMusic.attach(v, hook.fight)

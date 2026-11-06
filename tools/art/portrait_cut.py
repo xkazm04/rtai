@@ -2,8 +2,10 @@
 trimmed busts for the dialogue box: <out>/<id>.png and <out>/<id>_mood.png, each scaled to
 HEIGHT px tall. The split column is the emptiest alpha column in the middle third.
 Device mode (--device): take the first facing of a five-facing prop sheet instead.
+Card mode (--card=N): take frame 0 (facing the camera) of an N-frame shipped head/bust card strip
+(the boss crest: the King's p55 bust card, Servo's p55 head), trimmed, never scaled up.
 
-usage: python tools/art/portrait_cut.py <keyed.png> <out_dir> <id> [--device]
+usage: python tools/art/portrait_cut.py <keyed.png> <out_dir> <id> [--device | --card=N]
 """
 import sys
 from PIL import Image
@@ -37,6 +39,12 @@ def split_column(im: Image.Image, lo: float, hi: float) -> int:
 def main() -> None:
     src, out, pid = sys.argv[1], sys.argv[2], sys.argv[3]
     im = Image.open(src).convert("RGBA")
+    card = [a for a in sys.argv if a.startswith("--card=")]
+    if card:
+        n = int(card[0].split("=")[1])
+        f = trim(im.crop((0, 0, im.width // n, im.height)))
+        (scaled(f) if f.height > HEIGHT else f).save(f"{out}/{pid}.png")
+        return
     if "--device" in sys.argv:
         x = split_column(im, 0.1, 0.3)
         scaled(trim(im.crop((0, 0, x, im.height)))).save(f"{out}/{pid}.png")

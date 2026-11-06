@@ -3,14 +3,6 @@
   "schema": "gtai.portraits/1",
   "speakers": [
     {
-      "art": "res://features/hud/art/portraits/payphone.png",
-      "id": "don-fax",
-      "kind": "device",
-      "mood_art": "",
-      "mood_lines": [],
-      "source": "voice-only by design (pof voices/don-fax.md): the payphone frame, library payphone_55 A"
-    },
-    {
       "art": "res://features/hud/art/portraits/dock_guard.png",
       "id": "dock-guard",
       "kind": "face",
@@ -21,6 +13,14 @@
       "source": "library portrait_dock_guard_55 B (concept-matched, quest 1)"
     },
     {
+      "art": "res://features/hud/art/portraits/payphone.png",
+      "id": "don-fax",
+      "kind": "device",
+      "mood_art": "",
+      "mood_lines": [],
+      "source": "voice-only by design (pof voices/don-fax.md): the payphone frame, library payphone_55 A"
+    },
+    {
       "art": "res://features/hud/art/portraits/gunsmith.png",
       "id": "gunsmith",
       "kind": "face",
@@ -29,6 +29,14 @@
         "brass-someday"
       ],
       "source": "library portrait_gunsmith_55 B (concept-matched, quest 1)"
+    },
+    {
+      "art": "res://features/hud/art/portraits/king.png",
+      "id": "king",
+      "kind": "face",
+      "mood_art": "",
+      "mood_lines": [],
+      "source": "the shipped p55 king_bust_card frame 0 (owner verdict d8: the King as built, cape on the card); also the boss bar's crest"
     },
     {
       "art": "res://features/hud/art/portraits/krump.png",
@@ -75,6 +83,14 @@
         "kilohm-come-to-me"
       ],
       "source": "library portrait_scientist_55 B (concept-matched, quest 1)"
+    },
+    {
+      "art": "res://features/hud/art/portraits/servo.png",
+      "id": "servo",
+      "kind": "face",
+      "mood_art": "",
+      "mood_lines": [],
+      "source": "the shipped p55 servo head (owner verdict d8: Servo as built); also the boss bar's crest"
     }
   ]
 }
