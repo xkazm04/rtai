@@ -1829,3 +1829,26 @@ n7-melee JOURNAL tail (no REQUEST to ranged; their NEXT 1 cherry-picks my feel-l
   Rivet stands at (376.1, 264.6) m the whole window; victims 2.3-15.5 m away, dirs along the shot.
   So there is no "struck, not killed" read on the rifle in the quest: V is the kill's reaction.
   The 05:26 bloom at 14390-14394 was the 14381 kill's pool growing, not a new hit.
+
+### 05:47 quest 1 rifle filmed on its hit ticks and scored (audit: I ? -> 2, V ? -> 3), `ea3ce5d9`
+- `quest1_clip.gd --ppm=32 --cam=fight --ticks=14400-14444` (23 frames, exit 0, 0 SCRIPT ERROR).
+  LOOK at crops (2x): kill 14407 (2.3 m left / 4.1 m up of Rivet): the orange-vested contractor
+  stands on 14404-14406 with the tracer running at him from the claw; at 14408 he is down on the
+  heap, fallen up-left along the shot (dir -0.49, -0.87); blood sprays by 14410 and stays. Kill
+  14438 (2.6 m right / 4.9 m down): he stands, gun out, through 14436; flash and tracer 14438; down
+  at 14440; blood sprays down-right along the shot 14442-14444. V = 3. I = 2: blood + mark, and
+  by code (FeelCam._on_struck: `assault-rifle` is no weapons.json row -> light class; lethal ->
+  `kill` hit-stop 6 ticks + kick 1 x 1.5 px). Not on film: quest1_clip steps the sim itself
+  (s.step), so no SimClock hold can show in its frames; the stop shows only in the live game.
+  Still `evidence/ranged/it20-quest1-rifle-kills-32ppm.png` (both kills, ticks labelled).
+- Rules applied: motion-quality-gating (score only what the frames show; a cell the capture
+  cannot show is said so, not scored from code as film).
+
+### MILESTONE 05:47 the freeze exe exported early on `ea3ce5d9` (same code as `3243a483`)
+- `bake_city.gd` (256 chunks, exit 0), then `"$G" --headless --path project --export-release
+  windows-showcase ../build/export/windows/RTAI.exe`: exit 0, 0 ERROR lines, 245 MB + the release
+  sim DLL. Booted: `RTAI.exe --screen 0 --rendering-driver d3d12 --write-movie <abs> --fixed-fps 60
+  --quit-after 430 -- --bot=reel --reel=director --loadout=pistol --chapter=molotov --ppm=48`:
+  exit 0, 0 SCRIPT ERROR, chapter molotov 1/1 down; frames 54-61 looked at: shots 0 -> 1 on tick
+  58 with the claw out on that frame and the bottle in flight above (the editor's take). Scratch
+  avi deleted. If no code lands before 08:30, this exe is the freeze exe; else re-export.
