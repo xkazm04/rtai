@@ -244,3 +244,39 @@ top 19/19 all down, 0 SCRIPT ERROR (logs evidence/n8-vehicles/director-reel-it3-
 FRICTION: headless without `--fixed-fps 60`, `--quit-after 14000` counts frames, and frames outran
 the 60 Hz ticks on the first top run (it quit at tick ~6000, chapter 17 of 19, looking like a
 short reel). Use `--fixed-fps 60 --quit-after 7600`: one frame = one tick.
+
+## Iteration 4 (2026-11-06 22:22 - 23:22), BUILD
+
+Read: JOURNAL, git log, the other lanes' journals. city REQUEST to vehicles (n8-city JOURNAL ~171):
+`VehicleParked.live` so ChunkLift hands kerb cars over only when a VehicleView draws them.
+MILESTONE 22:30 answered (ee045433): `static var live` (true from VehicleView.setup, false on its
+_exit_tree) + `static func drawn() -> bool` (live and carded()). ANSWER to city: AND `drawn()` in at
+ORDER time (ChunkLift.order), not in `_setup`: ChunkLift is made inside CityView.setup, which runs
+before CityVehicleWorld.make_view, so `live` is still false at `_setup`. Merge n8-vehicles at ee045433+.
+
+MILESTONE 22:41 the depth film (NEXT 2, scene 35660255): `vehicle_frame --scene=depth` walks Rivet
+(the city focus, axis 16 = 3.1 m/s) in loops round the parked sedan card, behind and in front;
+`--no-front` = the before. Evidence: depth_tilt70_48ppm_ba_still.png + _before_after.mp4 (48, the
+`--car-zoom` camera), depth_tilt70_32ppm_ba_still.png + mp4. Judged: before, the card's wheels and
+sill cut through Rivet's head when he stands south of the car; after, he draws whole over it;
+behind the car both agree (the card covers his feet). FRICTION: windowed `--clip` frames are
+named tick>>1 and the 32 after-run caught odd ticks (clip-0003...): the 32 mp4 pairs by index (one
+capture apart), the 48 pair is exact. No 64 px/m camera in vehicle_frame (on_foot 32, car 48).
+MILESTONE 22:40 police light bar (NEXT 4, 6e497349): `VehicleCards.duty(art, speed)` adds SIREN
+(bit 256 of the wear) to a police card moving > 1 m/s (sim police and service cruisers; kerb-
+parked ones stay dark). The shader finds the lenses by colour in the bar band (cell top 45 %:
+the amber tail lamps sit below, measured per cell on both atlases) and lights blue then amber at
+2.2 Hz with a per-car phase; the lit lens spills a glow (16 taps on two rings). FRICTION: the
+first amber test (r > .75, .4 < g < .75) never matched in the shader though it matched the PNG in
+Python (cause not found; a hue test r > g + .2, b < .35 r works): judge shader colour tests on
+film, never on the PNG alone. The first glow added light onto the cream roof (invisible): it now
+mixes toward the hue and puts a halo in the air. Evidence: siren_tilt70_64ppm_before_amber_blue.png,
+siren_tilt70_{32,64}ppm_before_after.mp4, siren_tilt70_32ppm_amber_blue.png.
+DECISION vehicles: the light bar flashes on every moving police card, not only while wanted: the
+sim has no per-car pursuit flag the view can read, and lights.json already gives every police car a
+siren light at night. One value away: `VehicleCards.DUTY_SPEED` (raise it to silence patrols) or
+gate `duty()` on a wanted level once Events carries one to the view.
+Rules applied: depth-ordered-layered-art (the depth film judges the under/over split in motion),
+motion-quality-gating (flash judged on film at 32 and 64), generative-artifact-gating (no new AI
+art: the flash is a shader on the library cells), sprite-and-atlas-production (lens mask derived
+from the cell, not a new atlas), top-down-vehicle-handling-model (a cop reads as a cop at speed).
