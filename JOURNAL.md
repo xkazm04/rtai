@@ -314,3 +314,30 @@ Rules applied: registry `measured-draw-order` (probe before and after the sort, 
   side wall, round gold-hubbed wheels, raised cannon, Rivet's visor and collar. frames.json 14
   (4 new; the it7 + it5 clips and stills superseded, deleted). Raw .avi deleted.
 - TIMING: films are fast tonight (45 s of 32 px/m in about 2 min each).
+- MILESTONE a974482f: King's throne back (King lane it15) stands under a tilt (`KingCarStack.throne`:
+  the arch stacked 0.9 m in 7 slices, crest on top; was a flat thin arc on the cape). LOOKED 48 px/m
+  x2 (`evidence/view/it9/throne_stand_48_x2.png`): a standing gold back with volume, but it covers
+  more cape and reads partly as a gold crescent. `top` md5 b5ed2b94 unchanged.
+- FILM `gtai-masters/n7/view/king_p3_top_vs_tilt_48ppm_it9.mp4` (phase 3, 20 s, 48 px/m, top | tilt,
+  0 SCRIPT ERROR, on 9530f55d). LOOKED at 8 s: tilt = King upright with crown, ermine, chains and the
+  draped cloth cape, the slam ring an ellipse, Rivet's visor + collar; top = cape + crown on a disc.
+  frames.json 15.
+- NOT DONE this session: the gates after the merge beyond lint + unit (scenarios, director reel,
+  evidence/run.mjs have NOT run on the merge); the bumpers still float at roof height under tilt.
+
+NEXT (iteration 10):
+1. GATES on HEAD with the switch off (the merge brought King-lane code): scenarios
+   (`run_scenarios.gd`), the director reel (`--bot=reel --reel=director --loadout=pistol --rigs`,
+   headless, 900 s timeout; it does not quit itself), `node tools/evidence/run.mjs`. Log to
+   evidence/view/it10/.
+2. REPORT.md draft now (freeze 08:30, report 08:40): the question, the frames (frames.json order),
+   the cost table (docs/view-lab/PLAN.md draft) updated with: draw order MEASURED and FIXED for the
+   arena (16 % -> 2 % reversed), aim unprojection (unit only, not a live mouse check), the merge.
+   Calls for the owner: top vs top_lift vs tilt (default: tilt 55 + cards, the it9 clips), pitch
+   (55 vs 65/45: one data value), cards per head variant (cost: one image round each).
+   Exe lines: `build/export/windows/RTAI.exe -- --rigs --boss=king --view=<top|top_lift|tilt>`.
+3. Bumpers at ~0.4 m under tilt (draw them in the stack, not in the roof plane), then re-film tilt.
+4. If n7-king lands more King art before 07:30: merge again (ordinary merge), re-run the top swap
+   md5 proof, re-film the it9 clip. Re-export the exe at the freeze and smoke --view=tilt.
+5. Weakest items to raise: top_lift (still a modest gain: cast shadows by height not built);
+   the city's parked sedans flat under tilt.
