@@ -49,3 +49,21 @@ func test_a_five_column_atlas_has_no_fine_rows() -> void:
 	assert_eq(VehicleViews.fine_rows(VehicleViews.COLS, "p70").size(), 0)
 	assert_eq(VehicleViews.fine_rows(VehicleViews.FINE_COLS, "p55").size(), 0)
 	assert_eq(VehicleViews.cols_of(null), VehicleViews.COLS)
+
+
+func test_the_grid_follows_the_atlas_across_a_pitch_swap() -> void:
+	var cards: VehicleCards = VehicleCards.new()
+	var cell: int = VehicleViews.CELL_PX
+	var fine: Texture2D = _tex(cell * VehicleViews.FINE_COLS)
+	var five: Texture2D = _tex(cell * VehicleViews.COLS)
+	cards.begin(fine)
+	assert_eq(cards.cols(), VehicleViews.FINE_COLS, "a p70-like nine-column atlas")
+	cards.begin(five)
+	assert_eq(cards.cols(), VehicleViews.COLS, "the swap to a five-column atlas")
+	cards.begin(fine)
+	assert_eq(cards.cols(), VehicleViews.FINE_COLS, "and back")
+	cards.free()
+
+
+func _tex(w: int) -> Texture2D:
+	return ImageTexture.create_from_image(Image.create(w, 4, false, Image.FORMAT_RGBA8))

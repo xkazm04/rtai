@@ -6,9 +6,8 @@ extends Node2D
 ## side, three-quarter away, tail), the car's ground centre at each cell's centre; the three other
 ## eighths are those mirrored. A car draws the view nearest its heading, turned by the rest (at most
 ## VIEW_DEG / 2), as an upright card stretched back by 1 / ground_k (the art's own proportions).
-## Within `blend_deg` of a view boundary the neighbours cross-fade (0 = a hard swap). Keyed by
-## ViewMode.art (p70 / p55): a combined view swaps sets with its pitch; no atlas (and `top`) = none.
-## A FINE row also holds four 22.5-degree in-betweens and turns by 11.25 at most (VehicleViews).
+## Within `blend_deg` of a view boundary the neighbours cross-fade (0 = hard swap). Keyed by view
+## art (p70 / p55; `top` none); a FINE row adds four 22.5-deg in-betweens (VehicleViews).
 
 const DIR: String = "res://features/vehicles/art/%s/traffic_cards.png"
 const SHADER: String = "res://features/vehicles/vehicle_cards.gdshader"
@@ -166,6 +165,11 @@ func count() -> int:
 
 func count_under() -> int:
 	return _n_under
+
+
+## The columns of the atlas begun last (a combined view's pitch swap changes it).
+func cols() -> int:
+	return _cols
 
 
 ## The card's world transform: CELL_M square on screen, turned `turn_deg`, unsquashed by ground_k.
