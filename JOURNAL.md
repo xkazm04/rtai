@@ -1318,11 +1318,17 @@ idempotent tool; palette gate held), depth-ordered-layered-art (no layer change)
   CS crates); hot dash (one wing, lock, step out, the dash, the long vent). it10 clips and keys
   deleted; REPORT paths; NEXT 2 narrowed (bay hop, kamikaze left).
 
+- 04:39 FILMS the bay hop (p2, cut 10.5 + 4.5 s) and the kamikaze (p3, cut 5.0 + 5.8 s) re-filmed
+  at 48 px/m on 5f9ed433 (`film48_14.sh 2 2 900`, `3 2 1000`, 0 SCRIPT ERROR). **Looked at** both
+  key sheets: the hop's ring locking among the crates by bay 4 and the landing; the kamikaze's
+  lock rings, a dive landing in its ring, the sidestep. it10 clips and keys deleted; REPORT paths.
+  Every per-attack, per-phase and full-fight clip is now on the it14 body; only the Dent and Kerf
+  ghost clips show the it10 body.
+
 NEXT (iteration 15, in order):
 1. Merge n7-king if it moved (last merged 9a207b0b as 04164ce1; JOURNAL/REPORT add/add: ours).
-2. Re-film the remaining it10-body 48 px/m clips on the it14 body (hazard pads, parallel legs):
-   (carpet and hot dash done at 04:38) bay hop (`hop48_10.sh 2 2 900`),
-   kamikaze (`film48_10.sh 3 2 1000`); cut windows as their it10 mp4 durations. Ghost clips last.
+2. (attack clips done at 04:39) Re-film the Dent van and Kerf halves ghost clips on the it14
+   body (`ghost48_12.sh dent|kerf ...`, see the it10 entries for their phase, seed and ticks).
 3. Weakest by the target still: the sheet's bays hold quad-rotor drones with packages, ours cream
    squares (DOCKED_M; the full sprite was noise at 32 px/m): try a 2-rotor hint on the cream body
    at 48 px/m only if it stays quiet at 32. Render only, A/B.
