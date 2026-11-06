@@ -252,8 +252,9 @@ Iteration 6 left no journal entry and no commit; this session worked it5's NEXT.
   straight-down view, so it reduces to the flat test. top_lift draw order = UNMEASURED.
 
 NEXT (iteration 8):
-1. Director reel gate result on 4c03d511 (started 04:39, `evidence/view/it7/director-reel.log`):
-   if the session ended before it was committed, read the log and commit it (or re-run).
+1. (DONE it7) Director reel on 4c03d511 (switch off): 19/19 chapters fully down, 0 SCRIPT ERROR
+   (`evidence/view/it7/director-reel.log`; the reel does not quit itself, timeout 900 s ends it).
+   Gates it7 all green with the switch off: lint 13/13, unit 1174/0, scenarios 52/0, reel 19/19.
 2. Depth sort under tilt (the measured 16 % reversed + 71 % mixed): try a z band per rig by
    ground depth relative to the camera centre (`PART_SPAN` 16, bands of about 0.3 m, clamped),
    tilt only; then lift every fixed overlay z over the rigs (held +60, kill FX 30/40, KingAccents
