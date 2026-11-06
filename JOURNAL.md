@@ -258,6 +258,13 @@ NEXT (iteration 4):
   gtai-masters/d8/weapons/longguns_tilt_32_twotone_before_after.png. Exe:
   `RTAI.exe -- --weapon=plasma_rifle --bot=gunplay --lone --cam=fight --ppm=32 --view=tilt --rigs`.
 
+- Electro baton under tilt at 48 (its director chapter, same seed): the top-down part (dark shaft, pale bands,
+  prongs) vs the 55 part (pale tube, dark tip) vs the 55 small cell. Default kept: the 55 cells (more side
+  detail at 56+ px/m). Alternative: `enabled: false` on the baton row of weapon_held_pitch.json. See
+  gtai-masters/d8/weapons/electro_baton_tilt_48_topdown_vs_55.png. Exe:
+  `RTAI.exe -- --bot=reel --reel=director --chapter=electro_baton --loadout=pistol --ppm=48 --view=tilt --rigs`
+  (+ `--held-pitch=off` for the top-down part).
+
 NEXT (iteration 5):
 1. DONE 16:48: gates on 530d0f7b: director reel top 19/19 and tilt 19/19, all down, 0 SCRIPT ERROR; scenarios
    52 ran, 0 failed (headless). (Was: read the gate result; if not 19/19 + 0 SCRIPT ERROR in both
@@ -266,8 +273,7 @@ NEXT (iteration 5):
    FX: the flame jet from the tip, the charge on the coil, the two-tone long guns at 32, the reload ring.
 3. Melee smear at height: F 1 (faint under the hit star at 48). Try a stronger ink band (INK_A) for the
    tilted view only, or keep. Film the katana chapter at 48/64.
-4. Electro baton: the top-down part reads best at 48; try `enabled: false` for the baton row and film its
-   chapter, or a pale-wrap regen. Same as the Gatling: an owner call if close.
+4. Electro baton: now an owner call (above). Optional: a pale-wrap regen, filmed in its chapter.
 5. Freeze 18:30: export the exe (int-day recipe in docs/decisions.md) to build/export/windows/RTAI.exe, run
    `node tools/evidence/run.mjs --no-bench`, write REPORT.md by 18:40 (Calls for the owner above and in the
    iteration-3 block).
