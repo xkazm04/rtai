@@ -39,6 +39,13 @@ ghost-powers beats, telemetry overlay on).
    on the claw kills and the ram contact). Re-scored sound 1 -> 3 for every attack: on the frame and
    distinct per family, but reused recordings, and no swing whoosh or telegraph sound (still a call:
    real recordings). `M/hit_cues_ab_32ppm.mp4` (`--hit-cues=off` = the before).
+   **Telegraphs 05:40, 2026-11-06 (`690ec813`)**: TellCues (view only): Tonnage's armed press slam whines
+   (servo 1.4) from the ring's first frame (measured twice: sound 125 / ring 126, sound 383 / ring 384;
+   +30-40 dB in the 3.2-12.8 kHz band over the before), a slam onto no body lands with a concrete thud
+   (0.6; no whiff in the reel to film), Dent's seize clunks at the car on the tether's first frame (84;
+   +3-5 dB, the car's own sounds start there too). Sound re-scored for the press slam 3 -> 4 (the tell
+   is heard), Dent 3 (the clunk is small). Not listened to. `M/ghost_tell_cues_ab_32ppm.mp4`
+   (`--tell-cues=off` = the before).
 3. **A non-lethal melee hit showed nothing** (riot cop, SWAT): fixed in `1e32a7fd` + `a1716c1d`
    (`M/melee_wound_riot_ab_48ppm_64slow.mp4`).
 

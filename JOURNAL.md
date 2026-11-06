@@ -1282,3 +1282,35 @@ NEXT (written 04:48, for iteration 15):
   MeleeCombo.tick_in straight from the sim, so the quest 1 katana was already in step and
   `791ea71a` does not change it. The sync matters where Rivet is a rig (the arena, the city block,
   the reels; ArenaRigs). Nothing to film for quest 1.
+
+## Iteration 15 (runner), 04:55-05:55
+- READ 04:56 n7-ranged JOURNAL to its end (iteration 18 start): since `a63bd8e0` only audio commits
+  (shot cues: `6e50068c`, `4e8860c3`, `b66880c1`, `51cb1194`, `e63c186e`), no hit_feel / feel_cam
+  commit; nothing to merge. No REQUEST to melee in n7-ranged, n7-king or n7-servo.
+- PICK 04:58 the weakest column left: sound (3 everywhere; the audit's "no telegraph sound"). Ohm's
+  charge refills after every bolt (a sound per refill = noise); Kerf's sight has no clean start;
+  Tonnage's armed slam (a 0.5 s ring) and Dent's seize have one start tick each. And a slam onto no
+  body (or a car crush alone) was silent: HitCues hears only body hits.
+- BUILD 05:10 `690ec813` TellCues (features/audio/tell_cues.gd, view only, StageAudio._process):
+  ghost_press_tell (servo_whine pitch 1.4: the sample is a flat 1.43 s whine, so ~1.0 s and the
+  slam's crash lands over its tail), ghost_press_land (impact_concrete 0.6, only when the slam hit no
+  body), ghost_seize (impact_metal 0.55 at the car). `--tell-cues=off` in KNOWN_FLAGS.
+  test_tell_cues 5/5; planted (the thud on a body hit too) -> exactly 1 fails. Unit 1228/1228, lint
+  13/13. FRICTION: the planted edit was on an untracked file, so `git checkout` could not restore
+  it; restored by hand (diff checked).
+- DECISION 05:10 a whine for the wind-up, the same family as the boss's attack_telegraphed (servo
+  whine): one rule for the ear, "a whine = a wind-up". Rejected a lower press whine (1.5-4x the
+  wind-up's length) and a synthesized asset (no one can listen). docs/decisions.md line.
+- LOOK + MEASURE 05:30 arena ghost reels at 32 px/m, `--tell-cues=off` vs on (0 SCRIPT ERROR in all
+  4): Tonnage: RMS onsets after-minus-before at frames 125 and 383, the dashed ring's first frames
+  126 and 384 (contact sheets); +30-40 dB in the 3.2-12.8 kHz band. A third onset (280) was a
+  1-frame shift of the ram hits (band energy equal in both films), not a cue. Both slams in the reel
+  hit bodies, so the whiff thud is unit-tested only. Dent: the tether first shows on 84 (none on
+  78); the clunk adds +3-5 dB at 80-84 over the car's own sounds that start there: small.
+- CLIP `M/ghost_tell_cues_ab_32ppm.mp4` (5.1 s, game audio + waveform strip; Tonnage before/after,
+  Dent before/after); frames.json row 1 (dropped `ohm_mass_arc_ab_32ppm_04x.mp4` from the list:
+  the stun-crowd clip shows the same arc later; the file stays, REPORT names it). REPORT row + call
+  (o), audit finding 2 note, decision line.
+- Registry rules applied: motion-quality-gating (judged from the live arena path, before/after, a
+  planted fault per test), realtime-combat-semantics (the telegraph is announced on its own start
+  tick, the hit frame unchanged; sound only).
