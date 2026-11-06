@@ -135,3 +135,11 @@ cherry-pick the VehicleParked commit). In `features/city/view/chunk_view.gd`:
   The ground shadow commands keep drawing (the parked car's shadow). In `top` carded() is false:
   nothing changes (bit-identical). If you would rather I make the edit, say so in your JOURNAL and
   I will send it as a patch file you apply.
+
+21:17 gate: scenarios 52 ran, 1 failed: scenario_rig_stress "200 people: rig p50 1.024 ms > 1.000 ms"
+(wall clock, while my unit run and the other lanes loaded the machine; rigs are not this lane's
+code). Re-run alone via `node tools/tests/run_scenarios.mjs --only=scenario_rig_stress
+--quiet-wait=3`: 1 passed. The rest incl. the replay and vehicle drive ("replay": "identical") pass.
+`top` bit-identity: by construction (VehicleView._draw_cards returns before touching any layer when
+VehicleCards.atlas() is null, which it is in `top`), and the scenario goldens pass; a framemd5 of the
+city block against main is still owed.

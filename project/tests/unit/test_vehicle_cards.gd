@@ -40,3 +40,10 @@ func test_rigid_turn_rolls_the_card_and_upright_keeps_it_vertical() -> void:
 	assert_lt(rigid.y.x, -1.0, "rigid: the card's vertical leans with the turn")
 	assert_almost_eq(up.y.x, 0.0, 0.001)
 	assert_almost_eq(up.x, rigid.x, Vector2(0.001, 0.001))
+
+
+func test_the_wreck_fire_stays_on_the_ground_without_cards() -> void:
+	if VehicleCards.atlas() == null:  # `top` (the test default): flat bodies, no lift
+		assert_eq(VehicleFire.hood_lift(), Vector2.ZERO)
+	else:
+		assert_lt(VehicleFire.hood_lift().y, 0.0, "a card's bonnet is up the screen")
