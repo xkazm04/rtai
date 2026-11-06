@@ -1942,3 +1942,15 @@ a unit test): finished it rather than drop it.
   mean than `13e0e050`: the re-voiced shots). LOOK sheet every 300 frames: every tile an attack,
   red blood, ink scorch, the nuke ring whole in its crop. Master replaced in place, frames.json row
   updated. Scratch avi deleted.
+
+### 06:25 Gloria filmed for the wound-hold, and the heavy stop looked at (no build)
+- Gloria (`wh/film.sh gloria 32 on|off`, kill tick 333 both, exit 0, 0 SCRIPT ERROR): off holds
+  the cop standing gun up with two drops under him, the spurt at 341; on, the spurt is out on 335
+  and the held frames show it with the arms flung. Same as the pistol and machine pistol: all three
+  light guns now filmed. Still `evidence/ranged/it21-gloria-wound-hold-off-on-32ppm.jpg`.
+- Hand cannon (heavy, delay 0, kill tick 331): the ink star and the blood are out ON the contact
+  frame and hold 331-335, so the heavy stop already freezes on the wound: no delay needed (backs the
+  light-only DECISION). Still `evidence/ranged/it21-hand-cannon-kill-frames-330-380-32ppm.jpg`.
+- FINDING (not built): after the hold, the killed cop is carried down-screen along the shot but
+  stays UPRIGHT, gun arm up, from 336 to about 352 (about 15 frames, 10 sim ticks) before he reads
+  as down at 355. The throw slides a standing body; at 32 px/m it reads as a shove, then a drop.
