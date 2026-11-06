@@ -1,11 +1,11 @@
-# REPORT: lane `view` (n7x-view), night 2026-11-06. DRAFT (iteration 15, 07:40; final at 08:40)
+# REPORT: lane `view` (n7x-view), night 2026-11-06 (final, freeze iteration 18)
 
 ## The question
 
 Can a slight change of camera angle, plus character art drawn for that angle, lift RTAI's visual
 impression to another level, staying 2D / 2.5D at a cost the whole cast can afford?
 
-**My answer so far: yes, for the characters and the King's car, at 55 degrees.** The same seeded
+**My answer: yes, for the characters and the King's car, at 55 degrees.** The same seeded
 King fight reads as people and a car seen from a raised angle (King's crowned bust, Rivet's
 visor face from the logo, the car's side wall, wheels and raised cannon) instead of discs and
 rectangles. The cost is one image round per head variant plus code. The owner judges this, not me.
@@ -51,10 +51,11 @@ today's game, bit-identical: `top` frames are md5-identical with the King lane's
   176 body-frames behind a prop, the King fight (seed 2, 90 s) 8 (`evidence/view/it15/`).
 - Mouse aim unprojected through the tilt (`ViewMode.ground_of`, unit-tested; NOT checked live
   with a mouse: unattended run).
-- Exe: `build/export/windows/RTAI.exe` (windows-showcase, re-exported it12 on eba837e4 with the cast
-  shadows, 0 errors; re-exported again at the freeze). Smoke headless `--view=tilt` and
-  `--view=top`: King defeated, 0 SCRIPT ERROR, the two logs identical but for prewarm timing
-  (`evidence/view/it12/exe_*.log`).
+- Exe: `build/export/windows/RTAI.exe` (`windows-showcase`, re-exported at the freeze on the
+  final code; the main scene is the arena, so `--boss=king` and `--arena=city` both work). Smoke
+  headless on the it15 export of the same code (`evidence/view/it15/exe_*.log`): `--view=tilt` King
+  fight: King defeated, 8 body-frames hidden, 0 SCRIPT ERROR; `--view=tilt` city block: 176 hidden,
+  0 SCRIPT ERROR; `--view=top` King fight: King defeated, 0 SCRIPT ERROR.
 
 ## What does not work yet
 
@@ -68,9 +69,50 @@ today's game, bit-identical: `top` frames are md5-identical with the King lane's
 
 ## Cost table
 
-See `docs/view-lab/PLAN.md` "Cost table draft" (finalized here at the freeze).
+Numbers are from the it4-it18 builds (`docs/view-lab/PLAN.md` has the derivations). Every Godot
+timing tonight is CONTENDED (five lanes on one machine; during the A/B below the King lane ran
+9 headless fights at once).
 
-## Calls for the owner (draft)
+**Frame cost of `tilt` vs `top` (it18, MEASURED, CONTENDED, under the bench lock).** The exported
+release bench (`windows-bench`, windowed, vsync off), city `drive_dense` at 32 px/m, 30 s, two
+passes each, alternating (`evidence/view/it18/bench/`):
+
+| | `top` (2 passes) | `tilt` (2 passes) | change |
+|---|---|---|---|
+| avg frame | 0.86 / 0.89 ms | 1.01 / 1.00 ms | about +0.13 ms (+15 %) |
+| p99 CPU frame | 2.02 / 2.00 ms | 2.26 / 2.24 ms | +12 % |
+| render CPU avg | 0.31 / 0.32 ms | 0.41 / 0.40 ms | +0.09 ms |
+| draw calls avg | 370 / 370 | 572 / 574 | +55 % |
+| visible actors avg (max) | 23.3 (42) / 23.4 (42) | 28.6 (51) / 28.5 (51) | +22 % (the 1.22x ground) |
+| chunk failures, >25 ms hitches | 0, 0 / 0, 0 | 0, 0 / 0, 1 | |
+
+So the tilt sees 22 % more people (as computed: 1/sin 55 = 1.22) and costs 55 % more draw calls
+(the cards, the depth-sorted parts, the cast shadows), but its frame stays near 1 ms, far under
+section 20's limits. What this does NOT measure: the city's buildings and parked cars under tilt
+(still flat, so their future walls and roofs are not in this cost), and an uncontended machine.
+
+| | `top` (shipped) | `top_lift` (90, perspective eye 25 m, cast shadows) | `tilt` (55 + facing cards + cast shadows) | three-quarter per facing (not built) |
+|---|---|---|---|---|
+| Art per character | 0 | 0 | 1 card strip per head variant: 1 image round (56-78 s), 5 of 5 usable first try; still owed: SWAT, 6 ped heads, robot thug, other bosses (about 10 rounds) | every part x 8 facings x every clip: a redraw of the cast |
+| Art per vehicle | 0 | 0 (the stack leans; cast shadow swept from code) | sprite stack from code (King's car: 18 slices, round wheels, raised cannon: 0 art); parked sedans still flat | per-facing sprites |
+| Art per building / prop | 0 | 0 | south faces in code (arena props, city barriers); city buildings not done | per-facing |
+| Aim | ok | ok (uniform zoom) | fixed it7 (`ground_of`), unit-tested, not mouse-tested live | same as tilt |
+| Draw order | n/a | small (heights lean outward; unmeasured: the probe reads no lean straight down) | MEASURED + FIXED in the arena (it9): reversed 16 % -> 2 %, interleaved 71 % -> 4 %, car 0.5 %; owed: King accents, ghost/kill overlays, the city's baked crowd | same, harder |
+| Occlusion | n/a | n/a | BUILT it15 for the arena's station props (`PropOcclusion`: the prop redrawn over a body behind it, an ink silhouette with a cream rim, a body in front lifted over it; 0 art). MEASURED: 176 body-frames in 60 s on the city block, 8 in 90 s of the King fight. Owed: the city chunks' own props and buildings (still flat under tilt), the baked crowd (not rigs) | same, more often (taller lift) |
+| Streaming bubble | 1.0 | 1.0 | 0 extra chunks (it12, computed from code): residency is sim-driven, R_SIM 190 m around the focus; visible ground at 32 px/m grows 60 x 33.75 m -> 60 x 41.2 m (1/sin 55 = 1.22x) plus a 40 m roof's lift from south of the screen (cot 55 x 40 = 28 m), all inside 190 m. draw cost MEASURED it18: +15 % frame, +55 % draw calls (CONTENDED, table above) | 0 chunks; 1.41x ground at 45 |
+| Cast shadows (it12) | none | 0 art: a figure per body, the car and props swept (`RigCastShadows`); city sedans, buildings' own and the baked crowd not yet | same code, foreshortened on the ground; `tilt_noshadow` = without |  |
+| What breaks if shipped today | nothing | nothing visible (city sedans and the baked crowd cast no figure shadow) | interleaved people in crowds, overlays over the wrong rig, flat city buildings (no occlusion there yet), uncarded heads read top-down | everything until redrawn |
+
+Image rounds so far: 5 card strips (Rivet, King, gang, patrol cop, riot cop), 5 of 5 usable on the
+first try, 56-78 s each. The rest of the current roster under `tilt` is about 10 more rounds (one
+per head variant), plus code for the city's buildings, chunk props and parked cars.
+
+**The default I would pick: `tilt` (55 degrees, facing cards, cast shadows, occlusion).** It is the
+only option where the King's face and crown, the car's body and Rivet's logo visor read at the
+shipped 32 px/m; its art cost scales with head variants, not with clips, so the whole cast can
+afford it. `top_lift` is the fallback if the owner keeps straight down: free, but a modest gain.
+
+## Calls for the owner
 
 1. **The view**: `top` (shipped) / `top_lift` / `tilt`. My default: `tilt` (55 + cards). It is the
    only option that shows the faces and the car's body; its cost is per head variant, not per clip.
@@ -93,11 +135,17 @@ See `docs/view-lab/PLAN.md` "Cost table draft" (finalized here at the freeze).
 
 ## Gates (switch off)
 
+- **Final, it18 on 8b7a5982** (the last code commit eb09836f is dev-only: the city bench takes
+  `--view`): `node tools/evidence/run.mjs --no-bench` all PASS: lint 13/13, unit 1190/0, scenarios
+  52, parity bit-exact (mutation caught at step 629), look goldens 11/11 + block 5/5
+  (`evidence/view/it18/evidence-run-8b7a5982.log`). Also all PASS on 02af876a (code = 08e56ab6).
+  The game code is unchanged since 08e56ab6, where the director reel went 19/19 fully down with
+  0 SCRIPT ERROR (it15, below).
 - it15 on 08e56ab6 (occlusion in): `node tools/evidence/run.mjs --no-bench` all PASS (lint 13/13,
   unit 1190/0, scenarios 52, parity bit-exact, look goldens 11/11 + block 5/5;
   `evidence/view/it15/evidence-run-08e56ab6.log`); director reel 19/19 fully down, 0 SCRIPT ERROR
   on a56fc835 (`evidence/view/it15/director-reel-19of19.log`); `top` md5 b5ed2b94 (seed 2 tick 900)
-  unchanged. Bench not run.
+  unchanged.
 
 Iteration 9 on the merge (6cb9e9ef): lint 13/13, unit 1181/0, scenarios 52/0, director reel 19/19
 fully down, 0 SCRIPT ERROR. Iteration 12: `node tools/evidence/run.mjs --no-bench` on 52e72590 all
@@ -105,3 +153,28 @@ PASS (lint, unit 1181, scenarios 52, parity bit-exact, selftest look goldens 11/
 `evidence/view/it12/evidence-run.log`); unit 1186/0 after the cast shadows. An earlier run at
 06:02 (no commit) hit the known `scenario_city_chase` nav-budget flake; the re-run passed.
 Director reel on 16d83cbd (it12, cast shadows in): 19/19 fully down, 0 SCRIPT ERROR; scenarios on abc9c37a: 52 ran / 0 failed; evidence/run.mjs --no-bench on 3059b7b1: all PASS (unit 1186, scenarios 52, parity, look goldens 11/11). Bench: not run.
+
+## What blocked or slowed me
+
+- The contended machine: five lanes on one box. Every film took 2-4x real time, the director reel
+  about 15 min headless; the one bench (it18, the tilt A/B) is labelled CONTENDED.
+- Godot 2D clipping: `clip_children` on the actor layer drew nothing, and a pooled `clip_contents`
+  Control drew one row (it15, about 45 min). Occlusion was built another way, with polygon
+  intersection (`Geometry2D.intersect_polygons`) and the prop redrawn over the body.
+- Warnings-as-errors traps (`bool(Variant)`, `Dictionary.get` typing) and the evidence runner's
+  clean-tree rule (logs must go outside the tree) each cost a re-run.
+- Not blocked: the image route. 5 of 5 card strips came back usable on the first try.
+
+## Next steps (if the owner picks `tilt`)
+
+1. Cards for the rest of the cast: SWAT, the 6 ped heads, the robot thug, the other bosses (about
+   10 image rounds, one per head variant; `RigHeadCard.key_of`).
+2. City under tilt: south faces and roofs at height for the chunk buildings and props, the parked
+   sedans as code sprite stacks like the King's car, and occlusion over them (`PropOcclusion`
+   extended from the arena's station props to the chunk props).
+3. Draw order still owed: King's accents and the ghost/kill overlays at one fixed z, and the
+   baked crowd (not rigs) in the depth sort.
+4. Re-take the tilt bench once the city's buildings and parked cars have walls (it18 measured
+   today's tilt only: +15 % frame, +55 % draw calls, CONTENDED), and on a quiet machine.
+5. A live mouse test of aim under tilt (`ViewMode.ground_of` is unit-tested, not played).
+6. If `top` stays: keep `top_lift`'s cast shadows as the cheap upgrade (0 art).
