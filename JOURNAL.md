@@ -272,3 +272,62 @@ NEXT (iteration 4):
    (shadow/ink) is view's or city's; REQUEST if it still shows in the city clip at 32 px/m.
 6. Weakest item to raise: the crowd variety (mild by design; a stronger setting as the call's
    side-by-side) and the 70 twins' widths at 32 px/m in motion.
+
+## Iteration 4 (2026-11-06 23:08, BUILD)
+
+Read: JOURNAL, git log, the other lanes' journals (no REQUEST to street; city notes my cream-torso
+remark, not a REQUEST).
+
+- MEASURE (brief 6) crowd cost, bench.lock taken (free before), city_bench riot (400 on foot,
+  zoom 1.0 = 32 px/m, 30 s, `--fixed-fps 60`, the console binary windowed d3d12, vsync off),
+  3 alternating pairs top / tilt70. Pair 1 is the only clean one (0 other Godot processes at each
+  launch): avgFrameMs 4.63 -> 5.14 (+0.51), p99CpuMs 14.95 -> 15.15, low1Fps 56.2 -> 52.7,
+  drawCallsAvg 685 -> 800 (+115: the cards and plates), rigMsPerTick 0.74 -> 0.99 (+0.25),
+  renderCpuMsAvg 0.53 -> 0.57, simStepMsPerTick 0.113 -> 0.118 (the view-free control: flat).
+  Pairs 2-3 CONTENDED (2, then 8-10 other Godot processes appeared: other lanes' runs): pair 3
+  top 6.26 / tilt70 6.15, not an A/B. The absolute frame times are higher than it3's (1.7 ms):
+  it3 ran without `--fixed-fps`; compare within a pair only. Verdict: the angled street costs
+  about +0.5 ms a frame and +0.25 ms of rigs at 400 actors, +115 draw calls; the hook's own
+  share stays under the noise floor (it3). JSONs: masters n8/street/bench/it4/.
+- EVIDENCE (owed 32 px/m pairs, cops + riot plate + thug in one shot): the Kerf beat
+  (`--bot=ghosts --ghost=kerf --rigs --seed=4 --ppm=32 --view=tilt70`, three patrol cops, a riot
+  cop, the thug). Before = the lane off (StreetView.step returns at once, card_sets/street.json
+  moved aside: a filming-only local edit, restored, `git status` clean) = main. LOOKED (x1, x2):
+  the shield reads as a frosted plate where main draws a black-striped arc; the thug shows its box
+  head card and lit steel arms; the cops' 70 heads are subtle at 32 (same navy, the cap shape).
+  NOTE: at 32 px/m the thug's chest under the head card still prints as a dark patch (the print
+  inks small dark parts; the thug has no collar part to lift). At 64 px/m (filmed, x3) the chest,
+  plates and joints all read. Kept: 32 is legible, not a blob. Masters:
+  cops_riot_thug_before_after_tilt70_32ppm_{x1_kerfbeat_t1.6,x2_kerfbeat_t0.8_t1.6}.png,
+  cops_riot_thug_tilt70_32ppm_kerfbeat_12s.mp4, thug_lift_tilt70_64ppm_x3_kerfbeat_t4.png,
+  cops_p70_tilt70_64ppm_x2_kerfbeat_t4.png.
+- CALL evidence (crowd variety): the street crowd board at tilt70 48 px/m, built (SCALE_VAR 0.08,
+  VALUE_VAR 0.07) vs strong (0.16 / 0.14, a local edit, restored, tree clean). LOOKED: strong
+  separates the two hat walkers and the caps by size and reads as more different people, without
+  a head looking wrong on its body; no hue moves either way. Built stays mild (DECISION street/crowd
+  unchanged); the strong setting is two constants away.
+  call_crowd_variety_mild_vs_strong_tilt70_48ppm_x1.5_board_t4.png.
+- CHECK (NEXT 5) cream torsos on cream pavement at 32 px/m: city seed 5 tilt70 (15 s, 0 SCRIPT
+  ERROR). LOOKED x4: the pavement walkers read (ink rim, dark legs, the head card), so no REQUEST to
+  view/city. What does read weak is the BODY under the card: the top-down parts (cream jacket, white
+  hands, black legs) read as a grey sack on black legs, and on the board every walker's legs are the
+  same white-and-black pills (in `top` too). peds_pavement_tilt70_32ppm_x4_city_seed5_t4.png,
+  peds_bodies_top_vs_tilt70_64ppm_board_t4.png.
+- REQUEST to assets: ped_suit, ped_worker, ped_hood (pilot; then the other six), 70: a WALK strip,
+  whole figure, the 70 twins' camera and identity, five facings x 4 walk frames (contact, pass,
+  contact, pass), one baseline, feet on the bottom edge. Why: the pedestrians' head cards sit on
+  top-down bodies that read as sacks on pills under tilt70; the contractor's whole-figure card
+  reads well standing, but a walker needs stride frames, a sliding still figure fails in motion.
+  With these the street lane can draw walkers as whole-figure cards (the contractor recipe).
+- GATE director reel under `top` on 268bc09c (features as of 7b3ff9e3; headless, the it1 command
+  with `--view=top`): 19/19 chapters, every chapter all down, 0 SCRIPT ERROR, exit 0. All three
+  views now ran the reel on the current features (tilt70 13f1c5f7, combo c7899f99, top 268bc09c).
+- frames.json: the 32 px/m Kerf pair and the variety call in; the p55 shield still and the 48
+  cop pair (near-duplicate of the 64) out, their files kept. 15 entries, all files present.
+
+Registry rules applied: render-submission-economy (the cost split by a view-free control: sim step
+flat, the delta is rigs + draw calls; contended pairs labelled, not averaged in), motion-quality-
+gating (the walking-card idea held back: a still figure sliding fails in motion, so frames are
+REQUESTed instead of faking a walk), concept-scene-parity (before/after on one seed, same tick, the
+before made by switching the lane off rather than another scene), sprite-and-atlas-production (the
+walk REQUEST names cell layout and baseline so the strip cuts by script).
