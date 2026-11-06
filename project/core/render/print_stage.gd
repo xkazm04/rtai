@@ -86,7 +86,7 @@ func place(focus_m: Vector2) -> void:
 		rig.follow(tick, focus_m)
 		zoom = rig.ppm() / SimConst.PX_PER_M
 		offset += rig.offset_px(SimConst.PX_PER_M)
-	camera.zoom = Vector2.ONE * zoom
+	camera.zoom = ViewMode.shared().zoom_of(zoom)  # --view: exactly ONE * zoom when flat
 	camera.position = focus_m * SimConst.PX_PER_M + offset
 	fx_triggers.rig = rig
 	fx_triggers.focus_px = focus_m * SimConst.PX_PER_M
@@ -121,7 +121,7 @@ func _print_px() -> Vector2:
 	if rig != null and _print_zoom > 0.0 and zoom != _print_zoom:
 		_print_off -= camera.position * (zoom - _print_zoom)
 	_print_zoom = zoom
-	return (camera.position * zoom + _print_off).round()
+	return (camera.position * camera.zoom + _print_off).round()
 
 
 func _build_print() -> void:

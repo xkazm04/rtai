@@ -22,6 +22,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	# d7-held: the befores of the hold A/Bs (read straight from the OS args by RigOffClaw / RigGrip)
 	"--torch-off-arm",
 	"--gun-off-claw",
+	# view lab: the camera projection (data/tables/view.json; default top = the shipped view)
+	"--view",
 ]
 
 var _values: Dictionary[String, String] = {}

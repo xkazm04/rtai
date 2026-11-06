@@ -1,0 +1,59 @@
+{
+  "$id": "gtai.view/1",
+  "additionalProperties": false,
+  "properties": {
+    "default": {
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "type": "string"
+    },
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schema": {
+      "const": "gtai.view/1",
+      "type": "string"
+    },
+    "views": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "height_k": {
+            "maximum": 2,
+            "minimum": 0,
+            "type": "number"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "note": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "pitch_deg": {
+            "maximum": 90,
+            "minimum": 30,
+            "type": "number"
+          }
+        },
+        "required": [
+          "height_k",
+          "id",
+          "note",
+          "pitch_deg"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    }
+  },
+  "required": [
+    "default",
+    "doc",
+    "schema",
+    "views"
+  ],
+  "type": "object"
+}
