@@ -131,3 +131,35 @@ NEXT (iteration 4, in brief order):
   --bot=reel --reel=director --loadout=pistol --rigs`) 19/19 chapters, every chapter all down,
   0 SCRIPT ERROR, in `top` and in `combo` (at 504403a2). Logs: `evidence/n8-view/director-reel-it3-{top,combo}.log`,
   `unit-it3.log` (1489/0, at e513d663), `rig-stress-alone-it3.log`.
+
+## Iteration 4 (21:20-22:20)
+Read: JOURNAL, git log, the lane journals (no new REQUEST to view; street withdrew its hook
+REQUEST, city's occlusion answer stands), the library catalog: assets SERVED dent/ohm/kerf/king_car
+at 70 (round 20261106-2150; kerf re-done 2151 grade A, ohm A, dent B fixed tan, king_car B).
+Registry rules applied: combat-pacing (a death needs a readable beat before the cut, the cut
+hidden in the dark), motion-quality-gating (judged frame by frame, luminance per frame measured),
+generative-artifact-gating (Ohm 70 sheet's all-teal body is a colour-law fault; fixed by tone).
+
+- MILESTONE 21:52 item 4, Rivet's death beat (commits d422334f, 9a8eb3ac). `DeathBeat`
+  (features/player) holds the respawn `combat.json rivet.death_beat_s` = 1 s (60 ticks): the
+  quest stage and the arena's `_respawn` ask `death_beat.holding(alive)`; a dead Rivet's intent is
+  cleared in `_move` (no walk, hide, interact, fire); the rigs play the sprawl from the DEAD flag
+  (ArenaRigs already fed it; it never showed because the respawn came the same tick). `DeathVeil`
+  (boot/collect_call/view, under the HUD) inks the frame over the last 0.4 s and lifts it 0.3 s
+  after. BossHook: the boss keeps stepping over the corpse but deals no hit (it froze before:
+  read as a hang). `WaveDirector.ordinal` took `_wave_number` out of the stage (size budget);
+  debt baseline +1 line on collect_call_view accepted (stage -4).
+  Gates: lint 15/15; unit 1497/0 (full no-arg, at d422334f); scenarios 52 ran / 0 failed (no golden
+  moved: no scenario kills Rivet); director reel `top` 19/19 down, 0 SCRIPT ERROR (at 9a8eb3ac).
+  Evidence: `gtai-masters/n8/view/death_beat_before_after_combo_32ppm.mp4` (seed 2, King phase 3,
+  no bot: Rivet dies at tick 1728; before = the instant cut to the hub, after = the King over the
+  sprawl, then ink), `death_beat_after_sequence_combo_32ppm.png`. Frame luminance through the
+  cut: 110 -> 22 (ink) -> 128 (the hub) over 0.7 s.
+  NOT covered: release builds without `--rigs` draw Rivet as quest 1's sprite, which has no
+  death pose: there the beat is a standing Rivet under the veil (Rivet's art is frozen tonight).
+- FRICTION: a ColorRect under a CanvasLayer with only `set_anchors_preset(FULL_RECT)` stayed
+  0 x 0; size it from `get_viewport_rect()` (found by logging the veil, not by the film).
+- MILESTONE 22:10 item 5 (part): Ohm's p70 card from the served `ohm_70` (A): top row cut by
+  ghost_bust.py, hue guard, then ghost_card_tone.py against the game's p55 ohm_card (the served
+  sheet is all teal; the game's Ohm is steel, teal only in the wisps). Strip comparison:
+  scratch `ohm_55_70_strips.png`. Installed as `souls/art/view/p70/ohm_card.png`.
