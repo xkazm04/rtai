@@ -115,15 +115,16 @@ current roster, one per head variant (`RigHeadCard.key_of`: art_dir/head first).
 `top_lift` costs no art: a perspective eye (`eye_h_m`) reuses the 2.5D lifts radially. At 25 m and
 32 px/m the gain is small (the car leans about 0.4 m at 7 m off-centre).
 
-## Cost table draft (iteration 7, for REPORT)
+## Cost table draft (iteration 7, updated it12, for REPORT)
 
-| | `top` (shipped) | `top_lift` (90, perspective eye 25 m) | `tilt` (55 + facing cards) | three-quarter per facing (not built) |
+| | `top` (shipped) | `top_lift` (90, perspective eye 25 m, cast shadows) | `tilt` (55 + facing cards + cast shadows) | three-quarter per facing (not built) |
 |---|---|---|---|---|
 | Art per character | 0 | 0 | 1 card strip per head variant: 1 image round (56-78 s), 5 of 5 usable first try; still owed: SWAT, 6 ped heads, robot thug, other bosses (about 10 rounds) | every part x 8 facings x every clip: a redraw of the cast |
-| Art per vehicle | 0 | 0 (the stack leans) | sprite stack from code (King's car: 18 slices, round wheels, raised cannon: 0 art); parked sedans still flat | per-facing sprites |
+| Art per vehicle | 0 | 0 (the stack leans; cast shadow swept from code) | sprite stack from code (King's car: 18 slices, round wheels, raised cannon: 0 art); parked sedans still flat | per-facing sprites |
 | Art per building / prop | 0 | 0 | south faces in code (arena props, city barriers); city buildings not done | per-facing |
 | Aim | ok | ok (uniform zoom) | fixed it7 (`ground_of`), unit-tested, not mouse-tested live | same as tilt |
 | Draw order | n/a | small (heights lean outward; unmeasured: the probe reads no lean straight down) | MEASURED + FIXED in the arena (it9): reversed 16 % -> 2 %, interleaved 71 % -> 4 %, car 0.5 %; owed: King accents, ghost/kill overlays, the city's baked crowd | same, harder |
 | Occlusion | n/a | n/a | not built (tall walls can hide an actor: ink silhouette owed) | same |
-| Streaming bubble | 1.0 | 1.0 | 1 / sin 55 = 1.22x ground north-south (computed; chunks and frame time NOT measured) | 1.4x at 45 |
-| What breaks if shipped today | nothing | nothing visible | interleaved people in crowds, overlays over the wrong rig, no occlusion silhouette, uncarded heads read top-down | everything until redrawn |
+| Streaming bubble | 1.0 | 1.0 | 0 extra chunks (it12, computed from code): residency is sim-driven, R_SIM 190 m around the focus; visible ground at 32 px/m grows 60 x 33.75 m -> 60 x 41.2 m (1/sin 55 = 1.22x) plus a 40 m roof's lift from south of the screen (cot 55 x 40 = 28 m), all inside 190 m. Draw cost of 1.22x ground NOT measured | 0 chunks; 1.41x ground at 45 |
+| Cast shadows (it12) | none | 0 art: a figure per body, the car and props swept (`RigCastShadows`); city sedans, buildings' own and the baked crowd not yet | same code, foreshortened on the ground; `tilt_noshadow` = without |  |
+| What breaks if shipped today | nothing | nothing visible (city sedans and the baked crowd cast no figure shadow) | interleaved people in crowds, overlays over the wrong rig, no occlusion silhouette, uncarded heads read top-down | everything until redrawn |

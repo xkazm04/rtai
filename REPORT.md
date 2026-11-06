@@ -1,4 +1,4 @@
-# REPORT: lane `view` (n7x-view), night 2026-11-06. DRAFT (iteration 9, 05:35; final at 08:40)
+# REPORT: lane `view` (n7x-view), night 2026-11-06. DRAFT (iteration 12, 06:30; final at 08:40)
 
 ## The question
 
@@ -30,7 +30,12 @@ today's game, bit-identical: `top` frames are md5-identical with the King lane's
   rotation is kept. Upright facing cards (5 drawn + 3 mirrored) for Rivet, King, the gang, the
   patrol cop and the riot cop.
 - King's car as a sprite stack from code (18 slices, round wheels, raised cannon, standing throne
-  back), King's cloth cape draped.
+  back, bumpers at bumper height), King's cloth cape draped.
+- Cast shadows by height (it12, `RigCastShadows`, view.json `cast_k` 1.2, down-right as the city's
+  building shadows) in `top_lift` and `tilt`: a tapered figure per body, the King's car and the
+  arena props swept footprint to roof. 0 art. `top` unchanged (md5 b5ed2b94 / c66f823d).
+  Stills: `evidence/view/it12/toplift_cast_before_after_32_t900.png`,
+  `evidence/view/it12/tilt_noshadow_vs_cast_32_x2_t900.png`.
 - Draw order MEASURED and FIXED in the arena (`RigDepthSort`): reversed pairs 16 % -> 2 %,
   interleaved parts 71 % -> 4 % (seed 2, 60 s; `evidence/view/it9/order_tilt_sort.log`).
 - Mouse aim unprojected through the tilt (`ViewMode.ground_of`, unit-tested; NOT checked live
@@ -40,10 +45,11 @@ today's game, bit-identical: `top` frames are md5-identical with the King lane's
 
 ## What does not work yet
 
-- The car's bumpers float at roof height under tilt. The city's parked sedans are flat. No
-  occlusion silhouettes behind tall walls. King's accents and the ghost/kill overlays sit at one
+- The city's parked sedans are flat under tilt and cast no shadow; the city's baked crowd casts no
+  figure shadow. No occlusion silhouettes behind tall walls. King's accents and the ghost/kill overlays sit at one
   fixed z over the rigs.
-- `top_lift` is a modest gain (the heights lean out from the centre; nothing changes near Rivet).
+- `top_lift` is still a modest gain: the cast shadows now give Rivet and the car a height cue, but
+  no face or body side ever shows straight down.
 - Heads without a card (SWAT, the 6 ped heads, the robot thug, the other bosses) still read top-down.
 
 ## Cost table
@@ -58,8 +64,15 @@ See `docs/view-lab/PLAN.md` "Cost table draft" (finalized here at the freeze).
    - `build/export/windows/RTAI.exe -- --rigs --boss=king --view=top_lift`
    - `build/export/windows/RTAI.exe -- --rigs --boss=king --view=tilt`
 2. **The pitch**: 55 (default) vs 65 vs 45, one data value each (`--view=tilt65`, `--view=tilt45`).
+3. **Cast shadows by height** (a low evening sun, down-right): on (default, `--view=tilt`) or off
+   (`--view=tilt_noshadow`). My pick: on; they ground the car and the bodies on the foreshortened
+   road at 0 art cost. Still: `evidence/view/it12/tilt_noshadow_vs_cast_32_x2_t900.png`.
 
 ## Gates (switch off)
 
-Iteration 9 on the merge: lint 13/13, unit 1181/1181 0 SCRIPT ERROR; scenarios, the director reel
-and evidence/run.mjs: to be run on the final HEAD.
+Iteration 9 on the merge (6cb9e9ef): lint 13/13, unit 1181/0, scenarios 52/0, director reel 19/19
+fully down, 0 SCRIPT ERROR. Iteration 12: `node tools/evidence/run.mjs --no-bench` on 52e72590 all
+PASS (lint, unit 1181, scenarios 52, parity bit-exact, selftest look goldens 11/11 + block 5/5;
+`evidence/view/it12/evidence-run.log`); unit 1186/0 after the cast shadows. An earlier run at
+06:02 (no commit) hit the known `scenario_city_chase` nav-budget flake; the re-run passed.
+To re-run on the final HEAD: scenarios, the director reel, evidence/run.mjs. Bench: not run.

@@ -399,3 +399,9 @@ arena path), `sprite-and-atlas-production` (stack slices from existing art, no n
   60 x 33.75 m straight down, 60 x 41.2 m at 55 (1/sin 55 = 1.22x), plus a tall roof's lift from
   south of the screen (cot 55 x 40 m = 28 m): far inside 190 m, so a tilt adds NO chunks; the
   draw cost of 1.22x ground is NOT measured.
+- DECISION 4455ff27: `tilt` carries the cast shadows too (cast_k 1.2); `tilt_noshadow` = the it9
+  tilt. LOOKED (`it12/tilt_noshadow_vs_cast_32_x2_t900.png`): the car's shadow and the gang's
+  figure shadows on the road ground the car, which floated a little before. docs/decisions.md line.
+- FOUND: scratch `evidence-run-it11.log` (06:02, on f04f57aa, no commit): a session ran
+  evidence/run.mjs and hit the known `scenario_city_chase` flake (1 of 52); my re-run passed 52.
+- REPORT draft + PLAN cost table updated (streaming bubble computed, cast shadows, gates, call 3).
