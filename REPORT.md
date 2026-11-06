@@ -1,6 +1,6 @@
 # REPORT: lane n7-ranged (Rivet's guns + the shared feel layer), night 2026-11-05/06
 
-Final, written at the freeze (iterations 25-26). Branch `n7-ranged`, cut from main `763f8fba`, code head
+Final, written at the freeze (iterations 25-26), re-checked in the REPORT phase (iteration 32, 08:40): every evidence path it cites exists, and nothing has changed in code since `bd42aade`. Branch `n7-ranged`, cut from main `763f8fba`, code head
 `f13aa9cc` (gates, reels and the exe are all on it; the last change is quest 1's rifle camera kick, view only). Clips and stills: `C:\Users\kazda\kiro\gtai-masters\n7\ranged\` (index:
 `frames.json`). Audit and per-weapon before/after: `docs/polish/ranged.md`. Running log: `JOURNAL.md`.
 
@@ -29,7 +29,7 @@ rifle stopped playing the contractors' shot); none is listened to yet (call 7). 
 | Flamethrower ignition: a 3 px kick plus a fireball flare at the nozzle on the round that lights the stream (reads at 32 px/m for about 4 frames) | `e32720c4`, `5ef1c584` | `--feel=off` | `flamer_ignite_flare-ab-32-48ppm.mp4` |
 | Hit-stop cooldown 20 -> 16 ticks (every Kerf cut gets its stop; n7-melee call 7) | `0d4089f1` | - | n7-melee's clips |
 | Quest 1 fires the table guns (Gloria as her weapons.json row; the rifle stays on combat.json) | `48679f03` | `--quest-guns=off` | `quest1_table_gloria_dock9-ab-48ppm.mp4` (the it6 32 px/m pair dropped to keep frames.json at 15) |
-| Muzzle flash, smoke and shells leave along the shot's aim, not a facing the walk turned between shots (found by filming quest 1) | `1ce1b11e`, `ed60713e` | - (bug fix) | `quest1_gloria_muzzle_side-48ppm.png` |
+| Muzzle flash, smoke and shells leave along the shot's aim, not a facing the walk turned between shots (found by filming quest 1) | `1ce1b11e`, `ed60713e` | - (bug fix) | `quest1_table_gloria_dock9-ab-48ppm.mp4` (off vs fix); unit `project/tests/unit/test_gun_fx_aim.gd`, `evidence/ranged/it4-unit-muzzle.log` (the 3-panel still cited in JOURNAL 21:55 was lost in a scratch clean) |
 | Molotov throw follow-through: the torso leans into the release and the gun shoulder whips through (modest but visible at 32 px/m for about 15 frames; the lean alone was 1-2 px); the arm-only version `41bb90e7` moved no pixel | `41bb90e7`, `7326b53b`, `9b351ab4` | - (THROW_LEAN and THROW_TWIST 0 in `rig_clips.gd`, or drop the molotov `rig_kick` row) | `molotov_windup-ab-32-48ppm.mp4` (the twist plays in its after; the it6 twist clip dropped to keep frames.json at 15) |
 | Rivet's pistol flash reads at 32 px/m: his flash cell 1.6x (an ink-edged cream star, vermilion core, about one body wide; before it was a 15 px speck, smaller than the cop's own flash) | `d79c5278` | `--feel=off` (or hit_feel.json pistol `muzzle_k` 1) | `pistol_muzzle-ab-32-48ppm.mp4` |
 | Gloria's flash (quest 1's sidearm, the same cell): 1.8x, one notch over the pistol | `50c0883b` | `--feel=off` (or gloria `muzzle_k` 1) | `gloria_muzzle-ab-32ppm.mp4` |

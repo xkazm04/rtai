@@ -2300,3 +2300,13 @@ hit_feel.json `assault_rifle`); the rest of it25's NEXT list stands as written.
 
 NEXT (after the night): judge call 10 in a played Dock 9 (2 px vs 3 px is one value in
 hit_feel.json `assault_rifle`); the rest of it25's NEXT list stands as written.
+
+### REPORT 08:42 (iteration 32): REPORT.md re-checked, one evidence cell fixed
+- Every path REPORT.md cites checked on disk (masters n7/ranged, evidence/ranged, project/). One was gone:
+  `quest1_gloria_muzzle_side-48ppm.png` (the 3-panel still from 21:55, lost in a scratch clean). That row
+  now cites `quest1_table_gloria_dock9-ab-48ppm.mp4`, `test_gun_fx_aim.gd` and `evidence/ranged/it4-unit-muzzle.log`.
+- No code change since `bd42aade`; the exe, the gates and the reels are as the iteration 26-31 entries say.
+
+NEXT: the night is over for this lane. For the Director: merge `n7-ranged` (code head `bd42aade`, docs on top).
+For the owner's morning: REPORT.md `## Calls for the owner` 1-10. After the night: listen to the re-voiced cues
+(call 7), film the Gatling's sustained victim read on a boss, run the bench under the lock.
