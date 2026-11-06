@@ -11,7 +11,7 @@ func test_pitch_55_loads_the_p55_parts() -> void:
 
 
 func test_a_part_without_p55_art_keeps_todays() -> void:
-	assert_eq(ServoArt.path_at(&"rack", 55.0), ServoRig.ART % &"rack")
+	assert_eq(ServoArt.path_at(&"drone", 55.0), ServoRig.ART % &"drone")
 	assert_eq(ServoArt.path_at(&"torso", 70.0), ServoRig.ART % &"torso")
 
 

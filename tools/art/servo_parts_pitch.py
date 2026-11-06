@@ -6,7 +6,8 @@ The sheet (Codex, chroma #00B140, from servo_55.png) holds 9 top-view parts in t
 head (front = right), 3-row rack / pad, arm, thigh, shin, pelvis, drone. Each is keyed, cropped,
 turned to the rig's convention (front down the page: the head turns 90 degrees) and resized to
 EXACTLY today's part of the same name, so ServoRig's sizes (ART_PPM) and struts hold. The 2-row
-rack and the drone keep today's art (their layouts differ). Deterministic.
+rack is the 3-row rack with its bottom shelf row cut out (top frame + two rows, then the bottom
+frame); the drone keeps today's art. Deterministic.
 """
 
 import os
@@ -40,7 +41,15 @@ def main() -> None:
         size = Image.open(os.path.join(art_dir, name + ".png")).size
         img = parts[src].rotate(turn, expand=True) if turn else parts[src]
         img.resize(size, Image.LANCZOS).save(os.path.join(out_dir, name + ".png"))
-    print("parts:", len(DRESS), "->", out_dir)
+    r3 = Image.open(os.path.join(out_dir, "rack3.png")).convert("RGBA")
+    h = r3.height
+    keep, foot = round(h * 133 / 204), round(h * 185 / 204)  # 2 rows kept; the bottom frame
+    two = Image.new("RGBA", (r3.width, keep + h - foot))
+    two.alpha_composite(r3.crop((0, 0, r3.width, keep)), (0, 0))
+    two.alpha_composite(r3.crop((0, foot, r3.width, h)), (0, keep))
+    size = Image.open(os.path.join(art_dir, "rack.png")).size
+    two.resize(size, Image.LANCZOS).save(os.path.join(out_dir, "rack.png"))
+    print("parts:", len(DRESS) + 1, "->", out_dir)
 
 
 if __name__ == "__main__":
