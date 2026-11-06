@@ -16,7 +16,8 @@ The 22.5-degree in-betweens (keyed/vehicle/<id>_between_<pitch>.png: four drawin
 views 0-1, 1-2, 2-3, 3-4; <id>_between_c_<pitch>.png, one drawing, replaces C) fill columns 5-8
 (BETWEEN = False: five columns, as before). The four-drawing sheet shares the five-view sheet's
 canvas and scale family (its raw widths sit between its neighbours'), so A, B, D take the sheet's k;
-the one-drawing C redo is scaled to the mean of its neighbours' scaled widths (side, 3/4 away). Box
+the one-drawing C redo is scaled to the mean of its neighbours' scaled widths (side, 3/4 away) and
+its saturated paint graded to theirs (MATCH_C: the police C redo's blue is ~1.5x brighter). Box
 geometry (L |cos| + W |sin|) was tried and rejected: the sheets' own 3/4 views are drawn ~2/3 of it,
 so A and D came out half as big again as their neighbours. The runtime's VehicleViews.FINE lists
 the rows filled per pitch (printed here).
@@ -39,6 +40,8 @@ TOPDOWN = "project/features/city/art/vehicles/traffic_atlas.png"
 # Use keyed/vehicle/<id>_side_<pitch>.png (the asset lane's redrawn side view) when it exists.
 SIDE_REDO = True
 BETWEEN = True
+# Grade a C redo's saturated paint to its neighbours' (False: the redo's own grade).
+MATCH_C = True
 COLS = 9 if BETWEEN else 5
 ROWS = [
     ("sedan", 1.45, (1.0, 1.0, 1.0)),
@@ -125,6 +128,37 @@ def one_view(sheet: Image.Image) -> Image.Image:
     return sheet.crop((x0, rows.min(), x1, rows.max() + 1))
 
 
+def hsv_paint(im: Image.Image) -> tuple:
+    """The HSV array (0-1) of `im` and the mask of its saturated paint (opaque, s > 0.4)."""
+    hsv = np.array(im.convert("RGB").convert("HSV")).astype(np.float32) / 255.0
+    return hsv, (np.array(im)[:, :, 3] > 200) & (hsv[:, :, 1] > 0.4)
+
+
+def match_paint(v: Image.Image, refs: list) -> Image.Image:
+    """`v` with its saturated paint's mean value and saturation moved to the mean of `refs`' (a
+    redrawn cell graded brighter than the sheet it sits between); only the paint's own hue (within
+    30 deg of the refs' median saturated hue: the lamps and the light bar keep theirs), weighted by
+    saturation so the ink, the glass and the cream panels keep theirs."""
+    hsv, m = hsv_paint(v)
+    want = [hsv_paint(r) for r in refs]
+    if m.sum() < 500 or any(w[1].sum() < 500 for w in want):
+        return v
+    hue = np.median(np.concatenate([w[0][:, :, 0][w[1]] for w in want]))
+    near = lambda h: np.abs((h - hue + 0.5) % 1.0 - 0.5) < 30.0 / 360.0  # noqa: E731
+    want = [(w[0], w[1] & near(w[0][:, :, 0])) for w in want]
+    m = m & near(hsv[:, :, 0])
+    if m.sum() < 500 or any(w[1].sum() < 500 for w in want):
+        return v
+    for ch in (1, 2):
+        k = np.mean([w[0][:, :, ch][w[1]].mean() for w in want]) / hsv[:, :, ch][m].mean()
+        wt = np.clip((hsv[:, :, 1] - 0.3) / 0.2, 0.0, 1.0) * near(hsv[:, :, 0])
+        hsv[:, :, ch] = np.clip(hsv[:, :, ch] * (1.0 - wt + wt * k), 0.0, 1.0)
+    rgb = Image.fromarray((hsv * 255.0).round().astype(np.uint8), "HSV").convert("RGB")
+    out = rgb.convert("RGBA")
+    out.putalpha(v.getchannel("A"))
+    return out
+
+
 def paint(im: Image.Image, gain: tuple) -> Image.Image:
     if gain == (1.0, 1.0, 1.0):
         return im
@@ -183,6 +217,7 @@ def build(root: Path, lib: Path, pitch: int) -> Image.Image:
             kb = k
             if j == 2 and c_redo:  # C between the side (2) and the 3/4 away (3)
                 kb = (vs[2].width * ks[2] + vs[3].width * ks[3]) * 0.5 / v.width
+                v = match_paint(v, [vs[2], vs[3]]) if MATCH_C else v
             paste(atlas, v, kb, (5 + j, row, gain), drop)
     print(f"fine rows (VehicleViews.FINE): {fine}")
     return atlas
