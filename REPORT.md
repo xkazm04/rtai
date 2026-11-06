@@ -69,12 +69,15 @@ then look at `king_target_vs_game_32ppm_it18.png`, then play `build/export/windo
 | human + Dent (it7) | 90.8 s | 78.8 | 0 | 4/15 | 11/45 | 5/12 | 1/9 |
 
 Re-measured in it15 on b2e71b83 (the same 15 runs, `evidence/king/numbers-it15/`, 0 SCRIPT ERROR):
-every number in the table is identical, so nothing since it5d has moved the fight.
+every number in the table is identical, so nothing since it5d has moved the fight. Re-measured
+again in it18 on 71e76b3f (`evidence/king/numbers-it18/`, 15 runs, 0 SCRIPT ERROR): the summary is
+identical to it15's; only each run's total `ticks` differs (the idle run after the fight, before
+`--quit-after`, which headless pacing on a busy machine moves).
 
 Every attack is dodgeable (the dodging bot takes 0) and every attack lands on a stander. The
-easy band is as built (call C). Every body and look change since it8 (through it16's chain) is
-render only: King still goes down at tick 4933 for the human bot on seed 2 and 5315 for the
-standing bot, the same as before, in the editor and in the exported exe (it16 smoke on f4df4438).
+easy band is as built (call C). Every body and look change since it8 (through it18's gang shades)
+is render only: King still goes down at tick 4933 for the human bot on seed 2 and 5315 for the
+standing bot, the same as before, in the editor and in the exported exe (it18 smoke on 71e76b3f).
 
 ## What does not work yet / gaps against the target
 

@@ -1779,3 +1779,13 @@ NEXT (iteration 17, in order):
   (`evidence/king/director-reel-it18.log`). Scenarios **52 ran, 0 failed**, 0 SCRIPT ERROR
   (`evidence/king/scenarios-it18.log`). Unit 1168/0, lint 13/13. Combat holds. REPORT gates line
   moved to it18. (Journal times 06:05-06:21 corrected from the files' times.)
+
+### 06:43 NUMBERS re-measured on 71e76b3f (encounter-balance-simulation)
+- `node evidence/king/boss_numbers.mjs --out=evidence/king/numbers-it18`: the background job hit the
+  tool's 10 min limit after 12 of 15 runs (no Godot left behind); seed 5 re-run with `--seeds=5`,
+  then the 15-run aggregate rebuilt from the per-run files with the script's own aggregation
+  (`build/scratch18/agg.mjs`, the pool call removed). FRICTION: give it `timeout` 900000 next time.
+- **The summary is identical to it15's**: dodge 80.1 s / took 0; human 83.9 s / 78; stand 87.6 s /
+  190.4 / 5 deaths; per-attack hit rates the same; 0 SCRIPT ERROR in 15. Per run, every fight field
+  matches; only `ticks` (the run's total length after the fight, up to --quit-after) differs.
+  The shades are render only, as built. REPORT numbers section notes it.
