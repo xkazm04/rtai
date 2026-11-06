@@ -358,3 +358,23 @@ as city's standing prop cards (`PropCards.named().draw_named`). street / vehicle
   guessed scale), motion-quality-gating (the swap judged frame by frame at 64 px/m; a turn told
   apart from a swap), combat-pacing-and-dramatic-arc (cover must read at its real size: the
   player's cover decisions follow the drawn size).
+- GATES at cf6bed71: lint 15/15; unit full no-arg 1504 passed / 0 failed, 0 FLAKY
+  (`evidence/n8-view/unit-it6.log`); scenarios: see the line below.
+
+NEXT (iteration 7, in brief order):
+1. The boss-cam (dev clip camera) at 64 px/m under a tilt: add the boss's lifted height to its top
+   margin and cap the zoom so Rivet stays in (it5 finding); then re-film the King close-ups.
+2. Quest 1 (`collect-call`) at tilt70: city found its stage (boot/collect_call/view/stage_view.gd)
+   does not read ViewMode at all (flat at Ink's 48 px/m); grep confirms nothing under boot/ reads
+   ViewMode, but the quest shares CollectCallView and CutRig with the arena, so its rigs may tilt
+   over a flat floor. Film it at tilt70 (`--view=tilt70` on the quest launch) to see, and decide:
+   bring the stage under the view (cards for Rivet + cast via the arena's rig path) or a Call.
+3. Item 8 rest: the King fight frame cost combo vs top (a windowed arena run with frame metrics,
+   labelled, under bench.lock), and a release-export number if the bench export can load an arena.
+4. Weakest art: Dent's p70 bust prints darker than p55 (lift the tone's low quantiles); Kerf p70
+   lacks the p55 amber shoulder rings.
+5. The order probe: skip a car pair when the wreck is not drawn (phase-3 artifact, it5); the accent
+   pairs stay unmeasured until a scripted stand south of the King.
+6. Before the freeze: director reel 19/19 top + combo, evidence run --no-bench, export the exe,
+   REPORT with the Calls (King bust size, death beat length, attack lock, camera lead at speed,
+   cover as a stack sized to the collision box).
