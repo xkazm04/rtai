@@ -15,7 +15,7 @@
             596,
             150
           ],
-          "size_k": 0.85
+          "size_k": 1
         },
         "hand_cannon": {
           "art": "res://features/combat/weapons/art/held_55/hand_cannon.png",
@@ -28,7 +28,7 @@
             543,
             147
           ],
-          "size_k": 0.85
+          "size_k": 1
         },
         "machine_pistol": {
           "art": "res://features/combat/weapons/art/held_55/machine_pistol.png",
@@ -41,7 +41,7 @@
             601,
             140
           ],
-          "size_k": 0.85
+          "size_k": 1
         },
         "pistol": {
           "art": "res://features/combat/weapons/art/held_55/pistol.png",
@@ -54,7 +54,7 @@
             356,
             107
           ],
-          "size_k": 0.85
+          "size_k": 1
         }
       }
     }

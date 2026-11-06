@@ -81,6 +81,7 @@ func make(id: StringName, pitch_deg: float, art: WeaponArt) -> Sprite2D:
 	s.offset = -r.grip
 	s.scale = Vector2.ONE * art.length_m(id) * WeaponArt.WORLD_PX_PER_M / r.length_px * r.size_k
 	s.set_meta(&"pitch_row", r)
+	_rim(s)
 	return s
 
 
@@ -106,6 +107,10 @@ static func face(s: Sprite2D) -> void:
 	s.flip_v = left
 	var h: float = s.texture.get_size().y
 	s.offset = Vector2(-r.grip.x, -(h - r.grip.y) if left else -r.grip.y)
+	for c: Node in s.get_children():
+		if c is Sprite2D:
+			(c as Sprite2D).flip_v = left
+			(c as Sprite2D).offset = s.offset
 
 
 ## The bore tip in the sprite's local px (offset and flip included).
@@ -123,3 +128,20 @@ static func row_of(s: Sprite2D) -> Row:
 		return null
 	var m: Variant = s.get_meta(&"pitch_row")
 	return m if m is Row else null
+
+
+## WeaponArt's paper rim: cream silhouettes RIM_WORLD_PX out in RIM_DIRS directions, under it.
+static func _rim(s: Sprite2D) -> void:
+	if not WeaponArt.rim:
+		return
+	for i: int in WeaponArt.RIM_DIRS:
+		var h: Sprite2D = Sprite2D.new()
+		h.texture = s.texture
+		h.centered = false
+		h.offset = s.offset
+		h.position = (
+			Vector2.from_angle(TAU * i / WeaponArt.RIM_DIRS) * WeaponArt.RIM_WORLD_PX / s.scale.x
+		)
+		h.material = PartMaterials.get_mat(PartMaterials.PartKind.HALO, false, 0)
+		h.z_index = -1
+		s.add_child(h)
