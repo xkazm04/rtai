@@ -42,6 +42,8 @@ func _run() -> void:
 		var g: Fighter = stage.arena.spawn_guard(at + off)
 		g.pos = at + off
 	var forms: GhostForms = stage.pilot.ghosts.forms
+	if ghost == &"dent":
+		forms.locks.on = false  # quest 1 locks Dent (and parks no ghost car): film his misses
 	for t: int in OHM_TICKS if ghost == &"ohm" else TICKS:
 		# G until the ghost is picked (quest 1 may start on any of them): a tap every 4th tick
 		var pick: bool = t >= 10 and t < TAKE_AT and (t - 10) % 4 == 0
