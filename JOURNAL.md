@@ -173,3 +173,31 @@ NEXT (iteration 5):
   on the car and Rivet's helmet face; top_lift a leaning gold side strip; top a crown on a disc.
 - frames.json: 15 entries (5 new, the superseded it2 pitch study dropped and deleted). Raw .avi deleted.
 - PLAN.md: measured card cost (4 rounds, 4 usable first try, 56-78 s each).
+- CITY (`--arena=city --bot=rivet`, seed 2 tick 300, 32 px/m; `gtai-masters/n7/view/city_block_top_vs_tilt_32ppm_it5.png`):
+  the tilt works in the city block: patrol cops and Rivet with faces, props standing. The 3 m high
+  barriers printed as solid black slabs (south face = the ink fill darkened); MILESTONE c1a6b4d2:
+  the face is the barrier's own concrete, shaded (`it5/city_wall_face_32.png`). The parked sedans
+  are still flat. Streaming bubble: the tilt shows 1 / sin 55 = 1.22x the ground north to south
+  (computed, not measured in chunks or frame time).
+- GATE director reel (`--bot=reel --reel=director --loadout=pistol --rigs`, headless, switch off,
+  started on 12156b5a): 19/19 chapters fully down, 0 SCRIPT ERROR (`it5/director-reel.log`; the reel
+  does not quit itself, my 900 s timeout ends it). The code after it (c1a6b4d2: the city barrier face) only
+  runs under a tilt.
+- IMAGE round5 `cop_riot_head_facings` (57 s, image.lock): usable, facing right in order, BUT the
+  clear face shield is green-tinted where the chroma shows through: the keyer will eat or spill it.
+  Not cut, not in the game. Its out PNG is in scratch/view/round5/out/.
+
+NEXT (iteration 6):
+1. The riot card: cut round5 (key the visor carefully: lower tol or paint the shield opaque light
+   grey before keying), row `cop/head_helmet`, provenance line; look at it in the pit at 48 px/m.
+2. The car still reads as its roof at 32 px/m (the vermilion carpet dominates; 0.83 m of wall at
+   55). Try: the hood cannon lifted to its height as a gold barrel (not a flat bar), the wheels as
+   ellipses on the wall, the grille on the nose face; film before/after at 32.
+3. Draw-order MEASUREMENT (still unmeasured): count wrong-order overlapping actor pairs per frame
+   over the 25 s seed-2 clip (Rivet's cast canvas vs KingRigs are not sorted against each other).
+4. top_lift: try eye_h_m 15 vs 25 (one data value), add cast shadows offset by height; the
+   parked sedans as stacks (city); HUD world markers / FX at height check under tilt.
+5. Mouse aim under tilt: a live exe check (cursor ground point vs the shot's landing).
+6. The comparison set (work order 6): one seed, every view, 30-60 s hstack at 32 px/m (it5's
+   clip is 25 s), 48 px/m close-ups, a stills grid; the cost table. Then freeze: evidence/run.mjs,
+   parity, the exe (int-day recipe in docs/decisions.md), REPORT by 08:40.
