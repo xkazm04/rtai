@@ -1492,3 +1492,8 @@ STOP 04:08 iteration 15. Code commit: `d4559823` (heavy guns + shard own shot cu
 planted fault). Gates: lint 13/13, test_weapon_shot_cues 2/2, reels 19/19 x2 on `d4559823`. Clip
 `shot_cues-ab-32ppm.mp4` (frames.json entry 2). Audit: shard S 1 -> 2, hand cannon S 2 -> 3, the
 rifle row filmed and scored. Call 7 added.
+
+### GATES 04:08 unit on `44fa20dd`
+- Unit 1169/1170: the one failure is the known flake `test_noir_shadows`
+  (`test_only_shadow_commands_with_a_length_are_swept`, engine "Parameter t is null"); re-run alone:
+  2/2 pass. Includes the new `test_weapon_shot_cues` (+2). Log `evidence/ranged/it15-unit-44fa20dd.log` (git-ignored, local).
