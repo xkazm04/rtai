@@ -70,3 +70,16 @@ func test_no_gun_fires_a_hurt_cue_and_the_zaps_are_apart() -> void:
 		assert_lt(plasma.pitch, electro.pitch, "the plasma rifle is the heavier crack")
 		assert_gt(ray.pitch, electro.pitch, "the ray gun the thinner zip")
 		assert_lt(ray.cooldown_ticks, 6, "every ray round (one per 6 ticks) voices")
+
+
+## it16: the molotov's landing had only projectile_end (a concrete tick); its fire burst now has
+## a small ignition whoomp, lighter and quieter than the rocket's blast.
+func test_molotov_bursts_with_a_whoomp_under_the_blast() -> void:
+	var table: WeaponTable = WeaponTable.shipped()
+	var tables: AudioTables = AudioTables.shipped()
+	var cue: AudioCue = tables.cue(table.weapon(&"molotov").end_cue)
+	var blast: AudioCue = tables.cue(table.weapon(&"rocket_launcher").end_cue)
+	assert_not_null(cue, "the molotov has an end cue")
+	if cue != null and blast != null:
+		assert_gt(cue.pitch, blast.pitch, "lighter than the blast")
+		assert_lt(cue.gain_db, blast.gain_db - 4.0, "well under the blast")

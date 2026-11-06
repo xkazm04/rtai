@@ -212,6 +212,7 @@
       "dot_dps": 30,
       "dot_s": 3.5,
       "enabled": true,
+      "end_cue": "bottle_burst",
       "fire_mode": "semi",
       "hit_class": "burn",
       "id": "molotov",
