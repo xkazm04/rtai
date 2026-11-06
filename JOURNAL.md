@@ -310,18 +310,18 @@ machine is quiet; REPORT.md is a draft (iteration 2) - update it at the freeze.
   chars' route (their NEXT 4 still open); KingArt keys strips and limb parts by `roundi(live pitch)`.
 - 15:52 MILESTONE 5639148f merged d8-bosses (court p55 strips + limbs, throne-car from art, Servo p55
   drone; ordinary merge, JOURNAL ours, no other conflict). Lint 15/15.
-- 16:05 FOUND (combo King at 55 = the shared LAB bust + the bell, not bosses' court bust; seen at 64
+- 15:58 FOUND (combo King at 55 = the shared LAB bust + the bell, not bosses' court bust; seen at 64
   px/m, phase 3): (a) KingArt dresses a card once by the live pitch; combo rebuilds cards at 62.1 deg
   where no p62 strip exists. (b) A real bug in my cross-fade: RigHeadCard.drop queue_frees the old
   card, so the rebuilt sibling is renamed `@Sprite2D@N` and `find_children("head_card")` never found
   a rebuilt card again: every card after the first swap (both ways) had no cross-fade overlay, so the
   55 -> 70 return was a hard swap all along (it2's measured fade was the 70 -> 55 way only).
-- 16:12 MILESTONE ae847c59 `ViewPitchCourt` (my file): a folder stands for its pitch (p55 -> 55), so
+- 16:01 MILESTONE ae847c59 `ViewPitchCourt` (my file): a folder stands for its pitch (p55 -> 55), so
   KingArt's strips join the folder's card rows (anchor 0.80, width 2.4 x 1.5 = 3.6) and a card built
   under p55 takes the court strip as KingArt._swap would (meta court_card, horn hidden, this frame's
   scale). ViewPitchCards reaches cards through `CutRig.head_card` (find_children type CutRig).
   Unit test_view_pitch_court (5) + view_pitch/king_art/rig_head_card/ghost_card: 36/0.
-- 16:14 FILM `--boss=king --phase=3 --bot=boss --bot-human --seed=2 --rigs --ppm=64 --clean`, tilt vs
+- 16:03 FILM `--boss=king --phase=3 --bot=boss --bot-human --seed=2 --rigs --ppm=64 --clean`, tilt vs
   combo, 720 frames, 0 SCRIPT ERROR: at t4 the combo King is bosses' court bust (plum crown, ermine,
   vermilion cape, no bell), matching tilt; frame 240 tilt vs combo: 1013 px differ (mean 0.025/765).
   Rivet-region pop (card_pop.py, 170x180 crop, frames 0-90): combo max 31.4 at f11 (camera ease),
@@ -345,3 +345,19 @@ machine is quiet; REPORT.md is a draft (iteration 2) - update it at the freeze.
   by name (`find_children("head_card")`) misses every rebuilt card. Suggest `rig.head_card.name =
   &"head_card_dropped"` (or `rig.head.remove_child(...)`) before `queue_free()`. I no longer depend on
   the name (ae847c59 walks CutRig.head_card), so this is hygiene, not a blocker.
+- 16:04 GATE unit full (no-arg) on b519a9b3 (bosses merged + court fix): 1447 passed, 0 failed.
+- 16:07 MILESTONE 4eca94b0 the two bells at 70: my p70 King bust (cut from king_70.png) draws the
+  megaphone itself, so under it the rig's `horn` part hides (ViewPitchCourt.OWN_HORN; the hook now
+  also attaches its per-frame node on a row whose folder holds such a strip, i.e. tilt70; `tilt`
+  never attaches it). LOOKED at 64 px/m tilt70 phase 3 t4 (scratch it3/h70_t4z.png): one bell.
+  STILL THERE: bosses' drawn KingCape fan behind the p70 bust (flat ermine-edged fan on the ground).
+  It is drawn by the static `KingCape.draw` (bosses), which stands down only on
+  `KingArt.card_wears_cape()`; I cannot reach it from my files.
+- FRICTION 16:06: my film batch read project scripts while I edited them (a run started 3 s before
+  the edit); killed my batch by PID, committed, re-ran. Rule for me: no project edits while a batch
+  films.
+- REQUEST bosses (addendum to the iteration 3 request): please make `KingArt.card_wears_cape()` also
+  true when the King's card draws a strip that wears the cape but is not yours, e.g. when
+  `RigHeadCard.rows()["king"][0] != RigHeadCard.CARDS["king"][0]` (chars' route drew a per-art strip:
+  my `p70/king_bust_card.png` wears the vermilion cape on its shoulders). Then the drawn fan stands
+  down at 70 as it does at 55. Seen: masters `king_onfoot_*_64ppm` stills (the flat fan behind him).
