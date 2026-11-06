@@ -88,3 +88,33 @@ Meanwhile the 70 sets for Dent/Ohm/Kerf are built from the 55 drawings (the d8 p
 - Gates at d08768ea+e513d663: lint 15/15; unit 1489 passed / 0 failed (full no-arg run);
   scenarios 52 ran, 1 failed = rig_stress p50 1.041 ms > 1 ms CONTENDED (my filming ran alongside;
   re-run alone owed).
+- MILESTONE 21:02 item 5 (part): `ViewMode.art_pitch()` (the art key's pitch, `p55` -> 55; a row
+  without a key falls back to the live pitch, so `tilt_basecards` and `top` are unchanged).
+  KingArt, KingAccents and KingCarWalls ask it instead of `roundi(pitch_deg)`, so under combo the
+  court strip, the King's limb parts and the car walls swap with the card key and never fall back
+  to the shared card + drawn cape fan mid-ease (answers view70's open REQUEST). Commit 504403a2.
+  Tests: `test_view_art_pitch.gd`; `test_king_art` re-dress test now drives the art key.
+  Evidence OWED: the King-down return under combo. The windup lock changes every King fight, so
+  seed 2 phase 3 no longer has the King down by frame 1200 (d8's reference frames 1150-1186);
+  film to the defeat (try `--quit-after 2400`) or find the frame from the log's defeat tick.
+- rig_stress re-run alone: p50 0.984 ms < 1 ms, PASS (the earlier miss was contention).
+
+NEXT (iteration 4, in brief order):
+1. Item 4, Rivet's death beat (sim timing, not art). Plan: a `RivetDeathBeat` (features/player,
+   RefCounted, BEAT_TICKS = 60 from data, e.g. combat.json `death_beat_s` 1.0 with schema) used by
+   `CollectCallStage._respawn` and `ArenaStage._respawn`: on death count ticks, respawn when the
+   beat ends. While the beat runs: ignore the intent (no move/fire/ghost), hostiles keep their
+   step but deal no damage to a dead Rivet (check `arena.rivet.alive()` callers), the rig plays
+   `RigClips.die(false)` (rig_input feeds the clip from the sim: find where Rivet's die clip is
+   fed), and the view fades to the print's ink over the last ~0.4 s (a CanvasLayer ColorRect on
+   the stage view, render only). Re-bless what moves: run scenarios, the 60 s replay, the director
+   reel (19/19, 0 SCRIPT ERROR) in top and tilt70. Film quest 1 and the dev arena death.
+2. Item 5: p70 ghost card strips for Dent, Ohm, Kerf from the 55 drawings (until assets serves
+   the REQUESTs); at tilt70 the ghosts still draw their top-down rigs. Servo 70 exists
+   (`angle-r1/out/servo_70.png`); Tonnage 70 exists. Then the King-down return evidence (above),
+   Tonnage's swap and a ghost on screen at the boss-down moment under combo.
+3. Items 6-8: camera at 70 (city on foot + car, boss zoom-in, quest 1), Tonnage's legs in the
+   depth sort, the King's accents in the order probe, frame cost combo vs top under bench.lock.
+4. Read the lane journals again: street (card_sets JSON answer given), city (occlusion answer
+   given); answer any new REQUEST.
+5. Before calling the night done: the director reel 19/19 in top and combo; evidence run --no-bench.
