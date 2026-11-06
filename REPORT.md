@@ -51,8 +51,11 @@ The logs are in `evidence/n7-melee/`.
   thrown clear and reads, but a body that stays inside the press's footprint is hidden. The cause
   is draw order, not marks: the ghost form draws above every rig (ghost-forms' rule), so no view
   mark can show a body under it. That is call (h).
-- Tonnage's plates in quest 1 are on the same view path as in the arena, but they are not filmed:
-  the quest bot never takes Tonnage.
+- Tonnage in quest 1: the dev recorder `res://dev/ghost-powers/quest_hauler_rec.tscn` (quest 1's real
+  view, bound input) shows the ram's cream bursts on the dock guards Tonnage ploughs through, with
+  the slam and the blood (`M/quest1_tonnage_ram_marks_32ppm.png`, frames 84-175 every 4th). Whether
+  enemy rounds hit his plates there is not shown: the recorder's pinned guards may not fire, and the
+  quest bot never takes Tonnage.
 
 ## Calls for the owner
 (a) Quest 1 carries the katana on key 2.

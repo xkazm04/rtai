@@ -910,3 +910,9 @@ clips the owner sees with a HUD; your before/after pairs are consistent among th
   44.2 s, 0 SCRIPT ERROR in all 9 films. LOOK (sheet every 1.5 s): no telemetry box, the ghost card
   whole at the bottom left in every segment, every tile still shows an attack. frames.json note and
   REPORT line updated. Scratch AVIs from it kept for a RECUT at the freeze if the code does not move.
+- LOOK 02:31 Tonnage in quest 1's real view (`dev/ghost-powers/quest_hauler_rec.tscn --ppm=32`, 360
+  PNGs, 0 SCRIPT ERROR; quest_hauler: stomps 1, stomp_hits 1, ram_hits 3, kills 4): the ram's cream
+  bursts (RamMarks, `0c4161d8`) print on the dock guards on the ram kills (frames ~124-170), the slam
+  ring and blood read. Small stars by the press head at 84-88 could be plate sparks or slam chips:
+  not proven (the recorder's ring guards may not fire). Still
+  `M/quest1_tonnage_ram_marks_32ppm.png`; REPORT's "not filmed" line rewritten. PNGs deleted.
