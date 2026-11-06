@@ -150,6 +150,11 @@
           "minimum": 0,
           "type": "number"
         },
+        "sight_k": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
         "speed_k": {
           "maximum": 5,
           "minimum": 0,
