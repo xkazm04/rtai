@@ -394,3 +394,14 @@ NEXT (after the merge, a later run):
    limbs, the cape and the pitch re-dress (8dbbbcf0).
 2. Regenerate the emerald gem accents on magenta (Call 3); a p70 set from the 70 sheets with the same cutters.
 3. The cape train under the charge telegraph's fill instead of over it, if the owner finds the edges too busy.
+
+## Iteration 9 by the runner (session 7; 2026-11-06 18:19-18:30, BUILD -> the freeze)
+
+- 18:19 Read JOURNAL (it8 NEXT), git log. 11 min to the freeze: no code change can be gated (evidence
+  ~10 min) and re-exported in that window, so the 18:10 exe and the green gates on 02b11a53 stand.
+- 18:20 CHECK: `git diff --stat 02b11a53 HEAD` = JOURNAL.md, REPORT.md, docs/decisions.md only, so the
+  18:10 `build/export/windows/RTAI.exe` is HEAD's code. Masters frames.json 15 entries, every file present.
+  No raw .avi left in scratch (300 MB of stills/scripts stay for the report). Four Godot processes running
+  are other lanes' runs (not started by this session), left alone.
+NEXT: unchanged from iteration 8 (court strips into `ViewMode.art`, emerald gems on magenta + a p70 set,
+  the train under the telegraph fill if the owner asks).
