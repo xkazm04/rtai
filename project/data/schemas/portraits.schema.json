@@ -1,0 +1,65 @@
+{
+  "$id": "gtai.portraits/1",
+  "additionalProperties": false,
+  "properties": {
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schema": {
+      "const": "gtai.portraits/1"
+    },
+    "speakers": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "art": {
+            "pattern": "^res://features/hud/art/portraits/[a-z0-9_]+\\.png$",
+            "type": "string"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z-]*$",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "face",
+              "device"
+            ]
+          },
+          "mood_art": {
+            "pattern": "^(res://features/hud/art/portraits/[a-z0-9_]+\\.png)?$",
+            "type": "string"
+          },
+          "mood_lines": {
+            "items": {
+              "pattern": "^[a-z][a-z0-9-]*$",
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "source": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "art",
+          "mood_art",
+          "mood_lines",
+          "source"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema",
+    "doc",
+    "speakers"
+  ],
+  "type": "object"
+}

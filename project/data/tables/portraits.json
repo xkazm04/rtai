@@ -1,0 +1,80 @@
+{
+  "doc": "Who is speaking, as a face (n8-hud): the dialogue box shows a speaker's bust from this table, the mood bust on the lines named in mood_lines (presentation only: quest text and ids are read, never edited). kind device = a voice-only caller drawn as the device they speak through. A speaker with no row (Rivet while his look is in triage, any design proposal) shows the name alone. Only owner-approved looks get a row.",
+  "schema": "gtai.portraits/1",
+  "speakers": [
+    {
+      "art": "res://features/hud/art/portraits/payphone.png",
+      "id": "don-fax",
+      "kind": "device",
+      "mood_art": "",
+      "mood_lines": [],
+      "source": "voice-only by design (pof voices/don-fax.md): the payphone frame, library payphone_55 A"
+    },
+    {
+      "art": "res://features/hud/art/portraits/dock_guard.png",
+      "id": "dock-guard",
+      "kind": "face",
+      "mood_art": "res://features/hud/art/portraits/dock_guard_mood.png",
+      "mood_lines": [
+        "guard-who-do-we-call"
+      ],
+      "source": "library portrait_dock_guard_55 B (concept-matched, quest 1)"
+    },
+    {
+      "art": "res://features/hud/art/portraits/gunsmith.png",
+      "id": "gunsmith",
+      "kind": "face",
+      "mood_art": "res://features/hud/art/portraits/gunsmith_mood.png",
+      "mood_lines": [
+        "brass-someday"
+      ],
+      "source": "library portrait_gunsmith_55 B (concept-matched, quest 1)"
+    },
+    {
+      "art": "res://features/hud/art/portraits/krump.png",
+      "id": "krump",
+      "kind": "face",
+      "mood_art": "res://features/hud/art/portraits/krump_mood.png",
+      "mood_lines": [],
+      "source": "library portrait_krump_55 A (the approved boss target)"
+    },
+    {
+      "art": "res://features/hud/art/portraits/nurse.png",
+      "id": "nurse",
+      "kind": "face",
+      "mood_art": "res://features/hud/art/portraits/nurse_mood.png",
+      "mood_lines": [
+        "juno-real-name"
+      ],
+      "source": "library portrait_nurse_55 B (concept-matched, quest 1)"
+    },
+    {
+      "art": "res://features/hud/art/portraits/payphone.png",
+      "id": "patch",
+      "kind": "device",
+      "mood_art": "",
+      "mood_lines": [],
+      "source": "voice-only by design (pof voices/patch.md): the payphone frame, library payphone_55 A"
+    },
+    {
+      "art": "res://features/hud/art/portraits/quartermaster_mertz.png",
+      "id": "quartermaster-mertz",
+      "kind": "face",
+      "mood_art": "res://features/hud/art/portraits/quartermaster_mertz_mood.png",
+      "mood_lines": [
+        "mertz-appliances"
+      ],
+      "source": "library portrait_mertz_55 B (concept-matched, quest 1)"
+    },
+    {
+      "art": "res://features/hud/art/portraits/scientist.png",
+      "id": "scientist",
+      "kind": "face",
+      "mood_art": "res://features/hud/art/portraits/scientist_mood.png",
+      "mood_lines": [
+        "kilohm-come-to-me"
+      ],
+      "source": "library portrait_scientist_55 B (concept-matched, quest 1)"
+    }
+  ]
+}

@@ -15,11 +15,16 @@ const ICON_W: float = 190.0
 
 var state: HudState = HudState.new()
 var art: HudArt = null
+## n8-hud: the subtitle box with the speaker's face (its own node: the enter/exit animation).
+var dialogue: HudDialogue = HudDialogue.new()
 
 
 func _ready() -> void:
 	if art == null:
 		art = HudArt.new()
+	dialogue.state = state
+	dialogue.art = art
+	add_child(dialogue)
 
 
 func _process(_delta: float) -> void:
@@ -35,8 +40,6 @@ func _draw() -> void:
 	_top_right(screen)
 	if state.notice != "":
 		_notice(screen)
-	if state.speaker != "":
-		_subtitle(screen, state.speaker, state.words)
 
 
 ## The top of the subtitle box's paper (its tape strip included), in screen px: what a camera
@@ -95,23 +98,16 @@ func _icon(t: Texture2D, box: Rect2) -> void:
 	draw_texture_rect(t, Rect2(at, sz), false)
 
 
-func _subtitle(screen: Vector2, who: String, words: String) -> void:
-	var box: Rect2 = Rect2(MARGIN * 4, screen.y - MARGIN - 236, screen.x - MARGIN * 8, 236)
-	_panel(box)
-	_say(box.position + Vector2(24, 58), who.to_upper(), NAME_SIZE)
-	var font: Font = ThemeDB.fallback_font
-	var at: Vector2 = box.position + Vector2(24, 100)
-	draw_multiline_string(font, at, words, 0, box.size.x - 48, TEXT_SIZE, 4, INK)
-
-
 func _panel(r: Rect2) -> void:
 	# 18 px of extra paper on top: the tape strip sits above the first line of text
 	var t: Texture2D = art.texture(art.memo_art)
-	_nine(t, r.grow_individual(10.0, 28.0, 10.0, 10.0), art.memo_margin_px, art.memo_scale)
+	nine(self, t, r.grow_individual(10.0, 28.0, 10.0, 10.0), art.memo_margin_px, art.memo_scale)
 
 
-## A 9-slice draw of `t` into `r`: corners kept at `scale`, edges and centre stretched.
-func _nine(t: Texture2D, r: Rect2, m: float, scale: float) -> void:
+## A 9-slice draw of `t` into `r` on `ci`: corners kept at `scale`, edges and centre stretched.
+static func nine(
+	ci: CanvasItem, t: Texture2D, r: Rect2, m: float, scale: float, tint: Color = Color.WHITE
+) -> void:
 	var ts: Vector2 = Vector2(t.get_size())
 	m = minf(m, minf(ts.x, ts.y) * 0.5)
 	var sx: PackedFloat32Array = [0.0, m, ts.x - m, ts.x]
@@ -123,7 +119,7 @@ func _nine(t: Texture2D, r: Rect2, m: float, scale: float) -> void:
 		for i: int in 3:
 			var src: Rect2 = Rect2(sx[i], sy[j], sx[i + 1] - sx[i], sy[j + 1] - sy[j])
 			var dst: Rect2 = Rect2(dx[i], dy[j], dx[i + 1] - dx[i], dy[j + 1] - dy[j])
-			draw_texture_rect_region(t, dst, src)
+			ci.draw_texture_rect_region(t, dst, src, tint)
 
 
 func _say(at: Vector2, words: String, size: int) -> void:

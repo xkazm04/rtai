@@ -19,6 +19,11 @@ var ammo: int = -1
 ## The subtitle box: speaker and words; an empty speaker hides the box.
 var speaker: String = ""
 var words: String = ""
+## n8-hud: the speaker's face (PortraitBook): a bust, or the device of a voice-only caller; null =
+## the name alone. `portrait_key` changes when the speaker changes (the face enters again).
+var portrait: Texture2D = null
+var portrait_device: bool = false
+var portrait_key: String = ""
 ## One line under the beat panel (the save notice); empty hides it.
 var notice: String = ""
 ## Translated labels (HUD__HEAT, HUD__UNARMED).
@@ -34,3 +39,6 @@ func say(who: String, line: String) -> void:
 func silent() -> void:
 	speaker = ""
 	words = ""
+	portrait = null
+	portrait_device = false
+	portrait_key = ""

@@ -7,6 +7,7 @@ extends RefCounted
 var _text: QuestText = QuestText.new()
 var _showcase: WeaponShowcase = WeaponShowcase.new()
 var _art: WeaponArt = WeaponArt.new()
+var _faces: PortraitBook = PortraitBook.new()
 
 
 func fill(state: HudState, stage: CollectCallStage, system: QuestSystem) -> void:
@@ -29,12 +30,27 @@ func fill(state: HudState, stage: CollectCallStage, system: QuestSystem) -> void
 		state.weapon = _text.resolve(key, weapon)
 	state.ammo = stage.arena.rifle_ammo if weapon == "assault-rifle" else -1
 	var line: PackedStringArray = runner.lines.subtitle(_text)
+	var current: QuestLine = runner.lines.current
+	var who: PackedStringArray = ["", ""]
+	if current != null:
+		who = PackedStringArray([current.speaker, current.id])
 	if stage.refusal_left > 0:
 		line = _refusal(stage)
+		who = PackedStringArray(
+			[stage.router.refuse_line["speaker"], stage.router.refuse_line["id"]]
+		)
 	if line.size() == 2:
 		state.say(line[0], line[1])
+		face(state, who[0], who[1])
 	else:
 		state.silent()
+
+
+## n8-hud: the speaker's face for line `line_id` (PortraitBook), or none.
+func face(state: HudState, speaker: String, line_id: String) -> void:
+	state.portrait = _faces.face(speaker, line_id)
+	state.portrait_device = _faces.is_device(speaker)
+	state.portrait_key = speaker
 
 
 ## n8-hud: the HUD icon of weapon `id`: the showcase's flat icon cut, else the shipped icon part,
