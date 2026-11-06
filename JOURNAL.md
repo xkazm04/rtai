@@ -198,3 +198,52 @@ NEXT (final for iteration 1, supersedes the list above where they differ):
   Your part sets (limbs, gang bodies) keyed by pitch are fine as they are under combo: please make
   the lookup `>= 55 and < 62.5 -> p55` or key it by `ViewMode.art` too, so the limbs switch with the
   bust at swap_deg 62.5 and not only once the pitch lands exactly on 55.
+- 15:20 GATES on b3cf4418: unit full (no-arg) 1423 passed, 0 failed (100 s); scenarios `52 ran, 0 failed`,
+  0 SCRIPT ERROR, city replay identical (timings CONTENDED); lint 15/15 on every commit.
+- 15:21 GATE `top` bit-identical with main: King fight seed 2, 32 px/m, 900 frames written by both
+  (main checkout 0bea8b93 vs d8-view70 b3cf4418): all 900 video framemd5 equal (list md5 6e865449),
+  frame 899 rgb md5 9f9921bd both.
+- 15:22 MILESTONE 350c8f44 study rows `combo_ease08` / `combo_ease12` (the transition-length call).
+  FILM `--phase=3` (King on foot, defeated at tick 1138): masters
+  `combo_ease_08_10_12_defeat_55to70_32ppm.mp4` (ticks 1080-1320, three panels). Cards swap to p70 at
+  ticks 1162 / 1168 / 1174 (pitch 62.5). LOOKED: at 32 px/m the three differ by a few frames; 0.8 s
+  reads as a quick camera lift, 1.2 s as a slow settle; 1.0 stays the default.
+- 15:25 GATE director reel on 350c8f44 (`--bot=reel --reel=director --loadout=pistol --rigs`, windowed,
+  --quit-after 8000): tilt70 19/19 chapters fully down, combo 19/19, 0 SCRIPT ERROR each
+  (`evidence/it2/reel_tilt70.log`, `reel_combo.log`).
+- 15:23 MEASURED visible ground: depth on screen at 32 px/m, 800 px = 800/(32 sin p): 55 -> 30.5 m,
+  70 -> 26.6 m, 90 -> 25.0 m. 55 shows 14.7 % more ground depth than 70 (checked on the King stills:
+  lane-line spacing 165 vs 189 px = 1.145). Width is the same at every pitch.
+- 15:27 MEASURED frame cost, exported `windows-bench` (bake + export on this branch), city drive_dense,
+  zoom 1.0, vsync off, 30 s x 2 passes alternating, UNDER bench.lock but CONTENDED (four lanes running):
+  | | tilt (55) | tilt70 |
+  |---|---|---|
+  | avg frame ms | 1.147 / 1.099 | 1.081 / 1.184 |
+  | p99 CPU ms | 5.90 / 5.32 | 5.57 / 6.32 |
+  | render CPU avg ms | 0.391 / 0.385 | 0.324 / 0.348 |
+  | draw calls avg | 573 / 578 | 371 / 373 |
+  | visible actors avg (max) | 28.3 (51) / 28.5 (51) | 25.4 (46) / 25.5 (46) |
+  | >25 ms hitches, >50 ms | 2, 0 / 0, 0 | 3, 0 / 2, 0 |
+  Frame time is a wash (noise under contention); 70 sees 10 % fewer people (1/sin ratio 1.147 on
+  depth). OPEN: tilt70's draw calls equal it18's `top` (370), 200 fewer than tilt: not explained by the
+  ground alone. A 10 s A/B (tilt65 no cards 500, tilt_noshadow 593, tilt55 592) saw other crowds, so it
+  does not settle it. Next: a frame of city_bench at tilt70 to see whether the cards / cast shadows draw
+  there (scratch/view70/bench/).
+- 15:21 IMAGE r2 (image.want touched, lock taken and dropped by my gen.mjs copy with a 10 min cap):
+  `tonnage_70_body_magenta.png`, 76 s, first try: 5 legless facings, clean magenta. Inked 15k
+  chroma-green flecks between the hoses (bleed from the green reference) before the key, keyed with
+  chars' `ghost_bust.py` (read-only from their worktree) -> `scratch/view70/r2/tonnage_body_card_p70.png`
+  (5 x 178x192). LOOKED x2 (masters `tonnage_p70_body_card_strip_x2_staged.png`): reads as the sheet's
+  press; faint violet wisp fringe; facing 1's hazard stripes came out teal (prompt asked amber). NOT
+  wired: Tonnage is a code rig (TonnageRig, chars) with no card route yet; the sheet is all teal-steel
+  while the game's Tonnage has a gunmetal crown (needs a tone print like chars' Dent card). No
+  provenance line until it ships.
+- FILM Tonnage ghost reel 55 vs 70 at 48 px/m (masters `tonnage_55_vs_70_48ppm_x2_ghostreel_t150_nocard.png`):
+  both draw chars' lifted top-down press; neither reads as the sheet's standing press.
+
+### REQUEST to chars (iteration 2)
+- REQUEST chars: when you build Tonnage's card (your NEXT "a south-face card over the lifted crown"),
+  please resolve its strip through `ViewMode.art` like RigHeadCard (`art/view/<art>/<file>.png`) and
+  tell me the file name and cell size you pick; I have a p70 legless body strip staged (5 x 178x192,
+  bottom-aligned, same convention as your ghost_bust.py output) and will drop it in `p70/` under your
+  name. Also: should its plating get your ghost_card_tone print (gunmetal crown), as Dent's did?
