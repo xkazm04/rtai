@@ -62,7 +62,7 @@ static func hold_of(rig: CutRig) -> HeldTable.Hold:
 ## The hand target of arm `s` for the rig's hold; `tgt` unchanged otherwise.
 static func target(rig: CutRig, tgt: Vector3, aim_arm: bool, reach: float) -> Vector3:
 	if rig.reload_k >= 0.0 and rig.plan.gun_arm >= 0:
-		return _reload(rig, aim_arm, reach)
+		return _reload(rig, aim_arm, reach, tgt)
 	if rig.plan.gun_arm < 0 or not rig.gun_out:
 		return tgt
 	var hold: HeldTable.Hold = hold_of(rig)
@@ -70,6 +70,8 @@ static func target(rig: CutRig, tgt: Vector3, aim_arm: bool, reach: float) -> Ve
 		return tgt
 	if rig.grip == Kind.BLADE:
 		return _guard(rig, hold, tgt, aim_arm, reach)
+	if rig.grip == Kind.THROWN and aim_arm and rig.aiming:
+		return RigThrow.held_ready(rig, hold, tgt)  # n7-ranged: the bottle held cocked
 	if not RigGrip.both_claws(rig, hold):
 		return tgt
 	var g2: Vector2 = _line_start(rig, hold)
@@ -152,9 +154,11 @@ static func head_lean(rig: CutRig) -> float:
 
 
 ## The reload pantomime's hand target (the gun claw holds, the off claw works the magazine).
-static func _reload(rig: CutRig, aim_arm: bool, reach: float) -> Vector3:
+static func _reload(rig: CutRig, aim_arm: bool, reach: float, aimed: Vector3) -> Vector3:
 	var gs: Vector3 = rig.plan.shoulder[rig.plan.gun_arm]
 	var gun: Vector3 = Vector3(gs.x + reach * RELOAD_GUN.x, gs.y * RELOAD_GUN.y, RELOAD_GUN.z)
+	if aim_arm and rig.grip == Kind.THROWN and rig.aiming:
+		return RigThrow.in_reload(rig, hold_of(rig), gun, aimed)  # n7-ranged: release, then cock
 	if aim_arm:
 		return gun
 	var hip: Vector3 = gun + MAG_DROP  # short of the hip: a deeper fold flings the elbow out

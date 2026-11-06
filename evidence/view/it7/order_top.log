@@ -1,0 +1,34 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[INFO] bosses: king phase 1 (procession)
+[INFO] bosses: king engaged in king_boulevard, phase 1
+[INFO] arena: powers pad: 4 cars parked
+[INFO] arena: arena open: 19 stations
+ERROR: Condition "!actions.custom_samplers.has(function->arguments[j].tex_builtin)" is true. Continuing.
+   at: _dump_node_code (servers/rendering/shader_compiler.cpp:1329)
+   GDScript backtrace (most recent call first):
+       [0] _char (res://features/combat/kills/kill_char_fx.gd:189)
+       [1] _ready (res://features/combat/kills/kill_char_fx.gd:58)
+       [2] attach_view (res://features/combat/kills/brutality_hook.gd:115)
+       [3] _add_view (res://dev/arena/arena_game.gd:174)
+       [4] _ready (res://dev/arena/arena_game.gd:55)
+[INFO] characters: prewarmed 33 rigs in 87.9 ms
+[INFO] arena: cast rigs: true
+[INFO] view: tick 0 order-probe view=top samples 1 rig pairs 0 wrong 0 mixed 0 car pairs 0 car wrong 0
+[INFO] view: tick 600 order-probe view=top samples 101 rig pairs 0 wrong 0 mixed 0 car pairs 0 car wrong 0
+[INFO] view: tick 1200 order-probe view=top samples 201 rig pairs 0 wrong 0 mixed 0 car pairs 0 car wrong 0
+[INFO] bosses: king phase 2 (court)
+[INFO] bosses: king: 4 king_gang
+[INFO] view: tick 1800 order-probe view=top samples 301 rig pairs 49 wrong 0 mixed 49 car pairs 0 car wrong 0
+[INFO] bosses: king: 4 king_gang
+[INFO] view: tick 2400 order-probe view=top samples 401 rig pairs 117 wrong 0 mixed 117 car pairs 0 car wrong 0
+[INFO] view: tick 3000 order-probe view=top samples 501 rig pairs 212 wrong 0 mixed 212 car pairs 0 car wrong 0
+[INFO] view: tick 3600 order-probe view=top samples 601 rig pairs 212 wrong 0 mixed 212 car pairs 0 car wrong 0
+[INFO] bosses: king phase 3 (on_foot)
+[INFO] arena: react: 0 wounds (0 on a shield), 0 deaths, 0 ducks
+WARNING: 1 RID of type "CanvasItem" was leaked.
+   at: _free_rids (servers/rendering/renderer_canvas_cull.cpp:2733)
+WARNING: 614 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 90 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

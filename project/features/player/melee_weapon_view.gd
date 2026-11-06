@@ -14,12 +14,16 @@ const STEEL: Color = Color("c4c9d0")
 const GRIP: Color = Color("2b2622")
 const SHAFT: Color = Color("7d8794")
 const SPARK: Color = Color("e6eeff")
+const CREAM: Color = Color("f4ecd8")
 const SMEAR_TICKS: int = 4
 const INK_PX: float = 1.5
 
 var kind: StringName = &"katana"
 var length_px: float = 32.0
 var sweep_rad: float = 1.0
+## n7-melee: the smear in cream with an ink edge along the tip's path (quest 1's sprite cast: the
+## steel smear at 0.4 is lost on the cream pavement); false = the steel smear.
+var smear_ink: bool = false
 var _grip: Vector2 = Vector2.ZERO
 var _tip: Vector2 = Vector2.RIGHT
 var _smear: PackedVector2Array = PackedVector2Array()
@@ -31,15 +35,20 @@ var _zap_ticks: int = 0
 
 ## Places the prop on `rig`'s weapon hand, swept by `combo`'s current hit.
 func track(rig: CutRig, combo: MeleeCombo) -> void:
-	var hot: bool = combo.phase() == MeleeCombo.Phase.ACTIVE
 	var side: RigLimbs = rig.sides[maxi(rig.plan.gun_arm, 0)]
 	var spr: Sprite2D = side.hand if side.hand != null else side.fore
 	var ts: Vector2 = spr.texture.get_size()
 	var host: Node2D = get_parent() as Node2D
 	var g: Vector2 = spr.global_transform * (ts * 0.5 + spr.offset)
-	var dir: Vector2 = spr.global_transform.x.normalized().rotated(sweep_of(combo))
-	_grip = host.to_local(g) if host != null else g
-	_tip = _grip + dir * length_px
+	track_at(host.to_local(g) if host != null else g, spr.global_transform.x.normalized(), combo)
+
+
+## Places the prop at `grip` (host space) along `forearm`, swept by `combo`'s current hit (n7-melee:
+## quest 1's sprite cast has no rig hand, CastBladeView passes the sprite's hand point).
+func track_at(grip: Vector2, forearm: Vector2, combo: MeleeCombo) -> void:
+	var hot: bool = combo.phase() == MeleeCombo.Phase.ACTIVE
+	_grip = grip
+	_tip = _grip + forearm.rotated(sweep_of(combo)) * length_px
 	_hot = hot
 	if hot:
 		@warning_ignore("return_value_discarded")
@@ -73,10 +82,12 @@ func sweep_of(combo: MeleeCombo) -> float:
 
 
 func _draw() -> void:
-	var smear: Color = Color(STEEL, 0.4)
+	var smear: Color = Color(CREAM, 0.8) if smear_ink else Color(STEEL, 0.4)
 	for i: int in range(1, _smear.size()):
 		var tri: PackedVector2Array = PackedVector2Array([_grip, _smear[i - 1], _smear[i]])
 		draw_primitive(tri, PackedColorArray([smear, smear, smear]), PackedVector2Array())
+	if smear_ink and _smear.size() > 1:
+		draw_polyline(_smear, INK, INK_PX * 2.0)
 	if _zap_ticks > 0 and _zap_ticks % 4 < 3:
 		_draw_zap()
 	var dir: Vector2 = (_tip - _grip).normalized()

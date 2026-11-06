@@ -19,6 +19,13 @@ static var on_city: bool = true
 ## (ghost_forms.json `unlock`; quest 1 completes none, so Dent stays locked). false = every
 ## ghost free (the old default; the game's `--ghosts-free`).
 static var ghost_locks: bool = true
+## n7-ranged: Rivet's weapon fires as its weapons.json row (StageGuns: Gloria with the table's
+## muzzle, casings, cue and feel). false = the evening path (the game's `--quest-guns=off`).
+static var table_guns: bool = true
+## n7-melee: the blade Rivet carries on quest 1 (melee_weapons.json id, in its carry slot: the
+## katana on key 2; a press draws it over the story's gun, a second press puts it away). &"" = no
+## blade: Rivet fights with his own claws (the owner's 2026-11-06 call; `--quest-blade=katana`).
+static var blade: StringName = &""
 ## The act quests the story has completed (none before quest 1's own act lands).
 static var acts_done: Array[StringName] = []
 
@@ -49,6 +56,8 @@ static func open(events: EventBus, data: DataStore, seed: int = MASTER_SEED) -> 
 	s.world.name = "Quest1World"
 	s.world.start(events, data, seed)
 	s.stage = CollectCallStage.new(StageLayout.shipped(on_city))
+	if table_guns:
+		s.stage.guns = StageGuns.make(s.world.context().rng.stream(&"quest_guns"))
 	s._bind_pilot()
 	s.port = CollectCallWorld.new(s.stage)
 	s.system = QuestSystem.new(s.port)
@@ -79,12 +88,19 @@ static func open(events: EventBus, data: DataStore, seed: int = MASTER_SEED) -> 
 	return s
 
 
-## The player's pilot on the stage, with the story's ghost locks (ghost_locks, acts_done).
+## The player's pilot, with the story's ghost locks and the carried blade (n7-melee, `blade`).
 func _bind_pilot() -> void:
 	pilot = StagePilot.new(actions)
 	stage.pilot = pilot
 	if ghost_locks:
 		pilot.ghosts.forms.apply_locks(acts_done.duplicate())
+	if blade == &"":
+		return
+	var rng: RandomNumberGenerator = world.context().rng.stream(&"quest_blade")
+	var carry: RivetCarry = RivetCarry.new(WeaponTable.shipped(), ArsenalTable.shipped(), rng)
+	carry.sheathe = true
+	if carry.add(blade) >= 0:
+		pilot.carry = carry
 
 
 ## The city after the stage and the quest: its bubble follows Rivet (the stage sets the focus

@@ -55,6 +55,7 @@ static func draw_over(
 		var at: Vector2 = Vector2(sm.x, sm.y) + Vector2(0.15, -0.6) * age
 		var c: Color = Color(SMOKE, SMOKE.a * (1.0 - age))
 		ci.draw_circle(Ink.px(at), (0.18 + 0.32 * age) * sm.w * Ink.PX_PER_M, c)
+	WeaponFxTrail.draw(ci, fx.trails, tick)
 	for i: int in fx.impacts.size():
 		var im: Vector4 = fx.impacts[i]
 		var age: int = tick - int(im.w)
@@ -111,7 +112,7 @@ static func tracer(ci: CanvasItem, fx: GunFx, s: Shot, enemy_tail_m: float) -> v
 ## A heavy single shot (spikes 3): a long forward flare, two side jets, a short back lip. An
 ## automatic (spikes 4+): a star whose points turn half a step every shot, so a burst strobes.
 static func _muzzle(ci: CanvasItem, fx: GunFx, r: Fighter, row: Dictionary, age: int) -> void:
-	var f: Vector2 = r.facing.normalized()
+	var f: Vector2 = fx.aim_of(r)
 	var at: Vector2 = fx.muzzle(r, 0.45)
 	var shrink: float = 1.0 - 0.25 * float(age)
 	var fwd: float = row.get("muzzle_m", 0.7)
@@ -220,6 +221,8 @@ static func _claw_state(ci: CanvasItem, fx: GunFx, arena: CombatArena, tick: int
 	var gun: GunHand = arena.gun
 	if gun.trigger.charge > 0:
 		FightChargeArt.crackle(ci, fx.muzzle(arena.rivet, 0.45), gun.trigger.charge_frac(), tick)
+	if gun.trigger.spin > 0:  # the barrels winding up: a whirl at the muzzle (WeaponFxSpin)
+		WeaponFxSpin.draw(ci, arena.rivet, gun, tick)
 	if gun.trigger.reloading():
 		var k: float = (
 			1.0 - float(gun.trigger.reload_left) / maxf(gun.trigger.spec.reload_ticks, 1.0)

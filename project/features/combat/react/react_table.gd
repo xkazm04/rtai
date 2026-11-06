@@ -9,10 +9,14 @@ const SCHEMA: String = "gtai.human_reactions/1"
 
 var _len: Dictionary[StringName, float] = {}
 var _travel: Dictionary[StringName, float] = {}
+## snap_m (n7-ranged): how far the hit throws the body along the blow on its first frames.
+var _snap: Dictionary[StringName, float] = {}
 var _map: Dictionary[StringName, StringName] = {}
 var _death: Dictionary[StringName, StringName] = {}
 ## weapon_wound: a weapon id whose wounding hit plays its own family (the plasma bolt's stagger).
 var _weapon: Dictionary[StringName, StringName] = {}
+## ghost_wound (n7-melee): a ghost attack's weapon id -> the hit class its non-lethal hit plays.
+var _ghost: Dictionary[StringName, StringName] = {}
 var _errors: Array[String] = []
 
 
@@ -24,6 +28,8 @@ static func shipped(path: String = TABLE) -> ReactTable:
 		var id: StringName = StringName(t.text(r, "id"))
 		rt._len[id] = t.num(r, "len_s")
 		rt._travel[id] = t.num(r, "travel_m")
+		if r.has("snap_m") and snap_on():
+			rt._snap[id] = t.num(r, "snap_m")
 	var m: Dictionary = t.object(t.raw, "map")
 	for k: Variant in m:
 		rt._map[StringName(str(k))] = StringName(str(m[k]))
@@ -33,6 +39,11 @@ static func shipped(path: String = TABLE) -> ReactTable:
 	var w: Dictionary = t.object(t.raw, "weapon_wound") if t.raw.has("weapon_wound") else {}
 	for k: Variant in w:
 		rt._weapon[StringName(str(k))] = StringName(str(w[k]))
+	var g: Dictionary = t.object(t.raw, "ghost_wound") if t.raw.has("ghost_wound") else {}
+	if HitFeel.feel_flag() == "off":
+		g = {}
+	for k: Variant in g:
+		rt._ghost[StringName(str(k))] = StringName(str(g[k]))
 	rt._errors = t.errors()
 	if not rt.ok():
 		Log.error("human_reactions", str(rt._errors))
@@ -49,6 +60,30 @@ func length(kind: StringName) -> float:
 
 func travel(kind: StringName) -> float:
 	return _travel.get(kind, 0.0)
+
+
+## The hit snap of `kind` (m; 0 when the family has none or `--react-snap=off`).
+func snap(kind: StringName) -> float:
+	return _snap.get(kind, 0.0)
+
+
+## stun_crowd (n7-melee, StunCrowd): (full, arcs, spits, sparks): past the `full` newest stunned
+## bodies the rest draw lighter marks. full 0 (no cap) with no row or under --feel=off.
+static func stun_crowd(path: String = TABLE) -> Vector4i:
+	var t: DataTable = DataTable.open(path, SCHEMA)
+	if not t.raw.has("stun_crowd") or HitFeel.feel_flag() == "off":
+		return Vector4i.ZERO
+	var c: Dictionary = t.object(t.raw, "stun_crowd")
+	return Vector4i(
+		int(t.num(c, "full")),
+		int(t.num(c, "arcs")),
+		int(t.num(c, "spits")),
+		int(t.num(c, "sparks"))
+	)
+
+
+static func snap_on() -> bool:
+	return not OS.get_cmdline_user_args().has("--react-snap=off")
 
 
 ## The wound family for a hit of `hit_class` arriving along `local_dir` (rig space, +x = the
@@ -70,6 +105,11 @@ func reaction_for(
 ## The family `weapon`'s wounding hit plays over its hit class's (&"" when the class decides).
 func weapon_wound(weapon: StringName) -> StringName:
 	return _weapon.get(weapon, &"")
+
+
+## The hit class a ghost attack's non-lethal hit by `weapon` wounds with (&"" = no wound).
+func ghost_wound(weapon: StringName) -> StringName:
+	return _ghost.get(weapon, &"")
 
 
 func death_for(hit_class: StringName) -> StringName:

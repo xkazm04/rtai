@@ -1,0 +1,406 @@
+{
+  "arenas": {
+    "depot": {
+      "add_spawns": [],
+      "area": "pit",
+      "boss_at": [
+        9,
+        0
+      ],
+      "doc": "The CS courier depot: loading bays, a conveyor and stacked CS crates, room for the drones (first pass: the arena pit). parked: the delivery van backed into bay 3, nose to the yard (a vehicle_handling.json kind and a traffic atlas art cell; Dent's soul seizes it and rams Servo).",
+      "parked": [
+        {
+          "art": 4,
+          "at": [
+            4,
+            -9.9
+          ],
+          "head": [
+            0,
+            1
+          ],
+          "kind": "van"
+        }
+      ],
+      "rivet_at": [
+        -8,
+        0
+      ]
+    },
+    "king_boulevard": {
+      "add_spawns": [
+        [
+          -2.6,
+          -1.9
+        ],
+        [
+          2.6,
+          -1.9
+        ],
+        [
+          -2.6,
+          1.9
+        ],
+        [
+          2.6,
+          1.9
+        ]
+      ],
+      "adds_from": "boss",
+      "area": "boulevard",
+      "boss_at": [
+        -30,
+        0
+      ],
+      "doc": "King's district (dev arena area `boulevard`, 80 x 30 m): the procession enters from the west end down a 20 m clear street between planters; the plaza's plinths at the east end. The gang leaps off the car's four corners (adds_from boss).",
+      "rivet_at": [
+        8,
+        0
+      ]
+    }
+  },
+  "bosses": {
+    "king": {
+      "arena": "king_boulevard",
+      "attacks": {
+        "charge": {
+          "active_s": 0.9,
+          "aim_lock_s": 0.35,
+          "cooldown_s": 4,
+          "damage": 24,
+          "doc": "He drops his shoulder, cape flares, then barrels along the locked line.",
+          "max_m": 18,
+          "min_m": 4,
+          "move_mps": 11,
+          "punish_k": 1.5,
+          "punish_s": 1,
+          "range_m": 10,
+          "recovery_s": 1.4,
+          "shape": "charge",
+          "weight": 2,
+          "width_m": 2,
+          "windup_s": 1
+        },
+        "coin_fan": {
+          "active_s": 0.6,
+          "aim_lock_s": 0.5,
+          "arc_deg": 36,
+          "cooldown_s": 2.5,
+          "damage": 10,
+          "doc": "The hood cannon swings to Rivet and glows; the cone locks and a hail of coins sprays the fan.",
+          "max_m": 16,
+          "min_m": 0,
+          "punish_k": 1.25,
+          "punish_s": 0.6,
+          "range_m": 13,
+          "recovery_s": 0.9,
+          "shape": "cone",
+          "weight": 2,
+          "windup_s": 1.1
+        },
+        "decree": {
+          "active_s": 0.5,
+          "aim_lock_s": 0,
+          "buff_adds": {
+            "damage_k": 1.3,
+            "s": 6,
+            "speed_k": 1.2
+          },
+          "cooldown_s": 9,
+          "damage": 0,
+          "doc": "King raises the megaphone and shouts a decree: the gang hits harder and faster for a while. Long recovery: the best punish window.",
+          "max_m": 99,
+          "min_m": 0,
+          "punish_k": 1.5,
+          "punish_s": 1.8,
+          "range_m": 0,
+          "recovery_s": 1.8,
+          "shape": "none",
+          "weight": 1,
+          "windup_s": 1.2
+        },
+        "press_slam": {
+          "active_s": 0.25,
+          "aim_lock_s": 0.35,
+          "cooldown_s": 2,
+          "damage": 28,
+          "doc": "Both press plates rise over the head while the ring tracks Rivet up to 6 m out; at the lock he hops onto the ring and slams: a shockwave ring that showers coins.",
+          "leap_m": 6,
+          "max_m": 10,
+          "min_m": 0,
+          "punish_k": 1.5,
+          "punish_s": 1,
+          "radius_m": 3.2,
+          "range_m": 2.5,
+          "recovery_s": 1.3,
+          "shape": "circle",
+          "weight": 3,
+          "windup_s": 1.1
+        },
+        "ram": {
+          "active_s": 1.4,
+          "aim_lock_s": 0.45,
+          "cooldown_s": 3.5,
+          "damage": 30,
+          "doc": "Engine rev and headlights flare, the car backs up, then rams along the locked line; it skids to a stop and the gang has to push.",
+          "max_m": 40,
+          "min_m": 5,
+          "move_mps": 15,
+          "punish_k": 1.5,
+          "punish_s": 1.2,
+          "range_m": 22,
+          "recovery_s": 1.6,
+          "shape": "charge",
+          "weight": 3,
+          "width_m": 3.2,
+          "windup_s": 1.3
+        }
+      },
+      "doc": "Act 1: REG-1 the press king on his gilded throne-car (targets-2026-11-05-bosses/img/boss_king.jpg). Moveset: docs/bosses/king.md.",
+      "hp": 120,
+      "move_mps": 2.2,
+      "phases": [
+        {
+          "attacks": [
+            "ram",
+            "coin_fan"
+          ],
+          "doc": "The throne-car rams down the boulevard; the hood cannon sprays coins; the gang rides along.",
+          "gap_s": 1.2,
+          "hp_below": 1,
+          "id": "procession",
+          "transition_s": 0
+        },
+        {
+          "adds": {
+            "archetype": "king_gang",
+            "count": 4,
+            "every_s": 14,
+            "max_total": 8
+          },
+          "attacks": [
+            "coin_fan",
+            "decree"
+          ],
+          "doc": "The car is wrecked; the gang leaps off to brawl; King shouts decrees that buff the gang.",
+          "gap_s": 1.4,
+          "hp_below": 0.66,
+          "id": "court",
+          "transition_s": 2.5
+        },
+        {
+          "attacks": [
+            "press_slam",
+            "charge",
+            "coin_fan"
+          ],
+          "doc": "King steps down: press-plate slams that shower coins, and a charge.",
+          "gap_s": 0.9,
+          "hp_below": 0.33,
+          "id": "on_foot",
+          "transition_s": 2.5
+        }
+      ],
+      "radius_m": 1.1,
+      "rivet_repair_delay_s": 20,
+      "rng": "boss_king",
+      "script": "res://features/bosses/king/king_moves.gd"
+    },
+    "king_gang": {
+      "arena": "king_boulevard",
+      "attacks": {
+        "swipe": {
+          "active_s": 0.35,
+          "aim_lock_s": 0.2,
+          "cooldown_s": 1.2,
+          "damage": 8,
+          "doc": "The claw rears back (windup), the aim locks, a 3 m lunge along it; sidestep after the lock.",
+          "max_m": 3.4,
+          "min_m": 0,
+          "move_mps": 9,
+          "punish_k": 1,
+          "punish_s": 0.8,
+          "range_m": 3,
+          "recovery_s": 0.8,
+          "shape": "charge",
+          "weight": 1,
+          "width_m": 0.9,
+          "windup_s": 0.8
+        }
+      },
+      "body_class": "robot",
+      "doc": "King's bodyguard bots (the rich robot thug: gold chains, visor shades). Phase 2's adds. The swipe is enemy-ai's thug claw: a 0.8 s windup, the aim locks 0.2 s before, a 3 m lunge along the locked aim.",
+      "hp": 6,
+      "keep_m": 1.6,
+      "move_mps": 3.2,
+      "phases": [
+        {
+          "attacks": [
+            "swipe"
+          ],
+          "doc": "Walk at Rivet, swipe.",
+          "gap_s": 0.5,
+          "hp_below": 1,
+          "id": "brawl",
+          "transition_s": 0
+        }
+      ],
+      "radius_m": 0.5,
+      "rng": "boss_king_gang"
+    },
+    "servo": {
+      "arena": "depot",
+      "attacks": {
+        "bay_hop": {
+          "active_s": 0.2,
+          "aim_lock_s": 0.75,
+          "cooldown_s": 6,
+          "damage": 20,
+          "doc": "Rotors lift Servo to the loading bay nearest Rivet; the 3 m landing ring follows Rivet, locks 0.75 s before the jump (a step clears it), and the landing hurts inside it.",
+          "max_m": 30,
+          "min_m": 0,
+          "punish_k": 1.25,
+          "punish_s": 1,
+          "range_m": 3,
+          "recovery_s": 1,
+          "shape": "none",
+          "weight": 1,
+          "windup_s": 1.2
+        },
+        "kamikaze": {
+          "active_s": 0.2,
+          "aim_lock_s": 0.3,
+          "cooldown_s": 3,
+          "damage": 0,
+          "doc": "The broken rack spits sparking drones that each draw a dive line at Rivet, lock and dive (their blasts are the damage).",
+          "max_m": 30,
+          "min_m": 0,
+          "punish_k": 1.25,
+          "punish_s": 0.8,
+          "range_m": 20,
+          "recovery_s": 1.2,
+          "shape": "none",
+          "weight": 3,
+          "windup_s": 0.8
+        },
+        "package_carpet": {
+          "active_s": 0.3,
+          "aim_lock_s": 0.4,
+          "cooldown_s": 5,
+          "damage": 0,
+          "doc": "Drones form a line and fly a lane across the yard dropping a carpet of parcels; the lane is painted first; the gap is safe.",
+          "max_m": 30,
+          "min_m": 0,
+          "punish_k": 1.5,
+          "punish_s": 2,
+          "range_m": 20,
+          "recovery_s": 2.6,
+          "shape": "none",
+          "weight": 2,
+          "windup_s": 1.4
+        },
+        "rotor_dash": {
+          "active_s": 0.75,
+          "aim_lock_s": 0.35,
+          "cooldown_s": 3,
+          "damage": 30,
+          "doc": "The pads spin up (dust ring, the lane arrow tracks Rivet, locks), then a 14 m dash at 22 m/s; a skid and vent after.",
+          "max_m": 18,
+          "min_m": 4,
+          "move_mps": 22,
+          "punish_k": 1.5,
+          "punish_s": 1,
+          "range_m": 14,
+          "recovery_s": 1.2,
+          "shape": "charge",
+          "weight": 2,
+          "width_m": 2.4,
+          "windup_s": 0.9
+        },
+        "rotor_dash_hot": {
+          "active_s": 0.75,
+          "aim_lock_s": 0.3,
+          "cooldown_s": 1.2,
+          "damage": 30,
+          "doc": "Overtime: the dash comes often but overheats Servo into a 2.5 s vent (steam, glowing pads): the fight's biggest punish.",
+          "max_m": 18,
+          "min_m": 3,
+          "move_mps": 22,
+          "punish_k": 2,
+          "punish_s": 2.2,
+          "range_m": 14,
+          "recovery_s": 2.5,
+          "shape": "charge",
+          "weight": 3,
+          "width_m": 2.4,
+          "windup_s": 0.8
+        },
+        "scan_drop": {
+          "active_s": 0.3,
+          "aim_lock_s": 0.4,
+          "cooldown_s": 1.5,
+          "damage": 0,
+          "doc": "The visor beam sweeps, tracks Rivet (thin), locks (thick) and stamps a vermilion mark on his spot; the beam itself does not hurt. The wave launches on the stamp and drops on the mark during the recovery: the dock window is the punish.",
+          "max_m": 24,
+          "min_m": 3,
+          "punish_k": 1.5,
+          "punish_s": 2,
+          "range_m": 24,
+          "recovery_s": 2.6,
+          "shape": "line",
+          "weight": 3,
+          "width_m": 0.6,
+          "windup_s": 1.6
+        }
+      },
+      "doc": "Act 2: Servo, the courier-hub robot whose back is a launch rack of delivery drones (targets-2026-11-05-bosses/img/boss_servo.jpg). Moveset: docs/bosses/servo.md. The drones, parcels and rack are his own (features/bosses/servo/, data/tables/servo.json).",
+      "hp": 220,
+      "kerf_line_m": 0.6,
+      "move_mps": 2,
+      "phases": [
+        {
+          "attacks": [
+            "scan_drop",
+            "rotor_dash"
+          ],
+          "doc": "Teaches the loop: the scanner marks Rivet, a drone wave drops on the mark, the rack docks (punish), the rotor dash.",
+          "gap_s": 1,
+          "hp_below": 1,
+          "id": "depot",
+          "transition_s": 0
+        },
+        {
+          "attacks": [
+            "scan_drop",
+            "package_carpet",
+            "bay_hop",
+            "rotor_dash"
+          ],
+          "doc": "The conveyor starts and the bay doors roll up; bigger waves, package carpets in lanes, Servo hops between loading bays.",
+          "gap_s": 0.8,
+          "hp_below": 0.65,
+          "id": "rush_hour",
+          "transition_s": 2
+        },
+        {
+          "attacks": [
+            "kamikaze",
+            "rotor_dash_hot",
+            "scan_drop"
+          ],
+          "doc": "Half the rack blows off; drones kamikaze; Servo dashes often and overheats (long vent: the biggest punish).",
+          "gap_s": 0.6,
+          "hp_below": 0.3,
+          "id": "overtime",
+          "transition_s": 2
+        }
+      ],
+      "radius_m": 1.6,
+      "rivet_repair_delay_s": 30,
+      "rng": "boss_servo",
+      "script": "res://features/bosses/servo/servo_moves.gd"
+    }
+  },
+  "doc": "Act bosses as data (lane n7-king framework). A boss: hp, phases (entered by hp fraction), attacks with a tell (windup_s, aim_lock_s), an active window, a recovery whose first punish_s takes punish_k damage. Interface: n7-king JOURNAL REQUEST 1. One boss's special case lives in its script (features/bosses/<id>/), never here.",
+  "schema": "gtai.bosses/1"
+}

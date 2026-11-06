@@ -20,8 +20,16 @@ var _gun_fx: GunFx = null
 ## n5-look: Rivet's weapon FX cells in colour (null: fx_colour_dir is "", the ink cells).
 var _colour: WeaponFxColour = null
 var _colour_tried: bool = false
+## n7-melee: the plasma sword's deflect marks (DeflectMarks, melee_marks.json).
+var _deflects: DeflectMarks = null
+## n7-melee: the claw's rake marks (ClawMarks, melee_marks.json `claw`).
+var _claws: ClawMarks = null
+## n7-melee: Tonnage's plate sparks (PlateSparks, ghost_attacks.json tonnage plate_*).
+var _plates: PlateSparks = null
 ## perf-city: the retained ground marks (FxGround.enabled; null = drawn here every frame).
 var _ground: FxGround = null
+## n7-ranged it24: the shot trail of the picked-up rifle's hits (no GunFx on that path).
+var _bare_trail: BareGunTrail = BareGunTrail.new()
 
 
 func _ready() -> void:
@@ -43,17 +51,12 @@ func _draw() -> void:
 		for d: Vector2 in arena.rifle_drops:
 			draw_line(Ink.px(d + Vector2(-0.4, 0.1)), Ink.px(d + Vector2(0.4, -0.1)), Ink.INK, 5.0)
 	_under(arena)
-	for s: Shot in arena.shots:
-		if arena.gun != null:
-			if WeaponFxArt.shot(self, s, stage.tick):  # weapon-art's cells first
-				continue
-			if s.spec == null or not FightAreasArt.shot(self, s, stage.tick):
-				GunFxArt.tracer(self, _gun_fx, s, ENEMY_TAIL_M)
-			continue
-		var tail: Vector2 = s.pos - s.vel.normalized() * (0.5 if s.from_rivet else 0.25)
-		draw_line(Ink.px(tail), Ink.px(s.pos), Ink.INK if s.from_rivet else Ink.VERMILION, 4.0)
+	_shots(arena)
 	if arena.gun != null:
 		_gun_over(arena)
+	else:
+		_bare_trail.step(arena, stage.tick)
+		_bare_trail.draw(self)
 	if arena.guard_tell != null:
 		for h: Fighter in arena.hostiles:
 			if h.alive() and GuardTell.telling(h):
@@ -63,6 +66,14 @@ func _draw() -> void:
 	_arcs(arena)
 	if arena.areas != null:
 		FightAreasArt.draw(self, arena, stage.tick)
+	if _deflects == null or _deflects.arena != arena:
+		_deflects = DeflectMarks.attach(arena)
+	_deflects.draw(self, stage.tick)
+	if _claws == null or _claws.arena != arena:
+		_claws = ClawMarks.attach(arena)
+	_claws.draw(self, stage.tick)
+	if _plates != null:
+		_plates.draw(self, stage.tick)
 	_last()
 
 
@@ -226,3 +237,35 @@ func gun_fx() -> GunFx:
 	if _gun_fx == null:
 		_gun_fx = GunFx.new()
 	return _gun_fx
+
+
+func _plates_begin(arena: CombatArena) -> void:
+	var h: HaulerStage = stage.pilot.hauler if stage.pilot != null else null
+	if _plates == null or _plates.hauler != h:
+		_plates = PlateSparks.make(h) if h != null else null
+		if _plates != null:
+			_plates.pilot = stage.pilot.ghosts
+	if _plates != null:
+		_plates.prune(arena.shots)
+
+
+## The rounds in flight (n7-melee: Tonnage's plates stop an enemy round at their edge first).
+func _shots(arena: CombatArena) -> void:
+	_plates_begin(arena)
+	for s: Shot in arena.shots:
+		if _plates != null:
+			var tail_m: float = ENEMY_TAIL_M if arena.gun != null else PlateSparks.DASH_M
+			var at: Vector2 = _plates.edge(s, arena.rivet.pos, tail_m, stage.tick)
+			if at != Vector2.INF:
+				PlateSparks.tracer(self, s, at, tail_m, arena.gun != null)
+				continue
+		if arena.gun != null:
+			if WeaponFxArt.shot(self, s, stage.tick):  # weapon-art's cells first
+				continue
+			if s.spec == null or not FightAreasArt.shot(self, s, stage.tick):
+				GunFxArt.tracer(self, _gun_fx, s, ENEMY_TAIL_M)
+			continue
+		if BareGunFx.shot(self, s, arena):  # n7-ranged: the picked-up rifle's flash and tracer
+			continue
+		var tail: Vector2 = s.pos - s.vel.normalized() * (0.5 if s.from_rivet else 0.25)
+		draw_line(Ink.px(tail), Ink.px(s.pos), Ink.INK if s.from_rivet else Ink.VERMILION, 4.0)

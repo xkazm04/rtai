@@ -19,6 +19,8 @@ extends Node
 ## --armored[=k]: the pit's humans take gunplay's armored hp (2.5 hits, or k), so the limp plays;
 ## Rivet's hp scales by as much (the fight lasts longer, its balance holds).
 ## Lane showcase: --riot makes each pit wave's first guard (from wave 2) a riot cop with a shield.
+## n7-ranged: the arena has quest 1's sound (StageAudio: each gun's shot, the hit, the bed);
+## --silent keeps the old silent arena.
 
 const TUNE_TICK: int = 300
 
@@ -38,6 +40,10 @@ var _tune: String = ""
 var _zoom_i: int = 0
 var _area_i: int = 0
 var _characters: CityCharacters = null
+## View lab: --order-probe counts the draw-order failures (DrawOrderProbe), logged every 10 s.
+var _probe: DrawOrderProbe = (
+	DrawOrderProbe.new() if OS.get_cmdline_user_args().has("--order-probe") else null
+)
 
 
 func _ready() -> void:
@@ -63,7 +69,7 @@ func _ready() -> void:
 	if args.has("--horde"):  # corpse decay: the bodies on the floor against the cap
 		HordeOverlay.attach(layer, session.stage)
 	FightFrames.attach(self, args, session.world)  # perf-city: --frames=<json> frame log
-	hud.visible = not args.has("--clean")  # a clip of the game only (the owner's sample)
+	_audio_and_hud(args)
 	tuning = ArenaTuning.new(session.actions, session.stage.arena.tuning)
 	tuning.hooks = session.stage.hooks
 	panel.tick_now = session.tick
@@ -76,10 +82,22 @@ func _ready() -> void:
 	session.live.px_per_m = func() -> float: return px_per_m
 
 
+## The arena voices its guns like quest 1 (n7-ranged, StageAudio; --silent drops it). --clean is a
+## clip of the game only (the owner's sample); a boss fight hides the HUD too (it covers the boss
+## bar), unless --hud.
+func _audio_and_hud(args: ArenaArgs) -> void:
+	if not args.has("--silent"):
+		@warning_ignore("return_value_discarded")
+		StageAudio.attach(self, session.stage, null, Events, ArenaSession.MASTER_SEED)
+	var boss: bool = args.text("--boss") != "" and not args.has("--hud")
+	hud.visible = not args.has("--clean") and not boss
+
+
 ## The session (the dev arena, or the city proving block with --arena=city) and the bot.
 func _open(args: ArenaArgs) -> void:
 	var on_city: bool = args.text("--arena") == "city"
-	session = ArenaSession.open(Events, Data, ArenaSession.MASTER_SEED, null, on_city)
+	var seed_v: int = int(args.number("--seed", ArenaSession.MASTER_SEED))  # a bot's seed sweep
+	session = ArenaSession.open(Events, Data, seed_v, null, on_city)
 	_dev_fight(args, on_city)
 	if args.text("--bot") == "range":
 		session.world.loop().set_input(ArenaRangeBot.new(session.stage, session.actions))
@@ -105,16 +123,31 @@ func _open(args: ArenaArgs) -> void:
 		session.world.loop().set_input(_gunplay_bot(args))
 	elif args.text("--bot") == "react_line":  # lane human-reactions: each look from four sides
 		session.world.loop().set_input(_react_line_bot(args))
+	elif args.text("--bot") == "boss":  # n7-king: plays the --boss fight (dodges; --bot-stand)
+		session.world.loop().set_input(_boss_bot(args))
 	add_child(session.world)
 	for a: ArenaPlan.Area in session.plan.areas:
 		if a.id == args.text("--start") or (a.id == "alley" and args.text("--arena") == "alley"):
 			teleport(a)
 
 
+## `--bot=boss` (n7-king; its `--ghost=<id>` is BossBotGhost inside BossBot); with
+## `--servo-ghost=<id>` (n7-servo, dev) the ghost's attack aimed at the knots of drones instead.
+func _boss_bot(args: ArenaArgs) -> InputSource:
+	var bot: BossBot = BossBot.new(session.stage, session.actions)
+	var ghost: String = args.text("--servo-ghost")
+	if ghost == "dent":  # Dent seizes the depot's van and drives it into Servo
+		return ServoDentBot.wrap(bot)
+	return ServoGhostBot.wrap(bot, ghost) if ghost != "" else bot
+
+
 ## lane gunplay: the pit bot at the --weapon's own reach (--lone films the burn death).
 func _gunplay_bot(args: ArenaArgs) -> GunplayBot:
 	var w_id: StringName = StringName(args.text("--weapon", "pistol"))
-	var w: WeaponSpec = WeaponTable.shipped().weapon(w_id)
+	var table: WeaponTable = WeaponTable.shipped()
+	if not table.weapons.has(w_id):  # a mistyped id: GunplayHook warns and keeps Gloria
+		w_id = &"gloria"
+	var w: WeaponSpec = table.weapon(w_id)
 	var bot: GunplayBot = GunplayBot.new(session.stage, session.actions, w.range_m)
 	bot.follow_burning = args.has("--lone")  # the lone capture films the burn death
 	bot.reach_m = minf(bot.reach_m, args.number("--reach", bot.reach_m))
@@ -169,6 +202,7 @@ func _add_view() -> void:
 		Log.info(
 			"arena", "cast rigs: %s" % cast.attach(session.stage, view, session.world.context())
 		)
+		PropOcclusion.for_view(view)  # view lab: tall props over the bodies behind them
 	if session.city != null:
 		_characters = CityCharacters.new(session.city, view.city_view, session.world.context())
 		if cast != null:  # human-reactions: the street trips over the fight's dead
@@ -182,6 +216,10 @@ func _process(_delta: float) -> void:
 		var ok: bool = panel.set_live(_tune.get_slice(":", 0), _tune.get_slice(":", 1).to_float())
 		hud.note = "tuned %s live (%s)" % [_tune, ok]
 		_tune = ""
+	if _probe != null:
+		_probe.sample(self, session.tick())
+		if session.tick() % 600 == 0:
+			Log.info("view", "tick %d %s" % [session.tick(), _probe.summary()])
 	if _shot != "" and not _taken and session.tick() >= _shot_tick:
 		_taken = true
 		_save_shot.call_deferred()

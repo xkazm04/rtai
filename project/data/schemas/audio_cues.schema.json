@@ -98,6 +98,27 @@
       "minLength": 1,
       "type": "string"
     },
+    "hits": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "cue": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "cue"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
     "schema": {
       "const": "gtai.audio-cues/1"
     }

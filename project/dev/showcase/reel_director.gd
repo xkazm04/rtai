@@ -34,6 +34,8 @@ var spots: PackedVector2Array = PackedVector2Array()
 var kills: Dictionary[StringName, int] = {}
 ## False plants the scenario's fault: every button off (aim and walk only).
 var trigger: bool = true
+## n7-melee: `--riot-victims` dresses every chapter's victims as riot cops (the melee wound film).
+var riot_all: bool = ArenaArgs.parse().has("--riot-victims")
 var _next_tick: int = 0
 ## Other live hostiles (station actors) held where they stood at the chapter's start.
 var _extras: Dictionary[Fighter, Vector2] = {}
@@ -44,7 +46,7 @@ func _init(p_actions: PlayerActions) -> void:
 	var only: String = ArenaArgs.parse().text("--chapter")
 	if not only.is_empty():  # one fresh run per chapter: a clean floor under every kill
 		var keep: PackedStringArray = only.split(",", false)
-		chapters = chapters.filter(
+		chapters = (chapters + ReelChapters.extras()).filter(
 			func(c: ReelChapters.Chapter) -> bool: return keep.has(String(c.id))
 		)
 
@@ -168,7 +170,8 @@ func _spawn(stage: ArenaStage, at: Vector2, c: ReelChapters.Chapter) -> Fighter:
 	if c.armored:
 		g.max_hp *= ArenaPit.armored_hp()
 		g.hp = g.max_hp
-	if c.riot and stage.pit != null:  # the riot cop: armored hp, ArenaRigs dresses the shield
+	# the riot cop: armored hp, ArenaRigs dresses the shield
+	if (c.riot or riot_all) and stage.pit != null:
 		if stage.pit.riot_hp <= 0.0:
 			stage.pit.riot_hp = ArenaPit.armored_hp()
 		g.max_hp *= stage.pit.riot_hp

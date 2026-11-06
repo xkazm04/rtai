@@ -58,12 +58,15 @@ static func pose(r: HumanReact, rig: CutRig, env: float) -> void:
 
 ## Arcs crawling over a stunned body centred at `at` (px, `ppm` px per metre): ARCS short cream
 ## sparks in an ink rim between hashed points on the body, re-picked every other tick so they
-## crawl. ShockArcsView draws them over the rigs. View only.
-static func arcs(ci: CanvasItem, at: Vector2, ppm: float, tick: int) -> void:
+## crawl. ShockArcsView draws them over the rigs. `counts` (arcs, spits) is lighter for a body
+## past the stun_crowd cap. View only.
+static func arcs(
+	ci: CanvasItem, at: Vector2, ppm: float, tick: int, counts: Vector2i = Vector2i(ARCS, SPITS)
+) -> void:
 	if not hard:
 		return
 	var n: int = tick / 2
-	for i: int in ARCS:
+	for i: int in mini(counts.x, ARCS):
 		var a: Vector2 = Vector2(_u(n, i * 4), _u(n, i * 4 + 1)) * BODY_M
 		var d: Vector2 = Vector2.from_angle(PI * _u(n, i * 4 + 2))
 		var nrm: Vector2 = d.orthogonal()
@@ -74,7 +77,7 @@ static func arcs(ci: CanvasItem, at: Vector2, ppm: float, tick: int) -> void:
 			@warning_ignore("return_value_discarded")
 			pts.append(at + (a + d * ARC_M * float(k) / float(KINKS) + nrm * w) * ppm)
 		_spark(ci, pts)
-	for j: int in SPITS:
+	for j: int in mini(counts.y, SPITS):
 		_spark(ci, spit(at, ppm, n, j))
 
 

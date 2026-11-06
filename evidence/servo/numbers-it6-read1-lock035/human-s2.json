@@ -1,0 +1,131 @@
+{
+  "alley": {
+    "alley_kills": 0,
+    "alley_waves": 0
+  },
+  "boss_fight": {
+    "adds_landed": 0,
+    "adds_spawned": 0,
+    "adds_tries": 0,
+    "boss": "servo",
+    "dazes": 0,
+    "dealt": 48.0,
+    "defeated_tick": 7141,
+    "hp_frac": 0.0,
+    "landed": {
+      "rotor_dash": 1,
+      "servo": 1
+    },
+    "moves": {
+      "crates_smashed": 16,
+      "dive_hits": 1,
+      "dives": 6,
+      "drones_launched": 47,
+      "drones_shot": 30,
+      "marks": 14,
+      "parcel_hits": 0,
+      "parcels_landed": 41,
+      "windups": [
+        "59:rotor_dash",
+        "290:scan_drop",
+        "620:rotor_dash",
+        "851:scan_drop",
+        "1181:rotor_dash",
+        "1412:scan_drop",
+        "1742:rotor_dash",
+        "1973:scan_drop",
+        "2303:rotor_dash",
+        "2691:rotor_dash",
+        "2910:scan_drop",
+        "3228:package_carpet",
+        "3534:rotor_dash",
+        "3753:scan_drop",
+        "4071:bay_hop",
+        "4263:scan_drop",
+        "4581:rotor_dash",
+        "4800:scan_drop",
+        "5118:bay_hop",
+        "5294:scan_drop",
+        "5600:kamikaze",
+        "5768:rotor_dash_hot",
+        "6047:kamikaze",
+        "6215:rotor_dash_hot",
+        "6494:scan_drop",
+        "6800:kamikaze",
+        "6968:rotor_dash_hot"
+      ]
+    },
+    "phase": 3,
+    "rolled": {
+      "rotor_dash": 2,
+      "rotor_dash_hot": 1
+    },
+    "stuns": 0,
+    "tries": {
+      "bay_hop": 2,
+      "kamikaze": 3,
+      "package_carpet": 1,
+      "rotor_dash": 8,
+      "rotor_dash_hot": 3,
+      "scan_drop": 10
+    }
+  },
+  "brutality_pit": {
+    "by_style": {},
+    "kill_cut_us": [],
+    "kill_ticks": [],
+    "signature_kills": 0,
+    "view_avg_us": 105,
+    "view_frames": 14400,
+    "view_over_2ms": 41,
+    "view_worst_tick": 12140,
+    "view_worst_us": 36035
+  },
+  "cars": {
+    "damaged": 0,
+    "hijacked": 0,
+    "total": 3,
+    "wrecked": 0
+  },
+  "corpse_decay": {
+    "bodies_cap": 16,
+    "bodies_now": 0,
+    "bodies_peak": 1,
+    "died": 1,
+    "early_fades": 0,
+    "forced": 0,
+    "forced_alpha": 0.0,
+    "peak_dead_listed": 1,
+    "pruned": 0,
+    "stains_now": 0
+  },
+  "damage_taken": 0.0,
+  "deaths": 0,
+  "dodges": 0,
+  "hit_rate": 0.0,
+  "hits": 0,
+  "input_latency_mean_ticks": 0.0,
+  "input_latency_ticks": [
+    0
+  ],
+  "knockdowns": 0,
+  "pit_kills": 0,
+  "pit_waves": 0,
+  "rivet_claw_cops": {
+    "claw_hits": 0,
+    "claw_kills": 0,
+    "claw_swings": 0,
+    "claw_whiffs": 0,
+    "shock_discharges": 0,
+    "shock_landed": 0
+  },
+  "schema": "gtai.arena-telemetry/1",
+  "shots": 297,
+  "ticks": 14399,
+  "top_speed_mps": 17.0578926801682,
+  "ttk_s": {},
+  "turn_rate_peak_dps": 10800.0003005374,
+  "weapon_art_rack": {
+    "rack": true
+  }
+}

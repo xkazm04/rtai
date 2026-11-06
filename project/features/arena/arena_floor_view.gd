@@ -18,6 +18,12 @@ const LABEL_M: float = 2.2
 ## The city's inked props as the arena's cover, so the arena reads as the game, not a sketch:
 ## low cover is a row of crates (one crate of the stack, repeated along the box), high cover a
 ## dumpster, the course's cones the street cone. Walls stay solid ink (architecture).
+## View lab: each solid prop kind's height (m) under a tilted --view (others are paint: 0).
+## top_lift: the swept slices that extrude a prop toward its leaning top.
+const PROP_SLICES: int = 8
+const PROP_H_M: Dictionary[String, float] = {
+	"cone": 0.7, "cover_low": 1.0, "cover_high": 1.6, "wall_high": 3.0
+}
 const CRATES: Texture2D = preload("res://features/city/art/props/crate_stack.png")
 const CRATE_PX: Rect2 = Rect2(0.0, 0.0, 80.0, 80.0)
 const DUMPSTER: Texture2D = preload("res://features/city/art/props/dumpster.png")
@@ -56,7 +62,7 @@ func _draw() -> void:
 		_car(b)
 	draw_set_transform(Vector2.ZERO)
 	for a: ArenaPlan.Area in arena.plan.areas:  # over the props: a wall never hides a name
-		if arena.cells == null:
+		if arena.cells == null and a.stenciled:
 			Ink.label(
 				self, a.rect.position + Vector2(a.rect.size.x * 0.5, LABEL_M), a.name, 30, Ink.INK
 			)
@@ -84,7 +90,7 @@ func _held(arena: ArenaStage) -> void:
 		add_child(_static)
 		@warning_ignore("return_value_discarded")
 		_static.draw.connect(func() -> void: _props(_static, _static_of))
-	if _static_of != arena:
+	if _static_of != arena or ViewMode.shared().eye_h_m > 0.0:  # a perspective eye moves
 		_static_of = arena
 		_static.queue_redraw()
 
@@ -93,6 +99,11 @@ func _held(arena: ArenaStage) -> void:
 func _props(ci: CanvasItem, arena: ArenaStage) -> void:
 	if arena == null:
 		return
+	if ViewMode.shared().cast_k > 0.0:  # the view's cast shadows under every prop (top_lift)
+		for s: ArenaStation in arena.stations.stations:
+			for p: ArenaStation.Prop in s.props:
+				if not _city or p.kind in ArenaWalls.SOLID or p.kind == "cone":
+					_cast(ci, arena.plan.base + p.at, p)
 	for s: ArenaStation in arena.stations.stations:
 		for p: ArenaStation.Prop in s.props:
 			if not _city or p.kind in ArenaWalls.SOLID or p.kind == "cone":
@@ -102,9 +113,33 @@ func _props(ci: CanvasItem, arena: ArenaStage) -> void:
 				_ring(arena.plan.base + sp.at, sp.span_m, Ink.WASH, ci)
 
 
+## A prop's cast shadow on the ground, its top thrown down-right by its height (RigCastShadows).
+func _cast(ci: CanvasItem, at: Vector2, p: ArenaStation.Prop) -> void:
+	var r: Rect2 = Rect2(Ink.px(at - p.size * 0.5), p.size * Ink.PX_PER_M)
+	var view: ViewMode = ViewMode.shared()
+	var off: Vector2 = view.cast_dir() * PROP_H_M.get(p.kind, 0.0) * view.cast_k * Ink.PX_PER_M
+	var c: PackedVector2Array = PackedVector2Array(
+		[r.position, Vector2(r.end.x, r.position.y), r.end, Vector2(r.position.x, r.end.y)]
+	)
+	RigCastShadows.sweep(ci, c, off)
+
+
 func _prop(ci: CanvasItem, at: Vector2, p: ArenaStation.Prop) -> void:
 	var fill: Color = PROP_FILL.get(p.kind, Ink.WASH)
+	var side: Color = (BARRIER_FILL if _city and p.kind == "wall_high" else fill).darkened(0.45)
 	var r: Rect2 = Rect2(Ink.px(at - p.size * 0.5), p.size * Ink.PX_PER_M)
+	var h_m: float = PROP_H_M.get(p.kind, 0.0)
+	var up: Vector2 = ViewMode.shared().lift_at(ci.get_global_transform() * r.get_center(), h_m)
+	if ViewMode.shared().eye_h_m > 0.0 and up != Vector2.ZERO:  # top_lift: swept, leaning out
+		for i: int in PROP_SLICES:
+			ci.draw_rect(Rect2(r.position + up * (float(i) / PROP_SLICES), r.size), side)
+		r.position += up
+		ci.draw_rect(r.grow(1.0), Ink.INK, false, Ink.LINE_PX)
+	elif up != Vector2.ZERO:  # view lab: the south face, then the top at the prop's height
+		var face: Rect2 = Rect2(r.position.x, r.end.y + up.y, r.size.x, -up.y)
+		ci.draw_rect(face, side, true)  # the city barrier's face is its own concrete
+		ci.draw_rect(face, Ink.INK, false, Ink.LINE_PX)
+		r.position += up
 	if _city and p.kind == "wall_high":
 		_barrier(ci, r)
 		return

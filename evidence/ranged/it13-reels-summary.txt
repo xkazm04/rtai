@@ -1,0 +1,2 @@
+it13-reel-city-9df494f6.log: chapters 19 errors 0
+it13-reel-director-9df494f6.log: chapters 19 errors 0

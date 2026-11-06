@@ -1160,7 +1160,7 @@
       "grip_class": "two_hand_long",
       "grip_px": [
         53,
-        48
+        50
       ],
       "held": "res://features/combat/weapons/art/plasma_sword/held_long.png",
       "icon": "res://features/combat/weapons/art/plasma_sword/icon.png",
@@ -1169,15 +1169,15 @@
       "length_px": 526,
       "muzzle_fx": "",
       "muzzle_px": [
-        532,
-        48
+        531,
+        50
       ],
       "parts": {},
       "pickup": "res://features/combat/weapons/art/plasma_sword/pickup.png",
       "projectile_fx": "",
       "size_px": [
-        539,
-        100
+        538,
+        101
       ]
     },
     {

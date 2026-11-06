@@ -43,6 +43,11 @@ var city_view: CityView = null
 var city: CitySystem = null
 ## The Hauler stomp's shake and hit-stop (features/souls/hauler_kick.gd).
 var hauler_kick: HaulerKick = HaulerKick.new()
+## The camera side of the shared hit feel (features/combat/hit_feel/feel_cam.gd, lane n7-ranged).
+var feel_cam: FeelCam = null
+## n7-melee: Rivet's melee hits on the same FeelCam (they land with no `struck`).
+var melee_feel: MeleeFeel = null
+var _feel_px: Vector2 = Vector2.ZERO
 var _camera: Camera2D = null
 var _stage: CollectCallStage
 var _system: QuestSystem
@@ -144,6 +149,7 @@ func _process(_delta: float) -> void:
 	hud_feed.fill(hud_view.state, _stage, _system)
 	hud_view.state.notice = notice.text()
 	_hauler_kick()
+	_feel_kick()
 	if _stage == null:
 		return
 	if city_view != null:
@@ -196,9 +202,35 @@ func _hauler_kick() -> void:
 	if city_view != null and city_view.clock != null:
 		clock = city_view.clock
 	var h: HaulerStage = _stage.pilot.hauler
+	var glide_m: Vector2 = KerfGlide.offset_m(_stage.pilot.kerf, _stage.tick)
+	if objective_view != null:
+		objective_view.cam_off_m = glide_m
 	if city_view != null:
-		var lean_px: Vector2 = (city_lean_m + Vector2(0.0, forms_lift_m)) * SimConst.PX_PER_M
+		var lean_px: Vector2 = (
+			(city_lean_m + glide_m + Vector2(0.0, forms_lift_m)) * SimConst.PX_PER_M
+		)
 		city_view.kick_px = hauler_kick.step(h, _stage.tick, clock, city_view.rig) + lean_px
 	else:
-		var lift_px: Vector2 = Vector2(0.0, forms_lift_m * SimConst.PX_PER_M)
+		var lift_px: Vector2 = (glide_m + Vector2(0.0, forms_lift_m)) * SimConst.PX_PER_M
 		print_stage.kick_px = hauler_kick.step(h, _stage.tick, clock, print_stage.rig) + lift_px
+
+
+## Every round Rivet lands shakes, kicks and stops the camera by the shared hit feel (FeelCam), on
+## top of whatever _hauler_kick wrote this frame. View only (SimClock.hold, a camera offset).
+func _feel_kick() -> void:
+	if _stage == null or (city_view == null and print_stage == null):
+		return
+	var clock: SimClock = city_view.clock if city_view != null and city_view.clock != null else null
+	if feel_cam == null:
+		feel_cam = FeelCam.attach(_stage.arena, clock if clock != null else _stage.clock)
+		melee_feel = MeleeFeel.attach(feel_cam, _stage.arena)
+	feel_cam.reduced_motion = fx_view.reduced_motion
+	var zoom: float = city_view.zoom if city_view != null else print_stage.zoom
+	var now: Vector2 = feel_cam.offset_px(_stage.tick, zoom)
+	# with a pilot _hauler_kick rewrote kick_px this frame; without one, take last frame's back out
+	var add: Vector2 = now if _stage.pilot != null else now - _feel_px
+	_feel_px = now
+	if city_view != null:
+		city_view.kick_px += add
+	else:
+		print_stage.kick_px += add

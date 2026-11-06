@@ -11,7 +11,7 @@ static func track(fx: GunFx, arena: CombatArena, tick: int) -> void:
 	var now: Dictionary = {}
 	for s: Shot in arena.shots:
 		if not s.from_rivet or s.spec == null or _marks(s.spec):
-			now[s] = [s.pos, s.vel * SimClock.TICK_DT, s.from_rivet]
+			now[s] = [s.pos, s.vel * SimClock.TICK_DT, s.from_rivet, s.origin]
 			if not s.from_rivet and not fx.shots_seen.has(s):
 				_enemy_fired(fx, arena, s, tick)
 	for s: Variant in fx.shots_seen:
@@ -55,6 +55,9 @@ static func _impact(fx: GunFx, arena: CombatArena, last: Array, tick: int) -> vo
 				kind = GunFx.Hit.METAL
 			elif last[2] and arena.gun.trigger.spec.homing_rad_per_tick > 0.0:
 				fx.stick(h, c, hop.normalized())
+			if kind == GunFx.Hit.BODY:  # n7-ranged it24: the round's path stays a moment
+				var origin: Vector2 = last[3]
+				WeaponFxTrail.add(fx.trails, origin, c, arena.gun.trigger.spec.id, tick)
 			break
 	if kind == GunFx.Hit.GROUND:
 		for m: Vector2 in arena.metal:

@@ -16,6 +16,8 @@ const SHADOW_OFF: Vector2 = Vector2(5.12, 5.12)
 const SHADOW: Color = Color(0.09, 0.075, 0.106, 0.45)
 const WRECK_TINT: Color = Color(0.62, 0.6, 0.58, 1.0)
 const CAP: int = 32
+## View lab (view.json cast_k): the roof height a cast shadow is thrown from (m).
+const CAR_H_M: float = 1.4
 
 var service: VehicleService = null
 ## Tyre marks under the cars (a child, drawn below the shadows).
@@ -87,6 +89,7 @@ func _process(_delta: float) -> void:
 	@warning_ignore("return_value_discarded")
 	counts.resize(_bodies.size())
 	var ns: int = 0
+	var off: Vector2 = shadow_off()
 	for b: VehicleBody in service.cars:
 		if ns >= CAP:
 			break
@@ -97,12 +100,22 @@ func _process(_delta: float) -> void:
 		var tint: Color = WRECK_TINT if wreck and not _burnt else Color.WHITE
 		_put(mm, counts[k], xf, tint, b)
 		counts[k] += 1
-		_put(_shadow, ns, xf.translated(SHADOW_OFF), SHADOW, b)
+		_put(_shadow, ns, xf.translated(off), SHADOW, b)
 		ns += 1
 	_marked_traffic(counts)
 	for k: int in _bodies.size():
 		_bodies[k].visible_instance_count = counts[k]
 	_shadow.visible_instance_count = ns
+
+
+## The car shadow's offset: SHADOW_OFF, plus under a view's cast shadows (cast_k) the roof's
+## shadow thrown down-right; the car-shaped quad is moved, not swept, so half the roof's throw
+## keeps it joined to the car (top: exactly SHADOW_OFF).
+static func shadow_off() -> Vector2:
+	var view: ViewMode = ViewMode.shared()
+	if view.cast_k <= 0.0:
+		return SHADOW_OFF
+	return SHADOW_OFF + view.cast_dir() * CAR_H_M * view.cast_k * SimConst.PX_PER_M * 0.5
 
 
 ## A car's quad at `pos` metres facing `head` (CitySimRender cars: x axis head * CAR_L, y axis

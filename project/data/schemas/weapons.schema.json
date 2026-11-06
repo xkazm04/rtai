@@ -163,6 +163,10 @@
           "enabled": {
             "type": "boolean"
           },
+          "end_cue": {
+            "minLength": 1,
+            "type": "string"
+          },
           "fire_mode": {
             "enum": [
               "semi",

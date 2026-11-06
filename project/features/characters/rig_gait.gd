@@ -138,14 +138,20 @@ static func _solve_leg(rig: CutRig, side: RigLimbs, s: int, hl: Vector2) -> void
 		hip3, Vector3(fl.x, fl.y, lift * LIFT_PX), p.thigh_len, p.shin_len, pole
 	)
 	var knee: Vector2 = Vector2(knee3.x, knee3.y)
-	place(side.thigh, hl, knee, p.thigh_draw)
-	place(side.shin, knee, fl, p.shin_draw)
+	var hd: Vector2 = hl
+	var fd: Vector2 = fl
+	if rig.tilt_up != Vector2.ZERO:  # view lab: each joint drawn at its own height (RigTilt)
+		hd += rig.tilt_up * hz
+		knee += rig.tilt_up * knee3.z
+		fd += rig.tilt_up * lift * LIFT_PX
+	place(side.thigh, hd, knee, p.thigh_draw)
+	place(side.shin, knee, fd, p.shin_draw)
 	if p.leg_w != 1.0:
 		side.thigh.scale.y = p.leg_w
 		side.shin.scale.y = p.leg_w
 	var fs: float = (1.0 + 0.08 * lift) * p.foot_k
 	var splay: float = p.side_sign(s) * 0.8 * rig.c_sprawl * (1.0 - 0.8 * rig.c_plank)
-	side.foot.transform = Transform2D(splay, Vector2(fs, fs), 0.0, fl)
+	side.foot.transform = Transform2D(splay, Vector2(fs, fs), 0.0, fd)
 	if p.has_toeoff():
 		var cell: String = p.foot_toeoff[s] if lift > 0.12 else p.foot_part[s]
 		if cell != side.foot_cell:

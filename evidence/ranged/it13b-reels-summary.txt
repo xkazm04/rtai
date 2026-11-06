@@ -1,0 +1,2 @@
+it13-reel-city-5c171ed8.log: chapters 19 errors 0
+it13-reel-director-5c171ed8.log: chapters 19 errors 0

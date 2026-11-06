@@ -93,3 +93,9 @@ static func _armored() -> Chapter:
 	var c: Chapter = Chapter.new(&"plasma_armored", &"plasma_rifle", &"tap", 300, [Vector2(6.0, 0)])
 	c.armored = true
 	return c
+
+
+## Chapters outside the cut, run only by name (`--chapter=<id>`): n7-melee's plasma sword combo
+## on a lone cop (the deflect chapter never cuts a body; the asset film needs the swing).
+static func extras() -> Array[Chapter]:
+	return [Chapter.new(&"plasma_sword", &"plasma_sword", &"blade", 330, [Vector2(2.6, 0.0)])]

@@ -1,0 +1,36 @@
+{
+  "boss_fight": {
+    "adds_landed": 0,
+    "adds_spawned": 0,
+    "adds_tries": 0,
+    "boss": "servo",
+    "dealt": 180,
+    "defeated_tick": 8437,
+    "hp_frac": 0,
+    "landed": {
+      "rotor_dash": 5,
+      "rotor_dash_hot": 1
+    },
+    "moves": {
+      "dive_hits": 0,
+      "dives": 4,
+      "drones_launched": 51,
+      "drones_shot": 35,
+      "marks": 15,
+      "parcel_hits": 0,
+      "parcels_landed": 45
+    },
+    "phase": 3,
+    "rolled": {},
+    "tries": {
+      "bay_hop": 4,
+      "kamikaze": 2,
+      "package_carpet": 3,
+      "rotor_dash": 10,
+      "rotor_dash_hot": 3,
+      "scan_drop": 11
+    }
+  },
+  "deaths": 0,
+  "ticks": 14399
+}

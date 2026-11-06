@@ -7,6 +7,8 @@ const MIX_PATH: String = "res://data/tables/audio_mix.json"
 
 var cues: Dictionary[StringName, AudioCue] = {}
 var mix: Dictionary = {}
+## n7-melee: weapon id -> the cue its hit plays (audio_cues.json `hits`; HitCues).
+var hits: Dictionary[StringName, StringName] = {}
 
 
 static func shipped() -> AudioTables:
@@ -17,6 +19,8 @@ static func shipped() -> AudioTables:
 		for row: Dictionary in doc.get("cues", []):
 			var parsed: AudioCue = AudioCue.from_row(row)
 			t.cues[parsed.id] = parsed
+		for row: Dictionary in doc.get("hits", []):
+			t.hits[StringName(str(row.get("id", "")))] = StringName(str(row.get("cue", "")))
 	var mix_doc: Variant = _read(MIX_PATH)
 	if mix_doc is Dictionary:
 		t.mix = mix_doc

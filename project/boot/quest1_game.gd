@@ -43,6 +43,8 @@ func boot() -> void:
 		settings = PlayerSettings.load_or_default(settings_path)
 	settings.reduced_motion = settings.reduced_motion or LaunchArgs.has("--reduced-motion")
 	Quest1Session.ghost_locks = not LaunchArgs.has("--ghosts-free")  # ghost-powers-5's old default
+	Quest1Session.table_guns = LaunchArgs.value("--quest-guns") != "off"  # n7-ranged's before
+	Quest1Session.blade = Quest1Game.blade_of(LaunchArgs.value("--quest-blade"))  # n7-melee
 	add_child(card)
 	@warning_ignore("return_value_discarded")
 	card.start_pressed.connect(start)
@@ -121,9 +123,7 @@ func _begin(opened: Quest1Session) -> void:
 		_audio = StageAudio.attach(
 			self, session.stage, session.system, Events, Quest1Session.MASTER_SEED
 		)
-		session.live.viewport = get_viewport()
-		session.live.origin_px = func() -> Vector2:
-			return get_viewport().get_visible_rect().size / 2.0
+		_bind_live()
 	if view != null:
 		view.notice.show(Save.take_notice())
 	card.hide_all()
@@ -250,3 +250,20 @@ func _casts() -> void:
 	_dev_rigs()
 	@warning_ignore("return_value_discarded")
 	GhostAttackViews.attach_quest(view, session.stage, settings.reduced_motion)
+	if _story != null:  # n7-melee: the sprite cast draws the carried blade (rigs: RivetHeldView)
+		@warning_ignore("return_value_discarded")
+		CastBladeView.attach(view, session.stage)
+
+
+## The live input's screen frame: Rivet at the centre, and the view's px/m so a thrown aim lands
+## where the cursor is in metres (n7-ranged, quest 1's table guns).
+func _bind_live() -> void:
+	session.live.viewport = get_viewport()
+	session.live.origin_px = func() -> Vector2: return get_viewport().get_visible_rect().size / 2.0
+	session.live.px_per_m = func() -> float: return view.px_per_m
+
+
+## n7-melee: `--quest-blade` -> the carried blade (absent or off: none, Rivet's own claws, the
+## owner's 2026-11-06 call; else the id, e.g. katana).
+static func blade_of(flag: String) -> StringName:
+	return &"" if flag == "" or flag == "off" else StringName(flag)

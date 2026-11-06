@@ -7,6 +7,15 @@ extends Node2D
 ## afterimages of the Kerf body along it (KerfRig copies, limbs swept, teal-washed, older = fainter;
 ## pooled), and on a cut the hanging cut line across the target, white-hot in a
 ## teal glow, at the kill row's diagonal. Reduced motion: no afterimages, no flicker.
+## n7-melee: on each cut frame, for cut_flare_s, a cut flare across the target (a long cream slash
+## edged in ink, snapping out to full length, and ink sparks thrown along the blink), so a chain of
+## three reads as three marks at 32 px/m. A world impact prints in ink and paper (teal stays the
+## soul's own marks). --feel=off or cut_flare_s 0 = none (the before clips).
+## n7-melee: the sight (anticipation): while the settled form holds a charge, the cutter's dashed
+## teal sighting line runs to the body the next press would cut (KerfStage.pick on the last aim)
+## with a white lock (two brackets outside the body, at the cut line's ends); it brightens as the
+## blink gap refills, so every cut of a chain is called before it lands. sight_k 0 or --feel=off =
+## none.
 
 const TEAL: Color = HaulerLook.TEAL
 const INK: Color = Color(0.09, 0.08, 0.07)
@@ -19,10 +28,17 @@ const GHOSTS: int = 3
 const ECHO_POOL: int = 9
 const ECHO_WASH: Color = Color(0.55, 1.75, 1.6)
 const ECHO_ALPHA: Vector2 = Vector2(0.2, 0.6)
+const CREAM: Color = Color(0.98, 0.94, 0.82)
+const FLARE_HALF_M: float = 1.3
+const SPARKS: int = 4
+const SIGHT_LOCK_M: float = 0.4
+const SIGHT_ARC: float = 0.6
+const SIGHT_FLOOR: float = 0.4
 
 var stage: CollectCallStage = null
 var ppm: float = 32.0
 var reduced_motion: bool = false
+var flare: bool = HitFeel.feel_flag() != "off"
 var _echo: Array[KerfRig] = []
 
 
@@ -49,8 +65,10 @@ func _draw() -> void:
 		if k.trail_cut[i] != Vector2.INF:
 			var dir: Vector2 = (k.trail_to[i] - k.trail_from[i]).normalized()
 			_cut(k.trail_cut[i] * ppm, dir.rotated(deg_to_rad(CUT_DEG)), fade, i)
+			_flare(k, k.trail_cut[i] * ppm, dir, age)
 	if k.on():
 		_aura(k)
+		_sight(k)
 
 
 func _path(a: Vector2, b: Vector2, fade: float) -> void:
@@ -108,6 +126,25 @@ func _cut(c: Vector2, along: Vector2, fade: float, salt: int) -> void:
 	draw_circle(c, 2.5, Color(WHITE, fade))
 
 
+## The cut flare: full length within 2 ticks, then thinning out over cut_flare_s.
+func _flare(k: KerfStage, c: Vector2, dir: Vector2, age: float) -> void:
+	var span: float = k.num(&"cut_flare_s")
+	if not flare or span <= 0.0 or age > span:
+		return
+	var t: float = age / span
+	var grow: float = minf(1.0, (age + SimClock.TICK_DT) / (2.0 * SimClock.TICK_DT))
+	var along: Vector2 = dir.rotated(deg_to_rad(CUT_DEG))
+	var half: float = FLARE_HALF_M * ppm * grow
+	var w: float = lerpf(5.0, 1.5, t)
+	draw_line(c - along * half, c + along * half, Color(INK, 1.0 - t), w + 4.0, true)
+	draw_line(c - along * half, c + along * half, Color(CREAM, 1.0 - t * t), w, true)
+	for s: int in SPARKS:  # thrown forward along the blink, fanned across the cut
+		var off: float = (s - (SPARKS - 1) * 0.5) * 0.35
+		var from: Vector2 = c + along * off * ppm
+		var to: Vector2 = from + dir.rotated(off * 0.6) * (0.35 + 0.5 * t) * ppm
+		draw_line(from + (to - from) * t * 0.6, to, Color(INK, 1.0 - t), 2.0, true)
+
+
 func _aura(k: KerfStage) -> void:
 	var rivet: Fighter = stage.arena.rivet
 	var c: Vector2 = rivet.pos * ppm
@@ -118,3 +155,36 @@ func _aura(k: KerfStage) -> void:
 		var at: Vector2 = c + back * 0.75 * ppm + side * (i - (k.charges - 1) * 0.5) * 0.22 * ppm
 		draw_circle(at, 3.2, INK)
 		draw_circle(at, 2.2, TEAL)
+
+
+## The sight: dim just after a blink, full when the next one may fire.
+func _sight(k: KerfStage) -> void:
+	var a: float = sight_alpha(k.num(&"sight_k"), k.ready_k(), k.charges) if flare else 0.0
+	if a <= 0.0 or not stage.pilot.ghosts.settled_in(KerfStage.GHOST):
+		return
+	var target: Fighter = k.pick(stage, k.sight_aim)
+	if target == null:
+		return
+	var rivet: Vector2 = stage.arena.rivet.pos
+	var dir: Vector2 = (target.pos - rivet).normalized()
+	var a_px: Vector2 = (rivet + dir * 0.6) * ppm
+	var b_px: Vector2 = (target.pos - dir * (target.radius_m + 0.15)) * ppm
+	if b_px.distance_to(rivet * ppm) > 0.9 * ppm:
+		draw_dashed_line(a_px, b_px, Color(INK, 0.5 * a), 3.5, 7.0, true, true)
+		draw_dashed_line(a_px, b_px, Color(TEAL, a), 1.5, 7.0, true, true)
+	var c: Vector2 = target.pos * ppm
+	var r: float = (target.radius_m + SIGHT_LOCK_M) * ppm
+	var at: float = dir.rotated(deg_to_rad(CUT_DEG)).angle()
+	for end: float in [at, at + PI]:  # the lock: two brackets at the cut line's ends
+		var span: Vector2 = Vector2(end - SIGHT_ARC, end + SIGHT_ARC)
+		draw_arc(c, r, span.x, span.y, 8, Color(INK, 0.6 * a), 4.0, true)
+		draw_arc(c, r, span.x, span.y, 8, Color(WHITE, a), 1.8, true)
+
+
+## The sight's opacity: sight_k scaled by the gap's refill (a floor so the next target is named
+## at once), none without a charge.
+static func sight_alpha(sight_k: float, ready: float, charges: int) -> float:
+	if sight_k <= 0.0 or charges <= 0:
+		return 0.0
+	var r: float = clampf(ready, 0.0, 1.0)
+	return sight_k * (SIGHT_FLOOR + (1.0 - SIGHT_FLOOR) * r)

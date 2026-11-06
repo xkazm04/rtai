@@ -12,6 +12,10 @@ signal struck(victim: Fighter, dir: Vector2, lethal: bool, weapon: StringName)
 ## kill payload for brutality and human-reactions (weapon id or &"burn", hit direction, hit point
 ## in metres, the events.json death kind). Lane gunplay, night JOURNAL REQUEST 1.
 signal kill_landed(victim: Fighter, weapon: StringName, dir: Vector2, at: Vector2, kind: StringName)
+## A non-lethal hit on a non-Rivet fighter, from the chokepoint (view only: MeleeWound, n7-melee).
+signal wounded(victim: Fighter, weapon: StringName)
+## A hostile round batted back by the plasma sword at `at`, now flying along `back` (view only).
+signal deflected(at: Vector2, back: Vector2)
 
 const SPAWN_SPREAD_M: float = 2.5
 
@@ -73,6 +77,16 @@ func spawn_guard(at: Vector2) -> Fighter:
 	g.cooldown = _rng.randi_range(0, tuning.weapon(g.weapon).cooldown_ticks)
 	hostiles.append(g)
 	return g
+
+
+## Lane n7-king: an act boss (features/bosses) stepped in, or began a tell (`attack` is its
+## bosses.json attack id). The fight's beats go out as Events from here, their declared emitter.
+func announce_boss(boss_id: StringName) -> void:
+	_events.boss_engaged.emit(boss_id)
+
+
+func announce_tell(attack: StringName) -> void:
+	_events.attack_telegraphed.emit(attack)
 
 
 ## The next wave of the encounter at `encounter` began (Events.wave_started, wave from 1).
@@ -156,8 +170,7 @@ func step(p_tick: int) -> void:
 
 
 ## The one damage chokepoint (events.json: the kill payload is decided before the hit lands).
-## `kind` is the events.json death kind: quest 1's rounds are `shot`; FightAreas passes `blown`
-## and `burned`.
+## `kind` is the death kind: quest 1's rounds are `shot`; FightAreas passes `blown`, `burned`.
 func damage(
 	victim: Fighter, amount: float, killer_id: int, weapon: StringName, kind: StringName = &"shot"
 ) -> void:
@@ -172,6 +185,8 @@ func damage(
 		kills_now += 1
 		kill_weapon = weapon
 		_drop(victim)
+	elif victim.kind != Fighter.Kind.RIVET:
+		wounded.emit(victim, weapon)
 	victim.hp = maxf(victim.hp - amount, 0.0)
 	victim.hurt_tick = tick
 
@@ -192,6 +207,8 @@ func write_state(out: StreamPeerBuffer) -> void:
 
 
 func _step_hostile(h: Fighter) -> void:
+	if h.brain_owned:  # a boss: BossHook steps it (features/bosses)
+		return
 	if areas != null and areas.holds(self, h):
 		return
 	if h.kind == Fighter.Kind.BOSS:
@@ -269,7 +286,8 @@ func _step_balls() -> void:
 ## Dead guards drop their rifles; the quartermaster's Robo-tazer shorts out and is never dropped.
 func _drop(victim: Fighter) -> void:
 	if victim.kind == Fighter.Kind.BOSS:
-		tazer.short_out()
+		if tazer != null:  # an act boss (features/bosses) has no tazer and drops nothing
+			tazer.short_out()
 		balls.clear()
 	else:
 		rifle_drops.append(victim.pos)

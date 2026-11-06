@@ -67,6 +67,7 @@ func attach(p_stage: CollectCallStage, view: CollectCallView, ctx: WorldContext)
 	process_priority = -1  # the feed is filled before CharacterRigs poses this frame
 	rigs.z_index = RenderLayers.z(&"actors")
 	layer.add_child(rigs)
+	RigDepthSort.attach(layer)  # view lab: tilt only, bodies drawn far to near
 	rigs.setup(ctx)
 	_add_hand_views(layer, p_stage)
 	view.cast_view.fighters_on_rigs = true  # quest 1 keeps its allies and marks on the cast view
@@ -141,7 +142,9 @@ func _process(_delta: float) -> void:
 	for h: Fighter in stage.arena.hostiles:
 		if h.kind == Fighter.Kind.BOSS and not stage is ArenaStage:
 			continue  # quest 1's Mertz keeps the cast view's own drawing (no boss rig yet)
-		if hidden.has(h.id) or gone.has(h.id) or (robots != null and ArenaRobotRigs.takes(h)):
+		if h.brain_owned or hidden.has(h.id) or gone.has(h.id):
+			continue  # a boss draws itself (features/bosses, n7-king)
+		if robots != null and ArenaRobotRigs.takes(h):
 			continue
 		var look: Vector2i = _looks.get(h.id, Vector2i(BodyPlan.Kind.COP, _pit_look(h.id)))
 		_put(i, h, look.x as BodyPlan.Kind)
@@ -247,7 +250,7 @@ func _rivet_clips(f: RigFeed) -> void:
 		var h: MeleeHit = m.current()
 		var arm: int = STRIKE_ARMS[mini(m.hit_index - 1, STRIKE_ARMS.size() - 1)]
 		f.clip[0] = RigClips.Clip.STRIKE
-		f.clip_arg[0] = RigInput.pack_strike(h.windup, h.active, h.recovery, arm)
+		f.clip_arg[0] = RigInput.pack_hit(h, arm, m.tick_in)
 	_strikes_seen = m.starts
 	if pilot.shock.discharges != _shocks_seen:  # the discharge: both claws thrust
 		f.clip[0] = RigClips.Clip.STRIKE
@@ -261,7 +264,7 @@ func _rivet_clips(f: RigFeed) -> void:
 	var grip: ArsenalTable.Grip = _arsenal.grip_of(pilot.hold.held)
 	if pilot.throw.winds != _winds_seen and grip != null:  # the arm draws back, then whips through
 		f.clip[0] = RigClips.Clip.STRIKE
-		f.clip_arg[0] = RigInput.pack_strike(grip.windup_ticks, THROW.y, THROW.z, BodyPlan.L)
+		f.clip_arg[0] = RigThrow.pack_wind(grip.windup_ticks, pilot.throw.wound, THROW)
 	_winds_seen = pilot.throw.winds
 	if gun != null and gun.shots_fired != _shots_seen and f.clip[0] == RigClips.Clip.NONE:
 		f.clip[0] = RigClips.Clip.SHOOT  # the class's kick (rivet_arsenal.json)

@@ -45,7 +45,13 @@ var reload_k: float = -1.0
 ## d7-held: the drawn weapon's shift beside the helmet (RivetHeldView, torso-local px); the two
 ## claws' aim targets take it too, so the claws stay on the gun instead of a claw-width off it.
 var held_shift: Vector2 = Vector2.ZERO
+## n7-ranged: a ready molotov's rise to cocked (RigThrow.held_ready): 0 hanging, 1 cocked, and
+## the t_alive it was last posed at (a rest longer than RigThrow.REST_S starts the rise again).
+var throw_cock: float = 0.0
+var throw_t: float = -1.0
 var dead: bool = false
+## View lab: the z this rig sorts from under a tilt (RigDepthSort adds its depth level).
+var depth_base: int = 0
 
 var c_tuck: float = 0.0
 var c_sprawl: float = 0.0
@@ -79,6 +85,10 @@ var shove_v: Vector2 = Vector2.ZERO
 ## The rig's global transform and its inverse, cached once per pose step (hot path).
 var xf: Transform2D = Transform2D.IDENTITY
 var xf_inv: Transform2D = Transform2D.IDENTITY
+## View lab: screen-up per part px of height under a tilted --view (RigTilt); ZERO straight down.
+var tilt_up: Vector2 = Vector2.ZERO
+## View lab: the upright facing card over the head under a tilted --view with cards (RigHeadCard).
+var head_card: Sprite2D = null
 
 var body: Node2D = null
 var torso: Node2D = null
@@ -116,6 +126,7 @@ func setup(p_plan: BodyPlan, p_variant: RigVariant) -> void:
 ## Texture swaps only (head, torso, shield): no re-plan, no new nodes.
 func apply_variant(v: RigVariant) -> void:
 	variant = v
+	RigHeadCard.drop(self)
 	if v.head != "":
 		set_part_tex(head_spr, v.head)
 	if v.torso != "":
@@ -162,8 +173,12 @@ func drive(dt: float) -> void:
 		react.pre(self, dt)
 	RigHips.step(self, dt)
 	rotation = facing
+	RigTilt.aim_up(self)
 	RigGait.step(self, dt)
 	RigPose.step(self)
+	if tilt_up != Vector2.ZERO:
+		RigTilt.lift_upper(self)
+		RigHeadCard.step(self)
 	if react != null:
 		react.post(self)
 	if hose != null:
@@ -188,6 +203,7 @@ func set_tint(on: bool) -> void:
 		var mat: ShaderMaterial = PartMaterials.get_mat(kind, on, sprite_swaps[i])
 		sprites[i].material = null if plan.raw_parts and not on else mat
 	RigDetail.on_tint(self, on)
+	RigHeadCard.on_tint(self, on)
 	if hose != null:
 		hose.material = PartMaterials.get_mat(PartMaterials.PartKind.PART, on, 0)
 
@@ -221,7 +237,8 @@ func fwd() -> Vector2:
 
 func hip_local(s: int) -> Vector2:
 	var y: float = plan.hip_y * plan.side_sign(s)
-	return body.transform * (pelvis.position + Vector2(0, y).rotated(pelvis.rotation))
+	var at: Vector2 = body.transform * (pelvis.position + Vector2(0, y).rotated(pelvis.rotation))
+	return at if tilt_up == Vector2.ZERO else at - RigTilt.body_lift(self)
 
 
 func hip_world(s: int) -> Vector2:

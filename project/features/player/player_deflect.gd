@@ -36,6 +36,7 @@ static func bat(arena: CombatArena, facing: Vector2, reach_m: float) -> int:
 		s.left_m = BACK_RANGE_M
 		s.origin = s.pos
 		_spark(arena, s.pos, back)
+		arena.deflected.emit(s.pos, back)
 		n += 1
 	return n
 

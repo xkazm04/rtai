@@ -5,7 +5,8 @@ extends RefCounted
 ## BodyContact, so he never ends a tick inside one. Every arena hostile today is a human (the
 ## dock guards and quartermaster Mertz, "a human (1 hp)"), so Rivet always wins: a walk shoves,
 ## a run knocks them back by the rule's knockback (the arena has no lying-down state yet: the
-## combat lane owns that). A robot or big boss fighter needs its own body class here.
+## combat lane owns that). A fighter that names its own `body_class` (a boss: `boss`, its robot
+## adds: `robot`, through bosses.json) meets Rivet as that class: both block him.
 
 static var _table: BodyTable = null
 
@@ -17,7 +18,9 @@ static func table() -> BodyTable:
 
 
 static func class_of(f: Fighter) -> StringName:
-	return RivetBody.CLASS if f.kind == Fighter.Kind.RIVET else RivetBody.PERSON
+	if f.kind == Fighter.Kind.RIVET:
+		return RivetBody.CLASS
+	return f.body_class if f.body_class != &"" else RivetBody.PERSON
 
 
 ## Resolves Rivet (moving at rivet_vel m/s this tick) against every live hostile; returns the

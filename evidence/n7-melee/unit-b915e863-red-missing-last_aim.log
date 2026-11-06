@@ -1,0 +1,2 @@
+unit-tests: load_all exit 1; load_all reported script errors; gut exit 1; gut reported script errors; 4 failing (1197 passed, 4 failed, 0 skipped)
+exit 1

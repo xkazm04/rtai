@@ -191,7 +191,11 @@ func _impact(f: Fighter, rim: Color = Ink.INK) -> void:
 ## The Hauler stomp's ring and D5 crack where it landed (features/souls HaulerMarks).
 func _hauler_marks() -> void:
 	var h: HaulerStage = stage.pilot.hauler if stage.pilot != null else null
-	if h == null or h.stomp_tick < 0:
+	if h == null:
+		return
+	RamMarks.draw_all(self, h, stage.tick, Ink.PX_PER_M)  # n7-melee: the ram's contact marks
+	RamWake.draw(self, Ink.px(stage.arena.rivet.pos), h.form, stage.tick, Ink.PX_PER_M)
+	if h.stomp_tick < 0:
 		return
 	var age: float = (stage.tick - h.stomp_tick) * SimClock.TICK_DT
 	var radius: float = h.form.num(&"stomp_radius_m")

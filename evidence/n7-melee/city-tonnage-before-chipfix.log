@@ -1,0 +1,74 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+D3D12 12_0 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce RTX 4090
+
+Movie Maker mode enabled, recording movie in 1280×800 @ 60 FPS...
+[INFO] arena: city block: spawn at (529.0, 509.0) is in a building, dropped
+[INFO] arena: city block: spawn at (506.0, 545.0) is in a building, dropped
+[INFO] arena: city block: spawn at (506.0, 551.0) is in a building, dropped
+[INFO] arena: city block: spawn at (488.0, 553.0) is in a building, dropped
+[INFO] arena: city block: spawn at (498.0, 553.0) is in a building, dropped
+[INFO] arena: powers pad: 2 cars parked
+[INFO] arena: arena open: 18 stations
+[INFO] quest1: street filled in 16 chunk passes
+[INFO] characters: prewarmed 33 rigs in 119.9 ms
+[INFO] arena: cast rigs: true
+[INFO] characters: prewarmed 33 rigs in 10.5 ms
+[INFO] ghosts: ghost reel: tonnage beat at tick 0
+ERROR: Invalid polygon data, triangulation failed.
+   at: canvas_item_add_polygon (servers/rendering/renderer_canvas_cull.cpp:1770)
+   GDScript backtrace (most recent call first):
+       [0] _chip (res://features/souls/ram_marks.gd:74)
+       [1] draw (res://features/souls/ram_marks.gd:40)
+       [2] draw_all (res://features/souls/ram_marks.gd:27)
+       [3] _draw (res://features/souls/tonnage_view.gd:41)
+ERROR: Invalid polygon data, triangulation failed.
+   at: canvas_item_add_polygon (servers/rendering/renderer_canvas_cull.cpp:1770)
+   GDScript backtrace (most recent call first):
+       [0] _chip (res://features/souls/ram_marks.gd:74)
+       [1] draw (res://features/souls/ram_marks.gd:40)
+       [2] draw_all (res://features/souls/ram_marks.gd:27)
+       [3] _draw (res://features/souls/tonnage_view.gd:41)
+ERROR: Invalid polygon data, triangulation failed.
+   at: canvas_item_add_polygon (servers/rendering/renderer_canvas_cull.cpp:1770)
+   GDScript backtrace (most recent call first):
+       [0] _chip (res://features/souls/ram_marks.gd:74)
+       [1] draw (res://features/souls/ram_marks.gd:40)
+       [2] draw_all (res://features/souls/ram_marks.gd:27)
+       [3] _draw (res://features/souls/tonnage_view.gd:41)
+[INFO] ghosts: ghost reel: tonnage wave 2 at tick 230
+ERROR: Invalid polygon data, triangulation failed.
+   at: canvas_item_add_polygon (servers/rendering/renderer_canvas_cull.cpp:1770)
+   GDScript backtrace (most recent call first):
+       [0] _chip (res://features/souls/ram_marks.gd:74)
+       [1] draw (res://features/souls/ram_marks.gd:40)
+       [2] draw_all (res://features/souls/ram_marks.gd:27)
+       [3] _draw (res://features/souls/tonnage_view.gd:41)
+ERROR: Invalid polygon data, triangulation failed.
+   at: canvas_item_add_polygon (servers/rendering/renderer_canvas_cull.cpp:1770)
+   GDScript backtrace (most recent call first):
+       [0] _chip (res://features/souls/ram_marks.gd:74)
+       [1] draw (res://features/souls/ram_marks.gd:40)
+       [2] draw_all (res://features/souls/ram_marks.gd:27)
+       [3] _draw (res://features/souls/tonnage_view.gd:41)
+ERROR: Invalid polygon data, triangulation failed.
+   at: canvas_item_add_polygon (servers/rendering/renderer_canvas_cull.cpp:1770)
+   GDScript backtrace (most recent call first):
+       [0] _chip (res://features/souls/ram_marks.gd:74)
+       [1] draw (res://features/souls/ram_marks.gd:40)
+       [2] draw_all (res://features/souls/ram_marks.gd:27)
+       [3] _draw (res://features/souls/tonnage_view.gd:41)
+[INFO] arena: react: 2 wounds (0 on a shield), 0 deaths, 0 ducks
+[INFO] arena: crowd: 0 cowers (0 at a death), 0 trips, 0 deaths
+--------------------------------------------------------------------------------
+Done recording movie at path: C:/Users/kazda/kiro/gtai-n7p/scratch/melee/heap_before_32.avi
+600 frames at 60 FPS (movie length: 00:00:10:00), recorded in 00:00:37 (27% of real-time speed).
+CPU render time: 0.72 seconds (average: 1.20 ms/frame)
+GPU render time: 1.83 seconds (average: 3.05 ms/frame)
+Encoding time: 7.82 seconds (average: 13.03 ms/frame)
+--------------------------------------------------------------------------------
+WARNING: 1 RID of type "CanvasItem" was leaked.
+   at: _free_rids (servers/rendering/renderer_canvas_cull.cpp:2733)
+WARNING: 622 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 101 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

@@ -31,6 +31,7 @@ func _process(_delta: float) -> void:
 func _draw() -> void:
 	if arena == null or arena.areas == null or rigs == null:
 		return
+	var light: Dictionary[int, bool] = StunCrowd.light_of(arena)  # n7-melee: the crowd cap
 	for h: Fighter in arena.hostiles:
 		var rig: CutRig = rigs.rig_for(h.id)
 		if rig == null or rig.torso == null:
@@ -45,7 +46,9 @@ func _draw() -> void:
 		var c: Vector2 = to_local(rig.torso.global_position)
 		var ppm: float = Ink.PX_PER_M * rig.global_transform.get_scale().x / CutRig.SC
 		if stunned:
-			ShockJolt.arcs(self, c, ppm, arena.tick + h.id)
+			var cap: Vector4i = StunCrowd.cap()
+			var n: Vector2i = Vector2i(cap.y, cap.z) if light.has(h.id) else Vector2i(9, 9)
+			ShockJolt.arcs(self, c, ppm, arena.tick + h.id, n)
 			if not _drops.has(h.id) and ShockJolt.hard:
 				_drops[h.id] = _toss(c, ppm, rig.facing, h.id)
 		elif h.alive():

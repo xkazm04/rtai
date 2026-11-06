@@ -15,6 +15,11 @@ const PUNCH3_S: float = 0.58
 const ROLL_S: float = 0.45
 const DEATH_RAMP_S: float = 0.42
 const RECOIL_DECAY: float = 6.0
+## n7-ranged: a throw (negative recoil) leans the torso into the release this much per unit (the
+## arm is already at its reach when aimed, so the follow-through shows in the body).
+const THROW_LEAN: float = 0.5
+## ...and turns the torso this far (rad) per unit, the gun shoulder leading (RigPose).
+const THROW_TWIST: float = 0.3
 const HIT_S: float = 0.18
 const HIT_TINT_FROM: float = 0.10
 const HIT_SHOVE: float = 90.0
@@ -88,8 +93,10 @@ func die(blown: bool) -> void:
 		death_amount = 1.25 if blown else 1.0
 
 
+## A shot's recoil, 0.4-1.6. A negative kick (n7-ranged: a throw, arena.json rig_kick) swings the
+## arm FORWARD by that much instead, the release's follow-through, and settles back the same way.
 func shoot(kick: float) -> void:
-	recoil = clampf(kick, 0.4, 1.6)
+	recoil = clampf(kick, 0.4, 1.6) if kick >= 0.0 else clampf(kick, -1.6, -0.4)
 
 
 func hit(rig: CutRig, from_dir: Vector2) -> void:
@@ -110,7 +117,7 @@ func active() -> Clip:
 		return Clip.PUNCH
 	if hit_t > 0.0:
 		return Clip.HIT
-	if recoil > 0.0:
+	if recoil != 0.0:
 		return Clip.SHOOT
 	return Clip.NONE
 
@@ -119,16 +126,16 @@ func active() -> Clip:
 func sample(rig: CutRig, dt: float) -> void:
 	punch_t = maxf(0.0, punch_t - dt)
 	roll_t = maxf(0.0, roll_t - dt)
-	recoil = maxf(0.0, recoil - dt * RECOIL_DECAY)
+	recoil = move_toward(recoil, 0.0, dt * RECOIL_DECAY)
 	hit_t = maxf(0.0, hit_t - dt)
 	rig.c_reach = sin((1.0 - punch_t / punch_len) * PI) if punch_t > 0.0 else 0.0
 	if strike_t >= 0.0:
-		rig.c_reach = _strike_reach()
+		rig.c_reach = _strike_reach(StrikeDepth.depth(rig.hold))
 		strike_t += dt
 		if strike_t > strike_ph.x + strike_ph.y + strike_ph.z:
 			strike_t = -1.0
 			rig.strike_arm = -1
-	rig.c_lean = 0.6 * rig.c_reach
+	rig.c_lean = maxf(0.6 * rig.c_reach, -THROW_LEAN * recoil)
 	rig.c_tuck = (
 		clampf(sin(PI * (1.0 - roll_t / roll_len)) * 1.7, 0.0, 1.0) if roll_t > 0.0 else 0.0
 	)
@@ -152,22 +159,25 @@ func sample(rig: CutRig, dt: float) -> void:
 		rig.c_sprawl = down_amt
 
 
-## The strike's reach: -0.35 at the end of the windup (the torso twists back), 1 by the end of
-## the active frames (ease-out), back to 0 over the recovery (smoothstep); jab_early: see JAB_TICKS.
-func _strike_reach() -> float:
+## The strike's reach: -back cocked (StrikeDepth), 1 by the end of the active frames (ease-out),
+## back to 0 over the recovery (smoothstep); jab_early: see JAB_TICKS.
+func _strike_reach(back: float) -> float:
+	# The hit tick is the same at any depth, and so is every jab frame: a deeper cock snaps to the
+	# night's -0.35 as the jab starts (the hit-stop must never freeze an arm still drawn back).
 	var w: float = maxf(strike_ph.x, 0.001)
 	var a: float = maxf(strike_ph.y, 0.001)
 	var r: float = maxf(strike_ph.z, 0.001)
 	if jab_early:
 		var c0: float = w - minf(JAB_TICKS * SimClock.TICK_DT, w * 0.5)
 		if strike_t < c0:
-			return -0.35 * smoothstep(0.0, 1.0, strike_t / c0)
+			return -back * smoothstep(0.0, 1.0, strike_t / c0)
+		var jab0: float = -minf(back, StrikeDepth.BEFORE)  # the jab leaves from the night's cock
 		if strike_t < w + a:
-			return lerpf(-0.35, 1.0, minf((strike_t - c0) / (w - c0), 1.0))
+			return lerpf(jab0, 1.0, minf((strike_t - c0) / (w - c0), 1.0))
 		return 1.0 - smoothstep(0.0, 1.0, (strike_t - w - a) / r)
 	if strike_t < w:
-		return -0.35 * smoothstep(0.0, 1.0, strike_t / w)
+		return -back * smoothstep(0.0, 1.0, strike_t / w)
 	if strike_t < w + a:
 		var k: float = (strike_t - w) / a
-		return lerpf(-0.35, 1.0, 1.0 - (1.0 - k) * (1.0 - k))
+		return lerpf(-back, 1.0, 1.0 - (1.0 - k) * (1.0 - k))
 	return 1.0 - smoothstep(0.0, 1.0, (strike_t - w - a) / r)

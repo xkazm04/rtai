@@ -42,7 +42,8 @@ func setup(stage: ArenaStage, ctx: WorldContext) -> void:
 	_arena.gun.tap = bot
 	_arena.rivet.weapon = weapon  # rivet-arsenal: the claw holds and draws the gun it fires
 	_arena.guard_tell = GuardTell.from_table(table)
-	link = HitLink.make(_arena, HitFeel.shipped(CameraRig.new()), table)
+	# no rig: the camera side of each hit is the view's FeelCam (CollectCallView), not the sim's
+	link = HitLink.make(_arena, HitFeel.shipped(), table)
 	Log.info("gunplay", "arena: Rivet holds the table %s" % weapon)
 
 

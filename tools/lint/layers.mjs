@@ -36,6 +36,7 @@ export const NAMING_ALLOWLIST = [
 /** Known core -> features dependencies (rule 3), each with a reason. Shrink, never grow. */
 export const CORE_FEATURE_ALLOWLIST = [
   { file: 'core/render/print_stage.gd', name: 'SimConst', why: 'codegen constants (sim_constants.gd) live in features/city/sim; moving them under core/ is pending' },
+  { file: 'core/render/view_mode.gd', name: 'SimConst', why: 'n7x-view (merged 2026-11-06) reads the tile size the same way; same pending move of SimConst under core/' },
 ];
 
 /** Doc/legal file names that are conventionally upper case. */

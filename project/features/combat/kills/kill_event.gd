@@ -26,6 +26,6 @@ static func make(victim: int, p_at: Vector2, p_dir: Vector2, p_weapon: StringNam
 ## The event of a CombatArena fighter killed by `weapon` along `p_dir`.
 static func of_fighter(f: Fighter, p_dir: Vector2, p_weapon: StringName) -> KillEvent:
 	var e: KillEvent = make(f.id, f.pos, p_dir, p_weapon)
-	e.human = f.kind != Fighter.Kind.BOSS
+	e.human = f.kind != Fighter.Kind.BOSS and not f.machine
 	e.facing = f.facing
 	return e

@@ -1,0 +1,204 @@
+{
+  "schema": "gtai.boss-numbers/1",
+  "boss": "king",
+  "ghost": null,
+  "contended": true,
+  "quit_after": 18000,
+  "summary": {
+    "human": {
+      "n": 5,
+      "downed": 4,
+      "ttk_mean_s": 86.1,
+      "ttk_range_s": [
+        78.4,
+        98
+      ],
+      "taken_mean": 72.4,
+      "deaths": 3,
+      "hp_min": 3.6,
+      "hp_min_mean": 21.4,
+      "adds_landed_tries": [
+        22,
+        89
+      ],
+      "per_attack": {
+        "charge": {
+          "tries": 8,
+          "landed": 0,
+          "rolled": 0,
+          "hit_rate": 0
+        },
+        "coin_fan": {
+          "tries": 45,
+          "landed": 16,
+          "rolled": 1,
+          "hit_rate": 0.36
+        },
+        "decree": {
+          "tries": 16,
+          "landed": 0,
+          "rolled": 0,
+          "hit_rate": 0
+        },
+        "press_slam": {
+          "tries": 14,
+          "landed": 4,
+          "rolled": 2,
+          "hit_rate": 0.29
+        },
+        "ram": {
+          "tries": 12,
+          "landed": 3,
+          "rolled": 0,
+          "hit_rate": 0.25
+        }
+      }
+    }
+  },
+  "runs": {
+    "human": [
+      {
+        "seed": 11,
+        "down_s": 98,
+        "hp_left": 0,
+        "phase": 3,
+        "taken": 80,
+        "deaths": 1,
+        "tries": {
+          "charge": 3,
+          "coin_fan": 10,
+          "decree": 3,
+          "press_slam": 2,
+          "ram": 2
+        },
+        "landed": {
+          "coin_fan": 5,
+          "ram": 1
+        },
+        "rolled": {},
+        "hp_min": 3.6,
+        "repair_delay_s": 20,
+        "adds": [
+          3,
+          15
+        ],
+        "ticks": 7471,
+        "script_errors": 0
+      },
+      {
+        "seed": 12,
+        "down_s": null,
+        "hp_left": 0.01125,
+        "phase": 3,
+        "taken": 144,
+        "deaths": 2,
+        "tries": {
+          "coin_fan": 10,
+          "decree": 4,
+          "press_slam": 3,
+          "ram": 3
+        },
+        "landed": {
+          "coin_fan": 6,
+          "press_slam": 3
+        },
+        "rolled": {
+          "coin_fan": 1
+        },
+        "hp_min": 3.6,
+        "repair_delay_s": 20,
+        "adds": [
+          8,
+          23
+        ],
+        "ticks": 7467,
+        "script_errors": 0
+      },
+      {
+        "seed": 13,
+        "down_s": 83.9,
+        "hp_left": 0,
+        "phase": 3,
+        "taken": 30,
+        "deaths": 0,
+        "tries": {
+          "charge": 2,
+          "coin_fan": 8,
+          "decree": 3,
+          "press_slam": 3,
+          "ram": 3
+        },
+        "landed": {
+          "coin_fan": 3
+        },
+        "rolled": {},
+        "hp_min": 33.2,
+        "repair_delay_s": 20,
+        "adds": [
+          4,
+          15
+        ],
+        "ticks": 7471,
+        "script_errors": 0
+      },
+      {
+        "seed": 14,
+        "down_s": 78.4,
+        "hp_left": 0,
+        "phase": 3,
+        "taken": 58,
+        "deaths": 0,
+        "tries": {
+          "charge": 1,
+          "coin_fan": 8,
+          "decree": 3,
+          "press_slam": 3,
+          "ram": 2
+        },
+        "landed": {
+          "press_slam": 1,
+          "ram": 1
+        },
+        "rolled": {
+          "press_slam": 2
+        },
+        "hp_min": 54,
+        "repair_delay_s": 20,
+        "adds": [
+          2,
+          15
+        ],
+        "ticks": 7458,
+        "script_errors": 0
+      },
+      {
+        "seed": 15,
+        "down_s": 84.1,
+        "hp_left": 0,
+        "phase": 3,
+        "taken": 50,
+        "deaths": 0,
+        "tries": {
+          "charge": 2,
+          "coin_fan": 9,
+          "decree": 3,
+          "press_slam": 3,
+          "ram": 2
+        },
+        "landed": {
+          "coin_fan": 2,
+          "ram": 1
+        },
+        "rolled": {},
+        "hp_min": 12.6666666666667,
+        "repair_delay_s": 20,
+        "adds": [
+          5,
+          21
+        ],
+        "ticks": 7457,
+        "script_errors": 0
+      }
+    ]
+  }
+}

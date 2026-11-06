@@ -9,9 +9,27 @@ extends SceneTree
 ##   [--rigs] (rivet-arsenal: the quest drawn on the cast rigs, Quest1Game._dev_rigs)
 ##   [--cam=fight] (rivet-arsenal: the camera leans toward the cop Rivet fights, render only)
 ##   [--ticks=<from>-<to>] (rivet-arsenal: clip only these ticks, e.g. Dock 9's 13600-13840)
+##   [--quest-guns=off] (n7-ranged: the evening gun path, the before of the table guns)
+##   [--weapon-fx=shapes] (n7-ranged it16: no weapon-art cells, e.g. the rifle's dashes: the before)
+##   [--feel=off] (n7-ranged it26: no camera feel, HitFeel.feel_flag: the before of a feel row)
+##   [--quest-blade=off|<id>] (n7-melee: no carried blade / another one)
+##   [--blade=<from>-<to>] (n7-melee: the pad draws the blade on key 2 at <from>, closes and
+##   swings at the bot's target, puts it away at <to>)
 
 const KNOWN_FLAGS: PackedStringArray = [
-	"--out", "--ppm", "--stills", "--save", "--continue", "--rigs", "--cam", "--ticks"
+	"--out",
+	"--ppm",
+	"--stills",
+	"--save",
+	"--continue",
+	"--rigs",
+	"--cam",
+	"--ticks",
+	"--quest-guns",
+	"--weapon-fx",
+	"--feel",
+	"--quest-blade",
+	"--blade",
 ]
 const RECORDER: String = "res://dev/frames/quest1_clip_rec.gd"
 const COUNTER: String = "res://tests/support/error_counter.gd"
@@ -66,6 +84,10 @@ func _configure(rec: Node, values: Dictionary[String, String]) -> void:
 	if window.contains("-"):
 		var from: int = window.get_slice("-", 0).to_int()
 		rec.set("tick_window", Vector2i(from, window.get_slice("-", 1).to_int()))
+	var blade: String = values.get("--blade", "")
+	if blade.contains("-"):
+		var at: int = blade.get_slice("-", 0).to_int()
+		rec.set("blade_ticks", Vector2i(at, blade.get_slice("-", 1).to_int()))
 
 
 ## Called by the recorder when it is done: 0, or 1 when any engine/script error was logged.

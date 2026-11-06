@@ -86,10 +86,10 @@ static func _arms(rig: CutRig, p: BodyPlan) -> void:
 	for s: int in 2:
 		var side: RigLimbs = rig.sides[s]
 		side.upper = _limb(rig, p.upper_part[s], 0, rig.torso)
-		side.fore = _limb(rig, p.fore_part[s], 0, rig.torso)
+		side.fore = _limb(rig, p.fore_part[s], 0, rig.torso, p.arm_swap)
 	if p.has_hand():
 		var left: RigLimbs = rig.sides[BodyPlan.L]
-		left.hand = _part(rig, p.hand_open, _limb_kind(p), false, -1)
+		left.hand = _part(rig, p.hand_open, _limb_kind(p), false, p.arm_swap)
 		left.fore.add_child(left.hand)
 	if RigOffClaw.has_art(p):  # d7-held: the off claw on a two-claw weapon
 		var off: RigLimbs = rig.sides[1 - p.gun_arm]
@@ -115,8 +115,8 @@ static func _hose(rig: CutRig, p: BodyPlan) -> void:
 	rig.hose = hose
 
 
-static func _limb(rig: CutRig, part: String, z: int, parent: Node2D) -> Sprite2D:
-	var spr: Sprite2D = _part(rig, part, _limb_kind(rig.plan), false, -1)
+static func _limb(rig: CutRig, part: String, z: int, parent: Node2D, swap: int = -1) -> Sprite2D:
+	var spr: Sprite2D = _part(rig, part, _limb_kind(rig.plan), false, swap)
 	_attach(parent, spr, z)
 	return spr
 

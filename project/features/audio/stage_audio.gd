@@ -7,10 +7,18 @@ extends Node
 
 ## The riot's night-city bed is the quest stage's too, a little lower (a dock, not a crossing).
 const STAGE_BED_TRIM_DB: float = -3.0
+## n7-ranged: Rivet's picked-up rifle (audio_cues.json; pitch 1, gain -4 there = the before).
+const RIVET_RIFLE_CUE: StringName = &"shot_rivet_rifle"
 
 var service: AudioService
 var hooks: AudioHooks = AudioHooks.new()
 var voice: QuestVoice = QuestVoice.new()
+## n7-melee: the melee and ghost hits' own sounds (null under `--hit-cues=off`).
+var hit_cues: HitCues = null
+## n7-melee: the ghost attacks' wind-up and whiff sounds (null under `--tell-cues=off`).
+var tell_cues: TellCues = null
+## n7-ranged: a weapons row's end_cue plays where its round ends (`--end-cue=off` = the before).
+var end_cues: bool = not OS.get_cmdline_user_args().has("--end-cue=off")
 var _stage: CollectCallStage
 var _shots: Dictionary[Shot, Vector2] = {}
 
@@ -30,6 +38,10 @@ static func attach(
 	a.hooks.rivet_id = stage.arena.rivet.id
 	a.hooks.attach(a.service, bus, func() -> int: return stage.tick, rivet_m)
 	a.service.loops.set_on(&"city_ambience", true, STAGE_BED_TRIM_DB)
+	if HitCues.enabled():
+		a.hit_cues = HitCues.attach(stage.arena, a.service.tables.hits, a.service.cue)
+	if TellCues.enabled():
+		a.tell_cues = TellCues.make(a.service.cue)
 	var radio: CarRadio = CarRadio.new()
 	a.add_child(radio)
 	radio.listen(bus)
@@ -42,6 +54,8 @@ func _process(_delta: float) -> void:
 	if _stage == null:
 		return
 	_end_boss_loop()
+	if tell_cues != null:
+		tell_cues.step(_stage)
 	var gun: GunHand = _stage.arena.gun
 	if gun != null and gun.trigger.charge == 1:  # a charge gun starts charging (lane gunplay)
 		@warning_ignore("return_value_discarded")
@@ -51,12 +65,15 @@ func _process(_delta: float) -> void:
 		live[s] = s.pos
 		if not _shots.has(s):
 			@warning_ignore("return_value_discarded")
-			service.cue(_shot_cue(s), s.pos, _stage.tick)
+			service.cue(shot_cue(s), s.pos, _stage.tick)
 	for s: Shot in _shots:
 		if not live.has(s):
 			var id: StringName = &"hit_flesh" if hooks.kill_pending else &"projectile_end"
 			@warning_ignore("return_value_discarded")
 			service.cue(id, _shots[s], _stage.tick)
+			if end_cues and s.spec != null and s.spec.end_cue != &"":
+				@warning_ignore("return_value_discarded")
+				service.cue(s.spec.end_cue, _shots[s], _stage.tick)
 	_shots = live
 
 
@@ -67,7 +84,13 @@ func _end_boss_loop() -> void:
 		service.loops.set_on(&"boss_loop", false)
 
 
-func _shot_cue(s: Shot) -> StringName:
+## A round's shot cue: a table gun's own, Gloria's, Rivet's picked-up rifle (n7-ranged: his own,
+## not the contractors'), else the contractors' rifle.
+static func shot_cue(s: Shot) -> StringName:
 	if s.spec != null and s.spec.shot_cue != &"":  # a table gun's own (lane gunplay)
 		return s.spec.shot_cue
-	return &"shot_gloria" if s.weapon == &"gloria" else &"shot_assault_rifle"
+	if s.weapon == &"gloria":
+		return &"shot_gloria"
+	if s.from_rivet and s.weapon == &"assault-rifle":
+		return RIVET_RIFLE_CUE
+	return &"shot_assault_rifle"

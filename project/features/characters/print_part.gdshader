@@ -32,7 +32,8 @@ uniform float alpha_cut = 0.45;
 uniform vec2 world_px = vec2(0.0);  // camera world offset in screen px (PartMaterials.set_world_px): tooth + dots world-locked
 uniform float tint = 0.0;         // 1 = hit flash: everything but the ink prints cream (red is blood only; human-reactions 2026-11-04)
 uniform float silhouette = 0.0;
-uniform int swap = 0;           // crowd palette variants: 1 vermilion->ink, 2 vermilion->cream, 3 cream->vermilion, 4 ink->vermilion (a cop's solid plate)
+uniform int swap = 0;           // crowd palette variants: 1 vermilion->ink, 2 vermilion->cream, 3 cream->vermilion, 4 ink->vermilion (a cop's solid plate),
+                                // 5 gold leaf: paper and wash print GOLD..GOLD_DK, ink kept (n7-king: King's chest and press arms)
 uniform float lod_fill = 0.0;     // D1 sticker LOD fill: 0 = the limb_fill tint (limbs), 1 = flat vermilion (Rivet's collar), 2 = cream core,
                                   // 3 = vermilion with coarse ink hazard ticks (collar_stripes, collar_ink), 4 = cream core
                                   // with an ink welder-visor slot at the front (visor_x0, visor_hy; r2_c7 at game scale)
@@ -55,6 +56,9 @@ const vec3 GUN_TAN_HI = vec3(0.780, 0.700, 0.560);
 const vec3 GUN_TAN    = vec3(0.660, 0.580, 0.450);
 const vec3 GUN_TAN_DK = vec3(0.470, 0.400, 0.300);
 const vec3 INK   = vec3(0.090, 0.075, 0.106);
+// n7-king: the King's gold leaf (swap 5), the same gold as KingAccents and the throne-car's trim
+const vec3 GOLD    = vec3(0.851, 0.663, 0.200);
+const vec3 GOLD_DK = vec3(0.541, 0.392, 0.094);
 // d5-cast (2026-11-03): the police inks (palette.json cop_blue #3A4766, cop_blue_hi #4F86E0) replace vermilion
 // on cops. A pixel is cop blue where blue leads (b - max(r, g) >= blue_gate) and g >= r (navy, not the violet
 // steel sheen; a light pixel by blue_gate_hi); its light half prints cop_blue_hi (badge, shoulder marks), the rest cop_blue.
@@ -142,6 +146,10 @@ void fragment() {
 		else if (swap == 2 && o == VERM) o = CREAM;
 		else if (swap == 3 && o == CREAM) o = VERM;
 		else if (swap == 4 && o == INK) o = VERM;
+		else if (swap == 5 && !teal && o != INK && o != VERM) {
+			float gl = clamp((dot(o, vec3(0.299, 0.587, 0.114)) - li) / (lc - li), 0.0, 1.0);
+			o = mix(GOLD_DK, GOLD, smoothstep(0.15, 0.65, gl));
+		}
 		if (tint > 0.5 && o != INK) o = CREAM;
 		if (noir > 0.5) o = dot(c.rgb, vec3(0.299, 0.587, 0.114)) > noir_keep ? CREAM : INK;
 		COLOR = vec4(o * g, 1.0);

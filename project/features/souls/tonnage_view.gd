@@ -37,6 +37,10 @@ func _draw() -> void:
 		if reach_ring:
 			_reach(at, form.num(&"stomp_radius_m") * ppm, form.windup_k())
 		_telegraph(at, form.windup_k())
+	if form.on:  # n7-melee: the bow wave while the press charges
+		RamWake.draw(self, stage.arena.rivet.pos * ppm, form, stage.tick, ppm)
+	if marks:
+		RamMarks.draw_all(self, hauler, stage.tick, ppm)  # n7-melee: the ram's contact marks
 	if marks and hauler.stomp_tick >= 0:
 		var age: float = (stage.tick - hauler.stomp_tick) * SimClock.TICK_DT
 		var radius: float = form.num(&"stomp_radius_m")
