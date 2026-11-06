@@ -1370,3 +1370,7 @@ NEXT (written 05:15, for iteration 16; supersedes the 04:48 list):
   it: unit 1229, reels 19/19 x2, scenarios 52, full evidence run green on `7da9f3d6`. Clip
   `M/ghost_tell_cues_ab_32ppm.mp4` (8.1 s, with sound), city set re-cut. Call (o). NEXT is the 05:15
   entry above (item 3 done).
+- READ 05:34 n7-ranged log to `a175b3d8`: docs only since the shot cues, no hit_feel / feel_cam
+  commit, no REQUEST to melee; n7-king / n7-servo: none. TellCues reads the stage's pilot only (no
+  target kind), so a boss fight with the ghosts gets the same tells; Ohm's bolt on a boss is a body
+  hit (HitCues' crackle), not a TellCues whiff.
