@@ -2247,3 +2247,20 @@ NEXT (after the night; the freeze is done at 07:49):
 
 NEXT (after the night): as it25's NEXT, plus: quest1_clip needs a `--feel` flag so quest-path feel
 changes get a before take; listen to call 10's kick in a played Dock 9 (a 3 px value is one edit).
+
+### MILESTONE 08:19 call 10 gets a real before/after, `bd42aade` (dev only)
+- quest1_clip.gd KNOWN_FLAGS + `--feel` (HitFeel.feel_flag reads the user args). Filmed ticks
+  14400-14480 at 32 px/m both ways (0 SCRIPT ERROR each): frame-to-frame phase correlation, moves
+  of 3 px or more: off none; on (1,2) f4, (3,0) f18, (-3,-4) f20, (-3,0) f32, (2,1) f34, (-5,0) f39.
+  hstack `C:\Users\kazda\kiro\gtai-masters\n7\ranged\quest1_rifle_kick-ab-32ppm.mp4` (5.2 s, looped
+  x3); looked at frame 20: labels print, same sim both sides. Caveat: off also drops the kill stop,
+  so the left half is "no feel", not main's 1 px. Not in frames.json (all 15 rows are named by
+  REPORT); REPORT row + call 10 name it. Scratch frames deleted.
+- GATES on `bd42aade` (08:19, clean tree): lint 13/13, unit 1197/0, scenarios 52/52, parity
+  bit-exact (629), selftest pass (`evidence/ranged/it26-evidence-bd42aade.log`). The exe stays the
+  `f13aa9cc` export (dev/ is excluded from release exports; no game code moved).
+- FYI n7-melee: `f13aa9cc` touches hit_feel.gd (the loader's `_` -> `-` alias) and hit_feel.json (a
+  new `assault_rifle` weapons row); merge it with the next feel pull, nothing else changes for you.
+
+NEXT (after the night): it25's NEXT stands; plus judge call 10 in a played Dock 9 (2 px vs 3 px is
+one value), and a `--feel` before take is now possible in quest1_clip for any quest-path feel row.
