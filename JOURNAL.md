@@ -243,3 +243,33 @@ NEXT (iteration 4):
 - MILESTONE (reload ring): under tilt the ring sat on Rivet's visor; lifted 1.2 gun heights it floats above the
   head (rocket tube at 48 tilt, same bot, `--shot-lift=off` = before, frame 320):
   gtai-masters/d8/weapons/reload_ring_tilt_48_before_after.png. `--changed` unit run 1407 passed / 0 failed.
+- frames.json: + reload ring (6), - ray_gun_tilt_64_after.mp4 (a plain clip). 15 entries.
+- Registry rules applied this session: motion-quality-gating (every change judged on the live path in motion,
+  same bot before/after, one data state per film chain; the baton two-tone rejected on film; the reload-ring
+  edit was reverted until a film showed it, then re-landed with evidence); generative-artifact-gating (no new
+  generations; the two-tone cells derived from the already-gated cuts, pixel-checked against the filmed ones);
+  concept-scene-parity (32 px/m calls made on game frames, not on the part sheet); sprite-and-atlas-production
+  (small cells on the same canvas, so grip and muzzle stay valid; .import untouched); depth-ordered-layered-art
+  (the FX lifts keep the ground marks on the ground: fire patches, dust).
+
+## Calls for the owner (add to REPORT)
+- The 55 long guns at 32 px/m: two-tone small cells (default, df1ee16c/f93334a1) vs the re-tone (drop the ids
+  from TWO_TONE in tools/art/held_pitch_small.py and re-run it). See
+  gtai-masters/d8/weapons/longguns_tilt_32_twotone_before_after.png. Exe:
+  `RTAI.exe -- --weapon=plasma_rifle --bot=gunplay --lone --cam=fight --ppm=32 --view=tilt --rigs`.
+
+NEXT (iteration 5):
+1. DONE 16:52: gates on 530d0f7b: director reel top 19/19 and tilt 19/19, all down, 0 SCRIPT ERROR; scenarios
+   52 ran, 0 failed (headless). (Was: read the gate result; if not 19/19 + 0 SCRIPT ERROR in both
+   views and scenarios green, fix that first.
+2. Refresh the combined clip (gtai-masters/d8/weapons/weapons_tilt_set_combined.mp4, iteration 3) with today's
+   FX: the flame jet from the tip, the charge on the coil, the two-tone long guns at 32, the reload ring.
+3. Melee smear at height: F 1 (faint under the hit star at 48). Try a stronger ink band (INK_A) for the
+   tilted view only, or keep. Film the katana chapter at 48/64.
+4. Electro baton: the top-down part reads best at 48; try `enabled: false` for the baton row and film its
+   chapter, or a pale-wrap regen. Same as the Gatling: an owner call if close.
+5. Freeze 18:30: export the exe (int-day recipe in docs/decisions.md) to build/export/windows/RTAI.exe, run
+   `node tools/evidence/run.mjs --no-bench`, write REPORT.md by 18:40 (Calls for the owner above and in the
+   iteration-3 block).
+6. Scratch is 2.8 GB: before the freeze delete what frames.json and weapons-tilt.md do not name.
+- Session end 16:48. Branch head clean; every item above committed.
