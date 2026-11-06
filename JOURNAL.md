@@ -1256,3 +1256,59 @@ NEXT (iteration 13, in order):
 3. Director reel once more before the freeze; re-export the exe at the freeze (the it8 recipe in
    REPORT) and smoke it (King down 4933); finalize REPORT (remove DRAFT, Next steps).
 - Session ends ~02:48, everything committed.
+
+## Iteration 13 (02:45-03:45, BUILD)
+Read: JOURNAL it12 tail + NEXT, git log -12. Rules kept from it12: motion-quality-gating (judge at
+32 px/m in the live path, A/B stills), depth-ordered-layered-art (HUD band above the floor).
+
+### 02:55 MILESTONE (NEXT 1) the floor's area name no longer prints under the boss bar
+- `ArenaPlan.Area.stenciled` (default true); `BossHook._clear_floor` clears it on every area;
+  `ArenaFloorView` skips the stencil when false. Framework-shared (every `--boss` arena).
+- Before/after, `--boss=king --phase=3 --bot-stand --seed=2`, tick 300, 32 px/m
+  (`evidence/king/shots/it13/area_name_before_after_p3_32ppm_1p5x.png`): **looked at**: before,
+  "KING'S BOULEVARD" under the bar and its "3/3"; after, the band is clean, the crates and the curb
+  line unchanged. DECISION: skip (not move to bottom-left: a dev stencil, and the bottom edge is
+  where Rivet stands). Render only. Lint 13/13, unit **1160/0**. Commit 6651eae2.
+- REQUEST servo: merging `n7-king` past 6651eae2 brings `ArenaPlan.Area.stenciled`; your arena's
+  area name stops painting under `--boss` too. Nothing to change on your side.
+
+### 02:55 MILESTONE the shoulder megaphone prints gold (REPORT gap closed)
+- Why dark: the horn's steel (median luminance 80) sat at the print's ink end at 32 px/m, and its
+  red rim (2032 of 11823 px) printed vermilion flecks: vermilion is the cape's and danger's only.
+- `tools/art/king_press_parts.py HORN_LIFT` (red greyed to its luminance, steel x k, ink kept);
+  A/B 1.0 / 1.55 / 1.9, phase 3 tick 300 and phase 1 tick 60, 32 px/m
+  (`evidence/king/shots/it13/horn_lift_10_155_19_p3_p1_32ppm_4x.png`). **Looked at**: 1.0 ink
+  with vermilion flecks; 1.55 a gold cone with a dark bell mouth, on foot and on the car; 1.9 gilds
+  the mouth and the cone stops reading. DECISION 1.55. The tool's regenerated horn is byte-equal
+  to the trial; press_plate / r_forearm_press / parts.json unchanged.
+- Gates: lint 13/13; unit 1159/1 (`test_noir_shadows`, the known flake: "Parameter t is null"),
+  re-run 1160/1160 (`unit-it13b-noir-alone.log`). Commit 455dae8f.
+
+### 03:04 MILESTONE the cape reads as fur-trimmed cloth and moves (weakest item by the target comparison)
+- Looked at `M/king_target_vs_game_32ppm_it12.png`: beside the target's top panel the in-game cape
+  was the flattest thing on screen (a vermilion trapezoid, a plain cream band); the target's is
+  cloth with folds under ermine. Motion-quality-gating (anticipation and follow-through on the
+  tell/active/recover beats), depth-ordered-layered-art (cape under the rig, fur over the cloth).
+- `KingCape` (new file, out of KingBodyView, which drops to 204 LOC): folded hem, ink folds,
+  ermine border + tails, idle sway on the fight tick, gather/flare/settle on charge and ram.
+- A/B (`evidence/king/shots/it13/cape_before_after_32_48ppm.png`, phase 3 and phase 1, 32 and 48
+  px/m): **looked at**: cloth with an ermine edge, on foot and on the car; fold lines from the collar
+  read as spokes, so they start 0.3 out (DECISION FOLD_FROM 0.3; trial `build/scratch13`, deleted).
+- Motion (`cape_charge_gather_flare_48ppm_5fps.png`, phase 3 seed 2 stander, 2.6-5.0 s at 5 fps):
+  **looked at**: drawn in through the charge tell, long behind the dash, still long in the first
+  recovery frame, then at rest. Positions match the un-eased film frame for frame (render only).
+- `test_king_cape` 3/3 (planted FLARE_K 1.0: 1 failing, restored). Lint 13/13, unit **1160/0**.
+  Commit 3e3c0d61.
+
+### 03:20 FILM the full fight and the re-cuts on 3e3c0d61 (cape, gold horn, clean bar)
+- Scenarios **52 ran, 0 failed** (`evidence/king/scenarios-it13.log`).
+- `M/king_fight_bot_human_32ppm_it13.mp4` (95 s, 32 px/m, seed 2, --bot-human --boss-cam, music,
+  0 SCRIPT ERROR); headless telemetry of the same run: King down at tick **4933**, Rivet took
+  **88**, landed coin_fan 3 / press_slam 1 / ram 1, identical to it12
+  (`evidence/king/shots/it13/fight_human_s2_it13_tel.json`). **Looked at** the keys every 6 s
+  (`shots/it13/fight_human_32ppm_it13_keys.png`): folded cape on the car and on foot, ram lane,
+  coin fans, court, phase 3 with no stencil under the bar, the defeat.
+- Re-cut: phase clips 1-3, procession entering (0-62.5 s), target comparison (12 s / 72 s at 2x;
+  **looked at**: the car with cape, cannon and riders beside the sheet's top panel; King on foot
+  beside Rivet and the wreck). CRF 24 (CRF 20 doubled the size). it12 versions deleted;
+  frames.json 15; REPORT points at it13; REPORT call L (the cape).

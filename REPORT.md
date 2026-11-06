@@ -22,22 +22,23 @@ The moveset is `docs/bosses/king.md`; the full log is `JOURNAL.md`.
     forearm he inherited (`king_press_plates_before_after_48ppm_it8.png`);
   - (it13) the megaphone prints gold with a dark bell mouth at 32 px/m (it was an ink smudge with
     vermilion flecks: `evidence/king/shots/it13/horn_lift_10_155_19_p3_p1_32ppm_4x.png`);
-  - a jewelled crown and the ermine collar over the vermilion cape;
+  - a jewelled crown and the ermine collar over the vermilion cape; (it13) the cape is folded cloth
+    under an ermine border that sways and trails his charge (`evidence/king/shots/it13/cape_before_after_32_48ppm.png`);
   - the gilded plum throne-car, a boss-owned vehicle with drapes and a hood cannon (banded gold barrel on a swivel mount since it12, `evidence/king/shots/it12/hood_cannon_before_after_48ppm_2x.png`);
   - the gang: the rich robot thug with gold chains, a steel helmet and shades.
-- **Three phases** (`king_phase{1,2,3}_*_32ppm_it12.mp4`, cut from the it12 full fight):
+- **Three phases** (`king_phase{1,2,3}_*_32ppm_it13.mp4`, cut from the it13 full fight):
   - phase 1, the procession: ram lanes and the hood cannon's coin fan (since it10 a spray of 48 coins out of the muzzle, `evidence/king/shots/it10/coin_spray_before_after_48ppm.png`), with the gang pushing and riding;
   - phase 2, the court: the car stops, the gang brawls, and decrees buff them;
   - phase 3, on foot: the press slam (a leap onto the ring, shockwave plus coin ring) and the charge.
 
   Then a defeat beat: the crown falls off and rolls away.
 - **Clips**:
-  - the full fight played by the human-like bot on the current body (`king_fight_bot_human_32ppm_it12.mp4`, 95 s; King down at tick 4933, the headless run's tick);
-  - the procession entering, from the gang's first appearance to King stepping down (`king_procession_enter_32ppm_it12.mp4`);
+  - the full fight played by the human-like bot on the current body (`king_fight_bot_human_32ppm_it13.mp4`, 95 s; King down at tick 4933, the headless run's tick);
+  - the procession entering, from the gang's first appearance to King stepping down (`king_procession_enter_32ppm_it13.mp4`);
   - the press slam, telegraph (the plates raised beside the crown), hit and dodge (`king_slam_plates_48ppm_it10.mp4`);
   - the charge, telegraph lane, hit and dodge (`king_charge_48ppm_it10.mp4`);
   - the ram and the coin fan, hit and dodge (`king_ram_coin_fan_48ppm_it12.mp4`), and the decree's windup arc and buff (`king_decree_48ppm_it10.mp4`);
-  - the target sheet beside the game at 32 px/m (`king_target_vs_game_32ppm_it12.png`);
+  - the target sheet beside the game at 32 px/m (`king_target_vs_game_32ppm_it13.png`);
   - the ghosts on King (Dent, Kerf, Tonnage, Ohm).
 - **Combat holds**: the director reel was 19/19 chapters down with 0 SCRIPT ERROR on the branch
   (`evidence/king/director-reel-it6.log`).
@@ -105,6 +106,12 @@ Each call names its options, the default that is built, and how to see it.
 - **K. Gang close-up steel (it12).** At 56 px/m and above the gang's D5 set is lifted x1.3 and
   reads as light plated steel like the target's (built: `tools/art/gang_parts.py LIFT_K_D5` 1.3), or
   the old near-black close-up (1.0): `evidence/king/shots/it12/gang_d5_lift_before_after_64ppm_3x.png`.
+- **L. The cape (it13).** Fur-trimmed cloth that moves (built: `KingCape.FOLDS` 4: a folded hem,
+  short ink folds, an ermine border with ink tails, a slow sway, drawn in through the charge and ram
+  tells and flared through the dash), or the flat vermilion trapezoid with a cream band (`FOLDS` 0):
+  `evidence/king/shots/it13/cape_before_after_32_48ppm.png` (stills),
+  `evidence/king/shots/it13/cape_charge_gather_flare_48ppm_5fps.png` (the charge), and in play
+  `RTAI.exe -- --boss=king --phase=3`.
 
 ## The exe
 
