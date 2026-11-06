@@ -1,8 +1,5 @@
 # d8 bosses: REPORT (lane `bosses`, branch `d8-bosses`)
 
-> DRAFT written 17:10 (session 4). Owed at the freeze (18:30): the Windows export, `evidence --no-bench`,
-> the final gate numbers on the tip, and the exact exe command lines checked against the build.
-
 **What to look at first:** `C:\Users\kazda\kiro\gtai-masters\d8\bosses\frames.json` (15 entries, best
 first), then the combined clip `bosses_d8_it4_combined.mp4` (32 s: the throne-car at 64 px/m, the King on
 foot at 64 with the cape train, Servo standing at 48 vs the katana).
@@ -53,16 +50,20 @@ All under `--view=tilt` (55 degrees), seed 2, the live arena (`--boss=king` / `-
 The King vs the katana, the gang vs Rivet, and Servo at contact with the katana (`--ghost=kerf --loadout=katana`):
 the parts hold their detail and do not turn to mush.
 
-## Gates (refresh the numbers on the final tip at the freeze)
-- Director reel, headless (`--loadout=pistol --rigs --quit-after 8000`) on 6344f887: **tilt 19/19 chapters fully down,
+## Gates (on the final code tip 8dbbbcf0)
+- Director reel, headless (`--loadout=pistol --rigs --quit-after 8000`): **tilt 19/19 chapters fully down,
   top 19/19, 0 SCRIPT ERROR**.
-- On 0f11ec5f: unit full run **1427/1427**, scenarios **52/52** (run alone). Lint 15/15 on every commit.
+- `node tools/evidence/run.mjs --no-bench`: **all PASS**: lint 15/15, unit 1428/0, scenarios 52/52, parity
+  bit-exact (planted mutation caught at 629), selftest (look goldens 11/11, block 5/5), export-audit 542 loaded,
+  0 failed. Bench not run (art and view only; no bench lock taken).
 - `top` identity was measured for every change: a raw-frame md5 of the old code vs the new code under `--view=top` (JOURNAL).
-- `node tools/evidence/run.mjs --no-bench` on 27512277 (code = 76cbfcfb): **all PASS**: lint 15/15, unit 1427/0, scenarios 52/52, parity bit-exact (planted mutation caught at 629), selftest (look goldens 11/11, block 5/5), export-audit 542 loaded, 0 failed.
+
+### Mid-fight pitch changes (session 5)
+- view70's combined view eases 70 -> 55 into a boss fight. A court card now re-dresses when the pitch moves:
+  it swaps to that pitch's strip, or back to the shared card at a pitch with none (8dbbbcf0, unit test 55 -> 65 -> 55).
+  At a steady pitch the tilt frames are md5-identical to before.
 
 ## What does not work / known gaps
-- Mid-fight pitch changes (view70's combined view): a card swapped once keeps its strip if the pitch moves.
-  The fix is to fold the court strips into chars' `ViewMode.art` route after the merge (rows in JOURNAL 14:47).
 - An arm can cross over the bust card at melee range (RigDepthSort, which belongs to chars).
 - The emerald accents key toward grey (the chroma despill clamps green).
 
@@ -84,14 +85,19 @@ Each call names the default that is built, the alternative one value away, and h
 ## Exe
 `build/export/windows/RTAI.exe` (the `windows-showcase` preset: it boots into the arena; pass the arena args after `--`).
 Export: `"$GODOT_BIN" --headless --path project --export-release windows-showcase ../build/export/windows/RTAI.exe`
-(with `APPDATA=C:/Users/kazda/kiro/gtai-d8/appdata/bosses`). A trial export at 17:14 worked and its smoke run
-(`--boss=king --phase=3 --view=tilt`) showed 0 SCRIPT ERROR. The final exe is re-exported from the tip at the freeze.
+(with `APPDATA=C:/Users/kazda/kiro/gtai-d8/appdata/bosses`). **Exported at 17:44 from 8dbbbcf0** (exit 0).
+Smoke, 600 frames each (King phase 3 at 64 px/m tilt, the throne-car tilt, Servo tilt, the King in top): exit 0,
+0 SCRIPT ERROR, 0 "triangulation failed"; the last frames show the angled art.
 - The King, angled: `RTAI.exe -- --rigs --boss=king --view=tilt` (on foot: add `--phase=3`; close range: `--ppm=64`)
 - Servo, angled: `RTAI.exe -- --rigs --boss=servo --view=tilt`
 - The same fight in `top` (today's art): drop `--view=tilt`.
 
+## What blocked
+- Nothing blocked. Friction: this lane's appdata had no export-templates junction (fixed 17:13). I also edited the tree
+  while `evidence` ran once, which tripped its tree-changed guard (re-run clean).
+
 ## Next steps
-- Fold the court card strips into chars' `ViewMode.art` route after the merge, and re-dress the card when the pitch moves.
+- Fold the court card strips into chars' `ViewMode.art` route after the merge (rows in JOURNAL 14:47); KingArt keeps the limbs and the cape.
 - A p70 set for view70's sample (the same cutters: `tools/art/king_parts_pitch.py`, `king_car_walls.py`,
   `king_car_cannon.py`, `servo_parts_pitch.py` take the 70 sheets).
 - Kerf v2 is waiting for the owner's look (not in this lane).

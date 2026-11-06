@@ -316,3 +316,30 @@ NEXT (iteration 7 = the freeze session; freeze 18:30, REPORT 18:40):
   lint 15/15, unit 1427/0, scenarios 52/52, parity bit-exact (planted caught at 629), selftest (look
   goldens 11/11, block 5/5), export-audit 542 loaded 0 failed. NEXT item 1 done; re-run only if code
   changes before the freeze.
+
+## Iteration 7 by the runner (session 5; 2026-11-06 17:31-18:30, BUILD -> the freeze)
+
+- 17:31 Read JOURNAL, git log, REPORT draft, chars/view70 JOURNALs (no open REQUEST to bosses; view70
+  merged d8-bosses at c9501647 and put the throne-car art in p70). Rules applied: `concept-scene-parity`
+  (the exe smoke judged in the live arena paths, not the sheets), `motion-quality-gating` (the director
+  reel in tilt and top on the tip), `depth-ordered-layered-art` (the re-dressed card keeps the shared
+  card's z and anchor), `generative-artifact-gating` (no new AI asset this session).
+- 17:35 MILESTONE 8dbbbcf0: the known gap "a card swapped once keeps its strip if the pitch moves"
+  (view70's combined view eases 70 -> 55 into a boss fight) is closed in KingArt: the card keeps the pitch
+  it was dressed for (meta court_pitch) and the shared strip it first wore (court_shared), and when the
+  pitch moves it swaps to that pitch's court strip (p70 -> p55), or back to the shared card at a pitch
+  with no strip; the horn part follows. New unit test 55 -> 65 -> 55. GATE tilt at a steady pitch
+  pixel-md5 identical HEAD vs new: phase 3 t270 at 64 (c421b2d4) and the car t720 at 32 (72674cf7);
+  `top` builds no card, so it is untouched by construction. FYI view70: merge 8dbbbcf0 for the combo.
+- 17:36 GATE director reel headless (`--loadout=pistol --rigs --quit-after 8000`) on 8dbbbcf0: tilt
+  19/19 chapters fully down, 0 SCRIPT ERROR; top 19/19, 0 SCRIPT ERROR.
+- 17:44 GATE `node tools/evidence/run.mjs --no-bench` on 8dbbbcf0, tree untouched: ALL PASS: lint 15/15,
+  unit 1428/0, scenarios 52/52, parity bit-exact (planted caught at 629), selftest (look goldens 11/11,
+  block 5/5), export-audit 542 loaded 0 failed.
+- 17:44 EXPORT `build/export/windows/RTAI.exe` from 8dbbbcf0 (windows-showcase, exit 0, 0 ERROR lines).
+  Smoke 600 frames each, write-movie: King phase 3 tilt 64, King car tilt 32, Servo tilt 48, King top:
+  all exit 0, 0 SCRIPT ERROR, 0 "triangulation failed" (only the exit-time "resources still in use"
+  line every dev run prints too). Last frames looked at (scratch it7/smoke_strip.png): the p55 art draws
+  in the exe.
+- 17:48 Masters cleanup: removed the superseded it1/it3 combined clips and king_car_64_t600 (none in
+  frames.json or REPORT). No .avi left in scratch.
