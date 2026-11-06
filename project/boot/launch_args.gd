@@ -34,6 +34,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--quest-guns",
 	# n7-ranged: --flash-at=side prints the muzzle flash beside the aim line (the before of HeldMuzzle)
 	"--flash-at",
+	# n7-ranged: --throw-windup=off holds a ready molotov out at the aim (the before of RigThrow)
+	"--throw-windup",
 ]
 
 var _values: Dictionary[String, String] = {}

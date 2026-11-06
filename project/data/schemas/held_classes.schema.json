@@ -71,6 +71,11 @@
           "minItems": 1,
           "type": "array"
         },
+        "windup_px": {
+          "maximum": 200,
+          "minimum": 0,
+          "type": "number"
+        },
         "wrist_rad": {
           "maximum": 1.5,
           "minimum": -1.5,
