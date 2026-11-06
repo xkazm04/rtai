@@ -52,6 +52,7 @@ func test_heights_come_from_the_table() -> void:
 func test_parked_cars_go_to_vehicle_parked_not_the_draw_order() -> void:
 	var lift: ChunkLift = _lift(70.0)
 	lift._carded = true  # as under a tilt with a card atlas
+	VehicleParked.live = true  # a VehicleView draws them
 	var c: CityChunk = _chunk([Vector3(0, 0, 0), Vector3(44, 3, 5), Vector3(1, 0, 12)])
 	assert_eq(lift.count(c), 2, "the sedan (texture 44) is not drawn flat")
 	assert_eq(lift.nth(0, c), 0)
@@ -59,4 +60,17 @@ func test_parked_cars_go_to_vehicle_parked_not_the_draw_order() -> void:
 	var cars: PackedVector4Array = VehicleParked._chunks[c.key()]
 	assert_eq(cars.size(), 1, "it is handed to VehicleParked by chunk key")
 	assert_eq(cars[0], Vector4(3, 5, 0, 44))
+	VehicleParked.live = false
+	VehicleParked.clear()
+
+
+func test_parked_cars_stay_flat_without_a_live_vehicle_view() -> void:
+	var lift: ChunkLift = _lift(70.0)
+	lift._carded = true
+	VehicleParked.live = false  # the arena city: no VehicleView
+	@warning_ignore("return_value_discarded")
+	lift._is_building.resize(64)  # texture 44 (a sedan) is in range: a flat prop
+	var c: CityChunk = _chunk([Vector3(0, 0, 0), Vector3(44, 3, 5), Vector3(1, 0, 12)])
+	assert_eq(lift.count(c), 3, "the sedan stays a flat prop")
+	assert_false(VehicleParked._chunks.has(c.key()), "nothing handed over")
 	VehicleParked.clear()
