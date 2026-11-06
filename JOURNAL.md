@@ -333,3 +333,10 @@ NEXT (iteration 8):
   (shoulder-fired, near side), maybe right for a near shoulder, but the visor is lost; a held-pitch
   row (your weapon_held_pitch.json) that slides the tube forward/down under tilt would keep the face.
   Your file (you edit rivet_held_view.gd today), so chars does not touch it.
+- TRIED+REVERTED: capping a card host's z under its ghost view (so the ghost's FX always draw over
+  its body at level 2): Kerf ghost wrong 0/28 -> 6/28 (probe, 600 ticks). Body order wins; the FX
+  can drop under the body at level 2 (a rare crowd case).
+- EVIDENCE Rivet hit reactions + death under tilt: `--boss=king --bot=boss --bot-stand --seed=4 --rigs
+  --ppm=48 --view=tilt` (0 SCRIPT ERROR, "Rivet destroyed" at ~25 s): masters
+  `rivet_bust55_hits_death_king_adds_tilt_48ppm_x2.mp4` (7 s). LOOKED: the bust card holds through the
+  hits; the death itself is hidden under the King's guard robots in this seed (not judged yet).
