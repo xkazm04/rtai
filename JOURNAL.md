@@ -1652,17 +1652,30 @@ same-build before in the live quest path, the quest's own clip window), depth-or
 - Clip `smg_shot_cue-ab-32ppm.mp4` (6 s with sound), still checked. REPORT row, call 7, audit row,
   decisions.md line. NEXT 3's first half done (below).
 
+### MILESTONE 04:47: `e63c186e` the flamer's jet gets its own roar (NEXT 3's second half)
+- CHECK first (`--weapon=flamethrower --bot=range`, 600 frames, on `af228b88`): the held jet's
+  `fire_crackle` (one play per 8 ticks) is continuous (ticks 300-480: per-tick rms within about
+  +-3 dB, std 2.1, no gap), but faint: about -28 dB per tick, some 15 dB under a gun stream.
+- Data only: audio_cues.json `shot_flame` (fire_crackle 0.9, +1 dB, 50 m, cooldown 6, 3 voices);
+  weapons.json flamethrower shot_cue `fire_crackle` -> `shot_flame` (the wreck bed keeps its row).
+  Test +1 (7/7): not the bed, 3+ dB over it; planted (back on fire_crackle): 2 asserts fail. Lint
+  13/13.
+- FILM range before (HEAD~ weapons.json, restored, tree checked) / after, both exit 0, 0 SCRIPT
+  ERROR: ticks 300-480 per-tick mean -29.0 -> -24.2 dB (std 2.4 -> 2.7, still continuous); 5-8 s rms
+  -28.4 -> -23.4 dB, centroid 5875 -> 5361 Hz. Clip `flamer_jet_cue-ab-32ppm.mp4` (6 s with sound),
+  still checked (the jet and its burst on the dummy). REPORT row, call 7, audit row, decisions line.
+
 NEXT (iteration 17; supersedes the 04:08 list):
 1. Freeze (by 08:30): full evidence run on the final head (`node tools/evidence/run.mjs`; last
    full green `13e0e050`; since then render-only `01a482d1` (scenarios 52/0, quest 1 replay
-   identical) and sound-only data `d4559823`, `6e50068c`, `4e8860c3`, `b66880c1`, `51cb1194`); last
+   identical) and sound-only data `d4559823`, `6e50068c`, `4e8860c3`, `b66880c1`, `51cb1194`, `e63c186e`); last
    unit 1176/1176 + reels 19/19 x2 on `2d63f305`; re-bake + export
    `windows-showcase` -> `build/export/windows/RTAI.exe`; REPORT exe lines for calls 4-7 (call 7 now
    lists the Gatling, zap and molotov cues with their exe commands); drop DRAFT.
-2. City combined clip: retake at the freeze (the sound changed for the SMG, Gatling, electro, plasma,
+2. City combined clip: retake at the freeze (the sound changed for the SMG, flamer, Gatling, electro, plasma,
    ray, molotov, rocket and nuke chapters; the picture did not).
-3. Sound pass, what is left (the SMG is done, `51cb1194`): the flamer's `fire_crackle` cue is the burning-wreck bed (cooldown 8): check that a held jet
-   reads as continuous on the range film before touching it.
+3. Sound pass: done for every gun's shot (SMG `51cb1194`, flamer `e63c186e`). Run unit + reels on
+   the head (`e63c186e` and later): the last full unit and reels are on `2d63f305`.
 4. Quest 1's rifle: I and V still `?` (its hits land at the clip frame's right edge). If time, a
    wider `quest1_clip --ppm=24`-style framing is not a flag; try `--cam=fight` stills at the ticks
    a contractor drops (the HUD kill count) instead. Rifle fire kick: no hit_feel row can key
