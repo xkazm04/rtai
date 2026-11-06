@@ -1633,3 +1633,7 @@ NEXT (iteration 21: the freeze at 08:30, report 08:40):
   140/159, hot 18/19, hop 37/39, dives 34/54, 346 parcel hits. REPORT table now n = 10 for all
   three bots; the fairness line corrected to the measured rates (dives 11 % on the dodge bot, 63 %
   standing; my first draft said "under 10 % / over 90 %" for all, which the dives break).
+- 07:37 PACING from `numbers-it20/` windups (first own-attack windup per phase, an upper bound on the
+  transition: the telemetry has no transition tick): depot 54 s, rush hour 49-52 s, overtime
+  28-31 s for both moving bots. REPORT numbers section. (A framework `phase_ticks` field in the
+  boss_fight telemetry would make it exact: a REQUEST for king's lane next night, not tonight.)

@@ -44,6 +44,11 @@ bot's 98 on seed 10 is one bay hop, one dash each and a dive. it6a, wings touchi
 spread is wide (110-169 s), so still not called balanced; it is fair in the sense that the dashes and
 hop land 4-6 % and the dives 11 % on a bot that reads its tells, against 88-95 % (dashes, hop) and
 63 % (dives) on one that stands.)
+Pacing per phase (combat-pacing-and-dramatic-arc), from the same 20 runs: a phase's start is read as
+its first own attack's windup (carpet or hop = rush hour, kamikaze or hot dash = overtime), so each
+start is an upper bound; the fight records no transition tick. Depot 54 s (dodge 36-88, human
+45-75), rush hour 49-52 s (38-73), overtime 28-31 s (19-41): a falling arc, the hottest phase the
+shortest. The 88 s depot is dodge seed 1, the 159 s fight.
 The rotor dash checked against a reading player (it6): every tell read but 18-32 ticks late, it lands
 2/40. The human bot's ~40 % comes from its 30 % unread tells (`numbers-it6-read1-*`).
 
