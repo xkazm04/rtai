@@ -335,3 +335,18 @@ NEXT (iteration 5):
   1.35 (scratch molo/m3.png): 1.2 reads as a bottle (neck, body, lit rag) carried and raised; 1.35 is a club
   as big as the head. gtai-masters/d8/weapons/molotov_tilt_48_size_k.png (not in frames.json: a small data
   tweak; the audit row names it). `--changed` unit 1412 passed / 0 failed.
+- Gates on cddcc340 (molotov data): director reel headless top 19/19 and tilt 19/19, all down, 0 SCRIPT ERROR
+  (scratch reel9_*.log). Scratch cleaned 3.4 -> 2.9 GB (rejected v1 smear films, clip segments, the old
+  combined clips, check pngs).
+
+NEXT (iteration 6, the FREEZE session):
+1. 18:30 freeze: re-export on the final head (the 17:13 exe predates the pickup hover and the molotov):
+   `export APPDATA=C:/Users/kazda/kiro/gtai-d8/appdata/weapons; "$GODOT_BIN" --headless --path project --export-release windows-showcase ../build/export/windows/RTAI.exe`
+   (the templates junction is fixed). Smoke: `RTAI.exe --quit-after 600 -- --armory --ppm=48 --view=tilt --rigs`.
+2. `node tools/evidence/run.mjs --no-bench` (bench lock rule), quote its result in REPORT.
+3. REPORT.md is drafted and committed: fill in the final gate numbers, the head sha and the exe; drop "DRAFT".
+4. Scratch: audit/ (1.4 GB), heavy48/, lod32/ hold the sources of masters stills; delete the films that
+   frames.json/weapons-tilt.md do not name (audit/*_before|after for weapons with no still).
+5. If time is left before the freeze: score the electro arc origin in the electro_chain chapter (still ?), or a
+   pickup segment for the combined clip (`--armory`, 48 tilt, a slow pan).
+- Session end 17:35 (iteration 5). Branch head clean; every item above committed.
