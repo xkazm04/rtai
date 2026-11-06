@@ -50,3 +50,16 @@ func test_without_a_card_nothing_is_swapped() -> void:
 	rig.variant = RigVariant.crowd(1)
 	StreetCrowdCards.step(rig)
 	assert_null(rig.head_card)
+
+
+func test_the_variety_is_stable_bounded_and_spread() -> void:
+	var lo: float = 1.0
+	var hi: float = -1.0
+	for id: int in range(1, 201):
+		var a: float = StreetCrowdCards.vary(id, 3)
+		assert_eq(a, StreetCrowdCards.vary(id, 3), "same actor, same draw")
+		lo = minf(lo, a)
+		hi = maxf(hi, a)
+	assert_between(lo, -1.0, -0.8, "reaches the small end")
+	assert_between(hi, 0.8, 1.0, "reaches the big end")
+	assert_ne(StreetCrowdCards.vary(5, 3), StreetCrowdCards.vary(5, 17), "scale and value differ")
