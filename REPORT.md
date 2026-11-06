@@ -14,10 +14,10 @@ indexed in `M/frames.json`. Design: `docs/bosses/servo.md`. Journal: `JOURNAL.md
 - **The body**: a cutout rig from Codex part sheets (`tools/art/servo_parts.py`). The 3-row rack
   wings are each one frame (`tools/art/servo_rack3.py`), set 0.94 m apart (`servo.json
   rack.spine_m`) by a heavy 1.5 m central spine of tan steel with stacked plated boxes and its hose cap, the sheet's top view; round hover pads on long arms, walker legs, and a visor head that glows vermilion
-  only during a tell. The rack is its own animated layer: drones dock, launch and refill. Phase 3
+  only during a tell. The rack is its own animated layer: each full bay holds a docked quad drone (a cream hub and rotor rings on the art's bays, the sheet's look; the flying drone is the same hub and four rotors), drones launch from it, their bays go dark, and refill. Phase 3
   blows a wing off. The defeat: a flash, the pads spin down, the body slumps and greys out, the
   drones spill, the visor flickers out in cream.
-  See `M/frames/servo_target_vs_game_32ppm_it14.png` and `M/frames/servo_rack_spine_docked_ab_it9.png`.
+  See `M/frames/servo_target_vs_game_32ppm_it14.png` and `M/frames/servo_docked_bays_ab_it16.png`.
 - **The drone swarm** (`features/bosses/servo/`): flocking on the 60 Hz tick from the
   `servo_swarm` stream, drop rings, a max-alive cap per phase, despawn, parcels (a bomb or a CS
   crate obstacle), and armoured kamikaze dives in phase 3. The drones are shootable. Dent seizes
@@ -27,7 +27,7 @@ indexed in `M/frames.json`. Design: `docs/bosses/servo.md`. Journal: `JOURNAL.md
   from rush hour on, stacked CS crates). Rush hour opens with the depot's shift horn.
 - **The framework** (n7-king's) carries Servo: the boss bar and phase marks, the music and stinger,
   `--boss=servo [--phase=N]`, and `--bot=boss`.
-- **The full fight by the bot** at 32 px/m: `M/servo_fight_bot_human_32ppm_it14.mp4` (121 s, down at 117 s; keys `M/frames/servo_fight_keys_32ppm_it14.png`). Per attack (48 px/m): `M/servo_attack_*`; the drone wave from the lock to the dodge: `M/servo_drone_wave_scan_drop_dodge_48ppm_it16.mp4`; per phase (32 px/m): `M/servo_p{1,2,3}_*_32ppm_it12.mp4`; ghosts: `M/servo_ghost_*`. Index: `M/frames.json`.
+- **The full fight by the bot** at 32 px/m: `M/servo_fight_bot_human_32ppm_it14.mp4` (121 s, down at 117 s; keys `M/frames/servo_fight_keys_32ppm_it14.png`). Per attack (48 px/m): `M/servo_attack_*`; the drone wave from the lock to the dodge: `M/servo_drone_wave_scan_drop_dodge_48ppm_it16.mp4`; per phase (32 px/m): `M/servo_p{1,2,3}_*_32ppm_it14.mp4`; ghosts: `M/servo_ghost_*`. Index: `M/frames.json`.
 
 ## Numbers (the bot; `evidence/servo/numbers-it9-spine94/` + `-stand/`, seeds 1-5, CONTENDED wall time, tick-exact)
 On the shipped tree (rack.spine_m 0.94); `numbers-it6a/` is the same fight with the wings touching.
@@ -76,4 +76,10 @@ tick 7036, 188 on Rivet, 0 SCRIPT ERROR, the editor's numbers (`evidence/servo/e
 - (Fixed in it12) the clip camera at the phase-3 defeat in the yard's top-left corner: turned sideways, his rack, pads and spill reach ~5 m from his centre, so half the body left the screen at the 3.0 m margin. `BossCam.BOSS_MARGIN_X_M` 5.5 (sideways only; 3.0 vertically) holds him whole; the mid-fight framing did not change in the 12 keys, and at the corner a strip of sidewalk shows. View only, `--boss-cam` only (a framework file: King's clips frame the same unless he stands within 5.5 m of a side edge). A/B: `M/frames/servo_bosscam_xmargin_ab_it12.png`; the clip `M/servo_p3_overtime_defeat_32ppm_it14.mp4`.
 
 ## Next steps
-- To come.
+- Listen to the horn and the boss loop in the exe (never heard tonight).
+- Play the fight by hand at 32 px/m (`RTAI.exe -- --boss=servo`): the numbers are the bots'.
+- Body: the docked bays now match the sheet; what remains by the target still is the spine's rail
+  bottom under the torso and the drones' packages (the sheet's are slung, ours sit on the hub).
+- The sim's rack cells (the drones' launch points) could move onto the art's bays
+  (`servo.json rack.row_dy_m` 0.65, `cell_dx_m` 0.73); it moves the fight's numbers, so it needs a
+  re-measure with the bot first.
