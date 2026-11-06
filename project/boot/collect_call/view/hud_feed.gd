@@ -32,10 +32,13 @@ func fill(state: HudState, stage: CollectCallStage, system: QuestSystem) -> void
 	var line: PackedStringArray = runner.lines.subtitle(_text)
 	var current: QuestLine = runner.lines.current
 	var who: PackedStringArray = ["", ""]
+	state.full_words = ""
 	if current != null:
 		who = PackedStringArray([current.speaker, current.id])
+		state.full_words = _text.resolve(current.key, current.text)
 	if stage.refusal_left > 0:
 		line = _refusal(stage)
+		state.full_words = line[1]
 		who = PackedStringArray(
 			[stage.router.refuse_line["speaker"], stage.router.refuse_line["id"]]
 		)

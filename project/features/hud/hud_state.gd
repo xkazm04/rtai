@@ -24,6 +24,9 @@ var words: String = ""
 var portrait: Texture2D = null
 var portrait_device: bool = false
 var portrait_key: String = ""
+## n8-hud: the whole line (the box picks its text size on it, so typing never changes the size);
+## empty = fit on `words`.
+var full_words: String = ""
 ## One line under the beat panel (the save notice); empty hides it.
 var notice: String = ""
 ## Translated labels (HUD__HEAT, HUD__UNARMED).
@@ -42,3 +45,4 @@ func silent() -> void:
 	portrait = null
 	portrait_device = false
 	portrait_key = ""
+	full_words = ""

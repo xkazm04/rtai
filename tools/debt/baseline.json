@@ -2,7 +2,8 @@
   "metrics": {
     "dev_loc": {
       "accepted": [
-        "2026-11-06: d8 chars: --order-probe measures ghost-card vs rig pairs (the brief's draw-order item, measured before/after) (dev_loc 18080 -> 18115)"
+        "2026-11-06: d8 chars: --order-probe measures ghost-card vs rig pairs (the brief's draw-order item, measured before/after) (dev_loc 18080 -> 18115)",
+        "2026-11-06: n8-hud: the dialogue evidence board (dev/showcase/dialogue_board*.gd, the asset_board launcher pattern: a -s launcher reads its own args) (dev_loc 18115 -> 18206)"
       ],
       "files": {
         "project/dev/arena": 1034,
@@ -26,13 +27,16 @@
         "project/dev/save_crash_writer.gd": 18,
         "project/dev/selftest": 1446,
         "project/dev/servo": 434,
-        "project/dev/showcase": 5452,
+        "project/dev/showcase": 5543,
         "project/dev/view": 158,
         "project/dev/weapon_art": 506
       },
-      "total": 18115
+      "total": 18206
     },
     "direct_cmdline_reads": {
+      "accepted": [
+        "2026-11-06: n8-hud: the dialogue evidence board (dev/showcase/dialogue_board*.gd, the asset_board launcher pattern: a -s launcher reads its own args) (direct_cmdline_reads 153 -> 154)"
+      ],
       "files": {
         "project/core/render/view_mode.gd": 1,
         "project/dev/arena/arena_game.gd": 1,
@@ -107,6 +111,7 @@
         "project/dev/showcase/d5_showcase.gd": 1,
         "project/dev/showcase/d5_sweep.gd": 1,
         "project/dev/showcase/d5_walk.gd": 1,
+        "project/dev/showcase/dialogue_board.gd": 1,
         "project/dev/showcase/drive_shot.gd": 1,
         "project/dev/showcase/king_showcase.gd": 1,
         "project/dev/showcase/reel_frames.gd": 1,
@@ -171,7 +176,7 @@
         "project/tests/run_scenarios.gd": 1,
         "project/tests/unit/test_launch_args.gd": 1
       },
-      "total": 153
+      "total": 154
     },
     "files_near_cap": {
       "files": {

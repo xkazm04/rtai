@@ -11,11 +11,14 @@ const EXIT_S: float = 0.22
 const FACE_H: float = 252.0
 const DEVICE_H: float = 214.0
 const RISE_PX: float = 36.0
+## The words' sizes, largest first: the first whose whole line fits the box is drawn.
+const FIT_SIZES: Array[int] = [30, 27, 24, 22, 20]
 
 var state: HudState = null
 var art: HudArt = null
 var _who: String = ""
 var _words: String = ""
+var _full: String = ""
 var _face: Texture2D = null
 var _device: bool = false
 var _key: String = ""
@@ -39,6 +42,7 @@ func step(dt: float) -> void:
 		_key = state.portrait_key
 		_who = state.speaker
 		_words = state.words
+		_full = state.full_words if state.full_words != "" else state.words
 		_face = state.portrait
 		_device = state.portrait_device
 		_out_s = 0.0
@@ -71,8 +75,20 @@ func _draw() -> void:
 	var at: Vector2 = box.position + Vector2(text_x, 58)
 	draw_string(font, at, _who.to_upper(), HORIZONTAL_ALIGNMENT_LEFT, -1, HudView.NAME_SIZE, ink)
 	var w: float = box.size.x - text_x - 24.0
-	at = box.position + Vector2(text_x, 100)
-	draw_multiline_string(font, at, _words, 0, w, HudView.TEXT_SIZE, 4, ink)
+	var size: int = fit_size(font, _full, w, box.size.y - 96.0)
+	at = box.position + Vector2(text_x, 92 + size * 0.3)
+	draw_multiline_string(font, at, _words, HORIZONTAL_ALIGNMENT_LEFT, w, size, -1, ink)
+
+
+## The largest of FIT_SIZES at which `words` wrapped to `width` is at most `room` px tall.
+static func fit_size(font: Font, words: String, width: float, room: float) -> int:
+	for size: int in FIT_SIZES:
+		var h: float = (
+			font.get_multiline_string_size(words, HORIZONTAL_ALIGNMENT_LEFT, width, size).y
+		)
+		if h <= room:
+			return size
+	return FIT_SIZES[FIT_SIZES.size() - 1]
 
 
 ## Draws the face standing on the box's floor at its left end; returns its right edge (screen px).
