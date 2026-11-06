@@ -21,7 +21,10 @@ All under `--view=tilt` (55 degrees), seed 2, the live arena (`--boss=king` / `-
   Now on foot the cape's train streams from his back to the ground through the charge/ram flare and the
   slam landing, and nothing shows at rest. Evidence: `king_cape_train_64_before_after.png`,
   `king_p3_cape_train_tilt64.mp4`, and at 48 px/m (session 5, 2-11 s of phase 3, seed 2):
-  `king_p3_cape_train_tilt48_sheet.png`.
+  `king_p3_cape_train_tilt48_sheet.png`. Session 6 (02b11a53): in the charge the train lay inside the
+  vermilion charge lane and its cloth melted into it; now ink side edges run root to hem and the root is
+  darker (`KingCape.TRAIN_ROOT_DARK` 0.55, `TRAIN_SIDE_INK`), the hem stays vermilion with its ermine.
+  Same seed and ticks, before | after: `king_p3_cape_train_charge_tilt48_before_after.png` (frames.json #5).
 
 ### The throne-car
 - **Walls from the approved car sheet:** a 40-slice stack (`KingCarWalls`) drawing the side, front and
@@ -56,19 +59,23 @@ All under `--view=tilt` (55 degrees), seed 2, the live arena (`--boss=king` / `-
 The King vs the katana, the gang vs Rivet, and Servo at contact with the katana (`--ghost=kerf --loadout=katana`):
 the parts hold their detail and do not turn to mush.
 
-## Gates (on the final code tip 8dbbbcf0)
+## Gates (on the final code tip 02b11a53)
 - Director reel, headless (`--loadout=pistol --rigs --quit-after 8000`): **tilt 19/19 chapters fully down,
   top 19/19, 0 SCRIPT ERROR**.
-- `node tools/evidence/run.mjs --no-bench`: **all PASS**: lint 15/15, unit 1428/0, scenarios 52/52, parity
-  bit-exact (planted mutation caught at 629), selftest (look goldens 11/11, block 5/5), export-audit 542 loaded,
-  0 failed. Bench not run (art and view only; no bench lock taken).
+- `node tools/evidence/run.mjs --no-bench`: lint 15/15, unit 1428/0, parity bit-exact (planted mutation caught
+  at 629), selftest (look goldens 11/11, block 5/5), export-audit 542 loaded, 0 failed: PASS. **Scenarios 51/52:
+  `scenario_rig_stress` missed its 1 ms wall-clock budget** (200 people p50 1.005 and 1.009 ms, the miss under
+  contention and its re-judge alone after 100 s). Re-run alone at 18:11 (`run_scenarios.mjs --only=rig_stress`):
+  **PASS**, p50 0.839 ms (50 people 0.755). This lane changes no rig or sim code (the last change draws the
+  King's cape train under tilt only; scenarios run headless), and the same gate passed 52/52 on 8dbbbcf0 at
+  17:44: a margin miss on a 4-lane machine at the freeze, not a regression. Bench not run (no bench lock).
 - `top` identity was measured for every change: a raw-frame md5 of the old code vs the new code under `--view=top` (JOURNAL).
 
 ## What does not work / known gaps
 - An arm can cross over the bust card at melee range (RigDepthSort, which belongs to chars).
-- In the charge the cape's train lies inside the vermilion charge telegraph: the ermine hem and the ink edge carry
-  it, but the cloth itself has low contrast against the lane (`king_p3_cape_train_tilt48_sheet.png`, top middle).
-  One option, not built: draw the train under the telegraph's fill, or darken the train's root further.
+- The cape train in the charge lane is fixed by its edges and shade (02b11a53), not by draw order: it still sits
+  above the lane's fill. Drawing it under the fill is the other option, not built.
+- `scenario_rig_stress` sits on its 1 ms budget (200 people p50 0.84-1.01 ms across today's runs): see Gates.
 - The emerald accents key toward grey (the chroma despill clamps green).
 
 ## Calls for the owner
@@ -89,8 +96,8 @@ Each call names the default that is built, the alternative one value away, and h
 ## Exe
 `build/export/windows/RTAI.exe` (the `windows-showcase` preset: it boots into the arena; pass the arena args after `--`).
 Export: `"$GODOT_BIN" --headless --path project --export-release windows-showcase ../build/export/windows/RTAI.exe`
-(with `APPDATA=C:/Users/kazda/kiro/gtai-d8/appdata/bosses`). **Exported at 17:44 from 8dbbbcf0** (exit 0).
-Smoke, 600 frames each (King phase 3 at 64 px/m tilt, the throne-car tilt, Servo tilt, the King in top): exit 0,
+(with `APPDATA=C:/Users/kazda/kiro/gtai-d8/appdata/bosses`). **Exported at 18:10 from 02b11a53** (exit 0, 0 ERROR lines).
+Smoke, 600 frames each (King phase 3 at 64 px/m tilt, Servo at 48 tilt, the King in top): exit 0,
 0 SCRIPT ERROR, 0 "triangulation failed"; the last frames show the angled art.
 - The King, angled: `RTAI.exe -- --rigs --boss=king --view=tilt` (on foot: add `--phase=3`; close range: `--ppm=64`)
 - Servo, angled: `RTAI.exe -- --rigs --boss=servo --view=tilt`

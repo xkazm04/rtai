@@ -355,3 +355,39 @@ NEXT (after the merge, a later run):
 2. Fold the court strips into chars' `ViewMode.art` route (rows in the 14:47 entry); KingArt keeps the
    limbs, the cape and the pitch re-dress (8dbbbcf0).
 3. Regenerate the emerald gem accents on magenta (Call 3); a p70 set from the 70 sheets with the same cutters.
+
+## Iteration 8 by the runner (session 6; 2026-11-06 17:51-18:30, BUILD -> the freeze)
+
+- 17:51 Read JOURNAL (it7 NEXT), git log, REPORT final, chars/weapons/view70 JOURNALs (no open REQUEST to
+  bosses). Rules applied: `motion-quality-gating` (the fix judged in motion on the same seed and ticks,
+  before vs after), `concept-scene-parity` (the live arena path, not a still of the part),
+  `depth-ordered-layered-art` (the train keeps its z under the rig; only its shade and edges change),
+  `generative-artifact-gating` (no new AI asset this session).
+- 17:56 MILESTONE 02b11a53 (it7 NEXT item 1, the REPORT gap): the cape train reads inside the charge's
+  vermilion lane: ink side edges root to hem and a darker root (`KingCape.TRAIN_ROOT_DARK` 0.55, was 0.4;
+  `TRAIN_SIDE_INK` false = it7). The hem stays vermilion with its ermine (the King's cape colour verdict).
+  Tilt-only: `card_wears_cape()` needs a court strip, `strip_path` is "" at pitch >= 90, so top never
+  reaches `_train`. Unit --select test_king_cape 5/5, lint 15/15. LOOK 48 px/m phase 3 seed 2 at 3.7 s and
+  4.0 s, old values vs new, same ticks: masters `king_p3_cape_train_charge_tilt48_before_after.png`
+  (frames.json #5; dropped the unreferenced it2 combined clip from frames.json, the file stays).
+  0 SCRIPT ERROR, 0 "triangulation failed" in the 700-frame run.
+- 17:59 GATE director reel headless on 02b11a53: tilt 19/19 chapters fully down, top 19/19, 0 SCRIPT ERROR.
+- 18:09 GATE `evidence --no-bench` on 02b11a53, tree untouched: lint 15/15, unit 1428/0, parity bit-exact
+  (planted caught at 629), selftest (goldens 11/11, block 5/5), export-audit 542/0: PASS. Scenarios 51/52:
+  `scenario_rig_stress` FAIL on its 1 ms wall-clock budget (200 people p50 1.005 / 1.009 ms; missed under
+  contention, re-judged alone after 100 s and missed again by 0.009 ms).
+- 18:11 GATE `node tools/tests/run_scenarios.mjs --only=rig_stress` alone: PASS, 200 people p50 0.839 ms
+  (50 people 0.755). Not this lane's code (no rig/sim change; scenarios are headless and the train is tilt
+  draw only); it passed 52/52 on 8dbbbcf0 at 17:44. FRICTION: the 200-person p50 sits at ~0.8-1.0 ms against
+  a 1 ms budget, so four lanes running evidence at the freeze tip it over. FYI chars (owns the rig code).
+- 18:10 EXPORT `build/export/windows/RTAI.exe` from 02b11a53 (windows-showcase, exit 0, 0 ERROR lines).
+- 18:13 SMOKE 600 frames each: King phase 3 tilt 64, Servo tilt 48, King top: exit 0, 0 SCRIPT ERROR,
+  0 "triangulation failed" (only the exit-time "resources still in use" line). Last frames looked at
+  (scratch it8/smoke_strip.png): the p55 art draws in the exe. Scratch .avi deleted.
+- 18:15 REPORT.md updated (gates on 02b11a53 with the rig_stress margin miss named, the train gap closed, exe
+  18:10); decision line in docs/decisions.md.
+NEXT (after the merge, a later run):
+1. Fold the court strips into chars' `ViewMode.art` route (rows in the 14:47 entry); KingArt keeps the
+   limbs, the cape and the pitch re-dress (8dbbbcf0).
+2. Regenerate the emerald gem accents on magenta (Call 3); a p70 set from the 70 sheets with the same cutters.
+3. The cape train under the charge telegraph's fill instead of over it, if the owner finds the edges too busy.
