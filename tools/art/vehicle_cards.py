@@ -9,6 +9,9 @@ dropped by half the body's lifted height: a box's projection is centrally symmet
 centroid's). Rows = the sim car art id (CitySpawner CAR_ART 0-7, ART_POLICE_CAR 8), columns = the
 five views. Red-orange lamp lenses are turned amber (red is blood only). The mirrored three views are the runtime's (a UV flip about the cell centre).
 
+A redrawn side view (keyed/vehicle/<id>_side_<pitch>.png, one drawing) replaces the sheet's own
+side view, scaled to the footprint on its own (SIDE_REDO = False: the sheet's side view).
+
 Usage: python tools/art/vehicle_cards.py <library root> <pitch> [--out=<png>]
 Writes project/features/vehicles/art/p<pitch>/traffic_cards.png by default.
 """
@@ -24,6 +27,8 @@ PPM = 64.0  # the atlas's px per metre (1:1 at the 64 px/m close-up)
 CELL_PX = 448  # 7 m
 TOPDOWN = "project/features/city/art/vehicles/traffic_atlas.png"
 # art id -> (library sheet id, body height m, paint gain (r, g, b): value variety only, never a hue)
+# Use keyed/vehicle/<id>_side_<pitch>.png (the asset lane's redrawn side view) when it exists.
+SIDE_REDO = True
 ROWS = [
     ("sedan", 1.45, (1.0, 1.0, 1.0)),
     ("sedan", 1.45, (0.93, 0.93, 0.93)),  # sedan_b: the small hatch, a shade darker
@@ -71,6 +76,16 @@ def views(sheet: Image.Image) -> list[Image.Image]:
     return out
 
 
+def one_view(sheet: Image.Image) -> Image.Image:
+    """A one-drawing sheet (a redrawn rotation): the widest alpha column run, cropped."""
+    a = np.array(sheet)[:, :, 3] > 40
+    cols = np.concatenate([[False], a.any(0), [False]])
+    edges = np.flatnonzero(cols[1:] != cols[:-1]).reshape(-1, 2)
+    x0, x1 = max(edges, key=lambda e: e[1] - e[0])
+    rows = np.where(a[:, x0:x1].any(1))[0]
+    return sheet.crop((x0, rows.min(), x1, rows.max() + 1))
+
+
 def paint(im: Image.Image, gain: tuple) -> Image.Image:
     if gain == (1.0, 1.0, 1.0):
         return im
@@ -101,8 +116,13 @@ def build(root: Path, lib: Path, pitch: int) -> Image.Image:
         sheet = Image.open(lib / "keyed" / "vehicle" / f"{sid}_{pitch}.png").convert("RGBA")
         vs = views(sheet)
         k = lengths[row] * PPM / vs[2].width  # the side view as long as the footprint
+        ks = [k] * 5
+        redo = lib / "keyed" / "vehicle" / f"{sid}_side_{pitch}.png"
+        if SIDE_REDO and redo.exists():  # the side redrawn at the sheet's steeper camera
+            vs[2] = one_view(Image.open(redo).convert("RGBA"))
+            ks[2] = lengths[row] * PPM / vs[2].width
         for col, v in enumerate(vs):
-            w, h = max(1, round(v.width * k)), max(1, round(v.height * k))
+            w, h = max(1, round(v.width * ks[col])), max(1, round(v.height * ks[col]))
             im = amber(paint(v.resize((w, h), Image.LANCZOS), gain))
             drop = height * 0.5 * cos_p * PPM  # bbox centre -> ground centre (screen px)
             cx = col * CELL_PX + CELL_PX // 2
