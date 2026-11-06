@@ -2,6 +2,7 @@ extends GutTest
 ## Lane d8-view70: the King's court strips (KingArt) keyed by the card folder under combo.
 
 const COURT_55: String = "res://features/bosses/king/art/p55/king_bust_card.png"
+const COURT_70: String = "res://features/bosses/king/art/p70/king_bust_card.png"
 
 
 func test_a_folder_stands_for_its_pitch() -> void:
@@ -24,10 +25,22 @@ func test_the_p55_rows_draw_the_court_bust_at_its_width() -> void:
 	assert_eq(str(ViewPitchCourt.rows_of("p55")["king"][0]), COURT_55)
 
 
-func test_p70_has_no_court_strip_so_its_own_row_stays() -> void:
-	assert_true(ViewPitchCourt.court_row("king", "p70").is_empty())
+func test_the_p70_court_strip_draws_the_bust_as_wide_as_its_own_row() -> void:
+	# view70 cut the p70 bust into KingArt's p70 slot, each cell padded to the court's width factor,
+	# so KingArt's factor over the p70 row (already the bust's width) draws the same bust.
+	var row: Array = ViewPitchCourt.court_row("king", "p70")
+	assert_eq(str(row[0]), COURT_70)
 	var own: Array = RigHeadCard.rows_of("p70")["king"]
-	assert_eq(ViewPitchCourt.rows_of("p70")["king"], own)
+	var own_tex: Texture2D = load(str(own[0])) as Texture2D
+	var court_tex: Texture2D = load(COURT_70) as Texture2D
+	var court_k: float = KingArt.STRIPS["king"][2]
+	assert_eq(court_tex.get_height(), own_tex.get_height(), "the same cell height")
+	assert_almost_eq(
+		float(court_tex.get_width()),
+		own_tex.get_width() * court_k,
+		1.0,
+		"cells padded by the factor"
+	)
 	var shared: String = RigHeadCard.rows_of("p55")["king"][0]
 	assert_ne(shared, COURT_55, "rows_of itself is untouched")
 
@@ -52,16 +65,19 @@ func test_a_card_rebuilt_under_p55_takes_the_court_strip_once() -> void:
 	assert_almost_eq(card.scale.x, want, 0.0001, "a second dress changes nothing")
 
 
-func test_a_p70_card_is_left_alone() -> void:
+func test_a_p70_card_takes_the_padded_court_strip_at_the_same_drawn_scale() -> void:
 	var card: Sprite2D = Sprite2D.new()
 	card.name = &"head_card"
 	var path: String = str(RigHeadCard.rows_of("p70")["king"][0])
 	card.texture = load(path) as Texture2D
 	card.set_meta(&"art", "p70")
+	card.set_meta(KingArt.META, 1.0)
 	add_child_autofree(card)
 	ViewPitchCourt.dress(card)
-	assert_eq(card.texture.resource_path, path)
-	assert_eq(card.scale, Vector2.ONE)
+	assert_eq(card.texture.resource_path, COURT_70)
+	var k: float = card.get_meta(KingArt.META)
+	assert_almost_eq(card.scale.x, 1.0, 0.01, "the bust's pixels draw as large as before")
+	assert_eq(k, KingArt.STRIPS["king"][2])
 
 
 func test_only_a_folder_with_an_own_horn_strip_needs_dressing_unblended() -> void:

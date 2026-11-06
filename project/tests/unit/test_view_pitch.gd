@@ -69,7 +69,7 @@ func test_ease_turns_back_mid_ease_without_a_jump() -> void:
 
 
 func test_overlay_draws_the_other_folder_sized_by_its_own_row_and_fades() -> void:
-	var p70: Dictionary[String, Array] = RigHeadCard.rows_of("p70")
+	var p70: Dictionary[String, Array] = ViewPitchCourt.rows_of("p70")  # the p70 court slot
 	var p55: Dictionary[String, Array] = ViewPitchCourt.rows_of("p55")  # the court's King bust
 	var card: Sprite2D = Sprite2D.new()
 	card.name = &"head_card"

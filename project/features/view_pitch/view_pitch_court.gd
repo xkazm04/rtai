@@ -8,7 +8,9 @@ extends RefCounted
 ## court's width factor), and a card built under a court folder takes the court strip as
 ## KingArt._swap would. Render only; used by ViewPitchCards on combo rows and on rows drawing a
 ## strip that wears its own megaphone (OWN_HORN: then the rig's horn part hides, as KingArt does
-## under a court strip, so the King at 70 shows one bell, not two).
+## under a court strip, so the King at 70 shows one bell, not two). The p70 bust also sits in
+## KingArt's p70 slot (art/p70/, cells padded by KingArt's width factor, as the p70 row is the
+## bust's width): at 70 KingCape's drawn fan stands down and the court limbs (p70/parts) draw.
 
 ## Card strips that draw the King's megaphone themselves (cut from the 70 sheet with the bell).
 const OWN_HORN: Array[String] = ["res://features/characters/art/view/p70/king_bust_card.png"]
