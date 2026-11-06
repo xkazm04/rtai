@@ -1,7 +1,7 @@
 # REPORT: lane `king` (Act 1's King + the shared boss framework), night 2026-11-05/06
 
 Final pass in iteration 16 (05:05); the exe line, the gates and call C are brought up to iteration 22
-(08:05, the exe on 1aaeb122).
+(08:05, the exe on 1aaeb122). Freeze re-checked at it25-it27 (08:30): `project/` unchanged since 1aaeb122, so the exe (07:43) is current.
 Branch `n7-king`, cut from main `763f8fba`. Clips and stills are in
 `C:\Users\kazda\kiro\gtai-masters\n7\king\` (see `frames.json`, newest and best first).
 The moveset is `docs/bosses/king.md`; the full log is `JOURNAL.md`.

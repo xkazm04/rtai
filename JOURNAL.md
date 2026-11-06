@@ -1973,3 +1973,15 @@ next steps 3-5 (gang lenses at 64 px/m, D4 lift for the plain thug, merge n7-kin
 NEXT (next night): unchanged from iteration 24: the owner's verdicts on calls A-P (call C: 16 s is
 the gentler fair pick, same deaths as 20 s over seeds 1-15), then REPORT next steps 3-5 (gang lenses
 at 64 px/m, D4 lift for the plain thug, merge n7-king before n7-servo).
+
+## Iteration 27 (08:30-08:40, STABILIZE)
+
+### 08:31 FREEZE check
+- `git diff 1aaeb122 HEAD -- project` empty: `build/export/windows/RTAI.exe` (07:43) is still the
+  current build. All 15 `frames.json` entries exist on disk. No new REQUEST in n7-servo's JOURNAL.
+- REPORT header notes the freeze re-check. No code change, so the gates (all PASS on 3c5ab27d, same
+  `project/`) were not re-run.
+
+NEXT (next night): unchanged from iteration 24: the owner's verdicts on calls A-P (call C: 16 s is
+the gentler fair pick, same deaths as 20 s over seeds 1-15), then REPORT next steps 3-5 (gang lenses
+at 64 px/m, D4 lift for the plain thug, merge n7-king before n7-servo).
