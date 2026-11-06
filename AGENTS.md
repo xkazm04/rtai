@@ -18,6 +18,7 @@ the real engine as a child) and keep the partial log. The shell commands below s
 |---|---|---|
 | `node tools/lint/lint.mjs` | `just lint` | gdformat, gdlint, file/function size, banned-API grep, `Steam.` grep, canary, achievements validate |
 | `node tools/tests/run_unit.mjs` | `just test` | headless import, then GUT over `tests/unit` + `tests/integration` |
+| `node tools/tests/run_unit.mjs --changed` / `--select=<basenames>` / `--test=<name>` / `--fast` / `--all` | | the inner loop: `--changed` maps your diff to the tests that name its classes (falls back to the fast suite, saying why); `--fast` skips the slow tier (`tools/tests/tiers.json`); every run prints a `file:line test - message` digest per failure and the 10 slowest; a failing file is re-run once alone and a fail-then-pass is reported `FLAKY` and appended to `%LOCALAPPDATA%/gtai/flakes.jsonl` (`node tools/tests/flakes.mjs report` lists repeat offenders). The no-arg run (and evidence) still runs everything |
 | `"$GODOT_BIN" --headless --path project -s res://tests/run_scenarios.gd` | `just scenarios` | scenario suite (incl. the 60 s replay); exits non-zero on failure, any script error, or unknown args |
 | `"$GODOT_BIN" --headless --path project -- --replay=<file>` | | re-runs a `gtai.replay/1` log; exit 0 identical, 1 diverged, 2 unreadable (SIM-05) |
 | `node tools/achievements/gen.mjs validate\|emit\|--check` | `just ach` | achievements schema + ACH-04 rules; emits `AchIds` and runtime JSON |
@@ -28,9 +29,9 @@ the real engine as a child) and keep the partial log. The shell commands below s
 | `node tools/bench/run.mjs [--headless]` | `just bench` | exports `windows-bench`, runs the crowded drive + 400-actor riot, judges section 20 |
 | `"$GODOT_BIN" --headless --path project -s res://dev/bench/rig_bench.gd -- --out=build/evidence/rig-bench.json` | | F-09b rig stress at 50 and 200 people (16 full rigs, the rest baked), judges the section 20 rig cost |
 | `"$GODOT_BIN" --rendering-driver d3d12 --path project -s res://dev/showcase/rig_showcase.gd` | | Rivet, cops and peds at 32 and 48 px/m with `look_d4` + the baked crowd atlas -> `build/evidence/frames/` (needs a GPU) |
-| `node tools/evidence/run.mjs [--no-parity] [--no-bench] [--bench-headless]` | | also writes `scenario-tests`, `parity`, `bench` evidence |
+| `node tools/evidence/run.mjs [--no-parity] [--no-bench] [--bench-headless] [--no-release]` | | also writes `scenario-tests`, `parity`, `export-audit` (release-compile), `bench` evidence |
 | `node tools/tests/release_compile.mjs` | | compiles what a release export ships (a temp copy without `tests/`, `dev/`, `addons/gut`); exit 1 names any script that only compiles with dev code present |
-| `node --test "tools/lib/*.test.mjs" "tools/lint/*.test.mjs" "tools/tests/*.test.mjs"` | | the Node tooling's own tests (the glob form: `node --test <dir>` fails on Node 24) |
+| `node --test "tools/lib/*.test.mjs" "tools/lint/*.test.mjs" "tools/tests/*.test.mjs" "tools/debt/*.test.mjs"` | | the Node tooling's own tests (the glob form: `node --test <dir>` fails on Node 24) |
 | (stub) | `just export`, `just audit` | land with the first export ticket |
 
 Lint's `layers` check: boot/core/features never name a `dev/` or `tests/` class or an unguarded
