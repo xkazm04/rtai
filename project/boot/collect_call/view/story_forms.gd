@@ -55,6 +55,25 @@ static func attach(
 	return s
 
 
+## n8-view: the fold and the subtitle lift for a form view another cast already drew (quest 1's
+## rig cast under a card view, ArenaRigs.ghost_view); the rigs drew the forms with neither.
+static func follow(
+	host: Node, view: CollectCallView, stage: CollectCallStage, v: GhostFormView
+) -> void:
+	if host == null or view == null or v == null:
+		return
+	var table: GhostFormTable = GhostFormTable.load_default()
+	var s: StoryForms = StoryForms.new()
+	if not table.story_voice:
+		v.events = null
+	s.form_view = v
+	s._hud = view.hud_view
+	if table.story_lift:
+		s._view = view
+		s._stage = stage
+	host.add_child(s)
+
+
 ## The form card folds to one chip while the story's subtitle box is up (it takes the bottom
 ## centre), and the camera lifts the body clear of the box.
 func _process(_delta: float) -> void:
