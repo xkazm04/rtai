@@ -1728,3 +1728,11 @@ fba95dea) is the owner's build; REPORT calls 1-21 are the verdict page; n7-king 
 
 NEXT (final, it26, supersedes it25): unchanged. Exe `build/export/windows/RTAI.exe` (08:09,
 fba95dea) is the owner's build; REPORT calls 1-21 are the verdict page; n7-king merged to f1f5aae2.
+- 08:42 (it27, REPORT) MERGE n7-king 8d21a8c3 (king JOURNAL/REPORT only) as 149234bf; ours kept,
+  `project/` unchanged. Checked every evidence path REPORT cites (M/ clips and stills, evidence/servo
+  logs, numbers dirs, exe 08:09): all exist. Added REPORT "What blocked me, and for how long" (no
+  hard block; the frictions and their cost).
+
+NEXT (final, it27, supersedes it26): unchanged. Exe `build/export/windows/RTAI.exe` (08:09,
+fba95dea) is the owner's build; REPORT calls 1-21 are the verdict page; n7-king merged to 8d21a8c3.
+After the night: listen to the horn/loop, play by hand, bisect the repair delay if call 21 asks.

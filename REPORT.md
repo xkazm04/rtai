@@ -1,9 +1,9 @@
 # REPORT: lane `servo`, night 2026-11-05/06 (Act 2's Servo)
 
-Final (iteration 22, the freeze). Gates on the last code head, fba95dea (the it19 body, the sim-neutral `parcels.crate_damage` key, and n7-king's optional `rivet_repair_delay_s` field and `--repair-delay` dev flag, neither used by default): lint 13/13, unit 1203/0 (`evidence/servo/unit-it22b.log`), scenarios 52 ran / 0 failed (`evidence/servo/scenarios-it22b.log`); director reel 19/19 chapters fully down, 0 SCRIPT ERROR (`evidence/servo/director-reel-it22b.log`); `tools/evidence/run.mjs --no-bench` all PASS on bc447dad: lint, unit 1203, scenarios 52, parity (bit for bit, the planted mutation caught at step 629), selftest (look goldens 11/11, block goldens 5/5) (`evidence/servo/evidence-run-it22b.log`; bench skipped, CONTENDED); the bot's numbers at n = 10 (it20; the it22 merges leave Servo's fight alone: the re-exported exe's smoke gives tick 7036 and 188 on Rivet, the it20 record line for line, `evidence/servo/exe-smoke-it22b.json`). Every clip and still is on the it19 body (987c3439), which the final head draws identically (no render change since).
+Final (written at the freeze in iteration 22; checked in iteration 27, the REPORT phase, 08:40: every evidence path below exists, `project/` unchanged since fba95dea). Gates on the last code head, fba95dea (the it19 body, the sim-neutral `parcels.crate_damage` key, and n7-king's optional `rivet_repair_delay_s` field and `--repair-delay` dev flag, neither used by default): lint 13/13, unit 1203/0 (`evidence/servo/unit-it22b.log`), scenarios 52 ran / 0 failed (`evidence/servo/scenarios-it22b.log`); director reel 19/19 chapters fully down, 0 SCRIPT ERROR (`evidence/servo/director-reel-it22b.log`); `tools/evidence/run.mjs --no-bench` all PASS on bc447dad: lint, unit 1203, scenarios 52, parity (bit for bit, the planted mutation caught at step 629), selftest (look goldens 11/11, block goldens 5/5) (`evidence/servo/evidence-run-it22b.log`; bench skipped, CONTENDED); the bot's numbers at n = 10 (it20; the it22 merges leave Servo's fight alone: the re-exported exe's smoke gives tick 7036 and 188 on Rivet, the it20 record line for line, `evidence/servo/exe-smoke-it22b.json`). Every clip and still is on the it19 body (987c3439), which the final head draws identically (no render change since).
 
 Branch `n7-servo` (from main `763f8fba`, with `n7-king`'s framework merged in at every move; the
-last code merge was `fba95dea` = n7-king `b761f222`; the docs-only tail to `f1f5aae2` is merged too, the last at 08:31 after the freeze). Clips and stills: `C:\Users\kazda\kiro\gtai-masters\n7\servo\` (M below),
+last code merge was `fba95dea` = n7-king `b761f222`; the docs-only tail to `8d21a8c3` is merged too, the last at 08:42 in the REPORT phase). Clips and stills: `C:\Users\kazda\kiro\gtai-masters\n7\servo\` (M below),
 indexed in `M/frames.json`. Design: `docs/bosses/servo.md`. Journal: `JOURNAL.md`.
 
 ## What works (with evidence)
@@ -95,6 +95,24 @@ tick 7036, 188 on Rivet, 0 SCRIPT ERROR, the editor's numbers (`evidence/servo/e
 - (Fixed in it12) the clip camera at the phase-3 defeat in the yard's top-left corner: turned sideways, his rack, pads and spill reach ~5 m from his centre, so half the body left the screen at the 3.0 m margin. `BossCam.BOSS_MARGIN_X_M` 5.5 (sideways only; 3.0 vertically) holds him whole; the mid-fight framing did not change in the 12 keys, and at the corner a strip of sidewalk shows. View only, `--boss-cam` only (a framework file: King's clips frame the same unless he stands within 5.5 m of a side edge). A/B: `M/frames/servo_bosscam_xmargin_ab_it12.png`; the clip `M/servo_p3_overtime_defeat_32ppm_it19.mp4`.
 
 - The new `boss_fight.rivet_hp_min` (n7-king) reads 10 in a fight where Rivet died twice (`exe-smoke-it22b-delay30.json`): the minimum seems to skip the tick he falls, so read deaths from the top-level `deaths`, not from hp_min 0.
+
+## What blocked me, and for how long
+Nothing blocked the lane outright: n7-king's framework landed early and I merged each move (code
+merges up to `b761f222`, then docs only), and the image lock was free whenever I needed it. These
+frictions cost time (all in `JOURNAL.md`):
+- `run_unit.mjs` with no `GODOT_BIN` exported prints a stale "passed" count while every step exits -1
+  (20:55, it8, it19): about 5 min each time. Rule: export it and read the step exits.
+- The JOURNAL entries for iteration 2 were lost once by `git checkout --ours` after a merge that
+  refused to start (20:31): about 10 min to re-write. Rule: commit JOURNAL before any merge.
+- King's `boss_numbers.mjs` capped runs in frames with no `--fixed-fps`, so on the contended
+  machine every Servo fight was cut at 107 s (22:20): one numbers batch (~20 min) thrown away; my
+  copy `evidence/servo/boss_numbers.mjs` adds `--fixed-fps 60`.
+- A refactor for the line budget caused 1 SCRIPT ERROR on the first frame of the full-fight film
+  (05:06): one film re-shot (~10 min).
+- An edit to `project/` while a numbers batch was running gave seeds 5-9 a parse error (07:03): the
+  batch re-run (~15 min). Rule: never edit `project/` while a Godot batch is running.
+- The machine was contended all night (the other lane's Godot runs), so the bench never ran under
+  the lock: every wall time is CONTENDED; the bot numbers are tick-exact, so they are unaffected.
 
 ## Next steps
 - Listen to the horn and the boss loop in the exe (never heard tonight).
