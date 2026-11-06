@@ -1393,3 +1393,11 @@ live arena path at 32/48 px/m), sprite-and-atlas-production, depth-ordered-layer
   It now takes the rig's bay points (`ServoRig._bay_points` -> `ServoBays.points`, which also
   carries the +1 wing's shake; rig 285 lines). Unit 1190/0 (`unit-it16b.log`). The full fight
   film started on 5992f678 was stopped (my PID) and re-run on the fix.
+- 05:06 FRICTION/FIX the full fight on 0cf6e447 ran tick-identical (down **7036, 188**) but with
+  **1 SCRIPT ERROR**: the first frame's `_bay_cells` asked `_bays.on_art()` before `_bay_points`
+  had given the bays their rack ('rows' on Nil; the draw aborted for one frame). My refactor for
+  the line budget reordered it; 5992f678 (the wave clip, the A/B) did not have it (0 SCRIPT
+  ERROR there). Fixed in order (c.f. the commit after 46d77b64), `on_art()` made null-safe, and a
+  unit test `test_servo_bays.gd` (3 tests: mirror and pitch of the art's bays within 0.45 m of the
+  sim cells, off = the cells, no rack = off the art). Unit **1193/0**. The full fight and the three
+  phase clips (already running on the bug) stopped (my PIDs) and re-run on the fix.
