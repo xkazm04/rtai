@@ -203,16 +203,21 @@ NEXT (iteration 3, in order):
 - 16:20 Gang close-up at 64 px/m vs Rivet (phase 2, tick 1000): helmets, plum bands, gold-framed shades,
   rope chains and gunmetal bodies hold (gtai-masters/d8/bosses/gang_tilt64_close_vs_rivet.png).
   frames.json: 15 entries (servo_vs_katana_64_close.png replaced by the contact pair, file deleted).
+- 16:22 MILESTONE dropped parcels fall as boxes under tilt (7fffea59): ServoCrateStack split into
+  draw (shadow + box) and box (no shadow: the falling parcel keeps its own closing shadow), so a
+  parcel no longer falls flat and pops into a standing box on landing. GATE top md5-identical at
+  tick 1100 with parcels in the air (7189d363...), HEAD vs new. Unit --select (4 servo files) 13/13.
+  Evidence: servo_parcels_falling_tilt64_before_after.png (replaces king_p3_64_f300 in frames.json).
+- 16:24 Checked the windup at 48 px/m (clip frame 100): the dash lane's tell starts at his lifted
+  front, the visor line sits on the lifted head. NEXT item 3 closed.
 
 NEXT (iteration 6, in order; freeze 18:30):
-1. The falling parcels under tilt: today they fall flat in the ground plane and pop into standing
-   boxes as they land; drop them from height as lifted boxes (ServoCrateStack with a base height,
-   shadow staying on the ground), consistent with how the drones show height (SHADOW offset).
+1. (done 16:22: parcels fall as boxes.) The slung parcel under a flying drone is still flat (it
+   turns with the drone; ServoCrateStack is axis-aligned): a turned box if it reads flat at 64.
 2. The hood cannon barrel from art (a gilded barrel strip in the r5 palette) and the car's bumpers
    (KingCarStack.bumpers are skipped under the art stack).
-3. Servo's head and visor under the stand: the visor tell line (ServoRig._visor) is drawn at the
-   lifted head (o += _up before it): check the windup frame at 64 that the vermilion line sits on
-   the visor, and that the beam tell (BossTellView, ground) still reads from his feet.
+3. (done 16:24.) Servo's hit radius is on the ground under the lifted body: watch whether a katana
+   hit reads as landing on his legs at 64 px/m (a hit spark at the lifted torso is view-only).
 4. A combined clip of the it3 set (Servo standing, crates, gang at 64) for frames.json.
 5. At the freeze (18:30): export build/export/windows/RTAI.exe (int-day recipe in docs/decisions.md),
    evidence --no-bench, REPORT.md with Calls 1-7 (JOURNAL).
