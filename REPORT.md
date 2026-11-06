@@ -109,8 +109,10 @@ Evidence: `C:\Users\kazda\kiro\gtai-masters\d8\view70\` (`frames.json`, 15 entri
 - **Under combo, during the 1 s ease, the King's drawn cape fan shows** (KingArt keys by the live
   pitch rounded, and no strip exists for 56-69), and the gang chains switch when the pitch rounds
   to 55. The King is off screen at the engage in every seed tried (1-5); at the return he is dying.
-  bosses' 8dbbbcf0 now re-dresses the card when the pitch moves, but still keys the strip by the
-  live pitch, so 56-69 draws the shared card; keying KingArt by `ViewMode.art` closes it (REQUEST).
+  Seen at the freeze (48 px/m, frames 1138-1185): the bust card stays the court bust and swaps once,
+  but the fan shows from the first frames off 55 to the end of the ease. bosses' 8dbbbcf0 re-dresses
+  the card when the pitch moves, but still keys by the live pitch; keying KingArt by `ViewMode.art`
+  closes it (REQUEST; the fan is drawn in their body `_draw`, out of my files' reach).
 - **Tonnage's ghost cross-fade** under combo is unit-tested, but not seen live: no seeded fight has
   Tonnage on screen when the King goes down.
 
