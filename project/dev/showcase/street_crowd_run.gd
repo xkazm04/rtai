@@ -3,16 +3,23 @@ extends Node
 ## walking a road in four lanes and both directions, through CharacterRigs under the run's
 ## --view (the camera's ground squash applied), with look_d4 over the world. Shoots SHOTS frames
 ## (street-<view>-<ppm>-<i>.png). Windowed only (needs a GPU). Deterministic: no RNG.
+## kill_class != "": at KILL_AT every walker dies by that hit class (DeathPipe, the shipped
+## react table) from the west and stops on its spot; the same run under `top` and a tilt shows
+## whether the corpse lands where the body was (KILL_SHOTS replace SHOTS).
 
 const PX: float = 32.0
 const GROUND: String = "res://features/city/art/ground/"
 const COUNT: int = 16
 const SHOTS: PackedInt32Array = [60, 120, 180]
+const KILL_AT: int = 60
+const KILL_SHOTS: PackedInt32Array = [59, 72, 90, 150, 240]
 ## The looks walked: every pedestrian look, the pooled ones (StreetCrowdCards.POOLS) twice.
 const LOOKS: PackedByteArray = [0, 1, 2, 3, 4, 7, 1, 4, 7, 1, 4, 7, 0, 2, 3, 1]
 
 var out_dir: String = ""
 var ppm: float = 48.0
+var kill_class: String = ""
+var _pipe: DeathPipe = DeathPipe.make(ReactTable.shipped())
 var _world: CanvasLayer = CanvasLayer.new()
 var _post: CanvasLayer = CanvasLayer.new()
 var _actors: CanvasLayer = CanvasLayer.new()
@@ -51,14 +58,16 @@ func shoot() -> int:
 	_actors.transform = xf
 	_rigs.zoom = z
 	_look.set_shader_parameter("world_px", -view * 0.5)
-	for t: int in SHOTS[SHOTS.size() - 1] + 1:
-		_pose()
+	var shots: PackedInt32Array = SHOTS if kill_class == "" else KILL_SHOTS
+	for t: int in shots[shots.size() - 1] + 1:
+		_pose(t)
 		_rigs.step_ticks(1)
 		await get_tree().process_frame
-		if SHOTS.has(t):
+		if shots.has(t):
 			await RenderingServer.frame_post_draw
 			var img: Image = get_viewport().get_texture().get_image()
-			var file: String = "street-%s-%d-%d.png" % [ViewMode.shared().id, roundi(ppm), t]
+			var tag: String = ViewMode.shared().id + ("" if kill_class == "" else "-" + kill_class)
+			var file: String = "street-%s-%d-%d.png" % [tag, roundi(ppm), t]
 			ok = img != null and img.save_png(out_dir.path_join(file)) == OK and ok
 	return 0 if ok else 1
 
@@ -83,12 +92,29 @@ func _cast() -> void:
 		f.looks[i] = LOOKS[i]
 
 
-func _pose() -> void:
+func _pose(t: int) -> void:
 	var f: RigFeed = _rigs.feed
 	_rigs.focus = Vector2.ZERO
+	if kill_class != "" and t == KILL_AT:
+		_kill_all()
 	for i: int in f.count:
+		if f.flags[i] & RigFeed.Flag.DEAD:
+			f.vel[i] = Vector2.ZERO
+			continue
 		var east: bool = i % 2 == 0
 		f.clip[i] = RigClips.Clip.NONE
 		f.vel[i] = Vector2(38.0 if east else -38.0, 0.0)
 		f.face[i] = 0.0 if east else PI
 		f.pos[i] += f.vel[i] * SimClock.TICK_DT
+
+
+## Every walker dies where it stands.
+func _kill_all() -> void:
+	var f: RigFeed = _rigs.feed
+	for i: int in f.count:
+		var rig: CutRig = _rigs.rig_for(f.ids[i])
+		if rig == null:
+			continue
+		f.flags[i] = RigFeed.Flag.DEAD
+		@warning_ignore("return_value_discarded")
+		_pipe.kill(rig, StringName(kill_class), Vector2.RIGHT, &"")

@@ -4,7 +4,8 @@
       "accepted": [
         "2026-11-06: d8 chars: --order-probe measures ghost-card vs rig pairs (the brief's draw-order item, measured before/after) (dev_loc 18080 -> 18115)",
         "2026-11-06: n8 street: dev/showcase/street_crowd board (16 peds of every look under --view; the evidence for the crowd's nine pedestrian card types), dev only, excluded from release (dev_loc 18115 -> 18241)",
-        "2026-11-06: n8 street: cast_view +1 line (the StreetQuestCards hook: quest 1's contractors stand as cards under card views) and quest1_clip +1 (--view for filming quest 1 under a tilt) (dev_loc 18241 -> 18242)"
+        "2026-11-06: n8 street: cast_view +1 line (the StreetQuestCards hook: quest 1's contractors stand as cards under card views) and quest1_clip +1 (--view for filming quest 1 under a tilt) (dev_loc 18241 -> 18242)",
+        "2026-11-06: n8 street: the crowd board's --kill evidence option (dev only, +30 lines) (dev_loc 18242 -> 18272)"
       ],
       "files": {
         "project/dev/arena": 1034,
@@ -28,11 +29,11 @@
         "project/dev/save_crash_writer.gd": 18,
         "project/dev/selftest": 1446,
         "project/dev/servo": 434,
-        "project/dev/showcase": 5578,
+        "project/dev/showcase": 5608,
         "project/dev/view": 158,
         "project/dev/weapon_art": 506
       },
-      "total": 18242
+      "total": 18272
     },
     "direct_cmdline_reads": {
       "accepted": [
