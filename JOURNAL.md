@@ -1222,3 +1222,6 @@ edges, under the torso).
   still re-shot at tick 1800 (`M/frames/servo_target_vs_game_32ppm_it12.png`), **looked at**: the
   copper loops beside the cap and the rail along the column read at 2x. frames.json 15 (all files
   exist); REPORT paths. Scratch avis deleted.
+- 03:41 GATES director reel on 4a4e810c (after the n7-king merge and the it12 changes;
+  `scratch/servo/reel12.sh`, headless, --fixed-fps 60): **19/19 chapters fully down, 0 SCRIPT
+  ERROR** (`evidence/servo/director-reel-it12.log`). Combat holds.
