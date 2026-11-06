@@ -6,6 +6,8 @@ extends RefCounted
 ## (rivet_bust.py), Dent's tan bust (ghost_card_tone.py), the street heads (street_head.py, from the
 ## assets library's keyed 55 sheets). p70: view70's widths for its own strips; the street
 ## heads reuse the p55 strips (view70 it5 REQUEST: compare the pitch, not two street art sets).
+## n8: the other lanes register their own rows without editing this file: one
+## data/tables/card_sets/<lane>.json each (schema gtai.card-set/1), merged over SETS by all().
 
 const SETS: Dictionary[String, Dictionary] = {
 	"p55":
@@ -57,3 +59,51 @@ const SETS: Dictionary[String, Dictionary] = {
 		["res://features/characters/art/view/p55/thug_head_card.png", 0.86, 1.0, false, true],
 	},
 }
+
+const REG_DIR: String = "res://data/tables/card_sets"
+
+static var _all: Dictionary[String, Dictionary] = {}
+
+
+## SETS with every lane's card_sets/<lane>.json merged over it (files in name order; a later
+## row replaces an earlier one). Read once per run.
+static func all() -> Dictionary[String, Dictionary]:
+	if _all.is_empty():
+		_all = merged(REG_DIR)
+	return _all
+
+
+## SETS merged with the registration files under `dir` (a test points this at its own dir).
+static func merged(dir: String) -> Dictionary[String, Dictionary]:
+	var out: Dictionary[String, Dictionary] = {}
+	for art: String in SETS:
+		out[art] = SETS[art].duplicate()
+	var files: PackedStringArray = DirAccess.get_files_at(dir)
+	files.sort()
+	for f: String in files:
+		if f.get_extension() == "json":
+			_merge_file(out, dir.path_join(f))
+	return out
+
+
+static func _merge_file(out: Dictionary[String, Dictionary], path: String) -> void:
+	var parser: JSON = JSON.new()
+	if parser.parse(FileAccess.get_file_as_string(path)) != OK or not parser.data is Dictionary:
+		Log.warn("view", "card set %s does not parse; skipped" % path)
+		return
+	var doc: Dictionary = parser.data
+	var sets: Dictionary = doc.get("sets", {})
+	for art: String in sets:
+		if not out.has(art):
+			out[art] = {}
+		var rows: Dictionary = sets[art]
+		for key: String in rows:
+			var r: Dictionary = rows[key]
+			out[art][key] = row_of(r)
+
+
+## One registration row -> the positional row shape of RigHeadCard.CARDS.
+static func row_of(r: Dictionary) -> Array:
+	var anchor_y: float = r["anchor_y"]
+	var width: float = r["width"]
+	return [str(r["strip"]), anchor_y, width, r["bust"] == true, r["raw"] == true]
