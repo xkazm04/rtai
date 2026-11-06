@@ -83,6 +83,8 @@ func pose(fight: BossFight, adds: BossAdds, windup_px: Vector2) -> void:
 		_place(g, f.body.id, Ink.px(f.body.pos), f.body.facing, Vector2.INF)
 		_react(g, f.body, f)
 		_fade_down(g, f, fight.now())  # a downed add is no longer stepped: the boss's clock
+	if not ViewMode.shared().is_flat():  # view lab: far-side bodies behind the car
+		KingCarStack.sort_rigs(_rigs, b.id, fight)
 
 
 func _rig(id: int, is_king: bool, at: Vector2, facing: Vector2) -> CutRig:

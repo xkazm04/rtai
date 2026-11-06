@@ -10,6 +10,8 @@ extends RefCounted
 
 const ROOF_M: float = 1.45
 const SLICES: int = 18
+## A far-side rig's z under the car's (its parts' own z stay relative, all under 0).
+const BEHIND_Z: int = -64
 const BELT_K: float = 0.5
 const GLASS_FROM_K: float = 0.62
 const GLASS_TO_K: float = 0.93
@@ -64,3 +66,20 @@ static func _slice(ci: CanvasItem, k: float, l: float, w: float, p: float) -> vo
 				var half: Vector2 = Vector2(TYRE_M.x * p * 0.5, TYRE_M.y * p * 0.5)
 				ci.draw_rect(Rect2(c_at - half, half * 2.0), TYRE)
 				ci.draw_circle(c_at + Vector2(0, signf(sy) * half.y), 0.16 * p, KingBodyView.GOLD)
+
+
+## Ground-depth order against the car (registry measured-draw-order: the depth is the ground y):
+## a rig standing on the car's far side (smaller ground y) draws behind KingBodyView's car
+## (a relative z BEHIND_Z under it: the rigs are KingRigs' children, so show_behind_parent
+## would only put them behind KingRigs), the rest over it. King himself (on the roof) is never
+## behind. Tilt only.
+static func sort_rigs(rigs: Dictionary, king_id: int, f: BossFight) -> void:
+	var car: Vector2 = f.body.pos
+	var km: KingMoves = f.moves as KingMoves
+	if f.phase >= 2:
+		car = km.car_at if km != null else Vector2.INF
+	for id: int in rigs:
+		var rig: CutRig = rigs[id]
+		var behind: bool = car != Vector2.INF and id != king_id
+		var back: bool = behind and rig.position.y < Ink.px(car).y
+		rig.z_index = BEHIND_Z if back else 0
