@@ -344,3 +344,24 @@ NEXT (iteration 10):
 - REPORT.md draft written (05:35). NOTE: the root REPORT.md was the King lane's, inherited through
   the cut and the merge; replaced by the view lane's (the King lane's own copy lives on n7-king).
   A later merge of n7-king will conflict on REPORT.md and JOURNAL.md: keep ours for both.
+- MILESTONE 6cb9e9ef: the car's bumpers sit at 0.22-0.5 m in the stack under a tilt (were drawn in
+  the roof plane, floating at roof height). LOOKED 48 px/m x2 (`it9/bumpers_low_48_x2.png`): low on
+  the car's ends by the wheels, subtle at this zoom. `top` md5 b5ed2b94 unchanged.
+- GATE scenarios on the merge + depth sort (switch off): 52 ran / 0 failed / 0 SCRIPT ERROR
+  (`evidence/view/it9/scenarios.log`). Unit 1181/1181 (earlier). Director reel started 05:38 on
+  6cb9e9ef (`evidence/view/it9/director-reel.log`, timeout 840 s); if the session ended before it
+  finished, re-run it in iteration 10.
+- NOT in the it9 32 px/m clip: the standing throne and the low bumpers (filmed before them); the
+  phase-3 clip has the throne commit's parent too. Re-film tilt for the final comparison set.
+
+NEXT (iteration 10), replaces the list above:
+1. Director reel result (check the log's 19 chapters, 0 SCRIPT ERROR; re-run if cut short), then
+   `node tools/evidence/run.mjs` on HEAD.
+2. Re-film tilt 2700 frames 32 px/m (seed 2, film.sh) and re-encode the it9 hstack with the
+   top/top_lift avis re-filmed too (raw avis were deleted); same for phase 3 at 48.
+3. REPORT.md: finish the cost table (copy PLAN's, add measured numbers), Calls for the owner with
+   exe lines, what blocked (nothing blocked; contention made nothing slow tonight: 45 s films in
+   about 2 min).
+4. Re-export the exe at the freeze; smoke `--view=tilt` and `--view=top`.
+5. Raise the weakest: top_lift cast shadows by height; city sedans as stacks; the throne reads as
+   a crescent (try THRONE_H_M 0.6 or a darker inner face).
