@@ -16,7 +16,6 @@ static func over(p_stage: CollectCallStage) -> DeathVeil:
 func _ready() -> void:
 	color = Ink.INK
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
-	set_anchors_preset(Control.PRESET_FULL_RECT)
 	modulate.a = 0.0
 
 
@@ -24,3 +23,5 @@ func _process(_delta: float) -> void:
 	var beat: DeathBeat = stage.death_beat if stage != null else null
 	modulate.a = beat.veil() if beat != null else 0.0
 	visible = modulate.a > 0.0
+	if visible:  # anchors alone left it 0 x 0 under the HUD's CanvasLayer
+		size = get_viewport_rect().size

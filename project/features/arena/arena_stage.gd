@@ -142,7 +142,7 @@ func _respawn() -> void:
 	arena.rivet.hp = arena.rivet.max_hp
 	arena.rivet.pos = plan.rivet_start
 	pit.reset(arena)
-	Log.info("arena", "Rivet destroyed: back at the hub (deaths %d)" % deaths)
+	Log.info("arena", "Rivet destroyed: back at the hub (deaths %d, tick %d)" % [deaths, tick])
 
 
 func telemetry_dict() -> Dictionary:
