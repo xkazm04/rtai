@@ -653,3 +653,20 @@ NEXT: unchanged from iteration 5 (merge order; the two REQUESTs; the owner's cal
 NEXT: unchanged from iteration 5. For the Director: the merge order is any (only the lane docs conflict);
 after merging, re-run `test_rig_head_card`, `test_view_pitch*` and `test_king_art`, then the combo
 director reel.
+
+## Iteration 10 (18:22, BUILD, post-freeze; session stops 18:30)
+- 18:23 READ JOURNAL tail, git log, lane heads. Since iteration 9 the other lanes added docs-only
+  commits: chars 2d67a101 (final evidence note), bosses efc43c2c/a4bc50af/be41c710/148ff1f9 (journal +
+  REPORT), weapons 9b6c1d7a (REPORT). No code change touches the shared view code or `KingArt`, so the
+  iteration 9 dry-merge result stands (only lane docs conflict). The it5 REQUESTs are still open
+  (chars' `RigCardSets` carries the `p70` row view70 already fills; bosses' `KingArt` is not keyed by
+  `ViewMode.art`).
+- 18:24 CHECKED exe `build/export/windows/RTAI.exe` (18:02, afbdee5b) present; tree clean; image.lock
+  held by another lane (not needed: no art work after the freeze).
+- DECISION no new work in the last 6 min before the stop: any code change would need the full gates
+  again. The gated tree, the exe, REPORT and the masters package stand as delivered.
+- Registry rules applied: motion-quality-gating (no claim without frames; none made).
+
+NEXT: unchanged from iteration 5/9. Director: merge in any order (lane docs conflict only), then re-run
+`test_rig_head_card`, `test_view_pitch*`, `test_king_art` and the combo director reel; the owner's calls
+are in REPORT; frame cost 70 vs 55 still owed under the bench lock on a quiet machine.
