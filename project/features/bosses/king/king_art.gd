@@ -23,6 +23,10 @@ const STRIPS: Dictionary[String, Array] = {
 	"gang": ["gang_head_card", 0.84, 1.25],
 }
 const META: StringName = &"court_card"
+## The pitch a card was dressed for, and the shared strip it wore before (texture, offset): a live
+## pitch change (view70's combined view eases 70 -> 55 into a boss fight) re-dresses the card.
+const META_PITCH: StringName = &"court_pitch"
+const META_SHARED: StringName = &"court_shared"
 ## d8 A/B: true = under a court strip the King's bust card wears his cape (its front facings show
 ## the cape's edges, its back facings the whole cape) and KingCape's drawn fan stands down; false =
 ## the drawn fan stays behind him (flat on the ground under the tilt: the it18 read).
@@ -51,16 +55,21 @@ static func strip_path(art_dir: String, pitch_deg: float) -> String:
 	return path if _exists[path] else ""
 
 
-## After each drive step: dress a freshly built card once, then rescale it by the strip's width.
+## After each drive step: dress a freshly built card (or one whose pitch moved) once, then rescale
+## it by the strip's width.
 static func dress(rig: CutRig) -> void:
 	_dress_parts(rig)
 	var card: Sprite2D = rig.head_card
 	if card == null:
 		return
-	if not card.has_meta(META):
+	var pitch: int = roundi(ViewMode.shared().pitch_deg)
+	if not card.has_meta(META) or card.get_meta(META_PITCH) != pitch:
+		if not card.has_meta(META_SHARED):
+			card.set_meta(META_SHARED, [card.texture, card.offset])
 		var fit: Vector2 = _swap(card, rig)
-		card.scale *= fit.x  # this step was placed by the shared strip's cell width
+		card.scale *= fit.x  # this step was placed by the old strip's cell width
 		card.set_meta(META, fit.y)
+		card.set_meta(META_PITCH, pitch)
 	var k: float = card.get_meta(META)
 	if k != 1.0:
 		card.scale *= k
@@ -71,18 +80,21 @@ static func dress(rig: CutRig) -> void:
 static func _swap(card: Sprite2D, rig: CutRig) -> Vector2:
 	var art_dir: String = rig.plan.art_dir
 	var path: String = strip_path(art_dir, ViewMode.shared().pitch_deg)
-	if path.is_empty():
-		return Vector2.ONE
+	var old_cell_w: float = card.texture.get_width() / float(RigHeadCard.FRAMES)
+	var horn: Node = rig.find_child(HORN, true, false)
+	if horn is CanvasItem:
+		(horn as CanvasItem).visible = path.is_empty()
+	if path.is_empty():  # no strip at this pitch: the shared card again (a no-op if never swapped)
+		var shared: Array = card.get_meta(META_SHARED)
+		card.texture = shared[0]
+		card.offset = shared[1]
+		return Vector2(old_cell_w / (card.texture.get_width() / float(RigHeadCard.FRAMES)), 1.0)
 	if not _tex.has(path):
 		_tex[path] = load(path) as Texture2D
 	var tex: Texture2D = _tex[path]
 	var row: Array = STRIPS[art_dir]
-	var old_cell_w: float = card.texture.get_width() / float(RigHeadCard.FRAMES)
 	var cell: Vector2 = Vector2(tex.get_width() / float(RigHeadCard.FRAMES), tex.get_height())
 	card.texture = tex
-	var horn: Node = rig.find_child(HORN, true, false)
-	if horn is CanvasItem:
-		(horn as CanvasItem).visible = false
 	var anchor_y: float = row[1]
 	card.offset = Vector2(-cell.x * 0.5, -cell.y * anchor_y)
 	var width_k: float = row[2]  # RigHeadCard scales by the cell width: the drawn width holds
