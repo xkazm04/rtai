@@ -17,6 +17,13 @@ const CROWN_M: float = 0.42
 ## The ermine collar round his shoulders (the target's white fur ring with black tails), m.
 const ERMINE_R_M: float = 0.5
 const ERMINE_W_M: float = 0.16
+## it16: King's own gold chain (the 90-degree panel: a jewelled chain over his chest in the collar's
+## front opening), its width (m) on a ring of KING_CHAIN_R_M, a medallion with a plum gem at the
+## front (the sheet's orange gem: vermilion stays the cape's). 0 = no chain (it15).
+const KING_CHAIN_W_M: float = 0.08
+const KING_CHAIN_R_M: float = 0.56
+const KING_MEDAL_M: float = 0.1
+const GEM: Color = Color("#5A2335")
 const FUR: Color = Color("#EFE6D2")
 ## The decree's windup arc (it10, see _shout); false = the it2-it9 faint pulses.
 const SHOUT_ARC: bool = true
@@ -49,6 +56,7 @@ func _draw() -> void:
 	if f.state != BossFight.State.DEFEATED:
 		_down_at = -1
 		_ermine(at, f.body.facing)
+		_king_chain(at, f.body.facing.angle())
 		_crown(at, CROWN_M * Ink.PX_PER_M, 0.0)
 		_raised_plates(f, at)
 	else:  # the defeat beat: the crown falls off his head and rolls away
@@ -134,6 +142,24 @@ func _ermine(at: Vector2, facing: Vector2) -> void:
 	draw_arc(at, r, a + 0.75, a + TAU - 0.75, 24, FUR, w)
 	for i: int in 7:
 		draw_circle(at + Vector2.from_angle(a + 1.0 + float(i) * 0.71) * r, w * 0.18, Ink.INK)
+
+
+## King's chain: a gold rope across the ermine collar's front gap, links catching the light, a
+## gold medallion with a plum gem hanging at the front.
+func _king_chain(at: Vector2, a: float) -> void:
+	if KING_CHAIN_W_M <= 0.0:
+		return
+	var r: float = KING_CHAIN_R_M * Ink.PX_PER_M
+	var w: float = KING_CHAIN_W_M * Ink.PX_PER_M
+	draw_arc(at, r, a - 0.8, a + 0.8, 12, Ink.INK, w + 3.0)
+	draw_arc(at, r, a - 0.78, a + 0.78, 12, GOLD, w)
+	for i: int in 4:  # the links catch the light
+		draw_circle(at + Vector2.from_angle(a - 0.6 + 0.4 * float(i)) * r, w * 0.25, GOLD_HI)
+	var medal: Vector2 = at + Vector2.from_angle(a) * (r + w * 0.7)
+	var mr: float = KING_MEDAL_M * Ink.PX_PER_M
+	draw_circle(medal, mr + 1.5, Ink.INK)
+	draw_circle(medal, mr, GOLD)
+	draw_circle(medal, mr * 0.5, GEM)
 
 
 ## A gold star crown with an ink edge and a dark jewel (vermilion stays the cape's alone).
