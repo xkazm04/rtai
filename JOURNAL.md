@@ -1272,3 +1272,8 @@ idempotent tool; palette gate held), depth-ordered-layered-art (no layer change)
   pads ring ink and copper like the wing ledges and the sheet; at 48 px/m the stripes are crisp.
   `M/frames/servo_pad_hazard_ab_it14.png`; frames.json 15 (it10 steel A/B dropped, kept on disk
   for REPORT call 12). DECISION in docs/decisions.md; REPORT call 16.
+- 04:16 FILM the full fight re-filmed on 939453f5 (the hazard pads; `full32_14.sh`): down **7036,
+  188**, 0 SCRIPT ERROR, telemetry identical to it12. **Looked at** the 12 keys: framed as it12.
+  Target still re-shot at tick 1800 (`M/frames/servo_target_vs_game_32ppm_it14.png`), **looked
+  at**: at 1x the pads ring ink and copper like the sheet's. it12 fight clip, keys and still
+  deleted (frames.json `before` names them); REPORT paths moved to it14.
