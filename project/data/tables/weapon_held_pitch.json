@@ -211,7 +211,8 @@
             648,
             76
           ],
-          "size_k": 1
+          "size_k": 1,
+          "small": "res://features/combat/weapons/art/held_55/plasma_sword_small.png"
         },
         "ray_gun": {
           "art": "res://features/combat/weapons/art/held_55/ray_gun.png",
