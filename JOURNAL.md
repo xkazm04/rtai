@@ -522,3 +522,29 @@ NEXT (iteration 16 = the freeze; freeze 08:30, report 08:40):
   all PASS there, exe from 8d53ddbf smoked). If no code lands, the freeze only needs a final
   `evidence/run.mjs --no-bench` on HEAD, the REPORT final pass (drop "DRAFT"; fold the PLAN cost
   table into REPORT's `## Cost table`), and a check that frames.json still lists 8-15 files.
+
+## Iteration 18 (07:44-08:30, the freeze)
+
+- Read JOURNAL NEXT: code unchanged since 08e56ab6 (gates all PASS there). Freeze plan: final
+  `evidence/run.mjs --no-bench` on HEAD, REPORT final pass, exe re-export + smoke.
+- FRICTION: edited REPORT.md while the evidence runner was in its unit stage; its churn check
+  would fail unit-tests evidence on a dirty path. Moved the edit to scratch and restored the file
+  before the check (the runner needs a tree that stays clean for its whole run).
+- Machine: the King lane runs 9 headless Godot fights in parallel (numbers-it22); every timing
+  this session is CONTENDED.
+- GATE `node tools/evidence/run.mjs --no-bench` on 02af876a: all PASS (lint 13/13, unit 1190/0,
+  scenarios 52, parity bit-exact, goldens 11/11 + block 5/5), 07:52.
+- MILESTONE eb09836f (dev-only): `city_bench.gd` accepts `--view` (ViewMode.shared() reads it) and
+  writes `"view"` into its JSON. BENCH under `bench.lock` (taken 07:53, released 07:56): bake,
+  export `windows-bench`, city `drive_dense` 32 px/m 30 s, top/tilt alternating x2. CONTENDED (King
+  lane: 9 headless fights). top 0.86/0.89 ms avg, tilt 1.01/1.00 (+15 %); p99 2.0 -> 2.25 ms; draw
+  calls 370 -> 573 (+55 %); visible actors 23.3 -> 28.6 (+22 %, = the computed 1.22x ground);
+  0 chunk failures, 0 SCRIPT ERROR. JSONs + script `evidence/view/it18/bench/`. Bench exe deleted.
+- GATE run.mjs --no-bench on 8b7a5982: all PASS (same counts), 08:04.
+- REPORT final (78d652d7): DRAFT dropped, the cost table folded in with the bench A/B, "What
+  blocked", "Next steps", final gates. PLAN streaming row: MEASURED.
+- EXE re-exported on 78d652d7 (`windows-showcase`, 0 errors, build/export-it18.log; now packs the
+  baked city chunks, 248 MB). Smoke headless: tilt King: defeated, 8 hidden; tilt city: 176 hidden;
+  top King: defeated; 0 SCRIPT ERROR each (identical to it15). `evidence/view/it18/exe_*.log`.
+- GATE started 08:06: director reel on ae9b1502 (game code = 08e56ab6; the it15 reel was one
+  view-only commit earlier). Result below.
