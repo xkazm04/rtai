@@ -452,7 +452,7 @@
       "range_m": 32,
       "reload_s": 3.2,
       "rof_hz": 20,
-      "shot_cue": "shot_assault_rifle",
+      "shot_cue": "shot_gatling",
       "speed_mps": 70,
       "spin_s": 0.5,
       "splash_damage": 0,

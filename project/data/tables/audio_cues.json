@@ -573,6 +573,21 @@
       "priority": 3,
       "sound": "nailgun_shot",
       "takes": 3
+    },
+    {
+      "bus": "sfx",
+      "cooldown_ticks": 2,
+      "doc": "n7-ranged: Rivet's Gatling fires (its weapons row's shot_cue): the rifle shot pitched down to a heavier rumble at 20 rounds a second, a step under the contractors' rifle it shared with the machine pistol, quieter per round than the hand cannon so the stream does not clip",
+      "gain_db": -3,
+      "id": "shot_gatling",
+      "loop": false,
+      "max_m": 75,
+      "max_voices": 6,
+      "pitch": 0.82,
+      "pitch_jitter": 0.06,
+      "priority": 3,
+      "sound": "rifle_shot",
+      "takes": 3
     }
   ],
   "doc": "Sound cues as data (features/audio/README.md). A cue id is an FX trigger id (data/tables/fx_triggers.json: shot, projectile_end, death, player_hit, ...), an F-04 Events signal, or an id a lane fires itself (hit_flesh, horn, crash, tyre_screech). sound/takes: res://assets/audio/sfx/<sound>_<01..takes>.wav (.ogg when longer than 3 s). gain_db trims the cue before the bus. pitch is the base pitch scale, pitch_jitter the +/- fraction drawn per play from the audio dice (seeded from the RNG registry's master seed, never a registry stream: render-side draws must not enter the replay hash). max_m: hearing distance in metres, 0 = not positional. cooldown_ticks: min sim ticks between two plays of the cue. max_voices: simultaneous players for the cue. priority: who may steal a pool voice when it is full (0 lowest).",

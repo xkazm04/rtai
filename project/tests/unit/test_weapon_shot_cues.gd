@@ -36,3 +36,18 @@ func test_heavy_shots_sound_lower_and_the_shard_higher() -> void:
 	if shard != null:
 		assert_gt(shard.pitch, 1.3, "the shard's flick is pitched up")
 		assert_lt(shard.gain_db, -3.0, "and quieter than a gun")
+
+
+## it16: the Gatling shared the contractors' rifle shot with the machine pistol; its own cue sits
+## under them (a heavier rumble) and over the tube's launch thump.
+func test_gatling_has_its_own_heavier_shot() -> void:
+	var table: WeaponTable = WeaponTable.shipped()
+	var tables: AudioTables = AudioTables.shipped()
+	var cue_id: StringName = table.weapon(&"gatling").shot_cue
+	assert_ne(cue_id, table.weapon(&"machine_pistol").shot_cue, "not the machine pistol's shot")
+	assert_ne(cue_id, &"shot_assault_rifle", "not the contractors' rifle")
+	var cue: AudioCue = tables.cue(cue_id)
+	assert_not_null(cue, "gatling: its cue exists")
+	if cue != null:
+		assert_lt(cue.pitch, tables.cue(&"shot_assault_rifle").pitch, "lower than the rifle")
+		assert_gt(cue.pitch, tables.cue(&"shot_tube").pitch, "over the tube's thump")
