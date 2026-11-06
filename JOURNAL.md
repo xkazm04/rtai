@@ -1362,3 +1362,31 @@ Read: JOURNAL NEXT (it13), git log, frames.json. `king_car_trim.gd` showed `M` w
   off, ink burst). The folded ermine cape and the gold horn throughout.
 - it5/it6 clips deleted; frames.json 15 (all files present); REPORT clips line + gates (it13) and
   director reel (it13) lines brought up to date.
+
+### 03:46 CHECK the cape on the car through the ram (NEXT 2): no change, looked at
+- Phase 1 seed 2 stander, 48 px/m, `--write-movie` 0-5.5 s; frames at 3.2 / 3.6 s (ram active,
+  flared) and 4.8 s (at rest), 2x crops (`evidence/king/shots/it14/ram_cape_active_rest_48ppm_2x.png`).
+  **Looked at**: the flared hem reaches a little further over the trunk and stays inside the car's
+  outline; no overhang past the rear bumper; the rear pushers clear of it. DECISION: no change
+  (CAPE_ON_CAR_K 1.3 holds through the ram).
+
+### 03:48 MILESTONE the cape follows the press slam (NEXT 3)
+- motion-quality-gating (anticipation, follow-through, settle on the attack's beats),
+  realtime-combat-semantics (render only: the cape never reads as a hit area).
+- `KingCape`: `press_slam` joins CHARGING (gathered x0.88 through the crouch, flared x1.22 behind
+  the 6 m leap), and `_spread` LAND_SPREAD_K 1.14 widens the hem on the recovery's first tick (the
+  landing with the shockwave), easing back over 24 ticks. DECISION: a wide landing, not a "lifted"
+  shorter hem (from straight above a lift reads as a smaller cape, not a jump).
+- A/B, same ticks, 1280x800 like the it13 clip (`evidence/king/shots/it14/cape_slam_land_before_after_48ppm.png`,
+  0.9-2.3 s of the stander run). **Looked at**: before, the cape the same in every frame; after,
+  drawn in through the tell, long through the leap, wide on the ring at 1.55-1.7 s, at rest by 2.3 s.
+- `test_king_cape` 4/4 (new: the slam lands wide then settles, only the slam spreads); planted
+  LAND_SPREAD_K 1.0: 1163/1, restored. Unit **1164/0**, lint 13/13. Commit 62193e3e.
+- Render only, checked: headless full fight seed 2 human on 62193e3e, King down at tick **4933**,
+  Rivet took **88**, coin_fan 3 / press_slam 1 / ram 1, 0 SCRIPT ERROR: identical to it13
+  (`evidence/king/shots/it14/fight_human_s2_it14_tel.json`).
+- FILM `M/king_slam_plates_48ppm_it14.mp4` (stander + dodger, 6.4-9.6 s each, 1280x800, music,
+  0 SCRIPT ERROR). **Looked at** the 4 fps sheet: the landing spread in both halves, the stander
+  hit, the dodger clear. it13 clip deleted; frames.json 15 (slam first); REPORT clip + call L.
+- FRICTION: film.sh used 1280x720 while the it13 clips are 1280x800 (the A/B crops misaligned);
+  film.sh now takes RES. The it14 ghost clips are 1280x720 (fine as clips).

@@ -35,7 +35,7 @@ The moveset is `docs/bosses/king.md`; the full log is `JOURNAL.md`.
 - **Clips**:
   - the full fight played by the human-like bot on the current body (`king_fight_bot_human_32ppm_it13.mp4`, 95 s; King down at tick 4933, the headless run's tick);
   - the procession entering, from the gang's first appearance to King stepping down (`king_procession_enter_32ppm_it13.mp4`);
-  - the press slam, telegraph (the plates raised beside the crown), hit and dodge (`king_slam_plates_48ppm_it13.mp4`);
+  - the press slam, telegraph (the plates raised beside the crown), hit and dodge, the cape landing wide (`king_slam_plates_48ppm_it14.mp4`);
   - the charge, telegraph lane, hit and dodge, the cape drawn in and flared (`king_charge_48ppm_it13.mp4`);
   - the ram and the coin fan, hit and dodge (`king_ram_coin_fan_48ppm_it12.mp4`), and the decree's windup arc and buff (`king_decree_48ppm_it13.mp4`);
   - the target sheet beside the game at 32 px/m (`king_target_vs_game_32ppm_it13.png`);
@@ -111,7 +111,10 @@ Each call names its options, the default that is built, and how to see it.
   tells and flared through the dash), or the flat vermilion trapezoid with a cream band (`FOLDS` 0):
   `evidence/king/shots/it13/cape_before_after_32_48ppm.png` (stills),
   `evidence/king/shots/it13/cape_charge_gather_flare_48ppm_5fps.png` (the charge), and in play
-  `RTAI.exe -- --boss=king --phase=3`.
+  `RTAI.exe -- --boss=king --phase=3`. (it14) The press slam moves it too: gathered for the crouch,
+  flared behind the leap, landing wide with the shockwave (`KingCape.LAND_SPREAD_K` 1.14; 1.0 and
+  `press_slam` out of `CHARGING` = still through the slam):
+  `evidence/king/shots/it14/cape_slam_land_before_after_48ppm.png`.
 
 ## The exe
 
