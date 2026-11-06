@@ -24,6 +24,8 @@ class Blast:
 	var pos: Vector2 = Vector2.ZERO
 	var radius_m: float = 0.0
 	var damage: float = 0.0
+	## A bomb's or dive's fireball (false: a crate's landing hit, no boom drawn).
+	var fire: bool = true
 	## Render only (booms): ticks of its fireball left.
 	var life_left: int = 0
 
@@ -64,8 +66,9 @@ func drop(pos: Vector2, kind: StringName, fall_ticks: int) -> void:
 
 func step() -> void:
 	for b: Blast in blasts:
-		b.life_left = BOOM_TICKS
-		booms.append(b)
+		if b.fire:
+			b.life_left = BOOM_TICKS
+			booms.append(b)
 	booms = booms.filter(func(b: Blast) -> bool: return b.life_left > 1)
 	for b: Blast in booms:
 		b.life_left -= 1
@@ -98,6 +101,13 @@ func _land(p: Parcel) -> void:
 		b.damage = _tuning.bomb_damage
 		blasts.append(b)
 		return
+	if _tuning.crate_damage > 0.0:  # the owner call: a crate landing on Rivet hurts
+		var hit: Blast = Blast.new()
+		hit.pos = p.pos
+		hit.radius_m = _tuning.crate_m * 0.5
+		hit.damage = _tuning.crate_damage
+		hit.fire = false
+		blasts.append(hit)
 	p.hp = _tuning.crate_hp
 	p.life_left = _tuning.crate_life_ticks
 	crates.append(p)

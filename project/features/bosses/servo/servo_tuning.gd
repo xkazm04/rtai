@@ -34,6 +34,8 @@ var fall_ticks: int = 21
 var bomb_share: float = 0.5
 var bomb_damage: float = 22.0
 var ring_m: float = 1.6
+## A crate landing on Rivet deals this (0 = harmless, the default; the owner call).
+var crate_damage: float = 0.0
 var crate_hp: int = 3
 var crate_life_ticks: int = 720
 var crate_m: float = 0.9
@@ -119,6 +121,7 @@ static func _read_parcels(t: DataTable, s: ServoTuning) -> void:
 	s.bomb_share = t.num(p, "bomb_share")
 	s.bomb_damage = t.num(p, "bomb_damage")
 	s.ring_m = t.num(p, "ring_m")
+	s.crate_damage = t.num(p, "crate_damage")
 	s.crate_hp = t.integer(p, "crate_hp")
 	s.crate_life_ticks = ticks(t.num(p, "crate_life_s"))
 	s.crate_m = t.num(p, "crate_m")

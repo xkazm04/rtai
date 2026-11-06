@@ -205,6 +205,11 @@
           "minimum": 0,
           "type": "number"
         },
+        "crate_damage": {
+          "maximum": 100,
+          "minimum": 0,
+          "type": "number"
+        },
         "crate_hp": {
           "maximum": 20,
           "minimum": 1,
@@ -240,6 +245,7 @@
       "required": [
         "bomb_damage",
         "bomb_share",
+        "crate_damage",
         "crate_hp",
         "crate_life_s",
         "crate_m",
