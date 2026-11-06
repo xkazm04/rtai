@@ -105,8 +105,9 @@ func test_no_overlay_when_the_other_folder_draws_the_same_strip() -> void:
 	var card: Sprite2D = Sprite2D.new()
 	card.texture = load(RigHeadCard.CARDS["cop/head_cap"][0]) as Texture2D
 	card.set_meta(&"art", "p70")
-	ViewPitchCards.dress(card, "p55", 0.5)
-	assert_eq(card.get_child_count(), 0, "no p70 or p55 cop card: one base strip")
+	# p65 holds no art (and chars' p55 now has a cop cap card): both folders draw the base strip
+	ViewPitchCards.dress(card, "p65", 0.5)
+	assert_eq(card.get_child_count(), 0, "no p70 or p65 cop card: one base strip")
 	assert_eq(card.self_modulate.a, 1.0)
 	card.free()
 
