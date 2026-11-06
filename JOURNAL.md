@@ -517,3 +517,8 @@ NEXT (iteration 16 = the freeze; freeze 08:30, report 08:40):
   city block 3600 frames: 176 body-frames hidden, 0 SCRIPT ERROR; `--view=tilt` King fight: King
   defeated, 8 hidden, 0 SCRIPT ERROR; `--view=top` King fight: King defeated, no occluder made,
   0 SCRIPT ERROR. The exe matches the editor runs exactly.
+- PLAN cost table: the occlusion row is now built and measured (e70cd3d5). Session end 07:42 on
+  e70cd3d5; tree clean. NEXT for the freeze session: code has not changed since 08e56ab6 (gates
+  all PASS there, exe from 8d53ddbf smoked). If no code lands, the freeze only needs a final
+  `evidence/run.mjs --no-bench` on HEAD, the REPORT final pass (drop "DRAFT"; fold the PLAN cost
+  table into REPORT's `## Cost table`), and a check that frames.json still lists 8-15 files.
