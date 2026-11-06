@@ -1442,3 +1442,16 @@ scores and becomes call 7).
   (mini_nuke-ab-32ppm dropped from frames.json; its file stays, REPORT cites it). REPORT row + call 7,
   audit rows 1/2/6/7 + the sound paragraph (shard S 1 -> 2, hand cannon S 2 -> 3), decisions.md line.
 - Not listened to: no audio device on this machine. That is call 7.
+
+### GATES 03:36 on `d4559823` (the re-voiced shots)
+- Reels pit 19/19 + city 19/19, 0 SCRIPT ERROR (`evidence/ranged/it15-reel-{director,city}-d4559823.log`).
+  Sound only: no sim, replay or parity input changes (audio cues are render side, AudioDice seeded
+  outside the registry streams).
+
+### FIND 04:02: where Rivet holds the assault rifle (audit row `-`, every cell `?`)
+- The rifle is not a table gun: combat.json `assault-rifle`, picked up from a downed contractor in
+  quest 1 (stage_actions grab, 1.5 m reach). A scratch headless walk of CollectCallPlay (scratch
+  `ar/find_rifle*.gd`, the -s main script loads the worker after the autoloads exist) prints
+  Rivet's weapon: Gloria from tick 7305, **the rifle 14363-14721**, Gloria again (dry), done 19241.
+- FRICTION: the first try compiled the worker in the -s script (no `Log` autoload) and a parse error
+  left Godot hanging at exit until my 300 s timeout (5 min lost). Use `timeout` short on scratch runs.
