@@ -9,7 +9,10 @@ the ground seen at 70 is near its side profile, the assets lane's 21:0x finding)
 Keying: the sheet's own background (green or magenta) sampled at the corners, alpha from the colour
 distance (TOL hard, SOFT ramp), green/magenta spill pulled to grey on the edge.
 
-usage: python tools/art/design_cut.py <rivet_final_dir> <id>[,<id>...]
+usage: python tools/art/design_cut.py <rivet_final_dir> <id>[,<id>...] [--showcase]
+  --showcase: p70/p55 from the assets lane's sheets `out/showcase_<id>_{70,55}.png` instead (five
+  rotations of the weapon lying on the ground; the middle one, the side view, muzzle right, is cut);
+  the icon stays the design sheet's hero.
 """
 import os
 import sys
@@ -75,8 +78,25 @@ def save(rgba: np.ndarray, lab: np.ndarray, piece, path: str) -> None:
     print(f"-> {path} {im.size}")
 
 
+def side_of_sheet(path: str) -> tuple:
+    """The middle of the five rotations (sorted left to right): (rgba, lab, piece)."""
+    rgba = key(np.asarray(Image.open(path).convert("RGB")).astype(np.float32))
+    solid = rgba[..., 3] > 128
+    lab, _ = ndimage.label(ndimage.binary_dilation(solid, iterations=6))
+    boxes = [((lab[sl] == i + 1).sum(), i + 1, sl) for i, sl in enumerate(ndimage.find_objects(lab))]
+    five = sorted(sorted(boxes, key=lambda b: -b[0])[:5], key=lambda b: b[2][1].start)
+    return rgba, lab, five[len(five) // 2]
+
+
 def main() -> None:
     src_dir, ids = sys.argv[1], sys.argv[2].split(",")
+    if "--showcase" in sys.argv:
+        for wid in ids:
+            for form, pitch in (("p70", "70"), ("p55", "55")):
+                sheet = os.path.join(src_dir, "out", f"showcase_{wid}_{pitch}.png")
+                rgba, lab, piece = side_of_sheet(sheet)
+                save(rgba, lab, piece, os.path.join(OUT, form, f"{wid}.png"))
+        return
     for wid in ids:
         rgb = np.asarray(Image.open(os.path.join(src_dir, "refs", f"design_{wid}.png")).convert("RGB"))
         rgba = key(rgb.astype(np.float32))
