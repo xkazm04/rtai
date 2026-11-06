@@ -530,3 +530,10 @@ NEXT (iteration 5, the freeze, 17:50-18:40):
 4. 18:30 export: `"$GODOT_BIN" --headless --path project --export-release windows-showcase
    ../build/export/windows/RTAI.exe`, smoke `--view=combo` and `--view=tilt70`, REPORT final (drop
    DRAFT; exe lines), JOURNAL, commit.
+- 17:36 FILM re-take on f2361702, partly done: `king32_tilt`, `king32_tilt70`, `king64_tilt` avis are in
+  scratch it4 (0 SCRIPT ERROR each); my second parallel stream never started (b3b.out missing), so
+  `king32_combo` and `king64_tilt70` were started at 17:36 (b3c.out / b3d.out) as the session ends.
+  The masters it4 King films are still the 95109a45 ones (today's car at 70).
+NEXT 1 (replaces the one above): check b3c.out/b3d.out (0 SCRIPT ERROR, frame count); if fine, run
+  the trio and pair lines of it4/make.sh (combo label 'combo (70 play, 55 boss)'), re-take the t40/t9
+  stills, update frames.json to f2361702 and LOOK at the 70 panel (the throne-car); else re-film.
