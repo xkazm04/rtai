@@ -296,7 +296,7 @@ NEXT (iteration 8):
   (the most common heads on the street; their cards are still the n7 pre-55 cuts), no image job.
 - MILESTONE bd142385: p55 cards for `cop/head_cap` (cop_patrol_55, graded A by assets) and
   `cop/head_helmet` (cop_riot_55), cut by street_head.py (no image job). New options: `wcap` keeps a
-  1.12 x head-width column, feathered 8 px (drops the riot shield); fix `orange` (329 px of riot
+  1.12 x head-width column, feathered 8 px (drops the riot shield); fix `orange` (the riot
   shoulder patch -> slate), fix `navy` (sheet police blue 74,101,166 vs the rig's 53,63,92: value x0.62,
   sat x0.8). Tried raw=false (the part material, like the n7 cop cards): it prints the faces RED
   (blood red reserved), so the cards stay raw and the tone is fixed in the art. LOOKED at 48 px/m x3:
@@ -340,3 +340,21 @@ NEXT (iteration 8):
   --ppm=48 --view=tilt` (0 SCRIPT ERROR, "Rivet destroyed" at ~25 s): masters
   `rivet_bust55_hits_death_king_adds_tilt_48ppm_x2.mp4` (7 s). LOOKED: the bust card holds through the
   hits; the death itself is hidden under the King's guard robots in this seed (not judged yet).
+- GATE `top` city block (`--arena=city --bot=rivet --seed=2 --rigs`, 301 frames, video+audio
+  framemd5) on c2e50b6e+: IDENTICAL with main 0bea8b93's hashes (scratch ct_main.md5).
+- DECISIONs in docs/decisions.md: street cop cards (raw + navy fix, not the part material); ghost card
+  depth (host moves; the FX cap rejected).
+- Calls (add to REPORT): cop card tone (rig navy, built, vs the sheet's brighter police blue: rerun
+  street_head.py without `navy`); Kerf's lean (12 deg built; `KerfRig.CARD_LEAN` 0 = upright).
+
+NEXT (iteration 11, the freeze at 18:30):
+1. Freeze: export build/export/windows/RTAI.exe (int-day recipe in docs/decisions.md); REPORT.md by
+   18:40 with the Calls collected above (Dent tan vs teal; halo strength; Kerf thin card; Ohm arms
+   ground vs lifted; card facing count 5+3; cop tone; Kerf lean) and exe command lines per call.
+2. Read weapons' JOURNAL for the answer to the tank/tube REQUEST; re-film the flamethrower and
+   rocket_launcher chapters at 48 tilt when they land (`--chapter=flamethrower`).
+3. Rivet's death under tilt in the clear (a seed or a pit death where no add covers him), 64 px/m.
+4. Street heads hat/hood/cap when assets delivers (REQUEST it7); the ped_jogger/punk/shopper/worker
+   sheets are in the library now but match no head part the game has (ponytail, mohawk, bun, short
+   hair): a new ped head variant would be a parts change, not a card.
+- Provenance: two lines for cop_cap_card.png and cop_riot_card.png (steam/ai-provenance/2026-11.jsonl).
