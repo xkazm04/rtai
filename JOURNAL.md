@@ -300,3 +300,7 @@ NEXT (iteration 3):
 
 NEXT (iteration 3) stands as written above (15:41), plus: re-run the zoom 0.872 pass when the
 machine is quiet; REPORT.md is a draft (iteration 2) - update it at the freeze.
+- 15:48 RE-RUN (bench.lock, CONTENDED): tilt70 zoom 0.872 -> draw 602, 12.09 ms; tilt70 zoom 1.0 (the
+  15:27 setting, 1.08/1.18 ms then) -> draw 371, 12.01 ms, 256 hitches > 25 ms each. Both slow alike: the
+  12 ms is machine load at 15:46-15:48 (other lanes), not the zoom. Draw calls repeat exactly and follow
+  the visible area. Frame-time comparisons: only the 15:27 alternating table above counts.
