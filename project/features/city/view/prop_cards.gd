@@ -1,0 +1,85 @@
+class_name PropCards
+extends RefCounted
+## The city's street props standing up under an angled view (night n8, lane city): a prop named in
+## city_facades.json `props` draws as a card from its five-facing strip (keyed by the view row's
+## art, p55 / p70; cut by tools/art/city_prop_cut.py from the library's prop sheets) instead of
+## its flat top-down art. The facing comes from the command's turn (front, three-quarter, side,
+## three-quarter away, back; the other side mirrored); the card's foot sits on the footprint's
+## south edge and it rises by the art's aspect over the squashed ground. ChunkLift orders the
+## cards with the roofs by south edge. Render only.
+
+const FACINGS: int = 5
+
+var _strip: Dictionary[int, Texture2D] = {}
+var _cell_w_px: Dictionary[int, float] = {}
+var _turn: Dictionary[int, float] = {}
+
+
+## props: the table's `props` rows by city_textures name; names: the texture names by id.
+static func make(
+	props: Dictionary, names: Array[String], art: String, fallback: Dictionary
+) -> PropCards:
+	var out: PropCards = PropCards.new()
+	for t: int in names.size():
+		if not props.has(names[t]):
+			continue
+		var row: Dictionary = props[names[t]]
+		var tex: Texture2D = art_texture(str(row["art"]), art, fallback)
+		if tex == null:
+			continue
+		var w_m: float = row["cell_w_m"]
+		var turns: float = row.get("turn", 0.0)
+		out._strip[t] = tex
+		out._cell_w_px[t] = w_m * SimConst.PX_PER_M
+		out._turn[t] = turns * PI * 0.5
+	return out
+
+
+## The art at `path` with `<art>` set to the view's art key, else its fallback key's; null if none.
+static func art_texture(path: String, art: String, fallback: Dictionary) -> Texture2D:
+	var want: String = art if art != "" else str(fallback.get("", "p55"))
+	for key: String in [want, str(fallback.get(want, want))]:
+		var p: String = path.replace("<art>", key)
+		if ResourceLoader.exists(p):
+			return load(p)
+	Log.warn("city", "no art for %s at %s" % [path, art])
+	return null
+
+
+func has(t: int) -> bool:
+	return _strip.has(t)
+
+
+func size() -> int:
+	return _strip.size()
+
+
+## The draw bands by texture with the standing props moved to the roofs band (4).
+func bands(band_of: PackedByteArray) -> PackedByteArray:
+	var out: PackedByteArray = band_of.duplicate()
+	for t: int in _strip:
+		out[t] = 4
+	return out
+
+
+## The strip cell for a command's turn and whether it is mirrored (the art's front faces south at
+## turn 0, plus the row's `turn` quarter turns).
+func facing(t: int, rot: float) -> Vector2i:
+	var ang: float = wrapf(rot + _turn[t], -PI, PI)
+	var idx: int = clampi(roundi(absf(ang) / (PI * 0.25)), 0, FACINGS - 1)
+	return Vector2i(idx, 1 if ang < -0.01 and idx > 0 and idx < FACINGS - 1 else 0)
+
+
+## Draws prop t's card into `item`; `foot` is the footprint's south-edge centre in world px.
+func draw(item: RID, t: int, rot: float, foot: Vector2) -> void:
+	var strip: Texture2D = _strip[t]
+	var cell: Vector2 = Vector2(strip.get_width() / float(FACINGS), strip.get_height())
+	var w: float = _cell_w_px[t]
+	var h: float = w * cell.y / cell.x / ViewMode.shared().ground_k()
+	var f: Vector2i = facing(t, rot)
+	var src: Rect2 = Rect2(Vector2(cell.x * f.x, 0.0), cell)
+	var dst: Rect2 = Rect2(-w * 0.5, -h, w, h)
+	# a mirrored facing flips the basis (a negative rect size shifts the card instead of flipping)
+	var xf: Transform2D = Transform2D(Vector2(-1.0 if f.y == 1 else 1.0, 0.0), Vector2.DOWN, foot)
+	RenderingServer.canvas_item_add_set_transform(item, xf)
+	RenderingServer.canvas_item_add_texture_rect_region(item, dst, strip.get_rid(), src)

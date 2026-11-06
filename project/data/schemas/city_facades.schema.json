@@ -58,6 +58,37 @@
       "description": "ChunkLift: the kerb-parked cars go to VehicleParked as cards (n8 vehicles), not drawn flat",
       "type": "boolean"
     },
+    "props": {
+      "additionalProperties": {
+        "additionalProperties": false,
+        "properties": {
+          "art": {
+            "pattern": "^res://",
+            "type": "string"
+          },
+          "cell_w_m": {
+            "exclusiveMinimum": 0,
+            "maximum": 12,
+            "type": "number"
+          },
+          "turn": {
+            "maximum": 3,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "art",
+          "cell_w_m"
+        ],
+        "type": "object"
+      },
+      "description": "PropCards: a city_textures prop name drawn standing as a card from its five-facing strip under an angled view (art with <art> = the view's art key); cell_w_m = one strip cell's width on the ground; turn = quarter turns from the art's front (south at turn 0) to the texture's",
+      "propertyNames": {
+        "pattern": "^[a-z][a-z0-9_]*$"
+      },
+      "type": "object"
+    },
     "schema": {
       "const": "gtai.city-facades/1"
     },

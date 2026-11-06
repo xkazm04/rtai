@@ -1,11 +1,9 @@
 class_name ChunkView
 extends RefCounted
 ## Draws resident chunks (WLD-02 stage 2): one chunk at a time, nearest first, its draw list
-## recorded into pooled RenderingServer canvas items, one per world render layer (ground,
-## ground_decals, building_shadows, props, roofs: core/render/README.md) per 64 m quadrant so
-## off-screen quadrants cull, time-sliced to BUDGET_US per frame. Items are cleared
-## and pooled, never freed mid-run (pooling cut the worst swap frame 6.1 -> 1.8 ms in the spike,
-## WLD-05). Render only: the sim's residency is CityResidency.
+## recorded into pooled canvas items, one per world render layer (ground, ground_decals,
+## building_shadows, props, roofs) per 64 m quadrant so off-screen quadrants cull, time-sliced to
+## BUDGET_US per frame. Items are pooled, never freed mid-run (WLD-05: worst swap 6.1 -> 1.8 ms).
 
 const R_DRAW: float = 190.0
 const BUDGET_US: int = 1500
@@ -68,6 +66,7 @@ func _init(parent: RID, textures: CityTextures) -> void:
 	_core_on = casts.parapet_core_m > 0.0
 	_core_px = Vector2.ONE * (casts.parapet_core_m - casts.baked_m(&"building")) * SimConst.PX_PER_M
 	lift = ChunkLift.make(textures, _is_building)
+	_band_of = lift.cards.bands(_band_of) if lift != null else _band_of
 
 
 ## zoom: the camera zoom (1 = 32 px/m); the shadow strokes keep their screen spacing above 64 px/m.
@@ -131,12 +130,13 @@ func _slice(chunk: CityChunk, t0: int) -> void:
 		var item: RID = items[q + 4 * (SHADOW_BAND if shadow else _band_of[t])]
 		var sz: Vector2 = _tex.size_px[t]
 		var at: Vector2 = pos * SimConst.PX_PER_M + (_shadow_extra[t] if shadow else Vector2.ZERO)
-		if lift != null and _is_building[t] and not shadow:
-			at = lift.face(item, t, chunk.xf[o + 2], at)
-		RenderingServer.canvas_item_add_set_transform(item, Transform2D(chunk.xf[o + 2], at))
-		RenderingServer.canvas_item_add_texture_rect(
-			item, Rect2(-sz * 0.5, sz), _tex.rids[t], false, SHADOW if shadow else Color.WHITE
-		)
+		if lift != null and not shadow and lift.stands(t):
+			lift.draw(item, t, chunk.xf[o + 2], at)
+		else:
+			RenderingServer.canvas_item_add_set_transform(item, Transform2D(chunk.xf[o + 2], at))
+			RenderingServer.canvas_item_add_texture_rect(
+				item, Rect2(-sz * 0.5, sz), _tex.rids[t], false, SHADOW if shadow else Color.WHITE
+			)
 		if shadow and _core_on and _is_building[t]:
 			var core_item: RID = items[q + 4 * CORE_BAND]
 			_core(core_item, t, chunk.xf[o + 2], pos * SimConst.PX_PER_M)

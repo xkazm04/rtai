@@ -52,10 +52,74 @@
     "height_m": 14,
     "style": "tenement"
   },
-  "doc": "City south faces under an angled view (night n8 lane city, FacadeArt / ChunkLift): under a tilt every building's roof is lifted by its height (ViewMode.lift_px(height_m * height_k)) and its south face is drawn under it, tiled bay by bay across the footprint's width from a style's wall strip. by_name: a city_textures `name` -> its style and height in metres (else default). height_k scales every height (1 = true height; the owner's call: a shortened cut for play visibility). styles: art = the strip per view art key (`<art>` is the view row's art, p55 / p70), bays = bay cells in the strip, bay_m = a bay's width on the ground. art_fallback: an art key whose strip is missing draws the named key's strip (p70 draws the p55 drawing, stretched by the geometry, until the 70 twins land). occlude: a body behind a building draws as an ink silhouette under the redrawn face and roof (CityOcclusion; false = the body draws over the lifted roof). parked_cards: hand the kerb-parked cars to VehicleParked as cards instead of drawing them flat (false until VehicleParked can say a VehicleView draws them: the arena city has none, the cars vanished). `top` draws none of this (bit-identical).",
+  "doc": "City south faces under an angled view (night n8 lane city, FacadeArt / ChunkLift): under a tilt every building's roof is lifted by its height (ViewMode.lift_px(height_m * height_k)) and its south face is drawn under it, tiled bay by bay across the footprint's width from a style's wall strip. by_name: a city_textures `name` -> its style and height in metres (else default). height_k scales every height (1 = true height; the owner's call: a shortened cut for play visibility). styles: art = the strip per view art key (`<art>` is the view row's art, p55 / p70), bays = bay cells in the strip, bay_m = a bay's width on the ground. art_fallback: an art key whose strip is missing draws the named key's strip (p70 draws the p55 drawing, stretched by the geometry, until the 70 twins land). occlude: a body behind a building draws as an ink silhouette under the redrawn face and roof (CityOcclusion; false = the body draws over the lifted roof). parked_cards: hand the kerb-parked cars to VehicleParked as cards instead of drawing them flat (false until VehicleParked can say a VehicleView draws them: the arena city has none, the cars vanished). `top` draws none of this (bit-identical). props: the street props standing as cards under a tilt (PropCards, five facings cut by tools/art/city_prop_cut.py from the library's prop sheets, p55 / p70); a name not listed (lamp_post, traffic_light, street_sign, bollard, fire_escape) stays flat; remove a row to put a prop back flat.",
   "height_k": 0.5,
   "occlude": true,
   "parked_cards": false,
+  "props": {
+    "barrel_cluster": {
+      "art": "res://features/city/art/view/<art>/prop_barrel_cluster.png",
+      "cell_w_m": 2.2
+    },
+    "barricade": {
+      "art": "res://features/city/art/view/<art>/prop_barricade.png",
+      "cell_w_m": 2,
+      "turn": 1
+    },
+    "bench": {
+      "art": "res://features/city/art/view/<art>/prop_bench.png",
+      "cell_w_m": 1.9
+    },
+    "bus_stop": {
+      "art": "res://features/city/art/view/<art>/prop_bus_stop.png",
+      "cell_w_m": 3.4
+    },
+    "crate_stack": {
+      "art": "res://features/city/art/view/<art>/prop_crate_stack.png",
+      "cell_w_m": 3.2
+    },
+    "dumpster": {
+      "art": "res://features/city/art/view/<art>/prop_dumpster.png",
+      "cell_w_m": 2.25
+    },
+    "fire_hydrant": {
+      "art": "res://features/city/art/view/<art>/prop_fire_hydrant.png",
+      "cell_w_m": 0.55
+    },
+    "mailbox": {
+      "art": "res://features/city/art/view/<art>/prop_mailbox.png",
+      "cell_w_m": 0.75
+    },
+    "newsstand": {
+      "art": "res://features/city/art/view/<art>/prop_newsstand.png",
+      "cell_w_m": 2.6
+    },
+    "payphone": {
+      "art": "res://features/city/art/view/<art>/prop_payphone.png",
+      "cell_w_m": 1.2
+    },
+    "planter": {
+      "art": "res://features/city/art/view/<art>/prop_planter.png",
+      "cell_w_m": 2
+    },
+    "police_barrier": {
+      "art": "res://features/city/art/view/<art>/prop_police_barrier.png",
+      "cell_w_m": 2.2,
+      "turn": 1
+    },
+    "traffic_cone": {
+      "art": "res://features/city/art/view/<art>/prop_traffic_cone.png",
+      "cell_w_m": 0.65
+    },
+    "trash_can": {
+      "art": "res://features/city/art/view/<art>/prop_trash_can.png",
+      "cell_w_m": 0.75
+    },
+    "vending_machine": {
+      "art": "res://features/city/art/view/<art>/prop_vending_machine.png",
+      "cell_w_m": 1.3
+    }
+  },
   "schema": "gtai.city-facades/1",
   "styles": {
     "shop": {
