@@ -393,3 +393,31 @@ NEXT (iteration 7, in brief order):
   `tools/tests/run_scenarios.mjs --only=city_chase`: 1 passed (`scenarios-it6-city_chase-alone.log`).
   0 SCRIPT ERROR; no golden moved (`top` unchanged: every change this iteration is behind a tilt
   card view or a dev flag).
+
+## Iteration 7 (23:45-00:45)
+Read: JOURNAL, git log, the other lanes' journals: no new REQUEST to view (street, vehicles, city,
+hud; city's occlusion and arena-cover REQUESTs answered in it2/it6).
+- MILESTONE 23:55 NEXT 1, the boss clip camera (`--boss-cam`, dev) under a tilt (commit a73a900f):
+  `BossCam.hold_top` keeps the boss's LIFTED top (BOSS_TOP_M 4 m, `ViewMode.lift_px`) TOP_MARGIN_M
+  1 m under the boss bar, after the ground point's bottom margin; and Rivet is kept in with 1.5 m
+  (`keep_in` on Rivet first, then the boss's margins win). Straight down the lift is 0: today's frame.
+  FRICTION: the first cut kept BOSS_MARGIN_M (3 m) over the lifted top: at 64 px/m 3 + 2.8 + 3 m plus
+  the bar and ghost-card bands do not fit 12.5 m of screen, so it fell back and moved nothing; 1 m
+  over the crown fits. Evidence (seed 2, phase 2, tick 600, combo):
+  `gtai-masters/n8/view/boss_cam_lifted_top_before_after_combo_64ppm.png` (crown under the bar ->
+  crown clear) and `boss_cam_rivet_and_king_combo_48ppm.png` (the King whole and Rivet with the gang
+  both in at 48). At 64 px/m Rivet ~13+ m sideways still cannot fit a 20 m screen: the boss wins.
+  Not capping the zoom (a close-up film asks for its ppm). Unit test `test_hold_top_*` (6/6).
+- MILESTONE 00:05 NEXT 2, quest 1 (`collect-call`) at tilt70 (commit 43ff9ef1: `--view` on
+  dev/frames/quest1_clip.gd). Stills at ticks 600 (Line Stopped) and 13700 (Dock 9), 32 px/m:
+  `quest1_tick600_top_vs_tilt70_32ppm.png`, `quest1_tick13700_top_vs_tilt70_32ppm.png`,
+  `quest1_dock9_tilt70_rigs_48ppm.png`, `quest1_dock9_tilt70_sprites_vs_rigs_32ppm.png`. 0 SCRIPT ERROR.
+  FOUND: quest 1 DOES follow the view (CollectCallView's print stage takes the tilt: ground
+  foreshortened, the street crowd and lamps lifted, cast shadows). With `--rigs` the fighters stand on
+  the rigs with Rivet's card (judged: reads as the arena does). WITHOUT `--rigs` (the shipped slice:
+  `Quest1Game._dev_rigs` is debug-only, the rig cast is `dev/arena/arena_rigs.gd`, dropped by a
+  release export) Rivet and the cops are FLAT top-down sprites on the tilted ground, beside a lifted
+  crowd. So under combo the release exe draws quest 1's cast flat. Fix (larger than this session):
+  move the rig cast (ArenaRigs' attach path) out of dev/ into features/ and pick it in Quest1Game when
+  `ViewMode.shared().cards` is true; `top` keeps the sprite cast (goldens). A Call for the owner:
+  quest 1's cast under the angled view, sprites (today's ship) vs the rig cast (the dev path, filmed).
