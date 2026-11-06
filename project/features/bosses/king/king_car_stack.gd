@@ -45,6 +45,8 @@ static func draw(ci: CanvasItem, at: Vector2, heading: float, l: float, w: float
 	if view.cast_k > 0.0:  # the cast shadow by height, thrown from the roof line (top_lift)
 		var off: Vector2 = view.cast_dir().rotated(-heading) * ROOF_M * view.cast_k * p
 		RigCastShadows.sweep(ci, _corners(l, w), off)
+	if KingCarWalls.draw(ci, at, heading, l, w):  # d8: the walls from art for this pitch
+		return
 	for i: int in SLICES:
 		var k: float = float(i) / float(SLICES - 1)
 		var z: float = ROOF_M * k
