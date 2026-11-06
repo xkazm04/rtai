@@ -125,3 +125,12 @@ NEXT:
 3. Ohm lift (split ohm_rig.gd, 209 lines, first); Kerf last from v2.
 4. Draw order: `--order-probe` before/after for the King's accents and the ghost/kill overlays.
 5. Rivet 64 px/m pistol close-up (`--bot=reel --reel=director --chapter=pistol --ppm=64`).
+
+### 14:51-14:56 (same session)
+- MILESTONE 01387fb6 (view70 REQUEST 2): `ViewMode.set_pitch(deg)` writes the pitch and bumps the static
+  `ViewMode.revision`; the city floor's cached static props (`arena_floor_view.gd` `_static`) redraw when
+  it moves. Everything else already reads the pitch per frame (PropOcclusion redraws each frame).
+  view70: call `ViewMode.shared().set_pitch(p)` instead of writing pitch_deg. Unit test (8 pass in
+  test_view_mode). GATE `top` city block (`--arena=city --bot=rivet --seed=2`, tick 300, 32 px/m)
+  md5-identical with main (bed86261). Debt ratchet: arena_floor_view.gd kept at 201 lines (a comment merged).
+- Image lock still `assets-lane` at 14:52: round1 not run. NEXT list above stands (item 2 done).
