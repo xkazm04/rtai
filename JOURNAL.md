@@ -1155,3 +1155,26 @@ must keep the drawn body honest to the hit body).
   (and 54-65 s every 1 s to place the cut): the domed gang ride the car at 0 s, ram lanes, coin
   sprays, the court brawl, the phase-3 flash (white bar) at 58 s, King on foot beside the wreck at
   60-61 s. The it6 cut deleted; frames.json 15; REPORT points at the new file.
+
+### 02:14 CHECK the gang's size and value against the sheet (NEXT 2): no change, measured
+- How to take a still at a tick under `--boss` (it6 used the arena directly): the arena scene
+  must be named, `--path project res://dev/arena/arena.tscn -- --rigs --boss=king --phase=N
+  --bot=boss --bot-stand --seed=2 --ppm=P --boss-cam --shot=<png> --shot-tick=T`, with
+  `--fixed-fps 60 --quit-after T+20`. Without the scene, `--shot` is ignored.
+- **Size, measured** (64 px/m, phase 2, seed 2, tick 120, `shots/it12/gang_d5_p2_64ppm_t120.png`):
+  each bodyguard draws about 1.25 x 1.6 m (facing x shoulders, arms included) over a **1.0 m hit
+  circle** (`bosses.json king_gang.radius_m` 0.5); Rivet's 0.42 m. The rig's d5 calibration
+  (`RivetPlan.BODY_SIZE_K` 1.2 = art matching the 0.42 m body) and the measured span agree that
+  the drawing is already at or past the hit body. DECISION: no render-only size step (it would
+  draw a wider robot than the one Rivet's swings can hit). Against the sheet's 90-degree panel the
+  riders are about a sixth of the car (~1.1-1.3 m); ours ~1.6 m beside a ~6 m car (phase 1 tick
+  60 at 64 px/m), so the top view already matches. The "small" note came from the 3/4 side view,
+  where the sheet's bodyguards are drawn tall. The alternative (bigger hit + drawing together,
+  e.g. `radius_m` 0.58 with `GangPlan.SIZE_K` 1.4) is a gameplay change needing the bot numbers
+  again; left for the owner, not built.
+- **Value, measured** (32 px/m, the same seed and tick; D4 set,
+  `shots/it12/gang_lift_155_21_25_p2_32ppm_3x.png`): the built lift x1.55 already prints the
+  bodies mid-grey with ink edges; x2.1 lightens them into the floor's grey and x2.5 washes them
+  pale, both losing the edge. DECISION: keep x1.55 (regenerated and re-imported back to it; the
+  tree is byte-identical). The near-black gang seen at 64 px/m is the D5 close-up set (from 56
+  px/m, its own grime, not lifted by design); a D5 lift is a close-up-only item, listed in NEXT.
