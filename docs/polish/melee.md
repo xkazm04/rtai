@@ -106,6 +106,13 @@ By the craft columns (impact and read at 32 weigh most: they are what the owner 
 7. **Dent's blast**: lands at the frame edge at 32 (camera call open: polish only the impact).
    **Impact done 20:21 (`cb3e5caa`)**: dent_blast row (class blast, crash shake), kick outward from the
    car; measured 0.0 px -> 17.9 px first-frame jolt settling in 12 frames. `M/dent_blast_ab_32ppm.mp4`.
+   **Debris done 03:50, 2026-11-06 (`5c4219b2`)**: looked at 03:45 (32 px/m, every 20th frame): the
+   0.45 s fireball and ring played over a car that then lay dark; nothing of the car left the blast.
+   DentView now draws WeaponFxDebris (the rocket blast's slabs and specks, blast_debris.json) at the
+   blast, scaled to the view's ppm: ghost_attacks.json dent blast_debris 1 (0 = the before). Looked
+   at frames 172-200 every 4th (32) and 160-220 every 20th (48): the slabs fly out over the cops and
+   past the ring; at 48 px/m, the blast at the frame's right edge, they fly back into frame. Impact
+   3 -> 4, read 3 (the camera call still sets where it lands). `M/dent_blast_debris_ab_32ppm_48slow.mp4`.
 7b. **Tonnage ram** (scored 21:15 from the 48 px/m audit film; 32 px/m read): antic. 2, impact 2,
    read 2, victim sync 3, sound 1: the press drives cops into a heap against the car; HaulerKick's stop
    and shake run per hit, but nothing prints on the contact.

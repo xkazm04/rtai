@@ -1097,3 +1097,18 @@ NEXT (written 03:17, for iteration 12):
   the blast is a 0.45 s fireball and ink ring over the car, which then lies dark among the bodies;
   nothing of the car leaves the blast. The lever is debris (the press slam's lesson), not the camera
   (the owner's open call). Drafted BlastDebris in scratch while the gate ran.
+- TIME NOTE 03:52: `date` reads 03:51 at the Dent commit; my hand-written stamps above ran ~10 min
+  fast (the "GATES 04:00" entry was at about 03:49; "LOOK 03:52" at about 03:45). Stamps below are
+  from `date`.
+- FRICTION 03:48 copying the scratch draft in overwrote `tests/unit/test_blast_debris.gd`: the name
+  belongs to n5-look's rocket debris test (WeaponFxDebris, table blast_debris.json). Restored it from
+  HEAD at once (`git checkout HEAD -- <path>`, one path, my own overwrite); never committed. It also
+  showed that a debris drawer already exists, so the Dent-only BlastDebris draft was dropped.
+- BUILD 03:50 `5c4219b2` Dent's blast debris (audit 7, impact 3): DentView draws WeaponFxDebris at
+  the blast (scaled from Ink's 48 px/m to the view's ppm): ghost_attacks.json dent blast_debris 1;
+  0, --feel=off or --blast-debris=off = the before. Test test_dent_blast_debris; planted 0 fails.
+- LOOK 03:51 (b/a at 32 and 48 on the same sim frames, 0 SCRIPT ERROR): the slabs fly out over the
+  cops past the ink ring at 32; at 48 the blast sits at the frame's right edge (camera on Dent, the
+  open call) and the slabs fly back into frame. Impact 3 -> 4 (audit 7). CLIP
+  `M/dent_blast_debris_ab_32ppm_48slow.mp4` (3.7 s) + still; frames.json row 0 (dent_car_blow dropped
+  from the list, its file stays), REPORT row + call (m), decision line.

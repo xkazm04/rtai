@@ -17,6 +17,7 @@ final hash moved once, deliberately, when quest 1 started carrying the katana (`
 | Chainsaw kill | `49cc45d1` | a cream burst where the halves part, the grind's drops kept clear of the held body | `M/chainsaw_kill_ab_32ppm_48slow.mp4` |
 | Tonnage press slam | `4c6c6bf5` | a landing flash, paper chips and dust on the slam | `M/tonnage_slam_ab_32ppm_48slow.mp4` |
 | Dent's blast and blow | `cb3e5caa`, `4a522dfe` | felt: a kick outward from the car (blast), the melee stop plus a crash shake (blow) | `M/dent_blast_ab_32ppm.mp4`, `M/dent_car_blow_ab_32ppm_04x.mp4` |
+| Dent's car bomb throws debris | `5c4219b2` | the blast flings the rocket blast's grey slabs in a bold ink edge and ink specks out past its ring (WeaponFxDebris, the arsenal's one debris drawer); before, the fireball and ring played over a car that just went dark. At 48 px/m, with the blast at the frame edge (camera on Dent, call open), the slabs fly back into frame | `M/dent_blast_debris_ab_32ppm_48slow.mp4`, still `M/dent_blast_debris_ab_32_48ppm.png` (before `ghost_attacks.json` dent `blast_debris` 0, `--blast-debris=off`, or `--feel=off`) |
 | Tonnage ram | `0c4161d8` | a cream burst past each rammed body, paper chips along the shove | `M/tonnage_ram_ab_32ppm_48slow.mp4` |
 | Tonnage's ram called before the contact | `bc788d09` | while the press moves at ram speed a bow wave (cream edged in ink) rides from its nose past its flanks, outside the drawn press, so the charge reads before anyone is hit (in quest 1 too) | `M/tonnage_ram_wake_ab_32ppm_48slow.mp4`, still `M/tonnage_ram_wake_ab_32_48ppm.png` (before `ghost_attacks.json` tonnage `ram_wake_k` 0, or `--feel=off`) |
 | Tonnage plates | `8375c763`, `330779ff`, `d97a976d` | an enemy round now stops at the plate face with a small capped glance spark (it drew through his body before) | `M/tonnage_plates_ab_32ppm.mp4` |
@@ -136,6 +137,15 @@ head spark.
 - Before: `ghost_attacks.json` ohm `rim_m` 0, or `--feel=off`.
 - See it: `RTAI.exe -- --bot=ghosts --ghost=ohm --rigs --ppm=48` (the first bolt hits the robot thug at
   about 1.5 s).
+
+(m) Dent's car bomb flings the rocket's slabs.
+- Options: the rocket's grey slabs and ink specks (built: one blast vocabulary for the arsenal and the
+  ghosts); none (the fireball and ring alone). A cream car-panel variant was drafted and dropped to
+  keep one debris drawer; it would be a second row in `blast_debris.json` if the owner wants it.
+- Clip: `M/dent_blast_debris_ab_32ppm_48slow.mp4`.
+- Before: `ghost_attacks.json` dent `blast_debris` 0, or `--blast-debris=off` (which also drops the
+  rocket's slabs), or `--feel=off`.
+- See it: `RTAI.exe -- --bot=ghosts --ghost=dent --rigs --ppm=32` (the car goes off at about 2.9 s).
 
 ## Next steps
 See the last NEXT entry in `JOURNAL.md`.

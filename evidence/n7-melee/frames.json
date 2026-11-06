@@ -1,5 +1,14 @@
 [
   {
+    "file": "dent_blast_debris_ab_32ppm_48slow.mp4",
+    "title": "Dent: the car bomb flings debris (before | after)",
+    "source": "game-arena",
+    "branch": "n7-melee 5c4219b2",
+    "ppm": 32,
+    "before": "ghost_attacks.json dent.blast_debris 0 (or --blast-debris=off, --feel=off)",
+    "note": "32 px/m real time, then 48 px/m at 0.4x; the ghost-powers Dent beat (--bot=ghosts --ghost=dent --rigs --clean). The rocket blast's grey slabs in a bold ink edge and ink specks fly out of the car bomb past its ring; before, the fireball and ring alone over a car that went dark. At 48 px/m the blast is at the frame edge (camera on Dent, owner call) and the slabs fly back into frame. Same sim frames both sides (view only). Still: dent_blast_debris_ab_32_48ppm.png."
+  },
+  {
     "file": "ohm_bolt_rim_ab_32ppm_48slow.mp4",
     "title": "Ohm: the bolt lands on the body it strikes (before | after)",
     "source": "game-arena",
@@ -106,15 +115,6 @@
     "ppm": 32,
     "before": "--quest-blade=off (no blade; Rivet shoots from range)",
     "note": "fbc5a982 + 8237d411 + becfeb7f + 5f80e67c (re-rendered 22:21). The dev pad (quest1_clip --blade=13570-13880) draws the blade, walks in on the bot's target and holds fire: the blade leaves from the sprite's claw side, lifts, cuts down with a cream smear edged in ink, settles; contractors split on the cut."
-  },
-  {
-    "file": "dent_car_blow_ab_32ppm_04x.mp4",
-    "title": "Dent's seized car striking a cop: felt on the strike (dent_car row, class ram), 32 px/m at 0.4x",
-    "source": "game-arena",
-    "branch": "n7-melee",
-    "ppm": 32,
-    "before": "no dent_car row (the strike frame matched --feel=off, 0 px)",
-    "note": "4a522dfe. Measured: a 13 px jolt held through a 7-frame stop at the strike, the crash shake settling in ~7 frames; the car, the thrown cop and blood in frame."
   },
   {
     "file": "chainsaw_kill_ab_32ppm_48slow.mp4",
