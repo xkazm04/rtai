@@ -5,8 +5,8 @@ extends Scenario
 
 const SECONDS: int = 60
 const MASTER_SEED: int = 20261102
-const PATH: String = "user://test_tmp/replay/replay_60s.json"
 const TAMPER_TICK: int = 1800
+var _path: String = TestTmp.dir("replay").path_join("replay_60s.json")
 
 
 func run(_tree: SceneTree) -> String:
@@ -33,11 +33,11 @@ func _check_substance(log: ReplayLog) -> String:
 
 
 func _check_round_trip_and_replay(recorded: ReplayLog) -> String:
-	if DirAccess.make_dir_recursive_absolute(PATH.get_base_dir()) != OK:
-		return "cannot create %s" % PATH.get_base_dir()
-	if recorded.save(PATH) != OK:
-		return "cannot save %s" % PATH
-	var loaded: ReplayLog = ReplayLog.load_file(PATH)
+	if DirAccess.make_dir_recursive_absolute(_path.get_base_dir()) != OK:
+		return "cannot create %s" % _path.get_base_dir()
+	if recorded.save(_path) != OK:
+		return "cannot save %s" % _path
+	var loaded: ReplayLog = ReplayLog.load_file(_path)
 	if loaded == null:
 		return "saved log does not load back"
 	var reason: String = recorded.first_divergence(loaded)
@@ -48,13 +48,13 @@ func _check_round_trip_and_replay(recorded: ReplayLog) -> String:
 
 
 func _check_planted_mutations() -> String:
-	var tampered: ReplayLog = ReplayLog.load_file(PATH)
+	var tampered: ReplayLog = ReplayLog.load_file(_path)
 	tampered.tamper_input(TAMPER_TICK, TickInput.new(7, TickInput.AXIS_MAX, -TickInput.AXIS_MAX))
 	var caught: String = DummyRun.replay(tampered)
 	var first_checkpoint_after: int = TAMPER_TICK + ReplayLog.CHECKPOINT_EVERY
 	if not caught.ends_with("at tick %d" % first_checkpoint_after):
 		return "planted input mutation at tick %d not localised: %s" % [TAMPER_TICK, caught]
-	var reseeded: ReplayLog = ReplayLog.load_file(PATH)
+	var reseeded: ReplayLog = ReplayLog.load_file(_path)
 	reseeded.master_seed += 1
 	if DummyRun.replay(reseeded) == "":
 		return "planted seed mutation was not detected"

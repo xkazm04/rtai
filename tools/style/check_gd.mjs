@@ -13,7 +13,9 @@ const LOG_FILE = 'project/core/log/log.gd';
 const RNG_DIR = 'project/core/rng/';
 const CLOCK_DIR = 'project/core/clock/';
 const DELTA_CHOKE = 'project/boot/world.gd';
+const TEST_TMP_FILE = 'project/tests/support/test_tmp.gd';
 const BANNED = [
+  { re: /user:\/\/test_(tmp|save)/, why: 'raw scratch path in a test: use TestTmp.dir()/SaveKit.scratch(), the per-worktree root', only: ['project/tests/'], allow: [TEST_TMP_FILE] },
   { re: /(^|[^.\w])(print|prints|printt|print_rich)\(/, why: 'bare print: use Log (GDS-08)', allow: [LOG_FILE] },
   { re: /(^|[^.\w])printerr\(/, why: 'printerr outside Log/test and dev runners (GDS-08)', allow: [LOG_FILE, 'project/tests/', 'project/dev/'] },
   { re: /(^|[^.\w])(randf|randi|randf_range|randi_range|randfn|seed|randomize|rand_from_seed)\(/, why: 'global RNG: take a stream from ctx.rng (SIM-02)' },
@@ -82,6 +84,7 @@ export function checkAll(files = ownGdFiles()) {
     lines.forEach((raw, i) => {
       const code = stripComment(raw);
       for (const b of BANNED) {
+        if (b.only && !b.only.some((o) => path.startsWith(o))) continue;
         if (b.re.test(code) && !(b.allow ?? []).some((a) => path.startsWith(a))) {
           banned.issues.push(`${path}:${i + 1}: ${b.why}`);
         }

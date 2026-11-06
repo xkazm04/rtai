@@ -1,17 +1,17 @@
 extends GutTest
 ## The Save autoload as the game uses it: autosave, flush, Continue, load, notice, meta.
 
-const ROOT: String = "user://test_save/facade"
+var _root: String = SaveKit.scratch().path_join("facade")
 
 
 func before_each() -> void:
-	SaveKit.wipe(ROOT)
-	Save.use_root(ROOT)
+	SaveKit.wipe(_root)
+	Save.use_root(_root)
 
 
 func after_all() -> void:
 	Save.use_root(Save.DEFAULT_ROOT)
-	SaveKit.wipe(SaveKit.SCRATCH)
+	SaveKit.wipe(SaveKit.scratch())
 
 
 func _body(n: int) -> Dictionary:
@@ -58,7 +58,8 @@ func test_a_burst_of_autosaves_never_exceeds_two_slot_files() -> void:
 		Save.autosave("p", _body(n))
 	Save.flush()
 	assert_eq(
-		SaveKit.census(ROOT), ["auto_a/state.sav", "auto_b/state.sav", "meta.json"] as Array[String]
+		SaveKit.census(_root),
+		["auto_a/state.sav", "auto_b/state.sav", "meta.json"] as Array[String]
 	)
 	assert_eq(SaveKit.n_of(Save.load_latest(SaveKit.accept_all).body), 49, "the last one won")
 

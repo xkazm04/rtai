@@ -9,7 +9,7 @@ func before_each() -> void:
 
 
 func after_all() -> void:
-	SaveKit.wipe(SaveKit.SCRATCH)
+	SaveKit.wipe(SaveKit.scratch())
 
 
 ## A checkpoint whose tape changes every `every` ticks for `ticks` ticks.

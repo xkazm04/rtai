@@ -6,7 +6,6 @@ extends Scenario
 
 const REPORT: String = "res://dev/arena/stations_report.gd"
 const EVIDENCE_FILE: String = "arena-stations.json"
-const FAULT_DIR: String = "user://test_tmp/arena_stations_fault"
 const FAULT: String = """{"schema": "gtai.arena-station/1", "doc": "planted", "lane": "probe",
 "stations": [{"id": "probe", "name": "Probe", "area": "hub", "tuning": [
 {"key": "input_actions.move.no_such_knob", "min": 0, "max": 1, "step": 0.1}]}]}"""
@@ -28,17 +27,21 @@ func run(_tree: SceneTree) -> String:
 
 func _planted(checker: GDScript) -> String:
 	@warning_ignore("return_value_discarded")
-	DirAccess.make_dir_recursive_absolute(FAULT_DIR)
-	var f: FileAccess = FileAccess.open(FAULT_DIR + "/probe.json", FileAccess.WRITE)
+	DirAccess.make_dir_recursive_absolute(_fault_dir())
+	var f: FileAccess = FileAccess.open(_fault_dir() + "/probe.json", FileAccess.WRITE)
 	if f == null:
 		return "arena stations: cannot write the planted file"
 	@warning_ignore("return_value_discarded")
 	f.store_string(FAULT)
 	f.close()
-	var report: Dictionary = checker.call(&"check", FAULT_DIR)
+	var report: Dictionary = checker.call(&"check", _fault_dir())
 	var problems: Array = report["problems"]
 	@warning_ignore("return_value_discarded")
-	DirAccess.remove_absolute(FAULT_DIR + "/probe.json")
+	DirAccess.remove_absolute(_fault_dir() + "/probe.json")
 	if problems.size() != 1:
 		return "arena stations: the planted bad knob was not caught (%s)" % [problems]
 	return ""
+
+
+func _fault_dir() -> String:
+	return TestTmp.dir("arena_stations_fault")

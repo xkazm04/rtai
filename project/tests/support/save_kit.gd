@@ -3,11 +3,14 @@ extends RefCounted
 ## Helpers for the save tests: a scratch profile root under user://, synchronous writes through
 ## the real SaveWorker, file poking (truncate, flip, plant), and a directory census.
 
-const SCRATCH: String = "user://test_save"
+
+## The per-worktree, per-process save scratch root (TestTmp).
+static func scratch() -> String:
+	return TestTmp.dir("save")
 
 
 static func fresh_slots(name: String) -> SaveSlots:
-	var root: String = SCRATCH.path_join(name)
+	var root: String = scratch().path_join(name)
 	wipe(root)
 	return SaveSlots.new(root)
 

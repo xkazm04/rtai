@@ -1,18 +1,18 @@
 extends GutTest
 ## Chunk source, deterministic residency and the spawner (WLD-01/02, SIM-02, SIM-05).
 
-const DIR: String = "user://test_tmp/city_chunks"
+var _dir: String = TestTmp.dir("city_chunks")
 
 var _gen: CityGen
 
 
 func before_all() -> void:
 	_gen = CityGen.from_tables(CitySystem.DISTRICT, CitySystem.TEXTURES)
-	assert_eq(DirAccess.make_dir_recursive_absolute(DIR), OK)
+	assert_eq(DirAccess.make_dir_recursive_absolute(_dir), OK)
 
 
 func test_a_missing_file_is_generated_identically() -> void:
-	var src: ChunkSource = ChunkSource.new(_gen, DIR)
+	var src: ChunkSource = ChunkSource.new(_gen, _dir)
 	var why: Array[String] = []
 	var c: CityChunk = src.load_now(Vector2i(2, 3), why)
 	assert_not_null(c)
@@ -22,17 +22,19 @@ func test_a_missing_file_is_generated_identically() -> void:
 func test_a_corrupt_file_is_never_instantiated() -> void:
 	var bytes: PackedByteArray = ChunkCodec.encode(_gen.gen_chunk(1, 1), CityGen.GENERATOR_VERSION)
 	bytes[bytes.size() - 1] ^= 0x5A
-	var f: FileAccess = FileAccess.open(DIR.path_join(ChunkCodec.file_name(1, 1)), FileAccess.WRITE)
+	var f: FileAccess = FileAccess.open(
+		_dir.path_join(ChunkCodec.file_name(1, 1)), FileAccess.WRITE
+	)
 	assert_true(f.store_buffer(bytes))
 	f.close()
-	var src: ChunkSource = ChunkSource.new(_gen, DIR)
+	var src: ChunkSource = ChunkSource.new(_gen, _dir)
 	assert_null(src.take(Vector2i(1, 1)))
 	assert_eq(src.failures.size(), 1)
 	assert_string_contains(src.failures[0], "hash mismatch")
 
 
 func test_prefetch_then_take_returns_the_chunk() -> void:
-	var src: ChunkSource = ChunkSource.new(_gen, DIR)
+	var src: ChunkSource = ChunkSource.new(_gen, _dir)
 	src.prefetch(Vector2i(5, 5))
 	var c: CityChunk = src.take(Vector2i(5, 5))
 	assert_not_null(c)
@@ -58,7 +60,7 @@ func test_spawner_fills_the_bubble_from_its_stream() -> void:
 	for run: int in 2:
 		var sim: CitySimRef = CitySimRef.new()
 		sim.init(3)
-		var res: CityResidency = CityResidency.new(ChunkSource.new(_gen, DIR), sim, 16)
+		var res: CityResidency = CityResidency.new(ChunkSource.new(_gen, _dir), sim, 16)
 		res.update(Vector2(700, 700))
 		var sp: CitySpawner = CitySpawner.new(sim, res, RngRegistry.new(11).stream(&"city_spawn"))
 		sp.targets = CityTargets.street(60, 20, 2)
@@ -74,4 +76,4 @@ func test_spawner_fills_the_bubble_from_its_stream() -> void:
 func _residency() -> CityResidency:
 	var sim: CitySimRef = CitySimRef.new()
 	sim.init(1)
-	return CityResidency.new(ChunkSource.new(_gen, "user://test_tmp/no_such_dir"), sim, 16)
+	return CityResidency.new(ChunkSource.new(_gen, _dir.path_join("no_such_dir")), sim, 16)

@@ -4,7 +4,7 @@ extends GutTest
 ## page, so the actors, vehicles and FX age with the world (a D4-cream body read cool-grey on the
 ## D5-warmed paper at 64 px/m in the 4-lane trial merge).
 
-const PARAMS: String = "user://test_page_age_params.json"
+var _params_path: String = TestTmp.dir("page_age").path_join("params.json")
 
 
 func _row() -> Dictionary:
@@ -14,7 +14,7 @@ func _row() -> Dictionary:
 		"doc": "t",
 		"full_looks": ["d5"],
 		"id": "t_overlay",
-		"params": PARAMS,
+		"params": _params_path,
 		"params_key": "world",
 		"shader": "res://assets/shaders/look_d4.gdshader",
 		"zoom_looks": ["auto"],
@@ -22,7 +22,7 @@ func _row() -> Dictionary:
 
 
 func _write(world: Dictionary) -> void:
-	var f: FileAccess = FileAccess.open(PARAMS, FileAccess.WRITE)
+	var f: FileAccess = FileAccess.open(_params_path, FileAccess.WRITE)
 	assert_true(f.store_string(JSON.stringify({"world": world})))
 	f.close()
 

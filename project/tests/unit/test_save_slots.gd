@@ -9,7 +9,7 @@ func before_each() -> void:
 
 
 func after_all() -> void:
-	SaveKit.wipe(SaveKit.SCRATCH)
+	SaveKit.wipe(SaveKit.scratch())
 
 
 func _body(n: int) -> Dictionary:
@@ -108,7 +108,7 @@ func test_leftover_tmp_from_a_crash_is_ignored_then_removed() -> void:
 
 
 func test_unwritable_profile_reports_and_does_not_throw() -> void:
-	var blocker: String = SaveKit.SCRATCH.path_join("blocker")
+	var blocker: String = SaveKit.scratch().path_join("blocker")
 	SaveKit.put(blocker, "a file where the profile dir should be".to_utf8_buffer())
 	var bad: SaveSlots = SaveSlots.new(blocker)
 	var r: SaveWorker.Result = SaveKit.save(bad, _body(1))

@@ -7,10 +7,10 @@ extends Scenario
 
 const EVIDENCE_FILE: String = "quest1-input.json"
 const TIMEOUT_TICKS: int = 25 * 60 * SimClock.TICK_RATE
-const SAVE_PATH: String = "user://test_tmp/quest1/checkpoint.json"
 const LOAD_BEAT: String = "b4-dock"
+var _save_path: String = TestTmp.dir("quest1").path_join("checkpoint.json")
+var _log_path: String = TestTmp.dir("quest1").path_join("input-run.replay.json")
 ## The run's input log, kept for the exported exe's own --replay check (build/evidence).
-const LOG_PATH: String = "user://test_tmp/quest1/input-run.replay.json"
 
 
 func run(tree: SceneTree) -> String:
@@ -34,8 +34,8 @@ func run(tree: SceneTree) -> String:
 	_play(s, driver, beats, saves, hints)
 	var log: ReplayLog = s.world.loop().finish_recording()
 	var out: Dictionary = _evidence(s, driver, beats, log)
-	out["log"] = ProjectSettings.globalize_path(LOG_PATH)
-	out["log_saved"] = log.save(LOG_PATH) == OK
+	out["log"] = ProjectSettings.globalize_path(_log_path)
+	out["log_saved"] = log.save(_log_path) == OK
 	var reason: String = _verdict(s, log, out)
 	out["hints"] = hints
 	if reason == "" and hints.size() < 10:
@@ -54,7 +54,7 @@ func run(tree: SceneTree) -> String:
 
 ## The failed card's Retry: the game drops its session and resumes the Dock 9 checkpoint.
 func _check_restart(game: Quest1Game) -> String:
-	game.restart(Checkpoint.load_file(SAVE_PATH))
+	game.restart(Checkpoint.load_file(_save_path))
 	var ok: bool = game.session != null and game.session.beat_id() == LOAD_BEAT
 	return "" if ok else "Retry did not resume the %s checkpoint" % LOAD_BEAT
 
@@ -106,11 +106,11 @@ func _check_checkpoint(saves: Array[Checkpoint], out: Dictionary) -> String:
 	var pick: Array[Checkpoint] = saves.filter(
 		func(c: Checkpoint) -> bool: return c.beat == LOAD_BEAT
 	)
-	if pick.is_empty() or pick[0].save(SAVE_PATH) != OK:
-		return "cannot save the %s checkpoint to %s" % [LOAD_BEAT, SAVE_PATH]
-	var loaded: Checkpoint = Checkpoint.load_file(SAVE_PATH)
+	if pick.is_empty() or pick[0].save(_save_path) != OK:
+		return "cannot save the %s checkpoint to %s" % [LOAD_BEAT, _save_path]
+	var loaded: Checkpoint = Checkpoint.load_file(_save_path)
 	if loaded == null or JSON.stringify(loaded.to_dict()) != JSON.stringify(pick[0].to_dict()):
-		return "the checkpoint did not round-trip through %s" % SAVE_PATH
+		return "the checkpoint did not round-trip through %s" % _save_path
 	var bus: EventBus = EventBus.new()
 	var data: DataStore = DataStore.new()
 	var resumed: Quest1Session = Quest1Session.resume(bus, data, loaded)

@@ -144,7 +144,7 @@ func _burn_char(table: ReactTable) -> float:
 
 func _without_burn_death() -> ReactTable:
 	var raw: String = FileAccess.get_file_as_string(ReactTable.TABLE)
-	var path: String = "user://planted_human_reactions.json"
+	var path: String = TestTmp.dir("human_react").path_join("planted_human_reactions.json")
 	var fa: FileAccess = FileAccess.open(path, FileAccess.WRITE)
 	@warning_ignore("return_value_discarded")
 	fa.store_string(raw.replace('"burn": "death_burn"', '"burn": "death_bullet"'))

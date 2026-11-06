@@ -145,7 +145,7 @@ func test_one_ray_drops_a_human() -> void:
 
 
 func test_no_magazine_drop_when_weapon_art_draws_the_magazine() -> void:
-	var path: String = "user://test_weapon_art_mags.json"
+	var path: String = TestTmp.dir("gun_fx").path_join("weapon_art_mags.json")
 	var f: FileAccess = FileAccess.open(path, FileAccess.WRITE)
 	@warning_ignore("return_value_discarded")
 	f.store_string('{"weapons": [{"id": "pistol", "parts": {"mag": "a.png"}}, {"id": "molotov"}]}')
@@ -153,7 +153,9 @@ func test_no_magazine_drop_when_weapon_art_draws_the_magazine() -> void:
 	var owned: Dictionary = GunFx.read_art_mags(path)
 	assert_true(owned.has(&"pistol"))
 	assert_false(owned.has(&"molotov"))
-	assert_true(GunFx.read_art_mags("user://no_such_table.json").is_empty())
+	assert_true(
+		GunFx.read_art_mags(TestTmp.dir("gun_fx").path_join("no_such_table.json")).is_empty()
+	)
 	var arena: CombatArena = _arena(&"pistol")
 	var fx: GunFx = GunFx.new()
 	fx.art_mags = owned

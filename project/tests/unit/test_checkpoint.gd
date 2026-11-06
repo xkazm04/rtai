@@ -1,6 +1,6 @@
 extends GutTest
 
-const PATH: String = "user://test_tmp/unit/checkpoint.json"
+var _path: String = TestTmp.dir("unit").path_join("checkpoint.json")
 
 
 func _sample() -> Checkpoint:
@@ -17,13 +17,13 @@ func _sample() -> Checkpoint:
 
 func test_save_and_load_round_trip() -> void:
 	var c: Checkpoint = _sample()
-	assert_eq(c.save(PATH), OK)
-	var back: Checkpoint = Checkpoint.load_file(PATH)
+	assert_eq(c.save(_path), OK)
+	var back: Checkpoint = Checkpoint.load_file(_path)
 	assert_not_null(back)
 	assert_eq(JSON.stringify(back.to_dict()), JSON.stringify(c.to_dict()))
 	assert_eq(back.inputs[2], 12345678901, "48-bit packed inputs survive JSON")
-	Checkpoint.erase(PATH)
-	assert_false(FileAccess.file_exists(PATH))
+	Checkpoint.erase(_path)
+	assert_false(FileAccess.file_exists(_path))
 
 
 func test_wrong_schema_or_version_is_refused() -> void:

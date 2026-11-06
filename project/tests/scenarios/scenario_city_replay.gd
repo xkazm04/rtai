@@ -6,7 +6,7 @@ extends Scenario
 
 const SECONDS: int = 20
 const MASTER_SEED: int = 61
-const PATH: String = "user://test_tmp/replay/city_20s.json"
+var _path: String = TestTmp.dir("replay").path_join("city_20s.json")
 
 
 func run(_tree: SceneTree) -> String:
@@ -14,11 +14,11 @@ func run(_tree: SceneTree) -> String:
 	if recorded.ticks != SECONDS * SimClock.TICK_RATE or recorded.checkpoints.is_empty():
 		return "recording incomplete (%d ticks)" % recorded.ticks
 	if (
-		DirAccess.make_dir_recursive_absolute(PATH.get_base_dir()) != OK
-		or recorded.save(PATH) != OK
+		DirAccess.make_dir_recursive_absolute(_path.get_base_dir()) != OK
+		or recorded.save(_path) != OK
 	):
-		return "cannot save %s" % PATH
-	var loaded: ReplayLog = ReplayLog.load_file(PATH)
+		return "cannot save %s" % _path
+	var loaded: ReplayLog = ReplayLog.load_file(_path)
 	if loaded == null:
 		return "saved log does not load"
 	for native: bool in [true, false]:

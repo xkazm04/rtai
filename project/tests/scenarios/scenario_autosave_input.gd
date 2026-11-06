@@ -9,18 +9,18 @@ extends Scenario
 ## itself is exact or refused.)
 
 const EVIDENCE_FILE: String = "autosave-input.json"
-const ROOT: String = "user://scenario_autosave_input"
 const STOP_POINT: String = "as-b4-dock"
 const TIMEOUT_TICKS: int = 25 * 60 * SimClock.TICK_RATE
+var _root: String = TestTmp.dir("autosave_input")
 
 
 func run(tree: SceneTree) -> String:
-	SaveKit.wipe(ROOT)
-	Save.use_root(ROOT)
+	SaveKit.wipe(_root)
+	Save.use_root(_root)
 	var log: Dictionary = {}
 	var failure: String = _run(tree, log)
 	Save.use_root(Save.DEFAULT_ROOT)
-	SaveKit.wipe(ROOT)
+	SaveKit.wipe(_root)
 	return failure if failure != "" else write_evidence(EVIDENCE_FILE, log)
 
 

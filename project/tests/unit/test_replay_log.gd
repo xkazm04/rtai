@@ -1,11 +1,11 @@
 extends GutTest
 ## SIM-05 log mechanics: sparse input, lookup, JSON round trip, refusal of a foreign schema.
 
-const PATH: String = "user://test_tmp/replay_log/log.json"
+var _path: String = TestTmp.dir("replay_log").path_join("log.json")
 
 
 func before_all() -> void:
-	assert_eq(DirAccess.make_dir_recursive_absolute(PATH.get_base_dir()), OK)
+	assert_eq(DirAccess.make_dir_recursive_absolute(_path.get_base_dir()), OK)
 
 
 func test_input_is_packed_losslessly() -> void:
@@ -33,8 +33,8 @@ func test_json_round_trip() -> void:
 	log.final_hash = "abc"
 	log.checkpoints.assign(["h1", "h2"])
 	log.timeline.assign(["5 wanted_changed [1]"])
-	assert_eq(log.save(PATH), OK)
-	var back: ReplayLog = ReplayLog.load_file(PATH)
+	assert_eq(log.save(_path), OK)
+	var back: ReplayLog = ReplayLog.load_file(_path)
 	assert_not_null(back)
 	assert_eq(log.first_divergence(back), "")
 	assert_eq(back.input_at(2).move_y, -10)
@@ -51,7 +51,7 @@ func test_divergence_is_reported() -> void:
 
 
 func test_foreign_schema_is_refused() -> void:
-	var file: FileAccess = FileAccess.open(PATH, FileAccess.WRITE)
+	var file: FileAccess = FileAccess.open(_path, FileAccess.WRITE)
 	assert_true(file.store_string('{"schema": "gtai.other/1", "tick_rate": 60}'))
 	file.close()
-	assert_null(ReplayLog.load_file(PATH))
+	assert_null(ReplayLog.load_file(_path))

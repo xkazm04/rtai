@@ -7,16 +7,16 @@ extends Scenario
 ## and with both slots bad the quest starts from its start. Leaves autosave-resume.json.
 
 const EVIDENCE_FILE: String = "autosave-resume.json"
-const ROOT: String = "user://scenario_autosave"
+var _root: String = TestTmp.dir("autosave_resume")
 
 
 func run(_tree: SceneTree) -> String:
-	SaveKit.wipe(ROOT)
-	Save.use_root(ROOT)
+	SaveKit.wipe(_root)
+	Save.use_root(_root)
 	var log: Dictionary = {}
 	var failure: String = _play_and_load(log)
 	Save.use_root(Save.DEFAULT_ROOT)
-	SaveKit.wipe(ROOT)
+	SaveKit.wipe(_root)
 	if failure != "":
 		return failure
 	return write_evidence(EVIDENCE_FILE, log)

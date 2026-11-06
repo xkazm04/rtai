@@ -1,12 +1,12 @@
 extends GutTest
 ## TEL-03 hitch log: frames over 25 ms are recorded, attributed and written as JSONL.
 
-const PATH: String = "user://test_tmp/hitches/hitches.jsonl"
+var _path: String = TestTmp.dir("hitches").path_join("hitches.jsonl")
 
 
 func before_each() -> void:
-	if FileAccess.file_exists(PATH):
-		assert_eq(DirAccess.remove_absolute(PATH), OK)
+	if FileAccess.file_exists(_path):
+		assert_eq(DirAccess.remove_absolute(_path), OK)
 
 
 func test_attribution_rule() -> void:
@@ -28,7 +28,7 @@ func test_attribution_rule() -> void:
 
 func test_only_long_frames_are_recorded_and_written() -> void:
 	var rec: HitchRecorder = HitchRecorder.new()
-	rec.log_path = PATH
+	rec.log_path = _path
 	rec.start(get_viewport().get_viewport_rid(), func() -> int: return 42)
 	rec.frame(16.0, 1.0)
 	rec.frame(30.0, 25.0)
@@ -39,7 +39,7 @@ func test_only_long_frames_are_recorded_and_written() -> void:
 	var tick: int = first["tick"]
 	assert_eq(cause, "game")
 	assert_eq(tick, 42)
-	var lines: PackedStringArray = FileAccess.get_file_as_string(PATH).strip_edges().split("\n")
+	var lines: PackedStringArray = FileAccess.get_file_as_string(_path).strip_edges().split("\n")
 	assert_eq(lines.size(), 1)
 	assert_string_contains(lines[0], '"cause":"game"')
 

@@ -1,16 +1,16 @@
 extends GutTest
 ## One contract suite run against both NullBackend and FakeBackend (TST-06).
 
-const MIRROR_PATH: String = "user://test_tmp/contract/achievements_mirror.json"
+var _mirror_path: String = TestTmp.dir("contract").path_join("achievements_mirror.json")
 
 
 func after_each() -> void:
-	if FileAccess.file_exists(MIRROR_PATH):
-		assert_eq(DirAccess.remove_absolute(MIRROR_PATH), OK)
+	if FileAccess.file_exists(_mirror_path):
+		assert_eq(DirAccess.remove_absolute(_mirror_path), OK)
 
 
 func test_null_backend_honours_the_contract() -> void:
-	_check_contract(NullBackend.new(MIRROR_PATH))
+	_check_contract(NullBackend.new(_mirror_path))
 
 
 func test_fake_backend_honours_the_contract() -> void:
