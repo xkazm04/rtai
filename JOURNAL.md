@@ -900,3 +900,44 @@ Read: JOURNAL NEXT (it7 list; it8 closed Gloria in Dock 9), git log, n7-melee jo
   each, every one fully down, 0 SCRIPT ERROR (`evidence/ranged/it9-reel-{director,city}-ce923514.log`).
 - REPORT: Calls for the owner 2 (muzzle sizes) and 3 (the Gatling whirl, and the flash spot beside
   the heavy holds' drawn barrel) added with their clips and exe lines.
+
+### MILESTONE 01:02: city-block combined clip retaken on `42f74955` (it7 NEXT 5)
+- `res://dev/arena/arena.tscn -- --arena=city --bot=reel --reel=director --loadout=pistol --ppm=32
+  --cam=fight --clean`, Movie Maker 60 fps, `--quit-after 6150`: 16 chapters down (to the nuke),
+  0 SCRIPT ERROR (`evidence/ranged/it9-city-movie-42f74955.log`); recorded in about 4 min.
+- Cut frames 360-2700 (pistol, machine pistol, rocket, flamer, electro, molotov), 3810-5100 (hand
+  cannon, plasma rifle, ray gun, homing shard, riot cop), 5460-6150 (the nuke), crop 960x560 (the
+  ghost HUD panel out; the nuke segment's crop shifted 120 px right so the whole ring shows),
+  game audio (mean -23.6 dB, peak -1.1 dB): `masters .../city_block_polished_set-32ppm.mp4`, 72 s,
+  replaced in place; frames.json row 1. LOOK: sheet every 300 frames + 4 nuke frames: each gun,
+  red blood, ink scorch, the blue-lit car, the nuke's ring of vermilion-and-cream bursts with the
+  vaporised shadows inside. No Gatling chapter exists in the director reel.
+- FRICTION: `bc` is not in this Git Bash; use awk for the frame-to-seconds maths.
+- Scratch cleaned: the it9 AVIs, hc-*.avi, spin/, molo/, q8/ renders deleted (5.0 -> 3.4 GB; the
+  audit/ befores of main kept for later A/Bs).
+
+NEXT (iteration 10):
+1. The muzzle FX print on the drawn barrel, whatever the hold: RivetHeldView already finds the
+   drawn muzzle (`_sprite.to_global(art.muzzle_px(id) + _sprite.offset)`, used by `_light_rag`).
+   Publish it per frame in a tiny static holder (e.g. `HeldMuzzle.at_m` + the frame number;
+   rivet_held_view.gd is 286 lines, so one line there), and let `WeaponFxArt.muzzle` and
+   `WeaponFxSpin.tip` use it when fresh (same process frame), GUN_SIDE_M as the fallback (quest 1
+   cast rig, no held view). Both draws are in FxView's draw pass, after `_process`, so it is
+   fresh. Flag for the before (`--flash-at=side`). Film every hold class at 32 and 48 px/m: pistol
+   (one hand), machine pistol, Gloria, plasma rifle (two-hand long), rocket (shoulder), Gatling and
+   flamer (hip); quest 1 Dock 9 for Gloria. Holds stay the owner's; this only makes the flash
+   follow whatever hold he picks. melee does not touch rivet_held_view.gd (checked 00:52).
+2. Exe by 08:30: `windows-showcase` preset (decisions.md 2026-11-04 showcase export) ->
+   `build/export/windows/RTAI.exe`; REPORT command lines for calls 1-3 (+ `--feel=off`,
+   `--react-snap=off`, `--end-cue=off`, `--quest-guns=off`, `--shard-pop=12`). Check the exe
+   accepts `--weapon=` as the REPORT says (boot it once and look).
+3. Molotov anticipation (audit row 10, still 1): a view-only cock-back cannot lead a release the
+   sim fires at once; look at whether the bot's held-trigger moment gives a tick to read (the
+   draw), else record it as a sim-timing call for the owner.
+4. Homing shard pop call stays open (REPORT call 1).
+5. Reels: `scratch/ranged/reels9.sh <tag>` (pit + city in parallel, about 2 min tonight).
+
+STOP 01:04 iteration 9. Code commits: `193bc529` (machine pistol muzzle_k 1.3), `d99106f4` +
+`ce923514` (the Gatling's spin-up whirl, 0.8 m). Gates: evidence on `42f74955` all green (lint,
+unit 1150/1150, scenarios 52/52, parity bit-exact, selftest), reels 19/19 + 19/19 fully down on
+`ce923514`. City combined clip retaken. Calls 2-3 added to REPORT.

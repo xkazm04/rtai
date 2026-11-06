@@ -23,7 +23,7 @@ cut from main `763f8fba`. Clips and stills: `C:\Users\kazda\kiro\gtai-masters\n7
 | Rivet's pistol flash reads at 32 px/m: his flash cell 1.6x (an ink-edged cream star, vermilion core, about one body wide; before it was a 15 px speck, smaller than the cop's own flash) | `d79c5278` | `--feel=off` (or hit_feel.json pistol `muzzle_k` 1) | `pistol_muzzle-ab-32-48ppm.mp4` |
 | Gloria's flash (quest 1's sidearm, the same cell): 1.8x, one notch over the pistol | `50c0883b` | `--feel=off` (or gloria `muzzle_k` 1) | `gloria_muzzle-ab-32ppm.mp4` |
 | Machine pistol flash: 1.3x (at 14 rounds a second the flash_smg cell is up 3 ticks of 4, a 6-8 px flicker before; now a cream star about the gun's size, under the pistol's single shot) | `193bc529` | `--feel=off` (or machine_pistol `muzzle_k` 1) | `machine_pistol_muzzle-ab-32-48ppm.mp4` |
-| Combined clip of the polished set in the city block, 32 px/m, with sound | - | - | `city_block_polished_set-32ppm.mp4` |
+| Combined clip of the polished set in the city block, 32 px/m, fight camera, with sound (72 s, retaken on `42f74955`: every ranged chapter plus the whole nuke ring) | `42f74955` | - | `city_block_polished_set-32ppm.mp4` |
 
 Gates (iteration 5): evidence run on `41bb90e7`: lint 13/13, scenarios 52/52, parity bit-exact
 (planted mutation caught at 629), selftest pass; unit 1138/0 (flagged by the tree-change guard
