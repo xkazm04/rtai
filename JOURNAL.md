@@ -999,3 +999,39 @@ Working NEXT 1: the muzzle FX prints on the drawn barrel whatever the hold.
 - Clip `masters .../muzzle_on_drawn_tip-ab-48-32ppm.mp4` (18 s, frames.json row 0; dropped and
   deleted `quest1_table_gloria-ab-32ppm.mp4`, the Dock 9 48 px/m pair stays). REPORT row + call 4.
 - DECISION (docs/decisions.md): the flash follows the drawn tip; rejected per-hold offsets in data.
+
+### GATES 01:24: evidence on `2cb85d5b` all green
+- lint 13/13, unit 1155/1155, scenarios 52/52, parity bit-exact (planted mutation caught at 629),
+  selftest pass (`evidence/ranged/it11-evidence-2cb85d5b.log`, git-ignored copy). Pit + city
+  director reels on `9054e346` 19/19 + 19/19 fully down, 0 SCRIPT ERROR.
+- FRICTION: the first unit run had no GODOT_BIN in the subshell (every step exit -1; the 1150 count
+  was the stale junit); and evidence/run.mjs refuses an untracked file in the tree: commit the gate
+  summaries before it.
+
+### MILESTONE 01:38: `8766508f` the molotov is held cocked and the throw whips out (it9 NEXT 3)
+- Numbers first: rof 1.2 Hz = interval 50 ticks, reload 0.7 s = 42 ticks (out 0.3 / in 0.45 /
+  cock 0.25 = about 10 ticks), magazine 1, semi (fires on the press edge). So the release never
+  falls on the reload's end, and the lone film (and each reel chapter) sees one throw with no reload
+  before it: a wind-up in the reload's cock phase alone would never show before a release.
+- Built RigThrow (new, 52 lines): a ready, aimed molotov is held cocked (claw at gun shoulder x -
+  windup_px, y x OUT_K, z +40); `release(rig)` = clamp(-c_recoil, 0, 1) swings it out to the arm's
+  aimed target on the throw (rig_kick -1.6: out for 0.1 s, back over the next 0.17 s); in the
+  reload it holds the chest and the cock phase lerps back. Hooks: 2 lines in RigGrip.target, one in
+  RigGrip._reload (now takes the aimed target). held_classes.json thrown `windup_px` 110 (+ schema,
+  optional; HeldTable.windup_px). `--throw-windup=off` in KNOWN_FLAGS.
+- FRICTION: `static func reload` / `ready` on a class collide with GDScript's Script.reload()
+  ("Expected 1 argument"): renamed in_reload / held_ready. `float(row.get(...))` is a
+  Variant-to-float warning-as-error: used `t.num` behind `row.has`.
+- Tests `test_rig_throw` 4/4 (cocked -110 px behind the shoulder, thrown +275 px: a 385 px swing;
+  the planted fault is the off switch, out at the aim).
+- FILM lone cop, `--cam=fight`, same build +/- `--throw-windup=off`, 0 SCRIPT ERROR, lone kill at
+  tick 465 in all takes (the sim is unchanged). LOOK 48 px/m frames 300-315: before, the bottle hangs
+  ahead and vanishes; after, it rides up behind the head and the claw swings out on the release.
+  OUT_K 1.15 laid the bottle and its lit rag over the helmet and collar; 1.5 clears them (A/B
+  `scratch/ranged/hm/mtk.png`). 32 px/m: the raised bottle by the helmet reads clearly; the
+  release shows as an open claw up and back, then forward (2 frames).
+- Clip `masters .../molotov_windup-ab-32-48ppm.mp4` (6.4 s; frames.json row 0; the it6 twist clip
+  dropped and deleted, the twist plays in its after). Audit row 10 anticipation 1 -> 3. REPORT
+  row, call 5, the "not done" note rewritten. DECISION in docs/decisions.md.
+- GATES 01:41 on `8766508f`: pit + city director reels 19/19 + 19/19 fully down, 0 SCRIPT ERROR
+  (`evidence/ranged/it11-reel-{director,city}-8766508f.log`), unit 1159/1159.

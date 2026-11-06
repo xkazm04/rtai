@@ -19,11 +19,12 @@ cut from main `763f8fba`. Clips and stills: `C:\Users\kazda\kiro\gtai-masters\n7
 | Hit-stop cooldown 20 -> 16 ticks (every Kerf cut gets its stop; n7-melee call 7) | `0d4089f1` | - | n7-melee's clips |
 | Quest 1 fires the table guns (Gloria as her weapons.json row; the rifle stays on combat.json) | `48679f03` | `--quest-guns=off` | `quest1_table_gloria_dock9-ab-48ppm.mp4` (the it6 32 px/m pair dropped to keep frames.json at 15) |
 | Muzzle flash, smoke and shells leave along the shot's aim, not a facing the walk turned between shots (found by filming quest 1) | `1ce1b11e`, `ed60713e` | - (bug fix) | `quest1_gloria_muzzle_side-48ppm.png` |
-| Molotov throw follow-through: the torso leans into the release and the gun shoulder whips through (modest but visible at 32 px/m for about 15 frames; the lean alone was 1-2 px); the arm-only version `41bb90e7` moved no pixel | `41bb90e7`, `7326b53b`, `9b351ab4` | - (THROW_LEAN and THROW_TWIST 0 in `rig_clips.gd`, or drop the molotov `rig_kick` row) | `molotov_throw_twist-ab-32-48ppm.mp4` |
+| Molotov throw follow-through: the torso leans into the release and the gun shoulder whips through (modest but visible at 32 px/m for about 15 frames; the lean alone was 1-2 px); the arm-only version `41bb90e7` moved no pixel | `41bb90e7`, `7326b53b`, `9b351ab4` | - (THROW_LEAN and THROW_TWIST 0 in `rig_clips.gd`, or drop the molotov `rig_kick` row) | `molotov_windup-ab-32-48ppm.mp4` (the twist plays in its after; the it6 twist clip dropped to keep frames.json at 15) |
 | Rivet's pistol flash reads at 32 px/m: his flash cell 1.6x (an ink-edged cream star, vermilion core, about one body wide; before it was a 15 px speck, smaller than the cop's own flash) | `d79c5278` | `--feel=off` (or hit_feel.json pistol `muzzle_k` 1) | `pistol_muzzle-ab-32-48ppm.mp4` |
 | Gloria's flash (quest 1's sidearm, the same cell): 1.8x, one notch over the pistol | `50c0883b` | `--feel=off` (or gloria `muzzle_k` 1) | `gloria_muzzle-ab-32ppm.mp4` |
 | Machine pistol flash: 1.3x (at 14 rounds a second the flash_smg cell is up 3 ticks of 4, a 6-8 px flicker before; now a cream star about the gun's size, under the pistol's single shot) | `193bc529` | `--feel=off` (or machine_pistol `muzzle_k` 1) | `machine_pistol_muzzle-ab-32-48ppm.mp4` |
 | The muzzle flash (and the Gatling's whirl, the flamer's lick) prints on the drawn barrel tip of whatever hold is shown: RivetHeldView publishes the bore tip each frame (before: a fixed spot a claw width beside the aim line, off the rocket tube, the Gatling and the long guns) | `9054e346` | `--flash-at=side` | `muzzle_on_drawn_tip-ab-48-32ppm.mp4` |
+| Molotov wind-up: a ready bottle is held cocked behind the gun shoulder (lit, by the helmet), and the throw whips the claw out to the aim from there; the next bottle cocks back in the reload's last phase (before: held out at the aim, no wind-up; audit anticipation 1 -> 3). The release tick is unchanged (render only) | `8766508f` | `--throw-windup=off` (or held_classes.json thrown `windup_px` 0) | `molotov_windup-ab-32-48ppm.mp4` |
 | Combined clip of the polished set in the city block, 32 px/m, fight camera, with sound (72 s, retaken on `42f74955`: every ranged chapter plus the whole nuke ring) | `42f74955` | - | `city_block_polished_set-32ppm.mp4` |
 
 Gates (iteration 5): evidence run on `41bb90e7`: lint 13/13, scenarios 52/52, parity bit-exact
@@ -32,10 +33,11 @@ because I edited docs during the run). City-block director reel with `--loadout=
 `ed60713e` 19/19, 0 SCRIPT ERROR. On `7326b53b`: unit 1138/0, lint 13/13, pit director reel with the loadout 19/19, 0 SCRIPT ERROR.
 
 ## What does not work / not done
-- Molotov throw: scored 1/3/3/3/0 (no wind-up on Rivet; the bottle and the burst read). The arm-only
-  follow-through `41bb90e7` moved no pixel (the aimed arm is already at 0.97 of its reach); the
-  torso lean `7326b53b` shows, but only subtly. A real wind-up needs the release to wait in the sim
-  (a gameplay timing change): not done.
+- Molotov throw: the wind-up landed in iteration 11 as a cocked ready pose (`8766508f`), not as a
+  timed wind-up before each release: the throw fires on the button press (semi, 50-tick interval
+  over a 42-tick reload), so nothing in the sim announces the release; a wind-up that plays
+  between press and release would need the release to wait in the sim (a gameplay timing change,
+  not done).
 - Quest 1's assault rifle (combat.json, not a table gun): not scored.
 - Quest 1's table-gun change is small at 32 px/m in the windows filmed so far (Rivet fires few
   nails in Dock 9).
@@ -63,6 +65,13 @@ because I edited docs during the run). City-block director reel with `--loadout=
    the drawn tip. See `muzzle_on_drawn_tip-ab-48-32ppm.mp4` (pistol, plasma rifle, rocket, flamer,
    Gatling whirl at 48 and 32 px/m), or `RTAI.exe -- --weapon=rocket_launcher` vs
    `RTAI.exe -- --weapon=rocket_launcher --flash-at=side`.
+
+5. **The molotov held cocked.** Options: a ready bottle held cocked behind the gun shoulder by the
+   helmet, the throw whipping out from there (built, `windup_px` 110 part px), or held out at the
+   aim (`--throw-windup=off` / `windup_px` 0, the before). It changes how the ready molotov is held
+   (the thrown class is not among tonight's open hold calls, but it is a hold). Built default: cocked.
+   See `molotov_windup-ab-32-48ppm.mp4`, or `RTAI.exe -- --weapon=molotov --bot=gunplay --lone
+   --cam=fight` vs the same with `--throw-windup=off`.
 
 (More calls may be added by later iterations.)
 
