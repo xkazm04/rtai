@@ -455,3 +455,12 @@ NEXT (after the freeze; the Director merges):
 NEXT (unchanged from it13, plus):
 0. After the view70 merge: film the city at tilt70 seed 2 crowd 400, 48 px/m, and judge whether the p55
    street cards' anchors sit right at 70 (they were tuned at 55; the King/rivet p70 rows needed their own).
+
+## Iteration 15 (18:24-18:30, BUILD; freeze 18:30)
+- 18:25 Read JOURNAL tail, git status (clean, HEAD 46f8a117), the other lanes' JOURNALs for REQUESTs
+  to chars: none new (view70 it5 `p70` street rows answered in it14, 860fd3d8; bosses it1 card_set done).
+- No new build started: 5 min to freeze is too short for a gated change. The exe stays the 18:05 export
+  on 247b82ef (the p70 rows after it are data only and unreachable without view70's tilt70/combo rows).
+- Registry rules applied: motion-quality-gating (no new claim without a frame; none made).
+
+NEXT: unchanged from iteration 14 (0: film tilt70 street cards after the view70 merge; 1-4 as it13).
