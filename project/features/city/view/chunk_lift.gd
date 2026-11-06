@@ -26,10 +26,15 @@ var _bays: PackedInt32Array = PackedInt32Array()
 var _bay_px: PackedFloat32Array = PackedFloat32Array()
 var _order: PackedInt32Array = PackedInt32Array()
 var _rev: int = -1
+## Kerb-parked cars VehicleParked draws as cards (n8 vehicles): out of the draw order, handed over
+## by chunk key as the chunk is ordered (x m, y m, turn, texture id). Off with no card atlas.
+var _carded: bool = false
+var _parked: PackedVector4Array = PackedVector4Array()
+var _order_of: CityChunk = null
 var _rev_frames: int = 0
 
 
-## The lift for this run's view, or null when the view is flat (or a perspective top_lift).
+## The lift for this run's view, null when flat (or a perspective top_lift).
 static func make(tex: CityTextures, is_building: Array[bool]) -> ChunkLift:
 	var view: ViewMode = ViewMode.shared()
 	if view.is_flat() or view.eye_h_m > 0.0:
@@ -48,6 +53,8 @@ func _setup(d: Dictionary, tex: CityTextures, is_building: Array[bool], art: Str
 	_tex = tex
 	_is_building = is_building
 	drawn_pitch = ViewMode.shared().pitch_deg
+	_carded = d.get("parked_cards", false) and VehicleParked.carded()
+	VehicleParked.clear()  # a new city view: no cars of an old one
 	var names: Array[String] = []
 	var styles: Dictionary = d["styles"]
 	for style: String in styles:
@@ -98,11 +105,18 @@ func stale() -> bool:
 	return true
 
 
-## The chunk's `k`-th command in draw order (the order is set when k is 0).
+## The chunk's `k`-th command in draw order (the order is set once per chunk).
 func nth(k: int, chunk: CityChunk) -> int:
-	if k == 0:
+	if _order_of != chunk:
 		order(chunk)
 	return _order[k]
+
+
+## How many commands the chunk draws (its parked cards are not drawn here).
+func count(chunk: CityChunk) -> int:
+	if _order_of != chunk:
+		order(chunk)
+	return _order.size()
 
 
 ## Sets the chunk's command order: everything else as listed, then the buildings' roofs by south
@@ -110,15 +124,22 @@ func nth(k: int, chunk: CityChunk) -> int:
 func order(chunk: CityChunk) -> void:
 	var out: PackedInt32Array = PackedInt32Array()
 	var roofs: Array[Vector3] = []
+	_parked = PackedVector4Array()
+	_order_of = chunk
 	for k: int in chunk.command_count():
 		var t: int = chunk.tex[k]
 		var o: int = k * CityChunk.XF_STRIDE
-		if _is_building[t] and chunk.xf[o + 3] <= 0.5:
+		if _carded and chunk.xf[o + 3] <= 0.5 and VehicleParked.row(t) >= 0:
+			@warning_ignore("return_value_discarded")
+			_parked.append(Vector4(chunk.xf[o], chunk.xf[o + 1], chunk.xf[o + 2], t))
+		elif _is_building[t] and chunk.xf[o + 3] <= 0.5:
 			var south: float = chunk.xf[o + 1] + extent(t, chunk.xf[o + 2]).y * 0.5
 			roofs.append(Vector3(south, chunk.xf[o], k))
 		else:
 			@warning_ignore("return_value_discarded")
 			out.append(k)
+	if _carded:
+		VehicleParked.park(chunk.key(), _parked)
 	roofs.sort()
 	for r: Vector3 in roofs:
 		@warning_ignore("return_value_discarded")

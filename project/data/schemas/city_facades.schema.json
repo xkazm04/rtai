@@ -54,6 +54,10 @@
       "description": "CityOcclusion: redraw a building over a body behind it, the body as an ink silhouette (night n8 city); false = the body draws over the lifted roof",
       "type": "boolean"
     },
+    "parked_cards": {
+      "description": "ChunkLift: the kerb-parked cars go to VehicleParked as cards (n8 vehicles), not drawn flat",
+      "type": "boolean"
+    },
     "schema": {
       "const": "gtai.city-facades/1"
     },

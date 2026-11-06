@@ -120,7 +120,7 @@ func _slice(chunk: CityChunk, t0: int) -> void:
 		return
 	var items: Array = _drawn[_active]
 	var origin: Vector2 = Vector2(_active) * SimConst.CHUNK_M
-	var n: int = chunk.command_count()
+	var n: int = lift.count(chunk) if lift != null else chunk.command_count()
 	while _k < n:
 		var c: int = lift.nth(_k, chunk) if lift != null else _k
 		var t: int = chunk.tex[c]

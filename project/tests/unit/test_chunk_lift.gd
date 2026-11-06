@@ -47,3 +47,16 @@ func test_heights_come_from_the_table() -> void:
 	assert_eq(lift.height_m[2], 8.5 * 0.5, "building_warehouse at height_k 0.5")
 	assert_eq(lift.style_of[1], lift.style_of[0], "default is the tenement style")
 	assert_ne(lift.style_of[2], lift.style_of[1], "the warehouse is shop style")
+
+
+func test_parked_cars_go_to_vehicle_parked_not_the_draw_order() -> void:
+	var lift: ChunkLift = _lift(70.0)
+	lift._carded = true  # as under a tilt with a card atlas
+	var c: CityChunk = _chunk([Vector3(0, 0, 0), Vector3(44, 3, 5), Vector3(1, 0, 12)])
+	assert_eq(lift.count(c), 2, "the sedan (texture 44) is not drawn flat")
+	assert_eq(lift.nth(0, c), 0)
+	assert_eq(lift.nth(1, c), 2)
+	var cars: PackedVector4Array = VehicleParked._chunks[c.key()]
+	assert_eq(cars.size(), 1, "it is handed to VehicleParked by chunk key")
+	assert_eq(cars[0], Vector4(3, 5, 0, 44))
+	VehicleParked.clear()
