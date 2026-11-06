@@ -83,3 +83,15 @@ func test_molotov_bursts_with_a_whoomp_under_the_blast() -> void:
 	if cue != null and blast != null:
 		assert_gt(cue.pitch, blast.pitch, "lighter than the blast")
 		assert_lt(cue.gain_db, blast.gain_db - 4.0, "well under the blast")
+
+
+## it16: Rivet's guns never voice the contractors' rifle (the machine pistol did): the enemy's
+## shot and Rivet's must be told apart by ear.
+func test_no_gun_of_rivets_plays_the_contractors_rifle() -> void:
+	var table: WeaponTable = WeaponTable.shipped()
+	for id: StringName in table.weapons:
+		assert_ne(table.weapon(id).shot_cue, &"shot_assault_rifle", "%s sounds like the enemy" % id)
+	var smg: AudioCue = AudioTables.shipped().cue(table.weapon(&"machine_pistol").shot_cue)
+	assert_not_null(smg)
+	if smg != null:
+		assert_gt(smg.pitch, 1.0, "the SMG chatter sits over the rifle")

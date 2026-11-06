@@ -93,7 +93,7 @@
       "range_m": 28,
       "reload_s": 1.6,
       "rof_hz": 14,
-      "shot_cue": "shot_assault_rifle",
+      "shot_cue": "shot_smg",
       "speed_mps": 55,
       "splash_damage": 0,
       "splash_radius_m": 0,
