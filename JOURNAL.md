@@ -1312,10 +1312,16 @@ idempotent tool; palette gate held), depth-ordered-layered-art (no layer change)
   the rings fall on his spot, the bays empty, the bot steps off, the drops land in the rings.
   `M/servo_drone_wave_scan_drop_dodge_48ppm_it14.mp4` + keys replace it10's (deleted); REPORT path.
 
+- 04:38 FILMS the package carpet (p2, windup 47, cut 0.5 + 6 s) and the hot dash (p3, windup 35,
+  cut 0.3 + 4.8 s) re-filmed at 48 px/m on 5f9ed433 (`film48_14.sh 2|3 2 600`, dodging bot, 0
+  SCRIPT ERROR). **Looked at** both key sheets: carpet (scanner, the ring lane, step out, blasts,
+  CS crates); hot dash (one wing, lock, step out, the dash, the long vent). it10 clips and keys
+  deleted; REPORT paths; NEXT 2 narrowed (bay hop, kamikaze left).
+
 NEXT (iteration 15, in order):
 1. Merge n7-king if it moved (last merged 9a207b0b as 04164ce1; JOURNAL/REPORT add/add: ours).
 2. Re-film the remaining it10-body 48 px/m clips on the it14 body (hazard pads, parallel legs):
-   package carpet (p2, windup 47), hot dash (p3, windup 35), bay hop (`hop48_10.sh 2 2 900`),
+   (carpet and hot dash done at 04:38) bay hop (`hop48_10.sh 2 2 900`),
    kamikaze (`film48_10.sh 3 2 1000`); cut windows as their it10 mp4 durations. Ghost clips last.
 3. Weakest by the target still: the sheet's bays hold quad-rotor drones with packages, ours cream
    squares (DOCKED_M; the full sprite was noise at 32 px/m): try a 2-rotor hint on the cream body
