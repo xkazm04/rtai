@@ -52,7 +52,9 @@ static func shipped(rig: CameraRig = null, path: String = TABLE) -> HitFeel:
 	hf.cap = t.object(t.raw, "cap")
 	for row: Variant in t.array(t.raw, "weapons"):
 		var w: Dictionary = row if row is Dictionary else {}
-		hf._weapons[StringName(t.text(w, "id"))] = w
+		var id: String = t.text(w, "id")
+		hf._weapons[StringName(id)] = w
+		hf._weapons[StringName(id.replace("_", "-"))] = w  # combat.json's assault-rifle (quest 1)
 	hf.enabled = feel_flag() != "off"
 	hf._errors = t.errors()
 	if not hf.ok():
