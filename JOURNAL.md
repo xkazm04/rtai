@@ -1054,3 +1054,18 @@ NEXT (iteration 10, in order):
   (1.8 m). Holding the whole body needs a margin of ~4.5 m, which pushes the view off the floor
   more often elsewhere: not measured tonight, reverted to 3.0. NEXT 2b is now: try 4.5 on the full
   fight's 12 keys and the p3 defeat, and keep it only if the floor framing holds.
+
+## Iteration 10 (02:13-03:13, BUILD)
+Read: JOURNAL (it9 NEXT), git log, n7-king's JOURNAL tail (it12: procession clip; no REQUEST to servo).
+Rules applied: motion-quality-gating (look at every cut), encounter-balance-simulation (no sim change
+without 5 seeds x bots).
+- 02:16 MERGE n7-king 73543d25 as 91f94504 (coin spray, decree arc, slam plates; BossCam port is the
+  same file as ours, no change). JOURNAL/REPORT add/add: ours. Lint 13/13 on the merge.
+- 02:17 NEXT 3 done: FILM the kamikaze on the current body (`scratch/servo/film48_10.sh 3 2 1000` on
+  91f94504, dodge bot, seed 2, 48 px/m, boss cam; 0 SCRIPT ERROR; windup at tick 314, 4 dives, 0 hits).
+  **Looked at** keys every 1/6 s over 5-10.8 s: the scanner lock, launch puffs on the rack, thin dive
+  lines track, the lock (thick line + dashed blast ring), Rivet steps out, the blast bursts in the
+  empty ring at ~9.5 s, the next hot-dash lane already telegraphed. Cut
+  `M/servo_attack_kamikaze_dive_lands_48ppm_it10.mp4` (5.0-10.8 s) + keys
+  `M/frames/servo_kamikaze_keys_48ppm_it10.png`; the it5 clip and the it4 keys deleted; frames.json 15;
+  REPORT call 7 points at the new clip.

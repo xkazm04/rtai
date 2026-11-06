@@ -49,7 +49,7 @@ The rotor dash checked against a reading player (it6): every tell read but 18-32
 4. CS crates are solid (default) vs paint only: `servo.json parcels.crates_solid`. Clip: `M/servo_drone_wave_scan_drop_dodge_48ppm_it9.mp4`.
 5. Rack depth: 3 rows / 18 cells (default) vs 2 / 12: `servo.json rack.rows` + `cells`. Still: `M/frames/servo_target_vs_game_32ppm_it9.png`.
 6. The rotor dash smashes crates in its lane (default) vs crates stop him: `servo.json parcels.dash_smash`.
-7. Kamikaze armour: 3 rounds (default) vs 1: `servo.json kamikaze.hp`. Clip: `M/servo_attack_kamikaze_dive_lands_48ppm_it5.mp4`.
+7. Kamikaze armour: 3 rounds (default) vs 1: `servo.json kamikaze.hp`. Clip: `M/servo_attack_kamikaze_dive_lands_48ppm_it10.mp4`.
 8. Dent's van is parked from the start (default) vs none: `bosses.json arenas.depot.parked`. Clip: `M/servo_ghost_dent_van_48ppm_it5.mp4`.
 9. Kerf's blink cuts the drones within 0.6 m of its line (default) vs only the one target: `bosses.json servo.kerf_line_m`. Clip: `M/servo_ghost_kerf_cut_halves_48ppm_it7.mp4`.
 10. The spine: the wings 0.94 m apart for a 1.5 m spine, the sheet's measure (default) vs touching wings with a 0.56 m column over them (it8): `servo.json rack.spine_m` 0.94 / 0. It moves the drones' launch cells; measured, the fight stays inside the seeds' spread (`evidence/servo/numbers-it9-spine94/`). Still: `M/frames/servo_rack_spine_docked_ab_it9.png` (top row: 0 | 0.94 | 0.94 plated).
