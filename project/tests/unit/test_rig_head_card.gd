@@ -83,6 +83,8 @@ func test_every_set_card_strip_loads() -> void:
 	for art: String in RigHeadCard.SET_CARDS:
 		for key: String in RigHeadCard.SET_CARDS[art]:
 			var path: String = RigHeadCard.SET_CARDS[art][key][0]
+			if path == "":
+				continue
 			var t: Texture2D = load(path) as Texture2D
 			assert_not_null(t, path)
 			assert_eq(t.get_width() % RigHeadCard.FRAMES, 0, "%s splits into equal frames" % path)
@@ -92,3 +94,15 @@ func test_the_tilt_row_draws_the_55_set_and_top_none() -> void:
 	assert_eq(ViewMode.of("tilt").art, "p55")
 	assert_eq(ViewMode.of("top").art, "", "top draws no cards at all")
 	assert_eq(ViewMode.of("tilt_basecards").art, "", "the d8 before: the base cards")
+
+
+func test_a_set_row_without_a_path_keeps_the_strip_and_takes_its_width() -> void:
+	var r70: Dictionary[String, Array] = RigHeadCard.rows_of("p70")
+	var base: Array = RigHeadCard.CARDS["king"]
+	assert_ne(str(r70["king"][0]), "", "the empty path is filled from the folder or the base")
+	assert_eq(str(r70["king"][0]).get_file(), str(base[0]).get_file())
+	var king_w: float = r70["king"][2]
+	var rivet_w: float = r70["rivet"][2]
+	assert_almost_eq(king_w, 3.53, 0.001, "the p70 row's width")
+	assert_almost_eq(rivet_w, 1.17, 0.001)
+	assert_eq(str(RigHeadCard.SET_CARDS["p70"]["king"][0]), "", "the set table is untouched")

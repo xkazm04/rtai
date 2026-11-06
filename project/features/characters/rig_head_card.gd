@@ -24,7 +24,8 @@ const CARDS: Dictionary[String, Array] = {
 }
 ## Per view art (view.json `art`, ViewMode.art, e.g. "p55" = cut from the 55-degree angle sheets,
 ## "p70" from the 70): a card whose file name exists under ART_DIR/<art>/ draws that file with its
-## base row's fields; SET_CARDS[<art>] rows replace or add whole rows (new anchor, width or bust).
+## base row's fields; SET_CARDS[<art>] rows replace or add whole rows (new anchor, width or bust);
+## a set row with an empty path keeps the strip found above and only changes the other fields.
 ## A view without art draws CARDS. Rivet's p55 card is a bust (head, hazard
 ## collar and chest plate from rivet_55.png, tools/art/rivet_bust.py): anchored on the collar's
 ## middle, 1.25 x the collar wide (the cell is wider than the collar by the chest's shoulders).
@@ -34,6 +35,13 @@ const SET_CARDS: Dictionary[String, Dictionary] = {
 	{
 		"rivet":
 		["res://features/characters/art/view/p55/rivet_bust_card.png", 0.66, 1.25, true, true],
+	},
+	## The 70 sheets' cells are wider than the 55 ones: widths that keep each 70 card as tall as
+	## its 55 card (view70 lane: king 2.4 * 169/115, rivet 1.0 * 105/90).
+	"p70":
+	{
+		"rivet": ["", 0.86, 1.17, false, true],
+		"king": ["", 0.80, 3.53, true, true],
 	},
 }
 const FRAMES: int = 5
@@ -117,7 +125,11 @@ static func rows_of(art: String) -> Dictionary[String, Array]:
 			row[0] = alt
 		out[key] = row
 	for key: String in SET_CARDS.get(art, {}):
-		out[key] = SET_CARDS[art][key]
+		var set_row: Array = SET_CARDS[art][key]
+		var row: Array = set_row.duplicate()
+		if str(row[0]) == "" and out.has(key):
+			row[0] = out[key][0]
+		out[key] = row
 	return out
 
 
