@@ -860,3 +860,23 @@ NEXT (written 01:53, for iteration 10):
   branch's camera.json reads 16 (CameraRig.stop_cooldown loads it; the 20 at camera_rig.gd:21 is
   only the pre-load default), so every 18-tick cut gets its stop. REPORT's "does not" line on it
   removed.
+- DECISION 02:08 the plasma sword asset (backlog 3) is now in scope: brief items 1-5 all carry
+  evidence; the one weak score left (the ram heap, read 2) is call (h), not buildable view-only.
+- IMAGE 02:08-02:09 one Codex round under `gtai-n5/image.lock` (gen.mjs copy in
+  `gtai-n7p/scratch/melee/plasma`; refs: the old held_long.png and katana/held.png; no weapon noun
+  beyond "heat-blade tool prop"): ok in 60 s, one image, kept in `masters n7/melee/gen/plasma/`
+  with jobs.json. Looked at: the old hilt kept, a pronged collar, a tapering paper-white blade in an
+  ink ring with five ink arc strokes; no teal, no vermilion on the blade.
+- BUILD 02:12 `4540d259`: `tools/art/plasma_blade_fit.py` keys (weapon_cut.key), keeps the largest
+  component, fits to the old length_px 526 + 6 px margin: 538x101 vs the old 539x100, grip x 53,
+  bore row 50 (was 48), muzzle 531. weapon_art.json numbers updated; provenance row appended. The
+  film needed a combo on a body (the deflect chapter cuts nobody): `ReelChapters.extras()` holds a dev
+  `plasma_sword` blade chapter (lone cop at 2.6 m), reachable only by `--chapter=`; the cut stays 19.
+- LOOK 02:13 before/after (`--chapter=plasma_sword --loadout=pistol --clean --rigs`, 330 ticks, 0
+  SCRIPT ERROR all four films, same kill frame): 48 px/m frames 44/84/96 at 3x: the after tapers to a
+  point and the arc strokes show as a broken centre line; the before is a square-ended plank. 32 px/m
+  at 3x: close to identical (46 px long). Honest result: a detail gain at 48 and up, nothing at 32.
+  Call (i) in REPORT; audit 7f; decision line. Clip `M/plasma_sword_blade_ab_32ppm_48slow.mp4`
+  (5.9 s) + still `M/plasma_sword_blade_ab_48ppm_3x.png`; frames.json row 0 (dropped
+  tonnage_ram_ab from the list to stay at 15; the file stays, REPORT names it).
+- GATES 02:20 on the asset tree: lint 13/13, unit 1204/1204.

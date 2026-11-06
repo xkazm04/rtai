@@ -115,6 +115,16 @@ By the craft columns (impact and read at 32 weigh most: they are what the owner 
    hidden whatever the view prints; a body thrown clear (the city riot cop, frame 150) reads. Read
    stays 2 for the car heap; the fix is an owner call (REPORT (h)): pop the body over the form, or a
    sim footprint rule. `M/ram_heap_under_press_32ppm_2x.png`.
+7f. **Plasma sword asset** (backlog combat-notes item 3; allowed once items 1-5 were evidenced;
+   scored 02:13 from the dev `plasma_sword` chapter, a lone cop, 48 px/m frames 44-104 every 4th at 3x
+   and 32 px/m at 3x): the old held part is a square-ended cream plank on the rusted hilt.
+   **Done 02:20 (`4540d259`)**: one Codex image round (style refs: the old part and the katana), keyed
+   and fit to the old length and grip (`tools/art/plasma_blade_fit.py`): a blade tapering to a point
+   from a pronged emitter collar, ink arc strokes along a paper-white core, paper-white in an ink ring
+   (docs/art/weapons.md rule 3; no teal, no vermilion). Looked at: 48 px/m, the point and the broken
+   centre line read on the guard pose and the cut; 32 px/m (46 px long), before and after are close
+   to identical. Read at 32 unchanged; detail at 48 better. Same sim, same kill frame.
+   `M/plasma_sword_blade_ab_32ppm_48slow.mp4`, `M/plasma_sword_blade_ab_48ppm_3x.png`.
 8. **Electro baton**, 9. **Katana**: read well; they get the shared hit-stop with item 3 only.
 
 ## Quest 1 shows melee (brief item 5)
