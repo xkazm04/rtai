@@ -417,3 +417,24 @@ rows 4-5 repeat frame 1 in worker/hood, row 5 mirrored in post by assets).
   for the ones with a prop: shopper's bag, elder's cane). The away rows may be drawn as "frame 3 =
   frame 1" and mirrored in post (Codex repeats them anyway). The street lane cuts each by script the
   moment it lands (street_walk.py + one WALKS/WALK_FILL line).
+- MEASURE (city, NEXT 2's "judge at 32"): city seed 5 tilt70 32 px/m 15 s with the stride frames,
+  0 SCRIPT ERROR; the opening holds few pedestrians near Rivet (two at the edges), so the board is
+  the evidence for the gait; no city still taken into frames.json.
+- GATE unit no-arg on afe22e3b: 1507 passed, 0 failed, no FLAKY. Lint 15/15.
+- MILESTONE c1e8cf2f (NEXT 3, the pop at the hit): `StreetWalkerCards.falls()`. Before, any
+  reaction slot (rig.react != null, kept forever after the first flinch) dropped a walker to the
+  top-down parts for good, so a grazed passer-by walked on as the sack on pills. Now a flinch keeps
+  the figure (ReactPose moves the head, the card's parent, after the placement, and the hit flash
+  tints it); a death holds the figure for DEATH_HOLD 0.3 of the family while it topples about its
+  feet (DEATH_TIP 0.6 rad, eased, toward the hidden head's screen-x fall), then the parts take the
+  fall and the corpse (it3's corpse stays). First cut held the figure still: it read as a freeze,
+  then a bigger pop -> the topple. LOOKED `--kill=light` board 64 px/m before (hold 0) | after,
+  ticks 58-80 every 2: before is a black ink tangle from the blow; after a person falls for ~9 ticks,
+  then the swap. NOT SOLVED: the parts' corpse lies roughly north-south on screen, so the screen-x
+  topple and the parts' fall still disagree at the swap (a visible jump at 64 px/m, small at 32).
+  Masters: peds_walker_death_hold_before_after_tilt70_64ppm_board{_t58-80.png,.mp4}.
+  DECISIONs street/walk-frames and street/walker-hit in docs/decisions.md.
+- CALL (owner): the walker's death. Options: (a) hold + topple 0.3, then the parts (BUILT);
+  (b) the parts from the blow (DEATH_HOLD = 0); (c) later: a drawn death strip per type (the
+  library's action rows have one sprawl pose, not a fall). See the board clip above; exe
+  `--arena=city --rigs --view=tilt70`.
