@@ -374,3 +374,22 @@ NEXT (iteration 6, the FREEZE session):
   tan and ink). No clear gain: REJECTED, reverted with git restore + --import; not committed, no provenance
   line (nothing shipped). Still gtai-masters/d8/weapons/electro_baton_tilt_48_try3_rejected.png.
 - REPORT.md final (no DRAFT): gate numbers, exe on cddcc340 (no code since, so no re-export), the arc row.
+- 17:57 Every gun at 64 px/m under tilt (gunplay bot, scratch c64/, 15 films, 0 SCRIPT ERROR): aimed (f500) and
+  carry (f380) sheets -> gtai-masters held_all_tilt_64_{aimed,carry}.png. All read in the claw; the plasma
+  rifle rides above it (known). The chainsaw/baton gunplay films show Gloria (the gunplay bot does not carry
+  melee): left off the sheet. FOUND: facing the camera, the flamer's back tank drew over the visor.
+- MILESTONE 6533af0e: ShotLift.back_z: under a lift, when Rivet faces down the screen, the tank (and the
+  Gatling's belt box, same node) draws at z -61, under the rig (the held view rides +60 over the rigs, so a
+  first try at -2 changed nothing on film). Filmed 64 tilt, same seed, --shot-lift=off = before: visor and
+  collar read, the tank peeks at the shoulder. gtai-masters flamethrower_tilt_64_tank_behind_before_after.png.
+  rivet_held_view.gd stays 288 lines (a doc comment merged; the debt ratchet). DECISION in decisions.md.
+- Gates on 6533af0e: unit full 1429 passed / 0 failed; director reel headless top 19/19 and tilt 19/19, all
+  down, 0 SCRIPT ERROR (scratch reel10_*.log); lint 15/15.
+- frames.json: + held_all_tilt_64_aimed (3rd), + flamethrower tank (6th); - plasma_sword full-vs-small zoom,
+  - plasma_rifle_tilt_64 (the 64 sheet supersedes it). 15 entries.
+- 18:06 Exe re-exported on 6533af0e (exit 0); smoke flamethrower 64 tilt exit 0, 0 SCRIPT ERROR.
+- 18:07 Evidence run (--no-bench) on 0af9f396 started.
+- Registry rules applied this session: motion-quality-gating (judged on film, same seed before/after, the
+  baton try 3 rejected on film, gates in both views); concept-scene-parity (calls on game frames at 48/64);
+  depth-ordered-layered-art (the tank's order is decided by facing against the camera, not by tree order);
+  generative-artifact-gating (gen55i keyed, looked at, filmed, rejected; nothing shipped, so no provenance).

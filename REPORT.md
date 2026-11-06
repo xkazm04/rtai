@@ -1,7 +1,7 @@
 # REPORT - lane weapons (d8, 2026-11-06)
 
-Final, written in the freeze session (iteration 6). Code head `cddcc340`, which is the exported exe; the
-commits after it touch docs and the journal only.
+Final, written in the freeze session (iteration 6). Code head `6533af0e` (the back-tank fix), which is
+the exported exe; the commits after it touch docs and the journal only.
 
 Branch `d8-weapons` (cut from main `0bea8b93`). Evidence: `C:\Users\kazda\kiro\gtai-masters\d8\weapons\`
 (`frames.json`, 15 entries, best first; `weapons_tilt_set_combined.mp4`, 83 s). Audit:
@@ -41,7 +41,13 @@ unmeasured.
 
 5. **Molotov (iteration 5, cddcc340):** the 55 bottle is drawn at 1.2x; at 1x it read tiny in the claw at
    48 px/m, and at 1.35x it read as a club (`molotov_tilt_48_size_k.png`).
-6. **Electro chain arc (iteration 6, scored, no change needed):** in the `electro_chain` chapter the bolt
+6. **Every gun at 64 px/m, the close-combat zoom (iteration 6):** aimed and carried, each in the claw
+   with grip, body and tip readable (`held_all_tilt_64_aimed.png`, `held_all_tilt_64_carry.png`). The
+   sheet found one fault, fixed in `6533af0e`: facing the camera, the flame wand's back tank drew over
+   Rivet's visor. It now draws under the rig under tilt (`flamethrower_tilt_64_tank_behind_before_after.png`,
+   `--shot-lift=off` = the before; top unchanged). The Gatling ammo box no longer covers the collar either
+   (`gatling_tilt_64_box_behind_before_after.png`).
+7. **Electro chain arc (iteration 6, scored, no change needed):** in the `electro_chain` chapter the bolt
    leaves the coil tip at gun height and the hop arcs run cop to cop at chest height
    (`electro_chain_tilt_48_arc_before_after.png`).
 
@@ -81,12 +87,14 @@ unmeasured.
 ## The exe
 `build/export/windows/RTAI.exe` (windows-showcase preset, main scene = the arena). Command:
 `APPDATA=C:/Users/kazda/kiro/gtai-d8/appdata/weapons "$GODOT_BIN" --headless --path project --export-release windows-showcase ../build/export/windows/RTAI.exe`.
-Exported on `cddcc340` at 17:34 (exit 0, 247 MB + the gtai_sim dll); the pickup hover and the molotov
-are in it. Smoke: `RTAI.exe --quit-after 200 -- --armory --ppm=48 --view=tilt --rigs` exit 0, 0 SCRIPT
-ERROR. No code moved after it, so it was not re-exported. Every exe line in Calls for the owner works on it.
+Exported on `6533af0e` at 18:06 (exit 0, 247 MB + `gtai_sim.windows.template_release.x86_64.dll`); every
+item above is in it. Smoke: `RTAI.exe --quit-after 400 -- --weapon=flamethrower --bot=gunplay --lone
+--cam=fight --ppm=64 --view=tilt --rigs` exit 0, 0 SCRIPT ERROR. The exe lines in Calls for the owner were
+smoke-run on the 17:13/17:34 exports, and the code they exercise did not change after that.
 
 ## Next steps
-- Baton: a pale-wrap regeneration with a brass band, filmed in its chapter; or take the owner's pick.
+- Baton: tried three times; take the owner's pick (top-down part or the 55 cells).
+- The flamer's hose still draws over the body when the tank goes behind (it rides the held view's z).
 - The 70 row: the parts are keyed by the pitch row (`weapon_held_pitch.json`), so `view70` (or the next
   run) can add `held_70/` beside `held_55/`; the hover, the lift and the crescent already read the view.
 - Long guns at 32 px/m: a slimmer re-cut (fewer side-body px) if the owner keeps two-tone.
