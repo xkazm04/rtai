@@ -428,6 +428,9 @@
   "$id": "gtai.bosses/1",
   "additionalProperties": false,
   "properties": {
+    "aim_lock_at_windup": {
+      "type": "boolean"
+    },
     "arenas": {
       "additionalProperties": {
         "$ref": "#/$defs/arena"

@@ -102,8 +102,12 @@ static func from_table(t: DataTable, boss_id: StringName) -> BossSpec:
 	s.rng = StringName(t.text(row, "rng"))
 	s.script_path = str(row.get("script", ""))
 	var atk: Dictionary = t.object(row, "attacks")
+	var lock_at_windup: bool = t.raw.get("aim_lock_at_windup", false) == true
 	for k: Variant in atk.keys():
-		s.attacks[StringName(str(k))] = BossAttack.from_row(t, str(k), t.object(atk, str(k)))
+		var a: BossAttack = BossAttack.from_row(t, str(k), t.object(atk, str(k)))
+		if lock_at_windup:  # owner d8: the ring freezes as the windup begins
+			a.lock = a.windup
+		s.attacks[StringName(str(k))] = a
 	for p: Variant in t.array(row, "phases"):
 		var p_row: Dictionary = p if p is Dictionary else {}
 		s.phases.append(_phase(t, p_row))
