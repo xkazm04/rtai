@@ -4,7 +4,8 @@ extends RefCounted
 ## shoulders back to a hem that folds (alternate hem points in and out, ink fold lines from the
 ## collar into the troughs) under an ermine border (cream fur, an ink outer edge, ink tail spots).
 ## It moves, render only, on the fight's tick: a slow sway of the hem, gathered in through the
-## charge's and ram's tell, flared back through their active window (follow-through). FOLDS 0 =
+## charge's and ram's tell, flared back through their active window (follow-through); the press
+## slam's leap does the same and the hem lands wide with the shockwave, then settles. FOLDS 0 =
 ## the it12 flat trapezoid with a plain cream band.
 
 const FUR: Color = Color("#EFE6D2")
@@ -22,7 +23,10 @@ const SWAY_TICKS: float = 96.0
 ## Hem reach through a charging attack's tell (gathered) and active window (flared).
 const GATHER_K: float = 0.88
 const FLARE_K: float = 1.22
-const CHARGING: Array[StringName] = [&"charge", &"ram"]
+const CHARGING: Array[StringName] = [&"charge", &"ram", &"press_slam"]
+## The slam's landing: the hem spreads this much wider with the shockwave (1.0 = no beat, it14a).
+const LAND_SPREAD_K: float = 1.14
+const LANDING: Array[StringName] = [&"press_slam"]
 ## The ease into each reach (ticks): gathered over this, flared over half, settled over twice.
 const EASE_TICKS: float = 12.0
 
@@ -53,6 +57,7 @@ static func draw(ci: CanvasItem, at: Vector2, p: float, fight: BossFight) -> voi
 static func _hem(at: Vector2, p: float, fight: BossFight) -> PackedVector2Array:
 	var n: int = maxi(FOLDS, 1) * 2
 	var reach: float = _reach(fight)
+	var spread: float = _spread(fight)
 	var tick: float = float(fight.now()) if fight != null else 0.0
 	var out: Array[Vector2] = []
 	for i: int in n + 1:
@@ -61,7 +66,7 @@ static func _hem(at: Vector2, p: float, fight: BossFight) -> PackedVector2Array:
 		if FOLDS > 0 and i % 2 == 1:
 			back -= FOLD_DEPTH
 		var sway: float = SWAY_M * sin(TAU * tick / SWAY_TICKS + s * 1.6) if FOLDS > 0 else 0.0
-		out.append(at + Vector2(0.1 - back * reach, s * 0.95 + sway * absf(s)) * p)
+		out.append(at + Vector2(0.1 - back * reach, s * 0.95 * spread + sway * absf(s)) * p)
 	return PackedVector2Array(out)
 
 
@@ -79,3 +84,13 @@ static func _reach(fight: BossFight) -> float:
 		BossFight.State.RECOVER:  # follow-through: it settles after he stops
 			return lerpf(FLARE_K, 1.0, smoothstep(0.0, EASE_TICKS * 2.0, t))
 	return 1.0
+
+
+## The hem's width: wide as the slam lands (his recovery's first tick), easing back over the
+## settle; 1.0 otherwise.
+static func _spread(fight: BossFight) -> float:
+	if FOLDS <= 0 or fight == null or fight.attack == null:
+		return 1.0
+	if not LANDING.has(fight.attack.id) or fight.state != BossFight.State.RECOVER:
+		return 1.0
+	return lerpf(LAND_SPREAD_K, 1.0, smoothstep(0.0, EASE_TICKS * 2.0, float(fight.t)))
