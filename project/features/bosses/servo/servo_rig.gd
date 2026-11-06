@@ -155,8 +155,8 @@ func _wings(o: Vector2, fwd: Vector2, side: Vector2, k: float, tint: Color) -> v
 func _bay_cells(o: Vector2, fwd: Vector2, k: float, tint: Color) -> void:
 	var rot: float = fwd.angle() - PI / 2
 	var bay: Color = Color(_pal.color(&"ink"), 0.85)
+	var pts: Array[Vector2] = _bay_points(o, fwd, k)  # sets _bays.rack first
 	var on: bool = DOCKED_ON_BAYS and _bays.on_art()
-	var pts: Array[Vector2] = _bay_points(o, fwd, k)
 	for i: int in rack.state.size():
 		var st: int = rack.state[i]
 		var at: Vector2 = pts[i]
