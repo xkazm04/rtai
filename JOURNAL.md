@@ -559,3 +559,16 @@ NEXT (iteration 16 = the freeze; freeze 08:30, report 08:40):
 NEXT (report phase, 08:40): no code. REPORT.md is final; only re-read it against frames.json
 and `evidence/view/it18/`, and fix wording. Do not re-export (the exe matches the final code).
 If a session runs past 09:00 and the owner picks `tilt`: REPORT "Next steps" 1-6 in order.
+
+## Iteration 19 (08:10-08:30, post-freeze BUILD slot)
+
+- Freeze was already done in it18. Decided against code in a 20 min slot: any game-code change
+  would invalidate the exe (78d652d7) and the gates (run.mjs ~10 min + reel + re-export do not
+  fit before 08:30). Spent the slot on verification only.
+- CHECK: frames.json has 15 entries, all 15 files present in gtai-masters/n7/view/; every
+  `--view=<id>` in REPORT exists in `view.json` (13 rows); exe present (embedded pck, 248 MB).
+- REPORT call 3 (cast shadows): the still now points to the masters copy, and the call has the two
+  exe lines (`--view=tilt` / `--view=tilt_noshadow`) like the other calls. Docs only.
+
+NEXT (report phase, 08:40): no code, no re-export. REPORT.md is final; read it once more for
+wording. If the owner picks `tilt`: REPORT "Next steps" 1-6 in order.

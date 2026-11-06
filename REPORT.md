@@ -131,7 +131,10 @@ afford it. `top_lift` is the fallback if the owner keeps straight down: free, bu
    - (`--view=tilt65` / `tilt45` / `tilt75` are the same pitches without cards and shadows)
 3. **Cast shadows by height** (a low evening sun, down-right): on (default, `--view=tilt`) or off
    (`--view=tilt_noshadow`). My pick: on; they ground the car and the bodies on the foreshortened
-   road at 0 art cost. Still: `evidence/view/it12/tilt_noshadow_vs_cast_32_x2_t900.png`.
+   road at 0 art cost. Still: `gtai-masters/n7/view/king_tilt_noshadow_vs_cast_32ppm_x2_it12.png`
+   (in-repo copy: `evidence/view/it12/tilt_noshadow_vs_cast_32_x2_t900.png`).
+   - `build/export/windows/RTAI.exe -- --rigs --boss=king --view=tilt`
+   - `build/export/windows/RTAI.exe -- --rigs --boss=king --view=tilt_noshadow`
 4. **Occlusion under tilt** (it15): a body behind a barrier, dumpster or crate row is hidden by it
    and shown as an ink silhouette with a cream rim (default, `--view=tilt`), or drawn over the
    prop as in it12 (`--view=tilt_noocclude`). My pick: on. Without it a cop behind the city
