@@ -1213,7 +1213,7 @@ must keep the drawn body honest to the hit body).
   cannon next to the sheet's top-panel cannon, King on foot beside Rivet). All it10 versions
   deleted; frames.json 15; REPORT points at the it12 files.
 
-NEXT (iteration 13, in order):
+NEXT (iteration 13, superseded by the list at the end of it12):
 1. The D5 close-up gang (64 px/m) print near-black steel where the target's are light steel:
    measure the D5 set's steel values against the print as in it10 (a dome A/B), then a D5-only
    lift if it reads; render only, before/after at 64 px/m, the 32/48 px/m D4 read unchanged.
@@ -1233,3 +1233,22 @@ NEXT (iteration 13, in order):
   is pixel-identical to the x1.3 trial; only `art/d5/gang/*.png` changed (the D4 32-48 px/m set is
   untouched). REPORT call K; decisions line.
   Gates: lint 13/13 (`lint-it12b.log`), unit **1160/0** (`unit-it12b.log`).
+
+### 02:40 MILESTONE (it13 NEXT 2 taken early) the shoulder megaphone at 32 px/m
+- A/B at 32 px/m (phase 3 seed 2 tick 300, phase 1 tick 60), `KingRigs.HORN_K` 1.6 / 2.2 / 2.6
+  (`evidence/king/shots/it12/horn_16_22_26_p3_32ppm_4x.png`, `horn_before_after_p1_32ppm_4x.png`):
+  **looked at**: 1.6 a dark smudge under the right plate; 2.2 a cone with a bell rim, on foot and on
+  the car; 2.6 covers the plate. DECISION: 2.2 (render only). It still prints dark, not gold.
+- FOUND in the phase 3 still: the district title "KING'S BOULEVARD" overlaps the boss bar's "3/3"
+  phase mark at the top right while the title shows (32 px/m, tick 300 of `--phase=3`).
+- Lint 13/13 (`lint-it12c.log`), unit **1160/0** (`unit-it12c.log`).
+
+NEXT (iteration 13, in order):
+1. The district title overlapping the boss bar's phase mark (top right, `--boss=king --phase=3`,
+   while the title shows): move the title below the bar band or the phase mark inside the bar;
+   before/after at 32 px/m.
+2. Re-film the phase 3 clip / full fight if the horn should show in the evidence (render only:
+   tick 4933 holds); the slam clip at 48 px/m shows the horn too.
+3. Director reel once more before the freeze; re-export the exe at the freeze (the it8 recipe in
+   REPORT) and smoke it (King down 4933); finalize REPORT (remove DRAFT, Next steps).
+- Session ends ~02:45, everything committed.

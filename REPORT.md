@@ -65,7 +65,7 @@ and in the exported exe.
   the top view their size matches the target's 90-degree panel (measured in it12: ~1.6 m across the
   shoulders beside the ~6 m car, over a 1.0 m hit circle); they are less blocky and look smaller than
   the target's 3/4 view, where its bodyguards are drawn tall (call J).
-- The shoulder megaphone is a small gold cone at 32 px/m; it reads from 48 px/m.
+- The shoulder megaphone (bigger since it12, `KingRigs.HORN_K` 2.2) reads as a cone with a bell at 32 px/m, but prints dark, not gold.
 - The plain robot thug (the enemy-ai lane's, not King's) prints as solid ink at 48 px/m. The gang's
   lift would fix it (`evidence/king/shots/it7/plain_thug_48ppm_ink_x2.png`).
 
