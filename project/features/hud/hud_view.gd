@@ -10,6 +10,8 @@ const TEXT_SIZE: int = 30
 const NAME_SIZE: int = 26
 const MARGIN: float = 36.0
 const INK: Color = Color("17131b")
+## n8-hud: the weapon icon's box width left of the ammo ticket (screen px at 1080p).
+const ICON_W: float = 190.0
 
 var state: HudState = HudState.new()
 var art: HudArt = null
@@ -77,8 +79,20 @@ func _ammo_ticket(r: Rect2) -> void:
 	var k: float = r.size.x / art.size_px(&"ammo_ticket").x
 	var at: Vector2 = r.position + Vector2(140.0 * k, r.size.y * 0.5)
 	_say(at, state.weapon.to_upper(), 20)
+	if state.weapon_icon != null:
+		_icon(
+			state.weapon_icon, Rect2(r.position.x - ICON_W, r.position.y + 14.0, ICON_W - 8.0, 96.0)
+		)
 	if state.ammo >= 0:
 		_ink_digits(at + Vector2(0.0, 40.0), "x%d" % state.ammo, 30.0)
+
+
+## n8-hud: the weapon's icon left of the ticket, fitted into `box` (aspect kept, right-aligned).
+func _icon(t: Texture2D, box: Rect2) -> void:
+	var k: float = minf(box.size.x / t.get_width(), box.size.y / t.get_height())
+	var sz: Vector2 = Vector2(t.get_width(), t.get_height()) * k
+	var at: Vector2 = Vector2(box.end.x - sz.x, box.position.y + (box.size.y - sz.y) * 0.5)
+	draw_texture_rect(t, Rect2(at, sz), false)
 
 
 func _subtitle(screen: Vector2, who: String, words: String) -> void:

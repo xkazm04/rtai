@@ -21,13 +21,18 @@ const HOVER_M: float = 0.35
 const BOB_M: float = 0.05
 const BOB_RAD_S: float = 2.4
 const SHADOW_A: float = 0.3
-
 static var disc: bool = not OS.get_cmdline_user_args().has("--pickup-disc=off")
 
 var carry: RivetCarry = null
+## n8-hud: a showcase drawing (WeaponShowcase, keyed by the view's art) is drawn for its camera:
+## stood up, never spun; `--pickup-hover=off` lays it on the disc (the owner's open hover call).
+var hover: bool = LaunchArgs.value("--pickup-hover") != "off"
 var art: WeaponArt = WeaponArt.new()
+var showcase: WeaponShowcase = WeaponShowcase.new()
 var _sprites: Array[Sprite2D] = []
 var _shown: Array[StringName] = []
+var _form: String = ""
+var _drawn: Array[bool] = []
 var _paper: Color = PaletteTokens.shared().color(&"paper")
 var _ink: Color = PaletteTokens.shared().color(&"ink")
 var _t: float = 0.0
@@ -40,7 +45,9 @@ func _process(_delta: float) -> void:
 	var ids: Array[StringName] = []
 	for it: WeaponPickups.Item in items:
 		ids.append(it.id)
-	if ids != _shown:
+	var form: String = WeaponShowcase.form_of(ViewMode.shared())
+	if ids != _shown or form != _form:
+		_form = form
 		_rebuild(ids)
 	var stand: bool = ShotLift.up_m() != Vector2.ZERO
 	for i: int in items.size():
@@ -54,6 +61,12 @@ func _process(_delta: float) -> void:
 ## Under a tilt: lift the gun HOVER_M (+ a bob) and stand its side view up (screen y undone).
 func _stand(s: Sprite2D, i: int) -> void:
 	var v: ViewMode = ViewMode.shared()
+	if _drawn[i]:  # n8-hud: the showcase drawing already faces this camera
+		s.rotation = 0.0
+		if hover:
+			s.position += v.lift_px(hover_m(_t, i))
+		s.scale.y = s.scale.x / v.ground_k()
+		return
 	s.position += v.lift_px(hover_m(_t, i))
 	s.rotation *= 0.5  # the sway, not a spin: a standing card turned far reads as a shear
 	s.scale.y = s.scale.x / v.ground_k()
@@ -92,9 +105,13 @@ func _rebuild(ids: Array[StringName]) -> void:
 	for s: Sprite2D in _sprites:
 		s.queue_free()
 	_sprites.clear()
+	_drawn.clear()
 	for id: StringName in ids:
 		var s: Sprite2D = Sprite2D.new()
-		s.texture = art.pickup_texture(id) if art.has(id) else null
+		s.texture = showcase.texture(id, _form)
+		_drawn.append(s.texture != null)
+		if s.texture == null:
+			s.texture = art.pickup_texture(id) if art.has(id) else null
 		var w: float = s.texture.get_width() if s.texture != null else 1.0
 		var span_m: float = maxf(art.length_m(id), art.pickup_min_span_m)  # r2_w8: fills the ring
 		s.scale = Vector2.ONE * span_m * SimConst.PX_PER_M / maxf(w, 1.0)

@@ -5,6 +5,8 @@ extends RefCounted
 ## (the runtime's line through QuestText / tr(), or Patch's refusal when the router gives one).
 
 var _text: QuestText = QuestText.new()
+var _showcase: WeaponShowcase = WeaponShowcase.new()
+var _art: WeaponArt = WeaponArt.new()
 
 
 func fill(state: HudState, stage: CollectCallStage, system: QuestSystem) -> void:
@@ -21,6 +23,7 @@ func fill(state: HudState, stage: CollectCallStage, system: QuestSystem) -> void
 	state.unarmed_label = _text.resolve(&"HUD__UNARMED", "unarmed")
 	var weapon: String = stage.weapon_name()
 	state.weapon = ""
+	state.weapon_icon = icon_of(StringName(weapon))
 	if weapon != "":
 		var key: StringName = StringName("WEAPON__%s" % QuestText.symbol(weapon))
 		state.weapon = _text.resolve(key, weapon)
@@ -32,6 +35,15 @@ func fill(state: HudState, stage: CollectCallStage, system: QuestSystem) -> void
 		state.say(line[0], line[1])
 	else:
 		state.silent()
+
+
+## n8-hud: the HUD icon of weapon `id`: the showcase's flat icon cut, else the shipped icon part,
+## else null (no art row: the ticket shows the name alone).
+func icon_of(id: StringName) -> Texture2D:
+	if id == &"" or not _art.has(id):
+		return null
+	var t: Texture2D = _showcase.texture(id, WeaponShowcase.ICON)
+	return t if t != null else _art.icon_texture(id)
 
 
 func _head(runner: QuestRunner) -> String:

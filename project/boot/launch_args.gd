@@ -67,6 +67,10 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--held-pitch",
 	# d8-weapons: --shot-lift=off draws rounds and hits on the ground under a tilt (the before)
 	"--shot-lift",
+	# n8-hud: --showcase=off keeps the shipped pickup parts under a tilt (the before)
+	"--showcase",
+	# n8-hud: --pickup-hover=off lays a floor gun's showcase drawing on its disc (no hover)
+	"--pickup-hover",
 ]
 
 var _values: Dictionary[String, String] = {}

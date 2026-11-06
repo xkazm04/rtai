@@ -12,6 +12,8 @@ var heat_max: int = 3
 var cash: int = 0
 ## The weapon in hand, display text; empty = unarmed.
 var weapon: String = ""
+## n8-hud: the weapon's HUD icon (its showcase icon cut, else the shipped icon); null = no icon.
+var weapon_icon: Texture2D = null
 ## The magazine count drawn on the ammo ticket; -1 draws no count (e.g. the nail gun).
 var ammo: int = -1
 ## The subtitle box: speaker and words; an empty speaker hides the box.
