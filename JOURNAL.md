@@ -502,3 +502,7 @@ NEXT (iteration 16 = the freeze; freeze 08:30, report 08:40):
   (`evidence/view/it15/director-reel-19of19.log`; my idle reel process killed by PID after the
   snapshot, another lane's reel left alone). GATE unit 1190/0 on a44486b4+ (scratch unit2.log).
   NEXT 1 is DONE.
+- NEXT 3 DONE: Rivet's held weapon and magazine ride PropOcclusion's front lift
+  (`RigDepthSort.rig_of`, extracted from its follower code). Headless re-runs on it (tilt, seed 2):
+  city 3600 frames 176 body-frames hidden (648-1114), 0 SCRIPT ERROR; King fight 5400 frames,
+  King defeated, 8 hidden (frames 1647-3923), 0 SCRIPT ERROR (logs replaced in evidence/view/it15).

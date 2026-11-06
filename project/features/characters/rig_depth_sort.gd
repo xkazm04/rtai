@@ -111,11 +111,16 @@ func _collect(n: Node, depth: int, rigs: Array[CutRig], follow: Array[CanvasItem
 func _follow(f: CanvasItem) -> void:
 	if not _follow_base.has(f):
 		_follow_base[f] = f.z_index
-	var rig: CutRig = null
+	var rig: CutRig = rig_of(f)
+	f.z_index = _follow_base[f] + (rig.z_index if rig != null else 0)
+
+
+## The rig a follower (Rivet's held weapon or reload magazine) rides; null for anything else.
+static func rig_of(f: Node) -> CutRig:
 	if f is RivetHeldView:
 		var h: RivetHeldView = f as RivetHeldView
-		rig = h.rigs.rig_for(h.rivet_id) if h.rigs != null else null
-	elif f is WeaponMagView:
+		return h.rigs.rig_for(h.rivet_id) if h.rigs != null else null
+	if f is WeaponMagView:
 		var m: WeaponMagView = f as WeaponMagView
-		rig = m.rigs.rig_for(m.rivet_id) if m.rigs != null else null
-	f.z_index = _follow_base[f] + (rig.z_index if rig != null else 0)
+		return m.rigs.rig_for(m.rivet_id) if m.rigs != null else null
+	return null

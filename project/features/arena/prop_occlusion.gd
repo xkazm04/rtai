@@ -91,6 +91,12 @@ func _lift_front() -> void:
 		if redrawn.has(_front_of[i]) and not lifted.has(_front[i]):
 			lifted[_front[i]] = true
 			_front[i].z_index += FRONT_DZ
+	if lifted.is_empty():
+		return
+	for c: Node in _layer.get_children():  # Rivet's held weapon and magazine ride his lift
+		var rig: CutRig = RigDepthSort.rig_of(c)
+		if rig != null and lifted.has(rig):
+			(c as CanvasItem).z_index += FRONT_DZ
 
 
 ## The props with a body behind them, then each such body's silhouette cut to its prop's area.
