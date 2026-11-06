@@ -1954,3 +1954,24 @@ a unit test): finished it rather than drop it.
 - FINDING (not built): after the hold, the killed cop is carried down-screen along the shot but
   stays UPRIGHT, gun arm up, from 336 to about 352 (about 15 frames, 10 sim ticks) before he reads
   as down at 355. The throw slides a standing body; at 32 px/m it reads as a shove, then a drop.
+- Where the upright throw comes from (read, not built): hand_cannon is `heavy`, human_reactions.json
+  death_map heavy -> `death_bullet` (len 0.45 s = 27 ticks, travel 0.7 m), DeathPose._bullet: from
+  the front `c_sprawl = smoothstep(0, 0.6, k)` while `slide` eases out at once, so the body travels
+  before it lies down; the brutality lane can replace the death through DeathPipe. A heavy-round
+  death of its own (e.g. `death_heavy`: sprawl leads the slide, travel about 1.0 m) would be a
+  human_reactions.json row + a death_map line + a DeathPose branch: build only with the reels, the
+  hand cannon and plasma rifle kills filmed before/after at 32/48 px/m, and a test.
+
+NEXT (iteration 22; supersedes the it20 list):
+1. Freeze (by 08:30). The exe on `49cfe6c4` is current (exported and booted 06:17; REPORT
+   `## The exe`). Full evidence green on `49cfe6c4` (it21). Docs-only commits since. If code lands
+   after `49cfe6c4`: lint, unit, reels 19/19 x2, `node tools/evidence/run.mjs --no-bench` on a
+   clean tree (do not edit tracked files during it: the tree-change guard), then re-bake +
+   re-export + boot once, and retake the city clip (recipe in MILESTONE 06:22).
+2. REPORT at 08:40: drop the DRAFT line, refresh the top (what works: 3 light guns' wound-hold
+   rows are in), check every call names its exe before/after (call 8 is new).
+3. Optional build, only with time for its gates: the heavy-round death that falls as it travels
+   (FINDING 06:25; evidence `it21-hand-cannon-kill-frames-330-380-32ppm.jpg`). Check first whether
+   the brutality DeathPipe replaces death_bullet for the hand cannon (then it is not DeathPose).
+4. FYI to n7-melee is in MILESTONE 06:10 (merge `49cfe6c4`; their classes keep delay 0).
+5. Weak cells left: homing_shard I/R/V 2 (call 1, owner); Gatling R/V 2 (crowds only, a sim matter).
