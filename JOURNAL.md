@@ -1766,3 +1766,17 @@ NEXT (iteration 19; supersedes the iteration 17 list):
 5. If time before the freeze: look at the arsenal path of the other wound-up or clip-fed Rivet
    attacks for the same late feed (the shock discharge's STRIKE clip in _rivet_clips is fed on
    `shock.discharges` the same way; Ohm/ghost powers are melee's).
+
+### 05:19 the gun recoil's feed checked for the molotov's late-feed fault (no build)
+- `--weapon=pistol --bot=gunplay --lone --cam=fight --ppm=48 --reach=6`, 330 frames, exit 0,
+  0 SCRIPT ERROR. Frames 295-304: the flash star prints on 298-299 with the claw still on the aim
+  line; the arm's kick shows from 299 (the gun tipped back), so the recoil follows the flash by
+  one frame. Kept on purpose: the flash frame shows the gun where it fired, the kick after it
+  (the order a real shot reads in). The SHOOT clip is fed on `gun.shots_fired` with no wind-up,
+  so it carries no early-start debt like the throw's 14-tick wind-up did. No change.
+
+STOP 05:20 iteration 18. Code commit: `3243a483` (the molotov's claw whips out on the sim's
+release tick, view only, `--throw-sync=off` = the before; test_throw_sync 3/3 with the planted
+fault). Gates: lint 13/13, unit 1181/1181 on `11976ba4`, reels pit 19/19 + city 19/19 0 SCRIPT
+ERROR on `3243a483`. Clip `molotov_release_sync-ab-32-48ppm.mp4` (frames.json entry 0). Docs:
+REPORT row + call 5 exe line, audit rows 3 and 10, decisions.md line. NEXT is the iteration 19 list above.
