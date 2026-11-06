@@ -105,3 +105,34 @@ NEXT:
   flamethrower, molotov, katana, electro_baton, chainsaw. The molotov stands at 70/55 (a bottle), so
   PickupsView spans a showcase drawing's LONGER side (a standing drawing no longer blows up in height).
   12 of 12 approved weapons now have a showcase drawing; the 5 in redesign keep their shipped parts.
+- 21:20 Full unit no-arg run (over aa830e68 + the pickups/rack edits in flight): 1495 passed, 0 failed
+  (`gtai-n8/scratch/hud/unit_full.log`). After the rack change: `--select=test_weapon_showcase,
+  test_gatling,test_arena_armory,test_pickup_look,test_pickups_hover` 24/0.
+- 21:22 MILESTONE ec55285f all 12 approved weapons have a showcase drawing at p70/p55/icon; the wall
+  rack (WeaponRackView) hangs the icon cuts under an angled view and rebuilds on a form change (combo).
+  Armory re-filmed (same command as the before, 0 SCRIPT ERROR): `armory_{tilt70,tilt}_48_after.png`
+  and `..._before_after_crop2x.png` (the crop now includes the rack). Look: the floor reads as one
+  tan, inked family; the 5 in redesign (parts) now look the odd ones out, as expected until the pick.
+- 21:25 `gtai-masters/n8/hud/portrait_proposals_contact.jpg`: the 7 DESIGN PROPOSAL portraits for the
+  owner (never in game) + Don Fax's concept-matched bust, kept OUT of the game (voice-only brief).
+  Call for the owner: Don Fax as the payphone (built) vs his concept bust (one table row).
+
+Registry rules applied this iteration: `short-form-cards-and-barks` (a line's face is a fast read: a
+bust left, name above the words, enter <= 0.2 s, never blocking play), `accessibility` (text fitted
+to the box at 30-20 px at 1080p, ink on paper; legibility checked at 1280x800), `sprite-and-atlas-
+production` (one source cut per subject per pitch by tool: portrait_cut.py, showcase_import.py).
+
+NEXT:
+- Scenarios gate result (started 21:23, `gtai-n8/scratch/hud/scen.log`); then `node tools/evidence/run.mjs
+  --no-bench`. Not run yet this session: evidence. The director reel 19/19 in top and tilt70.
+- Long guns at 70: the assets lane's redo 2156 is C; Gloria/plasma rifle/gatling p70 still use the 55
+  cut (SOURCE in tools/art/showcase_import.py). Watch the assets JOURNAL for another redo.
+- Crate display: library `crates_55` B -> an open crate holding a showcase drawing (arena + vendor).
+- Film quest 1 in game with the face (needs a walk to the payphone; quest1.tscn has no bot: look for
+  a story pilot / StagePilot driver, or film the opening line + the HUD icon on the ticket).
+- HUD pass (item 3): soul cards teal, heat police blue, danger vermilion; 1080p + 1280x800 stills of
+  the in-game HUD. Then the boss bar crest/portrait (item 4): no library portrait of the King or Servo
+  yet -> REQUEST to assets (portrait_king_55, portrait_servo_55 from their approved art) or cut a
+  crest from the shipped p55 bust card.
+- Export the exe at the freeze; REPORT Calls: hover vs crate, portrait side/size, dialogue never
+  pauses play, Don Fax payphone vs bust.
