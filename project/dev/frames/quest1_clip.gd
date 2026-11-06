@@ -11,6 +11,7 @@ extends SceneTree
 ##   [--ticks=<from>-<to>] (rivet-arsenal: clip only these ticks, e.g. Dock 9's 13600-13840)
 ##   [--quest-guns=off] (n7-ranged: the evening gun path, the before of the table guns)
 ##   [--weapon-fx=shapes] (n7-ranged it16: no weapon-art cells, e.g. the rifle's dashes: the before)
+##   [--feel=off] (n7-ranged it26: no camera feel, HitFeel.feel_flag: the before of a feel row)
 
 const KNOWN_FLAGS: PackedStringArray = [
 	"--out",
@@ -22,7 +23,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--cam",
 	"--ticks",
 	"--quest-guns",
-	"--weapon-fx"
+	"--weapon-fx",
+	"--feel",
 ]
 const RECORDER: String = "res://dev/frames/quest1_clip_rec.gd"
 const COUNTER: String = "res://tests/support/error_counter.gd"
