@@ -1970,8 +1970,18 @@ NEXT (iteration 22; supersedes the it20 list):
    re-export + boot once, and retake the city clip (recipe in MILESTONE 06:22).
 2. REPORT at 08:40: drop the DRAFT line, refresh the top (what works: 3 light guns' wound-hold
    rows are in), check every call names its exe before/after (call 8 is new).
-3. Optional build, only with time for its gates: the heavy-round death that falls as it travels
-   (FINDING 06:25; evidence `it21-hand-cannon-kill-frames-330-380-32ppm.jpg`). Check first whether
-   the brutality DeathPipe replaces death_bullet for the hand cannon (then it is not DeathPose).
+3. The hand cannon's upright throw (FINDING 06:25) is NOT DeathPose: checked 06:31, see below.
+   It is the approved brutality signature `hand_cannon_blowback`; leave it unless a later look
+   shows the body piece's spin never reads at 32 px/m (then a signature_kills.json data value,
+   recorded as an owner call, not a silent change).
 4. FYI to n7-melee is in MILESTONE 06:10 (merge `49cfe6c4`; their classes keep delay 0).
 5. Weak cells left: homing_shard I/R/V 2 (call 1, owner); Gatling R/V 2 (crowds only, a sim matter).
+
+### 06:31 CORRECTION to the 06:25 FINDING (read, no build)
+- The hand cannon kill does not reach DeathPose: DeathPipe.kill asks the signatures first, and
+  BrutalityHook._takes_death takes every rig `kills.consumed` holds. signature_kills.json row
+  `hand_cannon_blowback` (weapon hand_cannon, style blowback, hitstop_ticks 3): the victim is blown
+  off his feet in one piece and flies back along the shot (launch 7.5-9 m/s, up 2.2-2.8 m/s, spin
+  180-540 deg/s, ground_drag 5), then slides on a smear. So the upright body in frames 336-352 is
+  the launched body piece in flight, the combat night's approved brutality kill. Not changed.
+  The DeathPose._bullet note above stands for the light and medium round deaths only.
