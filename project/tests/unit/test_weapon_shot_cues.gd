@@ -51,3 +51,22 @@ func test_gatling_has_its_own_heavier_shot() -> void:
 	if cue != null:
 		assert_lt(cue.pitch, tables.cue(&"shot_assault_rifle").pitch, "lower than the rifle")
 		assert_gt(cue.pitch, tables.cue(&"shot_tube").pitch, "over the tube's thump")
+
+
+## it16: the electro gun, plasma rifle and ray gun fired Rivet's own hurt cue
+## (player_hit_robo_tazer: non-positional, a 10-tick cooldown that voiced every other ray round
+## and muted a real tazer hit). Each has its own crackle now: plasma low, electro, ray high.
+func test_no_gun_fires_a_hurt_cue_and_the_zaps_are_apart() -> void:
+	var table: WeaponTable = WeaponTable.shipped()
+	for id: StringName in table.weapons:
+		var cue: String = str(table.weapon(id).shot_cue)
+		assert_false(cue.begins_with("player_hit"), "%s plays %s, a hurt cue" % [id, cue])
+	var tables: AudioTables = AudioTables.shipped()
+	var plasma: AudioCue = tables.cue(table.weapon(&"plasma_rifle").shot_cue)
+	var electro: AudioCue = tables.cue(table.weapon(&"electro_gun").shot_cue)
+	var ray: AudioCue = tables.cue(table.weapon(&"ray_gun").shot_cue)
+	assert_true(plasma != null and electro != null and ray != null, "the three cues exist")
+	if plasma != null and electro != null and ray != null:
+		assert_lt(plasma.pitch, electro.pitch, "the plasma rifle is the heavier crack")
+		assert_gt(ray.pitch, electro.pitch, "the ray gun the thinner zip")
+		assert_lt(ray.cooldown_ticks, 6, "every ray round (one per 6 ticks) voices")
