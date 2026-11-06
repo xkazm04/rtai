@@ -1,0 +1,70 @@
+{
+  "art_fallback": {
+    "p70": "p55"
+  },
+  "by_name": {
+    "building_block_2x2": {
+      "height_m": 16,
+      "style": "tenement"
+    },
+    "building_block_2x2_b": {
+      "height_m": 13,
+      "style": "tenement"
+    },
+    "building_block_2x2_c": {
+      "height_m": 10,
+      "style": "shop"
+    },
+    "building_helipad": {
+      "height_m": 18,
+      "style": "tenement"
+    },
+    "building_hq": {
+      "height_m": 17,
+      "style": "tenement"
+    },
+    "building_long": {
+      "height_m": 12,
+      "style": "tenement"
+    },
+    "building_long_t1": {
+      "height_m": 9,
+      "style": "shop"
+    },
+    "building_tall": {
+      "height_m": 21,
+      "style": "tenement"
+    },
+    "building_warehouse": {
+      "height_m": 8.5,
+      "style": "shop"
+    },
+    "roof_sawtooth": {
+      "height_m": 8.5,
+      "style": "shop"
+    },
+    "roof_solar": {
+      "height_m": 9,
+      "style": "shop"
+    }
+  },
+  "default": {
+    "height_m": 14,
+    "style": "tenement"
+  },
+  "doc": "City south faces under an angled view (night n8 lane city, FacadeArt / ChunkLift): under a tilt every building's roof is lifted by its height (ViewMode.lift_px(height_m * height_k)) and its south face is drawn under it, tiled bay by bay across the footprint's width from a style's wall strip. by_name: a city_textures `name` -> its style and height in metres (else default). height_k scales every height (1 = true height; the owner's call: a shortened cut for play visibility). styles: art = the strip per view art key (`<art>` is the view row's art, p55 / p70), bays = bay cells in the strip, bay_m = a bay's width on the ground. art_fallback: an art key whose strip is missing draws the named key's strip (p70 draws the p55 drawing, stretched by the geometry, until the 70 twins land). `top` draws none of this (bit-identical).",
+  "height_k": 1,
+  "schema": "gtai.city-facades/1",
+  "styles": {
+    "shop": {
+      "art": "res://features/city/art/view/<art>/facade_shop.png",
+      "bay_m": 4.1,
+      "bays": 3
+    },
+    "tenement": {
+      "art": "res://features/city/art/view/<art>/facade_tenement.png",
+      "bay_m": 4.2,
+      "bays": 3
+    }
+  }
+}

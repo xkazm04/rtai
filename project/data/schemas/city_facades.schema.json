@@ -1,0 +1,93 @@
+{
+  "$defs": {
+    "row": {
+      "additionalProperties": false,
+      "properties": {
+        "height_m": {
+          "maximum": 60,
+          "minimum": 0,
+          "type": "number"
+        },
+        "style": {
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "height_m",
+        "style"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "gtai.city-facades/1",
+  "additionalProperties": false,
+  "properties": {
+    "art_fallback": {
+      "additionalProperties": {
+        "pattern": "^p[0-9]+$",
+        "type": "string"
+      },
+      "type": "object"
+    },
+    "by_name": {
+      "additionalProperties": {
+        "$ref": "#/$defs/row"
+      },
+      "propertyNames": {
+        "pattern": "^[a-z][a-z0-9_]*$"
+      },
+      "type": "object"
+    },
+    "default": {
+      "$ref": "#/$defs/row"
+    },
+    "doc": {
+      "type": "string"
+    },
+    "height_k": {
+      "maximum": 2,
+      "minimum": 0,
+      "type": "number"
+    },
+    "schema": {
+      "const": "gtai.city-facades/1"
+    },
+    "styles": {
+      "additionalProperties": {
+        "additionalProperties": false,
+        "properties": {
+          "art": {
+            "pattern": "^res://",
+            "type": "string"
+          },
+          "bay_m": {
+            "exclusiveMinimum": 0,
+            "type": "number"
+          },
+          "bays": {
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "art",
+          "bay_m",
+          "bays"
+        ],
+        "type": "object"
+      },
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema",
+    "doc",
+    "default",
+    "by_name",
+    "styles",
+    "height_k",
+    "art_fallback"
+  ],
+  "type": "object"
+}

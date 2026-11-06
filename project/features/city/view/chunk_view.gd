@@ -50,6 +50,8 @@ var _shadow_zoom: float = 1.0
 var _core_px: Vector2 = Vector2.ZERO
 var _core_on: bool = false
 var _is_building: Array[bool] = []
+## lifted roofs over south faces under an angled view (null when flat: `top` untouched)
+var _lift: ChunkLift = null
 
 
 func _init(parent: RID, textures: CityTextures) -> void:
@@ -65,6 +67,7 @@ func _init(parent: RID, textures: CityTextures) -> void:
 	_shadow_extra = casts.extra_px(textures.classes, SimConst.PX_PER_M, textures.names)
 	_core_on = casts.parapet_core_m > 0.0
 	_core_px = Vector2.ONE * (casts.parapet_core_m - casts.baked_m(&"building")) * SimConst.PX_PER_M
+	_lift = ChunkLift.make(textures, _is_building)
 
 
 ## zoom: the camera zoom (1 = 32 px/m); the shadow strokes keep their screen spacing above 64 px/m.
@@ -75,6 +78,10 @@ func update(focus: Vector2, res: CityResidency, zoom: float = 1.0) -> void:
 		_shadow_mat.set_shader_parameter(&"zoom", zoom)
 	frame_cmds = 0
 	frame_swapped = false
+	if _lift != null and _lift.stale():  # a live pitch settled: redraw every chunk
+		_active = Vector2i(-1, -1)
+		for key: Vector2i in _drawn.keys():
+			_release(key)
 	for key: Vector2i in _drawn.keys():
 		if (
 			key != _active
@@ -115,14 +122,17 @@ func _slice(chunk: CityChunk, t0: int) -> void:
 	var origin: Vector2 = Vector2(_active) * SimConst.CHUNK_M
 	var n: int = chunk.command_count()
 	while _k < n:
-		var t: int = chunk.tex[_k]
-		var o: int = _k * CityChunk.XF_STRIDE
+		var c: int = _lift.nth(_k, chunk) if _lift != null else _k
+		var t: int = chunk.tex[c]
+		var o: int = c * CityChunk.XF_STRIDE
 		var pos: Vector2 = Vector2(chunk.xf[o], chunk.xf[o + 1])
 		var shadow: bool = chunk.xf[o + 3] > 0.5
 		var q: int = (1 if pos.x - origin.x >= 64.0 else 0) + (2 if pos.y - origin.y >= 64.0 else 0)
 		var item: RID = items[q + 4 * (SHADOW_BAND if shadow else _band_of[t])]
 		var sz: Vector2 = _tex.size_px[t]
 		var at: Vector2 = pos * SimConst.PX_PER_M + (_shadow_extra[t] if shadow else Vector2.ZERO)
+		if _lift != null and _is_building[t] and not shadow:
+			at = _lift.face(item, t, chunk.xf[o + 2], at)
 		RenderingServer.canvas_item_add_set_transform(item, Transform2D(chunk.xf[o + 2], at))
 		RenderingServer.canvas_item_add_texture_rect(
 			item, Rect2(-sz * 0.5, sz), _tex.rids[t], false, SHADOW if shadow else Color.WHITE
