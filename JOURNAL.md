@@ -288,3 +288,6 @@ NEXT (iteration 3):
    with Calls: 70 vs 55 vs combo (city/boss), ease 0.8/1.0/1.2 (clip ready), cross-fade vs swap
    (fade_deg 5 vs 0), bell on the p70 bust. Exe lines: `RTAI.exe -- --view=tilt70`, `--view=combo`,
    `--view=combo_ease08`, `--boss=king --view=combo`.
+- 15:42 GATE unit full (no-arg) on cb85b405: 1428 passed, 0 failed.
+- 15:44 FILM city 55 vs 70 re-filmed with `--clean` (dev HUD off; `arena_game.gd` reads it), 46 s,
+  0 SCRIPT ERROR: masters `city_55_vs_70_32ppm_45s_merged.mp4` + t25 still. NEXT 3 done.
