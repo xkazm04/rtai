@@ -1,0 +1,35 @@
+{
+ "branch": "n8-vehicles",
+ "commits": {
+  "4f146ef8": "dev/bench/vehicle_cards_cost (traffic card cost, 32-256 cards) + debt baseline",
+  "1baf28f5": "VehicleCards.cull + VehicleCull.screen_m (cards cull off-screen cars)",
+  "43abc325": "the p70 sedan and police cards take the redrawn side views",
+  "6b8f9313": "docs(decisions): the cull; no bike art",
+  "7a8e1419": "the pitch's own standing fire on wrecks (fx_fire 70 B / 55 A)"
+ },
+ "evidence_dir": "C:/Users/kazda/kiro/gtai-masters/n8/vehicles",
+ "films": {
+  "cost_shot": "cards_cost_bench_tilt70_32ppm_256cars.png",
+  "fire": "fire_tilt70_64ppm_closeup_before_top_after_bottom.png, fire_tilt70_{32,64}ppm_before_after.{png,mp4}, fire_in_city_crash_tilt70_48ppm.png, fire_tilt55_64ppm.png",
+  "kerb_cards": "kerb_cards_tilt70_48ppm_before_after.png, kerb_cards_tilt70_48ppm_stopped_before_after.png (n8-city 7a5f9137, parked_cards false = before)",
+  "side_redo": "turn_side_redo_64ppm_swap_before_top_after_bottom.png, turn360_tilt70_64ppm_side_redo_before_after.mp4 (before = same head, previous atlas)"
+ },
+ "gates": {
+  "director_reel": "not re-run: the arena reel loads no vehicles class (iteration 4 finding); last 19/19 top + tilt70 on 34018b19",
+  "lint": "15/15 (pre-commit on every commit but 6b8f9313, docs only, --no-verify by mistake; lint passed on the next commit)",
+  "scenarios": "52 ran, 0 failed, exit 0, 0 SCRIPT ERROR on 2252f1cd",
+  "top_bit_identity": "framemd5 main scene --arena=city --bot=rivet --seed=2 --rigs, 301 frames, HEAD f3762816 vs 97334804 (iteration 4 head, itself identical to the merge base): IDENTICAL, 0 SCRIPT ERROR each",
+  "unit": "1501 passed, 0 failed on 2252f1cd"
+ },
+ "iteration": 5,
+ "measurements": {
+  "cards_cost": "evidence/n8-vehicles/cards-cost-{tilt70,tilt,top}.json: ~5.3 us script per card (tilt70 128 cards p50 700 us, 256 cards 1331 us), GPU +0.02 ms; top draws none. bench.lock held; other lanes' Godot processes running (GPU CONTENDED-ish)",
+  "city_cards_per_frame": "main city tilt70 --bot=rivet --seed=2: 130 cards a frame before the cull (finish ~320 us), 1-4 after (finish ~20 us)",
+  "cull_identity": "tilt70 framemd5 cull ON vs OFF: city walk 900 frames IDENTICAL; vehicle_frame drive 632 frames IDENTICAL"
+ },
+ "not_done": [
+  "22.5-deg in-between rotations (served: sedan/police/van_between_70 + _between_c redos) - NEXT 1",
+  "bike: no sim bike (DECISION)",
+  "traffic density bench in the real city drive under bench.lock (the micro-bench + in-game count stand in)"
+ ]
+}

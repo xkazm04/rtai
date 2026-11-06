@@ -413,3 +413,30 @@ Rules applied (this iteration, also): generative-artifact-gating (B sheets used 
 faults measured in motion; C cells never; a red check on the fire cells), sprite-and-atlas-
 production (one cutter, one anchor rule for the redraws, provenance per atlas sha),
 concept-scene-parity (the kerb cards judged in the real city scene, not a lab).
+23:52 GATE `top` bit-identity: main scene `--arena=city --bot=rivet --seed=2 --rigs`, 301 frames,
+framemd5 HEAD f3762816 vs 97334804 (iteration 4's head, itself identical to the merge base; a
+throwaway detached worktree, removed): IDENTICAL (301 video + 301 audio), 0 SCRIPT ERROR each.
+23:51 the fire on the 55 cards (`--view=tilt`, 64 px/m): the 55 sheet's flame stands on the
+bonnet; masters fire_tilt55_64ppm.png (not in frames.json: 15 already).
+Director reel not re-run this iteration: the arena reel loads no vehicles class (iteration 4
+finding); last 19/19 in top + tilt70 on 34018b19. Evidence json: evidence/n8-vehicles/iteration5.json.
+
+## Calls for the owner (carry to REPORT)
+- Bike: the sim has no bike; the four library bike sheets are C. Options: (a) no bike (built),
+  (b) add a bike to traffic (sim work, not this lane) and build it then from the side view as a
+  slice stack. See docs/decisions.md.
+- Wreck fire size: the standing flame is the full 2.5 m cell (it covers the bonnet's width). See
+  fire_tilt70_64ppm_closeup_*.png. One value: VehicleFire.FLAME_SCALE (1.0 built; 0.8 smaller).
+
+NEXT (iteration 6, in order):
+1. The 22.5-deg in-betweens (asset lane served: sedan_between_70 B, police_car_between_70 B,
+   van_between_70 A, plus sedan/police_between_c_70 B single-drawing redos of cell C; the C in
+   the four-cell sheets is WRONG for sedan/police: use the _c sheet for it). Design: atlas COLS 5 ->
+   9 (5 drawn + 4 between, cols 5-8 = A B C D between drawn 0-1, 1-2, 2-3, 3-4); VIEW_DEG 22.5 for
+   a row whose between cells are filled (a per-row flag the shader/put reads: e.g. a 1 px marker or
+   a const PackedByteArray of the art ids 0 1 2 7 8 4), else 45 as now. vehicle_cards.py: a
+   between sheet = 4 runs (views() with n=4); the _c override like SIDE_REDO; scale each by its
+   own long axis? NO: by the set's k (the between C was under-turned, measured ~8-10 deg on screen
+   vs ~21): judge on the turn film at 64. Check the shader's cols uniform and VehicleCardMesh.
+2. Film the 360 turn before/after at 32 + 64; the city drive at 32.
+3. Exe at the freeze (int-day recipe in docs/decisions.md), REPORT.
