@@ -1202,6 +1202,16 @@ NEXT (iteration 14):
    the first frame it poses the reload (reload_k 0.03 set after the tick-265 pose). Look next at
    RigGrip._reload's aim-arm target on its first frame (RELOAD_GUN y uses gs.y * RELOAD_GUN.y:
    a sign?) together with the SHOOT clip's kick landing the same frame, and the arm IK's pole.
+   LIKELY CAUSE (read 02:39, untested): RivetCarryAngle.place_beside (rivet_carry_angle.gd:58-69)
+   pushes a long gun / tube off the helmet with beside_head(), toward whichever side is nearer,
+   and `follow` (claws take held_shift) is false once reload_k >= 0. On the first reload-posed
+   frame the claw sits at RigGrip._reload's chest spot (RELOAD_GUN y 0.35 x the gun shoulder: near
+   the centre line, and the shot's -60 px recoil lands that frame), so beside_head can pick the
+   LEFT side; a frame later the hand is right of centre again and the tube goes back. FIX PLAN:
+   make beside_head keep the gun shoulder's side (sign of rig.plan.shoulder[gun_arm].y in torso
+   space) instead of the nearer side, at least while reloading; A/B at 32 px/m (lone rocket and
+   nuke, frames 262-270), test with a planted fault, reels 19/19. The d7 holds are owner calls:
+   this keeps the drawn hold, it only stops a one-frame swap.
 4. Exe at the freeze: re-bake + re-export `windows-showcase` -> `build/export/windows/RTAI.exe`;
    REPORT exe lines for calls 4 (`--flash-at=side`) and 5 (`--throw-windup=off`).
 5. Full evidence run on the head before the freeze (last: `3b2e7c5c`, all green); commit logs
