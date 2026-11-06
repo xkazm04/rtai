@@ -12,6 +12,7 @@ import { basename, isAbsolute, join, resolve, sep } from 'node:path';
 
 export const MARKER = '.gtai-mutate-worktree';
 export const SIDECAR = '.gtai-orig';
+export const LOCK = '.gtai-mutate-lock';
 const norm = (p) => resolve(p).replace(/[\\/]+$/, '').split(sep).join('/').toLowerCase();
 const inside = (child, parent) => norm(child).startsWith(`${norm(parent)}/`);
 
@@ -51,7 +52,7 @@ const git = (cwd, ...args) => execFileSync('git', ['-C', cwd, ...args], { encodi
 /** Porcelain lines of the worktree minus the marker and sidecars. */
 export function dirtyLines(wt) {
   return git(wt, 'status', '--porcelain', '--untracked-files=all').split('\n').filter(Boolean)
-    .filter((l) => !l.endsWith(SIDECAR) && !l.endsWith(MARKER));
+    .filter((l) => !l.endsWith(SIDECAR) && !l.endsWith(MARKER) && !l.endsWith(LOCK));
 }
 
 /** Writes the original bytes next to the file (crash repair). Returns the sidecar path. */
@@ -124,10 +125,10 @@ export function ensureWorktree({ root, path = defaultWorktreePath(root), tmp = t
         notes.push(`repaired tracked change: ${f}`);
       } else notes.push(`untracked file left alone: ${l.slice(3).trim()}`);
     }
-    git(path, 'checkout', '--detach', head);
+    git(path, 'checkout', '--quiet', '--detach', head);
   } else {
     execFileSync('git', ['-C', root, 'worktree', 'prune'], { windowsHide: true });
-    execFileSync('git', ['-C', root, 'worktree', 'add', '--detach', path, head], { encoding: 'utf8', windowsHide: true });
+    execFileSync('git', ['-C', root, 'worktree', 'add', '--quiet', '--detach', path, head], { encoding: 'utf8', windowsHide: true });
     writeFileSync(join(path, MARKER), JSON.stringify({ root: resolve(root), head, created: new Date().toISOString() }));
     created = true;
   }
@@ -143,3 +144,23 @@ export function removeWorktree({ root, path, tmp = tmpdir() }) {
 
 export const slugOf = (projectRel) => projectRel.replace(/\.gd$/, '').replace(/[^\w]+/g, '-').replace(/^-|-$/g, '');
 export const stemOf = (p) => basename(p, '.gd');
+
+/** One mutate run per worktree: a pid lock file. A lock whose pid is dead is stale and taken over.
+ *  Returns a release function; throws when another live run holds the worktree. */
+export function acquireLock(wt, pid = process.pid) {
+  const file = join(wt, LOCK);
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      writeFileSync(file, String(pid), { flag: 'wx' });
+      return () => { try { unlinkSync(file); } catch { /* already gone */ } };
+    } catch (e) {
+      if (e.code !== 'EEXIST') throw e;
+      const other = Number(readFileSync(file, 'utf8'));
+      let alive = false;
+      try { process.kill(other, 0); alive = other !== pid; } catch { /* dead */ }
+      if (alive) throw new Error(`another mutate run (pid ${other}) holds ${wt}; wait for it or use --worktree=<other path>`);
+      unlinkSync(file); // stale lock of a dead run
+    }
+  }
+  throw new Error(`cannot lock ${wt}`);
+}
