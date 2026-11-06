@@ -120,5 +120,5 @@ NEXT (iteration 5):
 2. Re-check the cards at tilt45_cards and tilt_cards (65); pick the pitch for the comparison set;
    the King on foot (phase 2-3) with the card; Rivet turning a full circle at 48 (octant pops?).
 3. Scenarios + the director reel with the switch off (code touched cut_rig.gd and king_accents.gd).
-4. The 165 MB it4 clip: re-encode smaller (crf 26) if disk matters.
+4. (done it4: the clip re-encoded at crf 26, 44 MB)
 5. Then `top_lift`, occlusion, the city block; the cost table and the exe by 08:30.
