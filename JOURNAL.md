@@ -2211,3 +2211,21 @@ NEXT (after the night; the freeze is done at 07:49):
   14442. That is the light class's 1 px kick, measured now, and it does not read at 32 px/m: I stays 2.
   A bigger kick would be a light-class change for every light gun (or a stand-in row of its own):
   next night. Stills deleted (the crop missed the contractor; nothing kept).
+
+## Iteration 26 (07:52-08:30): one more build before the freeze
+
+### MILESTONE 07:56 quest 1's rifle kicks the camera on its own row, `f13aa9cc` (weak cell assault-rifle I 2)
+- Read: JOURNAL NEXT (it25), git log. Registry rules applied: realtime-combat-semantics (camera
+  answer on the hit tick, view only; the hit stays generic: the row is keyed by the round's weapon,
+  no target kind), motion-quality-gating (measured on film, same stills as the it25 before).
+- hit_feel.json `assault_rifle` weapons row: kick_px 2 / kick_ticks 6 (light class 1 / 5),
+  fire_kick_px 1.2 / fire_kick_ticks 4 (recoil per round, under the 1-kick-per-tick cap), no stop,
+  no shake. HitFeel's loader files each weapons row also under `_` -> `-`, so combat.json's
+  `assault-rifle` finds it (the stand-in lookups go through `machine_pistol` and are unchanged).
+- Unit `test_feel_quest_rifle` 3/3; planted (alias line removed) 2/3, restored. Lint 13/13.
+- MEASURED: `quest1_clip.gd --ppm=32 --cam=fight --stills=14430..14448/2` on `f13aa9cc`, exit 0,
+  0 SCRIPT ERROR. Phase correlation vs 14430: 0, (1,2), (1,1), (4,3), (3,3), (0,-1), 0, then the
+  next burst (2,1), (1,1), (1,1) px. Before (it25, `5ed859c4`, same ticks): at most 1 px. LOOK on a
+  fixed-crop strip (`evidence/ranged/it26-quest1-rifle-kick-32ppm-14430-14442.jpg`): muzzle stars
+  on 14432/14438, the street slides against the grid and is back by 14442. Audit I 2 -> 3.
+- DECISION docs/decisions.md (feel n7-ranged, the quest rifle's own row). REPORT row + call 10.
