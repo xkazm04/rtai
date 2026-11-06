@@ -182,3 +182,38 @@ NEXT (iteration 3):
 - GATE unit no-arg on the clean head 8f60301d (tree still): 1501 passed, 0 failed, no FLAKY (twice).
 - GATE director reel under tilt70 on 13f1c5f7 (the it1 command): 19/19 chapters, every chapter all
   down, 0 SCRIPT ERROR (exit 0). Combo and top reels on this head: owed (top ran on def405b4: 19/19).
+
+## Iteration 3 (2026-11-06 22:14, BUILD)
+
+Read: JOURNAL, git log, the other lanes' journals (no REQUEST to street).
+
+- MILESTONE ec2db012 (brief 5): the street crowd board learned `--kill=<hit class>`: at tick 60 all
+  16 walkers die on their spot (DeathPipe, the shipped react table, from the west); stills at
+  59/72/90/150/240. Run under `top` and `tilt70` (same deterministic board): LOOKED at 32 and 64 px/m
+  for `light` (fall back / crumple) and `blast` (thrown, spread): every corpse lies on the same
+  ground spot under tilt70 as under top (the fall, the travel and the corpse are in the ground plane;
+  the lift drops with c_sprawl), the head card sits on the corpse's head. Masters:
+  death_{light,blast}_top_vs_tilt70_64ppm_board_t3.png, death_blast_top_vs_tilt70_32ppm_board_t3.png.
+- REJECTED on sight: a corpse's head card lying down along the body (StreetCorpseCard: rotate the
+  card about its neck pivot to the hips->head axis, weighted by c_sprawl 0.25-0.85). The top-down
+  sprawl lays the limbs out around a head that stays over the chest, so that axis is short and
+  arbitrary: the rotated heads looked tipped at random, the upright card reads as a head on a body.
+  Not committed. Still: death_corpse_card_upright_vs_lying_REJECTED_64ppm_x2_t3.png.
+- CHECK (code read) corpse decay under the cards: CorpseFade inks (rig.modulate) and sinks
+  (rig.scale) the whole rig node; the head card and the riot plate are children of rig parts, so
+  they ink with it, and RigHeadCard sizes the card from the anchor's global scale, so it sinks too.
+  Not filmed (the decay runs 10+ s into a fight).
+- MILESTONE 02c16872 (brief 6): rig_bench takes --view.
+- MEASURE (brief 6), CONTENDED (two other lanes' Godot engines running; bench.lock taken, free
+  before): city_bench riot (400 on foot, 32 px/m, 30 s, the editor binary windowed d3d12, vsync off),
+  alternating top / tilt70:
+  run 1: avgFrameMs 1.71 -> 1.78, p99CpuMs 10.16 -> 11.84, low1Fps 74.6 -> 66.6, drawCallsAvg
+  681 -> 801 (+120: the cards and plates), rigMsPerTick 0.98 -> 1.22, renderCpuMsAvg 0.51 -> 0.54.
+  run 2 (load rose: the view-free simStepMsPerTick 0.15 -> 0.24 in the tilt run): avgFrameMs 2.07 ->
+  3.85; not usable as an A/B. The p99 limit (7 ms) is not judged here: the editor binary under load
+  misses it in `top` too.
+  rig_bench headless (16 full rigs, 10 s): top p50 0.54 / 0.55 ms (50 / 200 people) vs tilt70
+  0.65 / 0.79. The street hook's own share: tilt70 with StreetView.step returning at once
+  (a local edit, reverted, checked clean) 0.865 / 1.077 vs with it 0.947 / 1.086: under the noise
+  floor (<= 0.08 ms, about 5 us a rig). The tilt cost is view's (RigTilt + RigHeadCard) plus the
+  card draws. JSONs: masters n8/street/bench/.
