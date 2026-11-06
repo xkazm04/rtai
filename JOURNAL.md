@@ -1553,12 +1553,12 @@ NEXT (iteration 16, in order):
   REPORT final pass (NEXT 1), the plum inside the throne arch (NEXT 2), re-film if the look moves,
   re-export at the end.
 
-### 05:10 REPORT final pass (NEXT 1)
+### 05:05 REPORT final pass (NEXT 1)
 - DRAFT removed; every path REPORT cites checked to exist (the phase clips pointed at it14 names,
   now the it15 files; the brace globs written out); a Next steps list for the morning. Committed
   7efd7006.
 
-### 05:20 MILESTONE the throne arch's plum lining (NEXT 2)
+### 05:09 MILESTONE the throne arch's plum lining (NEXT 2)
 - Registry: depth-ordered-layered-art (the lining under the arch, over the cape), sprite-and-atlas-
   production (judged at 32 px/m first).
 - A plum fill of the whole arch was rejected before building: the space inside the arch is the
@@ -1569,3 +1569,29 @@ NEXT (iteration 16, in order):
   still fans vermilion round it; buttons visible only at 48. Phase 3 tick 30 at 48: the empty throne
   on the wreck, the lining sits on the plum roof without noise. DECISION keep 0.12.
 - Unit **1164/0** (`evidence/king/unit-it16.log`), lint 13/13.
+
+### 05:11 DECISION the gang's shades stay a REPORT gap (no third try)
+- Measured on `evidence/king/shots/it14/gang_shades_trial_0_007_01_p1_32ppm_6x.png`: a gang head
+  is about 10 px across at 32 px/m, and the gold chain's arc (CHAIN_R_M 0.3 in front of the chest)
+  already covers the dome's front edge, where shades would sit from straight above. Two lenses
+  inside the dome would be 2 px blots; a band across it undoes call I's light dome. The REPORT's
+  next step names the route (a separate visor part over the dome, judged at 48 px/m and up).
+
+### 05:14 FILM the full fight and the re-cuts on aca187af (the plum lining)
+- `M/king_fight_bot_human_32ppm_it16.mp4` (95 s, 32 px/m, seed 2, --bot-human --boss-cam,
+  1280x800, music, 0 SCRIPT ERROR; phases 1-2-3 and "king defeated" in the log). **Looked at** the
+  keys at 6/12/24/36/48/60/72/84/90 s: the same beats as it15 (procession, ram lane, coin fan cone,
+  court brawl, King stepping down, on foot, the defeat).
+- Re-cut: phase clips 1-3 (0-19.5, 17.5-59.5, 56.5-95 s), procession entering (0-62.5 s), target
+  comparison (12 s and 72 s crops at 2x beside the sheet; `build/scratch16/cut.sh`). **Looked at**
+  the comparison: the plum lining inside the gold arch in the ram crop, the empty throne on the
+  wreck in the on-foot crop. it15 versions deleted; frames.json 15 (all exist); REPORT points at it16.
+
+### 05:13 GATE director reel on aca187af
+- Headless `--rigs --bot=reel --reel=director --loadout=pistol`, 31200 ticks: **19/19 chapters
+  fully down**, 0 SCRIPT ERROR (`evidence/king/director-reel-it16.log`).
+
+### 05:17 EXE re-exported on aca187af (the plum lining) and smoked
+- `windows-showcase` export exit 0, 0 errors (`build/export-it16.log`); headless smoke seed 2
+  human: King down at tick **4933**, took **88**, coin_fan 3 / press_slam 1 / ram 1, 0 SCRIPT
+  ERROR (render only: identical to it15).
