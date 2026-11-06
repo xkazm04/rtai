@@ -90,17 +90,39 @@ static func _wheels(ci: CanvasItem, z: float, l: float, w: float, p: float) -> v
 
 
 ## Ground-depth order against the car (registry measured-draw-order: the depth is the ground y):
-## a rig standing on the car's far side (smaller ground y) draws behind KingBodyView's car
+## a rig standing on the car's far side (smaller ground y, inside far_box) draws behind the car
 ## (a relative z BEHIND_Z under it: the rigs are KingRigs' children, so show_behind_parent
 ## would only put them behind KingRigs), the rest over it. King himself (on the roof) is never
-## behind. Tilt only.
+## behind. RigDepthSort.far_box carries it to the cast's rigs near the car (Rivet). Tilt only.
 static func sort_rigs(rigs: Dictionary, king_id: int, f: BossFight) -> void:
 	var car: Vector2 = f.body.pos
 	var km: KingMoves = f.moves as KingMoves
 	if f.phase >= 2:
 		car = km.car_at if km != null else Vector2.INF
+	RigDepthSort.far_box = Rect2()
 	for id: int in rigs:
 		var rig: CutRig = rigs[id]
+		if car != Vector2.INF and not RigDepthSort.far_box.has_area():  # the cast's rigs too
+			var dir: Vector2 = km.car_facing if f.phase >= 2 and km != null else f.body.facing
+			RigDepthSort.far_box = far_box(rig.get_parent() as Node2D, car, dir)
 		var behind: bool = car != Vector2.INF and id != king_id
-		var back: bool = behind and rig.position.y < Ink.px(car).y
-		rig.z_index = BEHIND_Z if back else 0
+		var back: bool = behind and RigDepthSort.far_box.has_point(rig.global_position)
+		rig.depth_base = BEHIND_Z if back else 0  # RigDepthSort adds its level on top
+		rig.z_index = rig.depth_base
+
+
+## The screen box (global px) north of the car's ground centre where a cast rig draws behind it:
+## the car's footprint on screen widened by a body, from its centre line up past its roof.
+static func far_box(host: Node2D, car: Vector2, dir: Vector2) -> Rect2:
+	var k: float = host.get_global_transform().get_scale().x
+	var p: float = Ink.PX_PER_M * k
+	var c: Vector2 = host.to_global(Ink.px(car))
+	var ex: float = (
+		(absf(dir.x) * KingBodyView.CAR_LEN_M + absf(dir.y) * KingBodyView.CAR_W_M) * 0.5
+	)
+	var ey: float = (
+		(absf(dir.y) * KingBodyView.CAR_LEN_M + absf(dir.x) * KingBodyView.CAR_W_M) * 0.5
+	)
+	var up: float = absf(ViewMode.shared().lift_px(ROOF_M + 1.8).y) * k
+	var half_x: float = (ex + 0.9) * p
+	return Rect2(c.x - half_x, c.y - ey * p - up, half_x * 2.0, ey * p + up)

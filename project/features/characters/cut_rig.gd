@@ -46,6 +46,8 @@ var reload_k: float = -1.0
 ## claws' aim targets take it too, so the claws stay on the gun instead of a claw-width off it.
 var held_shift: Vector2 = Vector2.ZERO
 var dead: bool = false
+## View lab: the z this rig sorts from under a tilt (RigDepthSort adds its depth level).
+var depth_base: int = 0
 
 var c_tuck: float = 0.0
 var c_sprawl: float = 0.0

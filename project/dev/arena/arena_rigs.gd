@@ -76,6 +76,7 @@ func attach(p_stage: CollectCallStage, view: CollectCallView, ctx: WorldContext)
 	process_priority = -1  # the feed is filled before CharacterRigs poses this frame
 	rigs.z_index = RenderLayers.z(&"actors")
 	layer.add_child(rigs)
+	RigDepthSort.attach(layer)  # view lab: tilt only, bodies drawn far to near
 	rigs.setup(ctx)
 	_add_hand_views(layer, p_stage)
 	view.cast_view.fighters_on_rigs = true  # quest 1 keeps its allies and marks on the cast view
