@@ -80,6 +80,8 @@ NEXT (iteration 2, in order):
 5. A combined clip of the set (30-90 s) for frames.json; cape A/B clip for the call.
 6. Rivet's claw / katana chapter 64 px/m checks; then the King's own cape motion under tilt if the
    owner keeps the drawn fan (CARD_CAPE false) - a draped, upright cape layer instead of the fan.
+- 14:59 GATES on 1b42d66a: unit 1417/1417 (full run), lint 15/15 (pre-commit). Scenarios and the reel were
+  run on 7d9251a0 (before Servo); Servo is p55-only, so top is unchanged by construction.
 - 14:56 MILESTONE Servo's 2-row rack wing from the p55 3-row rack (bottom row cut), both wings match
   (11af64a8; still servo_tilt32_both_racks_after.png). NEXT item 3 shrinks to the drones/crates.
 - Evidence: gtai-masters/d8/bosses/ frames.json (15 entries, best first), combined clip
