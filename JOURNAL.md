@@ -1534,3 +1534,14 @@ depth-ordered-layered-art (the blades drawn over the pad, under the pelvis and r
   deleted.
 - 06:40 GATES scenarios on 05c403e5: **52 ran, 0 failed**, 0 SCRIPT ERROR
   (`evidence/servo/scenarios-it19.log`). REPORT header on the it19 gates.
+- 06:44 MILESTONE 987c3439 **chunky struts** (render only): the pad arms and legs draw wider than
+  their art (`ServoRig.ARM_W_K` 1.6, `LEG_W_K` 1.3), the sheet's chunky blocks; at 1.0 the arm
+  art's 0.25 m piston read as a thin rod at 32 px/m. A/B `film48_19.sh` / `film32_19.sh 1 2 200`
+  (0 SCRIPT ERROR), **looked at** 48 and 32 px/m at 1.5x (the scan windup, 1.5 s): heavier
+  pistons tying the octagonal pads to the body, nothing hidden. `M/frames/
+  servo_chunky_struts_ab_it19.png` in frames.json (replaces the slung-parcel A/B in the list; the
+  file stays, REPORT call 18 cites it). Unit **1197/0** (`unit-it19b.log`). FRICTION: the first
+  unit run had no `GODOT_BIN` exported: every Godot step exit -1 and the summary read the stale
+  06:22 junit as "1197 passed"; the re-run with `GODOT_BIN` is the real one (junit 06:43).
+  Decisions; REPORT call 20. Every clip re-filming on 987c3439 (same scripts and cut points; the
+  it19 names are overwritten in place), the director reel after them (`director-reel-it19b.log`).
