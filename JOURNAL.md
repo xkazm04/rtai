@@ -40,3 +40,22 @@
   (KingCape) still draws flat on the ground behind him under tilt: owed.
 - FRICTION `node tools/godot/check.mjs` fails on unchanged files too ("Failed to compile depended
   scripts") in this worktree; used the live arena runs (0 SCRIPT ERROR) and GUT instead.
+- 14:42 MILESTONE gang bodies (p55): a top-view gang part sheet (torso, sleeve, piston forearm,
+  gold-knuckle fist / thigh, shin, gold-toe boot, buckled hips; 87 s, first try) cut to the gang's
+  part boxes (`--set=gang`, 20 parts), plum-shifted. Commit 9660cbc2.
+- 14:44 DECISION cape under tilt (A/B `KingArt.CARD_CAPE`, default true): with a court strip the bust
+  card wears the cape and KingCape's drawn fan stands down (it lay flat on the ground under the
+  tilt, a white-rimmed decal behind the upright bust). Cost: the drawn cape's sway and charge
+  flare are gone under tilt. Owner call (still: gtai-masters/d8/bosses/call_cape_car_fan_vs_card_48.png).
+  Commit 7d9251a0.
+- 14:45 GATES on 7d9251a0: lint 15/15; unit 1413/1413 (full run); scenarios 51/52 raw, the one miss
+  is city_chase's 2 ms wall-clock nav budget (5.1 ms with 4 lanes running; sim code, untouched here),
+  re-run alone through run_scenarios.mjs: 1 passed. Director reel headless `--loadout=pistol --rigs`:
+  tilt 19/19 down 0 SCRIPT ERROR, top 19/19 down 0 SCRIPT ERROR (needs --quit-after 8000: chapter 19
+  starts at tick 6570). top is untouched by construction: every KingArt path returns at pitch >= 90.
+- 14:47 READ chars 8e557502: RigHeadCard now resolves `features/characters/art/view/<ViewMode.art>/`.
+  After the merge the court card strips can move there (file names king_bust_card.png /
+  gang_head_card.png; rows: king anchor 0.80 width 2.4*1.5 = 3.6 bust raw; gang 0.84, 1.4*1.25 =
+  1.75, raw) and KingArt keeps only the limbs + cape. Until then KingArt swaps on this branch.
+  Fixed for view70's combo: the part cache is keyed by pitch (a live pitch re-asks). Known gap
+  under combo: a card swapped once keeps its strip if the pitch moves mid-fight (fix = the merge above).

@@ -117,9 +117,9 @@ static func part(name: String) -> Texture2D:
 
 
 static func _court_part(set_dir: String, path: String) -> Texture2D:
-	var key: String = set_dir + ":" + path
+	var pitch: int = roundi(ViewMode.shared().pitch_deg)  # a live pitch (view70's combo) re-asks
+	var key: String = "%d:%s:%s" % [pitch, set_dir, path]
 	if not _parts.has(key):
-		var pitch: int = roundi(ViewMode.shared().pitch_deg)
 		var p: String = PARTS_DIR % [pitch, set_dir, path.get_file().get_basename()]
 		_parts[key] = load(p) as Texture2D if ResourceLoader.exists(p) else null
 	return _parts[key]
