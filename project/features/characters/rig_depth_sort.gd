@@ -32,7 +32,9 @@ var _follow_base: Dictionary[CanvasItem, int] = {}
 
 
 ## Adds the sorter to the actor `layer` under a tilted view (pitch below 90); else nothing.
+## Also the view's cast shadows (RigCastShadows: only when the view row sets cast_k).
 static func attach(layer: Node) -> void:
+	RigCastShadows.attach(layer)
 	if ViewMode.shared().is_flat():
 		return
 	far_box = Rect2()

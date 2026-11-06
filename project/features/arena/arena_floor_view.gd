@@ -99,6 +99,11 @@ func _held(arena: ArenaStage) -> void:
 func _props(ci: CanvasItem, arena: ArenaStage) -> void:
 	if arena == null:
 		return
+	if ViewMode.shared().cast_k > 0.0:  # the view's cast shadows under every prop (top_lift)
+		for s: ArenaStation in arena.stations.stations:
+			for p: ArenaStation.Prop in s.props:
+				if not _city or p.kind in ArenaWalls.SOLID or p.kind == "cone":
+					_cast(ci, arena.plan.base + p.at, p)
 	for s: ArenaStation in arena.stations.stations:
 		for p: ArenaStation.Prop in s.props:
 			if not _city or p.kind in ArenaWalls.SOLID or p.kind == "cone":
@@ -106,6 +111,17 @@ func _props(ci: CanvasItem, arena: ArenaStage) -> void:
 		for sp: ArenaStation.Spawn in s.spawns:
 			if sp.kind == "crowd":
 				_ring(arena.plan.base + sp.at, sp.span_m, Ink.WASH, ci)
+
+
+## A prop's cast shadow on the ground, its top thrown down-right by its height (RigCastShadows).
+func _cast(ci: CanvasItem, at: Vector2, p: ArenaStation.Prop) -> void:
+	var r: Rect2 = Rect2(Ink.px(at - p.size * 0.5), p.size * Ink.PX_PER_M)
+	var view: ViewMode = ViewMode.shared()
+	var off: Vector2 = view.cast_dir() * PROP_H_M.get(p.kind, 0.0) * view.cast_k * Ink.PX_PER_M
+	var c: PackedVector2Array = PackedVector2Array(
+		[r.position, Vector2(r.end.x, r.position.y), r.end, Vector2(r.position.x, r.end.y)]
+	)
+	RigCastShadows.sweep(ci, c, off)
 
 
 func _prop(ci: CanvasItem, at: Vector2, p: ArenaStation.Prop) -> void:

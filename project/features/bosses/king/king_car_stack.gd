@@ -42,6 +42,9 @@ static func draw(ci: CanvasItem, at: Vector2, heading: float, l: float, w: float
 	var p: float = Ink.PX_PER_M
 	ci.draw_set_transform(at, heading, Vector2.ONE)  # the contact shadow on the ground
 	ci.draw_rect(Rect2(-l * 0.5, -w * 0.5, l, w).grow(0.35 * p), SHADOW)
+	if view.cast_k > 0.0:  # the cast shadow by height, thrown from the roof line (top_lift)
+		var off: Vector2 = view.cast_dir().rotated(-heading) * ROOF_M * view.cast_k * p
+		RigCastShadows.sweep(ci, _corners(l, w), off)
 	for i: int in SLICES:
 		var k: float = float(i) / float(SLICES - 1)
 		var z: float = ROOF_M * k
@@ -54,6 +57,14 @@ static func draw(ci: CanvasItem, at: Vector2, heading: float, l: float, w: float
 			ci.draw_rect(Rect2(-l * 0.5, -w * 0.5, l, w).grow(3.0), Ink.INK)
 		_slice(ci, k, l, w, p)
 	ci.draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+
+
+static func _corners(l: float, w: float) -> PackedVector2Array:
+	var hl: float = l * 0.5
+	var hw: float = w * 0.5
+	return PackedVector2Array(
+		[Vector2(-hl, -hw), Vector2(hl, -hw), Vector2(hl, hw), Vector2(-hl, hw)]
+	)
 
 
 static func _slice(ci: CanvasItem, k: float, l: float, w: float, p: float) -> void:

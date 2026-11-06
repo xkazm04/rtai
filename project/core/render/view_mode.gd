@@ -10,6 +10,8 @@ extends RefCounted
 
 const TABLE: String = "res://data/tables/view.json"
 const FLAG: String = "--view"
+## The sun's ground direction for cast shadows: down-right, as CastShadows offsets the city's.
+const CAST_DIR: Vector2 = Vector2(0.70710678, 0.70710678)
 
 static var _shared: ViewMode = null
 ## The camera's ground point in world px (PrintStage.place sets it each frame; read by lift_at).
@@ -24,6 +26,9 @@ var cards: bool = false
 ## (0 = orthographic): a height lifts away from the camera's ground point, so walls and bodies
 ## lean out from the screen centre.
 var eye_h_m: float = 0.0
+## Cast shadows by height (RigCastShadows, KingCarStack, the arena props): a shadow's length per
+## unit of height, thrown down-right (CAST_DIR, the city's building shadows' direction); 0 = none.
+var cast_k: float = 0.0
 var ids: Array[String] = []
 
 
@@ -51,6 +56,8 @@ static func of(want: String) -> ViewMode:
 			v.cards = row.get("cards", false) == true and v.pitch_deg < 90.0
 			var eye_h: float = row.get("eye_h_m", 0.0)
 			v.eye_h_m = eye_h
+			var cast: float = row.get("cast_k", 0.0)
+			v.cast_k = cast
 	if want != "" and not v.ids.has(want):
 		Log.warn("view", "unknown --view=%s; drawing %s" % [want, v.id])
 	return v
@@ -89,6 +96,11 @@ func zoom_of(z: float) -> Vector2:
 	if is_flat():
 		return Vector2.ONE * z
 	return Vector2(z, z * ground_k())
+
+
+## The sun's ground direction (unit) for the cast shadows.
+func cast_dir() -> Vector2:
+	return CAST_DIR
 
 
 ## Any height cue at all (a tilt or a perspective eye); false = today's flat draw.
