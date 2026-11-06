@@ -1628,3 +1628,8 @@ NEXT (iteration 21: the freeze at 08:30, report 08:40):
   1199/0, scenarios 52, parity bit for bit + planted mutation caught at step 629, selftest: look
   goldens 11/11, block goldens 5/5) (`evidence-run-it20.log`). FRICTION: the first try wrote its log
   inside the worktree and refused a dirty tree; the log now goes to `gtai-n7/scratch/servo/` first.
+- 07:33 NUMBERS stand seeds 1-10 on 010b182a (`numbers-it20-stand/`, 0 SCRIPT ERROR): seeds 1-5
+  identical to it9 (moves and taken). n = 10: 1/10 downed (169 s), took 1370, 56 deaths, rotor
+  140/159, hot 18/19, hop 37/39, dives 34/54, 346 parcel hits. REPORT table now n = 10 for all
+  three bots; the fairness line corrected to the measured rates (dives 11 % on the dodge bot, 63 %
+  standing; my first draft said "under 10 % / over 90 %" for all, which the dives break).

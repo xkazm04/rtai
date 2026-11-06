@@ -1,0 +1,55 @@
+{
+ "stand": {
+  "n": 10,
+  "downed": 1,
+  "ttk_mean_s": 169.2,
+  "ttk_range_s": [
+   169.2,
+   169.2
+  ],
+  "taken_mean": 1370.4,
+  "deaths": 56,
+  "adds_landed_tries": [
+   0,
+   0
+  ],
+  "per_attack": {
+   "bay_hop": {
+    "tries": 39,
+    "landed": 37,
+    "rolled": 0,
+    "hit_rate": 0.95
+   },
+   "package_carpet": {
+    "tries": 55,
+    "landed": 0,
+    "rolled": 0,
+    "hit_rate": 0
+   },
+   "rotor_dash": {
+    "tries": 159,
+    "landed": 140,
+    "rolled": 0,
+    "hit_rate": 0.88
+   },
+   "scan_drop": {
+    "tries": 213,
+    "landed": 0,
+    "rolled": 0,
+    "hit_rate": 0
+   },
+   "kamikaze": {
+    "tries": 27,
+    "landed": 0,
+    "rolled": 0,
+    "hit_rate": 0
+   },
+   "rotor_dash_hot": {
+    "tries": 19,
+    "landed": 18,
+    "rolled": 0,
+    "hit_rate": 0.95
+   }
+  }
+ }
+}

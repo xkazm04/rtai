@@ -29,20 +29,21 @@ indexed in `M/frames.json`. Design: `docs/bosses/servo.md`. Journal: `JOURNAL.md
   `--boss=servo [--phase=N]`, and `--bot=boss`.
 - **The full fight by the bot** at 32 px/m: `M/servo_fight_bot_human_32ppm_it19.mp4` (121 s, down at 117 s; keys `M/frames/servo_fight_keys_32ppm_it19.png`). Per attack (48 px/m): `M/servo_attack_*`; the drone wave from the lock to the dodge: `M/servo_drone_wave_scan_drop_dodge_48ppm_it19.mp4`; per phase (32 px/m): `M/servo_p{1,2,3}_*_32ppm_it19.mp4`; ghosts: `M/servo_ghost_*`. Index: `M/frames.json`.
 
-## Numbers (the bot; `evidence/servo/numbers-it20/` (dodge, human: seeds 1-10) + `numbers-it9-spine94-stand/` (stand: seeds 1-5), CONTENDED wall time, tick-exact)
-Re-measured it20 on the shipped tree: seeds 1-5 give the same `boss_fight` record as it9, all
-ten, so the it10-it19 body work moved nothing in the sim; seeds 6-10 double n. The stand row is it9's (the same sim).
+## Numbers (the bot; `evidence/servo/numbers-it20/` (dodge, human) + `numbers-it20-stand/`, seeds 1-10 each, CONTENDED wall time, tick-exact)
+Re-measured it20 on the shipped tree: seeds 1-5 give the same `boss_fight` record as it9 for
+all three bots, so the it10-it19 body work moved nothing in the sim; seeds 6-10 double n.
 
 | bot | downed | time to kill | took | deaths | rotor dash | hot dash | bay hop | kamikaze dive | drop wave |
 |---|---|---|---|---|---|---|---|---|---|
 | dodge | 10/10 | 110-159 s (130) | 26 | 0 | 4/74 | 1/26 | 1/18 | 5/44 dives | 0 parcel hits |
 | human | 10/10 | 116-169 s (137) | 159 | 0 | 33/81 | 8/29 | 6/16 | 6/56 dives | 6 parcel hits |
-| stand | 0/5 (240 s cap) | - | 1398 | 28 | 81/90 | 6/6 | 17/17 | 8/14 dives | 177 parcel hits |
+| stand | 1/10 (240 s cap) | 169 s (the one kill) | 1370 | 56 | 140/159 | 18/19 | 37/39 | 34/54 dives | 346 parcel hits |
 
 (took = damage dealt to Rivet over the whole fight; neither moving bot died in 20 fights. The dodge
-bot's 98 on seed 10 is one bay hop, one dash each and a dive. it6a, wings touching: dodge 127 s / 62, human 129 s / 128, stand 1/5 / 1388. n = 10: the
-spread is wide (110-169 s), so still not called balanced; it is fair in the sense that every
-attack lands under 10 % on a bot that reads its tells and over 90 % on one that stands.)
+bot's 98 on seed 10 is one bay hop, one dash each and a dive. it6a, wings touching: dodge 127 s / 62, human 129 s / 128, stand 1/5 / 1388 (n = 5). n = 10: the
+spread is wide (110-169 s), so still not called balanced; it is fair in the sense that the dashes and
+hop land 4-6 % and the dives 11 % on a bot that reads its tells, against 88-95 % (dashes, hop) and
+63 % (dives) on one that stands.)
 The rotor dash checked against a reading player (it6): every tell read but 18-32 ticks late, it lands
 2/40. The human bot's ~40 % comes from its 30 % unread tells (`numbers-it6-read1-*`).
 
