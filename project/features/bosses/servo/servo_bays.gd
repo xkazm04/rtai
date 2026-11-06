@@ -27,7 +27,7 @@ var hub_m: float = 0.22
 
 ## True when the art bays apply (three rows, the data's rack); else draw on rack.cell_pos.
 func on_art() -> bool:
-	return rack.rows() == 3
+	return rack != null and rack.rows() == 3
 
 
 ## The rig's wing side of cell `i`: +1 for the rack's columns with across < 0.
