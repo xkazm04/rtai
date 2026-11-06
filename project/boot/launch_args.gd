@@ -32,6 +32,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--end-cue",
 	# n7-ranged: --quest-guns=off keeps quest 1's evening gun path (the before of the table guns)
 	"--quest-guns",
+	# n7-ranged: --flash-at=side prints the muzzle flash beside the aim line (the before of HeldMuzzle)
+	"--flash-at",
 ]
 
 var _values: Dictionary[String, String] = {}

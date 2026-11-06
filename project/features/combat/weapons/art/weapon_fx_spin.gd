@@ -41,14 +41,15 @@ static func phase(tick: int, s: float) -> float:
 	return _phase
 
 
-## Where the whirl rings the barrel: WeaponFxArt's flash spot, pulled back onto the barrel's tip.
-static func tip(r: Fighter, gun: GunHand) -> Vector2:
+## Where the whirl rings the barrel: the drawn bore tip (HeldMuzzle) when the held view published
+## it this frame, else WeaponFxArt's flash spot pulled back onto the barrel's tip.
+static func tip(r: Fighter, gun: GunHand, ci: CanvasItem = null) -> Vector2:
 	var aim: Vector2 = (gun.last_aim if gun.last_aim != Vector2.ZERO else r.facing).normalized()
 	var art: WeaponArt = WeaponFxArt.art()
 	var id: StringName = gun.trigger.spec.id
 	var len_m: float = art.muzzle_m(id).x * 0.5 if art.has(id) else 0.0
 	var reach: float = r.radius_m + WeaponFxArt.FLASH_AHEAD_M * TIP_BACK_K + len_m
-	return r.pos + aim * reach + aim.orthogonal() * WeaponFxArt.GUN_SIDE_M
+	return HeldMuzzle.at_m(ci, r.pos + aim * reach + aim.orthogonal() * WeaponFxArt.GUN_SIDE_M)
 
 
 ## Draw the whirl of Rivet's `gun` (held by `r`) on `ci` at `tick`.
@@ -58,7 +59,7 @@ static func draw(ci: CanvasItem, r: Fighter, gun: GunHand, tick: int) -> void:
 	if w <= 0.0:
 		return
 	var aim: Vector2 = (gun.last_aim if gun.last_aim != Vector2.ZERO else r.facing).normalized()
-	var at: Vector2 = tip(r, gun)
+	var at: Vector2 = tip(r, gun, ci)
 	var s: float = float(trig.spin) / float(trig.spec.spin_ticks)
 	var turn: float = phase(tick, s)
 	var side: Vector2 = aim.orthogonal() * w * 0.5

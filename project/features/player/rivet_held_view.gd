@@ -107,6 +107,7 @@ func _process(_delta: float) -> void:
 	_feed_smear(rig)
 	_sprite.visible = rig.grip != RigGrip.Kind.THROWN or rig.reload_k < 0.0 or rig.reload_k >= 1.0
 	_light_rag(rig, id)
+	HeldMuzzle.publish(_sprite, art.muzzle_px(id) + _sprite.offset)  # the flash's spot (n7-ranged)
 
 
 func _swap(id: StringName, weapon: StringName, size_k: float) -> void:
