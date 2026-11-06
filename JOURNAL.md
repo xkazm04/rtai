@@ -252,3 +252,45 @@ NEXT:
 - DECISION lines: hud/showcase redesign, hud/dialogue layout (docs/decisions.md).
 - Masters `frames.json` rebuilt to 15 entries (after17 crops at 70/55, quest-1 card crop and live
   opening added; the it2 full-frame afters replaced by the after17 one).
+- 22:50 Gates (`node tools/evidence/run.mjs --no-bench`, evidence commit 87f1c8e8 = every game-code
+  change of this iteration; `gtai-n8/scratch/hud/evidence_run_it4.log`): lint 15/15, unit 1502 passed
+  0 failed, scenarios 52/52 (both wall-clock budgets passed), parity bit-exact + planted mutation
+  caught at step 629, selftest look goldens 11/11 + block 5/5 (top did not move), export-audit 555/0.
+  The unit step is marked FAIL only for "tree changed during run" (I committed JOURNAL/decisions
+  mid-run: FRICTION, mine; do not commit while evidence runs). 0 failing tests.
+- 22:53 `tools/art/design_cut.py --showcase` (15ac8128): ready for the assets lane's
+  `showcase_<id>_{70,55}` sheets (the middle of five rotations = the side view; checked on
+  crates_70's row: one clean piece). Still not landed at 23:00.
+- 22:55 Armory at the SHIPPED 32 px/m (tilt70, seed 1, frame 89, 0 SCRIPT ERROR):
+  `gtai-masters/n8/hud/armory_tilt70_32_{before,after}.png` (before = `--showcase=off`) +
+  `armory_tilt70_32_before_after_crop2x.png`. Look: ~40 px per weapon; the showcase pieces read by
+  colour and silhouette, the parts were one grey-tan family, and the wall rack's black part prints
+  become inked icons.
+- 23:00 Call still: `gtai-masters/n8/hud/call_pickup_hover_vs_floor_tilt70_48_crop2x.png` (built:
+  hover 0.35 m vs `--pickup-hover=off`). Hover reads better (the drawing's shadow spot on the disc
+  lifts it off the floor: "take me"); kept as built. The crate display still waits for the open-crate
+  REQUEST (22:12).
+
+Registry rules applied this iteration: `sprite-and-atlas-production` (one cut per subject per pitch
+by tool, keyed on the sheet's own background, masked to its own piece; the import is re-runnable
+when the better sheet lands), `generative-artifact-gating` (only owner-picked AI art entered, 15
+provenance lines; the Rivet bust stays a proposal off-game), `concept-scene-parity` (the
+redesigned weapons are the owner's design sheets themselves, no redraw), `motion-quality-gating`
+(judged live in quest 1 and the armory at 32 and 48 px/m), `short-form-cards-and-barks` + 
+`accessibility` (the subtitle box never covers the ghost card; the text refits, 20 px floor).
+
+NEXT:
+- Watch `gtai-art/rivet-final/out/showcase_<id>_{70,55}.png` (round 2215, after Rivet's equipped
+  sheets): `python tools/art/design_cut.py C:/Users/kazda/kiro/gtai-art/rivet-final <ids> --showcase`,
+  look at each cut, provenance lines (round 2215 + prompt hash from its jobs.json), re-film the armory
+  at 32/48 px/m tilt70 and tilt.
+- Crate display: waits for `weapon_crate_open` (REQUEST 22:12); then an open crate in the armory
+  holding a showcase drawing, filmed at tilt70/tilt 32 and 48 px/m.
+- Long guns' true p70 (Gloria, plasma rifle, gatling use the 55 cut): no redo planned by assets
+  (their finding: a weapon lying on its side IS its side profile at 70); consider closing as built.
+- Quest 1 live: film a named speaker's face (needs a walk: Brass or the payphone); `--autostart`
+  exists now; no bot drives quest 1, so consider a short recorded input (`--record`) to replay into a
+  movie, or film the dialogue board instead (done in it2).
+- Freeze 08:30: export `build/export/windows/RTAI.exe` (int-day recipe in docs/decisions.md); REPORT
+  Calls: hover vs crate (still: call_pickup_hover_vs_floor...), portrait side/size, the dialogue never
+  pauses play, Don Fax payphone vs bust, boss crest disc vs bust, Rivet's dialogue face (proposal).
