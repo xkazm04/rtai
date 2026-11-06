@@ -604,3 +604,17 @@ NEXT 1 (replaces the one above): check b3c.out/b3d.out (0 SCRIPT ERROR, frame co
 - Registry rules applied this session: motion-quality-gating (the combo return checked on every frame
   1138-1185, not a single still), concept-scene-parity (the art-set mismatch at 70 named for the street
   heads, as it was fixed for the court), generative-artifact-gating (no new generated art this session).
+- 18:07 FILM city pair re-taken on afbdee5b (`city32_tilt`, `city32_tilt70`, 2760 frames each, 0 SCRIPT
+  ERROR) -> masters `city_55_vs_70_32ppm_46s_it4.mp4` + t25 still. LOOKED t25: the 55 panel wears
+  chars' p55 cop caps and riot helmets, the 70 panel today's heads (the gap REQUESTed above); cops
+  blue in both, red only blood. frames.json city entries name afbdee5b. Scratch avis deleted
+  (3.9 GB -> 18 MB).
+
+NEXT (after the freeze; for the Director or a next run):
+1. Merge order: d8-view70 merges cleanly over d8-chars and d8-bosses as of 17:41 (both merged here).
+2. The two REQUESTs above close the last 55-vs-70 art mismatches: chars' `p70` street rows in
+   `RigHeadCard.SET_CARDS` (the p55 strips at 70), and bosses keying `KingArt.strip_path` by
+   `ViewMode.art` (kills the cape fan during combo's 1 s ease; `ViewPitchCourt` can then be deleted).
+3. The owner's calls (REPORT): pitch per situation, ease length (1.0 s), swap vs cross-fade (swap),
+   the p70 King's own bell. If the owner picks combo, draw 70 sheets for the street cast and the gang.
+4. Frame cost 70 vs 55 is still CONTENDED only; take it under the bench lock.
