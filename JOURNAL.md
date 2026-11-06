@@ -74,15 +74,16 @@ second art_dir and a card row per pitch.
 
 - GATE director reel under tilt70 on 66836d5c (headless, `--fixed-fps 60 --quit-after 14000
   res://dev/arena/arena.tscn -- --bot=reel --reel=director --loadout=pistol --rigs --view=tilt70`):
-  19/19 chapters, every chapter all down, 0 SCRIPT ERROR. The combo reel started 21:09
-  (scratch/street/reel_combo.log); result in iteration 2 if this session ends first.
+  19/19 chapters, every chapter all down, 0 SCRIPT ERROR (exit 0). Under `--view=combo` (21:09-21:13,
+  same command): 19/19 chapters, all down, 0 SCRIPT ERROR at the 19th chapter (the process ran on to
+  its 14000-frame end in the background).
 - GATE unit no-arg on the clean head 0ad76dba (with view's card sets): 1493 passed, 0 failed, no FLAKY.
   Lint 15/15 on every commit (pre-commit hook).
 - LOOKED: the p55 riot plate at `--view=tilt` 64 px/m (masters still): it reads as at 70.
 
 NEXT (iteration 2):
-1. Reel gates: read scratch/street/reel_combo.log (19/19? 0 SCRIPT ERROR?); the reel under `top`
-   (StreetView never runs straight down, the top city framemd5 is identical, but run it).
+1. Reel gate under `top` (StreetView never runs straight down and the top city framemd5 is
+   identical, but run it); then `node tools/evidence/run.mjs --no-bench` on the head.
 2. Combo / boss arenas at 55: the riot plate at p55 and the thug lift at 55 (`--view=tilt`,
    `--boss=king`), and the combo swap of the plate (it rebuilds on the art change).
 3. Peds (brief 3): the 4 library types the game has no head for (shopper, punk, worker, jogger):
