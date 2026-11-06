@@ -1790,3 +1790,11 @@ REPORT row + call 5 exe line, audit rows 3 and 10, decisions.md line. NEXT is th
   and a blood bloom grows at its tip on those frames, spreading over about 10 ticks: I = 3. The
   struck body is at the crop's edge: V stays `?` (next: crop lower-right of x 1060-1420,
   y 400-620 on the same frames). Scratch deleted.
+
+### 05:27 CORRECTION of 05:26: the rifle's I = 3 is withdrawn
+- A wider crop of the same 49 frames (x 1240-1600, y 520-760; rerun, exit 0, 0 SCRIPT ERROR)
+  shows the tracer flying on past the bloom (frames 16-21) and the bloom growing on the heap of
+  bodies already down; the live contractor is at the top edge, and the cop is standing. So
+  that was a round through the dead, not a hit on a live target. Audit row back to I `?`, V `?`.
+  NEXT 4 stands: find a contractor's hit tick first (the HUD kill count, or Log the
+  struck events in a dev-only probe), then crop there.
