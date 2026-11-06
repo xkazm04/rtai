@@ -1636,3 +1636,36 @@ same-build before in the live quest path, the quest's own clip window), depth-or
 - LOOK: the still at the clip's after landing shows the ink-and-vermilion fire burst on the frame
   the whoomp starts. Clip `molotov_burst_cue-ab-32ppm.mp4` (6 s, with sound). Not in frames.json
   (sound pair). REPORT row, call 7, audit row, decisions.md line.
+
+### GATES 04:42: unit 1176/1176 on `2d63f305` (clean tree), reels 19/19 x2 on `2d63f305`
+- `evidence/ranged/it16-unit-2d63f305.log`, `evidence/ranged/it16c-reel-{director,city}-2d63f305.log`,
+  0 SCRIPT ERROR. This replaces the 04:31 mixed-tree unit run.
+
+### MILESTONE 04:41: `51cb1194` the machine pistol stops sounding like the contractors' rifle
+- Data only: audio_cues.json `shot_smg` (rifle_shot 1.25, -6 dB, 60 m, cooldown 2, 6 voices);
+  weapons.json machine_pistol shot_cue `shot_assault_rifle` -> `shot_smg`. Test +1 (6/6): no gun of
+  Rivet's plays shot_assault_rifle, the SMG's pitch is over the rifle's; planted (back on the rifle
+  shot): 2 asserts fail. Lint 13/13.
+- MEASURED: samples as played 2.35 kHz -7 dBFS 0.82 s -> 2.80 kHz -9 dBFS 0.65 s. Range film
+  (`--weapon=machine_pistol --bot=range`, before = HEAD~ weapons.json, restored, tree checked), both
+  exit 0, 0 SCRIPT ERROR; 4.0-6.0 s of fire: centroid 3841 -> 4465 Hz, rms -13.4 -> -16.3 dB.
+- Clip `smg_shot_cue-ab-32ppm.mp4` (6 s with sound), still checked. REPORT row, call 7, audit row,
+  decisions.md line. NEXT 3's first half done (below).
+
+NEXT (iteration 17; supersedes the 04:08 list):
+1. Freeze (by 08:30): full evidence run on the final head (`node tools/evidence/run.mjs`; last
+   full green `13e0e050`; since then render-only `01a482d1` (scenarios 52/0, quest 1 replay
+   identical) and sound-only data `d4559823`, `6e50068c`, `4e8860c3`, `b66880c1`, `51cb1194`); last
+   unit 1176/1176 + reels 19/19 x2 on `2d63f305`; re-bake + export
+   `windows-showcase` -> `build/export/windows/RTAI.exe`; REPORT exe lines for calls 4-7 (call 7 now
+   lists the Gatling, zap and molotov cues with their exe commands); drop DRAFT.
+2. City combined clip: retake at the freeze (the sound changed for the SMG, Gatling, electro, plasma,
+   ray, molotov, rocket and nuke chapters; the picture did not).
+3. Sound pass, what is left (the SMG is done, `51cb1194`): the flamer's `fire_crackle` cue is the burning-wreck bed (cooldown 8): check that a held jet
+   reads as continuous on the range film before touching it.
+4. Quest 1's rifle: I and V still `?` (its hits land at the clip frame's right edge). If time, a
+   wider `quest1_clip --ppm=24`-style framing is not a flag; try `--cam=fight` stills at the ticks
+   a contractor drops (the HUD kill count) instead. Rifle fire kick: no hit_feel row can key
+   `assault-rifle` (the schema's id pattern has no hyphen); leave it unless a stand-in lookup is
+   added to FeelCam.fire (view only, keyed by the arsenal's art_stand_in).
+5. Remaining weak cells: homing_shard V 2 (call 1, owner); Gatling I/R/V 2 (crowds only).
