@@ -618,3 +618,20 @@ NEXT (after the freeze; for the Director or a next run):
 3. The owner's calls (REPORT): pitch per situation, ease length (1.0 s), swap vs cross-fade (swap),
    the p70 King's own bell. If the owner picks combo, draw 70 sheets for the street cast and the gang.
 4. Frame cost 70 vs 55 is still CONTENDED only; take it under the bench lock.
+
+## Iteration 6 (18:12, BUILD, post-freeze; session stops 18:30)
+- 18:12 READ JOURNAL tail, git log, chars/bosses heads. chars (07918046) and bosses (02b11a53) are at
+  their finals; neither REQUEST from it5 (chars `p70` street rows, bosses `KingArt` keyed by
+  `ViewMode.art`) has landed, so no merge: the gated afbdee5b tree and the 18:02 exe stand.
+- 18:13 SKIPPED the quiet bench (NEXT 4): bench.lock was free, but weapons' and chars' freeze
+  scenario suites were running (2 Godot pairs, started 18:09/18:11). Any number would be CONTENDED
+  again, and a bench would push their city_chase/rig_stress budgets into CONTENDED. The 15:27
+  CONTENDED table remains the only frame-cost figure.
+- 18:14 CHECKED the evidence package: masters frames.json has 15 entries, every file exists, every
+  entry has the 8 keys, nothing unreferenced in the folder (663 MB). REPORT's evidence paths resolve.
+  Exe `build/export/windows/RTAI.exe` (18:02, afbdee5b) present. Tree clean.
+- Registry rules applied: motion-quality-gating (no claim without a frame; no new claim made),
+  generative-artifact-gating (no new generated art; image.lock held by assets, not taken).
+
+NEXT: unchanged from iteration 5 (merge order; the two REQUESTs; the owner's calls; frame cost
+70 vs 55 under the bench lock on a machine with no other lane's Godot running).

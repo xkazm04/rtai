@@ -30,7 +30,7 @@ Evidence: `C:\Users\kazda\kiro\gtai-masters\d8\view70\` (`frames.json`, 15 entri
 ## Measured, 70 vs 55
 - **Ground depth on screen** at 32 px/m: 26.6 m at 70 vs 30.5 m at 55. So 55 shows 14.7 % more depth
   (checked on the stills); the width is the same.
-- **Frame cost** (exported bench, city drive_dense, 2 x 30 s, CONTENDED):
+- **Frame cost** (exported bench, city drive_dense, 2 x 30 s, CONTENDED; not re-taken at 18:13: two other lanes' freeze gates were running):
   - average frame 1.08/1.18 ms at 70 vs 1.15/1.10 ms at 55, a wash;
   - draw calls 372 vs 575. They follow the visible area: tilt70 zoomed out to 55's depth draws 602-606
     calls, repeated twice. No feature is switched off at 70.
