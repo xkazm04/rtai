@@ -48,7 +48,8 @@ static func draw(
 	ci: CanvasItem, at: Vector2, p: float, fight: BossFight, up: Vector2 = Vector2.ZERO
 ) -> void:
 	if KingArt.card_wears_cape():
-		_train(ci, at, p, fight, up)
+		if up != Vector2.ZERO:  # on foot only: seated, the card's cape hangs over the throne
+			_train(ci, at, p, fight, up)
 		return
 	var hem: PackedVector2Array = _hem(at, p, fight)
 	var shoulder_l: Vector2 = at + Vector2(0.1, -0.7) * p
