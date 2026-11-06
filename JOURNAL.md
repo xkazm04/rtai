@@ -352,3 +352,29 @@ walk REQUEST names cell layout and baseline so the strip cuts by script).
   the tan coats are lower contrast than the old black legs (the ink rim holds them). See:
   peds_walkers_before_after_tilt70_32ppm_x2_city_seed5_t4.png; exe `--arena=city --rigs --view=tilt70`.
 - GATE unit no-arg on 2866ec0b: 1505 passed, 0 failed, no FLAKY. Lint 15/15.
+- GATE director reel under tilt70 on 2866ec0b (walkers in): 19/19 chapters, every chapter all
+  down, 0 SCRIPT ERROR, exit 0.
+
+Registry rules applied (walkers): sprite-and-atlas-production (whole-figure strips cut by script,
+five equal cells, unit-tested; one provenance line per strip), motion-quality-gating (judged in
+the board and city clips and across the kill sequence, not on one still; the glide is named as the
+cost, not hidden), depth-ordered-layered-art (the figure is the head card's own sprite, so it keeps
+the rig's depth sort), generative-artifact-gating (B sheets for suit/cap used as the head cards
+already did; no colour fix, the `orange` fix stays rejected for the street).
+
+NEXT (iteration 5):
+1. Combo reel on the walker head (running at 23:51; read reel-combo.log) and the evidence gate
+   (`--no-bench`, started 23:45): record both. If `top` look goldens moved, StreetView runs under top:
+   find out before anything else.
+2. Walkers: when the assets lane serves the walk REQUEST, cut the stride strips (5 facings x 4)
+   and swap the bob for frames by rig.phase; until then, judge the glide at 48 px/m in the city
+   clip and tune BOB_PX / SWAY by eye.
+3. Walkers: the pop at the hit (drawing -> parts). Options: hold the whole figure through the
+   knock-back's first frames and cross to the parts on the fall; or a drawn hit pose from the
+   sheet's action row. Film both on the `--kill=light` board.
+4. Walkers' shadows: the hidden parts took their cast shadow with them; check the city clip at
+   48 px/m (sun shadows on the pavement) and add a ground ellipse if the walkers float.
+5. Walkers at p55 (boss arenas under combo): cut the 55 top rows the same way and add a "p55"
+   STRIPS entry once judged (the arenas rarely hold pedestrians, so lower priority).
+6. Crowd cost with the walkers (fewer sprites drawn: the parts hidden): rerun city_bench riot top vs
+   tilt70 under the bench lock on a quiet machine.
