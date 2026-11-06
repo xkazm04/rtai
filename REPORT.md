@@ -20,6 +20,8 @@ The moveset is `docs/bosses/king.md`; the full log is `JOURNAL.md`.
   - KingPlan's cutout rig at boss size, his chest and arms gilded by the gold print swap;
   - (it8) **two flat gold press plates and a shoulder megaphone**, replacing the claw and the megaphone
     forearm he inherited (`king_press_plates_before_after_48ppm_it8.png`);
+  - (it13) the megaphone prints gold with a dark bell mouth at 32 px/m (it was an ink smudge with
+    vermilion flecks: `evidence/king/shots/it13/horn_lift_10_155_19_p3_p1_32ppm_4x.png`);
   - a jewelled crown and the ermine collar over the vermilion cape;
   - the gilded plum throne-car, a boss-owned vehicle with drapes and a hood cannon (banded gold barrel on a swivel mount since it12, `evidence/king/shots/it12/hood_cannon_before_after_48ppm_2x.png`);
   - the gang: the rich robot thug with gold chains, a steel helmet and shades.
@@ -65,7 +67,6 @@ and in the exported exe.
   the top view their size matches the target's 90-degree panel (measured in it12: ~1.6 m across the
   shoulders beside the ~6 m car, over a 1.0 m hit circle); they are less blocky and look smaller than
   the target's 3/4 view, where its bodyguards are drawn tall (call J).
-- The shoulder megaphone (bigger since it12, `KingRigs.HORN_K` 2.2) reads as a cone with a bell at 32 px/m, but prints dark, not gold.
 - The plain robot thug (the enemy-ai lane's, not King's) prints as solid ink at 48 px/m. The gang's
   lift would fix it (`evidence/king/shots/it7/plain_thug_48ppm_ink_x2.png`).
 
