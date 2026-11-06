@@ -15,6 +15,7 @@ final hash moved once, deliberately, when quest 1 started carrying the katana (`
 | Plasma sword deflect | `2502aaa7`, `a7ed5d4c` | a parry beat (a stop, a kick toward the shooter), a starburst on the bat frame and a streak along the return | `M/plasma_deflect_ab_32ppm_48slow.mp4` |
 | Ohm's tell | `0555878c` | white sparks edged in ink reach from Ohm's fingertips toward the aim while the charge refills | `M/ohm_tell_ab_32ppm_crop.mp4` |
 | Chainsaw kill | `49cc45d1` | a cream burst where the halves part, the grind's drops kept clear of the held body | `M/chainsaw_kill_ab_32ppm_48slow.mp4` |
+| Chainsaw kill: where the halves fall | `85f3ffa9`, `c8be703d` | a melee kill now carries its own blow line (Rivet -> victim; before, the last round's line, often a cop shot flying back at Rivet), and the chainsaw throws its halves forward along the push (`signature_kills.json` chainsaw `split_follow` 0.8): they lie in a V 1-1.5 m in front of him instead of against his outline, and the grind's spray flies out past the victim. The katana and claw chapters looked at before/after: no regression (claw identical; katana halves now part on the far side) | `M/chainsaw_halves_ab_32ppm_48slow.mp4` (before `--saw-part=off --melee-dir=off`) |
 | Tonnage press slam | `4c6c6bf5` | a landing flash, paper chips and dust on the slam | `M/tonnage_slam_ab_32ppm_48slow.mp4` |
 | Dent's blast and blow | `cb3e5caa`, `4a522dfe` | felt: a kick outward from the car (blast), the melee stop plus a crash shake (blow) | `M/dent_blast_ab_32ppm.mp4`, `M/dent_car_blow_ab_32ppm_04x.mp4` |
 | Dent's car bomb throws debris | `5c4219b2` | the blast flings the rocket blast's grey slabs in a bold ink edge and ink specks out past its ring (WeaponFxDebris, the arsenal's one debris drawer); before, the fireball and ring played over a car that just went dark. At 48 px/m, with the blast at the frame edge (camera on Dent, call open), the slabs fly back into frame | `M/dent_blast_debris_ab_32ppm_48slow.mp4`, still `M/dent_blast_debris_ab_32_48ppm.png` (before `ghost_attacks.json` dent `blast_debris` 0, `--blast-debris=off`, or `--feel=off`) |
@@ -180,6 +181,17 @@ head spark.
 - Before: `--tell-cues=off`.
 - See it: `RTAI.exe -- --bot=ghosts --ghost=tonnage --rigs --ppm=32` (the ring at about 2.1 s), `--ghost=dent`
   (the seize at about 1.4 s), `--ghost=ohm` (the car bolts from about 5.8 s).
+
+(p) Where the chainsaw's halves fall (and the line every melee kill carries).
+- Options: forward V (built: `split_follow` 0.8, the halves ~51 deg off the push, 1-1.5 m in front of Rivet); sideways
+  (0.25, the brutality night's value, but on the true line now: the halves either side of the victim, about 1 m); further
+  forward (1.2+, a tighter V, the halves nearer one line). One value in `signature_kills.json` (chainsaw row). The blow line
+  fix (`--melee-dir=off`) is a bug fix, not a taste call: before it a melee kill took the last round's direction, so the
+  katana's and the saw's cuts threw their parts at random angles, often back onto Rivet.
+- Clip: `M/chainsaw_halves_ab_32ppm_48slow.mp4` (32 px/m real time, then 48 px/m at 0.4x; before left).
+- Before: `--saw-part=off` (sideways, on the true line), `--saw-part=off --melee-dir=off` (the whole before).
+- See it: `RTAI.exe -- --arena=city --bot=reel --reel=director --chapter=chainsaw --loadout=pistol --clean`
+  (the halves part at about 6.6 s).
 
 ## Next steps
 See the last NEXT entry in `JOURNAL.md`.

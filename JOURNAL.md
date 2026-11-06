@@ -1374,3 +1374,38 @@ NEXT (written 05:15, for iteration 16; supersedes the 04:48 list):
   commit, no REQUEST to melee; n7-king / n7-servo: none. TellCues reads the stage's pilot only (no
   target kind), so a boss fight with the ghosts gets the same tells; Ohm's bolt on a boss is a body
   hit (HitCues' crackle), not a TellCues whiff.
+- READ 05:35 iteration 16 start: n7-ranged to `a175b3d8` (docs only, no feel commit), no REQUEST to melee in ranged/king/servo.
+
+## Iteration 16 (runner), 05:34-06:34
+- PICK 05:36 the weakest read left in the audit: the chainsaw kill (read 3, "the lower half stays
+  under his feet"). Looked at the city set film (frames 390-470): the halves part north and south
+  of the grind, about 1 m each, the south one lands on Rivet's outline.
+- TRIED 05:43, a first pass: a per-row `split_follow` (GibSim carried each half 0.25 along the cut
+  line, d) at 0.8 for the chainsaw. Filmed (city chapter, 32 px/m, before `--saw-part=off`): WORSE,
+  the halves flew back onto Rivet. So d pointed at him.
+- CAUSE 05:44 PlayerMelee._land never set CombatArena.hit_dir / hit_at (only rounds, FightAreas,
+  PlayerShock and the ghost stages do), so a melee kill handed kill_landed the last round's line:
+  in the city a cop's shot flying back at Rivet. Readers of the kill dir: SignatureKills (the cut
+  and the throw), HitCues, ClawMarks, MeleeFeel (melee class ignores it), ReactLink (ignores it).
+- BUILD 05:45 `85f3ffa9` PlayerMelee sets hit_dir = Rivet -> victim and hit_at = the victim's spot
+  before damage (`static var sets_dir`, `--melee-dir=off` in KNOWN_FLAGS). test_melee_dir 2/2;
+  planted (the line unset) -> exactly 1 fails. `c8be703d` signature_kills.json `split_follow`
+  (schema; default GibSim.SPLIT_FOLLOW), chainsaw 0.8; `--saw-part=off` (BrutalityHook.saw_part_off).
+  test_saw_part 3/3; planted (row 0.25) -> exactly the 2 row tests fail. Unit 1234/1234, lint 13/13.
+  GibSim is folded into the arena's replay hash: a table edit, no blessed arena hash (precedent:
+  n7-ranged's `--shard-pop`); parity / city sim untouched. DECISION line in docs/decisions.md.
+- LOOK 05:47-05:52 city chainsaw chapter, before (`--saw-part=off --melee-dir=off`) over after, 32
+  px/m frames 380-464 every 12th and 2x zooms of 416/464, 48 px/m 380/416/464: the halves lie in a V
+  1-1.5 m in front of Rivet either side of the blood pool, clear of his outline (before: against it
+  above and below); the grind's spray now flies out past the victim instead of back over him.
+  Read 3 -> 4. Regression look (the dir fix reaches every melee kill): katana and claw_combo city
+  chapters, before/after, frames 280-390 every 10th: claw identical (its kills go through
+  ReactLink, no split); katana halves still read, now on the far side from Rivet. 0 SCRIPT ERROR in
+  all 8 films.
+- CLIP 05:53 `M/chainsaw_halves_ab_32ppm_48slow.mp4` (6.9 s: 32 px/m real time, then 48 px/m at
+  0.4x, before left); frames.json row 0 (dropped `chainsaw_kill_ab_32ppm_48slow.mp4` from the list,
+  the file stays, REPORT names it). REPORT row + call (p), audit 5 note, decision line.
+- Registry rules applied: motion-quality-gating (a first pass judged worse on film and the cause
+  found before the fix; before/after in the live city path at 32 and 48, a planted fault per test),
+  realtime-combat-semantics (a hit carries its own direction, generic for any target kind: a boss
+  hit by the saw gets the same line).

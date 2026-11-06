@@ -124,6 +124,14 @@ By the craft columns (impact and read at 32 weigh most: they are what the owner 
    melee code moved since) at 2x, frames 378-438 every 4th: the grind, the cream burst on the
    parting frame (398), then the upper half lies about 1 m clear of Rivet and reads as its own piece.
    Read 2 -> 3 (not more: the burst holds a few frames and the lower half stays under his feet).
+   **Halves clear of Rivet 05:55, 2026-11-06 (`85f3ffa9`, `c8be703d`)**: cause, measured in the city chapter: a
+   melee kill never set CombatArena.hit_dir, so the cut ran along the last round's line (a cop's shot back at Rivet)
+   and the halves parted sideways across him; the near one lay on his outline. Now the kill carries Rivet -> victim
+   and the chainsaw row throws its halves forward (`split_follow` 0.8, ~51 deg off the push). Looked at (32 px/m
+   frames 380-464 every 12th, 48 px/m 380/416/464, before over after): the halves lie in a V 1-1.5 m in front of
+   him either side of the blood pool, each its own piece; the grind's spray flies out past the victim instead of
+   over Rivet. Katana and claw chapters before/after: no regression. Read 3 -> 4.
+   `M/chainsaw_halves_ab_32ppm_48slow.mp4` (before `--saw-part=off --melee-dir=off`).
 6. **Tonnage slam**: a clear tell, but the impact frame has no hold, shake or debris.
    **Correction 20:30**: measured, the slam does shake and stop (HaulerKick: `crash` + `boss_hit`, outside
    FeelCam, so `--feel=off` films are identical); what is missing is debris on the landing.
