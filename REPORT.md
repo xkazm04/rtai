@@ -24,7 +24,7 @@ final hash moved once, deliberately, when quest 1 started carrying the katana (`
 | Ohm mass arc | `454490ce`, `7ce7b33d` | the branches draw at 0.55 of the bolt; a stunned crowd keeps full marks on the 2 newest bodies only, so the cops' blue reads through | `M/ohm_mass_arc_ab_32ppm_04x.mp4`, `M/ohm_stun_crowd_ab_32ppm_04x.mp4` |
 | Ohm's bolt lands on the body it strikes | `a27fb59c` | the stroke stops 0.6 m out from each struck body and a crackling ink-and-white ring circles it (it ran into the body's chest under a solid white disc), so every link of the chain lands on a body you can see; a small gain, clearest on a robot | `M/ohm_bolt_rim_ab_32ppm_48slow.mp4`, still `M/ohm_bolt_rim_ab_32_48ppm.png` (before `ghost_attacks.json` ohm `rim_m` 0, or `--feel=off`) |
 | Melee and ghost hit sounds | `f593aac4` | each attack family plays its own sound on the hit tick, built from the shipped bank (claw knock, blade cut, chainsaw bite, baton zap, ghost slam, Ohm bolt) | `M/hit_cues_ab_32ppm.mp4` (before `--hit-cues=off`) |
-| Ghost wind-ups and whiffs make a sound | `690ec813` | Tonnage's press slam whines from the tick its dashed ring appears (measured: the ring's first frame 126, the sound's 125, twice in the reel); a slam that hits no body lands with a heavy concrete thud (only a body hit played a sound before); Dent's seize clunks at the car on the tether's first frame (84; +3-5 dB over the car's own sounds, so a small gain). Built from the shipped bank, not listened to | `M/ghost_tell_cues_ab_32ppm.mp4` (before `--tell-cues=off`) |
+| Ghost wind-ups and whiffs make a sound | `690ec813`, `a6c2797b` | Tonnage's press slam whines from the tick its dashed ring appears (measured: the ring's first frame 126, the sound's 125, twice in the reel); a slam that hits no body lands with a heavy concrete thud (only a body hit played a sound before); Dent's seize clunks at the car on the tether's first frame (84; +3-5 dB over the car's own sounds, so a small gain); Ohm's bolt that burns a car, or reaches nothing, crackles where it ends (it was drawn in silence; onsets on the drawn bolts' frames). Built from the shipped bank, not listened to | `M/ghost_tell_cues_ab_32ppm.mp4` (before `--tell-cues=off`) |
 | Claw jab reads at 32 | `f45ad8e6` | three cream rakes edged in ink across the struck cop on the hit frame, fading over 10 ticks | `M/claw_rake_ab_32ppm.mp4`, `M/claw_rake_48ppm_04x.mp4` (before `melee_marks.json` claw `flash_ticks` 0) |
 | Claw jab: out on the held hit frame, a deeper cock | `791ea71a` | the view strike was fed 2 ticks late, so the hit-stop held the claw cocked on every claw hit; now it holds the claw in the cop, and the open claw draws back for 2 frames before the jab (blades unchanged) | `M/claw_strike_sync_ab_32ppm_48slow.mp4`, `M/claw_strike_sync_ab_64ppm_04x.mp4`, `M/claw_strike_sync_ab_still.png` (before `--strike-sync=off --pullback=off`) |
 | Ghost hits move the victim | `91700e01` | a body Tonnage rams or throws with the slam, and that survives, now plays a knockdown on the hit (before: no reaction at all); a rammed riot cop goes down instead of standing braced | `M/ghost_wound_ram_ab_32ppm.mp4` (before `human_reactions.json` `ghost_wound` {}) |
@@ -173,11 +173,13 @@ head spark.
   0.7-1.0 runs 1.4-2.0 s, well past the 0.5 s wind-up); none. Each is one `audio_cues.json` row (`ghost_press_tell`,
   `ghost_press_land`, `ghost_seize`: `sound`, `pitch`, `gain_db`). No one has listened to them; the measures are frame
   onsets and band energy, not taste. Kerf's sight and Ohm's charge stay silent (Ohm recharges after every bolt: a sound
-  per refill would be noise).
-- Clip: `M/ghost_tell_cues_ab_32ppm.mp4` (with sound and a waveform strip: Tonnage before, after; Dent before, after).
+  per refill would be noise). Ohm's bolt onto a car (or nothing) reuses HitCues' `ghost_bolt` row: once the crowd is down
+  in the reel he burns a car every 0.4-0.5 s, so the crackle runs on there, one per drawn bolt, as on bodies.
+- Clip: `M/ghost_tell_cues_ab_32ppm.mp4` (with sound and a waveform strip: Tonnage before, after; Dent before, after; Ohm
+  on the car before, after).
 - Before: `--tell-cues=off`.
 - See it: `RTAI.exe -- --bot=ghosts --ghost=tonnage --rigs --ppm=32` (the ring at about 2.1 s), `--ghost=dent`
-  (the seize at about 1.4 s).
+  (the seize at about 1.4 s), `--ghost=ohm` (the car bolts from about 5.8 s).
 
 ## Next steps
 See the last NEXT entry in `JOURNAL.md`.

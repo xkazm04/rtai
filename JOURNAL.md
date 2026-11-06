@@ -1316,3 +1316,21 @@ NEXT (written 04:48, for iteration 15):
   tick, the hit frame unchanged; sound only).
 - NOTE 05:07 the times above were first written from guesses (05:10-05:40); corrected to the
   commit and file times (build 05:01, films 05:02, clip 05:04, docs commit 05:05).
+- LOOK 05:08 Tonnage in the city block (`--arena=city`, 32 px/m, before/after): the tell whine at
+  123-132 (high band +35-42 dB) on the ring; no whiff in this reel either (a low-band +8 dB at
+  240-246 is the ram hits shifted a frame, no ring in 226-259). The whiff thud stays unit-tested
+  only. FRICTION: the before film segfaulted at startup (exit 139, no script error) with 3 Godots
+  running; re-run alone, clean.
+- GATES 05:11 on `690ec813` (`bash evidence/n7-melee/reels.sh 690ec813`): director reels arena
+  19/19 and city 19/19 (38 chapter lines each, as on 791ea71a), 0 SCRIPT ERROR; scenarios 52 ran, 0
+  failed, 0 SCRIPT ERROR. FRICTION (mine): I edited tell_cues.gd (tracked) while the scenarios ran,
+  so call that scenario run mixed; re-run at the freeze on the final head.
+- BUILD 05:09 `a6c2797b` Ohm's bolt that struck no body (burned a car, or reached nothing) was
+  drawn in silence; TellCues.bolt plays HitCues' ghost_bolt at its end. test_tell_cues 6/6; planted
+  (crackle on a body bolt too) -> exactly 1 fails.
+- LOOK 05:10 the Ohm ghost reel, before/after at 32 px/m: once the cops are down Ohm burns the car
+  every 24-32 frames (big drawn strokes, the car goes black); the after film is +10-20 dB from 348
+  on, rises on the bolt frames (354, 378). One crackle per drawn bolt, as on bodies: kept (the
+  restraint rule is about cues on what is not seen; these are the biggest strokes on screen).
+  Clip re-cut with the Ohm pair: `M/ghost_tell_cues_ab_32ppm.mp4` 8.1 s; frames.json row, REPORT
+  row + call (o), audit note updated.

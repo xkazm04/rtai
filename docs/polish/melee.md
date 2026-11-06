@@ -46,6 +46,9 @@ ghost-powers beats, telemetry overlay on).
    +3-5 dB, the car's own sounds start there too). Sound re-scored for the press slam 3 -> 4 (the tell
    is heard), Dent 3 (the clunk is small). Not listened to. `M/ghost_tell_cues_ab_32ppm.mp4`
    (`--tell-cues=off` = the before).
+   **Ohm's car bolt (`a6c2797b`)**: a bolt that burns a car or reaches nothing played no sound (HitCues hears
+   bodies); TellCues plays ghost_bolt at its end. Film: once the cops are down Ohm burns the car every
+   24-32 frames, each drawn bolt now crackles (+10-20 dB over the silent before, onsets on the bolt frames).
 3. **A non-lethal melee hit showed nothing** (riot cop, SWAT): fixed in `1e32a7fd` + `a1716c1d`
    (`M/melee_wound_riot_ab_48ppm_64slow.mp4`).
 
