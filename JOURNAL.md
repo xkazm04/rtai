@@ -206,6 +206,11 @@ course run at 32 px/m, same seed before/after, frame-diff bbox checked), generat
   face is behind the block south of it; the only face is a thin dark band). The strips are NOT yet
   evidenced in game: next session needs a framing with an open south face (a block across a street
   from the camera: the main city boot or a course frame where Rivet walks south of a block).
+- 22:09 the p70 strips, proof of draw: `gtai-masters/n8/city/it4_facade_p55_vs_p70_20ppm_x3.png`
+  (course frame 450 at 20 px/m, p70 present vs moved aside so the p55 fallback draws; the frames
+  differ only in the face band, bbox x400-707 y653-715; 0 SCRIPT ERROR). Judged: a small gain at
+  20 px/m, the print turns both into ink bands; the 70 face keeps its cornice line and two window rows
+  slightly crisper. The real judgement is at 32-64 px/m on an open south face (NEXT 1).
 
 NEXT (session 5, in order):
 1. Evidence the p70 strips: find a frame with an open south face (frame 899 of the course has none),
