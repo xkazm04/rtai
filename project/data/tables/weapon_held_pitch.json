@@ -61,18 +61,17 @@
         },
         "gatling": {
           "art": "res://features/combat/weapons/art/held_55/gatling.png",
-          "enabled": false,
+          "enabled": true,
           "grip_px": [
-            70,
-            215
+            66,
+            150
           ],
-          "length_px": 676,
+          "length_px": 679,
           "muzzle_px": [
-            683,
-            108
+            682,
+            94
           ],
-          "size_k": 0.85,
-          "small": "res://features/combat/weapons/art/held_55/gatling_small.png"
+          "size_k": 1
         },
         "gloria": {
           "art": "res://features/combat/weapons/art/held_55/gloria.png",

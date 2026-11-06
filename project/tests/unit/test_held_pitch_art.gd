@@ -136,8 +136,12 @@ func test_a_pitch_tube_goes_empty_with_its_own_part_and_back() -> void:
 
 
 func test_a_disabled_row_keeps_the_top_down_part() -> void:
-	var r: HeldPitchRow = _shipped().pitches["55"].get(&"gatling", null)
-	assert_not_null(r, "the 55 Gatling art stays in the table")
-	assert_false(r.enabled, "judged worse than the top-down part at 48 px/m")
-	assert_null(_shipped().row(&"gatling", 55.0))
-	assert_null(_shipped().make(&"gatling", 55.0, WeaponArt.new()))
+	var h: HeldPitchArt = HeldPitchArt.new()
+	var r: HeldPitchRow = HeldPitchRow.new()
+	r.art = "res://features/combat/weapons/art/held_55/gatling.png"
+	r.enabled = false
+	h.pitches["55"] = {&"gatling": r}
+	assert_null(h.row(&"gatling", 55.0), "enabled false: the top-down part draws")
+	assert_null(h.make(&"gatling", 55.0, WeaponArt.new()))
+	r.enabled = true
+	assert_eq(h.row(&"gatling", 55.0), r)

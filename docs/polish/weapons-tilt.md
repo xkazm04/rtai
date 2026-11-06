@@ -89,8 +89,9 @@ The director reel on 8c64bdeb: top 19/19 and tilt 19/19 chapters, all down, 0 SC
 ## Still open
 
 - The Gatling: tried size_k 0.85 and a small cell without close_gaps; all read as a pale club. It
-  keeps the top-down part (`enabled: false`, the 55 art stays). A regenerated 55 Gatling (darker
-  barrels with visible gaps) is the next try.
+  kept the top-down part (`f0651a19`), then a regenerated 55 Gatling (gen55g: dark barrels with
+  gaps, no small cell) went back in: aimed it reads as a rotary gun (H 2); carried nose-down it is a
+  thin dark stick (H 1). `enabled: false` = the top-down part. Owner's call.
 - The 32 px/m read of the long guns: size_k per row; film both at 32 and pick.
 - The electro baton at 48 px/m.
 - The melee smear in the tilted plane; the flame jet and the electro arc at the drawn tip.
