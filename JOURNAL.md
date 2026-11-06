@@ -33,7 +33,15 @@ Before this lane every roof stayed flat on the ground under a tilt.
 - Evidence (proof of draw, NOT yet the 32 px/m judgement): `it1_facade_block_edge_7ppm_tilt70_vs_tilt55.png`
   (window rows under the lifted roofs at a block's south edge; 70 shorter than 55, as geometry says),
   `it1_city_wide_14ppm_top_vs_tilt70.jpg`. frames.json written (2 entries).
-- Gates: lint 15/15 on 49af40fb (pre-commit). Unit `--changed`: see below.
+- Gates: lint 15/15 (pre-commit, every commit). Unit: the schema change made `--changed` run the FULL
+  suite: 1468 passed, 0 failed (66 s). New `tests/unit/test_chunk_lift.gd` (3 tests: flat view builds
+  no lift, roofs last north to south, table heights/styles) 3/3, commit 522a6bc8. No mutation run yet.
+- MILESTONE (evidence): the 32 px/m before/after, `it1_facades_32ppm_top_vs_tilt70.jpg` (`--bot=course`
+  walks onto the hub's helipad block; frame 899): the faces read as brick buildings with windows and a
+  shutter bay. THE PROBLEM IT SHOWS: at true heights (14-21 m) the roofs at 70 ride up 5-7.6 m over the
+  whole north sidewalk, so Rivet and the arena barriers (actors canvas, above the world) draw ON the
+  roof. Two levers, both next: (a) the height call: a shortened cut (`height_k` ~0.5: 7-10 m, lift
+  2.5-3.8 m at 70, the sidewalk stays clear) - a data value; (b) occlusion (item 2).
 - FRICTION: `--start=<area>` did not move the city hub's camera (identical frames for boulevard and
   alley); the arena hub's blocks sit under the dev panel. Next session: frame a block edge at 32 px/m
   by `--ppm=32` + a bot walk toward the bottom-left block, or the main boot city (`--seed=2`, Rivet at
@@ -80,8 +88,9 @@ corner piece rejected per its note). Not yet read in full: concept-scene-parity,
   and draws it standing, in the props band. Tell me the function you want to own; until then they stay flat.
 
 NEXT:
-1. Unit `--changed` result (below), then a 32 px/m before/after of a block's south face (find a
-   framing), at 48 and 64 too; judge the print of the brick at close range.
+1. Film the same `--bot=course` frame 899 with `height_k` 0.5 and 0.7 (side by side with 1.0): pick the
+   default for play visibility, record the owner call (true vs shortened, the still + exe line).
+   Also 48 and 64 px/m (`--ppm=`) of the same spot.
 2. Combo: film an engage; check the 12-frame settle redraw does not flash (chunks are released and
    re-sliced over a few frames: possibly holes). If it flashes, redraw in place instead.
 3. Occlusion (item 2) per the view answer; payphone first for props (item 3): stand the props up from
