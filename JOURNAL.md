@@ -378,3 +378,12 @@ NEXT (iteration 7, in brief order):
 6. Before the freeze: director reel 19/19 top + combo, evidence run --no-bench, export the exe,
    REPORT with the Calls (King bust size, death beat length, attack lock, camera lead at speed,
    cover as a stack sized to the collision box).
+- CORRECTION 23:42 to it5's "phase-3 car pairs are a probe artifact": KingBodyView._wreck draws
+  the stalled car under the SAME condition the probe pairs on (phase >= 2 and KingMoves.car_at
+  set), so the wreck should be drawn at those ticks. Either the stills at 72/102 framed it out,
+  or the card views draw the wreck's stack/roof invisibly. Re-check with a 64 px/m still centred
+  on km.car_at (NEXT 5) before calling it an artifact; the it5 verdict is withdrawn until then.
+  23:39 first re-check: `--boss=king --phase=3 --bot=boss --seed=2 --view=combo --rigs --order-probe`
+  windowed, 130 ticks: car pairs 0 (it5's 10 pairs came with another flag set, likely
+  `--bot-stand`), and neither the King nor a wreck is in Rivet's frame for those 130 ticks. Repeat
+  it5's exact command (from `evidence/n8-view/order-probe-it5/`) with a still at its first wrong tick.
