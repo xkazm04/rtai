@@ -308,3 +308,10 @@ NEXT (iteration 5):
   before/after, the v1 "bold" rejected on film, gates in both views); concept-scene-parity (calls on game
   frames at 48/64, not on paper); depth-ordered-layered-art (the crescent stays in the held view's layer under
   the blade; nothing else reordered); generative-artifact-gating and sprite-and-atlas-production: no new art.
+- 17:13 Trial export (to de-risk the freeze): FRICTION/fixed: appdata/weapons/Godot/export_templates was an
+  EMPTY plain folder (not the junction), so `--export-release windows-showcase` failed "No export template
+  found". Replaced the empty folder with a junction to %APPDATA%/Godot/export_templates (verified empty
+  first). Export now exit 0 in ~1 min: build/export/windows/RTAI.exe (247 MB) + gtai_sim dll. Command:
+  `APPDATA=C:/Users/kazda/kiro/gtai-d8/appdata/weapons "$GODOT_BIN" --headless --path project --export-release windows-showcase ../build/export/windows/RTAI.exe`
+  Smoke: `RTAI.exe --quit-after 900 -- --bot=reel --reel=director --chapter=plasma_sword --loadout=pistol --ppm=48 --view=tilt --rigs`
+  -> chapter 1/1 down, 0 SCRIPT ERROR. Re-export at the freeze (this one is a7f6e29d + docs).
