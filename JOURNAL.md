@@ -237,3 +237,22 @@ NEXT (iteration 6, in order; freeze 18:30):
 4. (done 16:27.) A gang-on-foot clip at 64 vs the claw (the gang in this clip mostly ride the car).
 5. At the freeze (18:30): export build/export/windows/RTAI.exe (int-day recipe in docs/decisions.md),
    evidence --no-bench, REPORT.md with Calls 1-7 (JOURNAL).
+
+## Iteration 6 by the runner (session 4; 2026-11-06 16:40-17:40, BUILD)
+
+- 16:40 Read JOURNAL, git log. Rules applied: `concept-scene-parity` (the hood cannon is cut FROM the
+  approved car sheet, not redrawn), `generative-artifact-gating` (the cut looked at x6 before it
+  shipped: the laurel and the mount bracket cover the barrel's lower half on the sheet, so only the
+  clean upper half is kept and mirrored), `depth-ordered-layered-art` (the bumpers extrude inside the
+  slice loop, so higher slices cover the far bumper and the ink pass inks the proud rows),
+  `motion-quality-gating` (judged in the live arena, seed 2, 64 px/m).
+- 16:47 MILESTONE throne-car hood cannon + bumpers under tilt (09b68a37): `KingCarWalls.cannon` draws the
+  barrel cut from king_car_55's side view (tools/art/king_car_cannon.py: a round barrel's side
+  profile is its top silhouette; art/p55/car/cannon.png, 89x45) as a quad on KingCarTrim's swivel
+  mount, KingCarTrim's drawn barrel as the fallback (KingBodyView held at 235 lines: one call swapped).
+  The end walls' painted bumper rows (car_front/rear rows 98-126 = z 0.1-0.4 m) stand
+  `BUMPER_PROUD_M` 0.18 m past nose and tail (0 = flush), inked. Provenance row added.
+  GATE top identity measured: King `--view=top` tick 720 at 32 px/m, HEAD code vs new: raw-frame md5
+  e7d41ab1... both. Unit --select test_king_car_walls,test_king_art 12/12 (2 new tests); lint 15/15.
+  Evidence: gtai-masters/d8/bosses/king_car_cannon_bumpers_64_before_after.png (frames.json #8;
+  king_car_64_t600 out of the list, file kept for REPORT). NEXT item 2 done.
