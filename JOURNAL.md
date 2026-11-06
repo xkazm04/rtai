@@ -451,3 +451,33 @@ NEXT (iteration 13+; freeze 08:30, report 08:40):
    then say "draw cost of the tilt NOT measured" in REPORT, as now).
 - STILLS GRID `gtai-masters/n7/view/king_views_grid_32ppm_it12_t12s.png` (seed 2 tick 720, top / top_lift / tilt65 / tilt / tilt45_cards, 0 SCRIPT ERROR each). LOOKED: labels match what each row draws; tilt rows show King's crown and Rivet standing. frames.json 15 (the it4 x2 crop dropped).
 - GATE `node tools/evidence/run.mjs --no-bench` on 3059b7b1 (all it12 code, switch off): lint 13/13, unit 1186/0, scenarios 52, parity bit-exact, selftest look goldens 11/11 + block 5/5, all PASS (`evidence/view/it12/evidence-run-3059b7b1.log`). The idle director reel ended on its own timeout. Session end 06:56; everything committed. NEXT above stands (1: the freeze gates on the final HEAD; 2: occlusion silhouettes).
+
+## Iteration 15 (06:57-07:57), BUILD
+Starting from it12's NEXT (no it13/14 sessions in the log). Target: NEXT 2 occlusion under tilt.
+Rules applied: registry `measured-draw-order` (count the failures, do not eyeball), `concept-scene-parity`
+(judge in the live city block path).
+- FRICTION: the first film ran without `res://dev/arena/arena.tscn` on the command line: the boot
+  scene ignored --bot/--shot ("unknown launch arg") and idled; killed (my PIDs only). The arena
+  path is `--path project res://dev/arena/arena.tscn -- ...`.
+- FOUND: under tilt every arena prop draws with the floor (under all actors), so a body north of a
+  barrier drew over its lifted face and top. MEASURED (PropOcclusion's counter, headless): city
+  block seed 2 `--bot=rivet` 3600 frames: 176 body-frames behind a prop, frames 648-1114 (mostly a
+  downed cop by the barrier, 1012-1108); the King fight seed 2 5400 frames: 8 (crate rows rarely
+  have anyone behind them). Logs `evidence/view/it15/`.
+- FRICTION (45 min of the hour): `clip_children` on the actor layer drew nothing (proved with a
+  magenta debug mask: CLIP_CHILDREN_DISABLED drew it, 352 px at the hidden cop); a pooled
+  `clip_contents` Control per body drew one row. Both rejected; no time to find why.
+- MILESTONE 2d31cee6: `PropOcclusion` (tilt only, view.json `occlude`, `tilt_noocclude` = it12):
+  redraws a prop with a body behind it over the actors (the floor's own `_prop`, pixel-identical:
+  the A/B diff is only the 33x14 px where the body was), the body's ink silhouette cut to the
+  prop's area (Geometry2D.intersect_polygons; slivers skipped, they failed triangulation), a body
+  in front lifted over it. Lint 13/13. Unit test `test_prop_occlusion` (3).
+- FILM `gtai-masters/n7/view/city_occlusion_tilt_noocclude_vs_tilt_32ppm_x4_it15.png` (tick 1060,
+  0 SCRIPT ERROR each). LOOKED: left the downed cop spills over the barrier's top with his blood
+  on it; right the barrier's cream top edge runs unbroken over him. NOT shown: a STANDING body's
+  silhouette (the tick 648 case lasted 3 frames; the still at 650 grabbed the frame before).
+  frames.json 15 (it4 3-view clip dropped and deleted, superseded by the it12 clip).
+- KNOWN GAPS: Rivet's held weapon follows his z before the front lift (could hide under a
+  redrawn prop when he stands in front of one with a body behind it); the city's own chunk props
+  and buildings are still flat under tilt (only the arena's station props have height).
+- GATE unit 1189/0 on 2d31cee6 (scratch unit.log), lint 13/13.
