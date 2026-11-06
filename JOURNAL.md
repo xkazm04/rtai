@@ -840,3 +840,12 @@ NEXT (written 01:53, for iteration 10):
   (`evidence/n7-melee/{director-arena,director-city,scenarios}-*87d7dc2b.log`).
 - FRICTION 01:51 `tools/evidence/run.mjs` refuses an untracked log in the tree ("working tree is
   dirty", exit 2): commit reel logs before the evidence run.
+- GATES 02:03 `node tools/evidence/run.mjs --no-bench` on `317e86f2` (code = `87d7dc2b`), tree
+  untouched during it: exit 0, lint 13/13 (967 files), unit 1204/1204, scenarios 52/52, parity
+  bit-exact over 1200 steps (planted caught at 629), selftest look goldens 11/11, block 5/5
+  (`evidence/n7-melee/evidence-run-317e86f2.log`). Bench not run (contended, no lock).
+- STOP 02:04 iteration 9. Code commits: `ac548347 c955172e ab8cf8d0` (n7-ranged merges incl. the
+  missed prerequisite), `c48b2806` (chips in local space), `87d7dc2b` (the shipped quest 1 starts
+  again + test_slice_closure). Docs: call (h), set_clip.sh + the 44 s city clip, trial exes, the
+  REQUEST on Kerf's cooldown. NEXT is the 01:53 entry (items 1-4). Scratch: this iteration's AVIs
+  deleted; 13 older AVIs kept.
