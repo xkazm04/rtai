@@ -393,3 +393,19 @@ NEXT (iteration 6, the FREEZE session):
   baton try 3 rejected on film, gates in both views); concept-scene-parity (calls on game frames at 48/64);
   depth-ordered-layered-art (the tank's order is decided by facing against the camera, not by tree order);
   generative-artifact-gating (gen55i keyed, looked at, filmed, rejected; nothing shipped, so no provenance).
+- 18:10 Gatling at 64 tilt, same seed: the ammo box (same node as the tank) covered the collar and chin facing
+  the camera; after 6533af0e it sits behind. gtai-masters gatling_tilt_64_box_behind_before_after.png.
+- FRICTION: the 18:07 evidence run marked unit FAIL ("tree changed during run": I edited JOURNAL/REPORT while
+  it ran; 1429/0 otherwise). Re-ran on a clean tree, touching nothing: 18:24 on 9b6c1d7a every check PASS
+  (lint 15/15, unit 1429/0/0, scenarios 52, parity, selftest goldens 11/11 + 5/5, export audit 541/0).
+  Lesson: write docs only after evidence finishes.
+- FREEZE 18:25: exe build/export/windows/RTAI.exe on 6533af0e (18:06). REPORT final.
+
+NEXT (the next run on this lane):
+1. The owner's calls in REPORT (Gatling part, long guns at 32, baton, pickup hover); the baton was tried three
+   times, so take their pick.
+2. The flamer's hose still draws over the body when the tank goes behind (it rides the held view's z): give
+   HeldFeedLine the tank's z when it is behind.
+3. The plasma rifle rides above the claw when aimed (64 sheet): re-measure its grip_px on the 55 part.
+4. 70 pitch: add held_70/ rows beside held_55/ once view70 lands its pitch row.
+- Session end 18:26 (iteration 6). Branch head clean after this commit.

@@ -31,13 +31,13 @@ same seed and bot for before and after.
 4. **Floor pickups (iteration 5, 81548c4e).** Under tilt the gun hovers 0.35 m over its disc, stood up
    for the raised camera, with an ink shadow (`pickups_tilt_48_hover_before_after.png`, 48 + 32 px/m).
 
-Gates. Evidence run `node tools/evidence/run.mjs --no-bench` on `ca3edb4d` (the same code as `cddcc340`),
-17:46, every check PASS: lint 15/15 over 1095 files; unit 1428 passed, 0 failed, 0 skipped; scenarios 52
-passed (headless); parity native == GDScript bit for bit over 1200 steps, planted mutation caught at step
-629; selftest look goldens 11/11 and block goldens 5/5 within mean 4, no new off-doctrine accents; export
-audit release-compile 541 loaded, 0 failed. So `top` did not move. Director reel headless on `cddcc340`:
-`top` 19/19 and `tilt` 19/19, every chapter all down, 0 SCRIPT ERROR. Bench skipped (`--no-bench`),
-unmeasured.
+Gates. Final evidence run `node tools/evidence/run.mjs --no-bench` on `9b6c1d7a` (code = `6533af0e`), 18:24,
+every check PASS: lint 15/15 over 1095 files; unit 1429 passed, 0 failed, 0 skipped; scenarios 52 passed
+(headless); parity native == GDScript bit for bit over 1200 steps, planted mutation caught at step 629;
+selftest look goldens 11/11 (worst 0.27) and block goldens 5/5 (worst 0.22) within mean 4, no new
+off-doctrine accents; export audit release-compile 541 loaded, 0 failed. So `top` did not move. Director
+reel headless on `6533af0e`: `top` 19/19 and `tilt` 19/19, every chapter all down, 0 SCRIPT ERROR. Bench
+skipped (`--no-bench`): unmeasured.
 
 5. **Molotov (iteration 5, cddcc340):** the 55 bottle is drawn at 1.2x; at 1x it read tiny in the claw at
    48 px/m, and at 1.35x it read as a club (`molotov_tilt_48_size_k.png`).
