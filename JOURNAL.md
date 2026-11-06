@@ -1254,3 +1254,38 @@ its side of the body across poses).
 - FRICTION: a local `gun_side` in step() shadowed my first name for the new function (warnings
   as errors, 423 SCRIPT ERRORs in the test run): renamed aim_side. Python on Windows writes CRLF
   in text mode: write with newline='' / strip \r.
+
+### GATES 02:56: evidence on `994f8feb` (code `5586a80e`)
+- lint 13/13, unit 1164/1164, parity bit-exact (planted mutation caught at 629: the tube fix is
+  view only), selftest pass (look goldens 11/11, block 5/5); scenarios 51/52: `scenario_rig_stress`
+  50 people rig p50 1.123 ms > 1.0 (contended, the known flake). Re-run alone twice: pass (p50
+  0.744, 0.569 ms). Logs: scratch `it14-evidence-994f8feb.log`, `it14-rigstress-{1,2}.log`.
+- Reels on `5586a80e`: pit 19/19 + city 19/19, 0 SCRIPT ERROR
+  (`evidence/ranged/it14-reel-{director,city}-5586a80e.log`).
+
+### LOOK 02:50: Gloria re-scored, anticipation 1 -> 2 (audit row 13, no code)
+- Lone, 32 px/m, `994f8feb`, feel on vs off (kills 274 / 562 in both). Frames 262-271 at 2x: the
+  shot frame (265) prints the 1.8x flash star; the next frame the gun arm swings out (rig_kick 0.8,
+  in both builds), the camera kicks 1.5 px (on only). Flash + arm kick = 2 by the rubric; a sidearm
+  has no wind-up, so 2 is its ceiling. The it3 "1" predates muzzle_k and the fire kick.
+
+### FINDING 02:55: the Gatling's victim (audit row 3, closed without code)
+- Lone, `--reach=5` (at reach 9 the fight cam leaves the cop below the frame), 32 px/m, feel on/off.
+  First read wrong: frames 300-330 show stars and vermilion tracers at the cop. Those are the COP's
+  muzzle flashes and rounds going up at Rivet: the Gatling is spinning (the whirl at the barrel tip
+  336-354), its first round at 358, a hit mark at 362, the cop down from 364. ReactLink logged 1
+  wound + 1 death: damage 50 x 2 rounds kills, so a human is never under sustained fire; "pinned
+  under the stream" is a crowd / robot read (bosses: the boss lanes' rigs).
+- Also checked and refuted on the way: HumanReact.play restarts a family at t=0 on every hit, which
+  would make a 20 Hz flinch vibrate the body; it cannot happen on a human with this damage, but
+  it would on a sturdier human (a riot cop with a shield?). Note for whoever builds a tougher human.
+
+### LOOK 02:58: plasma rifle re-scored, impact 2 -> 3 (audit row 4, no code)
+- Lone, `--reach=5`, 32 px/m, `994f8feb`, feel on vs off (one-shot kill, tick 335). On: the hit
+  frame prints an ink star over the cream glow, holds about 6 frames, the camera kicks; then the
+  hole and the scorch. Off: the glow only. The it1 score was taken with --feel=off.
+
+### FYI from n7-melee 02:26 (film resolution), answered
+- My films pass no `--resolution`: Movie Maker writes 1280x800 (checked: tube, glo, gv, pl films),
+  and the city combined clip is a 960x560 crop with the HUD panel out on purpose. The
+  `evidence/film*.sh` scripts that pass 1280x720 are the showcase lane's (git log), not used tonight.
