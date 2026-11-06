@@ -1,6 +1,6 @@
 # n7-melee REPORT (night 2026-11-05/06): Rivet's melee and the four ghosts' attacks
 
-Final, written at the freeze (iteration 21, 08:xx; code head `48cb43d2`, evidence and both exes on it). Clips are under `C:\Users\kazda\kiro\gtai-masters\n7\melee\` (`M/` below); the shortlist is in
+Final, written at the freeze (iteration 21, 08:10; code head `48cb43d2`, evidence and both exes on `798b4960`). Clips are under `C:\Users\kazda\kiro\gtai-masters\n7\melee\` (`M/` below); the shortlist is in
 `M/frames.json`. Every change below is view only: no sim tick, replay or parity hash moved. Quest 1's
 final hash moved once, deliberately, when quest 1 started carrying the katana (`fbc5a982`).
 
@@ -41,16 +41,16 @@ card whole; last re-cut on `3fd49218` for Kerf's camera glide; the five melee se
 other ghost segments from `5c4219b2` on; nothing filmed in it changed since: the later code is Dent's miss lash,
 and the city Dent beat seizes a car, so it never misses).
 
-Gates on the code head `fca3ba52` (07:28-07:35):
+Gates on the code head `48cb43d2` (08:01-08:08):
 - director reel 19/19 in the arena and 19/19 in the city block (every chapter fully down), 0 SCRIPT ERROR;
-- the full `node tools/evidence/run.mjs --no-bench` on `9e246820` (clean tree): lint 13/13, unit 1242/1242,
+- the full `node tools/evidence/run.mjs --no-bench` on `798b4960` (clean tree): lint 13/13, unit 1242/1242,
   scenarios 52/52, parity bit-exact over 1200 steps with the planted mutation caught at 629, look goldens 11/11,
-  block goldens 5/5 (`evidence/n7-melee/evidence-run-9e246820.log`).
+  block goldens 5/5 (`evidence/n7-melee/evidence-run-798b4960.log`).
 Bench not run: contended machine, no lock taken.
 
 The logs are in `evidence/n7-melee/`.
 
-Exes (both exported on `9e246820`, code `fca3ba52`, at 07:35; bake + export exit 0, 0 ERROR lines; each booted once:
+Exes (both exported on `798b4960`, code `48cb43d2`, at 08:08; bake + export exit 0, 0 ERROR lines; each booted once:
 exit 0, 0 SCRIPT ERROR):
 - `build/export/windows/RTAI.exe`: the showcase build (arena, city block, every reel and ghost beat). The "See it"
   lines below are for it; add the before flag named in each call.

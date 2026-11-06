@@ -1651,3 +1651,21 @@ NEXT (written 07:37, for iteration 19 = the freeze; supersedes the 06:45 list):
   its place), motion-quality-gating (live arena path, before/after, measured, the take looked at).
 - GATES on `48cb43d2`: lint 13/13, unit 1242/0 (07:53); reels + scenarios running.
 - GATES 08:01 on `48cb43d2`: director reels arena 19/19 and city 19/19 (38 lines each), 0 SCRIPT ERROR; scenarios 52 ran, 0 failed (`evidence/n7-melee/{director-arena-loadout,director-city-loadout,scenarios}-48cb43d2.log`).
+- GATES 08:08 `node tools/evidence/run.mjs --no-bench` on `798b4960` (code `48cb43d2`), clean tree,
+  untouched through the run: exit 0; lint 13/13, unit 1242/1242, scenarios 52/52, parity bit-exact
+  over 1200 steps (planted caught at 629), look 11/11, block 5/5
+  (`evidence/n7-melee/evidence-run-798b4960.log`). Bench not run (contended, no lock).
+- EXE 08:08 re-baked and re-exported on `798b4960`: bake 0, both exports 0, 0 ERROR lines
+  (`evidence/n7-melee/it18-{bake,export,export-slice}.log`, overwritten). Booted the showcase exe
+  `RTAI.exe --screen 0 --rendering-driver d3d12 -- --bot=ghosts --ghost=tonnage --whiff --rigs
+  --ppm=32` (200 frames): exit 0, 0 SCRIPT ERROR, no unknown flag; frame 130 looked at (tick 126,
+  the slam flash on empty road, the cops clear). Slice exe: exit 0, 0 SCRIPT ERROR. Film deleted.
+- CLEAN 07:54 scratch: the 19:40 `audit_*_48.avi` (no doc names them) and the combined clip's
+  `set_*.avi` sources deleted; this iteration's films deleted; scratch 44 MB.
+- REPORT final: DRAFT line dropped, the top, gates and exe section on `798b4960` / `48cb43d2`, the
+  whiff in the wind-ups row and call (o).
+NEXT (written 08:10, the freeze): nothing left to build tonight. If another session runs before
+09:00: docs only. The Director merges `n7-melee`; the audio_cues.json tail conflict with n7-ranged's
+`5ed859c4` keeps both rows. Morning: the owner's calls (a)-(q) in REPORT; after them, the order
+in REPORT "Next steps" / the 07:37 NEXT (ObjectiveView vs forms_lift_m; real recorded sounds).
+- STOP 08:10 iteration 21.
