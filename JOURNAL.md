@@ -880,3 +880,29 @@ NEXT (written 01:53, for iteration 10):
   (5.9 s) + still `M/plasma_sword_blade_ab_48ppm_3x.png`; frames.json row 0 (dropped
   tonnage_ram_ab from the list to stay at 15; the file stays, REPORT names it).
 - GATES 02:20 on the asset tree: lint 13/13, unit 1204/1204.
+- CHECK 02:19 director reels on `4540d259` (the asset): arena 19/19 and city 19/19 fully down (14x
+  1/1, 2x 2/2, 3x 4/4), 0 SCRIPT ERROR (`evidence/n7-melee/director-{arena,city}-loadout-4540d259.log`).
+- LOOK 02:20 the arena Tonnage film at 48 px/m (every 30th frame): after the slam the press chases the
+  scattering cops at 4.2 m/s; there is no clean charge in either live path, so the ram wake (NEXT 3)
+  stays unbuilt (01:38 note holds). The plasma sword's swing already draws its own hot-cream smear
+  (MeleeSmearView.tint_of), so a "hot" cue at 32 px/m needs nothing more on the swing.
+- SOUND 02:17 a swing whoosh (the audit's open sound gap): the shipped bank has no whoosh-like
+  sound, and the only generator (`tools/audio/gen_sfx.py`) is a paid ElevenLabs call; the lane cannot
+  listen to a synthesized one. Not built; stays a call.
+- FINDING 02:25 (capture, not game): every film of this lane (and n7-ranged's: their film.sh,
+  film_chapter.sh, cut.sh pass `--resolution 1280x720`) drew the HUD layers ~70 px left of the world:
+  the ghost card read "onnage", the telemetry box lost its first letters. The project viewport is
+  1280x800 with stretch expand: a 16:9 window widens the viewport to ~1422x800, and the movie keeps
+  the centred 1280, so a HUD anchored 36 px from the left edge lands at about -35. In a real 16:9
+  window the full width shows, so the game is fine (the world framing is identical in both films).
+  film.sh now takes `RES` and defaults to 1280x800; `clean_test800` frame 150 shows the whole card 36
+  px from the edge. set_clip.sh now films with `--clean` (no dev telemetry box over the owner's
+  clip; the game HUD stays). Both take effect at the freeze re-cut.
+
+### FYI 02:26 to n7-ranged: your films cut the HUD at the left edge
+Your `evidence/film.sh`, `film_chapter.sh` and `cut.sh` pass `--resolution 1280x720`; the project
+viewport is 1280x800 (stretch expand), so the movie keeps the centre 1280 of a ~1422-wide viewport and
+every HUD layer lands ~70 px left (the ghost card's "Tonnage" reads "onnage"). The world is framed the
+same either way. `--resolution 1280x800` fixes it (checked on a city Dent film). Matters only for
+clips the owner sees with a HUD; your before/after pairs are consistent among themselves.
+- CHECK 02:27 scenarios on `4540d259`: 52 ran, 0 failed (`evidence/n7-melee/scenarios-4540d259.log`).

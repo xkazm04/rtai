@@ -17,14 +17,14 @@ GHOSTS="tonnage dent kerf ohm"
 IN=(); FILT=""; n=0
 for cl in $MELEE; do
 	ch=${cl%%:*}; last=${cl##*:}; first=${cl#*:}; first=${first%%:*}
-	[ "${RECUT:-0}" = 1 ] || bash $F set_${ch} 32 $((last + 10)) --arena=city --bot=reel --reel=director --chapter=$ch --loadout=pistol
+	[ "${RECUT:-0}" = 1 ] || bash $F set_${ch} 32 $((last + 10)) --arena=city --bot=reel --reel=director --chapter=$ch --loadout=pistol --clean
 	IN+=(-i "$S/set_${ch}.avi")
 	FILT+="[$n:v]trim=start_frame=$first:end_frame=$last,setpts=PTS-STARTPTS[v$n];"
 	FILT+="[$n:a]atrim=$(awk "BEGIN{print $first/60}"):$(awk "BEGIN{print $last/60}"),asetpts=PTS-STARTPTS[a$n];"
 	n=$((n + 1))
 done
 for g in $GHOSTS; do
-	[ "${RECUT:-0}" = 1 ] || bash $F set_ghost_${g} 32 410 --arena=city --bot=ghosts --ghost=$g --rigs
+	[ "${RECUT:-0}" = 1 ] || bash $F set_ghost_${g} 32 410 --arena=city --bot=ghosts --ghost=$g --rigs --clean
 	IN+=(-i "$S/set_ghost_${g}.avi")
 	FILT+="[$n:v]trim=start_frame=40:end_frame=400,setpts=PTS-STARTPTS[v$n];"
 	FILT+="[$n:a]atrim=$(awk "BEGIN{print 40/60}"):$(awk "BEGIN{print 400/60}"),asetpts=PTS-STARTPTS[a$n];"
