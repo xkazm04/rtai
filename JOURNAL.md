@@ -1437,8 +1437,8 @@ Read: JOURNAL NEXT (it13), git log, frames.json. `king_car_trim.gd` showed `M` w
   King down at tick **4933**, took **88**, coin_fan 3 / press_slam 1 / ram 1, 0 SCRIPT ERROR.
 
 NEXT (iteration 15, in order):
-1. (done 04:16, below: the ram/coin-fan clip.) The decree clip (it13) shows the brawlers' old
-   2 px chain arcs; re-film it on the current head (phase 2 seed 2 stander, 16.2-20.6 s, 1280x800).
+1. (done 04:16-04:20, below: the ram/coin-fan and decree clips.) Every REPORT clip is now it13-it14;
+   the charge (it13) predates the chains but shows King alone on foot, so it stands.
 2. The gang's shades: the drawn arc failed (journal 04:12). Next try is in the part art: the
    gang sheet's visor cell darker at 32 px/m (`tools/art/gang_parts.py`), A/B against call I's
    light dome; or leave it as a REPORT gap.
@@ -1453,3 +1453,8 @@ NEXT (iteration 15, in order):
   **Looked at** the 2.5 fps sheet and a full frame at 7.0 s: the lane outlined then filled, the car
   runs it, the dodger steps off; the cone, the coin burst, the dodger out of the cone; gold chains
   on all four car gang. it12 clip deleted; frames.json 15; REPORT points at it14. Session ends.
+- 04:20 FILM `M/king_decree_48ppm_it14.mp4` on dc2e70fc (phase 2 seed 2 stander, 16.2-20.6 s,
+  1280x800, the it13 caption burned in with drawtext, 0 SCRIPT ERROR). **Looked at** the 4 fps
+  sheet and the 1.5 s frame beside it13's: the same framing and moment; the decree rings round King
+  on the stalled car, the brawlers in the heavier chain. it13 deleted; frames.json 15; REPORT it14.
+  AVIs deleted. Session ends, everything committed.
