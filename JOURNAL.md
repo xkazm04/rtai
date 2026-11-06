@@ -1015,4 +1015,6 @@ NEXT (iteration 9, in order):
   360, 32 px/m, 2x): the four gang read heavier, limbs thicker, the dome a touch clearer; the heads
   still print dark at the centre (the black shade band + chains over a small dome). Partial: keep
   NEXT 1 open for the head (a wider dome / thinner band at 32 px/m). Unit 1159/0 (`unit-it8b.log`),
-  lint 13/13. Decisions line. Not yet re-measured: the seed 2 ticks (render only, expected equal).
+  lint 13/13. Decisions line. Render only, measured: seed 2 human King down at tick 4933, took 88, same landings (`numbers-it8b/`).
+- Session ends ~01:10, everything committed. NEXT for iteration 9 = the list above (item 1 now
+  only the gang's head at 32 px/m; then the re-films on the it8 body, the charge clip, reel, freeze).
