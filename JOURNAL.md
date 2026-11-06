@@ -1541,7 +1541,7 @@ leaves; a weapon's FX is keyed by weapon, never by target), motion-quality-gatin
 same-build before in the live quest path, the quest's own clip window), depth-ordered-layered-art
 (the flash prints on the FX layer over the rig, in ink, look-3).
 
-### MILESTONE 04:31: `01a482d1` the quest 1 rifle draws its stand-in's flash and inked tracer
+### MILESTONE 04:17: `01a482d1` the quest 1 rifle draws its stand-in's flash and inked tracer
 - `boot/collect_call/view/bare_gun_fx.gd` (BareGunFx, render only): a Rivet round with no spec
   (combat.json path, `arena.gun` null) draws with rivet_arsenal.json `art_stand_in`
   (assault-rifle -> machine_pistol): the stand-in's projectile cell (tracer) converging from the
@@ -1555,7 +1555,7 @@ same-build before in the live quest path, the quest's own clip window), depth-or
   row for the rifle) = sim change + re-bless; not taken.
 - TEST `test_bare_gun_fx` 3/3; planted (drop the `s.spec != null` guard): 1 fails. Lint 13/13.
 
-### FILM + LOOK 04:40: the quest 1 rifle, before/after at 32 px/m, after at 48 px/m
+### FILM + LOOK 04:21: the quest 1 rifle, before/after at 32 px/m, after at 48 px/m
 - `quest1_clip.gd --cam=fight --ticks=14340-14560` on `01a482d1`: b32 (`--weapon-fx=shapes`), a32,
   a48: each exit 0, 0 SCRIPT ERROR, 111 clip frames (a frame every 2 ticks; scratch `r16/`).
 - Pixel diff b32 vs a32: frames 1-67 differ (the rifle's bursts) and 108-110 (Gloria's art cells,
@@ -1569,3 +1569,27 @@ same-build before in the live quest path, the quest's own clip window), depth-or
   `quest1_rifle_flash-48ppm.mp4` (after, cropped 800x600). frames.json entry 1 (newest; dropped
   `heavy_feel-ab-48ppm.mp4` from frames.json to keep 15; its file stays, REPORT row 1 cites it).
 - REPORT row + the not-done line rewritten; audit row; decisions.md line.
+
+### GATES 04:23 on `01a482d1` / `3e4364c0`
+- Scenarios 52 ran, 0 failed, 0 SCRIPT ERROR; quest 1 `"replay":"identical"` (render-only change
+  proven: `evidence/ranged/it16-scenarios-01a482d1.log`). Reels pit 19/19 + city 19/19, 0 SCRIPT
+  ERROR on `3e4364c0` (`evidence/ranged/it16-reel-{director,city}-3e4364c0.log`).
+- The rifle's I and V stay `?`: in the clip window the scripted bot fires at contractors at the
+  frame's right edge (full-frame sheets, scratch `r16/full32*.png`). Its hits already go through
+  FeelCam (light class, by weapon id) and ReactLink; nothing rifle-specific is missing there.
+
+### MILESTONE 04:26: `6e50068c` the Gatling voices a shot of its own (audit S 2 -> 3)
+- Data only: audio_cues.json `shot_gatling` (rifle_shot pitch 0.82, -3 dB, 6 voices, cooldown 2,
+  75 m); weapons.json gatling shot_cue `shot_assault_rifle` -> `shot_gatling` (it shared the
+  contractors' rifle with the machine pistol). Test `test_weapon_shot_cues` +1 (3/3); planted
+  (back on shot_assault_rifle): 3 asserts fail. Lint 13/13.
+- MEASURED: samples as played (first 150 ms centroid, peak after gain, length): 2.35 kHz -7 dBFS
+  0.82 s -> 1.95 kHz -6 dBFS 1.00 s. Lone film (`--weapon=gatling --bot=gunplay --lone`, before =
+  a temporary weapons.json edit, restored, tree checked): kill tick 333 both, 0 SCRIPT ERROR, but
+  the cop dies to 2-3 rounds and the mix is masked by the hit cues. Range film (`--bot=range`,
+  720 frames): Rivet's stream differs 4.5-11.9 s; over 4.5-6.5 s the mix's centroid 3815 -> 3312
+  Hz, rms -13.0 -> -11.9 dB. Not listened to (no audio device): added to call 7.
+- LOOK: the clip's picture is the same in both halves (sound only), labels checked on a still.
+- Clip `gatling_shot_cue-ab-32ppm.mp4` (8 s with sound, before then after); not in frames.json
+  (a sound pair; frames.json keeps 15, `shot_cues-ab-32ppm.mp4` is the sound entry). REPORT row,
+  call 7, audit row, decisions.md line.

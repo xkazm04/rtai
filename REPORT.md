@@ -31,6 +31,7 @@ cut from main `763f8fba`. Clips and stills: `C:\Users\kazda\kiro\gtai-masters\n7
 | Mini-nuke framing: the camera follows the shell in flight (0.8 of the way, at most 10 m and 300 screen px) and holds 60 ticks on the landing while the ring plays, then eases back. Its ring is 12 m in radius, 384 px at 32 px/m on an 800 px screen, so on Rivet it was always cut: at 32 px/m only its top arc showed, at 48 nothing. Now the whole ring at 32 (Rivet at the top edge), the upper half at 48 and the top arc at 64, Rivet always in frame. View only (kill ticks unchanged, outside the kick cap) | `8efe76ca`, `a63bd8e0` | hit_feel.json mini_nuke `blast_lead_k` 0, or `--feel=off` | `nuke_blast_lead-ab-32-48ppm.mp4` |
 | The rocket, mini-nuke, hand cannon and homing shard voice a shot of their own (no new asset: three cue rows re-pitch the rifle shot and the nail-gun pop). Before: the rocket played the pistol shot, the nuke Rivet's joint whine at -19 dBFS (nearly silent under the bed), the hand cannon Gloria's nail-gun pop, the shard the generic pistol shot. Measured, not listened to: tube 1.2 kHz centroid at -5 dBFS, hand cannon 1.7 kHz, shard 10.2 kHz and 0.32 s (pistol 3.1 kHz, nail gun 6.0 kHz) | `d4559823` | the old `shot_cue` in each weapons.json row | `shot_cues-ab-32ppm.mp4` (with sound, each gun before then after) |
 | Quest 1's picked-up assault rifle prints a muzzle flash and inked tracers. It has no weapons.json row, so it fired on the quest's combat.json path with no flash and hair-thin ink dashes; it now draws with its rivet_arsenal.json art stand-in (machine_pistol: flash_smg at muzzle_k 1.3, the cream-and-ink tracer converging from the gun side), view only, so quest 1's replay does not move. Judged at 32 and 48 px/m in Dock 9 (ticks 14340-14560): every round shows a star on the claw tip and a tracer you can follow to the target | `01a482d1` | `--weapon-fx=shapes` | `quest1_rifle_flash-ab-32ppm.mp4`, `quest1_rifle_flash-48ppm.mp4` |
+| The Gatling voices a shot of its own, `shot_gatling` (the rifle shot at pitch 0.82, -3 dB, 6 voices; it shared the contractors' rifle shot with the machine pistol). Measured, not listened to: on the samples as played the onset centroid drops 2.35 -> 1.95 kHz and the tail grows 0.82 -> 1.00 s; in a 7 s sustained stream on the range (`--bot=range`), the mix's centroid over 2 s drops 3.8 -> 3.3 kHz at +1.1 dB rms. Picture and sim unchanged (lone kill tick 333 on both) | `6e50068c` | weapons.json gatling `shot_cue` = `shot_assault_rifle` | `gatling_shot_cue-ab-32ppm.mp4` (with sound, before then after) |
 | Combined clip of the polished set in the city block, 32 px/m, fight camera, with sound (72 s, retaken on `13e0e050`: every ranged chapter plus the whole nuke ring, with the tube fix and the nuke's camera lead) | `13e0e050` | - | `city_block_polished_set-32ppm.mp4` |
 
 Gates (iteration 5): evidence run on `41bb90e7`: lint 13/13, scenarios 52/52, parity bit-exact
@@ -90,12 +91,15 @@ because I edited docs during the run). City-block director reel with `--loadout=
 
 7. **The re-voiced shots.** Options: the shots built tonight from existing samples (`shot_tube`:
    the rifle shot an octave down for the rocket and nuke launch; `shot_hand_cannon`: the rifle shot
-   at 0.72; `shot_shard`: the nail-gun pop at 1.7, quieter), or main's borrowed cues (pistol shot,
+   at 0.72; `shot_shard`: the nail-gun pop at 1.7, quieter; `shot_gatling`: the rifle shot at
+   0.82, it16), or main's borrowed cues (pistol shot,
    joint whine, Gloria's pop), or a per-weapon sound asset pass (not built: new audio). Built
    default: the re-pitched cues. Nobody has listened to them yet (no audio device on the build
    machine; measured only): listen to `shot_cues-ab-32ppm.mp4` (each gun before, then after), or
    `RTAI.exe -- --weapon=mini_nuke --bot=gunplay --lone` (and `--weapon=hand_cannon`,
-   `--weapon=homing_shard`). The before is one data value per gun (weapons.json `shot_cue`).
+   `--weapon=homing_shard`); the Gatling's stream: `gatling_shot_cue-ab-32ppm.mp4` or
+   `RTAI.exe -- --weapon=gatling --bot=range`. The before is one data value per gun (weapons.json
+   `shot_cue`).
 
 (More calls may be added by later iterations.)
 
