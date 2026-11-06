@@ -462,3 +462,8 @@ NEXT (iteration 8, in brief order):
   default, so the voice should play) but no subtitle lift and no card fold: judge both on the clip.
 - GATE scenarios at ebd77c13 (`evidence/n8-view/scenarios-it7.log`): 52 passed, 0 SCRIPT ERROR, no
   CONTENDED (run alone); no golden or replay moved (`top` keeps the sprite cast).
+- GATE 00:35 combat does not regress after the rig-cast move: director reel (headless, `--quit-after
+  14000 --bot=reel --reel=director --loadout=pistol --rigs --view=<v>`) 19/19 chapters, every chapter
+  all down, 0 SCRIPT ERROR, in `top` and `combo` at ce7b4b87 (`evidence/n8-view/director-reel-it7-{top,combo}.log`).
+  Session ends here (00:45 stop). Head clean; lint 15/15; unit 1505/0; scenarios 52/0; reels 19/19.
+  Scratch stills deleted (copies in gtai-masters/n8/view). NEXT stands as written above.
