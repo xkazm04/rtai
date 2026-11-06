@@ -879,3 +879,30 @@ numbers; f448dbce car_goal on the floor, ad428713 gang helmets). No REQUEST to s
 - 01:02 keep_in takes HUD bands (`band_m`: top = the bar's HUD_PX, bottom = FOOT_PX =
   GhostFormHud.MARGIN + 162 px, the whole width), so the boss stays between the bar and the card.
   Unit test extended (a bottom-band case). Third full-fight film running.
+- 01:05 FILM `M/servo_fight_bot_human_32ppm_it8.mp4` (third take, ff643886): tick-identical
+  fight (down 8264 = 137.7 s, 210 on Rivet, 0 deaths). **Looked at** the 15 keys
+  (`M/frames/servo_fight_keys_32ppm_it8.png`): at 2400 and 3000 Servo stands whole above the
+  conveyor, clear of the ghost card; the price is an off-floor ground band at the bottom then.
+  The it5 full-fight clip deleted. 137 s is over the brief's 60-120 s: that is the measured fight.
+- 01:07 STILL `M/frames/servo_target_vs_game_32ppm_it8.png`: sheet | 1x | 2x at 32 px/m (tick
+  1800, the dash lane locked on Rivet, turned to face down). **Looked at**: the wide 3-bay rack
+  bar split by the spine with its hose cap, the hub, the pads on arms, the legs. Gaps: the sheet's
+  spine is a heavy rounded body (ours a narrow column); its pads hang lower and further out.
+- 01:08 FILM `M/servo_drone_wave_scan_drop_dodge_48ppm_it8.mp4` (the brief's wave clip, on the
+  current tree; dodging bot, seed 2, 4.5-11.5 s). **Looked at** the keys: beam tracks, locks,
+  rings on Rivet's spot, he steps off, a bomb blasts in its ring (the amber fireball). FOUND: at 48
+  px/m the rings fall beside the bottom-left ghost card (the cam keeps only the boss clear).
+  it3 clip + keys deleted. frames.json 15 (the spine A/B dropped: the 32 px/m still shows it).
+
+NEXT (iteration 9, in order):
+1. Merge n7-king if it moved; tell king about `BossCam.keep_in` + `FOOT_PX` (FYI above; the
+   signature is now `keep_in(focus, half_m, p, margin_m, band_m: Vector2)`).
+2. The spine heavier, toward the sheet's rounded central body (wider at the hub, ~0.8 m; it may
+   cover the inner bay column's edge: check the docked drones still read), and the pads lower and
+   further out (render only: `_draw` pad_w 2.6 / fwd 1.2).
+3. Re-film the per-attack 48 px/m clips on the current tree (all are it4/it5: before the 3-row
+   frame, the spine, the fireball): rotor dash, carpet, bay hop, hot dash.
+4. Windows export `build/export/windows/RTAI.exe` (`windows-showcase` preset, docs/decisions.md
+   2026-11-04 showcase export) by 08:30; check `RTAI.exe -- --boss=servo` boots into the depot.
+5. REPORT.md final (the draft is committed): the exe lines, the final gates, calls 1-9 + a call
+   for keep_in (boss over floor) if king disagrees.
