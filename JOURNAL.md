@@ -953,3 +953,13 @@ unit 1150/1150, scenarios 52/52, parity bit-exact, selftest), reels 19/19 + 19/1
   arena args after `--` work in the shipped build, Movie Maker included; REPORT exe lines hold.
   The only stderr line is the usual "105 resources still in use at exit".
 - NEXT 2 shrinks to: re-bake + re-export on the final head at the freeze, name it in REPORT.
+
+### AUDIT 01:12: the audit table's Sound and Impact columns brought up to date
+- Sound still showed iteration 1's zeros (the arena had no audio on main). Re-scored from the
+  weapons.json cue table + StageAudio (read, not listened: no audio device here): 3 for an own-family
+  shot cue + the impact on the frame (pistol, machine pistol, Gloria, flamer, electro, rocket and
+  nuke with `blast`), 2 for a shared cue (plasma rifle / ray gun share electro's tazer zap, hand
+  cannon shares Gloria's shot, the Gatling the machine pistol's, the molotov's throw is `servo`),
+  1 for the generic `shot` (homing shard). Own sounds per gun are a new-asset job (noted in the doc).
+- Impact 2 -> 3 for hand cannon, rocket and nuke (the camera answer scaled to the weapon, evidenced
+  by `heavy_feel-ab-48ppm.mp4` and `mini_nuke-ab-32ppm.mp4`). The header now says `a -> b` = after.

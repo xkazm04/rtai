@@ -21,25 +21,34 @@ not a 2), and an unfilmed cell is `?`, never a number.
 
 ## Ranked (weakest first)
 
-Iteration 1 scores: arena pit, lone cop, 32 px/m, `--feel=off` (main's feel). Columns:
+Iteration 1 scores: arena pit, lone cop, 32 px/m, `--feel=off` (main's feel); `a -> b` = the score
+after tonight's change (each evidenced below or in REPORT). Columns:
 Anticipation / Impact / Read 32 / Victim sync / Sound (arena). `?` = not looked at yet.
 
 | # | Weapon | A | I | R | V | S | Why it ranks here |
 |---|---|---|---|---|---|---|---|
-| 1 | mini_nuke | 1 | 2 | 2 | 3 | 0 | the biggest hit in the game and the frame does not move: a huge ink burst, no stop, kick or shake; half off frame |
-| 2 | rocket_launcher | 2 | 2 | 3 | 3 | 0 | strong ink blast, debris, smoke, crater; the camera ignores it (no weight) |
-| 3 | gatling | 1 -> 3 | 2 | 2 | 2 | 0 | casing/spark spray and blood read; sustained fire has no weight at all; the 0.5 s spin-up shows nothing (no barrel turn, no cue) |
-| 4 | plasma_rifle | 2 | 2 | 2 | 3 | 0 | impact star and a cream glow at the cop; it3 at 48 px/m: a 3-frame burst, the hole, the body thrown about 1.7 m along the bolt on the hit frame (the it1 "barely answers" was a misread at the frame edge) |
-| 5 | electro_gun | 2 | 2 | 2 | 3 | 0 | zigzag bolt, star, skeleton flicker, yellow burst; the kill reads; it3 `9c140ffb`: the struck (stunned) body is thrown 0.3 m along the bolt on the hit frame, then convulses |
-| 6 | homing_shard | 2 | 2 | 2 | 2 | 0 | the lozenge shards read in flight, a star on the hit frame and a small jolt/turn; the pop and the blood come at about T+40 (owner item 4: 3 + 36 grind ticks, JOURNAL) |
-| 7 | hand_cannon | 2 | 2 | 3 | 3 | 0 | ring at the muzzle, ink star + blood on the hit frame, body thrown; no camera answer for the heaviest single shot |
-| 8 | ray_gun | 2 | 3 | 2 | 3 | 0 | ink bolt and star on the hit frame, a pale ring at the body; it7 at 48 px/m: the kill is the approved brutality `ray_gun_dissolve` (star + stop, glow, the body locks and falls stiff, gold rings eat it from tick +40 to a dust heap); every beat reads at 48, the star, disc and gold ring at 32 |
-| 9 | flamethrower | 2 | 3 | 3 | 3 | 0 | it3 48 px/m: the vermilion/cream tongues grow from the nozzle over about 12 frames and light the cop on contact, patches stay; the ignition had no beat -> `e32720c4` a 3 px kick on the first puff |
-| 10 | molotov | 1 | 3 | 3 | 3 | 0 | it5 at 48 px/m, `--reach=7`: no wind-up on Rivet (the only cue is the next lit bottle in his claw); the bottle flies as a thin dark stick with a vermilion wick, readable at 48 px/m, thin at 32; the burst (ink, cream and vermilion star) and the burning cop read at a glance |
-| 11 | pistol | 1 -> 2 | 2 | 2 | 3 | 0 | Rivet's round is a 1-2 frame streak (the muzzle hardly reads at 32 px/m); blood spurt on T+1, the fall reads; it7 `d79c5278` muzzle_k 1.6: his flash now reads before the cop's |
-| 12 | machine_pistol | 1 -> 2 | 2 | 2 | 3 | 0 | each round sprays sparks and the body bleeds on the hit frames; the burst reads, Rivet's muzzle hardly did; it9 `193bc529` muzzle_k 1.3: the burst flickers as a cream star at the gun |
-| 13 | gloria | 1 | 2 | 3 | 3 | 0 | it3 (sheet `sheets/gloria-off-k2.png`, kill 2 at tick 562): a long dashed vermilion/ink tracer from the claw reads at a glance; blood on T+1, the body folds along the shot by T+12; no muzzle or kick of its own beyond the tracer; the victim at the frame edge (capture framing) |
+| 1 | mini_nuke | 1 | 2 -> 3 | 2 | 3 | 0 -> 3 | the biggest hit in the game and the frame does not move: a huge ink burst, no stop, kick or shake; half off frame |
+| 2 | rocket_launcher | 2 | 2 -> 3 | 3 | 3 | 0 -> 3 | strong ink blast, debris, smoke, crater; the camera ignores it (no weight) |
+| 3 | gatling | 1 -> 3 | 2 | 2 | 2 | 0 -> 2 | casing/spark spray and blood read; sustained fire has no weight at all; the 0.5 s spin-up shows nothing (no barrel turn, no cue) |
+| 4 | plasma_rifle | 2 | 2 | 2 | 3 | 0 -> 2 | impact star and a cream glow at the cop; it3 at 48 px/m: a 3-frame burst, the hole, the body thrown about 1.7 m along the bolt on the hit frame (the it1 "barely answers" was a misread at the frame edge) |
+| 5 | electro_gun | 2 | 2 | 2 | 3 | 0 -> 3 | zigzag bolt, star, skeleton flicker, yellow burst; the kill reads; it3 `9c140ffb`: the struck (stunned) body is thrown 0.3 m along the bolt on the hit frame, then convulses |
+| 6 | homing_shard | 2 | 2 | 2 | 2 | 0 -> 1 | the lozenge shards read in flight, a star on the hit frame and a small jolt/turn; the pop and the blood come at about T+40 (owner item 4: 3 + 36 grind ticks, JOURNAL) |
+| 7 | hand_cannon | 2 | 2 -> 3 | 3 | 3 | 0 -> 2 | ring at the muzzle, ink star + blood on the hit frame, body thrown; no camera answer for the heaviest single shot |
+| 8 | ray_gun | 2 | 3 | 2 | 3 | 0 -> 2 | ink bolt and star on the hit frame, a pale ring at the body; it7 at 48 px/m: the kill is the approved brutality `ray_gun_dissolve` (star + stop, glow, the body locks and falls stiff, gold rings eat it from tick +40 to a dust heap); every beat reads at 48, the star, disc and gold ring at 32 |
+| 9 | flamethrower | 2 | 3 | 3 | 3 | 0 -> 3 | it3 48 px/m: the vermilion/cream tongues grow from the nozzle over about 12 frames and light the cop on contact, patches stay; the ignition had no beat -> `e32720c4` a 3 px kick on the first puff |
+| 10 | molotov | 1 | 3 | 3 | 3 | 0 -> 2 | it5 at 48 px/m, `--reach=7`: no wind-up on Rivet (the only cue is the next lit bottle in his claw); the bottle flies as a thin dark stick with a vermilion wick, readable at 48 px/m, thin at 32; the burst (ink, cream and vermilion star) and the burning cop read at a glance |
+| 11 | pistol | 1 -> 2 | 2 | 2 | 3 | 0 -> 3 | Rivet's round is a 1-2 frame streak (the muzzle hardly reads at 32 px/m); blood spurt on T+1, the fall reads; it7 `d79c5278` muzzle_k 1.6: his flash now reads before the cop's |
+| 12 | machine_pistol | 1 -> 2 | 2 | 2 | 3 | 0 -> 3 | each round sprays sparks and the body bleeds on the hit frames; the burst reads, Rivet's muzzle hardly did; it9 `193bc529` muzzle_k 1.3: the burst flickers as a cream star at the gun |
+| 13 | gloria | 1 | 2 | 3 | 3 | 0 -> 3 | it3 (sheet `sheets/gloria-off-k2.png`, kill 2 at tick 562): a long dashed vermilion/ink tracer from the claw reads at a glance; blood on T+1, the body folds along the shot by T+12; no muzzle or kick of its own beyond the tracer; the victim at the frame edge (capture framing) |
 | - | assault-rifle | ? | ? | ? | ? | ? | in rivet_arsenal.json, not in weapons.json (`--weapon` cannot arm it); film via `--loadout` |
+
+Sound re-scored (it9, read from weapons.json cues + StageAudio, not listened to; no audio device
+here): the arena had no audio at all on main (the 0s); since `0f8e4f5f` every round plays its row's
+`shot_cue` on the frame it appears and `hit_flesh`/`projectile_end` on the frame it ends (+ the
+`blast` end_cue for rocket and nuke, `da508e6b`). 3 = a cue of its own family + the impact; 2 = a
+shared cue (plasma rifle, ray gun and electro share the tazer zap; hand cannon shares Gloria's shot;
+the Gatling the machine pistol's; the molotov's throw plays `servo`); 1 = the generic `shot`
+(homing shard). A per-weapon sound pass is a new-asset job, not tonight's polish.
 
 Films and 3x3 timing sheets (frames T-3, T, +1, +2, +4, +7, +12, +20, +40 around a kill) in the
 scratch audit folder: `<w>-off.avi`, `sheets/<w>-off-k2.png`.
