@@ -176,3 +176,13 @@ NEXT:
   hud_full_{1920x1080,1280x800}_after.png`, `hud_full_1920x1080_before.png`. Debt ratchet: dev_loc
   +33 accepted (the board's full-HUD still). Unit `--select=test_hud_art,test_hud_dialogue,
   test_boss_crest,test_story_forms` 25/0, lint 15/15.
+- 22:11 Gates at e1288012 (`node tools/evidence/run.mjs --no-bench`, `gtai-n8/scratch/hud/evidence_run.log`): lint 15/15, unit 1501/0, scenarios 52/52 (both wall-clock budgets passed this run), parity bit-exact + planted mutation caught at step 629, selftest look goldens 11/11 + block 5/5, export-audit 555/0. `top` look goldens did not move.
+- 22:12 DECISION lines in docs/decisions.md: hud/boss bar (the crest) and hud/colour (the brass bullet).
+- REQUEST to assets: weapon_crate_open, 70 and 55: ONE open wooden weapon crate drawn ALONE, lid
+  off and leaning on its side, empty, straw/packing lining visible inside (the interior floor must
+  read from above: at 70 the open top is the big plane), the same plank wood, X-bracing and black
+  corner brackets as `keyed/prop/crates_70.png` (A, attach it as the reference), five rotations,
+  no stencils or text, no red. Size: about 1.2 m x 0.6 m (a long gun fits lying in it). Why: the
+  showcase weapon goes INTO the crate (the brief's "open crate" display and the pickup-hover call);
+  the library crates are closed piles. Until it lands the crate display waits; pickups keep the
+  hover.
