@@ -38,11 +38,10 @@ const BARRIER_M: float = 2.0
 const CULL_M: float = 3.0
 
 var _city: bool = false
-## perf-city: on the city block the props and the crowd rings are drawn once on this child (behind
-## this node, with its material: the same order and print), not re-issued every frame (0.5 ms of
-## a 60 fps frame in the city fight). Props and spawns never change after the stations load.
+## perf-city: the city's props and crowd rings draw once on this child, not every frame (0.5 ms).
 var _static: Node2D = null
 var _static_of: ArenaStage = null
+var _static_rev: int = 0
 
 
 func _draw() -> void:
@@ -90,8 +89,9 @@ func _held(arena: ArenaStage) -> void:
 		add_child(_static)
 		@warning_ignore("return_value_discarded")
 		_static.draw.connect(func() -> void: _props(_static, _static_of))
-	if _static_of != arena or ViewMode.shared().eye_h_m > 0.0:  # a perspective eye moves
-		_static_of = arena
+	if _static_of != arena or _static_rev != ViewMode.revision or ViewMode.shared().eye_h_m > 0:
+		_static_of = arena  # a new stage, a combined view's eased pitch, a perspective eye
+		_static_rev = ViewMode.revision
 		_static.queue_redraw()
 
 

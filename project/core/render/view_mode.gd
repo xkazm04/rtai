@@ -16,6 +16,9 @@ const CAST_DIR: Vector2 = Vector2(0.70710678, 0.70710678)
 static var _shared: ViewMode = null
 ## The camera's ground point in world px (PrintStage.place sets it each frame; read by lift_at).
 static var eye: Vector2 = Vector2.ZERO
+## Bumped by set_pitch (a combined view easing its pitch live): a drawing cached at one pitch (the
+## city floor's static props) redraws when it moves. Never moves in a fixed-pitch view.
+static var revision: int = 0
 
 var id: StringName = &"top"
 var pitch_deg: float = 90.0
@@ -76,6 +79,13 @@ static func _flag_value(args: PackedStringArray) -> String:
 		if arg.begins_with(FLAG + "="):
 			return arg.substr(FLAG.length() + 1)
 	return ""
+
+
+## A live pitch change (the combined view's ease, d8-view70): every per-frame reader follows on its
+## next frame; drawings cached at the old pitch see `revision` move and redraw.
+func set_pitch(deg: float) -> void:
+	pitch_deg = deg
+	revision += 1
 
 
 ## True for a straight-down view (no projection at all: today's game).
