@@ -37,7 +37,7 @@ const HOSES_H_M: float = 1.8
 const FOOT_H_M: float = 0.35
 ## The tilted view's facing card (GhostCard, art/view/<art>/tonnage_card.png): drawn width (m) and
 ## the crown point's height in the card; it replaces the crown, press head and hoses.
-const CARD_M: float = 2.9
+const CARD_M: float = 3.1
 const CARD_ANCHOR: float = 0.42
 
 ## The shared part print (PartMaterials) on Tonnage's parts. Off by default: at 32 px/m its

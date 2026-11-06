@@ -47,3 +47,16 @@ func test_a_view_without_the_strip_draws_no_card() -> void:
 	rig.pose()
 	assert_false(rig._card.is_drawn())
 	assert_true(rig._crown.visible)
+
+
+func test_the_drawn_card_stands_upright_and_undoes_the_ground_squash() -> void:
+	var rig: TonnageRig = _rig("tilt")
+	if not rig._card.is_drawn():
+		pending("no tonnage card strip under the tilt art")
+		return
+	rig.rotation = 1.0
+	rig.pose()
+	var card: Sprite2D = rig.get_node(^"ghost_card") as Sprite2D
+	assert_almost_eq(card.global_rotation, 0.0, 0.0001, "upright whatever the facing")
+	assert_gt(card.global_scale.y, card.global_scale.x, "taller than wide by the squash")
+	assert_lt(card.position.y, 0.0, "it stands at the lifted crown point")
