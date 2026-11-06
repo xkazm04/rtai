@@ -51,3 +51,16 @@ judge the swap pop; try BLEND_DEG 8; (2) slice-stack sedan prototype for the mea
 (3) parked props in the floor; (4) depth vs people; (5) police/van/truck/depot/pickup checks
 (delivery_truck + depot_van are not in the traffic art ids: where do they appear?); (6) damage at
 height; (7) --arena=city and reel at tilt70 + combo, before/after stills to gtai-masters/n8/vehicles.
+
+MILESTONE 21:15: `--arena=city --view=tilt70 --seed=7`, 300 frames, 0 SCRIPT ERROR: moving traffic
+(an ambulance crossing) draws as the 70 card at full painted detail (scratch:
+gtai-n8/scratch/vehicles/city/f00000298.png; not evidence yet, no before/after pair). Note: the
+ambulance's amber light bar reads; check the catalog's "small red in the rear lamp clusters" fault
+on its tail view (colour law) before calling it done; key that out in vehicle_cards.py if seen.
+Gates this iteration: lint 15/15, unit test_vehicle_cards + test_vehicle_view 8/0. NOT yet run:
+the full unit run, scenarios, evidence (next iteration, before calling item 1 done).
+
+NEXT (iteration 2, in order): full unit + scenarios (top must stay bit-identical: cards only
+under a tilt with art); the 360 turn dev scene (sedan in place, tilt70, 32 + 64 px/m, BLEND_DEG
+0 vs 8) -> gtai-masters/n8/vehicles; before/after pair at tilt70 32 px/m (git worktree of main or
+`--view=tilt70` before = main exe); the kerb-parked floor cars; depth vs people; ambulance tail red.
