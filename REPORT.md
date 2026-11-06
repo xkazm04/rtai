@@ -65,7 +65,6 @@ and in the exported exe.
   the top view their size matches the target's 90-degree panel (measured in it12: ~1.6 m across the
   shoulders beside the ~6 m car, over a 1.0 m hit circle); they are less blocky and look smaller than
   the target's 3/4 view, where its bodyguards are drawn tall (call J).
-- At 64 px/m (the D5 close-up set) the gang print near-black steel; the target's are light steel.
 - The shoulder megaphone is a small gold cone at 32 px/m; it reads from 48 px/m.
 - The plain robot thug (the enemy-ai lane's, not King's) prints as solid ink at 48 px/m. The gang's
   lift would fix it (`evidence/king/shots/it7/plain_thug_48ppm_ink_x2.png`).
@@ -102,6 +101,9 @@ Each call names its options, the default that is built, and how to see it.
   king_gang.radius_m` 0.58 with `SIZE_K` 1.4: a gameplay change, harder to dodge round, not built
   and not measured). A size step that only changes the drawing is rejected: it would draw a wider
   robot than Rivet can hit. See `evidence/king/shots/it12/gang_d5_p2_64ppm_t120.png`.
+- **K. Gang close-up steel (it12).** At 56 px/m and above the gang's D5 set is lifted x1.3 and
+  reads as light plated steel like the target's (built: `tools/art/gang_parts.py LIFT_K_D5` 1.3), or
+  the old near-black close-up (1.0): `evidence/king/shots/it12/gang_d5_lift_before_after_64ppm_3x.png`.
 
 ## The exe
 

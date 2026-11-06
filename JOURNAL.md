@@ -1221,3 +1221,15 @@ NEXT (iteration 13, in order):
    rim, measured at 32 px/m beside the crown.
 3. Director reel once more before the freeze; re-export the exe at the freeze (the it8 recipe in
    REPORT) and smoke it (King down 4933); finalize REPORT (remove DRAFT, Next steps).
+
+### 02:36 MILESTONE (it13 NEXT 1 taken early) the gang's close-up steel
+- `tools/art/gang_parts.py LIFT_K_D5`: the D5 close-up set (from 56 px/m), never lifted, printed
+  the bodyguards near-black at 64 px/m; the target's are light riveted steel.
+- Measured, phase 2 seed 2 tick 120 at 64 px/m, x1.0 / 1.3 / 1.6
+  (`evidence/king/shots/it12/gang_d5_lift_10_13_16_64ppm.png`): x1.3 reads as plated steel with
+  highlight and shade and still keeps its ink edge against the floor; x1.6 washes pale. DECISION:
+  x1.3. **Looked at** the 3x crop of one bodyguard (`gang_d5_lift_before_after_64ppm_3x.png`):
+  an ink blob before, steel plates, the pale dome and the gold frame after. The final tree's frame
+  is pixel-identical to the x1.3 trial; only `art/d5/gang/*.png` changed (the D4 32-48 px/m set is
+  untouched). REPORT call K; decisions line.
+  Gates: lint 13/13 (`lint-it12b.log`), unit **1160/0** (`unit-it12b.log`).
