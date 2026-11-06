@@ -15,6 +15,8 @@ const UP_PX: float = 40.0
 
 ## A reload phase this young (out phase share) still counts as the release's first frame.
 const LAG_K: float = 0.2
+## A claw not posed cocked for longer than this starts its rise (the class's windup_rise_s) again.
+const REST_S: float = 0.1
 
 static var on: bool = not OS.get_cmdline_user_args().has("--throw-windup=off")
 
@@ -25,7 +27,28 @@ static func held_ready(rig: CutRig, hold: HeldTable.Hold, aimed: Vector3) -> Vec
 	var px: float = windup_px(hold)
 	if px <= 0.0:
 		return aimed
-	return _back(rig, px).lerp(aimed, release(rig))
+	var back: Vector3 = _back(rig, px)
+	var k: float = rise(rig, hold.windup_rise_s)
+	if k < 1.0:
+		back = rig.plan.hand_ready[rig.plan.gun_arm].lerp(back, smoothstep(0.0, 1.0, k))
+	return back.lerp(aimed, release(rig))
+
+
+## The ready claw's rise to cocked (0..1) over `rise_s` (it11 NEXT 4: the first aim snapped the
+## claw from its ready spot to cocked in one frame), stepped on the rig's own clock. It restarts
+## from 0 when the claw was not cocked a moment ago (the draw, a fresh aim), and is 1 straight out
+## of a reload (the reload's cock phase already drew the bottle back). rise_s 0 = the snap.
+static func rise(rig: CutRig, rise_s: float) -> float:
+	var dt: float = rig.t_alive - rig.throw_t
+	var fresh: bool = rig.throw_t < 0.0 or dt > REST_S or dt < 0.0
+	if rise_s <= 0.0:
+		rig.throw_cock = 1.0
+	elif fresh:
+		rig.throw_cock = 0.0
+	else:
+		rig.throw_cock = minf(rig.throw_cock + dt / rise_s, 1.0)
+	rig.throw_t = rig.t_alive
+	return rig.throw_cock
 
 
 ## The aimed claw in the reload: at `chest` until the cock phase draws it back; a release still
@@ -34,6 +57,8 @@ static func in_reload(rig: CutRig, hold: HeldTable.Hold, chest: Vector3, aimed: 
 	var px: float = windup_px(hold)
 	if px <= 0.0:
 		return chest
+	rig.throw_cock = 1.0  # out of the reload the bottle is already cocked: no second rise
+	rig.throw_t = rig.t_alive
 	var h: Vector3 = chest
 	if rig.reload_k >= 2.0:
 		h = chest.lerp(_back(rig, px), smoothstep(0.0, 1.0, clampf(rig.reload_k - 2.0, 0.0, 1.0)))

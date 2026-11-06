@@ -76,6 +76,11 @@
           "minimum": 0,
           "type": "number"
         },
+        "windup_rise_s": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
         "wrist_rad": {
           "maximum": 1.5,
           "minimum": -1.5,

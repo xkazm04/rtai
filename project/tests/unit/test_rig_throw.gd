@@ -71,3 +71,16 @@ func test_the_bottle_stays_in_the_cocked_claw_until_the_release_is_posed() -> vo
 	rig.clips.recoil = 0.0
 	rig.drive(SimClock.TICK_DT)
 	assert_false(RigThrow.lag_frame(rig), "off: the before (hidden at once)")
+
+
+func test_the_first_aim_rises_to_cocked_instead_of_snapping() -> void:
+	var rig: CutRig = _aimed(-1.0)
+	var cocked: float = _hand_ahead(rig)
+	rig.throw_t = -1.0  # a fresh aim: the claw was not cocked a moment ago
+	rig.drive(SimClock.TICK_DT)
+	var first: float = _hand_ahead(rig)
+	for _k: int in 20:
+		rig.drive(SimClock.TICK_DT)
+	gut.p("claw ahead: cocked %.0f px, first aimed frame %.0f px" % [cocked, first])
+	assert_gt(first - cocked, 40.0, "the first aimed frame is still near the ready claw")
+	assert_almost_eq(_hand_ahead(rig), cocked, 2.0, "a third of a second later it is cocked")
