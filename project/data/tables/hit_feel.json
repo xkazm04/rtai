@@ -9,9 +9,10 @@
   },
   "classes": [
     {
-      "doc": "Pistol, machine pistol, nails: a flash and a flinch, no stop (rate of fire would stutter).",
+      "doc": "Pistol, machine pistol, nails: a flash and a flinch, no stop (rate of fire would stutter). n7-ranged it20: hold_delay_ticks 2 starts a kill's stop 2 ticks after the hit, so the frozen frame shows the blood spurt instead of the darkened body alone (0 or --wound-hold=off = before).",
       "flash_ticks": 4,
       "hitstop": "",
+      "hold_delay_ticks": 2,
       "id": "light",
       "kick_px": 1,
       "kick_ticks": 5,
