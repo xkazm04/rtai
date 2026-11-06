@@ -1,0 +1,98 @@
+{
+  "default": "top",
+  "doc": "View lab (docs/view-lab/PLAN.md): the camera's projection per view id, picked by the launch flag --view=<id> (default `top`, the shipped 90-degree orthographic view, bit-identical: no transform is applied). pitch_deg is the camera's angle above the ground (90 = straight down); the ground plane is foreshortened by sin(pitch) on screen y (Camera2D zoom.y), so the mouse unprojects onto the ground through the same canvas transform. height_k scales how far a part's height lifts it up the screen (cos(pitch), the 2.5D actors; 0 = flat). Render only: a view never writes to the sim. cards (optional, default false) draws the upright facing cards (the head/bust drawn for the raised camera, 5 facings drawn + 3 mirrored, features/characters/art/view/) over the top-down head under a tilt. eye_h_m (optional, top_lift) makes a straight-down view a perspective camera that high above the ground: heights lean away from the screen centre. cast_k (optional, default 0) casts a ground shadow per height down-right (RigCastShadows: bodies, King's car, the arena props): its length per unit of height. occlude (optional, default true under a tilt) draws the arena's standing props over a body behind them with the body as an ink silhouette (PropOcclusion); false = the body draws over the prop (the it12 tilt).",
+  "schema": "gtai.view/1",
+  "views": [
+    {
+      "height_k": 0,
+      "id": "top",
+      "note": "the shipped view: straight down, orthographic, untouched",
+      "pitch_deg": 90
+    },
+    {
+      "cast_k": 1.2,
+      "eye_h_m": 25,
+      "height_k": 0,
+      "id": "top_lift",
+      "note": "still 90 degrees, no tilt: a straight-down perspective camera 25 m up (eye_h_m), so the car, the props and the bodies lean out from the screen centre by their heights; cast shadows by height (cast_k 1.2, down-right: a low evening sun)",
+      "pitch_deg": 90
+    },
+    {
+      "cast_k": 1.2,
+      "eye_h_m": 15,
+      "height_k": 0,
+      "id": "top_lift15",
+      "note": "study: top_lift with the eye 15 m up (stronger lean out from the screen centre)",
+      "pitch_deg": 90
+    },
+    {
+      "cards": true,
+      "cast_k": 1.2,
+      "height_k": 1,
+      "id": "tilt",
+      "note": "the main candidate (DECISION it5): 55 degrees with the upright facing cards (Rivet, King, gang, patrol cop); picked from the 65 / 55 / 45 stills at 32 px/m: 65 barely differs from top, 45 squashes the ground to 71 % and the top-down limbs read squat; cast shadows by height (cast_k 1.2, DECISION it12: they ground the car and the bodies on the foreshortened road)",
+      "pitch_deg": 55
+    },
+    {
+      "height_k": 1,
+      "id": "tilt65",
+      "note": "pitch study: 65 degrees, no cards (the it2 `tilt`)",
+      "pitch_deg": 65
+    },
+    {
+      "height_k": 1,
+      "id": "tilt75",
+      "note": "pitch study: 75 degrees",
+      "pitch_deg": 75
+    },
+    {
+      "height_k": 1,
+      "id": "tilt55",
+      "note": "pitch study: 55 degrees",
+      "pitch_deg": 55
+    },
+    {
+      "height_k": 1,
+      "id": "tilt45",
+      "note": "pitch study: 45 degrees, the stronger three-quarter end of the range",
+      "pitch_deg": 45
+    },
+    {
+      "cards": true,
+      "height_k": 1,
+      "id": "tilt_cards",
+      "note": "tilt 65 with the upright facing cards (Rivet head, King bust)",
+      "pitch_deg": 65
+    },
+    {
+      "cards": true,
+      "height_k": 1,
+      "id": "tilt55_cards",
+      "note": "tilt 55 with the upright facing cards",
+      "pitch_deg": 55
+    },
+    {
+      "cards": true,
+      "height_k": 1,
+      "id": "tilt45_cards",
+      "note": "tilt 45 with the upright facing cards",
+      "pitch_deg": 45
+    },
+    {
+      "cards": true,
+      "height_k": 1,
+      "id": "tilt_noshadow",
+      "note": "study: tilt (55 + cards) without the cast shadows (the it9 tilt)",
+      "pitch_deg": 55
+    },
+    {
+      "cards": true,
+      "cast_k": 1.2,
+      "height_k": 1,
+      "id": "tilt_noocclude",
+      "note": "study: tilt without the prop occlusion (a body behind a barrier draws over it; the it12 tilt)",
+      "occlude": false,
+      "pitch_deg": 55
+    }
+  ]
+}

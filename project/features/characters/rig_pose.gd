@@ -38,6 +38,8 @@ static func _body(rig: CutRig, walk01: float, ph: float) -> void:
 	var lean: float = 22.0 * rig.run_blend * walk01 + 40.0 * rig.c_lean
 	lean += SPRINT_LEAN_PX * sprint01(rig) - RigGrip.walk(rig).y  # d7-held: back off a heavy gun
 	var at: Vector2 = Vector2(lean - 25.0 * rig.c_sprawl, sway) + rig.shove
+	if rig.tilt_up != Vector2.ZERO:  # view lab: the body stands at hip height
+		at += RigTilt.body_lift(rig)
 	var tuck: Vector2 = Vector2(1.0 - 0.34 * rig.c_tuck, 1.0 - 0.22 * rig.c_tuck)
 	var sc: Vector2 = Vector2(bob, bob) * tuck * (1.0 + 0.06 * rig.c_sprawl)
 	rig.body.transform = Transform2D(0.25 * rig.c_sprawl * (1.0 - rig.c_plank), sc, 0.0, at)

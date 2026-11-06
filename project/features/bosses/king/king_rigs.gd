@@ -65,6 +65,9 @@ func pose(fight: BossFight, adds: BossAdds, windup_px: Vector2) -> void:
 	var b: Fighter = fight.body
 	var on_car: bool = fight.phase <= 1 and KingBeats.step_k(fight) <= 0.0
 	var at: Vector2 = KingBeats.king_px(fight, windup_px)  # the throne, the step-down, on foot
+	if fight.phase <= 1:  # view lab: on the car's roof under a tilt, down with the step
+		var roof: Vector2 = ViewMode.shared().lift_at(to_global(at), KingCarStack.ROOF_M)
+		at += roof * (1.0 - KingBeats.step_k(fight))
 	var king: CutRig = _rig(b.id, true, at, b.facing)
 	_place(king, b.id, at, b.facing, Vector2.ZERO if on_car else Vector2.INF)
 	_react(king, b, fight)
@@ -82,6 +85,8 @@ func pose(fight: BossFight, adds: BossAdds, windup_px: Vector2) -> void:
 		_place(g, f.body.id, Ink.px(f.body.pos), f.body.facing, Vector2.INF)
 		_react(g, f.body, f)
 		_fade_down(g, f, fight.now())  # a downed add is no longer stepped: the boss's clock
+	if not ViewMode.shared().is_flat():  # view lab: far-side bodies behind the car
+		KingCarStack.sort_rigs(_rigs, b.id, fight)
 
 
 ## The visible car riders' places for the accents: (x px, y px, facing angle).

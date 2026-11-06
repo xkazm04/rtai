@@ -40,6 +40,10 @@ var _tune: String = ""
 var _zoom_i: int = 0
 var _area_i: int = 0
 var _characters: CityCharacters = null
+## View lab: --order-probe counts the draw-order failures (DrawOrderProbe), logged every 10 s.
+var _probe: DrawOrderProbe = (
+	DrawOrderProbe.new() if OS.get_cmdline_user_args().has("--order-probe") else null
+)
 
 
 func _ready() -> void:
@@ -198,6 +202,7 @@ func _add_view() -> void:
 		Log.info(
 			"arena", "cast rigs: %s" % cast.attach(session.stage, view, session.world.context())
 		)
+		PropOcclusion.for_view(view)  # view lab: tall props over the bodies behind them
 	if session.city != null:
 		_characters = CityCharacters.new(session.city, view.city_view, session.world.context())
 		if cast != null:  # human-reactions: the street trips over the fight's dead
@@ -211,6 +216,10 @@ func _process(_delta: float) -> void:
 		var ok: bool = panel.set_live(_tune.get_slice(":", 0), _tune.get_slice(":", 1).to_float())
 		hud.note = "tuned %s live (%s)" % [_tune, ok]
 		_tune = ""
+	if _probe != null:
+		_probe.sample(self, session.tick())
+		if session.tick() % 600 == 0:
+			Log.info("view", "tick %d %s" % [session.tick(), _probe.summary()])
 	if _shot != "" and not _taken and session.tick() >= _shot_tick:
 		_taken = true
 		_save_shot.call_deferred()

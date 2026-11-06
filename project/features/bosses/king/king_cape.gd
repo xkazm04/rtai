@@ -29,13 +29,24 @@ const LAND_SPREAD_K: float = 1.14
 const LANDING: Array[StringName] = [&"press_slam"]
 ## The ease into each reach (ticks): gathered over this, flared over half, settled over twice.
 const EASE_TICKS: float = 12.0
+## View lab: under a tilt or top_lift the cape drapes: the shoulders stand DRAPE_SHOULDER_M up,
+## each point lower the further back it lies, the hem on the ground past DRAPE_BACK_M.
+const DRAPE_SHOULDER_M: float = 1.6
+const DRAPE_BACK_M: float = 1.6
 
 
-## The cape at `at` (px), facing +x, scaled `p` px per unit, for `fight` now.
-static func draw(ci: CanvasItem, at: Vector2, p: float, fight: BossFight) -> void:
+## The cape at `at` (px), facing +x, scaled `p` px per unit, for `fight` now; `up` = the local
+## lift per metre of height (ZERO straight down: the cape lies flat, untouched).
+static func draw(
+	ci: CanvasItem, at: Vector2, p: float, fight: BossFight, up: Vector2 = Vector2.ZERO
+) -> void:
 	var hem: PackedVector2Array = _hem(at, p, fight)
 	var shoulder_l: Vector2 = at + Vector2(0.1, -0.7) * p
 	var shoulder_r: Vector2 = at + Vector2(0.1, 0.7) * p
+	if up != Vector2.ZERO:
+		hem = _draped(hem, at, p, up)
+		shoulder_l += up * DRAPE_SHOULDER_M
+		shoulder_r += up * DRAPE_SHOULDER_M
 	var poly: PackedVector2Array = PackedVector2Array([shoulder_l]) + hem
 	poly += PackedVector2Array([shoulder_r])
 	ci.draw_colored_polygon(poly, Ink.VERMILION)  # the King's cape: vermilion by verdict
@@ -68,6 +79,19 @@ static func _hem(at: Vector2, p: float, fight: BossFight) -> PackedVector2Array:
 		var sway: float = SWAY_M * sin(TAU * tick / SWAY_TICKS + s * 1.6) if FOLDS > 0 else 0.0
 		out.append(at + Vector2(0.1 - back * reach, s * 0.95 * spread + sway * absf(s)) * p)
 	return PackedVector2Array(out)
+
+
+## Each hem point lifted by how far forward it lies: DRAPE_SHOULDER_M at the shoulders' line,
+## falling linearly to 0 at DRAPE_BACK_M behind it (it5's flat-cape drape: corners ~0.4 m).
+static func _draped(
+	hem: PackedVector2Array, at: Vector2, p: float, up: Vector2
+) -> PackedVector2Array:
+	var out: PackedVector2Array = hem.duplicate()
+	for i: int in out.size():
+		var back: float = (at.x + 0.1 * p - out[i].x) / (DRAPE_BACK_M * p)
+		var k: float = 1.0 - clampf(back, 0.0, 1.0)
+		out[i] += up * DRAPE_SHOULDER_M * k
+	return out
 
 
 static func _reach(fight: BossFight) -> float:

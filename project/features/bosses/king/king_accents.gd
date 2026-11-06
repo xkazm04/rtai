@@ -59,9 +59,10 @@ func _draw() -> void:
 	at += f.body.facing * HEAD_FWD_M * Ink.PX_PER_M
 	if f.state != BossFight.State.DEFEATED:
 		_down_at = -1
-		_ermine(at, f.body.facing)
-		_king_chain(at, f.body.facing.angle())
-		_crown(at, CROWN_M * Ink.PX_PER_M, 0.0)
+		if not ViewMode.shared().cards:  # view lab: the upright bust card wears them (RigHeadCard)
+			_ermine(at, f.body.facing)
+			_king_chain(at, f.body.facing.angle())
+			_crown(at, CROWN_M * Ink.PX_PER_M, 0.0)
 		_raised_plates(f, at)
 	else:  # the defeat beat: the crown falls off his head and rolls away
 		_down_at = f.now() if _down_at < 0 else _down_at

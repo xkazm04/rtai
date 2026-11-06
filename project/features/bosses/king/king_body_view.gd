@@ -21,12 +21,16 @@ const LAUNCH_SPREAD: float = 0.45
 const R2_A1: float = 0.7548777
 const R2_A2: float = 0.5698403
 const GOLD_HI: Color = Color("#F6D678")
+## View lab: the hood cannon's barrel height over the roof under a tilt (m).
+const BARREL_M: float = 0.45
 ## The cape on the throne-car spreads near the car's width (the target's fur-trimmed fan).
 const CAPE_ON_CAR_K: float = 1.3
 
 var _rigs: KingRigs = null
 ## The hood cannon's swivel off the car's heading (the stalled car aims only its cannon).
 var _cannon_rot: float = 0.0
+## View lab: the car-local screen lift per metre of height (ZERO straight down: the flat cannon).
+var _car_up: Vector2 = Vector2.ZERO
 
 
 func _process(_delta: float) -> void:
@@ -50,7 +54,13 @@ func _draw() -> void:
 		return
 	var heading: Vector2 = KingBeats.car_dir(fight) if fight.phase <= 1 else fight.body.facing
 	_cannon_rot = heading.angle_to(fight.aim)
-	draw_set_transform(Ink.px(fight.body.pos) + _windup_px(), heading.angle(), Vector2.ONE)
+	var car_at: Vector2 = Ink.px(fight.body.pos) + _windup_px()
+	if fight.phase <= 1:  # view lab: the body's stack under a tilt, the roof on top of it
+		var l: float = CAR_LEN_M * Ink.PX_PER_M
+		KingCarStack.draw(self, car_at, heading.angle(), l, CAR_W_M * Ink.PX_PER_M)
+		car_at += ViewMode.shared().lift_at(to_global(car_at), KingCarStack.ROOF_M)
+		_car_up = ViewMode.shared().lift_at(to_global(car_at), 1.0).rotated(-heading.angle())
+	draw_set_transform(car_at, heading.angle(), Vector2.ONE)
 	var stepping: bool = KingBeats.step_k(fight) > 0.0
 	if fight.phase <= 1:  # the procession, then the court on the stalled car
 		_car(not stepping)
@@ -122,7 +132,8 @@ func _car(with_king: bool = true) -> void:
 	var l: float = CAR_LEN_M * p
 	var w: float = CAR_W_M * p
 	var body: Rect2 = Rect2(-l * 0.5, -w * 0.5, l, w)
-	KingCarTrim.bumpers(self, l, w, p)  # rounded gold bars past both ends, under the body
+	if _car_up == Vector2.ZERO:  # under a tilt KingCarStack stacks them at bumper height
+		KingCarTrim.bumpers(self, l, w, p)  # rounded gold bars past both ends, under the body
 	draw_rect(body.grow(4.0), Ink.INK)
 	draw_rect(body, CAR_BLACK)
 	draw_rect(body.grow(-6.0), GOLD_DARK, false, 3.0)
@@ -140,7 +151,10 @@ func _car(with_king: bool = true) -> void:
 				_gangster(Vector2(l * sx, sy * (w * 0.5 + 0.3 * p)))
 	if with_king:
 		_king(Vector2(-l * 0.08, 0.0), CAPE_ON_CAR_K)  # the cape spreads wide over the car's back
-	KingCarTrim.throne(self, Vector2(-l * 0.08, 0.0), p)  # the gilded back, over the cape
+	if _car_up != Vector2.ZERO:  # view lab: the back stands up behind King
+		KingCarStack.throne(self, Vector2(-l * 0.08, 0.0), p, _car_up)
+	else:
+		KingCarTrim.throne(self, Vector2(-l * 0.08, 0.0), p)  # the gilded back, over the cape
 
 
 ## The car's smoke (the stall, the court) and, from phase 3, the stalled car left where it stood.
@@ -151,7 +165,11 @@ func _wreck() -> void:
 	if fight.phase >= 2 and km != null and km.car_at != Vector2.INF:
 		at = km.car_at
 		dir = km.car_facing
-		draw_set_transform(Ink.px(at), dir.angle(), Vector2.ONE)
+		var l: float = CAR_LEN_M * Ink.PX_PER_M
+		KingCarStack.draw(self, Ink.px(at), dir.angle(), l, CAR_W_M * Ink.PX_PER_M)
+		var roof: Vector2 = ViewMode.shared().lift_at(to_global(Ink.px(at)), KingCarStack.ROOF_M)
+		draw_set_transform(Ink.px(at) + roof, dir.angle(), Vector2.ONE)
+		_car_up = ViewMode.shared().lift_at(to_global(Ink.px(at)), 1.0).rotated(-dir.angle())
 		_car(false)
 		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 	var hood: Vector2 = Ink.px(at + dir * CAR_LEN_M * 0.36)
@@ -162,7 +180,22 @@ func _wreck() -> void:
 ## The hood cannon about its mount `p` (car px), swivelled `rot` off the car's nose.
 func _cannon(p: Vector2, l: float, rot: float) -> void:
 	var a: Vector2 = Vector2.from_angle(rot)
-	KingCarTrim.cannon(self, p - a * l * 0.08, p + a * l * 0.22)
+	var tail: Vector2 = p - a * l * 0.08
+	var tip: Vector2 = p + a * l * 0.22
+	if _car_up != Vector2.ZERO:  # view lab: a barrel on a mount, BARREL_M above the roof
+		_cannon_raised(p, tail, tip, a.orthogonal() * 10.0)
+		return
+	KingCarTrim.cannon(self, tail, tip)
+
+
+## Under a tilt: the barrel's shadow on the roof, the mount post, then KingCarTrim's barrel lifted.
+func _cannon_raised(p: Vector2, tail: Vector2, tip: Vector2, n: Vector2) -> void:
+	var up: Vector2 = _car_up * BARREL_M
+	var quad: PackedVector2Array = PackedVector2Array([tail - n, tip - n, tip + n, tail + n])
+	draw_colored_polygon(quad, Ink.INK)  # its shadow on the roof
+	draw_circle(p, 12.0, Ink.INK)
+	draw_circle(p + up * 0.5, 10.0, GOLD_DARK)  # the mount post
+	KingCarTrim.cannon(self, tail + up, tip + up)  # the King lane's barrel, lifted
 
 
 ## King on foot: the squat press body, plates out to the sides, cape behind.
@@ -170,12 +203,15 @@ func _on_foot() -> void:
 	var lunge: float = 0.0
 	if fight.state == BossFight.State.WINDUP:
 		lunge = -0.25 * (1.0 - float(fight.tell_left()) / float(maxi(fight.attack.windup, 1)))
-	_king(Vector2(lunge * Ink.PX_PER_M, 0.0), 1.25)
+	var b: Fighter = fight.body
+	var up: Vector2 = ViewMode.shared().lift_at(to_global(Ink.px(b.pos)), 1.0)
+	_king(Vector2(lunge * Ink.PX_PER_M, 0.0), 1.25, up.rotated(-b.facing.angle()))
 
 
-func _king(at: Vector2, k: float) -> void:
+## `up` = the local lift per metre of height (ZERO straight down: the cape lies flat).
+func _king(at: Vector2, k: float, up: Vector2 = Vector2.ZERO) -> void:
 	var p: float = Ink.PX_PER_M * k
-	KingCape.draw(self, at, p, fight)  # vermilion, folded, ermine-trimmed, swaying
+	KingCape.draw(self, at, p, fight, up)  # vermilion, folded, ermine; drapes under a tilt
 	if _rigs != null:  # the rig is King's body; the cape spreads under it
 		return
 	draw_circle(at, 0.62 * p, Ink.INK)

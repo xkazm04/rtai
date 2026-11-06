@@ -60,6 +60,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--melee-dir",
 	# n7-melee: --kerf-glide=off snaps the camera with each Kerf blink (the before)
 	"--kerf-glide",
+	# view lab: the camera projection (data/tables/view.json; default top = the shipped view)
+	"--view",
 ]
 
 var _values: Dictionary[String, String] = {}
