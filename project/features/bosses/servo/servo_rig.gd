@@ -22,8 +22,9 @@ const PAD_ART: StringName = &"pad_hazard"
 ## drones in the bays (the wing art alone printed them as dark cells). The flying drone's whole
 ## sprite there was 18 rotor crosses: noise at 32 px/m. 0 = off.
 const DOCKED_M: float = 0.34
-## The docked drone's rotor discs (metres radius, ink rings on its corners); 0 = the plain body.
-const DOCKED_ROTOR_M: float = 0.0
+## The docked drones on the art's bays (ServoBays: a hub and rotor rings over the art's printed
+## quad drone, the sheet's bays); false = the it14 cream squares on the sim's cells.
+const DOCKED_ON_BAYS: bool = true
 ## The hover pads, out from the centre and ahead of it: the sheet's top view hangs them in front
 ## of the wings' outer corners (render only; it8-it9: 2.6 out, 1.2 ahead, beside the wings).
 const PAD_OUT_M: float = 2.35
@@ -48,6 +49,7 @@ var _pal: PaletteTokens = PaletteTokens.shared()
 var _fall: ServoFall = ServoFall.new()
 var _shift: ServoShift = ServoShift.new()
 var _spine: ServoSpine = ServoSpine.new()
+var _bays: ServoBays = ServoBays.new()
 
 
 func _ready() -> void:
@@ -146,13 +148,29 @@ func _wings(o: Vector2, fwd: Vector2, side: Vector2, k: float, tint: Color) -> v
 		_wing_art(wing, tint)
 		ServoWingBand.draw(self, wing.get_height() * 0.5, wing.get_width() * 0.5, tint)
 	draw_set_transform(Vector2.ZERO)
+	_bay_cells(o, fwd, k, tint)
+
+
+## Each rack cell: an empty bay goes dark, a full one holds its docked drone.
+func _bay_cells(o: Vector2, fwd: Vector2, k: float, tint: Color) -> void:
+	var rot: float = fwd.angle() - PI / 2
 	var bay: Color = Color(_pal.color(&"ink"), 0.85)
+	_bays.rack = rack
+	_bays.px = px
+	_bays.wing_c_m = 1.305 + rack.spine_m() * 0.5
+	var on: bool = DOCKED_ON_BAYS and _bays.on_art()
 	for i: int in rack.state.size():
 		var st: int = rack.state[i]
+		var at: Vector2 = _bays.pos(i, o, fwd, k) if on else rack.cell_pos(i)
+		at += ServoShift.shake(fight) if on and _bays.side(i) > 0.0 else Vector2.ZERO
 		if st == ServoRack.Cell.OUT or st == ServoRack.Cell.REFILL:
-			draw_circle(rack.cell_pos(i) * px, 0.3 * px, bay)
-		elif st == ServoRack.Cell.FULL and DOCKED_M > 0.0 and _down() < 0:  # down: ServoFall.spill
-			_docked(rack.cell_pos(i), rot, k, tint)
+			draw_circle(at * px, 0.3 * px, bay)
+		elif st != ServoRack.Cell.FULL or DOCKED_M <= 0.0 or _down() >= 0:  # down: ServoFall.spill
+			continue
+		elif on:
+			_bays.docked(self, at * px, rot, k, tint)
+		else:
+			_docked(at, rot, k, tint)
 
 
 ## Three rows: rack3.png (tools/art/servo_rack3.py, one frame 3 bays deep) with its bottom on
@@ -182,9 +200,6 @@ func _docked(at: Vector2, rot: float, k: float, tint: Color) -> void:
 	draw_set_transform(at * px, rot)
 	draw_rect(Rect2(-h - 1.5, -h - 1.5, h * 2.0 + 3.0, h * 2.0 + 3.0), _pal.color(&"ink") * tint)
 	draw_rect(Rect2(-h, -h, h * 2.0, h * 2.0), _pal.color(&"paper_2") * tint)
-	for c: Vector2 in [Vector2(-h, -h), Vector2(h, -h), Vector2(-h, h), Vector2(h, h)]:
-		if DOCKED_ROTOR_M > 0.0:
-			draw_arc(c, DOCKED_ROTOR_M * k * px, 0.0, TAU, 12, _pal.color(&"ink") * tint, 1.5)
 	draw_set_transform(Vector2.ZERO)
 
 
