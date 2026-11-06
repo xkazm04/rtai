@@ -67,3 +67,48 @@ under a tilt with art); the 360 turn dev scene (sedan in place, tilt70, 32 + 64 
 
 21:22 gate: `run_unit.mjs --fast` 1471/1471 passing, 0 SCRIPT ERROR (96 s). The full no-arg run,
 scenarios and evidence are still owed (iteration 2, first thing).
+
+## Iteration 2 (2026-11-06 20:45 - 21:45), BUILD
+
+Read: JOURNAL, git log, the other lanes' journals (no REQUEST to vehicles; view's card-set
+registration is for head/bust cards, not needed for the car atlas), the library catalog notes for
+sedan/police_car/van 70 and the library JOURNAL tail.
+
+20:47 gate: the full no-arg unit run 1487/1487 passing, 0 failed (89 s).
+
+MILESTONE 20:50 item 1 (the 360 turn): `dev/showcase/vehicle_turn.tscn` turns the sedan, the police
+car and the van in place over their collision footprints, one circle per 6 s (`--view=`, `--ppm=`,
+`--blend=`, `--upright=`). Filmed at 32 and 64 px/m: gtai-masters/n8/vehicles/turn360_tilt70_{32,64}ppm.mp4.
+Measured (contact sheets in the same folder):
+- hard swap vs a 10 deg cross-fade: the fade ghosts two cars at 64 px/m. Hard swap kept.
+- rigid turn vs an upright (yaw-shear) turn (`VehicleCards.upright_k`, new, default 0): upright keeps
+  the wheels vertical (no roll at +-22 deg) but the three-quarter views stop tracking the heading
+  (drawn ~40 deg on a 23 deg footprint), which misleads at speed (top-down-vehicle-handling-model:
+  the player reads heading from the body's long axis). Rigid kept. DECISION in docs/decisions.md.
+- the remaining pop is the art's 45 deg step plus the sedan/police side view drawn ~15 deg shallower
+  than their other views (catalog B notes); at 32 px/m it reads as a small snap, at 64 a clear one.
+
+MILESTONE 21:03 city before/after: `--arena=city --view=tilt70 --seed=7` 600 frames at 32 and 64 px/m,
+before = this branch with art/p70/traffic_cards.png(+.import) moved aside (= main's flat car layer),
+restored after (git status clean on the art). 0 SCRIPT ERROR in all four runs. Evidence:
+city_tilt70_{32,64}ppm_ba_f500.png, city_tilt70_32ppm_ba_f300.png, city_tilt70_32ppm_before_after.mp4,
+city_tilt70_64ppm_after.mp4, frames.json (9 entries). Looked at every still: the traffic sedan gains
+body, glass and wheels at the footprint's length; amber lamps, no red.
+
+Rules applied: sprite-and-atlas-production (one atlas per pitch, one anchor per cell, view + mirror
+share it), depth-ordered-layered-art (cards in the vehicles band; people-in-front still owed),
+motion-quality-gating + concept-scene-parity (judged in motion on the real city scene, same seed
+before/after), generative-artifact-gating (B sheets used with the named fault logged + REQUEST),
+top-down-vehicle-handling-model (heading must read from the long axis: why rigid over upright).
+
+REQUEST to assets: sedan, 70, the side view (rotation 3) redrawn at the sheet's own steep camera
+(~70-75 deg, the roof the largest plane, as van_70 A) - the catalog's B fix for sedan_70; the same
+for police_car, 70. Why: the 360 turn snaps hardest at the side<->three-quarter swap because the
+side view is ~15 deg shallower.
+REQUEST to assets: sedan, police_car, van, 70, the four in-between rotations (nose at 22.5, 67.5,
+112.5, 157.5 deg from nose-right, i.e. between each pair of the five drawn views), same camera,
+same scale, one row. Why: 45 deg steps snap visibly at 64 px/m when a car turns; 22.5 deg halves
+the snap (16 views with mirrors). Lower priority than the side-view redo.
+
+FRICTION: `--arena=city` and `--ppm=` print "boot: unknown launch arg (ignored)" but the arena reads
+them itself (ArenaArgs); harmless. Godot's movie writer keeps the "." in a name like u0.5_f.png.

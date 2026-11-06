@@ -28,3 +28,15 @@ func test_the_card_is_unsquashed_by_the_ground_scale() -> void:
 	assert_almost_eq(xf.x.x, s, 0.001)
 	assert_almost_eq(xf.y.y, s / gk, 0.001)
 	assert_eq(xf.origin, Vector2(1.0, 2.0) * SimConst.PX_PER_M)
+
+
+func test_rigid_turn_rolls_the_card_and_upright_keeps_it_vertical() -> void:
+	var keep: float = VehicleCards.upright_k
+	VehicleCards.upright_k = 0.0
+	var rigid: Transform2D = VehicleCards.card_xf(Vector2.ZERO, 20.0)
+	VehicleCards.upright_k = 1.0
+	var up: Transform2D = VehicleCards.card_xf(Vector2.ZERO, 20.0)
+	VehicleCards.upright_k = keep
+	assert_lt(rigid.y.x, -1.0, "rigid: the card's vertical leans with the turn")
+	assert_almost_eq(up.y.x, 0.0, 0.001)
+	assert_almost_eq(up.x, rigid.x, Vector2(0.001, 0.001))
