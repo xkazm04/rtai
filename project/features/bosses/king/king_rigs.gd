@@ -84,6 +84,16 @@ func pose(fight: BossFight, adds: BossAdds, windup_px: Vector2) -> void:
 		_fade_down(g, f, fight.now())  # a downed add is no longer stepped: the boss's clock
 
 
+## The visible car riders' places for the accents: (x px, y px, facing angle).
+func rider_marks() -> Array[Vector3]:
+	var out: Array[Vector3] = []
+	for i: int in RIDERS.size():
+		var rig: CutRig = _rigs.get(RIDER_ID + i)
+		if rig != null and rig.visible:
+			out.append(Vector3(rig.position.x, rig.position.y, rig.face_to))
+	return out
+
+
 func _rig(id: int, is_king: bool, at: Vector2, facing: Vector2) -> CutRig:
 	if not _rigs.has(id):
 		var rig: CutRig = CutRig.new()

@@ -38,6 +38,7 @@ func _process(_delta: float) -> void:
 		add_child(_rigs)
 		var accents: KingAccents = KingAccents.new()
 		accents.view = self
+		accents.rigs = _rigs
 		accents.z_index = KingAccents.OVER_RIG_Z  # the rig's parts carry their own z
 		add_child(accents)
 	if _rigs != null:
