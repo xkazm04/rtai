@@ -93,6 +93,27 @@
       "note": "study: tilt without the prop occlusion (a body behind a barrier draws over it; the it12 tilt)",
       "occlude": false,
       "pitch_deg": 55
+    },
+    {
+      "art": "p70",
+      "cards": true,
+      "cast_k": 1.2,
+      "height_k": 1,
+      "id": "tilt70",
+      "note": "lane d8-view70: the tilt row's switches (cards, cast shadows, occlusion) at 70 degrees, with the 70-degree card art (art p70: features/characters/art/view/p70/, else the base card)",
+      "pitch_deg": 70
+    },
+    {
+      "art": "p70",
+      "boss_pitch_deg": 55,
+      "cards": true,
+      "cast_k": 1.2,
+      "ease_s": 1,
+      "height_k": 1,
+      "id": "combo",
+      "note": "lane d8-view70, the combined view: 70 degrees in play (art p70), easing to boss_pitch_deg 55 over ease_s when a boss engages (Events.boss_engaged) and back to 70 when it is defeated (ViewPitchEase; eased on sim ticks, so it holds during a hit-stop); the cards swap to the base (55) art below swap_deg",
+      "pitch_deg": 70,
+      "swap_deg": 62.5
     }
   ]
 }
