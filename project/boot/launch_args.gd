@@ -36,6 +36,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--quest-blade",
 	# n7-melee: --hit-cues=off gives melee and ghost hits no sound of their own (the before)
 	"--hit-cues",
+	# n7-melee: --tell-cues=off gives the ghost attacks' wind-ups and whiffs no sound (the before)
+	"--tell-cues",
 	# n7-melee: --pullback=off cocks every timed strike back at the night's depth (the before)
 	"--pullback",
 	# n7-melee: --strike-sync=off starts Rivet's view strike from 0 when it is seen (the before)
