@@ -1179,6 +1179,12 @@ NEXT (iteration 14):
 3. FIRST: the one-frame tube pop to Rivet's left on the rocket and nuke launch (LOOK 02:31).
    Film frames 262-269 at 48 px/m, log rig.reload_k / grip / held_shift per frame, find which side
    flips; compare with main. Fix view-side, A/B at 32 px/m, reels. (The flash gap is closed.)
+   Pointers (read 02:33, not tested): RivetHeldView._process sets `rig.reload_k` from
+   ArsenalTable.reload_phase (rivet_held_view.gd:80) AFTER the rig has posed this frame, so the
+   rig poses the reload one frame late (the molotov's lag frame had the same root); and
+   reload_phase is -1 unless `trigger.reloading()`: check whether a magazine-1 tube reports
+   reloading for a single tick on the shot and then waits (a pop for one frame, then the aim pose
+   again at 267, would fit that). Log reload_k per frame over 262-270 first.
 4. Exe at the freeze: re-bake + re-export `windows-showcase` -> `build/export/windows/RTAI.exe`;
    REPORT exe lines for calls 4 (`--flash-at=side`) and 5 (`--throw-windup=off`).
 5. Full evidence run on the head before the freeze (last: `3b2e7c5c`, all green); commit logs
