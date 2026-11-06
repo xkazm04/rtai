@@ -291,3 +291,12 @@ NEXT (iteration 3):
 - 15:42 GATE unit full (no-arg) on cb85b405: 1428 passed, 0 failed.
 - 15:44 FILM city 55 vs 70 re-filmed with `--clean` (dev HUD off; `arena_game.gd` reads it), 46 s,
   0 SCRIPT ERROR: masters `city_55_vs_70_32ppm_45s_merged.mp4` + t25 still. NEXT 3 done.
+- 15:46 MEASURED (bench.lock held, CONTENDED): exported bench, city drive_dense, `--view=tilt70
+  --zoom=0.872` (= 55's 30.5 m ground depth at 70; it also widens the view), 30 s: draw calls 606,
+  visible 32.7. So the 371-vs-575 draw-call gap follows the visible area (chunks / props on screen),
+  not a feature switched off at 70: the hypothesis above holds. BUT this pass's avg frame was 11.7 ms
+  (p99 33.6), 10x the other passes: unexplained (contention at 15:46, or a zoom-out cost) - re-run
+  under a quiet machine before quoting any frame time from it (`scratch/view70/bench/`).
+
+NEXT (iteration 3) stands as written above (15:41), plus: re-run the zoom 0.872 pass when the
+machine is quiet; REPORT.md is a draft (iteration 2) - update it at the freeze.
