@@ -1,11 +1,9 @@
 extends GutTest
 
 
-func test_a_long_x_row_has_one_foot_per_cell_on_the_south_edge() -> void:
+func test_an_east_west_row_is_one_stack_on_its_south_edge() -> void:
 	var feet: Array[Vector2] = ArenaPropCards.row_feet(Rect2(0.0, 0.0, 96.0, 32.0))
-	assert_eq(feet.size(), 3)
-	assert_eq(feet[0], Vector2(16.0, 32.0))
-	assert_eq(feet[2], Vector2(80.0, 32.0))
+	assert_eq(feet, [Vector2(48.0, 32.0)] as Array[Vector2])
 
 
 func test_a_north_south_row_steps_its_feet_down_the_screen() -> void:
