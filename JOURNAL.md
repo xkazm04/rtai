@@ -80,3 +80,13 @@ NEXT (iteration 2, in order):
 5. A combined clip of the set (30-90 s) for frames.json; cape A/B clip for the call.
 6. Rivet's claw / katana chapter 64 px/m checks; then the King's own cape motion under tilt if the
    owner keeps the drawn fan (CARD_CAPE false) - a draped, upright cape layer instead of the fan.
+- 14:56 MILESTONE Servo's 2-row rack wing from the p55 3-row rack (bottom row cut), both wings match
+  (11af64a8; still servo_tilt32_both_racks_after.png). NEXT item 3 shrinks to the drones/crates.
+- Evidence: gtai-masters/d8/bosses/ frames.json (15 entries, best first), combined clip
+  bosses_d8_it1_combined.mp4 (37 s). Raw avis deleted; scratch renders stay in gtai-d8/scratch/bosses.
+- Calls for the owner (for REPORT): (1) CARD_CAPE: the card's cape only (default) vs the drawn fan
+  under tilt (call_cape_car_fan_vs_card_48.png; `KingArt.CARD_CAPE = false`); (2) the bust's width
+  1.5x (`KingArt.STRIPS["king"][2]`); (3) the emeralds key toward grey (the chroma despill clamps
+  green): regenerate gem accents on magenta if the owner wants green gems.
+- Watch item: an arm can cross the bust card at melee range (king_vs_katana_64_close.png frame 2):
+  the rig's arm z draws over the card. Measure per frame next iteration (RigDepthSort is chars').
