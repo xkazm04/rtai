@@ -55,13 +55,13 @@ static func tint(dt: int) -> Color:
 
 
 ## Docked drones spill off the rack: each tumbles out from its cell and lands 1.8 m beyond.
-func spill(c: CanvasItem, rack: ServoRack, dt: int) -> void:
+func spill(c: CanvasItem, rack: ServoRack, dt: int, bays: Array[Vector2]) -> void:
 	var u: float = minf(float(dt) / SPILL_TICKS, 1.0)
 	var ease_out: float = 1.0 - (1.0 - u) * (1.0 - u)
 	for i: int in rack.state.size():
 		if rack.state[i] != ServoRack.Cell.FULL:
 			continue
-		var cell: Vector2 = rack.cell_pos(i)
+		var cell: Vector2 = bays[i]  # where the rig drew the bay (ServoRig._bay_points)
 		var out: Vector2 = (cell - rack.origin).normalized()
 		var at: Vector2 = cell + out * 1.8 * ease_out
 		c.draw_circle(cell * px, 0.26 * px, Color(_pal.color(&"ink_2"), 0.6))  # the bay is empty

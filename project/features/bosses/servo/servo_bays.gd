@@ -52,6 +52,16 @@ func pos(i: int, o: Vector2, fwd: Vector2, k: float) -> Vector2:
 	return o + fwd.orthogonal() * s * across + fwd * (-wing_back_m + y_px * k / ART_PPM)
 
 
+## Every cell's bay centre (`on`, three rows), or the sim's cells; the +1 wing shakes.
+func points(o: Vector2, fwd: Vector2, k: float, shake: Vector2, on: bool) -> Array[Vector2]:
+	var art: bool = on and on_art()
+	var pts: Array[Vector2] = []
+	for i: int in rack.state.size():
+		var at: Vector2 = pos(i, o, fwd, k) if art else rack.cell_pos(i)
+		pts.append(at + (shake if art and side(i) > 0.0 else Vector2.ZERO))
+	return pts
+
+
 ## The docked drone: light rotor rings over the art's round an ink-rimmed cream hub.
 func docked(c: CanvasItem, at_px: Vector2, rot: float, k: float, tint: Color) -> void:
 	var pal: PaletteTokens = PaletteTokens.shared()

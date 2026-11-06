@@ -113,7 +113,7 @@ func _draw() -> void:
 	_spine.draw(self, o, fwd, k, tint)
 	_shift.draw(self, fight, rack)
 	if dt >= 0:
-		_fall.spill(self, rack, dt)
+		_fall.spill(self, rack, dt, _bay_points(o, fwd, k))
 		_fall.crashes(self, (fight.moves as ServoMoves).crashes, dt)
 	_part(&"torso", o + fwd * 0.3, fwd.angle() - PI / 2, k, tint)
 	var head_rot: float = (fight.aim if _stage(&"windup", false) else fwd).angle() - PI / 2
@@ -155,14 +155,11 @@ func _wings(o: Vector2, fwd: Vector2, side: Vector2, k: float, tint: Color) -> v
 func _bay_cells(o: Vector2, fwd: Vector2, k: float, tint: Color) -> void:
 	var rot: float = fwd.angle() - PI / 2
 	var bay: Color = Color(_pal.color(&"ink"), 0.85)
-	_bays.rack = rack
-	_bays.px = px
-	_bays.wing_c_m = 1.305 + rack.spine_m() * 0.5
 	var on: bool = DOCKED_ON_BAYS and _bays.on_art()
+	var pts: Array[Vector2] = _bay_points(o, fwd, k)
 	for i: int in rack.state.size():
 		var st: int = rack.state[i]
-		var at: Vector2 = _bays.pos(i, o, fwd, k) if on else rack.cell_pos(i)
-		at += ServoShift.shake(fight) if on and _bays.side(i) > 0.0 else Vector2.ZERO
+		var at: Vector2 = pts[i]
 		if st == ServoRack.Cell.OUT or st == ServoRack.Cell.REFILL:
 			draw_circle(at * px, 0.3 * px, bay)
 		elif st != ServoRack.Cell.FULL or DOCKED_M <= 0.0 or _down() >= 0:  # down: ServoFall.spill
@@ -171,6 +168,14 @@ func _bay_cells(o: Vector2, fwd: Vector2, k: float, tint: Color) -> void:
 			_bays.docked(self, at * px, rot, k, tint)
 		else:
 			_docked(at, rot, k, tint)
+
+
+## Where each cell's bay is drawn: on the rack art's bays (ServoBays), else the sim's cells.
+func _bay_points(o: Vector2, fwd: Vector2, k: float) -> Array[Vector2]:
+	_bays.rack = rack
+	_bays.px = px
+	_bays.wing_c_m = 1.305 + rack.spine_m() * 0.5
+	return _bays.points(o, fwd, k, ServoShift.shake(fight), DOCKED_ON_BAYS)
 
 
 ## Three rows: rack3.png (tools/art/servo_rack3.py, one frame 3 bays deep) with its bottom on
