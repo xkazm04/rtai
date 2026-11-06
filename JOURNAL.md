@@ -429,3 +429,4 @@ arena path), `sprite-and-atlas-production` (stack slices from existing art, no n
   landed; the reel idles to its 840 s timeout). It12 gates on HEAD's code: lint 13/13, unit 1186/0,
   reel 19/19; evidence/run.mjs all PASS on 52e72590 (before the cast shadows). Scenarios on the
   cast-shadow code NOT re-run yet.
+- GATE scenarios on abc9c37a (switch off, cast shadows in): 52 ran / 0 failed / 0 SCRIPT ERROR (`evidence/view/it12/scenarios.log`). All it12 gates green on the cast-shadow code: lint, unit 1186/0, scenarios 52/0, reel 19/19.
