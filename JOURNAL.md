@@ -416,3 +416,10 @@ NEXT (the next run on this lane):
   a change now could not be evidenced (gates take more than 4 min) and would make the exe stale.
 - The NEXT list above stands unchanged for the next run on this lane.
 - Session end 18:27 (iteration 7).
+
+## Iteration 8 (18:30, STABILIZE)
+- 18:30 Checked the frozen lane: tree clean at 3c433eab; no `project/` change since 6533af0e, so the exe
+  (build/export/windows/RTAI.exe, 18:06, 6533af0e) and the evidence run on 9b6c1d7a (every check PASS) still
+  match the build; gtai-masters frames.json 15 entries, 0 missing files. No fix needed, no code touched.
+- NEXT: unchanged (see the NEXT list in iteration 6).
+- Session end 18:31 (iteration 8).
