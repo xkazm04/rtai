@@ -1188,3 +1188,24 @@ edges, under the torso).
   1.5 fps keys: the beam locks, the rings, the teal bolt jumps drone to drone (three keys), then
   the rack. `M/servo_ghost_ohm_chain_drones_48ppm_it12.mp4` + keys replace the it4 clip (deleted);
   frames.json 15. Every ghost clip is now on the it10 body (Kerf's it7 halves clip kept as before).
+- 03:16 MILESTONE (NEXT 3) a7e35f83 **the spine's horseshoe rail and big hose loops**
+  (`ServoSpine.HORSESHOE`, render only): a light steel U (ink 0.2 m, plate fill 0.11 m) at 0.84
+  of the column's inner half from 0.38 of its length, its round bottom under the torso; two
+  copper loops (r 0.42 m) off the back cap past the rack's back edge. Step 1 (rail 0.86 in box
+  tone, loops 0.3 m) **looked at** 48 px/m 2x: no visible change (the loops under the cap, the
+  rail the column edge's tone); step 2 (rail at the edge): lost in the edge band; step 3 (0.84,
+  plate tone, loops 0.42 m at 0.66 out): the rail frames the column down to the torso, the loops
+  show beside the cap. Subtle at 32 px/m, no noise. `M/frames/servo_spine_horseshoe_ab_it12.png`
+  (the sheet | 32 before | after; 48 before | after). Unit 1189/0 (`unit-it12b.log`). Decisions;
+  REPORT call 15; moveset doc body paragraph.
+- 03:21 MILESTONE (NEXT 4) 2667c047 **the clip cam holds a side-on boss at the floor's side
+  edge**: `BossCam.BOSS_MARGIN_X_M` 5.5 sideways (3.0 vertically as before), keep_in called per
+  axis (API and test unchanged). Measured on the p3 clip (`phase32_12.sh 3 2 2300`, 0 SCRIPT
+  ERROR): at 4.5 the rack was whole but a pad and the smoke touched the edge; at 5.5 the whole
+  body, spill and smoke stay on screen, a strip of sidewalk at the left; keys 1-9 frame the same.
+  `M/frames/servo_bosscam_xmargin_ab_it12.png` (it10 3.0 | it12 5.5, keys 10-11);
+  `M/servo_p3_overtime_defeat_32ppm_it12.mp4` + keys replace the it10 clip. Unit 1189/0
+  (`unit-it12c.log`). Decisions; REPORT open item marked fixed.
+- REQUEST king (FYI, framework view, no action): `BossCam.BOSS_MARGIN_X_M` 5.5 on n7-servo
+  (2667c047). `--boss-cam` only; your clips frame the same unless King stands within 5.5 m of a
+  side edge of the screen, where the view now keeps more of him in. 3.0 restores it11.
