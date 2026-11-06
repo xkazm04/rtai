@@ -1455,3 +1455,40 @@ scores and becomes call 7).
   Rivet's weapon: Gloria from tick 7305, **the rifle 14363-14721**, Gloria again (dry), done 19241.
 - FRICTION: the first try compiled the worker in the -s script (no `Log` autoload) and a parse error
   left Godot hanging at exit until my 300 s timeout (5 min lost). Use `timeout` short on scratch runs.
+
+### FILM + FINDING 04:05: quest 1's assault rifle at 32 px/m (audit row `-`, was all `?`)
+- `quest1_clip.gd --ppm=32|48 --cam=fight --ticks=14340-14740` on `8f5bb2ab`, both 0 SCRIPT ERROR, 201
+  frames each (a frame every 2 ticks; scratch `ar/q32`, `ar/q48`). Sheet every 4 frames + 2x crops
+  of the frames with the most vermilion (15-16, 30-33, 47): Rivet sprays (HUD x16 -> x1 over about
+  frames 10-65, then "Grab the rifle" with Gloria) but his rounds are thin dark dashes, there is no
+  muzzle flash and no rifle drawn in his claw. Scored A 0, R 1, S 2 (shared `shot_assault_rifle`),
+  I and V `?` (the hits land outside the crops). Still `evidence/ranged/it15-quest1-rifle-32ppm-2x.png`.
+- Cause, by reading (not yet proven): GunFxArt.tracer and the muzzle path read `s.spec` (a table
+  weapons.json row); a combat.json Shot (`CombatArena` Rivet branch, `Shot.fire(rivet, facing, w)`)
+  has none, so it gets no flash, no table tracer weight and no muzzle_k. Note: the live clip's rifle
+  runs out by about tick 14470, while the headless CollectCallPlay holds it to 14721 (the live quest
+  bot shoots faster or the clip uses the table guns' timing): check before filming a before/after.
+- Not built: 18 min left in the session. The drawn rifle in the claw is a hold (off limits tonight:
+  open owner calls); the flash and tracer are mine.
+
+NEXT (iteration 16; supersedes the 03:21 list):
+1. Quest 1's rifle muzzle and tracer (FINDING 04:05): give a spec-less Rivet Shot the table path's
+   flash and tracer weight, from a hit_feel.json / gun_fx.json row keyed `assault-rifle` (generic by
+   weapon id, no target kind), off with `--feel=off` or the row's value. Read gun_fx_art.gd around
+   :88 and the muzzle path (WeaponFxArt.muzzle, held_muzzle.gd: a rifle with no held sprite has no
+   bore tip, so fall back to the claw-side spot). Must not move quest 1's replay (render only);
+   prove with scenarios (scenario_quest1_*, the 60 s replay). Film before/after at 32 and 48 with
+   the same quest1_clip window, frames 10-65.
+2. Call 7 (re-voiced shots) is measured, not listened to; nothing more to do without a listener.
+3. Freeze (by 08:30): full evidence run on the final head (last green: `13e0e050`; since then only
+   data cues `d4559823`, reels 19/19 x2 on it, unit not re-run in full: run it); re-bake + export
+   `windows-showcase` -> `build/export/windows/RTAI.exe`; REPORT exe lines for calls 4-7; drop DRAFT.
+4. City combined clip: retake at the freeze if a chapter changed since `13e0e050` (`d4559823` changes
+   sound only: the rocket and nuke chapters now launch with `shot_tube`; a retake gives the clip the
+   new sound, picture unchanged).
+5. Remaining weak cells: homing_shard V 2 (call 1); Gatling I/R/V 2 (crowds only).
+
+STOP 04:08 iteration 15. Code commit: `d4559823` (heavy guns + shard own shot cues, test with a
+planted fault). Gates: lint 13/13, test_weapon_shot_cues 2/2, reels 19/19 x2 on `d4559823`. Clip
+`shot_cues-ab-32ppm.mp4` (frames.json entry 2). Audit: shard S 1 -> 2, hand cannon S 2 -> 3, the
+rifle row filmed and scored. Call 7 added.
