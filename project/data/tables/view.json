@@ -17,6 +17,13 @@
       "pitch_deg": 90
     },
     {
+      "eye_h_m": 15,
+      "height_k": 0,
+      "id": "top_lift15",
+      "note": "study: top_lift with the eye 15 m up (stronger lean out from the screen centre)",
+      "pitch_deg": 90
+    },
+    {
       "cards": true,
       "height_k": 1,
       "id": "tilt",
