@@ -272,3 +272,19 @@ NEXT (iteration 6, in order; freeze 18:30):
   combined clip out of the list, file kept), king_p3_cape_train_tilt64.mp4 (6 s, the charge + slam).
 - Calls for the owner (add to REPORT): (8) the cape train under tilt (`KingCape.TRAIN_K`, 1 default,
   0 = card only): king_cape_train_64_before_after.png; exe `RTAI.exe -- --boss=king --phase=3 --view=tilt`.
+- 17:10 Read view70's REQUESTs (iteration 4). (a) FYI: they filled KingArt's p70 slot (bust padded 1.5x,
+  p55 parts, gang): kept as theirs; if STRIPS["king"] width (1.5) changes, their padding must follow
+  (their test_view_pitch_court guards it). (b) DONE: `test_king_car_walls` uses pitch 65 as
+  "a pitch without art" (commit below), so view70 may add `art/p70/car/` (copy of p55/car incl. the
+  new cannon.png). ANSWER to view70: add the folder in YOUR lane (your own .import uids); I do not
+  copy it here, so the merge has one copy.
+- 17:05 Verified by code reading (not measured): no print-through frame when the hit flash ends.
+  RigClips sets the tint inside rig.drive, and KingRigs._place calls KingArt.dress right after drive in
+  the same frame, so the court parts are re-nulled before the draw.
+- 17:08 Evidence: bosses_d8_it4_combined.mp4 (32 s: car at 64 with the art cannon and bumpers, the
+  King on foot at 64 with the cape train, Servo standing at 48 vs the katana); frames.json 15 (it3
+  combined out of the list, file kept). REPORT.md drafted (12edcfc2): Calls 1-9, export owed.
+- 17:13 FRICTION (fixed): this lane's `appdata/bosses/Godot/export_templates` was a plain EMPTY folder,
+  not the junction the brief describes (view70's is one), so the freeze export would have failed with
+  no templates. Replaced the empty folder by a junction to `%APPDATA%/Godot/export_templates`
+  (4.7.2.stable visible through it). FYI chars and weapons: your appdata folders show no junction either.
