@@ -350,3 +350,8 @@ NEXT (iteration 6, the FREEZE session):
 5. If time is left before the freeze: score the electro arc origin in the electro_chain chapter (still ?), or a
    pickup segment for the combined clip (`--armory`, 48 tilt, a slow pan).
 - Session end 17:35 (iteration 5). Branch head clean; every item above committed.
+- 17:34 Re-exported on cddcc340 (exit 0, build/export/windows/RTAI.exe, 247 MB, pickup hover + molotov in);
+  smoke `RTAI.exe --quit-after 200 -- --armory --ppm=48 --view=tilt --rigs` exit 0, 0 SCRIPT ERROR. The
+  freeze session still re-exports if the head moves.
+- Combined clip + a captioned pickup segment (armory, 48 tilt, zoom 2x): 83 s, frames.json updated.
+- Session end 17:38. Branch head clean.
