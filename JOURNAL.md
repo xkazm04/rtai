@@ -223,3 +223,15 @@ NEXT (iteration 4):
 - 32 px/m long guns (NEXT 4): two small-cell variants from the raw cut (scratch tt32 = held_small.two_tone,
   mix32 = 55 % two-tone over the re-tone), filmed one data state at a time (vary.sh: copy, --import, film).
   FRICTION: films after a PNG swap need `--import` first (the run uses the .godot cache).
+- MILESTONE df1ee16c: the 55 small cells (drawn below 56 px/m) of plasma rifle, electro gun and ray gun
+  are two-tone (held_pitch_small.py TWO_TONE). Filmed at 32 tilt, same bot: re-tone (shipped) = a pale club
+  merging with the visor and legs; two-tone = a dark gun with pale details, also in the nose-down carry; the
+  55 % mix stayed muddy (scratch tt32/pr_cmp*.png, eg_cmp.png). Still:
+  gtai-masters/d8/weapons/longguns_tilt_32_twotone_before_after.png. DECISION in docs/decisions.md.
+- frames.json: + flame jet, + charge crackle, + 32 two-tone; - gatling variants (superseded), - plasma
+  rifle float fix, - the old 32 pair (superseded). Still 15.
+- Baton (NEXT 2): compared before (top-down part) / 55 full / 55 small in its chapter at 48 (scratch
+  baton_ab.png): the top-down part is the darker, higher-contrast stick; the 55 parts are a pale tube with a
+  dark tip. Queued: a two-tone 55 small cell for the baton and the homing shard (scratch vary2.sh).
+- Gates on df1ee16c: full unit 1423 passed / 0 failed; director reel headless top 19/19 and tilt 19/19, every
+  chapter all down, 0 SCRIPT ERROR; lint 15/15 (pre-commit).
