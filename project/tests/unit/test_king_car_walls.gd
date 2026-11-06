@@ -19,7 +19,7 @@ func test_pitch_55_has_every_car_part() -> void:
 
 
 func test_a_pitch_without_art_has_none() -> void:
-	assert_false(ResourceLoader.exists(KingCarWalls.DIR % [70, "car_side"]))
+	assert_false(ResourceLoader.exists(KingCarWalls.DIR % [65, "car_side"]))  # view70 owns p70
 
 
 func test_the_roof_fits_the_car_footprint() -> void:
