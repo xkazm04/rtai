@@ -355,3 +355,5 @@ NEXT (iteration 6, the FREEZE session):
   freeze session still re-exports if the head moves.
 - Combined clip + a captioned pickup segment (armory, 48 tilt, zoom 2x): 83 s, frames.json updated.
 - Session end 17:38. Branch head clean.
+## 17:38 iteration 6 (BUILD, freeze session)
+- 17:38 Read JOURNAL, git log. Code head cddcc340 = the exported exe (only docs since). Evidence run first (background).
