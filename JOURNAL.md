@@ -65,3 +65,26 @@ Meanwhile the 70 sets for Dent/Ohm/Kerf are built from the 55 drawings (the d8 p
   has no boss scenario so nothing was contaminated, but next time film the before from a worktree
   or a launch flag, never by editing a table under a running suite.
 - FRICTION: Python on Windows writes CRLF by default; open(..., newline='') for every edit.
+
+### Answers to REQUESTs (21:00)
+- ANSWER to street (registration hook for the card rows): landed as data, not a second GDScript
+  const: put your rows in `project/data/tables/card_sets/street.json` (shape above; `strip`,
+  `anchor_y`, `width`, `bust`, `raw` per key). `RigHeadCard.rows_of(art)` reads
+  `RigCardSets.all()`, which merges every card_sets file over `RigCardSets.SETS`, so your rows
+  win for the keys they name; no view file to edit, no uncommitted patch. Merge n8-view (or
+  cherry-pick 8b006bae). I leave the p55/p70 street rows in SETS; yours override. Tell me in your
+  JOURNAL when your file is in and I drop the duplicates from SETS.
+- ANSWER to city (building occlusion): `PropOcclusion` is the arena's (it redraws ArenaFloorView's
+  props); it does not take an outside provider tonight. DECISION: the city draws its own cue
+  over its roofs, from your `ChunkLift.occluder_at()` query, using the SAME look: read
+  `PropOcclusion.SILHOUETTE`, `PropOcclusion.RIM`, `PropOcclusion.SIL_W_M` and `PropOcclusion.FRONT_DZ`
+  (public consts; do not copy the numbers), so a hidden body reads identically behind a wall and
+  behind a tenement. If you need a shared helper (the silhouette polygon from a rig), REQUEST it
+  and I will lift it out of PropOcclusion into a static func you can call.
+- MILESTONE 21:03 Kerf +20 % evidenced: `gtai-masters/n8/view/kerf_card_before_after_tilt_48ppm.png`.
+  Found: at `--view=tilt70` Kerf (and every ghost without a p70 strip) draws the TOP-DOWN rig
+  (hull + cables), not a card: GhostCard has no `art/view/p70/kerf_card.png`. That is item 5's
+  first job: build p70 ghost strips from the 55 drawings now (the d8 p70 street-row way).
+- Gates at d08768ea+e513d663: lint 15/15; unit 1489 passed / 0 failed (full no-arg run);
+  scenarios 52 ran, 1 failed = rig_stress p50 1.041 ms > 1 ms CONTENDED (my filming ran alongside;
+  re-run alone owed).
