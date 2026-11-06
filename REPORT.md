@@ -1,6 +1,6 @@
 # REPORT: lane `king` (Act 1's King + the shared boss framework), night 2026-11-05/06
 
-DRAFT written in iteration 8 (01:05). The final pass lands after the 08:30 freeze.
+Final pass in iteration 16 (05:10); the exe line and the gates are brought up to the last export.
 Branch `n7-king`, cut from main `763f8fba`. Clips and stills are in
 `C:\Users\kazda\kiro\gtai-masters\n7\king\` (see `frames.json`, newest and best first).
 The moveset is `docs/bosses/king.md`; the full log is `JOURNAL.md`.
@@ -11,7 +11,7 @@ The moveset is `docs/bosses/king.md`; the full log is `JOURNAL.md`.
   - a phased state machine with attacks as data (`data/tables/bosses.json` + schema):
     windup / active / recovery ticks, aim lock, `leap_m`, `buff_adds`, adds per phase, `ghost_k`;
   - telegraph views, adds (`BossAdds`), the boss bar with phase marks and a lost-hp trail, music;
-  - arena records (`arena_stations/bosses.json`), a boss camera kept on the fight's floor;
+  - arena records (`data/tables/arena_stations/bosses.json`), a boss camera kept on the fight's floor;
   - the dev flags `--boss=<id> [--phase=N]` and `--bot=boss` (dodging, `--bot-stand`, `--bot-human`,
     `--ghost=<id>`).
 
@@ -25,11 +25,11 @@ The moveset is `docs/bosses/king.md`; the full log is `JOURNAL.md`.
   - a jewelled crown and the ermine collar over the vermilion cape; (it13) the cape is folded cloth
     under an ermine border that sways and trails his charge (`evidence/king/shots/it13/cape_before_after_32_48ppm.png`),
     and (it14) lands wide with the press slam's shockwave (`evidence/king/shots/it14/cape_slam_land_before_after_48ppm.png`);
-  - the gilded plum throne-car, a boss-owned vehicle with drapes and a hood cannon (banded gold barrel on a swivel mount since it12, `evidence/king/shots/it12/hood_cannon_before_after_48ppm_2x.png`); (it14) rounded gold bumpers past both ends (`evidence/king/shots/it14/car_bumpers_before_after_p1_32_48ppm.png`); (it15) a gilded throne back, a gold arch with ball finials round King's back over the cape, left empty on the car when he steps down (`evidence/king/shots/it15/car_throne_before_after_p1_32_48ppm.png`, `..._empty_p3_step_48ppm.png`);
+  - the gilded plum throne-car, a boss-owned vehicle with drapes and a hood cannon (banded gold barrel on a swivel mount since it12, `evidence/king/shots/it12/hood_cannon_before_after_48ppm_2x.png`); (it14) rounded gold bumpers past both ends (`evidence/king/shots/it14/car_bumpers_before_after_p1_32_48ppm.png`); (it15) a gilded throne back, a gold arch with ball finials round King's back over the cape, left empty on the car when he steps down (`evidence/king/shots/it15/car_throne_before_after_p1_32_48ppm.png`, `evidence/king/shots/it15/car_throne_empty_p3_step_48ppm.png`);
   - the gang: the rich robot thug with gold chains, a steel helmet and shades; (it14) the chain is a
     gold rope with a medallion that reads at 32 px/m, on the car's riders and pushers too (it was a
     2 px arc on the brawlers only: `evidence/king/shots/it14/gang_chain_before_after_p1_p2_32ppm_3x.png`).
-- **Three phases** (`king_phase{1,2,3}_*_32ppm_it14.mp4`, cut from the it14 full fight):
+- **Three phases** (`king_phase1_procession_32ppm_it15.mp4`, `king_phase2_court_32ppm_it15.mp4`, `king_phase3_on_foot_32ppm_it15.mp4`, cut from the it15 full fight):
   - phase 1, the procession: ram lanes and the hood cannon's coin fan (since it10 a spray of 48 coins out of the muzzle, `evidence/king/shots/it10/coin_spray_before_after_48ppm.png`), with the gang pushing and riding;
   - phase 2, the court: the car stops, the gang brawls, and decrees buff them;
   - phase 3, on foot: the press slam (a leap onto the ring, shockwave plus coin ring) and the charge.
@@ -42,7 +42,7 @@ The moveset is `docs/bosses/king.md`; the full log is `JOURNAL.md`.
   - the charge, telegraph lane, hit and dodge, the cape drawn in and flared (`king_charge_48ppm_it13.mp4`);
   - the ram and the coin fan, hit and dodge (`king_ram_coin_fan_48ppm_it14.mp4`), and the decree's windup arc and buff (`king_decree_48ppm_it14.mp4`);
   - the target sheet beside the game at 32 px/m (`king_target_vs_game_32ppm_it15.png`);
-  - the ghosts on King, phase 3 at 48 px/m on the current body (`king_{dent,kerf,tonnage}_p3_48ppm_it14.mp4`, `king_ohm_daze_tells_48ppm_it13.mp4`).
+  - the ghosts on King, phase 3 at 48 px/m on the current body (`king_dent_p3_48ppm_it14.mp4`, `king_kerf_p3_48ppm_it14.mp4`, `king_tonnage_p3_48ppm_it14.mp4`, `king_ohm_daze_tells_48ppm_it13.mp4`).
 - **Combat holds**: the director reel was 19/19 chapters down with 0 SCRIPT ERROR on the branch
   (it15, on aaf47854: `evidence/king/director-reel-it15.log`).
 - **Gates** (it15): lint 13/13, unit 1164/0 (`evidence/king/unit-it15.log`), scenarios 52/0
@@ -150,4 +150,14 @@ same as the editor run). It is re-exported at the freeze.
 
 ## Next steps
 
-See `JOURNAL.md` NEXT.
+1. The owner's verdicts on calls A-M; each default is one data value or flag (named in the call).
+2. Difficulty (call C): if "fair" is picked, re-tune the coin fan's spread and the charge's lane
+   width in `bosses.json` and re-run `node evidence/king/boss_numbers.mjs` until about 7 in 10
+   human-bot fights survive; never call it balanced without the table.
+3. The gang's shades (the last look gap): needs a separate dark visor part drawn over the dome in the
+   rig, not the part sheet's band (two part-art tries failed at 32 px/m, call I).
+4. The target's quilted plum inside the throne arch (covered by the cape from straight above).
+5. The plain enemy-ai robot thug: give it the gang's D4 lift (it prints as ink at 48 px/m).
+6. Merge order for the Director: `n7-king` (the framework) before `n7-servo`, which merged it.
+
+The full log is `JOURNAL.md`.
