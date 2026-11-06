@@ -260,13 +260,13 @@ NEXT:
   mid-run: FRICTION, mine; do not commit while evidence runs). 0 failing tests.
 - 22:53 `tools/art/design_cut.py --showcase` (15ac8128): ready for the assets lane's
   `showcase_<id>_{70,55}` sheets (the middle of five rotations = the side view; checked on
-  crates_70's row: one clean piece). Still not landed at 23:00.
+  crates_70's row: one clean piece). Still not landed at 22:55.
 - 22:55 Armory at the SHIPPED 32 px/m (tilt70, seed 1, frame 89, 0 SCRIPT ERROR):
   `gtai-masters/n8/hud/armory_tilt70_32_{before,after}.png` (before = `--showcase=off`) +
   `armory_tilt70_32_before_after_crop2x.png`. Look: ~40 px per weapon; the showcase pieces read by
   colour and silhouette, the parts were one grey-tan family, and the wall rack's black part prints
   become inked icons.
-- 23:00 Call still: `gtai-masters/n8/hud/call_pickup_hover_vs_floor_tilt70_48_crop2x.png` (built:
+- 22:55 Call still: `gtai-masters/n8/hud/call_pickup_hover_vs_floor_tilt70_48_crop2x.png` (built:
   hover 0.35 m vs `--pickup-hover=off`). Hover reads better (the drawing's shadow spot on the disc
   lifts it off the floor: "take me"); kept as built. The crate display still waits for the open-crate
   REQUEST (22:12).
@@ -294,3 +294,7 @@ NEXT:
 - Freeze 08:30: export `build/export/windows/RTAI.exe` (int-day recipe in docs/decisions.md); REPORT
   Calls: hover vs crate (still: call_pickup_hover_vs_floor...), portrait side/size, the dialogue never
   pauses play, Don Fax payphone vs bust, boss crest disc vs bust, Rivet's dialogue face (proposal).
+- 23:07 Director reel (headless, `arena.tscn --fixed-fps 60 --quit-after 14000 -- --bot=reel
+  --reel=director --loadout=pistol --rigs --view=<v>`) at 62096f63: `tilt70` 19/19 chapters all down,
+  `top` 19/19 all down, 0 SCRIPT ERROR both (`evidence/director-reel-n8hud-it4-{tilt70,top}.log`).
+- 23:08 Session end. All committed; masters `frames.json` 15 entries (32 px/m armory pair second).
