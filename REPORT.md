@@ -3,7 +3,7 @@
 DRAFT (iteration 19, 06:55): to be finalized at 08:40. The exe is re-exported at the freeze; the final gates are still open. Gates on the it19 head (987c3439, the square pads and chunky struts): lint 13/13, unit 1197/0 (`evidence/servo/unit-it19b.log`), scenarios 52 ran / 0 failed (`evidence/servo/scenarios-it19b.log`); director reel 19/19 chapters fully down, 0 SCRIPT ERROR (`evidence/servo/director-reel-it19b.log`). Every clip and still is on 987c3439.
 
 Branch `n7-servo` (from main `763f8fba`, with `n7-king`'s framework merged in at every move; the
-last merge was `6f083a5a` = n7-king `8ee305fc`, iteration 18). Clips and stills: `C:\Users\kazda\kiro\gtai-masters\n7\servo\` (M below),
+last merge was `a9bf2e2d` = n7-king `40f834c3`, iteration 20). Clips and stills: `C:\Users\kazda\kiro\gtai-masters\n7\servo\` (M below),
 indexed in `M/frames.json`. Design: `docs/bosses/servo.md`. Journal: `JOURNAL.md`.
 
 ## What works (with evidence)

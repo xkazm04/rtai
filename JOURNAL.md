@@ -1575,3 +1575,14 @@ NEXT (iteration 20, in order):
   --boss=servo --bot=boss --bot-human --seed=2`: **down 7036, 188 on Rivet, 0 SCRIPT ERROR** = the
   editor (`evidence/servo/exe-smoke-it19.json`). REPORT exe line updated. (NEXT 4 still re-exports
   at the freeze if the head moves.)
+
+## Iteration 20 (06:57-07:57, BUILD)
+- 06:57 Read JOURNAL NEXT (it19), git log, n7-king's JOURNAL tail (no REQUEST for servo).
+  Registry rules applied this session: encounter-balance-simulation (more seeds before any balance
+  word; the same seeds re-run as a determinism check), combat-pacing-and-dramatic-arc (time to kill
+  and damage per phase read from the same runs).
+- 06:58 MERGE n7-king 40f834c3 as a9bf2e2d (docs + king evidence only: the shades' BAND_W A/B, it18
+  numbers). JOURNAL/REPORT add/add: ours. Lint 13/13. No code moved, so no gate re-run for the merge.
+- 07:00 NUMBERS started on a9bf2e2d: `boss_numbers.mjs --seeds=1..10 --bots=dodge,human
+  --tag=it20` (CONTENDED: other lanes' Godot runs alive). Seeds 1-5 must equal it9's
+  `numbers-it9-spine94` (every change since it9 was render only); seeds 6-10 double n.
