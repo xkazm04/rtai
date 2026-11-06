@@ -1026,3 +1026,7 @@ NEXT (written 03:17, for iteration 12):
 4. Build candidates, weakest first: Dent seize read 3 (camera call open: impact only); Ohm bolt read
    3 at 32 (the bolt is thin); the ram heap (call h, not view-buildable). Call (b) only on the owner's
    word.
+- GATES 03:20 on `bc788d09` (Kerf's sight + the ram wake), tree untouched by code during them:
+  unit 1208/1208 (GODOT_BIN exported); scenarios 52 ran, 0 failed, 0 SCRIPT ERROR; director reels
+  arena 19/19 and city 19/19 fully down (14x 1/1, 2x 2/2, 3x 4/4), 0 SCRIPT ERROR
+  (`evidence/n7-melee/{unit,director-arena-loadout,director-city-loadout,scenarios}-bc788d09.log`).
