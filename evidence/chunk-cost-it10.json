@@ -1,0 +1,30 @@
+{
+  "bench_lock": "held (gtai-n5/bench.lock, n8-city) for both runs; other lanes' non-bench work may have run: wall-clock",
+  "command": "godot --rendering-driver d3d12 --fixed-fps 60 --path project -s res://dev/bench/chunk_cost.gd -- --arena=city --bot=rivet --seed=2 --rigs --view=<top|tilt70> --frames=3600 --out=<file>",
+  "head": "7a5f9137 (+ the probe 04eff755)",
+  "tilt70": {
+    "chunk_ms_max": 6.263,
+    "chunk_ms_p50": 3.837,
+    "chunks_recorded": 15,
+    "frame_ms_max": 2.623,
+    "frame_ms_p50": 1.519,
+    "frame_ms_p99": 2.623,
+    "frames": 3600,
+    "frames_over_2ms": 1,
+    "record_frames": 46,
+    "view": "tilt70"
+  },
+  "top": {
+    "chunk_ms_max": 3.275,
+    "chunk_ms_p50": 1.18,
+    "chunks_recorded": 15,
+    "frame_ms_max": 2.273,
+    "frame_ms_p50": 1.18,
+    "frame_ms_p99": 2.273,
+    "frames": 3600,
+    "frames_over_2ms": 1,
+    "record_frames": 16,
+    "view": "top"
+  },
+  "what": "n8 city brief item 5: streamed city recording cost per view, main scene --arena=city --bot=rivet --seed=2 --rigs, 3600 frames at --fixed-fps 60, d3d12, RTX 4090"
+}

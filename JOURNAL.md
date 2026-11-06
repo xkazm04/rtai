@@ -387,3 +387,28 @@ Read: JOURNAL, git log, the lane journals. Open answer to city: vehicles ee04543
   after at --grade=night), `it10_lamp_kerb_cars_tilt70_48ppm.png` (--car-zoom). Judged: the lamps
   read as bronze-grey posts with a bell head on the kerb at 32, the swan neck reads at 48; the pool
   sits on the pavement under the head. 0 SCRIPT ERROR in the 4 films.
+- GATE unit, full no-arg on 7a5f9137: 1516 passed, 0 failed (66.9 s). Lint 15/15 on every commit.
+- MILESTONE 04eff755 brief item 5 (the cost), first measurement: `dev/bench/chunk_cost.gd` runs the
+  real main scene under `-s` and samples ChunkView each frame (frame_us while recording; a chunk's
+  record time = its frames' frame_us, split on `activated`). `--arena=city --bot=rivet --seed=2
+  --rigs`, 3600 frames, bench.lock HELD for both runs (wall-clock; other lanes may have run
+  non-bench work). `evidence/chunk-cost-it10.json`:
+  | view | chunks | record per chunk p50 / max | frames recording | per-frame p50 / p99 / max | >2 ms |
+  | top | 15 | 1.18 / 3.28 ms | 16 | 1.18 / 2.27 / 2.27 ms | 1 |
+  | tilt70 | 15 | 3.84 / 6.26 ms | 46 | 1.52 / 2.62 / 2.62 ms | 1 |
+  Read: an angled chunk costs ~3.3x to record (faces, roof lifts, cards, the per-chunk order sort),
+  but ChunkView's time slice spreads it over ~3 frames, so the per-frame streaming work rises
+  only 2.27 -> 2.62 ms max and no chunk hitches. The overshoot past BUDGET_US is the 32-command
+  check granularity. NOT measured yet: the GPU side (draw calls per frame with faces + cards) and
+  the city DRIVE (the walk bot crossed 15 chunks; a car crosses more per second).
+  FRICTION: a `-s` SceneTree script compiles before the autoloads exist, so it cannot name a class
+  that names `Log` (every city view class): the probe duck-types the CityView (get("chunks")).
+  Debt baseline accepted for it (dev_loc +99, one cmdline read).
+- FRICTION: gdformat on Windows writes CRLF; git normalizes on add (warning only).
+
+Registry rules applied this session: depth-ordered-layered-art (lamps join the one south-edge order
+at their post base, the order key fixed to px), sprite-and-atlas-production (strips cut to equal
+bottom-aligned cells, mipmaps), generative-artifact-gating (lamp B fixes read: the 2250 pole is
+right, the plate shallow: used; traffic_light 55 B only where 55 shows), render-submission-economy
+(cards are one rect per prop recorded once per chunk; measured the record cost per view),
+motion-quality-gating + concept-scene-parity (same scene, same tick, before/after; night checked).
