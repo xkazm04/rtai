@@ -105,3 +105,7 @@ NEXT (iteration 3):
 6. The sidearms (iteration-1 parts) were never print-prepped: run prep.py on them and compare at 48.
 7. Clean scratch (3.6 GB, mostly audit mp4s) before the freeze: keep only what frames.json and
    docs/polish/weapons-tilt.md name.
+- 15:25 DONE from NEXT: (1) the director reel on c9828312 is tilt 19/19 and top 19/19, 0 SCRIPT ERROR;
+  the full unit run is 1418 passed, 0 failed. (6) 094a0661: the sidearms are print-prepped (a small
+  gain at 48 px/m, gtai-masters/d8/weapons/pistol_tilt_48_prep_zoom4x.png).
+  The rest of NEXT stands (2, 3, 4, 5, 7).
