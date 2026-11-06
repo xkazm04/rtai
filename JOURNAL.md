@@ -1390,3 +1390,8 @@ Read: JOURNAL NEXT (it13), git log, frames.json. `king_car_trim.gd` showed `M` w
   hit, the dodger clear. it13 clip deleted; frames.json 15 (slam first); REPORT clip + call L.
 - FRICTION: film.sh used 1280x720 while the it13 clips are 1280x800 (the A/B crops misaligned);
   film.sh now takes RES. The it14 ghost clips are 1280x720 (fine as clips).
+
+### 03:53 EXE re-exported on 9558e8fb and smoked (NEXT 4, first half)
+- `--export-release "windows-showcase"` -> `build/export/windows/RTAI.exe` (exit 0, 0 errors,
+  `build/export-it14.log`). Smoke headless, seed 2, human bot: phases 1-2-3, King down at tick
+  **4933**, took **88**, 0 SCRIPT ERROR. REPORT's exe section updated; re-export again at the freeze.
