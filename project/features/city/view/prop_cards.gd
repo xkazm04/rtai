@@ -18,6 +18,10 @@ static var _named_art: String = "-"
 var _strip: Dictionary[int, Texture2D] = {}
 var _cell_w_px: Dictionary[int, float] = {}
 var _turn: Dictionary[int, float] = {}
+## optional per row: the card's foot in the flat art's frame (px from its centre; a lamp's post
+## base at one end of its arm) and `mirror` (the strip's side view faces the other way)
+var _foot: Dictionary[int, Vector2] = {}
+var _mirror: Dictionary[int, bool] = {}
 var _names: Array[String] = []
 
 
@@ -39,6 +43,13 @@ static func make(
 		out._strip[t] = tex
 		out._cell_w_px[t] = w_m * SimConst.PX_PER_M
 		out._turn[t] = turns * PI * 0.5
+		if row.has("foot_m"):
+			var f: Array = row["foot_m"]
+			var fx: float = f[0]
+			var fy: float = f[1]
+			out._foot[t] = Vector2(fx, fy) * SimConst.PX_PER_M
+		if row.get("mirror", false):
+			out._mirror[t] = true
 	return out
 
 
@@ -107,7 +118,16 @@ func bands(band_of: PackedByteArray) -> PackedByteArray:
 func facing(t: int, rot: float) -> Vector2i:
 	var ang: float = wrapf(rot + _turn[t], -PI, PI)
 	var idx: int = clampi(roundi(absf(ang) / (PI * 0.25)), 0, FACINGS - 1)
-	return Vector2i(idx, 1 if ang < -0.01 and idx > 0 and idx < FACINGS - 1 else 0)
+	var flip: bool = ang < -0.01 and idx > 0 and idx < FACINGS - 1
+	return Vector2i(idx, 1 if flip != (idx > 0 and idx < FACINGS - 1 and _mirror.has(t)) else 0)
+
+
+## The card's foot in world px for a command at ground centre `at` with footprint `ext` px: the
+## row's `foot_m` turned with the command, else the footprint's south-edge centre.
+func foot_at(t: int, rot: float, at: Vector2, ext: Vector2) -> Vector2:
+	if _foot.has(t):
+		return at + _foot[t].rotated(rot)
+	return at + Vector2(0.0, ext.y * 0.5)
 
 
 ## Draws prop t's card into `item`; `foot` is the footprint's south-edge centre in world px; `w`

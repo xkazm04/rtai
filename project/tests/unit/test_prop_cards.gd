@@ -50,3 +50,19 @@ func test_draw_named_skips_an_unknown_prop() -> void:
 	var ci: Node2D = autofree(Node2D.new())
 	assert_false(_cards().draw_named(ci, "lamp_post", Vector2.ZERO, 48.0))
 	assert_true(_cards().draw_named(ci, "payphone", Vector2.ZERO, 48.0))
+
+
+func test_a_lamp_stands_on_its_post_base_with_the_arm_turned() -> void:
+	var names: Array[String] = ["lamp_post"]
+	var row: Dictionary = {
+		"art": ART, "cell_w_m": 1.0, "foot_m": [-1.0, 0.0], "mirror": true, "turn": 3
+	}
+	var cards: PropCards = PropCards.make({"lamp_post": row}, names, "p70", {"p70": "p55"})
+	var px: float = SimConst.PX_PER_M
+	var foot: Vector2 = cards.foot_at(0, PI * 0.5, Vector2(100, 100), Vector2.ZERO)
+	assert_almost_eq(foot, Vector2(100, 100 - px), Vector2(0.01, 0.01), "arm south: post north")
+	assert_eq(cards.foot_at(0, 0.0, Vector2.ZERO, Vector2(0, 50)), Vector2(-px, 0), "not the edge")
+	assert_eq(cards.facing(0, PI * 0.5), Vector2i(0, 0), "arm south: toward the camera")
+	assert_eq(cards.facing(0, 0.0), Vector2i(2, 0), "arm east: the side view as drawn (right)")
+	assert_eq(cards.facing(0, PI), Vector2i(2, 1), "arm west: mirrored")
+	assert_eq(cards.facing(0, -PI * 0.5), Vector2i(4, 0), "arm north: the back")

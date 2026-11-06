@@ -71,6 +71,29 @@
             "maximum": 12,
             "type": "number"
           },
+          "foot_m": {
+            "items": {
+              "maximum": 8,
+              "minimum": -8,
+              "type": "number"
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+          },
+          "light_m": {
+            "items": {
+              "maximum": 8,
+              "minimum": -8,
+              "type": "number"
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+          },
+          "mirror": {
+            "type": "boolean"
+          },
           "turn": {
             "maximum": 3,
             "minimum": 0,
@@ -83,7 +106,7 @@
         ],
         "type": "object"
       },
-      "description": "PropCards: a city_textures prop name drawn standing as a card from its five-facing strip under an angled view (art with <art> = the view's art key); cell_w_m = one strip cell's width on the ground; turn = quarter turns from the art's front (south at turn 0) to the texture's",
+      "description": "PropCards: a city_textures prop name drawn standing as a card from its five-facing strip under an angled view (art with <art> = the view's art key); cell_w_m = one strip cell's width on the ground; turn = quarter turns from the art's front (south at turn 0) to the texture's; foot_m = the card's foot in the flat art's frame (m from its centre, turned with it; default the footprint's south-edge centre: a lamp's post base at one end of its arm); mirror = the strip's side views face the other way (true: the side view's front faces east, as the lamp's arm); light_m = a night lamp's light under the card (CityPropLights, m in the flat art's frame; replaces lights.json at_m under an angled view)",
       "propertyNames": {
         "pattern": "^[a-z][a-z0-9_]*$"
       },
