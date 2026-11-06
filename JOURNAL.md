@@ -331,3 +331,24 @@ gating (the walking-card idea held back: a still figure sliding fails in motion,
 REQUESTed instead of faking a walk), concept-scene-parity (before/after on one seed, same tick, the
 before made by switching the lane off rather than another scene), sprite-and-atlas-production (the
 walk REQUEST names cell layout and baseline so the strip cuts by script).
+- MILESTONE 2866ec0b (brief 3, the weakest item raised): pedestrians walk as WHOLE-FIGURE cards
+  under p70 (StreetWalkerCards): the nine library ped_*_70 top rows cut by street_head.py band 1.0
+  (192 px, no fix: ped_suit and ped_cap from their 2120 B rounds, the rest A), drawn at the feet,
+  1.7 m tall x the crowd scale, the top-down parts hidden, a gait bob 1.6 px + sway 0.05 rad from
+  rig.phase. Hit or dead the person drops back to the parts and the head card for good (the parts'
+  visibility is kept on the rig and restored exactly: a hit, a death, p55, top). First a filming-
+  only prototype: white blobs at the feet (halos the rig re-shows every step) -> hidden every step
+  from a cached list. LOOKED: board 64 px/m (nine distinct people), board `--kill=light` (t59 whole
+  figures, t90 the parts fall, t240 the corpses lie where the bodies were, heads on), city seed 5
+  32 px/m before|after same tick (the sack on black pills becomes a coated person). FRICTION: a GUT
+  loop over a typed const Dictionary's PackedStringArray value inline crashed the engine (signal
+  11); a typed local first is fine. DECISION street/walkers in docs/decisions.md.
+  Masters: peds_walkers_tilt70_64ppm_board_t120.png + .mp4, peds_walkers_before_after_tilt70_32ppm
+  {,_x2}_city_seed5_t4.png, peds_walkers_city_tilt70_32ppm_seed5_15s.mp4,
+  peds_walkers_hit_drop_to_parts_tilt70_64ppm_board_t59_t90_t240.png. frames.json: 15 (walkers first).
+- CALL (owner): the walkers. Options: (a) whole-figure cards gliding with a bob (BUILT); (b) the
+  head cards over the top-down parts (StreetWalkerCards.ENABLED = false). Costs of (a): the figure
+  glides until stride frames land, and it pops from drawing to parts at the hit; on cream pavement
+  the tan coats are lower contrast than the old black legs (the ink rim holds them). See:
+  peds_walkers_before_after_tilt70_32ppm_x2_city_seed5_t4.png; exe `--arena=city --rigs --view=tilt70`.
+- GATE unit no-arg on 2866ec0b: 1505 passed, 0 failed, no FLAKY. Lint 15/15.
