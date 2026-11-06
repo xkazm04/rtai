@@ -247,3 +247,22 @@ Iteration 6 left no journal entry and no commit; this session worked it5's NEXT.
   the props and the car lean more (25/15 = 1.67x by construction), still a modest gain; the white
   parked sedans are flat in every view (VehicleView MultiMesh + the native crowd traffic: a stack
   needs a lifted body layer + wall slices in both paths; not started).
+- PROBE top_lift (`it7/order_top_lift.log`): 212 pairs, 0 reversed, 212 mixed, 0 car pairs. NOT a
+  measurement of top_lift's lean: the probe takes body height from `lift_px`, which is 0 for a
+  straight-down view, so it reduces to the flat test. top_lift draw order = UNMEASURED.
+
+NEXT (iteration 8):
+1. Director reel gate result on 4c03d511 (started 04:39, `evidence/view/it7/director-reel.log`):
+   if the session ended before it was committed, read the log and commit it (or re-run).
+2. Depth sort under tilt (the measured 16 % reversed + 71 % mixed): try a z band per rig by
+   ground depth relative to the camera centre (`PART_SPAN` 16, bands of about 0.3 m, clamped),
+   tilt only; then lift every fixed overlay z over the rigs (held +60, kill FX 30/40, KingAccents
+   40, mag floor -61) by the band of its own rig, or cap the bands under 30 z. Re-run
+   `--order-probe` (target: reversed and mixed near 0), film before/after at 48.
+3. Parked/traffic sedans as stacks under tilt (VehicleView: a lifted body layer + dark wall
+   slices from the shadow silhouette; the native crowd traffic path too).
+4. Re-encode the comparison clip with the labels below the boss bar; a 48 px/m close-up clip
+   (Rivet vs King phase 3); the stills grid. The it7 clip is the current best comparison.
+5. Freeze prep: the exe export (int-day recipe in docs/decisions.md) EARLY (it8 or it9), check that
+   `RTAI.exe -- --boss=king --view=tilt` reaches the arena; evidence/run.mjs; REPORT with the PLAN
+   cost table (draft at the end of docs/view-lab/PLAN.md).
