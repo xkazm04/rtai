@@ -1498,3 +1498,14 @@ matter at 32 px/m, finalize REPORT.
 - NEXT 1 (shades in the part art) left as a REPORT gap: it7/it10 already measured that a wider
   visor band prints the head as a black disc at 32 px/m (call I), and it14's drawn arc failed.
   REPORT gap line updated.
+
+### 04:28 FILM the full fight and the re-cuts on 889cc825 (the throne back)
+- `M/king_fight_bot_human_32ppm_it15.mp4` (95 s, 32 px/m, seed 2, --bot-human --boss-cam,
+  1280x800, music, 0 SCRIPT ERROR; phases 1-2-3 and "king defeated" in the log). **Looked at** the
+  keys at 6/12/24/36/48/60/72/84/90 s: the same beats as it14 (ram lane, coin fan cone, court brawl,
+  King on foot, the defeat); the gold arch behind King on the car, empty on the wreck from 60 s.
+- Re-cut: phase clips 1-3 (0-19.5, 17.5-59.5, 56.5-95 s), procession entering (0-62.5 s), target
+  comparison (12 s and 72 s crops at 2x beside the sheet). **Looked at** the comparison: the ram
+  tell with the arch behind King; King on foot beside Rivet, the empty gilded throne on the wreck.
+  it14 versions deleted; frames.json 15 (all exist); REPORT points at it15. Scratch PNGs and AVI
+  deleted.
