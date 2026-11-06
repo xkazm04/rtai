@@ -26,6 +26,9 @@ const WHEELS_K: Array[float] = [-0.32, 0.3]
 const TYRE_M: Vector2 = Vector2(0.48, 0.42)
 const HUB_M: float = 0.2
 const SHADOW: Color = Color(0.09, 0.075, 0.106, 0.38)
+## The throne back's height over the roof under a tilt (m) and its slices.
+const THRONE_H_M: float = 0.9
+const THRONE_SLICES: int = 7
 
 
 ## Draws the stack about `at` (world px) along `heading`; the caller then lifts the roof by ROOF_M.
@@ -126,3 +129,36 @@ static func far_box(host: Node2D, car: Vector2, dir: Vector2) -> Rect2:
 	var up: float = absf(ViewMode.shared().lift_px(ROOF_M + 1.8).y) * k
 	var half_x: float = (ex + 0.9) * p
 	return Rect2(c.x - half_x, c.y - ey * p - up, half_x * 2.0, ey * p + up)
+
+
+## Under a tilt: KingCarTrim's throne back standing THRONE_H_M tall behind King's seat `at` (car
+## px), `up` = the car-local lift per metre: the arch stacked in slices (ink silhouette, then gold
+## from dark at the seat to bright at the top), the light line, ball finials and crest on top.
+static func throne(ci: CanvasItem, at: Vector2, p: float, up: Vector2) -> void:
+	var r: float = KingCarTrim.THRONE_HW_M * p
+	var w: float = 0.16 * p
+	var a0: float = PI - KingCarTrim.THRONE_ARC
+	var a1: float = PI + KingCarTrim.THRONE_ARC
+	for i: int in THRONE_SLICES:
+		ci.draw_arc(at + up * _throne_h(i), r, a0, a1, 24, KingCarTrim.INK, w + 4.0)
+	for i: int in THRONE_SLICES:
+		var k: float = float(i) / float(THRONE_SLICES - 1)
+		var col: Color = KingCarTrim.GOLD_DARK.lerp(KingCarTrim.GOLD, k)
+		ci.draw_arc(at + up * _throne_h(i), r, a0, a1, 24, col, w)
+	var top: Vector2 = at + up * THRONE_H_M
+	ci.draw_arc(
+		top, r + w * 0.2, PI - KingCarTrim.THRONE_ARC * 0.9, a1 - 0.1, 24, KingCarTrim.GOLD_HI, 1.5
+	)
+	for s: float in [-1.0, 1.0]:
+		var fin: Vector2 = top + Vector2.from_angle(PI + s * KingCarTrim.THRONE_ARC) * r
+		ci.draw_circle(fin, 0.15 * p + 2.0, KingCarTrim.INK)
+		ci.draw_circle(fin, 0.15 * p, KingCarTrim.GOLD)
+		ci.draw_circle(fin - Vector2(0.05, 0.05) * p, 0.055 * p, KingCarTrim.GOLD_HI)
+	var c: Vector2 = top + Vector2(-r, 0.0) + up * KingCarTrim.CREST_M * 1.2
+	ci.draw_circle(c, KingCarTrim.CREST_M * p + 2.0, KingCarTrim.INK)
+	ci.draw_circle(c, KingCarTrim.CREST_M * p, KingCarTrim.GOLD)
+	ci.draw_circle(c, KingCarTrim.CREST_M * p * 0.45, KingCarTrim.PLUM_DARK)
+
+
+static func _throne_h(i: int) -> float:
+	return THRONE_H_M * float(i) / float(THRONE_SLICES - 1)
