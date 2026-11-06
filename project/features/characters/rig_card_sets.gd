@@ -5,7 +5,8 @@ extends RefCounted
 ## of RigHeadCard.CARDS. An empty path keeps the base strip and changes the rest. p55: Rivet's bust
 ## (rivet_bust.py), Dent's tan bust (ghost_card_tone.py), the street heads (street_head.py, from the
 ## assets library's keyed 55 sheets). p70: view70's widths for its own strips; the street
-## heads reuse the p55 strips (view70 it5 REQUEST: compare the pitch, not two street art sets).
+## heads reuse the p55 strips (view70 it5 REQUEST: compare the pitch, not two street art sets);
+## Dent's p70 bust is cut from the library's dent_70 (n8), its width over the wider 70 cell.
 ## n8: the other lanes register their own rows without editing this file: one
 ## data/tables/card_sets/<lane>.json each (schema gtai.card-set/1), merged over SETS by all().
 
@@ -39,6 +40,8 @@ const SETS: Dictionary[String, Dictionary] = {
 	{
 		"rivet": ["", 0.86, 1.17, false, true],
 		"king": ["", 0.80, 3.53, true, true],
+		"dent":
+		["res://features/characters/art/view/p70/dent_bust_card.png", 0.72, 2.1, true, true],
 		"cop/head_swat":
 		["res://features/characters/art/view/p55/swat_head_card.png", 0.8, 1.68, false, true],
 		"cop/head_cap":
