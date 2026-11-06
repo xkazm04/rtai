@@ -13,6 +13,9 @@ const WRECK_ID: int = 50
 
 ## chunk key -> its cars, each Vector4(x m, y m, rotation rad, texture id).
 static var _chunks: Dictionary[Vector2i, PackedVector4Array] = {}
+## True while a VehicleView exists that draws this registry (set in its setup, false on its exit;
+## n8 city's REQUEST): the arena city has none, so its kerb cars must stay flat props there.
+static var live: bool = false
 
 
 ## The card row for a city texture id, or -1 (keep the flat prop).
@@ -23,6 +26,12 @@ static func row(tex: int) -> int:
 ## True when parked cars draw as cards in the shared view (a tilt with a card atlas).
 static func carded() -> bool:
 	return VehicleCards.atlas() != null
+
+
+## True when a handed-in car is drawn: a live VehicleView under a view with card art. Ask it when a
+## chunk is ordered (not once at city setup: the VehicleView is made after the city view).
+static func drawn() -> bool:
+	return live and carded()
 
 
 static func park(chunk: Vector2i, cars: PackedVector4Array) -> void:

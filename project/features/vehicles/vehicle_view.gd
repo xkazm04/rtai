@@ -1,14 +1,11 @@
 class_name VehicleView
 extends Node2D
-## Draws VehicleService's cars (driven, parked, wrecks) the way the city draws traffic: the same
-## quad mesh and look material as the crowd's car layer (handed in by the composition root, so the
-## print matches), one MultiMesh per body texture (intact, d1, d2, hijacked, wreck: n-d4's burnt
-## wrecks in the traffic atlas layout; without that atlas a wreck draws its d2 cell darkened) plus
-## a car-shaped ink shadow, tyre marks (VehicleSkids) and burning wrecks (VehicleFire). Reads the
-## service each frame and writes nothing back (render only; never sim state). Size and cell
-## rules = CitySimRender cars. Sim traffic the service rammed to D1 or soul-hijacked keeps driving
-## in the sim, drawn by the crowd layer with its intact art: the view lays the D1 / hijacked cell
-## over it at the same transform (until the city's car shader picks art by custom.y itself).
+## Draws VehicleService's cars (driven, parked, wrecks) as the city draws traffic: the crowd car
+## layer's quad mesh and look material, one MultiMesh per body texture (intact, d1, d2, hijacked,
+## wreck; without the burnt atlas a wreck draws d2 darkened), an ink shadow, tyre marks
+## (VehicleSkids) and burning wrecks (VehicleFire); under a tilt with card art, VehicleCards. Render
+## only: reads the service, never writes sim state. Sim traffic rammed to D1 or soul-hijacked keeps
+## driving in the sim: the view lays the D1 / hijacked cell over it at the same transform.
 
 const CAR_L: float = 204.8
 const CAR_W: float = 102.4
@@ -30,8 +27,7 @@ var fire: VehicleFire = VehicleFire.new()
 var cards: VehicleCards = null
 var _bodies: Array[MultiMesh] = []
 var _shadow: MultiMesh = null
-## True when the burnt wreck atlas was handed in (else wrecks draw d2, darkened).
-var _burnt: bool = false
+var _burnt: bool = false  # the burnt wreck atlas was handed in
 ## [our node, the crowd node it mirrors]: the look may swap the crowd's material at runtime.
 var _mirrors: Array[Array] = []
 var _crowd_car: MultiMeshInstance2D = null
@@ -68,6 +64,11 @@ func setup(
 	add_child(cards)
 	cards.under.z_index = RenderLayers.z(&"actors") - 1
 	add_child(cards.under)
+	VehicleParked.live = true
+
+
+func _exit_tree() -> void:
+	VehicleParked.live = false
 
 
 func _layer(like: MultiMeshInstance2D, tex: Texture2D, z: int) -> MultiMesh:
@@ -121,9 +122,8 @@ func _process(_delta: float) -> void:
 	_draw_cards()
 
 
-## Under a tilt with art for its pitch: every car as a card (worn by its damage state; under the
-## actors when someone stands in front), the flat bodies hidden, their shadows kept. A view with no
-## card atlas (`top`) never touches the layers (bit-identical).
+## Under a tilt with card art: every car as a card (worn; under the actors with someone in front),
+## flat bodies hidden, shadows kept. No card atlas (`top`): the layers are untouched.
 func _draw_cards() -> void:
 	var tex: Texture2D = VehicleCards.atlas()
 	var on: bool = tex != null
