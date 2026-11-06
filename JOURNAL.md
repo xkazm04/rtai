@@ -1296,3 +1296,9 @@ idempotent tool; palette gate held), depth-ordered-layered-art (no layer change)
 - 04:28 GATES scenarios on 5f9ed433 (the legs): **52 ran, 0 failed**, 0 SCRIPT ERROR, exit 0
   (`evidence/servo/scenarios-it14.log`; CONTENDED: a film ran beside it). Lint 13/13 (hooks),
   unit 1190/0.
+- 04:31 FILMS the p1/p2/p3 32 px/m clips re-filmed on 5f9ed433 (`phase32_14.sh 1|2 2 2400`, `3 2
+  2300`; 0 SCRIPT ERROR each). **Looked at** the three 12-key sheets: p1 dash lanes, beam, rings,
+  the top-left corner; p2 carpet rings, CS crates, the belt, the bottom-right yard; p3 the hot
+  dash, dives and the defeat whole in the top-left corner, as it12, on the hazard pads and
+  parallel legs. `M/servo_p{1,2,3}_*_32ppm_it14.mp4` + keys replace it12's (deleted); every
+  REPORT path checked to exist.
