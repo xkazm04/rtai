@@ -909,3 +909,8 @@ NEXT (iteration 9, in order):
    2026-11-04 showcase export) by 08:30; check `RTAI.exe -- --boss=servo` boots into the depot.
 5. REPORT.md final (the draft is committed): the exe lines, the final gates, calls 1-9 + a call
    for keep_in (boss over floor) if king disagrees.
+- 01:20 GATES: director reel on the it8 head (`--bot=reel --reel=director --loadout=pistol --rigs`,
+  headless, --fixed-fps 60): **19/19 chapters fully down**, 0 SCRIPT ERROR
+  (`evidence/servo/director-reel-it8.log`; exit 124 = the 700 s cap after the last chapter, as
+  it6). Combat did not regress. Unit 1183/0, scenarios 52/0, lint 13/13 this iteration.
+  Session ends with everything committed; NEXT for iteration 9 is the list above.
