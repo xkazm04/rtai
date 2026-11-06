@@ -94,3 +94,29 @@ Scratch: `C:\Users\kazda\kiro\gtai-d8\scratch\view70\`.
 - FILM 64 px/m close-up, King on foot (`--phase=3 --boss-cam`): king_onfoot_55_vs_70_64ppm_t9.png +
   15 s mp4. LOOKED: the 70 bust reads in close combat (plum crown, grin, chain, emerald medallion);
   the fur's step cut mostly hides under the arms. frames.json now 11 entries.
+
+NEXT (iteration 2):
+1. Merge `d8-chars` (ordinary merge; their 8e557502 `ViewMode.art` + `RigHeadCard.rows_of`, tilt row
+   art `p55`). Expect view.json / schema hunks (their schema `art` = mine). After the merge:
+   - tilt70: RigHeadCard draws the p70 strips itself but with the BASE width -> the King small again
+     unless chars adds `SET_CARDS["p70"]` rows (REQUEST above: king k 3.53, rivet k 1.17). If not
+     landed, keep my overlay for the height match (it skips a card already drawn from the folder,
+     so make ViewPitchCards scale THAT card instead, or ask chars for a `height_match` flag).
+   - combo: set `ViewMode.shared().art` = "p70" above swap_deg, the boss art ("p55", new row key
+     `boss_art`) below, and keep the overlay only for the cross-fade window (mix 0<x<1); bump
+     `ViewMode.revision` once chars lands it (floor + PropOcclusion redraw on a pitch write).
+   - re-film the baseline (King seed 2 at tilt/tilt70/combo 32 px/m, the 64 px/m on-foot pair).
+2. Gates on the merge: lint, unit full, scenarios, director reel 19/19 under tilt70 and combo
+   (`--bot=reel --reel=director`), top bit-identical (md5 of a top frame vs main at tick 900).
+3. Tonnage at 70 from tonnage_70.png (a ghost: production sheet on MAGENTA under the image lock, or
+   cut from the sheet + despill), card/parts under art/view/p70/.
+4. Quality: the King p70 bust's flat step cut at the shoulders (a curved fur edge mask), Rivet p70
+   frame 4's shoulder ball; a card-region pop metric for the cross-fade; the ease length 0.8 vs 1.2 s
+   clips for the owner call; frame cost 70 vs 55 under the bench lock (CONTENDED otherwise).
+5. Film labels off the dev HUD in the city clip; a 30-90 s combined clip of the set.
+- GATE scenarios on 3ce6148c: `run_scenarios: 52 ran, 0 failed`, 0 SCRIPT ERROR, the replay
+  `identical` (timings CONTENDED: four lanes on the machine). Lint 15/15 on every commit.
+- 14:53 CHECKED the chars merge (`git merge-tree HEAD d8-chars`): 14 files, conflicts only in
+  JOURNAL.md (add/add: every lane keeps a root JOURNAL; keep OURS) and view.schema.json (same `art`
+  text). Deferred to iteration 2 (NEXT 1): post-merge the 70 King shrinks to 68 % until the p70
+  SET_CARDS rows land, and a re-film + gates do not fit in this session.
