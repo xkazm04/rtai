@@ -4,6 +4,32 @@
     "55": {
       "doc": "55 degrees (the `tilt` row): generated 2026-11-06 with the image tool from the shipped pickups as the design reference, keyed off #00B140 (steam/ai-provenance/2026-11.jsonl)",
       "weapons": {
+        "electro_baton": {
+          "art": "res://features/combat/weapons/art/held_55/electro_baton.png",
+          "grip_px": [
+            80,
+            74
+          ],
+          "length_px": 512,
+          "muzzle_px": [
+            519,
+            75
+          ],
+          "size_k": 1
+        },
+        "electro_gun": {
+          "art": "res://features/combat/weapons/art/held_55/electro_gun.png",
+          "grip_px": [
+            150,
+            200
+          ],
+          "length_px": 490,
+          "muzzle_px": [
+            497,
+            151
+          ],
+          "size_k": 1
+        },
         "gloria": {
           "art": "res://features/combat/weapons/art/held_55/gloria.png",
           "grip_px": [
@@ -30,6 +56,32 @@
           ],
           "size_k": 1
         },
+        "homing_shard": {
+          "art": "res://features/combat/weapons/art/held_55/homing_shard.png",
+          "grip_px": [
+            65,
+            245
+          ],
+          "length_px": 432,
+          "muzzle_px": [
+            439,
+            169
+          ],
+          "size_k": 1
+        },
+        "katana": {
+          "art": "res://features/combat/weapons/art/held_55/katana.png",
+          "grip_px": [
+            90,
+            86
+          ],
+          "length_px": 643,
+          "muzzle_px": [
+            650,
+            37
+          ],
+          "size_k": 1
+        },
         "machine_pistol": {
           "art": "res://features/combat/weapons/art/held_55/machine_pistol.png",
           "grip_px": [
@@ -53,6 +105,45 @@
           "muzzle_px": [
             356,
             107
+          ],
+          "size_k": 1
+        },
+        "plasma_rifle": {
+          "art": "res://features/combat/weapons/art/held_55/plasma_rifle.png",
+          "grip_px": [
+            172,
+            222
+          ],
+          "length_px": 527,
+          "muzzle_px": [
+            534,
+            151
+          ],
+          "size_k": 1
+        },
+        "plasma_sword": {
+          "art": "res://features/combat/weapons/art/held_55/plasma_sword.png",
+          "grip_px": [
+            65,
+            76
+          ],
+          "length_px": 641,
+          "muzzle_px": [
+            648,
+            76
+          ],
+          "size_k": 1
+        },
+        "ray_gun": {
+          "art": "res://features/combat/weapons/art/held_55/ray_gun.png",
+          "grip_px": [
+            78,
+            215
+          ],
+          "length_px": 400,
+          "muzzle_px": [
+            407,
+            143
           ],
           "size_k": 1
         }
