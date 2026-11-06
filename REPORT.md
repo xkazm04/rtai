@@ -39,6 +39,9 @@ cut from main `763f8fba`. Clips and stills: `C:\Users\kazda\kiro\gtai-masters\n7
 | The flamer's jet roars over the bed it borrowed: it played `fire_crackle`, the burning-wreck bed at -5 dB (continuous on film, but about 15 dB under a gun stream); now `shot_flame` (the crackle at pitch 0.9, +1 dB). On the range film (3 s of held jet): -28.4 -> -23.4 dB rms, still continuous (per-tick std 2.7 dB), centroid 5.9 -> 5.4 kHz. Still about 10 dB under a gun stream (one gain value if the owner wants it louder); not listened to (call 7) | `e63c186e` | weapons.json flamethrower `shot_cue` = `fire_crackle` | `flamer_jet_cue-ab-32ppm.mp4` (with sound, before then after) |
 | Combined clip of the polished set in the city block, 32 px/m, fight camera, with sound (72 s, retaken on `13e0e050`: every ranged chapter plus the whole nuke ring, with the tube fix and the nuke's camera lead) | `13e0e050` | - | `city_block_polished_set-32ppm.mp4` |
 
+| Impact re-scored on film with the feel layer on vs off (same build, same kill tick): the pistol, machine pistol, Gloria and the Gatling kill now hold the struck body for about 6 frames before the blood and the fall (off: the blood is out 2 ticks after the hit and nothing answers it); audit I 2 -> 3 for all four. The homing shard's hit star holds the same way, but its blood waits for the pop (call 1) | `779cdd3d` (it1, the feel layer) | `--feel=off` | `evidence/ranged/it20-pistol-kill-feel-on-off-32ppm.jpg`, `it20-smg-gloria-kill-feel-on-off-32ppm.jpg`, `it20-gatling-shard-kill-feel-on-off-32ppm.jpg` (in the repo) |
+| Quest 1's rifle judged on its real hit ticks: a struck probe finds 10 rifle hits in Dock 9, every one a one-hit kill; at 32 px/m the tracer runs to the contractor, he is down on the next frame along the shot, and the blood sprays along the shot and stays (audit V ? -> 3, I ? -> 2) | - (judging only) | - | `evidence/ranged/it20-quest1-rifle-kills-32ppm.png` |
+
 Gates (iteration 5): evidence run on `41bb90e7`: lint 13/13, scenarios 52/52, parity bit-exact
 (planted mutation caught at 629), selftest pass; unit 1138/0 (flagged by the tree-change guard
 because I edited docs during the run). City-block director reel with `--loadout=pistol` on
@@ -50,7 +53,7 @@ because I edited docs during the run). City-block director reel with `--loadout=
   over a 42-tick reload), so nothing in the sim announces the release; a wind-up that plays
   between press and release would need the release to wait in the sim (a gameplay timing change,
   not done).
-- Quest 1's assault rifle: the flash and tracer are fixed (it16, `01a482d1`, row above). Still open: no rifle of its own is drawn in Rivet's claw (the held art is an open owner call tonight), and its impact and victim reaction were not judged (the hits land off the clip's crops); it shares `shot_assault_rifle` with the contractors.
+- Quest 1's assault rifle: the flash and tracer are fixed (it16, `01a482d1`, row above). Still open: no rifle of its own is drawn in Rivet's claw (the held art is an open owner call tonight). Its impact and victim reaction are judged since iteration 20 (row above); earlier note: they were not judged (the hits land off the clip's crops); it shares `shot_assault_rifle` with the contractors.
 - Quest 1's table-gun change is small at 32 px/m in the windows filmed so far (Rivet fires few
   nails in Dock 9).
 - No performance claim: no bench was run under the bench lock.
