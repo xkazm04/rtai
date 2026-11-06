@@ -2145,3 +2145,12 @@ NEXT (iteration 25 = the freeze and the REPORT; supersedes the it22 list):
    judge it); assault-rifle I 2.
 5. If time remains before the freeze: a machine pistol take at range (item 4), data only if it
    needs a change (`trail_ticks`).
+
+### LOOK 07:28 the machine pistol's trail at range (NEXT item 5, no build)
+- `--weapon=machine_pistol --bot=gunplay --cam=fight --ppm=32 --clean --reach=8` (no `--lone`;
+  700 frames, exit 0, 0 SCRIPT ERROR; scratch `tr/mpg.log`). Frames 440-520 every 2-3 at 1.5x:
+  a riot cop about 6 m out; Rivet's burst first sparks on the shield (GunFx METAL: no trail, by
+  design, a block is not a body hit), then the body hits bleed. The 4-tick trails blend into the
+  SMG's own continuous cream tracers: no clutter, no curtain, and nothing that reads on its own.
+  Verdict: `trail_ticks` 4 stays (restraint: a stream needs no extra line); R stays 2. Avi deleted.
+- NEXT item 5 is closed by this look; the NEXT list above otherwise stands for iteration 25.
