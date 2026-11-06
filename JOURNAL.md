@@ -1041,3 +1041,20 @@ encounter-balance-simulation (render only: the gameplay numbers must not move).
   reverses it7's "no cream dome" call; the owner's call I (ink head = STEEL 158 + VISOR_FROM 0.60).
   64 px/m checked (`head_after_p2_64_t360.png`): pale domes, gold frames, the D5 body grime.
 - Gates: lint 13/13, unit **1159/0** (`evidence/king/unit-it10.log`). Render only (one PNG pair).
+
+### 01:26 FILM the full fight, the charge and the target comparison on the current body (NEXT 2-3)
+- FILM `M/king_fight_bot_human_32ppm_it10.mp4` (95 s, 32 px/m, seed 2, --bot-human --boss-cam,
+  music, 0 SCRIPT ERROR): King down at tick **4933**, Rivet took **88**, the same landings as the
+  headless it8 run (`evidence/king/shots/it10/fight_human_s2_it10_tel.json`): a deterministic film.
+  **Looked at** the keys every 6 s (`shots/it10/fight_human_32ppm_it10_keys.png`): the ram lane, the
+  procession, the court brawl under the coin cone, King on foot (cone, slam ring), the defeat.
+- FILM `M/king_charge_48ppm_it10.mp4` (phase 3, seed 2, standing bot then dodging bot, 4.4 s
+  each). **Looked at** the 2.5 fps sheet (`shots/it10/charge_48ppm_it10_sheet.png`): the lane outline
+  appears and fills during the 1 s windup, King barrels along it with the cape flaring; the stander
+  is hit at the lane's end, the dodger steps off the lane and King passes.
+- STILL `M/king_target_vs_game_32ppm_it10.png` (frames 12 s and 72 s of the film, 2x): on foot the
+  cape, ermine ring, jewelled crown and two gold plates read; Rivet at ~0.6 of his bulk. Gaps:
+  the riders are small beside the sheet's bodyguards; the target's plates are steel (ours gilded,
+  call E).
+- frames.json 15: + charge, fight it10, comparison it10; deleted the it6 fight, the it7
+  comparison and the it3 defeat frames (the defeat is in the it10 fight).
