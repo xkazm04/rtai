@@ -173,16 +173,16 @@ NEXT:
 - GATE `top` Tonnage ghost reel md5-identical with main 0bea8b93 at frames 150 and 299; 0 SCRIPT
   ERROR in every run this session. 32 px/m Tonnage pair filmed. frames.json 14 entries (the superseded
   tonnage_lifted/slam stills removed from masters).
-- NOT RUN this session: scenarios, evidence, director reel (top/tilt) on 4eb02025. Render-only, p55-
-  keyed changes, but owed before the freeze.
+- GATE on e5bfda6b: director reel (`--bot=reel --reel=director --loadout=pistol --rigs`, 9000 ticks)
+  19/19 chapters down, 0 SCRIPT ERROR in top (headless) AND tilt (windowed); scenarios
+  (`node tools/tests/run_scenarios.mjs`) 52 passed. NOT RUN: evidence --no-bench (owed before freeze).
 
 ## Calls for the owner (collected for REPORT)
 - Dent under tilt: tan crash dummy (the game's Dent, built) vs the 55 sheet's all-teal Dent
   (`p55/dent_bust_card_teal.png`, one SET_CARDS path; the limbs would need teal parts too).
 
 NEXT:
-1. Gates on 4eb02025: scenarios (`node tools/tests/run_scenarios.mjs`), director reel 19/19 in top and
-   tilt (`--bot=reel --reel=director --loadout=pistol --rigs`), evidence --no-bench.
+1. `node tools/evidence/run.mjs --no-bench` on the tip (the only gate not run on it).
 2. Tonnage card quality: the slam telegraph ring vs the card (does the card hide the ring at height?),
    the near front leg under the card (a near-leg z above the card when the leg is south of the crown),
    the card's transform-in at unfold < 1 (size_k only, no fold art). The teal glow at height (aura only
