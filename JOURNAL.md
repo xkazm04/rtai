@@ -438,3 +438,32 @@ rows 4-5 repeat frame 1 in worker/hood, row 5 mirrored in post by assets).
   (b) the parts from the blow (DEATH_HOLD = 0); (c) later: a drawn death strip per type (the
   library's action rows have one sprawl pose, not a fall). See the board clip above; exe
   `--arena=city --rigs --view=tilt70`.
+- FINDING (NEXT 4, walkers' shadows): city seed 5 tilt70 32 px/m, x2 crop at t4 and t10: a hat
+  walker on the cream pavement casts NO ground shadow while the patrol cop beside it casts the long
+  RigCastShadows figure (masters peds_no_cast_shadow_vs_cop_tilt70_32ppm_x2_city_seed5_t4_t10.png).
+  Not my hiding: the cast shadows are a separate Node2D (RigCastShadows, view's family) drawn per
+  rig; its collect() reaches CharacterRigs/RigPool/CutRig at depth 2, so the pooled walker should
+  be collected. Cause NOT found yet (no REQUEST to view until it is diagnosed).
+- frames.json: the stride clip (#2) and the death-hold strip (#6) in; the two peds9 boards out
+  (the walkers show all nine at 64 and 32 px/m), files kept. 15 entries, all present.
+
+Registry rules applied (it5): sprite-and-atlas-production (the walk grid cut by script with a fixed
+cell order and baseline, the size step measured per facing, not by eye; unit-tested grid shape),
+motion-quality-gating (the gait and the death judged as tick strips and clips, the "freeze" first cut
+rejected in motion, the remaining jump at the swap named), concept-scene-parity (before|after on one
+board run, the before made by a one-constant switch), generative-artifact-gating (B strips used with
+the library's own post fix; row 4's repeated frame accepted and named), render-submission-economy
+(no new draw: the walker is the head card's own sprite, one texture swap).
+
+NEXT (iteration 6):
+1. Diagnose the walkers' missing cast shadow in the city (RigCastShadows draws per rig: is the
+   walker rig in _rigs()? hip_h? z under the pavement?); fix on my side if it is mine, else a
+   REQUEST to view with the cause.
+2. When assets serve the six other walk strips: street_walk.py, one WALKS + WALK_FILL line each
+   (measure the fill with the it5 snippet: still figure height / walk figure height per cell).
+3. The death swap still jumps (the parts' corpse lies north-south, the topple is screen-x): tip
+   toward the corpse's own head direction (RigTilt / DeathPose's fall axis), or end the hold
+   earlier (0.2) and film both on the `--kill=light` board.
+4. Walkers at p55 (boss arenas under combo): cut the 55 top rows, a "p55" STRIPS entry.
+5. Crowd cost with the walkers under the bench lock on a quiet machine (city_bench riot, top vs
+   tilt70), and the combo reel on this head.
