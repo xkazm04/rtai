@@ -1382,3 +1382,14 @@ live arena path at 32/48 px/m), sprite-and-atlas-production, depth-ordered-layer
   bays go solid dark, full ones keep their drones; the change reads. Unit 1190/0
   (`evidence/servo/unit-it16.log`). `M/frames/servo_docked_bays_ab_it16.png`; frames.json 15 (hot
   dash clip dropped from the list, kept on disk). Decisions; REPORT call 11 rewritten.
+- 05:00 FILM the full drone wave at 48 px/m re-filmed on 5992f678 (`film48_16.sh 1 2 900`, cut
+  4.5-11.5 s as it14, 0 SCRIPT ERROR). **Looked at** the 2 fps keys and tick 7 s at 1x: the wave
+  lifts off the outer bays as the same quad drones that sat docked (the flying `drone.png` is the
+  hub + four rotors too), the emptied bays go dark, rings fall on Rivet's spot, he steps off.
+  `M/servo_drone_wave_scan_drop_dodge_48ppm_it16.mp4` + keys replace it14's (deleted); REPORT
+  paths and frames.json entry.
+- 05:03 FIX (render only) the defeat's spill (`ServoFall.spill`) drew the docked drones from the
+  sim's cells: at the fall they would have jumped up to 0.36 m off the bays they were drawn in.
+  It now takes the rig's bay points (`ServoRig._bay_points` -> `ServoBays.points`, which also
+  carries the +1 wing's shake; rig 285 lines). Unit 1190/0 (`unit-it16b.log`). The full fight
+  film started on 5992f678 was stopped (my PID) and re-run on the fix.
