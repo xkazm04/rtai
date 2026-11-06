@@ -1961,3 +1961,15 @@ NEXT (after the freeze / next night):
 
 NEXT (next night): unchanged from iteration 24's NEXT: the owner's verdicts on calls A-P, then REPORT
 next steps 3-5 (gang lenses at 64 px/m, D4 lift for the plain thug, merge n7-king before n7-servo).
+
+## Iteration 26 (08:24-08:30, BUILD at the freeze)
+
+### 08:24 FREEZE check
+- `git diff 1aaeb122 HEAD -- project` is still empty: `build/export/windows/RTAI.exe` (07:43) is the
+  current build of `n7-king`. No re-export. REPORT.md (253 lines) names the exe command lines and
+  calls A-P. Tree clean at session start.
+- With 6 minutes to the freeze, no new bot measurement was started (one seed run takes longer).
+
+NEXT (next night): unchanged from iteration 24: the owner's verdicts on calls A-P (call C: 16 s is
+the gentler fair pick, same deaths as 20 s over seeds 1-15), then REPORT next steps 3-5 (gang lenses
+at 64 px/m, D4 lift for the plain thug, merge n7-king before n7-servo).
