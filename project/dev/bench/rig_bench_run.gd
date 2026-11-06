@@ -5,7 +5,7 @@ extends RefCounted
 ## JSON (one run per crowd size) and exits 1 when a run breaks the hard limit.
 ## Run through rig_bench.gd (a -s main script must not name global classes at parse time).
 
-const KNOWN_FLAGS: PackedStringArray = ["--out", "--secs"]
+const KNOWN_FLAGS: PackedStringArray = ["--out", "--secs", "--view"]  # --view: ViewMode reads it
 const SIZES: Array[int] = [50, 200]
 
 
