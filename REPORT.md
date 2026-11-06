@@ -1,6 +1,5 @@
-# d8 lane view70: the 70-degree sample and the combined view (DRAFT, iteration 4, 17:00)
+# d8 lane view70: the 70-degree sample and the combined view (final, freeze 18:30)
 
-DRAFT: the freeze iteration (18:30) updates the numbers, adds the exe and finalises this file.
 Evidence: `C:\Users\kazda\kiro\gtai-masters\d8\view70\` (`frames.json`, 15 entries, best first).
 
 ## What works (with evidence)
@@ -69,20 +68,49 @@ Evidence: `C:\Users\kazda\kiro\gtai-masters\d8\view70\` (`frames.json`, 15 entri
     films and stills.
 
 - **Films re-taken on 95109a45** (swap default, both merges, the 70 King and gang): the King trio
-  (46 s), the 64 px/m pair, the city pair, the ease study; 10 films, 0 SCRIPT ERROR.
+  (46 s), the 64 px/m pair, the city pair, the ease study; 10 films, 0 SCRIPT ERROR. The King trio
+  and the 64 px/m pair were re-taken again on f2361702 (the throne-car at 70): at t40 all three
+  panels show one art set; at 70 the throne back shows above the seated King, at 55 the bigger bust
+  covers it (`king_55_70_combo_32ppm_t40_it4.png`).
 - **Gates on iteration 4**: lint 15/15 on every commit; unit 1456/0 on the merge (the final run is
   in JOURNAL); scenarios 52 passed; director reel 19/19 all down, 0 SCRIPT ERROR, under tilt70 and
   combo; `top` 900/900 frames identical with main (list md5 6e865449 both).
+
+## Iteration 5 (the freeze)
+- **Merged** d8-bosses (8dbbbcf0: a live pitch change re-dresses the court card, for combo) and
+  d8-chars (2dd6e236: `RigHeadCard.drop` renames the dropped card = view70's it3 REQUEST; the p55 cop
+  cap and riot cards; ghost host depth; Kerf's lean) at 17:41.
+- **Gates on afbdee5b** (the code tip: the merges plus one test fix):
+  - `node tools/evidence/run.mjs --no-bench`: ALL PASS: lint 15/15, unit 1462/0, scenarios 52/52
+    (city_chase missed its budget under contention, passed re-judged alone), parity bit-exact
+    (planted mutation caught at step 629), selftest (look goldens 11/11, block goldens 5/5),
+    export-audit 548 loaded / 0 failed;
+  - the first evidence run (on 4fffaf24) failed one unit test, mine: `test_view_pitch` assumed p55
+    draws the base cop cap strip, which chars' merge changed (their p55 cop card). The code was
+    right; the test now compares p70 with p65, a folder with no art (afbdee5b);
+  - director reel 19/19 chapters fully down, 0 SCRIPT ERROR, under tilt70 and under combo
+    (`evidence/it5/reel_*.log`);
+  - `top` bit-identical with main: King fight seed 2, 32 px/m, 900/900 frames framemd5 equal (list
+    md5 6e865449 both);
+  - the combo return (the King dying, 55 -> 70) frame by frame at 48 px/m after bosses' re-dress
+    merge: no flicker, one card swap at tick 1168
+    (`evidence/it5/combo_return_king_dying_48ppm_frames1138-1185_it5.png`). The drawn cape fan shows
+    through the ease (the known gap below).
 
 ## Not done / owed
 - **The 70 sample is narrower than the 55 cast.** Drawn from the 70 sheet: Rivet's head, the King's
   bust and Tonnage's card. At 70 the King's limbs, gang and throne-car reuse bosses' 55 art (the
   limbs and the car are pitch-agnostic; the gang's card is the 55 drawing). The car came last
-  (f2361702, after bosses moved their test to 65); the films before it show today's car at 70.
+  (f2361702, after bosses moved their test to 65).
+- **The street heads at 70 are today's.** chars' p55 street cards (SWAT, the patrol cap, the riot
+  helmet, peds, thugs) have no p70 rows, so the city pair compares two street art sets for the
+  humans (Rivet and the cast are matched). REQUEST to chars in JOURNAL: a `p70` row that points at
+  the p55 strips (the 55 drawing at 70, as the King's gang does) until 70 street sheets exist.
 - **Under combo, during the 1 s ease, the King's drawn cape fan shows** (KingArt keys by the live
   pitch rounded, and no strip exists for 56-69), and the gang chains switch when the pitch rounds
   to 55. The King is off screen at the engage in every seed tried (1-5); at the return he is dying.
-  bosses' fix is 3 lines (key KingArt by `ViewMode.art`; REQUEST in JOURNAL).
+  bosses' 8dbbbcf0 now re-dresses the card when the pitch moves, but still keys the strip by the
+  live pitch, so 56-69 draws the shared card; keying KingArt by `ViewMode.art` closes it (REQUEST).
 - **Tonnage's ghost cross-fade** under combo is unit-tested, but not seen live: no seeded fight has
   Tonnage on screen when the King goes down.
 
@@ -106,7 +134,12 @@ Evidence: `C:\Users\kazda\kiro\gtai-masters\d8\view70\` (`frames.json`, 15 entri
    the rig's horn.
    - See: `king_rivet_onfoot_55_vs_70_64ppm_t9_it4.png`.
 
-## The exe (trial export at 16:22; the freeze re-exports)
+## The exe (exported at the freeze from afbdee5b, 18:02)
+- `build/export/windows/RTAI.exe` (258 MB) plus `gtai_sim.windows.template_release.x86_64.dll`, in
+  the worktree `C:\Users\kazda\kiro\gtai-wt\d8-view70`. Smoke: `RTAI.exe --quit-after 600 -- --boss=king
+  --bot=boss --bot-human --seed=2 --rigs --view=combo` exit 0, 0 SCRIPT ERROR (`pitch ease 70.0 ->
+  boss at tick 4`, `cards art p55 (pitch 62.1) at tick 35`); the same with `--view=tilt70`: exit 0,
+  0 SCRIPT ERROR.
 - Export: `"$GODOT_BIN" --headless --path project --export-release windows-showcase ../build/export/windows/RTAI.exe`
 - See the same King fight in all three:
   `RTAI.exe -- --boss=king --bot=boss --bot-human --seed=2 --rigs --view=tilt` (55), `--view=tilt70`

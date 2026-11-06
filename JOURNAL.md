@@ -540,3 +540,67 @@ NEXT 1 (replaces the one above): check b3c.out/b3d.out (0 SCRIPT ERROR, frame co
 - 17:37 FILM the 64 px/m pair re-made on f2361702 (king64_tilt + king64_tilt70, 0 SCRIPT ERROR),
   masters mp4 + t9 still replaced, frames.json updated; LOOKED: same read as 95109a45 (no fan, court
   limbs). `king32_combo` was still filming at 17:38 (scratch it4/b3c.out): NEXT 1 assembles the trio.
+
+## Iteration 5 (17:38, the freeze session)
+- 17:38 READ JOURNAL, git log, chars/bosses/weapons JOURNAL tails. `king32_combo` had finished
+  (b3c.out: 0 SCRIPT ERROR, cards art p55 at tick 32).
+- 17:39 FILM the King trio assembled on f2361702 (it4/make.sh trio line, combo label 'combo (70 play,
+  55 boss)', 2556x800, 2760 frames) -> masters `king_55_70_combo_32ppm_46s_it4.mp4` + t40 still.
+  LOOKED (t40 and a 2x crop): all three panels show the throne-car and the court gang; at 70 the
+  throne back shows above the seated King, at 55 the bigger bust covers it. frames.json: the trio
+  and t40 entries now name f2361702; the before still's note says the gang and car are fixed.
+- 17:41 MILESTONE 7eb63047 merge d8-bosses (8dbbbcf0: KingArt re-dresses the court card when the
+  live pitch moves, for combo) and 4fffaf24 merge d8-chars (2dd6e236 = my it3 REQUEST, the
+  RigHeadCard.drop rename; the p55 cop cap/riot cards; ghost host depth; Kerf lean). JOURNAL/REPORT:
+  ours (per lane). Lint 15/15 on each merge commit (pre-commit hook). `--import` exit 0, 0 SCRIPT ERROR.
+- FOUND: chars' p55 street cards (cop cap, riot, SWAT, peds, thugs) have no `p70` row in
+  `RigHeadCard.SET_CARDS`, so at 70 the street humans draw today's base cards. The city pair is
+  matched for Rivet only. Not fixable from my files (the base-name swap under `p70/` would need the
+  p55 rows' anchor and width, which only SET_CARDS carries).
+- FOUND: bosses' 8dbbbcf0 keys the court strip by the live pitch rounded, so during combo's ease
+  (56-69 deg) the King draws the shared card and the drawn fan; the it4 note stands (he is off screen
+  at the engage in seeds 1-5).
+
+### REQUEST to chars (iteration 5)
+- REQUEST chars: add a `"p70"` set in `RigHeadCard.SET_CARDS` for the street heads that points at the
+  p55 strips with the p55 rows' anchor/width (`cop/head_swat`, `cop/head_cap`, `cop/head_helmet`,
+  `ped/head_hair`, `ped/head_bald`, `thug`), beside my `rivet` and `king` rows. Then 55 vs 70 in the
+  city compares the pitch, not two street art sets (as bosses did for the King's gang at 70).
+
+### REQUEST to bosses (iteration 5)
+- REQUEST bosses: `KingArt.strip_path` keys by `roundi(pitch_deg)`; under combo the ease passes
+  56-69 deg where no strip exists, so the shared card + the drawn fan show for ~1 s. Keying by
+  `ViewMode.shared().art` (p55/p70, set by combo at its swap threshold) closes it, and your
+  8dbbbcf0 re-dress then fires once at the swap.
+- 17:46 GATE `top` bit-identical with main on 4fffaf24 (both merges): King fight seed 2, 32 px/m,
+  900 frames, main checkout vs d8-view70: 900/900 framemd5 equal (list md5 6e865449 both, as it4),
+  0 SCRIPT ERROR both (it4/top.sh).
+- 17:46 LOOKED combo x bosses' re-dress (8dbbbcf0) on 4fffaf24: `--view=combo --ppm=48 --phase=3`
+  seed 2, the King dying at the 55 -> 70 return, every frame 1138-1185 cropped on him
+  (`evidence/it5/combo_return_king_dying_48ppm_frames1138-1185_it5.png`). The card is stable frame
+  to frame (no flicker from the per-pitch re-dress) and swaps once to p70 at 1168 (log: cards art
+  p70 at tick 1168); the drawn cape fan shows from 1150 (pitch < ~69 rounds out of p55) through the
+  rest of the ease: the known gap (REQUEST to bosses above), now seen on screen at 48 px/m while he
+  dies. 0 SCRIPT ERROR.
+- 17:49 GATE `evidence --no-bench` on 4fffaf24 (tree untouched): lint, scenarios 52, parity bit-exact
+  (planted caught at 629), selftest (look goldens 11/11, block 5/5), export-audit 548/0 PASS; unit
+  FAIL 1461/1, the same test on the re-run: MY `test_view_pitch.test_no_overlay_when_the_other_
+  folder_draws_the_same_strip` assumed p55 draws the base cop cap strip; chars' merge gave p55 a cop
+  cap card, so p70 vs p55 now differ (the code was right, the test's premise moved).
+- 17:50 FIX afbdee5b the case compares p70 with p65 (a folder with no art), the premise it meant.
+  test_view_pitch/_court, test_king_art, test_rig_head_card 37/0.
+- 17:51 GATE director reel on 4fffaf24 (`--bot=reel --reel=director --loadout=pistol --rigs`,
+  windowed, `--quit-after 8000`): tilt70 19/19 chapters fully down, combo 19/19, 0 SCRIPT ERROR each
+  (`evidence/it5/reel_tilt70.log`, `reel_combo.log`). (The render side did not change in afbdee5b.)
+- 18:01 GATE `evidence --no-bench` on afbdee5b: ALL PASS: lint 15/15, unit 1462/0, scenarios 52/52
+  (city_chase missed under contention, re-judged alone within budget), parity bit-exact (planted
+  caught at 629), selftest goldens 11/11 + block 5/5, export-audit 548/0.
+- 18:02 EXE `"$GODOT_BIN" --headless --path project --export-release windows-showcase
+  ../build/export/windows/RTAI.exe` exit 0 in 19 s (258 MB + sim dll). Smoke `--quit-after 600 --
+  --boss=king --bot=boss --bot-human --seed=2 --rigs --view=combo`: exit 0, 0 SCRIPT ERROR, ease at
+  tick 4, cards p55 at tick 35; `--view=tilt70`: exit 0, 0 SCRIPT ERROR.
+- 18:04 REPORT final (DRAFT banner dropped; gates, exe, the street-heads-at-70 gap, bosses' re-dress).
+- 18:03 FILM city pair re-take on afbdee5b started (chars' p55 cop cards now in the 55 panel).
+- Registry rules applied this session: motion-quality-gating (the combo return checked on every frame
+  1138-1185, not a single still), concept-scene-parity (the art-set mismatch at 70 named for the street
+  heads, as it was fixed for the court), generative-artifact-gating (no new generated art this session).
