@@ -1222,3 +1222,11 @@ NEXT (written 04:09, for iteration 13):
   blade's lift loses the 2 ticks the sim had already spent. Stills `M/katana_strike_sync_ab_48ppm_
   still.png`, `M/baton_strike_sync_ab_48ppm_still.png`, clip `M/katana_strike_sync_ab_48ppm_04x.mp4`;
   noted under call (n).
+- GATES 04:40 on `791ea71a`: lint 13/13, unit 1223/1223; director reels arena 19/19 and city 19/19,
+  every chapter fully down, 0 SCRIPT ERROR; scenarios 52 ran, 0 failed, 0 SCRIPT ERROR
+  (`evidence/n7-melee/{unit,director-arena-loadout,director-city-loadout,scenarios}-791ea71a.log`).
+- MILESTONE 04:41 combined city clip re-cut on `791ea71a`: the five melee segments refilmed, the
+  four ghost segments reused (RECUT=1), 44.2 s, 0 SCRIPT ERROR in all 9 films; a 1 fps sheet of the
+  first 18 s shows the kills inside the claw, katana and chainsaw windows. frames.json row updated.
+- Quest 1 builds its rigs with ArenaRigs (boot/quest1_game.gd), so the strike sync reaches the
+  shipped quest's katana too.

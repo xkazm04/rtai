@@ -33,13 +33,13 @@ final hash moved once, deliberately, when quest 1 started carrying the katana (`
 | Plasma sword asset (backlog 3) | `4540d259`, `9a2d3137` | a new top-down held part from one image round: the blade tapers to a point from a pronged emitter collar, with ink arc strokes along a paper-white core (it was a square-ended cream plank); same hilt, same length and grip; the floor pickup and the HUD icon follow it. A shape gain at 48 px/m and up; at 32 px/m the two are close to identical | `M/plasma_sword_blade_ab_32ppm_48slow.mp4`, `M/plasma_sword_blade_ab_48ppm_3x.png` (before: the old `held_long.png`) |
 
 The whole polished set in the city block at 32 px/m, with the game audio:
-`M/melee_polished_set_city_32ppm.mp4` (44 s, re-cut on `d4c3ccc9` (code `bc788d09`: Kerf's sight and the ram wake in) with `evidence/n7-melee/set_clip.sh`: no dev
+`M/melee_polished_set_city_32ppm.mp4` (44 s, re-cut on code `791ea71a`: the five melee segments refilmed for the strike sync; the ghost segments from `5c4219b2` with `evidence/n7-melee/set_clip.sh`: no dev
 telemetry box, the ghost card whole; it is re-cut once more on the final head at the freeze).
 
-Gates on the last build commit `bc788d09` (03:20):
-- lint 13/13; unit 1208/1208 (incl. `test_slice_closure`);
+Gates on the last build commit `791ea71a` (04:40):
+- lint 13/13; unit 1223/1223 (incl. `test_slice_closure`);
 - scenarios 52/52 with 0 SCRIPT ERROR;
-- director reel 19/19 in the arena and 19/19 in the city block, 0 SCRIPT ERROR.
+- director reel 19/19 in the arena and 19/19 in the city block (every chapter fully down), 0 SCRIPT ERROR.
 The full `node tools/evidence/run.mjs --no-bench` (lint, unit 1208, scenarios 52, parity bit-exact
 over 1200 steps with the planted mutation caught, look goldens 11/11, block 5/5) last ran green on
 `af4eff02` (code `bc788d09`, 03:29); it re-runs on the final head at the freeze.
