@@ -2154,3 +2154,20 @@ NEXT (iteration 25 = the freeze and the REPORT; supersedes the it22 list):
   SMG's own continuous cream tracers: no clutter, no curtain, and nothing that reads on its own.
   Verdict: `trail_ticks` 4 stays (restraint: a stream needs no extra line); R stays 2. Avi deleted.
 - NEXT item 5 is closed by this look; the NEXT list above otherwise stands for iteration 25.
+
+## Iteration 25 (07:28-08:28): the freeze
+
+### MILESTONE 07:33 Rivet's picked-up rifle voices his own shot, `5ed859c4` (weak cell: assault-rifle S 2)
+- Read: JOURNAL NEXT (it24), git log, REPORT; n7-melee / n7-king / n7-servo journals: no REQUEST for
+  ranged. Registry rules applied: realtime-combat-semantics (the shot cue on the fire tick, render
+  only; a hit event stays generic: the cue is picked from the round's weapon and shooter, no target
+  kind), motion-quality-gating (measured, not claimed: the cue is not listened to, call 7).
+- StageAudio.shot_cue (now static, public): a spec-less round `from_rivet` with weapon
+  `assault-rifle` plays `shot_rivet_rifle` (new audio_cues.json row: rifle_shot at pitch 0.9,
+  gain -2; the contractors' is pitch 1, gain -4). A contractor's rifle and Gloria keep theirs.
+- Unit `test_rivet_rifle_cue` 3/3; planted (back on shot_assault_rifle): 1193/1194, restored
+  1194/1194. Lint 13/13.
+- MEASURED on the samples as played (3 takes, first 150 ms): centroid 2.45 -> 2.17 kHz, peak -7 ->
+  -5 dBFS, 0.82 -> 0.91 s. No film: quest1_clip writes frames, no sound; the arena only arms the
+  rifle after a grab the reels never make. Not listened to (call 7).
+- DECISION docs/decisions.md (audio n7-ranged, the quest rifle's own shot).

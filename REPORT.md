@@ -1,8 +1,19 @@
 # REPORT: lane n7-ranged (Rivet's guns + the shared feel layer), night 2026-11-05/06
 
-DRAFT written in iteration 5 (22:30); the last iteration finishes it by 08:40. Branch `n7-ranged`,
-cut from main `763f8fba`. Clips and stills: `C:\Users\kazda\kiro\gtai-masters\n7\ranged\` (index:
+Final, written at the freeze (iteration 25). Branch `n7-ranged`, cut from main `763f8fba`, code head
+`5ed859c4` (gates, reels and the exe are all on it). Clips and stills: `C:\Users\kazda\kiro\gtai-masters\n7\ranged\` (index:
 `frames.json`). Audit and per-weapon before/after: `docs/polish/ranged.md`. Running log: `JOURNAL.md`.
+
+In one paragraph: the shared feel layer (hit-stop, a directional camera kick, shake, caps per frame and
+per second, per-weapon rows, `--feel=off`) landed first, stays view only (parity bit-exact all night)
+and n7-melee runs on it. Then, weakest first: the heavy guns got weight (the nuke's launch kick, the
+camera following its shell and ring, the rocket and nuke tube kept on the gun shoulder, a boom on the
+blast frame), the Gatling a visible and felt spin-up, the flamer an ignition beat, the molotov a
+cocked wind-up and a release drawn on the sim's frame, the light guns flashes that read at 32 px/m, a
+kill stop that freezes on the wound and a short shot trail from the gun to the wound. Eleven of Rivet's guns
+got a shot cue of their own instead of a borrowed one (the last, at the freeze: quest 1's picked-up
+rifle stopped playing the contractors' shot); none is listened to yet (call 7). Quest 1 fires the table guns, with the flash, tracer and trail. Every reel is
+19/19 with 0 SCRIPT ERROR, and every change has a before flag or data value (calls 1-9).
 
 ## What works (with its evidence)
 
@@ -44,8 +55,9 @@ cut from main `763f8fba`. Clips and stills: `C:\Users\kazda\kiro\gtai-masters\n7
 | Rivet's hit leaves its path a moment (shot trail): when his round stops in a body, a cream line in an ink casing joins the held gun to the wound and fades over the weapon's `trail_ticks` (pistol 8, Gloria 8, hand cannon 10, machine pistol 4; none on the Gatling, flamer, bolts or throws; misses none; at most 8 at once). Before: at a 5 m fight his pistol round was a pale needle on 2 frames while a cop's vermilion round read for 6. Audit pistol R 2 -> 3. View only (kill tick 332 on and off) | `1b1c8402` | `--shot-trail=off` (or hit_feel.json `trail_ticks` 0, or `--feel=off`) | `pistol_shot_trail-ab-32-48ppm.mp4` (frames.json entry 0); `evidence/ranged/it24-pistol-shot-trail-off-on-{32,48}ppm.jpg` |
 | The shot trail in quest 1, the shipped path: Gloria's nails (on GunFx like the arena) draw it across Dock 9 to contractors about 15 m away, over the blood bloom; the picked-up assault rifle (no GunFx on its path) gets it through BareGunTrail at its art stand-in's value (machine_pistol, 4 ticks): on the 14438 kill a cream line runs into the contractor and fades to ink next frame. View only. In the city reel the pistol and SMG fights are point blank (under 2 m), so the trail barely shows there | `1b1c8402`, `2e8143a5` | `--shot-trail=off` (arena and exe; quest1_clip has no such flag) | `evidence/ranged/it24-quest1-gloria-shot-trail-32ppm.jpg`, `it24-quest1-rifle-shot-trail-32ppm.jpg` |
 | Quest 1's rifle judged on its real hit ticks: a struck probe finds 10 rifle hits in Dock 9, every one a one-hit kill; at 32 px/m the tracer runs to the contractor, he is down on the next frame along the shot, and the blood sprays along the shot and stays (audit V ? -> 3, I ? -> 2) | - (judging only) | - | `evidence/ranged/it20-quest1-rifle-kills-32ppm.png` |
+| Quest 1's picked-up assault rifle voices Rivet's own shot, `shot_rivet_rifle` (the contractors' rifle sample at pitch 0.9, 2 dB up): it played their exact `shot_assault_rifle`, so in Dock 9 his bursts were the enemy's sound. Now no gun of Rivet's shares the contractors' shot. Measured on the samples as played, not listened to: first 150 ms centroid 2.45 -> 2.17 kHz, peak -7 -> -5 dBFS, 0.82 -> 0.91 s. Render only (picture, sim and replay unchanged). No clip: quest1_clip records frames without sound | `5ed859c4` | audio_cues.json `shot_rivet_rifle` pitch 1, gain_db -4 (= the contractors' shot) | unit `test_rivet_rifle_cue` (3/3; planted fault caught) |
 
-Gates on the latest code, `2e8143a5` (iteration 24, 07:23; `1b1c8402` green the same way at 07:05): `node tools/evidence/run.mjs --no-bench` on a clean tree: lint 13/13, unit 1191/0, scenarios 52/52, parity bit-exact over 1200 steps (planted mutation caught at 629), selftest (look goldens 11/11, block 5/5); director reels pit 19/19 and city 19/19 with `--loadout=pistol`, 0 SCRIPT ERROR (`evidence/ranged/it24-evidence-2e8143a5.log`). The older lines below are history.
+Gates on the latest code, `5ed859c4` (iteration 25, 07:39; `2e8143a5` green the same way at 07:23): `node tools/evidence/run.mjs --no-bench` on a clean tree: lint 13/13, unit 1194/0, scenarios 52/52, parity bit-exact over 1200 steps (planted mutation caught at 629), selftest (look goldens 11/11, block 5/5); director reels pit 19/19 and city 19/19 with `--loadout=pistol`, 0 SCRIPT ERROR (`evidence/ranged/it25-evidence-5ed859c4.log`). The city combined clip was retaken on `5ed859c4` at the freeze (see its row). The older lines below are history.
 
 Gates (iteration 5): evidence run on `41bb90e7`: lint 13/13, scenarios 52/52, parity bit-exact
 (planted mutation caught at 629), selftest pass; unit 1138/0 (flagged by the tree-change guard
@@ -58,13 +70,13 @@ because I edited docs during the run). City-block director reel with `--loadout=
   over a 42-tick reload), so nothing in the sim announces the release; a wind-up that plays
   between press and release would need the release to wait in the sim (a gameplay timing change,
   not done).
-- Quest 1's assault rifle: the flash and tracer are fixed (it16, `01a482d1`, row above). Still open: no rifle of its own is drawn in Rivet's claw (the held art is an open owner call tonight). Its impact and victim reaction are judged since iteration 20 (row above); earlier note: they were not judged (the hits land off the clip's crops); it shares `shot_assault_rifle` with the contractors.
+- Quest 1's assault rifle: the flash and tracer are fixed (it16, `01a482d1`, row above). Still open: no rifle of its own is drawn in Rivet's claw (the held art is an open owner call tonight). Its impact and victim reaction are judged since iteration 20 (row above); earlier note: they were not judged (the hits land off the clip's crops); its shot shared `shot_assault_rifle` with the contractors until `5ed859c4` (row above).
 - Quest 1's table-gun change is small at 32 px/m in the windows filmed so far (Rivet fires few
   nails in Dock 9).
 - No performance claim: no bench was run under the bench lock.
 
 ## The exe
-`build/export/windows/RTAI.exe` (in this worktree, with `gtai_sim.windows.template_release.x86_64.dll`), exported on `2e8143a5` at 07:24: `"$GODOT_BIN" --headless --path project -s res://dev/bake_city.gd` (exit 0), then `"$GODOT_BIN" --headless --path project --export-release windows-showcase ../build/export/windows/RTAI.exe` (exit 0, 0 ERROR lines, 245 MB). Booted: `RTAI.exe --screen 0 --rendering-driver d3d12 -- --weapon=pistol --bot=gunplay --lone --cam=fight --ppm=32 --clean --reach=5` (exit 0, 0 SCRIPT ERROR, kill on tick 332, the stop holds on the wound and the shot trail joins the gun to the wound 332-341, as in the editor take; on `2e8143a5` the hand cannon too, kill 331, trail 331-341; the Gatling's kill 364 on `d85fb768`). Every call below names its before and after flags on this exe. If code lands after `2e8143a5`, the freeze re-bakes and re-exports.
+`build/export/windows/RTAI.exe` (in this worktree, with `gtai_sim.windows.template_release.x86_64.dll`), exported on `5ed859c4` at 07:39: `"$GODOT_BIN" --headless --path project -s res://dev/bake_city.gd` (exit 0), then `"$GODOT_BIN" --headless --path project --export-release windows-showcase ../build/export/windows/RTAI.exe` (exit 0, 0 ERROR lines, 245 MB). Booted on `5ed859c4`: `RTAI.exe --screen 0 --rendering-driver d3d12 --quit-after 600 -- --weapon=pistol --bot=gunplay --lone --cam=fight --ppm=32 --clean --reach=5` (exit 0, 0 SCRIPT ERROR, kill on tick 332 as before). Earlier boots: `RTAI.exe --screen 0 --rendering-driver d3d12 -- --weapon=pistol --bot=gunplay --lone --cam=fight --ppm=32 --clean --reach=5` (exit 0, 0 SCRIPT ERROR, kill on tick 332, the stop holds on the wound and the shot trail joins the gun to the wound 332-341, as in the editor take; on `2e8143a5` the hand cannon too, kill 331, trail 331-341; the Gatling's kill 364 on `d85fb768`). Every call below names its before and after flags on this exe. This is the freeze build.
 
 ## Calls for the owner
 1. **Homing shard pop timing (combat note item 4).** Options: the default 36 grind ticks (the
@@ -123,14 +135,15 @@ because I edited docs during the run). City-block director reel with `--loadout=
    `molotov_burst_cue-ab-32ppm.mp4` or `RTAI.exe -- --weapon=molotov --bot=gunplay --lone` vs the
    same with `--end-cue=off`; the SMG: `smg_shot_cue-ab-32ppm.mp4` or
    `RTAI.exe -- --weapon=machine_pistol --bot=range`; the flamer: `flamer_jet_cue-ab-32ppm.mp4` or
-   `RTAI.exe -- --weapon=flamethrower --bot=range`. The before is one data value per gun (weapons.json
-   `shot_cue`).
+   `RTAI.exe -- --weapon=flamethrower --bot=range`; quest 1's picked-up rifle (`shot_rivet_rifle`, the
+   contractors' rifle at pitch 0.9, 2 dB up): play quest 1 to Dock 9 and grab a contractor's rifle
+   (no clip: the quest recorder writes frames only). The before is one data value per gun
+   (weapons.json `shot_cue`; for the rifle, audio_cues.json `shot_rivet_rifle` pitch 1, gain_db -4).
 
 8. **Where a light gun's kill stop freezes.** Options: on the wound, 2 ticks after the hit (built: the spurt and the flung arms hold for about 6 frames), or on the contact tick (the before: the body still standing, gun up, darkened; blood after). One value each: hit_feel.json `hold_delay_ticks` (0-4) on the light row and on the gatling weapons row. The Gatling: `RTAI.exe -- --weapon=gatling --bot=gunplay --lone --cam=fight` vs the same with `--wound-hold=off`. See `pistol_wound_hold-ab-32-48ppm.mp4`, or `RTAI.exe -- --weapon=pistol --bot=gunplay --lone --cam=fight` vs the same with `--wound-hold=off`.
 
 9. **The shot trail.** Options: a fading ink-and-cream line from the gun to the wound on every hit (built: pistol and Gloria 8 ticks, hand cannon 10, machine pistol 4), a shorter flick (`trail_ticks` 4 on all four), or none (`--shot-trail=off` / `trail_ticks` 0, the before). It is the only thing tonight that draws a line where the round went after it is gone; if it reads as a laser to you, drop the value. Built default: the trail. See `pistol_shot_trail-ab-32-48ppm.mp4`, or `RTAI.exe -- --weapon=pistol --bot=gunplay --lone --cam=fight --ppm=32` vs the same with `--shot-trail=off` (and `--weapon=hand_cannon`, `--weapon=machine_pistol`). In quest 1 Gloria and the picked-up rifle draw it too (stills `evidence/ranged/it24-quest1-*-shot-trail-32ppm.jpg`).
 
-(More calls may be added by later iterations.)
 
 ## What blocked or slowed me
 - Four lanes on one machine: Godot runs and Movie Maker takes ran slowly (hitches of 35 ms in
@@ -140,4 +153,13 @@ because I edited docs during the run). City-block director reel with `--loadout=
 - gdformat and Python text mode write CRLF on Windows; strip it after.
 
 ## Next steps
-See the last `NEXT:` entry in JOURNAL.md.
+1. Listen to every re-voiced cue on a machine with sound (call 7); each one is one data value.
+2. The weak cells left (`docs/polish/ranged.md`): the homing shard's late blood and mark (call 1);
+   the Gatling's read and victim sync on a single cop (it kills in 2 rounds, so a body held under
+   sustained fire only shows on crowds and robots: film it on a boss); the machine pistol in a group
+   at range (one take at 6 m read clean, R kept at 2); quest 1's rifle impact (no held rifle art: an
+   open owner call).
+3. A real wind-up before the molotov release needs the release to wait in the sim (a gameplay
+   timing change: a decision and a replay re-bless, not polish).
+4. The bench under the lock: no performance number was taken tonight.
+Details: the last `NEXT:` entry in JOURNAL.md.
