@@ -19,7 +19,7 @@ const COURT_ROOT: String = "res://features/bosses/king/art/"
 ## 1.5: the 55 sheet's bust is the boss's bulk (1.0 drew it a head narrower than his press arms);
 ## the gang 1.25 (1.0 drew the helmet narrower than the bodyguard's shoulders at 48 px/m).
 const STRIPS: Dictionary[String, Array] = {
-	"king": ["king_bust_card", 0.80, 1.5],
+	"king": ["king_bust_card", 0.80, 2.0],  # owner d8: bigger than 1.5 (n8 picked 2.0 over 1.75)
 	"gang": ["gang_head_card", 0.84, 1.25],
 }
 const META: StringName = &"court_card"

@@ -39,7 +39,7 @@ const DRAPE_BACK_M: float = 1.6
 ## TRAIN_K scales it (0 = no train, the it3 card-only read).
 const TRAIN_ROOT: Vector2 = Vector2(-0.3, 0.75)
 const TRAIN_ROOT_H_M: float = 0.9
-const TRAIN_K: float = 1.0
+const TRAIN_K: float = 0.0  # owner d8: no cape train; the cape stays on the card
 ## The train's root shade (darkened) and its ink side edges, so the cloth reads inside the charge's
 ## vermilion lane (d8 it8; it7 = 0.4, no side ink: TRAIN_SIDE_INK false).
 const TRAIN_ROOT_DARK: float = 0.55

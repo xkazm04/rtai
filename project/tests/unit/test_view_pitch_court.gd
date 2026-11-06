@@ -3,6 +3,9 @@ extends GutTest
 
 const COURT_55: String = "res://features/bosses/king/art/p55/king_bust_card.png"
 const COURT_70: String = "res://features/bosses/king/art/p70/king_bust_card.png"
+## The width factor view70 padded the p70 court cells by (d8's 1.5); n8 raised KingArt's factor,
+## so the p70 bust now draws KingArt's factor over this one larger, the same growth as at 55.
+const PAD_K: float = 1.5
 
 
 func test_a_folder_stands_for_its_pitch() -> void:
@@ -33,13 +36,9 @@ func test_the_p70_court_strip_draws_the_bust_as_wide_as_its_own_row() -> void:
 	var own: Array = RigHeadCard.rows_of("p70")["king"]
 	var own_tex: Texture2D = load(str(own[0])) as Texture2D
 	var court_tex: Texture2D = load(COURT_70) as Texture2D
-	var court_k: float = KingArt.STRIPS["king"][2]
 	assert_eq(court_tex.get_height(), own_tex.get_height(), "the same cell height")
 	assert_almost_eq(
-		float(court_tex.get_width()),
-		own_tex.get_width() * court_k,
-		1.0,
-		"cells padded by the factor"
+		float(court_tex.get_width()), own_tex.get_width() * PAD_K, 1.0, "cells padded by the factor"
 	)
 	var shared: String = RigHeadCard.rows_of("p55")["king"][0]
 	assert_ne(shared, COURT_55, "rows_of itself is untouched")
@@ -76,7 +75,8 @@ func test_a_p70_card_takes_the_padded_court_strip_at_the_same_drawn_scale() -> v
 	ViewPitchCourt.dress(card)
 	assert_eq(card.texture.resource_path, COURT_70)
 	var k: float = card.get_meta(KingArt.META)
-	assert_almost_eq(card.scale.x, 1.0, 0.01, "the bust's pixels draw as large as before")
+	var grow: float = KingArt.STRIPS["king"][2] / PAD_K
+	assert_almost_eq(card.scale.x, grow, 0.01, "the bust grows as KingArt's factor over the pad")
 	assert_eq(k, KingArt.STRIPS["king"][2])
 
 
