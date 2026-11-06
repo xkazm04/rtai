@@ -1,0 +1,72 @@
+{
+  "doc": "Lane n8 street's card rows (RigCardSets merges them over its base table): the street cast's p70 head cards, cut by tools/art/street_head.py from the assets library's keyed 70 sheets (keyed/street/<id>_70.png); widths keep each head's on-screen width equal to its p55 card's (the head's share of the cell measured on both strips). The riot shield's plate is StreetCardSets.SHIELD (not a head card).",
+  "lane": "street",
+  "schema": "gtai.card-set/1",
+  "sets": {
+    "p70": {
+      "cop/head_cap": {
+        "anchor_y": 0.8,
+        "bust": false,
+        "raw": true,
+        "strip": "res://features/characters/art/view/p70/cop_cap_card.png",
+        "width": 1.72
+      },
+      "cop/head_helmet": {
+        "anchor_y": 0.82,
+        "bust": false,
+        "raw": true,
+        "strip": "res://features/characters/art/view/p70/cop_riot_card.png",
+        "width": 1.05
+      },
+      "cop/head_swat": {
+        "anchor_y": 0.82,
+        "bust": false,
+        "raw": true,
+        "strip": "res://features/characters/art/view/p70/swat_head_card.png",
+        "width": 1.4
+      },
+      "ped/head_bald": {
+        "anchor_y": 0.74,
+        "bust": false,
+        "raw": true,
+        "strip": "res://features/characters/art/view/p70/ped_bald_card.png",
+        "width": 1.93
+      },
+      "ped/head_cap": {
+        "anchor_y": 0.74,
+        "bust": false,
+        "raw": true,
+        "strip": "res://features/characters/art/view/p70/ped_cap_card.png",
+        "width": 2.38
+      },
+      "ped/head_hair": {
+        "anchor_y": 0.74,
+        "bust": false,
+        "raw": true,
+        "strip": "res://features/characters/art/view/p70/ped_hair_card.png",
+        "width": 2.05
+      },
+      "ped/head_hat": {
+        "anchor_y": 0.74,
+        "bust": false,
+        "raw": true,
+        "strip": "res://features/characters/art/view/p70/ped_hat_card.png",
+        "width": 1.99
+      },
+      "ped/head_hood": {
+        "anchor_y": 0.74,
+        "bust": false,
+        "raw": true,
+        "strip": "res://features/characters/art/view/p70/ped_hood_card.png",
+        "width": 2.1
+      },
+      "thug": {
+        "anchor_y": 0.8,
+        "bust": false,
+        "raw": true,
+        "strip": "res://features/characters/art/view/p70/thug_head_card.png",
+        "width": 1.2
+      }
+    }
+  }
+}

@@ -1,32 +1,31 @@
 extends GutTest
 ## Lane n8 street: the street cast's per-pitch card rows (StreetCardSets).
 
+const STREET_JSON: String = "res://data/tables/card_sets/street.json"
+
+
+func _street_rows() -> Dictionary:
+	var data: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(STREET_JSON))
+	return data["sets"]["p70"]
+
 
 func test_every_street_strip_loads_with_whole_frames() -> void:
-	for art: String in StreetCardSets.SETS:
-		var rows: Dictionary = StreetCardSets.rows_for(art)
-		for key: String in rows:
-			var row: Array = rows[key]
-			assert_eq(row.size(), 5, "%s/%s row shape" % [art, key])
-			var tex: Texture2D = load(str(row[0])) as Texture2D
-			assert_not_null(tex, "%s/%s loads" % [art, key])
-			if tex != null:
-				assert_eq(
-					tex.get_width() % RigHeadCard.FRAMES, 0, "%s/%s whole frames" % [art, key]
-				)
-
-
-func test_p70_street_rows_point_at_p70_art() -> void:
-	var rows: Dictionary = StreetCardSets.rows_for("p70")
-	assert_true(rows.has("cop/head_cap"), "the patrol cap has a p70 row")
+	var rows: Dictionary = _street_rows()
+	assert_eq(rows.size(), 9, "4 cop/thug heads + 5 ped heads")
 	for key: String in rows:
-		var row: Array = rows[key]
+		var row: Dictionary = rows[key]
+		var tex: Texture2D = load(str(row["strip"])) as Texture2D
+		assert_not_null(tex, key)
+		if tex != null:
+			assert_eq(tex.get_width() % RigHeadCard.FRAMES, 0, "%s whole frames" % key)
+
+
+func test_the_merged_p70_rows_draw_the_street_70_art() -> void:
+	var p70: Dictionary = RigCardSets.all()["p70"]
+	for key: String in _street_rows():
+		assert_true(p70.has(key), key)
+		var row: Array = p70[key]
 		assert_true(str(row[0]).contains("/p70/"), "%s is drawn for 70, not 55" % key)
-
-
-func test_an_art_without_street_rows_is_empty() -> void:
-	assert_eq(StreetCardSets.rows_for("").size(), 0)
-	assert_eq(StreetCardSets.rows_for("nope").size(), 0)
 
 
 func test_the_shield_plate_loads_per_pitch() -> void:
