@@ -42,5 +42,29 @@ Weakest first:
    (`gen55c`). The three blades show their flat and their edge.
 3. **Every held_55 part imports with mipmaps,** as the shipped held parts do. Without them a
    600 px part drawn about 40 px wide aliases into the muddy look found at 64 px/m in iteration 1.
-4. **Next:** the impact height (finding 4); chainsaw, flamer, tubes, gatling and molotov parts;
-   melee-framed films for the blades.
+4. **The part stands up on screen** (`ce6ed14d`, HeldPitchArt.stand):
+   - It undoes the camera's sin(pitch) squash, because the art is already drawn for 55 degrees.
+   - It thins to half height as the barrel turns up or down the screen, so the nose-down carry
+     prints as a slim tube, not a blob.
+5. **Shots at gun height** (`258173e0` + `5e3d8e25`, ShotLift): this answers finding 4.
+   - Rounds, body and metal hits and enemy muzzle stars lift by 1 m under tilt.
+   - A faint ink shadow line stays on the ground under each round.
+   - Ground hits stay down.
+
+## After (48-64 px/m, tilt, filmed on 258173e0 / 5e3d8e25)
+
+| weapon(s) | H | F | L | note |
+|---|---|---|---|---|
+| ray gun, plasma rifle (64 px/m) | 2 | 2 | ? | They read as their pickups: grip, ribs, ball tip / stock, cell, vents. The plasma rifle floats about 10 px above-left of the claw. |
+| long guns (48) | 1-2 | 2 | 2 | Aimed, they read as guns. The nose-down carry is a slim tube. |
+| long guns (32, the shipped zoom) | 1 | 2 | 2 | **Not better than the before:** bigger and muddier than the slim top-down silhouette. |
+| pistol (48) | 1 | 2 | 2 | The rounds now land in the chest, not at the feet; the ground shadow shows. |
+| blades | ? | ? | ? | Parts landed, but not yet seen in a melee-framed film. |
+
+The director reel goes 19/19 chapters down with 0 SCRIPT ERROR in both `top` and `tilt` (on 258173e0).
+
+## Still open
+
+- The long-gun float: `RivetCarryAngle.place_beside` places the part by the top-down geometry.
+- A simplified part at 32 px/m (a held LOD, as WeaponArt's `small` part does for `top`).
+- Films for the blades, chainsaw, flamer, tubes, gatling and molotov parts.
