@@ -62,7 +62,7 @@ func _draw() -> void:
 		_car(b)
 	draw_set_transform(Vector2.ZERO)
 	for a: ArenaPlan.Area in arena.plan.areas:  # over the props: a wall never hides a name
-		if arena.cells == null:
+		if arena.cells == null and a.stenciled:
 			Ink.label(
 				self, a.rect.position + Vector2(a.rect.size.x * 0.5, LABEL_M), a.name, 30, Ink.INK
 			)

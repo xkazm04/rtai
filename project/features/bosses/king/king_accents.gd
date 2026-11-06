@@ -2,7 +2,8 @@ class_name KingAccents
 extends Node2D
 ## The wealth drawn over the rigs at game zoom (render only): at 32 px/m the rig prints flat
 ## stickers, so the gold in the part art is lost. King's jewelled gold crown sits over his head
-## (on the throne and on foot); each standing gang bot wears a gold chain arc across its chest.
+## (on the throne and on foot); every gang bot, riding the car or brawling, wears a gold chain
+## across its chest.
 ## Drawn after KingRigs (a later sibling), in the cast's px like KingBodyView.
 
 const GOLD: Color = Color("#D9A933")
@@ -23,8 +24,15 @@ const SHOUT_ARC_M: float = 1.15
 ## The slam tell's raised plates either side of the crown (it10, see _raised_plates).
 const RAISED_PLATES: bool = true
 const PLATE_OUT_M: float = 0.62
+## The gang's gold chain (it14): a rope this wide (m) round the chest at CHAIN_R_M, links and a
+## medallion at the front, on the car's riders too. CHAIN_W_M 0 = the it2-it13 3 px arc on the
+## brawlers only (a 2 px line at 32 px/m, lost under the buff ring).
+const CHAIN_W_M: float = 0.11
+const CHAIN_R_M: float = 0.3
+const MEDAL_M: float = 0.075
 
 var view: KingBodyView = null
+var rigs: KingRigs = null
 var _down_at: int = -1
 
 
@@ -54,9 +62,27 @@ func _draw() -> void:
 		var c: Vector2 = Ink.px(g.body.pos)
 		if buffed:  # the decree's buff: a danger ring on every gang bot until it ends
 			draw_arc(c, 0.52 * Ink.PX_PER_M, 0.0, TAU, 20, Ink.VERMILION, 2.5)
-		var a: float = g.body.facing.angle()
-		draw_arc(c, 0.3 * Ink.PX_PER_M, a - 1.0, a + 1.0, 10, Ink.INK, 5.0)
-		draw_arc(c, 0.3 * Ink.PX_PER_M, a - 0.95, a + 0.95, 10, GOLD, 3.0)
+		_chain(c, g.body.facing.angle())
+	if CHAIN_W_M > 0.0 and rigs != null:
+		for mark: Vector3 in rigs.rider_marks():
+			_chain(Vector2(mark.x, mark.y), mark.z)
+
+
+## A gang bot's gold chain round the front of its chest, facing angle `a`.
+func _chain(c: Vector2, a: float) -> void:
+	var r: float = CHAIN_R_M * Ink.PX_PER_M
+	if CHAIN_W_M <= 0.0:
+		draw_arc(c, r, a - 1.0, a + 1.0, 10, Ink.INK, 5.0)
+		draw_arc(c, r, a - 0.95, a + 0.95, 10, GOLD, 3.0)
+		return
+	var w: float = CHAIN_W_M * Ink.PX_PER_M
+	draw_arc(c, r, a - 1.05, a + 1.05, 12, Ink.INK, w + 3.0)
+	draw_arc(c, r, a - 1.0, a + 1.0, 12, GOLD, w)
+	for i: int in 5:  # the links catch the light
+		draw_circle(c + Vector2.from_angle(a - 0.8 + 0.4 * float(i)) * r, w * 0.22, GOLD_HI)
+	var medal: Vector2 = c + Vector2.from_angle(a) * (r + w * 0.6)
+	draw_circle(medal, MEDAL_M * Ink.PX_PER_M + 1.5, Ink.INK)
+	draw_circle(medal, MEDAL_M * Ink.PX_PER_M, GOLD_HI)
 
 
 ## The decree's tell (it10): an ink-backed vermilion windup arc fills round King over the tell

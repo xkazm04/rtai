@@ -32,7 +32,8 @@ const PRESS_PLATES: bool = true
 ## shoulder pointing forward and a touch out, over the arms: rig px, radians, scale, z.
 const HORN_AT: Vector2 = Vector2(10.0, 215.0)
 const HORN_TURN: float = 0.35
-const HORN_K: float = 1.6
+## n7-king it12: 2.2 (was 1.6, a dark smudge under the plate at 32 px/m; 2.6 covers the plate).
+const HORN_K: float = 2.2
 const HORN_Z: int = 40
 ## Which arm strikes per attack (BodyPlan.L / R, 2 = both press plates); others: by body id.
 const ATTACK_ARMS: Dictionary[StringName, int] = {
@@ -86,6 +87,16 @@ func pose(fight: BossFight, adds: BossAdds, windup_px: Vector2) -> void:
 		_fade_down(g, f, fight.now())  # a downed add is no longer stepped: the boss's clock
 	if not ViewMode.shared().is_flat():  # view lab: far-side bodies behind the car
 		KingCarStack.sort_rigs(_rigs, b.id, fight)
+
+
+## The visible car riders' places for the accents: (x px, y px, facing angle).
+func rider_marks() -> Array[Vector3]:
+	var out: Array[Vector3] = []
+	for i: int in RIDERS.size():
+		var rig: CutRig = _rigs.get(RIDER_ID + i)
+		if rig != null and rig.visible:
+			out.append(Vector3(rig.position.x, rig.position.y, rig.face_to))
+	return out
 
 
 func _rig(id: int, is_king: bool, at: Vector2, facing: Vector2) -> CutRig:

@@ -11,7 +11,6 @@ const GOLD: Color = Color("#D9A933")
 const GOLD_DARK: Color = Color("#8A6418")
 const CAR_BLACK: Color = Color("#231F22")
 const STEEL: Color = Color("#8E8B86")
-const FUR: Color = Color("#EFE6D2")
 const CAR_LEN_M: float = 6.6
 const CAR_W_M: float = 2.5
 const WINDUP_BACK_M: float = 0.6
@@ -26,9 +25,6 @@ const GOLD_HI: Color = Color("#F6D678")
 const BARREL_M: float = 0.45
 ## The cape on the throne-car spreads near the car's width (the target's fur-trimmed fan).
 const CAPE_ON_CAR_K: float = 1.3
-## View lab: under a tilt or top_lift the on-foot cape drapes, each edge point at its height (m):
-## the shoulders at the front, the hem down to the ground behind him (was flat on the ground).
-const CAPE_DRAPE_M: PackedFloat32Array = [1.6, 0.55, 0.12, 0.55, 1.6]
 
 var _rigs: KingRigs = null
 ## The hood cannon's swivel off the car's heading (the stalled car aims only its cannon).
@@ -46,6 +42,7 @@ func _process(_delta: float) -> void:
 		add_child(_rigs)
 		var accents: KingAccents = KingAccents.new()
 		accents.view = self
+		accents.rigs = _rigs
 		accents.z_index = KingAccents.OVER_RIG_Z  # the rig's parts carry their own z
 		add_child(accents)
 	if _rigs != null:
@@ -135,6 +132,7 @@ func _car(with_king: bool = true) -> void:
 	var l: float = CAR_LEN_M * p
 	var w: float = CAR_W_M * p
 	var body: Rect2 = Rect2(-l * 0.5, -w * 0.5, l, w)
+	KingCarTrim.bumpers(self, l, w, p)  # rounded gold bars past both ends, under the body
 	draw_rect(body.grow(4.0), Ink.INK)
 	draw_rect(body, CAR_BLACK)
 	draw_rect(body.grow(-6.0), GOLD_DARK, false, 3.0)
@@ -152,6 +150,7 @@ func _car(with_king: bool = true) -> void:
 				_gangster(Vector2(l * sx, sy * (w * 0.5 + 0.3 * p)))
 	if with_king:
 		_king(Vector2(-l * 0.08, 0.0), CAPE_ON_CAR_K)  # the cape spreads wide over the car's back
+	KingCarTrim.throne(self, Vector2(-l * 0.08, 0.0), p)  # the gilded back, over the cape
 
 
 ## The car's smoke (the stall, the court) and, from phase 3, the stalled car left where it stood.
@@ -177,32 +176,22 @@ func _wreck() -> void:
 ## The hood cannon about its mount `p` (car px), swivelled `rot` off the car's nose.
 func _cannon(p: Vector2, l: float, rot: float) -> void:
 	var a: Vector2 = Vector2.from_angle(rot)
-	var n: Vector2 = a.orthogonal() * 10.0
 	var tail: Vector2 = p - a * l * 0.08
 	var tip: Vector2 = p + a * l * 0.22
 	if _car_up != Vector2.ZERO:  # view lab: a barrel on a mount, BARREL_M above the roof
-		_cannon_raised(p, tail, tip, n)
+		_cannon_raised(p, tail, tip, a.orthogonal() * 10.0)
 		return
-	draw_colored_polygon(PackedVector2Array([tail - n, tip - n, tip + n, tail + n]), GOLD)
-	draw_circle(tip, 13.0, GOLD_DARK)
+	KingCarTrim.cannon(self, tail, tip)
 
 
-## Under a tilt: the barrel's shadow on the roof, the mount post, then the barrel lifted with its
-## ink edge and a highlight along its top, and the dark muzzle bore at the tip.
+## Under a tilt: the barrel's shadow on the roof, the mount post, then KingCarTrim's barrel lifted.
 func _cannon_raised(p: Vector2, tail: Vector2, tip: Vector2, n: Vector2) -> void:
 	var up: Vector2 = _car_up * BARREL_M
 	var quad: PackedVector2Array = PackedVector2Array([tail - n, tip - n, tip + n, tail + n])
 	draw_colored_polygon(quad, Ink.INK)  # its shadow on the roof
 	draw_circle(p, 12.0, Ink.INK)
 	draw_circle(p + up * 0.5, 10.0, GOLD_DARK)  # the mount post
-	var lifted: PackedVector2Array = PackedVector2Array(
-		[tail - n + up, tip - n + up, tip + n + up, tail + n + up]
-	)
-	draw_colored_polygon(lifted, GOLD)
-	draw_polyline(lifted + PackedVector2Array([lifted[0]]), Ink.INK, 2.0)
-	draw_line(tail + up - n * 0.4, tip + up - n * 0.4, GOLD_HI, 3.0)
-	draw_circle(tip + up, 13.0, Ink.INK)
-	draw_circle(tip + up, 8.0, GOLD_DARK)
+	KingCarTrim.cannon(self, tail + up, tip + up)  # the King lane's barrel, lifted
 
 
 ## King on foot: the squat press body, plates out to the sides, cape behind.
@@ -218,20 +207,7 @@ func _on_foot() -> void:
 ## `up` = the local lift per metre of height (ZERO straight down: the cape lies flat).
 func _king(at: Vector2, k: float, up: Vector2 = Vector2.ZERO) -> void:
 	var p: float = Ink.PX_PER_M * k
-	var cape: PackedVector2Array = PackedVector2Array(
-		[
-			at + Vector2(0.1, -0.7) * p,
-			at + Vector2(-1.1, -0.95) * p,
-			at + Vector2(-1.3, 0.0) * p,
-			at + Vector2(-1.1, 0.95) * p,
-			at + Vector2(0.1, 0.7) * p
-		]
-	)
-	if up != Vector2.ZERO:
-		for i: int in cape.size():
-			cape[i] += up * CAPE_DRAPE_M[i]
-	draw_colored_polygon(cape, Ink.VERMILION)  # the King's cape: vermilion by verdict
-	draw_polyline(cape, FUR, 0.16 * p)
+	KingCape.draw(self, at, p, fight, up)  # vermilion, folded, ermine; drapes under a tilt
 	if _rigs != null:  # the rig is King's body; the cape spreads under it
 		return
 	draw_circle(at, 0.62 * p, Ink.INK)

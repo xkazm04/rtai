@@ -20,27 +20,33 @@ The moveset is `docs/bosses/king.md`; the full log is `JOURNAL.md`.
   - KingPlan's cutout rig at boss size, his chest and arms gilded by the gold print swap;
   - (it8) **two flat gold press plates and a shoulder megaphone**, replacing the claw and the megaphone
     forearm he inherited (`king_press_plates_before_after_48ppm_it8.png`);
-  - a jewelled crown and the ermine collar over the vermilion cape;
-  - the gilded plum throne-car, a boss-owned vehicle with drapes and a hood cannon;
-  - the gang: the rich robot thug with gold chains, a steel helmet and shades.
-- **Three phases** (`king_phase{1,2,3}_*_32ppm_it10.mp4`, cut from the it10 full fight):
+  - (it13) the megaphone prints gold with a dark bell mouth at 32 px/m (it was an ink smudge with
+    vermilion flecks: `evidence/king/shots/it13/horn_lift_10_155_19_p3_p1_32ppm_4x.png`);
+  - a jewelled crown and the ermine collar over the vermilion cape; (it13) the cape is folded cloth
+    under an ermine border that sways and trails his charge (`evidence/king/shots/it13/cape_before_after_32_48ppm.png`),
+    and (it14) lands wide with the press slam's shockwave (`evidence/king/shots/it14/cape_slam_land_before_after_48ppm.png`);
+  - the gilded plum throne-car, a boss-owned vehicle with drapes and a hood cannon (banded gold barrel on a swivel mount since it12, `evidence/king/shots/it12/hood_cannon_before_after_48ppm_2x.png`); (it14) rounded gold bumpers past both ends (`evidence/king/shots/it14/car_bumpers_before_after_p1_32_48ppm.png`); (it15) a gilded throne back, a gold arch with ball finials round King's back over the cape, left empty on the car when he steps down (`evidence/king/shots/it15/car_throne_before_after_p1_32_48ppm.png`, `..._empty_p3_step_48ppm.png`);
+  - the gang: the rich robot thug with gold chains, a steel helmet and shades; (it14) the chain is a
+    gold rope with a medallion that reads at 32 px/m, on the car's riders and pushers too (it was a
+    2 px arc on the brawlers only: `evidence/king/shots/it14/gang_chain_before_after_p1_p2_32ppm_3x.png`).
+- **Three phases** (`king_phase{1,2,3}_*_32ppm_it14.mp4`, cut from the it14 full fight):
   - phase 1, the procession: ram lanes and the hood cannon's coin fan (since it10 a spray of 48 coins out of the muzzle, `evidence/king/shots/it10/coin_spray_before_after_48ppm.png`), with the gang pushing and riding;
   - phase 2, the court: the car stops, the gang brawls, and decrees buff them;
   - phase 3, on foot: the press slam (a leap onto the ring, shockwave plus coin ring) and the charge.
 
   Then a defeat beat: the crown falls off and rolls away.
 - **Clips**:
-  - the full fight played by the human-like bot on the current body (`king_fight_bot_human_32ppm_it10.mp4`, 95 s; King down at tick 4933, the headless run's tick);
-  - the procession entering, from the gang's first appearance to King stepping down (`king_procession_enter_32ppm_it6.mp4`);
-  - the press slam, telegraph, hit and dodge (`king_slam_plates_48ppm_it8.mp4`);
-  - the charge, telegraph lane, hit and dodge (`king_charge_48ppm_it10.mp4`);
-  - the ram and the coin fan, hit and dodge (`king_ram_coin_fan_48ppm_it10.mp4`), and the decree's windup arc and buff (`king_decree_48ppm_it10.mp4`);
-  - the target sheet beside the game at 32 px/m (`king_target_vs_game_32ppm_it10.png`);
-  - the ghosts on King (Dent, Kerf, Tonnage, Ohm).
+  - the full fight played by the human-like bot on the current body (`king_fight_bot_human_32ppm_it15.mp4`, 95 s; King down at tick 4933, the headless run's tick);
+  - the procession entering, from the gang's first appearance to King stepping down (`king_procession_enter_32ppm_it15.mp4`);
+  - the press slam, telegraph (the plates raised beside the crown), hit and dodge, the cape landing wide (`king_slam_plates_48ppm_it14.mp4`);
+  - the charge, telegraph lane, hit and dodge, the cape drawn in and flared (`king_charge_48ppm_it13.mp4`);
+  - the ram and the coin fan, hit and dodge (`king_ram_coin_fan_48ppm_it14.mp4`), and the decree's windup arc and buff (`king_decree_48ppm_it14.mp4`);
+  - the target sheet beside the game at 32 px/m (`king_target_vs_game_32ppm_it15.png`);
+  - the ghosts on King, phase 3 at 48 px/m on the current body (`king_{dent,kerf,tonnage}_p3_48ppm_it14.mp4`, `king_ohm_daze_tells_48ppm_it13.mp4`).
 - **Combat holds**: the director reel was 19/19 chapters down with 0 SCRIPT ERROR on the branch
-  (`evidence/king/director-reel-it6.log`).
-- **Gates** (it10): lint 13/13, unit 1160/0 (`evidence/king/unit-it10c.log`), scenarios 52/0
-  (`evidence/king/scenarios-it10.log`).
+  (it15, on aaf47854: `evidence/king/director-reel-it15.log`).
+- **Gates** (it15): lint 13/13, unit 1164/0 (`evidence/king/unit-it15.log`), scenarios 52/0
+  (`evidence/king/scenarios-it15.log`).
 - **The boss camera** (it10): n7-servo's `BossCam` bar band and `keep_in` are ported to this branch
   as identical files, so King stays whole below the boss bar at the boulevard's top edge.
 
@@ -61,9 +67,15 @@ and in the exported exe.
 ## What does not work yet / gaps against the target
 
 - The gang at 32 px/m: bulkier since it8 (size 1.2, arm width 1.7), and since it10 their heads
-  read as light steel domes with a gold frame (`evidence/king/shots/it10/gang_head_before_after_32ppm_3x.png`). They
-  are still smaller and less blocky than the target's bodyguards.
-- The shoulder megaphone is a small gold cone at 32 px/m; it reads from 48 px/m.
+  read as light steel domes with a gold frame (`evidence/king/shots/it10/gang_head_before_after_32ppm_3x.png`). In
+  the top view their size matches the target's 90-degree panel (measured in it12: ~1.6 m across the
+  shoulders beside the ~6 m car, over a 1.0 m hit circle); they are less blocky and look smaller than
+  the target's 3/4 view, where its bodyguards are drawn tall (call J). Since it14 they wear a gold
+  chain that reads at 32 px/m, on the car too; their shades are still a dark band, not the target's
+  black visor glasses. Tried and rejected: a wider visor band in the part art prints the head as a
+  black disc at 32 px/m (it7/it10, call I) and a drawn visor arc lands on the dome's ink edge (it14).
+- The target's throne back is plum-quilted inside a gold frame; ours is the gold arch only (from
+  straight above the cape covers the seat, measured it15).
 - The plain robot thug (the enemy-ai lane's, not King's) prints as solid ink at 48 px/m. The gang's
   lift would fix it (`evidence/king/shots/it7/plain_thug_48ppm_ink_x2.png`).
 
@@ -94,13 +106,40 @@ Each call names its options, the default that is built, and how to see it.
   (measured: `evidence/king/shots/it10/dome_158_148_204_32ppm_4x.png`). See
   `evidence/king/shots/it10/gang_head_before_after_32ppm_3x.png`.
 
+- **J. Gang bulk (it12).** The gang as built (drawn ~1.6 m across over a 1.0 m hit circle,
+  `GangPlan.SIZE_K` 1.2), or bigger bodyguards whose hit grows with the drawing (`bosses.json
+  king_gang.radius_m` 0.58 with `SIZE_K` 1.4: a gameplay change, harder to dodge round, not built
+  and not measured). A size step that only changes the drawing is rejected: it would draw a wider
+  robot than Rivet can hit. See `evidence/king/shots/it12/gang_d5_p2_64ppm_t120.png`.
+- **K. Gang close-up steel (it12).** At 56 px/m and above the gang's D5 set is lifted x1.3 and
+  reads as light plated steel like the target's (built: `tools/art/gang_parts.py LIFT_K_D5` 1.3), or
+  the old near-black close-up (1.0): `evidence/king/shots/it12/gang_d5_lift_before_after_64ppm_3x.png`.
+- **L. The cape (it13).** Fur-trimmed cloth that moves (built: `KingCape.FOLDS` 4: a folded hem,
+  short ink folds, an ermine border with ink tails, a slow sway, drawn in through the charge and ram
+  tells and flared through the dash), or the flat vermilion trapezoid with a cream band (`FOLDS` 0):
+  `evidence/king/shots/it13/cape_before_after_32_48ppm.png` (stills),
+  `evidence/king/shots/it13/cape_charge_gather_flare_48ppm_5fps.png` (the charge), and in play
+  `RTAI.exe -- --boss=king --phase=3`. (it14) The press slam moves it too: gathered for the crouch,
+  flared behind the leap, landing wide with the shockwave (`KingCape.LAND_SPREAD_K` 1.14; 1.0 and
+  `press_slam` out of `CHARGING` = still through the slam):
+  `evidence/king/shots/it14/cape_slam_land_before_after_48ppm.png`.
+- **M. The throne back (it15).** A gold arch with ball finials round King's back, drawn over the
+  cape, a small scrolled crest with a plum gem at its back (`CREST_M` 0.17, 0 = none,
+  `evidence/king/shots/it15/car_throne_crest_before_after_p1_32_48ppm.png`), left empty on the car when he steps down (built: `KingCarTrim.THRONE_HW_M` 0.95), or no
+  throne (0, the it14 car: the cape alone behind him). The arch crosses the cape's folds; the
+  target's quilted plum back is covered by the cape from straight above. Stills:
+  `evidence/king/shots/it15/car_throne_before_after_p1_32_48ppm.png`,
+  `evidence/king/shots/it15/car_throne_empty_p3_step_48ppm.png`; in play `RTAI.exe -- --rigs --boss=king`.
+
 ## The exe
 
 Export it with
 `"$GODOT_BIN" --headless --path project --export-release "windows-showcase" <worktree>/build/export/windows/RTAI.exe`.
-The showcase preset boots the arena, so the boss flags reach the fight. It was exported and
-smoke-tested in it8 (headless, seed 2: King down at tick 4933, 0 SCRIPT ERROR); it is
-re-exported at the freeze.
+The showcase preset boots the arena, so the boss flags reach the fight. Last exported in it15 on
+b2e71b83 (04:43, with the gang chains, the slam cape, the car bumpers and the throne back with its crest; 0 export errors, `build/export-it15b.log`) and smoke-tested headless
+(`RTAI.exe --headless --fixed-fps 60 --quit-after 5400 -- --rigs --boss=king --bot=boss --seed=2
+--bot-human --telemetry=<json>`): King down at tick 4933, Rivet took 88, 0 SCRIPT ERROR (the
+same as the editor run). It is re-exported at the freeze.
 
 - `build/export/windows/RTAI.exe -- --rigs --boss=king` (play the fight)
 - `build/export/windows/RTAI.exe -- --rigs --boss=king --phase=3`
