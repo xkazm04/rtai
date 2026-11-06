@@ -3,7 +3,7 @@
 Final (iteration 22, the freeze). Gates on the last code head, fba95dea (the it19 body, the sim-neutral `parcels.crate_damage` key, and n7-king's optional `rivet_repair_delay_s` field and `--repair-delay` dev flag, neither used by default): lint 13/13, unit 1203/0 (`evidence/servo/unit-it22b.log`), scenarios 52 ran / 0 failed (`evidence/servo/scenarios-it22b.log`); director reel 19/19 chapters fully down, 0 SCRIPT ERROR (`evidence/servo/director-reel-it22b.log`); `tools/evidence/run.mjs --no-bench` all PASS on bc447dad: lint, unit 1203, scenarios 52, parity (bit for bit, the planted mutation caught at step 629), selftest (look goldens 11/11, block goldens 5/5) (`evidence/servo/evidence-run-it22b.log`; bench skipped, CONTENDED); the bot's numbers at n = 10 (it20; the it22 merges leave Servo's fight alone: the re-exported exe's smoke gives tick 7036 and 188 on Rivet, the it20 record line for line, `evidence/servo/exe-smoke-it22b.json`). Every clip and still is on the it19 body (987c3439), which the final head draws identically (no render change since).
 
 Branch `n7-servo` (from main `763f8fba`, with `n7-king`'s framework merged in at every move; the
-last code merge was `fba95dea` = n7-king `b761f222`; the docs-only tail to `d6f8fafa` is merged too, iteration 22). Clips and stills: `C:\Users\kazda\kiro\gtai-masters\n7\servo\` (M below),
+last code merge was `fba95dea` = n7-king `b761f222`; the docs-only tail to `6edc6aaa` is merged too, at the 08:24 freeze). Clips and stills: `C:\Users\kazda\kiro\gtai-masters\n7\servo\` (M below),
 indexed in `M/frames.json`. Design: `docs/bosses/servo.md`. Journal: `JOURNAL.md`.
 
 ## What works (with evidence)

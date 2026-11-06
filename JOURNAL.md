@@ -1712,3 +1712,7 @@ boss_fight telemetry and a hp_min that counts the falling tick. Merge n7-king ag
 - 08:24 MERGE n7-king 6edc6aaa (docs/evidence only: king's 16 s repair-delay seeds 11-15 and its
   REPORT next-step note). JOURNAL/REPORT ours, `project/` unchanged: the 08:09 exe (fba95dea) and
   the 08:19 all-PASS evidence run stand. Freeze reached; no code moves after this.
+
+NEXT (final, supersedes 08:22): unchanged from the 08:22 NEXT. Exe `build/export/windows/RTAI.exe`
+(08:09, fba95dea) is the owner's build; REPORT calls 1-21 are the verdict page. Merged n7-king to
+6edc6aaa (docs only). If king moves again after the night, merge it the same way.
