@@ -974,3 +974,28 @@ unit 1150/1150, scenarios 52/52, parity bit-exact, selftest), reels 19/19 + 19/1
 STOP 01:10 iteration 9 (final). Commits after the 01:04 stop: `db355669` (trial exe journal),
 `d98750ba` (audit columns). Tree clean. NEXT for iteration 10 is the list above (1 with this
 addendum; 2 is now only the re-export at the freeze).
+
+## Iteration 11 (BUILD, 01:10-02:10)
+Read: JOURNAL NEXT (it9 list; no it10 entries), git log, n7-melee / n7-king / n7-servo journals (no new REQUEST for ranged).
+Working NEXT 1: the muzzle FX prints on the drawn barrel whatever the hold.
+
+### MILESTONE 01:30: `9054e346` the muzzle FX print on the drawn barrel tip (it9 NEXT 1)
+- HeldMuzzle (new, 42 lines, `features/combat/weapons/art/`): RivetHeldView publishes
+  `_sprite.get_global_transform_with_canvas() * (muzzle_px + offset)` once per process frame
+  (one line in rivet_held_view.gd, now 287); `HeldMuzzle.at_m(ci, fallback)` returns it in the
+  drawing item's metres (`ci.get_global_transform_with_canvas().affine_inverse()`, / Ink.PX_PER_M)
+  if fresh, else the GUN_SIDE_M spot. Used by WeaponFxArt.muzzle (every flash, the flamer's lick)
+  and WeaponFxSpin.tip (the whirl). `--flash-at=side` = the before (in LaunchArgs.KNOWN_FLAGS).
+- Tests `test_held_muzzle` 5/5; planted fault (fresh() ignoring the frame and the flag) -> 2 fail.
+- FILM (`scratch/ranged/hm/`, `--bot=gunplay --lone --cam=fight --clean --reach=6`, same build
+  with and without `--flash-at=side`, 0 SCRIPT ERROR in all 16 takes): diff frames find the FX
+  (first round at frame 298). LOOK at 48 px/m (2x crops): pistol flash now touches the barrel tip;
+  plasma rifle a few px nearer the tip; rocket flash moves from beside and below the tube onto its
+  line (a ~0.3 m gap to the mouth remains: the flash_tube star's own back edge, art); flamer lick
+  leaves the nozzle (before: beside it); Gatling whirl rings the barrel's end (before: arcs beside
+  its middle), at 32 px/m too; Gatling flash frames 330-335 at 32 px/m sit on the barrel end.
+- FRICTION: the weapon ids are `rocket_launcher` and `flamethrower` (`--weapon=rocket` boots with
+  422 SCRIPT ERRORs from a null spec in arena_game.gd:122, a dev flag with no guard; not fixed).
+- Clip `masters .../muzzle_on_drawn_tip-ab-48-32ppm.mp4` (18 s, frames.json row 0; dropped and
+  deleted `quest1_table_gloria-ab-32ppm.mp4`, the Dock 9 48 px/m pair stays). REPORT row + call 4.
+- DECISION (docs/decisions.md): the flash follows the drawn tip; rejected per-hold offsets in data.

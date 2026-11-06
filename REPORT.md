@@ -17,12 +17,13 @@ cut from main `763f8fba`. Clips and stills: `C:\Users\kazda\kiro\gtai-masters\n7
 | Rocket and mini-nuke boom on the blast frame | `da508e6b` | `--end-cue=off` | `rocket_blast_sound-ab-32ppm.mp4` |
 | Flamethrower ignition: a 3 px kick plus a fireball flare at the nozzle on the round that lights the stream (reads at 32 px/m for about 4 frames) | `e32720c4`, `5ef1c584` | `--feel=off` | `flamer_ignite_flare-ab-32-48ppm.mp4` |
 | Hit-stop cooldown 20 -> 16 ticks (every Kerf cut gets its stop; n7-melee call 7) | `0d4089f1` | - | n7-melee's clips |
-| Quest 1 fires the table guns (Gloria as her weapons.json row; the rifle stays on combat.json) | `48679f03` | `--quest-guns=off` | `quest1_table_gloria-ab-32ppm.mp4`, `quest1_table_gloria_dock9-ab-48ppm.mp4` |
+| Quest 1 fires the table guns (Gloria as her weapons.json row; the rifle stays on combat.json) | `48679f03` | `--quest-guns=off` | `quest1_table_gloria_dock9-ab-48ppm.mp4` (the it6 32 px/m pair dropped to keep frames.json at 15) |
 | Muzzle flash, smoke and shells leave along the shot's aim, not a facing the walk turned between shots (found by filming quest 1) | `1ce1b11e`, `ed60713e` | - (bug fix) | `quest1_gloria_muzzle_side-48ppm.png` |
 | Molotov throw follow-through: the torso leans into the release and the gun shoulder whips through (modest but visible at 32 px/m for about 15 frames; the lean alone was 1-2 px); the arm-only version `41bb90e7` moved no pixel | `41bb90e7`, `7326b53b`, `9b351ab4` | - (THROW_LEAN and THROW_TWIST 0 in `rig_clips.gd`, or drop the molotov `rig_kick` row) | `molotov_throw_twist-ab-32-48ppm.mp4` |
 | Rivet's pistol flash reads at 32 px/m: his flash cell 1.6x (an ink-edged cream star, vermilion core, about one body wide; before it was a 15 px speck, smaller than the cop's own flash) | `d79c5278` | `--feel=off` (or hit_feel.json pistol `muzzle_k` 1) | `pistol_muzzle-ab-32-48ppm.mp4` |
 | Gloria's flash (quest 1's sidearm, the same cell): 1.8x, one notch over the pistol | `50c0883b` | `--feel=off` (or gloria `muzzle_k` 1) | `gloria_muzzle-ab-32ppm.mp4` |
 | Machine pistol flash: 1.3x (at 14 rounds a second the flash_smg cell is up 3 ticks of 4, a 6-8 px flicker before; now a cream star about the gun's size, under the pistol's single shot) | `193bc529` | `--feel=off` (or machine_pistol `muzzle_k` 1) | `machine_pistol_muzzle-ab-32-48ppm.mp4` |
+| The muzzle flash (and the Gatling's whirl, the flamer's lick) prints on the drawn barrel tip of whatever hold is shown: RivetHeldView publishes the bore tip each frame (before: a fixed spot a claw width beside the aim line, off the rocket tube, the Gatling and the long guns) | `9054e346` | `--flash-at=side` | `muzzle_on_drawn_tip-ab-48-32ppm.mp4` |
 | Combined clip of the polished set in the city block, 32 px/m, fight camera, with sound (72 s, retaken on `42f74955`: every ranged chapter plus the whole nuke ring) | `42f74955` | - | `city_block_polished_set-32ppm.mp4` |
 
 Gates (iteration 5): evidence run on `41bb90e7`: lint 13/13, scenarios 52/52, parity bit-exact
@@ -54,9 +55,14 @@ because I edited docs during the run). City-block director reel with `--loadout=
 3. **The Gatling's spin-up whirl.** Options: the whirl at 0.8 m (built), 0.6 m (quieter, faint at
    32 px/m), or none (`spin_whirl_m` 0: the camera tremor alone). Built default: 0.8. See
    `gatling_whirl-ab-32-48ppm.mp4`, or `RTAI.exe -- --weapon=gatling` vs
-   `RTAI.exe -- --weapon=gatling --feel=off`. Note: the whirl and every muzzle flash print on the
-   flash spot measured for the one-hand hold (a claw width to the aim side); on the Gatling and the
-   machine pistol that is beside the drawn barrel. It moves with your heavy-hold verdict.
+   `RTAI.exe -- --weapon=gatling --feel=off`. Since `9054e346` the whirl and every muzzle flash
+   print on the drawn barrel tip of whatever hold you pick (before: a fixed spot a claw width to the
+   aim side, beside the heavy guns' barrels; `--flash-at=side` shows it).
+4. **Where the muzzle flash prints.** Options: on the drawn barrel tip (built, follows any hold
+   verdict) or the fixed spot beside the aim line (`--flash-at=side`, the before). Built default:
+   the drawn tip. See `muzzle_on_drawn_tip-ab-48-32ppm.mp4` (pistol, plasma rifle, rocket, flamer,
+   Gatling whirl at 48 and 32 px/m), or `RTAI.exe -- --weapon=rocket_launcher` vs
+   `RTAI.exe -- --weapon=rocket_launcher --flash-at=side`.
 
 (More calls may be added by later iterations.)
 
