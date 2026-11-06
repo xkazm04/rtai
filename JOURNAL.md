@@ -1302,3 +1302,8 @@ idempotent tool; palette gate held), depth-ordered-layered-art (no layer change)
   dash, dives and the defeat whole in the top-left corner, as it12, on the hazard pads and
   parallel legs. `M/servo_p{1,2,3}_*_32ppm_it14.mp4` + keys replace it12's (deleted); every
   REPORT path checked to exist.
+- 04:32 FILM the 48 px/m rotor dash re-filmed on 5f9ed433 (`film48_14.sh 1 2 900`, dodging bot,
+  windup 59 as before, 0 SCRIPT ERROR; cut 0.6 s + 4.4 s as it10). **Looked at** the 4 fps keys:
+  the thin tracking lane, the vermilion lock, the sidestep, the crossing, the vent steam; the
+  hazard pads and parallel legs read through the dash. `M/servo_attack_rotor_dash_48ppm_it14.mp4`
+  + keys replace it10's (deleted); REPORT path.
