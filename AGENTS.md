@@ -8,7 +8,11 @@ Public-facing strings say **RTAI** ("Robot Theft A.I."). Code, paths and PoF ids
 
 ## Commands
 
-Set `GODOT_BIN` to the Godot 4.7.2 console binary first (see `versions.toml`).
+Godot is found by `tools/lib/godot.mjs`: `GODOT_BIN`, then `POF_GODOT_BIN`, then a git-ignored
+`tools/local.json` (`{"godot": "<path>"}`), then known install paths (incl. `../gtai-spike/tools/godot`),
+then `godot` on PATH; it checks the version against `versions.toml` and fails with one line if not
+found. Every runner goes through it: timeouts kill the whole process tree (the `_console.exe` spawns
+the real engine as a child) and keep the partial log. The shell commands below still need `GODOT_BIN`.
 
 | Command | `just` recipe | What it does |
 |---|---|---|
@@ -25,7 +29,15 @@ Set `GODOT_BIN` to the Godot 4.7.2 console binary first (see `versions.toml`).
 | `"$GODOT_BIN" --headless --path project -s res://dev/bench/rig_bench.gd -- --out=build/evidence/rig-bench.json` | | F-09b rig stress at 50 and 200 people (16 full rigs, the rest baked), judges the section 20 rig cost |
 | `"$GODOT_BIN" --rendering-driver d3d12 --path project -s res://dev/showcase/rig_showcase.gd` | | Rivet, cops and peds at 32 and 48 px/m with `look_d4` + the baked crowd atlas -> `build/evidence/frames/` (needs a GPU) |
 | `node tools/evidence/run.mjs [--no-parity] [--no-bench] [--bench-headless]` | | also writes `scenario-tests`, `parity`, `bench` evidence |
+| `node tools/tests/release_compile.mjs` | | compiles what a release export ships (a temp copy without `tests/`, `dev/`, `addons/gut`); exit 1 names any script that only compiles with dev code present |
+| `node --test "tools/lib/*.test.mjs" "tools/lint/*.test.mjs" "tools/tests/*.test.mjs"` | | the Node tooling's own tests (the glob form: `node --test <dir>` fails on Node 24) |
 | (stub) | `just export`, `just audit` | land with the first export ticket |
+
+Lint's `layers` check: boot/core/features never name a `dev/` or `tests/` class or an unguarded
+`res://dev` path (a release export drops them), core never names a features class, and names are
+snake_case (LAY-02). Its allowlists in `tools/lint/layers.mjs` only shrink. Test scratch files go
+through `TestTmp.dir("<sub>")` (`user://test_tmp/<worktree>/<pid>/`); lint bans raw
+`user://test_tmp` and `user://test_save` under `tests/`, because every worktree shares one `user://`.
 
 Install the pre-commit hook once per clone: `git config core.hooksPath .githooks`.
 
