@@ -1,9 +1,9 @@
 extends ArenaHook
-## Lane d8-view70 (data/tables/arena_stations/view-pitch.json, station-only): under a tilted view
-## whose row names an `art` folder (tilt70, combo) the facing cards draw that folder's strips
-## (ViewPitchCards, stepped by ViewPitchEase on the dev view); under the combined view that node
-## also eases the pitch to the boss pitch while a boss fight is live (Events.boss_engaged until the
-## boss is defeated). Nothing is written to the sim or the replay hash; straight down (`top`) it
+## Lane d8-view70 (data/tables/arena_stations/view-pitch.json, station-only): under the combined
+## view (combo) a ViewPitchEase on the dev view eases the pitch to the boss pitch while a boss
+## fight is live, swaps the cards' art folder and cross-fades them (ViewPitchCards; a fixed-pitch
+## row's `art` is drawn by RigHeadCard itself); live = Events.boss_engaged until the boss is
+## defeated. Nothing is written to the sim or the replay hash; straight down (`top`) it
 ## does nothing at all.
 
 var _pitch: ViewPitch = null
@@ -25,7 +25,7 @@ func setup(stage: ArenaStage, ctx: WorldContext) -> void:
 
 
 func attach_view(view: Node) -> void:
-	if _pitch == null or (_pitch.art.is_empty() and not _pitch.eases()):
+	if _pitch == null or not _pitch.eases():
 		return
 	var ease: ViewPitchEase = ViewPitchEase.new()
 	ease.name = &"view_pitch_ease"

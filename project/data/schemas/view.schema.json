@@ -22,6 +22,10 @@
             "pattern": "^[a-z][a-z0-9_]*$",
             "type": "string"
           },
+          "boss_art": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
           "boss_pitch_deg": {
             "maximum": 90,
             "minimum": 30,
