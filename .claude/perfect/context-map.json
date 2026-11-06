@@ -1,0 +1,18 @@
+{
+  "contexts": [
+    {"name": "godot-runner", "category": "lib", "group": "execution", "description": "How tools and agents launch Godot: binary discovery, import/class-cache freshness, --check-only preflight, hang timeouts and child-tree kill, per-run user:// isolation, contention awareness.", "file_paths": ["tools/lib/repo.mjs", "tools/tests/run_unit.mjs", "tools/tests/run_scenarios.mjs", "tools/tests/run_parity.mjs", "tools/selftest/run.mjs", "tools/bench/run.mjs", "project/tests/load_all.gd"]},
+    {"name": "debt-radar", "category": "test", "group": "quality", "description": "Tech-debt detection: lint checks, size-cap early warning, dead code and orphan files, dev/ and launch-flag sprawl, DEVIATION re-check triggers, duplicated code.", "file_paths": ["tools/lint/lint.mjs", "tools/style/check_gd.mjs", "gdlintrc", "docs/decisions.md", "project/dev"]},
+    {"name": "test-suite", "category": "test", "group": "quality", "description": "GUT unit + integration layer: speed, targeted/impacted runs, flake detection and quarantine, planted-mutation (TST-05) tooling, test conventions.", "file_paths": ["project/tests/unit", "project/tests/integration", "project/tests/support", "project/.gutconfig.json", "tools/tests/run_unit.mjs"]},
+    {"name": "lane-workflow", "category": "config", "group": "process", "description": "The multi-agent lane machinery: worktrees, branches, merges, JOURNAL/REPORT, bench and image locks, git hooks, log placement.", "file_paths": [".githooks", "docs/day", "docs/night", "AGENTS.md", "justfile"]},
+    {"name": "evidence-pipeline", "category": "lib", "group": "process", "description": "Evidence writer and PoF envelope, dirty-tree policy, the evidence/ directory, REPORT evidence-path checking.", "file_paths": ["tools/evidence", "evidence", "build/evidence"]},
+    {"name": "dev-harness", "category": "lib", "group": "execution", "description": "project/dev launch args, bots, reels and film scripts: strict argument validation, --quit-after semantics, capture recipes.", "file_paths": ["project/dev", "project/boot"]},
+    {"name": "scenarios-replay", "category": "test", "group": "quality", "description": "Scenario SceneTree runner, replay determinism, wall-clock budgets under contention.", "file_paths": ["project/tests/scenarios", "project/tests/run_scenarios.gd", "tools/tests/run_scenarios.mjs", "project/core/replay"]},
+    {"name": "tool-selftests", "category": "test", "group": "quality", "description": "Tests for the Node tooling itself (TST-06 generator tests), tools/lib helpers, scaffold and data_lint stubs.", "file_paths": ["tools/lib", "tools/achievements", "tools/gen_constants", "tools/scaffold", "tools/data_lint"]},
+    {"name": "bench-perf", "category": "test", "group": "quality", "description": "Bench runner, bench.lock, contended vs idle numbers, performance budgets.", "file_paths": ["tools/bench", "project/dev/bench"]},
+    {"name": "visual-golden", "category": "test", "group": "quality", "description": "Look goldens, render selftest, frame capture, golden drift and re-bless workflow.", "file_paths": ["tools/selftest", "project/tests/golden", "project/dev/selftest", "project/dev/frames"]},
+    {"name": "native-parity", "category": "test", "group": "quality", "description": "SCons build, parity gate, DLL staleness across lanes.", "file_paths": ["native", "tools/tests/run_parity.mjs", "project/tests/parity"]},
+    {"name": "asset-pipeline", "category": "lib", "group": "execution", "description": "Python art/audio tools: CRLF, LFS pointer hazards, provenance.", "file_paths": ["tools/art", "tools/audio", "art_src"]}
+  ],
+  "generated_at": "2026-11-06",
+  "generator": "perfect init (Director, provisional, tooling-shaped)"
+}
