@@ -28,3 +28,5 @@ project/data/generated/city/
 # /perfect loop vault (local working memory; overlay is .claude/perfect/)
 .perfect/
 /tools/local.json
+# skill run logs (local, read by the ai-registry librarian)
+.ai/*.local.jsonl
