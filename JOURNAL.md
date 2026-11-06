@@ -1415,3 +1415,8 @@ live arena path at 32/48 px/m), sprite-and-atlas-production, depth-ordered-layer
   path in REPORT checked to exist; frames.json 15 entries, all on disk.
 - 05:15 GATES scenarios on the bay fix: **52 ran, 0 failed**, 0 SCRIPT ERROR, exit 0
   (`evidence/servo/scenarios-it16.log`; CONTENDED: films ran beside it). Unit 1193/0. Lint 13/13.
+- 05:18 FILM the 48 px/m rotor dash re-cut from the it16 p1 run (the wave's film, 5992f678 body
+  = the current look, 0 SCRIPT ERROR; cut 0.6 + 4.4 s as it14). **Looked at** the 4 fps keys: the
+  tracking lane, the lock, the sidestep, the crossing, the vent steam, on the docked bays.
+  `M/servo_attack_rotor_dash_48ppm_it16.mp4` + keys replace it14's (deleted). p2/p3 and the three
+  ghost runs re-filming (`film48_16.sh`, `ghost48_16.sh`).
