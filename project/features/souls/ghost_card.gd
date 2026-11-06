@@ -1,0 +1,78 @@
+class_name GhostCard
+extends RefCounted
+## View lab (docs/view-lab/PLAN.md): the upright facing card for a ghost rig that is not a CutRig
+## (Tonnage's press). Under a tilted --view whose row has `cards` and `art` (data/tables/view.json),
+## a rig whose card strip exists at ART_DIR/<art>/<name>_card.png draws that card (5 facings, the
+## left 3 mirrored: RigHeadCard.frame_of) in place of its top-down body parts, standing upright at
+## the lifted body point and undoing the camera's ground squash. Its limbs still draw (and walk)
+## under it. A live art change (the combined view) rebuilds it. Render only. Straight down, or a
+## view without art or without the strip, nothing is built and no part is touched: bit-identical.
+
+const ART_DIR: String = "res://features/souls/art/view/"
+const FRAMES: int = 5
+
+var card_name: String = ""
+## The card's drawn width (metres at the rig's px per metre) and its anchor's height in the card
+## (fraction of the card height from the top) that sits on the lifted body point.
+var width_m: float = 1.0
+var anchor_y: float = 0.5
+## The rig's own size factor this pose (Tonnage's unfold), times width_m.
+var size_k: float = 1.0
+var _spr: Sprite2D = null
+var _art: String = ""
+
+
+func _init(p_name: String, p_width_m: float, p_anchor_y: float) -> void:
+	card_name = p_name
+	width_m = p_width_m
+	anchor_y = p_anchor_y
+
+
+## Each pose (the rig's pose()): build the card when the view's art changes, then face and place
+## it at `at` (rig-local px, the lifted body point). `parts` hide while the card draws.
+func step(host: Node2D, parts: Array[Sprite2D], at: Vector2, px_per_m: float) -> void:
+	var vm: ViewMode = ViewMode.shared()
+	if vm.art != _art:
+		_rebuild(host, parts, vm)
+	if _spr == null:
+		return
+	var f: Vector2i = RigHeadCard.frame_of(host.global_rotation)
+	_spr.frame = f.x
+	_spr.flip_h = f.y == 1
+	_spr.position = at
+	_spr.global_rotation = 0.0
+	var cell_w: float = _spr.texture.get_width() / float(FRAMES)
+	var s: float = width_m * size_k * px_per_m * absf(host.global_scale.x) / cell_w
+	_spr.global_scale = Vector2(s, s / vm.ground_k())
+
+
+func is_drawn() -> bool:
+	return _spr != null
+
+
+static func path_of(art: String, p_name: String) -> String:
+	return ART_DIR.path_join(art).path_join(p_name + "_card.png")
+
+
+func _rebuild(host: Node2D, parts: Array[Sprite2D], vm: ViewMode) -> void:
+	var had: bool = _spr != null
+	if had:
+		_spr.queue_free()
+		_spr = null
+	_art = vm.art
+	var path: String = path_of(_art, card_name)
+	if vm.cards and _art != "" and ResourceLoader.exists(path):
+		_spr = Sprite2D.new()
+		_spr.name = &"ghost_card"
+		_spr.texture = load(path) as Texture2D
+		_spr.hframes = FRAMES
+		_spr.centered = false
+		var cell: Vector2 = Vector2(
+			_spr.texture.get_width() / float(FRAMES), _spr.texture.get_height()
+		)
+		_spr.offset = Vector2(-cell.x * 0.5, -cell.y * anchor_y)
+		_spr.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+		host.add_child(_spr)
+	if had or _spr != null:
+		for p: Sprite2D in parts:
+			p.visible = _spr == null

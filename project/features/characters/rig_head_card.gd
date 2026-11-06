@@ -29,15 +29,19 @@ const CARDS: Dictionary[String, Array] = {
 ## A view without art draws CARDS. Rivet's p55 card is a bust (head, hazard
 ## collar and chest plate from rivet_55.png, tools/art/rivet_bust.py): anchored on the collar's
 ## middle, 1.25 x the collar wide (the cell is wider than the collar by the chest's shoulders).
+## Dent (no collar) anchors on his torso, 1.75 x its depth (his shoulder span); his plating is
+## printed to his in-game tan (tools/art/ghost_card_tone.py; the sheet's teal-steel is
+## p55/dent_bust_card_teal.png, the alternative). The p70 rows (view70 lane) keep the folder strip
+## with widths that draw each 70 card as tall as its 55 card (king 2.4 * 169/115, rivet 105/90).
 const ART_DIR: String = "res://features/characters/art/view/"
 const SET_CARDS: Dictionary[String, Dictionary] = {
 	"p55":
 	{
 		"rivet":
 		["res://features/characters/art/view/p55/rivet_bust_card.png", 0.66, 1.25, true, true],
+		"dent":
+		["res://features/characters/art/view/p55/dent_bust_card.png", 0.75, 1.75, true, true],
 	},
-	## The 70 sheets' cells are wider than the 55 ones: widths that keep each 70 card as tall as
-	## its 55 card (view70 lane: king 2.4 * 169/115, rivet 1.0 * 105/90).
 	"p70":
 	{
 		"rivet": ["", 0.86, 1.17, false, true],
