@@ -64,3 +64,6 @@ NEXT (iteration 2, in order): full unit + scenarios (top must stay bit-identical
 under a tilt with art); the 360 turn dev scene (sedan in place, tilt70, 32 + 64 px/m, BLEND_DEG
 0 vs 8) -> gtai-masters/n8/vehicles; before/after pair at tilt70 32 px/m (git worktree of main or
 `--view=tilt70` before = main exe); the kerb-parked floor cars; depth vs people; ambulance tail red.
+
+21:22 gate: `run_unit.mjs --fast` 1471/1471 passing, 0 SCRIPT ERROR (96 s). The full no-arg run,
+scenarios and evidence are still owed (iteration 2, first thing).
