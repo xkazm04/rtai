@@ -243,7 +243,8 @@ With `--repair-delay=20` on seed 3 the exe gives exactly the editor run (one dea
    `bosses.json` (it22: 7/10 without a death, n=10) and confirm it with more seeds
    (`node evidence/king/boss_numbers.mjs --seeds=1,...,20 --bots=human,stand,dodge --delay=20`), since
    n=10 cannot tell 16 s from 20 s. A 20 s delay means Rivet barely repairs inside a phase; if that
-   reads harsh in play, the same table at 12-16 s is the middle.
+   reads harsh in play, the same table at 12-16 s is the middle. it24: over seeds 1-15, 16 s gives the
+   same deaths as 20 s (11/15 vs 10/15 without a death) with more hp left, so 16 s is the gentler fair.
 3. The gang's shades (call P, it18): the drawn part is built; if the owner wants the target's two
    lenses, they need about 64 px/m to read (a gang head is about 10 px across at 32 px/m).
 4. The plain enemy-ai robot thug: give it the gang's D4 lift (it prints as ink at 48 px/m).
