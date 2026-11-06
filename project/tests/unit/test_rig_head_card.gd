@@ -52,7 +52,10 @@ func test_a_head_variant_row_wins_over_the_set_row() -> void:
 	var cop: BodyPlan = BodyPlan.new()
 	cop.art_dir = "cop"
 	assert_eq(RigHeadCard.key_of(cop, "head_cap"), "cop/head_cap", "the patrol cop: the cap card")
-	assert_eq(RigHeadCard.key_of(cop, "head_helmet"), "", "the riot helmet keeps its own head")
+	assert_eq(
+		RigHeadCard.key_of(cop, "head_helmet"), "cop/head_helmet", "the riot cop: its own card"
+	)
+	assert_eq(RigHeadCard.key_of(cop, "head_swat"), "", "SWAT keeps its own head (no card yet)")
 	var thug: BodyPlan = BodyPlan.new()
 	thug.art_dir = "gang"
 	assert_eq(RigHeadCard.key_of(thug, "head"), "gang", "every gang head shares one card")
