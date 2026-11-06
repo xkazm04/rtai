@@ -60,3 +60,25 @@ NEXT (iteration 3):
 4. `top_lift` (cast shadows by height, wall extrusion, rim light).
 5. Mouse aim under tilt: verify with a live exe run (global mouse pos lands on the ground).
 6. Gates so far: lint 13/13, unit 1164/0 (on 9161400e); scenarios on 1bd33a5d see below.
+- MILESTONE a53b2e85: `tilt45` row (data only) + arena props extruded under a tilt
+  (`ArenaFloorView._prop`, `PROP_H_M` by kind; paint kinds 0). FRICTION: `Dictionary.get` returns
+  Variant -> typed-arg warning-as-error broke arena_game's compile (caught by the 3 SCRIPT
+  ERRORs in the shot log, fixed before commit). Still `props_top_vs_45.png`: the planters are
+  boxes with a south face; the parked sedans are still flat.
+  LOOKED at tilt 45 (`views_top_65_45_48.png`): taller car wall, Rivet stands clearly, but the
+  top-down part art squashed to 71 % reads squat. The upright face/chest cards are the missing half.
+- GATES at the session end: lint 13/13; unit 1164/0, 0 SCRIPT ERROR (a53b2e85, `unit-final.log`);
+  scenarios 52 ran / 0 failed / 0 SCRIPT ERROR (started on 1bd33a5d, `scenarios.log`). `top` is
+  md5-identical on the seed-2 tick-900 arena frame through every commit (5db6f283...).
+  NOT RUN yet: the director reel 19/19 (`--bot=reel --reel=director`), evidence/run.mjs, parity.
+- Evidence: `gtai-masters/n7/view/` frames.json (8 entries), raw renders deleted.
+
+NEXT (iteration 3), revised (replaces the list above, in order):
+1. Rivet's upright head card (the logo visor, 5 drawn + 3 mirrored facings) on the head node
+   under tilt, picked by (facing - camera) octant; image job under image.lock (gen.mjs copied to
+   scratch); provenance line. Then King's chest/crown card. Film before/after at 32 and 48.
+2. Draw-order measurement (count wrong-order overlapping pairs per frame over the 25 s clip),
+   including Rivet (cast canvas) vs the gang (KingRigs): not sorted against each other yet.
+3. Contact shadows under lifted rigs; the parked sedans as stacks (vehicles class); occlusion
+   silhouettes behind tall props.
+4. `top_lift`. 5. The director reel 19/19 + evidence/run.mjs with the switch off.
