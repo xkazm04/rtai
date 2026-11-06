@@ -1157,10 +1157,15 @@ NEXT (iteration 11, in order):
 
 NEXT (iteration 11, replaces the 02:50 list):
 1. Merge n7-king if it moved (last merged 73543d25 as 91f94504; JOURNAL/REPORT add/add: ours).
-2. Re-film the ghost clips on the it10 body (`scratch/servo/filmghost.sh`: Kerf cut halves, Dent's
-   van, Ohm's chain; read the script for their flags and windows), look at the keys, replace.
+2. Re-film the Kerf and Ohm ghost clips on the it10 body (flags in their frames.json notes:
+   `--servo-ghost=kerf` p2 seed 2 from 1.0 s; `--phase=2 --ghost=ohm` seed 2, 2.3-8.3 s), look, replace.
 3. The spine's horseshoe frame and hose loops (render only, `ServoSpine`): only if they show past
    the torso from above; A/B at 48/32 beside the sheet.
 4. The clip cam at the yard's left edge stays open in REPORT (framework file, shared with king).
 5. At the freeze (08:30): re-export `windows-showcase`, smoke (expect down 7036, 188), final gates
    (lint, unit, scenarios, evidence/run.mjs, director reel), REPORT final (drop DRAFT, Next steps).
+- 03:03 FILM Dent's van re-filmed on the it10 body (`--servo-ghost=dent --seed=1`, 48 px/m, 0 SCRIPT
+  ERROR). **Looked at** the keys: dash lane, teal tether to the van, the van onto the rack, the
+  amber fireball, the charred wreck. `M/servo_ghost_dent_van_48ppm_it10.mp4` + keys replace the it5
+  clip (deleted); REPORT call 8 path; NEXT 2 narrowed to Kerf and Ohm. Session ends here with
+  everything committed (scratch avis deleted).
