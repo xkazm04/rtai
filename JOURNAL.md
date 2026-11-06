@@ -114,3 +114,38 @@ NEXT (session 2, in order):
 3. Props stand up (payphone first: library payphone_55 A round 1920), then barriers, dumpsters,
    crates, hydrants, lamps (barrier/dumpster/hydrant have 70 twins: A).
 4. Combo engage film (the settle redraw: holes?), 48/64 px/m close-ups, a 30-90 s set clip.
+
+## Iteration 4 (2026-11-06 21:18-22:18, BUILD)
+
+Read: JOURNAL, git log, the lane journals (view answered the occlusion REQUEST: PropOcclusion takes
+no outside provider; the city draws its own cue in PropOcclusion's look, reading its public consts;
+vehicles REQUESTs the kerb-parked cars hook into `ChunkView`, `VehicleParked` on n8-vehicles).
+(Iterations 2-3 left no commits or journal lines: this session picks up from iteration 1's NEXT.)
+
+- MILESTONE 877fc27d + follow-up: **building occlusion** (brief item 2). `CityOcclusion`
+  (features/city/view/city_occlusion.gd), on the city's actors canvas at `roof_occluders`, made only
+  when ChunkLift exists (a tilt), the view occludes and `city_facades.json` `occlude` is true (new
+  key + schema; false = the old look, one value away). Each frame: every CutRig on the actors canvas,
+  the resident chunks' buildings within 40 m; a body whose feet are north of a building's north edge
+  and whose screen box (1.7 m upright: the cards stand, they are not foreshortened) meets the
+  building's drawn area (ground rect grown up by its lift) is "behind" it.
+  - First build redrew the building (ChunkLift.face + the roof texture) on the actors canvas over
+    the body. FILMED and REJECTED: the redraw gets the actors' per-item print (look_d4_item), not the
+    world's screen print, so the redrawn roof read lighter and lilac beside the world (cmp still in
+    scratch, not kept) and it covered actor-canvas props lying in its area.
+  - Built instead: a BackBufferCopy at the bottom of the actors canvas (z blood - 1) keeps the
+    printed world before any actor draws; the node paints that copy (city_occlusion.gdshader,
+    hint_screen_texture, nearest) back over only the body's patch (1.8 m wide: body + held weapon,
+    cut to the building's drawn area), and its child inks the body there as PropOcclusion's
+    silhouette + rim (its SILHOUETTE / RIM / SIL_W_M; widths scaled to the city's 32 px/m). Exact
+    world pixels: no second print, no seam. Bodies in front whose box meets a hit building's area
+    are lifted by PropOcclusion.FRONT_DZ, as the arena does.
+  - Counts (Log at exit): `--arena=city --bot=course --seed=2 --rigs --clean --view=tilt70`
+    1800 frames headless: 2002 body-frames hidden (Rivet + the riot cops along the helipad block's
+    north sidewalk); `--bot=rivet` 900 frames: 0 (nobody walks a north sidewalk).
+  - Known gaps: the baked crowd (multimesh peds) is not occluded (only rigs); a car card in front of
+    the building inside a hidden body's patch would be painted over (patch is narrow; not seen yet);
+    the arena city lets Rivet walk ONTO roofs (arena collision ignores the city), so on the course a
+    body can stand inside a footprint: it is not counted (feet must be north of the north edge).
+  - Test `test_city_occlusion.gd` (3: only buildings collected with the lift above them, the patch is
+    the body inside the drawn area only, the silhouette at city scale).
