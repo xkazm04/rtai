@@ -470,3 +470,28 @@ NEXT addendum (iteration 4): FIRST re-run the full unit + reel combo on the swap
   cells padded 1.5x because chars' p70 row is already 3.53 m wide, and `p70/parts/` = your p55 parts).
   Please keep them if you merge d8-view70; if you change STRIPS["king"] width (1.5) the padding must
   follow (unit test_view_pitch_court guards it). The it3 REQUEST (key by `ViewMode.art`) still stands.
+- 16:57 GATE `top` bit-identical with main on 2728572e (merges + the p70 court slot): King fight seed 2,
+  32 px/m, 900 frames, main checkout 0bea8b93 vs d8-view70: 900/900 video framemd5 equal (list md5
+  6e865449 both), 0 SCRIPT ERROR both (scratch it4/top.sh).
+- 17:01 GATE director reel on 2316e44f (windowed, `--quit-after 8000`): tilt70 19/19 chapters all down,
+  combo 19/19, 0 SCRIPT ERROR each (`evidence/it4/reel_tilt70.log`, `reel_combo.log`).
+- 17:01 LOOKED King fight t40, 32 px/m, tilt vs tilt70 (masters `king_car_gang_55_vs_70_32ppm_t40_before_it4.png`):
+  at 70 the car is today's flat plum car and the gang pale print, at 55 the gilded throne-car and the
+  dark court gang: the panels compared two art sets, not two pitches. Checked the combo opening
+  (frames 0-90): the King's car is off screen through the engage ease (so the car's art would not
+  flicker mid-ease).
+- 17:04 TRIED the car at 70 too (p70/car = bosses' p55 walls, roof, throne; the walls are a lifted
+  sprite stack, pitch-agnostic): looked right (throne-car at 70), BUT bosses' own unit test
+  `test_king_car_walls.test_a_pitch_without_art_has_none` asserts 70 has no car art. I cannot edit
+  their test, so I reverted the car (the still is not kept as evidence). The gang stays.
+- 17:05 MILESTONE 95109a45 the gang at 70: KingArt's p70 slot gets bosses' p55 gang card (base width
+  1.4 is the same in both folders, so it draws the 55 size) and gang_parts. The gang card is the 55
+  drawing shown at 70 (no 70 sheet of the gang); the limbs are pitch-agnostic. Unit court/king_art/
+  view_pitch/car_walls/cape/rig_head_card 43/0.
+
+### REQUEST to bosses (iteration 4, the car at 70)
+- REQUEST bosses: `test_king_car_walls.gd:21` uses pitch 70 as "a pitch without art". view70 wants
+  the throne-car at 70 too (copy `art/p55/car/*` to `art/p70/car/`: the walls and roof are your
+  lifted stack, pitch-agnostic; I tried it, it reads right). Please change that test's pitch to 65
+  (or 45), then either copy the folder yourself or tell me in your JOURNAL and I add it. Without it
+  the 70 King rides today's flat car beside your throne-car at 55.

@@ -1,4 +1,4 @@
-# d8 lane view70: the 70-degree sample and the combined view (DRAFT, iteration 3, 16:28)
+# d8 lane view70: the 70-degree sample and the combined view (DRAFT, iteration 4, 17:00)
 
 DRAFT: the freeze iteration (18:30) updates the numbers, adds the exe and finalises this file.
 Evidence: `C:\Users\kazda\kiro\gtai-masters\d8\view70\` (`frames.json`, 15 entries, best first).
@@ -54,15 +54,29 @@ Evidence: `C:\Users\kazda\kiro\gtai-masters\d8\view70\` (`frames.json`, 15 entri
   - lint 15/15;
   - a trial exe export and smoke run under combo.
 
+## Iteration 4 (chars + bosses merged again, the 70 King made whole)
+- **Merged** d8-chars (street p55 heads, SWAT helmet, Kerf v2 card, ghost depth sort) and d8-bosses
+  (Servo parcels as boxes) at 16:43; unit 1456/0 on the merge.
+- **The 70 King at close range** (2316e44f): the p70 bust also fills bosses' KingArt `p70/` slot, and
+  the court limbs are copied there (`p70/parts`). So at 70 the flat drawn cape fan behind the bust
+  is gone, and the King has the same gilded press arm and court limbs as at 55: 55 vs 70 now
+  compares the pitch, not two art sets. The bust draws at the same size (its cells are padded by
+  KingArt's 1.5 width factor; a unit test guards it).
+  - The King's gang at 70 also draws bosses' court card and limbs (95109a45), so the two
+    pitches show the same art set. The car is the one exception (below).
+  - Before/after: `king_car_gang_55_vs_70_32ppm_t40_before_it4.png` and
+    `king_rivet_onfoot_55_vs_70_64ppm_t9_it3.png` (before: the fan, print limbs, pale gang) vs the it4
+    films and stills.
+
 ## Not done / owed
-- **The 70 sample is narrower than the 55 cast.** At 70 the King's limbs, car and gang are today's
-  art: bosses' court parts exist for p55 only. The 70 sample is Rivet's head, the King's bust and
-  Tonnage's card.
-- **The King at 70 close up**: bosses' flat drawn cape fan still shows behind the p70 bust. The
-  stand-down sits in their `KingArt.card_wears_cape` (REQUEST in JOURNAL).
-- **Under combo, the court limbs, cape and gang chains switch late.** They switch when the live
-  pitch rounds to 55, about 0.9 s into the 1 s ease, not with the bust at 62.5. This is a small late
-  pop, and bosses' fix is 3 lines (REQUEST).
+- **The 70 sample is narrower than the 55 cast.** At 70 the King's car is today's flat car: bosses'
+  unit test pins pitch 70 as having no car art, so I could not add it (tried, it reads right;
+  REQUEST to bosses). Drawn from the 70 sheet: Rivet's head, the King's bust and Tonnage's card;
+  the gang's card at 70 is the 55 drawing.
+- **Under combo, during the 1 s ease, the King's drawn cape fan shows** (KingArt keys by the live
+  pitch rounded, and no strip exists for 56-69), and the gang chains switch when the pitch rounds
+  to 55. The King is off screen at the engage in every seed tried (1-5); at the return he is dying.
+  bosses' fix is 3 lines (key KingArt by `ViewMode.art`; REQUEST in JOURNAL).
 - **Tonnage's ghost cross-fade** under combo is unit-tested, but not seen live: no seeded fight has
   Tonnage on screen when the King goes down.
 
@@ -80,7 +94,6 @@ Evidence: `C:\Users\kazda\kiro\gtai-masters\d8\view70\` (`frames.json`, 15 entri
    `--view=combo_fade` (`fade_deg` 5).
    - See: `combo_engage_fade_vs_swap_rivet_48ppm_frames22-42_x2.png` (the engage) and
      `combo_return_fade_vs_swap_king_frames1150-1186_x2.png` (King down).
-   - NOTE: the it3 films (King trio, ease clip) were taken with the cross-fade (the default then).
 4. **The bell on the p70 King bust**: built as the strip's own bell, with the rig's horn hidden (one
    bell, as bosses' 55 court bust does). The alternative is to crop the bell off the strip and show
    the rig's horn.
