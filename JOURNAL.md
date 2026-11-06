@@ -1307,3 +1307,18 @@ idempotent tool; palette gate held), depth-ordered-layered-art (no layer change)
   the thin tracking lane, the vermilion lock, the sidestep, the crossing, the vent steam; the
   hazard pads and parallel legs read through the dash. `M/servo_attack_rotor_dash_48ppm_it14.mp4`
   + keys replace it10's (deleted); REPORT path.
+- 04:34 FILM the full drone wave at 48 px/m re-filmed on 5f9ed433 (`film48_14.sh 1 2 900`, cut
+  4.5-11.5 s as it10, 0 SCRIPT ERROR). **Looked at** the 2 fps keys: the beam tracks and locks,
+  the rings fall on his spot, the bays empty, the bot steps off, the drops land in the rings.
+  `M/servo_drone_wave_scan_drop_dodge_48ppm_it14.mp4` + keys replace it10's (deleted); REPORT path.
+
+NEXT (iteration 15, in order):
+1. Merge n7-king if it moved (last merged 9a207b0b as 04164ce1; JOURNAL/REPORT add/add: ours).
+2. Re-film the remaining it10-body 48 px/m clips on the it14 body (hazard pads, parallel legs):
+   package carpet (p2, windup 47), hot dash (p3, windup 35), bay hop (`hop48_10.sh 2 2 900`),
+   kamikaze (`film48_10.sh 3 2 1000`); cut windows as their it10 mp4 durations. Ghost clips last.
+3. Weakest by the target still: the sheet's bays hold quad-rotor drones with packages, ours cream
+   squares (DOCKED_M; the full sprite was noise at 32 px/m): try a 2-rotor hint on the cream body
+   at 48 px/m only if it stays quiet at 32. Render only, A/B.
+4. At the freeze (08:30): re-export `windows-showcase`, smoke (expect down 7036, 188), final gates
+   (lint, unit, scenarios, evidence/run.mjs, director reel), REPORT final (drop DRAFT, Next steps).
