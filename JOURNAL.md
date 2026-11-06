@@ -1277,3 +1277,8 @@ NEXT (written 04:48, for iteration 15):
   from -0.35. Before the sync that cock was visible only because the rig ran late (and then froze
   cocked on the hit). Showing a cock there would need a longer sim windup (not polish). The first
   blow (windup 5) keeps 1 cock tick plus the draw-back in frames 71-72.
+- CORRECTION 04:56 to the 04:41 line "the strike sync reaches the shipped quest's katana too": quest
+  1 draws Rivet as the sprite cast, and its blade (CastBladeView -> MeleeWeaponView.sweep_of) reads
+  MeleeCombo.tick_in straight from the sim, so the quest 1 katana was already in step and
+  `791ea71a` does not change it. The sync matters where Rivet is a rig (the arena, the city block,
+  the reels; ArenaRigs). Nothing to film for quest 1.
