@@ -47,3 +47,49 @@ func test_the_wreck_fire_stays_on_the_ground_without_cards() -> void:
 		assert_eq(VehicleFire.hood_lift(), Vector2.ZERO)
 	else:
 		assert_lt(VehicleFire.hood_lift().y, 0.0, "a card's bonnet is up the screen")
+
+
+func test_wear_levels_follow_the_damage_state_and_seed_per_car() -> void:
+	assert_eq(VehicleCards.wear(VehicleBody.State.INTACT, 0), 0)
+	assert_eq(VehicleCards.wear(VehicleBody.State.HIJACKED, 0), 0, "hijacked: no dents")
+	assert_eq(VehicleCards.wear(VehicleBody.State.D1, 0) % 4, 1)
+	assert_eq(VehicleCards.wear(VehicleBody.State.D2, 5) % 4, 2)
+	assert_eq(VehicleCards.wear(VehicleBody.State.WRECK, 9) % 4, 3)
+	var a: int = VehicleCards.wear(VehicleBody.State.D1, 1)
+	var b: int = VehicleCards.wear(VehicleBody.State.D1, 2)
+	assert_ne(a, b, "two dented cars wear different dents")
+	assert_lt(VehicleCards.wear(VehicleBody.State.WRECK, -77), 4 * VehicleCards.WEAR_SEEDS)
+
+
+func test_cards_draw_north_to_south_whatever_the_put_order() -> void:
+	var ys: PackedFloat32Array = PackedFloat32Array([5.0, -5.0, 0.0, -5.0])
+	assert_eq(VehicleCards.back_to_front(ys), [1, 3, 2, 0] as Array[int])
+
+
+func test_a_card_with_someone_in_front_drops_under_the_actors() -> void:
+	var f: VehicleFront = VehicleFront.new()
+	assert_false(f.blocks(Vector2.ZERO), "nobody: the vehicles band")
+	f.add(Vector2(0.5, -2.0))  # behind the car: the card covers them, stays over
+	assert_false(f.blocks(Vector2.ZERO))
+	f.add(Vector2(5.0, 1.0))  # beside, too far across
+	assert_false(f.blocks(Vector2.ZERO))
+	f.add_people(PackedFloat64Array([7, -1.0, 2.0, 1.0]))  # in front but dead: ignored
+	assert_false(f.blocks(Vector2.ZERO))
+	f.add_people(PackedFloat64Array([8, -1.0, 2.0, 0.0]))  # in front, alive
+	assert_true(f.blocks(Vector2.ZERO))
+	assert_false(f.blocks(Vector2(0.0, 10.0)), "a car further south is not blocked")
+	var cards: VehicleCards = autofree(VehicleCards.new())
+	cards.front = f
+	cards.begin(null)
+	cards.put(0, Vector2.ZERO, Vector2.RIGHT, Color.WHITE)
+	cards.put(0, Vector2(0.0, 10.0), Vector2.RIGHT, Color.WHITE)
+	cards.finish()
+	assert_eq(cards.count(), 2)
+	assert_eq(cards.count_under(), 1)
+
+
+func test_only_a_moving_police_card_flashes_its_bar() -> void:
+	assert_eq(VehicleCards.duty(VehicleCards.POLICE_ART, 8.0), VehicleCards.SIREN)
+	assert_eq(VehicleCards.duty(VehicleCards.POLICE_ART, 0.0), 0, "a parked cruiser stays dark")
+	assert_eq(VehicleCards.duty(0, 8.0), 0, "a sedan has no bar")
+	assert_true(VehicleCards.SIREN > VehicleCards.wear(VehicleBody.State.WRECK, 63), "a bit apart")

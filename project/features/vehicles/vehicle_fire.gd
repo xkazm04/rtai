@@ -22,6 +22,9 @@ const LIGHT_KIND: StringName = &"fire"
 const DAY: StringName = &"day"
 ## n8: the bonnet's height (m): the fire sits on it when the car draws as a card (VehicleCards).
 const HOOD_H_M: float = 1.0
+## n8: on a card the top-down burst stands up as a flame: narrower and taller, its foot on the
+## bonnet (x, y of the cell's size; ONE on the ground).
+const STAND: Vector2 = Vector2(0.7, 1.4)
 
 var service: VehicleService = null
 ## The page's lights (optional): one held `fire` light per burning wreck.
@@ -69,10 +72,12 @@ func _draw() -> void:
 		var f: float = flame(b.wreck_t)
 		if f <= 0.0:
 			continue
-		var at: Vector2 = (b.pos + b.head * NOSE_M) * SimConst.PX_PER_M + hood_lift()
+		var lift: Vector2 = hood_lift()
+		var at: Vector2 = (b.pos + b.head * NOSE_M) * SimConst.PX_PER_M + lift
 		var frame: int = int(b.wreck_t * FPS) % 4
-		_cell(Vector2i((frame + b.id) % 2, 1), at - b.head * 16.0, EMBER_SCALE * f)
-		_cell(Vector2i(frame, 0), at, FLAME_SCALE * (0.75 + 0.25 * f))
+		var stand: Vector2 = Vector2.ONE if lift == Vector2.ZERO else STAND
+		_cell(Vector2i((frame + b.id) % 2, 1), at - b.head * 16.0, EMBER_SCALE * f * Vector2.ONE)
+		_cell(Vector2i(frame, 0), at, FLAME_SCALE * (0.75 + 0.25 * f) * stand)
 
 
 ## The fire's lift onto the bonnet: only when the cars draw as cards (else ZERO: flat bodies).
@@ -82,11 +87,14 @@ static func hood_lift() -> Vector2:
 	return ViewMode.shared().lift_px(HOOD_H_M)
 
 
-## One 2.5 m cell of the sheet centred on `at` (world px), `scale` x its size.
-func _cell(cell: Vector2i, at: Vector2, scale: float) -> void:
-	var size: Vector2 = Vector2.ONE * CELL_M * scale * SimConst.PX_PER_M
+## One 2.5 m cell of the sheet at `at` (world px), `scale` x its size (per axis). A cell taller
+## than wide stands on `at` (its lower quarter below, the rest rising); else it is centred.
+func _cell(cell: Vector2i, at: Vector2, scale: Vector2) -> void:
+	var size: Vector2 = scale * CELL_M * SimConst.PX_PER_M
 	var src: Rect2 = Rect2(Vector2(cell) * CELL_PX, Vector2(CELL_PX, CELL_PX))
-	draw_texture_rect_region(_tex, Rect2(at - size * 0.5, size), src)
+	var foot: float = 0.75 if scale.y > scale.x else 0.5
+	var top_left: Vector2 = at - Vector2(size.x * 0.5, size.y * foot)
+	draw_texture_rect_region(_tex, Rect2(top_left, size), src)
 
 
 ## Keeps one held light per burning wreck; frees the lights of the ones that went out.

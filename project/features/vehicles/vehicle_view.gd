@@ -1,22 +1,18 @@
 class_name VehicleView
 extends Node2D
-## Draws VehicleService's cars (driven, parked, wrecks) the way the city draws traffic: the same
-## quad mesh and look material as the crowd's car layer (handed in by the composition root, so the
-## print matches), one MultiMesh per body texture (intact, d1, d2, hijacked, wreck: n-d4's burnt
-## wrecks in the traffic atlas layout; without that atlas a wreck draws its d2 cell darkened) plus
-## a car-shaped ink shadow, tyre marks (VehicleSkids) and burning wrecks (VehicleFire). Reads the
-## service each frame and writes nothing back (render only; never sim state). Size and cell
-## rules = CitySimRender cars. Sim traffic the service rammed to D1 or soul-hijacked keeps driving
-## in the sim, drawn by the crowd layer with its intact art: the view lays the D1 / hijacked cell
-## over it at the same transform (until the city's car shader picks art by custom.y itself).
+## Draws VehicleService's cars (driven, parked, wrecks) as the city draws traffic: the crowd car
+## layer's quad mesh and look material, one MultiMesh per body texture (intact, d1, d2, hijacked,
+## wreck; without the burnt atlas a wreck draws d2 darkened), an ink shadow, tyre marks
+## (VehicleSkids) and burning wrecks (VehicleFire); under a tilt with card art, VehicleCards. Render
+## only: reads the service, never writes sim state. Sim traffic rammed to D1 or soul-hijacked keeps
+## driving in the sim: the view lays the D1 / hijacked cell over it at the same transform.
 
 const CAR_L: float = 204.8
 const CAR_W: float = 102.4
 const SHADOW_OFF: Vector2 = Vector2(5.12, 5.12)
 const SHADOW: Color = Color(0.09, 0.075, 0.106, 0.45)
 const WRECK_TINT: Color = Color(0.62, 0.6, 0.58, 1.0)
-## n8: the kerb-parked cards drawn around the player (m; the camera sees ~40 m across at 32 px/m).
-const PARKED_M: float = 60.0
+const PARKED_M: float = 60.0  # n8: kerb-parked cards drawn this near the player (m)
 const CAP: int = 32
 ## View lab (view.json cast_k): the roof height a cast shadow is thrown from (m).
 const CAR_H_M: float = 1.4
@@ -30,8 +26,7 @@ var fire: VehicleFire = VehicleFire.new()
 var cards: VehicleCards = null
 var _bodies: Array[MultiMesh] = []
 var _shadow: MultiMesh = null
-## True when the burnt wreck atlas was handed in (else wrecks draw d2, darkened).
-var _burnt: bool = false
+var _burnt: bool = false  # the burnt wreck atlas was handed in
 ## [our node, the crowd node it mirrors]: the look may swap the crowd's material at runtime.
 var _mirrors: Array[Array] = []
 var _crowd_car: MultiMeshInstance2D = null
@@ -66,6 +61,13 @@ func setup(
 	cards = VehicleCards.new()
 	cards.z_index = car.z_index
 	add_child(cards)
+	cards.under.z_index = RenderLayers.z(&"actors") - 1
+	add_child(cards.under)
+	VehicleParked.live = true
+
+
+func _exit_tree() -> void:
+	VehicleParked.live = false
 
 
 func _layer(like: MultiMeshInstance2D, tex: Texture2D, z: int) -> MultiMesh:
@@ -119,9 +121,8 @@ func _process(_delta: float) -> void:
 	_draw_cards()
 
 
-## Under a tilt with art for its pitch: every car (the service's and the sim's traffic) as a card,
-## the flat body layers (ours and the crowd's) hidden; their ground shadows stay. Never touches the
-## layers in a view with no card atlas (`top` stays bit-identical).
+## Under a tilt with card art: every car as a card (worn; under the actors with someone in front),
+## flat bodies hidden, shadows kept. No card atlas (`top`): the layers are untouched.
 func _draw_cards() -> void:
 	var tex: Texture2D = VehicleCards.atlas()
 	var on: bool = tex != null
@@ -135,22 +136,30 @@ func _draw_cards() -> void:
 	if not on:
 		return
 	cards.begin(tex)
+	var me: Vector2 = service.world.player_pos()
+	cards.front.clear()
+	cards.front.add_people(service.world.people_near(me, VehicleFront.NEAR_M))
+	if service.driving == null:
+		cards.front.add(me)
 	for b: VehicleBody in service.cars:
-		var wreck: bool = b.state == VehicleBody.State.WRECK
-		cards.put(b.art, b.pos, b.head, WRECK_TINT if wreck else Color.WHITE)
-	var recs: PackedFloat64Array = service.world.cars_near(service.world.player_pos(), 1e6)
+		var on_duty: int = VehicleCards.duty(b.art, b.vel.length())
+		cards.put(b.art, b.pos, b.head, Color.WHITE, VehicleCards.wear(b.state, b.id) + on_duty)
+	var book: Dictionary[int, int] = service.traffic.state if service.traffic != null else {}
+	var recs: PackedFloat64Array = service.world.cars_near(me, 1e6)
 	for r: int in range(0, recs.size(), VehicleWorld.CAR_STRIDE):
+		var id: int = int(recs[r])
+		var st: int = book.get(id, VehicleBody.State.INTACT)
+		var at: Vector2 = Vector2(recs[r + 2], recs[r + 3])
+		var head: Vector2 = Vector2(recs[r + 4], recs[r + 5])
 		var art: int = int(recs[r + 7])
-		cards.put(
-			art, Vector2(recs[r + 2], recs[r + 3]), Vector2(recs[r + 4], recs[r + 5]), Color.WHITE
-		)
-	VehicleParked.put_near(cards, service.world.player_pos(), PARKED_M, WRECK_TINT)
+		var worn: int = VehicleCards.wear(st, id) + VehicleCards.duty(art, recs[r + 6])
+		cards.put(art, at, head, Color.WHITE, worn)
+	VehicleParked.put_near(cards, me, PARKED_M)
 	cards.finish()
 
 
-## The car shadow's offset: SHADOW_OFF, plus under a view's cast shadows (cast_k) the roof's
-## shadow thrown down-right; the car-shaped quad is moved, not swept, so half the roof's throw
-## keeps it joined to the car (top: exactly SHADOW_OFF).
+## The car shadow's offset: SHADOW_OFF (top), plus under cast shadows (cast_k) half the roof's
+## throw down-right (the quad is moved, not swept: half keeps it joined to the car).
 static func shadow_off() -> Vector2:
 	var view: ViewMode = ViewMode.shared()
 	if view.cast_k <= 0.0:
@@ -170,8 +179,7 @@ static func _put(mm: MultiMesh, i: int, xf: Transform2D, c: Color, b: VehicleBod
 	mm.set_instance_custom_data(i, Color(float(b.art), float(b.state), 0.0, 0.0))
 
 
-## Overlays for the marked sim traffic (VehicleTraffic.state D1 / HIJACKED), at the sim's own
-## car transform (CitySimRender: x axis head * CAR_L, y axis its left normal * CAR_W).
+## Overlays for the marked sim traffic (VehicleTraffic.state D1 / HIJACKED) at its car_xf.
 func _marked_traffic(counts: PackedInt32Array) -> void:
 	var book: VehicleTraffic = service.traffic
 	if book == null or book.state.is_empty():

@@ -1,0 +1,28 @@
+{
+ "branch": "n8-vehicles",
+ "commits": {
+  "34018b19": "glow taps inline in fragment() (headless shader ERROR fix)",
+  "35660255": "depth film scene (vehicle_frame --scene=depth)",
+  "6e497349": "police light bar flash",
+  "ee045433": "VehicleParked.live + drawn() (city REQUEST)"
+ },
+ "evidence_dir": "C:/Users/kazda/kiro/gtai-masters/n8/vehicles",
+ "films": {
+  "depth": "depth_tilt70_{32,48}ppm_before_after.mp4 + _ba_still.png (before = --no-front)",
+  "drive": "vehicle_frame route + carnage at tilt70: 0 SCRIPT ERROR, stills looked at (scratch, not kept)",
+  "siren": "siren_tilt70_{32,64}ppm_before_after.mp4, siren_tilt70_64ppm_before_amber_blue.png (before = --wear=0)"
+ },
+ "gates": {
+  "director_reel_tilt70": "see director-reel-it4-tilt70.log (run at the end of iteration 4)",
+  "lint": "15/15 (pre-commit, every commit)",
+  "scenarios": "52 ran, 0 failed, 0 SCRIPT ERROR on 34018b19",
+  "top_bit_identity": "framemd5 main scene --arena=city --bot=rivet --seed=2 --rigs, --fixed-fps 60 --quit-after 301: HEAD 34018b19 vs merge base 0bea8b93 IDENTICAL (301 video + 301 audio frames)",
+  "unit_full": "1496 passed, 0 failed on 34018b19 (6e497349 had 6 vehicle failures from a shader engine ERROR; fixed)"
+ },
+ "head_before_this_file": "34018b19",
+ "iteration": 4,
+ "not_measured": [
+  "traffic density cost (bench not run: machine busy with own gates)",
+  "--view=combo boss check (no vehicle of this lane in a boss arena)"
+ ]
+}

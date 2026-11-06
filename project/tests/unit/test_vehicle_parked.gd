@@ -23,11 +23,20 @@ func test_put_near_draws_only_registered_cars_in_range() -> void:
 	)
 	VehicleParked.park(Vector2i(1, 0), PackedVector4Array([Vector4(5, 5, 0, 51)]))
 	cards.begin(null)
-	VehicleParked.put_near(cards, Vector2.ZERO, 60.0, Color.GRAY)
+	VehicleParked.put_near(cards, Vector2.ZERO, 60.0)
 	cards.finish()
 	assert_eq(cards.count(), 1, "the far van and the bus are not drawn")
 	VehicleParked.unpark(Vector2i(0, 0))
 	cards.begin(null)
-	VehicleParked.put_near(cards, Vector2.ZERO, 60.0, Color.GRAY)
+	VehicleParked.put_near(cards, Vector2.ZERO, 60.0)
 	cards.finish()
 	assert_eq(cards.count(), 0)
+
+
+func test_drawn_needs_a_live_view_and_card_art() -> void:
+	var was: bool = VehicleParked.live
+	VehicleParked.live = false
+	assert_false(VehicleParked.drawn(), "no VehicleView: the city keeps its flat cars")
+	VehicleParked.live = true
+	assert_eq(VehicleParked.drawn(), VehicleParked.carded(), "a live view draws under card art")
+	VehicleParked.live = was

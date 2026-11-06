@@ -7,12 +7,15 @@ extends RefCounted
 ## flat prop: the bus, which has no card yet). Nothing registers in `top` (no card atlas): unused.
 
 ## city_textures id -> VehicleCards art row (the sim car art ids): 44-46 sedans, 47 taxi, 48 van,
-## 49 pickup, 50 the wreck (a sedan, WRECK_TINT), 52 ambulance, 53 police cruiser.
+## 49 pickup, 50 the wreck (a sedan worn as a burnt wreck), 52 ambulance, 53 police cruiser.
 const ROWS: Dictionary[int, int] = {44: 0, 45: 1, 46: 2, 47: 3, 48: 4, 49: 5, 50: 0, 52: 6, 53: 8}
 const WRECK_ID: int = 50
 
 ## chunk key -> its cars, each Vector4(x m, y m, rotation rad, texture id).
 static var _chunks: Dictionary[Vector2i, PackedVector4Array] = {}
+## True while a VehicleView exists that draws this registry (set in its setup, false on its exit;
+## n8 city's REQUEST): the arena city has none, so its kerb cars must stay flat props there.
+static var live: bool = false
 
 
 ## The card row for a city texture id, or -1 (keep the flat prop).
@@ -23,6 +26,12 @@ static func row(tex: int) -> int:
 ## True when parked cars draw as cards in the shared view (a tilt with a card atlas).
 static func carded() -> bool:
 	return VehicleCards.atlas() != null
+
+
+## True when a handed-in car is drawn: a live VehicleView under a view with card art. Ask it when a
+## chunk is ordered (not once at city setup: the VehicleView is made after the city view).
+static func drawn() -> bool:
+	return live and carded()
 
 
 static func park(chunk: Vector2i, cars: PackedVector4Array) -> void:
@@ -39,7 +48,7 @@ static func clear() -> void:
 
 
 ## Every registered car within `radius` m of `at`, put on `cards` (between begin and finish).
-static func put_near(cards: VehicleCards, at: Vector2, radius: float, wreck: Color) -> void:
+static func put_near(cards: VehicleCards, at: Vector2, radius: float) -> void:
 	var r2: float = radius * radius
 	for cars: PackedVector4Array in _chunks.values():
 		for c: Vector4 in cars:
@@ -47,5 +56,7 @@ static func put_near(cards: VehicleCards, at: Vector2, radius: float, wreck: Col
 			var art: int = row(int(c.w))
 			if art < 0 or p.distance_squared_to(at) > r2:
 				continue
-			var tint: Color = wreck if int(c.w) == WRECK_ID else Color.WHITE
-			cards.put(art, p, Vector2.from_angle(c.z), tint)
+			var worn: int = 0
+			if int(c.w) == WRECK_ID:
+				worn = VehicleCards.wear(VehicleBody.State.WRECK, int(c.x * 7.0 + c.y * 13.0))
+			cards.put(art, p, Vector2.from_angle(c.z), Color.WHITE, worn)
