@@ -44,3 +44,24 @@ strip and changes the rest; strips must split into RigHeadCard.FRAMES equal fram
 - REQUEST to assets: king_car, 70, the throne-car at 70 degrees (five rotations), as
   `angle-r1/out/king_car_55.png`; only a 55 exists.
 Meanwhile the 70 sets for Dent/Ohm/Kerf are built from the 55 drawings (the d8 p70 street-row way).
+
+- MILESTONE 20:45 item 2: the owner's d8 values (commit d08768ea). `KerfRig.CARD_M` 0.8 -> 0.96
+  (+20 %, lean kept); `KingArt.STRIPS["king"][2]` 1.5 -> 2.0; `KingCape.TRAIN_K` 1.0 -> 0.0.
+  DECISION bust 2.0 over 1.75: at 32 px/m 2.0 reads as the boss at a glance and the stubby legs
+  read stubby at every size, so the bigger bust costs nothing extra (Call for the owner, 1.75 one
+  value away). The p70 court strip was padded for 1.5, so the 70 King grows by the same 2.0/1.5;
+  `test_view_pitch_court` now states that (PAD_K). Evidence: `gtai-masters/n8/view/king_bust_abc_{32,64}ppm.png`,
+  `king_bust_cape_before_after_64ppm.png`. Kerf +20 % NOT filmed yet.
+- MILESTONE 20:55 item 3: the attack target freezes as the windup begins (commit e513d663).
+  `bosses.json` top-level `aim_lock_at_windup: true` sets every attack's `lock` to its windup
+  (BossSpec.from_table); false = the d8 lock. Applies to the King and Servo alike (every shipped
+  attack). Test `test_boss_lock_at_windup.gd`: a step out 10 ticks into the windup dodges with the
+  flag and is hit without it; every shipped attack locks at its windup. No replay golden moved:
+  there is no boss scenario/golden (scenarios 52 ran; the only fail was rig_stress p50 1.041 ms,
+  CONTENDED by my filming in parallel). Evidence: `king_ring_lock_before_after_combo_32ppm.mp4`
+  (phase 3: at 7.0-7.5 s Rivet walks out of the frozen ring, the King lands on it empty),
+  `king_ring_after_sequence_combo_32ppm.png`, `king_car_aim_lock_before_after_combo_32ppm.mp4`.
+- FRICTION: the scenario suite read bosses.json while I flipped the flag for the before clip; it
+  has no boss scenario so nothing was contaminated, but next time film the before from a worktree
+  or a launch flag, never by editing a table under a running suite.
+- FRICTION: Python on Windows writes CRLF by default; open(..., newline='') for every edit.
