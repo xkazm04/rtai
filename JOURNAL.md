@@ -1434,10 +1434,13 @@ live arena path at 32/48 px/m), sprite-and-atlas-production, depth-ordered-layer
   rack. it14 clips and keys deleted. **Every clip and still in frames.json is now on the it16
   body** (docked bays) or an A/B of it; every REPORT M/ path exists. Scratch avis deleted.
 
+- 05:35 GATES director reel on the it16 head (after the docked bays; headless, `reel16.sh`):
+  **19/19 chapters fully down, 0 SCRIPT ERROR**; the 780 s timeout (exit 124) fell after the last
+  chapter, as in it14 (`evidence/servo/director-reel-it16.log`). Combat holds.
+
 NEXT (iteration 17, in order):
 1. Merge n7-king if it moved (last merged 296cce50 as 71fa77a2; JOURNAL/REPORT add/add: ours).
-2. Director reel on the it16 head (`scratch/servo/reel*.sh`; last 19/19 on 939453f5, it14). The
-   it16 changes are render-only in features/bosses/servo/, but run it before the freeze anyway.
+2. (done 05:35) director reel 19/19 on the it16 head; re-run only after a merge or a change.
 3. Weakest by the target still now: the sheet's packages hang slung under the drones (ours sit on
    the hub) and the spine's rail bottom is under the torso. Low value; prefer play checks.
    Film scripts for a body change: `scratch/servo/{full32,phase32,film48,ghost48,spine}_16.sh`,
