@@ -941,3 +941,15 @@ STOP 01:04 iteration 9. Code commits: `193bc529` (machine pistol muzzle_k 1.3), 
 `ce923514` (the Gatling's spin-up whirl, 0.8 m). Gates: evidence on `42f74955` all green (lint,
 unit 1150/1150, scenarios 52/52, parity bit-exact, selftest), reels 19/19 + 19/19 fully down on
 `ce923514`. City combined clip retaken. Calls 2-3 added to REPORT.
+
+### MILESTONE 01:06: trial exe of the branch (de-risks NEXT 2; re-export at the freeze)
+- `bake_city.gd` (256 chunks, 4 s; git-ignored), then `"$G" --headless --path project
+  --export-release windows-showcase ../build/export/windows/RTAI.exe` on `074db37d`: exit 0, 20 s,
+  245 MB (+ the release sim DLL beside it; `evidence/ranged/it9-export.log`).
+- Booted: `build/export/windows/RTAI.exe --screen 0 --rendering-driver d3d12 --write-movie <abs>
+  --fixed-fps 60 --quit-after 345 -- --weapon=gatling --bot=gunplay --lone --cam=fight --ppm=32
+  --clean --reach=6`: exit 0, no unknown-flag line, 0 SCRIPT ERROR, lone kill at tick 333 (the
+  editor's tick), and the whirl shows at the barrel tip on frames 300-325 (sheet looked at). So the
+  arena args after `--` work in the shipped build, Movie Maker included; REPORT exe lines hold.
+  The only stderr line is the usual "105 resources still in use at exit".
+- NEXT 2 shrinks to: re-bake + re-export on the final head at the freeze, name it in REPORT.
