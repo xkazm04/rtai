@@ -2094,3 +2094,54 @@ NEXT (iteration 22; supersedes the 06:25 list and its 2b addendum):
   every 300 frames, every tile an attack, blood red, the nuke ring whole. The pistol chapter's hits
   are point blank (under 2 m, frames 362-456 looked at), so the trail barely shows in the city
   reel: an honest limit, written in the frames.json row. Master replaced in place; avi deleted.
+
+### LOOK 07:12 the machine pistol's trails against a group (city reel, no build)
+- City director reel to tick 1100 (`--arena=city ... --loadout=pistol --ppm=32 --cam=fight
+  --clean`, exit 0, 0 SCRIPT ERROR), machine_pistol chapter frames 780-876 at 2.5x: the 4 cops
+  are fought at point blank (under 2 m), so the 4-tick trails hardly show; nothing clutters.
+  R stays 2 (the city reel cannot judge it at range). Avi deleted.
+
+### MILESTONE 07:24 quest 1's picked-up rifle gets the shot trail, `2e8143a5`
+- BareGunTrail (`boot/collect_call/view/bare_gun_trail.gd`, owned by FxView): quest 1's rifle fires
+  on combat.json's path with `arena.gun` null, so no GunFx sees its rounds stop. The view keeps
+  the stand-in rounds in flight (pos, step, where it left the gun = pos - dir * (range - left)), and
+  a round gone since the last tick whose last step crossed a hostile (radius + 0.3) leaves a
+  WeaponFxTrail at the stand-in's `trail_ticks` (machine_pistol 4). One feel table, one trail
+  module. View only.
+- FRICTION: a Variant passed as an Array arg again (warnings-as-errors); `var last: Array = ...`.
+- Unit 1191/1191 (3 new: a hit leaves one trail starting at Rivet's gun; a round that stops in
+  nobody leaves none; --feel=off none). Lint 13/13. Reels pit 19/19 + city 19/19, 0 SCRIPT ERROR.
+- FILM `quest1_clip.gd --ppm=32 --cam=fight --ticks=14400-14444` (exit 0, 0 SCRIPT ERROR). LOOK
+  (2x crops frames 18-22 = ticks 14436-14444): the tracer reaches the contractor on 19, on 20 a
+  cream line runs from the tracer's path into him, on 21 a thin ink line, gone after. Quieter than
+  Gloria's 8 ticks; the 4-round bursts' tracers dominate. Still
+  `evidence/ranged/it24-quest1-rifle-shot-trail-32ppm.jpg`.
+- GATES on `2e8143a5` (07:23): full evidence `--no-bench` on the clean tree: lint 13/13, unit
+  1191/0, scenarios 52/52, parity bit-exact (629), selftest pass
+  (`evidence/ranged/it24-evidence-2e8143a5.log`). FRICTION: the run refuses an untracked file
+  (`working tree is dirty`); the new still waited in scratch during it.
+- EXE re-baked + re-exported on `2e8143a5` at 07:24 (bake 0, export 0, 0 ERROR). Booted
+  `RTAI.exe --screen 0 --rendering-driver d3d12 -- --weapon=hand_cannon --bot=gunplay --lone
+  --cam=fight --ppm=32 --clean --reach=5`: exit 0, 0 SCRIPT ERROR, kill 331, frames 330-341 looked
+  at: the trail 331-341 into the blowback.
+- The city combined clip (retaken on `1b1c8402`) stands for `2e8143a5`: the only change since is
+  quest 1's spec-less rifle path, which the director reel never fires.
+- DECISION docs/decisions.md (fx n7-ranged, the quest rifle's trail at its stand-in's value).
+- REPORT: a row for the trail in quest 1, the gates line, the exe section, call 9's quest line.
+
+NEXT (iteration 25 = the freeze and the REPORT; supersedes the it22 list):
+1. Freeze (by 08:30). Code head `2e8143a5`: the exe, the full evidence, the reels and the city clip
+   are all on it (above). Only docs since. If code lands after it: lint, unit, reels 19/19 x2, the
+   full evidence run on a clean tree (no untracked files either), re-bake + re-export + boot, and
+   retake the city clip (`gtai-n7p/scratch/ranged/city24/city.sh`, then copy `city_new.mp4` over
+   the master and update its frames.json row).
+2. REPORT at 08:40: drop the DRAFT line, refresh the top paragraph (tonight's last items: the
+   wound-hold for the light guns and the Gatling; the shot trail, call 9). Check every call names
+   its exe before/after (8 and 9 are the newest).
+3. FYI n7-melee: nothing to merge for them from it24 (GunFx and FxView only; hit_feel.json gained
+   an optional `weapons` `trail_ticks`).
+4. Weak cells left: homing_shard I/R/V 2 (call 1, owner); Gatling R/V 2 (crowds only); machine
+   pistol R 2 (no take at range in a group yet: `--bot=gunplay` with more cops at `--reach=8` would
+   judge it); assault-rifle I 2.
+5. If time remains before the freeze: a machine pistol take at range (item 4), data only if it
+   needs a change (`trail_ticks`).
