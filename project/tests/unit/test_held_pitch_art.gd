@@ -88,3 +88,18 @@ func test_stand_undoes_the_camera_squash_and_keeps_the_barrel_on_the_ground() ->
 		s.transform.y.length(), 0.5 * HeldPitchArt.EDGE_ON_K, 1e-5, "nose-down: edge-on"
 	)
 	s.free()
+
+
+func test_half_thickness_is_the_top_down_barrel_for_a_pitch_part() -> void:
+	var art: WeaponArt = WeaponArt.new()
+	var s: Sprite2D = _shipped().make(&"plasma_rifle", 55.0, art)
+	add_child_autofree(s)
+	var td: float = (
+		art.held_texture(&"plasma_rifle").get_height() * art.world_scale(&"plasma_rifle")
+	)
+	assert_almost_eq(HeldPitchArt.half_thickness(s), td * 0.5, 1e-3)
+	assert_lt(HeldPitchArt.half_thickness(s), s.texture.get_height() * s.scale.y * 0.5)
+	var flat: Sprite2D = art.make_held(&"plasma_rifle")
+	add_child_autofree(flat)
+	var want: float = flat.texture.get_height() * absf(flat.global_scale.y) * 0.5
+	assert_eq(HeldPitchArt.half_thickness(flat), want, "a top-down part: as before")

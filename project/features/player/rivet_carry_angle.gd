@@ -72,7 +72,7 @@ static func place_beside(rig: CutRig, gun: Sprite2D) -> void:
 	gun.global_position -= rig.torso.global_transform.basis_xform(rig.held_shift)
 	var head: Sprite2D = rig.head_spr
 	var head_half: float = head.texture.get_width() * absf(head.global_scale.x) * 0.5
-	var gun_half: float = gun.texture.get_height() * absf(gun.global_scale.y) * 0.5
+	var gun_half: float = HeldPitchArt.half_thickness(gun)  # d8-weapons: a 55 part's barrel
 	var at: Vector2 = gun.global_position
 	var rot: float = gun.global_rotation
 	var side: float = aim_side(rig, rot, head.global_position)

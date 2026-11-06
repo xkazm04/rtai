@@ -85,6 +85,8 @@ func make(id: StringName, pitch_deg: float, art: WeaponArt) -> Sprite2D:
 	s.offset = -r.grip
 	s.scale = Vector2.ONE * art.length_m(id) * WeaponArt.WORLD_PX_PER_M / r.length_px * r.size_k
 	s.set_meta(&"pitch_row", r)
+	var td_half: float = art.held_texture(id).get_height() * art.world_scale(id) * 0.5
+	s.set_meta(&"half_local", td_half / s.scale.x)
 	_rim(s)
 	return s
 
@@ -166,3 +168,13 @@ static func _rim(s: Sprite2D) -> void:
 		h.material = PartMaterials.get_mat(PartMaterials.PartKind.HALO, false, 0)
 		h.z_index = -1
 		s.add_child(h)
+
+
+## The weapon's half-thickness across its barrel (global px), for keeping it beside the head
+## (RivetCarryAngle.place_beside): a pitch part answers with the top-down part's thickness (its
+## own texture is the side body and grip too, which pushed the gun off the claw); others, as before.
+static func half_thickness(gun: Sprite2D) -> float:
+	if gun.has_meta(&"half_local"):
+		var half_local: float = gun.get_meta(&"half_local")
+		return half_local * absf(gun.global_scale.x)
+	return gun.texture.get_height() * absf(gun.global_scale.y) * 0.5
