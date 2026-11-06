@@ -1113,3 +1113,21 @@ without 5 seeds x bots).
   --headless --fixed-fps 60 --quit-after 7400 -- --rigs --boss=servo --bot=boss --bot-human
   --seed=2`: **down 7036, 188 on Rivet, 0 SCRIPT ERROR** = the editor
   (`evidence/servo/exe-smoke-it10.json`). REPORT exe line and DRAFT header updated.
+- 02:50 FILM the full fight once more on a93af6cf (the it10 body: steel spine, pads ahead, wing
+  ledges): down **7036, 188**, 0 SCRIPT ERROR, identical. `M/servo_fight_bot_human_32ppm_it10.mp4`
+  and its 12 keys replaced; the target still re-shot from it at tick 1800
+  (`M/frames/servo_target_vs_game_32ppm_it10.png`), **looked at**: three blocks, steel spine,
+  striped rack bases, pad | leg | leg | pad in front. Left vs the sheet: the spine's horseshoe frame
+  and hose loops; the stripes read browner (copper, by the palette verdict). frames.json 15
+  (the pads and band A/Bs are named in the still's note). Scratch renders deleted.
+
+NEXT (iteration 11, in order):
+1. Merge n7-king if it moved (last merged 73543d25 as 91f94504; JOURNAL/REPORT add/add: ours).
+2. Re-film the per-phase 32 px/m clips on the it10 body (`scratch/servo/phase32_9.sh` with
+   O=it11; p1/p2 2400, p3 2300) and the 48 px/m attack clips whose body shows (rotor dash, bay
+   hop): they show the it9 cream spine and pads beside the wings. Look at keys, replace, delete old.
+3. The spine's horseshoe frame (the sheet's U rail round the lower spine) and the hose loops over
+   the top: render only, `ServoSpine`; A/B at 48/32 beside the sheet.
+4. NEXT 2b of it9 (the clip cam at the yard's left edge) stays open in REPORT: framework file.
+5. At the freeze (08:30): re-export `windows-showcase`, smoke (expect down 7036, 188), final gates
+   (lint, unit, scenarios, evidence/run.mjs, director reel), REPORT final (drop DRAFT, Next steps).
