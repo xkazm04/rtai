@@ -1669,3 +1669,13 @@ NEXT (written 08:10, the freeze): nothing left to build tonight. If another sess
 `5ed859c4` keeps both rows. Morning: the owner's calls (a)-(q) in REPORT; after them, the order
 in REPORT "Next steps" / the 07:37 NEXT (ObjectiveView vs forms_lift_m; real recorded sounds).
 - STOP 08:10 iteration 21.
+
+## Iteration 22 (08:11-08:30): the freeze, one feel merge
+
+- READ 08:11 JOURNAL NEXT (08:10), git log; n7-ranged log: `f13aa9cc` feat(feel) (hit_feel.json
+  assault_rifle row + hit_feel.gd hyphen alias, view only) landed 07:55, after my 07:44 read.
+  n7-king / n7-servo / n7-ranged: no REQUEST for melee.
+- MERGE 08:13 n7-ranged `f13aa9cc` cherry-picked -x as `2dd19210`. One conflict in hit_feel.json's
+  `weapons` (both sides added rows at the top): kept both, re-sorted by id (assault_rifle first, as
+  on n7-ranged); the diff against HEAD is their 8 lines exactly. No melee or ghost row touched.
+- GATES 08:14 lint 13/13 on `2dd19210`; unit and reels + scenarios running; then bake + both exes.
