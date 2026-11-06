@@ -1185,6 +1185,12 @@ NEXT (iteration 14):
    reload_phase is -1 unless `trigger.reloading()`: check whether a magazine-1 tube reports
    reloading for a single tick on the shot and then waits (a pop for one frame, then the aim pose
    again at 267, would fit that). Log reload_k per frame over 262-270 first.
+   MEASURED 02:35 (a temporary Log line in RivetHeldView._process, reverted, tree clean): the
+   reload is continuous, not a one-tick flag: tick 264 reload_k -1 ammo 1; tick 265 reloading,
+   reload_k 0.03, ammo 0, then +0.03 a tick (0.31 at 274); facing 1.49 rad, steady. So the pop is
+   in how the first reload frames are posed (RigGrip._reload's chest spot for the aim arm, the
+   release recoil, or HeldTube / _place_long on reload start), not in the sim. Note the movie frame
+   index may be the process frame + 1: log Engine.get_process_frames() beside the movie frame.
 4. Exe at the freeze: re-bake + re-export `windows-showcase` -> `build/export/windows/RTAI.exe`;
    REPORT exe lines for calls 4 (`--flash-at=side`) and 5 (`--throw-windup=off`).
 5. Full evidence run on the head before the freeze (last: `3b2e7c5c`, all green); commit logs
