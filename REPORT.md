@@ -71,7 +71,7 @@ journal; FREEZE: put the final numbers and the evidence run here.
 ## The exe
 `build/export/windows/RTAI.exe` (windows-showcase preset, main scene = the arena). Command:
 `APPDATA=C:/Users/kazda/kiro/gtai-d8/appdata/weapons "$GODOT_BIN" --headless --path project --export-release windows-showcase ../build/export/windows/RTAI.exe`.
-FREEZE: re-export on the final head and name it here.
+Exported on cddcc340 at 17:34 (exit 0, smoke 0 SCRIPT ERROR). FREEZE: re-export if the head moves and name the sha here.
 
 ## Next steps
 - Baton: a pale-wrap regeneration with a brass band, filmed in its chapter; or take the owner's pick.
