@@ -62,6 +62,11 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--kerf-glide",
 	# view lab: the camera projection (data/tables/view.json; default top = the shipped view)
 	"--view",
+	# d8-weapons: --held-pitch=off draws the top-down held weapon under a tilt (the before);
+	# =squash keeps the camera squash on the 55 part
+	"--held-pitch",
+	# d8-weapons: --shot-lift=off draws rounds and hits on the ground under a tilt (the before)
+	"--shot-lift",
 ]
 
 var _values: Dictionary[String, String] = {}

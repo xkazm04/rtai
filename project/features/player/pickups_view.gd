@@ -14,6 +14,13 @@ const DASHES: int = 14
 ## The dash's share of its step round the ring, and the wash's alpha under the gun.
 const DASH_K: float = 0.6
 const WASH_A: float = 0.2
+## d8-weapons: under a tilt the gun hovers over its disc (HOVER_M up, bobbing BOB_M), stood up for
+## the raised camera (its side view un-squashed), with an ink shadow on the disc: loot at a
+## glance under the angle. Straight down nothing moves (the flat path). `--shot-lift=off` = before.
+const HOVER_M: float = 0.35
+const BOB_M: float = 0.05
+const BOB_RAD_S: float = 2.4
+const SHADOW_A: float = 0.3
 
 static var disc: bool = not OS.get_cmdline_user_args().has("--pickup-disc=off")
 
@@ -35,10 +42,26 @@ func _process(_delta: float) -> void:
 		ids.append(it.id)
 	if ids != _shown:
 		_rebuild(ids)
+	var stand: bool = ShotLift.up_m() != Vector2.ZERO
 	for i: int in items.size():
 		_sprites[i].position = items[i].pos * SimConst.PX_PER_M
 		_sprites[i].rotation = sin(_t * TURN_RAD_S + i) * 0.5
+		if stand:
+			_stand(_sprites[i], i)
 	queue_redraw()
+
+
+## Under a tilt: lift the gun HOVER_M (+ a bob) and stand its side view up (screen y undone).
+func _stand(s: Sprite2D, i: int) -> void:
+	var v: ViewMode = ViewMode.shared()
+	s.position += v.lift_px(hover_m(_t, i))
+	s.rotation *= 0.5  # the sway, not a spin: a standing card turned far reads as a shear
+	s.scale.y = s.scale.x / v.ground_k()
+
+
+## The gun's height over its disc at view time `t` (s) for item `i` (render only, no RNG).
+static func hover_m(t: float, i: int) -> float:
+	return HOVER_M + BOB_M * sin(t * BOB_RAD_S + float(i) * 1.7)
 
 
 func _draw() -> void:
@@ -52,6 +75,8 @@ func _draw() -> void:
 			draw_arc(at, r, 0.0, TAU, 32, _ink, RING_PX, true)
 		else:
 			_dashed(at, r)
+		if ShotLift.up_m() != Vector2.ZERO:  # d8-weapons: the hovering gun's shadow on the disc
+			draw_circle(at, r * 0.45, Color(_ink, SHADOW_A))
 
 
 ## r2_w8's loot ring: a faint paper wash and a ring of paper dashes.

@@ -1,0 +1,101 @@
+{
+  "$defs": {
+    "pitch": {
+      "additionalProperties": false,
+      "properties": {
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "weapons": {
+          "additionalProperties": {
+            "$ref": "#/$defs/weapon"
+          },
+          "type": "object"
+        }
+      },
+      "required": [
+        "doc",
+        "weapons"
+      ],
+      "type": "object"
+    },
+    "px": {
+      "items": {
+        "minimum": 0,
+        "type": "number"
+      },
+      "minItems": 2,
+      "type": "array"
+    },
+    "weapon": {
+      "additionalProperties": false,
+      "properties": {
+        "art": {
+          "pattern": "^res://features/combat/weapons/art/held_[0-9]+/",
+          "type": "string"
+        },
+        "empty": {
+          "pattern": "^res://features/combat/weapons/art/held_[0-9]+/",
+          "type": "string"
+        },
+        "empty_small": {
+          "pattern": "^res://features/combat/weapons/art/held_[0-9]+/",
+          "type": "string"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "grip_px": {
+          "$ref": "#/$defs/px"
+        },
+        "length_px": {
+          "minimum": 1,
+          "type": "number"
+        },
+        "muzzle_px": {
+          "$ref": "#/$defs/px"
+        },
+        "size_k": {
+          "maximum": 2,
+          "minimum": 0.3,
+          "type": "number"
+        },
+        "small": {
+          "pattern": "^res://features/combat/weapons/art/held_[0-9]+/",
+          "type": "string"
+        }
+      },
+      "required": [
+        "art",
+        "grip_px",
+        "length_px",
+        "muzzle_px"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "gtai.weapon-held-pitch/1",
+  "additionalProperties": false,
+  "properties": {
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "pitches": {
+      "additionalProperties": {
+        "$ref": "#/$defs/pitch"
+      },
+      "type": "object"
+    },
+    "schema": {
+      "const": "gtai.weapon-held-pitch/1"
+    }
+  },
+  "required": [
+    "doc",
+    "pitches",
+    "schema"
+  ],
+  "type": "object"
+}

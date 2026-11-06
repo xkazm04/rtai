@@ -1,0 +1,178 @@
+class_name HeldPitchArt
+extends RefCounted
+## d8-weapons: the held weapon drawn for a raised camera (data/tables/weapon_held_pitch.json).
+## Per camera pitch (the view row's pitch_deg, rounded; "55" today, "70" can sit beside it) and
+## weapon id: a three-quarter part that shows the gun's top AND its side body (trigger, grip),
+## origin on the grip, +x along the barrel, like WeaponArt's top-down part. A weapon with no row
+## for the pitch (and every weapon under `top`, 90) keeps WeaponArt's part: `top` is untouched.
+## The side view must never hang upside down, so while the barrel points left on screen the part
+## is mirrored about its barrel line (`face`), the classic held-sprite flip. `--held-pitch=off`
+## draws the top-down part under any view (the before). Render only: writes nothing to the sim.
+
+const TABLE: String = "res://data/tables/weapon_held_pitch.json"
+const SCHEMA: String = "gtai.weapon-held-pitch/1"
+## The side body's height while the barrel points straight up or down the screen (toward or away
+## from the camera the side turns edge-on), against 1 while it points across: a nose-down carry
+## prints as a slim tube, not the side view turned on end. 1 = the full side view at every angle.
+const EDGE_ON_K: float = 0.5
+
+static var _shipped: HeldPitchArt = null
+
+## pitch key ("55") -> weapon id -> HeldPitchRow
+var pitches: Dictionary[String, Dictionary] = {}
+var errors: Array[String] = []
+
+
+static func shipped() -> HeldPitchArt:
+	if _shipped == null:
+		_shipped = from_table(DataTable.open(TABLE, SCHEMA))
+	return _shipped
+
+
+static func from_table(t: DataTable) -> HeldPitchArt:
+	var h: HeldPitchArt = HeldPitchArt.new()
+	var rows: Dictionary = t.object(t.raw, "pitches")
+	for key: String in rows:
+		var by_id: Dictionary = {}
+		var weapons: Dictionary = t.object(t.object(rows, key), "weapons")
+		for id: String in weapons:
+			by_id[StringName(id)] = HeldPitchRow.from_row(t, t.object(weapons, id))
+		h.pitches[key] = by_id
+	h.errors = t.errors()
+	return h
+
+
+## The key of a camera pitch: whole degrees ("55"); "" for a straight-down view.
+static func key_of(pitch_deg: float) -> String:
+	return "" if pitch_deg >= 89.5 else str(roundi(pitch_deg))
+
+
+## The row for `id` at `pitch_deg` (null: none, the top-down part draws).
+func row(id: StringName, pitch_deg: float) -> HeldPitchRow:
+	var by_id: Dictionary = pitches.get(key_of(pitch_deg), {})
+	var r: HeldPitchRow = by_id.get(id, null) if LaunchArgs.value("--held-pitch") != "off" else null
+	return r if r != null and r.enabled else null
+
+
+## A held sprite for `id` at `pitch_deg` (origin on the grip, world px scale from WeaponArt's
+## length_m, an ink-paper rim like WeaponArt's), or null when the pitch has no art for it.
+func make(id: StringName, pitch_deg: float, art: WeaponArt) -> Sprite2D:
+	var r: HeldPitchRow = row(id, pitch_deg)
+	if r == null or not ResourceLoader.exists(r.art):
+		return null
+	var s: Sprite2D = _sprite(r, art)
+	s.name = "Held55_%s" % id
+	s.texture = load(r.art) as Texture2D
+	s.centered = false
+	s.offset = -r.grip
+	s.scale = Vector2.ONE * art.length_m(id) * WeaponArt.WORLD_PX_PER_M / r.length_px * r.size_k
+	s.set_meta(&"pitch_row", r)
+	var td_half: float = art.held_texture(id).get_height() * art.world_scale(id) * 0.5
+	s.set_meta(&"half_local", td_half / s.scale.x)
+	_rim(s)
+	return s
+
+
+## A HeldLod (the `small` part below WeaponArt's held_small_below_ppm, as for `top`), else a
+## plain Sprite2D.
+static func _sprite(r: HeldPitchRow, art: WeaponArt) -> Sprite2D:
+	if r.small == "" or art.held_small_below_ppm <= 0.0 or not ResourceLoader.exists(r.small):
+		return Sprite2D.new()
+	var lod: HeldLod = HeldLod.new()
+	lod.full = load(r.art) as Texture2D
+	lod.small = load(r.small) as Texture2D
+	lod.small_of[lod.full] = lod.small
+	if r.empty != "" and r.empty_small != "":
+		lod.small_of[load(r.empty) as Texture2D] = load(r.empty_small) as Texture2D
+	lod.below_view_px = art.held_small_below_ppm / WeaponArt.WORLD_PX_PER_M * CutRig.SC
+	return lod
+
+
+## The held sprite for `id` under the launch view: the pitch part, else WeaponArt's top-down one.
+func held(id: StringName, art: WeaponArt) -> Sprite2D:
+	var s: Sprite2D = make(id, ViewMode.shared().pitch_deg, art)
+	return s if s != null else art.make_held(id)
+
+
+## Faces the part (`face`) and publishes its bore tip as this frame's muzzle (HeldMuzzle).
+static func publish_muzzle(s: Sprite2D, top_down_muzzle: Vector2) -> void:
+	face(s)
+	HeldMuzzle.publish(s, muzzle_local(s, top_down_muzzle))
+
+
+## Mirrors a pitch part about its barrel line while the barrel points left on screen, so the
+## grip always hangs down. A top-down part (no pitch row) is left alone.
+static func face(s: Sprite2D) -> void:
+	var r: HeldPitchRow = row_of(s)
+	if r == null:
+		return
+	var g: float = ViewMode.shared().ground_k()
+	var left: bool = s.global_transform.x.x < 0.0
+	s.flip_v = left
+	var h: float = s.texture.get_size().y
+	s.offset = Vector2(-r.grip.x, -(h - r.grip.y) if left else -r.grip.y)
+	for c: Node in s.get_children():
+		if c is Sprite2D:
+			(c as Sprite2D).flip_v = left
+			(c as Sprite2D).offset = s.offset
+	if g < 1.0 and LaunchArgs.value("--held-pitch") != "squash":
+		stand(s, g)
+
+
+## The part is drawn for the raised camera already, so it undoes the camera's ground squash
+## (sin pitch on screen y, like RigHeadCard): its height axis is set perpendicular to the barrel
+## ON SCREEN at the art's own scale; the barrel axis stays on the ground (the tip lands true).
+## `--held-pitch=squash` keeps the camera's squash (the before). The x axis sets the scale, so a
+## global_rotation set over this each frame never accumulates.
+static func stand(s: Sprite2D, g: float) -> void:
+	var t: Transform2D = s.global_transform
+	var on_screen: Vector2 = Vector2(t.x.x, t.x.y * g).normalized()
+	var h: float = t.x.length() * signf(t.determinant()) * lerpf(EDGE_ON_K, 1.0, absf(on_screen.x))
+	var up: Vector2 = on_screen.orthogonal() * -h
+	t.y = Vector2(up.x, up.y / g)
+	s.global_transform = t
+
+
+## The bore tip in the sprite's local px (offset and flip included).
+static func muzzle_local(s: Sprite2D, top_down_muzzle: Vector2) -> Vector2:
+	var r: HeldPitchRow = row_of(s)
+	if r == null:
+		return top_down_muzzle + s.offset
+	var y: float = s.texture.get_size().y - r.muzzle.y if s.flip_v else r.muzzle.y
+	return Vector2(r.muzzle.x, y) + s.offset
+
+
+## The pitch row a held sprite was made from (null: a top-down part).
+static func row_of(s: Sprite2D) -> HeldPitchRow:
+	if s == null or not s.has_meta(&"pitch_row"):
+		return null
+	var m: Variant = s.get_meta(&"pitch_row")
+	return m if m is HeldPitchRow else null
+
+
+## WeaponArt's paper rim: cream silhouettes RIM_WORLD_PX out in RIM_DIRS directions, under it.
+static func _rim(s: Sprite2D) -> void:
+	if not WeaponArt.rim:
+		return
+	for i: int in WeaponArt.RIM_DIRS:
+		var h: Sprite2D = Sprite2D.new()
+		h.name = "Rim%d" % i
+		h.texture = s.texture
+		h.centered = false
+		h.offset = s.offset
+		h.position = (
+			Vector2.from_angle(TAU * i / WeaponArt.RIM_DIRS) * WeaponArt.RIM_WORLD_PX / s.scale.x
+		)
+		h.material = PartMaterials.get_mat(PartMaterials.PartKind.HALO, false, 0)
+		h.z_index = -1
+		s.add_child(h)
+
+
+## The weapon's half-thickness across its barrel (global px), for keeping it beside the head
+## (RivetCarryAngle.place_beside): a pitch part answers with the top-down part's thickness (its
+## own texture is the side body and grip too, which pushed the gun off the claw); others, as before.
+static func half_thickness(gun: Sprite2D) -> float:
+	if gun.has_meta(&"half_local"):
+		var half_local: float = gun.get_meta(&"half_local")
+		return half_local * absf(gun.global_scale.x)
+	return gun.texture.get_height() * absf(gun.global_scale.y) * 0.5
