@@ -22,6 +22,8 @@ const LAUNCH_SPREAD: float = 0.45
 const R2_A1: float = 0.7548777
 const R2_A2: float = 0.5698403
 const GOLD_HI: Color = Color("#F6D678")
+## View lab: the hood cannon's barrel height over the roof under a tilt (m).
+const BARREL_M: float = 0.45
 ## The cape on the throne-car spreads near the car's width (the target's fur-trimmed fan).
 const CAPE_ON_CAR_K: float = 1.3
 ## View lab: under a tilt or top_lift the on-foot cape drapes, each edge point at its height (m):
@@ -31,6 +33,8 @@ const CAPE_DRAPE_M: PackedFloat32Array = [1.6, 0.55, 0.12, 0.55, 1.6]
 var _rigs: KingRigs = null
 ## The hood cannon's swivel off the car's heading (the stalled car aims only its cannon).
 var _cannon_rot: float = 0.0
+## View lab: the car-local screen lift per metre of height (ZERO straight down: the flat cannon).
+var _car_up: Vector2 = Vector2.ZERO
 
 
 func _process(_delta: float) -> void:
@@ -58,6 +62,7 @@ func _draw() -> void:
 		var l: float = CAR_LEN_M * Ink.PX_PER_M
 		KingCarStack.draw(self, car_at, heading.angle(), l, CAR_W_M * Ink.PX_PER_M)
 		car_at += ViewMode.shared().lift_at(to_global(car_at), KingCarStack.ROOF_M)
+		_car_up = ViewMode.shared().lift_at(to_global(car_at), 1.0).rotated(-heading.angle())
 	draw_set_transform(car_at, heading.angle(), Vector2.ONE)
 	var stepping: bool = KingBeats.step_k(fight) > 0.0
 	if fight.phase <= 1:  # the procession, then the court on the stalled car
@@ -161,6 +166,7 @@ func _wreck() -> void:
 		KingCarStack.draw(self, Ink.px(at), dir.angle(), l, CAR_W_M * Ink.PX_PER_M)
 		var roof: Vector2 = ViewMode.shared().lift_at(to_global(Ink.px(at)), KingCarStack.ROOF_M)
 		draw_set_transform(Ink.px(at) + roof, dir.angle(), Vector2.ONE)
+		_car_up = ViewMode.shared().lift_at(to_global(Ink.px(at)), 1.0).rotated(-dir.angle())
 		_car(false)
 		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 	var hood: Vector2 = Ink.px(at + dir * CAR_LEN_M * 0.36)
@@ -174,8 +180,29 @@ func _cannon(p: Vector2, l: float, rot: float) -> void:
 	var n: Vector2 = a.orthogonal() * 10.0
 	var tail: Vector2 = p - a * l * 0.08
 	var tip: Vector2 = p + a * l * 0.22
+	if _car_up != Vector2.ZERO:  # view lab: a barrel on a mount, BARREL_M above the roof
+		_cannon_raised(p, tail, tip, n)
+		return
 	draw_colored_polygon(PackedVector2Array([tail - n, tip - n, tip + n, tail + n]), GOLD)
 	draw_circle(tip, 13.0, GOLD_DARK)
+
+
+## Under a tilt: the barrel's shadow on the roof, the mount post, then the barrel lifted with its
+## ink edge and a highlight along its top, and the dark muzzle bore at the tip.
+func _cannon_raised(p: Vector2, tail: Vector2, tip: Vector2, n: Vector2) -> void:
+	var up: Vector2 = _car_up * BARREL_M
+	var quad: PackedVector2Array = PackedVector2Array([tail - n, tip - n, tip + n, tail + n])
+	draw_colored_polygon(quad, Ink.INK)  # its shadow on the roof
+	draw_circle(p, 12.0, Ink.INK)
+	draw_circle(p + up * 0.5, 10.0, GOLD_DARK)  # the mount post
+	var lifted: PackedVector2Array = PackedVector2Array(
+		[tail - n + up, tip - n + up, tip + n + up, tail + n + up]
+	)
+	draw_colored_polygon(lifted, GOLD)
+	draw_polyline(lifted + PackedVector2Array([lifted[0]]), Ink.INK, 2.0)
+	draw_line(tail + up - n * 0.4, tip + up - n * 0.4, GOLD_HI, 3.0)
+	draw_circle(tip + up, 13.0, Ink.INK)
+	draw_circle(tip + up, 8.0, GOLD_DARK)
 
 
 ## King on foot: the squat press body, plates out to the sides, cape behind.
