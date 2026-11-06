@@ -58,7 +58,10 @@ then look at `king_target_vs_game_32ppm_it18.png`, then play `build/export/windo
   `test_noir_shadows` flake (`evidence/king/unit-it22-full.log`; alone 2/2,
   `evidence/king/unit-it22-noir-rerun.log`; the full run on dedf4fa0 was 1172/0), scenarios 52/0
   (`evidence/king/scenarios-it22.log`), director reel 19/19 down, 0 SCRIPT ERROR
-  (`evidence/king/director-reel-it22.log`).
+  (`evidence/king/director-reel-it22.log`). `node tools/evidence/run.mjs --no-bench` on 3c5ab27d
+  (08:09): all PASS: lint, unit 1172/0, scenarios 52, parity bit for bit over 1200 steps with the
+  planted mutation caught, selftest (look goldens 11/11) (`evidence/king/evidence-run-it22.log`).
+  The bench was not run (it needs the machine-wide bench lock and an idle machine).
 - **The boss camera** (it10): n7-servo's `BossCam` bar band and `keep_in` are ported to this branch
   as identical files, so King stays whole below the boss bar at the boulevard's top edge.
 
@@ -220,7 +223,8 @@ The showcase preset boots the arena, so the boss flags reach the fight. Last exp
 --quit-after 5400 -- --rigs --boss=king --bot=boss --seed=2 --bot-human --telemetry=<json>`): King
 down at tick 4933, Rivet took 88, 0 SCRIPT ERROR (the same as the editor run and it18); with
 `--repair-delay=8` the same 4933 / 88, the delay read as 8 s and Rivet's lowest hp 60 (67 without).
-Nothing under `project/` changed after 1aaeb122.
+With `--repair-delay=20` on seed 3 the exe gives exactly the editor run (one death, King down at
+5385, Rivet took 108). Nothing under `project/` changed after 1aaeb122.
 
 - `build/export/windows/RTAI.exe -- --rigs --boss=king` (play the fight)
 - `build/export/windows/RTAI.exe -- --rigs --boss=king --phase=3`

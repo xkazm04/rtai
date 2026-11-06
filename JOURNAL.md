@@ -1907,3 +1907,21 @@ boss field (schema 0-30 s; absent = combat.json's 3 s), plus `--repair-delay=<s>
 fields `boss_fight.rivet_hp_min` / `repair_delay_s` in BossHook. Servo needs nothing unless his
 difficulty needs it; a merge of n7-king brings it in (boss_spec.gd, boss_hook.gd, the schema,
 tests/unit/test_boss_repair.gd). `evidence/king/boss_numbers.mjs --delay=<s>` measures it.
+
+### 08:10 Exe at 20 s matches the editor; evidence gate green
+- `RTAI.exe ... --seed=3 --bot-human --repair-delay=20`: 1 death, King down at 5385, took 108,
+  lowest hp 0.8, 0 SCRIPT ERROR: identical to `numbers-it22-delay20/human-s3.json`.
+- `node tools/evidence/run.mjs --no-bench` on 3c5ab27d: lint, unit 1172/0, scenarios 52, parity
+  (bit for bit, planted mutation caught at step 629), selftest (look goldens 11/11): all PASS
+  (`evidence/king/evidence-run-it22.log`). FRICTION: the first try wrote its log under evidence/,
+  which made the tree dirty and the runner refused (exit 2); logs go to build/ first.
+- `git diff 1aaeb122 HEAD -- project` is empty: the exe is current.
+
+NEXT (iteration 23 / the freeze, in order):
+1. Nothing is pending. The exe (it22 07:43, 1aaeb122), the gates (evidence run all PASS, reel 19/19)
+   and REPORT (calls A-P; call C now has the repair-delay table) stand. No re-export is needed unless
+   `project/` changes.
+2. If time is left: confirm call C's fair row with more seeds (`node evidence/king/boss_numbers.mjs
+   --seeds=11,...,20 --bots=human --delay=20 --out=evidence/king/numbers-it23-delay20`), and the
+   standing and dodging bots at 20 s (the dodger must still take 0); update REPORT's table.
+3. At the freeze (08:30): REPORT read-through, commit.
