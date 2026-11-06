@@ -1630,3 +1630,24 @@ NEXT (written 07:37, for iteration 19 = the freeze; supersedes the 06:45 list):
   feel layer: not merged. NOTE for the Director's merge: it appends a row at the end of
   audio_cues.json `cues`, as my `05b0e51c` (ghost_lash) does, so the two will conflict textually
   there; keep both rows (independent ids, both lanes' unit tests check their own row).
+
+## Iteration 21 (07:44-08:30): the freeze
+
+- READ 07:44 JOURNAL NEXT (07:37), git log; n7-ranged's log: `5ed859c4` audio + `cc66c666` docs since
+  my last read, no hit_feel / feel_cam / camera commit: nothing to merge. No REQUEST for melee.
+- MILESTONE 07:52 the whiff thud filmed (NEXT 4), `48cb43d2` (dev only): `--whiff` (LaunchArgs) makes
+  GhostReel's Tonnage back off at the stalk speed and tap the slam (every 8th tick while
+  stomp_ready) until one slam has landed, then run the usual beat. First try held the button from
+  the first ready tick: no slam (no fresh press); second walked on during the wind-up and the
+  slam took the cluster (a hit). Third: the slam lands on empty road at tick 126, the ring clear
+  of the cops, knockdowns 0 (contact sheet looked at). Without `--whiff` the inputs are the same
+  (the slam/walk returns merged for gdlint max-returns: same move and buttons).
+- MEASURED arena 32 px/m, `--tell-cues=off` vs on, 300 frames each, 0 SCRIPT ERROR: below 250 Hz
+  the after rises +15 dB at movie frame 128 (+9..+12 to 134) over a before at -41..-47 dB (silent);
+  the high band carries the press whine from 112 (ring 104 + movie lead). Not listened to.
+- CLIP 07:50 `M/tonnage_whiff_thud_ab_32ppm.mp4` (5.3 s, sound + waveform strip, before then after).
+  Not in frames.json (15 held; a small sound gain). REPORT row + call (o) clip and see-it line.
+- Registry rules applied: realtime-combat-semantics (the miss answered on its own landing tick, at
+  its place), motion-quality-gating (live arena path, before/after, measured, the take looked at).
+- GATES on `48cb43d2`: lint 13/13, unit 1242/0 (07:53); reels + scenarios running.
+- GATES 08:01 on `48cb43d2`: director reels arena 19/19 and city 19/19 (38 lines each), 0 SCRIPT ERROR; scenarios 52 ran, 0 failed (`evidence/n7-melee/{director-arena-loadout,director-city-loadout,scenarios}-48cb43d2.log`).

@@ -1,7 +1,6 @@
 # n7-melee REPORT (night 2026-11-05/06): Rivet's melee and the four ghosts' attacks
 
-DRAFT written 23:40 (iteration 6), updated 07:40 (iteration 18; code head `fca3ba52`, evidence and both exes on it).
-The final version lands at 08:40, after the freeze. Clips are under `C:\Users\kazda\kiro\gtai-masters\n7\melee\` (`M/` below); the shortlist is in
+Final, written at the freeze (iteration 21, 08:xx; code head `48cb43d2`, evidence and both exes on it). Clips are under `C:\Users\kazda\kiro\gtai-masters\n7\melee\` (`M/` below); the shortlist is in
 `M/frames.json`. Every change below is view only: no sim tick, replay or parity hash moved. Quest 1's
 final hash moved once, deliberately, when quest 1 started carrying the katana (`fbc5a982`).
 
@@ -26,7 +25,7 @@ final hash moved once, deliberately, when quest 1 started carrying the katana (`
 | Ohm mass arc | `454490ce`, `7ce7b33d` | the branches draw at 0.55 of the bolt; a stunned crowd keeps full marks on the 2 newest bodies only, so the cops' blue reads through | `M/ohm_mass_arc_ab_32ppm_04x.mp4`, `M/ohm_stun_crowd_ab_32ppm_04x.mp4` |
 | Ohm's bolt lands on the body it strikes | `a27fb59c` | the stroke stops 0.6 m out from each struck body and a crackling ink-and-white ring circles it (it ran into the body's chest under a solid white disc), so every link of the chain lands on a body you can see; a small gain, clearest on a robot | `M/ohm_bolt_rim_ab_32ppm_48slow.mp4`, still `M/ohm_bolt_rim_ab_32_48ppm.png` (before `ghost_attacks.json` ohm `rim_m` 0, or `--feel=off`) |
 | Melee and ghost hit sounds | `f593aac4` | each attack family plays its own sound on the hit tick, built from the shipped bank (claw knock, blade cut, chainsaw bite, baton zap, ghost slam, Ohm bolt) | `M/hit_cues_ab_32ppm.mp4` (before `--hit-cues=off`) |
-| Ghost wind-ups and whiffs make a sound | `690ec813`, `a6c2797b` | Tonnage's press slam whines from the tick its dashed ring appears (measured: the ring's first frame 126, the sound's 125, twice in the reel); a slam that hits no body lands with a heavy concrete thud (only a body hit played a sound before); Dent's seize clunks at the car on the tether's first frame (84; +3-5 dB over the car's own sounds, so a small gain); Ohm's bolt that burns a car, or reaches nothing, crackles where it ends (it was drawn in silence; onsets on the drawn bolts' frames). Built from the shipped bank, not listened to | `M/ghost_tell_cues_ab_32ppm.mp4` (before `--tell-cues=off`) |
+| Ghost wind-ups and whiffs make a sound | `690ec813`, `a6c2797b` | Tonnage's press slam whines from the tick its dashed ring appears (measured: the ring's first frame 126, the sound's 125, twice in the reel); a slam that hits no body lands with a heavy concrete thud (only a body hit played a sound before); Dent's seize clunks at the car on the tether's first frame (84; +3-5 dB over the car's own sounds, so a small gain); Ohm's bolt that burns a car, or reaches nothing, crackles where it ends (it was drawn in silence; onsets on the drawn bolts' frames). Built from the shipped bank, not listened to. The whiff filmed at last (iteration 21, dev `--whiff` `48cb43d2`: the reel's Tonnage backs off and slams once onto empty road): the thud's onset at movie frame 128 on the slam flash (tick 126), +15 dB below 250 Hz over a silent before (-41..-47 dB), 0 knockdowns | `M/ghost_tell_cues_ab_32ppm.mp4`, the whiff `M/tonnage_whiff_thud_ab_32ppm.mp4` (with sound; before `--tell-cues=off`) |
 | Dent's miss lash makes a sound | `05b0e51c` | a seize that finds no car on the aim line lashes the tether out and frays it; it was silent, now a short bright crack at the aim point (the metal hit pitched to 1.8; a whine stays the wind-up's sound). Measured in quest 1's real view (Dent's lock lifted by the dev recorder: quest 1 locks him): onsets at movie frames 76, 96, 117, 137, i.e. on each miss of the 20-tick press cadence; the misses under Rivet's voice line sink with the sfx duck. Not listened to | `M/dent_miss_lash_ab_32ppm.mp4` (sound + waveform strip; before `--tell-cues=off`) |
 | Claw jab reads at 32 | `f45ad8e6` | three cream rakes edged in ink across the struck cop on the hit frame, fading over 10 ticks | `M/claw_rake_ab_32ppm.mp4`, `M/claw_rake_48ppm_04x.mp4` (before `melee_marks.json` claw `flash_ticks` 0) |
 | Claw jab: out on the held hit frame, a deeper cock | `791ea71a` | the view strike was fed 2 ticks late, so the hit-stop held the claw cocked on every claw hit; now it holds the claw in the cop, and the open claw draws back for 2 frames before the jab (blades unchanged) | `M/claw_strike_sync_ab_32ppm_48slow.mp4`, `M/claw_strike_sync_ab_64ppm_04x.mp4`, `M/claw_strike_sync_ab_still.png` (before `--strike-sync=off --pullback=off`) |
@@ -190,10 +189,12 @@ head spark.
   per refill would be noise). Ohm's bolt onto a car (or nothing) reuses HitCues' `ghost_bolt` row: once the crowd is down
   in the reel he burns a car every 0.4-0.5 s, so the crackle runs on there, one per drawn bolt, as on bodies.
 - Clip: `M/ghost_tell_cues_ab_32ppm.mp4` (with sound and a waveform strip: Tonnage before, after; Dent before, after; Ohm
-  on the car before, after); Dent's miss lash: `M/dent_miss_lash_ab_32ppm.mp4`.
+  on the car before, after); Dent's miss lash: `M/dent_miss_lash_ab_32ppm.mp4`; Tonnage's whiff thud:
+  `M/tonnage_whiff_thud_ab_32ppm.mp4` (arena 32 px/m, before then after).
 - Before: `--tell-cues=off`.
 - See it: `RTAI.exe -- --bot=ghosts --ghost=tonnage --rigs --ppm=32` (the ring at about 2.1 s), `--ghost=dent`
-  (the seize at about 1.4 s), `--ghost=ohm` (the car bolts from about 5.8 s).
+  (the seize at about 1.4 s), `--ghost=ohm` (the car bolts from about 5.8 s); the whiff thud:
+  `RTAI.exe -- --bot=ghosts --ghost=tonnage --whiff --rigs --ppm=32` (the empty-road slam at about 2.1 s).
 
 (p) Where the chainsaw's halves fall (and the line every melee kill carries).
 - Options: forward V (built: `split_follow` 0.8, the halves ~51 deg off the push, 1-1.5 m in front of Rivet); sideways
