@@ -1334,3 +1334,28 @@ NEXT (written 04:48, for iteration 15):
   restraint rule is about cues on what is not seen; these are the biggest strokes on screen).
   Clip re-cut with the Ohm pair: `M/ghost_tell_cues_ab_32ppm.mp4` 8.1 s; frames.json row, REPORT
   row + call (o), audit note updated.
+
+- GATES 05:21 on `a6c2797b` (tree clean for project/ through the run): unit 1229/1229
+  (`evidence/n7-melee/unit-a6c2797b.log`); director reels arena 19/19 and city 19/19 (38 lines each),
+  0 SCRIPT ERROR; scenarios 52 ran, 0 failed, 0 SCRIPT ERROR (`evidence/n7-melee/{director-arena-
+  loadout,director-city-loadout,scenarios}-a6c2797b.log`). This supersedes the mixed 05:11 scenario run.
+- MILESTONE 05:16 combined city clip re-cut on `a6c2797b`: the 4 ghost segments refilmed (0 SCRIPT
+  ERROR each), the 5 melee segments reused (no melee code since 791ea71a), 44.2 s; a 1-per-2 s sheet
+  shows every segment. frames.json row updated. NEXT 3 below is done.
+NEXT (written 05:15, for iteration 16; supersedes the 04:48 list):
+1. Read n7-ranged's JOURNAL to its end: cherry-pick new hit_feel / feel_cam / camera commits -x
+   (check prerequisites), unit with GODOT_BIN exported. Last merged: `8efe76ca`, `a63bd8e0` (their
+   shot-cue audio commits are not the feel layer: not merged).
+2. Freeze (by 08:30), in order: gates on the final head (lint, unit, `bash evidence/n7-melee/reels.sh
+   <head>`, then `node tools/evidence/run.mjs --no-bench > /tmp/<log>` on a clean tree, log copied
+   in after; never edit tracked files while a gate runs, scenarios too); bake_city + both exes
+   (`--export-release windows-showcase ../build/export/windows/RTAI.exe`, `--export-release
+   windows-slice ../build/export/windows-slice/RTAI.exe`); boot each once (calls (h)-(o) lines; the
+   slice title card; `--strike-sync=off`, `--pullback=off`, `--tell-cues=off` are in KNOWN_FLAGS);
+   finish REPORT.md (exe lines per call a-o, gates, drop "DRAFT").
+3. The combined city clip is current on `a6c2797b` (05:16). Re-cut only if code moves (ghost code:
+   refilm `set_ghost_<g>`; melee code: refilm the chapter; then `RECUT=1 bash evidence/n7-melee/set_clip.sh`).
+4. Build candidates, weakest first: the whiff thud is unit-tested only (no whiff in any reel; a
+   quest 1 Tonnage path might show one); Dent's miss lash (DentStage.miss_tick) is silent (no fitting
+   sound in the bank: leave unless one fits); chainsaw read 3 (the lower half under his feet); Dent
+   read 3 (the camera call); the ram heap (call h). Call (b) only on the owner's word.

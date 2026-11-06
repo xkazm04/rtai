@@ -37,8 +37,8 @@ The whole polished set in the city block at 32 px/m, with the game audio:
 `M/melee_polished_set_city_32ppm.mp4` (44 s, re-cut on code `791ea71a`: the five melee segments refilmed for the strike sync; the ghost segments from `5c4219b2` with `evidence/n7-melee/set_clip.sh`: no dev
 telemetry box, the ghost card whole; it is re-cut once more on the final head at the freeze).
 
-Gates on the last build commit `791ea71a` (04:40):
-- lint 13/13; unit 1223/1223 (incl. `test_slice_closure`);
+Gates on the last build commit `a6c2797b` (05:21):
+- lint 13/13; unit 1229/1229 (incl. `test_slice_closure`, `test_tell_cues`);
 - scenarios 52/52 with 0 SCRIPT ERROR;
 - director reel 19/19 in the arena and 19/19 in the city block (every chapter fully down), 0 SCRIPT ERROR.
 The full `node tools/evidence/run.mjs --no-bench` (lint 13/13, unit 1223, scenarios 52, parity
