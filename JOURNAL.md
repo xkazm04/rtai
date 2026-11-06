@@ -702,3 +702,20 @@ NEXT (written 00:58, for iteration 9):
    docs/decisions.md) to build/export/windows/RTAI.exe; finish REPORT.md (exe line, command lines
    per call a-g); gates on the final head (lint, unit, scenarios, director arena + city,
    `node tools/evidence/run.mjs`).
+- CHECK 00:59 director reels on `f17890ef`: arena 19/19 and city 19/19 fully down (every chapter's
+  `N/N down`), 0 SCRIPT ERROR (`evidence/n7-melee/director-{arena,city}-loadout-f17890ef.log`).
+- TRIED and REVERTED 01:00 (NEXT 3 early): ghost wounds thrown along `arena.hit_dir` (every ghost
+  hit sets it just before damage(): the stomp's press-head push, the ram's blend, Dent's car heading),
+  plus `dent_car` and `dent_blast` -> blast in ghost_wound. test_ghost_wound 6/6, melee 7/7. Dent
+  arena reel at 32 px/m, before = no Dent rows: react 1 wound vs 0; difference frames from 156 at a
+  cop in the cluster by the car's nose; 2.5x crops of 154/162/172/185: a few pixels in a dense
+  cluster, then the blast covers it. Not visible in motion: reverted. For iteration 9: the hit_dir
+  part is still right for the stomp's direction; land it with a film where a slam survivor is thrown
+  off to the side (city Tonnage reel), not on Dent.
+- GATES 01:04 scenarios on `f17890ef`: 52 ran, 1 failed, 0 SCRIPT ERROR. The one red was
+  scenario_city_chase's 2 ms nav budget (max 4536 us), the known flake, run while I filmed Dent beside
+  it; re-run alone: 1 ran, 0 failed (`evidence/n7-melee/scenario-city-chase-alone-f17890ef.log`).
+- STOP 01:05 iteration 8. Code commits: `f45ad8e6` (claw rakes), `91700e01` (ghost wounds), merges
+  `f1e9c76e` + `f17890ef`. Head gates on `f17890ef`: lint 13/13, unit 1197/1197, scenarios 52/52
+  (city_chase flake green alone), director arena + city 19/19, 0 SCRIPT ERROR. Later commits are docs
+  only. NEXT is the 00:58 entry above (items 1-4).
