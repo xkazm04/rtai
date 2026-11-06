@@ -45,6 +45,7 @@ func setup(stage: ArenaStage, ctx: WorldContext) -> void:
 	if spec == null:
 		return
 	_arena = stage.arena
+	spec.apply_repair(_arena.tuning)
 	_rng = ctx.rng
 	_clear_floor(stage)
 	var area: ArenaPlan.Area = stage.plan.area(String(spec.arena.area))

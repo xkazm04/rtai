@@ -281,6 +281,11 @@
           "minimum": 0.3,
           "type": "number"
         },
+        "rivet_repair_delay_s": {
+          "maximum": 30,
+          "minimum": 0,
+          "type": "number"
+        },
         "rng": {
           "pattern": "^[a-z][a-z0-9_]*$",
           "type": "string"

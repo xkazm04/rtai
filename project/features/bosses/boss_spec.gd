@@ -44,6 +44,9 @@ var radius_m: float = 1.0
 ## The share of the hp the boss takes while Rivet is settled in a ghost form (optional `ghost_k`,
 ## default 1: the ghosts' full machine damage). Owner call A (n7-king): e.g. 0.5 for a tougher boss.
 var ghost_k: float = 1.0
+## Rivet's repair delay during this fight (optional `rivet_repair_delay_s`; -1 = combat.json's).
+## Owner call C (n7-king): a longer delay lets spaced boss hits add up without a hit over 30 hp.
+var rivet_repair_delay_s: float = -1.0
 ## The bodies.json class Rivet meets the body as (optional `body_class`, default `boss`).
 var body_class: StringName = &"boss"
 var rng: StringName = &""
@@ -79,6 +82,7 @@ static func from_table(t: DataTable, boss_id: StringName) -> BossSpec:
 	s.keep_m = BossAttack.opt(row, "keep_m", -1.0)
 	s.radius_m = t.num(row, "radius_m")
 	s.ghost_k = BossAttack.opt(row, "ghost_k", 1.0)
+	s.rivet_repair_delay_s = BossAttack.opt(row, "rivet_repair_delay_s", -1.0)
 	s.body_class = StringName(str(row.get("body_class", "boss")))
 	s.rng = StringName(t.text(row, "rng"))
 	s.script_path = str(row.get("script", ""))
@@ -124,6 +128,12 @@ static func _arena(t: DataTable, p_id: String, row: Dictionary) -> Arena:
 		a.add_spawns.append(t.vec({"v": v}, "v"))
 	a.adds_from_boss = str(row.get("adds_from", "area")) == "boss"
 	return a
+
+
+## Sets the fight's repair delay on `tuning` (the stage's own CombatTuning) when the row has one.
+func apply_repair(tuning: CombatTuning) -> void:
+	if rivet_repair_delay_s >= 0.0:
+		tuning.rivet["repair_delay_s"] = rivet_repair_delay_s
 
 
 ## The phase index for an hp fraction: the last phase whose hp_below the fraction has reached.
