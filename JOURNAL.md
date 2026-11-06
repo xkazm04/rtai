@@ -1325,16 +1325,23 @@ idempotent tool; palette gate held), depth-ordered-layered-art (no layer change)
   Every per-attack, per-phase and full-fight clip is now on the it14 body; only the Dent and Kerf
   ghost clips show the it10 body.
 
-- 04:44 FILM Dent's van re-filmed on 5f9ed433 (`ghost48_14.sh dent 1 1 600`: p1, seed 1, 48 px/m,
+- 04:41 FILM Dent's van re-filmed on 5f9ed433 (`ghost48_14.sh dent 1 1 600`: p1, seed 1, 48 px/m,
   0 SCRIPT ERROR; whole run keyed at 2 fps first to find the beat, cut 1.5 + 4.5 s). **Looked at**
   the keys: the dash lane, the teal tether to the van, the van onto the rack, the blast, the
   charred wreck. `M/servo_ghost_dent_van_48ppm_it14.mp4` + keys replace it10's (deleted); REPORT
   call 8 path. Only Kerf's clip (it10, with the it7 halves clip) shows an older body.
 
+- 04:45 FILM Kerf re-filmed on 5f9ed433 (`ghost48_14.sh kerf 2 2 720`: p2, seed 2, 48 px/m, 0
+  SCRIPT ERROR; keyed whole first, cut 1.5 + 8 s). **Looked at** the keys: the blinks slice teal
+  across the swarm and the rack; the halves are not singled out at this spacing, as in it10, so
+  the it7 halves clip stays. `M/servo_ghost_kerf_cut_halves_48ppm_it14.mp4` + keys replace it10's
+  (deleted); REPORT call 9 path. Every clip in frames.json is now on the it14 body (Ohm it12: the
+  same body but for the pads and legs).
+
 NEXT (iteration 15, in order):
 1. Merge n7-king if it moved (last merged 9a207b0b as 04164ce1; JOURNAL/REPORT add/add: ours).
-2. Re-film Kerf's cut on the it14 body (`ghost48_14.sh kerf 2 2 <ticks>`, see the it10 03:05
-   entry; Dent done at 04:44).
+2. Re-film Ohm's chain on the it14 body (`ghost48_14.sh ohm 2 2 540`, as it12); every other
+   clip is it14 (done this session).
 3. Weakest by the target still: the sheet's bays hold quad-rotor drones with packages, ours cream
    squares (DOCKED_M; the full sprite was noise at 32 px/m): try a 2-rotor hint on the cream body
    at 48 px/m only if it stays quiet at 32. Render only, A/B.
