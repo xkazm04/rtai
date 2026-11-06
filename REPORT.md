@@ -14,7 +14,7 @@ Every view sits behind `--view=<id>` (`project/data/tables/view.json`). The defa
 today's game, bit-identical: `top` frames are md5-identical with the King lane's own files
 (seed 2, ticks 900 and 2040, 32 px/m), and the depth sort, cards and stacks never run straight down.
 
-## Watch these first (gtai-masters/n7/view/, frames.json order)
+## Watch these first (gtai-masters/n7/view/; frames.json lists all 15)
 
 1. `king_top_toplift_tilt_32ppm_it12.mp4`: the same seed-2 King fight, 45 s, top | top_lift |
    tilt at 32 px/m, on King's latest art (n7-king b2e71b83 merged), with the it12 cast shadows.
@@ -27,6 +27,9 @@ today's game, bit-identical: `top` frames are md5-identical with the King lane's
 5. `king_depth_sort_before_after_48ppm_x2_it9.png`: draw order under tilt, before | after.
 6. `city_occlusion_tilt_noocclude_vs_tilt_32ppm_x4_it15.png`: occlusion under tilt, a cop behind
    the city block's barrier, standing (tick 649) and downed (tick 1060), off | on.
+7. `concept_three_quarter_per_facing_king_rivet.png`: CONCEPT, not a game frame (one Codex
+   image round). The optional stronger three-quarter view with every character redrawn per
+   facing, shown only for what the most expensive option buys over `tilt` (cost table, last column).
 
 ## What works (evidence)
 
@@ -159,12 +162,14 @@ afford it. `top_lift` is the fallback if the owner keeps straight down: free, bu
   on a56fc835 (`evidence/view/it15/director-reel-19of19.log`); `top` md5 b5ed2b94 (seed 2 tick 900)
   unchanged.
 
-Iteration 9 on the merge (6cb9e9ef): lint 13/13, unit 1181/0, scenarios 52/0, director reel 19/19
-fully down, 0 SCRIPT ERROR. Iteration 12: `node tools/evidence/run.mjs --no-bench` on 52e72590 all
-PASS (lint, unit 1181, scenarios 52, parity bit-exact, selftest look goldens 11/11 + block 5/5;
-`evidence/view/it12/evidence-run.log`); unit 1186/0 after the cast shadows. An earlier run at
-06:02 (no commit) hit the known `scenario_city_chase` nav-budget flake; the re-run passed.
-Director reel on 16d83cbd (it12, cast shadows in): 19/19 fully down, 0 SCRIPT ERROR; scenarios on abc9c37a: 52 ran / 0 failed; evidence/run.mjs --no-bench on 3059b7b1: all PASS (unit 1186, scenarios 52, parity, look goldens 11/11). Bench: not run.
+- it12 (cast shadows in): `node tools/evidence/run.mjs --no-bench` on 52e72590 all PASS (lint,
+  unit 1181, scenarios 52, parity bit-exact, look goldens 11/11 + block 5/5;
+  `evidence/view/it12/evidence-run.log`), and on 3059b7b1 all PASS (unit 1186); scenarios on
+  abc9c37a 52 ran / 0 failed; director reel on 16d83cbd 19/19 fully down, 0 SCRIPT ERROR. One
+  earlier run at 06:02 (no commit) hit the known `scenario_city_chase` nav-budget flake; the
+  re-run passed.
+- it9 on the n7-king merge (6cb9e9ef): lint 13/13, unit 1181/0, scenarios 52/0, director reel
+  19/19 fully down, 0 SCRIPT ERROR.
 
 ## What blocked or slowed me
 
