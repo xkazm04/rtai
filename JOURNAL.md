@@ -288,3 +288,14 @@ NEXT (iteration 6, in order; freeze 18:30):
   not the junction the brief describes (view70's is one), so the freeze export would have failed with
   no templates. Replaced the empty folder by a junction to `%APPDATA%/Godot/export_templates`
   (4.7.2.stable visible through it). FYI chars and weapons: your appdata folders show no junction either.
+- 17:13 GATES on 0f11ec5f (code = fe163a2a): unit full no-arg run 1427/1427; scenarios 52/52
+  (run_scenarios.mjs, run alone, no contended miss). 854c8768 (test pitch 65): --select 6/6.
+- 17:14 Trial freeze export through the new junction: `"$GODOT_BIN" --headless --path project
+  --export-release windows-showcase ../build/export/windows/RTAI.exe` exit 0 (RTAI.exe 244 MB + the
+  sim DLL). Smoke: `RTAI.exe --rendering-driver d3d12 --fixed-fps 60 --quit-after 600 --write-movie
+  <abs.avi> -- --rigs --boss=king --phase=3 --bot=boss --bot-human --seed=2 --boss-cam --ppm=64
+  --view=tilt`: exit 0, 0 SCRIPT ERROR, but one "Invalid polygon data, triangulation failed".
+- 17:16 FIX (76cbfcfb): that error was the cape train's quads twisting (only runs with the shaded train
+  logged it: p3b/p3c/cB 1-2 each, none flat or TRAIN_K 0). Now two triangles per hem segment
+  (draw_primitive, no triangulation): the same look, 0 such errors over phase 3 ticks 0-540.
+  Unit --select test_king_cape 5/5, lint 15/15. The exported exe predates the fix: re-export at the freeze.
