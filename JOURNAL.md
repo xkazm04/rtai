@@ -327,3 +327,10 @@ logs have none of it, most likely because they did not capture stderr. Then the 
 ERROR" counted stdout only and was a weaker claim than it read; the it4 count includes stderr (0).
 The arena reel never loads a vehicles class (no Vehicle* in dev/arena, features/combat), so the
 exit leak is not this lane's; owed: the same reel on main to confirm it is pre-existing.
+23:11 CHECKED: the same `top` reel on the merge base 0bea8b93 (throwaway worktree, removed) prints
+the same exit report (1 RID, 710 ObjectDB, 98 resources; HEAD 713 / 99) and 19/19 chapters, 0
+SCRIPT ERROR: the leak is pre-existing, not vehicles'. (The +3 / +1 on HEAD: not chased; the arena
+loads no vehicles class.)
+
+NEXT (iteration 5) stands as written above (the reel and the 55 bar are done): 2 traffic density
+cost, 3 kerb rows as cards once city ANDs VehicleParked.drawn(), 4 the bike.
