@@ -3,7 +3,7 @@
 DRAFT (iteration 16, 05:25): to be finalized at 08:40. The exe is re-exported at the freeze; the final gates are still open. Gates on the it16 head: lint 13/13, unit 1193/0, scenarios 52 ran / 0 failed (`evidence/servo/scenarios-it16.log`); director reel 19/19 chapters fully down, 0 SCRIPT ERROR (`evidence/servo/director-reel-it16.log`).
 
 Branch `n7-servo` (from main `763f8fba`, with `n7-king`'s framework merged in at every move; the
-last merge was `71fa77a2` = n7-king `296cce50`, iteration 16). Clips and stills: `C:\Users\kazda\kiro\gtai-masters\n7\servo\` (M below),
+last merge was `6f083a5a` = n7-king `8ee305fc`, iteration 18). Clips and stills: `C:\Users\kazda\kiro\gtai-masters\n7\servo\` (M below),
 indexed in `M/frames.json`. Design: `docs/bosses/servo.md`. Journal: `JOURNAL.md`.
 
 ## What works (with evidence)
@@ -14,10 +14,10 @@ indexed in `M/frames.json`. Design: `docs/bosses/servo.md`. Journal: `JOURNAL.md
 - **The body**: a cutout rig from Codex part sheets (`tools/art/servo_parts.py`). The 3-row rack
   wings are each one frame (`tools/art/servo_rack3.py`), set 0.94 m apart (`servo.json
   rack.spine_m`) by a heavy 1.5 m central spine of tan steel with stacked plated boxes and its hose cap, the sheet's top view; round hover pads on long arms, walker legs, and a visor head that glows vermilion
-  only during a tell. The rack is its own animated layer: each full bay holds a docked quad drone (a cream hub and rotor rings on the art's bays, the sheet's look; the flying drone is the same hub and four rotors), drones launch from it, their bays go dark, and refill. Phase 3
+  only during a tell. The rack is its own animated layer: each full bay holds a docked quad drone (a cream hub and rotor rings on the art's bays, the sheet's look; the flying drone is the same hub and four rotors, a kraft parcel slung under it toward its shadow, which falls into its ring as the same box), drones launch from it, their bays go dark, and refill. Phase 3
   blows a wing off. The defeat: a flash, the pads spin down, the body slumps and greys out, the
   drones spill, the visor flickers out in cream.
-  See `M/frames/servo_target_vs_game_32ppm_it18.png` and `M/frames/servo_docked_bays_ab_it16.png`.
+  See `M/frames/servo_target_vs_game_32ppm_it18.png` and `M/frames/servo_docked_bays_ab_it16.png`, `M/frames/servo_slung_parcel_ab_it18.png`.
 - **The drone swarm** (`features/bosses/servo/`): flocking on the 60 Hz tick from the
   `servo_swarm` stream, drop rings, a max-alive cap per phase, despawn, parcels (a bomb or a CS
   crate obstacle), and armoured kamikaze dives in phase 3. The drones are shootable. Dent seizes
