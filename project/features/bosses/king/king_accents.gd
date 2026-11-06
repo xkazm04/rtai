@@ -24,6 +24,10 @@ const KING_CHAIN_W_M: float = 0.08
 const KING_CHAIN_R_M: float = 0.56
 const KING_MEDAL_M: float = 0.1
 const GEM: Color = Color("#5A2335")
+## it17: the crown's jewels (the sheet's top view: a gem at the crown's centre, smaller gems round
+## it). 0 = the it2-it16 ink centre (reads as a hole); 1 = a plum gem in it; 2 = also a plum gem
+## on every point (rejected in the it17 A/B: the points read as a cog at 32 px/m).
+const CROWN_GEMS: int = 1
 const FUR: Color = Color("#EFE6D2")
 ## The decree's windup arc (it10, see _shout); false = the it2-it9 faint pulses.
 const SHOUT_ARC: bool = true
@@ -162,7 +166,7 @@ func _king_chain(at: Vector2, a: float) -> void:
 	draw_circle(medal, mr * 0.5, GEM)
 
 
-## A gold star crown with an ink edge and a dark jewel (vermilion stays the cape's alone).
+## A gold star crown with an ink edge and plum jewels (CROWN_GEMS; vermilion stays the cape's).
 func _crown(at: Vector2, r: float, spin: float) -> void:
 	var pts: Array[Vector2] = []
 	for i: int in 10:
@@ -172,4 +176,11 @@ func _crown(at: Vector2, r: float, spin: float) -> void:
 	draw_colored_polygon(poly, GOLD)
 	draw_polyline(poly + PackedVector2Array([pts[0]]), Ink.INK, 2.0)
 	draw_circle(at, r * 0.32, Ink.INK)
+	if CROWN_GEMS >= 1:
+		draw_circle(at, r * 0.24, GEM)
+	if CROWN_GEMS >= 2:
+		for i: int in 5:  # a gem set on each of the crown's points
+			var g: Vector2 = at + Vector2.from_angle(TAU * float(i) / 5.0 + spin) * r * 0.7
+			draw_circle(g, r * 0.15, Ink.INK)
+			draw_circle(g, r * 0.1, GEM)
 	draw_circle(at + Vector2(-r * 0.08, -r * 0.08), r * 0.12, GOLD_HI)

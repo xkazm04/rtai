@@ -27,7 +27,8 @@ then look at `king_target_vs_game_32ppm_it16.png`, then play `build/export/windo
   - (it13) the megaphone prints gold with a dark bell mouth at 32 px/m (it was an ink smudge with
     vermilion flecks: `evidence/king/shots/it13/horn_lift_10_155_19_p3_p1_32ppm_4x.png`);
   - a jewelled crown and the ermine collar over the vermilion cape; (it16) his own gold chain across
-    the collar's front with a plum-gem medallion (`evidence/king/shots/it16/king_chain_before_after_p1_p3_32ppm.png`); (it13) the cape is folded cloth
+    the collar's front with a plum-gem medallion (`evidence/king/shots/it16/king_chain_before_after_p1_p3_32ppm.png`); (it17) a plum gem
+    in the crown's centre (`evidence/king/shots/it17/crown_gems_0_1_2_p1_p3_32_48ppm.png`); (it13) the cape is folded cloth
     under an ermine border that sways and trails his charge (`evidence/king/shots/it13/cape_before_after_32_48ppm.png`),
     and (it14) lands wide with the press slam's shockwave (`evidence/king/shots/it14/cape_slam_land_before_after_48ppm.png`);
   - the gilded plum throne-car, a boss-owned vehicle with drapes and a hood cannon (banded gold barrel on a swivel mount since it12, `evidence/king/shots/it12/hood_cannon_before_after_48ppm_2x.png`); (it14) rounded gold bumpers past both ends (`evidence/king/shots/it14/car_bumpers_before_after_p1_32_48ppm.png`); (it15) a gilded throne back, a gold arch with ball finials round King's back over the cape, left empty on the car when he steps down (`evidence/king/shots/it15/car_throne_before_after_p1_32_48ppm.png`, `evidence/king/shots/it15/car_throne_empty_p3_step_48ppm.png`);
@@ -144,6 +145,11 @@ Each call names its options, the default that is built, and how to see it.
   The sheet's gem is orange; plum here because vermilion stays the cape's (a gold gem is the other
   option, `KingAccents.GEM`). See `evidence/king/shots/it16/king_chain_before_after_p1_p3_32ppm.png`
   and `evidence/king/shots/it16/king_chain_p3_48ppm_4x.png`; in play `RTAI.exe -- --rigs --boss=king --phase=3`.
+- **O. The crown's jewel (it17).** A plum gem in the crown's centre (built: `KingAccents.CROWN_GEMS`
+  1), the it2-it16 ink centre (0, it reads as a hole or an eye at 32 px/m), or a plum gem on every
+  point too (2, rejected: the points read as a cog). See
+  `evidence/king/shots/it17/crown_gems_0_1_2_p1_p3_32_48ppm.png` (rows 0, 1, 2; columns: phase 1 on
+  the throne at 32 px/m, phase 3 on foot at 32, phase 3 at 48); in play `RTAI.exe -- --rigs --boss=king`.
 
 ## The exe
 

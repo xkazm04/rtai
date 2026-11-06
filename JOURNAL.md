@@ -1680,3 +1680,23 @@ NEXT (iteration 17, in order):
   said 30 / 30 / 25); every `before` names the deleted predecessor and what it lacked (King's chain;
   the it15 ones also the plum lining). REPORT gets a "where to start" line for the owner.
 - 05:46 Session closes: everything committed, scratch16 holds only the scripts (shot/film/film32/cut.sh). NEXT above stands.
+
+## Iteration 17 (05:47-06:47), BUILD
+
+### 05:47 START
+- Read JOURNAL NEXT (it16), git log -30. Order: NEXT 3 (the crown's jewel, render only), then NEXT 1
+  (re-export, smoke, re-film what it touches), NEXT 2 (shades) only if time is left. Scratch in
+  `build/scratch17` (the it16 scripts copied, paths moved).
+
+### 05:53 MILESTONE the crown's plum jewel (NEXT 3)
+- Registry: sprite-and-atlas-production and motion-quality-gating (judge at 32 px/m first, 48 for
+  detail), depth-ordered-layered-art (the gem inside the ink setting, the glint over it).
+- `KingAccents.CROWN_GEMS`: 0 = the it16 ink centre, 1 = a plum gem inside it, 2 = also a plum gem
+  set on every point. A/B, phase 1 tick 60 at 32 px/m (on the throne), phase 3 tick 240 at 32 (on
+  foot), phase 3 tick 30 at 48 (`evidence/king/shots/it17/crown_gems_0_1_2_p1_p3_32_48ppm.png`, rows 0/1/2).
+  **Looked at**: 0 reads as a hole or an eye in the star; 1 reads as a jewelled star, the gem's
+  plum matches the chain's medallion, the points stay points; 2 turns the star into a cog at 32 (the
+  crown's read is lost). DECISION keep 1 (decisions.md; REPORT call O). Lint 13/13, unit **1164/0**
+  (`evidence/king/unit-it17.log`).
+- FRICTION: the first unit run printed 1164 with "exit -1": GODOT_BIN was not exported in that
+  shell, the count was a stale result. Re-run with it set: exit 0, 1164/0.
