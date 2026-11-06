@@ -123,6 +123,12 @@ Each call names its options, the default that is built, and how to see it.
   flared behind the leap, landing wide with the shockwave (`KingCape.LAND_SPREAD_K` 1.14; 1.0 and
   `press_slam` out of `CHARGING` = still through the slam):
   `evidence/king/shots/it14/cape_slam_land_before_after_48ppm.png`.
+- **M. The throne back (it15).** A gold arch with ball finials round King's back, drawn over the
+  cape, left empty on the car when he steps down (built: `KingCarTrim.THRONE_HW_M` 0.95), or no
+  throne (0, the it14 car: the cape alone behind him). The arch crosses the cape's folds; the
+  target's quilted plum back is covered by the cape from straight above. Stills:
+  `evidence/king/shots/it15/car_throne_before_after_p1_32_48ppm.png`,
+  `evidence/king/shots/it15/car_throne_empty_p3_step_48ppm.png`; in play `RTAI.exe -- --rigs --boss=king`.
 
 ## The exe
 
