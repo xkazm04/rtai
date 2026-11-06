@@ -118,3 +118,16 @@ func test_a_gatling_round_kicks_back_against_the_aim_and_a_pistol_does_not() -> 
 	assert_false(cam.fire(&"pistol", Vector2.RIGHT, 11), "no fire row, no kick")
 	cam.feel.enabled = false
 	assert_false(cam.fire(&"rocket_launcher", Vector2.RIGHT, 20), "off means no effect")
+
+
+func test_the_mini_nuke_launch_kicks_harder_than_the_rocket() -> void:
+	var nuke: FeelCam = _cam()
+	var rocket: FeelCam = _cam()
+	assert_true(nuke.fire(&"mini_nuke", Vector2.UP, 10), "the launch kicks (it had no fire row)")
+	assert_true(rocket.fire(&"rocket_launcher", Vector2.UP, 10))
+	var n: float = nuke.offset_px(10, 1.0).y
+	var r: float = rocket.offset_px(10, 1.0).y
+	gut.p("launch kick down the screen: nuke %.1f px, rocket %.1f px" % [n, r])
+	assert_gt(n, r, "against an upward aim, and one notch over the rocket")
+	var cap_px: float = nuke.feel.cap["kick_px_max"]
+	assert_lte(n, cap_px, "inside the kick cap")
