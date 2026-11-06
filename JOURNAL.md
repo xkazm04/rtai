@@ -1035,3 +1035,45 @@ Working NEXT 1: the muzzle FX prints on the drawn barrel whatever the hold.
   row, call 5, the "not done" note rewritten. DECISION in docs/decisions.md.
 - GATES 01:41 on `8766508f`: pit + city director reels 19/19 + 19/19 fully down, 0 SCRIPT ERROR
   (`evidence/ranged/it11-reel-{director,city}-8766508f.log`), unit 1159/1159.
+
+### FIX 01:50: `63d2a29e` a mistyped `--weapon=` boots with Gloria and one warning
+- `--weapon=rocket` gave 422 SCRIPT ERRORs (the gunplay bot read the null spec); GunplayHook
+  already warns and keeps Gloria, so the bot takes Gloria's reach too. Checked headless: bad id
+  0 SCRIPT ERROR + the warning; `--weapon=pistol` still "Rivet holds the table pistol".
+
+### FIX 01:51: `cb98ccd4` the molotov leaves the claw on its forward swing
+- FOUND in the city director reel (molotov chapter, tick 2250; `--arena=city --loadout=pistol
+  --ppm=32 --cam=fight`, +/- `--throw-windup=off`, 0 SCRIPT ERROR): the wind-up reads in the live
+  path (three throws, the bottle cocked back behind the shoulder away from the cop between them),
+  but on frame 2364 the claw was still cocked with the bottle already hidden: the rig poses before
+  RivetHeldView reads the new reload. `RigThrow.lag_frame` keeps the bottle drawn that frame
+  (reload_k < 0.2 and no release posed yet); the next frame shows the empty claw out at the aim.
+  Re-filmed: city frame 2364 holds the cocked bottle, 2365 the claw forward; lone 48 px/m the
+  same at 310/311. Test 5/5 (+ the lag case and its off switch). Masters clip re-cut on it.
+
+NEXT (iteration 12):
+1. Retake the city-block combined clip on the final head (it now carries the muzzle on the drawn
+   tip and the molotov wind-up): same recipe as it9 (JOURNAL 01:02, frames 360-2700, 3810-5100,
+   5460-6150, crop 960x560), replace in place, LOOK at the molotov and rocket segments.
+2. Rounds still leave from the GUN_SIDE_M side (WeaponFxArt.shot converges from 0.35 m beside the
+   aim line over CONVERGE_M), while the flash now sits on the drawn tip. At 48 px/m on the rocket,
+   plasma rifle and Gatling check whether the first drawn frame of a round (1.1 m out) sits off the
+   barrel line; if so, start the convergence from HeldMuzzle's side offset (the published tip
+   minus the body line), with `--flash-at=side` as the before. Casings (WeaponCasings.track, the
+   same GUN_SIDE_M spot) likewise.
+3. Rocket flash: a ~0.3 m gap between the tube's mouth and the flash_tube star (the cell's own back
+   edge). Only if it reads on film at 32 px/m: a per-weapon `muzzle_back_m` in hit_feel.json.
+4. Molotov: the first draw snaps from the hanging claw to cocked when aiming starts; lerp it over
+   WeaponHold DRAWING progress (RigThrow, view only). Look at the arena molotov reel chapter.
+5. Exe at the freeze: re-bake + re-export `windows-showcase` -> `build/export/windows/RTAI.exe` on
+   the final head; REPORT exe lines for calls 4 (`--flash-at=side`) and 5 (`--throw-windup=off`).
+6. Calls 1-5 stay open in REPORT.
+- GATES 01:55 on `cb98ccd4`: pit + city director reels 19/19 + 19/19 fully down, 0 SCRIPT ERROR;
+  unit 1159/1160, the one red `test_noir_shadows` (the known flake, under the two reels' load):
+  alone 2/2 green (`evidence/ranged/it11c-noir-shadows-alone-cb98ccd4.log`). Lint 13/13.
+
+STOP 01:56 iteration 11. Code commits: `9054e346` (muzzle FX on the drawn barrel tip, HeldMuzzle),
+`8766508f` + `cb98ccd4` (the molotov held cocked, the throw whips out; RigThrow), `63d2a29e`
+(a mistyped --weapon boots with Gloria). Evidence on `2cb85d5b` all green; reels 19/19 on every
+code commit. Clips: `muzzle_on_drawn_tip-ab-48-32ppm.mp4`, `molotov_windup-ab-32-48ppm.mp4`
+(frames.json rows 0-1). REPORT rows + calls 4-5. NEXT for iteration 12 is the list above.
