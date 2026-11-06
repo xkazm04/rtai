@@ -27,7 +27,7 @@ indexed in `M/frames.json`. Design: `docs/bosses/servo.md`. Journal: `JOURNAL.md
   from rush hour on, stacked CS crates). Rush hour opens with the depot's shift horn.
 - **The framework** (n7-king's) carries Servo: the boss bar and phase marks, the music and stinger,
   `--boss=servo [--phase=N]`, and `--bot=boss`.
-- **The full fight by the bot** at 32 px/m: `M/servo_fight_bot_human_32ppm_it10.mp4` (121 s, down at 117 s; keys `M/frames/servo_fight_keys_32ppm_it10.png`). Per attack (48 px/m): `M/servo_attack_*`; the drone wave from the lock to the dodge: `M/servo_drone_wave_scan_drop_dodge_48ppm_it9.mp4`; per phase (32 px/m): `M/servo_p{1,2,3}_*_32ppm_it9.mp4`; ghosts: `M/servo_ghost_*`. Index: `M/frames.json`.
+- **The full fight by the bot** at 32 px/m: `M/servo_fight_bot_human_32ppm_it10.mp4` (121 s, down at 117 s; keys `M/frames/servo_fight_keys_32ppm_it10.png`). Per attack (48 px/m): `M/servo_attack_*`; the drone wave from the lock to the dodge: `M/servo_drone_wave_scan_drop_dodge_48ppm_it9.mp4`; per phase (32 px/m): `M/servo_p{1,2,3}_*_32ppm_it10.mp4`; ghosts: `M/servo_ghost_*`. Index: `M/frames.json`.
 
 ## Numbers (the bot; `evidence/servo/numbers-it9-spine94/` + `-stand/`, seeds 1-5, CONTENDED wall time, tick-exact)
 On the shipped tree (rack.spine_m 0.94); `numbers-it6a/` is the same fight with the wings touching.
@@ -70,7 +70,7 @@ tick 7036, 188 on Rivet, 0 SCRIPT ERROR, the editor's numbers (`evidence/servo/e
 - The horn has not been heard (every run was headless or filmed without listening).
 - The spine is procedural: since it10 it has the sheet's width and tan steel with stacked boxes, but not its rounded horseshoe frame or the hose loops over the top. The rack bases' hazard stripes are copper (vermilion is reserved), so they read browner than the sheet's orange.
 - The `--boss-cam` clip camera frames Rivet and the boss together; a bay-hop landing ring on a Rivet by the bays can sit under the boss bar in a clip (`M/servo_attack_bay_hop_48ppm_it9.mp4`). In play the camera centres on Rivet, so the ring stays on screen.
-- The same clip camera at the phase-3 defeat in the yard's top-left corner: Servo's centre stays 3.1-3.5 m inside the screen edge (`BossCam.BOSS_MARGIN_M` 3.0), but turned sideways his rack reaches 3.07 m out, so half the body leaves the left edge (`M/servo_p3_overtime_defeat_32ppm_it9.mp4`, ~32 s). A 3.5 margin changed nothing; ~4.5 would hold the body but pushes the view off the floor elsewhere (unmeasured). The framework file is shared with `n7-king`: left as is.
+- The same clip camera at the phase-3 defeat in the yard's top-left corner: Servo's centre stays 3.1-3.5 m inside the screen edge (`BossCam.BOSS_MARGIN_M` 3.0), but turned sideways his rack reaches 3.07 m out, so half the body leaves the left edge (`M/servo_p3_overtime_defeat_32ppm_it10.mp4`, ~32 s). A 3.5 margin changed nothing; ~4.5 would hold the body but pushes the view off the floor elsewhere (unmeasured). The framework file is shared with `n7-king`: left as is.
 
 ## Next steps
 - To come.

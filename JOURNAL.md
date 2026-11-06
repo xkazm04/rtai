@@ -1131,3 +1131,12 @@ NEXT (iteration 11, in order):
 4. NEXT 2b of it9 (the clip cam at the yard's left edge) stays open in REPORT: framework file.
 5. At the freeze (08:30): re-export `windows-showcase`, smoke (expect down 7036, 188), final gates
    (lint, unit, scenarios, evidence/run.mjs, director reel), REPORT final (drop DRAFT, Next steps).
+- 02:56 NEXT 2 (of the it11 list) done early: the phase clips re-filmed at 32 px/m on the it10
+  body (`scratch/servo/phase32_10.sh`, human bot, seed 2, boss cam; p1/p2 2400 ticks, p3 2300,
+  0 SCRIPT ERROR, p3 down at 1930 as in it9). **Looked at** the 12-key sheets
+  (`M/frames/servo_p{1,2,3}_keys_32ppm_it10.png`): p1 dash lanes, beam, drop rings, hops to the
+  bays; p2 bomb blast, carpet rings, spilled CS crates, the belt, the hop into the bottom-right
+  yard; p3 one wing, hot-dash lanes, kamikaze rings, the defeat spill in the top-left corner (half
+  off the left edge: the known clip-cam item). `M/servo_p{1,2,3}_*_32ppm_it10.mp4` replace the it9
+  clips (deleted with their keys); frames.json 15; REPORT paths. The it11 NEXT 2 now covers only
+  the 48 px/m rotor-dash and bay-hop clips (the body shows; it9 spine and pads).
