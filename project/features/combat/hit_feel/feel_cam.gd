@@ -94,6 +94,7 @@ func offset_px(tick: int, zoom: float) -> Vector2:
 	var cap_px: float = feel.cap.get("kick_px_max", 8.0)
 	var screen: Vector2 = sum.limit_length(cap_px) + _rig.offset_px(SimConst.PX_PER_M)
 	var lead: Vector2 = _lead.step(_arena, feel, tick) * SimConst.PX_PER_M
+	lead = lead.limit_length(_lead.max_px / maxf(zoom, 0.01))  # screen px, whatever the zoom
 	if not feel.enabled or reduced_motion:
 		lead = Vector2.ZERO
 	return screen / maxf(zoom, 0.01) + lead
