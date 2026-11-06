@@ -283,3 +283,8 @@ NEXT (iteration 8):
    with Calls: Dent tan vs teal; ghost halo strength (Ohm 0.45, Tonnage 0.35, Kerf 0.4; 0 = none);
    Kerf v2 card at 32 px/m (thin) vs a wider card; Ohm's arms on the ground vs lifted; card facing
    count 5+3.
+- GATES on 19dfe44a (16:27-16:37): `node tools/evidence/run.mjs --no-bench` ALL PASS (lint 15/15,
+  unit 1422/0, scenarios 52, parity bit-exact + mutation caught, selftest look goldens 11/11 and block
+  5/5, export-audit 539/0). `top` city block (seed 2, 301 frames) framemd5-identical with main
+  0bea8b93. Director reel headless 19/19 chapters down, 0 SCRIPT ERROR, in `top` AND `tilt`.
+  So NEXT item 1 is done; the rest of NEXT (iteration 8) stands.
