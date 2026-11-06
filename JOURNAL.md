@@ -586,3 +586,15 @@ wording. If the owner picks `tilt`: REPORT "Next steps" 1-6 in order.
 
 NEXT (report phase, 08:40): no code, no re-export. REPORT.md is final. If the owner picks `tilt`,
 do REPORT "Next steps" 1-6 in order.
+
+## Iteration 21 (08:20-08:30, post-freeze BUILD slot)
+
+- No code: 10 min to freeze, and a game-code change would invalidate the exe (78d652d7) and gates.
+- CHECK: `git diff --name-only 78d652d7..HEAD` shows only JOURNAL.md, REPORT.md and
+  evidence/view/it18 logs, so the exe matches the final game code. The masters folder holds exactly
+  the 15 frames.json files (0 unreferenced, 0 raw .avi in scratch). REPORT has all required sections
+  (question, watch-first, works, does not work, cost table, calls with 9 exe lines, gates, blockers,
+  next steps).
+
+NEXT (report phase, 08:40): no code, no re-export. REPORT.md is final. If the owner picks `tilt`,
+do REPORT "Next steps" 1-6 in order.
