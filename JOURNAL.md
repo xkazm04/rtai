@@ -1682,3 +1682,27 @@ NEXT (after the night): the exe at `build/export/windows/RTAI.exe` (07:42, dd385
 `project/` has not moved since. Owner calls 1-21 in REPORT. If call 21 picks a harder band, bisect
 `servo.rivet_repair_delay_s` between 6 and 30 s at n = 10 with the human bot; ask the framework for
 `phase_ticks` in the boss_fight telemetry. Merge n7-king again if it moves.
+- 08:03 MERGE n7-king b761f222 as fba95dea (king moved again: `--repair-delay=<s>` dev flag,
+  `rivet_hp_min` / `repair_delay_s` in the boss telemetry). JOURNAL add/add: ours. FRICTION: the
+  merged `BossHook.step` was 41 lines (my kerf-line call + king's 2-line hp-min update); folded the
+  update into one line (same semantics), lint 13/13. Backup of the 07:42 exe in
+  `gtai-n7/scratch/servo/exe-it22a/`.
+- 08:05 GATES on fba95dea: unit **1203/0** (`unit-it22b.log`), scenarios **52/0**, 0 SCRIPT ERROR
+  (`scenarios-it22b.log`); director reel **19/19 fully down, 0 SCRIPT ERROR**
+  (`director-reel-it22b.log`, stopped after the last chapter).
+- 08:09 EXE re-exported on fba95dea (exit 0); smoke seed 2 human: **7036, 188** = it20, Rivet's
+  hp_min 70 (`exe-smoke-it22b.json`); `--repair-delay=30` in the exe: **13955, 250, 2 deaths**, the
+  data-edit run exactly (`exe-smoke-it22b-delay30.json`). So call 21 can be played without a data
+  edit. NOTE for n7-king: `rivet_hp_min` reads 10 in that 2-death fight (the falling tick seems
+  skipped); REPORT says to read deaths from the top-level `deaths`.
+- 08:12 GATES `tools/evidence/run.mjs --no-bench` on the fba95dea gates commit started.
+- 08:19 GATES `tools/evidence/run.mjs --no-bench` on bc447dad: **all PASS** (lint 13/13, unit 1203,
+  scenarios 52, parity bit for bit + planted mutation at step 629, selftest goldens 11/11 + 5/5)
+  (`evidence-run-it22b.log`). REPORT final on fba95dea: header, merge line, exe line (08:09 export),
+  call 21 with the exe flag, the hp_min note, next steps.
+
+NEXT (after the night, supersedes 08:02): the exe at `build/export/windows/RTAI.exe` (08:09,
+fba95dea) is final; `project/` has not moved since. Owner calls 1-21 in REPORT (21 playable with
+`RTAI.exe -- --rigs --boss=servo --repair-delay=<s>`). If call 21 picks a harder band, bisect the
+delay between 6 and 30 s at n = 10 with the human bot; ask the framework for `phase_ticks` in the
+boss_fight telemetry and a hp_min that counts the falling tick. Merge n7-king again if it moves.
