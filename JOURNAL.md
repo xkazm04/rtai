@@ -1595,3 +1595,9 @@ NEXT (iteration 16, in order):
 - `windows-showcase` export exit 0, 0 errors (`build/export-it16.log`); headless smoke seed 2
   human: King down at tick **4933**, took **88**, coin_fan 3 / press_slam 1 / ram 1, 0 SCRIPT
   ERROR (render only: identical to it15).
+
+### 05:24 GATE scenarios on aca187af
+- Full suite **52 ran, 1 failed**: `scenario_city_chase` over the 2 ms nav budget (max 3373 us), the
+  known flake; it ran while the export, the exe smoke and the film encode loaded the machine.
+  Re-run alone: **1 ran, 0 failed** (`evidence/king/scenarios-it16.log`,
+  `evidence/king/scenarios-it16-city-chase.log`). 0 SCRIPT ERROR in both. Combat holds.
