@@ -281,3 +281,19 @@ NEXT (iteration 5):
 6. Scratch is 2.8 GB: before the freeze delete what frames.json and weapons-tilt.md do not name.
 - Session end 16:48. Branch head clean; every item above committed.
 - Session end 16:52 (iteration 4). Branch head clean; every item above committed. NEXT (iteration 5) above stands from item 3.
+## 16:53 iteration 5 (BUILD)
+- 16:54 Read JOURNAL, git log; NEXT 3 (melee smear at height) first.
+- Stepped the katana chapter (smear5/strip.py: crop on the collar, base | after per frame, 3x): the smear IS
+  drawn, as a soft grey wedge (ink band 0.3-1.0 under the pale core) over Rivet's legs and the cop; at 48 it
+  barely separates from the floor. Found the cut frames by diffing same-seed films (smear5/diff.py).
+- Tried v1 "bold" (ink 0.35 -> 0.6, rim 3 px, core x1.4) under tilt: filmed, indistinguishable from the
+  before (both grey). REJECTED.
+- MILESTONE a7f6e29d: under tilt the smear is a pale crescent (0.6-1.04 of the blade, a light ink shade
+  inside, an inked outer arc). Filmed katana / plasma sword / chainsaw chapters at 48 tilt, same seed,
+  `--shot-lift=off` = before, 0 SCRIPT ERROR: the crescent reads past the hit star and under the blade after
+  it (plasma sword's hot cream best). gtai-masters/d8/weapons/melee_smear_tilt_48_crescent_before_after.png.
+  Smear F 1 -> 2. Top: the iteration-4 fan, unit test test_melee_smear_bold. DECISION in decisions.md.
+- FRICTION: `git checkout <file>` on a STAGED file restores the index copy, not HEAD (`git restore
+  --source=HEAD --staged --worktree`). The debt ratchet blocked a +1 line in rivet_held_view.gd (288, near
+  cap): the bold flag moved into MeleeSmearView.feed instead.
+- frames.json: + melee crescent (4th), - rocket_launcher_tilt_48_after.mp4 (a plain clip; deleted). 15.
