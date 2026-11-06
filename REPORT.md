@@ -1,6 +1,6 @@
 # n7-melee REPORT (night 2026-11-05/06): Rivet's melee and the four ghosts' attacks
 
-DRAFT written 23:40 (iteration 6), updated 00:55 (iteration 8). The final version lands at 08:40, after the freeze and the exe
+DRAFT written 23:40 (iteration 6), updated 02:30 (iteration 10). The final version lands at 08:40, after the freeze and the exe
 export. Clips are under `C:\Users\kazda\kiro\gtai-masters\n7\melee\` (`M/` below); the shortlist is in
 `M/frames.json`. Every change below is view only: no sim tick, replay or parity hash moved. Quest 1's
 final hash moved once, deliberately, when quest 1 started carrying the katana (`fbc5a982`).
@@ -28,13 +28,16 @@ final hash moved once, deliberately, when quest 1 started carrying the katana (`
 | Plasma sword asset (backlog 3) | `4540d259` | a new top-down held part from one image round: the blade tapers to a point from a pronged emitter collar, with ink arc strokes along a paper-white core (it was a square-ended cream plank); same hilt, same length and grip. A shape gain at 48 px/m and up; at 32 px/m the two are close to identical | `M/plasma_sword_blade_ab_32ppm_48slow.mp4`, `M/plasma_sword_blade_ab_48ppm_3x.png` (before: the old `held_long.png`) |
 
 The whole polished set in the city block at 32 px/m, with the game audio:
-`M/melee_polished_set_city_32ppm.mp4` (44 s, re-cut on `bd36c37c` with `evidence/n7-melee/set_clip.sh`).
+`M/melee_polished_set_city_32ppm.mp4` (44 s, re-cut on `3efd6d47` with `evidence/n7-melee/set_clip.sh`: no dev
+telemetry box, the ghost card whole; it is re-cut once more on the final head at the freeze).
 
-Gates on the last build commit `7ce7b33d`:
-- lint 13/13;
-- unit 1178/1178 (`test_noir_shadows` flaked once, green alone);
+Gates on the last build commit `4540d259` (02:20-02:27):
+- lint 13/13; unit 1204/1204 (incl. `test_slice_closure`);
 - scenarios 52/52 with 0 SCRIPT ERROR;
-- director reel 19/19 in the arena and 19/19 in the city block.
+- director reel 19/19 in the arena and 19/19 in the city block, 0 SCRIPT ERROR.
+The full `node tools/evidence/run.mjs --no-bench` (lint, unit, scenarios, parity bit-exact, look
+goldens) last ran green on `317e86f2` (code `87d7dc2b`); it re-runs on the final head at the freeze.
+Bench not run: contended machine, no lock taken.
 
 The logs are in `evidence/n7-melee/`.
 

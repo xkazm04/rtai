@@ -906,3 +906,7 @@ every HUD layer lands ~70 px left (the ghost card's "Tonnage" reads "onnage"). T
 same either way. `--resolution 1280x800` fixes it (checked on a city Dent film). Matters only for
 clips the owner sees with a HUD; your before/after pairs are consistent among themselves.
 - CHECK 02:27 scenarios on `4540d259`: 52 ran, 0 failed (`evidence/n7-melee/scenarios-4540d259.log`).
+- MILESTONE 02:28 combined city clip re-cut on `3efd6d47` (code `4540d259`) with --clean at 1280x800:
+  44.2 s, 0 SCRIPT ERROR in all 9 films. LOOK (sheet every 1.5 s): no telemetry box, the ghost card
+  whole at the bottom left in every segment, every tile still shows an attack. frames.json note and
+  REPORT line updated. Scratch AVIs from it kept for a RECUT at the freeze if the code does not move.
