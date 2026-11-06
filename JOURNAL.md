@@ -419,3 +419,19 @@ NEXT (iteration 11, the freeze at 18:30):
   ends at chapter 12-13 (the frames run fewer sim ticks); always pass --fixed-fps 60.
 - GATE `top` city block (seed 2, --quit-after 301) framemd5 IDENTICAL with main 0bea8b93 (602 lines,
   scratch ct_main.md5). The cap ped hunt (seed 7 city): no hoodie-cap ped on screen; stopped.
+- MILESTONE 247b82ef: the hat card's tan coat toned to the dark coat the coat-hat ped's body draws
+  (in game ~27,20,27 ink + cream lights). New street_head.py fix `coat` on the finished strip: hue
+  31-52, sat > 0.3, rows below 0.62. MEASURED first: face hue 22-27 / sat 0.48, coat hue 38 / sat 0.39,
+  brim sat < 0.3; the first try (hue 28-55, any sat) greyed the faces and a row cut crossed the back
+  facing's brim; both rejected on sight. LOOKED in the city (seed 2 t6, 48 px/m x3): the collar now
+  continues the dark coat; masters still updated (hat columns = the shipped card). Provenance hash
+  updated.
+- EXE final: re-exported 18:05 on 247b82ef; smoke city seed 2 tilt and `--bot=ghosts --ghost=ohm`
+  (Ohm beat ran), 0 SCRIPT ERROR each.
+
+NEXT (after the freeze; the Director merges):
+1. The cap card in game: find a crowd with a hoodie-cap ped (CrowdAtlas look 3) and judge it at 48.
+2. weapons' tank/tube REQUEST (it10): re-film flamethrower and rocket_launcher chapters at 48 tilt
+   when it lands.
+3. Rivet's death beat if the owner takes Call 8 (a respawn delay = sim change + re-bless).
+4. Draw order: the level cap (Tonnage 3/26), the King's accents in the probe (with bosses).
