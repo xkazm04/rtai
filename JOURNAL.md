@@ -832,3 +832,11 @@ NEXT (written 01:53, for iteration 10):
    (01:00 note: ghost wounds along `arena.hit_dir` for the stomp, filmed on a slam survivor thrown
    sideways in the city reel).
 4. If the Director merges other lanes onto quest 1's path, `test_slice_closure` is the check.
+- LOOK 01:50 Tonnage wave 2 in the city (frames 230-340): the press turns and wades ~1-2 m in 110
+  frames into the slam's pile at the car. Neither ram in the reel happens at speed, so a ram wake
+  would show nothing on the live paths without a charging beat (NEXT 3).
+- CHECK 01:56 reels + scenarios on `87d7dc2b` (the slice fix): director arena 19/19 and city 19/19
+  fully down, 0 SCRIPT ERROR; scenarios 52 ran, 0 failed
+  (`evidence/n7-melee/{director-arena,director-city,scenarios}-*87d7dc2b.log`).
+- FRICTION 01:51 `tools/evidence/run.mjs` refuses an untracked log in the tree ("working tree is
+  dirty", exit 2): commit reel logs before the evidence run.
