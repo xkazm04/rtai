@@ -389,3 +389,28 @@ machine is quiet; REPORT.md is a draft (iteration 2) - update it at the freeze.
   (`evidence/it3/exe_combo.log`). The freeze re-exports the same way.
 - masters frames.json: 15 entries (it3 King trio/close-up/return fade/ease first; superseded
   pre-merge films and stills deleted). Scratch raw avis deleted (4.2 GB).
+- 16:24 TRIED Tonnage on screen at the combo return (`--phase=3 --ghost=tonnage`): Tonnage is
+  spent before the King goes down at tick 1220 (HUD cooldown), so it is not on screen. The ghost-card
+  cross-fade stays unit-tested only.
+- 16:25 decision line in docs/decisions.md (combo reads the court art by the card folder).
+- 16:29 MILESTONE `combo_swap` study row (fade_deg 0; owner call cross-fade vs swap), unit
+  test_view_pitch 25/0 with view_mode/court. FILM `--view=combo_swap --phase=3` (0 SCRIPT ERROR):
+  masters `combo_return_fade_vs_swap_king_frames1150-1186_x2.png` (top: cross-fade, bottom: swap).
+  LOOKED: fade frame 1171 = two crowns; swap = one clean change at 1168. From ~1176 both fade (the
+  defeated King fades out), so the return is a weak place to judge; the engage swap (tick 32) has
+  the King off screen in this seed. My pick stays the cross-fade (default), call for the owner.
+
+NEXT (iteration 4, 16:50-17:50):
+1. Read bosses' and chars' JOURNALs for answers to the it3 REQUESTs (KingArt by folder; cape fan at 70;
+   drop renaming). If bosses key KingArt by `ViewMode.art`, merge d8-bosses, delete ViewPitchCourt
+   (and its test), re-check combo at 55 = tilt (frame 240 diff) and re-film the King trio.
+2. If chars or bosses landed visible art since 16:00 (Ohm card, gang/King close-ups), merge (ordinary
+   merges, JOURNAL ours) and re-film the King trio + 64 px/m pair; run unit + director reel.
+3. A combo engage seen with the King ON screen: find a seed or phase where the King is in frame at
+   ticks 20-45 (`--phase=3 --seed=<n>`), film combo vs combo_swap at 48 px/m (the owner's call needs
+   the engage, not the death fade).
+4. Quality of the 70 King at 64 px/m (weakest frame): the flat cape fan (bosses), today's print
+   limbs under the p70 bust. If bosses do not answer, raise it as a call (70 sample is bust-only).
+5. 18:30 freeze (iteration 5?): export `windows-showcase` (command in REPORT), smoke `--view=combo`,
+   finalise REPORT (drop DRAFT), JOURNAL, commit. Gates before: lint, full unit, scenarios, reel
+   tilt70+combo, top 900-frame identity vs main.

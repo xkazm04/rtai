@@ -44,7 +44,7 @@ Evidence: `C:\Users\kazda\kiro\gtai-masters\d8\view70\` (`frames.json`, 15 entri
 - **The return trip cross-fades too.** Until ae847c59, every card rebuilt after a swap was missed:
   the rebuilt card is renamed while the old one frees. So the 55 -> 70 return was a hard swap.
   Measured now: no spike above the motion floor
-  (`combo_return_fade_king_frames1150-1186_x2.png`).
+  (`combo_return_fade_vs_swap_king_frames1150-1186_x2.png`).
 - **One bell at 70** (4eca94b0): the p70 King bust draws the bell, so the rig's horn part hides.
 - **Gates on 4eca94b0**:
   - unit 1447/0;
@@ -75,8 +75,10 @@ Evidence: `C:\Users\kazda\kiro\gtai-masters\d8\view70\` (`frames.json`, 15 entri
    - See: `combo_ease_08_10_12_defeat_55to70_32ppm_it3.mp4`.
    - Exe: `--view=combo_ease08` / `combo_ease12`.
 3. **Cross-fade or hard swap** of the cards. Default: cross-fade (`fade_deg` 5); `fade_deg` 0 is the
-   swap. Mid-fade, the two strips draw together for about 5 frames, which ghosts the King's bust.
-   - See: `combo_return_fade_king_frames1150-1186_x2.png`.
+   swap, and the `combo_swap` row (`--view=combo_swap`) builds it. Mid-fade, the two strips draw
+   together for about 5 frames, which ghosts the King's bust (two crowns at frame 1171); the swap
+   changes once, cleanly.
+   - See: `combo_return_fade_vs_swap_king_frames1150-1186_x2.png`.
 4. **The bell on the p70 King bust**: built as the strip's own bell, with the rig's horn hidden (one
    bell, as bosses' 55 court bust does). The alternative is to crop the bell off the strip and show
    the rig's horn.
