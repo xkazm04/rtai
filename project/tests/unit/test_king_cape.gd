@@ -47,3 +47,16 @@ func test_the_slam_lands_the_hem_wide_then_settles() -> void:
 	assert_gt(land, 1.05, "spread wide as he lands")
 	assert_almost_eq(later, 1.0, 0.001, "settled")
 	assert_eq(KingCape._spread(_fight(&"charge", BossFight.State.RECOVER, 0)), 1.0, "only the slam")
+
+
+func test_the_card_capes_train_shows_only_with_the_beat() -> void:
+	assert_eq(
+		KingCape.train_k(_fight(&"charge", BossFight.State.WINDUP, 60)), 0.0, "gathered: none"
+	)
+	assert_almost_eq(
+		KingCape.train_k(_fight(&"charge", BossFight.State.ACTIVE, 30)), 1.0, 0.001, "full flare"
+	)
+	assert_eq(KingCape.train_k(_fight(&"charge", BossFight.State.RECOVER, 60)), 0.0, "settled")
+	var land: float = KingCape.train_k(_fight(&"press_slam", BossFight.State.RECOVER, 0))
+	assert_almost_eq(land, 1.0, 0.001, "the slam lands it wide")
+	assert_eq(KingCape.train_k(null), 0.0, "no fight: at rest")

@@ -33,6 +33,13 @@ const EASE_TICKS: float = 12.0
 ## each point lower the further back it lies, the hem on the ground past DRAPE_BACK_M.
 const DRAPE_SHOULDER_M: float = 1.6
 const DRAPE_BACK_M: float = 1.6
+## d8: when his card wears the cape (KingArt.card_wears_cape) only the cape's TRAIN is drawn: on
+## the ground from TRAIN_ROOT (his back, under the card) out to the hem, as far as the flare and the
+## slam's landing push it past the idle hem (none at rest: the card's cape is the whole cape).
+## TRAIN_K scales it (0 = no train, the it3 card-only read).
+const TRAIN_ROOT: Vector2 = Vector2(-0.3, 0.75)
+const TRAIN_ROOT_H_M: float = 0.9
+const TRAIN_K: float = 1.0
 
 
 ## The cape at `at` (px), facing +x, scaled `p` px per unit, for `fight` now; `up` = the local
@@ -41,6 +48,7 @@ static func draw(
 	ci: CanvasItem, at: Vector2, p: float, fight: BossFight, up: Vector2 = Vector2.ZERO
 ) -> void:
 	if KingArt.card_wears_cape():
+		_train(ci, at, p, fight, up)
 		return
 	var hem: PackedVector2Array = _hem(at, p, fight)
 	var shoulder_l: Vector2 = at + Vector2(0.1, -0.7) * p
@@ -120,3 +128,38 @@ static func _spread(fight: BossFight) -> float:
 	if not LANDING.has(fight.attack.id) or fight.state != BossFight.State.RECOVER:
 		return 1.0
 	return lerpf(LAND_SPREAD_K, 1.0, smoothstep(0.0, EASE_TICKS * 2.0, float(fight.t)))
+
+
+## The train behind a card that wears the cape: the hem eased out from the root line at his back
+## by how far the beat pushes it (flare, landing spread). The root hangs TRAIN_ROOT_H_M up his
+## back (`up` = the local lift per metre), the hem on the ground: a sheet falling from under the
+## card's cape, shaded dark at the root, folded, a thin ermine hem. Under the rig.
+static func _train(ci: CanvasItem, at: Vector2, p: float, fight: BossFight, up: Vector2) -> void:
+	var t: float = minf(TRAIN_K * train_k(fight), 1.0)
+	if t <= 0.0:
+		return
+	var hem: PackedVector2Array = _hem(at, p, fight)
+	var roots: PackedVector2Array = hem.duplicate()
+	var n: int = hem.size() - 1
+	for i: int in hem.size():
+		var s: float = float(i) / float(n) * 2.0 - 1.0
+		var root: Vector2 = at + Vector2(TRAIN_ROOT.x, s * TRAIN_ROOT.y) * p
+		hem[i] = root.lerp(hem[i], t)
+		roots[i] = root + up * TRAIN_ROOT_H_M
+	var dark: Color = Ink.VERMILION.darkened(0.4)
+	for i: int in n:  # a quad per hem segment: root (dark) to hem (bright)
+		var q: PackedVector2Array = [roots[i], roots[i + 1], hem[i + 1], hem[i]]
+		ci.draw_polygon(q, PackedColorArray([dark, dark, Ink.VERMILION, Ink.VERMILION]))
+	for i: int in range(1, n, 2):  # a fold line into each trough
+		ci.draw_line(roots[i].lerp(hem[i], 0.3), hem[i], dark, maxf(FOLD_INK_W * p, 1.0))
+	ci.draw_polyline(hem, Ink.INK, FUR_W * p * 0.6 + 3.0)
+	ci.draw_polyline(hem, FUR, FUR_W * p * 0.6)
+	for i: int in n:  # the ermine's ink tails along the hem
+		ci.draw_circle(hem[i].lerp(hem[i + 1], 0.5), maxf(SPOT_R * p * 0.8, 1.2), Ink.INK)
+
+
+## How much of the train shows (0 at rest, 1 at the full flare or the slam's widest landing).
+static func train_k(fight: BossFight) -> float:
+	var flare: float = (_reach(fight) - 1.0) / (FLARE_K - 1.0)
+	var land: float = (_spread(fight) - 1.0) / (LAND_SPREAD_K - 1.0)
+	return clampf(maxf(flare, land), 0.0, 1.0)
