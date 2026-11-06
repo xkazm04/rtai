@@ -42,6 +42,14 @@ const BOXES: Array[Vector3] = [
 	Vector3(0.1, 0.3, 0.42), Vector3(0.34, 0.56, 0.5), Vector3(0.6, 0.9, 0.62)
 ]
 
+## The sheet's horseshoe rail (a steel U hugging the lower spine, open to the back, its bottom
+## under the torso) and its two big copper hose loops arcing out past the rack's back edge.
+## false = the it10 spine (the cap's small loops only).
+const HORSESHOE: bool = true
+const U_FROM: float = 0.38
+const U_SHARE: float = 0.84
+const LOOP_R_M: float = 0.42
+
 var px: float = 32.0
 ## The wings' extra gap (servo.json rack.spine_m): the column widens by it to fill the gap.
 var gap_m: float = 0.0
@@ -72,6 +80,8 @@ func draw(c: CanvasItem, o: Vector2, fwd: Vector2, k: float, tint: Color) -> voi
 	if gap_m > PLATED_FROM_M:
 		_tint = tint
 		_plates(c, back, front, inner, k)
+	if HORSESHOE and gap_m > PLATED_FROM_M:
+		_loops(c, back, fwd, inner, k)
 	if cap != null:
 		var ck: float = (CAP_W_M + gap_m * 0.6) / (cap.get_width() / ART_PPM) * k
 		c.draw_set_transform(
@@ -92,6 +102,8 @@ func _plates(c: CanvasItem, back: Vector2, front: Vector2, inner: Vector2, k: fl
 		c.draw_line((p - inner * 0.82) * px, (p + inner * 0.82) * px, SHADE * tint, seam)
 	if STEEL_TONE:
 		_boxes(c, back, front, inner, k)
+		if HORSESHOE:
+			_horseshoe(c, back, front, inner, k)
 	else:
 		var a: Vector2 = back + fwd * 0.35 * k
 		var b: Vector2 = front - fwd * 0.2 * k
@@ -124,6 +136,37 @@ func _boxes(c: CanvasItem, back: Vector2, front: Vector2, inner: Vector2, k: flo
 		c.draw_colored_polygon(_quad(a, z, half, Vector2.ZERO), BOX * _tint)
 		var m: Vector2 = a.lerp(z, 0.62)
 		c.draw_line((m - half * 0.8) * px, (m + half * 0.8) * px, SHADE * _tint, 0.03 * k * px)
+
+
+## The U rail: arms from U_FROM along the column at U_SHARE of the inner half, a round bottom.
+func _horseshoe(c: CanvasItem, back: Vector2, front: Vector2, inner: Vector2, k: float) -> void:
+	var fwd: Vector2 = (front - back).normalized()
+	var r: Vector2 = inner * U_SHARE
+	var centre: Vector2 = back.lerp(front, 0.9)
+	var pts: PackedVector2Array = PackedVector2Array()
+	@warning_ignore("return_value_discarded")
+	pts.resize(15)
+	pts[0] = (back.lerp(front, U_FROM) - r) * px
+	for j: int in 13:
+		var a: float = PI * j / 12.0
+		pts[j + 1] = (centre - r * cos(a) + fwd * r.length() * sin(a)) * px
+	pts[14] = (back.lerp(front, U_FROM) + r) * px
+	c.draw_polyline(pts, INK * _tint, 0.2 * k * px)
+	c.draw_polyline(pts, PLATE * _tint, 0.11 * k * px)
+
+
+## The two copper hose loops off the back cap, bulging out past the back edge.
+func _loops(c: CanvasItem, back: Vector2, fwd: Vector2, inner: Vector2, k: float) -> void:
+	var base: float = (-fwd).angle()
+	for s: float in [-1.0, 1.0]:
+		var centre: Vector2 = back + inner * s * 0.66 - fwd * 0.04 * k
+		var r: float = LOOP_R_M * k * px
+		c.draw_arc(
+			centre * px, r, base - PI * 0.55, base + PI * 0.55, 14, INK * _tint, 0.12 * k * px
+		)
+		c.draw_arc(
+			centre * px, r, base - PI * 0.55, base + PI * 0.55, 14, COPPER * _tint, 0.07 * k * px
+		)
 
 
 func _quad(a: Vector2, b: Vector2, half: Vector2, grow: Vector2) -> PackedVector2Array:

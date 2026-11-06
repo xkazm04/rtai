@@ -58,6 +58,7 @@ The rotor dash checked against a reading player (it6): every tell read but 18-32
 12. The spine's tone: tan steel under stacked lighter boxes, sampled from the sheet (default) vs the it9 cream column with a near-white plate: `ServoSpine.STEEL_TONE` true / false (render only). Still: `M/frames/servo_spine_steel_ab_it10.png` (48 px/m before | after | the sheet; 32 px/m before | after).
 13. The hover pads hang in front of the wings like the sheet (default) vs beside the wings' front corners (it9): `ServoRig.PAD_OUT_M` / `PAD_AHEAD_M` 2.35 / 2.0 vs 2.6 / 1.2 (render only). Still: `M/frames/servo_pads_ahead_ab_it10.png`.
 14. A hazard-striped ledge along each rack wing's front edge, copper and ink like the sheet's rack base (default) vs the plain wing front: `ServoWingBand.ON` (render only). Still: `M/frames/servo_wing_band_ab_it10.png`.
+15. The spine's horseshoe rail and the big copper hose loops off its back cap, like the sheet's top view (default) vs the it10 spine (the cap's small loops, no rail): `ServoSpine.HORSESHOE` true / false (render only; subtle at 32 px/m, the loops show beside the cap and the rail along the column). Still: `M/frames/servo_spine_horseshoe_ab_it12.png`.
 
 Exe (exported it10 on f430d3a2, re-exported at the freeze): `build/export/windows/RTAI.exe` in the
 worktree (`windows-showcase` preset, boots into the arena). Lines: `RTAI.exe -- --rigs --boss=servo`,
@@ -68,7 +69,7 @@ tick 7036, 188 on Rivet, 0 SCRIPT ERROR, the editor's numbers (`evidence/servo/e
 
 ## What does not work / open
 - The horn has not been heard (every run was headless or filmed without listening).
-- The spine is procedural: since it10 it has the sheet's width and tan steel with stacked boxes, but not its rounded horseshoe frame or the hose loops over the top. The rack bases' hazard stripes are copper (vermilion is reserved), so they read browner than the sheet's orange.
+- The spine is procedural: since it10 it has the sheet's width and tan steel with stacked boxes, and since it12 a light horseshoe rail and copper hose loops past its cap; the rail's round bottom sits under the torso, and the loops are thinner and less orange than the sheet's. The rack bases' hazard stripes are copper (vermilion is reserved), so they read browner than the sheet's orange.
 - The `--boss-cam` clip camera frames Rivet and the boss together; a bay-hop landing ring on a Rivet by the bays can sit under the boss bar in a clip (`M/servo_attack_bay_hop_48ppm_it10.mp4`). In play the camera centres on Rivet, so the ring stays on screen.
 - The same clip camera at the phase-3 defeat in the yard's top-left corner: Servo's centre stays 3.1-3.5 m inside the screen edge (`BossCam.BOSS_MARGIN_M` 3.0), but turned sideways his rack reaches 3.07 m out, so half the body leaves the left edge (`M/servo_p3_overtime_defeat_32ppm_it10.mp4`, ~32 s). A 3.5 margin changed nothing; ~4.5 would hold the body but pushes the view off the floor elsewhere (unmeasured). The framework file is shared with `n7-king`: left as is.
 
