@@ -5,7 +5,8 @@
         "2026-11-06: d8 chars: --order-probe measures ghost-card vs rig pairs (the brief's draw-order item, measured before/after) (dev_loc 18080 -> 18115)",
         "2026-11-06: vehicle_frame learns --view= (n8 vehicles: film the cars under the angled view) (dev_loc 18115 -> 18117)",
         "2026-11-06: n8 vehicles: vehicle_turn.gd, the 360-degree turn film the lane brief asks for (dev only) (dev_loc 18117 -> 18193)",
-        "2026-11-06: dev/showcase/vehicle_states: the vehicles lane's damage/fire/skid film scene (dev only, n8) (dev_loc 18193 -> 18288)"
+        "2026-11-06: dev/showcase/vehicle_states: the vehicles lane's damage/fire/skid film scene (dev only, n8) (dev_loc 18193 -> 18288)",
+        "2026-11-06: n8 vehicles: the depth film scene (vehicle_frame --scene=depth), dev only (dev_loc 18287 -> 18327)"
       ],
       "files": {
         "project/dev/arena": 1034,
@@ -29,11 +30,11 @@
         "project/dev/save_crash_writer.gd": 18,
         "project/dev/selftest": 1446,
         "project/dev/servo": 434,
-        "project/dev/showcase": 5624,
+        "project/dev/showcase": 5664,
         "project/dev/view": 158,
         "project/dev/weapon_art": 506
       },
-      "total": 18287
+      "total": 18327
     },
     "direct_cmdline_reads": {
       "files": {
