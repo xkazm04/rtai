@@ -29,6 +29,17 @@ const BOSS_MARGIN_X_M: float = 5.5
 ## the rim), screen px; kept clear of the boss across the whole width.
 const FOOT_PX: float = GhostFormHud.MARGIN + 162.0
 
+## Under a tilt the boss draws up the screen from his ground point: the King's 2.0x bust on the
+## throne-car reaches ~4 m. The top margin is kept round that lifted top (n8 it7: at 64 px/m the
+## bust rose into the boss bar). Straight down the lift is 0 (today's frame, exact).
+const BOSS_TOP_M: float = 4.0
+## Kept above that lifted top (the crown's air under the bar). 3 m (BOSS_MARGIN_M) round the
+## ground point plus 3 m over a 2.8 m lift did not fit 12.5 m of screen at 64 px/m.
+const TOP_MARGIN_M: float = 1.0
+## Rivet is kept on screen with this margin when the boss's own margins leave room (the boss wins;
+## n8 it7: at 64 px/m the frame held the boss and lost Rivet ~10 m away).
+const RIVET_MARGIN_M: float = 1.5
+
 var view: CollectCallView = null
 var hook: BossHook = null
 
@@ -74,8 +85,21 @@ func _process(_delta: float) -> void:
 	var hud_m: float = HUD_PX * m_per_px
 	var on_floor: Vector2 = clamp_focus(at, half, hook.bounds.grow_side(SIDE_TOP, hud_m))
 	var bands: Vector2 = Vector2(hud_m, FOOT_PX * m_per_px)
-	var held_x: Vector2 = keep_in(on_floor, half, b, BOSS_MARGIN_X_M, bands)
-	view.focus = Vector2(held_x.x, keep_in(on_floor, half, b, BOSS_MARGIN_M, bands).y)
+	var with_r: Vector2 = keep_in(on_floor, half, r, RIVET_MARGIN_M, bands)
+	var held_x: Vector2 = keep_in(with_r, half, b, BOSS_MARGIN_X_M, bands)
+	var y: float = keep_in(with_r, half, b, BOSS_MARGIN_M, bands).y
+	view.focus = Vector2(held_x.x, hold_top(Vector2(held_x.x, y), half, b, bands))
+
+
+## The focus y that keeps the boss's lifted top (BOSS_TOP_M up the screen under a tilt) and
+## TOP_MARGIN_M above it under the boss bar; the ground point's bottom margin is kept first.
+static func hold_top(focus: Vector2, half_m: Vector2, b: Vector2, bands: Vector2) -> float:
+	var top: Vector2 = b + ViewMode.shared().lift_px(BOSS_TOP_M) / SimConst.PX_PER_M
+	if top.is_equal_approx(b):
+		return focus.y
+	var lo: float = b.y + BOSS_MARGIN_M - half_m.y + bands.y
+	var hi: float = top.y - TOP_MARGIN_M + half_m.y - bands.x
+	return clampf(focus.y, lo, hi) if lo <= hi else focus.y
 
 
 ## Half the screen in metres at the view's zoom now.
