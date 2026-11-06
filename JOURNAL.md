@@ -1709,3 +1709,6 @@ boss_fight telemetry and a hp_min that counts the falling tick. Merge n7-king ag
 - 08:22 MERGE n7-king d6f8fafa (docs/evidence only, incl. king's REQUEST to servo at it22: already
   done, both code merges are in and the lever is measured on Servo). JOURNAL/REPORT ours.
   `project/` unchanged: the 08:09 exe and the fba95dea gates stand. Freeze.
+- 08:24 MERGE n7-king 6edc6aaa (docs/evidence only: king's 16 s repair-delay seeds 11-15 and its
+  REPORT next-step note). JOURNAL/REPORT ours, `project/` unchanged: the 08:09 exe (fba95dea) and
+  the 08:19 all-PASS evidence run stand. Freeze reached; no code moves after this.
