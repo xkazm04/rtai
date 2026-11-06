@@ -85,3 +85,40 @@ NEXT (iteration 3), revised (replaces the list above, in order):
 3. Contact shadows under lifted rigs; the parked sedans as stacks (vehicles class); occlusion
    silhouettes behind tall props.
 4. `top_lift`. 5. evidence/run.mjs + parity with the switch off.
+
+## Iteration 4 (02:54-03:54), BUILD
+Iteration 3 left no journal entry and no commit, so this session picked up iteration 2's revised NEXT 1.
+- IMAGE (image.lock, gen.mjs copied to scratch/view): round1 `rivet_head_facings` (ref: the
+  owner logo; 61 s) and round2 `king_bust_facings` (ref: boss_king.jpg; 60 s). Both came back
+  clean on chroma green, 5 facings in a row. Visor slit asked cream, not teal (teal = souls).
+  Provenance: 2 lines in steam/ai-provenance/2026-11.jsonl.
+- MILESTONE 8fd86e65: `RigHeadCard` upright facing cards + rows `tilt_cards`/`tilt55_cards`/
+  `tilt45_cards` (view.json `cards`). Cutter `tools/art/cut_facings.py` (key, split, bottom-align,
+  strip).
+  FRICTION: (1) `bool(Variant)`/`float(Variant)` constructors are warnings-as-errors (twice; read
+  typed vars instead). (2) Through the part shader, the logo's dark steel printed as a solid ink blob at
+  48 px/m (the gameplay thresholds), and King's gold would print vermilion; both cards are now
+  pre-printed in the cutter (--tan, --snap) and drawn raw. (3) KingAccents' flat star crown + ermine
+  doubled the card; they now stand down under cards (the defeat crown fall stays).
+  LOOKED (48 px/m, seed 2 tick 900, tilt55 vs tilt55_cards): the King reads as a crowned king with an
+  ermine collar, chains and cape on the car; Rivet reads as the logo's tan helmet with the visor
+  band and the vermilion hazard collar. At 32 px/m (clip): still readable, crown and helmet visible;
+  the other two panels show discs. My verdict: this is the first change tonight that moves the
+  impression, more than the angle itself. It is not the owner's verdict.
+- Gates: lint 13/13; unit 1168/0, 0 SCRIPT ERROR (`evidence/view/it4/unit.log`); `top` md5
+  5db6f283... unchanged on 8fd86e65. NOT RUN this session: scenarios, director reel, evidence/run.mjs.
+- FILM `gtai-masters/n7/view/king_top_tilt55_tilt55cards_32ppm_it4.mp4` (20 s, seed 2, top |
+  tilt55 | tilt55_cards, 0 SCRIPT ERROR each) + 2 stills. FRICTION: I overwrote frames.json by
+  mistake (a Python `/c/` path read failed, so I assumed the file did not exist). gtai-masters is not
+  git, so I rebuilt the 8 it2 entries from this journal, marked "rebuilt". Now 11 entries.
+- Rules applied: toolkit-fit slice first (the hardest element: the character and the boss faces,
+  before any backdrop); cost the roster (one 5-frame card per head, roughly 1 image round per character).
+
+NEXT (iteration 5):
+1. The card's hit flash (the card is not in rig.sprites; raw cards need a tint path) and the gang's
+   head card (the gang share art_dir "gang": one round gives every thug a face).
+2. Re-check the cards at tilt45_cards and tilt_cards (65); pick the pitch for the comparison set;
+   the King on foot (phase 2-3) with the card; Rivet turning a full circle at 48 (octant pops?).
+3. Scenarios + the director reel with the switch off (code touched cut_rig.gd and king_accents.gd).
+4. The 165 MB it4 clip: re-encode smaller (crf 26) if disk matters.
+5. Then `top_lift`, occlusion, the city block; the cost table and the exe by 08:30.
