@@ -1615,3 +1615,14 @@ NEXT (written 07:37, for iteration 19 = the freeze; supersedes the 06:45 list):
    (evidence-run-9e246820). Delete the `audit_*_48.avi` in scratch if no doc names them.
 4. Build only if time is left before 08:15: the whiff thud (unit-tested only), ObjectiveView vs
    forms_lift_m (judged look: film first). Call (b) only on the owner's word.
+- REPORT 07:38 (`a6545647`): top line, the combined clip's provenance, the gates block and a new exe
+  section brought to `fca3ba52` (still marked DRAFT; the freeze drops it).
+- TRIED 07:41 filming the whiff thud (NEXT 4) with no code change: `quest_hauler_rec.tscn --ppm=32`,
+  `--tell-cues=off` vs on, both exit 0, 0 SCRIPT ERROR: `stomps 1 stomp_hits 1` in both, so the
+  recorder's one stomp lands on a guard (its second press never fires a stomp). A whiff needs a dev
+  beat that slams onto an empty road; not started with 20 min left. Films deleted. The thud stays
+  unit-tested only (REPORT "What does not" already says so via call (o)).
+- STOP 07:43 iteration 18. Code: `05b0e51c` (Dent's miss lash cracks: `ghost_lash`), `fca3ba52`
+  (dev: quest_ghost_rec films Dent). Gates on it: reels 19/19 x2, scenarios 52, full evidence green
+  (`9e246820`); both exes re-exported and booted on it. Clip `M/dent_miss_lash_ab_32ppm.mp4`.
+  NEXT is the 07:37 entry above.
