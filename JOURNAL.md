@@ -480,3 +480,8 @@ NEXT (iteration 6):
 - GATE on c76be180 (code = c1e8cf2f): unit no-arg 1508 passed, 0 failed, no FLAKY; scenarios 52
   ran, 0 failed (headless; vehicle timings labelled CONTENDED by the runner); the tilt70 reel ran
   to its 14000-frame end, exit 0, 0 SCRIPT ERROR. Combo reel started 00:50 (reel_combo_it5.log).
+- GATE director reel under combo on c1e8cf2f code: 19/19 chapters, every chapter all down, 0 SCRIPT
+  ERROR at the 19th chapter (00:53; the process runs on to its end under a 14 min timeout). All
+  three gate views of the it5 code: tilt70 19/19, combo 19/19; `top` untouched by it5 (the walker
+  code returns at once without a card view; top reel last ran on 268bc09c) -> run the top reel and
+  the selftest goldens first in it6 to keep the bit-identity claim current.
