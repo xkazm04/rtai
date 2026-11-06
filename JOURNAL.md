@@ -1322,8 +1322,8 @@ Read: JOURNAL it12 tail + NEXT, git log -12. Rules kept from it12: motion-qualit
 
 NEXT (iteration 14, in order):
 1. (done 03:31-03:33: the slam and decree clips re-filmed, below.) All REPORT clips are now
-   it12-it13 except the ghost clips (Dent it6, Tonnage/Kerf it5, Ohm it4: the flat cape, dark
-   horn); re-film those four on the current head (their commands are in the frames.json notes).
+   it12-it13 except the ghost clips (Dent it6, Tonnage/Kerf it5: the flat cape, dark horn;
+   Ohm done 03:36); re-film those three on the current head (their commands are in the frames.json notes).
 2. The cape on the car in phase 1 does not react to the ram (CHARGING has `ram`, but on the car the
    cape sits at CAPE_ON_CAR_K 1.3 over the trunk; check the ram tell/active in a 48 px/m still that
    the gather/flare reads there and does not overhang the car's rear bumper oddly).
@@ -1341,3 +1341,7 @@ NEXT (iteration 14, in order):
   the it10 one, 0 SCRIPT ERROR). **Looked at** the 4 fps sheet and a frame beside the it10 clip at
   1.5 s: the same framing (BossCam unchanged), the decree rings round King on the stalled car, the
   gang brawling; the new cape and horn. it10 deleted; frames.json 15; REPORT points at it13.
+- 03:36 FILM `M/king_ohm_daze_tells_48ppm_it13.mp4` (phase 3 seed 2, --ghost=ohm --ghost-tells, 15 s,
+  0 SCRIPT ERROR, "king dazed 36 ticks" x2 as in it4). **Looked at** the 2 fps sheet: the teal form,
+  the bolt arcing into King, the dazes, the charge lanes, King down at the end; new cape and horn.
+  it4 clip deleted; frames.json 15; REPORT points at it13. Session ends, everything committed.
