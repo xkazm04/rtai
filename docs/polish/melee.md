@@ -46,6 +46,11 @@ ghost-powers beats, telemetry overlay on).
    +3-5 dB, the car's own sounds start there too). Sound re-scored for the press slam 3 -> 4 (the tell
    is heard), Dent 3 (the clunk is small). Not listened to. `M/ghost_tell_cues_ab_32ppm.mp4`
    (`--tell-cues=off` = the before).
+   **Dent's miss lash 07:20, 2026-11-06 (`05b0e51c`)**: a seize with no car on the aim line lashed out and frayed
+   in silence; TellCues.lash plays `ghost_lash` (the metal hit at 1.8, a short crack, not a whine) at the aim point
+   once per miss. Quest 1 view, 12 misses: onsets on the misses between Rivet's voice lines (76, 96, 117, 137,
+   ...), the rest sink under the sfx duck. Dent's sound stays 3 (small cues, reused bank). Not listened to.
+   `M/dent_miss_lash_ab_32ppm.mp4`.
    **Ohm's car bolt (`a6c2797b`)**: a bolt that burns a car or reaches nothing played no sound (HitCues hears
    bodies); TellCues plays ghost_bolt at its end. Film: once the cops are down Ohm burns the car every
    24-32 frames, each drawn bolt now crackles (+10-20 dB over the silent before, onsets on the bolt frames).

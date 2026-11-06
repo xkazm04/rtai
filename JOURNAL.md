@@ -1564,3 +1564,25 @@ NEXT (written 06:45, for iteration 18; supersedes the 05:59 list):
   --ppm=32 --kerf-glide=off --wound-hold=off` (Movie Maker, 260 frames): exit 0, 0 SCRIPT ERROR, no
   unknown flag; frames 100 (the seized car on its teal tether) and 200 (the blast, debris, blood)
   looked at. The slice exe: exit 0, 0 SCRIPT ERROR, frame 110 = the Quest 1 title card.
+- BUILD 07:12 `05b0e51c` Dent's miss lash makes a sound (NEXT 4 candidate "Dent's miss lash is
+  silent"): TellCues.lash plays `ghost_lash` at DentStage.miss_to once per new miss (misses count
+  moved). Unit test with a planted no-miss (10 ticks of 0 misses: no cue) + the row check;
+  unit 1242/1242, lint 13/13. `fca3ba52` (dev): quest_ghost_rec lifts quest 1's Dent lock for
+  `--ghost=dent` (since ghost-powers-5 quest 1 locks Dent, so G skipped him and it filmed Ohm).
+- MEASURE 07:15 quest 1 view, `quest_ghost_rec --ghost=dent --ppm=32`, `--tell-cues=off` vs on,
+  12 misses each, 0 SCRIPT ERROR. First pick, the servo whine at 1.7 (0.84 s): onsets only at 120
+  and 188-210: it overlapped itself at the 20-tick press cadence (2 voices), and a whine is the
+  wind-up's sound by the 05:01 decision. DECISION 07:17: the metal hit at 1.8 (0.38/0.17 s, a
+  crack where the tether snaps; the seize is the same sound at 0.55), cooldown 8, 3 voices.
+  Re-measured (2-12 kHz, after minus before): onsets 76, 96, 117, 137, 188, 206, 286 (the press
+  cadence plus ~6 frames of movie lead); the misses at 150-180 and 230-280 add nothing: they fall
+  under Rivet's voice line (the before's RMS is -15..-20 dB there vs -26..-44 between lines), where
+  the sfx bus is ducked (audio_buses duck). Not listened to.
+- CLIP 07:19 `M/dent_miss_lash_ab_32ppm.mp4` (5.8 s, sound + waveform strip, before then after,
+  quest 1 at 32 px/m). Not in frames.json (it holds 15; this small sound gain is not among the
+  best). REPORT row + call (o), audit note, decision line.
+- Registry rules applied: realtime-combat-semantics (the miss is answered on its own tick, the
+  sound at the place it happens), motion-quality-gating (live quest view, before/after, measured).
+- GATES 07:28 on `fca3ba52` (worktree untouched during them): director reels arena 19/19 and city
+  19/19 (38 lines each), 0 SCRIPT ERROR; scenarios 52 ran, 0 failed
+  (`evidence/n7-melee/{director-arena-loadout,director-city-loadout,scenarios}-fca3ba52.log`).
