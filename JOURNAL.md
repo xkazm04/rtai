@@ -1624,3 +1624,7 @@ NEXT (iteration 21: the freeze at 08:30, report 08:40):
    the same frames; the crate_damage key is sim-neutral at 0, the numbers prove it).
 4. REPORT final at 08:40: drop DRAFT, the header on the last gates (and evidence-run-it20's result),
    keep the n = 10 numbers. Never edit `project/` while a Godot batch runs (it20 FRICTION).
+- 07:29 GATES `tools/evidence/run.mjs --no-bench` on b998a2d0: **all PASS** (lint 13/13, unit
+  1199/0, scenarios 52, parity bit for bit + planted mutation caught at step 629, selftest: look
+  goldens 11/11, block goldens 5/5) (`evidence-run-it20.log`). FRICTION: the first try wrote its log
+  inside the worktree and refused a dirty tree; the log now goes to `gtai-n7/scratch/servo/` first.
