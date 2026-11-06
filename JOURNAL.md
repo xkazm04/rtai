@@ -1545,3 +1545,27 @@ NEXT (iteration 16, in order):
    plum fill between the arch and the collar, A/B at 32 px/m).
 3. If any change moves the look: re-film the full fight (film32.sh in build/scratch15) and re-cut.
 4. At the freeze: re-export the exe (last: b2e71b83, 04:43, smoke 4933 / 88), smoke, commit.
+
+## Iteration 16 (05:04-06:04), BUILD
+
+### 05:04 START
+- Read JOURNAL NEXT (it15), git log -12, servo's JOURNAL REQUESTs (none new for king). Order: the
+  REPORT final pass (NEXT 1), the plum inside the throne arch (NEXT 2), re-film if the look moves,
+  re-export at the end.
+
+### 05:10 REPORT final pass (NEXT 1)
+- DRAFT removed; every path REPORT cites checked to exist (the phase clips pointed at it14 names,
+  now the it15 files; the brace globs written out); a Next steps list for the morning. Committed
+  7efd7006.
+
+### 05:20 MILESTONE the throne arch's plum lining (NEXT 2)
+- Registry: depth-ordered-layered-art (the lining under the arch, over the cape), sprite-and-atlas-
+  production (judged at 32 px/m first).
+- A plum fill of the whole arch was rejected before building: the space inside the arch is the
+  cape, King's vermilion mark. Built `KingCarTrim.PAD_M` 0.12: a plum quilted band on the arch's
+  inner edge, ink-edged, five gold tufting buttons.
+- A/B phase 1 tick 60 at 48 and 32 px/m (`evidence/king/shots/it16/throne_pad_before_after_p1_48_32ppm.png`).
+  **Looked at**: at 32 px/m the arch reads as a gold frame with a plum cushion inside; the cape
+  still fans vermilion round it; buttons visible only at 48. Phase 3 tick 30 at 48: the empty throne
+  on the wreck, the lining sits on the plum roof without noise. DECISION keep 0.12.
+- Unit **1164/0** (`evidence/king/unit-it16.log`), lint 13/13.

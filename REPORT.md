@@ -77,8 +77,8 @@ and in the exported exe.
   chain that reads at 32 px/m, on the car too; their shades are still a dark band, not the target's
   black visor glasses. Tried and rejected: a wider visor band in the part art prints the head as a
   black disc at 32 px/m (it7/it10, call I) and a drawn visor arc lands on the dome's ink edge (it14).
-- The target's throne back is plum-quilted inside a gold frame; ours is the gold arch only (from
-  straight above the cape covers the seat, measured it15).
+- The target's throne back is plum-quilted inside a gold frame; ours is the gold arch with a thin
+  plum lining (it16): the rest is under the cape from straight above.
 - The plain robot thug (the enemy-ai lane's, not King's) prints as solid ink at 48 px/m. The gang's
   lift would fix it (`evidence/king/shots/it7/plain_thug_48ppm_ink_x2.png`).
 
@@ -129,8 +129,9 @@ Each call names its options, the default that is built, and how to see it.
 - **M. The throne back (it15).** A gold arch with ball finials round King's back, drawn over the
   cape, a small scrolled crest with a plum gem at its back (`CREST_M` 0.17, 0 = none,
   `evidence/king/shots/it15/car_throne_crest_before_after_p1_32_48ppm.png`), left empty on the car when he steps down (built: `KingCarTrim.THRONE_HW_M` 0.95), or no
-  throne (0, the it14 car: the cape alone behind him). The arch crosses the cape's folds; the
-  target's quilted plum back is covered by the cape from straight above. Stills:
+  throne (0, the it14 car: the cape alone behind him). The arch crosses the cape's folds. (it16) A
+  plum quilted lining on the arch's inner edge stands for the target's plum-tufted back (built:
+  `PAD_M` 0.12, 0 = the bare arch): `evidence/king/shots/it16/throne_pad_before_after_p1_48_32ppm.png`. Stills:
   `evidence/king/shots/it15/car_throne_before_after_p1_32_48ppm.png`,
   `evidence/king/shots/it15/car_throne_empty_p3_step_48ppm.png`; in play `RTAI.exe -- --rigs --boss=king`.
 
@@ -156,8 +157,7 @@ same as the editor run). It is re-exported at the freeze.
    human-bot fights survive; never call it balanced without the table.
 3. The gang's shades (the last look gap): needs a separate dark visor part drawn over the dome in the
    rig, not the part sheet's band (two part-art tries failed at 32 px/m, call I).
-4. The target's quilted plum inside the throne arch (covered by the cape from straight above).
-5. The plain enemy-ai robot thug: give it the gang's D4 lift (it prints as ink at 48 px/m).
-6. Merge order for the Director: `n7-king` (the framework) before `n7-servo`, which merged it.
+4. The plain enemy-ai robot thug: give it the gang's D4 lift (it prints as ink at 48 px/m).
+5. Merge order for the Director: `n7-king` (the framework) before `n7-servo`, which merged it.
 
 The full log is `JOURNAL.md`.

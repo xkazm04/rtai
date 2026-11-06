@@ -37,6 +37,9 @@ const THRONE_HW_M: float = 0.95
 const THRONE_ARC: float = 1.15
 ## The scrolled crest at the arch's back centre (the sheet's carved top), its radius (m); 0 = none.
 const CREST_M: float = 0.17
+## it16: the plum quilted lining on the arch's inner edge (the sheet's plum-tufted back), its width
+## (m), tufted with gold buttons; 0 = the bare gold arch (it15).
+const PAD_M: float = 0.12
 
 
 static func draw(ci: CanvasItem, l: float, w: float, p: float) -> void:
@@ -74,6 +77,13 @@ static func throne(ci: CanvasItem, at: Vector2, p: float) -> void:
 		return
 	var r: float = THRONE_HW_M * p
 	var w: float = 0.16 * p
+	if PAD_M > 0.0:  # the plum lining inside the arch, then its tufting
+		var pr: float = r - w * 0.5 - PAD_M * p * 0.5
+		ci.draw_arc(at, pr, PI - THRONE_ARC, PI + THRONE_ARC, 24, INK, PAD_M * p + 3.0)
+		ci.draw_arc(at, pr, PI - THRONE_ARC, PI + THRONE_ARC, 24, PLUM, PAD_M * p)
+		for k: int in 5:
+			var a: float = PI + THRONE_ARC * (float(k) / 2.0 - 1.0) * 0.8
+			ci.draw_circle(at + Vector2.from_angle(a) * pr, maxf(PAD_M * p * 0.16, 1.0), GOLD)
 	ci.draw_arc(at, r, PI - THRONE_ARC, PI + THRONE_ARC, 24, INK, w + 4.0)
 	ci.draw_arc(at, r, PI - THRONE_ARC, PI + THRONE_ARC, 24, GOLD, w)
 	ci.draw_arc(at, r + w * 0.2, PI - THRONE_ARC * 0.9, PI + THRONE_ARC * 0.9, 24, GOLD_HI, 1.5)
