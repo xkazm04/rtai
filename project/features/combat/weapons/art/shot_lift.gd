@@ -12,6 +12,8 @@ extends RefCounted
 const GUN_H_M: float = 1.0
 const SHADOW: Color = Color(0.090, 0.075, 0.106, 0.38)
 const SHADOW_PX: float = 5.0
+## The flame jet lets go of the drawn wand tip by this many metres out (onto the lifted sim line).
+const JET_CONVERGE_M: float = 2.0
 
 
 ## The lift of a point at gun height, in metres of the FX layer (ZERO straight down or off).
@@ -47,3 +49,15 @@ static func round_at(ci: CanvasItem, s: Shot, at: Vector2, flown: float) -> Vect
 		return at
 	var dir: Vector2 = s.vel.normalized()
 	return at + line(ci, at - dir * clampf(flown, 0.0, 1.0), at)
+
+
+## Rivet's flame jet `s`, `went` m out: its tongues at gun height. Near the nozzle they are pulled
+## onto the drawn wand tip (HeldMuzzle) and let go by JET_CONVERGE_M, so the stream leaves the tip,
+## not the floor under Rivet. ZERO straight down or `--shot-lift=off` (the before: on the ground).
+static func jet(ci: CanvasItem, s: Shot, went: float) -> Vector2:
+	var up: Vector2 = up_m()
+	if up == Vector2.ZERO:
+		return Vector2.ZERO
+	var line0: Vector2 = s.origin + up
+	var tip: Vector2 = HeldMuzzle.at_m(ci, line0)
+	return up + (tip - line0) * clampf(1.0 - went / JET_CONVERGE_M, 0.0, 1.0)

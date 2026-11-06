@@ -18,3 +18,12 @@ func test_ground_hits_stay_on_the_ground_and_body_hits_lift() -> void:
 	assert_eq(ShotLift.hit_at(at, GunFx.Hit.GROUND), at)
 	assert_eq(ShotLift.hit_at(at, GunFx.Hit.BODY), at + ShotLift.up_m())
 	assert_eq(ShotLift.hit_at(at, GunFx.Hit.METAL), at + ShotLift.up_m())
+
+
+func test_the_flame_jet_stays_on_the_ground_straight_down() -> void:
+	var s: Shot = Shot.new()
+	s.origin = Vector2(1, 2)
+	s.pos = Vector2(4, 2)
+	var ci: Node2D = autofree(Node2D.new())
+	assert_eq(ShotLift.jet(ci, s, 0.0), Vector2.ZERO, "top: the jet is the before, bit-identical")
+	assert_eq(ShotLift.jet(ci, s, 3.0), Vector2.ZERO)
