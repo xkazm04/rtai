@@ -70,12 +70,15 @@ func _draw() -> void:
 		_crown(at + Vector2(fall.x, fall.y), CROWN_M * Ink.PX_PER_M, fall.z)
 	_shout(f, at)
 	var buffed: bool = view.adds != null and view.adds.buffed(f.now())
+	# d8: the court's gang card for this view's pitch wears its own gold chain (KingArt)
+	var chains: bool = KingArt.strip_path(GangPlan.ART_DIR, ViewMode.shared().pitch_deg).is_empty()
 	for g: BossFight in view.standing_adds():
 		var c: Vector2 = Ink.px(g.body.pos)
 		if buffed:  # the decree's buff: a danger ring on every gang bot until it ends
 			draw_arc(c, 0.52 * Ink.PX_PER_M, 0.0, TAU, 20, Ink.VERMILION, 2.5)
-		_chain(c, g.body.facing.angle())
-	if CHAIN_W_M > 0.0 and rigs != null:
+		if chains:
+			_chain(c, g.body.facing.angle())
+	if CHAIN_W_M > 0.0 and rigs != null and chains:
 		for mark: Vector3 in rigs.rider_marks():
 			_chain(Vector2(mark.x, mark.y), mark.z)
 
