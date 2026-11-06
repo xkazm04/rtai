@@ -24,12 +24,19 @@ const ART_PPM: float = 96.0
 const CREAM: Color = Color8(234, 197, 149)
 const SHADE: Color = Color8(192, 159, 126)
 const INK: Color = Color8(27, 22, 26)
+## The wide spine (gap_m over PLATED_FROM_M) reads as the sheet's armoured body: plate seams
+## across it every PLATE_M, a raised centre plate, and a copper hose down each side.
+const PLATED_FROM_M: float = 0.2
+const PLATE_M: float = 0.48
+const PLATE: Color = Color8(247, 224, 190)
+const COPPER: Color = Color8(178, 92, 48)
 
 var px: float = 32.0
 ## The wings' extra gap (servo.json rack.spine_m): the column widens by it to fill the gap.
 var gap_m: float = 0.0
 ## The cap art (ServoRig's head part).
 var cap: Texture2D = null
+var _tint: Color = Color.WHITE
 
 
 func draw(c: CanvasItem, o: Vector2, fwd: Vector2, k: float, tint: Color) -> void:
@@ -50,6 +57,9 @@ func draw(c: CanvasItem, o: Vector2, fwd: Vector2, k: float, tint: Color) -> voi
 		for s: float in [-1.0, 1.0]:
 			var at: Vector2 = p + side * s * (w * 0.5 - BAND_M * 0.5) * k
 			c.draw_circle(at * px, 0.028 * k * px, INK * tint)
+	if gap_m > PLATED_FROM_M:
+		_tint = tint
+		_plates(c, back, front, inner, k)
 	if cap != null:
 		var ck: float = (CAP_W_M + gap_m * 0.6) / (cap.get_width() / ART_PPM) * k
 		c.draw_set_transform(
@@ -57,6 +67,33 @@ func draw(c: CanvasItem, o: Vector2, fwd: Vector2, k: float, tint: Color) -> voi
 		)
 		c.draw_texture(cap, -cap.get_size() * 0.5, tint)
 		c.draw_set_transform(Vector2.ZERO)
+
+
+## The wide spine's plating (gap_m over PLATED_FROM_M), over the cream fill; `_tint` is draw's.
+func _plates(c: CanvasItem, back: Vector2, front: Vector2, inner: Vector2, k: float) -> void:
+	var fwd: Vector2 = (front - back).normalized()
+	var tint: Color = _tint
+	var len_m: float = (BACK_M + FRONT_M) * k
+	var seam: float = 0.035 * k * px
+	for i: int in range(1, floori(len_m / (PLATE_M * k)) + 1):
+		var p: Vector2 = back + fwd * PLATE_M * i * k
+		c.draw_line((p - inner * 0.82) * px, (p + inner * 0.82) * px, SHADE * tint, seam)
+	var a: Vector2 = back + fwd * 0.35 * k
+	var b: Vector2 = front - fwd * 0.2 * k
+	c.draw_colored_polygon(_quad(a, b, inner * 0.5, fwd * 0.03 * k), INK * tint)
+	c.draw_colored_polygon(_quad(a, b, inner * 0.44, Vector2.ZERO), PLATE * tint)
+	var side: Vector2 = inner.normalized()
+	for s: float in [-1.0, 1.0]:
+		var pts: PackedVector2Array = PackedVector2Array()
+		@warning_ignore("return_value_discarded")
+		pts.resize(9)
+		for j: int in 9:
+			var t: float = j / 8.0
+			var at: Vector2 = back.lerp(front, 0.12 + 0.6 * t)
+			at += side * s * (inner.length() * 0.72 + sin(t * PI) * 0.1 * k)
+			pts[j] = at * px
+		c.draw_polyline(pts, INK * tint, 0.1 * k * px)
+		c.draw_polyline(pts, COPPER * tint, 0.06 * k * px)
 
 
 func _quad(a: Vector2, b: Vector2, half: Vector2, grow: Vector2) -> PackedVector2Array:
