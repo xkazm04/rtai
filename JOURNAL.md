@@ -1420,3 +1420,11 @@ live arena path at 32/48 px/m), sprite-and-atlas-production, depth-ordered-layer
   tracking lane, the lock, the sidestep, the crossing, the vent steam, on the docked bays.
   `M/servo_attack_rotor_dash_48ppm_it16.mp4` + keys replace it14's (deleted). p2/p3 and the three
   ghost runs re-filming (`film48_16.sh`, `ghost48_16.sh`).
+- 05:22 FILMS on the docked bays at 48 px/m (`film48_16.sh 2 2 900`, `3 2 1000`, `ghost48_16.sh
+  dent 1 1 600`; 0 SCRIPT ERROR each), cut as it14 (`scratch/servo/cut16.sh`): the package carpet
+  (0.5 + 6 s), the bay hop (10.5 + 4.5), the hot dash (0.3 + 4.8), the kamikaze (5.0 + 5.8),
+  Dent's van (1.5 + 4.5). **Looked at** every key sheet: carpet (the ring lane, blasts, CS
+  crates), bay hop (the ring locking among the crates by bay 4, the landing), hot dash (one wing,
+  the lane, the step out, the vent), kamikaze (lock rings, a dive in its ring, the sidestep), Dent
+  (the teal tether, the van onto the rack, the blast, the wreck). it14 clips and keys deleted;
+  REPORT and frames.json paths moved; every frames.json file exists. Kerf and Ohm filming.
