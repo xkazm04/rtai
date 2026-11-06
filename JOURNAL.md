@@ -948,3 +948,12 @@ NEXT (written 02:35, for iteration 11):
   tick x 6 ticks), 0 SCRIPT ERROR (`evidence/n7-melee/quest1-hauler-rec-plates.log`). 2x crops of
   frames 60/64/100/104/200/204: small cream stars on the press's flank, not a blur; the ram's big
   star at 200. Still `M/quest1_tonnage_plates_32ppm_2x.png`; REPORT line updated. PNGs deleted.
+- STOP 02:52 iteration 10. Code commits: `4540d259` (plasma sword held blade + dev plasma_sword
+  chapter), `9a2d3137` (its pickup and icon), `4b43491e` (quest 1 Hauler recorder counts plate
+  sparks, dev only). Gates: full evidence run green on `5e466b7f` (code `4540d259`); reels 19/19 x2 and
+  scenarios 52/52 on `4540d259`; unit 1204/1204 on `9a2d3137`'s tree; lint 13/13 on `4b43491e`.
+  Docs: withdrawn Kerf REQUEST, call (i), audit 7f, decision line, film.sh 1280x800 + set_clip
+  --clean (city clip re-cut on `3efd6d47`), FYI to n7-ranged on film resolution, quest 1 Tonnage
+  ram marks and plates evidenced. NEXT is the 02:35 entry (items 1-4; item 3's first two closed).
+  Scratch: this iteration's AVIs and sheets deleted; the set_* AVIs kept for a RECUT; plasma/out kept
+  (copy in masters).
