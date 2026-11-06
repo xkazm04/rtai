@@ -1467,6 +1467,7 @@ NEXT (iteration 15, in order):
   odd; the drawn car is 0.36 m longer than the body (render only; the ram lane unchanged).
 - Unit **1164/0** (`evidence/king/unit-it14b.log`), lint 13/13 (hook).
 NEXT (iteration 15): 1. the shades in the part art (or leave the gap); 2. the throne back behind
-King on the car (the sheet's gilded plum throne); 3. at the freeze: re-export the exe (it is on
-2c1fa18f, before the bumpers), smoke, re-film the full fight if the car's look changed enough to
+King on the car (the sheet's gilded plum throne); 3. at the freeze: re-export the exe (04:17: on
+f614cdf6 with the bumpers, smoke 4933 / 88 / 0 SCRIPT ERROR), smoke, re-film the full fight if the car's look changed enough to
 matter at 32 px/m, finalize REPORT.
+- 04:17 EXE re-exported on f614cdf6 (`build/export-it14c.log`, 0 errors); smoke seed 2 human: King down 4933, took 88, 0 SCRIPT ERROR. Session ends, everything committed.
