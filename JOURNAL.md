@@ -1491,3 +1491,30 @@ Scratch moved to `gtai-n7/scratch/servo/it18` (the it16 scripts live there; none
   teal tether, the van, the blast, the wreck; Kerf's teal blinks across swarm and rack; Ohm's bolt
   drone to drone. it16 clips and keys deleted. **Every clip and still in frames.json is now on the
   it18 body** (slung parcels) but the it16 docked-bays A/B; every frames.json file exists.
+
+## Iteration 19 (06:13-07:13, BUILD)
+Read: JOURNAL (it18; no NEXT written: the session ended during the it18 gate runs), git log,
+n7-king's JOURNAL (it17-it18: crown jewel, gang shades; no REQUEST for servo), REPORT. Rules kept:
+motion-quality-gating (A/B in the live arena path at 48 and 32 px/m, the same sim both sides),
+depth-ordered-layered-art (the blades drawn over the pad, under the pelvis and rack).
+- 06:14 GATES (it18's open runs, committed 1st): director reel on the it18 head **19/19 chapters
+  down, 0 SCRIPT ERROR** (`evidence/servo/director-reel-it18.log`); scenarios 52 ran / 1 failed =
+  `scenario_city_chase`'s 2 ms nav budget (the known flake, CONTENDED: n7-ranged's scenarios and a
+  director reel ran beside it), re-run alone: **1 ran, 0 failed** (`scenario-city-chase-it19.log`).
+- 06:16 MERGE n7-king 71e76b3f as 98f8e820 (crown jewel, gang shades; king-only files).
+  JOURNAL/REPORT add/add: ours; decisions auto-merged. Lint 13/13. Scratch avis deleted (5 GB).
+- 06:23 MILESTONE 05c403e5 **the hover pads hold square to the body** (render only). By the
+  target still the sheet's pads are octagons square to the body; ours turned whole with the rotor
+  (0.1 of the spin), a round wheel at 32 px/m. Now `ServoPad` (new, 59 lines; the pad draw and its
+  vent steam moved out of the 285-line rig) holds them square, and the rotor's rev (any tell, a
+  dash, the transition, the defeat's wind-down; rate > 0.3 rad/tick, idle 0.15) shows as two
+  crossed paper blades with a 3-step smear inside the pad, so the spin-up tell stays. A/B
+  `film48_19.sh 1 2 720` with `ServoPad.TURN` true / false (0 SCRIPT ERROR each), **looked at**
+  48 px/m 1.5x at the scan windup (1.5 s) and the dash windup (2.5 s), and at 32 px/m (1.5x): hazard
+  octagons in line with their arms, a pale rotor cross only in the tells. DECISION (decisions.md):
+  TURN false; rejected blades always on (two spinning crosses all fight beside 18 bays). Unit
+  **1197/0** (`evidence/servo/unit-it19.log`; +4 from the king merge), lint 13/13. REPORT call 19;
+  `M/frames/servo_pad_square_ab_it19.png` in frames.json (replaces the it16 docked-bays A/B in the
+  list; the file stays, REPORT call 11 cites it).
+- 06:24 GATES/FILMS started on 05c403e5: the director reel (`reel19.sh`) and the full fight
+  (`full32_19.sh`).
