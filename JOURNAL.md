@@ -1006,3 +1006,23 @@ NEXT (written 02:35, for iteration 11):
   audit 7b, decision line.
 - FRICTION 03:11 a unit run without GODOT_BIN exported reports "import exit -1 ... (1205 passed)":
   the runner re-reads a stale result. Not a test result; log deleted, re-run.
+- LOOK 03:14 RamWake in quest 1's real view (`dev/ghost-powers/quest_hauler_rec.tscn --ppm=32`, 0
+  SCRIPT ERROR; ram_hits 3, kills 4 as before): the cream arc rides round the press as it pushes east
+  through the dock guards (frames ~105-130), ahead of the ram bursts. Still
+  `M/quest1_tonnage_ram_wake_32ppm.png` (frames 100-175 every 5th). PNGs deleted.
+
+NEXT (written 03:17, for iteration 12):
+1. Read n7-ranged's JOURNAL to its end: cherry-pick new hit_feel / feel_cam / camera commits -x
+   (check prerequisites), unit with GODOT_BIN exported. Last merged: `5c171ed8`, `311684d4`.
+2. The combined city clip is stale since `96e1abe6` (Kerf's sight) and `bc788d09` (the ram wake):
+   re-cut with `bash evidence/n7-melee/set_clip.sh <head>` (code-moved path, not RECUT) and look at a
+   1.5 s sheet; the old set_* AVIs are stale.
+3. Freeze (by 08:30), in order: gates on the final head (lint, unit, `bash evidence/n7-melee/reels.sh
+   <head>`, `node tools/evidence/run.mjs --no-bench`, tree untouched, logs committed first; never
+   edit or flip data while a gate runs); bake_city + both exes (`--export-release windows-showcase
+   ../build/export/windows/RTAI.exe`, `--export-release windows-slice
+   ../build/export/windows-slice/RTAI.exe`); boot each once (calls (h)-(k) lines; slice title card);
+   finish REPORT.md (exe lines per call a-k, gates, drop "DRAFT").
+4. Build candidates, weakest first: Dent seize read 3 (camera call open: impact only); Ohm bolt read
+   3 at 32 (the bolt is thin); the ram heap (call h, not view-buildable). Call (b) only on the owner's
+   word.
