@@ -159,7 +159,9 @@ func _falling_box(c: CanvasItem, at: Vector2, k: float, t: ServoTuning) -> void:
 	var sh: Vector2 = (at + SHADOW * t.fly_h_m * (1.0 - k)) * px
 	var half: Vector2 = Vector2.ONE * side * 0.5 * px
 	c.draw_rect(Rect2(sh - half, half * 2.0), Color(pal.color(&"ink"), 0.3 + 0.2 * k))
-	_box(c, (at + SHADOW * SLING_M * (1.0 - k)) * px, 0.0, side)
+	var box: Vector2 = (at + SHADOW * SLING_M * (1.0 - k)) * px  # d8: a box under a tilt
+	if not ServoCrateStack.box(c, box, side * px, crate_tex, px / SimConst.PX_PER_M):
+		_box(c, box, 0.0, side)
 
 
 ## A kraft parcel `side_m` wide at `at_px`: an ink edge, then the crate art.

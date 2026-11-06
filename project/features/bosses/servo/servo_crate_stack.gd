@@ -30,33 +30,40 @@ static func draw(
 	var view: ViewMode = ViewMode.shared()
 	if not view.has_lift() or tex == null:
 		return false
-	var origin: Vector2 = ci.get_global_transform() * at_px
 	var h_m: float = side_px / (px_k * SimConst.PX_PER_M) * HEIGHT_K
-	var box: Rect2 = Rect2(-side_px * 0.5, -side_px * 0.5, side_px, side_px)
-	var tape: Rect2 = Rect2(-side_px * TAPE_K * 0.5, -side_px * 0.5, side_px * TAPE_K, side_px)
+	var r: Rect2 = Rect2(-side_px * 0.5, -side_px * 0.5, side_px, side_px)
 	var c: PackedVector2Array = PackedVector2Array(
-		[
-			box.position,
-			Vector2(box.end.x, box.position.y),
-			box.end,
-			Vector2(box.position.x, box.end.y)
-		]
+		[r.position, Vector2(r.end.x, r.position.y), r.end, Vector2(r.position.x, r.end.y)]
 	)
 	for j: int in c.size():
 		c[j] += at_px
 	var off: Vector2 = view.cast_dir() * h_m * view.cast_k * px_k * SimConst.PX_PER_M
 	RigCastShadows.sweep(ci, c, off)  # its top thrown down-right, like the arena's props
+	return box(ci, at_px, side_px, tex, px_k)
+
+
+## The box alone (no cast shadow: a falling parcel's shadow is its own), true when drawn.
+static func box(
+	ci: CanvasItem, at_px: Vector2, side_px: float, tex: Texture2D, px_k: float
+) -> bool:
+	var view: ViewMode = ViewMode.shared()
+	if not view.has_lift() or tex == null:
+		return false
+	var origin: Vector2 = ci.get_global_transform() * at_px
+	var h_m: float = side_px / (px_k * SimConst.PX_PER_M) * HEIGHT_K
+	var r: Rect2 = Rect2(-side_px * 0.5, -side_px * 0.5, side_px, side_px)
+	var tape: Rect2 = Rect2(-side_px * TAPE_K * 0.5, -side_px * 0.5, side_px * TAPE_K, side_px)
 	for i: int in SLICES + 1:  # the ink pass: the prism's outline
 		ci.draw_set_transform(at_px + _lift(view, origin, h_m, i) * px_k)
-		ci.draw_rect(box.grow(INK_PX), Ink.INK)
+		ci.draw_rect(r.grow(INK_PX), Ink.INK)
 	for i: int in SLICES:
 		var k: float = float(i) / float(SLICES)
 		var shade: float = lerpf(SHADE_LOW, SHADE_HIGH, k)
 		ci.draw_set_transform(at_px + _lift(view, origin, h_m, i) * px_k)
-		ci.draw_rect(box, _shaded(KRAFT, shade))
+		ci.draw_rect(r, _shaded(KRAFT, shade))
 		ci.draw_rect(tape, _shaded(TAPE, shade))
 	ci.draw_set_transform(at_px + _lift(view, origin, h_m, SLICES) * px_k)
-	ci.draw_texture_rect(tex, box, false)
+	ci.draw_texture_rect(tex, r, false)
 	ci.draw_set_transform(Vector2.ZERO)
 	return true
 
@@ -79,14 +86,14 @@ static func _shaded(c: Color, k: float) -> Color:
 
 
 ## The crate's "CS" stencil on its lid (on the flat crate under `top`: today's draw call).
-static func label(ci: CanvasItem, box: Rect2, px: float, ink: Color, px_k: float) -> void:
+static func label(ci: CanvasItem, rect: Rect2, px: float, ink: Color, px_k: float) -> void:
 	var font_px: int = int(px * 0.32)
 	ci.draw_string(
 		ThemeDB.fallback_font,
 		(
-			box.get_center()
+			rect.get_center()
 			+ Vector2(-font_px * 0.6, font_px * 0.35)
-			+ lid_lift(ci, box.get_center(), box.size.x, px_k)
+			+ lid_lift(ci, rect.get_center(), rect.size.x, px_k)
 		),
 		"CS",
 		0,
