@@ -235,3 +235,15 @@ Iteration 6 left no journal entry and no commit; this session worked it5's NEXT.
   1174/0 (`it7/unit2.log`). NOT checked live with a real mouse (unattended run): unit test only.
   NOTE: origin_px is the screen centre in arena and quest1 (camera on Rivet); under --boss-cam
   the camera leads, so the mouse aim origin is off Rivet in every view, top too (pre-existing).
+- FILM (work order 6, first cut): `gtai-masters/n7/view/king_top_toplift_tilt_32ppm_it7.mp4`, 45 s
+  (2700 frames each, seed 2, --boss-cam, code at 290d3a1d), top | top_lift | tilt, 3840x800
+  unscaled (each panel 32 px/m), 0 SCRIPT ERROR each, crf 26 = 113 MB. Stills: t12s (procession)
+  and `king_p2_top_vs_tilt_32ppm_x2_it7_t34s.png` (phase 2 court, x2 crop). LOOKED at t34: under
+  tilt the stalled car reads as a car seen from a raised angle (side wall, round wheels with gold
+  hubs, the raised gold cannon, King's crowned bust); top shows a plum and gold rectangle.
+  frames.json: 3 new entries first, the 3 superseded it2/it4 items dropped (files deleted); 15.
+  Raw .avi deleted. FRICTION: the panel labels sit over the boss bar (y=36); move them lower next.
+- MILESTONE cf2b4a25: `top_lift15` study row (eye 15 m). LOOKED (`it7/toplift_25_vs_15_32.png`):
+  the props and the car lean more (25/15 = 1.67x by construction), still a modest gain; the white
+  parked sedans are flat in every view (VehicleView MultiMesh + the native crowd traffic: a stack
+  needs a lifted body layer + wall slices in both paths; not started).
