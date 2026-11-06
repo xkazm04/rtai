@@ -48,6 +48,10 @@ Bench not run: contended machine, no lock taken.
 The logs are in `evidence/n7-melee/`.
 
 ## What does not (yet)
+- The claw's second blow shows no wind-up of its own: its sim windup is 4 ticks and the view
+  first sees it 2 ticks in, i.e. after the cock (before the strike sync it only seemed cocked
+  because the rig ran late and then froze cocked on the hit). A visible cock there needs a longer
+  sim windup, which is game timing, not polish. The first blow keeps its draw-back.
 - The hit sounds reuse the shipped bank, pitched per family. Real recorded swings, cuts and slams
   are still missing (sound scores 3, not higher).
 - The heap at the car under Tonnage's ram still reads as one blob at 32 px/m: the sim shoves the
