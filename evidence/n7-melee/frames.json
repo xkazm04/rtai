@@ -1,137 +1,137 @@
 [
-  {
-    "file": "ohm_mass_arc_ab_32ppm_04x.mp4",
-    "title": "Ohm's mass arc: one bolt that spreads, the fan's branches at 0.55 of the bolt",
-    "source": "game-arena",
-    "branch": "n7-melee 454490ce",
-    "ppm": 32,
-    "before": "the head before 454490ce, feel on (left: the same hit-stop timing, tick-matched), branches drawn as wide as the bolt",
-    "note": "--bot=ghosts --ghost=ohm --tier=1 --rigs, frames 60-140 at 0.4x. Looked at the 48 px/m pair at tick 92 and this clip's frame 40: the bolt keeps full weight, the five branches thin, the cops' blue shows through. The cream stun squiggles on each body (the reaction view) still dominate the cluster: not changed."
-  },
-  {
-    "file": "tonnage_plates_ab_32ppm.mp4",
-    "title": "Tonnage's plates stop the rounds: each cop round ends at the plate face with a cream glance spark edged in ink",
-    "source": "game-arena",
-    "branch": "n7-melee d97a976d",
-    "ppm": 32,
-    "before": "--feel=off on the same head (left): the rounds draw on inside the press body",
-    "note": "Arena ghost reel (--bot=ghosts --ghost=tonnage --rigs). Looked at frames 86-109 every 2nd at 48 px/m (after and before) and 90-105 at 32 px/m x2 crops: the vermilion dashes stop at the hazard-striped plate, a star and a short bounce streak print, at most 2 new a tick. Pass 1 (plate_r_m 1.2) put the sparks inside the stripe; 1.35 puts them on it. Small at 32 px/m (a light hit, kept small on purpose). Re-rendered on d97a976d: no sparks while Rivet is still morphing in (the city film had printed them round the teal morph disc); they start at 0.8 of the way into Tonnage, as the press leaves the morph ring (clip frames 52-72 looked at)."
-  },
-  {
-    "file": "quest1_katana_ab_32ppm.mp4",
-    "title": "Quest 1 shows melee: Rivet's katana on key 2 at Dock 9 (shipped sprite cast)",
-    "source": "game-quest",
-    "branch": "n7-melee",
-    "ppm": 32,
-    "before": "--quest-blade=off (no blade; Rivet shoots from range)",
-    "note": "fbc5a982 + 8237d411 + becfeb7f + 5f80e67c (re-rendered 22:21). The dev pad (quest1_clip --blade=13570-13880) draws the blade, walks in on the bot's target and holds fire: the blade leaves from the sprite's claw side, lifts, cuts down with a cream smear edged in ink, settles; contractors split on the cut."
-  },
-  {
-    "file": "quest1_katana_smear_ab_48ppm_half.mp4",
-    "title": "Quest 1 blade smear: steel (first build) vs cream edged in ink, 48 px/m at half speed",
-    "source": "game-quest",
-    "branch": "n7-melee",
-    "ppm": 48,
-    "before": "the first CastBladeView build (steel smear at 0.4 alpha)",
-    "note": "becfeb7f. Smear shows only on the cut ticks (frames 3, 26, 83 of the window differ); on asphalt the steel smear was a faint grey, the cream wedge with its ink edge reads."
-  },
-  {
-    "file": "dent_car_blow_ab_32ppm_04x.mp4",
-    "title": "Dent's seized car striking a cop: felt on the strike (dent_car row, class ram), 32 px/m at 0.4x",
-    "source": "game-arena",
-    "branch": "n7-melee",
-    "ppm": 32,
-    "before": "no dent_car row (the strike frame matched --feel=off, 0 px)",
-    "note": "4a522dfe. Measured: a 13 px jolt held through a 7-frame stop at the strike, the crash shake settling in ~7 frames; the car, the thrown cop and blood in frame."
-  },
-  {
-    "file": "tonnage_ram_ab_32ppm_48slow.mp4",
-    "title": "Tonnage ram prints on the contact: a cream burst edged in ink and paper chips along the shove",
-    "source": "game-arena",
-    "branch": "n7-melee 0c4161d8",
-    "ppm": 32,
-    "before": "--feel=off on the same head (left; HaulerKick shake/stop runs in both); 32 px/m real time, then 48 px/m at 0.4x",
-    "note": "Pass 1 drew the burst between the press and the body: hidden under the press (measured: about 30 px differed). Pass 2 draws it 0.1 m past the body, 0.7 m: looked at frames 133-147 (x2 crops, after over before), the star holds through the ram stop, then chips fly. Small at 32 px/m; the heap of rammed bodies at the car is unchanged."
-  },
-  {
-    "file": "chainsaw_kill_ab_32ppm_48slow.mp4",
-    "title": "The chainsaw kill reads: a cream release burst as the halves part, the held body clear of its own spray",
-    "source": "game-arena",
-    "branch": "n7-melee 49cc45d1",
-    "ppm": 32,
-    "before": "--feel=off on the same head (left; it also drops the kill stop, so the after runs a few frames behind); 32 px/m real time, then 48 px/m at 0.4x",
-    "note": "Pass 1 drew a cream slash along the cut: it lay on the saw bar and did not show (looked at frames 140-162, before over after). Pass 2: a 1.2 m starburst on the parting tick, drops hidden for their first 0.45 m, judder 0.035 -> 0.06 m. Looked at frames 140-162 at 32 and 136-170 at 48."
-  },
-  {
-    "file": "plasma_deflect_streak_ab_48ppm_slow.mp4",
-    "title": "Deflect return streak: stays cream and thins instead of greying",
-    "source": "game-arena",
-    "branch": "n7-melee a7ed5d4c",
-    "ppm": 48,
-    "before": "the head before a7ed5d4c (deflect marks on, linear fade), left; 48 px/m at 0.25x",
-    "note": "Looked at frames 125-134 x2 crops, after over before: before turns into a grey smudge on frames 129-131, after keeps a cream line edged in ink that thins out."
-  },
-  {
-    "file": "ohm_tell_ab_32ppm_crop.mp4",
-    "title": "Ohm's forked bolt gets a tell: the fingertips charge back to a white reach before each bolt",
-    "source": "game-arena",
-    "branch": "n7-melee 0555878c",
-    "ppm": 32,
-    "before": "--feel=off on the same head (left); 32 px/m real time, then a 3x crop at 0.4x",
-    "note": "Pass 1 (a fingertip glow) sank into the form's teal aura at 32 px/m: not landed. Pass 2 adds white sparks edged in ink reaching 0.25 -> 0.9 m toward the aim as the charge fills. Looked at frames 140-180 every 4th: prongs out while ready, gone on the fire frame, growing back."
-  },
-  {
-    "file": "tonnage_slam_ab_32ppm_48slow.mp4",
-    "title": "Tonnage's press slam lands with debris: a landing flash, paper chips, dust",
-    "source": "game-arena",
-    "branch": "n7-melee 4c6c6bf5",
-    "ppm": 32,
-    "before": "--feel=off on the same head (left; the slam's HaulerKick shake/stop runs in both); 32 px/m real time, then 48 px/m at 0.4x",
-    "note": "SlamDebris via HaulerMarks (all callers). First pass had ink chips that vanished on the asphalt and a flash hidden under the press body; re-cut to paper chips edged in ink and a 2 m flash. Looked at frames 157-171 full res."
-  },
-  {
-    "file": "plasma_deflect_ab_32ppm_48slow.mp4",
-    "title": "Plasma sword deflect: a parry beat, a cream burst at the blade and a streak along the return",
-    "source": "game-arena",
-    "branch": "n7-melee 2502aaa7",
-    "ppm": 32,
-    "before": "--feel=off on the same head (left); 32 px/m real time, then 48 px/m at 0.4x",
-    "note": "CombatArena.deflected -> DeflectMarks (melee_marks.json) + MeleeFeel parry (4-tick stop, kick toward the shooter). Looked at 48 px/m frames 126-148: before only the ink spark scribble; after a cream star edged in ink and a streak. The streak greys as its ink fades."
-  },
-  {
-    "file": "kerf_chain_ab_32ppm_64slow.mp4",
-    "title": "Kerf's blink-slice chain cut by cut: a hold and a cream-and-ink flare on every cut",
-    "source": "game-arena",
-    "branch": "n7-melee cb3e5caa",
-    "ppm": 32,
-    "before": "--feel=off on the same head (left); 32 px/m real time, then 64 px/m at 0.4x",
-    "note": "kerf_slice rides the shared feel (class slice, kick 2.5; a kill takes the 6-tick kill stop) and KerfView draws a 0.15 s cut flare across each target. Looked at: frames 96-102 of the after hold still on the first cut with the flare across the cop; the before runs straight through."
-  },
-  {
-    "file": "dent_blast_ab_32ppm.mp4",
-    "title": "Dent's seized-car blast now lands with the blast feel (kick outward from the car, crash shake, stop)",
-    "source": "game-arena",
-    "branch": "n7-melee cb3e5caa",
-    "ppm": 32,
-    "before": "--feel=off on the same head (left)",
-    "note": "Measured by phase correlation on a 600x300 floor crop: before 0.0 px camera motion through the blast; after a 17.9 px first-frame jolt settling over 12 frames (165-177). The blast still lands at the right edge: the camera stays on Dent (open owner call)."
-  },
-  {
-    "file": "melee_feel_claw_ab_32ppm_48slow.mp4",
-    "title": "Melee weight: the claw combo on the shared hit feel (hit-stop on the contact frame, kick along the blow)",
-    "source": "game-arena",
-    "branch": "n7-melee 65dd07e1",
-    "ppm": 32,
-    "before": "--feel=off on the same head (left); 32 px/m real time, then 48 px/m at 0.4x",
-    "note": "MeleeFeel sends every melee hit to n7-ranged's FeelCam. Measured: the after holds 6 frames at the first kill and 5 at the second cop (still-frame runs in a 400x240 actor crop); the before holds none. No shake on melee hits (restraint)."
-  },
-  {
-    "file": "melee_wound_riot_ab_48ppm_64slow.mp4",
-    "title": "The non-lethal melee wound: a claw jab on a riot cop now twists him away",
-    "source": "game-arena",
-    "branch": "n7-melee a1716c1d",
-    "ppm": 48,
-    "before": "--soft-swing on the same head (left): the riot cop stands untouched through the first jab",
-    "note": "Director chapter claw_combo with --riot-victims. 48 px/m real time, then 64 px/m at 0.4x. The wound plays on the body, not the shield (the first pass played the block sparks: rejected, it said 'blocked' while the sim took his hp)."
-  }
+ {
+  "file": "ghost_wound_ram_ab_32ppm.mp4",
+  "title": "A body Tonnage rams reacts on the hit: the riot cop is thrown down instead of standing braced behind his shield",
+  "source": "game-city",
+  "branch": "n7-melee 91700e01",
+  "ppm": 32,
+  "before": "human_reactions.json ghost_wound {} on the same code (left); 32 px/m real time, then 0.4x",
+  "note": "City block, --bot=ghosts --ghost=tonnage --rigs. The ram lands at frame 142; from there the after's rammed riot cop plays the knockdown along the shove (react: 2 wounds vs 0), the before's stands braced until the press slam kills him at ~175 in both. Ghost hits reached no rig reaction before: CombatArena.struck carries rounds only. Small at 32 px/m; the heap still reads as a heap."
+ },
+ {
+  "file": "claw_rake_ab_32ppm.mp4",
+  "title": "The claw's jab reads at 32 px/m: three cream rakes edged in ink across the struck cop on the hit frame",
+  "source": "game-arena",
+  "branch": "n7-melee f45ad8e6",
+  "ppm": 32,
+  "before": "melee_marks.json claw flash_ticks 0 on the same head (left); 32 px/m real time, then 0.4x",
+  "note": "Director chapter claw_combo. The rakes print on frame 74 (first blood at 75) and 106, square to Rivet -> cop, held by the hit-stop and fading over 10 ticks; the before shows the arm over a blue cop and nothing else. 48 px/m close-up at 0.4x: claw_rake_48ppm_04x.mp4. Off: flash_ticks 0 or --feel=off."
+ },
+ {
+  "file": "hit_cues_ab_32ppm.mp4",
+  "title": "Melee and ghost hits sound on the hit frame (claw combo, then Tonnage's ram)",
+  "source": "game-arena",
+  "branch": "n7-melee f593aac4",
+  "ppm": 32,
+  "before": "--hit-cues=off (first half of each pair)",
+  "note": "Back to back with the game audio and a cream waveform strip: claw combo off/on (director chapter claw_combo), Tonnage ghost reel off/on. The claw knock starts within 1 frame of each kill's first blood (frames 75->76, 108->109); the ram's crash within 1 frame of its contact star (135->136). Sounds are the shipped bank pitched per family (audio_cues.json hits)."
+ },
+ {
+  "file": "melee_polished_set_city_32ppm.mp4",
+  "title": "The polished set in the city block at 32 px/m: claw, katana, chainsaw, plasma deflect, baton, then Tonnage, Dent, Kerf, Ohm",
+  "source": "game-city",
+  "branch": "n7-melee 7ce7b33d",
+  "ppm": 32,
+  "before": "none (the combined after clip; each attack's before is its own A/B entry)",
+  "note": "53 s with the game's audio cut in sync. Melee from the director reel (--arena=city --bot=reel --reel=director --loadout=pistol, frames cut by the HUD tick: hit-stop drifts frames 74-141 ahead of ticks), ghosts from --arena=city --bot=ghosts --ghost=<id> --rigs frames 40-400. Looked at a sheet every 3 s: every segment shows its own attack."
+ },
+ {
+  "file": "ohm_stun_crowd_ab_32ppm_04x.mp4",
+  "title": "Ohm's mass arc on a crowd: the stun marks capped, the cops' blue reads through",
+  "source": "game-arena",
+  "branch": "n7-melee 7ce7b33d",
+  "ppm": 32,
+  "before": "the same head with human_reactions.json stun_crowd full 0 (no cap): every stunned body draws 3 crawling arcs, 3 spits and 2 head sparks",
+  "note": "--bot=ghosts --ghost=ohm --tier=1 --rigs, frames 70-200 at 0.4x, crop on the cluster. After: the 2 newest stunned bodies keep the full marks, the rest draw one spit and one head spark with no crawling arc (arcs 1 was tried first: still busy). Looked at frames 96-131 (every 7th) of all three films side by side."
+ },
+ {
+  "file": "ohm_mass_arc_ab_32ppm_04x.mp4",
+  "title": "Ohm's mass arc: one bolt that spreads, the fan's branches at 0.55 of the bolt",
+  "source": "game-arena",
+  "branch": "n7-melee 454490ce",
+  "ppm": 32,
+  "before": "the head before 454490ce, feel on (left: the same hit-stop timing, tick-matched), branches drawn as wide as the bolt",
+  "note": "--bot=ghosts --ghost=ohm --tier=1 --rigs, frames 60-140 at 0.4x. Looked at the 48 px/m pair at tick 92 and this clip's frame 40: the bolt keeps full weight, the five branches thin, the cops' blue shows through. The cream stun squiggles on each body (the reaction view) still dominate the cluster: not changed."
+ },
+ {
+  "file": "tonnage_plates_ab_32ppm.mp4",
+  "title": "Tonnage's plates stop the rounds: each cop round ends at the plate face with a cream glance spark edged in ink",
+  "source": "game-arena",
+  "branch": "n7-melee d97a976d",
+  "ppm": 32,
+  "before": "--feel=off on the same head (left): the rounds draw on inside the press body",
+  "note": "Arena ghost reel (--bot=ghosts --ghost=tonnage --rigs). Looked at frames 86-109 every 2nd at 48 px/m (after and before) and 90-105 at 32 px/m x2 crops: the vermilion dashes stop at the hazard-striped plate, a star and a short bounce streak print, at most 2 new a tick. Pass 1 (plate_r_m 1.2) put the sparks inside the stripe; 1.35 puts them on it. Small at 32 px/m (a light hit, kept small on purpose). Re-rendered on d97a976d: no sparks while Rivet is still morphing in (the city film had printed them round the teal morph disc); they start at 0.8 of the way into Tonnage, as the press leaves the morph ring (clip frames 52-72 looked at)."
+ },
+ {
+  "file": "quest1_katana_ab_32ppm.mp4",
+  "title": "Quest 1 shows melee: Rivet's katana on key 2 at Dock 9 (shipped sprite cast)",
+  "source": "game-quest",
+  "branch": "n7-melee",
+  "ppm": 32,
+  "before": "--quest-blade=off (no blade; Rivet shoots from range)",
+  "note": "fbc5a982 + 8237d411 + becfeb7f + 5f80e67c (re-rendered 22:21). The dev pad (quest1_clip --blade=13570-13880) draws the blade, walks in on the bot's target and holds fire: the blade leaves from the sprite's claw side, lifts, cuts down with a cream smear edged in ink, settles; contractors split on the cut."
+ },
+ {
+  "file": "dent_car_blow_ab_32ppm_04x.mp4",
+  "title": "Dent's seized car striking a cop: felt on the strike (dent_car row, class ram), 32 px/m at 0.4x",
+  "source": "game-arena",
+  "branch": "n7-melee",
+  "ppm": 32,
+  "before": "no dent_car row (the strike frame matched --feel=off, 0 px)",
+  "note": "4a522dfe. Measured: a 13 px jolt held through a 7-frame stop at the strike, the crash shake settling in ~7 frames; the car, the thrown cop and blood in frame."
+ },
+ {
+  "file": "tonnage_ram_ab_32ppm_48slow.mp4",
+  "title": "Tonnage ram prints on the contact: a cream burst edged in ink and paper chips along the shove",
+  "source": "game-arena",
+  "branch": "n7-melee 0c4161d8",
+  "ppm": 32,
+  "before": "--feel=off on the same head (left; HaulerKick shake/stop runs in both); 32 px/m real time, then 48 px/m at 0.4x",
+  "note": "Pass 1 drew the burst between the press and the body: hidden under the press (measured: about 30 px differed). Pass 2 draws it 0.1 m past the body, 0.7 m: looked at frames 133-147 (x2 crops, after over before), the star holds through the ram stop, then chips fly. Small at 32 px/m; the heap of rammed bodies at the car is unchanged."
+ },
+ {
+  "file": "chainsaw_kill_ab_32ppm_48slow.mp4",
+  "title": "The chainsaw kill reads: a cream release burst as the halves part, the held body clear of its own spray",
+  "source": "game-arena",
+  "branch": "n7-melee 49cc45d1",
+  "ppm": 32,
+  "before": "--feel=off on the same head (left; it also drops the kill stop, so the after runs a few frames behind); 32 px/m real time, then 48 px/m at 0.4x",
+  "note": "Pass 1 drew a cream slash along the cut: it lay on the saw bar and did not show (looked at frames 140-162, before over after). Pass 2: a 1.2 m starburst on the parting tick, drops hidden for their first 0.45 m, judder 0.035 -> 0.06 m. Looked at frames 140-162 at 32 and 136-170 at 48."
+ },
+ {
+  "file": "melee_wound_riot_ab_48ppm_64slow.mp4",
+  "title": "The non-lethal melee wound: the claw against a riot cop",
+  "source": "game-arena",
+  "branch": "n7-melee a1716c1d",
+  "ppm": 48,
+  "before": "--soft-swing",
+  "note": "48 px/m real time A/B, then 64 px/m at 0.4x: the first jab on a riot cop now plays a body wound on the hit frame (CombatArena.wounded -> MeleeWound beside ReactLink); the before shows no flinch."
+ },
+ {
+  "file": "tonnage_slam_ab_32ppm_48slow.mp4",
+  "title": "Tonnage's press slam lands with debris: a landing flash, paper chips, dust",
+  "source": "game-arena",
+  "branch": "n7-melee 4c6c6bf5",
+  "ppm": 32,
+  "before": "--feel=off on the same head (left; the slam's HaulerKick shake/stop runs in both); 32 px/m real time, then 48 px/m at 0.4x",
+  "note": "SlamDebris via HaulerMarks (all callers). First pass had ink chips that vanished on the asphalt and a flash hidden under the press body; re-cut to paper chips edged in ink and a 2 m flash. Looked at frames 157-171 full res."
+ },
+ {
+  "file": "plasma_deflect_ab_32ppm_48slow.mp4",
+  "title": "Plasma sword deflect: a parry beat, a cream burst at the blade and a streak along the return",
+  "source": "game-arena",
+  "branch": "n7-melee 2502aaa7",
+  "ppm": 32,
+  "before": "--feel=off on the same head (left); 32 px/m real time, then 48 px/m at 0.4x",
+  "note": "CombatArena.deflected -> DeflectMarks (melee_marks.json) + MeleeFeel parry (4-tick stop, kick toward the shooter). Looked at 48 px/m frames 126-148: before only the ink spark scribble; after a cream star edged in ink and a streak. The streak greys as its ink fades."
+ },
+ {
+  "file": "kerf_chain_ab_32ppm_64slow.mp4",
+  "title": "Kerf's blink-slice chain cut by cut: a hold and a cream-and-ink flare on every cut",
+  "source": "game-arena",
+  "branch": "n7-melee cb3e5caa",
+  "ppm": 32,
+  "before": "--feel=off on the same head (left); 32 px/m real time, then 64 px/m at 0.4x",
+  "note": "kerf_slice rides the shared feel (class slice, kick 2.5; a kill takes the 6-tick kill stop) and KerfView draws a 0.15 s cut flare across each target. Looked at: frames 96-102 of the after hold still on the first cut with the flare across the cop; the before runs straight through."
+ }
 ]
