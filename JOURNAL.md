@@ -280,3 +280,38 @@ Rules applied: depth-ordered-layered-art (the depth film judges the under/over s
 motion-quality-gating (flash judged on film at 32 and 64), generative-artifact-gating (no new AI
 art: the flash is a shader on the library cells), sprite-and-atlas-production (lens mask derived
 from the cell, not a new atlas), top-down-vehicle-handling-model (a cop reads as a cop at speed).
+
+22:52 GATE full unit on 6e497349: 1490 passed, 6 FAILED (test_vehicle_view x4, test_vehicle_cards,
+test_vehicle_parked: "Unexpected Errors"): the glow passed the built-in TEXTURE to a shader function
+(`ERROR: !actions.custom_samplers.has(tex_builtin)` headless). The d3d12 film hid it. FIXED 34018b19
+(the taps inline in fragment()); the three files 17/0, picture re-filmed unchanged (mean diff ~1).
+FRICTION: always run the vehicle unit tests after a shader edit, not just film it.
+22:56 GATE `top` bit-identity (NEXT 6): main scene `--arena=city --bot=rivet --seed=2 --rigs`,
+`--fixed-fps 60 --write-movie --quit-after 301`, framemd5 HEAD 34018b19 vs the merge base 0bea8b93
+(a throwaway detached worktree under scratch, removed after; native DLLs copied in): IDENTICAL,
+301 video + 301 audio frames, 0 SCRIPT ERROR each.
+22:50 the driven car at tilt70 (NEXT 5, vehicle_frame route + carnage, 0 SCRIPT ERROR): the driven
+sedan and the hijacked taxi are the same cards as traffic; the route's handbrake slide ends in a
+kerb crash and a burning wreck with the standing flame on the bonnet (the route was laid for an
+older start point). The hijack (driver thrown, Rivet in) reads; Rivet's side stays his frozen rig.
+The kerb-parked cars in that frame are still FLAT props (city's hand-off is off by default until
+it ANDs VehicleParked.drawn()): a top-down police car beside the cards reads wrong - city owns it.
+22:58 GATE full unit on 34018b19: 1496 passed, 0 failed (the six vehicle failures fixed).
+Not done this iteration: `--view=combo` boss check (no vehicle of mine is in a boss arena; the cards
+are keyed by ViewMode.art so the 70 -> 55 swap is the same path as the atlas pick: not filmed),
+traffic density cost under bench.lock (bench ~14 min, the machine was busy with my own gates).
+23:03 GATE scenarios on 34018b19: 52 ran, 0 failed, 0 SCRIPT ERROR (exit 0).
+Evidence json: evidence/n8-vehicles/iteration4.json. masters frames.json: 15 entries (depth 48 still +
+clip, the siren still in the top five).
+
+NEXT (iteration 5, in order):
+1. Read director-reel-it4-tilt70.log (started 23:04 on 34018b19): want 19/19 down, 0 SCRIPT ERROR;
+   run `top` too if time (`--fixed-fps 60 --quit-after 7600`).
+2. Traffic density cost under bench.lock: tilt70 vs top on the city drive. tools/bench/run.mjs has
+   no --view; cheapest honest probe = a `last_us` around VehicleView._draw_cards + the world's
+   add_frame_probe (boot/world.gd, shared: check owner) or a dev scene timing cards.put/finish for
+   N = 32/64/128 cars. Label CONTENDED without the lock.
+3. If city merged ee045433 and ANDs drawn(): film the kerb rows as cards (main city, tilt70, 32/64).
+4. The bike (no sheet, catalog C x4): find where a bike appears first in the sim art ids.
+5. Light bar at 55 (`--view=tilt`): the p55 lens band check measured (all lenses y < 0.37) but
+   not filmed. vehicle_frame has no 64 px/m camera: add `--zoom=` if needed for close-ups.
