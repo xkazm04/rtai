@@ -72,9 +72,15 @@ second art_dir and a card row per pitch.
   rig/variant draws them before cutting contractor_70 (A). Cultists / Torque's gang: no code names
   them in features/ (grep cultist|kronk|torque: nothing): likely not in game yet; ask the Director.
 
+- GATE director reel under tilt70 on 66836d5c (headless, `--fixed-fps 60 --quit-after 14000
+  res://dev/arena/arena.tscn -- --bot=reel --reel=director --loadout=pistol --rigs --view=tilt70`):
+  19/19 chapters, every chapter all down, 0 SCRIPT ERROR. The combo reel started 21:09
+  (scratch/street/reel_combo.log); result in iteration 2 if this session ends first.
+- LOOKED: the p55 riot plate at `--view=tilt` 64 px/m (masters still): it reads as at 70.
+
 NEXT (iteration 2):
-1. Reel gates: tilt70 director reel result (started 20:57, log scratch/street/reel_tilt70.log);
-   then the reel under `combo` and `top` (headless, `--fixed-fps 60 --quit-after 14000`).
+1. Reel gates: read scratch/street/reel_combo.log (19/19? 0 SCRIPT ERROR?); the reel under `top`
+   (StreetView never runs straight down, the top city framemd5 is identical, but run it).
 2. Combo / boss arenas at 55: the riot plate at p55 and the thug lift at 55 (`--view=tilt`,
    `--boss=king`), and the combo swap of the plate (it rebuilds on the art change).
 3. Peds (brief 3): the 4 library types the game has no head for (shopper, punk, worker, jogger):
