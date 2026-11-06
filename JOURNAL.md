@@ -1926,3 +1926,19 @@ a unit test): finished it rather than drop it.
   (light row), hit_feel.schema.json, hit_feel.gd, feel_cam.gd, launch_args.gd. Your classes keep
   delay 0, so nothing changes for melee until you choose to: set `hold_delay_ticks` (0-4) on a
   class row (data only) if your kill stops also freeze before the wound shows.
+
+### MILESTONE 06:17 the exe re-exported on `49cfe6c4` (code landed after the early freeze exe)
+- `bake_city.gd` (exit 0), `--export-release windows-showcase ../build/export/windows/RTAI.exe`
+  (exit 0, 0 ERROR lines). Booted the pistol lone take on it (`--weapon=pistol --bot=gunplay --lone
+  --cam=fight --ppm=32 --clean --reach=5`, 420 frames): exit 0, 0 SCRIPT ERROR, kill tick 332;
+  frames 331-342 looked at: the spurt holds 333-340, the fall on 342, same as the editor take.
+  REPORT `## The exe` section written. Scratch avi deleted.
+
+### MILESTONE 06:22 city combined clip retaken on `49cfe6c4` (NEXT 2)
+- Same recipe and cut as it14 (`--arena=city --bot=reel --reel=director --loadout=pistol --ppm=32
+  --cam=fight --clean`, `--quit-after 6200`; frames 360-2700, 3810-5100, 5460-6150; 960x560 at
+  160,30, the nuke at 300,30) plus audio cut on the same seconds: 16 chapters down, 0 SCRIPT
+  ERROR, chapter ticks identical to it13/it14. 72 s, mean -22.3 dB, peak -1.1 dB (louder by 1.3 dB
+  mean than `13e0e050`: the re-voiced shots). LOOK sheet every 300 frames: every tile an attack,
+  red blood, ink scorch, the nuke ring whole in its crop. Master replaced in place, frames.json row
+  updated. Scratch avi deleted.
