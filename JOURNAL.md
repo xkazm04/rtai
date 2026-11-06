@@ -450,3 +450,4 @@ NEXT (iteration 13+; freeze 08:30, report 08:40):
 5. Optional bench under the lock (`node tools/bench/run.mjs` with --view? it has no view flag:
    then say "draw cost of the tilt NOT measured" in REPORT, as now).
 - STILLS GRID `gtai-masters/n7/view/king_views_grid_32ppm_it12_t12s.png` (seed 2 tick 720, top / top_lift / tilt65 / tilt / tilt45_cards, 0 SCRIPT ERROR each). LOOKED: labels match what each row draws; tilt rows show King's crown and Rivet standing. frames.json 15 (the it4 x2 crop dropped).
+- GATE `node tools/evidence/run.mjs --no-bench` on 3059b7b1 (all it12 code, switch off): lint 13/13, unit 1186/0, scenarios 52, parity bit-exact, selftest look goldens 11/11 + block 5/5, all PASS (`evidence/view/it12/evidence-run-3059b7b1.log`). The idle director reel ended on its own timeout. Session end 06:56; everything committed. NEXT above stands (1: the freeze gates on the final HEAD; 2: occlusion silhouettes).
