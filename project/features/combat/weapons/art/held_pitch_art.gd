@@ -11,6 +11,10 @@ extends RefCounted
 
 const TABLE: String = "res://data/tables/weapon_held_pitch.json"
 const SCHEMA: String = "gtai.weapon-held-pitch/1"
+## The side body's height while the barrel points straight up or down the screen (toward or away
+## from the camera the side turns edge-on), against 1 while it points across: a nose-down carry
+## prints as a slim tube, not the side view turned on end. 1 = the full side view at every angle.
+const EDGE_ON_K: float = 0.5
 
 static var _shipped: HeldPitchArt = null
 
@@ -103,7 +107,8 @@ static func face(s: Sprite2D) -> void:
 	var r: Row = row_of(s)
 	if r == null:
 		return
-	var left: bool = cos(s.global_rotation) < 0.0
+	var g: float = ViewMode.shared().ground_k()
+	var left: bool = s.global_transform.x.x < 0.0
 	s.flip_v = left
 	var h: float = s.texture.get_size().y
 	s.offset = Vector2(-r.grip.x, -(h - r.grip.y) if left else -r.grip.y)
@@ -111,6 +116,22 @@ static func face(s: Sprite2D) -> void:
 		if c is Sprite2D:
 			(c as Sprite2D).flip_v = left
 			(c as Sprite2D).offset = s.offset
+	if g < 1.0 and LaunchArgs.value("--held-pitch") != "squash":
+		stand(s, g)
+
+
+## The part is drawn for the raised camera already, so it undoes the camera's ground squash
+## (sin pitch on screen y, like RigHeadCard): its height axis is set perpendicular to the barrel
+## ON SCREEN at the art's own scale; the barrel axis stays on the ground (the tip lands true).
+## `--held-pitch=squash` keeps the camera's squash (the before). The x axis sets the scale, so a
+## global_rotation set over this each frame never accumulates.
+static func stand(s: Sprite2D, g: float) -> void:
+	var t: Transform2D = s.global_transform
+	var on_screen: Vector2 = Vector2(t.x.x, t.x.y * g).normalized()
+	var h: float = t.x.length() * signf(t.determinant()) * lerpf(EDGE_ON_K, 1.0, absf(on_screen.x))
+	var up: Vector2 = on_screen.orthogonal() * -h
+	t.y = Vector2(up.x, up.y / g)
+	s.global_transform = t
 
 
 ## The bore tip in the sprite's local px (offset and flip included).

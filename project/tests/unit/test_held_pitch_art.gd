@@ -60,3 +60,31 @@ func test_a_top_down_sprite_is_left_alone() -> void:
 	assert_false(s.flip_v)
 	assert_eq(HeldPitchArt.muzzle_local(s, Vector2(10, 4)), Vector2(7, 0))
 	s.free()
+
+
+func test_stand_undoes_the_camera_squash_and_keeps_the_barrel_on_the_ground() -> void:
+	var s: Sprite2D = Sprite2D.new()
+	s.scale = Vector2(0.5, 0.5)
+	s.rotation = 0.6
+	var g: float = sin(deg_to_rad(55.0))
+	var barrel: Vector2 = s.transform.x
+	HeldPitchArt.stand(s, g)
+	assert_eq(s.transform.x, barrel, "the barrel axis stays on the ground")
+	var x_screen: Vector2 = Vector2(s.transform.x.x, s.transform.x.y * g)
+	var y_screen: Vector2 = Vector2(s.transform.y.x, s.transform.y.y * g)
+	assert_almost_eq(x_screen.dot(y_screen), 0.0, 1e-5, "height is upright on screen")
+	var k: float = lerpf(HeldPitchArt.EDGE_ON_K, 1.0, absf(x_screen.normalized().x))
+	assert_almost_eq(y_screen.length(), 0.5 * k, 1e-5, "at the art's scale, edge-on as it turns")
+	assert_gt(x_screen.cross(y_screen), 0.0, "not mirrored")
+	s.rotation = 0.6
+	HeldPitchArt.stand(s, g)
+	assert_almost_eq(Vector2(s.transform.y.x, s.transform.y.y * g).length(), 0.5 * k, 1e-5)
+	s.rotation = 0.0
+	HeldPitchArt.stand(s, g)
+	assert_almost_eq(s.transform.y.length(), 0.5 / g, 1e-5, "across the screen: the full side")
+	s.rotation = PI / 2.0
+	HeldPitchArt.stand(s, g)
+	assert_almost_eq(
+		s.transform.y.length(), 0.5 * HeldPitchArt.EDGE_ON_K, 1e-5, "nose-down: edge-on"
+	)
+	s.free()
