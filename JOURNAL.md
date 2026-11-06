@@ -488,3 +488,20 @@ combo/tilt70.
   FOUND: quest 1's street itself (CityView chunks, props, the cops) still draws top-down at
   tilt70 on this branch: the city's lifts and the street cast's cards are city's and street's
   branches, not merged here. Judge the quest at tilt70 after the Director's merge.
+- MILESTONE 00:50 NEXT 1 in motion: quest 1's Dock 9 (ticks 13560-13900) on the SHIPPED path at
+  tilt70 (no --rigs, "cast rigs: true"), 1920x1080, 32 px/m:
+  `gtai-masters/n8/view/quest1_dock9_shipped_rigcast_tilt70_32ppm.mp4` (5.7 s at 30 fps, every 2nd
+  tick). Judged: Rivet's card stands, the Tonnage morph plays, the cops fall with blood, the form
+  card folds under each line, 0 SCRIPT ERROR. The fight lives in the band above the subtitle box
+  (the box takes the lower 40 % at 1080p); the street and the cops are top-down on this branch
+  (city's lifts and street's cards are on their branches).
+- MILESTONE 00:52 (commit 563e3709) Dent's p70 bust: the plating (opaque, saturation < 0.38: not the
+  yellow badges, not the teal wisps) quantile-matched per channel to the p55 card: median luma
+  67 -> 73, mean RGB 95/89/81 -> 104/94/83 (p55 104/94/84). Script kept in scratch
+  (`scratch/view/tone8/match.py`). Evidence `dent70_tone_before_after_cards_and_64ppm.png` (the
+  three cards + the after in game, `--bot=ghosts --ghost=dent --view=tilt70 --rigs --ppm=64`).
+- MILESTONE 00:55 (commit a5500f67) Kerf's p70 card: the amber shoulder rings p55 has (the served
+  kerf_70 drew none) painted on the shoulder joints of all five facings with p55's own amber pixels
+  by a luma ramp (ink under luma 45 kept). Evidence `kerf70_amber_rings_before_after_cards_and_64ppm.png`
+  (cards + in game at 64 px/m, tilt70, the amber joint reads). No provenance line: the same served
+  sheet as it5's line, retoned.
