@@ -39,6 +39,12 @@ const LEG_LO_FAST: float = deg_to_rad(178.0)
 const FAST_MPS: float = 10.0
 const BOB_HZ: float = 1.3
 const BOB_K: float = 0.035
+## Tilted view: the v2 facing card (GhostCard, art/view/<art>/kerf_card.png: the tall lanky biped
+## whose forearms are blades, Rivet-tall), its width (m), the ground point's height in the card and
+## its soul halo alpha. It replaces the hull, cables and every limb (v2 is a different body plan).
+const CARD_M: float = 0.8
+const CARD_ANCHOR: float = 0.97
+const CARD_HALO_A: float = 0.4
 
 var unfold: float = 1.0
 ## Ground speed (m/s), fed by the host each tick.
@@ -50,10 +56,12 @@ var _hull: Sprite2D = null
 var _cables: Sprite2D = null
 ## Per side (0 = right, 1 = left) four sprites: upper arm, forearm, leg upper, leg lower.
 var _limbs: Array[Sprite2D] = []
+var _hide: Array[Sprite2D] = []
+var _card: GhostCard = GhostCard.new("kerf", CARD_M, CARD_ANCHOR)
 
 
 func _ready() -> void:
-	add_child(_soft_glow())
+	add_child(GhostRim.soft_glow(TEAL, 0.4, 2.4 * PX_PER_M))  # teal belongs to the souls
 	add_child(_body)
 	for side: int in 2:
 		var leg_up: Sprite2D = _limb("leg_upper")
@@ -68,6 +76,9 @@ func _ready() -> void:
 	_cables.position = CABLES_AT * PX_PER_M
 	_hull = _part("hull", HULL_M)
 	GhostRim.body(_hull)
+	_hide = [_hull, _cables]
+	_hide.append_array(_limbs)
+	_card.halo = Color(TEAL, CARD_HALO_A)
 	pose()
 
 
@@ -101,6 +112,8 @@ func pose() -> void:
 		var tip: Vector2 = knee + Vector2.from_angle(lerp_angle(PI, l_lo, u)) * LEG_LO_M * u
 		_place(_limbs[i + 2], hip, knee, LEG_THICK_M)
 		_place(_limbs[i + 3], knee, tip, LEG_THICK_M)
+	_card.size_k = _body.scale.x
+	_card.step(self, _hide, Vector2.ZERO, PX_PER_M)
 
 
 func _place(s: Sprite2D, a: Vector2, b: Vector2, thick_m: float) -> void:
@@ -130,22 +143,4 @@ func _part(name: String, length_m: float) -> Sprite2D:
 	var long_px: int = maxi(s.texture.get_width(), s.texture.get_height())
 	s.scale = Vector2.ONE * length_m * PX_PER_M / float(long_px)
 	_body.add_child(s)
-	return s
-
-
-## The soul glow under the hovering head: a soft teal disc (teal belongs to the souls).
-func _soft_glow() -> Sprite2D:
-	var g: GradientTexture2D = GradientTexture2D.new()
-	g.width = 64
-	g.height = 64
-	g.fill = GradientTexture2D.FILL_RADIAL
-	g.fill_from = Vector2(0.5, 0.5)
-	g.fill_to = Vector2(1.0, 0.5)
-	var grad: Gradient = Gradient.new()
-	grad.set_color(0, Color(TEAL, 0.4))
-	grad.set_color(1, Color(TEAL, 0.0))
-	g.gradient = grad
-	var s: Sprite2D = Sprite2D.new()
-	s.texture = g
-	s.scale = Vector2.ONE * 2.4 * PX_PER_M / 64.0
 	return s

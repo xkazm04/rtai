@@ -77,3 +77,20 @@ func test_a_halo_draws_behind_the_card_in_its_facing() -> void:
 	assert_eq(halo.frame, card.frame, "the same facing")
 	assert_eq(halo.flip_h, card.flip_h)
 	assert_gt(halo.scale.x, 1.0, "a rim around the card")
+
+
+func test_kerf_under_tilt_swaps_the_whole_hover_body_for_the_v2_card() -> void:
+	ViewMode._shared = ViewMode.of("tilt")
+	var rig: KerfRig = KerfRig.new()
+	add_child_autofree(rig)
+	rig.pose()
+	var want: bool = ResourceLoader.exists(GhostCard.path_of(ViewMode.of("tilt").art, "kerf"))
+	assert_eq(rig._card.is_drawn(), want, "a card iff the view's strip exists")
+	assert_eq(rig._hide.size(), 10, "hull, cables and the eight limb sprites")
+	for p: Sprite2D in rig._hide:
+		assert_eq(p.visible, not want, "the hover body hides under the v2 card")
+	ViewMode._shared = ViewMode.of("top")
+	rig.pose()
+	assert_false(rig._card.is_drawn(), "straight down: the hover rig")
+	for p: Sprite2D in rig._hide:
+		assert_true(p.visible)
