@@ -1648,3 +1648,10 @@ NEXT (iteration 16, in order):
   **19/19 chapters fully down**, 0 SCRIPT ERROR (`evidence/king/director-reel-it16b.log`).
 - Scenarios **52 ran, 0 failed**, 0 SCRIPT ERROR (`evidence/king/scenarios-it16b.log`): the
   city_chase flake of 05:24 did not recur with the machine quiet. Unit 1164/0, lint 13/13. Combat holds.
+
+### 05:37 FILM the decree at 48 px/m re-shot on f4df4438
+- `M/king_decree_48ppm_it16.mp4` (phase 2 seed 2 stander, 16.2-20.6 s, 1280x800, the it13 caption
+  burned in with drawtext, 0 SCRIPT ERROR). **Looked at** the 4 fps sheets old above new: the same
+  sequence (the windup arc fills round King on the stalled car, the shout rings burst, the brawlers
+  carry the vermilion buff rings after). it14 deleted; frames.json 15, all exist. Every King clip in
+  frames.json is now on the current body except the ghost clips (dent/kerf/tonnage it14, ohm it13).
