@@ -62,3 +62,11 @@ func test_the_feed_fills_the_face_from_the_speaker() -> void:
 	assert_eq(state.portrait_key, "gunsmith")
 	feed.face(state, "rivet", "rivet-line-stopped")
 	assert_null(state.portrait)
+
+
+func test_the_box_paper_clears_the_folded_ghost_card() -> void:
+	var card_right: float = GhostFormHud.MARGIN + GhostFormHud.GAP + 24.0 + 4.0  # one chip + rim
+	for screen: Vector2 in [Vector2(1920, 1080), Vector2(1728, 1080)]:
+		var paper_left: float = HudDialogue.box_of(screen).position.x - 10.0
+		assert_gt(paper_left, card_right, "the paper starts right of the card at %s" % screen)
+		assert_almost_eq(HudDialogue.box_of(screen).get_center().x, screen.x * 0.5, 0.01)

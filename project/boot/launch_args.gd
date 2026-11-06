@@ -42,6 +42,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--wound-hold",
 	# n7-ranged: --shot-trail=off draws no fading path behind a round that hit (the before)
 	"--shot-trail",
+	# n8-hud: --autostart presses quest 1's Start (debug builds; films the opening without a click)
+	"--autostart",
 	# n7-melee: --quest-blade=off gives quest 1 no carried blade (the before); =<id> another one
 	"--quest-blade",
 	# n7-melee: --hit-cues=off gives melee and ghost hits no sound of their own (the before)

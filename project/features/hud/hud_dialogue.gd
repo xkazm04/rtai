@@ -11,6 +11,11 @@ const EXIT_S: float = 0.22
 const FACE_H: float = 252.0
 const DEVICE_H: float = 214.0
 const RISE_PX: float = 36.0
+## The box's left and right inset (screen px): its paper (10 px wider than the box) clears the
+## ghost-form card folded beside it while a line is up (GhostFormHud.compact: 36 + 108 + 4 rim =
+## 148 px), with a gap. The old inset (MARGIN * 4 = 144) laid the paper over the card's edge.
+const SIDE_X: float = 166.0
+const BOX_H: float = 236.0
 ## The words' sizes, largest first: the first whose whole line fits the box is drawn.
 const FIT_SIZES: Array[int] = [30, 27, 24, 22, 20]
 
@@ -61,8 +66,7 @@ func _draw() -> void:
 	if art == null or not showing():
 		return
 	var screen: Vector2 = get_viewport_rect().size
-	var m: float = HudView.MARGIN
-	var box: Rect2 = Rect2(m * 4, screen.y - m - 236, screen.x - m * 8, 236)
+	var box: Rect2 = box_of(screen)
 	var a: float = 1.0 - _out_s / EXIT_S
 	var ink: Color = Color(HudView.INK, a)
 	var paper: Rect2 = box.grow_individual(10.0, 28.0, 10.0, 10.0)
@@ -78,6 +82,12 @@ func _draw() -> void:
 	var size: int = fit_size(font, _full, w, box.size.y - 96.0)
 	at = box.position + Vector2(text_x, 92 + size * 0.3)
 	draw_multiline_string(font, at, _words, HORIZONTAL_ALIGNMENT_LEFT, w, size, -1, ink)
+
+
+## The subtitle box (its paper is 10 px wider each side and 28 px taller for the tape strip).
+static func box_of(screen: Vector2) -> Rect2:
+	var y: float = screen.y - HudView.MARGIN - BOX_H
+	return Rect2(SIDE_X, y, screen.x - SIDE_X * 2.0, BOX_H)
 
 
 ## The largest of FIT_SIZES at which `words` wrapped to `width` is at most `room` px tall.
