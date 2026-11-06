@@ -52,7 +52,8 @@ sheet enters; design proposals stay on contact sheets).
 - 21:10 Evidence: `gtai-masters/n8/hud/armory_{tilt70,tilt}_48_before.png` (frame 89, seed 1, 0 SCRIPT
   ERROR, 16 weapons laid). Every gun is a stand-in (no showcase drawing exists yet): honest BEFORE.
 - DECISION hud/showcase: see docs/decisions.md (the route, the stand-in rule, hover kept).
-- Not yet run this iteration: the full unit run, scenarios, evidence (only the selected tests + lint).
+- 21:16 Unit `--fast`: 1473 tests, 0 failures (junit), 89 s. Not yet run this iteration: the full
+  no-arg unit run (slow tier), scenarios, evidence --no-bench.
 
 NEXT:
 - Read `gtai-art/library/JOURNAL.md` for the answer to the showcase REQUEST; when sheets land: a cut
