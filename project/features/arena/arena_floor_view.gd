@@ -19,6 +19,8 @@ const LABEL_M: float = 2.2
 ## low cover is a row of crates (one crate of the stack, repeated along the box), high cover a
 ## dumpster, the course's cones the street cone. Walls stay solid ink (architecture).
 ## View lab: each solid prop kind's height (m) under a tilted --view (others are paint: 0).
+## top_lift: the swept slices that extrude a prop toward its leaning top.
+const PROP_SLICES: int = 8
 const PROP_H_M: Dictionary[String, float] = {
 	"cone": 0.7, "cover_low": 1.0, "cover_high": 1.6, "wall_high": 3.0
 }
@@ -88,7 +90,7 @@ func _held(arena: ArenaStage) -> void:
 		add_child(_static)
 		@warning_ignore("return_value_discarded")
 		_static.draw.connect(func() -> void: _props(_static, _static_of))
-	if _static_of != arena:
+	if _static_of != arena or ViewMode.shared().eye_h_m > 0.0:  # a perspective eye moves
 		_static_of = arena
 		_static.queue_redraw()
 
@@ -110,8 +112,15 @@ func _prop(ci: CanvasItem, at: Vector2, p: ArenaStation.Prop) -> void:
 	var fill: Color = PROP_FILL.get(p.kind, Ink.WASH)
 	var r: Rect2 = Rect2(Ink.px(at - p.size * 0.5), p.size * Ink.PX_PER_M)
 	var h_m: float = PROP_H_M.get(p.kind, 0.0)
-	var up: Vector2 = ViewMode.shared().lift_px(h_m)
-	if up != Vector2.ZERO:  # view lab: the south face, then the top at the prop's height
+	var up: Vector2 = ViewMode.shared().lift_at(ci.get_global_transform() * r.get_center(), h_m)
+	if ViewMode.shared().eye_h_m > 0.0 and up != Vector2.ZERO:  # top_lift: swept, leaning out
+		for i: int in PROP_SLICES:
+			ci.draw_rect(
+				Rect2(r.position + up * (float(i) / PROP_SLICES), r.size), fill.darkened(0.45)
+			)
+		r.position += up
+		ci.draw_rect(r.grow(1.0), Ink.INK, false, Ink.LINE_PX)
+	elif up != Vector2.ZERO:  # view lab: the south face, then the top at the prop's height
 		var face: Rect2 = Rect2(r.position.x, r.end.y + up.y, r.size.x, -up.y)
 		ci.draw_rect(face, fill.darkened(0.45), true)
 		ci.draw_rect(face, Ink.INK, false, Ink.LINE_PX)

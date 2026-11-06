@@ -17,11 +17,10 @@ const HEAD_ABOVE_TORSO: float = 0.45
 
 ## Once per pose step after the facing is set: the rig's screen-up per part px of height.
 static func aim_up(rig: CutRig) -> void:
-	var k: float = ViewMode.shared().lift_k()
-	if k == 0.0:
+	var up: Vector2 = ViewMode.shared().up_at(rig.global_position)
+	if up == Vector2.ZERO:
 		rig.tilt_up = Vector2.ZERO
 		return
-	var up: Vector2 = Vector2(0.0, -k / ViewMode.shared().ground_k())
 	rig.tilt_up = up.rotated(-rig.global_rotation)
 
 

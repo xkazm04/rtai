@@ -88,6 +88,7 @@ func place(focus_m: Vector2) -> void:
 		offset += rig.offset_px(SimConst.PX_PER_M)
 	camera.zoom = ViewMode.shared().zoom_of(zoom)  # --view: exactly ONE * zoom when flat
 	camera.position = focus_m * SimConst.PX_PER_M + offset
+	ViewMode.eye = camera.position  # view lab: a perspective top_lift lifts away from here
 	fx_triggers.rig = rig
 	fx_triggers.focus_px = focus_m * SimConst.PX_PER_M
 	_update_look(focus_m)

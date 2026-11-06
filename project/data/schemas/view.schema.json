@@ -21,6 +21,11 @@
           "cards": {
             "type": "boolean"
           },
+          "eye_h_m": {
+            "maximum": 200,
+            "minimum": 0,
+            "type": "number"
+          },
           "height_k": {
             "maximum": 2,
             "minimum": 0,

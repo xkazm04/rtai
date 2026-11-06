@@ -12,12 +12,18 @@ const TABLE: String = "res://data/tables/view.json"
 const FLAG: String = "--view"
 
 static var _shared: ViewMode = null
+## The camera's ground point in world px (PrintStage.place sets it each frame; read by lift_at).
+static var eye: Vector2 = Vector2.ZERO
 
 var id: StringName = &"top"
 var pitch_deg: float = 90.0
 var height_k: float = 0.0
 ## The upright facing cards (RigHeadCard) under a tilt; false = the top-down head art only.
 var cards: bool = false
+## top_lift: a straight-down PERSPECTIVE camera this many metres above the ground
+## (0 = orthographic): a height lifts away from the camera's ground point, so walls and bodies
+## lean out from the screen centre.
+var eye_h_m: float = 0.0
 var ids: Array[String] = []
 
 
@@ -43,6 +49,8 @@ static func of(want: String) -> ViewMode:
 			v.pitch_deg = row["pitch_deg"]
 			v.height_k = row["height_k"]
 			v.cards = row.get("cards", false) == true and v.pitch_deg < 90.0
+			var eye_h: float = row.get("eye_h_m", 0.0)
+			v.eye_h_m = eye_h
 	if want != "" and not v.ids.has(want):
 		Log.warn("view", "unknown --view=%s; drawing %s" % [want, v.id])
 	return v
@@ -75,6 +83,26 @@ func zoom_of(z: float) -> Vector2:
 	if is_flat():
 		return Vector2.ONE * z
 	return Vector2(z, z * ground_k())
+
+
+## Any height cue at all (a tilt or a perspective eye); false = today's flat draw.
+func has_lift() -> bool:
+	return not is_flat() or eye_h_m > 0.0
+
+
+## Screen offset per px of height at the ground point `at` (world px): radial from the eye under a
+## perspective top_lift, else straight up the screen (ZERO when flat).
+func up_at(at: Vector2) -> Vector2:
+	if eye_h_m > 0.0:
+		return (at - eye) / (eye_h_m * SimConst.PX_PER_M)
+	if is_flat():
+		return Vector2.ZERO
+	return Vector2(0.0, -lift_k() / ground_k())
+
+
+## lift_px at a ground point: the same under a tilt, radial under a perspective top_lift.
+func lift_at(at: Vector2, h_m: float) -> Vector2:
+	return up_at(at) * h_m * SimConst.PX_PER_M if eye_h_m > 0.0 else lift_px(h_m)
 
 
 ## How far up the screen (world px, before the camera's y zoom) a height of `h_m` metres draws.

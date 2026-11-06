@@ -28,13 +28,15 @@ const TYRE_M: Vector2 = Vector2(0.95, 0.42)
 ## Draws the stack about `at` (world px) along `heading`; the caller then lifts the roof by ROOF_M.
 static func draw(ci: CanvasItem, at: Vector2, heading: float, l: float, w: float) -> void:
 	var view: ViewMode = ViewMode.shared()
-	if view.is_flat():
+	if not view.has_lift():
 		return
 	var p: float = Ink.PX_PER_M
 	for i: int in SLICES:
 		var k: float = float(i) / float(SLICES - 1)
 		var z: float = ROOF_M * k
-		ci.draw_set_transform(at + view.lift_px(z), heading, Vector2.ONE)
+		ci.draw_set_transform(
+			at + view.lift_at(ci.get_global_transform() * at, z), heading, Vector2.ONE
+		)
 		if i == 0 or i == SLICES - 1:  # the ink line at the foot and at the roof line
 			ci.draw_rect(Rect2(-l * 0.5, -w * 0.5, l, w).grow(3.0), Ink.INK)
 		_slice(ci, k, l, w, p)
