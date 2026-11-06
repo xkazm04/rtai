@@ -12,6 +12,7 @@ final hash moved once, deliberately, when quest 1 started carrying the katana (`
 | Melee weight (brief 3) | `65dd07e1` + rows | every melee hit reaches FeelCam (n7-ranged's layer): a hold on the hit frame, a kick along the blow, the kill stop; per-weapon rows for the claw, katana, baton and chainsaw | `M/melee_feel_claw_ab_32ppm_48slow.mp4` (before `--feel=off`) |
 | Kerf's chain | `cb3e5caa` | a hold and a cream-and-ink cut flare per cut: it reads cut by cut instead of one blur | `M/kerf_chain_ab_32ppm_64slow.mp4` |
 | Kerf's sight (anticipation) | `96e1abe6` | a dashed teal sighting line from Kerf to the body the next press cuts, with a white lock (two brackets) on it; dim just after a blink, full when the next blink may fire, none without a charge. Each cut of a chain is called before it lands (the blink came from nowhere before) | `M/kerf_sight_ab_32ppm_48slow.mp4`, still `M/kerf_sight_ab_32_48ppm.png` (before `ghost_attacks.json` kerf `sight_k` 0, or `--feel=off`) |
+| Kerf's camera after a blink | `3fd49218` | the camera whips from where Kerf stood to where he lands (0.18 s, eased out) instead of jumping with the one-tick blink; the cut's hit-stop holds the take-off framing, so he is seen landing across the frame, then the camera travels. A chain reads as one fight in one place | `M/kerf_cam_glide_ab_32ppm_48slow.mp4` (before `--kerf-glide=off`) |
 | Plasma sword deflect | `2502aaa7`, `a7ed5d4c` | a parry beat (a stop, a kick toward the shooter), a starburst on the bat frame and a streak along the return | `M/plasma_deflect_ab_32ppm_48slow.mp4` |
 | Ohm's tell | `0555878c` | white sparks edged in ink reach from Ohm's fingertips toward the aim while the charge refills | `M/ohm_tell_ab_32ppm_crop.mp4` |
 | Chainsaw kill | `49cc45d1` | a cream burst where the halves part, the grind's drops kept clear of the held body | `M/chainsaw_kill_ab_32ppm_48slow.mp4` |
@@ -192,6 +193,14 @@ head spark.
 - Before: `--saw-part=off` (sideways, on the true line), `--saw-part=off --melee-dir=off` (the whole before).
 - See it: `RTAI.exe -- --arena=city --bot=reel --reel=director --chapter=chainsaw --loadout=pistol --clean`
   (the halves part at about 6.6 s).
+
+(q) Kerf's camera after a blink.
+- Options: the whip (built: `ghost_attacks.json` kerf `cam_glide_s` 0.18, cubic ease-out, held through the cut's
+  hit-stop); the snap (0, the camera nailed to Rivet as before); a slower follow (0.3-0.4: the trail and the cut stay on
+  screen longer, the camera lags further on a fast chain). One value. Kerf only: Dent's camera is call (d7) and untouched.
+- Clip: `M/kerf_cam_glide_ab_32ppm_48slow.mp4` (city 32 px/m real time, then the arena at 48 px/m 0.4x; before left).
+- Before: `--kerf-glide=off`.
+- See it: `RTAI.exe -- --arena=city --bot=ghosts --ghost=kerf --rigs --ppm=32` (blinks from about 1.3 s).
 
 ## Next steps
 See the last NEXT entry in `JOURNAL.md`.

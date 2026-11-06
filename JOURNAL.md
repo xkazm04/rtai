@@ -1444,3 +1444,25 @@ NEXT (written 05:59, for iteration 17; supersedes the 05:15 list):
 - READ 06:02 n7-ranged to its it20 NEXT: no hit_feel / feel_cam commit since `8efe76ca`/`a63bd8e0`;
   a FINDING (not built) of a `hold_delay_ticks` so the hit-stop freezes on the wound, flagged as a
   shared-layer change with an FYI to melee if it lands. Nothing to merge, no REQUEST to melee.
+- PICK 06:04 the audit's one Kerf note never addressed: "the camera jumps with each blink". The
+  arena and city camera is nailed to Rivet (PrintStage.place / CityView: focus + kick_px), and the
+  sim moves him the whole blink in one tick.
+- BUILD 06:08 `3fd49218` KerfGlide (features/souls, view only): each live blink in KerfStage's
+  trail leaves the camera (from - to) x (1 - t)^3 over ghost_attacks.json kerf `cam_glide_s` 0.18
+  (schema), summed over the chain, stepped on the stage tick (a hit-stop holds it); applied in
+  CollectCallView._hauler_kick's offsets, so arena, city block and quest 1 take it. `--kerf-glide=off`
+  in KNOWN_FLAGS. test_kerf_glide 3/3; planted (residual 0 = the snap) -> exactly the 2 glide tests
+  fail. Lint 13/13. FRICTION: a typed Packed*Array append in a test needs a per-statement
+  `@warning_ignore("return_value_discarded")` (a function-level one does not cover it).
+- LOOK 06:09-06:12 ghost reel kerf, before `--kerf-glide=off` vs after: arena 32 px/m, city 32 px/m,
+  arena 48 px/m (6 films, exit 0, 0 SCRIPT ERROR). Frame difference: non-zero only in the 10-17
+  frames after each of the 7 blinks (76, 96, 122, 148, 208, 274, 336), 0 elsewhere. Stills (arena
+  95-113, city 121-138): before, the whole frame lurches on the blink frame; after, the framing holds
+  on the take-off through the cut's 7-frame stop (Kerf seen landing across the frame at the end of
+  his trail), then the camera arrives by ~11 ticks. Read 3 -> 4. Clip
+  `M/kerf_cam_glide_ab_32ppm_48slow.mp4` (8.0 s); frames.json row 0 (dropped
+  tonnage_plates_ab_32ppm.mp4 from the list, the file stays). REPORT row + call (q), audit, decision.
+- Registry rules applied: motion-quality-gating (judged in motion in the live arena and city paths at
+  32 and 48 px/m against a before on the same head; a planted fault per test), realtime-combat-
+  semantics (feel is view only: the camera offset reads stage state and writes nothing to the sim;
+  generic for any target, a boss cut by Kerf gets the same whip).

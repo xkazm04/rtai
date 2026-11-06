@@ -84,6 +84,15 @@ By the craft columns (impact and read at 32 weigh most: they are what the owner 
    drew a cut tick on the target: hidden under the body, replaced by the brackets; a squared ramp
    from 0.25 read faint mid-gap, now linear from 0.4. Antic. 2 -> 4.
    `M/kerf_sight_ab_32ppm_48slow.mp4`.
+   **Camera 06:15, 2026-11-06 (`3fd49218`)**: the audit's last Kerf note ("the camera jumps with each blink") was
+   still true: the sim moves Rivet the whole blink in one tick and the camera was nailed to him, so every cut lurched
+   the street 4-10 m. KerfGlide (view only, in CollectCallView's camera offset, so the arena, the city block and quest 1
+   all take it): each live blink leaves the camera (from - to), eased out over `cam_glide_s` 0.18 (cubic), summed over
+   the chain; stepped on the stage tick, so the cut's hit-stop holds the take-off framing. Looked at (arena 32 px/m
+   frames 95-113, city 32 px/m 121-138, 48 px/m 88-160 at 0.4x; before `--kerf-glide=off`): before, the whole frame
+   jumps on the blink frame; after, Kerf is seen landing across the frame at the end of his trail through the 7-frame
+   stop, then the camera arrives in about 11 ticks. Read 3 -> 4 (the chain stays in one place).
+   `M/kerf_cam_glide_ab_32ppm_48slow.mp4`.
 2. **Plasma sword deflect**: the deflect spark is tiny and the return is not tied to the swing; the
    placeholder blade (asset only after every item, backlog 3).
    **Done 20:30 (`2502aaa7`)**: a parry beat (row `plasma_deflect`: 4-tick stop, kick toward the shooter)
