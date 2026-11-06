@@ -255,7 +255,7 @@
         "project/features/souls/ghost_form_view.gd": 206,
         "project/features/souls/ghost_forms.gd": 219,
         "project/features/souls/kerf_stage.gd": 208,
-        "project/features/souls/ohm_rig.gd": 209,
+        "project/features/souls/ohm_rig.gd": 201,
         "project/tests/parity/city_parity.gd": 204,
         "project/tests/scenarios/scenario_vehicle_drive.gd": 213,
         "project/tests/unit/test_crowd_react.gd": 231,
