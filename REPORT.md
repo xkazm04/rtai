@@ -68,6 +68,7 @@ tick 7036, 188 on Rivet, 0 SCRIPT ERROR, the editor's numbers (`evidence/servo/e
 - The spine is procedural: since it10 it has the sheet's width and tan steel with stacked boxes, but not its rounded horseshoe frame or the hose loops over the top.
 - The hover pads hang on the arms beside the body; the sheet hangs them lower and further out at the corners (moving them moves the arms' reach, a fight read: not done).
 - The `--boss-cam` clip camera frames Rivet and the boss together; a bay-hop landing ring on a Rivet by the bays can sit under the boss bar in a clip (`M/servo_attack_bay_hop_48ppm_it9.mp4`). In play the camera centres on Rivet, so the ring stays on screen.
+- The same clip camera at the phase-3 defeat in the yard's top-left corner: Servo's centre stays 3.1-3.5 m inside the screen edge (`BossCam.BOSS_MARGIN_M` 3.0), but turned sideways his rack reaches 3.07 m out, so half the body leaves the left edge (`M/servo_p3_overtime_defeat_32ppm_it9.mp4`, ~32 s). A 3.5 margin changed nothing; ~4.5 would hold the body but pushes the view off the floor elsewhere (unmeasured). The framework file is shared with `n7-king`: left as is.
 
 ## Next steps
 - To come.
