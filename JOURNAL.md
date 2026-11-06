@@ -1616,3 +1616,14 @@ NEXT (iteration 16, in order):
   the medallion at the front against the plum, the top-view read of the sheet; on foot at 32 it is
   subtler where it crosses the gold arm; at 48 the medallion and its plum gem read clearly.
   DECISION keep 0.08. Unit **1164/0** (`evidence/king/unit-it16b.log`), lint 13/13.
+
+### 05:25 EXE re-exported on f4df4438 (King's chain) and smoked
+- `windows-showcase` export exit 0, 0 errors (`build/export-it16b.log`); headless smoke seed 2
+  human: King down at tick **4933**, took **88**, coin_fan 3 / press_slam 1 / ram 1, 0 SCRIPT ERROR.
+
+### 05:29 FILM the full fight and the re-cuts re-shot on f4df4438 (King's chain)
+- Same command and cut points as 05:14 (`build/scratch16/film32.sh`, `cut.sh`), 0 SCRIPT ERROR,
+  phases 1-2-3 and "king defeated" in the log. **Looked at** the nine keys (same beats) and the target
+  comparison: in the ram crop the ermine collar now closes in a gold ring with the medallion at the
+  front, like the sheet's top view. The it16 masters are overwritten in place; frames.json notes
+  name f4df4438 (15 entries, all exist).
