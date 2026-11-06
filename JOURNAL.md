@@ -1507,3 +1507,33 @@ NEXT (written 05:59, for iteration 17; supersedes the 05:15 list):
   `scenarios-edb40f7c.log` appeared. FRICTION: my taskkill /T of the `edb40f7c` reels.sh did not
   reach its forked bash, which ran the scenarios on the tree mid-cherry-pick (finished 06:34); that
   log is mixed and deleted. Clean evidence re-run below.
+- GATES 06:44 `node tools/evidence/run.mjs --no-bench` on `f93d4857` (code `1166c418`), tree clean
+  and untouched through the run: exit 0; lint 13/13, unit 1240/1240, scenarios 52/52, parity
+  bit-exact over 1200 steps (planted caught at 629), look goldens 11/11, block 5/5
+  (`evidence/n7-melee/evidence-run-f93d4857.log`). Bench not run (contended, no lock).
+NEXT (written 06:45, for iteration 18; supersedes the 05:59 list):
+1. Read n7-ranged's JOURNAL to its end: cherry-pick new hit_feel / feel_cam / camera commits -x
+   (check prerequisites; LaunchArgs.KNOWN_FLAGS conflicts: keep only the merged commit's flag),
+   unit with GODOT_BIN exported. Merged so far: `8efe76ca`, `a63bd8e0`, `49cfe6c4` (= `1166c418`).
+2. Freeze (by 08:30), in order: gates on the final head (lint, unit, `bash evidence/n7-melee/reels.sh
+   <head>`, then `node tools/evidence/run.mjs --no-bench > /tmp/<log>` on a clean tree, log copied
+   in after; never edit the worktree while a gate runs, docs included: the unit churn guard counts
+   them); bake_city + both exes (`--export-release windows-showcase ../build/export/windows/RTAI.exe`,
+   `--export-release windows-slice ../build/export/windows-slice/RTAI.exe`); boot each once (calls
+   (h)-(q) lines; the slice title card; `--kerf-glide=off`, `--wound-hold=off` now in KNOWN_FLAGS);
+   finish REPORT.md (exe lines per call a-q, gates, drop "DRAFT").
+   To stop a reels.sh run: kill the godot child AND every bash of that reels.sh (it forks; /T on
+   the parent missed one on 06:28).
+3. The combined city clip is current on `3fd49218` (Kerf glide segment). Re-cut only if code moves
+   (ghost code: refilm `set_ghost_<g>`; melee code: refilm the chapter; then `RECUT=1 bash
+   evidence/n7-melee/set_clip.sh`).
+4. Build candidates, weakest first: ObjectiveView's ring vs the older camera offsets (forms_lift_m,
+   city_lean_m; one line, but the lift is a judged quest 1 look: film quest 1's Tonnage subtitle
+   beat before/after first); the whiff thud is unit-tested only; Dent's miss lash is silent; Dent
+   read 3 (the camera call); the ram heap (call h). Call (b) only on the owner's word.
+- STOP 06:46 iteration 17. Code: `3fd49218` (KerfGlide: the camera whips after a Kerf blink,
+  `cam_glide_s` 0.18, `--kerf-glide=off`), `be78d440` (quest 1's objective ring stays on its goal
+  under the glide), `edb40f7c` (dev: quest_ghost_rec picks the asked ghost), merge `1166c418`
+  (ranged's wound-hold). Gates on it: reels 19/19 x2, scenarios 52, full evidence green. Clips
+  `M/kerf_cam_glide_ab_32ppm_48slow.mp4`, `M/quest1_kerf_cam_glide_ab_32ppm.mp4`; city set re-cut.
+  Call (q). NEXT is the 06:45 entry above.
