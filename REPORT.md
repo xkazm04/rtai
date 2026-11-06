@@ -51,9 +51,10 @@ today's game, bit-identical: `top` frames are md5-identical with the King lane's
   176 body-frames behind a prop, the King fight (seed 2, 90 s) 8 (`evidence/view/it15/`).
 - Mouse aim unprojected through the tilt (`ViewMode.ground_of`, unit-tested; NOT checked live
   with a mouse: unattended run).
-- Exe: `build/export/windows/RTAI.exe` (`windows-showcase`, re-exported at the freeze on the
-  final code; the main scene is the arena, so `--boss=king` and `--arena=city` both work). Smoke
-  headless on the it15 export of the same code (`evidence/view/it15/exe_*.log`): `--view=tilt` King
+- Exe: `build/export/windows/RTAI.exe` (`windows-showcase`, re-exported at the freeze on 78d652d7,
+  0 errors, `build/export-it18.log`; it now packs the baked city chunks; the main scene is the arena,
+  so `--boss=king` and `--arena=city` both work). Smoke headless on that exe
+  (`evidence/view/it18/exe_*.log`, identical to the it15 export's counts): `--view=tilt` King
   fight: King defeated, 8 body-frames hidden, 0 SCRIPT ERROR; `--view=tilt` city block: 176 hidden,
   0 SCRIPT ERROR; `--view=top` King fight: King defeated, 0 SCRIPT ERROR.
 
