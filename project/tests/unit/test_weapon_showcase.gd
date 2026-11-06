@@ -31,7 +31,7 @@ func test_hud_icon_falls_back_to_the_shipped_icon() -> void:
 	assert_null(feed.icon_of(&""), "unarmed: no icon")
 
 
-func test_all_twelve_approved_weapons_have_every_form() -> void:
+func test_all_seventeen_weapons_have_every_form() -> void:
 	var s: WeaponShowcase = WeaponShowcase.new()
 	var ids: Array[StringName] = [
 		&"pistol",
@@ -46,6 +46,11 @@ func test_all_twelve_approved_weapons_have_every_form() -> void:
 		&"katana",
 		&"electro_baton",
 		&"chainsaw",
+		&"electro_gun",
+		&"homing_shard",
+		&"ray_gun",
+		&"mini_nuke",
+		&"plasma_sword",
 	]
 	for form: String in ["p70", "p55", WeaponShowcase.ICON]:
 		assert_eq(s.stand_ins(ids, form), [] as Array[StringName], form)
