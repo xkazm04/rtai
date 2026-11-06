@@ -343,3 +343,15 @@ NEXT (iteration 7 = the freeze session; freeze 18:30, REPORT 18:40):
   in the exe.
 - 17:48 Masters cleanup: removed the superseded it1/it3 combined clips and king_car_64_t600 (none in
   frames.json or REPORT). No .avi left in scratch.
+- 17:52 LOOK the cape train at 48 px/m (NEXT item 4; dev build = the exe's code, phase 3 seed 2, 2-11 s):
+  the train streams in the charge and spreads at the slam landing, nothing at rest. Found: in the charge it
+  lies inside the vermilion charge telegraph, so the cloth has low contrast there (the ermine hem and ink
+  carry it). Not fixed at the freeze (a code change would re-open evidence + export); in REPORT gaps.
+  Masters: king_p3_cape_train_tilt48_sheet.png (not in frames.json; named in REPORT).
+- 17:55 REPORT.md final (no DRAFT banner; gates and exe on 8dbbbcf0; Calls 1-9; blocked: none).
+NEXT (after the merge, a later run):
+1. The cape train in the charge: draw it under the telegraph's fill or darken its root, judge at 48 in
+   the charge (king_p3_cape_train_tilt48_sheet.png is the before).
+2. Fold the court strips into chars' `ViewMode.art` route (rows in the 14:47 entry); KingArt keeps the
+   limbs, the cape and the pitch re-dress (8dbbbcf0).
+3. Regenerate the emerald gem accents on magenta (Call 3); a p70 set from the 70 sheets with the same cutters.

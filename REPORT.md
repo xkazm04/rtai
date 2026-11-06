@@ -20,7 +20,8 @@ All under `--view=tilt` (55 degrees), seed 2, the live arena (`--boss=king` / `-
 - **The cape train (session 4):** the card's cape is static, so the drawn cape's follow-through was lost.
   Now on foot the cape's train streams from his back to the ground through the charge/ram flare and the
   slam landing, and nothing shows at rest. Evidence: `king_cape_train_64_before_after.png`,
-  `king_p3_cape_train_tilt64.mp4`.
+  `king_p3_cape_train_tilt64.mp4`, and at 48 px/m (session 5, 2-11 s of phase 3, seed 2):
+  `king_p3_cape_train_tilt48_sheet.png`.
 
 ### The throne-car
 - **Walls from the approved car sheet:** a 40-slice stack (`KingCarWalls`) drawing the side, front and
@@ -46,6 +47,11 @@ All under `--view=tilt` (55 degrees), seed 2, the live arena (`--boss=king` / `-
   `servo_stands_tilt32_before_after.png`, `servo_crates_tilt64_before_after.png`,
   `servo_parcels_falling_tilt64_before_after.png`, `servo_tilt48_drones_rotor_dash.mp4`.
 
+### Mid-fight pitch changes (session 5)
+- view70's combined view eases 70 -> 55 into a boss fight. A court card now re-dresses when the pitch moves:
+  it swaps to that pitch's strip, or back to the shared card at a pitch with none (8dbbbcf0, unit test 55 -> 65 -> 55).
+  At a steady pitch the tilt frames are md5-identical to before.
+
 ### Close combat at 64 px/m
 The King vs the katana, the gang vs Rivet, and Servo at contact with the katana (`--ghost=kerf --loadout=katana`):
 the parts hold their detail and do not turn to mush.
@@ -58,13 +64,11 @@ the parts hold their detail and do not turn to mush.
   0 failed. Bench not run (art and view only; no bench lock taken).
 - `top` identity was measured for every change: a raw-frame md5 of the old code vs the new code under `--view=top` (JOURNAL).
 
-### Mid-fight pitch changes (session 5)
-- view70's combined view eases 70 -> 55 into a boss fight. A court card now re-dresses when the pitch moves:
-  it swaps to that pitch's strip, or back to the shared card at a pitch with none (8dbbbcf0, unit test 55 -> 65 -> 55).
-  At a steady pitch the tilt frames are md5-identical to before.
-
 ## What does not work / known gaps
 - An arm can cross over the bust card at melee range (RigDepthSort, which belongs to chars).
+- In the charge the cape's train lies inside the vermilion charge telegraph: the ermine hem and the ink edge carry
+  it, but the cloth itself has low contrast against the lane (`king_p3_cape_train_tilt48_sheet.png`, top middle).
+  One option, not built: draw the train under the telegraph's fill, or darken the train's root further.
 - The emerald accents key toward grey (the chroma despill clamps green).
 
 ## Calls for the owner
