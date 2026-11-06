@@ -3,8 +3,8 @@ extends GutTest
 ## anywhere in quest 1's static closure breaks the build: quest1_game.gd fails to compile and the
 ## game never starts (65dd07e1 did that: MeleeFeel -> ReactLink -> PlasmaScorchView -> ArenaRigs).
 ## This walks the global class names each script names (comments stripped) from the slice's main
-## scene script and fails on any script under res://dev/. Run-time load() by path (quest 1's
-## guarded --rigs) is not a static reference and is not walked.
+## scene script and fails on any script under res://dev/. Run-time load() by path is not a static
+## reference and is not walked. (n8-view: quest 1's rig cast, ArenaRigs, now lives in features/.)
 
 const ROOT: String = "res://boot/quest1_game.gd"
 
@@ -17,7 +17,7 @@ func test_quest_one_never_names_a_dev_class() -> void:
 
 func test_the_walk_catches_a_planted_dev_class() -> void:
 	var classes: Dictionary[String, String] = _classes()
-	classes["MeleeFeel"] = "res://dev/arena/arena_rigs.gd"  # as if MeleeFeel lived in dev/
+	classes["MeleeFeel"] = "res://dev/arena/planted.gd"  # as if MeleeFeel lived in dev/
 	assert_false(_dev_reached(ROOT, classes).is_empty(), "MeleeFeel is on quest 1's path")
 
 

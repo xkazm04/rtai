@@ -442,3 +442,23 @@ hud; city's occlusion and arena-cover REQUESTs answered in it2/it6).
   his lifted height, not his ground point), motion-quality-gating (stills at the same tick and seed,
   before/after differ only in the change), perf-regression-gating (not measured this iteration: the
   quest's rig cast vs sprites frame cost is UNMEASURED, owed).
+- GATE unit full no-arg at ebd77c13: 1505 passed / 0 failed, 0 FLAKY (`evidence/n8-view/unit-it7.log`).
+
+NEXT (iteration 8, in brief order):
+1. Quest 1 under combo/tilt70 on the rig cast: film the opening and the Dock 9 fight as a CLIP
+   (quest1_clip.gd without --stills, `--view=tilt70`, then `--view=combo`) and judge in motion;
+   measure its frame cost vs the sprite cast (perf-regression-gating: UNMEASURED now). Check the
+   ghost forms/voices: the rig cast brings GhostFormView instead of StoryForms; confirm the voice
+   lines and form HUD still show under tilt70 (the dialogue box did show in the still).
+2. Item 8 rest: the King fight frame cost combo vs top under bench.lock, release export.
+3. Weakest art: Dent's p70 bust darker than p55; Kerf p70 lacks the amber shoulder rings.
+4. The order probe's phase-3 car pairs: repeat it5's exact command, still at the first wrong tick.
+5. Before the freeze: director reel 19/19 top + combo, evidence run --no-bench, export the exe,
+   REPORT with the Calls (King bust size, death beat length, attack lock, camera lead at speed,
+   cover as a stack, quest 1's cast under the angled view: rigs (built) vs sprites).
+  NEXT 1 note (code read, 00:24): StoryForms on the sprite path gives the ghost form view with its
+  story voice bound (GhostFormView.events), the subtitle camera lift (zero at 32 px/m) and the form
+  card's fold under the subtitle box. The rig path attaches its own GhostFormView (events bound by
+  default, so the voice should play) but no subtitle lift and no card fold: judge both on the clip.
+- GATE scenarios at ebd77c13 (`evidence/n8-view/scenarios-it7.log`): 52 passed, 0 SCRIPT ERROR, no
+  CONTENDED (run alone); no golden or replay moved (`top` keeps the sprite cast).
