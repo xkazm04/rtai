@@ -25,6 +25,8 @@ today's game, bit-identical: `top` frames are md5-identical with the King lane's
 4. `king_views_grid_32ppm_it12_t12s.png`: every view at one tick (top / top_lift / tilt65 / tilt /
    tilt45_cards), 32 px/m unscaled crops.
 5. `king_depth_sort_before_after_48ppm_x2_it9.png`: draw order under tilt, before | after.
+6. `city_occlusion_tilt_noocclude_vs_tilt_32ppm_x4_it15.png`: occlusion under tilt, a cop behind
+   the city block's barrier, standing (tick 649) and downed (tick 1060), off | on.
 
 ## What works (evidence)
 
@@ -42,6 +44,11 @@ today's game, bit-identical: `top` frames are md5-identical with the King lane's
   `evidence/view/it12/tilt_noshadow_vs_cast_32_x2_t900.png`.
 - Draw order MEASURED and FIXED in the arena (`RigDepthSort`): reversed pairs 16 % -> 2 %,
   interleaved parts 71 % -> 4 % (seed 2, 60 s; `evidence/view/it9/order_tilt_sort.log`).
+- Occlusion under tilt (it15, `PropOcclusion`, view.json `occlude`; `tilt_noocclude` = before): a
+  body behind a standing arena prop (barrier, dumpster, crate row) is hidden by the prop redrawn
+  over it (pixel-identical to the floor's) and shown as an ink silhouette with a cream rim, cut to
+  the prop; a body in front of it is lifted over it. MEASURED: the city block (seed 2, 60 s) has
+  176 body-frames behind a prop, the King fight (seed 2, 90 s) 8 (`evidence/view/it15/`).
 - Mouse aim unprojected through the tilt (`ViewMode.ground_of`, unit-tested; NOT checked live
   with a mouse: unattended run).
 - Exe: `build/export/windows/RTAI.exe` (windows-showcase, re-exported it12 on eba837e4 with the cast
@@ -52,7 +59,8 @@ today's game, bit-identical: `top` frames are md5-identical with the King lane's
 ## What does not work yet
 
 - The city's parked sedans are flat under tilt and cast no shadow; the city's baked crowd casts no
-  figure shadow. No occlusion silhouettes behind tall walls. King's accents and the ghost/kill overlays sit at one
+  figure shadow. Occlusion covers the arena's station props only: the city chunks' own props and
+  buildings are still flat under tilt, so nothing there can hide a body yet. King's accents and the ghost/kill overlays sit at one
   fixed z over the rigs.
 - `top_lift` is still a modest gain: the cast shadows now give Rivet and the car a height cue, but
   no face or body side ever shows straight down.

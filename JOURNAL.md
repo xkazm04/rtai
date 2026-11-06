@@ -481,3 +481,10 @@ Rules applied: registry `measured-draw-order` (count the failures, do not eyebal
   redrawn prop when he stands in front of one with a body behind it); the city's own chunk props
   and buildings are still flat under tilt (only the arena's station props have height).
 - GATE unit 1189/0 on 2d31cee6 (scratch unit.log), lint 13/13.
+- PROOF switch off: `evidence/view/shot.sh top 900 32` md5 b5ed2b94 (as it12; my first try lacked
+  `--boss-cam` and gave a different md5, so use shot.sh). Flat views never make PropOcclusion.
+- Caught the STANDING case at tick 649 (city block; 648-650 only). LOOKED x4: noocclude = the cop
+  drawn over the barrier's face down to its foot; occlude = his cap over the barrier's top, the
+  body hidden. The hip-wide ink figure was a faint sliver on the dark face -> silhouette at a body
+  width with a cream rim: 0.6 m read as a coffin, 0.42 m reads as a hidden figure (committed).
+  `city_occlusion_..._it15.png` rebuilt with both rows (649 standing, 1060 downed).
