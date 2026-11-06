@@ -74,6 +74,20 @@ again in it18 on 71e76b3f (`evidence/king/numbers-it18/`, 15 runs, 0 SCRIPT ERRO
 identical to it15's; only each run's total `ticks` differs (the idle run after the fight, before
 `--quit-after`, which headless pacing on a busy machine moves).
 
+**it20, call C's "fair" option measured** (human-like bot, seeds 1-10, n=10 per row, 0 SCRIPT ERROR
+in 40; a rate from 10 runs resolves only steps of 10 points; values reverted after each run):
+
+| variant (temporary, not built) | survive | Rivet took (mean) | dir |
+|---|---|---|---|
+| default as built (repair 5 hp/s; outcomes = default, nobody died) | 10/10 | 74.4 | `numbers-it20-repair5` |
+| King hits 30/14/30/30, coin fan 48 deg | 10/10 | 96.4 | `numbers-it20-fair` |
+| + cooldowns -20-35 %, gang swipe 11 every 1.0 s | 10/10 | 86.0 | `numbers-it20-fair2` |
+| default, the bot reads 50 % of tells (READ_P 0.5) | 10/10 | 127.6 | `numbers-it20-read50` |
+
+"Took" counts King's own hits (`boss_fight.dealt`); the gang's come on top. Rivet's repair
+(10 hp/s after 3 s unhit) heals between King's spaced attacks, and with no hit over 30, a death
+needs about 4 hits in about 3 s. The standing bot does that (5 deaths in 5); a reader does not.
+
 Every attack is dodgeable (the dodging bot takes 0) and every attack lands on a stander. The
 easy band is as built (call C). Every body and look change since it8 (through it18's gang shades)
 is render only: King still goes down at tick 4933 for the human bot on seed 2 and 5315 for the
@@ -104,8 +118,16 @@ Each call names its options, the default that is built, and how to see it.
   king.ghost_k` 1.0), or e.g. 0.5. Ohm takes about 14 % off the fight. Dent's car and Tonnage's
   shove are set pieces, not damage. See `RTAI.exe -- --rigs --boss=king --bot=boss --bot-human --ghost=ohm`.
 - **B. The wreck is cover in phase 3** (built: `KingMoves.WRECK_SOLID` true), or paint only.
-- **C. Difficulty band.** Easy (built: the human-like bot survives 5/5 and takes 78 of 100), or
-  fair (about 7 in 10 survive).
+- **C. Difficulty band.** Easy (built: the human-like bot survives 5/5 and takes 78 of 100; it20,
+  seeds 1-10: 10/10, taken 74), or fair (about 7 in 10 survive). (it20) Measured: data tuning
+  inside King's own floor (no hit over 30 of Rivet's 100 hp) does not reach fair. Hits up to 30, a
+  48-degree coin fan, shorter cooldowns and the gang at 11 still give 10/10 (taken 86-96, n=10 each).
+  A bot that reads half the tells instead of 70 % also survives 10/10 (taken 128, up to 194), because
+  Rivet repairs 10 hp/s after 3 s unhit (`combat.json rivet`), so only about 4 hits in a row kill
+  him. Halving the repair changes nothing for the 70 % reader (no fight comes near a death). So
+  "fair" means changing a law, not a number: allow a heavier hit than 30 (the x1.4 ram is 42), or
+  a boss-only repair delay (not built). The numbers are in "Numbers" below; in play
+  `RTAI.exe -- --rigs --boss=king`.
 - **D. Gang steel.** The D4 lift x1.55, the visor and the steel dome (built), or the old dark print:
   `evidence/king/shots/gang_steel_before_after_48ppm.png`.
 - **E. Gold swap.** King's gilded chest and arms (built: `KingRigs.GOLD_SWAP` 5), or plain steel (-1):
@@ -182,9 +204,11 @@ same as the editor run). It is re-exported at the freeze.
 ## Next steps
 
 1. The owner's verdicts on calls A-P; each default is one data value or flag (named in the call).
-2. Difficulty (call C): if "fair" is picked, re-tune the coin fan's spread and the charge's lane
-   width in `bosses.json` and re-run `node evidence/king/boss_numbers.mjs` until about 7 in 10
-   human-bot fights survive; never call it balanced without the table.
+2. Difficulty (call C): if "fair" is picked, the it20 numbers say the coin fan and the charge
+   cannot get there alone. First a per-boss Rivet repair delay field (framework, e.g.
+   `bosses.json <id>.rivet_repair_delay_s`) or a lifted 30-hp floor, then re-run
+   `node evidence/king/boss_numbers.mjs --seeds=1,...,10 --bots=human` until about 7 in 10 survive;
+   never call it balanced without the table.
 3. The gang's shades (call P, it18): the drawn part is built; if the owner wants the target's two
    lenses, they need about 64 px/m to read (a gang head is about 10 px across at 32 px/m).
 4. The plain enemy-ai robot thug: give it the gang's D4 lift (it prints as ink at 48 px/m).

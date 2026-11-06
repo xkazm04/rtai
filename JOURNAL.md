@@ -1819,3 +1819,22 @@ NEXT (iteration 19, in order):
   riders at 6x, left 0.44, right 0.5): the difference is one pixel row on the brow; the phase 2
   diff box is 9 x 36 px. Not clearly better, so per NEXT 2 the rule holds. DECISION keep 0.44
   (no code change; the dome stays as light as call I's).
+
+### 07:25 NUMBERS call C's "fair" option measured: data inside the floor cannot reach it
+- Registry: encounter-balance-simulation (n stated with every rate; 10 runs resolve 10-point steps;
+  floors are laws, bands are taste: the moveset's "no hit over 30 % of Rivet's hp" stays),
+  difficulty-design-and-adaptation (the band is the owner's).
+- Method: temporary edits of `bosses.json` / `combat.json` / `BossBotRead.READ_P`, reverted after
+  each run (`git status` clean of them before every commit); `boss_numbers.mjs --bots=human
+  --seeds=1..10`. 0 SCRIPT ERROR in 40 runs. Each set of 10 took about 2-4 min.
+- First try x1.4 damage (ram 42): stopped before any run finished. It breaks the floor.
+- `numbers-it20-fair` (hits 30/14/30/30, fan 48 deg): **10/10 survive**, took 96.4.
+  `numbers-it20-fair2` (+ cooldowns charge 3, fan 1.8, slam 1.6, ram 2.8; gang swipe 11 / 1.0 s):
+  **10/10**, took 86.0. `numbers-it20-read50` (default, READ_P 0.5): **10/10**, took 127.6, max 194.
+- Why: `CombatArena._repair` gives Rivet 10 hp/s after 3 s unhit (`combat.json rivet`); King's hits
+  come seconds apart, so a death needs ~4 hits in ~3 s. `numbers-it20-repair5` (repair 5):
+  seeds 1-5 identical to it18's default (hp only matters at a death), seeds 6-10 complete the
+  default's 10-seed baseline: **10/10, took 74.4**.
+- DECISION keep the easy band as built; "fair" needs a law change (a hit over 30, or a boss-only
+  repair delay field in the framework), the owner's call. REPORT call C, Numbers and next step 2
+  updated; decisions.md.
