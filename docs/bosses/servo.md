@@ -42,7 +42,8 @@ mistaken for a cop (no blue), a car (legs and pads move) or the crowd.
   `KNEE_OUT_M` 0.2; were 0.9 / 0.5, splayed). Since iteration 19 the pads hold square to the
   body, octagons like the sheet's, and the rotor's spin-up (any tell, a dash, the transition,
   the defeat's wind-down) shows as pale blades blurring inside them (`ServoPad.TURN` false; true
-  = it8-it18, the whole pad turning, a round wheel at 32 px/m).
+  = it8-it18, the whole pad turning, a round wheel at 32 px/m). The pad arms and legs draw wider than
+  their art, the sheet's chunky blocks (`ServoRig.ARM_W_K` 1.6, `LEG_W_K` 1.3; 1.0 = the art).
 - The drone: a small quad-rotor with a CS parcel slung below; ~0.7 m across (22 px at 32 px/m),
   four rotor discs read as a + shape; its **shadow on the ground** is the read of where it is,
   offset by its height.

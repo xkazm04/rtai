@@ -33,6 +33,10 @@ const PAD_AHEAD_M: float = 2.0
 ## (metres). The sheet's top view has two parallel legs under the torso (it13: 0.9 / 0.5, splayed).
 const LEG_SPLAY_M: float = 0.25
 const KNEE_OUT_M: float = 0.2
+## The struts' width against their art: the sheet's pad arms and legs are chunky blocks (it19:
+## 1.0, the art's 0.25 m piston). Render only.
+const ARM_W_K: float = 1.6
+const LEG_W_K: float = 1.3
 
 ## Pixels per metre of the canvas (32 in the dev view, Ink.PX_PER_M in the arena).
 var px: float = 32.0
@@ -110,7 +114,7 @@ func _draw() -> void:
 	_pad.tint = tint
 	for s: float in [-1.0, 1.0]:
 		var pad: Vector2 = o + side * s * pad_w + fwd * PAD_AHEAD_M
-		_strut(&"arm", o + side * s * 0.9 + fwd * 0.2, pad, tint)
+		_strut(&"arm", o + side * s * 0.9 + fwd * 0.2, pad, tint, ARM_W_K)
 		_pad.draw(self, pad, fwd.angle() - PI / 2, s, pad_k)
 		if _stage(&"recovery", false):
 			_pad.steam(self, pad, tick)
@@ -137,8 +141,8 @@ func _leg(o: Vector2, fwd: Vector2, side: Vector2, s: float, tint: Color) -> voi
 	var swing: float = sin(_walk + (PI if s > 0.0 else 0.0))
 	var foot: Vector2 = hip + side * s * LEG_SPLAY_M + fwd * (1.9 + 0.7 * swing)
 	var knee: Vector2 = (hip + foot) * 0.5 + side * s * KNEE_OUT_M
-	_strut(&"thigh", hip, knee, tint)
-	_strut(&"shin", knee, foot, tint)
+	_strut(&"thigh", hip, knee, tint, LEG_W_K)
+	_strut(&"shin", knee, foot, tint, LEG_W_K)
 
 
 func _wings(o: Vector2, fwd: Vector2, side: Vector2, k: float, tint: Color) -> void:
@@ -222,10 +226,10 @@ func _part(n: StringName, at: Vector2, rot: float, k: float, tint: Color) -> voi
 
 
 ## A strut part (art long axis down the page) stretched from a to b.
-func _strut(n: StringName, a: Vector2, b: Vector2, tint: Color) -> void:
+func _strut(n: StringName, a: Vector2, b: Vector2, tint: Color, wk: float) -> void:
 	var t: Texture2D = _tex[n]
 	var len_px: float = a.distance_to(b) * px
-	var w: float = px / ART_PPM
+	var w: float = px / ART_PPM * wk
 	draw_set_transform(
 		(a + b) * 0.5 * px, (b - a).angle() - PI / 2, Vector2(w, len_px / t.get_height())
 	)
