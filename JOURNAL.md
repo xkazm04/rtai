@@ -297,3 +297,14 @@ NEXT (iteration 5):
   --source=HEAD --staged --worktree`). The debt ratchet blocked a +1 line in rivet_held_view.gd (288, near
   cap): the bold flag moved into MeleeSmearView.feed instead.
 - frames.json: + melee crescent (4th), - rocket_launcher_tilt_48_after.mp4 (a plain clip; deleted). 15.
+- Gates on a7f6e29d: director reel headless top 19/19 and tilt 19/19, every chapter all down, 0 SCRIPT ERROR
+  (scratch reel7_*.log); unit (full, via --changed) 1409 passed / 0 failed; lint 15/15.
+- Electro baton chapter at 48 tilt with the crescent (SPARK tint): a pale spark-white arc instead of the grey
+  smear (scratch smear5/eb_d.png); no regression. Katana / plasma sword at 64: the crescent shows even in
+  the full frame.
+- Combined clip: + two captioned 64 px/m segments (plasma sword, katana; the cut slowed x4): 79 s,
+  gtai-masters/d8/weapons/weapons_tilt_set_combined.mp4; frames.json title/note updated.
+- Registry rules applied: motion-quality-gating (judged on the live director chapters in motion, same seed
+  before/after, the v1 "bold" rejected on film, gates in both views); concept-scene-parity (calls on game
+  frames at 48/64, not on paper); depth-ordered-layered-art (the crescent stays in the held view's layer under
+  the blade; nothing else reordered); generative-artifact-gating and sprite-and-atlas-production: no new art.
