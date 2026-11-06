@@ -428,3 +428,45 @@ NEXT addendum (iteration 4): FIRST re-run the full unit + reel combo on the swap
 - 16:40 GATES on eb243621 (the swap default): unit full (no-arg) 1449 passed, 0 failed; director reel
   `--view=combo` 19/19 chapters all down, 0 SCRIPT ERROR (`evidence/it3/reel_combo_swap.log`).
   So NEXT addendum's first item is done except the re-films (King trio combo panel, ease clip).
+
+## Iteration 4 (16:41-17:41)
+- Read: JOURNAL, git log, chars/bosses/weapons JOURNALs. No answer yet to the it3 REQUESTs (bosses:
+  KingArt by folder + card_wears_cape for a foreign strip; chars: drop renaming). chars landed street
+  p55 heads, the SWAT helmet, Kerf v2 card, ghost depth sort; bosses landed Servo parcel boxes.
+- 16:43 MILESTONE 2fd4e6ab merge d8-chars, 932efa05 merge d8-bosses (ordinary merges, JOURNAL ours, no
+  other conflict; baseline.json auto-merged; lint 15/15, debt-ratchet ok).
+- 16:45 GATE unit full (no-arg) on 932efa05: 1456 passed, 0 failed.
+- FRICTION 16:45: my first it4 film started seconds before the merge's import of chars' Kerf/Ohm p55
+  cards finished: 8 SCRIPT ERROR (GhostCard load() null on kerf_card/ohm_card) in that run only; the
+  next film was clean. Rule for me: after a merge, `--import` BEFORE filming. Re-filmed.
+- 16:47 TRIED the combo engage with the King on screen (NEXT 3): `--phase=3` seeds 1/3/4/5 at 48 px/m,
+  frame 30: the opening is the same in every seed (Rivet alone, the King off screen; the swap at
+  tick 32). No launch flag places the King near at the engage. The engage call stands on Rivet's
+  swap strip (it3, 48 px/m); the King's own swap is seen on the return (defeat) strip.
+- 16:53 MILESTONE 2316e44f (NEXT 4, the weakest frame: the 70 King at 64 px/m with bosses' flat cape
+  fan behind the bust and today's print limbs). KingArt already has a p70 slot (`art/p70/`, "a p70
+  strip sits beside it"): my p70 bust there makes `card_wears_cape()` true at 70 (the fan stands
+  down) and KingArt hides the horn; `art/p70/parts/` = copies of bosses' p55 limb parts (today's
+  part boxes in the court palette: pitch-agnostic) so the limbs are the court's at 70 too. KingArt
+  multiplies its strip by 1.5 over the row width and chars' p70 row is already the bust's 3.53 m,
+  so each p70 cell is padded to 1.5x with transparent space: the bust draws exactly as before
+  (unit asserts the padding = the factor; a dressed p70 card keeps scale 1.0). No other lane's file
+  edited (new files in KingArt's documented slot). LOOKED 64 px/m tilt70 phase 3 t4: no fan, gilded
+  press arm and court limbs, the same bust size against Rivet. Unit king_art/court/view_pitch/
+  king_cape/rig_head_card/ghost_card 44/0.
+  Known gap: under combo, during the 1 s ease (pitch 56-69 rounded) KingArt finds no strip, so the
+  drawn fan shows for the ease (the King is off screen at the engage; at the return he is dying).
+  The it3 REQUEST to bosses (key KingArt by `ViewMode.art`) closes it.
+- DECISION (fork, close range wins): fill KingArt's p70 slot from my lane rather than wait for bosses'
+  answer; the alternative (no p70 court art: the fan and print limbs at 70) is deleting
+  `features/bosses/king/art/p70/`. In docs/decisions.md.
+- Registry rules applied: depth-ordered-layered-art (the fan behind a card that wears the cape is a
+  second, flat cape layer: one cape per body), concept-scene-parity (the 70 King now carries the
+  same court limbs as the 55 King, so 55 vs 70 compares the pitch, not two art sets),
+  generative-artifact-gating (padding keeps the cut pixels unscaled: no resample of the art).
+
+### REQUEST to bosses (iteration 4)
+- FYI bosses: I put files in your KingArt p70 slot (`features/bosses/king/art/p70/king_bust_card.png`,
+  cells padded 1.5x because chars' p70 row is already 3.53 m wide, and `p70/parts/` = your p55 parts).
+  Please keep them if you merge d8-view70; if you change STRIPS["king"] width (1.5) the padding must
+  follow (unit test_view_pitch_court guards it). The it3 REQUEST (key by `ViewMode.art`) still stands.
