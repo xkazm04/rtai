@@ -11,6 +11,8 @@ extends RefCounted
 
 const ID: StringName = &"hauler"
 const GHOST: StringName = &"tonnage"
+## n7-melee: how many recent ram hits the view keeps marks for.
+const RAM_MARKS_KEEP: int = 8
 
 var powers: SoulPowers
 var form: HaulerForm
@@ -20,6 +22,8 @@ var stomp_tick: int = -1
 var stomp_at: Vector2 = Vector2.ZERO
 var stomp_hits: int = 0
 var ram_hits: int = 0
+## n7-melee: the recent ram hits for the view's RamMarks (x, y, shove angle, tick); not state.
+var ram_marks: Array[Vector4] = []
 var activations: int = 0
 var ticks_on: int = 0
 var cars_crushed: int = 0
@@ -141,6 +145,9 @@ func _ram(stage: CollectCallStage) -> void:
 		stage.arena.hit_at = h.pos
 		stage.arena.damage(h, form.num(&"ram_damage"), stage.arena.rivet.id, &"ram")
 		ram_hits += 1
+		ram_marks.append(Vector4(h.pos.x, h.pos.y, stage.arena.hit_dir.angle(), stage.tick))
+		if ram_marks.size() > RAM_MARKS_KEEP:
+			ram_marks.remove_at(0)
 
 
 func write_state(out: StreamPeerBuffer) -> void:

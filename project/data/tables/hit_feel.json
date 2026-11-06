@@ -241,6 +241,73 @@
       "fire_kick_px": 3,
       "fire_kick_ticks": 10,
       "id": "rocket_launcher"
+    },
+    {
+      "doc": "n7-melee: the grind lands every tick: no stop per bite (it would stutter), only a 1 px judder kick once per strike (MeleeWound's gap). The kill takes the kill stop.",
+      "hitstop": "",
+      "id": "chainsaw",
+      "kick_px": 1,
+      "kick_ticks": 4,
+      "shake": ""
+    },
+    {
+      "doc": "n7-melee: the claw jab (class melee via MeleeFeel): a 3-tick hold and a small kick along the blow, no shake (a combo lands 3-4 jabs a second). A kill takes the kill stop and 1.5x the kick.",
+      "hitstop": "rivet_hit",
+      "id": "claw",
+      "kick_px": 2,
+      "kick_ticks": 6,
+      "shake": ""
+    },
+    {
+      "class": "blast",
+      "doc": "n7-melee: Dent's seized-car blast on each body in its radius (MeleeFeel via class): the blast row (long stop, explosion shake, a hard kick outward from the car); the cap keeps a crowd in the radius to one kick a tick and one stop.",
+      "id": "dent_blast",
+      "shake": "crash"
+    },
+    {
+      "class": "ram",
+      "doc": "n7-melee: Dent's seized car striking a body (the blow, weapon dent_car): the ram row (the melee stop, the crash shake, a 5 px kick along the car's nose). With the camera on Dent (the owner's open call) the blow often lands at or past the frame edge; the kick toward it is what reads on screen. No row = not felt (the before).",
+      "id": "dent_car"
+    },
+    {
+      "doc": "n7-melee: the tap: the 4-tick hold (the shock star marks the frame), a small kick, no shake.",
+      "hitstop": "melee_hit",
+      "id": "electro_baton",
+      "kick_px": 2.5,
+      "kick_ticks": 7,
+      "shake": ""
+    },
+    {
+      "doc": "n7-melee: the cut: the 4-tick melee hold and a firmer kick, no shake. A kill (the split) takes the kill stop.",
+      "hitstop": "melee_hit",
+      "id": "katana",
+      "kick_px": 3,
+      "kick_ticks": 8,
+      "shake": ""
+    },
+    {
+      "class": "slice",
+      "doc": "n7-melee: one cut of Kerf's blink chain (MeleeFeel via class): a short kick along the blink and the slice stop (a kill takes the kill stop); no shake, so the chain reads cut by cut. With the camera's 16-tick stop cooldown (n7-ranged 0d4089f1; 20 before) every 18-tick cut gets its stop; the kick and KerfView's cut flare mark every cut too.",
+      "id": "kerf_slice",
+      "kick_px": 2.5,
+      "kick_ticks": 6
+    },
+    {
+      "class": "melee_heavy",
+      "doc": "n7-melee: the plasma sword batting a round back (CombatArena.deflected via MeleeFeel): a parry beat, the 4-tick melee stop and a firm kick toward the shooter, no shake. melee_marks.json draws the bat.",
+      "hitstop": "melee_hit",
+      "id": "plasma_deflect",
+      "kick_px": 3,
+      "kick_ticks": 8,
+      "shake": ""
+    },
+    {
+      "doc": "n7-melee: as the katana (a blade's cut).",
+      "hitstop": "melee_hit",
+      "id": "plasma_sword",
+      "kick_px": 3,
+      "kick_ticks": 8,
+      "shake": ""
     }
   ]
 }

@@ -22,6 +22,8 @@ var fight_cam: bool = false
 ## rivet-arsenal: clip only the ticks [x, y] (Vector2i.ZERO = the WINDOWS); the sim runs through
 ## the rest with no frame drawn, so a Dock 9 close-up does not wait on the opening's frames.
 var tick_window: Vector2i = Vector2i.ZERO
+## n7-melee: the pad's blade window (CollectCallInputDriver.blade_ticks; ZERO = never).
+var blade_ticks: Vector2i = Vector2i.ZERO
 var _game: Quest1Game
 var _driver: CollectCallInputDriver = null
 var _frame: int = 0
@@ -44,6 +46,7 @@ func _ready() -> void:
 	_game.session.world.set_process(false)
 	_game.session.live.viewport = null
 	_driver = CollectCallInputDriver.new(_game.session.stage, _game.session.system)
+	_driver.blade_ticks = blade_ticks
 	await _settle()
 	_run()
 

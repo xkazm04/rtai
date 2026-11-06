@@ -7,6 +7,10 @@ extends Node2D
 ## fireball with a hot core over BLAST_S (reduced motion: the ring only). A seize that finds no car
 ## (none in range, or no car service: quest 1) lashes the tether out along the aim to its reach,
 ## then it frays into dashes and three teal sparks over MISS_S (reduced motion: it fades whole).
+## n7-melee: the blast flings the rocket blast's slabs and ink specks out past the fireball
+## (WeaponFxDebris, the arsenal's one debris drawer: the blast had a fireball and a ring but
+## nothing left it). ghost_attacks.json dent blast_debris 1 (0, --feel=off or --blast-debris=off =
+## the before).
 ## Reads DentStage only.
 
 const TEAL: Color = HaulerLook.TEAL
@@ -35,6 +39,9 @@ var reduced_motion: bool = false
 var follow_cam: CollectCallView = null
 ## False hides the missed reach (dev `--no-dent-miss`: the A/B before, iteration 8).
 var miss_on: bool = not OS.get_cmdline_user_args().has("--no-dent-miss")
+var debris_on: bool = (
+	GhostAttacks.shipped().num(&"dent", &"blast_debris") > 0.0 and HitFeel.feel_flag() != "off"
+)
 var _cam_at: Vector2 = Vector2.INF
 
 
@@ -74,6 +81,22 @@ func _draw() -> void:
 		var age: float = (stage.tick - dent.blast_tick) * SimClock.TICK_DT
 		if age <= BLAST_S:
 			_blast(dent.blast_at * ppm, age / BLAST_S)
+		_debris(stage.tick - dent.blast_tick)
+
+
+## The blast's slabs, `age` ticks after it: WeaponFxDebris draws in Ink's 48 px/m world, so the
+## view is scaled to this view's ppm around the canvas origin.
+func _debris(age: int) -> void:
+	if not debris_on:
+		return
+	var at: Vector2 = dent.blast_at
+	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE * debris_scale())
+	WeaponFxDebris.draw(self, Vector3(at.x, at.y, dent.num(&"blast_radius_m")), age)
+	draw_set_transform(Vector2.ZERO)
+
+
+func debris_scale() -> float:
+	return ppm / Ink.PX_PER_M
 
 
 func _tether(a: Vector2, b: Vector2) -> void:

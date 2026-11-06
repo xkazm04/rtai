@@ -8,7 +8,12 @@
     "melee": "death_melee",
     "shock": "death_shock"
   },
-  "doc": "Human reactions (lane human-reactions): the cutout rig's reaction and death families. len_s is the length of the animation (a death holds its last pose as the corpse), travel_m how far the body is drawn along the hit at the peak. View only: never sim state, never hashed. weapon_wound: a weapon whose wounding hit plays its own family over its hit class's (the plasma bolt's heavy stagger, owner note 2026-11-04 'hot and heavy'); a shield still stops the bolt, the bearer staggers behind it.",
+  "doc": "Human reactions (lane human-reactions): the cutout rig's reaction and death families. len_s is the length of the animation (a death holds its last pose as the corpse), travel_m how far the body is drawn along the hit at the peak. View only: never sim state, never hashed. weapon_wound: a weapon whose wounding hit plays its own family over its hit class's (the plasma bolt's heavy stagger, owner note 2026-11-04 'hot and heavy'); a shield still stops the bolt, the bearer staggers behind it. ghost_wound (n7-melee, view only): a ghost attack's weapon id -> the hit class (a map key) its non-lethal hit plays on the struck body through CombatArena.wounded (the ram, the slam's survivors: blast = knockdown); absent = no wound (the before), --feel=off = none.",
+  "ghost_wound": {
+    "ram": "blast",
+    "stomp": "blast",
+    "stomp_wave": "blast"
+  },
   "map": {
     "blast": "knockdown",
     "burn": "burn",
@@ -124,6 +129,13 @@
     }
   ],
   "schema": "gtai.human_reactions/1",
+  "stun_crowd": {
+    "arcs": 0,
+    "doc": "n7-melee (Ohm's mass arc stuns up to 6 bodies on one tick): only the `full` newest stunned bodies draw the full marks (ShockJolt's ARCS + SPITS crawl, WeaponFxElectro's 2 head sparks); the rest draw `arcs` crawling arcs, `spits` spits and `sparks` head sparks (StunCrowd), so a crowd under a mass arc reads as stunned without a cream blob. full 0 or --feel=off = every body draws the full crawl (the before). View only.",
+    "full": 2,
+    "sparks": 1,
+    "spits": 1
+  },
   "weapon_wound": {
     "plasma_rifle": "stagger"
   }

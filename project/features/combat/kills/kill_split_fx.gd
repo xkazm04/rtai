@@ -7,7 +7,7 @@ extends Node2D
 ## slash streak with an ink rim along the cut that thins out over STREAK_TICKS. No RNG.
 ## A row with grind_ticks (the chainsaw) plays the grind instead of the streak: the halves held
 ## together (GibSim.wait) shake on a hash of the tick while blood spurts and cream sparks fly off
-## the saw's bite, then the halves fall apart.
+## the saw's bite, then the halves fall apart; the halves part on a cream release burst (SawMarks).
 
 const STREAK_TICKS: int = 12
 const STREAK_M: float = 1.7
@@ -38,8 +38,12 @@ static var _white: ImageTexture = null
 var kills: SignatureKills = null
 var ppm: float = 32.0
 var reduced_motion: bool = false
+## The chainsaw kill's read (melee_marks.json `saw`); null = the shipped table on first use.
+var saw: SawMarks = null
 ## serial -> Vector4(at.x, at.y, cut angle, kill tick), metres.
 var _streaks: Dictionary[int, Vector4] = {}
+## serial -> the chainsaw's release burst (at, cut angle, the tick the halves part).
+var _releases: Dictionary[int, Vector4] = {}
 var _grinds: Dictionary[int, Grind] = {}
 
 
@@ -127,6 +131,10 @@ func add(
 	g.born = kills.tick
 	g.ticks = row.hitstop_ticks + row.grind_ticks
 	_grinds[serial] = g
+	if saw == null:
+		saw = SawMarks.shipped()
+	if saw.release_m > 0.0:
+		_releases[serial] = Vector4(at.x, at.y, cut_dir.angle(), g.born + g.ticks)
 
 
 func forget(serial: int) -> void:
@@ -134,6 +142,8 @@ func forget(serial: int) -> void:
 	_streaks.erase(serial)
 	@warning_ignore("return_value_discarded")
 	_grinds.erase(serial)
+	@warning_ignore("return_value_discarded")
+	_releases.erase(serial)
 
 
 ## After KillView placed the halves: a grinding body shakes in one piece.
@@ -145,7 +155,7 @@ func pose() -> void:
 			half.z_index = HELD_Z if age < g.ticks else 0
 		if age < 0 or age >= g.ticks or reduced_motion:
 			continue
-		var amp: float = SHAKE_M * ppm
+		var amp: float = (saw.shake_m if saw != null else SHAKE_M) * ppm
 		var off: Vector2 = Vector2(_h(serial, age) - 0.5, _h(serial, age + 300) - 0.5) * 2.0 * amp
 		var turn: float = (_h(serial, age + 700) - 0.5) * 0.12
 		for half: Node2D in g.halves:
@@ -159,18 +169,28 @@ func _draw() -> void:
 	for serial: int in _grinds.keys():
 		_draw_grind(serial, _grinds[serial])
 	for serial: int in _streaks.keys():
-		var s: Vector4 = _streaks[serial]
-		var age: int = kills.tick - int(s.w)
-		if age < 0 or age > STREAK_TICKS:
-			continue
-		var k: float = 1.0 - float(age) / float(STREAK_TICKS)
-		var c: Vector2 = Vector2.from_angle(s.z)
-		var mid: Vector2 = Vector2(s.x, s.y) * ppm
-		var half: float = STREAK_M * 0.5 * ppm
-		var lead: Vector2 = c * half * (0.6 + 0.4 * (1.0 - k))  # the streak runs on with the blade
-		var w: float = 0.11 * ppm * k
-		draw_line(mid - c * half, mid + lead, INK, w + 3.0, true)
-		draw_line(mid - c * half * 0.8, mid + lead * 0.95, CREAM, w, true)
+		_draw_streak(_streaks[serial], STREAK_M)
+	for serial: int in _releases.keys():
+		var r: Vector4 = _releases[serial]
+		var age: int = kills.tick - int(r.w)
+		if age >= 0 and age < STREAK_TICKS:
+			var t: float = float(age) / float(STREAK_TICKS)
+			SawMarks.burst(self, Vector2(r.x, r.y) * ppm, saw.release_m * 0.5 * ppm, r.z, t)
+
+
+## A cream slash edged in ink along a cut (s: at, angle, tick), thinning over STREAK_TICKS.
+func _draw_streak(s: Vector4, length_m: float) -> void:
+	var age: int = kills.tick - int(s.w)
+	if age < 0 or age > STREAK_TICKS:
+		return
+	var k: float = 1.0 - float(age) / float(STREAK_TICKS)
+	var c: Vector2 = Vector2.from_angle(s.z)
+	var mid: Vector2 = Vector2(s.x, s.y) * ppm
+	var half: float = length_m * 0.5 * ppm
+	var lead: Vector2 = c * half * (0.6 + 0.4 * (1.0 - k))  # the streak runs on with the blade
+	var w: float = 0.11 * ppm * k
+	draw_line(mid - c * half, mid + lead, INK, w + 3.0, true)
+	draw_line(mid - c * half * 0.8, mid + lead * 0.95, CREAM, w, true)
 
 
 ## The saw's bite: blood drops spurting out of the cut (each born on a tick, flying
@@ -181,6 +201,7 @@ func _draw_grind(serial: int, g: Grind) -> void:
 		return
 	var bite: Vector2 = (g.at - g.dir * 0.12) * ppm
 	var back: float = g.dir.angle()  # out through the body, away from the saw (Rivet hides behind)
+	var clear: float = (saw.clear_m if saw != null else 0.0) * ppm  # the held body stays readable
 	for born: int in range(maxi(0, age - DROP_LIFE), mini(age, g.ticks) + 1):
 		var t: float = float(age - born) / 60.0
 		for j: int in DROPS:
@@ -189,7 +210,7 @@ func _draw_grind(serial: int, g: Grind) -> void:
 			var sp: float = lerpf(DROP_MPS.x, DROP_MPS.y, _h(serial, key + 1900))
 			var p: Vector2 = bite + Vector2.from_angle(a) * sp * t * ppm * (1.0 - t * 1.2)
 			var r: float = (0.06 + 0.05 * _h(serial, key + 2600)) * ppm * (1.0 - t * 2.0)
-			if r > 0.6:
+			if r > 0.6 and p.distance_to(bite) >= clear:
 				draw_circle(p, r + 1.2, INK)
 				draw_circle(p, r, RAW)
 	if age < g.ticks:

@@ -12,6 +12,10 @@ signal struck(victim: Fighter, dir: Vector2, lethal: bool, weapon: StringName)
 ## kill payload for brutality and human-reactions (weapon id or &"burn", hit direction, hit point
 ## in metres, the events.json death kind). Lane gunplay, night JOURNAL REQUEST 1.
 signal kill_landed(victim: Fighter, weapon: StringName, dir: Vector2, at: Vector2, kind: StringName)
+## A non-lethal hit on a non-Rivet fighter, from the chokepoint (view only: MeleeWound, n7-melee).
+signal wounded(victim: Fighter, weapon: StringName)
+## A hostile round batted back by the plasma sword at `at`, now flying along `back` (view only).
+signal deflected(at: Vector2, back: Vector2)
 
 const SPAWN_SPREAD_M: float = 2.5
 
@@ -166,8 +170,7 @@ func step(p_tick: int) -> void:
 
 
 ## The one damage chokepoint (events.json: the kill payload is decided before the hit lands).
-## `kind` is the events.json death kind: quest 1's rounds are `shot`; FightAreas passes `blown`
-## and `burned`.
+## `kind` is the death kind: quest 1's rounds are `shot`; FightAreas passes `blown`, `burned`.
 func damage(
 	victim: Fighter, amount: float, killer_id: int, weapon: StringName, kind: StringName = &"shot"
 ) -> void:
@@ -182,6 +185,8 @@ func damage(
 		kills_now += 1
 		kill_weapon = weapon
 		_drop(victim)
+	elif victim.kind != Fighter.Kind.RIVET:
+		wounded.emit(victim, weapon)
 	victim.hp = maxf(victim.hp - amount, 0.0)
 	victim.hurt_tick = tick
 

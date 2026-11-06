@@ -88,6 +88,8 @@ static func _target(rig: CutRig, s: int, ph: float, walk01: float, aim_arm: bool
 	tgt = RigOffClaw.target(rig, s, tgt)  # d7-held: the off claw clamps the drawn barrel
 	if (striking(rig, s) or (rig.strike_arm < 0 and s == p.melee_arm)) and rig.c_reach > 0.0:
 		tgt = tgt.lerp(Vector3(sh.x + reach * 0.99, sh.y * 0.2, 0.0), rig.c_reach)
+	elif striking(rig, s) and rig.c_reach < -StrikeDepth.BEFORE:  # n7-melee: the claw cocks back
+		tgt = tgt.lerp(Vector3(sh.x - reach * 0.15, sh.y * 1.35, 0.0), StrikeDepth.cock(rig))
 	if rig.c_hands_up > 0.0:
 		tgt = tgt.lerp(Vector3(sh.x + 30.0, sh.y * 0.55, 160.0), rig.c_hands_up)
 	if rig.c_tuck > 0.0:

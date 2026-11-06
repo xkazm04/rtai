@@ -29,6 +29,8 @@ var trail_from: PackedVector2Array = PackedVector2Array()
 var trail_to: PackedVector2Array = PackedVector2Array()
 var trail_cut: PackedVector2Array = PackedVector2Array()
 var trail_tick: PackedInt32Array = PackedInt32Array()
+## View only (n7-melee KerfView's sight): the aim of the last tick, never in write_state.
+var sight_aim: Vector2 = Vector2.ZERO
 var _recharge: int = 0
 var _gap: int = 0
 var _shared: bool = false
@@ -68,6 +70,7 @@ func drive(
 	if not _shared:
 		_take(power and rivet.alive())
 	_refill()
+	sight_aim = aim.normalized() if aim.length() > 0.001 else rivet.facing
 	if not on():
 		return move_by
 	if melee and charges > 0 and _gap == 0 and rivet.alive():
@@ -81,6 +84,12 @@ func _take(power: bool) -> void:
 		activations += 1
 		charges = int(num(&"charges"))
 	powers.tick()
+
+
+## The blink gap's refill, 0 just after a blink to 1 when the next blink may fire (view only).
+func ready_k() -> float:
+	var gap: int = PowerDef.ticks(num(&"gap_s"))
+	return 1.0 if gap <= 0 else 1.0 - float(_gap) / gap
 
 
 ## True while the soul is on (the pilot skips the jab: melee is the blink).

@@ -7,6 +7,19 @@ extends Node2D
 ## row's anchors) meeting in the first body, and forking on
 ## along OhmStage.bolt_path, re-jagged every other tick, with a white flash disc at each body.
 ## Reduced motion: one still jag, no flicker.
+## n7-melee: the tell. After each bolt the fingertip sparks go dark and charge back over bolt_gap_s
+## (a teal glow growing at each electrode, and outside the form's own aura a white spark edged in
+## ink reaching from each tip toward the aim, 0.25 -> 0.9 m) to a white "ready" glint, and the fire
+## frame flashes white at the tips: the next bolt is seen coming. ghost_attacks.json ohm
+## tell_glow_m (0 = the old steady sparks); --feel=off = the old sparks too.
+## n7-melee: the branches. A hop from a struck body (the fork chain's next link, the mass arc's
+## fan out of the first body) draws at ghost_attacks.json ohm branch_k of the bolt's strokes and
+## flash, so the strike reads as one bolt that spreads and a crowd under the mass arc is not
+## buried under equal ropes (the 32 px/m film, 2026-11-05). 1 or --feel=off = the old look.
+## n7-melee: the rim. Each stroke stops at ghost_attacks.json ohm rim_m from a struck body and the
+## hop leaves from its far rim, and the body gets a crackling ink-and-white ring instead of a
+## solid white disc, so every link of the chain lands on a body you can see (the 48 px/m film: the
+## stroke ran across the first cop and hid it). 0 or --feel=off = the old through-the-body look.
 
 const TEAL: Color = HaulerLook.TEAL
 const INK: Color = Color(0.09, 0.08, 0.07)
@@ -24,9 +37,21 @@ const CORE_W: float = 2.5
 const PRONG_K: float = 0.5
 const PRONG_M: float = 0.9
 
+## The ring's crackle: RING_N arcs, the gaps re-cut every other tick.
+const RING_N: int = 5
+## The shortest stroke left between two rims; a closer hop is drawn body to body.
+const MIN_LINK_M: float = 0.3
+
 var stage: CollectCallStage = null
 var ppm: float = 32.0
 var reduced_motion: bool = false
+var tell: bool = HitFeel.feel_flag() != "off"
+var branch_k: float = (
+	GhostAttacks.shipped().num(&"ohm", &"branch_k") if HitFeel.feel_flag() != "off" else 1.0
+)
+var rim_m: float = (
+	GhostAttacks.shipped().num(&"ohm", &"rim_m") if HitFeel.feel_flag() != "off" else 0.0
+)
 
 
 func _process(_delta: float) -> void:
@@ -54,16 +79,42 @@ func _draw() -> void:
 	for i: int in o.bolt_path.size() - 1:
 		var src: int = o.bolt_from[i + 1] if o.bolt_from.size() > i + 1 else i
 		var b: Vector2 = o.bolt_path[i + 1] * ppm
+		var k: float = 1.0 if src <= 0 else branch_k
 		if src <= 0:  # the fingertips: one prong from each electrode into the first body
 			var mid: Vector2 = (prongs[0] + prongs[1]) * 0.5
 			var reach: float = minf(PRONG_M, mid.distance_to(o.bolt_path[i + 1]) * 0.5)
 			var join: Vector2 = (mid + o.bolt_aim * reach) * ppm
 			_stroke(_jag(prongs[0] * ppm, join, beat + i), fade, PRONG_K)
 			_stroke(_jag(prongs[1] * ppm, join, beat + i + 7), fade, PRONG_K)
-			_stroke(_jag(join, b, beat + i + 3), fade, 1.0)
+			_stroke(_jag(join, rim(join, b, true), beat + i + 3), fade, 1.0)
 		else:
-			_stroke(_jag(o.bolt_path[src] * ppm, b, beat + i), fade, 1.0)
-		draw_circle(b, 0.3 * ppm * fade, Color(WHITE, 0.8 * fade))
+			var a: Vector2 = o.bolt_path[src] * ppm
+			_stroke(_jag(rim(b, a, false), rim(a, b, true), beat + i), fade, k)
+		_hit(b, fade, k, beat + i)
+
+
+## The point where a stroke a -> b meets the struck body's rim: b pulled back rim_m toward a
+## (at_end), or a pushed rim_m toward b. Unchanged with rim_m 0 or a hop too short for two rims
+## and MIN_LINK_M of stroke between them.
+func rim(a: Vector2, b: Vector2, at_end: bool) -> Vector2:
+	var r: float = rim_m * ppm
+	if r <= 0.0 or a.distance_to(b) < r * 2.0 + MIN_LINK_M * ppm:
+		return b if at_end else a
+	return b - (b - a).normalized() * r if at_end else a + (b - a).normalized() * r
+
+
+## The struck body: the old solid white disc (rim_m 0), or a crackling ring round the body.
+func _hit(b: Vector2, fade: float, k: float, seed_i: int) -> void:
+	if rim_m <= 0.0:
+		draw_circle(b, 0.3 * ppm * fade * k, Color(WHITE, 0.8 * fade))
+		return
+	var r: float = rim_m * ppm * (1.0 + 0.25 * (1.0 - fade))
+	var arc: float = TAU / RING_N
+	for j: int in RING_N:
+		var h: float = sin(float(seed_i * 13 + j * 7) * 12.9898) * 43758.5453
+		var a0: float = arc * (j + 0.35 * (h - floorf(h)))
+		draw_arc(b, r, a0, a0 + arc * 0.6, 6, Color(INK, 0.8 * fade), 5.0 * k + 1.0, true)
+		draw_arc(b, r, a0, a0 + arc * 0.6, 6, Color(WHITE, fade), 2.0 * k + 0.5, true)
 
 
 func _stroke(pts: PackedVector2Array, fade: float, k: float) -> void:
@@ -92,9 +143,46 @@ func _sparks() -> void:
 	var f: Vector2 = rivet.facing.normalized()
 	var tips: PackedVector2Array = ohm().tips(rivet.pos, f)
 	var beat: int = 0 if reduced_motion else stage.tick / 3
+	var k: float = _charge()
 	for i: int in 2:
 		var side: float = -1.0 if i == 0 else 1.0
 		var at: Vector2 = tips[i] * ppm
-		var tip: Vector2 = at + f.rotated(side * (0.4 + 0.3 * float(beat % 3))) * 0.3 * ppm
+		_glow(at, k)
+		_reach(at, f, side, k, beat)
+		var tip: Vector2 = at + f.rotated(side * (0.4 + 0.3 * float(beat % 3))) * 0.3 * ppm * k
 		draw_line(at, tip, TEAL, 2.0, true)
-		draw_circle(at, 2.5, WHITE)
+		draw_circle(at, 2.5 if k < 1.0 else 3.5, WHITE)
+
+
+## 0 right after a bolt, 1 when the next one is ready (1 with the tell off or before any bolt).
+func _charge() -> float:
+	var o: OhmStage = ohm()
+	if not tell or o.num(&"tell_glow_m") <= 0.0 or o.bolt_tick < 0:
+		return 1.0
+	var age: float = (stage.tick - o.bolt_tick) * SimClock.TICK_DT
+	return clampf(age / maxf(o.num(&"bolt_gap_s"), 0.01), 0.0, 1.0)
+
+
+func _glow(at: Vector2, k: float) -> void:
+	var o: OhmStage = ohm()
+	var r: float = o.num(&"tell_glow_m") * ppm
+	if not tell or r <= 0.0:
+		return
+	var age: int = stage.tick - o.bolt_tick
+	if o.bolt_tick >= 0 and age < 3:  # the fire frame: a white flash at the tips
+		draw_circle(at, r * 1.4, Color(WHITE, 0.9 * (1.0 - age / 3.0)))
+		return
+	draw_circle(at, r * k, Color(TEAL, 0.35 * k))
+	if k >= 1.0:
+		draw_circle(at, r * 0.45, Color(WHITE, 0.5))
+
+
+## The reach (pass 2: the glow alone sank into the form's teal aura at 32 px/m): a white spark
+## edged in ink from the fingertip toward the aim, growing with the charge, crackling.
+func _reach(at: Vector2, f: Vector2, side: float, k: float, beat: int) -> void:
+	if not tell or ohm().num(&"tell_glow_m") <= 0.0:
+		return
+	var tip: Vector2 = at + f.rotated(side * 0.25) * (0.25 + 0.65 * k) * ppm
+	var pts: PackedVector2Array = _jag(at, tip, beat * 5 + int(side * 3.0))
+	draw_polyline(pts, Color(INK, 0.8 * k), 4.0, true)
+	draw_polyline(pts, Color(WHITE, k), 1.8, true)

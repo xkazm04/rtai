@@ -42,6 +42,24 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--wound-hold",
 	# n7-ranged: --shot-trail=off draws no fading path behind a round that hit (the before)
 	"--shot-trail",
+	# n7-melee: --quest-blade=off gives quest 1 no carried blade (the before); =<id> another one
+	"--quest-blade",
+	# n7-melee: --hit-cues=off gives melee and ghost hits no sound of their own (the before)
+	"--hit-cues",
+	# n7-melee: --tell-cues=off gives the ghost attacks' wind-ups and whiffs no sound (the before)
+	"--tell-cues",
+	# n7-melee: --whiff makes the ghost reel's Tonnage slam once onto empty road (dev film)
+	"--whiff",
+	# n7-melee: --pullback=off cocks every timed strike back at the night's depth (the before)
+	"--pullback",
+	# n7-melee: --strike-sync=off starts Rivet's view strike from 0 when it is seen (the before)
+	"--strike-sync",
+	# n7-melee: --saw-part=off parts the chainsaw's halves sideways, under Rivet (the before)
+	"--saw-part",
+	# n7-melee: --melee-dir=off leaves a melee kill the last round's line (the before)
+	"--melee-dir",
+	# n7-melee: --kerf-glide=off snaps the camera with each Kerf blink (the before)
+	"--kerf-glide",
 ]
 
 var _values: Dictionary[String, String] = {}

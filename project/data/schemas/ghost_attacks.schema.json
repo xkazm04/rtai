@@ -20,6 +20,11 @@
           "minimum": 0,
           "type": "number"
         },
+        "blast_debris": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "integer"
+        },
         "blast_radius_m": {
           "maximum": 50,
           "minimum": 0,
@@ -91,6 +96,11 @@
           "minimum": 0,
           "type": "number"
         },
+        "cam_glide_s": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
         "charges": {
           "maximum": 9,
           "minimum": 0,
@@ -98,6 +108,11 @@
         },
         "cone_deg": {
           "maximum": 180,
+          "minimum": 0,
+          "type": "number"
+        },
+        "cut_flare_s": {
+          "maximum": 1,
           "minimum": 0,
           "type": "number"
         },
@@ -145,6 +160,11 @@
           "minimum": 0,
           "type": "number"
         },
+        "sight_k": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
         "speed_k": {
           "maximum": 5,
           "minimum": 0,
@@ -184,6 +204,11 @@
         "bolt_gap_s": {
           "maximum": 5,
           "minimum": 0,
+          "type": "number"
+        },
+        "branch_k": {
+          "maximum": 1,
+          "minimum": 0.1,
           "type": "number"
         },
         "car_damage": {
@@ -235,8 +260,18 @@
           "minimum": 0,
           "type": "number"
         },
+        "rim_m": {
+          "maximum": 2,
+          "minimum": 0,
+          "type": "number"
+        },
         "stun_s": {
           "maximum": 10,
+          "minimum": 0,
+          "type": "number"
+        },
+        "tell_glow_m": {
+          "maximum": 2,
           "minimum": 0,
           "type": "number"
         },
@@ -289,8 +324,53 @@
           "minLength": 1,
           "type": "string"
         },
+        "plate_r_m": {
+          "maximum": 5,
+          "minimum": 0,
+          "type": "number"
+        },
+        "plate_spark_ticks": {
+          "maximum": 60,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "plate_sparks_per_tick": {
+          "maximum": 16,
+          "minimum": 0,
+          "type": "integer"
+        },
         "press_ahead_m": {
           "maximum": 5,
+          "minimum": 0,
+          "type": "number"
+        },
+        "ram_chips": {
+          "maximum": 24,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "ram_flash_s": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "ram_wake_k": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "slam_debris": {
+          "maximum": 64,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "slam_debris_s": {
+          "maximum": 3,
+          "minimum": 0,
+          "type": "number"
+        },
+        "slam_flash_s": {
+          "maximum": 1,
           "minimum": 0,
           "type": "number"
         },

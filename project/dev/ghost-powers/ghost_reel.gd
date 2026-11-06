@@ -32,6 +32,8 @@ var kerf_beat: KerfBeat = null
 var ohm_beat: OhmBeat = null
 ## False plants the scenario's fault: every button off (aim and walk only).
 var trigger: bool = true
+## --whiff: Tonnage slams once onto the empty road before the walk-in (films the whiff thud).
+var whiff: bool = false
 var _anchor: Vector2 = Vector2.ZERO
 var _stage: ArenaStage = null
 
@@ -39,6 +41,7 @@ var _stage: ArenaStage = null
 func _init(p_actions: PlayerActions) -> void:
 	actions = p_actions
 	ghost = StringName(ArenaArgs.parse().text("--ghost", "tonnage"))
+	whiff = ArenaArgs.parse().has("--whiff")
 
 
 func step(stage: ArenaStage, tick: int) -> void:
@@ -124,10 +127,13 @@ func sample(stage: ArenaStage, tick: int) -> TickInput:
 	var aim: Vector2 = gap.normalized()
 	var hauler: HaulerStage = stage.pilot.hauler if stage.pilot != null else null
 	var ready: bool = hauler != null and hauler.form.stomp_ready()
-	if gap.length() <= SLAM_M and ready:
-		return _input(Vector2.ZERO, aim, _bit(&"melee", true))
-	var slammed: bool = hauler != null and hauler.form.stomps > 0
-	return _input(aim * (1.0 if slammed else STALK), aim, 0)  # stalk under ram speed, then charge
+	var early: int = 1 if whiff else 0
+	if hauler != null and hauler.form.stomps < early:  # --whiff: back off, one tapped slam on air
+		return _input(-aim * STALK, aim, _bit(&"melee", ready and local % 8 == 0))
+	var slam: bool = gap.length() <= SLAM_M and ready
+	var slammed: bool = hauler != null and hauler.form.stomps > early
+	var walk: Vector2 = aim * (1.0 if slammed else STALK)  # stalk under ram speed, then charge
+	return _input(Vector2.ZERO if slam else walk, aim, _bit(&"melee", slam))
 
 
 ## The scripted ghost beat's (move, aim, action) for this tick.

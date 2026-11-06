@@ -37,11 +37,11 @@ static func chain(ci: CanvasItem, a: Vector2, b: Vector2, phase: int) -> bool:
 
 
 ## Two sparks circling a stunned human's head (the cartoon daze), `tick` turns them.
-static func stun(ci: CanvasItem, at: Vector2, tick: int) -> bool:
+static func stun(ci: CanvasItem, at: Vector2, tick: int, sparks: int = 2) -> bool:
 	if not WeaponFxArt.enabled:
 		return false
 	var head: Vector2 = at + Vector2(0.0, -STUN_LIFT_M)
-	for i: int in 2:
+	for i: int in mini(sparks, 2):
 		var ang: float = float(tick) * 0.25 + PI * float(i)
 		var p: Vector2 = head + Vector2.from_angle(ang) * STUN_RING_M
 		WeaponFxArt.draw_cell(ci, &"spark", (tick / 3 + i) % 3, p, ang, Vector2.ONE * STUN_SPARK_K)

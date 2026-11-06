@@ -115,6 +115,11 @@
             "minItems": 2,
             "type": "array"
           },
+          "split_follow": {
+            "maximum": 2,
+            "minimum": 0,
+            "type": "number"
+          },
           "spray": {
             "minimum": 0,
             "type": "integer"

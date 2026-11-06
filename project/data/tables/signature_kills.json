@@ -270,6 +270,7 @@
         15,
         50
       ],
+      "split_follow": 0.8,
       "spray": 24,
       "spray_cone_deg": 70,
       "style": "split",

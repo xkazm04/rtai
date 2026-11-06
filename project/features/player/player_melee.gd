@@ -12,6 +12,11 @@ const SHOVE_TICKS: int = 8
 ## A body's radius is added to a hit's reach (the claw reaches the edge, not the centre).
 const EDGE_SLACK_M: float = 0.0
 
+## n7-melee: a landed hit hands CombatArena its line (Rivet -> victim) and contact point, so a kill
+## carries the blow's own direction (signature kills cut and throw along it) instead of whatever
+## round set it last; `--melee-dir=off` = the before (a stale line).
+static var sets_dir: bool = not OS.get_cmdline_user_args().has("--melee-dir=off")
+
 var combo: MeleeCombo
 ## The weapon id the hits are dealt with (CombatArena.damage; brutality keys kills on it).
 var weapon_id: StringName = WEAPON
@@ -86,6 +91,9 @@ func _land(arena: CombatArena, h: MeleeHit, facing: Vector2) -> void:
 		var dir: Vector2 = to.normalized() if to.length() > 0.001 else facing
 		if dir.dot(facing) < h.cone_dot:
 			continue
+		if sets_dir:
+			arena.hit_dir = dir
+			arena.hit_at = f.pos
 		arena.damage(f, h.damage, arena.rivet.id, weapon_id)
 		if h.stun_ticks > 0 and f.alive():  # the electro baton's lock
 			PlayerShock.stun_on(PlayerShock.areas_of(arena), f, h.stun_ticks)

@@ -45,6 +45,8 @@ var city: CitySystem = null
 var hauler_kick: HaulerKick = HaulerKick.new()
 ## The camera side of the shared hit feel (features/combat/hit_feel/feel_cam.gd, lane n7-ranged).
 var feel_cam: FeelCam = null
+## n7-melee: Rivet's melee hits on the same FeelCam (they land with no `struck`).
+var melee_feel: MeleeFeel = null
 var _feel_px: Vector2 = Vector2.ZERO
 var _camera: Camera2D = null
 var _stage: CollectCallStage
@@ -200,11 +202,16 @@ func _hauler_kick() -> void:
 	if city_view != null and city_view.clock != null:
 		clock = city_view.clock
 	var h: HaulerStage = _stage.pilot.hauler
+	var glide_m: Vector2 = KerfGlide.offset_m(_stage.pilot.kerf, _stage.tick)
+	if objective_view != null:
+		objective_view.cam_off_m = glide_m
 	if city_view != null:
-		var lean_px: Vector2 = (city_lean_m + Vector2(0.0, forms_lift_m)) * SimConst.PX_PER_M
+		var lean_px: Vector2 = (
+			(city_lean_m + glide_m + Vector2(0.0, forms_lift_m)) * SimConst.PX_PER_M
+		)
 		city_view.kick_px = hauler_kick.step(h, _stage.tick, clock, city_view.rig) + lean_px
 	else:
-		var lift_px: Vector2 = Vector2(0.0, forms_lift_m * SimConst.PX_PER_M)
+		var lift_px: Vector2 = (glide_m + Vector2(0.0, forms_lift_m)) * SimConst.PX_PER_M
 		print_stage.kick_px = hauler_kick.step(h, _stage.tick, clock, print_stage.rig) + lift_px
 
 
@@ -216,6 +223,7 @@ func _feel_kick() -> void:
 	var clock: SimClock = city_view.clock if city_view != null and city_view.clock != null else null
 	if feel_cam == null:
 		feel_cam = FeelCam.attach(_stage.arena, clock if clock != null else _stage.clock)
+		melee_feel = MeleeFeel.attach(feel_cam, _stage.arena)
 	feel_cam.reduced_motion = fx_view.reduced_motion
 	var zoom: float = city_view.zoom if city_view != null else print_stage.zoom
 	var now: Vector2 = feel_cam.offset_px(_stage.tick, zoom)

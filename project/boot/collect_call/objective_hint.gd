@@ -69,6 +69,8 @@ static func with_keys(prompt: String, pad: bool = false) -> String:
 	for action: String in ["use", "fire", "melee", "pause"]:
 		var id: StringName = &"interact" if action == "use" else StringName(action)
 		out = out.replace("[%s]" % action, "[%s]" % (pad_name(id) if pad else key_name(id)))
+	for i: int in RivetCarry.SLOTS:  # n7-melee: [slot2] -> the carry slot's key
+		out = out.replace("[slot%d]" % (i + 1), "[%s]" % key_name(RivetCarry.SLOT_ACTIONS[i]))
 	return out
 
 
@@ -131,7 +133,14 @@ func _meet(stage: CollectCallStage, runner: QuestRunner) -> void:
 
 func _dock(stage: CollectCallStage) -> void:
 	var dock: Vector2 = stage.layout.marker("Dock 9 bonded storage").at
-	_mark(dock, &"SLICE__HINT_FIGHT", "Hold Dock 9: aim [aim], [fire] to shoot, [melee] to shock")
+	var fight: String = "Hold Dock 9: aim [aim], [fire] to shoot, [melee] to shock"
+	var carry: RivetCarry = stage.pilot.carry if stage.pilot != null else null
+	if carry != null and carry.sheathe:  # n7-melee: quest 1's carried blade and its key
+		for i: int in RivetCarry.SLOTS:
+			if carry.slots[i] != &"":
+				fight += ", [slot%d] for the blade" % (i + 1)
+				break
+	_mark(dock, &"SLICE__HINT_FIGHT", fight)
 	var arena: CombatArena = stage.arena
 	if not arena.rifle_drops.is_empty() and arena.rivet.weapon != &"assault-rifle":
 		_mark(arena.rifle_drops[0], &"SLICE__HINT_RIFLE", "Grab the rifle: [use]")

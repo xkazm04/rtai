@@ -23,6 +23,7 @@ static func draw(
 	ci: CanvasItem, c: Vector2, age: float, radius_m: float, ppm: float, seed: int
 ) -> void:
 	_crack(ci, c, age, ppm, seed)
+	SlamDebris.draw(ci, c, age, ppm, seed)  # n7-melee: chips, dust and the landing flash
 	if age > SHOCK_S:
 		return
 	var k: float = age / SHOCK_S

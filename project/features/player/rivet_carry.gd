@@ -24,6 +24,11 @@ var ground: WeaponPickups = WeaponPickups.new()
 ## rivet-arsenal: melee_weapons.json ids carried like guns (the katana in the long slot, the baton
 ## in the sidearm slot); selecting one puts the gun away (arena.gun = null).
 var melee_ids: Array[StringName] = MeleeTable.weapon_ids()
+## n7-melee, quest 1: the story hands Rivet his guns and the carry holds one blade. A press on the
+## drawn blade's slot puts it away and gives back the weapon it replaced; when the story swaps the
+## weapon (Brass's Gloria, a picked-up rifle) the blade counts as put away. false = the arena's.
+var sheathe: bool = false
+var _stowed: StringName = &""
 var _hands: Dictionary[StringName, GunHand] = {}
 var _table: WeaponTable
 var _arsenal: ArsenalTable
@@ -48,15 +53,23 @@ func add(id: StringName) -> int:
 
 ## The tick's switch and reload presses.
 func step(c: PlayerCommand, actions: PlayerActions, arena: CombatArena) -> void:
+	if sheathe and current >= 0 and arena.rivet.weapon != slots[current]:
+		current = -1  # the story put another weapon in the claw
 	var want: int = current
+	var pressed: int = -1
 	for i: int in SLOTS:
 		if c.was_pressed(actions, SLOT_ACTIONS[i]) and slots[i] != &"":
 			want = i
+			pressed = i
 	if c.was_pressed(actions, &"weapon_next"):
 		want = _cycle(1)
 	elif c.was_pressed(actions, &"weapon_prev"):
 		want = _cycle(-1)
-	if want != current and want >= 0:
+	if sheathe and pressed >= 0 and pressed == current:
+		arena.rivet.weapon = _stowed  # put away: the weapon it replaced comes back
+		current = -1
+		switches += 1
+	elif want != current and want >= 0:
 		select(want, arena)
 	if c.was_pressed(actions, &"reload") and arena.gun != null:
 		arena.gun.trigger.start_reload()
@@ -91,6 +104,8 @@ func select(i: int, arena: CombatArena) -> void:
 	if id == &"":
 		return
 	if melee_ids.has(id):
+		if sheathe and not melee_ids.has(arena.rivet.weapon):
+			_stowed = arena.rivet.weapon
 		arena.gun = null
 		arena.rivet.weapon = id
 		current = i
@@ -118,6 +133,8 @@ func write_state(out: StreamPeerBuffer) -> void:
 		out.put_32(hand.trigger.ammo if hand != null else -1)
 		out.put_32(hand.trigger.reload_left if hand != null else -1)
 	ground.write_state(out)
+	if sheathe:
+		out.put_32(String(_stowed).hash())
 
 
 ## The next carried slot after the current one in `dir` (wraps; the current when alone).

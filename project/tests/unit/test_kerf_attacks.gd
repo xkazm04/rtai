@@ -119,3 +119,39 @@ func test_path_cut_spares_the_body_on_the_line_unless_set() -> void:
 		assert_false(target.alive(), "the pick is cut (path_cut_m %s)" % width)
 		assert_eq(on_line.alive(), width == 0.0, "the body on the line (path_cut_m %s)" % width)
 		before_each()
+
+
+## n7-melee KerfView's sight (view only): it names the body the next press cuts, dims on the
+## blink and is full again once gap_s has run; the aim it reads stays out of the sim state.
+func test_the_sight_names_the_next_cut_and_refills_with_the_gap() -> void:
+	var kerf: KerfStage = _pilot.kerf
+	var first: Fighter = _guard(Vector2(6.0, 0.5))
+	var second: Fighter = _guard(Vector2(10.0, 0.4))
+	_take()
+	_wait(2)
+	assert_eq(kerf.pick(_stage, kerf.sight_aim), first, "the sight is on the nearer cut")
+	assert_eq(kerf.ready_k(), 1.0, "full before the first blink")
+	_press(&"melee")
+	assert_false(first.alive(), "the first is cut")
+	assert_eq(kerf.ready_k(), 0.0, "dim on the blink tick")
+	assert_eq(kerf.pick(_stage, kerf.sight_aim), second, "the sight moves on to the next")
+	_wait(PowerDef.ticks(kerf.num(&"gap_s")))
+	assert_eq(kerf.ready_k(), 1.0, "full again once the gap has run")
+	var before: PackedByteArray = _state(kerf)
+	kerf.sight_aim = Vector2.DOWN
+	assert_eq(_state(kerf), before, "the sight's aim is not sim state")
+
+
+func test_the_sight_alpha_floors_fills_and_needs_a_charge() -> void:
+	var floor_a: float = KerfView.sight_alpha(1.0, 0.0, 3)
+	assert_gt(floor_a, 0.0, "the next target is named at once")
+	assert_lt(floor_a, KerfView.sight_alpha(1.0, 0.5, 3), "it brightens as the gap refills")
+	assert_eq(KerfView.sight_alpha(1.0, 1.0, 3), 1.0, "full when ready")
+	assert_eq(KerfView.sight_alpha(1.0, 1.0, 0), 0.0, "none without a charge")
+	assert_eq(KerfView.sight_alpha(0.0, 1.0, 3), 0.0, "sight_k 0 = none (the before)")
+
+
+func _state(kerf: KerfStage) -> PackedByteArray:
+	var out: StreamPeerBuffer = StreamPeerBuffer.new()
+	kerf.write_state(out)
+	return out.data_array

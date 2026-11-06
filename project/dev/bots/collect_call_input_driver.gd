@@ -12,12 +12,18 @@ const STICK_GAIN: float = 8.0
 ## arrives instead of resting short of the mark).
 const STICK_FLOOR: float = 0.02
 const STAND_M: float = 0.15
+## n7-melee: how close the thumb walks Rivet to the bot's target while the blade is out (m).
+const BLADE_CLOSE_M: float = 1.5
 
 var bot: CollectCallBot
 var presses: int = 0
 var events_sent: int = 0
+## n7-melee (dev films): key 2 draws quest 1's carried blade at tick x, the thumb closes on the
+## bot's target and the held trigger swings it, key 2 puts it away at tick y (ZERO = never).
+var blade_ticks: Vector2i = Vector2i.ZERO
 var _stage: CollectCallStage
 var _interact_down: bool = false
+var _slot_down: bool = false
 
 
 func _init(stage: CollectCallStage, system: QuestSystem) -> void:
@@ -41,11 +47,14 @@ func act() -> void:
 		var least: float = _stage.pilot.actions.stick_deadzone + STICK_FLOOR
 		if stick != Vector2.ZERO and stick.length() < least:
 			stick = stick.normalized() * least
-	_axis(JOY_AXIS_LEFT_X, stick.x)
-	_axis(JOY_AXIS_LEFT_Y, stick.y)
 	var aim: Vector2 = Vector2.ZERO
 	if intent.fire_at != Vector2.INF:
 		aim = (intent.fire_at - _stage.arena.rivet.pos).normalized()
+		stick = _blade_stick(stick, intent.fire_at - _stage.arena.rivet.pos)
+	_axis(JOY_AXIS_LEFT_X, stick.x)
+	_axis(JOY_AXIS_LEFT_Y, stick.y)
+	var edge: bool = _stage.tick == blade_ticks.x or _stage.tick == blade_ticks.y
+	_slot(edge and blade_ticks != Vector2i.ZERO)
 	_axis(JOY_AXIS_RIGHT_X, aim.x)
 	_axis(JOY_AXIS_RIGHT_Y, aim.y)
 	_axis(JOY_AXIS_TRIGGER_RIGHT, 1.0 if aim != Vector2.ZERO else 0.0)
@@ -64,6 +73,27 @@ func release() -> void:
 	_axis(JOY_AXIS_TRIGGER_RIGHT, 0.0)
 	_key(false)
 	Input.flush_buffered_events()
+
+
+## With the blade out, the thumb walks Rivet in on the target (`to`, m) until he is in reach.
+func _blade_stick(stick: Vector2, to: Vector2) -> Vector2:
+	var out: bool = _stage.tick >= blade_ticks.x and _stage.tick < blade_ticks.y
+	if blade_ticks == Vector2i.ZERO or not out or to.length() <= BLADE_CLOSE_M:
+		return stick
+	return to.normalized()
+
+
+func _slot(down: bool) -> void:
+	if down == _slot_down:
+		return
+	_slot_down = down
+	for bound: InputEvent in InputMap.action_get_events(&"weapon_slot_2"):
+		if bound is InputEventKey:
+			var key: InputEventKey = bound.duplicate() as InputEventKey
+			key.pressed = down
+			Input.parse_input_event(key)
+			events_sent += 1
+			return
 
 
 func _axis(axis: JoyAxis, value: float) -> void:
