@@ -94,8 +94,6 @@ The director reel on 8c64bdeb: top 19/19 and tilt 19/19 chapters, all down, 0 SC
   thin dark stick (H 1). `enabled: false` = the top-down part. Owner's call.
 - The 32 px/m read of the long guns: size_k per row; film both at 32 and pick.
 - The electro baton at 48 px/m.
-- The reload ring (1.5 m up the screen over Rivet) may sit on the tall rig's face under tilt: not yet
-  seen on film (no reload in the filmed fights), so it is unchanged.
 
 ## Iteration 4 (a06036e6, ddf61c87): the flame jet and the charge crackle leave the drawn tip
 
@@ -110,3 +108,6 @@ The director reel on 8c64bdeb: top 19/19 and tilt 19/19 chapters, all down, 0 SC
 | flame wand | 2 | 2 | 2 | The stream now leaves the wand tip and its tongues reach the cop's chest; before, a gap under the tip and the tongues ran along the floor. `flamethrower_tilt_48_jet_before_after.png`. |
 | electro gun | 2 | 2 | 2 | The charge gathers on the coil tip, the arc leaves it and the shock lands on the body; before, the crackle and core sat on the floor by the feet. `electro_gun_tilt_48_charge_before_after.png`. |
 | katana (smear) | 2 | 1 | 2 | The smear is drawn in the squashed ground plane about the grip (the tilted plane at hand height); at 48 px/m it shows only faintly under the hit star. |
+| reload ring | - | 2 | - | It sat on Rivet's visor under tilt (1.5 m up the screen is inside the tall rig); now lifted 1.2 gun heights, it floats above the head (rocket tube, frame 320). `reload_ring_tilt_48_before_after.png`. |
+| plasma rifle, electro gun, ray gun, homing shard (32) | 2 | - | - | Two-tone small cells: a dark gun with pale details instead of a pale club. `longguns_tilt_32_twotone_before_after.png`, `homing_shard_tilt_32_twotone_before_after.png`. |
+| electro baton (48) | 1 | - | 2 | A two-tone small cell printed as a solid black stick: rejected. The top-down part still reads best. |

@@ -240,3 +240,6 @@ NEXT (iteration 4):
   Electro baton at 48 in its chapter = a solid black stick, its pale bands gone: REJECTED (scratch tt4/baton_cmp.png).
   The baton keeps its 55 cells; of the three, the top-down part reads best (dark shaft, pale bands, prongs).
 - 80864ce8: NEXT 5 closed: "assault rifle" is not a weapon (the arena kept Gloria).
+- MILESTONE (reload ring): under tilt the ring sat on Rivet's visor; lifted 1.2 gun heights it floats above the
+  head (rocket tube at 48 tilt, same bot, `--shot-lift=off` = before, frame 320):
+  gtai-masters/d8/weapons/reload_ring_tilt_48_before_after.png. `--changed` unit run 1407 passed / 0 failed.
