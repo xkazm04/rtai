@@ -405,3 +405,13 @@ NEXT (after the merge, a later run):
   are other lanes' runs (not started by this session), left alone.
 NEXT: unchanged from iteration 8 (court strips into `ViewMode.art`, emerald gems on magenta + a p70 set,
   the train under the telegraph fill if the owner asks).
+
+## Iteration 10 by the runner (2026-11-06 18:20-18:30, BUILD -> the freeze)
+
+- 18:20 Read JOURNAL (it9 NEXT), git log. 10 min to the freeze: no code change can be gated (evidence takes
+  ~10 min) and re-exported in that window, so the 18:10 exe and the green gates on 02b11a53 still stand.
+- 18:21 CHECK: `git diff --stat 02b11a53 HEAD` still covers only JOURNAL.md, REPORT.md and docs/decisions.md,
+  so `build/export/windows/RTAI.exe` (18:10) is built from HEAD's code. Masters frames.json has 15 entries and
+  every file exists. 0 raw .avi in scratch. Tree clean apart from this entry.
+NEXT: unchanged from iteration 8 (court strips into `ViewMode.art`, emerald gems on magenta + a p70 set,
+  the train under the telegraph fill if the owner asks).
