@@ -1660,3 +1660,25 @@ freeze: play checks only (no body or sim change); clips stay on 987c3439 (same f
   the view timing fields differ) (`exe-smoke-it22.json`). Commit f850c6f9.
 - 07:40 GATES director reel on dd385a82 started (`scratch/servo/reel22.sh`,
   `director-reel-it22.log`).
+- 07:46 GATES director reel on dd385a82: **19/19 chapters fully down, 0 SCRIPT ERROR**
+  (`director-reel-it22.log`); stopped my own run after the last chapter (TaskStop + taskkill of
+  its PID) instead of idling to the 780 s timeout.
+- 07:47 NUMBERS n7-king's lever on Servo (registry encounter-balance-simulation: the floor stays,
+  the lever is the heal between hits; difficulty-design-and-adaptation: the band is the owner's).
+  Temporary `bosses.json servo.rivet_repair_delay_s`, reverted after each run, human bot seeds 1-10:
+  6 s = the it20 fights exactly, 0 deaths (`numbers-it22-repair6/`); 30 s = a death in 6 of 10
+  fights (8 in all), Servo still 10/10 down, slower where Rivet died (seed 2: 233 s vs 117 s)
+  (`numbers-it22-repair30/`). The lever reaches the fight. DECISION (decisions.md): Servo ships
+  without it (easy band); REPORT call 21. Commit 8097cdf3.
+- 07:55 CLEAN masters: deleted 4 stale pre-it19 renders that neither frames.json nor REPORT nor the
+  design doc cite (kerf it4/it7, defeat visor it7). frames.json 15 entries, none missing.
+- 08:00 GATES `tools/evidence/run.mjs --no-bench` on 8097cdf3: **all PASS** (lint 13/13, unit 1203,
+  scenarios 52, parity bit for bit + planted mutation at step 629, selftest goldens 11/11 + 5/5)
+  (`evidence-run-it22.log`; bench skipped, CONTENDED).
+- 08:02 REPORT final: header on the it22 gates, merge line, exe line (it22 export + smoke),
+  repair-delay numbers, call 21, next steps.
+
+NEXT (after the night): the exe at `build/export/windows/RTAI.exe` (07:42, dd385a82) is final;
+`project/` has not moved since. Owner calls 1-21 in REPORT. If call 21 picks a harder band, bisect
+`servo.rivet_repair_delay_s` between 6 and 30 s at n = 10 with the human bot; ask the framework for
+`phase_ticks` in the boss_fight telemetry. Merge n7-king again if it moves.

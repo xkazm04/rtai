@@ -1,9 +1,9 @@
 # REPORT: lane `servo`, night 2026-11-05/06 (Act 2's Servo)
 
-DRAFT (iteration 20, 07:25): to be finalized at 08:40. Gates on the it20 head (1445b7c5: the it19 body plus the sim-neutral `parcels.crate_damage` key): lint 13/13, unit 1199/0 (`evidence/servo/unit-it20.log`), scenarios 52 ran / 0 failed (`evidence/servo/scenarios-it20.log`); director reel 19/19 chapters fully down, 0 SCRIPT ERROR (`evidence/servo/director-reel-it20.log`); `tools/evidence/run.mjs --no-bench` all PASS: lint, unit, scenarios, parity (bit for bit, the planted mutation caught), selftest (`evidence/servo/evidence-run-it20.log`; bench skipped, CONTENDED); the bot's numbers re-measured at n = 10 (seeds 1-5 identical to it9). Every clip and still is on the it19 body (987c3439), which the it20 head draws identically (no render change).
+Final (iteration 22, the freeze). Gates on the last code head, dd385a82 (the it19 body, the sim-neutral `parcels.crate_damage` key, and n7-king's optional `rivet_repair_delay_s`, which Servo does not set): lint 13/13, unit 1203/0 (`evidence/servo/unit-it22.log`), scenarios 52 ran / 0 failed (`evidence/servo/scenarios-it22.log`); director reel 19/19 chapters fully down, 0 SCRIPT ERROR (`evidence/servo/director-reel-it22.log`); `tools/evidence/run.mjs --no-bench` all PASS on 8097cdf3: lint, unit 1203, scenarios 52, parity (bit for bit, the planted mutation caught at step 629), selftest (look goldens 11/11, block goldens 5/5) (`evidence/servo/evidence-run-it22.log`; bench skipped, CONTENDED); the bot's numbers at n = 10 (it20; the it22 merge leaves Servo's fight alone: the re-exported exe's smoke gives tick 7036 and 188 on Rivet, the it20 record line for line, `evidence/servo/exe-smoke-it22.json`). Every clip and still is on the it19 body (987c3439), which the final head draws identically (no render change since).
 
 Branch `n7-servo` (from main `763f8fba`, with `n7-king`'s framework merged in at every move; the
-last merge was `a9bf2e2d` = n7-king `40f834c3`, iteration 20). Clips and stills: `C:\Users\kazda\kiro\gtai-masters\n7\servo\` (M below),
+last merge was `dd385a82` = n7-king `7b404d71`, iteration 22). Clips and stills: `C:\Users\kazda\kiro\gtai-masters\n7\servo\` (M below),
 indexed in `M/frames.json`. Design: `docs/bosses/servo.md`. Journal: `JOURNAL.md`.
 
 ## What works (with evidence)
@@ -49,6 +49,12 @@ its first own attack's windup (carpet or hop = rush hour, kamikaze or hot dash =
 start is an upper bound; the fight records no transition tick. Depot 54 s (dodge 36-88, human
 45-75), rush hour 49-52 s (38-73), overtime 28-31 s (19-41): a falling arc, the hottest phase the
 shortest. The 88 s depot is dodge seed 1, the 159 s fight.
+Rivet's repair delay (it22, n7-king's `bosses.json <id>.rivet_repair_delay_s`, merged; a temporary
+data edit on Servo's row, reverted; human bot, seeds 1-10): at 6 s (twice combat.json's 3 s) the
+fights match it20 exactly, 0 deaths (`numbers-it22-repair6/`); at 30 s (the schema's top) 6 of 10
+fights have a Rivet death (8 in all: seeds 1, 8, 9, 10 one each, 2 and 3 two each) and Servo still
+goes down 10/10, slower where Rivet died (seed 2 233 s vs 117 s) (`numbers-it22-repair30/`). The
+lever reaches the fight, and the easy band holds up to at least 6 s.
 The rotor dash checked against a reading player (it6): every tell read but 18-32 ticks late, it lands
 2/40. The human bot's ~40 % comes from its 30 % unread tells (`numbers-it6-read1-*`).
 
@@ -73,13 +79,14 @@ The rotor dash checked against a reading player (it6): every tell read but 18-32
 18. The carried parcel is a kraft box slung under each drone, shown round the hub toward its shadow, and a dropped parcel falls into its ring as the same box over a closing shadow (default, it18) vs the it16 cream square on the hub, nothing seen falling: `ServoDraw.SLUNG_PARCEL` true / false (render only; `PARCEL_M` 0.62, `SLING_M` 0.5). Still: `M/frames/servo_slung_parcel_ab_it18.png` (48 px/m at 2x, it16 left, it18 right; then 32 px/m 1x); clip `M/servo_drone_wave_scan_drop_dodge_48ppm_it19.mp4`.
 19. The hover pads hold square to the body, the sheet's octagons, and the rotor's spin-up shows as pale blades inside them on every tell, dash and wind-down (default, it19) vs the it18 pads turning whole with the rotor, a round wheel at 32 px/m: `ServoPad.TURN` false / true (render only). Still: `M/frames/servo_pad_square_ab_it19.png` (48 px/m at 1.5x, it18 left, it19 right, at the scan and dash windups; then it19 at 32 px/m).
 20. The pad arms and legs drawn wider than their art, the sheet's chunky blocks (default, it19b: arms 1.6, legs 1.3) vs the art's width, a thin 0.25 m piston at 32 px/m: `ServoRig.ARM_W_K` / `LEG_W_K` 1.6 / 1.3 vs 1.0 (render only). Still: `M/frames/servo_chunky_struts_ab_it19.png` (48 px/m then 32 px/m, both at 1.5x; 1.0 left, it19b right). Every clip is re-shot on it (987c3439).
+21. Difficulty band, the same question as King's call C: easy (default: the human-like bot never dies in 10 fights, took 159 on average) vs harder through Rivet's repair delay in this fight, `bosses.json servo.rivet_repair_delay_s` (absent = combat.json's 3 s). Measured (human bot, n = 10, `evidence/servo/numbers-it22-repair6/` and `-repair30/`): 6 s changes nothing (0 deaths); 30 s gives a death in 6 of 10 fights, Servo still downed 10/10. A value between them was not measured. To see it: set the field in `project/data/tables/bosses.json` and run `node evidence/servo/boss_numbers.mjs --seeds=1,2,3,4,5,6,7,8,9,10 --bots=human --tag=<name>`; in play it needs a re-export. No clip.
 
-Exe (re-exported it20 on 1445b7c5+, again at the freeze if the head moves): `build/export/windows/RTAI.exe` in the
+Exe (re-exported at 07:42 in iteration 22, on dd385a82, the last code head): `build/export/windows/RTAI.exe` in the
 worktree (`windows-showcase` preset, boots into the arena). Lines: `RTAI.exe -- --rigs --boss=servo`,
 `RTAI.exe -- --rigs --boss=servo --phase=2` (or 3), `RTAI.exe -- --rigs --boss=servo --bot=boss`
 (the bot plays; add `--bot-human` for the human-like one). Headless smoke `RTAI.exe --headless
 --fixed-fps 60 --quit-after 7400 -- --rigs --boss=servo --bot=boss --bot-human --seed=2`: Servo down at
-tick 7036, 188 on Rivet, 0 SCRIPT ERROR, the editor's numbers (`evidence/servo/exe-smoke-it20.json`, on the it20 head; the code since 987c3439 is the sim-neutral `crate_damage` key).
+tick 7036, 188 on Rivet, 0 SCRIPT ERROR, the editor's numbers (`evidence/servo/exe-smoke-it22.json`; the code since 987c3439 is the sim-neutral `crate_damage` key and n7-king's repair delay field, which Servo does not set).
 
 ## What does not work / open
 - The horn has not been heard (every run was headless or filmed without listening).
@@ -90,6 +97,9 @@ tick 7036, 188 on Rivet, 0 SCRIPT ERROR, the editor's numbers (`evidence/servo/e
 ## Next steps
 - Listen to the horn and the boss loop in the exe (never heard tonight).
 - Play the fight by hand at 32 px/m (`RTAI.exe -- --boss=servo`): the numbers are the bots'.
+- If the owner picks a harder band (call 21): bisect `servo.rivet_repair_delay_s` between 6 and 30 s
+  with the human bot at n = 10 until about 7 in 10 survive, and ask the framework for a
+  `phase_ticks` field in the `boss_fight` telemetry (today a phase's start is read from windups).
 - Body: the docked bays, slung parcels and square octagonal pads now match the sheet; what remains
   by the target still is the spine's rail bottom under the torso (the legs and pad arms are wider since it19b, still slimmer than the sheet's blocks).
 - The sim's rack cells (the drones' launch points) could move onto the art's bays
