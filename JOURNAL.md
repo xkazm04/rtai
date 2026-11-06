@@ -76,6 +76,8 @@ second art_dir and a card row per pitch.
   res://dev/arena/arena.tscn -- --bot=reel --reel=director --loadout=pistol --rigs --view=tilt70`):
   19/19 chapters, every chapter all down, 0 SCRIPT ERROR. The combo reel started 21:09
   (scratch/street/reel_combo.log); result in iteration 2 if this session ends first.
+- GATE unit no-arg on the clean head 0ad76dba (with view's card sets): 1493 passed, 0 failed, no FLAKY.
+  Lint 15/15 on every commit (pre-commit hook).
 - LOOKED: the p55 riot plate at `--view=tilt` 64 px/m (masters still): it reads as at 70.
 
 NEXT (iteration 2):
