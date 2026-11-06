@@ -27,3 +27,8 @@ func test_the_flame_jet_stays_on_the_ground_straight_down() -> void:
 	var ci: Node2D = autofree(Node2D.new())
 	assert_eq(ShotLift.jet(ci, s, 0.0), Vector2.ZERO, "top: the jet is the before, bit-identical")
 	assert_eq(ShotLift.jet(ci, s, 3.0), Vector2.ZERO)
+
+
+func test_a_claw_effect_keeps_its_ground_point_straight_down() -> void:
+	var ci: Node2D = autofree(Node2D.new())
+	assert_eq(ShotLift.claw_at(ci, Vector2(2, 5)), Vector2(2, 5), "top: the crackle is the before")

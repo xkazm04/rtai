@@ -61,3 +61,10 @@ static func jet(ci: CanvasItem, s: Shot, went: float) -> Vector2:
 	var line0: Vector2 = s.origin + up
 	var tip: Vector2 = HeldMuzzle.at_m(ci, line0)
 	return up + (tip - line0) * clampf(1.0 - went / JET_CONVERGE_M, 0.0, 1.0)
+
+
+## Rivet's drawn muzzle (HeldMuzzle) for a claw effect at `ground` (a charge crackle) under a
+## tilted view; `ground` itself straight down or `--shot-lift=off` (the before, bit-identical).
+static func claw_at(ci: CanvasItem, ground: Vector2) -> Vector2:
+	var up: Vector2 = up_m()
+	return ground if up == Vector2.ZERO else HeldMuzzle.at_m(ci, ground + up)

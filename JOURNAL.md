@@ -199,3 +199,19 @@ NEXT (iteration 4):
   UNSCORED (?); next session: step the film by hand round Rivet's shots (or use the electro_chain chapter).
 - Session end 16:13. Branch head is clean; every item above is committed. NEXT (iteration 4) above stands,
   with 1 done and 2 tried (baton regen rejected).
+## 16:12 iteration 4 (BUILD)
+- 16:13 Read JOURNAL, git log; no REQUESTs to weapons in the other lanes' journals.
+- FOUND (code): the flame jet's tongues and embers drew at s.pos, the sim's GROUND line, while the nozzle
+  lick sits at the drawn wand tip (HeldMuzzle): under tilt the stream ran along the floor, below the gun.
+- MILESTONE a06036e6: ShotLift.jet lifts the jet to gun height and pulls it onto the drawn wand tip near
+  the nozzle (let go by 2 m); embers follow. Top: ZERO lift (unit test). Filmed at 48 tilt, same bot,
+  `--shot-lift=off` = before: the stream now leaves the wand tip; the tongues reach the cop's chest
+  (gtai-masters/d8/weapons/flamethrower_tilt_48_jet_before_after.png). Flame F: 2 -> 3 (start at the tip).
+- FRICTION: film.sh ignores OUT (hard-coded audit/); films launched with `( ... &)` in a Bash call die with
+  the call; use run_in_background. A `var tip` in jet() shadowed a new `tip()` (warning = error): the
+  films that started on it were killed and discarded.
+- Electro gun at 48 tilt (director chapter electro_gun): the arc leaves the drawn coil tip at gun height
+  and the shock lands on the body (2). But the CHARGE crackle (FightChargeArt.crackle: gathering arcs + a
+  cream core) drew at the ground muzzle point by Rivet's feet (scratch arc/shots.png). Fix: ShotLift.claw_at
+  (HeldMuzzle under tilt, the ground point under top). The reload ring (1.5 m up the screen) sat on the tall
+  rig's face under tilt: it is raised by 1.2 gun-height lifts (ZERO under top).
