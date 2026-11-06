@@ -1611,3 +1611,16 @@ NEXT (iteration 20, in order):
 - 07:24 GATES director reel (`scratch/servo/reel20.sh`): **19/19 chapters fully down, 0 SCRIPT
   ERROR** (`director-reel-it20.log`; the process runs on to its 780 s timeout, ~07:30). REPORT
   header on the it20 gates; exe line.
+- 07:23 GATES `tools/evidence/run.mjs --no-bench` started on 7d19cd97 (`evidence-run-it20.log`;
+  bench skipped: other lanes' heavy runs, CONTENDED).
+
+NEXT (iteration 21: the freeze at 08:30, report 08:40):
+1. Merge n7-king if it moved (last: 40f834c3 as a9bf2e2d; JOURNAL/REPORT add/add: ours). After a
+   code merge: unit (export GODOT_BIN first), scenarios, director reel (`scratch/servo/reel20.sh`,
+   rename the log), exe re-export + smoke (expect 7036, 188).
+2. If nothing in `project/` moved since 7d19cd97, the it20 exe is final (smoked 07:20): do not
+   re-export. Commit the director-reel-it20 log tail if it changed.
+3. Don't change the body or sim before the freeze: every clip is on 987c3439 (the it20 head draws
+   the same frames; the crate_damage key is sim-neutral at 0, the numbers prove it).
+4. REPORT final at 08:40: drop DRAFT, the header on the last gates (and evidence-run-it20's result),
+   keep the n = 10 numbers. Never edit `project/` while a Godot batch runs (it20 FRICTION).
