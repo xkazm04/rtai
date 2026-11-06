@@ -7,6 +7,8 @@ extends Node
 
 ## The riot's night-city bed is the quest stage's too, a little lower (a dock, not a crossing).
 const STAGE_BED_TRIM_DB: float = -3.0
+## n7-ranged: Rivet's picked-up rifle (audio_cues.json; pitch 1, gain -4 there = the before).
+const RIVET_RIFLE_CUE: StringName = &"shot_rivet_rifle"
 
 var service: AudioService
 var hooks: AudioHooks = AudioHooks.new()
@@ -53,7 +55,7 @@ func _process(_delta: float) -> void:
 		live[s] = s.pos
 		if not _shots.has(s):
 			@warning_ignore("return_value_discarded")
-			service.cue(_shot_cue(s), s.pos, _stage.tick)
+			service.cue(shot_cue(s), s.pos, _stage.tick)
 	for s: Shot in _shots:
 		if not live.has(s):
 			var id: StringName = &"hit_flesh" if hooks.kill_pending else &"projectile_end"
@@ -72,7 +74,13 @@ func _end_boss_loop() -> void:
 		service.loops.set_on(&"boss_loop", false)
 
 
-func _shot_cue(s: Shot) -> StringName:
+## A round's shot cue: a table gun's own, Gloria's, Rivet's picked-up rifle (n7-ranged: his own,
+## not the contractors'), else the contractors' rifle.
+static func shot_cue(s: Shot) -> StringName:
 	if s.spec != null and s.spec.shot_cue != &"":  # a table gun's own (lane gunplay)
 		return s.spec.shot_cue
-	return &"shot_gloria" if s.weapon == &"gloria" else &"shot_assault_rifle"
+	if s.weapon == &"gloria":
+		return &"shot_gloria"
+	if s.from_rivet and s.weapon == &"assault-rifle":
+		return RIVET_RIFLE_CUE
+	return &"shot_assault_rifle"
