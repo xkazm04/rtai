@@ -75,7 +75,8 @@ func test_planted_no_sheathe_keeps_the_blade_out() -> void:
 
 
 func test_quest_blade_flag() -> void:
-	assert_eq(Quest1Game.blade_of(""), &"katana")
+	assert_eq(Quest1Game.blade_of(""), &"", "owner 2026-11-06: quest 1 uses Rivet's own claws")
+	assert_eq(Quest1Game.blade_of("katana"), &"katana")
 	assert_eq(Quest1Game.blade_of("off"), &"")
 	assert_eq(Quest1Game.blade_of("electro_baton"), &"electro_baton")
 

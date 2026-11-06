@@ -24,8 +24,8 @@ static var ghost_locks: bool = true
 static var table_guns: bool = true
 ## n7-melee: the blade Rivet carries on quest 1 (melee_weapons.json id, in its carry slot: the
 ## katana on key 2; a press draws it over the story's gun, a second press puts it away). &"" = no
-## blade (the game's `--quest-blade=off`, the before).
-static var blade: StringName = &"katana"
+## blade: Rivet fights with his own claws (the owner's 2026-11-06 call; `--quest-blade=katana`).
+static var blade: StringName = &""
 ## The act quests the story has completed (none before quest 1's own act lands).
 static var acts_done: Array[StringName] = []
 

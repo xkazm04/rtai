@@ -193,7 +193,7 @@
       "fire_kick_ticks": 6,
       "id": "gloria",
       "muzzle_k": 1.8,
-      "trail_ticks": 8
+      "trail_ticks": 4
     },
     {
       "doc": "The heavy single shot: a bigger kick than its class. Fire: a 2 px recoil kick. Shot trail (n7-ranged it24): trail_ticks 10, the round's path from the held gun to the wound stays that long as an ink line with a cream core when it stops in a body, the tail drawing in as it fades (WeaponFxTrail; 0, --shot-trail=off or --feel=off = before).",
@@ -202,7 +202,7 @@
       "id": "hand_cannon",
       "kick_px": 5,
       "kick_ticks": 10,
-      "trail_ticks": 10
+      "trail_ticks": 4
     },
     {
       "doc": "Several shards land together: no per-shard stop (the kill still stops).",
@@ -234,7 +234,7 @@
       "doc": "Rivet's sidearm (audit: anticipation 1, his muzzle a 15 px speck at 32 px/m, smaller than a cop's flash star): muzzle_k scales his flash cell (WeaponFxArt.muzzle; 1 = the weapon-art size, the before) so his shot reads first. View only; --feel=off = 1. Shot trail (n7-ranged it24): trail_ticks 8, the round's path from the held gun to the wound stays that long as an ink line with a cream core when it stops in a body, the tail drawing in as it fades (WeaponFxTrail; 0, --shot-trail=off or --feel=off = before).",
       "id": "pistol",
       "muzzle_k": 1.6,
-      "trail_ticks": 8
+      "trail_ticks": 4
     },
     {
       "doc": "Fire: the launch shoves the camera 3 px back along the tube (10 ticks); the hit keeps its blast class.",

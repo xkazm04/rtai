@@ -202,6 +202,7 @@
         }
       ],
       "radius_m": 1.1,
+      "rivet_repair_delay_s": 20,
       "rng": "boss_king",
       "script": "res://features/bosses/king/king_moves.gd"
     },
@@ -395,6 +396,7 @@
         }
       ],
       "radius_m": 1.6,
+      "rivet_repair_delay_s": 30,
       "rng": "boss_servo",
       "script": "res://features/bosses/servo/servo_moves.gd"
     }

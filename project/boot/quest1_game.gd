@@ -263,8 +263,7 @@ func _bind_live() -> void:
 	session.live.px_per_m = func() -> float: return view.px_per_m
 
 
-## n7-melee: `--quest-blade` -> the carried blade (absent: the katana; off: none; else the id).
+## n7-melee: `--quest-blade` -> the carried blade (absent or off: none, Rivet's own claws, the
+## owner's 2026-11-06 call; else the id, e.g. katana).
 static func blade_of(flag: String) -> StringName:
-	if flag == "":
-		return &"katana"
-	return &"" if flag == "off" else StringName(flag)
+	return &"" if flag == "" or flag == "off" else StringName(flag)
