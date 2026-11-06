@@ -315,3 +315,12 @@ NEXT (iteration 5):
   `APPDATA=C:/Users/kazda/kiro/gtai-d8/appdata/weapons "$GODOT_BIN" --headless --path project --export-release windows-showcase ../build/export/windows/RTAI.exe`
   Smoke: `RTAI.exe --quit-after 900 -- --bot=reel --reel=director --chapter=plasma_sword --loadout=pistol --ppm=48 --view=tilt --rigs`
   -> chapter 1/1 down, 0 SCRIPT ERROR. Re-export at the freeze (this one is a7f6e29d + docs).
+- FOUND (scope gap): the floor pickups had no tilt pass. Under tilt the side-view gun lay on its disc squashed
+  to 82 % by the ground plane, flat as a decal.
+- MILESTONE 81548c4e: under tilt a floor gun hovers 0.35 m over its disc (0.05 m bob, render time, no RNG),
+  stood up for the raised camera (scale.y / ground_k, sway halved), with a soft ink shadow on the disc. Filmed
+  `--armory --clean --view=tilt --rigs` at 48 and 32 px/m, frame 150, `--shot-lift=off` = before, 0 SCRIPT
+  ERROR: every gun reads as an object over its disc, taller, at both zooms.
+  gtai-masters/d8/weapons/pickups_tilt_48_hover_before_after.png (48 + 32 pairs). DECISION in decisions.md;
+  alternative HOVER_M 0. Unit test test_pickups_hover (top flat).
+- frames.json: + pickups (6th), - longguns_tilt_48_stand_edge_zoom3x.png (iteration-1 study; deleted). 15.
