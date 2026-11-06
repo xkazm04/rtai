@@ -1746,3 +1746,25 @@ NEXT (iteration 17, in order):
 - Unit: 4 new tests (`test_gang_shades.gd`: dressed once, over the chain, the plain thug stays
   plain, the crescent inside the dome). Full run 1167/1: the known flake `test_noir_shadows`
   ("Parameter t is null"); re-run **1168/0** (`evidence/king/unit-it18-rerun.log`). Lint 13/13.
+
+### 06:10 EXE re-exported on 71e76b3f (the gang's shades) and smoked
+- `windows-showcase` export exit 0, 0 errors (`build/export-it18.log`); headless smoke seed 2
+  human: King down at tick **4933**, took **88**, coin_fan 3 / press_slam 1 / ram 1, 0 SCRIPT ERROR.
+  The telemetry diffs from it17's only in the view timings (contended machine): render only.
+
+### 06:20 FILM the full fight, the re-cuts, the target comparison and the decree re-shot on 71e76b3f
+- `build/scratch18/film32.sh` + `cut.sh` (`_it18` names): full fight 95 s, 0 SCRIPT ERROR, phases
+  1-2-3 and "king defeated" in the log. **Looked at** the nine keys (6-90 s): the same beats as it17.
+  `cmp.py` -> `M/king_target_vs_game_32ppm_it18.png`: **looked at**, the riders' heads now carry a
+  dark front at 2x.
+- `M/king_decree_48ppm_it18.mp4` (phase 2 seed 2 stander, 16.2-20.6 s of `film.sh dec 1300`,
+  1280x800, the caption re-burned with drawtext, consolas 24, black@0.6 box). **Looked at** a frame
+  beside the it16 one (same framing) and the 4 fps sheet: arc fills, rings burst, the brawlers carry
+  the buff rings and now the shades.
+- it17 versions of the six and the it16 decree deleted; frames.json 15, all exist, befores name what
+  they lacked (no shades). REPORT paths and the exe line moved to it18.
+- 06:30 FILM `M/king_ram_coin_fan_48ppm_it18.mp4` re-shot on 71e76b3f (phase 1 seed 2, 1280x800,
+  `film.sh ram_s 620 --bot-stand` and `ram_d 620`, cut 1.4-4.4 + 6.6-9.0 s of each with one ffmpeg
+  concat, 10.8 s, music, 0 SCRIPT ERROR). **Looked at** the 1 fps sheet beside the it16 one: the
+  same frames (deterministic); a frame at 0.3 s at 2x: the rider wears the shades and King's crown
+  the plum jewel (the it16 clip had neither). it16 deleted; frames.json 15, all exist.
