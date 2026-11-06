@@ -1409,3 +1409,38 @@ NEXT (written 05:15, for iteration 16; supersedes the 04:48 list):
   found before the fix; before/after in the live city path at 32 and 48, a planted fault per test),
   realtime-combat-semantics (a hit carries its own direction, generic for any target kind: a boss
   hit by the saw gets the same line).
+- MILESTONE 05:57 combined city clip re-cut on `c8be703d`: the 5 melee segments refilmed (0 SCRIPT
+  ERROR each; the blow line reaches every melee kill), the 4 ghost segments reused (no ghost code
+  since a6c2797b), 44.2 s; the chainsaw segment (6.7-9.7 s, a 2 fps sheet) ends with the halves in
+  front of Rivet. frames.json row updated.
+NEXT (written 05:59, for iteration 17; supersedes the 05:15 list):
+1. Read n7-ranged's JOURNAL to its end: cherry-pick new hit_feel / feel_cam / camera commits -x
+   (check prerequisites), unit with GODOT_BIN exported. Last merged: `8efe76ca`, `a63bd8e0`.
+2. Freeze (by 08:30), in order: gates on the final head (lint, unit, `bash evidence/n7-melee/reels.sh
+   <head>`, then `node tools/evidence/run.mjs --no-bench > /tmp/<log>` on a clean tree, log copied
+   in after; never edit tracked files while a gate runs); bake_city + both exes
+   (`--export-release windows-showcase ../build/export/windows/RTAI.exe`, `--export-release
+   windows-slice ../build/export/windows-slice/RTAI.exe`); boot each once (calls (h)-(p) lines; the
+   slice title card; `--strike-sync=off`, `--pullback=off`, `--tell-cues=off`, `--saw-part=off`,
+   `--melee-dir=off` are in KNOWN_FLAGS); finish REPORT.md (exe lines per call a-p, gates, drop "DRAFT").
+3. The combined city clip is current on `c8be703d`. Re-cut only if code moves (ghost code: refilm
+   `set_ghost_<g>`; melee code: refilm the chapter; then `RECUT=1 bash evidence/n7-melee/set_clip.sh`).
+4. Build candidates, weakest first: the plasma sword's halves and the electro baton's kill also
+   take the true blow line now: look at their city chapters before/after (`--melee-dir=off`) once
+   (only the katana and claw were looked at); the whiff thud is unit-tested only; Dent's miss lash
+   is silent (no fitting sound in the bank); Dent read 3 (the camera call); the ram heap (call h).
+   Call (b) only on the owner's word.
+- LOOK 06:01 (NEXT 4's first item, done now): city chapters `plasma_sword_deflect` and
+  `electro_baton`, `--melee-dir=off` vs the set films on `c8be703d`: frame difference 0 on every
+  frame (490 and 400 frames; ffmpeg blend difference, signalstats YAVG max 0). Those chapters' kills
+  do not read the melee line (the deflect's are returned rounds, with their own line). So the blow
+  line changes the chainsaw and the katana only, in the reels. 0 SCRIPT ERROR. Films deleted.
+- CLEAN 06:02 this iteration's scratch films and sheets deleted (the set_*.avi kept for RECUT).
+- GATES (run in iteration 16, logged now) on `c8be703d`: director reels arena 19/19 and city 19/19
+  (38 chapter lines each), 0 SCRIPT ERROR; scenarios 52 ran, 0 failed, 0 SCRIPT ERROR
+  (`evidence/n7-melee/{director-arena-loadout,director-city-loadout,scenarios}-c8be703d.log`).
+
+## Iteration 17 (runner), 06:01-07:01
+- READ 06:02 n7-ranged to its it20 NEXT: no hit_feel / feel_cam commit since `8efe76ca`/`a63bd8e0`;
+  a FINDING (not built) of a `hold_delay_ticks` so the hit-stop freezes on the wound, flagged as a
+  shared-layer change with an FYI to melee if it lands. Nothing to merge, no REQUEST to melee.
