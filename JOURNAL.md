@@ -256,3 +256,19 @@ NEXT (iteration 6, in order; freeze 18:30):
   e7d41ab1... both. Unit --select test_king_car_walls,test_king_art 12/12 (2 new tests); lint 15/15.
   Evidence: gtai-masters/d8/bosses/king_car_cannon_bumpers_64_before_after.png (frames.json #8;
   king_car_64_t600 out of the list, file kept for REPORT). NEXT item 2 done.
+- 16:50 Picked the weakest point after the list: under tilt the King's cape had lost its motion (the
+  card wears a static cape since 14:44; the drawn cape's gather/flare/landing beat was gone).
+- 16:57 MILESTONE + DECISION the cape train (6344f887, fe163a2a): on foot `KingCape._train` draws the
+  train from 0.9 m up his back to the ground, out by `train_k` (the flare of charge/ram/press_slam
+  and the slam's landing spread; 0 at rest), shaded dark root -> vermilion hem, fold lines, a thin
+  ermine hem. First cut (flat fill, thick fur) read as a decal flag: looked at, reworked before commit.
+  Seated on the car it stays off (in the ram it lay flat across the deck from under the throne foot).
+  `TRAIN_K = 0` = the card-only read. Decision line in docs/decisions.md.
+  GATE top identity measured: phase 3 `--view=top` tick 270 at 32 px/m, HEAD king_cape vs new: raw
+  md5 fe5408e1... both. Unit --select (cape, art, car walls) 17/17 (1 new test); lint 15/15.
+  GATE director reel headless `--loadout=pistol --rigs --quit-after 8000` on 6344f887: tilt 19/19
+  fully down 0 SCRIPT ERROR, top 19/19 fully down 0 SCRIPT ERROR (fe163a2a narrows the same branch).
+  Evidence: gtai-masters/d8/bosses/king_cape_train_64_before_after.png (frames.json #4; the it1
+  combined clip out of the list, file kept), king_p3_cape_train_tilt64.mp4 (6 s, the charge + slam).
+- Calls for the owner (add to REPORT): (8) the cape train under tilt (`KingCape.TRAIN_K`, 1 default,
+  0 = card only): king_cape_train_64_before_after.png; exe `RTAI.exe -- --boss=king --phase=3 --view=tilt`.
