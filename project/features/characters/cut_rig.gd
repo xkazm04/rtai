@@ -79,6 +79,8 @@ var shove_v: Vector2 = Vector2.ZERO
 ## The rig's global transform and its inverse, cached once per pose step (hot path).
 var xf: Transform2D = Transform2D.IDENTITY
 var xf_inv: Transform2D = Transform2D.IDENTITY
+## View lab: screen-up per part px of height under a tilted --view (RigTilt); ZERO straight down.
+var tilt_up: Vector2 = Vector2.ZERO
 
 var body: Node2D = null
 var torso: Node2D = null
@@ -162,8 +164,11 @@ func drive(dt: float) -> void:
 		react.pre(self, dt)
 	RigHips.step(self, dt)
 	rotation = facing
+	RigTilt.aim_up(self)
 	RigGait.step(self, dt)
 	RigPose.step(self)
+	if tilt_up != Vector2.ZERO:
+		RigTilt.lift_upper(self)
 	if react != null:
 		react.post(self)
 	if hose != null:
@@ -221,7 +226,8 @@ func fwd() -> Vector2:
 
 func hip_local(s: int) -> Vector2:
 	var y: float = plan.hip_y * plan.side_sign(s)
-	return body.transform * (pelvis.position + Vector2(0, y).rotated(pelvis.rotation))
+	var at: Vector2 = body.transform * (pelvis.position + Vector2(0, y).rotated(pelvis.rotation))
+	return at if tilt_up == Vector2.ZERO else at - RigTilt.body_lift(self)
 
 
 func hip_world(s: int) -> Vector2:
