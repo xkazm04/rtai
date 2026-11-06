@@ -78,3 +78,30 @@ NEXT:
   RivetCarryAngle.place_beside / the two-claw hold places it by the top-down geometry.
 - FOUND: the gunplay bot with --weapon=katana: I could not confirm a katana is drawn (the frames
   show a gun-like part); blades unverified in the live path.
+- MILESTONE c9828312: the long-gun float fixed. RivetCarryAngle.place_beside cleared the head by
+  half the TEXTURE height; the 55 part is twice as tall (side body + grip), so the gun was pushed
+  off the claw. HeldPitchArt.half_thickness gives the top-down barrel thickness for a pitch part
+  (top unchanged). Seen at 64 px/m: gtai-masters/d8/weapons/plasma_rifle_tilt_64_float_fix.png.
+  NOTE for chars: this touches one line of features/player/rivet_carry_angle.gd (held placement,
+  not a hold class); top is bit-identical (no pitch rows under top).
+
+NEXT (iteration 3):
+1. Read the director reel result for c9828312 (scratch reel2_tilt.log / reel2_top.log; started 15:21).
+   If it isn't 19/19 with 0 SCRIPT ERROR in both views, fix that first.
+2. The 32 px/m read (the shipped zoom): the long-gun 55 parts are bigger and muddier than the top-down
+   silhouette. Options:
+   - size_k 0.8 per row (one data value);
+   - a held LOD below ~40 px/m (WeaponArt has `small` parts for top: make 55 small parts, prepped
+     harder: ink 0.22, grow 3, fewer plates).
+   Film both at 32 and pick; a Call for the owner if it stays a judgement call.
+3. Blades: film them in melee (the director reel's katana / plasma_sword_deflect / electro_baton
+   chapters with --view=tilt --ppm=48 --write-movie, not the gunplay bot) and check the grip, the
+   flip on a left swing, and the sweep (MeleeSwing) with the three-quarter part.
+4. Heavy, tube and thrown parts: chainsaw, flamethrower wand, gatling, rocket launcher, mini nuke,
+   molotov. Generate from the shipped pickups (gen55c recipe, image.want + lock), cut, prep.py
+   0.17 2, grips by eye, mipmaps ON in the .import.
+5. FX at height, still owed: the flame tongue (CONE jet) and the electro arc start at the drawn tip
+   (check the films); the melee smear in the tilted plane.
+6. The sidearms (iteration-1 parts) were never print-prepped: run prep.py on them and compare at 48.
+7. Clean scratch (3.6 GB, mostly audit mp4s) before the freeze: keep only what frames.json and
+   docs/polish/weapons-tilt.md name.
