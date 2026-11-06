@@ -59,3 +59,24 @@
   1.75, raw) and KingArt keeps only the limbs + cape. Until then KingArt swaps on this branch.
   Fixed for view70's combo: the part cache is keyed by pitch (a live pitch re-asks). Known gap
   under combo: a card swapped once keeps its strip if the pitch moves mid-fight (fix = the merge above).
+- 14:51 MILESTONE Servo (p55): a top-view part sheet from servo_55.png (95 s, first try; 9 parts in the
+  asked order) cut to today's part sizes, head turned to the rig's front-down convention
+  (tools/art/servo_parts_pitch.py); `ServoArt.path` picks p55 when present (two load lines in
+  ServoRig, no growth). Kept main's art: the 2-row rack (layout differs), the drones and crates
+  (ServoDraw). Commit a546faca. Still at 64 px/m: gtai-masters/d8/bosses/servo_tilt64_before_after.png.
+
+NEXT (iteration 2, in order):
+1. The throne-car as a sprite stack from art (item 2): slices from a simple Blender model rendered
+   to PNG (or generated) with our gilded grille (not a maker's trade dress), amber tail lamps, drapes,
+   the hood cannon, the throne; replace KingCarStack's code slices under a court pitch only. Film the
+   procession and the ram.
+2. Fold the court card strips into chars' `ViewMode.art` route once merged (rows in this JOURNAL,
+   14:47) and keep KingArt for the limbs + cape; re-dress the card when the pitch moves (combo).
+3. Servo: the 2-row rack in the new palette (cut the top two rows of the 3-row rack art), the drones
+   (ServoDraw drone_tex/crate_tex through ServoArt); film the drone launch and the rotor dash at 64.
+4. Close combat at 64 px/m: the King vs Rivet's claw and the katana chapter (`--loadout=katana`
+   in the arena boss fight), Servo the same; check the hit flash on the raw parts (one frame of
+   print-through possible when the flash ends: KingArt re-nulls on the next step).
+5. A combined clip of the set (30-90 s) for frames.json; cape A/B clip for the call.
+6. Rivet's claw / katana chapter 64 px/m checks; then the King's own cape motion under tilt if the
+   owner keeps the drawn fan (CARD_CAPE false) - a draped, upright cape layer instead of the fan.
