@@ -1642,3 +1642,9 @@ NEXT (iteration 16, in order):
   hit, the dodger clear; slam ring, leap, shockwave with coins and the cape landing wide, the dodger
   outside the ring. A full frame of the slam tell at 4x: plates raised beside the crown, King's chain
   and plum medallion in front. it13/it14 versions deleted; frames.json 15, all exist.
+
+### 05:36 GATES on f4df4438 (King's chain), run one after the other
+- Director reel (headless, `--rigs --bot=reel --reel=director --loadout=pistol`, 31200 ticks):
+  **19/19 chapters fully down**, 0 SCRIPT ERROR (`evidence/king/director-reel-it16b.log`).
+- Scenarios **52 ran, 0 failed**, 0 SCRIPT ERROR (`evidence/king/scenarios-it16b.log`): the
+  city_chase flake of 05:24 did not recur with the machine quiet. Unit 1164/0, lint 13/13. Combat holds.
