@@ -9,6 +9,7 @@ import { PROJECT, ROOT, ownGdFiles, readJson, rel, run, walk } from '../lib/repo
 import { checkAll as styleChecks } from '../style/check_gd.mjs';
 import { check as constantsCheck } from '../gen_constants/gen.mjs';
 import { validate } from '../lib/mini_schema.mjs';
+import { check as layersCheck } from './layers.mjs';
 
 // Windows caps a command line at 32767 chars and the gdtoolkit launchers fail silently past it
 // (exit 1, no output: 810 files were 32633 chars), so file lists go in batches of FILE_BATCH.
@@ -122,6 +123,7 @@ export function runLint() {
     autoloadBudget(),
     dataTables(),
     constantsCheck(),
+    layersCheck(),
     tool('achievements-validate', node, [gen, 'validate']),
     tool('achievements-drift', node, [gen, '--check']),
   ];
