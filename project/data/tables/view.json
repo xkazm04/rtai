@@ -32,6 +32,12 @@
       "id": "tilt55",
       "note": "pitch study: 55 degrees",
       "pitch_deg": 55
+    },
+    {
+      "height_k": 1,
+      "id": "tilt45",
+      "note": "pitch study: 45 degrees, the stronger three-quarter end of the range",
+      "pitch_deg": 45
     }
   ]
 }
