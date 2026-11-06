@@ -16,6 +16,9 @@ var _ppm: float = 32.0
 var _game: Quest1Game
 var _frame: int = 0
 var _held_frames: int = 0
+## n7-melee: ticks with a plate spark on screen, and the most at once (rounds his plates stop).
+var _spark_ticks: int = 0
+var _spark_max: int = 0
 
 
 func _ready() -> void:
@@ -35,6 +38,7 @@ func _ready() -> void:
 	_game.session.live.viewport = null
 	await _settle()
 	await _run()
+	Log.info("quest_hauler", "plate sparks: %d ticks, max %d" % [_spark_ticks, _spark_max])
 	get_tree().quit(0)
 
 
@@ -56,6 +60,7 @@ func _run() -> void:
 		_stick(0.9 if t >= 90 and t < 170 else 0.0)
 		Input.flush_buffered_events()
 		s.step()
+		_count_sparks()
 		await _save()
 		await _hold(s.world.context().clock)
 	var h: HaulerStage = stage.pilot.hauler
@@ -115,3 +120,10 @@ func _save() -> void:
 	@warning_ignore("return_value_discarded")
 	img.save_png(_out.path_join("f_%04d.png" % _frame))
 	_frame += 1
+
+
+func _count_sparks() -> void:
+	var p: PlateSparks = _game.view.fx_view.get(&"_plates")
+	var n: int = p.marks.size() if p != null else 0
+	_spark_ticks += 1 if n > 0 else 0
+	_spark_max = maxi(_spark_max, n)
