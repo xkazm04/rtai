@@ -88,6 +88,18 @@ By the craft columns (impact and read at 32 weigh most: they are what the owner 
    before first blood; 106) and fading over 10 ticks. Looked at in 2x crops of frames 72-79 and
    104-111, before (flash_ticks 0) over after: the before shows only the arm over a blue cop. Re-scored
    impact 2 -> 3, read 3 -> 4. `M/claw_rake_ab_32ppm.mp4`, `M/claw_rake_48ppm_04x.mp4`.
+   **Anticipation 04:35 (`791ea71a`)**: measured in the claw reel (a debug log of tick, reach and
+   strike_t, removed): the arena fed Rivet's view strike 2 ticks into the sim's windup, so on the hit
+   tick the rig was still cocked and the hit-stop held that pose for 7 frames (reach -0.35: the
+   claw never out on the held frame, in the shipped game). The rig now starts the strike that far
+   in (`RigInput.pack_hit`, before `--strike-sync=off`): reach 1.00 on every held frame. And the
+   cock is deeper for the claw (`melee_marks.json swing`: pullback 0.7, arm_back 1: the open claw
+   draws back and out for 2 frames, then the jab leaves from the night's -0.35; before
+   `--pullback=off`). Looked at in 32 and 48 px/m stills of frames 72 / 76 / 104 / 108, before over
+   after: the open claw drawn back reads at 32 on 72, the claw is in the cop on the held 76. The
+   second blow (windup 4) shows little cock (the sim's windup is short; changing it is sim).
+   Antic. 3 -> 4. `M/claw_strike_sync_ab_32ppm_48slow.mp4`, `M/claw_strike_sync_ab_64ppm_04x.mp4`,
+   `M/claw_strike_sync_ab_still.png`.
 4. **Ohm's bolt**: no tell; thin at 32.
    **Tried 20:38, not landed**: a fingertip charge glow over bolt_gap_s does not separate from the form's
    own teal aura at 32 px/m (the form is ~20 px). Next: a tell outside the aura (an ink/cream spark arc

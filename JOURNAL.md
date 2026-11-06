@@ -1182,3 +1182,35 @@ NEXT (written 04:09, for iteration 13):
   the hit frame where it is. rig_clips is shared by every timed strike (claw, baton, katana: check
   which callers set strike_ph), so a per-weapon depth row is the safe shape. Film A/B at 48 then 32
   on the lone claw chapter before deciding; reels 19/19 x2 after.
+
+## Iteration 14 (runner), 04:14-05:14
+- READ 04:15 n7-ranged JOURNAL to its end: no new hit_feel / feel_cam commit since `a63bd8e0`
+  (its latest are docs on the quest 1 rifle flash); nothing to merge. No REQUEST to melee.
+- BUILD 04:16 (NEXT 4, the claw's anticipation) StrikeDepth + melee_marks.json `swing.pullback`.
+  FRICTION 04:19: the first A/B films were byte-identical: during a claw hit with a gun in hand
+  rig.hold is the gun's class (`sidearm`), not &"", so a "claw = empty hold" key never matched.
+  Re-keyed: a hold without a row takes the claw row; blade and chainsaw rows hold 0.35.
+- LOOK 04:20 torso twist alone at 0.7 is invisible at 48 px/m (5-frame crops at 3x). Added an arm
+  draw-back while cocked (`arm_back`, claw 1, blades 0).
+- FINDING 04:22 the cocked arm showed ON the hit frame and through the whole hit-stop. A debug log
+  (tick, c_reach, strike_t per frame; removed) showed why: ArenaRigs feeds the STRIKE clip with
+  MeleeCombo.tick_in 1 (fed tick 70) and the sim's hit lands 3 ticks later (tick 73) for a 5-tick
+  windup (hit 2: fed 98, hit 100, windup 4). So the rig was 2 ticks behind the sim and the
+  hit-stop (clock.hold) froze it at strike_t 3 ticks = still cocked: reach -0.35 in the shipped
+  build, i.e. combat-notes' JAB_TICKS fix ("out at full reach on the hit tick") never held in the
+  live arena. That is a sync bug, not a call.
+- BUILD 04:27 `791ea71a`: RigInput.pack_hit packs `late` = tick_in + 1 (bits 20-23) and the rig
+  starts the strike that far in (log after: reach 1.00 on all 7 held frames); `--strike-sync=off`
+  = the before. The deeper cock only before the jab (the jab leaves from the night's -0.35 so no
+  jab frame changes; RigArm draws the arm back only past -0.35). `--pullback=off` = the depth's
+  before. Unit test_strike_depth (4 tests, planted: no rows; late 0 still cocked at the sim hit).
+  Lint 13/13, unit 1223/1223.
+- LOOK 04:33 32 and 48 px/m stills of frames 72/76/104/108, before (both flags off) over after:
+  the open claw drawn back reads at 32 on 72; on the held 76 the claw is in the cop. The second
+  blow's cock is barely there (windup 4 ticks: the sim's timing, not a view lever). Antic. 3 -> 4.
+  CLIP `M/claw_strike_sync_ab_32ppm_48slow.mp4` (4.6 s), `M/claw_strike_sync_ab_64ppm_04x.mp4`
+  (3.3 s), still `M/claw_strike_sync_ab_still.png`; frames.json row 0 (15 rows kept). REPORT row +
+  call (n), audit item 3, decision line.
+- Registry rules applied: realtime-combat-semantics (anticipation never moves the active frame:
+  the hit tick and every jab frame are as before; the fix puts the view's active frame back on the
+  sim's), motion-quality-gating (judged on film at 32 and 48, a planted fault per test).

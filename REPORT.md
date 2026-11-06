@@ -25,6 +25,7 @@ final hash moved once, deliberately, when quest 1 started carrying the katana (`
 | Ohm's bolt lands on the body it strikes | `a27fb59c` | the stroke stops 0.6 m out from each struck body and a crackling ink-and-white ring circles it (it ran into the body's chest under a solid white disc), so every link of the chain lands on a body you can see; a small gain, clearest on a robot | `M/ohm_bolt_rim_ab_32ppm_48slow.mp4`, still `M/ohm_bolt_rim_ab_32_48ppm.png` (before `ghost_attacks.json` ohm `rim_m` 0, or `--feel=off`) |
 | Melee and ghost hit sounds | `f593aac4` | each attack family plays its own sound on the hit tick, built from the shipped bank (claw knock, blade cut, chainsaw bite, baton zap, ghost slam, Ohm bolt) | `M/hit_cues_ab_32ppm.mp4` (before `--hit-cues=off`) |
 | Claw jab reads at 32 | `f45ad8e6` | three cream rakes edged in ink across the struck cop on the hit frame, fading over 10 ticks | `M/claw_rake_ab_32ppm.mp4`, `M/claw_rake_48ppm_04x.mp4` (before `melee_marks.json` claw `flash_ticks` 0) |
+| Claw jab: out on the held hit frame, a deeper cock | `791ea71a` | the view strike was fed 2 ticks late, so the hit-stop held the claw cocked on every claw hit; now it holds the claw in the cop, and the open claw draws back for 2 frames before the jab (blades unchanged) | `M/claw_strike_sync_ab_32ppm_48slow.mp4`, `M/claw_strike_sync_ab_64ppm_04x.mp4`, `M/claw_strike_sync_ab_still.png` (before `--strike-sync=off --pullback=off`) |
 | Ghost hits move the victim | `91700e01` | a body Tonnage rams or throws with the slam, and that survives, now plays a knockdown on the hit (before: no reaction at all); a rammed riot cop goes down instead of standing braced | `M/ghost_wound_ram_ab_32ppm.mp4` (before `human_reactions.json` `ghost_wound` {}) |
 | Quest 1 shows melee (brief 5) | `fbc5a982`, `8237d411`, `becfeb7f`, `806a657e`, `5f80e67c` | Rivet carries the katana on key 2 in quest 1; the shipped sprite cast draws the blade, the swing and the smear | `M/quest1_katana_ab_32ppm.mp4` (before `--quest-blade=off`) |
 | The shipped quest 1 starts (found by the trial exe) | `87d7dc2b` | since `65dd07e1` the slice exe failed to compile quest1_game.gd (a dev-only class on the melee feel's path); fixed, and `test_slice_closure` now fails the unit gate on any dev class on quest 1's path | `evidence/n7-melee/it9-export-slice-fix.log`; the slice exe's title card loads, 0 SCRIPT ERROR |
@@ -146,6 +147,15 @@ head spark.
 - Before: `ghost_attacks.json` dent `blast_debris` 0, or `--blast-debris=off` (which also drops the
   rocket's slabs), or `--feel=off`.
 - See it: `RTAI.exe -- --bot=ghosts --ghost=dent --rigs --ppm=32` (the car goes off at about 2.9 s).
+
+(n) The claw cocks back deeper before the jab.
+- Options: pullback 0.7 with the arm drawn back (built); the night's 0.35 torso twist only (the
+  before); any depth 0-1 is one value (`melee_marks.json swing.pullback.claw`, `arm_back.claw`).
+  The strike sync under it (the claw out on the held hit frame) is a fix, not a call.
+- Clip: `M/claw_strike_sync_ab_32ppm_48slow.mp4` (32 real time, then 48 at 0.4x), still
+  `M/claw_strike_sync_ab_still.png` (rows: 32 before, 32 after, 48 before, 48 after).
+- Before: `--pullback=off` (the depth only), `--strike-sync=off --pullback=off` (the whole before).
+- See it: `RTAI.exe -- --bot=reel --reel=director --chapter=claw_combo --loadout=pistol --lone`.
 
 ## Next steps
 See the last NEXT entry in `JOURNAL.md`.
