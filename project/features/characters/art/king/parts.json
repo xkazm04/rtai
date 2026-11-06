@@ -423,5 +423,56 @@
    388.0,
    28.5
   ]
+ },
+ "press_plate": {
+  "size": [
+   218,
+   198
+  ],
+  "sheet": "tools/art/king_press_parts.py",
+  "cell": 0,
+  "scale": 1.0,
+  "pivot_a": [
+   26.0,
+   99.0
+  ],
+  "pivot_b": [
+   210.0,
+   99.0
+  ]
+ },
+ "r_forearm_press": {
+  "size": [
+   434,
+   198
+  ],
+  "sheet": "tools/art/king_press_parts.py",
+  "cell": 0,
+  "scale": 1.0,
+  "pivot_a": [
+   56.0,
+   99.0
+  ],
+  "pivot_b": [
+   242.0,
+   99.0
+  ]
+ },
+ "megaphone": {
+  "size": [
+   144,
+   136
+  ],
+  "sheet": "tools/art/king_press_parts.py",
+  "cell": 0,
+  "scale": 1.0,
+  "pivot_a": [
+   8.0,
+   68.0
+  ],
+  "pivot_b": [
+   144.0,
+   68.0
+  ]
  }
 }

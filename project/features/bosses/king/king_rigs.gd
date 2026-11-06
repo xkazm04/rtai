@@ -25,6 +25,15 @@ const RIDER_ID: int = 9190
 ## plates, kept at 32 px/m where the part art's own gold is lost to the flat stickers. -1 = the
 ## plain cream-and-steel d5 King (the iteration-2 look).
 const GOLD_SWAP: int = 5
+## The target's flat press plates (tools/art/king_press_parts.py): the left hand cell and the right
+## forearm's end. false = Rivet's claw (left) and the megaphone forearm (right), iterations 1-7.
+const PRESS_PLATES: bool = true
+## The target's shoulder megaphone (the horn cut from the old megaphone forearm), on the right
+## shoulder pointing forward and a touch out, over the arms: rig px, radians, scale, z.
+const HORN_AT: Vector2 = Vector2(10.0, 215.0)
+const HORN_TURN: float = 0.35
+const HORN_K: float = 1.6
+const HORN_Z: int = 40
 ## Which arm strikes per attack (BodyPlan.L / R, 2 = both press plates); others: by body id.
 const ATTACK_ARMS: Dictionary[StringName, int] = {
 	&"press_slam": 2, &"charge": BodyPlan.L, &"decree": BodyPlan.R, &"coin_fan": BodyPlan.L
@@ -79,6 +88,8 @@ func _rig(id: int, is_king: bool, at: Vector2, facing: Vector2) -> CutRig:
 		var rig: CutRig = CutRig.new()
 		add_child(rig)
 		rig.setup(king_plan() if is_king else GangPlan.build(), RigVariant.rivet())
+		if is_king and PRESS_PLATES:
+			_horn(rig)
 		rig.actor_id = id
 		rig.position = at
 		rig.snap_facing(facing.angle())
@@ -109,7 +120,31 @@ static func king_plan() -> BodyPlan:
 	var p: BodyPlan = KingPlan.build(KING_SIZE_K)
 	p.torso_swap = GOLD_SWAP
 	p.arm_swap = GOLD_SWAP
+	if PRESS_PLATES:
+		p.hand_open = "press_plate"
+		p.hand_closed = "press_plate"
+		p.hand_pistol = "press_plate"
+		p.fore_part[BodyPlan.R] = "r_forearm_press"
 	return p
+
+
+## The shoulder megaphone: a gilded rig part on the torso (tinted with the rest on a hit flash).
+static func _horn(rig: CutRig) -> void:
+	var spr: Sprite2D = Sprite2D.new()
+	spr.texture = PartLibrary.texture(rig.plan.art_dir, "megaphone")
+	spr.centered = false
+	spr.offset = -PartLibrary.of(rig.plan.art_dir).pivot("megaphone", spr.texture)
+	spr.position = HORN_AT
+	spr.rotation = HORN_TURN
+	spr.scale = Vector2.ONE * HORN_K
+	spr.z_index = HORN_Z
+	spr.material = PartMaterials.get_mat(PartMaterials.PartKind.PART, false, GOLD_SWAP)
+	rig.torso.add_child(spr)
+	rig.sprites.append(spr)
+	@warning_ignore_start("return_value_discarded")
+	rig.sprite_kinds.append(int(PartMaterials.PartKind.PART))
+	rig.sprite_swaps.append(GOLD_SWAP)
+	@warning_ignore_restore("return_value_discarded")
 
 
 ## `vel` INF = the stride from the frame's own motion; a given vel overrides it (seated: zero).
