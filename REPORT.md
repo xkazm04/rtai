@@ -53,10 +53,12 @@ All under `--view=tilt` (55 degrees), seed 2, the live arena (`--boss=king` / `-
 The King vs the katana, the gang vs Rivet, and Servo at contact with the katana (`--ghost=kerf --loadout=katana`):
 the parts hold their detail and do not turn to mush.
 
-## Gates (to be refreshed on the tip at the freeze)
-- On the session 4 tip: the director reel ran headless (`--loadout=pistol --rigs --quit-after 8000`) on 6344f887,
-  **tilt 19/19 fully down, top 19/19, 0 SCRIPT ERROR**. Lint passed 15/15 on every commit.
-- The unit full run and the scenarios on 0f11ec5f are in JOURNAL. `evidence --no-bench` is owed at the freeze.
+## Gates (refresh the numbers on the final tip at the freeze)
+- Director reel, headless (`--loadout=pistol --rigs --quit-after 8000`) on 6344f887: **tilt 19/19 chapters fully down,
+  top 19/19, 0 SCRIPT ERROR**.
+- On 0f11ec5f: unit full run **1427/1427**, scenarios **52/52** (run alone). Lint 15/15 on every commit.
+- `top` identity was measured for every change: a raw-frame md5 of the old code vs the new code under `--view=top` (JOURNAL).
+- `node tools/evidence/run.mjs --no-bench` on 76cbfcfb: see JOURNAL (running at 17:17).
 
 ## What does not work / known gaps
 - Mid-fight pitch changes (view70's combined view): a card swapped once keeps its strip if the pitch moves.
@@ -80,7 +82,13 @@ Each call names the default that is built, the alternative one value away, and h
 9. **Proud bumpers:** `KingCarWalls.BUMPER_PROUD_M` 0.18 m (0 = flush): `king_car_cannon_bumpers_64_before_after.png`.
 
 ## Exe
-`build/export/windows/RTAI.exe` (the `windows-showcase` preset: it boots into the arena). Owed at the freeze.
+`build/export/windows/RTAI.exe` (the `windows-showcase` preset: it boots into the arena; pass the arena args after `--`).
+Export: `"$GODOT_BIN" --headless --path project --export-release windows-showcase ../build/export/windows/RTAI.exe`
+(with `APPDATA=C:/Users/kazda/kiro/gtai-d8/appdata/bosses`). A trial export at 17:14 worked and its smoke run
+(`--boss=king --phase=3 --view=tilt`) showed 0 SCRIPT ERROR. The final exe is re-exported from the tip at the freeze.
+- The King, angled: `RTAI.exe -- --rigs --boss=king --view=tilt` (on foot: add `--phase=3`; close range: `--ppm=64`)
+- Servo, angled: `RTAI.exe -- --rigs --boss=servo --view=tilt`
+- The same fight in `top` (today's art): drop `--view=tilt`.
 
 ## Next steps
 - Fold the court card strips into chars' `ViewMode.art` route after the merge, and re-dress the card when the pitch moves.

@@ -299,3 +299,13 @@ NEXT (iteration 6, in order; freeze 18:30):
   logged it: p3b/p3c/cB 1-2 each, none flat or TRAIN_K 0). Now two triangles per hem segment
   (draw_primitive, no triangulation): the same look, 0 such errors over phase 3 ticks 0-540.
   Unit --select test_king_cape 5/5, lint 15/15. The exported exe predates the fix: re-export at the freeze.
+NEXT (iteration 7 = the freeze session; freeze 18:30, REPORT 18:40):
+1. Read the result of `evidence --no-bench` on 76cbfcfb (scratch/bosses/evidence6.log; this
+   session's last entry says if it finished). If code changes after it, re-run it on the final tip.
+2. At the freeze: re-export `build/export/windows/RTAI.exe` from the tip (command in REPORT "Exe";
+   the 17:14 trial exe predates 76cbfcfb), smoke it once (`--boss=king --phase=3 --view=tilt`,
+   `--boss=servo --view=tilt`: exit 0, 0 SCRIPT ERROR, 0 "triangulation failed").
+3. Finish REPORT.md (draft 12edcfc2 + this session's edits): final gate numbers on the tip, remove the
+   DRAFT banner, Calls 1-9 are in it.
+4. If time remains before the freeze: the director reel in tilt and top on the tip (the train fix is
+   tilt-only render), and a 48 px/m look at the cape train in the ram-free phase 3 slam.
