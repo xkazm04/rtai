@@ -62,19 +62,7 @@ static func _chip(ci: CanvasItem, c: Vector2, dir: Vector2, age: float, ppm: flo
 	var reach: float = (0.7 + 0.8 * h) * ppm * (1.0 - pow(1.0 - t, 2.0))
 	var p: Vector2 = c + Vector2.from_angle(a) * reach
 	var s: float = (0.12 + 0.08 * h) * ppm
-	var spin: float = a + t * 7.0
-	var pts: PackedVector2Array = PackedVector2Array(
-		[
-			p + Vector2(s, 0.0).rotated(spin),
-			p + Vector2(0.0, s * 0.6).rotated(spin),
-			p + Vector2(-s * 0.8, 0.0).rotated(spin),
-			p + Vector2(0.0, -s * 0.7).rotated(spin)
-		]
-	)
-	ci.draw_colored_polygon(pts, Color(CREAM, fade))
-	@warning_ignore("return_value_discarded")
-	pts.append(pts[0])
-	ci.draw_polyline(pts, Color(INK, fade), 1.5, true)
+	SlamDebris.chip(ci, p, s, a + t * 7.0, fade, 1.5)
 
 
 static func _load() -> void:

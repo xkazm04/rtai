@@ -47,19 +47,27 @@ static func _chip(ci: CanvasItem, c: Vector2, age: float, ppm: float, h: int) ->
 	ci.draw_circle(ground, size_m * 0.5 * ppm, Color(INK, 0.3 * fade))
 	var spin: float = a + t * (6.0 + float(h % 7))
 	var at: Vector2 = ground - Vector2(0.0, lift)
-	var s: float = size_m * ppm
-	var pts: PackedVector2Array = PackedVector2Array(
-		[
-			at + Vector2(s, 0.0).rotated(spin),
-			at + Vector2(0.0, s * 0.6).rotated(spin),
-			at + Vector2(-s * 0.8, 0.0).rotated(spin),
-			at + Vector2(0.0, -s * 0.7).rotated(spin)
-		]
-	)
+	chip(ci, at, size_m * ppm, spin, fade, 2.0)
+
+
+## One paper chip of side `s` px at canvas `at`, turned `spin`, drawn in local space under a draw
+## transform: in the city block (~16000 px from the origin at 32 px/m) a few-px quad given in
+## absolute canvas coordinates fails Godot's float32 triangulation and the chip drops out.
+static func chip(ci: CanvasItem, at: Vector2, s: float, spin: float, fade: float, w: float) -> void:
+	ci.draw_set_transform(at, spin)
+	var pts: PackedVector2Array = chip_points(s)
 	ci.draw_colored_polygon(pts, Color(CREAM, fade))
 	@warning_ignore("return_value_discarded")
 	pts.append(pts[0])
-	ci.draw_polyline(pts, Color(INK, fade), 2.0, true)
+	ci.draw_polyline(pts, Color(INK, fade), w, true)
+	ci.draw_set_transform(Vector2.ZERO)
+
+
+## The chip's quad around the origin (local px), the same shape SlamDebris and RamMarks fling.
+static func chip_points(s: float) -> PackedVector2Array:
+	return PackedVector2Array(
+		[Vector2(s, 0.0), Vector2(0.0, s * 0.6), Vector2(-s * 0.8, 0.0), Vector2(0.0, -s * 0.7)]
+	)
 
 
 static func _puffs(ci: CanvasItem, c: Vector2, t: float, ppm: float, seed: int) -> void:
