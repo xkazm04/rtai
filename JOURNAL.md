@@ -341,3 +341,6 @@ NEXT (iteration 10):
    md5 proof, re-film the it9 clip. Re-export the exe at the freeze and smoke --view=tilt.
 5. Weakest items to raise: top_lift (still a modest gain: cast shadows by height not built);
    the city's parked sedans flat under tilt.
+- REPORT.md draft written (05:35). NOTE: the root REPORT.md was the King lane's, inherited through
+  the cut and the merge; replaced by the view lane's (the King lane's own copy lives on n7-king).
+  A later merge of n7-king will conflict on REPORT.md and JOURNAL.md: keep ours for both.
