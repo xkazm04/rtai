@@ -288,3 +288,21 @@ NEXT (iteration 8):
   5/5, export-audit 539/0). `top` city block (seed 2, 301 frames) framemd5-identical with main
   0bea8b93. Director reel headless 19/19 chapters down, 0 SCRIPT ERROR, in `top` AND `tilt`.
   So NEXT item 1 is done; the rest of NEXT (iteration 8) stands.
+
+## Iteration 10 (16:39-17:39)
+- Read: JOURNAL, git log, other lanes' JOURNALs (no new REQUEST to chars), assets JOURNAL/keyed:
+  no hat/hood/cap ped sheet yet; NEW since it7: cop_patrol_55 (graded A), cop_riot_55, ped_jogger,
+  ped_punk, ped_shopper, ped_worker. Plan: p55 cards for the patrol cop cap and the riot helmet
+  (the most common heads on the street; their cards are still the n7 pre-55 cuts), no image job.
+- MILESTONE bd142385: p55 cards for `cop/head_cap` (cop_patrol_55, graded A by assets) and
+  `cop/head_helmet` (cop_riot_55), cut by street_head.py (no image job). New options: `wcap` keeps a
+  1.12 x head-width column, feathered 8 px (drops the riot shield); fix `orange` (329 px of riot
+  shoulder patch -> slate), fix `navy` (sheet police blue 74,101,166 vs the rig's 53,63,92: value x0.62,
+  sat x0.8). Tried raw=false (the part material, like the n7 cop cards): it prints the faces RED
+  (blood red reserved), so the cards stay raw and the tone is fixed in the art. LOOKED at 48 px/m x3:
+  patrol face under the brim, riot visor + face; both in the uniform navy. 0 SCRIPT ERROR.
+- FRICTION: arena flags must follow `--` (`res://dev/arena/arena.tscn -- --bot=...`); without it the
+  hub boots with no bot at 32 px/m (one film wasted).
+- EVIDENCE masters: cop_cap55 before|after pit clip (seed 3, 20 s), cop_cap_riot55 react_line x3 still
+  (patrol, riot, SWAT), and the owed COMBINED clip `chars_d8_set_tilt_combined.mp4` (74 s: Rivet 64,
+  Rivet reel, Tonnage, Dent, Ohm, Kerf, cops). frames.json 15; unreferenced files deleted.
