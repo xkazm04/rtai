@@ -11,6 +11,9 @@ extends RefCounted
 const EASE_IN: float = 0.08
 const EASE_OUT: float = 0.04
 
+## The lead's cap in screen px (blast_lead_max_px): Rivet stays on screen at 48 or 64 px/m too.
+var max_px: float = 0.0
+
 var _lead_m: Vector2 = Vector2.ZERO
 var _at_m: Vector2 = Vector2.ZERO
 var _k: float = 0.0
@@ -30,6 +33,7 @@ func step(arena: CombatArena, feel: HitFeel, tick: int) -> Vector2:
 		_at_m = shell.pos
 		_k = feel.weapon_num(shell.weapon, "blast_lead_k", 0.0)
 		_max_m = feel.weapon_num(shell.weapon, "blast_lead_max_m", 0.0)
+		max_px = feel.weapon_num(shell.weapon, "blast_lead_max_px", 0.0)
 		_hold_until = tick + int(feel.weapon_num(shell.weapon, "blast_lead_hold_ticks", 0.0))
 	var live: bool = shell != null or tick <= _hold_until
 	var want: Vector2 = (

@@ -133,6 +133,10 @@
             "minimum": 0,
             "type": "number"
           },
+          "blast_lead_max_px": {
+            "minimum": 0,
+            "type": "number"
+          },
           "class": {
             "pattern": "^[a-z][a-z0-9_]*$",
             "type": "string"

@@ -58,3 +58,19 @@ func test_a_pistol_round_never_moves_the_view() -> void:
 	@warning_ignore("return_value_discarded")
 	_shell(arena, &"pistol", Vector2(0.0, 9.0))
 	assert_eq(_run(lead, arena, 0, 60), Vector2.ZERO)
+
+
+func test_at_64_px_per_m_the_lead_stays_inside_its_screen_cap() -> void:
+	var arena: CombatArena = _arena()
+	var cam: FeelCam = FeelCam.attach(arena, null)
+	@warning_ignore("return_value_discarded")
+	_shell(arena, &"mini_nuke", Vector2(0.0, 9.0))
+	var zoom: float = 2.0  # 64 px/m over the 32 px/m world
+	var screen: Vector2 = Vector2.ZERO
+	for t: int in 60:
+		screen = cam.offset_px(t, zoom) * zoom
+	var cap: float = HitFeel.shipped().weapon_num(&"mini_nuke", "blast_lead_max_px", 0.0)
+	var kick: float = HitFeel.shipped().cap["kick_px_max"]
+	assert_gt(cap, 0.0, "the nuke row caps its lead on screen")
+	assert_lte(screen.length(), cap + kick + 0.01, "Rivet stays on screen")
+	assert_gt(screen.length(), cap - kick - 0.01, "and the lead is still there")
