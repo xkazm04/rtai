@@ -24,6 +24,9 @@ const R2_A2: float = 0.5698403
 const GOLD_HI: Color = Color("#F6D678")
 ## The cape on the throne-car spreads near the car's width (the target's fur-trimmed fan).
 const CAPE_ON_CAR_K: float = 1.3
+## View lab: under a tilt or top_lift the on-foot cape drapes, each edge point at its height (m):
+## the shoulders at the front, the hem down to the ground behind him (was flat on the ground).
+const CAPE_DRAPE_M: PackedFloat32Array = [1.6, 0.55, 0.12, 0.55, 1.6]
 
 var _rigs: KingRigs = null
 ## The hood cannon's swivel off the car's heading (the stalled car aims only its cannon).
@@ -180,10 +183,13 @@ func _on_foot() -> void:
 	var lunge: float = 0.0
 	if fight.state == BossFight.State.WINDUP:
 		lunge = -0.25 * (1.0 - float(fight.tell_left()) / float(maxi(fight.attack.windup, 1)))
-	_king(Vector2(lunge * Ink.PX_PER_M, 0.0), 1.25)
+	var b: Fighter = fight.body
+	var up: Vector2 = ViewMode.shared().lift_at(to_global(Ink.px(b.pos)), 1.0)
+	_king(Vector2(lunge * Ink.PX_PER_M, 0.0), 1.25, up.rotated(-b.facing.angle()))
 
 
-func _king(at: Vector2, k: float) -> void:
+## `up` = the local lift per metre of height (ZERO straight down: the cape lies flat).
+func _king(at: Vector2, k: float, up: Vector2 = Vector2.ZERO) -> void:
 	var p: float = Ink.PX_PER_M * k
 	var cape: PackedVector2Array = PackedVector2Array(
 		[
@@ -194,6 +200,9 @@ func _king(at: Vector2, k: float) -> void:
 			at + Vector2(0.1, 0.7) * p
 		]
 	)
+	if up != Vector2.ZERO:
+		for i: int in cape.size():
+			cape[i] += up * CAPE_DRAPE_M[i]
 	draw_colored_polygon(cape, Ink.VERMILION)  # the King's cape: vermilion by verdict
 	draw_polyline(cape, FUR, 0.16 * p)
 	if _rigs != null:  # the rig is King's body; the cape spreads under it
