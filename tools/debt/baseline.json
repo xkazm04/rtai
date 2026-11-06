@@ -6,7 +6,8 @@
         "2026-11-06: n8-view: the order probe counts the King's accents (brief item 7, dev-only measurement) (dev_loc 18115 -> 18145)",
         "2026-11-06: n8-view: the order probe logs the first wrong car pair's tick (to film it) (dev_loc 18145 -> 18150)",
         "2026-11-06: n8-view: the order probe logs the first wrong car pair's tick (to film it) (dev_loc 18150 -> 18151)",
-        "2026-11-06: dev order probe logs each wrong ghost pair's tick (+1 dev line) (dev_loc 18151 -> 18152)"
+        "2026-11-06: dev order probe logs each wrong ghost pair's tick (+1 dev line) (dev_loc 18151 -> 18152)",
+        "2026-11-06: n8-view it7: quest1_clip --view flag (+2 dev lines) for quest 1 stills under tilt70 (dev_loc 18152 -> 18154)"
       ],
       "files": {
         "project/dev/arena": 1034,
@@ -15,7 +16,7 @@
         "project/dev/bench": 1388,
         "project/dev/bots": 399,
         "project/dev/enemy_ai": 662,
-        "project/dev/frames": 462,
+        "project/dev/frames": 464,
         "project/dev/ghost-forms": 616,
         "project/dev/ghost-powers": 1137,
         "project/dev/gunplay": 674,
@@ -34,7 +35,7 @@
         "project/dev/view": 195,
         "project/dev/weapon_art": 506
       },
-      "total": 18152
+      "total": 18154
     },
     "direct_cmdline_reads": {
       "files": {
