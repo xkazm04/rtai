@@ -66,3 +66,17 @@ func test_a_lamp_stands_on_its_post_base_with_the_arm_turned() -> void:
 	assert_eq(cards.facing(0, 0.0), Vector2i(2, 0), "arm east: the side view as drawn (right)")
 	assert_eq(cards.facing(0, PI), Vector2i(2, 1), "arm west: mirrored")
 	assert_eq(cards.facing(0, -PI * 0.5), Vector2i(4, 0), "arm north: the back")
+
+
+func test_arena_cover_kinds_draw_as_the_street_cards() -> void:
+	var names: Array[String] = ["crate_stack"]
+	var row: Dictionary = {"art": ART, "cell_w_m": 3.2}
+	var cards: PropCards = PropCards.make({"crate_stack": row}, names, "p70", {"p70": "p55"})
+	var ci: Node2D = autofree(Node2D.new())
+	assert_true(
+		cards.draw_on(ci, "cover_low", Rect2(0, 0, 96, 32)), "a crate row is the crate card"
+	)
+	assert_false(cards.draw_on(ci, "wall_high", Rect2(0, 0, 96, 32)), "walls stay architecture")
+	assert_false(cards.draw_on(ci, "cover_high", Rect2(0, 0, 64, 64)), "no dumpster row here")
+	assert_eq(PropCards.ARENA_KIND["cover_low"], "crate_stack")
+	assert_eq(PropCards.ARENA_KIND["cone"], "traffic_cone")

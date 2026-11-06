@@ -10,6 +10,12 @@ extends RefCounted
 
 const FACINGS: int = 5
 const TABLE: String = "res://data/tables/city_facades.json"
+## The boss arenas' and the dev arena's cover kinds (ArenaFloorView) drawn as the street's cards.
+const ARENA_KIND: Dictionary[String, String] = {
+	"cover_low": "crate_stack", "cover_high": "dumpster", "cone": "traffic_cone"
+}
+## The ground under an arena card: its footprint in the print's ink, see-through.
+const ARENA_SHADOW: Color = Color(0.090, 0.075, 0.106, 0.35)
 
 ## The by-name set for drawers outside the streamed city (the arena's cover, quest 1's stage).
 static var _named: PropCards = null
@@ -82,6 +88,29 @@ func draw_named(ci: CanvasItem, name: String, foot: Vector2, px_per_m: float) ->
 		return false
 	var item: RID = ci.get_canvas_item()
 	draw(item, t, 0.0, foot, _cell_w_px[t] * px_per_m / SimConst.PX_PER_M)
+	RenderingServer.canvas_item_add_set_transform(item, Transform2D.IDENTITY)
+	return true
+
+
+## The arena's cover `kind` as its card on ground rect `r` under this run's view (named(), then
+## draw_on); false under a flat or perspective view, or for a kind with no card.
+static func stand(ci: CanvasItem, kind: String, r: Rect2) -> bool:
+	var cards: PropCards = named()
+	return cards != null and cards.draw_on(ci, kind, r)
+
+
+## Draws the card for an arena cover `kind` (ARENA_KIND) standing on ground rect `r` (px, from
+## ci's _draw): over a footprint shadow, as wide as r's long side, facing the camera when r runs
+## east-west, side-on when it runs north-south. False (nothing drawn) for any other kind.
+func draw_on(ci: CanvasItem, kind: String, r: Rect2) -> bool:
+	var t: int = _names.find(ARENA_KIND.get(kind, ""))
+	if t < 0 or not _strip.has(t):
+		return false
+	var item: RID = ci.get_canvas_item()
+	RenderingServer.canvas_item_add_rect(item, r, ARENA_SHADOW)
+	var wide: bool = r.size.x >= r.size.y
+	var foot: Vector2 = Vector2(r.get_center().x, r.end.y)
+	draw(item, t, 0.0 if wide else PI * 0.5, foot, maxf(r.size.x, r.size.y))
 	RenderingServer.canvas_item_add_set_transform(item, Transform2D.IDENTITY)
 	return true
 
