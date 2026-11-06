@@ -414,3 +414,8 @@ NEXT (iteration 11, the freeze at 18:30):
 - GATE unit no-arg on d0bec791: 1423 passed, 0 failed; lint 15/15.
 - EXE re-exported 17:53 on d0bec791 (11 s); smoke: city seed 5 crowd 400 tilt (0 SCRIPT ERROR) and the
   pistol chapter (2/2 down, 0 SCRIPT ERROR).
+- GATE director reel headless on d0bec791, `--fixed-fps 60 --quit-after 14000`: top 19/19 and tilt 19/19
+  chapters, all down, 0 SCRIPT ERROR. FRICTION: without --fixed-fps a headless `--quit-after 9200`
+  ends at chapter 12-13 (the frames run fewer sim ticks); always pass --fixed-fps 60.
+- GATE `top` city block (seed 2, --quit-after 301) framemd5 IDENTICAL with main 0bea8b93 (602 lines,
+  scratch ct_main.md5). The cap ped hunt (seed 7 city): no hoodie-cap ped on screen; stopped.

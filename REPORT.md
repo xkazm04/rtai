@@ -119,3 +119,5 @@ Re-taken on `d0bec791`, the freeze head's code (17:51-17:55):
 - Exe re-exported at 17:53. Smoke runs, each 0 SCRIPT ERROR:
   - `RTAI.exe --quit-after 400 -- --arena=city --bot=rivet --seed=5 --rigs --ppm=48 --view=tilt --crowd=400`
   - the pistol chapter: 2/2 down.
+- Director reel (`--fixed-fps 60 --quit-after 14000 res://dev/arena/arena.tscn -- --bot=reel --reel=director --loadout=pistol --rigs --view=<v>`, headless): 19/19 chapters, every chapter all down, 0 SCRIPT ERROR, in both `top` and `tilt`.
+- `top` bit-identity: the city block (`--arena=city --bot=rivet --seed=2 --rigs`, `--quit-after 301`, 301 video + 301 audio frames) has a framemd5 IDENTICAL to main 0bea8b93's.
