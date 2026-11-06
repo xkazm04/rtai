@@ -235,3 +235,8 @@ NEXT (iteration 4):
   dark tip. Queued: a two-tone 55 small cell for the baton and the homing shard (scratch vary2.sh).
 - Gates on df1ee16c: full unit 1423 passed / 0 failed; director reel headless top 19/19 and tilt 19/19, every
   chapter all down, 0 SCRIPT ERROR; lint 15/15 (pre-commit).
+- vary2 (two-tone small cells, filmed; same seed): homing shard at 32 tilt = a dark gun with pale crystals and a
+  flared muzzle instead of a pale blob: TAKEN (gtai-masters/d8/weapons/homing_shard_tilt_32_twotone_before_after.png).
+  Electro baton at 48 in its chapter = a solid black stick, its pale bands gone: REJECTED (scratch tt4/baton_cmp.png).
+  The baton keeps its 55 cells; of the three, the top-down part reads best (dark shaft, pale bands, prongs).
+- 80864ce8: NEXT 5 closed: "assault rifle" is not a weapon (the arena kept Gloria).

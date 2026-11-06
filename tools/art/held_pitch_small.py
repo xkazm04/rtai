@@ -30,8 +30,9 @@ EDGE = 6  # part px of silhouette ink: the side body is drawn finer than the top
 # Two-tone (ink body, the drawn cream kept as paper), as held_small.py does for Gloria: the re-toned
 # 55 long guns printed as pale clubs at 32 px/m, merging with the visor and the legs; the two-tone
 # cell reads as a dark gun with pale details (d8 iteration 4, filmed at 32 tilt; the full tan part
-# still draws from held_small_below_ppm up). homing_shard is not yet filmed, so it keeps the re-tone.
-TWO_TONE = hs.TWO_TONE + ("plasma_rifle", "electro_gun", "ray_gun")
+# still draws from held_small_below_ppm up). homing_shard too (filmed at 32). Not the baton: as two-tone
+# it printed as a solid black stick at 48 px/m (its pale bands gone).
+TWO_TONE = hs.TWO_TONE + ("plasma_rifle", "electro_gun", "ray_gun", "homing_shard")
 
 
 def main(argv):
