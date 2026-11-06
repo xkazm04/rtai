@@ -1363,3 +1363,35 @@ the clock); the "STOP 03:03" line was not a stop. The session went on; entries b
 - Unit 1168/1168 on `2fccff62` (scratch `it14-unit-2fccff62.log`; +4 test_blast_lead).
 - Not run on the new head: the full evidence run (parity). BlastLead only reads arena.shots and
   writes a camera offset; parity was bit-exact on `994f8feb`. Run it first next iteration.
+
+### GATES 03:20: evidence on `13e0e050` (head with the blast lead) ALL GREEN
+- lint 13/13, unit 1168/1168, scenarios 52/52, parity bit-exact (planted mutation caught at 629),
+  selftest pass (scratch `it14-evidence-13e0e050.log`). BlastLead is view only.
+
+### MILESTONE 03:18: city combined clip retaken on `13e0e050` (NEXT 4)
+- `--arena=city --bot=reel --reel=director --loadout=pistol --ppm=32 --cam=fight --clean`,
+  `--quit-after 6200`: 16 chapters down, 0 SCRIPT ERROR, chapter ticks identical to it13. Same cut;
+  the crop was never written down: found by matching the old clip's first frame against the new
+  movie (960x560 at 160,30; the nuke segment at 300,30). 72 s, audio mean -23.6 dB, peak -0.9.
+  LOOK (sheet every 300 frames + the nuke chapter every 60 frames): every tile an attack; in the
+  nuke chapter the view shifts toward the blast (the crosswalk comes into frame) and the whole ring
+  stays in the crop. REPORT row and frames.json note updated.
+NEXT (iteration 15; supersedes the 02:57 list):
+1. (Evidence on `13e0e050` green, 03:20.) Re-run it before the freeze on whatever head then is.
+2. Call 6 (nuke camera lead): film the 0.5 option if time allows (`blast_lead_k` 0.5, 32 px/m, lone,
+   live camera) so the owner's page has all three side by side. (City: the lead reads in the
+   retaken clip's nuke chapter, MILESTONE 03:18.)
+3. Exe at the freeze: re-bake + re-export `windows-showcase` -> `build/export/windows/RTAI.exe`;
+   REPORT exe lines for calls 4 (`--flash-at=side`), 5 (`--throw-windup=off`), 6 (`--feel=off`).
+4. City combined clip: retaken on `13e0e050` (MILESTONE 03:18) unless a later commit changes a ranged
+   chapter; nuke segment crop as noted.
+5. Remaining weak cells: homing_shard (V 2 = owner call 1, S 1 = needs a sound asset); Gatling
+   I/R/V 2 (a 2-round kill on humans; film a crowd chapter if one has it); the rocket's blast is
+   1.2 m: no lead needed (checked by numbers only).
+6. Calls 1-6 stay open in REPORT.
+
+STOP 03:21 iteration 14 (true time). Code commits: `5586a80e` (tube keeps the gun shoulder),
+`8efe76ca` + `a63bd8e0` (the nuke's camera lead, capped at 300 screen px). Gates: evidence all green
+on `13e0e050`; reels 19/19 x2 on `5586a80e` and on `a63bd8e0`; unit 1168/1168. Clips:
+`tube_side-ab-32-48ppm.mp4`, `nuke_blast_lead-ab-32-48ppm.mp4`, city set retaken. Re-scored from
+film: Gloria A 1 -> 2, plasma I 2 -> 3, electro I 2 -> 3, nuke R 2 -> 3. Call 6 added.
