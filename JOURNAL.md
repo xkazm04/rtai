@@ -1395,3 +1395,27 @@ Read: JOURNAL NEXT (it13), git log, frames.json. `king_car_trim.gd` showed `M` w
 - `--export-release "windows-showcase"` -> `build/export/windows/RTAI.exe` (exit 0, 0 errors,
   `build/export-it14.log`). Smoke headless, seed 2, human bot: phases 1-2-3, King down at tick
   **4933**, took **88**, 0 SCRIPT ERROR. REPORT's exe section updated; re-export again at the freeze.
+
+### 03:58 MILESTONE the gang's gold chain reads at 32 px/m, on the car too (weakest item by the target comparison)
+- Looked at the it13 target comparison and stills (phase 1 tick 60 and phase 2 tick 360, 32 and
+  64 px/m): the target's bodyguards wear thick gold chains; ours carried a 3 px arc (about 2 px at
+  32 px/m, lost under the decree's buff ring) on the phase 2 brawlers only, and the procession's
+  riders and pushers no gold at all. sprite-and-atlas-production (read at game zoom first),
+  depth-ordered-layered-art (over the rig, under nothing).
+- `KingAccents._chain`: a CHAIN_W_M 0.11 rope on an ink edge, five GOLD_HI links, a medallion at
+  the front; `KingRigs.rider_marks()` gives the visible riders' places, so the car's four wear it.
+  CHAIN_W_M 0 = the it13 arcs.
+- A/B (`evidence/king/shots/it14/gang_chain_before_after_p1_p2_32ppm_3x.png`, `..._p2_64ppm_2x.png`).
+  **Looked at**: at 32 px/m a gold necklace with a bright medallion on every rider, readable beside
+  the gold car trim; at 64 px/m a rope with links. DECISION 0.11 (render only). Unit **1164/0**
+  (`evidence/king/unit-it14.log`), lint 13/13. Commit 9a207b0b.
+
+### 04:00 FILM the full fight and the re-cuts on 9a207b0b (chain + slam cape)
+- `M/king_fight_bot_human_32ppm_it14.mp4` (95 s, 32 px/m, seed 2, --bot-human --boss-cam,
+  1280x800, music, 0 SCRIPT ERROR, phases 1-2-3 and "king defeated" in the log). **Looked at** the
+  keys every 6 s: the same beats as it13 (ram lane, procession, court brawl, coin fans, the wreck,
+  King on foot, the defeat).
+- Re-cut: phase clips 1-3 (0-19.5, 17.5-59.5, 56.5-95 s), procession entering (0-62.5 s), target
+  comparison (12 s / 72 s crops at 2x beside the sheet, no labels). **Looked at** the comparison:
+  gold chains on the car's riders beside the sheet's chained bodyguards. it13 versions deleted;
+  frames.json 15, full fight / comparison / slam / procession first; REPORT points at it14.

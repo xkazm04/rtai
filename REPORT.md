@@ -23,22 +23,25 @@ The moveset is `docs/bosses/king.md`; the full log is `JOURNAL.md`.
   - (it13) the megaphone prints gold with a dark bell mouth at 32 px/m (it was an ink smudge with
     vermilion flecks: `evidence/king/shots/it13/horn_lift_10_155_19_p3_p1_32ppm_4x.png`);
   - a jewelled crown and the ermine collar over the vermilion cape; (it13) the cape is folded cloth
-    under an ermine border that sways and trails his charge (`evidence/king/shots/it13/cape_before_after_32_48ppm.png`);
+    under an ermine border that sways and trails his charge (`evidence/king/shots/it13/cape_before_after_32_48ppm.png`),
+    and (it14) lands wide with the press slam's shockwave (`evidence/king/shots/it14/cape_slam_land_before_after_48ppm.png`);
   - the gilded plum throne-car, a boss-owned vehicle with drapes and a hood cannon (banded gold barrel on a swivel mount since it12, `evidence/king/shots/it12/hood_cannon_before_after_48ppm_2x.png`);
-  - the gang: the rich robot thug with gold chains, a steel helmet and shades.
-- **Three phases** (`king_phase{1,2,3}_*_32ppm_it13.mp4`, cut from the it13 full fight):
+  - the gang: the rich robot thug with gold chains, a steel helmet and shades; (it14) the chain is a
+    gold rope with a medallion that reads at 32 px/m, on the car's riders and pushers too (it was a
+    2 px arc on the brawlers only: `evidence/king/shots/it14/gang_chain_before_after_p1_p2_32ppm_3x.png`).
+- **Three phases** (`king_phase{1,2,3}_*_32ppm_it14.mp4`, cut from the it14 full fight):
   - phase 1, the procession: ram lanes and the hood cannon's coin fan (since it10 a spray of 48 coins out of the muzzle, `evidence/king/shots/it10/coin_spray_before_after_48ppm.png`), with the gang pushing and riding;
   - phase 2, the court: the car stops, the gang brawls, and decrees buff them;
   - phase 3, on foot: the press slam (a leap onto the ring, shockwave plus coin ring) and the charge.
 
   Then a defeat beat: the crown falls off and rolls away.
 - **Clips**:
-  - the full fight played by the human-like bot on the current body (`king_fight_bot_human_32ppm_it13.mp4`, 95 s; King down at tick 4933, the headless run's tick);
-  - the procession entering, from the gang's first appearance to King stepping down (`king_procession_enter_32ppm_it13.mp4`);
+  - the full fight played by the human-like bot on the current body (`king_fight_bot_human_32ppm_it14.mp4`, 95 s; King down at tick 4933, the headless run's tick);
+  - the procession entering, from the gang's first appearance to King stepping down (`king_procession_enter_32ppm_it14.mp4`);
   - the press slam, telegraph (the plates raised beside the crown), hit and dodge, the cape landing wide (`king_slam_plates_48ppm_it14.mp4`);
   - the charge, telegraph lane, hit and dodge, the cape drawn in and flared (`king_charge_48ppm_it13.mp4`);
   - the ram and the coin fan, hit and dodge (`king_ram_coin_fan_48ppm_it12.mp4`), and the decree's windup arc and buff (`king_decree_48ppm_it13.mp4`);
-  - the target sheet beside the game at 32 px/m (`king_target_vs_game_32ppm_it13.png`);
+  - the target sheet beside the game at 32 px/m (`king_target_vs_game_32ppm_it14.png`);
   - the ghosts on King, phase 3 at 48 px/m on the current body (`king_{dent,kerf,tonnage}_p3_48ppm_it14.mp4`, `king_ohm_daze_tells_48ppm_it13.mp4`).
 - **Combat holds**: the director reel was 19/19 chapters down with 0 SCRIPT ERROR on the branch
   (it13, on 756993a8: `evidence/king/director-reel-it13.log`).
@@ -67,7 +70,9 @@ and in the exported exe.
   read as light steel domes with a gold frame (`evidence/king/shots/it10/gang_head_before_after_32ppm_3x.png`). In
   the top view their size matches the target's 90-degree panel (measured in it12: ~1.6 m across the
   shoulders beside the ~6 m car, over a 1.0 m hit circle); they are less blocky and look smaller than
-  the target's 3/4 view, where its bodyguards are drawn tall (call J).
+  the target's 3/4 view, where its bodyguards are drawn tall (call J). Since it14 they wear a gold
+  chain that reads at 32 px/m, on the car too; their shades are still a dark band, not the target's
+  black visor glasses.
 - The plain robot thug (the enemy-ai lane's, not King's) prints as solid ink at 48 px/m. The gang's
   lift would fix it (`evidence/king/shots/it7/plain_thug_48ppm_ink_x2.png`).
 
