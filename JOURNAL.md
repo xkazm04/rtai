@@ -815,3 +815,20 @@ the kerf_slice value and film it.
 - DECISION 01:46: two exes at the freeze. `build/export/windows/RTAI.exe` (windows-showcase: the arena
   and city calls b-h) and `build/export/windows-slice/RTAI.exe` (windows-slice: quest 1, call a).
   Both presets default to the same path; the slice one is redirected on the command line.
+
+NEXT (written 01:53, for iteration 10):
+1. Read n7-ranged's JOURNAL to its end: cherry-pick new feel commits -x **with their prerequisites**
+   (check that each commit's new names exist on this branch: `1ce1b11e` was missed once, 01:27), run
+   unit before committing the merge note. Look for a reply to the 01:49 REQUEST (Kerf cooldown).
+2. Freeze (by 08:30), in this order: gates on the final head (lint, unit, scenarios, reels.sh,
+   `node tools/evidence/run.mjs --no-bench`); `bash evidence/n7-melee/set_clip.sh <head>` (the
+   combined city clip, ~7 min; look at a 2 s sheet); bake_city + both exes: `--export-release
+   windows-showcase ../build/export/windows/RTAI.exe` and `--export-release windows-slice
+   ../build/export/windows-slice/RTAI.exe`; boot each once (showcase: call (h)'s line; slice: the
+   title card, 0 SCRIPT ERROR); finish REPORT.md (exe lines per call a-h, gates).
+3. Build candidates (weakest first): the ram's anticipation (2) needs a charging beat: check
+   whether the ghost reel can drive the press at top speed into a line (a dev beat change, not
+   sim), then an ink speed wake behind the press while `ramming()`; Dent's blow on a survivor
+   (01:00 note: ghost wounds along `arena.hit_dir` for the stomp, filmed on a slam survivor thrown
+   sideways in the city reel).
+4. If the Director merges other lanes onto quest 1's path, `test_slice_closure` is the check.
