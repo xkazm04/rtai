@@ -68,6 +68,12 @@ Evidence: `C:\Users\kazda\kiro\gtai-masters\d8\view70\` (`frames.json`, 15 entri
     `king_rivet_onfoot_55_vs_70_64ppm_t9_it3.png` (before: the fan, print limbs, pale gang) vs the it4
     films and stills.
 
+- **Films re-taken on 95109a45** (swap default, both merges, the 70 King and gang): the King trio
+  (46 s), the 64 px/m pair, the city pair, the ease study; 10 films, 0 SCRIPT ERROR.
+- **Gates on iteration 4**: lint 15/15 on every commit; unit 1456/0 on the merge (the final run is
+  in JOURNAL); scenarios 52 passed; director reel 19/19 all down, 0 SCRIPT ERROR, under tilt70 and
+  combo; `top` 900/900 frames identical with main (list md5 6e865449 both).
+
 ## Not done / owed
 - **The 70 sample is narrower than the 55 cast.** At 70 the King's car is today's flat car: bosses'
   unit test pins pitch 70 as having no car art, so I could not add it (tried, it reads right;
@@ -83,10 +89,11 @@ Evidence: `C:\Users\kazda\kiro\gtai-masters\d8\view70\` (`frames.json`, 15 entri
 ## Calls for the owner (default built, how to see it)
 1. **Pitch per situation**: 55 vs 70 vs combo, for the city and for boss fights. Built: all three rows;
    `top` stays the default.
-   - See: `king_55_70_combo_32ppm_46s_it3.mp4` and `city_55_vs_70_32ppm_45s_merged.mp4`.
+   - See: `king_55_70_combo_32ppm_46s_it4.mp4`, `king_rivet_onfoot_55_vs_70_64ppm_16s_it4.mp4` and
+     `city_55_vs_70_32ppm_46s_it4.mp4`.
    - Exe: `RTAI.exe -- --view=tilt`, `--view=tilt70`, `--view=combo`.
 2. **Transition length**: 0.8 / 1.0 / 1.2 s. Default 1.0.
-   - See: `combo_ease_08_10_12_defeat_55to70_32ppm_it3.mp4`.
+   - See: `combo_ease_08_10_12_defeat_55to70_32ppm_it4.mp4` (hard swap, the default).
    - Exe: `--view=combo_ease08` / `combo_ease12`.
 3. **Cross-fade or hard swap** of the cards. Default since 16:40: **hard swap** (`fade_deg` 0 on
    `combo` and the ease studies). At 48 px/m the cross-fade drew a double head for about 4 frames;
@@ -97,7 +104,7 @@ Evidence: `C:\Users\kazda\kiro\gtai-masters\d8\view70\` (`frames.json`, 15 entri
 4. **The bell on the p70 King bust**: built as the strip's own bell, with the rig's horn hidden (one
    bell, as bosses' 55 court bust does). The alternative is to crop the bell off the strip and show
    the rig's horn.
-   - See: `king_rivet_onfoot_55_vs_70_64ppm_t9_it3.png`.
+   - See: `king_rivet_onfoot_55_vs_70_64ppm_t9_it4.png`.
 
 ## The exe (trial export at 16:22; the freeze re-exports)
 - Export: `"$GODOT_BIN" --headless --path project --export-release windows-showcase ../build/export/windows/RTAI.exe`

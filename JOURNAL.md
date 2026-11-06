@@ -495,3 +495,10 @@ NEXT addendum (iteration 4): FIRST re-run the full unit + reel combo on the swap
   lifted stack, pitch-agnostic; I tried it, it reads right). Please change that test's pitch to 65
   (or 45), then either copy the folder yourself or tell me in your JOURNAL and I add it. Without it
   the 70 King rides today's flat car beside your throne-car at 55.
+- 17:12 FILM batch 2 on 95109a45 (10 films incl. king32_tilt from batch 1 on 2316e44f, whose tilt
+  output my p70 change cannot touch; all 0 SCRIPT ERROR). LOOKED: t40 trio, the gang at 70 = 55
+  (court helmet, plum band, gilded limbs; scratch gang_cmp.png), the car at 70 still today's; 64 px/m
+  t9: no fan at 70, court limbs; city t25: same scene both pitches, cops blue, red only blood.
+- 17:16 GATE scenarios (`node tools/tests/run_scenarios.mjs --quiet-wait=5`) on 52de758a: 52 passed.
+- 17:20 masters: frames.json 15 entries (it4 King trio, 64 pair, stills, before still, city, ease
+  study first; superseded it3 films deleted). Scratch avis deleted.
