@@ -29,3 +29,36 @@ func test_hud_icon_falls_back_to_the_shipped_icon() -> void:
 	var feed: HudFeed = HudFeed.new()
 	assert_not_null(feed.icon_of(&"pistol"), "pistol has a shipped icon part")
 	assert_null(feed.icon_of(&""), "unarmed: no icon")
+
+
+func test_all_twelve_approved_weapons_have_every_form() -> void:
+	var s: WeaponShowcase = WeaponShowcase.new()
+	var ids: Array[StringName] = [
+		&"pistol",
+		&"machine_pistol",
+		&"hand_cannon",
+		&"gloria",
+		&"plasma_rifle",
+		&"gatling",
+		&"rocket_launcher",
+		&"flamethrower",
+		&"molotov",
+		&"katana",
+		&"electro_baton",
+		&"chainsaw",
+	]
+	for form: String in ["p70", "p55", WeaponShowcase.ICON]:
+		assert_eq(s.stand_ins(ids, form), [] as Array[StringName], form)
+
+
+func test_the_rack_hangs_icons_under_a_form_and_parts_in_top() -> void:
+	var rack: WeaponRackView = WeaponRackView.new()
+	add_child_autofree(rack)
+	rack._form = ""
+	rack._hang()
+	assert_not_null(rack._sprites[0].material, "top: the shipped part print")
+	rack._form = "p70"
+	rack._hang()
+	var pistol: Sprite2D = rack._sprites[0]
+	assert_eq(pistol.texture, rack.showcase.texture(&"pistol", WeaponShowcase.ICON))
+	assert_null(pistol.material, "the showcase icon is already inked")

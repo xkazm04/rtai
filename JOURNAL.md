@@ -67,3 +67,41 @@ NEXT:
   (gunsmith, nurse, scientist, mertz, dock_guard = quest-1 concept-matched; krump boss), device frames
   for Don Fax / Patch; the 7 DESIGN PROPOSAL portraits go on a contact sheet for the owner only.
 - Run the full gates (unit no-arg, scenarios, evidence --no-bench) before calling anything done.
+
+## Iteration 2 (BUILD, 20:44-21:44)
+
+- 20:44 Read JOURNAL, git log, the assets JOURNAL: my showcase REQUEST is served as round 2155
+  (`rounds/20261106-2155`), the cuts land as `library/keyed/weapon/<id>_<70|55|icon>.png`. No REQUEST
+  to hud in the other n8 journals.
+- 20:55 MILESTONE c99ff149 the dialogue box with a face: `data/tables/portraits.json` (+schema),
+  `PortraitBook`, `HudDialogue` (child node of HudView; the face rises in over 0.18 s on a new
+  speaker, the box fades out over 0.22 s after the last line; play never waits). Approved looks only:
+  gunsmith, nurse, scientist, quartermaster-mertz, dock-guard (quest-1 concept-matched library
+  portraits), krump (the approved boss target); Don Fax + Patch get the payphone (library payphone_55
+  A, first facing): voice-only by design. Rivet has no row (his look is in triage), the 7 DESIGN
+  PROPOSAL portraits have none. The mood bust is shown on the lines named per speaker in the table
+  (presentation data keyed by the quest's stable line ids; quest.json untouched): juno-real-name,
+  brass-someday, kilohm-come-to-me, guard-who-do-we-call, mertz-appliances. Cut tool
+  `tools/art/portrait_cut.py`. Unit `--select=test_hud_dialogue,test_hud_art,test_story_forms,
+  test_weapon_showcase` 26/0.
+- 21:00 FRICTION: HudDialogue read `delta` -> banned-api (SIM-01). Stepped one TICK_DT per drawn
+  frame instead (BossBar's precedent).
+- 21:05 Showcase sheets arrived (sidearms 70 A, long 70 B: column 1 near side view, the 55 cut stands
+  in for p70 until redo round 2156). `tools/art/showcase_import.py` -> `showcase/<p70|p55|icon>/<id>.png`
+  for pistol, machine_pistol, hand_cannon, gloria, plasma_rifle, gatling. Provenance lines appended.
+- 21:12 MILESTONE eb9decbb armory AFTER at tilt70 and tilt, 48 px/m, the before's exact command
+  (frame 89, seed 1, --rigs): `gtai-masters/n8/hud/armory_{tilt70,tilt}_48_{after,before_after_crop2x}.png`,
+  0 SCRIPT ERROR. Look: the drawings read warmer and on-design (Gloria's heart plate, the gatling's hose).
+- 21:08 MILESTONE aa830e68 dialogue stills, every quest-1 speaker at 1080p and 1280x800 (`dev/showcase/
+  dialogue_board.gd`, a -s launcher + a run node, since -s scripts cannot name autoload classes):
+  `gtai-masters/n8/hud/dialogue_contact_{1080p,1280x800}.png`, `dialogue_1080p_{patch_payphone,brass,
+  dock_guard_mood}.png`, `dialogue_1280x800_brass.png`. Found and fixed on the stills: the narrower
+  text column ran the 4th line through the paper's bottom edge -> the size is fitted on the WHOLE line
+  (HudState.full_words) so the typewriter never changes it.
+- 21:10 FRICTION: the debt ratchet counts any new dev/ code (dev_loc) and the launcher's cmdline read;
+  recorded with `--update --accept-regression` (the reason names the board).
+- 21:15 heavy + melee showcase delivered by assets (B both: heavy's icon column washed out -> the icon
+  is cut from the 70; melee columns near-identical side profiles). Imported rocket_launcher,
+  flamethrower, molotov, katana, electro_baton, chainsaw. The molotov stands at 70/55 (a bottle), so
+  PickupsView spans a showcase drawing's LONGER side (a standing drawing no longer blows up in height).
+  12 of 12 approved weapons now have a showcase drawing; the 5 in redesign keep their shipped parts.

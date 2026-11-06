@@ -113,6 +113,8 @@ func _rebuild(ids: Array[StringName]) -> void:
 		if s.texture == null:
 			s.texture = art.pickup_texture(id) if art.has(id) else null
 		var w: float = s.texture.get_width() if s.texture != null else 1.0
+		if _drawn[-1]:  # n8-hud: a drawing may stand (the molotov bottle): span its longer side
+			w = maxf(w, s.texture.get_height())
 		var span_m: float = maxf(art.length_m(id), art.pickup_min_span_m)  # r2_w8: fills the ring
 		s.scale = Vector2.ONE * span_m * SimConst.PX_PER_M / maxf(w, 1.0)
 		PickupLook.dress(s, _outline)  # flat fills in ink (--pickup-print=on = before)

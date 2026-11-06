@@ -4,6 +4,9 @@ extends Node2D
 ## art hangs muzzle up on a paper board along the hub's north edge, in the brief's order, as its
 ## pickup side view at its drawn length, so the whole arsenal is seen at 32 to 128 px/m in the
 ## live print beside the cops. Render only: no sim state, nothing in the replay hash.
+## n8-hud: under an angled view (WeaponShowcase.form_of) a weapon with a showcase drawing hangs as
+## its flat icon cut (the vendor rack's display piece, already inked: no part print), rebuilt when
+## the form changes (combo); `top` and `--showcase=off` hang today's pickup parts.
 
 ## The brief's order (the arsenal as designed); ids without art are skipped.
 const ORDER: Array[StringName] = [
@@ -35,28 +38,46 @@ const BOARD_WASH: float = 0.14
 ## The board's left end, bottom edge (hub-relative metres + the stage base, set by the hook).
 var origin_m: Vector2 = Vector2.ZERO
 var art: WeaponArt = WeaponArt.new()
+var showcase: WeaponShowcase = WeaponShowcase.new()
+var _form: String = "?"
+var _sprites: Array[Sprite2D] = []
 var _paper: Color = PaletteTokens.shared().color(&"paper")
 var _ink: Color = PaletteTokens.shared().color(&"ink")
 var _shown: int = 0
 
 
-func _ready() -> void:
+func _process(_delta: float) -> void:
+	var form: String = WeaponShowcase.form_of(ViewMode.shared())
+	if form != _form:
+		_form = form
+		_hang()
+
+
+## Hangs every weapon with art on the board: the showcase icon under a form, else the pickup part.
+func _hang() -> void:
+	for old: Sprite2D in _sprites:
+		old.queue_free()
+	_sprites.clear()
 	var k: int = 0
 	for id: StringName in ORDER:
 		if not art.has(id):
 			continue
 		var s: Sprite2D = Sprite2D.new()
-		s.texture = art.pickup_texture(id)
+		var icon: Texture2D = showcase.texture(id, WeaponShowcase.ICON) if _form != "" else null
+		s.texture = icon if icon != null else art.pickup_texture(id)
 		if s.texture == null:
 			continue
 		var len_px: float = art.length_m(id) * SimConst.PX_PER_M
 		s.scale = Vector2.ONE * len_px / maxf(s.texture.get_width(), 1.0)
 		s.rotation = -PI * 0.5  # muzzle up: hung on the wall
 		s.position = _slot(k) + Vector2(0.0, -len_px * 0.5 - PEG_M * SimConst.PX_PER_M)
-		s.material = PartMaterials.get_mat(PartMaterials.PartKind.PART, false, 0)
+		if icon == null:
+			s.material = PartMaterials.get_mat(PartMaterials.PartKind.PART, false, 0)
 		add_child(s)
+		_sprites.append(s)
 		k += 1
 	_shown = k
+	queue_redraw()
 
 
 func _draw() -> void:

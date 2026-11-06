@@ -17,6 +17,9 @@ SOURCE = {
     ("gloria", "p70"): "55",
     ("plasma_rifle", "p70"): "55",
     ("gatling", "p70"): "55",
+    # the assets lane, 21:0x: weapon_showcase_heavy's icon column is washed-out cream; cut from 70
+    ("rocket_launcher", "icon"): "70",
+    ("flamethrower", "icon"): "70",
 }
 OUT = "project/features/combat/weapons/art/showcase"
 
