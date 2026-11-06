@@ -1,6 +1,7 @@
 extends GutTest
-## King's cape follows his charging attacks (render only): drawn in through the tell, flared
-## through the dash, settling back after; any other attack leaves it at rest.
+## King's cape follows his charging attacks and the slam's leap (render only): drawn in through
+## the tell, flared through the dash, settling back after; the slam lands it wide; the coin fan
+## and the decree leave it at rest.
 
 
 func _fight(attack: StringName, state: BossFight.State, t: int) -> BossFight:
@@ -31,5 +32,18 @@ func test_the_reach_eases_never_snaps() -> void:
 
 
 func test_other_attacks_leave_the_cape_at_rest() -> void:
-	for id: StringName in [&"press_slam", &"coin_fan", &"decree"]:
+	for id: StringName in [&"coin_fan", &"decree"]:
 		assert_eq(KingCape._reach(_fight(id, BossFight.State.ACTIVE, 10)), 1.0, String(id))
+		assert_eq(KingCape._spread(_fight(id, BossFight.State.RECOVER, 0)), 1.0, String(id))
+
+
+func test_the_slam_lands_the_hem_wide_then_settles() -> void:
+	var leap: float = KingCape._reach(_fight(&"press_slam", BossFight.State.ACTIVE, 12))
+	assert_almost_eq(leap, KingCape.FLARE_K, 0.001, "trailing behind the leap")
+	var mid_air: float = KingCape._spread(_fight(&"press_slam", BossFight.State.ACTIVE, 12))
+	assert_eq(mid_air, 1.0, "not spread before he lands")
+	var land: float = KingCape._spread(_fight(&"press_slam", BossFight.State.RECOVER, 0))
+	var later: float = KingCape._spread(_fight(&"press_slam", BossFight.State.RECOVER, 40))
+	assert_gt(land, 1.05, "spread wide as he lands")
+	assert_almost_eq(later, 1.0, 0.001, "settled")
+	assert_eq(KingCape._spread(_fight(&"charge", BossFight.State.RECOVER, 0)), 1.0, "only the slam")
