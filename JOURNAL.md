@@ -940,7 +940,11 @@ NEXT (written 02:35, for iteration 11):
    lines; slice: the title card, 0 SCRIPT ERROR); finish REPORT.md (exe lines per call a-i, gates,
    drop "DRAFT").
 3. Build candidates, weakest first (all small; the big ones are owner calls): Tonnage's plates in
-   quest 1 are unproven (does the quest_hauler_rec ring fire? if not, a dev variant with shooting
-   guards, film only); (the plasma sword's pickup and icon: done 02:44, `9a2d3137`); call (b) (route the
+   quest 1: proven 02:44 (below); (the plasma sword's pickup and icon: done 02:44, `9a2d3137`); call (b) (route the
    stomp's stop and shake through FeelCam so --feel=off covers it) if the owner's page wants it.
 4. `test_slice_closure` is the check for any merge onto quest 1's path.
+- LOOK 02:44 Tonnage's plates in quest 1 (NEXT 3, closed): quest_hauler_rec now logs the plate
+  sparks on screen (dev only, `_count_sparks`): 274 of 330 ticks, max 12 at once (= the cap, 2 a
+  tick x 6 ticks), 0 SCRIPT ERROR (`evidence/n7-melee/quest1-hauler-rec-plates.log`). 2x crops of
+  frames 60/64/100/104/200/204: small cream stars on the press's flank, not a blur; the ram's big
+  star at 200. Still `M/quest1_tonnage_plates_32ppm_2x.png`; REPORT line updated. PNGs deleted.

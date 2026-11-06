@@ -53,9 +53,11 @@ The logs are in `evidence/n7-melee/`.
   mark can show a body under it. That is call (h).
 - Tonnage in quest 1: the dev recorder `res://dev/ghost-powers/quest_hauler_rec.tscn` (quest 1's real
   view, bound input) shows the ram's cream bursts on the dock guards Tonnage ploughs through, with
-  the slam and the blood (`M/quest1_tonnage_ram_marks_32ppm.png`, frames 84-175 every 4th). Whether
-  enemy rounds hit his plates there is not shown: the recorder's pinned guards may not fire, and the
-  quest bot never takes Tonnage.
+  the slam and the blood (`M/quest1_tonnage_ram_marks_32ppm.png`, frames 84-175 every 4th). The ring
+  guards shoot, and his plates spark there as in the arena: a spark on screen in 274 of 330 ticks, at
+  most 12 at once (the cap: 2 new a tick, 6 ticks each); small cream stars on the press's flank at
+  2x (`M/quest1_tonnage_plates_32ppm_2x.png`, frames 60/64/100/104/200/204). The quest bot itself
+  never takes Tonnage.
 
 ## Calls for the owner
 (a) Quest 1 carries the katana on key 2.
