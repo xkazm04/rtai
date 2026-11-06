@@ -1780,3 +1780,13 @@ release tick, view only, `--throw-sync=off` = the before; test_throw_sync 3/3 wi
 fault). Gates: lint 13/13, unit 1181/1181 on `11976ba4`, reels pit 19/19 + city 19/19 0 SCRIPT
 ERROR on `3243a483`. Clip `molotov_release_sync-ab-32-48ppm.mp4` (frames.json entry 0). Docs:
 REPORT row + call 5 exe line, audit rows 3 and 10, decisions.md line. NEXT is the iteration 19 list above.
+
+### 05:26 quest 1's rifle impact scored at 24 px/m (NEXT 4, audit row "assault-rifle" I ? -> 3)
+- `quest1_clip.gd --ppm=24 --cam=fight` (24 px/m frames all of Dock 9 at 1920x1080): stills
+  every 20 ticks 14360-14720 show the rifle window as 14360-14460 (ammo x16 -> x3, then "Grab the
+  rifle" for Gloria). A `--stills` run every 4 ticks saved nothing (exit 1); `--ticks=14364-14460`
+  did (49 frames, exit 0, 0 SCRIPT ERROR).
+- LOOK (crop, ticks 14384-14406): the cream-and-ink tracer reaches the contractor on 14390-14394
+  and a blood bloom grows at its tip on those frames, spreading over about 10 ticks: I = 3. The
+  struck body is at the crop's edge: V stays `?` (next: crop lower-right of x 1060-1420,
+  y 400-620 on the same frames). Scratch deleted.
