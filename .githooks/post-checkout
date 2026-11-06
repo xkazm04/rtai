@@ -1,3 +1,6 @@
 #!/bin/sh
 command -v git-lfs >/dev/null 2>&1 || { echo >&2 "\nThis repository is configured for Git LFS but 'git-lfs' was not found on your path. If you no longer wish to use Git LFS, remove this hook by deleting the 'post-checkout' file in the hooks directory (set by 'core.hookspath'; usually '.git/hooks').\n"; exit 2; }
-git lfs post-checkout "$@"
+git lfs post-checkout "$@"; lfs_status=$?
+# /perfect godot-runner: notice only on branch checkouts ($3=1); never blocks, starts no Godot.
+[ "$3" = "1" ] && { node -e "import('./tools/lib/class_cache.mjs').then(m=>{const r=m.isStale('project');if(r.stale)console.error('class cache stale ('+r.reason+'): the next runner auto-imports; check one script with node tools/godot/check.mjs <res://path>')})" 2>/dev/null || true; }
+exit $lfs_status
