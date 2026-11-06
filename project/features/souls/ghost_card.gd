@@ -24,6 +24,9 @@ var size_k: float = 1.0
 ## The soul halo behind the card (its colour and alpha; alpha 0 = none): the card's silhouette in
 ## soul teal, HALO_K the card's size, so the possessed body keeps its teal read at height.
 var halo: Color = Color(0.0, 0.0, 0.0, 0.0)
+## The card's lean on screen (radians, + = top to screen right), about its anchor: a darting rig
+## leans into its motion (Kerf). 0 = upright.
+var lean: float = 0.0
 var _spr: Sprite2D = null
 var _art: String = ""
 
@@ -50,7 +53,7 @@ func step(host: Node2D, parts: Array[Sprite2D], at: Vector2, px_per_m: float) ->
 		var h: Sprite2D = _spr.get_child(0) as Sprite2D
 		h.frame = f.x
 		h.flip_h = _spr.flip_h
-	_spr.global_rotation = 0.0
+	_spr.global_rotation = lean
 	var cell_w: float = _spr.texture.get_width() / float(FRAMES)
 	var s: float = width_m * size_k * px_per_m * absf(host.global_scale.x) / cell_w
 	_spr.global_scale = Vector2(s, s / vm.ground_k())
