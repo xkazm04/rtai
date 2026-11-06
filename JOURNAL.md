@@ -134,3 +134,26 @@ NEXT:
   test_view_mode). GATE `top` city block (`--arena=city --bot=rivet --seed=2`, tick 300, 32 px/m)
   md5-identical with main (bed86261). Debt ratchet: arena_floor_view.gd kept at 201 lines (a comment merged).
 - Image lock still `assets-lane` at 14:52: round1 not run. NEXT list above stands (item 2 done).
+
+## Iteration 6 (14:56-15:56)
+- Read: JOURNAL, git log, other lanes' JOURNALs (REQUESTs). Registry rules applied this session:
+  generative-artifact-gating (keyed + despilled sheet looked at per frame before shipping, provenance
+  lines), concept-scene-parity (Dent judged in the live ghost reel, not on the sheet), sprite-and-atlas
+  (one strip per view row, bottom-aligned cells), motion-quality-gating (judged in a 10 s clip, not a still).
+- IMAGE round1 ran (image.want touched, lock taken 14:57, released 15:00): `dent_55_bust_magenta.png`
+  (clean, 5 facings, all turned right as the card convention wants) and `tonnage_55_side_magenta.png`
+  (busy; the hazard stripes came out teal-on-teal; not used yet). Both 76 s.
+- MILESTONE e0e73ffc (view70 REQUEST): `SET_CARDS["p70"]` rivet 1.17 / king 3.53. A set row with an
+  EMPTY path keeps the strip found in the art folder (or the base) and only changes anchor/width/bust,
+  so the rows do not name view70's files (which are on their branch). Unit test added.
+- MILESTONE 8902c1d2: Dent's p55 bust card. `tools/art/ghost_bust.py` (magenta key + despill, N
+  facings into a strip). FOUND in game: Dent's parts are a TAN crash dummy with teal soul cracks, the
+  sheet is all teal-steel: a teal bust on tan legs. So `tools/art/ghost_card_tone.py` prints the plating
+  to his part tones by luminance quantile (dark plating -> warm grey, cyan wisps kept). DECISION in
+  docs/decisions.md; teal card kept as `dent_bust_card_teal.png` (owner call).
+- EVIDENCE gtai-masters/d8/chars/: dent before|after 48 px/m clip + x4 stills, 32 px/m x4 pair,
+  96 px/m close-up. 0 SCRIPT ERROR in all runs. LOOKED: at 96/48 the dummy reads (discs, strap, rivets,
+  wisps); at 32 the profile facing's torso reads dark (belt + disc, and the MJPEG avi darkens it).
+  frames.json 14 entries.
+- FRICTION: gdformat moves `##` comments inside a const Dictionary literal to the wrong row; keep the
+  row comments in the doc block above the const.
