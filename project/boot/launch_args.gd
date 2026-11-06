@@ -73,6 +73,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--showcase",
 	# n8-hud: --pickup-hover=off lays a floor gun's showcase drawing on its disc (no hover)
 	"--pickup-hover",
+	# n8-hud: --pickup-crate=on|off lays a floor gun's showcase drawing in an open crate (else hover)
+	"--pickup-crate",
 ]
 
 var _values: Dictionary[String, String] = {}
