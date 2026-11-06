@@ -423,3 +423,12 @@ NEXT (the next run on this lane):
   match the build; gtai-masters frames.json 15 entries, 0 missing files. No fix needed, no code touched.
 - NEXT: unchanged (see the NEXT list in iteration 6).
 - Session end 18:31 (iteration 8).
+
+## Iteration 9 (18:40, REPORT)
+- 18:41 REPORT phase, nothing built. Checked every path REPORT cites: all 24 gtai-masters stills/clips,
+  frames.json (15, 0 missing), the five gate JSONs in build/evidence (pass, commit 9b6c1d7a), the exe
+  (18:06), the docs/table/tool/code anchors. No project/tools/native change since 6533af0e. Appended a
+  "Path check" section to REPORT.md.
+- NEXT: unchanged (see the NEXT list in iteration 6): owner calls; the flamer hose z when the tank is
+  behind; the plasma rifle grip_px at 64; held_70/ rows once view70 lands its pitch row.
+- Session end 18:42 (iteration 9).

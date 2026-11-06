@@ -98,3 +98,17 @@ smoke-run on the 17:13/17:34 exports, and the code they exercise did not change 
 - The 70 row: the parts are keyed by the pitch row (`weapon_held_pitch.json`), so `view70` (or the next
   run) can add `held_70/` beside `held_55/`; the hover, the lift and the crescent already read the view.
 - Long guns at 32 px/m: a slimmer re-cut (fewer side-body px) if the owner keeps two-tone.
+
+## Path check (iteration 9, 18:41, REPORT phase)
+Nothing was built after the freeze. Every evidence path cited above was checked and exists:
+- `C:\Users\kazda\kiro\gtai-masters\d8\weapons\`: the 24 stills/clips named above (each base name
+  resolves to its `.png`/`.mp4`), `weapons_tilt_set_combined.mp4`, and `frames.json` (15 entries,
+  0 missing files).
+- Gate evidence: `build/evidence/{lint,unit-tests,scenario-tests,parity,export-audit}.json` (git-ignored
+  build output, written by `node tools/evidence/run.mjs --no-bench`), each `pass` and stamped commit
+  `9b6c1d7a`. The tracked `evidence/` folder in the lane cwd is main's history; this lane added nothing there.
+- `docs/polish/weapons-tilt.md`, `project/data/tables/weapon_held_pitch.json`,
+  `tools/art/held_pitch_small.py`, `ShotLift.back_z` (`project/features/combat/weapons/art/shot_lift.gd:76`),
+  `PickupsView.HOVER_M` (`project/features/player/pickups_view.gd:20`).
+- `build/export/windows/RTAI.exe` (18:06, 246,980,912 bytes) + the sim DLL. `git diff 6533af0e HEAD --
+  project tools native` is empty, so the exe and the 9b6c1d7a evidence match the branch head.
