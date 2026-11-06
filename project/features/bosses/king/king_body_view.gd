@@ -11,7 +11,6 @@ const GOLD: Color = Color("#D9A933")
 const GOLD_DARK: Color = Color("#8A6418")
 const CAR_BLACK: Color = Color("#231F22")
 const STEEL: Color = Color("#8E8B86")
-const FUR: Color = Color("#EFE6D2")
 const CAR_LEN_M: float = 6.6
 const CAR_W_M: float = 2.5
 const WINDUP_BACK_M: float = 0.6
@@ -173,17 +172,7 @@ func _on_foot() -> void:
 
 func _king(at: Vector2, k: float) -> void:
 	var p: float = Ink.PX_PER_M * k
-	var cape: PackedVector2Array = PackedVector2Array(
-		[
-			at + Vector2(0.1, -0.7) * p,
-			at + Vector2(-1.1, -0.95) * p,
-			at + Vector2(-1.3, 0.0) * p,
-			at + Vector2(-1.1, 0.95) * p,
-			at + Vector2(0.1, 0.7) * p
-		]
-	)
-	draw_colored_polygon(cape, Ink.VERMILION)  # the King's cape: vermilion by verdict
-	draw_polyline(cape, FUR, 0.16 * p)
+	KingCape.draw(self, at, p, fight)  # vermilion, folded, ermine-trimmed, swaying
 	if _rigs != null:  # the rig is King's body; the cape spreads under it
 		return
 	draw_circle(at, 0.62 * p, Ink.INK)
