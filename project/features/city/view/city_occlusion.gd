@@ -1,15 +1,11 @@
 class_name CityOcclusion
 extends Node2D
-## The city's buildings over a body behind them (night n8, lane city; brief item 2). The world
-## canvas (ChunkView, ChunkLift's lifted roofs and south faces) is under the whole actors canvas,
-## so under a tilt a body just north of a building draws ON its lifted roof. A BackBufferCopy at
-## the bottom of the actors canvas keeps the printed world as it is before any actor draws; each
-## frame this node (at roof_occluders) paints that copy back over the part of every body behind
-## a building that falls inside the building's drawn area (face and lifted roof), and its child
-## inks the body there as PropOcclusion's silhouette (its SILHOUETTE, RIM, SIL_W_M, FRONT_DZ: the
-## view lane's answer). A body in front of such a building whose box meets it is lifted over this
-## node for the frame. Only under a lifted view that occludes (city_facades.json `occlude`).
-## Render only: reads the chunks, the rigs and the view; writes nothing but z on the rigs it lifts.
+## The city's buildings over a body behind them (n8 city, brief item 2). The world canvas (chunks,
+## lifted roofs, south faces) is under the actors canvas, so under a tilt a body north of a building
+## draws ON its roof. A BackBufferCopy at the bottom of the actors canvas keeps the printed world;
+## each frame this node paints it back over every body part behind a building inside its drawn area
+## and its child inks PropOcclusion's silhouette there; a body in front is lifted over this node.
+## Only under a lifted view that occludes. Render only: writes nothing but z on the rigs it lifts.
 
 ## A body's screen height (m at the ground's px per metre) for the patch and the silhouette: the
 ## cards stand upright under a tilt (Rivet's reads ~1.6 m tall at 70), so it is not foreshortened.
@@ -23,8 +19,7 @@ const NORTH_TOL_PX: float = 4.0
 ## Measured over the run (Log at exit): frames, body-frames hidden behind a building.
 var frames: int = 0
 var hidden_frames: int = 0
-var _lift: ChunkLift = null
-var _city: CitySystem = null
+var _near: CityOccluders = null
 var _view: CityView = null
 var _print: Material = null
 var _layer: Node = null
@@ -34,23 +29,13 @@ var _hits: Array[PackedVector2Array] = []
 var _hit_area: Array[Rect2] = []
 
 
-## A building on the ground (px): its texture, turn, ground centre and rect, drawn area.
-class Bld:
-	var t: int
-	var rot: float
-	var at: Vector2
-	var r: Rect2
-	var area: Rect2
-
-
 ## Adds the occluder to the city's actors canvas when the chunks are lifted and the view occludes.
 static func attach(view: CityView, city: CitySystem, print_mat: Material) -> void:
 	var lift: ChunkLift = view.chunks.lift
 	if lift == null or not lift.occlude or not ViewMode.shared().occlude:
 		return
 	var o: CityOcclusion = CityOcclusion.new()
-	o._lift = lift
-	o._city = city
+	o._near = CityOccluders.new(lift, city.residency)
 	o._layer = view.actor_layer()
 	o._view = view
 	o._print = print_mat
@@ -96,7 +81,7 @@ func _scan() -> void:
 	for rig: CutRig in rigs:
 		var feet: Vector2 = rig.global_position
 		var head: Vector2 = feet - Vector2(0.0, BODY_H_M * SimConst.PX_PER_M)
-		for b: Bld in buildings_near(feet / SimConst.PX_PER_M):
+		for b: CityOccluders.Bld in _near.near(feet / SimConst.PX_PER_M):
 			var patch: Rect2 = body_patch(feet, head, b.area)
 			if not patch.has_area():
 				continue
@@ -122,42 +107,6 @@ func _lift_front(lifted: Dictionary[CutRig, bool]) -> void:
 		var rig: CutRig = RigDepthSort.rig_of(c)
 		if rig != null and lifted.has(rig):
 			(c as CanvasItem).z_index += PropOcclusion.FRONT_DZ
-
-
-## The buildings of the resident chunks around a ground point (m), with their drawn areas.
-func buildings_near(at_m: Vector2) -> Array[Bld]:
-	var out: Array[Bld] = []
-	var keys: Dictionary[Vector2i, bool] = {}
-	for d: Vector2 in [Vector2(-16, -4), Vector2(16, -4), Vector2(-16, 28), Vector2(16, 28)]:
-		var p: Vector2 = (at_m + d) / SimConst.CHUNK_M
-		keys[Vector2i(floori(p.x), floori(p.y))] = true
-	for key: Vector2i in keys:
-		var res: CityResidency = _city.residency
-		var chunk: CityChunk = res.chunk_at(key) if res.is_resident(key) else null
-		if chunk != null:
-			_collect(chunk, at_m * SimConst.PX_PER_M, out)
-	return out
-
-
-func _collect(chunk: CityChunk, near_px: Vector2, out: Array[Bld]) -> void:
-	var reach: float = 40.0 * SimConst.PX_PER_M
-	for k: int in chunk.command_count():
-		var t: int = chunk.tex[k]
-		var o: int = k * CityChunk.XF_STRIDE
-		if not _lift.is_building_tex(t) or chunk.xf[o + 3] > 0.5:
-			continue
-		var at: Vector2 = Vector2(chunk.xf[o], chunk.xf[o + 1]) * SimConst.PX_PER_M
-		if absf(at.x - near_px.x) > reach or absf(at.y - near_px.y) > reach:
-			continue
-		var b: Bld = Bld.new()
-		b.t = t
-		b.rot = chunk.xf[o + 2]
-		b.at = at
-		var ext: Vector2 = _lift.extent(t, b.rot)
-		b.r = Rect2(at - ext * 0.5, ext)
-		var up: float = -_lift.lift_of(t).y
-		b.area = Rect2(b.r.position - Vector2(0.0, up), b.r.size + Vector2(0.0, up))
-		out.append(b)
 
 
 ## PropOcclusion's upright figure, its shoulders SIL_W_M at the city's px per metre.

@@ -12,7 +12,7 @@ func after_each() -> void:
 	ViewMode._shared = _saved
 
 
-func _occ() -> CityOcclusion:
+func _occ() -> CityOccluders:
 	var tex: CityTextures = CityTextures.new({"textures": []})
 	tex.names.assign(["road", "building_tall", "building_warehouse"])
 	tex.size_px.assign([Vector2(256, 256), Vector2(269, 269), Vector2(525, 269)])
@@ -20,9 +20,7 @@ func _occ() -> CityOcclusion:
 	var d: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(ChunkLift.TABLE))
 	var lift: ChunkLift = ChunkLift.new()
 	lift._setup(d, tex, built, "p70")
-	var o: CityOcclusion = CityOcclusion.new()
-	o._lift = lift
-	return o
+	return CityOccluders.new(lift)
 
 
 ## rows: (texture id, x m, y m) per command; a 1 in xf[3] marks a shadow command
@@ -39,21 +37,39 @@ func _chunk(rows: Array[Vector3], shadow_k: int = -1) -> CityChunk:
 
 
 func test_only_buildings_are_collected_with_the_lift_above_them() -> void:
-	var o: CityOcclusion = _occ()
-	var out: Array[CityOcclusion.Bld] = []
-	o._collect(
+	var o: CityOccluders = _occ()
+	var out: Array[CityOccluders.Bld] = []
+	o.collect(
 		_chunk([Vector3(0, 10, 10), Vector3(1, 10, 10), Vector3(1, 12, 10)], 2),
 		Vector2(320, 320),
 		out
 	)
 	assert_eq(out.size(), 1, "the road and the shadow command are not occluders")
-	var b: CityOcclusion.Bld = out[0]
+	var b: CityOccluders.Bld = out[0]
 	var up: float = -ViewMode.shared().lift_px(o._lift.height_m[1]).y
 	assert_gt(up, 1.0, "tilt70 lifts the roof")
 	assert_eq(b.area.end.y, b.r.end.y, "the drawn area ends at the ground line")
 	assert_almost_eq(b.area.position.y, b.r.position.y - up, 0.01, "and rises by the lift")
-	o._ink.free()
-	o.free()
+
+
+func test_a_chunk_is_scanned_once_and_its_areas_follow_the_lift() -> void:
+	var o: CityOccluders = _occ()
+	var c: CityChunk = _chunk([Vector3(1, 10, 10), Vector3(2, 30, 10)])
+	var first: Array[CityOccluders.Bld] = []
+	o.collect(c, Vector2(320, 320), first)
+	var top70: float = first[0].area.position.y
+	c.tex[0] = 0  # a changed command list is not re-read: chunks are immutable once built
+	ViewMode._shared = ViewMode.of("tilt")  # combo eases to 55: a taller lift
+	var again: Array[CityOccluders.Bld] = []
+	o.collect(c, Vector2(320, 320), again)
+	assert_eq(o.cached(), 1, "one chunk, one scan")
+	assert_eq(again.size(), 2, "the cached list, not a rescan")
+	var up55: float = -ViewMode.shared().lift_px(o._lift.height_m[1]).y
+	assert_almost_eq(again[0].area.position.y, again[0].r.position.y - up55, 0.01)
+	assert_ne(again[0].area.position.y, top70, "the area is re-lifted on every query")
+	var far: Array[CityOccluders.Bld] = []
+	o.collect(c, Vector2(320 + 100 * SimConst.PX_PER_M, 320), far)
+	assert_eq(far.size(), 0, "past REACH_M nothing is looked at")
 
 
 func test_the_patch_is_the_body_inside_the_drawn_area_only() -> void:
