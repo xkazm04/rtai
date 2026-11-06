@@ -7,7 +7,7 @@
 // Prints `ok <path>` or the error lines (file:line); exit 0 all ok, 1 some failed, 2 usage/no Godot.
 // Each file gets a 60 s budget with a process-tree kill. A stale class cache is refreshed first
 // (runGodot does that once per process), so a script using a brand new class_name is not a false alarm.
-import { existsSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { isAbsolute, join, relative, resolve, sep } from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -26,12 +26,45 @@ export function toRes(arg) {
   return r.startsWith('..') || isAbsolute(r) ? null : `res://${r}`;
 }
 
-const errorLines = (out) => out.split('\n').filter((l) => ERROR_LINE.test(l)).map((l) => l.trimEnd());
+/** Autoload singleton names from project.godot: --check-only does not register them, so a script that
+ *  names one reports "Identifier not found: Log" although it is fine at run time. */
+const autoloadNames = () => {
+  try {
+    const sec = /^\[autoload\]([^[]*)/m.exec(readFileSync(join(PROJECT, 'project.godot'), 'utf8'));
+    return new Set([...(sec?.[1] ?? '').matchAll(/^(\w+)=/gm)].map((m) => m[1]));
+  } catch { return new Set(); }
+};
+
+const isAt = (l) => /^\s+at: /.test(l ?? '');
+
+/** The error lines of a run minus autoload-identifier false positives (and their `at:` lines). When
+ *  nothing else was reported the script is fine, so the generic "Failed to load script" trailer goes too. */
+export function errorLines(out, autoloads = autoloadNames()) {
+  const lines = out.split('\n').filter((l) => ERROR_LINE.test(l)).map((l) => l.trimEnd());
+  const kept = [];
+  for (let i = 0; i < lines.length; i += 1) {
+    const m = /Identifier not found: (\w+)/.exec(lines[i]);
+    if (m && autoloads.has(m[1])) {
+      while (isAt(lines[i + 1])) i += 1;
+      continue;
+    }
+    kept.push(lines[i]);
+  }
+  const real = kept.filter((l) => !isAt(l) && !/Failed to load script/.test(l));
+  return real.length ? kept : [];
+}
+
+/** ok when nothing but autoload false positives was reported (Godot still exits 1 for those). */
+const judge = (r, bad) => ({
+  ...r,
+  ok: !r.timedOut && bad.length === 0 && (r.status === 0 || ERROR_LINE.test(r.out)),
+  lines: bad,
+});
 
 async function checkScript(res) {
   const r = await runGodot(['--check-only', '-s', res], { name: 'check', timeoutMs: CHECK_TIMEOUT_MS });
   const bad = errorLines(r.out);
-  return { ...r, ok: r.status === 0 && !r.timedOut && bad.length === 0, lines: bad };
+  return judge(r, bad);
 }
 
 async function checkResource(res) {
@@ -40,7 +73,7 @@ async function checkResource(res) {
   try {
     const r = await runGodot(['-s', tmp.split(sep).join('/')], { name: 'check', timeoutMs: CHECK_TIMEOUT_MS });
     const bad = errorLines(r.out);
-    return { ...r, ok: r.status === 0 && !r.timedOut && bad.length === 0, lines: bad };
+    return judge(r, bad);
   } finally {
     rmSync(tmp, { force: true, recursive: false }); // one explicit file under os.tmpdir()
   }

@@ -1,7 +1,12 @@
 #!/usr/bin/env node
 // The city bench (WLD-08, STANDARDS section 20): bake the chunks, export the windows-bench
 // release build, run the crowded drive and the 400-actor riot, judge the hard limits.
-//   node tools/bench/run.mjs [--headless] [--secs=60] [--runs=3]
+//   node tools/bench/run.mjs [--headless] [--secs=60] [--runs=3] [--wait=<minutes, default 20>]
+// Queueing (run_ledger.mjs): the bench takes a machine-wide FIFO ticket, waits for the machine to be
+// quiet (no other registered Godot run, no unregistered Godot process) and for bench.lock, printing an
+// ETA from the running entries' start times (bench ~14 min); a legacy <repo>/build/bench.lock still
+// holds. After --wait minutes the head of the queue runs anyway and the summary says CONTENDED with the
+// peak number of other runs seen; the limits are judged strictly either way. --wait=0 does not wait (it still takes bench.lock, or gives up when held).
 // --headless (or no export templates / no Windows) runs the editor binary with --fixed-fps 60
 // instead: CPU only, no rendering, and every summary says so.
 import { existsSync, mkdirSync, readFileSync } from 'node:fs';
@@ -9,6 +14,7 @@ import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { ROOT } from '../lib/repo.mjs';
 import { describe, runGodot, runProcess } from '../lib/godot.mjs';
+import { acquireBench, contention, register } from '../lib/run_ledger.mjs';
 
 // Hard limits that fail the job (section 20); worstFrameMs has none (TEL-03 records > 25 ms).
 export const LIMITS = { p99CpuMs: 7, low1Fps: 45, worstSwapMs: 50 };
@@ -39,11 +45,21 @@ async function prepare(headless) {
   return { mode: 'exported' };
 }
 
+/** The windowed export build, registered in the run ledger like a runGodot call. */
+async function runExe(user, timeoutMs) {
+  const entry = register({ kind: 'bench-exe' });
+  try {
+    return await runProcess(EXE, user, { cwd: join(ROOT, 'build', 'export', 'windows-bench'), timeoutMs, onSpawn: (pid) => entry.setChild(pid) });
+  } finally {
+    entry.release();
+  }
+}
+
 async function runScenario(sc, mode, secs, outDir) {
   const out = join(outDir, `bench-${sc.name}.json`).replace(/\\/g, '/');
   const user = ['--', `--scenario=${sc.scenario}`, `--label=${sc.name}`, `--secs=${secs}`, `--zoom=${sc.zoom}`, `--vsync=${sc.vsync ?? 'disabled'}`, `--out=${out}`];
   const res = mode === 'exported'
-    ? await runProcess(EXE, user, { cwd: join(ROOT, 'build', 'export', 'windows-bench'), timeoutMs: (secs + 120) * 1000 })
+    ? await runExe(user, (secs + 120) * 1000)
     : await godot(['--headless', '--fixed-fps', '60', 'res://dev/bench/city_bench.tscn', ...user],
       { timeoutMs: (secs + 120) * 1000 });
   if (res.status !== 0 || !existsSync(out)) return { error: `${sc.name} ${describe(res)}` };
@@ -100,12 +116,33 @@ async function onePass(mode, secs, outDir, pass) {
   return { byName, files };
 }
 
-// Gate: section 20 hard limits on every run, and F-07's "no unexplained frame over 50 ms".
-export async function runBench(outDir, { headless = false, secs = 60, runs = 3 } = {}) {
+/** Queue for the machine, run, and annotate the verdict with the contention seen (never flips ok). */
+export async function runBench(outDir, opts = {}) {
   mkdirSync(outDir, { recursive: true });
   if (!existsSync(NATIVE_DLL)) {
     return { ok: false, summary: 'bench: native release library not built (scons in native/)' };
   }
+  const slot = await acquireBench({ waitMs: (opts.waitMin ?? 20) * 60000, log: (l) => console.error(`bench: ${l}`) });
+  if (slot.error) return { ok: false, summary: `bench: ${slot.error}` };
+  const entry = register({ kind: 'bench' });
+  let peak = slot.others;
+  const timer = setInterval(() => { try { peak = Math.max(peak, contention().count); } catch { /* advisory */ } }, 15000);
+  timer.unref();
+  try {
+    const res = await benchRun(outDir, opts);
+    peak = Math.max(peak, contention().count);
+    if (peak > 0) res.summary += `; CONTENDED: up to ${peak} other run(s) active during the bench (numbers are pessimistic)`;
+    if (res.metrics) res.metrics.contendedPeak = peak;
+    return res;
+  } finally {
+    clearInterval(timer);
+    entry.release();
+    slot.lock.release();
+  }
+}
+
+// Gate: section 20 hard limits on every run, and F-07's "no unexplained frame over 50 ms".
+async function benchRun(outDir, { headless = false, secs = 60, runs = 3 } = {}) {
   const prep = await prepare(headless || process.platform !== 'win32');
   if (prep.error) return { ok: false, summary: `bench: ${prep.error}` };
   const passes = [];
@@ -136,7 +173,7 @@ export async function runBench(outDir, { headless = false, secs = 60, runs = 3 }
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const arg = (name, dflt) => Number((process.argv.find((a) => a.startsWith(`${name}=`)) ?? `=${dflt}`).split('=')[1]);
   const res = await runBench(join(ROOT, 'build', 'bench'), {
-    headless: process.argv.includes('--headless'), secs: arg('--secs', 60), runs: arg('--runs', 3),
+    headless: process.argv.includes('--headless'), secs: arg('--secs', 60), runs: arg('--runs', 3), waitMin: arg('--wait', 20),
   });
   console.log(res.summary);
   process.exit(res.ok ? 0 : 1);

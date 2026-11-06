@@ -7,6 +7,9 @@ extends Scenario
 
 const TICKS: int = 600
 const SIZES: Array[int] = [50, 200]
+## Test-only: GTAI_BUDGET_SCALE multiplies the 1 ms budget (0.001 forces a miss). The tools runner
+## sets GTAI_CONTENTION (other machine runs at launch) and GTAI_CONTENTION_FILE (the live count): a
+## miss while others run is reported CONTENDED and passes; the runner re-judges it alone.
 
 
 func run(tree: SceneTree) -> String:
@@ -35,6 +38,28 @@ func _one(tree: SceneTree, people: int) -> String:
 		return "%d people: %d full rigs ran (cap 16)" % [people, int(m["fullRigsMax"])]
 	if m["poolGrown"] > 0.0:
 		return "%d people: the pools grew in play" % people
-	if m["rigMsP50"] > RigStress.HARD_MS:
-		return "%d people: rig p50 %.3f ms > %.1f ms" % [people, m["rigMsP50"], RigStress.HARD_MS]
-	return ""
+	return _p50_verdict(people, m["rigMsP50"])
+
+
+func _p50_verdict(people: int, p50_ms: float) -> String:
+	var scale_text: String = OS.get_environment("GTAI_BUDGET_SCALE")
+	var budget: float = RigStress.HARD_MS * (scale_text.to_float() if scale_text != "" else 1.0)
+	if p50_ms <= budget:
+		return ""
+	var others: int = _contention()
+	if others > 0:
+		Log.warn(
+			"scenario",
+			"CONTENDED: rig_stress.rigMsP50 %.3f > %.3f (%d other runs)" % [p50_ms, budget, others]
+		)
+		return ""
+	return "%d people: rig p50 %.3f ms > %.3f ms" % [people, p50_ms, budget]
+
+
+## Other machine runs: the launch count, raised by the runner's live file while it runs.
+func _contention() -> int:
+	var others: int = OS.get_environment("GTAI_CONTENTION").to_int()
+	var path: String = OS.get_environment("GTAI_CONTENTION_FILE")
+	if path != "" and FileAccess.file_exists(path):
+		others = maxi(others, FileAccess.get_file_as_string(path).strip_edges().to_int())
+	return others

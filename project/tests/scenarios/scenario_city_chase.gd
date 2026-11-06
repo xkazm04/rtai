@@ -11,6 +11,9 @@ const START: Vector2 = Vector2(64.0 * 5 + 30.0, 64.0 * 5 + 12.0)
 const SPEED: float = 4.0
 const COPS: int = 8
 const NAV_BUDGET_US: int = 2000
+## Test-only: GTAI_BUDGET_SCALE multiplies the budget (0.001 forces a miss). The tools runner sets
+## GTAI_CONTENTION (other machine runs at launch) and GTAI_CONTENTION_FILE (the live count): a
+## budget miss while others run is reported CONTENDED and passes; the runner re-judges it alone.
 
 
 func run(_tree: SceneTree) -> String:
@@ -62,9 +65,36 @@ func _judge(sim: CitySimBackend, d0: float, d1: float, near_car: float) -> Strin
 		return "the cops did not close in: %s" % summary
 	if near_car > 40.0:
 		return "no police car got within 40 m: %s" % summary
-	if sim.backend_name() == &"native" and st[SimConst.FS_MAX_US] > NAV_BUDGET_US:
-		return "flow field over the 2 ms nav budget: %s" % summary
+	if sim.backend_name() == &"native":
+		return _nav_verdict(st[SimConst.FS_MAX_US], summary)
 	return ""
+
+
+func _nav_verdict(max_us: int, summary: String) -> String:
+	var scale_text: String = OS.get_environment("GTAI_BUDGET_SCALE")
+	var budget: float = NAV_BUDGET_US * (scale_text.to_float() if scale_text != "" else 1.0)
+	if max_us <= budget:
+		return ""
+	var others: int = _contention()
+	if others > 0:
+		Log.warn(
+			"scenario",
+			(
+				"CONTENDED: city_chase.nav_max_us %d > %d (%d other runs)"
+				% [max_us, int(budget), others]
+			)
+		)
+		return ""
+	return "flow field over the 2 ms nav budget: %s" % summary
+
+
+## Other machine runs: the launch count, raised by the runner's live file while it runs.
+func _contention() -> int:
+	var others: int = OS.get_environment("GTAI_CONTENTION").to_int()
+	var path: String = OS.get_environment("GTAI_CONTENTION_FILE")
+	if path != "" and FileAccess.file_exists(path):
+		others = maxi(others, FileAccess.get_file_as_string(path).strip_edges().to_int())
+	return others
 
 
 ## Promoted cops on walkable cells 40-60 m behind the target, around the block.

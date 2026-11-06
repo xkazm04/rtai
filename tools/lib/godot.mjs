@@ -14,6 +14,7 @@ import { tmpdir } from 'node:os';
 import { join, resolve, sep } from 'node:path';
 import { ROOT } from './repo.mjs';
 import { isStale } from './class_cache.mjs';
+import { register } from './run_ledger.mjs';
 
 export const SCRIPT_ERROR = /SCRIPT ERROR|Parse Error|Compile Error|Failed to load script/;
 export const HEADLESS_TIMEOUT_MS = 10 * 60 * 1000;
@@ -111,7 +112,7 @@ export function killTree(pid) {
 
 /** Async spawn with merged stdout+stderr (ANSI stripped). On timeout the tree is killed and the
  *  partial output is kept. Resolves {status, out, timedOut, durationMs}; status -1 = never ran. */
-export function runProcess(cmd, args, { cwd = ROOT, timeoutMs = HEADLESS_TIMEOUT_MS, env } = {}) {
+export function runProcess(cmd, args, { cwd = ROOT, timeoutMs = HEADLESS_TIMEOUT_MS, env, onSpawn } = {}) {
   return new Promise((done) => {
     const t0 = Date.now();
     let out = '';
@@ -126,6 +127,7 @@ export function runProcess(cmd, args, { cwd = ROOT, timeoutMs = HEADLESS_TIMEOUT
     };
     const child = spawn(cmd, args, { cwd, env, windowsHide: true, stdio: ['ignore', 'pipe', 'pipe'],
       detached: process.platform !== 'win32' });
+    if (onSpawn && child.pid) onSpawn(child.pid);
     const take = (d) => { out += d.toString('utf8'); };
     child.stdout.on('data', take);
     child.stderr.on('data', take);
@@ -161,6 +163,12 @@ export function ensureImport({ projectDir = join(ROOT, 'project'), timeoutMs = I
   return importChecks.get(key);
 }
 
+/** Ledger label when the caller gave no `name`: the script basename or the first flag. */
+const kindOf = (args) => {
+  const i = args.indexOf('-s');
+  return i >= 0 && args[i + 1] ? args[i + 1].split('/').pop().replace(/[.]gd$/, '') : (args[0] ?? 'godot').replace(/^-+/, '');
+};
+
 /** Runs the resolved Godot. `headless` (default) prepends --headless; `--path project` is always
  *  added. `name` is only a label for callers' logs. `env` replaces the child environment (default:
  *  inherit). `ensure` (default: on unless the args contain --import) first refreshes a stale class
@@ -171,7 +179,12 @@ export async function runGodot(args, { timeoutMs = HEADLESS_TIMEOUT_MS, cwd = RO
   if (!g.ok) return { status: -1, out: g.message, timedOut: false, durationMs: 0, notFound: true, name };
   if (ensure) await ensureImport({ projectDir: join(cwd, 'project') });
   const full = [...(headless ? ['--headless'] : []), '--path', 'project', ...args];
-  return { ...(await runProcess(g.bin, full, { cwd, timeoutMs, env })), name };
+  const entry = register({ kind: name ?? kindOf(args), root: cwd }); // machine-wide run ledger (run_ledger.mjs)
+  try {
+    return { ...(await runProcess(g.bin, full, { cwd, timeoutMs, env, onSpawn: (pid) => entry.setChild(pid) })), name };
+  } finally {
+    entry.release(); // also on timeout/kill: runProcess resolves after the tree kill
+  }
 }
 
 /** True when `file` resolves strictly inside <repo>/build or the OS temp dir. */

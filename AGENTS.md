@@ -41,6 +41,18 @@ through `TestTmp.dir("<sub>")` (`user://test_tmp/<worktree>/<pid>/`); lint bans 
 
 Install the pre-commit hook once per clone: `git config core.hooksPath .githooks`.
 
+Godot launcher extras (`tools/lib/godot.mjs`): every `runGodot` first runs `--import` when the class
+cache is stale (`tools/lib/class_cache.mjs`; once per process, logged, not for `--import` itself), so a
+merge no longer leaves scenarios/parity/bench on a stale cache. `node tools/godot/check.mjs <res://path|file>...`
+is the safe parse check (`--check-only` for `.gd`, a throwaway load for `.tscn/.tres`; 60 s tree-kill;
+exit 0 ok, 1 errors, 2 usage). Every run registers in a machine-wide ledger (`%LOCALAPPDATA%/gtai/runs`,
+override `GTAI_RUNS_DIR`; `tools/lib/run_ledger.mjs`). `run_scenarios.mjs` passes `GTAI_CONTENTION`/`GTAI_CONTENTION_FILE`;
+a miss of the two wall-clock budgets (city_chase nav 2 ms, rig_stress p50 1 ms) while others run logs
+`CONTENDED: <metric> ...` and passes, then those scenarios are re-run alone once the machine is quiet
+(`--quiet-wait=<min>`, `--only=<names>`); an idle-machine miss FAILS, a machine that never quiets leaves the
+summary saying CONTENDED. `GTAI_BUDGET_SCALE=0.001` (test only) forces the miss. `tools/bench/run.mjs` queues FIFO
+behind other runs and `bench.lock` with an ETA (`--wait=<min>`, default 20, then it runs flagged CONTENDED).
+
 Debt ratchet: `node tools/debt/debt.mjs --check` (lint check `debt-ratchet`) fails when a debt metric is worse than `tools/debt/baseline.json`; it names metric, file and old -> new, so shrink or remove what it names. When it prints `tighten:`, run `node tools/debt/debt.mjs --update` and commit the baseline (it only ever tightens; a deliberate rise needs `--accept-regression="reason"`). After a baseline merge conflict take either side and re-run `--update`. Details: `tools/debt/README.md`.
 
 ## Folder map (STANDARDS section 2)
