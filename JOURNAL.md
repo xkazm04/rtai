@@ -914,3 +914,58 @@ NEXT (iteration 9, in order):
   (`evidence/servo/director-reel-it8.log`; exit 124 = the 700 s cap after the last chapter, as
   it6). Combat did not regress. Unit 1183/0, scenarios 52/0, lint 13/13 this iteration.
   Session ends with everything committed; NEXT for iteration 9 is the list above.
+
+## Iteration 9 (01:22-02:22, BUILD)
+Read: JOURNAL (it8 NEXT), git log, n7-king's JOURNAL tail (it10: gang heads; no REQUEST to servo;
+king reads my keep_in FYI and leaves the merging to the Director). Rules applied:
+encounter-balance-simulation (a sim-moving art change is re-measured on seeds 1-5 x bots before it
+ships; the alternative stays one data value), depth-ordered-layered-art (the spine sits between
+the wings, under the torso).
+- 01:24 MERGE n7-king 63bbdeb8 as 108324a4 (press plates, shoulder megaphone, gang bulk + steel
+  dome heads, king evidence). Conflicts: JOURNAL.md and REPORT.md (add/add: each lane's own),
+  both ours. Unit on the merged tree **1185/0** (`evidence/servo/unit-it9.log`; king's +2).
+  FRICTION: a `&&` chain sent to the background with `&` ran the commit's pre-commit lint in a
+  shell that returned at once; the commit did land (108324a4), and my retry then failed on the
+  missing MERGE_HEAD. Do not background commits.
+- 01:30 BUILT NEXT 2, `servo.json rack.spine_m` (schema 0..2): the rack wings sit spine_m further
+  apart across the back (`ServoRack.cell_pos` adds +-spine_m/2 to each cell's across, so drones
+  launch from the moved cells; `ServoRig._wings` moves the wing art; `ServoSpine` widens by the
+  gap and its hose cap grows by 0.6 of it). Unit `test_spine_gap_sets_the_wings_apart_not_the_bays`.
+- 01:33 LOOKED at the A/B, p2 seed 2 tick 200, 48 px/m (`it9/ab.png`, zoom `zab.png`) beside
+  the sheet's top view: at 0 the wings meet behind a thin column; at **0.94** (spine 1.5 m, the
+  sheet's measure) the top view is the sheet's three blocks, wing | heavy cream spine with the
+  hose cap | wing. The drones launch from the wider wings (their tick-200 spread differs).
+  Measuring seeds 1-5 x dodge/human before it becomes the default.
+- 01:28 MEASURED the gap (`evidence/servo/numbers-it9-spine94/`, seeds 1-5, --fixed-fps 60,
+  14400 cap, 0 SCRIPT ERROR, CONTENDED wall time), against it6a (the it8 tree's fight: human s2
+  137.7 s / 210 in both):
+
+  | bot | downed | time to kill | took | deaths | rotor dash | hot dash | bay hop |
+  |---|---|---|---|---|---|---|---|
+  | dodge it6a | 5/5 | 114-140 s (127) | 62 | 0 | 2/35 | 1/17 | 5/8 |
+  | dodge gap 0.94 | 5/5 | 110-159 s (124) | 16 | 0 | 2/36 | 0/14 | 0/9 |
+  | human it6a | 5/5 | 121-138 s (129) | 128 | 0 | 15/38 | 5/15 | 0/8 |
+  | human gap 0.94 | 5/5 | 116-169 s (134) | 168 | 0 | 17/38 | 5/15 | 2/10 |
+  | stand it6a | 1/5 | 204 s | 1388 | 25 | 86/95 | 3/3 | 14/14 |
+  | stand gap 0.94 | 0/5 | - | 1398 | 28 | 81/90 | 6/6 | 17/17 |
+
+  The moved launch points re-roll every wave (the cascade), so seeds move both ways (dodge took
+  less, human more); the attack hit rates hold. Called: no direction, inside the spread, not
+  "balanced" (n = 5). DECISION: ship 0.94 (the target's measure), `rack.spine_m` 0 = the owner's
+  alternative (call 10 in REPORT).
+- 01:30 MILESTONE ad9b80c0 the spine gap committed (unit **1186/0**, lint 13/13 in the hook;
+  FRICTION: gdformat on Windows writes CRLF: strip it before staging).
+- 01:31 FILMS the per-attack 48 px/m clips re-shot on ad9b80c0 (dodging bot, seed 2, boss cam,
+  phases 1-3 x 2400 ticks, 0 SCRIPT ERROR). **Looked at** every key sheet:
+  - rotor dash (p1 t620): tracking line, the lane locks, the bot steps out, Servo crosses
+    smashing the crates in his lane, steam in the punish window; the wide spine reads.
+  - package carpet (p2 t863): beam tracks, locks, the ring lane runs past the van through the
+    mark, the bot steps out, a bomb's amber blast in its ring.
+  - bay hop (p2 t671): the ring locks on Rivet among crates, he lands by bay 4, the bot clear.
+    FOUND: the ring sits on the screen's top edge under the boss bar (the cam frames the boss,
+    not the mark); the cam then jumps with the hop.
+  - hot dash (p3 t956): one wing gone, lane locks, the bot steps out, the slam at the yard edge.
+  - kamikaze: my cut (p3 t788) shows the lock ring but not the dive landing clearly: not kept;
+    the it5 clip stays.
+  The it4 clips and keys deleted; frames.json updated (4 clips, the spine A/B still replaces the
+  it8 rack3-seam still).
