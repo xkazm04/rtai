@@ -18,6 +18,10 @@
       "items": {
         "additionalProperties": false,
         "properties": {
+          "card_set": {
+            "pattern": "^[a-z0-9_]+$",
+            "type": "string"
+          },
           "cards": {
             "type": "boolean"
           },

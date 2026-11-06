@@ -59,3 +59,35 @@ func test_a_head_variant_row_wins_over_the_set_row() -> void:
 	var thug: BodyPlan = BodyPlan.new()
 	thug.art_dir = "gang"
 	assert_eq(RigHeadCard.key_of(thug, "head"), "gang", "every gang head shares one card")
+
+
+func test_a_card_set_overrides_only_its_own_rows() -> void:
+	assert_eq(RigHeadCard.rows_of(""), RigHeadCard.CARDS, "no set: the base cards")
+	assert_eq(RigHeadCard.rows_of("none_such"), RigHeadCard.CARDS, "an unknown set: the base cards")
+	var r55: Dictionary[String, Array] = RigHeadCard.rows_of("55")
+	assert_eq(str(r55["rivet"][0]), "res://features/characters/art/view/55/rivet_bust_card.png")
+	var bust: bool = r55["rivet"][3]
+	assert_true(bust, "Rivet's 55 card is a bust: the torso hides")
+	var king: Array = r55["king"]
+	var king_base: Array = RigHeadCard.CARDS["king"]
+	assert_eq(king, king_base, "rows the set does not name stay the base")
+	assert_eq(
+		str(RigHeadCard.CARDS["rivet"][0]),
+		"res://features/characters/art/view/rivet_head_card.png",
+		"the base table is untouched by the merge"
+	)
+
+
+func test_every_set_card_strip_loads() -> void:
+	for card_set: String in RigHeadCard.SET_CARDS:
+		for key: String in RigHeadCard.SET_CARDS[card_set]:
+			var path: String = RigHeadCard.SET_CARDS[card_set][key][0]
+			var t: Texture2D = load(path) as Texture2D
+			assert_not_null(t, path)
+			assert_eq(t.get_width() % RigHeadCard.FRAMES, 0, "%s splits into equal frames" % path)
+
+
+func test_the_tilt_row_draws_the_55_set_and_top_none() -> void:
+	assert_eq(ViewMode.of("tilt").card_set, "55")
+	assert_eq(ViewMode.of("top").card_set, "", "top draws no cards at all")
+	assert_eq(ViewMode.of("tilt_basecards").card_set, "", "the d8 before: the base cards")

@@ -22,6 +22,9 @@ var pitch_deg: float = 90.0
 var height_k: float = 0.0
 ## The upright facing cards (RigHeadCard) under a tilt; false = the top-down head art only.
 var cards: bool = false
+## The facing cards' art set (view.json `card_set`, e.g. "55": RigHeadCard.SET_CARDS); "" = the
+## base cards. Keyed per view row so each pitch draws its own sheets' art.
+var card_set: String = ""
 ## top_lift: a straight-down PERSPECTIVE camera this many metres above the ground
 ## (0 = orthographic): a height lifts away from the camera's ground point, so walls and bodies
 ## lean out from the screen centre.
@@ -56,6 +59,7 @@ static func of(want: String) -> ViewMode:
 			v.pitch_deg = row["pitch_deg"]
 			v.height_k = row["height_k"]
 			v.cards = row.get("cards", false) == true and v.pitch_deg < 90.0
+			v.card_set = str(row.get("card_set", ""))
 			var eye_h: float = row.get("eye_h_m", 0.0)
 			v.eye_h_m = eye_h
 			var cast: float = row.get("cast_k", 0.0)
