@@ -70,7 +70,10 @@ NEXT (iteration 3):
 - GATES at the session end: lint 13/13; unit 1164/0, 0 SCRIPT ERROR (a53b2e85, `unit-final.log`);
   scenarios 52 ran / 0 failed / 0 SCRIPT ERROR (started on 1bd33a5d, `scenarios.log`). `top` is
   md5-identical on the seed-2 tick-900 arena frame through every commit (5db6f283...).
-  NOT RUN yet: the director reel 19/19 (`--bot=reel --reel=director`), evidence/run.mjs, parity.
+  Director reel (`--bot=reel --reel=director --loadout=pistol --rigs`, headless, a53b2e85, switch
+  off): 19/19 chapters fully down, 0 SCRIPT ERROR (`evidence/view/it2/director-reel.log`; exit 124
+  = my 600 s timeout killing it after the last chapter, the reel does not quit itself).
+  NOT RUN yet: evidence/run.mjs, parity.
 - Evidence: `gtai-masters/n7/view/` frames.json (8 entries), raw renders deleted.
 
 NEXT (iteration 3), revised (replaces the list above, in order):
@@ -81,4 +84,4 @@ NEXT (iteration 3), revised (replaces the list above, in order):
    including Rivet (cast canvas) vs the gang (KingRigs): not sorted against each other yet.
 3. Contact shadows under lifted rigs; the parked sedans as stacks (vehicles class); occlusion
    silhouettes behind tall props.
-4. `top_lift`. 5. The director reel 19/19 + evidence/run.mjs with the switch off.
+4. `top_lift`. 5. evidence/run.mjs + parity with the switch off.
