@@ -12,6 +12,15 @@ five views. Red-orange lamp lenses are turned amber (red is blood only). The mir
 A redrawn side view (keyed/vehicle/<id>_side_<pitch>.png, one drawing) replaces the sheet's own
 side view, scaled to the footprint on its own (SIDE_REDO = False: the sheet's side view).
 
+The 22.5-degree in-betweens (keyed/vehicle/<id>_between_<pitch>.png: four drawings A-D between
+views 0-1, 1-2, 2-3, 3-4; <id>_between_c_<pitch>.png, one drawing, replaces C) fill columns 5-8
+(BETWEEN = False: five columns, as before). The four-drawing sheet shares the five-view sheet's
+canvas and scale family (its raw widths sit between its neighbours'), so A, B, D take the sheet's k;
+the one-drawing C redo is scaled to the mean of its neighbours' scaled widths (side, 3/4 away). Box
+geometry (L |cos| + W |sin|) was tried and rejected: the sheets' own 3/4 views are drawn ~2/3 of it,
+so A and D came out half as big again as their neighbours. The runtime's VehicleViews.FINE lists
+the rows filled per pitch (printed here).
+
 Usage: python tools/art/vehicle_cards.py <library root> <pitch> [--out=<png>]
 Writes project/features/vehicles/art/p<pitch>/traffic_cards.png by default.
 """
@@ -29,6 +38,8 @@ TOPDOWN = "project/features/city/art/vehicles/traffic_atlas.png"
 # art id -> (library sheet id, body height m, paint gain (r, g, b): value variety only, never a hue)
 # Use keyed/vehicle/<id>_side_<pitch>.png (the asset lane's redrawn side view) when it exists.
 SIDE_REDO = True
+BETWEEN = True
+COLS = 9 if BETWEEN else 5
 ROWS = [
     ("sedan", 1.45, (1.0, 1.0, 1.0)),
     ("sedan", 1.45, (0.93, 0.93, 0.93)),  # sedan_b: the small hatch, a shade darker
@@ -76,6 +87,34 @@ def views(sheet: Image.Image) -> list[Image.Image]:
     return out
 
 
+def runs_of(sheet: Image.Image, n: int) -> list[Image.Image]:
+    """`n` drawings in one row, each cropped to its alpha bbox."""
+    a = np.array(sheet)[:, :, 3] > 40
+    cols = np.concatenate([[False], a.any(0), [False]])
+    edges = np.flatnonzero(cols[1:] != cols[:-1]).reshape(-1, 2)
+    edges = sorted([e for e in edges if e[1] - e[0] > 40], key=lambda e: e[0])
+    if len(edges) != n:
+        raise SystemExit(f"expected {n} drawings, found {len(edges)}")
+    out = []
+    for x0, x1 in edges:
+        rows = np.where(a[:, x0:x1].any(1))[0]
+        out.append(sheet.crop((x0, rows.min(), x1, rows.max() + 1)))
+    return out
+
+
+def betweens(lib: Path, sid: str, pitch: int) -> tuple[list[Image.Image], bool]:
+    """The four in-betweens (A-D), C from its own redraw when it exists ([] when none), and
+    whether C is that redraw."""
+    f = lib / "keyed" / "vehicle" / f"{sid}_between_{pitch}.png"
+    if not BETWEEN or not f.exists():
+        return [], False
+    out = runs_of(Image.open(f).convert("RGBA"), 4)
+    c = lib / "keyed" / "vehicle" / f"{sid}_between_c_{pitch}.png"
+    if c.exists():
+        out[2] = one_view(Image.open(c).convert("RGBA"))
+    return out, c.exists()
+
+
 def one_view(sheet: Image.Image) -> Image.Image:
     """A one-drawing sheet (a redrawn rotation): the widest alpha column run, cropped."""
     a = np.array(sheet)[:, :, 3] > 40
@@ -108,8 +147,21 @@ def amber(im: Image.Image) -> Image.Image:
     return Image.fromarray(np.clip(px, 0, 255).astype(np.uint8))
 
 
+def paste(atlas: Image.Image, v: Image.Image, k: float, at: tuple, lift: float) -> None:
+    """`v` scaled by `k` into cell (col, row) at `at`, its ground centre at the cell centre."""
+    col, row, gain = at
+    w, h = max(1, round(v.width * k)), max(1, round(v.height * k))
+    im = amber(paint(v.resize((w, h), Image.LANCZOS), gain))
+    cx = col * CELL_PX + CELL_PX // 2
+    cy = row * CELL_PX + CELL_PX // 2
+    x, y = round(cx - w / 2), round(cy - lift - h / 2)
+    y = max(row * CELL_PX, min(y, (row + 1) * CELL_PX - h))
+    atlas.alpha_composite(im, (x, y))
+
+
 def build(root: Path, lib: Path, pitch: int) -> Image.Image:
-    atlas = Image.new("RGBA", (CELL_PX * 5, CELL_PX * len(ROWS)), (0, 0, 0, 0))
+    atlas = Image.new("RGBA", (CELL_PX * COLS, CELL_PX * len(ROWS)), (0, 0, 0, 0))
+    fine = []
     lengths = footprints(root)
     cos_p = math.cos(math.radians(pitch))
     for row, (sid, height, gain) in enumerate(ROWS):
@@ -121,15 +173,18 @@ def build(root: Path, lib: Path, pitch: int) -> Image.Image:
         if SIDE_REDO and redo.exists():  # the side redrawn at the sheet's steeper camera
             vs[2] = one_view(Image.open(redo).convert("RGBA"))
             ks[2] = lengths[row] * PPM / vs[2].width
+        drop = height * 0.5 * cos_p * PPM  # bbox centre -> ground centre (screen px)
         for col, v in enumerate(vs):
-            w, h = max(1, round(v.width * ks[col])), max(1, round(v.height * ks[col]))
-            im = amber(paint(v.resize((w, h), Image.LANCZOS), gain))
-            drop = height * 0.5 * cos_p * PPM  # bbox centre -> ground centre (screen px)
-            cx = col * CELL_PX + CELL_PX // 2
-            cy = row * CELL_PX + CELL_PX // 2
-            x, y = round(cx - w / 2), round(cy - drop - h / 2)
-            y = max(row * CELL_PX, min(y, (row + 1) * CELL_PX - h))
-            atlas.alpha_composite(im, (x, y))
+            paste(atlas, v, ks[col], (col, row, gain), drop)
+        bs, c_redo = betweens(lib, sid, pitch)
+        if bs:
+            fine.append(row)
+        for j, v in enumerate(bs):
+            kb = k
+            if j == 2 and c_redo:  # C between the side (2) and the 3/4 away (3)
+                kb = (vs[2].width * ks[2] + vs[3].width * ks[3]) * 0.5 / v.width
+            paste(atlas, v, kb, (5 + j, row, gain), drop)
+    print(f"fine rows (VehicleViews.FINE): {fine}")
     return atlas
 
 

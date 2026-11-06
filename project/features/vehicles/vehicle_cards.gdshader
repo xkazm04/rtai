@@ -73,8 +73,9 @@ void vertex() {
 		uv.x = 1.0 - uv.x;
 	}
 	local = uv;
-	// The drawn view's nose in the cell (column 0 nose to the camera = down, 2 = right, 4 = up).
-	float a = radians(90.0 - 45.0 * c);
+	// The drawn view's nose in the cell (column 0 nose to the camera = down, 2 = right, 4 = up;
+	// columns 5-8 the in-betweens, 22.5 degrees past columns 0-3).
+	float a = radians(c < 4.5 ? 90.0 - 45.0 * c : 67.5 - 45.0 * (c - 5.0));
 	nose = vec2(cos(a) * (INSTANCE_CUSTOM.y > 0.5 ? -1.0 : 1.0), sin(a));
 	float w = floor(INSTANCE_CUSTOM.z + 0.5);
 	siren = w >= siren_bit ? 1.0 : 0.0;

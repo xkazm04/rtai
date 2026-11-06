@@ -8,14 +8,13 @@ extends Node2D
 ## VIEW_DEG / 2), as an upright card stretched back by 1 / ground_k (the art's own proportions).
 ## Within `blend_deg` of a view boundary the neighbours cross-fade (0 = a hard swap). Keyed by
 ## ViewMode.art (p70 / p55): a combined view swaps sets with its pitch; no atlas (and `top`) = none.
+## A FINE row also holds four 22.5-degree in-betweens and turns by 11.25 at most (VehicleViews).
 
 const DIR: String = "res://features/vehicles/art/%s/traffic_cards.png"
 const SHADER: String = "res://features/vehicles/vehicle_cards.gdshader"
-const COLS: int = 5
 const ROWS: int = 9
 ## The atlas cell's side in metres (CELL_PX 448 at 64 px/m).
 const CELL_M: float = 7.0
-const VIEW_DEG: float = 45.0
 ## The cross-fade window around a view boundary (degrees of heading); 0 = hard swap.
 const BLEND_DEG: float = 0.0
 const CAP: int = 256
@@ -51,14 +50,16 @@ var _cs: PackedColorArray = PackedColorArray()
 var _cds: PackedColorArray = PackedColorArray()
 var _below: PackedByteArray = PackedByteArray()
 var _seen: Rect2 = Rect2()
+var _cols: int = VehicleViews.COLS
+var _fine: PackedInt32Array = PackedInt32Array()
 
 
 func _init() -> void:
 	var shader: Shader = load(SHADER) as Shader
-	_node = VehicleCardMesh.make(CAP, shader, COLS, ROWS)
+	_node = VehicleCardMesh.make(CAP, shader, VehicleViews.COLS, ROWS)
 	_mm = _node.multimesh
 	add_child(_node)
-	under = VehicleCardMesh.make(CAP, shader, COLS, ROWS)
+	under = VehicleCardMesh.make(CAP, shader, VehicleViews.COLS, ROWS)
 	_mm_under = under.multimesh
 
 
@@ -75,6 +76,11 @@ static func atlas() -> Texture2D:
 
 ## Starts a frame with `tex`; then put() each car, then finish().
 func begin(tex: Texture2D) -> void:
+	if tex != _node.texture:  # a new atlas: its grid (columns, FINE rows) into both layers
+		_cols = VehicleViews.cols_of(tex)
+		_fine = VehicleViews.fine_rows(_cols, ViewMode.shared().art)
+		for node: MultiMeshInstance2D in [_node, under]:
+			(node.material as ShaderMaterial).set_shader_parameter("cols", _cols)
 	_node.texture = tex
 	under.texture = tex
 	if under.get_parent() == null:
@@ -112,13 +118,15 @@ func put(art: int, pos: Vector2, head: Vector2, tint: Color, worn: int = 0) -> v
 	if _seen.has_area() and not _seen.has_point(pos):
 		return
 	var a: float = rad_to_deg(atan2(head.y, head.x))
-	var pick: Vector3 = view_of(a)
+	var fine: bool = _fine.has(art)
+	var step: float = VehicleViews.FINE_DEG if fine else VehicleViews.VIEW_DEG
+	var pick: Vector3 = VehicleViews.view_of(a, fine)
 	var turn: float = wrapf(a - pick.z, -180.0, 180.0)
 	var w: float = 1.0
-	var edge: float = VIEW_DEG * 0.5 - absf(turn)
+	var edge: float = step * 0.5 - absf(turn)
 	if blend_deg > 0.0 and edge < blend_deg * 0.5:
 		w = 0.5 + edge / blend_deg
-		var nb: Vector3 = view_of(a + signf(turn) * VIEW_DEG)
+		var nb: Vector3 = VehicleViews.view_of(a + signf(turn) * step, fine)
 		var c: Color = Color(tint, tint.a * (1.0 - w))
 		_one(Vector2i(art, worn), pos, nb, wrapf(a - nb.z, -180.0, 180.0), c)
 	_one(Vector2i(art, worn), pos, pick, turn, Color(tint, tint.a * w))
@@ -160,18 +168,6 @@ func count_under() -> int:
 	return _n_under
 
 
-## The view for a nose angle `a_deg` (ground, y down: 90 = nose down the screen): x = the cell
-## column 0-4, y = 1 when mirrored, z = the view's own nose angle (the card turns by the rest).
-static func view_of(a_deg: float) -> Vector3:
-	var a: float = wrapf(a_deg, -180.0, 180.0)
-	var flip: bool = absf(a) > 90.0
-	var s: float = 1.0 if a >= 0.0 else -1.0
-	var a2: float = (s * 180.0 - a) if flip else a
-	var i: int = clampi(roundi((90.0 - a2) / VIEW_DEG), 0, COLS - 1)
-	var c: float = 90.0 - VIEW_DEG * i
-	return Vector3(i, 1.0 if flip else 0.0, (s * 180.0 - c) if flip else c)
-
-
 ## The card's world transform: CELL_M square on screen, turned `turn_deg`, unsquashed by ground_k.
 static func card_xf(pos: Vector2, turn_deg: float) -> Transform2D:
 	var s: float = CELL_M * SimConst.PX_PER_M
@@ -187,7 +183,7 @@ static func card_xf(pos: Vector2, turn_deg: float) -> Transform2D:
 func _one(aw: Vector2i, pos: Vector2, pick: Vector3, turn: float, c: Color) -> void:
 	if _n >= CAP or c.a <= 0.0:
 		return
-	var cell: float = float(clampi(aw.x, 0, ROWS - 1) * COLS) + pick.x
+	var cell: float = float(clampi(aw.x, 0, ROWS - 1) * _cols) + pick.x
 	@warning_ignore("return_value_discarded")
 	_ys.append(pos.y)
 	_xfs.append(card_xf(pos, turn))
