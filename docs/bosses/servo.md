@@ -30,6 +30,11 @@ mistaken for a cop (no blue), a car (legs and pads move) or the crowd.
   the rack's back edge: the sheet's wing | spine | wing read. Since iteration 9 the wings stand
   `servo.json rack.spine_m` apart (0.94 m: the spine 1.5 m wide, the sheet's heavy body; the
   cells move with the wings, so the drones launch from there; 0 = the it8 narrow column).
+  Since iteration 10 the spine is the sheet's tan steel (a darker fill under three stacked
+  lighter boxes, `ServoSpine.STEEL_TONE`), each wing's front edge carries the sheet's hazard
+  ledge in copper and ink (`ServoWingBand`), and the pads hang in front of the wings like the
+  sheet's (`ServoRig.PAD_OUT_M` 2.35 / `PAD_AHEAD_M` 2.0; render only, outside the 1.6 m hit body
+  as before).
 - The drone: a small quad-rotor with a CS parcel slung below; ~0.7 m across (22 px at 32 px/m),
   four rotor discs read as a + shape; its **shadow on the ground** is the read of where it is,
   offset by its height.
