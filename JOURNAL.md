@@ -213,3 +213,23 @@ NEXT:
   Calls: hover vs crate, portrait side/size, dialogue never pauses play, Don Fax payphone vs bust,
   boss crest as a disc vs a bust above the bar.
 - 22:21 Session end. All committed.
+
+## Iteration 4 (BUILD, 22:22-23:22)
+
+- 22:25 Read JOURNAL, git log, the other journals (no REQUEST to hud), the assets JOURNAL: my crate
+  REQUEST (weapon_crate_open 70/55) not served yet; assets is on Rivet production (round 2200/2215,
+  owner TOP PRIORITY). Round 2215 queues the 5 redesigned weapons' `showcase_<id>_{70,55}` sheets
+  after 15 Rivet sheets: not landed (`rivet-final/out/` has only rivet sheets at 22:25).
+- 22:40 MILESTONE 19b011e6 the 5 redesigned weapons have showcase art NOW: their owner-picked
+  design sheets (`rivet-final/refs/design_<id>.png`) already hold a hero side view, a 3/4 (~55) and a
+  steeper (~60-70) view: `tools/art/design_cut.py` keys the sheet's own bg (green or magenta, corner
+  median, TOL 60 + 40 ramp, spill clamp), labels the pieces (scipy), cuts icon = hero, p55 = bottom 1,
+  p70 = bottom 2 (the plasma cleaver's bottom 2 stands end-on -> p70 = its side). Each piece masked
+  to its own label (the ray gun's 55 caught a corner of the hero's grip before). 15 provenance lines
+  (rivet-r3 job + prompt sha). 17 of 17 drawable weapons now carry p70/p55/icon (unit guard widened
+  to all 17; `--select=test_weapon_showcase` 7/0, lint 15/15). Interim: the assets lane's showcase
+  sheets replace p70/p55 when they land (the import tool is ready).
+  Armory re-filmed (arena.tscn -- --armory --ppm=48 --view=<v> --rigs --seed=1, frame 89, 0 SCRIPT
+  ERROR): `gtai-masters/n8/hud/armory_{tilt70,tilt}_48_after17.png` + `_after17_crop2x.png` (it2 vs it4).
+  Look: the floor is now one inked family; the drum mini-nuke is the biggest piece (sized by its long
+  side; a bulky launcher, reads as heavy, kept).
