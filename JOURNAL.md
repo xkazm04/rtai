@@ -1112,3 +1112,14 @@ NEXT (written 03:17, for iteration 12):
   open call) and the slabs fly back into frame. Impact 3 -> 4 (audit 7). CLIP
   `M/dent_blast_debris_ab_32ppm_48slow.mp4` (3.7 s) + still; frames.json row 0 (dent_car_blow dropped
   from the list, its file stays), REPORT row + call (m), decision line.
+- LOOK 03:53 Dent's slabs in the city block (`--arena=city --bot=ghosts --ghost=dent --rigs --clean`,
+  32 px/m, every 8th frame 140-260): the slabs draw far from the origin (no float32 drop-out), fly
+  over the ambulance and the cops. The log's one ERROR is the exit-time "resources still in use"
+  line, present in the before films too.
+- MILESTONE 03:55 combined city clip re-cut on `5c4219b2`: Dent and Ohm segments refilmed, the other
+  seven reused (RECUT=1), 44.2 s, 0 SCRIPT ERROR in all 9 films. LOOK (sheet over the Dent and Ohm
+  segments): the slabs fly from the car bomb; the bolts land. frames.json note updated.
+- GATES 04:01 on `5c4219b2` (Ohm rim + Dent debris), tree untouched by code during them: unit
+  1219/1219; director reels arena 19/19 and city 19/19 fully down (14x 1/1, 2x 2/2, 3x 4/4 each),
+  0 SCRIPT ERROR; scenarios 52 ran, 0 failed, 0 SCRIPT ERROR
+  (`evidence/n7-melee/{unit,director-arena-loadout,director-city-loadout,scenarios}-5c4219b2.log`).

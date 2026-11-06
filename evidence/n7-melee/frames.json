@@ -75,10 +75,10 @@
     "file": "melee_polished_set_city_32ppm.mp4",
     "title": "The polished set in the city block at 32 px/m: claw, katana, chainsaw, plasma deflect, baton, then Tonnage, Dent, Kerf, Ohm",
     "source": "game-city",
-    "branch": "n7-melee bd36c37c",
+    "branch": "n7-melee 5c4219b2",
     "ppm": 32,
     "before": "none (the combined after clip; each attack's before is its own A/B entry)",
-    "note": "44 s, re-cut 02:28 on 3efd6d47 (code 4540d259) by evidence/n7-melee/set_clip.sh: the five melee chapters and the four ghost reels in the city block at 32 px/m, each filmed alone and cut to its kill window, game audio per segment; --clean (no dev telemetry box) at 1280x800 (the ghost card whole; earlier cuts drew it ~70 px off the left edge)."
+    "note": "44 s, re-cut 03:55 on 5c4219b2 by evidence/n7-melee/set_clip.sh: the five melee chapters and the four ghost reels in the city block at 32 px/m, each filmed alone and cut to its kill window, game audio per segment, --clean at 1280x800. The Dent (car bomb slabs) and Ohm (bolt rim) segments refilmed on 5c4219b2, Kerf (sight) and Tonnage (ram wake) on bc788d09, the melee five on 4540d259 (no melee code moved since). Looked at a sheet over the Dent and Ohm segments: the slabs fly from the car bomb, the bolts land."
   },
   {
     "file": "ohm_stun_crowd_ab_32ppm_04x.mp4",
