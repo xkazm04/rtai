@@ -160,3 +160,33 @@ NEXT (iteration 3):
   the sheet); sprite-and-atlas-production (mipmaps on every new import; same-canvas LOD cells so grip
   and muzzle stay valid); depth-ordered-layered-art (the rim copies swap with the LOD cell, Rim%d names).
 - 15:58: gen55g: a regenerated 55 Gatling (dark barrels with gaps, compact receiver), image.want + lock.
+- MILESTONE 5c71e55e: the regenerated 55 Gatling (gen55g, 64 s; dark gunmetal barrels with gaps, compact
+  receiver; scaled 0.4, prep.py 0.17 2, no small cell: the re-tone would lift the barrels) is drawn again
+  (`enabled: true`). At 48 aimed it reads as a rotary gun with receiver depth (on par with or better than the
+  top-down part); carried nose-down it is a thin dark stick. DECISION (supersedes f0651a19's) in decisions.md.
+- Gates on 5c71e55e: full unit 1421 passed / 0 failed; director reel headless top 19/19 and tilt 19/19, all
+  down, 0 SCRIPT ERROR; lint 15/15.
+- Evidence: gtai-masters/d8/weapons/frames.json (15 entries) + weapons_tilt_set_combined.mp4 (49 s, full
+  frames). Removed pistol_tilt_48_prep_zoom4x.png from masters to stay at 15 (the iteration-2 line above
+  names it; the source film is gone too, so it is not re-makeable: it was a small prep gain).
+- Scratch cleaned: superseded film mp4s deleted (4.7 GB -> ~2.2 GB); kept audit/, heavy48/, lod32/, melee/
+  (the before/after sources of the masters stills).
+
+## Calls for the owner (for REPORT)
+- Gatling under tilt: the regenerated 55 part (default, 5c71e55e) vs the top-down part (`enabled: false` in
+  weapon_held_pitch.json). See gtai-masters/d8/weapons/gatling_tilt_48_regen_before_after.png.
+  Exe: `RTAI.exe -- --arena=pit --weapon=gatling --view=tilt --ppm=48 --rigs` (check the flags against the exe).
+- Long guns at 32 px/m: size_k 1 (default) vs 0.8 (slimmer, still a pale club):
+  gtai-masters/d8/weapons/plasma_rifle_tilt_32_size_k.png. One value per row.
+
+NEXT (iteration 4):
+1. Read scen_it3.log (run_scenarios.mjs on 5c71e55e, started 16:02). If anything but a CONTENDED budget
+   failed, fix that first.
+2. Electro baton at 48: no gain over the before (a thin stick, a dark coil). Try a regenerated part with a
+   thicker cream body and fewer coils, or `enabled: false` (judge on the director chapter, melee.sh).
+3. The melee smear in the tilted plane (MeleeSwing) and the electro arc at the drawn tip: film the
+   electro_gun and the electro_chain chapter at 48/64 and score F.
+4. 32 px/m long guns: the 55 parts read as pale clubs. Try a darker/inked small cell for the long guns
+   only (like the Gatling fix: contrast, not lift), or a slimmer re-cut; film at 32 and pick.
+5. Assault rifle (Gloria?) row in the audit was `?` (bot leaves the crop): film with a wider crop.
+6. Freeze 18:30: export the exe (int-day recipe in docs/decisions.md), REPORT.md by 18:40.
