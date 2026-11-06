@@ -15,11 +15,9 @@ const PROP_FILL: Dictionary[String, Color] = {
 const FLOOR_TILE_M: float = 8.0
 ## The area's stencilled name, this far in from its top edge (below a station's edge wall).
 const LABEL_M: float = 2.2
-## The city's inked props as the arena's cover, so the arena reads as the game, not a sketch:
-## low cover is a row of crates (one crate of the stack, repeated along the box), high cover a
-## dumpster, the course's cones the street cone. Walls stay solid ink (architecture).
-## View lab: each solid prop kind's height (m) under a tilted --view (others are paint: 0).
-## top_lift: the swept slices that extrude a prop toward its leaning top.
+## The city's inked props as the arena's cover: low cover a crate row, high cover a dumpster, the
+## cones the street cone (cards under a tilt: ArenaPropCards); walls stay solid ink. PROP_H_M:
+## each solid kind's height (m) under a tilt; PROP_SLICES: top_lift's swept slices.
 const PROP_SLICES: int = 8
 const PROP_H_M: Dictionary[String, float] = {
 	"cone": 0.7, "cover_low": 1.0, "cover_high": 1.6, "wall_high": 3.0
@@ -135,6 +133,8 @@ func _prop(ci: CanvasItem, at: Vector2, p: ArenaStation.Prop) -> void:
 			ci.draw_rect(Rect2(r.position + up * (float(i) / PROP_SLICES), r.size), side)
 		r.position += up
 		ci.draw_rect(r.grow(1.0), Ink.INK, false, Ink.LINE_PX)
+	elif up != Vector2.ZERO and ArenaPropCards.draw(ci, p.kind, r):  # city's standing cards
+		return
 	elif up != Vector2.ZERO:  # view lab: the south face, then the top at the prop's height
 		var face: Rect2 = Rect2(r.position.x, r.end.y + up.y, r.size.x, -up.y)
 		ci.draw_rect(face, side, true)  # the city barrier's face is its own concrete
