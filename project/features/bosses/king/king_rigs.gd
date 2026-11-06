@@ -57,8 +57,7 @@ var _tick: int = -1
 var _steps: int = 0
 
 
-## Poses every body for this frame, one drive step per sim tick since the last frame;
-## `windup_px` is the car's tell offset (KingBodyView).
+## Poses every body: one drive step per sim tick since the last frame; `windup_px` = car tell.
 func pose(fight: BossFight, adds: BossAdds, windup_px: Vector2) -> void:
 	_steps = 0 if _tick < 0 else clampi(fight.now() - _tick, 0, MAX_STEPS)
 	_tick = fight.now()
@@ -132,8 +131,7 @@ func _fade_down(rig: CutRig, f: BossFight, now: int) -> void:
 	rig.scale = Vector2.ONE * CutRig.SC * rig.plan.size_k * lerpf(1.0, 0.45, clampf(k, 0.0, 1.0))
 
 
-## King's boss plan: KingPlan at boss size with the gold leaf (KingPlan itself stays the plain
-## robot the enemy-ai thug is built from).
+## King's boss plan: KingPlan at boss size with the gold leaf (KingPlan stays the thug's base).
 static func king_plan() -> BodyPlan:
 	var p: BodyPlan = KingPlan.build(KING_SIZE_K)
 	p.torso_swap = GOLD_SWAP
@@ -149,6 +147,7 @@ static func king_plan() -> BodyPlan:
 ## The shoulder megaphone: a gilded rig part on the torso (tinted with the rest on a hit flash).
 static func _horn(rig: CutRig) -> void:
 	var spr: Sprite2D = Sprite2D.new()
+	spr.name = KingArt.HORN
 	spr.texture = PartLibrary.texture(rig.plan.art_dir, "megaphone")
 	spr.centered = false
 	spr.offset = -PartLibrary.of(rig.plan.art_dir).pivot("megaphone", spr.texture)
@@ -177,6 +176,7 @@ func _place(rig: CutRig, id: int, at: Vector2, facing: Vector2, vel: Vector2) ->
 	rig.aim_at = at + facing * 4.0 * Ink.PX_PER_M
 	for _k: int in _steps:
 		rig.drive(SimClock.TICK_DT)
+	KingArt.dress(rig)  # d8: the court's own card strip for this view's pitch (none straight down)
 	RigDetail.sync(rig)
 
 

@@ -220,7 +220,7 @@
         "project/features/bosses/boss_bot.gd": 202,
         "project/features/bosses/boss_fight.gd": 269,
         "project/features/bosses/boss_hook.gd": 282,
-        "project/features/bosses/king/king_body_view.gd": 243,
+        "project/features/bosses/king/king_body_view.gd": 235,
         "project/features/bosses/king/king_rigs.gd": 202,
         "project/features/bosses/servo/servo_draw.gd": 202,
         "project/features/bosses/servo/servo_moves.gd": 223,

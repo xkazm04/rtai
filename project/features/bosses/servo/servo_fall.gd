@@ -16,7 +16,7 @@ const WIND: Vector2 = Vector2(0.55, -0.85)
 const VISOR_TICKS: int = 80
 
 var px: float = 32.0
-var drone_tex: Texture2D = load(ServoRig.ART % "drone") as Texture2D
+var drone_tex: Texture2D = load(ServoArt.path(&"drone")) as Texture2D
 var _pal: PaletteTokens = PaletteTokens.shared()
 
 
