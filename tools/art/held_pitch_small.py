@@ -27,6 +27,11 @@ import held_small as hs  # noqa: E402
 # Pale already (held_small.SKIP): re-toning flattens the glass and the glow core.
 SKIP = hs.SKIP
 EDGE = 6  # part px of silhouette ink: the side body is drawn finer than the top-down parts
+# Two-tone (ink body, the drawn cream kept as paper), as held_small.py does for Gloria: the re-toned
+# 55 long guns printed as pale clubs at 32 px/m, merging with the visor and the legs; the two-tone
+# cell reads as a dark gun with pale details (d8 iteration 4, filmed at 32 tilt; the full tan part
+# still draws from held_small_below_ppm up). homing_shard is not yet filmed, so it keeps the re-tone.
+TWO_TONE = hs.TWO_TONE + ("plasma_rifle", "electro_gun", "ray_gun")
 
 
 def main(argv):
@@ -46,7 +51,7 @@ def main(argv):
             continue
         src = raw / f"{wid}.png" if raw is not None and (raw / f"{wid}.png").exists() else root / f"{wid}.png"
         rgba = np.asarray(Image.open(src).convert("RGBA"))
-        small = hs.two_tone(rgba) if wid in hs.TWO_TONE else hs.retone(rgba, None, EDGE)[0]
+        small = hs.two_tone(rgba) if wid in TWO_TONE else hs.retone(rgba, None, EDGE)[0]
         if sim is None:
             Image.fromarray(small).save(root / f"{wid}_small.png", optimize=True)
             print(f"{wid}: small")
