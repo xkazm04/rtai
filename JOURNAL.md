@@ -1056,3 +1056,10 @@ NEXT (written 03:17, for iteration 12):
   stills, quest 1 ram wake still), city clip re-cut. Calls (j), (k) added. NEXT is the 03:17 entry
   (item 2 done at 03:21; item 4: Ohm per the 03:33 look). Scratch: this iteration's AVIs deleted;
   the set_* AVIs are current for a RECUT.
+- LOOK 03:35 (closes the 03:33 open question) Ohm at 48 px/m, full frames 88/91/94/100: the first
+  bolt strikes the near cop and forks on to the robot thug behind; the robot's landing prints white
+  star sparks edged in ink (100), so a world mark exists. The weak read is the hop on the first
+  cop: the bolt line runs straight across that body and hides it. Candidate for NEXT 4: break the
+  stroke at a struck body (draw the bolt to the body's rim and on from the far rim, or draw the
+  struck body's x-ray above the bolt) so each link of the chain lands on a visible body. View only;
+  film A/B at 32 and 48 first.
