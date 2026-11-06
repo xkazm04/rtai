@@ -163,3 +163,28 @@ generative-artifact-gating (Ohm 70 sheet's all-teal body is a colour-law fault; 
   ghost_bust.py, hue guard, then ghost_card_tone.py against the game's p55 ohm_card (the served
   sheet is all teal; the game's Ohm is steel, teal only in the wisps). Strip comparison:
   scratch `ohm_55_70_strips.png`. Installed as `souls/art/view/p70/ohm_card.png`.
+- MILESTONE 22:14 combat does not regress with the death beat: director reel (headless,
+  `--quit-after 14000 --bot=reel --reel=director --loadout=pistol --rigs`) 19/19 chapters all down,
+  0 SCRIPT ERROR, in `top` and `combo` (at 9a8eb3ac). Logs `evidence/n8-view/director-reel-it4-{top,combo}.log`,
+  `unit-it4.log`, `scenarios-it4.log`.
+
+### Calls for the owner (add to REPORT)
+- The death beat's length: built 1.0 s (`combat.json rivet.death_beat_s`), ink over the last 0.4 s.
+  Options: 0.7 s (snappier) or 1.5 s (a longer look at the sprawl); one value. See
+  `gtai-masters/n8/view/death_beat_before_after_combo_32ppm.mp4`; exe
+  `RTAI.exe res://dev/arena/arena.tscn -- --rigs --boss=king --phase=3 --seed=2 --view=combo` and stand still.
+
+NEXT (iteration 5, in brief order):
+1. Ohm p70 card: film it in game at `--view=tilt70` and `combo` (32 + 64 px/m), before/after
+   (before = the top-down rig at tilt70); check its size against Ohm p55 (GhostCard width).
+2. Kerf p70 from `library/rounds/20261106-2151/out/kerf_70.png` (A): crop the top row, cut with
+   ghost_bust.py (cell 256 like p55), hue guard; the sheet is teal but the game's p55 Kerf v2 is
+   game-palette steel with amber shoulders: tone it against the p55 kerf_card (ghost_card_tone.py,
+   check the hue window keeps the cyan blade edges) and compare side by side before installing.
+3. Dent p70 bust from `library/keyed/street/dent_70.png` (B, fixed tan in keyed/): Dent is a
+   RigHeadCard bust (characters/art/view/p55/dent_bust_card.png): add `p70/dent_bust_card.png` and
+   its row in `RigCardSets.SETS` p70 (my file). Servo 70 from angle-r1/out/servo_70.png.
+4. king_car 70 (B) served: tell `vehicles`? No: the throne-car is the boss cast (mine); read its
+   notes and plan the slice-stack swap by art key.
+5. Then the King-down return under combo, Tonnage's swap with a ghost on screen; items 6-8.
+6. Death beat close-up at `--ppm=64` (not filmed: the 32 px/m clip and a 2x crop only).
