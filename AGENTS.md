@@ -41,6 +41,8 @@ through `TestTmp.dir("<sub>")` (`user://test_tmp/<worktree>/<pid>/`); lint bans 
 
 Install the pre-commit hook once per clone: `git config core.hooksPath .githooks`.
 
+Debt ratchet: `node tools/debt/debt.mjs --check` (lint check `debt-ratchet`) fails when a debt metric is worse than `tools/debt/baseline.json`; it names metric, file and old -> new, so shrink or remove what it names. When it prints `tighten:`, run `node tools/debt/debt.mjs --update` and commit the baseline (it only ever tightens; a deliberate rise needs `--accept-regression="reason"`). After a baseline merge conflict take either side and re-run `--update`. Details: `tools/debt/README.md`.
+
 ## Folder map (STANDARDS section 2)
 
 - `project/` is `res://`. `boot/` composition root, `core/` engine-agnostic infrastructure,

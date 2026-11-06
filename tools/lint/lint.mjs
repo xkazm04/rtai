@@ -10,6 +10,7 @@ import { checkAll as styleChecks } from '../style/check_gd.mjs';
 import { check as constantsCheck } from '../gen_constants/gen.mjs';
 import { validate } from '../lib/mini_schema.mjs';
 import { check as layersCheck } from './layers.mjs';
+import { check as debtCheck } from '../debt/debt.mjs';
 
 // Windows caps a command line at 32767 chars and the gdtoolkit launchers fail silently past it
 // (exit 1, no output: 810 files were 32633 chars), so file lists go in batches of FILE_BATCH.
@@ -124,6 +125,7 @@ export function runLint() {
     dataTables(),
     constantsCheck(),
     layersCheck(),
+    debtCheck(),
     tool('achievements-validate', node, [gen, 'validate']),
     tool('achievements-drift', node, [gen, '--check']),
   ];
