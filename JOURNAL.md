@@ -916,3 +916,32 @@ clips the owner sees with a HUD; your before/after pairs are consistent among th
   ring and blood read. Small stars by the press head at 84-88 could be plate sparks or slam chips:
   not proven (the recorder's ring guards may not fire). Still
   `M/quest1_tonnage_ram_marks_32ppm.png`; REPORT's "not filmed" line rewritten. PNGs deleted.
+- GATES 02:39 `node tools/evidence/run.mjs --no-bench` on `5e466b7f` (code `4540d259`), tree untouched:
+  exit 0, lint 13/13, unit 1204/1204, scenarios 52/52, parity bit-exact over 1200 steps (planted
+  caught at 629), selftest look goldens 11/11, block 5/5 (`evidence/n7-melee/evidence-run-5e466b7f.log`).
+  Bench not run (contended, no lock).
+- BUILD 02:44 `9a2d3137`: the plasma sword's pickup (floor ring, wall rack) and HUD icon still showed the
+  plank blade; both now come from the new part (`plasma_blade_fit.py --icon`: pickup fit to the old
+  487 px width, so PickupsView/WeaponRackView draw it at the same size; icon = pickup padded 8 px
+  through weapon_cut.icon). Looked at both PNGs (the icon silhouette tapers to the point). Provenance
+  rows appended. Unit 1204/1204 on the tree. Not filmed (the pickup ring is not on the reel paths).
+
+NEXT (written 02:35, for iteration 11):
+1. Read n7-ranged's JOURNAL to its end: cherry-pick new hit_feel / feel_cam / camera commits -x with
+   their prerequisites (check each new name exists here), unit before the merge note. Their it11
+   code (muzzle on the drawn tip, molotov wind-up) is weapon art, not the feel layer: not merged.
+   Check for a reply to the 02:26 FYI (film resolution).
+2. Freeze (by 08:30), in order: gates on the final head (lint, unit, `bash evidence/n7-melee/reels.sh
+   <head>`, `node tools/evidence/run.mjs --no-bench` with the tree untouched and logs committed
+   first); `bash evidence/n7-melee/set_clip.sh <head>` only if code moved since `4540d259` (else
+   the 02:28 cut stands; look at a 1.5 s sheet); bake_city + both exes: `--export-release
+   windows-showcase ../build/export/windows/RTAI.exe` and `--export-release windows-slice
+   ../build/export/windows-slice/RTAI.exe`; boot each once (showcase: call (h)'s and call (i)'s
+   lines; slice: the title card, 0 SCRIPT ERROR); finish REPORT.md (exe lines per call a-i, gates,
+   drop "DRAFT").
+3. Build candidates, weakest first (all small; the big ones are owner calls): Tonnage's plates in
+   quest 1 are unproven (does the quest_hauler_rec ring fire? if not, a dev variant with shooting
+   guards, film only); the plasma sword's pickup/icon still show the old plank blade (side views;
+   a re-cut from the new top-down part only if it reads at the pickup's size); call (b) (route the
+   stomp's stop and shake through FeelCam so --feel=off covers it) if the owner's page wants it.
+4. `test_slice_closure` is the check for any merge onto quest 1's path.
