@@ -1,4 +1,4 @@
-# REPORT: lane `view` (n7x-view), night 2026-11-06. DRAFT (iteration 12, 06:30; final at 08:40)
+# REPORT: lane `view` (n7x-view), night 2026-11-06. DRAFT (iteration 15, 07:40; final at 08:40)
 
 ## The question
 
@@ -81,8 +81,23 @@ See `docs/view-lab/PLAN.md` "Cost table draft" (finalized here at the freeze).
 3. **Cast shadows by height** (a low evening sun, down-right): on (default, `--view=tilt`) or off
    (`--view=tilt_noshadow`). My pick: on; they ground the car and the bodies on the foreshortened
    road at 0 art cost. Still: `evidence/view/it12/tilt_noshadow_vs_cast_32_x2_t900.png`.
+4. **Occlusion under tilt** (it15): a body behind a barrier, dumpster or crate row is hidden by it
+   and shown as an ink silhouette with a cream rim (default, `--view=tilt`), or drawn over the
+   prop as in it12 (`--view=tilt_noocclude`). My pick: on. Without it a cop behind the city
+   barrier stands on its lid; with it the barrier reads as a solid wall and the cop as hidden
+   behind it. It fires mostly on the city block (176 body-frames in 60 s, seed 2); the King fight
+   barely shows it (8 frames in 90 s). Still: `gtai-masters/n7/view/city_occlusion_tilt_noocclude_vs_tilt_32ppm_x4_it15.png`.
+   - `build/export/windows/RTAI.exe -- --rigs --arena=city --bot=rivet --seed=2 --view=tilt`
+   - `build/export/windows/RTAI.exe -- --rigs --arena=city --bot=rivet --seed=2 --view=tilt_noocclude`
+   (the showcase export's main scene is the arena; watch the south barrier from about 11 s to 19 s)
 
 ## Gates (switch off)
+
+- it15 on 08e56ab6 (occlusion in): `node tools/evidence/run.mjs --no-bench` all PASS (lint 13/13,
+  unit 1190/0, scenarios 52, parity bit-exact, look goldens 11/11 + block 5/5;
+  `evidence/view/it15/evidence-run-08e56ab6.log`); director reel 19/19 fully down, 0 SCRIPT ERROR
+  on a56fc835 (`evidence/view/it15/director-reel-19of19.log`); `top` md5 b5ed2b94 (seed 2 tick 900)
+  unchanged. Bench not run.
 
 Iteration 9 on the merge (6cb9e9ef): lint 13/13, unit 1181/0, scenarios 52/0, director reel 19/19
 fully down, 0 SCRIPT ERROR. Iteration 12: `node tools/evidence/run.mjs --no-bench` on 52e72590 all

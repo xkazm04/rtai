@@ -506,3 +506,9 @@ NEXT (iteration 16 = the freeze; freeze 08:30, report 08:40):
   (`RigDepthSort.rig_of`, extracted from its follower code). Headless re-runs on it (tilt, seed 2):
   city 3600 frames 176 body-frames hidden (648-1114), 0 SCRIPT ERROR; King fight 5400 frames,
   King defeated, 8 hidden (frames 1647-3923), 0 SCRIPT ERROR (logs replaced in evidence/view/it15).
+- GATE `node tools/evidence/run.mjs --no-bench` on 08e56ab6 (all it15 code, switch off): lint
+  13/13, unit 1190/0, scenarios 52, parity bit-exact (mutation at step 629), look goldens 11/11 +
+  block 5/5, all PASS in 6 min (`evidence/view/it15/evidence-run-08e56ab6.log`).
+- REPORT: call 4 (occlusion on/off, exe lines for `--arena=city`: the showcase export's main
+  scene is the arena), the it15 gates, watch-list item 6. Scratch renders deleted.
+  Session end ~07:42; everything committed. NEXT above stands (1 done, 3 done): the freeze = NEXT 2.
