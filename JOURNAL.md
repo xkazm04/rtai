@@ -954,7 +954,7 @@ unit 1150/1150, scenarios 52/52, parity bit-exact, selftest), reels 19/19 + 19/1
   The only stderr line is the usual "105 resources still in use at exit".
 - NEXT 2 shrinks to: re-bake + re-export on the final head at the freeze, name it in REPORT.
 
-### AUDIT 01:12: the audit table's Sound and Impact columns brought up to date
+### AUDIT 01:08: the audit table's Sound and Impact columns brought up to date
 - Sound still showed iteration 1's zeros (the arena had no audio on main). Re-scored from the
   weapons.json cue table + StageAudio (read, not listened: no audio device here): 3 for an own-family
   shot cue + the impact on the frame (pistol, machine pistol, Gloria, flamer, electro, rocket and
@@ -963,3 +963,14 @@ unit 1150/1150, scenarios 52/52, parity bit-exact, selftest), reels 19/19 + 19/1
   1 for the generic `shot` (homing shard). Own sounds per gun are a new-asset job (noted in the doc).
 - Impact 2 -> 3 for hand cannon, rocket and nuke (the camera answer scaled to the weapon, evidenced
   by `heavy_feel-ab-48ppm.mp4` and `mini_nuke-ab-32ppm.mp4`). The header now says `a -> b` = after.
+- NEXT 1 addendum (read 01:09): RivetHeldView sits on the RIGS' CanvasLayer (`arena_rigs.gd`
+  `_add_hand_views`, z = rigs + 60) while FxView sits on the print stage's actor layer
+  (`collect_call_view.gd:96`), so `to_global` coordinates are NOT shared between them. Publish the
+  muzzle in canvas (screen) space (`_sprite.get_global_transform_with_canvas() * local`) and convert
+  it in FxView with `get_global_transform_with_canvas().affine_inverse()`, then / Ink.PX_PER_M.
+  Also: FX draw UNDER the held weapon sprite (the first whirl take hid under the barrel), so the
+  flash must sit past the tip by about half its cell, tuned on film.
+
+STOP 01:10 iteration 9 (final). Commits after the 01:04 stop: `db355669` (trial exe journal),
+`d98750ba` (audit columns). Tree clean. NEXT for iteration 10 is the list above (1 with this
+addendum; 2 is now only the re-export at the freeze).
