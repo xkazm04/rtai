@@ -1643,3 +1643,20 @@ NEXT (iteration 21, re-stated at 07:36; the 07:23 list stands): `project/` has n
 code. Gates on that tree: lint, unit 1199/0, scenarios 52/0, director reel 19/19, evidence run all
 PASS. At 08:40: REPORT drop DRAFT (header line 3), nothing else owed. If time remains before the
 freeze: play checks only (no body or sim change); clips stay on 987c3439 (same frames).
+
+## Iteration 22 (07:36-08:30, BUILD; the freeze at 08:30)
+
+### 07:37 START
+- Read JOURNAL NEXT (it21 re-stated), git log. n7-king moved with code: dedf4fa0, the optional
+  per-boss `rivet_repair_delay_s` (owner call C's lever on their side; absent = combat.json's 3 s).
+- 07:39 MERGE n7-king 7b404d71 as dd385a82: one content conflict in `boss_spec.gd` (my
+  `kerf_line_m` field beside their `rivet_repair_delay_s`; both kept, both parse lines kept);
+  JOURNAL/REPORT ours. Servo's row does not set the field, so his fight keeps the 3 s repair: the
+  sim must be identical. Pre-commit lint 13/13.
+- 07:41 GATES on dd385a82: unit **1203/0** (1199 + king's 4 repair tests; `unit-it22.log`),
+  scenarios **52 ran / 0 failed**, 0 SCRIPT ERROR (`scenarios-it22.log`).
+- 07:43 EXE re-exported (`--export-release "windows-showcase"`, exit 0), smoke seed 2 human with
+  `--telemetry=<abs path>`: **down 7036, 188, 0 SCRIPT ERROR**, the it20 record line for line (only
+  the view timing fields differ) (`exe-smoke-it22.json`). Commit f850c6f9.
+- 07:40 GATES director reel on dd385a82 started (`scratch/servo/reel22.sh`,
+  `director-reel-it22.log`).
