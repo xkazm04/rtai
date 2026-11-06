@@ -387,3 +387,6 @@ NEXT (iteration 5):
   under contention: my own reels were running). Lint 15/15, unit 1505/0 and the selftest ran
   separately on this head; scenarios, parity and export-audit are owed on the walker head
   (NEXT 1: run the gate alone, nothing else of mine running, with a longer timeout).
+- GATE (00:03) scenarios on 420ef174: 52 passed (headless, not contended). Combo reel ran to its
+  end: exit 0, 0 SCRIPT ERROR, 19/19 all down. Still owed on the walker head: parity and
+  export-audit (the full `evidence/run.mjs --no-bench`, run alone). Scratch .avi captures deleted.
