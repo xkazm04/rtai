@@ -120,3 +120,23 @@ test('removeStale only deletes explicit files under <repo>/build or the temp dir
   rmdirSync(sub); // non-recursive cleanup of the test's own empty mkdtemp dirs
   rmdirSync(dir);
 });
+
+test('ensureImport skips a fresh class cache and answers once per project dir', async () => {
+  const { mkdirSync, mkdtempSync, rmdirSync, rmSync, writeFileSync } = await import('node:fs');
+  const { tmpdir } = await import('node:os');
+  const { ensureImport } = await import('./godot.mjs');
+  const dir = mkdtempSync(join(tmpdir(), 'gtai-ei-'));
+  const cache = join(dir, '.godot', 'global_script_class_cache.cfg');
+  mkdirSync(join(dir, '.godot'));
+  writeFileSync(cache, 'list=[]\n');
+  try {
+    const first = await ensureImport({ projectDir: dir });
+    assert.equal(first.imported, false);
+    assert.match(first.reason, /fresh/);
+    assert.equal(await ensureImport({ projectDir: dir }), first); // memoized: the same object
+  } finally {
+    rmSync(cache, { force: true, recursive: false });
+    rmdirSync(join(dir, '.godot'));
+    rmdirSync(dir);
+  }
+});

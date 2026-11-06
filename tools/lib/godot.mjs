@@ -13,6 +13,7 @@ import { existsSync, readdirSync, readFileSync, rmSync, statSync } from 'node:fs
 import { tmpdir } from 'node:os';
 import { join, resolve, sep } from 'node:path';
 import { ROOT } from './repo.mjs';
+import { isStale } from './class_cache.mjs';
 
 export const SCRIPT_ERROR = /SCRIPT ERROR|Parse Error|Compile Error|Failed to load script/;
 export const HEADLESS_TIMEOUT_MS = 10 * 60 * 1000;
@@ -138,13 +139,39 @@ export function runProcess(cmd, args, { cwd = ROOT, timeoutMs = HEADLESS_TIMEOUT
   });
 }
 
+const IMPORT_TIMEOUT_MS = 8 * 60 * 1000;
+const importChecks = new Map(); // projectDir -> Promise<{imported, reason, durationMs}>, one check per process
+
+/** Runs `--headless --path <dir> --import` only when the class cache is stale (see class_cache.mjs),
+ *  logging the reason to stderr. Idempotent: one check per process and project dir (concurrent
+ *  callers share the promise). Resolves {imported, reason, durationMs, status?}. A failed import is
+ *  reported, not thrown: the caller's own run then shows the real errors. */
+export function ensureImport({ projectDir = join(ROOT, 'project'), timeoutMs = IMPORT_TIMEOUT_MS } = {}) {
+  const key = resolve(projectDir);
+  if (!importChecks.has(key)) importChecks.set(key, (async () => {
+    const t0 = Date.now();
+    const { stale, reason } = isStale(key);
+    if (!stale) return { imported: false, reason, durationMs: Date.now() - t0 };
+    console.error(`godot: class cache stale (${reason}): running --import first`);
+    const res = await runGodot(['--import'], { name: 'import', timeoutMs, cwd: resolve(key, '..'), ensure: false });
+    const note = res.status === 0 && !res.timedOut ? 'done' : `FAILED (${describe(res)})`;
+    console.error(`godot: --import ${note} in ${(res.durationMs / 1000).toFixed(1)} s`);
+    return { imported: true, reason, durationMs: Date.now() - t0, status: res.status };
+  })());
+  return importChecks.get(key);
+}
+
 /** Runs the resolved Godot. `headless` (default) prepends --headless; `--path project` is always
- *  added. `name` is only a label for callers' logs. */
-export async function runGodot(args, { timeoutMs = HEADLESS_TIMEOUT_MS, cwd = ROOT, name, headless = true } = {}) {
+ *  added. `name` is only a label for callers' logs. `env` replaces the child environment (default:
+ *  inherit). `ensure` (default: on unless the args contain --import) first refreshes a stale class
+ *  cache once per process via ensureImport. */
+export async function runGodot(args, { timeoutMs = HEADLESS_TIMEOUT_MS, cwd = ROOT, name, headless = true, env,
+  ensure = !args.includes('--import') } = {}) {
   const g = resolveGodot();
   if (!g.ok) return { status: -1, out: g.message, timedOut: false, durationMs: 0, notFound: true, name };
+  if (ensure) await ensureImport({ projectDir: join(cwd, 'project') });
   const full = [...(headless ? ['--headless'] : []), '--path', 'project', ...args];
-  return { ...(await runProcess(g.bin, full, { cwd, timeoutMs })), name };
+  return { ...(await runProcess(g.bin, full, { cwd, timeoutMs, env })), name };
 }
 
 /** True when `file` resolves strictly inside <repo>/build or the OS temp dir. */
