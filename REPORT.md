@@ -18,6 +18,7 @@ final hash moved once, deliberately, when quest 1 started carrying the katana (`
 | Tonnage press slam | `4c6c6bf5` | a landing flash, paper chips and dust on the slam | `M/tonnage_slam_ab_32ppm_48slow.mp4` |
 | Dent's blast and blow | `cb3e5caa`, `4a522dfe` | felt: a kick outward from the car (blast), the melee stop plus a crash shake (blow) | `M/dent_blast_ab_32ppm.mp4`, `M/dent_car_blow_ab_32ppm_04x.mp4` |
 | Tonnage ram | `0c4161d8` | a cream burst past each rammed body, paper chips along the shove | `M/tonnage_ram_ab_32ppm_48slow.mp4` |
+| Tonnage's ram called before the contact | `bc788d09` | while the press moves at ram speed a bow wave (cream edged in ink) rides from its nose past its flanks, outside the drawn press, so the charge reads before anyone is hit (in quest 1 too) | `M/tonnage_ram_wake_ab_32ppm_48slow.mp4`, still `M/tonnage_ram_wake_ab_32_48ppm.png` (before `ghost_attacks.json` tonnage `ram_wake_k` 0, or `--feel=off`) |
 | Tonnage plates | `8375c763`, `330779ff`, `d97a976d` | an enemy round now stops at the plate face with a small capped glance spark (it drew through his body before) | `M/tonnage_plates_ab_32ppm.mp4` |
 | Ohm mass arc | `454490ce`, `7ce7b33d` | the branches draw at 0.55 of the bolt; a stunned crowd keeps full marks on the 2 newest bodies only, so the cops' blue reads through | `M/ohm_mass_arc_ab_32ppm_04x.mp4`, `M/ohm_stun_crowd_ab_32ppm_04x.mp4` |
 | Melee and ghost hit sounds | `f593aac4` | each attack family plays its own sound on the hit tick, built from the shipped bank (claw knock, blade cut, chainsaw bite, baton zap, ghost slam, Ohm bolt) | `M/hit_cues_ab_32ppm.mp4` (before `--hit-cues=off`) |
@@ -119,6 +120,13 @@ head spark.
 - Before: `ghost_attacks.json` kerf `sight_k` 0, or `--feel=off` (which also drops every other feel effect).
 - See it: `RTAI.exe -- --bot=ghosts --ghost=kerf --rigs --ppm=32` (the first cut is called at about 1.5 s).
 - Note: the line is teal because it is Kerf's own mark (a soul's), not an impact on the world.
+
+(k) Tonnage's bow wave while he rams.
+- Options: the bow wave (built); none (the ram reads only on contact).
+- Clip: `M/tonnage_ram_wake_ab_32ppm_48slow.mp4`.
+- Before: `ghost_attacks.json` tonnage `ram_wake_k` 0, or `--feel=off`.
+- See it: `RTAI.exe -- --bot=ghosts --ghost=tonnage --rigs --ppm=32` (the press reaches the cops at
+  the car at about 1.9 s).
 
 ## Next steps
 See the last NEXT entry in `JOURNAL.md`.

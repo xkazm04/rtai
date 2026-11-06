@@ -984,3 +984,25 @@ NEXT (written 02:35, for iteration 11):
 - CLIP `M/kerf_sight_ab_32ppm_48slow.mp4` (7.3 s) + still; frames.json row 0 (kerf_chain dropped
   from the list to stay at 15; its file stays, REPORT names it). Audit antic. 2 -> 4, REPORT row and
   call (j), decision line.
+- LOOK 03:07 Kerf's sight in the city block (`--arena=city --bot=ghosts --ghost=kerf`, 32 px/m,
+  every 8th frame 70-229, 0 SCRIPT ERROR): the dashed teal line reads on the dark asphalt to the
+  cops by the ambulance; the lock shows on the next cop after each cut.
+- FRICTION 03:05 the background reels on `96e1abe6` ran while I edited the RamWake files: their city
+  and scenario logs are not a clean read of any commit. Deleted; re-run on `bc788d09`. Same lesson
+  for data flips: the 48 px/m before film set ram_wake_k 0 for ~40 s while the bc788d09 arena reel
+  ran (a view value only, it cannot change a chapter's pass); restored from a copy. Next time film
+  befores before starting a gate.
+- BUILD 03:09 `bc788d09` RamWake (audit 7b, Tonnage ram antic. 2): a bow wave of two swept arcs
+  (cream in ink) and flank dust streaks while HaulerForm.vel > 0.8 x ram_mps, full at ram_mps;
+  TonnageView and CastView (quest 1) draw it. ghost_attacks.json tonnage ram_wake_k (0 = before).
+  Test test_ram_wake (off below 0.8, grows in, capped); planted ram_wake_k 0 fails 3 asserts.
+- LOOK 03:08 first pass (wave 0.45-0.55 m past the 0.9 m body) lay under the press art (the form
+  draws over TonnageView; the press is drawn ~0.7 m past its body, the gear arms 1.1 m): only faint
+  cream curves through the press. Moved to 1.3-1.5 m: the arc rides outside the press ahead of the
+  cops at the car (110) and the riot cop (222, the ram burst at 232). Antic. 2 -> 3, not more: the
+  live beats have no long charge, only a close shove at ram speed.
+- CLIP `M/tonnage_ram_wake_ab_32ppm_48slow.mp4` (9.3 s) + still; frames.json row 0
+  (plasma_deflect dropped from the list; its file stays, REPORT names it). REPORT row + call (k),
+  audit 7b, decision line.
+- FRICTION 03:11 a unit run without GODOT_BIN exported reports "import exit -1 ... (1205 passed)":
+  the runner re-reads a stale result. Not a test result; log deleted, re-run.

@@ -119,6 +119,13 @@ By the craft columns (impact and read at 32 weigh most: they are what the owner 
    rammed riot cop is thrown down from the contact (142) where he stood braced. Victim sync 3 -> 4;
    read stays 2 (the heap is still the sim's shove into the car). Tried and reverted 00:36: ink speed
    lines bridging the shove (they lie under the press). `M/ghost_wound_ram_ab_32ppm.mp4`.
+   **Anticipation 03:10 (`bc788d09`)**: RamWake: while HaulerForm.vel is above 0.8 of ram_mps a
+   bow wave (two swept arcs, cream edged in ink, with dust streaks off the flanks) rides 1.3-1.5 m
+   past the 0.9 m body, so it clears the drawn press (the first pass at 0.45-0.55 m lay under the
+   press art and only showed faintly through it). Looked at (32 px/m frames 110/120/222/232/340/356,
+   48 px/m 108/224): the arc rides ahead of the press as it closes on the cops at the car and on the
+   riot cop, a few frames before each ram burst. Antic. 2 -> 3 (there is still no charge in the
+   live beats, only a close-in shove at ram speed). `M/tonnage_ram_wake_ab_32ppm_48slow.mp4`.
    **Cause found 01:34**: GhostFormView draws the form at rigs z + 60 (ghost-forms: no human over a
    ghost body) and the sim lets a rammed body sit inside the press footprint, so a body there is
    hidden whatever the view prints; a body thrown clear (the city riot cop, frame 150) reads. Read
