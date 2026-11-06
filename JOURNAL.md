@@ -1345,3 +1345,20 @@ NEXT (iteration 14, in order):
   0 SCRIPT ERROR, "king dazed 36 ticks" x2 as in it4). **Looked at** the 2 fps sheet: the teal form,
   the bolt arcing into King, the dazes, the charge lanes, King down at the end; new cape and horn.
   it4 clip deleted; frames.json 15; REPORT points at it13. Session ends, everything committed.
+
+## Iteration 14 (03:37-, BUILD)
+Read: JOURNAL NEXT (it13), git log, frames.json. `king_car_trim.gd` showed `M` with an empty diff
+(stat only; `git update-index --refresh` cleared it).
+
+### 03:42 FILM the three old ghost clips re-filmed on 263d1046 (NEXT 1)
+- `build/scratch14/film.sh` (arena scene, `--rigs --boss=king --bot=boss --boss-cam --ppm=48
+  --phase=3 --seed=2 --ghost=<id>`, `--fixed-fps 60 --write-movie <abs>.avi`), CRF 24:
+  `M/king_kerf_p3_48ppm_it14.mp4` (10 s), `M/king_tonnage_p3_48ppm_it14.mp4` (20 s),
+  `M/king_dent_p3_48ppm_it14.mp4` (26 s); each 0 SCRIPT ERROR, "king defeated" in the log.
+- **Looked at** the sheets: Kerf (2 fps) blinks through King in the charge lane, the slam ring, King
+  down crown off at ~8 s; Tonnage (1 fps) closes, the teal stomp ring and cracks beside King, then
+  the soul ends and Rivet finishes him; Dent (0.8 fps) tethers the plaza sedan, drives it into
+  King, it wrecks black beside him, the fight goes on; a frame at 25.6 s shows the defeat (crown
+  off, ink burst). The folded ermine cape and the gold horn throughout.
+- it5/it6 clips deleted; frames.json 15 (all files present); REPORT clips line + gates (it13) and
+  director reel (it13) lines brought up to date.
