@@ -1,10 +1,10 @@
 # REPORT - lane weapons (d8, 2026-11-06)
 
-DRAFT written 17:25 (iteration 5). The freeze session updates the gate numbers, the exe line and the
-branch head below.
+Final, written in the freeze session (iteration 6). Code head `cddcc340`, which is the exported exe; the
+commits after it touch docs and the journal only.
 
 Branch `d8-weapons` (cut from main `0bea8b93`). Evidence: `C:\Users\kazda\kiro\gtai-masters\d8\weapons\`
-(`frames.json`, 15 entries, best first; `weapons_tilt_set_combined.mp4`, 79 s). Audit:
+(`frames.json`, 15 entries, best first; `weapons_tilt_set_combined.mp4`, 83 s). Audit:
 `docs/polish/weapons-tilt.md`. Every change is selected by the view (the `55` pitch row of
 `project/data/tables/weapon_held_pitch.json`, or the view's lift via `ShotLift`). Under `top` the art and
 FX are today's (unit tests), and `--held-pitch=off` / `--shot-lift=off` give the before under `tilt`.
@@ -31,15 +31,25 @@ same seed and bot for before and after.
 4. **Floor pickups (iteration 5, 81548c4e).** Under tilt the gun hovers 0.35 m over its disc, stood up
    for the raised camera, with an ink shadow (`pickups_tilt_48_hover_before_after.png`, 48 + 32 px/m).
 
-Gates (iteration 5, on a7f6e29d): the director reel headless went `top` 19/19 and `tilt` 19/19, every
-chapter all down, 0 SCRIPT ERROR. Unit: 1409 passed, 0 failed. Lint: 15/15. Re-run on 81548c4e: see the
-journal; FREEZE: put the final numbers and the evidence run here.
+Gates. Evidence run `node tools/evidence/run.mjs --no-bench` on `ca3edb4d` (the same code as `cddcc340`),
+17:46, every check PASS: lint 15/15 over 1095 files; unit 1428 passed, 0 failed, 0 skipped; scenarios 52
+passed (headless); parity native == GDScript bit for bit over 1200 steps, planted mutation caught at step
+629; selftest look goldens 11/11 and block goldens 5/5 within mean 4, no new off-doctrine accents; export
+audit release-compile 541 loaded, 0 failed. So `top` did not move. Director reel headless on `cddcc340`:
+`top` 19/19 and `tilt` 19/19, every chapter all down, 0 SCRIPT ERROR. Bench skipped (`--no-bench`),
+unmeasured.
 
 5. **Molotov (iteration 5, cddcc340):** the 55 bottle is drawn at 1.2x; at 1x it read tiny in the claw at
    48 px/m, and at 1.35x it read as a club (`molotov_tilt_48_size_k.png`).
+6. **Electro chain arc (iteration 6, scored, no change needed):** in the `electro_chain` chapter the bolt
+   leaves the coil tip at gun height and the hop arcs run cop to cop at chest height
+   (`electro_chain_tilt_48_arc_before_after.png`).
 
 ## What does not work / open
 - **Electro baton:** none of the 55 parts beats the top-down part at 48 px/m. That is an owner call (below).
+  A third try in the freeze session (pale cream wrap, brass band, no red; gen55i) printed the same as the
+  shipped 55 part in its chapter: at 48 px/m the print flattens the band and the wrap into tan and ink.
+  Rejected, not committed (`electro_baton_tilt_48_try3_rejected.png`, top row = shipped).
 - **Long guns at 32 px/m:** the two-tone cells are better than the re-tone, but still larger than the
   slim top-down silhouette.
 - **HUD icons:** not changed. The HUD shows the pickup art, which this lane did not change.
@@ -66,13 +76,17 @@ journal; FREEZE: put the final numbers and the evidence run here.
    (+ `--held-pitch=off`).
 4. **Floor pickups:** hover 0.35 m (the default) vs lying stood-up on the disc (`PickupsView.HOVER_M` 0).
    See `pickups_tilt_48_hover_before_after.png`.
-   Exe: `RTAI.exe -- --armory --ppm=48 --view=tilt --rigs` (+ `--shot-lift=off` for the before); smoke-run on the 17:13 export (16 weapons on the hub floor, 0 SCRIPT ERROR; that export predates the hover, so re-export).
+   Exe: `RTAI.exe -- --armory --ppm=48 --view=tilt --rigs` (+ `--shot-lift=off` for the before); smoke-run on the 17:34 export, 0 SCRIPT ERROR.
 
 ## The exe
 `build/export/windows/RTAI.exe` (windows-showcase preset, main scene = the arena). Command:
 `APPDATA=C:/Users/kazda/kiro/gtai-d8/appdata/weapons "$GODOT_BIN" --headless --path project --export-release windows-showcase ../build/export/windows/RTAI.exe`.
-Exported on cddcc340 at 17:34 (exit 0, smoke 0 SCRIPT ERROR). FREEZE: re-export if the head moves and name the sha here.
+Exported on `cddcc340` at 17:34 (exit 0, 247 MB + the gtai_sim dll); the pickup hover and the molotov
+are in it. Smoke: `RTAI.exe --quit-after 200 -- --armory --ppm=48 --view=tilt --rigs` exit 0, 0 SCRIPT
+ERROR. No code moved after it, so it was not re-exported. Every exe line in Calls for the owner works on it.
 
 ## Next steps
 - Baton: a pale-wrap regeneration with a brass band, filmed in its chapter; or take the owner's pick.
-- Electro arc: score the shock's origin frame by frame in the electro_chain chapter.
+- The 70 row: the parts are keyed by the pitch row (`weapon_held_pitch.json`), so `view70` (or the next
+  run) can add `held_70/` beside `held_55/`; the hover, the lift and the crescent already read the view.
+- Long guns at 32 px/m: a slimmer re-cut (fewer side-body px) if the owner keeps two-tone.

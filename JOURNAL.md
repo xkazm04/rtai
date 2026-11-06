@@ -357,3 +357,20 @@ NEXT (iteration 6, the FREEZE session):
 - Session end 17:38. Branch head clean.
 ## 17:38 iteration 6 (BUILD, freeze session)
 - 17:38 Read JOURNAL, git log. Code head cddcc340 = the exported exe (only docs since). Evidence run first (background).
+- 17:40 Electro chain arc scored (NEXT 5): the electro_chain chapter at 48 tilt, same seed, --shot-lift=off =
+  before. The bolt leaves the coil tip at gun height and the hop arcs run cop to cop at chest height in both
+  films; nothing to fix. Audit row dd8594a5; still gtai-masters/d8/weapons/electro_chain_tilt_48_arc_before_after.png.
+- 17:42 Scratch cleaned 3.0 GB -> 0.4 GB (audit/ films except the flamethrower pair frames.json names,
+  heavy48/, lod32/, molo/). frames.json: the pickup source now names the kept pngs (the .avi are gone). 15 entries, all exist.
+- 17:43 Evidence run (--no-bench) started on ca3edb4d (the first try refused a dirty JOURNAL: commit first).
+- 17:45 Baton try 3 (gen55i, image.want + lock, 65 s): a pale cream wrap, a brass band, cream prongs, no red
+  (try 2 gen55h was rejected for the dark grip and the reddish copper band). Cut, fit to the 528x148 canvas
+  (grip [84,78], muzzle [519,81] between the prongs), print prep 0.17 2, small cell. Scratch baton_i/. To be
+  filmed in its chapter once the evidence run is done (it must not see half-swapped art).
+- 17:46 Evidence on ca3edb4d (= cddcc340 code): every check PASS. lint 15/15; unit 1428/0/0; scenarios 52;
+  parity bit for bit, mutation caught at 629; selftest look goldens 11/11, block 5/5; export audit 541/0.
+- 17:48 Baton try 3 filmed in its chapter at 48 tilt, same seed (scratch baton_i/cmp.png, zcmp.png; 0 SCRIPT
+  ERROR both): it prints like the shipped 55 part (the print flattens the brass band and the cream wrap into
+  tan and ink). No clear gain: REJECTED, reverted with git restore + --import; not committed, no provenance
+  line (nothing shipped). Still gtai-masters/d8/weapons/electro_baton_tilt_48_try3_rejected.png.
+- REPORT.md final (no DRAFT): gate numbers, exe on cddcc340 (no code since, so no re-export), the arc row.
