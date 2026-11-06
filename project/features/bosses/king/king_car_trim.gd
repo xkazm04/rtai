@@ -35,6 +35,8 @@ const BUMPER_M: float = 0.18
 ## angle (rad) either side of straight back. THRONE_HW_M 0 = no throne (it14).
 const THRONE_HW_M: float = 0.95
 const THRONE_ARC: float = 1.15
+## The scrolled crest at the arch's back centre (the sheet's carved top), its radius (m); 0 = none.
+const CREST_M: float = 0.17
 
 
 static func draw(ci: CanvasItem, l: float, w: float, p: float) -> void:
@@ -80,6 +82,14 @@ static func throne(ci: CanvasItem, at: Vector2, p: float) -> void:
 		ci.draw_circle(fin, 0.15 * p + 2.0, INK)
 		ci.draw_circle(fin, 0.15 * p, GOLD)
 		ci.draw_circle(fin - Vector2(0.05, 0.05) * p, 0.055 * p, GOLD_HI)
+	if CREST_M > 0.0:  # the crest: a gold boss with two scrolls, past the arch's back
+		var c: Vector2 = at + Vector2(-r - CREST_M * 0.6 * p, 0.0)
+		for k: Vector2 in [Vector2(0.0, 0.0), Vector2(0.25, -0.9), Vector2(0.25, 0.9)]:
+			var q: Vector2 = c + Vector2(k.x, k.y) * CREST_M * p
+			var rr: float = CREST_M * p * (1.0 if k == Vector2.ZERO else 0.6)
+			ci.draw_circle(q, rr + 2.0, INK)
+			ci.draw_circle(q, rr, GOLD)
+		ci.draw_circle(c, CREST_M * p * 0.45, PLUM_DARK)  # a plum gem (vermilion is the cape's)
 
 
 ## The hood cannon from `tail` to `tip` (car px): ink-edged, shaded, banded, on its mount.

@@ -1515,3 +1515,13 @@ matter at 32 px/m, finalize REPORT.
   **19/19 chapters fully down**, 0 SCRIPT ERROR (`evidence/king/director-reel-it15.log`).
 - Scenarios **52 ran, 0 failed**, 0 SCRIPT ERROR (`evidence/king/scenarios-it15.log`; the exit
   PagedAllocator line is in it14's log too). Unit 1164/0 and lint 13/13 at 889cc825. Combat holds.
+
+### 04:42 MILESTONE the throne back's crest
+- **Looked at** the it15 comparison's ram-tell crop zoomed: the arch holds through the tell, but
+  reads partly as a horseshoe. `KingCarTrim` CREST_M 0.17: a gold boss with two scrolls at the
+  arch's back centre (the sheet's carved top). First try had a vermilion gem: caught at the A/B
+  (vermilion is the cape's, danger's, objectives' and the collar's only), changed to a plum gem.
+- A/B phase 1 tick 60 at 32 and 48 px/m
+  (`evidence/king/shots/it15/car_throne_crest_before_after_p1_32_48ppm.png`). **Looked at**:
+  subtle at 32 px/m (about 5 px), a carved ornament at 48; no clutter. DECISION keep 0.17.
+- Unit **1164/0** (`evidence/king/unit-it15b.log`).
