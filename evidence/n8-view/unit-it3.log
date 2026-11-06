@@ -1,0 +1,14 @@
+unit-tests: 1489 passed, 0 failed, 0 skipped (GUT, headless)
+10 slowest tests:
+  9.084 s  res://tests/unit/test_save_slots.gd test_a_thousand_alternating_autosaves_leave_exactly_two_slot_files
+  3.370 s  res://tests/unit/test_city_flow_field.gd test_a_cop_routes_through_the_gap
+  2.035 s  res://tests/unit/test_city_sim_pass.gd test_a_car_passes_a_parked_obstacle_and_returns_to_its_lane
+  1.055 s  res://tests/unit/test_city_flow_field.gd test_the_field_is_deterministic
+  1.014 s  res://tests/unit/test_city_sim.gd test_a_cop_shoots_and_a_hit_kills
+  0.941 s  res://tests/unit/test_city_sim.gd test_a_car_stops_behind_an_obstacle_point
+  0.753 s  res://tests/unit/test_city_sim_pass.gd test_a_blocked_oncoming_lane_keeps_it_waiting
+  0.737 s  res://tests/unit/test_city_sim.gd test_same_seed_same_world
+  0.676 s  res://tests/unit/test_city_streaming.gd test_residency_follows_the_focus_deterministically
+  0.511 s  res://tests/unit/test_ghost_apparition.gd test_a_voice_shows_one_body_and_ends
+log: build/test-results/unit-tests.log (84.8 s)
+exit 0

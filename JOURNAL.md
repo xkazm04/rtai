@@ -127,3 +127,7 @@ NEXT (iteration 4, in brief order):
   `aim_lock_at_windup` true); option false = d8's late lock. Note it makes every King/Servo attack
   easier to dodge (the whole windup is reaction time); if the fights get too easy, the next lever is
   a shorter windup, not a later lock. See `king_ring_lock_before_after_combo_32ppm.mp4`.
+- MILESTONE 21:18 combat does not regress: director reel (headless, `--quit-after 14000
+  --bot=reel --reel=director --loadout=pistol --rigs`) 19/19 chapters, every chapter all down,
+  0 SCRIPT ERROR, in `top` and in `combo` (at 504403a2). Logs: `evidence/n8-view/director-reel-it3-{top,combo}.log`,
+  `unit-it3.log` (1489/0, at e513d663), `rig-stress-alone-it3.log`.
