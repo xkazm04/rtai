@@ -512,3 +512,8 @@ NEXT (iteration 16 = the freeze; freeze 08:30, report 08:40):
 - REPORT: call 4 (occlusion on/off, exe lines for `--arena=city`: the showcase export's main
   scene is the arena), the it15 gates, watch-list item 6. Scratch renders deleted.
   Session end ~07:42; everything committed. NEXT above stands (1 done, 3 done): the freeze = NEXT 2.
+- EXE re-exported on 8d53ddbf (`windows-showcase`, 9 s, 0 errors, build/export-it15.log; a safety
+  net, re-export again at the freeze). Smoke headless (`evidence/view/it15/exe_*.log`): `--view=tilt`
+  city block 3600 frames: 176 body-frames hidden, 0 SCRIPT ERROR; `--view=tilt` King fight: King
+  defeated, 8 hidden, 0 SCRIPT ERROR; `--view=top` King fight: King defeated, no occluder made,
+  0 SCRIPT ERROR. The exe matches the editor runs exactly.
