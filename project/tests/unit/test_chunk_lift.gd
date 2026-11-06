@@ -43,7 +43,7 @@ func test_buildings_draw_last_by_south_edge() -> void:
 
 func test_heights_come_from_the_table() -> void:
 	var lift: ChunkLift = _lift(70.0)
-	assert_eq(lift.height_m[1], 21.0, "building_tall")
-	assert_eq(lift.height_m[2], 8.5, "building_warehouse")
+	assert_eq(lift.height_m[1], 21.0 * 0.5, "building_tall at height_k 0.5")
+	assert_eq(lift.height_m[2], 8.5 * 0.5, "building_warehouse at height_k 0.5")
 	assert_eq(lift.style_of[1], lift.style_of[0], "default is the tenement style")
 	assert_ne(lift.style_of[2], lift.style_of[1], "the warehouse is shop style")

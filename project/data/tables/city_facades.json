@@ -53,7 +53,7 @@
     "style": "tenement"
   },
   "doc": "City south faces under an angled view (night n8 lane city, FacadeArt / ChunkLift): under a tilt every building's roof is lifted by its height (ViewMode.lift_px(height_m * height_k)) and its south face is drawn under it, tiled bay by bay across the footprint's width from a style's wall strip. by_name: a city_textures `name` -> its style and height in metres (else default). height_k scales every height (1 = true height; the owner's call: a shortened cut for play visibility). styles: art = the strip per view art key (`<art>` is the view row's art, p55 / p70), bays = bay cells in the strip, bay_m = a bay's width on the ground. art_fallback: an art key whose strip is missing draws the named key's strip (p70 draws the p55 drawing, stretched by the geometry, until the 70 twins land). `top` draws none of this (bit-identical).",
-  "height_k": 1,
+  "height_k": 0.5,
   "schema": "gtai.city-facades/1",
   "styles": {
     "shop": {

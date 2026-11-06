@@ -96,3 +96,21 @@ NEXT:
 3. Occlusion (item 2) per the view answer; payphone first for props (item 3): stand the props up from
    the library sheets (payphone_55 A from round 1920).
 4. Check cross-quadrant order (a building straddling two 64 m quadrants draws in item order).
+
+### 21:16 DECISION height_k 0.5 (default)
+- Filmed `height_k` 1 vs 0.5, same `--bot=course` frame 899, tilt70, 32 px/m:
+  `it1_height_k_1_vs_05_tilt70_32ppm.jpg`. At 0.5 the north sidewalk stays clear (Rivet and the
+  barriers stand beside the roof edge, not on it); the faces become short brick strips (the helipad's
+  is hidden by the block south of it). Default 0.5, true height one value away: an owner call (Calls
+  for the owner: true height vs shortened cut; the still above; exe line
+  `RTAI.exe res://dev/arena/arena.tscn -- --arena=city --bot=course --seed=2 --rigs --clean --view=tilt70`).
+- Test updated (heights x 0.5), 3/3. The occlusion item (2) stays needed for the 17-21 m landmarks
+  and for anyone walking in a roof's lift band.
+
+NEXT (session 2, in order):
+1. Full unit run + scenarios on this head; check `top` bit-identity (framemd5 of
+   `--arena=city --bot=rivet --seed=2 --rigs`, `--quit-after 301`, vs main 8e9eeb78).
+2. Occlusion: read view's answer to the REQUEST; build `ChunkLift.occluder_at()` either way.
+3. Props stand up (payphone first: library payphone_55 A round 1920), then barriers, dumpsters,
+   crates, hydrants, lamps (barrier/dumpster/hydrant have 70 twins: A).
+4. Combo engage film (the settle redraw: holes?), 48/64 px/m close-ups, a 30-90 s set clip.
