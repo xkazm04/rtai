@@ -58,7 +58,7 @@ the parts hold their detail and do not turn to mush.
   top 19/19, 0 SCRIPT ERROR**.
 - On 0f11ec5f: unit full run **1427/1427**, scenarios **52/52** (run alone). Lint 15/15 on every commit.
 - `top` identity was measured for every change: a raw-frame md5 of the old code vs the new code under `--view=top` (JOURNAL).
-- `node tools/evidence/run.mjs --no-bench` on 76cbfcfb: see JOURNAL (running at 17:17).
+- `node tools/evidence/run.mjs --no-bench` on 27512277 (code = 76cbfcfb): **all PASS**: lint 15/15, unit 1427/0, scenarios 52/52, parity bit-exact (planted mutation caught at 629), selftest (look goldens 11/11, block 5/5), export-audit 542 loaded, 0 failed.
 
 ## What does not work / known gaps
 - Mid-fight pitch changes (view70's combined view): a card swapped once keeps its strip if the pitch moves.

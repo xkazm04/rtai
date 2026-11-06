@@ -309,3 +309,10 @@ NEXT (iteration 7 = the freeze session; freeze 18:30, REPORT 18:40):
    DRAFT banner, Calls 1-9 are in it.
 4. If time remains before the freeze: the director reel in tilt and top on the tip (the train fix is
    tilt-only render), and a 48 px/m look at the cape train in the ram-free phase 3 slam.
+- 17:23 GATE `evidence --no-bench` on 76cbfcfb: every step PASS except unit-tests marked FAIL with
+  1427/0, because I edited JOURNAL.md/REPORT.md during the run (the tree-changed guard). My error:
+  do not touch the tree while evidence runs.
+- 17:29 GATE `evidence --no-bench` re-run on 27512277 (code = 76cbfcfb), tree untouched: ALL PASS:
+  lint 15/15, unit 1427/0, scenarios 52/52, parity bit-exact (planted caught at 629), selftest (look
+  goldens 11/11, block 5/5), export-audit 542 loaded 0 failed. NEXT item 1 done; re-run only if code
+  changes before the freeze.
