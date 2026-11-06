@@ -35,6 +35,7 @@ because I edited docs during the run). City-block director reel with `--loadout=
 `ed60713e` 19/19, 0 SCRIPT ERROR. On `7326b53b`: unit 1138/0, lint 13/13, pit director reel with the loadout 19/19, 0 SCRIPT ERROR.
 
 ## What does not work / not done
+- The rocket and the mini-nuke tube pops to Rivet's left shoulder for one frame right after each launch (32 px/m, lone film frame 266; found it13, not yet diagnosed or compared with main). See JOURNAL LOOK 02:31.
 - Molotov throw: the wind-up landed in iteration 11 as a cocked ready pose (`8766508f`), not as a
   timed wind-up before each release: the throw fires on the button press (semi, 50-tick interval
   over a 42-tick reload), so nothing in the sim announces the release; a wind-up that plays

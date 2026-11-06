@@ -1158,12 +1158,27 @@ Read: JOURNAL NEXT (it11; no it12 entries), git log, n7-melee / n7-king / n7-ser
   change. Find the launch by the `rocket_launcher` shot in a lone film instead
   (`--weapon=rocket_launcher --bot=gunplay --lone --cam=fight --ppm=32 --reach=9`).
 
+### LOOK 02:31: rocket flash gap closed; a one-frame tube pop FOUND (not fixed)
+- Lone `--weapon=rocket_launcher --bot=gunplay --lone --cam=fight --ppm=32 --reach=9 --clean` on
+  `311684d4`, 0 SCRIPT ERROR, lone kill tick 289; frames 262-269 at 3x. The launch star sits about
+  5 px (0.15 m) past the tube mouth at 32 px/m: reads as attached. NEXT 3 closed without code.
+- FOUND: frame 265 the tube is on Rivet's right, mouth down the aim, star at the mouth; frame 266
+  the whole tube is on his LEFT side (star under it); frame 267 it is back on the right with the
+  rocket leaving the mouth. A one-frame pop to the other shoulder on every launch; the nuke shows
+  the same on its frame 266 (scratch nuke/z.png). Suspect: the first reload frame (magazine 1, the
+  reload starts on the shot) posed by RigGrip._reload's chest spot before the release, or the held
+  view reading the reload a frame apart from the rig (like the molotov's lag frame, it11). Not
+  compared with main yet. Film: C:\Users\kazda\kiro\gtai-n7p\scratch\ranged\rocket\r32.avi.
+- Commit note: `52fa900d`'s message names this entry, but the entry only landed in the next commit
+  (a heredoc escape broke the edit; that commit carried the TEST 02:27 entry).
+
 NEXT (iteration 14):
 1. (City clip retaken 02:16 on `3b2e7c5c`; retake once more at the freeze only if a later commit
    changes a ranged chapter. Nuke segment crop x 300.)
 2. (done 02:11, see LOOK above.)
-3. Rocket flash ~0.3 m gap to the tube mouth: only if it reads at 32 px/m (`muzzle_back_m`);
-   film it lone (see TEST 02:27), not from the city film.
+3. FIRST: the one-frame tube pop to Rivet's left on the rocket and nuke launch (LOOK 02:31).
+   Film frames 262-269 at 48 px/m, log rig.reload_k / grip / held_shift per frame, find which side
+   flips; compare with main. Fix view-side, A/B at 32 px/m, reels. (The flash gap is closed.)
 4. Exe at the freeze: re-bake + re-export `windows-showcase` -> `build/export/windows/RTAI.exe`;
    REPORT exe lines for calls 4 (`--flash-at=side`) and 5 (`--throw-windup=off`).
 5. Full evidence run on the head before the freeze (last: `3b2e7c5c`, all green); commit logs
@@ -1173,7 +1188,7 @@ NEXT (iteration 14):
    32 px/m (half the ring off the fight cam's frame in the pit).
 6. Calls 1-5 stay open in REPORT.
 
-STOP 02:31 iteration 13. Code commits: `9df494f6` (molotov draw rise), `5c171ed8` (nuke launch
+STOP 02:34 iteration 13. Code commits: `9df494f6` (molotov draw rise), `5c171ed8` (nuke launch
 kick), `311684d4` (its test). Evidence green on `3b2e7c5c`; reels 19/19 + 19/19 on `9df494f6` and
 `5c171ed8`; unit 1161/1161 on `444b003e`. Clips: `molotov_draw_rise-ab-32-48ppm.mp4`,
 `mini_nuke_launch-ab-32-48ppm.mp4`, city set retaken, `gatling_spinup-ab-32ppm.mp4` re-filmed.
