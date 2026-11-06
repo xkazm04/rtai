@@ -180,3 +180,23 @@ NEXT (iteration 3, in order):
   GATE top identity measured: Servo `--view=top` tick 1800 at 64 px/m md5 b1f14925... with the HEAD
   ServoDraw and with the new one. Unit --select test_servo_crate_stack,test_servo_art 6/6; lint 15/15.
   Evidence: gtai-masters/d8/bosses/servo_crates_tilt64_before_after.png, _tilt32_before_after.png.
+- 16:00 Servo contact frame at 64 px/m (owed): `--ghost=kerf --loadout=katana` brings the boss bot into
+  melee range (BossBotGhost.hold_m; the plain bot holds HOLD_M 8 m). Tick 500: Rivet's katana at
+  Servo's visor; the p55 parts hold (gtai-masters/d8/bosses/servo_vs_katana_64_contact.png).
+- 16:03 FINDING: Servo had no lift at all under tilt (ServoRig draws a flat cutout): beside an
+  upright Rivet and the standing crates he read as a floor decal.
+- 16:07 DECISION + MILESTONE Servo stands under tilt (d5765239, fc539407): the upper body draws
+  ServoArt.STAND_M = 1.6 m over the feet (view.lift_at), the legs and pad arms stretch up to it (pads
+  at half height), his footprint (4.4 x 2.4 m) casts the props' swept shadow; on defeat the lift
+  sinks to the floor (ServoFall.stand_k, exp(-dt/16)). ServoRig held at 288 lines (comments trimmed).
+  Alternative one value away: STAND_M = 0. Decision line in docs/decisions.md.
+  GATE top identity measured: `--view=top` tick 1800 64 px/m md5 b1f14925... = HEAD before the session.
+  Unit `--changed` (ran the full suite): 1408 passed, 0 failed. Lint 15/15 per commit.
+  GATE director reel headless tilt `--loadout=pistol --rigs --quit-after 8000` on d5765239: 19/19
+  chapters fully down, 0 SCRIPT ERROR. Phase-3 headless (`--phase=3 --ghost=kerf`): servo defeated,
+  0 SCRIPT ERROR (the kill_char_fx shader warning under --headless predates this lane).
+- 16:15 Evidence (frames.json 15, new first): servo_stands_vs_katana_64_before_after.png,
+  servo_stands_tilt48_katana.mp4 (15 s), servo_stands_tilt32_before_after.png (also shows the crates),
+  servo_crates_tilt64_before_after.png. Looked at every frame.
+- Calls for the owner (add to REPORT): (7) Servo's stand height `ServoArt.STAND_M` (1.6 m; 0 = the
+  flat rig): see servo_stands_vs_katana_64_before_after.png; exe `RTAI.exe -- --boss=servo --view=tilt`.
