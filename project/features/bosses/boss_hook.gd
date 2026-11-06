@@ -22,6 +22,8 @@ var tries: Dictionary[StringName, int] = {}
 var landed: Dictionary[StringName, int] = {}
 var rolled: Dictionary[StringName, int] = {}
 var dealt: float = 0.0
+## Rivet's lowest hp during the fight (telemetry: how close a run came to a death; call C).
+var rivet_hp_min: float = INF
 ## New stuns on the boss body, and those that dazed it (telemetry: Ohm's bolt on the fight).
 var stuns: int = 0
 var dazes: int = 0
@@ -45,6 +47,9 @@ func setup(stage: ArenaStage, ctx: WorldContext) -> void:
 	if spec == null:
 		return
 	_arena = stage.arena
+	var delay: String = _arg(args, "--repair-delay")  # dev: try call C's lever without a data edit
+	if delay.is_valid_float():
+		spec.rivet_repair_delay_s = maxf(float(delay), 0.0)
 	spec.apply_repair(_arena.tuning)
 	_rng = ctx.rng
 	_clear_floor(stage)
@@ -84,6 +89,8 @@ func step(stage: ArenaStage, tick: int) -> void:
 	_last_hp = fight.body.hp
 	adds.step(_arena, tick)
 	var r: Fighter = _arena.rivet
+	if defeated_tick < 0:
+		rivet_hp_min = minf(rivet_hp_min, r.hp)
 	if not r.alive():
 		return
 	_stun_check()
@@ -188,6 +195,8 @@ func telemetry() -> Dictionary:
 		"landed": landed.duplicate(),
 		"rolled": rolled.duplicate(),
 		"dealt": dealt,
+		"rivet_hp_min": rivet_hp_min if rivet_hp_min < INF else -1.0,
+		"repair_delay_s": _arena.tuning.rivet["repair_delay_s"],
 		"stuns": stuns,
 		"dazes": dazes,
 		"adds_spawned": adds.fights.size(),
