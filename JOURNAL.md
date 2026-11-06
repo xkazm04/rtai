@@ -188,3 +188,38 @@ NEXT (iteration 5, in brief order):
    notes and plan the slice-stack swap by art key.
 5. Then the King-down return under combo, Tonnage's swap with a ghost on screen; items 6-8.
 6. Death beat close-up at `--ppm=64` (not filmed: the 32 px/m clip and a 2x crop only).
+
+## Iteration 5 (22:03-23:03)
+Read: JOURNAL, git log, the four lane journals (no new REQUEST to view; street's card_sets file,
+city's occlusion answer and vehicles' notes stand), the catalog rows for kerf/dent at 70.
+Registry rules applied: generative-artifact-gating (the served 70 sheets draw the ghosts all teal:
+a colour-law fault, fixed by tone; the hue window widened for Kerf after the first pass left teal
+mid-tones, then narrowed back for Dent whose wisps sit in that window), concept-scene-parity (each
+card judged in the arena next to its p55 twin and the before), depth-ordered-layered-art (the bust
+stands on the legs' anchor at 70, width set over the wider 70 cell).
+
+- MILESTONE 22:08 Kerf p70 card (commit 90444ddc) from library kerf_70 (A, round 20261106-2151):
+  top row cut (ghost_bust.py, 256 px cell like p55), hue guard, tone to the p55 card's steel with
+  hue window 135-190 (the default 135-175 left the 160-190 teal mid-tones; the cyan blades sit
+  above 190 and stay). The p55 card's amber shoulder rings are not on the 70 sheet (not added).
+  Evidence: `gtai-masters/n8/view/ghosts70_ohm_kerf_before_after_tilt70_32ppm.png` (before: the
+  top-down hull + cables at tilt70; after: the 70 card) and `ghosts70_ohm_kerf_closeup_tilt70_64ppm.png`
+  (Ohm's p70 card from it4 filmed in game here for the first time).
+- MILESTONE 22:12 Dent p70 bust (commit 375fba7b) from library dent_70 (B; its named fix "tan, not
+  teal" applied by our own tone route from the teal original): cropped at the belt (y 298) into a
+  bust like p55, toned to the p55 bust's tan (default hue window: Dent's wisps are 175-190),
+  RigCardSets p70 row `dent` (anchor 0.72, width 2.1 = p55's 1.75 over the 189/154 wider cell).
+  Evidence `dent70_before_after_tilt70_32_64ppm.png` (before at tilt70: the top-down crash dummy
+  flat; after: the bust stands over his legs). The 70 bust prints a little darker than p55
+  (the 70 sheet is shaded deeper); reads at 32 px/m by the target discs.
+- MILESTONE 22:30 Servo under combo (commit 89cac319). FOUND on screen: under `combo` Servo drew
+  today's top-down tan parts all fight (ServoRig loaded its parts once in `_ready`, by the rounded
+  LIVE pitch 70, which has no p70 parts), while `tilt` draws the ochre p55 boss palette. Fix:
+  ServoArt keyed by `ViewMode.art_pitch()`, a row with art but no part for its pitch falls back to
+  p55 (`ServoArt.FALLBACK_PITCH`; lab rows without art keep d8's lookup, `top` unchanged), and
+  `ServoParts` (new) reloads the rig's and the air layer's textures when the art key changes.
+  servo_rig.gd 288 -> 287 (the debt ratchet caught the first version at 300).
+  Evidence `servo_combo_art_key_before_after_32ppm.png` (tilt d8 | combo before | combo after /
+  tilt70 before | after). Tests: test_servo_art (+3: fallback, key not live pitch, reload).
+  Note: no Servo p70 PART sheet exists (angle-r1 servo_70.png is an angle sheet; the parts are top
+  views), so p70 = the p55 parts; Servo is only on screen at 70 under tilt70 or mid-ease.
