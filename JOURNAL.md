@@ -1174,3 +1174,11 @@ NEXT (written 04:09, for iteration 13):
   without moving the active frame); find where the rig poses the jab (MeleeSwing / the claw rig
   part) and check it against the d7 hold (the off claw is an open owner call: touch only the main
   claw's jab). Film deleted (scratch).
+- SCOUT 04:14 (for the claw idea above, no build): the jab's windup is sim timing (rivet_melee.json
+  claw hits windup_ticks 5 / 4 / 9: changing it moves the sim, not allowed as polish). The view lever
+  is the rig's pull-back depth: `features/characters/rig_clips.gd` _strike_reach() returns -0.35 at
+  the end of the windup (the torso twists back), then 1 by the end of the active frames. A deeper
+  pull-back (e.g. -0.6, as a data value with the old -0.35 as the before) is view only and leaves
+  the hit frame where it is. rig_clips is shared by every timed strike (claw, baton, katana: check
+  which callers set strike_ph), so a per-weapon depth row is the safe shape. Film A/B at 48 then 32
+  on the lone claw chapter before deciding; reels 19/19 x2 after.
