@@ -1487,3 +1487,23 @@ NEXT (written 05:59, for iteration 17; supersedes the 05:15 list):
   still `M/quest1_kerf_cam_glide_ring_ab_32ppm.png`; REPORT row + call (q) updated.
 - CLEAN 06:26 this iteration's scratch films, PNG runs and sheets deleted (set_ghost_kerf.avi
   replaced by the glide film for RECUT).
+- MERGE 06:29 n7-ranged `49cfe6c4` (feat(feel): a light kill's hit-stop holds on the wound,
+  hold_delay_ticks 2 on the `light` class only) cherry-picked -x as `1166c418`. Conflict in
+  LaunchArgs.KNOWN_FLAGS only: kept my flags + `--wound-hold`; dropped their `--flash-at`,
+  `--throw-windup`, `--throw-sync` lines (from ranged commits not merged here: not the feel layer).
+  test_feel_wound_hold 3/3. No melee or ghost row is `light` (melee classes keep delay 0), so
+  nothing of this lane changes by data. Feel commits merged so far: `8efe76ca`, `a63bd8e0`, `49cfe6c4`.
+  FRICTION (mine): to merge it I stopped my gate run on `edb40f7c` after its unit pass (1237/1237,
+  `evidence/n7-melee/unit-edb40f7c.log`) and killed its arena reel (my reels.sh tree only, by PID).
+- GATES 06:31 on `1166c418` started: reels.sh (arena, city, scenarios) and, in parallel,
+  `node tools/evidence/run.mjs --no-bench --allow-dirty` (first try refused: the reel's untracked
+  log in evidence/; at its start `git status` showed only two untracked evidence logs, project/ clean).
+- GATES 06:38 on `1166c418` (project/ clean through both runs): director reels arena 19/19 and city
+  19/19 (38 lines each), 0 SCRIPT ERROR; scenarios 52 ran, 0 failed
+  (`evidence/n7-melee/{director-arena-loadout,director-city-loadout,scenarios}-1166c418.log`).
+  Evidence run (`--allow-dirty`, `evidence/n7-melee/evidence-run-1166c418-churn.log`): lint 13/13,
+  scenarios 52, parity bit-exact (planted caught at 629), look 11/11, block 5/5 PASS; unit 1240
+  passed 0 failed but marked FAIL by the churn guard: I edited JOURNAL/REPORT during it, and a
+  `scenarios-edb40f7c.log` appeared. FRICTION: my taskkill /T of the `edb40f7c` reels.sh did not
+  reach its forked bash, which ran the scenarios on the tree mid-cherry-pick (finished 06:34); that
+  log is mixed and deleted. Clean evidence re-run below.

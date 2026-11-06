@@ -72,6 +72,11 @@ The logs are in `evidence/n7-melee/`.
   2x (`M/quest1_tonnage_plates_32ppm_2x.png`, frames 60/64/100/104/200/204). The quest bot itself
   never takes Tonnage.
 
+- Quest 1's objective ring places its goal from Rivet's spot. It now takes Kerf's camera glide
+  (`be78d440`), but not the older view-only camera offsets (`forms_lift_m` under a ghost subtitle,
+  the dev `--cam=fight` lean): with those the ring sits that far off its goal. Not changed this
+  late, because the lift is a judged quest 1 look; it is one line (`cam_off_m` = all three).
+
 ## Calls for the owner
 (a) Quest 1 carries the katana on key 2.
 - Options: katana (built), electro baton, none.
