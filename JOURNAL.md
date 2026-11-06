@@ -1289,3 +1289,40 @@ its side of the body across poses).
 - My films pass no `--resolution`: Movie Maker writes 1280x800 (checked: tube, glo, gv, pl films),
   and the city combined clip is a 960x560 crop with the HUD panel out on purpose. The
   `evidence/film*.sh` scripts that pass 1280x720 are the showcase lane's (git log), not used tonight.
+
+### LOOK 03:01: electro gun re-scored, impact 2 -> 3 (audit row 5, no code)
+- Lone, `--reach=5`, 32 px/m, `994f8feb`, feel on vs off (1 wound, the kill at tick 399 in both).
+  Struck (frames 332-338): the zigzag bolt lands and the cop convulses with the skeleton limbs, the
+  same in both. Kill: on, the ink burst over the cop holds about 9 frames and the frame shifts (stop +
+  kick), then the yellow skeleton; off, the burst is up for 1 frame. Scratch `el/x.png`.
+
+### FINDING 03:02: the nuke's ring does not fit the screen at 32 px/m (audit "Framing", game too)
+- mini_nuke splash_radius_m 12 = 384 px at 32 px/m; the screen is 1280x800. The whole ring shows only
+  if the blast lands within about 0.5 m of the screen centre vertically, so a lobbed nuke is always
+  cut at the top or bottom in the live camera, not only in the fight-cam capture. Not built tonight
+  (see NEXT 1): a blast lead is a camera change, and the boss lanes own a BossCam (keep_in).
+
+NEXT (iteration 15):
+1. Nuke framing (FINDING 03:02). Options to film before building: (a) a view-only camera lead
+   toward a `blast`-class landing (hit_feel.json weapons row, e.g. mini_nuke `blast_lead` 0.6 of the
+   Rivet-to-blast offset, eased in over 10 ticks and out over 40, its own px cap, off with
+   `--feel=off`), added on CameraRig's follow focus, not in FeelCam's 8 px kick cap; (b) a brief
+   zoom-out (32 -> 24 px/m) for the blast's ring life; (c) leave it. Check first how the arena and
+   city cameras set their focus (camera_rig.gd follow(), CityView offset at city_view.gd:161) and
+   n7-king's BossCam.keep_in so the two do not fight. Make it an owner call with an A/B clip.
+2. Exe at the freeze: re-bake + re-export `windows-showcase` -> `build/export/windows/RTAI.exe`;
+   REPORT exe lines for calls 4 (`--flash-at=side`) and 5 (`--throw-windup=off`).
+3. Full evidence run on the head before the freeze (last: `994f8feb`, green but for the
+   rig_stress flake, re-run alone green); commit docs first, do not commit while it runs.
+4. City combined clip: retake at the freeze if a ranged chapter changed since `3b2e7c5c`
+   (`5586a80e` changes the rocket and nuke tube's side in their chapters: retake it).
+5. Remaining weak cells: homing_shard (V 2 = owner call 1, S 1 = needs a sound asset), Gloria A 2
+   (a sidearm's ceiling), Gatling I/R/V 2 (on humans a 2-round kill: nothing sustained to polish;
+   on crowds film the director's riot chapter if one has a Gatling).
+6. Calls 1-5 stay open in REPORT.
+
+STOP 03:03 iteration 14. Code commit: `5586a80e` (the tube keeps the gun shoulder's side; test with
+a planted fault). Gates: evidence on `994f8feb` (lint 13/13, unit 1164/1164, parity bit-exact,
+selftest pass, scenarios 51/52 + rig_stress alone green twice); reels 19/19 + 19/19 on `5586a80e`.
+Clip: `tube_side-ab-32-48ppm.mp4` (frames.json entry 0). Re-scored from film: Gloria A 1 -> 2,
+plasma I 2 -> 3, electro I 2 -> 3; Gatling victim closed without code.

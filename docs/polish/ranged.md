@@ -31,7 +31,7 @@ Anticipation / Impact / Read 32 / Victim sync / Sound (arena). `?` = not looked 
 | 2 | rocket_launcher | 2 | 2 -> 3 | 3 | 3 | 0 -> 3 | it14 `5586a80e`: the tube no longer pops to Rivet's off shoulder on the launch (`tube_side-ab-32-48ppm.mp4`; the nuke had the same, plus a held swap mid-reload). strong ink blast, debris, smoke, crater; the camera ignores it (no weight) |
 | 3 | gatling | 1 -> 3 | 2 | 2 | 2 | 0 -> 2 | it14 (lone, `--reach=5`): a cop dies to 2 rounds (damage 50): the wound, then the kill 4 frames later (frames 358-364), so a body pinned under sustained fire exists only on crowds and robots; the stars on the cop before 358 are his own muzzle flashes. casing/spark spray and blood read; sustained fire has no weight at all; the 0.5 s spin-up shows nothing (no barrel turn, no cue) |
 | 4 | plasma_rifle | 2 | 2 -> 3 | 2 | 3 | 0 -> 2 | it14 re-scored on `994f8feb` (lone, `--reach=5`, 32 px/m, feel on vs off, scratch `pl/p1.png`): on the hit frame an ink star over the cream glow, about 6 frames of stop and a camera kick, then the hole and the scorch (`--feel=off`: the glow only) = 3. impact star and a cream glow at the cop; it3 at 48 px/m: a 3-frame burst, the hole, the body thrown about 1.7 m along the bolt on the hit frame (the it1 "barely answers" was a misread at the frame edge) |
-| 5 | electro_gun | 2 | 2 | 2 | 3 | 0 -> 3 | zigzag bolt, star, skeleton flicker, yellow burst; the kill reads; it3 `9c140ffb`: the struck (stunned) body is thrown 0.3 m along the bolt on the hit frame, then convulses |
+| 5 | electro_gun | 2 | 2 -> 3 | 2 | 3 | 0 -> 3 | it14 re-scored on `994f8feb` (lone, `--reach=5`, 32 px/m, feel on vs off, scratch `el/x.png`): the kill's ink burst holds about 9 frames with a camera shift, then the yellow skeleton (off: the burst for 1 frame) = 3. zigzag bolt, star, skeleton flicker, yellow burst; the kill reads; it3 `9c140ffb`: the struck (stunned) body is thrown 0.3 m along the bolt on the hit frame, then convulses |
 | 6 | homing_shard | 2 | 2 | 2 | 2 | 0 -> 1 | the lozenge shards read in flight, a star on the hit frame and a small jolt/turn; the pop and the blood come at about T+40 (owner item 4: 3 + 36 grind ticks, JOURNAL) |
 | 7 | hand_cannon | 2 | 2 -> 3 | 3 | 3 | 0 -> 2 | ring at the muzzle, ink star + blood on the hit frame, body thrown; no camera answer for the heaviest single shot |
 | 8 | ray_gun | 2 | 3 | 2 | 3 | 0 -> 2 | ink bolt and star on the hit frame, a pale ring at the body; it7 at 48 px/m: the kill is the approved brutality `ray_gun_dissolve` (star + stop, glow, the body locks and falls stiff, gold rings eat it from tick +40 to a dust heap); every beat reads at 48, the star, disc and gold ring at 32 |
@@ -64,6 +64,9 @@ scratch audit folder: `<w>-off.avi`, `sheets/<w>-off-k2.png`.
   measure needs the bed off or a cue log (iteration 2).
 - **Framing (capture, not game):** `--cam=fight` at 32 px/m leaves the rocket and nuke blasts half
   off the right edge on the pit's second wave; the ghost HUD panel shows despite `--clean`.
+  it14: for the nuke it is the game's framing too, not only the capture: its ring is 12 m in radius
+  (384 px at 32 px/m) on an 800 px tall screen, so the whole ring shows only if the blast lands within
+  about 0.5 m of the screen centre vertically, whatever camera follows Rivet.
 
 ## Per weapon (before -> after)
 
