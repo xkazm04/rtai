@@ -22,7 +22,7 @@ the same 55 pitch, with no p55 art.
 | **Ohm**: the p55 card (shell, goggles, cable beard with copper tips) over the cane and guard arms, halo 0.45 | 12b205eb, f0ce9dd5 | `ohm_card55_before_after_tilt_32ppm_x2_ghostreel.mp4`, `ohm_card55_halo_tilt_64ppm_t2_t4_t6.png` |
 | **Kerf v2** (Rivet-tall, thin, blade forearms with bright cyan edges): the card replaces the hover body under tilt, halo 0.4, a 12 deg lean into the glide | f2e781dc, 0d417c52 | `kerf_card55_before_after_tilt_32ppm_x2_ghostreel.mp4` |
 | **Draw order (owed by the view REPORT)**: ghost cards depth-sort with the rigs, and the whole host takes the card's level. `--order-probe` counts ghost-card pairs. Ghost reel 600 ticks: Tonnage wrong pairs 18/26 -> 3/26, Kerf 28/28 -> 0/28, rig pairs 0 wrong before and after | 34651864, e5f2a9bd | `kerf_card55_draworder_before_after_tilt_64ppm_*.png` |
-| **Street cast**: p55 cards for SWAT, the patrol cap, the riot helmet, the hair and bald peds and the robot thug, cut from the assets library's keyed 55 sheets (`tools/art/street_head.py`, no image job) | d58d379a, 69574457, bd142385 | `cop_cap55_before_after_tilt_48ppm_pit_seed3.mp4`, `cop_cap_riot55_..._x3_reactline_t5.png` |
+| **Street cast**: p55 cards for SWAT, the patrol cap, the riot helmet, the robot thug and all five ped heads (hair, bald, and since d0bec791 hat, hood, cap from the library's new A-graded sheets), cut from the assets library's keyed 55 sheets (`tools/art/street_head.py`, no image job). No head of the street cast reads top-down under tilt any more | d58d379a, 69574457, bd142385, d0bec791 | `cop_cap55_before_after_tilt_48ppm_pit_seed3.mp4`, `cop_cap_riot55_..._x3_reactline_t5.png`, `street_hat_hood55_before_after_tilt_48ppm_x3_city.png` |
 | **view70 REQUEST it3**: `RigHeadCard.drop` renames the dropped card first, so a card rebuilt in the same frame keeps the name `head_card` | 2dd6e236 | unit `test_a_dropped_card_gives_up_its_name_for_the_rebuild` |
 | **Combined clip** (74 s: Rivet 64, Rivet reel, Tonnage, Dent, Ohm, Kerf, cops) | - | `chars_d8_set_tilt_combined.mp4` |
 
@@ -41,7 +41,9 @@ The gate numbers are in the last section.
   - Tonnage's walking legs still ride the ghost view's fixed z (3/26 wrong pairs).
   - At depth level 2, a card host can pass the ghost FX (rare crowd case). Capping it made Kerf 0/28 -> 6/28 wrong, so I reverted it.
   - The King's accents are not in the probe. bosses own KingAccents.
-- **Street heads:** the hat, hood and cap peds still have no 55 card. The assets library has no sheet for them yet (REQUEST to assets, iteration 7).
+- **Street heads:**
+  - The hoodie-cap card is built and unit-loaded, but it did not appear in the two city crowds I filmed (seeds 2 and 5), so it is not judged in game.
+  - The hat card's collar is tan, while the coat-hat ped's coat draws dark (still above).
 - **The card at 32 px/m:** the 192 px cell is drawn at about 25 px, so the collar stripes alias a little. Mipmaps and a 48 px strip both came out softer, so I kept the crisp one.
 
 ## What blocked
@@ -90,7 +92,7 @@ Each call below is one data value away. The exe is `build/export/windows/RTAI.ex
 
 1. When weapons answer the tank/tube REQUEST, re-film the flamethrower and rocket_launcher chapters at 48 tilt.
 2. Rivet's death beat, if the owner wants it (call 8).
-3. Hat, hood and cap ped cards when the assets library delivers the sheets.
+3. Judge the cap card in a crowd that has a hoodie-cap ped, and tone the hat card's collar to the coat.
 4. Tonnage's legs into the depth sort; the King's accents in the order probe (with bosses).
 5. If the owner picks 8 drawn facings: one image round for Rivet's left facings.
 
@@ -109,3 +111,11 @@ Taken by iteration 13 on `2dd6e236` (APPDATA `gtai-d8/appdata/chars`, 17:33-17:4
 - Exe: `windows-showcase` exported in 11 s to `build/export/windows/RTAI.exe` (242 MB, + `gtai_sim.windows.template_release.x86_64.dll`).
   - Export: `APPDATA=C:/Users/kazda/kiro/gtai-d8/appdata/chars "$GODOT_BIN" --headless --path project --export-release windows-showcase ../build/export/windows/RTAI.exe`
   - Smoke: `RTAI.exe --quit-after 900 -- --bot=reel --reel=director --chapter=pistol --ppm=48 --view=tilt --rigs` -> 2/2 down, 0 SCRIPT ERROR.
+
+Re-taken on `d0bec791`, the freeze head's code (17:51-17:55):
+
+- Unit (no-arg): 1423 passed, 0 failed (also on 9c039a76).
+- Lint: 15/15.
+- Exe re-exported at 17:53. Smoke runs, each 0 SCRIPT ERROR:
+  - `RTAI.exe --quit-after 400 -- --arena=city --bot=rivet --seed=5 --rigs --ppm=48 --view=tilt --crowd=400`
+  - the pistol chapter: 2/2 down.

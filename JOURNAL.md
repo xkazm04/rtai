@@ -397,3 +397,20 @@ NEXT (iteration 11, the freeze at 18:30):
   collar's stripe slant and the skull seam; the visor is symmetric.
 - NOTE for weapons (observation, their art): at 64 px/m the pistol in Rivet's hand reads as a fat
   olive bottle, longer than his forearm (still above). Not a REQUEST; their call.
+- GATE unit no-arg on 9c039a76 (clean tree): 1423 passed, 0 failed.
+- MILESTONE d0bec791 (street heads, NEXT 4 / REQUEST to assets it7): assets delivered keyed ped_hat_55,
+  ped_hood_55, ped_cap_55 (all graded A, round 20261106-1815) at 17:19-17:23. Cut by street_head.py,
+  NO colour fix (`orange` turned the hood's skin slate-blue: 561 px, rejected on sight), band 0.3 (hat,
+  cap) and 0.36 (hood: 0.3 cut the face at the chin). Widths by the measured head fraction of the cell
+  (hair 2.0 x 0.47 as the base): hat 1.93 (brim ~1.25 x a hair head), hood 1.81, cap 2.3; anchor 0.74.
+  The p55/p70 rows moved to `RigCardSets.SETS` (new file, 40 lines) so rig_head_card.gd fell to 175
+  lines; `RigHeadCard.SET_CARDS` aliases it (tests and view70 keep the name). Provenance: 3 lines.
+- EVIDENCE masters `street_hat_hood55_before_after_tilt_48ppm_x3_city.png` (city, `--bot=rivet --rigs
+  --ppm=48`, tilt_basecards | tilt; hat seed 2 crowd 160 t6, hood seed 5 crowd 400 t4; 0 SCRIPT ERROR
+  in all 4 runs). LOOKED: the white top-down disc becomes a face under the olive brim / the grey hood.
+  GAPS: the hat card's collar is tan, the coat-hat body draws dark; the cap card never appeared in
+  either crowd (not judged in game). frames.json 15 (the Kerf draw-order still left the list; the
+  file stays, REPORT names it).
+- GATE unit no-arg on d0bec791: 1423 passed, 0 failed; lint 15/15.
+- EXE re-exported 17:53 on d0bec791 (11 s); smoke: city seed 5 crowd 400 tilt (0 SCRIPT ERROR) and the
+  pistol chapter (2/2 down, 0 SCRIPT ERROR).
