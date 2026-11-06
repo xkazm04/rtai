@@ -2194,3 +2194,12 @@ NEXT (iteration 25 = the freeze and the REPORT; supersedes the it22 list):
   sustained fire is still unjudged). Stills `evidence/ranged/it25-gatling-riot-cop-32ppm.jpg`,
   `it25-gatling-riot-cop-frames-516-547-32ppm.jpg`. Avi deleted. Rules applied:
   motion-quality-gating (judged frame by frame in motion, at 32 px/m, on the live arena path).
+
+NEXT (after the night; the freeze is done at 07:49):
+- Freeze state: code head `5ed859c4`; gates (full evidence, reels 19/19 x2), the exe
+  (`build/export/windows/RTAI.exe`, booted) and the city combined clip are all on it. Only docs since.
+- For the owner: REPORT `## Calls for the owner` 1-9 (each with its exe before/after).
+- Next night: listen to the re-voiced cues (call 7); film the Gatling's stream on a boss (a body held
+  under sustained fire, V 2); the homing shard after call 1; a sim-side molotov wind-up only with a
+  decision and a re-bless; the bench under the lock.
+- FYI n7-melee: nothing to merge from it25 (StageAudio and audio_cues.json only).

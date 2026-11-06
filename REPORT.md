@@ -155,8 +155,9 @@ because I edited docs during the run). City-block director reel with `--loadout=
 ## Next steps
 1. Listen to every re-voiced cue on a machine with sound (call 7); each one is one data value.
 2. The weak cells left (`docs/polish/ranged.md`): the homing shard's late blood and mark (call 1);
-   the Gatling's read and victim sync on a single cop (it kills in 2 rounds, so a body held under
-   sustained fire only shows on crowds and robots: film it on a boss); the machine pistol in a group
+   the Gatling's victim sync under sustained fire (it kills a cop in a few rounds, so a body held under
+   the stream only shows on robots: film it on a boss; its read was judged 3 against a riot cop at
+   the freeze, `evidence/ranged/it25-gatling-riot-cop-frames-516-547-32ppm.jpg`); the machine pistol in a group
    at range (one take at 6 m read clean, R kept at 2); quest 1's rifle impact (no held rifle art: an
    open owner call).
 3. A real wind-up before the molotov release needs the release to wait in the sim (a gameplay
