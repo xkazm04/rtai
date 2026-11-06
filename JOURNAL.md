@@ -237,3 +237,10 @@ NEXT (iteration 4, in order):
 5. The driven car + hijack at tilt70 (vehicle_frame default scene), and `--view=combo` boss check.
 6. A framemd5 of the city block in `top` vs main (bit identity, measured).
 7. Traffic density cost under bench.lock (tilt70 vs top). 8. Bike.
+
+22:20 gate: director reel on fbead9ab, `res://dev/arena/arena.tscn -- --bot=reel --reel=director
+--loadout=pistol --rigs --view=<v>` headless: tilt70 19/19 chapters all down, 0 SCRIPT ERROR;
+top 19/19 all down, 0 SCRIPT ERROR (logs evidence/n8-vehicles/director-reel-it3-*.log). NEXT item 1 done.
+FRICTION: headless without `--fixed-fps 60`, `--quit-after 14000` counts frames, and frames outran
+the 60 Hz ticks on the first top run (it quit at tick ~6000, chapter 17 of 19, looking like a
+short reel). Use `--fixed-fps 60 --quit-after 7600`: one frame = one tick.
