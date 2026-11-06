@@ -304,3 +304,44 @@ machine is quiet; REPORT.md is a draft (iteration 2) - update it at the freeze.
   15:27 setting, 1.08/1.18 ms then) -> draw 371, 12.01 ms, 256 hitches > 25 ms each. Both slow alike: the
   12 ms is machine load at 15:46-15:48 (other lanes), not the zoom. Draw calls repeat exactly and follow
   the visible area. Frame-time comparisons: only the 15:27 alternating table above counts.
+
+## Iteration 3 (15:50, BUILD)
+- 15:50 READ JOURNAL, git log, chars/bosses/weapons journals. bosses did NOT fold the court strips into
+  chars' route (their NEXT 4 still open); KingArt keys strips and limb parts by `roundi(live pitch)`.
+- 15:52 MILESTONE 5639148f merged d8-bosses (court p55 strips + limbs, throne-car from art, Servo p55
+  drone; ordinary merge, JOURNAL ours, no other conflict). Lint 15/15.
+- 16:05 FOUND (combo King at 55 = the shared LAB bust + the bell, not bosses' court bust; seen at 64
+  px/m, phase 3): (a) KingArt dresses a card once by the live pitch; combo rebuilds cards at 62.1 deg
+  where no p62 strip exists. (b) A real bug in my cross-fade: RigHeadCard.drop queue_frees the old
+  card, so the rebuilt sibling is renamed `@Sprite2D@N` and `find_children("head_card")` never found
+  a rebuilt card again: every card after the first swap (both ways) had no cross-fade overlay, so the
+  55 -> 70 return was a hard swap all along (it2's measured fade was the 70 -> 55 way only).
+- 16:12 MILESTONE ae847c59 `ViewPitchCourt` (my file): a folder stands for its pitch (p55 -> 55), so
+  KingArt's strips join the folder's card rows (anchor 0.80, width 2.4 x 1.5 = 3.6) and a card built
+  under p55 takes the court strip as KingArt._swap would (meta court_card, horn hidden, this frame's
+  scale). ViewPitchCards reaches cards through `CutRig.head_card` (find_children type CutRig).
+  Unit test_view_pitch_court (5) + view_pitch/king_art/rig_head_card/ghost_card: 36/0.
+- 16:14 FILM `--boss=king --phase=3 --bot=boss --bot-human --seed=2 --rigs --ppm=64 --clean`, tilt vs
+  combo, 720 frames, 0 SCRIPT ERROR: at t4 the combo King is bosses' court bust (plum crown, ermine,
+  vermilion cape, no bell), matching tilt; frame 240 tilt vs combo: 1013 px differ (mean 0.025/765).
+  Rivet-region pop (card_pop.py, 170x180 crop, frames 0-90): combo max 31.4 at f11 (camera ease),
+  median 23.3; tilt max 31.4, median 22.2: the swap at tick 32 is inside the grain noise (no spike).
+- Registry rules applied this session: depth-ordered-layered-art (the overlay keeps the card's z and
+  parent material), concept-scene-parity (combo-at-55 must equal tilt: checked pixel-wise above),
+  motion-quality-gating (pop measured per frame, not by eye alone).
+
+### REQUEST to bosses (iteration 3)
+- REQUEST bosses: KingArt's limb parts, `card_wears_cape` and the gang chain check key by
+  `roundi(ViewMode.shared().pitch_deg)`. Under `--view=combo` the pitch eases 70 -> 55 over 1 s, so the
+  bust swaps to your court strip at 62.5 deg (my ViewPitchCourt does that from the card folder) but
+  the limbs, the cape fan and the gang chains swap only when the pitch rounds to 55 (~0.9 s in): a
+  small late pop. Fix (3 lines): pick the folder `ViewMode.shared().art` when it starts with "p"
+  (`"p55"`), else `"p%d" % roundi(pitch)`, in `strip_path` / `_court_part` / `card_wears_cape`. Then my
+  ViewPitchCourt becomes a no-op and can go. Your top/tilt output does not change.
+
+### REQUEST to chars (iteration 3)
+- REQUEST chars: `RigHeadCard.drop` queue_frees `head_card` and the rebuild adds a new sibling of the
+  same name in the same frame, so Godot renames the new card `@Sprite2D@N`. Anything that finds a card
+  by name (`find_children("head_card")`) misses every rebuilt card. Suggest `rig.head_card.name =
+  &"head_card_dropped"` (or `rig.head.remove_child(...)`) before `queue_free()`. I no longer depend on
+  the name (ae847c59 walks CutRig.head_card), so this is hygiene, not a blocker.
