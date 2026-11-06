@@ -1058,3 +1058,28 @@ encounter-balance-simulation (render only: the gameplay numbers must not move).
   call E).
 - frames.json 15: + charge, fight it10, comparison it10; deleted the it6 fight, the it7
   comparison and the it3 defeat frames (the defeat is in the it10 fight).
+
+### 01:41 MILESTONES a403f08b (camera port) + 6a8d1e5c (decree arc); per-attack clips complete
+- Per-attack 48 px/m clips filmed for phase 1 and 2 (seed 2, standing + dodging bots, 30 s each;
+  the same attack order on both). **Looked at** the sheets: ram (lane, the car runs it, the dodger
+  steps off), coin fan (the cone fills, the coin arc sweeps it, the dodger leaves the locked cone).
+  FOUND: at 48 px/m the coins are a thin dotted arc (the target: a dense spray), in REPORT gaps.
+- FOUND the decree's tell was faint: half-alpha 3 px pulses (`KingAccents._shout`), a ring barely
+  visible at 48 px/m. FIX 6a8d1e5c: an ink-backed vermilion windup arc fills round King over the
+  1.2 s tell (the enemy-ai windup-arc rule), then 6 px rings burst. Located the decrees by a frame
+  diff of the old and new films (only the drawing changed): 2.8 s, 16.9-18.5 s, 29.4 s.
+- FOUND at 16-23 s of the phase 2 stander film King stood **under the boss bar** at the
+  boulevard's top edge (my floor clamp). n7-servo fixed exactly this (5206ae56, 85401d4c,
+  ff643886: the bar band + keep_in). DECISION: ported as the same file contents (boss_cam.gd,
+  test_boss_cam.gd), not a merge of n7-servo (that carries servo's JOURNAL and evidence); the
+  Director's merge sees identical files. **Looked at** before/after
+  (`shots/it10/p2_cam_keep_in_before_after_48ppm.png`, `decree_arc_before_after_48ppm_2x.png`):
+  King whole below the bar; the arc fills (1/4 at 17.2 s, nearly closed at 17.8 s) as the
+  megaphone rises, then the shout and the gang's buff rings. Same telemetry (dealt 20, hp 0.635).
+- Gates: unit **1160/0** (`unit-it10b.log`, +1 servo's keep_in test), scenarios **52/0**
+  (`scenarios-it10.log`, on the tree with the gang head), lint 13/13 at each commit.
+- M/: + `king_ram_coin_fan_48ppm_it10.mp4`, `king_decree_48ppm_it10.mp4`; dropped from frames.json
+  and deleted: the it7 gang dome A/B and the it5 drapes still (superseded), and the it10 gang head
+  A/B (the same image is in the repo; REPORT call I points there). frames.json 15.
+- Note: the it10 full-fight film and the ram/coin/charge clips predate the camera port; their
+  framing had King on screen (looked at), so they stand.

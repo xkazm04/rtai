@@ -34,12 +34,15 @@ The moveset is `docs/bosses/king.md`; the full log is `JOURNAL.md`.
   - the procession entering, from the gang's first appearance to King stepping down (`king_procession_enter_32ppm_it6.mp4`);
   - the press slam, telegraph, hit and dodge (`king_slam_plates_48ppm_it8.mp4`);
   - the charge, telegraph lane, hit and dodge (`king_charge_48ppm_it10.mp4`);
+  - the ram and the coin fan, hit and dodge (`king_ram_coin_fan_48ppm_it10.mp4`), and the decree's windup arc and buff (`king_decree_48ppm_it10.mp4`);
   - the target sheet beside the game at 32 px/m (`king_target_vs_game_32ppm_it10.png`);
   - the ghosts on King (Dent, Kerf, Tonnage, Ohm).
 - **Combat holds**: the director reel was 19/19 chapters down with 0 SCRIPT ERROR on the branch
   (`evidence/king/director-reel-it6.log`).
-- **Gates** (it8): lint 13/13, unit 1159/0, scenarios 52 with 1 contended timing fail
-  (`rig_stress` p50 1.007 ms > 1.0; it passes alone at 0.638 ms).
+- **Gates** (it10): lint 13/13, unit 1160/0 (`evidence/king/unit-it10b.log`), scenarios 52/0
+  (`evidence/king/scenarios-it10.log`).
+- **The boss camera** (it10): n7-servo's `BossCam` bar band and `keep_in` are ported to this branch
+  as identical files, so King stays whole below the boss bar at the boulevard's top edge.
 
 ## Numbers (encounter-balance-simulation: full fights, seeds 1-5, CONTENDED machine)
 
@@ -58,9 +61,10 @@ and in the exported exe.
 ## What does not work yet / gaps against the target
 
 - The gang at 32 px/m: bulkier since it8 (size 1.2, arm width 1.7), and since it10 their heads
-  read as light steel domes with a gold frame (`king_gang_head_before_after_32ppm_it10.png`). They
+  read as light steel domes with a gold frame (`evidence/king/shots/it10/gang_head_before_after_32ppm_3x.png`). They
   are still smaller and less blocky than the target's bodyguards.
 - The shoulder megaphone is a small gold cone at 32 px/m; it reads from 48 px/m.
+- At 48 px/m the hood cannon's coins are a thin dotted gold arc, not the target's dense spray.
 - From straight above, the raised plates in the slam tell hide under the crown (the warning ring
   carries the tell).
 - The plain robot thug (the enemy-ai lane's, not King's) prints as solid ink at 48 px/m. The gang's
@@ -77,7 +81,7 @@ Each call names its options, the default that is built, and how to see it.
 - **C. Difficulty band.** Easy (built: the human-like bot survives 5/5 and takes 78 of 100), or
   fair (about 7 in 10 survive).
 - **D. Gang steel.** The D4 lift x1.55, the visor and the steel dome (built), or the old dark print:
-  `evidence/king/shots/gang_steel_before_after_48ppm.png` and `king_gang_dome_before_after_it7.png`.
+  `evidence/king/shots/gang_steel_before_after_48ppm.png`.
 - **E. Gold swap.** King's gilded chest and arms (built: `KingRigs.GOLD_SWAP` 5), or plain steel (-1):
   `evidence/king/shots/gold_ab_p3_32ppm_2x.png`.
 - **F. The slam's leap.** King hops onto the locked ring (built: `leap_m` 6), or slams on the spot (0).
@@ -91,7 +95,7 @@ Each call names its options, the default that is built, and how to see it.
   `tools/art/gang_parts.py` STEEL 204, VISOR_FROM 0.70), or the ink head of it7-it9 (STEEL 158,
   VISOR_FROM 0.60). At 32 px/m the print gives a head only paper or ink, with no grey between
   (measured: `evidence/king/shots/it10/dome_158_148_204_32ppm_4x.png`). See
-  `king_gang_head_before_after_32ppm_it10.png`.
+  `evidence/king/shots/it10/gang_head_before_after_32ppm_3x.png`.
 
 ## The exe
 
