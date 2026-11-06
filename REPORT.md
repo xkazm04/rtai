@@ -120,7 +120,15 @@ afford it. `top_lift` is the fallback if the owner keeps straight down: free, bu
    - `build/export/windows/RTAI.exe -- --rigs --boss=king --view=top`
    - `build/export/windows/RTAI.exe -- --rigs --boss=king --view=top_lift`
    - `build/export/windows/RTAI.exe -- --rigs --boss=king --view=tilt`
-2. **The pitch**: 55 (default) vs 65 vs 45, one data value each (`--view=tilt65`, `--view=tilt45`).
+   - To watch the same seeded fight played by the bot (as filmed), append
+     `--bot=boss --bot-human --seed=2` to any line above.
+   - Side by side: `gtai-masters/n7/view/king_top_toplift_tilt_32ppm_it12.mp4` (45 s, 32 px/m).
+   - Frame cost (it18, CONTENDED): tilt +15 % frame, +55 % draw calls vs top; frame near 1 ms.
+2. **The pitch**: 55 (default) vs 65 vs 45, one data value each in `view.json`. Still:
+   `gtai-masters/n7/view/king_views_grid_32ppm_it12_t12s.png`.
+   - `build/export/windows/RTAI.exe -- --rigs --boss=king --view=tilt_cards` (65, with cards)
+   - `build/export/windows/RTAI.exe -- --rigs --boss=king --view=tilt45_cards` (45, with cards)
+   - (`--view=tilt65` / `tilt45` / `tilt75` are the same pitches without cards and shadows)
 3. **Cast shadows by height** (a low evening sun, down-right): on (default, `--view=tilt`) or off
    (`--view=tilt_noshadow`). My pick: on; they ground the car and the bodies on the foreshortened
    road at 0 art cost. Still: `evidence/view/it12/tilt_noshadow_vs_cast_32_x2_t900.png`.
