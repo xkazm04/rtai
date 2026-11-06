@@ -4,7 +4,7 @@ extends Node
 ## above CharacterRigs) and, for each decaying body on a full rig, inks it out (tints it to ink)
 ## and sinks it into its stain (shrinks it by CorpseDecay.sink): a fade, not a pop. Never alpha:
 ## the D5 part print discards a part under alpha 0.45 and stipples it cream above.
-## It wires the rest once they exist: ArenaRigs skips `gone` fixtures, the corpse soaks fade with
+## It wires the rest once they exist: RigHost skips `gone` fixtures, the corpse soaks fade with
 ## their body (CorpseStains.body_alpha), the signature kills' gibs, dust piles and prints fade with
 ## their victim's body and stain (KillView.decay), and every CombatBlood under the game takes the
 ## stains' life for its decals and pools. Released ids are drained from the hook every frame:
@@ -15,7 +15,7 @@ const PRIORITY: int = 10
 var hook: CorpseDecayHook = null
 var stage: ArenaStage = null
 var view: CollectCallView = null
-var _rigs: ArenaRigs = null
+var _rigs: RigHost = null
 var _kills: KillView = null
 var _bloods_set: bool = false
 
@@ -53,8 +53,8 @@ func _process(_delta: float) -> void:
 func _wire() -> void:
 	if _rigs == null:
 		for ch: Node in get_parent().get_children():
-			if ch is ArenaRigs:
-				_rigs = ch as ArenaRigs
+			if ch is RigHost:
+				_rigs = ch as RigHost
 				_rigs.gone = hook.gone
 				_rigs.decay = hook.decay  # combat-notes: a dropped pistol inks out with its body
 	if _kills == null:

@@ -5,7 +5,7 @@ extends Node2D
 ## centred on the rig's drawn torso so they ride its convulsion, and the pistol his fingers let go
 ## (the rig's hand cell drops the gun while he convulses): tossed out of the gun hand on the first
 ## stun tick, it lies beside him until the stun ends; an electro corpse keeps it, and it inks out
-## and sinks with the body (CorpseDecay via ArenaRigs.decay), gone with it. Reads the
+## and sinks with the body (CorpseDecay via RigHost.decay), gone with it. Reads the
 ## arena's stun state on its tick; render only, no RNG.
 
 ## The toss: ticks in the air, how far it lands from the torso (m, ahead and to the gun side),
@@ -19,7 +19,7 @@ const GUN_WIDE_M: float = 0.06
 
 var arena: CombatArena = null
 var rigs: CharacterRigs = null
-var host: ArenaRigs = null
+var host: RigHost = null
 ## Fighter id -> [from px, to px, the stun's first tick, rest angle, px per metre].
 var _drops: Dictionary[int, Array] = {}
 

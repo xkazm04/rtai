@@ -20,8 +20,8 @@ const CHAR: Color = Color(0.16, 0.11, 0.09)
 
 var arena: CombatArena = null
 var rigs: CharacterRigs = null
-## The ArenaRigs whose ReactLink holds the marks (read every frame: the link lands after this).
-var host: ArenaRigs = null
+## The RigHost whose ReactLink holds the marks (read every frame: the link lands after this).
+var host: RigHost = null
 
 
 ## Adds a mark on fighter `id`, hit along `local_dir` (rig space) on `tick` (oldest dropped).

@@ -1,5 +1,5 @@
 class_name ArenaRigs
-extends Node
+extends RigHost
 ## Dev flag --rigs: the arena's fighters drawn on the cast rigs (CharacterRigs, d5-cast) instead of
 ## quest 1's stills and guard sprites (CastView is hidden). Rivet is the RIVET rig, every hostile
 ## and dummy a COP rig (the robot and contractor plans land with the enemy-ai and rivet-motion
@@ -22,18 +22,9 @@ const FOCUS_REACH_M: float = 20.0
 ## wind-back, the whip out to full reach, a slow return (view only; the bottle left this tick).
 const THROW: Vector3i = Vector3i(1, 6, 18)
 
-var rigs: CharacterRigs = CharacterRigs.new()
 var stage: CollectCallStage = null
 ## The floor plan whose rig_kick sets a shot's recoil strength (null: every weapon kicks 1.0).
 var plan: ArenaPlan = null
-## human-reactions: the wound families and the deaths by damage class on the hostiles' rigs.
-var react: ReactLink = null
-## Fighter ids a signature kill consumed (lane brutality): their body is gibs now, no rig.
-var hidden: Dictionary[int, bool] = {}
-## Fixtures whose body decayed (CorpseDecayHook.gone): undrawn until they stand up again.
-var gone: Dictionary[int, bool] = {}
-## The fight's corpse decay (CorpseFade wires it; null without one): the dropped pistols ink out.
-var decay: CorpseDecay = null
 ## human-reactions: the city crowd's reactions (--arena=city), told where the fight's dead lie.
 var crowd: CrowdReact = null
 ## ghost-forms: the bound player's ghost form over the rigs (null without a pilot).

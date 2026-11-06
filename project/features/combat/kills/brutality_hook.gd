@@ -13,7 +13,7 @@ const PART_RADIUS_M: float = 0.2
 var kills: SignatureKills = null
 var view: KillView = null
 var _stage: ArenaStage = null
-var _rigs: ArenaRigs = null
+var _rigs: RigHost = null
 var _game: Node = null
 var _lab: KillLab = null
 
@@ -72,7 +72,7 @@ func step(stage: ArenaStage, tick: int) -> void:
 		if h.alive() and kills.consumed.has(h.id):
 			@warning_ignore("return_value_discarded")
 			kills.consumed.erase(h.id)
-			var rigs: ArenaRigs = _find_rigs()
+			var rigs: RigHost = _find_rigs()
 			if rigs != null:
 				@warning_ignore("return_value_discarded")
 				rigs.hidden.erase(h.id)
@@ -116,7 +116,7 @@ func attach_view(p_view: Node) -> void:
 
 
 ## The printed path's actor layer, or the CityView's on the city block (--arena=city), where the
-## rigs draw too (ArenaRigs.attach); null with neither (headless).
+## rigs draw too (RigHost.attach); null with neither (headless).
 static func _actor_layer(cc: CollectCallView) -> CanvasLayer:
 	if cc == null:
 		return null
@@ -153,21 +153,21 @@ func _push_out(p: Vector2) -> Vector2:
 
 
 func _rig_of(victim_id: int) -> CutRig:
-	var rigs: ArenaRigs = _find_rigs()
+	var rigs: RigHost = _find_rigs()
 	return rigs.rigs.rig_for(victim_id) if rigs != null else null
 
 
 func _hide(victim_id: int) -> void:
-	var rigs: ArenaRigs = _find_rigs()
+	var rigs: RigHost = _find_rigs()
 	if rigs != null:
 		rigs.hidden[victim_id] = true
 
 
-func _find_rigs() -> ArenaRigs:
+func _find_rigs() -> RigHost:
 	if _rigs == null and _game != null:
 		for ch: Node in _game.get_children():
-			if ch is ArenaRigs:
-				_rigs = ch as ArenaRigs
+			if ch is RigHost:
+				_rigs = ch as RigHost
 				if _rigs.react != null:  # human-reactions' DeathPipe: our kills skip the standard death
 					_rigs.react.pipe.add_signature(_takes_death)
 	return _rigs
