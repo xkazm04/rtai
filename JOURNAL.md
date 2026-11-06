@@ -991,3 +991,22 @@ over the arm chain, under the drawn crown/ermine).
   damage and landings as it5d/it6 (`evidence/king/numbers-it8/`). The director reel is not re-run:
   the change is KingRigs.king_plan() only (KingPlan, the enemy-ai thug's base, keeps the claw;
   unit-tested).
+- 01:01 EXE de-risked: `--export-release "windows-showcase"` -> `build/export/windows/RTAI.exe` in 35 s
+  (exit 0); headless smoke `RTAI.exe --headless --quit-after 18000 -- --rigs --boss=king --bot=boss
+  --bot-human --seed=2`: **King down at tick 4933, took 88, 0 SCRIPT ERROR**, the editor's numbers
+  (`evidence/king/exe-smoke-it8.json`). Note: `--quit-after` counts frames; 6000 frames headless
+  without `--fixed-fps` was only 3308 ticks. Re-export at the freeze.
+- 01:08 REPORT.md drafted (works / numbers table / gaps / calls A-H / exe lines). FRICTION: I
+  deleted `M/king_gang_steel_before_after_48ppm_it5.png` with the frames.json trim although call D
+  cites it; the same image is in the repo (`evidence/king/shots/gang_steel_before_after_48ppm.png`),
+  so REPORT points there.
+
+NEXT (iteration 9, in order):
+1. The gang at 32 px/m (the weakest read left): bulkier steel (a wider torso/arm print or arm_w
+   on GangPlan) and a lighter head; judge it against the target's bodyguards at 32 px/m, before/after.
+2. Re-film the full fight and the phase-3 clip on the it8 body (press plates + horn) at 32 px/m;
+   the target comparison re-shot (the it7 one predates the plates).
+3. A charge clip at 48 px/m (telegraph lane, hit, dodge) on the new body; the coin-fan and ram
+   clips at 48 if missing (frames.json has the slam only as a per-attack clip at 48 now).
+4. Director reel once more before the freeze; re-export the exe at the freeze; finalize REPORT
+   (remove DRAFT, fill Next steps).
