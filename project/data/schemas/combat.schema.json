@@ -37,6 +37,10 @@
     "rivet": {
       "additionalProperties": false,
       "properties": {
+        "death_beat_s": {
+          "minimum": 0,
+          "type": "number"
+        },
         "hp": {
           "minimum": 0,
           "type": "number"

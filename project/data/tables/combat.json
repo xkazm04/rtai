@@ -7,6 +7,7 @@
     "walk_mps": 3
   },
   "rivet": {
+    "death_beat_s": 1,
     "hp": 100,
     "near_death_frac": 0.15,
     "radius_m": 0.6,

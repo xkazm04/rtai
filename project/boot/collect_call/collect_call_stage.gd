@@ -30,6 +30,8 @@ var burn_ticks: int = 0
 var cash_phone: String = ""
 var refusal_left: int = 0
 var deaths: int = 0
+## Rivet's death beat (features/player): about 1 s down in his sprawl before the respawn.
+var death_beat: DeathBeat = DeathBeat.of(CombatTuning.shipped())
 var shots_fired: int = 0
 ## This tick's interact press, if the stage did not use it (the quest's meet beat takes it).
 var press_left: bool = false
@@ -159,6 +161,8 @@ func write_state(out: StreamPeerBuffer) -> void:
 
 
 func _move() -> void:
+	if not arena.rivet.alive():
+		intent.clear()  # the death beat: a dead Rivet neither walks, hides, nor fires
 	if intent.move_to == Vector2.INF and intent.move_by != Vector2.ZERO:
 		hidden_in = ""
 		arena.rivet.pos = _collide(arena.rivet.pos + intent.move_by)
@@ -193,7 +197,7 @@ func _spawns() -> void:
 	var due: WaveDirector.Spawn = layout.waves.step(arena.hostiles_alive())
 	if layout.waves.began >= 0:
 		var w: WaveDirector.Wave = layout.waves.waves[layout.waves.began]
-		arena.announce_wave(StringName(w.encounter), _wave_number(layout.waves.began))
+		arena.announce_wave(StringName(w.encounter), layout.waves.ordinal(layout.waves.began))
 	if due == null:
 		return
 	var at: Vector2 = layout.spawn_points[due.point]
@@ -242,17 +246,9 @@ func _beat_id() -> String:
 	return _quest.runner.current_beat().id
 
 
-## Wave `i`'s number within its encounter, from 1.
-func _wave_number(i: int) -> int:
-	var n: int = 0
-	for k: int in i + 1:
-		n += 1 if layout.waves.waves[k].encounter == layout.waves.waves[i].encounter else 0
-	return n
-
-
 ## Rivet destroyed: he wakes up in the Toner Room, and Juno's tape bill comes off the payout.
 func _respawn() -> void:
-	if arena.rivet.alive():
+	if death_beat.holding(arena.rivet.alive()) or arena.rivet.alive():
 		return
 	deaths += 1
 	arena.rivet.hp = arena.rivet.max_hp
