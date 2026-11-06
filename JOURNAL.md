@@ -1721,3 +1721,10 @@ NEXT (final, supersedes 08:22): unchanged from the 08:22 NEXT. Exe `build/export
 
 NEXT (final, it25, supersedes 08:24): unchanged. Exe `build/export/windows/RTAI.exe` (08:09,
 fba95dea) is the owner's build; REPORT calls 1-21 are the verdict page; n7-king merged to 53208590.
+- 08:31 (it26, STABILIZE) MERGE n7-king f1f5aae2 (king's JOURNAL only: its it26 freeze check).
+  JOURNAL ours, `project/` unchanged since fba95dea (`git diff --stat fba95dea HEAD -- project/`
+  empty): the 08:09 exe (`build/export/windows/RTAI.exe`, 239 MB) and the 08:19 all-PASS evidence
+  run stand. No bugs open; nothing to fix past the freeze.
+
+NEXT (final, it26, supersedes it25): unchanged. Exe `build/export/windows/RTAI.exe` (08:09,
+fba95dea) is the owner's build; REPORT calls 1-21 are the verdict page; n7-king merged to f1f5aae2.
