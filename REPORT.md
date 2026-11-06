@@ -25,7 +25,7 @@ The moveset is `docs/bosses/king.md`; the full log is `JOURNAL.md`.
   - a jewelled crown and the ermine collar over the vermilion cape; (it13) the cape is folded cloth
     under an ermine border that sways and trails his charge (`evidence/king/shots/it13/cape_before_after_32_48ppm.png`),
     and (it14) lands wide with the press slam's shockwave (`evidence/king/shots/it14/cape_slam_land_before_after_48ppm.png`);
-  - the gilded plum throne-car, a boss-owned vehicle with drapes and a hood cannon (banded gold barrel on a swivel mount since it12, `evidence/king/shots/it12/hood_cannon_before_after_48ppm_2x.png`);
+  - the gilded plum throne-car, a boss-owned vehicle with drapes and a hood cannon (banded gold barrel on a swivel mount since it12, `evidence/king/shots/it12/hood_cannon_before_after_48ppm_2x.png`); (it14) rounded gold bumpers past both ends (`evidence/king/shots/it14/car_bumpers_before_after_p1_32_48ppm.png`);
   - the gang: the rich robot thug with gold chains, a steel helmet and shades; (it14) the chain is a
     gold rope with a medallion that reads at 32 px/m, on the car's riders and pushers too (it was a
     2 px arc on the brawlers only: `evidence/king/shots/it14/gang_chain_before_after_p1_p2_32ppm_3x.png`).

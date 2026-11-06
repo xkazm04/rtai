@@ -27,6 +27,9 @@ const SWAGS: int = 5
 const BELLY_M: float = 0.22
 const PANELS_X: Array[float] = [-0.44, -0.28, 0.0]
 const PANEL_W: Array[float] = [0.14, 0.18, 0.12]
+## it14: the rounded gold bumpers at both ends (the 90-degree panel's bars past the nose and the
+## trunk), standing out this far (m); 0 = the it13 square-ended box.
+const BUMPER_M: float = 0.18
 
 
 static func draw(ci: CanvasItem, l: float, w: float, p: float) -> void:
@@ -38,6 +41,22 @@ static func draw(ci: CanvasItem, l: float, w: float, p: float) -> void:
 		ci.draw_rect(Rect2(r.end.x, -w * 0.5 + 6.0, 3.0, w - 12.0), GOLD)  # the gold cross-bar after it
 	for sy: float in [-1.0, 1.0]:
 		_swags(ci, l, w, p, sy)
+
+
+## The gold bumpers, drawn under the body: a rounded bar across each end, past the outline.
+static func bumpers(ci: CanvasItem, l: float, w: float, p: float) -> void:
+	if BUMPER_M <= 0.0:
+		return
+	var t: float = BUMPER_M * p
+	var h: float = w * 0.78
+	for sx: float in [-1.0, 1.0]:
+		var x: float = sx * (l * 0.5 + t * 0.5)
+		for edge: float in [3.0, 0.0]:  # the ink edge, then the gold
+			var col: Color = INK if edge > 0.0 else GOLD
+			ci.draw_rect(Rect2(x - t * 0.5 - edge, -h * 0.5, t + edge * 2.0, h), col)
+			for sy: float in [-1.0, 1.0]:
+				ci.draw_circle(Vector2(x, sy * h * 0.5), t * 0.5 + edge, col)
+		ci.draw_line(Vector2(x, -h * 0.45), Vector2(x, h * 0.45), GOLD_HI, maxf(t * 0.18, 1.5))
 
 
 ## The hood cannon from `tail` to `tip` (car px): ink-edged, shaded, banded, on its mount.

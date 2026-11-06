@@ -1458,3 +1458,15 @@ NEXT (iteration 15, in order):
   sheet and the 1.5 s frame beside it13's: the same framing and moment; the decree rings round King
   on the stalled car, the brawlers in the heavier chain. it13 deleted; frames.json 15; REPORT it14.
   AVIs deleted. Session ends, everything committed.
+
+### 04:17 MILESTONE the throne-car's rounded gold bumpers (NEXT 3)
+- `KingCarTrim.bumpers` (BUMPER_M 0.18: a gold bar with rounded ends past the nose and the trunk,
+  under the body, ink edge, light line). A/B phase 1 tick 60 at 32 and 48 px/m
+  (`evidence/king/shots/it14/car_bumpers_before_after_p1_32_48ppm.png`). **Looked at**: the square
+  nose becomes a rounded gold bar like the sheet's top panel; subtle at 32 px/m (about 6 px), not
+  odd; the drawn car is 0.36 m longer than the body (render only; the ram lane unchanged).
+- Unit **1164/0** (`evidence/king/unit-it14b.log`), lint 13/13 (hook).
+NEXT (iteration 15): 1. the shades in the part art (or leave the gap); 2. the throne back behind
+King on the car (the sheet's gilded plum throne); 3. at the freeze: re-export the exe (it is on
+2c1fa18f, before the bumpers), smoke, re-film the full fight if the car's look changed enough to
+matter at 32 px/m, finalize REPORT.
