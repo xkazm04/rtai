@@ -125,7 +125,7 @@
       "range_m": 7,
       "reload_s": 2.2,
       "rof_hz": 20,
-      "shot_cue": "fire_crackle",
+      "shot_cue": "shot_flame",
       "speed_mps": 13,
       "splash_damage": 0,
       "splash_radius_m": 0,

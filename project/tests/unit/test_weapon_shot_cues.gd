@@ -95,3 +95,15 @@ func test_no_gun_of_rivets_plays_the_contractors_rifle() -> void:
 	assert_not_null(smg)
 	if smg != null:
 		assert_gt(smg.pitch, 1.0, "the SMG chatter sits over the rifle")
+
+
+## it16: the flamer's jet borrowed the burning-wreck bed (fire_crackle, -5 dB), about 15 dB under a
+## gun stream; its own roar sits over that bed.
+func test_flamer_jet_is_its_own_roar_over_the_wreck_bed() -> void:
+	var table: WeaponTable = WeaponTable.shipped()
+	var tables: AudioTables = AudioTables.shipped()
+	var jet: AudioCue = tables.cue(table.weapon(&"flamethrower").shot_cue)
+	var bed: AudioCue = tables.cue(&"fire_crackle")
+	assert_ne(table.weapon(&"flamethrower").shot_cue, &"fire_crackle", "not the wreck's bed")
+	if jet != null and bed != null:
+		assert_gt(jet.gain_db, bed.gain_db + 3.0, "the jet sits over the bed")

@@ -663,6 +663,21 @@
       "priority": 3,
       "sound": "rifle_shot",
       "takes": 3
+    },
+    {
+      "bus": "sfx",
+      "cooldown_ticks": 6,
+      "doc": "n7-ranged: Rivet's flamethrower jet (its weapons row's shot_cue, one play per 6 ticks of a held jet): the fire crackle pitched down to a roar and 6 dB over the burning-wreck bed it borrowed (fire_crackle at -5 dB read about 15 dB under a gun stream on the range film)",
+      "gain_db": 1,
+      "id": "shot_flame",
+      "loop": false,
+      "max_m": 50,
+      "max_voices": 3,
+      "pitch": 0.9,
+      "pitch_jitter": 0.04,
+      "priority": 3,
+      "sound": "fire_crackle",
+      "takes": 2
     }
   ],
   "doc": "Sound cues as data (features/audio/README.md). A cue id is an FX trigger id (data/tables/fx_triggers.json: shot, projectile_end, death, player_hit, ...), an F-04 Events signal, or an id a lane fires itself (hit_flesh, horn, crash, tyre_screech). sound/takes: res://assets/audio/sfx/<sound>_<01..takes>.wav (.ogg when longer than 3 s). gain_db trims the cue before the bus. pitch is the base pitch scale, pitch_jitter the +/- fraction drawn per play from the audio dice (seeded from the RNG registry's master seed, never a registry stream: render-side draws must not enter the replay hash). max_m: hearing distance in metres, 0 = not positional. cooldown_ticks: min sim ticks between two plays of the cue. max_voices: simultaneous players for the cue. priority: who may steal a pool voice when it is full (0 lowest).",
