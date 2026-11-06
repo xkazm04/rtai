@@ -326,3 +326,32 @@ NEXT:
   round 20261106-2215 e8b793d29d8a).
 - Stills: `gtai-masters/n8/hud/armory_crate_48_tilt70_tilt_crop2x.png` (crates at 70 top / 55 bottom,
   48 px/m, seed 1, frame 89, 0 SCRIPT ERROR).
+- 23:32 Full unit run (no-arg) at c06f18c3: 1507 passed, 0 failed (`gtai-n8/scratch/hud/it5/unit_full.log`).
+- 23:33 FRICTION: filming the boss bar "at 1080p" with `--resolution 1920x1080` (or 1600x900) still
+  records 1280x800: Movie Maker records at the project viewport (1280x800), and the bigger window's
+  `canvas_items`/`expand` layout pushed the ghost-form panel ~35 px off the left edge in the capture.
+  A filming artifact, not a game bug (the same scene without `--resolution` lays out right; the
+  1080p HUD is evidenced by the dialogue board). For a true 1080p live capture, the movie needs
+  `display/window/size/viewport_*` overridden, not `--resolution`. Captures deleted.
+- 23:37 MILESTONE 5febcad2 the crate wears the pickups' bold ink (PickupLook.dress on the crate): at
+  32 px/m the 70 crates no longer merge into one tan band (the B sheet's note 1, thin outline).
+  Still `crate_ink_32_before_after_crop2x.png`; the call still `call_pickup_hover_vs_crate_32_crop2x.png`
+  (hover left, inked crate right; 70 top, 55 bottom) re-cut with it. Masters `frames.json` 14 entries.
+- 23:38 Director reel started at 5febcad2 (tilt70 + top, headless; logs `evidence/director-reel-n8hud-it5-*.log`).
+- 23:40 Combined clip being captured (`gtai-n8/scratch/hud/clip.sh`: armory hover 70 / crates 70 and
+  55 at 48 px/m / the King's boss bar at combo / quest 1's live opening at tilt70).
+- 23:40 MILESTONE the combined clip of the set: `gtai-masters/n8/hud/hud_set_combined_it5.mp4` (41 s,
+  1280x800, at 5febcad2; 5 segments, 0 SCRIPT ERROR each; raw .avi deleted). Looked at a contact
+  sheet of 6 frames: armory hover (32), crates 70 / 55 (48), the King on his throne-car with the
+  crest + bar at combo, quest 1's live opening (Rivet's line box, heat in blue pips, cash). Masters
+  `frames.json` 15 entries (the clip second).
+- 23:42 MILESTONE 23cebe4c the homing shard's and the ray gun's showcase from the assets lane's round
+  2215 (all four sheets A, design exact; delivered 23:23-23:36): p70/p55 = each sheet's side view
+  (`design_cut.py --showcase`), looked at side by side with the interim cuts
+  (`gtai-n8/scratch/hud/it5/shard_ray_compare.png`): the same design, one consistent lying side view
+  like the other 12. 4 provenance lines. Mini nuke and plasma sword sheets: not made yet (chain B).
+- 23:44 Director reel (headless, `arena.tscn --fixed-fps 60 --quit-after 14000 -- --bot=reel
+  --reel=director --loadout=pistol --rigs --view=<v>`) at 5febcad2: `top` 19/19 chapters all down,
+  `tilt70` 19/19 all down, 0 SCRIPT ERROR both (`evidence/director-reel-n8hud-it5-{top,tilt70}.log`).
+- 23:44 Call still at 48 px/m with all 17 showcase drawings (23cebe4c): `gtai-masters/n8/hud/
+  call_pickup_hover_vs_crate_48_crop2x.png` (hover left, inked crate right; 70 top, 55 bottom).
