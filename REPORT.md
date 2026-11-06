@@ -127,3 +127,15 @@ Final head `247b82ef` (the hat card re-toned; art only, p55 set only):
 - **The owner's exe:** re-exported at 18:05 to `build/export/windows/RTAI.exe` (242 MB). Smoke runs, each 0 SCRIPT ERROR:
   - the city at seed 2, crowd 160, tilt;
   - `RTAI.exe --quit-after 700 -- --bot=ghosts --ghost=ohm --ppm=48 --view=tilt --rigs` (the Ohm beat ran).
+- `node tools/evidence/run.mjs --no-bench` on `247b82ef` (18:07-18:18):
+  - lint 15/15;
+  - unit 1423/0;
+  - parity bit-exact, mutation caught at step 629;
+  - selftest PASS;
+  - export-audit 540/0.
+- Scenarios **FAIL** in that run: 51/52.
+  - `scenario_rig_stress` missed its wall-clock budget under contention, and the runner's alone re-judge also said FAIL. The four d8 lanes and the assets lane share this machine.
+  - The scenario log shows rig p50 0.58 ms (50 people) and 0.67 ms (200 people), against a 1 ms budget.
+  - Re-run alone at 18:19 (`node tools/tests/run_scenarios.mjs --only=scenario_rig_stress`): 1 passed.
+  - These commits change only p55 rows and art, which `top` (the scenario view) never loads.
+  - Re-check on an idle machine at the merge.

@@ -435,3 +435,7 @@ NEXT (after the freeze; the Director merges):
    when it lands.
 3. Rivet's death beat if the owner takes Call 8 (a respawn delay = sim change + re-bless).
 4. Draw order: the level cap (Tonnage 3/26), the King's accents in the probe (with bosses).
+- GATE evidence --no-bench on 247b82ef: all PASS except scenarios 51/52 (rig_stress wall-clock budget
+  missed under contention; the runner's alone re-judge also FAIL). Re-run alone 18:19:
+  `run_scenarios.mjs --only=scenario_rig_stress` 1 passed. Logged p50 0.58/0.67 ms vs the 1 ms budget.
+  Recorded in REPORT as a FAIL-then-pass-alone (re-check idle at the merge).
