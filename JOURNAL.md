@@ -453,3 +453,9 @@ NEXT:
   crate, portrait side/size, dialogue never pauses play, Don Fax payphone vs bust, boss crest disc
   vs bust, Rivet's dialogue face proposal).
 - 00:47 Session end. All committed.
+- 00:48 MILESTONE the combined clip v2: `gtai-masters/n8/hud/hud_set_combined_it6.mp4` (42 s, at
+  ec53cc46, 0 SCRIPT ERROR): armory hover at 70 with the 17 final drawings (48 px/m), crates at 55,
+  the payphone call live. Looked at frames. Masters `frames.json` 15 entries (the it6 clip third;
+  the opening still superseded by the live call dropped). Raw .avi deleted. NEXT's "combined clip v2"
+  is done; the King's crest stays in the it5 clip.
+- 00:49 Session end. All committed.
