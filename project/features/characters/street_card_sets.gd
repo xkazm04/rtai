@@ -23,6 +23,11 @@ const SETS: Dictionary[String, Dictionary] = {
 		"cop/head_helmet": [P70 + "cop_riot_card.png", 0.82, 1.05, false, true],
 		"cop/head_swat": [P70 + "swat_head_card.png", 0.82, 1.4, false, true],
 		"thug": [P70 + "thug_head_card.png", 0.8, 1.2, false, true],
+		"ped/head_hair": [P70 + "ped_hair_card.png", 0.74, 2.05, false, true],
+		"ped/head_bald": [P70 + "ped_bald_card.png", 0.74, 1.93, false, true],
+		"ped/head_hat": [P70 + "ped_hat_card.png", 0.74, 1.99, false, true],
+		"ped/head_hood": [P70 + "ped_hood_card.png", 0.74, 2.1, false, true],
+		"ped/head_cap": [P70 + "ped_cap_card.png", 0.74, 2.38, false, true],
 	},
 }
 
