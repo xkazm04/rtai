@@ -61,9 +61,9 @@ By the craft columns (impact and read at 32 weigh most: they are what the owner 
 1. **Kerf's chain**: one blur at 32 (the brief's own warning). View-only fix candidates: a cut mark held
    on each victim from its cut frame, and a short hold per cut through FeelCam (`slice` row, no shake).
    **Done 20:18 (`cb3e5caa`)**: kerf_slice rides FeelCam (class `slice`; a kill takes the 6-tick kill stop)
-   and KerfView draws a 0.15 s cream-and-ink cut flare per cut (`cut_flare_s`). Limit: the camera's
-   20-tick stop cooldown is longer than the 18-tick `gap_s`, so at full player cadence only every other
-   cut can hold (the reel presses every 20 ticks: every cut holds); the kick and the flare mark all.
+   and KerfView draws a 0.15 s cream-and-ink cut flare per cut (`cut_flare_s`). The camera's stop
+   cooldown is 16 ticks (n7-ranged `0d4089f1`, merged), under the 18-tick `gap_s`, so every cut holds
+   at full player cadence too.
    `M/kerf_chain_ab_32ppm_64slow.mp4`.
 2. **Plasma sword deflect**: the deflect spark is tiny and the return is not tied to the swing; the
    placeholder blade (asset only after every item, backlog 3).
