@@ -42,8 +42,10 @@ today's game, bit-identical: `top` frames are md5-identical with the King lane's
   interleaved parts 71 % -> 4 % (seed 2, 60 s; `evidence/view/it9/order_tilt_sort.log`).
 - Mouse aim unprojected through the tilt (`ViewMode.ground_of`, unit-tested; NOT checked live
   with a mouse: unattended run).
-- Exe: `build/export/windows/RTAI.exe` (windows-showcase, exported it9 on 3625f68a, re-exported at
-  the freeze). Smoke `--view=tilt` headless: King down at tick 4933, 0 SCRIPT ERROR.
+- Exe: `build/export/windows/RTAI.exe` (windows-showcase, re-exported it12 on eba837e4 with the cast
+  shadows, 0 errors; re-exported again at the freeze). Smoke headless `--view=tilt` and
+  `--view=top`: King defeated, 0 SCRIPT ERROR, the two logs identical but for prewarm timing
+  (`evidence/view/it12/exe_*.log`).
 
 ## What does not work yet
 

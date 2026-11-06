@@ -430,3 +430,22 @@ arena path), `sprite-and-atlas-production` (stack slices from existing art, no n
   reel 19/19; evidence/run.mjs all PASS on 52e72590 (before the cast shadows). Scenarios on the
   cast-shadow code NOT re-run yet.
 - GATE scenarios on abc9c37a (switch off, cast shadows in): 52 ran / 0 failed / 0 SCRIPT ERROR (`evidence/view/it12/scenarios.log`). All it12 gates green on the cast-shadow code: lint, unit 1186/0, scenarios 52/0, reel 19/19.
+- TRIED + REVERTED (not committed): the throne back's slices in plum under a gold rim
+  (`THRONE_PADDED`). A/B at tick 2040 48 px/m: a 26 x 69 px diff, the back mostly hidden behind
+  King at that heading; no gain I could show, so no commit. Judge it at a heading where the back
+  shows (procession, ~12 s) before trying again.
+- EXE re-exported on eba837e4 (`windows-showcase`, 0 errors, build/export-it12.log). Smoke headless
+  `RTAI.exe --headless --fixed-fps 60 --quit-after 5400 -- --rigs --boss=king --bot=boss --seed=2
+  --bot-human --view=tilt|top`: King defeated, 0 SCRIPT ERROR each; the two logs identical but
+  for prewarm timing (`evidence/view/it12/exe_*.log`).
+
+NEXT (iteration 13+; freeze 08:30, report 08:40):
+1. At the freeze: `node tools/evidence/run.mjs --no-bench` on the final HEAD (log OUTSIDE the
+   tree, commit first), re-export the exe, smoke --view=tilt and --view=top, finish REPORT.
+2. Occlusion: an ink silhouette for an actor behind a tall wall/building under tilt (city block,
+   `--arena=city`): the last unbuilt class in the brief. Measure how often an actor is hidden.
+3. City under tilt: parked sedans and native traffic as stacks (VehicleView: a lifted body
+   layer + dark wall quads); the baked crowd's cast shadows.
+4. The throne crescent: judge at the procession heading (12 s), then try THRONE_PADDED.
+5. Optional bench under the lock (`node tools/bench/run.mjs` with --view? it has no view flag:
+   then say "draw cost of the tilt NOT measured" in REPORT, as now).
