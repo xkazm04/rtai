@@ -74,7 +74,7 @@ static func shot(ci: CanvasItem, s: Shot, tick: int) -> bool:
 		return true
 	# drawn out of the held gun (left of the aim line), converging onto the sim's line by CONVERGE_M
 	var side: float = GUN_SIDE_M * clampf(1.0 - (went - CLEAR_M) / CONVERGE_M, 0.0, 1.0)
-	var at: Vector2 = s.pos + dir.orthogonal() * side
+	var at: Vector2 = ShotLift.round_at(ci, s, s.pos + dir.orthogonal() * side, went - CLEAR_M)
 	match s.spec.kind:
 		WeaponSpec.Kind.BULLET:
 			var fx: StringName = art().projectile_fx(s.spec.id)
