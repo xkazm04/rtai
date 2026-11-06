@@ -1729,3 +1729,40 @@ tail (FYI 04:45: the molotov's wind-up may start ~2 ticks late in ArenaRigs; fix
 - Registry rules applied: motion-quality-gating (A/B in the live arena path at 32 and 48 px/m,
   same build with a flag, frame-exact diff), realtime-combat-semantics (the view follows the sim's
   release tick, never the reverse).
+
+### 05:12 `76569475` REPORT call 5: the arsenal path's molotov exe line
+- `RTAI.exe -- --bot=reel --reel=director --loadout=pistol --chapter=molotov --ppm=48` vs
+  `--throw-sync=off`; the showcase export's main scene is the arena (project.godot
+  `run/main_scene.showcase`), so the director flags work in the exe. `--chapter` logs "unknown
+  launch arg (ignored)" at boot but ArenaArgs still reads it (not in KNOWN_FLAGS; not mine).
+- Unit 1181/1181 on `11976ba4` (`evidence/ranged/it18-unit-11976ba4.log`).
+
+### 05:20 Gatling in a crowd, filmed (audit row 3 note, no build)
+- `--weapon=gatling --bot=gunplay --horde --cam=fight --ppm=32`, 1200 frames, exit 0, 0 SCRIPT
+  ERROR (`--arena=city --reel=pit --riot` without `--bot=reel` never fires: shots 0; with it, 2-3
+  guards a wave, no crowd). Horde: 4 then 6 guards, hit rate 21-29%, tracers read, kills read with
+  blood; a cop dies to 2 rounds, so the "pinned under sustained fire" read cannot show on humans
+  without more hp (sim). Robots: ArenaRobotRigs._react shoves the rig on every hit (checked in
+  code, not filmed tonight). Scores kept.
+- DECIDED not to build the quest 1 rifle fire kick (NEXT 4 second half): its stand-in
+  machine_pistol has no fire_kick row either, and its hits already get the class's hit feel;
+  a camera kick on every rifle round is the noise the restraint rule forbids.
+
+NEXT (iteration 19; supersedes the iteration 17 list):
+1. Freeze (by 08:30): full evidence run on the final head (`node tools/evidence/run.mjs`; last
+   full green `13e0e050`; since then render-only `01a482d1` (scenarios 52/0, quest 1 replay
+   identical), view-only `3243a483` (the throw sync), sound-only data `d4559823`, `6e50068c`,
+   `4e8860c3`, `b66880c1`, `51cb1194`, `e63c186e`); last unit 1181/1181 on `11976ba4`, reels
+   19/19 x2 on `3243a483`; re-bake + export `windows-showcase` -> `build/export/windows/RTAI.exe`;
+   boot the exe once with the call 5 arsenal line; REPORT exe lines for calls 4-7; drop DRAFT.
+2. City combined clip: retake at the freeze (the sound changed for most gun chapters, and the
+   molotov chapter's picture changed with `3243a483`).
+3. Melee merge note: n7-melee's `791ea71a` (`pack_strike(..., late)`) and my `3243a483` both feed
+   late-seen clips; they touch different lines of ArenaRigs._rivet_clips. If the Director merges
+   both, the throw can move onto the `late` bits (decisions.md re-check line).
+4. Remaining weak cells: homing_shard V 2 (call 1, owner); Gatling I/R/V 2 (filmed in a horde
+   it18: a 2-round kill never shows a pin; a sim matter, leave it). Quest 1's rifle I and V `?`:
+   `--cam=fight` stills at the contractor kill ticks.
+5. If time before the freeze: look at the arsenal path of the other wound-up or clip-fed Rivet
+   attacks for the same late feed (the shock discharge's STRIKE clip in _rivet_clips is fed on
+   `shock.discharges` the same way; Ohm/ghost powers are melee's).
