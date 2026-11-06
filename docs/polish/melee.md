@@ -42,7 +42,7 @@ ghost-powers beats, telemetry overlay on).
    **Telegraphs 05:04, 2026-11-06 (`690ec813`)**: TellCues (view only): Tonnage's armed press slam whines
    (servo 1.4) from the ring's first frame (measured twice: sound 125 / ring 126, sound 383 / ring 384;
    +30-40 dB in the 3.2-12.8 kHz band over the before), a slam onto no body lands with a concrete thud
-   (0.6; no whiff in the reel to film), Dent's seize clunks at the car on the tether's first frame (84;
+   (0.6; filmed with the dev `--whiff` beat, `M/tonnage_whiff_thud_ab_32ppm.mp4`: +15 dB below 250 Hz on the slam flash), Dent's seize clunks at the car on the tether's first frame (84;
    +3-5 dB, the car's own sounds start there too). Sound re-scored for the press slam 3 -> 4 (the tell
    is heard), Dent 3 (the clunk is small). Not listened to. `M/ghost_tell_cues_ab_32ppm.mp4`
    (`--tell-cues=off` = the before).
