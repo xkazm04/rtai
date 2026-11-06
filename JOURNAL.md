@@ -1047,3 +1047,10 @@ NEXT (iteration 10, in order):
   there?). To check in it10 (view only, framework BossCam).
 - NEXT 2 above is done (the phase re-films are in frames.json). Add to NEXT: 2b. the boss cam at
   the yard's left edge (p3 defeat, tick ~1930-2300): measure, then keep_in's x if it is the cause.
+- 02:12 MEASURED the p3 defeat at the left edge: tried `BossCam.BOSS_MARGIN_M` 3.5 (was 3.0):
+  no visible change. Servo's centre already stands ~3.1-3.5 m inside the screen's left edge
+  (keep_in works); it is his body that is wider than the margin there: turned sideways, the rack
+  with the spine gap reaches 3.07 m out from the centre, plus the defeat slump and the spill
+  (1.8 m). Holding the whole body needs a margin of ~4.5 m, which pushes the view off the floor
+  more often elsewhere: not measured tonight, reverted to 3.0. NEXT 2b is now: try 4.5 on the full
+  fight's 12 keys and the p3 defeat, and keep it only if the floor framing holds.
