@@ -194,6 +194,7 @@ func _hauler_marks() -> void:
 	if h == null:
 		return
 	RamMarks.draw_all(self, h, stage.tick, Ink.PX_PER_M)  # n7-melee: the ram's contact marks
+	RamWake.draw(self, Ink.px(stage.arena.rivet.pos), h.form, stage.tick, Ink.PX_PER_M)
 	if h.stomp_tick < 0:
 		return
 	var age: float = (stage.tick - h.stomp_tick) * SimClock.TICK_DT

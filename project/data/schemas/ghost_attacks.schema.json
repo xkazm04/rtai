@@ -339,6 +339,11 @@
           "minimum": 0,
           "type": "number"
         },
+        "ram_wake_k": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
         "slam_debris": {
           "maximum": 64,
           "minimum": 0,
