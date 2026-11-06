@@ -21,6 +21,10 @@ const HUD_PX: float = BossBar.TOP + BossBar.BAR_H + 10.0
 
 ## Metres kept on screen round the boss's centre (Servo's rack is 5.4 m across).
 const BOSS_MARGIN_M: float = 3.0
+## Sideways the screen is wider, so more is kept: a boss turned side-on (Servo's rack with its
+## spine gap reaches 3.1 m from his centre, his defeat spill more) stays whole at the floor's
+## side edge. 3.0 = the same margin on both axes (it11).
+const BOSS_MARGIN_X_M: float = 5.5
 ## The ghost card's band at the bottom of the screen (GhostFormHud: MARGIN + its 158 px card +
 ## the rim), screen px; kept clear of the boss across the whole width.
 const FOOT_PX: float = GhostFormHud.MARGIN + 162.0
@@ -69,7 +73,9 @@ func _process(_delta: float) -> void:
 	var m_per_px: float = half.y / maxf(view.get_viewport_rect().size.y * 0.5, 1.0)
 	var hud_m: float = HUD_PX * m_per_px
 	var on_floor: Vector2 = clamp_focus(at, half, hook.bounds.grow_side(SIDE_TOP, hud_m))
-	view.focus = keep_in(on_floor, half, b, BOSS_MARGIN_M, Vector2(hud_m, FOOT_PX * m_per_px))
+	var bands: Vector2 = Vector2(hud_m, FOOT_PX * m_per_px)
+	var held_x: Vector2 = keep_in(on_floor, half, b, BOSS_MARGIN_X_M, bands)
+	view.focus = Vector2(held_x.x, keep_in(on_floor, half, b, BOSS_MARGIN_M, bands).y)
 
 
 ## Half the screen in metres at the view's zoom now.
