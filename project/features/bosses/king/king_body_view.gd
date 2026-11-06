@@ -50,7 +50,12 @@ func _draw() -> void:
 		return
 	var heading: Vector2 = KingBeats.car_dir(fight) if fight.phase <= 1 else fight.body.facing
 	_cannon_rot = heading.angle_to(fight.aim)
-	draw_set_transform(Ink.px(fight.body.pos) + _windup_px(), heading.angle(), Vector2.ONE)
+	var car_at: Vector2 = Ink.px(fight.body.pos) + _windup_px()
+	if fight.phase <= 1:  # view lab: the body's stack under a tilt, the roof on top of it
+		var l: float = CAR_LEN_M * Ink.PX_PER_M
+		KingCarStack.draw(self, car_at, heading.angle(), l, CAR_W_M * Ink.PX_PER_M)
+		car_at += ViewMode.shared().lift_px(KingCarStack.ROOF_M)
+	draw_set_transform(car_at, heading.angle(), Vector2.ONE)
 	var stepping: bool = KingBeats.step_k(fight) > 0.0
 	if fight.phase <= 1:  # the procession, then the court on the stalled car
 		_car(not stepping)
@@ -149,7 +154,10 @@ func _wreck() -> void:
 	if fight.phase >= 2 and km != null and km.car_at != Vector2.INF:
 		at = km.car_at
 		dir = km.car_facing
-		draw_set_transform(Ink.px(at), dir.angle(), Vector2.ONE)
+		var l: float = CAR_LEN_M * Ink.PX_PER_M
+		KingCarStack.draw(self, Ink.px(at), dir.angle(), l, CAR_W_M * Ink.PX_PER_M)
+		var roof: Vector2 = ViewMode.shared().lift_px(KingCarStack.ROOF_M)
+		draw_set_transform(Ink.px(at) + roof, dir.angle(), Vector2.ONE)
 		_car(false)
 		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 	var hood: Vector2 = Ink.px(at + dir * CAR_LEN_M * 0.36)

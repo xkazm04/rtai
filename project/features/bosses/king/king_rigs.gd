@@ -64,6 +64,8 @@ func pose(fight: BossFight, adds: BossAdds, windup_px: Vector2) -> void:
 	var b: Fighter = fight.body
 	var on_car: bool = fight.phase <= 1 and KingBeats.step_k(fight) <= 0.0
 	var at: Vector2 = KingBeats.king_px(fight, windup_px)  # the throne, the step-down, on foot
+	if fight.phase <= 1:  # view lab: on the car's roof under a tilt, down with the step
+		at += ViewMode.shared().lift_px(KingCarStack.ROOF_M) * (1.0 - KingBeats.step_k(fight))
 	var king: CutRig = _rig(b.id, true, at, b.facing)
 	_place(king, b.id, at, b.facing, Vector2.ZERO if on_car else Vector2.INF)
 	_react(king, b, fight)
