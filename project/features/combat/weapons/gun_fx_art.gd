@@ -227,6 +227,6 @@ static func _claw_state(ci: CanvasItem, fx: GunFx, arena: CombatArena, tick: int
 		var k: float = (
 			1.0 - float(gun.trigger.reload_left) / maxf(gun.trigger.spec.reload_ticks, 1.0)
 		)
-		var at: Vector2 = Ink.px(arena.rivet.pos + Vector2(0.0, -1.5))
+		var at: Vector2 = Ink.px(arena.rivet.pos + Vector2(0.0, -1.5) + ShotLift.up_m() * 1.2)
 		ci.draw_arc(at, 11.0, 0.0, TAU, 24, Ink.INK, 7.0)
 		ci.draw_arc(at, 11.0, -PI / 2.0, -PI / 2.0 + TAU * k, 24, Ink.CREAM, 3.5)
