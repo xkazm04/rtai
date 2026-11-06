@@ -112,7 +112,7 @@ export function releaseCompile({ dir, keep = false, src = PROJECT } = {}) {
   return { ok, ran: ran ? Number(ran[1]) : null, failed, errors, status: res.status, importStatus: imp.status, out: res.out };
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const arg = (k) => process.argv.find((a) => a.startsWith(`--${k}=`))?.slice(k.length + 3);
   try {
     const src = arg('src');

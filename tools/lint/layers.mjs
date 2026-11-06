@@ -206,7 +206,7 @@ export function check(project = PROJECT) {
   return { name: 'layers', ok: issues.length === 0, issues };
 }
 
-if (import.meta.url === new URL(`file://${process.argv[1].replace(/\\/g, '/')}`).href) {
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const r = check();
   for (const i of r.issues) console.error(i);
   console.log(`layers: ${r.ok ? 'ok' : `${r.issues.length} issue(s)`}`);
