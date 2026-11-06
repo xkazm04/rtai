@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 // Evidence writer: runs lint, the unit tests, the scenario suite, the parity gate, the render
 // selftest and the city bench, and writes the PoF wire contract pof.godot-evidence/1 to
-// build/evidence/{lint,unit-tests,scenario-tests,parity,selftest,bench}.json.
+// build/evidence/{lint,unit-tests,scenario-tests,parity,selftest,export-audit,bench}.json.
 //   node tools/evidence/run.mjs [--allow-dirty] [--no-parity] [--no-bench] [--bench-headless]
-//                               [--no-selftest]
-// --no-parity / --no-bench / --no-selftest skip a kind (its file is not rewritten, so PoF sees
+//                               [--no-selftest] [--no-release]
+// --no-parity / --no-bench / --no-selftest / --no-release skip a kind (its file is not rewritten, so PoF sees
 // it stale or absent, never a fake pass): for runners without the native library or a display.
 // Commit first: the evidence names HEAD, and PoF treats evidence from another commit as stale.
 // A dirty tree is refused (the evidence would describe code that is not HEAD) unless
@@ -17,12 +17,13 @@ import { runLint } from '../lint/lint.mjs';
 import { runUnit } from '../tests/run_unit.mjs';
 import { runScenarios } from '../tests/run_scenarios.mjs';
 import { runParity } from '../tests/run_parity.mjs';
+import { releaseCompile } from '../tests/release_compile.mjs';
 import { runBench } from '../bench/run.mjs';
 import { runSelftest } from '../selftest/run.mjs';
 import { makeEnvelope } from './envelope.mjs';
 
 const OUT = join(ROOT, 'build', 'evidence');
-const FLAGS = ['--allow-dirty', '--no-parity', '--no-bench', '--bench-headless', '--no-selftest'];
+const FLAGS = ['--allow-dirty', '--no-parity', '--no-bench', '--bench-headless', '--no-selftest', '--no-release'];
 const allowDirty = process.argv.includes('--allow-dirty');
 const unknown = process.argv.slice(2).filter((a) => !FLAGS.includes(a));
 
@@ -89,10 +90,21 @@ async function laterKinds(version) {
   const out = [['scenario-tests', await runScenarios(OUT)]];
   if (!process.argv.includes('--no-parity')) out.push(['parity', await runParity(OUT)]);
   if (!process.argv.includes('--no-selftest')) out.push(['selftest', await runSelftest(OUT)]);
+  if (!process.argv.includes('--no-release')) out.push(['export-audit', releaseEvidence()]); // release-compile; the PCK audit (EXP-05) joins this kind
   if (!process.argv.includes('--no-bench')) {
     out.push(['bench', await runBench(OUT, { headless: process.argv.includes('--bench-headless') })]);
   }
   return out;
+}
+
+/** export-audit, part 1: what a release export ships still compiles (tools/tests/release_compile.mjs). */
+function releaseEvidence() {
+  const r = releaseCompile();
+  const ran = r.ran ?? 0;
+  const summary = r.ran === null
+    ? `release-compile: the load pass did not run (exit ${r.status})`
+    : `release-compile: ${ran} loaded, ${r.failed.length} failed${r.failed.length ? ` (${r.failed.slice(0, 3).join(', ')})` : ''}`;
+  return { ok: r.ok, summary, counts: { passed: ran, failed: r.failed.length, skipped: 0 } };
 }
 
 process.exit(await main());
