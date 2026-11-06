@@ -143,3 +143,26 @@ code). Re-run alone via `node tools/tests/run_scenarios.mjs --only=scenario_rig_
 `top` bit-identity: by construction (VehicleView._draw_cards returns before touching any layer when
 VehicleCards.atlas() is null, which it is in `top`), and the scenario goldens pass; a framemd5 of the
 city block against main is still owed.
+
+21:30 gate: director reel (`res://dev/arena/arena.tscn -- --bot=reel --reel=director --loadout=pistol
+--rigs --view=<v>`, headless, --quit-after 14000) in `tilt70` and `top`: 19/19 chapters, every one
+all down, 0 SCRIPT ERROR in both (run on bd11dd62; 1f34babb only lifts a wreck's fire under cards).
+MILESTONE 21:29 item 3 started: VehicleFire.hood_lift() puts a wreck's fire on the bonnet (HOOD_H_M
+1.0) when the cars draw as cards; ZERO otherwise (test). Not yet filmed.
+
+NEXT (iteration 3, in order):
+1. Film the fire on a card wreck (a dev scene or the vehicle drive with a wreck) at tilt70 32 + 64;
+   then the damage states (d1/d2 draw the intact card today: darken/scuff the card by state, or
+   cut damage cells) and skids (VehicleSkids on the ground: check they stay at the ground under the
+   card, not the lifted body).
+2. Depth vs people: a person south of a car must draw over the card. Plan: split VehicleCards into
+   two MultiMeshes, `under` (z just below the actors band) for cars whose ground front edge is north
+   of a nearby person's feet and overlapping on screen, `over` (today's band) for the rest; start with
+   Rivet + the rigs near the camera (RigDepthSort is view's: REQUEST if a hook is needed).
+3. Read n8-city's JOURNAL for the answer to the VehicleParked REQUEST; film the kerb rows when hooked.
+4. Police light bar flash on the card (blue/amber lenses) for the police chase; the driven car /
+   hijack at tilt70 (item 4); `--view=combo` boss fight check (King) with the p55 set.
+5. A framemd5 of the city block in `top` against main (bit-identity, measured not argued).
+6. Traffic density cost: bench under the bench lock (gtai-n5/bench.lock), tilt70 vs top.
+7. Bike: no sheet (catalog C x4). Build from the three-quarter views mirrored or a side-view slice
+   stack; it is not in the sim's car art ids yet, so find where a bike appears first.
