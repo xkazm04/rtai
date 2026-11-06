@@ -1312,3 +1312,23 @@ Read: JOURNAL it12 tail + NEXT, git log -12. Rules kept from it12: motion-qualit
   **looked at**: the car with cape, cannon and riders beside the sheet's top panel; King on foot
   beside Rivet and the wreck). CRF 24 (CRF 20 doubled the size). it12 versions deleted;
   frames.json 15; REPORT points at it13; REPORT call L (the cape).
+- 03:22 Director reel on 756993a8 (headless, `--rigs --bot=reel --reel=director --loadout=pistol`,
+  520 s cap): **19/19 chapters fully down**, 0 SCRIPT ERROR (`evidence/king/director-reel-it13.log`).
+- 03:28 FILM `M/king_charge_48ppm_it13.mp4` (phase 3 seed 2, stander then dodger, 1.8-6.2 s each,
+  music, 0 SCRIPT ERROR). **Looked at** the 2.5 fps sheet and a full frame of the dodger half: lane
+  lock, the cape drawn in through the tell, flared behind the dash, the stander hit, the dodger
+  below the lane, the bar clean. it10 clip deleted; frames.json 15; REPORT points at it13.
+  `build/scratch13` (trials, AVIs) deleted.
+
+NEXT (iteration 14, in order):
+1. The decree and slam clips at 48 px/m are it10 (the flat cape, the dark horn): re-film both on
+   the current head (`king_decree_48ppm_it10.mp4`: phase 2 seed 2 stander 16.2-20.6 s;
+   `king_slam_plates_48ppm_it10.mp4`: phase 3 seed 2, stander then dodger, 6.4-9.6 s each).
+2. The cape on the car in phase 1 does not react to the ram (CHARGING has `ram`, but on the car the
+   cape sits at CAPE_ON_CAR_K 1.3 over the trunk; check the ram tell/active in a 48 px/m still that
+   the gather/flare reads there and does not overhang the car's rear bumper oddly).
+3. The press slam could lift the cape's hem (a hop: the hem jumps out and drops with the
+   shockwave): a KingCape beat for press_slam, render only, A/B at 48 px/m.
+4. Before the freeze: re-export the exe (the it8 recipe in REPORT) and smoke it (King down 4933);
+   finalize REPORT (remove DRAFT, Next steps).
+- Session ends ~03:45, everything committed.
