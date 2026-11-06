@@ -1,8 +1,8 @@
 extends GutTest
 ## n7-melee: the ghost attacks' wind-ups and whiffs play their own sound once, on the frame the
 ## stage shows them: the press tell once per armed slam, the landing thud only when the slam hit no
-## body (a body hit plays HitCues' ghost_slam), the seize clunk once per seized car; every cue has a
-## row in audio_cues.json.
+## body (a body hit plays HitCues' ghost_slam), the seize clunk once per seized car, Ohm's bolt
+## crackle only when it struck no body; every cue has a row in audio_cues.json.
 
 var _ids: Array[StringName] = []
 var _at: Array[Vector2] = []
@@ -61,7 +61,17 @@ func test_the_seize_clunk_plays_once_per_seized_car() -> void:
 	assert_eq(_at[0], Vector2(5.0, 0.0), "at the car")
 
 
+func test_a_bolt_that_strikes_no_body_crackles_where_it_ends() -> void:
+	var t: TellCues = _cues()
+	t.bolt(-1, 0, Vector2.ZERO, 1)
+	t.bolt(20, 0, Vector2(6.0, 0.0), 20)
+	t.bolt(20, 0, Vector2(6.0, 0.0), 21)
+	t.bolt(50, 3, Vector2(4.0, 0.0), 50)
+	assert_eq(_ids, [TellCues.BOLT] as Array[StringName], "the body bolt is HitCues' to play")
+	assert_eq(_at[0], Vector2(6.0, 0.0), "at the burned car")
+
+
 func test_every_tell_cue_has_a_row() -> void:
 	var tables: AudioTables = AudioTables.shipped()
-	for id: StringName in [TellCues.PRESS_TELL, TellCues.PRESS_LAND, TellCues.SEIZE]:
+	for id: StringName in [TellCues.PRESS_TELL, TellCues.PRESS_LAND, TellCues.SEIZE, TellCues.BOLT]:
 		assert_not_null(tables.cue(id), "audio_cues.json row %s" % id)
