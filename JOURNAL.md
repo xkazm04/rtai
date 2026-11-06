@@ -409,3 +409,10 @@ NEXT (the next run on this lane):
 3. The plasma rifle rides above the claw when aimed (64 sheet): re-measure its grip_px on the 55 part.
 4. 70 pitch: add held_70/ rows beside held_55/ once view70 lands its pitch row.
 - Session end 18:26 (iteration 6). Branch head clean after this commit.
+
+## Iteration 7 (18:26, BUILD, 4 min before the freeze)
+- 18:26 Started 4 min before the freeze. Iteration 6 had already frozen the lane: the tree was clean at 7ff7684a,
+  every evidence check passed on 9b6c1d7a, the exe was on 6533af0e and REPORT was final. No code was started:
+  a change now could not be evidenced (gates take more than 4 min) and would make the exe stale.
+- The NEXT list above stands unchanged for the next run on this lane.
+- Session end 18:27 (iteration 7).
