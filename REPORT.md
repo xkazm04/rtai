@@ -13,7 +13,7 @@ the same 55 pitch, with no p55 art.
 
 | Item | Commit | Evidence (masters) |
 |---|---|---|
-| **Rivet's p55 bust card**: head with the logo visor, the vermilion hazard collar and the riveted tan chest. 5 drawn facings + 3 mirrored, cut from `rivet_55.png` by `tools/art/rivet_bust.py`, re-inked where the mask cut through the art | 54c05d12, 1fcba322 | `rivet_bust55_walk_sprint_roll_claw_tilt_64ppm.mp4` (64 px/m), before/after at 32 px/m (`..._before_after_tilt_32ppm_x2.mp4`, `rivet_bust55_reel_claw_pistol_...`), pistol at 64 px/m before/after `rivet_bust55_pistol_before_after_tilt_64ppm_x3_slow2.mp4` |
+| **Rivet's p55 bust card**: head with the logo visor, the vermilion hazard collar and the riveted tan chest. 5 drawn facings + 3 mirrored, cut from `rivet_55.png` by `tools/art/rivet_bust.py`, re-inked where the mask cut through the art | 54c05d12, 1fcba322 | `rivet_bust55_walk_sprint_roll_claw_tilt_64ppm.mp4` (64 px/m), before/after at 32 px/m (`rivet_bust55_walk_sprint_roll_claw_before_after_tilt_32ppm_x2.mp4`, `rivet_bust55_reel_claw_pistol_before_after_tilt_32ppm_x2.mp4`), pistol at 64 px/m before/after `rivet_bust55_pistol_before_after_tilt_64ppm_x3_slow2.mp4` |
 | **Rivet in every hold class**: all 19 director-reel chapters (claw, sidearm, long gun, tube, heavy, chainsaw, thrown, blades) | (art above) | `rivet_bust55_all_holds_tilt_48ppm_director_reel.png` |
 | **Rivet's hit reactions under tilt**: the card dips on each hit and takes the hit flash | (on_tint) | `rivet_bust55_hits_to_death_servo_tilt_48ppm_x3.mp4` |
 | **Per-view art route**: the view row's `art` key, `RigHeadCard.rows_of(art)`, `SET_CARDS[art]`, live rebuild when the art changes (for view70's combined view), `ViewMode.set_pitch` + `revision` | 8e557502, 01387fb6, e0e73ffc | unit `test_rig_head_card`, `test_view_mode` |
@@ -22,7 +22,7 @@ the same 55 pitch, with no p55 art.
 | **Ohm**: the p55 card (shell, goggles, cable beard with copper tips) over the cane and guard arms, halo 0.45 | 12b205eb, f0ce9dd5 | `ohm_card55_before_after_tilt_32ppm_x2_ghostreel.mp4`, `ohm_card55_halo_tilt_64ppm_t2_t4_t6.png` |
 | **Kerf v2** (Rivet-tall, thin, blade forearms with bright cyan edges): the card replaces the hover body under tilt, halo 0.4, a 12 deg lean into the glide | f2e781dc, 0d417c52 | `kerf_card55_before_after_tilt_32ppm_x2_ghostreel.mp4` |
 | **Draw order (owed by the view REPORT)**: ghost cards depth-sort with the rigs, and the whole host takes the card's level. `--order-probe` counts ghost-card pairs. Ghost reel 600 ticks: Tonnage wrong pairs 18/26 -> 3/26, Kerf 28/28 -> 0/28, rig pairs 0 wrong before and after | 34651864, e5f2a9bd | `kerf_card55_draworder_before_after_tilt_64ppm_*.png` |
-| **Street cast**: p55 cards for SWAT, the patrol cap, the riot helmet, the robot thug and all five ped heads (hair, bald, and since d0bec791 hat, hood, cap from the library's new A-graded sheets), cut from the assets library's keyed 55 sheets (`tools/art/street_head.py`, no image job). No head of the street cast reads top-down under tilt any more | d58d379a, 69574457, bd142385, d0bec791, 247b82ef (the hat card's coat toned to the dark coat the ped draws) | `cop_cap55_before_after_tilt_48ppm_pit_seed3.mp4`, `cop_cap_riot55_..._x3_reactline_t5.png`, `street_hat_hood55_before_after_tilt_48ppm_x3_city.png` |
+| **Street cast**: p55 cards for SWAT, the patrol cap, the riot helmet, the robot thug and all five ped heads (hair, bald, and since d0bec791 hat, hood, cap from the library's new A-graded sheets), cut from the assets library's keyed 55 sheets (`tools/art/street_head.py`, no image job). No head of the street cast reads top-down under tilt any more | d58d379a, 69574457, bd142385, d0bec791, 247b82ef (the hat card's coat toned to the dark coat the ped draws) | `cop_cap55_before_after_tilt_48ppm_pit_seed3.mp4`, `cop_cap_riot55_before_after_tilt_48ppm_x3_reactline_t5.png`, `street_hat_hood55_before_after_tilt_48ppm_x3_city.png` |
 | **view70 REQUEST it3**: `RigHeadCard.drop` renames the dropped card first, so a card rebuilt in the same frame keeps the name `head_card` | 2dd6e236 | unit `test_a_dropped_card_gives_up_its_name_for_the_rebuild` |
 | **Combined clip** (74 s: Rivet 64, Rivet reel, Tonnage, Dent, Ohm, Kerf, cops) | - | `chars_d8_set_tilt_combined.mp4` |
 
@@ -43,7 +43,7 @@ The gate numbers are in the last section.
 ## What does not work / not done
 
 - **Rivet has no death pose to judge.** The quest stage (`collect_call_stage.gd _respawn`) and the dev arena both respawn him the same tick his hp hits 0. His rig has a DEATH sprawl clip (`RigClips.die`), but nothing calls it for Rivet. Raised as a call below.
-- **The flamethrower's back tank and the rocket tube's breech draw over Rivet's visor** when he faces screen right under tilt. That is weapons' `rivet_held_view.gd`. The REQUEST is in JOURNAL iteration 10 and has no answer yet. Still: `rivet_bust55_tank_tube_over_visor_tilt_48ppm_x4.png`.
+- **The flamethrower's back tank and the rocket tube's breech draw over Rivet's visor** when he faces screen right under tilt. That is weapons' `rivet_held_view.gd`. The REQUEST is in JOURNAL iteration 10. **Weapons answered it on their own branch** (`d8-weapons` 6533af0e `ShotLift.back_z`: facing down the screen, the tank and the Gatling's belt box draw under the rig; their still `gtai-masters/d8/weapons/flamethrower_tilt_64_tank_behind_before_after.png`). The fix is not on `d8-chars`, so this branch still shows `rivet_bust55_tank_tube_over_visor_tilt_48ppm_x4.png`. Re-film both chapters after the merge (their fix does not name the tube's breech).
 - **Draw order left over:**
   - Tonnage's walking legs still ride the ghost view's fixed z (3/26 wrong pairs).
   - At depth level 2, a card host can pass the ghost FX (rare crowd case). Capping it made Kerf 0/28 -> 6/28 wrong, so I reverted it.
@@ -54,8 +54,9 @@ The gate numbers are in the last section.
 
 ## What blocked
 
-- **The image lock:** the asset lane held it for most of iteration 3, so the Dent and Tonnage sheets slipped one session.
-- **Billing:** iterations 1-2 died at launch on billing.
+- **The image lock:** the asset lane held it for most of iteration 3 (about one session), so the Dent and Tonnage sheets slipped one session.
+- **Billing:** iterations 1-2 died at launch on billing (about two sessions lost before any work).
+- **Machine contention:** `scenario_rig_stress` missed its wall-clock budget during the 18:07 evidence run (five lanes on one machine); passed alone at 18:19 (gates section).
 - **This session's export templates:** `appdata/chars/Godot/export_templates` was an empty plain folder, not the junction. I replaced it with a junction to the shared templates. Export now takes 11 s.
 
 ## Calls for the owner
@@ -68,7 +69,7 @@ Each call below is one data value away. The exe is `build/export/windows/RTAI.ex
    - See: `rivet_bust55_walk_sprint_roll_claw_tilt_64ppm.mp4`, and `RTAI.exe -- --bot=reel --reel=director --chapter=claw_combo --ppm=64 --view=tilt --rigs`.
 2. **Rivet's scale under tilt:** the bust row width is 1.25 x the collar part (`SET_CARDS["p55"]["rivet"][2]`), anchor 0.66. Built: 1.25.
 3. **Dent: tan (built, his in-game crash dummy) or the 55 sheet's all-teal Dent.**
-   - The teal strip is `p55/dent_bust_card_teal.png`, one path in `SET_CARDS`. Teal Dent would also need teal limb parts.
+   - The teal strip is `project/features/characters/art/view/p55/dent_bust_card_teal.png`, one path in `SET_CARDS`. Teal Dent would also need teal limb parts.
    - See: `dent_bust55_before_after_tilt_48ppm_x2_ghostreel.mp4`, and `RTAI.exe -- --bot=ghosts --ghost=dent --ppm=48 --view=tilt --rigs`.
 4. **The ghosts' teal glow at height:** the soul halo alpha is Ohm 0.45, Tonnage 0.35 and Kerf 0.4 (`CARD_HALO_A` in each rig; 0 = the bare card). Built: those values.
    - See: `ohm_card55_halo_tilt_64ppm_t2_t4_t6.png`, and `RTAI.exe -- --bot=ghosts --ghost=ohm --ppm=64 --view=tilt --rigs`.
@@ -96,7 +97,8 @@ Each call below is one data value away. The exe is `build/export/windows/RTAI.ex
 
 ## Next steps
 
-1. When weapons answer the tank/tube REQUEST, re-film the flamethrower and rocket_launcher chapters at 48 tilt.
+0. After the view70 merge: film the p70 street head rows at tilt70, 48 px/m (860fd3d8, data only today).
+1. After the weapons merge (6533af0e, tank behind the rig): re-film the flamethrower and rocket_launcher chapters at 48 tilt; ask weapons about the tube breech if it still covers the visor.
 2. Rivet's death beat, if the owner wants it (call 8).
 3. Judge the cap card in a crowd that has a hoodie-cap ped.
 4. Tonnage's legs into the depth sort; the King's accents in the order probe (with bosses).
@@ -150,3 +152,13 @@ Final head `247b82ef` (the hat card re-toned; art only, p55 set only):
 ## Stabilize check (18:31, head 7f089f5a; the code is the same as 860fd3d8)
 - Lint 15/15 (1092 files). Unit no-arg: 1423 passed, 0 failed, 0 skipped, no FLAKY.
 - The exe is still the 18:05 export on 247b82ef. Every commit after it is data only (unreachable p70 rows) or docs, so the exe draws what the head draws.
+
+## Report check (iteration 19, 18:40-18:47; no code since 860fd3d8)
+- Every masters file this REPORT names was checked with `ls` in `C:\Users\kazda\kiro\gtai-masters\d8\chars\`
+  (17 files + `frames.json`): all present. The shortened names in the first table now carry their full file names.
+- Also present: `build/export/windows/RTAI.exe` (242,399,176 bytes, 18:05), `tools/art/rivet_bust.py`,
+  `tools/art/street_head.py`, `project/features/characters/art/view/p55/dent_bust_card_teal.png`, the source sheet
+  `gtai-art/angle-r1/out/rivet_55.png`, and the unit test
+  `test_a_dropped_card_gives_up_its_name_for_the_rebuild` (`project/tests/unit/test_rig_head_card.gd:111`).
+- Lane-local evidence logs: `evidence/` (452 files).
+- No build and no full gate re-run in this phase; lint 15/15 again at 18:44 (pre-commit). Unit 1423/0 on code 860fd3d8 stands.
