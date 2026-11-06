@@ -1815,3 +1815,17 @@ n7-melee JOURNAL tail (no REQUEST to ranged; their NEXT 1 cherry-picks my feel-l
   Supersedes the last full green `13e0e050`: the freeze only re-runs this if code lands after.
 - Checked (no build): the shock discharge's STRIKE clip (NEXT 5) is `claw_shock`, Rivet's melee
   (n7-melee's scope); its 2-tick wind-up starts on the discharge tick. FYI to n7-melee below.
+- FYI -> n7-melee (no answer needed): `ArenaRigs._rivet_clips` feeds the shock discharge's STRIKE
+  clip on `pilot.shock.discharges` with `pack_strike(2, 5, recovery, 2)`: the claws reach the
+  thrust 2 ticks + 1 drawn frame after the arc lands (the molotov had the same shape, fixed in
+  `3243a483`). Yours to judge; I did not touch it.
+
+### MEASURE 05:58 quest 1's rifle hits, by a struck probe (NEXT 4 first step; scratch, not in tree)
+- Scratch `gtai-n7p/scratch/ranged/q1probe/q1probe{,_node}.gd` (headless, the scripted pad, logs
+  `CombatArena.struck` from tick 14300; exit 0, 0 SCRIPT ERROR; a first one-file version could not
+  compile its typed globals before the autoloads, so it loads the node like quest1_clip does).
+- Rivet's rifle lands 10 rounds in Dock 9 and EVERY one kills in one hit (lethal true, kind 1):
+  ticks 14355, 14381 (two), 14407, 14434, 14438, 14463, 14466, 14477, 14497; then Gloria at 14571.
+  Rivet stands at (376.1, 264.6) m the whole window; victims 2.3-15.5 m away, dirs along the shot.
+  So there is no "struck, not killed" read on the rifle in the quest: V is the kill's reaction.
+  The 05:26 bloom at 14390-14394 was the 14381 kill's pool growing, not a new hit.
