@@ -62,3 +62,12 @@ ERROR: Condition "!actions.custom_samplers.has(function->arguments[j].tex_builti
 [INFO] showcase: director chapter electro_baton: 1/1 down
 [INFO] showcase: director chapter electro_chain (electro_gun) at tick 6570
 [INFO] showcase: director chapter electro_chain: 4/4 down
+[INFO] view: occlusion: 0 body-frames hidden over 14000 frames, frames -1--1
+[INFO] arena: react: 30 wounds (6 on a shield), 11 deaths, 2 ducks
+WARNING: 1 RID of type "CanvasItem" was leaked.
+   at: _free_rids (servers/rendering/renderer_canvas_cull.cpp:2733)
+WARNING: 717 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 101 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+exit 0
