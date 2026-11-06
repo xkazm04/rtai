@@ -1,0 +1,8 @@
+{
+  "frames": 240,
+  "label": "vehicle_cards_cost",
+  "ppm": 32.0,
+  "rows": [],
+  "schema": "gtai.bench/1",
+  "view": "top"
+}

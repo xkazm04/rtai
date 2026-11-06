@@ -1,0 +1,49 @@
+{
+  "frames": 240,
+  "label": "vehicle_cards_cost",
+  "ppm": 32.0,
+  "rows": [
+    {
+      "cars": 32,
+      "gpu_ms_p50_hidden": 0.005,
+      "gpu_ms_p50_shown": 0.016,
+      "gpu_ms_p95_shown": 0.017,
+      "render_cpu_ms_p50_hidden": 0.015,
+      "render_cpu_ms_p50_shown": 0.021,
+      "script_us_p50": 186.0,
+      "script_us_p95": 253.0
+    },
+    {
+      "cars": 64,
+      "gpu_ms_p50_hidden": 0.005,
+      "gpu_ms_p50_shown": 0.023,
+      "gpu_ms_p95_shown": 0.024,
+      "render_cpu_ms_p50_hidden": 0.015,
+      "render_cpu_ms_p50_shown": 0.021,
+      "script_us_p50": 361.0,
+      "script_us_p95": 449.0
+    },
+    {
+      "cars": 128,
+      "gpu_ms_p50_hidden": 0.005,
+      "gpu_ms_p50_shown": 0.026,
+      "gpu_ms_p95_shown": 0.028,
+      "render_cpu_ms_p50_hidden": 0.015,
+      "render_cpu_ms_p50_shown": 0.021,
+      "script_us_p50": 690.0,
+      "script_us_p95": 779.0
+    },
+    {
+      "cars": 256,
+      "gpu_ms_p50_hidden": 0.005,
+      "gpu_ms_p50_shown": 0.028,
+      "gpu_ms_p95_shown": 0.037,
+      "render_cpu_ms_p50_hidden": 0.015,
+      "render_cpu_ms_p50_shown": 0.021,
+      "script_us_p50": 1398.0,
+      "script_us_p95": 1884.0
+    }
+  ],
+  "schema": "gtai.bench/1",
+  "view": "tilt"
+}
