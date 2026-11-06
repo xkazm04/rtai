@@ -1,0 +1,6 @@
+{
+  "doc": "The view lane's own registrations (RigCardSets.SETS stays the base table). Each lane adds card_sets/<lane>.json: sets.<art key>.<card key> = {strip, anchor_y, width, bust, raw}; files merge over the base in name order, a later file's row replacing an earlier one's.",
+  "lane": "view",
+  "schema": "gtai.card-set/1",
+  "sets": {}
+}

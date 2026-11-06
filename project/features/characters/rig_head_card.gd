@@ -96,7 +96,7 @@ static func rows() -> Dictionary[String, Array]:
 	return _merged
 
 
-## CARDS with each strip found under ART_DIR/<art>/ swapped in, then SET_CARDS[art]'s rows.
+## CARDS with each strip found under ART_DIR/<art>/ swapped in, then RigCardSets.all()[art]'s rows.
 static func rows_of(art: String) -> Dictionary[String, Array]:
 	if art == "":
 		return CARDS
@@ -107,8 +107,9 @@ static func rows_of(art: String) -> Dictionary[String, Array]:
 		if ResourceLoader.exists(alt):
 			row[0] = alt
 		out[key] = row
-	for key: String in SET_CARDS.get(art, {}):
-		var set_row: Array = SET_CARDS[art][key]
+	var sets: Dictionary[String, Dictionary] = RigCardSets.all()
+	for key: String in sets.get(art, {}):
+		var set_row: Array = sets[art][key]
 		var row: Array = set_row.duplicate()
 		if str(row[0]) == "" and out.has(key):
 			row[0] = out[key][0]
