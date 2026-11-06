@@ -983,3 +983,18 @@ the wings, under the torso).
   is grey panelled steel with orange hoses (ours a cream column), its docked drones read cream
   with rotors (ours dark cells). it8 fight clip, keys and target still deleted (superseded).
 - REPORT numbers moved to the shipped tree (it9-spine94); stale paths fixed.
+- 01:41 MILESTONE fae5b894 **the spine plated** (render only, `ServoSpine._plates`, only when
+  spine_m > 0.2 so the 0 alternative keeps the it8 column): plate seams, a raised lighter centre
+  plate with an ink rim, a copper hose down each side. **Looked at** 48 and 32 px/m (p2 seed 2):
+  the centre plate reads as the sheet's raised box; the hoses print copper-brown (not vermilion),
+  faint at 32. FRICTION: `PackedVector2Array.append/resize` return values = warnings = errors;
+  the first film had 246 SCRIPT ERRORs (Servo's whole view gone). Always run
+  `-s res://tests/load_all.gd` after a render edit, before filming. Still
+  `M/frames/servo_spine_gap_ab_48ppm_it9.png` now 0 | 0.94 | 0.94 plated; target still re-shot on
+  fae5b894. (The full-fight and attack clips are on ad9b80c0: the same fight, before the plating.)
+- 01:42 GATES scenarios **52 ran / 0 failed**, 0 SCRIPT ERROR (`evidence/servo/scenarios-it9.log`,
+  CONTENDED, beside films). Unit on fae5b894 **1186/0** (`unit-it9c.log`). Lint 13/13 (hook).
+- 01:44 EXE de-risked: `--export-release "windows-showcase"` in 14 s, exit 0; headless smoke
+  `RTAI.exe --headless --fixed-fps 60 --quit-after 7400 -- --rigs --boss=servo --bot=boss
+  --bot-human --seed=2`: **down at 7036, 188 on Rivet, 0 SCRIPT ERROR** = the editor
+  (`evidence/servo/exe-smoke-it9.json`). REPORT exe lines written. Re-export at the freeze.

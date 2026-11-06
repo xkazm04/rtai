@@ -54,7 +54,12 @@ The rotor dash checked against a reading player (it6): every tell read but 18-32
 9. Kerf's blink cuts the drones within 0.6 m of its line (default) vs only the one target: `bosses.json servo.kerf_line_m`. Clip: `M/servo_ghost_kerf_cut_halves_48ppm_it7.mp4`.
 10. The spine: the wings 0.94 m apart for a 1.5 m spine, the sheet's measure (default) vs touching wings with a 0.56 m column over them (it8): `servo.json rack.spine_m` 0.94 / 0. It moves the drones' launch cells; measured, the fight stays inside the seeds' spread (`evidence/servo/numbers-it9-spine94/`). Still: `M/frames/servo_spine_gap_ab_48ppm_it9.png` (left 0, right 0.94).
 
-Exe: (to come by 08:30) `build/export/windows/RTAI.exe -- --boss=servo`, `-- --boss=servo --phase=2`, `-- --bot=boss --boss=servo`.
+Exe (exported it9 on fae5b894, re-exported at the freeze): `build/export/windows/RTAI.exe` in the
+worktree (`windows-showcase` preset, boots into the arena). Lines: `RTAI.exe -- --rigs --boss=servo`,
+`RTAI.exe -- --rigs --boss=servo --phase=2` (or 3), `RTAI.exe -- --rigs --boss=servo --bot=boss`
+(the bot plays; add `--bot-human` for the human-like one). Headless smoke `RTAI.exe --headless
+--fixed-fps 60 --quit-after 7400 -- --rigs --boss=servo --bot=boss --bot-human --seed=2`: Servo down at
+tick 7036, 188 on Rivet, 0 SCRIPT ERROR, the editor's numbers (`evidence/servo/exe-smoke-it9.json`).
 
 ## What does not work / open
 - The horn has not been heard (every run was headless or filmed without listening).
