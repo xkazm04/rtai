@@ -1690,3 +1690,17 @@ in REPORT "Next steps" / the 07:37 NEXT (ObjectiveView vs forms_lift_m; real rec
 NEXT (08:24, freeze): nothing left to build. REPORT at 08:40 is written; only fill in the clean
 evidence re-run's result if a session runs. The Director merges n7-melee (merge notes in REPORT
 Next steps: audio_cues.json tail, hit_feel.json weapons top). Morning: the owner's calls (a)-(q).
+- GATES 08:29 clean `node tools/evidence/run.mjs --no-bench` on `3c54f494` (code `2dd19210`): exit 0, all five PASS (lint 13/13, unit 1245/1245, scenarios 52/52, parity bit-exact, selftest). STOP 08:29 iteration 22.
+
+## Iteration 23 (08:30-08:40): stabilize, past the freeze
+
+- READ 08:30 JOURNAL NEXT (08:24), git log, staged tail of it22 (the clean evidence run on `3c54f494`:
+  exit 0, all five PASS) committed now. n7-ranged since `f13aa9cc`: `bd42aade` (dev-only
+  `quest1_clip` passes `--feel`) and docs; no feel-layer code to merge. Not cherry-picked: dev tool
+  only, past the freeze, my quest-1 clips do not need it. No REQUEST for melee in n7-ranged,
+  n7-king or n7-servo.
+- EXE `build/export/windows/RTAI.exe` (08:15, code `2dd19210`) is the current build; no code change
+  since, so no re-export.
+NEXT (08:32): nothing to build. The Director merges `n7-melee` (merge notes in REPORT Next steps:
+audio_cues.json tail, hit_feel.json weapons top). Morning: the owner's calls (a)-(q) in REPORT.
+- STOP 08:32 iteration 23.

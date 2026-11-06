@@ -45,7 +45,7 @@ Gates on the code head `2dd19210` (08:14-08:25; iteration 22 cherry-picked n7-ra
 rifle's `assault_rifle` row in hit_feel.json + the hyphen alias in hit_feel.gd; no melee or ghost row moved):
 - lint 13/13, unit 1245/1245 (the 3 new ones are n7-ranged's `test_feel_quest_rifle`);
 - director reel 19/19 in the arena (0 SCRIPT ERROR), 19/19 in the city block (0 SCRIPT ERROR), scenarios 52/52 (`evidence/n7-melee/{director-arena-loadout,director-city-loadout}-2dd19210.log`);
-- `node tools/evidence/run.mjs --no-bench --allow-dirty` on `b9e93606` (08:17-08:23; the dirt: the two reel logs being written): lint 13/13, unit 1245/0, scenarios 52/52, parity bit-exact over 1200 steps (planted caught at 629), look 11/11, block 5/5. The gate printed FAIL on unit-tests only because I edited REPORT.md during the run (its tree-changed guard); a clean re-run started at the freeze, result in JOURNAL (`evidence/n7-melee/evidence-run-b9e93606.log`);
+- `node tools/evidence/run.mjs --no-bench --allow-dirty` on `b9e93606` (08:17-08:23; the dirt: the two reel logs being written): lint 13/13, unit 1245/0, scenarios 52/52, parity bit-exact over 1200 steps (planted caught at 629), look 11/11, block 5/5. The gate printed FAIL on unit-tests only because I edited REPORT.md during the run (its tree-changed guard); the clean re-run on `3c54f494` (08:24-08:29, clean tree) exited 0: lint 13/13, unit 1245/1245, scenarios 52/52, parity bit-exact, selftest PASS (`evidence/n7-melee/evidence-run-{b9e93606,3c54f494}.log`);
 - the previous full run on `798b4960` (code `48cb43d2`, clean tree): lint 13/13, unit 1242/1242, scenarios 52/52,
   parity bit-exact over 1200 steps (planted mutation caught at 629), look 11/11, block 5/5
   (`evidence/n7-melee/evidence-run-798b4960.log`).
