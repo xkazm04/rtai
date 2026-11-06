@@ -1,0 +1,28 @@
+{
+  "branch": "n8-vehicles",
+  "gates": {
+    "city_block_tilt70": "--arena=city --view=tilt70 --seed=7, 600 frames at 32 and 64 px/m, before and after: 0 SCRIPT ERROR (4 runs)",
+    "director_reel": {
+      "commit": "bd11dd62",
+      "tilt70": "19/19 chapters all down, 0 SCRIPT ERROR",
+      "top": "19/19 chapters all down, 0 SCRIPT ERROR"
+    },
+    "lint": "15/15 (pre-commit, every commit)",
+    "scenarios": "52 ran, 1 failed: scenario_rig_stress p50 1.024 ms > 1.000 ms under load; re-run alone 1 passed",
+    "unit_full": "1487 passed, 0 failed (on 869fb281 + the turn scene WIP)",
+    "unit_vehicle_tests": "15 passed, 0 failed (1f34babb)"
+  },
+  "head_before_this_file": "1f34babb",
+  "iteration": 2,
+  "measured": {
+    "red_lamps": "red-dominant px p70 2739 -> 0, p55 4819 -> 0",
+    "turn_blend": "10 deg cross-fade ghosts two cars at 64 px/m: hard swap kept",
+    "turn_upright": "upright_k 1 keeps wheels vertical but 3/4 views read ~40 deg on a 23 deg footprint: rigid kept"
+  },
+  "media": "C:/Users/kazda/kiro/gtai-masters/n8/vehicles/ (frames.json, 10 entries)",
+  "owed": [
+    "top framemd5 vs main",
+    "evidence/run.mjs --no-bench",
+    "bench under the lock (traffic density cost)"
+  ]
+}
