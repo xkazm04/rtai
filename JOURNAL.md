@@ -112,3 +112,8 @@ the snap (16 views with mirrors). Lower priority than the side-view redo.
 
 FRICTION: `--arena=city` and `--ppm=` print "boot: unknown launch arg (ignored)" but the arena reads
 them itself (ArenaArgs); harmless. Godot's movie writer keeps the "." in a name like u0.5_f.png.
+
+MILESTONE 21:18 colour law: the atlases carried red-orange tail lenses (r > 1.8 g and 1.8 b): 2739 px
+at p70, 4819 at p55, in the tail / three-quarter-away views of taxi, van, pickup, ambulance, police
+(the ambulance looked amber at a glance; the numbers did not). `vehicle_cards.py` amber() turns them
+amber keeping value; both atlases re-cut: 0 such px. Evidence pickup_tail_lamps_amber_ba.png.

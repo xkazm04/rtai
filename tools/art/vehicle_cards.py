@@ -7,7 +7,7 @@ as the car's top-down footprint (the traffic atlas cell, 80 px/m: the collision 
 every view into a CELL_PX square with the car's GROUND CENTRE at the cell centre (the bbox centre
 dropped by half the body's lifted height: a box's projection is centrally symmetric about its
 centroid's). Rows = the sim car art id (CitySpawner CAR_ART 0-7, ART_POLICE_CAR 8), columns = the
-five views. The mirrored three views are the runtime's (a UV flip about the cell centre).
+five views. Red-orange lamp lenses are turned amber (red is blood only). The mirrored three views are the runtime's (a UV flip about the cell centre).
 
 Usage: python tools/art/vehicle_cards.py <library root> <pitch> [--out=<png>]
 Writes project/features/vehicles/art/p<pitch>/traffic_cards.png by default.
@@ -82,6 +82,17 @@ def paint(im: Image.Image, gain: tuple) -> Image.Image:
     return Image.fromarray(np.clip(px, 0, 255).astype(np.uint8))
 
 
+def amber(im: Image.Image) -> Image.Image:
+    """The colour law: red only for blood. Turns the sheets' red-orange lamp lenses amber
+    (r dominant over g and b by 1.8x), keeping their value."""
+    px = np.array(im).astype(np.float32)
+    r, g, b = px[:, :, 0], px[:, :, 1], px[:, :, 2]
+    red = (px[:, :, 3] > 0) & (r > 90) & (r > g * 1.8) & (r > b * 1.8)
+    px[:, :, 1] = np.where(red, r * 0.66, g)
+    px[:, :, 2] = np.where(red, r * 0.16, b)
+    return Image.fromarray(np.clip(px, 0, 255).astype(np.uint8))
+
+
 def build(root: Path, lib: Path, pitch: int) -> Image.Image:
     atlas = Image.new("RGBA", (CELL_PX * 5, CELL_PX * len(ROWS)), (0, 0, 0, 0))
     lengths = footprints(root)
@@ -92,7 +103,7 @@ def build(root: Path, lib: Path, pitch: int) -> Image.Image:
         k = lengths[row] * PPM / vs[2].width  # the side view as long as the footprint
         for col, v in enumerate(vs):
             w, h = max(1, round(v.width * k)), max(1, round(v.height * k))
-            im = paint(v.resize((w, h), Image.LANCZOS), gain)
+            im = amber(paint(v.resize((w, h), Image.LANCZOS), gain))
             drop = height * 0.5 * cos_p * PPM  # bbox centre -> ground centre (screen px)
             cx = col * CELL_PX + CELL_PX // 2
             cy = row * CELL_PX + CELL_PX // 2
