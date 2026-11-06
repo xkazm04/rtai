@@ -21,6 +21,7 @@ var wrong: int = 0
 var mixed: int = 0
 var car_pairs: int = 0
 var car_wrong: int = 0
+var car_wrong_tick: int = -1  # n8: the first wrong car pair's tick (to film it)
 ## Ghost cards (GhostCard sprites, d8 chars) against rigs: a rig south of the card must draw over
 ## it, a card south of a rig over every part of the rig.
 var ghost_pairs: int = 0
@@ -32,12 +33,14 @@ var accent_pairs: int = 0
 var accent_wrong: int = 0
 var _accents: Array[KingAccents] = []
 var _order: Dictionary[Node, int] = {}
+var _tick: int = 0
 
 
 func sample(root: Node, tick: int) -> void:
 	if tick % SAMPLE_EVERY != 0:
 		return
 	samples += 1
+	_tick = tick
 	_order.clear()
 	var rigs: Array[CutRig] = []
 	var cars: Array[KingBodyView] = []
@@ -65,6 +68,7 @@ func summary() -> String:
 		(
 			"order-probe view=%s samples %d rig pairs %d wrong %d mixed %d car pairs %d"
 			+ " car wrong %d ghost pairs %d ghost wrong %d accent pairs %d accent wrong %d"
+			+ " first car wrong %d"
 		)
 		% [
 			ViewMode.shared().id,
@@ -78,6 +82,7 @@ func summary() -> String:
 			ghost_wrong,
 			accent_pairs,
 			accent_wrong,
+			car_wrong_tick,
 		]
 	)
 
@@ -143,6 +148,7 @@ func _car_pair(car: KingBodyView, rig: CutRig, p: float, h: float) -> void:
 	var rig_over: bool = _rank(rig) > _rank(car)
 	if rig_over == north:
 		car_wrong += 1
+		car_wrong_tick = _tick if car_wrong_tick < 0 else car_wrong_tick
 
 
 func _ghost_pair(card: Sprite2D, rig: CutRig, p: float, h: float) -> void:

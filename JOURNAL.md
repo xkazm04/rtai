@@ -289,3 +289,10 @@ NEXT (iteration 6, in brief order):
    Kerf p70 lacks the p55's amber shoulder rings.
 7. Before the freeze: director reel 19/19 top + combo, evidence run --no-bench, export the exe,
    REPORT with the Calls (King bust size, death beat length, attack lock, camera lead at speed).
+- 22:46 the phase-3 car pairs: the probe now logs the first wrong car pair's tick (60; all 10 at
+  ticks 60-114). Stills at ticks 72 and 102 (64 px/m, combo,
+  `evidence/n8-view/order-probe-it5/phase3_car_wrong_ticks_72_102_combo_64ppm.png`): NO car on
+  screen near Rivet. A `--phase=3` start draws no wreck there while `KingMoves.car_at` is set, so the
+  10/10 is a PROBE ARTIFACT (it pairs Rivet with an undrawn car), not a draw fault. Fix for the
+  probe next: skip the car when the wreck is not drawn (read the wreck's visibility from KingBodyView).
+  NEXT item 1 above is answered; keep the probe fix as a small item.
