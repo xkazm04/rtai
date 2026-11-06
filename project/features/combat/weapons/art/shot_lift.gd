@@ -68,3 +68,10 @@ static func jet(ci: CanvasItem, s: Shot, went: float) -> Vector2:
 static func claw_at(ci: CanvasItem, ground: Vector2) -> Vector2:
 	var up: Vector2 = up_m()
 	return ground if up == Vector2.ZERO else HeldMuzzle.at_m(ci, ground + up)
+
+
+## The z of the flamer's back tank (RivetHeldView): with a lift, a Rivet facing down the screen
+## (towards the raised camera) carries it up the screen, on his head; it must draw under the rig.
+## The held view rides 60 z over the rigs (arena_rigs), so the tank drops one under the rig's own z.
+static func back_z(fwd: Vector2) -> int:
+	return -61 if up_m().y < 0.0 and fwd.y > 0.0 else 0

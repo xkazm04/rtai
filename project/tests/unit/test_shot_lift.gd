@@ -32,3 +32,8 @@ func test_the_flame_jet_stays_on_the_ground_straight_down() -> void:
 func test_a_claw_effect_keeps_its_ground_point_straight_down() -> void:
 	var ci: Node2D = autofree(Node2D.new())
 	assert_eq(ShotLift.claw_at(ci, Vector2(2, 5)), Vector2(2, 5), "top: the crackle is the before")
+
+
+func test_the_back_tank_keeps_its_z_straight_down() -> void:
+	assert_eq(ShotLift.back_z(Vector2(0, 1)), 0, "top: the tank draws as before, facing down")
+	assert_eq(ShotLift.back_z(Vector2(0, -1)), 0, "top: and facing up")

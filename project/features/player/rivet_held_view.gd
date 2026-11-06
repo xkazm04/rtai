@@ -208,8 +208,7 @@ func _mag_view() -> RivetMagView:
 	return _mag
 
 
-## weapon-art's `tank` part on Rivet's back while a backpack weapon (the flamethrower) is carried in
-## the claw: across the shoulders, TANK_BACK_M behind the torso, turning with it.
+## weapon-art's `tank` on Rivet's back (the flamethrower): TANK_BACK_M behind the torso, turning.
 func _back_tank(rig: CutRig, on: bool) -> void:
 	var id: StringName = arsenal.art_id(pilot.hold.held)
 	if on and _tank == null:
@@ -235,6 +234,7 @@ func _back_tank(rig: CutRig, on: bool) -> void:
 		var back_px: float = (TANK_BACK_M + TANK_SWAP_M * swap) * WeaponArt.WORLD_PX_PER_M
 		_tank.global_position = rig.torso.global_position - fwd * back_px
 		_tank.global_rotation = fwd.angle() + PI * 0.5
+		_tank.z_index = ShotLift.back_z(fwd)  # d8-weapons: under the rig when he faces the camera
 		if _sprite != null and _sprite.visible:
 			_route_hose(fwd)
 
