@@ -2029,3 +2029,7 @@ NEXT (iteration 22; supersedes the 06:25 list and its 2b addendum):
    weapons row can now carry `hold_delay_ticks` too (data only).
 4. Weak cells left: homing_shard I/R/V 2 (call 1, owner); Gatling R/V 2 (crowds only, a sim matter).
 5. Not a build: the hand cannon's upright flight is the approved blowback signature (06:31).
+- Note 06:47: the city combined clip (retaken on `49cfe6c4`) stands for `d85fb768` too: the only
+  change since is the Gatling's weapons row, and the director reel has no Gatling chapter.
+  Scratch for this iteration (`gtai-n7p/scratch/ranged/wh/`, `city21/`) holds only logs and the
+  scripts; every avi deleted.
