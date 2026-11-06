@@ -23,9 +23,11 @@ final hash moved once, deliberately, when quest 1 started carrying the katana (`
 | Claw jab reads at 32 | `f45ad8e6` | three cream rakes edged in ink across the struck cop on the hit frame, fading over 10 ticks | `M/claw_rake_ab_32ppm.mp4`, `M/claw_rake_48ppm_04x.mp4` (before `melee_marks.json` claw `flash_ticks` 0) |
 | Ghost hits move the victim | `91700e01` | a body Tonnage rams or throws with the slam, and that survives, now plays a knockdown on the hit (before: no reaction at all); a rammed riot cop goes down instead of standing braced | `M/ghost_wound_ram_ab_32ppm.mp4` (before `human_reactions.json` `ghost_wound` {}) |
 | Quest 1 shows melee (brief 5) | `fbc5a982`, `8237d411`, `becfeb7f`, `806a657e`, `5f80e67c` | Rivet carries the katana on key 2 in quest 1; the shipped sprite cast draws the blade, the swing and the smear | `M/quest1_katana_ab_32ppm.mp4` (before `--quest-blade=off`) |
+| The shipped quest 1 starts (found by the trial exe) | `87d7dc2b` | since `65dd07e1` the slice exe failed to compile quest1_game.gd (a dev-only class on the melee feel's path); fixed, and `test_slice_closure` now fails the unit gate on any dev class on quest 1's path | `evidence/n7-melee/it9-export-slice-fix.log`; the slice exe's title card loads, 0 SCRIPT ERROR |
+| City Tonnage reel has no engine errors | `c48b2806` | the ram and slam chips draw in local space (6 triangulation ERRORs per city reel, 0 now; no visible change) | `evidence/n7-melee/city-tonnage-{before,after}-chipfix.log` |
 
 The whole polished set in the city block at 32 px/m, with the game audio:
-`M/melee_polished_set_city_32ppm.mp4` (53 s).
+`M/melee_polished_set_city_32ppm.mp4` (44 s, re-cut on `bd36c37c` with `evidence/n7-melee/set_clip.sh`).
 
 Gates on the last build commit `7ce7b33d`:
 - lint 13/13;
