@@ -170,7 +170,7 @@
             638,
             150
           ],
-          "size_k": 1
+          "size_k": 1.2
         },
         "pistol": {
           "art": "res://features/combat/weapons/art/held_55/pistol.png",
