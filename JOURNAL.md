@@ -48,3 +48,49 @@ Scratch: `C:\Users\kazda\kiro\gtai-d8\scratch\view70\`.
   unit `test_view_pitch` 6/6. Headless combo King fight seed 2: king defeated, 0 SCRIPT ERROR.
 - FRICTION: `node tools/godot/check.mjs` FAILs on untouched files here too (rig_head_card.gd:
   "Failed to compile depended scripts"); used run_unit --select instead.
+- 14:24 FRICTION/fix: the King engages inside BossHook.setup (station order: bosses before
+  view-pitch), before my hook listens to Events.boss_engaged; `boss_on()` now reads the BossHook's
+  live fight state directly (signal kept for arena bosses without a BossHook).
+- 14:29 MILESTONE (film, seed 2, 5400 frames, 32 px/m): combo log: `pitch ease 70.0 -> boss at
+  tick 1`, cards to the base art at tick 32, `king defeated`, `pitch ease 55.0 -> play at tick
+  5252`, cards to p70 at tick 5282. 0 SCRIPT ERROR in tilt / tilt70 / combo.
+- 14:31 LOOKED: at 70 the King's p70 bust drew tiny and sunk behind the throne (t12, t34 zooms).
+  Cause: RigHeadCard sizes a card by cell WIDTH (2.4 x torso); the 70 bust cell is 169 px wide vs
+  the 55's 115 px (the bell, the wide fur), so it drew at 68 % height.
+- DECISION: per-pitch art is an OVERLAY child of the live card (same frame/mirror, same height in
+  the card's pixels, base anchor fraction, parent material) instead of re-texturing; the card's own
+  texture goes invisible via self_modulate. This also gives the cross-fade: combo fades over
+  fade_deg 5 centred on swap_deg 62.5 (fade_deg 0 = hard swap). Unit 9/9.
+- 14:36 MILESTONE (films, 0 SCRIPT ERROR each): re-filmed tilt70 + combo with the overlay. combo log:
+  `cards mix 1 (70.0) tick 1`, `cards mix 0 (59.9) tick 38` (fade ticks ~23-38), `king defeated`,
+  `pitch ease 55.0 -> play at tick 5252`, `cards mix 1 (65.1) at tick 5289`. LOOKED at t12 x2: the
+  70 King bust now reads (plum cap, fur, vermilion) at the 55 card's height; lower lift at 70.
+- MEASURED pop (frame-to-frame mean abs diff, full 1280x800 frame, frames 5240-5330, i.e. the whole
+  defeat ease): combo max 17.97, median 14.29; tilt70 (no ease) max 19.94, median 13.43. The ease and
+  the cross-fade add no spike above the print-grain floor. Caveat: a full-frame metric; a card-region
+  metric would be sharper (next). `gtai-masters/d8/view70/combo_defeat_ease_framediff.txt`.
+- MEASURED occlusion (logs): King fight 55 = 113 body-frames hidden / 90 s, 70 = 6; city block
+  55 = 176 / 45 s, 70 = 30. COMPUTED ground north-south vs top: 55 1.221x, 70 1.064x.
+- EVIDENCE in gtai-masters/d8/view70 (frames.json, 9 entries): king_55_70_combo_32ppm_45s.mp4,
+  king_defeat_combo_eases_back_to_70_32ppm.mp4, city_55_vs_70_32ppm_45s.mp4 (+ t18 still),
+  king_car_55_vs_70_32ppm_x2_t12.png, rivet_55_vs_70_64ppm_t12/t30.png, the two p70 strips x3.
+- READ chars JOURNAL 14:44: they built REQUEST 1 in d8-chars 8e557502 (`ViewMode.art` from the row's
+  `art`; `RigHeadCard.rows_of(art)`: a same-name strip under art/view/<art>/ replaces the base path,
+  KEEPING the base row's anchor/width; `SET_CARDS[art]` replaces whole rows; a live
+  `ViewMode.shared().art` change rebuilds cards). NOTE the 55 art is `p55` there, not the base.
+- REQUEST chars (rows for p70, since rows_of keeps the base width and RigHeadCard sizes by cell
+  width): `SET_CARDS["p70"]["king"]` = base king row with width k 2.4 * 169/115 = 3.53 (anchor 0.80,
+  bust true, raw true); `SET_CARDS["p70"]["rivet"]` = base rivet row with width k 1.0 * 105/90 = 1.17
+  (anchor 0.86, raw true). Those keep each 70 card as tall as its 55 card (MEASURED at 32 px/m: with
+  the base width the 70 King bust drew at 68 % height, sunk behind the throne). Or I keep my
+  overlay, which does the height match itself (ViewPitchCards.SCALE).
+- ANSWER chars (REQUEST 2 proposal): yes please, `ViewMode.revision` bumped on each pitch write;
+  I will bump it from ViewPitchEase once it lands. No objection.
+- GATE unit (full, no-arg) on 05d684e9: 1416 passed, 0 failed (60 s).
+- MEASURED draw order at 70 (`--order-probe`, King fight seed 2, 32 px/m, to tick 3000;
+  `evidence/it1/order_tilt*.log`): tilt (55) rig pairs 318, reversed 0, interleaved 1, car pairs
+  356 car wrong 2; tilt70 rig pairs 218, reversed 0, interleaved 0, car pairs 313 car wrong 1.
+  70 has fewer overlapping pairs (smaller lift) and no new failure.
+- FILM 64 px/m close-up, King on foot (`--phase=3 --boss-cam`): king_onfoot_55_vs_70_64ppm_t9.png +
+  15 s mp4. LOOKED: the 70 bust reads in close combat (plum crown, grin, chain, emerald medallion);
+  the fur's step cut mostly hides under the arms. frames.json now 11 entries.
