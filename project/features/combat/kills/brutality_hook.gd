@@ -23,6 +23,8 @@ func setup(stage: ArenaStage, ctx: WorldContext) -> void:
 	var table: SignatureKillTable = SignatureKillTable.load_table()
 	table.gore_full = SignatureKillTable.gore_from_args(ArenaArgs.parse().text("--gore", "full"))
 	shard_pop(table, ArenaArgs.parse().text("--shard-pop"))
+	if ArenaArgs.parse().text("--saw-part") == "off":  # n7-melee's before: the halves part sideways
+		saw_part_off(table)
 	kills = SignatureKills.new(table, ctx.rng.stream(&"brutality"))
 	kills.push_out = _push_out
 	@warning_ignore("return_value_discarded")
@@ -123,6 +125,15 @@ static func shard_pop(table: SignatureKillTable, value: String) -> void:
 	var row: SignatureKill = table.for_weapon(&"homing_shard")
 	if row != null and value.is_valid_int():
 		row.grind_ticks = maxi(0, value.to_int())
+
+
+## `--saw-part=off`: every split row's halves leave as the brutality night threw them (GibSim
+## state, so it moves the arena's replay hash like any table edit).
+static func saw_part_off(table: SignatureKillTable) -> void:
+	for w: StringName in table.weapons():
+		var row: SignatureKill = table.for_weapon(w)
+		if row != null:
+			row.split_follow = GibSim.SPLIT_FOLLOW
 
 
 ## The printed path's actor layer, or the CityView's on the city block (--arena=city), where the

@@ -42,6 +42,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--pullback",
 	# n7-melee: --strike-sync=off starts Rivet's view strike from 0 when it is seen (the before)
 	"--strike-sync",
+	# n7-melee: --saw-part=off parts the chainsaw's halves sideways, under Rivet (the before)
+	"--saw-part",
 	# n7-melee: --melee-dir=off leaves a melee kill the last round's line (the before)
 	"--melee-dir",
 ]
