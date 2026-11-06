@@ -670,3 +670,20 @@ director reel.
 NEXT: unchanged from iteration 5/9. Director: merge in any order (lane docs conflict only), then re-run
 `test_rig_head_card`, `test_view_pitch*`, `test_king_art` and the combo director reel; the owner's calls
 are in REPORT; frame cost 70 vs 55 still owed under the bench lock on a quiet machine.
+
+## Iteration 11 (18:30, STABILIZE, post-freeze; session stops 18:40)
+- 18:30 READ JOURNAL tail, git log, lane heads. chars moved to 4c31b40b: 860fd3d8 lands view70's it5
+  REQUEST (`RigCardSets.SETS["p70"]` street rows reuse the p55 strips) + docs. bosses and weapons:
+  docs only. `git merge-tree --write-tree HEAD d8-chars` still conflicts in the lane docs only
+  (`JOURNAL.md`, `REPORT.md`); `rig_card_sets.gd`, `docs/decisions.md` and provenance auto-merge.
+- 18:32 CHECKED masters `frames.json` (15 entries, every file present) and the exe (18:02, afbdee5b).
+- DECISION no merge of 860fd3d8 here: past freeze, and a merge needs the full gates again (~13 min
+  evidence + reels). REPORT now says the p70 street rows landed on chars, unmerged and unfilmed here;
+  the city pair must be re-filmed after the Director's merge.
+- Registry rules applied: motion-quality-gating (the landed street rows are not claimed as seen: no frame).
+
+NEXT: Director: merge d8-view70 and d8-chars in any order (lane docs conflict only), re-run
+`test_rig_head_card`, `test_view_pitch*`, `test_king_art`, the combo director reel, and re-film the
+city pair at tilt70 (now with the p70 street rows). The owner's calls are in REPORT. Frame cost 70 vs 55
+is still owed, under the bench lock on a quiet machine. it5 REQUEST to bosses (`KingArt` keyed by
+`ViewMode.art`) is still open.

@@ -106,6 +106,9 @@ Evidence: `C:\Users\kazda\kiro\gtai-masters\d8\view70\` (`frames.json`, 15 entri
   helmet, peds, thugs) have no p70 rows, so the city pair compares two street art sets for the
   humans (Rivet and the cast are matched). REQUEST to chars in JOURNAL: a `p70` row that points at
   the p55 strips (the 55 drawing at 70, as the King's gang does) until 70 street sheets exist.
+  **Landed on d8-chars after the freeze** (860fd3d8, `RigCardSets.SETS["p70"]`); it is not merged into
+  d8-view70 and was not filmed here. The city pair in this lane's masters still shows the old street
+  heads at 70; after the Director merges both lanes, re-film the city pair (`--view=tilt70`).
 - **Under combo, during the 1 s ease, the King's drawn cape fan shows** (KingArt keys by the live
   pitch rounded, and no strip exists for 56-69), and the gang chains switch when the pitch rounds
   to 55. The King is off screen at the engage in every seed tried (1-5); at the return he is dying.
