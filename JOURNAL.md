@@ -1010,3 +1010,9 @@ NEXT (iteration 9, in order):
    clips at 48 if missing (frames.json has the slam only as a per-attack clip at 48 now).
 4. Director reel once more before the freeze; re-export the exe at the freeze; finalize REPORT
    (remove DRAFT, fill Next steps).
+- 01:06 NEXT 1 started early: **gang bulk** (`GangPlan.SIZE_K` 1.2, `ARM_W` 1.7; render only).
+  **Looked at** `evidence/king/shots/it8/gang_bulk_before_after_32ppm_2x.png` (phase 2, seed 2, tick
+  360, 32 px/m, 2x): the four gang read heavier, limbs thicker, the dome a touch clearer; the heads
+  still print dark at the centre (the black shade band + chains over a small dome). Partial: keep
+  NEXT 1 open for the head (a wider dome / thinner band at 32 px/m). Unit 1159/0 (`unit-it8b.log`),
+  lint 13/13. Decisions line. Not yet re-measured: the seed 2 ticks (render only, expected equal).
