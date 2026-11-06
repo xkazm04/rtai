@@ -66,6 +66,8 @@ func setup(
 	cards = VehicleCards.new()
 	cards.z_index = car.z_index
 	add_child(cards)
+	cards.under.z_index = RenderLayers.z(&"actors") - 1
+	add_child(cards.under)
 
 
 func _layer(like: MultiMeshInstance2D, tex: Texture2D, z: int) -> MultiMesh:
@@ -119,9 +121,9 @@ func _process(_delta: float) -> void:
 	_draw_cards()
 
 
-## Under a tilt with art for its pitch: every car (the service's and the sim's traffic) as a card,
-## the flat body layers (ours and the crowd's) hidden; their ground shadows stay. Never touches the
-## layers in a view with no card atlas (`top` stays bit-identical).
+## Under a tilt with art for its pitch: every car as a card (worn by its damage state; under the
+## actors when someone stands in front), the flat bodies hidden, their shadows kept. A view with no
+## card atlas (`top`) never touches the layers (bit-identical).
 func _draw_cards() -> void:
 	var tex: Texture2D = VehicleCards.atlas()
 	var on: bool = tex != null
@@ -135,19 +137,22 @@ func _draw_cards() -> void:
 	if not on:
 		return
 	cards.begin(tex)
+	var me: Vector2 = service.world.player_pos()
+	cards.front.clear()
+	cards.front.add_people(service.world.people_near(me, VehicleFront.NEAR_M))
+	if service.driving == null:
+		cards.front.add(me)
 	for b: VehicleBody in service.cars:
 		cards.put(b.art, b.pos, b.head, Color.WHITE, VehicleCards.wear(b.state, b.id))
-	var book: Dictionary[int, int] = {}
-	if service.traffic != null:
-		book = service.traffic.state
-	var recs: PackedFloat64Array = service.world.cars_near(service.world.player_pos(), 1e6)
+	var book: Dictionary[int, int] = service.traffic.state if service.traffic != null else {}
+	var recs: PackedFloat64Array = service.world.cars_near(me, 1e6)
 	for r: int in range(0, recs.size(), VehicleWorld.CAR_STRIDE):
 		var id: int = int(recs[r])
 		var st: int = book.get(id, VehicleBody.State.INTACT)
 		var at: Vector2 = Vector2(recs[r + 2], recs[r + 3])
 		var head: Vector2 = Vector2(recs[r + 4], recs[r + 5])
 		cards.put(int(recs[r + 7]), at, head, Color.WHITE, VehicleCards.wear(st, id))
-	VehicleParked.put_near(cards, service.world.player_pos(), PARKED_M)
+	VehicleParked.put_near(cards, me, PARKED_M)
 	cards.finish()
 
 

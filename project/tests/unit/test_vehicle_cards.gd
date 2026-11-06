@@ -64,3 +64,25 @@ func test_wear_levels_follow_the_damage_state_and_seed_per_car() -> void:
 func test_cards_draw_north_to_south_whatever_the_put_order() -> void:
 	var ys: PackedFloat32Array = PackedFloat32Array([5.0, -5.0, 0.0, -5.0])
 	assert_eq(VehicleCards.back_to_front(ys), [1, 3, 2, 0] as Array[int])
+
+
+func test_a_card_with_someone_in_front_drops_under_the_actors() -> void:
+	var f: VehicleFront = VehicleFront.new()
+	assert_false(f.blocks(Vector2.ZERO), "nobody: the vehicles band")
+	f.add(Vector2(0.5, -2.0))  # behind the car: the card covers them, stays over
+	assert_false(f.blocks(Vector2.ZERO))
+	f.add(Vector2(5.0, 1.0))  # beside, too far across
+	assert_false(f.blocks(Vector2.ZERO))
+	f.add_people(PackedFloat64Array([7, -1.0, 2.0, 1.0]))  # in front but dead: ignored
+	assert_false(f.blocks(Vector2.ZERO))
+	f.add_people(PackedFloat64Array([8, -1.0, 2.0, 0.0]))  # in front, alive
+	assert_true(f.blocks(Vector2.ZERO))
+	assert_false(f.blocks(Vector2(0.0, 10.0)), "a car further south is not blocked")
+	var cards: VehicleCards = autofree(VehicleCards.new())
+	cards.front = f
+	cards.begin(null)
+	cards.put(0, Vector2.ZERO, Vector2.RIGHT, Color.WHITE)
+	cards.put(0, Vector2(0.0, 10.0), Vector2.RIGHT, Color.WHITE)
+	cards.finish()
+	assert_eq(cards.count(), 2)
+	assert_eq(cards.count_under(), 1)

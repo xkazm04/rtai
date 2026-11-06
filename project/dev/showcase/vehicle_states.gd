@@ -1,16 +1,13 @@
 extends Node2D
 ## n8 vehicles: the damage film. Four sedans turn slowly in place in a row, intact, dented (D1),
 ## smashed (D2) and a burning wreck (VehicleFire on the bonnet), while a police car drifts a
-## circle south of them laying tyre marks (VehicleSkids on the ground), all under the shared view
-## (--view=). A stand-in VehicleService carries the cars; nothing steps the sim.
+## circle south of them laying tyre marks (VehicleSkids on the ground), under --view= (no sim).
 ##   godot --rendering-driver d3d12 --fixed-fps 60 --path project
 ##     res://dev/showcase/vehicle_states.tscn
 ##     --write-movie <abs>.avi --quit-after 600 -- --view=tilt70 --ppm=32 [--wear=0]
 ## --wear=0: the "before" (iteration 2): every state draws the intact card, the wreck tinted.
 
-const STATES: Array[VehicleBody.State] = [
-	VehicleBody.State.INTACT, VehicleBody.State.D1, VehicleBody.State.D2, VehicleBody.State.WRECK
-]
+const STATES: Array[int] = [0, 1, 2, 4]  # VehicleBody.State INTACT, D1, D2, WRECK
 const GAP_M: float = 6.0
 const DEG_PER_TICK: float = 0.5
 ## The drifting police car: art id, circle centre (m), radius (m), rad per tick, drift angle.
@@ -41,7 +38,7 @@ func _ready() -> void:
 	var p: VehicleProfile = VehicleProfile.load_all().get(&"sedan")
 	for i: int in STATES.size():
 		var b: VehicleBody = VehicleBody.new(i + 1, p, _at(i), Vector2.RIGHT)
-		b.state = STATES[i]
+		b.state = STATES[i] as VehicleBody.State
 		_svc.cars.append(b)
 	_cop = VehicleBody.new(9, p, Vector2.ZERO, Vector2.RIGHT)
 	_cop.art = COP_ART

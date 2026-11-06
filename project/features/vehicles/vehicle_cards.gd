@@ -31,33 +31,31 @@ static var blend_deg: float = BLEND_DEG
 ## 1 = only its long axis turns and its verticals stay screen-vertical (a yaw shear, no roll).
 static var upright_k: float = 0.0
 
+## Who stands in front of a card this frame (empty: every card in the vehicles band).
+var front: VehicleFront = VehicleFront.new()
+## The cards with someone in front of them, drawn just under the actors band. The owner parents
+## it at that z (VehicleView); unparented, begin() keeps it as this node's child.
+var under: MultiMeshInstance2D = null
 var _mm: MultiMesh = null
+var _mm_under: MultiMesh = null
 var _node: MultiMeshInstance2D = null
 var _n: int = 0
+var _n_under: int = 0
 ## This frame's cards before the depth sort: ground y (m), transform, colour, custom data.
 var _ys: PackedFloat32Array = PackedFloat32Array()
 var _xfs: Array[Transform2D] = []
 var _cs: PackedColorArray = PackedColorArray()
 var _cds: PackedColorArray = PackedColorArray()
+var _below: PackedByteArray = PackedByteArray()
 
 
 func _init() -> void:
-	_mm = MultiMesh.new()
-	_mm.transform_format = MultiMesh.TRANSFORM_2D
-	_mm.use_colors = true
-	_mm.use_custom_data = true
-	_mm.mesh = _quad()
-	_mm.instance_count = CAP
-	_mm.visible_instance_count = 0
-	_mm.custom_aabb = AABB(Vector3(-1e7, -1e7, -10), Vector3(2e7, 2e7, 20))
-	_node = MultiMeshInstance2D.new()
-	_node.multimesh = _mm
-	var mat: ShaderMaterial = ShaderMaterial.new()
-	mat.shader = load(SHADER) as Shader
-	mat.set_shader_parameter("cols", COLS)
-	mat.set_shader_parameter("rows", ROWS)
-	_node.material = mat
+	var shader: Shader = load(SHADER) as Shader
+	_node = VehicleCardMesh.make(CAP, shader, COLS, ROWS)
+	_mm = _node.multimesh
 	add_child(_node)
+	under = VehicleCardMesh.make(CAP, shader, COLS, ROWS)
+	_mm_under = under.multimesh
 
 
 ## The card atlas for the shared view (null: flat, or no art for its pitch).
@@ -74,11 +72,15 @@ static func atlas() -> Texture2D:
 ## Starts a frame with `tex`; then put() each car, then finish().
 func begin(tex: Texture2D) -> void:
 	_node.texture = tex
+	under.texture = tex
+	if under.get_parent() == null:
+		add_child(under)
 	_n = 0
 	_ys.clear()
 	_xfs.clear()
 	_cs.clear()
 	_cds.clear()
+	_below.clear()
 
 
 ## The shader's wear for a car in damage state `state` (VehicleBody.State): level 0 intact (and
@@ -113,15 +115,21 @@ func put(art: int, pos: Vector2, head: Vector2, tint: Color, worn: int = 0) -> v
 
 
 ## Writes the cards back to front (north to south on the ground: a car nearer the camera covers
-## the one behind it, whatever order they were put in).
+## the one behind it, whatever order they were put in); a card with someone in front goes to the
+## under layer.
 func finish() -> void:
 	var order: Array[int] = back_to_front(_ys)
-	for i: int in _n:
-		var k: int = order[i]
-		_mm.set_instance_transform_2d(i, _xfs[k])
-		_mm.set_instance_color(i, _cs[k])
-		_mm.set_instance_custom_data(i, _cds[k])
-	_mm.visible_instance_count = _n
+	var n: Vector2i = Vector2i.ZERO
+	for k: int in order:
+		var mm: MultiMesh = _mm_under if _below[k] == 1 else _mm
+		var i: int = n.y if _below[k] == 1 else n.x
+		mm.set_instance_transform_2d(i, _xfs[k])
+		mm.set_instance_color(i, _cs[k])
+		mm.set_instance_custom_data(i, _cds[k])
+		n += Vector2i(0, 1) if _below[k] == 1 else Vector2i(1, 0)
+	_mm.visible_instance_count = n.x
+	_mm_under.visible_instance_count = n.y
+	_n_under = n.y
 
 
 ## The draw order for cards at ground y `ys`: north first, ties in put order.
@@ -137,6 +145,11 @@ static func back_to_front(ys: PackedFloat32Array) -> Array[int]:
 ## The cards drawn this frame.
 func count() -> int:
 	return _n
+
+
+## The cards drawn under the actors this frame (someone in front of them).
+func count_under() -> int:
+	return _n_under
 
 
 ## The view for a nose angle `a_deg` (ground, y down: 90 = nose down the screen): x = the cell
@@ -174,21 +187,6 @@ func _one(aw: Vector2i, pos: Vector2, pick: Vector3, turn: float, c: Color) -> v
 	_cs.append(c)
 	@warning_ignore("return_value_discarded")
 	_cds.append(Color(cell, pick.y, float(aw.y), 0.0))
-	_n += 1
-
-
-static func _quad() -> ArrayMesh:
-	var arr: Array = []
 	@warning_ignore("return_value_discarded")
-	arr.resize(Mesh.ARRAY_MAX)
-	var h: float = 0.5
-	arr[Mesh.ARRAY_VERTEX] = PackedVector2Array(
-		[Vector2(-h, -h), Vector2(h, -h), Vector2(h, h), Vector2(-h, h)]
-	)
-	arr[Mesh.ARRAY_TEX_UV] = PackedVector2Array(
-		[Vector2(0, 0), Vector2(1, 0), Vector2(1, 1), Vector2(0, 1)]
-	)
-	arr[Mesh.ARRAY_INDEX] = PackedInt32Array([0, 1, 2, 0, 2, 3])
-	var mesh: ArrayMesh = ArrayMesh.new()
-	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arr)
-	return mesh
+	_below.append(1 if front.blocks(pos) else 0)
+	_n += 1

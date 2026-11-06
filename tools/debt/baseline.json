@@ -29,11 +29,11 @@
         "project/dev/save_crash_writer.gd": 18,
         "project/dev/selftest": 1446,
         "project/dev/servo": 434,
-        "project/dev/showcase": 5625,
+        "project/dev/showcase": 5624,
         "project/dev/view": 158,
         "project/dev/weapon_art": 506
       },
-      "total": 18288
+      "total": 18287
     },
     "direct_cmdline_reads": {
       "files": {
