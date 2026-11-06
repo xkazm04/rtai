@@ -20,9 +20,12 @@ const SIDE: Color = Color("#2E282B")
 const SIDE_LOW: Color = Color("#1A1618")
 const TYRE: Color = Color("#141213")
 const LAMP: Color = Color("#F3E9C8")
-## Wheel centres along the car (fractions of its length) and the tyre's size in metres.
+## Wheel centres along the car (fractions of its length) and the tyre's size in metres: a
+## vertical disc of radius x standing y wide, so each slice cuts it to a chord (round on the wall).
 const WHEELS_K: Array[float] = [-0.32, 0.3]
-const TYRE_M: Vector2 = Vector2(0.95, 0.42)
+const TYRE_M: Vector2 = Vector2(0.48, 0.42)
+const HUB_M: float = 0.2
+const SHADOW: Color = Color(0.09, 0.075, 0.106, 0.38)
 
 
 ## Draws the stack about `at` (world px) along `heading`; the caller then lifts the roof by ROOF_M.
@@ -31,6 +34,8 @@ static func draw(ci: CanvasItem, at: Vector2, heading: float, l: float, w: float
 	if not view.has_lift():
 		return
 	var p: float = Ink.PX_PER_M
+	ci.draw_set_transform(at, heading, Vector2.ONE)  # the contact shadow on the ground
+	ci.draw_rect(Rect2(-l * 0.5, -w * 0.5, l, w).grow(0.35 * p), SHADOW)
 	for i: int in SLICES:
 		var k: float = float(i) / float(SLICES - 1)
 		var z: float = ROOF_M * k
@@ -61,13 +66,27 @@ static func _slice(ci: CanvasItem, k: float, l: float, w: float, p: float) -> vo
 	if absf(k - 0.4) < 0.07:  # the headlamps at the nose's corners
 		for sy: float in [-0.32, 0.32]:
 			ci.draw_circle(Vector2(l * 0.5 + 0.05 * p, w * sy), 0.2 * p, LAMP)
-	if k < TYRE_M.x / ROOF_M:  # the tyres stand proud of the body
-		for fx: float in WHEELS_K:
-			for sy: float in [-0.5, 0.5]:
-				var c_at: Vector2 = Vector2(l * fx, w * sy)
-				var half: Vector2 = Vector2(TYRE_M.x * p * 0.5, TYRE_M.y * p * 0.5)
-				ci.draw_rect(Rect2(c_at - half, half * 2.0), TYRE)
-				ci.draw_circle(c_at + Vector2(0, signf(sy) * half.y), 0.16 * p, KingBodyView.GOLD)
+	_wheels(ci, k * ROOF_M, l, w, p)
+
+
+## The tyres at height z (m): each wheel a vertical disc, cut to its chord at z, a gold hub disc
+## on the outer face; the slices stack them into round wheels on the walls.
+static func _wheels(ci: CanvasItem, z: float, l: float, w: float, p: float) -> void:
+	var r: float = TYRE_M.x
+	var dz: float = z - r
+	if absf(dz) >= r:
+		return
+	var half: float = sqrt(r * r - dz * dz) * p
+	var hub: float = sqrt(maxf(HUB_M * HUB_M - dz * dz, 0.0)) * p
+	for fx: float in WHEELS_K:
+		for sy: float in [-0.5, 0.5]:
+			var c_at: Vector2 = Vector2(l * fx, w * sy)
+			var depth: float = TYRE_M.y * p * 0.5
+			ci.draw_rect(Rect2(c_at.x - half, c_at.y - depth, half * 2.0, depth * 2.0), TYRE)
+			if hub > 0.0:
+				var face: float = c_at.y + signf(sy) * (depth - 0.06 * p)
+				var hub_r: Rect2 = Rect2(c_at.x - hub, face - 0.06 * p, hub * 2.0, 0.12 * p)
+				ci.draw_rect(hub_r, KingBodyView.GOLD)
 
 
 ## Ground-depth order against the car (registry measured-draw-order: the depth is the ground y):
