@@ -197,3 +197,9 @@ func muzzle_k(weapon: StringName) -> float:
 	var over: Dictionary = _weapons.get(weapon, {})
 	var k: float = over.get("muzzle_k", 1.0)
 	return k if enabled else 1.0
+
+
+## A number from `weapon`'s hit_feel.json `weapons` row (`fallback` when the row or key is absent).
+func weapon_num(weapon: StringName, key: String, fallback: float) -> float:
+	var over: Dictionary = _weapons.get(weapon, {})
+	return over.get(key, fallback)

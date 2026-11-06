@@ -22,6 +22,8 @@ var held_ticks: int = 0
 var _arena: CombatArena = null
 var _table: WeaponTable = null
 var _rig: CameraRig = CameraRig.new()
+## n7-ranged: the drift toward a blast weapon's round (BlastLead), outside the kick cap.
+var _lead: BlastLead = BlastLead.new()
 ## Live kicks: (x px, y px, start tick, length ticks).
 var _kicks: Array[Vector4] = []
 ## Rivet's rounds already seen in flight (the fire kick fires once per new round).
@@ -91,7 +93,10 @@ func offset_px(tick: int, zoom: float) -> Vector2:
 	sum += spin_tremor(tick)
 	var cap_px: float = feel.cap.get("kick_px_max", 8.0)
 	var screen: Vector2 = sum.limit_length(cap_px) + _rig.offset_px(SimConst.PX_PER_M)
-	return screen / maxf(zoom, 0.01)
+	var lead: Vector2 = _lead.step(_arena, feel, tick) * SimConst.PX_PER_M
+	if not feel.enabled or reduced_motion:
+		lead = Vector2.ZERO
+	return screen / maxf(zoom, 0.01) + lead
 
 
 ## The spin-up's anticipation (hit_feel.json `weapons` spin_rumble_px): while Rivet's barrels turn

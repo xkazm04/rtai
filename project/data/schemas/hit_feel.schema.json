@@ -120,6 +120,19 @@
       "items": {
         "additionalProperties": false,
         "properties": {
+          "blast_lead_hold_ticks": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "blast_lead_k": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "blast_lead_max_m": {
+            "minimum": 0,
+            "type": "number"
+          },
           "class": {
             "pattern": "^[a-z][a-z0-9_]*$",
             "type": "string"
