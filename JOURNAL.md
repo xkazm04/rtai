@@ -1852,3 +1852,34 @@ n7-melee JOURNAL tail (no REQUEST to ranged; their NEXT 1 cherry-picks my feel-l
   exit 0, 0 SCRIPT ERROR, chapter molotov 1/1 down; frames 54-61 looked at: shots 0 -> 1 on tick
   58 with the claw out on that frame and the bottle in flight above (the editor's take). Scratch
   avi deleted. If no code lands before 08:30, this exe is the freeze exe; else re-export.
+
+### 05:55 impact re-scored on film, feel on vs off (audit rows 3, 6, 11, 12, 13), `7ac20fa1` `318629c1` `5a2d99cc`
+- Lone takes `--weapon=<w> --bot=gunplay --lone --cam=fight --ppm=32 --clean --reach=5 --feel=on|off`,
+  420 frames, all 10 exit 0, 0 SCRIPT ERROR, the kill tick identical on and off (sim untouched):
+  pistol 332, machine pistol 336, Gloria 333, Gatling 364, homing shard 342.
+- LOOK (2x crops, every 2nd frame): with feel on the kill frame holds about 6 frames (the class's
+  `kill` stop: the struck body darkened, Rivet frozen mid-recoil), then the blood and the fall;
+  off, the blood is out 2 ticks after the hit and nothing answers it. I 2 -> 3 for the pistol,
+  machine pistol, Gloria and the Gatling (on the kill); the shard's star holds too but its blood
+  waits for the pop at T+40 (call 1): I stays 2. Stills (jpg, in the repo):
+  `evidence/ranged/it20-{pistol,smg-gloria,gatling-shard}-kill-feel-on-off-32ppm.jpg`. Scratch avis deleted.
+- FINDING (not built): the hold starts on the contact tick, so the frozen image is the darkened body
+  WITHOUT its blood; the spurt appears only when the hold lets go (pistol: blood 340 on vs 334 off).
+  A classic hit-stop freezes on the wound. Candidate: a `hold_delay_ticks` (1-2) so FeelCam queues
+  the SimClock.hold and applies it from offset_px once tick >= hit + delay; 0 = today. It touches
+  every stopped hit (melee's and the ghosts' too), so it is a shared-layer change: build only with
+  a test, both reels, the pistol and a melee kill filmed before/after, and a FYI to n7-melee.
+- `4fd66005` REPORT rows for the re-scores and the quest 1 rifle.
+
+NEXT (iteration 21; supersedes the iteration 19 list):
+1. Freeze (by 08:30). The exe on `ea3ce5d9` is current for code (no code since `3243a483`; full
+   evidence green on `a175b3d8`, it20). If no code lands: boot it once more, write the REPORT exe
+   section (calls 1-7 lines are in place), drop DRAFT. If code lands: re-run lint, unit, reels
+   19/19 x2, `node tools/evidence/run.mjs --no-bench` on a clean tree, then re-bake + re-export.
+2. City combined clip: retake at the freeze (sound changed for most gun chapters since `13e0e050`,
+   and the molotov chapter's picture with `3243a483`); frames.json entry.
+3. Optional build, only with time for its gates: the hit-stop that freezes on the wound (FINDING
+   05:55 above). Judge it on the pistol kill and on one melee kill at 32 and 48 px/m.
+4. Melee merge note (unchanged): n7-melee `791ea71a` and my `3243a483` touch different lines of
+   ArenaRigs._rivet_clips.
+5. Weak cells left: homing_shard I/R/V 2 (call 1, owner); Gatling R/V 2 (crowds only, a sim matter).
