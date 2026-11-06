@@ -1532,3 +1532,40 @@ rifle row filmed and scored. Call 7 added.
   his latest Shot (render only), using rivet_arsenal.json `art_stand_in` (assault-rifle ->
   machine_pistol) for the cell and the gun_fx.json look; do not arm `arena.gun` (that would move
   the sim and quest 1's replay: the rifle's magazine must still run dry into Gloria).
+
+## Iteration 16 (BUILD, 04:13-05:13)
+Read: JOURNAL NEXT (it15, 04:13 correction), git log, n7-melee / n7-king / n7-servo journal tails
+(no new REQUEST for ranged). Took NEXT 1: quest 1's picked-up rifle has no flash and draws as thin
+dashes. Registry rules applied: realtime-combat-semantics (the shot must read on the frame it
+leaves; a weapon's FX is keyed by weapon, never by target), motion-quality-gating (filmed against a
+same-build before in the live quest path, the quest's own clip window), depth-ordered-layered-art
+(the flash prints on the FX layer over the rig, in ink, look-3).
+
+### MILESTONE 04:31: `01a482d1` the quest 1 rifle draws its stand-in's flash and inked tracer
+- `boot/collect_call/view/bare_gun_fx.gd` (BareGunFx, render only): a Rivet round with no spec
+  (combat.json path, `arena.gun` null) draws with rivet_arsenal.json `art_stand_in`
+  (assault-rifle -> machine_pistol): the stand-in's projectile cell (tracer) converging from the
+  gun side like a table round, and its flash_smg cell for FLASH_TICKS at hit_feel muzzle_k (1.3,
+  1 under --feel=off), on HeldMuzzle's bore tip or the GUN_SIDE_M spot. A round is aged from its
+  own flight (range_m - left_m over speed), so a clip drawing every 2nd tick still catches it.
+  FxView asks it before the dashes. Enemy rounds and table rounds are untouched.
+- Off / before: `--weapon-fx=shapes` (WeaponFxArt.enabled), now also a quest1_clip flag.
+- DECISION: draw with the stand-in, do not arm `arena.gun` for the rifle (that would move the sim
+  and quest 1's replay, and the magazine must still run dry into Gloria). Alternative (a weapons.json
+  row for the rifle) = sim change + re-bless; not taken.
+- TEST `test_bare_gun_fx` 3/3; planted (drop the `s.spec != null` guard): 1 fails. Lint 13/13.
+
+### FILM + LOOK 04:40: the quest 1 rifle, before/after at 32 px/m, after at 48 px/m
+- `quest1_clip.gd --cam=fight --ticks=14340-14560` on `01a482d1`: b32 (`--weapon-fx=shapes`), a32,
+  a48: each exit 0, 0 SCRIPT ERROR, 111 clip frames (a frame every 2 ticks; scratch `r16/`).
+- Pixel diff b32 vs a32: frames 1-67 differ (the rifle's bursts) and 108-110 (Gloria's art cells,
+  also off under shapes); every other frame identical (render-only change, same sim).
+- LOOKED at a 9-frame sheet (before over after) and 2x crops of frames 7/13/43, and a 48 px/m sheet
+  (7/13/40/46): after, each round shows a star on the claw tip (ink with a vermilion and cream core,
+  fire colours per the verdict) and a cream-and-ink tracer leaving the gun side and converging onto
+  the line; before, a hair-thin ink dash and no flash. The star sits ahead of the claw, not on the
+  helmet. Re-scored: A 0 -> 2, R 1 -> 3 (I and V still `?`: the hits land off the crops).
+- Clips: `quest1_rifle_flash-ab-32ppm.mp4` (hstack, 3.7 s at 30 fps = 2 ticks a frame),
+  `quest1_rifle_flash-48ppm.mp4` (after, cropped 800x600). frames.json entry 1 (newest; dropped
+  `heavy_feel-ab-48ppm.mp4` from frames.json to keep 15; its file stays, REPORT row 1 cites it).
+- REPORT row + the not-done line rewritten; audit row; decisions.md line.
