@@ -334,3 +334,64 @@ loads no vehicles class.)
 
 NEXT (iteration 5) stands as written above (the reel and the 55 bar are done): 2 traffic density
 cost, 3 kerb rows as cards once city ANDs VehicleParked.drawn(), 4 the bike.
+
+## Iteration 5 (2026-11-06 23:13 - 00:13), BUILD
+
+Read: JOURNAL, git log, the lane journals. city merged 34018b19 and turned `parked_cards` on
+(848ff5a5: kerb cars handed to VehicleParked per chunk only while `drawn()`), so NEXT 3 is filmable.
+No new REQUEST to vehicles.
+
+MILESTONE 23:20 the traffic card cost (NEXT 2). bench.lock taken (free; two other lanes' Godot
+processes were running: GPU numbers are CONTENDED-ish, the script time is per-frame CPU on one
+thread). New dev bench `dev/bench/vehicle_cards_cost.gd` (-s launcher + runner, windowed d3d12,
+1280x800 at 32 px/m, 240 frames per N after 60 warm, headings turning every frame):
+| view | cards | script p50 / p95 (us) | GPU p50 shown / hidden (ms) |
+| tilt70 | 32 | 185 / 244 | 0.016 / 0.005 |
+| tilt70 | 64 | 355 / 451 | 0.022 / 0.005 |
+| tilt70 | 128 | 700 / 1499 | 0.025 / 0.006 |
+| tilt70 | 256 | 1331 / 1475 | 0.024 / 0.005 |
+| tilt (55) | 128 / 256 | 690 / 1398 | 0.026 / 0.028 |
+| top | - | no card atlas: 0 cards drawn | - |
+The GPU side is ~0.02 ms (the shot cost256.png confirmed the cards drew, ~45 on screen); the cost is
+the GDScript put + depth sort + MultiMesh writes: ~5.3 us per card. Measured in the real city
+(main scene, tilt70, `--bot=rivet --seed=2`, a temporary Log line, reverted): VehicleView put **130
+cards every frame** (every car in the sim bubble, nearly all off screen), finish() alone ~320 us.
+MILESTONE 23:25 the cull (git log "cards cull off-screen cars"): VehicleCards.cull +
+VehicleCull.screen_m (the viewport's ground rect through the canvas transform, grown by one 7 m
+cell). Same run: 1-4 cards a frame, finish ~20 us. tilt70 framemd5 cull ON vs OFF (900 frames,
+city walk): IDENTICAL. `top` untouched (cards only exist under a tilt). Unit: test_vehicle_cull 4/0,
+the vehicle files 21/0. Evidence: evidence/n8-vehicles/cards-cost-{tilt70,tilt,top}.json.
+DECISION vehicles: cull to the screen, not a radius round the player (docs/decisions.md).
+DECISION vehicles: no bike art: the sim has no bike (no art id, no profile, nothing native); the
+four library sheets are C. Raised as a Call for the owner.
+FRICTION: a headless main-scene run (`--headless -- --arena=city`) logs only boot (the city never
+starts headless): count things in the real city windowed with `--fixed-fps 60 --quit-after`.
+FRICTION: python `open(p, 'w')` on Windows writes CRLF; normalised with sed before commit. Use
+newline='' next time.
+SLIP: 6b8f9313 (docs/decisions.md only) was committed with --no-verify by mistake; lint re-run on
+the head after it (see the gate line below).
+Rules applied: motion-quality-gating (the cull judged by framemd5 over motion, not a still),
+sprite-and-atlas-production (cost per card measured before shipping density), depth-ordered-layered-
+art (the cull runs before the depth sort, so order is unchanged for what draws).
+23:30 the cull on the DRIVE too: vehicle_frame route (car zoom 48 px/m, look-ahead camera, full
+throttle, S-bend, handbrake slide, kerb crash), cull ON vs OFF: framemd5 IDENTICAL, 632 frames.
+MILESTONE 23:33 the kerb rows as cards (NEXT 3), filmed on n8-city's head 7a5f9137 (a throwaway
+detached worktree, removed after; city_facades.json parked_cards false = the before): at the
+vehicle_frame start (48 px/m) the kerb ambulance, police car and taxi stand as the same cards as
+traffic instead of flat top-down props; 0 SCRIPT ERROR both. masters kerb_cards_tilt70_48ppm_*.
+FRICTION: main city `--bot=rivet --seed=2` spawns at a crossroads with no kerb cars in 7 s: use
+vehicle_frame (it starts beside kerb cars) to judge parked cars.
+MILESTONE 23:36 the standing fire (7a8e1419): the asset lane served my fx_fire REQUEST (70 B, 55 A,
+keyed cells 1024x512 = the game sheet's grid). Under a tilt a wreck now draws the pitch's sheet
+(art/<p70|p55>/fx_fire.png): the flame loop standing on the bonnet as drawn (no stretch; its base
+at 0.88 of the cell), two smoke puffs rising and thinning half a cycle apart, embers, and the
+dying-flame cell once it shrinks below half. Checked the cells: green 7 / 1 px, teal 4 / 31 px
+(of 170k / 135k: invisible), pure red 671 / 17 px moved to the sheet orange (red is blood's);
+provenance lines appended. `top` and pitch_art = false keep the burst. Film: vehicle_states
+tilt70 32 + 64 (before = HEAD before the change), and the real city route's kerb crash at 48:
+masters fire_tilt70_64ppm_closeup_*, fire_tilt70_{32,64}ppm_before_after.{png,mp4},
+fire_in_city_crash_tilt70_48ppm.png. Judged: the old burst read as a splash on the bonnet; the new
+one reads as a car on fire from 32 px/m, with smoke from the hood (brief item 3).
+masters frames.json: 15 (fire close-up, kerb cards, fire in the city crash, fire clip in; the two
+turn-compare stills and the 32 turn clip out: their DECISIONs stand on the files).
+REQUEST to city: none new. ANSWER: the kerb cards read on your head (film above); nothing owed.
