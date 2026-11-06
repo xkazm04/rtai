@@ -1123,3 +1123,35 @@ NEXT (written 03:17, for iteration 12):
   1219/1219; director reels arena 19/19 and city 19/19 fully down (14x 1/1, 2x 2/2, 3x 4/4 each),
   0 SCRIPT ERROR; scenarios 52 ran, 0 failed, 0 SCRIPT ERROR
   (`evidence/n7-melee/{unit,director-arena-loadout,director-city-loadout,scenarios}-5c4219b2.log`).
+- FRICTION 04:02 `node tools/evidence/run.mjs` exits 2 on a dirty tree, and its own log written into
+  evidence/ made the tree dirty. Re-run with the log in /tmp, copied in after.
+- GATES 04:08 `node tools/evidence/run.mjs --no-bench` on `be852011` (code `5c4219b2`), tree clean,
+  GODOT_BIN exported: exit 0, lint 13/13 (973 files), unit 1219/1219, scenarios 52/52, parity
+  bit-exact over 1200 steps (planted caught at 629), selftest look goldens 11/11, block 5/5
+  (`evidence/n7-melee/evidence-run-be852011.log`). Bench not run (contended, no lock).
+- LOOK 04:04 chainsaw re-scored from the city set film at 2x (the only weak cell never re-scored after
+  its fix): the halves read apart after the parting burst. Read 2 -> 3 (audit item 5).
+- READ 04:03 n7-ranged JOURNAL to its end: nothing new in the feel layer since `a63bd8e0` (merged);
+  `d4559823` is shot audio (not merged). No REQUEST to melee in n7-king / n7-servo.
+
+NEXT (written 04:09, for iteration 13):
+1. Read n7-ranged's JOURNAL to its end: cherry-pick new hit_feel / feel_cam / camera commits -x
+   (check prerequisites), unit with GODOT_BIN exported. Last merged: `8efe76ca`, `a63bd8e0`.
+2. Freeze (by 08:30), in order: gates on the final head (lint, unit, `bash evidence/n7-melee/reels.sh
+   <head>`, then `node tools/evidence/run.mjs --no-bench > /tmp/<log>` on a clean tree, log copied
+   in after; never edit or flip data while a gate runs); bake_city + both exes (`--export-release
+   windows-showcase ../build/export/windows/RTAI.exe`, `--export-release windows-slice
+   ../build/export/windows-slice/RTAI.exe`); boot each once (calls (h)-(m) lines; slice title card);
+   finish REPORT.md (exe lines per call a-m, gates, drop "DRAFT").
+3. The combined city clip is current on `5c4219b2`. Re-cut only if code moves (refilm the moved
+   segments with film.sh set_<name>, then `RECUT=1 bash evidence/n7-melee/set_clip.sh <head>`).
+4. Build candidates, weakest first: the claw and chainsaw anticipation (3); Dent read 3 (the camera
+   call sets where the blast lands: impact only); the ram heap (call h, not view-buildable). Ohm's
+   tier-1 rings are faint under the stun stars (no gain there, none needed). Call (b) only on the
+   owner's word.
+- STOP 04:09 iteration 12 (runner 13). Code commits: `da1e6a22` + `94dce278` (n7-ranged merge: the
+  nuke blast lead), `a27fb59c` (Ohm's rim), `5c4219b2` (Dent's blast debris via WeaponFxDebris).
+  Gates: reels 19/19 x2 + scenarios 52 on `a27fb59c` and on `5c4219b2`; unit 1219; full evidence run
+  green on `be852011`. Clips: `ohm_bolt_rim_ab_32ppm_48slow.mp4`, `dent_blast_debris_ab_32ppm_48slow.mp4`
+  (+ stills), city clip re-cut. Calls (l), (m) added. Scratch: the ohm_rim_* and dent_* AVIs deleted;
+  the set_* AVIs are current for a RECUT.

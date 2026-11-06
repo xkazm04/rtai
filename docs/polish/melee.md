@@ -98,6 +98,10 @@ By the craft columns (impact and read at 32 weigh most: they are what the owner 
    **Done 21:12 (`49cc45d1`)**: SawMarks (`melee_marks.json saw`): a cream starburst edged in ink on the
    tick the halves part (a slash along the cut hid on the saw bar), the grind's drops hidden until
    0.45 m clear of the held body, a firmer judder (0.06 m). `M/chainsaw_kill_ab_32ppm_48slow.mp4`.
+   **Re-scored 04:04, 2026-11-06** from the city set film (`set_chainsaw.avi`, code `4540d259`; no
+   melee code moved since) at 2x, frames 378-438 every 4th: the grind, the cream burst on the
+   parting frame (398), then the upper half lies about 1 m clear of Rivet and reads as its own piece.
+   Read 2 -> 3 (not more: the burst holds a few frames and the lower half stays under his feet).
 6. **Tonnage slam**: a clear tell, but the impact frame has no hold, shake or debris.
    **Correction 20:30**: measured, the slam does shake and stop (HaulerKick: `crash` + `boss_hit`, outside
    FeelCam, so `--feel=off` films are identical); what is missing is debris on the landing.
