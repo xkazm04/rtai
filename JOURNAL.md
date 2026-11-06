@@ -355,3 +355,35 @@ NEXT:
   `tilt70` 19/19 all down, 0 SCRIPT ERROR both (`evidence/director-reel-n8hud-it5-{top,tilt70}.log`).
 - 23:44 Call still at 48 px/m with all 17 showcase drawings (23cebe4c): `gtai-masters/n8/hud/
   call_pickup_hover_vs_crate_48_crop2x.png` (hover left, inked crate right; 70 top, 55 bottom).
+- 23:56 Gates (`node tools/evidence/run.mjs --no-bench` at c3c21e4b, every game-code change of this
+  iteration; `gtai-n8/scratch/hud/evidence_run_it5.log`): lint 15/15, unit 1507 passed 0 failed,
+  scenarios 52/52, parity bit-exact + planted mutation caught at step 629, look goldens 11/11 + block
+  5/5 (top did not move), export-audit 556/0. The unit step is marked FAIL only for "tree changed
+  during run": FRICTION, mine again: I committed the tilt70 reel log at its last chapter line while
+  Godot was still writing its exit lines; the finished log is committed now. 0 failing tests.
+
+Registry rules applied this iteration: `sprite-and-atlas-production` (one cut per subject per pitch
+by tool from the library's keyed sheets, the B sheet's named fix applied in the tool, re-runnable),
+`depth-ordered-layered-art` (crate behind its ink, the gun and its ink over the crate, the shadow
+under both, all inside PickupsView's draw order), `concept-scene-parity` (the electro gun's 70
+sheet rejected for drift from the owner's design; the A 55 cut serves both pitches),
+`generative-artifact-gating` (only A/B-graded library art entered, 10 provenance lines),
+`motion-quality-gating` (the combined clip; the reel 19/19 in top and tilt70),
+`accessibility` (the crate call judged at the shipped 32 px/m, where the readability is decided).
+
+NEXT:
+- Watch `gtai-art/rivet-final/out/showcase_{mini_nuke,plasma_sword}_{70,55}.png` (round 2215 chain B):
+  `python tools/art/design_cut.py C:/Users/kazda/kiro/gtai-art/rivet-final mini_nuke,plasma_sword
+  --showcase`, look at each cut beside the interim (grade A only, else keep the interim), 4
+  provenance lines (catalog `showcase_<id>` round + prompt_hash), re-film the armory call stills.
+  The plasma cleaver's sheet: check that its middle rotation is the side view (its design sheet's
+  steep view stood end-on).
+- Freeze 08:30: export `build/export/windows/RTAI.exe` (int-day recipe in docs/decisions.md);
+  REPORT Calls: pickup hover vs open crate (`call_pickup_hover_vs_crate_{32,48}_crop2x.png`,
+  `--pickup-crate=on`), portrait side/size, the dialogue never pauses play, Don Fax payphone vs
+  bust, boss crest disc vs bust, Rivet's dialogue face (proposal only).
+- A vendor counter: no vendor exists in the game (grep: none); the wall rack and the crate are the
+  showcase's display forms. Raise as a note in REPORT, not a build.
+- Optional: a true 1080p live capture needs the viewport overridden (Movie Maker records at the
+  project's 1280x800), e.g. a dev-only override.cfg copy; the board covers 1080p meanwhile.
+- 23:57 Session end. All committed.
