@@ -55,8 +55,9 @@ and in the exported exe.
 
 ## What does not work yet / gaps against the target
 
-- At 32 px/m the gang still reads as thin grey limbs with dark heads. The target shows bulky steel bots,
-  and the steel dome only shows from 48 px/m.
+- The gang at 32 px/m: bulkier since it8 (size 1.2, arm width 1.7), and since it10 their heads
+  read as light steel domes with a gold frame (`king_gang_head_before_after_32ppm_it10.png`). They
+  are still smaller and less blocky than the target's bodyguards.
 - The shoulder megaphone is a small gold cone at 32 px/m; it reads from 48 px/m.
 - From straight above, the raised plates in the slam tell hide under the crown (the warning ring
   carries the tell).
@@ -83,6 +84,12 @@ Each call names its options, the default that is built, and how to see it.
 - **H. Press plates (it8).** Two gold press plates and a shoulder megaphone (built:
   `KingRigs.PRESS_PLATES` true), or the claw and megaphone forearm (false):
   `king_press_plates_before_after_48ppm_it8.png`.
+
+- **I. Gang heads (it10).** A light steel dome with a gold frame and a black shade strip (built:
+  `tools/art/gang_parts.py` STEEL 204, VISOR_FROM 0.70), or the ink head of it7-it9 (STEEL 158,
+  VISOR_FROM 0.60). At 32 px/m the print gives a head only paper or ink, with no grey between
+  (measured: `evidence/king/shots/it10/dome_158_148_204_32ppm_4x.png`). See
+  `king_gang_head_before_after_32ppm_it10.png`.
 
 ## The exe
 

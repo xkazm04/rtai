@@ -1018,3 +1018,26 @@ NEXT (iteration 9, in order):
   lint 13/13. Decisions line. Render only, measured: seed 2 human King down at tick 4933, took 88, same landings (`numbers-it8b/`).
 - Session ends ~01:10, everything committed. NEXT for iteration 9 = the list above (item 1 now
   only the gang's head at 32 px/m; then the re-films on the it8 body, the charge clip, reel, freeze).
+
+## Iteration 10 (01:11-02:11): BUILD
+
+Read: JOURNAL (it8; no it9 entry exists: the runner's numbering skips one), git log, servo's JOURNAL
+(it8: FYI `BossCam.keep_in` + `FOOT_PX` on n7-servo, framework, view only; no REQUEST to king; the
+Director merges both branches, so I do not pull servo's branch into mine). Rules applied:
+motion-quality-gating (before/after on the same seed and tick at game zoom, looked at every
+frame), sprite-and-atlas-production (measure the print's response before choosing a value),
+encounter-balance-simulation (render only: the gameplay numbers must not move).
+
+### 01:27 MILESTONE 90162228 the gang's heads at 32 px/m (NEXT 1 from it8)
+- Cause: the it7 dome (158, not lifted) with a thick ink rim, a centre line and the 0.60 shade band
+  printed as a black disc at 32 px/m (`shots/it8/gang_bulk_before_after_32ppm_2x.png`).
+- Measured the print instead of guessing: same seed 2, phase 2, tick 360, 32 px/m, dome at 148 /
+  172 / 204. **148 printed ink, 172 and 204 printed paper**: at the head's size the print is
+  two-level, with no grey between (`evidence/king/shots/it10/dome_158_148_204_32ppm_4x.png`).
+- DECISION: a light dome (204), a thinner rim, the centre line dropped, the shade strip from 0.70.
+  **Looked at** the 3x before/after (`gang_head_before_after_32ppm_3x.png`, also in M/): the four
+  gang now read as helmets (a pale dome, a gold frame arc, a black strip at the front) instead of
+  dark discs. Next to Rivet: he keeps the vermilion collar and the gang keep the gold arc. This
+  reverses it7's "no cream dome" call; the owner's call I (ink head = STEEL 158 + VISOR_FROM 0.60).
+  64 px/m checked (`head_after_p2_64_t360.png`): pale domes, gold frames, the D5 body grime.
+- Gates: lint 13/13, unit **1159/0** (`evidence/king/unit-it10.log`). Render only (one PNG pair).
