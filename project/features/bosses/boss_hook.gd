@@ -165,6 +165,8 @@ func _clear_floor(stage: ArenaStage) -> void:
 	for t: ArenaTargets.Target in stage.targets.targets:
 		_arena.hostiles.erase(t.fighter)
 	stage.pit.zone = Rect2()
+	for a: ArenaPlan.Area in stage.plan.areas:  # the dev stencils sat under the boss bar's band
+		a.stenciled = false
 
 
 func write_state(out: StreamPeerBuffer) -> void:

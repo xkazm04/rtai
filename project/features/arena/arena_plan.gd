@@ -12,6 +12,8 @@ class Area:
 	var id: String = ""
 	var name: String = ""
 	var rect: Rect2 = Rect2()
+	## The floor stencils `name` (ArenaFloorView); a boss fight clears it (its HUD bar's band).
+	var stenciled: bool = true
 
 
 var base: Vector2 = Vector2.ZERO
