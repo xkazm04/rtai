@@ -467,3 +467,24 @@ NEXT (iteration 8, in brief order):
   all down, 0 SCRIPT ERROR, in `top` and `combo` at ce7b4b87 (`evidence/n8-view/director-reel-it7-{top,combo}.log`).
   Session ends here (00:45 stop). Head clean; lint 15/15; unit 1505/0; scenarios 52/0; reels 19/19.
   Scratch stills deleted (copies in gtai-masters/n8/view). NEXT stands as written above.
+
+## Iteration 8 (00:37-01:37)
+Read: JOURNAL, git log, the other lanes' journals. No new REQUEST to view (street's withdrawn,
+city's two answered it2/it6). hud's FINDING (n8-hud JOURNAL l.244): under `--rigs` quest 1's
+ghost-form card never folds under a subtitle line (StoryForms is null on the rig path). Since
+ebd77c13 the rig cast IS the shipped path under a card view, so that became a release bug under
+combo/tilt70.
+- MILESTONE 00:50 (commit 8e02cc3c) `StoryForms.follow(host, view, stage, ArenaRigs.ghost_view)`:
+  the fold (one chip while a line is up) and the subtitle camera lift on the rig cast's own form
+  view (no second form view, the sprite cast is not told to step out; story_voice/story_lift
+  honoured). Quest1Game calls it after the rigs attach; quest1_game.gd stays at 270 lines (debt
+  flat). Unit `test_follow_folds_the_rig_casts_own_form_card_and_skips_without_one`;
+  `--select=test_story_forms,test_slice_closure` 12/0; lint 15/15.
+  Evidence: `gtai-masters/n8/view/quest1_rigcast_formcard_fold_before_after_tilt70_crop2x.png`
+  (before = hud's own crop of the rig cast, unfolded; after = the shipped tilt70 run at tick 600,
+  1280x800, no --rigs, "cast rigs: true", card folded). FOUND on the after: the subtitle's last
+  line sits on the box's hatch, and the box inset is today's 144 px: hud's SIDE_X 166 fix lives
+  on n8-hud and reaches this path when the Director merges (no edit here).
+  FOUND: quest 1's street itself (CityView chunks, props, the cops) still draws top-down at
+  tilt70 on this branch: the city's lifts and the street cast's cards are city's and street's
+  branches, not merged here. Judge the quest at tilt70 after the Director's merge.
