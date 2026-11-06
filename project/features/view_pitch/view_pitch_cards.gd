@@ -8,7 +8,8 @@ extends RefCounted
 ## parent's material (the hit flash). `other_a` is the overlay's alpha: the card itself draws at
 ## 1 - other_a (self_modulate), so the two cross-fade. The other folder is picked per card from
 ## the art it was built under, so a card not yet rebuilt after a swap still fades right. Render
-## only; straight down no card is ever built, so nothing here runs.
+## only; straight down no card is ever built, so nothing here runs. The King's court strips
+## (bosses' KingArt) join their folder's rows through ViewPitchCourt.
 
 const OVERLAY: StringName = &"pitch_art"
 ## GhostCard's sprite (Tonnage): one strip per folder, the same width and anchor in every folder.
@@ -21,10 +22,14 @@ static var _tex: Dictionary[String, Texture2D] = {}
 static func apply(root: Node, pitch: ViewPitch, mix: float) -> void:
 	if root == null:
 		return
-	var cards: Array[Node] = root.find_children("head_card", "Sprite2D", true, false)
-	cards.append_array(root.find_children(GHOST, "Sprite2D", true, false))
+	# a rebuilt card is renamed while the dropped one waits to free: reach cards through the rigs
+	var cards: Array[Node] = root.find_children(GHOST, "Sprite2D", true, false)
+	for rig: Node in root.find_children("*", "CutRig", true, false):
+		if (rig as CutRig).head_card != null:
+			cards.append((rig as CutRig).head_card)
 	for n: Node in cards:
 		var card: Sprite2D = n as Sprite2D
+		ViewPitchCourt.dress(card)
 		var built: String = art_of(card)
 		var other: String = pitch.boss_art if built == pitch.art else pitch.art
 		dress(card, other, mix if other == pitch.art else 1.0 - mix)
@@ -60,7 +65,7 @@ static func art_of(card: Sprite2D) -> String:
 
 ## The card row (RigHeadCard.rows_of) drawing `path` under the folder `art`, or "".
 static func key_of(path: String, art: String) -> String:
-	var rows: Dictionary[String, Array] = RigHeadCard.rows_of(art)
+	var rows: Dictionary[String, Array] = ViewPitchCourt.rows_of(art)
 	for key: String in rows:
 		if str(rows[key][0]) == path:
 			return key
@@ -74,10 +79,10 @@ static func _build(card: Sprite2D, other: String) -> Sprite2D:
 		return _build_ghost(card, other)
 	var art: String = str(card.get_meta(&"art", ViewMode.shared().art))
 	var key: String = key_of(card.texture.resource_path, art)
-	var rows: Dictionary[String, Array] = RigHeadCard.rows_of(other)
+	var rows: Dictionary[String, Array] = ViewPitchCourt.rows_of(other)
 	if key.is_empty() or not rows.has(key) or str(rows[key][0]) == card.texture.resource_path:
 		return null
-	var mine: Array = RigHeadCard.rows_of(art)[key]
+	var mine: Array = ViewPitchCourt.rows_of(art)[key]
 	var row: Array = rows[key]
 	var path: String = row[0]
 	if not _tex.has(path):

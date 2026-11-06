@@ -70,7 +70,7 @@ func test_ease_turns_back_mid_ease_without_a_jump() -> void:
 
 func test_overlay_draws_the_other_folder_sized_by_its_own_row_and_fades() -> void:
 	var p70: Dictionary[String, Array] = RigHeadCard.rows_of("p70")
-	var p55: Dictionary[String, Array] = RigHeadCard.rows_of("p55")
+	var p55: Dictionary[String, Array] = ViewPitchCourt.rows_of("p55")  # the court's King bust
 	var card: Sprite2D = Sprite2D.new()
 	card.name = &"head_card"
 	var path70: String = p70["king"][0]
@@ -103,10 +103,10 @@ func test_overlay_draws_the_other_folder_sized_by_its_own_row_and_fades() -> voi
 
 func test_no_overlay_when_the_other_folder_draws_the_same_strip() -> void:
 	var card: Sprite2D = Sprite2D.new()
-	card.texture = load(RigHeadCard.CARDS["gang"][0]) as Texture2D
+	card.texture = load(RigHeadCard.CARDS["cop/head_cap"][0]) as Texture2D
 	card.set_meta(&"art", "p70")
 	ViewPitchCards.dress(card, "p55", 0.5)
-	assert_eq(card.get_child_count(), 0, "no p70 or p55 gang card: one base strip")
+	assert_eq(card.get_child_count(), 0, "no p70 or p55 cop card: one base strip")
 	assert_eq(card.self_modulate.a, 1.0)
 	card.free()
 
