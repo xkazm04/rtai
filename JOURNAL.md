@@ -426,3 +426,13 @@ NEXT: unchanged from iteration 8 (court strips into `ViewMode.art`, emerald gems
   the gates stand from 02b11a53 (no code change since; REPORT "Gates" section).
 NEXT: unchanged from iteration 8 (court strips into `ViewMode.art`, emerald gems on magenta + a p70 set,
   the train under the telegraph fill if the owner asks).
+
+## Iteration 12 by the runner (2026-11-06 18:40-18:45, REPORT)
+
+- 18:40 Read JOURNAL (it11 NEXT), git log. REPORT.md from the freeze stands; checked every path it cites:
+  all stills/clips exist in masters, frames.json 15/0 missing, source sheets, cutters, art/p55 folders and the
+  18:10 exe present; `git diff --stat 02b11a53 HEAD` = docs only, so the exe is HEAD's code.
+- 18:43 REPORT.md: "What blocked" now says how long each friction cost; added "Where the evidence is" (masters
+  folder, not the repo's `evidence/`) with the 18:42 path check. No code change.
+NEXT: unchanged from iteration 8 (court strips into `ViewMode.art` after the merge, emerald gems on magenta
+  + a p70 set with the same cutters, the cape train under the charge telegraph's fill if the owner asks).
