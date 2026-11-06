@@ -161,6 +161,7 @@ func _ghost_pair(card: Sprite2D, rig: CutRig, p: float, h: float) -> void:
 	var dz: int = eff_z(rig) - eff_z(card)
 	if (d.y > 0.0 and dz <= 0) or (d.y < 0.0 and dz > -PART_SPAN):
 		ghost_wrong += 1
+		Log.info("view", "order-probe ghost wrong tick %d dy %.0f dz %d" % [_tick, d.y, dz])
 
 
 func _accent_pair(acc: KingAccents, rig: CutRig, p: float, h: float) -> void:

@@ -5,7 +5,8 @@
         "2026-11-06: d8 chars: --order-probe measures ghost-card vs rig pairs (the brief's draw-order item, measured before/after) (dev_loc 18080 -> 18115)",
         "2026-11-06: n8-view: the order probe counts the King's accents (brief item 7, dev-only measurement) (dev_loc 18115 -> 18145)",
         "2026-11-06: n8-view: the order probe logs the first wrong car pair's tick (to film it) (dev_loc 18145 -> 18150)",
-        "2026-11-06: n8-view: the order probe logs the first wrong car pair's tick (to film it) (dev_loc 18150 -> 18151)"
+        "2026-11-06: n8-view: the order probe logs the first wrong car pair's tick (to film it) (dev_loc 18150 -> 18151)",
+        "2026-11-06: dev order probe logs each wrong ghost pair's tick (+1 dev line) (dev_loc 18151 -> 18152)"
       ],
       "files": {
         "project/dev/arena": 1034,
@@ -30,10 +31,10 @@
         "project/dev/selftest": 1446,
         "project/dev/servo": 434,
         "project/dev/showcase": 5452,
-        "project/dev/view": 194,
+        "project/dev/view": 195,
         "project/dev/weapon_art": 506
       },
-      "total": 18151
+      "total": 18152
     },
     "direct_cmdline_reads": {
       "files": {
