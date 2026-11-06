@@ -1263,3 +1263,12 @@ NEXT (written 04:48, for iteration 15):
   melee_marks.json`, my own edit). A real chainsaw lever would be the swing arc's lift
   (MeleeSwing), i.e. the d7 blade arc: leave it (the brief keeps the arc measured from the forearm).
   Films deleted. NEXT 4 updated: drop the chainsaw pullback idea.
+- LOOK 04:55 the strike sync on the plasma sword (deflect chapter, 48 px/m, `--strike-sync=off`
+  over the after): the deflect starbursts fall on the same frames (a 12-frame sheet over 40-160);
+  the sweeps keep their shape and run 2 frames earlier (frames 46-64 every 2nd), in step with the
+  sim's swing. No regression; nothing to film for it. Films deleted.
+- STOP 04:56 iteration 14. Code: `791ea71a` (the view strike in sync with the sim's hit, the
+  claw's deeper cock; `--strike-sync=off`, `--pullback=off`). Gates on it: lint, unit 1223, reels
+  19/19 x2, scenarios 52, full evidence run green on `91b3f06e`. Clips: claw_strike_sync_ab_32ppm_
+  48slow, claw_strike_sync_ab_64ppm_04x, katana_strike_sync_ab_48ppm_04x (+ 3 stills), city set
+  re-cut. Call (n). NEXT is the 04:48 entry (item 4: the chainsaw pullback idea is dropped, 04:52).
