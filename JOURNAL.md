@@ -1726,7 +1726,7 @@ NEXT (iteration 17, in order):
   64180); it finished 19/19 on its own. Order: NEXT 2 (the gang's shades as a separate drawn part,
   timeboxed), then re-export, smoke, re-film what it touches. Scratch `build/scratch18`.
 
-### 06:12 MILESTONE the gang's shades as their own part (call P)
+### 06:05 MILESTONE the gang's shades as their own part (call P)
 - Registry: depth-ordered-layered-art (from straight above the head is the highest part, so it
   draws over the chest's chain), sprite-and-atlas-production and motion-quality-gating (judge at
   32 px/m first, 48 for detail).
@@ -1752,7 +1752,7 @@ NEXT (iteration 17, in order):
   human: King down at tick **4933**, took **88**, coin_fan 3 / press_slam 1 / ram 1, 0 SCRIPT ERROR.
   The telemetry diffs from it17's only in the view timings (contended machine): render only.
 
-### 06:20 FILM the full fight, the re-cuts, the target comparison and the decree re-shot on 71e76b3f
+### 06:17 FILM the full fight, the re-cuts, the target comparison and the decree re-shot on 71e76b3f
 - `build/scratch18/film32.sh` + `cut.sh` (`_it18` names): full fight 95 s, 0 SCRIPT ERROR, phases
   1-2-3 and "king defeated" in the log. **Looked at** the nine keys (6-90 s): the same beats as it17.
   `cmp.py` -> `M/king_target_vs_game_32ppm_it18.png`: **looked at**, the riders' heads now carry a
@@ -1763,8 +1763,19 @@ NEXT (iteration 17, in order):
   the buff rings and now the shades.
 - it17 versions of the six and the it16 decree deleted; frames.json 15, all exist, befores name what
   they lacked (no shades). REPORT paths and the exe line moved to it18.
-- 06:30 FILM `M/king_ram_coin_fan_48ppm_it18.mp4` re-shot on 71e76b3f (phase 1 seed 2, 1280x800,
+- 06:19 FILM `M/king_ram_coin_fan_48ppm_it18.mp4` re-shot on 71e76b3f (phase 1 seed 2, 1280x800,
   `film.sh ram_s 620 --bot-stand` and `ram_d 620`, cut 1.4-4.4 + 6.6-9.0 s of each with one ffmpeg
   concat, 10.8 s, music, 0 SCRIPT ERROR). **Looked at** the 1 fps sheet beside the it16 one: the
   same frames (deterministic); a frame at 0.3 s at 2x: the rider wears the shades and King's crown
   the plum jewel (the it16 clip had neither). it16 deleted; frames.json 15, all exist.
+- 06:21 CHECK the shades at 64 px/m (where call K's close-up D5 steel shows the helmet art's own
+  black visor): `evidence/king/shots/it18/gang_shades_1_p2_64ppm_4x.png` (phase 2 tick 300, 4x).
+  **Looked at**: the drawn crescent lies on the art's visor, one dark visor with the gold frame and
+  glint, no doubled edge. Downed and fading adds carry it with the head (a child of the head sprite;
+  the full fight's 36 s key at 3x shows no stray marks). Scratch18 cleaned to its scripts.
+
+### 06:23 GATES on 71e76b3f (the gang's shades), run one after the other
+- Director reel **19/19 chapters down** (14 x 1/1, 2 x 2/2, 3 x 4/4), 0 SCRIPT ERROR
+  (`evidence/king/director-reel-it18.log`). Scenarios **52 ran, 0 failed**, 0 SCRIPT ERROR
+  (`evidence/king/scenarios-it18.log`). Unit 1168/0, lint 13/13. Combat holds. REPORT gates line
+  moved to it18. (Journal times 06:05-06:21 corrected from the files' times.)

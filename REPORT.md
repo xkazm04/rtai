@@ -52,9 +52,10 @@ then look at `king_target_vs_game_32ppm_it18.png`, then play `build/export/windo
   - the target sheet beside the game at 32 px/m (`king_target_vs_game_32ppm_it18.png`);
   - the ghosts on King, phase 3 at 48 px/m on the current body (`king_dent_p3_48ppm_it16.mp4`, `king_kerf_p3_48ppm_it16.mp4`, `king_tonnage_p3_48ppm_it16.mp4`, `king_ohm_daze_tells_48ppm_it16.mp4`).
 - **Combat holds**: the director reel was 19/19 chapters down with 0 SCRIPT ERROR on the branch
-  (it16, on f4df4438: `evidence/king/director-reel-it16b.log`).
-- **Gates** (it16, on f4df4438): lint 13/13, unit 1164/0 (`evidence/king/unit-it16b.log`),
-  scenarios 52/0 (`evidence/king/scenarios-it16b.log`).
+  (it18, on 71e76b3f: `evidence/king/director-reel-it18.log`).
+- **Gates** (it18, on 71e76b3f): lint 13/13, unit 1168/0 (`evidence/king/unit-it18-rerun.log`; the
+  first run's one failure was the known `test_noir_shadows` flake, `evidence/king/unit-it18.log`),
+  scenarios 52/0 (`evidence/king/scenarios-it18.log`).
 - **The boss camera** (it10): n7-servo's `BossCam` bar band and `keep_in` are ported to this branch
   as identical files, so King stays whole below the boss bar at the boulevard's top edge.
 
@@ -157,7 +158,8 @@ Each call names its options, the default that is built, and how to see it.
 - **P. The gang's shades (it18).** A black wraparound crescent with a gold frame and a cream glint,
   drawn on the helmet over the gang's chain (built: `GangShades.MODE` 1), or the bare light dome of
   it10-it17 (0). See `evidence/king/shots/it18/gang_shades_0_1_p1_32ppm_4x.png` (the car's riders,
-  left 0, right 1), `..._p1_48ppm_3x.png` and `..._p2_48ppm_2x.png` (the court brawl); in play
+  left 0, right 1), `..._p1_48ppm_3x.png` and `..._p2_48ppm_2x.png` (the court brawl), and at 64 px/m, where it lies on the helmet art's
+  own visor, `evidence/king/shots/it18/gang_shades_1_p2_64ppm_4x.png`; in play
   `RTAI.exe -- --rigs --boss=king --phase=2`.
 
 ## The exe
