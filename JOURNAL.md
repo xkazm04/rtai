@@ -1401,17 +1401,17 @@ live arena path at 32/48 px/m), sprite-and-atlas-production, depth-ordered-layer
   unit test `test_servo_bays.gd` (3 tests: mirror and pitch of the art's bays within 0.45 m of the
   sim cells, off = the cells, no rack = off the art). Unit **1193/0**. The full fight and the three
   phase clips (already running on the bug) stopped (my PIDs) and re-run on the fix.
-- 05:14 FILM the full fight re-filmed on the bay fix (`full32_16.sh`): down **7036, 188**, **0
+- 05:10 FILM the full fight re-filmed on the bay fix (`full32_16.sh`): down **7036, 188**, **0
   SCRIPT ERROR**, telemetry identical. **Looked at** the 12 keys (framed as it14) and the defeat
   at 3x (ticks 7040/7070/7110): the docked drones tumble out from the bays they were drawn in
   (the spill fix), the emptied bays grey. Target still re-shot at tick 1800
   (`M/frames/servo_target_vs_game_32ppm_it16.png`, `scratch/servo/compose_target16.py` keeps the
   it14 framing), **looked at**: the wings now read as the sheet's dark bays of quad drones at 1x
   and 2x. it14 clip, keys and still deleted; REPORT and frames.json paths moved to it16.
-- 05:22 FILMS the p1/p2/p3 32 px/m clips re-filmed on the bay fix (`phase32_16.sh 1|2 2 2400`,
+- 05:15 FILMS the p1/p2/p3 32 px/m clips re-filmed on the bay fix (`phase32_16.sh 1|2 2 2400`,
   `3 2 2300`; 0 SCRIPT ERROR each). **Looked at** the three key sheets: framed as it14 (p1 the
   top-left, p2 the bottom-right yard with carpet rings and CS crates, p3 the hot dash, dives and
   the defeat in the top-left corner) on the docked bays. it14 clips and keys deleted; every M/
   path in REPORT checked to exist; frames.json 15 entries, all on disk.
-- 05:22 GATES scenarios on the bay fix: **52 ran, 0 failed**, 0 SCRIPT ERROR, exit 0
+- 05:15 GATES scenarios on the bay fix: **52 ran, 0 failed**, 0 SCRIPT ERROR, exit 0
   (`evidence/servo/scenarios-it16.log`; CONTENDED: films ran beside it). Unit 1193/0. Lint 13/13.
