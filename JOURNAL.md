@@ -1700,3 +1700,19 @@ NEXT (iteration 17, in order):
   (`evidence/king/unit-it17.log`).
 - FRICTION: the first unit run printed 1164 with "exit -1": GODOT_BIN was not exported in that
   shell, the count was a stale result. Re-run with it set: exit 0, 1164/0.
+
+### 05:56 EXE re-exported on 09f94abd (the crown's jewel) and smoked
+- `windows-showcase` export exit 0, 0 errors (`build/export-it17.log`); headless smoke seed 2
+  human: King down at tick **4933**, took **88**, coin_fan 3 / press_slam 1 / ram 1, 0 SCRIPT ERROR
+  (render only: identical to it16).
+
+### 06:05 FILM the full fight, the re-cuts and the target comparison re-shot on 09f94abd
+- `build/scratch17/film32.sh` + `cut.sh` (now writing `_it17` names): full fight 95 s, phases 1-3,
+  procession entering; 0 SCRIPT ERROR, phases 1-2-3 and "king defeated" in the log. **Looked at** the
+  nine keys (6-90 s): the same beats as it16.
+- The comparison's crop boxes were not in any script: recovered by matching the it16 PNG against the
+  it16 film's 12 s and 72 s frames (exact match: 450x264 at (325,278) and (400,380), 2x nearest,
+  the sheet at 1056 px high). Saved as `build/scratch17/cmp.py`. **Looked at** the it17 one: the plum
+  jewel reads in the crown on the throne (ram tell) and on foot.
+- it16 versions of these six deleted; frames.json 15 (all exist; befores name what they lacked);
+  REPORT paths and the exe line moved to it17.

@@ -5,8 +5,8 @@ Branch `n7-king`, cut from main `763f8fba`. Clips and stills are in
 `C:\Users\kazda\kiro\gtai-masters\n7\king\` (see `frames.json`, newest and best first).
 The moveset is `docs/bosses/king.md`; the full log is `JOURNAL.md`.
 
-**Where to start:** watch `king_fight_bot_human_32ppm_it16.mp4` (95 s, the whole fight at game zoom),
-then look at `king_target_vs_game_32ppm_it16.png`, then play `build/export/windows/RTAI.exe -- --rigs
+**Where to start:** watch `king_fight_bot_human_32ppm_it17.mp4` (95 s, the whole fight at game zoom),
+then look at `king_target_vs_game_32ppm_it17.png`, then play `build/export/windows/RTAI.exe -- --rigs
 --boss=king`. The calls A-N below are the verdicts the lane needs; each default is built.
 
 ## What works (with its evidence)
@@ -35,19 +35,19 @@ then look at `king_target_vs_game_32ppm_it16.png`, then play `build/export/windo
   - the gang: the rich robot thug with gold chains, a steel helmet and shades; (it14) the chain is a
     gold rope with a medallion that reads at 32 px/m, on the car's riders and pushers too (it was a
     2 px arc on the brawlers only: `evidence/king/shots/it14/gang_chain_before_after_p1_p2_32ppm_3x.png`).
-- **Three phases** (`king_phase1_procession_32ppm_it16.mp4`, `king_phase2_court_32ppm_it16.mp4`, `king_phase3_on_foot_32ppm_it16.mp4`, cut from the it16 full fight):
+- **Three phases** (`king_phase1_procession_32ppm_it17.mp4`, `king_phase2_court_32ppm_it17.mp4`, `king_phase3_on_foot_32ppm_it17.mp4`, cut from the it17 full fight):
   - phase 1, the procession: ram lanes and the hood cannon's coin fan (since it10 a spray of 48 coins out of the muzzle, `evidence/king/shots/it10/coin_spray_before_after_48ppm.png`), with the gang pushing and riding;
   - phase 2, the court: the car stops, the gang brawls, and decrees buff them;
   - phase 3, on foot: the press slam (a leap onto the ring, shockwave plus coin ring) and the charge.
 
   Then a defeat beat: the crown falls off and rolls away.
 - **Clips**:
-  - the full fight played by the human-like bot on the current body (`king_fight_bot_human_32ppm_it16.mp4`, 95 s; King down at tick 4933, the headless run's tick);
-  - the procession entering, from the gang's first appearance to King stepping down (`king_procession_enter_32ppm_it16.mp4`);
+  - the full fight played by the human-like bot on the current body (`king_fight_bot_human_32ppm_it17.mp4`, 95 s; King down at tick 4933, the headless run's tick);
+  - the procession entering, from the gang's first appearance to King stepping down (`king_procession_enter_32ppm_it17.mp4`);
   - the press slam, telegraph (the plates raised beside the crown), hit and dodge, the cape landing wide (`king_slam_plates_48ppm_it16.mp4`);
   - the charge, telegraph lane, hit and dodge, the cape drawn in and flared (`king_charge_48ppm_it16.mp4`);
   - the ram and the coin fan, hit and dodge (`king_ram_coin_fan_48ppm_it16.mp4`), and the decree's windup arc and buff (`king_decree_48ppm_it16.mp4`);
-  - the target sheet beside the game at 32 px/m (`king_target_vs_game_32ppm_it16.png`);
+  - the target sheet beside the game at 32 px/m (`king_target_vs_game_32ppm_it17.png`);
   - the ghosts on King, phase 3 at 48 px/m on the current body (`king_dent_p3_48ppm_it16.mp4`, `king_kerf_p3_48ppm_it16.mp4`, `king_tonnage_p3_48ppm_it16.mp4`, `king_ohm_daze_tells_48ppm_it16.mp4`).
 - **Combat holds**: the director reel was 19/19 chapters down with 0 SCRIPT ERROR on the branch
   (it16, on f4df4438: `evidence/king/director-reel-it16b.log`).
@@ -155,8 +155,8 @@ Each call names its options, the default that is built, and how to see it.
 
 Export it with
 `"$GODOT_BIN" --headless --path project --export-release "windows-showcase" <worktree>/build/export/windows/RTAI.exe`.
-The showcase preset boots the arena, so the boss flags reach the fight. Last exported in it16 on
-f4df4438 (05:25, with the gang chains, the slam cape, the car bumpers, the throne back with its crest and plum lining, and King's chain; 0 export errors, `build/export-it16b.log`) and smoke-tested headless
+The showcase preset boots the arena, so the boss flags reach the fight. Last exported in it17 on
+09f94abd (05:56, with the gang chains, the slam cape, the car bumpers, the throne back with its crest and plum lining, King's chain and the crown's plum jewel; 0 export errors, `build/export-it17.log`) and smoke-tested headless
 (`RTAI.exe --headless --fixed-fps 60 --quit-after 5400 -- --rigs --boss=king --bot=boss --seed=2
 --bot-human --telemetry=<json>`): King down at tick 4933, Rivet took 88, 0 SCRIPT ERROR (the
 same as the editor run). It is re-exported at the freeze.
