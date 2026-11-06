@@ -365,3 +365,13 @@ NEXT (iteration 10), replaces the list above:
 4. Re-export the exe at the freeze; smoke `--view=tilt` and `--view=top`.
 5. Raise the weakest: top_lift cast shadows by height; city sedans as stacks; the throne reads as
    a crescent (try THRONE_H_M 0.6 or a darker inner face).
+- GATE director reel on 6cb9e9ef (switch off, headless): 19/19 chapters fully down, 0 SCRIPT ERROR
+  (`evidence/view/it9/director-reel-19of19.log`, a snapshot taken once all 19 had landed; the reel
+  idles until its 840 s timeout, so the live `director-reel.log` is left untracked).
+  Iteration 9 gates with the switch off: lint 13/13, unit 1181/1181, scenarios 52/0, reel 19/19.
+  NOT run: `node tools/evidence/run.mjs` (iteration 10, NEXT 1).
+- RE-FILMED the 32 px/m comparison on 6cb9e9ef (throne + bumpers in), re-encoded over
+  `king_top_toplift_tilt_32ppm_it9.mp4` and its stills; the top avi came out the same byte size as
+  the first take (deterministic). LOOKED at 34 s: bumpers low on the car's ends; the standing
+  throne is mostly hidden behind King's bust at that heading. Raw avis deleted. NEXT 2's 32 px/m
+  re-film is DONE; phase 3 at 48 (filmed on 9530f55d, before the throne commit) is still owed.
