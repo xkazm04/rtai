@@ -1525,3 +1525,6 @@ matter at 32 px/m, finalize REPORT.
   (`evidence/king/shots/it15/car_throne_crest_before_after_p1_32_48ppm.png`). **Looked at**:
   subtle at 32 px/m (about 5 px), a carved ornament at 48; no clutter. DECISION keep 0.17.
 - Unit **1164/0** (`evidence/king/unit-it15b.log`).
+- 04:43 EXE re-exported on b2e71b83 (the crest; `build/export-it15b.log`, 0 errors); smoke seed 2
+  human: King down 4933, took 88, coin_fan 3 / press_slam 1 / ram 1, 0 SCRIPT ERROR. The full
+  fight film (889cc825) is not re-shot for the crest (about 5 px at 32 px/m); the A/B still shows it.

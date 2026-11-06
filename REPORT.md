@@ -136,7 +136,7 @@ Each call names its options, the default that is built, and how to see it.
 Export it with
 `"$GODOT_BIN" --headless --path project --export-release "windows-showcase" <worktree>/build/export/windows/RTAI.exe`.
 The showcase preset boots the arena, so the boss flags reach the fight. Last exported in it15 on
-889cc825 (04:26, with the gang chains, the slam cape, the car bumpers and the throne back; 0 export errors, `build/export-it15.log`) and smoke-tested headless
+b2e71b83 (04:43, with the gang chains, the slam cape, the car bumpers and the throne back with its crest; 0 export errors, `build/export-it15b.log`) and smoke-tested headless
 (`RTAI.exe --headless --fixed-fps 60 --quit-after 5400 -- --rigs --boss=king --bot=boss --seed=2
 --bot-human --telemetry=<json>`): King down at tick 4933, Rivet took 88, 0 SCRIPT ERROR (the
 same as the editor run). It is re-exported at the freeze.
