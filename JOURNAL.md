@@ -635,3 +635,21 @@ NEXT (after the freeze; for the Director or a next run):
 
 NEXT: unchanged from iteration 5 (merge order; the two REQUESTs; the owner's calls; frame cost
 70 vs 55 under the bench lock on a machine with no other lane's Godot running).
+
+## Iteration 9 (18:15, BUILD, post-freeze; session stops 18:30)
+- 18:15 READ JOURNAL tail, git log, chars/bosses heads: chars final 07918046, bosses final 1da1f142.
+  Neither it5 REQUEST landed (no `p70` street rows; `KingArt.strip_path` not keyed by `ViewMode.art`).
+- 18:17 DRY MERGE (`git merge-tree --write-tree`, no tree change) of HEAD 207010ec with each final:
+  d8-chars and d8-bosses each conflict only in the lane docs `JOURNAL.md` and `REPORT.md` (take
+  each lane's own side); code, art, `steam/ai-provenance` and `docs/decisions.md` auto-merge.
+  chars' d0bec791 moves the per-view rows to `RigCardSets` with `RigHeadCard.SET_CARDS` as an
+  alias, so view70's tests (`test_rig_head_card` reads `SET_CARDS["p70"]`) keep their name; it adds
+  p55 rows only, so the 70 panels are unchanged by the merge.
+- 18:18 DECISION no merge into d8-view70 after the freeze: a merge needs the full gates again
+  (evidence --no-bench about 13 min + two director reels), which would not finish before 18:30. The gated
+  afbdee5b tree and the 18:02 exe stand; the Director merges the three finals.
+- Registry rules applied: motion-quality-gating (no new on-screen claim without frames; none made).
+
+NEXT: unchanged from iteration 5. For the Director: the merge order is any (only the lane docs conflict);
+after merging, re-run `test_rig_head_card`, `test_view_pitch*` and `test_king_art`, then the combo
+director reel.
