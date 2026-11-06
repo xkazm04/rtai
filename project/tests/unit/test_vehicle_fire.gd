@@ -56,3 +56,13 @@ func test_a_burning_wreck_holds_one_fire_light_until_it_goes_out() -> void:
 	b.wreck_t = VehicleFire.BURN_S
 	fire._process(0.0)
 	assert_eq(fire._lit.size(), 0)
+
+
+func test_the_pitch_fire_sheets_exist_and_top_draws_none() -> void:
+	for art: String in ["p55", "p70"]:
+		assert_true(ResourceLoader.exists(VehicleFire.PITCH_SHEET % art), art)
+	if ViewMode.shared().art == "":
+		assert_null(VehicleFire.pitch_sheet(), "top: the flat burst, no pitch sheet")
+	VehicleFire.pitch_art = false
+	assert_null(VehicleFire.pitch_sheet())
+	VehicleFire.pitch_art = true
