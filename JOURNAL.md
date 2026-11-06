@@ -1140,3 +1140,10 @@ NEXT (iteration 11, in order):
   off the left edge: the known clip-cam item). `M/servo_p{1,2,3}_*_32ppm_it10.mp4` replace the it9
   clips (deleted with their keys); frames.json 15; REPORT paths. The it11 NEXT 2 now covers only
   the 48 px/m rotor-dash and bay-hop clips (the body shows; it9 spine and pads).
+- 02:58 FILMS the 48 px/m rotor dash and bay hop on the it10 body (`film48_10.sh 1 2 900`,
+  `hop48_10.sh 2 2 900`, dodging bot, seed 2, 0 SCRIPT ERROR; windups at 59 and 671 as before).
+  **Looked at** both 4 fps key sheets: the dash's thin tracking lane, the vermilion lock, the
+  sidestep, the dash and the vent (the wing ledges read at 48); the hop's ring locking among the
+  crates by bay 4 and the landing (this seed lands it, as in it9). `M/servo_attack_rotor_dash_48ppm_it10.mp4`,
+  `M/servo_attack_bay_hop_48ppm_it10.mp4` + keys replace the it9 ones (deleted); frames.json 15;
+  REPORT paths. The it11 NEXT 2 is done.
