@@ -110,6 +110,11 @@ By the craft columns (impact and read at 32 weigh most: they are what the owner 
    rammed riot cop is thrown down from the contact (142) where he stood braced. Victim sync 3 -> 4;
    read stays 2 (the heap is still the sim's shove into the car). Tried and reverted 00:36: ink speed
    lines bridging the shove (they lie under the press). `M/ghost_wound_ram_ab_32ppm.mp4`.
+   **Cause found 01:34**: GhostFormView draws the form at rigs z + 60 (ghost-forms: no human over a
+   ghost body) and the sim lets a rammed body sit inside the press footprint, so a body there is
+   hidden whatever the view prints; a body thrown clear (the city riot cop, frame 150) reads. Read
+   stays 2 for the car heap; the fix is an owner call (REPORT (h)): pop the body over the form, or a
+   sim footprint rule. `M/ram_heap_under_press_32ppm_2x.png`.
 8. **Electro baton**, 9. **Katana**: read well; they get the shared hit-stop with item 3 only.
 
 ## Quest 1 shows melee (brief item 5)

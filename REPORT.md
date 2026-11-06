@@ -41,7 +41,10 @@ The logs are in `evidence/n7-melee/`.
 - The heap at the car under Tonnage's ram still reads as one blob at 32 px/m: the sim shoves the
   bodies into the car. Two view-only tries were reverted because they could not be seen in motion:
   a bigger burst on a ram kill (no ram kills in the beat), and ink speed lines over the shove (they
-  lie under the press). The rammed bodies now react (`91700e01`), which helps only a little.
+  lie under the press). The rammed bodies now react (`91700e01`): in the city the riot cop is
+  thrown clear and reads, but a body that stays inside the press's footprint is hidden. The cause
+  is draw order, not marks: the ghost form draws above every rig (ghost-forms' rule), so no view
+  mark can show a body under it. That is call (h).
 - Tonnage's plates in quest 1 are on the same view path as in the arena, but they are not filmed:
   the quest bot never takes Tonnage.
 - Kerf at full player cadence: the camera's 20-tick stop cooldown means only every other cut holds.
@@ -78,6 +81,15 @@ head spark.
 - Options: past the slab (built), or the shield braces and shows its block sparks.
 - Clip: `M/ghost_wound_ram_ab_32ppm.mp4`.
 - Before: `human_reactions.json` `ghost_wound` {} (no ghost wounds at all), or `--feel=off`.
+
+(h) The ram heap: a body the press shoves into a car sits inside the press's footprint, under it.
+- Options: leave it (built); pop the struck body above the form for the shove's ~0.3 s (breaks the
+  ghost-forms rule that no human draws over a ghost body); or let the sim keep rammed bodies out of
+  the footprint (a sim change and a deliberate re-bless).
+- Still: `M/ram_heap_under_press_32ppm_2x.png` (city, 32 px/m at 2x, frames 138/146/150: the star,
+  the bonnet cop's head peeking from under the press arm, the riot cop thrown clear).
+- See it: `RTAI.exe -- --arena=city --bot=ghosts --ghost=tonnage --rigs --ppm=32` (contact at
+  about 2.3 s).
 
 ## Next steps
 See the last NEXT entry in `JOURNAL.md`.
