@@ -250,6 +250,11 @@
           "minimum": 0,
           "type": "number"
         },
+        "rim_m": {
+          "maximum": 2,
+          "minimum": 0,
+          "type": "number"
+        },
         "stun_s": {
           "maximum": 10,
           "minimum": 0,
