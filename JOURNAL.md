@@ -378,3 +378,12 @@ NEXT (iteration 5):
    STRIPS entry once judged (the arenas rarely hold pedestrians, so lower priority).
 6. Crowd cost with the walkers (fewer sprites drawn: the parts hidden): rerun city_bench riot top vs
    tilt70 under the bench lock on a quiet machine.
+- GATE director reel under combo on 87cc6fa7 (walkers in): 19/19 chapters, every chapter all
+  down, 0 SCRIPT ERROR at the 19th chapter (23:56; the process runs on to its 14000-frame end).
+- GATE `top` holds on 87cc6fa7: `node tools/selftest/run.mjs` look goldens 11/11 (worst 0.27),
+  block goldens 5/5 (worst 0.22), crowd atlas 6/6 on doctrine, world lock 0.00 %.
+- BLOCKED (partly): `node tools/evidence/run.mjs --no-bench` (started 23:45) was stopped at the
+  10 min background limit while scenarios waited for a quiet machine (rig_stress budget missed
+  under contention: my own reels were running). Lint 15/15, unit 1505/0 and the selftest ran
+  separately on this head; scenarios, parity and export-audit are owed on the walker head
+  (NEXT 1: run the gate alone, nothing else of mine running, with a longer timeout).
