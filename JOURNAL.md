@@ -1030,3 +1030,7 @@ NEXT (written 03:17, for iteration 12):
   unit 1208/1208 (GODOT_BIN exported); scenarios 52 ran, 0 failed, 0 SCRIPT ERROR; director reels
   arena 19/19 and city 19/19 fully down (14x 1/1, 2x 2/2, 3x 4/4), 0 SCRIPT ERROR
   (`evidence/n7-melee/{unit,director-arena-loadout,director-city-loadout,scenarios}-bc788d09.log`).
+- MILESTONE 03:21 combined city clip re-cut on `d4c3ccc9` (code `bc788d09`): the Kerf and Tonnage
+  segments refilmed (the only code that moved since `4540d259`), the other seven from the existing
+  AVIs (RECUT=1): 44.2 s, 0 SCRIPT ERROR in all 9 films. LOOK (1.5 s sheet over 20-38.5 s): every
+  tile shows an attack, the ghost card whole. NEXT 2 is done unless code moves again.

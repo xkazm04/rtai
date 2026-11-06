@@ -30,7 +30,7 @@ final hash moved once, deliberately, when quest 1 started carrying the katana (`
 | Plasma sword asset (backlog 3) | `4540d259`, `9a2d3137` | a new top-down held part from one image round: the blade tapers to a point from a pronged emitter collar, with ink arc strokes along a paper-white core (it was a square-ended cream plank); same hilt, same length and grip; the floor pickup and the HUD icon follow it. A shape gain at 48 px/m and up; at 32 px/m the two are close to identical | `M/plasma_sword_blade_ab_32ppm_48slow.mp4`, `M/plasma_sword_blade_ab_48ppm_3x.png` (before: the old `held_long.png`) |
 
 The whole polished set in the city block at 32 px/m, with the game audio:
-`M/melee_polished_set_city_32ppm.mp4` (44 s, re-cut on `3efd6d47` with `evidence/n7-melee/set_clip.sh`: no dev
+`M/melee_polished_set_city_32ppm.mp4` (44 s, re-cut on `d4c3ccc9` (code `bc788d09`: Kerf's sight and the ram wake in) with `evidence/n7-melee/set_clip.sh`: no dev
 telemetry box, the ghost card whole; it is re-cut once more on the final head at the freeze).
 
 Gates on the last build commit `4540d259` (02:20-02:27):
