@@ -59,3 +59,21 @@ func test_stride_frame_steps_four_frames_per_cycle_and_stands_on_pass() -> void:
 	assert_eq(StreetWalkerCards.stride_frame(0.99, true), 3)
 	assert_eq(StreetWalkerCards.stride_frame(1.3, true), 1, "the cycle wraps")
 	assert_eq(StreetWalkerCards.stride_frame(0.6, false), StreetWalkerCards.STAND_FRAME)
+
+
+func test_a_flinch_keeps_the_figure_and_a_death_falls_after_the_hold() -> void:
+	var rig: CutRig = autofree(CutRig.new())
+	var r: HumanReact = HumanReact.on(rig)
+	assert_false(StreetWalkerCards.falls(rig), "a reaction slot alone keeps the figure")
+	r.kind = &"flinch"
+	assert_false(StreetWalkerCards.falls(rig), "a flinch keeps the figure")
+	r.kind = &"death_light"
+	r.dying = true
+	r.length = 1.0
+	r.t = StreetWalkerCards.DEATH_HOLD * 0.5
+	rig.dead = true
+	assert_false(StreetWalkerCards.falls(rig), "the figure holds into the death")
+	r.t = StreetWalkerCards.DEATH_HOLD
+	assert_true(StreetWalkerCards.falls(rig), "the parts take the fall")
+	r.clear()
+	assert_true(StreetWalkerCards.falls(rig), "dead with no family: the parts")

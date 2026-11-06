@@ -6,9 +6,9 @@ extends RefCounted
 ## under the tilt. The parts are hidden, not freed; the card is the person's head card with its
 ## strip swapped. Where the library has a WALK strip (WALKS: 5 facings x 4 stride frames,
 ## street_walk.py) the card steps through the frames by rig.phase; the others keep a gait bob and
-## sway until their strips land (REQUEST to assets, n8 it4). Hit or dead (rig.react, rig.dead)
-## the person drops back to the parts and the head card for good, so knock-back, the fall and
-## the corpse draw as before.
+## sway until their strips land (REQUEST to assets, n8 it4). A flinch keeps the figure; a death
+## holds it for DEATH_HOLD of the family, then the person drops back to the parts and the head
+## card for good, so the fall and the corpse draw as before (falls()).
 ## No strip for the view (p55, top) = nothing here runs. ENABLED false = the head cards (before).
 
 const ENABLED: bool = true
@@ -49,6 +49,11 @@ const WALK_FILL: Dictionary[String, float] = {
 const STRIDE_FRAMES: int = 4
 ## The frame a person stands in (pass: the feet together).
 const STAND_FRAME: int = 1
+## How far into a death family (0..1) the whole figure holds before the parts take the fall;
+## 0 = the parts from the blow (it4).
+const DEATH_HOLD: float = 0.3
+## The figure tips about its feet away from the blow over the hold (rad at the swap).
+const DEATH_TIP: float = 0.6
 ## The standing figure's height on the ground plane (m), before the person's crowd scale.
 const HEIGHT_M: float = 1.7
 ## The feet's height in the cell (from the top): street_head.py pads 2 px under the shoes.
@@ -83,7 +88,7 @@ static func step(rig: CutRig) -> void:
 static func strip_of(rig: CutRig) -> String:
 	if not ENABLED or rig.head_card == null or rig.plan.art_dir != "ped":
 		return ""
-	if rig.dead or rig.react != null:
+	if falls(rig):
 		return ""
 	var art: String = ViewMode.shared().art
 	var key: String = row_of(rig)
@@ -97,6 +102,16 @@ static func strip_of(rig: CutRig) -> String:
 ## The stride frame for a gait phase (one cycle = two steps); STAND_FRAME when not moving.
 static func stride_frame(phase: float, moving: bool) -> int:
 	return posmod(floori(phase * STRIDE_FRAMES), STRIDE_FRAMES) if moving else STAND_FRAME
+
+
+## True once the person goes to the parts: dead past DEATH_HOLD of the death family (the swap
+## lands mid-fall, where the motion hides it), or dead with no family playing. A flinch keeps the
+## figure (the head's snap and the hit flash carry it: ReactPose moves the card's parent).
+static func falls(rig: CutRig) -> bool:
+	var r: HumanReact = rig.react
+	if r != null and r.dying:
+		return r.progress() >= DEATH_HOLD
+	return rig.dead
 
 
 ## The card row the person's head card draws (StreetCrowdCards' pick, else the look's head).
@@ -157,6 +172,19 @@ static func _place(rig: CutRig, card: Sprite2D) -> void:
 		)
 		walk = 0.0
 	var stride: float = sin(TAU * rig.phase)
-	card.global_rotation = stride * SWAY * walk
+	card.global_rotation = stride * SWAY * walk + _tip(rig)
 	card.global_scale = Vector2(s, s)
 	card.global_position = rig.global_position - Vector2(0.0, absf(stride) * BOB_PX * walk)
+
+
+## The topple through a death's hold, eased in: toward the side the hidden parts' head is
+## falling to on screen (so the swap lands on the same fall), else away from the blow.
+static func _tip(rig: CutRig) -> float:
+	var r: HumanReact = rig.react
+	if r == null or not r.dying or DEATH_HOLD <= 0.0:
+		return 0.0
+	var fall: float = rig.head.global_position.x - rig.global_position.x
+	var blow: Vector2 = r.dir.rotated(rig.facing)
+	var away: float = signf(fall) if absf(fall) > 1.0 else (signf(blow.x) if blow.x != 0.0 else 1.0)
+	var k: float = clampf(r.progress() / DEATH_HOLD, 0.0, 1.0)
+	return away * DEATH_TIP * k * k
