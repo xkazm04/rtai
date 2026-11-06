@@ -223,3 +223,36 @@ stands on the legs' anchor at 70, width set over the wider 70 cell).
   tilt70 before | after). Tests: test_servo_art (+3: fallback, key not live pitch, reload).
   Note: no Servo p70 PART sheet exists (angle-r1 servo_70.png is an angle sheet; the parts are top
   views), so p70 = the p55 parts; Servo is only on screen at 70 under tilt70 or mid-ease.
+- GATES at 89cac319: unit 1500 passed / 0 failed (full no-arg, `evidence/n8-view/unit-it5.log`);
+  scenarios 52 ran / 0 failed (`scenarios-it5.log`; no golden moved: `top` unchanged); lint 15/15.
+- MILESTONE 22:27 the King-down return under combo with a ghost on screen (brief item 5, owed since
+  it3). `--boss=king --phase=3 --bot=boss --ghost=ohm --seed=2 --view=combo`: the King falls at
+  tick ~422, the ease back starts there, the cards swap to p70 at tick 452 (pitch 62.5): the King's
+  p55 bust -> p70 strip and Ohm's p55 -> p70 card in the same tick, and no drawn cape fan mid-ease
+  (the art_pitch fix of it3, now seen). `gtai-masters/n8/view/king_down_return_ohm_combo_32ppm.mp4`,
+  `_closeup_x2.mp4`, `king_down_ohm_swap_p55_p70_combo_crop.png` (ticks 440/452/470).
+  With `--ghost=tonnage` the bot never had Tonnage on screen at the defeat (tick ~1160): the
+  Tonnage cross-fade under combo is still NOT seen live.
+  NOTE: at the swap the King's size jumps (the p55 bust at 2.0x reads larger than the p70 down pose);
+  judged acceptable for a hard swap the owner chose, but watch it in the next combo clip.
+- MILESTONE 22:30 item 6 (part): the camera at 70 in the city. Drive (`dev/bench/city_bench.tscn
+  --scenario=drive --zoom=1.0`, 15 s) and on foot (`--arena=city --bot=rivet --seed=7`), top | tilt70
+  side by side: `city_drive_top_vs_tilt70_32ppm.mp4`, `city_foot_top_vs_tilt70_32ppm.mp4` (+ stills).
+  The framing holds: the car and Rivet stay centred; at 70 the view shows ~6 % more ground along y
+  (1/sin 70), no extra lead ahead of the car at speed (the camera lead at driving speed stays a
+  Call for the owner). Not filmed yet: the boss camera's zoom-in under combo at 64 px/m, quest 1.
+- frames.json (masters) rewritten: 15 entries, best first.
+- MILESTONE 22:33 item 8 (part): frame cost combo vs top on the in-car drive, under bench.lock (held
+  by me, NOT contended), release export `windows-bench` (debug_build false), `drive_dense` at
+  zoom 1.5 (48 px/m), 30 s x 2 runs per view, alternated. `evidence/n8-view/bench-it5/drive48_*.json`.
+  | metric | top r1 / r2 | combo r1 / r2 |
+  | renderCpuMsAvg | 0.300 / 0.399 | 0.346 / 0.356 |
+  | drawCallsAvg | 252.0 / 252.3 | 254.1 / 254.7 |
+  | rigMsP50 | 0.439 / 0.544 | 0.582 / 0.565 |
+  | rigMsP99 | 1.107 / 1.330 | 1.187 / 1.251 |
+  | visibleAvg | 9.8 / 9.8 | 10.9 / 10.7 |
+  | p99CpuMs / low1Fps | 32.6 / 30.0, 32.9 / 24.4 | 19.5 / 50.5, 31.2 / 31.4 |
+  Reading: combo costs ~+1 % draw calls and ~+0.05-0.1 ms rig time per frame (one more visible
+  actor at 70: the view covers more ground); render CPU within run noise. The p99 / low-1 % rows are
+  the known vsync-off present stalls (~32 ms trios, bench run.mjs note), present in BOTH views, not a
+  view cost. NOT measured: the King fight (the bench export runs the city only; needs an arena bench).
