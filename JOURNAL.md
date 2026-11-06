@@ -1360,3 +1360,10 @@ NEXT (iteration 15, in order):
    px/m). Try smaller or lower-contrast rings; keep it off unless it reads at 32 px/m.
 4. At the freeze (08:30): re-export `windows-showcase`, smoke (expect down 7036, 188), final gates
    (lint, unit, scenarios, evidence/run.mjs, director reel), REPORT final (drop DRAFT, Next steps).
+
+## Iteration 16 (04:48-05:48, BUILD)
+Read: JOURNAL NEXT (it14; no it15 entry on this branch), git log -30, n7-king's JOURNAL (it15:
+throne back and crest; no new REQUEST for servo). Rules kept: motion-quality-gating (A/B in the
+live arena path at 32/48 px/m), sprite-and-atlas-production, depth-ordered-layered-art.
+- 04:50 MERGE n7-king 296cce50 as 71fa77a2 (16 commits: King's throne back and crest; king-only
+  files). JOURNAL/REPORT add/add: ours; decisions auto-merged. Lint 13/13 (hook).
