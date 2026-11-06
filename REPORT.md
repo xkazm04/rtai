@@ -12,7 +12,7 @@ final hash moved once, deliberately, when quest 1 started carrying the katana (`
 | Melee weight (brief 3) | `65dd07e1` + rows | every melee hit reaches FeelCam (n7-ranged's layer): a hold on the hit frame, a kick along the blow, the kill stop; per-weapon rows for the claw, katana, baton and chainsaw | `M/melee_feel_claw_ab_32ppm_48slow.mp4` (before `--feel=off`) |
 | Kerf's chain | `cb3e5caa` | a hold and a cream-and-ink cut flare per cut: it reads cut by cut instead of one blur | `M/kerf_chain_ab_32ppm_64slow.mp4` |
 | Kerf's sight (anticipation) | `96e1abe6` | a dashed teal sighting line from Kerf to the body the next press cuts, with a white lock (two brackets) on it; dim just after a blink, full when the next blink may fire, none without a charge. Each cut of a chain is called before it lands (the blink came from nowhere before) | `M/kerf_sight_ab_32ppm_48slow.mp4`, still `M/kerf_sight_ab_32_48ppm.png` (before `ghost_attacks.json` kerf `sight_k` 0, or `--feel=off`) |
-| Kerf's camera after a blink | `3fd49218` | the camera whips from where Kerf stood to where he lands (0.18 s, eased out) instead of jumping with the one-tick blink; the cut's hit-stop holds the take-off framing, so he is seen landing across the frame, then the camera travels. A chain reads as one fight in one place | `M/kerf_cam_glide_ab_32ppm_48slow.mp4` (before `--kerf-glide=off`) |
+| Kerf's camera after a blink | `3fd49218` | the camera whips from where Kerf stood to where he lands (0.18 s, eased out) instead of jumping with the one-tick blink; the cut's hit-stop holds the take-off framing, so he is seen landing across the frame, then the camera travels. A chain reads as one fight in one place. Quest 1 takes it too (`be78d440`: the objective ring now stays on its goal while the camera travels) | `M/kerf_cam_glide_ab_32ppm_48slow.mp4`, quest 1 `M/quest1_kerf_cam_glide_ab_32ppm.mp4` + still `M/quest1_kerf_cam_glide_ring_ab_32ppm.png` (before `--kerf-glide=off`) |
 | Plasma sword deflect | `2502aaa7`, `a7ed5d4c` | a parry beat (a stop, a kick toward the shooter), a starburst on the bat frame and a streak along the return | `M/plasma_deflect_ab_32ppm_48slow.mp4` |
 | Ohm's tell | `0555878c` | white sparks edged in ink reach from Ohm's fingertips toward the aim while the charge refills | `M/ohm_tell_ab_32ppm_crop.mp4` |
 | Chainsaw kill | `49cc45d1` | a cream burst where the halves part, the grind's drops kept clear of the held body | `M/chainsaw_kill_ab_32ppm_48slow.mp4` |
@@ -201,6 +201,7 @@ head spark.
 - Clip: `M/kerf_cam_glide_ab_32ppm_48slow.mp4` (city 32 px/m real time, then the arena at 48 px/m 0.4x; before left).
 - Before: `--kerf-glide=off`.
 - See it: `RTAI.exe -- --arena=city --bot=ghosts --ghost=kerf --rigs --ppm=32` (blinks from about 1.3 s).
+  Quest 1 (dev recorder, bound input): `quest_ghost_rec.tscn -- --ghost=kerf --ppm=32 --out=<dir>` (blinks from frame 70).
 
 ## Next steps
 See the last NEXT entry in `JOURNAL.md`.

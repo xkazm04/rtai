@@ -1466,3 +1466,24 @@ NEXT (written 05:59, for iteration 17; supersedes the 05:15 list):
   32 and 48 px/m against a before on the same head; a planted fault per test), realtime-combat-
   semantics (feel is view only: the camera offset reads stage state and writes nothing to the sim;
   generic for any target, a boss cut by Kerf gets the same whip).
+- GATES 06:18 on `3fd49218`: unit 1237/1237 (`evidence/n7-melee/unit-3fd49218.log`); director reels
+  arena 19/19 and city 19/19 (38 lines each), 0 SCRIPT ERROR; scenarios 52 ran, 0 failed. MIXED:
+  I edited objective_view / collect_call_view / quest_ghost_rec while the scenarios ran (my own
+  rule broken); superseded by the run on `edb40f7c` below.
+- MILESTONE 06:16 combined city clip re-cut on `3fd49218`: the Kerf segment (32.2-38.2 s) is the
+  after film from the look (the set's exact command), the other 8 reused; 44.2 s; a 2 fps sheet
+  shows Kerf landing right of centre and the frame re-centring. frames.json row updated.
+- LOOK 06:17 quest 1 Kerf (`dev/ghost-powers/quest_ghost_rec.tscn -- --ghost=kerf`, bound input,
+  a PNG per tick). FINDING: the recorder filmed Ohm (`kerf blinks 0, ohm bolts 6`): it tapped G a
+  fixed count from a selection quest 1 no longer starts on. `edb40f7c` taps until the asked ghost
+  is picked (6 blinks, 5 slices). FINDING 2, a regression of `3fd49218` seen only in quest 1:
+  ObjectiveView places the goal as if the camera centred Rivet, so during the glide the vermilion
+  ring floated with the screen ~6 m off its crosswalk and hid for 2 frames as the centre swept
+  over it. `be78d440`: ObjectiveView.cam_off_m (the glide only) and the hide test on Rivet's
+  screen point. Looked at frames 69-87 (and 76-83 zoomed), before over after: the ring sits on the
+  goal box on every frame while the camera travels. The older city_lean_m / forms_lift_m offsets
+  have the same Rivet-centred assumption in ObjectiveView (not changed this late: forms_lift is a
+  judged quest-1 look; noted for NEXT). Clip `M/quest1_kerf_cam_glide_ab_32ppm.mp4` (4.5 s) +
+  still `M/quest1_kerf_cam_glide_ring_ab_32ppm.png`; REPORT row + call (q) updated.
+- CLEAN 06:26 this iteration's scratch films, PNG runs and sheets deleted (set_ghost_kerf.avi
+  replaced by the glide film for RECUT).
