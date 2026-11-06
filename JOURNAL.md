@@ -1119,3 +1119,23 @@ NEXT (iteration 11, in order):
   middle and last frames of each (phase flash, King stepping down, the defeat). The it6 phase
   clips deleted; frames.json 15. NEXT for it11 is now items 2-4 (+ re-cut the procession-entering
   clip on the current head).
+
+### 01:57 MILESTONE (it11 NEXT 2 taken early) the slam tell's raised plates
+- Cause: the slam's tell reuses the rig's hands-up pose (`rig.clips.fleeing`), which puts both
+  press plates over the head, under KingAccents' crown from straight above.
+- FIX (render only): `KingAccents._raised_plates` draws two gold plates either side of the crown
+  through the tell, growing as they rise (`RAISED_PLATES`, `PLATE_OUT_M` 0.62). **Looked at**
+  `evidence/king/shots/it10/slam_plates_before_after_48ppm_3x.png` (phase 3, seed 2, tick 420,
+  the same frame as it8's still): before only the crown; after the two plates up beside it, read as
+  "plates raised". They are flat stickers like the rest of the cutout; a pose change (plates
+  out wide in the rig) is the deeper fix, left as the alternative. Decisions line; REPORT gap removed.
+- Unit **1160/0** (`unit-it10d.log`), lint 13/13.
+
+NEXT (iteration 11, replaces the 01:52 list; the session ends ~01:58, everything committed):
+1. The slam tell in motion: film the slam at 48 px/m on the current head (the it8 clip predates
+   the raised plates) and look at the plates rising through the 1.2 s tell; re-cut the
+   procession-entering clip on the current head.
+2. The gang at 32 px/m against the sheet's bodyguards (still small); measure the drawn body
+   against the hit body before any size step (fairness).
+3. Director reel once more before the freeze; re-export the exe at the freeze (the it8 recipe in
+   REPORT); finalize REPORT (remove DRAFT, Next steps).

@@ -64,8 +64,6 @@ and in the exported exe.
   read as light steel domes with a gold frame (`evidence/king/shots/it10/gang_head_before_after_32ppm_3x.png`). They
   are still smaller and less blocky than the target's bodyguards.
 - The shoulder megaphone is a small gold cone at 32 px/m; it reads from 48 px/m.
-- From straight above, the raised plates in the slam tell hide under the crown (the warning ring
-  carries the tell).
 - The plain robot thug (the enemy-ai lane's, not King's) prints as solid ink at 48 px/m. The gang's
   lift would fix it (`evidence/king/shots/it7/plain_thug_48ppm_ink_x2.png`).
 
