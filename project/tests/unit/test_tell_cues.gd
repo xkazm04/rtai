@@ -61,6 +61,18 @@ func test_the_seize_clunk_plays_once_per_seized_car() -> void:
 	assert_eq(_at[0], Vector2(5.0, 0.0), "at the car")
 
 
+func test_dents_lash_plays_once_per_miss_where_the_tether_reaches() -> void:
+	var t: TellCues = _cues()
+	for tick: int in 10:
+		t.lash(0, Vector2.ZERO, tick)
+	assert_eq(t.played, 0, "planted: no miss, no lash")
+	t.lash(1, Vector2(0.0, 7.0), 10)
+	t.lash(1, Vector2(0.0, 7.0), 11)
+	t.lash(2, Vector2(7.0, 0.0), 40)
+	assert_eq(_ids, [TellCues.LASH, TellCues.LASH] as Array[StringName], "once per miss")
+	assert_eq(_at[0], Vector2(0.0, 7.0), "at the aim point")
+
+
 func test_a_bolt_that_strikes_no_body_crackles_where_it_ends() -> void:
 	var t: TellCues = _cues()
 	t.bolt(-1, 0, Vector2.ZERO, 1)
@@ -73,5 +85,7 @@ func test_a_bolt_that_strikes_no_body_crackles_where_it_ends() -> void:
 
 func test_every_tell_cue_has_a_row() -> void:
 	var tables: AudioTables = AudioTables.shipped()
-	for id: StringName in [TellCues.PRESS_TELL, TellCues.PRESS_LAND, TellCues.SEIZE, TellCues.BOLT]:
+	for id: StringName in [
+		TellCues.PRESS_TELL, TellCues.PRESS_LAND, TellCues.SEIZE, TellCues.LASH, TellCues.BOLT
+	]:
 		assert_not_null(tables.cue(id), "audio_cues.json row %s" % id)

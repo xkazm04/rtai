@@ -663,6 +663,21 @@
       "priority": 4,
       "sound": "impact_metal",
       "takes": 2
+    },
+    {
+      "bus": "sfx",
+      "cooldown_ticks": 8,
+      "doc": "n7-melee TellCues: Dent's seize finds no car and the tether lashes out along the aim and frays (DentStage.miss_tick: no live car on the aim line in reach): the metal hit pitched far up to a short bright crack at the aim point, where the tether snaps (the seize is the same sound at 0.55, a clunk; a whine is kept for wind-ups); --tell-cues=off = none (the before)",
+      "gain_db": -7,
+      "id": "ghost_lash",
+      "loop": false,
+      "max_m": 60,
+      "max_voices": 3,
+      "pitch": 1.8,
+      "pitch_jitter": 0.05,
+      "priority": 3,
+      "sound": "impact_metal",
+      "takes": 2
     }
   ],
   "doc": "Sound cues as data (features/audio/README.md). A cue id is an FX trigger id (data/tables/fx_triggers.json: shot, projectile_end, death, player_hit, ...), an F-04 Events signal, or an id a lane fires itself (hit_flesh, horn, crash, tyre_screech). sound/takes: res://assets/audio/sfx/<sound>_<01..takes>.wav (.ogg when longer than 3 s). gain_db trims the cue before the bus. pitch is the base pitch scale, pitch_jitter the +/- fraction drawn per play from the audio dice (seeded from the RNG registry's master seed, never a registry stream: render-side draws must not enter the replay hash). max_m: hearing distance in metres, 0 = not positional. cooldown_ticks: min sim ticks between two plays of the cue. max_voices: simultaneous players for the cue. priority: who may steal a pool voice when it is full (0 lowest). hits: n7-melee, a hit by weapon `id` (CombatArena.wounded or kill_landed: Rivet's melee and the ghost attacks) plays `cue` where the victim stands, on the hit tick (HitCues; `--hit-cues=off` = none, the before). A weapon without a row plays nothing of its own.",

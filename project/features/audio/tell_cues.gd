@@ -1,12 +1,14 @@
 class_name TellCues
 extends RefCounted
 ## n7-melee: the ghost attacks' wind-ups had no sound (the audit's sound column: a hit played its
-## HitCues knock, the tell before it nothing). This plays four cues (audio_cues.json rows; a
+## HitCues knock, the tell before it nothing). This plays five cues (audio_cues.json rows; a
 ## missing row is silent) from what the stage already shows, on the tick it shows it:
 ## - ghost_press_tell where Tonnage's press will land, the tick a slam is armed (the dashed ring);
 ## - ghost_press_land where it lands, when the slam struck no body (a body hit plays HitCues'
 ##   ghost_slam; a whiff onto the road, or a car crush alone, was silent);
 ## - ghost_seize at the car, the tick Dent's gearbox seizes it (the tether);
+## - ghost_lash, a bright crack at the aim point, the tick Dent's seize finds no car on the aim
+##   line and the tether lashes out and frays (DentStage.miss_tick; a whine is kept for wind-ups);
 ## - ghost_bolt (HitCues' own bolt crackle) at the bolt's end when Ohm's bolt struck no body: a
 ##   bolt that burned a car, or reached nothing, was drawn in silence.
 ## Render side only: reads the stage, writes nothing back. `--tell-cues=off` = none (the before).
@@ -14,6 +16,7 @@ extends RefCounted
 const PRESS_TELL: StringName = &"ghost_press_tell"
 const PRESS_LAND: StringName = &"ghost_press_land"
 const SEIZE: StringName = &"ghost_seize"
+const LASH: StringName = &"ghost_lash"
 const BOLT: StringName = &"ghost_bolt"
 
 var played: int = 0
@@ -23,6 +26,7 @@ var _armed: bool = false
 var _stomp_seen: int = -1
 var _hits_seen: int = 0
 var _seizes_seen: int = 0
+var _misses_seen: int = 0
 var _bolt_seen: int = -1
 var _struck_seen: int = 0
 
@@ -50,6 +54,7 @@ func step(stage: CollectCallStage) -> void:
 	var d: DentStage = p.dent
 	if d != null:
 		seize(d.seizes, d.car.pos if d.car != null else stage.arena.rivet.pos, stage.tick)
+		lash(d.misses, d.miss_to, stage.tick)
 	var o: OhmStage = p.ohm
 	if o != null and not o.bolt_path.is_empty():
 		bolt(o.bolt_tick, o.struck, o.bolt_path[o.bolt_path.size() - 1], stage.tick)
@@ -76,6 +81,13 @@ func seize(seizes: int, at: Vector2, tick: int) -> void:
 	if seizes > _seizes_seen:
 		_fire(SEIZE, at, tick)
 	_seizes_seen = seizes
+
+
+## A new miss (the seize found no car) plays the lash once, where the tether reaches.
+func lash(misses: int, at: Vector2, tick: int) -> void:
+	if misses > _misses_seen:
+		_fire(LASH, at, tick)
+	_misses_seen = misses
 
 
 ## A new bolt (bolt_tick moved) that struck no new body crackles where it ends.
