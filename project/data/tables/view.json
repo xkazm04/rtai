@@ -153,6 +153,20 @@
       "note": "lane d8-view70 study (owner call: the transition length): combo with a 1.2 s ease",
       "pitch_deg": 70,
       "swap_deg": 62.5
+    },
+    {
+      "art": "p70",
+      "boss_art": "p55",
+      "boss_pitch_deg": 55,
+      "cards": true,
+      "cast_k": 1.2,
+      "ease_s": 1,
+      "fade_deg": 0,
+      "height_k": 1,
+      "id": "combo_swap",
+      "note": "lane d8-view70 study (owner call: cross-fade or swap): combo with a hard card swap at swap_deg (fade_deg 0)",
+      "pitch_deg": 70,
+      "swap_deg": 62.5
     }
   ]
 }

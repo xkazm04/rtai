@@ -129,3 +129,11 @@ func test_a_ghost_card_cross_fades_to_the_other_folder_as_wide_and_anchored_alik
 	assert_almost_eq(o.offset.y / o.texture.get_height(), -0.6, 0.001, "the same anchor")
 	assert_almost_eq(card.self_modulate.a, 0.6, 0.001)
 	card.free()
+
+
+func test_combo_swap_is_combo_with_a_hard_card_swap() -> void:
+	var p: ViewPitch = ViewPitch.of("combo_swap")
+	assert_true(p.eases())
+	assert_eq(p.fade_deg, 0.0, "the owner call's alternative: no cross-fade")
+	assert_eq(p.ease_s, ViewPitch.of("combo").ease_s)
+	assert_eq(p.mix_at(p.swap_deg - 0.01), 0.0)
