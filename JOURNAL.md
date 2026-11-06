@@ -1803,3 +1803,15 @@ REPORT row + call 5 exe line, audit rows 3 and 10, decisions.md line. NEXT is th
   14378 and shifts about 1 body width left, then rocks in place; he does not fall in the window.
   At 24 px/m (a body about 12 px) whether that pool is his own wound or the heap's cannot be
   told from the frames: unscored. Leave I/V `?` until a struck-event probe gives the tick.
+
+## Iteration 20 (BUILD, 05:27-06:27)
+Read: JOURNAL to its end (NEXT iteration 19 list; the 05:26/05:27 rifle crops), git log -30,
+n7-melee JOURNAL tail (no REQUEST to ranged; their NEXT 1 cherry-picks my feel-layer commits only).
+
+### GATES 05:39 full evidence run on `a175b3d8` (no code since `3243a483`): all green
+- `node tools/evidence/run.mjs --no-bench` (tree clean through the run): lint 13/13 (955 files),
+  unit 1181/1181, scenarios 52/0, parity exact over 1200 steps (planted mutation caught at 629),
+  selftest (look goldens 11/11, block goldens 5/5). Log `evidence/ranged/it20-evidence-a175b3d8.log`.
+  Supersedes the last full green `13e0e050`: the freeze only re-runs this if code lands after.
+- Checked (no build): the shock discharge's STRIKE clip (NEXT 5) is `claw_shock`, Rivet's melee
+  (n7-melee's scope); its 2-tick wind-up starts on the discharge tick. FYI to n7-melee below.
