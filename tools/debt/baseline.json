@@ -1,6 +1,9 @@
 {
   "metrics": {
     "dev_loc": {
+      "accepted": [
+        "2026-11-06: d8 chars: --order-probe measures ghost-card vs rig pairs (the brief's draw-order item, measured before/after) (dev_loc 18080 -> 18115)"
+      ],
       "files": {
         "project/dev/arena": 1034,
         "project/dev/audio": 367,
@@ -24,10 +27,10 @@
         "project/dev/selftest": 1446,
         "project/dev/servo": 434,
         "project/dev/showcase": 5452,
-        "project/dev/view": 123,
+        "project/dev/view": 158,
         "project/dev/weapon_art": 506
       },
-      "total": 18080
+      "total": 18115
     },
     "direct_cmdline_reads": {
       "files": {
@@ -255,7 +258,7 @@
         "project/features/souls/ghost_form_view.gd": 206,
         "project/features/souls/ghost_forms.gd": 219,
         "project/features/souls/kerf_stage.gd": 208,
-        "project/features/souls/ohm_rig.gd": 209,
+        "project/features/souls/ohm_rig.gd": 201,
         "project/tests/parity/city_parity.gd": 204,
         "project/tests/scenarios/scenario_vehicle_drive.gd": 213,
         "project/tests/unit/test_crowd_react.gd": 231,

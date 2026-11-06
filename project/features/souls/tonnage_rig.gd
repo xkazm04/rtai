@@ -39,6 +39,8 @@ const FOOT_H_M: float = 0.35
 ## the crown point's height in the card; it replaces the crown, press head and hoses.
 const CARD_M: float = 3.1
 const CARD_ANCHOR: float = 0.42
+## The card's soul halo alpha (GhostCard.halo; 0 = the bare card).
+const CARD_HALO_A: float = 0.35
 
 ## The shared part print (PartMaterials) on Tonnage's parts. Off by default: at 32 px/m its
 ## flat-sticker LOD prints the gunmetal crown as one ink mass and hides the teal seams (JOURNAL
@@ -62,6 +64,7 @@ var _card: GhostCard = GhostCard.new("tonnage", CARD_M, CARD_ANCHOR)
 
 func _ready() -> void:
 	_glow = _soft_glow()
+	_card.halo = Color(TEAL, CARD_HALO_A)
 	for i: int in 4:
 		_feet.append(_part("foot", FOOT_M, false))
 	for i: int in 4:

@@ -9,9 +9,8 @@ extends RefCounted
 ## its drawn aspect; it anchors on the collar ring. Rotation stays free for the rest of the rig.
 ## Render only. Straight down (or a row without cards) nothing here runs: bit-identical.
 
-## art_dir -> [strip, anchor y (fraction of the card height from the top where the anchor sits),
-## width over the anchor part's width, bust (the card covers the chest too: the torso hides),
-## raw (the strip is pre-printed by tools/art/cut_facings.py --snap: gold would print vermilion)].
+## art_dir -> [strip, anchor y (card height fraction from the top), width over the anchor part's,
+## bust (covers the chest: the torso hides), raw (pre-printed: cut_facings.py --snap)].
 ## Rivet anchors on his collar ring, King's bust on his torso.
 const CARDS: Dictionary[String, Array] = {
 	"rivet": ["res://features/characters/art/view/rivet_head_card.png", 0.86, 1.0, false, true],
@@ -26,13 +25,10 @@ const CARDS: Dictionary[String, Array] = {
 ## "p70" from the 70): a card whose file name exists under ART_DIR/<art>/ draws that file with its
 ## base row's fields; SET_CARDS[<art>] rows replace or add whole rows (new anchor, width or bust);
 ## a set row with an empty path keeps the strip found above and only changes the other fields.
-## A view without art draws CARDS. Rivet's p55 card is a bust (head, hazard
-## collar and chest plate from rivet_55.png, tools/art/rivet_bust.py): anchored on the collar's
-## middle, 1.25 x the collar wide (the cell is wider than the collar by the chest's shoulders).
-## Dent (no collar) anchors on his torso, 1.75 x its depth (his shoulder span); his plating is
-## printed to his in-game tan (tools/art/ghost_card_tone.py; the sheet's teal-steel is
-## p55/dent_bust_card_teal.png, the alternative). The p70 rows (view70 lane) keep the folder strip
-## with widths that draw each 70 card as tall as its 55 card (king 2.4 * 169/115, rivet 105/90).
+## A view without art draws CARDS. p55: Rivet's bust (rivet_bust.py) on the collar, 1.25 x; Dent
+## on his torso, 1.75 x its depth, printed to his tan (ghost_card_tone.py; the sheet's teal is
+## p55/dent_bust_card_teal.png). p70 (view70) keeps the folder strips, each as tall as its 55 card.
+## SWAT, hair/bald peds, robot thug: tools/art/street_head.py from the assets library's 55 sheets.
 const ART_DIR: String = "res://features/characters/art/view/"
 const SET_CARDS: Dictionary[String, Dictionary] = {
 	"p55":
@@ -41,6 +37,14 @@ const SET_CARDS: Dictionary[String, Dictionary] = {
 		["res://features/characters/art/view/p55/rivet_bust_card.png", 0.66, 1.25, true, true],
 		"dent":
 		["res://features/characters/art/view/p55/dent_bust_card.png", 0.75, 1.75, true, true],
+		"cop/head_swat":
+		["res://features/characters/art/view/p55/swat_head_card.png", 0.8, 1.68, false, true],
+		"ped/head_hair":
+		["res://features/characters/art/view/p55/ped_hair_card.png", 0.74, 2.0, false, true],
+		"ped/head_bald":
+		["res://features/characters/art/view/p55/ped_bald_card.png", 0.74, 1.9, false, true],
+		"thug":
+		["res://features/characters/art/view/p55/thug_head_card.png", 0.86, 1.0, false, true],
 	},
 	"p70":
 	{

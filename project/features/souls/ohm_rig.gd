@@ -17,8 +17,8 @@ const TEAL: Color = Color(0.18, 0.77, 0.71)
 ## y right).
 const SHELL_M: float = 0.8
 const BEARD_M: float = 0.5
-## The soul glow under him: across (m) and its centre alpha. The smallest body needs the widest
-## pool against its size to read as possessed at 32 px/m (was 1.9 m at 0.4, under Kerf's 2.4).
+## The soul glow under him: across (m), centre alpha. The smallest body needs the widest pool for
+## its size to read as possessed at 32 px/m (was 1.9 m at 0.4, under Kerf's 2.4).
 const GLOW_M: float = 2.6
 const GLOW_A: float = 0.5
 const BEARD_AT: Vector2 = Vector2(0.42, 0.0)
@@ -51,6 +51,12 @@ const KICK_M: float = 0.2
 const KICK_S: float = 0.25
 const RECOIL_M: float = 0.1
 const KICK_TWIST: float = deg_to_rad(16.0)
+## Tilted view: the facing card (GhostCard, art/view/<art>/ohm_card.png: shell, goggles, beard,
+## back cables): width (m), the ground point's height in the card, its soul halo alpha (0 = none).
+## The arms and feet stay rig parts on the ground, so cane, guard hand and bolt prongs still meet.
+const CARD_M: float = 1.2
+const CARD_ANCHOR: float = 0.8
+const CARD_HALO_A: float = 0.45
 
 var unfold: float = 1.0
 ## OhmStage.bolts, fed by the host: a rise kicks the guard arm (the first sight only arms it).
@@ -62,16 +68,16 @@ var speed_mps: float = 0.0
 var phase: float = 0.0
 var _t: float = 0.0
 var _seen_bolts: int = -1
-## 1 at the bolt, falling to 0 over KICK_S.
-var _kick: float = 0.0
+var _kick: float = 0.0  # 1 at the bolt, falling to 0 over KICK_S
 var _body: Node2D = Node2D.new()
 var _feet: Array[Sprite2D] = []
-## [upper_r, fore_r, upper_l, fore_l]
-var _arms: Array[Sprite2D] = []
+var _arms: Array[Sprite2D] = []  # [upper_r, fore_r, upper_l, fore_l]
+var _hide: Array[Sprite2D] = []
+var _card: GhostCard = GhostCard.new("ohm", CARD_M, CARD_ANCHOR)
 
 
 func _ready() -> void:
-	add_child(_soft_glow())
+	add_child(GhostRim.soft_glow(TEAL, GLOW_A, GLOW_M * PX_PER_M))  # teal belongs to the souls
 	add_child(_body)
 	for side: int in 2:
 		var foot: Sprite2D = _part("foot", FOOT_M)
@@ -90,6 +96,8 @@ func _ready() -> void:
 	var shell: Sprite2D = _part("shell", SHELL_M)  # added last: over the arms' roots
 	GhostRim.body(shell)
 	shell.add_child(OhmSeams.new())  # the soul seams and lenses, bold enough for 32 px/m
+	_hide = [shell, beard, hose]
+	_card.halo = Color(TEAL, CARD_HALO_A)
 	pose()
 
 
@@ -145,6 +153,8 @@ func pose() -> void:
 	var sh_l: Vector2 = Vector2(SHOULDER.x, -SHOULDER.y)
 	var guard: Vector2 = GUARD_HAND + Vector2(kick_m() + RECOIL_M * kick, 0.0)
 	_arm(2, sh_l, sh_l.lerp(guard, u), -1.0)
+	_card.size_k = _body.scale.x
+	_card.step(self, _hide, _body.position, PX_PER_M)
 
 
 ## Two-bone arm from `a` to the hand `b` (body frame, metres), the elbow bent outward.
@@ -188,22 +198,4 @@ func _sprite(name: String) -> Sprite2D:
 	s.texture = load(ART + name + ".png") as Texture2D
 	s.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	_body.add_child(s)
-	return s
-
-
-## The soul glow under the old welder: a soft teal disc (teal belongs to the souls).
-func _soft_glow() -> Sprite2D:
-	var g: GradientTexture2D = GradientTexture2D.new()
-	g.width = 64
-	g.height = 64
-	g.fill = GradientTexture2D.FILL_RADIAL
-	g.fill_from = Vector2(0.5, 0.5)
-	g.fill_to = Vector2(1.0, 0.5)
-	var grad: Gradient = Gradient.new()
-	grad.set_color(0, Color(TEAL, GLOW_A))
-	grad.set_color(1, Color(TEAL, 0.0))
-	g.gradient = grad
-	var s: Sprite2D = Sprite2D.new()
-	s.texture = g
-	s.scale = Vector2.ONE * GLOW_M * PX_PER_M / 64.0
 	return s
