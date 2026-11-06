@@ -160,5 +160,7 @@ func _crate_for(drawn: bool) -> Sprite2D:
 	var c: Sprite2D = Sprite2D.new()
 	c.name = "Crate"
 	c.texture = crates.texture(_form)
+	ShowcaseCrate.size_crate(c, ViewMode.shared().ground_k())
+	PickupLook.dress(c, _outline)  # the pickups' bold ink: crates side by side stay apart at 32
 	add_child(c)
 	return c
