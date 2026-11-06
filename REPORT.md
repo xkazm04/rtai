@@ -1,6 +1,7 @@
 # REPORT: lane `king` (Act 1's King + the shared boss framework), night 2026-11-05/06
 
-Final pass in iteration 16 (05:05); the exe line and the gates are brought up to the last export.
+Final pass in iteration 16 (05:05); the exe line, the gates and call C are brought up to iteration 22
+(08:05, the exe on 1aaeb122).
 Branch `n7-king`, cut from main `763f8fba`. Clips and stills are in
 `C:\Users\kazda\kiro\gtai-masters\n7\king\` (see `frames.json`, newest and best first).
 The moveset is `docs/bosses/king.md`; the full log is `JOURNAL.md`.
@@ -53,9 +54,11 @@ then look at `king_target_vs_game_32ppm_it18.png`, then play `build/export/windo
   - the ghosts on King, phase 3 at 48 px/m on the current body (`king_dent_p3_48ppm_it16.mp4`, `king_kerf_p3_48ppm_it16.mp4`, `king_tonnage_p3_48ppm_it16.mp4`, `king_ohm_daze_tells_48ppm_it16.mp4`).
 - **Combat holds**: the director reel was 19/19 chapters down with 0 SCRIPT ERROR on the branch
   (it18, on 71e76b3f: `evidence/king/director-reel-it18.log`).
-- **Gates** (it18, on 71e76b3f): lint 13/13, unit 1168/0 (`evidence/king/unit-it18-rerun.log`; the
-  first run's one failure was the known `test_noir_shadows` flake, `evidence/king/unit-it18.log`),
-  scenarios 52/0 (`evidence/king/scenarios-it18.log`).
+- **Gates** (it22, on 1aaeb122): lint 13/13, unit 1171/1 where the one is the known
+  `test_noir_shadows` flake (`evidence/king/unit-it22-full.log`; alone 2/2,
+  `evidence/king/unit-it22-noir-rerun.log`; the full run on dedf4fa0 was 1172/0), scenarios 52/0
+  (`evidence/king/scenarios-it22.log`), director reel 19/19 down, 0 SCRIPT ERROR
+  (`evidence/king/director-reel-it22.log`).
 - **The boss camera** (it10): n7-servo's `BossCam` bar band and `keep_in` are ported to this branch
   as identical files, so King stays whole below the boss bar at the boulevard's top edge.
 
@@ -87,6 +90,23 @@ in 40; a rate from 10 runs resolves only steps of 10 points; values reverted aft
 "Took" counts King's own hits (`boss_fight.dealt`); the gang's come on top. Rivet's repair
 (10 hp/s after 3 s unhit) heals between King's spaced attacks, and with no hit over 30, a death
 needs about 4 hits in about 3 s. The standing bot does that (5 deaths in 5); a reader does not.
+
+**it22, call C's lever built and measured: a per-boss repair delay** (framework field
+`bosses.json <id>.rivet_repair_delay_s`, absent = combat.json's 3 s; in the exe `--repair-delay=<s>`;
+human-like bot, seeds 1-10, n=10 per row, 0 SCRIPT ERROR in 60; "lowest hp" is the mean of each
+run's lowest hp, the new `rivet_hp_min` telemetry):
+
+| repair delay | runs with no death | King down | Rivet took (mean) | lowest hp (mean) | dir |
+|---|---|---|---|---|---|
+| 3 s (as built) | 10/10 | 10/10, 84.1 s | 74.4 | 66.6 | `numbers-it22-base` |
+| 6 s | 10/10 | 10/10, 84.1 s | 74.4 | (not sampled) | `numbers-it22-delay6` |
+| 8 s | 10/10 | 10/10, 84.1 s | 74.4 | 54.6 | `numbers-it22-delay8` |
+| 12 s | 9/10 | 9/10, 84.3 s | 70.6 | 31.5 | `numbers-it22-delay12` |
+| 16 s | 8/10 | 9/10, 85.4 s | 69.6 | 24.9 | `numbers-it22-delay16` |
+| 20 s | **7/10** | 9/10, 88.0 s | 72.4 | 20.3 | `numbers-it22-delay20` |
+
+King's hits do not change (no hit over 30 stays); only the heal between them does. 20 s is the
+first row at "about 7 in 10"; with n=10 the 16 s and 20 s rows are inside one another's noise.
 
 Every attack is dodgeable (the dodging bot takes 0) and every attack lands on a stander. The
 easy band is as built (call C). Every body and look change since it8 (through it18's gang shades)
@@ -124,10 +144,13 @@ Each call names its options, the default that is built, and how to see it.
   48-degree coin fan, shorter cooldowns and the gang at 11 still give 10/10 (taken 86-96, n=10 each).
   A bot that reads half the tells instead of 70 % also survives 10/10 (taken 128, up to 194), because
   Rivet repairs 10 hp/s after 3 s unhit (`combat.json rivet`), so only about 4 hits in a row kill
-  him. Halving the repair changes nothing for the 70 % reader (no fight comes near a death). So
-  "fair" means changing a law, not a number: allow a heavier hit than 30 (the x1.4 ram is 42), or
-  a boss-only repair delay (not built). The numbers are in "Numbers" below; in play
-  `RTAI.exe -- --rigs --boss=king`.
+  him. Halving the repair changes nothing for the 70 % reader (no fight comes near a death).
+  (it22) **The lever is now built, default off:** a per-boss repair delay
+  (`bosses.json king.rivet_repair_delay_s`, absent = 3 s). Measured n=10 each: 8 s 10/10, 12 s
+  9/10, 16 s 8/10, **20 s 7/10** without a death (lowest hp falls from 67 to 20 on average); the
+  30-hp floor is untouched. Options: easy (built, no field), fair (`"rivet_repair_delay_s": 20`),
+  or between (12-16). See it in play: `RTAI.exe -- --rigs --boss=king` (easy) against
+  `RTAI.exe -- --rigs --boss=king --repair-delay=20` (fair); the table is in "Numbers" below.
 - **D. Gang steel.** The D4 lift x1.55, the visor and the steel dome (built), or the old dark print:
   `evidence/king/shots/gang_steel_before_after_48ppm.png`.
 - **E. Gold swap.** King's gilded chest and arms (built: `KingRigs.GOLD_SWAP` 5), or plain steel (-1):
@@ -191,24 +214,27 @@ Each call names its options, the default that is built, and how to see it.
 
 Export it with
 `"$GODOT_BIN" --headless --path project --export-release "windows-showcase" <worktree>/build/export/windows/RTAI.exe`.
-The showcase preset boots the arena, so the boss flags reach the fight. Last exported in it18 on
-71e76b3f (06:10, with the gang chains and shades, the slam cape, the car bumpers, the throne back with its crest and plum lining, King's chain and the crown's plum jewel; 0 export errors, `build/export-it18.log`) and smoke-tested headless
-(`RTAI.exe --headless --fixed-fps 60 --quit-after 5400 -- --rigs --boss=king --bot=boss --seed=2
---bot-human --telemetry=<json>`): King down at tick 4933, Rivet took 88, 0 SCRIPT ERROR (the
-same as the editor run). It is re-exported at the freeze.
+The showcase preset boots the arena, so the boss flags reach the fight. Last exported in it22 on
+1aaeb122 (07:43; every look of it18 plus the call C repair-delay flag; 0 export errors,
+`build/export-it22.log`) and smoke-tested headless (`RTAI.exe --headless --fixed-fps 60
+--quit-after 5400 -- --rigs --boss=king --bot=boss --seed=2 --bot-human --telemetry=<json>`): King
+down at tick 4933, Rivet took 88, 0 SCRIPT ERROR (the same as the editor run and it18); with
+`--repair-delay=8` the same 4933 / 88, the delay read as 8 s and Rivet's lowest hp 60 (67 without).
+Nothing under `project/` changed after 1aaeb122.
 
 - `build/export/windows/RTAI.exe -- --rigs --boss=king` (play the fight)
 - `build/export/windows/RTAI.exe -- --rigs --boss=king --phase=3`
+- `build/export/windows/RTAI.exe -- --rigs --boss=king --repair-delay=20` (call C's fair option)
 - `build/export/windows/RTAI.exe -- --rigs --boss=king --bot=boss --bot-human --boss-cam` (watch the bot)
 
 ## Next steps
 
 1. The owner's verdicts on calls A-P; each default is one data value or flag (named in the call).
-2. Difficulty (call C): if "fair" is picked, the it20 numbers say the coin fan and the charge
-   cannot get there alone. First a per-boss Rivet repair delay field (framework, e.g.
-   `bosses.json <id>.rivet_repair_delay_s`) or a lifted 30-hp floor, then re-run
-   `node evidence/king/boss_numbers.mjs --seeds=1,...,10 --bots=human` until about 7 in 10 survive;
-   never call it balanced without the table.
+2. Difficulty (call C): if "fair" is picked, add `"rivet_repair_delay_s": 20` to King's row in
+   `bosses.json` (it22: 7/10 without a death, n=10) and confirm it with more seeds
+   (`node evidence/king/boss_numbers.mjs --seeds=1,...,20 --bots=human,stand,dodge --delay=20`), since
+   n=10 cannot tell 16 s from 20 s. A 20 s delay means Rivet barely repairs inside a phase; if that
+   reads harsh in play, the same table at 12-16 s is the middle.
 3. The gang's shades (call P, it18): the drawn part is built; if the owner wants the target's two
    lenses, they need about 64 px/m to read (a gang head is about 10 px across at 32 px/m).
 4. The plain enemy-ai robot thug: give it the gang's D4 lift (it prints as ink at 48 px/m).

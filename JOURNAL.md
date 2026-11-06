@@ -1893,3 +1893,17 @@ NEXT (iteration 21, in order):
 - base (3 s): 10/10, took 74.4, lowest hp 56 (mean of run minima 66.6).
 - 8 s: 10/10, lowest 44 (mean 54.6). 12 s: **9/10** (seed 10 died in phase 2, King at 45 %),
   lowest 2 (mean 31.5). Hits and outcomes otherwise identical (King's hits do not depend on hp).
+
+### 08:02 NUMBERS 16 s and 20 s; REPORT call C, Numbers, gates, exe, next step 2
+- 16 s: **8/10** without a death (seeds 3 and 10 died; King still down 9/10), lowest hp mean 24.9.
+  20 s: **7/10** (seeds 1, 3, 10), King down 9/10 at 88.0 s, lowest hp mean 20.3. "Without a death"
+  counts runs with `deaths` 0 (a death in the arena respawns Rivet, so King can still go down).
+- DECISION keep easy as built (call C is the owner's); fair is one value: `"rivet_repair_delay_s": 20`
+  or `RTAI.exe -- --rigs --boss=king --repair-delay=20`. n=10 cannot separate 16 s from 20 s (REPORT
+  next step 2: 20 seeds x 3 bots if fair is picked). decisions.md line.
+
+REQUEST (king -> servo, it22): `bosses.json <id>.rivet_repair_delay_s` is a new optional shared
+boss field (schema 0-30 s; absent = combat.json's 3 s), plus `--repair-delay=<s>` and the telemetry
+fields `boss_fight.rivet_hp_min` / `repair_delay_s` in BossHook. Servo needs nothing unless his
+difficulty needs it; a merge of n7-king brings it in (boss_spec.gd, boss_hook.gd, the schema,
+tests/unit/test_boss_repair.gd). `evidence/king/boss_numbers.mjs --delay=<s>` measures it.
