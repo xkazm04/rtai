@@ -1548,3 +1548,7 @@ NEXT (written 06:45, for iteration 18; supersedes the 05:59 list):
   (the known flake, run in parallel with the reels); re-run alone twice: 2/2 green both times.
   The full evidence run was not repeated on this head (last green: `f93d4857`, code `1166c418`):
   first thing in iteration 18's freeze list.
+- GATES 06:59 `node tools/evidence/run.mjs --no-bench` on `dfb60a40` (code `d7b73363`), clean tree:
+  exit 0; lint 13/13, unit 1241/1241 (test_noir_shadows green), scenarios 52/52, parity bit-exact
+  (planted caught at 629), look 11/11, block 5/5 (`evidence/n7-melee/evidence-run-dfb60a40.log`).
+  The freeze's evidence step is done for this head; re-run only if code moves. STOP 07:00.
