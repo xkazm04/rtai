@@ -1017,3 +1017,18 @@ the wings, under the torso).
   docked bodies make it read on the body). it8 wave clip + keys deleted.
 - 01:58 EXE re-exported on 8e34d545 (exit 0), smoke again: down 7036, 188 on Rivet, 0 SCRIPT
   ERROR (`evidence/servo/exe-smoke-it9.json`; render-only changes since, as expected).
+
+NEXT (iteration 10, in order):
+1. Merge n7-king if it moved (last merged 63bbdeb8 as 108324a4; JOURNAL/REPORT add/add: ours).
+2. If the it9 phase re-films (p1/p2/p3 at 32 px/m on 8e34d545, `scratch/servo/phase32_9.sh`)
+   are not in frames.json yet: look at their keys, replace the it7 phase clips, delete the it7 ones.
+3. Kamikaze 48 px/m clip on the current body (the it5 one stays until then): cut on a
+   `kamikaze` windup in a p3 film where a dive lands (the it9 p3 t788 cut showed only the lock).
+4. Look: the target still's remaining gaps: the sheet's spine is grey panelled steel (ours cream
+   with a raised plate); its pads hang lower and further out at the corners. Both render only.
+5. Numbers: the stand bot 0/5 downed at the 240 s cap with the gap (it6a 1/5); the human 116-169 s.
+   If the owner wants a tighter fight length, the carpet cadence or phase hp (encounter-balance:
+   measure 5 seeds x 3 bots per change).
+6. At the freeze (08:30): re-export `windows-showcase`, smoke `RTAI.exe --headless --fixed-fps 60
+   --quit-after 7400 -- --rigs --boss=servo --bot=boss --bot-human --seed=2` (expect down 7036, 188),
+   final gates (lint, unit, scenarios, evidence/run.mjs, director reel), REPORT final (drop DRAFT).
