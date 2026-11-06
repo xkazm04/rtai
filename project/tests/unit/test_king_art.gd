@@ -38,3 +38,26 @@ func test_court_parts_keep_todays_part_boxes() -> void:
 		var court: Texture2D = load("res://features/bosses/king/art/p55/parts/%s.png" % name)
 		var today: Texture2D = PartLibrary.texture("king", name)
 		assert_eq(court.get_size(), today.get_size(), name)
+
+
+func test_a_live_pitch_change_re_dresses_the_card() -> void:
+	var was: ViewMode = ViewMode._shared
+	ViewMode._shared = ViewMode.of("tilt")
+	var rig: CutRig = autofree(CutRig.new())
+	rig.plan = BodyPlan.new()
+	rig.plan.art_dir = "king"
+	var card: Sprite2D = Sprite2D.new()
+	rig.add_child(card)
+	rig.head_card = card
+	var shared: Texture2D = load(RigHeadCard.CARDS["king"][0]) as Texture2D
+	card.texture = shared
+	ViewMode._shared.pitch_deg = 55.0
+	KingArt.dress(rig)
+	assert_eq(card.texture.resource_path, KingArt.strip_path("king", 55.0), "55: the court strip")
+	ViewMode._shared.pitch_deg = 65.0
+	KingArt.dress(rig)
+	assert_eq(card.texture, shared, "a pitch without a strip: the shared card again")
+	ViewMode._shared.pitch_deg = 55.0
+	KingArt.dress(rig)
+	assert_eq(card.texture.resource_path, KingArt.strip_path("king", 55.0), "back at 55")
+	ViewMode._shared = was
