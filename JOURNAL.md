@@ -1148,11 +1148,22 @@ Read: JOURNAL NEXT (it11; no it12 entries), git log, n7-melee / n7-king / n7-ser
 - GATES on `5c171ed8`: pit + city director reels 19/19 + 19/19, 0 SCRIPT ERROR
   (`evidence/ranged/it13b-reels-summary.txt`).
 
+### TEST 02:27: `311684d4` the nuke launch kick is pinned
+- `test_feel_cam` 11/11 (nuke 4.0 px down the screen against an upward aim, rocket 3.0, inside the
+  8 px cap); planted fire_kick_px 0 -> 1 fail. Unit 1161/1161 on `444b003e` (the full suite before
+  the new test). FRICTION: `assert_lte(n, cap["kick_px_max"])` is a Variant-subtype parse error
+  (warnings as errors): read the cap into a typed float first.
+- NEXT 3 (rocket flash gap at 32 px/m) not judged: in the city film, frames do not equal ticks
+  under hit-stop, so the "rocket chapter at tick 1140" frames 1168-1175 are still the chapter
+  change. Find the launch by the `rocket_launcher` shot in a lone film instead
+  (`--weapon=rocket_launcher --bot=gunplay --lone --cam=fight --ppm=32 --reach=9`).
+
 NEXT (iteration 14):
 1. (City clip retaken 02:16 on `3b2e7c5c`; retake once more at the freeze only if a later commit
    changes a ranged chapter. Nuke segment crop x 300.)
 2. (done 02:11, see LOOK above.)
-3. Rocket flash ~0.3 m gap to the tube mouth: only if it reads at 32 px/m (`muzzle_back_m`).
+3. Rocket flash ~0.3 m gap to the tube mouth: only if it reads at 32 px/m (`muzzle_back_m`);
+   film it lone (see TEST 02:27), not from the city film.
 4. Exe at the freeze: re-bake + re-export `windows-showcase` -> `build/export/windows/RTAI.exe`;
    REPORT exe lines for calls 4 (`--flash-at=side`) and 5 (`--throw-windup=off`).
 5. Full evidence run on the head before the freeze (last: `3b2e7c5c`, all green); commit logs
@@ -1162,3 +1173,8 @@ NEXT (iteration 14):
    32 px/m (half the ring off the fight cam's frame in the pit).
 6. Calls 1-5 stay open in REPORT.
 
+STOP 02:31 iteration 13. Code commits: `9df494f6` (molotov draw rise), `5c171ed8` (nuke launch
+kick), `311684d4` (its test). Evidence green on `3b2e7c5c`; reels 19/19 + 19/19 on `9df494f6` and
+`5c171ed8`; unit 1161/1161 on `444b003e`. Clips: `molotov_draw_rise-ab-32-48ppm.mp4`,
+`mini_nuke_launch-ab-32-48ppm.mp4`, city set retaken, `gatling_spinup-ab-32ppm.mp4` re-filmed.
+NEXT for iteration 14 is the list above.
