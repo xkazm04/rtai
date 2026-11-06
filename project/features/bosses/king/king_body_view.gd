@@ -132,7 +132,8 @@ func _car(with_king: bool = true) -> void:
 	var l: float = CAR_LEN_M * p
 	var w: float = CAR_W_M * p
 	var body: Rect2 = Rect2(-l * 0.5, -w * 0.5, l, w)
-	KingCarTrim.bumpers(self, l, w, p)  # rounded gold bars past both ends, under the body
+	if _car_up == Vector2.ZERO:  # under a tilt KingCarStack stacks them at bumper height
+		KingCarTrim.bumpers(self, l, w, p)  # rounded gold bars past both ends, under the body
 	draw_rect(body.grow(4.0), Ink.INK)
 	draw_rect(body, CAR_BLACK)
 	draw_rect(body.grow(-6.0), GOLD_DARK, false, 3.0)

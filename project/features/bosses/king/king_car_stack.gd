@@ -28,6 +28,9 @@ const HUB_M: float = 0.2
 const SHADOW: Color = Color(0.09, 0.075, 0.106, 0.38)
 ## The throne back's height over the roof under a tilt (m) and its slices.
 const THRONE_H_M: float = 0.9
+## The bumpers' band under a tilt (m from the ground): KingCarTrim's bars, stacked in the slices
+## between (were drawn in the roof plane, floating at roof height).
+const BUMPER_Z_M: Vector2 = Vector2(0.22, 0.5)
 const THRONE_SLICES: int = 7
 
 
@@ -45,6 +48,8 @@ static func draw(ci: CanvasItem, at: Vector2, heading: float, l: float, w: float
 		ci.draw_set_transform(
 			at + view.lift_at(ci.get_global_transform() * at, z), heading, Vector2.ONE
 		)
+		if z >= BUMPER_Z_M.x and z <= BUMPER_Z_M.y:  # the gold bumpers at their own height
+			KingCarTrim.bumpers(ci, l, w, p)
 		if i == 0 or i == SLICES - 1:  # the ink line at the foot and at the roof line
 			ci.draw_rect(Rect2(-l * 0.5, -w * 0.5, l, w).grow(3.0), Ink.INK)
 		_slice(ci, k, l, w, p)
