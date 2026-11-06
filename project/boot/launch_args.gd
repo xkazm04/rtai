@@ -36,6 +36,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--flash-at",
 	# n7-ranged: --throw-windup=off holds a ready molotov out at the aim (the before of RigThrow)
 	"--throw-windup",
+	# n7-ranged: --throw-sync=off starts the throw clip from 0 when the view sees it (the before)
+	"--throw-sync",
 ]
 
 var _values: Dictionary[String, String] = {}

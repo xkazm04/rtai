@@ -19,6 +19,9 @@ const LAG_K: float = 0.2
 const REST_S: float = 0.1
 
 static var on: bool = not OS.get_cmdline_user_args().has("--throw-windup=off")
+## n7-ranged it18 (n7-melee's FYI): the view sees a wind-up already `wound` ticks in, and draws
+## one behind, so the whip trailed the bottle by 2 frames. `--throw-sync=off` = the before.
+static var sync: bool = not OS.get_cmdline_user_args().has("--throw-sync=off")
 
 
 ## The aimed claw of a ready bottle: cocked, out to `aimed` (the arm's aim target) while a
@@ -69,6 +72,19 @@ static func in_reload(rig: CutRig, hold: HeldTable.Hold, chest: Vector3, aimed: 
 ## frame's state): the bottle stays drawn in the cocked claw, so it never leaves from behind.
 static func lag_frame(rig: CutRig) -> bool:
 	return on and rig.reload_k >= 0.0 and rig.reload_k < LAG_K and release(rig) <= 0.0
+
+
+## The wind-up ticks the view's throw clip still has to draw, so the claw whips through on the
+## sim's release tick: the class's ticks less the ones gone when seen (`wound`, +1 drawn behind).
+static func windup_left(windup_ticks: int, wound: int) -> int:
+	if not sync:
+		return windup_ticks
+	return maxi(windup_ticks - (wound + 1 if wound >= 0 else windup_ticks), 0)
+
+
+## The wind-up's throw clip packed for the gun claw (`phases`: y active, z recovery ticks).
+static func pack_wind(windup_ticks: int, wound: int, phases: Vector3i) -> float:
+	return RigInput.pack_strike(windup_left(windup_ticks, wound), phases.y, phases.z, BodyPlan.L)
 
 
 ## The class's wind-up (part px), 0 when off.

@@ -270,7 +270,7 @@ func _rivet_clips(f: RigFeed) -> void:
 	var grip: ArsenalTable.Grip = _arsenal.grip_of(pilot.hold.held)
 	if pilot.throw.winds != _winds_seen and grip != null:  # the arm draws back, then whips through
 		f.clip[0] = RigClips.Clip.STRIKE
-		f.clip_arg[0] = RigInput.pack_strike(grip.windup_ticks, THROW.y, THROW.z, BodyPlan.L)
+		f.clip_arg[0] = RigThrow.pack_wind(grip.windup_ticks, pilot.throw.wound, THROW)
 	_winds_seen = pilot.throw.winds
 	if gun != null and gun.shots_fired != _shots_seen and f.clip[0] == RigClips.Clip.NONE:
 		f.clip[0] = RigClips.Clip.SHOOT  # the class's kick (rivet_arsenal.json)
