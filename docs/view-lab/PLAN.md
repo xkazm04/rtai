@@ -60,3 +60,21 @@ per frame over a seeded fight.
   failures are counted per frame.
 - `sprite-and-atlas-production` ("a character route is costed by its roster"): the 2.5D cutout keeps
   one art set per character; facings are bought only for two cards (head, chest).
+
+## Measured so far (iteration 5)
+
+Facing cards, one per head (5 drawn facings in one image, 3 mirrored in code):
+
+| Card | Image rounds | Generation | Fit work | Notes |
+|---|---|---|---|---|
+| Rivet head + collar (logo ref) | 1 | 61 s | pre-printed `--tan` | it4 |
+| King bust (boss target ref) | 1 | 60 s | pre-printed `--snap` | it4; flat crown/ermine accents stand down |
+| Gang head (one card, every thug) | 1 | 78 s | mirrored + frames reordered, `--snap` | it5 |
+| Patrol cop head (cast target ref) | 1 | 56 s | unsnapped, prints through the part shader's cop blue | it5 |
+
+Every round came back usable on the first try (4 of 4). The cast still without cards: riot
+helmet, SWAT, the 6 ped heads, the robot thug, the other bosses = about 10 more rounds for the
+current roster, one per head variant (`RigHeadCard.key_of`: art_dir/head first).
+
+`top_lift` costs no art: a perspective eye (`eye_h_m`) reuses the 2.5D lifts radially. At 25 m and
+32 px/m the gain is small (the car leans about 0.4 m at 7 m off-centre).

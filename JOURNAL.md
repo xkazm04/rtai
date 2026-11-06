@@ -122,3 +122,54 @@ NEXT (iteration 5):
 3. Scenarios + the director reel with the switch off (code touched cut_rig.gd and king_accents.gd).
 4. (done it4: the clip re-encoded at crf 26, 44 MB)
 5. Then `top_lift`, occlusion, the city block; the cost table and the exe by 08:30.
+
+## Iteration 5 (03:10-04:10), BUILD
+- GATES on f442aeba (switch off): scenarios 52 ran / 0 failed / 0 SCRIPT ERROR
+  (`evidence/view/it5/scenarios.log`); unit 1170/0, 0 SCRIPT ERROR (`it5/unit.log`); lint 13/13.
+- IMAGE round3 `gang_head_facings` (image.lock, 78 s; ref boss_king.jpg): clean on chroma, but
+  the turned facings looked to screen LEFT (Rivet/King strips look right). FRICTION: flipping the
+  sheet before the cutter also reversed the frame order (the cutter orders runs left to right);
+  the cells are reversed back after the cut. Provenance line added.
+- MILESTONE 07e7035f: gang head card (`gang` row, one card for every thug) + the card takes the hit
+  flash (`RigHeadCard.on_tint` from `CutRig.set_tint`; it4 NEXT 1). LOOKED at 48 px/m
+  (`it5/gang_card_zoom.png`): the four bodyguards read as boxy steel heads with black shades and
+  gold chains (were grey discs). `top` md5 5db6f283 (32 px/m, seed 2, tick 900) unchanged on 07e7035f.
+- FILM `--bot=rivet` (walk, strafe, sprint, roll, claw) 720 frames at 48 px/m, tilt55_cards and top
+  (`it5/sheet_*.png`, 16 frames every 45): Rivet's card turns with him, no pops seen at 0.75 s
+  spacing (NOT a frame-by-frame check). LOOKED: the blue cops next to him are still top-down
+  caps on discs, so the cop (the most numerous enemy) gets the next card.
+- NOTE for REPORT: the owner-accepted cast target `targets-2026-11-04/img/r2_c6_cast_ingame_scale_lanky.jpg`
+  is itself drawn from a raised angle (about 70 deg: the cops' faces, the crates' south faces).
+- IMAGE round4 `cop_head_facings` (image.lock, 56 s; ref targets-2026-11-04 r2_c6): cap, face,
+  collar, badge, turned right, in order. Cut unsnapped: it prints through the part shader's cop blue
+  (print_part.gdshader: blue-leading pixels -> cop_blue / cop_blue_hi), so raw = false.
+- MILESTONE 2f5642e1: patrol cop card (`cop/head_cap`). FRICTION: the first cut gave EVERY cop the
+  cap, including the riot cops: variants swap the head texture at runtime (`CutRig.apply_variant`)
+  and leave `plan.head_part` alone. Rows now key on art_dir/<variant head> first
+  (`RigHeadCard.key_of`), and `apply_variant` drops a built card (pooled rigs re-dress). FRICTION
+  again: `pair[0] as Node2D` from an untyped Array = warning-as-error (2250 SCRIPT ERRORs in the shot
+  log; fixed before commit). LOOKED (48 px/m, `it5/cop_card_48.png`): patrol cops read as officers
+  with a cap and a face; riot cops (dome + shield arc) keep their head. Each further head variant
+  is one more image round (riot helmet, SWAT, the 6 ped heads).
+- MILESTONE 6115e51f + DECISION: `--view=tilt` = 55 deg with cards (the old 65 = `tilt65`). Grid
+  `it5/pitch_grid_32.png` (top / 65 / 55 / 45 with cards, 32 px/m): 65 barely differs from top, 45
+  squashes the ground to 71 % and the limbs read squat; 55 keeps the faces and a car wall.
+  LOOKED, honestly: at 32 px/m the whole cast is small (Rivet about 40 px tall), and the car still
+  reads mostly as its roof (the vermilion carpet dominates; 0.83 m of wall at 55).
+- MILESTONE 9ea50921: `top_lift` = a straight-down PERSPECTIVE camera (`eye_h_m` 25 in view.json):
+  no angle change, uniform zoom, every height leans out from the camera's ground point
+  (`ViewMode.up_at/lift_at`, the eye set by `PrintStage.place`). The same 2.5D machinery (RigTilt,
+  the car stack, the props swept to a leaning top) runs with a radial lift. Unit +2 (1173/0).
+  LOOKED (`it5/toplift_cmp_32.png`): the car shows a leaning gold side strip; near the centre
+  (Rivet) nothing changes. At 25 m the gain is small; 15 m is one data value away. NOT DONE for
+  top_lift: cast shadows by height, rim light. `top` md5 5db6f283 unchanged on every commit.
+- MILESTONE 12156b5a: King's on-foot cape drapes under a tilt (it was a flat vermilion sheet on
+  the ground behind the upright card, `it5/king_onfoot` LOOKED at phase 3 tick 420, 48 px/m). Phase-3
+  `top` frame md5 ea8e1054 identical with the file at HEAD vs the new file (checked by swapping the
+  file for one shot).
+- FILM `gtai-masters/n7/view/king_top_toplift_tilt55cards_32ppm_it5.mp4` (25 s, seed 2, full size
+  3840x800, 0 SCRIPT ERROR each). FRICTION: the first encode scaled each panel to 640x400, i.e.
+  16 px/m; deleted and re-encoded unscaled. LOOKED at 12 s (ram tell): tilt shows King's crowned bust
+  on the car and Rivet's helmet face; top_lift a leaning gold side strip; top a crown on a disc.
+- frames.json: 15 entries (5 new, the superseded it2 pitch study dropped and deleted). Raw .avi deleted.
+- PLAN.md: measured card cost (4 rounds, 4 usable first try, 56-78 s each).
