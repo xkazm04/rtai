@@ -1174,3 +1174,17 @@ NEXT (iteration 11, replaces the 02:50 list):
   the blinks slice teal across the swarm and the rack; the falling halves are not singled out at
   that spacing, so the it7 clip stays on disk as the halves' evidence (frames.json `before`).
   REPORT call 9 path. NEXT 2 updated. Session ends with everything committed.
+
+## Iteration 12 (03:04-04:04, BUILD)
+Read: JOURNAL NEXT (it11), git log -15, n7-king's JOURNAL it13 (REQUEST servo: `ArenaPlan.Area.stenciled`,
+nothing to change on my side). Rules kept: motion-quality-gating (judge at 48/32 px/m in the live
+arena path, key sheets looked at), depth-ordered-layered-art (spine parts over the wings' inner
+edges, under the torso).
+- 03:06 MERGE n7-king 3e3c0d61 as f28e1ad1 (11 commits: the king's cape, horn, gang D5 lift,
+  `ArenaPlan.Area.stenciled`). JOURNAL/REPORT add/add: ours; no code conflicts. Lint 13/13 (hook),
+  unit **1189/0** (`evidence/servo/unit-it12a.log`).
+- 03:12 FILM Ohm's chain re-filmed on the it10 body (`scratch/servo/ghost48_12.sh ohm 2 2 540`:
+  `--phase=2 --servo-ghost=ohm --seed=2`, 48 px/m, boss cam, 0 SCRIPT ERROR). **Looked at** the
+  1.5 fps keys: the beam locks, the rings, the teal bolt jumps drone to drone (three keys), then
+  the rack. `M/servo_ghost_ohm_chain_drones_48ppm_it12.mp4` + keys replace the it4 clip (deleted);
+  frames.json 15. Every ghost clip is now on the it10 body (Kerf's it7 halves clip kept as before).
