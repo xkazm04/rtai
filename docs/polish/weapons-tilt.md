@@ -63,8 +63,33 @@ Weakest first:
 
 The director reel goes 19/19 chapters down with 0 SCRIPT ERROR in both `top` and `tilt` (on 258173e0).
 
+## Iteration 3 (7d93ac4a, 8c64bdeb): every weapon has a 55 part; small cells below 56 px/m
+
+6. **The long-gun float** was fixed in `c9828312` (the head clearance uses the top-down barrel thickness).
+7. **Heavy, tube and thrown parts** (`gen55d`, from the shipped pickups): chainsaw, Gatling, flame
+   wand (the tanks masked out of the reference, so only the wand is drawn), rocket tube, mini-nuke,
+   molotov. The tubes get an `empty` part (the warhead cut away) so HeldTube's spent-tube swap stays
+   on the 55 canvas.
+8. **Small cells** (`tools/art/held_pitch_small.py`): the 55 part re-toned from the unprepped cut,
+   drawn by HeldLod below `held_small_below_ppm` (56), as WeaponArt does for `top`.
+
+| weapon(s) | H | F | L | note (48 px/m unless named; director chapters for blades) |
+|---|---|---|---|---|
+| rocket tube, mini-nuke | 2 | 2 | 2 | Flared back, sight, grip, fins and the striped warhead read; clearly better than the before. |
+| katana | 2 | ? | 2 | The curve and the hilt read in the claw; the kill lands. The smear is not yet judged at height. |
+| plasma sword | 2 | ? | 2 | The full 55 part's coil hilt printed as an ink blob; its small cell (`8c64bdeb`) fixes it. |
+| chainsaw | 2 | ? | 2 | The engine and the toothed bar read at the hip in both claws. |
+| flame wand | 2 | 1 | ? | The hose curve reads. The jet's start at the drawn tip is not yet checked. |
+| electro baton | 1 | ? | 2 | Still a thin stick with a dark coil at 48 px/m; no clear gain over the before. |
+| Gatling | 1 | 2 | ? | **Worse than the before:** a fat tan tube; the slim top-down bundle reads more as a rotary gun. |
+| sidearms, long guns (32) | 1 | 2 | 2 | The small cell barely changes pistol and plasma rifle (Gloria goes two-tone dark, as for top). The 32 px/m issue is the part's size and silhouette, not its tones. |
+
+The director reel on 8c64bdeb: top 19/19 and tilt 19/19 chapters, all down, 0 SCRIPT ERROR (headless).
+
 ## Still open
 
-- The long-gun float: `RivetCarryAngle.place_beside` places the part by the top-down geometry.
-- A simplified part at 32 px/m (a held LOD, as WeaponArt's `small` part does for `top`).
-- Films for the blades, chainsaw, flamer, tubes, gatling and molotov parts.
+- The Gatling at 55: try size_k 0.8 and a small cell without close_gaps (the 55 bundle has no gaps),
+  or keep the top-down part for it (delete its row: one data value).
+- The 32 px/m read of the long guns: size_k per row; film both at 32 and pick.
+- The electro baton at 48 px/m.
+- The melee smear in the tilted plane; the flame jet and the electro arc at the drawn tip.
