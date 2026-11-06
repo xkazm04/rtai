@@ -23,19 +23,19 @@ The moveset is `docs/bosses/king.md`; the full log is `JOURNAL.md`.
   - a jewelled crown and the ermine collar over the vermilion cape;
   - the gilded plum throne-car, a boss-owned vehicle with drapes and a hood cannon (banded gold barrel on a swivel mount since it12, `evidence/king/shots/it12/hood_cannon_before_after_48ppm_2x.png`);
   - the gang: the rich robot thug with gold chains, a steel helmet and shades.
-- **Three phases** (`king_phase{1,2,3}_*_32ppm_it10.mp4`, cut from the it10 full fight):
+- **Three phases** (`king_phase{1,2,3}_*_32ppm_it12.mp4`, cut from the it12 full fight):
   - phase 1, the procession: ram lanes and the hood cannon's coin fan (since it10 a spray of 48 coins out of the muzzle, `evidence/king/shots/it10/coin_spray_before_after_48ppm.png`), with the gang pushing and riding;
   - phase 2, the court: the car stops, the gang brawls, and decrees buff them;
   - phase 3, on foot: the press slam (a leap onto the ring, shockwave plus coin ring) and the charge.
 
   Then a defeat beat: the crown falls off and rolls away.
 - **Clips**:
-  - the full fight played by the human-like bot on the current body (`king_fight_bot_human_32ppm_it10.mp4`, 95 s; King down at tick 4933, the headless run's tick);
-  - the procession entering, from the gang's first appearance to King stepping down (`king_procession_enter_32ppm_it10.mp4`);
+  - the full fight played by the human-like bot on the current body (`king_fight_bot_human_32ppm_it12.mp4`, 95 s; King down at tick 4933, the headless run's tick);
+  - the procession entering, from the gang's first appearance to King stepping down (`king_procession_enter_32ppm_it12.mp4`);
   - the press slam, telegraph (the plates raised beside the crown), hit and dodge (`king_slam_plates_48ppm_it10.mp4`);
   - the charge, telegraph lane, hit and dodge (`king_charge_48ppm_it10.mp4`);
-  - the ram and the coin fan, hit and dodge (`king_ram_coin_fan_48ppm_it10.mp4`), and the decree's windup arc and buff (`king_decree_48ppm_it10.mp4`);
-  - the target sheet beside the game at 32 px/m (`king_target_vs_game_32ppm_it10.png`);
+  - the ram and the coin fan, hit and dodge (`king_ram_coin_fan_48ppm_it12.mp4`), and the decree's windup arc and buff (`king_decree_48ppm_it10.mp4`);
+  - the target sheet beside the game at 32 px/m (`king_target_vs_game_32ppm_it12.png`);
   - the ghosts on King (Dent, Kerf, Tonnage, Ohm).
 - **Combat holds**: the director reel was 19/19 chapters down with 0 SCRIPT ERROR on the branch
   (`evidence/king/director-reel-it6.log`).

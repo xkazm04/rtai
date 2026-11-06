@@ -1179,7 +1179,7 @@ must keep the drawn body honest to the hit body).
   tree is byte-identical). The near-black gang seen at 64 px/m is the D5 close-up set (from 56
   px/m, its own grime, not lifted by design); a D5 lift is a close-up-only item, listed in NEXT.
 
-### 02:20 MILESTONE b5213dc7 the hood cannon reads as a cannon
+### 02:19 MILESTONE b5213dc7 the hood cannon reads as a cannon
 - Found by looking at the it10 target comparison beside the sheet's 90-degree panel: the hood
   cannon, phase 1's coin source, was a flat gold quad with a dull brown disc, read as a stripe on
   the black hood (a "T") at 32 and 48 px/m.
@@ -1195,10 +1195,29 @@ must keep the drawn body honest to the hit body).
   commit is King's render only (drawn under `--boss`), so it stands for b5213dc7.
 - Python on Windows writes CRLF: the committed blobs are LF (`* text=auto eol=lf`), the working
   copies converted back.
-- 02:27 FILM `M/king_ram_coin_fan_48ppm_it12.mp4` (10.8 s, music) on b5213dc7: phase 1 seed 2,
+- 02:23 FILM `M/king_ram_coin_fan_48ppm_it12.mp4` (10.8 s, music) on b5213dc7: phase 1 seed 2,
   stander then dodger, windows 1.4-4.4 s (ram) and 6.6-9.0 s (coin fan) of each 30 s run, 0 SCRIPT
   ERROR. **Looked at** the 2 fps sheet: the ram lane (stander hit, dodger steps off), the coin
   spray out of the new cannon (stander in it, dodger outside the locked cone). The it10 clip and
   the scratch AVIs deleted; frames.json 15.
-- 02:28 the full fight re-filming on b5213dc7 (32 px/m, human bot, seed 2) for the phase 1,
+- 02:24 the full fight re-filming on b5213dc7 (32 px/m, human bot, seed 2) for the phase 1,
   procession and target-comparison re-cuts.
+- 02:33 FILM `M/king_fight_bot_human_32ppm_it12.mp4` (95 s, 32 px/m, seed 2, --bot-human
+  --boss-cam, music, 0 SCRIPT ERROR) on b5213dc7: King down at tick **4933**, Rivet took **88**;
+  the boss telemetry is identical to it10's (only the view timings differ;
+  `evidence/king/shots/it12/fight_human_s2_it12_tel.json`). **Looked at** the keys every 6 s
+  (`shots/it12/fight_human_32ppm_it12_keys.png`): the cannon on the car and on the wreck, ram lane,
+  court, King on foot, the defeat. Re-cut from it: phase clips 1-3 (0-19.5, 17.5-59.5, 56.5-95 s;
+  looked at the first, 10 s and last frames), the procession entering (0-62.5 s), and the target
+  comparison `M/king_target_vs_game_32ppm_it12.png` (12 s and 72 s at 2x; **looked at**: the banded
+  cannon next to the sheet's top-panel cannon, King on foot beside Rivet). All it10 versions
+  deleted; frames.json 15; REPORT points at the it12 files.
+
+NEXT (iteration 13, in order):
+1. The D5 close-up gang (64 px/m) print near-black steel where the target's are light steel:
+   measure the D5 set's steel values against the print as in it10 (a dome A/B), then a D5-only
+   lift if it reads; render only, before/after at 64 px/m, the 32/48 px/m D4 read unchanged.
+2. The shoulder megaphone at 32 px/m (a small gold cone; REPORT gap): a bigger bell or an ink
+   rim, measured at 32 px/m beside the crown.
+3. Director reel once more before the freeze; re-export the exe at the freeze (the it8 recipe in
+   REPORT) and smoke it (King down 4933); finalize REPORT (remove DRAFT, Next steps).
