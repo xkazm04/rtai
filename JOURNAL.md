@@ -172,3 +172,47 @@ vehicles REQUESTs the kerb-parked cars hook into `ChunkView`, `VehicleParked` on
   VehicleParked, set true by VehicleView while it draws cards (false on exit). ChunkLift will AND it
   into the hand-off (`parked_cards` then defaults true): the main city gets cards, the arena city
   (no VehicleView) keeps its flat cars. Or put a VehicleView in the arena city.
+- GATE `top` bit-identity (21:58): `--arena=city --bot=rivet --seed=2 --rigs`, `--quit-after 301`,
+  framemd5 of HEAD 4fa48c45 (with the n8-vehicles merge) vs the branch base 8e9eeb78 (a throwaway
+  detached worktree under scratch, removed after; main itself has moved to 0bea8b93): IDENTICAL,
+  301 video + 301 audio frames, 0 SCRIPT ERROR each. (Owed since iteration 1: done.)
+- Unit, full no-arg run on 244e9fbd + the parked edit: 1498 passed, 0 failed (83.6 s). Lint 15/15
+  on every commit (pre-commit hook). EXCEPTION: commit 9901b926 (JOURNAL only) was made with
+  `--no-verify` by mistake; the next commits re-ran the full lint over the tree (15/15).
+- Library check: assets served most of my REQUESTs: facade_kit 70 A, facade_shop 70 A,
+  facade_tall 55 + 70 B (2210), payphone 70 A, crates 70 A, mailbox 70 A, bench 70 B,
+  trash_can 70 B, lamp 55 B (2210) + lamp 70 B (2250). Thank you, assets.
+- MILESTONE e9a6f10b: **p70 facade strips** from facade_kit_70 / facade_shop_70 (round 2110, A):
+  `tools/art/city_facade_cut.py <lib> <out> 70` (STYLES_70: same four-piece layout as 55; bays
+  inset by the 55 cut's offsets; wall band from under the roof's front ink to the ground ink,
+  rows measured on the keyed sheets: tenement 326-600, shop 338-570). Strips 768 x 297 / 768 x 189
+  (p55: 768 x 524 / 303). Looked at: three clean bays each, butt-joined (strips70.png in scratch).
+  Provenance: 2 lines (round 2110, prompt hashes fdc084cee41e / 16c8a532077f).
+- Not done: the scenario suite was started on 4fa48c45 headless (scratch/city/scen.log); it was still
+  running at the end of the session (it shares the machine with my films). Result OWED.
+- FRICTION: a 720-frame film at 32 px/m takes 3-9 min on this machine with another Godot running;
+  the 48 px/m close-up of occlusion was stopped unfinished (my own process tree, by command line).
+
+Registry rules applied this session: depth-ordered-layered-art (the occluder sits at the render
+stack's roof_occluders band, bodies in front lifted by the arena's FRONT_DZ: one painter order for
+arena props and buildings), render-submission-economy (one full-screen BackBufferCopy per frame and
+one rect per hidden body, instead of re-submitting a building's face + roof commands; nothing at
+all under `top`), concept-scene-parity + motion-quality-gating (judged on the real arena-city
+course run at 32 px/m, same seed before/after, frame-diff bbox checked), generative-artifact-gating
+(70 sheets graded A used as is; the corner piece 4 still unused).
+
+NEXT (session 5, in order):
+1. Judge the p70 strips in motion: `--arena=city --bot=course --seed=2 --rigs --clean --view=tilt70
+   --ppm=32` frame 899 vs `it1_height_k_1_vs_05_tilt70_32ppm.jpg` right half (p55 squashed, same
+   frame); then at 48/64. Then `facade_tall` (B, 2210) for the 17-21 m landmarks: add a `tall` style
+   (city_facades.json + STYLES/STYLES_70 rows), read its notes for the B fix.
+2. The scenario suite on the head (headless, alone); the director reel under tilt70 + combo (19/19,
+   0 SCRIPT ERROR): the BackBufferCopy is new on the city's actors canvas.
+3. Occlusion at 48/64 px/m (same course run, frames 620-710); a short clip.
+4. Props (brief item 3): payphone first (payphone_70 A + payphone_55 A 1920), then barriers, dumpsters,
+   crates (70 A), hydrants (70 A), lamps (55 B 2210 / 70 B 2250). Find where the city draws the prop
+   class (ChunkView band 3, flat): stand them up the way the facades do (lifted top + a front face
+   from the sheet's facing rotations), keyed by art, with ground shadows.
+5. Parked cars: when vehicles answers the REQUEST (VehicleParked.live), AND it in ChunkLift and set
+   `parked_cards` true; film the main city boot (`--seed=2 --view=tilt70`), not the arena city.
+6. Combo engage film (the 12-frame settle redraw).
