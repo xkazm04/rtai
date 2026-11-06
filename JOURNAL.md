@@ -331,3 +331,7 @@ NEXT (iteration 5):
   floor, 0 SCRIPT ERROR. The owner-call exe lines run on a real export.
 - REPORT.md drafted (committed): what works, open items, blocks, four Calls for the owner (Gatling, 32 long
   guns, baton, pickup hover), exe command. The freeze session fills the final gate numbers and re-exports.
+- MILESTONE (molotov): the 55 molotov row size_k 1 -> 1.2. Filmed at 48 tilt, gunplay bot, same seed, 1 / 1.2 /
+  1.35 (scratch molo/m3.png): 1.2 reads as a bottle (neck, body, lit rag) carried and raised; 1.35 is a club
+  as big as the head. gtai-masters/d8/weapons/molotov_tilt_48_size_k.png (not in frames.json: a small data
+  tweak; the audit row names it). `--changed` unit 1412 passed / 0 failed.
