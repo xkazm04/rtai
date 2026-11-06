@@ -10,7 +10,7 @@
         "2026-11-06: n8-view it7: quest1_clip --view flag (+2 dev lines) for quest 1 stills under tilt70 (dev_loc 18152 -> 18154)"
       ],
       "files": {
-        "project/dev/arena": 1034,
+        "project/dev/arena": 642,
         "project/dev/audio": 367,
         "project/dev/bake_city.gd": 32,
         "project/dev/bench": 1388,
@@ -35,13 +35,15 @@
         "project/dev/view": 195,
         "project/dev/weapon_art": 506
       },
-      "total": 18154
+      "total": 17762
     },
     "direct_cmdline_reads": {
+      "accepted": [
+        "2026-11-06: n8-view it7: ArenaRigs + ArenaRobotRigs moved dev/arena -> features/arena (quest 1 ships the rig cast under a card view; decision 2026-11-04 re-check); quest1_game +3 lines (direct_cmdline_reads 153 -> 153)"
+      ],
       "files": {
         "project/core/render/view_mode.gd": 1,
         "project/dev/arena/arena_game.gd": 1,
-        "project/dev/arena/arena_robot_rigs.gd": 1,
         "project/dev/arena/stations_check.gd": 1,
         "project/dev/audio/audio_beat.gd": 1,
         "project/dev/audio/audio_riot.gd": 1,
@@ -125,6 +127,7 @@
         "project/dev/weapon_art/swat_lineup.gd": 1,
         "project/dev/weapon_art/weapon_lineup.gd": 1,
         "project/features/alley/alley_hook.gd": 1,
+        "project/features/arena/arena_robot_rigs.gd": 1,
         "project/features/audio/hit_cues.gd": 1,
         "project/features/audio/stage_audio.gd": 1,
         "project/features/audio/tell_cues.gd": 1,
@@ -179,11 +182,15 @@
       "total": 153
     },
     "files_near_cap": {
+      "accepted": [
+        "2026-11-06: n8-view it7: ArenaRigs + ArenaRobotRigs moved dev/arena -> features/arena (quest 1 ships the rig cast under a card view; decision 2026-11-04 re-check); quest1_game +3 lines (files_near_cap 15 -> 16)"
+      ],
       "files": {
         "project/boot/collect_call/view/fx_view.gd": 271,
+        "project/boot/quest1_game.gd": 270,
         "project/dev/arena/arena_game.gd": 294,
-        "project/dev/arena/arena_rigs.gd": 291,
         "project/dev/showcase/city_fight.gd": 300,
+        "project/features/arena/arena_rigs.gd": 291,
         "project/features/bosses/boss_hook.gd": 281,
         "project/features/bosses/servo/servo_rig.gd": 287,
         "project/features/combat/combat_arena.gd": 300,
@@ -196,11 +203,12 @@
         "project/features/fx/noir/blood_fx.gd": 275,
         "project/features/player/rivet_held_view.gd": 288
       },
-      "total": 15
+      "total": 16
     },
     "files_past_soft_cap": {
       "accepted": [
-        "2026-11-06: collect_call_view +1 line: the death beat's ink veil (owner d8); collect_call_stage shrank 266->262 in the same change (files_past_soft_cap 68 -> 68)"
+        "2026-11-06: collect_call_view +1 line: the death beat's ink veil (owner d8); collect_call_stage shrank 266->262 in the same change (files_past_soft_cap 68 -> 68)",
+        "2026-11-06: n8-view it7: ArenaRigs + ArenaRobotRigs moved dev/arena -> features/arena (quest 1 ships the rig cast under a card view; decision 2026-11-04 re-check); quest1_game +3 lines (files_past_soft_cap 68 -> 68)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 262,
@@ -208,9 +216,8 @@
         "project/boot/collect_call/view/collect_call_view.gd": 237,
         "project/boot/collect_call/view/fx_view.gd": 271,
         "project/boot/collect_call/view/stage_view.gd": 201,
-        "project/boot/quest1_game.gd": 269,
+        "project/boot/quest1_game.gd": 270,
         "project/dev/arena/arena_game.gd": 294,
-        "project/dev/arena/arena_rigs.gd": 291,
         "project/dev/audio/audio_riot.gd": 201,
         "project/dev/bench/fight_frames.gd": 244,
         "project/dev/bench/node_spans.gd": 228,
@@ -227,6 +234,7 @@
         "project/dev/showcase/reel_director.gd": 209,
         "project/dev/weapon_art/weapon_lineup_run.gd": 210,
         "project/features/arena/arena_floor_view.gd": 201,
+        "project/features/arena/arena_rigs.gd": 291,
         "project/features/arena/prop_occlusion.gd": 206,
         "project/features/bosses/boss_bot.gd": 202,
         "project/features/bosses/boss_fight.gd": 269,
