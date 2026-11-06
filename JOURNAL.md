@@ -1985,3 +1985,21 @@ NEXT (iteration 22; supersedes the it20 list):
   180-540 deg/s, ground_drag 5), then slides on a smear. So the upright body in frames 336-352 is
   the launched body piece in flight, the combat night's approved brutality kill. Not changed.
   The DeathPose._bullet note above stands for the light and medium round deaths only.
+
+### 06:36 does a medium-class kill freeze before its wound? (measure, no build)
+- Medium = plasma rifle, homing shard, Gatling (weapons.json). Plasma rifle lone take
+  (`wh/film.sh plasma_rifle 32 on`, kill tick 335, exit 0, 0 SCRIPT ERROR), frames 334-348: the
+  ink star and the glowing cream dissolve body are ON the contact frame and hold 335-339, then the
+  dissolve: it already freezes on the wound. Still
+  `evidence/ranged/it21-plasma-rifle-kill-frames-334-348-32ppm.jpg`. The homing shard's wound
+  waits for the pop (call 1): a delay of 2 cannot reach it. Only the Gatling shows the light guns'
+  pattern (it20: the killed cop darkens, the hold runs about 362-370, blood at 372).
+- So no blanket `hold_delay_ticks` on `medium`. The right shape for the Gatling is a per-weapon
+  override: hit_feel.json `weapons` rows today override only hitstop/shake (camera_row loop
+  `for key in ["hitstop", "shake"]`); adding `hold_delay_ticks` to that loop + a gatling row value
+  2 is a small code + data change.
+NEXT (addendum to the iteration 22 list, after item 2):
+2b. Optional build: Gatling `hold_delay_ticks` 2 as a per-weapon override (above). Gates: unit test
+    (a gatling kill holds 2 ticks on, the plasma rifle still on the hit tick), lint, reels 19/19 x2,
+    the Gatling lone kill filmed on vs off (`--wound-hold=off`) at 32 px/m, then the full evidence
+    run and the re-export (freeze item 1). Skip it if it cannot all land before 08:15.
