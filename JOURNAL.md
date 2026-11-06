@@ -315,3 +315,9 @@ NEXT (iteration 5, in order):
 4. The bike (no sheet, catalog C x4): find where a bike appears first in the sim art ids.
 5. Light bar at 55 (`--view=tilt`): the p55 lens band check measured (all lenses y < 0.37) but
    not filmed. vehicle_frame has no 64 px/m camera: add `--zoom=` if needed for close-ups.
+23:08 GATE director reel on 34018b19 (`--fixed-fps 60 --quit-after 7600`, headless): tilt70 19/19
+chapters all down, 0 SCRIPT ERROR; top 19/19 all down, 0 SCRIPT ERROR (logs
+evidence/n8-vehicles/director-reel-it4-*.log). NEXT 1 done.
+23:06 the light bar on the 55 cards (`--view=tilt`, 64 px/m): amber and blue alternate, the blue
+halo shows above the bar; masters siren_tilt55_64ppm_amber_blue.png (frames.json: replaced the
+turn contact sheet). NEXT 5 done.

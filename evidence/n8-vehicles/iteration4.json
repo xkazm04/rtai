@@ -10,10 +10,12 @@
  "films": {
   "depth": "depth_tilt70_{32,48}ppm_before_after.mp4 + _ba_still.png (before = --no-front)",
   "drive": "vehicle_frame route + carnage at tilt70: 0 SCRIPT ERROR, stills looked at (scratch, not kept)",
-  "siren": "siren_tilt70_{32,64}ppm_before_after.mp4, siren_tilt70_64ppm_before_amber_blue.png (before = --wear=0)"
+  "siren": "siren_tilt70_{32,64}ppm_before_after.mp4, siren_tilt70_64ppm_before_amber_blue.png (before = --wear=0)",
+  "siren_55": "siren_tilt55_64ppm_amber_blue.png (--view=tilt, the p55 cards flash the same)"
  },
  "gates": {
-  "director_reel_tilt70": "see director-reel-it4-tilt70.log (run at the end of iteration 4)",
+  "director_reel_tilt70": "19/19 chapters all down, 0 SCRIPT ERROR on 34018b19 (--fixed-fps 60 --quit-after 7600; director-reel-it4-tilt70.log)",
+  "director_reel_top": "19/19 chapters all down, 0 SCRIPT ERROR on 34018b19 (director-reel-it4-top.log)",
   "lint": "15/15 (pre-commit, every commit)",
   "scenarios": "52 ran, 0 failed, 0 SCRIPT ERROR on 34018b19",
   "top_bit_identity": "framemd5 main scene --arena=city --bot=rivet --seed=2 --rigs, --fixed-fps 60 --quit-after 301: HEAD 34018b19 vs merge base 0bea8b93 IDENTICAL (301 video + 301 audio frames)",
