@@ -1,0 +1,6 @@
+{
+  "schema": "gtai.test-tiers/1",
+  "slow": [
+    "tests/unit/test_save_slots.gd"
+  ]
+}
