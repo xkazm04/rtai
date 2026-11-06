@@ -14,7 +14,11 @@ extends Node2D
 ## Props lower than this hide nothing worth a patch (a cone).
 const MIN_H_M: float = 1.0
 ## The silhouette's ink: the print's ink, see-through enough that the prop still reads as solid.
-const SILHOUETTE: Color = Color(0.090, 0.075, 0.106, 0.62)
+const SILHOUETTE: Color = Color(0.090, 0.075, 0.106, 0.8)
+## Its cream rim, so it reads on a prop's dark south face (it15: the bare ink was lost there).
+const RIM: Color = Color(0.949, 0.910, 0.835, 0.85)
+## The silhouette's shoulder width (m): the body's, not its foreshortened hip's.
+const SIL_W_M: float = 0.42
 ## The body box's width (m), as RigDepthSort's overlap test.
 const BODY_W_M: float = 0.9
 ## How far a body in front of a redrawn prop is lifted (z): over roof_occluders, under fx.
@@ -100,11 +104,24 @@ func _draw() -> void:
 			done[h.prop] = true
 			_floor._prop(self, base + h.prop.at, h.prop)
 	for h: Hit in _hits:
-		var hip: float = (h.feet.y - h.head.y) / RigCastShadows.BODY_IN_HIPS
-		var fig: PackedVector2Array = RigCastShadows.figure(h.feet, Vector2.UP, hip)
-		for part: PackedVector2Array in Geometry2D.intersect_polygons(fig, _poly(h.area)):
+		for part: PackedVector2Array in Geometry2D.intersect_polygons(
+			silhouette(h.feet, h.head), _poly(h.area)
+		):
 			if not Geometry2D.triangulate_polygon(part).is_empty():  # a sliver: nothing to ink
 				draw_colored_polygon(part, SILHOUETTE)
+				@warning_ignore("return_value_discarded")
+				part.append(part[0])
+				draw_polyline(part, RIM, Ink.LINE_PX * 0.5)
+
+
+## An upright body from `feet` to `head` (local px): RigCastShadows' figure, its shoulders SIL_W_M.
+static func silhouette(feet: Vector2, head: Vector2) -> PackedVector2Array:
+	var hip: float = maxf((feet.y - head.y) / RigCastShadows.BODY_IN_HIPS, 1.0)
+	var fig: PackedVector2Array = RigCastShadows.figure(feet, Vector2.UP, hip)
+	var k: float = SIL_W_M * Ink.PX_PER_M / (hip * RigCastShadows.WIDTH_IN_HIPS)
+	for i: int in fig.size():
+		fig[i].x = feet.x + (fig[i].x - feet.x) * k
+	return fig
 
 
 static func _poly(r: Rect2) -> PackedVector2Array:

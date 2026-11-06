@@ -22,3 +22,12 @@ func test_flat_views_make_no_occluder() -> void:
 	assert_false(ViewMode.of("top_lift").occlude)
 	assert_true(ViewMode.of("tilt").occlude)
 	assert_false(ViewMode.of("tilt_noocclude").occlude)
+
+
+func test_the_silhouette_is_as_wide_as_a_body_however_short() -> void:
+	for h: float in [20.0, 80.0]:
+		var fig: PackedVector2Array = PropOcclusion.silhouette(Vector2.ZERO, Vector2(0.0, -h))
+		var w: float = 0.0
+		for q: Vector2 in fig:
+			w = maxf(w, absf(q.x) * 2.0)
+		assert_almost_eq(w, PropOcclusion.SIL_W_M * Ink.PX_PER_M, 0.01)
