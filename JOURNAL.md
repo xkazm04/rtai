@@ -1484,3 +1484,10 @@ Scratch moved to `gtai-n7/scratch/servo/it18` (the it16 scripts live there; none
   **looked at** the 4 fps keys: the lane tracks, locks, crosses, vents; the ring locks among the
   crates by bay 4, the landing. it16 clips, keys and still deleted; frames.json and REPORT paths
   moved (every REPORT M/ path exists). p3 (hot dash, kamikaze) and the three ghosts filming.
+- 05:55 FILMS p3 at 48 px/m (`film48_18.sh 3 2 1000`) and the three ghosts (`ghost48_18.sh dent 1 1
+  600`, `kerf 2 2 720`, `ohm 2 2 540`), 0 SCRIPT ERROR each, cut at the it16 points (hot dash 0.3 +
+  4.8, kamikaze 5.0 + 5.8, Dent 1.5 + 4.5, Kerf 1.5 + 8, Ohm 1.5 + 7.5). **Looked at** every key
+  sheet: the hot dash lane and vent; the kamikaze lock rings, a dive landing, the sidestep; Dent's
+  teal tether, the van, the blast, the wreck; Kerf's teal blinks across swarm and rack; Ohm's bolt
+  drone to drone. it16 clips and keys deleted. **Every clip and still in frames.json is now on the
+  it18 body** (slung parcels) but the it16 docked-bays A/B; every frames.json file exists.
