@@ -439,3 +439,19 @@ NEXT (after the freeze; the Director merges):
   missed under contention; the runner's alone re-judge also FAIL). Re-run alone 18:19:
   `run_scenarios.mjs --only=scenario_rig_stress` 1 passed. Logged p50 0.58/0.67 ms vs the 1 ms budget.
   Recorded in REPORT as a FAIL-then-pass-alone (re-check idle at the merge).
+
+## Iteration 14 (18:20-18:30, BUILD; freeze 18:30)
+- Read JOURNAL tail, git log, the other lanes' JOURNALs for REQUESTs to chars. Open: view70 it5
+  "add `p70` street rows in SET_CARDS pointing at the p55 strips with the p55 anchor/width".
+- MILESTONE (view70 it5 REQUEST): `RigCardSets.SETS["p70"]` gains the 9 street rows (swat, cop cap,
+  riot helmet, ped hair/bald/hat/hood/cap, thug) = the p55 strips, anchors and widths, beside view70's
+  rivet/king rows. Data only; this branch has no `art: "p70"` view row, so `top` and `tilt` cannot
+  change (unfilmed here: it only shows after the merge with view70's tilt70/combo rows).
+  GATE lint 15/15, unit (full, via --changed: schema touched on the branch) 1407 passed, 0 failed.
+  The exe stays the 18:05 export on 247b82ef (no p70 row reachable in it, so it draws the same).
+- REQUEST answered: view70 it5. No other open REQUEST to chars (bosses it1 card_set = done earlier,
+  view70 it3 drop rename = 2dd6e236).
+
+NEXT (unchanged from it13, plus):
+0. After the view70 merge: film the city at tilt70 seed 2 crowd 400, 48 px/m, and judge whether the p55
+   street cards' anchors sit right at 70 (they were tuned at 55; the King/rivet p70 rows needed their own).
