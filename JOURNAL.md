@@ -526,3 +526,5 @@ NEXT (iteration 9, in order):
    arena); leave five.
 3. Exe at the freeze (int-day recipe in docs/decisions.md), REPORT.md by 08:40 with the Calls above
    and the earlier ones (bike, wreck fire size).
+00:32 GATE scenarios on a265dfba: 52 ran, 0 failed, exit 0, 0 SCRIPT ERROR (vehicle drive replay
+identical, timing CONTENDED as labelled). Evidence json: evidence/n8-vehicles/iteration8.json.
