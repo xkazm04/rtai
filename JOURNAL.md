@@ -457,3 +457,25 @@ Read: JOURNAL, git log, the lane journals (no new REQUEST to city; vehicles: "no
   swapchain) or `unexplained` with game_ms ~0: OS/driver stalls with other lanes on the machine,
   not city code. `worstSwapMs` 29 ms after vs 8 before is such a present stall landing on a swap
   frame (two runs, both `present`), not the record cost (that is per chunk, it 10: 3.8 ms p50).
+- NEXT 2 check (combo on the main scene): `--arena=city --view=combo` vs `--view=tilt70`, seed 2,
+  frames 5 and 39 pixel-identical, frame 28 differs 2.3 % only where a chunk was still streaming in
+  (east pavement). So combo starts at 70 like tilt70 and ChunkLift is made at setup: last session's
+  "lamps flat at frame 28" was streaming timing, not a combo setup bug. Closed.
+- MILESTONE 19b50a28 **the arenas' cover stands as cards** (the depot film at combo 48 px/m showed
+  the crate rows as a top-down crate tile lifted on a black box and the high cover as a dumpster
+  lid on a box). `PropCards.stand(ci, kind, r)` from `ArenaFloorView._prop` only when the view lifts:
+  cover_low = crate_stack (crates_70 A / crates_55 B strips, already cut), cover_high = dumpster
+  (70 A / 55 B), cone = traffic_cone; foot at the footprint's south edge, card as wide as the long
+  side, side-on (facing 2) for a north-south row, over a footprint shadow (ink 35 %). PropOcclusion
+  redraws through `_prop`, so its redraw over a body is the same card. New unit test (draw_on maps
+  the kinds, walls stay). ArenaFloorView 201 lines (comment folded; debt ratchet flat).
+  EVIDENCE `gtai-masters/n8/city/it11_depot_cover_cards_combo48_before_after.jpg` (`res://dev/arena/arena.tscn
+  -- --boss=servo --bot=boss --rigs --seed=2 --view=combo --ppm=48`, frames 30/450/880, before =
+  4225aff3) and `it11_depot_cover_cards_48ppm_closeup.png` (frame 450). Judged: plank lids, X-braced
+  sides and the stacked crate read at 48; the north-south row reads as a stack seen end-on; the
+  dumpster has lids and a body. 0 SCRIPT ERROR both. frames.json: 2 new, 2 weakest dropped (15).
+  Known: the dock doors sit at the top edge under the boss bar at frame 880 (data nudge owed).
+- GATE unit, full no-arg on 19b50a28: 1518 passed, 0 failed (94 s). Lint 15/15 every commit.
+- GATE `top` bit-identity on 19b50a28: `--arena=city --bot=rivet --seed=2 --rigs --quit-after 301`
+  framemd5 vs d9f8db90 RE-RECORDED in the same session (throwaway detached worktree, removed):
+  IDENTICAL, 301 video + 301 audio frames, 0 SCRIPT ERROR each.
