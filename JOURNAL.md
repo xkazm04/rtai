@@ -180,8 +180,7 @@ NEXT (iteration 3):
   gtai-masters/d8/weapons/plasma_rifle_tilt_32_size_k.png. One value per row.
 
 NEXT (iteration 4):
-1. Read scen_it3.log (run_scenarios.mjs on 5c71e55e, started 16:02). If anything but a CONTENDED budget
-   failed, fix that first.
+1. DONE 16:05: scenarios on 5c71e55e: 52 passed (headless).
 2. Electro baton at 48: no gain over the before (a thin stick, a dark coil). Try a regenerated part with a
    thicker cream body and fewer coils, or `enabled: false` (judge on the director chapter, melee.sh).
 3. The melee smear in the tilted plane (MeleeSwing) and the electro arc at the drawn tip: film the
@@ -190,3 +189,7 @@ NEXT (iteration 4):
    only (like the Gatling fix: contrast, not lift), or a slimmer re-cut; film at 32 and pick.
 5. Assault rifle (Gloria?) row in the audit was `?` (bot leaves the crop): film with a wider crop.
 6. Freeze 18:30: export the exe (int-day recipe in docs/decisions.md), REPORT.md by 18:40.
+- 16:09 NEXT 2 tried: gen55h, a regenerated bolder baton (56 s, image.want + lock). Filmed at 48 in its director
+  chapter (scratch baton_cmp.png): the ink-wrapped grip prints dark and the copper band reads reddish at
+  game size (too near the blood/vermilion law); no better than v1. REJECTED, reverted (art not committed).
+  Next try for the baton: a pale wrap, the copper band brass-toned, or `enabled: false`.
