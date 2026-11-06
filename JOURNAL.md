@@ -1228,20 +1228,22 @@ edges, under the torso).
 - 03:44 GATES scenarios on eb111830: **52 ran, 0 failed**, 0 SCRIPT ERROR, exit 0
   (`evidence/servo/scenarios-it12.log`). Lint 13/13 (every commit's hook), unit 1189/0.
 
+- 03:54 FILMS (NEXT 3 of it13, done early) the p1/p2 32 px/m clips and the tick-1800 target
+  still re-shot on 1373be3f (`phase32_12.sh 1|2 2 2400`, `still32_12.sh`; 0 SCRIPT ERROR each).
+  **Looked at** both 12-key sheets (p1: dash lanes, beam, rings, bay hops, whole in the top-left
+  corner; p2: carpet rings, a bomb, CS crates, the belt, the bottom-right yard) and the still (the
+  0.55 m loops arc out over the wing at 2x). `M/servo_p{1,2}_*_32ppm_it12.mp4` + keys replace
+  it10's (deleted); every phase clip and the target still are it12; frames.json 15 (all exist).
+  The full fight clip shows the 0.42 m loops (same tick-exact fight).
+
 NEXT (iteration 13, in order):
 1. Merge n7-king if it moved (last merged 3e3c0d61 as f28e1ad1; JOURNAL/REPORT add/add: ours).
    Its JOURNAL has my FYI REQUEST on `BossCam.BOSS_MARGIN_X_M` 5.5.
-2. The target still's remaining gap: the sheet's hose loops are bigger and more orange than ours
-   (`ServoSpine.LOOP_R_M` 0.42, COPPER 178,92,48). Try r 0.55 and a lighter copper (not vermilion),
-   A/B at 48/32 beside the sheet (`scratch/servo/spine12.sh before48 1 240 48`, crop 340x300+340+60).
-3. Re-film the p1/p2 32 px/m clips on the it12 body (`phase32_12.sh 1 2 2400`, `2 2 2400`), look,
-   replace the it10 ones (the p3 and full fight are already it12).
+2. Optional: re-film the full fight on the 0.55 m loops (`scratch/servo/full32_12.sh` then
+   `post_full12.sh`; expect 7036, 188), look at 12 keys.
+3. Weakest item by the target still: the rail's round bottom is hidden under the torso, and the
+   sheet's pads carry bright hazard stripes round their rims (ours are copper-ringed discs):
+   compare `M/frames/servo_target_vs_game_32ppm_it12.png` and pick one, render only, A/B at 48/32.
 4. The bay-hop ring under the boss bar in the 48 px/m clip stays open (measured: no room).
 5. At the freeze (08:30): re-export `windows-showcase`, smoke (expect down 7036, 188), final gates
    (lint, unit, scenarios, evidence/run.mjs, director reel), REPORT final (drop DRAFT, Next steps).
-- 03:47 MILESTONE (NEXT 2 of it13, done early) **the hose loops bigger and lighter**:
-  `ServoSpine.LOOP_R_M` 0.55 (was 0.42), `LOOP_COPPER` 208,116,56, 0.08 m. **Looked at** 48 and
-  32 px/m beside the sheet (`M/frames/servo_spine_loops_ab_it12.png`): they arc out over both
-  wings' back corners like the sheet's; at 32 the left loop reads larger. Render only. Unit
-  1189/0 (`unit-it12d.log`). Decisions; REPORT call 15 and gap. The full fight and target still
-  show the 0.42 loops (filmed before); re-shoot with NEXT 3 of it13 (the p1/p2 re-films).
