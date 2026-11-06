@@ -361,3 +361,31 @@ machine is quiet; REPORT.md is a draft (iteration 2) - update it at the freeze.
   `RigHeadCard.rows()["king"][0] != RigHeadCard.CARDS["king"][0]` (chars' route drew a per-art strip:
   my `p70/king_bust_card.png` wears the vermilion cape on its shoulders). Then the drawn fan stands
   down at 70 as it does at 55. Seen: masters `king_onfoot_*_64ppm` stills (the flat fan behind him).
+- 16:13 GATE scenarios (`node tools/tests/run_scenarios.mjs`) on 4eca94b0: 52 passed.
+- 16:16 FILM the deliverable re-filmed on bosses' art (4eca94b0), 0 SCRIPT ERROR each, centre crops at
+  native pixels (no downscale this time): masters `king_55_70_combo_32ppm_46s_it3.mp4` (2556x800,
+  46 s) + still t40, `king_rivet_onfoot_55_vs_70_64ppm_16s_it3.mp4` (2560x800) + still t9. LOOKED:
+  combo at 55 = tilt (court King, throne-car from art, court gang); at 70 the car and gang are
+  today's art (bosses' car/gang art is p55 only: the 70 sample covers Rivet, King bust, Tonnage).
+  At 64 px/m the 55 court King reads larger and richer; the 70 bust is shorter (steeper) with
+  bosses' flat cape fan behind it.
+- 16:17 MEASURED the return trip (combo, `--phase=3`, King down at tick 1138, cards p70 at tick 1168):
+  the King's bust now cross-fades (strip `combo_return_fade_king_frames1150-1186_x2.png`); King-region
+  frame diff 1130-1210: no spike above the post-kill motion (max 32.9, median 22.9); frames
+  1140-1145 are the kill hit-stop (diff 0: the ease holds, as designed). Mid-fade (1171-1176) the two
+  busts ghost: that is the cross-fade-vs-swap call.
+- 16:20 FILM ease study re-filmed (the it2 clip had the hard return swap): masters
+  `combo_ease_08_10_12_defeat_55to70_32ppm_it3.mp4`, swaps at ticks 1162 / 1168 / 1174.
+- 16:19 GATE `top` bit-identical with main after the bosses merge: King fight seed 2, 32 px/m, 900
+  frames, main checkout 0bea8b93 vs d8-view70 4eca94b0: 900/900 video framemd5 equal (list md5
+  b9160708 both).
+- 16:21 GATE director reel (`--bot=reel --reel=director --loadout=pistol --rigs`, windowed,
+  --quit-after 8000) on 4eca94b0: tilt70 19/19 chapters all down, combo 19/19, 0 SCRIPT ERROR each
+  (`evidence/it3/reel_tilt70.log`, `reel_combo.log`).
+- 16:22 TRIAL EXPORT (de-risking the freeze): `"$GODOT_BIN" --headless --path project --export-release
+  windows-showcase ../build/export/windows/RTAI.exe` exit 0 (254 MB + the sim DLL). Smoke:
+  `RTAI.exe --quit-after 300 -- --boss=king --bot=boss --bot-human --seed=2 --rigs --view=combo` logs
+  `pitch ease 70.0 -> boss at tick 4`, `cards art p55 (pitch 62.1) at tick 35`, 0 SCRIPT ERROR
+  (`evidence/it3/exe_combo.log`). The freeze re-exports the same way.
+- masters frames.json: 15 entries (it3 King trio/close-up/return fade/ease first; superseded
+  pre-merge films and stills deleted). Scratch raw avis deleted (4.2 GB).
