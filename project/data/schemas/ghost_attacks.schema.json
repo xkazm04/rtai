@@ -20,6 +20,11 @@
           "minimum": 0,
           "type": "number"
         },
+        "blast_debris": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "integer"
+        },
         "blast_radius_m": {
           "maximum": 50,
           "minimum": 0,
