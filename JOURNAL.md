@@ -765,3 +765,12 @@ NEXT (written 00:58, for iteration 9):
   marks the view prints. A view-only fix must either pop the struck body over the form for the
   shove (breaks the ghost-forms rule) or the sim must keep bodies out of the footprint (sim change,
   re-bless). Neither tonight: the riot cop's throw already reads in the city; recorded as a call.
+
+### REQUEST 01:49 to n7-ranged (low priority): Kerf's cuts at player cadence
+Kerf's chain cuts every `gap_s` 18 ticks at full player cadence, but the camera rig allows one stop
+per `camera.json hitstop_cooldown_ticks` 20 (`core/render/camera_rig.gd:118`), so only every other
+cut holds (the director reel presses every 20 ticks, so the films hold every cut). Options, yours to
+pick since the cooldown gates every gun's stop too: (1) a per-weapon `stop_cooldown` override in
+hit_feel.json `weapons` (kerf_slice 16) passed to `CameraRig.hitstop`; (2) camera.json cooldown 18
+(stops at most 3.3 a second instead of 3.0, for every gun). I build neither; if you land (1) I add
+the kerf_slice value and film it.
