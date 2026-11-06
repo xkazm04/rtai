@@ -30,6 +30,17 @@ const PLATED_FROM_M: float = 0.2
 const PLATE_M: float = 0.48
 const PLATE: Color = Color8(247, 224, 190)
 const COPPER: Color = Color8(178, 92, 48)
+## The sheet's spine tone (sampled from its top view): mid tan steel machinery (STEEL) under a
+## column of stacked lighter boxes (BOX), widening towards the hub; it was cream with one
+## near-white plate, the brightest thing on the body. false = the it9 cream column and plate.
+const STEEL_TONE: bool = true
+const STEEL: Color = Color8(116, 94, 70)
+const BOX: Color = Color8(203, 165, 122)
+## The stacked boxes, back to front: [from, to] along the column (0 back, 1 front), half width
+## as a share of the inner fill.
+const BOXES: Array[Vector3] = [
+	Vector3(0.1, 0.3, 0.42), Vector3(0.34, 0.56, 0.5), Vector3(0.6, 0.9, 0.62)
+]
 
 var px: float = 32.0
 ## The wings' extra gap (servo.json rack.spine_m): the column widens by it to fill the gap.
@@ -49,7 +60,8 @@ func draw(c: CanvasItem, o: Vector2, fwd: Vector2, k: float, tint: Color) -> voi
 	c.draw_colored_polygon(_quad(back, front, half + grow, fwd * RIM_M * k), INK * tint)
 	c.draw_colored_polygon(_quad(back, front, half, Vector2.ZERO), SHADE * tint)
 	var inner: Vector2 = half - side * BAND_M * k
-	c.draw_colored_polygon(_quad(back, front, inner, Vector2.ZERO), CREAM * tint)
+	var fill: Color = STEEL if STEEL_TONE and gap_m > PLATED_FROM_M else CREAM
+	c.draw_colored_polygon(_quad(back, front, inner, Vector2.ZERO), fill * tint)
 	c.draw_line(back * px, front * px, SHADE * tint, 0.05 * k * px)
 	var n: int = floori((BACK_M + FRONT_M) / RIVET_STEP_M)
 	for i: int in range(2, n):
@@ -78,10 +90,13 @@ func _plates(c: CanvasItem, back: Vector2, front: Vector2, inner: Vector2, k: fl
 	for i: int in range(1, floori(len_m / (PLATE_M * k)) + 1):
 		var p: Vector2 = back + fwd * PLATE_M * i * k
 		c.draw_line((p - inner * 0.82) * px, (p + inner * 0.82) * px, SHADE * tint, seam)
-	var a: Vector2 = back + fwd * 0.35 * k
-	var b: Vector2 = front - fwd * 0.2 * k
-	c.draw_colored_polygon(_quad(a, b, inner * 0.5, fwd * 0.03 * k), INK * tint)
-	c.draw_colored_polygon(_quad(a, b, inner * 0.44, Vector2.ZERO), PLATE * tint)
+	if STEEL_TONE:
+		_boxes(c, back, front, inner, k)
+	else:
+		var a: Vector2 = back + fwd * 0.35 * k
+		var b: Vector2 = front - fwd * 0.2 * k
+		c.draw_colored_polygon(_quad(a, b, inner * 0.5, fwd * 0.03 * k), INK * tint)
+		c.draw_colored_polygon(_quad(a, b, inner * 0.44, Vector2.ZERO), PLATE * tint)
 	var side: Vector2 = inner.normalized()
 	for s: float in [-1.0, 1.0]:
 		var pts: PackedVector2Array = PackedVector2Array()
@@ -94,6 +109,21 @@ func _plates(c: CanvasItem, back: Vector2, front: Vector2, inner: Vector2, k: fl
 			pts[j] = at * px
 		c.draw_polyline(pts, INK * tint, 0.1 * k * px)
 		c.draw_polyline(pts, COPPER * tint, 0.06 * k * px)
+
+
+## The sheet's stacked spine boxes (STEEL_TONE): an ink rim, the lighter box, a seam across it.
+func _boxes(c: CanvasItem, back: Vector2, front: Vector2, inner: Vector2, k: float) -> void:
+	var fwd: Vector2 = (front - back).normalized()
+	for b: Vector3 in BOXES:
+		var a: Vector2 = back.lerp(front, b.x)
+		var z: Vector2 = back.lerp(front, b.y)
+		var half: Vector2 = inner * b.z
+		c.draw_colored_polygon(
+			_quad(a, z, half + inner.normalized() * 0.04 * k, fwd * 0.04 * k), INK * _tint
+		)
+		c.draw_colored_polygon(_quad(a, z, half, Vector2.ZERO), BOX * _tint)
+		var m: Vector2 = a.lerp(z, 0.62)
+		c.draw_line((m - half * 0.8) * px, (m + half * 0.8) * px, SHADE * _tint, 0.03 * k * px)
 
 
 func _quad(a: Vector2, b: Vector2, half: Vector2, grow: Vector2) -> PackedVector2Array:

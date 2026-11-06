@@ -1069,3 +1069,14 @@ without 5 seeds x bots).
   `M/servo_attack_kamikaze_dive_lands_48ppm_it10.mp4` (5.0-10.8 s) + keys
   `M/frames/servo_kamikaze_keys_48ppm_it10.png`; the it5 clip and the it4 keys deleted; frames.json 15;
   REPORT call 7 points at the new clip.
+- 02:40 MILESTONE NEXT 4 (part): **the spine is the sheet's tan steel** (`ServoSpine.STEEL_TONE`:
+  a mid steel fill 116,94,70 under three stacked lighter boxes 203,165,122, sampled from the
+  target's top view). Before, the cream column and its near-white plate were the brightest thing
+  on the body and merged with the torso. 150,121,89 tried first: the boxes did not separate from
+  the fill under the print. **Looked at** 48 px/m before | after | the sheet, 32 px/m before |
+  after at 2x (p2 seed 2 tick 420): wing | darker spine | wing, torso set off, stacked boxes as
+  in the sheet. `M/frames/servo_spine_steel_ab_it10.png` (frames.json 15: the it9 rack still is
+  now its `before`). Render only. Unit 1185/1 (the known flake `test_noir_shadows`, then 1186/0
+  alone, twice); scenarios exit 0, 0 SCRIPT ERROR (`evidence/servo/*-it10.log`); decisions.
+  The pads lower/further out (the other half of NEXT 4) left: it moves the arms' reach (a fight
+  read), not tonight's last half hour.
