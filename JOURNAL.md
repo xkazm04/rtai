@@ -378,3 +378,8 @@ NEXT (iteration 10), replaces the list above:
 - RE-FILMED phase 3 at 48 px/m on f7b19eea (top | tilt, 1200 frames each, 0 SCRIPT ERROR), over
   `king_p3_top_vs_tilt_48ppm_it9.mp4`; frames.json note updated. Raw avis deleted. Both it9 clips
   now match HEAD's render code. Session end 05:49; everything committed.
+
+## Iteration 12 (06:02-07:02), BUILD
+No iteration 10/11 sessions ran (it9 ended 05:55; the runner numbers this one 12). Starting from
+it9's NEXT. Rules applied: registry `measured-draw-order`, `concept-scene-parity` (judge in the live
+arena path), `sprite-and-atlas-production` (stack slices from existing art, no new image round).
