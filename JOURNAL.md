@@ -1191,6 +1191,10 @@ NEXT (iteration 14):
    in how the first reload frames are posed (RigGrip._reload's chest spot for the aim arm, the
    release recoil, or HeldTube / _place_long on reload start), not in the sim. Note the movie frame
    index may be the process frame + 1: log Engine.get_process_frames() beside the movie frame.
+   Candidate (read 02:36, untested): RivetHeldView._place_long carries a tube across the body
+   (RivetCarryAngle, `across` = not rig.aiming) and _held_angle aims it only while rig.aiming; if
+   `aiming` drops for one frame as the reload starts, the tube would swing to the other side for
+   exactly that frame. Log rig.aiming and the `across` flag beside reload_k over 262-270.
 4. Exe at the freeze: re-bake + re-export `windows-showcase` -> `build/export/windows/RTAI.exe`;
    REPORT exe lines for calls 4 (`--flash-at=side`) and 5 (`--throw-windup=off`).
 5. Full evidence run on the head before the freeze (last: `3b2e7c5c`, all green); commit logs
