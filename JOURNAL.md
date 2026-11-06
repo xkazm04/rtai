@@ -1326,3 +1326,31 @@ a planted fault). Gates: evidence on `994f8feb` (lint 13/13, unit 1164/1164, par
 selftest pass, scenarios 51/52 + rig_stress alone green twice); reels 19/19 + 19/19 on `5586a80e`.
 Clip: `tube_side-ab-32-48ppm.mp4` (frames.json entry 0). Re-scored from film: Gloria A 1 -> 2,
 plasma I 2 -> 3, electro I 2 -> 3; Gatling victim closed without code.
+
+### TIME NOTE: the entries above stamped 03:01-03:03 were written at about 02:55-02:57 (I misread
+the clock); the "STOP 03:03" line was not a stop. The session went on; entries below are true times.
+
+### MILESTONE 03:10: the camera follows the mini-nuke (NEXT 1 of iteration 15, built now)
+- `8efe76ca` BlastLead (hit_feel/blast_lead.gd, view only, on the sim tick, outside FeelCam's kick
+  cap): while Rivet's shell flies the view drifts blast_lead_k 0.8 of the way toward it (at most
+  blast_lead_max_m 10), holds blast_lead_hold_ticks 60 on the landing, eases in 0.08 / out 0.04 a
+  tick. `a63bd8e0`: capped at blast_lead_max_px 300 screen px: uncapped, at 48 px/m the 7.2 m lead was
+  345 px and Rivet left the frame (filmed, scratch lead/c2.png).
+- FILM lone cop, the live follow camera (no fight cam), `--reach=9 --clean`, before = the same build
+  with blast_lead_k 0 (a temporary data edit, reverted, tree clean before the reels). Kill tick 330 in
+  all 9 films (32/48/64, before/after, fight cam), 0 SCRIPT ERROR. LOOK (sheets every 15 frames):
+  32 px/m before: only the top arc of the ring (frames 335-425); after: the whole ring with Rivet at
+  the top edge, then eased back by about frame 410. 48: before none of the ring, after its upper half,
+  Rivet in frame 120-160 px from the top. 64: Rivet in frame, the burst and the ring's top arc. With
+  the fight cam (a dev driver) the lead adds on top: half the ring instead of almost none.
+- TEST `test_blast_lead` 4/4: the shell pulls the view (planted k 0 -> fail), holds then eases back,
+  a pistol never moves it, at 64 px/m inside the screen cap through FeelCam (planted no cap -> 458 px
+  > 308, fail). Lint 13/13.
+- Clip `nuke_blast_lead-ab-32-48ppm.mp4` (7 s), frames.json entry 0 (machine_pistol_muzzle dropped
+  from frames.json; its file stays, REPORT cites it). REPORT row + call 6, audit row 1 read 2 -> 3,
+  decisions.md line.
+- Rules applied (registry): combat-pacing-and-dramatic-arc (the biggest hit gets the frame, briefly,
+  then the player gets the view back); motion-quality-gating (judged in motion at 32/48/64 against a
+  same-build before).
+- FRICTION: I started the reels on `8efe76ca` before filming 48 px/m; the 48 film showed the bug, so
+  I killed my two reel Godots (PIDs by start time 03:05:07 under my script) and re-ran on `a63bd8e0`.

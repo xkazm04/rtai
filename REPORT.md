@@ -28,6 +28,7 @@ cut from main `763f8fba`. Clips and stills: `C:\Users\kazda\kiro\gtai-masters\n7
 | Molotov first aim: the lit bottle lifts from the ready claw to cocked over 0.22 s (smoothstep, about 13 frames) instead of jumping behind the helmet in one frame; straight out of a reload it is already cocked (no second rise). Render only | `9df494f6` | held_classes.json thrown `windup_rise_s` 0 (the snap) | `molotov_draw_rise-ab-32-48ppm.mp4` |
 | Mini-nuke launch weight: a 4 px camera kick against the aim on the launch, easing out over 7-9 frames (measured at 32 and 48 px/m; the rocket's is 3 px, the nuke had none). Restrained on purpose: the blast keeps its own stop, kick and shake. A harder rig kick (arena.json rig_kick 2.0) was filmed and dropped: it did not separate at 32 px/m (the tube swings into its reload pose on the next frame) and the schema caps it at 1.6 | `5c171ed8` | hit_feel.json mini_nuke `fire_kick_px` 0, or `--feel=off` | `mini_nuke_launch-ab-32-48ppm.mp4` |
 | Rocket and mini-nuke tube stays on the gun shoulder: on every launch the tube jumped to Rivet's left for a frame, and the nuke sat on the left again for about 9 frames of its reload (present on main: the reload poses the claw on the centre line, so the tube's axis passed within 0.2 px of the head's centre and the helmet clearance took the nearer side, flipping 19 times over a rocket reload and 21 over a nuke's). Aimed, it now keeps the gun shoulder's side. View only (lone kill ticks unchanged) | `5586a80e` | - (bug fix; before = main) | `tube_side-ab-32-48ppm.mp4` |
+| Mini-nuke framing: the camera follows the shell in flight (0.8 of the way, at most 10 m and 300 screen px) and holds 60 ticks on the landing while the ring plays, then eases back. Its ring is 12 m in radius, 384 px at 32 px/m on an 800 px screen, so on Rivet it was always cut: at 32 px/m only its top arc showed, at 48 nothing. Now the whole ring at 32 (Rivet at the top edge), the upper half at 48 and the top arc at 64, Rivet always in frame. View only (kill ticks unchanged, outside the kick cap) | `8efe76ca`, `a63bd8e0` | hit_feel.json mini_nuke `blast_lead_k` 0, or `--feel=off` | `nuke_blast_lead-ab-32-48ppm.mp4` |
 | Combined clip of the polished set in the city block, 32 px/m, fight camera, with sound (72 s, retaken on `42f74955`: every ranged chapter plus the whole nuke ring) | `42f74955` | - | `city_block_polished_set-32ppm.mp4` |
 
 Gates (iteration 5): evidence run on `41bb90e7`: lint 13/13, scenarios 52/52, parity bit-exact
@@ -75,6 +76,14 @@ because I edited docs during the run). City-block director reel with `--loadout=
    (the thrown class is not among tonight's open hold calls, but it is a hold). Built default: cocked.
    See `molotov_windup-ab-32-48ppm.mp4`, or `RTAI.exe -- --weapon=molotov --bot=gunplay --lone
    --cam=fight` vs the same with `--throw-windup=off`.
+
+6. **The camera follows the mini-nuke.** Options: the view leads toward the shell and holds on
+   its ring (built: `blast_lead_k` 0.8, at most 10 m and 300 screen px, held 60 ticks), a gentler
+   lead (`blast_lead_k` 0.5, not filmed), or the camera stays on Rivet
+   (`blast_lead_k` 0, the before: the ring runs off the screen). It moves the camera away from
+   Rivet for about 2 s per nuke. Built default: 0.8. See `nuke_blast_lead-ab-32-48ppm.mp4`, or
+   `RTAI.exe -- --weapon=mini_nuke --bot=gunplay --lone` vs the same with `--feel=off` (off also
+   drops the kicks and the stop).
 
 (More calls may be added by later iterations.)
 
