@@ -1195,6 +1195,13 @@ NEXT (iteration 14):
    (RivetCarryAngle, `across` = not rig.aiming) and _held_angle aims it only while rig.aiming; if
    `aiming` drops for one frame as the reload starts, the tube would swing to the other side for
    exactly that frame. Log rig.aiming and the `across` flag beside reload_k over 262-270.
+   TESTED 02:37 (temporary log, reverted, tree clean): REFUTED. rig.aiming stays true and
+   _place_long adds no rotation. What moves is the gun claw: the held sprite's anchor (the gun
+   hand) is +16 px right of the torso on ticks 262-265, -19 px LEFT on tick 266 (rotation 1.58 ->
+   1.43), +18 px right again on 267. So the rig poses the gun hand on the wrong side for exactly
+   the first frame it poses the reload (reload_k 0.03 set after the tick-265 pose). Look next at
+   RigGrip._reload's aim-arm target on its first frame (RELOAD_GUN y uses gs.y * RELOAD_GUN.y:
+   a sign?) together with the SHOOT clip's kick landing the same frame, and the arm IK's pole.
 4. Exe at the freeze: re-bake + re-export `windows-showcase` -> `build/export/windows/RTAI.exe`;
    REPORT exe lines for calls 4 (`--flash-at=side`) and 5 (`--throw-windup=off`).
 5. Full evidence run on the head before the freeze (last: `3b2e7c5c`, all green); commit logs
