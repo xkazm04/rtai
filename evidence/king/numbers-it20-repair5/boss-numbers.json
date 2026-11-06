@@ -1,0 +1,329 @@
+{
+  "schema": "gtai.boss-numbers/1",
+  "boss": "king",
+  "ghost": null,
+  "contended": true,
+  "quit_after": 18000,
+  "summary": {
+    "human": {
+      "n": 10,
+      "downed": 10,
+      "ttk_mean_s": 84.1,
+      "ttk_range_s": [
+        77.9,
+        90.6
+      ],
+      "taken_mean": 74.4,
+      "deaths": 0,
+      "adds_landed_tries": [
+        38,
+        182
+      ],
+      "per_attack": {
+        "charge": {
+          "tries": 18,
+          "landed": 0,
+          "rolled": 0,
+          "hit_rate": 0
+        },
+        "coin_fan": {
+          "tries": 93,
+          "landed": 25,
+          "rolled": 0,
+          "hit_rate": 0.27
+        },
+        "decree": {
+          "tries": 31,
+          "landed": 0,
+          "rolled": 0,
+          "hit_rate": 0
+        },
+        "press_slam": {
+          "tries": 23,
+          "landed": 8,
+          "rolled": 3,
+          "hit_rate": 0.35
+        },
+        "ram": {
+          "tries": 21,
+          "landed": 9,
+          "rolled": 0,
+          "hit_rate": 0.43
+        }
+      }
+    }
+  },
+  "runs": {
+    "human": [
+      {
+        "seed": 1,
+        "down_s": 90.6,
+        "hp_left": 0,
+        "phase": 3,
+        "taken": 116,
+        "deaths": 0,
+        "tries": {
+          "charge": 1,
+          "coin_fan": 11,
+          "decree": 3,
+          "press_slam": 3,
+          "ram": 2
+        },
+        "landed": {
+          "coin_fan": 3,
+          "press_slam": 2,
+          "ram": 1
+        },
+        "rolled": {},
+        "adds": [
+          3,
+          17
+        ],
+        "ticks": 7458,
+        "script_errors": 0
+      },
+      {
+        "seed": 2,
+        "down_s": 82.2,
+        "hp_left": 0,
+        "phase": 3,
+        "taken": 88,
+        "deaths": 0,
+        "tries": {
+          "charge": 2,
+          "coin_fan": 9,
+          "decree": 3,
+          "press_slam": 2,
+          "ram": 2
+        },
+        "landed": {
+          "coin_fan": 3,
+          "press_slam": 1,
+          "ram": 1
+        },
+        "rolled": {},
+        "adds": [
+          4,
+          19
+        ],
+        "ticks": 7459,
+        "script_errors": 0
+      },
+      {
+        "seed": 3,
+        "down_s": 77.9,
+        "hp_left": 0,
+        "phase": 3,
+        "taken": 80,
+        "deaths": 0,
+        "tries": {
+          "charge": 2,
+          "coin_fan": 8,
+          "decree": 3,
+          "press_slam": 2,
+          "ram": 2
+        },
+        "landed": {
+          "coin_fan": 2,
+          "ram": 2
+        },
+        "rolled": {
+          "press_slam": 1
+        },
+        "adds": [
+          4,
+          15
+        ],
+        "ticks": 7458,
+        "script_errors": 0
+      },
+      {
+        "seed": 4,
+        "down_s": 89.8,
+        "hp_left": 0,
+        "phase": 3,
+        "taken": 58,
+        "deaths": 0,
+        "tries": {
+          "charge": 1,
+          "coin_fan": 10,
+          "decree": 4,
+          "press_slam": 3,
+          "ram": 2
+        },
+        "landed": {
+          "coin_fan": 3,
+          "press_slam": 1
+        },
+        "rolled": {
+          "press_slam": 1
+        },
+        "adds": [
+          4,
+          19
+        ],
+        "ticks": 7457,
+        "script_errors": 0
+      },
+      {
+        "seed": 5,
+        "down_s": 79.1,
+        "hp_left": 0,
+        "phase": 3,
+        "taken": 48,
+        "deaths": 0,
+        "tries": {
+          "coin_fan": 10,
+          "decree": 3,
+          "press_slam": 2,
+          "ram": 2
+        },
+        "landed": {
+          "coin_fan": 2,
+          "press_slam": 1
+        },
+        "rolled": {},
+        "adds": [
+          5,
+          22
+        ],
+        "ticks": 7458,
+        "script_errors": 0
+      },
+      {
+        "seed": 6,
+        "down_s": 83.2,
+        "hp_left": 0,
+        "phase": 3,
+        "taken": 50,
+        "deaths": 0,
+        "tries": {
+          "charge": 2,
+          "coin_fan": 9,
+          "decree": 3,
+          "press_slam": 3,
+          "ram": 2
+        },
+        "landed": {
+          "coin_fan": 2,
+          "ram": 1
+        },
+        "rolled": {
+          "press_slam": 1
+        },
+        "adds": [
+          0,
+          17
+        ],
+        "ticks": 7457,
+        "script_errors": 0
+      },
+      {
+        "seed": 7,
+        "down_s": 84.7,
+        "hp_left": 0,
+        "phase": 3,
+        "taken": 50,
+        "deaths": 0,
+        "tries": {
+          "charge": 3,
+          "coin_fan": 9,
+          "decree": 3,
+          "press_slam": 2,
+          "ram": 2
+        },
+        "landed": {
+          "coin_fan": 2,
+          "ram": 1
+        },
+        "rolled": {},
+        "adds": [
+          5,
+          21
+        ],
+        "ticks": 7456,
+        "script_errors": 0
+      },
+      {
+        "seed": 8,
+        "down_s": 81.2,
+        "hp_left": 0,
+        "phase": 3,
+        "taken": 108,
+        "deaths": 0,
+        "tries": {
+          "charge": 2,
+          "coin_fan": 8,
+          "decree": 3,
+          "press_slam": 3,
+          "ram": 2
+        },
+        "landed": {
+          "coin_fan": 2,
+          "press_slam": 1,
+          "ram": 2
+        },
+        "rolled": {},
+        "adds": [
+          2,
+          16
+        ],
+        "ticks": 7457,
+        "script_errors": 0
+      },
+      {
+        "seed": 9,
+        "down_s": 90,
+        "hp_left": 0,
+        "phase": 3,
+        "taken": 58,
+        "deaths": 0,
+        "tries": {
+          "charge": 2,
+          "coin_fan": 9,
+          "decree": 3,
+          "press_slam": 2,
+          "ram": 3
+        },
+        "landed": {
+          "coin_fan": 3,
+          "press_slam": 1
+        },
+        "rolled": {},
+        "adds": [
+          4,
+          17
+        ],
+        "ticks": 7457,
+        "script_errors": 0
+      },
+      {
+        "seed": 10,
+        "down_s": 82.7,
+        "hp_left": 0,
+        "phase": 3,
+        "taken": 88,
+        "deaths": 0,
+        "tries": {
+          "charge": 3,
+          "coin_fan": 10,
+          "decree": 3,
+          "press_slam": 1,
+          "ram": 2
+        },
+        "landed": {
+          "coin_fan": 3,
+          "press_slam": 1,
+          "ram": 1
+        },
+        "rolled": {},
+        "adds": [
+          7,
+          19
+        ],
+        "ticks": 7456,
+        "script_errors": 0
+      }
+    ]
+  }
+}
