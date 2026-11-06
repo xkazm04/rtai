@@ -41,6 +41,15 @@ func test_buildings_draw_last_by_south_edge() -> void:
 	assert_eq(got, [1, 2, 3, 0], "the road first, then roofs north to south")
 
 
+func test_south_edge_is_in_px_not_metres_plus_px() -> void:
+	var lift: ChunkLift = _lift(70.0)
+	# the warehouse turned a quarter (525 px deep) at y 1 m ends at 294 px; the tall one at y 10 m
+	# (269 px deep) at 454 px: the warehouse is farther, drawn first
+	var c: CityChunk = _chunk([Vector3(1, 0, 10), Vector3(2, 0, 1)])
+	c.xf[CityChunk.XF_STRIDE + 2] = PI * 0.5
+	assert_eq([lift.nth(0, c), lift.nth(1, c)], [1, 0])
+
+
 func test_heights_come_from_the_table() -> void:
 	var lift: ChunkLift = _lift(70.0)
 	assert_eq(lift.height_m[1], 21.0 * 0.5, "building_tall at height_k 0.5")

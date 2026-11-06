@@ -114,7 +114,11 @@ func order(chunk: CityChunk) -> void:
 			@warning_ignore("return_value_discarded")
 			_parked.append(Vector4(chunk.xf[o], chunk.xf[o + 1], chunk.xf[o + 2], t))
 		elif stands(t) and chunk.xf[o + 3] <= 0.5:
-			var south: float = chunk.xf[o + 1] + extent(t, chunk.xf[o + 2]).y * 0.5
+			var at: Vector2 = Vector2(chunk.xf[o], chunk.xf[o + 1]) * SimConst.PX_PER_M
+			var ext: Vector2 = extent(t, chunk.xf[o + 2])
+			var south: float = at.y + ext.y * 0.5  # px (was metres + px: the size outweighed y)
+			if cards.has(t):
+				south = cards.foot_at(t, chunk.xf[o + 2], at, ext).y
 			roofs.append(Vector3(south, chunk.xf[o], k))
 		else:
 			@warning_ignore("return_value_discarded")
@@ -146,7 +150,7 @@ func stands(t: int) -> bool:
 ## Draws standing t at ground centre `at` px: a prop card on its south edge, or face + roof.
 func draw(item: RID, t: int, rot: float, at: Vector2) -> void:
 	if cards.has(t):
-		cards.draw(item, t, rot, at + Vector2(0.0, extent(t, rot).y * 0.5))
+		cards.draw(item, t, rot, cards.foot_at(t, rot, at, extent(t, rot)))
 		return
 	var r: Rect2 = Rect2(-_tex.size_px[t] * 0.5, _tex.size_px[t])
 	RenderingServer.canvas_item_add_set_transform(item, Transform2D(rot, face(item, t, rot, at)))
