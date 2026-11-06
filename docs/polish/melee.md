@@ -192,3 +192,13 @@ jolt held through a 7-frame stop, the shake settling by frame 130; before 0 px.
    arcs, 3 spits, 2 sparks each). full 0 or `--feel=off` = the before. A 1-arc pass was still busy.
    Looked at: the six cops read blue, each still visibly stunned (the spark circling, the spit).
    Read 3 -> 4. `M/ohm_stun_crowd_ab_32ppm_04x.mp4`.
+
+7g. **Ohm's bolt, where it lands** (looked at 03:35-03:45, 2026-11-06, `--bot=ghosts --ghost=ohm --rigs
+   --clean` at 32 and 48 px/m, frames 86-104): the first bolt strikes the robot thug (the cop it
+   crosses on the way is not struck: it is not in the chain), and the stroke ran into the robot's
+   chest under a solid white disc, so the struck body was the least visible thing in the frame.
+   **Done 03:40 (`a27fb59c`)**: ghost_attacks.json ohm rim_m 0.6 (view only): each stroke stops at
+   the rim, the hop leaves from the far rim, and a crackling ink-and-white ring circles the body.
+   Looked at: the robot's torso reads inside the ring at both scales; in the tier-1 mass arc the
+   cops' rings are faint under the stun stars (no gain there, no clutter added). Impact 3 -> 3 (a
+   small gain, not a step), read 3 -> 3+. `M/ohm_bolt_rim_ab_32ppm_48slow.mp4`.

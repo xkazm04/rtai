@@ -1063,3 +1063,29 @@ NEXT (written 03:17, for iteration 12):
   stroke at a struck body (draw the bolt to the body's rim and on from the far rim, or draw the
   struck body's x-ray above the bolt) so each link of the chain lands on a visible body. View only;
   film A/B at 32 and 48 first.
+
+## Iteration 12 (runner iteration 13; 03:33-04:33), phase BUILD
+- READ 03:33 JOURNAL NEXT (03:17) + the 03:33/03:35 Ohm looks, git log, n7-ranged JOURNAL to its end
+  (it14 stop 03:21, call-6 look 03:25, FYI 03:26 on the blast lead in the feel layer).
+- MERGE 03:34 `da1e6a22` + `94dce278` (cherry-pick -x of n7-ranged `8efe76ca`, `a63bd8e0`: BlastLead,
+  the camera leads toward the mini-nuke's shell, capped at 300 screen px; feel layer, view only;
+  clean). Not merged: `d4559823` (ranged weapons' shot audio, not the feel layer). Unit 1212/1212
+  after the merge, GODOT_BIN exported (`evidence/n7-melee/unit-94dce278.log`).
+- Registry rules applied: motion-quality-gating (A/B at 32 then 48 on the same sim frames, judge the
+  sequence), depth-ordered-layered-art (a mark must not cover the body it marks: the stroke stops at
+  the rim instead of being drawn into the body under the actor).
+- FINDING 03:38 (corrects the 03:35 look) full-res crops at 48 px/m, frames 91-99: the first bolt
+  never struck the near cop. It strikes the robot thug directly and only passes over that cop's
+  head (no flash, no stun on the cop). The cop sits on the bolt's straight line; it is not a link.
+- BUILD 03:40 `a27fb59c` Ohm's rim (NEXT 4): OhmView stops each stroke ghost_attacks.json ohm rim_m
+  (0.6 m; a body is 0.45) short of a struck body, the hop leaves from its far rim, and the body gets
+  a crackling ink-and-white ring (5 arcs, re-cut every other tick) instead of the solid white disc.
+  A hop too short for two rims and 0.3 m of stroke draws body to body. View only. Test test_ohm_rim;
+  planted rim_m 0 + no trim fails 4 asserts.
+- LOOK 03:42 (b/a at 32 and 48, single bolt, plus tier-1 mass arc at 48, 0 SCRIPT ERROR in all 7
+  films): the robot's torso (the white ring-eye) now reads inside the ring where the stroke used to
+  vanish into it, at both scales. Tier-1: the cops' rings are faint under the stun stars, no gain
+  there and no added clutter. A small gain, not a step: impact 3 -> 3, read 3 -> 3+ (audit 7g).
+- CLIP `M/ohm_bolt_rim_ab_32ppm_48slow.mp4` (3.3 s) + still `M/ohm_bolt_rim_ab_32_48ppm.png`;
+  frames.json row 0 (tonnage_slam dropped from the list to stay at 15; its file stays, REPORT names
+  it). REPORT row + call (l), decision line.

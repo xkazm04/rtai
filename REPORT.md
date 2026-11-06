@@ -21,6 +21,7 @@ final hash moved once, deliberately, when quest 1 started carrying the katana (`
 | Tonnage's ram called before the contact | `bc788d09` | while the press moves at ram speed a bow wave (cream edged in ink) rides from its nose past its flanks, outside the drawn press, so the charge reads before anyone is hit (in quest 1 too) | `M/tonnage_ram_wake_ab_32ppm_48slow.mp4`, still `M/tonnage_ram_wake_ab_32_48ppm.png` (before `ghost_attacks.json` tonnage `ram_wake_k` 0, or `--feel=off`) |
 | Tonnage plates | `8375c763`, `330779ff`, `d97a976d` | an enemy round now stops at the plate face with a small capped glance spark (it drew through his body before) | `M/tonnage_plates_ab_32ppm.mp4` |
 | Ohm mass arc | `454490ce`, `7ce7b33d` | the branches draw at 0.55 of the bolt; a stunned crowd keeps full marks on the 2 newest bodies only, so the cops' blue reads through | `M/ohm_mass_arc_ab_32ppm_04x.mp4`, `M/ohm_stun_crowd_ab_32ppm_04x.mp4` |
+| Ohm's bolt lands on the body it strikes | `a27fb59c` | the stroke stops 0.6 m out from each struck body and a crackling ink-and-white ring circles it (it ran into the body's chest under a solid white disc), so every link of the chain lands on a body you can see; a small gain, clearest on a robot | `M/ohm_bolt_rim_ab_32ppm_48slow.mp4`, still `M/ohm_bolt_rim_ab_32_48ppm.png` (before `ghost_attacks.json` ohm `rim_m` 0, or `--feel=off`) |
 | Melee and ghost hit sounds | `f593aac4` | each attack family plays its own sound on the hit tick, built from the shipped bank (claw knock, blade cut, chainsaw bite, baton zap, ghost slam, Ohm bolt) | `M/hit_cues_ab_32ppm.mp4` (before `--hit-cues=off`) |
 | Claw jab reads at 32 | `f45ad8e6` | three cream rakes edged in ink across the struck cop on the hit frame, fading over 10 ticks | `M/claw_rake_ab_32ppm.mp4`, `M/claw_rake_48ppm_04x.mp4` (before `melee_marks.json` claw `flash_ticks` 0) |
 | Ghost hits move the victim | `91700e01` | a body Tonnage rams or throws with the slam, and that survives, now plays a knockdown on the hit (before: no reaction at all); a rammed riot cop goes down instead of standing braced | `M/ghost_wound_ram_ab_32ppm.mp4` (before `human_reactions.json` `ghost_wound` {}) |
@@ -128,6 +129,13 @@ head spark.
 - Before: `ghost_attacks.json` tonnage `ram_wake_k` 0, or `--feel=off`.
 - See it: `RTAI.exe -- --bot=ghosts --ghost=tonnage --rigs --ppm=32` (the press reaches the cops at
   the car at about 1.9 s).
+
+(l) Ohm's bolt stops at the struck body's rim and rings it.
+- Options: rim and ring (built); the old stroke into the body's centre under a white disc.
+- Clip: `M/ohm_bolt_rim_ab_32ppm_48slow.mp4`.
+- Before: `ghost_attacks.json` ohm `rim_m` 0, or `--feel=off`.
+- See it: `RTAI.exe -- --bot=ghosts --ghost=ohm --rigs --ppm=48` (the first bolt hits the robot thug at
+  about 1.5 s).
 
 ## Next steps
 See the last NEXT entry in `JOURNAL.md`.
