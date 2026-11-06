@@ -33,7 +33,7 @@ Weakest first:
 | 6 | mini nuke, rocket launcher (tubes) | 1 | 2 | 2 | Shouldered, they read. At the low carry the tube stands vertical at the hip. The blast plus blood reads. |
 | 7 | pistol, machine pistol, hand cannon, Gloria (sidearms) | 1 | 2 | ? | At 32-48 px/m the top-down part is a dark lozenge beside the claw. **Fixed `ea380dba`/`d87722f9`** (the three-quarter parts). |
 | 8 | gatling | 2 | 2 | ? | The long barrel ahead of the hip in both claws reads as a heavy gun even top-down. |
-| - | assault rifle | ? | ? | ? | The bot moves out of the crop. Film it again with a wider crop. |
+| - | ~~assault rifle~~ | - | - | - | **Not a weapon** (iteration 4): the film's log says `no weapon assault-rifle in weapons.json; the arena keeps Gloria`. Gloria is scored with the sidearms. |
 
 ## The fix order (as built)
 
