@@ -41,7 +41,7 @@ The moveset is `docs/bosses/king.md`; the full log is `JOURNAL.md`.
   - the procession entering, from the gang's first appearance to King stepping down (`king_procession_enter_32ppm_it16.mp4`);
   - the press slam, telegraph (the plates raised beside the crown), hit and dodge, the cape landing wide (`king_slam_plates_48ppm_it14.mp4`);
   - the charge, telegraph lane, hit and dodge, the cape drawn in and flared (`king_charge_48ppm_it13.mp4`);
-  - the ram and the coin fan, hit and dodge (`king_ram_coin_fan_48ppm_it14.mp4`), and the decree's windup arc and buff (`king_decree_48ppm_it14.mp4`);
+  - the ram and the coin fan, hit and dodge (`king_ram_coin_fan_48ppm_it16.mp4`), and the decree's windup arc and buff (`king_decree_48ppm_it14.mp4`);
   - the target sheet beside the game at 32 px/m (`king_target_vs_game_32ppm_it16.png`);
   - the ghosts on King, phase 3 at 48 px/m on the current body (`king_dent_p3_48ppm_it14.mp4`, `king_kerf_p3_48ppm_it14.mp4`, `king_tonnage_p3_48ppm_it14.mp4`, `king_ohm_daze_tells_48ppm_it13.mp4`).
 - **Combat holds**: the director reel was 19/19 chapters down with 0 SCRIPT ERROR on the branch

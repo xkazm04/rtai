@@ -1627,3 +1627,10 @@ NEXT (iteration 16, in order):
   comparison: in the ram crop the ermine collar now closes in a gold ring with the medallion at the
   front, like the sheet's top view. The it16 masters are overwritten in place; frames.json notes
   name f4df4438 (15 entries, all exist).
+
+### 05:32 FILM the ram and coin fan at 48 px/m re-shot on f4df4438
+- `M/king_ram_coin_fan_48ppm_it16.mp4` (phase 1 seed 2, 1280x800, stander then dodger, ram 1.4-4.4 s
+  and fan 6.6-9.0 s of each run, 10.8 s, music, 0 SCRIPT ERROR; the it14 cut points). **Looked at**
+  keys at 1.0/2.8/4.5/7.0/9.7 s: the ram lane locked, the car on the stander; the stander in the
+  coin cone; the dodger out of the lane and out of the cone. The current car (bumpers, throne back,
+  lining) and King's chain in frame. it14 version deleted; frames.json 15, all exist.
