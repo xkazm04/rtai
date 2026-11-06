@@ -43,3 +43,18 @@ func test_a_zero_delay_is_the_before() -> void:
 	row["hold_delay"] = 0
 	var ticks: int = cam.hit(&"pistol", &"light", Vector2.RIGHT, true, 1000)
 	assert_almost_eq(clock.held(), ticks * SimClock.TICK_DT, 1e-6, "held on the hit tick")
+
+
+func test_the_gatling_overrides_its_class_and_the_plasma_rifle_does_not() -> void:
+	var clock: SimClock = SimClock.new()
+	var cam: FeelCam = _cam(clock)
+	var ticks: int = cam.hit(&"gatling", &"medium", Vector2.RIGHT, true, 2000)
+	assert_gt(ticks, 0, "a Gatling kill takes the kill stop")
+	assert_eq(clock.held(), 0.0, "the Gatling's wound shows first")
+	@warning_ignore("return_value_discarded")
+	cam.offset_px(2002, 1.0)
+	assert_almost_eq(clock.held(), ticks * SimClock.TICK_DT, 1e-6, "then the stop")
+	var clock2: SimClock = SimClock.new()
+	var cam2: FeelCam = _cam(clock2)
+	var t2: int = cam2.hit(&"plasma_rifle", &"medium", Vector2.RIGHT, true, 2000)
+	assert_almost_eq(clock2.held(), t2 * SimClock.TICK_DT, 1e-6, "plasma holds on the hit tick")
