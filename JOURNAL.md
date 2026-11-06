@@ -266,3 +266,11 @@ NEXT (iteration 8):
 5. Freeze prep: the exe export (int-day recipe in docs/decisions.md) EARLY (it8 or it9), check that
    `RTAI.exe -- --boss=king --view=tilt` reaches the arena; evidence/run.mjs; REPORT with the PLAN
    cost table (draft at the end of docs/view-lab/PLAN.md).
+- PROTOTYPE (reverted, not committed): naive depth band (`RigTilt.depth_z`: z = round(ground dy
+  from the camera centre / 0.3 m) x 16, clamped to 12 bands; set in CutRig.drive under a tilt and
+  added in KingCarStack.sort_rigs). Probe, same run (`it7/order_tilt_band_proto.log`): rig pairs
+  304, reversed 48 -> 44, mixed 215 -> 157, but car reversed 2 -> 190 (the band outweighs the car's
+  BEHIND_Z -64 and the car itself has no band). So for it8: the car needs its own band (or the rig
+  bands are taken relative to the car), and the remaining mixed pairs (157) say most overlaps sit
+  within 0.3 m of ground depth, or Rivet's rig (ArenaRigs) is not getting a band: check which
+  pairs stay mixed before tuning BAND_M.
