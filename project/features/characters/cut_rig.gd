@@ -178,7 +178,7 @@ func drive(dt: float) -> void:
 	if tilt_up != Vector2.ZERO:
 		RigTilt.lift_upper(self)
 		RigHeadCard.step(self)
-		RiotShieldCard.step(self)
+		StreetView.step(self)
 	if react != null:
 		react.post(self)
 	if hose != null:

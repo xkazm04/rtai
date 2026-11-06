@@ -52,3 +52,15 @@ func test_a_rig_without_a_shield_is_left_alone() -> void:
 	var rig: CutRig = autofree(CutRig.new())
 	RiotShieldCard.step(rig)
 	assert_null(rig.sides[BodyPlan.L].shield)
+
+
+func test_straight_down_the_thug_keeps_its_dark_steel() -> void:
+	var rig: CutRig = autofree(CutRig.new())
+	rig.plan = ThugPlan.build()
+	rig.body = autofree(Node2D.new())
+	var part: Sprite2D = Sprite2D.new()
+	part.material = ShaderMaterial.new()
+	rig.add_child(part)
+	StreetView.step(rig)
+	assert_false(rig.body.has_meta(StreetView.LIT), "the shipped view lifts nothing")
+	assert_eq(part.self_modulate, Color.WHITE)
