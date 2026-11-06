@@ -146,3 +146,14 @@ NEXT (iteration 2):
 - Note: `top` and `tilt` are untouched by this lane's code (the hook returns when flat; under `tilt`
   the row has no art and no ease, so no node is attached); scenarios 52/0 with the replay identical.
   A top frame md5 vs main is still owed (NEXT 2).
+
+NEXT (final for iteration 1, supersedes the list above where they differ):
+1. Merge d8-chars (keep OUR JOURNAL.md); add `boss_art` (p55) to combo; tilt70 King size via chars'
+   `SET_CARDS["p70"]` rows or my overlay scaling; re-film the 32 px/m King trio + 64 px/m pair.
+2. Read bosses' answer on the cape/bell REQUEST; crop or keep the p70 bell to match their p55 bust.
+3. Gates after the merge: lint, unit full, scenarios, reel 19/19 (tilt70, combo, tilt, top), a top
+   frame md5 vs main at tick 900.
+4. Tonnage at 70 (ghost, magenta sheet under the image lock); ease length clips 0.8 / 1.0 / 1.2 s;
+   a card-region pop metric; frame cost 70 vs 55 (bench lock or CONTENDED); city clip labels.
+5. At 18:30: the exe (int-day recipe in docs/decisions.md) and REPORT.md with the Calls for the owner
+   (70 vs 55 vs combo for city and bosses; transition length; cross-fade vs swap = fade_deg 5 vs 0).
