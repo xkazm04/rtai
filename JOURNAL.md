@@ -193,3 +193,9 @@ NEXT (iteration 4):
   chapter (scratch baton_cmp.png): the ink-wrapped grip prints dark and the copper band reads reddish at
   game size (too near the blood/vermilion law); no better than v1. REJECTED, reverted (art not committed).
   Next try for the baton: a pale wrap, the copper band brass-toned, or `enabled: false`.
+- 16:12 NEXT 3 started: filmed electro_gun at 48 tilt (scratch arc/electro_gun_48_after.mp4, 0 SCRIPT ERROR).
+  The auto-crop (vermilion collar) locked onto the cops' tracers instead (they fly at height with their
+  ground shadows, as ShotLift intends); no arc frame found by the cream-pixel search. The arc origin is
+  UNSCORED (?); next session: step the film by hand round Rivet's shots (or use the electro_chain chapter).
+- Session end 16:13. Branch head is clean; every item above is committed. NEXT (iteration 4) above stands,
+  with 1 done and 2 tried (baton regen rejected).
