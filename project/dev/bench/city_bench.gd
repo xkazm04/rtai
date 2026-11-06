@@ -16,7 +16,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--vsync",
 	"--fx-feed",
 	"--spans",
-	"--blood"
+	"--blood",
+	"--view"  # read by ViewMode.shared() (the view lab A/B); top = the default
 ]
 const VSYNC: Dictionary[String, DisplayServer.VSyncMode] = {
 	"disabled": DisplayServer.VSYNC_DISABLED,
@@ -120,6 +121,7 @@ func _finish() -> void:
 		"backend": String(_city.sim.backend_name()),
 		"secs": _args["--secs"].to_float(),
 		"zoom": _view.zoom,
+		"view": String(ViewMode.shared().id),
 		"vsync": _args["--vsync"],
 		"label": _args["--label"] if _args["--label"] != "" else _args["--scenario"],
 		"frames": _stats.frames,
