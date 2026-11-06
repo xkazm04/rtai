@@ -1474,3 +1474,13 @@ Scratch moved to `gtai-n7/scratch/servo/it18` (the it16 scripts live there; none
   (`film48_18.sh 2 2 900`, cut 0.5 + 6 s) at 48 px/m on 69445eac, 0 SCRIPT ERROR. **Looked at** both
   key sheets: beam, lock, rings, carriers with kraft boxes, boxes dropping into the rings, blasts,
   CS crates; the dodge. it16 clips and keys deleted; frames.json and REPORT paths moved.
+- 05:52 FILMS on 69445eac (the slung parcels): the full fight (`full32_18.sh`): down **7036, 188**,
+  **0 SCRIPT ERROR**, the sim telemetry identical to it16 (only the view's wall-time fields differ,
+  CONTENDED: the phase films ran beside it); the p1/p2/p3 32 px/m clips (`phase32_18.sh`, 0 SCRIPT
+  ERROR each); the target still re-composed on the it16 framing (`compose_target18.py`, the base
+  now the it16 still). **Looked at** the 12 fight keys, the p2 keys (the scattered kraft squares at
+  2x are the landed CS crates, unchanged) and the target still (the body as it16). The rotor dash
+  (0.6 + 4.4 s of the wave's run) and the bay hop (10.5 + 4.5 s of the carpet's run) re-cut,
+  **looked at** the 4 fps keys: the lane tracks, locks, crosses, vents; the ring locks among the
+  crates by bay 4, the landing. it16 clips, keys and still deleted; frames.json and REPORT paths
+  moved (every REPORT M/ path exists). p3 (hot dash, kamikaze) and the three ghosts filming.
