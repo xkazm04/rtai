@@ -47,12 +47,12 @@ The rotor dash checked against a reading player (it6): every tell read but 18-32
 2/40. The human bot's ~40 % comes from its 30 % unread tells (`numbers-it6-read1-*`).
 
 ## Calls for the owner
-1. Drop rings show from the drone's launch (default) vs only over its hover: `servo.json drone.ring_from_launch`.
+1. Drop rings show from the drone's launch (default) vs only over its hover: `servo.json drone.ring_from_launch` true / false. The default is seen in `M/servo_drone_wave_scan_drop_dodge_48ppm_it19.mp4` (the rings stand on the mark while the drones fly in); the alternative has no clip (it needs a data edit and a re-export).
 2. Should a CS crate landing on Rivet hurt? Today it does not (default): `servo.json parcels.crate_damage` 0 vs e.g. 12 (the bomb deals 22). Measured with 12 (`evidence/servo/numbers-it20-crate12/`): the dodge and human bots, seeds 1-10, are identical to 0, since the 0.9 m crate sits inside the 1.6 m ring they already dodge; only a standing Rivet pays (`-stand/`, parcel hits 50/53/43 vs 39/48/32). So it only punishes a player who already missed the ring.
 3. Drones die to one round (default) vs tougher drones, so that waves land more often: `servo.json drone.hp` 1 vs 2-3 (drop wave hits today: dodge 0, human 6 parcel hits in 10 fights).
 4. CS crates are solid (default) vs paint only: `servo.json parcels.crates_solid`. Clip: `M/servo_drone_wave_scan_drop_dodge_48ppm_it19.mp4`.
 5. Rack depth: 3 rows / 18 cells (default) vs 2 / 12: `servo.json rack.rows` + `cells`. Still: `M/frames/servo_target_vs_game_32ppm_it19.png`.
-6. The rotor dash smashes crates in its lane (default) vs crates stop him: `servo.json parcels.dash_smash`.
+6. The rotor dash smashes crates in its lane (default) vs crates stop him: `servo.json parcels.dash_smash` true / false. The bots' fights smash 3-18 crates each (`numbers-it20/`, `crates_smashed`); in play: `RTAI.exe -- --rigs --boss=servo` and stand behind a CS crate in a dash lane. The alternative has no clip.
 7. Kamikaze armour: 3 rounds (default) vs 1: `servo.json kamikaze.hp`. Clip: `M/servo_attack_kamikaze_dive_lands_48ppm_it19.mp4`.
 8. Dent's van is parked from the start (default) vs none: `bosses.json arenas.depot.parked`. Clip: `M/servo_ghost_dent_van_48ppm_it19.mp4`.
 9. Kerf's blink cuts the drones within 0.6 m of its line (default) vs only the one target: `bosses.json servo.kerf_line_m`. Clip: `M/servo_ghost_kerf_cut_halves_48ppm_it19.mp4`.
