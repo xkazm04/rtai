@@ -216,4 +216,6 @@ head spark.
   Quest 1 (dev recorder, bound input): `quest_ghost_rec.tscn -- --ghost=kerf --ppm=32 --out=<dir>` (blinks from frame 70).
 
 ## Next steps
+- Merge note: `05b0e51c` (ghost_lash) and n7-ranged's `5ed859c4` (shot_rivet_rifle) both append a row at the end of
+  `audio_cues.json` `cues`: a textual conflict only; keep both rows.
 See the last NEXT entry in `JOURNAL.md`.

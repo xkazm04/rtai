@@ -1626,3 +1626,7 @@ NEXT (written 07:37, for iteration 19 = the freeze; supersedes the 06:45 list):
   (dev: quest_ghost_rec films Dent). Gates on it: reels 19/19 x2, scenarios 52, full evidence green
   (`9e246820`); both exes re-exported and booted on it. Clip `M/dent_miss_lash_ab_32ppm.mp4`.
   NEXT is the 07:37 entry above.
+- READ 07:43 n7-ranged `5ed859c4` (audio: shot_rivet_rifle for Rivet's picked-up rifle) is not the
+  feel layer: not merged. NOTE for the Director's merge: it appends a row at the end of
+  audio_cues.json `cues`, as my `05b0e51c` (ghost_lash) does, so the two will conflict textually
+  there; keep both rows (independent ids, both lanes' unit tests check their own row).
