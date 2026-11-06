@@ -1,8 +1,38 @@
 {
-  "doc": "Lane n8 street's card rows (RigCardSets merges them over its base table): the street cast's p70 head cards, cut by tools/art/street_head.py from the assets library's keyed 70 sheets (keyed/street/<id>_70.png); widths keep each head's on-screen width equal to its p55 card's (the head's share of the cell measured on both strips). The riot shield's plate is StreetCardSets.SHIELD (not a head card).",
+  "doc": "Lane n8 street's card rows (RigCardSets merges them over its base table): the street cast's p70 head cards, cut by tools/art/street_head.py from the assets library's keyed 70 sheets (keyed/street/<id>_70.png); widths keep each head's on-screen width equal to its p55 card's (the head's share of the cell measured on both strips). The riot shield's plate is StreetCardSets.SHIELD (not a head card). The four pedestrian types the crowd looks have no head of their own (punk, shopper, jogger, worker) are extra ped rows at p55 and p70: StreetCrowdCards draws them for part of a look's people (by actor id); widths match each head's skull width to the suit head's (measured on the strips).",
   "lane": "street",
   "schema": "gtai.card-set/1",
   "sets": {
+    "p55": {
+      "ped/head_jogger": {
+        "anchor_y": 0.74,
+        "bust": false,
+        "raw": true,
+        "strip": "res://features/characters/art/view/p55/ped_jogger_card.png",
+        "width": 1.77
+      },
+      "ped/head_punk": {
+        "anchor_y": 0.74,
+        "bust": false,
+        "raw": true,
+        "strip": "res://features/characters/art/view/p55/ped_punk_card.png",
+        "width": 2.4
+      },
+      "ped/head_shopper": {
+        "anchor_y": 0.74,
+        "bust": false,
+        "raw": true,
+        "strip": "res://features/characters/art/view/p55/ped_shopper_card.png",
+        "width": 1.58
+      },
+      "ped/head_worker": {
+        "anchor_y": 0.74,
+        "bust": false,
+        "raw": true,
+        "strip": "res://features/characters/art/view/p55/ped_worker_card.png",
+        "width": 2.5
+      }
+    },
     "p70": {
       "cop/head_cap": {
         "anchor_y": 0.8,
@@ -59,6 +89,34 @@
         "raw": true,
         "strip": "res://features/characters/art/view/p70/ped_hood_card.png",
         "width": 2.1
+      },
+      "ped/head_jogger": {
+        "anchor_y": 0.74,
+        "bust": false,
+        "raw": true,
+        "strip": "res://features/characters/art/view/p70/ped_jogger_card.png",
+        "width": 1.84
+      },
+      "ped/head_punk": {
+        "anchor_y": 0.74,
+        "bust": false,
+        "raw": true,
+        "strip": "res://features/characters/art/view/p70/ped_punk_card.png",
+        "width": 2.5
+      },
+      "ped/head_shopper": {
+        "anchor_y": 0.74,
+        "bust": false,
+        "raw": true,
+        "strip": "res://features/characters/art/view/p70/ped_shopper_card.png",
+        "width": 1.64
+      },
+      "ped/head_worker": {
+        "anchor_y": 0.74,
+        "bust": false,
+        "raw": true,
+        "strip": "res://features/characters/art/view/p70/ped_worker_card.png",
+        "width": 2.3
       },
       "thug": {
         "anchor_y": 0.8,

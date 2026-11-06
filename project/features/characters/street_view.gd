@@ -1,7 +1,8 @@
 class_name StreetView
 extends RefCounted
 ## Lane n8 street: the street cast's view-only steps under a tilt (CutRig.drive, after the head
-## card). The riot shield's upright plate (RiotShieldCard), and the robot thug's steel lift: its
+## card). The riot shield's upright plate (RiotShieldCard), the crowd's nine pedestrian types
+## (StreetCrowdCards), and the robot thug's steel lift: its
 ## dark gunmetal parts print as one solid ink mass at 32-48 px/m (n7 King REPORT); under a view row
 ## with card art each printed part's colour is scaled by THUG_LIFT before the print (the gang's
 ## x1.55 steel lift, gang_parts.py, done in the modulate, so the plates and joints separate. The
@@ -14,6 +15,7 @@ const LIT: StringName = &"street_lit"
 
 static func step(rig: CutRig) -> void:
 	RiotShieldCard.step(rig)
+	StreetCrowdCards.step(rig)
 	if rig.plan.art_dir == ThugPlan.ART_DIR and not rig.body.has_meta(LIT):
 		_lift(rig)
 

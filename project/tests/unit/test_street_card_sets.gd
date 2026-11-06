@@ -11,7 +11,7 @@ func _street_rows() -> Dictionary:
 
 func test_every_street_strip_loads_with_whole_frames() -> void:
 	var rows: Dictionary = _street_rows()
-	assert_eq(rows.size(), 9, "4 cop/thug heads + 5 ped heads")
+	assert_eq(rows.size(), 13, "4 cop/thug heads + 5 ped heads + 4 pooled ped types")
 	for key: String in rows:
 		var row: Dictionary = rows[key]
 		var tex: Texture2D = load(str(row["strip"])) as Texture2D
