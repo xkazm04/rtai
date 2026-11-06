@@ -1289,3 +1289,7 @@ idempotent tool; palette gate held), depth-ordered-layered-art (no layer change)
   pad arms read on their own. `M/frames/servo_legs_stance_ab_it14.png`; frames.json: it replaces
   the pad A/B entry (that file stays, REPORT call 16). Unit 1190/0 (`unit-it14c.log`). Decisions;
   REPORT call 17; moveset doc body paragraph.
+- 04:27 FILM the full fight re-filmed on 5f9ed433 (the parallel legs): down **7036, 188**, 0
+  SCRIPT ERROR, identical. **Looked at** the 12 keys (framed as before) and the tick-1800 target
+  still: pad | leg | leg | pad now reads at 1x and 2x like the sheet's top view. Clip, keys and
+  still replaced in place (same it14 names).
