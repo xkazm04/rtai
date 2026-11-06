@@ -27,6 +27,14 @@ const STRIDE_M: float = 0.8
 ## A lifted foot grows by this much at the top of its step (it rises toward the camera).
 const LIFT_K: float = 0.16
 const TEAL: Color = Color(0.18, 0.77, 0.71)
+## Under a tilted --view: the heights (m, unfolded) the parts ride at, so the press stands on its
+## legs with its feet planted (a lifted foot rises FOOT_H_M at the top of its step). Straight down
+## the screen-up vector is ZERO and every position is exactly the flat one.
+const HIP_H_M: float = 1.3
+const CROWN_H_M: float = 1.5
+const HEAD_H_M: float = 1.35
+const HOSES_H_M: float = 1.8
+const FOOT_H_M: float = 0.35
 
 ## The shared part print (PartMaterials) on Tonnage's parts. Off by default: at 32 px/m its
 ## flat-sticker LOD prints the gunmetal crown as one ink mass and hides the teal seams (JOURNAL
@@ -68,6 +76,7 @@ func advance(dt: float) -> void:
 ## Lays every part out for the current phase and unfold.
 func pose() -> void:
 	var u: float = smoothstep(0.0, 1.0, unfold)
+	var up: Vector2 = _up() * lerpf(0.45, 1.0, u)
 	for i: int in 4:
 		var sx: float = 1.0 if i < 2 else -1.0
 		var sy: float = 1.0 if i % 2 == 0 else -1.0
@@ -77,6 +86,8 @@ func pose() -> void:
 		var hip: Vector2 = Vector2(sx, sy) * HIP_M * lerpf(0.55, 1.0, u)
 		var foot: Vector2 = Vector2(sx, sy) * FOOT_AT_M * lerpf(0.5, 1.0, u)
 		foot.x += swing * STRIDE_M * 0.5 * u
+		hip += up * HIP_H_M
+		foot += up * FOOT_H_M * lift
 		_feet[i].position = foot * PX_PER_M
 		_feet[i].scale = (
 			Vector2.ONE * _k(_feet[i], FOOT_M) * (1.0 + LIFT_K * lift) * lerpf(0.6, 1.0, u)
@@ -85,12 +96,20 @@ func pose() -> void:
 	var bob: float = 1.0 + 0.012 * absf(sin(_phase * TAU * 2.0))
 	_crown.scale = Vector2.ONE * _k(_crown, CROWN_M) * bob * lerpf(0.62, 1.0, u)
 	_crown.rotation = -PI * 0.5 + (1.0 - u) * 0.35
-	_head.position = Vector2(lerpf(0.55, 1.12, u), 0.0) * PX_PER_M
+	_crown.position = up * CROWN_H_M * PX_PER_M
+	_head.position = (Vector2(lerpf(0.55, 1.12, u), 0.0) + up * HEAD_H_M) * PX_PER_M
 	_head.scale = Vector2.ONE * _k(_head, HEAD_M) * lerpf(0.6, 1.0, u)
-	_hoses.position = Vector2(-0.55 * u, 0.0) * PX_PER_M
+	_hoses.position = (Vector2(-0.55 * u, 0.0) + up * HOSES_H_M) * PX_PER_M
 	_hoses.scale = Vector2.ONE * _k(_hoses, HOSES_M) * lerpf(0.4, 1.0, u)
 	_glow.scale = Vector2.ONE * (CROWN_M * 1.9 * PX_PER_M / 64.0) * lerpf(0.5, 1.0, u)
 	_check_stamps()
+
+
+## The screen-up direction in the rig's own frame per unit of height (ZERO straight down).
+func _up() -> Vector2:
+	if not is_inside_tree():
+		return Vector2.ZERO
+	return ViewMode.shared().up_at(global_position).rotated(-global_rotation)
 
 
 ## 0..1: how high pair `pair`'s feet are (0 = planted). The pairs alternate half a cycle apart.
