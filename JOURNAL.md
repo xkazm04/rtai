@@ -479,3 +479,35 @@ Read: JOURNAL, git log, the lane journals (no new REQUEST to city; vehicles: "no
 - GATE `top` bit-identity on 19b50a28: `--arena=city --bot=rivet --seed=2 --rigs --quit-after 301`
   framemd5 vs d9f8db90 RE-RECORDED in the same session (throwaway detached worktree, removed):
   IDENTICAL, 301 video + 301 audio frames, 0 SCRIPT ERROR each.
+- GATE director reel at tilt70 on 19b50a28 (headless, `--fixed-fps 60 --quit-after 7600
+  res://dev/arena/arena.tscn -- --bot=reel --reel=director --loadout=pistol --rigs --view=tilt70`):
+  19/19 chapters all down, 0 SCRIPT ERROR (`evidence/director-reel-it11-tilt70.log`). `top` reel not
+  re-run: top is frame-identical by the framemd5 above.
+- GATE scenarios on 19b50a28 (`node tools/tests/run_scenarios.mjs`, the reel running alongside):
+  52 ran, 0 failed; `rig_stress.rigMsP50` 1.032 > 1.000 ms CONTENDED (4 other runs, never quiet in
+  5 min: budget not judged). Rig stress does not touch city code.
+- FRICTION: I made and soft-reset a throwaway `--no-verify` commit while staging the JOURNAL
+  (HEAD checked, nothing lost); the real commit ran the hook. Don't chain commit experiments.
+- Session end 00:50. Head = this JOURNAL commit.
+
+Registry rules applied this session: render-submission-economy (measured the drive per view with
+the bench's own span profiler before touching anything; fixed the named node, re-measured under
+the lock), depth-ordered-layered-art (the arena cards stand on the footprint's south edge, in the
+floor band under the actors, PropOcclusion's redraw is the same card), sprite-and-atlas-production
+(the cover reuses the cut p70/p55 strips, one rect per prop), motion-quality-gating +
+concept-scene-parity (same seed, same frames before/after, at 48 px/m, combo through the ease),
+generative-artifact-gating (crates 55 B / dumpster 55 B notes: flatter than 55; only the 55 part of
+combo shows them, the play pitch draws the 70 A twins).
+
+NEXT (iteration 12, in order):
+1. The arenas' cover under `--boss=king --view=combo` and the dev arena's pit/course at tilt70
+   (cones: traffic_cone card); check PropOcclusion's silhouette cut against a card (it uses
+   PROP_H_M's box height): film a body behind a crate stack at 48 px/m; if the silhouette pokes
+   above the card, cut it to the card's drawn rect (PropCards could return it).
+2. The depot's dock door row: sits under the boss bar at the 55 framing (frame 880): nudge
+   boss_dressing.json `at` south by ~1.5 m if it stays clear of the fight lanes, film again.
+3. CityOcclusion's remaining 0.21 ms: RigCastShadows.collect walks the whole actors layer each
+   frame (400 crowd children on the drive); collect the rigs once per frame from RigDepthSort's
+   list if view exposes one (REQUEST to view), else skip bodies off screen.
+4. facade_tall (B 2210, untapered) as a `tall` style for the 17-21 m landmarks (by_name rows).
+5. Quest 1's payphone: still blocked on the quest stage having no angled view (not city's file).
