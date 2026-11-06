@@ -1,5 +1,5 @@
 {
-  "doc": "d8-weapons: Rivet's held weapons drawn for a raised camera (HeldPitchArt). Keyed by the view row's camera pitch in whole degrees (\"55\" = `tilt`; a \"70\" block can sit beside it), then by weapon_art id: art = a three-quarter part showing the gun's top and its side body, +x along the barrel (mirrored about the barrel line while it points left on screen), grip_px = where the gun claw closes, muzzle_px = the bore tip (the flash and the shot start here), length_px = the tail-to-tip span, drawn weapon_art's length_m long. A weapon without a row keeps weapon_art's top-down part; `top` (90) never reads this table. `--held-pitch=off` = the before. small (optional) = the part re-toned for gameplay scale on the same canvas (tools/art/held_pitch_small.py, from the unprepped cut), drawn in the claw below weapon_art.json's held_small_below_ppm like WeaponArt's `small` parts; absent = the full part at every zoom. empty / empty_small (tubes): the tube with the warhead cut away on the same canvas, drawn from the shot until the reload loads (HeldTube), as weapon_art's empty parts are for `top`.",
+  "doc": "d8-weapons: Rivet's held weapons drawn for a raised camera (HeldPitchArt). Keyed by the view row's camera pitch in whole degrees (\"55\" = `tilt`; a \"70\" block can sit beside it), then by weapon_art id: art = a three-quarter part showing the gun's top and its side body, +x along the barrel (mirrored about the barrel line while it points left on screen), grip_px = where the gun claw closes, muzzle_px = the bore tip (the flash and the shot start here), length_px = the tail-to-tip span, drawn weapon_art's length_m long. A weapon without a row keeps weapon_art's top-down part; `top` (90) never reads this table. `--held-pitch=off` = the before. small (optional) = the part re-toned for gameplay scale on the same canvas (tools/art/held_pitch_small.py, from the unprepped cut), drawn in the claw below weapon_art.json's held_small_below_ppm like WeaponArt's `small` parts; absent = the full part at every zoom. empty / empty_small (tubes): the tube with the warhead cut away on the same canvas, drawn from the shot until the reload loads (HeldTube), as weapon_art's empty parts are for `top`. enabled false = the art stays but the top-down part draws (the Gatling, d8-weapons iteration 3: its 55 part read as a pale club at 48 px/m, the slim top-down bundle reads more as a rotary gun).",
   "pitches": {
     "55": {
       "doc": "55 degrees (the `tilt` row): generated 2026-11-06 with the image tool from the shipped pickups as the design reference, keyed off #00B140 (steam/ai-provenance/2026-11.jsonl)",
@@ -61,6 +61,7 @@
         },
         "gatling": {
           "art": "res://features/combat/weapons/art/held_55/gatling.png",
+          "enabled": false,
           "grip_px": [
             70,
             215
@@ -70,7 +71,7 @@
             683,
             108
           ],
-          "size_k": 1,
+          "size_k": 0.85,
           "small": "res://features/combat/weapons/art/held_55/gatling_small.png"
         },
         "gloria": {

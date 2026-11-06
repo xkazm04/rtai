@@ -50,7 +50,8 @@ static func key_of(pitch_deg: float) -> String:
 ## The row for `id` at `pitch_deg` (null: none, the top-down part draws).
 func row(id: StringName, pitch_deg: float) -> HeldPitchRow:
 	var by_id: Dictionary = pitches.get(key_of(pitch_deg), {})
-	return by_id.get(id, null) if LaunchArgs.value("--held-pitch") != "off" else null
+	var r: HeldPitchRow = by_id.get(id, null) if LaunchArgs.value("--held-pitch") != "off" else null
+	return r if r != null and r.enabled else null
 
 
 ## A held sprite for `id` at `pitch_deg` (origin on the grip, world px scale from WeaponArt's

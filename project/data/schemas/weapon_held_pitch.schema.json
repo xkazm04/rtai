@@ -43,6 +43,9 @@
           "pattern": "^res://features/combat/weapons/art/held_[0-9]+/",
           "type": "string"
         },
+        "enabled": {
+          "type": "boolean"
+        },
         "grip_px": {
           "$ref": "#/$defs/px"
         },

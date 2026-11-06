@@ -133,3 +133,11 @@ func test_a_pitch_tube_goes_empty_with_its_own_part_and_back() -> void:
 	HeldTube.apply(s, art, &"rocket_launcher", false)
 	assert_eq(s.texture, full)
 	s.free()
+
+
+func test_a_disabled_row_keeps_the_top_down_part() -> void:
+	var r: HeldPitchRow = _shipped().pitches["55"].get(&"gatling", null)
+	assert_not_null(r, "the 55 Gatling art stays in the table")
+	assert_false(r.enabled, "judged worse than the top-down part at 48 px/m")
+	assert_null(_shipped().row(&"gatling", 55.0))
+	assert_null(_shipped().make(&"gatling", 55.0, WeaponArt.new()))

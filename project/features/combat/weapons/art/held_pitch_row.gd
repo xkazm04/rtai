@@ -14,6 +14,8 @@ var small: String = ""
 ## A tube's empty part (warhead cut away) and its small cell, same canvas (HeldTube).
 var empty: String = ""
 var empty_small: String = ""
+## false: the art stays but the top-down part draws (a 55 part judged worse; one value away).
+var enabled: bool = true
 
 
 static func from_row(t: DataTable, w: Dictionary) -> HeldPitchRow:
@@ -26,6 +28,7 @@ static func from_row(t: DataTable, w: Dictionary) -> HeldPitchRow:
 	r.small = _opt(t, w, "small")
 	r.empty = _opt(t, w, "empty")
 	r.empty_small = _opt(t, w, "empty_small")
+	r.enabled = w.get("enabled", true) == true
 	return r
 
 

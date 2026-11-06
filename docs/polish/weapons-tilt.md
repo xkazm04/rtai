@@ -88,8 +88,9 @@ The director reel on 8c64bdeb: top 19/19 and tilt 19/19 chapters, all down, 0 SC
 
 ## Still open
 
-- The Gatling at 55: try size_k 0.8 and a small cell without close_gaps (the 55 bundle has no gaps),
-  or keep the top-down part for it (delete its row: one data value).
+- The Gatling: tried size_k 0.85 and a small cell without close_gaps; all read as a pale club. It
+  keeps the top-down part (`enabled: false`, the 55 art stays). A regenerated 55 Gatling (darker
+  barrels with visible gaps) is the next try.
 - The 32 px/m read of the long guns: size_k per row; film both at 32 and pick.
 - The electro baton at 48 px/m.
 - The melee smear in the tilted plane; the flame jet and the electro arc at the drawn tip.
