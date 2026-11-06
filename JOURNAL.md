@@ -2275,3 +2275,14 @@ one value), and a `--feel` before take is now possible in quest1_clip for any qu
 
 NEXT (after the night): it26's NEXT stands: judge call 10 in a played Dock 9 (2 px vs 3 px is one
 value in hit_feel.json `assault_rifle`); n7-melee to merge `f13aa9cc`'s hit_feel loader alias + row.
+
+### FREEZE 08:23 iteration 28 (BUILD, 7 min to freeze)
+- READ: tree clean at `f3f8dcd1`; last project/ commit `bd42aade` (dev only), last game-code commit
+  `f13aa9cc`. Exe `build/export/windows/RTAI.exe` 08:03 on `f13aa9cc` (booted exit 0, 0 SCRIPT
+  ERROR at it26). n7-melee has merged `f13aa9cc`'s hit_feel alias + `assault_rifle` row (their
+  08:14 entry), so the FYI from it26 is closed. No REQUEST to ranged in n7-melee, n7-king, n7-servo.
+- No new change: a gate run alone is about 12 min under contention, so a gated + filmed item does
+  not fit before 08:30. REPORT's gates (`bd42aade`), exe (`f13aa9cc`) and calls stand unchanged.
+
+NEXT (after the night): judge call 10 in a played Dock 9 (2 px vs 3 px is one value in
+hit_feel.json `assault_rifle`); the rest of it25's NEXT list stands as written.
