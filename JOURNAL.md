@@ -1634,3 +1634,11 @@ NEXT (iteration 16, in order):
   keys at 1.0/2.8/4.5/7.0/9.7 s: the ram lane locked, the car on the stander; the stander in the
   coin cone; the dodger out of the lane and out of the cone. The current car (bumpers, throne back,
   lining) and King's chain in frame. it14 version deleted; frames.json 15, all exist.
+
+### 05:35 FILM the charge and the press slam at 48 px/m re-shot on f4df4438
+- Phase 3 seed 2, 1280x800, stander then dodger (one pair of 10 s runs): `M/king_charge_48ppm_it16.mp4`
+  (1.8-6.2 s of each) and `M/king_slam_plates_48ppm_it16.mp4` (6.4-9.6 s of each), music, 0 SCRIPT
+  ERROR. **Looked at** the 2.5 fps sheets: charge lane lock, the cape drawn in and flared, the stander
+  hit, the dodger clear; slam ring, leap, shockwave with coins and the cape landing wide, the dodger
+  outside the ring. A full frame of the slam tell at 4x: plates raised beside the crown, King's chain
+  and plum medallion in front. it13/it14 versions deleted; frames.json 15, all exist.
