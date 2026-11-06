@@ -6,7 +6,7 @@ up-right), tail to the camera. This cuts the five, scales each vehicle so its si
 as the car's top-down footprint (the traffic atlas cell, 80 px/m: the collision size), and pastes
 every view into a CELL_PX square with the car's GROUND CENTRE at the cell centre (the bbox centre
 dropped by half the body's lifted height: a box's projection is centrally symmetric about its
-centroid's). Rows = the sim car art id (CitySpawner CAR_ART 0-7, ART_POLICE_CAR 8), columns = the
+centroid's). Rows = the sim car art id (CitySpawner CAR_ART 0-7, ART_POLICE_CAR 8; row 9 the bike, BIKE), columns = the
 five views. Red-orange lamp lenses are turned amber (red is blood only). The mirrored three views are the runtime's (a UV flip about the cell centre).
 
 A redrawn side view (keyed/vehicle/<id>_side_<pitch>.png, one drawing) replaces the sheet's own
@@ -42,6 +42,11 @@ SIDE_REDO = True
 BETWEEN = True
 # Grade a C redo's saturated paint to its neighbours' (False: the redo's own grade).
 MATCH_C = True
+# The bike row (art id 9, after the sim's 0-8): bike_v3 keyed here from the green original (the
+# library's keyed side view sits on an opaque black box); False: the nine sim rows only.
+BIKE = True
+BIKE_SHEET = "bike_{pitch}_v3.png"
+BIKE_M = (2.1, 1.1)  # length, height (m): no top-down footprint to measure
 COLS = 9 if BETWEEN else 5
 ROWS = [
     ("sedan", 1.45, (1.0, 1.0, 1.0)),
@@ -56,6 +61,33 @@ ROWS = [
 ]
 
 
+def green_key(im: Image.Image, tol: float = 24.0) -> Image.Image:
+    """A #00B140-ish green screen to alpha: alpha falls from 255 at a green excess (g over max(r, b))
+    of `tol` to 0 at 3 `tol`; a spill pixel (green over red and blue) goes neutral grey at its red
+    and blue's mean, warm-biased (no teal in the spoke gaps: teal is the souls')."""
+    px = np.array(im.convert("RGBA")).astype(np.float32)
+    r, g, b = px[:, :, 0], px[:, :, 1], px[:, :, 2]
+    rb = np.maximum(r, b)
+    ex = g - rb
+    a = np.clip(1.0 - (ex - tol) / (2.0 * tol), 0.0, 1.0)
+    grey = (r + b) * 0.5
+    spill = ex > 0
+    for ch, k in ((0, 1.04), (1, 1.0), (2, 0.94)):
+        px[:, :, ch] = np.where(spill, grey * k, px[:, :, ch])
+    px[:, :, 3] = np.where(a < 0.08, 0.0, a * 255.0)
+    return Image.fromarray(np.clip(px, 0, 255).astype(np.uint8))
+
+
+def rows_of() -> list:
+    return ROWS + ([("bike", BIKE_M[1], (1.0, 1.0, 1.0))] if BIKE else [])
+
+
+def sheet_of(lib: Path, sid: str, pitch: int) -> Image.Image:
+    if sid == "bike":
+        return green_key(Image.open(lib / "sheets" / "vehicle" / BIKE_SHEET.format(pitch=pitch)))
+    return Image.open(lib / "keyed" / "vehicle" / f"{sid}_{pitch}.png").convert("RGBA")
+
+
 def footprints(root: Path) -> list[float]:
     """Each art id's top-down length (m) from the traffic atlas (3 x 3 cells of 512 x 256)."""
     a = np.array(Image.open(root / TOPDOWN).convert("RGBA"))[:, :, 3]
@@ -64,7 +96,7 @@ def footprints(root: Path) -> list[float]:
         c, r = i % 3, i // 3
         xs = np.where((a[r * 256 : (r + 1) * 256, c * 512 : (c + 1) * 512] > 40).any(0))[0]
         out.append((xs.max() - xs.min() + 1) / 80.0)
-    return out
+    return out + ([BIKE_M[0]] if BIKE else [])
 
 
 def views(sheet: Image.Image) -> list[Image.Image]:
@@ -194,13 +226,12 @@ def paste(atlas: Image.Image, v: Image.Image, k: float, at: tuple, lift: float) 
 
 
 def build(root: Path, lib: Path, pitch: int) -> Image.Image:
-    atlas = Image.new("RGBA", (CELL_PX * COLS, CELL_PX * len(ROWS)), (0, 0, 0, 0))
+    atlas = Image.new("RGBA", (CELL_PX * COLS, CELL_PX * len(rows_of())), (0, 0, 0, 0))
     fine = []
     lengths = footprints(root)
     cos_p = math.cos(math.radians(pitch))
-    for row, (sid, height, gain) in enumerate(ROWS):
-        sheet = Image.open(lib / "keyed" / "vehicle" / f"{sid}_{pitch}.png").convert("RGBA")
-        vs = views(sheet)
+    for row, (sid, height, gain) in enumerate(rows_of()):
+        vs = views(sheet_of(lib, sid, pitch))
         k = lengths[row] * PPM / vs[2].width  # the side view as long as the footprint
         ks = [k] * 5
         redo = lib / "keyed" / "vehicle" / f"{sid}_side_{pitch}.png"
@@ -220,7 +251,7 @@ def build(root: Path, lib: Path, pitch: int) -> Image.Image:
                 v = match_paint(v, [vs[2], vs[3]]) if MATCH_C else v
             paste(atlas, v, kb, (5 + j, row, gain), drop)
     print(f"fine rows (VehicleViews.FINE): {fine}")
-    return atlas
+    return atlas if fine else atlas.crop((0, 0, CELL_PX * 5, atlas.height))  # no in-betweens: 5
 
 
 def main() -> None:

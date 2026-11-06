@@ -11,9 +11,8 @@ extends Node2D
 
 const DIR: String = "res://features/vehicles/art/%s/traffic_cards.png"
 const SHADER: String = "res://features/vehicles/vehicle_cards.gdshader"
-const ROWS: int = 9
-## The atlas cell's side in metres (CELL_PX 448 at 64 px/m).
-const CELL_M: float = 7.0
+const ROWS: int = 9  # the sim's art ids 0-8; VehicleViews.BIKE_ART after them (no sim bike yet)
+const CELL_M: float = 7.0  # the atlas cell's side (m): CELL_PX 448 at 64 px/m
 ## The cross-fade window around a view boundary (degrees of heading); 0 = hard swap.
 const BLEND_DEG: float = 0.0
 const CAP: int = 256
@@ -49,7 +48,7 @@ var _cs: PackedColorArray = PackedColorArray()
 var _cds: PackedColorArray = PackedColorArray()
 var _below: PackedByteArray = PackedByteArray()
 var _seen: Rect2 = Rect2()
-var _cols: int = VehicleViews.COLS
+var _grid: Vector2i = Vector2i(VehicleViews.COLS, ROWS)
 var _fine: PackedInt32Array = PackedInt32Array()
 
 
@@ -75,11 +74,11 @@ static func atlas() -> Texture2D:
 
 ## Starts a frame with `tex`; then put() each car, then finish().
 func begin(tex: Texture2D) -> void:
-	if tex != _node.texture:  # a new atlas: its grid (columns, FINE rows) into both layers
-		_cols = VehicleViews.cols_of(tex)
-		_fine = VehicleViews.fine_rows(_cols, ViewMode.shared().art)
+	if tex != _node.texture:  # a new atlas: its grid (columns, rows, FINE rows) into both layers
+		_grid = VehicleViews.grid_of(tex, ROWS)
+		_fine = VehicleViews.fine_rows(_grid.x, ViewMode.shared().art)
 		for node: MultiMeshInstance2D in [_node, under]:
-			(node.material as ShaderMaterial).set_shader_parameter("cols", _cols)
+			VehicleCardMesh.set_grid(node, _grid)
 	_node.texture = tex
 	under.texture = tex
 	if under.get_parent() == null:
@@ -158,7 +157,7 @@ static func back_to_front(ys: PackedFloat32Array) -> Array[int]:
 	return order
 
 
-## The cards drawn this frame (all), and those drawn under the actors (someone in front).
+## The cards drawn this frame (all), and those under the actors (someone in front).
 func count() -> int:
 	return _n
 
@@ -169,7 +168,7 @@ func count_under() -> int:
 
 ## The columns of the atlas begun last (a combined view's pitch swap changes it).
 func cols() -> int:
-	return _cols
+	return _grid.x
 
 
 ## The card's world transform: CELL_M square on screen, turned `turn_deg`, unsquashed by ground_k.
@@ -187,7 +186,7 @@ static func card_xf(pos: Vector2, turn_deg: float) -> Transform2D:
 func _one(aw: Vector2i, pos: Vector2, pick: Vector3, turn: float, c: Color) -> void:
 	if _n >= CAP or c.a <= 0.0:
 		return
-	var cell: float = float(clampi(aw.x, 0, ROWS - 1) * _cols) + pick.x
+	var cell: float = float(clampi(aw.x, 0, _grid.y - 1) * _grid.x) + pick.x
 	@warning_ignore("return_value_discarded")
 	_ys.append(pos.y)
 	_xfs.append(card_xf(pos, turn))

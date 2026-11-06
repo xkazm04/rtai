@@ -17,10 +17,16 @@ static func make(cap: int, shader: Shader, cols: int, rows: int) -> MultiMeshIns
 	node.multimesh = mm
 	var mat: ShaderMaterial = ShaderMaterial.new()
 	mat.shader = shader
-	mat.set_shader_parameter("cols", cols)
-	mat.set_shader_parameter("rows", rows)
 	node.material = mat
+	set_grid(node, Vector2i(cols, rows))
 	return node
+
+
+## The atlas grid (columns, rows) the layer's shader reads its cells from.
+static func set_grid(node: MultiMeshInstance2D, grid: Vector2i) -> void:
+	var mat: ShaderMaterial = node.material as ShaderMaterial
+	mat.set_shader_parameter("cols", grid.x)
+	mat.set_shader_parameter("rows", grid.y)
 
 
 static func quad() -> ArrayMesh:

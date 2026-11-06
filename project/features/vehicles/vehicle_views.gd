@@ -11,6 +11,8 @@ const VIEW_DEG: float = 45.0
 const FINE_DEG: float = 22.5
 ## The atlas cell's side in px (tools/art/vehicle_cards.py CELL_PX): the atlas width / it = columns.
 const CELL_PX: int = 448
+## The bike's row in the card atlases (after the sim's nine): showcase art until the sim has a bike.
+const BIKE_ART: int = 9
 ## Per view art key, the rows whose in-betweens are drawn (vehicle_cards.py prints them; the unit
 ## test checks them against the atlas). Missing: five views a row.
 const FINE: Dictionary[String, PackedInt32Array] = {"p70": [0, 1, 2, 4, 7, 8]}
@@ -41,6 +43,14 @@ static func nose_deg(col: int) -> float:
 ## The columns of card atlas `tex` (COLS when null).
 static func cols_of(tex: Texture2D) -> int:
 	return COLS if tex == null else maxi(COLS, floori(float(tex.get_width()) / CELL_PX))
+
+
+## The grid (columns, rows) of card atlas `tex`: rows past `rows` (the sim's) are showcase art,
+## the bike (vehicle_cards.py BIKE); (COLS, `rows`) when null.
+static func grid_of(tex: Texture2D, rows: int) -> Vector2i:
+	if tex == null:
+		return Vector2i(COLS, rows)
+	return Vector2i(cols_of(tex), maxi(1, floori(float(tex.get_height()) / CELL_PX)))
 
 
 ## The FINE rows of the atlas for view art key `art`, `cols` wide (none under FINE_COLS).

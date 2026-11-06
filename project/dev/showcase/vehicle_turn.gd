@@ -6,8 +6,11 @@ extends Node2D
 ##     res://dev/showcase/vehicle_turn.tscn
 ##     --write-movie <abs>.avi --quit-after 400 -- --view=tilt70 --ppm=64 [--blend=8] [--upright=1]
 
-## [art id, footprint length m, width m]: the sedan, the police car, the van.
-const CARS: Array[Vector3] = [Vector3(0, 4.6, 1.9), Vector3(8, 4.8, 1.95), Vector3(4, 5.2, 2.1)]
+## [art id, footprint length m, width m]: the sedan, the police car, the van; the bike (atlas row
+## VehicleViews.BIKE_ART, no sim bike yet) below the police car.
+const CARS: Array[Vector3] = [
+	Vector3(0, 4.6, 1.9), Vector3(8, 4.8, 1.95), Vector3(4, 5.2, 2.1), Vector3(9, 2.1, 0.8)
+]
 const GAP_M: float = 6.0
 const DEG_PER_TICK: float = 1.0
 const ASPHALT: Color = Color(0.27, 0.27, 0.28)
@@ -73,4 +76,4 @@ func _head() -> Vector2:
 
 
 func _at(i: int) -> Vector2:
-	return Vector2((i - 1) * GAP_M, 0.0)
+	return Vector2((i - 1) * GAP_M, 0.0) if i < 3 else Vector2(0.0, 4.5)

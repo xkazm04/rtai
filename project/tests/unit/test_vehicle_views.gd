@@ -67,3 +67,35 @@ func test_the_grid_follows_the_atlas_across_a_pitch_swap() -> void:
 
 func _tex(w: int) -> Texture2D:
 	return ImageTexture.create_from_image(Image.create(w, 4, false, Image.FORMAT_RGBA8))
+
+
+func test_both_atlases_hold_the_bike_row_after_the_sims_nine() -> void:
+	var cell: int = VehicleViews.CELL_PX
+	for art: String in ["p70", "p55"]:
+		var tex: Texture2D = load(VehicleCards.DIR % art) as Texture2D
+		var grid: Vector2i = VehicleViews.grid_of(tex, VehicleCards.ROWS)
+		assert_eq(grid.y, VehicleViews.BIKE_ART + 1, art)
+		var img: Image = tex.get_image()
+		for col: int in VehicleViews.COLS:  # the five drawn views, each a lone bike
+			var r: Rect2i = Rect2i(col * cell, VehicleViews.BIKE_ART * cell, cell, cell)
+			assert_gt(_opaque(img, r), 40, "%s view %d" % [art, col])
+
+
+func test_a_null_atlas_keeps_the_sims_grid() -> void:
+	assert_eq(VehicleViews.grid_of(null, VehicleCards.ROWS), Vector2i(5, 9))
+
+
+func test_both_layers_shaders_read_the_atlas_rows() -> void:
+	var cards: VehicleCards = VehicleCards.new()
+	var cell: int = VehicleViews.CELL_PX
+	var img: Image = Image.create(cell * VehicleViews.COLS, cell * 10, false, Image.FORMAT_L8)
+	cards.begin(ImageTexture.create_from_image(img))
+	var layers: Array[MultiMeshInstance2D] = [
+		cards.get_child(0) as MultiMeshInstance2D, cards.under
+	]
+	for node: MultiMeshInstance2D in layers:
+		var mat: ShaderMaterial = node.material as ShaderMaterial
+		var rows: int = mat.get_shader_parameter("rows")
+		var cols: int = mat.get_shader_parameter("cols")
+		assert_eq(Vector2i(cols, rows), Vector2i(VehicleViews.COLS, 10))
+	cards.free()
