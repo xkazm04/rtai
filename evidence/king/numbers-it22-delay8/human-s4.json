@@ -1,0 +1,93 @@
+{
+  "alley": {
+    "alley_kills": 0,
+    "alley_waves": 0
+  },
+  "boss_fight": {
+    "adds_landed": 4,
+    "adds_spawned": 8,
+    "adds_tries": 19,
+    "boss": "king",
+    "dazes": 0,
+    "dealt": 58.0,
+    "defeated_tick": 5387,
+    "hp_frac": 0.0,
+    "landed": {
+      "coin_fan": 3,
+      "press_slam": 1
+    },
+    "moves": {},
+    "phase": 3,
+    "repair_delay_s": 8.0,
+    "rivet_hp_min": 58.8,
+    "rolled": {
+      "press_slam": 1
+    },
+    "stuns": 0,
+    "tries": {
+      "charge": 1,
+      "coin_fan": 10,
+      "decree": 4,
+      "press_slam": 3,
+      "ram": 2
+    }
+  },
+  "brutality_pit": {
+    "by_style": {},
+    "kill_cut_us": [],
+    "kill_ticks": [],
+    "signature_kills": 0,
+    "view_avg_us": 70,
+    "view_frames": 18000,
+    "view_over_2ms": 1,
+    "view_worst_tick": 1836,
+    "view_worst_us": 2311
+  },
+  "cars": {
+    "damaged": 0,
+    "hijacked": 0,
+    "total": 4,
+    "wrecked": 0
+  },
+  "corpse_decay": {
+    "bodies_cap": 16,
+    "bodies_now": 0,
+    "bodies_peak": 4,
+    "died": 9,
+    "early_fades": 0,
+    "forced": 0,
+    "forced_alpha": 0.0,
+    "peak_dead_listed": 4,
+    "pruned": 8,
+    "stains_now": 0
+  },
+  "damage_taken": 0.0,
+  "deaths": 0,
+  "dodges": 0,
+  "hit_rate": 0.0,
+  "hits": 0,
+  "input_latency_mean_ticks": 0.0,
+  "input_latency_ticks": [
+    0
+  ],
+  "knockdowns": 0,
+  "pit_kills": 0,
+  "pit_waves": 0,
+  "rivet_claw_cops": {
+    "claw_hits": 0,
+    "claw_kills": 0,
+    "claw_swings": 0,
+    "claw_whiffs": 0,
+    "shock_discharges": 0,
+    "shock_landed": 0
+  },
+  "schema": "gtai.arena-telemetry/1",
+  "shots": 217,
+  "ticks": 7462,
+  "top_speed_mps": 19.9644613265991,
+  "ttk_s": {},
+  "turn_rate_peak_dps": 6266.55567592926,
+  "weapon_art_rack": {
+    "rack": true
+  }
+}
