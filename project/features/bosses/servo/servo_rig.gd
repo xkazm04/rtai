@@ -15,6 +15,10 @@ const FLASH_TICKS: int = 5
 const PARTS: Array[StringName] = [
 	&"head", &"pad", &"pelvis", &"torso", &"rack", &"rack3", &"thigh", &"shin", &"arm"
 ]
+## A docked drone: a cream body (metres square, ink rim) in each full rack cell, the sheet's cream
+## drones in the bays (the wing art alone printed them as dark cells). The flying drone's whole
+## sprite there was 18 rotor crosses: noise at 32 px/m. 0 = off.
+const DOCKED_M: float = 0.34
 
 ## Pixels per metre of the canvas (32 in the dev view, Ink.PX_PER_M in the arena).
 var px: float = 32.0
@@ -132,6 +136,8 @@ func _wings(o: Vector2, fwd: Vector2, side: Vector2, k: float, tint: Color) -> v
 		var st: int = rack.state[i]
 		if st == ServoRack.Cell.OUT or st == ServoRack.Cell.REFILL:
 			draw_circle(rack.cell_pos(i) * px, 0.3 * px, bay)
+		elif st == ServoRack.Cell.FULL and DOCKED_M > 0.0 and _down() < 0:  # down: ServoFall.spill
+			_docked(rack.cell_pos(i), rot, k, tint)
 
 
 ## Three rows: rack3.png (tools/art/servo_rack3.py, one frame 3 bays deep) with its bottom on
@@ -154,6 +160,14 @@ func _extra_rows(wing: Texture2D, tint: Color) -> void:
 	for r: int in range(2, rack.rows()):
 		var dst: Rect2 = Rect2(-sz.x * 0.5, -sz.y * 0.5 - row_px * (r - 1), sz.x, row_px)
 		draw_texture_rect_region(wing, dst, Rect2(0.0, 0.0, sz.x, row_px), tint)
+
+
+func _docked(at: Vector2, rot: float, k: float, tint: Color) -> void:
+	var h: float = DOCKED_M * 0.5 * k * px
+	draw_set_transform(at * px, rot)
+	draw_rect(Rect2(-h - 1.5, -h - 1.5, h * 2.0 + 3.0, h * 2.0 + 3.0), _pal.color(&"ink") * tint)
+	draw_rect(Rect2(-h, -h, h * 2.0, h * 2.0), _pal.color(&"paper_2") * tint)
+	draw_set_transform(Vector2.ZERO)
 
 
 func _part(n: StringName, at: Vector2, rot: float, k: float, tint: Color) -> void:

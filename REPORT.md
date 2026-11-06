@@ -17,7 +17,7 @@ indexed in `M/frames.json`. Design: `docs/bosses/servo.md`. Journal: `JOURNAL.md
   only during a tell. The rack is its own animated layer: drones dock, launch and refill. Phase 3
   blows a wing off. The defeat: a flash, the pads spin down, the body slumps and greys out, the
   drones spill, the visor flickers out in cream.
-  See `M/frames/servo_target_vs_game_32ppm_it9.png` and `M/frames/servo_spine_gap_ab_48ppm_it9.png`.
+  See `M/frames/servo_target_vs_game_32ppm_it9.png` and `M/frames/servo_rack_spine_docked_ab_it9.png`.
 - **The drone swarm** (`features/bosses/servo/`): flocking on the 60 Hz tick from the
   `servo_swarm` stream, drop rings, a max-alive cap per phase, despawn, parcels (a bomb or a CS
   crate obstacle), and armoured kamikaze dives in phase 3. The drones are shootable. Dent seizes
@@ -52,7 +52,8 @@ The rotor dash checked against a reading player (it6): every tell read but 18-32
 7. Kamikaze armour: 3 rounds (default) vs 1: `servo.json kamikaze.hp`. Clip: `M/servo_attack_kamikaze_dive_lands_48ppm_it5.mp4`.
 8. Dent's van is parked from the start (default) vs none: `bosses.json arenas.depot.parked`. Clip: `M/servo_ghost_dent_van_48ppm_it5.mp4`.
 9. Kerf's blink cuts the drones within 0.6 m of its line (default) vs only the one target: `bosses.json servo.kerf_line_m`. Clip: `M/servo_ghost_kerf_cut_halves_48ppm_it7.mp4`.
-10. The spine: the wings 0.94 m apart for a 1.5 m spine, the sheet's measure (default) vs touching wings with a 0.56 m column over them (it8): `servo.json rack.spine_m` 0.94 / 0. It moves the drones' launch cells; measured, the fight stays inside the seeds' spread (`evidence/servo/numbers-it9-spine94/`). Still: `M/frames/servo_spine_gap_ab_48ppm_it9.png` (left 0, right 0.94).
+10. The spine: the wings 0.94 m apart for a 1.5 m spine, the sheet's measure (default) vs touching wings with a 0.56 m column over them (it8): `servo.json rack.spine_m` 0.94 / 0. It moves the drones' launch cells; measured, the fight stays inside the seeds' spread (`evidence/servo/numbers-it9-spine94/`). Still: `M/frames/servo_rack_spine_docked_ab_it9.png` (top row: 0 | 0.94 | 0.94 plated).
+11. Docked drones: a cream body in each full rack bay, gaps where drones are out (default) vs the wing art alone (dark bays): `ServoRig.DOCKED_M` 0.34 / 0. The flying drone's full sprite in the bays was tried and rejected (18 rotor crosses: noise at 32 px/m). Still: the same file, bottom row (32 px/m).
 
 Exe (exported it9 on fae5b894, re-exported at the freeze): `build/export/windows/RTAI.exe` in the
 worktree (`windows-showcase` preset, boots into the arena). Lines: `RTAI.exe -- --rigs --boss=servo`,
