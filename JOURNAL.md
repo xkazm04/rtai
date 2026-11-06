@@ -548,3 +548,7 @@ NEXT (iteration 16 = the freeze; freeze 08:30, report 08:40):
   top King: defeated; 0 SCRIPT ERROR each (identical to it15). `evidence/view/it18/exe_*.log`.
 - GATE started 08:06: director reel on ae9b1502 (game code = 08e56ab6; the it15 reel was one
   view-only commit earlier). Result below.
+- GATE director reel on ae9b1502 (switch off, headless): 19/19 chapters fully down, 0 SCRIPT ERROR,
+  done 08:08 (`evidence/view/it18/director-reel-19of19-ae9b1502.log`); my reel killed by PID
+  42192 after (another lane's reel left alone). REPORT gates updated. REPORT calls 1-2: full exe
+  lines (pitch study via `tilt_cards` / `tilt45_cards`, which have cards but no cast shadows).

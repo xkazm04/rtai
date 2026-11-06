@@ -126,8 +126,8 @@ afford it. `top_lift` is the fallback if the owner keeps straight down: free, bu
    - Frame cost (it18, CONTENDED): tilt +15 % frame, +55 % draw calls vs top; frame near 1 ms.
 2. **The pitch**: 55 (default) vs 65 vs 45, one data value each in `view.json`. Still:
    `gtai-masters/n7/view/king_views_grid_32ppm_it12_t12s.png`.
-   - `build/export/windows/RTAI.exe -- --rigs --boss=king --view=tilt_cards` (65, with cards)
-   - `build/export/windows/RTAI.exe -- --rigs --boss=king --view=tilt45_cards` (45, with cards)
+   - `build/export/windows/RTAI.exe -- --rigs --boss=king --view=tilt_cards` (65, with cards, no cast shadows)
+   - `build/export/windows/RTAI.exe -- --rigs --boss=king --view=tilt45_cards` (45, with cards, no cast shadows)
    - (`--view=tilt65` / `tilt45` / `tilt75` are the same pitches without cards and shadows)
 3. **Cast shadows by height** (a low evening sun, down-right): on (default, `--view=tilt`) or off
    (`--view=tilt_noshadow`). My pick: on; they ground the car and the bodies on the foreshortened
@@ -148,8 +148,8 @@ afford it. `top_lift` is the fallback if the owner keeps straight down: free, bu
   `--view`): `node tools/evidence/run.mjs --no-bench` all PASS: lint 13/13, unit 1190/0, scenarios
   52, parity bit-exact (mutation caught at step 629), look goldens 11/11 + block 5/5
   (`evidence/view/it18/evidence-run-8b7a5982.log`). Also all PASS on 02af876a (code = 08e56ab6).
-  The game code is unchanged since 08e56ab6, where the director reel went 19/19 fully down with
-  0 SCRIPT ERROR (it15, below).
+  Director reel (`--bot=reel --reel=director --loadout=pistol --rigs`, headless) on ae9b1502:
+  19/19 chapters fully down, 0 SCRIPT ERROR (`evidence/view/it18/director-reel-19of19-ae9b1502.log`).
 - it15 on 08e56ab6 (occlusion in): `node tools/evidence/run.mjs --no-bench` all PASS (lint 13/13,
   unit 1190/0, scenarios 52, parity bit-exact, look goldens 11/11 + block 5/5;
   `evidence/view/it15/evidence-run-08e56ab6.log`); director reel 19/19 fully down, 0 SCRIPT ERROR
