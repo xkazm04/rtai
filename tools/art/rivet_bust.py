@@ -23,13 +23,14 @@ import cut_facings as cf  # noqa: E402
 # down to the chest plate's lower edge y_b
 FACINGS = [
     (77, 345, 200, 145, 282, 268, 158, 278, 318),
-    (397, 624, 218, 448, 580, 266, 458, 568, 318),
+    (397, 624, 196, 444, 574, 236, 468, 570, 318),
     (713, 850, 250, 713, 850, 250, 718, 834, 318),
     (946, 1137, 200, 988, 1118, 254, 996, 1118, 312),
     (1201, 1462, 205, 1272, 1403, 242, 1288, 1388, 312),
 ]
 TOP = 44
 FADE = 6
+INK = 4
 
 
 def bust_mask(h: int, w: int) -> np.ndarray:
@@ -40,6 +41,20 @@ def bust_mask(h: int, w: int) -> np.ndarray:
         for y in range(yc, yb):
             m[y, tx0:tx1] = min(1.0, (yb - y) / FADE)
     return m
+
+
+def reink(rgba: np.ndarray, whole: np.ndarray) -> np.ndarray:
+    """Where the mask cut through opaque art (an arm, the shoulder ball, the chest's lower edge), the
+    new edge gets the ink outline INK px wide, so a cut reads as drawn, not sliced."""
+    from scipy.ndimage import binary_dilation
+
+    kept = rgba[:, :, 3] > 128
+    cut = whole & ~kept
+    edge = kept & binary_dilation(cut, iterations=INK)
+    out = rgba.copy()
+    out[edge, :3] = cf.PRINT[1].astype(np.uint8)
+    out[edge, 3] = 255
+    return out
 
 
 def tan55(rgba: np.ndarray) -> np.ndarray:
@@ -65,8 +80,9 @@ def main() -> None:
     rest = [a for a in sys.argv[3:] if not a.startswith("--")]
     cell_h = int(rest[0]) if rest else 192
     rgba = cf.key_out(Image.open(src), 70.0).astype(np.float32)
+    whole = rgba[:, :, 3] > 128
     rgba[:, :, 3] *= bust_mask(rgba.shape[0], rgba.shape[1])
-    rgba = rgba.astype(np.uint8)
+    rgba = reink(rgba.astype(np.uint8), whole)
     solid = rgba[:, :, 3] > 128
     crops = []
     for x0, x1, *_ in FACINGS:
