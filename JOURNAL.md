@@ -1586,3 +1586,32 @@ NEXT (written 06:45, for iteration 18; supersedes the 05:59 list):
 - GATES 07:28 on `fca3ba52` (worktree untouched during them): director reels arena 19/19 and city
   19/19 (38 lines each), 0 SCRIPT ERROR; scenarios 52 ran, 0 failed
   (`evidence/n7-melee/{director-arena-loadout,director-city-loadout,scenarios}-fca3ba52.log`).
+- GATES 07:35 `node tools/evidence/run.mjs --no-bench` on `9e246820` (code `fca3ba52`), clean tree,
+  untouched through the run: exit 0; lint 13/13, unit 1242/1242, scenarios 52/52, parity bit-exact
+  over 1200 steps (planted caught at 629), look 11/11, block 5/5
+  (`evidence/n7-melee/evidence-run-9e246820.log`). Bench not run (contended, no lock).
+- EXE 07:35 re-baked and re-exported on `9e246820` (code `fca3ba52`): bake exit 0, both exports exit
+  0, 0 ERROR lines (`evidence/n7-melee/it18-{bake,export,export-slice}.log`, overwritten from the
+  07:02 run). Booted the showcase exe `RTAI.exe --screen 0 --rendering-driver d3d12 -- --arena=city
+  --bot=ghosts --ghost=tonnage --rigs --ppm=32 --tell-cues=off` (260 frames): exit 0, 0 SCRIPT
+  ERROR, no unknown flag; frame 140 looked at (the press with its dashed ring on the cops at the
+  car). Slice exe: exit 0, 0 SCRIPT ERROR, the Quest 1 title card at frame 110.
+- NOTE the combined city clip stands for `fca3ba52`: the only code since `3fd49218` is TellCues'
+  miss lash and the dev recorder; the city Dent beat seizes a car (no miss), so its audio is the
+  same. Scratch: this iteration's films deleted; the `set_*.avi` (combined clip sources) kept, and
+  the 19:40 `audit_*_48.avi` (main's before takes, not in frames.json) left for the freeze clean.
+NEXT (written 07:37, for iteration 19 = the freeze; supersedes the 06:45 list):
+1. Read n7-ranged's JOURNAL to its end; cherry-pick only hit_feel / feel_cam / camera commits -x
+   (merged: `8efe76ca`, `a63bd8e0`, `49cfe6c4`=`1166c418`, `d85fb768`=`d7b73363`; `1b1c8402` shot
+   trail = weapon FX, not merged). If anything merges or code moves: lint, unit, `bash
+   evidence/n7-melee/reels.sh <head>`, the full evidence run on a clean tree (log to /tmp, copy in
+   after), then `bash /c/Users/kazda/kiro/gtai-n7p/scratch/melee_export18.sh` (bake + both exes,
+   logs in /tmp/m18-*.log) and boot each once.
+2. If no code moves: the exes and the evidence are current on `9e246820` (code `fca3ba52`): no
+   gate re-run needed; only docs.
+3. REPORT at 08:40: drop the DRAFT line; refresh the top (iteration count, final heads); the exe
+   section: `build/export/windows/RTAI.exe` (showcase) and `build/export/windows-slice/RTAI.exe`
+   (quest 1), both on `fca3ba52`; check each call (a)-(q) names its before flag; the gates line
+   (evidence-run-9e246820). Delete the `audit_*_48.avi` in scratch if no doc names them.
+4. Build only if time is left before 08:15: the whiff thud (unit-tested only), ObjectiveView vs
+   forms_lift_m (judged look: film first). Call (b) only on the owner's word.
