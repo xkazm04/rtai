@@ -417,3 +417,39 @@ NEXT:
   `gtai-masters/n8/hud/quest1_payphone_call_live_tilt70.mp4` (32 s): Patch's payphone rises in,
   Rivet's line (no face: proposal only), Don Fax's payphone; the ghost card folded beside the box.
   Stills `quest1_payphone_{patch,fax}_live_tilt70_32.png`. Looked at a contact sheet of 8 frames.
+- 00:39 Gates (`node tools/evidence/run.mjs --no-bench` at 6fd17433, every change of this iteration;
+  `gtai-n8/scratch/hud/evidence_run_it6.log`): lint 15/15, unit 1508 passed 0 failed, scenarios
+  52/52, parity bit-exact + planted mutation caught at step 629, look goldens 11/11 + block 5/5 (top
+  did not move), export-audit 556/0. No commit during the run this time (the it5 friction).
+- 00:44 FRICTION (caught by looking): the 00:05 armory shots showed the INTERIM mini nuke at 55: a
+  game run (not the editor) draws the stale `.godot/imported` cache of a PNG replaced on disk; the
+  gate run's `--import` refreshed it. Re-shot after the import: `gtai-masters/n8/hud/armory_{tilt70,
+  tilt}_48_before_after_crop2x.png` (17 final drawings, notes updated) and the call still
+  `call_pickup_hover_vs_crate_48_crop2x.png` (hover left, crate right; 70 top, 55 bottom), 0 SCRIPT
+  ERROR. Rule for me: after replacing art, run `--import` (or any gate) BEFORE filming.
+- Masters `frames.json` 15 entries: the live payphone clip third; `dialogue_1080p_patch_payphone.png`
+  (the board's still, superseded by the live call) dropped; the stale after17 armory stills deleted.
+- FINDING: the car radio carries no speech (3 placeholder music loops, `audio_radio.json`): there
+  is no speaker to frame; a PortraitBook `kind: device` row is the hook when a DJ line exists. For
+  REPORT (draft in `gtai-n8/scratch/hud/it6/report_notes.md`).
+
+Registry rules applied this iteration: `sprite-and-atlas-production` (the last 2 weapons' cuts by
+the same re-runnable tool from A sheets), `generative-artifact-gating` (A only, 4 provenance
+lines), `concept-scene-parity` (cuts compared with the owner's design sheets), `motion-quality-gating`
+(the payphone call judged live in motion, not on the board; every still looked at, the stale-cache
+frame caught and re-shot), `short-form-cards-and-barks` + `accessibility` (the card never under the
+subtitle paper on either cast path).
+
+NEXT:
+- All 5 redesigned weapons now come from the assets sheets: work item 1 is complete. Remaining
+  quality: a true 70 long-gun sheet (Gloria, plasma rifle, gatling use their 55 cut) only if the
+  assets lane makes one; otherwise close as built in REPORT.
+- Film one combined clip v2 (30-90 s) at the end: armory hover/crate 48 px/m (final 17), the
+  payphone call live (`quest1_clip.gd --ticks=2150-4100 --view=tilt70`), the King's crest at combo.
+  Run `--import` (or a gate) first.
+- Optional: a true 1080p live capture (Movie Maker records at the project's 1280x800).
+- Freeze 08:30: export `build/export/windows/RTAI.exe` (int-day recipe in docs/decisions.md);
+  REPORT from `gtai-n8/scratch/hud/it6/report_notes.md` (works / findings / Calls: pickup hover vs
+  crate, portrait side/size, dialogue never pauses play, Don Fax payphone vs bust, boss crest disc
+  vs bust, Rivet's dialogue face proposal).
+- 00:47 Session end. All committed.
