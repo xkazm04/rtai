@@ -62,8 +62,8 @@ Evidence: `C:\Users\kazda\kiro\gtai-masters\d8\view70\` (`frames.json`, 15 entri
   is gone, and the King has the same gilded press arm and court limbs as at 55: 55 vs 70 now
   compares the pitch, not two art sets. The bust draws at the same size (its cells are padded by
   KingArt's 1.5 width factor; a unit test guards it).
-  - The King's gang at 70 also draws bosses' court card and limbs (95109a45), so the two
-    pitches show the same art set. The car is the one exception (below).
+  - The King's gang (95109a45) and throne-car (f2361702) at 70 also draw bosses' court art, so the
+    two pitches show the same art set.
   - Before/after: `king_car_gang_55_vs_70_32ppm_t40_before_it4.png` and
     `king_rivet_onfoot_55_vs_70_64ppm_t9_it3.png` (before: the fan, print limbs, pale gang) vs the it4
     films and stills.
@@ -75,10 +75,10 @@ Evidence: `C:\Users\kazda\kiro\gtai-masters\d8\view70\` (`frames.json`, 15 entri
   combo; `top` 900/900 frames identical with main (list md5 6e865449 both).
 
 ## Not done / owed
-- **The 70 sample is narrower than the 55 cast.** At 70 the King's car is today's flat car: bosses'
-  unit test pins pitch 70 as having no car art, so I could not add it (tried, it reads right;
-  REQUEST to bosses). Drawn from the 70 sheet: Rivet's head, the King's bust and Tonnage's card;
-  the gang's card at 70 is the 55 drawing.
+- **The 70 sample is narrower than the 55 cast.** Drawn from the 70 sheet: Rivet's head, the King's
+  bust and Tonnage's card. At 70 the King's limbs, gang and throne-car reuse bosses' 55 art (the
+  limbs and the car are pitch-agnostic; the gang's card is the 55 drawing). The car came last
+  (f2361702, after bosses moved their test to 65); the films before it show today's car at 70.
 - **Under combo, during the 1 s ease, the King's drawn cape fan shows** (KingArt keys by the live
   pitch rounded, and no strip exists for 56-69), and the gang chains switch when the pitch rounds
   to 55. The King is off screen at the engage in every seed tried (1-5); at the return he is dying.

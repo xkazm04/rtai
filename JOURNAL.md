@@ -502,3 +502,31 @@ NEXT addendum (iteration 4): FIRST re-run the full unit + reel combo on the swap
 - 17:16 GATE scenarios (`node tools/tests/run_scenarios.mjs --quiet-wait=5`) on 52de758a: 52 passed.
 - 17:20 masters: frames.json 15 entries (it4 King trio, 64 pair, stills, before still, city, ease
   study first; superseded it3 films deleted). Scratch avis deleted.
+- 17:21 GATE unit full (no-arg) on 608ca9e3: 1457 passed, 0 failed.
+- 17:22 Started `evidence --no-bench`, stopped it at 17:23 for the bosses merge below (not a result).
+- 17:23 READ bosses' ANSWER (17:10): (a) they keep my p70 slot files as mine; (b) DONE 854c8768: their
+  car-walls test uses 65 as the car-less pitch; add `art/p70/car/` in MY lane (incl. their new
+  cannon.png).
+- 17:23 MILESTONE c9501647 merge d8-bosses (cape train on foot, the car's art cannon, the test pitch;
+  JOURNAL and REPORT: ours, both root files are per lane). f2361702 `p70/car` = their p55 car art
+  (walls, roof, throne front/back, cannon): at 70 the King rides the throne-car too. Unit court/
+  king_art/view_pitch/car_walls/cape/rig_head_card 46/0, lint 15/15.
+- 17:25 FILM re-take of the King trio + 64 pair on f2361702 (running at the session end; if it did not
+  finish, iteration 5 re-takes it first).
+- Registry rules applied (this session, all): depth-ordered-layered-art, concept-scene-parity (one art
+  set at both pitches: the comparison is the pitch), motion-quality-gating (every film watched as
+  stills at fixed seconds; the combo engage seen frame by frame in it3), generative-artifact-gating
+  (padding, not resampling, for the p70 bust slot).
+
+NEXT (iteration 5, the freeze, 17:50-18:40):
+1. If `king_55_70_combo_32ppm_46s_it4.mp4` in masters is older than 17:25, re-make it from the scratch
+   it4 avis (`sh trio.sh ...` lines in it4/make.sh) or re-film (it4/film.sh): the 70 panel must show the
+   throne-car (f2361702). Update frames.json (branch f2361702 or later; drop the "car still today's"
+   notes and the car line in REPORT "Not done").
+2. Read chars'/bosses' JOURNALs; merge if they landed visible art (ordinary merges; JOURNAL and REPORT
+   ours; `--import` BEFORE filming).
+3. Gates before the freeze: lint, unit full, scenarios, `node tools/evidence/run.mjs --no-bench`
+   (not run this session), director reel tilt70 + combo, `top` 900-frame identity vs main (it4/top.sh).
+4. 18:30 export: `"$GODOT_BIN" --headless --path project --export-release windows-showcase
+   ../build/export/windows/RTAI.exe`, smoke `--view=combo` and `--view=tilt70`, REPORT final (drop
+   DRAFT; exe lines), JOURNAL, commit.
