@@ -95,4 +95,4 @@ func _reach_at_hit(w: float) -> float:
 	var clips: RigClips = RigClips.new()
 	clips.strike_ph = Vector3(w, 4.0 * SimClock.TICK_DT, 10.0 * SimClock.TICK_DT)
 	clips.strike_t = w
-	return clips.call("_strike_reach")
+	return clips.call("_strike_reach", StrikeDepth.BEFORE)

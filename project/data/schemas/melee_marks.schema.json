@@ -107,6 +107,37 @@
     },
     "schema": {
       "const": "gtai.melee_marks/1"
+    },
+    "swing": {
+      "additionalProperties": false,
+      "properties": {
+        "arm_back": {
+          "additionalProperties": {
+            "maximum": 2,
+            "minimum": 0,
+            "type": "number"
+          },
+          "type": "object"
+        },
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "pullback": {
+          "additionalProperties": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "type": "object"
+        }
+      },
+      "required": [
+        "arm_back",
+        "doc",
+        "pullback"
+      ],
+      "type": "object"
     }
   },
   "required": [

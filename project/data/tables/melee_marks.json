@@ -19,5 +19,18 @@
     "release_m": 1.2,
     "shake_m": 0.06
   },
-  "schema": "gtai.melee_marks/1"
+  "schema": "gtai.melee_marks/1",
+  "swing": {
+    "arm_back": {
+      "blade": 0,
+      "chainsaw": 0,
+      "claw": 1
+    },
+    "doc": "How far a timed strike cocks back before it lands (view only; StrikeDepth -> RigClips' windup reach: the torso twists back and leans away, then the arm is out on the hit tick, which is unchanged). pullback is keyed by the rig's hold class (held_classes.json: blade and chainsaw swing their own weapon); a hold without a row (no weapon, or a gun: the strike is the claw's jab) takes the claw row. --pullback=off or --feel=off = 0.35 for all (the night's curve, the before). 1 = the full reach mirrored back. arm_back (same keys): how far the striking arm draws back and out with the torso while cocked (0 = it stays, the night's; 1 = fully cocked at the deepest pull); none under the off switches.",
+    "pullback": {
+      "blade": 0.35,
+      "chainsaw": 0.35,
+      "claw": 0.7
+    }
+  }
 }

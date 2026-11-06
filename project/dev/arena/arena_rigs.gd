@@ -256,7 +256,7 @@ func _rivet_clips(f: RigFeed) -> void:
 		var h: MeleeHit = m.current()
 		var arm: int = STRIKE_ARMS[mini(m.hit_index - 1, STRIKE_ARMS.size() - 1)]
 		f.clip[0] = RigClips.Clip.STRIKE
-		f.clip_arg[0] = RigInput.pack_strike(h.windup, h.active, h.recovery, arm)
+		f.clip_arg[0] = RigInput.pack_hit(h, arm, m.tick_in)
 	_strikes_seen = m.starts
 	if pilot.shock.discharges != _shocks_seen:  # the discharge: both claws thrust
 		f.clip[0] = RigClips.Clip.STRIKE
