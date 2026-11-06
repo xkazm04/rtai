@@ -40,17 +40,30 @@ func step(carry: bool, fwd: Vector2, grip_at: Vector2, torso_at: Vector2, rot: f
 
 
 ## The shift (global px) that moves a weapon at `at`, axis angle `rot`, beside the head at `head`.
-## `head_half` and `gun_half` are the head's half-width and the weapon's half-thickness (px).
+## `half_sum` is the head's half-width plus the weapon's half-thickness (px). `side` (+1 / -1, in
+## the axis normal's sense) keeps that side of the head; 0 takes the nearer side.
 static func beside_head(
-	at: Vector2, rot: float, head: Vector2, head_half: float, gun_half: float
+	at: Vector2, rot: float, head: Vector2, half_sum: float, side: float = 0.0
 ) -> Vector2:
 	var n: Vector2 = Vector2.from_angle(rot).orthogonal()
 	var dist: float = (at - head).dot(n)
-	var clear: float = BESIDE * (head_half + gun_half)
-	if absf(dist) >= clear:
+	var clear: float = BESIDE * half_sum
+	if side == 0.0:
+		side = signf(dist) if dist != 0.0 else 1.0
+	if dist * side >= clear:
 		return Vector2.ZERO
-	var side: float = signf(dist) if dist != 0.0 else 1.0
 	return n * (side * clear - dist)
+
+
+## n7-ranged: an aimed weapon stays on the gun shoulder's side of the head. Taking the nearer side
+## popped a tube to the off shoulder for one frame on every rocket and nuke launch: the reload's
+## first frame poses the claw on the centre line (its axis 0.1 px off the head's centre).
+static func aim_side(rig: CutRig, rot: float, head: Vector2) -> float:
+	if not rig.aiming or rig.plan.gun_arm < 0:
+		return 0.0
+	var shoulder: Vector2 = rig.sides[rig.plan.gun_arm].upper.global_position
+	var d: float = (shoulder - head).dot(Vector2.from_angle(rot).orthogonal())
+	return signf(d)
 
 
 ## Moves the held `gun` beside Rivet's helmet; d7-held: the claws take the same shift one frame
@@ -62,7 +75,8 @@ static func place_beside(rig: CutRig, gun: Sprite2D) -> void:
 	var gun_half: float = gun.texture.get_height() * absf(gun.global_scale.y) * 0.5
 	var at: Vector2 = gun.global_position
 	var rot: float = gun.global_rotation
-	var shift: Vector2 = beside_head(at, rot, head.global_position, head_half, gun_half)
+	var side: float = aim_side(rig, rot, head.global_position)
+	var shift: Vector2 = beside_head(at, rot, head.global_position, head_half + gun_half, side)
 	gun.global_position += shift
 	var follow: bool = rig.aiming and rig.reload_k < 0.0 and RigGrip.follow_shift
 	var to_local: Transform2D = rig.torso.global_transform.affine_inverse()
