@@ -13,7 +13,10 @@ wcap > 0 keeps only wcap x the head width around the head's centre (drops a riot
 the cut sides feathered over 8 px);
 fix is a comma list: `orange` moves saturated orange (reserved: vermilion is danger only) to the
 street slate; `navy` darkens the sheet's police blue to the game uniform's navy (value x0.62,
-saturation x0.8: the cut-rig uniform measured 53,63,92 against the sheet's 74,101,166).
+saturation x0.8: the cut-rig uniform measured 53,63,92 against the sheet's 74,101,166); `coat`
+(on the finished strip) tones the tan coat (hue 31-52, saturation over 0.3, below 0.62 of the cell
+height) to the dark coat the coat-hat ped's body draws (in game ~27,20,27 ink with cream lights);
+the face (hue 22-27) and the cream brim (saturation under 0.3) keep their colour.
 Raw art (no print). Deterministic.
 """
 
@@ -59,6 +62,21 @@ def _navy(px: np.ndarray) -> int:
     )
     out = (grey + norm * (v - grey)) * 0.62
     px[mask, :3] = (out * 255).clip(0, 255).astype(np.uint8)
+    return int(mask.sum())
+
+
+def _coat(px: np.ndarray) -> int:
+    """Tan coat (lower cell) -> charcoal plum at the pixel's own value; face and brim kept."""
+    rgb = px[:, :, :3].astype(np.float32) / 255.0
+    mx, mn = rgb.max(axis=2), rgb.min(axis=2)
+    sat = np.where(mx > 0, (mx - mn) / np.maximum(mx, 1e-6), 0)
+    r, g, b = rgb[:, :, 0], rgb[:, :, 1], rgb[:, :, 2]
+    hue = np.degrees(np.arctan2(np.sqrt(3) * (g - b), 2 * r - g - b)) % 360
+    low = np.zeros_like(mx, bool)
+    low[int(px.shape[0] * 0.62) :] = True
+    mask = low & (sat > 0.3) & (mx > 0.2) & (hue >= 31) & (hue <= 52) & (px[:, :, 3] > 0)
+    tone = np.array([95, 82, 90], np.float32)
+    px[mask, :3] = (mx[mask][:, None] * tone[None, :]).clip(0, 255).astype(np.uint8)
     return int(mask.sum())
 
 
@@ -119,6 +137,10 @@ def main() -> None:
         cell = Image.new("RGBA", (cw, ch), (0, 0, 0, 0))
         cell.paste(Image.fromarray(c), ((cw - c.shape[1]) // 2, ch - 2 - c.shape[0]))
         strip.paste(cell.resize((w, cell_h), Image.LANCZOS), (i * w, 0))
+    if "coat" in fixes:
+        px = np.array(strip)
+        print(f"  coat {_coat(px)} px")
+        strip = Image.fromarray(px)
     strip.save(args[1])
     print(f"{args[1]}: 5 frames of {w}x{cell_h} (crop cell {cw}x{ch})")
 
