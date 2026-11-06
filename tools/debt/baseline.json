@@ -6,13 +6,14 @@
         "2026-11-06: vehicle_frame learns --view= (n8 vehicles: film the cars under the angled view) (dev_loc 18115 -> 18117)",
         "2026-11-06: n8 vehicles: vehicle_turn.gd, the 360-degree turn film the lane brief asks for (dev only) (dev_loc 18117 -> 18193)",
         "2026-11-06: dev/showcase/vehicle_states: the vehicles lane's damage/fire/skid film scene (dev only, n8) (dev_loc 18193 -> 18288)",
-        "2026-11-06: n8 vehicles: the depth film scene (vehicle_frame --scene=depth), dev only (dev_loc 18287 -> 18327)"
+        "2026-11-06: n8 vehicles: the depth film scene (vehicle_frame --scene=depth), dev only (dev_loc 18287 -> 18327)",
+        "2026-11-06: n8 city: dev/bench/chunk_cost.gd, the angled view's streaming cost probe (brief item 5); a -s script cannot use the LaunchArgs autoload, so it reads the cmdline once (dev_loc 18327 -> 18426)"
       ],
       "files": {
         "project/dev/arena": 1034,
         "project/dev/audio": 367,
         "project/dev/bake_city.gd": 32,
-        "project/dev/bench": 1388,
+        "project/dev/bench": 1487,
         "project/dev/bots": 399,
         "project/dev/enemy_ai": 662,
         "project/dev/frames": 462,
@@ -34,9 +35,12 @@
         "project/dev/view": 158,
         "project/dev/weapon_art": 506
       },
-      "total": 18327
+      "total": 18426
     },
     "direct_cmdline_reads": {
+      "accepted": [
+        "2026-11-06: n8 city: dev/bench/chunk_cost.gd, the angled view's streaming cost probe (brief item 5); a -s script cannot use the LaunchArgs autoload, so it reads the cmdline once (direct_cmdline_reads 153 -> 154)"
+      ],
       "files": {
         "project/core/render/view_mode.gd": 1,
         "project/dev/arena/arena_game.gd": 1,
@@ -47,6 +51,7 @@
         "project/dev/audio/line_timeline.gd": 1,
         "project/dev/bake_city.gd": 2,
         "project/dev/bench/bodies_cost.gd": 1,
+        "project/dev/bench/chunk_cost.gd": 1,
         "project/dev/bench/city_bench.gd": 1,
         "project/dev/bench/quest1_frames.gd": 1,
         "project/dev/bench/rig_bench_run.gd": 1,
@@ -175,7 +180,7 @@
         "project/tests/run_scenarios.gd": 1,
         "project/tests/unit/test_launch_args.gd": 1
       },
-      "total": 153
+      "total": 154
     },
     "files_near_cap": {
       "files": {
