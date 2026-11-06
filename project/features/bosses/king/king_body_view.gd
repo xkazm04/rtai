@@ -187,7 +187,7 @@ func _cannon_raised(p: Vector2, tail: Vector2, tip: Vector2, n: Vector2) -> void
 	draw_colored_polygon(quad, Ink.INK)  # its shadow on the roof
 	draw_circle(p, 12.0, Ink.INK)
 	draw_circle(p + up * 0.5, 10.0, GOLD_DARK)  # the mount post
-	KingCarTrim.cannon(self, tail + up, tip + up)  # the King lane's barrel, lifted
+	KingCarWalls.cannon(self, tail + up, tip + up)  # lifted: the art barrel, else KingCarTrim's
 
 
 ## King on foot: the squat press body, plates out to the sides, cape behind.

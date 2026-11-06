@@ -23,6 +23,15 @@ const ART_MOUNT_K: float = 0.33
 const THRONE_W_M: float = 3.0
 const THRONE_SIDE_K: float = 0.7
 const THRONE_BACK_M: float = 0.3
+## The end walls' painted bumper rows (m from the ground: car_front/car_rear rows 98-126) stand
+## BUMPER_PROUD_M past the nose and the tail, the art extruded, so the ends keep a proud gilded lip
+## (KingCarTrim.bumpers' code bars are not drawn over the art). 0 = flush walls.
+const BUMPER_Z_M: Vector2 = Vector2(0.1, 0.4)
+const BUMPER_PROUD_M: float = 0.18
+## The hood cannon's barrel from art (cannon.png, cut from the sheet's side view): its width (m).
+const CANNON_W_M: float = 0.7
+
+const QUAD_UV: PackedVector2Array = [Vector2(0, 0), Vector2(1, 0), Vector2(1, 1), Vector2(0, 1)]
 
 static var _tex: Dictionary[String, Texture2D] = {}
 
@@ -37,19 +46,21 @@ static func draw(ci: CanvasItem, at: Vector2, heading: float, l: float, w: float
 		return false
 	var origin: Vector2 = ci.get_global_transform() * at
 	var body: Rect2 = Rect2(-l * 0.5, -w * 0.5, l, w)
-	for i: int in SLICES:  # the ink pass: the stack's outline
+	for i: int in SLICES:  # the ink pass: the stack's outline, the bumpers' past the ends
 		_at(ci, at, heading, view.lift_at(origin, _z(i)))
-		ci.draw_rect(body.grow(INK_PX), Ink.INK)
+		var b: float = _proud(i)
+		ci.draw_rect(body.grow_individual(b, 0.0, b, 0.0).grow(INK_PX), Ink.INK)
 	var t: float = BAND_M * Ink.PX_PER_M
 	for i: int in SLICES:
 		var lift: Vector2 = view.lift_at(origin, _z(i))
 		var k: float = 1.0 - float(i) / float(SLICES - 1)  # the wall row: 0 at the roof line
+		var b: float = _proud(i)
 		_at(ci, at, heading, lift)
 		_band(ci, side, Rect2(-l * 0.5, -w * 0.5, l, t), k)
 		_band(ci, side, Rect2(-l * 0.5, w * 0.5 - t, l, t), k)
 		_at(ci, at, heading + PI * 0.5, lift)  # the ends: x across the car, -y toward the nose
-		_band(ci, front, Rect2(-w * 0.5, -l * 0.5, w, t), k)
-		_band(ci, rear, Rect2(-w * 0.5, l * 0.5 - t, w, t), k)
+		_band(ci, front, Rect2(-w * 0.5, -l * 0.5 - b, w, t + b), k)
+		_band(ci, rear, Rect2(-w * 0.5, l * 0.5 - t, w, t + b), k)
 	ci.draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 	return true
 
@@ -68,6 +79,28 @@ static func _at(ci: CanvasItem, at: Vector2, heading: float, lift: Vector2) -> v
 
 static func _z(i: int) -> float:
 	return KingCarStack.ROOF_M * float(i) / float(SLICES - 1)
+
+
+## How far slice `i`'s end bands stand past the nose and the tail (px): the bumpers' rows only.
+static func _proud(i: int) -> float:
+	var z: float = _z(i)
+	var bumper: bool = z >= BUMPER_Z_M.x and z <= BUMPER_Z_M.y
+	return BUMPER_PROUD_M * Ink.PX_PER_M if bumper else 0.0
+
+
+## The hood cannon from `tail` to `tip` (car px): the barrel from art for this pitch (breech at the
+## strip's left) on KingCarTrim's swivel mount; with no strip, KingCarTrim's drawn barrel.
+static func cannon(ci: CanvasItem, tail: Vector2, tip: Vector2) -> void:
+	var tex: Texture2D = _wall(ViewMode.shared().pitch_deg, "cannon")
+	if tex == null:
+		KingCarTrim.cannon(ci, tail, tip)
+		return
+	var a: Vector2 = tip - tail
+	var n: Vector2 = a.normalized().orthogonal() * CANNON_W_M * 0.5 * Ink.PX_PER_M
+	ci.draw_circle(tail + a * 0.2, 17.0, Ink.INK)  # the swivel mount under the breech
+	ci.draw_circle(tail + a * 0.2, 14.5, KingCarTrim.GOLD_DARK)
+	var quad: PackedVector2Array = PackedVector2Array([tail + n, tip + n, tip - n, tail - n])
+	ci.draw_polygon(quad, PackedColorArray([Color.WHITE]), QUAD_UV, tex)
 
 
 ## Where the hood cannon stands (and its coins fly from): on the roof art's ring when drawn.
@@ -110,10 +143,7 @@ static func throne(ci: CanvasItem, at: Vector2, p: float, up: Vector2) -> bool:
 			foot - side * half
 		]
 	)
-	var uv: PackedVector2Array = PackedVector2Array(
-		[Vector2(0, 0), Vector2(1, 0), Vector2(1, 1), Vector2(0, 1)]
-	)
-	ci.draw_polygon(quad, PackedColorArray([Color.WHITE]), uv, tex)
+	ci.draw_polygon(quad, PackedColorArray([Color.WHITE]), QUAD_UV, tex)
 	return true
 
 
