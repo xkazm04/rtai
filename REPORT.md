@@ -1,6 +1,6 @@
 # n7-melee REPORT (night 2026-11-05/06): Rivet's melee and the four ghosts' attacks
 
-DRAFT written 23:40 (iteration 6), updated 02:30 (iteration 10). The final version lands at 08:40, after the freeze and the exe
+DRAFT written 23:40 (iteration 6), updated 03:22 (iteration 11). The final version lands at 08:40, after the freeze and the exe
 export. Clips are under `C:\Users\kazda\kiro\gtai-masters\n7\melee\` (`M/` below); the shortlist is in
 `M/frames.json`. Every change below is view only: no sim tick, replay or parity hash moved. Quest 1's
 final hash moved once, deliberately, when quest 1 started carrying the katana (`fbc5a982`).
@@ -33,8 +33,8 @@ The whole polished set in the city block at 32 px/m, with the game audio:
 `M/melee_polished_set_city_32ppm.mp4` (44 s, re-cut on `d4c3ccc9` (code `bc788d09`: Kerf's sight and the ram wake in) with `evidence/n7-melee/set_clip.sh`: no dev
 telemetry box, the ghost card whole; it is re-cut once more on the final head at the freeze).
 
-Gates on the last build commit `4540d259` (02:20-02:27):
-- lint 13/13; unit 1204/1204 (incl. `test_slice_closure`);
+Gates on the last build commit `bc788d09` (03:20):
+- lint 13/13; unit 1208/1208 (incl. `test_slice_closure`);
 - scenarios 52/52 with 0 SCRIPT ERROR;
 - director reel 19/19 in the arena and 19/19 in the city block, 0 SCRIPT ERROR.
 The full `node tools/evidence/run.mjs --no-bench` (lint, unit, scenarios, parity bit-exact, look
