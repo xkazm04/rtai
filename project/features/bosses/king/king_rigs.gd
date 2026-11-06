@@ -101,6 +101,8 @@ func _rig(id: int, is_king: bool, at: Vector2, facing: Vector2) -> CutRig:
 		rig.setup(king_plan() if is_king else GangPlan.build(), RigVariant.rivet())
 		if is_king and PRESS_PLATES:
 			_horn(rig)
+		elif not is_king:
+			GangShades.dress(rig)
 		rig.actor_id = id
 		rig.position = at
 		rig.snap_facing(facing.angle())
