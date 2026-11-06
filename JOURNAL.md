@@ -746,3 +746,22 @@ NEXT (written 00:58, for iteration 9):
   clean bar JOURNAL) and cherry-picked `1ce1b11e d99106f4 ce923514` -x as `ac548347 c955172e
   ab8cf8d0`, so no broken commit sits on the branch. Lint 13/13, unit 1201/1201 on `ab8cf8d0`
   (`evidence/n7-melee/{lint,unit}-ab8cf8d0.log`).
+- FINDING + FIX 01:36 (`c48b2806`): the city Tonnage reel logged 6 engine `ERROR: Invalid polygon
+  data, triangulation failed` at `RamMarks._chip` (not SCRIPT ERROR, so the reels' count missed it).
+  Cause: city positions ~500 m = ~16000 canvas px at 32 px/m; a 4-6 px quad in absolute coordinates
+  is degenerate in float32 (Godot's Geometry2D failed 1 of 200 such quads in a probe; the renderer
+  is pickier). SlamDebris.chip now draws the quad around the origin under a draw transform (the
+  HaulerMarks pattern) and RamMarks uses it. City reel after: 0 such ERROR, react 2 wounds as before
+  (`evidence/n7-melee/city-tonnage-{before,after}-chipfix.log`). LOOK: difference blend of the two
+  600-frame films: only frames 250, 261, 268 differ, by single pixels (the outline drew before;
+  only the fill dropped). Log hygiene, no visible change: not filmed as an A/B.
+- LOOK 01:31 the ram in the city at 32 px/m (2x crops, frames 134-162 every 4th): 138 burst star
+  past the riot cop; 142-146 he and a second cop at the car's bonnet slip under the press's turning
+  arm; 150 the riot cop is thrown clear with the chips (the ghost wound, `91700e01`); 158 the slam.
+  The bonnet cop stays under the press: that is the heap.
+- FINDING 01:34 (why the heap): GhostFormView draws the form at rigs z + 60 (`Z_OVER_RIGS`, a
+  ghost-forms decision: no human head or arm over a ghost body), and the sim lets a rammed body sit
+  inside the press's footprint against the car. So any body the press overlaps is hidden, whatever
+  marks the view prints. A view-only fix must either pop the struck body over the form for the
+  shove (breaks the ghost-forms rule) or the sim must keep bodies out of the footprint (sim change,
+  re-bless). Neither tonight: the riot cop's throw already reads in the city; recorded as a call.
