@@ -18,9 +18,10 @@ today's game, bit-identical: `top` frames are md5-identical with the King lane's
 
 1. `king_top_toplift_tilt_32ppm_it12.mp4`: the same seed-2 King fight, 45 s, top | top_lift |
    tilt at 32 px/m, on King's latest art (n7-king b2e71b83 merged), with the it12 cast shadows.
-2. `king_p3_top_vs_tilt_48ppm_it9.mp4`: phase 3, King on foot vs Rivet, 48 px/m close-up.
+2. `king_p3_top_vs_tilt_48ppm_it12.mp4`: phase 3, King on foot vs Rivet, 48 px/m close-up (it12).
 3. `king_p2_top_vs_tilt_32ppm_x2_it12_t34s.png`: phase 2 still, top vs tilt, 32 px/m shown x2.
    `king_tilt_noshadow_vs_cast_32ppm_x2_it12.png`: the cast shadows under tilt, off vs on.
+   `city_block_top_vs_tilt_32ppm_it12.png`: the city block (`--arena=city`), top vs tilt.
 4. `king_depth_sort_before_after_48ppm_x2_it9.png`: draw order under tilt, before | after.
 
 ## What works (evidence)

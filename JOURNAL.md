@@ -417,3 +417,10 @@ arena path), `sprite-and-atlas-production` (stack slices from existing art, no n
   At 12 s: the cannon's vermilion danger lane in all three views. frames.json 15 (3 replaced, the
   cast-shadow A/B added, the it2 car depth-order still dropped). Raw avis deleted.
   PROOF top md5 b5ed2b94 (tick 900) after the sedan change. Unit 1186/0, lint 13/13.
+- RE-FILMED phase 3 at 48 px/m on cad9c356 (`king_p3_top_vs_tilt_48ppm_it12.mp4`, 1200 frames
+  each, 0 SCRIPT ERROR; the it9 clip deleted). LOOKED at 8 s: King upright in the slam ring,
+  Rivet's visor, collar and figure shadow, crate rows' shadows.
+- CITY still `city_block_top_vs_tilt_32ppm_it12.png` (`--arena=city --bot=rivet`, seed 2, tick
+  300, 0 SCRIPT ERROR each; replaces it5). LOOKED: tilt cops capped and upright, barrier south
+  faces, props cast shadows; ped heads without a card still top-down; parked sedans flat.
+- GATE director reel started 06:39 on 16d83cbd (log in scratch, snapshot into it12 when 19 land).
