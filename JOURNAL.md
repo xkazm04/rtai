@@ -144,3 +144,35 @@ NEXT:
   This lane touched neither nav nor rigs (HUD, pickups view, rack view only).
 - 21:37 Session end. Not run this session: `tools/evidence/run.mjs --no-bench`, the director reel in
   top/tilt70, rig_stress on a quiet machine. All work committed (c99ff149..4afd59d9 + this journal).
+
+## Iteration 3 (BUILD, 21:37-22:37)
+
+- 21:40 Read JOURNAL, git log, the other journals: no REQUEST to hud (view's card-set note is for
+  head cards; the HUD registers none). Assets lane (21:33) noted my planned King/Servo portrait ask
+  was not a REQUEST line; it is not needed now (the crest is cut from the shipped approved cards).
+  `rivet-final/out/` does not exist yet: the 5 redesigned weapons' showcase sheets have not landed.
+- 21:42 FINDING: there is no boss taunt line system (no `taunt` anywhere in features/boot/data):
+  "film one boss taunt" has nothing to film; the boss's face shows on the boss bar instead.
+- 21:50 MILESTONE 65505423 boss bar crest (work item 4): `portrait_cut.py --card=N` takes frame 0
+  of a shipped card strip (never scaled up); `portraits.json` rows `king` (p55 king_bust_card, 216x254)
+  and `servo` (p55 head, 86x98); BossView.attach hands BossBar the PortraitBook face; BossBar draws
+  it on an ink-ringed cream disc left of the bar (crown may rise past the ring), the ring vermilion
+  during a transition (danger). Unit `--select=test_boss_crest,test_hud_dialogue,test_hud_art` 15/0,
+  lint 15/15. Stills (arena, `--rigs --boss=<id> --view=combo --seed=2`, frame 150, 0 SCRIPT ERROR,
+  1280x800 window): `gtai-masters/n8/hud/bossbar_{king,servo}_combo_1280x800_after.png`,
+  `bossbar_king_combo_1280x800_before.png`, `bossbar_king_before_after_crop2x.png`. Look: the King's
+  crown and cape read at once at 80 px; Servo's faceplate fills the disc and its top rises past it.
+- FRICTION: `--boss=` is an unknown arg on the city main scene; filming needs `res://dev/arena/arena.tscn`.
+- 22:00 MILESTONE 76a6d4ad HUD pass (work item 3), judged on the full HUD over a game frame (the
+  dialogue board's new `hud_<w>x<h>_full.png`: heat 2/3, Gloria + its showcase icon + x12, the
+  notice, Brass's line) at 1920x1080 and 1280x800. Found and fixed: (1) the ammo ticket's bullet was
+  signal RED (3585 px; red is for blood only) -> re-hued to brass by `tools/art/hud_recolor.py`
+  (hue 0.1, sat x0.7, val x0.8), guarded by `test_hud_art::test_the_drawn_panels_carry_no_red`
+  (planted the red ticket back: the guard FAILS with 919 sampled red px; brass passes); (2) the
+  notice ("Saved.") drew a 900 px strip -> as wide as its words (min 240, max 900); (3) the weapon
+  name on the ticket 20 -> 24 px (thin at 1280x800). Heat pips are police blue (68,109,181 mean),
+  danger is vermilion (the boss bar), teal only on the ghost-form meter's tick (souls). Soul cards
+  stay undrawn (descoped by owner verdict 3, 2026-11-03). Stills: `gtai-masters/n8/hud/
+  hud_full_{1920x1080,1280x800}_after.png`, `hud_full_1920x1080_before.png`. Debt ratchet: dev_loc
+  +33 accepted (the board's full-HUD still). Unit `--select=test_hud_art,test_hud_dialogue,
+  test_boss_crest,test_story_forms` 25/0, lint 15/15.
