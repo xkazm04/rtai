@@ -1655,3 +1655,24 @@ NEXT (iteration 16, in order):
   sequence (the windup arc fills round King on the stalled car, the shout rings burst, the brawlers
   carry the vermilion buff rings after). it14 deleted; frames.json 15, all exist. Every King clip in
   frames.json is now on the current body except the ghost clips (dent/kerf/tonnage it14, ohm it13).
+
+### 05:42 FILM the four ghost clips re-shot on f4df4438
+- Same runs as it13/it14 (`build/scratch16/film.sh`, phase 3 seed 2, 48 px/m, boss cam, CRF 24):
+  `M/king_kerf_p3_48ppm_it16.mp4` (10 s), `M/king_tonnage_p3_48ppm_it16.mp4` (20 s),
+  `M/king_dent_p3_48ppm_it16.mp4` (26 s), 1280x720; `M/king_ohm_daze_tells_48ppm_it16.mp4` (15 s,
+  --ghost-tells, 1280x800). Each 0 SCRIPT ERROR and "king defeated"; Ohm "king dazed 36 ticks" x2
+  as in it13. **Looked at** the 1 fps sheets: Kerf blinks through the charge lane; Tonnage's teal
+  stomp ring and cracks beside King; Dent's car hits King at 7-8 s; Ohm's teal form and bolt arcing
+  into King. Old versions deleted. **Every clip in frames.json is now on f4df4438** (15 entries, all
+  exist; the it8 press-plates still is a before/after by design). Every path REPORT cites checked.
+
+NEXT (iteration 17, in order):
+1. No code changed since f4df4438; the exe (05:25) and every clip are on it. If a new look change
+   lands, re-export, smoke (4933 / 88), re-film the full fight (`build/scratch16/film32.sh` +
+   `cut.sh`) and the 48 px/m clips it touches (recipes in it16's FILM entries).
+2. Weakest look item left against the sheet's top view: the gang's shades (a REPORT gap; decision
+   05:11 says why the part art and a drawn arc fail at 32 px/m). Only a separate visor part judged at
+   48 px/m and up could change it; timebox it, or leave it.
+3. Optional: the sheet's gems are orange and King's crown jewel is ink; a gold-hi or plum jewel in
+   the crown's centre (KingAccents._crown), A/B at 32 px/m. Render only.
+4. At the freeze (08:30): REPORT read-through once more (calls A-N), commit. The REPORT is final now.
