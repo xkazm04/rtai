@@ -2171,3 +2171,16 @@ NEXT (iteration 25 = the freeze and the REPORT; supersedes the it22 list):
   -5 dBFS, 0.82 -> 0.91 s. No film: quest1_clip writes frames, no sound; the arena only arms the
   rifle after a grab the reels never make. Not listened to (call 7).
 - DECISION docs/decisions.md (audio n7-ranged, the quest rifle's own shot).
+- GATES on `5ed859c4` (07:39): full `node tools/evidence/run.mjs --no-bench` on the clean tree:
+  lint 13/13, unit 1194/0, scenarios 52/52, parity bit-exact (629), selftest pass
+  (`evidence/ranged/it25-evidence-5ed859c4.log`, git-ignored, in the worktree). Reels pit 19/19 +
+  city 19/19 with `--loadout=pistol`, 0 SCRIPT ERROR (scratch `it25-reel-{director,city}-5ed859c4.log`).
+- EXE re-baked + re-exported on `5ed859c4` at 07:39 (bake 0, export 0, 0 ERROR lines). Booted
+  `RTAI.exe --screen 0 --rendering-driver d3d12 --quit-after 600 -- --weapon=pistol --bot=gunplay
+  --lone --cam=fight --ppm=32 --clean --reach=5`: exit 0, 0 SCRIPT ERROR, lone kill tick 332 (as before).
+- REPORT finalised (`cc66c666`): DRAFT line dropped, a summary paragraph, the rifle cue row, call 7's
+  rifle line, gates and exe on `5ed859c4`, next steps written out.
+- FILM City combined clip retaken on `5ed859c4` (city25/city.sh, the MILESTONE 06:22 recipe): 16
+  chapters down, 0 SCRIPT ERROR, 72 s, mean -22.3 dB, peak -1.1 dB (same as 07:09). LOOK: sheet every
+  300 frames: every tile an attack, blood red, the nuke ring whole. Master replaced, frames.json row
+  branch `n7-ranged 5ed859c4`. Scratch avi deleted.
