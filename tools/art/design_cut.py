@@ -28,6 +28,10 @@ OUT = "project/features/combat/weapons/art/showcase"
 # (id, form) -> which cut: "hero", "b0", "b1"
 CUTS = {"icon": "hero", "p55": "b0", "p70": "b1"}
 OVERRIDE = {("plasma_sword", "p70"): "hero"}
+# --showcase: (id, form) -> the sheet pitch to cut instead. electro_gun_70 is B with design drift
+# (no tape band or back cap, a glyph; assets 23:00): its p70 is the A 55 sheet's side view (a gun
+# lying on its side seen at 70 is near its side profile; the long guns' precedent).
+SHOWCASE_SOURCE = {("electro_gun", "p70"): "55"}
 
 
 def key(rgb: np.ndarray) -> np.ndarray:
@@ -93,6 +97,7 @@ def main() -> None:
     if "--showcase" in sys.argv:
         for wid in ids:
             for form, pitch in (("p70", "70"), ("p55", "55")):
+                pitch = SHOWCASE_SOURCE.get((wid, form), pitch)
                 sheet = os.path.join(src_dir, "out", f"showcase_{wid}_{pitch}.png")
                 rgba, lab, piece = side_of_sheet(sheet)
                 save(rgba, lab, piece, os.path.join(OUT, form, f"{wid}.png"))
