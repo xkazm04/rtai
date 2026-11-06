@@ -119,7 +119,10 @@ func _open(args: ArenaArgs) -> void:
 ## lane gunplay: the pit bot at the --weapon's own reach (--lone films the burn death).
 func _gunplay_bot(args: ArenaArgs) -> GunplayBot:
 	var w_id: StringName = StringName(args.text("--weapon", "pistol"))
-	var w: WeaponSpec = WeaponTable.shipped().weapon(w_id)
+	var table: WeaponTable = WeaponTable.shipped()
+	if not table.weapons.has(w_id):  # a mistyped id: GunplayHook warns and keeps Gloria
+		w_id = &"gloria"
+	var w: WeaponSpec = table.weapon(w_id)
 	var bot: GunplayBot = GunplayBot.new(session.stage, session.actions, w.range_m)
 	bot.follow_burning = args.has("--lone")  # the lone capture films the burn death
 	bot.reach_m = minf(bot.reach_m, args.number("--reach", bot.reach_m))
