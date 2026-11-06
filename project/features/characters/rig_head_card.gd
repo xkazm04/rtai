@@ -16,6 +16,7 @@ extends RefCounted
 const CARDS: Dictionary[String, Array] = {
 	"rivet": ["res://features/characters/art/view/rivet_head_card.png", 0.86, 1.0, false, true],
 	"king": ["res://features/characters/art/view/king_bust_card.png", 0.80, 2.4, true, true],
+	"gang": ["res://features/characters/art/view/gang_head_card.png", 0.84, 1.4, false, true],
 }
 const FRAMES: int = 5
 ## Card frame and mirror per screen octant of the look (0 = screen right, +1 = 45 deg clockwise,
@@ -32,6 +33,16 @@ static func step(rig: CutRig) -> void:
 			return
 		_build(rig)
 	_place(rig)
+
+
+## The hit flash (CutRig.set_tint): a raw card takes the tinted part material while lit, then
+## draws raw again; a printed card swaps between the plain and the tinted part material.
+static func on_tint(rig: CutRig, on: bool) -> void:
+	if rig.head_card == null:
+		return
+	var raw: bool = CARDS[rig.plan.art_dir][4] == true
+	var mat: ShaderMaterial = PartMaterials.get_mat(PartMaterials.PartKind.PART, on, 0)
+	rig.head_card.material = null if raw and not on else mat
 
 
 static func frame_of(look: float) -> Vector2i:
@@ -52,8 +63,8 @@ static func _build(rig: CutRig) -> void:
 	var cell: Vector2 = Vector2(card.texture.get_width() / float(FRAMES), card.texture.get_height())
 	var anchor_y: float = row[1]
 	card.offset = Vector2(-cell.x * 0.5, -cell.y * anchor_y)
-	if row[4] != true:
-		card.material = PartMaterials.get_mat(PartMaterials.PartKind.PART, false, 0)
+	if row[4] != true or rig.is_tinted():
+		card.material = PartMaterials.get_mat(PartMaterials.PartKind.PART, rig.is_tinted(), 0)
 	card.z_index = rig.plan.head_z
 	rig.head.add_child(card)
 	rig.head_card = card

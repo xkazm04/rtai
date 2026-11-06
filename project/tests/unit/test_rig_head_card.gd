@@ -29,3 +29,20 @@ func test_every_card_strip_loads() -> void:
 		var t: Texture2D = load(path) as Texture2D
 		assert_not_null(t, path)
 		assert_eq(t.get_width() % RigHeadCard.FRAMES, 0, "%s splits into equal frames" % path)
+
+
+func test_a_raw_card_flashes_on_a_hit_then_draws_raw() -> void:
+	var rig: CutRig = autofree(CutRig.new())
+	rig.plan = BodyPlan.new()
+	rig.plan.art_dir = "gang"
+	rig.head_card = autofree(Sprite2D.new())
+	RigHeadCard.on_tint(rig, true)
+	assert_not_null(rig.head_card.material, "the hit flash reaches the card")
+	RigHeadCard.on_tint(rig, false)
+	assert_null(rig.head_card.material, "a pre-printed card draws raw again")
+
+
+func test_no_card_no_flash_work() -> void:
+	var rig: CutRig = autofree(CutRig.new())
+	RigHeadCard.on_tint(rig, true)
+	assert_null(rig.head_card)

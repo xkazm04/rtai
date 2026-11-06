@@ -196,6 +196,7 @@ func set_tint(on: bool) -> void:
 		var mat: ShaderMaterial = PartMaterials.get_mat(kind, on, sprite_swaps[i])
 		sprites[i].material = null if plan.raw_parts and not on else mat
 	RigDetail.on_tint(self, on)
+	RigHeadCard.on_tint(self, on)
 	if hose != null:
 		hose.material = PartMaterials.get_mat(PartMaterials.PartKind.PART, on, 0)
 
