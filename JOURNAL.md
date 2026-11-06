@@ -124,3 +124,10 @@ NEXT (iteration 2):
   (`tools/art/view70/prep_king70.py` SLOPE 22). LOOKED at both x2 (masters
   `king_p70_bust_step_vs_slope_cut.png`): the fur now falls off round the fists, no ledge. Shipped;
   NOT yet re-filmed in game (the it1 films show the step cut). Unit test_view_pitch 9/9.
+- 15:00 FILM re-filmed the 64 px/m on-foot pair on 3a5df575 (sloped cut), 0 SCRIPT ERROR;
+  `king_onfoot_70_64ppm_x3_t9.png`. FOUND at x3: (a) two bells: the rig's top-down hand bell AND the
+  70 card's shoulder bell; (b) the top-down cloth cape (cream, dots, vermilion) draws behind the bust
+  card like a flag. Both are King-rig matters (bosses lane / KingAccents). Next: a REQUEST to bosses
+  (hide the cloth cape under a bust card at 70, or crop the bell off the p70 card; my default would be
+  to keep the card's bell and ask them to hide the hand bell's duplicate only if it IS the same prop).
+  frames.json 13 entries; raw avis deleted (scratch 28 MB).
