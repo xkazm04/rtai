@@ -22,7 +22,6 @@ func _occ() -> CityOcclusion:
 	lift._setup(d, tex, built, "p70")
 	var o: CityOcclusion = CityOcclusion.new()
 	o._lift = lift
-	o._tex = tex
 	return o
 
 
@@ -53,27 +52,21 @@ func test_only_buildings_are_collected_with_the_lift_above_them() -> void:
 	assert_gt(up, 1.0, "tilt70 lifts the roof")
 	assert_eq(b.area.end.y, b.r.end.y, "the drawn area ends at the ground line")
 	assert_almost_eq(b.area.position.y, b.r.position.y - up, 0.01, "and rises by the lift")
+	o._ink.free()
 	o.free()
 
 
-func test_a_building_in_front_of_a_hit_is_redrawn_after_it() -> void:
-	var o: CityOcclusion = _occ()
-	var out: Array[CityOcclusion.Bld] = []
-	var far: Vector3 = Vector3(1, 10, 30)  # further south, its area clear of the hit
-	o._collect(
-		_chunk([Vector3(1, 10, 18), Vector3(1, 10, 10), Vector3(1, 60, 10), far]),
-		Vector2(320, 320),
-		out
-	)
-	var seen: Dictionary[Vector3, CityOcclusion.Bld] = {}
-	for b: CityOcclusion.Bld in out:
-		seen[Vector3(b.at.x, b.at.y, b.t)] = b
-	var hit: Dictionary[Vector3, bool] = {Vector3(320, 320, 1): true}
-	o._pick_draw_set(seen, hit)
-	assert_eq(o._draw_set.size(), 2, "the hit and the overlapping building south of it")
-	assert_eq(o._draw_set[0].at, Vector2(320, 320), "the hit first")
-	assert_eq(o._draw_set[1].at, Vector2(320, 576), "the one in front last")
-	o.free()
+func test_the_patch_is_the_body_inside_the_drawn_area_only() -> void:
+	var area: Rect2 = Rect2(0, 100, 400, 200)  # a lifted roof and face from y 100 to 300
+	var feet: Vector2 = Vector2(200, 120)  # behind it: the roof's lift covers the legs
+	var head: Vector2 = feet - Vector2(0, CityOcclusion.BODY_H_M * SimConst.PX_PER_M)
+	var patch: Rect2 = CityOcclusion.body_patch(feet, head, area)
+	assert_eq(patch.position.y, 100.0, "cut at the roof's top edge: the head stays visible")
+	assert_almost_eq(patch.end.y, feet.y + Ink.LINE_PX, 0.01, "down to the feet")
+	var w: float = CityOcclusion.PATCH_W_M * SimConst.PX_PER_M + Ink.LINE_PX * 2.0
+	assert_almost_eq(patch.size.x, w, 0.01, "the body and a held weapon wide")
+	var clear: Rect2 = CityOcclusion.body_patch(Vector2(200, 40), Vector2(200, -14), area)
+	assert_false(clear.has_area(), "a body far enough north is not covered")
 
 
 func test_the_silhouette_is_at_city_scale() -> void:
