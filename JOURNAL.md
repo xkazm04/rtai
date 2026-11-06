@@ -201,3 +201,37 @@ NEXT (iteration 6):
 6. The comparison set (work order 6): one seed, every view, 30-60 s hstack at 32 px/m (it5's
    clip is 25 s), 48 px/m close-ups, a stills grid; the cost table. Then freeze: evidence/run.mjs,
    parity, the exe (int-day recipe in docs/decisions.md), REPORT by 08:40.
+
+## Iteration 7 (04:03-05:03), BUILD
+Iteration 6 left no journal entry and no commit; this session worked it5's NEXT.
+- MILESTONE 01115d6e: riot cop card (round5 cut). The clear visor let the chroma through; the
+  cutter's new `--glass` fills the keyed holes enclosed by the part (scipy binary_fill_holes) with
+  an opaque pale steel. Row `cop/head_helmet` (prints through the part shader's cop blue).
+  LOOKED (pit --riot tick 700, 48 px/m, `evidence/view/it7/riot_card_48.png`): the shield cop
+  reads as a blue dome helmet with a pale visor over a face. Provenance line added.
+  FRICTION: the unit test asserted the riot helmet had NO card (it5's intent); updated (68ede04b),
+  unit 1173/0, 0 SCRIPT ERROR (`it7/unit.log`). gdformat in the pre-commit hook caught a long line.
+- MILESTONE 4a3370a7: the car's wheels are round (each tyre a vertical disc cut to its chord per
+  stack slice, a gold hub on the face; was a 0.95 m block per slice = a black slab with a tall gold
+  bar) + a contact shadow under the stack. LOOKED before/after at 48 and 32 (`it7/car_wheels_48_32.png`):
+  the slab-and-bar was wrong, now round tyres; at 32 px/m small but visibly round.
+- MILESTONE 173f2cc3: the hood cannon is a raised gold barrel (BARREL_M 0.45 over the roof: its
+  shadow on the roof, mount post, ink edge, top highlight, the bore). LOOKED (`it7/car_cannon_48_32.png`):
+  reads as a gun barrel at 48 and at 32 (was a flat gold bar). `top` md5 5db6f283 unchanged.
+- MILESTONE 5f7b36ad: draw-order MEASURED (registry measured-draw-order; it5 NEXT 3).
+  `dev/view/draw_order_probe.gd`, arena `--order-probe`: every 6 ticks, overlapping actor pairs
+  (rig vs rig by ground point and body height, rig vs King's car footprint), the nearer must draw
+  over (effective z, then tree order; rigs < 16 z apart interleave their parts = `mixed`).
+  Seed 2 King fight, 60 s, 32 px/m, headless: tilt 304 rig pairs, 48 reversed (16 %), 215 mixed
+  (71 %); car 391 pairs, 2 reversed. top: 212 pairs, 0 reversed, 212 mixed (harmless flat).
+  So the car sort works, people against people do not. Fix designed, NOT built: a z band per rig by
+  ground depth, but the overlays sit at fixed z "over every rig part" (kill FX +30/+40, held weapon
+  +60, KingAccents 40, the mag floor -61): each would have to ride its own rig's band. Written in
+  PLAN as the tilt's biggest code risk (cost table).
+- MILESTONE 290d3a1d (BUG FOUND): the mouse aim was NOT unprojected. PLAN it1 claimed it was free
+  through the canvas transform, but `LiveInput._aim/_reach_m` read the screen offset from the
+  screen centre. Under tilt 55 a cursor whose ground point lies 50.7 deg off aimed at 45 deg, reach
+  18 % short north-south. Fixed via `ViewMode.ground_of` (y / sin p; exact identity flat). Unit
+  1174/0 (`it7/unit2.log`). NOT checked live with a real mouse (unattended run): unit test only.
+  NOTE: origin_px is the screen centre in arena and quest1 (camera on Rivet); under --boss-cam
+  the camera leads, so the mouse aim origin is off Rivet in every view, top too (pre-existing).

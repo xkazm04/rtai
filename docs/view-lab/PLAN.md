@@ -99,3 +99,16 @@ current roster, one per head variant (`RigHeadCard.key_of`: art_dir/head first).
 
 `top_lift` costs no art: a perspective eye (`eye_h_m`) reuses the 2.5D lifts radially. At 25 m and
 32 px/m the gain is small (the car leans about 0.4 m at 7 m off-centre).
+
+## Cost table draft (iteration 7, for REPORT)
+
+| | `top` (shipped) | `top_lift` (90, perspective eye 25 m) | `tilt` (55 + facing cards) | three-quarter per facing (not built) |
+|---|---|---|---|---|
+| Art per character | 0 | 0 | 1 card strip per head variant: 1 image round (56-78 s), 5 of 5 usable first try; still owed: SWAT, 6 ped heads, robot thug, other bosses (about 10 rounds) | every part x 8 facings x every clip: a redraw of the cast |
+| Art per vehicle | 0 | 0 (the stack leans) | sprite stack from code (King's car: 18 slices, round wheels, raised cannon: 0 art); parked sedans still flat | per-facing sprites |
+| Art per building / prop | 0 | 0 | south faces in code (arena props, city barriers); city buildings not done | per-facing |
+| Aim | ok | ok (uniform zoom) | fixed it7 (`ground_of`), unit-tested, not mouse-tested live | same as tilt |
+| Draw order | n/a | small (heights lean outward) | MEASURED: people vs people 16 % reversed + 71 % mixed; car 0.5 %; fix = z band per rig + every overlay rides its rig | same, harder |
+| Occlusion | n/a | n/a | not built (tall walls can hide an actor: ink silhouette owed) | same |
+| Streaming bubble | 1.0 | 1.0 | 1 / sin 55 = 1.22x ground north-south (computed; chunks and frame time NOT measured) | 1.4x at 45 |
+| What breaks if shipped today | nothing | nothing visible | interleaved people in crowds, overlays over the wrong rig, no occlusion silhouette, uncarded heads read top-down | everything until redrawn |
