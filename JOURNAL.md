@@ -405,3 +405,15 @@ arena path), `sprite-and-atlas-production` (stack slices from existing art, no n
 - FOUND: scratch `evidence-run-it11.log` (06:02, on f04f57aa, no commit): a session ran
   evidence/run.mjs and hit the known `scenario_city_chase` flake (1 of 52); my re-run passed 52.
 - REPORT draft + PLAN cost table updated (streaming bubble computed, cast shadows, gates, call 3).
+- Sedan shadows (`VehicleView.shadow_off`): under a view's cast_k the car-shaped shadow quad moves
+  by half the roof's throw (CAR_H_M 1.4 m); top keeps SHADOW_OFF exactly. Moved, not swept: the
+  quad is a MultiMesh instance; a sweep would need a second instance per car.
+- FRICTION: a `for v in ...; "$W\$v.avi"` loop wrote all three films to one literal
+  `clip12$v.avi` (the `\$` escaped the variable): wasted one 2-min film. Use `C:/...` paths.
+- FILM `gtai-masters/n7/view/king_top_toplift_tilt_32ppm_it12.mp4` (45 s, 3840x800, seed 2,
+  0 SCRIPT ERROR each; the it9 clip deleted, superseded). LOOKED at 34 s x2
+  (`king_p2_top_vs_tilt_32ppm_x2_it12_t34s.png`): tilt = King crowned on the throne-car, the car's
+  shadow down-right on the road, Rivet's figure shadow, the crate row's shadow; top unchanged.
+  At 12 s: the cannon's vermilion danger lane in all three views. frames.json 15 (3 replaced, the
+  cast-shadow A/B added, the it2 car depth-order still dropped). Raw avis deleted.
+  PROOF top md5 b5ed2b94 (tick 900) after the sedan change. Unit 1186/0, lint 13/13.
