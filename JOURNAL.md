@@ -1034,3 +1034,11 @@ NEXT (written 03:17, for iteration 12):
   segments refilmed (the only code that moved since `4540d259`), the other seven from the existing
   AVIs (RECUT=1): 44.2 s, 0 SCRIPT ERROR in all 9 films. LOOK (1.5 s sheet over 20-38.5 s): every
   tile shows an attack, the ghost card whole. NEXT 2 is done unless code moves again.
+- GATES 03:29 `node tools/evidence/run.mjs --no-bench` on `af4eff02` (code `bc788d09`), tree
+  untouched, GODOT_BIN exported: exit 0, lint 13/13 (969 files), unit 1208/1208, scenarios 52/52,
+  parity bit-exact over 1200 steps (planted caught at 629), selftest look goldens 11/11, block 5/5
+  (`evidence/n7-melee/evidence-run-af4eff02.log`). Bench not run (contended, no lock).
+- READ 03:27 (for NEXT 4) Ohm's bolt strokes are already 10/6/2.5 px (ink/teal/core) with a 0.22 s
+  hang (ohm_view.gd INK_W/TEAL_W/CORE_W, HANG_S): a thicker bolt is not the lever. The likely gap
+  at 32 px/m is the world mark where the bolt lands (ink-and-paper scorch/burst on the struck
+  body or car, as RamMarks/DeflectMarks do); film the bolt at 48 px/m first and score it.
