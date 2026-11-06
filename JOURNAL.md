@@ -390,3 +390,30 @@ NEXT (iteration 5):
 - GATE (00:03) scenarios on 420ef174: 52 passed (headless, not contended). Combo reel ran to its
   end: exit 0, 0 SCRIPT ERROR, 19/19 all down. Still owed on the walker head: parity and
   export-audit (the full `evidence/run.mjs --no-bench`, run alone). Scratch .avi captures deleted.
+
+## Iteration 5 (2026-11-07 00:05, BUILD)
+
+Read: JOURNAL, git log, the four lane journals (no REQUEST to street), the assets JOURNAL: the walk
+REQUEST is served for the pilot (ped_suit_walk_70_v2 A, ped_worker_walk_70_v2 B, ped_hood_walk_70 B;
+rows 4-5 repeat frame 1 in worker/hood, row 5 mirrored in post by assets).
+- GATE (owed from it4) on a21730cb (the walker head): parity native == GDScript 1200 steps, planted
+  mutation caught at step 629, exit 0; release_compile 558 loaded, 0 failed. With it4's lint 15/15,
+  unit 1505/0, scenarios 52/52, selftest goldens 11/11: the evidence gate's parts are all green on
+  the walker head (run piecewise, not as one evidence/run.mjs: the machine was never quiet).
+- MILESTONE afe22e3b (NEXT 2): suit, hood and worker walkers draw the library's stride frames under
+  p70. tools/art/street_walk.py cuts a keyed 5 x 4 walk sheet into a game grid (5 facings across in
+  RigHeadCard's order, 4 frames down), each figure at its drawn foot line and drift so the head
+  stays steady (LOOKED at the cut: heads level across the four frames). StreetWalkerCards.WALKS
+  picks the grid over the still strip; frame = floor(phase x 4) (one gait cycle = two steps: about
+  15 ticks a frame at walking speed, 2 steps/s), the pass frame when standing; the bob and sway are
+  off for them. FIRST CUT drew the three about 10 % smaller than their still twins (the grid's cell
+  carries stride headroom) -> WALK_FILL per grid, measured (still figure height / walk figure height
+  per cell, mean of facings: 1.06 / 1.07 / 1.11). FRAMES_ON false = the bob (before). LOOKED: board
+  64 px/m before|after (clip), the suit over 24 ticks (contact -> pass -> other contact), the hood
+  profile alternating arms and boots. Masters: peds_walk_frames_before_after_tilt70_64ppm_board.mp4,
+  peds_walk_frames_suit_before_after_tilt70_64ppm_board_t100-123.png.
+- REQUEST to assets: the other six walk strips at 70 (ped_shopper, ped_elder, ped_punk, ped_jogger,
+  ped_hat, ped_cap), the ped_suit_walk_70_v2 recipe (name the pinned arm and the free arm per frame
+  for the ones with a prop: shopper's bag, elder's cane). The away rows may be drawn as "frame 3 =
+  frame 1" and mirrored in post (Codex repeats them anyway). The street lane cuts each by script the
+  moment it lands (street_walk.py + one WALKS/WALK_FILL line).
