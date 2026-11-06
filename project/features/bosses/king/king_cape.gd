@@ -40,6 +40,10 @@ const DRAPE_BACK_M: float = 1.6
 const TRAIN_ROOT: Vector2 = Vector2(-0.3, 0.75)
 const TRAIN_ROOT_H_M: float = 0.9
 const TRAIN_K: float = 1.0
+## The train's root shade (darkened) and its ink side edges, so the cloth reads inside the charge's
+## vermilion lane (d8 it8; it7 = 0.4, no side ink: TRAIN_SIDE_INK false).
+const TRAIN_ROOT_DARK: float = 0.55
+const TRAIN_SIDE_INK: bool = true
 
 
 ## The cape at `at` (px), facing +x, scaled `p` px per unit, for `fight` now; `up` = the local
@@ -147,7 +151,7 @@ static func _train(ci: CanvasItem, at: Vector2, p: float, fight: BossFight, up: 
 		var root: Vector2 = at + Vector2(TRAIN_ROOT.x, s * TRAIN_ROOT.y) * p
 		hem[i] = root.lerp(hem[i], t)
 		roots[i] = root + up * TRAIN_ROOT_H_M
-	var dark: Color = Ink.VERMILION.darkened(0.4)
+	var dark: Color = Ink.VERMILION.darkened(TRAIN_ROOT_DARK)
 	var lit: Color = Ink.VERMILION
 	for i: int in n:  # two triangles per hem segment, root (dark) to hem (bright); a quad can twist
 		var a: PackedVector2Array = [roots[i], roots[i + 1], hem[i + 1]]
@@ -156,6 +160,9 @@ static func _train(ci: CanvasItem, at: Vector2, p: float, fight: BossFight, up: 
 		ci.draw_primitive(b, PackedColorArray([dark, lit, lit]), PackedVector2Array())
 	for i: int in range(1, n, 2):  # a fold line into each trough
 		ci.draw_line(roots[i].lerp(hem[i], 0.3), hem[i], dark, maxf(FOLD_INK_W * p, 1.0))
+	if TRAIN_SIDE_INK:  # the two outer edges, root to hem, so the sheet has a shape in the lane
+		ci.draw_line(roots[0], hem[0], Ink.INK, maxf(FOLD_INK_W * p * 1.5, 1.5))
+		ci.draw_line(roots[n], hem[n], Ink.INK, maxf(FOLD_INK_W * p * 1.5, 1.5))
 	ci.draw_polyline(hem, Ink.INK, FUR_W * p * 0.6 + 3.0)
 	ci.draw_polyline(hem, FUR, FUR_W * p * 0.6)
 	for i: int in n:  # the ermine's ink tails along the hem

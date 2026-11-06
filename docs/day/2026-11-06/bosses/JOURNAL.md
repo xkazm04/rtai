@@ -1,0 +1,438 @@
+# d8-bosses JOURNAL (lane: bosses; branch d8-bosses)
+
+## Iteration 1 (2026-11-06 14:09-15:09, BUILD)
+
+- 14:10 Read: AGENTS.md, view.json (`tilt` is already pitch 55: no change), RigHeadCard, KingAccents,
+  KingBodyView, the angle sheets (`king_55.png`) and NOTES.md. Other lanes' JOURNALs are empty so far.
+- Registry rules applied (from the brief's slugs):
+  - `concept-scene-parity`: the King's card is regenerated FROM the approved 55 sheet (image 1 = the
+    sheet), so the in-game bust matches the concept the owner approved; judged in the live arena.
+  - `generative-artifact-gating`: every generated strip is looked at, keyed, measured (frame count,
+    bbox per frame) before it ships; the sheet's known defect (blood-red crown cap) is fixed in the prompt.
+  - `sprite-and-atlas-production`: one strip per head variant, 5 drawn facings + 3 mirrored in code.
+  - `depth-ordered-layered-art`: accents that stay drawn keep their z over the rig; the card replaces them.
+  - `motion-quality-gating`: judged in motion (boss bot, fixed seed) at 32 and 64 px/m.
+- 14:14 DECISION art keying: the shared `RigHeadCard.CARDS` belongs to `chars`, so the boss art per
+  view lives in the bosses lane: `features/bosses/king/art/p<pitch>/` picked by the active view row's
+  pitch (55 today; a 70 strip drops in beside it as `p70/`), swapped onto the built card by the King's
+  own code. `top` draws no card at all, so it is untouched. Alternative (one data move away): a
+  `card_set` per view row read by RigHeadCard (REQUEST to chars below).
+- 14:15 Image round r1 started (King bust 55, gang head 55), lock taken by gen.mjs.
+
+## REQUESTs
+- REQUEST to chars (RigHeadCard owner): resolve card strips per view row (e.g. a `card_set` /
+  pitch folder `art/view/p<pitch>/<name>.png`, fallback to today's path) so boss strips need no
+  swap hook in the bosses lane. Until then bosses swap the King/gang card texture after `_build`.
+- 14:20 MILESTONE King bust card (p55): Codex strip from king_55.png (85 s, usable first try), cut
+  5 x 218x256 raw (no print snap: the wider palette survives), crimson cap -> plum (hue shift, 17k px).
+  Width 1.5x the shared card (1.0 drew the bust narrower than his press arms at 64 px/m).
+  The rig's shoulder megaphone part hides under the card (the card draws its own horn).
+- 14:25 MILESTONE gang head card (p55): steel helmet, plum band, gold-framed shades, gold rope chain
+  with an emerald medallion (71 s, first try); width 1.25. KingAccents skips its drawn gang chain
+  when the court strip exists (the card wears it). Commit 3bf2f0d9.
+- 14:30 MILESTONE King limbs (p55): a top-view part sheet (plate, piston, plum sleeve, thigh, shin,
+  boot, horn; 87 s, first try) cut to today's part boxes (tools/art/king_parts_pitch.py, 19 parts)
+  so the pivots hold; drawn raw, re-dressed each step (the rig swaps end-on / toe-off textures).
+  The slam tell's drawn plates now use the engraved plate art and rise 5.5 m with the tell under
+  a tilt (they lay flat at his feet before). Commit 3f2c7d68.
+- Draw order measured by eye per frame in the 64 px/m slam strip: the plates (z 40, KingAccents)
+  draw over the bust card (head z) - intended, the plates are raised in front of him; the cape fan
+  (KingCape) still draws flat on the ground behind him under tilt: owed.
+- FRICTION `node tools/godot/check.mjs` fails on unchanged files too ("Failed to compile depended
+  scripts") in this worktree; used the live arena runs (0 SCRIPT ERROR) and GUT instead.
+- 14:42 MILESTONE gang bodies (p55): a top-view gang part sheet (torso, sleeve, piston forearm,
+  gold-knuckle fist / thigh, shin, gold-toe boot, buckled hips; 87 s, first try) cut to the gang's
+  part boxes (`--set=gang`, 20 parts), plum-shifted. Commit 9660cbc2.
+- 14:44 DECISION cape under tilt (A/B `KingArt.CARD_CAPE`, default true): with a court strip the bust
+  card wears the cape and KingCape's drawn fan stands down (it lay flat on the ground under the
+  tilt, a white-rimmed decal behind the upright bust). Cost: the drawn cape's sway and charge
+  flare are gone under tilt. Owner call (still: gtai-masters/d8/bosses/call_cape_car_fan_vs_card_48.png).
+  Commit 7d9251a0.
+- 14:45 GATES on 7d9251a0: lint 15/15; unit 1413/1413 (full run); scenarios 51/52 raw, the one miss
+  is city_chase's 2 ms wall-clock nav budget (5.1 ms with 4 lanes running; sim code, untouched here),
+  re-run alone through run_scenarios.mjs: 1 passed. Director reel headless `--loadout=pistol --rigs`:
+  tilt 19/19 down 0 SCRIPT ERROR, top 19/19 down 0 SCRIPT ERROR (needs --quit-after 8000: chapter 19
+  starts at tick 6570). top is untouched by construction: every KingArt path returns at pitch >= 90.
+- 14:47 READ chars 8e557502: RigHeadCard now resolves `features/characters/art/view/<ViewMode.art>/`.
+  After the merge the court card strips can move there (file names king_bust_card.png /
+  gang_head_card.png; rows: king anchor 0.80 width 2.4*1.5 = 3.6 bust raw; gang 0.84, 1.4*1.25 =
+  1.75, raw) and KingArt keeps only the limbs + cape. Until then KingArt swaps on this branch.
+  Fixed for view70's combo: the part cache is keyed by pitch (a live pitch re-asks). Known gap
+  under combo: a card swapped once keeps its strip if the pitch moves mid-fight (fix = the merge above).
+- 14:51 MILESTONE Servo (p55): a top-view part sheet from servo_55.png (95 s, first try; 9 parts in the
+  asked order) cut to today's part sizes, head turned to the rig's front-down convention
+  (tools/art/servo_parts_pitch.py); `ServoArt.path` picks p55 when present (two load lines in
+  ServoRig, no growth). Kept main's art: the 2-row rack (layout differs), the drones and crates
+  (ServoDraw). Commit a546faca. Still at 64 px/m: gtai-masters/d8/bosses/servo_tilt64_before_after.png.
+
+NEXT (iteration 2, in order):
+1. The throne-car as a sprite stack from art (item 2): slices from a simple Blender model rendered
+   to PNG (or generated) with our gilded grille (not a maker's trade dress), amber tail lamps, drapes,
+   the hood cannon, the throne; replace KingCarStack's code slices under a court pitch only. Film the
+   procession and the ram.
+2. Fold the court card strips into chars' `ViewMode.art` route once merged (rows in this JOURNAL,
+   14:47) and keep KingArt for the limbs + cape; re-dress the card when the pitch moves (combo).
+3. Servo: the 2-row rack in the new palette (cut the top two rows of the 3-row rack art), the drones
+   (ServoDraw drone_tex/crate_tex through ServoArt); film the drone launch and the rotor dash at 64.
+4. Close combat at 64 px/m: the King vs Rivet's claw and the katana chapter (`--loadout=katana`
+   in the arena boss fight), Servo the same; check the hit flash on the raw parts (one frame of
+   print-through possible when the flash ends: KingArt re-nulls on the next step).
+5. A combined clip of the set (30-90 s) for frames.json; cape A/B clip for the call.
+6. Rivet's claw / katana chapter 64 px/m checks; then the King's own cape motion under tilt if the
+   owner keeps the drawn fan (CARD_CAPE false) - a draped, upright cape layer instead of the fan.
+- 14:59 GATES on 1b42d66a: unit 1417/1417 (full run), lint 15/15 (pre-commit). Scenarios and the reel were
+  run on 7d9251a0 (before Servo); Servo is p55-only, so top is unchanged by construction.
+- 14:56 MILESTONE Servo's 2-row rack wing from the p55 3-row rack (bottom row cut), both wings match
+  (11af64a8; still servo_tilt32_both_racks_after.png). NEXT item 3 shrinks to the drones/crates.
+- Evidence: gtai-masters/d8/bosses/ frames.json (15 entries, best first), combined clip
+  bosses_d8_it1_combined.mp4 (37 s). Raw avis deleted; scratch renders stay in gtai-d8/scratch/bosses.
+- Calls for the owner (for REPORT): (1) CARD_CAPE: the card's cape only (default) vs the drawn fan
+  under tilt (call_cape_car_fan_vs_card_48.png; `KingArt.CARD_CAPE = false`); (2) the bust's width
+  1.5x (`KingArt.STRIPS["king"][2]`); (3) the emeralds key toward grey (the chroma despill clamps
+  green): regenerate gem accents on magenta if the owner wants green gems.
+- Watch item: an arm can cross the bust card at melee range (king_vs_katana_64_close.png frame 2):
+  the rig's arm z draws over the card. Measure per frame next iteration (RigDepthSort is chars').
+
+## Iteration 2 (2026-11-06 15:00-16:00, BUILD)
+
+- 15:00 Read JOURNAL, git log, chars' JOURNAL tail (ViewMode.set_pitch + revision landed on chars).
+  Registry rules applied this session: `concept-scene-parity` (the car's walls are cut FROM the
+  approved king_car_55 sheet, not redrawn), `generative-artifact-gating` (sheet defects fixed in the
+  cutter: red tail lamps -> amber, the maker-like slatted grille replaced by our sunburst),
+  `depth-ordered-layered-art` (an ink pass under all slices, then the wall bands, then the roof plane),
+  `motion-quality-gating` (judged in the live arena at 32 and 64 px/m, fixed seed 2).
+- 15:05 DECISION throne-car stack from art: the walls are cut from the car sheet's side and rear
+  views (tools/art/king_car_walls.py) and drawn as one texture row per lifted slice (KingCarWalls, 40
+  slices: under 2 px a step at 64 px/m), instead of slices rendered from a Blender model. Why: the
+  sheet IS the approved look (drapes, tassels, gilded wheels), the slices need only a wall per side,
+  and a Blender model would be a second, unapproved design. Rejected: Blender slice renders (no time
+  to model to the sheet's fidelity this session; the route stays open: the same three PNGs can be
+  rendered from a model). The front wall is the rear band with OUR grille (a gilded sunburst under a
+  plum crest, round cream lamps) painted over: the sheet's slatted temple grille is a maker's trade
+  dress (LEG-02). Tail lamps amber (hue 28, red is blood only). Alternative one move away: delete
+  art/p55/car/ and KingCarStack's code slices draw again.
+- FRICTION `draw_texture_rect_region(..., transpose=true)` drew the end band 2.5 m long past the nose;
+  the ends now draw under a frame turned a quarter (no transpose).
+- 15:20 MILESTONE throne-car walls (p55): before/after at 64 px/m (scratch car/shots/ba64.png): the
+  black walls with a gold belt and drawn tyres become the sheet's side (glass band, gold belt, plum
+  drapes with gold tassels, gilded spoked wheels, gold bumpers) and our grille on the nose.
+- 15:13 Image round r5 (lock: asset lane yielded after image.want; 97 s, first try): the car's roof
+  as a top plan + the empty throne from behind and from the front, from king_car_55.png. Velvet came
+  crimson (hue 348-351): shifted -24 deg, value x0.85 (the bust's -32 read violet on a big area).
+- 15:20 MILESTONE car roof + throne (p55), commit c18af566: `KingCarWalls.roof` draws the plan over
+  the car's footprint; KingBodyView's code roof moved verbatim into `KingCarTrim.roof` (top: same
+  draw calls, same colours; KingBodyView 243 -> 235 lines, debt baseline tightened). The throne is an
+  upright card (textured quad in the car frame, upright on screen): the back when the tail faces the
+  camera, else the front; narrowed to 0.7 side-on; 3.0 m face-on (1.9 m hid behind the 1.5x bust,
+  3.3 m towered). The hood cannon (and its coins) stand on the art's laurel ring (0.33; top 0.2).
+- 15:22 MILESTONE Servo's flying drone (p55) from the r4 sheet (turned 180, today's size), through
+  ServoArt; test_servo_art's "no p55 art" example moved to the crate. Commit 30282892. Seen in flight
+  over the drop rings at 48 px/m (gtai-masters/d8/bosses/servo_tilt48_drones_x3.png, from the clip
+  servo_tilt48_drones_rotor_dash.mp4: launch, drop rings, the rotor dash lane at 21 s).
+- Provenance: 7 rows (roof, throne x2, walls x3, drone). Decision line in docs/decisions.md.
+- Unit: --select test_king_car_walls,test_servo_art,test_king_art 14/14; --changed earlier caught
+  the servo test (fixed). Lint 15/15 on every commit.
+- 15:33 Evidence (gtai-masters/d8/bosses/, frames.json 15 entries, the 4 new car/drone entries first):
+  king_car_64_t720_before_after.png, king_car_64_t600_before_after.png, king_car_tilt32_after.mp4 +
+  king_car_tilt32_before.mp4 (procession and the ram's tell, seed 2, 15 s; before = art folder moved
+  aside), king_car_tilt32_ram_before_after.png, servo_tilt48_drones_x3.png,
+  servo_tilt48_drones_rotor_dash.mp4. Raw avis deleted.
+- 15:35 GATE director reel headless `--loadout=pistol --rigs --quit-after 8000` on a412f1ad: tilt 19/19
+  chapters fully down, 0 SCRIPT ERROR; top 19/19, 0 SCRIPT ERROR.
+- 15:37 GATE top identity, measured: a detached worktree of 8b0f9031 (before this session) vs HEAD,
+  same seed: King `--view=top` tick 720 at 32 px/m md5 a88c7d73... both; Servo `--view=top` tick 1140
+  (drones up) at 48 px/m md5 d1c09fbf... both. (Also art present vs moved aside: identical.)
+- 15:40 GATES on a412f1ad: scenarios 52/52 (run_scenarios.mjs, no contended miss this time); unit
+  1421/1421 (full run); lint 15/15. Phase 2 (court on the stalled car) at 48 px/m looks right: the King
+  on the gilded throne card, the car's art walls and roof (scratch car/shots/late.png).
+- 15:46 Close combat (item 5), Servo: `--loadout=katana` at 64 px/m, ticks 400/900/1500/2100; the bot
+  never closed to contact, nearest ~3 m at 2100 (gtai-masters/d8/bosses/servo_vs_katana_64_close.png):
+  the p55 parts hold (no mush). A true contact frame for Servo is still owed (a scripted melee or
+  `--bot=rivet` duel). frames.json: 15 entries (combined clip bosses_d8_it2_combined.mp4, 37 s).
+- Calls for the owner (add to REPORT): (4) the throne card's size: 3.0 m face-on, towering a head over
+  the crown like the sheet (`KingCarWalls.THRONE_W_M`; 2.3 hid behind the bust); (5) the hood cannon
+  moved onto the roof art's laurel ring under tilt (0.33 of the car vs 0.2; view only, coins follow;
+  `KingCarWalls.ART_MOUNT_K`); (6) the car's walls are flush art (the wheels painted), main's drawn
+  tyres stood proud of the body: same seed side by side in king_car_64_t720_before_after.png.
+
+NEXT (iteration 3, in order):
+1. The gang on foot at 64 px/m vs the claw, and the King on foot at 64 (press slam) with
+   the new car parked behind: one before/after per figure for REPORT.
+2. The hood cannon barrel from art (a gilded barrel strip, top view, in the r5 palette), and the
+   car's bumper protrusion (KingCarStack.bumpers are skipped under the art stack).
+3. Servo contact frame at 64 (claw and katana); the crate (kraft box) in the 55 palette via ServoArt.
+4. Fold the court card strips into chars' `ViewMode.art` route once merged (rows in 14:47 entry).
+5. Watch item: the King's arm over the bust card at melee range (RigDepthSort, chars').
+6. At the freeze (18:30): export build/export/windows/RTAI.exe (int-day recipe), REPORT.md.
+
+## Iteration 5 by the runner (session 3; 2026-11-06 15:47-16:47, BUILD)
+
+- 15:47 Read JOURNAL, git log, chars' JOURNAL tail. Rules applied: `depth-ordered-layered-art` (the
+  crate: shadow, ink pass, face slices, lid art last), `concept-scene-parity` (kraft parcels are cubes
+  on the Servo sheet), `motion-quality-gating` (judged in the live arena, seed 2, 32 and 64 px/m).
+- 15:50 The r4 Servo sheet holds no loose crate, and today's crate.png is already kraft (212,151,93,
+  tape 244,205,154): no recolour owed. What was wrong under tilt is the SHAPE: the landed CS crates
+  (cover, obstacles) lay flat as floor tiles beside the depot's standing crate stacks.
+- 15:57 MILESTONE CS crates stand up under tilt (ServoCrateStack, 1091a211 + 0fa4b259): a lifted
+  prism (12 solid slices, shaded 0.58 -> 0.8, the tape down the near face), the crate art as the lid
+  at 0.9 m, the "CS" stencil on the lid, a cast shadow through RigCastShadows.sweep (the arena props'
+  sweep). ServoDraw 202 -> 195 lines (the stencil moved out; debt baseline tightened).
+  GATE top identity measured: Servo `--view=top` tick 1800 at 64 px/m md5 b1f14925... with the HEAD
+  ServoDraw and with the new one. Unit --select test_servo_crate_stack,test_servo_art 6/6; lint 15/15.
+  Evidence: gtai-masters/d8/bosses/servo_crates_tilt64_before_after.png, _tilt32_before_after.png.
+- 16:00 Servo contact frame at 64 px/m (owed): `--ghost=kerf --loadout=katana` brings the boss bot into
+  melee range (BossBotGhost.hold_m; the plain bot holds HOLD_M 8 m). Tick 500: Rivet's katana at
+  Servo's visor; the p55 parts hold (gtai-masters/d8/bosses/servo_vs_katana_64_contact.png).
+- 16:03 FINDING: Servo had no lift at all under tilt (ServoRig draws a flat cutout): beside an
+  upright Rivet and the standing crates he read as a floor decal.
+- 16:07 DECISION + MILESTONE Servo stands under tilt (d5765239, fc539407): the upper body draws
+  ServoArt.STAND_M = 1.6 m over the feet (view.lift_at), the legs and pad arms stretch up to it (pads
+  at half height), his footprint (4.4 x 2.4 m) casts the props' swept shadow; on defeat the lift
+  sinks to the floor (ServoFall.stand_k, exp(-dt/16)). ServoRig held at 288 lines (comments trimmed).
+  Alternative one value away: STAND_M = 0. Decision line in docs/decisions.md.
+  GATE top identity measured: `--view=top` tick 1800 64 px/m md5 b1f14925... = HEAD before the session.
+  Unit `--changed` (ran the full suite): 1408 passed, 0 failed. Lint 15/15 per commit.
+  GATE director reel headless tilt `--loadout=pistol --rigs --quit-after 8000` on d5765239: 19/19
+  chapters fully down, 0 SCRIPT ERROR. Phase-3 headless (`--phase=3 --ghost=kerf`): servo defeated,
+  0 SCRIPT ERROR (the kill_char_fx shader warning under --headless predates this lane).
+- 16:15 Evidence (frames.json 15, new first): servo_stands_vs_katana_64_before_after.png,
+  servo_stands_tilt48_katana.mp4 (15 s), servo_stands_tilt32_before_after.png (also shows the crates),
+  servo_crates_tilt64_before_after.png. Looked at every frame.
+- Calls for the owner (add to REPORT): (7) Servo's stand height `ServoArt.STAND_M` (1.6 m; 0 = the
+  flat rig): see servo_stands_vs_katana_64_before_after.png; exe `RTAI.exe -- --boss=servo --view=tilt`.
+- 16:20 Gang close-up at 64 px/m vs Rivet (phase 2, tick 1000): helmets, plum bands, gold-framed shades,
+  rope chains and gunmetal bodies hold (gtai-masters/d8/bosses/gang_tilt64_close_vs_rivet.png).
+  frames.json: 15 entries (servo_vs_katana_64_close.png replaced by the contact pair, file deleted).
+- 16:22 MILESTONE dropped parcels fall as boxes under tilt (7fffea59): ServoCrateStack split into
+  draw (shadow + box) and box (no shadow: the falling parcel keeps its own closing shadow), so a
+  parcel no longer falls flat and pops into a standing box on landing. GATE top md5-identical at
+  tick 1100 with parcels in the air (7189d363...), HEAD vs new. Unit --select (4 servo files) 13/13.
+  Evidence: servo_parcels_falling_tilt64_before_after.png (replaces king_p3_64_f300 in frames.json).
+- 16:24 Checked the windup at 48 px/m (clip frame 100): the dash lane's tell starts at his lifted
+  front, the visor line sits on the lifted head. NEXT item 3 closed.
+
+- 16:24 GATES on 7fffea59 (the code tip): unit full no-arg run 1424/1424; scenarios 52/52 (on fc539407,
+  run_scenarios.mjs; 7fffea59 is render-only Servo); director reel headless `--loadout=pistol --rigs
+  --quit-after 8000`: top 19/19 fully down 0 SCRIPT ERROR (7fffea59), tilt 19/19 0 SCRIPT ERROR
+  (d5765239); lint 15/15 per commit; top md5 identity measured for every change (16:07, 16:22).
+  NOT RUN this session: evidence --no-bench (owed at the freeze with the export).
+- 16:27 Evidence: bosses_d8_it3_combined.mp4 (30 s: the gang + throne-car at 64 px/m in phase 2, then
+  Servo standing at 48 vs the katana); frames.json 15 (servo_tilt48_drones_x3.png out). NEXT item 4 done.
+- 16:30 MILESTONE the slung parcel under a flying drone is the same standing box under tilt (2637e2e0),
+  so the drop no longer pops flat -> box. ServoDraw held at 200 (comments trimmed). GATE top md5
+  7189d363... at tick 1100 (= HEAD before). Unit --changed (full suite) 1408/1408; lint 15/15. Still in
+  scratch: contact/sling_crop.png (not shipped to masters; frames.json is full at 15).
+- 16:37 GATES on 551128f5 (code = 2637e2e0): director reel headless tilt 19/19 fully down, 0 SCRIPT
+  ERROR; scenarios 51/52 with the reel running beside them: scenario_corpse_horde's wall-clock check
+  (the step grew 1029 -> 2561 us in its last window; city corpses, no boss code) under my own
+  contention; re-run alone (`run_scenarios.mjs --only=scenario_corpse_horde`): 1 passed.
+  FRICTION: running the reel beside the scenarios contends their wall-clock budgets: run them apart.
+NEXT (iteration 6, in order; freeze 18:30):
+1. (done: falling and slung parcels are boxes; gates on 2637e2e0 run 16:37.) The top reel was last
+   run on 7fffea59 (2637e2e0 changes only tilt draws; top md5-identical measured).
+2. The hood cannon barrel from art (a gilded barrel strip in the r5 palette) and the car's bumpers
+   (KingCarStack.bumpers are skipped under the art stack).
+3. (done 16:24.) Servo's hit radius is on the ground under the lifted body: watch whether a katana
+   hit reads as landing on his legs at 64 px/m (a hit spark at the lifted torso is view-only).
+4. (done 16:27.) A gang-on-foot clip at 64 vs the claw (the gang in this clip mostly ride the car).
+5. At the freeze (18:30): export build/export/windows/RTAI.exe (int-day recipe in docs/decisions.md),
+   evidence --no-bench, REPORT.md with Calls 1-7 (JOURNAL).
+
+## Iteration 6 by the runner (session 4; 2026-11-06 16:40-17:40, BUILD)
+
+- 16:40 Read JOURNAL, git log. Rules applied: `concept-scene-parity` (the hood cannon is cut FROM the
+  approved car sheet, not redrawn), `generative-artifact-gating` (the cut looked at x6 before it
+  shipped: the laurel and the mount bracket cover the barrel's lower half on the sheet, so only the
+  clean upper half is kept and mirrored), `depth-ordered-layered-art` (the bumpers extrude inside the
+  slice loop, so higher slices cover the far bumper and the ink pass inks the proud rows),
+  `motion-quality-gating` (judged in the live arena, seed 2, 64 px/m).
+- 16:47 MILESTONE throne-car hood cannon + bumpers under tilt (09b68a37): `KingCarWalls.cannon` draws the
+  barrel cut from king_car_55's side view (tools/art/king_car_cannon.py: a round barrel's side
+  profile is its top silhouette; art/p55/car/cannon.png, 89x45) as a quad on KingCarTrim's swivel
+  mount, KingCarTrim's drawn barrel as the fallback (KingBodyView held at 235 lines: one call swapped).
+  The end walls' painted bumper rows (car_front/rear rows 98-126 = z 0.1-0.4 m) stand
+  `BUMPER_PROUD_M` 0.18 m past nose and tail (0 = flush), inked. Provenance row added.
+  GATE top identity measured: King `--view=top` tick 720 at 32 px/m, HEAD code vs new: raw-frame md5
+  e7d41ab1... both. Unit --select test_king_car_walls,test_king_art 12/12 (2 new tests); lint 15/15.
+  Evidence: gtai-masters/d8/bosses/king_car_cannon_bumpers_64_before_after.png (frames.json #8;
+  king_car_64_t600 out of the list, file kept for REPORT). NEXT item 2 done.
+- 16:50 Picked the weakest point after the list: under tilt the King's cape had lost its motion (the
+  card wears a static cape since 14:44; the drawn cape's gather/flare/landing beat was gone).
+- 16:57 MILESTONE + DECISION the cape train (6344f887, fe163a2a): on foot `KingCape._train` draws the
+  train from 0.9 m up his back to the ground, out by `train_k` (the flare of charge/ram/press_slam
+  and the slam's landing spread; 0 at rest), shaded dark root -> vermilion hem, fold lines, a thin
+  ermine hem. First cut (flat fill, thick fur) read as a decal flag: looked at, reworked before commit.
+  Seated on the car it stays off (in the ram it lay flat across the deck from under the throne foot).
+  `TRAIN_K = 0` = the card-only read. Decision line in docs/decisions.md.
+  GATE top identity measured: phase 3 `--view=top` tick 270 at 32 px/m, HEAD king_cape vs new: raw
+  md5 fe5408e1... both. Unit --select (cape, art, car walls) 17/17 (1 new test); lint 15/15.
+  GATE director reel headless `--loadout=pistol --rigs --quit-after 8000` on 6344f887: tilt 19/19
+  fully down 0 SCRIPT ERROR, top 19/19 fully down 0 SCRIPT ERROR (fe163a2a narrows the same branch).
+  Evidence: gtai-masters/d8/bosses/king_cape_train_64_before_after.png (frames.json #4; the it1
+  combined clip out of the list, file kept), king_p3_cape_train_tilt64.mp4 (6 s, the charge + slam).
+- Calls for the owner (add to REPORT): (8) the cape train under tilt (`KingCape.TRAIN_K`, 1 default,
+  0 = card only): king_cape_train_64_before_after.png; exe `RTAI.exe -- --boss=king --phase=3 --view=tilt`.
+- 17:10 Read view70's REQUESTs (iteration 4). (a) FYI: they filled KingArt's p70 slot (bust padded 1.5x,
+  p55 parts, gang): kept as theirs; if STRIPS["king"] width (1.5) changes, their padding must follow
+  (their test_view_pitch_court guards it). (b) DONE: `test_king_car_walls` uses pitch 65 as
+  "a pitch without art" (commit below), so view70 may add `art/p70/car/` (copy of p55/car incl. the
+  new cannon.png). ANSWER to view70: add the folder in YOUR lane (your own .import uids); I do not
+  copy it here, so the merge has one copy.
+- 17:05 Verified by code reading (not measured): no print-through frame when the hit flash ends.
+  RigClips sets the tint inside rig.drive, and KingRigs._place calls KingArt.dress right after drive in
+  the same frame, so the court parts are re-nulled before the draw.
+- 17:08 Evidence: bosses_d8_it4_combined.mp4 (32 s: car at 64 with the art cannon and bumpers, the
+  King on foot at 64 with the cape train, Servo standing at 48 vs the katana); frames.json 15 (it3
+  combined out of the list, file kept). REPORT.md drafted (12edcfc2): Calls 1-9, export owed.
+- 17:13 FRICTION (fixed): this lane's `appdata/bosses/Godot/export_templates` was a plain EMPTY folder,
+  not the junction the brief describes (view70's is one), so the freeze export would have failed with
+  no templates. Replaced the empty folder by a junction to `%APPDATA%/Godot/export_templates`
+  (4.7.2.stable visible through it). FYI chars and weapons: your appdata folders show no junction either.
+- 17:13 GATES on 0f11ec5f (code = fe163a2a): unit full no-arg run 1427/1427; scenarios 52/52
+  (run_scenarios.mjs, run alone, no contended miss). 854c8768 (test pitch 65): --select 6/6.
+- 17:14 Trial freeze export through the new junction: `"$GODOT_BIN" --headless --path project
+  --export-release windows-showcase ../build/export/windows/RTAI.exe` exit 0 (RTAI.exe 244 MB + the
+  sim DLL). Smoke: `RTAI.exe --rendering-driver d3d12 --fixed-fps 60 --quit-after 600 --write-movie
+  <abs.avi> -- --rigs --boss=king --phase=3 --bot=boss --bot-human --seed=2 --boss-cam --ppm=64
+  --view=tilt`: exit 0, 0 SCRIPT ERROR, but one "Invalid polygon data, triangulation failed".
+- 17:16 FIX (76cbfcfb): that error was the cape train's quads twisting (only runs with the shaded train
+  logged it: p3b/p3c/cB 1-2 each, none flat or TRAIN_K 0). Now two triangles per hem segment
+  (draw_primitive, no triangulation): the same look, 0 such errors over phase 3 ticks 0-540.
+  Unit --select test_king_cape 5/5, lint 15/15. The exported exe predates the fix: re-export at the freeze.
+NEXT (iteration 7 = the freeze session; freeze 18:30, REPORT 18:40):
+1. Read the result of `evidence --no-bench` on 76cbfcfb (scratch/bosses/evidence6.log; this
+   session's last entry says if it finished). If code changes after it, re-run it on the final tip.
+2. At the freeze: re-export `build/export/windows/RTAI.exe` from the tip (command in REPORT "Exe";
+   the 17:14 trial exe predates 76cbfcfb), smoke it once (`--boss=king --phase=3 --view=tilt`,
+   `--boss=servo --view=tilt`: exit 0, 0 SCRIPT ERROR, 0 "triangulation failed").
+3. Finish REPORT.md (draft 12edcfc2 + this session's edits): final gate numbers on the tip, remove the
+   DRAFT banner, Calls 1-9 are in it.
+4. If time remains before the freeze: the director reel in tilt and top on the tip (the train fix is
+   tilt-only render), and a 48 px/m look at the cape train in the ram-free phase 3 slam.
+- 17:23 GATE `evidence --no-bench` on 76cbfcfb: every step PASS except unit-tests marked FAIL with
+  1427/0, because I edited JOURNAL.md/REPORT.md during the run (the tree-changed guard). My error:
+  do not touch the tree while evidence runs.
+- 17:29 GATE `evidence --no-bench` re-run on 27512277 (code = 76cbfcfb), tree untouched: ALL PASS:
+  lint 15/15, unit 1427/0, scenarios 52/52, parity bit-exact (planted caught at 629), selftest (look
+  goldens 11/11, block 5/5), export-audit 542 loaded 0 failed. NEXT item 1 done; re-run only if code
+  changes before the freeze.
+
+## Iteration 7 by the runner (session 5; 2026-11-06 17:31-18:30, BUILD -> the freeze)
+
+- 17:31 Read JOURNAL, git log, REPORT draft, chars/view70 JOURNALs (no open REQUEST to bosses; view70
+  merged d8-bosses at c9501647 and put the throne-car art in p70). Rules applied: `concept-scene-parity`
+  (the exe smoke judged in the live arena paths, not the sheets), `motion-quality-gating` (the director
+  reel in tilt and top on the tip), `depth-ordered-layered-art` (the re-dressed card keeps the shared
+  card's z and anchor), `generative-artifact-gating` (no new AI asset this session).
+- 17:35 MILESTONE 8dbbbcf0: the known gap "a card swapped once keeps its strip if the pitch moves"
+  (view70's combined view eases 70 -> 55 into a boss fight) is closed in KingArt: the card keeps the pitch
+  it was dressed for (meta court_pitch) and the shared strip it first wore (court_shared), and when the
+  pitch moves it swaps to that pitch's court strip (p70 -> p55), or back to the shared card at a pitch
+  with no strip; the horn part follows. New unit test 55 -> 65 -> 55. GATE tilt at a steady pitch
+  pixel-md5 identical HEAD vs new: phase 3 t270 at 64 (c421b2d4) and the car t720 at 32 (72674cf7);
+  `top` builds no card, so it is untouched by construction. FYI view70: merge 8dbbbcf0 for the combo.
+- 17:36 GATE director reel headless (`--loadout=pistol --rigs --quit-after 8000`) on 8dbbbcf0: tilt
+  19/19 chapters fully down, 0 SCRIPT ERROR; top 19/19, 0 SCRIPT ERROR.
+- 17:44 GATE `node tools/evidence/run.mjs --no-bench` on 8dbbbcf0, tree untouched: ALL PASS: lint 15/15,
+  unit 1428/0, scenarios 52/52, parity bit-exact (planted caught at 629), selftest (look goldens 11/11,
+  block 5/5), export-audit 542 loaded 0 failed.
+- 17:44 EXPORT `build/export/windows/RTAI.exe` from 8dbbbcf0 (windows-showcase, exit 0, 0 ERROR lines).
+  Smoke 600 frames each, write-movie: King phase 3 tilt 64, King car tilt 32, Servo tilt 48, King top:
+  all exit 0, 0 SCRIPT ERROR, 0 "triangulation failed" (only the exit-time "resources still in use"
+  line every dev run prints too). Last frames looked at (scratch it7/smoke_strip.png): the p55 art draws
+  in the exe.
+- 17:48 Masters cleanup: removed the superseded it1/it3 combined clips and king_car_64_t600 (none in
+  frames.json or REPORT). No .avi left in scratch.
+- 17:48 LOOK the cape train at 48 px/m (NEXT item 4; dev build = the exe's code, phase 3 seed 2, 2-11 s):
+  the train streams in the charge and spreads at the slam landing, nothing at rest. Found: in the charge it
+  lies inside the vermilion charge telegraph, so the cloth has low contrast there (the ermine hem and ink
+  carry it). Not fixed at the freeze (a code change would re-open evidence + export); in REPORT gaps.
+  Masters: king_p3_cape_train_tilt48_sheet.png (not in frames.json; named in REPORT).
+- 17:49 REPORT.md final (no DRAFT banner; gates and exe on 8dbbbcf0; Calls 1-9; blocked: none).
+NEXT (after the merge, a later run):
+1. The cape train in the charge: draw it under the telegraph's fill or darken its root, judge at 48 in
+   the charge (king_p3_cape_train_tilt48_sheet.png is the before).
+2. Fold the court strips into chars' `ViewMode.art` route (rows in the 14:47 entry); KingArt keeps the
+   limbs, the cape and the pitch re-dress (8dbbbcf0).
+3. Regenerate the emerald gem accents on magenta (Call 3); a p70 set from the 70 sheets with the same cutters.
+
+## Iteration 8 by the runner (session 6; 2026-11-06 17:51-18:30, BUILD -> the freeze)
+
+- 17:51 Read JOURNAL (it7 NEXT), git log, REPORT final, chars/weapons/view70 JOURNALs (no open REQUEST to
+  bosses). Rules applied: `motion-quality-gating` (the fix judged in motion on the same seed and ticks,
+  before vs after), `concept-scene-parity` (the live arena path, not a still of the part),
+  `depth-ordered-layered-art` (the train keeps its z under the rig; only its shade and edges change),
+  `generative-artifact-gating` (no new AI asset this session).
+- 17:56 MILESTONE 02b11a53 (it7 NEXT item 1, the REPORT gap): the cape train reads inside the charge's
+  vermilion lane: ink side edges root to hem and a darker root (`KingCape.TRAIN_ROOT_DARK` 0.55, was 0.4;
+  `TRAIN_SIDE_INK` false = it7). The hem stays vermilion with its ermine (the King's cape colour verdict).
+  Tilt-only: `card_wears_cape()` needs a court strip, `strip_path` is "" at pitch >= 90, so top never
+  reaches `_train`. Unit --select test_king_cape 5/5, lint 15/15. LOOK 48 px/m phase 3 seed 2 at 3.7 s and
+  4.0 s, old values vs new, same ticks: masters `king_p3_cape_train_charge_tilt48_before_after.png`
+  (frames.json #5; dropped the unreferenced it2 combined clip from frames.json, the file stays).
+  0 SCRIPT ERROR, 0 "triangulation failed" in the 700-frame run.
+- 17:59 GATE director reel headless on 02b11a53: tilt 19/19 chapters fully down, top 19/19, 0 SCRIPT ERROR.
+- 18:09 GATE `evidence --no-bench` on 02b11a53, tree untouched: lint 15/15, unit 1428/0, parity bit-exact
+  (planted caught at 629), selftest (goldens 11/11, block 5/5), export-audit 542/0: PASS. Scenarios 51/52:
+  `scenario_rig_stress` FAIL on its 1 ms wall-clock budget (200 people p50 1.005 / 1.009 ms; missed under
+  contention, re-judged alone after 100 s and missed again by 0.009 ms).
+- 18:11 GATE `node tools/tests/run_scenarios.mjs --only=rig_stress` alone: PASS, 200 people p50 0.839 ms
+  (50 people 0.755). Not this lane's code (no rig/sim change; scenarios are headless and the train is tilt
+  draw only); it passed 52/52 on 8dbbbcf0 at 17:44. FRICTION: the 200-person p50 sits at ~0.8-1.0 ms against
+  a 1 ms budget, so four lanes running evidence at the freeze tip it over. FYI chars (owns the rig code).
+- 18:10 EXPORT `build/export/windows/RTAI.exe` from 02b11a53 (windows-showcase, exit 0, 0 ERROR lines).
+- 18:13 SMOKE 600 frames each: King phase 3 tilt 64, Servo tilt 48, King top: exit 0, 0 SCRIPT ERROR,
+  0 "triangulation failed" (only the exit-time "resources still in use" line). Last frames looked at
+  (scratch it8/smoke_strip.png): the p55 art draws in the exe. Scratch .avi deleted.
+- 18:14 REPORT.md updated (gates on 02b11a53 with the rig_stress margin miss named, the train gap closed, exe
+  18:10); decision line in docs/decisions.md.
+- 18:16 LOOK the train fix at the shipped 32 px/m from the 18:10 exe (phase 3 seed 2, 3.4-4.6 s, the charge):
+  the train reads as a dark-rooted sheet with a thin ink edge inside the lane, not heavy. Masters:
+  king_p3_cape_train_charge_tilt32_exe.png (named in REPORT; frames.json stays at 15). 0 SCRIPT ERROR.
+NEXT (after the merge, a later run):
+1. Fold the court strips into chars' `ViewMode.art` route (rows in the 14:47 entry); KingArt keeps the
+   limbs, the cape and the pitch re-dress (8dbbbcf0).
+2. Regenerate the emerald gem accents on magenta (Call 3); a p70 set from the 70 sheets with the same cutters.
+3. The cape train under the charge telegraph's fill instead of over it, if the owner finds the edges too busy.
+
+## Iteration 9 by the runner (session 7; 2026-11-06 18:19-18:30, BUILD -> the freeze)
+
+- 18:19 Read JOURNAL (it8 NEXT), git log. 11 min to the freeze: no code change can be gated (evidence
+  ~10 min) and re-exported in that window, so the 18:10 exe and the green gates on 02b11a53 stand.
+- 18:20 CHECK: `git diff --stat 02b11a53 HEAD` = JOURNAL.md, REPORT.md, docs/decisions.md only, so the
+  18:10 `build/export/windows/RTAI.exe` is HEAD's code. Masters frames.json 15 entries, every file present.
+  No raw .avi left in scratch (300 MB of stills/scripts stay for the report). Four Godot processes running
+  are other lanes' runs (not started by this session), left alone.
+NEXT: unchanged from iteration 8 (court strips into `ViewMode.art`, emerald gems on magenta + a p70 set,
+  the train under the telegraph fill if the owner asks).
+
+## Iteration 10 by the runner (2026-11-06 18:20-18:30, BUILD -> the freeze)
+
+- 18:20 Read JOURNAL (it9 NEXT), git log. 10 min to the freeze: no code change can be gated (evidence takes
+  ~10 min) and re-exported in that window, so the 18:10 exe and the green gates on 02b11a53 still stand.
+- 18:21 CHECK: `git diff --stat 02b11a53 HEAD` still covers only JOURNAL.md, REPORT.md and docs/decisions.md,
+  so `build/export/windows/RTAI.exe` (18:10) is built from HEAD's code. Masters frames.json has 15 entries and
+  every file exists. 0 raw .avi in scratch. Tree clean apart from this entry.
+NEXT: unchanged from iteration 8 (court strips into `ViewMode.art`, emerald gems on magenta + a p70 set,
+  the train under the telegraph fill if the owner asks).
+
+## Iteration 11 by the runner (2026-11-06 18:30-18:32, STABILIZE, past the freeze)
+
+- 18:30 Read JOURNAL (it10 NEXT), git log. Past the freeze: no feature work.
+- 18:30 CHECK: `git diff --stat 02b11a53 HEAD` = JOURNAL.md, REPORT.md, docs/decisions.md only, so
+  `build/export/windows/RTAI.exe` (18:10) is still HEAD's code. Masters frames.json 15 entries, 0 missing.
+  0 raw .avi in scratch. REPORT.md (18:16) has every required section; no change needed.
+- 18:31 GATE `node tools/lint/lint.mjs` on HEAD: all 15 checks pass over 1096 GDScript files. The rest of
+  the gates stand from 02b11a53 (no code change since; REPORT "Gates" section).
+NEXT: unchanged from iteration 8 (court strips into `ViewMode.art`, emerald gems on magenta + a p70 set,
+  the train under the telegraph fill if the owner asks).
+
+## Iteration 12 by the runner (2026-11-06 18:40-18:45, REPORT)
+
+- 18:40 Read JOURNAL (it11 NEXT), git log. REPORT.md from the freeze stands; checked every path it cites:
+  all stills/clips exist in masters, frames.json 15/0 missing, source sheets, cutters, art/p55 folders and the
+  18:10 exe present; `git diff --stat 02b11a53 HEAD` = docs only, so the exe is HEAD's code.
+- 18:43 REPORT.md: "What blocked" now says how long each friction cost; added "Where the evidence is" (masters
+  folder, not the repo's `evidence/`) with the 18:42 path check. No code change.
+NEXT: unchanged from iteration 8 (court strips into `ViewMode.art` after the merge, emerald gems on magenta
+  + a p70 set with the same cutters, the cape train under the charge telegraph's fill if the owner asks).
