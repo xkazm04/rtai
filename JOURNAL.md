@@ -271,7 +271,8 @@ NEXT (iteration 5):
    views and scenarios green, fix that first.
 2. DONE 16:50 (70 s, four captioned iteration-4 segments appended). Was: refresh the combined clip (gtai-masters/d8/weapons/weapons_tilt_set_combined.mp4, iteration 3) with today's
    FX: the flame jet from the tip, the charge on the coil, the two-tone long guns at 32, the reload ring.
-3. Melee smear at height: F 1 (faint under the hit star at 48). Try a stronger ink band (INK_A) for the
+3. Melee smear at height: F 1 (faint under the hit star at 48; 16:53 a 2x crop of the katana cut, frames
+   56-66, scratch smear/cut2.png, could not separate it from the star and the cop). Try a stronger ink band (INK_A) for the
    tilted view only, or keep. Film the katana chapter at 48/64.
 4. Electro baton: now an owner call (above). Optional: a pale-wrap regen, filmed in its chapter.
 5. Freeze 18:30: export the exe (int-day recipe in docs/decisions.md) to build/export/windows/RTAI.exe, run
@@ -279,3 +280,4 @@ NEXT (iteration 5):
    iteration-3 block).
 6. Scratch is 2.8 GB: before the freeze delete what frames.json and weapons-tilt.md do not name.
 - Session end 16:48. Branch head clean; every item above committed.
+- Session end 16:52 (iteration 4). Branch head clean; every item above committed. NEXT (iteration 5) above stands from item 3.
