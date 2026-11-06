@@ -477,3 +477,6 @@ NEXT (iteration 6):
   chapter (the process runs on to its 14000-frame end). Unit no-arg 1507/0 was on afe22e3b; the
   `--changed` run on c1e8cf2f passed 1492/0 (its fast suite), lint 15/15. Owed: unit no-arg and the
   combo reel on c1e8cf2f, scenarios on the it5 head.
+- GATE on c76be180 (code = c1e8cf2f): unit no-arg 1508 passed, 0 failed, no FLAKY; scenarios 52
+  ran, 0 failed (headless; vehicle timings labelled CONTENDED by the runner); the tilt70 reel ran
+  to its 14000-frame end, exit 0, 0 SCRIPT ERROR. Combo reel started 00:50 (reel_combo_it5.log).
