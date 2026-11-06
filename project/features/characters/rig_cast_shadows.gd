@@ -72,11 +72,12 @@ static func figure(feet: Vector2, dir: Vector2, hip: float) -> PackedVector2Arra
 func _rigs() -> Array[CutRig]:
 	var out: Array[CutRig] = []
 	for c: Node in _layer.get_children():
-		_collect(c, 0, out)
+		collect(c, 0, out)
 	return out
 
 
-func _collect(n: Node, depth: int, out: Array[CutRig]) -> void:
+## (PropOcclusion collects the same rigs.)
+static func collect(n: Node, depth: int, out: Array[CutRig]) -> void:
 	if n is CutRig:
 		if (n as CutRig).is_visible_in_tree():
 			out.append(n as CutRig)
@@ -84,7 +85,7 @@ func _collect(n: Node, depth: int, out: Array[CutRig]) -> void:
 	if depth >= 2:
 		return
 	for c: Node in n.get_children():
-		_collect(c, depth + 1, out)
+		collect(c, depth + 1, out)
 
 
 ## The cast shadow of a box standing on `corners` (its footprint, the canvas's local px), its

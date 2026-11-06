@@ -44,6 +44,9 @@
             "minLength": 1,
             "type": "string"
           },
+          "occlude": {
+            "type": "boolean"
+          },
           "pitch_deg": {
             "maximum": 90,
             "minimum": 30,

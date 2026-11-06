@@ -29,6 +29,8 @@ var eye_h_m: float = 0.0
 ## Cast shadows by height (RigCastShadows, KingCarStack, the arena props): a shadow's length per
 ## unit of height, thrown down-right (CAST_DIR, the city's building shadows' direction); 0 = none.
 var cast_k: float = 0.0
+## Under a tilt: the standing props drawn over a body behind them (PropOcclusion); false = not.
+var occlude: bool = false
 var ids: Array[String] = []
 
 
@@ -58,6 +60,7 @@ static func of(want: String) -> ViewMode:
 			v.eye_h_m = eye_h
 			var cast: float = row.get("cast_k", 0.0)
 			v.cast_k = cast
+			v.occlude = row.get("occlude", true) == true and v.pitch_deg < 90.0
 	if want != "" and not v.ids.has(want):
 		Log.warn("view", "unknown --view=%s; drawing %s" % [want, v.id])
 	return v

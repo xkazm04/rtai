@@ -179,6 +179,7 @@ func _add_view() -> void:
 		Log.info(
 			"arena", "cast rigs: %s" % cast.attach(session.stage, view, session.world.context())
 		)
+		_add_occlusion()
 	if session.city != null:
 		_characters = CityCharacters.new(session.city, view.city_view, session.world.context())
 		if cast != null:  # human-reactions: the street trips over the fight's dead
@@ -268,3 +269,13 @@ func _notification(what: int) -> void:
 		var n: Array[int] = [c.cowers, c.startles, c.trips, c.deaths]
 		Log.info("arena", "crowd: %d cowers (%d at a death), %d trips, %d deaths" % n)
 		_characters = null
+
+
+## View lab (tilted --view only): the tall props drawn over the bodies standing behind them.
+func _add_occlusion() -> void:
+	var ps: PrintStage = view.print_stage
+	var floor_view: ArenaFloorView = view.stage_view as ArenaFloorView
+	if ps != null:
+		PropOcclusion.attach(ps.actor_layer(), floor_view, ps.item_material())
+	elif view.city_view != null:
+		PropOcclusion.attach(view.city_view.actor_layer(), floor_view, null)
