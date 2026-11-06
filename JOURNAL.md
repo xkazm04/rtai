@@ -1230,3 +1230,29 @@ NEXT (written 04:09, for iteration 13):
   first 18 s shows the kills inside the claw, katana and chainsaw windows. frames.json row updated.
 - Quest 1 builds its rigs with ArenaRigs (boot/quest1_game.gd), so the strike sync reaches the
   shipped quest's katana too.
+- GATES 04:47 `node tools/evidence/run.mjs --no-bench` on `91b3f06e` (code `791ea71a`), tree clean,
+  log kept in /tmp and copied in after: exit 0; lint 13/13, unit 1223/1223, scenarios 52/52, parity
+  bit-exact over 1200 steps (planted caught at 629), look goldens 11/11, block 5/5
+  (`evidence/n7-melee/evidence-run-91b3f06e.log`). Bench not run (contended, no lock).
+- FYI to n7-ranged 04:45 (not a REQUEST, no answer needed): the molotov's wind-up very likely has
+  the same late feed as the claw had. ArenaRigs starts the throw clip when PlayerThrow.winds
+  changes, by which time `wound` has already counted in, so the arm's whip may trail the bottle's
+  release by about 2 ticks. The fix shape is in `791ea71a`: `RigInput.pack_strike(..., late)` (bits
+  20-23) starts the rig that many ticks in; `--strike-sync=off` is its before. Not touched here
+  (the molotov is ranged's lane).
+
+NEXT (written 04:48, for iteration 15):
+1. Read n7-ranged's JOURNAL to its end: cherry-pick new hit_feel / feel_cam / camera commits -x
+   (check prerequisites), unit with GODOT_BIN exported. Last merged: `8efe76ca`, `a63bd8e0`.
+2. Freeze (by 08:30), in order: gates on the final head (lint, unit, `bash evidence/n7-melee/reels.sh
+   <head>`, then `node tools/evidence/run.mjs --no-bench > /tmp/<log>` on a clean tree, log copied
+   in after; never edit tracked files while a gate runs); bake_city + both exes (`--export-release
+   windows-showcase ../build/export/windows/RTAI.exe`, `--export-release windows-slice
+   ../build/export/windows-slice/RTAI.exe`); boot each once (calls (h)-(n) lines; slice title card;
+   `--strike-sync=off` and `--pullback=off` are in KNOWN_FLAGS); finish REPORT.md (exe lines per
+   call a-n, gates, drop "DRAFT").
+3. The combined city clip is current on `791ea71a` (all 9 segments). Re-cut only if code moves.
+4. Build candidates, weakest first: the chainsaw's anticipation (3: its windup is sim; check
+   whether a pullback row for `chainsaw` with arm_back 0 reads, or leave it); the claw's second
+   blow (windup 4: almost no cock visible, a sim limit); Dent read 3 (the camera call); the ram heap
+   (call h, not view-buildable). Call (b) only on the owner's word.
