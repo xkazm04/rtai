@@ -1428,3 +1428,20 @@ live arena path at 32/48 px/m), sprite-and-atlas-production, depth-ordered-layer
   the lane, the step out, the vent), kamikaze (lock rings, a dive in its ring, the sidestep), Dent
   (the teal tether, the van onto the rack, the blast, the wreck). it14 clips and keys deleted;
   REPORT and frames.json paths moved; every frames.json file exists. Kerf and Ohm filming.
+- 05:26 FILMS Kerf (1.5 + 8 s) and Ohm (1.5 + 7.5 s) re-filmed at 48 px/m on the docked bays
+  (`ghost48_16.sh kerf 2 2 720`, `ohm 2 2 540`, 0 SCRIPT ERROR). **Looked at** both key sheets:
+  the blinks slice teal across the swarm and the rack; the bolt jumps drone to drone, then the
+  rack. it14 clips and keys deleted. **Every clip and still in frames.json is now on the it16
+  body** (docked bays) or an A/B of it; every REPORT M/ path exists. Scratch avis deleted.
+
+NEXT (iteration 17, in order):
+1. Merge n7-king if it moved (last merged 296cce50 as 71fa77a2; JOURNAL/REPORT add/add: ours).
+2. Director reel on the it16 head (`scratch/servo/reel*.sh`; last 19/19 on 939453f5, it14). The
+   it16 changes are render-only in features/bosses/servo/, but run it before the freeze anyway.
+3. Weakest by the target still now: the sheet's packages hang slung under the drones (ours sit on
+   the hub) and the spine's rail bottom is under the torso. Low value; prefer play checks.
+   Film scripts for a body change: `scratch/servo/{full32,phase32,film48,ghost48,spine}_16.sh`,
+   `post_{full,phase}16.sh`, `cut16.sh` (cuts as listed in the 05:22 entry), `compose_target16.py`.
+4. At the freeze (08:30): re-export `windows-showcase`, smoke (expect down 7036, 188), final gates
+   (lint, unit 1193, scenarios, evidence/run.mjs, director reel), REPORT final (drop DRAFT; Next
+   steps drafted at it16).
