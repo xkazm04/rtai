@@ -204,6 +204,11 @@
           "spin_whirl_m": {
             "minimum": 0,
             "type": "number"
+          },
+          "trail_ticks": {
+            "maximum": 20,
+            "minimum": 0,
+            "type": "number"
           }
         },
         "required": [

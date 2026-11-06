@@ -40,6 +40,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--throw-sync",
 	# n7-ranged: --wound-hold=off starts a light kill's stop on the hit tick (the before)
 	"--wound-hold",
+	# n7-ranged: --shot-trail=off draws no fading path behind a round that hit (the before)
+	"--shot-trail",
 ]
 
 var _values: Dictionary[String, String] = {}

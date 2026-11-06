@@ -54,8 +54,10 @@ var fired_count: int = 0
 var aim: Vector2 = Vector2.ZERO
 ## The burnt ground fire patches leave when they go out.
 var scorch: FightScorch = FightScorch.new()
-## Rounds seen last tick (GunFxRounds): Shot -> [pos, step, from_rivet].
+## Rounds seen last tick (GunFxRounds): Shot -> [pos, step, from_rivet, origin].
 var shots_seen: Dictionary = {}
+## n7-ranged it24: Rivet's rounds that stopped in a body, drawn as a fading path (WeaponFxTrail).
+var trails: Array[WeaponFxTrail.Trail] = []
 var _seen_fired: int = 0
 var _was_reloading: bool = false
 var _last_tick: int = -1
@@ -197,6 +199,7 @@ func _expire(tick: int) -> void:
 		impact_dir.remove_at(0)
 	while not enemy_flashes.is_empty() and tick - int(enemy_flashes[0].z) > 3:
 		enemy_flashes.remove_at(0)
+	WeaponFxTrail.expire(trails, tick)
 	while not smoke.is_empty() and tick - int(smoke[0].z) > SMOKE_TICKS:
 		smoke.remove_at(0)
 	for i: int in range(bits.size() - 1, -1, -1):

@@ -55,6 +55,7 @@ static func draw_over(
 		var at: Vector2 = Vector2(sm.x, sm.y) + Vector2(0.15, -0.6) * age
 		var c: Color = Color(SMOKE, SMOKE.a * (1.0 - age))
 		ci.draw_circle(Ink.px(at), (0.18 + 0.32 * age) * sm.w * Ink.PX_PER_M, c)
+	WeaponFxTrail.draw(ci, fx.trails, tick)
 	for i: int in fx.impacts.size():
 		var im: Vector4 = fx.impacts[i]
 		var age: int = tick - int(im.w)
