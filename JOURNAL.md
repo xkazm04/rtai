@@ -222,9 +222,14 @@ NEXT (iteration 3, in order):
   so the drop no longer pops flat -> box. ServoDraw held at 200 (comments trimmed). GATE top md5
   7189d363... at tick 1100 (= HEAD before). Unit --changed (full suite) 1408/1408; lint 15/15. Still in
   scratch: contact/sling_crop.png (not shipped to masters; frames.json is full at 15).
+- 16:37 GATES on 551128f5 (code = 2637e2e0): director reel headless tilt 19/19 fully down, 0 SCRIPT
+  ERROR; scenarios 51/52 with the reel running beside them: scenario_corpse_horde's wall-clock check
+  (the step grew 1029 -> 2561 us in its last window; city corpses, no boss code) under my own
+  contention; re-run alone (`run_scenarios.mjs --only=scenario_corpse_horde`): 1 passed.
+  FRICTION: running the reel beside the scenarios contends their wall-clock budgets: run them apart.
 NEXT (iteration 6, in order; freeze 18:30):
-1. (done 16:22 and 16:30: falling and slung parcels are boxes.) Gates owed on 2637e2e0: scenarios
-   and the tilt/top director reel (render-only Servo change; last run on 7fffea59/d5765239).
+1. (done: falling and slung parcels are boxes; gates on 2637e2e0 run 16:37.) The top reel was last
+   run on 7fffea59 (2637e2e0 changes only tilt draws; top md5-identical measured).
 2. The hood cannon barrel from art (a gilded barrel strip in the r5 palette) and the car's bumpers
    (KingCarStack.bumpers are skipped under the art stack).
 3. (done 16:24.) Servo's hit radius is on the ground under the lifted body: watch whether a katana
