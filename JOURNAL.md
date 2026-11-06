@@ -241,3 +241,34 @@ Read: JOURNAL, git log, the other lanes' journals (no REQUEST to street).
   robots_cultist_torquegang_strips_70_55_nofix_scout_t3.png, robots_strips_70_orangefix_REJECTED_t3.png.
   NOTE: keyed/street/torque_gang_55.png is dated 16:36 but the catalog's A is round 1705: check
   which drawing the keyed file holds before integrating the 55.
+- CHECK (code read) the knocked-out contractor: CastView draws the flat `guard_down` sprite at the
+  guard's own ground position under every view (no card); a lying body from 70 deg reads close to
+  top-down. Kept; not filmed.
+- GATE director reel under `--view=combo` on c7899f99 (features as of 7b3ff9e3): 19/19 chapters,
+  every chapter all down, 0 SCRIPT ERROR, exit 0 (ran to its 14000-frame end).
+- GATE `node tools/evidence/run.mjs --no-bench` on c7899f99 (tree still): lint PASS 15/15, unit
+  1501 passed 0 failed, scenarios 52 ran PASS (CONTENDED: rig_stress.rigMsP50 1.041 > 1.000 with 3
+  other runs, the machine never went quiet in 5 min: budget not judged), parity PASS (1200 steps,
+  mutation caught at 629), selftest PASS (look goldens 11/11, block goldens 5/5: `top` holds),
+  export-audit PASS (557 loaded, 0 failed). The it2 rerun debt is paid.
+
+Registry rules applied this iteration: motion-quality-gating (deaths judged across the fall in
+tick sequences, the city judged as a 40 s clip, not stills), concept-scene-parity (same seed,
+same tick top vs tilt70; the cop-tone call filmed on the d8 call's own scene), generative-artifact-
+gating (the `orange` fix rejected on sight for the robots: a fix tuned for one sheet broke another's
+identity and the colour law), render-submission-economy (the crowd cost split: the street hook's
+own share is under the noise floor, the cost is the card draws + view's tilt), sprite-and-atlas-
+production (robot strips cut by script from keyed A sheets, five equal cells).
+
+NEXT (iteration 4):
+1. Top reel on the head (last ran on def405b4; features changed in 7b3ff9e3, quest only).
+2. 32 px/m before/after pairs still owed for the cops (48/64 only), the riot plate and the thug
+   (48 only): the cops' before = main's p70 rows (a detached worktree), the thug's = THUG_LIFT 1.0.
+3. Crowd cost on a quiet machine (bench.lock, no other Godot): city_bench riot top vs tilt70, 3
+   alternating pairs; and drive48 (the in-car camera) under tilt70.
+4. Cultists / Torque's gang: if the Director or a lane adds a spawn, the strips are ready (scratch
+   robots/, street_head.py band 1.0 192 px, NO fix); check the keyed torque_gang_55 round first.
+5. The cream ped torsos on cream pavement at tilt70 (legs under a head): a ground-contact read
+   (shadow/ink) is view's or city's; REQUEST if it still shows in the city clip at 32 px/m.
+6. Weakest item to raise: the crowd variety (mild by design; a stronger setting as the call's
+   side-by-side) and the 70 twins' widths at 32 px/m in motion.
