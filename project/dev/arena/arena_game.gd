@@ -63,7 +63,10 @@ func _ready() -> void:
 	if args.has("--horde"):  # corpse decay: the bodies on the floor against the cap
 		HordeOverlay.attach(layer, session.stage)
 	FightFrames.attach(self, args, session.world)  # perf-city: --frames=<json> frame log
-	hud.visible = not args.has("--clean")  # a clip of the game only (the owner's sample)
+	# --clean: a clip of the game only (the owner's sample); a boss fight hides it too (it covers
+	# the boss bar), unless --hud
+	var boss: bool = args.text("--boss") != "" and not args.has("--hud")
+	hud.visible = not args.has("--clean") and not boss
 	tuning = ArenaTuning.new(session.actions, session.stage.arena.tuning)
 	tuning.hooks = session.stage.hooks
 	panel.tick_now = session.tick
@@ -79,7 +82,8 @@ func _ready() -> void:
 ## The session (the dev arena, or the city proving block with --arena=city) and the bot.
 func _open(args: ArenaArgs) -> void:
 	var on_city: bool = args.text("--arena") == "city"
-	session = ArenaSession.open(Events, Data, ArenaSession.MASTER_SEED, null, on_city)
+	var seed_v: int = int(args.number("--seed", ArenaSession.MASTER_SEED))  # a bot's seed sweep
+	session = ArenaSession.open(Events, Data, seed_v, null, on_city)
 	_dev_fight(args, on_city)
 	if args.text("--bot") == "range":
 		session.world.loop().set_input(ArenaRangeBot.new(session.stage, session.actions))
@@ -105,6 +109,8 @@ func _open(args: ArenaArgs) -> void:
 		session.world.loop().set_input(_gunplay_bot(args))
 	elif args.text("--bot") == "react_line":  # lane human-reactions: each look from four sides
 		session.world.loop().set_input(_react_line_bot(args))
+	elif args.text("--bot") == "boss":  # n7-king: plays the --boss fight (dodges; --bot-stand)
+		session.world.loop().set_input(BossBot.new(session.stage, session.actions))
 	add_child(session.world)
 	for a: ArenaPlan.Area in session.plan.areas:
 		if a.id == args.text("--start") or (a.id == "alley" and args.text("--arena") == "alley"):

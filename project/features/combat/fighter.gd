@@ -23,6 +23,11 @@ var hurt_tick: int = -1000000
 var tell_left: int = 0
 ## Lane ghost-powers: the share of every hit this fighter takes (Tonnage's plates: 0.3; 1 = none).
 var damage_k: float = 1.0
+## Lane n7-king (boss framework): an outside brain (BossFight, through BossHook) steps this
+## fighter; CombatArena never moves it, and the arena's cop and robot rigs never draw it.
+var brain_owned: bool = false
+## Lane n7-king: the bodies.json class Rivet meets this fighter as (ArenaBodies); empty = a person.
+var body_class: StringName = &""
 
 
 static func make(p_kind: Kind, p_id: int, at: Vector2, hp_max: float) -> Fighter:

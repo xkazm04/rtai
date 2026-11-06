@@ -1,0 +1,415 @@
+{
+  "$defs": {
+    "arena": {
+      "additionalProperties": false,
+      "properties": {
+        "add_spawns": {
+          "items": {
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "type": "array"
+          },
+          "type": "array"
+        },
+        "adds_from": {
+          "enum": [
+            "area",
+            "boss"
+          ]
+        },
+        "area": {
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "type": "string"
+        },
+        "boss_at": {
+          "items": {
+            "type": "number"
+          },
+          "minItems": 2,
+          "type": "array"
+        },
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "rivet_at": {
+          "items": {
+            "type": "number"
+          },
+          "minItems": 2,
+          "type": "array"
+        }
+      },
+      "required": [
+        "area",
+        "boss_at",
+        "rivet_at",
+        "add_spawns",
+        "doc"
+      ],
+      "type": "object"
+    },
+    "attack": {
+      "additionalProperties": false,
+      "properties": {
+        "active_s": {
+          "maximum": 10,
+          "minimum": 0.05,
+          "type": "number"
+        },
+        "adds": {
+          "additionalProperties": false,
+          "properties": {
+            "archetype": {
+              "pattern": "^[a-z][a-z0-9_]*$",
+              "type": "string"
+            },
+            "count": {
+              "maximum": 12,
+              "minimum": 1,
+              "type": "integer"
+            },
+            "every_s": {
+              "maximum": 120,
+              "minimum": 0,
+              "type": "number"
+            },
+            "max_total": {
+              "maximum": 60,
+              "minimum": 0,
+              "type": "integer"
+            }
+          },
+          "required": [
+            "archetype",
+            "count"
+          ],
+          "type": "object"
+        },
+        "aim_lock_s": {
+          "maximum": 2,
+          "minimum": 0,
+          "type": "number"
+        },
+        "arc_deg": {
+          "maximum": 360,
+          "minimum": 5,
+          "type": "number"
+        },
+        "buff_adds": {
+          "additionalProperties": false,
+          "properties": {
+            "damage_k": {
+              "maximum": 3,
+              "minimum": 1,
+              "type": "number"
+            },
+            "s": {
+              "maximum": 30,
+              "minimum": 0.5,
+              "type": "number"
+            },
+            "speed_k": {
+              "maximum": 3,
+              "minimum": 1,
+              "type": "number"
+            }
+          },
+          "required": [
+            "damage_k",
+            "speed_k",
+            "s"
+          ],
+          "type": "object"
+        },
+        "cooldown_s": {
+          "maximum": 60,
+          "minimum": 0,
+          "type": "number"
+        },
+        "damage": {
+          "maximum": 100,
+          "minimum": 0,
+          "type": "number"
+        },
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "leap_m": {
+          "maximum": 20,
+          "minimum": 0,
+          "type": "number"
+        },
+        "max_m": {
+          "maximum": 100,
+          "minimum": 0,
+          "type": "number"
+        },
+        "min_m": {
+          "maximum": 100,
+          "minimum": 0,
+          "type": "number"
+        },
+        "move_mps": {
+          "maximum": 40,
+          "minimum": 0,
+          "type": "number"
+        },
+        "punish_k": {
+          "maximum": 4,
+          "minimum": 1,
+          "type": "number"
+        },
+        "punish_s": {
+          "maximum": 10,
+          "minimum": 0,
+          "type": "number"
+        },
+        "radius_m": {
+          "maximum": 20,
+          "minimum": 0.5,
+          "type": "number"
+        },
+        "range_m": {
+          "maximum": 60,
+          "minimum": 0,
+          "type": "number"
+        },
+        "recovery_s": {
+          "maximum": 10,
+          "minimum": 0.2,
+          "type": "number"
+        },
+        "shape": {
+          "enum": [
+            "charge",
+            "circle",
+            "cone",
+            "line",
+            "none"
+          ]
+        },
+        "weight": {
+          "maximum": 10,
+          "minimum": 0,
+          "type": "number"
+        },
+        "width_m": {
+          "maximum": 10,
+          "minimum": 0.2,
+          "type": "number"
+        },
+        "windup_s": {
+          "maximum": 5,
+          "minimum": 0.4,
+          "type": "number"
+        }
+      },
+      "required": [
+        "shape",
+        "windup_s",
+        "aim_lock_s",
+        "active_s",
+        "recovery_s",
+        "punish_s",
+        "punish_k",
+        "cooldown_s",
+        "damage",
+        "range_m",
+        "min_m",
+        "max_m",
+        "weight",
+        "doc"
+      ],
+      "type": "object"
+    },
+    "boss": {
+      "additionalProperties": false,
+      "properties": {
+        "arena": {
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "type": "string"
+        },
+        "attacks": {
+          "additionalProperties": {
+            "$ref": "#/$defs/attack"
+          },
+          "type": "object"
+        },
+        "body_class": {
+          "enum": [
+            "boss",
+            "robot"
+          ]
+        },
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "ghost_k": {
+          "maximum": 4,
+          "minimum": 0,
+          "type": "number"
+        },
+        "hp": {
+          "maximum": 100000,
+          "minimum": 1,
+          "type": "number"
+        },
+        "keep_m": {
+          "maximum": 40,
+          "minimum": 0,
+          "type": "number"
+        },
+        "move_mps": {
+          "maximum": 20,
+          "minimum": 0,
+          "type": "number"
+        },
+        "phases": {
+          "items": {
+            "$ref": "#/$defs/phase"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "radius_m": {
+          "maximum": 6,
+          "minimum": 0.3,
+          "type": "number"
+        },
+        "rivet_repair_delay_s": {
+          "maximum": 30,
+          "minimum": 0,
+          "type": "number"
+        },
+        "rng": {
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "type": "string"
+        },
+        "script": {
+          "pattern": "^res://features/bosses/[a-z0-9_]+/[a-z0-9_]+\\.gd$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "arena",
+        "hp",
+        "move_mps",
+        "radius_m",
+        "rng",
+        "phases",
+        "attacks",
+        "doc"
+      ],
+      "type": "object"
+    },
+    "phase": {
+      "additionalProperties": false,
+      "properties": {
+        "adds": {
+          "additionalProperties": false,
+          "properties": {
+            "archetype": {
+              "pattern": "^[a-z][a-z0-9_]*$",
+              "type": "string"
+            },
+            "count": {
+              "maximum": 12,
+              "minimum": 1,
+              "type": "integer"
+            },
+            "every_s": {
+              "maximum": 120,
+              "minimum": 0,
+              "type": "number"
+            },
+            "max_total": {
+              "maximum": 60,
+              "minimum": 0,
+              "type": "integer"
+            }
+          },
+          "required": [
+            "archetype",
+            "count"
+          ],
+          "type": "object"
+        },
+        "attacks": {
+          "items": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "gap_s": {
+          "maximum": 10,
+          "minimum": 0,
+          "type": "number"
+        },
+        "hp_below": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "id": {
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "type": "string"
+        },
+        "transition_s": {
+          "maximum": 10,
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "hp_below",
+        "attacks",
+        "gap_s",
+        "transition_s",
+        "doc"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "gtai.bosses/1",
+  "additionalProperties": false,
+  "properties": {
+    "arenas": {
+      "additionalProperties": {
+        "$ref": "#/$defs/arena"
+      },
+      "type": "object"
+    },
+    "bosses": {
+      "additionalProperties": {
+        "$ref": "#/$defs/boss"
+      },
+      "type": "object"
+    },
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schema": {
+      "const": "gtai.bosses/1"
+    }
+  },
+  "required": [
+    "schema",
+    "doc",
+    "bosses",
+    "arenas"
+  ],
+  "type": "object"
+}

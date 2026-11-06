@@ -1,0 +1,315 @@
+{
+  "doc": "Lane n7-king: the act bosses (features/bosses, data/tables/bosses.json). The hook is live only under --boss=<id> (--phase=N, --bot=boss); without it nothing spawns and no golden moves.",
+  "lane": "bosses",
+  "schema": "gtai.arena-station/1",
+  "stations": [
+    {
+      "area": "boulevard",
+      "doc": "A boss fight on the arena floor: --boss=king jumps straight in (the boss and Rivet stand at the boss arena record). King's boulevard: planters along both kerbs, a painted centre line, two plinths in the plaza at the east end. Two sedans parked at the plaza's kerbs (spawns kind car, ArenaCars.park): Dent's cars to seize and drive into King and his gang.",
+      "id": "boss_fight",
+      "name": "Boss fight",
+      "props": [
+        {
+          "at": [
+            68,
+            -27
+          ],
+          "kind": "cover_low",
+          "size": [
+            2.4,
+            0.8
+          ]
+        },
+        {
+          "at": [
+            68,
+            -3
+          ],
+          "kind": "cover_low",
+          "size": [
+            2.4,
+            0.8
+          ]
+        },
+        {
+          "at": [
+            80,
+            -27
+          ],
+          "kind": "cover_low",
+          "size": [
+            2.4,
+            0.8
+          ]
+        },
+        {
+          "at": [
+            80,
+            -3
+          ],
+          "kind": "cover_low",
+          "size": [
+            2.4,
+            0.8
+          ]
+        },
+        {
+          "at": [
+            92,
+            -27
+          ],
+          "kind": "cover_low",
+          "size": [
+            2.4,
+            0.8
+          ]
+        },
+        {
+          "at": [
+            92,
+            -3
+          ],
+          "kind": "cover_low",
+          "size": [
+            2.4,
+            0.8
+          ]
+        },
+        {
+          "at": [
+            104,
+            -27
+          ],
+          "kind": "cover_low",
+          "size": [
+            2.4,
+            0.8
+          ]
+        },
+        {
+          "at": [
+            104,
+            -3
+          ],
+          "kind": "cover_low",
+          "size": [
+            2.4,
+            0.8
+          ]
+        },
+        {
+          "at": [
+            116,
+            -27
+          ],
+          "kind": "cover_low",
+          "size": [
+            2.4,
+            0.8
+          ]
+        },
+        {
+          "at": [
+            116,
+            -3
+          ],
+          "kind": "cover_low",
+          "size": [
+            2.4,
+            0.8
+          ]
+        },
+        {
+          "at": [
+            64,
+            -15
+          ],
+          "kind": "lane_mark",
+          "size": [
+            2.6,
+            0.25
+          ]
+        },
+        {
+          "at": [
+            70,
+            -15
+          ],
+          "kind": "lane_mark",
+          "size": [
+            2.6,
+            0.25
+          ]
+        },
+        {
+          "at": [
+            76,
+            -15
+          ],
+          "kind": "lane_mark",
+          "size": [
+            2.6,
+            0.25
+          ]
+        },
+        {
+          "at": [
+            82,
+            -15
+          ],
+          "kind": "lane_mark",
+          "size": [
+            2.6,
+            0.25
+          ]
+        },
+        {
+          "at": [
+            88,
+            -15
+          ],
+          "kind": "lane_mark",
+          "size": [
+            2.6,
+            0.25
+          ]
+        },
+        {
+          "at": [
+            94,
+            -15
+          ],
+          "kind": "lane_mark",
+          "size": [
+            2.6,
+            0.25
+          ]
+        },
+        {
+          "at": [
+            100,
+            -15
+          ],
+          "kind": "lane_mark",
+          "size": [
+            2.6,
+            0.25
+          ]
+        },
+        {
+          "at": [
+            106,
+            -15
+          ],
+          "kind": "lane_mark",
+          "size": [
+            2.6,
+            0.25
+          ]
+        },
+        {
+          "at": [
+            112,
+            -15
+          ],
+          "kind": "lane_mark",
+          "size": [
+            2.6,
+            0.25
+          ]
+        },
+        {
+          "at": [
+            118,
+            -15
+          ],
+          "kind": "lane_mark",
+          "size": [
+            2.6,
+            0.25
+          ]
+        },
+        {
+          "at": [
+            124,
+            -15
+          ],
+          "kind": "lane_mark",
+          "size": [
+            2.6,
+            0.25
+          ]
+        },
+        {
+          "at": [
+            130,
+            -15
+          ],
+          "kind": "lane_mark",
+          "size": [
+            2.6,
+            0.25
+          ]
+        },
+        {
+          "at": [
+            136,
+            -15
+          ],
+          "kind": "lane_mark",
+          "size": [
+            2.6,
+            0.25
+          ]
+        },
+        {
+          "at": [
+            130,
+            -21
+          ],
+          "kind": "cover_high",
+          "size": [
+            1.6,
+            1.6
+          ]
+        },
+        {
+          "at": [
+            130,
+            -9
+          ],
+          "kind": "cover_high",
+          "size": [
+            1.6,
+            1.6
+          ]
+        }
+      ],
+      "script": "res://features/bosses/boss_hook.gd",
+      "spawns": [
+        {
+          "at": [
+            124,
+            -25
+          ],
+          "id": "boss_car_north",
+          "kind": "car",
+          "motion": "static",
+          "span_m": 0,
+          "speed_mps": 0
+        },
+        {
+          "at": [
+            124,
+            -5
+          ],
+          "id": "boss_car_south",
+          "kind": "car",
+          "motion": "static",
+          "span_m": 0,
+          "speed_mps": 0
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,214 @@
+{
+  "schema": "gtai.boss-numbers/1",
+  "boss": "king",
+  "ghost": null,
+  "contended": true,
+  "quit_after": 18000,
+  "summary": {
+    "stand": {
+      "n": 5,
+      "downed": 5,
+      "ttk_mean_s": 92,
+      "ttk_range_s": [
+        91.8,
+        92.2
+      ],
+      "taken_mean": 202,
+      "deaths": 10,
+      "hp_min": 0,
+      "hp_min_mean": 2.4,
+      "adds_landed_tries": [
+        40,
+        57
+      ],
+      "per_attack": {
+        "charge": {
+          "tries": 10,
+          "landed": 5,
+          "rolled": 0,
+          "hit_rate": 0.5
+        },
+        "coin_fan": {
+          "tries": 32,
+          "landed": 29,
+          "rolled": 0,
+          "hit_rate": 0.91
+        },
+        "decree": {
+          "tries": 17,
+          "landed": 0,
+          "rolled": 0,
+          "hit_rate": 0
+        },
+        "press_slam": {
+          "tries": 9,
+          "landed": 9,
+          "rolled": 0,
+          "hit_rate": 1
+        },
+        "ram": {
+          "tries": 10,
+          "landed": 10,
+          "rolled": 0,
+          "hit_rate": 1
+        }
+      }
+    }
+  },
+  "runs": {
+    "stand": [
+      {
+        "seed": 1,
+        "down_s": 92.2,
+        "hp_left": 0,
+        "phase": 3,
+        "taken": 210,
+        "deaths": 2,
+        "tries": {
+          "charge": 1,
+          "coin_fan": 8,
+          "decree": 3,
+          "press_slam": 2,
+          "ram": 2
+        },
+        "landed": {
+          "charge": 1,
+          "coin_fan": 7,
+          "press_slam": 2,
+          "ram": 2
+        },
+        "rolled": {},
+        "hp_min": 4,
+        "repair_delay_s": 20,
+        "adds": [
+          8,
+          11
+        ],
+        "ticks": 7469,
+        "script_errors": 0
+      },
+      {
+        "seed": 2,
+        "down_s": 92.2,
+        "hp_left": 0,
+        "phase": 3,
+        "taken": 210,
+        "deaths": 2,
+        "tries": {
+          "charge": 1,
+          "coin_fan": 8,
+          "decree": 3,
+          "press_slam": 2,
+          "ram": 2
+        },
+        "landed": {
+          "charge": 1,
+          "coin_fan": 7,
+          "press_slam": 2,
+          "ram": 2
+        },
+        "rolled": {},
+        "hp_min": 4,
+        "repair_delay_s": 20,
+        "adds": [
+          8,
+          11
+        ],
+        "ticks": 7470,
+        "script_errors": 0
+      },
+      {
+        "seed": 3,
+        "down_s": 92,
+        "hp_left": 0,
+        "phase": 3,
+        "taken": 186,
+        "deaths": 2,
+        "tries": {
+          "charge": 3,
+          "coin_fan": 5,
+          "decree": 4,
+          "press_slam": 1,
+          "ram": 2
+        },
+        "landed": {
+          "charge": 1,
+          "coin_fan": 5,
+          "king": 1,
+          "press_slam": 1,
+          "ram": 2
+        },
+        "rolled": {},
+        "hp_min": 0,
+        "repair_delay_s": 20,
+        "adds": [
+          8,
+          12
+        ],
+        "ticks": 7468,
+        "script_errors": 0
+      },
+      {
+        "seed": 4,
+        "down_s": 92,
+        "hp_left": 0,
+        "phase": 3,
+        "taken": 204,
+        "deaths": 2,
+        "tries": {
+          "charge": 3,
+          "coin_fan": 4,
+          "decree": 4,
+          "press_slam": 2,
+          "ram": 2
+        },
+        "landed": {
+          "charge": 1,
+          "coin_fan": 4,
+          "king": 1,
+          "press_slam": 2,
+          "ram": 2
+        },
+        "rolled": {},
+        "hp_min": 0,
+        "repair_delay_s": 20,
+        "adds": [
+          8,
+          12
+        ],
+        "ticks": 7457,
+        "script_errors": 0
+      },
+      {
+        "seed": 5,
+        "down_s": 91.8,
+        "hp_left": 0,
+        "phase": 3,
+        "taken": 200,
+        "deaths": 2,
+        "tries": {
+          "charge": 2,
+          "coin_fan": 7,
+          "decree": 3,
+          "press_slam": 2,
+          "ram": 2
+        },
+        "landed": {
+          "charge": 1,
+          "coin_fan": 6,
+          "press_slam": 2,
+          "ram": 2
+        },
+        "rolled": {},
+        "hp_min": 4,
+        "repair_delay_s": 20,
+        "adds": [
+          8,
+          11
+        ],
+        "ticks": 7458,
+        "script_errors": 0
+      }
+    ]
+  }
+}

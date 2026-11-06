@@ -1,0 +1,49 @@
+{
+ "human": {
+  "n": 5,
+  "downed": 5,
+  "ttk_mean_s": 90.8,
+  "ttk_range_s": [
+   86.8,
+   97.9
+  ],
+  "taken_mean": 78.8,
+  "deaths": 0,
+  "adds_landed_tries": [
+   24,
+   85
+  ],
+  "per_attack": {
+   "charge": {
+    "tries": 9,
+    "landed": 1,
+    "rolled": 0,
+    "hit_rate": 0.11
+   },
+   "coin_fan": {
+    "tries": 45,
+    "landed": 11,
+    "rolled": 2,
+    "hit_rate": 0.24
+   },
+   "decree": {
+    "tries": 15,
+    "landed": 0,
+    "rolled": 0,
+    "hit_rate": 0
+   },
+   "press_slam": {
+    "tries": 12,
+    "landed": 5,
+    "rolled": 0,
+    "hit_rate": 0.42
+   },
+   "ram": {
+    "tries": 15,
+    "landed": 4,
+    "rolled": 0,
+    "hit_rate": 0.27
+   }
+  }
+ }
+}

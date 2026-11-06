@@ -1,0 +1,87 @@
+{
+  "schema": "gtai.boss-numbers/1",
+  "boss": "king",
+  "ghost": null,
+  "contended": true,
+  "quit_after": 18000,
+  "summary": {
+    "human": {
+      "n": 1,
+      "downed": 1,
+      "ttk_mean_s": 82.2,
+      "ttk_range_s": [
+        82.2,
+        82.2
+      ],
+      "taken_mean": 88,
+      "deaths": 0,
+      "adds_landed_tries": [
+        4,
+        19
+      ],
+      "per_attack": {
+        "charge": {
+          "tries": 2,
+          "landed": 0,
+          "rolled": 0,
+          "hit_rate": 0
+        },
+        "coin_fan": {
+          "tries": 9,
+          "landed": 3,
+          "rolled": 0,
+          "hit_rate": 0.33
+        },
+        "decree": {
+          "tries": 3,
+          "landed": 0,
+          "rolled": 0,
+          "hit_rate": 0
+        },
+        "press_slam": {
+          "tries": 2,
+          "landed": 1,
+          "rolled": 0,
+          "hit_rate": 0.5
+        },
+        "ram": {
+          "tries": 2,
+          "landed": 1,
+          "rolled": 0,
+          "hit_rate": 0.5
+        }
+      }
+    }
+  },
+  "runs": {
+    "human": [
+      {
+        "seed": 2,
+        "down_s": 82.2,
+        "hp_left": 0,
+        "phase": 3,
+        "taken": 88,
+        "deaths": 0,
+        "tries": {
+          "charge": 2,
+          "coin_fan": 9,
+          "decree": 3,
+          "press_slam": 2,
+          "ram": 2
+        },
+        "landed": {
+          "coin_fan": 3,
+          "press_slam": 1,
+          "ram": 1
+        },
+        "rolled": {},
+        "adds": [
+          4,
+          19
+        ],
+        "ticks": 7619,
+        "script_errors": 0
+      }
+    ]
+  }
+}
