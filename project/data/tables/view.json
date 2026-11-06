@@ -27,9 +27,10 @@
     },
     {
       "cards": true,
+      "cast_k": 1.2,
       "height_k": 1,
       "id": "tilt",
-      "note": "the main candidate (DECISION it5): 55 degrees with the upright facing cards (Rivet, King, gang, patrol cop); picked from the 65 / 55 / 45 stills at 32 px/m: 65 barely differs from top, 45 squashes the ground to 71 % and the top-down limbs read squat",
+      "note": "the main candidate (DECISION it5): 55 degrees with the upright facing cards (Rivet, King, gang, patrol cop); picked from the 65 / 55 / 45 stills at 32 px/m: 65 barely differs from top, 45 squashes the ground to 71 % and the top-down limbs read squat; cast shadows by height (cast_k 1.2, DECISION it12: they ground the car and the bodies on the foreshortened road)",
       "pitch_deg": 55
     },
     {
@@ -76,6 +77,13 @@
       "id": "tilt45_cards",
       "note": "tilt 45 with the upright facing cards",
       "pitch_deg": 45
+    },
+    {
+      "cards": true,
+      "height_k": 1,
+      "id": "tilt_noshadow",
+      "note": "study: tilt (55 + cards) without the cast shadows (the it9 tilt)",
+      "pitch_deg": 55
     }
   ]
 }
