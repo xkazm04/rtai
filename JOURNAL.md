@@ -64,3 +64,24 @@ width side-on, held angled), not the crescent; StreetCardSets.SHIELD has no row 
 DECISION street/thug: the steel lift is a modulate x1.55 under card art only (top keeps the dark
 thug, so top goldens do not move); the alternative (a lifted part set like art/gang/) would need a
 second art_dir and a card row per pitch.
+- GATE `top` bit-identity (21:05): city block `--arena=city --bot=rivet --seed=2 --rigs`,
+  `--quit-after 301`, framemd5 of HEAD 7c658104 vs main 8e9eeb78 (a throwaway detached worktree,
+  removed after): IDENTICAL, 301 video + 301 audio frames, 0 SCRIPT ERROR each.
+- SCOUT (brief item 4): quest 1's dock contractors are GuardBrain actors; no rig look of their own
+  found yet (RigVariant.crowd has 9 looks: 5 peds, patrol, riot, SWAT, overalls-bald). Find what
+  rig/variant draws them before cutting contractor_70 (A). Cultists / Torque's gang: no code names
+  them in features/ (grep cultist|kronk|torque: nothing): likely not in game yet; ask the Director.
+
+NEXT (iteration 2):
+1. Reel gates: tilt70 director reel result (started 20:57, log scratch/street/reel_tilt70.log);
+   then the reel under `combo` and `top` (headless, `--fixed-fps 60 --quit-after 14000`).
+2. Combo / boss arenas at 55: the riot plate at p55 and the thug lift at 55 (`--view=tilt`,
+   `--boss=king`), and the combo swap of the plate (it rebuilds on the art change).
+3. Peds (brief 3): the 4 library types the game has no head for (shopper, punk, worker, jogger):
+   map them onto the crowd looks (vest-hair, jacket-hair, overalls-bald...) and re-cut torsos if they
+   read better; crowd variety (scale/tint within the colour law) is a call.
+4. Contractors (brief 4): find their rig look, cut contractor_70/55 cards.
+5. Hit reactions/deaths at height (brief 5): the plate hides in the sprawl (c_sprawl >= 0.5) like
+   the crescent; check the corpse lands where the body was under tilt70.
+6. Crowd cost (brief 6) under the bench lock: city crowd 400, tilt70 vs top.
+7. 32 px/m before/after pairs for each subject (only 48/64 so far); a combined clip.
