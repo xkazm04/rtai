@@ -537,3 +537,6 @@ NEXT (iteration 5, the freeze, 17:50-18:40):
 NEXT 1 (replaces the one above): check b3c.out/b3d.out (0 SCRIPT ERROR, frame count); if fine, run
   the trio and pair lines of it4/make.sh (combo label 'combo (70 play, 55 boss)'), re-take the t40/t9
   stills, update frames.json to f2361702 and LOOK at the 70 panel (the throne-car); else re-film.
+- 17:37 FILM the 64 px/m pair re-made on f2361702 (king64_tilt + king64_tilt70, 0 SCRIPT ERROR),
+  masters mp4 + t9 still replaced, frames.json updated; LOOKED: same read as 95109a45 (no fan, court
+  limbs). `king32_combo` was still filming at 17:38 (scratch it4/b3c.out): NEXT 1 assembles the trio.
