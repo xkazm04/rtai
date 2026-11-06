@@ -92,3 +92,56 @@ NEXT (iteration 2, in order):
   green): regenerate gem accents on magenta if the owner wants green gems.
 - Watch item: an arm can cross the bust card at melee range (king_vs_katana_64_close.png frame 2):
   the rig's arm z draws over the card. Measure per frame next iteration (RigDepthSort is chars').
+
+## Iteration 2 (2026-11-06 15:00-16:00, BUILD)
+
+- 15:00 Read JOURNAL, git log, chars' JOURNAL tail (ViewMode.set_pitch + revision landed on chars).
+  Registry rules applied this session: `concept-scene-parity` (the car's walls are cut FROM the
+  approved king_car_55 sheet, not redrawn), `generative-artifact-gating` (sheet defects fixed in the
+  cutter: red tail lamps -> amber, the maker-like slatted grille replaced by our sunburst),
+  `depth-ordered-layered-art` (an ink pass under all slices, then the wall bands, then the roof plane),
+  `motion-quality-gating` (judged in the live arena at 32 and 64 px/m, fixed seed 2).
+- 15:05 DECISION throne-car stack from art: the walls are cut from the car sheet's side and rear
+  views (tools/art/king_car_walls.py) and drawn as one texture row per lifted slice (KingCarWalls, 40
+  slices: under 2 px a step at 64 px/m), instead of slices rendered from a Blender model. Why: the
+  sheet IS the approved look (drapes, tassels, gilded wheels), the slices need only a wall per side,
+  and a Blender model would be a second, unapproved design. Rejected: Blender slice renders (no time
+  to model to the sheet's fidelity this session; the route stays open: the same three PNGs can be
+  rendered from a model). The front wall is the rear band with OUR grille (a gilded sunburst under a
+  plum crest, round cream lamps) painted over: the sheet's slatted temple grille is a maker's trade
+  dress (LEG-02). Tail lamps amber (hue 28, red is blood only). Alternative one move away: delete
+  art/p55/car/ and KingCarStack's code slices draw again.
+- FRICTION `draw_texture_rect_region(..., transpose=true)` drew the end band 2.5 m long past the nose;
+  the ends now draw under a frame turned a quarter (no transpose).
+- 15:20 MILESTONE throne-car walls (p55): before/after at 64 px/m (scratch car/shots/ba64.png): the
+  black walls with a gold belt and drawn tyres become the sheet's side (glass band, gold belt, plum
+  drapes with gold tassels, gilded spoked wheels, gold bumpers) and our grille on the nose.
+- 15:13 Image round r5 (lock: asset lane yielded after image.want; 97 s, first try): the car's roof
+  as a top plan + the empty throne from behind and from the front, from king_car_55.png. Velvet came
+  crimson (hue 348-351): shifted -24 deg, value x0.85 (the bust's -32 read violet on a big area).
+- 15:20 MILESTONE car roof + throne (p55), commit c18af566: `KingCarWalls.roof` draws the plan over
+  the car's footprint; KingBodyView's code roof moved verbatim into `KingCarTrim.roof` (top: same
+  draw calls, same colours; KingBodyView 243 -> 235 lines, debt baseline tightened). The throne is an
+  upright card (textured quad in the car frame, upright on screen): the back when the tail faces the
+  camera, else the front; narrowed to 0.7 side-on; 3.0 m face-on (1.9 m hid behind the 1.5x bust,
+  3.3 m towered). The hood cannon (and its coins) stand on the art's laurel ring (0.33; top 0.2).
+- 15:22 MILESTONE Servo's flying drone (p55) from the r4 sheet (turned 180, today's size), through
+  ServoArt; test_servo_art's "no p55 art" example moved to the crate. Commit 30282892. Seen in flight
+  over the drop rings at 48 px/m (gtai-masters/d8/bosses/servo_tilt48_drones_x3.png, from the clip
+  servo_tilt48_drones_rotor_dash.mp4: launch, drop rings, the rotor dash lane at 21 s).
+- Provenance: 7 rows (roof, throne x2, walls x3, drone). Decision line in docs/decisions.md.
+- Unit: --select test_king_car_walls,test_servo_art,test_king_art 14/14; --changed earlier caught
+  the servo test (fixed). Lint 15/15 on every commit.
+- 15:33 Evidence (gtai-masters/d8/bosses/, frames.json 15 entries, the 4 new car/drone entries first):
+  king_car_64_t720_before_after.png, king_car_64_t600_before_after.png, king_car_tilt32_after.mp4 +
+  king_car_tilt32_before.mp4 (procession and the ram's tell, seed 2, 15 s; before = art folder moved
+  aside), king_car_tilt32_ram_before_after.png, servo_tilt48_drones_x3.png,
+  servo_tilt48_drones_rotor_dash.mp4. Raw avis deleted.
+- 15:35 GATE director reel headless `--loadout=pistol --rigs --quit-after 8000` on a412f1ad: tilt 19/19
+  chapters fully down, 0 SCRIPT ERROR; top 19/19, 0 SCRIPT ERROR.
+- 15:37 GATE top identity, measured: a detached worktree of 8b0f9031 (before this session) vs HEAD,
+  same seed: King `--view=top` tick 720 at 32 px/m md5 a88c7d73... both; Servo `--view=top` tick 1140
+  (drones up) at 48 px/m md5 d1c09fbf... both. (Also art present vs moved aside: identical.)
+- 15:40 GATES on a412f1ad: scenarios 52/52 (run_scenarios.mjs, no contended miss this time); unit
+  1421/1421 (full run); lint 15/15. Phase 2 (court on the stalled car) at 48 px/m looks right: the King
+  on the gilded throne card, the car's art walls and roof (scratch car/shots/late.png).
