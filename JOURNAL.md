@@ -367,3 +367,33 @@ NEXT (iteration 11, the freeze at 18:30):
   changed during run"; 1422 passed 0 failed). Re-run on a clean tree: unit 1422/1422. Director reel
   headless `top` 19/19 chapters down, 0 SCRIPT ERROR; `tilt` 19/19 at 48 px/m (rendered, above).
   FRICTION: never commit while evidence runs.
+
+## Iteration 13 (17:29-18:29, the freeze)
+- Read: JOURNAL, git log, weapons/bosses/view70 JOURNALs. weapons has not answered the tank/tube
+  REQUEST (it10). view70's it3 REQUEST (RigHeadCard.drop renaming) was still open.
+- MILESTONE 2dd6e236 (view70 REQUEST it3): `RigHeadCard.drop` renames the dropped card
+  `head_card_dropped` before queue_free, so a card rebuilt in the same frame keeps `head_card`. Unit
+  test added (rig_head_card + ghost_card 18/0); lint 15/15. rig_head_card.gd stays 200 lines.
+- FRICTION/fixed: `gtai-d8/appdata/chars/Godot/export_templates` was an EMPTY plain folder (as weapons
+  found for theirs), so an export would fail. Checked empty, replaced by a junction to
+  %APPDATA%/Godot/export_templates. Export `windows-showcase` then exit 0 in 11 s:
+  build/export/windows/RTAI.exe (242 MB) + gtai_sim dll. Smoke: `RTAI.exe --quit-after 900 --
+  --bot=reel --reel=director --chapter=pistol --ppm=48 --view=tilt --rigs` -> 2/2 down, 0 SCRIPT ERROR.
+- FOUND (NEXT 3, Rivet's death pose): there is none to film. Both the quest stage
+  (`collect_call_stage.gd _respawn`) and the arena respawn him on the tick his hp hits 0; nothing calls
+  `RigClips.die` for Rivet (only humans, the King's guards and the crowd baker). Raised as Call 8 in
+  REPORT (a ~1 s DEATH sprawl before the cut = a respawn delay = a sim change + re-bless).
+- NOTE: "Tonnage's walking legs ride the ghost view's fixed z" (it8) is stale since e5f2a9bd (the host
+  takes the card's level); the 3/26 wrong pairs left come from the level cap.
+- REPORT.md drafted (Calls 1-8 with exe lines; chapter ids checked in reel_chapters.gd).
+- GATE `node tools/evidence/run.mjs --no-bench` on 2dd6e236: lint 15/15, scenarios 52, parity bit-exact
+  + mutation caught 629, selftest goldens 11/11 + block 5/5, export-audit 539/0; unit 1423/0 but marked
+  FAIL by "tree changed" (I wrote REPORT.md mid-run AGAIN: write untracked files only after it ends).
+- EVIDENCE masters `rivet_bust55_pistol_before_after_tilt_64ppm_x3_slow2.mp4` + x4 still t1.3 (director
+  chapter pistol, 64 px/m, tilt_basecards | tilt, 2/2 down, 0 SCRIPT ERROR both). LOOKED: the bust adds
+  the riveted chest plate and shoulder disc under the visor head. The brief's 64 px/m pistol close-up is
+  done. frames.json 15 (it replaces the 32 x4 King still; the 32 before/afters stay as clips).
+- CHECKED Call 1's claim on the strip (scratch it13/mirror_check.png): the mirrored 3/4 flips the
+  collar's stripe slant and the skull seam; the visor is symmetric.
+- NOTE for weapons (observation, their art): at 64 px/m the pistol in Rivet's hand reads as a fat
+  olive bottle, longer than his forearm (still above). Not a REQUEST; their call.
