@@ -1804,3 +1804,18 @@ NEXT (iteration 19, in order):
    the dome stays light (call I).
 3. At the freeze (08:30): REPORT read-through (calls A-P), commit. REPORT is final otherwise.
 - 06:46 Session closes: everything committed; scratch18 holds only the scripts. NEXT above stands.
+
+## Iteration 20 (06:44-07:44), BUILD
+
+### 06:44 START
+- Read JOURNAL NEXT (it18; no it19 entries on this branch), git log, servo's JOURNAL tail (no
+  REQUEST for king). Order: NEXT 2 (the shades' width A/B), then call C's "fair" option measured
+  (it is "not built and not measured" in REPORT). Scratch `build/scratch20`.
+
+### 06:52 A/B the gang's shades at BAND_W 0.5 against 0.44: keep 0.44
+- Registry: motion-quality-gating (judge at 32 px/m in the live arena path first).
+  `shot.sh` phase 1 tick 60 and phase 2 tick 300 at 32 px/m, seed 2 stander, BAND_W 0.44 and 0.5.
+  **Looked at** `evidence/king/shots/it20/gang_shades_bandw_044_050_p1_32ppm_6x.png` (the car's
+  riders at 6x, left 0.44, right 0.5): the difference is one pixel row on the brow; the phase 2
+  diff box is 9 x 36 px. Not clearly better, so per NEXT 2 the rule holds. DECISION keep 0.44
+  (no code change; the dome stays as light as call I's).
