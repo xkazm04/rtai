@@ -1,9 +1,9 @@
 # REPORT: lane `servo`, night 2026-11-05/06 (Act 2's Servo)
 
-DRAFT (iteration 8, 00:50): to be finalized at 08:40. The exe line and the final gates are still open.
+DRAFT (iteration 9, 01:36): to be finalized at 08:40. The exe line and the final gates are still open.
 
 Branch `n7-servo` (from main `763f8fba`, with `n7-king`'s framework merged in at every move; the
-last merge was `ad428713`). Clips and stills: `C:\Users\kazda\kiro\gtai-masters\n7\servo\` (M below),
+last merge was `63bbdeb8`, iteration 9). Clips and stills: `C:\Users\kazda\kiro\gtai-masters\n7\servo\` (M below),
 indexed in `M/frames.json`. Design: `docs/bosses/servo.md`. Journal: `JOURNAL.md`.
 
 ## What works (with evidence)
@@ -12,12 +12,12 @@ indexed in `M/frames.json`. Design: `docs/bosses/servo.md`. Journal: `JOURNAL.md
   a counterplay and a punish window. Three phases: the depot, rush hour, overtime. How the four
   ghosts and Rivet's weapons play on him.
 - **The body**: a cutout rig from Codex part sheets (`tools/art/servo_parts.py`). The 3-row rack
-  wings are each one frame (`tools/art/servo_rack3.py`), with a central spine and its hose cap
-  (render only), round hover pads on long arms, walker legs, and a visor head that glows vermilion
+  wings are each one frame (`tools/art/servo_rack3.py`), set 0.94 m apart (`servo.json
+  rack.spine_m`) by a heavy 1.5 m central spine with its hose cap, the sheet's top view; round hover pads on long arms, walker legs, and a visor head that glows vermilion
   only during a tell. The rack is its own animated layer: drones dock, launch and refill. Phase 3
   blows a wing off. The defeat: a flash, the pads spin down, the body slumps and greys out, the
   drones spill, the visor flickers out in cream.
-  See `M/frames/servo_target_vs_arena_rack3_seam_48ppm_it8.png` and `M/frames/servo_spine_ab_48ppm_it8.png`.
+  See `M/frames/servo_target_vs_game_32ppm_it8.png` and `M/frames/servo_spine_gap_ab_48ppm_it9.png`.
 - **The drone swarm** (`features/bosses/servo/`): flocking on the 60 Hz tick from the
   `servo_swarm` stream, drop rings, a max-alive cap per phase, despawn, parcels (a bomb or a CS
   crate obstacle), and armoured kamikaze dives in phase 3. The drones are shootable. Dent seizes
@@ -42,18 +42,20 @@ The rotor dash checked against a reading player: every tell read but 18-32 ticks
 1. Drop rings show from the drone's launch (default) vs only over its hover: `servo.json drone.ring_from_launch`.
 2. Should a CS crate landing on Rivet hurt? Today it does not.
 3. Drones die to one round (default) vs tougher drones, so that waves land more often.
-4. CS crates are solid (default) vs paint only: `servo.json parcels.crates_solid`. Clip: `M/servo_drone_wave_scan_drop_dodge_48ppm_it3.mp4`.
-5. Rack depth: 3 rows / 18 cells (default) vs 2 / 12: `servo.json rack.rows` + `cells`. Still: `M/frames/servo_target_vs_arena_rack3_seam_48ppm_it8.png`.
+4. CS crates are solid (default) vs paint only: `servo.json parcels.crates_solid`. Clip: `M/servo_drone_wave_scan_drop_dodge_48ppm_it8.mp4`.
+5. Rack depth: 3 rows / 18 cells (default) vs 2 / 12: `servo.json rack.rows` + `cells`. Still: `M/frames/servo_target_vs_game_32ppm_it8.png`.
 6. The rotor dash smashes crates in its lane (default) vs crates stop him: `servo.json parcels.dash_smash`.
 7. Kamikaze armour: 3 rounds (default) vs 1: `servo.json kamikaze.hp`. Clip: `M/servo_attack_kamikaze_dive_lands_48ppm_it5.mp4`.
 8. Dent's van is parked from the start (default) vs none: `bosses.json arenas.depot.parked`. Clip: `M/servo_ghost_dent_van_48ppm_it5.mp4`.
 9. Kerf's blink cuts the drones within 0.6 m of its line (default) vs only the one target: `bosses.json servo.kerf_line_m`. Clip: `M/servo_ghost_kerf_cut_halves_48ppm_it7.mp4`.
+10. The spine: the wings 0.94 m apart for a 1.5 m spine, the sheet's measure (default) vs touching wings with a 0.56 m column over them (it8): `servo.json rack.spine_m` 0.94 / 0. It moves the drones' launch cells; measured, the fight stays inside the seeds' spread (`evidence/servo/numbers-it9-spine94/`). Still: `M/frames/servo_spine_gap_ab_48ppm_it9.png` (left 0, right 0.94).
 
 Exe: (to come by 08:30) `build/export/windows/RTAI.exe -- --boss=servo`, `-- --boss=servo --phase=2`, `-- --bot=boss --boss=servo`.
 
 ## What does not work / open
 - The horn has not been heard (every run was headless or filmed without listening).
-- The spine is a procedural strap, lighter than the sheet's heavy central body.
+- The spine is a procedural cream column with rivet bands: it has the sheet's width since it9, but not its rounded, panelled body.
+- The `--boss-cam` clip camera frames Rivet and the boss together; a bay-hop landing ring on a Rivet by the bays can sit under the boss bar in a clip (`M/servo_attack_bay_hop_48ppm_it9.mp4`). In play the camera centres on Rivet, so the ring stays on screen.
 
 ## Next steps
 - To come.
