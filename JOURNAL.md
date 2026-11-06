@@ -166,3 +166,57 @@ NEXT (iteration 3, in order):
 6. Traffic density cost: bench under the bench lock (gtai-n5/bench.lock), tilt70 vs top.
 7. Bike: no sheet (catalog C x4). Build from the three-quarter views mirrored or a side-view slice
    stack; it is not in the sim's car art ids yet, so find where a bike appears first.
+
+## Iteration 3 (2026-11-06 21:36 - 22:36), BUILD
+
+Read: JOURNAL, git log, n8-city/n8-view journals. City answered the VehicleParked REQUEST in kind
+("tell me the function you want to own"): my iteration-2 REQUEST already names it
+(`VehicleParked.park/unpark/clear/row/carded`); no new answer from city since. No REQUEST to vehicles.
+
+MILESTONE 21:58 item 3 (damage at height): the cards wear their damage (commit 83ec4edf).
+`VehicleCards.wear(state, id)` -> custom.z; the card shader paints in the card's own space:
+D1 = ink dents at the nose end of the body (the drawn view's nose direction per column, mirrored
+views flipped) + pale scratches along the body; D2 = deeper, spread over the body, paint dulled;
+WRECK = burnt (desaturated, 0.56 value, soot) with dim amber embers, outline kept (0.42 lost the
+form at 64 px/m: measured, raised). A per-car seed (id % 64) so two damaged cars differ. The sim
+traffic marked D1 by VehicleTraffic now wears it too; the kerb wreck prop (id 50) wears WRECK.
+Before this, every damage state drew the intact card.
+MILESTONE 21:58 the cards draw north to south (`back_to_front`, ties in put order): before, the
+put order (service cars, then traffic, then parked) decided who covered whom.
+MILESTONE 21:59 the fire stands up: on a card the top-down burst draws 0.7 x 1.4 with its foot on
+the bonnet (`VehicleFire.STAND`); `top` keeps the old centred square (same float ops).
+Skids: VehicleSkids stays on the ground layer under the cards (checked on film: the drifting
+police car's marks lie on the asphalt under the body, not lifted).
+Evidence (gtai-masters/n8/vehicles, frames.json now 12): damage_tilt70_{32,64}ppm_before_after.mp4,
+damage_tilt70_{32,64}ppm_ba_f{150,500}.png. Film scene: `dev/showcase/vehicle_states.tscn`
+(`--wear=0` = the before). Looked at every still.
+
+MILESTONE 22:05 depth vs people (c4e756df): the vehicles band (z 200) sits OVER the actors (100),
+so a card painted over anyone standing just south of it (nearer the camera). `VehicleFront` buckets
+the bubble's living people (people_near 48 m) + Rivet on foot on a 4 m grid; a card with a body
+inside its front box (south by < 3.2 m, across < 2.6 m) goes to VehicleCards' `under` layer at
+actors - 1 (a VehicleView child, as the crowd layers are). A body behind a car stays covered
+(right). Both: the front body wins. Unit test. NOT FILMED: the yield scene's before/after differs
+all over the frame (traffic timing), so it shows nothing clean; `--arena=city --rigs` gave the
+hub (no traffic) - film owed: a dev scene with a rig walking past a parked card.
+
+DECISION vehicles: damage on the cards is a shader wear on the one rotation art (not cut damage
+cells): the library has no damaged vehicle sheets, and a wear keeps 55 and 70 consistent; cut
+cells are a REQUEST away (wear level 0 = intact = the hook).
+DECISION vehicles: a card with someone in front drops under the actors as a whole (two layers),
+not a per-pair interleave with RigDepthSort (view's code); the rare front-and-behind case favours
+the nearer body.
+
+Rules applied: depth-ordered-layered-art (back-to-front by ground y; the under/over split by who is
+in front), motion-quality-gating (judged the wear in motion through every view at 32 and 64),
+generative-artifact-gating (no new AI art; the wear is procedural), sprite-and-atlas-production
+(one atlas, the wear in the shader not new cells), top-down-vehicle-handling-model (dents at the
+nose: the crash reads where it happened).
+
+Gates: full unit 1494/0, 0 SCRIPT ERROR (22:03, on the depth commit's tree); lint 15/15 (hook, each
+commit).
+
+REQUEST to assets: fx_fire, 70 (and 55): a standing flame loop seen at the pitch (4 frames, a
+flame rising from a car bonnet, + 2 smoke puff cells), same 2.5 m cells as features/fx/art/fx_fire.png
+(4 x 2). Why: today's fire is the top-down burst stretched 0.7 x 1.4; it reads as fire at 32 px/m
+but as a splash at 64.
