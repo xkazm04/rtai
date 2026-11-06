@@ -1497,3 +1497,19 @@ rifle row filmed and scored. Call 7 added.
 - Unit 1169/1170: the one failure is the known flake `test_noir_shadows`
   (`test_only_shadow_commands_with_a_length_are_swept`, engine "Parameter t is null"); re-run alone:
   2/2 pass. Includes the new `test_weapon_shot_cues` (+2). Log `evidence/ranged/it15-unit-44fa20dd.log` (git-ignored, local).
+
+### READ 04:12: code pointers for NEXT 1 (quest 1's rifle has no flash)
+- Rivet's flash is drawn by `WeaponFxArt.muzzle` (features/combat/weapons/art/weapon_fx_art.gd:107),
+  called from quest 1's `boot/collect_call/view/fx_view.gd:206` with `arena.gun`. It draws only
+  from a GunHand trigger's `spec` and its cooldown age (`spec.interval_ticks - trigger.cooldown`,
+  `gun.shots_fired`), so a round fired on the combat.json path (`CombatArena.rivet_fire`, the
+  `Shot.fire(rivet, facing, w)` branch after the `gun != null` block, combat_arena.gd:114-123)
+  never ages a trigger and never flashes.
+- Open question before building: `rivet_fire` takes the table branch whenever `gun != null`; find
+  how quest 1 reaches the combat.json branch while the rifle is held (is `gun` nulled or swapped on
+  `grab_rifle`, or does quest 1 fire the rifle elsewhere?). Grep `grab_rifle` callers and where
+  quest 1 sets `arena.gun` (`--quest-guns`, `48679f03`).
+- There is already an art stand-in: rivet_arsenal.json `art_stand_in` maps `assault-rifle` ->
+  `machine_pistol` (its cell, muzzle_fx and casing). A fix can age a flash from Rivet's latest
+  rifle Shot (render only, ShotTicks from `arena.shots`) and draw the stand-in's cell; scale it by
+  a hit_feel.json `weapons` row `assault-rifle` (`muzzle_k`), off under `--feel=off`.
