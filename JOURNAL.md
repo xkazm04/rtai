@@ -1513,3 +1513,12 @@ rifle row filmed and scored. Call 7 added.
   `machine_pistol` (its cell, muzzle_fx and casing). A fix can age a flash from Rivet's latest
   rifle Shot (render only, ShotTicks from `arena.shots`) and draw the stand-in's cell; scale it by
   a hit_feel.json `weapons` row `assault-rifle` (`muzzle_k`), off under `--feel=off`.
+- 04:11 answered: `StageGuns.sync` (boot/collect_call/stage_guns.gd:27-36) sets `arena.gun = null`
+  for a weapon without a weapons.json row, so the rifle fires on the combat.json branch. fx_view's
+  `_gun_over` (fx_view.gd:202) then skips WeaponFxArt.muzzle and calls `GunFxArt.draw_over(..., not
+  art = true)`, i.e. GunFx is meant to draw Rivet's flash itself in that case. So the flash is not
+  missing by design: it is drawn by GunFx and is too small or too short to see at 32 px/m in the
+  crops (frames every 2 ticks may also miss a 1-2 tick flash). NEXT 1, first step: film the window
+  frame per tick (quest1_clip has no per-tick switch: check) or at 48/64 px/m, and find GunFx's
+  Rivet flash size in gun_fx.json before choosing between "scale GunFx's flash" and "route the
+  rifle through the art stand-in".
