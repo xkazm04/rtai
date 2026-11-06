@@ -140,6 +140,7 @@ func _car(with_king: bool = true) -> void:
 				_gangster(Vector2(l * sx, sy * (w * 0.5 + 0.3 * p)))
 	if with_king:
 		_king(Vector2(-l * 0.08, 0.0), CAPE_ON_CAR_K)  # the cape spreads wide over the car's back
+	KingCarTrim.throne(self, Vector2(-l * 0.08, 0.0), p)  # the gilded back, over the cape
 
 
 ## The car's smoke (the stall, the court) and, from phase 3, the stalled car left where it stood.

@@ -1471,3 +1471,22 @@ King on the car (the sheet's gilded plum throne); 3. at the freeze: re-export th
 f614cdf6 with the bumpers, smoke 4933 / 88 / 0 SCRIPT ERROR), smoke, re-film the full fight if the car's look changed enough to
 matter at 32 px/m, finalize REPORT.
 - 04:17 EXE re-exported on f614cdf6 (`build/export-it14c.log`, 0 errors); smoke seed 2 human: King down 4933, took 88, 0 SCRIPT ERROR. Session ends, everything committed.
+
+## Iteration 15 (04:18-05:18), BUILD
+
+### 04:18 START
+- Read JOURNAL NEXT, git log. Scratch moved to `build/scratch15` (shot.sh / film.sh copied), it14
+  AVIs deleted. Order: the throne back (NEXT 2), the shades in part art (NEXT 1), then the freeze.
+
+### 04:35 MILESTONE the throne-car's gilded throne back (NEXT 2)
+- Registry: depth-ordered-layered-art (the back over the cape, under the rig), sprite-and-atlas-
+  production (judged at 32 px/m first).
+- Try 1 (a plum seat in a gold frame, arms, a back bar, all under the cape): **looked at** 48 px/m
+  3x: lost under the cape; the arms merged into the car's inner gold trim. Rejected.
+- Try 2 (`KingCarTrim.throne`): a gold arch round King's back over the cape (r 0.95 m, +-1.15 rad
+  round straight back), ink edge, light line, ball finials. A/B phase 1 tick 60 at 32 and 48 px/m
+  (`evidence/king/shots/it15/car_throne_before_after_p1_32_48ppm.png`). **Looked at**: at 32 px/m
+  a gold arch with two knobs behind King, read as a throne back; the cape's vermilion fan and fur
+  still read round it. Phase 2 tick 360 at 32: present on the stalled car. Phase 3 tick 30 at 48
+  (`..._empty_p3_step_48ppm.png`): King stepping off, the empty gold arch left on the car.
+- DECISION THRONE_HW_M 0.95 (0 = it14). Unit **1164/0** (`evidence/king/unit-it15.log`), lint 13/13.
