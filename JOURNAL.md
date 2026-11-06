@@ -1155,3 +1155,12 @@ NEXT (written 04:09, for iteration 13):
   green on `be852011`. Clips: `ohm_bolt_rim_ab_32ppm_48slow.mp4`, `dent_blast_debris_ab_32ppm_48slow.mp4`
   (+ stills), city clip re-cut. Calls (l), (m) added. Scratch: the ohm_rim_* and dent_* AVIs deleted;
   the set_* AVIs are current for a RECUT.
+- SCOUT 04:12 (for NEXT 4, no build): the claw's anticipation can't be judged from the city set
+  film (the camera moves; two blind 2x crops missed Rivet). Next iteration: film the claw alone,
+  `bash evidence/n7-melee/film.sh claw48 48 420 --bot=reel --reel=director --chapter=claw_combo
+  --loadout=pistol --lone --clean`, then a 48 px/m sheet of the wind-up before each hit frame (74,
+  106 in the arena chapter) and score the anticipation before building anything (the d7 blade hold
+  measures the arc from the forearm line: keep it). Launch flags checked: `--blast-debris=off` is
+  n5-look's own flag (read from the OS args, not in KNOWN_FLAGS; boot only warns on unknown flags),
+  so calls (l) and (m) need no new flag.
+- STOP 04:13 iteration 12 (final). NEXT is the 04:09 entry (items 1-4) plus the 04:12 claw scout.
