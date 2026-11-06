@@ -572,3 +572,17 @@ If a session runs past 09:00 and the owner picks `tilt`: REPORT "Next steps" 1-6
 
 NEXT (report phase, 08:40): no code, no re-export. REPORT.md is final; read it once more for
 wording. If the owner picks `tilt`: REPORT "Next steps" 1-6 in order.
+
+## Iteration 20 (08:12-08:30, post-freeze BUILD slot)
+
+- Freeze stays as it18 left it: no game code. Any change would invalidate the exe (78d652d7) and
+  the gates, and they cannot be re-run before 08:30. This slot was docs and verification only.
+- CHECK: every `evidence/view/...` path that REPORT cites exists; every `--view=<id>` in REPORT
+  has a `view.json` row; frames.json has 15 entries, all present; DECISION lines it2-it15 are in
+  docs/decisions.md.
+- REPORT (47796f1e): "Watch these first" no longer claims frames.json order. It now lists the
+  labelled CONCEPT frame (option 4, three-quarter per facing), which REPORT had never named.
+  Gates history tidied into dated bullets. Docs only; lint passed in the hook.
+
+NEXT (report phase, 08:40): no code, no re-export. REPORT.md is final. If the owner picks `tilt`,
+do REPORT "Next steps" 1-6 in order.
