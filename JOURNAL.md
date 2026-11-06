@@ -687,3 +687,13 @@ NEXT: Director: merge d8-view70 and d8-chars in any order (lane docs conflict on
 city pair at tilt70 (now with the p70 street rows). The owner's calls are in REPORT. Frame cost 70 vs 55
 is still owed, under the bench lock on a quiet machine. it5 REQUEST to bosses (`KingArt` keyed by
 `ViewMode.art`) is still open.
+
+## Iteration 12 (18:40, REPORT; session stops 18:58)
+- 18:41 CHECKED every evidence path REPORT cites: all present except the iteration-2 still
+  `combo_fade_p70_to_p55_rivet_frames20-43_x3.png` (superseded, cleaned). REPORT now cites the
+  existing `combo_engage_fade_vs_swap_rivet_48ppm_frames22-42_x2.png`. Exe (18:02), p70 art, `evidence/it5/` present.
+- REPORT: added "What blocked me, and for how long" and "Next steps". No code change.
+- Registry rules applied: motion-quality-gating (every cited frame checked to exist; no new claim).
+
+NEXT: Director merge (d8-view70 + d8-chars, lane docs conflict only), re-run the view tests and the combo reel,
+re-film the city pair at tilt70. bosses: key KingArt by ViewMode.art. Quiet-machine frame cost 70 vs 55. The owner's calls are in REPORT.

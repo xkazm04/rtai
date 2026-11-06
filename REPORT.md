@@ -13,7 +13,8 @@ Evidence: `C:\Users\kazda\kiro\gtai-masters\d8\view70\` (`frames.json`, 15 entri
   `art` (chars' `RigHeadCard.rows_of`, `GhostCard`); never hard-coded 55.
 - **The combined view's card swap** sets `ViewMode.art` live and cross-fades Rivet, the King and
   Tonnage's cards over 5 degrees. Card-region pop measured frame by frame: no spike above the
-  moving-ground floor (`combo_fade_p70_to_p55_rivet_frames20-43_x3.png`).
+  moving-ground floor (`combo_engage_fade_vs_swap_rivet_48ppm_frames22-42_x2.png`; the
+  iteration 2 still `combo_fade_p70_to_p55_rivet_frames20-43_x3.png` was superseded and cleaned).
 - **The films**:
   - the King fight, seed 2, at 55 | 70 | combo, 32 px/m, 46 s;
   - the city block at 55 vs 70, 46 s;
@@ -119,6 +120,19 @@ Evidence: `C:\Users\kazda\kiro\gtai-masters\d8\view70\` (`frames.json`, 15 entri
 - **Tonnage's ghost cross-fade** under combo is unit-tested, but not seen live: no seeded fight has
   Tonnage on screen when the King goes down.
 
+## What blocked me, and for how long
+- **Nothing blocked the lane for more than minutes.** The frictions, each logged in JOURNAL:
+  - `tools/godot/check.mjs` failed on untouched files here (14:19). I used `run_unit --select` instead; no time lost.
+  - The King engages inside `BossHook.setup`, before my hook listens (14:24). Fixed in about 5 min: `boss_on()` reads the
+    fight state.
+  - A film batch read scripts while I edited them (16:06), and a film started before a merge's import finished (16:45).
+    Each cost one re-film, about 5 min.
+  - **The bench lock and other lanes' gates:** no quiet frame-cost measurement all day. Every frame time
+    above is CONTENDED, and the 15:46 pass (11.7 ms average) is unexplained.
+  - **Cross-lane fixes I could not make myself:** the King's cape fan during the combo ease is drawn in bosses'
+    files. My REQUEST (since iteration 3, about 3.5 h) is still open.
+- **The image lock:** no generated art was needed. The 70 cards were cut from the angle sheets, so the lock never blocked.
+
 ## Calls for the owner (default built, how to see it)
 1. **Pitch per situation**: 55 vs 70 vs combo, for the city and for boss fights. Built: all three rows;
    `top` stays the default.
@@ -150,3 +164,14 @@ Evidence: `C:\Users\kazda\kiro\gtai-masters\d8\view70\` (`frames.json`, 15 entri
   `RTAI.exe -- --boss=king --bot=boss --bot-human --seed=2 --rigs --view=tilt` (55), `--view=tilt70`
   (70), `--view=combo` (70 in play, easing to 55 when the boss engages).
 - Close range: add `--ppm=64 --phase=3` (the King on foot). The city: `RTAI.exe -- --arena=city --bot=rivet --seed=2 --rigs --view=tilt|tilt70`.
+
+## Next steps
+1. **Director merge:** d8-view70 and d8-chars (incl. 860fd3d8, the p70 street rows), in any order. Only `JOURNAL.md`/`REPORT.md`
+   conflict (checked by `git merge-tree` in iterations 9 and 11). Then re-run `test_rig_head_card`, `test_view_pitch*`,
+   `test_king_art` and the director reel under `--view=combo`.
+2. **Re-film the city pair** at `--view=tilt70` after that merge (the street heads at 70).
+3. **bosses: key `KingArt` by `ViewMode.art`**, not the rounded live pitch. This closes the cape fan during the combo ease.
+4. **Frame cost 70 vs 55** under the bench lock, on a machine with no other lane's Godot running.
+5. **Once the owner picks:**
+   - draw the remaining cast at the chosen pitch(es);
+   - if combo wins, draw 70 street sheets, so p70 stops reusing the 55 drawings.
