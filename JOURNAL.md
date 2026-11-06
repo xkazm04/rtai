@@ -336,10 +336,12 @@ NEXT (iteration 8):
 - TRIED+REVERTED: capping a card host's z under its ghost view (so the ghost's FX always draw over
   its body at level 2): Kerf ghost wrong 0/28 -> 6/28 (probe, 600 ticks). Body order wins; the FX
   can drop under the body at level 2 (a rare crowd case).
-- EVIDENCE Rivet hit reactions + death under tilt: `--boss=king --bot=boss --bot-stand --seed=4 --rigs
-  --ppm=48 --view=tilt` (0 SCRIPT ERROR, "Rivet destroyed" at ~25 s): masters
-  `rivet_bust55_hits_death_king_adds_tilt_48ppm_x2.mp4` (7 s). LOOKED: the bust card holds through the
-  hits; the death itself is hidden under the King's guard robots in this seed (not judged yet).
+- EVIDENCE Rivet hit reactions + death under tilt: the King run (seed 4, --bot-stand) buried him under
+  the guard robots, so re-filmed `--boss=servo --bot=boss --bot-stand --seed=4 --rigs --ppm=48
+  --view=tilt` (0 SCRIPT ERROR, 2 deaths): masters `rivet_bust55_hits_to_death_servo_tilt_48ppm_x3.mp4`
+  + `rivet_bust55_hit_flash_to_respawn_servo_tilt_48ppm_x3.png`. LOOKED: the bust card dips on each
+  hit and takes the hit flash; the dev arena cuts straight to the hub on death (no death pose plays
+  there, so the death pose under tilt is NOT judged: it needs the quest's death path).
 - GATE `top` city block (`--arena=city --bot=rivet --seed=2 --rigs`, 301 frames, video+audio
   framemd5) on c2e50b6e+: IDENTICAL with main 0bea8b93's hashes (scratch ct_main.md5).
 - DECISIONs in docs/decisions.md: street cop cards (raw + navy fix, not the part material); ghost card
@@ -353,7 +355,8 @@ NEXT (iteration 11, the freeze at 18:30):
    ground vs lifted; card facing count 5+3; cop tone; Kerf lean) and exe command lines per call.
 2. Read weapons' JOURNAL for the answer to the tank/tube REQUEST; re-film the flamethrower and
    rocket_launcher chapters at 48 tilt when they land (`--chapter=flamethrower`).
-3. Rivet's death under tilt in the clear (a seed or a pit death where no add covers him), 64 px/m.
+3. Rivet's death pose under tilt: the arena respawns at once; find the quest/game death path
+   (`--boss=servo --bot-stand` dies at ~13.9 s, seed 4) and film it at 64 px/m.
 4. Street heads hat/hood/cap when assets delivers (REQUEST it7); the ped_jogger/punk/shopper/worker
    sheets are in the library now but match no head part the game has (ponytail, mohawk, bun, short
    hair): a new ped head variant would be a parts change, not a card.
