@@ -181,8 +181,21 @@ NEXT:
 - Dent under tilt: tan crash dummy (the game's Dent, built) vs the 55 sheet's all-teal Dent
   (`p55/dent_bust_card_teal.png`, one SET_CARDS path; the limbs would need teal parts too).
 
+- IMAGE round3 (lock 15:36-15:38, after view70's job): `round3/out/ohm_55_body_magenta.png`, Ohm's
+  body (shell, goggles, cable beard, back cables; no arms/legs) in the GAME palette. Cut to
+  `scratch/chars/ohm_card.png` (5 x 142x192) by ghost_bust.py; NOT shipped yet. LOOKED: facings 1, 2,
+  4, 5 good; facing 3 (side) is nearer a front 3/4 low-goggle view; the beard's wire tips read
+  red/violet (red is blood-only): shift them to copper before shipping (a hue pass: red/violet ->
+  orange copper on the beard's lower third).
+- NOTE: image.want is shared: I deleted it after my round3 job while view70 had also touched it (they
+  held the lock already, so no harm). Next time only delete it when nobody else touched it after me.
+
 NEXT:
 1. `node tools/evidence/run.mjs --no-bench` on the tip (the only gate not run on it).
+1b. Ohm: split `ohm_rig.gd` (209 lines) first, then `GhostCard.new("ohm", ...)` over its lifted body
+   (hide shell + beard; arms and feet stay rig parts so the attack telegraphs keep moving); ship the
+   round3 strip as `features/souls/art/view/p55/ohm_card.png` after the copper-tip fix; provenance
+   line (prompt_ref round3/jobs.json#ohm_55_body_magenta).
 2. Tonnage card quality: the slam telegraph ring vs the card (does the card hide the ring at height?),
    the near front leg under the card (a near-leg z above the card when the leg is south of the crown),
    the card's transform-in at unfold < 1 (size_k only, no fold art). The teal glow at height (aura only
