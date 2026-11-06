@@ -116,7 +116,7 @@ func attach_view(p_view: Node) -> void:
 
 
 ## The printed path's actor layer, or the CityView's on the city block (--arena=city), where the
-## rigs draw too (RigHost.attach); null with neither (headless).
+## rigs draw too (the dev ArenaRigs.attach); null with neither (headless).
 static func _actor_layer(cc: CollectCallView) -> CanvasLayer:
 	if cc == null:
 		return null
