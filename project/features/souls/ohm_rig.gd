@@ -17,8 +17,8 @@ const TEAL: Color = Color(0.18, 0.77, 0.71)
 ## y right).
 const SHELL_M: float = 0.8
 const BEARD_M: float = 0.5
-## The soul glow under him: across (m) and its centre alpha. The smallest body needs the widest
-## pool against its size to read as possessed at 32 px/m (was 1.9 m at 0.4, under Kerf's 2.4).
+## The soul glow under him: across (m), centre alpha. The smallest body needs the widest pool for
+## its size to read as possessed at 32 px/m (was 1.9 m at 0.4, under Kerf's 2.4).
 const GLOW_M: float = 2.6
 const GLOW_A: float = 0.5
 const BEARD_AT: Vector2 = Vector2(0.42, 0.0)
@@ -51,11 +51,12 @@ const KICK_M: float = 0.2
 const KICK_S: float = 0.25
 const RECOIL_M: float = 0.1
 const KICK_TWIST: float = deg_to_rad(16.0)
-## The tilted view's facing card (GhostCard, art/view/<art>/ohm_card.png: the shell, goggles,
-## beard and back cables): drawn width (m) and the ground point's height in the card. The arms and
-## feet stay rig parts on the ground, so the cane, the guard hand and the bolt's prongs still meet.
-const CARD_M: float = 1.05
+## Tilted view: the facing card (GhostCard, art/view/<art>/ohm_card.png: shell, goggles, beard,
+## back cables): width (m), the ground point's height in the card, its soul halo alpha (0 = none).
+## The arms and feet stay rig parts on the ground, so cane, guard hand and bolt prongs still meet.
+const CARD_M: float = 1.2
 const CARD_ANCHOR: float = 0.8
+const CARD_HALO_A: float = 0.45
 
 var unfold: float = 1.0
 ## OhmStage.bolts, fed by the host: a rise kicks the guard arm (the first sight only arms it).
@@ -67,12 +68,10 @@ var speed_mps: float = 0.0
 var phase: float = 0.0
 var _t: float = 0.0
 var _seen_bolts: int = -1
-## 1 at the bolt, falling to 0 over KICK_S.
-var _kick: float = 0.0
+var _kick: float = 0.0  # 1 at the bolt, falling to 0 over KICK_S
 var _body: Node2D = Node2D.new()
 var _feet: Array[Sprite2D] = []
-## [upper_r, fore_r, upper_l, fore_l]
-var _arms: Array[Sprite2D] = []
+var _arms: Array[Sprite2D] = []  # [upper_r, fore_r, upper_l, fore_l]
 var _hide: Array[Sprite2D] = []
 var _card: GhostCard = GhostCard.new("ohm", CARD_M, CARD_ANCHOR)
 
@@ -98,6 +97,7 @@ func _ready() -> void:
 	GhostRim.body(shell)
 	shell.add_child(OhmSeams.new())  # the soul seams and lenses, bold enough for 32 px/m
 	_hide = [shell, beard, hose]
+	_card.halo = Color(TEAL, CARD_HALO_A)
 	pose()
 
 

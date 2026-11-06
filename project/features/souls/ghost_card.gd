@@ -10,6 +10,9 @@ extends RefCounted
 
 const ART_DIR: String = "res://features/souls/art/view/"
 const FRAMES: int = 5
+const HALO_SHADER: String = "res://features/souls/ghost_card_halo.gdshader"
+## The halo's size against the card (it is centred on the card's cell).
+const HALO_K: float = 1.12
 
 var card_name: String = ""
 ## The card's drawn width (metres at the rig's px per metre) and its anchor's height in the card
@@ -18,6 +21,9 @@ var width_m: float = 1.0
 var anchor_y: float = 0.5
 ## The rig's own size factor this pose (Tonnage's unfold), times width_m.
 var size_k: float = 1.0
+## The soul halo behind the card (its colour and alpha; alpha 0 = none): the card's silhouette in
+## soul teal, HALO_K the card's size, so the possessed body keeps its teal read at height.
+var halo: Color = Color(0.0, 0.0, 0.0, 0.0)
 var _spr: Sprite2D = null
 var _art: String = ""
 
@@ -40,6 +46,10 @@ func step(host: Node2D, parts: Array[Sprite2D], at: Vector2, px_per_m: float) ->
 	_spr.frame = f.x
 	_spr.flip_h = f.y == 1
 	_spr.position = at
+	if _spr.get_child_count() > 0:
+		var h: Sprite2D = _spr.get_child(0) as Sprite2D
+		h.frame = f.x
+		h.flip_h = _spr.flip_h
 	_spr.global_rotation = 0.0
 	var cell_w: float = _spr.texture.get_width() / float(FRAMES)
 	var s: float = width_m * size_k * px_per_m * absf(host.global_scale.x) / cell_w
@@ -72,7 +82,25 @@ func _rebuild(host: Node2D, parts: Array[Sprite2D], vm: ViewMode) -> void:
 		)
 		_spr.offset = Vector2(-cell.x * 0.5, -cell.y * anchor_y)
 		_spr.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+		if halo.a > 0.0:
+			_spr.add_child(_halo(cell))
 		host.add_child(_spr)
 	if had or _spr != null:
 		for p: Sprite2D in parts:
 			p.visible = _spr == null
+
+
+func _halo(cell: Vector2) -> Sprite2D:
+	var h: Sprite2D = Sprite2D.new()
+	h.name = &"halo"
+	h.texture = _spr.texture
+	h.hframes = FRAMES
+	h.show_behind_parent = true
+	h.position = Vector2(0.0, cell.y * (0.5 - anchor_y))
+	h.scale = Vector2.ONE * HALO_K
+	h.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+	var m: ShaderMaterial = ShaderMaterial.new()
+	m.shader = load(HALO_SHADER) as Shader
+	m.set_shader_parameter(&"tint", halo)
+	h.material = m
+	return h

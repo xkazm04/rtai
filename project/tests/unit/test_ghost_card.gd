@@ -60,3 +60,20 @@ func test_the_drawn_card_stands_upright_and_undoes_the_ground_squash() -> void:
 	assert_almost_eq(card.global_rotation, 0.0, 0.0001, "upright whatever the facing")
 	assert_gt(card.global_scale.y, card.global_scale.x, "taller than wide by the squash")
 	assert_lt(card.position.y, 0.0, "it stands at the lifted crown point")
+
+
+func test_a_halo_draws_behind_the_card_in_its_facing() -> void:
+	var rig: OhmRig = OhmRig.new()
+	ViewMode._shared = ViewMode.of("tilt")
+	add_child_autofree(rig)
+	rig.rotation = PI
+	rig.pose()
+	if not rig._card.is_drawn():
+		pending("no ohm card strip under the tilt art")
+		return
+	var card: Sprite2D = rig.get_node(^"ghost_card") as Sprite2D
+	var halo: Sprite2D = card.get_node(^"halo") as Sprite2D
+	assert_true(halo.show_behind_parent, "behind the card")
+	assert_eq(halo.frame, card.frame, "the same facing")
+	assert_eq(halo.flip_h, card.flip_h)
+	assert_gt(halo.scale.x, 1.0, "a rim around the card")
