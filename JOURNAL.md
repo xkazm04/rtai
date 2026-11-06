@@ -488,3 +488,13 @@ Rules applied: registry `measured-draw-order` (count the failures, do not eyebal
   body hidden. The hip-wide ink figure was a faint sliver on the dark face -> silhouette at a body
   width with a cream rim: 0.6 m read as a coffin, 0.42 m reads as a hidden figure (committed).
   `city_occlusion_..._it15.png` rebuilt with both rows (649 standing, 1060 downed).
+- GATES started 07:29 on a56fc835 (switch off): director reel (headless, 900 s timeout, log
+  scratch/view/it15/reel.log) and unit (scratch unit2.log). Results below when they land.
+
+NEXT (iteration 16 = the freeze; freeze 08:30, report 08:40):
+1. Snapshot the it15 reel log into `evidence/view/it15/` if it shows 19/19 (else re-run it).
+2. `node tools/evidence/run.mjs --no-bench` on the final HEAD (commit first; log OUTSIDE the
+   tree), re-export the exe (`windows-showcase`, int-day recipe), smoke `--view=tilt` and
+   `--view=top` headless, finish REPORT (add call: `--view=tilt` vs `--view=tilt_noocclude`).
+3. If time: lift Rivet's held weapon with him when PropOcclusion lifts his rig (it follows his z
+   in RigDepthSort before the lift, so it can stay under a redrawn prop).
