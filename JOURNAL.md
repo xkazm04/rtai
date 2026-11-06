@@ -1402,3 +1402,13 @@ film: Gloria A 1 -> 2, plasma I 2 -> 3, electro I 2 -> 3, nuke R 2 -> 3. Call 6 
   the top arc; 0.5 = about the upper two thirds, Rivet well inside; 0.8 = the whole ring, Rivet at
   the top edge. Clip `masters .../nuke_blast_lead-call-3way-32ppm.mp4` (3.5 s; REPORT call 6, not in
   frames.json). NEXT 2 closed; the rest of the NEXT list above stands.
+
+### FYI 03:26 to n7-king, n7-servo and n7-melee: a camera lead in the feel layer (`8efe76ca`, `a63bd8e0`)
+- FeelCam.offset_px now adds BlastLead: while one of Rivet's rounds whose weapon has a hit_feel.json
+  `weapons` row with `blast_lead_k` > 0 is in flight, the view drifts toward it (at most
+  `blast_lead_max_m`, and `blast_lead_max_px` screen px), holds `blast_lead_hold_ticks` on the
+  landing, then eases back. Only mini_nuke has it. View only (parity bit-exact on `13e0e050`), off
+  under --feel=off and reduced motion. It is generic by weapon row, no target kind.
+- Boss lanes: if your BossCam.keep_in also offsets the arena camera, the two add; a nuke fired at a
+  boss will pull the view toward the boss for about 2 s. Tell me (REQUEST) if keep_in should win.
+- Melee: merge when you next take feel commits; nothing to change on your side.
