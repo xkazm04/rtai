@@ -11,7 +11,6 @@ extends RefCounted
 
 ## art_dir -> [strip, anchor y (card height fraction from the top), width over the anchor part's,
 ## bust (covers the chest: the torso hides), raw (pre-printed: cut_facings.py --snap)].
-## Rivet anchors on his collar ring, King's bust on his torso.
 const CARDS: Dictionary[String, Array] = {
 	"rivet": ["res://features/characters/art/view/rivet_head_card.png", 0.86, 1.0, false, true],
 	"king": ["res://features/characters/art/view/king_bust_card.png", 0.80, 2.4, true, true],
@@ -84,11 +83,12 @@ static func on_tint(rig: CutRig, on: bool) -> void:
 	rig.head_card.material = null if raw and not on else mat
 
 
-## A variant swap (CutRig.apply_variant, a pooled rig re-dressed) drops the card: the next step
-## builds the new head's card, or none, and the top-down parts draw again meanwhile.
+## A variant swap (CutRig.apply_variant) or an art change drops the card; renamed first, so a card
+## rebuilt this frame keeps the name `head_card`. The top-down parts draw until the next step.
 static func drop(rig: CutRig) -> void:
 	if rig.head_card == null:
 		return
+	rig.head_card.name = &"head_card_dropped"
 	rig.head_card.queue_free()
 	rig.head_card = null
 	_hide(rig.head, rig.head_spr, true)
