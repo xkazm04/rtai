@@ -136,3 +136,11 @@ NEXT:
   crest from the shipped p55 bust card.
 - Export the exe at the freeze; REPORT Calls: hover vs crate, portrait side/size, dialogue never
   pauses play, Don Fax payphone vs bust.
+- 21:29 Scenarios (raw `run_scenarios.gd`, head 4afd59d9): 52 ran, 2 failed, 0 SCRIPT ERROR. The two
+  fails are the two wall-clock budgets only: city_chase nav (max 13870 us > 2 ms) and rig_stress p50
+  (1.028 > 1.000 ms), while 4 other lanes ran. Re-run through `node tools/tests/run_scenarios.mjs
+  --only=scenario_city_chase,scenario_rig_stress --quiet-wait=3`: city_chase PASS; rig_stress
+  CONTENDED (1.073 ms, 3 other runs, the machine never went quiet in 3 min): NOT judged, not a pass.
+  This lane touched neither nav nor rigs (HUD, pickups view, rack view only).
+- 21:37 Session end. Not run this session: `tools/evidence/run.mjs --no-bench`, the director reel in
+  top/tilt70, rig_stress on a quiet machine. All work committed (c99ff149..4afd59d9 + this journal).
