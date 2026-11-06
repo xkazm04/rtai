@@ -18,19 +18,7 @@ const EDGE_ON_K: float = 0.5
 
 static var _shipped: HeldPitchArt = null
 
-
-class Row:
-	extends RefCounted
-	var art: String = ""
-	var grip: Vector2 = Vector2.ZERO
-	var muzzle: Vector2 = Vector2.ZERO
-	var length_px: float = 1.0
-	## Draw size against weapon_art length_m (the side body adds the grip's height, so a
-	## three-quarter pistol at full length reads bigger than the top-down one).
-	var size_k: float = 1.0
-
-
-## pitch key ("55") -> weapon id -> Row
+## pitch key ("55") -> weapon id -> HeldPitchRow
 var pitches: Dictionary[String, Dictionary] = {}
 var errors: Array[String] = []
 
@@ -48,14 +36,7 @@ static func from_table(t: DataTable) -> HeldPitchArt:
 		var by_id: Dictionary = {}
 		var weapons: Dictionary = t.object(t.object(rows, key), "weapons")
 		for id: String in weapons:
-			var w: Dictionary = t.object(weapons, id)
-			var r: Row = Row.new()
-			r.art = t.text(w, "art")
-			r.grip = t.vec(w, "grip_px")
-			r.muzzle = t.vec(w, "muzzle_px")
-			r.length_px = maxf(t.num(w, "length_px"), 1.0)
-			r.size_k = t.num(w, "size_k") if w.has("size_k") else 1.0
-			by_id[StringName(id)] = r
+			by_id[StringName(id)] = HeldPitchRow.from_row(t, t.object(weapons, id))
 		h.pitches[key] = by_id
 	h.errors = t.errors()
 	return h
@@ -67,7 +48,7 @@ static func key_of(pitch_deg: float) -> String:
 
 
 ## The row for `id` at `pitch_deg` (null: none, the top-down part draws).
-func row(id: StringName, pitch_deg: float) -> Row:
+func row(id: StringName, pitch_deg: float) -> HeldPitchRow:
 	var by_id: Dictionary = pitches.get(key_of(pitch_deg), {})
 	return by_id.get(id, null) if LaunchArgs.value("--held-pitch") != "off" else null
 
@@ -75,10 +56,10 @@ func row(id: StringName, pitch_deg: float) -> Row:
 ## A held sprite for `id` at `pitch_deg` (origin on the grip, world px scale from WeaponArt's
 ## length_m, an ink-paper rim like WeaponArt's), or null when the pitch has no art for it.
 func make(id: StringName, pitch_deg: float, art: WeaponArt) -> Sprite2D:
-	var r: Row = row(id, pitch_deg)
+	var r: HeldPitchRow = row(id, pitch_deg)
 	if r == null or not ResourceLoader.exists(r.art):
 		return null
-	var s: Sprite2D = Sprite2D.new()
+	var s: Sprite2D = _sprite(r, art)
 	s.name = "Held55_%s" % id
 	s.texture = load(r.art) as Texture2D
 	s.centered = false
@@ -89,6 +70,21 @@ func make(id: StringName, pitch_deg: float, art: WeaponArt) -> Sprite2D:
 	s.set_meta(&"half_local", td_half / s.scale.x)
 	_rim(s)
 	return s
+
+
+## A HeldLod (the `small` part below WeaponArt's held_small_below_ppm, as for `top`), else a
+## plain Sprite2D.
+static func _sprite(r: HeldPitchRow, art: WeaponArt) -> Sprite2D:
+	if r.small == "" or art.held_small_below_ppm <= 0.0 or not ResourceLoader.exists(r.small):
+		return Sprite2D.new()
+	var lod: HeldLod = HeldLod.new()
+	lod.full = load(r.art) as Texture2D
+	lod.small = load(r.small) as Texture2D
+	lod.small_of[lod.full] = lod.small
+	if r.empty != "" and r.empty_small != "":
+		lod.small_of[load(r.empty) as Texture2D] = load(r.empty_small) as Texture2D
+	lod.below_view_px = art.held_small_below_ppm / WeaponArt.WORLD_PX_PER_M * CutRig.SC
+	return lod
 
 
 ## The held sprite for `id` under the launch view: the pitch part, else WeaponArt's top-down one.
@@ -106,7 +102,7 @@ static func publish_muzzle(s: Sprite2D, top_down_muzzle: Vector2) -> void:
 ## Mirrors a pitch part about its barrel line while the barrel points left on screen, so the
 ## grip always hangs down. A top-down part (no pitch row) is left alone.
 static func face(s: Sprite2D) -> void:
-	var r: Row = row_of(s)
+	var r: HeldPitchRow = row_of(s)
 	if r == null:
 		return
 	var g: float = ViewMode.shared().ground_k()
@@ -138,7 +134,7 @@ static func stand(s: Sprite2D, g: float) -> void:
 
 ## The bore tip in the sprite's local px (offset and flip included).
 static func muzzle_local(s: Sprite2D, top_down_muzzle: Vector2) -> Vector2:
-	var r: Row = row_of(s)
+	var r: HeldPitchRow = row_of(s)
 	if r == null:
 		return top_down_muzzle + s.offset
 	var y: float = s.texture.get_size().y - r.muzzle.y if s.flip_v else r.muzzle.y
@@ -146,11 +142,11 @@ static func muzzle_local(s: Sprite2D, top_down_muzzle: Vector2) -> Vector2:
 
 
 ## The pitch row a held sprite was made from (null: a top-down part).
-static func row_of(s: Sprite2D) -> Row:
+static func row_of(s: Sprite2D) -> HeldPitchRow:
 	if s == null or not s.has_meta(&"pitch_row"):
 		return null
 	var m: Variant = s.get_meta(&"pitch_row")
-	return m if m is Row else null
+	return m if m is HeldPitchRow else null
 
 
 ## WeaponArt's paper rim: cream silhouettes RIM_WORLD_PX out in RIM_DIRS directions, under it.
@@ -159,6 +155,7 @@ static func _rim(s: Sprite2D) -> void:
 		return
 	for i: int in WeaponArt.RIM_DIRS:
 		var h: Sprite2D = Sprite2D.new()
+		h.name = "Rim%d" % i
 		h.texture = s.texture
 		h.centered = false
 		h.offset = s.offset

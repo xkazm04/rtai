@@ -28,7 +28,7 @@ func test_tilt_pitch_has_the_pistol() -> void:
 func test_every_row_points_at_real_art_with_grip_and_muzzle_inside() -> void:
 	for key: String in _shipped().pitches:
 		for id: StringName in _shipped().pitches[key]:
-			var r: HeldPitchArt.Row = _shipped().pitches[key][id]
+			var r: HeldPitchRow = _shipped().pitches[key][id]
 			assert_true(ResourceLoader.exists(r.art), r.art)
 			var size: Vector2 = (load(r.art) as Texture2D).get_size()
 			assert_true(Rect2(Vector2.ZERO, size).has_point(r.grip), "%s grip" % id)
@@ -39,7 +39,7 @@ func test_every_row_points_at_real_art_with_grip_and_muzzle_inside() -> void:
 func test_left_aim_mirrors_about_the_barrel_and_keeps_the_grip_on_the_origin() -> void:
 	var s: Sprite2D = _shipped().make(&"pistol", 55.0, WeaponArt.new())
 	add_child_autofree(s)
-	var r: HeldPitchArt.Row = s.get_meta(&"pitch_row")
+	var r: HeldPitchRow = s.get_meta(&"pitch_row")
 	var h: float = s.texture.get_size().y
 	s.global_rotation = 0.0
 	HeldPitchArt.face(s)
@@ -103,3 +103,33 @@ func test_half_thickness_is_the_top_down_barrel_for_a_pitch_part() -> void:
 	add_child_autofree(flat)
 	var want: float = flat.texture.get_height() * absf(flat.global_scale.y) * 0.5
 	assert_eq(HeldPitchArt.half_thickness(flat), want, "a top-down part: as before")
+
+
+func test_a_row_with_small_art_draws_it_below_the_lod_zoom_on_the_same_canvas() -> void:
+	var art: WeaponArt = WeaponArt.new()
+	art.held_small_below_ppm = 56.0
+	var s: Sprite2D = _shipped().make(&"plasma_rifle", 55.0, art)
+	assert_true(s is HeldLod, "a pitch row with `small` is a HeldLod")
+	var lod: HeldLod = s as HeldLod
+	assert_eq(lod.small.get_size(), lod.full.get_size(), "same canvas: grip and muzzle stay valid")
+	assert_true(s.get_node_or_null(^"Rim0") != null or not WeaponArt.rim, "the rim swaps with it")
+	s.free()
+	art.held_small_below_ppm = 0.0
+	var plain: Sprite2D = _shipped().make(&"plasma_rifle", 55.0, art)
+	assert_false(plain is HeldLod, "no LOD zoom: the full part only")
+	plain.free()
+
+
+func test_a_pitch_tube_goes_empty_with_its_own_part_and_back() -> void:
+	var art: WeaponArt = WeaponArt.new()
+	var s: Sprite2D = _shipped().make(&"rocket_launcher", 55.0, art)
+	assert_not_null(s)
+	var r: HeldPitchRow = HeldPitchArt.row_of(s)
+	assert_ne(r.empty, "", "the 55 rocket tube has an empty part")
+	var full: Texture2D = s.texture
+	HeldTube.apply(s, art, &"rocket_launcher", true)
+	assert_eq(s.texture.resource_path, r.empty, "the pitch row's empty part, not the top-down one")
+	assert_eq(s.texture.get_size(), full.get_size(), "same canvas")
+	HeldTube.apply(s, art, &"rocket_launcher", false)
+	assert_eq(s.texture, full)
+	s.free()

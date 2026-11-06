@@ -35,6 +35,14 @@
           "pattern": "^res://features/combat/weapons/art/held_[0-9]+/",
           "type": "string"
         },
+        "empty": {
+          "pattern": "^res://features/combat/weapons/art/held_[0-9]+/",
+          "type": "string"
+        },
+        "empty_small": {
+          "pattern": "^res://features/combat/weapons/art/held_[0-9]+/",
+          "type": "string"
+        },
         "grip_px": {
           "$ref": "#/$defs/px"
         },
@@ -49,6 +57,10 @@
           "maximum": 2,
           "minimum": 0.3,
           "type": "number"
+        },
+        "small": {
+          "pattern": "^res://features/combat/weapons/art/held_[0-9]+/",
+          "type": "string"
         }
       },
       "required": [

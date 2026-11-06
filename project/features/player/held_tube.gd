@@ -21,11 +21,20 @@ static func is_empty(ammo: int, magazine: int, reload_k: float) -> bool:
 
 ## Puts the empty or loaded art on the held sprite (and on its paper rim copies). No-op for a
 ## weapon without an `empty` part.
+## d8-weapons: a raised-camera held part (HeldPitchArt) swaps to its own pitch row's empty part.
 static func apply(sprite: Sprite2D, art: WeaponArt, id: StringName, empty: bool) -> void:
+	var pitch: HeldPitchRow = HeldPitchArt.row_of(sprite)
+	if pitch != null:
+		if pitch.empty != "":
+			_put(sprite, load(pitch.empty if empty else pitch.art) as Texture2D)
+		return
 	var hollow: Texture2D = art.part_texture(id, "empty")
 	if sprite == null or hollow == null:
 		return
-	var tex: Texture2D = hollow if empty else art.held_texture(id)
+	_put(sprite, hollow if empty else art.held_texture(id))
+
+
+static func _put(sprite: Sprite2D, tex: Texture2D) -> void:
 	if sprite.texture == tex:
 		return
 	sprite.texture = tex

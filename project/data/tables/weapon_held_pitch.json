@@ -1,9 +1,23 @@
 {
-  "doc": "d8-weapons: Rivet's held weapons drawn for a raised camera (HeldPitchArt). Keyed by the view row's camera pitch in whole degrees (\"55\" = `tilt`; a \"70\" block can sit beside it), then by weapon_art id: art = a three-quarter part showing the gun's top and its side body, +x along the barrel (mirrored about the barrel line while it points left on screen), grip_px = where the gun claw closes, muzzle_px = the bore tip (the flash and the shot start here), length_px = the tail-to-tip span, drawn weapon_art's length_m long. A weapon without a row keeps weapon_art's top-down part; `top` (90) never reads this table. `--held-pitch=off` = the before.",
+  "doc": "d8-weapons: Rivet's held weapons drawn for a raised camera (HeldPitchArt). Keyed by the view row's camera pitch in whole degrees (\"55\" = `tilt`; a \"70\" block can sit beside it), then by weapon_art id: art = a three-quarter part showing the gun's top and its side body, +x along the barrel (mirrored about the barrel line while it points left on screen), grip_px = where the gun claw closes, muzzle_px = the bore tip (the flash and the shot start here), length_px = the tail-to-tip span, drawn weapon_art's length_m long. A weapon without a row keeps weapon_art's top-down part; `top` (90) never reads this table. `--held-pitch=off` = the before. small (optional) = the part re-toned for gameplay scale on the same canvas (tools/art/held_pitch_small.py, from the unprepped cut), drawn in the claw below weapon_art.json's held_small_below_ppm like WeaponArt's `small` parts; absent = the full part at every zoom. empty / empty_small (tubes): the tube with the warhead cut away on the same canvas, drawn from the shot until the reload loads (HeldTube), as weapon_art's empty parts are for `top`.",
   "pitches": {
     "55": {
       "doc": "55 degrees (the `tilt` row): generated 2026-11-06 with the image tool from the shipped pickups as the design reference, keyed off #00B140 (steam/ai-provenance/2026-11.jsonl)",
       "weapons": {
+        "chainsaw": {
+          "art": "res://features/combat/weapons/art/held_55/chainsaw.png",
+          "grip_px": [
+            140,
+            190
+          ],
+          "length_px": 645,
+          "muzzle_px": [
+            652,
+            189
+          ],
+          "size_k": 1,
+          "small": "res://features/combat/weapons/art/held_55/chainsaw_small.png"
+        },
         "electro_baton": {
           "art": "res://features/combat/weapons/art/held_55/electro_baton.png",
           "grip_px": [
@@ -15,7 +29,8 @@
             519,
             75
           ],
-          "size_k": 1
+          "size_k": 1,
+          "small": "res://features/combat/weapons/art/held_55/electro_baton_small.png"
         },
         "electro_gun": {
           "art": "res://features/combat/weapons/art/held_55/electro_gun.png",
@@ -28,7 +43,35 @@
             497,
             151
           ],
+          "size_k": 1,
+          "small": "res://features/combat/weapons/art/held_55/electro_gun_small.png"
+        },
+        "flamethrower": {
+          "art": "res://features/combat/weapons/art/held_55/flamethrower.png",
+          "grip_px": [
+            125,
+            160
+          ],
+          "length_px": 677,
+          "muzzle_px": [
+            684,
+            61
+          ],
           "size_k": 1
+        },
+        "gatling": {
+          "art": "res://features/combat/weapons/art/held_55/gatling.png",
+          "grip_px": [
+            70,
+            215
+          ],
+          "length_px": 676,
+          "muzzle_px": [
+            683,
+            108
+          ],
+          "size_k": 1,
+          "small": "res://features/combat/weapons/art/held_55/gatling_small.png"
         },
         "gloria": {
           "art": "res://features/combat/weapons/art/held_55/gloria.png",
@@ -41,7 +84,8 @@
             596,
             150
           ],
-          "size_k": 1
+          "size_k": 1,
+          "small": "res://features/combat/weapons/art/held_55/gloria_small.png"
         },
         "hand_cannon": {
           "art": "res://features/combat/weapons/art/held_55/hand_cannon.png",
@@ -54,7 +98,8 @@
             543,
             147
           ],
-          "size_k": 1
+          "size_k": 1,
+          "small": "res://features/combat/weapons/art/held_55/hand_cannon_small.png"
         },
         "homing_shard": {
           "art": "res://features/combat/weapons/art/held_55/homing_shard.png",
@@ -67,7 +112,8 @@
             439,
             169
           ],
-          "size_k": 1
+          "size_k": 1,
+          "small": "res://features/combat/weapons/art/held_55/homing_shard_small.png"
         },
         "katana": {
           "art": "res://features/combat/weapons/art/held_55/katana.png",
@@ -80,7 +126,8 @@
             650,
             37
           ],
-          "size_k": 1
+          "size_k": 1,
+          "small": "res://features/combat/weapons/art/held_55/katana_small.png"
         },
         "machine_pistol": {
           "art": "res://features/combat/weapons/art/held_55/machine_pistol.png",
@@ -92,6 +139,36 @@
           "muzzle_px": [
             601,
             140
+          ],
+          "size_k": 1,
+          "small": "res://features/combat/weapons/art/held_55/machine_pistol_small.png"
+        },
+        "mini_nuke": {
+          "art": "res://features/combat/weapons/art/held_55/mini_nuke.png",
+          "empty": "res://features/combat/weapons/art/held_55/mini_nuke_empty.png",
+          "empty_small": "res://features/combat/weapons/art/held_55/mini_nuke_empty_small.png",
+          "grip_px": [
+            80,
+            262
+          ],
+          "length_px": 654,
+          "muzzle_px": [
+            661,
+            170
+          ],
+          "size_k": 1,
+          "small": "res://features/combat/weapons/art/held_55/mini_nuke_small.png"
+        },
+        "molotov": {
+          "art": "res://features/combat/weapons/art/held_55/molotov.png",
+          "grip_px": [
+            260,
+            110
+          ],
+          "length_px": 631,
+          "muzzle_px": [
+            638,
+            150
           ],
           "size_k": 1
         },
@@ -106,7 +183,8 @@
             356,
             107
           ],
-          "size_k": 1
+          "size_k": 1,
+          "small": "res://features/combat/weapons/art/held_55/pistol_small.png"
         },
         "plasma_rifle": {
           "art": "res://features/combat/weapons/art/held_55/plasma_rifle.png",
@@ -119,7 +197,8 @@
             534,
             151
           ],
-          "size_k": 1
+          "size_k": 1,
+          "small": "res://features/combat/weapons/art/held_55/plasma_rifle_small.png"
         },
         "plasma_sword": {
           "art": "res://features/combat/weapons/art/held_55/plasma_sword.png",
@@ -145,7 +224,24 @@
             407,
             143
           ],
-          "size_k": 1
+          "size_k": 1,
+          "small": "res://features/combat/weapons/art/held_55/ray_gun_small.png"
+        },
+        "rocket_launcher": {
+          "art": "res://features/combat/weapons/art/held_55/rocket_launcher.png",
+          "empty": "res://features/combat/weapons/art/held_55/rocket_launcher_empty.png",
+          "empty_small": "res://features/combat/weapons/art/held_55/rocket_launcher_empty_small.png",
+          "grip_px": [
+            215,
+            275
+          ],
+          "length_px": 637,
+          "muzzle_px": [
+            644,
+            160
+          ],
+          "size_k": 1,
+          "small": "res://features/combat/weapons/art/held_55/rocket_launcher_small.png"
         }
       }
     }
