@@ -14,6 +14,15 @@ const SLICES: int = 40
 ## A band's depth into the outline (m): deeper than a slice's step, so the bands overlap.
 const BAND_M: float = 0.14
 const INK_PX: float = 2.5
+## The hood cannon's mount along the car (fraction of its length from the middle): the code roof's
+## 0.2, or the roof art's laurel mount ring (car_roof.png: the ring's hole at 0.33).
+const MOUNT_K: float = 0.2
+const ART_MOUNT_K: float = 0.33
+## The throne card's width face-on (m: it frames the 1.5x bust, the sheet's throne rising over
+## his shoulders), side-on (its depth over its width), and its foot behind the seat (m).
+const THRONE_W_M: float = 3.0
+const THRONE_SIDE_K: float = 0.7
+const THRONE_BACK_M: float = 0.3
 
 static var _tex: Dictionary[String, Texture2D] = {}
 
@@ -59,6 +68,53 @@ static func _at(ci: CanvasItem, at: Vector2, heading: float, lift: Vector2) -> v
 
 static func _z(i: int) -> float:
 	return KingCarStack.ROOF_M * float(i) / float(SLICES - 1)
+
+
+## Where the hood cannon stands (and its coins fly from): on the roof art's ring when drawn.
+static func mount_k() -> float:
+	var view: ViewMode = ViewMode.shared()
+	var art: bool = view.has_lift() and _wall(view.pitch_deg, "car_roof") != null
+	return ART_MOUNT_K if art else MOUNT_K
+
+
+## The roof from art for this pitch over `body` (car px, nose +x); false when it has none.
+static func roof(ci: CanvasItem, body: Rect2) -> bool:
+	var tex: Texture2D = _wall(ViewMode.shared().pitch_deg, "car_roof")
+	if tex == null:
+		return false
+	ci.draw_rect(body.grow(INK_PX), Ink.INK)
+	ci.draw_texture_rect(tex, body, false)
+	return true
+
+
+## The empty throne as an upright card at the seat `at` (car px; `up` = the car-local lift per
+## metre): the back when the car's tail points down the screen, else the front, its width eased
+## to THRONE_SIDE_K side-on. Drawn as a textured quad in the car's frame, upright on the screen.
+static func throne(ci: CanvasItem, at: Vector2, p: float, up: Vector2) -> bool:
+	var view: ViewMode = ViewMode.shared()
+	var back: bool = up.x > 0.0  # the tail (-x) faces the camera (down the screen)
+	var tex: Texture2D = _wall(view.pitch_deg, "throne_back" if back else "throne_front")
+	if tex == null or up == Vector2.ZERO:
+		return false
+	var u: Vector2 = up.normalized()
+	var side: Vector2 = u.rotated(PI * 0.5)  # the screen's right, in the car's frame
+	var face: float = lerpf(THRONE_SIDE_K, 1.0, absf(u.x))
+	var half: float = THRONE_W_M * 0.5 * p * face
+	var tall: Vector2 = u * (half * 2.0 * tex.get_height() / tex.get_width() / view.ground_k())
+	var foot: Vector2 = at - Vector2(THRONE_BACK_M * p, 0.0)
+	var quad: PackedVector2Array = PackedVector2Array(
+		[
+			foot - side * half + tall,
+			foot + side * half + tall,
+			foot + side * half,
+			foot - side * half
+		]
+	)
+	var uv: PackedVector2Array = PackedVector2Array(
+		[Vector2(0, 0), Vector2(1, 0), Vector2(1, 1), Vector2(0, 1)]
+	)
+	ci.draw_polygon(quad, PackedColorArray([Color.WHITE]), uv, tex)
+	return true
 
 
 ## The wall strip for a pitch (null: none). One lookup per path; `top` never asks (no lift).

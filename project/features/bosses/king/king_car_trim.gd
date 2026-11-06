@@ -42,6 +42,23 @@ const CREST_M: float = 0.17
 const PAD_M: float = 0.12
 
 
+## The car's roof from straight above (the 90-degree panel; also under a pitch with no roof art):
+## the black body in an ink edge, the gilded inner trim, corner studs, grille, rear bumper, panels.
+static func roof(ci: CanvasItem, body: Rect2, p: float) -> void:
+	var l: float = body.size.x
+	var w: float = body.size.y
+	ci.draw_rect(body.grow(4.0), Ink.INK)
+	ci.draw_rect(body, KingBodyView.CAR_BLACK)
+	ci.draw_rect(body.grow(-6.0), GOLD_DARK, false, 3.0)
+	ci.draw_rect(body.grow(-11.0), GOLD, false, 2.0)  # the gilded inner trim
+	for cx: float in [-0.5, 0.5]:  # gold corner studs
+		for cy: float in [-0.5, 0.5]:
+			ci.draw_circle(Vector2(l * cx * 0.94, w * cy * 0.86), 4.0, GOLD)
+	ci.draw_rect(Rect2(l * 0.5 - 10.0, -w * 0.42, 10.0, w * 0.84), GOLD)  # the grille
+	ci.draw_rect(Rect2(-l * 0.5, -w * 0.45, 8.0, w * 0.9), GOLD_DARK)  # rear bumper
+	draw(ci, l, w, p)  # plum roof panels between gold bars, the side swags
+
+
 static func draw(ci: CanvasItem, l: float, w: float, p: float) -> void:
 	for i: int in PANELS_X.size():  # the plum roof panels (rear, the throne's plush, the front cabin)
 		var r: Rect2 = Rect2(l * PANELS_X[i], -w * 0.5 + 7.0, l * PANEL_W[i], w - 14.0)
