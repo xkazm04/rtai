@@ -1850,3 +1850,20 @@ NEXT (iteration 21, in order):
    Only if it is landed, tested and measured by 08:20; otherwise leave the REPORT's next step 2.
 3. At the freeze (08:30): REPORT read-through (calls A-P, call C now has the it20 numbers), commit.
 - 07:27 Session closes: everything committed; scratch20 holds only scripts and run outputs.
+
+## Iteration 22 (07:26-08:26), BUILD
+
+### 07:26 START
+- Read JOURNAL NEXT (it20; no it21 entries on this branch), git log. servo's JOURNAL tail: no
+  REQUEST for king. Order: NEXT 2 (call C's lever: a per-boss repair delay, built, tested, measured
+  by 08:20), then NEXT 3 (REPORT, re-export since project/ moves, smoke, gates).
+
+### 07:40 MILESTONE `bosses.json <id>.rivet_repair_delay_s` (framework, optional, default off)
+- Registry: encounter-balance-simulation (floors are laws: no hit over 30 stays; the lever is the
+  heal between hits, not a bigger hit), difficulty-design-and-adaptation (the band is the owner's).
+- `BossSpec.rivet_repair_delay_s` (-1 = combat.json's 3 s), `BossSpec.apply_repair(tuning)` sets it
+  on the stage's own `CombatTuning` (`CombatTuning.shipped()` is a fresh instance per stage, so
+  nothing else sees it); `BossHook.setup` calls it. Schema: 0-30 s. King ships without it.
+- `tests/unit/test_boss_repair.gd`: the field sets the delay; absent keeps 3 s (and King has none);
+  planted fault (the field ignored) is caught; `CombatArena.step` does not heal 5 s after a hit under
+  a 6 s delay and heals after 6 s. Lint 13/13, unit 1172/0. Commit dedf4fa0.
