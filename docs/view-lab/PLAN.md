@@ -67,6 +67,21 @@ rigs (the held weapon at rigs + 60, KingAccents OVER_RIG_Z, the cards), which mu
 of their rig. That is the biggest code risk of the tilt: every overlay that sits "over the rigs"
 today must become "over its own rig".
 
+FIXED it9 (dd43e5e6 + 9c0a1215, `RigDepthSort`): per frame, far to near, each rig gets a depth
+level (0 if it overlaps no farther body, else one over the highest farther body it overlaps), z =
+base + level x 32, 2 levels max (the actors band is 100 wide). Rivet's held weapon and magazine
+ride his level; the boss tell drops under the behind-car band. The it7 "16 % reversed" turned out
+to be one bug: King's rigs north of the car's centre line ANYWHERE took the behind-car z; that rule
+now holds only in the car's screen box (`KingCarStack.far_box`), for every rig. Same probe run:
+
+| View | Overlapping rig pairs | Reversed | Mixed | Rig-vs-car pairs | Car reversed |
+|---|---|---|---|---|---|
+| tilt (55), it9 | 304 | 6 (2 %) | 13 (4 %) | 391 | 2 (0.5 %) |
+
+Still owed if a tilt ships: KingAccents (chains, crown accents) at one fixed z over all King rigs;
+the ghost and kill overlays at fixed z; the city's baked crowd is not in the sort; 3+ bodies deep
+share the top level.
+
 ## Ranking (iteration 2, before the art round)
 
 1. `tilt` at about 65 degrees with 2.5D rigs + upright head/chest cards + a stacked car: the main bet.
@@ -108,7 +123,7 @@ current roster, one per head variant (`RigHeadCard.key_of`: art_dir/head first).
 | Art per vehicle | 0 | 0 (the stack leans) | sprite stack from code (King's car: 18 slices, round wheels, raised cannon: 0 art); parked sedans still flat | per-facing sprites |
 | Art per building / prop | 0 | 0 | south faces in code (arena props, city barriers); city buildings not done | per-facing |
 | Aim | ok | ok (uniform zoom) | fixed it7 (`ground_of`), unit-tested, not mouse-tested live | same as tilt |
-| Draw order | n/a | small (heights lean outward) | MEASURED: people vs people 16 % reversed + 71 % mixed; car 0.5 %; fix = z band per rig + every overlay rides its rig | same, harder |
+| Draw order | n/a | small (heights lean outward; unmeasured: the probe reads no lean straight down) | MEASURED + FIXED in the arena (it9): reversed 16 % -> 2 %, interleaved 71 % -> 4 %, car 0.5 %; owed: King accents, ghost/kill overlays, the city's baked crowd | same, harder |
 | Occlusion | n/a | n/a | not built (tall walls can hide an actor: ink silhouette owed) | same |
 | Streaming bubble | 1.0 | 1.0 | 1 / sin 55 = 1.22x ground north-south (computed; chunks and frame time NOT measured) | 1.4x at 45 |
 | What breaks if shipped today | nothing | nothing visible | interleaved people in crowds, overlays over the wrong rig, no occlusion silhouette, uncarded heads read top-down | everything until redrawn |
