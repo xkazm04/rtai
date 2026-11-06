@@ -387,3 +387,9 @@ NEXT (iteration 7, in brief order):
   windowed, 130 ticks: car pairs 0 (it5's 10 pairs came with another flag set, likely
   `--bot-stand`), and neither the King nor a wreck is in Rivet's frame for those 130 ticks. Repeat
   it5's exact command (from `evidence/n8-view/order-probe-it5/`) with a still at its first wrong tick.
+- GATE scenarios at cf6bed71 (`evidence/n8-view/scenarios-it6.log`): 52 ran, 1 failed: city_chase's
+  2 ms WALL-CLOCK nav budget (max 2571 us) while my Godot films ran beside it (contended, not a
+  code fault: no city/nav code touched this iteration). Re-run alone through
+  `tools/tests/run_scenarios.mjs --only=city_chase`: 1 passed (`scenarios-it6-city_chase-alone.log`).
+  0 SCRIPT ERROR; no golden moved (`top` unchanged: every change this iteration is behind a tilt
+  card view or a dev flag).
