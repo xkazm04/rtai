@@ -5,6 +5,7 @@ from PIL import Image
 import numpy as np
 src = np.asarray(Image.open('C:/Users/kazda/kiro/gtai-art/angle-r1/out/king_70.png').convert('RGB')).copy()
 Y0 = 40
+SLOPE = 22
 # x0, x1, window below ysplit (wx0, wx1), ysplit, ybottom  (top-row coords)
 FIG = [(25, 345, 108, 258, 172, 226), (345, 628, 362, 572, 125, 226), (645, 878, 650, 832, 125, 212),
        (915, 1185, 992, 1182, 130, 230), (1200, 1505, 1242, 1468, 112, 230)]
@@ -12,8 +13,14 @@ G = np.array([0, 177, 64], dtype=np.uint8)
 out = np.zeros((300, 1536, 3), dtype=np.uint8); out[:] = G
 for x0, x1, wx0, wx1, ys, yb in FIG:
     part = src[Y0:Y0 + yb, x0:x1].copy()
-    part[ys:, : wx0 - x0] = G
-    part[ys:, wx1 - x0 :] = G
+    # a sloped shoulder: the window narrows from the figure's full width at ys - SLOPE to the
+    # torso window at ys + SLOPE (no flat step), so the fur falls off round the fists
+    w = x1 - x0
+    for y in range(max(ys - SLOPE, 0), yb):
+        t = min(max((y - (ys - SLOPE)) / (2.0 * SLOPE), 0.0), 1.0)
+        l = int(round((wx0 - x0) * t)); r = int(round(w - (x1 - wx1) * t))
+        part[y, :l] = G
+        part[y, r:] = G
     out[10:10 + yb, x0:x1] = part
 a = out.astype(np.float32) / 255.0
 r, g, b = a[..., 0], a[..., 1], a[..., 2]

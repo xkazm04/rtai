@@ -120,3 +120,7 @@ NEXT (iteration 2):
   JOURNAL.md (add/add: every lane keeps a root JOURNAL; keep OURS) and view.schema.json (same `art`
   text). Deferred to iteration 2 (NEXT 1): post-merge the 70 King shrinks to 68 % until the p70
   SET_CARDS rows land, and a re-film + gates do not fit in this session.
+- 14:58 QUALITY: the King p70 bust's flat step cut at the shoulders -> a sloped shoulder mask
+  (`tools/art/view70/prep_king70.py` SLOPE 22). LOOKED at both x2 (masters
+  `king_p70_bust_step_vs_slope_cut.png`): the fur now falls off round the fists, no ledge. Shipped;
+  NOT yet re-filmed in game (the it1 films show the step cut). Unit test_view_pitch 9/9.
