@@ -1,13 +1,11 @@
 class_name GhostFormHud
 extends Control
-## The ghost-form HUD widget in screen space (bottom left), D5 style: a paper card with an ink
-## rim holding one chip per ghost in the cycle order. The current form's chip is filled soul
-## teal and larger; the selected (next) ghost carries an ink chevron and the key hint; a ghost
-## on cooldown is swept over in ink (a pie that shrinks as it cools). Under the chips the Madness
-## bar, with the selected ghost's cost marked as a notch (a refused activation reads before Q).
-## A ghost still locked (GhostLocks: before its act) shows a padlock in a dimmed chip and no
-## name; G passes it by. Plain values only (sync() fills them from GhostForms); words come
-## translated by the caller.
+## The ghost-form HUD (bottom left): a paper card, one chip per ghost in the cycle order (its face:
+## GhostChipFace). The current form's chip is soul teal and larger; the selected (next) ghost has
+## an ink chevron and the key hint; a cooling ghost is swept in ink (a shrinking pie). Under the
+## chips the Madness bar, the selected ghost's cost a notch. A locked ghost (GhostLocks) shows a
+## padlock in a dimmed chip and no name; G passes it by. Plain values only (sync() fills them from
+## GhostForms); words come translated by the caller.
 
 const PAPER: Color = Color("e9dcc3")
 const INK: Color = Color("17131b")
@@ -106,6 +104,7 @@ func _chip(id: StringName, c: Vector2) -> void:
 		r *= 1.0 + 0.12 * sin(morph_k * PI)
 	draw_circle(c, r + 3.0, INK)
 	draw_circle(c, r, TEAL if on else PAPER)
+	var face: bool = GhostChipFace.draw(self, id, c, r)  # n8-hud: the ghost's face, else the glyph
 	var cool: float = cooling.get(id, 0.0)
 	if cool > 0.0:
 		_pie(c, r, cool)
@@ -121,7 +120,8 @@ func _chip(id: StringName, c: Vector2) -> void:
 		TEXT_SIZE,
 		INK
 	)
-	_glyph(id, c, r * 0.55, PAPER if on else INK)
+	if not face:
+		_glyph(id, c, r * 0.55, PAPER if on else INK)
 	if id == selected and not on:
 		_chevron(c, r, font)
 
