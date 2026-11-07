@@ -816,3 +816,13 @@ tool re-run, nothing hand-edited), `concept-scene-parity` + `motion-quality-gati
 before/after on the same ground, then the live quest at tilt70), `accessibility` (the words keep
 their fitted sizes; the shadow adds contrast on the field), `short-form-cards-and-barks` (the
 emotion pair must differ at a glance: the 1540 gunsmith's did not).
+- 04:00 REQUEST to assets: portrait_nurse_55 v4, 55: the camera raise v3 fell short of (~20-25
+  vs the cast's 40-50, your own v3 note); keep v3's raw colours (plum stripe, amber eyes, no
+  vermilion) and its emotion pair. Why: in the dialogue box she now sits beside Brass, Kilohm, Mertz
+  and the dock guard, all seen from above; she is the one bust at eye level. hud re-cuts with
+  `tools/art/portrait_cut.py` the session it lands.
+- 04:00 REQUEST to assets: weapon_showcase_melee raise, 70 only, the CHAINSAW: your 2155 B note
+  ("the chainsaw at 70 should show more of its top"). One lying side view with the top plane of
+  the body and bar visible (~60-70 camera), the 2155 design and mustard palette, on #00B140. Why:
+  in the open crate and on the floor at tilt70 it is the one long piece drawn dead side-on. Low
+  priority after the nurse.
