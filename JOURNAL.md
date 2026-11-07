@@ -560,3 +560,7 @@ NEXT (iteration 14):
    that copy; the BC7 scratch worktree `gtai-d9x/scratch/hh-bc7` (git worktree remove); the scratch dirs
    `gtai-d9x/scratch/{padwalk,padwalk2,it12,it13}`; the freeze exe `build/export/windows/RTAI.exe` with the exact
    command in REPORT.
+- MILESTONE 16:17 NEXT 1 of it14 done early: handheld_rumble.gd re-scored on af40d92d **86.7 %** (39/45; was 71.1 %);
+  the 6 left are equivalent: initial values (:26 :32 :33), the `now < _until_ms` boundary and the ms rounding (:108,
+  :110: a millisecond), the pad call with no pad on this PC (:116) (`evidence/it13/mutate-rumble-af40d92d.log`).
+  it14 starts at NEXT 2. Session end 16:18: everything committed, no Godot or mutate run of mine left.

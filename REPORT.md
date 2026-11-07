@@ -72,8 +72,8 @@ priority, the CPU's own 2-CU Radeon), never a device claim. Details and sources:
   engaged), Servo 2 -> 63; the hurt counts unchanged, so nothing cut and the fight unmoved
   (`evidence/it13/*-rumble-deck-hit.log`). Gate on cab191e0: lint 15/15, unit 1728/0, scenarios 53/53, parity
   bit-exact, look goldens 11/11: **top bit-identical**; reels top / tilt70 / combo / combo + deck 19/19, 0 SCRIPT ERROR
-  (`evidence/it13/`). Mutation: player_settings.gd 66.7 -> 86.1 %, handheld_rumble.gd 71.1 % with seven survivors
-  killed since; the full unit run on af40d92d 1733/0.
+  (`evidence/it13/`). Mutation: player_settings.gd 66.7 -> 86.1 %, handheld_rumble.gd 71.1 -> 86.7 % (the 6 left
+  equivalent); the full unit run on af40d92d 1733/0.
 - (it13) **E12, perf's upload-buffer trim on the iGPU** (perf's instrumented export, 1280x800, the riot, 1 run per arm,
   memory only): the stock engine holds 224 MB of staging; trimmed, the GPU's shared memory 1006 -> 878 MB and the
   working set 1304 -> 1128 MB. On a Deck that memory is the RAM the game shares with the GPU: perf's traffic-sheet
