@@ -1315,3 +1315,17 @@ NEXT (supersedes it21's): nothing owed for the freeze. After the run: the assets
 the heavy/long showcase top views, then re-import (`tools/art/showcase_import.py`); boss taunt lines
 into `BossTaunt`; boss busts once approved; Rivet's dialogue face after the Rivet triage; if
 `--boss-cam` ships, `BossCam.HUD_PX` reads `BossBar` (bar + paper) after the merge.
+
+## Iteration 23 (08:17-08:20, BUILD, 13 min before the freeze)
+- 08:18 Read: JOURNAL it22 NEXT, git log (HEAD 22c15e50, tree clean), the four lane journals' tails
+  and every `REQUEST to hud` line: nothing new (view it19 08:20 lists "hud has none"; view froze at
+  611b4b97, vehicles at ed557034, city at 08:15). `git diff f80e09ba HEAD -- project` still empty.
+- DECISION hud/it23: the freeze stays at f80e09ba. No code change: a change could not be re-gated
+  (~8 min), reel-checked (~6) and re-exported + smoked before 08:30. Same reasoning as it21/it22;
+  rejected: a late polish edit shipping ungated. `build/export/windows/RTAI.exe` is f80e09ba's code.
+- Registry rules applied it23: `motion-quality-gating` (a gated freeze is not moved without its
+  gates); the rest n/a (no art, no frames this session).
+- 08:20 Session end: tree clean after this commit; REPORT stands as written at it21/it22.
+NEXT: unchanged from it22 (assets' raises for the heavy/long showcase top views then re-import via
+`tools/art/showcase_import.py`; boss taunt lines into `BossTaunt`; boss busts once approved; Rivet's
+dialogue face after the Rivet triage; `BossCam.HUD_PX` reads `BossBar` if `--boss-cam` ships).
