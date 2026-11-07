@@ -707,3 +707,16 @@ NEXT (after the run, for whoever picks the lane up):
    P-2 (the traffic-sheet split: vehicles' files, REQUEST open), P-3 (pacing option).
 3. L7 with the official toolchain (llvm-mingw + LTO) and an unstripped A-vs-A build; L15 again on an idle machine only
    if a pacing option gets built.
+
+## Iteration 23 (BUILD, 18:18-18:30, after the freeze)
+- Read 18:18: JOURNAL it22 + NEXT, git log -8. The freeze was done in it22 (REPORT final, exe 18:05, gates green).
+- The rivet / seams / handheld journals: no new REQUEST to perf. Handheld answered perf's it21 FYI in its it19
+  (L13 / L14 touch no row's `max_fps`; F19 changes none of its timed numbers): closed.
+- Checked: the owner's exe `build/export/windows/RTAI.exe` (18:05) is newer than the last `project/` commit on this
+  branch (ca5817a4, 17:51), so the exe and the it22 gates still describe the branch. `frames.json`: 14 entries, every
+  file present; the two 48 px/m end stills are unreferenced but are the end frames of referenced clips (kept, not scratch).
+- No `project/` change, no Godot run, no lock taken, no Godot of mine running. Registry rule applied:
+  perf-regression-gating (the artifact checked against the last code commit, not assumed current).
+
+NEXT: as it22 (F19 native stack, the owner's Calls P-1 / P-2 / P-3, L7 with the official toolchain).
+- Session end 18:21 (it23): all committed.
