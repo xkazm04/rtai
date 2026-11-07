@@ -119,3 +119,12 @@ NEXT (iteration 2):
   the 40 Hz mode is a real power cut on the simulator; KEPT as the battery row. E6 (zoom_k 1.5 vs 1.0, uncapped): render
   GPU 8.91 vs 8.88 ms, p50 9.55 vs 9.56: **no difference**; the iGPU frame is fill-bound. DROPPED as a lever.
 - CORRECTION to my answer to perf above: the zoom is NOT a CPU/GPU cut (E6 measured none); nothing for perf to take.
+- MILESTONE 11:49 reels on 9b35dd21 (run in parallel, 4 Godot): top 19/19, tilt70 19/19, combo 19/19, combo + deck
+  19/19, all 0 SCRIPT ERROR (`evidence/it4/reels-summary.log`, logs `evidence/it4/reel-*.log`).
+- MILESTONE 11:49 re-filmed at 48 px/m (zoom_k 1.5) under `deck` on the iGPU: the King fight 40 s, the city 30 s, the
+  combined set 70 s (`gtai-masters/d9/handheld/deck-set-48ppm-king-city.mp4`), stills at 20 s / 15 s looked at: Rivet
+  ~45 px on the 800 px panel, the King and the tell cone read; the ghost-form panel still takes the bottom-left
+  (Call 2). frames.json: 13 entries, the new set first. Raw .avi deleted.
+- RESULT 11:52 E7 Switch-class budget (3 threads, 30 cap, CONTENDED): the cap holds (p50 33.3, p99 ~37 ms) in the
+  reel and the city; city memory ~2.3 GB (RAM + GPU shared) on x86. The CPU is the risk on an A57-class core
+  (model-knowledge ratio, not measured).
