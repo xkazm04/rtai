@@ -220,3 +220,23 @@ NEXT (iteration 5):
   0.27): **top bit-identical** (`evidence/it7/evidence-run-93c1fb69.log`). Release-compile still skipped (seams' temp-dir clash).
 - RESULT 12:52 E9 (handheld_1080 viewport vs native, city, 2 rounds, CONTENDED, bench lock 12:49-12:52): render GPU 9.86 vs
   16.09 ms; p50 16.65 (vsync-locked) vs 17.44 (misses 60). Viewport stretch KEPT on the 1080 rows. LEDGER E9.
+- FINDING 12:55 a 1080 row still via --write-movie is not faithful: the movie is 1280x800 (the project base), the window is
+  1920x1080 with `aspect=expand` (16:9 -> a 1422x800 base), and the ghost-form panel's left edge was cut in the frame
+  ("onnage"). Either the capture crops or the HUD really clips on a 16:9 panel under viewport stretch: unknown. Still
+  deleted (not shown as evidence). Owed: a true panel grab (`get_viewport().get_texture().get_image()` at the window size,
+  or an OS screenshot of the window) under handheld_1080, and the HUD anchors at 16:9.
+- Session end 12:56: every change committed; no Godot of mine running; bench lock released (12:52).
+
+NEXT (iteration 8):
+1. The 1080 row's HUD at 16:9: a true window grab under `handheld_1080` (see the FINDING above); if the ghost-form panel
+   clips, it is the hud's anchors under viewport stretch + aspect expand: a REQUEST or a handheld-only fix behind the row.
+2. draw_scale's HUD side effect (the HUD lays out in the smaller size under viewport stretch): if the owner takes Call 5 b/c,
+   the HUD needs its own CanvasLayer at the panel size (or a counter-scale) so only the world draws small.
+3. The King fight's rumble pulse count with the hurt read (the sim does not keep the engine log: add `--log=` to sim.mjs
+   or read HandheldRumble's exit line from a direct run), and the Switch-class row (E7) re-checked at a real 48 px/m
+   (E7 ran with zoom_k unapplied in the arena: its numbers were at 32 px/m; E8c says 48 is ~10 % cheaper, so E7 holds).
+4. Re-check E5 is unaffected (both rows at the same zoom, so the ratio stands) and E1/E2/E3 claims in the LEDGER that
+   came from the dev arena (all ran at 32 px/m): label them "at 32 px/m" where it matters.
+5. NAT-06 parity on the Linux `.so` inside WSL.
+6. End of day: delete the HKCU DirectX UserGpuPreferences value for gtai-d9x/handheld-godot/..._hh.exe and that copy;
+   the freeze exe (`build/export/windows/RTAI.exe`).

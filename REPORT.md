@@ -68,6 +68,8 @@ priority, the CPU's own 2-CU Radeon), never a device claim. Details and sources:
    `RTAI.exe -- --arena=city --bot=course --seed=2 --rigs --view=tilt70 --device=deck_ds75`.
 
 ## Owed / next
+- (it7) The 1080 handheld row's HUD at 16:9 (a true window grab: the movie capture crops), the draw_scale HUD side
+  effect (if Call 5 b/c), the King fight's rumble count, the dev-arena experiments E1-E3/E7 re-labelled "at 32 px/m".
 - The Linux build: NAT-06 parity on the Linux `.so` (in WSL), a real Vulkan run (needs a Linux PC or a Deck).
 - Glyph images per pad type, a PlayStation pad behind Steam Input (Steam's origin glyphs), a rumble settings toggle,
   rumble on blasts and crashes (no bus event), aim assist (a design call), a pad-only
