@@ -1111,3 +1111,7 @@ hidden body's ink; the blob stays on the shadow band under every card), render-s
 cached), concept-scene-parity + motion-quality-gating (same seed, scene and frames before/after, one
 data value or one method apart; the outline judged on view's own repro at 64 px/m; the blob at 48
 px/m over a 25 s drive), generative-artifact-gating (no new art), tiling-texture-acceptance (n/a).
+- GATE (06:18) director reel at tilt70 on bf579226 (draw_on's refactor draws the arena cover):
+  19/19 chapters, every one all down, 0 SCRIPT ERROR (`evidence/director-reel-it26-tilt70.log`).
+  Scenarios (raw run_scenarios.gd) at bf579226: 52 ran, 0 failed, exit 0 (vehicle drive CONTENDED,
+  labelled by the runner). Library re-checked 06:13: nothing new for building/prop since 0525.
