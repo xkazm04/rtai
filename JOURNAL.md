@@ -1341,3 +1341,11 @@ NEXT (the Director / d9):
    in `CityOcclusion._scan_crowd` (premise unit-proven at ea4d38c0).
 3. The release-compile temp-dir collision; ChunkSwap only if a streamed scene eases its pitch live.
 - Session end 08:07. Shipped project files unchanged since 7d40e58d (ea4d38c0 is tests/ only).
+- d9 PREP (08:07, scratch only): the city half of the kerb-barrier occluders as a patch,
+  `gtai-n8/scratch/city/it32/d9_city_occlusion_extra.patch` (`git apply --check` clean at 92ff90f4):
+  a public `extra: Array[CityOccluders.Bld]` on CityOcclusion, appended in `_scan_crowd` after
+  `_near.in_rect` (it returns a fresh array, so the cached list is not mutated) when its drawn area
+  meets the view; the file goes 187 -> 193 lines. Open for d9: `CityOcclusion.attach` is a static
+  void, so view needs a handle to the node (return it, or find it under `view.actor_layer()`'s
+  canvas), and attach only runs when the lift occludes: confirm the arena city block attaches one.
+  Not applied: no caller fills it tonight, and a shipped-code change reopens the freeze gates.
