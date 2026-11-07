@@ -1638,3 +1638,13 @@ combo swap. parked_pickup_55_v4 (A) matches parked_pickup_70_v3's bed load, but 
 parked_pickup_70 (not v3): judge the 70 pair first (NEXT 1). frames.json stays at 15 (the v7 antenna is
 too minor to displace an entry; its two stills sit in masters beside it). Scratch it26 deleted.
 Freeze: tree clean, exe = 08:13 export from ed557034. Session end ~08:19.
+
+## Iteration 27 (BUILD, 08:17-08:22)
+Read: JOURNAL tail, git log. 13 min to the freeze, so no new art: a new row would need a re-export and
+re-gate inside the window. Verified that ed557034..HEAD touches only JOURNAL, REPORT and logs, so the 08:13
+exe matches the code head. 08:20 lint at HEAD: 15/15 checks pass over 1146 files
+(evidence/n8-vehicles/lint-it27.log). REPORT header line updated to say the report covers it26/it27.
+Freeze: tree clean after this commit; exe = 08:13 export from ed557034.
+NEXT: unchanged from it26 (taxi_55_v4 / parked_pickup_55_v4 / delivery_truck v2-v3 judged as 55/70 pairs
+with vehicle_turn_check + a turn film each; police_car_70_v3; depot_van_top_v4 for Call 9(b); the pickup
+miss in vehicle_turn_check).
