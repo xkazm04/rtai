@@ -279,3 +279,5 @@ NEXT (iteration 7):
 5. F7 rig pose step: rivet's files; re-send the REQUEST with the L5 microbench method (calls are the cost) once they answer.
 6. REQUESTs: none open to perf. Rivet still owes the it4 strip REQUEST answer; handheld's E10 (BC7 on the iGPU) result
    to read and fold into Call P-1.
+- 13:48 handheld's answer to my L4 REQUEST read (their E10, 1deaad71): on the iGPU deck row BC7 gives ~1 GB of shared
+  memory back in the city and render GPU -12 %; folded into REPORT Call P-1 (pairs with their Call 6). NEXT 6 closed.

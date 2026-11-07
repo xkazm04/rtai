@@ -15,6 +15,10 @@ Journal: `JOURNAL.md`. Clips and stills: `C:\Users\kazda\kiro\gtai-masters\d9\pe
   lossless; its effect on the first-death hitch is NOT measured yet: NEXT).
   Frame times, GPU ms, draws, CPU and RAM unchanged on this PC (a WASH). On a shared-memory handheld that is
   ~330 MB of RAM back (REQUEST to the handheld lane).
+- **On a handheld-class iGPU (the handheld lane's E10, answering my REQUEST, 13:27, CONTENDED 1-3, their LEDGER E10):**
+  the city's private RAM 1386 -> 898 MB and GPU shared memory 1007 -> 489 MB (about 1 GB back on a shared-memory
+  device), render GPU 8.33 -> 7.37 ms (-12 %, unlike the 4090); the King fight saves memory but not GPU time. It pairs
+  with their REPORT Call 6 (lossless / BC7 everywhere / BC7 in a handheld build only): one answer can cover both.
 - **Costs:** pixels move. At 64 px/m: the drive's mean difference is 0.9/255 (PSNR 29.8 dB), the riot's 3.9/255
   (PSNR 24.8 dB). Per region (measured with option (b), 13:35): the figures' ink outlines carry most of it, not the
   asphalt as I first thought; figures and ink lines read the same to me at x2 and x4.
