@@ -586,8 +586,11 @@ the mock), `accessibility` (the call decided at the shipped 32 px/m), `depth-ord
 
 NEXT:
 - Work items 1-4 evidenced; it8 raised the open crate at 70. Remaining polish, weakest first: the
-  katana in the crate (above); Servo's taunt waits for lines.
+  Servo's taunt waits for lines (the katana checked at 02:08: it reads).
 - Freeze 08:30: export `build/export/windows/RTAI.exe` with the `windows-showcase` preset (recipe
   in `gtai-n8/scratch/hud/it6/report_notes.md`, updated it8); REPORT from those notes. Run
   `--import` (or a gate) before any filming; write nothing into the worktree during a gate run.
-- 02:06 Session end. All committed.
+- 02:08 The katana FINDING checked at 5x on the 48 px/m frame (`scratch/hud/it8/katana_x5.png`):
+  the wrapped hilt, the guard and the blade's highlight all read on the hollow; closed, no change.
+  Scratch frame sequences deleted (the crops are in masters).
+- 02:09 Session end. All committed.
