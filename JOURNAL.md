@@ -680,3 +680,8 @@ NEXT (iteration 10, in brief order):
 4. Before the freeze: director reel 19/19 top + combo, evidence run --no-bench, export the exe,
    REPORT with the Calls (King bust size, death beat length, attack lock, camera lead at speed:
    combo vs combo_lead, cover as one stack, quest 1's cast under the angled view).
+- GATE 02:09 scenarios at 917e30b1 (`tools/tests/run_scenarios.mjs --quiet-wait=3`,
+  `evidence/n8-view/scenarios-it9.log`): 52 passed, 0 failed, 0 SCRIPT ERROR, nothing contended.
+  Head gates it9: lint 15/15, unit 1509/0 (105de9d5; later commits: King sort z (tilt only) +
+  docs, fast suite 1493/0), scenarios 52/0, director reel 19/19 top + combo. Session closes; the
+  NEXT above stands.
