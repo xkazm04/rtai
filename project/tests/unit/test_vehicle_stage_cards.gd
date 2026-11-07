@@ -4,6 +4,7 @@ extends GutTest
 
 var _saved: ViewMode = null
 var _cars: Array[VehicleBody] = []
+var _walker: PackedVector2Array = PackedVector2Array()
 
 
 func before_each() -> void:
@@ -101,3 +102,20 @@ func test_a_wide_fighter_gives_its_edges_to_the_front_grid() -> void:
 	var pts: PackedVector2Array = VehicleStageCards.fighters(arena)
 	assert_eq(pts.size(), base + 3, "the boss's centre and both edges")
 	assert_true(pts.has(Vector2(8.4, 0)) and pts.has(Vector2(11.6, 0)))
+
+
+func _walking() -> PackedVector2Array:
+	return _walker
+
+
+func test_a_fighter_who_walks_off_leaves_the_front_grid() -> void:
+	var node: VehicleStageCards = _stand("tilt70")
+	node._view = node.get_parent() as Node2D  # as if hosted on a print's actor layer
+	node._banded = true
+	node._people = _walking
+	_walker = _one_south()
+	node._process(0.0)
+	assert_eq(node.cards.count_under(), 1, "in front of the car at (0, 4)")
+	_walker = PackedVector2Array([Vector2(40, 40)])
+	node._process(0.0)
+	assert_eq(node.cards.count_under(), 0, "gone: the car stands over the actors again")
