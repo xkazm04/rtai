@@ -806,3 +806,18 @@ NEXT (17:13; replaces NEXT 1 of 17:05, the rest stands): 1. When the walk cells 
 - p55: packed the 55 offer the same way (400 x 984, cells 100 x 123); contact `evidence/d9/rivet_walk_55_contact_x2.png`:
   hand side right in every row; the three left rows are a shade darker and leaner than the right rows (noted in
   REPORT). Not filmable in the arenas (always armed); in the boss fights it shows only with no gun out.
+- 17:38 GATES it22 (`evidence/d9/gates-it22.md`, `e2400dc4`): director reel 19/19 fully down in top, tilt70, combo,
+  0 SCRIPT ERROR, 0 p_frame, the 2 known ^ERROR lines; unit 1712/0. MILESTONE `e2400dc4` p55 walk + docs.
+- Checked the facing rows against the base strip side by side (base cells 0-7 over grid rows 0-7, p70): same
+  facing per row; the base profile (cell 2) is drawn from a steeper camera (dome-heavy, visor at the edge), which
+  is why the bob's card read as a back view in the 64 px/m film. Mapping right; no change.
+- Masters: `rivet_walk_70_bob_vs_drawn_quest1_tilt70_64ppm_x2_32ppm_x3_t748_920_15fps.mp4` (11.7 s, bob | drawn,
+  64 x2 then 32 x3, real time; frames.json entry 2, the respawn entry out, file kept). Seen: he "walks" on the
+  drawn stride while climbing out of the dumpster (moving above MOVING; the bob did the same). Scratch .avi deleted.
+- 17:47 evidence run on e2400dc4: ALL PASS (goldens 11/11: `top` did not move; release-compile 601/0).
+- Registry rules applied it22: sprite-and-atlas-production (one scale per grid, a common foot line, the hand side
+  checked per row on a contact, the r2fresh alternative refused for its 8 % size pulse); motion-quality-gating
+  (judged in motion at 64 and the shipped 32 px/m, before/after at the same ticks); generative-artifact-gating
+  (the p55 left rows' tone/lean mismatch caught on the contact, noted rather than hidden); realtime-combat-semantics
+  (view only; reels 19/19 x3, parity exact); depth-ordered-layered-art (the walk grid is the same card: the same
+  sort, shadow and occlusion path as the facings).
