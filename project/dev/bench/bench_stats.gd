@@ -30,6 +30,10 @@ var _rigs_max: int = 0
 var _ticks: int = 0
 var _sim_us: int = 0
 var _stream_us: int = 0
+## Tick cadence (L10): frames that showed no new tick (a duplicate image) / two or more ticks
+## (a tick image skipped).
+var _no_tick: int = 0
+var _multi_tick: int = 0
 
 
 func add(ms: float, city_us: PackedInt64Array, swapped: bool, counts: Vector2i) -> void:
@@ -37,6 +41,8 @@ func add(ms: float, city_us: PackedInt64Array, swapped: bool, counts: Vector2i) 
 	if frames <= WARMUP_FRAMES:
 		return
 	_ticks += city_us[3]
+	_no_tick += 1 if city_us[3] == 0 else 0
+	_multi_tick += 1 if city_us[3] >= 2 else 0
 	_sim_us += city_us[2]
 	_stream_us += city_us[0] + city_us[1]
 	@warning_ignore_start("return_value_discarded")
@@ -98,6 +104,8 @@ func metrics() -> Dictionary[String, float]:
 		"visibleAvg": _mean_i(visible),
 		"visibleMax": float(_max_i(visible)),
 		"framesMeasured": float(n),
+		"framesNoTick": float(_no_tick),
+		"framesMultiTick": float(_multi_tick),
 		"rigMsP50": _pct(rig_ms, 0.5),
 		"rigMsP99": _pct(rig_ms, 0.99),
 		"rigMsPerTick": _rig_us / 1000.0 / maxi(1, _rig_ticks),

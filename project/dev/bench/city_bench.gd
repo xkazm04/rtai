@@ -18,6 +18,7 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--blood",
 	"--perf-hud",  # d9-perf: PerfHud; --strip-prefetch=off: L3's before (A/B)
 	"--strip-prefetch",
+	"--max-fps",  # L10: the frame limiter (0 = none, the default); the engine's own --max-fps is reset
 	"--view"  # read by ViewMode.shared() (the view lab A/B); top = the default
 ]
 const VSYNC: Dictionary[String, DisplayServer.VSyncMode] = {
@@ -57,7 +58,7 @@ func _ready() -> void:
 			get_tree().quit(2)
 			return
 		_args[flag] = arg.substr(flag.length() + 1)
-	Engine.max_fps = 0
+	Engine.max_fps = str(_args.get("--max-fps", "0")).to_int()
 	if not _headless():
 		var mode: DisplayServer.VSyncMode = VSYNC.get(
 			_args["--vsync"], DisplayServer.VSYNC_DISABLED

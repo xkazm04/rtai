@@ -15,13 +15,14 @@
         "2026-11-07: n8 merge: + hud growth combined (accepted on its lane); fold_rigs dropped for view's follow per both lanes' merge notes (dev_loc 18535 -> 18799)",
         "2026-11-07: d9-perf: the --perf-hud frame-budget overlay (dev only, the owner's perf brief: tooling that stays) (dev_loc 18799 -> 18960)",
         "2026-11-07: d9-perf: city_bench logs the render GPU ms (renderGpuMsAvg/P99), the LEDGER's n/m GPU column (dev_loc 18960 -> 18967)",
-        "2026-11-07: d9-perf: the bench logs peak VRAM and texture memory (vramPeakMb, texMemPeakMb) for the texture-compression A/B (dev_loc 18967 -> 18974)"
+        "2026-11-07: d9-perf: the bench logs peak VRAM and texture memory (vramPeakMb, texMemPeakMb) for the texture-compression A/B (dev_loc 18967 -> 18974)",
+        "2026-11-07: d9-perf L10: city_bench --max-fps and BenchStats tick cadence (framesNoTick / framesMultiTick), the instrument that measured the frame cap (dev_loc 18974 -> 18983)"
       ],
       "files": {
         "project/dev/arena": 642,
         "project/dev/audio": 367,
         "project/dev/bake_city.gd": 32,
-        "project/dev/bench": 1673,
+        "project/dev/bench": 1682,
         "project/dev/bots": 399,
         "project/dev/enemy_ai": 662,
         "project/dev/frames": 464,
@@ -44,7 +45,7 @@
         "project/dev/view": 195,
         "project/dev/weapon_art": 506
       },
-      "total": 18974
+      "total": 18983
     },
     "direct_cmdline_reads": {
       "accepted": [

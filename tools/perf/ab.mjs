@@ -81,7 +81,8 @@ export function readLog(kind, doc) {
   if (kind === 'bench') {
     const m = doc.metrics ?? {};
     return { wall: doc.frame_ms, side: { draws: m.drawCallsAvg, renderCpu: m.renderCpuMsAvg,
-      renderGpu: m.renderGpuMsAvg, sim: m.simStepMsPerTick, vramMb: m.vramPeakMb, texMb: m.texMemPeakMb } };
+      renderGpu: m.renderGpuMsAvg, sim: m.simStepMsPerTick, vramMb: m.vramPeakMb, texMb: m.texMemPeakMb,
+      frames: m.framesMeasured, noTick: m.framesNoTick, multiTick: m.framesMultiTick } };
   }
   let t = 0;
   let k = 0;
@@ -176,7 +177,7 @@ export function summarise(results, arms) {
       const runs = byArm[arm.name] ?? [];
       const row = {};
       for (const m of METRICS) row[m] = verdict(base.map((r) => r.stats[m]), runs.map((r) => r.stats[m]));
-      for (const s of ['draws', 'renderCpu', 'renderGpu', 'process', 'sim', 'vramMb', 'texMb', 'cpuCores', 'peakWsMb', 'wsMb', 'lastWsMb', 'threads']) {
+      for (const s of ['draws', 'renderCpu', 'renderGpu', 'process', 'sim', 'vramMb', 'texMb', 'cpuCores', 'peakWsMb', 'wsMb', 'lastWsMb', 'threads', 'frames', 'noTick', 'multiTick']) {
         row[s] = verdict(base.map((r) => r.side[s] ?? NaN), runs.map((r) => r.side[s] ?? NaN));
       }
       row.contended = runs.filter((r) => r.contended).length;
@@ -208,7 +209,7 @@ async function main() {
           ((results[scene] ??= {})[arm.name] ??= []).push(r);
           const s = r.stats;
           console.log(`${scene} ${arm.name} r${round}: p50 ${s.p50.toFixed(2)} p99 ${s.p99.toFixed(2)} worst ${s.worst.toFixed(1)} `
-            + `draws ${Math.round(r.side.draws)} cpu ${r.side.cpuCores.toFixed(2)} cores ws ${Math.round(r.side.peakWsMb)} MB steady ${Math.round(r.side.wsMb)} last ${Math.round(r.side.lastWsMb)} errors ${r.errors}${r.contended ? ` CONTENDED(${r.others})` : ''}`);
+            + `draws ${Math.round(r.side.draws)} cpu ${r.side.cpuCores.toFixed(2)} cores ws ${Math.round(r.side.peakWsMb)} MB steady ${Math.round(r.side.wsMb)} last ${Math.round(r.side.lastWsMb)} frames ${r.side.frames ?? '-'} noTick ${r.side.noTick ?? '-'} multiTick ${r.side.multiTick ?? '-'} errors ${r.errors}${r.contended ? ` CONTENDED(${r.others})` : ''}`);
         }
       }
     }
@@ -221,7 +222,7 @@ async function main() {
     for (const [arm, row] of Object.entries(rows)) {
       const f = (v) => `${v.b.median.toFixed(2)}±${(v.b.spread / 2).toFixed(2)}${arm === o.arms[0].name ? '' : ` ${v.call}`}`;
       console.log(`${scene} ${arm}: p50 ${f(row.p50)} p99 ${f(row.p99)} p99.9 ${f(row.p999)} worst ${f(row.worst)} draws ${f(row.draws)}`
-        + ` renderCpu ${f(row.renderCpu)} gpu ${f(row.renderGpu)} vram ${f(row.vramMb)} cpu ${f(row.cpuCores)} ws ${f(row.peakWsMb)} wsSteady ${f(row.wsMb)} wsLast ${f(row.lastWsMb)} contended ${row.contended} errors ${row.scriptErrors}`);
+        + ` renderCpu ${f(row.renderCpu)} gpu ${f(row.renderGpu)} vram ${f(row.vramMb)} cpu ${f(row.cpuCores)} ws ${f(row.peakWsMb)} wsSteady ${f(row.wsMb)} wsLast ${f(row.lastWsMb)} frames ${f(row.frames)} noTick ${f(row.noTick)} multiTick ${f(row.multiTick)} contended ${row.contended} errors ${row.scriptErrors}`);
     }
   }
 }
