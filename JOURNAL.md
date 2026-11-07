@@ -707,3 +707,15 @@ NEXT (it20 end, 16:20; supersedes every NEXT above):
 - FRICTION (~4 min): the first films ran the main scene (city crossing, "unknown launch arg --bot=pit"): I left out
   `res://dev/arena/arena.tscn` before `--` (the it13 rule, JOURNAL l.389). The first before film also had the new
   muzzle table: re-filmed with all three files restored.
+- 16:40 READ for Call 2 (the walk): the base strips' drawn walk (cell 8, toward the camera) and sprint (cell 9,
+  picture right) are cut but never picked by `RivetFrames.cell_of`; one direction each, so no 8-way stride from
+  them (a 2-frame step toward the camera only would read uneven against the other seven octants). Not built.
+- REQUEST to assets: rivet_walk_70, 70, a 4-frame walk stride for bare-claw Rivet in your game-ready walk-cells
+  layout (as `deliveries/seams_ped_walk_cells_it85.md`: 20 tight cells `r_c.png`, rows = facings toward, 3/4
+  toward, profile, 3/4 away, away; columns = frames 1-4, contact feet then passing), copy by example of
+  rivet_70_v3 (the five facings, row 1 of the sheet) + its walk cell; the cable claw and the cream spike stay his
+  LEFT in every row (image right when he faces the camera), the vermilion collar band, the amber eye-bar visor;
+  plus rivet_walk_70_left: the three drawn left facings (rivet_70_left_v4) the same way (3 rows x 4), never a
+  mirror. Why: the owner's Call 2 (frames per stride); today he walks as one facing card with a built bob and
+  sway, the only character in the city without drawn legs moving. If served by 17:45 I wire it as a strip picked
+  by phase while he walks bare-claw (the default stays the bob until the owner picks).
