@@ -116,6 +116,20 @@ Branch `d9-seams`. Evidence: `C:\Users\kazda\kiro\gtai-masters\d9\seams\` (`fram
    quest 1 take the library's cop_patrol_walk v4 (A, both pitches); v1 repeated two rows and copied a
    frame on the 3/4-away row. `quest_patrol_walk_v1_vs_v4_p55_p70_cells.png`.
 
+21. **The city crowd walks the library's fixed walk rows** (item 5 kin, c159e9d5 + 324dac8a, it8): the asset
+   lane served my REQUEST with one game-ready cells folder per 70 ped walk; cap, elder, hat, hood, punk,
+   suit, worker and jogger take their fresh rows (hung from the head line), so every facing alternates
+   its stride (several old rows repeated frame 1 as frame 3). The crowd board got `--spin` (16 walkers,
+   16 headings) so every facing is filmed, not just the profile:
+   `crowd_walk_cells_it85_before_after_spin_tilt70_64ppm.mp4` (left before, right after), grids
+   `crowd_walk_cells_it85_old_vs_new_grids_p70.png`. Weak row named by assets: elder 3/4 away (a small
+   alternation; kept).
+22. **Quest 1's patrol cop keeps its stride between sim ticks** (90e9a69c, it8): it stood only when its
+   point did not move since the previous render frame; on a display over 60 Hz most frames have no sim
+   step, so it would flick to the standing card. Now 4 frames with no step stand (unit-tested). Honest
+   note: the quest 1 clip tool cannot show it (it steps between every frame: before and after are
+   pixel-identical), and my it7 "flip" was the walk's passing frame; the fix is unfilmed in play.
+
 **The set in one clip:** `seams_d9_set_combined_52s.mp4` (52 s, captioned per item).
 
 Gates it6: evidence at 2ef868fc (arm rim): all PASS, lint 15/15, unit 1717/0, scenarios 52/52, parity,
@@ -143,6 +157,7 @@ selftest alone at share 0: look goldens 11/11 (worst 0.27). Evidence at eac11147
 scenarios 52/52, parity, selftest (look goldens 11/11), release-compile 601/0 PASS; unit 1705 passed /
 0 failed but marked FAIL by the tree-changed guard (I edited REPORT.md during the run; no test failed).
 Logs `evidence/d9-seams/evidence-it2-*.log`.
+Gates it8: evidence at 90e9a69c all PASS (lint 15/15, unit 1718/0, scenarios 52, parity, goldens 11/11, release-compile 602/0) (`evidence/d9-seams/evidence-it8-90e9a69c.log`); director reel it8 below.
 Gates it7: evidence at a8940e1b all PASS (unit 1717/0, scenarios 52, parity, goldens 11/11, release-compile 602/0); director reel it7 19/19 x3, 0 SCRIPT ERROR.
 Gates it1: lint 15/15; unit no-arg 1696 passed / 0 failed (at 966a2a79);
 director reel (`--fixed-fps 60 --quit-after 14000`) top 19/19, tilt70 19/19, combo 19/19 down,
@@ -151,8 +166,7 @@ director reel (`--fixed-fps 60 --quit-after 14000`) top 19/19, tilt70 19/19, com
 ## What does not work yet
 - The SWAT back rows (55 and 70, the library's mirror-fixed row 5) let the head move 3-5 px over the
   stride (drawn, not a splice; left). The riot 55 repeat is fixed (it7, item 18).
-- Seven of the nine ped walks (cap, elder, hat, hood, punk, suit, worker) still use
-  older library sheets than the library's fixed rows (a REQUEST to assets for one drop-in folder each).
+- The elder's 3/4-away walk row alternates weakly (the asset lane's named weak row; 4 fix asks failed).
 - The sim bike is off by default (Call 3).
 - After merge, rebuild native (`just native`): `project/native/bin` is git-ignored, and the old DLL
   would treat bikes as cars (no crash; parity would fail).

@@ -661,3 +661,21 @@ the others were older v1/v2 bases in the game, so they upgrade whole).
   frames.json: it replaces the jogger/shopper board still (the clip covers both).
 - FRICTION (2 min): the pre-commit hook (lint) blocked the --spin commit: gdformat, a 100-col line and
   the debt ratchet (dev_loc +8). Squeezed to +6 and accepted with a recorded reason.
+- 15:27 FINDING (corrects my it7 15:04 FINDING): the quest 1 clip at tilt70/tilt 48 px/m, ticks 600-760,
+  is PIXEL-IDENTICAL with and without a hold (0 differing pixels over 81 frames, both pitches): the clip
+  tool steps the sim between every saved frame, so it never draws a frame with no step. What I read as
+  a stand/walk flip in it7 was the walk's passing frame (feet together), which looks like the standing
+  card at 48 px/m (strip `it10/q1/strip_20.png`: 5 clip frames contact, 5 passing, as one stride frame =
+  0.35 m at ~1.2 m/s = ~17 ticks). The code path is still real: `_moving` was the step since the last
+  RENDER frame, and World._process steps the 60 Hz sim from delta, so on a display over 60 Hz most
+  frames have no step and would draw the standing card.
+- 15:35 MILESTONE (90e9a69c): StreetQuestCards.HOLD_FRAMES 4: a cop stands only after 4 frames with no
+  step (the hold rides in the walk memory's Vector4: x, y, facing angle, frames since the last step).
+  Unit: a frame with no step between steps keeps walking and its facing; 4 still frames stand. Full unit
+  1718/0, lint 15/15. NOT filmed in the case it fixes: `--autostart --fixed-fps 240` on the main scene
+  opened the city drive, not quest 1 (capture deleted, 594 MB); the quest clip shows no change (above).
+- 15:43 GATE evidence it8 at 90e9a69c: lint 15/15, unit 1718/0, scenarios 52, parity bit-exact, selftest
+  goldens 11/11 (worst 0.27) + block 5/5, release-compile 602/0: all PASS
+  (`evidence/d9-seams/evidence-it8-90e9a69c.log`).
+- 15:38 LOOKED: the asset lane's named weak row (elder 70 row 4, 3/4 away) in the new grid: frame 3
+  plants the centre foot where frame 1 plants lower-left: a small alternation, not a repeat; kept.
