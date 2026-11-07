@@ -1193,8 +1193,8 @@ the old 55 and the 70 before cutting), tiling-texture-acceptance (n/a).
   is visible progressively and the `top` framemd5 must not move). Not landed: no time to gate it.
 
 NEXT (iteration 28, freeze session, in order):
-1. Director reel tilt70 log `evidence/director-reel-it27-tilt70.log` (started 07:10 on 7d40e58d):
-   check 19/19, 0 SCRIPT ERROR; if the session ended first, re-run it.
+1. (done 07:12) GATE director reel at tilt70 on 7d40e58d: 19/19 chapters, every one all down,
+   0 SCRIPT ERROR, exit 0 (`evidence/director-reel-it27-tilt70.log`).
 2. Freeze items (08:30): `top` framemd5 both recipes (boot scene vs top22.md5; the city arena vs
    it26/topbase_arena.md5), `node tools/evidence/run.mjs --no-bench`, scenarios, the exe export
    (int-day recipe in docs/decisions.md) to build/export/windows/RTAI.exe, REPORT final (head, exe
