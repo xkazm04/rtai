@@ -177,6 +177,16 @@ evidence run plus the seams lane's), so read the ratios, not the ms; a quiet rer
   plain load() caches (CACHE_MODE_REUSE), so moving the decode is pixel-free; get blocks only if the
   request is still running. Lesson: a lazy-load hitch is fixed by asking earlier, not by loading
   everything at boot (all fall grids decoded = ~25 x 18 MB raw).
+- Size lever research (it4, for NEXT 5): Godot docs "Using the engine compilation configuration editor"
+  (Project > Tools: detects the classes a project uses, saves a `.gdbuild` build profile, passed to SCons
+  as `build_profile=` when compiling a custom export template; unchecking does nothing without the
+  compile) and "Optimizing a build for size" (`optimize=size`, `size_extra` from 4.5, `disable_3d`,
+  module switches). Caveat that bites us: detection does not see classes used only from a GDExtension
+  (our CitySim) or from runtime-built scripts, so the profile needs a hand review + the full gates on the
+  custom template. One community write-up (popcar.bearblog.dev, "How to Minify Godot's Build Size"):
+  Windows template 92.8 MB -> 44.0 MB with 3D off -> 33.6 MB with more modules off (one project, not a
+  benchmark). Our stock template is 109.3 MB, so the expected gain is ~60-70 MB of exe, plus boot time
+  (less to map); the cost is a template compile (~30-60 min) per platform and a CI/export change.
 - Registry: `perf-regression-gating` (cost is busy time measured uncapped; interleave base and head;
   the presented interval is a delivery bar, not a cost gate), `render-submission-economy` (counts A/B
   anywhere, ms only on the host; the order of moves: cull, batch, retain, spread bursts, then the look),
