@@ -712,3 +712,11 @@ NEXT (it9), replaces the list above:
   FRICTION (3 min, mine): deleted the first captures before checking the clip (an fps filter had
   dropped 3 of 4 frames, hiding the flicker); re-shot. LESSON: build `setpts=N/60/TB` from a 240 fps
   capture, and keep the source until the master is looked at.
+- 16:01 AUDIT (read only): the other render-frame-keyed path in features is `combat/weapons/art/
+  held_muzzle.gd` (a muzzle light on only in the frame it was lit: at 240 Hz the flash lasts a quarter
+  as long as at 60). The rivet lane owns the held weapons: NOTE to rivet (not a REQUEST; judge it if
+  you film above 60 Hz). Crowd walkers judge motion by rig speed (no such issue).
+
+NEXT (it9) addendum: item 2 is done (filmed 15:59). Start at item 3 (weakest left) after reading the
+journals; gates last green at 90e9a69c (evidence it8) + reels it8; the it8 commits after that are docs only.
+- Session end 16:02: all committed; scratch captures deleted (masters hold the mp4s and stills).
