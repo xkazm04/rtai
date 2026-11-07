@@ -1,4 +1,4 @@
-# n8 view lane: REPORT (DRAFT it13, 05:00; final at the freeze)
+# n8 view lane: REPORT (DRAFT it14, 05:50; final at the freeze)
 
 Lane `view`, branch `n8-view`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n8\view\` (`frames.json`,
 15 entries, best first; the combined reel `view_set_combined_n8_it11.mp4`, 86 s). Repo evidence
@@ -50,6 +50,14 @@ under `evidence/n8-view/`. Full log: `JOURNAL.md`.
    library's dent_v2 70 A (drawn tan): `dent70_v2_before_after_tilt70_64ppm_f160_f200_x2.png`.
    The Servo depot's bay apron marks draw over the vehicles band under a card view (vehicles'
    REQUEST, it11): `servo_bay_marks_over_van_before_after_combo_32ppm_f130.png` (+ `.mp4`).
+   it14: the bay NUMBER gets an ink stroke under a firmer paper fill under a card view, so bay 3
+   reads over vehicles' cream stage van at 32 px/m (vehicles' it19 REQUEST):
+   `servo_bay_number_ink_combo_32ppm_seed2_f130_before_top_after_bottom_x2.png`.
+   **Quest 1's contractors are hi-vis dock guards again** (it14, found on the merged tree): view's
+   rig cast had dressed every quest fighter as a blue POLICE rig (colour law), and on the merge
+   their deaths threw 102 SCRIPT ERRORs (street_walker_cards.gd:91) and fell to gore blobs.
+   `QuestGuardCast.ON` keeps them on the cast view (street's drawn cards); Rivet keeps his rig:
+   `quest1_dock9_guards_cast_before_after_tilt70_48ppm.mp4` (+ `_t13840_crop.png`).
 9. **Frame cost combo vs top**: see the table below (release export: the city drive; the King fight
    in the editor binary, because the release export drops `dev/bots`).
 
@@ -69,6 +77,10 @@ under `evidence/n8-view/`. Full log: `JOURNAL.md`.
 - Quest 1 under tilt70 on this branch draws the street and the city top-down: their cards and lifts are
   on `street` and `city`. Judge quest 1 after the merge.
 - The King fight in a release export cannot be benched (its bot is dev-only).
+- On n8-view ALONE quest 1's contractors draw as the flat top-down dock-guard sprites at tilt70
+  (`quest1_dock9_guards_cast_n8view_alone_tilt70_48ppm_t13700_crop.png`); street's cards bring
+  them up on the merge. They no longer interleave with Rivet's rig in the depth sort (they fight at
+  range at Dock 9; no overlap seen).
 
 ## Calls for the owner
 (Each: options, the default built, how to see it.)
@@ -102,6 +114,11 @@ hand fix, unit 1639/0, director reel top + combo 19/19 all down, 0 SCRIPT ERROR.
 - city + hud: `BossView.attach` was 41 lines (gd-size) at it11's heads; gone at it12's heads (lint
   15/15 on the merge with no hand fix).
 
+- it14: trial merge refreshed 05:26 (n8-view 0afbbefa + city aa795463, street 82c6f40c, vehicles
+  2bccd4d1, hud c36dac9e): the same conflicts as it11, view's side; director reel top + combo 19/19
+  all down, 0 SCRIPT ERROR with QuestGuardCast (`evidence/n8-view/director-reel-it14-trial-*.log`).
+  street's `StreetWalkerCards.step` loop at :91 needs an is_instance_valid guard (REQUESTed);
+  QuestGuardCast keeps quest 1 off that path either way.
 - it13: PropOcclusion reads city's `PropCards.stand_polys` by method presence (REQUESTed from
   city); merge order does not matter, without it the cut stays the card's rect.
 
