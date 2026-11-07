@@ -1206,3 +1206,20 @@ NEXT (iteration 28, freeze session, in order):
 - GATE (07:17) scenarios (raw run_scenarios.gd) at 6c653ec4: 52 ran, 0 failed, exit 0, 0 SCRIPT
   ERROR (vehicle drive timing CONTENDED, labelled by the runner). Scratch .avi deleted.
 - Session end 07:18. Head = this commit. Tree clean. NEXT above (item 1 done; start at item 2).
+
+## Iteration 30 (07:19-08:19, BUILD; the freeze session)
+Read: JOURNAL, git log, the lane journals (no new REQUEST to city). Iterations 28-29 left no entries
+(the runner's numbering; the it27 NEXT is current).
+- GATE `top` (07:20) at 7a43f001, both recipes, 301 frames, framemd5, 0 SCRIPT ERROR: the boot
+  scene (`-- --arena=city --bot=rivet --seed=2 --rigs`) IDENTICAL to top22.md5; the city arena
+  (`res://dev/arena/arena.tscn -- --arena=city --bot=rivet --seed=2 --rigs`) IDENTICAL to
+  it26/topbase_arena.md5 (the branch base 0bea8b93's).
+- EXPORT (07:21) at 7a43f001: `"$GODOT_BIN" --headless --path project --export-release
+  windows-showcase ../build/export/windows/RTAI.exe` exit 0 (RTAI.exe 282 MB + the sim DLL). Smoke:
+  `RTAI.exe --quit-after 600 -- --arena=city --bot=course --seed=2 --rigs --clean --view=tilt70`
+  exit 0, 0 SCRIPT ERROR, boots into the arena's city block. (The REPORT's old exe lines named
+  `res://dev/arena/arena.tscn` on the command line: the release template refuses a scene path; the
+  showcase preset's main scene IS the arena. Fixed in REPORT.)
+- FOUND (07:23) the riot edge flash reproduces on HEAD: `city_bench.tscn -- --scenario=riot
+  --view=tilt70 --zoom=1.0 --secs=11`, 620 frames: f569 the top strip's mean luma 158 -> 133
+  (the sidewalk under a freshly sliced chunk's asphalt), f570 150, f571 back to 158.
