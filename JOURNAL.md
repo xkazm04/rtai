@@ -1266,3 +1266,7 @@ NEXT (iteration 20, in order):
    smoke it, final gates (unit no-arg, reel top + tilt70, scenarios, top framemd5), finish
    REPORT.md (gates line 8 -> the final commit).
 Session end ~05:30.
+LOOKED 05:26 King boulevard combo 32 px/m seed 2 (120 frames, 0 SCRIPT ERROR): no van in the
+frame at f60 (the powers pad's cars sit at the edge; it18 checked them). NEXT 2's King candidate
+closed; quest 1's kerb vans draw through ChunkLift from the same atlas row (cream, as the print).
+Session end 05:27. Scratch it19: raw .avi deleted.
