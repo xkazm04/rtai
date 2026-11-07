@@ -28,10 +28,15 @@ priority, the CPU's own 2-CU Radeon), never a device claim. Details and sources:
 - **Correction (it7):** the it4 clips named `*-48ppm-*` are really **32 px/m**: in the dev arena (the King fight, the
   city block, the reel) the profile's zoom was read before `--device` was selected, so `zoom_k` never applied there
   (quest 1 and the city drive were right). Fixed (4a773812, the profile is selected in `LaunchArgs._init`); frames.json
-  corrected; the real 48 px/m set is re-filmed in it7.
+  corrected. The real 48 px/m set (it7, the Deck profile, 1280x800, the iGPU):
+  `gtai-masters/d9/handheld/deck-set-48ppm-real-king-city.mp4` (70 s: the King fight, then the city),
+  `still-king-48ppm-real-20.png`, `still-city-48ppm-real-15.png`.
+- The gates on the it7 code (e2f222df): director reel 19/19 chapters, 0 SCRIPT ERROR in top, tilt70, combo and
+  combo + `deck` (`evidence/it7/reels-summary.log`); rumble in the reel under `deck`: 4 pulses (it4: 0).
 
-- The fill-rate lever: drawing the 2D frame at 960x600 and scaling it to the 1280x800 panel cuts render GPU on the iGPU
-  9.10 -> 5.27 ms (-42 %, E8, a study row `deck_bench_ds75`); the look is not judged yet (next iteration: stills, a Call).
+- The fill-rate lever (E8c, same framing, CONTENDED, bench lock): drawing the 2D frame smaller and scaling it to the
+  1280x800 panel cuts render GPU on the iGPU 8.12 -> 6.21 ms at 0.85 (-24 %) and -> 5.14 ms at 0.75 (-37 %); the look
+  softens (stills looked at; Call 5). The 48 px/m handheld zoom renders ~10 % cheaper than 32 (8.12 vs 9.01 ms).
 
 ## What does not work yet
 - Rumble on every hit Rivet takes is in (it7: the view reads his hurt tick; no sim change); its live pulse count is
@@ -52,6 +57,13 @@ priority, the CPU's own 2-CU Radeon), never a device claim. Details and sources:
    `PadGlyphs.active_family`). Default built: a.
 4. **Rumble on the desktop?** Built: handheld rows only. a) keep; b) a `rumble` value on the desktop row (one data
    value), plus a settings toggle (owed either way). Default built: a.
+
+5. **Draw the handheld frame smaller?** (`gtai-masters/d9/handheld/e8b-deck-vs-ds75-48ppm-city-t720.png` and its
+   `-crop-x2`: left the full 1280x800 draw, right 960x600 scaled up, the same framing.) a) full draw: **the default
+   built** (the Deck profile already has headroom: 8.1 ms of a 16.6 ms frame on a GPU weaker than a Deck's);
+   b) 0.85 (-24 % GPU, a light softening); c) 0.75 (-37 % GPU, the grain, hatching and ink line go soft, and the HUD
+   lays out in 960x600 so the ghost-form panel draws 1.33x bigger). One value (`draw_scale`) per row; try c:
+   `RTAI.exe -- --arena=city --bot=course --seed=2 --rigs --view=tilt70 --device=deck_ds75`.
 
 ## Owed / next
 - The Linux build: NAT-06 parity on the Linux `.so` (in WSL), a real Vulkan run (needs a Linux PC or a Deck).

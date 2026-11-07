@@ -196,3 +196,16 @@ NEXT (iteration 5):
   0.75 is softer (grain, hatched shadows, cracks, Rivet's ink line); and the HUD lays out in 960x600, so the ghost-form
   panel is 1.33x bigger on the panel. DECISION: draw_scale stays a Call (deck_ds75 row), not the Deck baseline.
 - 12:24 E8c running (bench lock): deck_bench (z 1.5) / deck_bench_z1 / ds85 / ds75, city, 3 rounds: E6 + E8 re-measured.
+- RESULT 12:35 E8c (the valid re-measure; 11/12 CONTENDED, bench lock held 12:24-12:35, released): render GPU deck_bench
+  48 px/m 8.12 / z1 32 px/m 9.01 / ds85 6.21 / ds75 5.14 ms; p50 9.19 / 9.65 / 6.78 / 5.88. The zoom is ~10 % CHEAPER at
+  48 (less world per frame), not free and not a cost. draw_scale -24 % / -37 %. DECISION (decisions.md): draw_scale stays a
+  Call (REPORT Call 5, default = full draw); zoom_k 1.5 kept. LEDGER row E8c.
+- RESEARCH 12:36 the Deck's own scaler: gamescope's Scaling Filter (linear / integer / FSR 1.0) in the quick access menu
+  acts only when the game renders below 1280x800; our in-engine viewport stretch hides that from it. Alternative recorded in
+  the LEDGER (a Deck render-resolution setting: a 960x600 window, the player picks FSR or integer). Untested (no gamescope here).
+- 12:35 running: reels top / tilt70 / combo / combo+deck (`evidence/it7/`) and the real 48 px/m King + city films under
+  `deck` on the iGPU (the King film's exit line gives the rumble pulse count with the new hurt read).
+- Registry rules applied this iteration: perf-regression-gating (interleaved rounds, medians + spread, CONTENDED stamped,
+  a void result re-measured, not patched); motion-quality-gating / generative-artifact-gating (judge the look at the same
+  framing before keeping a speed lever: E8b caught the framing confound); fire-tv-device-realities (every claim "on the
+  simulator"; the Deck's scaler is a device behaviour we cannot see here); adaptive-fidelity-tiers (the lever is a row value).
