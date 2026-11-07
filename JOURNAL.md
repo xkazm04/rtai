@@ -801,3 +801,25 @@ merged the lanes (n8-view..main = 0), so quest 1 after the merge (NEXT 3) still 
   King's stomp lands over the corpse; 1.0 s shows one stomp over the sprawl, then ink; 1.5 s holds a
   second look at the King standing on the wreck. Close up the King's body covers half the sprawl.
   Default stays 1.0 s.
+- MEASURE 03:19-03:21 the King fight, top vs combo alternated x2, bench.lock held (taken 03:18:32,
+  released by the script), head a5bbf95f, `scratch/view/bench11.sh` (it10's command, engine flags
+  before the scene path), `evidence/n8-view/bench-it11/`:
+  | run | p50 ms | p99 ms | low 1 % fps | over 33 ms settled | worst settled ms |
+  | top 1 / 2 | 4.96 / 5.17 | 11.1 / 9.9 | 79 / 92 | 0 / 0 | 25.3 / 12.4 |
+  | combo 1 / 2 | 3.81 / 4.06 | 8.0 / 8.7 | 112 / 102 | 0 / 0 | 12.7 / 14.0 |
+  CONTENDED: vehicles started a windowed Godot render (n8-vehicles project) at ~03:19 during run 1;
+  no other bench. Quieter than it10 (top 5.0 vs 7.3-9.8 then). Reading: combo is now CHEAPER than
+  top on the King fight (-1.1 ms p50, -2 ms p99), both runs; it8 combo was 3.3x top, it9 1.6x,
+  it10 at or under. Likely why: under combo the cast draws as one card quad per body where top draws
+  every rig part flat (not split by spans this time). Combo's unsettled worst (77-88 ms) is the first
+  second (card atlas + shader load), outside the settled stats.
+- 03:15 TRIAL MERGE (throwaway detached worktree in %TEMP%, never a branch) of city, street,
+  vehicles, hud onto n8-view: conflicts in view-owned or co-written files are comment lines only
+  (rig_card_sets.gd doc line vs street's copy of my 091f5309; arena_floor_view.gd doc lines vs city;
+  quest1_clip.gd's `--view` doc line, which city, hud and I each added), plus every JOURNAL.md and
+  tools/debt/baseline.json. ONE REAL OVERLAP with hud: `StoryForms.fold_rigs` (hud 6fd17433, 00:26)
+  and my `StoryForms.follow` (8e02cc3c, 00:41) do the same fold for quest 1's rig cast; follow also
+  lifts and voices, and quest1_game.gd under view builds the cast in features (ArenaRigs moved out
+  of dev/, ebd77c13), where hud's side still loads `res://dev/arena/arena_rigs.gd`. Resolution: take
+  view's side in story_forms.gd, quest1_game.gd and test_story_forms.gd; hud's test case (the card
+  unfolds when the line closes) is now in my follow test (8ecf8f2d), so no coverage is lost.
