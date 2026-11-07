@@ -382,3 +382,24 @@ NEXT (it10 end, 13:03; supersedes every NEXT above):
   jet keeps the true aim and the sim's shot origin; the drawn flame yields to it); sprite-and-atlas-production
   (the portrait cut at the sheet's own resolution, reproducible with `--check`; provenance per file).
 - 13:05 gates it10b on cfe5eea4: director reel 19/19 x3, 0 SCRIPT ERROR, 0 p_frame (evidence/d9/gates-it10.md). Session end.
+
+## Iteration 13 (director it13, 13:07-14:07), BUILD
+- Read: JOURNAL it10 NEXT, git log, d9-seams JOURNAL (ACK: the bay-number REQUEST served at 3f4732db on d9-seams; no REQUEST to rivet), catalog (no portrait_rivet_55 yet).
+- FRICTION (~4 min): filmed the death beat with the boss flags but without the scene: `--boss/--bot/--loadout` are the
+  arena's (`res://dev/arena/arena.tscn`), boot ignores them ("unknown launch arg") and the main scene films the city.
+  Every arena film needs `res://dev/arena/arena.tscn` before `--`.
+- MILESTONE `988c0329` NEXT 1 + 2 in one root cause: Rivet's rig latched `clips.die()` from the DEAD flag and nothing
+  ended it on the respawn (he respawns on the same rig, same actor id): he lay in the sprawl at the hub while he
+  walked, with his gun out, so the drawn BASE figure (DEATH cell) did not own the weapon and RivetHeldView drew the
+  top-down held part beside him: that was the "grey, cream-rimmed splat". `RigInput.revive` (Rivet's row only: a
+  dead row never turns live for any other kind) clears death_t / dead / sprawl / a dying reaction when his row is
+  alive again. test_rig_revive (fails without the fix, planted by hand). Film on the fix, King combo 48 px/m seed 1
+  (`res://dev/arena/arena.tscn -- --boss=king --bot=boss --bot-stand --view=combo --ppm=48 --seed=1 --loadout=pistol
+  --rigs`, 1440 frames, 0 SCRIPT ERROR, 0 ERROR but the exit leak): the veil f1314-1326, he stands at the hub from
+  f1334, no grey part. Before/after: `gtai-masters/d9/rivet/rivet_respawn_stands_before_after_king_combo_48ppm_x3_seed1_f1290_1338_1416.png`.
+  The same film in `top` stands up too (the top-down rig after the cut matches its pose before the death).
+- MILESTONE `6438394e` NEXT 4 the spawn frame: a rig acquired on a frame that did not pose it (no tick due; a half or
+  quarter-rate rank skips its first tick) drew its hidden parts once: f0 of the King combo film showed the parts'
+  cream rim under the figure. CharacterRigs.step_ticks poses any rig with t_alive 0 once under a card view (top
+  unchanged; at 144 Hz most frames have no tick due, so this was every newly selected rig there, cops and peds too).
+  Test (tilt70 posed, top not), fails without the change.
