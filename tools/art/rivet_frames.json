@@ -14,9 +14,17 @@
     "counts": "5,3",
     "sheet": "rivet_eq_electro_baton_55_v2.png"
    },
+   "rivet_eq_electro_baton_left": {
+    "counts": "3",
+    "sheet": "rivet_eq_electro_baton_55_left.png"
+   },
    "rivet_eq_electro_gun": {
     "counts": "5,3",
     "sheet": "rivet_eq_electro_gun_55_v3.png"
+   },
+   "rivet_eq_electro_gun_left": {
+    "counts": "3",
+    "sheet": "rivet_eq_electro_gun_55_left.png"
    },
    "rivet_eq_flamethrower": {
     "counts": "5,3",
@@ -34,9 +42,17 @@
     "counts": "5,3",
     "sheet": "rivet_eq_hand_cannon_55_v2.png"
    },
+   "rivet_eq_hand_cannon_left": {
+    "counts": "3",
+    "sheet": "rivet_eq_hand_cannon_55_left.png"
+   },
    "rivet_eq_homing_shard": {
     "counts": "5,3",
     "sheet": "rivet_eq_homing_shard_55.png"
+   },
+   "rivet_eq_homing_shard_left": {
+    "counts": "3",
+    "sheet": "rivet_eq_homing_shard_55_left.png"
    },
    "rivet_eq_katana": {
     "act_k": 0.95,
@@ -47,6 +63,10 @@
     "counts": "5,3",
     "sheet": "rivet_eq_machine_pistol_55.png"
    },
+   "rivet_eq_machine_pistol_left": {
+    "counts": "3",
+    "sheet": "rivet_eq_machine_pistol_55_left.png"
+   },
    "rivet_eq_mini_nuke": {
     "counts": "5,3",
     "sheet": "rivet_eq_mini_nuke_55.png"
@@ -55,9 +75,17 @@
     "counts": "5,3",
     "sheet": "rivet_eq_molotov_55.png"
    },
+   "rivet_eq_molotov_left": {
+    "counts": "3",
+    "sheet": "rivet_eq_molotov_55_left.png"
+   },
    "rivet_eq_pistol": {
     "counts": "5,3",
     "sheet": "rivet_eq_pistol_55_v4.png"
+   },
+   "rivet_eq_pistol_left": {
+    "counts": "3",
+    "sheet": "rivet_eq_pistol_55_left.png"
    },
    "rivet_eq_plasma_rifle": {
     "counts": "5,3",
@@ -72,6 +100,10 @@
    "rivet_eq_ray_gun": {
     "counts": "5,3",
     "sheet": "rivet_eq_ray_gun_55.png"
+   },
+   "rivet_eq_ray_gun_left": {
+    "counts": "3",
+    "sheet": "rivet_eq_ray_gun_55_left.png"
    },
    "rivet_eq_rocket_launcher": {
     "counts": "5,3",
@@ -96,7 +128,7 @@
    },
    "rivet_eq_electro_baton_left": {
     "counts": "3",
-    "sheet": "rivet_eq_electro_baton_70_left.png"
+    "sheet": "rivet_eq_electro_baton_70_left_v2_s.png"
    },
    "rivet_eq_electro_gun": {
     "counts": "5,3",
@@ -104,7 +136,7 @@
    },
    "rivet_eq_electro_gun_left": {
     "counts": "3",
-    "sheet": "rivet_eq_electro_gun_70_left_s.png"
+    "sheet": "rivet_eq_electro_gun_70_left_v2.png"
    },
    "rivet_eq_flamethrower": {
     "counts": "5,3",
