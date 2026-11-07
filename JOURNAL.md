@@ -497,3 +497,9 @@ NEXT:
   did not move), export-audit 557/0. Nothing committed during the run.
 - 01:14 Director reel started at 4632084a (top + tilt70, headless, in parallel; logs to scratch
   then `evidence/director-reel-n8hud-it7-*.log` once finished).
+- 01:22 Director reel at a91232c4 (headless, `arena.tscn --fixed-fps 60 --quit-after 14000 --
+  --bot=reel --reel=director --loadout=pistol --rigs --view=<v>`): `top` 19/19 chapters all down,
+  `tilt70` 19/19 all down, 0 SCRIPT ERROR both (`evidence/director-reel-n8hud-it7-{top,tilt70}.log`).
+- DECISION (not built): no `--taunt` arena flag for the exe: the showcase preset exports only
+  data/ and quests/ JSON, so the dev lines would have to be hard-coded text (rule 4). The taunt
+  call is shown by the masters still + clip; the dev shot command is in frames.json.
