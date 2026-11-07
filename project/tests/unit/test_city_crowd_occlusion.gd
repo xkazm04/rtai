@@ -57,3 +57,19 @@ func test_a_cop_lying_behind_the_roof_gets_a_square_patch() -> void:
 	var side: float = CityCrowdOcclusion.LYING_HALF_M * 2.0 * PX
 	assert_almost_eq(out[0].size.x, side, 0.01)
 	assert_almost_eq(out[0].size.y, side, 0.01)
+
+
+## d9 premise (view's it31 NOTE, the arena kerb barriers): a prop-shaped occluder (a 6 x 0.6 m
+## ground rect, its 3 m wall drawn north) already hides a body lying behind it, not one in front.
+func test_a_kerb_barrier_shaped_occluder_hides_a_lying_body_behind_it() -> void:
+	var wall: CityOccluders.Bld = CityOccluders.Bld.new()
+	wall.r = Rect2(Vector2(0.0, 10.0) * PX, Vector2(6.0, 0.6) * PX)
+	wall.area = Rect2(Vector2(0.0, 7.0) * PX, Vector2(6.0, 3.6) * PX)
+	var view: Rect2 = Rect2(Vector2(-20.0, -20.0) * PX, Vector2(60.0, 60.0) * PX)
+	var snap: PackedFloat64Array = _row(6, SimConst.K_PED, SimConst.M_DEAD, Vector2(3.0, 9.5))
+	snap.append_array(_row(7, SimConst.K_PED, SimConst.M_DEAD, Vector2(3.0, 12.0)))
+	var out: Array[Rect2] = []
+	var areas: Array[Rect2] = CityCrowdOcclusion.patches(snap, [wall], view, out)
+	assert_eq(out.size(), 1)
+	assert_eq(areas.size(), 1)
+	assert_true(wall.area.encloses(out[0]))
