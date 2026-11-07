@@ -352,6 +352,20 @@ def paste(atlas: Image.Image, v: Image.Image, k: float, at: tuple, lift: float) 
     atlas.alpha_composite(im, (x, y))
 
 
+def paint_to(atlas: Image.Image, row: int, col: int, refs: list) -> None:
+    """Cell (col, row)'s saturated warm paint (opaque, r - b > 100) given the per-channel gain to the
+    mean of the same paint in cells `refs` of the row, as printed (after every hue turn)."""
+    def cell(c: int) -> np.ndarray:
+        return np.array(atlas.crop((c * CELL_PX, row * CELL_PX, (c + 1) * CELL_PX, (row + 1) * CELL_PX))).astype(np.float32)
+    def mask(px: np.ndarray) -> np.ndarray:
+        return (px[:, :, 3] > 200) & (px[:, :, 0] - px[:, :, 2] > 100)
+    want = np.mean([cell(c)[:, :, :3][mask(cell(c))].mean(0) for c in refs], 0)
+    px = cell(col)
+    m = mask(px)
+    px[:, :, :3][m] = np.clip(px[:, :, :3][m] * (want / px[:, :, :3][m].mean(0)), 0.0, 255.0)
+    atlas.paste(Image.fromarray(px.round().astype(np.uint8), "RGBA"), (col * CELL_PX, row * CELL_PX))
+
+
 def build(root: Path, lib: Path, pitch: int) -> Image.Image:
     atlas = Image.new("RGBA", (CELL_PX * COLS, CELL_PX * len(rows_of())), (0, 0, 0, 0))
     fine = []
@@ -389,6 +403,8 @@ def build(root: Path, lib: Path, pitch: int) -> Image.Image:
             if sid in BETWEEN_PICKS and CREAM_GRADE:  # the cream repaint's in-betweens to their neighbours
                 g = tuple(a * b for a, b in zip(gain, light_gain(v, [vs[j], vs[j + 1]])))
             paste(atlas, v, kb, (5 + j, row, g), drop)
+    for row, col in sorted(_NATIVE):
+        paint_to(atlas, row, col, [col - 1, col + 1])
     print(f"fine rows (VehicleViews.FINE): {fine}")
     return atlas if fine else atlas.crop((0, 0, CELL_PX * 5, atlas.height))  # no in-betweens: 5
 

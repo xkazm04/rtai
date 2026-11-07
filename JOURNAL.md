@@ -1497,3 +1497,14 @@ EXE dry run 07:24: `windows-showcase` exported from 1651d3d6 (exit 0, RTAI.exe 2
 smoke `RTAI.exe --fixed-fps 60 --quit-after 200 -- --boss=servo --bot=boss --servo-ghost=dent
 --view=combo --rigs --seed=2` exit 0, 0 SCRIPT ERROR. The freeze re-exports HEAD.
 Session end ~07:26. Head = this commit. Tree clean.
+07:27 the taxi's graded side still printed ~9 % darker than its 3/4 neighbours (175,150,30 vs 192/188):
+the cutter's `paint_to` gives a SIDE_NATIVE cell's warm paint (r - b > 100) a per-channel gain to its
+neighbours' printed paint (190,160,35). LOOKED in the atlas (graded vs gain) and turning at 64 px/m
+(vehicle_turn --set=street, 0 SCRIPT ERROR): the side no longer dims between its neighbours. CAUTION:
+that film's frames 150-210 sit at other headings than the 07:05 film's (only the side frame is
+like-for-like); not chased. Master taxi_side_gain_turn_f150-210_graded_left_gain_right.png.
+FOUND: a fresh p70 cut now also changes police row 8 (side and C): the asset lane re-keyed
+police_car_side_70 at 07:09 and is making police_car_70_v2/v3 and 55 v5/v6. Not judged, NOT taken: the
+committed atlas got only the taxi side cell (3, 2) pasted from the fresh cut (verified: the only
+changed cell). Provenance line's sha updated. NEXT 1 for the freeze: judge the police re-key + v2/v3
+before a re-cut (or leave the atlas as is: a fresh cut is no longer the committed one for row 8).
