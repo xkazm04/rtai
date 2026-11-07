@@ -459,3 +459,47 @@ NEXT (it13 end, 13:56; supersedes every NEXT above):
 - Session end 13:58: everything committed (92577499 + this note); scratch stills deleted (composited into the two
   masters contacts); the capture scripts kept in gtai-d9/scratch/rivet/it13/tools (fs_one.sh guns, fs_melee.sh melee,
   fs_contact.py the sheets).
+
+## Iteration 16 (director it16, 14:00-15:00), BUILD
+- Read: JOURNAL it13 NEXT, git log, d9-seams JOURNAL (no REQUEST to rivet; their 13:52 merge-seam trial with
+  d9-rivet: disjoint hunks in prop_occlusion.gd, gate green), the library catalog (new for rivet: portrait_rivet_v2 A
+  (the it10 REQUEST), rivet_eq_plasma_sword_v4 55 A supersedes v3 B).
+- MILESTONE `e978f01f` the dialogue face = the library's portrait_rivet_55_v2 (A): neutral + mood bust cut by the cast's
+  own tools/art/portrait_cut.py (267x320, 308x320, the cast's 320 px); looked beside the interim cut on one sheet
+  (scratch). Mood bust on rivet-feels-good and rivet-sorry-not-sorry (his "other voice" lines). The interim
+  rivet_portrait.py retired. test_hud_dialogue checks the mood line (10/0). Provenance x2.
+- MILESTONE `a2f9c77e` plasma sword p55 = rivet_eq_plasma_sword_55_v4 (A): cut with v3's params (act_k 0.85, --cc=1),
+  judged on a 3-row sheet (current v3 / v4 / v4 default act_k: the default shrinks the actions, rejected); filmed
+  `--bot=pit --loadout=plasma_sword --view=tilt --ppm=64 --seed=3 --rigs --fire-stills`: 3 swing cells, both claws on
+  the haft, the long amber blade. `gtai-masters/d9/rivet/rivet_plasma_sword_55_v4_swings_tilt_p55_64ppm_seed3_t282_302_322.png`.
+- MILESTONE `ebacd1ab` the library audit (every rivet_frames.json row vs the catalog's newer, better-graded sheets):
+  3 p55 left strips had A redos waiting: electro_baton_left_v2 (the tip spark), homing_shard_left_v2 and
+  molotov_left_v2 (the gun/bottle in the far claw in view 3, the hand rule). Swapped. FOUND on the contact: 7 of 16
+  left strips (p55 hand cannon, homing shard, machine pistol, ray gun; p70 baton sparks, molotov flame, pistol)
+  carried a neighbour figure's gun bell / flame / spark at a cell edge: the column cut crosses touching figures; in
+  play a floating piece beside him on a left turn. All left rows now cut by component (`cc: "0"`), except p55
+  electro_baton_left (its figures split into several big components: the component cut misassigned them; column cut
+  clean). Re-cut deterministic (only the left strips moved). Muzzles re-measured: the hip-held shard (p55 v2 view 3)
+  read the cable spike, pinned at the bell by eye on a x5 zoom (rivet_muzzle.py LEFT_PINNED). Every left muzzle point
+  judged on a contact. Provenance x16. Masters: `rivet_left_strips_before_after_component_cut_p55_p70_16strips.png`.
+- Dialogue face seen live (quest 1, `-s res://dev/frames/quest1_clip.gd -- --view=tilt70 --rigs --stills=3050..9050`,
+  0 SCRIPT ERROR): the neutral bust on "Nobody calls a payphone" t3050-3650, crisp. The stills did not reach his mood
+  lines (TUCK-IN is later); the line mapping is covered by test_hud_dialogue. Masters
+  `rivet_dialogue_face_before_after_portrait_v2_quest1_payphone_tilt70_32ppm_1080p_t3350.png` (frames.json entry 6
+  replaced: the it10 interim's entry; its file kept as the before).
+- MILESTONE `90c46dfc` NEXT 2 the flamer's red jet = the it10 two-flame case on a diagonal: filmed `--bot=gunplay
+  --weapon=flamethrower --view=tilt70 --ppm=64 --seed=3 --rigs` 420 frames: at t368-371 the head read octant 4
+  (screen left: drawn flame left) while the jet left at ~124 deg (down-left). fires_drawn now also needs the aim
+  (rig.aim_at) within 22.5 deg of the drawn flame. After (same seed): t371 shows the facing cell, the jet from the
+  nozzle; t368 still shows a short drawn flame (the fire cell outlives the last shot by FIRE_TICKS while the aim swings
+  left; accepted, a one-frame tail). Masters `rivet_flamer_drawn_flame_needs_aim_before_after_gunplay_tilt70_64ppm_seed3_t359_380.png`.
+  The red of the jet itself is the owner-picked teardrop tongues (d7 look-14), not this lane's art.
+- DECISIONs rivet/portrait-v2, rivet/left-cut, rivet/cone-aim (docs/decisions.md).
+- REQUEST to assets: rivet_eq_electro_baton, 70 and 55 (and the _left sheets to match), the baton reads as part of
+  his forearm at 32-64 px/m: the rod is the same rust-brown value as his arm plating, so in the facings and the strike
+  cells only the white tip spark reads (it13 every-weapon contact; it16 strips). Ask: the rod a dark steel (near the
+  ink value) with the bright copper coil and a pale charged glow along the prongs, angled OUT from the claw so its
+  silhouette separates from the arm, about 1.3x longer; holds, hand rule (right claw, cable arm with the cream spike
+  on his left), poses and pitch as rivet_eq_electro_baton_70_v2 / _55_v2; no blue, no teal, no red. Why: the owner's
+  d8 note (no weapon looked natural in his hand) needs every weapon to read at play zoom; the baton is the one that
+  does not.
