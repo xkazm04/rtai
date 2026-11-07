@@ -1248,3 +1248,19 @@ over all 620 frames, before vs after, not one still; the "fix" rejected because 
 worse), concept-scene-parity (same seed, scene and frame count; one file apart), render-submission-
 economy (n/a: nothing landed), depth-ordered-layered-art / tiling-texture-acceptance /
 generative-artifact-gating (n/a: no new art).
+- EVIDENCE (07:40) the combined clip refreshed: `it30_city_set_tilt70_combo_51s.mp4` (masters, 44 MB,
+  labelled): facade drive tilt70 32 px/m 16 s (`city_bench --scenario=facade`), the riot's crowd
+  behind the roofs 3 s (f395-565, between the bench churns), the 55 traffic light v6 at 48 px/m 5 s
+  (`--scenario=drive --view=tilt --zoom=1.5`), the King fight combo 48 px/m 15 s, the city block with
+  rigs tilt70 12 s (`arena.tscn -- --arena=city --bot=course --seed=2 --rigs --clean`). 0 SCRIPT
+  ERROR x5. LOOKED at 5 frames across it. Replaces it25's clip in frames.json (file deleted).
+- FRICTION (07:46) the second full evidence run died on the same EPERM (another lane's Godot held
+  `%TEMP%/gtai-release-compile`, started 07:46:10). Ran `--no-release` instead and
+  `release_compile.mjs` alone once the other one finished.
+- GATE (07:53) `node tools/evidence/run.mjs --no-bench --no-release` at 7d73de04: PASS (lint 15/15,
+  unit 1530/0, scenarios 52, parity bit-exact + planted mutation caught at 629, selftest goldens
+  11/11 + block 5/5). release_compile at 7d73de04: 565 loaded, 0 failed. (An earlier run at
+  927f40f3 marked unit FAIL only because I committed JOURNAL/REPORT mid-run: "tree changed during
+  run", 1530/0.) Project tree unchanged since 7d40e58d, so the it27 reel (19/19 tilt70) and the
+  07:21 exe cover the head.
+- REPORT final (gates, exe lines incl. both boss arenas smoke-run, gap closed, next steps).

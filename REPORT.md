@@ -1,7 +1,7 @@
 # n8 lane `city`: buildings, roofs and props under the angled view
 
-DRAFT written in iteration 22 (04:30); the freeze session updates the gates, the exe and the
-head commit. Branch `n8-city`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n8\city\` (`frames.json`,
+FINAL (iteration 30, the freeze session, 07:55). The project tree is unchanged since 7d40e58d; later
+commits touch JOURNAL/REPORT/docs only. Branch `n8-city`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n8\city\` (`frames.json`,
 15 entries, best first). Memory: `JOURNAL.md`.
 
 ## What works (with evidence)
@@ -12,7 +12,7 @@ head commit. Branch `n8-city`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n8\ci
    from two straight runs (no oblique side face). Art per pitch (`p55` / `p70`) from the library's
    facade kits; data in `data/tables/city_facades.json`. `top` builds none of it.
    Evidence: `it1_facades_32ppm_top_vs_tilt70.jpg`, `it16_facade_tall_48ppm_before_after.png`,
-   `it22_facade_tall_v3_tilt70_32ppm_before_after_x2.png`, the set clip `it25_city_set_tilt70_combo_55s.mp4`.
+   `it22_facade_tall_v3_tilt70_32ppm_before_after_x2.png`, the set clip `it30_city_set_tilt70_combo_51s.mp4` (facade drive, the riot's crowd behind the roofs, the 55 traffic light at 48 px/m, the King fight under combo, the city block with rigs; labelled).
    All facade strips are from the library's latest raw sheets (0510/0525: muted brick and rust).
 2. **Occlusion** (item 2). A body behind a building draws as an ink silhouette with a rim over the
    exact world pixels (a back-buffer copy, no second print). `occlude: false` puts the old look back.
@@ -52,23 +52,21 @@ head commit. Branch `n8-city`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n8\ci
    view). tilt70 had 6 frames over 25 ms (top 0, worst 39 ms, none over 50): not attributed, and the
    chunk slice is not it. `evidence/drive-cost-it25.json`.
 
-## Gates (iteration 26, head 25c9be53)
+## Gates (freeze, iteration 30)
 
-- `top` bit-identical, two recipes, 301 frames each, framemd5, 0 SCRIPT ERROR:
-  - the city arena (`res://dev/arena/arena.tscn -- --arena=city --bot=rivet --seed=2 --rigs`):
-    HEAD 55ede50c identical to the branch base 0bea8b93 (iteration 26);
-  - the boot scene (`-- --arena=city --bot=rivet --seed=2 --rigs` without the arena scene: the boot
-    ignores `--arena`, so this is the game's own start; the it19-it25 gate was this one) identical
-    to the it19 baseline at 55ede50c.
-- unit (full no-arg) 1526 passed, 0 failed, no FLAKY (55ede50c).
-- lint 15/15 every commit.
-- Director reel at tilt70 (`--bot=reel --reel=director --loadout=pistol --rigs --view=tilt70`, 7600
-  frames headless): 19/19 chapters down, 0 SCRIPT ERROR (`evidence/director-reel-it26-tilt70.log`, bf579226).
-- Scenarios: 52 ran, 0 failed, exit 0 at bf579226 (vehicle drive timing CONTENDED, labelled by the runner).
-- Last `evidence/run.mjs --no-bench`: PASS at 25c9be53 (iteration 26: lint 15/15, unit 1527/0, scenarios 52, parity bit-exact + planted mutation caught, selftest look goldens 11/11 + block 5/5, export-audit release-compile 564/0). FREEZE: re-run.
-
-Iteration 27 gates (head 6c653ec4): lint 15/15, unit full 1530/0 (at f14b97c9), scenarios 52/0,
-director reel tilt70 19/19 0 SCRIPT ERROR, `top` city arena framemd5 identical to the branch base.
+- `node tools/evidence/run.mjs --no-bench --no-release` at 7d73de04: PASS (lint 15/15, unit 1530/0,
+  scenarios 52, parity bit-exact over 1200 steps + planted mutation caught at 629, selftest: look
+  goldens 11/11 + block 5/5, world lock 0.00 %, no new off-doctrine accents).
+- export-audit: `node tools/tests/release_compile.mjs` at 7d73de04, run alone: 565 loaded, 0 failed.
+  (Two full runs died in this stage with EPERM on `%TEMP%/gtai-release-compile`, a fixed temp path
+  every worktree shares, while another lane's release-compile held it; see Next steps.)
+- `top` bit-identical, two recipes, 301 frames, framemd5, 0 SCRIPT ERROR, at 7a43f001 (same
+  project tree): the boot scene (`-- --arena=city --bot=rivet --seed=2 --rigs`) identical to the
+  it19 baseline; the city arena (`res://dev/arena/arena.tscn -- --arena=city --bot=rivet --seed=2
+  --rigs`) identical to the branch base 0bea8b93.
+- Director reel at tilt70 (`--bot=reel --reel=director --loadout=pistol --rigs --view=tilt70`) at
+  7d40e58d (same project tree): 19/19 chapters down, 0 SCRIPT ERROR (`evidence/director-reel-it27-tilt70.log`).
+- Bench: not re-run at the freeze (no bench.lock taken); the last cost numbers are item 5's, iteration 25.
 
 ## What does not work / gaps
 
@@ -123,6 +121,8 @@ path goes on the command line (a release template refuses one). Smoke-run: the f
 
 ## Next steps
 
+- Tooling (not city's): give `release_compile.mjs`'s staging dir a per-worktree/pid name, so
+  parallel lanes' evidence runs stop colliding (EPERM).
 - 70 twins and raises as the library serves them (the traffic light 55 short pole: served and cut at iteration 27).
 - If a streamed-city scene ever eases its pitch live (combo outside the boss arenas), ChunkView
   releases every chunk at the 12-frame settle: keep the old chunk on screen until its redraw is whole
