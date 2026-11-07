@@ -10,6 +10,11 @@
       "items": {
         "additionalProperties": false,
         "properties": {
+          "draw_scale": {
+            "maximum": 1,
+            "minimum": 0.25,
+            "type": "number"
+          },
           "id": {
             "pattern": "^[a-z][a-z0-9_]*$",
             "type": "string"

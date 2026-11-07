@@ -25,6 +25,8 @@ var stretch_mode: String = ""
 var zoom_k: float = 1.0
 ## The pad rumble gain (0 = none; HandheldRumble plays the pulses).
 var rumble: float = 0.0
+## Under viewport stretch, the 2D draw size = the project base x this (1 = the base; E8 study).
+var draw_scale: float = 1.0
 var tier: StringName = &"full"
 var ids: Array[String] = []
 
@@ -78,6 +80,8 @@ func _read(row: Dictionary) -> void:
 	zoom_k = k
 	var r: float = row.get("rumble", 0.0)
 	rumble = r
+	var ds: float = row.get("draw_scale", 1.0)
+	draw_scale = ds
 	tier = StringName(str(row.get("tier", "full")))
 
 
@@ -101,6 +105,8 @@ func apply(window: Window) -> void:
 		DisplayServer.window_set_vsync_mode(mode)
 	if stretch_mode == "viewport":
 		window.content_scale_mode = Window.CONTENT_SCALE_MODE_VIEWPORT
+		if draw_scale < 1.0:
+			window.content_scale_size = Vector2i(Vector2(window.content_scale_size) * draw_scale)
 	elif stretch_mode == "canvas_items":
 		window.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
 	if window_size != Vector2i.ZERO:
