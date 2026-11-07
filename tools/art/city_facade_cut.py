@@ -35,17 +35,18 @@ STYLES = {
         12,
     ),
 }
-# the 70 twins (round 2110, A): same four-piece layout; the wall band starts under the roof's
+# the 70 twins (tenement and shop: the 0525 v2 raw redraws, A, same boxes as the 2110 keys within
+# 1 px; tall: round 2210 untapered): same four-piece layout; the wall band starts under the roof's
 # front ink and ends at the ground ink, as the 55 cut does (rows measured on the keyed sheets)
 STYLES_70 = {
     "tenement": (
-        "keyed/building/facade_kit_70_untapered.png",
+        "keyed/building/facade_kit_70_v2.png",
         [(83, 349), (451, 717), (818, 1084)],
         (326, 600),
         15,
     ),
     "shop": (
-        "keyed/building/facade_shop_70_untapered.png",
+        "keyed/building/facade_shop_70_v2.png",
         [(42, 381), (412, 752), (783, 1125)],
         (338, 570),
         12,
