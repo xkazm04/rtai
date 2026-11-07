@@ -925,3 +925,24 @@ between them and the perforation), `motion-quality-gating` (armory film, same se
   (new file) and touches `hud_view.gd`, `dialogue_board_run.gd` (dev), `test_hud_art.gd`, the nurse
   busts, the 70 chainsaw cut, `tools/art/showcase_import.py`, and `tools/debt/baseline.json` (dev_loc
   +22 accepted): none of them yours.
+- 04:53 Full unit at 6e8daf39: 1519 passed, 0 failed, 0 FLAKY (`gtai-n8/scratch/hud/it12/unit_full.log`).
+- 04:55 006aeaba the board's ticket crop in proportion to the window; all 17 tickets looked at 1080p
+  (`hud_tickets_all_weapons_1920x1080_contact.png`).
+- 04:57 Combined clip v3 recording (`gtai-n8/scratch/hud/it12/clip3.sh`: armory 70/55 at 48 px/m,
+  the King at combo, quest 1's payphone call 2150-3500 and Dock 9 13560-13860 at tilt70).
+
+NEXT:
+- Work items 1-4 evidenced; it12 answered view (the Dock 9 "7 m Gloria" was the HUD icon: now on
+  the ticket), took the nurse v4 and chainsaw 70 v2 raises. Weakest left: the thin pieces on the
+  ticket (katana, baton, plasma sword at 180 px wide read small; ICON_MAX_W is one value), the
+  Servo taunt waits for lines, the long guns on the wall overlap the cops at 55 (the hub layout),
+  quest 1's Dock 9 crate row sits under the HUD's top-right corner at the tilt70 camera (stage
+  placement: a note for the REPORT, not hud's to move).
+- If the combined clip v3 is not in `gtai-masters/n8/hud/` yet: its frames/avis are in
+  `gtai-n8/scratch/hud/it12/clip/`; encode (ffmpeg, 1280x800, 30 fps), look at a contact sheet, put
+  it in frames.json in place of the it6 clip (entry 1), then delete the raw .avi/png frames.
+- Freeze 08:30: the director reel (top + tilt70), `node tools/evidence/run.mjs --no-bench`, export
+  `build/export/windows/RTAI.exe` (`windows-showcase` preset, recipe in
+  `gtai-n8/scratch/hud/it6/report_notes.md`, it12 lines appended), REPORT from those notes
+  (FINDING: the dock guard's concept-approved orange-vermilion hi-vis). Delete it9-it12 scratch
+  frames after the REPORT. Nothing into the worktree during a gate run.
