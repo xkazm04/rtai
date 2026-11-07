@@ -108,3 +108,48 @@ func test_the_boss_bar_feels_a_hit_that_takes_hp() -> void:
 	await wait_process_frames(3)
 	var hits: int = rumble.by_kind.get(&"boss_hit", 0)
 	assert_eq(hits, 1, "one hit, one pulse, however many frames")
+
+
+## Mutation survivor :62 (`== -> !=`): leaving the tree clears the live node (no stale static).
+func test_leaving_the_tree_clears_the_live_rumble() -> void:
+	var rumble: HandheldRumble = HandheldRumble.new(1.0)
+	add_child(rumble)
+	assert_eq(HandheldRumble._live, rumble)
+	remove_child(rumble)
+	assert_null(HandheldRumble._live, "feel_hurt must never reach a node out of the tree")
+	rumble.free()
+
+
+## Mutation survivor :105 (`* -> /`): the player's level multiplies the row's gain.
+func test_the_player_level_times_the_row_gain() -> void:
+	var keep: float = HandheldRumble.player_gain
+	HandheldRumble.player_gain = 0.5
+	var rumble: HandheldRumble = HandheldRumble.new(0.8)
+	assert_true(rumble.play(&"rivet_hurt"))
+	assert_eq(rumble.last, HandheldRumble.pulse(&"rivet_hurt", 0.4))
+	HandheldRumble.player_gain = keep
+	rumble.free()
+
+
+## Mutation survivor :108 (`< -> <=`): an equal pulse restarts a running one (a second hurt felt).
+func test_an_equal_pulse_restarts_a_running_one() -> void:
+	var rumble: HandheldRumble = HandheldRumble.new(1.0)
+	assert_true(rumble.play(&"rivet_hurt"))
+	assert_true(rumble.play(&"rivet_hurt"), "a second hurt inside the first one's 120 ms")
+	assert_eq(rumble.played, 2)
+	rumble.free()
+
+
+## Mutation survivors :129 :133 :137 :141 (a _fire deleted): each bus event plays its kind.
+func test_each_bus_event_plays_its_own_kind() -> void:
+	var rumble: HandheldRumble = HandheldRumble.new(1.0)
+	add_child_autofree(rumble)
+	Events.actor_knocked_down.emit(1, 2, &"ped", Vector2.ZERO)
+	rumble._until_ms = 0  # each pulse alone: none may wait on the one before
+	Events.boss_engaged.emit(&"king")
+	rumble._until_ms = 0
+	Events.vehicle_hijacked.emit(&"car")
+	rumble._until_ms = 0
+	Events.whispers_spiked.emit()
+	var want: Dictionary = {&"knocked_down": 1, &"boss_engaged": 1, &"hijacked": 1, &"whispers": 1}
+	assert_eq(rumble.by_kind, want)
