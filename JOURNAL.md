@@ -967,3 +967,15 @@ Logged in docs/decisions.md.
   606/0, scenarios 53/53; 18:02 director reels top / tilt70 / combo 19/19 FULLY down, 0 SCRIPT ERROR, the 2 known
   ^ERROR lines each (`evidence/d9-seams/mergetrial-it11-*.log`, `director-reel-merge-it11-*.log`). REPORT merge note.
 - 17:55 the combined set clip now 63 s (+ the gang's steel legs segment, captioned); the 58 s file deleted.
+- 18:05 REPORT final: + "What blocked me" (no BLOCKED all day; the FRICTION minutes), concrete Next steps.
+
+NEXT (it12, after the freeze), replaces the lists above:
+1. The lane froze at 18:30 with everything committed. Last gates: evidence it11 at b026010d all PASS; reels it11
+   19/19 x3; trial merge it11 vs d9-rivet e2400dc4 green (unit 1748/0, release-compile 606/0, scenarios 53,
+   reels 19/19 x3). Exe: `build/export/windows/RTAI.exe` (b51247bb), smoke clean.
+2. For the Director's merge: JOURNAL add/add (take either), debt baseline chain 18799 -> 18805 -> 18874, then
+   `node tools/debt/debt.mjs --update`; `just native` after merge.
+3. Owner Calls 1-5 (5 now defaults to (c) the gang's own steel legs). Each pick is one value.
+4. If the lane runs again: assets' gang_legs spares (_b) are B (black shins), keep the A sheets; the elder's
+   3/4-away walk; Call 2's body stopped at a wall; Call 4 c (cars knock Rivet down).
+- Session end ~18:06: all committed; scratch avi/png deleted; frames.json 15 (entry 0 the 63 s set clip).

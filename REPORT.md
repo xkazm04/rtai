@@ -229,6 +229,17 @@ director reel (`--fixed-fps 60 --quit-after 14000`) top 19/19, tilt70 19/19, com
 - After merge, rebuild native (`just native`): `project/native/bin` is git-ignored, and the old DLL
   would treat bikes as cars (no crash; parity would fail).
 
+## What blocked me, and for how long
+Nothing blocked the lane outright (no BLOCKED entry all day). The time lost, from the JOURNAL's FRICTION lines:
+- ~10 min (it1, 10:43): the worktree's `native/godot-cpp` submodule was empty; built against a read-only copy of
+  the same pinned commit (e103d348). Debug DLL 2 min, release ~8 min. After merge: `just native` (the DLL is git-ignored).
+- 8 min (14:29): "before" grids taken with `git show HEAD:<png>` were Git LFS pointer text, not PNGs; the
+  imports went `valid=false` and needed a re-import. Lesson: take befores from a film of the old commit.
+- ~6 min (12:05): no planter in a real game frame at first (the boulevard's "planters" are crate stacks); found later.
+- ~10 min over the day, all mine: evidence runs refusing a tree I edited mid-run (it2, it3, it6, it10), the
+  pre-commit lint stopping a commit (fixed), one deleted capture. Asset waits: none blocked a built item (I built the wiring ahead of the art;
+  the gang's legs were served 21 min after the REQUEST).
+
 ## Calls for the owner
 1. **The King's legs meet the bust.** Built (it2, ON at 55): the bust and his arms rise half the legs'
    cell onto `king_legs_55` (the legs scaled with the bust: cell width = the bust's cell width), the
@@ -266,4 +277,10 @@ director reel (`--fixed-fps 60 --quit-after 14000`) top 19/19, tilt70 19/19, com
    --view=combo` (or `"$GODOT_BIN" --path project res://dev/arena/arena.tscn -- --boss=king --phase=1 --view=combo`).
 
 ## Next steps
-See JOURNAL `NEXT:`.
+1. The owner's picks on Calls 1-5; each option is one data value or flag (named in the Call).
+2. On merge: the debt baseline chain above, then `just native` (the bike-aware DLL is git-ignored; an old DLL
+   treats bikes as cars and the parity gate fails), then `--import` once.
+3. When main switches to combo: turn bikes on (Call 3 b) and rebaseline the `top` look goldens in the same commit.
+4. Weak points left: the elder's 3/4-away walk row (the asset lane's named weak row); a falling body stopped at a
+   wall (Call 2 option, sim work in both twins); cars knocking Rivet down (Call 4 c, sim work in both twins).
+5. Full detail and the last state: JOURNAL `NEXT (it12)`.
