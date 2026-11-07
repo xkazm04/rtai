@@ -937,3 +937,18 @@ NEXT (iteration 17, in order):
    the depot van colour, the pickup C (row vs _c), stage cars over the actors (now ON), the taxi
    paint (+12 built vs +16 vs the sheet's).
 Session end 03:22.
+
+CORRECTION 03:26 to MILESTONE 03:17 (03862a1d, bench-it16): that bench does NOT measure the
+traffic cards. `dev/bench/city_bench` (the windows-bench export's drive_dense) builds a CityView
+and CityCharacters but no VehicleView (only boot/city_vehicle_world.gd attaches it, in the real
+game): its cars are the crowd's flat atlas layer in both views. Seen when I filmed it windowed
+(`res://dev/bench/city_bench.tscn -- --scenario=drive --zoom=<1.0|1.5> --view=tilt70`, 900
+frames, 0 SCRIPT ERROR): flat top-down cars on the tilted city. So bench-it16 is the angled VIEW's
+cost on the drive without my cards (it agrees with view's it5 numbers), and "the cards cost
+nothing visible on the drive" is WITHDRAWN. What stands for the cards: the synthetic bench
+(23:20, ~5.3 us per card script, ~0.02 ms GPU) and the in-game count after the cull (1-4 cards a
+frame in the city walk, finish ~20 us). Brief item 5 (the real drive with cards, tilt70 vs top)
+stays OPEN: needs a frame-time probe in the main game's drive (vehicle_frame or the main scene)
+or VehicleView in city_bench (a dev change; city_bench is shared: check its owner first).
+FRICTION: a bench is only evidence for the code it runs: check the bench scene builds the node
+under test before reading its numbers.

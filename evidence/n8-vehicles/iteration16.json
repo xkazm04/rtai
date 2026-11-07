@@ -18,6 +18,7 @@
  },
  "measures": {
   "city_tilt70_gate_clusters": "seeds 2 7 11 23, every 10th frame 0-180 (76 frames): non-collar clusters are lit amber lenses (hue > 30); the only hue < 30 cluster is Rivet's collar; no pickup rust over the gate seen",
+  "drive_bench": "evidence/n8-vehicles/bench-it16: city_bench drive_dense top vs tilt70 (release export, bench.lock held). CAUTION: city_bench has no VehicleView, so these numbers are the angled view's cost WITHOUT the traffic cards (the crowd's flat car layer in both views); not a measure of the cards",
   "fire_gate_px": {
    "hue_turn_p70": {
     "10": 51653,
