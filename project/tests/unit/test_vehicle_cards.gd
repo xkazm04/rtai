@@ -103,3 +103,17 @@ func test_soul_bit_sits_above_the_siren_and_matches_the_shader() -> void:
 	var code: String = (load(VehicleCards.SHADER) as Shader).code
 	assert_string_contains(code, "soul_bit = %.1f;" % float(VehicleCards.SOUL))
 	assert_string_contains(code, "siren_bit = %.1f;" % float(VehicleCards.SIREN))
+
+
+func test_near_a_view_boundary_the_neighbours_cross_fade_to_one() -> void:
+	var keep: float = VehicleCards.blend_deg
+	VehicleCards.blend_deg = 20.0
+	var cards: VehicleCards = autofree(VehicleCards.new())
+	cards.begin(null)
+	cards.put(0, Vector2.ZERO, Vector2.RIGHT, Color.WHITE)  # mid-view: one card
+	assert_eq(cards.count(), 1)
+	cards.put(0, Vector2.ZERO, Vector2.from_angle(deg_to_rad(20.0)), Color.WHITE)  # 2.5 off
+	VehicleCards.blend_deg = keep
+	assert_eq(cards.count(), 3, "the neighbour view and the nearest one")
+	assert_almost_eq(cards._cs[1].a, 0.375, 0.001, "the neighbour fades in")
+	assert_almost_eq(cards._cs[2].a, 0.625, 0.001)
