@@ -306,3 +306,21 @@ NEXT (iteration 7):
   29x encode); decode bit-exact in every case, decode time WASH. Textures are 209 of the pck's 228 MB.
 - 13:58 ab.mjs: an arm `<name>@exe-<dir>` runs `build/export/<dir>/RTAI-bench.exe` (the same pck beside another
   template); boot.sh `EXE_B=<path>` compares two exes.
+- 14:01 FRICTION (~1 min): the first link failed: the static ANGLE (angle=yes, ships in 4.7's Windows template) references
+  astcenc; astcenc back in, relinked in 30 s: 63.6 MB. The A/B's strip arm then crashed at boot: `Could not find type
+  "QuadMesh"`: `disable_3d` also drops the 3D primitive meshes, and the 2D MultiMesh crowds type `QuadMesh` (8 refs).
+  My stale bench.lock (the killed job's, pid gone) removed. Rebuilt with 3D kept (5.6 min: the define change rebuilt most
+  of the tree): **66.9 MB vs the official 109.3 MB (-39 %)**.
+- MILESTONE 14:11 L7 class check (`gtai-d9x/scratch/classprobe`: a 2 kB probe pck whose main scene writes
+  `ClassDB.get_class_list()`, run under each template): official 968 classes, strip 712, 256 removed (physics bodies and
+  shapes 2D/3D, joints, nav, CSG, GLTF/FBX, ENet/WebRTC/WebSocket, XR, Theora, MP3, FastNoiseLite ...), none added.
+  **No file under project/ (game, dev, tests; addons excluded) names any of the 256** (word grep; sanity: adding
+  MultiMesh to the list hits 36). Smoke: the strip exe runs the riot headless, exit 0, 0 ERROR lines.
+- MILESTONE 14:05 L8 KEPT (5ad88dab): project setting WebP lossless q75 m4; ctex 209.38 -> 196.87 MB, pck 227.71 -> 215.21
+  MB; 1220/1220 textures, 6317 mip payloads decode bit-identical (`tools/perf/ctex_same.py`). Reimport here: delete
+  `.godot/imported/*.png-*.md5` AND touch the `.png.import` (either alone does not trigger it), 31 s.
+- 14:12 L7 A/B started (lock held): official vs strip, the same 14:05 pck (md5 equal), riot / drive70 / riot60, 3 pairs.
+- MILESTONE 14:15 L7 no-LTO A/B (`evidence/perf/l7-strip/ab.json`): riot p50 3.50 -> 3.94 ms LOSS, drive70 2.01 -> 2.19 LOSS,
+  riot60 CPU 0.26 -> 0.29 cores LOSS, RAM -13..-20 MB WASH, 0 errors. Boot 7 rounds 2394 vs 2403 ms WASH (CONTENDED).
+  Reading: the official template is LTO (production=yes); mine was not. 14:17 LTO build of the same profile started
+  (production=yes, BelowNormal, -j12); the no-LTO exe kept as `gtai-d9x/scratch/godot-src/strip-nolto.exe`.
