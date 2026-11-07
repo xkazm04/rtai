@@ -587,3 +587,15 @@ looked at old vs new on one contact).
   0.27) + block 5/5, release-compile 602/0 PASS; unit 1717/0 but FAIL-flagged "tree changed during run":
   FRICTION (mine, 1 min): I edited JOURNAL/REPORT while it ran. Re-run on a clean tree below; never edit
   the worktree during an evidence run (write notes to scratch, paste after).
+- 14:52 GATE evidence it7b at f7b133ff (clean tree): lint 15/15, unit 1717/0, scenarios 52, parity
+  bit-exact, selftest goldens 11/11 (worst 0.27) + block 5/5, release-compile 602/0: all PASS
+  (`evidence/d9-seams/evidence-it7b-f7b133ff.log`).
+- 14:54 MILESTONE (a95de60e): quest 1's walking patrol cops (StreetQuestCards.PATROL_WALK) take the
+  library's cop_patrol_walk v4 (A at 55 and 70; a whole sheet, cut straight, no splice): every facing
+  alternates (v1 repeated rows 2/4; the 3/4-away row was the 1-2-1-4 --copy). Toned to the card's
+  navy as before; mean figure height 55 176.8 -> 178.7, 70 171.8 -> 171.5 px (no FILL table here: the
+  walk cell keeps the standing card's height). Unit test_street_quest_cards 8/0, lint 15/15 (one gdlint
+  line-length fix on the comment). Masters `quest_patrol_walk_v1_vs_v4_p55_p70_cells.png`; provenance 2.
+- 14:58 MERGE SEAM vs d9-rivet head (3c9def9a): `git merge-tree` conflicts in JOURNAL.md only (add/add);
+  shared + auto-merged: docs/decisions.md, provenance, prop_occlusion.gd, tools/debt/baseline.json (new
+  since it6: both lanes moved the baseline; after the merge run `node tools/debt/debt.mjs --update`).

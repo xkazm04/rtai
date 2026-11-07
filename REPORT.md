@@ -112,6 +112,9 @@ Branch `d9-seams`. Evidence: `C:\Users\kazda\kiro\gtai-masters\d9\seams\` (`fram
    `peds_jogger_shopper_before_after_board_tilt70_64ppm_f150_x2.png` + clip,
    `jogger_still_vs_walk_v1_vs_v3_cells.png`. Owner eye: the shopper's new profile row sits at a slightly
    shallower camera than her other facings.
+20. **Quest 1's patrol walks alternate its stride** (item 5 kin, a95de60e, it7): the walking patrol cops of
+   quest 1 take the library's cop_patrol_walk v4 (A, both pitches); v1 repeated two rows and copied a
+   frame on the 3/4-away row. `quest_patrol_walk_v1_vs_v4_p55_p70_cells.png`.
 
 **The set in one clip:** `seams_d9_set_combined_52s.mp4` (52 s, captioned per item).
 
@@ -147,7 +150,7 @@ director reel (`--fixed-fps 60 --quit-after 14000`) top 19/19, tilt70 19/19, com
 ## What does not work yet
 - The SWAT back rows (55 and 70, the library's mirror-fixed row 5) let the head move 3-5 px over the
   stride (drawn, not a splice; left). The riot 55 repeat is fixed (it7, item 18).
-- Seven of the nine ped walks (cap, elder, hat, hood, punk, suit, worker) and the unarmed patrol still use
+- Seven of the nine ped walks (cap, elder, hat, hood, punk, suit, worker) still use
   older library sheets than the library's fixed rows (a REQUEST to assets for one drop-in folder each).
 - The sim bike is off by default (Call 3).
 - After merge, rebuild native (`just native`): `project/native/bin` is git-ignored, and the old DLL
