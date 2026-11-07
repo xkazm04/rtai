@@ -146,6 +146,10 @@ NEXT (iteration 5):
 2. E8 fill-rate levers (E6 says the iGPU frame is fill-bound): the handheld tier drawing at a smaller 2D size scaled up
    (stretch viewport, content_scale_size below 1280x800) and the print grain / light passes off on tier `handheld`;
    A/B on `deck_bench` (render GPU ms), stills at 48 px/m to judge the look on a 7" panel.
+   Source: Godot's multiple-resolutions doc: viewport stretch renders to a viewport at `content_scale_size` and scales
+   it up ("running in lower resolution to increase frames per second"); `canvas_items` renders at the target size; the
+   cost is the lost 1:1 sprite-to-screen pixels (https://docs.godotengine.org/en/4.2/tutorials/rendering/multiple_resolutions.html).
+   A row field `draw_scale` (content_scale_size = base x draw_scale under viewport stretch) keeps it one data value.
 3. `handheld_1080` viewport vs `handheld_1080_native` A/B (iGPU, render GPU ms).
 4. A live proof of the focus-out pause (quest 1 running, NOTIFICATION_APPLICATION_FOCUS_OUT sent) as a scenario.
 5. NAT-06 parity on the Linux `.so` inside WSL.
