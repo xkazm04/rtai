@@ -9,7 +9,7 @@
 // Usage: node tools/handheld/sim.mjs --device=deck [--scene=reel|city|king|servo] [--ticks=1800]
 //   [--gpu=igpu|dgpu|<index>] [--threads=<n>] [--priority=belownormal|normal] [--label=<name>]
 //   [--out=<dir>] [--no-device] [--movie=<abs .avi>] [--renderer=forward_plus|mobile|compat]
-//   [-- <extra user args for the arena>]
+//   [--bin=<gui exe>] [-- <extra user args for the arena>]
 // --no-device runs the same pin/GPU without the --device flag (the desktop row: the A side).
 import { spawn, spawnSync } from 'node:child_process';
 import { mkdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs';
@@ -75,6 +75,14 @@ export function rendererArgs(renderer = 'forward_plus') {
   return ['--rendering-driver', 'd3d12'];
 }
 
+/** The adapter the run really used (the engine log's "Using Device" line): the request is not
+ *  the fact (an OpenGL run goes to the display's GPU whatever --gpu-index says). */
+export function adapterLine(logPath) {
+  try {
+    return readFileSync(logPath, 'utf8').match(/^.*Using Device.*$/m)?.[0].trim() ?? 'unknown';
+  } catch { return 'unknown (no log)'; }
+}
+
 const median = (xs) => { const s = [...xs].sort((p, q) => p - q); return s.length ? s[s.length >> 1] : null; };
 const pct = (xs, p) => { const s = [...xs].sort((x, y) => x - y); return s.length ? s[Math.min(s.length - 1, Math.floor(s.length * p))] : null; };
 const r2 = (x) => (x == null ? null : Math.round(x * 100) / 100);
@@ -102,7 +110,7 @@ async function main() {
   if (!row) { console.error(`sim: no device row ${a.device}`); process.exit(2); }
   const g = resolveGodot();
   if (!g.ok) { console.error(g.message); process.exit(2); }
-  const gui = g.bin.replace(/_console\.exe$/i, '.exe');
+  const gui = a.bin || g.bin.replace(/_console\.exe$/i, '.exe');
   const threads = a.threads || row.sim_threads || 16;
   const gpuIndex = a.renderer === 'compat' ? null : detectGpu(g.bin, a.gpu);
   const label = a.label || `${a.noDevice ? 'desktop' : row.id}-${a.scene}-${a.gpu}-t${threads}-${a.renderer || 'forward_plus'}`;
@@ -126,10 +134,11 @@ async function main() {
   clearTimeout(timer);
   await new Promise((done) => { sampler.on('close', done); setTimeout(done, 5000); });
   if (!existsSync(framesPath)) { console.error(`sim: no frame log (exit ${code})`); process.exit(1); }
+  const adapter = adapterLine(join(process.env.APPDATA ?? '', 'RTAI Uprising', 'logs', 'godot.log'));
   const samples = sampled.split(/\r?\n/).filter((l) => l.startsWith('{')).map((l) => JSON.parse(l));
   const doc = { schema: 'gtai.handheld-sim/1', label, device: a.noDevice ? 'desktop' : row.id, scene: a.scene,
     scene_args: SCENES[a.scene], extra: a.extra, renderer: a.renderer || 'forward_plus', gpu: a.gpu, gpu_index: gpuIndex, threads, priority: a.priority,
-    ticks: a.ticks, exit: code, contended: before.count > 0 ? `CONTENDED (${before.count} other Godot runs)` : 'quiet',
+    ticks: a.ticks, exit: code, adapter, contended: before.count > 0 ? `CONTENDED (${before.count} other Godot runs)` : 'quiet',
     at: new Date().toISOString(), summary: summarize(JSON.parse(readFileSync(framesPath, 'utf8')), samples), samples };
   const outPath = join(a.out, `${label}.json`);
   writeFileSync(outPath, `${JSON.stringify(doc, null, 2)}\n`);
