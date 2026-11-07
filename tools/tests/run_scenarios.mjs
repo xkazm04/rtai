@@ -119,13 +119,31 @@ export async function runScenarios(outDir, { quietWaitMs = 5 * 60 * 1000, pollMs
   return { ok, counts, summary, metrics, artifacts, durationMs: res.durationMs, contended: settled.state === 'contended', verdict: settled.state };
 }
 
+export class UsageError extends Error {
+  name = 'UsageError';
+}
+
+/** argv -> {quietWaitMs?, only?}. Throws UsageError for an unknown flag, a wait that is not a
+ *  non-negative number of minutes (NaN used to wait forever) or an empty --only. */
+export function parseArgs(argv) {
+  const o = {};
+  for (const a of argv) {
+    const [k, v] = [a.split('=')[0], a.includes('=') ? a.slice(a.indexOf('=') + 1) : null];
+    if (k === '--quiet-wait' && v !== null && v.trim() !== '' && Number(v) >= 0) o.quietWaitMs = Number(v) * 60000;
+    else if (k === '--only' && v && v.split(',').every(Boolean)) o.only = v.split(',');
+    else throw new UsageError(`unknown or malformed argument: ${a} (usage: [--quiet-wait=<minutes>] [--only=<name>[,<name>]])`);
+  }
+  return o;
+}
+
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  const qw = process.argv.find((a) => a.startsWith('--quiet-wait='));
-  const only = process.argv.find((a) => a.startsWith('--only='));
-  const r = await runScenarios(join(ROOT, 'build', 'test-results'), {
-    ...(qw ? { quietWaitMs: Number(qw.split('=')[1]) * 60000 } : {}),
-    ...(only ? { only: only.split('=')[1].split(',') } : {}),
-  });
+  let opts;
+  try { opts = parseArgs(process.argv.slice(2)); } catch (e) {
+    if (!(e instanceof UsageError)) throw e;
+    console.error(`run_scenarios: ${e.message}`);
+    process.exit(2);
+  }
+  const r = await runScenarios(join(ROOT, 'build', 'test-results'), opts);
   console.log(r.summary);
   process.exit(r.ok ? 0 : 1);
 }

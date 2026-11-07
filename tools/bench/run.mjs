@@ -170,11 +170,35 @@ async function benchRun(outDir, { headless = false, secs = 60, runs = 3 } = {}) 
   return { ok: !misses.length && !failures, summary, metrics: m, artifacts };
 }
 
+export class UsageError extends Error {
+  name = 'UsageError';
+}
+
+const NUMERIC = { '--secs': ['secs', (n) => n > 0], '--runs': ['runs', (n) => Number.isInteger(n) && n > 0], '--wait': ['waitMin', (n) => n >= 0] };
+
+/** argv -> {headless, secs, runs, waitMin}. Throws UsageError for an unknown flag or a value that is
+ *  not a valid number (NaN --wait used to queue forever; --runs=0 crashed combine()). */
+export function parseArgs(argv) {
+  const o = { headless: false, secs: 60, runs: 3, waitMin: 20 };
+  for (const a of argv) {
+    const k = a.split('=')[0];
+    const v = a.includes('=') ? a.slice(a.indexOf('=') + 1) : '';
+    const spec = NUMERIC[k];
+    if (a === '--headless') o.headless = true;
+    else if (spec && v.trim() !== '' && spec[1](Number(v))) o[spec[0]] = Number(v);
+    else throw new UsageError(`unknown or malformed argument: ${a} (usage: [--headless] [--secs=N] [--runs=N] [--wait=<minutes>])`);
+  }
+  return o;
+}
+
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  const arg = (name, dflt) => Number((process.argv.find((a) => a.startsWith(`${name}=`)) ?? `=${dflt}`).split('=')[1]);
-  const res = await runBench(join(ROOT, 'build', 'bench'), {
-    headless: process.argv.includes('--headless'), secs: arg('--secs', 60), runs: arg('--runs', 3), waitMin: arg('--wait', 20),
-  });
+  let opts;
+  try { opts = parseArgs(process.argv.slice(2)); } catch (e) {
+    if (!(e instanceof UsageError)) throw e;
+    console.error(`bench: ${e.message}`);
+    process.exit(2);
+  }
+  const res = await runBench(join(ROOT, 'build', 'bench'), opts);
   console.log(res.summary);
   process.exit(res.ok ? 0 : 1);
 }
