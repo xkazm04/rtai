@@ -33,7 +33,7 @@ const FILL: Dictionary[String, float] = {
 	"p70/swat_armed_walk.png": 1.14,
 	"p55/cop_patrol_armed_walk.png": 1.07,
 	"p55/cop_riot_armed_walk.png": 1.09,
-	"p55/swat_armed_walk.png": 1.07,
+	"p55/swat_armed_walk.png": 1.08,
 }
 
 
