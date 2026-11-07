@@ -1232,3 +1232,14 @@ Rules applied: concept-scene-parity (the card takes the top print's paint), gene
 gating (judged in the depot under the grade and through a filmed turn, not in the sheet),
 sprite-and-atlas-production (cutter flag, False bit-exact; the grade reproducible), motion-quality-
 gating (the 64 px/m turn, every 15 deg).
+GATE on 3202cd13 (the cream atlases): unit no-arg 1550 passed, 0 failed, no FLAKY; lint 15/15;
+`top` framemd5 seed 2 (main scene --arena=city --bot=rivet --rigs, 300 frames) identical to it18;
+director reel top 19/19 and tilt70 19/19 all down, 0 SCRIPT ERROR (evidence/n8-vehicles/director-
+reel-it19-*.log); scenarios 52 ran, 0 failed, exit 0 (scenarios-it19.log). iteration19.json.
+LOOKED city tilt70 seed 7 (721 frames, 0 SCRIPT ERROR): no van in its traffic (sedans, ambulance);
+the cream van's evidence is the turn and the depot.
+MILESTONE combined clip re-cut: segment 5 (Servo depot combo 32 px/m seed 2) on HEAD shows the cream
+van seized over Servo (looked at 46 s); the others as it18 (no van in them). frames.json entry 1.
+NOTED (REPORT, Call 9): the library's delivery_truck_70 (A) and depot_van_70 (A, an ochre courier
+van) have no sim archetype and no top-down print; Servo's stage van is the van row. Cutting depot_van
+for the stage alone would bring back the card-vs-print mismatch just fixed, so it is a Call.
