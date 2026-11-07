@@ -1484,3 +1484,28 @@ NEXT (iteration 17, the freeze at 08:30):
   p99 8.03 / 7.26 vs 6.34 / 6.44, draws p50 498 vs 670, render CPU p50 0.46 / 0.35 vs 0.34 / 0.35.
   Same verdict as it5/it11/it16: combo ~+0.09 ms rig on the drive, cheaper than top in the King
   fight. REPORT Frame cost updated.
+- CLEAN 08:05: `git worktree remove --force` %TEMP%/view-trial-it11 and %TEMP%/view-street-check
+  (both mine); the trial logs in %TEMP% deleted; scratch renders not in frames.json deleted (the
+  city17 .avi, crops, quest stills). Left alone (not view's): %TEMP%/gtai-mutate-0de94ca0
+  (bae619d5, a vehicles commit) and gtai-mutate-21c3edad (737985aa, main's mutate tool commit):
+  stale mutate worktrees for the Director's hygiene pass.
+- Registry rules applied it17: concept-scene-parity (the last trial merge judged on the real scenes,
+  quest 1 / the city block / the King / Servo, same seeds and ticks as earlier takes),
+  motion-quality-gating (the reel by chapter counts in both views on the merge; the corpse fix
+  rejected because the same-seed frame did not move: a hit counter rising is not a visual fix),
+  perf-regression-gating (the frame cost re-taken under the lock at the freeze HEAD, labelled
+  CONTENDED, four takes compared, the paced wall times refused as a verdict),
+  combat-pacing-and-dramatic-arc (Servo's fixed target circle re-checked on the merge: Rivet clear
+  of it after the wind-up), depth-ordered-layered-art (the corpse-over-barrier traced to two
+  occluders that each see half the bodies), generative-artifact-gating / sprite-and-atlas-production
+  (n/a: no new art).
+- Session close it17 08:06: code unchanged since e369f4b0 (gated at cc76970c; the exe
+  `build/export/windows/RTAI.exe` 07:20 is that code). Commits it17: 7f45cfeb, c5ba9164, 271abbfa,
+  the JOURNAL King/Servo commit, dbef2186, this one. Tree clean after this commit.
+NEXT (after the night; for d9 or the Director):
+1. Merge: n8-view merges with the four lanes with JOURNAL/REPORT conflicts only (it17 trial at the
+   lanes' 07:3x heads); if merging from a fresh main, the it16 `cast_view.gd` note applies.
+2. d9: the arena's tall props as an `extra` occluder list for city's CityOcclusion (view fills it
+   from ArenaFloorView; city merges it): the corpse-over-barrier repro is seed 5 tick 900 tilt70.
+3. The Calls 1-7 in REPORT; BossCam as the fight camera (Call 7) with its band read from BossBar.
+4. After the owner's Rivet pick: the whole-figure Rivet frames per pitch via `data/tables/card_sets/`.
