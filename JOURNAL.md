@@ -244,3 +244,13 @@ NEXT (iteration 6):
   snapshot by offset (was a `slice()` alloc per person in range). Same events, same order (new test pins the end order
   to slot order; it fails without the sort). Unit 16/0 (fx + layers), lint 15/15. A/B against a scratch project at
   ee63589c (`gtai-d9x/scratch/perf-base`, the pre-lever baseline for code levers): riot, drive70, quest1, 3 pairs.
+- 13:16-13:29 L5 A/B: job 1 (riot/drive70/quest1, 3 pairs) riot p99 10.47 -> 8.69, p99.9 15.95 -> 10.69 "WIN", rest WASH;
+  confirm job (riot, + a `--render-thread separate` arm) p50 5.95 -> 5.20, p99.9 18.0 -> 14.1 "WIN". Every run
+  CONTENDED 4-10 (rivet filming). Then an A-vs-A (same L5 code from both dirs): p99 14.27 vs 12.25 "WIN" for the
+  d9-perf dir alone. FINDING F12: a scratch-project arm carries a ~2 ms tail floor; the L5 frame "wins" sit inside it.
+- MILESTONE 13:31 L5 mechanism (headless microbench, old vs new observe in one process, 8 interleaved blocks x2):
+  201-209 -> 122 us a tick (-40 %, ranges disjoint); slice removal ~2 us. ~0.08 ms of a 5 ms riot frame: KEPT as a
+  pixel-free CPU cut, NO frame win claimed (measurement-honesty). LEDGER L5 + F12.
+- L6 `--render-thread separate` (research sub-agent: still experimental in the docs, D3D12 shutdown drops the pipeline
+  cache #119000, texture uploads stay on the calling thread on Forward+): vs L5 frame times WASH, CPU 0.99 -> 1.15
+  cores LOSS: DROPPED. Quest 1 baseline row filled (p50 3.63, p99 6.49, worst 18.8 ms, 1035 MB, CONTENDED).
