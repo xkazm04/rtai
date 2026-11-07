@@ -1501,3 +1501,17 @@ NEXT (after the freeze):
 - GATE director reel `--view=combo` on 7db6c352 (08:15-08:20): 19/19 chapters, every chapter all
   down, 0 SCRIPT ERROR, exit 0. All three views gated on the final code. REPORT updated.
 - Session end 08:21: tree clean after this commit; freeze = 7db6c352's code, exe from it.
+
+## Iteration 16 (08:21, BUILD, freeze 08:30)
+Read: JOURNAL tail, git log, the other lanes' journals (no new REQUEST to street; view's l.1137 was
+answered in it14), the library's keyed/street (newest ped_cap_fall_70_v4 07:46, already integrated).
+- DECISION street/it16-hold: no code change in the last 9 min before the freeze. The freeze stays
+  7db6c352 (it15: evidence ALL PASS, director reel 19/19 in top, tilt70 and combo, exe exported from
+  it). A change now could not be re-gated in time; the gated build beats an ungated tweak.
+- REQUEST to assets: ped_cap_fall_70_v5, p70, the round-0137 ped_cap_fall_70 short-fall poses (v1
+  layout, 5 x 3) redrawn in the ped_cap_70_v3 identity, so the short grid's value tone retires too.
+- REQUEST to assets: armed walk strips at p70 for the patrol and riot cops (city cops cannot show a
+  walk grid without them).
+NEXT: the it15 NEXT list stands (cap short fall v5, cop armed walks, the SWAT p70 front corpse
+1.43x short, cultists / Torque's gang when they spawn). REPORT.md is current for the freeze.
+- Session end 08:22: tree clean after this commit.
