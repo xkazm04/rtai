@@ -22,11 +22,14 @@ export const EXE = join(ROOT, 'build', 'export', 'windows-bench', 'RTAI-bench.ex
 // --fixed-fps 60 with vsync off: every frame steps exactly one sim tick and runs as fast as it can,
 // so a frame's wall time is the cost of one 60 Hz gameplay frame. Uncapped without it, most frames
 // carry no tick (the riot at ~400 fps ticks every 6-7th frame) and p50 reads the cheap ones (F3).
-const WIN = ['--rendering-driver', 'd3d12', '--disable-vsync', '--fixed-fps', '60', '--resolution', '1920x1080'];
+// `--screen 0` pins the window to the same monitor for every arm: the git-excluded override.cfg does it
+// for the editor binary only, and an exported exe on the primary (ultrawide) screen blocked 27-47 ms in
+// present (F8): a placement confound, not a build cost.
+const WIN = ['--screen', '0', '--rendering-driver', 'd3d12', '--disable-vsync', '--fixed-fps', '60', '--resolution', '1920x1080'];
 // The player's case: vsync on and a 60 fps cap, real time (no --fixed-fps). Its frame times are the
 // presented interval (a delivery bar, not a cost); the numbers it exists for are the process CPU in
 // cores and the peak RAM at the cap (`*60` presets): the "least resources" side.
-const CAP60 = ['--rendering-driver', 'd3d12', '--max-fps', '60', '--resolution', '1920x1080'];
+const CAP60 = ['--screen', '0', '--rendering-driver', 'd3d12', '--max-fps', '60', '--resolution', '1920x1080'];
 
 /** Scene presets: engine args, scene, user args (`OUT` is replaced by the log path), log kind. */
 export const SCENES = {

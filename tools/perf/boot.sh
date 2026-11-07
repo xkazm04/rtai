@@ -6,7 +6,7 @@ N=${1:-5}
 export APPDATA=${APPDATA_PERF:-C:/Users/kazda/kiro/gtai-d9x/appdata/perf}
 G=${GODOT_BIN:-C:/Users/kazda/kiro/gtai-spike/tools/godot/Godot_v4.7.2-stable_win64_console.exe}
 EXE=build/export/windows-bench/RTAI-bench.exe
-A=(--rendering-driver d3d12 --resolution 1920x1080 --quit-after 1)
+A=(--screen 0 --rendering-driver d3d12 --resolution 1920x1080 --quit-after 1)
 U=(-- --scenario=riot --secs=1 --out=build/boot-probe.json)
 ms() { local t0; t0=$(date +%s%N); "$@" > /dev/null 2>&1; echo $(( ($(date +%s%N) - t0) / 1000000 )); }
 for i in $(seq 1 "$N"); do
