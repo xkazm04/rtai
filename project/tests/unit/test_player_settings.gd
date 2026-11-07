@@ -72,6 +72,12 @@ func test_rumble_round_trips_and_bad_levels_fall_back_to_full() -> void:
 	assert_true(f.store_string('{"schema": "gtai.player-settings/1", "rumble": 0.7}'))
 	f.close()
 	assert_eq(PlayerSettings.load_or_default(_path).rumble, 1.0, "0.7 is not offered")
+	f = FileAccess.open(_path, FileAccess.WRITE)
+	assert_true(f.store_string('{"schema": "gtai.player-settings/1", "frame_cap": 40.0}'))
+	f.close()
+	var old: PlayerSettings = PlayerSettings.load_or_default(_path)
+	assert_eq(old.rumble, 1.0, "a file saved before the rumble row keeps full rumble")
+	assert_eq(old.frame_cap, 40, "and its other fields")
 
 
 func test_frame_cap_drives_the_engine_and_device_restores_it() -> void:
