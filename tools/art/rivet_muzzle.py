@@ -8,10 +8,11 @@ whose muzzle could be measured -> [x, y] px from the cell's top-left (unmirrored
 
 - An equipped strip's fire cells (5 = fire toward camera-right, 6 = toward the camera) carry a
   drawn flash: the muzzle is the flash's root, the pixel of the biggest flash-core blob (pale hot
-  yellow) nearest the figure's body centre; blobs count off the visor (a hot blob centred in the
-  helmet's span above VISOR_BAND of the figure) and, in the side cell, right of the body centre
-  (a launcher's back-blast is drawn hot too). A cell with
-  fewer than MIN_FLASH core px (a beam drawn in another hue) gets no point.
+  yellow) nearest the figure's body centre; blobs count off the visor (a flat hot blob centred in
+  the helmet's span above VISOR_BAND of the figure) and, in the side cell, right of the body centre
+  (a launcher's back-blast is drawn hot too). A cell with fewer than MIN_FLASH core px (a
+  whirl or a beam drawn in another hue) takes its shape: the arm band's rightmost px (cell 5),
+  the arm band's centre at CAM_Y of the figure (cell 6).
 - A one-handed hold's drawn left strip (cells 0-2): the gun points left, so the muzzle is the
   leftmost opaque pixel in the arm band (ARM_BAND of the figure height, below the helmet).
 
@@ -35,6 +36,8 @@ LEFT_CELLS = 3
 MIN_FLASH = 6
 ARM_BAND = (0.38, 0.72)
 VISOR_BAND = 0.58
+CAM_Y = 0.7
+VISOR_FLAT = 2.0
 ## Blades, the baton and the bottle: no muzzle flash (the swing's smear, the lit rag instead).
 NO_FLASH = ("katana", "chainsaw", "plasma_sword", "electro_baton", "molotov")
 
@@ -66,12 +69,32 @@ def fire_point(cell, c):
 
 
 def _drop_visor(core, alpha, top, bot):
-    """Clears the core blobs of the visor: centred in the helmet's span, above VISOR_BAND."""
+    """Clears the visor's core blobs: flat (VISOR_FLAT wide per tall), centred in the helmet's
+    span, above VISOR_BAND (a flash drawn in front of the chest is round or spiky)."""
     head = np.nonzero(alpha[top : int(top + (bot - top) * 0.25)].any(axis=0))[0]
     lab, n = ndimage.label(core)
+    boxes = ndimage.find_objects(lab)
     for k, (y, x) in enumerate(ndimage.center_of_mass(core, lab, range(1, n + 1))):
-        if y < top + (bot - top) * VISOR_BAND and head.min() - 2 <= x <= head.max() + 2:
+        h = boxes[k][0].stop - boxes[k][0].start
+        w = boxes[k][1].stop - boxes[k][1].start
+        flat = w >= VISOR_FLAT * h
+        if flat and y < top + (bot - top) * VISOR_BAND and head.min() - 2 <= x <= head.max() + 2:
             core[lab == k + 1] = False
+
+
+def shape_point(cell, c):
+    """A fire cell without a drawn flash: the arm band's right tip (5), its centre (6)."""
+    a = cell[:, :, 3] > 128
+    ys = np.nonzero(a.any(axis=1))[0]
+    top, bot = ys.min(), ys.max()
+    y0 = int(top + (bot - top) * ARM_BAND[0])
+    y1 = int(top + (bot - top) * ARM_BAND[1])
+    if c == 6:
+        bx = np.nonzero(a[y0:y1].any(axis=0))[0]
+        return [int((bx.min() + bx.max()) // 2), int(top + (bot - top) * CAM_Y)]
+    band = a[y0:y1]
+    x = int(np.nonzero(band.any(axis=0))[0].max())
+    return [x, int(y0 + np.nonzero(band[:, x])[0].mean())]
 
 
 def left_point(cell):
@@ -101,7 +124,7 @@ def measure(out_dir, strips):
             cells = {}
             for c in range(LEFT_CELLS) if left else FIRE_CELLS:
                 cell = im[:, c * w : (c + 1) * w]
-                p = left_point(cell) if left else fire_point(cell, c)
+                p = left_point(cell) if left else (fire_point(cell, c) or shape_point(cell, c))
                 if p is not None:
                     cells[str(c)] = p
             if cells:
