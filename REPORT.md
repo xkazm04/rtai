@@ -85,9 +85,11 @@ priority, the CPU's own 2-CU Radeon), never a device claim. Details and sources:
 - (it14) **E13, the sim is the same on Linux**: in WSL Ubuntu with the official 4.7.2 Linux editor (sha512 checked),
   NAT-06 parity on the Linux `.so` is exact over 1200 steps (planted fault caught at 629, as on Windows), and quest 1
   replays cross both ways identical (Windows-recorded 1800 ticks on Linux, Linux-recorded 3600 ticks on Windows):
-  a replay made on a Deck runs the same on the PC (`evidence/it14/linux/`; a save file across the two OSes is not tested). Idle input and the debug `.so`. E13b (the release `.so` through the export) is not a result yet: `linux-showcase` boots the dev arena, which never reads `--replay`; a `linux-slice` preset is owed.
+  a replay made on a Deck runs the same on the PC (`evidence/it14/linux/`; a save file across the two OSes is not tested). Idle input and the debug `.so`. E13b (the release exports, a new `linux-slice` preset): an editor-recorded replay **diverges at tick 60 in the release exports of both OSes alike**, so the editor and a shipped build differ, not Windows and Linux; and a release exe writes no `--record` file on `--quit-after`. An open finding for the replay owner (the Director), under "does not work".
 
 ## What does not work yet
+- (it14) A quest 1 replay recorded in the editor diverges at tick 60 in a release export (`windows-slice` and `linux-slice` alike),
+  and a release exe with `--record` and `--quit-after` writes no file (`evidence/it14/linux/slice-*`). Cause unmeasured.
 - Rumble on every hit Rivet takes is in (it7: the view reads his hurt tick; no sim change); its live pulse count is
   owed. The release-compile step of the evidence gate collides with seams' new temp-dir layout
   (their item; skipped with `--no-release`).

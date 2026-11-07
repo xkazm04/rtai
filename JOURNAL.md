@@ -607,10 +607,19 @@ NEXT (iteration 14):
   fire-tv-device-realities (a device ships a different binary: the release `.so` and the export's main scene are the
   device's reality, and the showcase preset is not the game a Deck would run).
 
+- RESULT 17:04 (dab6158a) E13b done early (NEXT 1 below was started this session): a `linux-slice` preset (quest 1 as
+  main), exported in 14 s; both editor-recorded logs **diverge at tick 60** through it on Linux, and through
+  `windows-slice` on Windows alike: an editor-vs-export difference, not an OS one (E13's editor runs cross the OSes
+  identical). The Windows release exe with `--record` + `--quit-after 1800` exits 0 but writes no file, so release vs
+  release across the OSes is not measured. FINDING for the Director (SIM-05 is not handheld's code): a replay made in
+  the editor does not hold in a shipped build. Cause unmeasured (candidates: `dev/*` excluded from the slice, a
+  debug-only path).
+
 NEXT (iteration 15):
-1. E13b: a `linux-slice` export preset (feature `slice`, mirror `windows-slice`; exclude_filter like `linux-showcase`),
-   export, replay `evidence/it14/linux/q1-{win,linux}.replay.json` through `RTAI.x86_64 --headless -- --replay=` in WSL
-   (a script file, not an inline `bash -lc`); then a save round trip Windows <-> Linux.
+1. E13b follow-up: why the release export diverges at tick 60 (bisect: a `windows-slice` copy without the `dev/*`
+   exclusion; and why `--record` writes nothing in release: does the World's exit save run on `--quit-after`?). If
+   the cause is outside handheld's files, a REQUEST to the Director with the evidence; then release-vs-release on
+   Linux, and a save round trip Windows <-> Linux.
 2. mutate.mjs on handheld_rumble.gd at HEAD (the rest lines) and quote the score.
 3. The glyph REQUEST (`ui_pad_glyphs_v1`): re-read the asset journal.
 4. FREEZE prep (by 18:30): the exe `build/export/windows/RTAI.exe` (`"$GODOT_BIN" --headless --path project
