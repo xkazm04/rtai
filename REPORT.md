@@ -40,6 +40,9 @@ The view lane's REPORT.md came in with the n8-view merge; this file replaces it 
    `tilt70`, 0 SCRIPT ERROR; lint 15/15; `top` framemd5 identical; scenarios: see JOURNAL.
 
 ## What does not work / not done
+- The delivery truck and the dedicated depot van (library `delivery_truck_70` A, `depot_van_70` A,
+  an ochre courier van with hazard bumpers) have no sim archetype and no top-down print: they are
+  not cut. Servo's stage van and the city's vans draw the van row (cream). See Call 9.
 - The bike has no sim archetype: it draws only in `dev/showcase/vehicle_turn.tscn`.
 - The driven car's hijack enter/exit keeps Rivet's current rig (Rivet frozen tonight).
 - The main scene ignores `--ppm`: city stills at 48/64 px/m come from the showcases, not the drive.
@@ -69,6 +72,10 @@ Each: options, the default built, how to see it.
    `van_cream_turn_tilt70_64ppm_olive_left_cream_right.mp4`.
 7. **Pickup's C in-between:** row C (built) vs the better-turned `_c` redraw (`PICKUP_C_REDO`).
 8. **Stage cars over the actors:** ON (built) vs under.
+
+9. **Servo's stage van:** (a) the city van row, cream, matching its top-down print (built); (b) the
+   library's ochre `depot_van` as a new atlas row for the stage only (needs a top-down print too, or
+   `top` and the card disagree again). See `van_cream_servo_depot_combo_64ppm_seed2_f120_olive_left_cream_right.png`.
 
 ## Exe
 (at the freeze) `build/export/windows/RTAI.exe`, with the command lines.
