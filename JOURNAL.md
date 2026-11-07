@@ -1098,3 +1098,25 @@ FILMED Servo depot on the merge (`res://dev/arena/arena.tscn -- --boss=servo --b
 both): bay 3's box and number draw over the stage van at 32 (f130) and 64 (f120). Looked.
 Masters: servo_bay3_mark_over_van_combo_64ppm_f120_before_left_after_right.png (before = it16's
 "on" half), servo_bay3_mark_over_van_combo_32ppm_f130_after_crop2x.png. NEXT 1 closed.
+MEASURED 04:22 the sedan's unlit rear lenses (it17 NEW): in the atlas the inner lens block is
+(155, 90, 6), hue 33, value 0.61 (looked at 4x: orange); under the city's grade it prints (97, 34, 0),
+hue 20: rust-red, a red tail lamp to the eye. LAMP_DEG never touched it (value >= 0.7 only); amber()
+neither (r > g * 1.8 only). The same band (sat >= 0.8, value 0.3-0.7, hue 20-42) holds only lenses
+on every row (looked: magenta overlay on the ambulance, taxi, van, pickup rows; the taxi's paint is
+already out of the band).
+MILESTONE 7f9cbf26 DARK_LAMP_DEG 10 in the cutter (hue_turn learns max_v). Police row capped at
+value 0.6: with 0.7 three of its amber pixels left the siren shader's lens() set; at 0.6 the lens
+set is identical in both atlases, police blue identical. The pre-edit cutter re-made HEAD's atlas
+bit-exact first. Changed px p70 per row [1026, 768, 1001, 847, 736, 801, 4987, 1808, 1257, 155],
+alpha untouched. FILMED city `-- --arena=city --view=tilt70 --seed=13 --rigs --ppm=<32|64>`, 181
+fixed-fps frames, 0 SCRIPT ERROR all three: the sedan's rear lenses at f180 hue 20 / 23 -> 33 / 31
+(80 + 60 lens px), amber-brown by eye at 32 and 64; vermilion-gate px in the frame 244 -> 232.
+Masters: sedan_unlit_rear_lenses_before_left_after_right_city_tilt70_32ppm_seed13_f180_crop4x.png,
+sedan_unlit_rear_lenses_after_city_tilt70_64ppm_seed13_f180_crop3x.png. Provenance (2 lines, the
+current sha256s; the it15 lines' sha256 was already stale against HEAD: aaaaf876 re-cut the police
+row without a new line, now covered). Decision line.
+GATE unit --changed (fell back to the fast/full set: death_veil.gd has no test) 1533 passed, 0
+failed. FRICTION: not comparable with it17's no-arg 1545; the no-arg run comes at the close.
+Rules applied: generative-artifact-gating (judge the art as it prints in the game, under the grade,
+not in the atlas), sprite-and-atlas-production (the fix in the cutter, reproducible, 0 = previous
+bit-exact; no hand repaint).
