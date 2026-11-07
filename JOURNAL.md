@@ -267,3 +267,35 @@ NEXT (supersedes every NEXT above):
   RivetFrames' hide list misses), or a dropped hand part. Film `--boss=servo --view=top` vs combo at the same seed
   and frame to see what it is in top.
 - Session end 12:16: everything committed (16da537f + this note); scratch PNG sequences deleted (5.7 GB).
+
+## Iteration 10 (director it10, 12:14-13:14), BUILD
+- Read: JOURNAL it7 NEXT, git log, d9-seams JOURNAL (no REQUEST to rivet), the library catalog (plasma sword
+  v3 B / v4 A at round 1135/1145; this lane swapped the redraw in at b2614b45, nothing new owed).
+- MILESTONE `5f3c583d` the flamer's one flame (it7 NEXT 1): `RivetFrames.fires_drawn(weapon, octant)`: the cone
+  weapon (`RivetStrips.CONE` = flamethrower) fires its drawn flame cell only along octants 0, 2, 4 (side, camera,
+  side mirrored); off them the facing cell fires and the game's jet leaves the drawn nozzle. `rivet_muzzle.py`
+  now measures the flamer's 5 facing cells (the wand points right in all five drawn facings: the rightmost px in
+  FACE_BAND 0.38-0.86; p70 holds the wand low). A generic facing rule for every hold was tried first and failed
+  on the contact sheet (the pistol is drawn at image left in cell 0, cell 0 is three-quarter, not camera): so
+  facing points are the flamer's only. 10 points judged on
+  `gtai-masters/d9/rivet/rivet_muzzle_flamer_facing_points_p70_p55_contact.png` (all on the nozzle ring).
+  Film (`--bot=gunplay --weapon=flamethrower --view=tilt70 --ppm=64 --seed=3`, before = CONE emptied for the run):
+  `rivet_flamer_one_flame_before_after_tilt70_64ppm_x1.1_seed3_f344_364.png`: before, a drawn flame points
+  left while the jets go down-left; after, one stream from the drawn nozzle. New tests (2). Unit full 1700/0.
+- 12:25 The it6 Servo "grey blob" (it7 NEXT 2): re-filmed `--boss=servo --bot=boss --view=combo --ppm=48 --seed=1`
+  and `--view=top` on HEAD (540 frames each). Combo's occlusion log equals it6's first film exactly (18 body-frames,
+  frames 32-49), so the same run: the blob is not there at f270 or at bay 4 (f436-538). `top` f0 shows what it was
+  made of: his top-down rig parts (grey claws, cream sticker rim). Most likely the reload magazine on the hidden
+  claw, which f3038865 hid under the drawn figure (it6). Closed:
+  `gtai-masters/d9/rivet/rivet_servo_grey_blob_was_the_reload_mag_it6_vs_it10_combo_48ppm.png`.
+- Found (same film): under combo the Servo bay's apron NUMBER prints over Rivet's body (f466-478,
+  `gtai-masters/d9/rivet/servo_bay_number_prints_over_rivet_combo_48ppm_x4_seed1_f466_472_478.png`). In `top`
+  he stands over it. Cause: n8-view's `ServoDepotDraw.marks_apart` draws the marks on ServoBodyView._marks at
+  z = vehicles + 1 (201), over the actors band (100 + depth sort), so the van no longer hides bay 3 but every
+  body walking on a bay is printed through. Not this lane's file.
+  REQUEST to seams: Servo bay number (servo_body_view.gd:39) draws over every actor under a card view. Suggest
+  the marks at `actors - 1` (under bodies) and the van's own card skips/fades the bay rect it covers, or draw
+  the number only where no rig's screen box meets it. Evidence above; repro `--boss=servo --bot=boss
+  --view=combo --ppm=48 --seed=1`, frames 466-478.
+- Seen (both films, combo, f0-f1): for the first frame Rivet's top-down parts show a pale outline at his feet
+  under the drawn figure (RivetFrames' first step runs after the first draw). One frame at spawn; noted, not fixed.

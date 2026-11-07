@@ -31,6 +31,17 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
   sim's shot origin does not move. Before/after: `gtai-masters\d9\rivet\rivet_muzzle_before_after_pistol_left_tilt70_64ppm_seed3_f290_297.png`;
   p55 gatling in the Servo fight: `gtai-masters\d9\rivet\rivet_muzzle_servo_gatling_combo_p55_48ppm_seed2_f340_402_x1.7.png`;
   the measured points: `gtai-masters\d9\rivet\rivet_muzzle_points_fire_cells_p55_p70_contact.png`.
+- **The flamer's one flame** (`5f3c583d`, it10): the drawn flame cell only along the side and camera octants;
+  off them the facing cell fires and the game's jet leaves the drawn nozzle (the flamer's 5 facing cells
+  measured, `RivetFrames.fires_drawn`, `RivetStrips.CONE`). Before/after at 64 px/m:
+  `gtai-masters\d9\rivet\rivet_flamer_one_flame_before_after_tilt70_64ppm_x1.1_seed3_f344_364.png`; the nozzle
+  points: `gtai-masters\d9\rivet\rivet_muzzle_flamer_facing_points_p70_p55_contact.png`.
+- **Ghost form swap back and the roll** (it10, King, Kerf, combo p55, 48 px/m): the drawn figure comes back inside
+  the exit ring (f434-442) with the pistol strip, firing by f464; the roll ball spins over the roll (f606-624):
+  `gtai-masters\d9\rivet\rivet_ghost_kerf_swap_back_and_roll_king_combo_p55_48ppm_x1.5_seed1_f404_632.png`.
+- **The Servo "grey blob" (it6) is gone at HEAD**: the same run (`--boss=servo --bot=boss --view=combo --seed=1`)
+  shows no part beside him; it was his top-down parts (the reload magazine, fixed in `f3038865`):
+  `gtai-masters\d9\rivet\rivet_servo_grey_blob_was_the_reload_mag_it6_vs_it10_combo_48ppm.png`.
 - **Gates (it7):** `node tools/evidence/run.mjs --no-bench` green on feb56ca2 (lint 15/15, unit 1695/0, scenarios 52
   incl. the replay, parity exact + planted caught, look goldens 11/11 + block 5/5, release-compile 599/0; run with a
   lane-private TEMP); on f7334278 unit 1698/0 and the director reel 19/19 in `tilt70`, `combo`, `top`, 0 SCRIPT ERROR
@@ -41,10 +52,11 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
 
 ## What does not (yet)
 - The cast shadow is the shared rig-height shadow (long for a 1.1 m robot).
-- The flamer firing between octants: the drawn side cell's flame points sideways while the game's jet follows
-  the true aim (e.g. down-left), so two flames show for one stream. Candidate: streams keep the facing cell (no
-  drawn flame) + the game jet from a measured facing muzzle.
-- A facing cell (no fire drawn) has no measured muzzle: a flash outside the fire cell's 7 ticks keeps the old spot.
+- A facing cell (no fire drawn) has no measured muzzle except the flamer's: a flash outside the fire cell's 7
+  ticks keeps the old spot (the other holds are drawn every which way in their facings; no generic rule held).
+- The Servo bay number prints over Rivet (and every body) under combo: n8-view's apron marks sit at z vehicles+1.
+  REQUEST to seams (JOURNAL it10): `gtai-masters\d9\rivet\servo_bay_number_prints_over_rivet_combo_48ppm_x4_seed1_f466_472_478.png`.
+- The first frame after spawn shows his top-down parts' pale rim under the drawn figure (one frame).
 - Walk: one drawn walk and one sprint pose per sheet; built bob + sway on the facing.
 - Reload: no drawn reload frame; he keeps the equipped strip through it (it7 check: the "bare figure" seen in it6
   was the equipped back views, which show the small guns barely; no change made).
