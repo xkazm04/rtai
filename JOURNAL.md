@@ -1046,3 +1046,6 @@ NEXT (iteration 26, in order):
   --quit-after 7600 res://dev/arena/arena.tscn -- --bot=reel --reel=director --loadout=pistol
   --rigs --view=tilt70`): 19/19 chapters, every one all down, 0 SCRIPT ERROR, exit 0
   (`evidence/director-reel-it25-tilt70.log`). Left for iteration 26: evidence/run.mjs --no-bench.
+- (05:41) GATE `node tools/evidence/run.mjs --no-bench` at 492f14f1: PASS (lint 15/15, unit 1524/0,
+  scenarios 52, parity bit-exact + planted mutation caught, selftest look goldens 11/11 + block 5/5,
+  export-audit release-compile 563/0). NEXT 1 done; iteration 26 starts at NEXT 2.

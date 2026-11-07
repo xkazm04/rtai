@@ -53,7 +53,7 @@ head commit. Branch `n8-city`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n8\ci
 - Director reel at tilt70 (`--bot=reel --reel=director --loadout=pistol --rigs --view=tilt70`, 7600
   frames headless): 19/19 chapters down, 0 SCRIPT ERROR (`evidence/director-reel-it25-tilt70.log`, 9614fc50).
 - Scenarios: 52 ran, 0 failed at 0d9002a1 (vehicle drive timing CONTENDED, labelled by the runner).
-- Last `evidence/run.mjs --no-bench`: PASS at 7b63bcb1 (iteration 19). FREEZE: re-run.
+- Last `evidence/run.mjs --no-bench`: PASS at 492f14f1 (iteration 25: lint, unit 1524/0, scenarios 52, parity, selftest goldens, export-audit 563/0). FREEZE: re-run.
 
 ## What does not work / gaps
 
