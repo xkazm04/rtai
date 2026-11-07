@@ -1130,3 +1130,13 @@ for street: `RigSelect.CORPSE_HOLD_TICKS` (90 in the city game, then street's at
   evidence/quest1_patrol_cop_walk_frames_tilt70_48ppm_x2_t686-710.png + _t600-760.mp4 (masters
   too). Unit 12/12 (+2: the grid is 5x4 per pitch; walked px adds up, a still frame stops the
   stride). Lint 15/15. Provenance x2. DECISION street/patrol-walk. 55 not filmed yet (NEXT).
+- LOOKED the 55 walk: quest 1 `--view=tilt --ppm=48 --ticks=600-760` (81 frames, 0 SCRIPT ERROR):
+  the cop strides at p55 too (the face under the visor shows, as the 55 sheet's camera), navy as
+  the 55 standing card. evidence/quest1_patrol_cop_walk_frames_p55_tilt_48ppm_x2_t686-710.png.
+- Evidence run re-started 05:16 on a7b72448 (clean tree), running.
+- SCOUT (city cops walking, for it12): StreetWalkerCards.strip_of lets only `ped` rows walk
+  (cops get a FALLS grid while down). A patrol cop (`cop/head_cap`) could walk on the same
+  cop_patrol_walk grid while `not rig.gun_out` (WALKS p70/p55 row + a WALK_FILL entry), back to
+  the head card on parts the moment a gun comes out (the aim arm needs the parts): that swap is a
+  pop to judge in a clip first (city seed 5, a cop walking up then drawing). Riot/SWAT keep parts
+  (no walk strip; they carry shields/rifles).
