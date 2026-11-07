@@ -826,3 +826,37 @@ emotion pair must differ at a glance: the 1540 gunsmith's did not).
   the body and bar visible (~60-70 camera), the 2155 design and mustard palette, on #00B140. Why:
   in the open crate and on the floor at tilt70 it is the one long piece drawn dead side-on. Low
   priority after the nurse.
+- 04:04 MILESTONE d60b7f4c the ghost-form card (the soul cards, bottom left; seen in the arena, the
+  boss fights, the reel and quest 1) on the HUD's torn memo paper (`HudPaper`, a 12-line helper
+  over HudArt's 9-slice; `GhostFormHud.MEMO`, false = the flat D5 card) instead of the flat cream
+  rectangle with a hard ink rim, the last HUD panel outside the print style. First take: the tape ran
+  across "Dent"/"Kerf" and the hatch touched "Tonnage" -> `paper_of` grows 16/34/10/16; the right
+  held to 10 because the folded card's paper must clear the dialogue box's (156 px at 1080p):
+  test_hud_dialogue's clearance test now measures `paper_of`. The debt ratchet failed the first
+  take (209 lines past the soft cap) -> the paper draw moved to HudPaper, the card file at 200.
+  Looked: the armory tilt70 32 px/m seed 1 frame 89 (the frame diff only the card's box) and quest 1
+  at 6700 (the folded card beside Juno's box), 0 SCRIPT ERROR. Master
+  `ghost_card_paper_tilt70_before_after.png` (frames.json 11). docs(decisions) hud/ghost-form card paper.
+- 04:12 Gates at d60b7f4c (`gtai-n8/scratch/hud/evidence_run_it11b.log`, tree untouched during the
+  run): lint 15/15, unit 1518/0, scenarios 52/52, parity bit-exact + planted mutation at 629, look
+  goldens 11/11 + block 5/5 (top did not move), export-audit 559/0.
+- frames.json: a list trim dropped the 55 armory pair; restored (entry 15), the boss-taunt mp4
+  entry removed instead (its file stays; the call still's note points at it).
+- Director reel not re-run: d60b7f4c draws the ghost card in the arena (render only, the same code
+  path the armory film ran with 0 SCRIPT ERROR). The last reel 19/19 in top and tilt70 is at a91232c4
+  (it7). RUN IT AT THE FREEZE (the card is in every chapter's frame).
+
+NEXT:
+- Work items 1-4 evidenced; it11 raised the quest-1 faces (newest sheets, the nurse's vermilion
+  gone), the HUD icon (ink drop shadow) and the ghost-form card (memo paper). Weakest left: the
+  nurse's camera (REQUEST v4 out), the chainsaw's side-on 70 drawing (REQUEST out), the chips inside
+  the card are flat D5 discs (a drawn chip set would match the paper; a REQUEST or keep), the Servo
+  taunt waits for lines, the long guns on the wall overlap the cops at 55 (the hub layout).
+- On a nurse v4 or chainsaw raise in the catalog: re-cut (`portrait_cut.py`, `showcase_import.py`),
+  provenance, film, and the nurse guard test stays.
+- Freeze 08:30: the director reel (top + tilt70), `node tools/evidence/run.mjs --no-bench`, export
+  `build/export/windows/RTAI.exe` (`windows-showcase` preset, recipe in
+  `gtai-n8/scratch/hud/it6/report_notes.md`, it11 lines appended), REPORT from those notes (FINDING
+  for the owner: the dock guard's concept-approved orange-vermilion hi-vis). Delete it9-it11 scratch
+  frames after the REPORT. Nothing into the worktree during a gate run.
+- 04:14 Session end. All committed.
