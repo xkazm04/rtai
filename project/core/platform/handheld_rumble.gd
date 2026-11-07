@@ -19,6 +19,8 @@ const PULSES: Dictionary[StringName, Vector3] = {
 
 ## The live node (null without a rumble row: feel_hurt() is then a no-op, the desktop's case).
 static var _live: HandheldRumble = null
+## The player's rumble level (PlayerSettings.rumble: 1, 0.5, 0), times the row's gain.
+static var player_gain: float = 1.0
 
 var gain: float = 1.0
 ## Pulses played (tests and the log read it).
@@ -86,7 +88,7 @@ static func pulse(kind: StringName, rumble_gain: float) -> Vector3:
 
 ## Plays `kind` on every connected pad unless a stronger pulse is still running; true when it did.
 func play(kind: StringName) -> bool:
-	var p: Vector3 = pulse(kind, gain)
+	var p: Vector3 = pulse(kind, gain * player_gain)
 	var now: int = Time.get_ticks_msec()
 	var strength: float = maxf(p.x, p.y)
 	if strength <= 0.0 or (now < _until_ms and strength < _strength):

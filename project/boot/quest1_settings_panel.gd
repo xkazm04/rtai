@@ -1,12 +1,12 @@
 class_name Quest1SettingsPanel
 extends VBoxContainer
-## The pause card's settings: master volume, reduced motion, a frame cap on a handheld device
-## row (device / 30 / 40 / 60), and a keyboard rebind per action (press the button, then the
-## new key; Esc or any pad button cancels). Every change is applied and saved at once
-## (PlayerSettings, to `save_path`; "" = not saved); `changed` tells the game to refresh what
-## reads the flags. A rebuild keeps the focus on the same button (d9-handheld: a pad or keyboard
-## player pressing Toggle would otherwise lose the focus with the freed button, and the pad
-## could no longer move in the card).
+## The pause card's settings: master volume, reduced motion, a frame cap and the rumble level on a
+## handheld device row (device / 30 / 40 / 60; full / half / off), and a keyboard rebind per action
+## (press the button, then the new key; Esc or any pad button cancels). Every change is applied and
+## saved at once (PlayerSettings, to `save_path`; "" = not saved); `changed` tells the game to
+## refresh what reads the flags. A rebuild keeps the focus on the same button (d9-handheld: a pad
+## or keyboard player pressing Toggle would otherwise lose the focus with the freed button, and the
+## pad could no longer move in the card).
 
 signal changed
 
@@ -85,6 +85,10 @@ func _build_rows() -> void:
 		_row(
 			cap_label(settings.frame_cap), [[_text.resolve(&"SLICE__TOGGLE", "Toggle"), _cycle_cap]]
 		)
+		_row(
+			rumble_label(settings.rumble),
+			[[_text.resolve(&"SLICE__TOGGLE", "Toggle"), _cycle_rumble]]
+		)
 	# d9-handheld: no keyboard rebind rows on a handheld tier (the pad has none; Steam Input remaps)
 	var rebinds: Array[StringName] = REBINDS.duplicate()
 	if DeviceProfile.shared().is_handheld():
@@ -139,6 +143,21 @@ func cap_label(cap: int) -> String:
 func _cycle_cap() -> void:
 	var caps: Array[int] = PlayerSettings.FRAME_CAPS
 	settings.frame_cap = caps[(caps.find(settings.frame_cap) + 1) % caps.size()]
+	_commit()
+	_rebuild()
+
+
+func rumble_label(level: float) -> String:
+	if level >= 1.0:
+		return _text.resolve(&"SLICE__RUMBLE_FULL", "Rumble: full")
+	if level > 0.0:
+		return _text.resolve(&"SLICE__RUMBLE_HALF", "Rumble: half")
+	return _text.resolve(&"SLICE__RUMBLE_OFF", "Rumble: off")
+
+
+func _cycle_rumble() -> void:
+	var levels: Array[float] = PlayerSettings.RUMBLE_LEVELS
+	settings.rumble = levels[(levels.find(settings.rumble) + 1) % levels.size()]
 	_commit()
 	_rebuild()
 

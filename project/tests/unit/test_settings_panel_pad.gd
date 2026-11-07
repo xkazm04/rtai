@@ -9,6 +9,7 @@ extends GutTest
 ## tier (the controls line, a thick focus mark) and unchanged on the desktop.
 
 const CAP_ROW: int = 2
+const RUMBLE_ROW: int = 3
 const REBIND_ROW: int = 2
 
 var _fps_before: int = 0
@@ -30,6 +31,7 @@ func after_each() -> void:
 	DeviceProfile.select("")
 	PlayerActions.shipped().install()
 	Engine.max_fps = _fps_before
+	HandheldRumble.player_gain = 1.0
 
 
 func test_a_cycles_the_cap_and_the_focus_stays_for_the_dpad() -> void:
@@ -62,6 +64,26 @@ func test_a_pad_button_cancels_a_rebind_wait() -> void:
 	assert_eq(_panel.focused_slot(), Vector2i(REBIND_ROW, 1), "the focus stayed on Rebind")
 
 
+func test_a_cycles_the_rumble_full_half_off_and_the_pad_goes_quiet() -> void:
+	var rumble: HandheldRumble = HandheldRumble.new(1.0)
+	(_panel.get_child(RUMBLE_ROW).get_child(1) as Button).grab_focus()
+	var label: Label = _panel.get_child(RUMBLE_ROW).get_child(0) as Label
+	assert_eq(label.text, "Rumble: full")
+	_pad(JOY_BUTTON_A)
+	assert_eq(_panel.settings.rumble, 0.5, "A pressed the rumble's Toggle")
+	assert_eq(HandheldRumble.player_gain, 0.5, "the level reached the rumble")
+	assert_true(rumble.play(&"player_hit"))
+	assert_eq(rumble.last, HandheldRumble.pulse(&"player_hit", 0.5), "half strength")
+	_pad(JOY_BUTTON_A)
+	label = _panel.get_child(RUMBLE_ROW).get_child(0) as Label
+	assert_eq(label.text, "Rumble: off")
+	assert_false(rumble.play(&"boss_engaged"), "off: the pad stays still")
+	_pad(JOY_BUTTON_A)
+	assert_eq(_panel.settings.rumble, 1.0, "a third A wraps to full")
+	assert_eq(_panel.focused_slot(), Vector2i(RUMBLE_ROW, 1), "the focus stayed on Toggle")
+	rumble.free()
+
+
 func test_menu_pad_adds_a_and_b_once() -> void:
 	var a: InputEventJoypadButton = InputEventJoypadButton.new()
 	a.button_index = JOY_BUTTON_A
@@ -77,7 +99,7 @@ func test_menu_pad_adds_a_and_b_once() -> void:
 
 
 func test_handheld_card_is_pad_first_and_desktop_unchanged() -> void:
-	assert_eq(_panel.get_child_count(), CAP_ROW + 1, "deck: volume, motion, cap; no keyboard rows")
+	assert_eq(_panel.get_child_count(), RUMBLE_ROW + 1, "deck: volume, motion, cap, rumble only")
 	var card: Quest1Card = Quest1Card.new()
 	add_child_autofree(card)
 	var pad: String = card.controls_text()
