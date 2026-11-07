@@ -90,3 +90,37 @@ NEXT (iteration 4):
   `%TEMP%\gtai-release-compile` (created by another worktree, no marker): the seams lane's item
   (their 6e49a298 makes the dir per worktree + process); the release-compile evidence comes with their merge.
   Log: `evidence/perf/evidence-0d3b0d56.log`. Director reel x3 views still owed (NEXT 2).
+
+## Iteration 4 (11:19-12:19, BUILD)
+- Read: JOURNAL, LEDGER, git log, d9-handheld JOURNAL (answered my tooling REQUEST: their runners overlap;
+  L2 waits for the merge; lever back: zoom_k 1.5 = a look change, not chased), d9-seams/rivet (no REQUEST to perf).
+- Registry rules applied it4: perf-instrumentation (split the owner before fixing: a span per call inside
+  the hot _process, then per rig stage, then per drive stage: measure down to the line, never guess),
+  render-submission-economy ("spread bursts": a one-off decode moved off the frame, the picture unchanged),
+  perf-regression-gating (ABAB, flag arms in one job), measurement-honesty (the spike frames named by index).
+- GATE 11:25 director reel at 8ea5ba90 (L2 inside), headless `--fixed-fps 60 --quit-after 14000
+  res://dev/arena/arena.tscn -- --bot=reel --reel=director --loadout=pistol --rigs --view=<v>`:
+  top 19/19, tilt70 19/19, combo 19/19 chapters all down, 0 SCRIPT ERROR (`evidence/perf/reel-l2/*.log`).
+- 11:27 L3 profile (scratch spans, reverted; riot fixed 60, windowed, 1826 frames): city_view _process =
+  place_camera 0.25 mean / chunks 0.10 (p99 1.6, max 6.8 = a chunk build at frame ~40) / prop_lights 0.003 /
+  before_render 2.24 (p99 4.0, max 22) / write_render 0.03. before_render = _fill_feed 0.65 (fx_feed.observe
+  0.23 + the feed loop 0.39 + snapshot 0.03) + crowd.observe 0.14 + CharacterRigs.step_ticks 1.33 (p99 2.5,
+  max 20.6). The step_ticks spikes (frames 4, 91, 174: 16-21 ms) are ALL in CutRig.drive ->
+  StreetView.step -> StreetWalkerCards._build -> a synchronous `load()` of a ~3000x1500 RGBA lossless fall
+  grid on the frame a person dies (15-28 ms PNG decode); the walk grids cost 7-9 ms on first use.
+- FINDING F7: the rig pose step (CharacterRigs.step_ticks, 16-20 full rigs) is the riot's biggest steady
+  GDScript cost (1.33 ms mean, debug build). Rig code is rivet's today: a candidate for after the merge.
+- 11:33 L3 built: `StreetStrips` (features/characters/street_strips.gd): a worker-thread
+  `ResourceLoader.load_threaded_request` of each full rig's fall grid when its card is first stepped
+  (+ the art's walk grids once); `get_tex` returns the same Texture2D as load(). `--strip-prefetch=off` =
+  the before. Top untouched by construction (StreetView only runs under a tilt).
+- FRICTION 11:30: city_bench validates its own user args: a new A/B flag must also go into its KNOWN list
+  (first L3 job died on the off arm; lock released by hand: it was mine, pid 37580 gone).
+- MILESTONE 11:36 (1c115075) L3 KEPT: riot worst 27.19 -> 17.96 ms (WIN beyond the 2.45 spread), p50/p99/p99.9
+  and the King WASH, draws equal, RAM +16 MB (WASH). Mechanism checked (scratch): each death's card step
+  15-28 ms -> ~2 ms, every strip found decoded. `evidence/perf/l3-prefetch/ab.json`. DECISION line in docs/decisions.md.
+- 09e6c713 `@exe` arms in ab.mjs (the release-export baseline); presets king60/drive60/riot60 (vsync + 60 cap:
+  CPU cores and RAM at the player's cap).
+- GATE 11:41 at 1c115075: unit full 1697/0 (`evidence/perf/unit-1c115075.log`); director reel top/tilt70/combo
+  19/19 chapters all down, 0 SCRIPT ERROR (`evidence/perf/reel-l3/`). Lint 15/15 (debt ratchet: city_bench's
+  new flag line paid for by a shorter usage comment).

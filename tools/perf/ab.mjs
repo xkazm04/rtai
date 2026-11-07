@@ -23,6 +23,10 @@ export const EXE = join(ROOT, 'build', 'export', 'windows-bench', 'RTAI-bench.ex
 // so a frame's wall time is the cost of one 60 Hz gameplay frame. Uncapped without it, most frames
 // carry no tick (the riot at ~400 fps ticks every 6-7th frame) and p50 reads the cheap ones (F3).
 const WIN = ['--rendering-driver', 'd3d12', '--disable-vsync', '--fixed-fps', '60', '--resolution', '1920x1080'];
+// The player's case: vsync on and a 60 fps cap, real time (no --fixed-fps). Its frame times are the
+// presented interval (a delivery bar, not a cost); the numbers it exists for are the process CPU in
+// cores and the peak RAM at the cap (`*60` presets): the "least resources" side.
+const CAP60 = ['--rendering-driver', 'd3d12', '--max-fps', '60', '--resolution', '1920x1080'];
 
 /** Scene presets: engine args, scene, user args (`OUT` is replaced by the log path), log kind. */
 export const SCENES = {
@@ -34,6 +38,12 @@ export const SCENES = {
     user: ['--scenario=drive_dense', '--zoom=1.5', '--view=tilt70', '--secs=30', '--out=OUT'] },
   riot: { engine: WIN, scene: 'res://dev/bench/city_bench.tscn', kind: 'bench',
     user: ['--scenario=riot', '--zoom=1.0', '--view=tilt70', '--secs=30', '--out=OUT'] },
+  king60: { engine: CAP60, scene: 'res://dev/arena/arena.tscn', kind: 'fight',
+    user: ['--boss=king', '--bot=boss', '--seed=2', '--rigs', '--view=combo', '--frames=OUT', '--frames-ticks=1500'] },
+  drive60: { engine: CAP60, scene: 'res://dev/bench/city_bench.tscn', kind: 'bench',
+    user: ['--scenario=drive_dense', '--zoom=1.5', '--view=tilt70', '--secs=30', '--vsync=enabled', '--out=OUT'] },
+  riot60: { engine: CAP60, scene: 'res://dev/bench/city_bench.tscn', kind: 'bench',
+    user: ['--scenario=riot', '--zoom=1.0', '--view=tilt70', '--secs=30', '--vsync=enabled', '--out=OUT'] },
   drive70h: { engine: ['--fixed-fps', '60'], headless: true, scene: 'res://dev/bench/city_bench.tscn', kind: 'bench',
     user: ['--scenario=drive_dense', '--zoom=1.5', '--view=tilt70', '--secs=30', '--out=OUT'] },
 };
