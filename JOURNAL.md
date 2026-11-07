@@ -1203,3 +1203,6 @@ NEXT (iteration 28, freeze session, in order):
    the riot f560-575 with a framemd5 `top` check.
 4. REPORT's combined clip (it25 set, 55 s) predates the crowd occlusion and the 55 traffic light:
    refresh only if the freeze leaves time.
+- GATE (07:17) scenarios (raw run_scenarios.gd) at 6c653ec4: 52 ran, 0 failed, exit 0, 0 SCRIPT
+  ERROR (vehicle drive timing CONTENDED, labelled by the runner). Scratch .avi deleted.
+- Session end 07:18. Head = this commit. Tree clean. NEXT above (item 1 done; start at item 2).

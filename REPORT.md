@@ -67,6 +67,9 @@ head commit. Branch `n8-city`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n8\ci
 - Scenarios: 52 ran, 0 failed, exit 0 at bf579226 (vehicle drive timing CONTENDED, labelled by the runner).
 - Last `evidence/run.mjs --no-bench`: PASS at 25c9be53 (iteration 26: lint 15/15, unit 1527/0, scenarios 52, parity bit-exact + planted mutation caught, selftest look goldens 11/11 + block 5/5, export-audit release-compile 564/0). FREEZE: re-run.
 
+Iteration 27 gates (head 6c653ec4): lint 15/15, unit full 1530/0 (at f14b97c9), scenarios 52/0,
+director reel tilt70 19/19 0 SCRIPT ERROR, `top` city arena framemd5 identical to the branch base.
+
 ## What does not work / gaps
 
 - The baked crowd is hidden behind the lifted roofs since iteration 27 (`CityCrowdOcclusion`,
