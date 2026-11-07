@@ -1,4 +1,4 @@
-# n8 hud lane: REPORT (DRAFT it19, 06:55; final at the freeze)
+# n8 hud lane: REPORT (DRAFT it20, 07:25; final at the freeze)
 
 Lane `hud`, branch `n8-hud`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n8\hud\` (`frames.json`,
 15 entries, best first; the combined clip `hud_set_combined_it19.mp4`, 61 s, 7 segments). Repo evidence under
@@ -29,6 +29,8 @@ changed. `top` stays bit-identical (look goldens 11/11 + block 5/5 at every gate
    `dialogue_faces_1280x800_before_after.png`, `dialogue_contact_{1280x800,1080p}.png`.
    Boss taunt presentation (`BossTaunt`, a paper strip under the boss bar, tail at the crest):
    `call_boss_taunt_box_vs_strip_combo_1280x800.png` (dev shot: no taunt lines exist yet).
+   it20: Juno Stitch's busts from the assets lane's rust-brown post fix of v4 (red-hue px 738 -> 265 /
+   990 -> 225; red stays for blood): `dialogue_nurse_rustbrown_busts_before_after.png`.
 3. **The HUD pass on one hand-inked torn-paper style** (`HudPaper`): beat panel, cash frame (fits
    its sum), ammo ticket (a 3-slice with the showcase icon), the ghost-form card (soul teal only on
    the current form; each chip shows that ghost's own drawn face), quest 1's control prompt, heat
@@ -54,7 +56,11 @@ Every look has a flag one value away (`PAPER`, `FACES`, `SEE`, `ON_TICKET`, `FIT
   (`evidence/director-reel-n8hud-it19-{top,tilt70}.log`).
 - Full gate run at 38bc8bee (it19, `evidence_run_it19.log`): lint 15/15, unit 1529/0, scenarios
   52/52, parity bit-exact + planted mutation caught at step 629, look goldens 11/11 + block 5/5 (top did not move), export-audit 563/0.
-- FREEZE: re-run all four gates + the reel on the final head.
+- Full gate run at 9a6a3ce4 (it20, after Juno's rust-brown busts, `evidence_run_it20.log`, 07:15-07:22): lint 15/15,
+  unit 1529/0, scenarios 52/52, parity bit-exact + planted mutation caught at step 629, look goldens 11/11 +
+  block 5/5 (top did not move), export-audit 563/0. The reel was not re-run for it: a portrait PNG only, no
+  reel chapter draws the dialogue box (quest 1 only); the it19 reel ran on the same code.
+- FREEZE: re-run the gates (+ the reel if code changed) only if the tree changes after 9a6a3ce4.
 
 ## What does not work / not done
 - No vendor exists in the game: the rack and the crate are the showcase's display forms.
@@ -99,12 +105,12 @@ Every look has a flag one value away (`PAPER`, `FACES`, `SEE`, `ON_TICKET`, `FIT
   `RTAI.exe -- --armory --view=tilt --rigs` (55), `RTAI.exe -- --armory --pickup-crate=on --view=tilt70 --rigs`,
   `RTAI.exe -- --boss=king --view=combo --rigs`, `RTAI.exe -- --boss=servo --view=combo --rigs`.
   The taunt shot and the dialogue board are dev-only (-s scripts): see the masters stills.
-- Built at 07:01 from 1fab97c0 (project tree = 38bc8bee, gates green): `build/export/windows/RTAI.exe`
+- Built at 07:22 from 9a6a3ce4 (gates green at that head; it replaces the 07:01 build): `build/export/windows/RTAI.exe`
   (262 MB, embedded pck, + `gtai_sim.windows.template_release.x86_64.dll` beside it), export 0 errors.
   Smoke: `RTAI.exe --log-file <f> --write-movie <dir>/f.png --fixed-fps 60 --quit-after 240 -- --armory
   --view=tilt70 --rigs` and `-- --boss=king --view=combo --rigs`: 241 frames each, 0 errors in the
   log; looked at frame 239 of each (the floor showcase + rack + chip faces; the King's paper banner).
-  FREEZE: re-export only if the code changed after 38bc8bee.
+  FREEZE: re-export only if the tree changed after 9a6a3ce4. Smoke frames: `gtai-n8/scratch/hud/it20/exe_smoke.png`.
 
 ## Merge notes for the Director
 - hud touches `features/hud/`, `features/bosses/boss_bar.gd`, `features/police/heat_meter.gd`, the

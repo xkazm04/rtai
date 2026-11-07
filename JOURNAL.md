@@ -1206,3 +1206,17 @@ fixed, the camera still mixed) and `portrait_nurse_v5` (0835, C; its notes name 
   (masters `dialogue_nurse_rustbrown_busts_before_after.png`) and both nurse lines on the board at
   1280x800 (`it20/board.sh rb`), 0 SCRIPT ERROR. Unit 21/0, lint 15/15 (hook). 2 provenance lines.
   DECISION hud/dialogue nurse rustbrown.
+- GATE 07:15-07:22 full evidence run at 9a6a3ce4 (`gtai-n8/scratch/hud/evidence_run_it20.log`, the
+  tree untouched during the run): lint 15/15, unit 1529/0, scenarios 52/52, parity bit-exact +
+  planted mutation caught at 629, look goldens 11/11 + block 5/5 (top did not move), export-audit
+  563/0. The first attempt (07:14) refused a dirty tree (JOURNAL uncommitted): commit first.
+  Reel not re-run: a portrait PNG only, no reel chapter draws the dialogue box.
+- 07:22 EXE re-exported at 9a6a3ce4 (`windows-showcase`, 0 errors, 262 MB + the sim DLL). Smoke
+  (`--log-file`, 240 frames each): `-- --armory --view=tilt70 --rigs` and `-- --boss=king
+  --view=combo --rigs`, 0 errors, 241 frames each, frame 239 looked at (`it20/exe_smoke.png`: the
+  floor showcase, rack and chip faces; the King's banner + crest). REPORT's gates + Exe updated.
+- LOOKED (no change): the red-hue audit over the HUD, showcase and boss art. Above 5 %: the dock
+  guard (the REPORT's hi-vis FINDING), `wanted_pip_full/army` (dev overlay only; DECISION hud/colour),
+  the King's p70 bust card (the cape), the electro gun (the design's copper coil, as the assets lane
+  measured). The dialogue board's full-HUD still puts the box over the 4-chip ghost card: board
+  only (it does not fold the card); live, `GhostFormHud.compact` folds it while a line is up.
