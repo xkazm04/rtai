@@ -1509,3 +1509,8 @@ NEXT (after the night; for d9 or the Director):
    from ArenaFloorView; city merges it): the corpse-over-barrier repro is seed 5 tick 900 tilt70.
 3. The Calls 1-7 in REPORT; BossCam as the fight camera (Call 7) with its band read from BossBar.
 4. After the owner's Rivet pick: the whole-figure Rivet frames per pitch via `data/tables/card_sets/`.
+- CHECK 08:05 the REPORT's four "Try" lines in the freeze exe (`RTAI.exe --headless --quit-after 600
+  -- <args>`): `--rigs --boss=king --phase=3 --view=combo --ppm=64`, `--rigs --boss=servo
+  --view=combo` (both p55 cards), `--arena=city --rigs --view=tilt70`, `--rigs --view=combo_lead`
+  (the occluder made: a tilted view): all exit 0, 0 SCRIPT ERROR, no unknown flag. With the 07:39
+  Call 7 line and the 07:20 smoke, every owner command line in REPORT has run in this exe.
