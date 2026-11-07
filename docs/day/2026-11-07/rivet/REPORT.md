@@ -64,8 +64,9 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
 - **The frame cost** (it16, under the bench lock; 3 before / 3 after interleaved): rig_bench `--view=tilt70`, the
   drawn figure vs the head card over parts, median p50: 50 people 0.943 -> 0.776 ms, 200 people 1.319 -> 1.179 ms.
   No added cost (`evidence/d9/rivet-frame-cost-it16.md`; it10's contended runs agreed).
-- **Gates (it16):** director reel 19/19 in `tilt70`, `combo`, `top`, 0 SCRIPT ERROR on 90c46dfc; unit 1705/0
-  (`evidence/d9/gates-it16.md`).
+- **Gates (it16):** director reel 19/19 in `tilt70`, `combo`, `top`, 0 SCRIPT ERROR on 90c46dfc and e6a74d74;
+  unit 1705/0; evidence run all PASS (look goldens 11/11 + block 5/5: `top` did not move; parity exact;
+  release-compile 600/0) (`evidence/d9/gates-it16.md`).
 - **Gates (it10):** director reel 19/19 in `tilt70`, `combo`, `top`, 0 SCRIPT ERROR on 61fbbdf8; evidence run on
   dfb7a4de: lint, scenarios 52, parity, look goldens 11/11 + block 5/5 (top did not move), release-compile 600/0
   PASS; unit 1700/0 (the stage flagged "tree changed during run": a tool file written mid-run) (`evidence/d9/gates-it10.md`).
