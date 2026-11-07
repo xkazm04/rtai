@@ -843,3 +843,8 @@ NEXT (iteration 20, in order):
    framemd5 on the city arena, the exe export, REPORT (Calls: facade height, occlusion style,
    lamp 70 width, the TUCK-IN two-layer box vs a drawn sheet).
 - Session end ~03:45. Head = this JOURNAL commit.
+- (03:46) EVIDENCE NEXT 3 done early: the burning TUCK-IN crates (tuckin_crate_hit, same PropBox
+  path) at tick 16040 (fire at 16022), quest1_clip --stills=16040 --view=tilt70, ca539e27 vs
+  678c7382: the fire bursts and smoke still cover the lifted crates (the lift is ~5 px at 32 px/m),
+  no floating or gap; Rivet's fight beside them unchanged. 0 SCRIPT ERROR both.
+  `gtai-masters/n8/city/it19_quest1_tuckin_burning_tilt70_32ppm_before_after_x2.png`.
