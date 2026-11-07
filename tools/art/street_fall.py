@@ -9,6 +9,11 @@ usage: python -I tools/art/street_fall.py <keyed_fall.png> <out.png> [stand_px=1
 rows is drawn as tall as the standing one; it is stretched K along the fall axis (vertical), about
 the feet, so the corpse lies a body's length from them.
 
+--back-from-away: the back row's lying frame is the 3/4-away row's (lying on the up-right
+diagonal, 45 deg off the blow), for a strip whose drawn back corpse reads as a man standing with
+raised hands (cop_patrol_fall_70's named fault; the same corpse turned 180 deg read so too: any
+face-down body lying head-up on screen does at 70 deg, a diagonal one reads as lying).
+
 The feet: buckling (frame 0) the box centre on the bottom line, as the walker strips are placed
 (a held case would pull a centroid sideways and jump at the blow); mid-fall the lowest rows' x
 centroid; lying (frame 2) the end of the body away from the facing's fall direction (the 5 %
@@ -72,6 +77,7 @@ def main() -> None:
     for o in opts:
         if o.startswith("--stretch="):
             stretch = float(o[10:])
+    back_from_away = "--back-from-away" in opts
     stand_px = float(sys.argv[3]) if len(sys.argv) > 3 else 177.0
     rgba = np.asarray(Image.open(sys.argv[1]).convert("RGBA"))
     solid = rgba[:, :, 3] > 128
@@ -92,6 +98,11 @@ def main() -> None:
             figs.append((f, i, crop, fx, fy))
         print(f"facing {f}: sizes {[(g[2].shape[1], g[2].shape[0]) for g in figs[-3:]]}, "
               f"feet {[(round(g[3]), round(g[4])) for g in figs[-3:]]}")
+    if back_from_away:
+        _, _, crop, fx, fy = next(g for g in figs if g[0] == 3 and g[1] == 2)
+        at = next(j for j, g in enumerate(figs) if g[0] == 4 and g[1] == 2)
+        figs[at] = (4, 2, crop, fx, fy)
+        print("back lying frame = the 3/4-away lying frame")
     k = stand_px / np.mean([g[2].shape[0] for g in figs if g[1] == 0])
     print(f"stretch {stretch} on the facing-camera and back lying frames")
     hw = max(max(g[3], g[2].shape[1] - g[3]) for g in figs) * k

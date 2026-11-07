@@ -30,6 +30,7 @@ const FALLS: Dictionary[String, Dictionary] = {
 		"ped/head_jogger": "ped_jogger_fall.png",
 		"ped/head_punk": "ped_punk_fall.png",
 		"ped/head_shopper": "ped_shopper_fall.png",
+		"cop/head_cap": "cop_patrol_fall.png",
 	},
 }
 const FALL_FRAMES: int = 3
