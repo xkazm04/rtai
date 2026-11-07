@@ -56,6 +56,13 @@ COLS = 9 if BETWEEN else 5
 # flatter camera and heavier rust): PICKUP_C_REDO = True takes the _c.
 PICKUP_C_REDO = False
 TAXI_HUE = 12.0
+# True: the taxi's five views from taxi_70_v3 (the asset lane's repaint, a native cab yellow, hue
+# ~49: no hue turn on them); its in-betweens (drawn mustard) keep TAXI_HUE (35 + 12 = ~47). False:
+# the 2021 sheet, every cell turned TAXI_HUE (the build since iteration 15). 55 has no v3 sheet.
+TAXI_SHEET = False
+SHEET_PICKS = {"taxi": {70: "taxi_70_v3"}} if TAXI_SHEET else {}
+# Rows whose five views come from a SHEET_PICKS sheet this build (their HUE_DEG skips columns 0-4).
+_PICKED: set = set()
 REDRAWS = {
     "sedan": {2: "sedan_between_c_{p}_v2"},
     "police_car": {2: "police_car_between_c_{p}_v2"},
@@ -121,7 +128,8 @@ def rows_of() -> list:
 def sheet_of(lib: Path, sid: str, pitch: int) -> Image.Image:
     if sid == "bike":
         return green_key(Image.open(lib / "sheets" / "vehicle" / BIKE_SHEET.format(pitch=pitch)))
-    return Image.open(lib / "keyed" / "vehicle" / f"{sid}_{pitch}.png").convert("RGBA")
+    name = SHEET_PICKS.get(sid, {}).get(pitch, f"{sid}_{pitch}")
+    return Image.open(lib / "keyed" / "vehicle" / f"{name}.png").convert("RGBA")
 
 
 def footprints(root: Path) -> list[float]:
@@ -286,7 +294,8 @@ def paste(atlas: Image.Image, v: Image.Image, k: float, at: tuple, lift: float) 
     """`v` scaled by `k` into cell (col, row) at `at`, its ground centre at the cell centre."""
     col, row, gain = at
     w, h = max(1, round(v.width * k)), max(1, round(v.height * k))
-    im = amber(hue_turn(paint(v.resize((w, h), Image.LANCZOS), gain), HUE_DEG.get(row, 0.0)))
+    turn = 0.0 if (row in _PICKED and col < 5) else HUE_DEG.get(row, 0.0)
+    im = amber(hue_turn(paint(v.resize((w, h), Image.LANCZOS), gain), turn))
     im = hue_turn(im, LAMP_DEG, 0.8, 0.7, 42.0)
     top = DARK_LAMP_V_SIREN if rows_of()[row][0] == "police_car" else DARK_LAMP_V[1]
     im = hue_turn(im, DARK_LAMP_DEG, 0.8, DARK_LAMP_V[0], 42.0, top)
@@ -304,6 +313,8 @@ def build(root: Path, lib: Path, pitch: int) -> Image.Image:
     cos_p = math.cos(math.radians(pitch))
     for row, (sid, height, gain) in enumerate(rows_of()):
         vs = views(sheet_of(lib, sid, pitch))
+        if pitch in SHEET_PICKS.get(sid, {}):
+            _PICKED.add(row)
         k = lengths[row] * PPM / vs[2].width  # the side view as long as the footprint
         ks = [k] * 5
         redo = lib / "keyed" / "vehicle" / f"{sid}_side_{pitch}.png"
