@@ -634,3 +634,30 @@ NEXT (iteration 19 = the freeze session, 18:30 freeze, 18:40 REPORT):
   -> low 0.354 / 0.343 cores; the shown phase (same code both arms) differs 0.04, so the claim is ~-0.06 core (F18's size).
   Loops equal (3613-3639). Unit 1712 / 0 (full run before the comment-only line-length fix), lint 15/15.
   `evidence/perf/l14-minimized-low/`.
+- REQUEST to handheld (FYI, for your device rows): L13 (0f725304) idles the slice's title card in low-processor mode at
+  the tick (0.033 -> 0.004 cores on this PC; a menu a Deck player sits in costs ~nothing now) and L14 (ca5817a4) adds
+  low-processor mode while minimized (F18: the Windows limiter spins the last 1 ms of each frame unless that mode is on;
+  on Linux / SteamOS `OS_LinuxBSD` uses the core `add_frame_delay`, which only sleeps, so L14 is Windows-only value).
+  Neither touches a row's `max_fps` below 60. F19 (quest 1 freeze ~1 in 4 under `--autostart`) may show up in your quest
+  runs too: a run reading ~0.005 cores is frozen, not efficient.
+- Registry rules applied (it21 summary): measurement-honesty (L14 claimed at the net -0.06, not the raw -0.10; the 1-pair
+  smoke was never quoted as the result), perf-regression-gating (gates on committed trees, reels at 2d81ee85),
+  runtime-observation-evidence (stills looked at; the shared-monitor grab hazard found and fixed with TOPMOST).
+- Session end 17:55 (it21): commits 0f725304 (L13), 2d81ee85 (F19), 48565c9e (reels), ca5817a4 (L14), this. Lock released;
+  no Godot of mine running; scratch `perf-before` restored to clean at 2d81ee85.
+
+NEXT (iteration 22 = the freeze session, 18:30 freeze, 18:40 REPORT):
+1. Gates on HEAD first: `node tools/evidence/run.mjs --no-bench` with a private TEMP (`gtai-d9x/scratch/tmp-perf/t`) ->
+   goldens 11/11 + block 5/5, parity exact, export-audit (it covers L13 + L14; both are headless no-ops, so expect PASS).
+   The reels already ran at 2d81ee85 (L13 inside); L14 is a headless no-op (MinimizedCap never processes headless).
+2. Export `build/export/windows/RTAI.exe` (mkdir first; `"$GODOT_BIN" --headless --path project --export-release
+   windows-showcase ../build/export/windows/RTAI.exe`) and name it in REPORT with the exact command line.
+3. REPORT final (title without "in progress"): the kept list (L2, L3, L5, L8, L10, L12, L13, L14), the final table vs
+   main (add L13 title row 0.033 -> 0.004 and the L14 minimized row), Call P-3 with F18, FYI F-19, what does not work
+   (L1, L6, L7, L9 engine patch, L11, the pause card), blocked: F19 chase 25 min (17:10-17:35), the tooling list
+   (ab.mjs, stats, proc_sample, thread_cpu, perf HUD, NodeSpans, probes incl. l13 probe.ps1 and f19 hunt.ps1), next steps
+   (F19 root cause with a stack; a pacing A/B of low-processor mode on screen; the traffic-sheet split REQUEST to seams).
+4. Clean-up at the freeze: `git worktree remove` the scratch worktrees `gtai-d9x/scratch/perf-before`, `perf-bc7cv`,
+   `perf-base` (my own; check `git status` in each first), `gtai-d9x/scratch/godot-src` (several GB; F18 was read from it,
+   cite the file/lines, the tree is not needed), `scratch/tmp-perf`, `scratch/gates-it18`, `scratch/gates-it21`,
+   `scratch/l11.log`, `scratch/l10exe.log`, `scratch/export-cap.log`.
