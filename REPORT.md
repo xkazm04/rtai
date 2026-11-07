@@ -70,6 +70,10 @@ Every look has a flag one value away (`PAPER`, `FACES`, `SEE`, `ON_TICKET`, `FIT
   merged clip `quest1_mertz_ease_before_after_combo_32ppm_merged_t15200_15600.mp4`). Built: opaque,
   never pauses. Options: the box's see-through over Rivet/a hostile (as the corners, but text must
   stay legible: ~70 %), a slimmer box in a fight, or pause on a boss intro. Not built tonight.
+  Looked on n8-hud (it19, `quest1_clip --view=combo --ticks=15200-15600`, 1280x800, 0 SCRIPT ERROR,
+  an 8-frame contact): Rivet and Mertz stay at the crate row top right, clear of the box, through
+  the whole line; one blue figure brushes the box's right end. So it reads as crowding, not as a
+  hidden fight: kept opaque (the Call stands).
 - `--write-movie` ignores `--resolution`: 1080p arena shots need `window_width/height_override` in
   the local override.cfg (JOURNAL it19).
 

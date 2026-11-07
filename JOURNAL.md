@@ -1179,3 +1179,11 @@ NEXT (supersedes it16's):
   262 MB + the sim DLL. Smoke (`--log-file`, 240 frames each): `-- --armory --view=tilt70 --rigs`
   and `-- --boss=king --view=combo --rigs`, 0 errors, frame 239 looked at
   (`it19/exe_smoke.png`). REPORT's Exe filled. The freeze re-exports only if code changes.
+- 07:08 LOOKED the dialogue-over-a-fight note on n8-hud: `quest1_clip --view=combo
+  --ticks=15200-15600` (1280x800, 0 SCRIPT ERROR, contact `it19/mertz_contact.png`, frames deleted):
+  Rivet and Mertz stay at the crate row top right, clear of the box, the whole line; one blue figure
+  brushes the box's right end. Crowding, not a hidden fight: kept opaque; REPORT says so (the Call
+  stands). NEXT's "if time" item drops in priority under the export + REPORT.
+- Scratch cleaned: every movie frame sequence in it9-it19 and the raw clip segments deleted
+  (2.2 GB -> 545 MB); the masters hold every referenced still and clip; logs + scripts kept.
+- 07:09 Session end: all committed; tree clean. Head = this commit.
