@@ -50,8 +50,8 @@ const WALK_FILL: Dictionary[String, float] = {
 	"ped_hood_walk.png": 1.07,
 	"ped_cap_walk.png": 1.12,
 	"ped_punk_walk.png": 1.00,
-	"ped_shopper_walk.png": 1.08,
-	"ped_jogger_walk.png": 1.11,
+	"ped_shopper_walk.png": 1.09,
+	"ped_jogger_walk.png": 1.12,
 	"ped_worker_walk.png": 1.11,
 }
 const STRIDE_FRAMES: int = 4
