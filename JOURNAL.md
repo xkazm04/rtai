@@ -413,3 +413,24 @@ NEXT (iteration 10):
   `C:/Users/kazda/kiro/gtai-d9x/scratch/godot-src/tw-lto.exe` (copy it over a windows-bench export's RTAI-bench.exe;
   `GTAI_TW_LOG=1` prints every staging allocation; `GTAI_TW_TRIM_MB=32` frees the outliers; MSVC build, ~10 % slower a frame,
   so compare memory with it, never frame time against the official exe). `ab.mjs` arms now take env vars (third `^`).
+- 15:17 masters: `perf-set-combined.mp4` (69 s, 61.5 MB: King 32, drive, riot L3 off/on, King 48; before vs after with the
+  perf HUD), looked at frame by frame (4 stills, one per segment: all four play, HUD readable; the riot HUD clips at the
+  right edge, the known it4 issue); frames.json 14 entries (the combined clip second).
+- 15:18 LEDGER F13: where the riot's memory sits (video-memory monitor 883 = textures 531 + staging 208 + ~144; working set
+  ~745 = Godot static ~138 + staging + ~400 exe / D3D12 / driver, the remainder not split).
+- Scratch state now: `gtai-d9x/scratch/perf-base` is at main 3982af1a (q25 imports, the 256 chunks): the "main" side for
+  any later main-vs-head job; `build/export/windows-bench-main/` its export; `build/export/windows-bench-tw/` = the head pck +
+  the L9 instrumented template (also `gtai-d9x/scratch/godot-src/tw-lto.exe`); the scratch Godot tree carries the L9 patch
+  (uncommitted there; `tools/perf/template/tw_trim.py` re-applies it to a clean 4.7.2 tree). windows-bench-head2 removed.
+
+NEXT (iteration 13):
+1. If the Director serves the traffic-sheet REQUEST (or rivet/seams touch the vehicles art): measure it the same hour:
+   `GTAI_TW_LOG=1` on windows-bench-tw (expect the 128 MB worker gone: 208 -> ~112 MB staging) + the ab.mjs RAM job
+   (riot60 steady working set, the video-memory monitor), stock template for the frame side.
+2. RAM remainder (~400 MB of the working set not itemised): VMMap / `Get-Process` private vs image vs mapped on the exe at
+   the cap; the D3D12 shader cache and the driver's share. Possible lever: `rendering/rendering_device/pipeline_cache`.
+3. L7 / L9 on the official toolchain only if cheap (llvm-mingw + LTO, with an unpatched build of the same toolchain as the
+   A-vs-A); otherwise both stay dropped.
+4. At the freeze: export `build/export/windows/RTAI.exe` (windows-showcase), REPORT final; remove the scratch worktrees
+   (perf-before, perf-bc7cv, perf-base) and `gtai-d9x/scratch/godot-src` (several GB) unless NEXT 3 runs.
+5. REQUESTs: none open to perf (read the journals first).

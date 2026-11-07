@@ -179,6 +179,15 @@ CONTENDED(2-8) in 14 of 36 runs (the other lanes' Godots), 0 script errors in 36
   `_process` and `_draw` cost: the per-system report), `city_bench.tscn` (`gtai.bench/1`).
 
 ## Findings
+- **F13 (it12) where the riot's memory sits (release exe, RTX 4090, stock engine; `evidence/perf/l9-t32/` + the L9 mechanism
+  log; the split is partly arithmetic, labelled):** Godot's video-memory monitor peaks at 883 MB = textures 531 (`texMemPeakMb`)
+  + **transfer-worker staging 208 (L9, logged)** + ~144 other (render targets, MultiMesh / vertex buffers: the remainder,
+  not itemised). The monitor counts the CPU-side upload heaps: a trim of them moves it by -112 (32 MB policy) and -222 MB
+  (4 MB policy). The process working set (~745 MB steady) = Godot's own allocations ~138 MB (the perf HUD's `mem`,
+  `Performance.MEMORY_STATIC`) + the staging pages (resident: the 4 MB trim took riot60's steady set 788 -> 574) + ~400 MB
+  of exe image, D3D12 runtime, the GPU driver's user-mode part and its shader cache (the remainder: not split further
+  today; a VMMap read is the next tool). Lesson: on this game the biggest RAM item the project controls is the size of its
+  largest texture (it sets a staging buffer per worker), not the total art bytes; the GDScript heap is small.
 - F1 (10:27): `--rendering-driver vulkan` without `--gpu-index` crashes at start in `amdxc64.dll` (the
   AMD iGPU's driver) with exit 0xC0000005; `--gpu-index 0` = the RTX 4090 runs. D3D12 (the project's
   driver) picks the 4090 by itself. The shipped exe is on D3D12, so players are not exposed; recorded
