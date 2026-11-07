@@ -1010,3 +1010,9 @@ NEXT (it12, after the freeze), replaces the lists above:
   Exe `build/export/windows/RTAI.exe` present (17:52, b51247bb); `git diff b51247bb..HEAD -- project tools` empty, so
   the exe is HEAD's code. Past the freeze: no code change (stabilize; nothing red to fix). Registry rule applied:
   motion-quality-gating (the exe and evidence stay the gated build). NEXT unchanged (it12 list above). Session end.
+- 18:42 (it23 session, REPORT) checked every evidence path REPORT.md names: all present (one shorthand fixed to the
+  full name `traffic_yields_to_rivet_before_after_tilt70_64ppm_seed7_f300-660_strip.png`); masters frames.json 15/15
+  files present; exe present and HEAD's code. d9-rivet head a365f970 (+1 since 78fef679: its JOURNAL only);
+  `git merge-tree` the same two conflicts (JOURNAL.md add/add, tools/debt/baseline.json). REPORT final. No code change.
+  NEXT: unchanged (it12 list): owner picks Calls 1-5; on merge chain the debt baseline then `debt.mjs --update`,
+  `just native`, `--import` once. Session end.

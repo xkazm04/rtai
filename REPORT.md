@@ -1,5 +1,8 @@
 # REPORT: d9 lane `seams` (final, freeze 18:30)
 
+Final check 18:42 (it23): every evidence file named below exists (the masters folder or `evidence/d9-seams/`);
+`frames.json` 15 entries, all files present; the exe is HEAD's code (`git diff b51247bb..HEAD -- project tools` empty).
+
 Branch `d9-seams`. Evidence: `C:\Users\kazda\kiro\gtai-masters\d9\seams\` (`frames.json`), logs in
 `evidence/d9-seams/`. Journal: `JOURNAL.md`.
 
@@ -12,7 +15,7 @@ b51247bb (code = b026010d) with
 Try the King and his gang: `RTAI.exe -- --boss=king --phase=1 --view=combo` (and `--phase=3` for his stride).
 
 ## Merge note for the Director
-vs d9-rivet e2400dc4 (its heads 873a00c1, 94757f93, dacaac88, 3a3d25a1 and 78fef679 add only docs and evidence since; same two conflicts, re-checked 18:07, 18:10, 18:14, 18:23 and 18:31): conflicts only `JOURNAL.md` (add/add: keep either lane's, they are lane journals) and
+vs d9-rivet e2400dc4 (its heads 873a00c1, 94757f93, dacaac88, 3a3d25a1 and 78fef679 and a365f970 add only docs and evidence since; same two conflicts, re-checked 18:07, 18:10, 18:14, 18:23, 18:31 and 18:42): conflicts only `JOURNAL.md` (add/add: keep either lane's, they are lane journals) and
 `tools/debt/baseline.json` dev_loc (both lanes accepted rises from 18799: keep both lines, chained: seams
 18799 -> 18805, then rivet +69 -> 18874; total 18874), then `node tools/debt/debt.mjs --update`. Trial merge
 it11 gates: on 2c84666c (scratch, detached, native DLLs from this worktree) lint 15/15 over 1226 files, unit 1748/0, release-compile 606/0, scenarios 53/53, director reel top / tilt70 / combo 19/19 fully down, 0 SCRIPT ERROR (`evidence/d9-seams/mergetrial-it11-*.log`, `director-reel-merge-it11-*.log`).
@@ -266,7 +269,7 @@ Nothing blocked the lane outright (no BLOCKED entry all day). The time lost, fro
    parked car and overtake mid-block; standing in a junction he holds traffic up (no overtaking there).
    Turning it on is one value, but it moves the city traffic, so scenarios/goldens get re-checked then.
    (c) cars knock him down (sim work in both twins, not built). Before/after:
-   `traffic_yields_to_rivet_before_after_tilt70_64ppm_seed7_bikes025_f300-720.mp4` (+ `_f300-660_strip.png`).
+   `traffic_yields_to_rivet_before_after_tilt70_64ppm_seed7_bikes025_f300-720.mp4` (+ `traffic_yields_to_rivet_before_after_tilt70_64ppm_seed7_f300-660_strip.png`).
    Try: `"$GODOT_BIN" --path project -- --view=tilt70 --seed=7 --rigs --bikes=0.25 --traffic-yields`.
 5. **The King's bodyguards' legs** (it10, it11). Default built: (c) their own drawn steel legs (assets
    `gang_legs_55/70`, landed it11): gunmetal with a thin gold ring at knee and ankle, ink only. Options:
