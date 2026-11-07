@@ -72,6 +72,12 @@ static func publish(rig: CutRig, held: StringName, gun: GunHand) -> void:
 	rig.set_meta(FIRE, t != null and t.cooldown > maxi(0, t.spec.interval_ticks - FIRE_TICKS))
 
 
+## True while Rivet is one drawn figure: RivetHeldView feeds no magazine part then (no bottle or
+## tank has one either); a part beside a drawn figure floats off it (it6: at his helmet on reload).
+static func drawn(rig: CutRig) -> bool:
+	return rig.head_card != null and rig.head_card.has_meta(ON)
+
+
 ## True while the drawn frame carries the weapon (RivetHeldView hides its held part then).
 static func owns_weapon(rig: CutRig) -> bool:
 	var card: Sprite2D = rig.head_card

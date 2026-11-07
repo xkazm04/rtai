@@ -50,6 +50,7 @@ func _process(_delta: float) -> void:
 	var weapon: StringName = pilot.hold.held if pilot != null else &""
 	var id: StringName = arsenal.art_id(weapon)
 	var k: float = rig.reload_k if rig != null and rig.plan.gun_arm >= 0 else -1.0
+	k = -1.0 if rig != null and RivetFrames.drawn(rig) else k  # d9 rivet: no claw to ride
 	var size_k: float = rig.plan.size_k if rig != null else arsenal.held_size_ref
 	if id != _shown or size_k != _shown_size:
 		_swap(id, weapon, size_k)

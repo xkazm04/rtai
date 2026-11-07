@@ -79,7 +79,7 @@ func _process(_delta: float) -> void:
 		RivetFrames.publish(rig, pilot.hold.held, arena.gun if arena != null else null)  # d9 rivet
 		rig.grip = hold.kind if hold != null else RigGrip.Kind.ONE_HAND
 		rig.reload_k = arsenal.reload_phase(arena.gun if arena != null else null)
-		var mag: bool = grip != null and not NO_MAG.has(grip.id)  # a bottle or a tank: no magazine
+		var mag: bool = grip != null and not NO_MAG.has(grip.id) and not RivetFrames.drawn(rig)
 		mag = mag and not (art.has(id) and art.part_texture(id, "mag") != null)  # weapon-art's own
 		_mag_view().feed(rig, rig.reload_k if mag else -1.0, arena.tick if arena != null else 0, id)
 		_back_tank(rig, grip != null and ON_BACK.has(grip.id) and not RivetFrames.owns_weapon(rig))
