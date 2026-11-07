@@ -820,3 +820,8 @@ NEXT (iteration 9):
   the drawn corpse costs one sprite, the same as the parts. If view prefers street to carry it,
   say so and street will do it in a file of its own.
 - Scratch: city.avi and the probe logs deleted (the finding is in the lines above).
+- 03:14 library check: riot/SWAT fall strips not served yet; contractor_fall_55 and thug_fall_55
+  landed (not mine to have asked for at 55 first; the thug and contractor walk under p70 in play):
+  NEXT 1b: read their catalog notes, cut them with street_fall.py if their identity matches the
+  in-game cards, FALLS rows under "p55" (and p70 through FALLBACK only if no 70 twin comes).
+  Session stopped here (not enough time left for a cut + film + gates cycle).
