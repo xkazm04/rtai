@@ -317,3 +317,27 @@ NEXT (supersedes every NEXT above):
   from each segment. frames.json: 15 entries (the clip first; shadow, ghost, flamer before/after in; the strips
   contact, blades contact and muzzle contact out of the list, files kept: REPORT cites them).
 - Scratch sequences deleted (6.2 GB).
+- GATES it10 (`evidence/d9/gates-it10.md`): director reel 19/19 fully down in tilt70, combo, top, 0 SCRIPT ERROR
+  (on 61fbbdf8). `node tools/evidence/run.mjs --no-bench` on dfb7a4de (lane-private TEMP): lint PASS, scenarios 52
+  PASS, parity exact + planted caught PASS, look goldens 11/11 + block 5/5 PASS (top did not move), release-compile
+  600/0 PASS; unit 1700/0 but the stage reads FAIL "tree changed during run": I wrote tools/art/rivet_portrait.py
+  while it ran. FRICTION (mine, ~0 min lost): no file writes in the worktree while evidence runs, not only .gd.
+- MILESTONE `f599a528` the frame cost (`evidence/d9/rivet-frame-cost-it10.md`): rig_bench --view=tilt70, before =
+  RivetFrames.ENABLED false for one run: 50 people p50 0.866 -> 0.774 / 0.781 ms, 200 people 1.276 -> 1.147 /
+  1.090 ms. The drawn figure adds no rig cost. CONTENDED: the bench lock was held by `perf` (from 12:35) and
+  `handheld` before it; every run fails the hard-limit judge alike on this machine state.
+- MILESTONE `2b41bdeb` Rivet's dialogue face (brief item 6): portraits.json row `rivet` = the front facing of the
+  approved rivet_55_v2 sheet cut at the chest (`tools/art/rivet_portrait.py`, 274x225 at the sheet's own
+  resolution, bottom 22 px faded; `--check` reproduces it). Judged beside the King's and the gunsmith's busts
+  (`gtai-d9/scratch/rivet/it10/port_cmp.png`): crisp, the amber visor, the collar. His 9 quest-1 lines now show
+  a face. test_hud_dialogue's "rivet has no row" asserts moved to lady-cathode + a new rivet test (10/10).
+  Provenance line added.
+  REQUEST to assets: portrait_rivet_55 (A or B), the dialogue bust in the cast portraits' frame (as
+  portrait_gunsmith_55 / portrait_mertz_55: chest-up, front three-quarter, transparent, ~300x320), Rivet exactly
+  as rivet_55_v2 (amber eye-bar visor, hazard collar, rust plates); and a mood variant (visor narrowed). Why: the
+  interim is cut from a production sheet's front facing, so it is a straight-on figure crop, not a composed
+  portrait; the swap is one file (`project/features/hud/art/portraits/rivet.png`).
+- Seen live (quest 1, `-s res://dev/frames/quest1_clip.gd -- --view=tilt70 --rigs --stills=2250..3850`, 1080p,
+  0 SCRIPT ERROR): the face fades in on his first payphone line (t3050), where Patch's payphone sits; crisp,
+  the faded cut blends into the paper: `gtai-masters/d9/rivet/rivet_dialogue_face_quest1_payphone_tilt70_32ppm_1080p_t3450.png`
+  (frames.json: in, the duplicate Servo-swap entry out, file kept).

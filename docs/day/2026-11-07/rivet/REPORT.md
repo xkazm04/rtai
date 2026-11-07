@@ -48,6 +48,15 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
 - **The Servo "grey blob" (it6) is gone at HEAD**: the same run (`--boss=servo --bot=boss --view=combo --seed=1`)
   shows no part beside him; it was his top-down parts (the reload magazine, fixed in `f3038865`):
   `gtai-masters\d9\rivet\rivet_servo_grey_blob_was_the_reload_mag_it6_vs_it10_combo_48ppm.png`.
+- **Rivet's dialogue face** (`2b41bdeb`, it10): the front bust of the approved rivet_55_v2 sheet (portraits.json
+  row `rivet`, `tools/art/rivet_portrait.py`); his 9 quest-1 lines show a face. A concept-matched portrait is
+  REQUESTed from assets (one-file swap). Live in quest 1 at 1080p: `gtai-masters\d9\rivet\rivet_dialogue_face_quest1_payphone_tilt70_32ppm_1080p_t3450.png`.
+- **The frame cost** (`f599a528`, CONTENDED: another lane held the bench lock): rig_bench `--view=tilt70`, the drawn
+  figure vs the head card over parts: 50 people p50 0.866 -> 0.78 ms, 200 people 1.276 -> 1.09-1.15 ms. No added
+  cost (`evidence/d9/rivet-frame-cost-it10.md`).
+- **Gates (it10):** director reel 19/19 in `tilt70`, `combo`, `top`, 0 SCRIPT ERROR on 61fbbdf8; evidence run on
+  dfb7a4de: lint, scenarios 52, parity, look goldens 11/11 + block 5/5 (top did not move), release-compile 600/0
+  PASS; unit 1700/0 (the stage flagged "tree changed during run": a tool file written mid-run) (`evidence/d9/gates-it10.md`).
 - **Gates (it7):** `node tools/evidence/run.mjs --no-bench` green on feb56ca2 (lint 15/15, unit 1695/0, scenarios 52
   incl. the replay, parity exact + planted caught, look goldens 11/11 + block 5/5, release-compile 599/0; run with a
   lane-private TEMP); on f7334278 unit 1698/0 and the director reel 19/19 in `tilt70`, `combo`, `top`, 0 SCRIPT ERROR
