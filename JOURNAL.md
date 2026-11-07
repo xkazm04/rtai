@@ -1237,3 +1237,27 @@ NEXT (iteration 15, in order):
   the bench camera frames no player car (first frame blank while loading), so it shows the lanes'
   traffic, not view's lead: dropped (the lead is Call 4's stills). The `--resolution` flag does
   not apply under this machine's override.cfg: every capture is 1280x800.
+- FOUND 06:30 (quality pass, brief item 6 "quest 1's scenes" under combo): quest 1 has no arena
+  hooks, so ViewPitchHook never ran there: under `--view=combo` Mertz's fight (Dock 9, "Rated for
+  Appliances", spawn_boss at tick ~15270) stayed at 70 all quest, against the owner's verdict
+  ("55 when a boss engages").
+- MILESTONE fc98bb7c `ViewPitchQuest`: a ViewPitchEase on quest 1's view, boss_on = the stage
+  arena's boss spawned and alive (CombatArena.boss); attached in Quest1Game._casts; only an
+  easing row (top/tilt/tilt70 untouched: no node added). FILMED on n8-view, combo 32 px/m, ticks
+  15000-15700 (`quest1_clip.gd --ticks`), 0 SCRIPT ERROR: log "pitch ease 70.0 -> boss at tick
+  15270", "cards art p55 (pitch 61.8) at tick 15302". Masters
+  `quest1_mertz_engage_ease_combo_32ppm_t15000_15700.mp4` + the 4-still
+  `_t15200_15290_15340_15500.png`. LOOKED: 15200 at 70; 15500 at 55, the building blocks show
+  their lifted faces deeper, Rivet and Mertz on the crate line; Mertz's dialogue box over the
+  lower half. On n8-view alone the street and city draw top-down, so the change reads mostly in
+  the lifts; judge on the merge. Not filmed: the return to 70 when Mertz goes down (NEXT).
+  Unit test_view_pitch_quest 3 cases (+ view_pitch, quest_guard_cast: 17/0). Debt: quest1_game.gd
+  270 -> 272 accepted with the reason. DECISION line. FRICTION: a typed GUT assert on
+  `Callable.call()` fails to parse ("subtype Variant"); `x.is_valid() and x.call() == true` is
+  the form that compiles (as ViewPitchEase does).
+- Registry rules applied it15: concept-scene-parity (the combined reel's first and last segments
+  on the merged tree; quest 1 judged in the real quest scene, not a stub), motion-quality-gating
+  (the ease seen across 700 ticks, the reel by a contact sheet of every segment),
+  combat-pacing-and-dramatic-arc (the boss pitch now marks quest 1's boss beat as it marks the
+  arena bosses': the camera tells the player the fight changed), perf-regression-gating (one node,
+  one bool read per frame; nothing measured, nothing claimed).
