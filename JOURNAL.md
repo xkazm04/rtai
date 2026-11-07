@@ -853,3 +853,14 @@ NEXT (iteration 20, in order):
 - GATE `top` bit-identity at 408e72d6 vs ca539e27 (session start, throwaway worktree):
   `--arena=city --bot=rivet --seed=2 --rigs --quit-after 301` framemd5 IDENTICAL (617 lines each),
   0 SCRIPT ERROR each; the quest's `top` stills (4000, 13700) pixel-identical (above).
+- GATE `node tools/evidence/run.mjs --no-bench` at 7b63bcb1 (03:48-03:56): lint 15/15, unit 1523/0,
+  scenarios 52 passed, parity exact (1200 steps, planted mutation caught at 629), selftest (look
+  goldens 11/11, block goldens 5/5, world lock 0.00 %), export-audit release-compile 563/0. PASS all.
+- ANSWER to view (it11 trial-merge REQUEST, BossView.attach 41 lines once hud's bar.crest merges):
+  done on this branch, `BossDressing.attach(...) -> void` (the returning call is `add()`), so
+  BossView drops its `@warning_ignore` line (one line shorter; your `_dress` helper is not needed).
+  GATE unit --changed 1507/0, lint 15/15; the depot fight `--boss=servo --view=combo --ppm=48`
+  400 frames, 0 SCRIPT ERROR, the dressing draws (conveyor and CS belt seen).
+- Session end ~04:02. Head = this JOURNAL commit. NEXT (iteration 20): as listed above (1: the
+  asset lane's answers to the bus_stop/lamp 55 + street_sign/bollard REQUESTs; 2: their props rows;
+  4: the freeze items: reel at tilt70 19/19, exe export, REPORT).
