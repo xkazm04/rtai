@@ -209,3 +209,12 @@ NEXT (iteration 5):
   a void result re-measured, not patched); motion-quality-gating / generative-artifact-gating (judge the look at the same
   framing before keeping a speed lever: E8b caught the framing confound); fire-tv-device-realities (every claim "on the
   simulator"; the Deck's scaler is a device behaviour we cannot see here); adaptive-fidelity-tiers (the lever is a row value).
+- MILESTONE 12:39 reels on e2f222df code (4 in parallel): top / tilt70 / combo / combo + deck 19/19, 0 SCRIPT ERROR
+  (`evidence/it7/reels-summary.log`). Rumble live under `deck` in the director reel: **4 pulses** (it4: 0): the hurt read works.
+- MILESTONE 12:41 the real 48 px/m set under `deck` on the iGPU (after the fix): `deck-set-48ppm-real-king-city.mp4` (70 s),
+  `deck-king-48ppm-real-*.mp4`, `deck-city-48ppm-real-*.mp4`, stills at 20 s / 15 s looked at (Rivet ~70 px in the King
+  fight; pale Rivet is low-contrast on the pale pavement at 15 s in the city). frames.json 15 entries, the real set first;
+  the superseded stills deleted, the it4 clips kept but re-labelled 32 px/m.
+- MILESTONE 12:48 evidence gate on 93c1fb69 `--no-bench --no-release`: lint 15/15, unit 1711/0, scenarios 53/53 (with
+  handheld_focus_pause), parity bit-exact over 1200 steps (planted mutation caught at 629), look goldens 11/11 (worst
+  0.27): **top bit-identical** (`evidence/it7/evidence-run-93c1fb69.log`). Release-compile still skipped (seams' temp-dir clash).

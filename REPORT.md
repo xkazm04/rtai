@@ -33,6 +33,8 @@ priority, the CPU's own 2-CU Radeon), never a device claim. Details and sources:
   `still-king-48ppm-real-20.png`, `still-city-48ppm-real-15.png`.
 - The gates on the it7 code (e2f222df): director reel 19/19 chapters, 0 SCRIPT ERROR in top, tilt70, combo and
   combo + `deck` (`evidence/it7/reels-summary.log`); rumble in the reel under `deck`: 4 pulses (it4: 0).
+- The desktop unmoved with the it7 code in: evidence gate on 93c1fb69 lint 15/15, unit 1711/0, scenarios 53/53,
+  parity bit-exact, look goldens 11/11 (`evidence/it7/evidence-run-93c1fb69.log`).
 
 - The fill-rate lever (E8c, same framing, CONTENDED, bench lock): drawing the 2D frame smaller and scaling it to the
   1280x800 panel cuts render GPU on the iGPU 8.12 -> 6.21 ms at 0.85 (-24 %) and -> 5.14 ms at 0.75 (-37 %); the look
