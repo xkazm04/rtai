@@ -111,7 +111,10 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
 - The Servo bay number printed over Rivet under combo: REQUEST to seams (it10), served on `d9-seams` at 3f4732db
   (ServoDepotDraw.cover); not on this branch until the Director merges both.
 - The p70 electro baton's facings still carry the rod along the forearm (the library's v3 is B with that named
-  fix) and its side strike lost the old sheet's drawn swing arc: REQUESTed as 70 v4 (it19).
+  fix) and its side strike lost the old sheet's drawn swing arc: REQUESTed as 70 v4 (it19). Under the drawn
+  figure the game's MeleeSmearView is not fed (RivetHeldView returns before `_feed_smear` once the strip owns the
+  weapon), so a melee swing's arc is only what its sheet draws: the baton (p55 always, p70 since v3) swings with
+  no arc. Fix options: the v4 art, or feed the smear for sheets without a drawn arc (a per-strip flag).
 - Walk: one drawn walk and one sprint pose per sheet; built bob + sway on the facing.
 - Reload: no drawn reload frame; he keeps the equipped strip through it (it7 check: the "bare figure" seen in it6
   was the equipped back views, which show the small guns barely; no change made).

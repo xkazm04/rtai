@@ -622,3 +622,9 @@ NEXT (it19 end, 15:27; supersedes every NEXT above):
    film is wanted; the city films use `--bot=gunplay`.
 5. At the freeze: the exe (`build/export/windows/RTAI.exe`), the final REPORT.
 - Session end 15:27: everything committed.
+- 15:32 FOUND (read, not built): under the drawn figure the game's melee smear is never drawn: RivetHeldView returns
+  before `_feed_smear` when RivetFrames.owns_weapon (rivet_held_view.gd l.88), so a swing's arc is the sheet's own
+  drawing (the katana, chainsaw and sword sheets draw one; the baton at p55 never did, at p70 v3 no longer does).
+  NEXT 6: if the 70 v4 does not bring the arc back, feed MeleeSmearView for strips without a drawn arc (a per-strip
+  flag in RivetStrips, the smear's root at the drawn claw: the muzzle table's measure), never on top of a drawn arc.
+  REPORT does-not updated. Session end 15:33: everything committed.
