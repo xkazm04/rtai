@@ -44,8 +44,9 @@ The view lane's REPORT.md came in with the n8-view merge; this file replaces it 
    (`soul_seized_van_servo_depot_combo_64ppm_seed2_f120_before_left_after_right.png`,
    `soul_hijacked_traffic_top_left_tilt70_before_mid_after_right_f320_crop3x.png`).
 9. **Gates (it20, 80926b7c):** unit 1551/0 no FLAKY; director reel 19/19 all down in `top` and
-   `tilt70`, 0 SCRIPT ERROR; lint 15/15; `top` framemd5 identical; scenarios 52/0
-   (`evidence/n8-vehicles/iteration20.json`; the freeze re-runs them on its HEAD).
+   `tilt70`, 0 SCRIPT ERROR; lint 15/15; `top` framemd5 identical; scenarios 52/0;
+   `tools/evidence/run.mjs --no-bench` all PASS on aa086daa (parity bit-exact, selftest goldens,
+   release-compile 566/0) (`evidence/n8-vehicles/iteration20.json`; the freeze re-runs them on its HEAD).
 
 ## What does not work / not done
 - The delivery truck and the dedicated depot van (library `delivery_truck_70` A, `depot_van_70` A,
