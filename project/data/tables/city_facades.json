@@ -108,7 +108,8 @@
     },
     "newsstand": {
       "art": "res://features/city/art/view/<art>/prop_newsstand.png",
-      "cell_w_m": 2.6
+      "cell_w_m": 2.6,
+      "cell_w_m_p55": 3.15
     },
     "payphone": {
       "art": "res://features/city/art/view/<art>/prop_payphone.png",
@@ -144,7 +145,8 @@
     },
     "vending_machine": {
       "art": "res://features/city/art/view/<art>/prop_vending_machine.png",
-      "cell_w_m": 1.3
+      "cell_w_m": 1.3,
+      "cell_w_m_p55": 1.37
     }
   },
   "schema": "gtai.city-facades/1",
