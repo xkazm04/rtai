@@ -980,3 +980,8 @@ NEXT (it12, after the freeze), replaces the lists above:
    3/4-away walk; Call 2's body stopped at a wall; Call 4 c (cars knock Rivet down).
 - Session end ~18:06: all committed; scratch avi/png deleted; frames.json 15 (entry 0 the 63 s set clip).
 - 18:07 d9-rivet head 873a00c1 vs e2400dc4: docs/evidence only (no code), merge-tree shows the same two conflicts and the same baseline total 18868: the it11 trial merge holds. REPORT merge note says so.
+- 18:09 MEASURED the 70 drawn cycle from the sheet (it10 left it on an estimated boot): king_legs_70 profile column
+  (col 2): standing 66 wide (sole band 55), contact rows 1/3 95 and 92 wide. Boot 49-55 px (49 = the 55 sheet's
+  boot/sole-band ratio 64/72 applied to 55) -> cycle (95-b)+(92-b) = 77-89 cell px; shipped 80 is inside the range,
+  at most ~10 % short (a pose every 14.6 vs up to 16.2 world px). Kept at the freeze (a code change would need
+  the gates again); if re-tuned, 84 is the midpoint (`KingLegsCard.CYCLE_CELL[70]`).
