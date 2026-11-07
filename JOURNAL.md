@@ -1264,3 +1264,13 @@ NEXT (iteration 13 = the freeze iteration if the runner gives one before 08:30):
    --back-from-away` (no stretch), point LONG_FALLS["p55"] at them, film `--view=tilt --heavy`.
 4. Weakest left: SWAT's camera-facing long corpse is a touch short (row 1 1.43x); city cops still
    glide on head cards (every city cop is armed from tick 60, so the walk grid shows nowhere).
+- Freeze recipe (found it12, as d8 used it): `APPDATA=C:/Users/kazda/kiro/gtai-n8/appdata/street
+  "$GODOT_BIN" --headless --path project --export-release windows-showcase
+  ../build/export/windows/RTAI.exe` (preset windows-showcase boots the arena; args after `--`:
+  `RTAI.exe -- --arena=city --rigs --view=tilt70`).
+- GATE scenarios on 6d177df4+docs (headless `run_scenarios.gd`, 06:24-06:35, other lanes running):
+  52 ran, 0 failed, 0 SCRIPT ERROR (exit 0).
+- Session end 06:37: tree clean after this commit. Commits it12: d61f48bc (view's REQUEST:
+  hide_all), b398a319 (the long falls), 6d177df4 (patrol fall tone), + evidence/docs. Gates on
+  the it12 code: lint 15/15, unit 1525/0, scenarios 52/0, reel tilt70 19/19. Owed for the freeze:
+  the evidence run, reels under top and combo, the export, REPORT final (NEXT above).
