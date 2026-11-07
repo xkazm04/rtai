@@ -562,3 +562,12 @@ NEXT (iteration 9, in brief order):
 4. Before the freeze: director reel 19/19 top + combo, evidence run --no-bench, export the exe,
    REPORT with the Calls (King bust size, death beat length, attack lock, camera lead at speed,
    cover as one stack, quest 1's cast under the angled view: rigs (built) vs sprites).
+- GATE scenarios at 1b1e30eb (`evidence/n8-view/scenarios-it8.log`): 52 ran, 2 failed: city_chase's
+  2 ms WALL-CLOCK nav budget (max 2546 us) and rig_stress's 1 ms rig p50 (1.021 ms), while my
+  commit's lint hook and a windowed occlusion run went beside it. Re-run alone through
+  `tools/tests/run_scenarios.mjs --only=city_chase,rig_stress --quiet-wait=3`: 2 passed
+  (`scenarios-it8-alone.log`). 0 SCRIPT ERROR. No sim file touched this iteration (view, art,
+  dev-arena-only perf); `top` builds no card, so rows_of's cache and PropOcclusion (made only
+  under a tilt) do not run there.
+  Session ends here (01:20). Head: lint 15/15, unit 1506/0 (+ the targeted 12/0 after the
+  PropOcclusion edit), scenarios 52 (2 wall-clock, passed alone). NEXT stands as written above.
