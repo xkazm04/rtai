@@ -55,6 +55,7 @@ func _register_features(with_views: bool) -> void:
 	vehicles = VehicleService.new()
 	add_system(vehicles)
 	var vworld: CityVehicleWorld = CityVehicleWorld.new(city)
+	vworld.yield_to_rivet = LaunchArgs.has("--traffic-yields")  # d9 seams: Call 4 (dev, filming)
 	vehicles.world = vworld
 	if with_views and DisplayServer.get_name() != "headless":
 		var view: CityView = CityView.new()
