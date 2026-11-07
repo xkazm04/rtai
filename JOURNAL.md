@@ -1183,3 +1183,14 @@ NEXT (iteration 15, in order):
    the cast path: street's sprite-path behaviour; judge if it reads as a mess at Dock 9, 15000).
 3. The freeze (08:30): `git worktree remove` %TEMP%/view-trial-it11 and %TEMP%/view-street-check,
    director reel top + combo on n8-view, `evidence/run.mjs --no-bench`, the exe, REPORT final.
+- 06:02 NEXT 2 started: quest 1 combo 32 px/m tick 15000 on the trial merge (still, 0 SCRIPT
+  ERROR): Dock 9's contractors' corpses pile ~30 deep along the kerb and over the bench card
+  (`quest1_dock9_contractor_corpses_pile_combo_32ppm_t15000_crop.png`). Not added by QuestGuardCast:
+  the cast path has always kept every guard_down (the top sprite path at DOWN_FADE 0.8 alpha); the
+  rig path before only hid it by pinning 4 corpses and breaking the rest. The drawn lying figures
+  are standing-height, so the pile reads heavier than the top sprites.
+- NOTE to street: CastView's `StreetQuestCards.draw_down(self, Ink.px(h.pos), h.facing,
+  Ink.PX_PER_M)` drops the sprite path's `DOWN_FADE` (0.8): passing it as the `tint` keeps the
+  dead behind the living, as the top-down path does; a cap on the drawn corpses (oldest fade out)
+  would be yours or the quest's to choose. The pile also draws over the bench card (CastView has no
+  depth sort with the props).
