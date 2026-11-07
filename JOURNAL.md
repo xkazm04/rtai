@@ -1126,14 +1126,14 @@ NEXT (iteration 27, in order):
 1. Read view's journal: did its trial merge on city >= 55ede50c film the outline cut and the cream
    crates on the real code? Answer any new REQUEST to city.
 2. Library check for new building/prop sheets (70 twins; the traffic light 55 is still v5 B).
-3. (done 06:33, see below) the traffic light blob pair at 70.
+3. (done 06:29, see below) the traffic light blob pair at 70.
 4. Freeze items (08:30): `top` framemd5 (both recipes: boot scene vs top22.md5, and the city arena
    `res://dev/arena/arena.tscn -- --arena=city --bot=rivet --seed=2 --rigs` vs the branch base
    0bea8b93), evidence --no-bench, the exe export (int-day recipe), REPORT final (head, exe command
    lines, gates).
-- EVIDENCE (06:33, NEXT 3 of it26 done in-session) the traffic light's head blob at 70:
+- EVIDENCE (06:29, NEXT 3 of it26 done in-session) the traffic light's head blob at 70:
   `city_bench --scenario=drive --view=tilt70 --zoom=1.5 --secs=10`, 600 frames, before = the same
   tree without `cast_blob_m`; LOOKED f300/f420: the cast ends in a small round head blob, the same
   down-right fall as the lamp's. `it26_traffic_light_head_blob_tilt70_48ppm_before_after_x2.png`
   (named in the it25 sign entry's frames.json note). 0 SCRIPT ERROR both. Raw .avi deleted.
-- Session end 06:35. Head = this commit. Tree clean.
+- Session end 06:31. Head = this commit. Tree clean.
