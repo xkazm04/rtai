@@ -432,10 +432,16 @@ NEXT (it10 end, 13:03; supersedes every NEXT above):
   not judged (a burning target or the it10 two-flame case on a side octant).
   frames.json: the two contacts in at 3 and 4; the Servo gatling muzzle and the p55 left pistol out (files kept).
 
+- 13:55 MILESTONE NEXT 1 done in-session, the melee four: `--bot=pit --loadout=<id> --fire-stills` catches their
+  swing cells (strike_t -> FIRE cells): katana, electro_baton, chainsaw, plasma_sword at tilt70 and tilt, 8 runs, 0
+  SCRIPT ERROR (chainsaw 2 stills each, the rest 3). Both contacts now show all 17 weapons (looked at both): the katana
+  swing with its smear, the chainsaw toward the camera, the long amber plasma blade (the v3 redraw) in both hands;
+  the electro baton reads weakly (a small spark, the baton barely shows) at 64 px/m.
+
 NEXT (it13 end, 13:56; supersedes every NEXT above):
-1. The melee weapons at each pitch: katana, electro_baton, chainsaw, plasma_sword are not gunplay weapons. FireStills
-   catches strike cells too (strike_t >= 0 -> fire cells): run it with a melee bot and `--loadout=<id>` (the pit bot
-   `--bot=pit`, or the director reel with its chapter), tilt70 and tilt; add them to the two contacts.
+1. The electro baton's swing reads weakly at 64 px/m (every-weapon contact): film it in motion at 48 and 64
+   (`res://dev/arena/arena.tscn -- --bot=pit --loadout=electro_baton --view=tilt70 --ppm=64 --seed=3 --rigs`) and
+   judge the drawn strike cell vs the facing (a REQUEST to assets if the cell itself hides the baton).
 2. The flamer's red jet in the every-weapon contact (t369, both pitches): film `--bot=gunplay --weapon=flamethrower
    --view=tilt70 --ppm=64 --seed=3` t340-400 and judge: a burning target, or the drawn side flame plus the game jet
    on a diagonal aim (then fires_drawn's octant test needs the aim, not the head's octant).
