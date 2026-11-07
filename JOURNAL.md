@@ -1372,7 +1372,7 @@ NEXT (iteration 16) is the it15 NEXT above, items 1-2 (item 3 done).
   combo 32 px/m): the King's bust card on the throne-car, the gang's cards, Rivet at 55, the HUD
   ghost wheel; masters `exe_it16_king_combo_32ppm_f400.png`. If no code lands before 08:30 this
   exe IS the freeze exe; else re-run freeze.sh.
-- LOOKED 07:27-07:33 the King fight on the it16 merge (691768ec), combo 48 px/m, seed 2,
+- LOOKED 07:25-07:31 the King fight on the it16 merge (691768ec), combo 48 px/m, seed 2,
   `--bot=boss --rigs`, frames 1-1206 (the 300 s timeout cut the 1500), 0 SCRIPT ERROR; "-> boss"
   at tick 1, p55 cards at 32. Frame 1150: the King's 2.0x bust on the throne-car, the gang's cards,
   the stood crates and the cable drum read at 48 px/m; nothing view-owned misplaced. FOUND (not a
@@ -1386,3 +1386,8 @@ NEXT (iteration 16) is the it15 NEXT above, items 1-2 (item 3 done).
   default camera, worth one look with `--boss-cam`. REPORT merge note + Call candidate for d9:
   ship `--boss-cam` as the boss fight's camera (it keeps the bust whole) with `HUD_PX` read from
   `BossBar` (bar + paper).
+- LOOKED 07:32-07:35 the same fight on the it16 merge with `--boss-cam` (combo 48 px/m, seed 2,
+  frames 1-720, 0 SCRIPT ERROR): f500/560/620/700 the King's bust whole under the banner, the
+  horn cone and the crates in frame, Rivet on screen. Masters
+  `king_boss_cam_merged_it16_combo_48ppm_seed2_f500_560_620_700.png`. REPORT Call 7 (the boss
+  fight's camera: follow as built, BossCam recommended; one flag) and Next steps 5.

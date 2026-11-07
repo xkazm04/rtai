@@ -125,6 +125,14 @@ under `evidence/n8-view/`. Full log: `JOURNAL.md`.
    `quest1_mertz_combo_48ppm_merged_t15600_55_t16000_play.png`. Exe: `RTAI.exe -- --view=combo`, play
    quest 1 to Dock 9's crates ("Rated for Appliances").
 
+7. **The boss fight's camera.** Built (as since d8): the follow camera; option `BossCam`
+   (`--boss-cam`), which frames the boss with Rivet and keeps the King's lifted bust under the bar.
+   With the follow camera the throne-car ramming from the top edge hides his bust under hud's boss
+   banner (on the merge, combo 48 px/m, seed 2 f500-700): before
+   `king_under_hud_banner_merged_it16_combo_48ppm_seed2_f500_560_620_700_crop.png`, after
+   `king_boss_cam_merged_it16_combo_48ppm_seed2_f500_560_620_700.png` (the bust whole in all four).
+   View's recommendation: BossCam. Exe: `RTAI.exe -- --rigs --boss=king --seed=2 --view=combo --ppm=48 [--boss-cam]`.
+
 ## Merge notes for the Director
 Trial merge it11 (03:15-03:40, a throwaway detached tree): city, street, vehicles and hud onto
 n8-view; lint 15/15, unit 1624/0, quest 1 at tilt70 0 SCRIPT ERROR. Re-run it12 (04:13, n8-view
@@ -182,5 +190,7 @@ Try: `RTAI.exe -- --rigs --boss=king --phase=3 --view=combo [--ppm=64]`, `RTAI.e
 2. After the owner's Rivet pick: the whole-figure Rivet frames per pitch (p55 for bosses, p70 for
    play) register through `data/tables/card_sets/` like street's heads; the held-weapon parts keyed
    by the art key (it13) then retire.
-3. The Calls for the owner (1-6) are each one value; flip the chosen ones on main after the merge.
+3. The Calls for the owner (1-7) are each one value; flip the chosen ones on main after the merge.
 4. Re-take the frame cost on an idle machine (every take tonight was CONTENDED by the other lanes).
+5. Make `BossCam` the boss fight's camera (today behind `--boss-cam`) so the King's bust never rams
+   under hud's banner, with its band read from `BossBar` (bar + paper + crest) after the merge.
