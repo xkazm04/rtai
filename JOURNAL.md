@@ -1331,3 +1331,7 @@ NEXT (iteration 21, in order):
 3. Freeze 08:30: re-export `windows-showcase` from HEAD (REPORT ## Exe), smoke it, final gates
    (unit no-arg, reel top + tilt70, scenarios, top framemd5, evidence --no-bench with the tree
    still), finish REPORT.md (gates item 9 -> the final commit; Call 10 soul paint).
+GATE 06:08 `node tools/evidence/run.mjs --no-bench` on aa086daa (tree still): ALL PASS: lint 15/15,
+unit 1552/0, scenarios 52, parity bit-exact + mutation caught, selftest, export-audit 566/0
+(evidence/n8-vehicles/evidence-run-it20.log, iteration20.json).
+Session end ~06:09.
