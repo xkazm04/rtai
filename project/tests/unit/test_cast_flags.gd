@@ -6,6 +6,7 @@ func after_each() -> void:
 	PartMaterials.head_lod_fill = PartMaterials.HEAD_LOD_FILL
 	PartMaterials.core_tan = PartMaterials.CORE_TAN
 	RivetPlan.form = RivetPlan.FORM_BASE
+	RivetFrames.height_k = 1.0
 
 
 func test_defaults_are_the_owner_picks() -> void:
@@ -21,3 +22,14 @@ func test_flags_bring_back_the_old_defaults() -> void:
 	assert_almost_eq(RivetPlan.build().size_k, 0.97, 0.001, "n5-cast's 1.2x")
 	assert_eq(PartMaterials.head_lod_fill, PartMaterials.HEAD_VISOR_FILL)
 	assert_eq(PartMaterials.core_tan, 1.0)
+
+
+func test_rivet_height_scales_his_drawn_height_at_every_art_key() -> void:
+	# d9 Call 1: the built 1.1 m is the default; --rivet-height=1.4 brings an option into the exe.
+	assert_almost_eq(RivetFrames.height_k, 1.0, 0.0001, "1.1 m built")
+	CastFlags._read = false
+	CastFlags.apply(PackedStringArray(["--rivet-height=1.4"]))
+	assert_almost_eq(RivetFrames.height_k * RivetFrames.HEIGHT_M, 1.4, 0.0001)
+	CastFlags._read = false
+	CastFlags.apply(PackedStringArray(["--rivet-height=9"]))
+	assert_almost_eq(RivetFrames.height_k * RivetFrames.HEIGHT_M, 2.0, 0.0001, "clamped")

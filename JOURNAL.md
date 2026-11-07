@@ -719,3 +719,10 @@ NEXT (it20 end, 16:20; supersedes every NEXT above):
   mirror. Why: the owner's Call 2 (frames per stride); today he walks as one facing card with a built bob and
   sway, the only character in the city without drawn legs moving. If served by 17:45 I wire it as a strip picked
   by phase while he walks bare-claw (the default stays the bob until the owner picks).
+- 16:35 GATES it21 on 613490f1 (`evidence/d9/gates-it21.md`, `5af5db29`): director reel 19/19 fully down in top,
+  tilt70, combo (electro_baton 1/1), 0 SCRIPT ERROR, 0 p_frame, the 2 known ^ERROR lines; unit 1708/0; lint 15/15.
+  FRICTION (~1 min): the first evidence run refused a dirty tree (the uncommitted reel logs); committed, re-run.
+- 16:37 Next (raise the weakest item): Call 1 (his size) has no options still for the owner, and seams (it9) also
+  reads him small beside the cops. Plan: `--rivet-height=<m>` (CastFlags, LaunchArgs) scales his drawn height at
+  every art key (p55 in proportion), so each Call option is one flag in the exe; film the city block at 32 px/m
+  tilt70 at 1.1 / 1.25 / 1.4 m beside the cast.

@@ -75,6 +75,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--pickup-hover",
 	# n8-hud: --pickup-crate=on|off lays a floor gun's showcase drawing in an open crate (else hover)
 	"--pickup-crate",
+	# d9-rivet: --rivet-height=<m> sets Rivet's drawn standing height under a card view (Call 1)
+	"--rivet-height",
 ]
 
 var _values: Dictionary[String, String] = {}

@@ -139,7 +139,11 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
 
 ## Calls for the owner
 1. **Rivet's size.** Built 1.1 m standing (~35 px at 32 px/m, the asset lane's mock), p55 1.3 m.
-   Options: 1.25 m / 1.4 m (`RivetFrames.HEIGHT_M`). He reads smaller than the parts rig did (before/after still).
+   Options: 1.25 m / 1.4 m, each one launch flag in the exe since it21: `RTAI.exe -- --rigs --rivet-height=1.25`
+   (p55 scales in proportion; view only). At 1.1 m he reads smaller than a cop and the pedestrians (seams saw the
+   same at its merge trial); 1.25 m is a pedestrian's height, 1.4 m the cop's. Still, same seed and frame:
+   `gtai-masters\d9ivetivet_size_options_1p1_1p25_1p4_beside_cop_and_peds_city_tilt70_32ppm_x2_seed5_f300.png`.
+   My recommendation: 1.25 m (the hero at least as tall as a passer-by, still a compact robot).
 2. **The walk.** The sheets carry one walk and one sprint drawing. Built: the facing with a bob and sway
    (the street walkers' no-grid path, no pops). Options: alternate facing / walk drawing (a 2-frame step),
    or a REQUEST to assets for a 4-frame stride grid per facing (street's `ped_*_walk` shape).

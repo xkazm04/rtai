@@ -37,6 +37,8 @@ const FIRE: StringName = &"rivet_fire"
 const ON: StringName = &"rivet_frames"
 const HID: StringName = &"rivet_frames_hid"
 const WAS: StringName = &"rivet_frames_was"
+## The owner's Call 1 (his size): --rivet-height=<m> (CastFlags) scales every art key's height.
+static var height_k: float = 1.0
 static var _tex: Dictionary[String, Texture2D] = {}
 
 
@@ -119,7 +121,7 @@ static func place(rig: CutRig, card: Sprite2D) -> void:
 	var c: Vector2i = cell_of(rig, card.hframes)
 	card.frame = c.x
 	card.flip_h = c.y == 1
-	var h: float = HEIGHT_BY_ART.get(ViewMode.shared().art, HEIGHT_M)
+	var h: float = HEIGHT_BY_ART.get(ViewMode.shared().art, HEIGHT_M) * height_k
 	var s: float = h * CharacterRigs.PX_PER_M / FIG_PX
 	var walk: float = clampf(rig.speed_now / WALK_SPEED, 0.0, 1.0)
 	walk = walk if c.x != Cell.ROLL and c.x != Cell.DEATH else 0.0
