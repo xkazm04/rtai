@@ -754,3 +754,51 @@ vending_machine_v3, barrel_cluster_v3, trash_can_v3); NEXT 2-5 as above.
 - GATE unit full no-arg at 22024a9c: 1521 passed, 0 failed, 0 skipped, no FLAKY.
 - Session end ~03:10. Head = this JOURNAL commit. NEXT (iteration 17): (b) the remaining 55 raises,
   then NEXT 2-5 of iteration 16.
+
+## Iteration 19 (2026-11-07 03:10 - 04:10), BUILD
+Read: JOURNAL, git log, the four lane journals (no new REQUEST to city), the library catalog (new
+A at 55: hydrant_v3, newsstand_v2, planter_v2, vending_machine_v3, barrel_cluster_v3,
+trash_can_v3; B: bench_v3 55 (twin of the 70 A), traffic_light_v3 55, lamp_v4 55; roof_dressing_v3
+A at 55/70; depot_dressing_v3 70 B "no gain").
+- MILESTONE 3ba29fd0 (it16 NEXT (b)): the hydrant, newsstand, planter, vending machine, barrel
+  cluster and trash can 55 strips from the A raises, cut by city_prop_cut.py (scratch copy named
+  `<id>_55.png`); 6 provenance lines. The newsstand's and machine's facing 0 now fill 0.75 of the
+  cell (before 0.93 / 0.85), so `cell_w_m_p55` 3.15 / 1.37 keep the 70 strips' front-face ground
+  width (2.37 m / 1.03 m). No new code (the it16 per-pitch key).
+- EVIDENCE the 55 raises in motion: `res://dev/bench/city_bench.tscn -- --scenario=facade
+  --zoom=1.5 --view=tilt --secs=24` (48 px/m), ca539e27 (throwaway worktree wt_before, imported)
+  vs 3ba29fd0, 22.5 s: the wall-side vending machine reads as a machine (bottle rows, coin slot)
+  where it was a cream slab with a dark lid; the corner planter shows its shrubs from above.
+  `gtai-masters/n8/city/it19_vending_planter_v55_tilt48_before_after_x2.png`. At 13.5 s the wall
+  bins show the rounder v3 rim. 0 SCRIPT ERROR both. The hydrant, newsstand and barrels were not
+  in frame. The same drive at tilt70 (3ba29fd0) frames the 70 vending v2 against a wall (it16
+  NEXT 2, it reads as a dark louvred box at 48: looked, not kept).
+- EVIDENCE (it16 NEXT 3) the v4 lamp at night: `vehicle_frame.tscn -- --scene=yield --view=tilt70
+  --grade=night --car-zoom`, tick 180: the pool sits on the pavement around the head and the upper
+  post (light_m -0.45 still fits the v4 head; no change).
+  `gtai-masters/n8/city/it19_lamp_v4_night_tilt70_48ppm_x2.png`. 0 SCRIPT ERROR.
+- MILESTONE 5f35e2a4 the bench's 55 strip from bench_v3 (B, the 55 twin of the 70 bench_v2 A):
+  combo's hard swap 70 -> 55 no longer turns the slatted scroll-end bench into the 2110 armchair
+  bench. B note (views 1/5 near elevations) accepted at game size so the strip keeps one design.
+- FOUND (all 17 prop strips, 55 | 70 side by side, scratch swap_pairs.jpg): the designs that still
+  change in combo's swap are the bus stop (55 = the black slab, 70 = v4 ribbed roof + cream
+  fascia) and the lamp (55 = slender swan neck, 70 = v4 fluted bronze with a bolted plate).
+  Everything else keeps its design (crate stack differs in the stack only).
+- DECISION traffic_light_v3 55 (B, the new pick) NOT cut: its view 1 puts the head in front of the
+  pole (facing 0 fills 0.45 of a cell) while the props row's foot_m / mirror assume the post at -x
+  and the head at +x in every view; no boss arena has traffic lights, so only `--view=tilt` on the
+  city street would show it. Re-check when a 55 sheet with the 70's layout lands.
+- DECISION roof_dressing_v3 (A, 55/70) NOT integrated: the baked roofs already paint their AC
+  units, tanks, vents and hatches (seen in every drive frame); standing cards would double them.
+  Re-check if the owner asks for rooftop silhouettes above the roof line.
+- REQUEST to assets: bus_stop, 55, the 55 twin of bus_stop_70_v4 (A): the ribbed mid-grey roof and
+  cream fascia at 55, because combo hard-swaps the 70 shelter into the 2000 black slab mid-fight.
+- REQUEST to assets: lamp, 55, the 55 twin of lamp_70_v4 (A: fluted bronze pole, bolted 10-sided
+  plate, curved arm, domed shade + cream globe), same reason (the 55 is a different slender lamp).
+  Keep the arm to the right in views 1-4 as the 70 (the props row mirrors view 3 from it).
+- REQUEST to assets: street_sign and bollard, 70 then 55, five rotations each: the two kerb props
+  (KerbDresser.KERB_PROPS 36/37, 2 of 12 kerb picks) with no sheet, still drawn flat top-down
+  under the angled view. Street sign: a 2.6 m grey pole with a blank cream blade sign (no
+  letters); bollard: a 0.9 m dark iron post with a cream band, no hazard stripes.
+- GATE unit full no-arg at 5f35e2a4: 1521 passed, 0 failed; lint 15/15 every commit. `top` cannot
+  move: only p55 strips and a p55 width key changed (p55 is never drawn under top).
