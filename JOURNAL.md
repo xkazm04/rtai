@@ -708,3 +708,49 @@ re-runnable cut tool, the alternative one value away), `concept-scene-parity` +
 `motion-quality-gating` (the real armory, the same seed and frame, 32 and 48 px/m),
 `depth-ordered-layered-art` (the bed re-measured so the gun's bottom rests on the straw front inside
 the near wall).
+- 03:12 Full unit at 507d037c: 1514 passed, 0 failed (`gtai-n8/scratch/hud/it10/unit_full.log`).
+- Looked for the next weakest piece on a fresh full-HUD still at HEAD (`dialogue_board.gd --size=1280x800
+  --ground=<a tilt70 city frame>`): the fitted dialogue box (it9) left the two top panels as the
+  biggest empty paper on screen: the beat panel a fixed 640 px for "4/6  Get Gloria back" (~300 px
+  empty), the cash frame a fixed 420 px for "$12,450" (~200 px empty).
+- 03:14 MILESTONE 7d907818 the beat panel fits its words and heat pips (`HudView.BEAT_FIT`,
+  `beat_width`: the longer of the head at 30 px and the heat row, + 30 px, at most 640): 640 -> ~330
+  px; the frame diff is only that panel. Unit test_hud_art +1.
+- 03:19 MILESTONE d847c440 the cash frame fits its sum (`HudCash`, a new 46-line file so hud_view.gd
+  stays under 200 lines; the debt ratchet failed the first take at 222 lines): the drawn frame's
+  banknote end and its torn right end (120 source px) kept at the 420 px scale, the plain middle cut,
+  260-420 px, right-aligned so it stands over the 260 px ammo ticket as one column: 420 -> 260 px.
+  Looked at 1280x800, 1920x1080, and the seam at 4x (`hud_cash_fit_seam_x4.png`: a 2 px step in the
+  torn top edge, reads as torn paper). Unit test_hud_art +1. Rejected a 9-slice stretch (it stretches
+  the hatching).
+- Masters: `hud_fit_1280x800_before_after.png` (frames.json entry 12, replaces
+  `hud_full_1280x800_after`, whose file stays), `hud_cash_fit_seam_x4.png` (not in frames.json).
+- DECISIONS (docs/decisions.md): hud/beat panel width, hud/cash frame width.
+- FINDING (not built): at 1080p the beat panel's right pad is tight (the "k" of "back" ~25 px from
+  the torn edge, the rim eats ~10): BEAT_PAD 30 -> 40 is a one-value raise if it reads cramped.
+- 03:27 Gates at d847c440 (`node tools/evidence/run.mjs --no-bench`, the tree untouched during the
+  run; `gtai-n8/scratch/hud/evidence_run_it10.log`): lint 15/15, unit 1516/0, scenarios 52/52,
+  parity bit-exact + planted mutation caught at 629, look goldens 11/11 + block 5/5 (top did not
+  move), export-audit 558/0.
+- 03:29 MILESTONE 20cefbe7 the FINDING built: BEAT_PAD 30 -> 40 (at 1080p the words now clear the
+  hatched rim; `hud_beat_pad_1080p_30_vs_40.png`). test_hud_art 9/0, lint 15/15.
+- Director reel not re-run: this session's changes are the 70 crate art under `--pickup-crate=on`
+  (no reel chapter turns it on) and quest 1's HUD panels (no reel chapter draws HudView). The last
+  reel 19/19 in top and tilt70 is at a91232c4 (it7). Run it at the freeze.
+- Scratch it10 trimmed to the frame-89 stills the masters crops came from.
+
+Registry rules applied (HUD items): `accessibility` (the words keep their 30/32 px sizes; only empty
+paper is cut; checked at 1280x800 and 1080p), `short-form-cards-and-barks` (the panels sized to
+what they say), `sprite-and-atlas-production` (the cash frame's drawn ends kept at their authored
+scale, never stretched).
+
+NEXT:
+- Work items 1-4 evidenced; it10 raised the 70 crate (v3) and the top HUD panels (fitted). Weakest
+  left: the weapon's showcase icon sits on the field left of the ammo ticket with no paper under it
+  (reads as HUD by its place, but could be mistaken for a floor pickup on a busy street; a paper tab
+  under it is the candidate); the Servo taunt waits for lines; the long guns on the wall overlap
+  the cops at 55 (the hub layout).
+- Freeze 08:30: run the director reel (top + tilt70) and `node tools/evidence/run.mjs --no-bench`,
+  export `build/export/windows/RTAI.exe` with the `windows-showcase` preset (recipe in
+  `gtai-n8/scratch/hud/it6/report_notes.md`, it10 lines appended), REPORT from those notes. Delete
+  the it9/it10 scratch frames after the REPORT. Nothing into the worktree during a gate run.
