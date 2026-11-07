@@ -995,3 +995,7 @@ NEXT (it12, after the freeze), replaces the lists above:
   `git merge-tree HEAD dacaac88`: the same two conflicts (JOURNAL.md add/add, debt baseline); the it11 trial merge
   holds; REPORT merge note says so. No REQUEST/NOTE open to seams. No code change before the freeze (the gates
   would not fit in the 16 min left). NEXT unchanged (it12 list above). Session end.
+- 18:16 (it20 session) freeze check: d9-rivet head still dacaac88 (no new commits since it19); no REQUEST/NOTE open
+  to seams; `git merge-tree` vs dacaac88 the same conflicts (JOURNAL.md add/add, debt baseline); exe
+  `build/export/windows/RTAI.exe` present; tree clean. No code change before the 18:30 freeze (the gates would not
+  fit in 14 min). NEXT unchanged (it12 list above). Session end.
