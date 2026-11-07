@@ -1,5 +1,5 @@
 {
-  "doc": "d9 rivet: the muzzle point of Rivet's drawn strip cells, measured by tools/art/rivet_muzzle.py (px from the cell's top-left, unmirrored). Fire cells 5/6: the drawn flash's root; a one-handed left strip's cells 0-2: the gun's left tip. RivetMuzzle publishes it as HeldMuzzle while the drawn figure carries the weapon; a cell without a point keeps the caller's fallback spot.",
+  "doc": "d9 rivet: the muzzle point of Rivet's drawn strip cells, measured by tools/art/rivet_muzzle.py (px from the cell's top-left, unmirrored). The flamer's facing cells 0-4: the wand's nozzle; fire cells 5/6: the drawn flash's root; a one-handed left strip's cells 0-2: the gun's left tip. RivetMuzzle publishes it as HeldMuzzle while the drawn figure carries the weapon; a cell without a point keeps the caller's fallback spot.",
   "schema": "gtai.rivet-muzzle/1",
   "strips": {
     "p55": {
@@ -33,6 +33,26 @@
       },
       "rivet_eq_flamethrower": {
         "cells": {
+          "0": [
+            164,
+            94
+          ],
+          "1": [
+            159,
+            87
+          ],
+          "2": [
+            160,
+            67
+          ],
+          "3": [
+            155,
+            62
+          ],
+          "4": [
+            156,
+            60
+          ],
           "5": [
             159,
             94
@@ -275,6 +295,26 @@
       },
       "rivet_eq_flamethrower": {
         "cells": {
+          "0": [
+            188,
+            130
+          ],
+          "1": [
+            202,
+            128
+          ],
+          "2": [
+            197,
+            103
+          ],
+          "3": [
+            195,
+            93
+          ],
+          "4": [
+            199,
+            91
+          ],
           "5": [
             195,
             134

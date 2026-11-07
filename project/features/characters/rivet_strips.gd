@@ -19,6 +19,8 @@ const ONE_HAND: Array[StringName] = [
 	&"ray_gun",
 	&"homing_shard",
 ]
+## Streams drawn as a long flame in the fire cells (RivetFrames.fires_drawn).
+const CONE: Array[StringName] = [&"flamethrower"]
 static var _logged: Dictionary[StringName, bool] = {}
 
 

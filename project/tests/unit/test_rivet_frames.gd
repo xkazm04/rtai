@@ -26,3 +26,16 @@ func test_every_one_handed_hold_has_a_drawn_left_strip_at_both_pitches() -> void
 
 func test_without_a_left_strip_the_base_figure_draws() -> void:
 	assert_eq(RivetStrips.left_of("p55", &"katana"), P55 + RivetStrips.BASE)
+
+
+func test_the_flamer_fires_its_drawn_flame_only_along_side_and_camera() -> void:
+	for o: int in 8:
+		assert_eq(RivetFrames.fires_drawn(&"flamethrower", o), o in [0, 2, 4], "octant %d" % o)
+		assert_true(RivetFrames.fires_drawn(&"pistol", o), "pistol octant %d" % o)
+
+
+func test_the_flamer_facings_carry_the_nozzle_at_both_pitches() -> void:
+	for art: String in ["p70", "p55"]:
+		var path: String = RivetStrips.DIR + art + "/rivet_eq_flamethrower.png"
+		for cell: int in 5:
+			assert_gt(RivetMuzzle.point(path, cell).x, 0.0, "%s cell %d" % [art, cell])

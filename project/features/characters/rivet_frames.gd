@@ -102,11 +102,17 @@ static func cell_of(rig: CutRig, cells: int) -> Vector2i:
 			return Vector2i(Cell.HIT, 0)
 		return Vector2i(BASE_OCT[o], 0)
 	var fired: bool = absf(rig.clips.recoil) > FIRE_RECOIL or rig.get_meta(FIRE, false) == true
-	if fired or rig.clips.strike_t >= 0.0:
+	if (fired or rig.clips.strike_t >= 0.0) and fires_drawn(weapon_of(rig), o):
 		return Vector2i(Eq.FIRE_CAM if o == 2 else Eq.FIRE_SIDE, left)
 	if not rig.aiming and rig.speed_now <= MOVING and o in [1, 2, 3]:
 		return Vector2i(Eq.REST, 0)
 	return Vector2i(EQ_OCT[o], left)
+
+
+## The cone (the flamer) fires its drawn flame only along the side and camera octants; off them
+## the facing cell fires and the game jet leaves its nozzle (else two flames point two ways).
+static func fires_drawn(weapon: StringName, o: int) -> bool:
+	return not RivetStrips.CONE.has(weapon) or o in [0, 2, 4]
 
 
 ## The screen octant of the look (0 = screen right, +1 = 45 deg toward the camera).
