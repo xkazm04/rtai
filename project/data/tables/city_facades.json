@@ -141,6 +141,7 @@
     },
     "traffic_light": {
       "art": "res://features/city/art/view/<art>/prop_traffic_light.png",
+      "cast_m": 1.8,
       "cell_w_m": 1.4,
       "foot_m": [
         -1.3,
