@@ -18,6 +18,13 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
   about 2x. Still: `gtai-masters\d9\rivet\rivet_plasma_sword_redraw_tilt70_64ppm_x3_t204_264_300.png`.
 - **Blade action rows sized** (it6): katana, plasma sword, chainsaw at both pitches (manifest `act_k`), the p55
   sword's overlapping swings cut by component (`--cc`). Contact: `gtai-masters\d9\rivet\rivet_blades_act_k_tuned_p70_p55_contact.jpg`.
+- **Fire frames for streams and autos** (`657a4b28`, it6): a shot within 7 ticks draws the fire cell (the flamer
+  stream holds it, no flicker). Still: `gtai-masters\d9ivetivet_flamer_fire_cell_tilt70_64ppm_x2_t300_336_346_356.png`.
+- **Drawn left views at 55 too** (it6): all 8 one-handed holds; no p55 fallback left. Contact:
+  `gtai-masters\d9ivetivet_left_views_p55_and_p70_v2_contact.jpg`.
+- **Combo swap filmed at Servo's engage** (p55 at tick 32): `gtai-masters\d9ivetivet_combo_swap_servo_engage_48ppm_x2_t26_30_32_40.png`.
+- **No floating reload magazine** under the drawn figure (it6 fix): before/after in frames.json entries 5-6.
+- **Gates (it6):** unit 1695 / 0; director reel 19/19 in `tilt70`, `combo`, `top`, 0 SCRIPT ERROR (`evidence/d9/gates-it6.md`).
 - **Gates (it3):** unit 1691 passed / 0 failed; director reel 19/19 chapters down in `tilt70`, `combo`, `top`,
   0 SCRIPT ERROR (`evidence/d9/reel-director-it3-*.log`).
 
@@ -26,7 +33,7 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
 - The shot origin and muzzle flash still come from the hidden claw (realtime-combat-semantics: the origin
   must not move; the flash should sit on the drawn muzzle).
 - Walk: one drawn walk and one sprint pose per sheet; built bob + sway on the facing.
-- The combo swap is in (the strip follows the art key) but not yet filmed at the engage.
+- While reloading he shows the bare base figure (no drawn reload frame; the equipped at-rest cell is the plan).
 
 ## Calls for the owner
 1. **Rivet's size.** Built 1.1 m standing (~35 px at 32 px/m, the asset lane's mock), p55 1.3 m.

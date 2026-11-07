@@ -158,7 +158,37 @@ NEXT (supersedes both NEXT above):
   sheets checked against the hand rule before use: weapon hand, cable arm near, size beside the right facings).
 - DECISION rivet/left-strips: own 3-cell strip per weapon per art key (docs/decisions.md).
 
-NEXT (supersedes it3's):
+### Iteration 6, continued (10:52-11:25; the 10:52 entry above was written early, the clock was ahead of me)
+- MILESTONE `657a4b28`: the fire cell for streams and autos: `RivetFrames.publish(rig, held, gun)` (replaces the
+  set_meta line in RivetHeldView, net 0 lines there) flags a shot within FIRE_TICKS=7 from the trigger's cooldown;
+  the strip pick moved to `RivetStrips` (rivet_strips.gd: DIR, BASE, ONE_HAND, strip_of, left_of) to stay under 200.
+  Seen: the flamer stream holds the fire-at-camera cell through frames 328-354, no flicker.
+- The asset lane delivered the 8 one-handed 55 left views (5 A, 3 B) and 70 left v2 for electro_gun (A) and
+  electro_baton (B, `_s`): manifest rows + provenance; p55 no longer falls back (Servo film: 0 fallback lines).
+- Found in the Servo fight at 48 px/m: a reload magazine floating at his helmet under the drawn figure
+  (WeaponMagView rides the hidden off claw; first suspected RivetMagView, filmed `top` to see it was the reload).
+  Fixed: `RivetFrames.drawn(rig)` turns both magazine views off under the drawn figure. Verified by film.
+- Combo swap filmed at Servo's engage (p55 at tick 32): `rivet_combo_swap_servo_engage_48ppm_x2_t26_30_32_40.png`.
+- FRICTION (~3 min): my reels ran while I edited rivet_frames.gd; the combo reel caught the mid-edit parse error.
+  Killed my own process tree (PIDs from my reels.sh parent, never by name), re-ran on committed code. Rule for me:
+  no .gd edit while a gate runs from this worktree.
+- FRICTION: the top reel at `--quit-after 14000` ended before the last two chapters (headless top runs uncapped;
+  ticks per frame drift with load); 20000 frames: 19/19. Recorded in evidence/d9/gates-it6.md.
+- Gates it6 (evidence/d9/gates-it6.md): unit 1695/0 (full), director reel 19/19 x3 views, 0 SCRIPT ERROR; the
+  magazine fix after that: `--changed` 1679/0 + lint. evidence/run.mjs (goldens/parity/scenarios) owed.
+- To check (not mine?): a cream-outlined grey blob near Rivet in the Servo fight at t270/t450-510 (first film).
+
+NEXT (supersedes every NEXT above):
+1. `node tools/evidence/run.mjs --no-bench` (scenarios, look goldens, parity) and release-compile on HEAD; the
+   reel in top with `--quit-after 20000`. No .gd edits while they run.
+2. Reload under the drawn figure: he shows the bare base figure while reloading (gun_out false?). Use the
+   equipped strip's at-rest cell during the reload so the weapon stays in his hands.
+3. Shot origin + muzzle flash from the drawn frame (per-cell muzzle point measured in rivet_frames.py -> JSON).
+4. The grey blob in the Servo fight (above): identify it in `top` vs combo; REQUEST to seams if it is theirs.
+5. Ghost form swap back; death beat; occlusion silhouette; King engage re-film with the 55 left views; every
+   weapon at each pitch; frame cost under the bench lock; a combined 30-90 s clip; Rivet's dialogue face.
+
+NEXT (it6 early, superseded below the continued entry):
 1. Gates on HEAD: director reel `--quit-after 14000` in top, tilt70, combo (0 SCRIPT ERROR, 19/19) and
    `node tools/evidence/run.mjs --no-bench`; re-try `node tools/tests/release_compile.mjs` (the foreign temp dir).
 2. Fire state for streams/auto weapons (flamer shows no fire cell): `RivetFrames.publish(rig, held, arena)` from
