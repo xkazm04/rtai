@@ -361,3 +361,9 @@ NEXT (it5):
   52/52, parity bit-exact, selftest look goldens 11/11, release-compile 602/0: all PASS
   (`evidence/d9-seams/evidence-it4-6110bbf9.log`). Gameplay code unchanged since the it4 reels (16eb6d86:
   19/19 x3), only art + FILL.
+- REQUEST to assets: `swat_walk_armed_55` row 2 (3/4 toward), a fresh row at the front row's figure
+  height: the round-1320 row 2 (A) draws ~8 % shorter than row 1 in the game grid (street_walk.py fits
+  all 20 in one cell), so the SWAT shrinks on the front -> 3/4 turn at 55. And `cop_riot_walk_armed_55`
+  row 2 (3/4 toward; repeats frame 1 as 3; your fresh try was C). Same layout and drop-in
+  `<strip>_rfresh_cells/` names. Why: brief item 5; the 55 armed cops are what combo fights show.
+- 12:48 ACK assets: rounds 1310-1330 consumed (swat 70 v2 + row 3, patrol/riot/swat 55 + fresh rows).
