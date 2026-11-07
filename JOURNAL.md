@@ -1329,3 +1329,14 @@ into `BossTaunt`; boss busts once approved; Rivet's dialogue face after the Rive
 NEXT: unchanged from it22 (assets' raises for the heavy/long showcase top views then re-import via
 `tools/art/showcase_import.py`; boss taunt lines into `BossTaunt`; boss busts once approved; Rivet's
 dialogue face after the Rivet triage; `BossCam.HUD_PX` reads `BossBar` if `--boss-cam` ships).
+
+## Iteration 24 (08:19-08:21, BUILD, 11 min before the freeze)
+- 08:19 Read: JOURNAL it23 NEXT, git log (HEAD 6e96f934, tree clean), the four lane journals'
+  `REQUEST to hud` lines: only view l.862 (Dock 9 Gloria size), already ANSWERED at l.886 (it is the
+  HUD's weapon icon, not a floor pickup). `git diff f80e09ba HEAD -- project` still empty.
+- DECISION hud/it24: the freeze stays at f80e09ba (same reasoning as it21-it23: no time to re-gate,
+  reel-check and re-export a change before 08:30). `build/export/windows/RTAI.exe` is f80e09ba's code.
+- Registry rules applied it24: `motion-quality-gating` (a gated freeze is not moved without its gates).
+NEXT: unchanged from it22/it23 (assets' raises for the heavy/long showcase top views then re-import
+via `tools/art/showcase_import.py`; boss taunt lines into `BossTaunt`; boss busts once approved;
+Rivet's dialogue face after the Rivet triage; `BossCam.HUD_PX` reads `BossBar` if `--boss-cam` ships).
