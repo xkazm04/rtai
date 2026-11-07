@@ -108,9 +108,13 @@ under `evidence/n8-view/`. Full log: `JOURNAL.md`.
 - FOUND it17 on the final merge (not fixed): in the city block at tilt70 (seed 5, tick 900, 32 px/m)
   two dead cops lying just north of the kerb barrier draw their heads and shoulders OVER the
   barrier's top face (masters `FOUND_corpse_head_over_barrier_merged_it17_tilt70_32ppm_seed5_t900_crop3x.png`).
-  `PropOcclusion` models every body as upright (its patch and silhouette run from the feet up the
-  screen), so a lying figure whose head points south into a prop makes no hit. Not landed at the
-  freeze: it is a view + street + city seam (the down figure's extent, the barrier's height class).
+  Measured cause (07:52-07:55): after street's 90-tick hold the corpse leaves its rig for city's crowd
+  atlas, drawn on the actors canvas over the whole world canvas; `CityCrowdOcclusion` patches lying
+  crowd bodies (`LYING_HALF_M` 0.9) but only behind city's buildings, and view's `PropOcclusion`
+  (the arena's kerb barriers, `wall_high`) only sees rigs. A lying-rig patch in PropOcclusion was
+  tried (dead hits 2 -> 192 body-frames) and left the frame pixel-identical, so it was NOT landed
+  (`scratch/view/prop_occlusion_lie_wip.gd`). The fix is one seam: hand the arena's tall props to
+  CityOcclusion as occluders, or feed the crowd snapshot to PropOcclusion.
 
 ## Calls for the owner
 (Each: options, the default built, how to see it.)
@@ -214,6 +218,7 @@ Try: `RTAI.exe -- --rigs --boss=king --phase=3 --view=combo [--ppm=64]`, `RTAI.e
 4. Re-take the frame cost on an idle machine (every take tonight was CONTENDED by the other lanes).
 5. Make `BossCam` the boss fight's camera (today behind `--boss-cam`) so the King's bust never rams
    under hud's banner, with its band read from `BossBar` (bar + paper + crest) after the merge.
-6. Lying bodies in `PropOcclusion`: give a dead rig a lying patch (the down figure's screen extent,
-   from street's cards) and no x-ray silhouette, and decide with city whether the kerb barrier is an
-   occluding height; film the city block at tilt70 seed 5 around tick 900 before/after (it17 FOUND).
+6. The crowd's dead behind the arena's kerb barriers (it17 FOUND): view + city choose the seam
+   (the arena's `wall_high` props as `CityOccluders` entries, or the crowd snapshot in PropOcclusion,
+   which then also wants the lying-rig patch tried it17); film the city block at tilt70 seed 5 tick
+   900 before/after.

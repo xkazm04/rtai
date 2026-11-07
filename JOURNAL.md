@@ -1445,3 +1445,20 @@ NEXT (iteration 17, the freeze at 08:30):
   (the down figure's screen extent, no x-ray silhouette for the dead) and the down figure's extent
   from street's cards. DECISION freeze-it17: not landed before the freeze (a view+street seam, ~30
   lines + a test + the full re-gate does not fit 08:30 safely; the gated freeze stays). Next steps 6.
+- TRIED 07:51-07:55 (not landed) the FOUND above: a lying-rig patch in `PropOcclusion` (`CutRig.dead`
+  -> a LIE_M 1.0 box round the ground point, no x-ray silhouette; + a unit test, 5/5). Applied to
+  the trial tree and filmed the same seed/tick: the run logs 192 body-frames hidden (was 2), yet the
+  tick-900 frame is PIXEL-IDENTICAL to the before (ImageChops bbox None). Cause, read in the merged
+  code: after street's 90-tick hold (`RigSelect`, the city has an atlas) the corpse leaves its rig
+  for city's crowd atlas, drawn on the actors canvas over the whole world canvas (the barrier is a
+  floor prop, world `props` z 3). `CityCrowdOcclusion.body_box` already patches lying crowd bodies
+  (LYING_HALF_M 0.9), but only behind city's buildings (`CityOccluders.Bld`, "crowd 0 patches"
+  here); view's PropOcclusion (the arena's `wall_high` kerb barriers) only sees rigs. So the patch
+  fixes nothing the player saw here: reverted (WIP kept at `scratch/view/prop_occlusion_lie_wip.gd`
+  + `lie_test.patch`), n8-view code unchanged, the freeze stays. `--write-movie` of the same run
+  frames a different camera than `--shot` at the same tick: not usable for a pixel before/after.
+- NOTE to city: the arena city block's kerb barriers (ArenaStation `wall_high`, drawn on the floor)
+  do not hide the crowd atlas's dead lying behind them at tilt70 (seed 5 tick 900, 32 px/m; masters
+  `FOUND_corpse_head_over_barrier_merged_it17_tilt70_32ppm_seed5_t900_crop3x.png`). Your
+  `CityCrowdOcclusion` already has the lying box; it needs the arena's tall props as occluders (or
+  view feeds the crowd snapshot to PropOcclusion). For d9; not a freeze change.
