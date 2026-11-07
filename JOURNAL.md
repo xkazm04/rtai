@@ -952,3 +952,17 @@ stays OPEN: needs a frame-time probe in the main game's drive (vehicle_frame or 
 or VehicleView in city_bench (a dev change; city_bench is shared: check its owner first).
 FRICTION: a bench is only evidence for the code it runs: check the bench scene builds the node
 under test before reading its numbers.
+
+NEXT (iteration 17, replaces the NEXT above):
+1. Brief item 5 for real: the drive's frame time WITH the traffic cards, tilt70 vs top, under
+   bench.lock. vehicle_frame runs the real World + VehicleService (it has the cards; 200 lines,
+   so put the probe in vehicle_frame_setup.gd or a new dev file): attach dev/bench/fight_frames.gd
+   (FightFrames.attach(parent, ArenaArgs, World): needs an ArenaArgs, or a thin adapter) behind a
+   `--frames=<json>` flag, run `--clip`-less route `--view=<top|tilt70>` with --disable-vsync,
+   2 runs each alternated; read render CPU / draw calls / p50. Also count the cards drawn per frame
+   on that route (the city walk had 1-4 after the cull; a drive past parked rows has more).
+2. If view moves the bay markers to world_markers (my it16 REQUEST): re-film Servo depot f60.
+3. Raise the weakest item: the parked pickup under the grade (find a seed with one in view).
+4. Exe at the freeze, REPORT.md by 08:40 with every Call (list in the NEXT above) and the
+   bench-it16 caveat (it measured the view without the cards).
+Session end 03:27.
