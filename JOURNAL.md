@@ -836,3 +836,10 @@ NEXT (it10), replaces the lists above:
   yield reuses the sim's car-following distances: 12 m look-ahead, 5.5 m stop), generative-artifact-gating
   (no new art this iteration).
 - 16:40 GATE director reel it9 at 5fa6baee (code since it8: CityVehicleWorld.yield_to_rivet, off): top, tilt70, combo 19/19 FULLY down, 0 SCRIPT ERROR, 0 p_frame, the 2 known ^ERROR lines each (`evidence/d9-seams/director-reel-it9-*.log`).
+- 16:45 MILESTONE (NEXT 4 done early): `scenario_traffic_yields_rivet` on the real World (seed 53): Rivet stands
+  in an east-bound lane mid-block, one sim car at 12 m/s from 24 m behind, 12 s, two arms. Measured: n8 (off)
+  closest 0.10 m (straight through him); yield (on) 2.44 m (it stops, then pulls round him in the next lane).
+  Pass bar: n8 under 1.0 m (the scene really sends it through) and yield over 1.5 m (hull half width 0.95 +
+  a person 0.4: no overlap). FRICTION (1 min, mine): my first bar (2.5 m) was a guess and failed at 2.44 m,
+  a clean pass round him; set from the geometry instead, the measure written into the const's comment.
+  Scenarios 53 passed (`evidence/d9-seams/scenarios-it9-traffic-yields.log`), lint 15/15.

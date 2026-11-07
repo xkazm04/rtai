@@ -174,6 +174,8 @@ director reel (`--fixed-fps 60 --quit-after 14000`) top 19/19, tilt70 19/19, com
    change, parity bit-exact. On, the van stops ~3 m short of him and the bike queues behind it (filmed
    before/after, tilt70 64 px/m, seed 7). Unit 4 tests, 4/4 hand-planted faults caught (one by a compile
    error). Evidence it9 at 0a950b56 all PASS.
+   Scenario `traffic_yields_rivet` (real World, a car at 12 m/s at a standing Rivet): off 0.10 m (through him),
+   on 2.44 m closest (stops, then pulls round him); scenarios 53 passed.
 
 ## What does not work yet
 - (closed it9, measured) The SWAT back rows (55 and 70, row 5) move the head 3 px (1.6 % of the figure) at 55
