@@ -456,3 +456,6 @@ NEXT (it13 end, 13:56; supersedes every NEXT above):
   (view only: revive reads the sim's alive row, never writes it; FireStills reads the card); depth-ordered-layered-art
   (no hidden part drawn on a rig's first frame); sprite-and-atlas-production (the strips unchanged; the capture keys
   by the view's art key through --view).
+- Session end 13:58: everything committed (92577499 + this note); scratch stills deleted (composited into the two
+  masters contacts); the capture scripts kept in gtai-d9/scratch/rivet/it13/tools (fs_one.sh guns, fs_melee.sh melee,
+  fs_contact.py the sheets).
