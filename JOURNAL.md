@@ -594,3 +594,79 @@ NEXT:
   the wrapped hilt, the guard and the blade's highlight all read on the hollow; closed, no change.
   Scratch frame sequences deleted (the crops are in masters).
 - 02:09 Session end. All committed.
+
+## Iteration 9 (BUILD, 02:05-03:05)
+
+- 02:06 Read JOURNAL, git log, the lane journals (no REQUEST to hud) and the assets JOURNAL (nothing
+  new for hud: fall strips, props, vehicles). Items 1-4 evidenced, so I looked for the weakest piece
+  on the masters stills: the dialogue box is 236 px + paper (~30 % of the 1280x800 viewport) for
+  every line, even a one-line bark with two thirds of the paper empty (hud_full_1280x800_after.png).
+- 02:17 MILESTONE 5e667105 the box fits its line (HudDialogue.FIT_BOX): its height comes from the
+  words at their fitted size (150-236 px, bottom-anchored, eased over ENTER_S between lines; the size
+  is still fitted against the full box, so the words never change size as the box moves); the
+  252 px bust keeps its size and stands out over the paper's top edge on a short box. Unit
+  test_hud_dialogue +1 (a bark gets 150-170 px, a long line 236), `--changed` 1497/0, lint 15/15.
+- Looked: (1) live quest 1 at tilt70 (`quest1_clip.gd --view=tilt70 --stills=2300..4050`,
+  0 SCRIPT ERROR): the payphone call is unchanged, because 21 of quest 1's 23 lines are over 110
+  characters (13 over 165) and run 3-4 rows; no clipping on Don Fax's 4-row line. (2) The dialogue
+  board at 1280x800, FIT_BOX false vs true: the short line (Brass's "Bring her back...") gains ~76 px
+  of field, the bust over the paper reads as intentional; the 3-4 row lines are unchanged.
+  Master: `dialogue_fitbox_1280x800_before_after.png` (frames.json 15: replaces the it5
+  `quest1_dialogue_card` pair, whose file stays in masters).
+- DECISION (docs/decisions.md hud/dialogue height): fitted over a fixed short box (quest 1's
+  monologues would drop to 20 px or clip) and over shrinking the bust with the box; FIT_BOX = false
+  is the fixed box.
+- Side effect noted: the boss taunt's BOX form (the call's alternative) now gets the fitted box too,
+  so the call still `call_boss_taunt_box_vs_strip_combo_1280x800.png` shows the old taller box.
+- 02:30 Gates at 5e667105 (`node tools/evidence/run.mjs --no-bench`, the tree untouched during the
+  run; `gtai-n8/scratch/hud/evidence_run_it9.log`): lint 15/15, unit 1513/0, scenarios 52/52, parity
+  bit-exact + planted mutation caught at 629, look goldens 11/11 + block 5/5 (top did not move),
+  export-audit 557/0.
+- 02:36 MILESTONE 15fe68d7 the weapon wall hangs the seven pistol-grip guns flat (WeaponRackView.FLAT:
+  pistol, machine pistol, Gloria, hand cannon, electro gun, ray gun, homing shard), muzzle forward,
+  from a peg and a cord at the board's middle, at 0.9 of their length (the ray gun and the shard
+  share 1 m slots); long guns, blades, the baton and the bottle stand muzzle up; `top` unchanged.
+  Why: on the 32 px/m armory still every icon stood muzzle up, so a pistol read as a small upright
+  totem. Filmed `arena.tscn -- --armory --ppm=<32|48> --view=tilt70 --rigs --seed=1`, frame 89,
+  0 SCRIPT ERROR, before = HEAD's file; the frame diff's bbox is only the rack. Looked at both and at
+  `--view=tilt` 48: the handguns read as guns on hooks at both pitches. Masters
+  `rack_handguns_flat_tilt70_{32,48}_before_after_crop2x.png`; frames.json 15 (replaces the crate
+  v2 32 pair; the 48 pair stays the crate's close-up). Unit test_weapon_showcase +1; full unit
+  1514/0 at 15fe68d7.
+- FRICTION (mine): the first take of the rack failed to parse (PackedVector2Array.append returns a
+  bool: a discarded-value warning is an error here); caught by the SCRIPT ERROR count on the take,
+  fixed to Array[Vector2]. `tools/godot/check.mjs` FAILs every file in this dependency chain
+  (pickup_look.gd too, untouched): it is not a usable parse check for the weapon art scripts; the
+  real scene run is.
+- DECISION (docs/decisions.md hud/weapon rack): a named FLAT list over a length threshold (the bottle
+  and the baton would lie flat); the board's width kept. An empty FLAT is the it8 wall.
+
+Registry rules applied this iteration: `motion-quality-gating` + `concept-scene-parity` (both changes
+judged on the real scenes: the live quest-1 call showed the fitted box barely moves for its long
+lines, which kept the claim honest; the rack before/after on the same seed and frame),
+`short-form-cards-and-barks` (a bark gets a bark-sized box; the face keeps its size),
+`accessibility` (the words keep their fitted 30-20 px; nothing shrinks to make room),
+`sprite-and-atlas-production` (the rack reuses the icon cut, only its pose changes, by data),
+`depth-ordered-layered-art` (the bust drawn over the paper's top edge; the cord under the gun).
+- 02:45 Scenarios at 15fe68d7 (`node tools/tests/run_scenarios.mjs`): 52 passed.
+- 02:48 The boss taunt call re-shot (the box form now gets the fitted box): `GTAI_TAUNT_FORM=box
+  boss_taunt.gd -- --boss=king --view=combo --rigs`, frame 239, 0 SCRIPT ERROR; pasted over the box
+  half of `call_boss_taunt_box_vs_strip_combo_1280x800.png` (frames.json note says so). Looked: the
+  box is ~40 px shorter and the crown stands over the paper, but it still covers the ghost card's
+  chips (Dent/Kerf/Ohm) in the fight: the strip stays the default, the call unchanged.
+- Director reel not re-run this session: 5e667105 changes the dialogue box's height (render only;
+  no reel chapter speaks a quest line), 15fe68d7 the hub wall's pose under an angled view (render
+  only). The last reel 19/19 in top and tilt70 is at a91232c4 (it7). Run it at the freeze.
+- Scratch: the it9 take frames (rack/, taunt/, after/, board_*) stay in `gtai-n8/scratch/hud/it9/`
+  only until the freeze session; the masters hold the crops.
+
+NEXT:
+- Work items 1-4 evidenced; it9 raised the dialogue box (fits its line) and the weapon wall (the
+  handguns hang flat). Weakest left: the HUD's notice ("Saved.") floats free above a short box
+  (could ride the box's top); the Servo taunt waits for lines; the long guns standing on the wall
+  overlap the cops in front at 55 (the hub layout, not the art).
+- Freeze 08:30: run the director reel (top + tilt70) and `node tools/evidence/run.mjs --no-bench`,
+  export `build/export/windows/RTAI.exe` with the `windows-showcase` preset (recipe in
+  `gtai-n8/scratch/hud/it6/report_notes.md`, updated it9), REPORT from those notes. Delete the it9
+  scratch frames after the REPORT. Nothing into the worktree during a gate run.
+- 02:51 Session end. All committed.
