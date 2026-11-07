@@ -97,8 +97,9 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
   (ServoDepotDraw.cover); not on this branch until the Director merges both.
 - The electro baton reads as part of his forearm at 32-64 px/m (the rod is his arm's rust-brown; only the tip spark
   reads): an art fault, REQUESTed from assets (it16: a dark steel rod angled out of the claw, 1.3x longer).
-- The flamer: one frame after the trigger is released can still show a short drawn flame while the aim swings (the
-  fire cell outlives the last shot by 7 ticks).
+- The flamer: after the stream stops, the fire cell's 7-tick latch can draw a phantom flame for ~3 frames while the
+  aim swings into a side octant (no jet): `gtai-masters\d9\rivet\rivet_flamer_phantom_flame_after_stream_ends_tilt70_64ppm_x1.5_seed3_t362_373.png`.
+  Fix designed (the burst keeps its facing cell), next iteration.
 - Walk: one drawn walk and one sprint pose per sheet; built bob + sway on the facing.
 - Reload: no drawn reload frame; he keeps the equipped strip through it (it7 check: the "bare figure" seen in it6
   was the equipped back views, which show the small guns barely; no change made).

@@ -530,11 +530,18 @@ NEXT (it16 end, 14:37; supersedes every NEXT above):
 1. Watch assets for the electro baton REQUEST (it16): when rivet_eq_electro_baton_70/55 (+ _left) land A/B, swap the
    manifest rows, re-cut (`python -I tools/art/rivet_frames.py --manifest=tools/art/rivet_frames.json`; check the
    left rows' cc on a contact), provenance, film `--bot=pit --loadout=electro_baton --fire-stills` at tilt70 + tilt.
-2. The flamer's one-frame tail: RivetHeldView publishes FIRE for FIRE_TICKS after a shot, so when the aim swings into a
-   drawn octant after the trigger is released a short drawn flame shows (gunplay seed 3 t368). For CONE weapons key
-   the drawn fire cell on the stream actually emitting (cooldown near interval) or latch the aim at the last shot.
+2. The flamer's phantom flame (re-filmed 14:40 on 90c46dfc, gunplay seed 3 tilt70 64 px/m, x1.5 crops t362-373:
+   `gtai-masters/d9/rivet/rivet_flamer_phantom_flame_after_stream_ends_tilt70_64ppm_x1.5_seed3_t362_373.png`):
+   t362-366 the jet leaves the facing cell's nozzle (one flame: the cone-aim fix works); t367 the stream stops;
+   t368-370 the drawn FIRE_SIDE flame points left with NO jet (3 frames): the FIRE latch (RivetHeldView, FIRE_TICKS
+   after the last shot) outlives the stream while the aim swings into the left octant. Fix: a burst that began on the
+   facing cell (fired and not fires_drawn) keeps the facing cell until the latch clears (a rig meta set in cell_of,
+   cleared when not fired); test it; rivet_frames.gd is at the 200-line cap, move the octant helpers (oct_of,
+   fires_drawn, aim_of) to RivetStrips or a small RivetAim first. Re-gate the reels after.
 3. A facing (non-fire) cell's muzzle for the other holds (REPORT does-not 1).
 4. The mood bust live in quest 1 (the stills reached t9050, Gloria's hand-over; rivet-feels-good comes at the TUCK-IN
    fire): film later ticks.
 5. A new combined clip of the set (the 35 s one is from it10: no left-strip cleanup, no v4 sword, no portrait v2).
 6. The armory/rack showing him holding each weapon (brief item 6; the rack is hud's): FireStills' crops are the cells.
+- Session end 14:45: everything committed; scratch sequences deleted (flm3 too); the phantom-flame crop in masters
+  (not in frames.json: a does-not still). frames.json: 15 entries, entry 6 = the portrait before/after.
