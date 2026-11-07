@@ -1,4 +1,4 @@
-# n8 hud lane: REPORT (DRAFT it20, 07:25; final at the freeze)
+# n8 hud lane: REPORT (final, it21, 08:05; the project tree frozen at f80e09ba)
 
 Lane `hud`, branch `n8-hud`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n8\hud\` (`frames.json`,
 15 entries, best first; the combined clip `hud_set_combined_it19.mp4`, 61 s, 7 segments). Repo evidence under
@@ -67,7 +67,8 @@ Every look has a flag one value away (`PAPER`, `FACES`, `SEE`, `ON_TICKET`, `FIT
   unit 1530/0, scenarios 52/52, parity bit-exact + planted mutation caught at step 629, look goldens 11/11 +
   block 5/5 (top did not move), export-audit 563/0. Director reel at f80e09ba: `top` 19/19 down, `tilt70`
   19/19 down, 0 SCRIPT ERROR both (`evidence/director-reel-n8hud-it20-{top,tilt70}.log`).
-- FREEZE: re-run the gates (+ the reel if code changed) only if the project tree changes after f80e09ba.
+- FREEZE (it21): the project tree did not change after f80e09ba (`git diff f80e09ba HEAD -- project` empty), so the
+  f80e09ba gate run, reel and exe stand as the freeze's.
 
 ## What does not work / not done
 - No vendor exists in the game: the rack and the crate are the showcase's display forms.
@@ -117,8 +118,11 @@ Every look has a flag one value away (`PAPER`, `FACES`, `SEE`, `ON_TICKET`, `FIT
   Smoke: `RTAI.exe --log-file <f> --write-movie <dir>/f.png --fixed-fps 60 --quit-after 240 -- --armory
   --view=tilt70 --rigs` and `-- --boss=king --view=combo --rigs`: 241 frames each, 0 errors in the
   log; looked at frame 239 of each (the floor showcase + rack + chip faces; the King's paper banner).
-  FREEZE: re-export only if the project tree changed after f80e09ba. Smoke frames: `gtai-n8/scratch/hud/it20/exe_smoke.png`
+  Smoke frames: `gtai-n8/scratch/hud/it20/exe_smoke.png`
   (07:22 build, armory + King) and `exe2_smoke.png` (07:48 build, armory: the rack bottle at 0.7 m).
+  it21 (08:00), the 07:48 build again: `-- --boss=king --view=combo --rigs` and `-- --boss=servo --view=combo --rigs`,
+  241 frames each, exit 0, 0 ERROR lines in either log; frame 239 of both looked at (the paper banner with
+  the King's and Servo's crests, the ghost card): `gtai-n8/scratch/hud/it21/exe_boss_smoke.png`.
 
 ## Merge notes for the Director
 - hud touches `features/hud/`, `features/bosses/boss_bar.gd`, `features/police/heat_meter.gd`, the
