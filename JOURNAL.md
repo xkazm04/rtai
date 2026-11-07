@@ -615,3 +615,23 @@ RigCastShadows.collect: "REQUEST to view if view exposes one", conditional). hud
   order probe 0 wrong (`evidence/n8-view/occ-it9/king_combo_seed2_after_frame_rigs.log`).
   RigDepthSort._process calls `_with_cards` always (levels() with no card: the same sums).
   Unit (depth sort, occlusion, prop cards, cast shadows) 19/0.
+- MEASURE 01:42-01:46 the King fight frames re-taken UNDER bench.lock (taken by me 01:42, released
+  by the script), same command as it8 (`--boss=king --bot=boss --seed=2 --rigs --view=<v>
+  --disable-vsync --resolution 1920x1080 --frames-ticks=1500`, editor binary, dev arena; NOT a
+  release number), top/combo alternated x2, head 3855bae3 (rows_of cache + PropOcclusion + the
+  ease's holder list + frame_rigs). `evidence/n8-view/bench-it9/king_*.json`:
+  | run | p50 ms | p99 ms | low 1 % fps | over 33 ms settled |
+  | top 1 / 2 | 6.04 / 5.66 | 11.41 / 10.66 | 79 / 84 | 0 / 0 |
+  | combo 1 / 2 | 8.27 / 9.98 | 15.76 / 15.77 | 55 / 53 | 0 / 0 |
+  it8 before the fixes, same lock: combo 19.3 / 21.3 p50, 29.5 / 30.9 p99, low 1 % 31 fps, 2-4
+  frames over 33 ms. Combo is now ~1.6x top's p50 (was 3.3x), never over 33 ms settled. One
+  disturbance of mine: my decision commit's lint hook ran beside `top 1` (01:42:30, ~30 s): top 1
+  sits 0.4 ms over top 2. What remains of combo's extra: the arena floor's tilted draw (the
+  floor redraws its lifted prop faces/cards every frame; arena's and city's code, not view's alone).
+- MEASURE 01:44-01:46 quest 1's Dock 9 (`dev/bench/quest1_frames.gd --from=13560 --frames=900
+  --view=<v>`, the window came up 1422x800: the script ignores --resolution), the SHIPPED path
+  (top: the sprite cast; tilt70: the rig cast, "cast rigs: true"), alternated x2 under the same lock:
+  top p50 3.83 / 3.84 ms, p99 12.2 / 12.6; tilt70 p50 5.71 / 7.37 ms, p99 14.8 / 17.7. tilt70 run 2
+  overlapped my own unit run (01:45:00-01:45:10): CONTENDED; take run 1. Reading: quest 1 under a
+  card view costs ~+1.9 ms p50 (the rig cast + the tilt's cards), all under 30 ms max (max 28.9).
+  This answers it7's open "rig cast vs sprites" cost: affordable at 1080p on this machine.

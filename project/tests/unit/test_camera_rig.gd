@@ -77,3 +77,19 @@ func test_a_boss_eases_to_the_arena_and_the_contract_end_back_on_foot() -> void:
 	assert_eq(rig.ppm(), 64.0)
 	bus.contract_completed.emit(&"collect-call")
 	assert_eq(rig.mode, &"on_foot")
+
+
+func test_a_view_rows_lead_k_scales_the_lead_and_its_cap() -> void:
+	var saved: ViewMode = ViewMode._shared
+	var got: Array[float] = []
+	for id: String in ["top", "combo_lead"]:
+		ViewMode._shared = ViewMode.of(id)
+		var rig: CameraRig = CameraRig.new()
+		rig.snap(&"car")
+		for t: int in 600:
+			rig.step(t, Vector2(80, 0))
+		got.append(rig.offset_px(32.0).x)
+	ViewMode._shared = saved
+	var cap: float = CameraRig.new().modes[&"car"]["look_ahead_max_m"]
+	assert_almost_eq(got[0], cap * 32.0, 1.0, "top: camera.json's lead, untouched")
+	assert_almost_eq(got[1], cap * 1.5 * 32.0, 1.0, "combo_lead: x1.5")

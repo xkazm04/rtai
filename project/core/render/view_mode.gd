@@ -38,6 +38,8 @@ var eye_h_m: float = 0.0
 var cast_k: float = 0.0
 ## Under a tilt: the standing props drawn over a body behind them (PropOcclusion); false = not.
 var occlude: bool = false
+## The look-ahead at speed (CameraRig: the in-car lead and its cap) x this; 1 = camera.json.
+var lead_k: float = 1.0
 var ids: Array[String] = []
 
 
@@ -69,6 +71,8 @@ static func of(want: String) -> ViewMode:
 			var cast: float = row.get("cast_k", 0.0)
 			v.cast_k = cast
 			v.occlude = row.get("occlude", true) == true and v.pitch_deg < 90.0
+			var lead: float = row.get("lead_k", 1.0)
+			v.lead_k = lead
 	if want != "" and not v.ids.has(want):
 		Log.warn("view", "unknown --view=%s; drawing %s" % [want, v.id])
 	return v
