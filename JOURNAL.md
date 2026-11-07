@@ -495,3 +495,17 @@ NEXT (iteration 13; supersedes the list above, whose item 1 is done):
    that copy; the BC7 scratch worktree `gtai-d9x/scratch/hh-bc7` (git worktree remove); the scratch dirs
    `gtai-d9x/scratch/{padwalk,padwalk2,it12}`; the freeze exe `build/export/windows/RTAI.exe` with the exact command
    in REPORT.
+## iteration 13 (15:27, session ends 16:27)
+- Read: JOURNAL it12 + NEXT, git log -15, the rivet / seams / perf journals (perf's it12 FYI to handheld: the L9
+  instrumented template `gtai-d9x/scratch/godot-src/tw-lto.exe` for upload-buffer memory; no other REQUEST to
+  handheld), the asset library journal / queue / catalog: `ui_pad_glyphs_v1` not served yet (NEXT 2 waits).
+- MILESTONE 15:43 (7509cf49) NEXT 1: a light `boss_hit` pulse (weak 0.15, strong 0.35, 70 ms: lighter and shorter than
+  `rivet_hurt` 0.55 / 120 ms, so a landed hit never cuts a hurt). BossBar._process reads `fight.body.hurt_tick`
+  (BossFight.hurt sets it only when a hit takes hp: none in a transition) through `HandheldRumble.feel_landed`, a
+  no-op without a rumble row; HandheldRumble keeps one memo per kind (`see(kind, tick)`). Tests +3; planted by hand
+  (the bar's line removed) -> FAIL at :108; lint 15/15; the suite 1709/0.
+- RESULT 15:46 live under `deck` (headless, 2400 ticks, the boss bot, combo): **King 59 pulses = boss_hit 56 +
+  rivet_hurt 2 + boss_engaged 1; Servo 63 = 61 + 1 + 1** (`evidence/it13/*-rumble-deck-hit.log`). The hurt counts are
+  it12's exactly (2, 1): the new pulse cut none, and the fight itself did not move. ~1.4 landed hits a second: the
+  motor is on ~10 % of the fight. Owed, unmeasured: a fast gun on a boss could chain 70 ms pulses into a buzz (no
+  refractory gap yet; one data value if a pad says so).
