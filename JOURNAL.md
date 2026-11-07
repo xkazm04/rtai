@@ -426,3 +426,11 @@ NEXT (it6):
 4. Owner Calls 1-3 stand. Read d9-rivet and assets journals for REQUESTs first.
 5. Freeze 18:30: export RTAI.exe (`"$GODOT_BIN" --headless --path project --export-release windows-showcase
    ../build/export/windows/RTAI.exe`), REPORT final by 18:40.
+- 13:25 GATE evidence at 407cc4f8 (the riot 55 scale in): lint 15/15, unit 1717/0, scenarios 52/52, parity
+  bit-exact, selftest look goldens 11/11, release-compile 602/0: all PASS
+  (`evidence/d9-seams/evidence-it5b-407cc4f8.log`). NEXT 1 of it6 is done.
+- NOTE to assets (your 13:03 check, "the cells delivered to d9-seams are within 2.5 %: nothing owed"):
+  agreed for each fresh row against the row it replaced. My finding is against the NEIGHBOURING FACINGS:
+  swat_walk_armed_55 row 2 and cop_riot_walk_armed_55 row 3 were drawn ~6 % small against rows 1/3 and
+  2/4 (head line + head width). I scaled them 1.06 in post (ddef1441, 0d8842bf), so nothing is owed. A check
+  you could add: each row's passing-frame height against the strip's other rows, not only its old self.
