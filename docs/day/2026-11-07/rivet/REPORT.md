@@ -136,7 +136,7 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
   (ServoDepotDraw.cover); not on this branch until the Director merges both.
 - The p70 electro baton (v5): its toward-camera strike draws no arc, and the right-facing views
   trail the rod behind him (it21; judged acceptable, a one-copy redraw is on offer).
-- Walk: one drawn walk and one sprint pose per sheet; built bob + sway on the facing.
+- Walk: drawn bare-claw only (it22, p70 and p55); every weapon-out walk keeps the equipped facing with the bob.
 - Reload: no drawn reload frame; he keeps the equipped strip through it (it7 check: the "bare figure" seen in it6
   was the equipped back views, which show the small guns barely; no change made).
 
@@ -147,10 +147,19 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
    same at its merge trial); 1.25 m is a pedestrian's height, 1.4 m the cop's. Still, same seed and frame:
    `gtai-masters/d9/rivet/rivet_size_options_1p1_1p25_1p4_beside_cop_and_peds_city_tilt70_32ppm_x2_seed5_f300.png`.
    My recommendation: 1.25 m (the hero at least as tall as a passer-by, still a compact robot).
-2. **The walk.** The sheets carry one walk and one sprint drawing. Built: the facing with a bob and sway
-   (the street walkers' no-grid path, no pops). Options: alternate facing / walk drawing (a 2-frame step),
-   or a REQUEST to assets for a 4-frame stride grid per facing (street's `ped_*_walk` shape). it21: REQUESTed
-   (rivet_walk_70 + _left, being drawn by the asset lane); the packer `tools/art/rivet_walk.py` is ready.
+2. **The walk.** Built (it22, the default): a drawn 4-frame stride per facing, 5 facings + the 3 drawn left
+   views (the asset lane's it94 walk cells: rivet_walk_b B rows 1,2,3,5, rivet_walk B row 4, rivet_walk_left A),
+   picked by the stride phase (one cycle = two steps) while he walks bare-claw; no built bob over drawn legs.
+   With a weapon out he keeps the equipped facings (no walk drawn per weapon). The before is one flag:
+   `RTAI.exe -- --rigs --rivet-walk=bob` (the facing card with a bob and sway). Still, quest 1 t812-856, tilt70,
+   bob over drawn at 64 and 32 px/m:
+   `gtai-masters/d9/rivet/rivet_walk_70_bob_vs_drawn_quest1_tilt70_64ppm_x1_32ppm_x2_t812_856.png`.
+   p55 (boss fights) too: the asset lane's 55 offer (rivet_walk_v4 A, rivet_walk_left_v2 B), packed the same way;
+   its three left rows are a shade darker and leaner than the right rows (seen on the contact,
+   `evidence/d9/rivet_walk_55_contact_x2.png`). The arenas always give Rivet a gun, so the bare-claw walk was
+   filmed in quest 1 only; in the boss fights it shows only with no gun out.
+   Options: the bob (the before); drawn (built).
+   Known: the 3/4-toward rows (right row 2, left row 1) keep the lowest foot on one side (the arms alternate).
 3. **Left facings with a one-handed weapon.** Built (it6): the asset lane's drawn left views at 70 and 55 (weapon
    in his right claw); two-handed holds mirror. Option: mirror everything (swaps the gun hand: against the hand rule).
 4. **Rivet's dialogue face.** Built (it16): the concept-matched portrait_rivet_55_v2; the mood bust (eye bars

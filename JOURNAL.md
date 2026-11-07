@@ -778,3 +778,31 @@ NEXT (17:13; replaces NEXT 1 of 17:05, the rest stands): 1. When the walk cells 
   before) in the city block and quest 1 at 32 and 64 px/m; judge the stride rate (one phase cycle = one stride:
   check the feet do not skate); pick the default (DECISION), REPORT Call 2; evidence run hands off.
 - Session end 17:13: everything committed.
+
+## it22 (17:13-, BUILD)
+- Read: JOURNAL NEXT (17:13), git log, d9-seams JOURNAL (no REQUEST to rivet), the asset lane's JOURNAL it94
+  (DELIVERED rivet_walk_70 + _left; OFFER rivet_walk_55 + _left, `deliveries/rivet_walk_55_it94.md`).
+- ACK assets: rivet_walk_70 (it94) taken as delivered (rows 1,2,3,5 rivet_walk_b B, row 4 rivet_walk B, left
+  rivet_walk_left A). The r2fresh / left_r1fresh alternatives NOT taken: r2fresh's frame 1 is ~8 % taller, and the
+  packer keeps one scale per grid, so it would pulse in size each stride. ACK the 55 offer: taken (below).
+- 17:14 packed p70 (`python -I tools/art/rivet_walk.py <lib>/keyed/rivet/rivet_walk_70_cells
+  <lib>/keyed/rivet/rivet_walk_70_left_cells project/features/characters/art/view/p70/rivet_walk.png`, 428 x 1024,
+  cells 107 x 128, scales 0.64/0.64). Contact x2 on grey (`evidence/d9/rivet_walk_70_contact_x2.png`): spike
+  picture right in rows 0-2, picture left in row 4, hidden in row 3 (as the delivery says); the near arm in the 3
+  drawn left rows. Feet on one line, no size pulse.
+- FRICTION (~12 min): finding a bare-claw walk to film. The arena always arms Rivet (ArenaRigs: Gloria by default,
+  GUN_OUT whenever a gun exists), so `--arena=city --bot=rivet` bob vs drawn differed in 1 of 10 frames. Quest 1
+  clip mode was slow (72 frames in 500 s at 1080p); stills mode is fast (14 s): stills t700-1800 step 100 found
+  his walk at ~t760-900 (dumpster to payphone). quest1_clip refused `--rivet-walk=bob` (its own KNOWN_FLAGS):
+  added `--rivet-walk` and `--rivet-height` there (debt dev_loc +3, accepted with a reason).
+- Judged (quest 1 stills t740-920 step 4, tilt70, 32 and 64 px/m, drawn vs `--rivet-walk=bob`, 0 SCRIPT ERROR):
+  at 64 px/m the bob reads as a card sliding along, the drawn legs read as walking; at 32 px/m the alternation still
+  shows in the silhouette. The facing row is the same octant as the bob's card in every frame (I first misread a
+  back view; checked at 2x). Patch's ghost walks over him in that stretch (a cleaner stretch is owed for the clip).
+  Masters `rivet_walk_70_bob_vs_drawn_quest1_tilt70_64ppm_x1_32ppm_x2_t812_856.png` (frames.json entry 2; the
+  pistol-left entry out, file kept).
+- MILESTONE `c36631bc` the drawn walk at p70 (art, provenance, test pins the 4 x 8 grid, quest1_clip flags).
+  DECISION rivet/drawn-walk (default drawn; `--rivet-walk=bob` the before). REPORT Call 2 rewritten.
+- p55: packed the 55 offer the same way (400 x 984, cells 100 x 123); contact `evidence/d9/rivet_walk_55_contact_x2.png`:
+  hand side right in every row; the three left rows are a shade darker and leaner than the right rows (noted in
+  REPORT). Not filmable in the arenas (always armed); in the boss fights it shows only with no gun out.
