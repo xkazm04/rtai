@@ -20,6 +20,10 @@ const WEAPON_SIZE: int = 24
 const BEAT_FIT: bool = true
 const BEAT_MAX_W: float = 640.0
 const BEAT_PAD: float = 40.0
+## n8-hud: the weapon icon's ink drop shadow (screen px at 1080p, its alpha): the bare icon on the
+## field reads as a HUD piece lifted off the street, not a floor pickup. ZERO = no shadow.
+const ICON_SHADOW: Vector2 = Vector2(5.0, 6.0)
+const ICON_SHADOW_A: float = 0.5
 
 var state: HudState = HudState.new()
 var art: HudArt = null
@@ -122,6 +126,8 @@ func _icon(t: Texture2D, box: Rect2) -> void:
 	var k: float = minf(box.size.x / t.get_width(), box.size.y / t.get_height())
 	var sz: Vector2 = Vector2(t.get_width(), t.get_height()) * k
 	var at: Vector2 = Vector2(box.end.x - sz.x, box.position.y + (box.size.y - sz.y) * 0.5)
+	if ICON_SHADOW != Vector2.ZERO:
+		draw_texture_rect(t, Rect2(at + ICON_SHADOW, sz), false, Color(INK, ICON_SHADOW_A))
 	draw_texture_rect(t, Rect2(at, sz), false)
 
 

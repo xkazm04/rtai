@@ -86,3 +86,9 @@ func test_the_cash_frame_fits_its_sum() -> void:
 	assert_lte(big, HudCash.W)
 	var digits: float = HudCash.digits_w(art, "$1,234,567", 32.0)
 	assert_gte(big, HudCash.TEXT_X + digits, "the sum stays on the paper")
+
+
+func test_the_icon_shadow_stays_off_the_ticket() -> void:
+	# the icon's box ends 8 px left of the ticket: a wider offset would print ink on the paper
+	assert_between(HudView.ICON_SHADOW.x, 0.0, 8.0)
+	assert_between(HudView.ICON_SHADOW_A, 0.0, 1.0)
