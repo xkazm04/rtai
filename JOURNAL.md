@@ -1361,3 +1361,26 @@ _fall_70_v3 B round 0740, the library's own note: torque v3 "NO GAIN, v2 stays t
   no new off-doctrine accents), export-audit (561 loaded, 0 failed) PASS; unit 1529/0 but marked
   FAIL "tree changed during run: M JOURNAL.md" (FRICTION, mine: I appended to the journal while it
   ran). Re-run on the clean commit below.
+- GATE evidence `node tools/evidence/run.mjs --no-bench` on the clean 6a4d0679 (07:20-07:27): ALL
+  PASS: lint 15/15, unit 1529/0, scenarios 52, parity (mutation caught at 629), selftest (look
+  goldens 11/11 worst 0.27, block 5/5), export-audit 561/0. (A run at 07:12 exited 1 after 7 min
+  and wrote no JSON; its output was piped through a filter that dropped it, so the cause is
+  unknown: the 07:20 run on the same commit passed. Next time capture the whole log.)
+NEXT (iteration 14 = the freeze iteration if the runner gives one before 08:30):
+1. Freeze at 08:30: if no code changed since 6a4d0679, reuse this session's evidence run
+   (build/evidence, re-run note below); else `node tools/evidence/run.mjs --no-bench` on the final
+   head WITH THE TREE CLEAN (commit the journal first: an edit mid-run marks unit FAIL). Then the
+   Windows export (`APPDATA=.../appdata/street "$GODOT_BIN" --headless --path project
+   --export-release windows-showcase ../build/export/windows/RTAI.exe`; run `RTAI.exe --
+   --arena=city --rigs --view=tilt70`), REPORT final by 08:40 (the it13 draft is current: gates,
+   calls 1-7, next steps).
+2. If assets serve the ped_cap/ped_suit walk v3 REQUEST: swap still (ped_*_full, head card) + walk
+   together (street_walk.py / street_head.py as their it6-it7 cuts), film the board at 32/64 px/m.
+3. Weakest left: SWAT's p70 camera-facing long corpse a touch short (1.43x); city cops glide on
+   head cards (armed from tick 60); the ped falls a touch lighter than their stills (a grey value
+   tone in street_tone.py if the owner sees a pop); quest 1's view-side ANSWER to be re-checked on
+   view's next trial merge (Dock 9 t15000).
+- Session end: commits it13: 3e0996c2 (p55 riot/SWAT/thug long falls), 432c5ef9 (quest 1 corpse
+  decay), a5c7d30e (thug v3 at p70), + evidence/docs. Gates on the it13 code: lint 15/15, unit
+  1529/0, scenarios 52/0, reels top/combo 19/19 (tilt70 19/19 on it12's code), evidence run PASS
+  except the unit row's tree-changed flag (mine).

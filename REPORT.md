@@ -85,8 +85,10 @@ Exe command lines: (freeze) `RTAI.exe --arena=city --rigs --view=tilt70`, quest 
 
 ## Gates
 
-it13 head (a5c7d30e): lint 15/15; unit no-arg 1529/0 (on 49b57ffb, no FLAKY); director reel
-`top` 19/19 and `combo` 19/19 all down, 0 SCRIPT ERROR (on 49b57ffb). (freeze) lint, unit, scenarios, `node tools/evidence/run.mjs --no-bench`, the director reel under
+it13: `node tools/evidence/run.mjs --no-bench` on 6a4d0679 ALL PASS (lint 15/15, unit 1529/0,
+scenarios 52, parity with the planted mutation caught, selftest look goldens 11/11 and block 5/5,
+export-audit 561/0); director reel `top` 19/19 and `combo` 19/19 all down, 0 SCRIPT ERROR (on
+49b57ffb); `tilt70` 19/19 on it12's code. (freeze: re-run if code changes) lint, unit, scenarios, `node tools/evidence/run.mjs --no-bench`, the director reel under
 `top`, `tilt70` and `combo`.
 
 ## Next steps
