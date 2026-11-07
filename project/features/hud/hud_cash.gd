@@ -36,7 +36,7 @@ static func frame(ci: CanvasItem, art: HudArt, box: Rect2) -> void:
 	ci.draw_texture_rect_region(t, right, Rect2(src.x - end_w / k, 0.0, end_w / k, src.y))
 
 
-## The advance of `value` in the numeral strip at `size` (what HudView._ink_digits draws).
+## The advance of `value` in the numeral strip at `size` (what ink_digits draws).
 static func digits_w(art: HudArt, value: String, size: float) -> float:
 	var s: float = size * 0.92 / art.cap_px
 	var x: float = 0.0
@@ -44,3 +44,25 @@ static func digits_w(art: HudArt, value: String, size: float) -> float:
 		var k: int = art.glyphs.find(ch)
 		x += (art.space_px if k < 0 or k >= art.advance_px.size() else art.advance_px[k]) * s
 	return x
+
+
+## The hand-inked numeral strip on `ci` on the baseline `at`, cap height 0.92 of `size` (the
+## condensed caps need more height than the sans to carry the same weight). Unknown characters
+## advance a space. n8-hud: moved here from HudView (the corners draw it on their own nodes).
+static func ink_digits(
+	ci: CanvasItem, art: HudArt, at: Vector2, value: String, size: float
+) -> void:
+	var s: float = size * 0.92 / art.cap_px
+	var strip: Texture2D = art.texture(art.digits_art)
+	var cell: Vector2 = art.cell_px
+	var x: float = at.x
+	for ch: String in value:
+		var k: int = art.glyphs.find(ch)
+		if k < 0 or k >= art.advance_px.size():
+			x += art.space_px * s
+			continue
+		var adv: float = art.advance_px[k]
+		var src: Rect2 = Rect2(Vector2(k * cell.x, 0.0), cell)
+		var pos: Vector2 = Vector2(x - (cell.x - adv) * 0.5 * s, at.y - art.baseline_px * s)
+		ci.draw_texture_rect_region(strip, Rect2(pos, cell * s), src)
+		x += adv * s

@@ -146,7 +146,7 @@ func fill_street(max_passes: int = 600) -> int:
 
 
 func _process(_delta: float) -> void:
-	hud_feed.fill(hud_view.state, _stage, _system)
+	hud_feed.fill_view(self, _stage, _system)
 	hud_view.state.notice = notice.text()
 	_hauler_kick()
 	_feel_kick()

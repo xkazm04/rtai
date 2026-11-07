@@ -27,6 +27,9 @@ var portrait_key: String = ""
 ## n8-hud: the whole line (the box picks its text size on it, so typing never changes the size);
 ## empty = fit on `words`.
 var full_words: String = ""
+## n8-hud: screen points (px) the top corners must not hide: a corner over one turns see-through
+## (HudSee). The caller fills them (quest 1: Rivet and the objective's goal); empty = opaque.
+var clear_px: PackedVector2Array = PackedVector2Array()
 ## One line under the beat panel (the save notice); empty hides it.
 var notice: String = ""
 ## Translated labels (HUD__HEAT, HUD__UNARMED).
