@@ -210,3 +210,17 @@ NEXT (iteration 5):
   712 `features/{characters,city,vehicles}/art/**/*.png.import` set to `compress/mode=2` + `high_quality=true`
   (73 s reimport), A/B'd through `ab.mjs` with `bc7:^--path <worktree>/project`. If you have an iGPU/deck row,
   a BC7 arm there would say whether the GPU side moves where bandwidth is scarce (it did not on the 4090).
+- MILESTONE 12:56 L4 look: same movie frame from both projects at 64 px/m (floor exact): drive PSNR 29.8 dB, riot
+  24.8 dB (the asphalt grain mostly). Looked at both crops: figures and ink read the same. Masters frames.json 11.
+  REPORT.md started at the lane root: Call P-1 (BC7, default lossless). DECISION line in docs/decisions.md.
+- The scratch worktree `C:\Users\kazda\kiro\gtai-d9x\scratch\perf-before` (detached, 712 import edits, BC7 .godot)
+  stays for the next A/Bs (quest 1, the King under BC7); remove it with `git worktree remove --force` at the freeze.
+
+NEXT (iteration 6):
+1. L4 option (b): BC7 for characters + vehicles only (city ground lossless): measure VRAM and the riot PSNR alone;
+   and BC7's effect on the strip decode hitch with L3 off (`--strip-prefetch=off` on the BC7 arm): if the death
+   spike is gone without L3, L3 and its VRAM cost (F9) can go together.
+2. Run the new `quest1` preset (base) to fill quest 1's row in the baseline; the King on the release build (owed).
+3. riot60's exe worst frame (it4 NEXT 2); `CityFxFeed` fused loop (it4 NEXT 3), measured on the exe.
+4. Size lever (custom template, it4 NEXT 5) - research done, the compile not started.
+5. Answer REQUESTs (rivet has not answered the it4 strip REQUEST; handheld has the L4 REQUEST).
