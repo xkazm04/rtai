@@ -485,3 +485,33 @@ NEXT (iteration 6):
   three gate views of the it5 code: tilt70 19/19, combo 19/19; `top` untouched by it5 (the walker
   code returns at once without a card view; top reel last ran on 268bc09c) -> run the top reel and
   the selftest goldens first in it6 to keep the bit-identity claim current.
+
+## Iteration 6 (2026-11-07 00:55, BUILD)
+
+Read: JOURNAL, git log, the four lane journals (no REQUEST to street), the assets catalog: all six
+walk strips served (ped_cap/elder/hat/jogger/punk/shopper_walk 70, all B, round 20261107-0005;
+row-5 mirror post fixes applied by assets where the hand allows; the row-4 pilots for cap/punk C).
+- MILESTONE 5f3727fe (NEXT 2): all nine walkers stride. street_walk.py cut the six; the size step
+  measured per grid (still height / walk height per cell, mean of the facings; the snippet now kept
+  in scratch/street/walk_fill.py; it reproduces it5's 1.06/1.07/1.11): cap 1.10, elder 1.07, hat
+  1.07, jogger 1.11 (her shallower camera: the B note's "cut her cells to the cast's card height"
+  is this step), punk 1.00, shopper 1.08. The shopper's B fix applied in the cut: row 4 frame 1
+  swings the bag to her shoulder -> drawn as frame 3 (`street_walk.py --copy=3:0<2`, new flag).
+  Elder rows 4-5 repeat frame 1 (no fix possible: the cane would change hands): a two-pose
+  shuffle, kept. Provenance: six lines. LOOKED: the six grids on a contact sheet (identity, cane and
+  bag in one hand, foot lines level), board 64 px/m before (c1e8cf2f) | after clip and a tick
+  strip t100-120 (cap, jogger, elder, punk step; before they glide). Checked the facing direction
+  of every grid column against its still twin by correlation (scratch/street/walk_dir.py): all 45
+  columns agree, none mirrored; a runtime probe confirmed the same frame and flip in before and
+  after for one jogger (the walk drawing is just more in profile than the still).
+  Masters: peds_walk9_frames_before_after_tilt70_64ppm_board{.mp4,_t100-120.png},
+  peds_walk9_city_tilt70_48ppm_seed5_12s.mp4 (+ _t8.png).
+- FINDING WITHDRAWN (it5 NEXT 1, "walkers cast no shadow"): a probe inside RigCastShadows at city
+  seed 5 lists both pooled pedestrians among its rigs (hip 236.7 x 0.125), and the x3 crop at 48
+  px/m shows the hat and hood walkers' long cast shadows (faint on cream crosswalk and paving, read
+  as absent at 32 px/m). The same with StreetWalkerCards.ENABLED false. No bug; no REQUEST to view.
+  Master peds_cast_shadow_present_tilt70_48ppm_x3_city_seed5_t8.png; the it5 "no shadow" still
+  deleted.
+- GATE on 5f3727fe: lint 15/15; unit no-arg 1508 passed, 0 failed, no FLAKY.
+- frames.json: the nine-walker board clip (#2) and the city clip (#3) in; the it5 three-walker clip
+  and cops_p70_heads out (files kept). 15 entries.
