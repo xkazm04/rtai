@@ -11,6 +11,7 @@
 //   [--out=<dir>] [--no-device] [--movie=<abs .avi>] [--renderer=forward_plus|mobile|compat]
 //   [--bin=<gui exe>] [--suspend=<after s>:<for s>] [--project=<dir>] [-- <extra user args for the arena>]
 // --project=<dir> runs another checkout's project (an import-settings A/B arm in a scratch worktree).
+// --grab=<after s>:<abs .png> copies the game window's client area from the screen (grab_window.ps1).
 // --no-device runs the same pin/GPU without the --device flag (the desktop row: the A side).
 import { spawn, spawnSync } from 'node:child_process';
 import { mkdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs';
@@ -149,6 +150,13 @@ async function main() {
       '-AfterS', String(afterS), '-ForS', String(forS)], { windowsHide: true });
     sus.stdout.on('data', (d) => { suspended += d.toString(); });
   }
+  let grabbed = '';
+  if (a.grab) {
+    const [after, png] = [a.grab.slice(0, a.grab.indexOf(':')), a.grab.slice(a.grab.indexOf(':') + 1)];
+    const gr = spawn('powershell', ['-NoProfile', '-NonInteractive', '-File', join(HERE, 'grab_window.ps1'), '-Tag', framesPath,
+      '-AfterSec', after, '-Out', png], { windowsHide: true });
+    gr.stdout.on('data', (d) => { grabbed += d.toString(); });
+  }
   const timer = setTimeout(() => killTree(game.pid), (a.ticks / 60 + 120 + (forS || 0)) * 1000);
   const code = await new Promise((done) => game.on('close', done));
   clearTimeout(timer);
@@ -160,6 +168,8 @@ async function main() {
     scene_args: SCENES[a.scene], extra: a.extra, renderer: a.renderer || 'forward_plus', gpu: a.gpu, gpu_index: gpuIndex, threads, priority: a.priority,
     ticks: a.ticks, exit: code, adapter, contended: before.count > 0 ? `CONTENDED (${before.count} other Godot runs)` : 'quiet',
     at: new Date().toISOString(), summary: summarize(JSON.parse(readFileSync(framesPath, 'utf8')), samples), samples };
+  if (a.project) doc.project = projectDir(a);
+  if (grabbed) doc.grab = grabbed.trim();
   if (forS > 0) doc.suspend = { ...JSON.parse(suspended.trim() || '{}'), resume: resumeFrame(JSON.parse(readFileSync(framesPath, 'utf8'))) };
   const outPath = join(a.out, `${label}.json`);
   writeFileSync(outPath, `${JSON.stringify(doc, null, 2)}\n`);
