@@ -627,3 +627,10 @@ NEXT (iteration 15):
    UserGpuPreferences value for `gtai-d9x/handheld-godot/..._hh.exe` and that copy; `git worktree remove` the BC7
    scratch `gtai-d9x/scratch/hh-bc7`; the scratch dirs `gtai-d9x/scratch/{padwalk,padwalk2,it12,it13,it14}`;
    WSL `~/hh14` (1 GB: the project copy, the editor, the export); `build/export/linux/` (292 MB).
+- LEAD 17:08 (unverified, for NEXT 1): the release `rec.log` has no `boot:` or `quest1:` line at all, and
+  `quest1_card.gd:70` gates `--autostart` on `OS.is_debug_build()`: a headless release exe likely waits on the title
+  card, so no session starts and nothing records. The tick-60 divergence is a separate question (the replay path
+  `_replay` skips the card). Bisect it first with a `windows-slice` copy that keeps `dev/*`.
+- Cleanup 17:09: WSL `~/hh14/rel` (the showcase export copy) and `gtai-d9x/scratch/it14/winslice` deleted; kept for it15:
+  WSL `~/hh14/{project,slice,Godot editor}` and `build/export/linux-slice/`. No Godot / RTAI process of mine running.
+- Session end 17:10 (it14): 9 commits (7ae230b4 .. this), every change committed; no bench lock taken (no timing kept).
