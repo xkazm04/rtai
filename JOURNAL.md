@@ -1270,3 +1270,38 @@ LOOKED 05:26 King boulevard combo 32 px/m seed 2 (120 frames, 0 SCRIPT ERROR): n
 frame at f60 (the powers pad's cars sit at the edge; it18 checked them). NEXT 2's King candidate
 closed; quest 1's kerb vans draw through ChunkLift from the same atlas row (cream, as the print).
 Session end 05:27. Scratch it19: raw .avi deleted.
+
+## Iteration 20 (05:27, BUILD)
+Read: JOURNAL, git log, the lane journals (no new REQUEST to vehicles; view has not answered the
+bay-number stroke REQUEST), the library catalog (new: delivery_truck_55_v2 A, depot_van_55_v2 B at
+05:16: no sim archetype, Call 9 stands).
+FOUND 05:30 (looking for the weakest item): a soul-hijacked traffic car has NO cue under any card
+view. The flat print's teal plate rides the D1/hijacked overlay layers, which mirror the crowd car
+layer the cards hide (it17 0687f8c1 skips them), and VehicleCards.wear() gave HIJACKED level 0.
+Filmed `res://dev/showcase/vehicle_frame.tscn -- --clip --soul-traffic` top vs `--view=tilt70`
+(420 frames, 0 SCRIPT ERROR): teal px at f320 top 11136, tilt70 143 (a plain tan sedan).
+MILESTONE 80926b7c the soul's teal on the card: VehicleCards.SOUL (bit 512, above SIREN 256) added by
+wear() for HIJACKED; the card shader's soul paint lerps the light paint to soul_teal (0.12, 0.68,
+0.63, sampled from the top print's plate) by its value (soul_k 0.85, soul_lo 0.18), ink, glass and
+tyres stay dark, the amber rear lamp kept. soul_lo 0.3 filmed first: roof/hood/trunk teal, side
+panels tan; 0.18 turns the whole body (looked, 3x crop). After: 9601 teal px at f320 (0.3).
+The Servo stage van (same wear path; its SOUL tint stays WHITE) now reads teal under Dent's seize,
+with the tether: combo 64 px/m f120 and 32 px/m f130, seed 2, before = it19's frames. Bonus: bay 3's
+pale number reads over teal at 32 px/m where it vanished over cream (eases my REQUEST to view).
+Test (wear() == SOUL for HIJACKED, no dents; shader's soul_bit/siren_bit == the consts). Decision line.
+GATE on 80926b7c: unit no-arg 1551 passed, 0 failed, no FLAKY; lint 15/15; director reel top 19/19
+and tilt70 19/19 all down, 0 SCRIPT ERROR; `top` framemd5 seed 2 identical to it19; scenarios 52
+ran, 0 failed (vehicle drive timing CONTENDED). evidence/n8-vehicles/iteration20.json.
+MEASURED mutate vehicle_cards.gd (--max=12, test_vehicle_cards): 45.5 % (5/11); the survivors were
+the cross-fade branch (125-127) and card_xf's ground_k division (180). 33bf691e adds a cross-fade
+test (blend_deg 20, heading 20: 0.375 + 0.625): re-run 81.8 % (9/11); left: 123 (180 -> 181) and
+180 (`top` has ground_k 1; a tilted ViewMode in a unit test is view's shared state, not worth it).
+None of the 12 sampled mutants hit the new SOUL lines; the new test kills their removal by reading.
+Masters (frames.json 2 and 3, two weakest-by-supersession dropped: servo_depot_van zoom (olive era)
+and powers_pad 24 px/m; files stay): soul_seized_van_servo_depot_combo_64ppm_seed2_f120_before_left_
+after_right.png, ..._32ppm_..._f130_..._crop.png, soul_hijacked_traffic_top_left_tilt70_before_mid_
+after_right_f320_crop3x.png, soul_hijacked_traffic_tilt70_drive_before_left_after_right.mp4.
+Rules applied: concept-scene-parity (the card takes the print's teal plate, colour sampled from it),
+generative-artifact-gating (no new art; a shader recolour judged on screen at 48/64/32 px/m),
+motion-quality-gating (the hijacked car judged in a driven clip, before/after same scene),
+depth-ordered-layered-art (n/a: no order change), sprite-and-atlas-production (atlases untouched).

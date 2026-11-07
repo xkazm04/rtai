@@ -1,0 +1,57 @@
+{
+  "change": "80926b7c soul-hijacked card paints the soul's teal (VehicleCards.SOUL, card shader soul paint); 33bf691e cross-fade test",
+  "date": "2026-11-07",
+  "gates": {
+    "director_reel": {
+      "commit": "80926b7c",
+      "logs": [
+        "director-reel-it20-top.log",
+        "director-reel-it20-tilt70.log"
+      ],
+      "tilt70": "19/19 all down, 0 SCRIPT ERROR",
+      "top": "19/19 all down, 0 SCRIPT ERROR"
+    },
+    "lint": "15/15",
+    "scenarios": {
+      "commit": "80926b7c tree",
+      "failed": 0,
+      "log": "scenarios-it20.log",
+      "ran": 52
+    },
+    "top_identity": {
+      "commit": "80926b7c",
+      "file": "identity-it20/top_s2.md5",
+      "framemd5_seed2": "identical to it19 (600 lines, video + audio)"
+    },
+    "unit_full": {
+      "commit": "80926b7c",
+      "failed": 0,
+      "flaky": 0,
+      "passed": 1551
+    }
+  },
+  "iteration": 20,
+  "lane": "vehicles",
+  "masters": [
+    "soul_seized_van_servo_depot_combo_64ppm_seed2_f120_before_left_after_right.png",
+    "soul_seized_van_servo_depot_combo_32ppm_seed2_f130_before_left_after_right_crop.png",
+    "soul_hijacked_traffic_top_left_tilt70_before_mid_after_right_f320_crop3x.png",
+    "soul_hijacked_traffic_tilt70_drive_before_left_after_right.mp4"
+  ],
+  "measured": {
+    "mutation_vehicle_cards_gd": {
+      "after_test": "81.8% (9/11)",
+      "before_test": "45.5% (5/11, sampled 12 of 112)",
+      "survivors": [
+        "123 literal 180->181",
+        "180 arith / -> * (card_xf ground_k; top gk 1)"
+      ]
+    },
+    "teal_px_f320_vehicle_frame_soul_traffic": {
+      "note": "after soul_lo 0.18 (committed) the side panels turn too; filmed soul70c",
+      "tilt70_after_soul_lo_0.3": 9601,
+      "tilt70_before": 143,
+      "top": 11136
+    }
+  }
+}
