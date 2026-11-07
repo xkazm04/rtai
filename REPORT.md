@@ -83,7 +83,9 @@ beside it). Export (10 s; dry run at 05:18 on e8a597e8, the freeze re-exports HE
 See the vehicles (`top` stays the default; add `--view=<top|tilt70|combo>`):
 - Servo depot (the cream stage van, combo): `RTAI.exe -- --boss=servo --view=combo --rigs`
 - King boulevard (parked cars at 55): `RTAI.exe -- --boss=king --view=combo --rigs`
-- the city traffic at 70: `RTAI.exe -- --arena=city --view=tilt70 --rigs`
+- the city traffic at 70 is the main scene, which the showcase exe does not boot (its `--arena=city`
+  is the arena hub, no traffic): `"$GODOT_BIN" --path project -- --view=tilt70 --seed=7 --rigs`,
+  or export `windows-slice` (main scene, same path; the last export wins)
 - the director reel: `RTAI.exe -- --bot=reel --reel=director --loadout=pistol --rigs --view=tilt70`
 Smoke-tested: `RTAI.exe --fixed-fps 60 --quit-after 200 -- --boss=servo --bot=boss --servo-ghost=dent
 --view=combo --rigs --seed=2`, exit 0, 0 SCRIPT ERROR, the cream van seized at f130 (looked).
