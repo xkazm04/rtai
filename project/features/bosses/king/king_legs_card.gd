@@ -19,8 +19,8 @@ const FRAMES_PER_CYCLE: float = 4.0
 ## How far the bust rises onto the legs, as a share of the legs' cell height (the bust card reaches
 ## the ground: with 0 the legs stand hidden behind it). The owner's call (REPORT call 1).
 const LIFT: float = 0.5
-## false (it1 default): the leg parts as before. true needs the arms lifted with the bust (JOURNAL).
-const ON: bool = false
+## false: the leg parts as before (it1's default, while the arms stayed at the old height).
+const ON: bool = true
 
 static var _tex: Dictionary[String, Texture2D] = {}
 
@@ -49,9 +49,13 @@ static func step(rig: CutRig) -> void:
 	legs.flip_h = card.flip_h
 	legs.global_rotation = 0.0
 	legs.global_scale = card.global_scale
-	legs.global_position = rig.global_position
 	var lift: float = legs.texture.get_height() / float(ROWS) * LIFT * legs.global_scale.y
-	card.global_position -= Vector2(0.0, lift)
+	# The whole upper body rises (the torso carries the head, its card, this legs card and the arm
+	# parts; RigTilt sets torso.position fresh each step, so this never accumulates), then the
+	# legs are pinned back to the ground point.
+	if rig.torso != null:
+		rig.torso.global_position -= Vector2(0.0, lift)
+	legs.global_position = rig.global_position
 
 
 ## The sheet for a pitch (null: none, the parts draw).

@@ -10,3 +10,28 @@ func test_the_55_legs_sheet_is_the_requested_layout() -> void:
 
 func test_no_sheet_for_a_pitch_draws_the_parts() -> void:
 	assert_null(KingLegsCard.sheet(90), "straight down never has a legs card")
+
+
+func test_the_legs_stand_on_the_ground_and_the_upper_body_rises() -> void:
+	var was: ViewMode = ViewMode._shared
+	ViewMode._shared = ViewMode.of("tilt")
+	ViewMode._shared.art = "p55"
+	var rig: CutRig = autofree(CutRig.new())
+	rig.plan = BodyPlan.new()
+	rig.plan.art_dir = "king"
+	rig.torso = Node2D.new()
+	rig.add_child(rig.torso)
+	rig.head = Node2D.new()
+	rig.torso.add_child(rig.head)
+	var card: Sprite2D = Sprite2D.new()
+	card.texture = load(KingArt.strip_path("king", 55.0)) as Texture2D
+	card.hframes = RigHeadCard.FRAMES
+	rig.head.add_child(card)
+	rig.head_card = card
+	rig.global_position = Vector2(100.0, 200.0)
+	KingLegsCard.step(rig)
+	var legs: Sprite2D = card.get_parent().get_node(NodePath(KingLegsCard.NAME)) as Sprite2D
+	assert_true(legs.visible == card.visible, "the legs show with the bust")
+	assert_eq(legs.global_position, rig.global_position, "the soles on the ground point")
+	assert_lt(rig.torso.global_position.y, rig.global_position.y, "bust and arms rise together")
+	ViewMode._shared = was
