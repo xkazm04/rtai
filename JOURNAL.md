@@ -950,3 +950,12 @@ NEXT (iteration 10), replacing the list above:
 NEXT 2b (iteration 10): CrowdAtlas' corpse cell under p70/p55 for a baked dead cop/ped: draw the
   FALLS lying frame (StreetWalkerFall's grid, frame 2 of the blow's facing) if CrowdAtlas lets a
   card view swap the cell; else REQUEST to view with the repro (city seed 5, actor 3000).
+- SCOUT (NEXT 2b, 03:55): CrowdAtlas is baked at run time from the real rig (CrowdBaker: 8 looks x
+  6 clips, DEATH = 4 frames of the parts' death pose, top-down at 48 px/m) and the people layer
+  draws each cell as a MultiMesh quad turned to the row's facing. So a card view's baked corpse is
+  the parts' death pose seen from above, squashed: the "black bar". Street's fix would be in the
+  bake (under a card view, the DEATH clip's last frame = the FALLS lying frame of facing 2, side-on,
+  which the quad's turn then lays along the facing; the drawn 2.5D art turned by the instance is
+  the same compromise d8 accepted for the atlas walkers). crowd_baker.gd / character_rigs.gd are
+  chars/view files: it is a REQUEST, not a street edit; first check whether view's RigSelect change
+  (it12) already makes the baked corpse rare on screen, then REQUEST only if it still shows.
