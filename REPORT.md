@@ -34,6 +34,21 @@ Journal: `JOURNAL.md`. Clips and stills: `C:\Users\kazda\kiro\gtai-masters\d9\pe
 - **Measured on the way:** BC7 does not remove the first-death hitch by itself (worst frame 23 ms without the
   worker-thread strip prefetch, 18-19 ms with it), so the prefetch (kept lever L3) stays whichever option you pick.
 
+### Call P-2: the engine holds ~208 MB of upload buffers on the riot; how to get ~100 MB back - default built: no change
+- **Found (L9, measured with a log line inside the engine):** Godot 4.7.2 copies every texture to the GPU through
+  "transfer workers", and each one keeps a CPU-side buffer of the next power of two above the largest texture it ever
+  uploaded, for the whole session. On the 400-actor riot that is 4 buffers of 128 + 32 + 32 + 16 = 208 MB. The 128 MB
+  one comes from a single texture: the vehicles' `p70/traffic_cards.png` (4032 x 4480, 69 MB uncompressed).
+- **Options:** (a) no change (default; nothing built changes). (b) Split that traffic sheet so no texture is over 32 MB
+  (the size of the street strips, which already need a 32 MB buffer): the same drawn cells, so no pixel moves;
+  an **estimate** of about -96 MB of resident memory with the stock engine. Not measured yet: it is in the vehicles code,
+  so it is a REQUEST, not mine to edit. (c) Patch the engine to free oversized idle buffers: measured -96..-112 MB of
+  device memory and 746 -> 686 MB working set at the 60 fps cap, but it needs our own export template, and on this PC's
+  compiler a home-built template is ~10 % slower a frame (L7), so it is not worth it today. (d) Report it upstream to
+  Godot with the measurement (outward-facing: only with your OK; nothing posted).
+- **Recommended:** (b), plus (d) if you agree to post. Most valuable on handhelds with shared memory, where these buffers
+  come out of the same RAM as the game.
+
 ## Kept so far (pixel-free, on the branch; numbers in LEDGER)
 
 - L2 CircleFan fan build (riot p99 22.2 -> 11.9 ms), L3 strip prefetch (riot worst 27.2 -> 18.0 ms), L5 snapshot passes

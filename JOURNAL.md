@@ -397,3 +397,19 @@ NEXT (iteration 10):
   Reading: trimming at 4 MB churns: every death re-creates a 16-32 MB upload buffer (allocation + fresh page faults)
   and frees it a few frames later. The 4 MB policy is DROPPED. Next arm (no rebuild, env only): GTAI_TW_TRIM_MB=32
   frees only the outlier (the 128 MB traffic-sheet buffer), the strip-sized ones stay. Job 15:09 (`l9-t32/`).
+- MILESTONE 15:13 L9 trim at 32 MB (`evidence/perf/l9-t32/`, riot + riot60, 3 pairs, CONTENDED 0-4): video memory riot
+  883 -> 771, riot60 851 -> 755 MB (WIN), riot60 steady working set 746 -> 686 MB (WIN), riot WS WASH, frames WASH (riot
+  p50 4.24 -> 4.88, slower in 2 of 3 pairs: not ruled out). Verdict: mechanism found, engine lever not a baseline (custom
+  template = ~10 % frame on MSVC, L7). LEDGER L9, DECISION line (83d33c0e), REPORT Call P-2.
+- REQUEST to Director (vehicles art has no lane today; seams owns the sim bike only): split
+  `features/vehicles/art/p70/traffic_cards.png` (4032 x 4480, 69 MB RGBA, no mips) into sheets of <= 32 MB (e.g. three
+  4032 x 1494 rows, the same cells, `vehicle_cards.gd` reads the sheet index). Why: Godot 4.7.2 keeps a CPU upload buffer of
+  next_pow2(the largest texture) per transfer worker for the whole session; this one sheet makes a 128 MB buffer (L9,
+  measured). Expected (estimate, not measured): about -96 MB resident on any scene that loads the p70 cars, no pixel moves.
+  The p55 sheet (2240 x 4480, 38 MB) makes a 64 MB buffer under combo; the same split takes it to 32 MB. perf can measure
+  it the same hour with `GTAI_TW_LOG=1` on `gtai-d9x/scratch/godot-src/tw-lto.exe` (an instrumented template).
+- REQUEST to handheld (FYI + tooling): L9's numbers matter most on your shared-memory deck row: the stock engine holds
+  ~208 MB of upload buffers on the riot (four workers; 128 MB from one texture). The instrumented template is
+  `C:/Users/kazda/kiro/gtai-d9x/scratch/godot-src/tw-lto.exe` (copy it over a windows-bench export's RTAI-bench.exe;
+  `GTAI_TW_LOG=1` prints every staging allocation; `GTAI_TW_TRIM_MB=32` frees the outliers; MSVC build, ~10 % slower a frame,
+  so compare memory with it, never frame time against the official exe). `ab.mjs` arms now take env vars (third `^`).
