@@ -22,12 +22,12 @@ const PAD_PX: float = 2.0
 ## p55: the 55 drawings carry a smaller helmet over longer legs (StreetWalkerCards' x1.18 step).
 const HEIGHT_M: float = 1.1
 const HEIGHT_BY_ART: Dictionary[String, float] = {"p55": 1.3}
-## The roll ball's height for its cast shadow, in standing heights.
-const ROLL_SHADOW: float = 0.45
+const ROLL_SHADOW: float = 0.45  # the roll ball's cast-shadow height, in standing heights
 ## The fire cell: a recoil (RigClips.recoil, 0.4-1.6) above FIRE_RECOIL, or a shot left within
 ## FIRE_TICKS (streams and autos: RivetHeldView publishes it from the trigger's cooldown).
 const FIRE_RECOIL: float = 0.25
 const FIRE_TICKS: int = 7
+const CONE_TOL: float = PI / 8.0
 ## The gait without drawn stride frames: a lift per step (px at full walk) and a sway (rad).
 const BOB_PX: float = 1.4
 const SWAY: float = 0.06
@@ -104,17 +104,25 @@ static func cell_of(rig: CutRig, cells: int) -> Vector2i:
 			return Vector2i(Cell.HIT, 0)
 		return Vector2i(BASE_OCT[o], 0)
 	var fired: bool = absf(rig.clips.recoil) > FIRE_RECOIL or rig.get_meta(FIRE, false) == true
-	if (fired or rig.clips.strike_t >= 0.0) and fires_drawn(weapon_of(rig), o):
+	if (fired or rig.clips.strike_t >= 0.0) and fires_drawn(weapon_of(rig), o, aim_of(rig)):
 		return Vector2i(Eq.FIRE_CAM if o == 2 else Eq.FIRE_SIDE, left)
 	if not rig.aiming and rig.speed_now <= MOVING and o in [1, 2, 3]:
 		return Vector2i(Eq.REST, 0)
 	return Vector2i(EQ_OCT[o], left)
 
 
-## The cone (the flamer) fires its drawn flame only along the side and camera octants; off them
-## the facing cell fires and the game jet leaves its nozzle (else two flames point two ways).
-static func fires_drawn(weapon: StringName, o: int) -> bool:
-	return not RivetStrips.CONE.has(weapon) or o in [0, 2, 4]
+## The cone (the flamer) fires its drawn flame along the side and camera octants while the aim
+## (NAN = the head's) is within CONE_TOL of it; else the facing cell fires (not two flames).
+static func fires_drawn(weapon: StringName, o: int, aim: float = NAN) -> bool:
+	if not RivetStrips.CONE.has(weapon):
+		return true
+	var off: float = 0.0 if is_nan(aim) else absf(angle_difference(aim, o * PI * 0.25))
+	return o in [0, 2, 4] and off <= CONE_TOL
+
+
+static func aim_of(rig: CutRig) -> float:
+	var to: Vector2 = rig.aim_at - rig.global_position
+	return to.angle() if rig.aiming and to.length() > 1.0 else NAN
 
 
 ## The screen octant of the look (0 = screen right, +1 = 45 deg toward the camera).

@@ -34,6 +34,15 @@ func test_the_flamer_fires_its_drawn_flame_only_along_side_and_camera() -> void:
 		assert_true(RivetFrames.fires_drawn(&"pistol", o), "pistol octant %d" % o)
 
 
+func test_the_flamer_drawn_flame_needs_the_aim_along_it() -> void:
+	# d9 it16: the head read octant 4 (screen left) while the jet left at ~124 deg (down-left).
+	assert_false(RivetFrames.fires_drawn(&"flamethrower", 4, deg_to_rad(124.0)))
+	assert_true(RivetFrames.fires_drawn(&"flamethrower", 4, deg_to_rad(170.0)))
+	assert_true(RivetFrames.fires_drawn(&"flamethrower", 0, deg_to_rad(-15.0)))
+	assert_false(RivetFrames.fires_drawn(&"flamethrower", 2, deg_to_rad(50.0)))
+	assert_true(RivetFrames.fires_drawn(&"pistol", 4, deg_to_rad(124.0)))
+
+
 func test_the_flamer_facings_carry_the_nozzle_at_both_pitches() -> void:
 	for art: String in ["p70", "p55"]:
 		var path: String = RivetStrips.DIR + art + "/rivet_eq_flamethrower.png"
