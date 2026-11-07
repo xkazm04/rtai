@@ -43,6 +43,7 @@ var _ends: PackedVector2Array = PackedVector2Array()  # each rig's (feet, head) 
 ## A body hidden behind a prop: the prop's drawn area (local px), the prop, the body's feet, head.
 class Hit:
 	var area: Rect2
+	var cut: Array[PackedVector2Array]  # the silhouette's cut: the card's outline(s), else area
 	var prop: ArenaStation.Prop
 	var feet: Vector2
 	var head: Vector2
@@ -119,14 +120,15 @@ func _draw() -> void:
 			done[h.prop] = true
 			_floor._prop(self, base + h.prop.at, h.prop)
 	for h: Hit in _hits:
-		for part: PackedVector2Array in Geometry2D.intersect_polygons(
-			silhouette(h.feet, h.head), _poly(h.area)
-		):
-			if not Geometry2D.triangulate_polygon(part).is_empty():  # a sliver: nothing to ink
-				draw_colored_polygon(part, SILHOUETTE)
-				@warning_ignore("return_value_discarded")
-				part.append(part[0])
-				draw_polyline(part, RIM, Ink.LINE_PX * 0.5)
+		for cut: PackedVector2Array in h.cut:
+			for part: PackedVector2Array in Geometry2D.intersect_polygons(
+				silhouette(h.feet, h.head), cut
+			):
+				if not Geometry2D.triangulate_polygon(part).is_empty():  # a sliver: no ink
+					draw_colored_polygon(part, SILHOUETTE)
+					@warning_ignore("return_value_discarded")
+					part.append(part[0])
+					draw_polyline(part, RIM, Ink.LINE_PX * 0.5)
 
 
 ## An upright body from `feet` to `head` (local px): RigCastShadows' figure, its shoulders SIL_W_M.
@@ -137,11 +139,6 @@ static func silhouette(feet: Vector2, head: Vector2) -> PackedVector2Array:
 	for i: int in fig.size():
 		fig[i].x = feet.x + (fig[i].x - feet.x) * k
 	return fig
-
-
-static func _poly(r: Rect2) -> PackedVector2Array:
-	var ne: Vector2 = Vector2(r.end.x, r.position.y)
-	return PackedVector2Array([r.position, ne, r.end, Vector2(r.position.x, r.end.y)])
 
 
 ## Every (body, prop) pair where the body stands behind the prop and its screen box meets the
@@ -171,12 +168,15 @@ func hits() -> Array[Hit]:
 func _hits_of(at: Vector2, p: ArenaStation.Prop, rigs: Array[CutRig], out: Array[Hit]) -> void:
 	var r: Rect2 = Rect2(Ink.px(at - p.size * 0.5), p.size * Ink.PX_PER_M)
 	var area: Rect2 = drawn_area(r, p)
+	var cut: Array[PackedVector2Array] = []
 	for i: int in rigs.size():
 		var feet: Vector2 = _ends[i * 2]
 		if not body_patch(feet, _ends[i * 2 + 1], area).has_area():
 			continue
 		var h: Hit = Hit.new()
 		h.area = area
+		cut = ArenaPropCards.cut_polys(p.kind, r, area) if cut.is_empty() else cut
+		h.cut = cut
 		h.prop = p
 		h.feet = feet
 		h.head = _ends[i * 2 + 1]

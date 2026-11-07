@@ -1032,3 +1032,29 @@ gang: street's it10 notes). The throne-car's p70 is a lifted stack (pitch-agnost
   owner's equipped-Rivet frames replace both). Re-filmed on the final code: Rivet's crop at f600
   pixel-identical. Test +1 (planted the old `pitch_deg` line: it fails). Lint 15/15, unit
   --changed 1500/0. DECISION view/held-art-key.
+- GATE 04:53 at 04429dee: unit full no-arg 1516 passed / 0 failed, 0 FLAKY (`evidence/n8-view/unit-it13.log`); director reel top 19/19 and combo 19/19 chapters all down, 0 SCRIPT ERROR (`director-reel-it13-{top,combo}.log`). Every per-pitch art lookup in the merged tree now goes through the art key (KingArt, KingCarWalls, ServoArt, HeldPitchArt; the lanes' through `view.art`; ChunkLift reads pitch_deg for geometry, right).
+- FOUND 05:00 on the trial merge, King fight combo 64 px/m seed 2 (1500 frames, 0 SCRIPT ERROR):
+  (a) VIEW's: PropOcclusion inked Rivet as a black kite over city's crate-stack card's see-through
+  upper corners (the cut was the card's rect, `stand_rect`). (b) city's: the crate stack prints
+  vermilion-orange from the King's first cone over it on (cream at f940, orange from f960, stays
+  after the cone). If that is a hit/damage state it reads as a danger mark on the cover for the
+  rest of the fight: NOTE to city below.
+- MILESTONE 05:08 (a) fixed on view's side: `ArenaPropCards.cut_polys` (city's `stand_polys` when
+  present, else the area quad: today's behaviour) and PropOcclusion intersects the silhouette with
+  each outline (prop_occlusion.gd stays 204 lines; the cut computed once per prop with a hit).
+  FILMED with a PROTOTYPE of city's function written into the trial tree only (never city's
+  branch): `prop_occlusion_card_outline_before_after_combo_64ppm.mp4` + `_f940_f1100.png`. LOOKED:
+  before, the kite beside the top crate at f1000-1100; after, gone; at f1040 where Rivet is behind
+  the top crate the ink shows inside the crate. Test +1 (fallback quad). DECISION line.
+- REQUEST to city: add `static func stand_polys(kind: String, r: Rect2) -> Array` to PropCards (or
+  a helper your prop_cards.gd calls; it is at 200 lines): the card's opaque outline(s) in
+  `stand_rect(kind, r)`'s space, as PackedVector2Array each. The prototype I filmed (trial tree
+  only): the facing cell `cards.facing(t, 0 if r.size.x >= r.size.y else PI/2)` of `_strip[t]`,
+  `BitMap.create_from_image_alpha(cell image, 0.5)`, `opaque_to_polygons(Rect2i(0, cell), 2.0)`
+  cached per (t, facing), each point mapped `rect.position + (u * rect.size.x, v * rect.size.y)`
+  with u mirrored when `f.y == 1`. view's side (n8-view, this commit) picks it up by method
+  presence; nothing else to wire. Repro: `--boss=king --bot=boss --bot-human --seed=2 --boss-cam
+  --ppm=64 --view=combo --rigs`, f960-1100.
+- NOTE to city: the arena's crate stack turns vermilion-orange when the King's cone first covers it
+  (f960, seed 2) and stays: if intended (a danger/damaged state), fine; if not, the colour law
+  keeps vermilion for danger marks, objectives, Rivet's collar and the King's cape.

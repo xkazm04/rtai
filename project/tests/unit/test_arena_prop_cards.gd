@@ -33,3 +33,13 @@ func test_stand_rect_is_empty_without_city_or_for_a_wall() -> void:
 	assert_false(ArenaPropCards.stand_rect("wall_high", r).has_area(), "walls keep their box")
 	if not ResourceLoader.exists(ArenaPropCards.SCRIPT):
 		assert_false(ArenaPropCards.stand_rect("cover_low", r).has_area(), "city not merged")
+
+
+func test_cut_polys_fall_back_to_the_area_quad_without_city_outlines() -> void:
+	var area: Rect2 = Rect2(10.0, -40.0, 30.0, 50.0)
+	var cut: Array[PackedVector2Array] = ArenaPropCards.cut_polys("wall", Rect2(), area)
+	assert_eq(cut.size(), 1)
+	assert_eq(
+		cut[0],
+		PackedVector2Array([area.position, Vector2(40.0, -40.0), area.end, Vector2(10.0, 10.0)])
+	)
