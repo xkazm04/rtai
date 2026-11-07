@@ -18,6 +18,9 @@ changed. `top` stays bit-identical (look goldens 11/11 + block 5/5 at every gate
    - Stills: `armory_tilt70_48_before_after_crop2x.png` (frames 1), `armory_tilt70_32_...`,
      `armory_tilt_48_...` (55), `rack_handguns_flat_tilt70_32_...`, `crate_v3_tilt70_{32,48}_...`,
      `chainsaw_v2_tilt70_{32,48}_before_after_x3.png`.
+   - it20: on the wall rack a showcase piece hangs at least 0.7 m (`WeaponRackView.MIN_SHOW_M`): the molotov
+     was a 4 px sliver at 32 px/m, now its bottle and rag read: `rack_molotov_min_show_tilt70_32_64_before_after.png`;
+     the whole showcase at 64 px/m, p70 over p55: `armory_showcase_64ppm_tilt70_tilt.png`.
    - it19: the rocket launcher, flamethrower and molotov icons from the assets lane's
      `weapon_showcase_heavy_70_v3` (the icon column fixed to rust/brass; the molotov no longer
      cream-on-cream): `hud_heavy_icons_v3_tickets_1280x800_before_after.png`,
@@ -45,7 +48,7 @@ changed. `top` stays bit-identical (look goldens 11/11 + block 5/5 at every gate
    `bossbar_paper_king_servo_combo_1920x1080_top.png` (it19).
 
 Every look has a flag one value away (`PAPER`, `FACES`, `SEE`, `ON_TICKET`, `FIT_BOX`,
-`--pickup-crate`), recorded as `DECISION hud/...` in `docs/decisions.md`.
+`--pickup-crate`, `MIN_SHOW_M`), recorded as `DECISION hud/...` in `docs/decisions.md`.
 
 ## Gates
 - Last full gate run: 610da507 (it16): lint 15/15, unit 1528/0, scenarios 52/52, parity bit-exact
@@ -60,12 +63,14 @@ Every look has a flag one value away (`PAPER`, `FACES`, `SEE`, `ON_TICKET`, `FIT
   unit 1529/0, scenarios 52/52, parity bit-exact + planted mutation caught at step 629, look goldens 11/11 +
   block 5/5 (top did not move), export-audit 563/0. The reel was not re-run for it: a portrait PNG only, no
   reel chapter draws the dialogue box (quest 1 only); the it19 reel ran on the same code.
-- FREEZE: re-run the gates (+ the reel if code changed) only if the tree changes after 9a6a3ce4.
+- Full gate run at f80e09ba (it20, after the rack show minimum, `evidence_run_it20b.log`, 07:33-07:41): lint 15/15,
+  unit 1530/0, scenarios 52/52, parity bit-exact + planted mutation caught at step 629, look goldens 11/11 +
+  block 5/5 (top did not move), export-audit 563/0. Director reel at f80e09ba: `top` 19/19 down, `tilt70`
+  19/19 down, 0 SCRIPT ERROR both (`evidence/director-reel-n8hud-it20-{top,tilt70}.log`).
+- FREEZE: re-run the gates (+ the reel if code changed) only if the project tree changes after f80e09ba.
 
 ## What does not work / not done
 - No vendor exists in the game: the rack and the crate are the showcase's display forms.
-- On the wall rack the molotov is a sliver (~10 px wide at 64 px/m, a speck at 32): the rack sizes
-  each piece by its length; a bottle needs a minimum width (`armory_showcase_64ppm_tilt70_tilt.png`, it20).
 - No boss taunt line system and no owner-signed boss lines: `BossTaunt` waits for a caller.
 - The car radio carries no speech (3 placeholder music loops): no speaker to frame; a
   `PortraitBook` `kind: device` row is the hook.
@@ -107,12 +112,13 @@ Every look has a flag one value away (`PAPER`, `FACES`, `SEE`, `ON_TICKET`, `FIT
   `RTAI.exe -- --armory --view=tilt --rigs` (55), `RTAI.exe -- --armory --pickup-crate=on --view=tilt70 --rigs`,
   `RTAI.exe -- --boss=king --view=combo --rigs`, `RTAI.exe -- --boss=servo --view=combo --rigs`.
   The taunt shot and the dialogue board are dev-only (-s scripts): see the masters stills.
-- Built at 07:22 from 9a6a3ce4 (gates green at that head; it replaces the 07:01 build): `build/export/windows/RTAI.exe`
+- Built at 07:48 from f80e09ba (gates + reel green at that head; it replaces the 07:01 and 07:22 builds): `build/export/windows/RTAI.exe`
   (262 MB, embedded pck, + `gtai_sim.windows.template_release.x86_64.dll` beside it), export 0 errors.
   Smoke: `RTAI.exe --log-file <f> --write-movie <dir>/f.png --fixed-fps 60 --quit-after 240 -- --armory
   --view=tilt70 --rigs` and `-- --boss=king --view=combo --rigs`: 241 frames each, 0 errors in the
   log; looked at frame 239 of each (the floor showcase + rack + chip faces; the King's paper banner).
-  FREEZE: re-export only if the tree changed after 9a6a3ce4. Smoke frames: `gtai-n8/scratch/hud/it20/exe_smoke.png`.
+  FREEZE: re-export only if the project tree changed after f80e09ba. Smoke frames: `gtai-n8/scratch/hud/it20/exe_smoke.png`
+  (07:22 build, armory + King) and `exe2_smoke.png` (07:48 build, armory: the rack bottle at 0.7 m).
 
 ## Merge notes for the Director
 - hud touches `features/hud/`, `features/bosses/boss_bar.gd`, `features/police/heat_meter.gd`, the

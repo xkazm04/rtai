@@ -1233,3 +1233,22 @@ post fix it names; the B v2 electro gun checked against the A design before not 
 `sprite-and-atlas-production` (the busts cut by `portrait_cut.py`, provenance per file),
 `accessibility` (red kept for blood: measured, not eyeballed), `motion-quality-gating` +
 `concept-scene-parity` (judged on the real armory scene at the third zoom).
+- MILESTONE f80e09ba the rack show minimum (`WeaponRackView.MIN_SHOW_M` = 0.7, the floor bottle's
+  cap; under a form only): the molotov's bottle and rag now read on the wall rack at 32 and 64
+  px/m. Looked: armory tilt70 seed 1 f89 before (0.0) / after at 32 and 64, the frame diff only the
+  bottle, 0 SCRIPT ERROR (masters `rack_molotov_min_show_tilt70_32_64_before_after.png`). Unit +1.
+  DECISION hud/rack show minimum (rejected: a minimum width, it stretches the baton/katana to 1.7 m).
+- GATE 07:33-07:41 full evidence run at f80e09ba (`evidence_run_it20b.log`): lint 15/15, unit
+  1530/0, scenarios 52/52, parity bit-exact + mutation at 629, look goldens 11/11 + block 5/5,
+  export-audit 563/0. Director reel at f80e09ba (`it20/reel.sh`): top 19/19 down, tilt70 19/19
+  down, 0 SCRIPT ERROR (`evidence/director-reel-n8hud-it20-{top,tilt70}.log`).
+- 07:48 EXE re-exported at f80e09ba (0 errors, 262 MB + DLL); smoke `-- --armory --view=tilt70
+  --rigs` 241 frames, 0 errors, frame 239 looked at (the rack bottle shows). REPORT updated.
+
+NEXT (supersedes it19's):
+- FREEZE 08:30: the gates, the reel and the exe are all green/fresh at f80e09ba (the project tree;
+  later commits are JOURNAL/REPORT/evidence logs only). If the project tree is unchanged: drop
+  "DRAFT" from REPORT's title, re-read it once, commit. If anything under project/ changes: gates
+  (`node tools/evidence/run.mjs --no-bench`, ~8 min, commit first), reel (`it20/reel.sh`, ~6 min),
+  re-export (REPORT "Exe"), smoke.
+- Watch the catalog for raises to hud's ids; electro gun 70 v2 was looked at and not taken (it20).
