@@ -669,3 +669,67 @@ NEXT (iteration 14, in order):
 5. Quest 1's TUCK-IN crate stack under a tilt if it shows on the quest film.
 6. Before the freeze: full gates (evidence --no-bench), the exe export, REPORT.
 - GATE unit full no-arg on c5ec22ff (clean tree): 1521 passed, 0 failed, 0 skipped, no FLAKY.
+
+## Iteration 16 (2026-11-07 02:18 - 03:18), BUILD
+Read: JOURNAL, git log, the four lane journals (no new REQUEST to city; view's it9 FINDING was
+answered in it13), the library catalog (new A raises at 70: lamp_v4 0240, trash_can_v3 0245,
+bus_stop_v4 0305; at 55: dumpster_v4/crates_v4 0205 (arena cover, view's ArenaPropCards cover kinds),
+vending_machine_v3, newsstand_v2, planter_v2, hydrant_v3, barrel_cluster_v3, trash_can_v3 55).
+- FOUND where the landmarks sit (a throwaway probe over CityGen.gen_chunk, all 256 chunks, deleted):
+  ~950 each of building_tall / building_hq / building_helipad; on the bench drive's first leg
+  (y 270, eastward) building_helipad (412, 236), building_tall (492, 220) and (500, 252),
+  building_helipad (508, 244), (612, 220), building_hq (628, 220), building_helipad (676, 236); a
+  kerb bench at (675, 261.5). List: gtai-n8/scratch/city/landmarks.txt.
+- MILESTONE 7451ef86 + 9502e612 the city bench's `facade` film scenario (BenchDriver: the drive's
+  lap at 8 m/s, the camera 12 m north of the car: the south faces of the blocks north of the road
+  in frame at 32 and 48 px/m). Debt +5 accepted with the reason. A film, not a bench.
+- EVIDENCE (it13 NEXT 1 closed) the `tall` landmarks in motion: `--scenario=facade --zoom=1.0|1.5
+  --view=tilt70`, ac8f9af4+ vs 633d882c (throwaway worktree, same scenario file): building_tall at
+  (500, 252) between two tenements. Before: the tenement strip stretched (smeared bricks); after:
+  fire-escape landings and stacked windows, the face ~1/3 taller than its neighbours'. LOOKED at
+  32 and 48. `gtai-masters/n8/city/it16_facade_tall_48ppm_before_after.png` (frames.json #8) +
+  `it16_facade_tall_32ppm_before_after.jpg`. 0 SCRIPT ERROR all runs.
+- EVIDENCE (it12 NEXT 2 closed for the bench) bench_v2 in motion, 48 px/m x2, vs 28281696:
+  before = a tall frontal slab like a crate, after = a low slatted bench under the steep camera.
+  `it16_bench_v2_48ppm_before_after_x2.png` (frames.json #4). The vending machine v2 is still not
+  filmed. FRICTION: a worktree checked out to an older commit keeps the newer imported textures
+  when a png is replaced under the same name (the first before == after); run `--import` on the
+  trial after every checkout.
+- MILESTONE 522fc454 + bf831ee7 the lamp, trash can and bus stop 70 strips from the library's A
+  raises (lamp_v4, trash_can_v3, bus_stop_v4), cut by city_prop_cut.py (from a scratch copy:
+  the tool reads `<id>_<pitch>.png`, the raises are named `<id>_<pitch>_vN.png`); 3 provenance
+  lines. A props row's `cell_w_m_<art>` overrides `cell_w_m` for that pitch's strip (one line in
+  PropCards.make, schema too): the v4 lamp at the shared 1.15 m drew 1.3x a walker (squat), at
+  1.7 m it had the old height but a 1 m plate; built 1.45 m (DECISION in docs/decisions.md).
+  EVIDENCE `it16_lamp_busstop_v4_48ppm_before_after.png` (frames.json #5): the bus stop's ribbed
+  grey roof and cream fascia replace the black slab (the clearest gain); the lamp shows its
+  shade and globe. Dropped from frames.json: it10 night lamps (the lamp art changed), it12
+  payphone 32 pair (the 48 pair stays).
+- GATE unit `--changed` on the strips + cell width: 1505 passed, 0 failed, 0 skipped (50 s).
+  Lint 15/15 every commit.
+- GATE `top` bit-identity at bf831ee7 vs 94930301 (session start) re-recorded this session in a
+  throwaway worktree (removed): `--arena=city --bot=rivet --seed=2 --rigs --quit-after 301`
+  framemd5 IDENTICAL, 301 video + 301 audio, 0 SCRIPT ERROR each.
+
+Registry rules applied this session: concept-scene-parity + motion-quality-gating (every pair from
+the same scenario, seed and frame, before and after in throwaway worktrees, judged at 32 and 48
+px/m with a walker in frame for scale), generative-artifact-gating (A raises read note by note;
+the lamp's A grade did not settle its scale: judged against the cast in the scene, not the sheet),
+sprite-and-atlas-production (the raises cut by the same tool into the same five-cell layout; a
+pitch's own cell width instead of re-cutting the drawing), depth-ordered-layered-art (no new band:
+the swapped strips stand where the old ones did), tiling-texture-acceptance (the tall bays read
+butt-joined in motion at 48), render-submission-economy (texture swaps and one dictionary read
+at build time; no per-frame work).
+
+NEXT (iteration 17, in order):
+1. The 55 raises for the boss arenas (55 first there): dumpster_v4 55 A and crates_v4 55 A are
+   the arena cover kinds (cover_high / cover_low): cut them into p55 prop_dumpster /
+   prop_crate_stack (+ re-bake the crate's print twin with tools/art/print_twin.py), film the King
+   fight under combo at 48 vs today. Then hydrant_v3, newsstand_v2, planter_v2,
+   vending_machine_v3, barrel_cluster_v3, trash_can_v3 at 55 (A).
+2. The vending machine v2 at 70 in motion (a probe for a kerb vending_machine near the route).
+3. The lamp at night with v4 (light_m checked against the new head's ground point; the it10
+   night pair is stale).
+4. CityOcclusion's remaining 0.21 ms (RigCastShadows.collect walk), under bench.lock.
+5. Before the freeze: full gates (unit no-arg, scenarios, evidence --no-bench, reel tilt70),
+   the exe export, REPORT (Calls: facade height, occlusion style, the lamp's 70 cell width).
