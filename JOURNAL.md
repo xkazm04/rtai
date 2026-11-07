@@ -1585,3 +1585,14 @@ NEXT (after the night run):
 3. depot_van_top_v4 (A) is the top print Call 9(b) asked for; it needs a sim archetype to draw.
 4. A cutter self-check: flag a sheet whose 3/4 nose side disagrees with its side view (the fault
    found tonight was only seen turning).
+08:02 NEXT 1 done early: MILESTONE 8562bf13 the mirrored p55 police 3/4's light-bar lenses trade
+colours back in the cutter (`LENS_SWAP`: the bright blue lens and the amber lens in the bar's box swap,
+each keeping its value), so blue stays on the car's right in all five views; one cell, 1206 px.
+LOOKED cell before/after and turning (vehicle_turn tilt 64 px/m, f30-60), 0 SCRIPT ERROR. Masters
+police55_lens_swap_34_cell_before_left_after_right_x2.png, police55_lens_swap_turn_tilt55_64ppm_
+f30-45-60_after.png. Decision line amended (the "known" caveat gone).
+EXE 08:03 re-exported from 8562bf13 (exit 0), smoke Servo combo exit 0, 0 SCRIPT ERROR. Unit no-arg on
+8562bf13 1566/0. (Reel/top identity stand from 42b01ee9: 8562bf13 changes one p55 cell, which neither
+`top` nor tilt70 loads.)
+NEXT (after the night run): 2-4 above.
+Session end ~08:05. Tree clean after this commit.

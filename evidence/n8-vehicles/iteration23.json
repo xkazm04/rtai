@@ -1,8 +1,9 @@
 {
- "change": "0f4810f0 service vans turn one way (MIRROR_34) + p70 depot van from depot_van_70_v2; ada297fe p55 van/pickup/police 3/4-toward mirrored; 42b01ee9 p55 van_cream_55_v3 + police_car_55_v6 (P55_V)",
+ "change": "0f4810f0 service vans turn one way (MIRROR_34) + p70 depot van from depot_van_70_v2; ada297fe p55 van/pickup/police 3/4-toward mirrored; 42b01ee9 p55 van_cream_55_v3 + police_car_55_v6 (P55_V); 8562bf13 p55 police mirrored 3/4 lens colours swapped back (LENS_SWAP)",
  "date": "2026-11-07",
  "exe": {
-  "commit": "42b01ee9",
+  "commit": "8562bf13",
+  "exported": "08:03",
   "path": "build/export/windows/RTAI.exe",
   "preset": "windows-showcase",
   "smoke": "--boss=servo --bot=boss --servo-ghost=dent --view=combo --rigs --seed=2, 200 frames, exit 0, 0 SCRIPT ERROR"
@@ -25,6 +26,7 @@
   },
   "lint": "15/15 (pre-commit on every commit)",
   "top_identity": "framemd5 --arena=city --bot=rivet --seed=2 --rigs: frames 0-299 video+audio identical to identity-it22 (this run wrote 301 frames, it22 300)",
-  "unit": "1566/1566 passed, 0 failed (no-arg run, 44 s)"
+  "unit": "1566/1566 passed, 0 failed (no-arg run, 44 s)",
+  "unit_8562bf13": "1566 passed, 0 failed (no-arg run); vehicle tests 21/0; lint 15/15"
  }
 }

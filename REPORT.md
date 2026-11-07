@@ -71,10 +71,12 @@ The view lane's REPORT.md came in with the n8-view merge; this file replaces it 
    `traffic55_turn_dir_fix_tilt55_64ppm_f30-45-60_before_after_main_then_street.png`,
    `service_turn360_64ppm_before_left_after_right_tilt55_top_tilt70_bottom.mp4`.
    The 55 van now takes van_cream_55_v3 (the 70 van's design, no roof rails) and the 55 police car
-   police_car_55_v6 (its side no longer flattens to ~28 deg) (42b01ee9; Call 12):
+   police_car_55_v6 (its side no longer flattens to ~28 deg) (42b01ee9; Call 12); the mirrored police
+   3/4 trades its lens colours back so blue stays on the car's right (8562bf13,
+   `police55_lens_swap_34_cell_before_left_after_right_x2.png`):
    `p55_van_v3_servo_depot_combo_32ppm_seed2_f60_150_290_before_left_after_right_x3.png` (Servo's
    bay 3 van parked, seized, burnt).
-13. **Gates (final, it23 on 42b01ee9):** unit 1566/1566; director reel 19/19 chapters down in `top`
+13. **Gates (final, it23 on 42b01ee9; 8562bf13 = + one p55 police cell):** unit 1566/1566 on both; director reel 19/19 chapters down in `top`
    and `tilt70`, 0 SCRIPT ERROR, exit 0; lint 15/15; `top` framemd5 (city block, seed 2) identical to
    it22 over its 300 frames; `tools/evidence/run.mjs --no-bench` all PASS on ada297fe (the same code;
    42b01ee9 changes only the p55 atlas and the cutter): scenarios 52, parity bit-exact + the planted
@@ -137,7 +139,7 @@ Each: options, the default built, how to see it.
 
 ## Exe
 `build/export/windows/RTAI.exe` (preset `windows-showcase`: boots the arena; embedded pck + the sim DLL
-beside it). Exported at 07:56 from 42b01ee9 (the it23 art head; 10 s, exit 0, RTAI.exe 269 MB +
+beside it). Exported at 08:03 from 8562bf13 (the it23 art head; 10 s, exit 0, RTAI.exe 269 MB +
 `gtai_sim.windows.template_release.x86_64.dll`):
 `"$GODOT_BIN" --headless --path project --export-release windows-showcase ../build/export/windows/RTAI.exe`
 See the vehicles (`top` stays the default; add `--view=<top|tilt70|combo>`):
@@ -147,7 +149,7 @@ See the vehicles (`top` stays the default; add `--view=<top|tilt70|combo>`):
   is the arena hub, no traffic): `"$GODOT_BIN" --path project -- --view=tilt70 --seed=7 --rigs`,
   or export `windows-slice` (main scene, same path; the last export wins)
 - the director reel: `RTAI.exe -- --bot=reel --reel=director --loadout=pistol --rigs --view=tilt70`
-Smoke-tested on the 07:56 export: `RTAI.exe --fixed-fps 60 --quit-after 200 -- --boss=servo --bot=boss
+Smoke-tested on the 08:03 export: `RTAI.exe --fixed-fps 60 --quit-after 200 -- --boss=servo --bot=boss
 --servo-ghost=dent --view=combo --rigs --seed=2`, exit 0, 0 SCRIPT ERROR (only the known exit-time
 "resources still in use" lines). The 55 van (no roof rails since it23) is the one Dent seizes in bay 3.
 The turn showcase (`dev/showcase/vehicle_turn.tscn`) is a dev scene: run it from the editor build
