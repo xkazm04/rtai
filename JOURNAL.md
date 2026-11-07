@@ -733,3 +733,16 @@ NEXT: as it22 (F19 native stack, the owner's Calls P-1 / P-2 / P-3, L7 with the 
 
 NEXT: as it22 (F19 native stack, the owner's Calls P-1 / P-2 / P-3, L7 with the official toolchain).
 - Session end 18:23 (it24): all committed.
+
+## Iteration 25 (STABILIZE, 18:30-18:40, at the freeze)
+- Read 18:30: JOURNAL it24 + NEXT, git log -8. The rivet (18:24) / seams (18:22) / handheld (18:26) journals: no new
+  REQUEST to perf (handheld's it21 tail names perf only to say it found nothing for itself; l.533 E12 FYI closed in it21).
+- Checked: the owner's exe `build/export/windows/RTAI.exe` (18:05, 324.5 MB) is still newer than the last `project/`
+  commit (ca5817a4, 17:51), so the it22 gates (`evidence/perf/gates-it22/`) and REPORT's exe section still describe
+  the branch. Worktree clean; no Godot process running (tasklist); bench.lock free; image.lock held by another lane
+  (not mine, not touched). REPORT.md is final (it22), no wording change needed.
+- No `project/` change, no Godot run, no lock taken: STABILIZE has no bug open on this lane, and no rebuild is owed.
+  Registry rules applied: perf-regression-gating (artifact vs last code commit), measurement-honesty (no partial run).
+
+NEXT: as it22 (F19 native stack, the owner's Calls P-1 / P-2 / P-3, L7 with the official toolchain).
+- Session end 18:32 (it25): all committed.
