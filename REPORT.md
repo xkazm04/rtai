@@ -101,11 +101,12 @@ selected by the view row's art key (`p70` / `p55`) or `cards`, never by a pitch.
    v3 twin (not REQUESTed in time); before = the six p70 files at e87ed678.
    `ped_cap_v3_identity_before_after_tilt70_64ppm_kill_light_t59_68_72_240.png`.
 
-Exe (`build/export/windows/RTAI.exe`, exported 07:47 from 2de46fa1, the final code; built with
+Exe (`build/export/windows/RTAI.exe`, exported 08:11 from 7db6c352, the final code (it15); built with
 `APPDATA=C:/Users/kazda/kiro/gtai-n8/appdata/street "$GODOT_BIN" --headless --path project
 --export-release windows-showcase ../build/export/windows/RTAI.exe`). Smoke-tested: the city at
 tilt70 32 px/m seed 5 draws the same frame as the editor at tick 540
-(`evidence/exe_vs_editor_city_tilt70_32ppm_seed5_t540_x2.png`). Command lines:
+(it14: `evidence/exe_vs_editor_city_tilt70_32ppm_seed5_t540_x2.png`; it15 re-export: the same
+command exit 0, 0 SCRIPT ERROR, t540 LOOKED). Command lines:
 - the city block, play pitch: `RTAI.exe -- --arena=city --rigs --view=tilt70`
 - the same at close range: `RTAI.exe -- --arena=city --rigs --view=tilt70 --ppm=48`
 - a boss fight under combo: `RTAI.exe -- --boss=king --rigs --view=combo`
@@ -114,13 +115,13 @@ tilt70 32 px/m seed 5 draws the same frame as the editor at tick 540
 
 ## Gates
 
-Freeze (it14), on the final code 2de46fa1 (the later commits are docs and evidence only):
-`node tools/evidence/run.mjs --no-bench` ALL PASS (07:39-07:46, tree clean): lint 15/15, unit
+Freeze (it15), on the final code 7db6c352 (the later commits are docs only):
+`node tools/evidence/run.mjs --no-bench` ALL PASS (08:03-08:11; it14 the same on 2de46fa1): lint 15/15, unit
 1529/0, scenarios 52, parity native == GDScript 1200 steps (planted mutation caught at step 629),
 selftest (look goldens 11/11 worst 0.27, block goldens 5/5 worst 0.22, no new off-doctrine accents),
 export-audit 561 loaded / 0 failed. Director reel (headless, `--fixed-fps 60 --quit-after 14000
 res://dev/arena/arena.tscn -- --bot=reel --reel=director --loadout=pistol --rigs --view=<v>`):
-`top` 19/19, `tilt70` 19/19, `combo` 19/19 chapters, every chapter all down, 0 SCRIPT ERROR (exit
+`top` 19/19, `tilt70` 19/19 (it15, on 7db6c352), `combo` 19/19 (it14) chapters, every chapter all down, 0 SCRIPT ERROR (exit
 0). `top` stays bit-identical (look goldens). Bench: not re-run at the freeze (it10's CONTENDED
 numbers above stand; tonight's changes are texture swaps of the same size).
 

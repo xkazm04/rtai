@@ -1480,3 +1480,21 @@ REQUEST** (v3 B with a lighter hoodie superseded by it).
 - Registry rules applied (it15): generative-artifact-gating (A grade, judged beside the walk it
   meets), sprite-and-atlas-production (the same cut script and cell rule), motion-quality-gating
   (stand -> buckle -> lie on the deterministic board), render-submission-economy (a texture swap).
+- GATE evidence `node tools/evidence/run.mjs --no-bench` on 7db6c352 (08:03-08:11; I committed docs
+  mid-run, the tree stayed clean, the run did not flag it): ALL PASS: lint 15/15, unit 1529/0,
+  scenarios 52, parity (mutation caught at 629), selftest (look goldens 11/11 worst 0.27, block 5/5
+  worst 0.22), export-audit 561/0. Log scratch/street/evidence-it15.log.
+- GATE director reel on 7db6c352 (headless, the it1 command): `tilt70` and `top` each 19/19
+  chapters, every chapter all down, 0 SCRIPT ERROR, exit 0. (`combo` not re-run: a texture swap
+  under p70 only; it14's 19/19 stands.)
+- EXPORT (08:11) the same command as it14, exit 0 (RTAI.exe 290 MB + the sim dll). SMOKE `RTAI.exe
+  --rendering-driver d3d12 --fixed-fps 60 --quit-after 600 --write-movie ... -- --arena=city --rigs
+  --view=tilt70 --ppm=32 --seed=5` exit 0, 0 SCRIPT ERROR; LOOKED t540 (tilt70 cards, navy cops,
+  the same frame as it14's). Raw frames deleted. Masters frames.json #2 note names the it15 still.
+- REPORT updated (it15 freeze: the cap long fall, gates, the exe from 7db6c352).
+NEXT (after the freeze):
+1. REQUEST to assets (for a later night): ped_cap_fall_70_v5, the round-0137 ped_cap_fall_70 (v1
+   layout, the short fall) poses redrawn in the ped_cap_70_v3 identity, same 5 x 3 layout, so the
+   short grid's tone retires too. Cut with street_fall.py (with the stretch it used, see l.624ff).
+2. City cops: armed walk strips (REQUEST) before any walk grid can show in the city.
+3. SWAT p70 front corpse 1.43x short (library redraw); cultists / Torque's gang when they spawn.
