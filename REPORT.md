@@ -78,6 +78,14 @@ priority, the CPU's own 2-CU Radeon), never a device claim. Details and sources:
   memory only): the stock engine holds 224 MB of staging; trimmed, the GPU's shared memory 1006 -> 878 MB and the
   working set 1304 -> 1128 MB. On a Deck that memory is the RAM the game shares with the GPU: perf's traffic-sheet
   split is worth ~128 MB there (`evidence/it13/tw-igpu/`).
+- (it14) **A fast gun no longer buzzes the pad** (`boss_hit` rests 8 ticks after a felt one): with the gatling or the
+  machine pistol a hit lands on a boss every 2 ticks, so the 70 ms pulses had chained into one buzz (King 225 pulses
+  in 40 s); now 80 taps + 145 rested, the stock gun's fight unchanged (59 / 63 pulses, 0 rested)
+  (`evidence/it14/*-gap.log`). DECISION handheld/boss-hit-rest.
+- (it14) **E13, the sim is the same on Linux**: in WSL Ubuntu with the official 4.7.2 Linux editor (sha512 checked),
+  NAT-06 parity on the Linux `.so` is exact over 1200 steps (planted fault caught at 629, as on Windows), and quest 1
+  replays cross both ways identical (Windows-recorded 1800 ticks on Linux, Linux-recorded 3600 ticks on Windows):
+  a replay made on a Deck runs the same on the PC (`evidence/it14/linux/`; a save file across the two OSes is not tested). Idle input and the debug `.so`. E13b (the release `.so` through the export) is not a result yet: `linux-showcase` boots the dev arena, which never reads `--replay`; a `linux-slice` preset is owed.
 
 ## What does not work yet
 - Rumble on every hit Rivet takes is in (it7: the view reads his hurt tick; no sim change); its live pulse count is
@@ -121,10 +129,11 @@ priority, the CPU's own 2-CU Radeon), never a device claim. Details and sources:
 ## Owed / next
 - (it7) The draw_scale HUD side
   effect (if Call 5 b/c), the King fight's rumble count, the dev-arena experiments E1-E3/E7 re-labelled "at 32 px/m".
-- The Linux build: NAT-06 parity on the Linux `.so` (in WSL), a real Vulkan run (needs a Linux PC or a Deck).
+- The Linux build: a real Vulkan run (needs a Linux PC or a Deck); a `linux-slice` export to replay through the release
+  `.so` (E13b); a save round trip Windows <-> Linux (Steam Cloud's root override, LEDGER section 1). NAT-06 on Linux: done (E13).
 - Steam Input's origin glyphs through the Steam backend (and a drawn ink glyph set: REQUEST to assets
-  `ui_pad_glyphs_v1`, it12), rumble on blasts and crashes (no bus event), aim assist (a design call); a refractory gap for
-  the landed-hit pulse if a fast gun turns it into a buzz (unmeasured).
+  `ui_pad_glyphs_v1`, it12), rumble on blasts and crashes (no bus event), aim assist (a design call); whether the boss_hit
+  rest (8 ticks, it14) reads as taps on a real pad.
 - A/Bs: `handheld_1080` viewport vs native stretch; the iGPU frame is fill-bound (E6), so next: a lower 2D draw size
   scaled up (viewport stretch below 1280x800) and the print grain / light passes off on the handheld tier,
   the Switch-class budget at 3 threads.

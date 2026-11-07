@@ -581,3 +581,40 @@ NEXT (iteration 14):
   (planted: no rest -> FAIL at :164); lint 15/15. DECISION handheld/boss-hit-rest (docs/decisions.md).
   Evidence: `evidence/it14/*-gap.log` (+ `before/`), `evidence/it14/gaps.sh`.
 - FRICTION 16:28 the gate refused the tree (JOURNAL.md uncommitted): committed, re-run.
+- MILESTONE 16:36 evidence gate on 890c3f07 (the rest code): lint 15/15, unit 1735/0, scenarios 53/53, parity
+  bit-exact (planted caught at 629), look goldens 11/11 (worst 0.27): **top bit-identical**
+  (`evidence/it14/evidence-run-890c3f07.log`). Reels on 890c3f07: **top / tilt70 / combo / combo + deck 19/19, 0 SCRIPT
+  ERROR**.
+- RESULT 16:34 (a8f9019d) **E13, the sim is the same on Linux** (the NAT-06 item carried since it1): the official
+  Godot 4.7.2 Linux editor (GitHub release zip, sha512 matched SHA512-SUMS, build ed1daf0bf as on Windows) in WSL
+  Ubuntu 24.04, the project copied to the distro's disk with its import cache. Parity on the sniper-built debug `.so`:
+  exact over 1200 steps, 3516 floats, planted caught at 629 (Windows: 629). Quest 1 replay recorded on Windows (1800
+  ticks, seed 7) -> Linux **identical**; recorded on Linux (3600 ticks, seed 11) -> Windows **identical**. Why it holds:
+  `native/SConstruct` builds with `-ffp-contract=off` / `/fp:strict`. Limits: idle input, the debug `.so`, Ubuntu.
+- FRICTION 16:38-16:59 (~20 min) E13b (the release `.so`): two bugs of mine and one finding. (1) `wsl.exe -- bash -lc
+  '...$r...'` is expanded once by the login shell, so `$r` was empty: put WSL loops in a script file (and
+  `MSYS_NO_PATHCONV=1`, or Git Bash rewrites `/mnt/c` to `C:/Program Files/Git/mnt/c`). (2) FINDING: `linux-showcase`
+  boots the dev arena (`run/main_scene.showcase`), which never reads `--replay`; both runs played the arena until my
+  300 s timeout (exit 124), killed by me (my PIDs only). E13b needs a `linux-slice` export (owed).
+- RESEARCH 16:45 Steam Cloud cross-save (LEDGER section 1): one Auto-Cloud root (WinAppDataRoaming) + a Root Override to
+  LinuxXdgDataHome for the native build (`user://` = `~/.local/share/RTAI Uprising`); a Steam Flatpak breaks the XDG map;
+  Proton keeps the Windows root. Sources: partner.steamgames.com/doc/features/cloud, ctrl.blog flatpak-steamcloud-xdg.
+- Registry rules applied this iteration: on-device-verification-harness (the pulse gap measured on the real boss
+  scenes before choosing a value; the Linux claim made on a Linux engine, not inferred from the SConstruct flags);
+  controller-latency-instrumentation (the rest counts in sim ticks, the game's time, not wall-clock, so 40 Hz rows rest
+  the same); adaptive-fidelity-tiers (the rest sits behind the rumble row: desktop never vibrates); perf-regression-gating
+  (the gate on a committed tree, re-run when JOURNAL dirtied it; planted fault by hand; reels in four views);
+  fire-tv-device-realities (a device ships a different binary: the release `.so` and the export's main scene are the
+  device's reality, and the showcase preset is not the game a Deck would run).
+
+NEXT (iteration 15):
+1. E13b: a `linux-slice` export preset (feature `slice`, mirror `windows-slice`; exclude_filter like `linux-showcase`),
+   export, replay `evidence/it14/linux/q1-{win,linux}.replay.json` through `RTAI.x86_64 --headless -- --replay=` in WSL
+   (a script file, not an inline `bash -lc`); then a save round trip Windows <-> Linux.
+2. mutate.mjs on handheld_rumble.gd at HEAD (the rest lines) and quote the score.
+3. The glyph REQUEST (`ui_pad_glyphs_v1`): re-read the asset journal.
+4. FREEZE prep (by 18:30): the exe `build/export/windows/RTAI.exe` (`"$GODOT_BIN" --headless --path project
+   --export-release windows-showcase ../build/export/windows/RTAI.exe`) named in REPORT; delete the HKCU DirectX
+   UserGpuPreferences value for `gtai-d9x/handheld-godot/..._hh.exe` and that copy; `git worktree remove` the BC7
+   scratch `gtai-d9x/scratch/hh-bc7`; the scratch dirs `gtai-d9x/scratch/{padwalk,padwalk2,it12,it13,it14}`;
+   WSL `~/hh14` (1 GB: the project copy, the editor, the export); `build/export/linux/` (292 MB).
