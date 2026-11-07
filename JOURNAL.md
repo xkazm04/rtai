@@ -848,3 +848,8 @@ NEXT (iteration 20, in order):
   678c7382: the fire bursts and smoke still cover the lifted crates (the lift is ~5 px at 32 px/m),
   no floating or gap; Rivet's fight beside them unchanged. 0 SCRIPT ERROR both.
   `gtai-masters/n8/city/it19_quest1_tuckin_burning_tilt70_32ppm_before_after_x2.png`.
+- GATE scenarios at 408e72d6: `run_scenarios.gd` 52 ran, 0 failed, exit 0 (vehicle drive timing
+  CONTENDED as labelled by the runner: other lanes on the machine).
+- GATE `top` bit-identity at 408e72d6 vs ca539e27 (session start, throwaway worktree):
+  `--arena=city --bot=rivet --seed=2 --rigs --quit-after 301` framemd5 IDENTICAL (617 lines each),
+  0 SCRIPT ERROR each; the quest's `top` stills (4000, 13700) pixel-identical (above).
