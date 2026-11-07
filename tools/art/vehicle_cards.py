@@ -142,7 +142,12 @@ def green_key(im: Image.Image, tol: float = 24.0) -> Image.Image:
 # does not grow by two rows. Per pitch the library sheet (best grade, latest round).
 SERVICE = [("delivery_truck", 2.9, (1.0, 1.0, 1.0)), ("depot_van", 2.3, (1.0, 1.0, 1.0))]
 SERVICE_M = [6.4, 4.9]  # side-view lengths (m), no top-down footprint; the truck then fits the 7 m cell (x0.82)
-SERVICE_PICKS = {"delivery_truck": {55: "delivery_truck_55_v2"}, "depot_van": {55: "depot_van_55_v3"}}
+SERVICE_PICKS = {"delivery_truck": {55: "delivery_truck_55_v2"}, "depot_van": {55: "depot_van_55_v3", 70: "depot_van_70_v2"}}
+# (sheet, pitch) -> the 3/4 columns drawn turned the other way from the side view (nose down-LEFT
+# beside a nose-right side): the atlas convention (every traffic row, the 70 truck) is nose down-right
+# in column 1 and the tail down-left in column 3, so these are mirrored in place. Empty: the sheets as
+# drawn (the car turns back on itself between the 3/4 and the side, its roller door swaps sides).
+MIRROR_34 = {("delivery_truck", 55): (1,), ("depot_van", 55): (1, 3), ("depot_van", 70): (1, 3)}
 # Per service row, degrees its saturated mid paint turns toward yellow: the truck's 70 cab is drawn
 # amber-orange (the library note: match the 55 sheet's mustard; 1463 vermilion-gate px raw in view 0).
 SERVICE_HUE = {0: 12.0}
@@ -373,6 +378,8 @@ def build(root: Path, lib: Path, pitch: int) -> Image.Image:
     cos_p = math.cos(math.radians(pitch))
     for row, (sid, height, gain) in enumerate(rows_of()):
         vs = views(sheet_of(lib, sid, pitch))
+        for c in MIRROR_34.get((sid, pitch), ()):
+            vs[c] = vs[c].transpose(Image.Transpose.FLIP_LEFT_RIGHT)
         if pitch in SHEET_PICKS.get(sid, {}):
             _PICKED.add(row)
         k = lengths[row] * PPM / vs[2].width  # the side view as long as the footprint
