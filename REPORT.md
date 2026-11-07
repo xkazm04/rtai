@@ -29,7 +29,12 @@ The view lane's REPORT.md came in with the n8-view merge; this file replaces it 
    `servo_bay3_mark_over_van_combo_64ppm_f120_before_left_after_right.png`). Bay 3's number reads
    over the cream van at 32 px/m since view's ink stroke (c3deecd3, merged it21 at 81762e2e):
    `servo_bay3_ink_over_cream_van_combo_32ppm_seed2_f60_before_left_after_right_crop3x.png`.
-5. **Kerb-parked cars** as cards through city's ChunkLift hand-off (`VehicleParked.live`).
+5. **Kerb-parked cars** as cards through city's ChunkLift hand-off (`VehicleParked.live`), in the
+   city drive and, since it21 (dd288959, 7a993845), in quest 1 and the arena's city block too, where
+   no VehicleView exists: the stage view claims the registry before the street is drawn, the cards
+   stand in the vehicles band (Dock 9's kerb sedans were flat top-down prints at tilt70; filmed on a
+   trial merge with n8-city: `quest1_dock9_kerb_cars_tilt70_32ppm_t13700_before_left_after_right_crop2x.png`,
+   48 px/m `..._48ppm_..._crop.png`). Shows only once n8-city is merged (the hand-off is city code).
 6. **Colour law:** no red lamps (red lens segments amber in the cutter; lit lenses LAMP_DEG; the
    unlit rear lenses, which printed rust-red under the city grade, DARK_LAMP_DEG in it18:
    `sedan_unlit_rear_lenses_before_left_after_right_city_tilt70_32ppm_seed13_f180_crop4x.png`); the
@@ -45,10 +50,11 @@ The view lane's REPORT.md came in with the n8-view merge; this file replaces it 
    Dent's seized van in the Servo depot read as the soul's, with the tether
    (`soul_seized_van_servo_depot_combo_64ppm_seed2_f120_before_left_after_right.png`,
    `soul_hijacked_traffic_top_left_tilt70_before_mid_after_right_f320_crop3x.png`).
-9. **Gates (it20, 80926b7c):** unit 1551/0 no FLAKY; director reel 19/19 all down in `top` and
-   `tilt70`, 0 SCRIPT ERROR; lint 15/15; `top` framemd5 identical; scenarios 52/0;
-   `tools/evidence/run.mjs --no-bench` all PASS on aa086daa (parity bit-exact, selftest goldens,
-   release-compile 566/0) (`evidence/n8-vehicles/iteration20.json`; the freeze re-runs them on its HEAD).
+9. **Gates (it21, 7a993845, after the n8-view merge):** unit 1563/0 no FLAKY; director reel 19/19
+   all down in `top` and `tilt70`, 0 SCRIPT ERROR; lint 15/15; `top` framemd5 identical to it20;
+   scenarios 52/0 (`evidence/n8-vehicles/iteration21.json`). `tools/evidence/run.mjs --no-bench`
+   all PASS on aa086daa (it20; parity bit-exact, selftest goldens, release-compile 566/0); the
+   freeze re-runs everything on its HEAD.
 
 ## What does not work / not done
 - The delivery truck and the dedicated depot van (library `delivery_truck_70` A, `depot_van_70` A,
@@ -57,6 +63,8 @@ The view lane's REPORT.md came in with the n8-view merge; this file replaces it 
 - The bike has no sim archetype: it draws only in `dev/showcase/vehicle_turn.tscn`.
 - The driven car's hijack enter/exit keeps Rivet's current rig (Rivet frozen tonight).
 - The main scene ignores `--ppm`: city stills at 48/64 px/m come from the showcases, not the drive.
+- Quest 1 / arena-city kerb cards: a corpse lying on a kerb card's own footprint is covered by the
+  card (the front grid counts living fighters; counting corpses was filmed and changed nothing).
 
 ## Calls for the owner
 Each: options, the default built, how to see it.

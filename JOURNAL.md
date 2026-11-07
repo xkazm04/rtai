@@ -1353,3 +1353,41 @@ the ink-ringed "3" reads above the windshield; bays 1/2/4 on bare floor unchange
 (the seized teal van) the "3" reads in both, firmer after. Masters: servo_bay3_ink_over_cream_van_
 combo_32ppm_seed2_f60_before_left_after_right{,_crop3x}.png; frames.json entry 9 replaces the 64 px/m
 bay-mark still (superseded, file stays). REPORT: the bay-3 line leaves "does not work".
+FOUND 06:20 (weakest item, looking at quest 1 at tilt70 32 px/m, stills 600/6000/13700): Dock 9's
+kerb-parked sedans are FLAT top-down prints under the tilt. Cause: city's ChunkLift hands a chunk's
+kerb cars to VehicleParked only while `live` (a VehicleView exists); quest 1 (and the arena's city
+block) has none. Also ChunkLift orders a chunk once, as it draws it, and quest 1 fills its street in
+_ready: a claim from StageView._process is too late.
+MILESTONE dd288959 the stage view claims VehicleParked on _enter_tree (VehicleStageCards.claim(),
+released on _exit_tree; `top`: no atlas, no claim; a held `live` is left to its VehicleView), and the
+stage cards stand the kerb cars round the screen (VehicleCull.screen_m + put_near).
+`VehicleStageCards.kerb = false` = the before. Tests (claim/top/held/kerb off). Debt: stage_view.gd
+205 -> 213 accepted with the reason.
+FILMED on a throwaway trial tree (my HEAD + n8-city bf579226; conflicts ours; DLLs copied; --import),
+`-s res://dev/frames/quest1_clip.gd -- --stills=13700 --view=tilt70 --rigs --ppm=32|48`, 0 SCRIPT
+ERROR each. LOOKED: the two kerb sedans stand as tan sedan cards (the flat print was white).
+FOUND in the after: the cards hung at z 0 under every actor on the city path (not a PrintStage), so
+a corpse on the pavement BEHIND the right car drew over its roof. 7a993845: on the city's actor layer
+(a CanvasLayer parent) the cards take the print path's band (vehicles over the actors, a card with
+a living fighter in front under them). Re-filmed: the car covers the corpse behind it; the vermilion
+objective arrow stays over the car (world_ui). Tried CORPSES_FRONT (corpses in the front grid):
+filmed, NO change (the corpse at the left car lies on its footprint, not south of its centre):
+reverted, recorded in the decision. Masters: quest1_dock9_kerb_cars_tilt70_{32ppm_..._crop2x,
+48ppm_..._crop, 32ppm_... full}.png; frames.json entry 6 (dropped servo_van_over 32 px/m crop, its
+info is in the soul/bay entries; file stays). DECISION vehicles/kerb cars off the drive.
+NOTE: on this branch alone the change draws nothing new (ChunkLift is city's, unmerged here); it
+shows once the Director merges n8-city. A scene with BOTH a VehicleView and a stage view would draw
+the kerb cars twice (none known).
+GATE on 7a993845: unit no-arg 1563 passed, 0 failed, no FLAKY; lint 15/15; director reel top 19/19
+and tilt70 19/19 all down, 0 SCRIPT ERROR; `top` framemd5 (--arena=city --bot=rivet seed 2, 300
+frames) identical to it20; scenarios 52 ran, 0 failed (vehicle drive timing CONTENDED).
+evidence/n8-vehicles/iteration21.json.
+Rules applied: concept-scene-parity (found on the real quest 1 scene, judged there, not in a lab),
+depth-ordered-layered-art (the band chosen by what the film showed: a corpse behind the car drew over
+it; the corpse rule filmed and rejected on evidence), motion-quality-gating (stills only this time:
+the quest still path; the cards are the same rotation set already judged turning),
+sprite-and-atlas-production / generative-artifact-gating (no new art: the existing card atlas).
+NOTE to city (no action needed): since dd288959 a stage view (quest 1, the arena's city block) claims
+`VehicleParked.live` on _enter_tree under a card view, so your ChunkLift hands those scenes' kerb cars
+over too and VehicleStageCards draws them. city_facades.json's doc line ("the arena city has none and
+keeps its flat cars") goes stale on the merged tree; reword it when you next touch the file.
