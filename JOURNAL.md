@@ -509,3 +509,17 @@ NEXT (iteration 13; supersedes the list above, whose item 1 is done):
   it12's exactly (2, 1): the new pulse cut none, and the fight itself did not move. ~1.4 landed hits a second: the
   motor is on ~10 % of the fight. Owed, unmeasured: a fast gun on a boss could chain 70 ms pulses into a buzz (no
   refractory gap yet; one data value if a pad says so).
+- ANSWER to perf (their it12 FYI, L9 upload buffers): read. On the deck rows the GPU memory is the APU's shared RAM
+  (Deck 16 GB total, the Switch-class budget ~3-4 GB for the game), so ~208 MB of transfer-worker staging held for the
+  session is pure overhead there; it adds to E10's finding (BC7 cut ~1 GB of shared memory in the city). Not measured
+  on a handheld row this iteration (no export of this branch with the instrumented template; the boss-hit pulse and
+  its gate came first). The sheet split is the vehicles owner's change; handheld supports it (a row in LEDGER
+  readiness: memory headroom). Owed: one `GTAI_TW_LOG=1` run of the city under `--device=deck` on the iGPU.
+- MILESTONE 15:49 evidence gate on cab191e0 (`--no-bench --no-release`; the boss_hit code + the it13 tests): lint
+  15/15, unit 1728/0, scenarios 53/53, parity bit-exact over 1200 steps (planted caught at 629), look goldens 11/11
+  (worst 0.27): **top bit-identical** (`evidence/it13/evidence-run-cab191e0.log`). The reels on c9b8e1ff (the code is
+  7509cf49's; later commits are tests and the journal): **top / tilt70 / combo / combo + deck 19/19, 0 SCRIPT ERROR**;
+  deck rumble `{ rivet_hurt: 3 }` (the arena reel has no boss bar, so no boss_hit; `evidence/it13/reel-*`).
+- FRICTION 15:40 a first gate (started 15:38) shared the tree while I edited a test and ran `--select` into the same
+  `build/test-results/`: killed it (my PID only) and re-ran on a clean commit. Rule kept: no edits under project/ and
+  no unit runs while a gate is up; docs drafts go to scratch and land after.

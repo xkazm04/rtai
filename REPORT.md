@@ -23,7 +23,9 @@ priority, the CPU's own 2-CU Radeon), never a device claim. Details and sources:
   (quest 1 running, the OS focus-out propagated: paused; the planted desktop run stays live).
 - Pad rumble under the handheld rows (`HandheldRumble` on the Events bus: Rivet hit, a car strike, a tackle, a boss
   stepping in, a hijack, the whispers; desktop none) and prompts that name a PlayStation / Nintendo-layout pad's own
-  buttons (`PadGlyphs`, handheld rows). Unit-tested; **never felt**: no pad on this PC.
+  buttons (`PadGlyphs`, handheld rows). Since it13 a light pulse when Rivet's hit takes a boss's hp (King fight
+  under `deck`, 40 s of the boss bot: 59 pulses = 56 landed + 2 hurts + 1 engaged; it12 had 3). Unit-tested;
+  **never felt**: no pad on this PC.
 - The 40 Hz battery row (`deck40`) measured against `deck` on the city block: GPU busy 38 % vs 55 % of each second,
   pinned CPU -26 % (E5, CONTENDED). (E6, "the 1.5x zoom costs nothing", was VOID: see below.)
 - The desktop game unmoved with all of it in: evidence gate on 9b35dd21 lint 15/15, unit 1708/0, scenarios 52/52,
@@ -110,8 +112,8 @@ priority, the CPU's own 2-CU Radeon), never a device claim. Details and sources:
   effect (if Call 5 b/c), the King fight's rumble count, the dev-arena experiments E1-E3/E7 re-labelled "at 32 px/m".
 - The Linux build: NAT-06 parity on the Linux `.so` (in WSL), a real Vulkan run (needs a Linux PC or a Deck).
 - Steam Input's origin glyphs through the Steam backend (and a drawn ink glyph set: REQUEST to assets
-  `ui_pad_glyphs_v1`, it12), rumble on blasts and crashes (no bus event), aim assist (a design call), a light
-  pulse when Rivet's blow lands on a boss (it12: a boss fight pulses only on his hurts, King 2 in 40 s of the bot).
+  `ui_pad_glyphs_v1`, it12), rumble on blasts and crashes (no bus event), aim assist (a design call); a refractory gap for
+  the landed-hit pulse if a fast gun turns it into a buzz (unmeasured).
 - A/Bs: `handheld_1080` viewport vs native stretch; the iGPU frame is fill-bound (E6), so next: a lower 2D draw size
   scaled up (viewport stretch below 1280x800) and the print grain / light passes off on the handheld tier,
   the Switch-class budget at 3 threads.
