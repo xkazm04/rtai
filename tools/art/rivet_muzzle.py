@@ -1,0 +1,164 @@
+"""d9 rivet: measure the muzzle point of each drawn Rivet strip cell (RivetMuzzle reads it).
+
+usage: python -I tools/art/rivet_muzzle.py [--check] [--sheet=<contact.png>]
+
+Reads the strips rivet_frames.py cut (tools/art/rivet_frames.json) and writes
+project/data/tables/rivet_muzzle.json (gtai.rivet-muzzle/1): per art key and strip, the cells
+whose muzzle could be measured -> [x, y] px from the cell's top-left (unmirrored).
+
+- An equipped strip's fire cells (5 = fire toward camera-right, 6 = toward the camera) carry a
+  drawn flash: the muzzle is the flash's root, the pixel of the biggest flash-core blob (pale hot
+  yellow) nearest the figure's body centre; blobs count off the visor (a hot blob centred in the
+  helmet's span above VISOR_BAND of the figure) and, in the side cell, right of the body centre
+  (a launcher's back-blast is drawn hot too). A cell with
+  fewer than MIN_FLASH core px (a beam drawn in another hue) gets no point.
+- A one-handed hold's drawn left strip (cells 0-2): the gun points left, so the muzzle is the
+  leftmost opaque pixel in the arm band (ARM_BAND of the figure height, below the helmet).
+
+--check exits 1 when the table on disk differs from a fresh measure. --sheet writes a contact
+sheet with every measured point marked (a red cross) to judge by eye. Deterministic.
+"""
+
+import json
+import sys
+
+import numpy as np
+from PIL import Image, ImageDraw
+from scipy import ndimage
+
+MANIFEST = "tools/art/rivet_frames.json"
+OUT = "project/data/tables/rivet_muzzle.json"
+SCHEMA = "gtai.rivet-muzzle/1"
+FIRE_CELLS = (5, 6)
+EQ_CELLS = 8
+LEFT_CELLS = 3
+MIN_FLASH = 6
+ARM_BAND = (0.38, 0.72)
+VISOR_BAND = 0.58
+## Blades, the baton and the bottle: no muzzle flash (the swing's smear, the lit rag instead).
+NO_FLASH = ("katana", "chainsaw", "plasma_sword", "electro_baton", "molotov")
+
+
+def flash_core(rgba):
+    r, g, b, a = (rgba[:, :, i].astype(int) for i in range(4))
+    return (a > 128) & (r > 225) & (g > 195) & (b < 190)
+
+
+def fire_point(cell, c):
+    core = flash_core(cell)
+    rows = np.nonzero((cell[:, :, 3] > 128).any(axis=1))[0]
+    top, bot = rows.min(), rows.max()
+    _drop_visor(core, cell[:, :, 3] > 128, top, bot)
+    body = (cell[:, :, 3] > 128) & ~flash_core(cell)
+    by, bx = np.nonzero(body)
+    cy, cx = by.mean(), bx.mean()
+    if c == 5:
+        core[:, : int(cx)] = False  # a launcher's back-blast is drawn hot too
+    lab, n = ndimage.label(core)
+    if n == 0:
+        return None
+    sizes = ndimage.sum(core, lab, range(1, n + 1))
+    if sizes.max() < MIN_FLASH:
+        return None
+    fy, fx = np.nonzero(lab == int(np.argmax(sizes)) + 1)  # the flash: the biggest hot blob
+    i = int(np.argmin((fx - cx) ** 2 + (fy - cy) ** 2))
+    return [int(fx[i]), int(fy[i])]
+
+
+def _drop_visor(core, alpha, top, bot):
+    """Clears the core blobs of the visor: centred in the helmet's span, above VISOR_BAND."""
+    head = np.nonzero(alpha[top : int(top + (bot - top) * 0.25)].any(axis=0))[0]
+    lab, n = ndimage.label(core)
+    for k, (y, x) in enumerate(ndimage.center_of_mass(core, lab, range(1, n + 1))):
+        if y < top + (bot - top) * VISOR_BAND and head.min() - 2 <= x <= head.max() + 2:
+            core[lab == k + 1] = False
+
+
+def left_point(cell):
+    a = cell[:, :, 3] > 128
+    ys = np.nonzero(a.any(axis=1))[0]
+    top, bot = ys.min(), ys.max()
+    y0 = int(top + (bot - top) * ARM_BAND[0])
+    y1 = int(top + (bot - top) * ARM_BAND[1])
+    band = a[y0:y1]
+    xs = np.nonzero(band.any(axis=0))[0]
+    x = int(xs.min())
+    col = np.nonzero(band[:, x])[0]
+    return [x, int(y0 + col.mean())]
+
+
+def measure(out_dir, strips):
+    table = {}
+    for art in sorted(strips):
+        rows = {}
+        for name in sorted(strips[art]):
+            if not name.startswith("rivet_eq_") or name[9:].split("_left")[0] in NO_FLASH:
+                continue
+            im = np.asarray(Image.open(f"{out_dir}/{art}/{name}.png").convert("RGBA"))
+            left = name.endswith("_left")
+            n = LEFT_CELLS if left else EQ_CELLS
+            w = im.shape[1] // n
+            cells = {}
+            for c in range(LEFT_CELLS) if left else FIRE_CELLS:
+                cell = im[:, c * w : (c + 1) * w]
+                p = left_point(cell) if left else fire_point(cell, c)
+                if p is not None:
+                    cells[str(c)] = p
+            if cells:
+                rows[name] = {"cells": cells}
+        table[art] = rows
+    return table
+
+
+def contact(out_dir, table, path):
+    tiles = []
+    for art in table:
+        for name, row in table[art].items():
+            im = Image.open(f"{out_dir}/{art}/{name}.png").convert("RGBA")
+            n = LEFT_CELLS if name.endswith("_left") else EQ_CELLS
+            w = im.width // n
+            for c, (x, y) in row["cells"].items():
+                t = Image.new("RGBA", (w, im.height), (120, 120, 120, 255))
+                t.alpha_composite(im.crop((int(c) * w, 0, (int(c) + 1) * w, im.height)))
+                d = ImageDraw.Draw(t)
+                d.line((x - 6, y, x + 6, y), fill=(255, 0, 0, 255), width=1)
+                d.line((x, y - 6, x, y + 6), fill=(255, 0, 0, 255), width=1)
+                d.text((2, 2), f"{art} {name[9:]} {c}", fill=(255, 255, 0, 255))
+                tiles.append(t)
+    cols = 10
+    tw = max(t.width for t in tiles)
+    th = max(t.height for t in tiles)
+    g = Image.new("RGB", (cols * tw, ((len(tiles) + cols - 1) // cols) * th), (60, 60, 60))
+    for i, t in enumerate(tiles):
+        g.paste(t.convert("RGB"), ((i % cols) * tw, (i // cols) * th))
+    g.save(path)
+
+
+def main(argv):
+    man = json.load(open(MANIFEST, encoding="utf-8"))
+    table = measure(man["out"], man["strips"])
+    doc = (
+        "d9 rivet: the muzzle point of Rivet's drawn strip cells, measured by "
+        "tools/art/rivet_muzzle.py (px from the cell's top-left, unmirrored). Fire cells 5/6: the "
+        "drawn flash's root; a one-handed left strip's cells 0-2: the gun's left tip. RivetMuzzle "
+        "publishes it as HeldMuzzle while the drawn figure carries the weapon; a cell without a "
+        "point keeps the caller's fallback spot."
+    )
+    data = {"doc": doc, "schema": SCHEMA, "strips": table}
+    text = json.dumps(data, indent=2, sort_keys=True) + "\n"
+    for a in argv:
+        if a.startswith("--sheet="):
+            contact(man["out"], table, a.split("=", 1)[1])
+    if "--check" in argv:
+        same = open(OUT, encoding="utf-8").read() == text
+        print("rivet_muzzle: " + ("up to date" if same else "STALE"))
+        return 0 if same else 1
+    with open(OUT, "w", encoding="utf-8", newline="\n") as f:
+        f.write(text)
+    count = sum(len(r["cells"]) for t in table.values() for r in t.values())
+    print(f"rivet_muzzle: {count} points in {OUT}")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1:]))

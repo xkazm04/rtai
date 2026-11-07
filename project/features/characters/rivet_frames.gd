@@ -65,11 +65,12 @@ static func weapon_of(rig: CutRig) -> StringName:
 	return StringName(str(rig.get_meta(WEAPON, ""))) if rig.gun_out and not down else &""
 
 
-## RivetHeldView each frame: the weapon out, and whether a shot left within FIRE_TICKS.
+## RivetHeldView each frame: the weapon out, whether a shot left within FIRE_TICKS, the muzzle.
 static func publish(rig: CutRig, held: StringName, gun: GunHand) -> void:
 	rig.set_meta(WEAPON, held)
 	var t: Trigger = gun.trigger if gun != null and gun.trigger.spec.id == held else null
 	rig.set_meta(FIRE, t != null and t.cooldown > maxi(0, t.spec.interval_ticks - FIRE_TICKS))
+	RivetMuzzle.publish(rig)  # the drawn cell's muzzle (the held part is hidden then)
 
 
 ## True while Rivet is one drawn figure: RivetHeldView feeds no magazine part then (no bottle or
