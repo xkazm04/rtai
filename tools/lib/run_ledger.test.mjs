@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { spawn, spawnSync } from 'node:child_process';
-import { existsSync, mkdtempSync, readdirSync, rmdirSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdtempSync, readdirSync, rmdirSync, rmSync, utimesSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import {
@@ -209,5 +209,26 @@ test('acquireBench: at the deadline the head of the queue runs anyway, flagged c
     assert.match(second.error, /bench lock held/);
     assert.equal(queueTickets({ dir: f.dir }).length, 0, 'the giving-up ticket is released');
     r.lock.release();
+  } finally { f.done(); }
+});
+
+test('a fresh unreadable file (a writer mid-create) is never reaped: bench.lock still holds; old garbage is reaped', () => {
+  const f = fixtureDir();
+  try {
+    const lock = join(f.dir, 'bench.lock');
+    const ticket = join(f.dir, 'queue-000000000000100-1-mid0.json');
+    const run = join(f.dir, '1-midrun.json');
+    for (const p of [lock, ticket, run]) writeFileSync(p, ''); // created, not yet written
+    assert.ok(benchHolder({ dir: f.dir, root: f.dir }), 'a lock being written is held');
+    assert.equal(takeBenchLock({ dir: f.dir, root: f.dir }), null, 'and cannot be taken from under its writer');
+    assert.equal(queueTickets({ dir: f.dir }).length, 0);
+    assert.equal(activeRuns({ dir: f.dir, excludeSelf: false }).length, 0);
+    for (const p of [lock, ticket, run]) assert.ok(existsSync(p), `${p} kept while fresh`);
+    const past = new Date(Date.now() - 5 * 60 * 1000);
+    for (const p of [lock, ticket, run]) utimesSync(p, past, past);
+    assert.equal(benchHolder({ dir: f.dir, root: f.dir }), null, 'an old unreadable lock does not hold');
+    queueTickets({ dir: f.dir });
+    activeRuns({ dir: f.dir, excludeSelf: false });
+    for (const p of [lock, ticket, run]) assert.ok(!existsSync(p), `${p} reaped once old`);
   } finally { f.done(); }
 });

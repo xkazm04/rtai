@@ -50,6 +50,10 @@ export function branchOf(root = ROOT) {
 }
 
 const readEntry = (file) => { try { return JSON.parse(readFileSync(file, 'utf8')); } catch { return null; } };
+/** An unreadable file this young is a writer between create and write (tickets and bench.lock are
+ *  written in place): never reap it, or a second process deletes a live ticket or lock. */
+const MID_WRITE_MS = 30 * 1000;
+const midWrite = (file, now = Date.now()) => { try { return now - statSync(file).mtimeMs < MID_WRITE_MS; } catch { return false; } };
 const names = (dir, prefix) => { try { return readdirSync(dir).filter((f) => f.endsWith('.json') && prefix(f)); } catch { return []; } };
 const reap = (file) => rmSync(file, { force: true, recursive: false });
 
@@ -87,6 +91,7 @@ export function activeRuns({ excludeSelf = true, dir = ledgerDir(), now = Date.n
   for (const f of names(dir, (n) => !n.startsWith('queue-'))) {
     const file = join(dir, f);
     const e = readEntry(file);
+    if (!e && midWrite(file)) continue;
     if (!e || !pidAlive(e.pid) || now - (e.start ?? 0) > MAX_AGE_MS) {
       reap(file); // dead owner (or an unreadable half-written file): drop that one entry
       continue;
@@ -166,6 +171,7 @@ export function queueTickets({ dir = ledgerDir() } = {}) {
   for (const f of names(dir, (n) => n.startsWith('queue-')).sort()) {
     const file = join(dir, f);
     const e = readEntry(file);
+    if (!e && midWrite(file)) continue;
     if (!e || !pidAlive(e.pid)) { reap(file); continue; }
     out.push({ ...e, file });
   }
@@ -178,6 +184,7 @@ export function benchHolder({ dir = ledgerDir(), root = ROOT, now = Date.now() }
   const file = join(dir, 'bench.lock');
   const e = existsSync(file) ? readEntry(file) : null;
   if (e && pidAlive(e.pid) && now - e.start < MAX_AGE_MS) return { ...e, file };
+  if (!e && existsSync(file) && midWrite(file)) return { pid: 0, worktree: '?', branch: '?', start: now, file, midWrite: true };
   if (existsSync(file)) reap(file);
   const legacy = join(root, 'build', 'bench.lock');
   if (existsSync(legacy) && now - statSync(legacy).mtimeMs < 20 * 60 * 1000) {
