@@ -969,3 +969,13 @@ NEXT 2b (iteration 10): CrowdAtlas' corpse cell under p70/p55 for a baked dead c
   ratio) or cap h_m at the p70 card's; compare at 48 px/m both pitches. Capture deleted.
 - Session end 04:02: tree clean. GATE unit no-arg on 1ebcd60e: 1516 passed, 0 failed, no FLAKY.
   Scenarios last ran on 72dde64b (52/0); the later commits only add p55 rows (no `top` path).
+
+## Iteration 10 (04:03, BUILD; session stops 05:03)
+Read: JOURNAL, git log, the other lanes' journals: no REQUEST to street. view's NOTE (trial merge,
+l.866): quest 1's tick-600 cop (Line Stopped crossing) still draws top-down at tilt70.
+- MILESTONE ec42c9a1 (it9 FOUND): a dead contractor lies one body length at every pitch
+  (StreetQuestCards.body_m = the p70 standing card's height, ~1.57 m; the 55 card's 1.73 laid the
+  p55 corpse ~1.2x). LOOKED quest 1 Dock 9 t14100 48 px/m `--view=tilt` vs `--view=tilt70` (0
+  SCRIPT ERROR both): the 55 corpses now as long as the 70 ones, slimmer as the 55 drawing is.
+  evidence/contractor_p55_corpse_one_length_tilt_vs_tilt70_48ppm_q1_t14100.png. Unit 5/5.
+- Bench: bench.lock fresh (04:04, another lane): crowd cost skipped this session.
