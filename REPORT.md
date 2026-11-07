@@ -17,6 +17,12 @@ head commit. Branch `n8-city`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n8\ci
 2. **Occlusion** (item 2). A body behind a building draws as an ink silhouette with a rim over the
    exact world pixels (a back-buffer copy, no second print). `occlude: false` puts the old look back.
    Evidence: `it4_occlusion_32ppm_before_after_x3.png`.
+   The arenas' cover cards give view's PropOcclusion their real outline (`PropCards.stand_polys`,
+   iteration 26, view's REQUEST): a body behind a crate stack is inked only where the crates are,
+   no black kite over the card's see-through corner. The crate stack also keeps its cream under
+   PropOcclusion's redraw (it went vermilion-orange: a colour-law breach). Filmed on a trial merge
+   with n8-view: `it26_card_outline_cut_king_combo_64ppm_before_after_x3.png`,
+   `it26_crate_print_twin_king_combo_64ppm_before_after_x3.png`.
 3. **Props stand up** (item 3). 19 street props stand as five-facing cards in the depth sort, with
    their ground shadow: payphone (quest 1's start), hydrant, trash can, mailbox, bench, newsstand,
    bus stop, vending machine, planter, dumpster, barrel cluster, crate stack, cone, police barrier,
@@ -45,11 +51,16 @@ head commit. Branch `n8-city`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n8\ci
    view). tilt70 had 6 frames over 25 ms (top 0, worst 39 ms, none over 50): not attributed, and the
    chunk slice is not it. `evidence/drive-cost-it25.json`.
 
-## Gates (iteration 25, head 9614fc50)
+## Gates (iteration 26, head 55ede50c)
 
-- `top` bit-identical: `--arena=city --bot=rivet --seed=2 --rigs --quit-after 301` framemd5 identical
-  to the it19 baseline (617 lines) at 0952dd47 (every city change), 0 SCRIPT ERROR.
-- lint 15/15; unit (full no-arg) 1524 passed, 0 failed (7d9b32a1).
+- `top` bit-identical, two recipes, 301 frames each, framemd5, 0 SCRIPT ERROR:
+  - the city arena (`res://dev/arena/arena.tscn -- --arena=city --bot=rivet --seed=2 --rigs`):
+    HEAD 55ede50c identical to the branch base 0bea8b93 (iteration 26);
+  - the boot scene (`-- --arena=city --bot=rivet --seed=2 --rigs` without the arena scene: the boot
+    ignores `--arena`, so this is the game's own start; the it19-it25 gate was this one) identical
+    to the it19 baseline at 55ede50c.
+- unit (full no-arg) 1526 passed, 0 failed, no FLAKY (55ede50c).
+- lint 15/15 every commit.
 - Director reel at tilt70 (`--bot=reel --reel=director --loadout=pistol --rigs --view=tilt70`, 7600
   frames headless): 19/19 chapters down, 0 SCRIPT ERROR (`evidence/director-reel-it25-tilt70.log`, 9614fc50).
 - Scenarios: 52 ran, 0 failed at 0d9002a1 (vehicle drive timing CONTENDED, labelled by the runner).

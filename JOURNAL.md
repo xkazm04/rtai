@@ -1079,3 +1079,14 @@ cone, f960 seed 2). Library: nothing new for building/prop since 0525 (all cut o
   prop_cards.gd: the whole crate stack vermilion-orange from f960 on; after (55ede50c) cream like
   the floor print. `it26_crate_print_twin_king_combo_64ppm_before_after_x3.png`, named in the it26
   frames.json entry's note. 0 SCRIPT ERROR. Raw .avi deleted.
+- FRICTION (06:05) the `top` gate recipe of it19-it25 (`--write-movie ... -- --arena=city --bot=rivet
+  ...` with no scene path) runs the BOOT scene: its log says `unknown launch arg --arena=city
+  (ignored)`. Still a valid `top` check of the game's own start, but not of the city block. Found when
+  my arena-scene run "DIFFERED" from top22.md5 (a different scene, not a regression).
+- GATE `top` (06:10), both recipes, 301 frames, framemd5, 0 SCRIPT ERROR: the boot scene at
+  55ede50c IDENTICAL to top22.md5; the city arena (`res://dev/arena/arena.tscn -- --arena=city
+  --bot=rivet --seed=2 --rigs`) at 55ede50c IDENTICAL to the branch base 0bea8b93 (temp worktree,
+  removed): no city change since the start of the night moved a `top` pixel of the city block.
+  Unit full no-arg at 55ede50c: 1526 passed, 0 failed, no FLAKY. Lint 15/15.
+- REPORT: occlusion item names the card outline + crate twin; Gates section at 55ede50c with both
+  `top` recipes.
