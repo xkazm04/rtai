@@ -783,3 +783,36 @@ NEXT:
   `hud_full_1920x1080_after.png` re-shot at HEAD (fitted panels + the new Brass).
 - Not taken: `portrait_don_fax_55_v2` (A): Don Fax is voice-only by design (the payphone frame);
   the three DESIGN PROPOSAL raises (valet, sister suction, lady cathode) stay off the game.
+- 03:44 Colour audit of every PNG this branch adds (`git diff --name-only main...HEAD -- '*.png'`,
+  228 files; red / vermilion / teal / police-blue pixel shares by hue, then the flagged ones LOOKED
+  at with the hits masked, `gtai-n8/scratch/hud/it11/red_audit.png`): the five owner-redesigned
+  weapons flag on copper coils and wire wraps (warm metal, the owner's designs) and small hazard
+  stripes (danger marks): kept. The dock guard's orange-vermilion hard hat and hi-vis vest are his
+  approved concept (assets graded A): kept, a FINDING for the REPORT (vermilion is reserved; hi-vis is
+  hazard gear). Nothing else.
+- 03:46 9af4190d unit guard: the nurse's busts carry no vermilion (the 1540 cut counts 320/329
+  sampled px, v3 15/12, threshold 60: the planted old art fails it by the same count in Python).
+- 03:47 MILESTONE 69c3b200 the HUD weapon icon's ink drop shadow (HudView.ICON_SHADOW 5,6 px, alpha
+  0.5; ZERO = the bare icon): it10's NEXT alternative after the paper tab was dropped. The board at
+  1080p and 1280x800, the frame diff's bbox only the icon's box: the icon now lifts off the street
+  the way the cash frame and ticket do from their drawn shadows. Unit test_hud_art +1 (the offset
+  stays in the 8 px gap before the ticket). docs(decisions) hud/weapon icon shadow.
+- 03:54 Gates at 69c3b200 (`node tools/evidence/run.mjs --no-bench`, the tree untouched during the
+  run; `gtai-n8/scratch/hud/evidence_run_it11.log`): lint 15/15, unit 1518/0, scenarios 52/52,
+  parity bit-exact + planted mutation caught at 629, look goldens 11/11 + block 5/5 (top did not
+  move), export-audit 558/0.
+- 03:55 Live: `quest1_clip.gd --resolution 1280x800 -- --view=tilt70 --stills=4300..9100/400`,
+  0 SCRIPT ERROR: Juno's mood bust (6700) and Brass (9100) in the real Toner Room beat read; the
+  shadowed Gloria icon over the crosswalk reads as HUD. Masters `quest1_live_faces_tilt70_1280x800.png`,
+  `quest1_live_icon_shadow_tilt70_x2.png`, `hud_icon_shadow_1080p_before_after_x2.png`,
+  `portrait_proposals_contact_v2.jpg` (the six DESIGN PROPOSALS at their latest raise + Don Fax's
+  v2 bust, kept off the game: for the owner only).
+- Director reel not re-run: this session changed quest-1 portrait art and the HUD icon's draw (no
+  reel chapter draws HudView). The last reel 19/19 in top and tilt70 is at a91232c4 (it7). Freeze.
+
+Registry rules applied: `generative-artifact-gating` (the newest graded sheet per id, the colour law
+checked on the cut, a C never; 10 provenance lines), `sprite-and-atlas-production` (the same cut
+tool re-run, nothing hand-edited), `concept-scene-parity` + `motion-quality-gating` (board
+before/after on the same ground, then the live quest at tilt70), `accessibility` (the words keep
+their fitted sizes; the shadow adds contrast on the field), `short-form-cards-and-barks` (the
+emotion pair must differ at a glance: the 1540 gunsmith's did not).
