@@ -73,8 +73,10 @@ const STAND_FRAME: int = 1
 ## How far into a death family (0..1) the whole figure holds before the parts take the fall;
 ## 0 = the parts from the blow (it4).
 const DEATH_HOLD: float = 0.3
-## The standing figure's height on the ground plane (m), before the person's crowd scale.
+## The standing figure's height on the ground plane (m), before the person's crowd scale; per view
+## art: the 55 drawings are longer-legged with smaller heads, so at 1.7 they read ~0.8 the p70 bulk.
 const HEIGHT_M: float = 1.7
+const HEIGHT_BY_ART: Dictionary[String, float] = {"p55": 2.0}
 ## The feet's height in the cell (from the top): street_head.py pads 2 px under the shoes.
 const FOOT_Y: float = 0.985
 ## The gait: a lift per step (world px at full walk speed) and a sway (rad) per stride.
@@ -182,7 +184,8 @@ static func _place(rig: CutRig, card: Sprite2D) -> void:
 	var k: float = 1.0 + StreetCrowdCards.SCALE_VAR * StreetCrowdCards.vary(rig.actor_id, 3)
 	if card.vframes > 1:
 		k *= WALK_FILL.get(card.texture.resource_path.get_file(), 1.0)
-	var s: float = HEIGHT_M * CharacterRigs.PX_PER_M * k * card.vframes / card.texture.get_height()
+	var h: float = HEIGHT_BY_ART.get(ViewMode.shared().art, HEIGHT_M)
+	var s: float = h * CharacterRigs.PX_PER_M * k * card.vframes / card.texture.get_height()
 	var walk: float = clampf(rig.speed_now / WALK_SPEED, 0.0, 1.0)
 	if card.vframes > 1:
 		var moving: bool = rig.speed_now > MOVING
