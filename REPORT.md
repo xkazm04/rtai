@@ -154,9 +154,8 @@ priority, the CPU's own 2-CU Radeon), never a device claim. Details and sources:
    Windows editor and release builds, and a save resumes across the two OSes at the same hash. Proton would run the
    Windows build unchanged but turns D3D12 into Vulkan through vkd3d-proton. a) **native Linux depot + Proton as the
    fallback** (the recommendation: Valve recommends Vulkan for battery; one more depot and one more CI export);
-   b) Proton only (one build, no Linux depot; D3D12 translated); c) both, picked by Steam per OS (a) with the Windows
-   depot also marked for Proton. Nothing is built either way until the Steam port: today both exports exist. A real
-   Vulkan run on a Linux PC or a Deck is what decides it (WSLg has no Vulkan here).
+   b) Proton only (one build, no Linux depot; D3D12 translated). Nothing is built either way until the Steam port: today both exports
+   exist. A real Vulkan run on a Linux PC or a Deck is what decides it (WSLg has no Vulkan here).
 
 ## Owed / next
 - (it7) The draw_scale HUD side

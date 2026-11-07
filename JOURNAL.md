@@ -698,10 +698,11 @@ NEXT (iteration 15):
   lands on the desktop); controller-latency-instrumentation (no new latency number this iteration: none claimed).
 
 NEXT (iteration 16 = the freeze session, 18:30 freeze, 18:40 REPORT):
-1. If HEAD moved past 0ee1ba66: re-export `build/export/windows/RTAI.exe` (`"$GODOT_BIN" --headless --path project
+1. If `project/` changed since 0ee1ba66 (the commits after it are docs and evidence only): re-export `build/export/windows/RTAI.exe` (`"$GODOT_BIN" --headless --path project
    --export-release windows-showcase ../build/export/windows/RTAI.exe`, mkdir first), smoke it, update the REPORT header.
 2. REPORT final by 18:40: change the title from "in progress"; the port readiness table (LEDGER) is current through E14;
    "what blocked": the glyph REQUEST `ui_pad_glyphs_v1` unserved all day (assets drew Rivet / weapons first).
 3. Re-read the glyph REQUEST in the asset journal; answer any REQUEST in the other lanes' journals.
 4. Clean-up left: `gtai-d9x/scratch/it15` (gate TEMP, reels, the windev / linuxdev / winslice exports, ~1 GB);
    the loose `gtai-d9x/scratch/evidence-run-{035643c7,955f56cb,80a4fce9}.log` and `mutate-panel*.log` if mine (check).
+- Session end 17:48 (it15): commits 68c5ee42 .. this, every change committed; no Godot, mutate or WSL run of mine left; no bench lock taken (no timing kept this iteration).
