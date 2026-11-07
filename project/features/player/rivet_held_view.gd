@@ -76,7 +76,7 @@ func _process(_delta: float) -> void:
 		var grip: ArsenalTable.Grip = arsenal.grip_of(pilot.hold.held)
 		var hold: HeldTable.Hold = HeldTable.shipped().hold_of(pilot.hold.held)
 		rig.hold = hold.id if hold != null else &""
-		rig.set_meta(RivetFrames.WEAPON, pilot.hold.held)  # d9 rivet: picks his drawn strip
+		RivetFrames.publish(rig, pilot.hold.held, arena.gun if arena != null else null)  # d9 rivet
 		rig.grip = hold.kind if hold != null else RigGrip.Kind.ONE_HAND
 		rig.reload_k = arsenal.reload_phase(arena.gun if arena != null else null)
 		var mag: bool = grip != null and not NO_MAG.has(grip.id)  # a bottle or a tank: no magazine
