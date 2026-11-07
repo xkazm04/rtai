@@ -54,6 +54,17 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
 - **Gates (it10):** director reel 19/19 in `tilt70`, `combo`, `top`, 0 SCRIPT ERROR on 61fbbdf8; evidence run on
   dfb7a4de: lint, scenarios 52, parity, look goldens 11/11 + block 5/5 (top did not move), release-compile 600/0
   PASS; unit 1700/0 (the stage flagged "tree changed during run": a tool file written mid-run) (`evidence/d9/gates-it10.md`).
+- **He stands up after the respawn** (it13, `988c0329`): the rig latched the death clip from the DEAD flag and
+  nothing ended it, so after the cut he lay in his drawn sprawl at the hub while he walked, gun out, and the
+  top-down held part drew beside the base figure (the "grey splat" of it6/it10, one root cause).
+  `RigInput.revive` (Rivet's row only) ends it; test_rig_revive. Before/after, King combo 48 px/m:
+  `gtai-masters\d9\rivet\rivet_respawn_stands_before_after_king_combo_48ppm_x3_seed1_f1290_1338_1416.png`.
+- **No parts on a rig's first frame** (it13, `6438394e`): a rig acquired on a frame with no tick due drew its hidden
+  top-down parts once (f0 of the King film: a cream rim under him; at 144 Hz most frames have no tick due, so every
+  newly selected cop and walker too). CharacterRigs poses it before it draws under card views; top unchanged.
+- **Gates (it13):** `node tools/evidence/run.mjs --no-bench` on cc7f418b (both fixes in): lint 15/15, unit 1704/0,
+  scenarios 52, parity exact + planted caught, look goldens 11/11 + block 5/5 (top did not move), release-compile
+  600/0, all PASS. Director reels: `evidence/d9/reel-director-it13-<view>.log`.
 - **Gates (it7):** `node tools/evidence/run.mjs --no-bench` green on feb56ca2 (lint 15/15, unit 1695/0, scenarios 52
   incl. the replay, parity exact + planted caught, look goldens 11/11 + block 5/5, release-compile 599/0; run with a
   lane-private TEMP); on f7334278 unit 1698/0 and the director reel 19/19 in `tilt70`, `combo`, `top`, 0 SCRIPT ERROR
@@ -65,13 +76,11 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
 ## What does not (yet)
 - A facing cell (no fire drawn) has no measured muzzle except the flamer's: a flash outside the fire cell's 7
   ticks keeps the old spot (the other holds are drawn every which way in their facings; no generic rule held).
-- The Servo bay number prints over Rivet (and every body) under combo: n8-view's apron marks sit at z vehicles+1.
-  REQUEST to seams (JOURNAL it10): `gtai-masters\d9\rivet\servo_bay_number_prints_over_rivet_combo_48ppm_x4_seed1_f466_472_478.png`.
-- A grey, cream-rimmed splat lies on the ground near him (it6 in the Servo fight; it10 at the hub after his death
-  in the King fight): not identified yet (not the reload magazine, as first thought). Still:
-  `gtai-masters\d9\rivet\rivet_death_respawn_sprawl_held_and_grey_part_king_combo_48ppm_x3_seed1_f1290_1338_1416.png`.
-- After his death he lies in the drawn sprawl at the hub 1.5 s+ after the respawn (the same still): to check vs `top`.
-- The first frame after spawn shows his top-down parts' pale rim under the drawn figure (one frame).
+- The Servo bay number printed over Rivet under combo: REQUEST to seams (it10), served on `d9-seams` at 3f4732db
+  (ServoDepotDraw.cover); not on this branch until the Director merges both.
+- Every weapon fired once at each pitch is not filmed yet (it13 tried a batch of gunplay films with an
+  automatic shot picker; the flash is the road paint's cream and the camera leads his aim off-centre, so the
+  picks missed him; a capture that writes stills on the fire cell's own tick is NEXT).
 - Walk: one drawn walk and one sprint pose per sheet; built bob + sway on the facing.
 - Reload: no drawn reload frame; he keeps the equipped strip through it (it7 check: the "bare figure" seen in it6
   was the equipped back views, which show the small guns barely; no change made).

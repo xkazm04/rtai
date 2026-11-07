@@ -403,3 +403,17 @@ NEXT (it10 end, 13:03; supersedes every NEXT above):
   cream rim under the figure. CharacterRigs.step_ticks poses any rig with t_alive 0 once under a card view (top
   unchanged; at 144 Hz most frames have no tick due, so this was every newly selected rig there, cops and peds too).
   Test (tilt70 posed, top not), fails without the change.
+- 13:39 GATES it13: `node tools/evidence/run.mjs --no-bench` on cc7f418b (lane-private TEMP, no worktree writes while
+  it ran): lint 15/15, unit 1704/0, scenarios 52, parity exact + planted caught at step 629, look goldens 11/11 + block
+  5/5 (top did not move), release-compile 600/0: all PASS.
+- FRICTION / not done (~25 min lost): NEXT 5 (every weapon fired once at each pitch). Tried a batch: 17 weapons x
+  {tilt70 (p70), tilt (p55: the `tilt` row's art key)} gunplay films (`res://dev/arena/arena.tscn -- --bot=gunplay
+  --weapon=<id> --view=<v> --ppm=64 --seed=3 --rigs`), an automatic picker on the PNGs, frames deleted after each.
+  Three pickers failed: (1) warm-bright pixels = the arena's cream road paint scores as high as a flash (the
+  measured pistol/flamer flash colours are cream, 240/208/176); (2) strict saturated colours = 0 everywhere;
+  (3) motion inside a box round the screen centre minus the ring: at a 640x640 window the camera leads his aim and
+  he is not in the centre at all. Also: the first batch respawned Godot as each one was killed (a bash for-loop over
+  weapons); killing needs the loop's bash first (Windows PIDs, `Stop-Process` on every films.sh/bash match).
+  Rule for me: do not pick shots from pixels; read the game's own state.
+- The Servo bay number REQUEST: served by seams at 3f4732db on d9-seams (their JOURNAL ACK); REPORT updated.
+- Library: no portrait_rivet_55 yet (catalog), nothing new for rivet.
