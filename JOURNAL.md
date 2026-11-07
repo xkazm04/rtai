@@ -1615,3 +1615,20 @@ p70 depot van is a different sheet from today's, so no 70 before/after was possi
 a gate: it points at a row to look at turning, nothing more.
 Rules applied: generative-artifact-gating (an automatic screen in front of the human look, its miss
 and false-positive rates written down), sprite-and-atlas-production (one turn direction per row).
+08:13 MILESTONE ed557034: the p55 police row from police_car_55_v7 (A, round 1010, prompt_hash
+5426e7dedd73: v6's drawings, the roof antenna gone as on the 70 car), `POLICE_V7 = True` (False: v6).
+Cut as v6 (MIRROR_34 + LENS_SWAP col 1); only row 8 changes (177528 px); turn check 0 flags. LOOKED the
+cells v6/v7 side by side and the turn (vehicle_turn tilt 64 px/m f30/45/60, 0 SCRIPT ERROR). Provenance
+line, decision. The other new library A sheets (taxi_55_v4, parked_pickup_55_v4, delivery_truck_70_v2 /
+55_v3) are NOT taken: no time to judge them before the freeze.
+EXE 08:13 re-exported from ed557034 (exit 0); smoke `--boss=servo --view=combo --rigs` 200 frames, exit 0,
+0 SCRIPT ERROR (evidence/n8-vehicles/export-it26.log, smoke-it26.log). Unit no-arg 1566/0 (unit-it26.log).
+REPORT works 14, Exe updated.
+NEXT (after the night run):
+1. Judge and take taxi_55_v4 (A, the 70 yellow), parked_pickup_55_v4 (A, bed load), delivery_truck_70_v2 /
+   55_v3 (A, cab hue turned in post: then drop the cutter's own truck hue turn) with vehicle_turn_check +
+   a turn film each.
+2. police_car_70_v3 (one lens order) once its in-betweens share the order.
+3. depot_van_top_v4 (A) for Call 9(b): needs a sim archetype.
+4. vehicle_turn_check: catch the pickup (margin 0.009): a per-row centroid-of-nose cue, then make it a
+   cutter step.
