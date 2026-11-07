@@ -71,9 +71,11 @@ VAN_BETWEEN_55 = False
 # 55 police car from police_car_55_v6 (B: the side view at the 3/4s' camera, ~50, not ~28; one lens
 # order); False: van_cream_55 (van_55's rails and camera spread) and police_car_55 (1725 B).
 P55_V = True
+# police_car_55_v7 (A, 1010): v6 redrawn exactly without the roof antenna (the 70 car has none). False: v6.
+POLICE_V7 = True
 SHEET_PICKS = ({"taxi": {70: "taxi_70_v3"}} if TAXI_SHEET else {}) | (
     {"van": {70: "van_cream_70", 55: "van_cream_55_v3" if P55_V else "van_cream_55"}} if VAN_SHEET else {}
-) | ({"police_car": {55: "police_car_55_v6"}} if P55_V else {})
+) | ({"police_car": {55: "police_car_55_v7" if POLICE_V7 else "police_car_55_v6"}} if P55_V else {})
 # Grade the cream in-betweens' light paint to their five-view neighbours (False: as drawn, a shade peach).
 CREAM_GRADE = True
 BETWEEN_PICKS = {"van": {70: "van_cream_between_70"} | ({55: "van_cream_between_55"} if VAN_BETWEEN_55 else {})} if VAN_SHEET else {}
