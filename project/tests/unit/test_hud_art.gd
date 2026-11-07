@@ -75,3 +75,14 @@ func test_the_beat_panel_fits_its_words_and_pips() -> void:
 	assert_lte(long, HudView.BEAT_MAX_W)
 	var pips_only: float = HudView.beat_width("", 5)
 	assert_gte(pips_only, 110.0 + 4 * 46.0 + 38.0, "five pips fit on the paper")
+
+
+func test_the_cash_frame_fits_its_sum() -> void:
+	var art: HudArt = HudArt.new()
+	var small: float = HudCash.width(art, "$12,450", "")
+	var big: float = HudCash.width(art, "$1,234,567", "")
+	assert_between(small, HudCash.MIN_W, 320.0, "a five-digit sum leaves the field: %.0f" % small)
+	assert_gt(big, small, "a longer sum widens the frame")
+	assert_lte(big, HudCash.W)
+	var digits: float = HudCash.digits_w(art, "$1,234,567", 32.0)
+	assert_gte(big, HudCash.TEXT_X + digits, "the sum stays on the paper")

@@ -90,9 +90,12 @@ func _notice(screen: Vector2) -> void:
 
 
 func _top_right(screen: Vector2) -> void:
-	var box: Rect2 = Rect2(screen.x - MARGIN - 420, MARGIN - 8, 420, 104)
-	draw_texture_rect(art.texture(&"cash_frame"), box, false)
-	_ink_digits(box.position + Vector2(112, 50), "$%s" % thousands(state.cash), 32.0)
+	var sum: String = "$%s" % thousands(state.cash)
+	var label: String = state.unarmed_label if state.weapon == "" else ""
+	var w: float = HudCash.width(art, sum, label)
+	var box: Rect2 = Rect2(screen.x - MARGIN - w, MARGIN - 8, w, 104)
+	HudCash.frame(self, art, box)
+	_ink_digits(box.position + Vector2(112, 50), sum, 32.0)
 	if state.weapon == "":
 		_say(box.position + Vector2(112, 76), state.unarmed_label, 22)
 	else:
