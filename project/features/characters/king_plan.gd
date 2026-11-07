@@ -8,6 +8,8 @@ extends RefCounted
 ## (Rivet's base form hunches; King squares up).
 
 const SIZE_K: float = 1.3
+## false: no cream leg rim in `top` either (the card views never have one, d9).
+const LEG_RIM_TOP: bool = true
 
 
 ## size_k: the boss scale (an arena dial; the owner may pick a smaller King, see rig_footprint).
@@ -20,4 +22,7 @@ static func build(size_k: float = SIZE_K) -> BodyPlan:
 	p.head_visor = false  # the star crown has no visor slot (n5-cast)
 	p.core_tan = false  # the tan work-plate sticker is Rivet's own read (n5-cast)
 	p.d5_warm = 0.0  # the warm tan close-up steel is Rivet's own read (n5-cast)
+	# d9 (owner: "Legs do have white background"): under the card views the bust stands on these
+	# legs; Rivet's cream leg sticker rim read as a white backing: ink outline only. `top` keeps it.
+	p.leg_rim = LEG_RIM_TOP and not ViewMode.shared().cards
 	return p
