@@ -367,3 +367,22 @@ NEXT (it5):
   row 2 (3/4 toward; repeats frame 1 as 3; your fresh try was C). Same layout and drop-in
   `<strip>_rfresh_cells/` names. Why: brief item 5; the 55 armed cops are what combo fights show.
 - 12:48 ACK assets: rounds 1310-1330 consumed (swat 70 v2 + row 3, patrol/riot/swat 55 + fresh rows).
+
+## Iteration 5 (director it7, 12:49-13:49), BUILD
+
+Read: JOURNAL it4 NEXT, git log, d9-rivet JOURNAL (it10: **REQUEST to seams**: the Servo bay number
+prints over every actor under a card view, servo_body_view.gd:39), library JOURNAL (it79: riot55 r2 and
+patrol55 r2 NO GAIN after 3 tries, stopped; my it4 REQUEST rows are named faults, nothing new to splice).
+Registry rules applied: depth-ordered-layered-art (a ground decal stays under the bodies; only what a
+car would wrongly hide is lifted, and only where nothing stands), motion-quality-gating (before/after at
+the same seed and frames, a clip in motion).
+- 12:55 MILESTONE (rivet REQUEST, 3f4732db): `ServoDepotDraw.cover()` flags per frame the bays whose
+  NUMBER a living fighter's body box meets; those marks draw in the ground pass (under bodies), the rest
+  keep the apart pass over the vehicles band. Masters
+  `servo_bay_number_under_bodies_before_after_combo_48ppm_x2_seed1_f480.png` + `_f400_500.mp4`: "4" now
+  under Rivet's gun and legs, "3" still over the van. unit test_servo_depot_marks 4/0, `--changed` 1701/0,
+  lint 15/15. FRICTION: my first cut tested the whole apron: Servo (beside the van) met bay 3's apron and
+  dropped "3" under the van (the n8 regression); caught on the first still, narrowed to the glyph box (4 min).
+  The misfilmed full-frame pair was deleted from masters.
+- ACK rivet it10 REQUEST (Servo bay number over actors): served at 3f4732db, evidence above.
+DECISION Servo bay marks: see docs/decisions.md (glyph box test; whole-apron and always-under rejected).
