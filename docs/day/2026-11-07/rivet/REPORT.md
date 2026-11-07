@@ -59,11 +59,11 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
   `gtai-masters\d9\rivet\rivet_dialogue_face_before_after_portrait_v2_quest1_payphone_tilt70_32ppm_1080p_t3350.png`.
   Live in quest 1 at Dock 9 (it19, `--stills` t13660-13900 and t13000-18750, 0 SCRIPT ERROR): the mood bust
   (eye bars narrowed, head lowered) on "Sorry! Sorry. Not sorry?", the neutral on "Everybody screamed" and "I have
-  a job": `gtai-masters\d9ivetivet_dialogue_face_live_quest1_mood_t13680_vs_neutral_t17250_t18750_tilt70_1080p.png`.
+  a job": `gtai-masters\d9\rivet\rivet_dialogue_face_live_quest1_mood_t13680_vs_neutral_t17250_t18750_tilt70_1080p.png`.
 - **The electro baton redraw** (`6443bc82`, it19, the it16 REQUEST served): the library's v3 (p55 A, p70 B, both
   left A): a dark steel rod with a copper coil, 1.3x longer; p55 cut by component (a tip spark crossed a column
   cut). The rod now reads in the strikes at both pitches and in the p55 facings. Before/after in the pit, 64 px/m:
-  `gtai-masters\d9ivetivet_electro_baton_v3_before_after_pit_tilt70_p70_and_tilt_p55_64ppm_x2_seed3_f60_150_300_310_330_350.png`.
+  `gtai-masters\d9\rivet\rivet_electro_baton_v3_before_after_pit_tilt70_p70_and_tilt_p55_64ppm_x2_seed3_f60_150_300_310_330_350.png`.
 - **The flamer's drawn flame follows the aim** (`90c46dfc`, it16): the it13 "red jet" was a drawn flame pointing
   left (the head's octant) beside the game's jet at ~124 deg (the aim); the drawn flame now needs the aim within
   22.5 deg. Before/after: `gtai-masters\d9\rivet\rivet_flamer_drawn_flame_needs_aim_before_after_gunplay_tilt70_64ppm_seed3_t359_380.png`.
@@ -129,6 +129,12 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
 5. **The flamer's flame off the side/camera octants.** Built (it10): the facing cell + the game jet from the drawn
    nozzle (one flame). Option: the drawn flame cell in every octant (`RivetStrips.CONE` empty): a bigger drawn
    flame, but two flames when he fires diagonally (before/after still in frames.json).
+6. **The armory showing him holding each weapon** (brief item 6). Not built: under a card view the hub's weapon
+   wall would get a row of 17 drawn Rivets above the board, each in his REST pose with that weapon (the equipped
+   strips' cell 7). In the world it reads as a lineup of clones, so it is your pick. Today the every-weapon contacts
+   show him holding each one: `gtai-masters\d9\rivet\rivet_every_weapon_fires_drawn_p70_tilt70_64ppm_seed3_firestills.png`
+   and the `_p55_tilt_` one. Options: the wall row (about an hour), a figure only beside the weapon he stands over, or
+   none (the default).
 
 ## Next steps
 See JOURNAL `NEXT:`.
