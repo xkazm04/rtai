@@ -1632,3 +1632,9 @@ NEXT (after the night run):
 3. depot_van_top_v4 (A) for Call 9(b): needs a sim archetype.
 4. vehicle_turn_check: catch the pickup (margin 0.009): a per-row centroid-of-nose cue, then make it a
    cutter step.
+08:18 JUDGED, NOT TAKEN: taxi_55_v4 (A) is painted to taxi_70_v4's yellow, but the built 70 taxi is the
+2021 sheet turned +12 (Call 1 default, TAXI_SHEET = False): taking it would split the design across the
+combo swap. parked_pickup_55_v4 (A) matches parked_pickup_70_v3's bed load, but our 70 row cuts
+parked_pickup_70 (not v3): judge the 70 pair first (NEXT 1). frames.json stays at 15 (the v7 antenna is
+too minor to displace an entry; its two stills sit in masters beside it). Scratch it26 deleted.
+Freeze: tree clean, exe = 08:13 export from ed557034. Session end ~08:19.
