@@ -23,7 +23,15 @@ priority, the CPU's own 2-CU Radeon), never a device claim. Details and sources:
   pinned CPU -26 % (E5, CONTENDED); the 1.5x handheld zoom costs nothing (E6).
 - The desktop game unmoved with all of it in: evidence gate on 9b35dd21 lint 15/15, unit 1708/0, scenarios 52/52,
   parity bit-exact, look goldens 11/11 (`evidence/it4/`).
-- Clips at 1280x800 on the iGPU: `gtai-masters/d9/handheld/deck-king-1280x800-igpu.mp4`, `deck-city-1280x800-igpu.mp4`.
+- The Switch-class budget (3 threads, 30 cap): the cap holds in the reel and the city; ~2.3 GB RAM + GPU memory (E7).
+- Clips at 1280x800 on the iGPU at 48 px/m (the handheld zoom): `gtai-masters/d9/handheld/deck-set-48ppm-king-city.mp4`
+  (70 s: the King fight, then the city), `deck-king-48ppm-1280x800-igpu.mp4`, `deck-city-48ppm-1280x800-igpu.mp4`;
+  the 32 px/m "before" clips `deck-king-1280x800-igpu.mp4`, `deck-city-1280x800-igpu.mp4`.
+
+## What does not work yet
+- Rumble is near-silent in the arena: 1 pulse in a 40 s King fight, 0 in the director reel (`player_hit` is not emitted
+  where Rivet takes damage). The release-compile step of the evidence gate collides with seams' new temp-dir layout
+  (their item; skipped with `--no-release`).
 
 ## Calls for the owner
 1. **Handheld zoom** (stills: `gtai-masters/d9/handheld/zoom-city-deck-32ppm.png`, `-40ppm`, `-48ppm`, all 1280x800

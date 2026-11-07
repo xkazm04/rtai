@@ -133,3 +133,16 @@ NEXT (iteration 2):
   quest 1's robo-tazer and the pit AI, not from Rivet's damage chokepoint; no fire / blast / crash events. Logs
   `evidence/it4/rumble-*-deck.log`. Owed next: emit `player_hit` where Rivet takes damage (gameplay: Events only, the
   emit is a sim-side fact, so it must not change replay; check the replay/parity gate after).
+
+NEXT (iteration 5):
+1. `player_hit` at Rivet's damage chokepoint (features/combat; find where his hp drops) so rumble fires on every hit:
+   check first that no listener changes the sim on it (quest 1 barks key on the weapon tag), then the evidence gate
+   (replay, parity, look goldens) and the reels. Live check: the pulse count in the King fight should rise above 1.
+2. E8 fill-rate levers (E6 says the iGPU frame is fill-bound): the handheld tier drawing at a smaller 2D size scaled up
+   (stretch viewport, content_scale_size below 1280x800) and the print grain / light passes off on tier `handheld`;
+   A/B on `deck_bench` (render GPU ms), stills at 48 px/m to judge the look on a 7" panel.
+3. `handheld_1080` viewport vs `handheld_1080_native` A/B (iGPU, render GPU ms).
+4. A live proof of the focus-out pause (quest 1 running, NOTIFICATION_APPLICATION_FOCUS_OUT sent) as a scenario.
+5. NAT-06 parity on the Linux `.so` inside WSL.
+6. End of day: delete the HKCU DirectX UserGpuPreferences value for gtai-d9x/handheld-godot/..._hh.exe and that copy;
+   the freeze exe.
