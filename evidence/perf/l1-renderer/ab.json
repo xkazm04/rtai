@@ -1,0 +1,2784 @@
+{
+ "schema": "gtai.perf-ab/1",
+ "when": "2026-11-07T09:41:24.841Z",
+ "locked": true,
+ "arms": [
+  {
+   "name": "base",
+   "user": [],
+   "engine": []
+  },
+  {
+   "name": "vulkan",
+   "user": [],
+   "engine": [
+    "--rendering-driver",
+    "vulkan",
+    "--gpu-index",
+    "0"
+   ]
+  },
+  {
+   "name": "mobile",
+   "user": [],
+   "engine": [
+    "--rendering-method",
+    "mobile"
+   ]
+  }
+ ],
+ "summary": {
+  "king": {
+   "base": {
+    "p50": {
+     "a": {
+      "median": 2.79999995231628,
+      "spread": 0.1690001487731898,
+      "n": 3
+     },
+     "b": {
+      "median": 2.79999995231628,
+      "spread": 0.1690001487731898,
+      "n": 3
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 0.1690001487731898,
+     "call": "WASH"
+    },
+    "p99": {
+     "a": {
+      "median": 6.39900016784668,
+      "spread": 1.0840001106262198,
+      "n": 3
+     },
+     "b": {
+      "median": 6.39900016784668,
+      "spread": 1.0840001106262198,
+      "n": 3
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 1.0840001106262198,
+     "call": "WASH"
+    },
+    "p999": {
+     "a": {
+      "median": 8.9069995880127,
+      "spread": 1.7860002517700195,
+      "n": 3
+     },
+     "b": {
+      "median": 8.9069995880127,
+      "spread": 1.7860002517700195,
+      "n": 3
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 1.7860002517700195,
+     "call": "WASH"
+    },
+    "worst": {
+     "a": {
+      "median": 78.6500015258789,
+      "spread": 74.44500160217285,
+      "n": 3
+     },
+     "b": {
+      "median": 78.6500015258789,
+      "spread": 74.44500160217285,
+      "n": 3
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 74.44500160217285,
+     "call": "WASH"
+    },
+    "mean": {
+     "a": {
+      "median": 3.1876000268959706,
+      "spread": 0.28432509815800966,
+      "n": 3
+     },
+     "b": {
+      "median": 3.1876000268959706,
+      "spread": 0.28432509815800966,
+      "n": 3
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 0.28432509815800966,
+     "call": "WASH"
+    },
+    "pace99": {
+     "a": {
+      "median": 2.6490001678466797,
+      "spread": 0.336999893188469,
+      "n": 3
+     },
+     "b": {
+      "median": 2.6490001678466797,
+      "spread": 0.336999893188469,
+      "n": 3
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 0.336999893188469,
+     "call": "WASH"
+    },
+    "over25": {
+     "a": {
+      "median": 2,
+      "spread": 4,
+      "n": 3
+     },
+     "b": {
+      "median": 2,
+      "spread": 4,
+      "n": 3
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 4,
+     "call": "WASH"
+    },
+    "draws": {
+     "a": {
+      "median": 640.3372141955393,
+      "spread": 0.4782635296717217,
+      "n": 3
+     },
+     "b": {
+      "median": 640.3372141955393,
+      "spread": 0.4782635296717217,
+      "n": 3
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 0.4782635296717217,
+     "call": "WASH"
+    },
+    "renderCpu": {
+     "a": {
+      "median": 0.35981733676851724,
+      "spread": 0.023588862756979245,
+      "n": 3
+     },
+     "b": {
+      "median": 0.35981733676851724,
+      "spread": 0.023588862756979245,
+      "n": 3
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 0.023588862756979245,
+     "call": "WASH"
+    },
+    "renderGpu": {
+     "a": {
+      "median": 0.23468120051411734,
+      "spread": 0.017144379453647995,
+      "n": 3
+     },
+     "b": {
+      "median": 0.23468120051411734,
+      "spread": 0.017144379453647995,
+      "n": 3
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 0.017144379453647995,
+     "call": "WASH"
+    },
+    "process": {
+     "a": {
+      "median": 1.297286871521498,
+      "spread": 0.12890386324951453,
+      "n": 3
+     },
+     "b": {
+      "median": 1.297286871521498,
+      "spread": 0.12890386324951453,
+      "n": 3
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 0.12890386324951453,
+     "call": "WASH"
+    },
+    "sim": {
+     "a": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "b": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "delta": null,
+     "pct": null,
+     "noise": null,
+     "call": "WASH"
+    },
+    "cpuCores": {
+     "a": {
+      "median": 1.0122818551278987,
+      "spread": 0.010729473515686427,
+      "n": 3
+     },
+     "b": {
+      "median": 1.0122818551278987,
+      "spread": 0.010729473515686427,
+      "n": 3
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 0.010729473515686427,
+     "call": "WASH"
+    },
+    "peakWsMb": {
+     "a": {
+      "median": 724.27734375,
+      "spread": 22.703125,
+      "n": 3
+     },
+     "b": {
+      "median": 724.27734375,
+      "spread": 22.703125,
+      "n": 3
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 22.703125,
+     "call": "WASH"
+    },
+    "threads": {
+     "a": {
+      "median": 76,
+      "spread": 0,
+      "n": 3
+     },
+     "b": {
+      "median": 76,
+      "spread": 0,
+      "n": 3
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 0,
+     "call": "WASH"
+    },
+    "contended": 3,
+    "scriptErrors": 0
+   },
+   "vulkan": {
+    "p50": {
+     "a": {
+      "median": 2.79999995231628,
+      "spread": 0.1690001487731898,
+      "n": 3
+     },
+     "b": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "delta": null,
+     "pct": null,
+     "noise": null,
+     "call": "WASH"
+    },
+    "p99": {
+     "a": {
+      "median": 6.39900016784668,
+      "spread": 1.0840001106262198,
+      "n": 3
+     },
+     "b": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "delta": null,
+     "pct": null,
+     "noise": null,
+     "call": "WASH"
+    },
+    "p999": {
+     "a": {
+      "median": 8.9069995880127,
+      "spread": 1.7860002517700195,
+      "n": 3
+     },
+     "b": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "delta": null,
+     "pct": null,
+     "noise": null,
+     "call": "WASH"
+    },
+    "worst": {
+     "a": {
+      "median": 78.6500015258789,
+      "spread": 74.44500160217285,
+      "n": 3
+     },
+     "b": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "delta": null,
+     "pct": null,
+     "noise": null,
+     "call": "WASH"
+    },
+    "mean": {
+     "a": {
+      "median": 3.1876000268959706,
+      "spread": 0.28432509815800966,
+      "n": 3
+     },
+     "b": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "delta": null,
+     "pct": null,
+     "noise": null,
+     "call": "WASH"
+    },
+    "pace99": {
+     "a": {
+      "median": 2.6490001678466797,
+      "spread": 0.336999893188469,
+      "n": 3
+     },
+     "b": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "delta": null,
+     "pct": null,
+     "noise": null,
+     "call": "WASH"
+    },
+    "over25": {
+     "a": {
+      "median": 2,
+      "spread": 4,
+      "n": 3
+     },
+     "b": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "delta": null,
+     "pct": null,
+     "noise": null,
+     "call": "WASH"
+    },
+    "draws": {
+     "a": {
+      "median": 640.3372141955393,
+      "spread": 0.4782635296717217,
+      "n": 3
+     },
+     "b": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "delta": null,
+     "pct": null,
+     "noise": null,
+     "call": "WASH"
+    },
+    "renderCpu": {
+     "a": {
+      "median": 0.35981733676851724,
+      "spread": 0.023588862756979245,
+      "n": 3
+     },
+     "b": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "delta": null,
+     "pct": null,
+     "noise": null,
+     "call": "WASH"
+    },
+    "renderGpu": {
+     "a": {
+      "median": 0.23468120051411734,
+      "spread": 0.017144379453647995,
+      "n": 3
+     },
+     "b": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "delta": null,
+     "pct": null,
+     "noise": null,
+     "call": "WASH"
+    },
+    "process": {
+     "a": {
+      "median": 1.297286871521498,
+      "spread": 0.12890386324951453,
+      "n": 3
+     },
+     "b": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "delta": null,
+     "pct": null,
+     "noise": null,
+     "call": "WASH"
+    },
+    "sim": {
+     "a": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "b": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "delta": null,
+     "pct": null,
+     "noise": null,
+     "call": "WASH"
+    },
+    "cpuCores": {
+     "a": {
+      "median": 1.0122818551278987,
+      "spread": 0.010729473515686427,
+      "n": 3
+     },
+     "b": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "delta": null,
+     "pct": null,
+     "noise": null,
+     "call": "WASH"
+    },
+    "peakWsMb": {
+     "a": {
+      "median": 724.27734375,
+      "spread": 22.703125,
+      "n": 3
+     },
+     "b": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "delta": null,
+     "pct": null,
+     "noise": null,
+     "call": "WASH"
+    },
+    "threads": {
+     "a": {
+      "median": 76,
+      "spread": 0,
+      "n": 3
+     },
+     "b": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "delta": null,
+     "pct": null,
+     "noise": null,
+     "call": "WASH"
+    },
+    "contended": 0,
+    "scriptErrors": 0
+   },
+   "mobile": {
+    "p50": {
+     "a": {
+      "median": 2.79999995231628,
+      "spread": 0.1690001487731898,
+      "n": 3
+     },
+     "b": {
+      "median": 2.82200002670288,
+      "spread": 0.11199998855590998,
+      "n": 3
+     },
+     "delta": 0.02200007438659979,
+     "pct": 0.785716955759245,
+     "noise": 0.1690001487731898,
+     "call": "WASH"
+    },
+    "p99": {
+     "a": {
+      "median": 6.39900016784668,
+      "spread": 1.0840001106262198,
+      "n": 3
+     },
+     "b": {
+      "median": 6.34000015258789,
+      "spread": 0.2539997100830007,
+      "n": 3
+     },
+     "delta": -0.05900001525878995,
+     "pct": -0.922019279750136,
+     "noise": 1.0840001106262198,
+     "call": "WASH"
+    },
+    "p999": {
+     "a": {
+      "median": 8.9069995880127,
+      "spread": 1.7860002517700195,
+      "n": 3
+     },
+     "b": {
+      "median": 9.28999996185303,
+      "spread": 1.5869998931884695,
+      "n": 3
+     },
+     "delta": 0.3830003738403285,
+     "pct": 4.299993168920559,
+     "noise": 1.7860002517700195,
+     "call": "WASH"
+    },
+    "worst": {
+     "a": {
+      "median": 78.6500015258789,
+      "spread": 74.44500160217285,
+      "n": 3
+     },
+     "b": {
+      "median": 11.1899995803833,
+      "spread": 4.90299987792973,
+      "n": 3
+     },
+     "delta": -67.4600019454956,
+     "pct": -85.77241021832485,
+     "noise": 74.44500160217285,
+     "call": "WASH"
+    },
+    "mean": {
+     "a": {
+      "median": 3.1876000268959706,
+      "spread": 0.28432509815800966,
+      "n": 3
+     },
+     "b": {
+      "median": 3.240989886832009,
+      "spread": 0.14075079510995936,
+      "n": 3
+     },
+     "delta": 0.05338985993603851,
+     "pct": 1.6749234372428032,
+     "noise": 0.28432509815800966,
+     "call": "WASH"
+    },
+    "pace99": {
+     "a": {
+      "median": 2.6490001678466797,
+      "spread": 0.336999893188469,
+      "n": 3
+     },
+     "b": {
+      "median": 2.7940001487731996,
+      "spread": 0.3289997577667303,
+      "n": 3
+     },
+     "delta": 0.1449999809265199,
+     "pct": 5.473762617553457,
+     "noise": 0.336999893188469,
+     "call": "WASH"
+    },
+    "over25": {
+     "a": {
+      "median": 2,
+      "spread": 4,
+      "n": 3
+     },
+     "b": {
+      "median": 0,
+      "spread": 0,
+      "n": 3
+     },
+     "delta": -2,
+     "pct": -100,
+     "noise": 4,
+     "call": "WASH"
+    },
+    "draws": {
+     "a": {
+      "median": 640.3372141955393,
+      "spread": 0.4782635296717217,
+      "n": 3
+     },
+     "b": {
+      "median": 641.3665902656061,
+      "spread": 0.802178186434503,
+      "n": 3
+     },
+     "delta": 1.0293760700667463,
+     "pct": 0.1607553094286359,
+     "noise": 0.802178186434503,
+     "call": "LOSS"
+    },
+    "renderCpu": {
+     "a": {
+      "median": 0.35981733676851724,
+      "spread": 0.023588862756979245,
+      "n": 3
+     },
+     "b": {
+      "median": 0.366742351763297,
+      "spread": 0.009808332030984246,
+      "n": 3
+     },
+     "delta": 0.006925014994779766,
+     "pct": 1.9245918101035981,
+     "noise": 0.023588862756979245,
+     "call": "WASH"
+    },
+    "renderGpu": {
+     "a": {
+      "median": 0.23468120051411734,
+      "spread": 0.017144379453647995,
+      "n": 3
+     },
+     "b": {
+      "median": 0.19803572871324363,
+      "spread": 0.013234165895126881,
+      "n": 3
+     },
+     "delta": -0.036645471800873713,
+     "pct": -15.61500099735057,
+     "noise": 0.017144379453647995,
+     "call": "WIN"
+    },
+    "process": {
+     "a": {
+      "median": 1.297286871521498,
+      "spread": 0.12890386324951453,
+      "n": 3
+     },
+     "b": {
+      "median": 1.3185623384819505,
+      "spread": 0.05653419340600907,
+      "n": 3
+     },
+     "delta": 0.02127546696045246,
+     "pct": 1.639997091429742,
+     "noise": 0.12890386324951453,
+     "call": "WASH"
+    },
+    "sim": {
+     "a": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "b": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "delta": null,
+     "pct": null,
+     "noise": null,
+     "call": "WASH"
+    },
+    "cpuCores": {
+     "a": {
+      "median": 1.0122818551278987,
+      "spread": 0.010729473515686427,
+      "n": 3
+     },
+     "b": {
+      "median": 1.0167965666929755,
+      "spread": 0.016912371675859683,
+      "n": 3
+     },
+     "delta": 0.004514711565076768,
+     "pct": 0.4459935286014139,
+     "noise": 0.016912371675859683,
+     "call": "WASH"
+    },
+    "peakWsMb": {
+     "a": {
+      "median": 724.27734375,
+      "spread": 22.703125,
+      "n": 3
+     },
+     "b": {
+      "median": 688.265625,
+      "spread": 10.1171875,
+      "n": 3
+     },
+     "delta": -36.01171875,
+     "pct": -4.97208963676078,
+     "noise": 22.703125,
+     "call": "WIN"
+    },
+    "threads": {
+     "a": {
+      "median": 76,
+      "spread": 0,
+      "n": 3
+     },
+     "b": {
+      "median": 76,
+      "spread": 0,
+      "n": 3
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 0,
+     "call": "WASH"
+    },
+    "contended": 2,
+    "scriptErrors": 0
+   }
+  },
+  "drive70": {
+   "base": {
+    "p50": {
+     "a": {
+      "median": 1.436,
+      "spread": 0.16999999999999993,
+      "n": 3
+     },
+     "b": {
+      "median": 1.436,
+      "spread": 0.16999999999999993,
+      "n": 3
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 0.16999999999999993,
+     "call": "WASH"
+    },
+    "p99": {
+     "a": {
+      "median": 3.623,
+      "spread": 3.031,
+      "n": 3
+     },
+     "b": {
+      "median": 3.623,
+      "spread": 3.031,
+      "n": 3
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 3.031,
+     "call": "WASH"
+    },
+    "p999": {
+     "a": {
+      "median": 5.522,
+      "spread": 6.570000000000001,
+      "n": 3
+     },
+     "b": {
+      "median": 5.522,
+      "spread": 6.570000000000001,
+      "n": 3
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 6.570000000000001,
+     "call": "WASH"
+    },
+    "worst": {
+     "a": {
+      "median": 13.133,
+      "spread": 24.229,
+      "n": 3
+     },
+     "b": {
+      "median": 13.133,
+      "spread": 24.229,
+      "n": 3
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 24.229,
+     "call": "WASH"
+    },
+    "mean": {
+     "a": {
+      "median": 1.5559795159262384,
+      "spread": 0.5691965090131583,
+      "n": 3
+     },
+     "b": {
+      "median": 1.5559795159262384,
+      "spread": 0.5691965090131583,
+      "n": 3
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 0.5691965090131583,
+     "call": "WASH"
+    },
+    "pace99": {
+     "a": {
+      "median": 2.162,
+      "spread": 4.38,
+      "n": 3
+     },
+     "b": {
+      "median": 2.162,
+      "spread": 4.38,
+      "n": 3
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 4.38,
+     "call": "WASH"
+    },
+    "over25": {
+     "a": {
+      "median": 0,
+      "spread": 3,
+      "n": 3
+     },
+     "b": {
+      "median": 0,
+      "spread": 3,
+      "n": 3
+     },
+     "delta": 0,
+     "pct": null,
+     "noise": 3,
+     "call": "WASH"
+    },
+    "draws": {
+     "a": {
+      "median": 285.636211232188,
+      "spread": 2.757528426579995,
+      "n": 3
+     },
+     "b": {
+      "median": 285.636211232188,
+      "spread": 2.757528426579995,
+      "n": 3
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 2.757528426579995,
+     "call": "WASH"
+    },
+    "renderCpu": {
+     "a": {
+      "median": 0.213852944234285,
+      "spread": 0.007950486108079996,
+      "n": 3
+     },
+     "b": {
+      "median": 0.213852944234285,
+      "spread": 0.007950486108079996,
+      "n": 3
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 0.007950486108079996,
+     "call": "WASH"
+    },
+    "renderGpu": {
+     "a": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "b": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "delta": null,
+     "pct": null,
+     "noise": null,
+     "call": "WASH"
+    },
+    "process": {
+     "a": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "b": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "delta": null,
+     "pct": null,
+     "noise": null,
+     "call": "WASH"
+    },
+    "sim": {
+     "a": {
+      "median": 0.0751060606060606,
+      "spread": 0.011557262041579794,
+      "n": 3
+     },
+     "b": {
+      "median": 0.0751060606060606,
+      "spread": 0.011557262041579794,
+      "n": 3
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 0.011557262041579794,
+     "call": "WASH"
+    },
+    "cpuCores": {
+     "a": {
+      "median": 1.0252301117685734,
+      "spread": 0.2214348923374646,
+      "n": 3
+     },
+     "b": {
+      "median": 1.0252301117685734,
+      "spread": 0.2214348923374646,
+      "n": 3
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 0.2214348923374646,
+     "call": "WASH"
+    },
+    "peakWsMb": {
+     "a": {
+      "median": 842.51171875,
+      "spread": 23.12109375,
+      "n": 3
+     },
+     "b": {
+      "median": 842.51171875,
+      "spread": 23.12109375,
+      "n": 3
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 23.12109375,
+     "call": "WASH"
+    },
+    "threads": {
+     "a": {
+      "median": 75,
+      "spread": 1,
+      "n": 3
+     },
+     "b": {
+      "median": 75,
+      "spread": 1,
+      "n": 3
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 1,
+     "call": "WASH"
+    },
+    "contended": 3,
+    "scriptErrors": 0
+   },
+   "vulkan": {
+    "p50": {
+     "a": {
+      "median": 1.436,
+      "spread": 0.16999999999999993,
+      "n": 3
+     },
+     "b": {
+      "median": 3.568,
+      "spread": 0,
+      "n": 1
+     },
+     "delta": 2.132,
+     "pct": 148.46796657381617,
+     "noise": 0.16999999999999993,
+     "call": "LOSS"
+    },
+    "p99": {
+     "a": {
+      "median": 3.623,
+      "spread": 3.031,
+      "n": 3
+     },
+     "b": {
+      "median": 8.796,
+      "spread": 0,
+      "n": 1
+     },
+     "delta": 5.172999999999999,
+     "pct": 142.78222467568312,
+     "noise": 3.031,
+     "call": "LOSS"
+    },
+    "p999": {
+     "a": {
+      "median": 5.522,
+      "spread": 6.570000000000001,
+      "n": 3
+     },
+     "b": {
+      "median": 11.664,
+      "spread": 0,
+      "n": 1
+     },
+     "delta": 6.1419999999999995,
+     "pct": 111.22781600869249,
+     "noise": 6.570000000000001,
+     "call": "WASH"
+    },
+    "worst": {
+     "a": {
+      "median": 13.133,
+      "spread": 24.229,
+      "n": 3
+     },
+     "b": {
+      "median": 30.329,
+      "spread": 0,
+      "n": 1
+     },
+     "delta": 17.196,
+     "pct": 130.93733343485877,
+     "noise": 24.229,
+     "call": "WASH"
+    },
+    "mean": {
+     "a": {
+      "median": 1.5559795159262384,
+      "spread": 0.5691965090131583,
+      "n": 3
+     },
+     "b": {
+      "median": 3.784420212765955,
+      "spread": 0,
+      "n": 1
+     },
+     "delta": 2.2284406968397166,
+     "pct": 143.2178684893019,
+     "noise": 0.5691965090131583,
+     "call": "LOSS"
+    },
+    "pace99": {
+     "a": {
+      "median": 2.162,
+      "spread": 4.38,
+      "n": 3
+     },
+     "b": {
+      "median": 6.004000000000001,
+      "spread": 0,
+      "n": 1
+     },
+     "delta": 3.8420000000000014,
+     "pct": 177.70582793709536,
+     "noise": 4.38,
+     "call": "WASH"
+    },
+    "over25": {
+     "a": {
+      "median": 0,
+      "spread": 3,
+      "n": 3
+     },
+     "b": {
+      "median": 1,
+      "spread": 0,
+      "n": 1
+     },
+     "delta": 1,
+     "pct": null,
+     "noise": 3,
+     "call": "WASH"
+    },
+    "draws": {
+     "a": {
+      "median": 285.636211232188,
+      "spread": 2.757528426579995,
+      "n": 3
+     },
+     "b": {
+      "median": 288.867799688635,
+      "spread": 0,
+      "n": 1
+     },
+     "delta": 3.231588456447014,
+     "pct": 1.1313651173660613,
+     "noise": 2.757528426579995,
+     "call": "LOSS"
+    },
+    "renderCpu": {
+     "a": {
+      "median": 0.213852944234285,
+      "spread": 0.007950486108079996,
+      "n": 3
+     },
+     "b": {
+      "median": 0.232557732136326,
+      "spread": 0,
+      "n": 1
+     },
+     "delta": 0.018704787902040998,
+     "pct": 8.746565528482558,
+     "noise": 0.007950486108079996,
+     "call": "LOSS"
+    },
+    "renderGpu": {
+     "a": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "b": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "delta": null,
+     "pct": null,
+     "noise": null,
+     "call": "WASH"
+    },
+    "process": {
+     "a": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "b": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "delta": null,
+     "pct": null,
+     "noise": null,
+     "call": "WASH"
+    },
+    "sim": {
+     "a": {
+      "median": 0.0751060606060606,
+      "spread": 0.011557262041579794,
+      "n": 3
+     },
+     "b": {
+      "median": 0.0699422857142857,
+      "spread": 0,
+      "n": 1
+     },
+     "delta": -0.0051637748917749,
+     "pct": -6.875310527680923,
+     "noise": 0.011557262041579794,
+     "call": "WASH"
+    },
+    "cpuCores": {
+     "a": {
+      "median": 1.0252301117685734,
+      "spread": 0.2214348923374646,
+      "n": 3
+     },
+     "b": {
+      "median": 0.626636929120969,
+      "spread": 0,
+      "n": 1
+     },
+     "delta": -0.39859318264760435,
+     "pct": -38.87841159483807,
+     "noise": 0.2214348923374646,
+     "call": "WIN"
+    },
+    "peakWsMb": {
+     "a": {
+      "median": 842.51171875,
+      "spread": 23.12109375,
+      "n": 3
+     },
+     "b": {
+      "median": 1086.8046875,
+      "spread": 0,
+      "n": 1
+     },
+     "delta": 244.29296875,
+     "pct": 28.995794754338544,
+     "noise": 23.12109375,
+     "call": "LOSS"
+    },
+    "threads": {
+     "a": {
+      "median": 75,
+      "spread": 1,
+      "n": 3
+     },
+     "b": {
+      "median": 68,
+      "spread": 0,
+      "n": 1
+     },
+     "delta": -7,
+     "pct": -9.333333333333334,
+     "noise": 1,
+     "call": "WIN"
+    },
+    "contended": 1,
+    "scriptErrors": 0
+   },
+   "mobile": {
+    "p50": {
+     "a": {
+      "median": 1.436,
+      "spread": 0.16999999999999993,
+      "n": 3
+     },
+     "b": {
+      "median": 1.458,
+      "spread": 0.05699999999999994,
+      "n": 3
+     },
+     "delta": 0.02200000000000002,
+     "pct": 1.5320334261838455,
+     "noise": 0.16999999999999993,
+     "call": "WASH"
+    },
+    "p99": {
+     "a": {
+      "median": 3.623,
+      "spread": 3.031,
+      "n": 3
+     },
+     "b": {
+      "median": 6.529,
+      "spread": 3.411,
+      "n": 3
+     },
+     "delta": 2.9059999999999997,
+     "pct": 80.20977090808721,
+     "noise": 3.411,
+     "call": "WASH"
+    },
+    "p999": {
+     "a": {
+      "median": 5.522,
+      "spread": 6.570000000000001,
+      "n": 3
+     },
+     "b": {
+      "median": 9.321,
+      "spread": 15.497,
+      "n": 3
+     },
+     "delta": 3.7989999999999995,
+     "pct": 68.79753712423035,
+     "noise": 15.497,
+     "call": "WASH"
+    },
+    "worst": {
+     "a": {
+      "median": 13.133,
+      "spread": 24.229,
+      "n": 3
+     },
+     "b": {
+      "median": 37.664,
+      "spread": 87.096,
+      "n": 3
+     },
+     "delta": 24.531000000000002,
+     "pct": 186.7890047970761,
+     "noise": 87.096,
+     "call": "WASH"
+    },
+    "mean": {
+     "a": {
+      "median": 1.5559795159262384,
+      "spread": 0.5691965090131583,
+      "n": 3
+     },
+     "b": {
+      "median": 1.7422305883736002,
+      "spread": 0.40102154734922646,
+      "n": 3
+     },
+     "delta": 0.18625107244736183,
+     "pct": 11.970020848024527,
+     "noise": 0.5691965090131583,
+     "call": "WASH"
+    },
+    "pace99": {
+     "a": {
+      "median": 2.162,
+      "spread": 4.38,
+      "n": 3
+     },
+     "b": {
+      "median": 5.7090000000000005,
+      "spread": 5.5409999999999995,
+      "n": 3
+     },
+     "delta": 3.5470000000000006,
+     "pct": 164.06105457909345,
+     "noise": 5.5409999999999995,
+     "call": "WASH"
+    },
+    "over25": {
+     "a": {
+      "median": 0,
+      "spread": 3,
+      "n": 3
+     },
+     "b": {
+      "median": 4,
+      "spread": 5,
+      "n": 3
+     },
+     "delta": 4,
+     "pct": null,
+     "noise": 5,
+     "call": "WASH"
+    },
+    "draws": {
+     "a": {
+      "median": 285.636211232188,
+      "spread": 2.757528426579995,
+      "n": 3
+     },
+     "b": {
+      "median": 284.57224073711,
+      "spread": 1.0052709416769972,
+      "n": 3
+     },
+     "delta": -1.0639704950779674,
+     "pct": -0.37249146054982746,
+     "noise": 2.757528426579995,
+     "call": "WASH"
+    },
+    "renderCpu": {
+     "a": {
+      "median": 0.213852944234285,
+      "spread": 0.007950486108079996,
+      "n": 3
+     },
+     "b": {
+      "median": 0.212064891566621,
+      "spread": 0.007899028347544995,
+      "n": 3
+     },
+     "delta": -0.0017880526676639918,
+     "pct": -0.8361131870623694,
+     "noise": 0.007950486108079996,
+     "call": "WASH"
+    },
+    "renderGpu": {
+     "a": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "b": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "delta": null,
+     "pct": null,
+     "noise": null,
+     "call": "WASH"
+    },
+    "process": {
+     "a": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "b": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "delta": null,
+     "pct": null,
+     "noise": null,
+     "call": "WASH"
+    },
+    "sim": {
+     "a": {
+      "median": 0.0751060606060606,
+      "spread": 0.011557262041579794,
+      "n": 3
+     },
+     "b": {
+      "median": 0.078947191011236,
+      "spread": 0.005189536275607698,
+      "n": 3
+     },
+     "delta": 0.0038411304051753914,
+     "pct": 5.114274898962595,
+     "noise": 0.011557262041579794,
+     "call": "WASH"
+    },
+    "cpuCores": {
+     "a": {
+      "median": 1.0252301117685734,
+      "spread": 0.2214348923374646,
+      "n": 3
+     },
+     "b": {
+      "median": 0.9337855511041949,
+      "spread": 0.1712714479138936,
+      "n": 3
+     },
+     "delta": -0.09144456066437845,
+     "pct": -8.919418149612481,
+     "noise": 0.2214348923374646,
+     "call": "WASH"
+    },
+    "peakWsMb": {
+     "a": {
+      "median": 842.51171875,
+      "spread": 23.12109375,
+      "n": 3
+     },
+     "b": {
+      "median": 765.54296875,
+      "spread": 76.984375,
+      "n": 3
+     },
+     "delta": -76.96875,
+     "pct": -9.135629604558542,
+     "noise": 76.984375,
+     "call": "WASH"
+    },
+    "threads": {
+     "a": {
+      "median": 75,
+      "spread": 1,
+      "n": 3
+     },
+     "b": {
+      "median": 76,
+      "spread": 1,
+      "n": 3
+     },
+     "delta": 1,
+     "pct": 1.3333333333333333,
+     "noise": 1,
+     "call": "WASH"
+    },
+    "contended": 3,
+    "scriptErrors": 0
+   }
+  },
+  "riot": {
+   "base": {
+    "p50": {
+     "a": {
+      "median": 1.775,
+      "spread": 0.1100000000000001,
+      "n": 3
+     },
+     "b": {
+      "median": 1.775,
+      "spread": 0.1100000000000001,
+      "n": 3
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 0.1100000000000001,
+     "call": "WASH"
+    },
+    "p99": {
+     "a": {
+      "median": 9.643,
+      "spread": 0.5370000000000008,
+      "n": 3
+     },
+     "b": {
+      "median": 9.643,
+      "spread": 0.5370000000000008,
+      "n": 3
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 0.5370000000000008,
+     "call": "WASH"
+    },
+    "p999": {
+     "a": {
+      "median": 17.567,
+      "spread": 2.9780000000000015,
+      "n": 3
+     },
+     "b": {
+      "median": 17.567,
+      "spread": 2.9780000000000015,
+      "n": 3
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 2.9780000000000015,
+     "call": "WASH"
+    },
+    "worst": {
+     "a": {
+      "median": 29.894,
+      "spread": 52.071,
+      "n": 3
+     },
+     "b": {
+      "median": 29.894,
+      "spread": 52.071,
+      "n": 3
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 52.071,
+     "call": "WASH"
+    },
+    "mean": {
+     "a": {
+      "median": 2.3144287838472373,
+      "spread": 0.20394752687839945,
+      "n": 3
+     },
+     "b": {
+      "median": 2.3144287838472373,
+      "spread": 0.20394752687839945,
+      "n": 3
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 0.20394752687839945,
+     "call": "WASH"
+    },
+    "pace99": {
+     "a": {
+      "median": 8.948,
+      "spread": 1.7110000000000003,
+      "n": 3
+     },
+     "b": {
+      "median": 8.948,
+      "spread": 1.7110000000000003,
+      "n": 3
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 1.7110000000000003,
+     "call": "WASH"
+    },
+    "over25": {
+     "a": {
+      "median": 2,
+      "spread": 3,
+      "n": 3
+     },
+     "b": {
+      "median": 2,
+      "spread": 3,
+      "n": 3
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 3,
+     "call": "WASH"
+    },
+    "draws": {
+     "a": {
+      "median": 827.110113501609,
+      "spread": 1.5551798837519755,
+      "n": 3
+     },
+     "b": {
+      "median": 827.110113501609,
+      "spread": 1.5551798837519755,
+      "n": 3
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 1.5551798837519755,
+     "call": "WASH"
+    },
+    "renderCpu": {
+     "a": {
+      "median": 0.445917436698827,
+      "spread": 0.034496798204186,
+      "n": 3
+     },
+     "b": {
+      "median": 0.445917436698827,
+      "spread": 0.034496798204186,
+      "n": 3
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 0.034496798204186,
+     "call": "WASH"
+    },
+    "renderGpu": {
+     "a": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "b": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "delta": null,
+     "pct": null,
+     "noise": null,
+     "call": "WASH"
+    },
+    "process": {
+     "a": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "b": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "delta": null,
+     "pct": null,
+     "noise": null,
+     "call": "WASH"
+    },
+    "sim": {
+     "a": {
+      "median": 0.121311549295775,
+      "spread": 0.007719382150123993,
+      "n": 3
+     },
+     "b": {
+      "median": 0.121311549295775,
+      "spread": 0.007719382150123993,
+      "n": 3
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 0.007719382150123993,
+     "call": "WASH"
+    },
+    "cpuCores": {
+     "a": {
+      "median": 1.009162951956414,
+      "spread": 0.016690339114406205,
+      "n": 3
+     },
+     "b": {
+      "median": 1.009162951956414,
+      "spread": 0.016690339114406205,
+      "n": 3
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 0.016690339114406205,
+     "call": "WASH"
+    },
+    "peakWsMb": {
+     "a": {
+      "median": 843.8828125,
+      "spread": 70.37890625,
+      "n": 3
+     },
+     "b": {
+      "median": 843.8828125,
+      "spread": 70.37890625,
+      "n": 3
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 70.37890625,
+     "call": "WASH"
+    },
+    "threads": {
+     "a": {
+      "median": 76,
+      "spread": 1,
+      "n": 3
+     },
+     "b": {
+      "median": 76,
+      "spread": 1,
+      "n": 3
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 1,
+     "call": "WASH"
+    },
+    "contended": 3,
+    "scriptErrors": 0
+   },
+   "vulkan": {
+    "p50": {
+     "a": {
+      "median": 1.775,
+      "spread": 0.1100000000000001,
+      "n": 3
+     },
+     "b": {
+      "median": 9.636,
+      "spread": 0,
+      "n": 1
+     },
+     "delta": 7.860999999999999,
+     "pct": 442.8732394366197,
+     "noise": 0.1100000000000001,
+     "call": "LOSS"
+    },
+    "p99": {
+     "a": {
+      "median": 9.643,
+      "spread": 0.5370000000000008,
+      "n": 3
+     },
+     "b": {
+      "median": 21.498,
+      "spread": 0,
+      "n": 1
+     },
+     "delta": 11.855,
+     "pct": 122.93891942341594,
+     "noise": 0.5370000000000008,
+     "call": "LOSS"
+    },
+    "p999": {
+     "a": {
+      "median": 17.567,
+      "spread": 2.9780000000000015,
+      "n": 3
+     },
+     "b": {
+      "median": 36.903,
+      "spread": 0,
+      "n": 1
+     },
+     "delta": 19.336,
+     "pct": 110.07001764672397,
+     "noise": 2.9780000000000015,
+     "call": "LOSS"
+    },
+    "worst": {
+     "a": {
+      "median": 29.894,
+      "spread": 52.071,
+      "n": 3
+     },
+     "b": {
+      "median": 42.971,
+      "spread": 0,
+      "n": 1
+     },
+     "delta": 13.076999999999998,
+     "pct": 43.74456412658058,
+     "noise": 52.071,
+     "call": "WASH"
+    },
+    "mean": {
+     "a": {
+      "median": 2.3144287838472373,
+      "spread": 0.20394752687839945,
+      "n": 3
+     },
+     "b": {
+      "median": 10.223375446109937,
+      "spread": 0,
+      "n": 1
+     },
+     "delta": 7.9089466622627,
+     "pct": 341.72348345563637,
+     "noise": 0.20394752687839945,
+     "call": "LOSS"
+    },
+    "pace99": {
+     "a": {
+      "median": 8.948,
+      "spread": 1.7110000000000003,
+      "n": 3
+     },
+     "b": {
+      "median": 11.633,
+      "spread": 0,
+      "n": 1
+     },
+     "delta": 2.6849999999999987,
+     "pct": 30.006705409029937,
+     "noise": 1.7110000000000003,
+     "call": "LOSS"
+    },
+    "over25": {
+     "a": {
+      "median": 2,
+      "spread": 3,
+      "n": 3
+     },
+     "b": {
+      "median": 8,
+      "spread": 0,
+      "n": 1
+     },
+     "delta": 6,
+     "pct": 300,
+     "noise": 3,
+     "call": "LOSS"
+    },
+    "draws": {
+     "a": {
+      "median": 827.110113501609,
+      "spread": 1.5551798837519755,
+      "n": 3
+     },
+     "b": {
+      "median": 835.656673804425,
+      "spread": 0,
+      "n": 1
+     },
+     "delta": 8.546560302816033,
+     "pct": 1.0333038084413904,
+     "noise": 1.5551798837519755,
+     "call": "LOSS"
+    },
+    "renderCpu": {
+     "a": {
+      "median": 0.445917436698827,
+      "spread": 0.034496798204186,
+      "n": 3
+     },
+     "b": {
+      "median": 0.609018915300281,
+      "spread": 0,
+      "n": 1
+     },
+     "delta": 0.16310147860145396,
+     "pct": 36.57660929541377,
+     "noise": 0.034496798204186,
+     "call": "LOSS"
+    },
+    "renderGpu": {
+     "a": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "b": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "delta": null,
+     "pct": null,
+     "noise": null,
+     "call": "WASH"
+    },
+    "process": {
+     "a": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "b": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "delta": null,
+     "pct": null,
+     "noise": null,
+     "call": "WASH"
+    },
+    "sim": {
+     "a": {
+      "median": 0.121311549295775,
+      "spread": 0.007719382150123993,
+      "n": 3
+     },
+     "b": {
+      "median": 0.125273414776033,
+      "spread": 0,
+      "n": 1
+     },
+     "delta": 0.003961865480257981,
+     "pct": 3.265860095973536,
+     "noise": 0.007719382150123993,
+     "call": "WASH"
+    },
+    "cpuCores": {
+     "a": {
+      "median": 1.009162951956414,
+      "spread": 0.016690339114406205,
+      "n": 3
+     },
+     "b": {
+      "median": 0.5209690023443605,
+      "spread": 0,
+      "n": 1
+     },
+     "delta": -0.48819394961205353,
+     "pct": -48.37612683517723,
+     "noise": 0.016690339114406205,
+     "call": "WIN"
+    },
+    "peakWsMb": {
+     "a": {
+      "median": 843.8828125,
+      "spread": 70.37890625,
+      "n": 3
+     },
+     "b": {
+      "median": 1127.75390625,
+      "spread": 0,
+      "n": 1
+     },
+     "delta": 283.87109375,
+     "pct": 33.638686503050444,
+     "noise": 70.37890625,
+     "call": "LOSS"
+    },
+    "threads": {
+     "a": {
+      "median": 76,
+      "spread": 1,
+      "n": 3
+     },
+     "b": {
+      "median": 68,
+      "spread": 0,
+      "n": 1
+     },
+     "delta": -8,
+     "pct": -10.526315789473685,
+     "noise": 1,
+     "call": "WIN"
+    },
+    "contended": 1,
+    "scriptErrors": 0
+   },
+   "mobile": {
+    "p50": {
+     "a": {
+      "median": 1.775,
+      "spread": 0.1100000000000001,
+      "n": 3
+     },
+     "b": {
+      "median": 1.959,
+      "spread": 0.14300000000000002,
+      "n": 3
+     },
+     "delta": 0.18400000000000016,
+     "pct": 10.3661971830986,
+     "noise": 0.14300000000000002,
+     "call": "LOSS"
+    },
+    "p99": {
+     "a": {
+      "median": 9.643,
+      "spread": 0.5370000000000008,
+      "n": 3
+     },
+     "b": {
+      "median": 10.533,
+      "spread": 1.7910000000000004,
+      "n": 3
+     },
+     "delta": 0.8899999999999988,
+     "pct": 9.229492896401522,
+     "noise": 1.7910000000000004,
+     "call": "WASH"
+    },
+    "p999": {
+     "a": {
+      "median": 17.567,
+      "spread": 2.9780000000000015,
+      "n": 3
+     },
+     "b": {
+      "median": 17.841,
+      "spread": 9.018999999999998,
+      "n": 3
+     },
+     "delta": 0.2740000000000009,
+     "pct": 1.5597426993795236,
+     "noise": 9.018999999999998,
+     "call": "WASH"
+    },
+    "worst": {
+     "a": {
+      "median": 29.894,
+      "spread": 52.071,
+      "n": 3
+     },
+     "b": {
+      "median": 31.388,
+      "spread": 105.39500000000001,
+      "n": 3
+     },
+     "delta": 1.4940000000000033,
+     "pct": 4.99765839298857,
+     "noise": 105.39500000000001,
+     "call": "WASH"
+    },
+    "mean": {
+     "a": {
+      "median": 2.3144287838472373,
+      "spread": 0.20394752687839945,
+      "n": 3
+     },
+     "b": {
+      "median": 2.6998761939415967,
+      "spread": 0.196458190265147,
+      "n": 3
+     },
+     "delta": 0.38544741009435946,
+     "pct": 16.654105444265884,
+     "noise": 0.20394752687839945,
+     "call": "LOSS"
+    },
+    "pace99": {
+     "a": {
+      "median": 8.948,
+      "spread": 1.7110000000000003,
+      "n": 3
+     },
+     "b": {
+      "median": 10.870999999999999,
+      "spread": 1.7899999999999991,
+      "n": 3
+     },
+     "delta": 1.9229999999999983,
+     "pct": 21.490835940992383,
+     "noise": 1.7899999999999991,
+     "call": "LOSS"
+    },
+    "over25": {
+     "a": {
+      "median": 2,
+      "spread": 3,
+      "n": 3
+     },
+     "b": {
+      "median": 2,
+      "spread": 8,
+      "n": 3
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 8,
+     "call": "WASH"
+    },
+    "draws": {
+     "a": {
+      "median": 827.110113501609,
+      "spread": 1.5551798837519755,
+      "n": 3
+     },
+     "b": {
+      "median": 826.834698628956,
+      "spread": 2.6996057564119837,
+      "n": 3
+     },
+     "delta": -0.27541487265307296,
+     "pct": -0.03329845303028533,
+     "noise": 2.6996057564119837,
+     "call": "WASH"
+    },
+    "renderCpu": {
+     "a": {
+      "median": 0.445917436698827,
+      "spread": 0.034496798204186,
+      "n": 3
+     },
+     "b": {
+      "median": 0.494104794112131,
+      "spread": 0.070016233695123,
+      "n": 3
+     },
+     "delta": 0.04818735741330399,
+     "pct": 10.806340691684989,
+     "noise": 0.070016233695123,
+     "call": "WASH"
+    },
+    "renderGpu": {
+     "a": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "b": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "delta": null,
+     "pct": null,
+     "noise": null,
+     "call": "WASH"
+    },
+    "process": {
+     "a": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "b": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "delta": null,
+     "pct": null,
+     "noise": null,
+     "call": "WASH"
+    },
+    "sim": {
+     "a": {
+      "median": 0.121311549295775,
+      "spread": 0.007719382150123993,
+      "n": 3
+     },
+     "b": {
+      "median": 0.142195272931908,
+      "spread": 0.021488916374137995,
+      "n": 3
+     },
+     "delta": 0.020883723636133,
+     "pct": 17.21495089079728,
+     "noise": 0.021488916374137995,
+     "call": "WASH"
+    },
+    "cpuCores": {
+     "a": {
+      "median": 1.009162951956414,
+      "spread": 0.016690339114406205,
+      "n": 3
+     },
+     "b": {
+      "median": 0.9998644251626898,
+      "spread": 0.07251663472314751,
+      "n": 3
+     },
+     "delta": -0.009298526793724227,
+     "pct": -0.9214098452284277,
+     "noise": 0.07251663472314751,
+     "call": "WASH"
+    },
+    "peakWsMb": {
+     "a": {
+      "median": 843.8828125,
+      "spread": 70.37890625,
+      "n": 3
+     },
+     "b": {
+      "median": 806.03515625,
+      "spread": 89.52734375,
+      "n": 3
+     },
+     "delta": -37.84765625,
+     "pct": -4.484942185026431,
+     "noise": 89.52734375,
+     "call": "WASH"
+    },
+    "threads": {
+     "a": {
+      "median": 76,
+      "spread": 1,
+      "n": 3
+     },
+     "b": {
+      "median": 76,
+      "spread": 1,
+      "n": 3
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 1,
+     "call": "WASH"
+    },
+    "contended": 2,
+    "scriptErrors": 0
+   }
+  }
+ },
+ "raw": {
+  "king": {
+   "base": [
+    {
+     "stats": {
+      "frames": 7798,
+      "mean": 3.080706463865391,
+      "p50": 2.70199990272522,
+      "p99": 5.84899997711182,
+      "p999": 8.9069995880127,
+      "worst": 83.6780014038086,
+      "low1Fps": 99.494872303549,
+      "over25": 4,
+      "over50": 4,
+      "pace50": 0.2189998626709002,
+      "pace99": 2.3449997901916504
+     },
+     "side": {
+      "draws": 640.0972044113876,
+      "renderCpu": 0.3534873054138542,
+      "renderGpu": 0.23468120051411734,
+      "process": 1.2363118749607769,
+      "cpuCores": 1.0122818551278987,
+      "peakWsMb": 702.42578125,
+      "threads": 76
+     },
+     "errors": 0,
+     "contended": true,
+     "others": 2
+    },
+    {
+     "stats": {
+      "frames": 7129,
+      "mean": 3.365031562023401,
+      "p50": 2.87100005149841,
+      "p99": 6.93300008773804,
+      "p999": 8.27600002288818,
+      "worst": 9.23299980163574,
+      "low1Fps": 134.70860832407064,
+      "over25": 0,
+      "over50": 0,
+      "pace50": 0.38900017738341974,
+      "pace99": 2.6490001678466797
+     },
+     "side": {
+      "draws": 640.3372141955393,
+      "renderCpu": 0.37707616817083345,
+      "renderGpu": 0.23360246715881428,
+      "process": 1.3652157382102914,
+      "cpuCores": 1.014792627668694,
+      "peakWsMb": 725.12890625,
+      "threads": 76
+     },
+     "errors": 0,
+     "contended": true,
+     "others": 1
+    },
+    {
+     "stats": {
+      "frames": 7533,
+      "mean": 3.1876000268959706,
+      "p50": 2.79999995231628,
+      "p99": 6.39900016784668,
+      "p999": 10.0620002746582,
+      "worst": 78.6500015258789,
+      "low1Fps": 106.66022923824015,
+      "over25": 2,
+      "over50": 2,
+      "pace50": 0.26399993896483975,
+      "pace99": 2.6819996833801194
+     },
+     "side": {
+      "draws": 640.5754679410593,
+      "renderCpu": 0.35981733676851724,
+      "renderGpu": 0.25074684661246227,
+      "process": 1.297286871521498,
+      "cpuCores": 1.0040631541530076,
+      "peakWsMb": 724.27734375,
+      "threads": 76
+     },
+     "errors": 0,
+     "contended": true,
+     "others": 3
+    }
+   ],
+   "mobile": [
+    {
+     "stats": {
+      "frames": 7387,
+      "mean": 3.2552358194957716,
+      "p50": 2.86800003051758,
+      "p99": 6.34000015258789,
+      "p999": 9.28999996185303,
+      "worst": 14.6730003356934,
+      "low1Fps": 134.51830594072774,
+      "over25": 0,
+      "over50": 0,
+      "pace50": 0.43700003623962,
+      "pace99": 2.7940001487731996
+     },
+     "side": {
+      "draws": 641.3748477054285,
+      "renderCpu": 0.36806335820547537,
+      "renderGpu": 0.19540760781214042,
+      "process": 1.3185623384819505,
+      "cpuCores": 1.0312937206814254,
+      "peakWsMb": 680.73046875,
+      "threads": 76
+     },
+     "errors": 0,
+     "contended": true,
+     "others": 2
+    },
+    {
+     "stats": {
+      "frames": 7417,
+      "mean": 3.240989886832009,
+      "p50": 2.82200002670288,
+      "p99": 6.43599987030029,
+      "p999": 9.67399978637695,
+      "worst": 11.1899995803833,
+      "low1Fps": 131.2156868631282,
+      "over25": 0,
+      "over50": 0,
+      "pace50": 0.3689999580383301,
+      "pace99": 2.95899987220764
+     },
+     "side": {
+      "draws": 641.3665902656061,
+      "renderCpu": 0.366742351763297,
+      "renderGpu": 0.19803572871324363,
+      "process": 1.3218825666654042,
+      "cpuCores": 1.0143813490055658,
+      "peakWsMb": 688.265625,
+      "threads": 76
+     },
+     "errors": 0,
+     "contended": false,
+     "others": 0
+    },
+    {
+     "stats": {
+      "frames": 7713,
+      "mean": 3.114485024385812,
+      "p50": 2.75600004196167,
+      "p99": 6.18200016021729,
+      "p999": 8.08699989318848,
+      "worst": 9.77000045776367,
+      "low1Fps": 145.70615156106274,
+      "over25": 0,
+      "over50": 0,
+      "pace50": 0.2609999179840101,
+      "pace99": 2.6300001144409095
+     },
+     "side": {
+      "draws": 640.572669518994,
+      "renderCpu": 0.3582550261744911,
+      "renderGpu": 0.2086417737072673,
+      "process": 1.265348373259395,
+      "cpuCores": 1.0167965666929755,
+      "peakWsMb": 690.84765625,
+      "threads": 76
+     },
+     "errors": 0,
+     "contended": true,
+     "others": 2
+    }
+   ]
+  },
+  "drive70": {
+   "base": [
+    {
+     "stats": {
+      "frames": 20182,
+      "mean": 1.4673723615102594,
+      "p50": 1.353,
+      "p99": 3.352,
+      "p999": 5.294,
+      "worst": 13.133,
+      "low1Fps": 237.80876878630423,
+      "over25": 0,
+      "over50": 0,
+      "pace50": 0.08099999999999996,
+      "pace99": 1.806
+     },
+     "side": {
+      "draws": 285.99340996928,
+      "renderCpu": 0.206661084145765,
+      "sim": 0.0665700619020822,
+      "cpuCores": 1.0305462885738115,
+      "peakWsMb": 842.51171875,
+      "threads": 75
+     },
+     "errors": 0,
+     "contended": true,
+     "others": 3
+    },
+    {
+     "stats": {
+      "frames": 14520,
+      "mean": 2.0365688705234177,
+      "p50": 1.523,
+      "p99": 6.383,
+      "p999": 11.864,
+      "worst": 35.05,
+      "low1Fps": 111.0679180318765,
+      "over25": 3,
+      "over50": 0,
+      "pace50": 0.242,
+      "pace99": 6.186
+     },
+     "side": {
+      "draws": 283.2358815427,
+      "renderCpu": 0.214611570253845,
+      "sim": 0.078127323943662,
+      "cpuCores": 0.8091113962363469,
+      "peakWsMb": 839.79296875,
+      "threads": 75
+     },
+     "errors": 0,
+     "contended": true,
+     "others": 1
+    },
+    {
+     "stats": {
+      "frames": 19088,
+      "mean": 1.5559795159262384,
+      "p50": 1.436,
+      "p99": 3.623,
+      "p999": 5.522,
+      "worst": 10.821,
+      "low1Fps": 222.30912840854597,
+      "over25": 0,
+      "over50": 0,
+      "pace50": 0.1270000000000001,
+      "pace99": 2.162
+     },
+     "side": {
+      "draws": 285.636211232188,
+      "renderCpu": 0.213852944234285,
+      "sim": 0.0751060606060606,
+      "cpuCores": 1.0252301117685734,
+      "peakWsMb": 862.9140625,
+      "threads": 76
+     },
+     "errors": 0,
+     "contended": true,
+     "others": 2
+    }
+   ],
+   "mobile": [
+    {
+     "stats": {
+      "frames": 19286,
+      "mean": 1.5369979259566504,
+      "p50": 1.417,
+      "p99": 3.462,
+      "p999": 5.137,
+      "worst": 110.319,
+      "low1Fps": 192.85073353224595,
+      "over25": 4,
+      "over50": 1,
+      "pace50": 0.10799999999999987,
+      "pace99": 2.027
+     },
+     "side": {
+      "draws": 283.934304676968,
+      "renderCpu": 0.211583687552498,
+      "sim": 0.0750045019696117,
+      "cpuCores": 1.0185707647371216,
+      "peakWsMb": 814.5625,
+      "threads": 76
+     },
+     "errors": 0,
+     "contended": true,
+     "others": 2
+    },
+    {
+     "stats": {
+      "frames": 15303,
+      "mean": 1.9380194733058769,
+      "p50": 1.474,
+      "p99": 6.529,
+      "p999": 9.321,
+      "worst": 23.223,
+      "low1Fps": 124.85841947077871,
+      "over25": 0,
+      "over50": 0,
+      "pace50": 0.18999999999999995,
+      "pace99": 5.7090000000000005
+     },
+     "side": {
+      "draws": 284.57224073711,
+      "renderCpu": 0.219482715900043,
+      "sim": 0.078947191011236,
+      "cpuCores": 0.847299316823228,
+      "peakWsMb": 737.578125,
+      "threads": 76
+     },
+     "errors": 0,
+     "contended": true,
+     "others": 0
+    },
+    {
+     "stats": {
+      "frames": 17013,
+      "mean": 1.7422305883736002,
+      "p50": 1.458,
+      "p99": 6.873,
+      "p999": 20.634,
+      "worst": 37.664,
+      "low1Fps": 86.3284073973853,
+      "over25": 5,
+      "over50": 0,
+      "pace50": 0.14500000000000002,
+      "pace99": 7.568
+     },
+     "side": {
+      "draws": 284.939575618645,
+      "renderCpu": 0.212064891566621,
+      "sim": 0.0801940382452194,
+      "cpuCores": 0.9337855511041949,
+      "peakWsMb": 765.54296875,
+      "threads": 75
+     },
+     "errors": 0,
+     "contended": true,
+     "others": 3
+    }
+   ],
+   "vulkan": [
+    {
+     "stats": {
+      "frames": 7708,
+      "mean": 3.784420212765955,
+      "p50": 3.568,
+      "p99": 8.796,
+      "p999": 11.664,
+      "worst": 30.329,
+      "low1Fps": 97.01058161574856,
+      "over25": 1,
+      "over50": 0,
+      "pace50": 0.835,
+      "pace99": 6.004000000000001
+     },
+     "side": {
+      "draws": 288.867799688635,
+      "renderCpu": 0.232557732136326,
+      "sim": 0.0699422857142857,
+      "cpuCores": 0.626636929120969,
+      "peakWsMb": 1086.8046875,
+      "threads": 68
+     },
+     "errors": 0,
+     "contended": true,
+     "others": 3
+    }
+   ]
+  },
+  "riot": {
+   "base": [
+    {
+     "stats": {
+      "frames": 12778,
+      "mean": 2.3144287838472373,
+      "p50": 1.775,
+      "p99": 9.203,
+      "p999": 15.506,
+      "worst": 27.108,
+      "low1Fps": 83.70794820047529,
+      "over25": 2,
+      "over50": 0,
+      "pace50": 0.19500000000000006,
+      "pace99": 8.466999999999999
+     },
+     "side": {
+      "draws": 828.183048990452,
+      "renderCpu": 0.445917436698827,
+      "sim": 0.121311549295775,
+      "cpuCores": 1.0120474458588196,
+      "peakWsMb": 843.8828125,
+      "threads": 76
+     },
+     "errors": 0,
+     "contended": true,
+     "others": 2
+    },
+    {
+     "stats": {
+      "frames": 11806,
+      "mean": 2.5041378959851053,
+      "p50": 1.852,
+      "p99": 9.74,
+      "p999": 18.484,
+      "worst": 29.894,
+      "low1Fps": 74.7210987894554,
+      "over25": 2,
+      "over50": 0,
+      "pace50": 0.27100000000000013,
+      "pace99": 10.177999999999999
+     },
+     "side": {
+      "draws": 827.110113501609,
+      "renderCpu": 0.464580467847693,
+      "sim": 0.127695211267606,
+      "cpuCores": 0.9953571067444134,
+      "peakWsMb": 862.8984375,
+      "threads": 75
+     },
+     "errors": 0,
+     "contended": true,
+     "others": 3
+    },
+    {
+     "stats": {
+      "frames": 12896,
+      "mean": 2.300190369106706,
+      "p50": 1.742,
+      "p99": 9.643,
+      "p999": 17.567,
+      "worst": 79.179,
+      "low1Fps": 74.2730738804054,
+      "over25": 5,
+      "over50": 1,
+      "pace50": 0.18399999999999994,
+      "pace99": 8.948
+     },
+     "side": {
+      "draws": 826.6278691067,
+      "renderCpu": 0.430083669643507,
+      "sim": 0.119975829117482,
+      "cpuCores": 1.009162951956414,
+      "peakWsMb": 792.51953125,
+      "threads": 76
+     },
+     "errors": 0,
+     "contended": true,
+     "others": 3
+    }
+   ],
+   "mobile": [
+    {
+     "stats": {
+      "frames": 10993,
+      "mean": 2.6998761939415967,
+      "p50": 1.959,
+      "p99": 10.533,
+      "p999": 24.508,
+      "worst": 133.103,
+      "low1Fps": 60.860501092169386,
+      "over25": 10,
+      "over50": 1,
+      "pace50": 0.3620000000000001,
+      "pace99": 10.870999999999999
+     },
+     "side": {
+      "draws": 828.136541435459,
+      "renderCpu": 0.494104794112131,
+      "sim": 0.142195272931908,
+      "cpuCores": 0.9998644251626898,
+      "peakWsMb": 737.96484375,
+      "threads": 76
+     },
+     "errors": 0,
+     "contended": false,
+     "others": 0
+    },
+    {
+     "stats": {
+      "frames": 11597,
+      "mean": 2.5533446581012336,
+      "p50": 1.819,
+      "p99": 9.424,
+      "p999": 15.489,
+      "worst": 27.708,
+      "low1Fps": 81.67346105372846,
+      "over25": 2,
+      "over50": 0,
+      "pace50": 0.34999999999999964,
+      "pace99": 9.145
+     },
+     "side": {
+      "draws": 826.834698628956,
+      "renderCpu": 0.434155040443319,
+      "sim": 0.122112549240293,
+      "cpuCores": 0.9346112017400762,
+      "peakWsMb": 806.03515625,
+      "threads": 75
+     },
+     "errors": 0,
+     "contended": true,
+     "others": 3
+    },
+    {
+     "stats": {
+      "frames": 10743,
+      "mean": 2.7498028483663806,
+      "p50": 1.962,
+      "p99": 11.215,
+      "p999": 17.841,
+      "worst": 31.388,
+      "low1Fps": 69.8911510037146,
+      "over25": 2,
+      "over50": 0,
+      "pace50": 0.28200000000000003,
+      "pace99": 10.934999999999999
+     },
+     "side": {
+      "draws": 825.436935679047,
+      "renderCpu": 0.504171274138442,
+      "sim": 0.143601465614431,
+      "cpuCores": 1.0071278364632237,
+      "peakWsMb": 827.4921875,
+      "threads": 76
+     },
+     "errors": 0,
+     "contended": true,
+     "others": 1
+    }
+   ],
+   "vulkan": [
+    {
+     "stats": {
+      "frames": 2802,
+      "mean": 10.223375446109937,
+      "p50": 9.636,
+      "p99": 21.498,
+      "p999": 36.903,
+      "worst": 42.971,
+      "low1Fps": 39.44183010091668,
+      "over25": 8,
+      "over50": 0,
+      "pace50": 2.59,
+      "pace99": 11.633
+     },
+     "side": {
+      "draws": 835.656673804425,
+      "renderCpu": 0.609018915300281,
+      "sim": 0.125273414776033,
+      "cpuCores": 0.5209690023443605,
+      "peakWsMb": 1127.75390625,
+      "threads": 68
+     },
+     "errors": 0,
+     "contended": true,
+     "others": 3
+    }
+   ]
+  }
+ }
+}

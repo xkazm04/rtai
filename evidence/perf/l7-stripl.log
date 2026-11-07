@@ -1,0 +1,24 @@
+riot off@exe r0: p50 3.59 p99 6.51 worst 9.1 draws 832 cpu 1.03 cores ws 754 MB errors 0 CONTENDED(2)
+riot stripl@exe-windows-bench-stripl r0: p50 4.51 p99 8.31 worst 24.2 draws 832 cpu 1.01 cores ws 752 MB errors 0 CONTENDED(2)
+drive70 off@exe r0: p50 2.05 p99 4.23 worst 17.8 draws 293 cpu 0.98 cores ws 760 MB errors 0 CONTENDED(2)
+drive70 stripl@exe-windows-bench-stripl r0: p50 2.22 p99 4.35 worst 6.1 draws 293 cpu 1.04 cores ws 746 MB errors 0 CONTENDED(2)
+riot60 off@exe r0: p50 16.68 p99 18.83 worst 36.2 draws 831 cpu 0.26 cores ws 770 MB errors 0
+riot60 stripl@exe-windows-bench-stripl r0: p50 16.67 p99 18.38 worst 22.2 draws 832 cpu 0.38 cores ws 746 MB errors 0 CONTENDED(0)
+riot stripl@exe-windows-bench-stripl r1: p50 5.59 p99 9.39 worst 16.2 draws 832 cpu 0.98 cores ws 749 MB errors 0 CONTENDED(10)
+riot off@exe r1: p50 4.49 p99 8.42 worst 26.2 draws 832 cpu 1.03 cores ws 754 MB errors 0 CONTENDED(10)
+drive70 stripl@exe-windows-bench-stripl r1: p50 2.52 p99 4.95 worst 5.7 draws 293 cpu 1.02 cores ws 749 MB errors 0 CONTENDED(8)
+drive70 off@exe r1: p50 2.04 p99 3.92 worst 5.5 draws 293 cpu 1.02 cores ws 758 MB errors 0 CONTENDED(2)
+riot60 stripl@exe-windows-bench-stripl r1: p50 16.68 p99 17.02 worst 20.7 draws 832 cpu 0.29 cores ws 749 MB errors 0 CONTENDED(2)
+riot60 off@exe r1: p50 16.68 p99 17.21 worst 21.0 draws 832 cpu 0.26 cores ws 758 MB errors 0
+riot off@exe r2: p50 3.50 p99 6.17 worst 8.5 draws 832 cpu 1.02 cores ws 756 MB errors 0
+riot stripl@exe-windows-bench-stripl r2: p50 3.98 p99 6.88 worst 10.3 draws 832 cpu 1.02 cores ws 745 MB errors 0
+drive70 off@exe r2: p50 2.01 p99 3.50 worst 6.1 draws 293 cpu 1.00 cores ws 754 MB errors 0
+drive70 stripl@exe-windows-bench-stripl r2: p50 2.21 p99 4.01 worst 5.8 draws 293 cpu 1.06 cores ws 745 MB errors 0
+riot60 off@exe r2: p50 16.68 p99 17.41 worst 21.1 draws 832 cpu 0.27 cores ws 757 MB errors 0 CONTENDED(0)
+riot60 stripl@exe-windows-bench-stripl r2: p50 16.67 p99 18.81 worst 34.6 draws 832 cpu 0.29 cores ws 745 MB errors 0 CONTENDED(2)
+riot off@exe: p50 3.59±0.50 p99 6.51±1.13 p99.9 8.47±4.59 worst 9.13±8.83 draws 832.19±0.00 renderCpu 0.42±0.07 gpu 0.31±0.03 vram 843.35±12.00 cpu 1.03±0.00 ws 754.33±1.42 contended 2 errors 0
+riot stripl@exe-windows-bench-stripl: p50 4.51±0.81 WASH p99 8.31±1.26 WASH p99.9 11.72±6.11 WASH worst 16.16±6.99 WASH draws 832.13±0.17 WASH renderCpu 0.48±0.07 WASH gpu 0.36±0.05 WASH vram 851.35±8.00 WASH cpu 1.01±0.02 WASH ws 749.48±3.31 WASH contended 2 errors 0
+drive70 off@exe: p50 2.04±0.02 p99 3.92±0.36 p99.9 4.68±1.63 worst 6.08±6.16 draws 293.04±0.00 renderCpu 0.20±0.00 gpu 0.22±0.01 vram 869.97±16.00 cpu 1.00±0.02 ws 758.11±3.16 contended 2 errors 0
+drive70 stripl@exe-windows-bench-stripl: p50 2.22±0.16 WASH p99 4.35±0.47 WASH p99.9 5.35±0.22 WASH worst 5.78±0.21 WASH draws 293.04±0.00 WASH renderCpu 0.19±0.01 WASH gpu 0.23±0.01 WASH vram 885.97±16.09 WASH cpu 1.04±0.02 WASH ws 746.09±2.00 WIN contended 2 errors 0
+riot60 off@exe: p50 16.68±0.00 p99 17.41±0.81 p99.9 20.37±3.67 worst 21.10±7.60 draws 832.03±0.33 renderCpu 0.48±0.02 gpu 2.50±0.34 vram 867.35±8.00 cpu 0.26±0.01 ws 758.42±6.34 contended 1 errors 0
+riot60 stripl@exe-windows-bench-stripl: p50 16.67±0.00 WASH p99 18.38±0.89 WASH p99.9 21.68±1.66 WASH worst 22.17±6.91 WASH draws 831.95±0.12 WASH renderCpu 0.51±0.11 WASH gpu 2.47±0.16 WASH vram 867.35±8.00 WASH cpu 0.29±0.05 WASH ws 745.91±1.91 WASH contended 3 errors 0

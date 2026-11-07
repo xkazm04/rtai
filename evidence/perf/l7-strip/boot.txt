@@ -1,0 +1,7 @@
+round 1: exe 2295 ms, exe_b 2513 ms
+round 2: exe 2394 ms, exe_b 2399 ms
+round 3: exe 2884 ms, exe_b 2279 ms
+round 4: exe 2083 ms, exe_b 2218 ms
+round 5: exe 2207 ms, exe_b 2547 ms
+round 6: exe 2572 ms, exe_b 2426 ms
+round 7: exe 2717 ms, exe_b 2403 ms

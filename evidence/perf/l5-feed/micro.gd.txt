@@ -1,0 +1,76 @@
+extends SceneTree
+@warning_ignore_start("return_value_discarded")
+## L5 mechanism: old vs new CityFxFeed.observe on a synthetic riot snapshot (400 people, 60 projectiles
+## in flight, ~1 death a tick), plus the per-person slice; interleaved blocks, same process.
+
+const PEOPLE: int = 400
+const PROJ: int = 60
+const TICKS: int = 600
+const BLOCKS: int = 8
+
+
+func _snap(t: int) -> PackedFloat64Array:
+	var s: PackedFloat64Array = PackedFloat64Array()
+	s.resize(PEOPLE * SimConst.SNAP_STRIDE)
+	for i: int in PEOPLE:
+		var r: int = i * SimConst.SNAP_STRIDE
+		s[r] = i
+		s[r + 1] = SimConst.K_COP if i % 5 == 0 else SimConst.K_PED
+		s[r + 2] = SimConst.M_DEAD if i < t * PEOPLE / (TICKS * 2) else 0
+		s[r + 4] = float(i % 20)
+		s[r + 5] = float(i / 20)
+		s[r + 6] = 1.0
+	for k: int in PROJ:
+		var kk: int = (k + t / 10 * 7) % SimConst.PCAP
+		s.append_array(PackedFloat64Array([SimConst.SNAP_PROJ_BASE + kk, float(k) + t * 0.5, 3.0]))
+	return s
+
+
+func _run(feed: Object, snaps: Array[PackedFloat64Array]) -> int:
+	var t0: int = Time.get_ticks_usec()
+	for t: int in snaps.size():
+		feed.call(&"observe", snaps[t], t)
+	return Time.get_ticks_usec() - t0
+
+
+func _slices(snaps: Array[PackedFloat64Array], cut: bool) -> int:
+	var t0: int = Time.get_ticks_usec()
+	var acc: float = 0.0
+	for snap: PackedFloat64Array in snaps:
+		for r: int in range(0, 20 * SimConst.SNAP_STRIDE, SimConst.SNAP_STRIDE):  # 20 people in rig range
+			if cut:
+				var a: PackedFloat64Array = snap.slice(r, r + SimConst.SNAP_STRIDE)
+				acc += a[4] + a[5] + a[6] + a[7] + a[8] + a[10]
+			else:
+				acc += snap[r + 4] + snap[r + 5] + snap[r + 6] + snap[r + 7] + snap[r + 8] + snap[r + 10]
+	return Time.get_ticks_usec() - t0 + int(acc) * 0
+
+
+func _initialize() -> void:
+	var old_script: GDScript = load(OS.get_cmdline_user_args()[0])
+	var new_script: GDScript = load("res://features/city/view/city_fx_feed.gd")
+	var trig: GDScript = load("res://core/render/fx_triggers.gd")
+	var snaps: Array[PackedFloat64Array] = []
+	for t: int in TICKS:
+		snaps.append(_snap(t))
+	var names: Array[String] = ["old", "new", "slice", "offset"]
+	var res: Array[PackedInt64Array] = [PackedInt64Array(), PackedInt64Array(), PackedInt64Array(), PackedInt64Array()]
+	for b: int in BLOCKS:
+		var o: Object = old_script.new(trig.new())
+		var n: Object = new_script.new(trig.new())
+		if b % 2 == 0:
+			res[0].append(_run(o, snaps))
+			res[1].append(_run(n, snaps))
+		else:
+			res[1].append(_run(n, snaps))
+			res[0].append(_run(o, snaps))
+		res[2].append(_slices(snaps, true))
+		res[3].append(_slices(snaps, false))
+	for j: int in 4:
+		var v: PackedInt64Array = res[j]
+		v.sort()
+		var lo: float = float(v[0]) / TICKS
+		var hi: float = float(v[BLOCKS - 1]) / TICKS
+		var med: float = float(v[BLOCKS / 2]) / TICKS
+		printerr("l5micro " + "%s us/tick median %.2f min %.2f max %.2f" % [names[j], med, lo, hi])
+	quit()

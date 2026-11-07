@@ -1,0 +1,12 @@
+drive70 lossless r0: p50 2.59 p99 4.88 worst 6.5 draws 293 cpu 0.96 cores ws 856 MB errors 0
+drive70 bc7 r0: p50 2.60 p99 4.86 worst 6.3 draws 293 cpu 1.02 cores ws 854 MB errors 0
+riot lossless r0: p50 5.32 p99 9.90 worst 13.9 draws 832 cpu 1.03 cores ws 899 MB errors 0
+riot bc7 r0: p50 5.39 p99 10.35 worst 13.4 draws 832 cpu 1.01 cores ws 832 MB errors 0
+drive70 bc7 r1: p50 2.99 p99 5.30 worst 6.0 draws 293 cpu 1.02 cores ws 836 MB errors 0
+drive70 lossless r1: p50 2.81 p99 5.07 worst 6.3 draws 293 cpu 1.00 cores ws 831 MB errors 0
+riot bc7 r1: p50 5.50 p99 9.82 worst 16.4 draws 832 cpu 1.00 cores ws 762 MB errors 0 CONTENDED(0)
+riot lossless r1: p50 4.79 p99 9.79 worst 15.4 draws 832 cpu 1.01 cores ws 834 MB errors 0 CONTENDED(2)
+drive70 lossless: p50 2.81±0.11 p99 5.07±0.09 p99.9 6.41±0.13 worst 6.53±0.12 draws 293.04±0.00 renderCpu 0.24±0.01 gpu 0.24±0.01 vram 902.04±24.03 cpu 1.00±0.02 ws 855.50±12.04 contended 0 errors 0
+drive70 bc7: p50 2.99±0.20 WASH p99 5.30±0.22 WASH p99.9 5.84±0.23 WIN worst 6.32±0.17 WASH draws 293.04±0.00 WASH renderCpu 0.25±0.01 WASH gpu 0.21±0.00 WASH vram 573.42±16.00 WIN cpu 1.02±0.00 WASH ws 854.39±9.40 WASH contended 0 errors 0
+riot lossless: p50 5.32±0.26 p99 9.90±0.06 p99.9 13.45±0.20 worst 15.41±0.73 draws 832.16±0.13 renderCpu 0.60±0.05 gpu 0.46±0.03 vram 883.35±0.00 cpu 1.03±0.01 ws 898.78±32.34 contended 1 errors 0
+riot bc7: p50 5.50±0.05 WASH p99 10.35±0.26 WASH p99.9 13.27±0.55 WASH worst 16.45±1.53 WASH draws 831.96±0.05 WASH renderCpu 0.62±0.01 WASH gpu 0.52±0.05 WASH vram 553.61±8.00 WIN cpu 1.01±0.00 WASH ws 831.97±34.82 WASH contended 1 errors 0

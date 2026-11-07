@@ -1,0 +1,232 @@
+#!/usr/bin/env node
+// The perf lane's interleaved A/B runner (docs/perf/LEDGER.md). Runs each scene once per arm per
+// round, alternating the arm order every round (ABBA...), so a machine's slow drift lands on both.
+//   node tools/perf/ab.mjs --scenes=king,drive70,riot --arms=base:,lever:--some-flag [--pairs=3]
+//        [--out=evidence/perf/<name>] [--headless] [--no-lock]
+// An arm is `<name>:<extra user args>[^<extra engine args>]` (space separated, comma-free), e.g.
+// `mobile:^--rendering-method mobile` A/Bs the renderer without touching the project. A third `^` segment
+// sets env vars for that arm (`KEY=VAL ...`): `stock@exe-windows-bench-tw:^^GTAI_TW_TRIM_MB=0` (L9: one binary, two arms). A name ending
+// `@exe` (e.g. `rel@exe:`) runs the exported windows-bench release build (EXE) instead of the editor
+// binary: the release-vs-debug baseline; `@exe-<dir>` runs build/export/<dir>/RTAI-bench.exe instead (L7: the
+// same pck beside another export template); export it first (`node tools/bench/run.mjs` or the line in LEDGER). Takes C:/Users/kazda/kiro/gtai-n5/bench.lock
+// (noclobber) for the whole run; every run is stamped CONTENDED when another Godot was up.
+// Writes <out>/<scene>-<arm>-<round>.json (the scene's own log) and <out>/ab.json (the summary).
+import { spawn } from 'node:child_process';
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { join, resolve } from 'node:path';
+import { ROOT } from '../lib/repo.mjs';
+import { describe, runGodot, runProcess, SCRIPT_ERROR } from '../lib/godot.mjs';
+import { foreignGodot, register } from '../lib/run_ledger.mjs';
+import { frameStats, verdict } from './stats.mjs';
+
+const LOCK = 'C:/Users/kazda/kiro/gtai-n5/bench.lock';
+export const EXE = join(ROOT, 'build', 'export', 'windows-bench', 'RTAI-bench.exe');
+// --fixed-fps 60 with vsync off: every frame steps exactly one sim tick and runs as fast as it can,
+// so a frame's wall time is the cost of one 60 Hz gameplay frame. Uncapped without it, most frames
+// carry no tick (the riot at ~400 fps ticks every 6-7th frame) and p50 reads the cheap ones (F3).
+// `--screen 0` pins the window to the same monitor for every arm: the git-excluded override.cfg does it
+// for the editor binary only, and an exported exe on the primary (ultrawide) screen blocked 27-47 ms in
+// present (F8): a placement confound, not a build cost.
+const WIN = ['--screen', '0', '--rendering-driver', 'd3d12', '--disable-vsync', '--fixed-fps', '60', '--resolution', '1920x1080'];
+// The player's case: vsync on and a 60 fps cap, real time (no --fixed-fps). Its frame times are the
+// presented interval (a delivery bar, not a cost); the numbers it exists for are the process CPU in
+// cores and the peak RAM at the cap (`*60` presets): the "least resources" side.
+const CAP60 = ['--screen', '0', '--rendering-driver', 'd3d12', '--max-fps', '60', '--resolution', '1920x1080'];
+
+/** Scene presets: engine args, scene, user args (`OUT` is replaced by the log path), log kind. */
+export const SCENES = {
+  king: { engine: WIN, scene: 'res://dev/arena/arena.tscn', kind: 'fight',
+    user: ['--boss=king', '--bot=boss', '--seed=2', '--rigs', '--view=combo', '--frames=OUT', '--frames-ticks=1500'] },
+  reel: { engine: WIN, scene: 'res://dev/arena/arena.tscn', kind: 'fight',
+    user: ['--bot=reel', '--reel=director', '--loadout=pistol', '--rigs', '--view=tilt70', '--frames=OUT', '--frames-ticks=3600'] },
+  drive70: { engine: WIN, scene: 'res://dev/bench/city_bench.tscn', kind: 'bench',
+    user: ['--scenario=drive_dense', '--zoom=1.5', '--view=tilt70', '--secs=30', '--out=OUT'] },
+  riot: { engine: WIN, scene: 'res://dev/bench/city_bench.tscn', kind: 'bench',
+    user: ['--scenario=riot', '--zoom=1.0', '--view=tilt70', '--secs=30', '--out=OUT'] },
+  king60: { engine: CAP60, scene: 'res://dev/arena/arena.tscn', kind: 'fight',
+    user: ['--boss=king', '--bot=boss', '--seed=2', '--rigs', '--view=combo', '--frames=OUT', '--frames-ticks=1500'] },
+  drive60: { engine: CAP60, scene: 'res://dev/bench/city_bench.tscn', kind: 'bench',
+    user: ['--scenario=drive_dense', '--zoom=1.5', '--view=tilt70', '--secs=30', '--vsync=enabled', '--out=OUT'] },
+  riot60: { engine: CAP60, scene: 'res://dev/bench/city_bench.tscn', kind: 'bench',
+    user: ['--scenario=riot', '--zoom=1.0', '--view=tilt70', '--secs=30', '--vsync=enabled', '--out=OUT'] },
+  // quest 1 from the Dock 9 fight (quest1_frames: its own one-tick-a-frame loop, 1200 frames, the play view).
+  quest1: { engine: [...WIN, '-s', 'res://dev/bench/quest1_frames.gd'], scene: '', kind: 'slice',
+    user: ['--out=OUT', '--view=tilt70'] },
+  drive70h: { engine: ['--fixed-fps', '60'], headless: true, scene: 'res://dev/bench/city_bench.tscn', kind: 'bench',
+    user: ['--scenario=drive_dense', '--zoom=1.5', '--view=tilt70', '--secs=30', '--out=OUT'] },
+};
+
+function parseArgs(argv) {
+  const o = { scenes: 'king', arms: 'base:', pairs: 3, out: '', lock: true };
+  for (const a of argv) {
+    const [k, ...rest] = a.replace(/^--/, '').split('=');
+    const v = rest.join('=');
+    if (k === 'no-lock') o.lock = false;
+    else if (k in o) o[k] = k === 'pairs' ? Number(v) : v;
+    else throw new Error(`ab: unknown argument ${a}`);
+  }
+  o.arms = o.arms.split(',').map((s) => {
+    const i = s.indexOf(':');
+    const [user, engine = '', envs = ''] = s.slice(i + 1).split('^');
+    const env = Object.fromEntries(envs.split(' ').filter(Boolean).map((kv) => [kv.split('=')[0], kv.split('=').slice(1).join('=')]));
+    return { name: s.slice(0, i), user: user.split(' ').filter(Boolean), engine: engine.split(' ').filter(Boolean), env };
+  });
+  o.scenes = o.scenes.split(',');
+  return o;
+}
+
+/** Frames of one log, warm-up / settle frames dropped, plus the side series (render, draws). */
+export function readLog(kind, doc) {
+  if (kind === 'slice') return { wall: doc.wall_ms ?? [], side: {} }; // quest1_frames: already past its warm-up
+  if (kind === 'bench') {
+    const m = doc.metrics ?? {};
+    return { wall: doc.frame_ms, side: { draws: m.drawCallsAvg, renderCpu: m.renderCpuMsAvg,
+      renderGpu: m.renderGpuMsAvg, sim: m.simStepMsPerTick, vramMb: m.vramPeakMb, texMb: m.texMemPeakMb,
+      frames: m.framesMeasured, noTick: m.framesNoTick, multiTick: m.framesMultiTick } };
+  }
+  let t = 0;
+  let k = 0;
+  while (k < doc.wall_ms.length && t < 1000) t += doc.wall_ms[k++];
+  const cut = (a) => (a ?? []).slice(k);
+  const avg = (a) => (a.length ? a.reduce((s, v) => s + v, 0) / a.length : NaN);
+  return { wall: cut(doc.wall_ms), side: { draws: avg(cut(doc.draw_calls)), renderCpu: avg(cut(doc.render_cpu_ms)),
+    renderGpu: avg(cut(doc.render_gpu_ms)), process: avg(cut(doc.process_ms)) } };
+}
+
+async function runOnce(sceneName, arm, round, outDir) {
+  const sc = SCENES[sceneName];
+  const file = resolve(outDir, `${sceneName}-${arm.name}-${round}.json`).replace(/\\/g, '/');
+  rmSync(file, { force: true });
+  const user = sc.user.map((u) => u.replace('OUT', file));
+  const others = foreignGodot().length;
+  const env = { ...process.env, APPDATA: process.env.APPDATA_PERF ?? 'C:/Users/kazda/kiro/gtai-d9x/appdata/perf', ...arm.env };
+  const sampler = startSampler();
+  const exeDir = arm.name.match(/@exe(?:-([\w.-]+))?$/)?.[1] ?? (arm.name.endsWith('@exe') ? 'windows-bench' : null);
+  const exe = exeDir !== null;
+  if (exe && sc.scene !== 'res://dev/bench/city_bench.tscn') return { error: `${sceneName}: @exe runs city_bench presets only` };
+  // A release template refuses a scene path (disable_path_overrides): the bench export boots city_bench.
+  const args = [...sc.engine, ...arm.engine, ...(exe || !sc.scene ? [] : [sc.scene]), '--', ...user, ...arm.user];
+  const res = exe ? await runExe(sc.headless ? ['--headless', ...args] : args, env, exeDir)
+    : await runGodot(args, { headless: !!sc.headless, env, timeoutMs: 6 * 60 * 1000, name: `perf-ab-${sceneName}` });
+  const proc = sampler.stop();
+  const errors = (res.out.match(new RegExp(SCRIPT_ERROR.source, 'g')) ?? []).length;
+  if (!existsSync(file)) return { error: `${sceneName}/${arm.name}: no log (${describe(res)}) ${res.out.slice(-400)}` };
+  const log = readLog(sc.kind, JSON.parse(readFileSync(file, 'utf8')));
+  return { stats: frameStats(log.wall), side: { ...log.side, ...proc }, errors, contended: others > 0 || foreignGodot().length > 0, others };
+}
+
+/** The exported release build (EXE), registered in the run ledger like a runGodot call. */
+async function runExe(args, env, dir) {
+  const exePath = dir === 'windows-bench' ? EXE : join(ROOT, 'build', 'export', dir, 'RTAI-bench.exe');
+  if (!existsSync(exePath)) return { status: -1, out: `no ${exePath}: export windows-bench first`, timedOut: false, durationMs: 0 };
+  const entry = register({ kind: 'perf-ab-exe' });
+  try {
+    return await runProcess(exePath, args, { cwd: join(ROOT, 'build', 'export', dir), env,
+      timeoutMs: 6 * 60 * 1000, onSpawn: (pid) => entry.setChild(pid) });
+  } finally {
+    entry.release();
+  }
+}
+
+/** The process sampler (proc_sample.ps1) over this runner's Godot children. stop() returns the
+ *  steady-state CPU in cores (the first SKIP samples, the boot, left out), the peak working set
+ *  in MB and the peak thread count; NaN when it saw fewer than two steady samples. */
+export function startSampler(skip = 3) {
+  const ps = spawn('powershell', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File',
+    join(ROOT, 'tools', 'perf', 'proc_sample.ps1'), '-Root', String(process.pid)], { windowsHide: true });
+  let text = '';
+  ps.stdout.on('data', (d) => { text += d.toString('utf8'); });
+  return { stop() { ps.kill(); return procStats(text, skip); } };
+}
+
+export function procStats(text, skip = 3) {
+  const rows = text.split(String.fromCharCode(10)).map((l) => l.trim()).filter((l) => l.startsWith('{')).map((l) => JSON.parse(l)).filter((r) => r.procs > 0);
+  const steady = rows.slice(skip);
+  const out = { cpuCores: NaN, peakWsMb: NaN, wsMb: NaN, lastWsMb: NaN, threads: NaN };
+  if (!rows.length) return out;
+  out.peakWsMb = Math.max(...rows.map((r) => r.ws)) / 1048576;
+  // L9: the steady working set (median after the boot samples) and the last sample: the peak keeps
+  // a load-time spike that a release later in the run (a freed upload buffer) never shows.
+  const ws = steady.map((r) => r.ws).sort((x, y) => x - y);
+  if (ws.length) out.wsMb = ws[Math.floor(ws.length / 2)] / 1048576;
+  if (steady.length) out.lastWsMb = steady[steady.length - 1].ws / 1048576;
+  out.threads = Math.max(...rows.map((r) => r.threads));
+  if (steady.length >= 2) {
+    const a = steady[0];
+    const b = steady[steady.length - 1];
+    out.cpuCores = (b.cpu100ns - a.cpu100ns) / 1e4 / (b.t - a.t);
+  }
+  return out;
+}
+
+function takeLock() {
+  try {
+    writeFileSync(LOCK, JSON.stringify({ lane: 'perf', pid: process.pid, start: new Date().toISOString() }), { flag: 'wx' });
+    return true;
+  } catch { return false; }
+}
+
+const METRICS = ['p50', 'p99', 'p999', 'worst', 'mean', 'pace99', 'over25'];
+
+export function summarise(results, arms) {
+  const out = {};
+  for (const [scene, byArm] of Object.entries(results)) {
+    out[scene] = {};
+    const base = byArm[arms[0].name] ?? [];
+    for (const arm of arms) {
+      const runs = byArm[arm.name] ?? [];
+      const row = {};
+      for (const m of METRICS) row[m] = verdict(base.map((r) => r.stats[m]), runs.map((r) => r.stats[m]));
+      for (const s of ['draws', 'renderCpu', 'renderGpu', 'process', 'sim', 'vramMb', 'texMb', 'cpuCores', 'peakWsMb', 'wsMb', 'lastWsMb', 'threads', 'frames', 'noTick', 'multiTick']) {
+        row[s] = verdict(base.map((r) => r.side[s] ?? NaN), runs.map((r) => r.side[s] ?? NaN));
+      }
+      row.contended = runs.filter((r) => r.contended).length;
+      row.scriptErrors = runs.reduce((s, r) => s + r.errors, 0);
+      out[scene][arm.name] = row;
+    }
+  }
+  return out;
+}
+
+async function main() {
+  const o = parseArgs(process.argv.slice(2));
+  const outDir = resolve(ROOT, o.out || join('evidence', 'perf', `ab-${Date.now()}`));
+  mkdirSync(outDir, { recursive: true });
+  let locked = false;
+  if (o.lock) {
+    const t0 = Date.now();
+    while (!(locked = takeLock()) && Date.now() - t0 < 10 * 60 * 1000) await new Promise((r) => setTimeout(r, 15000));
+    if (!locked) console.error('ab: bench.lock still held after 10 min: running CONTENDED');
+  }
+  const results = {};
+  try {
+    for (let round = 0; round < o.pairs; round++) {
+      const order = round % 2 === 0 ? o.arms : [...o.arms].reverse();
+      for (const scene of o.scenes) {
+        for (const arm of order) {
+          const r = await runOnce(scene, arm, round, outDir);
+          if (r.error) { console.error(`ab: ${r.error}`); continue; }
+          ((results[scene] ??= {})[arm.name] ??= []).push(r);
+          const s = r.stats;
+          console.log(`${scene} ${arm.name} r${round}: p50 ${s.p50.toFixed(2)} p99 ${s.p99.toFixed(2)} worst ${s.worst.toFixed(1)} `
+            + `draws ${Math.round(r.side.draws)} cpu ${r.side.cpuCores.toFixed(2)} cores ws ${Math.round(r.side.peakWsMb)} MB steady ${Math.round(r.side.wsMb)} last ${Math.round(r.side.lastWsMb)} frames ${r.side.frames ?? '-'} noTick ${r.side.noTick ?? '-'} multiTick ${r.side.multiTick ?? '-'} errors ${r.errors}${r.contended ? ` CONTENDED(${r.others})` : ''}`);
+        }
+      }
+    }
+  } finally {
+    if (locked) rmSync(LOCK, { force: true });
+  }
+  const summary = { schema: 'gtai.perf-ab/1', when: new Date().toISOString(), locked, arms: o.arms, summary: summarise(results, o.arms), raw: results };
+  writeFileSync(join(outDir, 'ab.json'), JSON.stringify(summary, null, 1));
+  for (const [scene, rows] of Object.entries(summary.summary)) {
+    for (const [arm, row] of Object.entries(rows)) {
+      const f = (v) => `${v.b.median.toFixed(2)}±${(v.b.spread / 2).toFixed(2)}${arm === o.arms[0].name ? '' : ` ${v.call}`}`;
+      console.log(`${scene} ${arm}: p50 ${f(row.p50)} p99 ${f(row.p99)} p99.9 ${f(row.p999)} worst ${f(row.worst)} draws ${f(row.draws)}`
+        + ` renderCpu ${f(row.renderCpu)} gpu ${f(row.renderGpu)} vram ${f(row.vramMb)} cpu ${f(row.cpuCores)} ws ${f(row.peakWsMb)} wsSteady ${f(row.wsMb)} wsLast ${f(row.lastWsMb)} frames ${f(row.frames)} noTick ${f(row.noTick)} multiTick ${f(row.multiTick)} contended ${row.contended} errors ${row.scriptErrors}`);
+    }
+  }
+}
+
+if (import.meta.url === `file:///${process.argv[1].replace(/\\/g, '/')}` || process.argv[1].endsWith('ab.mjs')) {
+  main().catch((e) => { console.error(e.message); process.exit(1); });
+}

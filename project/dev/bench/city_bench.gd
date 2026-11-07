@@ -4,8 +4,7 @@ extends Node
 ## only) or as an exported build (windowed, vsync off, uncapped). Writes gtai.bench/1 JSON.
 ## Usage: <godot|exe> [--headless --fixed-fps 60] [--path project] res://dev/bench/city_bench.tscn
 ##        -- --scenario=drive|riot --secs=60 --zoom=0.4 --out=<json path> [--fx-feed=off]
-##        [--blood=noir|ink] [--spans=<json>] (perf-city: NodeSpans' per-node cost, slows
-##        the frame: profile only)
+##        [--blood=noir|ink] [--spans=<json>] (NodeSpans' per-node cost: profile only)
 
 const KNOWN_FLAGS: PackedStringArray = [
 	"--scenario",
@@ -17,6 +16,9 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--fx-feed",
 	"--spans",
 	"--blood",
+	"--perf-hud",  # d9-perf: PerfHud; --strip-prefetch=off: L3's before (A/B)
+	"--strip-prefetch",
+	"--max-fps",  # L10: the frame limiter (0 = none, the default); the engine's own --max-fps is reset
 	"--view"  # read by ViewMode.shared() (the view lab A/B); top = the default
 ]
 const VSYNC: Dictionary[String, DisplayServer.VSyncMode] = {
@@ -56,7 +58,7 @@ func _ready() -> void:
 			get_tree().quit(2)
 			return
 		_args[flag] = arg.substr(flag.length() + 1)
-	Engine.max_fps = 0
+	Engine.max_fps = str(_args.get("--max-fps", "0")).to_int()
 	if not _headless():
 		var mode: DisplayServer.VSyncMode = VSYNC.get(
 			_args["--vsync"], DisplayServer.VSYNC_DISABLED
@@ -78,10 +80,10 @@ func _ready() -> void:
 	_characters.rivet_on_foot = _args["--scenario"] == "riot"
 	_city.body.on = _characters.rivet_on_foot  # in a car Rivet has no body (features/bodies)
 	await _characters.bake()
-	var prewarm_us: int = await _view.prewarm()
-	printerr("city_bench: prewarm %.1f ms" % (prewarm_us / 1000.0))
+	printerr("city_bench: prewarm %.1f ms" % ((await _view.prewarm()) / 1000.0))
 	add_child(world)
 	_world = world
+	PerfHud.attach(self)
 	if _args["--spans"] != "":
 		NodeSpans.attach(self, ArenaArgs.parse(["--spans=" + _args["--spans"]]))
 	_last_us = Time.get_ticks_usec()
@@ -102,7 +104,7 @@ func _process(_delta: float) -> void:
 	_stats.add(ms, _city.take_stats(), swapped, Vector2i(live, _view.visible_actors))
 	var vp: RID = get_viewport().get_viewport_rid()
 	var dc: int = int(Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME))
-	_stats.add_render(dc, RenderingServer.viewport_get_measured_render_time_cpu(vp))
+	_stats.add_render(dc, vp)
 	var stepped: int = _characters.rigs.ticks_stepped
 	_stats.add_rig(_characters.rigs.last_us, stepped - _rig_ticks, _characters.rigs.full_count())
 	_rig_ticks = stepped

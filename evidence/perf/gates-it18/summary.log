@@ -1,0 +1,8 @@
+reel top: 19/19 chapters all down, 0 SCRIPT ERROR
+reel tilt70: 19/19 chapters all down, 0 SCRIPT ERROR
+reel combo: 19/19 chapters all down, 0 SCRIPT ERROR
+scenarios exit 0
+[INFO] showcase: reel beat range at tick 1257
+[INFO] scenario: vehicle drive: {"final_hp_lost":12.44,"final_state":0,"hijacked":["taxi"],"max_slip_deg":90.0,"peak_speed_mps":28.0,"replay":"identical","service_us_avg":62.5444444444444,"service_us_max":132,"struck":1,"ticks":720,"timing":"CONTENDED (shared machine, headless, native sim)"}
+run_scenarios: 52 ran, 0 failed
+DONE

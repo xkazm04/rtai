@@ -1,0 +1,10 @@
+{"tag":"main1","mode":"pause","extra":"","others":8,"play":0.203,"paused":0.166,"ws_mb":726,"started":true}
+{"tag":"nopf1","mode":"pause","extra":"--menu-idle=off --strip-prefetch=off","others":10,"play":0.182,"paused":0.154,"ws_mb":725,"started":true}
+{"tag":"main2","mode":"pause","extra":"","others":4,"play":0.213,"paused":0.152,"ws_mb":731,"started":true}
+{"tag":"nopf2","mode":"pause","extra":"--menu-idle=off --strip-prefetch=off","others":4,"play":0.023,"paused":0.008,"ws_mb":739,"started":true}
+{"tag":"main3","mode":"pause","extra":"","others":2,"play":0.19,"paused":0.16,"ws_mb":729,"started":true}
+{"tag":"nopf3","mode":"pause","extra":"--menu-idle=off --strip-prefetch=off","others":2,"play":0.145,"paused":0.144,"ws_mb":734,"started":true}
+{"tag":"main4","mode":"pause","extra":"","others":2,"play":0.218,"paused":0.156,"ws_mb":728,"started":true}
+{"tag":"nopf4","mode":"pause","extra":"--menu-idle=off --strip-prefetch=off","others":2,"play":0.192,"paused":0.166,"ws_mb":714,"started":true}
+{"tag":"main5","mode":"pause","extra":"","others":2,"play":0.018,"paused":0.002,"ws_mb":735,"started":true}
+{"tag":"nopf5","mode":"pause","extra":"--menu-idle=off --strip-prefetch=off","others":2,"play":0.197,"paused":0.166,"ws_mb":733,"started":true}

@@ -1,0 +1,12 @@
+riot base r0: p50 5.95 p99 12.50 worst 24.8 draws 832 cpu 0.99 cores ws 856 MB errors 0 CONTENDED(4)
+riot l5 r0: p50 5.20 p99 10.00 worst 18.0 draws 832 cpu 1.02 cores ws 788 MB errors 0 CONTENDED(6)
+riot l5sep r0: p50 5.31 p99 9.04 worst 14.9 draws 832 cpu 1.15 cores ws 855 MB errors 0 CONTENDED(4)
+riot l5sep r1: p50 5.47 p99 10.05 worst 13.3 draws 832 cpu 1.17 cores ws 913 MB errors 0 CONTENDED(4)
+riot l5 r1: p50 5.36 p99 9.37 worst 13.2 draws 832 cpu 0.97 cores ws 854 MB errors 0 CONTENDED(4)
+riot base r1: p50 5.96 p99 11.68 worst 21.1 draws 832 cpu 0.99 cores ws 853 MB errors 0 CONTENDED(4)
+riot base r2: p50 5.62 p99 10.43 worst 18.3 draws 832 cpu 1.00 cores ws 854 MB errors 0 CONTENDED(8)
+riot l5 r2: p50 5.08 p99 9.93 worst 15.0 draws 832 cpu 0.99 cores ws 854 MB errors 0 CONTENDED(8)
+riot l5sep r2: p50 5.25 p99 9.36 worst 13.9 draws 832 cpu 1.14 cores ws 852 MB errors 0 CONTENDED(4)
+riot base: p50 5.95±0.17 p99 11.68±1.04 p99.9 17.96±1.63 worst 21.09±3.23 draws 832.00±0.04 renderCpu 0.61±0.03 gpu 0.43±0.14 vram 883.35±24.00 cpu 0.99±0.01 ws 854.05±1.20 contended 3 errors 0
+riot l5: p50 5.20±0.14 WIN p99 9.93±0.31 WASH p99.9 14.07±1.05 WIN worst 14.96±2.36 WASH draws 831.97±0.06 WASH renderCpu 0.58±0.02 WASH gpu 0.53±0.02 WASH vram 867.35±24.00 WASH cpu 0.99±0.02 WASH ws 853.92±32.96 WASH contended 3 errors 0
+riot l5sep: p50 5.31±0.11 WIN p99 9.36±0.50 WIN p99.9 13.05±1.45 WIN worst 13.95±0.80 WIN draws 832.10±0.04 LOSS renderCpu 0.55±0.01 WASH gpu 0.54±0.04 WASH vram 883.35±8.00 WASH cpu 1.15±0.01 LOSS ws 854.70±30.52 WASH contended 3 errors 0

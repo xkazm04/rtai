@@ -1,0 +1,8 @@
+riot scratch r0: p50 6.46 p99 13.57 worst 24.4 draws 832 cpu 1.03 cores ws 866 MB errors 0 CONTENDED(10)
+riot here r0: p50 6.49 p99 12.25 worst 32.5 draws 832 cpu 0.99 cores ws 906 MB errors 0 CONTENDED(9)
+riot here r1: p50 7.15 p99 12.85 worst 22.3 draws 832 cpu 1.01 cores ws 784 MB errors 0 CONTENDED(10)
+riot scratch r1: p50 7.05 p99 14.77 worst 27.9 draws 832 cpu 1.00 cores ws 850 MB errors 0 CONTENDED(9)
+riot scratch r2: p50 7.57 p99 14.27 worst 23.6 draws 832 cpu 1.00 cores ws 848 MB errors 0 CONTENDED(8)
+riot here r2: p50 6.80 p99 12.22 worst 20.7 draws 832 cpu 0.94 cores ws 850 MB errors 0 CONTENDED(9)
+riot scratch: p50 7.05±0.55 p99 14.27±0.60 p99.9 22.55±1.67 worst 24.38±2.17 draws 831.79±0.10 renderCpu 0.85±0.10 gpu 0.62±0.18 vram 867.35±8.00 cpu 1.00±0.01 ws 850.46±9.24 contended 3 errors 0
+riot here: p50 6.80±0.33 WASH p99 12.25±0.32 WIN p99.9 18.93±4.89 WASH worst 22.26±5.90 WASH draws 831.83±0.02 WASH renderCpu 0.82±0.04 WASH gpu 0.64±0.05 WASH vram 867.35±24.00 WASH cpu 0.99±0.03 WASH ws 850.37±61.06 WASH contended 3 errors 0

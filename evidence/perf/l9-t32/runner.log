@@ -1,0 +1,16 @@
+riot stock@exe-windows-bench-tw r0: p50 4.21 p99 7.87 worst 20.0 draws 832 cpu 1.01 cores ws 744 MB steady 744 last 744 errors 0 CONTENDED(0)
+riot t32@exe-windows-bench-tw r0: p50 4.88 p99 8.98 worst 13.8 draws 832 cpu 1.01 cores ws 741 MB steady 741 last 741 errors 0 CONTENDED(2)
+riot60 stock@exe-windows-bench-tw r0: p50 16.68 p99 20.18 worst 34.9 draws 831 cpu 0.35 cores ws 745 MB steady 745 last 745 errors 0 CONTENDED(2)
+riot60 t32@exe-windows-bench-tw r0: p50 16.68 p99 19.48 worst 24.0 draws 832 cpu 0.34 cores ws 753 MB steady 683 last 429 errors 0 CONTENDED(0)
+riot t32@exe-windows-bench-tw r1: p50 5.09 p99 9.01 worst 21.9 draws 832 cpu 1.01 cores ws 743 MB steady 743 last 682 errors 0 CONTENDED(0)
+riot stock@exe-windows-bench-tw r1: p50 4.49 p99 9.47 worst 16.1 draws 832 cpu 0.99 cores ws 809 MB steady 808 last 809 errors 0 CONTENDED(2)
+riot60 t32@exe-windows-bench-tw r1: p50 16.68 p99 20.84 worst 34.0 draws 832 cpu 0.34 cores ws 806 MB steady 729 last 729 errors 0
+riot60 stock@exe-windows-bench-tw r1: p50 16.69 p99 19.93 worst 21.7 draws 832 cpu 0.35 cores ws 807 MB steady 795 last 730 errors 0 CONTENDED(2)
+riot stock@exe-windows-bench-tw r2: p50 4.24 p99 8.50 worst 14.4 draws 832 cpu 1.00 cores ws 744 MB steady 743 last 555 errors 0 CONTENDED(2)
+riot t32@exe-windows-bench-tw r2: p50 4.36 p99 8.71 worst 16.1 draws 832 cpu 1.01 cores ws 743 MB steady 743 last 743 errors 0
+riot60 stock@exe-windows-bench-tw r2: p50 16.67 p99 19.57 worst 27.7 draws 832 cpu 0.37 cores ws 747 MB steady 746 last 554 errors 0 CONTENDED(0)
+riot60 t32@exe-windows-bench-tw r2: p50 16.68 p99 19.91 worst 36.9 draws 832 cpu 0.33 cores ws 746 MB steady 686 last 686 errors 0 CONTENDED(4)
+riot stock@exe-windows-bench-tw: p50 4.24±0.14 p99 8.50±0.80 p99.9 11.28±1.04 worst 16.06±2.78 draws 832.13±0.10 renderCpu 0.45±0.02 gpu 0.40±0.02 vram 883.35±32.00 cpu 1.00±0.01 ws 743.80±32.45 wsSteady 743.58±32.58 wsLast 743.80±126.73 contended 3 errors 0
+riot t32@exe-windows-bench-tw: p50 4.88±0.36 WASH p99 8.98±0.15 WASH p99.9 11.52±1.19 WASH worst 16.08±4.05 WASH draws 832.11±0.12 WASH renderCpu 0.47±0.04 WASH gpu 0.37±0.02 WASH vram 771.35±16.00 WIN cpu 1.01±0.00 WASH ws 743.38±0.97 WASH wsSteady 743.11±1.07 WASH wsLast 741.47±30.51 WASH contended 2 errors 0
+riot60 stock@exe-windows-bench-tw: p50 16.68±0.01 p99 19.93±0.30 p99.9 24.41±2.72 worst 27.69±6.61 draws 831.68±0.24 renderCpu 0.61±0.02 gpu 3.84±0.76 vram 851.35±16.00 cpu 0.35±0.01 ws 746.66±30.72 wsSteady 746.46±24.82 wsLast 730.16±95.48 contended 3 errors 0
+riot60 t32@exe-windows-bench-tw: p50 16.68±0.00 WASH p99 19.91±0.68 WASH p99.9 27.81±3.29 WASH worst 34.00±6.46 WASH draws 832.11±0.28 WASH renderCpu 0.57±0.01 WIN gpu 2.53±1.40 WASH vram 755.35±8.00 WIN cpu 0.34±0.01 WASH ws 752.84±30.16 WASH wsSteady 686.21±22.87 WIN wsLast 686.31±149.82 WASH contended 2 errors 0

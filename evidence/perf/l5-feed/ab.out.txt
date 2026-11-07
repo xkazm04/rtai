@@ -1,0 +1,24 @@
+riot base r0: p50 4.88 p99 10.47 worst 17.9 draws 832 cpu 1.01 cores ws 855 MB errors 0 CONTENDED(4)
+riot l5 r0: p50 4.70 p99 8.27 worst 11.3 draws 832 cpu 0.99 cores ws 919 MB errors 0 CONTENDED(4)
+drive70 base r0: p50 2.77 p99 5.58 worst 12.6 draws 293 cpu 1.05 cores ws 853 MB errors 0 CONTENDED(4)
+drive70 l5 r0: p50 2.64 p99 5.03 worst 9.9 draws 293 cpu 1.00 cores ws 853 MB errors 0 CONTENDED(6)
+quest1 base r0: p50 3.63 p99 6.96 worst 18.8 draws NaN cpu 0.94 cores ws 1035 MB errors 0 CONTENDED(6)
+quest1 l5 r0: p50 3.97 p99 6.93 worst 18.6 draws NaN cpu 1.03 cores ws 970 MB errors 0 CONTENDED(6)
+riot l5 r1: p50 4.53 p99 8.69 worst 11.3 draws 832 cpu 1.02 cores ws 858 MB errors 0 CONTENDED(2)
+riot base r1: p50 4.70 p99 11.01 worst 23.9 draws 832 cpu 1.00 cores ws 855 MB errors 0 CONTENDED(2)
+drive70 l5 r1: p50 2.92 p99 5.51 worst 7.9 draws 293 cpu 0.99 cores ws 852 MB errors 0 CONTENDED(4)
+drive70 base r1: p50 2.59 p99 4.70 worst 7.9 draws 293 cpu 1.04 cores ws 858 MB errors 0 CONTENDED(4)
+quest1 l5 r1: p50 3.45 p99 6.09 worst 16.6 draws NaN cpu 0.95 cores ws 1023 MB errors 0 CONTENDED(4)
+quest1 base r1: p50 3.63 p99 6.49 worst 16.1 draws NaN cpu 0.96 cores ws 1027 MB errors 0 CONTENDED(4)
+riot base r2: p50 4.80 p99 9.84 worst 15.6 draws 832 cpu 1.00 cores ws 852 MB errors 0 CONTENDED(4)
+riot l5 r2: p50 4.82 p99 8.85 worst 12.3 draws 832 cpu 1.01 cores ws 852 MB errors 0 CONTENDED(4)
+drive70 base r2: p50 2.62 p99 4.89 worst 7.0 draws 293 cpu 1.08 cores ws 856 MB errors 0 CONTENDED(4)
+drive70 l5 r2: p50 2.69 p99 5.00 worst 11.9 draws 293 cpu 1.00 cores ws 861 MB errors 0 CONTENDED(4)
+quest1 base r2: p50 3.67 p99 6.37 worst 22.0 draws NaN cpu 0.99 cores ws 1041 MB errors 0 CONTENDED(4)
+quest1 l5 r2: p50 3.56 p99 6.46 worst 16.8 draws NaN cpu 1.01 cores ws 1025 MB errors 0 CONTENDED(4)
+riot base: p50 4.80±0.09 p99 10.47±0.58 p99.9 15.95±1.48 worst 17.94±4.11 draws 832.02±0.02 renderCpu 0.52±0.02 gpu 0.44±0.08 vram 883.35±8.00 cpu 1.00±0.01 ws 854.58±1.56 contended 3 errors 0
+riot l5: p50 4.70±0.15 WASH p99 8.69±0.29 WIN p99.9 10.69±0.40 WIN worst 11.28±0.53 WASH draws 832.02±0.03 WASH renderCpu 0.49±0.05 WASH gpu 0.37±0.14 WASH vram 883.35±8.00 WASH cpu 1.01±0.01 WASH ws 857.86±33.77 WASH contended 3 errors 0
+drive70 base: p50 2.62±0.09 p99 4.89±0.44 p99.9 6.45±1.98 worst 7.95±2.81 draws 293.04±0.00 renderCpu 0.23±0.00 gpu 0.22±0.01 vram 901.97±8.00 cpu 1.05±0.02 ws 855.92±2.40 contended 3 errors 0
+drive70 l5: p50 2.69±0.14 WASH p99 5.03±0.25 WASH p99.9 7.12±0.91 WASH worst 9.88±1.96 WASH draws 293.04±0.00 WASH renderCpu 0.24±0.01 WASH gpu 0.22±0.01 WASH vram 901.97±8.00 WASH cpu 1.00±0.01 WIN ws 852.86±4.58 WASH contended 3 errors 0
+quest1 base: p50 3.63±0.02 p99 6.49±0.30 p99.9 9.70±1.19 worst 18.77±2.96 draws NaN±NaN renderCpu NaN±NaN gpu NaN±NaN vram NaN±NaN cpu 0.96±0.02 ws 1035.44±7.03 contended 3 errors 0
+quest1 l5: p50 3.56±0.26 WASH p99 6.46±0.42 WASH p99.9 10.58±0.91 WASH worst 16.76±1.04 WASH draws NaN±NaN WASH renderCpu NaN±NaN WASH gpu NaN±NaN WASH vram NaN±NaN WASH cpu 1.01±0.04 WASH ws 1022.79±27.31 WASH contended 3 errors 0

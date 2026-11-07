@@ -75,11 +75,12 @@ const MOVING: float = 6.0
 const ON: StringName = &"street_walker"
 const HID: StringName = &"street_walker_hid"
 const WAS: StringName = &"street_walker_was"
-static var _tex: Dictionary[String, Texture2D] = {}
 
 
 ## Each pose step under a tilt (StreetView, after RigHeadCard and StreetCrowdCards).
 static func step(rig: CutRig) -> void:
+	if rig.head_card != null and not rig.head_card.has_meta(StreetStrips.PREF):
+		StreetStrips.prefetch_fall(rig, ViewMode.shared().art, row_of(rig))
 	var path: String = strip_of(rig)
 	if path.is_empty():
 		release(rig)
@@ -151,9 +152,7 @@ static func release(rig: CutRig) -> void:
 
 
 static func _build(rig: CutRig, card: Sprite2D, path: String) -> void:
-	if not _tex.has(path):
-		_tex[path] = load(path) as Texture2D
-	card.texture = _tex[path]
+	card.texture = StreetStrips.get_tex(path)
 	var fall: bool = path.ends_with("_fall.png")
 	var walk: bool = path.ends_with("_walk.png")
 	card.vframes = StreetWalkerFall.FALL_FRAMES if fall else (STRIDE_FRAMES if walk else 1)

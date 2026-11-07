@@ -88,3 +88,27 @@ func test_the_shake_kicks_only_near_the_focus() -> void:
 	t.fire(&"shot", Vector2.ONE, 0.0, 11)
 	t.rig.step(12, Vector2.ZERO)
 	assert_ne(t.rig.offset_px(SimConst.PX_PER_M), Vector2.ZERO, "near gunfire")
+
+
+func test_ends_fire_in_slot_order_and_only_for_the_unseen() -> void:
+	var f: CityFxFeed = _feed()
+	var ends: Array[Vector2] = []
+	@warning_ignore("return_value_discarded")
+	f.triggers.cued.connect(
+		func(id: StringName, at: Vector2, _a: float, _t: int) -> void:
+			if id == &"projectile_end":
+				ends.append(at)
+	)
+	f.observe(PackedFloat64Array(), 1)
+	var two: PackedFloat64Array = PackedFloat64Array()
+	for step: int in 2:  # born 9, 2, 5 (in that order), then each flies 0.5 m
+		two = PackedFloat64Array()
+		for k: int in [9, 2, 5]:
+			two.append_array(_proj(k, Vector2(k, step * 0.5)))
+		f.observe(two, 2 + step)
+	f.observe(_proj(2, Vector2(2, 1.0)), 4)  # 9 and 5 vanish, 2 flies on
+	assert_eq(ends, [Vector2(5, 0.5) * SimConst.PX_PER_M, Vector2(9, 0.5) * SimConst.PX_PER_M])
+	f.observe(PackedFloat64Array(), 5)
+	assert_eq(ends.size(), 3, "2 ends once, later")
+	f.observe(PackedFloat64Array(), 6)
+	assert_eq(ends.size(), 3)

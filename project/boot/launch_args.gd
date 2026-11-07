@@ -6,6 +6,9 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--seed",
 	"--bikes",  # d9: the sim bike's share of traffic (overrides vehicle_handling traffic.bike_share)
 	"--traffic-yields",  # d9: sim traffic brakes for Rivet on foot (CityVehicleWorld.yield_to_rivet)
+	"--strip-prefetch",
+	"--frame-cap",  # d9-perf L10/L12/L14: off = no caps (FrameCap, MinimizedCap); spin = no L14
+	"--menu-idle",  # d9-perf L13: off = the title card redraws every frame (MenuIdle)
 	"--replay",
 	"--record",
 	"--devtools",
@@ -81,6 +84,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--rivet-height",
 	# d9-rivet: --rivet-walk=bob keeps the facing card with the built bob (Call 2's before)
 	"--rivet-walk",
+	# d9-perf: --perf-hud draws the frame-budget overlay (dev/perf/perf_hud.gd), read only
+	"--perf-hud",
 ]
 
 var _values: Dictionary[String, String] = {}

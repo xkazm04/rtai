@@ -22,6 +22,8 @@ var _heading: PackedFloat32Array = PackedFloat32Array()
 var _state: PackedByteArray = PackedByteArray()
 var _seen: PackedByteArray = PackedByteArray()
 var _dead: PackedByteArray = PackedByteArray()
+## Slots whose _state is not 0 (the end pass walks these, not all PCAP slots).
+var _active: PackedInt32Array = PackedInt32Array()
 var _primed: bool = false
 
 
@@ -47,36 +49,51 @@ func observe(snap: PackedFloat64Array, tick: int) -> void:
 	var n: int = snap.size()
 	var r: int = 0
 	while r + SimConst.SNAP_STRIDE <= n and snap[r] < SimConst.SNAP_PROJ_BASE:
-		_person(snap, r, tick)
+		var i: int = int(snap[r])
+		var kind: int = int(snap[r + 1])
+		if i >= 0 and i < SimConst.CAP and (kind == SimConst.K_PED or kind == SimConst.K_COP):
+			if (int(snap[r + 2]) == SimConst.M_DEAD) != (_dead[i] != 0):
+				_person(snap, r, i, tick)  # only on a change: the call is the cost per person
 		r += SimConst.SNAP_STRIDE
 	while r + SimConst.SNAP_PROJ_STRIDE <= n:
 		var k: int = int(snap[r]) - SimConst.SNAP_PROJ_BASE
 		if k >= 0 and k < SimConst.PCAP:
 			_shot(k, Vector2(snap[r + 1], snap[r + 2]), tick)
 		r += SimConst.SNAP_PROJ_STRIDE
-	for k: int in SimConst.PCAP:
-		if _state[k] != 0 and _seen[k] == 0:
-			_end(k, tick)
+	_end_unseen(tick)
 	_primed = true
 	if headlights != null:
 		headlights.observe(snap, triggers.focus_px / SimConst.PX_PER_M, tick)
 
 
-func _person(snap: PackedFloat64Array, r: int, tick: int) -> void:
-	var i: int = int(snap[r])
-	var kind: int = int(snap[r + 1])
-	if i < 0 or i >= SimConst.CAP or (kind != SimConst.K_PED and kind != SimConst.K_COP):
-		return
+## Person `i` (record at `r`) turned dead or back: a death fires once, after the first observe.
+func _person(snap: PackedFloat64Array, r: int, i: int, tick: int) -> void:
 	var dead: bool = int(snap[r + 2]) == SimConst.M_DEAD
-	if dead and _dead[i] == 0 and _primed:
+	if dead and _primed:
 		var at: Vector2 = Vector2(snap[r + 4], snap[r + 5]) * SimConst.PX_PER_M
 		triggers.fire(&"death", at, atan2(snap[r + 7], snap[r + 6]), tick)
 	_dead[i] = 1 if dead else 0
 
 
+## Ends every live slot this snapshot did not carry, in slot order (as the full sweep did).
+func _end_unseen(tick: int) -> void:
+	_active.sort()
+	var keep: int = 0
+	for k: int in _active:
+		if _seen[k] == 0:
+			_end(k, tick)
+		if _state[k] != 0:
+			_active[keep] = k
+			keep += 1
+	@warning_ignore("return_value_discarded")
+	_active.resize(keep)
+
+
 func _shot(k: int, p: Vector2, tick: int) -> void:
 	_seen[k] = 1
 	if _state[k] == 0:
+		@warning_ignore("return_value_discarded")
+		_active.append(k)
 		_q[k] = p
 		_state[k] = PENDING if _primed else FLYING
 		return

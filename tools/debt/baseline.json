@@ -15,13 +15,17 @@
         "2026-11-07: n8 merge: + hud growth combined (accepted on its lane); fold_rigs dropped for view's follow per both lanes' merge notes (dev_loc 18535 -> 18799)",
         "2026-11-07: d9 seams: street crowd board --spin (dev evidence: every facing row walks), +6 dev lines (dev_loc 18799 -> 18805)",
         "2026-11-07: d9-rivet FireStills: a dev-only capture of Rivet's drawn fire cell per weapon (the every-weapon-at-each-pitch evidence); 2 lines in arena_game.gd hook it under --fire-stills (dev_loc 18805 -> 18871)",
-        "2026-11-07: d9-rivet: quest1_clip knows --rivet-walk/--rivet-height, the owner's Call 1/2 befores in quest 1 (3 lines) (dev_loc 18871 -> 18874)"
+        "2026-11-07: d9-rivet: quest1_clip knows --rivet-walk/--rivet-height, the owner's Call 1/2 befores in quest 1 (3 lines) (dev_loc 18871 -> 18874)",
+        "2026-11-07: d9-perf: the --perf-hud frame-budget overlay (dev only, the owner's perf brief: tooling that stays) (dev_loc 18799 -> 18960)",
+        "2026-11-07: d9-perf: city_bench logs the render GPU ms (renderGpuMsAvg/P99), the LEDGER's n/m GPU column (dev_loc 18960 -> 18967)",
+        "2026-11-07: d9-perf: the bench logs peak VRAM and texture memory (vramPeakMb, texMemPeakMb) for the texture-compression A/B (dev_loc 18967 -> 18974)",
+        "2026-11-07: d9-perf L10: city_bench --max-fps and BenchStats tick cadence (framesNoTick / framesMultiTick), the instrument that measured the frame cap (dev_loc 18974 -> 18983)"
       ],
       "files": {
         "project/dev/arena": 708,
         "project/dev/audio": 367,
         "project/dev/bake_city.gd": 32,
-        "project/dev/bench": 1658,
+        "project/dev/bench": 1682,
         "project/dev/bots": 399,
         "project/dev/enemy_ai": 662,
         "project/dev/frames": 467,
@@ -31,6 +35,7 @@
         "project/dev/held": 103,
         "project/dev/human_react": 412,
         "project/dev/noir": 1220,
+        "project/dev/perf": 160,
         "project/dev/quest1_city_fit.gd": 18,
         "project/dev/quest1_city_fit_run.gd": 74,
         "project/dev/rivet_arsenal": 255,
@@ -43,7 +48,7 @@
         "project/dev/view": 195,
         "project/dev/weapon_art": 506
       },
-      "total": 18874
+      "total": 19058
     },
     "direct_cmdline_reads": {
       "accepted": [

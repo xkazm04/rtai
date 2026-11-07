@@ -32,3 +32,47 @@ func test_clear_empties_and_batched_is_the_default() -> void:
 	fan.clear()
 	assert_eq(fan.size(), 0)
 	assert_true(CircleFan.batched)
+
+
+## d9-perf: the cached-rim build submits the very arrays the per-point build did (so the
+## pixels cannot move): every point, colour and index equal, on fractional centres and radii.
+func test_the_fast_build_is_bit_identical_to_the_per_point_build() -> void:
+	var fan: CircleFan = CircleFan.new()
+	for k: int in 40:
+		var at: Vector2 = Vector2(123.37 + k * 7.31, -45.9 + k * 3.173)
+		var c: Color = Color(0.64, 0.02 * (k % 3), 0.035, 0.5 + 0.01 * k)
+		fan.add(at, 0.83 + k * 0.417, c)
+	var old: Array = _per_point_build(fan)
+	var pts: PackedVector2Array = old[0]
+	var cols: PackedColorArray = old[1]
+	var idx: PackedInt32Array = old[2]
+	assert_eq(pts.size(), 40 * 66)
+	assert_true(fan.points() == pts, "points bit-identical")
+	assert_true(fan.colour_runs() == cols, "colours identical")
+	assert_true(CircleFan.indices(fan.size()) == idx, "indices identical")
+	assert_true(CircleFan.indices(3) == idx.slice(0, 3 * 64 * 3), "a smaller fan slices the cache")
+
+
+## The pre-d9 print_on build, verbatim (the reference the fast build must equal).
+static func _per_point_build(fan: CircleFan) -> Array:
+	var seg: int = CircleFan.SEGMENTS
+	var pts: PackedVector2Array = PackedVector2Array()
+	var cols: PackedColorArray = PackedColorArray()
+	var idx: PackedInt32Array = PackedInt32Array()
+	var f: PackedFloat32Array = PackedFloat32Array([TAU / seg, 0.0, 0.0])
+	var step: float = f[0]
+	@warning_ignore_start("return_value_discarded")
+	for c: int in fan.centres.size():
+		var at: Vector2 = fan.centres[c]
+		f[1] = fan.radii[c]
+		var r: float = f[1]
+		var base: int = pts.size()
+		for i: int in seg + 1:
+			pts.append(at + CircleFan._rim(f, i * step, r))
+		pts.append(at)
+		for i: int in seg + 2:
+			cols.append(fan.colours[c])
+		for i: int in seg:
+			idx.append_array([base + seg + 1, base + i, base + i + 1])
+	@warning_ignore_restore("return_value_discarded")
+	return [pts, cols, idx]

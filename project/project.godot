@@ -69,3 +69,5 @@ common/max_physics_steps_per_frame=4
 renderer/rendering_method="forward_plus"
 rendering_device/driver.windows="d3d12"
 textures/canvas_textures/default_texture_filter=1
+textures/webp_compression/compression_method=4
+textures/webp_compression/lossless_compression_factor=75.0

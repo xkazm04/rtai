@@ -26,3 +26,17 @@ func test_a_swap_window_closes_after_three_frames() -> void:
 		var k: int = i - BenchStats.WARMUP_FRAMES
 		s.add(30.0 if k == 6 else 1.0, zero, k == 2, Vector2i())
 	assert_eq(s.metrics()["worstSwapMs"], 1.0, "frame 6 is outside the window opened at 2")
+
+
+func test_render_series_skip_the_warm_up_and_carry_gpu() -> void:
+	var s: BenchStats = BenchStats.new()
+	var zero: PackedInt64Array = PackedInt64Array([0, 0, 0, 1])
+	var vp: RID = get_viewport().get_viewport_rid()
+	for i: int in BenchStats.WARMUP_FRAMES + 5:
+		s.add(2.0, zero, false, Vector2i())
+		s.add_render(100 + i, vp)
+	assert_eq(s.draws.size(), 5, "warm-up frames carry no render sample")
+	assert_eq(s.render_gpu_ms.size(), 5, "one GPU sample a measured frame")
+	assert_true(s.metrics().has("renderGpuMsAvg"))
+	assert_true(s.metrics().has("renderGpuMsP99"))
+	assert_true(s.metrics().has("vramPeakMb"))

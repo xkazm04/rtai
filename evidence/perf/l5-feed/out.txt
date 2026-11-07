@@ -1,0 +1,8 @@
+l5micro old us/tick median 201.26 min 177.62 max 299.39
+l5micro new us/tick median 122.81 min 100.65 max 139.36
+l5micro slice us/tick median 3.99 min 3.11 max 5.43
+l5micro offset us/tick median 2.16 min 1.72 max 3.39
+l5micro old us/tick median 208.75 min 183.16 max 216.07
+l5micro new us/tick median 121.97 min 115.26 max 126.42
+l5micro slice us/tick median 3.88 min 3.14 max 5.42
+l5micro offset us/tick median 1.94 min 1.68 max 3.50
