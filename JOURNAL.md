@@ -1000,3 +1000,10 @@ l.866): quest 1's tick-600 cop (Line Stopped crossing) still draws top-down at t
   judge in the King fight. Capture deleted.
 - BENCH 04:17 bench6/run.sh, 3 alternating riot pairs top/tilt70 under bench.lock (mine), 6 other
   Godot processes up at start: running.
+- MILESTONE BENCH (brief 6, the crowd's cost) 04:17-04:19 under bench.lock (mine), CONTENDED (4-6
+  other lanes' Godot processes up in every run): 400-actor riot, 3 alternating pairs top/tilt70,
+  windowed d3d12, debug build, 30 s each, ada46751. Mean of 3: avg frame top 5.31 ms -> tilt70
+  5.65 ms (+0.33, +6 %); p50 4.37 -> 4.75; p95 11.78 -> 12.15; draw calls 685 -> 778 (+93: the
+  cards, fall cards and plates); 1 % low 47.8 -> 44.5 fps; 0 hitches over 50 ms both; 16 full rigs
+  max both. Run-to-run spread of top alone 4.87-5.95 ms avg, so the +0.33 is inside one run's noise
+  but in the same direction in all 3 pairs. evidence/street-bench-it10/ (summary.json + 6 runs).
