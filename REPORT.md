@@ -71,7 +71,16 @@ under `evidence/n8-view/`. Full log: `JOURNAL.md`.
    See `quest1_dock9_shipped_before_after_tilt70_32ppm.png`.
 
 ## Merge notes for the Director
-(trial merge it11 of city, street, vehicles, hud onto n8-view: see JOURNAL it11)
+Trial merge it11 (03:15-03:40, a throwaway detached tree): city, street, vehicles and hud onto
+n8-view; lint 15/15, unit 1624/0, quest 1 at tilt70 0 SCRIPT ERROR.
+- Text conflicts in view-owned or co-written files are comment lines: take view's side
+  (`rig_card_sets.gd` doc line, `arena_floor_view.gd` doc lines, `quest1_clip.gd` `--view` line).
+  JOURNAL.md: keep each lane's; `tools/debt/baseline.json`: either side, then `debt.mjs --update`.
+- hud: `StoryForms.fold_rigs` duplicates view's `StoryForms.follow` (same fold; follow also lifts
+  and voices). Take view's side in `story_forms.gd`, `quest1_game.gd`, `test_story_forms.gd`; hud's
+  test case lives on in view's follow test.
+- city + hud: `BossView.attach` becomes 41 lines (gd-size) with no text conflict; move city's
+  `BossDressing.attach` call into `static func _dress(v: CollectCallView, hook: BossHook)`.
 
 ## Exe
 (at the freeze: `build/export/windows/RTAI.exe`, the int-day recipe)

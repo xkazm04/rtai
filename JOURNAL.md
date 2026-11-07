@@ -823,3 +823,46 @@ merged the lanes (n8-view..main = 0), so quest 1 after the merge (NEXT 3) still 
   of dev/, ebd77c13), where hud's side still loads `res://dev/arena/arena_rigs.gd`. Resolution: take
   view's side in story_forms.gd, quest1_game.gd and test_story_forms.gd; hud's test case (the card
   unfolds when the line closes) is now in my follow test (8ecf8f2d), so no coverage is lost.
+- 03:25 TRIAL MERGE result (detached %TEMP%/view-trial-it11, head a7f4cdf5, never a branch): all
+  four lanes merge onto n8-view with the resolutions above. ONE SEMANTIC CLASH (lint gd-size, no
+  text conflict): `features/bosses/boss_view.gd` `attach` is 41 lines > 40 once city's
+  `BossDressing.attach` call (+2: an `@warning_ignore` and the call) and hud's `bar.crest` line (+1)
+  meet; each branch alone is at 40/39, view does not touch the file. In the trial I moved city's
+  two lines into a `static func _dress(v, hook)` (attach -> 40); lint 15/15 then.
+  REQUEST to city: shrink `BossView.attach` by a line on your branch so the merge with hud passes
+  gd-size, e.g. `BossDressing.attach(...) -> void` (no `@warning_ignore` needed) or the `_dress`
+  helper above. (Not urgent before the Director's merge; one line.)
+  NOTE to hud: `StoryForms.fold_rigs` and view's `StoryForms.follow` fold the same card; the merge
+  takes `follow` (it also lifts and voices; quest1_game.gd under view no longer loads the dev
+  arena_rigs.gd path), and your unfold-on-silence assertion is in my follow test (8ecf8f2d). Nothing
+  to do on your side unless you object in your JOURNAL.
+- GATE 03:31 the trial merge tree (d8d1ee75: n8-view a5bbf95f + city ca539e27 + street b1fe5682 +
+  vehicles 21597e15 + hud 0ce401f0, the resolutions above): lint 15/15 (the commit hook), unit
+  full no-arg 1624 passed / 0 failed (`%TEMP%/trial_unit.log`). FRICTION: my first trial-only
+  `_dress(v: BossView, ...)` was wrong (`v` is a CollectCallView in `BossView.attach`); the
+  quest film's 12 SCRIPT ERROR showed it, check.mjs named it. The REQUEST to city above means
+  `_dress(v: CollectCallView, hook: BossHook)`. check.mjs's king_body_view FAIL is the known
+  cycle false FAIL (the same on n8-view alone).
+- MILESTONE 03:33 quest 1 judged AFTER the merge (NEXT 3, owed since it7), on the trial tree:
+  `quest1_clip.gd -- --stills=600,2400,6000,13700 --view=tilt70 --ppm=32` (shipped path, no
+  --rigs), 1920x1080, 0 SCRIPT ERROR; n8-view alone left, all lanes right:
+  `gtai-masters/n8/view/quest1_merge_preview_view_vs_all_lanes_tilt70_32ppm.png` (not in frames.json:
+  a trial, not this branch). LOOKED: the whole street now stands at 70 (city's facades, lamps,
+  dumpster and payphone cards; street's pedestrians as cards; vehicles' cards; hud's portraits in the
+  dialogue box); view's cast (Rivet's card, the rig cast, the form card) sits in it without a draw
+  fault I can see at 32 px/m; Rivet in the dumpster (tick 600) draws over the dumpster card's lid.
+  FOUND two things, neither view's:
+  (a) the Dock 9 Gloria floor drawing is ~7 m long at 32 px/m (about four crates), over the crate
+  row and the objective label (`quest1_merge_preview_dock9_gloria_pickup_crop2x.png`). A second
+  throwaway tree with n8-hud ALONE draws it the same (`scratch/view/it11/keep_q_hud_vs_merged_13700.png`):
+  hud's, not a merge effect.
+  (b) a cop at the Line Stopped crossing (tick 600) is the top-down sprite in both trees (shoulders
+  and cap from above), while street's crowd stands as cards: not view's rig cast (those stand as
+  head cards); the city sim's cop sprite path.
+  REQUEST to hud: the quest 1 Dock 9 Gloria drawing under tilt70 (tick 13700, 32 px/m) spans ~7 m;
+  if it is the objective showcase on purpose, a size near the crate (1.6 m) would keep the crate
+  row and the "PROJECT TUG..." label readable; if not, it is a pickup sized off the wrong width.
+  Stills: the two paths above.
+  NOTE to street: the tick-600 cop (Line Stopped crossing) still draws top-down at tilt70 in the
+  merged tree; if city cops are yours (the --cops board), quest 1's street cops are not on it yet.
+- 03:36 director reel on the trial tree, top + combo in parallel (headless): running.
