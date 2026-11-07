@@ -169,6 +169,8 @@ static func draw_down(
 	var f: Vector2i = RigHeadCard.frame_of(facing.angle() + spread_of(at_px))
 	var dst: Rect2 = Rect2(-cell * s * 0.5, cell * s)
 	var src: Rect2 = Rect2(cell.x * f.x, cell.y * (rows - 1), cell.x, cell.y)
+	if tint.a <= 0.0:
+		return true  # decayed away (StreetQuestCorpses): nothing to draw, no sprite either
 	canvas.draw_set_transform(at_px, 0.0, Vector2(-1.0 if f.y == 1 else 1.0, 1.0))
 	canvas.draw_texture_rect_region(tex, dst, src, tint)
 	canvas.draw_set_transform(Vector2.ZERO)
