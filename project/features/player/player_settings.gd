@@ -1,9 +1,10 @@
 class_name PlayerSettings
 extends RefCounted
 ## The player's settings as versioned JSON (`gtai.player-settings/1`, SAV-10 device side):
-## master volume (0..1), the reduced-motion flag and key rebinds (action id -> physical key
-## name). apply() pushes them into the AudioServer and the InputMap. Read with the JSON class
-## only (SEC-02); unknown or bad fields fall back to the defaults.
+## master volume (0..1), the reduced-motion flag, key rebinds (action id -> physical key
+## name) and a frame cap (0 = the device row's own; the handheld pause card offers 30/40/60).
+## apply() pushes them into the AudioServer, the InputMap and Engine.max_fps. Read with the
+## JSON class only (SEC-02); unknown or bad fields fall back to the defaults.
 
 const SCHEMA: String = "gtai.player-settings/1"
 const PATH: String = "user://settings.json"
@@ -11,10 +12,13 @@ const PATH: String = "user://settings.json"
 const REBINDABLE: Array[StringName] = [
 	&"move_up", &"move_down", &"move_left", &"move_right", &"interact", &"melee", &"car"
 ]
+## The frame caps a player may pick (0 = the device profile's own cap).
+const FRAME_CAPS: Array[int] = [0, 30, 40, 60]
 
 var volume: float = 0.8
 var reduced_motion: bool = false
 var keys: Dictionary[String, String] = {}
+var frame_cap: int = 0
 
 
 static func load_or_default(path: String = PATH) -> PlayerSettings:
@@ -33,6 +37,9 @@ static func load_or_default(path: String = PATH) -> PlayerSettings:
 	var rm: Variant = d.get("reduced_motion")
 	var flag: bool = rm if rm is bool else false
 	s.reduced_motion = flag
+	var fc: Variant = d.get("frame_cap")
+	var cap: float = fc if fc is float else 0.0
+	s.frame_cap = int(cap) if FRAME_CAPS.has(int(cap)) else 0
 	var k: Variant = d.get("keys")
 	var raw: Dictionary = k if k is Dictionary else {}
 	for action: Variant in raw:
@@ -47,7 +54,11 @@ func save(path: String = PATH) -> Error:
 	if file == null:
 		return FileAccess.get_open_error()
 	var body: Dictionary = {
-		"schema": SCHEMA, "volume": volume, "reduced_motion": reduced_motion, "keys": keys
+		"schema": SCHEMA,
+		"volume": volume,
+		"reduced_motion": reduced_motion,
+		"keys": keys,
+		"frame_cap": frame_cap
 	}
 	var ok: bool = file.store_string(JSON.stringify(body, "  ", true))
 	file.close()
@@ -60,6 +71,15 @@ func apply() -> void:
 	AudioServer.set_bus_volume_db(0, linear_to_db(maxf(volume, 0.0001)))
 	for action: String in keys:
 		rebind(StringName(action), keys[action])
+	apply_frame_cap()
+
+
+## The player's cap, else the device row's (the desktop row has none: -1 leaves the engine's).
+func apply_frame_cap() -> void:
+	if frame_cap > 0:
+		Engine.max_fps = frame_cap
+	elif DeviceProfile.shared().max_fps >= 0:
+		Engine.max_fps = DeviceProfile.shared().max_fps
 
 
 func rebind(action: StringName, key_name: String) -> void:

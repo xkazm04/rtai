@@ -1,7 +1,8 @@
 class_name Quest1SettingsPanel
 extends VBoxContainer
-## The pause card's settings: master volume, reduced motion, and a keyboard rebind per action
-## (press the button, then the new key; Esc cancels). Every change is applied and saved at once
+## The pause card's settings: master volume, reduced motion, a frame cap on a handheld device
+## row (device / 30 / 40 / 60), and a keyboard rebind per action (press the button, then the
+## new key; Esc cancels). Every change is applied and saved at once
 ## (PlayerSettings); `changed` tells the game to refresh what reads the flags.
 
 signal changed
@@ -47,6 +48,10 @@ func _rebuild() -> void:
 		rm_key, "Reduced motion: on" if settings.reduced_motion else "Reduced motion: off"
 	)
 	_row(rm, [[_text.resolve(&"SLICE__TOGGLE", "Toggle"), _toggle_motion]])
+	if DeviceProfile.shared().is_handheld():
+		_row(
+			cap_label(settings.frame_cap), [[_text.resolve(&"SLICE__TOGGLE", "Toggle"), _cycle_cap]]
+		)
 	for action: StringName in PlayerSettings.REBINDABLE:
 		var bound: String = "..." if _waiting == action else ObjectiveHint.key_name(action)
 		var label: String = String(action).replace("_", " ")
@@ -83,6 +88,19 @@ func _volume(delta: float) -> void:
 
 func _toggle_motion() -> void:
 	settings.reduced_motion = not settings.reduced_motion
+	_commit()
+	_rebuild()
+
+
+func cap_label(cap: int) -> String:
+	if cap <= 0:
+		return _text.resolve(&"SLICE__FRAME_CAP_DEVICE", "Frame cap: device")
+	return _text.resolve(&"SLICE__FRAME_CAP", "Frame cap: %d fps") % cap
+
+
+func _cycle_cap() -> void:
+	var caps: Array[int] = PlayerSettings.FRAME_CAPS
+	settings.frame_cap = caps[(caps.find(settings.frame_cap) + 1) % caps.size()]
 	_commit()
 	_rebuild()
 
