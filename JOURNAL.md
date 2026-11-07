@@ -56,9 +56,27 @@ DECISION item 2: drop the leg rim under card views (one bool, `KingPlan.LEG_RIM_
   pistons). Why: under the card views the bust stands on his old top-down leg parts; they read as
   parts, not a figure.
 
+- 10:13 MILESTONE item 6: release_compile defaultDir = %TEMP%/gtai-release-compile/<worktree>-<hash8>/<pid>,
+  removed in a finally. Two passes in parallel: 599 loaded / 0 failed each, both dirs gone. 6e49a298.
+- 10:15 MILESTONE item 4: planter_v3 55 cut with city_prop_cut.py (the library names the sheet
+  planter_55_v3.png, the tool wants <id>_<pitch>.png: copied into a scratch lib dir, read-only on the
+  library); byte-identical to n8 city's scratch cut; provenance line. 3272969d. FRICTION: no planter
+  on the routes I filmed (King's boulevard at tilt, frame 80): in-game frame owed.
+- 10:15 gates: unit no-arg 1696 passed / 0 failed (at 966a2a79, items 1, 2a). Lint 15/15 at each commit.
+- 10:17 director reel top/tilt70/combo started headless (`scratch/seams/reels.sh`, logs in evidence/d9-seams/).
+
+Item 3 scope (read, not started): traffic cars are uniform in the sim (car_hit.cpp push distance 2.2 m,
+car_hull's six sample points; no per-car mass); CitySpawner picks `CAR_ART[_rng.randi_range(0, 11)]`
+and vmax 9-13 from the spawner's one stream. A bike needs: a per-art hull (half length/width) and push
+share in the native core AND sim_cars.gd/sim_body.gd (parity 1200 steps), a `bike` row in
+vehicle_handling.json (mass, vmax, accel), the share drawn from its OWN rng stream so the main
+spawner sequence (and the scenarios) do not move when the share is 0, VehicleCards.ROWS 9 -> 10,
+and a flat top print (traffic atlas row 9) cut from the bike card's top facing.
+
 NEXT:
-1. Item 6 (release_compile per-worktree/pid temp dir) is small: do it next.
-2. Item 3 sim bike: native C++ + GDScript twin (parity 1200 steps), vehicle tables, art id 9,
+1. Read the reel results (evidence/d9-seams/director-reel-it1-*.log): 19/19 down, 0 SCRIPT ERROR each.
+2. Item 3 sim bike (scope above): native C++ + GDScript twin (parity 1200 steps), vehicle tables, art id 9,
    small traffic share; top-down print for `top` from the bike's top facing.
-3. Item 2 second half when `king_legs_*` lands (check catalog.json); item 4 planter; item 5 armed walk.
-4. Not yet run this iteration: full no-arg unit run, scenarios/evidence, director reel x3.
+3. Item 2 second half when `king_legs_*` lands (check catalog.json); item 5 armed walk (catalog
+   `cop_*_walk*` with a held weapon); the planter's in-game frame (find a planter: city_facades props).
+4. Not yet run: `node tools/evidence/run.mjs --no-bench` (scenarios, parity, top bit-identical).
