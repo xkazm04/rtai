@@ -2,17 +2,15 @@ class_name RivetFrames
 extends RefCounted
 ## Lane d9 rivet: under a view row with card art (p70 in play, p55 in boss fights) Rivet draws as
 ## one whole-figure drawing at his feet instead of the head card over top-down parts (the parts are
-## hidden, not freed; StreetWalkerCards' pattern). The strips are cut by tools/art/rivet_frames.py
-## from the owner-judged sheets: BASE (5 facings, 3 drawn left facings, walk, sprint, roll, claw
-## strike, hit, death) and one EQ strip per weapon (5 facings holding it, fire or swing right, at
-## the camera, at rest). While a weapon is out his frames come from its strip; a left octant of a
-## one-handed hold (no drawn left view yet: a mirror would swap the weapon hand) keeps the base
-## left figure and RivetHeldView's held part (the fallback, logged once per weapon). The cell
-## changes on the art key's change (the combo's hard swap). Straight down (no art) nothing runs.
+## hidden, not freed; StreetWalkerCards' pattern). Strips (tools/art/rivet_frames.py): BASE (5
+## facings, 3 drawn left, walk, sprint, roll, claw strike, hit, death) and one EQ strip per weapon
+## (5 facings holding it, fire or swing right, at the camera, at rest), used while it is out. A
+## one-handed hold turned left (no drawn left view: a mirror swaps the weapon hand) keeps the base
+## left figure + RivetHeldView's held part (logged). The art key's change swaps the strip (the
+## combo's hard swap). Straight down nothing runs. ENABLED false = the head card (before).
 enum Cell { WALK = 8, SPRINT = 9, ROLL = 10, CLAW = 11, HIT = 12, DEATH = 13 }
 enum Eq { FIRE_SIDE = 5, FIRE_CAM = 6, REST = 7 }
 
-## ENABLED false = the head card over the parts (before).
 const ENABLED: bool = true
 const DIR: String = "res://features/characters/art/view/"
 const BASE: String = "rivet_frames.png"
@@ -38,7 +36,9 @@ const ONE_HAND: Array[StringName] = [
 const FIG_PX: float = 110.0
 const PAD_PX: float = 2.0
 ## Rivet's standing height on screen (m): ~35 px at 32 px/m (the asset lane's mock).
+## p55: the 55 drawings carry a smaller helmet over longer legs (StreetWalkerCards' x1.18 step).
 const HEIGHT_M: float = 1.1
+const HEIGHT_BY_ART: Dictionary[String, float] = {"p55": 1.3}
 ## A shot's recoil (RigClips.recoil, 0.4-1.6, decays 6/s) above this draws the fire cell.
 const FIRE_RECOIL: float = 0.25
 ## The gait without drawn stride frames: a lift per step (px at full walk) and a sway (rad).
@@ -131,7 +131,8 @@ static func place(rig: CutRig, card: Sprite2D) -> void:
 	var c: Vector2i = cell_of(rig, eq)
 	card.frame = c.x
 	card.flip_h = c.y == 1
-	var s: float = HEIGHT_M * CharacterRigs.PX_PER_M / FIG_PX
+	var h: float = HEIGHT_BY_ART.get(ViewMode.shared().art, HEIGHT_M)
+	var s: float = h * CharacterRigs.PX_PER_M / FIG_PX
 	var walk: float = clampf(rig.speed_now / WALK_SPEED, 0.0, 1.0)
 	walk = walk if c.x != Cell.ROLL and c.x != Cell.DEATH else 0.0
 	var stride: float = sin(TAU * rig.phase)
