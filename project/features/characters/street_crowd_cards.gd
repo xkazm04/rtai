@@ -19,8 +19,8 @@ const POOLS: Dictionary[String, PackedStringArray] = {
 }
 ## The card's width over the base row's (1.0 = the base card, no swap) times the person's scale.
 const K: StringName = &"street_card_k"
-const SCALE_VAR: float = 0.08
-const VALUE_VAR: float = 0.07
+const SCALE_VAR: float = 0.16  # owner 2026-11-07: strong variety (was 0.08)
+const VALUE_VAR: float = 0.14  # owner 2026-11-07: strong variety (was 0.07)
 static var _tex: Dictionary[String, Texture2D] = {}
 
 
