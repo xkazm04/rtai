@@ -10,9 +10,14 @@ extends RefCounted
 
 const FACINGS: int = 5
 const TABLE: String = "res://data/tables/city_facades.json"
-## The boss arenas' and the dev arena's cover kinds (ArenaFloorView) drawn as the street's cards.
+## The boss arenas' and the dev arena's cover kinds (ArenaFloorView) and quest 1's stage props
+## (StageView: the payphone, the hide-spot dumpster) drawn as the street's cards.
 const ARENA_KIND: Dictionary[String, String] = {
-	"cover_low": "crate_stack", "cover_high": "dumpster", "cone": "traffic_cone"
+	"cover_low": "crate_stack",
+	"cover_high": "dumpster",
+	"cone": "traffic_cone",
+	"payphone": "payphone",
+	"dumpster": "dumpster",
 }
 ## The ground under an arena card: its footprint in the print's ink, see-through.
 const ARENA_SHADOW: Color = Color(0.090, 0.075, 0.106, 0.35)

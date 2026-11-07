@@ -3,7 +3,8 @@ extends Node2D
 ## Quest 1's places as flat placeholder ink: Factory Row's alley and dumpster, the payphones
 ## (ringing rings while Patch has a call), the Toner Room basement, Dock 9's floor, gates,
 ## catwalks and vault cage, the TUCK-IN crate stack with its bolt-through-a-robot mark, the
-## Harbor Road skip, and the cash taped under the phone.
+## Harbor Road skip, and the cash taped under the phone. Under a tilt the payphone and the
+## dumpsters stand as the city's cards on their footprint's south part (PropCards.stand).
 
 const KERB_ROWS: float = 338.0
 ## Places at least this big (m) get their name stencilled on the city street.
@@ -21,6 +22,8 @@ const CAR_ATLAS: Array[Texture2D] = [
 ]
 const CAR_CELL_PX: Vector2 = Vector2(512.0, 256.0)
 const CAR_COLS: int = 3
+## The standing card's ground slab (m north of the footprint's south edge) where it is thinner.
+const SLAB_M: Dictionary[String, float] = {"payphone": 0.5}
 
 var stage: CollectCallStage
 ## The invented arena's floors and labels (off on the city, whose ground is the world).
@@ -144,7 +147,10 @@ func _road(r: Rect2) -> void:
 
 
 func _sprite(name: String, at: Vector2, size: Vector2) -> void:
-	draw_texture_rect(_art(name), Rect2(Ink.px(at - size * 0.5), size * Ink.PX_PER_M), false)
+	var r: Rect2 = Rect2(Ink.px(at - size * 0.5), size * Ink.PX_PER_M)
+	var slab: float = (SLAB_M[name] if SLAB_M.has(name) else size.y) * Ink.PX_PER_M
+	if not PropCards.stand(self, name, Rect2(r.position.x, r.end.y - slab, r.size.x, slab)):
+		draw_texture_rect(_art(name), r, false)
 
 
 func _phone(phone: String, at: Vector2) -> void:

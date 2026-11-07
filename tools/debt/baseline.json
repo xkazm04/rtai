@@ -7,7 +7,8 @@
         "2026-11-06: n8 vehicles: vehicle_turn.gd, the 360-degree turn film the lane brief asks for (dev only) (dev_loc 18117 -> 18193)",
         "2026-11-06: dev/showcase/vehicle_states: the vehicles lane's damage/fire/skid film scene (dev only, n8) (dev_loc 18193 -> 18288)",
         "2026-11-06: n8 vehicles: the depth film scene (vehicle_frame --scene=depth), dev only (dev_loc 18287 -> 18327)",
-        "2026-11-06: n8 city: dev/bench/chunk_cost.gd, the angled view's streaming cost probe (brief item 5); a -s script cannot use the LaunchArgs autoload, so it reads the cmdline once (dev_loc 18327 -> 18426)"
+        "2026-11-06: n8 city: dev/bench/chunk_cost.gd, the angled view's streaming cost probe (brief item 5); a -s script cannot use the LaunchArgs autoload, so it reads the cmdline once (dev_loc 18327 -> 18426)",
+        "2026-11-07: n8 city it12: quest 1's payphone and hide-spot dumpsters stand as the city's cards under a tilt (StageView._sprite, +6); quest1_clip --view (+2, the same two lines as n8-hud 6fd17433, so a merge is identical) (dev_loc 18426 -> 18428)"
       ],
       "files": {
         "project/dev/arena": 1034,
@@ -16,7 +17,7 @@
         "project/dev/bench": 1487,
         "project/dev/bots": 399,
         "project/dev/enemy_ai": 662,
-        "project/dev/frames": 462,
+        "project/dev/frames": 464,
         "project/dev/ghost-forms": 616,
         "project/dev/ghost-powers": 1137,
         "project/dev/gunplay": 674,
@@ -35,7 +36,7 @@
         "project/dev/view": 158,
         "project/dev/weapon_art": 506
       },
-      "total": 18426
+      "total": 18428
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -203,12 +204,15 @@
       "total": 15
     },
     "files_past_soft_cap": {
+      "accepted": [
+        "2026-11-07: n8 city it12: quest 1's payphone and hide-spot dumpsters stand as the city's cards under a tilt (StageView._sprite, +6); quest1_clip --view (+2, the same two lines as n8-hud 6fd17433, so a merge is identical) (files_past_soft_cap 68 -> 68)"
+      ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 266,
         "project/boot/collect_call/view/cast_view.gd": 225,
         "project/boot/collect_call/view/collect_call_view.gd": 236,
         "project/boot/collect_call/view/fx_view.gd": 271,
-        "project/boot/collect_call/view/stage_view.gd": 201,
+        "project/boot/collect_call/view/stage_view.gd": 207,
         "project/boot/quest1_game.gd": 269,
         "project/dev/arena/arena_game.gd": 294,
         "project/dev/arena/arena_rigs.gd": 291,

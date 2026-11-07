@@ -80,3 +80,11 @@ func test_arena_cover_kinds_draw_as_the_street_cards() -> void:
 	assert_false(cards.draw_on(ci, "cover_high", Rect2(0, 0, 64, 64)), "no dumpster row here")
 	assert_eq(PropCards.ARENA_KIND["cover_low"], "crate_stack")
 	assert_eq(PropCards.ARENA_KIND["cone"], "traffic_cone")
+
+
+func test_quest_stage_props_stand_by_their_own_names() -> void:
+	var ci: Node2D = autofree(Node2D.new())
+	var cards: PropCards = _cards()
+	assert_true(cards.draw_on(ci, "payphone", Rect2(0, 0, 62, 24)), "quest 1's payphone stands")
+	assert_false(cards.draw_on(ci, "cash_taped", Rect2(0, 0, 64, 40)), "the cash stays flat")
+	assert_eq(PropCards.ARENA_KIND["dumpster"], "dumpster", "the hide spot is the dumpster card")
