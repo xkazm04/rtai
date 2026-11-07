@@ -1,0 +1,44 @@
+extends GutTest
+## Lane n8 street: a dying walker's figure follows the hidden parts' head (StreetWalkerFall).
+
+var _card: Sprite2D = null
+
+
+func _dying_rig(head_at: Vector2) -> CutRig:
+	var rig: CutRig = autofree(CutRig.new())
+	rig.head = Node2D.new()
+	rig.add_child(rig.head)
+	add_child(rig)
+	rig.head.position = Vector2(0.0, -40.0)
+	var r: HumanReact = HumanReact.on(rig)
+	r.kind = &"death_light"
+	r.dying = true
+	r.length = 1.0
+	r.t = 0.0
+	_card = autofree(Sprite2D.new())
+	# the standing length is read at the first dying step
+	var stand: Vector2 = StreetWalkerFall.pose(rig, _card)
+	assert_eq(stand, Vector2(0.0, 1.0), "upright at the blow")
+	rig.head.position = head_at
+	r.t = StreetWalkerCards.DEATH_HOLD
+	return rig
+
+
+func test_not_dying_is_upright_and_full_length() -> void:
+	var rig: CutRig = autofree(CutRig.new())
+	var card: Sprite2D = autofree(Sprite2D.new())
+	assert_eq(StreetWalkerFall.pose(rig, card), Vector2(0.0, 1.0))
+
+
+func test_at_the_swap_the_figure_lies_along_the_parts_head() -> void:
+	var rig: CutRig = _dying_rig(Vector2(20.0, -20.0))
+	var p: Vector2 = StreetWalkerFall.pose(rig, _card)
+	assert_almost_eq(p.x, PI * 0.25, 0.001, "leans toward the head, screen right-up")
+	assert_almost_eq(p.y, Vector2(20.0, -20.0).length() / 40.0, 0.001, "shortened as the parts")
+
+
+func test_a_body_falling_north_shortens_without_a_lean() -> void:
+	var rig: CutRig = _dying_rig(Vector2(0.0, -12.0))
+	var p: Vector2 = StreetWalkerFall.pose(rig, _card)
+	assert_almost_eq(p.x, 0.0, 0.001, "no screen-x tip")
+	assert_almost_eq(p.y, StreetWalkerFall.MIN_LEN, 0.001, "foreshortened to the floor")

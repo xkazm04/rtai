@@ -60,8 +60,6 @@ const STAND_FRAME: int = 1
 ## How far into a death family (0..1) the whole figure holds before the parts take the fall;
 ## 0 = the parts from the blow (it4).
 const DEATH_HOLD: float = 0.3
-## The figure tips about its feet away from the blow over the hold (rad at the swap).
-const DEATH_TIP: float = 0.6
 ## The standing figure's height on the ground plane (m), before the person's crowd scale.
 const HEIGHT_M: float = 1.7
 ## The feet's height in the cell (from the top): street_head.py pads 2 px under the shoes.
@@ -180,19 +178,7 @@ static func _place(rig: CutRig, card: Sprite2D) -> void:
 		)
 		walk = 0.0
 	var stride: float = sin(TAU * rig.phase)
-	card.global_rotation = stride * SWAY * walk + _tip(rig)
-	card.global_scale = Vector2(s, s)
+	var fall: Vector2 = StreetWalkerFall.pose(rig, card)
+	card.global_rotation = stride * SWAY * walk + fall.x
+	card.global_scale = Vector2(s, s * fall.y)
 	card.global_position = rig.global_position - Vector2(0.0, absf(stride) * BOB_PX * walk)
-
-
-## The topple through a death's hold, eased in: toward the side the hidden parts' head is
-## falling to on screen (so the swap lands on the same fall), else away from the blow.
-static func _tip(rig: CutRig) -> float:
-	var r: HumanReact = rig.react
-	if r == null or not r.dying or DEATH_HOLD <= 0.0:
-		return 0.0
-	var fall: float = rig.head.global_position.x - rig.global_position.x
-	var blow: Vector2 = r.dir.rotated(rig.facing)
-	var away: float = signf(fall) if absf(fall) > 1.0 else (signf(blow.x) if blow.x != 0.0 else 1.0)
-	var k: float = clampf(r.progress() / DEATH_HOLD, 0.0, 1.0)
-	return away * DEATH_TIP * k * k
