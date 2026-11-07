@@ -49,8 +49,23 @@ Journal: `JOURNAL.md`. Clips and stills: `C:\Users\kazda\kiro\gtai-masters\d9\pe
 - **Recommended:** (b), plus (d) if you agree to post. Most valuable on handhelds with shared memory, where these buffers
   come out of the same RAM as the game.
 
+### Call P-3: smoother frame pacing at 60 Hz for ~0.1 of a core - default built: no change at 60 Hz
+- **Context (L10, kept):** nothing on screen moves between the game's 60 Hz ticks, so on a 120 / 144 / 165 Hz monitor the game
+  used to draw the same picture 2-3 times. It now caps itself at 60 fps on such monitors (vsync on): on a simulated 144 Hz
+  display that is **-38 % CPU on the riot, -42 % on the city drive**, and no duplicate frames, with the same images per tick.
+  It does nothing on a 60 Hz monitor (this PC), so nothing you have seen changes. `--frame-cap=off` is the before.
+- **Found on the way (F15):** on a 60 Hz monitor, adding the same 60 fps limiter on top of vsync makes delivery steadier: the
+  slowest 1 % of frames 20.4 -> 17.1 ms, and the 1-3 skipped ticks per 30 s gone. Cost: +30 % process CPU on the riot
+  (0.37 -> 0.48 of a core), 0.25 -> 0.30 on the drive.
+- **Options:** (a) no limiter at 60 Hz (default: least CPU). (b) the limiter at 60 Hz too (steadier delivery). (c) a
+  'frame pacing: efficient / steady' option in the settings, default (a). Evidence: `evidence/perf/l10-cap/ab.json`.
+- **Recommended:** (c) when a settings screen for it exists; (a) until then. The bigger lever above 60 Hz is drawing
+  in-between positions (interpolation), which would make 144 Hz look smoother than 60: a look change, so a later Call.
+
 ## Kept so far (pixel-free, on the branch; numbers in LEDGER)
 
+- **L10 frame cap at the tick rate on > 61 Hz displays** (15:48): simulated 144 Hz riot 0.68 -> 0.42 cores, drive 0.52 ->
+  0.30, duplicate frames 2450 -> 0 per 30 s; a no-op at 60 Hz and headless (Call P-3 for the 60 Hz pacing option).
 - L2 CircleFan fan build (riot p99 22.2 -> 11.9 ms), L3 strip prefetch (riot worst 27.2 -> 18.0 ms), L5 snapshot passes
   (-40 % of that pass's CPU, no frame claim), **L8 lossless WebP effort** (14:05): the pck 227.7 -> 215.2 MB
   (-12.5 MB) with every mip of every texture decoding bit-identical; costs ~1.7x texture encode at import.

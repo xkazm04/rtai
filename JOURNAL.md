@@ -439,3 +439,50 @@ NEXT (iteration 13):
   208 MB, the 128 MB one made at load. Every city scene pays it, not only the riot: the traffic-sheet REQUEST covers both.
 - 15:24 NEXT 2 partly done: LEDGER F13 now carries a measured working-set split (private 617 + image 138 MB; modules: exe 106, NVIDIA compiler 94 + driver 86, the AMD iGPU driver 58 loaded too).
 - Session end 15:21 (it12): 8 commits (200256f5 .. 5473af6a), no new REQUEST to perf in the rivet / seams / handheld journals; lock released, no Godot / RTAI / scons of mine running; project/ untouched this session (tools + docs + evidence only), so the it9 gates at 78193069 still cover the game.
+
+## Iteration 15 by the Director's count (15:24-16:24, BUILD)
+- Read: JOURNAL it12 + NEXT, git log -20, the rivet / seams / handheld journals: no REQUEST open to perf; the Director has not
+  answered the traffic-sheet REQUEST. Registry rules applied: measurement-honesty (the 144 Hz case is labelled SIMULATED: both
+  monitors here run 59.94 Hz), perf-instrumentation (a cadence counter in the bench, so "smooth" is counted, not argued),
+  render-submission-economy (a frame that shows no new tick is pure waste: count it before cutting it).
+- FINDING 15:26: seams' branch edits `features/vehicles/art/p70/traffic_cards.png` (the sim bike row) + `vehicle_cards.gd`, so
+  the sheet is seams' file today, not unowned. REQUEST to seams (redirected from the Director, same text as it12): when the
+  sim bike row lands, cut `p70/traffic_cards.png` (4032 x 4480, 69 MB RGBA) into sheets of <= 32 MB (and p55 likewise),
+  same cells, `vehicle_cards.gd` picks the sheet by row. Why (measured, L9): Godot 4.7.2 keeps a CPU upload buffer of
+  next_pow2(largest texture) per transfer worker for the whole session: this one sheet makes a 128 MB buffer on every city
+  scene (riot AND drive, `evidence/perf/l9-twtrim/mechanism/`). Expected about -96 MB resident, no pixel. perf measures it
+  the same hour it lands (`GTAI_TW_LOG=1`, `build/export/windows-bench-tw/`). If seams has no room today, it stays a Call.
+- FINDING F14 15:27: no view reads `SimClock.alpha()`; the camera follows per tick; so at > 60 Hz vsync every extra frame is a
+  duplicate image. And `city_bench` hard-resets `Engine.max_fps = 0`, so the `*60` presets' `--max-fps 60` never applied:
+  they were vsync-capped only (their numbers stand, the label was wrong). L10 hypothesis in the LEDGER before building.
+- 15:29 L10 job 1 started (`evidence/perf/l10-cap/`, riot60 + drive60, 4 arms x 3 rounds, editor binary, lock via ab.mjs).
+- FRICTION 15:31 (~4 min lost, job 1 void): I wrote `boot/frame_cap.gd` + the `Game._ready` call while job 1 ran on this
+  worktree; the 4th run loaded the new `game.gd` against a class cache without `FrameCap` (5 SCRIPT ERROR) and the
+  discarded-return warning was an error too. Job stopped (my stale lock removed, no process left), `apply()` returns void,
+  `--import`, `test_frame_cap` 4/4. Job 2 restarted ~15:33 from zero (`evidence/perf/l10-cap/`). Rule for myself: no edit
+  under `project/` while a job of mine runs on this tree. Job 1's three clean runs (kept in this entry only): riot60 vsync
+  0.43 cores 1683 frames 0 dup; vsync + limiter 60 0.52 cores; SIMULATED 144 Hz 0.64 cores, 4200 frames of which 2449
+  (58 %) showed no new tick.
+- 15:31 research (LEDGER digest): Godot's `Engine.max_fps` docs + the jitter/stutter page; source read of 4.7.2's
+  `OS::add_frame_delay` (the limiter sleeps with `Sleep(ms)` on Windows: no spin, ~1 ms granularity) .
+- REQUEST to handheld (FYI, a lever for your device rows): L10 caps the frame limiter at the 60 Hz tick when the display is
+  faster than 61 Hz and vsync is on (`boot/frame_cap.gd`, set once by the `Game` autoload; `--frame-cap=off` = the before).
+  A 90 Hz handheld panel renders 90 frames for 60 images today: the cap is -33 % of the frames there with no new pixel lost
+  (nothing on screen moves between ticks: F14). Your `--device=` profiles may want to set it explicitly (the decision
+  function is `FrameCap.cap_for(refresh_hz, vsync_on, current, flag)`, pure, unit-tested).
+- MILESTONE 15:48 L10 job 2 (`evidence/perf/l10-cap/ab.json`, 24 runs, lock held, CONTENDED 0-8 in 2-3 of 3 per arm, 0 SCRIPT
+  ERROR): SIMULATED 144 Hz uncapped -> capped: riot60 0.68 -> 0.42 cores (-38 %), drive60 0.52 -> 0.30 (-42 %), duplicate
+  frames 2450 -> 0 per 30 s, skipped tick images 0 -> 0; GPU ms a frame rises at the lower load (the 4090 clocks down): no
+  GPU claim. At 60 Hz, vsync + limiter 60 vs vsync: p99 20.4 -> 17.1 (riot), 21.1 -> 17.1 ms (drive), skipped ticks 2 -> 0,
+  but CPU +30 % (0.37 -> 0.48): F15, Call P-3 (default: no limiter at 60 Hz).
+- DECISION 15:50 (also `docs/decisions.md`): FrameCap caps at the tick only on > 61 Hz + vsync; the 60 Hz limiter is Call P-3;
+  rejected a project-wide `max_fps=60` (it would cap the headless tests, the replay, the uncapped bench).
+- FRICTION 15:51-15:55 (~4 min): lint's debt ratchet failed (city_bench 201 lines, +1 direct cmdline read, +9 dev lines):
+  city_bench trimmed to 200 (the default comes from `.get`; first `.to_int()` on a Variant and then an `as String` cast both
+  are warnings-as-errors: `str()`), FrameCap no longer reads the cmdline (`--fixed-fps` with the cap only paces wall time),
+  the +9 dev lines accepted in the baseline with the reason. The A/B ran the earlier `"--max-fps": "0"` default spelling:
+  the same behaviour.
+- GATE 15:56 at 314632c4: lint 15/15, unit 1703 passed / 0 failed (load_all clean), windowed riot smoke with FrameCap live
+  (59.94 Hz: no-op, no log line) exit 0, 182 frames, 0 duplicate / 0 skipped, 0 SCRIPT ERROR. Scenarios + the director reel
+  top / tilt70 / combo running (15:57 / 15:59).
+- COMMITS: 813b7976 (bench tooling), 314632c4 (FrameCap).
