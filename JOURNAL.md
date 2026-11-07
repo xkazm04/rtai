@@ -1068,3 +1068,25 @@ gang: street's it10 notes). The throne-car's p70 is a lifted stack (pitch-agnost
   new art; the held fix changes selection only, not the frozen art), combat-pacing-and-dramatic-arc
   (n/a this iteration), perf-regression-gating (the outline cut computed once per prop with a hit;
   city's prototype caches the bitmap polys per facing).
+- MEASURE 05:14-05:21 mutation test of arena_prop_cards.gd (`--tests=test_arena_prop_cards`):
+  first --max=10: 4 killed / 6 survived (40 %), none on the new cut_polys lines (not sampled). Added
+  a stub-of-city's-script test (014ddf54: outlines kept, degenerate dropped, quad without
+  stand_polys). Re-run --max=14: 6 killed / 8 survived (42.9 %); the new filter line 84 (`>= 3`)
+  killed. The 8 survivors are the city-only paths that n8-view cannot run without city's script:
+  `draw` (39/40/45), the method detection (105), `_crate_w_m` (25), `_has_polys` default (23),
+  `not CARD.has` (32). They are covered on the merged tree by city's own PropCards tests + film;
+  a stubbed `draw_named` test would kill 39/40/45: owed, low value.
+- Session close 05:22: tree clean, every change committed. Commits it13: 04429dee (held art key),
+  bd55a29b (evidence), 01865f0e (REPORT), ba67b4a2 (occlusion card outline), 02ead854 (evidence),
+  014ddf54 (test). Scratch .avi deleted.
+NEXT (iteration 14, in order):
+1. Read city's JOURNAL for the stand_polys REQUEST and the crate-colour NOTE; when city lands
+   stand_polys, merge-check it on the trial tree (re-run trial_merge.sh on the newer heads) and
+   film the King fight combo 64 px/m seed 2 f900-1110 on the real code (replace the prototype
+   film in frames.json).
+2. Other lanes' journals for REQUESTs to view; the library for new 70 sheets in view's cast.
+3. Quality pass on the merged tree: quest 1 under tilt70 and the Servo depot under combo at
+   64 px/m, looking for view-owned draw-order faults with the lanes' newest art (as this one).
+4. The freeze (08:30): delete the trial tree (`git worktree remove` on
+   %TEMP%/view-trial-it11), director reel top + combo on n8-view, evidence run --no-bench, the
+   exe, REPORT final.
