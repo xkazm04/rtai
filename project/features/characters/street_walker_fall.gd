@@ -42,11 +42,15 @@ const OCT: StringName = &"street_fall_oct"
 
 ## The fall grid the person draws now ("" = none: alive, the row has none, or DRAWN off).
 static func grid_of(rig: CutRig, art: String, row: String) -> String:
-	var r: HumanReact = rig.react
-	if not DRAWN or not (rig.dead or (r != null and r.dying)):
+	if not DRAWN or not down(rig):
 		return ""
 	var rows: Dictionary = FALLS.get(art, {})
 	return str(rows.get(row, ""))
+
+
+## Dying or dead.
+static func down(rig: CutRig) -> bool:
+	return rig.dead or (rig.react != null and rig.react.dying)
 
 
 ## The fall frame for a death progress (the last frame once the family is over).

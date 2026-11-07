@@ -92,16 +92,20 @@ static func step(rig: CutRig) -> void:
 	_place(rig, card)
 
 
-## The strip a person draws now ("" = none: no card, not a pedestrian, no strip, hit or dead).
+## The strip a person draws now ("" = none: no card, no strip, hit or dead; anyone else (a cop)
+## only a FALLS grid while down).
 static func strip_of(rig: CutRig) -> String:
-	if not ENABLED or rig.head_card == null or rig.plan.art_dir != "ped":
+	if not ENABLED or rig.head_card == null:
+		return ""
+	var ped: bool = rig.plan.art_dir == "ped"
+	if not ped and not StreetWalkerFall.down(rig):
 		return ""
 	var art: String = ViewMode.shared().art
 	var key: String = row_of(rig)
 	var grid: String = StreetWalkerFall.grid_of(rig, art, key)
 	if not grid.is_empty():
 		return DIR + art + "/" + grid
-	if falls(rig):
+	if not ped or falls(rig):
 		return ""
 	var walks: Dictionary = WALKS.get(art, {}) if FRAMES_ON else {}
 	if walks.has(key):
