@@ -530,14 +530,7 @@ NEXT (it16 end, 14:37; supersedes every NEXT above):
 1. Watch assets for the electro baton REQUEST (it16): when rivet_eq_electro_baton_70/55 (+ _left) land A/B, swap the
    manifest rows, re-cut (`python -I tools/art/rivet_frames.py --manifest=tools/art/rivet_frames.json`; check the
    left rows' cc on a contact), provenance, film `--bot=pit --loadout=electro_baton --fire-stills` at tilt70 + tilt.
-2. The flamer's phantom flame (re-filmed 14:40 on 90c46dfc, gunplay seed 3 tilt70 64 px/m, x1.5 crops t362-373:
-   `gtai-masters/d9/rivet/rivet_flamer_phantom_flame_after_stream_ends_tilt70_64ppm_x1.5_seed3_t362_373.png`):
-   t362-366 the jet leaves the facing cell's nozzle (one flame: the cone-aim fix works); t367 the stream stops;
-   t368-370 the drawn FIRE_SIDE flame points left with NO jet (3 frames): the FIRE latch (RivetHeldView, FIRE_TICKS
-   after the last shot) outlives the stream while the aim swings into the left octant. Fix: a burst that began on the
-   facing cell (fired and not fires_drawn) keeps the facing cell until the latch clears (a rig meta set in cell_of,
-   cleared when not fired); test it; rivet_frames.gd is at the 200-line cap, move the octant helpers (oct_of,
-   fires_drawn, aim_of) to RivetStrips or a small RivetAim first. Re-gate the reels after.
+2. DONE in-session (e6a74d74), see below.
 3. A facing (non-fire) cell's muzzle for the other holds (REPORT does-not 1).
 4. The mood bust live in quest 1 (the stills reached t9050, Gloria's hand-over; rivet-feels-good comes at the TUCK-IN
    fire): film later ticks.
@@ -545,3 +538,10 @@ NEXT (it16 end, 14:37; supersedes every NEXT above):
 6. The armory/rack showing him holding each weapon (brief item 6; the rack is hud's): FireStills' crops are the cells.
 - Session end 14:45: everything committed; scratch sequences deleted (flm3 too); the phantom-flame crop in masters
   (not in frames.json: a does-not still). frames.json: 15 entries, entry 6 = the portrait before/after.
+- 14:44 MILESTONE `e6a74d74` NEXT 2 done in-session: a flamer burst that went off its drawn flame keeps the facing
+  cell to its end (RivetStrips.draws_fire, rig meta rivet_cone_off); fires_drawn / aim_of / CONE_TOL moved to
+  RivetStrips (rivet_frames.gd 200 -> 185). Test fails with the latch planted out (by hand), passes with it. Filmed
+  the same seed: t368-370 show the left facing with the wand, no phantom flame. Masters
+  `rivet_flamer_phantom_flame_before_after_tilt70_64ppm_x1.5_seed3_t362_373.png` (the before-only crop replaced).
+  Gates it16b: reels 19/19 x3, 0 SCRIPT ERROR, 0 p_frame; unit --changed 1690/0; lint 15/15.
+- Session end 14:46: everything committed; scratch sequences deleted.

@@ -58,6 +58,9 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
 - **The flamer's drawn flame follows the aim** (`90c46dfc`, it16): the it13 "red jet" was a drawn flame pointing
   left (the head's octant) beside the game's jet at ~124 deg (the aim); the drawn flame now needs the aim within
   22.5 deg. Before/after: `gtai-masters\d9\rivet\rivet_flamer_drawn_flame_needs_aim_before_after_gunplay_tilt70_64ppm_seed3_t359_380.png`.
+  And a burst that went off its drawn flame keeps the facing cell to its end (`e6a74d74`): the fire latch drew a
+  phantom flame with no jet for 3 frames after the stream stopped. Before/after:
+  `gtai-masters\d9\rivet\rivet_flamer_phantom_flame_before_after_tilt70_64ppm_x1.5_seed3_t362_373.png`.
 - **The frame cost** (it16, under the bench lock; 3 before / 3 after interleaved): rig_bench `--view=tilt70`, the
   drawn figure vs the head card over parts, median p50: 50 people 0.943 -> 0.776 ms, 200 people 1.319 -> 1.179 ms.
   No added cost (`evidence/d9/rivet-frame-cost-it16.md`; it10's contended runs agreed).
@@ -97,9 +100,6 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
   (ServoDepotDraw.cover); not on this branch until the Director merges both.
 - The electro baton reads as part of his forearm at 32-64 px/m (the rod is his arm's rust-brown; only the tip spark
   reads): an art fault, REQUESTed from assets (it16: a dark steel rod angled out of the claw, 1.3x longer).
-- The flamer: after the stream stops, the fire cell's 7-tick latch can draw a phantom flame for ~3 frames while the
-  aim swings into a side octant (no jet): `gtai-masters\d9\rivet\rivet_flamer_phantom_flame_after_stream_ends_tilt70_64ppm_x1.5_seed3_t362_373.png`.
-  Fix designed (the burst keeps its facing cell), next iteration.
 - Walk: one drawn walk and one sprint pose per sheet; built bob + sway on the facing.
 - Reload: no drawn reload frame; he keeps the equipped strip through it (it7 check: the "bare figure" seen in it6
   was the equipped back views, which show the small guns barely; no change made).

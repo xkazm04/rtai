@@ -14,3 +14,6 @@ drawn flame needs the aim 90c46dfc):
   goldens 11/11 (worst 0.27) + block 5/5 (worst 0.22): `top` did not move; release-compile 600 loaded / 0 failed:
   all PASS.
 - Unit, the full no-arg run on 90c46dfc's tree: 1705 passed / 0 failed / 0 skipped (no FLAKY).
+- it16b on e6a74d74 (the flamer burst latch): director reel 19/19 fully down in tilt70, combo, top; 0 SCRIPT ERROR;
+  0 `p_frame`; the 2 known `^ERROR` lines each (`reel-director-it16b-<view>.log`). Unit `--changed` 1690/0; lint 15/15.
+  The evidence run above was on 90c46dfc's code (view-only change since, under card views; `top` draws none of it).
