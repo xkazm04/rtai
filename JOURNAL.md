@@ -720,3 +720,21 @@ NEXT (it9), replaces the list above:
 NEXT (it9) addendum: item 2 is done (filmed 15:59). Start at item 3 (weakest left) after reading the
 journals; gates last green at 90e9a69c (evidence it8) + reels it8; the it8 commits after that are docs only.
 - Session end 16:02: all committed; scratch captures deleted (masters hold the mp4s and stills).
+
+## Iteration 9 (director it13, 16:01-17:01), BUILD
+
+Read: JOURNAL it8 NEXT + addendum, git log, d9-rivet JOURNAL (it20 15:30-15:58: the baton smear; no REQUEST
+to seams), the library JOURNAL (it91 16:02: "No open REQUEST"; its it88 NEXT offers the King and patrol cop
+portraits to the game lanes). Main has not moved (merge-base = main 0bea8b93).
+- 16:05 DECLINED (for seams) the portrait offer: the HUD's `king` portrait is the shipped p55 bust card
+  frame 0 by the owner's d8 verdict ("the King as built"; portraits.json `source`), so a fresh drawn King
+  portrait is an owner call, not a seam; the cop portrait has no slot in portraits.json today. Left for the
+  hud lane / the owner.
+- 16:06 MERGE SEAM vs d9-rivet head bd526bf9 (rivet moved 20+ commits since my it6 trial): conflicts now
+  JOURNAL.md (add/add) and tools/debt/baseline.json (both lanes accepted a dev_loc rise from 18799: seams
+  +6 the crowd board --spin, rivet +66 FireStills). Resolution for the Director: keep both accepted lines,
+  chain them (18799 -> 18805 -> 18871), total 18871; then `node tools/debt/debt.mjs --update`.
+  Scratch trial merge commit ab6b34f2 (detached, `scratch/seams/mergetrial9`, not a branch): the
+  pre-commit lint passed on it, 15/15 over 1222 files.
+  FRICTION (2 min, mine): a Python regex backreference in a heredoc wrote \x01 into the baseline; the
+  pre-commit hook (debt-ratchet JSON parse) stopped the commit; fixed by hand.
