@@ -90,7 +90,10 @@ func _init() -> void:
 ## d9-handheld: a `--device=` profile sets the window and the frame cap before the main scene.
 func _ready() -> void:
 	if has("--device"):
-		DeviceProfile.select(value("--device")).apply(get_window())
+		var profile: DeviceProfile = DeviceProfile.select(value("--device"))
+		profile.apply(get_window())
+		if profile.is_handheld():
+			add_child(HandheldFocusPause.new())
 
 
 ## Parses `--flag` and `--flag=value` pairs; unknown ones are kept for unknown().

@@ -46,3 +46,11 @@ func test_camera_rig_zoom_k_scales_the_mode_ppm() -> void:
 	var base: float = rig._target_ppm()
 	rig.zoom_k = 1.5
 	assert_almost_eq(rig._target_ppm(), base * 1.5, 0.001)
+
+
+func test_focus_pause_leaves_a_quest_without_a_run_alone() -> void:
+	assert_false(HandheldFocusPause.pause(null))
+	var quest: Quest1Game = Quest1Game.new()
+	assert_false(HandheldFocusPause.pause(quest))
+	assert_false(quest.paused)
+	quest.free()
