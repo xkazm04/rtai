@@ -131,6 +131,12 @@ hand fix, unit 1639/0, director reel top + combo 19/19 all down, 0 SCRIPT ERROR.
   all down, 0 SCRIPT ERROR with QuestGuardCast (`evidence/n8-view/director-reel-it14-trial-*.log`).
   street's `StreetWalkerCards.step` loop at :91 got its guard (n8-street d61f48bc; checked it15 on the merge with `ON` false: 0 SCRIPT ERROR, was 102);
   QuestGuardCast keeps quest 1 off that path either way.
+- it15: trial merge rebuilt 06:06-06:10 on n8-view a2745fe0 + city 814c0a4e, street 6d177df4,
+  vehicles aa086daa, hud 610da507, then + n8-view 971fc2c5 (06:31): the same conflicts, view's
+  side; the debt baseline: either side + `debt.mjs --update`. Director reel top + combo 19/19 all
+  down, 0 SCRIPT ERROR (`evidence/n8-view/director-reel-it15-trial-*.log`). `ViewPitchQuest` adds
+  one call in `boot/quest1_game.gd` `_casts()` (after `GhostAttackViews.attach_quest`): no other
+  lane touches that function.
 - it13: PropOcclusion reads city's `PropCards.stand_polys` by method presence (landed on n8-city
   8c982682 + 55ede50c, checked on the 05:56 trial merge); merge order does not matter, without it
   the cut stays the card's rect.
