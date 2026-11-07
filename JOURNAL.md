@@ -1451,3 +1451,8 @@ NEXT (after the freeze; for a later night or the Director's merge):
   walks the kerb as a warm-grey suit with his briefcase, apart from the bench and the kerb; the hood
   and shopper unchanged. No cap ped in shot on this seed (the board pair covers it).
   evidence/peds_city_tilt70_48ppm_seed5_botrivet_suit_v3_hood_shopper_x3.png. Raw .avi deleted.
+- FILMED (motion) the `--kill=light` board under `--write-movie` (the -s board script films: 243
+  frames, exit 0, 0 SCRIPT ERROR), 64 px/m crop real time then 0.25x: LOOKED 0.5/5/9 s: the cap and
+  suit peds walk, buckle and lie in one look. Masters
+  peds_suit_cap_v3_walk_fall_tilt70_64ppm_board_realtime_then_0.25x.mp4 (named in frames.json #2's
+  note; frames.json stays at 15). Raw .avi deleted.
