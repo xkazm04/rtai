@@ -934,3 +934,4 @@ trial merge on the newer heads, 5. the freeze items (NEXT 4 above). Session clos
   the van on bay 3 hides its box and number; after, the "3" and the box read over the van, under
   Dent's seize ring and tether. `top`: marks_apart false, the ground pass unchanged. Servo tests
   39/0. DECISION in docs/decisions.md. ANSWER to vehicles: done on n8-view (this commit).
+- GATE 03:52 at 73a78455: unit full no-arg 1511 passed / 0 failed, 0 FLAKY (`evidence/n8-view/unit-it11.log`); scenarios 52 passed, 0 failed (`scenarios-it11.log`); lint 15/15 (hook). NEXT (it12): 1. street's RigSelect corpse (plan above), 2. city's / hud's answers on the trial findings, 3. the trial merge re-run on newer heads (then delete the tree), 4. the freeze items. Session closes 03:52.
