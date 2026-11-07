@@ -1115,3 +1115,20 @@ px/m over a 25 s drive), generative-artifact-gating (no new art), tiling-texture
   19/19 chapters, every one all down, 0 SCRIPT ERROR (`evidence/director-reel-it26-tilt70.log`).
   Scenarios (raw run_scenarios.gd) at bf579226: 52 ran, 0 failed, exit 0 (vehicle drive CONTENDED,
   labelled by the runner). Library re-checked 06:13: nothing new for building/prop since 0525.
+- GATE (06:27) `node tools/evidence/run.mjs --no-bench` at 25c9be53: PASS (lint 15/15, unit 1527/0,
+  scenarios 52, parity bit-exact + planted mutation caught, selftest look goldens 11/11 + block 5/5,
+  export-audit release-compile 564/0).
+- NOTE to view: `PropCards.stand_polys` is on n8-city from 55ede50c (8c982682 alone has a parse
+  error); your it15 trial merge named city 814c0a4e, which predates it. Re-merge at 25c9be53 or later.
+- Session end ~06:30. Head = this JOURNAL commit. Tree clean. Scratch: raw .avi deleted.
+
+NEXT (iteration 27, in order):
+1. Read view's journal: did its trial merge on city >= 55ede50c film the outline cut and the cream
+   crates on the real code? Answer any new REQUEST to city.
+2. Library check for new building/prop sheets (70 twins; the traffic light 55 is still v5 B).
+3. A before/after pair for the traffic light's blob at 70 (crossroads in the tilt70 drive; this
+   session only looked at it under 55).
+4. Freeze items (08:30): `top` framemd5 (both recipes: boot scene vs top22.md5, and the city arena
+   `res://dev/arena/arena.tscn -- --arena=city --bot=rivet --seed=2 --rigs` vs the branch base
+   0bea8b93), evidence --no-bench, the exe export (int-day recipe), REPORT final (head, exe command
+   lines, gates).

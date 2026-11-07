@@ -52,7 +52,7 @@ head commit. Branch `n8-city`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n8\ci
    view). tilt70 had 6 frames over 25 ms (top 0, worst 39 ms, none over 50): not attributed, and the
    chunk slice is not it. `evidence/drive-cost-it25.json`.
 
-## Gates (iteration 26, head 55ede50c)
+## Gates (iteration 26, head 25c9be53)
 
 - `top` bit-identical, two recipes, 301 frames each, framemd5, 0 SCRIPT ERROR:
   - the city arena (`res://dev/arena/arena.tscn -- --arena=city --bot=rivet --seed=2 --rigs`):
@@ -65,7 +65,7 @@ head commit. Branch `n8-city`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n8\ci
 - Director reel at tilt70 (`--bot=reel --reel=director --loadout=pistol --rigs --view=tilt70`, 7600
   frames headless): 19/19 chapters down, 0 SCRIPT ERROR (`evidence/director-reel-it26-tilt70.log`, bf579226).
 - Scenarios: 52 ran, 0 failed, exit 0 at bf579226 (vehicle drive timing CONTENDED, labelled by the runner).
-- Last `evidence/run.mjs --no-bench`: PASS at 492f14f1 (iteration 25: lint, unit 1524/0, scenarios 52, parity, selftest goldens, export-audit 563/0). FREEZE: re-run.
+- Last `evidence/run.mjs --no-bench`: PASS at 25c9be53 (iteration 26: lint 15/15, unit 1527/0, scenarios 52, parity bit-exact + planted mutation caught, selftest look goldens 11/11 + block 5/5, export-audit release-compile 564/0). FREEZE: re-run.
 
 ## What does not work / gaps
 
