@@ -36,6 +36,8 @@ var front: VehicleFront = VehicleFront.new()
 var under: MultiMeshInstance2D = null
 ## Skip cars whose ground point is off screen by more than a cell (VehicleView sets it).
 var cull: bool = false
+## This frame's cull rect (m; begin() sets it), empty without cull.
+var seen: Rect2 = Rect2()
 var _mm: MultiMesh = null
 var _mm_under: MultiMesh = null
 var _node: MultiMeshInstance2D = null
@@ -47,7 +49,6 @@ var _xfs: Array[Transform2D] = []
 var _cs: PackedColorArray = PackedColorArray()
 var _cds: PackedColorArray = PackedColorArray()
 var _below: PackedByteArray = PackedByteArray()
-var _seen: Rect2 = Rect2()
 var _grid: Vector2i = Vector2i(VehicleViews.COLS, ROWS)
 var _fine: PackedInt32Array = PackedInt32Array()
 
@@ -89,7 +90,7 @@ func begin(tex: Texture2D) -> void:
 	_cs.clear()
 	_cds.clear()
 	_below.clear()
-	_seen = VehicleCull.screen_m(self, CELL_M) if cull else Rect2()
+	seen = VehicleCull.screen_m(self, CELL_M) if cull else Rect2()
 
 
 ## The shader's wear for VehicleBody.State `state`: 0 intact (and hijacked), 1 dented (D1), 2
@@ -113,7 +114,7 @@ static func duty(art: int, speed: float) -> int:
 
 ## A car of art id `art` at `pos` (m) facing `head` (ground unit), tinted `tint`, worn `worn`.
 func put(art: int, pos: Vector2, head: Vector2, tint: Color, worn: int = 0) -> void:
-	if _seen.has_area() and not _seen.has_point(pos):
+	if seen.has_area() and not seen.has_point(pos):
 		return
 	var a: float = rad_to_deg(atan2(head.y, head.x))
 	var fine: bool = _fine.has(art)

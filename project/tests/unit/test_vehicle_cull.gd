@@ -38,3 +38,18 @@ func test_without_cull_every_car_is_put() -> void:
 	cards.put(0, Vector2(1000.0, 1000.0), Vector2.RIGHT, Color.WHITE)
 	cards.finish()
 	assert_eq(cards.count(), 1)
+
+
+func test_the_reach_holds_every_point_of_the_rect() -> void:
+	var rect: Rect2 = Rect2(Vector2(-10.0, 4.0), Vector2(30.0, 12.0))
+	var at: Vector2 = Vector2(2.0, 9.0)
+	var reach: float = VehicleCull.reach_m(rect, at)
+	assert_almost_eq(reach, Vector2(18.0, 7.0).length(), 1e-4)
+	for c: Vector2 in [rect.position, rect.end, Vector2(rect.end.x, rect.position.y)]:
+		assert_true(at.distance_to(c) <= reach + 1e-4)
+	var outside: Vector2 = at + Vector2(0.0, reach + 0.1)
+	assert_false(rect.has_point(outside))
+
+
+func test_no_rect_reaches_everything() -> void:
+	assert_eq(VehicleCull.reach_m(Rect2(), Vector2(5.0, 5.0)), 1e6)

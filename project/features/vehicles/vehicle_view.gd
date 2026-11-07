@@ -145,7 +145,7 @@ func _draw_cards() -> void:
 		var on_duty: int = VehicleCards.duty(b.art, b.vel.length())
 		cards.put(b.art, b.pos, b.head, Color.WHITE, VehicleCards.wear(b.state, b.id) + on_duty)
 	var book: Dictionary[int, int] = service.traffic.state if service.traffic != null else {}
-	var recs: PackedFloat64Array = service.world.cars_near(me, 1e6)
+	var recs: PackedFloat64Array = service.world.cars_near(me, VehicleCull.reach_m(cards.seen, me))
 	for r: int in range(0, recs.size(), VehicleWorld.CAR_STRIDE):
 		var id: int = int(recs[r])
 		var st: int = book.get(id, VehicleBody.State.INTACT)
