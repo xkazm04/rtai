@@ -1565,3 +1565,19 @@ Calls 1-7; the whole-figure Rivet frames per pitch after the owner's pick).
 NEXT: unchanged from it17 (merge with the four lanes, JOURNAL/REPORT conflicts only; d9 the
 arena's tall props as CityOcclusion's `extra` occluders, repro seed 5 tick 900 tilt70; REPORT
 Calls 1-7; the whole-figure Rivet frames per pitch after the owner's pick).
+
+## it21 (08:30-08:33, STABILIZE, at the freeze)
+- READ: JOURNAL it20 tail, git log (HEAD 2718062a, tree clean), the four lane journals'
+  `REQUEST to view` / `NOTE to view` lines: none new (street l.1041 answered by their l.1092;
+  vehicles l.720/867/1223/1290 and city l.544/591/623/1121 answered it14-it18; hud has none).
+- DECISION view/it21: freeze stays at 611b4b97 (gated it17, evidence run all PASS; the exe
+  `build/export/windows/RTAI.exe` 07:20 is that code; REPORT.md 08:13 and the masters'
+  frames.json describe it). STABILIZE allows bug fixes only, and no bug is open against view;
+  a change now could not be re-gated before the 08:40 report. Rejected: the d9 CityOcclusion
+  `extra` occluders (a feature, needs city's side).
+- Registry rules applied it21: perf-regression-gating (a gated freeze is not moved without its
+  gates); the rest n/a (no art, no frames).
+- Session close it21: tree clean after this commit; REPORT stands as written at it17.
+NEXT: unchanged from it17 (merge with the four lanes, JOURNAL/REPORT conflicts only; d9 the
+arena's tall props as CityOcclusion's `extra` occluders, repro seed 5 tick 900 tilt70; REPORT
+Calls 1-7; the whole-figure Rivet frames per pitch after the owner's pick).
