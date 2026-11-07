@@ -746,3 +746,11 @@ NEXT (iteration 17, in order):
 NEXT (iteration 17) replaces NEXT 1 above: (a) film the dumpster v4 on the depot fight under combo
 48 vs 94930301; (b) the remaining 55 raises (hydrant_v3, newsstand_v2, planter_v2,
 vending_machine_v3, barrel_cluster_v3, trash_can_v3); NEXT 2-5 as above.
+- (03:08) EVIDENCE NEXT (a) done: the dumpster v4 on the depot fight, `res://dev/arena/arena.tscn --
+  --boss=servo --bot=boss --seed=2 --rigs --view=combo --ppm=48`, 6.3 s, 94930301 (throwaway
+  worktree, re-imported, removed) vs 22024a9c: the lid stands open, the bags and the lift pockets
+  read; before, two flat lids. `gtai-masters/n8/city/it16_depot_dumpster_v4_combo48_before_after_x2.png`.
+  0 SCRIPT ERROR both.
+- GATE unit full no-arg at 22024a9c: 1521 passed, 0 failed, 0 skipped, no FLAKY.
+- Session end ~03:10. Head = this JOURNAL commit. NEXT (iteration 17): (b) the remaining 55 raises,
+  then NEXT 2-5 of iteration 16.
