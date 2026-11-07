@@ -54,3 +54,9 @@ func test_focus_pause_leaves_a_quest_without_a_run_alone() -> void:
 	assert_false(HandheldFocusPause.pause(quest))
 	assert_false(quest.paused)
 	quest.free()
+
+
+func test_view_zoom_keeps_the_framing_under_a_smaller_draw() -> void:
+	assert_eq(DeviceProfile.of("").view_zoom(), 1.0)
+	assert_almost_eq(DeviceProfile.of("deck").view_zoom(), 1.5, 0.001)
+	assert_almost_eq(DeviceProfile.of("deck_bench_ds75").view_zoom(), 1.5 * 0.75, 0.001)

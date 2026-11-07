@@ -39,9 +39,9 @@ static func shared() -> DeviceProfile:
 	return _shared
 
 
-## This run's camera zoom factor (1 on the desktop).
+## This run's camera zoom factor (1 on the desktop): see view_zoom().
 static func zoom() -> float:
-	return shared().zoom_k
+	return shared().view_zoom()
 
 
 ## Picks this run's profile from a `--device=` value (a dash reads as an underscore).
@@ -88,6 +88,14 @@ func _read(row: Dictionary) -> void:
 ## True for the shipped desktop game (a row that changes nothing).
 func is_desktop() -> bool:
 	return window_size == Vector2i.ZERO and max_fps < 0 and vsync == "" and stretch_mode == ""
+
+
+## The camera's px/m factor: zoom_k, times draw_scale when the 2D is drawn smaller and scaled up
+## (viewport stretch), so a smaller draw keeps the same framing on the panel (E8).
+func view_zoom() -> float:
+	if stretch_mode == "viewport" and draw_scale < 1.0:
+		return zoom_k * draw_scale
+	return zoom_k
 
 
 func is_handheld() -> bool:
