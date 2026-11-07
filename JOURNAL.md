@@ -1200,3 +1200,40 @@ NEXT (iteration 15, in order):
   barrier draws over the barrier mid-flight and lands as street's drawn lying figure on the
   pavement, a blood trail and a gore piece left at the hit spot (brutality's design). Nothing
   view-owned misplaced. Raw .avi deleted.
+
+## Iteration 15 (06:04-07:04, BUILD: quality pass on the weakest item)
+- Read: JOURNAL, git log, the four lane journals. No new REQUEST to view. street ANSWERED the
+  it14 REQUEST: n8-street d61f48bc, `StreetWalkerCards.step` hides through `StreetView.hide_all`,
+  which skips an item freed since it was hidden. street keeps quest 1's contractors on its cards
+  (no dock-guard RIG look), so `QuestGuardCast.ON` stays true (the it14 NEXT 1 condition for
+  turning it off is not met); the alternative (`ON` false) is now safe on the merge too: checked
+  below. The corpse pile (it14 NOTE to street) is street's draw_down line (cast_view.gd:79 on
+  n8-street); view leaves it: not answered yet.
+- Library: no Servo p70 PART sheet (unchanged; Servo is 55 under combo). Nothing new for view.
+- Plan it15: trial merge on every lane's current head (city 814c0a4e, street d61f48bc, vehicles
+  aa086daa, hud 610da507), check street's fix with `ON` false, then refresh the lane's combined
+  clip with the it12-it14 work (it11's predates the held art key, the outline cut, the bay ink,
+  the contractors), filmed on the merged tree where the lanes' art meets view's code.
+- 06:06-06:10 TRIAL MERGE rebuilt on n8-view a2745fe0 + city 814c0a4e, street 6d177df4 (incl.
+  d61f48bc), vehicles aa086daa, hud 610da507 (`trial_merge.sh`, view's side on the known
+  conflicts), `--import` exit 0, 0 errors.
+- CHECKED street's fix (it14 REQUEST closed): on the trial merge with `QuestGuardCast.ON = false`
+  (edited in the trial tree only, reverted with `git checkout --`), quest 1 Dock 9 ticks
+  13560-13900 tilt70 48 px/m: exit 0, **0 SCRIPT ERROR** (it14: 102). So `ON` false is now a safe
+  one-value alternative on the merge; `ON` stays true (hi-vis contractors, not police blue).
+- MILESTONE 06:25 the lane's combined clip refreshed: `view_set_combined_n8_it15.mp4`, 75 s, 8
+  titled segments (`scratch/view/combined/make15.sh`): (1) the King fight under combo on all five
+  lanes merged, 32 px/m, 0 SCRIPT ERROR (new: `king_fight_combo_32ppm_merged_it15.mp4`, 25 s, seed 2
+  `--bot-human --boss-cam`), (2) ring lock, (3) death beat, (4) Tonnage King-down swap, (5) held
+  art key, (6) the outline cut, (7) quest 1 contractors, (8) the city block on foot tilt70 on the
+  merge (new: `city_foot_tilt70_32ppm_merged_it15.mp4`, seed 5, 0 SCRIPT ERROR). LOOKED: a
+  contact sheet of one frame per segment, titles legible, before/after sides as titled; the
+  merged King fight 11 frames every 150: the ease 70 -> 55 at the engage, the car's ram line and
+  cone over the road, the lanes' parked cars and city's crates at 55. frames.json #1 replaced
+  (it11's 86 s reel deleted: it predated the it12-14 work). FRICTION: three masters mp4s report a
+  container duration longer than their frames (tonnage 18.3 s vs 240 frames, held 15 s vs 500,
+  outline 25 s vs 210): count frames (`-count_frames`) before trimming with `-ss/-t`.
+- Tried the city drive on the merge for segment 8 (`city_bench.tscn --scenario=drive`, tilt70):
+  the bench camera frames no player car (first frame blank while loading), so it shows the lanes'
+  traffic, not view's lead: dropped (the lead is Call 4's stills). The `--resolution` flag does
+  not apply under this machine's override.cfg: every capture is 1280x800.

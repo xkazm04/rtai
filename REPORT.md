@@ -1,7 +1,7 @@
 # n8 view lane: REPORT (DRAFT it14, 05:50; final at the freeze)
 
 Lane `view`, branch `n8-view`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n8\view\` (`frames.json`,
-15 entries, best first; the combined reel `view_set_combined_n8_it11.mp4`, 86 s). Repo evidence
+15 entries, best first; the combined reel `view_set_combined_n8_it15.mp4`, 75 s, its first and last segments filmed on all five lanes merged). Repo evidence
 under `evidence/n8-view/`. Full log: `JOURNAL.md`.
 
 ## What works (with its evidence)
@@ -119,7 +119,7 @@ hand fix, unit 1639/0, director reel top + combo 19/19 all down, 0 SCRIPT ERROR.
 - it14: trial merge refreshed 05:26 (n8-view 0afbbefa + city aa795463, street 82c6f40c, vehicles
   2bccd4d1, hud c36dac9e): the same conflicts as it11, view's side; director reel top + combo 19/19
   all down, 0 SCRIPT ERROR with QuestGuardCast (`evidence/n8-view/director-reel-it14-trial-*.log`).
-  street's `StreetWalkerCards.step` loop at :91 needs an is_instance_valid guard (REQUESTed);
+  street's `StreetWalkerCards.step` loop at :91 got its guard (n8-street d61f48bc; checked it15 on the merge with `ON` false: 0 SCRIPT ERROR, was 102);
   QuestGuardCast keeps quest 1 off that path either way.
 - it13: PropOcclusion reads city's `PropCards.stand_polys` by method presence (landed on n8-city
   8c982682 + 55ede50c, checked on the 05:56 trial merge); merge order does not matter, without it
