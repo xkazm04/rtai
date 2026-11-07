@@ -1,0 +1,30 @@
+{
+ "change": "0f4810f0 service vans turn one way (MIRROR_34) + p70 depot van from depot_van_70_v2; ada297fe p55 van/pickup/police 3/4-toward mirrored; 42b01ee9 p55 van_cream_55_v3 + police_car_55_v6 (P55_V)",
+ "date": "2026-11-07",
+ "exe": {
+  "commit": "42b01ee9",
+  "path": "build/export/windows/RTAI.exe",
+  "preset": "windows-showcase",
+  "smoke": "--boss=servo --bot=boss --servo-ghost=dent --view=combo --rigs --seed=2, 200 frames, exit 0, 0 SCRIPT ERROR"
+ },
+ "film": "vehicle_turn --set=service tilt+tilt70 64 px/m before/after; vehicle_turn main+street tilt 64 px/m before/after (x2); Servo depot combo 32 px/m before/after; all 0 SCRIPT ERROR",
+ "gates": {
+  "commit": "42b01ee9",
+  "director_reel": {
+   "logs": [
+    "director-reel-it23-top.log",
+    "director-reel-it23-tilt70.log"
+   ],
+   "tilt70": "19/19 chapters down, 0 SCRIPT ERROR, exit 0",
+   "top": "19/19 chapters down, 0 SCRIPT ERROR, exit 0"
+  },
+  "evidence_run_no_bench": {
+   "commit": "ada297fe",
+   "log": "evidence-run-it23.log",
+   "result": "all PASS: lint 15/15, unit 1566/0, scenarios 52, parity bit-exact + mutation caught at step 629, selftest goldens 11/11 + block 5/5, export-audit 567/0"
+  },
+  "lint": "15/15 (pre-commit on every commit)",
+  "top_identity": "framemd5 --arena=city --bot=rivet --seed=2 --rigs: frames 0-299 video+audio identical to identity-it22 (this run wrote 301 frames, it22 300)",
+  "unit": "1566/1566 passed, 0 failed (no-arg run, 44 s)"
+ }
+}

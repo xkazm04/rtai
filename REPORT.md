@@ -1,6 +1,6 @@
 # REPORT: night lane `vehicles` (n8, 2026-11-06 20:00 to 2026-11-07 09:00)
 
-DRAFT written in iteration 18 (04:50); the freeze session completes it (exe, final gates).
+Written through iteration 18-23; it23 (07:29-08:29) did the final exe and gates.
 Branch `n8-vehicles`. Evidence: `evidence/n8-vehicles/` (gate logs, bench, identity md5s) and the
 masters in `C:\Users\kazda\kiro\gtai-masters\n8\vehicles\` (`frames.json`, 15 entries, best first).
 The view lane's REPORT.md came in with the n8-view merge; this file replaces it on this branch
@@ -70,11 +70,16 @@ The view lane's REPORT.md came in with the n8-view merge; this file replaces it 
    `service_turn_mirror_fix_tilt_64ppm_f15-135_f210-330_before_top_after_bottom.png`,
    `traffic55_turn_dir_fix_tilt55_64ppm_f30-45-60_before_after_main_then_street.png`,
    `service_turn360_64ppm_before_left_after_right_tilt55_top_tilt70_bottom.mp4`.
-13. **Gates (it22, 299d849f):** unit 1566/0 no FLAKY; director reel 19/19
-   all down in `top` and `tilt70`, 0 SCRIPT ERROR; lint 15/15; `top` framemd5 identical to it21;
-   scenarios 52/0 (`evidence/n8-vehicles/iteration22.json`). `tools/evidence/run.mjs --no-bench`
-   all PASS on 1651d3d6 (it22; parity bit-exact, selftest goldens, release-compile 567/0); the
-   freeze re-runs everything on its HEAD.
+   The 55 van now takes van_cream_55_v3 (the 70 van's design, no roof rails) and the 55 police car
+   police_car_55_v6 (its side no longer flattens to ~28 deg) (42b01ee9; Call 12):
+   `p55_van_v3_servo_depot_combo_32ppm_seed2_f60_150_290_before_left_after_right_x3.png` (Servo's
+   bay 3 van parked, seized, burnt).
+13. **Gates (final, it23 on 42b01ee9):** unit 1566/1566; director reel 19/19 chapters down in `top`
+   and `tilt70`, 0 SCRIPT ERROR, exit 0; lint 15/15; `top` framemd5 (city block, seed 2) identical to
+   it22 over its 300 frames; `tools/evidence/run.mjs --no-bench` all PASS on ada297fe (the same code;
+   42b01ee9 changes only the p55 atlas and the cutter): scenarios 52, parity bit-exact + the planted
+   mutation caught, selftest goldens 11/11 + block 5/5, release-compile 567/0
+   (`evidence/n8-vehicles/iteration23.json`, `evidence-run-it23.log`, `director-reel-it23-*.log`).
 
 ## What does not work / not done
 - The delivery truck and the dedicated depot van have no sim archetype and no top-down print: since
@@ -132,7 +137,8 @@ Each: options, the default built, how to see it.
 
 ## Exe
 `build/export/windows/RTAI.exe` (preset `windows-showcase`: boots the arena; embedded pck + the sim DLL
-beside it). Export (10 s; dry run at 05:18 on e8a597e8, the freeze re-exports HEAD):
+beside it). Exported at 07:56 from 42b01ee9 (the it23 art head; 10 s, exit 0, RTAI.exe 269 MB +
+`gtai_sim.windows.template_release.x86_64.dll`):
 `"$GODOT_BIN" --headless --path project --export-release windows-showcase ../build/export/windows/RTAI.exe`
 See the vehicles (`top` stays the default; add `--view=<top|tilt70|combo>`):
 - Servo depot (the cream stage van, combo): `RTAI.exe -- --boss=servo --view=combo --rigs`
@@ -141,8 +147,9 @@ See the vehicles (`top` stays the default; add `--view=<top|tilt70|combo>`):
   is the arena hub, no traffic): `"$GODOT_BIN" --path project -- --view=tilt70 --seed=7 --rigs`,
   or export `windows-slice` (main scene, same path; the last export wins)
 - the director reel: `RTAI.exe -- --bot=reel --reel=director --loadout=pistol --rigs --view=tilt70`
-Smoke-tested: `RTAI.exe --fixed-fps 60 --quit-after 200 -- --boss=servo --bot=boss --servo-ghost=dent
---view=combo --rigs --seed=2`, exit 0, 0 SCRIPT ERROR, the cream van seized at f130 (looked).
+Smoke-tested on the 07:56 export: `RTAI.exe --fixed-fps 60 --quit-after 200 -- --boss=servo --bot=boss
+--servo-ghost=dent --view=combo --rigs --seed=2`, exit 0, 0 SCRIPT ERROR (only the known exit-time
+"resources still in use" lines). The 55 van (no roof rails since it23) is the one Dent seizes in bay 3.
 The turn showcase (`dev/showcase/vehicle_turn.tscn`) is a dev scene: run it from the editor build
 (`"$GODOT_BIN" --path project res://dev/showcase/vehicle_turn.tscn -- --view=tilt70 --ppm=64`).
 
