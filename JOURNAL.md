@@ -504,3 +504,7 @@ NEXT (iteration 16):
    riot60 + drive60, counting `multiTick` and the presented p99.
 4. If seams serves the traffic-sheet split: `GTAI_TW_LOG=1` on windows-bench-tw (expect 208 -> ~112 MB staging) + the RAM job.
 - Session end 16:09 (it15): 5 commits (813b7976 .. this); L10 KEPT as the new baseline; lock released, no Godot of mine running; scratch build logs removed.
+- MILESTONE 16:13 L10 on the King (`evidence/perf/l10-king/ab.json`, combo, editor binary, lock held, 3 rounds, CONTENDED 1 of
+  3 per arm, 0 errors): SIMULATED 144 Hz uncapped -> capped 0.80 -> 0.47 cores (-41 %): the same cut as the city scenes. NEXT 2's
+  King half is done; the release-exe half stays.
+- Session end 16:15 (it15, final): lock released, no Godot of mine running (the reels / GUT up at 16:10 are another lane's).

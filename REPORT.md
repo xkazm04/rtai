@@ -52,7 +52,7 @@ Journal: `JOURNAL.md`. Clips and stills: `C:\Users\kazda\kiro\gtai-masters\d9\pe
 ### Call P-3: smoother frame pacing at 60 Hz for ~0.1 of a core - default built: no change at 60 Hz
 - **Context (L10, kept):** nothing on screen moves between the game's 60 Hz ticks, so on a 120 / 144 / 165 Hz monitor the game
   used to draw the same picture 2-3 times. It now caps itself at 60 fps on such monitors (vsync on): on a simulated 144 Hz
-  display that is **-38 % CPU on the riot, -42 % on the city drive**, and no duplicate frames, with the same images per tick.
+  display that is **-38 % CPU on the riot, -42 % on the city drive, -41 % in the King fight**, and no duplicate frames, with the same images per tick.
   It does nothing on a 60 Hz monitor (this PC), so nothing you have seen changes. `--frame-cap=off` is the before.
 - **Found on the way (F15):** on a 60 Hz monitor, adding the same 60 fps limiter on top of vsync makes delivery steadier: the
   slowest 1 % of frames 20.4 -> 17.1 ms, and the 1-3 skipped ticks per 30 s gone. Cost: +30 % process CPU on the riot
