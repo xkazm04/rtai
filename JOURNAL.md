@@ -979,3 +979,15 @@ l.866): quest 1's tick-600 cop (Line Stopped crossing) still draws top-down at t
   SCRIPT ERROR both): the 55 corpses now as long as the 70 ones, slimmer as the 55 drawing is.
   evidence/contractor_p55_corpse_one_length_tilt_vs_tilt70_48ppm_q1_t14100.png. Unit 5/5.
 - Bench: bench.lock fresh (04:04, another lane): crowd cost skipped this session.
+- MILESTONE ada46751 (view's trial-merge NOTE, l.866 of n8-view): **quest 1's patrol cops stand as
+  a whole-figure card** under the card views (StreetQuestCards.draw_patrol, CastView where it drew
+  the `cop` sprite; cop_patrol_70 B (keyed file already recoloured: the B fix) / cop_patrol_55 A,
+  street_head.py band 1.0 192 px, fix navy = the cop-tone default; police blue one arg away).
+  cop_patrol_v2 70 A cut too and REJECTED on sight: under `navy` its mid-blue shirt goes grey-teal
+  (and teal is souls only); raw it would not pair with the city cops' navy head cards.
+  LOOKED Line Stopped t600 48 px/m: before (HEAD's cast_view, a separate run) a top-down blue blob
+  at the kerb; after a standing navy cop, feet on the patrol point, at tilt70 and tilt (0 SCRIPT
+  ERROR x3). Masters frames.json #6 (quest1_patrol_cop_card_before_after_tilt70_and_tilt_48ppm_
+  x1.5_t600.png; dropped #11 thug_lift, superseded by the drawn falls, file kept). Debt +1 line in
+  cast_view accepted (as the it4 contractor branch). Unit 5/5. Provenance x2.
+  ANSWER to view: the tick-600 cop is done on n8-street (ada46751).
