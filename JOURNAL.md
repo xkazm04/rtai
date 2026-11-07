@@ -196,3 +196,17 @@ NEXT (iteration 5):
 - F9 / F10 (LEDGER): L3 costs ~+80-120 MB VRAM; every texture in the game imports lossless (1.44 GB if all
   resident). L4 = BC7 for characters/city/vehicles art, in a scratch worktree (712 imports, 73 s reimport):
   A/B queued behind handheld's bench.lock (held since 12:11).
+- FRICTION 12:37 (~10 min lost): the first L4 A/B job was killed by my own background-task limit (10 min) after 3
+  runs, because it spent 8 of them waiting for handheld's bench.lock; the lock file it held was mine (pid gone),
+  removed by hand. Rerun with a 25-min limit. Lesson: a lock-waiting job needs the long timeout from the start.
+- 12:47 quest 1 in the runner (fc90bcd2): preset `quest1` (quest1_frames writes wall_ms). Not yet run.
+- MILESTONE 12:48 L4 measured (`evidence/perf/l4-bc7/ab.json`, lock held, 2 pairs): BC7 for the street cast,
+  city and vehicles art: peak VRAM drive70 902 -> 573 MB, riot 883 -> 554 (-37 %); texture memory -65 %;
+  frame times, GPU, draws, CPU, RAM WASH. Pixels move (BC7): OWNER CALL, default lossless kept.
+- F11: mipmaps are live (PrintStage samples LINEAR_WITH_MIPMAPS): dropping them is a look change, not pursued.
+- REQUEST to handheld (perf, numbers attached): L4 is a device-budget lever more than a desktop one: BC7 art cuts
+  the riot's peak VRAM 883 -> 554 MB and texture memory 531 -> 186 MB at no frame cost on this PC (LEDGER L4).
+  On a shared-memory handheld that is ~330 MB of RAM back. The arm is reproducible: a scratch worktree with the
+  712 `features/{characters,city,vehicles}/art/**/*.png.import` set to `compress/mode=2` + `high_quality=true`
+  (73 s reimport), A/B'd through `ab.mjs` with `bc7:^--path <worktree>/project`. If you have an iGPU/deck row,
+  a BC7 arm there would say whether the GPU side moves where bandwidth is scarce (it did not on the 4090).
