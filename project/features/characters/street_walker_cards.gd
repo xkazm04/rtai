@@ -87,8 +87,8 @@ static func step(rig: CutRig) -> void:
 	var card: Sprite2D = rig.head_card
 	if str(card.get_meta(ON, "")) != path:
 		_build(rig, card, path)
-	for c: CanvasItem in rig.body.get_meta(HID):
-		c.visible = false
+	var hid: Array[CanvasItem] = rig.body.get_meta(HID)
+	StreetView.hide_all(hid)
 	place(rig, card)
 
 

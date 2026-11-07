@@ -30,6 +30,14 @@ static func post(rig: CutRig) -> void:
 		StreetWalkerCards.place(rig, card)
 
 
+## Hides what StreetWalkerCards.step hid; an item freed since (a part dropped mid-fall) is skipped,
+## not assigned through a typed loop (102 SCRIPT ERRORs in quest 1 Dock 9 on view's trial merge).
+static func hide_all(items: Array[CanvasItem]) -> void:
+	for i: int in items.size():
+		if is_instance_valid(items[i]):
+			items[i].visible = false
+
+
 static func _lift(rig: CutRig) -> void:
 	if not ViewMode.shared().cards or ViewMode.shared().art.is_empty():
 		return

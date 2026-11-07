@@ -77,3 +77,13 @@ func test_a_flinch_keeps_the_figure_and_a_death_falls_after_the_hold() -> void:
 	assert_true(StreetWalkerCards.falls(rig), "the parts take the fall")
 	r.clear()
 	assert_true(StreetWalkerCards.falls(rig), "dead with no family: the parts")
+
+
+func test_hide_skips_an_item_freed_since_it_was_hidden() -> void:
+	var kept: Node2D = autofree(Node2D.new())
+	var gone: Node2D = Node2D.new()
+	var items: Array[CanvasItem] = [gone, kept]
+	gone.free()
+	StreetView.hide_all(items)
+	assert_false(kept.visible, "the live item is hidden")
+	assert_false(is_instance_valid(items[0]), "the freed one was skipped")
