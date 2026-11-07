@@ -1282,3 +1282,6 @@ lines into `BossTaunt`; boss busts once approved; Rivet's dialogue face after th
   --view=tilt --rigs` and `-- --armory --pickup-crate=on --view=tilt70 --rigs`, 241 frames each,
   exit 0, 0 ERROR lines; frame 239 looked at (p55 floor pieces + wall rack; the open crate rows):
   `it21/exe_armory55_crate_smoke.png`. All five REPORT exe lines now smoked on the shipped build.
+- 08:02 DECISION (freeze): no project change this late. A code change needs gates (~8 min) +
+  reel (~6) + re-export + smoke, about 20 min with no slack before 08:30. The project tree stays at
+  f80e09ba, where every gate, the reel and the exe are green. Session end: tree clean. NEXT above stands.
