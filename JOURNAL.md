@@ -1314,3 +1314,20 @@ lists need C:/ paths, not /c/ (opens C:/c/...).
 LOOKED 05:53 the driven car soul-hijacked (vehicle_frame --clip --soul --view=tilt70, 240 frames,
 0 SCRIPT ERROR): the service-car path (b.state HIJACKED) paints teal too, 11.5k teal px from f120.
 Scratch: the .avi captures and the showcase shot dirs deleted (1.1 GB -> 119 MB).
+NOTE (by reading the shader, not filmed): a soul-hijacked police cruiser paints its light bar's blue
+and amber lenses teal before the siren pass, so its bar no longer finds lenses and stays dark. Read
+as intended (a soul holds the car, it is off duty); the alternative is the soul pass after the siren.
+GATE 06:00 `node tools/evidence/run.mjs --no-bench` on 695fdda1: lint, scenarios 52, parity (1200
+steps bit-exact, planted mutation caught), selftest (look goldens 11/11, block 5/5, world lock),
+export-audit (release-compile 566/0) PASS; unit FAIL only by "tree changed during run: M JOURNAL.md"
+(my append mid-run; 1552 passed, 0 failed). FRICTION: never write to the tree during an evidence
+run. Re-run on the committed tree below.
+
+NEXT (iteration 21, in order):
+1. Answer any REQUEST to vehicles; if view lands the bay-number stroke, merge n8-view and film the
+   Servo depot at 32 px/m (bay 3 over the cream van before the seize).
+2. Raise the weakest item (candidates: the soul paint at 55 on the King boulevard if a soul ever
+   seizes a car there; a city traffic van at 48 px/m via vehicle_frame).
+3. Freeze 08:30: re-export `windows-showcase` from HEAD (REPORT ## Exe), smoke it, final gates
+   (unit no-arg, reel top + tilt70, scenarios, top framemd5, evidence --no-bench with the tree
+   still), finish REPORT.md (gates item 9 -> the final commit; Call 10 soul paint).
