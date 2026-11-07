@@ -1140,3 +1140,38 @@ for street: `RigSelect.CORPSE_HOLD_TICKS` (90 in the city game, then street's at
   the head card on parts the moment a gun comes out (the aim arm needs the parts): that swap is a
   pop to judge in a clip first (city seed 5, a cop walking up then drawing). Riot/SWAT keep parts
   (no walk strip; they carry shields/rifles).
+- GATE evidence run (`node tools/evidence/run.mjs --no-bench`) on a7b72448, 05:16-05:25: lint 15/15
+  PASS; unit 1524 passed / 0 failed, marked FAIL only for "tree changed during run" (my docs
+  commit 0b8717e9: JOURNAL.md + one evidence PNG, no code); scenarios 52 PASS; parity PASS (1200
+  steps bit for bit, planted mutation caught at 629); selftest PASS (look goldens 11/11, block 5/5,
+  world lock holds); export-audit (release-compile 560 loaded, 0 failed) PASS.
+- GATE director reel under combo on a7b72448 (headless, the it1 command with `--view=combo`):
+  19/19 chapters, every one all down, 0 SCRIPT ERROR (exit 0).
+- TRIED and REVERTED (not committed): city patrol cops walking on the cop_patrol_walk grid while
+  holstered (StreetCopWalk hooked into StreetWalkerCards.strip_of). FILMED city `--arena=city
+  --bot=rivet --seed=5 --rigs --ppm=48 --view=tilt70` 600 frames (0 SCRIPT ERROR): every cop
+  already holds a baton or gun from tick 60 (a 64 px crop at f300), so the walk showed nowhere.
+  An unseen change is not worth shipping; the patch is in scratch/street/it11/patch/.
+- LOOKED the patrol walk at the shipped zoom (quest 1 `--ppm=32 --view=tilt70 --ticks=600-760`,
+  0 SCRIPT ERROR): contact and pass frames still read at 32 px/m, navy, feet on the line.
+  evidence/quest1_patrol_cop_walk_frames_tilt70_32ppm_x2_t684-708.png.
+- REPORT.md drafted (82c6f40c) for the freeze.
+- Registry rules applied (it11): motion-quality-gating (the atlas death judged frame by frame at
+  f100-124, the walk in a clip because a still cannot show a stride), concept-scene-parity (the
+  befores are HEAD's file in the same scenario; the riot is not run-identical, said so),
+  sprite-and-atlas-production (the walk grid cut to the same 192 px cell rule as the peds; the
+  strip's colour matched to the card it sits beside, not to the sheet), generative-artifact-
+  gating (the library's B fix applied: row 4 as 1-2-1-4), render-submission-economy (the atlas
+  stamp edits the one texture at load: 0 extra draws for the 3 new cells).
+NEXT (iteration 12):
+1. Freeze prep at 08:30: Windows export (the int-day recipe in docs/decisions.md) to
+   build/export/windows/RTAI.exe, the exact command lines into REPORT.md; finish REPORT.md (gates
+   on the final head, calls, next steps) by 08:40.
+2. Re-run the unit no-arg on the head with the tree still (it11's evidence-run unit was flagged
+   for my docs commit only), and the director reel under `top` and `tilt70` once more.
+3. If time before the freeze: a riot clip at 0.25x of the atlas death at p55 (`--view=tilt`:
+   FROM_FALL picks the 55 cop/thug grids' mid-fall), and the masters combined clip refresh (30-90
+   s) with the patrol walk and the drawn far deaths in it.
+4. The city cop walker (scratch patch) only if a scene shows cops holstered (quest 1 cops are
+   already covered by StreetQuestCards).
+- Session end 05:31: tree clean after this commit.
