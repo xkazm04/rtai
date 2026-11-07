@@ -545,3 +545,22 @@ NEXT (it16 end, 14:37; supersedes every NEXT above):
   `rivet_flamer_phantom_flame_before_after_tilt70_64ppm_x1.5_seed3_t362_373.png` (the before-only crop replaced).
   Gates it16b: reels 19/19 x3, 0 SCRIPT ERROR, 0 p_frame; unit --changed 1690/0; lint 15/15.
 - Session end 14:46: everything committed; scratch sequences deleted.
+
+## Iteration 19 (14:48-15:48, BUILD)
+- Read: JOURNAL NEXT (it16 end), git log, seams JOURNAL (no REQUEST to rivet), the asset lane's JOURNAL (it read my
+  journal at 14:17, before the it16 baton REQUEST: not served yet; it reads the d9 journals every iteration).
+- NEXT 3 (a facing cell's muzzle) re-judged: every non-cone weapon draws its fire cell while a shot is up
+  (RivetStrips.draws_fire is true for them in every octant), so the facing-cell muzzle only matters for a flash's
+  tail past FIRE_TICKS. Low value; parked behind the clip.
+- FRICTION (~4 min): `--arena=city --bot=reel --reel=director --view=tilt70` filmed the top view of the city (the
+  rigs drawn top-down, no drawn figure), although the log has the occlusion line. Not chased (the gate reels run
+  without --arena=city and their tilt70/combo logs differ from top); filmed the city with it10's gunplay args.
+- MILESTONE the combined clip, it19 (owed since it16 NEXT 5): 8 films on 4cc9e4ab (`--fixed-fps 60
+  --write-movie`, 0 SCRIPT ERROR each): city 32 tilt70 (gunplay pistol, seed 5), gatling 70 (gunplay), katana 70
+  (pit), plasma sword v4 p55 (pit, `--view=tilt`), rocket launcher p55 (gunplay), King combo 48 (the swap at ~f31,
+  judged on a crop f10-300: p70 at f30, p55 at f33), Servo combo 48. Fixed crops x1-x2.5 to 1280x800, captions.
+  `gtai-masters/d9/rivet/rivet_d9_set_it19_city32_gatling_katana_sword_rocket64_king_servo48_combined_31s.mp4`
+  (30.8 s); looked at a frame of every segment. frames.json entry 0 replaced; the it10 clip deleted.
+- Seen in the films: the pit's guards and the city block's cops are the arena's top-down rigs (with dev rings)
+  beside the drawn Rivet under tilt70; that is ArenaRigs (not this lane's art, the same in it10's stills). The pit bot
+  mostly walks (one gatling shot in 300 frames); gunplay is the bot for firing.

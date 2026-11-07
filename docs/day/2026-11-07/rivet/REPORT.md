@@ -49,8 +49,10 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
   height (1.1 m p70, 1.3 m p55), the roll ball casts a ball's shadow; before, the hidden parts' 1.8 m plan.
   Before/after: `gtai-masters\d9\rivet\rivet_shadow_drawn_height_and_roll_before_after_king_combo_48ppm_x1.5_seed1.png`; beside a
   cop at 32 px/m: `gtai-masters\d9\rivet\rivet_shadow_drawn_height_beside_cop_city_tilt70_32ppm_x4_seed5_f60.png`.
-- **The combined clip** (35 s, city 32, flamer 64, King + Kerf + roll 48, Servo 48):
-  `gtai-masters\d9\rivet\rivet_d9_set_city32_flamer64_king_servo48_combined_35s.mp4`.
+- **The combined clip** (it19, 31 s: the city at 32 px/m x1 and x2, the gatling, katana, v4 plasma sword and
+  rocket launcher in his hands at 64, the King engage's p70 -> p55 swap and Servo at 48; 0 SCRIPT ERROR in all 8
+  films): `gtai-masters\d9\rivet\rivet_d9_set_it19_city32_gatling_katana_sword_rocket64_king_servo48_combined_31s.mp4`
+  (replaces it10's 35 s clip, which predated the left-strip cleanup, the v4 sword and the flamer fixes).
 - **Rivet's dialogue face** (`e978f01f`, it16): the library's concept-matched portrait_rivet_55_v2 (A), neutral +
   mood bust at the cast's 320 px; the mood bust on rivet-feels-good and rivet-sorry-not-sorry. Before (it10's sheet
   cut) / after, live in quest 1 at 1080p:
