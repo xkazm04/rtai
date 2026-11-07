@@ -117,7 +117,7 @@ func _scan() -> void:
 
 ## The baked crowd's patches (appended to _patches); returns the drawn areas that hid one.
 func _scan_crowd() -> Array[Rect2]:
-	if not CROWD or _city == null or _city.sim == null:
+	if not CROWD:
 		return []
 	var t0: int = Time.get_ticks_usec()
 	var screen: Rect2 = Rect2(Vector2.ZERO, get_viewport_rect().size)
@@ -125,11 +125,19 @@ func _scan_crowd() -> Array[Rect2]:
 	var n: int = _patches.size()
 	var blds: Array[CityOccluders.Bld] = _near.in_rect(view_px)
 	var areas: Array[Rect2] = []
-	if not blds.is_empty():  # no building on screen: no snapshot
-		areas = CityCrowdOcclusion.patches(_city.sim.snapshot(), blds, view_px, _patches)
+	if not blds.is_empty():
+		areas = CityCrowdOcclusion.patches(_snapshot(), blds, view_px, _patches)
 	crowd_patches += _patches.size() - n
 	crowd_us += Time.get_ticks_usec() - t0
 	return areas
+
+
+## The rig feed's snapshot of this tick (CityFxFeed.last_snap), else one of our own.
+func _snapshot() -> PackedFloat64Array:
+	var feed: CityFxFeed = _view.fx_feed
+	if feed != null and not feed.last_snap.is_empty():
+		return feed.last_snap
+	return _city.sim.snapshot()
 
 
 ## Lifts the bodies in front of a redrawn building over this node (RigDepthSort reset their z).
