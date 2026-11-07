@@ -73,7 +73,8 @@ function parseArgs(argv) {
 export function readLog(kind, doc) {
   if (kind === 'bench') {
     const m = doc.metrics ?? {};
-    return { wall: doc.frame_ms, side: { draws: m.drawCallsAvg, renderCpu: m.renderCpuMsAvg, sim: m.simStepMsPerTick } };
+    return { wall: doc.frame_ms, side: { draws: m.drawCallsAvg, renderCpu: m.renderCpuMsAvg,
+      renderGpu: m.renderGpuMsAvg, sim: m.simStepMsPerTick } };
   }
   let t = 0;
   let k = 0;

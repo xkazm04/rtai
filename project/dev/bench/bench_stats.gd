@@ -19,6 +19,8 @@ var rig_ms: PackedFloat64Array = PackedFloat64Array()
 ## call count does not move with the machine's load, so it A/Bs on a busy machine).
 var draws: PackedInt32Array = PackedInt32Array()
 var render_cpu_ms: PackedFloat64Array = PackedFloat64Array()
+## d9-perf: the render server's GPU ms per frame (the viewport's timestamp queries).
+var render_gpu_ms: PackedFloat64Array = PackedFloat64Array()
 var _rig_us: int = 0
 var _rig_ticks: int = 0
 var _rigs_max: int = 0
@@ -55,14 +57,17 @@ func add_rig(us: int, ticks: int, full: int) -> void:
 	rig_ms.append(us / 1000.0)
 
 
-## One frame's draw calls and render CPU ms (call after add(); skipped in the warm-up).
-func add_render(draw_calls: int, cpu_ms: float) -> void:
+## One frame's draw calls and the viewport `vp`'s render CPU and GPU ms (call after add(); skipped
+## in the warm-up; the viewport needs viewport_set_measure_render_time).
+func add_render(draw_calls: int, vp: RID) -> void:
 	if frames <= WARMUP_FRAMES:
 		return
 	@warning_ignore("return_value_discarded")
 	draws.append(draw_calls)
 	@warning_ignore("return_value_discarded")
-	render_cpu_ms.append(cpu_ms)
+	render_cpu_ms.append(RenderingServer.viewport_get_measured_render_time_cpu(vp))
+	@warning_ignore("return_value_discarded")
+	render_gpu_ms.append(RenderingServer.viewport_get_measured_render_time_gpu(vp))
 
 
 func metrics() -> Dictionary[String, float]:
@@ -96,6 +101,8 @@ func metrics() -> Dictionary[String, float]:
 		"drawCallsAvg": _mean_i(draws),
 		"renderCpuMsAvg": _mean(render_cpu_ms),
 		"renderCpuMsP99": _pct(render_cpu_ms, 0.99),
+		"renderGpuMsAvg": _mean(render_gpu_ms),
+		"renderGpuMsP99": _pct(render_gpu_ms, 0.99),
 	}
 
 

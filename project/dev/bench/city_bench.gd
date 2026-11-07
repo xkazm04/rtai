@@ -103,7 +103,7 @@ func _process(_delta: float) -> void:
 	_stats.add(ms, _city.take_stats(), swapped, Vector2i(live, _view.visible_actors))
 	var vp: RID = get_viewport().get_viewport_rid()
 	var dc: int = int(Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME))
-	_stats.add_render(dc, RenderingServer.viewport_get_measured_render_time_cpu(vp))
+	_stats.add_render(dc, vp)
 	var stepped: int = _characters.rigs.ticks_stepped
 	_stats.add_rig(_characters.rigs.last_us, stepped - _rig_ticks, _characters.rigs.full_count())
 	_rig_ticks = stepped

@@ -47,6 +47,13 @@ test('a fight log drops its first second of wall time', () => {
   assert.equal(log.side.renderCpu, 2);
 });
 
+test('a bench log carries the render GPU ms from its metrics', () => {
+  const doc = { frame_ms: [5, 6], metrics: { drawCallsAvg: 300, renderCpuMsAvg: 0.2, renderGpuMsAvg: 1.5 } };
+  const log = readLog('bench', doc);
+  assert.deepEqual(log.wall, [5, 6]);
+  assert.equal(log.side.renderGpu, 1.5);
+});
+
 test('procStats: steady CPU in cores after the boot samples, peak working set in MB', async () => {
   const { procStats } = await import('./ab.mjs');
   const row = (t, cpu, ws) => JSON.stringify({ t, cpu100ns: cpu, ws, threads: 30, procs: 2 });
