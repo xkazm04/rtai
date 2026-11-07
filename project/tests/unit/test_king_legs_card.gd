@@ -54,3 +54,26 @@ func test_show_parts_hides_the_pelvis_with_the_legs() -> void:
 	assert_false(rig.pelvis_spr.visible, "no ground-level pelvis under the lifted bust")
 	KingLegsCard.show_parts(rig, true)
 	assert_true(rig.pelvis_spr.visible, "the parts' pelvis comes back without a sheet")
+
+
+func test_the_gang_keeps_its_own_legs() -> void:
+	var was: ViewMode = ViewMode._shared
+	ViewMode._shared = ViewMode.of("tilt")
+	ViewMode._shared.art = "p55"
+	var rig: CutRig = autofree(CutRig.new())
+	rig.plan = BodyPlan.new()
+	rig.plan.art_dir = GangPlan.ART_DIR
+	rig.torso = Node2D.new()
+	rig.add_child(rig.torso)
+	var card: Sprite2D = Sprite2D.new()
+	rig.torso.add_child(card)
+	rig.head_card = card
+	rig.pelvis_spr = Sprite2D.new()
+	rig.add_child(rig.pelvis_spr)
+	rig.global_position = Vector2(100.0, 200.0)
+	KingLegsCard.step(rig)
+	var legs: Node = rig.torso.get_node_or_null(NodePath(KingLegsCard.NAME))
+	assert_null(legs, "no King legs under a bodyguard")
+	assert_true(rig.pelvis_spr.visible, "the bodyguard's own parts stay")
+	assert_eq(rig.torso.global_position, rig.global_position, "the bodyguard's torso is not lifted")
+	ViewMode._shared = was

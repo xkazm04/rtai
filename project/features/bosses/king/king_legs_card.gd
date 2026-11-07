@@ -25,6 +25,11 @@ const FRAMES_PER_CYCLE: float = 4.0
 const LIFT: Dictionary[int, float] = {55: 0.5, 70: 0.74}
 ## false: the leg parts as before (it1's default, while the arms stayed at the old height).
 const ON: bool = true
+## Whose bust stands on these legs: the King's art only. it10: KingArt.dress runs for every court
+## rig, so the gang's bodyguards (art_dir "gang", their own gang_parts legs) stood on small copies
+## of the King's legs, their torsos lifted (seen in phase 1; every earlier take was phase 3).
+## Adding "gang" is the one value back to that look.
+const ART_DIRS: Array[String] = ["king"]
 
 static var _tex: Dictionary[String, Texture2D] = {}
 
@@ -32,7 +37,7 @@ static var _tex: Dictionary[String, Texture2D] = {}
 ## After KingArt.dress: the legs card under the bust card, or the leg parts when there is no sheet.
 static func step(rig: CutRig) -> void:
 	var card: Sprite2D = rig.head_card
-	if card == null:
+	if card == null or rig.plan == null or not ART_DIRS.has(rig.plan.art_dir):
 		return
 	var legs: Sprite2D = card.get_parent().get_node_or_null(NodePath(NAME)) as Sprite2D
 	var pitch: int = roundi(ViewMode.shared().art_pitch())
