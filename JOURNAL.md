@@ -1126,3 +1126,26 @@ parked cars stand as p55 cards from f30 (f0 draws them flat: the stage cards att
 _process; one frame, not worth a change). Nothing owed on the boulevard.
 GATE 04:40 on 7f9cbf26: unit no-arg 1549 passed, 0 failed, no FLAKY; director reel top 19/19 and
 tilt70 19/19 all down, 0 SCRIPT ERROR (evidence/n8-vehicles/director-reel-it18-*.log).
+CORRECTION 04:40: the main scene ignores `--ppm` (log: "unknown launch arg --ppm=64 (ignored)"; the
+32 and 64 films of seed 13 are byte-identical frames). The "64 px/m" unlit-lens still above is 32
+px/m: renamed sedan_unlit_rear_lenses_after_city_tilt70_32ppm_seed13_f180_crop3x.png, frames.json
+fixed. FRICTION: the city at 48/64 px/m needs another scene (res://dev/arena/arena.tscn --arena=city
+opens the arena hub with cops, no traffic); the 64 px/m car look comes from the turn showcase.
+LIBRARY 04:38: new sheets for my classes: taxi_v2 70 B (olive-lemon, overshot), taxi_v3 70 B (cab
+yellow hue 49, the pick), ambulance_v2 70 B / 55 B, ambulance_v3 55 A, bike_v4 70/55 B (a raw redraw
+of my squashed v3 key: same look), van_cream 70 A / 55 A (the depot van Call's option c, prepared).
+MILESTONE 2bcfdc56 TAXI_SHEET (cutter option, default False, atlas bit-exact): taxi_70_v3's five views
+untouched, the mustard in-betweens keep TAXI_HUE and match_paint grades them to v3. FILMED (atlas
+swapped in for the film only, restored + re-imported, git clean): city tilt70 seed 13 f180 (32 px/m):
+paint on screen (160,115,6) olive-mustard -> (247,178,1) cab yellow, hue 42 -> 43; vermilion-gate px
+in the taxi box 195 -> 538 (its gold shading at ~(254,170,4)). Turn showcase --set=street 64 px/m,
+361 frames: one yellow through all 16 cells, no pop at the in-betweens (looked: strip every 15 deg).
+0 SCRIPT ERROR all. Masters: taxi_sheet_v3_built_left_v3_right_city_tilt70_32ppm_seed13_f180_crop3x.png,
+taxi_sheet_v3_turn_tilt70_64ppm_built_top_v3_bottom.png, taxi_sheet_v3_turn_tilt70_64ppm_built_left_
+v3_right.mp4. CALL (taxi paint: built +12 / v3 sheet): v3 is the better cab by eye; the gate is the
+only reason it is not the default. Same root as the lit-lamps Call: the gate counts amber/gold.
+van_cream NOT cut: the van row's in-betweens (van_between_70) are olive and match_paint grades only
+saturation and value, so a cream five-view row would pop olive at every 22.5-deg cell.
+REQUEST to assets: van_cream_between, 70 (then 55), the four 22.5-deg in-betweens A-D of van_cream_70
+copied by example from van_between_70 (the same drawings, the game's top-down cream paint), so the
+depot van's cream option can turn without popping (owner Call l.619 option c).
