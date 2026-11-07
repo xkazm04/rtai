@@ -93,6 +93,7 @@
     },
     "lamp_post": {
       "art": "res://features/city/art/view/<art>/prop_lamp_post.png",
+      "cast_m": 1.6,
       "cell_w_m": 1.15,
       "cell_w_m_p70": 1.45,
       "foot_m": [
