@@ -889,3 +889,28 @@ REQUEST to street.
   the four grids (the p55 patrol cop is the 55 sheet's brighter police blue, as its p55 card).
   Needs grid_of to fall back per row (today a "p55" key would drop the peds' p70 fallback):
   scratch it9/p55/apply.py does both.
+- GATE director reel under tilt70 on the it9 code (72dde64b, headless, the it1 command): 19/19
+  chapters, every one all down, 0 SCRIPT ERROR (stopped after the 19th: my PID 47076 tree).
+- Registry rules applied (it9): generative-artifact-gating (four B sheets each with its named fix,
+  the stretch, plus the back corpse swapped by a cut flag where the note names a kneel; the
+  contractor's back corpse looked at and swapped for the same fault), motion-quality-gating (the
+  thug's death in a real-time-then-0.25x clip; a probe before blaming the art, which showed the
+  "parts" I saw were the drawn lying frame), concept-scene-parity (every before one data row away
+  on the same seed; quest 1 same tick, separate runs, said so), sprite-and-atlas-production (one
+  cut script, one px/m for every fall grid; the contractor sized from its own standing card),
+  depth-ordered-layered-art (the riot shield: the drawn one replaces the upright plate, never both),
+  render-submission-economy (one sprite per corpse, the parts hidden; the contractor one
+  draw_texture_rect_region where the sprite drew one).
+
+NEXT (iteration 10):
+1. p55 fall grids for the boss arenas (prepared in scratch it9/p55: copy the four PNGs to
+   art/view/p55/, run scratch it9/p55/apply.py from the worktree root (grid_of per-row fallback +
+   a "p55" FALLS dict), add a test: p55 cop -> "p55/cop_patrol_fall.png", p55 ped -> the p70 grid),
+   --import, film the board `--view=tilt --heavy --kill=light --kill-spread` at 64 px/m, before =
+   today (the p70 grids at p55 height), provenance x4 (rounds 0300 / 0335, hashes in the catalog).
+2. Contractor at 55 and the cultist / Torque gang falls: nothing in game spawns cultists or
+   Torque's gang (it3/it4 scout) - the strips wait; the contractor 55 only matters under --view=tilt.
+3. Crowd cost on a quiet machine (bench6/run.sh, 3 pairs) if the machine quiets.
+4. Freeze prep (08:30): the Windows export and REPORT calls (cop tone, crowd variety, walkers,
+   drawn-fall speed FALL_AT / stretch / p55 height, cop back corpse, contractor corpse opaque +
+   spread).
