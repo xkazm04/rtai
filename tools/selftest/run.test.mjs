@@ -1,0 +1,42 @@
+// node --test "tools/selftest/*.test.mjs"
+import assert from 'node:assert/strict';
+import { mkdtempSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { test } from 'node:test';
+import { runAccentAudit, runWorldLock } from './run.mjs';
+
+const lockJson = JSON.stringify({ ok: true, max_share: 0.01, frames: [{ ppm: 32, differing_share: 0 }] });
+const fresh = () => mkdtempSync(join(tmpdir(), 'gtai-selftest-'));
+
+/** A stub windowed runner: writes `name` into `dir` (after removeStale) and exits `status`. */
+const stub = (dir, name, text, status, out = '') => async () => {
+  writeFileSync(join(dir, name), text);
+  return { status, out, timedOut: false, durationMs: 1 };
+};
+
+test('runWorldLock: an exit 1 fails even when world-lock.json says ok:true', async () => {
+  const dir = fresh();
+  const r = await runWorldLock(dir, dir, stub(dir, 'world-lock.json', lockJson, 1));
+  assert.equal(r.ok, false);
+  assert.match(r.summary, /FAIL exit 1/);
+});
+
+test('runWorldLock: exit 0, no errors, a fresh ok result holds (guard)', async () => {
+  const dir = fresh();
+  const r = await runWorldLock(dir, dir, stub(dir, 'world-lock.json', lockJson, 0));
+  assert.equal(r.ok, true, r.summary);
+});
+
+test('runWorldLock: a SCRIPT ERROR behind an ok JSON fails', async () => {
+  const dir = fresh();
+  const r = await runWorldLock(dir, dir, stub(dir, 'world-lock.json', lockJson, 0, 'SCRIPT ERROR: x\n'));
+  assert.equal(r.ok, false);
+});
+
+test('runAccentAudit: an exit 1 fails a clean audit', async () => {
+  const dir = fresh();
+  const audit = JSON.stringify({ frames: [{ ppm: 32, frame_share: 0, offenders: [] }] });
+  const r = await runAccentAudit(dir, dir, 'junction', stub(dir, 'accent-audit.json', audit, 1));
+  assert.equal(r.ok, false);
+});
