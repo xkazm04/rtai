@@ -8,7 +8,7 @@ extends RefCounted
 ## The grid holds through aiming and firing (the drawn arms already point the weapon along the
 ## facing; swapping on every shot flickers); a baton strike, a throw or a reload goes to the parts,
 ## which draw that action. Dying goes to StreetWalkerFall's grids as before. ENABLED false = the
-## head cards over parts (before); a pitch with no grid (p55 for now) draws the head cards.
+## head cards over parts (before); a row with no grid draws its head card over the parts.
 const ENABLED: bool = true
 ## view art -> card row -> armed walk grid (5 facings across, 4 stride frames down).
 const WALKS: Dictionary[String, Dictionary] = {
@@ -16,13 +16,22 @@ const WALKS: Dictionary[String, Dictionary] = {
 	{
 		"cop/head_cap": "cop_patrol_armed_walk.png",
 		"cop/head_helmet": "cop_riot_armed_walk.png",
+		"cop/head_swat": "swat_armed_walk.png",
+	},
+	"p55":
+	{
+		"cop/head_cap": "cop_patrol_armed_walk.png",
+		"cop/head_helmet": "cop_riot_armed_walk.png",
 	},
 }
-## The size step per grid (as StreetWalkerCards.WALK_FILL): the still strip's figure fill (0.985
-## of the cell) over the grid's mean figure height (patrol 0.883, riot 0.891 of the cell).
+## The size step per grid, keyed "<art>/<file>" (as StreetWalkerCards.WALK_FILL): the still
+## strip's figure fill (0.985 of the cell) over the grid's mean figure height in the cell.
 const FILL: Dictionary[String, float] = {
-	"cop_patrol_armed_walk.png": 1.12,
-	"cop_riot_armed_walk.png": 1.11,
+	"p70/cop_patrol_armed_walk.png": 1.12,
+	"p70/cop_riot_armed_walk.png": 1.11,
+	"p70/swat_armed_walk.png": 1.14,
+	"p55/cop_patrol_armed_walk.png": 1.07,
+	"p55/cop_riot_armed_walk.png": 1.09,
 }
 
 
@@ -37,6 +46,6 @@ static func strip_of(rig: CutRig, art: String, row: String) -> String:
 	return StreetWalkerCards.DIR + art + "/" + str(rows[row]) if rows.has(row) else ""
 
 
-## The size step for a grid file (1.0 = not one of ours).
-static func fill_of(file: String) -> float:
-	return FILL.get(file, 1.0)
+## The size step for a grid's resource path (1.0 = not one of ours).
+static func fill_of(path: String) -> float:
+	return FILL.get(path.get_base_dir().get_file() + "/" + path.get_file(), 1.0)

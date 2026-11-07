@@ -15,7 +15,7 @@ func test_every_armed_grid_loads_as_five_facings_by_four_frames() -> void:
 			var file: String = str(rows[key])
 			var path: String = StreetWalkerCards.DIR + art + "/" + file
 			assert_true(path.ends_with("_walk.png"), "%s steps as a walk grid" % path)
-			assert_true(StreetCopWalk.FILL.has(file), "%s has a fill" % path)
+			assert_true(StreetCopWalk.FILL.has(art + "/" + file), "%s has a fill" % path)
 			var tex: Texture2D = load(path) as Texture2D
 			assert_not_null(tex, path)
 			if tex != null:
@@ -23,14 +23,17 @@ func test_every_armed_grid_loads_as_five_facings_by_four_frames() -> void:
 				assert_eq(tex.get_height() % StreetWalkerCards.STRIDE_FRAMES, 0, "%s frames" % path)
 
 
-func test_a_living_cop_walks_its_rows_grid_at_70_and_not_at_55() -> void:
+func test_a_living_cop_walks_its_rows_grid_at_70_and_55() -> void:
 	var rig: CutRig = _cop()
 	var cap: String = StreetCopWalk.strip_of(rig, "p70", "cop/head_cap")
 	assert_eq(cap, StreetWalkerCards.DIR + "p70/cop_patrol_armed_walk.png")
 	var riot: String = StreetCopWalk.strip_of(rig, "p70", "cop/head_helmet")
 	assert_eq(riot, StreetWalkerCards.DIR + "p70/cop_riot_armed_walk.png")
-	assert_eq(StreetCopWalk.strip_of(rig, "p70", "cop/head_swat"), "", "no SWAT grid yet")
-	assert_eq(StreetCopWalk.strip_of(rig, "p55", "cop/head_cap"), "", "no 55 grid yet")
+	var swat: String = StreetCopWalk.strip_of(rig, "p70", "cop/head_swat")
+	assert_eq(swat, StreetWalkerCards.DIR + "p70/swat_armed_walk.png")
+	var cap55: String = StreetCopWalk.strip_of(rig, "p55", "cop/head_cap")
+	assert_eq(cap55, StreetWalkerCards.DIR + "p55/cop_patrol_armed_walk.png")
+	assert_eq(StreetCopWalk.strip_of(rig, "p55", "cop/head_swat"), "", "no 55 SWAT grid yet")
 
 
 func test_aiming_and_firing_keep_the_grid() -> void:
@@ -62,5 +65,8 @@ func test_a_pedestrian_is_not_a_cop() -> void:
 
 
 func test_fill_of_an_unknown_file_is_one() -> void:
-	assert_eq(StreetCopWalk.fill_of("ped_suit_walk.png"), 1.0)
-	assert_almost_eq(StreetCopWalk.fill_of("cop_riot_armed_walk.png"), 1.11, 0.001)
+	assert_eq(StreetCopWalk.fill_of(StreetWalkerCards.DIR + "p70/ped_suit_walk.png"), 1.0)
+	var riot70: String = StreetWalkerCards.DIR + "p70/cop_riot_armed_walk.png"
+	assert_almost_eq(StreetCopWalk.fill_of(riot70), 1.11, 0.001)
+	var riot55: String = StreetWalkerCards.DIR + "p55/cop_riot_armed_walk.png"
+	assert_almost_eq(StreetCopWalk.fill_of(riot55), 1.09, 0.001, "per pitch")

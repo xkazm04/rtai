@@ -184,7 +184,7 @@ static func place(rig: CutRig, card: Sprite2D) -> void:
 	var h: float = HEIGHT_BY_ART.get(ViewMode.shared().art, HEIGHT_M)
 	if card.vframes > 1:
 		var file: String = card.texture.resource_path.get_file()
-		k *= WALK_FILL.get(file, StreetCopWalk.fill_of(file))
+		k *= WALK_FILL.get(file, StreetCopWalk.fill_of(card.texture.resource_path))
 	var s: float = h * CharacterRigs.PX_PER_M * k * card.vframes / card.texture.get_height()
 	var walk: float = clampf(rig.speed_now / WALK_SPEED, 0.0, 1.0)
 	if card.vframes > 1:
