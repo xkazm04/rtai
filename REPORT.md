@@ -12,7 +12,7 @@ head commit. Branch `n8-city`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n8\ci
    from two straight runs (no oblique side face). Art per pitch (`p55` / `p70`) from the library's
    facade kits; data in `data/tables/city_facades.json`. `top` builds none of it.
    Evidence: `it1_facades_32ppm_top_vs_tilt70.jpg`, `it16_facade_tall_48ppm_before_after.png`,
-   `it22_facade_tall_v3_tilt70_32ppm_before_after_x2.png`, the set clip `it19_city_set_tilt70_combo_56s.mp4`.
+   `it22_facade_tall_v3_tilt70_32ppm_before_after_x2.png`, the set clip `it25_city_set_tilt70_combo_55s.mp4`.
    All facade strips are from the library's latest raw sheets (0510/0525: muted brick and rust).
 2. **Occlusion** (item 2). A body behind a building draws as an ink silhouette with a rim over the
    exact world pixels (a back-buffer copy, no second print). `occlude: false` puts the old look back.
@@ -36,6 +36,12 @@ head commit. Branch `n8-city`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n8\ci
    (occlusion 0.15-0.21 ms after the building index cache, draw calls +16 %); an angled chunk costs
    ~3.3x to record but the time slice spreads it over ~3 frames (per-frame streaming p99 2.27 ->
    2.62 ms). `evidence/drive-cost-it11.json`, `evidence/chunk-cost-it10.json`.
+   Refreshed at 0a630cfe (iteration 25, tonight's facade strips and kerb cards, bench.lock held,
+   other lanes' Godot work running): the drive averages 1.04 ms (top) vs 1.28 ms (tilt70) per frame,
+   p99 CPU 2.05 vs 3.15 ms, draw calls 823 vs 961 (+17 %); a chunk records in 0.80 ms (top) vs 3.48 ms
+   p50 (tilt70) but over 39 frames, so no streaming frame passes 1.72 ms (0 frames over 2 ms either
+   view). tilt70 had 6 frames over 25 ms (top 0, worst 39 ms, none over 50): not attributed, and the
+   chunk slice is not it. `evidence/drive-cost-it25.json`.
 
 ## Gates (iteration 22, head f07b348e)
 
