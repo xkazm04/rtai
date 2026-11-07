@@ -11,8 +11,8 @@ const W: float = 260.0
 const H: float = 124.0
 const L_SRC: float = 150.0
 const R_SRC: float = 120.0
-## The name's left edge in the ticket (source px, right of the perforation).
-const TEXT_SRC: float = 140.0
+## The name's left edge in the ticket (source px, clear of the perforation; 140 touched it).
+const TEXT_SRC: float = 152.0
 ## The icon's box on the paper (screen px): its height, widest, the gap after the words and the
 ## paper right of it (clear of the torn end's hatch).
 const ICON_H: float = 80.0

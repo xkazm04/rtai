@@ -74,6 +74,7 @@ func _run(out: String, px: Vector2i) -> void:
 			for i: int in 20:
 				await get_tree().process_frame
 	await _full(out, px)
+	await _tickets(out, px)
 	get_tree().quit(0)
 
 
@@ -93,3 +94,24 @@ func _full(out: String, px: Vector2i) -> void:
 	var img: Image = get_tree().root.get_texture().get_image()
 	@warning_ignore("return_value_discarded")
 	img.save_png("%s/hud_%dx%d_full.png" % [out, px.x, px.y])
+
+
+## n8-hud it12: the ammo ticket for every showcase weapon (the name and icon fit, HudTicket),
+## the top-right corner of the screen saved per weapon.
+func _tickets(out: String, px: Vector2i) -> void:
+	var s: HudState = _hud.state
+	s.silent()
+	s.notice = ""
+	for f: String in DirAccess.get_files_at(WeaponShowcase.DIR + WeaponShowcase.ICON):
+		if not f.ends_with(".png"):
+			continue
+		var id: StringName = StringName(f.get_basename())
+		s.weapon = String(id).replace("_", " ").capitalize()
+		s.weapon_icon = _feed.icon_of(id)
+		for i: int in 3:
+			await get_tree().process_frame
+		var img: Image = get_tree().root.get_texture().get_image()
+		var w: int = mini(620, px.x)
+		var crop: Image = img.get_region(Rect2i(px.x - w, 0, w, 300))
+		@warning_ignore("return_value_discarded")
+		crop.save_png("%s/ticket_%s.png" % [out, id])
