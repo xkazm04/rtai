@@ -503,3 +503,29 @@ NEXT:
 - DECISION (not built): no `--taunt` arena flag for the exe: the showcase preset exports only
   data/ and quests/ JSON, so the dev lines would have to be hard-coded text (rule 4). The taunt
   call is shown by the masters still + clip; the dev shot command is in frames.json.
+- 01:35 MILESTONE 952317a2 the taunt strip in the print style: the dialogue box's torn memo paper
+  (HudArt 9-slice) instead of flat cream. First paper take (looked at a 2x crop) put the hatched
+  edge on the words and the tape over the bar: the paper now grows 14/16 px outside the words,
+  the strip sits 34 px under the bar (tape clear), the tail 32 px to the crest. Masters re-shot
+  (box vs strip still + clip, 0 SCRIPT ERROR both) and `boss_taunt_strip_flat_vs_paper_crop2x.png`.
+  Unit fast suite (`--changed` fell back to it) 1496/0, lint 15/15. Not re-run after 952317a2:
+  the full evidence run (the change is BossTaunt only, which no shipped scene attaches).
+
+Registry rules applied this iteration: `short-form-cards-and-barks` (a taunt in a fight is a bark:
+one strip, 2 lines max, no second face, never blocking), `accessibility` (judged at the Steam Deck
+1280x800 capture: 22 px ink on cream, the field and the telegraphs stay visible),
+`motion-quality-gating` (the layout judged live in the King fight, the problem found by looking at
+the real take, not the board), `depth-ordered-layered-art` (the strip on the boss bar's HUD layer,
+the tail over the paper), `concept-scene-parity` (the strip wears the dialogue box's own paper).
+
+NEXT:
+- Work items 1-4 are evidenced. it7 closed "film one boss taunt" (live, strip default, box the
+  call). Run the full gates once at the start of the next session (`node tools/evidence/run.mjs
+  --no-bench`; 952317a2 only touched BossTaunt).
+- Polish candidates, weakest first: Servo has no voice bible (no taunt words to film); a Servo
+  strip shot only when lines exist. Long guns' p70 closed as built (assets: a lying gun IS its
+  side profile at 70).
+- Freeze 08:30: export `build/export/windows/RTAI.exe` with the `windows-showcase` preset
+  (recipe in `gtai-n8/scratch/hud/it6/report_notes.md`, updated it7: Calls incl. the boss taunt
+  strip vs box); REPORT from those notes.
+- 01:40 Session end. All committed.
