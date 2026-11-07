@@ -515,3 +515,30 @@ row-5 mirror post fixes applied by assets where the hand allows; the row-4 pilot
 - GATE on 5f3727fe: lint 15/15; unit no-arg 1508 passed, 0 failed, no FLAKY.
 - frames.json: the nine-walker board clip (#2) and the city clip (#3) in; the it5 three-walker clip
   and cops_p70_heads out (files kept). 15 entries.
+- MILESTONE 325645a6 (NEXT 3, the death swap jump): StreetWalkerFall (new file, the cards file
+  stays under 200 lines). Through the hold the figure follows the hidden parts' own head vector
+  (feet -> head on screen): leans along it and shortens to its length (of the length at the blow,
+  clamped 0.3-1.15), eased in. FOLLOW false = the it5 screen-x tip. LOOKED `--kill=light` board 64
+  px/m ticks 58-82 every 3, before | after: the parts' corpses lie head SOUTH (toward the camera),
+  so it5 tipped the figure sideways and then the corpse lay vertical (a direction change); now the
+  figure crumples over its feet (the first half of a fall toward the camera) and the corpse
+  extends below. NOT SOLVED: the head still crosses from above the feet to below them at the
+  swap (a drawn fall per type would remove it). 3 unit tests (upright when not dying, the lean and
+  length at the swap, a north fall shortens without a lean). DECISION street/walker-fall.
+  Masters: peds_walker_death_follow_before_after_tilt70_64ppm_board{.mp4,_t58-82.png}.
+- CHECKED (no change): the facing convention of the nine p70 strips and grids, at full size against
+  Rivet's and the cop's d8 strips: every unflipped cell faces right (3/4 toward down-right, side
+  right, 3/4 away up-right), as RigHeadCard.OCT_FLIP expects. A read at thumbnail size had
+  suggested otherwise; it was wrong.
+- MILESTONE aa9f60ef (NEXT 4): walkers under p55. The nine library ped_*_55 A top rows cut by
+  street_head.py (band 1.0, 192 px, no colour fix; nine provenance lines), a "p55" STRIPS row;
+  the bob (no 55 walk grids). LOOKED board 64 px/m `--view=tilt` t120 before | after: the head
+  cards on black-and-white pill bodies become coated people; they read a little small beside the
+  old oversized head cards (HEIGHT_M 1.7 is shared with p70; a p55 height is one constant away if
+  the owner wants them bigger). DECISION street/walkers-p55.
+  Master peds_walkers_p55_before_after_tilt_64ppm_board_t120.png.
+- GATE director reel under tilt70 on abb17c2b (all nine stride; headless, the it1 command): 19/19
+  chapters, every chapter all down (14 x 1/1, 2 x 2/2, 3 x 4/4), 0 SCRIPT ERROR, exit 0.
+- GATE unit no-arg on aa9f60ef: 1511 passed, 0 failed, no FLAKY. Lint 15/15 (pre-commit).
+- frames.json: the p55 board (#4) in, the death-follow strip replaces the it5 death-hold strip;
+  15 entries. Scratch .avi captures deleted.
