@@ -1264,3 +1264,13 @@ generative-artifact-gating (n/a: no new art).
   run", 1530/0.) Project tree unchanged since 7d40e58d, so the it27 reel (19/19 tilt70) and the
   07:21 exe cover the head.
 - REPORT final (gates, exe lines incl. both boss arenas smoke-run, gap closed, next steps).
+- Scratch: raw .avi captures deleted; scratch/city/it30/src keeps the ChunkSwap draft (not in repo).
+- Session end 07:56. Head = this commit. Tree clean. Freeze items all done: no project change after
+  7d40e58d, so every gate above covers the head.
+
+NEXT (iteration 31, report window 08:30-08:40):
+1. Nothing owed for the freeze. If a session runs before 08:40: re-read REPORT.md (FINAL), add any
+   REQUEST/NOTE the other lanes' journals raise for city; touch no project file (a change would
+   reopen top framemd5, evidence, the reel and the exe).
+2. After the night (for the Director): the release-compile temp-dir collision (FRICTION above);
+   ChunkSwap only if a streamed-city scene eases its pitch live; riot bodies inside a footprint.
