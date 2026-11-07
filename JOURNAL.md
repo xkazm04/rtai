@@ -1049,3 +1049,29 @@ NEXT (iteration 26, in order):
 - (05:41) GATE `node tools/evidence/run.mjs --no-bench` at 492f14f1: PASS (lint 15/15, unit 1524/0,
   scenarios 52, parity bit-exact + planted mutation caught, selftest look goldens 11/11 + block 5/5,
   export-audit release-compile 563/0). NEXT 1 done; iteration 26 starts at NEXT 2.
+
+## Iteration 26 (05:42-06:42, BUILD)
+
+Read: JOURNAL, git log, the other lanes' journals: view it13 (05:08) has a REQUEST to city
+(`PropCards.stand_polys`) and a NOTE (the arena crate stack turns vermilion-orange under the King's
+cone, f960 seed 2). Library: nothing new for building/prop since 0525 (all cut or judged in it22-25).
+- MILESTONE 8c982682 + 55ede50c ANSWER to view's it13 REQUEST: `PropCards.stand_polys(kind, r) ->
+  Array[PackedVector2Array]`, the cover card's opaque outline(s) in stand_rect's space. New
+  `PropCardPolys` (82 lines): the strip cell's alpha traced once per (strip, facing) (BitMap 0.5,
+  opaque_to_polygons epsilon 2 px) in the cell's unit square, mapped into the rect, mirrored (and
+  reversed) with the facing, exactly view's prototype. stand_rect's body moved there too
+  (`card_rect`), so prop_cards.gd stays 198 lines (the debt ratchet failed at 206).
+  FRICTION 8c982682 was committed with a parse error (`rect` parameter shadowing the new `rect`
+  function; my chained command did not stop on the test failure); fixed at 55ede50c, 20/0.
+- ANSWER to view's NOTE (crate colour): the world-print twin (d70c8b06) was only drawn by
+  `draw_on`; view's ArenaPropCards draws through `draw_named`, which skipped it, so PropOcclusion's
+  item-print redraw snapped the orange crates to vermilion. `draw_named` now goes through the same
+  `_draw_ci` (twin under the item print). Not a danger state: a bug, fixed at 8c982682.
+- EVIDENCE trial merge (temp worktree %TEMP%/city-trial-it26, detached: 55ede50c + n8-view
+  92a3de77; conflicts were comment-only in arena_floor_view.gd/quest1_clip.gd + JOURNAL/REPORT/
+  baseline): view's repro `arena.tscn -- --boss=king --bot=boss --bot-human --seed=2 --boss-cam
+  --ppm=64 --view=combo --rigs`, 1110 frames, before = the same tree with stand_polys renamed away.
+  Frames differ only in a 48x96 px box around Rivet at the crates. LOOKED f1000/f1040/f1080: before,
+  the black kite beside the top crate (f1000, f1080); after, gone, and at f1040 the ink stays inside
+  the crates. `it26_card_outline_cut_king_combo_64ppm_before_after_x3.png` (frames.json #6, the
+  it22 bus stop 55 pair dropped from frames.json, kept for REPORT). 0 SCRIPT ERROR both runs.
