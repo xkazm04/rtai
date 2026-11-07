@@ -1648,3 +1648,11 @@ Freeze: tree clean after this commit; exe = 08:13 export from ed557034.
 NEXT: unchanged from it26 (taxi_55_v4 / parked_pickup_55_v4 / delivery_truck v2-v3 judged as 55/70 pairs
 with vehicle_turn_check + a turn film each; police_car_70_v3; depot_van_top_v4 for Call 9(b); the pickup
 miss in vehicle_turn_check).
+
+## Iteration 28 (BUILD, 08:20-08:23)
+Read: JOURNAL tail, git log. 10 min to the freeze, so no new art and no code: any change to `project/`
+would need a re-export and a re-gate inside the window. Checked again: ed557034..HEAD touches only
+JOURNAL.md, REPORT.md and evidence logs, so build/export/windows/RTAI.exe (08:13, 269 MB, with
+gtai_sim.windows.template_release.x86_64.dll beside it) still matches the code head.
+Freeze: tree clean after this commit; exe = 08:13 export from ed557034. REPORT unchanged (covers it26/it27).
+NEXT: unchanged from it26/it27.
