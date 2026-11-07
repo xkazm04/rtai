@@ -19,3 +19,9 @@ func test_headless_never_processes_or_touches_the_limiter() -> void:
 	add_child_autofree(cap)
 	assert_false(cap.is_processing())
 	assert_eq(Engine.max_fps, before)
+
+
+func test_low_processor_mode_while_minimized_unless_off_or_spin() -> void:
+	assert_true(MinimizedCap.low_when_minimized(""))
+	assert_false(MinimizedCap.low_when_minimized("off"))
+	assert_false(MinimizedCap.low_when_minimized("spin"))

@@ -630,3 +630,7 @@ NEXT (iteration 19 = the freeze session, 18:30 freeze, 18:40 REPORT):
   (nothing is drawn, so no pixel), so the limiter sleeps the whole gap instead of spinning its last 1 ms. Expected: the
   King minimized 0.38 -> ~0.32 cores (-0.06, F18's size); on screen unchanged. Built in the scratch worktree
   `perf-before` at 2d81ee85 (`--frame-cap=spin` = L12 only); A/B `probe_king.ps1` spin / low / low / spin, lock held.
+- MILESTONE 17:50 L14 KEPT: MinimizedCap also sets low-processor mode while minimized. King minimized spin 0.408 / 0.484
+  -> low 0.354 / 0.343 cores; the shown phase (same code both arms) differs 0.04, so the claim is ~-0.06 core (F18's size).
+  Loops equal (3613-3639). Unit 1712 / 0 (full run before the comment-only line-length fix), lint 15/15.
+  `evidence/perf/l14-minimized-low/`.

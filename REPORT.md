@@ -88,6 +88,8 @@ Journal: `JOURNAL.md`. Clips and stills: `C:\Users\kazda\kiro\gtai-masters\d9\pe
 - **L12 the same cap while minimized** (16:52): a minimized game used to spin at ~145 loops a second and cost MORE CPU
   than on screen (riot 0.35 -> 0.58 cores); now the King fight minimized costs **0.73 -> 0.38 cores (-49 %)**, the same ticks,
   nothing on screen changes (`--frame-cap=off` is the before).
+  **L14 (17:47):** minimized, the engine now also sleeps instead of spinning (F18): a further **~-0.06 of a core** (King
+  minimized 0.45 -> 0.35 raw, 0.04 of that is run-to-run offset); `--frame-cap=spin` is the L12-only before.
 - **L13 the title card idles** (17:26): the slice's title card is a still picture but was redrawn 60 times a second;
   it now runs in the engine's low-processor mode (a frame is drawn only when something on it changes, a button's hover
   still redraws at once): **0.033 -> 0.004 cores (-88 %)**, the card pixel-identical. The pause card measured no gain (the
