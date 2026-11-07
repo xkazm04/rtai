@@ -967,5 +967,5 @@ NEXT 2b (iteration 10): CrowdAtlas' corpse cell under p70/p55 for a baked dead c
   corpse from the standing card's height, and the 55 contractor card is taller (longer-legged 55
   drawing). NEXT: size draw_down at p55 by the walkers' rule (StreetWalkerCards.HEIGHT_BY_ART
   ratio) or cap h_m at the p70 card's; compare at 48 px/m both pitches. Capture deleted.
-- Session end 04:01: tree clean. Not re-gated after 1ebcd60e beyond lint 15/15 and the select
-  run: run the full unit no-arg first thing in iteration 10.
+- Session end 04:02: tree clean. GATE unit no-arg on 1ebcd60e: 1516 passed, 0 failed, no FLAKY.
+  Scenarios last ran on 72dde64b (52/0); the later commits only add p55 rows (no `top` path).
