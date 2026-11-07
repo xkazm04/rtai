@@ -131,8 +131,9 @@
     "sheet": "rivet_eq_chainsaw_70_v4.png"
    },
    "rivet_eq_electro_baton": {
+    "cc": "0",
     "counts": "5,3",
-    "sheet": "rivet_eq_electro_baton_70_v3.png"
+    "sheet": "rivet_eq_electro_baton_70_v5.png"
    },
    "rivet_eq_electro_baton_left": {
     "cc": "0",

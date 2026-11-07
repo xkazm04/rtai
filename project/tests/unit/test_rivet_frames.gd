@@ -65,14 +65,15 @@ func test_a_cone_burst_that_went_off_its_drawn_flame_keeps_the_facing_cell() -> 
 
 
 func test_a_strip_with_no_drawn_arc_keeps_the_held_part_posing_for_the_smear() -> void:
-	# d9 it20: the baton's strike cells draw no swing arc (p55 v3, p70 v3), so the game's smear
-	# sweeps the cut from the hidden held part; the katana's sheet draws its own arc.
+	# d9 it20: the baton's strike cells at p55 (v3) draw no swing arc, so the game's smear sweeps
+	# the cut from the hidden held part; the katana's sheet draws its own arc, and so does the
+	# p70 baton since it21 (v5).
 	var saved: ViewMode = ViewMode._shared
-	ViewMode._shared = ViewMode.of("tilt70")
+	ViewMode._shared = ViewMode.of("tilt")
 	var rig: CutRig = add_child_autofree(CutRig.new())
 	rig.head_card = autofree(Sprite2D.new())
 	rig.head_card.hframes = RivetFrames.EQ_CELLS
-	rig.head_card.set_meta(RivetFrames.ON, P70 + "rivet_eq_electro_baton.png")
+	rig.head_card.set_meta(RivetFrames.ON, P55 + "rivet_eq_electro_baton.png")
 	rig.gun_out = true
 	rig.set_meta(RivetFrames.WEAPON, &"electro_baton")
 	var art: String = ViewMode._shared.art
@@ -81,6 +82,11 @@ func test_a_strip_with_no_drawn_arc_keeps_the_held_part_posing_for_the_smear() -
 	assert_true(RivetStrips.hides_held(rig), "katana at " + art)
 	rig.head_card.hframes = RivetFrames.BASE_CELLS  # the bare-claw strip carries no weapon
 	assert_false(RivetStrips.hides_held(rig))
+	ViewMode._shared = ViewMode.of("tilt70")  # the p70 baton v5 draws its own arc
+	rig.head_card.hframes = RivetFrames.EQ_CELLS
+	rig.head_card.set_meta(RivetFrames.ON, P70 + "rivet_eq_electro_baton.png")
+	rig.set_meta(RivetFrames.WEAPON, &"electro_baton")
+	assert_true(RivetStrips.hides_held(rig), "baton at p70 (v5 draws its arc)")
 	ViewMode._shared = saved
 
 

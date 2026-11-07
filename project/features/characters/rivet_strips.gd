@@ -28,7 +28,7 @@ const CONE_OFF: StringName = &"rivet_cone_off"
 ## Equipped strips per art key whose strike cells draw no swing arc: under them RivetHeldView
 ## keeps posing the hidden held part so the game's smear (MeleeSmearView) still sweeps the cut.
 ## The katana, chainsaw and plasma sword sheets draw their own arc (no game smear over it).
-const NO_ARC: Dictionary[String, Array] = {"p55": [&"electro_baton"], "p70": [&"electro_baton"]}
+const NO_ARC: Dictionary[String, Array] = {"p55": [&"electro_baton"]}
 static var _logged: Dictionary[StringName, bool] = {}
 
 
