@@ -73,8 +73,8 @@ head commit. Branch `n8-city`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n8\ci
 - The squat kerb props keep their flat art's hatched silhouette as the ground shadow (it reads as
   one); the three poles (street sign, lamp, traffic light) cast a drawn stroke since iteration 25, and
   since iteration 26 the lamp's and the traffic light's end in a round blob for the globe / signal
-  head (`cast_blob_m`; `it26_lamp_globe_blob_tilt70_48ppm_before_after_x3.png`). The traffic light's
-  blob was looked at under 55 only (no before/after pair).
+  head (`cast_blob_m`; `it26_lamp_globe_blob_tilt70_48ppm_before_after_x3.png`,
+  `it26_traffic_light_head_blob_tilt70_48ppm_before_after_x2.png`).
 - The 55 street sign and lamp are B sheets (a little steep); accepted for the matched design.
 - Roof dressing cards (`roof_dressing_v3`) not integrated: the baked roofs already paint them.
 
