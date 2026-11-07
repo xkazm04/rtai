@@ -9,6 +9,7 @@ extends Node
 const PULSES: Dictionary[StringName, Vector3] = {
 	&"player_hit": Vector3(0.3, 0.8, 0.18),
 	&"rivet_hurt": Vector3(0.25, 0.55, 0.12),
+	&"boss_hit": Vector3(0.15, 0.35, 0.07),
 	&"struck_killed": Vector3(0.4, 0.6, 0.16),
 	&"struck": Vector3(0.3, 0.3, 0.1),
 	&"knocked_down": Vector3(0.5, 0.2, 0.1),
@@ -30,9 +31,8 @@ var by_kind: Dictionary[StringName, int] = {}
 var last: Vector3 = Vector3.ZERO
 var _until_ms: int = 0
 var _strength: float = 0.0
-## The last Rivet hurt tick seen (feel_hurt); the first one seen only sets it.
-var _hurt_seen: int = -1
-var _hurt_primed: bool = false
+## The last hurt tick seen per kind (feel_hurt, feel_landed); the first one seen only primes.
+var _seen: Dictionary[StringName, int] = {}
 
 
 func _init(rumble_gain: float = 1.0) -> void:
@@ -69,17 +69,29 @@ func _exit_tree() -> void:
 static func feel_hurt(hurt_tick: int) -> void:
 	if _live != null:
 		@warning_ignore("return_value_discarded")
-		_live.see_hurt(hurt_tick)
+		_live.see(&"rivet_hurt", hurt_tick)
 
 
-## True when `hurt_tick` is a new hurt (and plays the pulse); the first call only primes.
-func see_hurt(hurt_tick: int) -> bool:
-	var fresh: bool = _hurt_primed and hurt_tick > _hurt_seen
-	_hurt_seen = hurt_tick
-	_hurt_primed = true
+## The boss bar's per-frame read of the boss body's `hurt_tick` (BossFight.hurt sets it on every
+## hit that takes hp; a transition takes none): a rise plays the light `boss_hit`. Reads only.
+static func feel_landed(hurt_tick: int) -> void:
+	if _live != null:
+		@warning_ignore("return_value_discarded")
+		_live.see(&"boss_hit", hurt_tick)
+
+
+## True when `hurt_tick` is a new hurt for `kind` (and plays its pulse); the first call only primes.
+func see(kind: StringName, hurt_tick: int) -> bool:
+	var fresh: bool = _seen.has(kind) and hurt_tick > _seen[kind]
+	_seen[kind] = hurt_tick
 	if fresh:
-		_fire(&"rivet_hurt")
+		_fire(kind)
 	return fresh
+
+
+## Rivet's hurt (see()); the tests' name for it.
+func see_hurt(hurt_tick: int) -> bool:
+	return see(&"rivet_hurt", hurt_tick)
 
 
 ## The pulse `kind` at `rumble_gain`: weak, strong, seconds (zero for an unknown kind).

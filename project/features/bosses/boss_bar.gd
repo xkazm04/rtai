@@ -38,6 +38,7 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if fight == null:
 		return
+	HandheldRumble.feel_landed(fight.body.hurt_tick)  # d9-handheld: no-op without a rumble row
 	var hp: float = fight.hp_frac()
 	_trail = hp if _trail < 0.0 else maxf(hp, _trail - TRAIL_PER_FRAME)
 	size = get_viewport_rect().size
