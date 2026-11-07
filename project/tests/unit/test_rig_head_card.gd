@@ -80,9 +80,10 @@ func test_an_art_folder_overrides_only_its_own_rows() -> void:
 
 
 func test_every_set_card_strip_loads() -> void:
-	for art: String in RigHeadCard.SET_CARDS:
-		for key: String in RigHeadCard.SET_CARDS[art]:
-			var path: String = RigHeadCard.SET_CARDS[art][key][0]
+	var sets: Dictionary[String, Dictionary] = RigCardSets.all()
+	for art: String in sets:
+		for key: String in sets[art]:
+			var path: String = sets[art][key][0]
 			if path == "":
 				continue
 			var t: Texture2D = load(path) as Texture2D

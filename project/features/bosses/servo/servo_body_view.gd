@@ -14,6 +14,7 @@ var _paint: ServoDraw = ServoDraw.new()
 var _depot: ServoDepotDraw = ServoDepotDraw.new()
 var _cut: ServoCut = ServoCut.new()
 var _frame: int = 0
+var _drone: ServoParts = ServoParts.new()
 ## Seconds the conveyor has run (it starts with rush hour, phase 2); one frame = one tick here.
 var _belt_s: float = 0.0
 
@@ -54,6 +55,8 @@ func _process(_delta: float) -> void:
 	if fight.phase >= 1 and fight.state != BossFight.State.DEFEATED:
 		_belt_s += SimClock.TICK_DT
 	_rig.pose(_frame)
+	if _drone.sync([&"drone"]):  # n8: the air's drones follow the art key too
+		_paint.drone_tex = _drone.tex[&"drone"]
 	_ground.queue_redraw()
 	_air.queue_redraw()
 

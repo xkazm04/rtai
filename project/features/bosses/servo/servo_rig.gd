@@ -12,11 +12,6 @@ const ART_PPM: float = 96.0
 const ART: String = "res://features/bosses/servo/art/%s.png"
 const STRIDE_M: float = 2.2
 const FLASH_TICKS: int = 5
-const PARTS: Array[StringName] = [
-	&"head", &"pad", &"pelvis", &"torso", &"rack", &"rack3", &"thigh", &"shin", &"arm"
-]
-## The pads' art: pad_hazard (tools/art/servo_pad_rim.py: the sheet's hazard rim) or pad (it13).
-const PAD_ART: StringName = &"pad_hazard"
 ## A docked drone: a cream body (metres square, ink rim) in each full rack cell (the wing art alone
 ## printed dark cells; the flying drone's sprite there was noise at 32 px/m). 0 = off.
 const DOCKED_M: float = 0.34
@@ -40,7 +35,7 @@ var px: float = 32.0
 var fight: BossFight = null
 var rack: ServoRack = null
 var tick: int = 0
-var _tex: Dictionary[StringName, Texture2D] = {}
+var _parts: ServoParts = ServoParts.new()  # n8: the view's parts, by art key
 var _walk: float = 0.0
 var _last_pos: Vector2 = Vector2.ZERO
 var _spin: float = 0.0
@@ -56,16 +51,20 @@ var _up: Vector2 = Vector2.ZERO  # d8: the upper body's lift (m; ServoArt.stand)
 
 
 func _ready() -> void:
-	for n: StringName in PARTS:
-		_tex[n] = load(ServoArt.path(n)) as Texture2D  # d8: the view pitch's parts
-	_tex[PAD_ART] = load(ServoArt.path(PAD_ART)) as Texture2D
-	_pad.tex = _tex[PAD_ART]
-	_spine.cap = _tex[&"head"]
+	_sync_art()
+
+
+func _sync_art() -> void:  # n8: the view's parts, again on an art key change (combo's swap)
+	if _parts.sync():
+		_pad.tex = _parts.tex[ServoParts.PAD]
+		_spine.cap = _parts.tex[&"head"]
+		_fall.drone_tex = _parts.tex[&"drone"]
 
 
 ## Called once per sim tick by the view: advances the gait and the pad spin, then redraws.
 func pose(p_tick: int) -> void:
 	tick = p_tick
+	_sync_art()
 	_fall.px = px
 	_shift.px = px
 	_spine.px = px
@@ -147,7 +146,7 @@ func _leg(o: Vector2, fwd: Vector2, side: Vector2, s: float, tint: Color) -> voi
 
 func _wings(o: Vector2, fwd: Vector2, side: Vector2, k: float, tint: Color) -> void:
 	var rot: float = fwd.angle() - PI / 2
-	var wing: Texture2D = _tex[&"rack"]
+	var wing: Texture2D = _parts.tex[&"rack"]
 	for s: float in [-1.0, 1.0]:
 		if s > 0.0 and rack.count(ServoRack.Cell.BROKEN) > 0:
 			continue  # phase 3: the wing of ServoRack.break_wing (its across < 0 is our side +1)
@@ -193,7 +192,7 @@ func _bay_points(o: Vector2, fwd: Vector2, k: float) -> Array[Vector2]:
 func _wing_art(wing: Texture2D, tint: Color) -> void:
 	var sz: Vector2 = wing.get_size()
 	if rack.rows() == 3:
-		var deep: Texture2D = _tex[&"rack3"]
+		var deep: Texture2D = _parts.tex[&"rack3"]
 		draw_texture(deep, Vector2(-sz.x * 0.5, sz.y * 0.5 - deep.get_height()), tint)
 		return
 	draw_texture(wing, -sz * 0.5, tint)
@@ -219,7 +218,7 @@ func _docked(at: Vector2, rot: float, k: float, tint: Color) -> void:
 
 
 func _part(n: StringName, at: Vector2, rot: float, k: float, tint: Color) -> void:
-	var t: Texture2D = _tex[n]
+	var t: Texture2D = _parts.tex[n]
 	draw_set_transform(at * px, rot, Vector2(k, k) * px / ART_PPM)
 	draw_texture(t, -t.get_size() * 0.5, tint)
 	draw_set_transform(Vector2.ZERO)
@@ -227,7 +226,7 @@ func _part(n: StringName, at: Vector2, rot: float, k: float, tint: Color) -> voi
 
 ## A strut part (art long axis down the page) stretched from a to b.
 func _strut(n: StringName, a: Vector2, b: Vector2, tint: Color, wk: float) -> void:
-	var t: Texture2D = _tex[n]
+	var t: Texture2D = _parts.tex[n]
 	var len_px: float = a.distance_to(b) * px
 	var w: float = px / ART_PPM * wk
 	draw_set_transform(

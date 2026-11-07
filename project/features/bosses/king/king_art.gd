@@ -19,7 +19,7 @@ const COURT_ROOT: String = "res://features/bosses/king/art/"
 ## 1.5: the 55 sheet's bust is the boss's bulk (1.0 drew it a head narrower than his press arms);
 ## the gang 1.25 (1.0 drew the helmet narrower than the bodyguard's shoulders at 48 px/m).
 const STRIPS: Dictionary[String, Array] = {
-	"king": ["king_bust_card", 0.80, 1.5],
+	"king": ["king_bust_card", 0.80, 2.0],  # owner d8: bigger than 1.5 (n8 picked 2.0 over 1.75)
 	"gang": ["gang_head_card", 0.84, 1.25],
 }
 const META: StringName = &"court_card"
@@ -42,7 +42,7 @@ static var _parts: Dictionary[String, Texture2D] = {}
 
 ## KingCape stands down: the King's court strip for this view wears the cape (CARD_CAPE).
 static func card_wears_cape() -> bool:
-	return CARD_CAPE and not strip_path("king", ViewMode.shared().pitch_deg).is_empty()
+	return CARD_CAPE and not strip_path("king", ViewMode.shared().art_pitch()).is_empty()
 
 
 ## The strip a rig's card draws at a pitch ("" = none: the shared card stays).
@@ -62,7 +62,7 @@ static func dress(rig: CutRig) -> void:
 	var card: Sprite2D = rig.head_card
 	if card == null:
 		return
-	var pitch: int = roundi(ViewMode.shared().pitch_deg)
+	var pitch: int = roundi(ViewMode.shared().art_pitch())
 	if not card.has_meta(META) or card.get_meta(META_PITCH) != pitch:
 		if not card.has_meta(META_SHARED):
 			card.set_meta(META_SHARED, [card.texture, card.offset])
@@ -79,7 +79,7 @@ static func dress(rig: CutRig) -> void:
 ## placed; the strip's width factor from then on). ONE = untouched (no strip for this pitch).
 static func _swap(card: Sprite2D, rig: CutRig) -> Vector2:
 	var art_dir: String = rig.plan.art_dir
-	var path: String = strip_path(art_dir, ViewMode.shared().pitch_deg)
+	var path: String = strip_path(art_dir, ViewMode.shared().art_pitch())
 	var old_cell_w: float = card.texture.get_width() / float(RigHeadCard.FRAMES)
 	var horn: Node = rig.find_child(HORN, true, false)
 	if horn is CanvasItem:
@@ -105,7 +105,7 @@ static func _swap(card: Sprite2D, rig: CutRig) -> Vector2:
 ## a court texture for this pitch takes it, raw (no print material) unless the hit flash is lit.
 static func _dress_parts(rig: CutRig) -> void:
 	var set_dir: String = PART_SETS.get(rig.plan.art_dir, "")
-	if set_dir.is_empty() or ViewMode.shared().pitch_deg >= 90.0:
+	if set_dir.is_empty() or ViewMode.shared().art_pitch() >= 90.0:
 		return
 	var raw: bool = not rig.is_tinted()
 	for spr: Sprite2D in rig.sprites:
@@ -123,13 +123,13 @@ static func _dress_parts(rig: CutRig) -> void:
 
 ## The court's part `name` for this view's pitch (null: none, or straight down).
 static func part(name: String) -> Texture2D:
-	if ViewMode.shared().pitch_deg >= 90.0:
+	if ViewMode.shared().art_pitch() >= 90.0:
 		return null
 	return _court_part(PART_SETS["king"], PartLibrary.ART_ROOT + "king/" + name + ".png")
 
 
 static func _court_part(set_dir: String, path: String) -> Texture2D:
-	var pitch: int = roundi(ViewMode.shared().pitch_deg)  # a live pitch (view70's combo) re-asks
+	var pitch: int = roundi(ViewMode.shared().art_pitch())  # a live pitch (view70's combo) re-asks
 	var key: String = "%d:%s:%s" % [pitch, set_dir, path]
 	if not _parts.has(key):
 		var p: String = PARTS_DIR % [pitch, set_dir, path.get_file().get_basename()]

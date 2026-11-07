@@ -37,12 +37,11 @@ var _hits: Array[Hit] = []
 ## This frame's bodies in front of a prop that meets their screen box, and that prop (parallel).
 var _front: Array[CutRig] = []
 var _front_of: Array[ArenaStation.Prop] = []
+var _ends: PackedVector2Array = PackedVector2Array()  # each rig's (feet, head) this frame
 
 
-## A body hidden behind a prop: the prop's ground rect (local px), the body's feet and head.
+## A body hidden behind a prop: the prop's drawn area (local px), the prop, the body's feet, head.
 class Hit:
-	var r: Rect2
-	## The prop's drawn area (local px): its face and lifted top.
 	var area: Rect2
 	var prop: ArenaStation.Prop
 	var feet: Vector2
@@ -150,13 +149,18 @@ static func _poly(r: Rect2) -> PackedVector2Array:
 func hits() -> Array[Hit]:
 	var out: Array[Hit] = []
 	var arena: ArenaStage = _floor.stage as ArenaStage
-	if arena == null:
+	var sorter: RigDepthSort = RigDepthSort.on(_layer)  # its rigs: this frame's, collected once
+	if arena == null or sorter == null:
 		return out
 	_front.clear()
 	_front_of.clear()
-	var rigs: Array[CutRig] = []
-	for c: Node in _layer.get_children():
-		RigCastShadows.collect(c, 0, rigs)
+	var rigs: Array[CutRig] = sorter.frame_rigs
+	_ends.clear()
+	var lift: Vector2 = ViewMode.shared().lift_px(1.0) * RigCastShadows.BODY_IN_HIPS
+	for rig: CutRig in rigs:
+		var hip: float = RigTilt.hip_h(rig) * absf(rig.global_scale.x)
+		var head: Vector2 = rig.global_position + lift * hip / SimConst.PX_PER_M
+		_ends += PackedVector2Array([to_local(rig.global_position), to_local(head)])
 	for s: ArenaStation in arena.stations.stations:
 		for p: ArenaStation.Prop in s.props:
 			if ArenaFloorView.PROP_H_M.get(p.kind, 0.0) >= MIN_H_M:
@@ -167,36 +171,30 @@ func hits() -> Array[Hit]:
 func _hits_of(at: Vector2, p: ArenaStation.Prop, rigs: Array[CutRig], out: Array[Hit]) -> void:
 	var r: Rect2 = Rect2(Ink.px(at - p.size * 0.5), p.size * Ink.PX_PER_M)
 	var area: Rect2 = drawn_area(r, p)
-	for rig: CutRig in rigs:
-		var feet: Vector2 = to_local(rig.global_position)
-		var hip: float = RigTilt.hip_h(rig) * absf(rig.global_scale.x)
-		var up: Vector2 = ViewMode.shared().lift_px(1.0) * hip * RigCastShadows.BODY_IN_HIPS
+	for i: int in rigs.size():
+		var feet: Vector2 = _ends[i * 2]
+		if not body_patch(feet, _ends[i * 2 + 1], area).has_area():
+			continue
 		var h: Hit = Hit.new()
-		h.r = r
 		h.area = area
 		h.prop = p
 		h.feet = feet
-		h.head = to_local(rig.global_position + up / SimConst.PX_PER_M)
-		if not _patch(h, area).has_area():
-			continue
+		h.head = _ends[i * 2 + 1]
 		if feet.y < r.position.y:  # north of the prop's north edge: behind it
 			out.append(h)
 		else:
-			_front.append(rig)
+			_front.append(rigs[i])
 			_front_of.append(p)
 
 
-## The prop's drawn area on screen (local px): its ground rect grown up the screen by its lift.
+## The prop's drawn area (local px): city's card (ArenaPropCards.stand_rect), else the box lifted.
 func drawn_area(r: Rect2, p: ArenaStation.Prop) -> Rect2:
+	var card: Rect2 = ArenaPropCards.stand_rect(p.kind, r)
+	if card.has_area():
+		return card
 	var h_m: float = ArenaFloorView.PROP_H_M.get(p.kind, 0.0)
 	var up: Vector2 = ViewMode.shared().lift_at(get_global_transform() * r.get_center(), h_m)
 	return Rect2(r.position + Vector2(0.0, up.y), r.size + Vector2(0.0, -up.y))
-
-
-func _patch(h: Hit, area: Rect2 = Rect2()) -> Rect2:
-	if not area.has_area():
-		area = drawn_area(h.r, h.prop)
-	return body_patch(h.feet, h.head, area)
 
 
 ## The part of a body's screen box (feet to head, local px) inside a prop's drawn `area`.

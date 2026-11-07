@@ -95,10 +95,9 @@ func step(stage: ArenaStage, tick: int) -> void:
 	adds.step(_arena, tick)
 	var r: Fighter = _arena.rivet
 	rivet_hp_min = minf(rivet_hp_min, r.hp) if defeated_tick < 0 else rivet_hp_min
-	if not r.alive():
-		return
 	_stun_check()
 	var hit: float = fight.step(tick, r.pos, r.radius_m)
+	hit = hit if r.alive() else 0.0  # the death beat: the boss plays on, a corpse takes no hit
 	_sync_bodies()
 	_sync_solids(stage.walls)
 	_keep_in(fight)

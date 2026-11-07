@@ -5,7 +5,8 @@ extends RefCounted
 ## GhostPilot's order, Q transforms, the attack waits for the settled form). It presses melee
 ## at most every CADENCE ticks with the boss inside the ghost's REACH_M, first whenever the boss
 ## (or an add) is in a windup: Ohm's bolt dazes a boss's tell (BossFight.daze).
-## `--ghost-tells` keeps it for the tells only.
+## `--ghost-tells` keeps it for the tells only. `--ghost-at=<tick>` holds the soul until that
+## tick (a film with the form still on when the boss goes down; default 0 = at once).
 
 const ORDER: Array[StringName] = [&"tonnage", &"dent", &"kerf", &"ohm"]
 const REACH_M: Dictionary = {&"tonnage": 3.2, &"dent": 6.0, &"kerf": 8.0, &"ohm": 10.5}
@@ -19,7 +20,9 @@ const SEIZE_M: float = 7.0
 var ghost: StringName
 ## `--ghost-tells`: the power is saved for the boss's tells (a reader interrupts with Ohm's bolt);
 ## default: used on cooldown whenever the boss is in reach.
-var save_for_tells: bool = OS.get_cmdline_user_args().has("--ghost-tells")
+var args: PackedStringArray = OS.get_cmdline_user_args()
+var save_for_tells: bool = args.has("--ghost-tells")
+var take_at: int = int(BossHook._arg(args, "--ghost-at"))
 var presses: int = 0
 var _start: int = -1
 var _last: int = -1000
@@ -43,7 +46,8 @@ func hold_m(f: BossFight, band_m: float) -> float:
 ## The ghost's buttons this tick (a bit mask over PlayerActions).
 func buttons(tick: int, hook: BossHook, me: Vector2, actions: PlayerActions) -> int:
 	if _start < 0:
-		if ghost == &"dent" and not _near:  # Dent: walk to a car first, then take the soul
+		# --ghost-at: not yet; Dent: walk to a car first, then take the soul
+		if tick < take_at or (ghost == &"dent" and not _near):
 			return 0
 		_start = tick
 	var local: int = tick - _start

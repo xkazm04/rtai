@@ -3,22 +3,22 @@
     "dev_loc": {
       "accepted": [
         "2026-11-06: d8 chars: --order-probe measures ghost-card vs rig pairs (the brief's draw-order item, measured before/after) (dev_loc 18080 -> 18115)",
-        "2026-11-06: vehicle_frame learns --view= (n8 vehicles: film the cars under the angled view) (dev_loc 18115 -> 18117)",
-        "2026-11-06: n8 vehicles: vehicle_turn.gd, the 360-degree turn film the lane brief asks for (dev only) (dev_loc 18117 -> 18193)",
-        "2026-11-06: dev/showcase/vehicle_states: the vehicles lane's damage/fire/skid film scene (dev only, n8) (dev_loc 18193 -> 18288)",
-        "2026-11-06: n8 vehicles: the depth film scene (vehicle_frame --scene=depth), dev only (dev_loc 18287 -> 18327)",
-        "2026-11-06: n8 vehicles: dev/bench/vehicle_cards_cost (the traffic card cost bench, the rig_bench pattern: its own cmdline flags) (dev_loc 18327 -> 18493)",
-        "2026-11-06: vehicles: the turn film shows the bike row (dev/showcase/vehicle_turn.gd +3 lines) (dev_loc 18493 -> 18496)",
-        "2026-11-07: vehicles: the turn film's --set=street (taxi, pickup, ambulance) to judge the new p70 in-betweens; dev only (dev_loc 18496 -> 18503)"
+        "2026-11-06: n8-view: the order probe counts the King's accents (brief item 7, dev-only measurement) (dev_loc 18115 -> 18145)",
+        "2026-11-06: n8-view: the order probe logs the first wrong car pair's tick (to film it) (dev_loc 18145 -> 18150)",
+        "2026-11-06: n8-view: the order probe logs the first wrong car pair's tick (to film it) (dev_loc 18150 -> 18151)",
+        "2026-11-06: dev order probe logs each wrong ghost pair's tick (+1 dev line) (dev_loc 18151 -> 18152)",
+        "2026-11-06: n8-view it7: quest1_clip --view flag (+2 dev lines) for quest 1 stills under tilt70 (dev_loc 18152 -> 18154)",
+        "2026-11-07: lead_showcase takes --view and --speed to film the camera lead (combo vs combo_lead) with the real CameraRig (dev_loc 17762 -> 17769)",
+        "2026-11-07: merge n8-view into n8-vehicles: both sides' accepted dev lines (vehicles' dev films and bench, view's lead showcase) (dev_loc 17769 -> 18157)"
       ],
       "files": {
-        "project/dev/arena": 1034,
+        "project/dev/arena": 642,
         "project/dev/audio": 367,
         "project/dev/bake_city.gd": 32,
         "project/dev/bench": 1554,
         "project/dev/bots": 399,
         "project/dev/enemy_ai": 662,
-        "project/dev/frames": 462,
+        "project/dev/frames": 464,
         "project/dev/ghost-forms": 616,
         "project/dev/ghost-powers": 1137,
         "project/dev/gunplay": 674,
@@ -31,22 +31,22 @@
         "project/dev/rivet_motion": 1234,
         "project/dev/save_crash_loop.gd": 14,
         "project/dev/save_crash_writer.gd": 18,
-        "project/dev/selftest": 1446,
+        "project/dev/selftest": 1453,
         "project/dev/servo": 434,
         "project/dev/showcase": 5674,
-        "project/dev/view": 158,
+        "project/dev/view": 195,
         "project/dev/weapon_art": 506
       },
-      "total": 18503
+      "total": 18157
     },
     "direct_cmdline_reads": {
       "accepted": [
-        "2026-11-06: n8 vehicles: dev/bench/vehicle_cards_cost (the traffic card cost bench, the rig_bench pattern: its own cmdline flags) (direct_cmdline_reads 153 -> 154)"
+        "2026-11-06: n8-view it7: ArenaRigs + ArenaRobotRigs moved dev/arena -> features/arena (quest 1 ships the rig cast under a card view; decision 2026-11-04 re-check); quest1_game +3 lines (direct_cmdline_reads 153 -> 153)",
+        "2026-11-07: merge n8-view into n8-vehicles: both sides' accepted dev lines (vehicles' dev films and bench, view's lead showcase) (direct_cmdline_reads 153 -> 154)"
       ],
       "files": {
         "project/core/render/view_mode.gd": 1,
         "project/dev/arena/arena_game.gd": 1,
-        "project/dev/arena/arena_robot_rigs.gd": 1,
         "project/dev/arena/stations_check.gd": 1,
         "project/dev/audio/audio_beat.gd": 1,
         "project/dev/audio/audio_riot.gd": 1,
@@ -131,6 +131,7 @@
         "project/dev/weapon_art/swat_lineup.gd": 1,
         "project/dev/weapon_art/weapon_lineup.gd": 1,
         "project/features/alley/alley_hook.gd": 1,
+        "project/features/arena/arena_robot_rigs.gd": 1,
         "project/features/audio/hit_cues.gd": 1,
         "project/features/audio/stage_audio.gd": 1,
         "project/features/audio/tell_cues.gd": 1,
@@ -185,13 +186,17 @@
       "total": 154
     },
     "files_near_cap": {
+      "accepted": [
+        "2026-11-06: n8-view it7: ArenaRigs + ArenaRobotRigs moved dev/arena -> features/arena (quest 1 ships the rig cast under a card view; decision 2026-11-04 re-check); quest1_game +3 lines (files_near_cap 15 -> 16)"
+      ],
       "files": {
         "project/boot/collect_call/view/fx_view.gd": 271,
+        "project/boot/quest1_game.gd": 270,
         "project/dev/arena/arena_game.gd": 294,
-        "project/dev/arena/arena_rigs.gd": 291,
         "project/dev/showcase/city_fight.gd": 300,
-        "project/features/bosses/boss_hook.gd": 282,
-        "project/features/bosses/servo/servo_rig.gd": 288,
+        "project/features/arena/arena_rigs.gd": 291,
+        "project/features/bosses/boss_hook.gd": 281,
+        "project/features/bosses/servo/servo_rig.gd": 287,
         "project/features/combat/combat_arena.gd": 300,
         "project/features/combat/kills/kill_view.gd": 286,
         "project/features/combat/react/react_link.gd": 286,
@@ -202,21 +207,22 @@
         "project/features/fx/noir/blood_fx.gd": 275,
         "project/features/player/rivet_held_view.gd": 288
       },
-      "total": 15
+      "total": 16
     },
     "files_past_soft_cap": {
       "accepted": [
-        "2026-11-07: vehicles: StageView hands its cars to VehicleStageCards under a tilt (+4 lines: the cards field, ensure, the flat-body skip) (files_past_soft_cap 68 -> 68)"
+        "2026-11-06: collect_call_view +1 line: the death beat's ink veil (owner d8); collect_call_stage shrank 266->262 in the same change (files_past_soft_cap 68 -> 68)",
+        "2026-11-06: n8-view it7: ArenaRigs + ArenaRobotRigs moved dev/arena -> features/arena (quest 1 ships the rig cast under a card view; decision 2026-11-04 re-check); quest1_game +3 lines (files_past_soft_cap 68 -> 68)",
+        "2026-11-07: merge n8-view into n8-vehicles: both sides' accepted dev lines (vehicles' dev films and bench, view's lead showcase) (files_past_soft_cap 67 -> 67)"
       ],
       "files": {
-        "project/boot/collect_call/collect_call_stage.gd": 266,
+        "project/boot/collect_call/collect_call_stage.gd": 262,
         "project/boot/collect_call/view/cast_view.gd": 225,
-        "project/boot/collect_call/view/collect_call_view.gd": 236,
+        "project/boot/collect_call/view/collect_call_view.gd": 237,
         "project/boot/collect_call/view/fx_view.gd": 271,
         "project/boot/collect_call/view/stage_view.gd": 205,
-        "project/boot/quest1_game.gd": 269,
+        "project/boot/quest1_game.gd": 270,
         "project/dev/arena/arena_game.gd": 294,
-        "project/dev/arena/arena_rigs.gd": 291,
         "project/dev/audio/audio_riot.gd": 201,
         "project/dev/bench/fight_frames.gd": 244,
         "project/dev/bench/node_spans.gd": 228,
@@ -232,15 +238,15 @@
         "project/dev/showcase/d5_hero_run.gd": 265,
         "project/dev/showcase/reel_director.gd": 209,
         "project/dev/weapon_art/weapon_lineup_run.gd": 210,
-        "project/features/arena/arena_floor_view.gd": 201,
-        "project/features/arena/prop_occlusion.gd": 206,
+        "project/features/arena/arena_rigs.gd": 291,
+        "project/features/arena/prop_occlusion.gd": 204,
         "project/features/bosses/boss_bot.gd": 202,
         "project/features/bosses/boss_fight.gd": 269,
-        "project/features/bosses/boss_hook.gd": 282,
+        "project/features/bosses/boss_hook.gd": 281,
         "project/features/bosses/king/king_body_view.gd": 235,
         "project/features/bosses/king/king_rigs.gd": 202,
         "project/features/bosses/servo/servo_moves.gd": 223,
-        "project/features/bosses/servo/servo_rig.gd": 288,
+        "project/features/bosses/servo/servo_rig.gd": 287,
         "project/features/bosses/servo/servo_swarm.gd": 208,
         "project/features/characters/cut_rig.gd": 264,
         "project/features/city/gen/tile_painter.gd": 243,
@@ -278,7 +284,7 @@
         "project/tests/unit/test_gun_fx.gd": 213,
         "project/tests/unit/test_weapon_art.gd": 223
       },
-      "total": 68
+      "total": 67
     },
     "lane_named_dev_dirs": {
       "files": {

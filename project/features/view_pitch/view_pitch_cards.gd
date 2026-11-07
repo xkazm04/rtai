@@ -20,15 +20,27 @@ static var _tex: Dictionary[String, Texture2D] = {}
 
 ## Every card under `root` at the row's `mix` (ViewPitch.mix_at: 1 = all `art`, 0 = boss_art).
 static func apply(root: Node, pitch: ViewPitch, mix: float) -> void:
-	if root == null:
-		return
-	# a rebuilt card is renamed while the dropped one waits to free: reach cards through the rigs
-	var cards: Array[Node] = root.find_children(GHOST, "Sprite2D", true, false)
-	for rig: Node in root.find_children("*", "CutRig", true, false):
-		if (rig as CutRig).head_card != null:
-			cards.append((rig as CutRig).head_card)
-	for n: Node in cards:
-		var card: Sprite2D = n as Sprite2D
+	if root != null:
+		apply_to(holders(root), pitch, mix)
+
+
+## The ghost cards and the rigs under `root` (ViewPitchEase keeps this list until the tree gains
+## or loses one: the walk over a whole arena cost ~0.5 ms a frame).
+static func holders(root: Node) -> Array[Node]:
+	var out: Array[Node] = root.find_children(GHOST, "Sprite2D", true, false)
+	out.append_array(root.find_children("*", "CutRig", true, false))
+	return out
+
+
+## Every card of `holders` (a ghost card, or a rig's head card read now: a rebuilt card is renamed
+## while the dropped one waits to free, so reach it through the rig).
+static func apply_to(holders_now: Array[Node], pitch: ViewPitch, mix: float) -> void:
+	for n: Node in holders_now:
+		if not is_instance_valid(n) or not n.is_inside_tree():
+			continue
+		var card: Sprite2D = (n as CutRig).head_card if n is CutRig else n as Sprite2D
+		if card == null:
+			continue
 		ViewPitchCourt.dress(card)
 		var built: String = art_of(card)
 		var other: String = pitch.boss_art if built == pitch.art else pitch.art

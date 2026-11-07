@@ -1,0 +1,76 @@
+[
+  {
+    "driven_ticks": 0,
+    "file": "lead-000.png",
+    "lead_m": [
+      0.0,
+      0.0
+    ],
+    "ppm": 48.0
+  },
+  {
+    "driven_ticks": 30,
+    "file": "lead-030.png",
+    "lead_m": [
+      6.19816827774048,
+      0.0
+    ],
+    "ppm": 48.0
+  },
+  {
+    "driven_ticks": 60,
+    "file": "lead-060.png",
+    "lead_m": [
+      7.16666650772095,
+      0.0
+    ],
+    "ppm": 48.0
+  },
+  {
+    "driven_ticks": 150,
+    "file": "lead-150.png",
+    "lead_m": [
+      7.40043592453003,
+      0.0
+    ],
+    "ppm": 48.0
+  },
+  {
+    "driven_ticks": -1,
+    "file": "hitstop-tazer.png",
+    "lead_m": [
+      7.40043592453003,
+      0.068777970969677
+    ],
+    "ppm": 48.0
+  },
+  {
+    "fired": {
+      "car_wreck": 0,
+      "crash": 0,
+      "death": 17,
+      "hit_metal": 0,
+      "horn": 0,
+      "player_hit": 1,
+      "player_hit_robo_tazer": 1,
+      "projectile_end": 15,
+      "rivet_kill": 0,
+      "shot": 17,
+      "tyre_screech": 0,
+      "wreck_smoke": 0
+    },
+    "fx_alive": 2
+  },
+  {
+    "hitstop_ticks_per_frame": [
+      268,
+      268,
+      268,
+      268,
+      268,
+      269,
+      270
+    ],
+    "stops": 1
+  }
+]

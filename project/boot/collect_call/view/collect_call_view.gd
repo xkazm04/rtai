@@ -66,6 +66,7 @@ func _ready() -> void:
 	var layer: CanvasLayer = CanvasLayer.new()
 	layer.layer = RenderLayers.canvas(&"hud")
 	add_child(layer)
+	layer.add_child(DeathVeil.over(_stage))  # the death beat's ink, under the HUD
 	layer.add_child(hud_view)
 	if objective_view != null:
 		objective_view.stage = _stage

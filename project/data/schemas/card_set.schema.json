@@ -1,0 +1,73 @@
+{
+  "$defs": {
+    "row": {
+      "additionalProperties": false,
+      "properties": {
+        "anchor_y": {
+          "maximum": 2,
+          "minimum": 0,
+          "type": "number"
+        },
+        "bust": {
+          "type": "boolean"
+        },
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "raw": {
+          "type": "boolean"
+        },
+        "strip": {
+          "pattern": "^(res://features/[a-z0-9_/]+[.]png)?$",
+          "type": "string"
+        },
+        "width": {
+          "maximum": 8,
+          "minimum": 0.1,
+          "type": "number"
+        }
+      },
+      "required": [
+        "anchor_y",
+        "bust",
+        "raw",
+        "strip",
+        "width"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "gtai.card-set/1",
+  "additionalProperties": false,
+  "properties": {
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "lane": {
+      "pattern": "^[a-z][a-z0-9_-]*$",
+      "type": "string"
+    },
+    "schema": {
+      "const": "gtai.card-set/1",
+      "type": "string"
+    },
+    "sets": {
+      "additionalProperties": {
+        "additionalProperties": {
+          "$ref": "#/$defs/row"
+        },
+        "type": "object"
+      },
+      "type": "object"
+    }
+  },
+  "required": [
+    "doc",
+    "lane",
+    "schema",
+    "sets"
+  ],
+  "type": "object"
+}
