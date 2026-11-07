@@ -37,6 +37,22 @@ Lines marked *(model knowledge)* were not checked against a source.
 - `Engine.max_fps` "reduces power consumption" [Engine](https://docs.godotengine.org/en/latest/classes/class_engine.html); `--gpu-index` picks the adapter on Forward+/Mobile [CLI](https://docs.godotengine.org/en/latest/tutorials/editor/command_line_tutorial.html).
 - Suspend: `NOTIFICATION_APPLICATION_PAUSED/RESUMED` are Android/iOS only; desktop gets `NOTIFICATION_APPLICATION_FOCUS_OUT/IN` [Node](https://docs.godotengine.org/en/latest/classes/class_node.html). A Deck suspend freezes the process without telling it *(model knowledge)*: on resume the first frame's delta is the whole sleep, and our `SimClock` already clamps it (the dropped seconds are counted; no catch-up spiral).
 
+### Pad families, glyphs and rumble (researched iteration 4)
+- Godot has no `get_joy_type()` (a proposal, [godot-proposals#8519](https://github.com/godotengine/godot-proposals/issues/8519));
+  `Input.get_joy_info()` returns `raw_name`, `vendor_id`, `product_id` (desktop), `xinput_index` (Windows) and
+  `steam_input_index` only for a Steam Input device ([Input.xml mirror](https://git.objectionable.solutions/Sara/api_tester/raw/branch/development/engine/doc/classes/Input.xml));
+  the SDL driver had lost those keys and got them back in Aug 2025 ([patch](https://remotebranch.eu/Stowage/godot/commit/f28acf97d0de82a4e0f2b5ab9cc281603d0ea101.patch)).
+  So the family is the USB vendor id (Sony 0x054C, Nintendo 0x057E) with the name as a fallback.
+- SDL has `SDL_IsJoystickSteamDeck` and a Steam-virtual-gamepad check ([SDL_joystick_c.h](https://cocalc.com/github/godotengine/godot/blob/master/thirdparty/sdl/joystick/SDL_joystick_c.h)):
+  under Steam Input a game sees an Xbox-style virtual pad whatever is in the player's hands, so the right glyph for a
+  PlayStation pad on a Deck needs the Steam Input API (`GetGlyphForActionOrigin`, via the Steam backend): owed.
+- Rumble on the Deck: the kernel's hid-steam got XInput-style rumble emulation in Jan 2023
+  ([commit 9cd61c81](https://patchwork.kernel.org/project/linux-input/patch/20230126030126.895670-3-vi@endrift.com));
+  SDL's Deck HIDAPI driver answers rumble "unsupported... use the full Steam Input API"
+  ([SDL commit](https://cdn05042023.gitlink.org.cn/zinface/SDL/commit/41bf6b5a51d868061c767affbceea2d8735dcccd)); Steam Input
+  forwarding rumble to opted-in pads was fixed in 2019 ([GamingOnLinux](https://www.gamingonlinux.com/2019/05/the-latest-steam-client-beta-fixes-rumble-support-on-linux-with-steam-input)).
+  No source confirms `start_joy_vibration` reaching the Deck's motors through the virtual pad: **only a Deck can prove it**.
+
 ### Windows handhelds (by chip)
 - Ryzen Z1 Extreme (Zen 4 8C/16T, 12 RDNA 3 CUs, 9-30 W) [Windows Central](https://www.windowscentral.com/gaming/pc-gaming/amd-ryzen-z2-series-leaks-alongside-the-steam-deck-2-asus-rog-ally-lenovo-legion-go-and-the-steam-deck-set-for-a-huge-boost); Ryzen Z2 Extreme (8C/16T Zen 5/5c, 16 RDNA 3.5 CUs, up to 35 W) [Tom's Hardware](https://www.tomshardware.com/pc-components/cpus/amd-announces-ryzen-z2-series-processors-for-handhelds-more-performance-better-efficiency-coming-soon); Intel Lunar Lake (Arc 140V) [gameranx](https://gameranx.com/updates/id/500265/article/msi-claw-8-ai-is-the-1st-windows-gaming-handheld-on-intels-lunar-lake/).
 - Panels: 7" 1920x1080 120 Hz VRR, 8" 1920x1200 120 Hz, 8.8" 2560x1600 144 Hz. [Digit](https://www.digit.in/features/gaming/rog-ally-x-vs-legion-go-vs-msi-claw-8-ai-which-handheld-windows-gaming-pc-is-the-best-in-2025.html)
@@ -108,10 +124,18 @@ stick, 2/3 right stick, 4 LT, 5 RT.
 | pause | Esc / P | Start | same | |
 
 - Prompts: `ObjectiveHint` shows pad labels (A/B/X/Y, LB/RB, LT/RT, now L3/R3) when the pad was used last. They are
-  **text labels, not glyph images**, and they do not tell an Xbox, a Deck or a PlayStation pad apart. Valve's rule is
-  "glyphs must match the inputs being used": the A/B/X/Y layout matches a Deck and an Xbox-style pad; **owed**: PlayStation
-  glyphs (Godot's `Input.get_joy_name` / SDL's pad type) and glyph images.
-- Rumble: **none** in the game (no `Input.start_joy_vibration` call). Owed: rumble on a hit, a blast, a car crash, behind a setting.
+  **text labels, not glyph images**. Valve's rule is "glyphs must match the inputs being used": the A/B/X/Y layout
+  matches a Deck and an Xbox-style pad. **Built (it4)**: `PadGlyphs` reads the first pad's family from
+  `Input.get_joy_info` (vendor id; name fallback) and relabels the prompts under the handheld rows (PlayStation Cross /
+  Circle / Square / Triangle, L1/R1/L2/R2, Create/Options; Nintendo layout B/A/Y/X, L/R/ZL/ZR, -/+). A Steam Input
+  virtual pad reads as Xbox-style. Owed: glyph images, and a PlayStation pad behind Steam Input (the Steam API's origin
+  glyphs).
+- Rumble: was **none** in the game. **Built (it4)**: `HandheldRumble` (core/platform) on the Events bus, added by
+  `LaunchArgs` when the device row sets `rumble` (every handheld row 1.0; desktop none): Rivet hit (0.3/0.8, 180 ms),
+  a car strikes a person (killed 0.4/0.6, 160 ms; knocked 0.3/0.3, 100 ms), a tackle knock-down (0.5/0.2, 100 ms), a boss
+  steps in (0.6/0.6, 500 ms), a hijack (0.3/0.1, 120 ms), the whispers spike (0.2/0, 400 ms); a weaker pulse never cuts a
+  stronger running one. Owed: a blast and a car crash (no bus event for either), a settings toggle, and the feel on a
+  real pad (this PC has no pad attached: the calls are unit-tested, never felt).
 - Aim assist for twin-stick aim: not found. Owed (a design call for the owner: magnetism toward the nearest target in a cone).
 - Menus and the dialogue: owed, a pad-only walk through quest 1's start, the settings panel and the dialogue box (iteration 2).
 - On-screen keyboard: the game has no text entry today; nothing owed until it does.

@@ -82,11 +82,11 @@ static func pad_name(action: StringName) -> String:
 		if ev is InputEventJoypadButton:
 			var b: InputEventJoypadButton = ev
 			if PAD_BUTTONS.has(b.button_index):
-				return PAD_BUTTONS[b.button_index]
+				return PadGlyphs.label(PAD_BUTTONS[b.button_index])
 		if ev is InputEventJoypadMotion:
 			var m: InputEventJoypadMotion = ev
 			if PAD_AXES.has(m.axis):
-				return PAD_AXES[m.axis]
+				return PadGlyphs.label(PAD_AXES[m.axis])
 	return key_name(action)
 
 
