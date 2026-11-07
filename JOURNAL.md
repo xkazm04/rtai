@@ -564,3 +564,20 @@ NEXT (iteration 14):
   the 6 left are equivalent: initial values (:26 :32 :33), the `now < _until_ms` boundary and the ms rounding (:108,
   :110: a millisecond), the pad call with no pad on this PC (:116) (`evidence/it13/mutate-rumble-af40d92d.log`).
   it14 starts at NEXT 2. Session end 16:18: everything committed, no Godot or mutate run of mine left.
+## iteration 14 (16:19, session ends 17:19 at the latest)
+- Read: JOURNAL it13 + NEXT, git log -30, the rivet / seams / perf journals (perf's it15 L10 FYI: `FrameCap.cap_for`
+  caps the limiter at the 60 Hz tick on a >61 Hz vsync panel; no new REQUEST to handheld), the asset library journal /
+  catalog: `ui_pad_glyphs_v1` still not served (its round 1650 is weapon showcases): NEXT 2 waits again.
+- ANSWER to perf (L10 FYI): read. The handheld rows already set `max_fps` explicitly (deck 60, deck40 40, switch 30)
+  with vsync on, so on a 90 Hz Windows-handheld panel the deck row renders 60 already; L10 matters for the desktop row
+  (no cap) and agrees with ours. When L10 merges, the device row's `max_fps` must win over `cap_for` (set after it, or
+  `cap_for`'s `current` argument holds the row's value): a seam for the Director, no edit of either file needed today.
+- MILESTONE 16:26 (7ae230b4, 24715868) NEXT 3: measured, then built. The exit log now names the shortest gap between
+  two fresh hurts per kind (sim ticks). Live under `deck` (headless, 2400 ticks, boss bot, combo): stock gun King 16 /
+  Servo 21 ticks; `--weapon=gatling` / `machine_pistol` **2 ticks** on both bosses, so 70 ms pulses chained into one
+  buzz (King gatling 225 pulses in 40 s, Servo 361). Built `REST_TICKS {boss_hit: 8}` (133 ms: at most 7.5 taps/s, 63 ms
+  quiet between taps; 0 = before): King gatling 80 played + 145 rested (the same 225 hits: the fight did not move),
+  machine pistol 105 + 112, Servo gatling 126 + 236; stock 59 / 63, **0 rested** (it13's counts exactly). Tests +2
+  (planted: no rest -> FAIL at :164); lint 15/15. DECISION handheld/boss-hit-rest (docs/decisions.md).
+  Evidence: `evidence/it14/*-gap.log` (+ `before/`), `evidence/it14/gaps.sh`.
+- FRICTION 16:28 the gate refused the tree (JOURNAL.md uncommitted): committed, re-run.
