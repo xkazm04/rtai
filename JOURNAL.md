@@ -1372,3 +1372,17 @@ NEXT (iteration 16) is the it15 NEXT above, items 1-2 (item 3 done).
   combo 32 px/m): the King's bust card on the throne-car, the gang's cards, Rivet at 55, the HUD
   ghost wheel; masters `exe_it16_king_combo_32ppm_f400.png`. If no code lands before 08:30 this
   exe IS the freeze exe; else re-run freeze.sh.
+- LOOKED 07:27-07:33 the King fight on the it16 merge (691768ec), combo 48 px/m, seed 2,
+  `--bot=boss --rigs`, frames 1-1206 (the 300 s timeout cut the 1500), 0 SCRIPT ERROR; "-> boss"
+  at tick 1, p55 cards at 32. Frame 1150: the King's 2.0x bust on the throne-car, the gang's cards,
+  the stood crates and the cable drum read at 48 px/m; nothing view-owned misplaced. FOUND (not a
+  regression): frames 500-700, while the car rams down from the arena's top edge, the King's bust is
+  under hud's boss banner (masters `king_under_hud_banner_merged_it16_combo_48ppm_seed2_f500_560_620_700_crop.png`).
+  The shipped fight camera follows Rivet; `BossCam` (which keeps the lifted bust under the bar) is
+  behind `--boss-cam`, as since d8. Measured on f700: hud's paper banner ends at y 59-63 px (BossCam's
+  `HUD_PX` band is 58 = TOP 34 + BAR_H 14 + 10), and the crest disc at the left reaches ~88 px.
+  No change at the freeze (a cross-branch constant: `BossBar.PAPER_GROW` exists on n8-hud only).
+  NOTE to hud: the banner hangs ~5 px and the crest ~30 px below BossCam's band; harmless with the
+  default camera, worth one look with `--boss-cam`. REPORT merge note + Call candidate for d9:
+  ship `--boss-cam` as the boss fight's camera (it keeps the bust whole) with `HUD_PX` read from
+  `BossBar` (bar + paper).

@@ -158,6 +158,12 @@ hand fix, unit 1639/0, director reel top + combo 19/19 all down, 0 SCRIPT ERROR.
   top + combo 19/19 all down, 0 SCRIPT ERROR (`evidence/n8-view/director-reel-it16-trial-*.log`);
   quest 1 Dock 9 at combo 48 px/m: street's corpse decay and view's guard cast together, 0 SCRIPT
   ERROR (`quest1_dock9_merged_it16_corpse_decay_guard_cast_combo_48ppm_t14400_t15500.png`).
+- it16 (look on the merge, not a regression): with the shipped follow camera, the King's throne-car
+  ramming from the arena's top edge puts his bust under hud's boss banner at 48 px/m (seed 2 f500-700,
+  `king_under_hud_banner_merged_it16_combo_48ppm_seed2_f500_560_620_700_crop.png`). `BossCam`
+  (`--boss-cam`, off by default since d8) keeps the bust under the bar; its band `HUD_PX` (58 px)
+  predates hud's paper banner (ends ~63 px) and crest (~88 px at the left). Next: make BossCam the
+  boss fight's camera and read the band from `BossBar` after the merge.
 - it13: PropOcclusion reads city's `PropCards.stand_polys` by method presence (landed on n8-city
   8c982682 + 55ede50c, checked on the 05:56 trial merge); merge order does not matter, without it
   the cut stays the card's rect.
