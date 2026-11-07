@@ -1551,3 +1551,37 @@ sheets only; a generated turntable's mirrored 3/4 caught before it shipped to 70
 concept-scene-parity (one design across the 70/55 swap), depth-ordered-layered-art (mirrored in place
 about the cell centre: the ground centre and shadow stay put).
 GATE unit --changed 1550/0 and lint 15/15 (pre-commit) on both commits.
+07:51 GATE `tools/evidence/run.mjs --no-bench` on ada297fe: all PASS (lint 15/15, unit 1566/0,
+scenarios 52, parity bit-exact + mutation caught at step 629, selftest goldens 11/11 + block 5/5,
+release-compile 567/0). Log: evidence/n8-vehicles/evidence-run-it23.log.
+JUDGED the library's new 55 sheets in the cutter (scratch, cell by cell beside the committed atlas):
+van_cream_55_v3 (A: the 70 van's design, no roof rails, its 3/4 drawn the right way round: the
+MIRROR_34 van entry would have flipped it wrong, so it is dropped with P55_V) and police_car_55_v6
+(B: the side view at ~50 like its 3/4s, the old one ~28 flattened; nose right; one lens order).
+MILESTONE 42b01ee9 both taken (`P55_V = True`, one flag back). FILMED vehicle_turn tilt 64 px/m
+(the police and van turn one way, sides no longer flatten) and Servo's depot
+(`res://dev/arena/arena.tscn -- --boss=servo --bot=boss --servo-ghost=dent --view=combo --ppm=32
+--rigs --seed=2`, 300 frames) before/after, 0 SCRIPT ERROR: the bay 3 van parked, seized (teal) and
+burnt draws the new 55 van; the rest of the frame identical. King boulevard: no 55 traffic in frame
+in 300 frames (identical), not used.
+FRICTION: `--boss=` on the main scene does nothing (city drive): boss films need
+`res://dev/arena/arena.tscn`. The first King/Servo pair was on the main scene: deleted, unused.
+DECISION (decisions.md): p55 van + police sheets; the mirrored police 3/4 shows its blue lens on the
+image right in that one view (known, minor: the siren flashes both).
+EXE 07:56 `windows-showcase` exported from 42b01ee9 (exit 0, RTAI.exe 269 MB + sim DLL); smoke Servo
+combo 200 frames exit 0, 0 SCRIPT ERROR.
+GATE on 42b01ee9: unit no-arg 1566/1566; director reel top 19/19 and tilt70 19/19 chapters down, 0
+SCRIPT ERROR, exit 0; `top` framemd5 (city, seed 2) identical to it22 over its 300 frames (this run
+wrote 301). evidence/n8-vehicles/iteration23.json. REPORT: works 12 (turn direction, p55 sheets), 13
+(final gates), Exe (07:56 export), Call 12 (P55_V).
+LOOKED p70 in turn order (0, A, 1, B, 2, C, 3, D, 4) for every sim row: all turn one way.
+Masters added: p55_van_v3_servo_depot_combo_32ppm_seed2_f60_150_290_before_left_after_right_x3.png.
+Scratch it23: raw .avi deleted.
+
+NEXT (after the night run):
+1. The police 3/4-toward at 55 is a mirror: swap its lens colours in the cutter, or REQUEST to assets
+   police_car_55 view 2 redrawn nose down-right.
+2. police_car_70_v3 (one lens order through all five) once its in-betweens share the order.
+3. depot_van_top_v4 (A) is the top print Call 9(b) asked for; it needs a sim archetype to draw.
+4. A cutter self-check: flag a sheet whose 3/4 nose side disagrees with its side view (the fault
+   found tonight was only seen turning).
