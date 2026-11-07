@@ -22,6 +22,8 @@ const PAD_PX: float = 2.0
 ## p55: the 55 drawings carry a smaller helmet over longer legs (StreetWalkerCards' x1.18 step).
 const HEIGHT_M: float = 1.1
 const HEIGHT_BY_ART: Dictionary[String, float] = {"p55": 1.3}
+## The roll ball's height for its cast shadow, in standing heights.
+const ROLL_SHADOW: float = 0.45
 ## The fire cell: a recoil (RigClips.recoil, 0.4-1.6) above FIRE_RECOIL, or a shot left within
 ## FIRE_TICKS (streams and autos: RivetHeldView publishes it from the trigger's cooldown).
 const FIRE_RECOIL: float = 0.25
@@ -131,6 +133,10 @@ static func place(rig: CutRig, card: Sprite2D) -> void:
 	var stride: float = sin(TAU * rig.phase)
 	card.global_rotation = stride * SWAY * walk + _roll_spin(rig, c.x)
 	card.global_scale = Vector2(s, s)
+	var k: float = ROLL_SHADOW if c.x == Cell.ROLL else RigTilt.hip_h(rig) / rig.plan.hip_z
+	rig.set_meta(
+		RigCastShadows.CAST_HIP, h * CharacterRigs.PX_PER_M * k / RigCastShadows.BODY_IN_HIPS
+	)
 	card.global_position = rig.global_position - Vector2(0.0, absf(stride) * BOB_PX * walk)
 
 
@@ -144,6 +150,7 @@ static func _roll_spin(rig: CutRig, cell: int) -> float:
 
 ## Back to the parts: restores what step hid and drops the card (RigHeadCard builds it again).
 static func release(rig: CutRig) -> void:
+	rig.remove_meta(RigCastShadows.CAST_HIP)
 	if rig.body == null or not rig.body.has_meta(HID):
 		return
 	var was: Array[bool] = rig.body.get_meta(WAS)

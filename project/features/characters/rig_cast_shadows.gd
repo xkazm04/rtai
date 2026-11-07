@@ -11,6 +11,9 @@ extends Node2D
 const SHADOW: Color = Color(0.09, 0.075, 0.106, 0.38)
 ## A body's height in hip heights (RigTilt: torso 0.55 and head 0.45 above the hips).
 const BODY_IN_HIPS: float = 2.0
+## A rig drawn as one card (RivetFrames) publishes its drawn hip height here (global px): the
+## shadow and the occlusion silhouette take the drawing's height, not the hidden parts' plan.
+const CAST_HIP: StringName = &"cast_hip_px"
 ## The shadow's shoulder width in hip heights, the feet's and the head's in shoulder widths.
 const WIDTH_IN_HIPS: float = 0.55
 const FEET_K: float = 0.4
@@ -40,9 +43,14 @@ func _process(_delta: float) -> void:
 func _draw() -> void:
 	var view: ViewMode = ViewMode.shared()
 	for rig: CutRig in _rigs():
-		var hip: float = RigTilt.hip_h(rig) * absf(rig.global_scale.x)
+		var hip: float = hip_px(rig)
 		var feet: Vector2 = to_local(rig.global_position)
 		draw_colored_polygon(figure(feet, view.cast_dir(), hip * view.cast_k), SHADOW)
+
+
+## The rig's hip height in global px: the drawn card's (CAST_HIP), else its plan's.
+static func hip_px(rig: CutRig) -> float:
+	return rig.get_meta(CAST_HIP, RigTilt.hip_h(rig) * absf(rig.global_scale.x))
 
 
 ## The shadow of a body with its feet at `feet`, cast along `dir` (unit) by a hip height of
