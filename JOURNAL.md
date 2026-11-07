@@ -1362,3 +1362,17 @@ Rivet's dialogue face after the Rivet triage; `BossCam.HUD_PX` reads `BossBar` i
 NEXT: unchanged from it22-it25 (assets' raises for the heavy/long showcase top views then re-import
 via `tools/art/showcase_import.py`; boss taunt lines into `BossTaunt`; boss busts once approved;
 Rivet's dialogue face after the Rivet triage; `BossCam.HUD_PX` reads `BossBar` if `--boss-cam` ships).
+
+## Iteration 27 (08:40-08:43, REPORT)
+- 08:41 Re-checked every evidence path REPORT.md cites: all 29 masters files + the boss-cam/armory/
+  crate/rack globs exist, `frames.json` has 15 entries and every file is there, the four reel logs are
+  in `evidence/`, the four exe smoke stills are in `gtai-n8/scratch/hud/it20|it21/`, and `build/export/
+  windows/RTAI.exe` (07:48, 262 MB) is there. Fixed: the three `evidence_run_it*.log` citations now
+  carry their real folder (`gtai-n8/scratch/hud/`). Added the section on what blocked me (no hard block;
+  waits: the showcase sheets ~40 min, the open crate ~53 min, boss taunt lines all night). `git diff f80e09ba
+  HEAD -- project` is still empty: the exe and the gates stand.
+- Registry rules applied it27: `generative-artifact-gating` (every cited artifact was checked to exist
+  on disk before the report claims it).
+NEXT: unchanged from it22-it26 (assets' raises for the heavy/long showcase top views, then re-import
+via `tools/art/showcase_import.py`; boss taunt lines into `BossTaunt`; boss busts once approved;
+Rivet's dialogue face after the Rivet triage; `BossCam.HUD_PX` reads `BossBar` if `--boss-cam` ships).

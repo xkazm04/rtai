@@ -1,4 +1,4 @@
-# n8 hud lane: REPORT (final, it21, 07:55; the project tree frozen at f80e09ba)
+# n8 hud lane: REPORT (final; written it21 07:55, paths re-checked it27 08:41; the project tree frozen at f80e09ba)
 
 Lane `hud`, branch `n8-hud`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n8\hud\` (`frames.json`,
 15 entries, best first; the combined clip `hud_set_combined_it19.mp4`, 61 s, 7 segments). Repo evidence under
@@ -57,13 +57,13 @@ Every look has a flag one value away (`PAPER`, `FACES`, `SEE`, `ON_TICKET`, `FIT
 - Director reel at 2a8a045c (it19, headless, `--bot=reel --reel=director --loadout=pistol --rigs`):
   `top` 19/19 chapters down, `tilt70` 19/19 down, 0 SCRIPT ERROR both
   (`evidence/director-reel-n8hud-it19-{top,tilt70}.log`).
-- Full gate run at 38bc8bee (it19, `evidence_run_it19.log`): lint 15/15, unit 1529/0, scenarios
+- Full gate run at 38bc8bee (it19, `gtai-n8/scratch/hud/evidence_run_it19.log`): lint 15/15, unit 1529/0, scenarios
   52/52, parity bit-exact + planted mutation caught at step 629, look goldens 11/11 + block 5/5 (top did not move), export-audit 563/0.
-- Full gate run at 9a6a3ce4 (it20, after Juno's rust-brown busts, `evidence_run_it20.log`, 07:15-07:22): lint 15/15,
+- Full gate run at 9a6a3ce4 (it20, after Juno's rust-brown busts, `gtai-n8/scratch/hud/evidence_run_it20.log`, 07:15-07:22): lint 15/15,
   unit 1529/0, scenarios 52/52, parity bit-exact + planted mutation caught at step 629, look goldens 11/11 +
   block 5/5 (top did not move), export-audit 563/0. The reel was not re-run for it: a portrait PNG only, no
   reel chapter draws the dialogue box (quest 1 only); the it19 reel ran on the same code.
-- Full gate run at f80e09ba (it20, after the rack show minimum, `evidence_run_it20b.log`, 07:33-07:41): lint 15/15,
+- Full gate run at f80e09ba (it20, after the rack show minimum, `gtai-n8/scratch/hud/evidence_run_it20b.log`, 07:33-07:41): lint 15/15,
   unit 1530/0, scenarios 52/52, parity bit-exact + planted mutation caught at step 629, look goldens 11/11 +
   block 5/5 (top did not move), export-audit 563/0. Director reel at f80e09ba: `top` 19/19 down, `tilt70`
   19/19 down, 0 SCRIPT ERROR both (`evidence/director-reel-n8hud-it20-{top,tilt70}.log`).
@@ -90,6 +90,19 @@ Every look has a flag one value away (`PAPER`, `FACES`, `SEE`, `ON_TICKET`, `FIT
   hidden fight: kept opaque (the Call stands).
 - `--write-movie` ignores `--resolution`: 1080p arena shots need `window_width/height_override` in
   the local override.cfg (JOURNAL it19).
+
+## What blocked me, and for how long
+Nothing hard-blocked the lane (no BLOCKED entry in JOURNAL). Three waits on other lanes:
+- The showcase sheets: REQUESTed in it1 (JOURNAL l.16), served as round 2155 and arrived at 21:05
+  (about 40 min). I built the display code on the shipped parts meanwhile.
+- The open weapon crate: REQUESTed 22:12, served 23:05-23:06 (about 53 min). The pickups kept their
+  hover meanwhile.
+- Boss taunt lines: none exist (not this lane's to write). That waited all night, so `BossTaunt` is
+  presentation only and has no caller.
+The assets raise for the heavy/long showcase top views (REQUEST 04:00) was served for the chainsaw
+only; the rest are still owed (see Next steps).
+Self-inflicted time losses are the FRICTION lines in JOURNAL: the scene arg for `--armory`/`--boss`,
+`--write-movie` ignoring `--resolution`, the git LFS pointer, and two wasted smoke runs (08:03-08:10).
 
 ## Calls for the owner
 - **Pickup hover (built) vs lying in the open crate:** `call_pickup_hover_vs_crate_32_crop2x.png`;
