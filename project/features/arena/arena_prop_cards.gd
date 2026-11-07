@@ -17,6 +17,8 @@ const CARD: Dictionary[String, String] = {
 ## The PropCards script, looked up once (null: city not merged).
 static var _script: Script = null
 static var _looked: bool = false
+## Whether that script has PropCards.stand_rect (city a1fe2bbf or later).
+static var _has_rect: bool = false
 ## The crate stack card's cell width (m), from city's table (city_facades.json props).
 static var _crate_w_m: float = 3.2
 
@@ -53,6 +55,18 @@ static func row_feet(r: Rect2) -> Array[Vector2]:
 	return out
 
 
+## The screen rect (ci's local px) city's card for cover `kind` on ground rect `r` covers
+## (PropCards.stand_rect, city's REQUEST it12): PropOcclusion's hit and cut area. Empty when city is
+## not merged, under a flat view, or for a kind with no card (walls): the caller keeps its box.
+static func stand_rect(kind: String, r: Rect2) -> Rect2:
+	@warning_ignore("return_value_discarded")
+	_cards()
+	if not _has_rect:
+		return Rect2()
+	var got: Variant = _script.call("stand_rect", kind, r)
+	return got if got is Rect2 else Rect2()
+
+
 static func _foot(r: Rect2) -> Vector2:
 	return Vector2(r.get_center().x, r.end.y)
 
@@ -63,6 +77,8 @@ static func _cards() -> Object:
 		if ResourceLoader.exists(SCRIPT):
 			_script = load(SCRIPT) as Script
 			_crate_w_m = _cell_w_m("crate_stack", _crate_w_m)
+			for m: Dictionary in _script.get_script_method_list():
+				_has_rect = _has_rect or m.get("name", "") == "stand_rect"
 	if _script == null:
 		return null
 	var got: Variant = _script.call("named")

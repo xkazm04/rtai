@@ -40,10 +40,8 @@ var _front_of: Array[ArenaStation.Prop] = []
 var _ends: PackedVector2Array = PackedVector2Array()  # each rig's (feet, head) this frame
 
 
-## A body hidden behind a prop: the prop's ground rect (local px), the body's feet and head.
+## A body hidden behind a prop: the prop's drawn area (local px), the prop, the body's feet, head.
 class Hit:
-	var r: Rect2
-	## The prop's drawn area (local px): its face and lifted top.
 	var area: Rect2
 	var prop: ArenaStation.Prop
 	var feet: Vector2
@@ -179,7 +177,6 @@ func _hits_of(at: Vector2, p: ArenaStation.Prop, rigs: Array[CutRig], out: Array
 		if not body_patch(feet, _ends[i * 2 + 1], area).has_area():
 			continue
 		var h: Hit = Hit.new()
-		h.r = r
 		h.area = area
 		h.prop = p
 		h.feet = feet
@@ -191,8 +188,11 @@ func _hits_of(at: Vector2, p: ArenaStation.Prop, rigs: Array[CutRig], out: Array
 			_front_of.append(p)
 
 
-## The prop's drawn area on screen (local px): its ground rect grown up the screen by its lift.
+## The prop's drawn area (local px): city's card (ArenaPropCards.stand_rect), else the box lifted.
 func drawn_area(r: Rect2, p: ArenaStation.Prop) -> Rect2:
+	var card: Rect2 = ArenaPropCards.stand_rect(p.kind, r)
+	if card.has_area():
+		return card
 	var h_m: float = ArenaFloorView.PROP_H_M.get(p.kind, 0.0)
 	var up: Vector2 = ViewMode.shared().lift_at(get_global_transform() * r.get_center(), h_m)
 	return Rect2(r.position + Vector2(0.0, up.y), r.size + Vector2(0.0, -up.y))

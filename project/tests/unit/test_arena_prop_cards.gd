@@ -26,3 +26,10 @@ func test_under_top_the_floor_draws_no_card() -> void:
 	var drawn: bool = ArenaPropCards.draw(ci, "cone", Rect2(0.0, 0.0, 32.0, 32.0))
 	ViewMode._shared = saved
 	assert_false(drawn, "PropCards.named() is null under a flat view (or city is not merged)")
+
+
+func test_stand_rect_is_empty_without_city_or_for_a_wall() -> void:
+	var r: Rect2 = Rect2(0.0, 0.0, 144.0, 48.0)
+	assert_false(ArenaPropCards.stand_rect("wall_high", r).has_area(), "walls keep their box")
+	if not ResourceLoader.exists(ArenaPropCards.SCRIPT):
+		assert_false(ArenaPropCards.stand_rect("cover_low", r).has_area(), "city not merged")
