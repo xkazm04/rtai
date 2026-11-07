@@ -25,6 +25,8 @@ func test_weaker_pulse_never_cuts_a_running_stronger_one() -> void:
 	assert_true(rumble.play(&"player_hit"))
 	assert_eq(rumble.played, 2)
 	assert_eq(rumble.last, HandheldRumble.pulse(&"player_hit", 1.0))
+	var counted: Dictionary = {&"boss_engaged": 1, &"player_hit": 1}
+	assert_eq(rumble.by_kind, counted, "counted per kind, not the cut one")
 	rumble.free()
 
 

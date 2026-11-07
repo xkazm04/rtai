@@ -25,6 +25,8 @@ static var player_gain: float = 1.0
 var gain: float = 1.0
 ## Pulses played (tests and the log read it).
 var played: int = 0
+## Pulses played per kind (the exit log names them: which hits a fight is felt by).
+var by_kind: Dictionary[StringName, int] = {}
 var last: Vector3 = Vector3.ZERO
 var _until_ms: int = 0
 var _strength: float = 0.0
@@ -59,7 +61,7 @@ func _ready() -> void:
 func _exit_tree() -> void:
 	if _live == self:
 		_live = null
-	Log.info("device", "rumble: %d pulses played" % played)
+	Log.info("device", "rumble: %d pulses played %s" % [played, by_kind])
 
 
 ## A view's per-frame read of Rivet's `hurt_tick` (the sim's Fighter.hurt_tick, set by every
@@ -96,6 +98,7 @@ func play(kind: StringName) -> bool:
 	_until_ms = now + int(p.z * 1000.0)
 	_strength = strength
 	played += 1
+	by_kind[kind] = by_kind.get(kind, 0) + 1
 	last = p
 	for pad: int in Input.get_connected_joypads():
 		Input.start_joy_vibration(pad, p.x, p.y, p.z)
