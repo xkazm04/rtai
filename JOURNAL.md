@@ -635,3 +635,22 @@ RigCastShadows.collect: "REQUEST to view if view exposes one", conditional). hud
   overlapped my own unit run (01:45:00-01:45:10): CONTENDED; take run 1. Reading: quest 1 under a
   card view costs ~+1.9 ms p50 (the rig cast + the tilt's cards), all under 30 ms max (max 28.9).
   This answers it7's open "rig cast vs sprites" cost: affordable at 1080p on this machine.
+- MILESTONE 02:00 the King on foot behind his wreck (brief item 7, the order probe's phase-3 car
+  pairs, owed since it5): REAL, not a probe artifact. it5's command (`--boss=king --phase=3
+  --bot=boss --seed=2 --view=combo --rigs --order-probe`) reproduces 10/10 wrong, first at tick 60;
+  a debug line (not committed) named the pair: the car at (70,-15) m, a rig 2.2 m north of it.
+  The it5/it6 stills missed it because they followed Rivet (the wreck is 30 m west); with
+  `--boss-cam` at tick 72 the King stands just north of the wreck and his boots draw over its
+  roof edge. Cause: `KingCarStack.sort_rigs` never put the King's own rig behind the car ("on the
+  roof"), true in phases 0-1 only; from phase 2 he is on foot. Fix: the King goes behind too from
+  phase 2 (`id != king_id or f.phase >= 2`). After: car pairs 10, 0 wrong over 2400 ticks; rig,
+  ghost and accent pairs unchanged (0 wrong); 0 SCRIPT ERROR. Evidence
+  `evidence/n8-view/order-probe-it9/` (logs + the x3 before/after crop at tick 72, combo 32 px/m:
+  the roof's ink edge now runs unbroken over his boots). Tilt only (sort_rigs is never called
+  flat): top unchanged. Unit (fast suite via --changed) 1493/0.
+- FRICTION 01:52 the camera lead study (combo_lead) cannot be filmed on the city bench: the bench
+  makes its own CityView with no CameraRig and no clock, so both views drew identical frames
+  (deleted). The lead is proved by unit test only; the owner sees it in the exe by driving
+  (`RTAI.exe -- --view=combo_lead` vs `--view=combo`). A dev drive with the real World camera is
+  the way to film it (World._register_features makes the rig; the bench would need it + a clock).
+- GATE unit full no-arg at 105de9d5: 1509 passed / 0 failed, 0 FLAKY (`evidence/n8-view/unit-it9.log`).
