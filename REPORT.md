@@ -71,6 +71,9 @@ Journal: `JOURNAL.md`. Clips and stills: `C:\Users\kazda\kiro\gtai-masters\d9\pe
 - **L10 frame cap at the tick rate on > 61 Hz displays** (15:48): simulated 144 Hz riot 0.68 -> 0.42 cores, drive 0.52 ->
   0.30, the King under combo 0.80 -> 0.47, duplicate frames 2450 -> 0 per 30 s; **on the shipped release build (16:42)
   riot 0.68 -> 0.39 (-43 %), drive 0.47 -> 0.29 (-38 %)**; a no-op at 60 Hz and headless (Call P-3 for the 60 Hz pacing option).
+- **L12 the same cap while minimized** (16:52): a minimized game used to spin at ~145 loops a second and cost MORE CPU
+  than on screen (riot 0.35 -> 0.58 cores); now the King fight minimized costs **0.73 -> 0.38 cores (-49 %)**, the same ticks,
+  nothing on screen changes (`--frame-cap=off` is the before).
 - L2 CircleFan fan build (riot p99 22.2 -> 11.9 ms), L3 strip prefetch (riot worst 27.2 -> 18.0 ms), L5 snapshot passes
   (-40 % of that pass's CPU, no frame claim), **L8 lossless WebP effort** (14:05): the pck 227.7 -> 215.2 MB
   (-12.5 MB) with every mip of every texture decoding bit-identical; costs ~1.7x texture encode at import.

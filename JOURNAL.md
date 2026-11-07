@@ -551,3 +551,14 @@ NEXT (iteration 16):
   ±0.03 cores (-43 %), drive60 0.47 ±0.03 -> 0.29 ±0.02 (-38 %), duplicate frames 2450 -> 0, skipped tick images 0 -> 0,
   working set WASH. LEDGER L10 row + two rows in the final table (main column = the head exe without the cap: main's
   city_bench has no `--max-fps`, so it cannot run the arm; said so in the table); REPORT kept-list updated.
+- FINDING F16 16:45: physics_ms on the King = 0.015 ms a frame (0.3 %): a dummy physics server is not worth a lever.
+- FINDING F17 16:46 (`evidence/perf/l12-minimized/probe-{a,b}-*.json`, riot60 before any change, lock held): minimized
+  costs MORE than on screen: 0.35 / 0.35 -> 0.56 / 0.61 cores, all main thread, 4600 loops in 60 s of sim (no vsync
+  wait when the window cannot draw; the engine's 6.9 ms low-processor sleep is the only pacing). L12 HYPOTHESIS (before
+  building): the limiter at the tick while minimized -> ~60 loops, CPU <= on screen, same ticks, no pixel.
+- MILESTONE 16:52 L12 KEPT (9a2fcdc8): `boot/minimized_cap.gd` (MinimizedCap, child of Game), `test_minimized_cap` (3).
+  King under combo minimized, off / on / on / off: 0.73 / 0.38 / 0.38 / 0.75 cores (-49 %), on screen WASH, same 3593
+  ticks, loops 4640 -> 3630. Unit 1706 / 0, lint 15/15. DECISION (also docs/decisions.md): cap while minimized, never
+  pause (pausing on focus loss changes the game: a design call, not perf's); `--frame-cap=off` turns off L10 and L12 together.
+- 16:56 gates for 9a2fcdc8 started (headless reels top / tilt70 / combo + scenarios, logs in `gtai-d9x/scratch/gates-it18/`);
+  no `project/` edit while they run.
