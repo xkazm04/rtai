@@ -1,0 +1,27 @@
+{
+ "bench": {
+  "after_fix": "vehicle_view.gd 0.294 / 0.286 ms (2 spans runs); script process p50 top 0.33/0.32/0.26, tilt70 0.53/0.51/0.52 ms",
+  "before_fix": "vehicle_view.gd 0.488 ms mean per frame at tilt70 vs 0.123 top (NodeSpans); script process p50 top 0.22/0.22/0.29, tilt70 0.85/0.50/0.65 ms",
+  "cards_per_frame": "3.8 avg, 6-7 max, 0 under the actors (the drive at 48 px/m)",
+  "dir": "evidence/n8-vehicles/bench-it17 (summary.json: every run, settled stats, the spans rows)",
+  "gpu_and_draws": "render GPU 0.11 ms both views; draw calls 177 top vs 181-182 tilt70; 0 frames over 33 ms settled in every run",
+  "reading": "the traffic cards cost +0.17 ms of script per frame over top after the fix (~1 % of a 60 fps frame); the rest is two full GDScript passes over the sim snapshot (people for the front grid, cars), which needs a native radius query (native/, not this lane)",
+  "recipe": "scratch/vehicles/it17/drive.sh <label> <top|tilt70> 600: res://dev/showcase/vehicle_frame.tscn -- --view=<v> --frames=<json> --frames-ticks=600 [--spans=<json>], editor binary, d3d12, 1280x720 window, vsync off, under bench.lock (vehicles)",
+  "reverted": "the people query cut to the same reach: exact (framemd5 identical) but no measured gain (0.299/0.287 ms)"
+ },
+ "branch": "n8-vehicles",
+ "calls_added": [
+  "the taxi's lit rear lamps (233,140,0 graded) pass the vermilion gate though they read amber: LAMP_DEG 10 -> 14+ (moves the police lens the siren shader finds) vs the gate learning lit amber; built: unchanged"
+ ],
+ "commits": {
+  "1b6740ac": "the traffic cards query only cars within the cull rect's reach (VehicleCull.reach_m)",
+  "5820d218": "VehicleFrameBench: vehicle_frame --frames/--frames-ticks/--spans on the real drive with the game's traffic (brief item 5)",
+  "760760e3": "JOURNAL iteration 17"
+ },
+ "gates": {
+  "director_reel": "19/19 chapters all down, 0 SCRIPT ERROR, exit 0 in top and tilt70 on 1b6740ac (director-reel-it17-*.log)",
+  "identity": "main scene --arena=city --bot=rivet --rigs, 300 fixed-fps frames framemd5: tilt70 seeds 7 and 11 before == after the reach fix; top seed 2 == it16's top md5 (bench-it17/identity/)",
+  "lint": "15/15 on 1b6740ac and 760760e3",
+  "unit": "1544 passed, 0 failed on the clean tree at 760760e3 (full no-arg run, no FLAKY); scenarios 52 ran, 0 failed (raw run_scenarios.gd, 04:00)"
+ }
+}

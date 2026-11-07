@@ -1,0 +1,15 @@
+{
+  "cards": {
+    "avg": 3.76575839083148,
+    "max": 6,
+    "p50": 4
+  },
+  "frames": 8551,
+  "schema": "gtai.vehicle-frame-cards/1",
+  "under": {
+    "avg": 0.0,
+    "max": 0,
+    "p50": 0
+  },
+  "view": "tilt70"
+}

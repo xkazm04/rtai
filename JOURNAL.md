@@ -1032,3 +1032,11 @@ probe runs the real VehicleView; the per-node spans name the cost before any fix
 proved pixel-identical on fixed-fps frames, a fix with no measured gain reverted),
 sprite-and-atlas-production (cull before work: the query bounded by the same rect the cards cull
 with), depth-ordered-layered-art (the front grid's reach derived from its own box, not guessed).
+CORRECTION: the GATE line above says 04:00; it ran ~03:56. Unit 1545 there included the
+reverted near_m test; the clean tree (760760e3) is 1544 passed, 0 failed, no FLAKY.
+GATE 04:00 scenarios (raw run_scenarios.gd on 760760e3): 52 ran, 0 failed, exit 0.
+NOTE on the it16 combined-clip remark "vehicle_frame's camera keeps the ground flat": CityView.
+_place_camera applies ViewMode.zoom_of on the rig path too, so vehicle_frame's ground IS squashed
+at tilt70 (sin 70 = 0.94: a 6 % squash, hard to see) and the bench-it17 tilt70 runs include it.
+Not re-filmed; the remark is likely wrong (the buildings draw flat roofs in both scenes).
+Evidence json: evidence/n8-vehicles/iteration17.json.
