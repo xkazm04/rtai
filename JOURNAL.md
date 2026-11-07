@@ -1355,3 +1355,29 @@ NEXT (the Director / d9):
 - Session end 08:09. Tree clean. Shipped project files unchanged since 7d40e58d; this iteration added
   one tests/ case (ea4d38c0, full unit 1531/0) and docs. The freeze evidence, `top` framemd5, the
   reel and the exe (7d73de04) stand.
+
+## Iteration 33 (08:10-, BUILD slot inside the freeze window)
+Read: JOURNAL NEXT, git log, the four lane journals' tails (no new REQUEST to city; view's NEXT 2 is
+the agreed kerb-barrier split), bench.lock absent.
+- FRICTION (08:11) iteration 32's scratch patch `it32/d9_city_occlusion_extra.patch` applies clean
+  but FAILS lint: gdlint `class-definitions-order` (the public `extra` var sat after the private
+  ones). "Applies clean" was not "passes the gates"; run lint on a patch before calling it a drop-in.
+- d9 PREP (08:13, verified, not landed) `gtai-n8/scratch/city/it33/d9_city_occlusion_extra_v2.patch`:
+  `extra` moved above the private vars, the merge pulled out as a static
+  `CityOcclusion.merge_extra(blds, more, view_px)` (unit-testable without a live node) and
+  `test_extra_occluders_merge_only_when_their_drawn_area_meets_the_view` added. With it applied:
+  lint 15/15, `--select=test_city_occlusion,test_city_crowd_occlusion` 9 passed / 0 failed;
+  city_occlusion.gd 200 lines (the soft cap, held). Then restored to HEAD with `git checkout --` on
+  the two paths; `git apply --check` of v2 clean at 108d740e. Not landed: a shipped-code change after
+  the freeze evidence reopens the exe and the gates for a node nothing fills tonight. Not
+  mutation-tested (mutate.mjs mutates HEAD; the patch is not committed). REPORT next step updated.
+Registry rules applied it33: generative-artifact-gating's gate-before-claim spirit applied to code
+(a drop-in must pass the gates, not just apply); no art touched.
+
+NEXT (the Director / d9):
+1. Apply `it33/d9_city_occlusion_extra_v2.patch` (not it32's), give view a handle to the node
+   (return it from `attach`), view fills `extra` from ArenaFloorView; run mutate on city_occlusion.gd.
+2. Land `planter_v3` 55 (it32 scratch strip + one provenance line), film `--view=tilt` 48 px/m.
+3. The release-compile temp-dir collision; ChunkSwap only if a streamed scene eases its pitch live.
+- Session end 08:15. Shipped project files unchanged since 7d40e58d; the freeze evidence, `top`
+  framemd5, the reel and the exe (7d73de04) stand.

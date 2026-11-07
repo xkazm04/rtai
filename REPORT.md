@@ -133,6 +133,10 @@ path goes on the command line (a release template refuses one). Smoke-run: the f
   filled by view's `ArenaFloorView` (ground rect + the 3.0 m lift at the live pitch), merged into
   `_scan_crowd`. The premise is unit-proven at ea4d38c0 (`test_a_kerb_barrier_shaped_occluder_hides_
   a_lying_body_behind_it`: a 6 x 0.6 m wall hides a body lying behind it, not one in front; test-only).
+  City's half is a verified drop-in: `gtai-n8/scratch/city/it33/d9_city_occlusion_extra_v2.patch`
+  (`git apply` clean at 108d740e; a public `extra` list + a static `CityOcclusion.merge_extra` with
+  its own unit case; lint 15/15 and `--select=test_city_occlusion,test_city_crowd_occlusion` 9/0
+  with it applied). View still needs a handle to the node (`attach` returns void).
 - Tooling (not city's): give `release_compile.mjs`'s staging dir a per-worktree/pid name, so
   parallel lanes' evidence runs stop colliding (EPERM).
 - 70 twins and raises as the library serves them (the traffic light 55 short pole: served and cut at iteration 27).
