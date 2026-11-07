@@ -50,3 +50,21 @@ func test_a_tilt_stands_every_car_and_tints_the_seized_one() -> void:
 func test_the_cards_place_in_sim_px_under_an_ink_px_view() -> void:
 	var node: VehicleStageCards = _stand("tilt70")
 	assert_almost_eq(node.scale.x * SimConst.PX_PER_M, Ink.PX_PER_M, 0.0001)
+
+
+func _one_south() -> PackedVector2Array:
+	return PackedVector2Array([Vector2(0, 5)])  # 1 m south of the car at (0, 4)
+
+
+func test_on_a_print_a_car_with_a_fighter_in_front_drops_under_the_actors() -> void:
+	var node: VehicleStageCards = _stand("tilt70")
+	node._view = node.get_parent() as Node2D  # as if hosted on a print's actor layer
+	node._people = _one_south
+	node._process(0.0)
+	assert_eq(node.cards.count_under(), 0, "over off (the default): no front grid")
+	VehicleStageCards.over = true
+	node._process(0.0)
+	VehicleStageCards.over = false
+	assert_eq(node.cards.count(), 2)
+	assert_eq(node.cards.count_under(), 1, "only the car at (0, 4)")
+	assert_eq(VehicleStageCards.fighters(null).size(), 0)
