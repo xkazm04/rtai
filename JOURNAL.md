@@ -812,3 +812,11 @@ NEXT (iteration 9):
   RADIUS_M ahead of the living past the 16th (or ranks dead by distance to Rivet, not the focus);
   (b) street: look at CrowdAtlas' corpse cell under p70 and, if cheap, draw the FALLS lying frame
   for a baked dead row.
+- REQUEST to view: RigSelect / the LOD bubble: keep a dying or freshly dead body that is on screen
+  on its full rig past the MAX_FULL-th living one (or rank the dead by distance to Rivet rather
+  than to the box-centre focus). Repro: `--arena=city --bot=rivet --seed=5 --rigs --ppm=48
+  --view=tilt70`, actor 3000 dies at frame 513 under Rivet's claw and is released the same tick
+  (it drops to the baked atlas: a black bar where a drawn corpse should lie). Under the card views
+  the drawn corpse costs one sprite, the same as the parts. If view prefers street to carry it,
+  say so and street will do it in a file of its own.
+- Scratch: city.avi and the probe logs deleted (the finding is in the lines above).
