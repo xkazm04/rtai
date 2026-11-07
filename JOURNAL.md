@@ -1040,3 +1040,34 @@ _place_camera applies ViewMode.zoom_of on the rig path too, so vehicle_frame's g
 at tilt70 (sin 70 = 0.94: a 6 % squash, hard to see) and the bench-it17 tilt70 runs include it.
 Not re-filmed; the remark is likely wrong (the buildings draw flat roofs in both scenes).
 Evidence json: evidence/n8-vehicles/iteration17.json.
+MILESTONE 0687f8c1 (04:06) under a card atlas VehicleView skips _marked_traffic: the D1 / soul-hijacked
+overlay layers mirror the crowd car layer, which the cards hide, so the full cars_near(me, 1e6)
+pass wrote into invisible MultiMeshes every frame (the ~80 us my timers left outside _draw_cards).
+Decided from VehicleCards.atlas() this frame, not the cached _carded flag (a pitch swap would
+otherwise drop one frame of overlays). vehicle_view.gd 0.29 -> 0.186 / 0.182 ms (2 spans runs; top
+0.123). framemd5 tilt70 seed 7 and top seed 2 identical. New unit test fails without the fix
+(planted: the atlas check removed -> 1 failing), passes with it. Decision line.
+GATE on 0687f8c1: unit 1545 passed, 0 failed, no FLAKY; director reel top 19/19 and tilt70 19/19
+all down, 0 SCRIPT ERROR (director-reel-it17b-*.log); lint 15/15.
+Brief item 5 now reads: the traffic cards cost ~0.06 ms of script per frame over top on the real
+drive (was +0.37 before tonight's two fixes), GPU and draw calls within noise, 0 hitches.
+FRICTION: summarize.py over a dir whose raw series I had already moved out wrote a near-empty
+summary (0687f8c1); 2872a8c2 rebuilt it. Keep the raw series in scratch/vehicles/it17/raw and
+always summarize from there.
+
+NEXT (iteration 18, in order):
+1. If view lands the bay apron marks on world_markers (its it12; answer to my it16 REQUEST): merge
+   n8-view, re-film the Servo depot (combo 32 + 64, seed 2, van on bay 3) and check the number
+   shows over the van. Else nothing owed.
+2. Raise the weakest item. Candidates: (a) the bike (still a showcase-only Call: look again at
+   its 64 px/m still against the cars); (b) a fresh look at the set at 64 px/m under combo in the
+   King boulevard (the throne-car's neighbours: parked cards near the King's wreck);
+   (c) the taxi lit lamps' Call: prepare the side-by-side (LAMP_DEG 10 vs 14 cut, atlas only, no
+   commit) so the owner sees both, if time allows.
+3. Freeze 08:30: exe (int-day recipe in docs/decisions.md; windows-bench export worked at 03:13),
+   REPORT.md by 08:40 with every Call: bike, wreck fire size, wreck fire vermilion (palette layer),
+   rotation density (nine views), depot van colour, pickup C (row vs _c), stage cars over the
+   actors (ON), taxi paint (+12 / +16 / sheet), taxi lit lamps (gate vs LAMP_DEG). REPORT names
+   bench-it16 as the view's cost WITHOUT cards and bench-it17 as the cards' cost (with the fixes).
+GATE 04:13 scenarios on 2872a8c2 (raw run_scenarios.gd): 52 ran, 0 failed, exit 0.
+Session end 04:14.
