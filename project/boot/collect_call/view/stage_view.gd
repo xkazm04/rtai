@@ -150,7 +150,7 @@ func _sprite(name: String, at: Vector2, size: Vector2) -> void:
 	var r: Rect2 = Rect2(Ink.px(at - size * 0.5), size * Ink.PX_PER_M)
 	var slab: float = (SLAB_M[name] if SLAB_M.has(name) else size.y) * Ink.PX_PER_M
 	if not PropCards.stand(self, name, Rect2(r.position.x, r.end.y - slab, r.size.x, slab)):
-		draw_texture_rect(_art(name), r, false)
+		PropBox.draw_on(self, name, _art(name), r, Ink.PX_PER_M)
 
 
 func _phone(phone: String, at: Vector2) -> void:
