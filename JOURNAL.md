@@ -511,3 +511,86 @@ NEXT (iteration 12, in order):
    list if view exposes one (REQUEST to view), else skip bodies off screen.
 4. facade_tall (B 2210, untapered) as a `tall` style for the 17-21 m landmarks (by_name rows).
 5. Quest 1's payphone: still blocked on the quest stage having no angled view (not city's file).
+
+## Iteration 12 (2026-11-07 00:56 - 01:56), BUILD
+Read: JOURNAL, git log, the lane journals (no new REQUEST to city). hud filmed quest 1 at tilt70
+(`quest1_payphone_patch_live_tilt70_32.png`): the whole stage flat there, because hud's branch has
+none of city's work; on n8-city the same tick shows facades, lamp/crate cards. The payphone itself
+and the hide-spot dumpster were StageView's flat sprites: the last city gap in quest 1's opening.
+- MILESTONE cd831a08 **quest 1's payphone and hide-spot dumpsters stand as cards** (brief item 3,
+  the quest's start): `StageView._sprite` tries `PropCards.stand(self, name, slab)` first (payphone
+  on a 0.5 m slab facing the street, dumpster on its 2.4 x 1.6 m footprint), else the old flat
+  sprite through the same rect (top: same draw call). PropCards.ARENA_KIND gains payphone/dumpster.
+  quest1_clip takes `--view` (the same two lines as n8-hud 6fd17433: an identical merge).
+  Debt +8 accepted with the reason (stage_view 201 -> 207, dev/frames +2). Unit test added.
+  EVIDENCE `gtai-masters/n8/city/it12_quest1_payphone_tilt70_32_before_after.jpg` (`-s
+  res://dev/frames/quest1_clip.gd -- --stills=2300 --view=tilt70`, 1280x800, before = 2a54fcff) and
+  `it12_quest1_payphone_48ppm_top_vs_tilt70.png` (tick 1500, --ppm=48, top vs tilt70). Judged: at
+  48 the booth with its keypad stands on the north kerb between the lamp and bin cards; at 32 the
+  dumpster at the crosswalk is the dumpster card; the phone at 2300 sits under the ghost's teal and
+  the objective ring (readable, small, as in the city). 0 SCRIPT ERROR every run.
+  FRICTION: `minf(x, typed_dict.get(...))` is a Variant arg: warnings-as-errors broke the parse
+  (caught by the film's 17 SCRIPT ERRORs, fixed before commit); `tools/godot/check.mjs` on
+  stage_view says "Compilation failed" with no message (it cannot see autoload classes; the real
+  run is the check).
+- MILESTONE a1fe2bbf `PropCards.stand_rect(kind, r)`: the screen rect draw_on's cover card covers
+  (cell height / ground_k over the footprint's south edge, long-side wide; empty under top or for
+  walls). Numbers: a 3 x 1 m crate row at 70 draws a card ~2.6 m tall on screen against
+  PropOcclusion's box area (1 m footprint depth + 1.0 m lift x cos 70), so a body standing 1-1.8 m
+  north of a crate card is not a hit (its box misses the area): drawn OVER the card from behind,
+  no redraw, no silhouette. The depot film (combo 48, 1200 frames, `occlusion: 52 body-frames
+  hidden, frames 151-420`) showed Rivet behind a dumpster with his legs correctly under the card
+  (the dumpster's card and box nearly agree); the crate case did not come up in that film.
+  REQUEST to view: in `PropOcclusion.drawn_area(r, p)`, use `PropCards.stand_rect(p.kind, r)` when
+  it has an area (merge n8-city a1fe2bbf or later), so the hit test and the silhouette cut follow
+  the card the floor actually draws; walls keep the box (stand_rect is empty for them).
+- MILESTONE 28281696 **the boss dressing at 70**: the library served the 70 twins overnight
+  (king_district_70 A, depot_dressing_70 B "mixed pitch, brick recoloured", round 2300); cut by
+  `city_prop_cut.py --kit` into p70/dress_*.png (same piece order as the 55 kits, checked on a
+  side-by-side), 16 provenance lines. Under combo the boss engages within the first second (frames
+  60+ are pixel-identical before/after: 55 art), so the 70 kit shows at tilt70 and combo's opening;
+  depot frame 30 shows the 70 roll cage and cartons. No masters still (the dressing sits at the
+  frame edges in the first second: not a useful picture).
+- MILESTONE c63a03a4 bench and vending machine 70 strips from the library's A raises (bench_v2,
+  vending_machine_v2, round 20261107-0125: they fix exactly the B notes of it7). Same cell_w_m.
+  EVIDENCE strips only: `gtai-masters/n8/city/it12_bench_vending_p70_B_vs_v2A_strips.png`. NOT yet
+  seen in motion: no film has framed a bench or a vending machine so far (owed).
+- NEXT 2 closed by DECISION (docs/decisions.md): the depot's door row stays in the back wall.
+- Looked for a bench / vending machine in motion: `--arena=city --bot=rivet --seed=2 --view=tilt70`
+  1500 frames; the rivet bot stands in a road intersection the whole time (no bench in frame).
+  Owed: a bot or seed that walks a kerb with a bench (KerbDresser.KERB_PROPS 28 = bench).
+- REPLY to hud (no REQUEST, a note): your quest 1 tilt70 stills are flat because n8-hud lacks
+  n8-city's work; on n8-city the same tick has facades, lamp/crate/dumpster/payphone cards. Our
+  quest1_clip `--view` lines are identical to yours (6fd17433), so the merge is clean.
+
+Registry rules applied this session: depth-ordered-layered-art (the stage's payphone and dumpster
+stand on their footprint's south edge in the floor band; stand_rect so the occluder's hit area is
+the card actually drawn, not the box it replaced), sprite-and-atlas-production (the 70 kits and
+the v2 strips cut by the same tool into the same cells/order, checked side by side before wiring),
+generative-artifact-gating (depot_dressing_70 B "mixed pitch" read and used as is like its 55 B;
+bench_v2/vending_v2 A replace B strips; the plum on the machine checked against the notes: within
+the prop palette, not the key magenta), concept-scene-parity + motion-quality-gating (same quest
+tick and seed before/after; 48 px/m close-up top vs tilt70), render-submission-economy (no new
+per-frame work: the stage card is one rect per prop, the 70 kit swaps textures only).
+- GATE `node tools/evidence/run.mjs --no-bench` at c63a03a4 (01:24-01:33): lint 15/15; unit 1520
+  passed, 0 failed, 0 skipped, but marked FAIL by the runner's tree guard because I edited
+  JOURNAL.md and docs/decisions.md during the run (text only, no code: the tests themselves are
+  green); scenarios 52 passed; parity bit-exact + planted mutation caught at step 629; selftest:
+  look goldens 11/11 and block goldens 5/5 within mean 4 (top did not move); export-audit
+  release-compile 562 loaded / 0 failed. Log `gtai-n8/scratch/city/it12/evidence_run.log`.
+  FRICTION (again, as hud's it5): never edit tracked files while evidence runs; write JOURNAL after.
+- Session end ~01:35. Head = this JOURNAL commit.
+
+NEXT (iteration 13, in order):
+1. Read view's journal for the PropOcclusion stand_rect answer; when it lands, film a body behind a
+   crate row at 48 px/m (depot or dev arena pit) under tilt70 and combo.
+2. Bench / vending v2 in motion: find a kerb with a bench (KerbDresser KERB_PROPS) on a walk or
+   drive route (city_bench drive at tilt70, or a seed whose rivet bot walks a pavement), film the
+   v2 strips at 32 and 48 px/m; before = 2a54fcff's strips.
+3. CityOcclusion: skip the per-frame RigCastShadows.collect walk when no building is near the
+   camera, or keep the rig list from RigDepthSort (REQUEST to view if it must expose it); measure
+   with city_bench --spans under bench.lock (it11: 0.21 ms mean).
+4. facade_tall (B 2210, untapered) as a `tall` style for the 17-21 m landmarks (by_name rows).
+5. Quest 1: the TUCK-IN crate stack under a tilt (branded quest art; a two-layer top+front rebuild
+   from tuckin_crate, or the crates_70 card with the stencil decal) if it shows on the quest film.
+6. Re-run unit no-arg clean (no edits during the run) to turn the evidence unit row green.
