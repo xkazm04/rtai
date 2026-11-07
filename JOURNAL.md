@@ -1098,3 +1098,6 @@ NEXT (supersedes it13's):
   hi-vis; "what works" adds the see-through corners, chip faces, prompt paper, boss banner; Calls:
   the boss banner vs the bare bar, chip faces vs glyphs). Delete it9-it16 scratch frames after the
   REPORT. Nothing into the worktree during a gate run.
+- 06:30 Session end: all committed (15ecfd9c + this line). Scratch it16 raw stills deleted (masters
+  hold the pairs). The 1080p boss bar left for NEXT (arena.tscn renders 1280x800 under
+  --resolution; the HUD is canvas_items-stretched, so 1080p is the same layout x1.35).
