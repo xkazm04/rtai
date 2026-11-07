@@ -1138,3 +1138,19 @@ integrating), `accessibility` (value contrast of the icon on the cream ticket).
   and the canvas_items stretch untouched, so this is the shipped 1080p layout).
 - 06:47 Director reel at 2a8a045c started (headless, top + tilt70 in parallel, the it7 recipe;
   `gtai-n8/scratch/hud/it19/reel.sh`).
+- GATE director reel on 5108b040 (the project tree = 6dff9553; headless, top + tilt70 in parallel,
+  `--fixed-fps 60 --quit-after 14000 -- --bot=reel --reel=director --loadout=pistol --rigs`): `top`
+  19/19 chapters down, `tilt70` 19/19 down, 0 SCRIPT ERROR both
+  (`evidence/director-reel-n8hud-it19-{top,tilt70}.log`). It covers the boss banner and the chip faces.
+- MILESTONE the combined clip v4: `gtai-masters/n8/hud/hud_set_combined_it19.mp4` (61 s, 1280x800,
+  7 segments, 0 SCRIPT ERROR each; `gtai-n8/scratch/hud/it19/clip4.sh` + `encode.sh`): the armory at
+  70 and 55 (48 px/m), the King and Servo at combo (paper banner + crest, ghost chip faces), quest
+  1's payphone call (Patch's device frame, the prompt on paper), Dock 9 (Gloria on the ticket), the
+  Hot Walk Home (the corners see-through over a patrol). Looked at an 8-frame contact sheet
+  (`it19/clip/contact.png`). frames.json entry 2 (replaces v3; its file stays). Raw .avi and png
+  frames deleted.
+- REPORT.md drafted (it19) from `it6/report_notes.md`: the freeze session updates the gates line,
+  the exe and anything after it19. Flags it names checked to exist (FORM, FACES, SEE_A, PAPER,
+  ON_TICKET, FIT_BOX, --pickup-crate).
+Registry rules applied (2nd half): `motion-quality-gating` (the set judged as one clip across seven
+scenes, not stills), `concept-scene-parity` (the real arena, boss and quest scenes).

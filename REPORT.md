@@ -1,7 +1,7 @@
 # n8 hud lane: REPORT (DRAFT it19, 06:55; final at the freeze)
 
 Lane `hud`, branch `n8-hud`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n8\hud\` (`frames.json`,
-15 entries, best first; the combined clip `hud_set_combined_it12.mp4`, 49 s). Repo evidence under
+15 entries, best first; the combined clip `hud_set_combined_it19.mp4`, 61 s, 7 segments). Repo evidence under
 `evidence/`. Full log: `JOURNAL.md`. Presentation only: no combat number, quest logic or line text
 changed. `top` stays bit-identical (look goldens 11/11 + block 5/5 at every gate run).
 
@@ -49,7 +49,9 @@ Every look has a flag one value away (`PAPER`, `FACES`, `SEE`, `ON_TICKET`, `FIT
 - Last full gate run: 610da507 (it16): lint 15/15, unit 1528/0, scenarios 52/52, parity bit-exact
   + planted mutation, look goldens 11/11 + block 5/5, export-audit 563/0. Full unit 1529/0 at 8ee9483f.
 - it19 (icons only): `--select` test_hud_art + test_weapon_showcase 20/0, lint 15/15.
-- Director reel: last 19/19 in top and tilt70 at a91232c4 (it7); it19 run at 2a8a045c: FILL IN.
+- Director reel at 2a8a045c (it19, headless, `--bot=reel --reel=director --loadout=pistol --rigs`):
+  `top` 19/19 chapters down, `tilt70` 19/19 down, 0 SCRIPT ERROR both
+  (`evidence/director-reel-n8hud-it19-{top,tilt70}.log`).
 - FREEZE: re-run all four gates + the reel on the final head.
 
 ## What does not work / not done
