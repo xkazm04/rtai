@@ -626,3 +626,45 @@ for city: on that merge the boulevard's middle crate row draws RED-ORANGE beside
 - GATE `top` bit-identity: `--arena=city --bot=rivet --seed=2 --rigs --quit-after 301` framemd5 of
   d70c8b06 vs 33e3d596 re-recorded in a throwaway detached worktree this session: IDENTICAL
   (301 video + 301 audio), 0 SCRIPT ERROR each.
+- MILESTONE ac8f9af4 **the `tall` facade style** (brief item 1 / NEXT 4): building_tall (21 m),
+  building_helipad (18 m) and building_hq (17 m) draw six-storey brick bays (fire-escape landings,
+  roller-shutter shop, awning stoop) from the library's facade_tall 55/70 (B 2210, roofs untapered by
+  the library) instead of the three-storey tenement strip stretched 1.5-2x. Cut by
+  `city_facade_cut.py` (new `tall` rows; the tenement and shop cuts reproduce byte-identical), bay_m
+  4.2 as the tenement. 2 provenance lines. test_chunk_lift names the three styles (17/17 with
+  prop cards). DECISION in docs/decisions.md (38128b29) with the print-twin one.
+  EVIDENCE strips only: `gtai-masters/n8/city/it13_facade_tall_strips_p55_left_p70_right.png`
+  (looked: the 70 cut carries the top render band and bay 1's street storey is brick, the B note).
+  NOT yet seen in motion. FRICTION: the city_bench drive (`--scenario=drive --zoom=1.0
+  --view=tilt70`, 60 s, 0 SCRIPT ERROR, occlusion 440 body-frames) runs along the blocks' NORTH
+  side: the HQ/helipad roofs pass at the frame's bottom with their south faces off screen; the main
+  scene's `--ppm=16` does not widen the camera (the rig sets the zoom), and seed 2 spawns Rivet in a
+  bare crossroads. Owed: a framing of a landmark's south face.
+- GATE `node tools/tests/run_unit.mjs --changed` on the tall change: 1504 passed, 1 failed
+  (test_chunk_lift's old "building_tall is the default tenement" assertion, updated in ac8f9af4;
+  then 17/17 on the selected files). Full no-arg run 1521/0 was at d70c8b06 (before the tall rows).
+  Lint 15/15 every commit.
+- Clean-up: the trial worktree removed (`git worktree list` has no trial), the .avi captures deleted.
+- Session end ~02:20. Head = this JOURNAL commit.
+
+Registry rules applied this session: generative-artifact-gating (facade_tall B read: squatter
+storeys, bay 1 brick; used on the landmarks only, where its height fits), depth-ordered-layered-art
+(the redrawn crate card is the same card in the same place, only its print path differs; no new
+band), sprite-and-atlas-production (the twins share the strips' cells exactly; the tall strip cut
+by the same tool and cell width as the others), concept-scene-parity + motion-quality-gating (the
+crate fix judged on the real King fight under combo at 48 px/m, the same seed and ticks before and
+after), tiling-texture-acceptance (the tall bays butt-join: same 256 px cells, edge insets as the
+kit), render-submission-economy (a twin is a texture swap on one draw call; no per-frame work).
+
+NEXT (iteration 14, in order):
+1. Film a landmark's south face with the `tall` style at tilt70 32 + 48 px/m (before = 633d882c):
+   find where building_tall / building_hq / building_helipad sit (a dev probe over the baked chunks'
+   commands by texture name, or the selftest's block goldens framing), then a bot walk or a
+   city_bench drive on the street SOUTH of one.
+2. Bench / vending v2 in motion (it12 NEXT 2, still owed): the same probe can list a kerb bench.
+3. The redrawn cone: if a cone card is ever redrawn (dev arena course), check the twin against the
+   world print's cone (verm on or off by the look profile) and drop its print_art if it should keep
+   its stripes.
+4. CityOcclusion's remaining 0.21 ms (RigCastShadows.collect walk), measured under bench.lock.
+5. Quest 1's TUCK-IN crate stack under a tilt if it shows on the quest film.
+6. Before the freeze: full gates (evidence --no-bench), the exe export, REPORT.
