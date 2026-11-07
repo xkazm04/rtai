@@ -459,3 +459,35 @@ NEXT:
   the opening still superseded by the live call dropped). Raw .avi deleted. NEXT's "combined clip v2"
   is done; the King's crest stays in the it5 clip.
 - 00:49 Session end. All committed.
+
+## Iteration 7 (BUILD, 00:47-01:47)
+
+- 00:48 Read JOURNAL, git log, the other lanes' journals (no REQUEST to hud; view notes my SIDE_X
+  166 fix reaches its path at the merge). The work order is evidenced; the weakest item is
+  "film one boss taunt" (not filmed: no boss line system, `grep -ri taunt` empty; the King's voice
+  bible `pof/games/gtai/voices/king.md` has only ILLUSTRATIVE lines, not owner-signed). HudView
+  lives only in quest 1; the boss arena has the boss bar alone.
+- DECISION: film the taunt as a dev-only layout shot, not a shipped feature: `dev/showcase/
+  boss_taunt.gd` runs the live arena (`dev/arena/arena.tscn`, the game's own args) and lays
+  HudDialogue with the boss's PortraitBook face (the bust the boss bar's crest uses) over the fight;
+  words from `dev/showcase/boss_taunt_lines.json` (the voice bible's illustrative lines 1 and 3,
+  labelled as such; dev/ is dropped from release). Settings via env (GTAI_TAUNT_AT/_HOLD) so the
+  arena's LaunchArgs see only its flags. Line text and a boss line system stay out of this lane.
+- FRICTION: first take ran `boot/main.tscn`, which ignores `--boss` (boss fights run via the arena
+  scene); killed my own run (PID 5764 tree) and re-pointed at the arena.
+- 00:58 FINDING (by looking at the live take): in the King fight at combo (1280x800) the quest
+  dialogue box with the bust covers the lower third of the field AND the arena's ghost-form card
+  (unfolded there: only quest 1's StoryForms folds it). A taunt in a fight should be a bark, not
+  a conversation (`short-form-cards-and-barks`).
+- 01:00 MILESTONE 8fd8aa0b `BossTaunt` (features/bosses): the taunt as a short paper strip under
+  the boss bar, its tail at the crest (the face is already there), ink on cream, 2 lines max
+  (22/20/18 fit), top quarter, fade 0.18/0.22 s, never waits on play; FORM = &"strip" (the box one
+  value away). Unit test_boss_taunt 4/0 (+ test_hud_dialogue: 11/0). b129ae24 the dev shot
+  (`GTAI_TAUNT_FORM=strip|box`), debt +118 dev lines accepted with the reason. Lint 15/15.
+- DECISION (docs/decisions.md hud/boss taunt): strip under the bar is the default; the box is the
+  owner's call.
+- 01:01 Evidence: `gtai-masters/n8/hud/call_boss_taunt_box_vs_strip_combo_1280x800.png` and
+  `boss_taunt_box_vs_strip_king_combo.mp4` (12 s, side by side, seed 2, 0 SCRIPT ERROR both).
+  Looked at 4.5 s / 7.5 s / 8.5 s: at 7.5 s the King's attack wedge reaches Rivet, the strip
+  covers nothing of it. frames.json 15 (dropped the it5 clip, superseded by it6 + this clip for
+  the King's crest, and the crate-ink still; both files deleted).
