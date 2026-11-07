@@ -8,7 +8,8 @@
         "2026-11-06: n8-view: the order probe logs the first wrong car pair's tick (to film it) (dev_loc 18150 -> 18151)",
         "2026-11-06: dev order probe logs each wrong ghost pair's tick (+1 dev line) (dev_loc 18151 -> 18152)",
         "2026-11-06: n8-view it7: quest1_clip --view flag (+2 dev lines) for quest 1 stills under tilt70 (dev_loc 18152 -> 18154)",
-        "2026-11-07: lead_showcase takes --view and --speed to film the camera lead (combo vs combo_lead) with the real CameraRig (dev_loc 17762 -> 17769)"
+        "2026-11-07: lead_showcase takes --view and --speed to film the camera lead (combo vs combo_lead) with the real CameraRig (dev_loc 17762 -> 17769)",
+        "2026-11-07: n8 merge: view + street growth combined (each accepted on its lane; cast_view.gd conflict resolved by keeping both) (dev_loc 17769 -> 17942)"
       ],
       "files": {
         "project/dev/arena": 642,
@@ -32,15 +33,16 @@
         "project/dev/save_crash_writer.gd": 18,
         "project/dev/selftest": 1453,
         "project/dev/servo": 434,
-        "project/dev/showcase": 5452,
+        "project/dev/showcase": 5625,
         "project/dev/view": 195,
         "project/dev/weapon_art": 506
       },
-      "total": 17769
+      "total": 17942
     },
     "direct_cmdline_reads": {
       "accepted": [
-        "2026-11-06: n8-view it7: ArenaRigs + ArenaRobotRigs moved dev/arena -> features/arena (quest 1 ships the rig cast under a card view; decision 2026-11-04 re-check); quest1_game +3 lines (direct_cmdline_reads 153 -> 153)"
+        "2026-11-06: n8-view it7: ArenaRigs + ArenaRobotRigs moved dev/arena -> features/arena (quest 1 ships the rig cast under a card view; decision 2026-11-04 re-check); quest1_game +3 lines (direct_cmdline_reads 153 -> 153)",
+        "2026-11-07: n8 merge: view + street growth combined (each accepted on its lane; cast_view.gd conflict resolved by keeping both) (direct_cmdline_reads 153 -> 154)"
       ],
       "files": {
         "project/core/render/view_mode.gd": 1,
@@ -123,6 +125,7 @@
         "project/dev/showcase/riso_cost.gd": 1,
         "project/dev/showcase/rivet_sprite.gd": 1,
         "project/dev/showcase/save_notice_frame.gd": 1,
+        "project/dev/showcase/street_crowd.gd": 1,
         "project/dev/showcase/vehicle_frame.gd": 1,
         "project/dev/weapon_art/electro_cells.gd": 1,
         "project/dev/weapon_art/swat_lineup.gd": 1,
@@ -180,7 +183,7 @@
         "project/tests/run_scenarios.gd": 1,
         "project/tests/unit/test_launch_args.gd": 1
       },
-      "total": 153
+      "total": 154
     },
     "files_near_cap": {
       "accepted": [
@@ -212,11 +215,12 @@
         "2026-11-06: collect_call_view +1 line: the death beat's ink veil (owner d8); collect_call_stage shrank 266->262 in the same change (files_past_soft_cap 68 -> 68)",
         "2026-11-06: n8-view it7: ArenaRigs + ArenaRobotRigs moved dev/arena -> features/arena (quest 1 ships the rig cast under a card view; decision 2026-11-04 re-check); quest1_game +3 lines (files_past_soft_cap 68 -> 68)",
         "2026-11-07: cast_view.gd +4: quest 1's rig cast leaves the contractors to the cast view (QuestGuardCast), _rivet steps out for the rigs (files_past_soft_cap 67 -> 67)",
-        "2026-11-07: quest1_game.gd +2: the one call that attaches ViewPitchQuest (quest 1 under combo eases at Mertz); the logic lives in features/view_pitch (files_past_soft_cap 67 -> 67)"
+        "2026-11-07: quest1_game.gd +2: the one call that attaches ViewPitchQuest (quest 1 under combo eases at Mertz); the logic lives in features/view_pitch (files_past_soft_cap 67 -> 67)",
+        "2026-11-07: n8 merge: view + street growth combined (each accepted on its lane; cast_view.gd conflict resolved by keeping both) (files_past_soft_cap 67 -> 67)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 262,
-        "project/boot/collect_call/view/cast_view.gd": 229,
+        "project/boot/collect_call/view/cast_view.gd": 231,
         "project/boot/collect_call/view/collect_call_view.gd": 237,
         "project/boot/collect_call/view/fx_view.gd": 271,
         "project/boot/collect_call/view/stage_view.gd": 201,
@@ -247,7 +251,7 @@
         "project/features/bosses/servo/servo_moves.gd": 223,
         "project/features/bosses/servo/servo_rig.gd": 287,
         "project/features/bosses/servo/servo_swarm.gd": 208,
-        "project/features/characters/cut_rig.gd": 264,
+        "project/features/characters/cut_rig.gd": 265,
         "project/features/city/gen/tile_painter.gd": 243,
         "project/features/city/sim/sim_people.gd": 208,
         "project/features/city/view/city_view.gd": 259,
