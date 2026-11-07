@@ -5,38 +5,25 @@ extends RefCounted
 ## instead of a head card over top-down parts. The parts are hidden, not freed. WALKS grids (5
 ## facings x 4 stride frames, street_walk.py) step by rig.phase; a row without one bobs and sways.
 ## A flinch keeps the figure; a death holds it DEATH_HOLD of the family, then the parts take the
-## fall and the corpse (falls()). p55 (n8 it6): the 55 top rows, still with the bob (no 55 walk
-## grids). No strip for the view (top) = nothing here runs.
+## fall and the corpse (falls()), unless the row has a drawn fall (StreetWalkerFall.FALLS: the
+## figure falls and lies as drawn). p55: the 55 top rows with the bob. No strip (top): nothing runs.
 ## ENABLED false = the head cards (before).
 const ENABLED: bool = true
 const DIR: String = "res://features/characters/art/view/"
 ## view art -> card row (the head the person draws, StreetCrowdCards included) -> strip file.
-const STRIPS: Dictionary[String, Dictionary] = {
-	"p70":
-	{
-		"ped/head_hair": "ped_suit_full.png",
-		"ped/head_bald": "ped_elder_full.png",
-		"ped/head_hat": "ped_hat_full.png",
-		"ped/head_hood": "ped_hood_full.png",
-		"ped/head_cap": "ped_cap_full.png",
-		"ped/head_punk": "ped_punk_full.png",
-		"ped/head_shopper": "ped_shopper_full.png",
-		"ped/head_jogger": "ped_jogger_full.png",
-		"ped/head_worker": "ped_worker_full.png",
-	},
-	"p55":
-	{
-		"ped/head_hair": "ped_suit_full.png",
-		"ped/head_bald": "ped_elder_full.png",
-		"ped/head_hat": "ped_hat_full.png",
-		"ped/head_hood": "ped_hood_full.png",
-		"ped/head_cap": "ped_cap_full.png",
-		"ped/head_punk": "ped_punk_full.png",
-		"ped/head_shopper": "ped_shopper_full.png",
-		"ped/head_jogger": "ped_jogger_full.png",
-		"ped/head_worker": "ped_worker_full.png",
-	},
+const ROWS: Dictionary[String, String] = {
+	"ped/head_hair": "ped_suit_full.png",
+	"ped/head_bald": "ped_elder_full.png",
+	"ped/head_hat": "ped_hat_full.png",
+	"ped/head_hood": "ped_hood_full.png",
+	"ped/head_cap": "ped_cap_full.png",
+	"ped/head_punk": "ped_punk_full.png",
+	"ped/head_shopper": "ped_shopper_full.png",
+	"ped/head_jogger": "ped_jogger_full.png",
+	"ped/head_worker": "ped_worker_full.png",
 }
+## (p55: the same names, cut from the 55 sheets.)
+const STRIPS: Dictionary[String, Dictionary] = {"p70": ROWS, "p55": ROWS}
 ## view art -> card row -> stride grid (5 facings across, 4 frames down: contact, pass, contact,
 ## pass). A row here draws its frames instead of STRIPS' still figure; FRAMES_ON false = the bob.
 const FRAMES_ON: bool = true
@@ -98,7 +85,7 @@ static func step(rig: CutRig) -> void:
 		release(rig)
 		return
 	var card: Sprite2D = rig.head_card
-	if not card.has_meta(ON):
+	if str(card.get_meta(ON, "")) != path:
 		_build(rig, card, path)
 	for c: CanvasItem in rig.body.get_meta(HID):
 		c.visible = false
@@ -109,10 +96,13 @@ static func step(rig: CutRig) -> void:
 static func strip_of(rig: CutRig) -> String:
 	if not ENABLED or rig.head_card == null or rig.plan.art_dir != "ped":
 		return ""
-	if falls(rig):
-		return ""
 	var art: String = ViewMode.shared().art
 	var key: String = row_of(rig)
+	var grid: String = StreetWalkerFall.grid_of(rig, art, key)
+	if not grid.is_empty():
+		return DIR + art + "/" + grid
+	if falls(rig):
+		return ""
 	var walks: Dictionary = WALKS.get(art, {}) if FRAMES_ON else {}
 	if walks.has(key):
 		return DIR + art + "/" + walks[key]
@@ -161,13 +151,16 @@ static func _build(rig: CutRig, card: Sprite2D, path: String) -> void:
 	if not _tex.has(path):
 		_tex[path] = load(path) as Texture2D
 	card.texture = _tex[path]
-	card.vframes = STRIDE_FRAMES if path.ends_with("_walk.png") else 1
+	var fall: bool = path.ends_with("_fall.png")
+	var walk: bool = path.ends_with("_walk.png")
+	card.vframes = StreetWalkerFall.FALL_FRAMES if fall else (STRIDE_FRAMES if walk else 1)
 	var cell: Vector2 = Vector2(
 		card.texture.get_width() / float(RigHeadCard.FRAMES),
 		card.texture.get_height() / float(card.vframes)
 	)
-	card.offset = Vector2(-cell.x * 0.5, -cell.y * FOOT_Y)
-	card.set_meta(ON, true)
+	card.offset = Vector2(-cell.x * 0.5, -cell.y * (0.5 if fall else FOOT_Y))
+	card.set_meta(ON, path)
+	card.remove_meta(StreetWalkerFall.OCT)
 	if rig.body.has_meta(HID):
 		return
 	var hid: Array[CanvasItem] = []
@@ -182,9 +175,12 @@ static func _build(rig: CutRig, card: Sprite2D, path: String) -> void:
 
 static func _place(rig: CutRig, card: Sprite2D) -> void:
 	var k: float = 1.0 + StreetCrowdCards.SCALE_VAR * StreetCrowdCards.vary(rig.actor_id, 3)
+	var h: float = HEIGHT_BY_ART.get(ViewMode.shared().art, HEIGHT_M)
+	if card.vframes == StreetWalkerFall.FALL_FRAMES:
+		StreetWalkerFall.draw(rig, card, h * CharacterRigs.PX_PER_M * k / StreetWalkerFall.STILL_PX)
+		return
 	if card.vframes > 1:
 		k *= WALK_FILL.get(card.texture.resource_path.get_file(), 1.0)
-	var h: float = HEIGHT_BY_ART.get(ViewMode.shared().art, HEIGHT_M)
 	var s: float = h * CharacterRigs.PX_PER_M * k * card.vframes / card.texture.get_height()
 	var walk: float = clampf(rig.speed_now / WALK_SPEED, 0.0, 1.0)
 	if card.vframes > 1:

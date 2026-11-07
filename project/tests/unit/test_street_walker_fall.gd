@@ -42,3 +42,21 @@ func test_a_body_falling_north_shortens_without_a_lean() -> void:
 	var p: Vector2 = StreetWalkerFall.pose(rig, _card)
 	assert_almost_eq(p.x, 0.0, 0.001, "no screen-x tip")
 	assert_almost_eq(p.y, StreetWalkerFall.MIN_LEN, 0.001, "foreshortened to the floor")
+
+
+func test_the_fall_frames_run_buckle_mid_fall_lying() -> void:
+	assert_eq(StreetWalkerFall.fall_frame(0.0), 0, "buckles at the blow")
+	assert_eq(StreetWalkerFall.fall_frame(StreetWalkerFall.FALL_AT[1]), 1, "mid-fall")
+	assert_eq(
+		StreetWalkerFall.fall_frame(1.0), StreetWalkerFall.FALL_FRAMES - 1, "lies as a corpse"
+	)
+
+
+func test_only_the_dying_and_the_dead_draw_a_fall_grid() -> void:
+	var rig: CutRig = autofree(CutRig.new())
+	var row: String = "ped/head_hood"
+	assert_eq(StreetWalkerFall.grid_of(rig, "p70", row), "", "alive: the walk")
+	rig.dead = true
+	assert_eq(StreetWalkerFall.grid_of(rig, "p70", row), "ped_hood_fall.png", "dead: the grid")
+	assert_eq(StreetWalkerFall.grid_of(rig, "p55", row), "", "no 55 fall grids")
+	assert_eq(StreetWalkerFall.grid_of(rig, "p70", "ped/head_punk"), "", "a row with no grid")
