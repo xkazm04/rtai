@@ -54,4 +54,8 @@ func test_frame_cap_drives_the_engine_and_device_restores_it() -> void:
 	s.apply_frame_cap()
 	var row: int = DeviceProfile.shared().max_fps
 	assert_eq(Engine.max_fps, row if row >= 0 else 77, "device: the row's cap, none on desktop")
+	s.frame_cap = 40
+	s.apply()
+	assert_eq(Engine.max_fps, 40, "apply() carries the cap with the other settings")
+	PlayerActions.shipped().install()
 	Engine.max_fps = before

@@ -282,3 +282,27 @@ NEXT (iteration 8):
   generative-artifact-gating / motion-quality-gating (a lossy lever's look judged at the same tick and framing, 2x crop);
   adaptive-fidelity-tiers (BC7 as a build-tier lever, not a runtime branch); fire-tv-device-realities (the OS memory
   counter on a UMA adapter did not see texture size: measure inside the engine as well).
+- MILESTONE 13:43 evidence gate on 71c4a111 (`--no-bench --no-release`): lint 15/15, unit 1713/0, scenarios 53/53, parity
+  bit-exact over 1200 steps (planted mutation caught at 629), look goldens 11/11: **top bit-identical** with the it10 code
+  (`evidence/it10/evidence-run-71c4a111.log`). Release-compile still skipped (seams' temp-dir clash).
+- 13:37 mutation on player_settings.gd (`evidence/it10/mutate-player-settings.log`): 70 % (7/10). Survivors: line 74
+  (mine: apply() -> apply_frame_cap deleted), 38 and 87 (pre-existing). 13:46 a test for 74 added (apply() carries the
+  cap); planted by hand (the call -> pass): FAIL "[77] expected to equal [40]"; restored, 4/4 green.
+- Session end 13:47: every change committed; no Godot of mine running; bench lock released (13:27).
+
+NEXT (iteration 11):
+1. The it10 gate is green on 71c4a111 (above); the last commit only adds a test: re-run the full gate once more
+   on the HEAD with the reels (item 2).
+2. The reels on the it10 code (top / tilt70 / combo / combo + deck, `--quit-after 14000`): PlayerSettings.apply() now
+   applies a frame cap (a no-op on desktop: frame_cap 0 and the desktop row's max_fps -1), FightFrames logs two more
+   keys (dev). Expect 19/19, 0 SCRIPT ERROR.
+3. The frame cap in the pause card seen on screen: quest 1 under `--device=deck`, open the pause card (Start on the pad),
+   cycle the cap, a still; then read Engine.max_fps in the log.
+4. BC7 on the Switch-class row (E10 on `switch_handheld`, the reel and the city, 2 rounds) and on the Linux build in
+   WSLg (memory there); the scratch arm stays at `gtai-d9x/scratch/hh-bc7` (detached worktree, BC7 imports, 8a37f4a9
+   code + the 4513c5ff FightFrames copy): re-sync its code with `git -C <it> checkout --detach <sha>` then re-run
+   `node tools/handheld/bc7_arm.mjs <it>/project` and `--import` if the code under test moves.
+5. Mutation: line 74 now caught (it10); re-run mutate.mjs on player_settings.gd for the score with the new test;
+   lines 38 and 87 are pre-existing (reduced_motion's fallback, rebind's or).
+6. Carried: the draw_scale HUD side effect (if Call 5 b/c), NAT-06 parity on the Linux `.so` in WSL, the King fight's
+   rumble count, end-of-day: the HKCU DirectX UserGpuPreferences value and the _hh.exe copy, the freeze exe.
