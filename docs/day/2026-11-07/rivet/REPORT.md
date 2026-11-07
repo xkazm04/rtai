@@ -58,9 +58,11 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
 - **The flamer's drawn flame follows the aim** (`90c46dfc`, it16): the it13 "red jet" was a drawn flame pointing
   left (the head's octant) beside the game's jet at ~124 deg (the aim); the drawn flame now needs the aim within
   22.5 deg. Before/after: `gtai-masters\d9\rivet\rivet_flamer_drawn_flame_needs_aim_before_after_gunplay_tilt70_64ppm_seed3_t359_380.png`.
-- **The frame cost** (`f599a528`, CONTENDED: another lane held the bench lock): rig_bench `--view=tilt70`, the drawn
-  figure vs the head card over parts: 50 people p50 0.866 -> 0.78 ms, 200 people 1.276 -> 1.09-1.15 ms. No added
-  cost (`evidence/d9/rivet-frame-cost-it10.md`).
+- **The frame cost** (it16, under the bench lock; 3 before / 3 after interleaved): rig_bench `--view=tilt70`, the
+  drawn figure vs the head card over parts, median p50: 50 people 0.943 -> 0.776 ms, 200 people 1.319 -> 1.179 ms.
+  No added cost (`evidence/d9/rivet-frame-cost-it16.md`; it10's contended runs agreed).
+- **Gates (it16):** director reel 19/19 in `tilt70`, `combo`, `top`, 0 SCRIPT ERROR on 90c46dfc; unit 1705/0
+  (`evidence/d9/gates-it16.md`).
 - **Gates (it10):** director reel 19/19 in `tilt70`, `combo`, `top`, 0 SCRIPT ERROR on 61fbbdf8; evidence run on
   dfb7a4de: lint, scenarios 52, parity, look goldens 11/11 + block 5/5 (top did not move), release-compile 600/0
   PASS; unit 1700/0 (the stage flagged "tree changed during run": a tool file written mid-run) (`evidence/d9/gates-it10.md`).
