@@ -6,7 +6,9 @@ extends RefCounted
 ## lane's king_legs, 5 facings x [standing + a 4-frame walk], ink outline only), a legs card stands
 ## under the bust instead: the bust's facing column and flip, a walk row by the rig's gait phase,
 ## the bust card's scale, its soles on the rig's ground point; the leg parts hide. No sheet for the
-## pitch (70 until king_legs v2; `top` never has a card): the parts draw as before. Render only.
+## pitch (`top` never has a card): the parts draw as before. Render only. it3: 70 from
+## king_legs_70_v3 (A: no hip ring, the thigh tops start under the hem), 55 from king_legs_55_v2
+## (A: the profile strides).
 
 const DIR: String = "res://features/bosses/king/art/p%d/king_legs.png"
 const NAME: StringName = &"legs_card"
@@ -17,8 +19,10 @@ const SOLE_Y: float = 0.94
 ## Walk frames per gait phase unit (RigGait: one unit = one stride cycle).
 const FRAMES_PER_CYCLE: float = 4.0
 ## How far the bust rises onto the legs, as a share of the legs' cell height (the bust card reaches
-## the ground: with 0 the legs stand hidden behind it). The owner's call (REPORT call 1).
-const LIFT: float = 0.5
+## the ground: with 0 the legs stand hidden behind it), per art pitch. The owner's call (REPORT
+## call 1).
+## 70's legs are drawn foreshortened (cells 246 x 76): the hem overlaps their top ~20 %.
+const LIFT: Dictionary[int, float] = {55: 0.5, 70: 0.74}
 ## false: the leg parts as before (it1's default, while the arms stayed at the old height).
 const ON: bool = true
 
@@ -31,7 +35,8 @@ static func step(rig: CutRig) -> void:
 	if card == null:
 		return
 	var legs: Sprite2D = card.get_parent().get_node_or_null(NodePath(NAME)) as Sprite2D
-	var tex: Texture2D = sheet(roundi(ViewMode.shared().art_pitch())) if ON else null
+	var pitch: int = roundi(ViewMode.shared().art_pitch())
+	var tex: Texture2D = sheet(pitch) if ON else null
 	if tex == null:
 		if legs != null and legs.visible:
 			legs.visible = false
@@ -49,7 +54,8 @@ static func step(rig: CutRig) -> void:
 	legs.flip_h = card.flip_h
 	legs.global_rotation = 0.0
 	legs.global_scale = card.global_scale
-	var lift: float = legs.texture.get_height() / float(ROWS) * LIFT * legs.global_scale.y
+	var cell_h: float = legs.texture.get_height() / float(ROWS)
+	var lift: float = cell_h * LIFT.get(pitch, 0.5) * legs.global_scale.y
 	# The whole upper body rises (the torso carries the head, its card, this legs card and the arm
 	# parts; RigTilt sets torso.position fresh each step, so this never accumulates), then the
 	# legs are pinned back to the ground point.
