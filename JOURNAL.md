@@ -225,3 +225,39 @@ NEXT (it6 early, superseded below the continued entry):
   tongues go down-left from the wand: two flames for one stream when the aim sits between octants. Candidate:
   for streams, the facing cell (no drawn flame) + the game jet, which needs a facing muzzle point. Open.
 - Seen (machine_pistol reload, frames 324-396): the bare base figure, no weapon, through the whole reload.
+- Gates on f7334278 (`evidence/d9/gates-it7.md`): unit 1698/0 (full); director reel `--quit-after 20000` 19/19
+  chapters fully down in tilt70, combo, top; 0 SCRIPT ERROR. Commit 876042e4.
+- Reload check: re-filmed machine_pistol frames 318-402 (tilt70, 64 px/m) and `top` with the same seed: frames
+  330-396 are the reload, and they ARE the equipped strip (its back views carry the small gun barely visible at his
+  right claw). The it6 "bare base figure" note was wrong; no reload path drops gun_out for Rivet in the arena
+  (ArenaRigs keeps GUN_OUT while armed). A tried `weapon_of` change (reload_k keeps the strip) fixed nothing
+  measured and would hide the HIT cell on a reload-hit: reverted, not committed.
+- MILESTONE `126b6a8c` muzzle round 5: the visor test now needs a flat blob (p55's chest-high flashes sat inside
+  the helmet span above 58% and were dropped); fire cells with no hot flash (p70 gatling at camera: a whirl)
+  take the arm band's tip (side) / centre at 0.7 (camera). 84 points; all 48 gun fire cells judged on a contact
+  sheet (`gtai-masters/d9/rivet/rivet_muzzle_points_fire_cells_p55_p70_contact.png`).
+- Seen p55 (Servo, combo, 48 px/m, gatling, frames 340-402): the game flash and the tracer leave from the drawn
+  barrels in the side, mirrored side and at-camera cells (`rivet_muzzle_servo_gatling_combo_p55_48ppm_seed2_f340_402_x1.7.png`).
+- frames.json: 15 entries (3 muzzle entries added; the p55 strip contact dropped from the list, file kept: REPORT cites it).
+- REPORT: muzzle item, gates it7, What does not updated (flamer double flame; facing cells have no muzzle point;
+  reload note corrected).
+- FRICTION (~0): `node tools/godot/check.mjs` fails "depended scripts" on rivet_frames.gd AND on the untouched
+  rivet_held_view.gd (the check-only path vs human_react's dependencies); unit runs and films are the real check.
+- Registry rules applied: realtime-combat-semantics (the sim's shot origin untouched: view-only HeldMuzzle; the hit
+  read, the tracer, now leaves from the drawn barrel); generative-artifact-gating (the measure judged on contact
+  sheets each round, 5 rounds; the drawn sheets' own flashes are the source of truth for the muzzle);
+  motion-quality-gating (judged in motion on the arena at 64 px/m and in the Servo fight at 48, frame by frame);
+  sprite-and-atlas-production (the point data reproducible from the strips: `rivet_muzzle.py --check`).
+- DECISION rivet/muzzle: the drawn fire cells' own flash roots are the muzzle (measured, a data table), not a hand-
+  placed point per weapon or the hidden claw's: it follows the drawing at both pitches and re-measures in one
+  command when a sheet is swapped. Rejected: the hidden held part's tip (off the drawing), per-weapon offsets by hand.
+
+NEXT (supersedes every NEXT above):
+1. The flamer between octants (two flames): for streams (flame, gatling?) keep the facing cell + the game jet, or
+   pick the fire cell only within ~22 deg of side/camera. Needs a facing-cell muzzle: extend rivet_muzzle.py to cells
+   0-4 (the barrel tip along the facing) and judge on a contact sheet.
+2. The grey blob in the Servo fight (it6 note, t270/t450-510): identify it in top vs combo; REQUEST to seams if theirs.
+3. Ghost form swap back; death beat in the sprawl cell; roll spin; hit flash; occlusion silhouette; King engage
+   re-film with the 55 left views.
+4. Every weapon at each pitch (`--loadout=<id>`), the frame cost under the bench lock, a combined 30-90 s clip.
+5. Rivet's dialogue face (a bust from rivet_70_v3 frame 0 or a REQUEST to assets), the armory showing him holding each.

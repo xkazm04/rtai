@@ -13,7 +13,6 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
 - **Drawn left views for the one-handed holds at 70** (`1e00b083`, it6): the asset lane answered the REQUEST
   (`rivet_eq_<id>_70_left`, 6 A / 2 B); each is its own 3-cell strip `rivet_eq_<id>_left.png`, picked for the
   three left octants, weapon in his right claw, never mirrored. Still: `gtai-masters\d9\rivet\rivet_pistol_left_drawn_tilt70_64ppm_x3_t75_125_425_450.png`.
-  p55 still falls back (base left + held part, logged once per weapon) until the 55 left views land.
 - **Plasma sword redraw** (`b2614b45`, it6): equipped 70_v2 (A) and 55_v3 (B), both hands on the hilt, blade
   about 2x. Still: `gtai-masters\d9\rivet\rivet_plasma_sword_redraw_tilt70_64ppm_x3_t204_264_300.png`.
 - **Blade action rows sized** (it6): katana, plasma sword, chainsaw at both pitches (manifest `act_k`), the p55
@@ -24,16 +23,31 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
   `gtai-masters\d9\rivet\rivet_left_views_p55_and_p70_v2_contact.jpg`.
 - **Combo swap filmed at Servo's engage** (p55 at tick 32): `gtai-masters\d9\rivet\rivet_combo_swap_servo_engage_48ppm_x2_t26_30_32_40.png`.
 - **No floating reload magazine** under the drawn figure (it6 fix): before/after in frames.json entries 5-6.
+- **The muzzle from the drawn figure** (`f7334278`, `126b6a8c`, it7): with the held part hidden nothing
+  published the muzzle, so the flash printed on the ground ~1.3 m off his gun and the tracer left from there.
+  `tools/art/rivet_muzzle.py` measures each fire cell's drawn flash root (or the barrel's tip/centre where the
+  sheet drew no hot flash) and each left strip's gun tip into `data/tables/rivet_muzzle.json` (84 points, both
+  pitches); `RivetMuzzle` publishes the shown cell's point (mirrored with it) as HeldMuzzle. View only: the
+  sim's shot origin does not move. Before/after: `gtai-masters\d9\rivet\rivet_muzzle_before_after_pistol_left_tilt70_64ppm_seed3_f290_297.png`;
+  p55 gatling in the Servo fight: `gtai-masters\d9\rivet\rivet_muzzle_servo_gatling_combo_p55_48ppm_seed2_f340_402_x1.7.png`;
+  the measured points: `gtai-masters\d9\rivet\rivet_muzzle_points_fire_cells_p55_p70_contact.png`.
+- **Gates (it7):** `node tools/evidence/run.mjs --no-bench` green on feb56ca2 (lint 15/15, unit 1695/0, scenarios 52
+  incl. the replay, parity exact + planted caught, look goldens 11/11 + block 5/5, release-compile 599/0; run with a
+  lane-private TEMP); on f7334278 unit 1698/0 and the director reel 19/19 in `tilt70`, `combo`, `top`, 0 SCRIPT ERROR
+  (`evidence/d9/gates-it7.md`).
 - **Gates (it6):** unit 1695 / 0; director reel 19/19 in `tilt70`, `combo`, `top`, 0 SCRIPT ERROR (`evidence/d9/gates-it6.md`).
 - **Gates (it3):** unit 1691 passed / 0 failed; director reel 19/19 chapters down in `tilt70`, `combo`, `top`,
   0 SCRIPT ERROR (`evidence/d9/reel-director-it3-*.log`).
 
 ## What does not (yet)
 - The cast shadow is the shared rig-height shadow (long for a 1.1 m robot).
-- The shot origin and muzzle flash still come from the hidden claw (realtime-combat-semantics: the origin
-  must not move; the flash should sit on the drawn muzzle).
+- The flamer firing between octants: the drawn side cell's flame points sideways while the game's jet follows
+  the true aim (e.g. down-left), so two flames show for one stream. Candidate: streams keep the facing cell (no
+  drawn flame) + the game jet from a measured facing muzzle.
+- A facing cell (no fire drawn) has no measured muzzle: a flash outside the fire cell's 7 ticks keeps the old spot.
 - Walk: one drawn walk and one sprint pose per sheet; built bob + sway on the facing.
-- While reloading he shows the bare base figure (no drawn reload frame; the equipped at-rest cell is the plan).
+- Reload: no drawn reload frame; he keeps the equipped strip through it (it7 check: the "bare figure" seen in it6
+  was the equipped back views, which show the small guns barely; no change made).
 
 ## Calls for the owner
 1. **Rivet's size.** Built 1.1 m standing (~35 px at 32 px/m, the asset lane's mock), p55 1.3 m.
@@ -41,9 +55,8 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
 2. **The walk.** The sheets carry one walk and one sprint drawing. Built: the facing with a bob and sway
    (the street walkers' no-grid path, no pops). Options: alternate facing / walk drawing (a 2-frame step),
    or a REQUEST to assets for a 4-frame stride grid per facing (street's `ped_*_walk` shape).
-3. **Left facings with a one-handed weapon.** Built (it6): the asset lane's drawn left views at 70 (weapon in
-   his right claw); at 55 the base drawn-left figure + the old held part until the 55 left views land;
-   two-handed holds mirror. Option: mirror everything (swaps the gun hand: against the hand rule).
+3. **Left facings with a one-handed weapon.** Built (it6): the asset lane's drawn left views at 70 and 55 (weapon
+   in his right claw); two-handed holds mirror. Option: mirror everything (swaps the gun hand: against the hand rule).
 
 ## Next steps
 See JOURNAL `NEXT:`.
