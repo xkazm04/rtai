@@ -968,3 +968,31 @@ have not answered the it11 trial findings yet; street's it9 notes my answer and 
   b097c7a5 (detached), then city 7b63bcb1, street cfc90d46, vehicles 1b6740ac, hud 69c3b200 by
   `trial_merge.sh` (conflicts: view's side, as it11). Lint 15/15 over 1185 files with NO hand fix:
   the it11 BossView.attach gd-size clash is gone on the lanes' heads. Unit + reel top/combo running.
+- GATE 04:21 the trial merge tree (n8-view b097c7a5 + city/street/vehicles/hud heads above):
+  unit full 1639 passed / 0 failed (`evidence/n8-view/unit-it12-trialmerge.log`); director reel
+  top 19/19 and combo 19/19 chapters all down, 0 SCRIPT ERROR each
+  (`director-reel-it12-trialmerge-{top,combo}.log`). The it11 BossView.attach clash is gone (city
+  or hud shrank it): REPORT merge notes updated. The trial tree stays for the freeze check.
+- MILESTONE 04:22 Dent p70 (2685766e): the asset lane served `dent_v2` 70 A (round 20261107-0400,
+  drawn tan by copy-by-example, superseding the 2150 B whose tone we fixed in post). Same layout as
+  v1, so the same belt crop (y 298) + ghost_bust.py; no tone step. Cards side by side (p55 | old p70
+  | new p70: `dent70_v2_cards_p55_p70old_p70v2.png`): the new one is the p55 tan, the old printed
+  grey-dark. FILMED Servo depot `--servo-ghost=dent --view=tilt70 --seed=2` at 32 and 64 px/m, 240
+  frames, 0 SCRIPT ERROR before/after: `dent70_v2_before_after_tilt70_64ppm_f160_f200_x2.png`,
+  `_32ppm_f200.png`. LOOKED: warmer dome and shoulders, discs and wisps unchanged; subtle at 32.
+  Provenance line (round + prompt_hash), decision line. frames.json: Dent v2 replaces the old Dent
+  pair, the corpse clip in at #8, king_bust_abc_32 out (still in the folder, named in REPORT).
+- Registry rules applied it12: motion-quality-gating (the corpse fix judged in motion over the
+  death and 120 frames after it; the first cut's side effect, a vanished living cop, seen in the
+  film, not in the unit test, and fixed before commit), generative-artifact-gating (dent_v2 graded
+  A in the catalog, looked at against p55 and the old cut before integrating; provenance with
+  round + prompt_hash), concept-scene-parity (the corpse fix filmed on the merged tree, where
+  street's cards are), depth-ordered-layered-art (the pinned corpse keeps the depth sort's rig
+  path, no new layer), perf-regression-gating (pins bounded at 4, pools prewarmed: pool().grown 0).
+NEXT (iteration 13, in order):
+1. Answers: city / hud on the it11 trial findings if they reply (Gloria size, fold_rigs); street on
+   the corpse hold (CORPSE_HOLD_TICKS, one value).
+2. Library check for new 70 sheets in view's cast (Kerf, King, King's car, gang, Servo parts):
+   the asset lane is serving view's REQUESTs (dent_v2 came at 04:00).
+3. The freeze (08:30): delete the trial tree (`git worktree remove` on %TEMP%/view-trial-it11),
+   director reel top + combo on n8-view, evidence run --no-bench, the exe, REPORT final.

@@ -39,7 +39,12 @@ under `evidence/n8-view/`. Full log: `JOURNAL.md`.
 7. **Draw order**: Tonnage's legs in the depth sort (order probe 0/9 wrong at 70); the King's accents in
    the order probe; the King on foot behind his wreck (car pairs 10/10 wrong -> 0/10); PropOcclusion
    (a rig behind a prop shows through it).
-8. **Frame cost combo vs top**: see the table below (release export: the city drive; the King fight
+8. **A fresh corpse keeps its drawn fall** (street's REQUEST, it12): under a card view a body that
+   dies on its full rig keeps it in a slot past the living 16 (at most 4), until it leaves the feed
+   in the arena / quest 1 (no atlas there), 90 ticks in the city (then street's atlas lying frame).
+   `arena_corpse_keeps_rig_before_after_tilt70_48ppm_seed5.mp4`. Dent's p70 card re-cut from the
+   library's dent_v2 70 A (drawn tan): `dent70_v2_before_after_tilt70_64ppm_f160_f200_x2.png`.
+9. **Frame cost combo vs top**: see the table below (release export: the city drive; the King fight
    in the editor binary, because the release export drops `dev/bots`).
 
 ## Frame cost (item 8)
@@ -79,15 +84,17 @@ under `evidence/n8-view/`. Full log: `JOURNAL.md`.
 
 ## Merge notes for the Director
 Trial merge it11 (03:15-03:40, a throwaway detached tree): city, street, vehicles and hud onto
-n8-view; lint 15/15, unit 1624/0, quest 1 at tilt70 0 SCRIPT ERROR.
+n8-view; lint 15/15, unit 1624/0, quest 1 at tilt70 0 SCRIPT ERROR. Re-run it12 (04:13, n8-view
+b097c7a5 + city 7b63bcb1, street cfc90d46, vehicles 1b6740ac, hud 69c3b200): lint 15/15 with no
+hand fix, unit 1639/0, director reel top + combo 19/19 all down, 0 SCRIPT ERROR.
 - Text conflicts in view-owned or co-written files are comment lines: take view's side
   (`rig_card_sets.gd` doc line, `arena_floor_view.gd` doc lines, `quest1_clip.gd` `--view` line).
   JOURNAL.md: keep each lane's; `tools/debt/baseline.json`: either side, then `debt.mjs --update`.
 - hud: `StoryForms.fold_rigs` duplicates view's `StoryForms.follow` (same fold; follow also lifts
   and voices). Take view's side in `story_forms.gd`, `quest1_game.gd`, `test_story_forms.gd`; hud's
   test case lives on in view's follow test.
-- city + hud: `BossView.attach` becomes 41 lines (gd-size) with no text conflict; move city's
-  `BossDressing.attach` call into `static func _dress(v: CollectCallView, hook: BossHook)`.
+- city + hud: `BossView.attach` was 41 lines (gd-size) at it11's heads; gone at it12's heads (lint
+  15/15 on the merge with no hand fix).
 
 ## Exe
 (at the freeze: `build/export/windows/RTAI.exe`, the int-day recipe)
