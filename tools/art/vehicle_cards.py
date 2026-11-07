@@ -156,6 +156,32 @@ MIRROR_34 = {
     ("delivery_truck", 55): (1,), ("depot_van", 55): (1, 3), ("depot_van", 70): (1, 3),
     ("parked_pickup", 55): (1,), ("police_car", 55): (1,),
 } | ({} if P55_V else {("van", 55): (1,)})  # van_cream_55_v3 is drawn the right way
+# (sheet, pitch) -> mirrored columns whose light-bar lenses swap colours back (the mirror moved the
+# blue lens to the car's left; the bar law: blue on the car's right in every view). Empty: as mirrored.
+LENS_SWAP = {("police_car", 55): (1,)}
+
+
+def swap_lenses(v: Image.Image) -> Image.Image:
+    """The bright blue lens and the amber lens beside it (within the bar's box) trade colours, each
+    keeping its own shading (value)."""
+    px = np.array(v).astype(np.float32)
+    r, g, b, al = (px[:, :, i] for i in range(4))
+    blue = (b > 140) & (b - r > 60) & (al > 200)
+    if not blue.any():
+        return v
+    ys, xs = np.where(blue)
+    h, w = ys.max() - ys.min() + 1, xs.max() - xs.min() + 1
+    box = np.zeros_like(blue)
+    box[max(0, ys.min() - h) : ys.max() + h + 1, max(0, xs.min() - 2 * w) : xs.max() + 2 * w + 1] = True
+    amber = (r > 170) & (r - b > 90) & (g > 90) & (al > 200) & box
+    if not amber.any():
+        return v
+    val = px[:, :, :3].max(2)
+    bm, am = px[blue][:, :3].mean(0), px[amber][:, :3].mean(0)
+    out = px.copy()
+    out[:, :, :3][blue] = np.clip(am * (val[blue] / am.max())[:, None], 0.0, 255.0)
+    out[:, :, :3][amber] = np.clip(bm * (val[amber] / bm.max())[:, None], 0.0, 255.0)
+    return Image.fromarray(out.round().astype(np.uint8), "RGBA")
 # Per service row, degrees its saturated mid paint turns toward yellow: the truck's 70 cab is drawn
 # amber-orange (the library note: match the 55 sheet's mustard; 1463 vermilion-gate px raw in view 0).
 SERVICE_HUE = {0: 12.0}
@@ -388,6 +414,8 @@ def build(root: Path, lib: Path, pitch: int) -> Image.Image:
         vs = views(sheet_of(lib, sid, pitch))
         for c in MIRROR_34.get((sid, pitch), ()):
             vs[c] = vs[c].transpose(Image.Transpose.FLIP_LEFT_RIGHT)
+        for c in LENS_SWAP.get((sid, pitch), ()):
+            vs[c] = swap_lenses(vs[c])
         if pitch in SHEET_PICKS.get(sid, {}):
             _PICKED.add(row)
         k = lengths[row] * PPM / vs[2].width  # the side view as long as the footprint
