@@ -103,3 +103,24 @@ func test_stand_rect_is_the_card_over_the_south_edge() -> void:
 	assert_eq(got.size.x, 144.0, "as wide as the long side")
 	assert_lt(got.position.y, r.position.y - 48.0, "the crate card rises well over its box")
 	assert_false(wall.has_area(), "walls keep their box")
+
+
+func test_item_print_draws_the_world_printed_twin() -> void:
+	var names: Array[String] = ["crate_stack"]
+	var crate: String = "res://features/city/art/view/<art>/prop_crate_stack"
+	var props: Dictionary = {
+		"crate_stack": {"art": crate + ".png", "cell_w_m": 3.2, "print_art": crate + "_print.png"}
+	}
+	var cards: PropCards = PropCards.make(props, names, "p70", {"p70": "p55"})
+	assert_not_null(cards._print[0], "the twin loads by the same art key")
+	var floor_ci: Node2D = autofree(Node2D.new())
+	var actor_ci: Node2D = autofree(Node2D.new())
+	var item_print: ShaderMaterial = ShaderMaterial.new()
+	item_print.shader = load(PrintStage.ITEM_SHADER)
+	actor_ci.material = item_print
+	assert_false(PropCards.item_printed(floor_ci), "the floor goes through the world print")
+	assert_true(PropCards.item_printed(actor_ci), "PropOcclusion's redraw: the item print")
+	item_print.shader = null
+	assert_false(PropCards.item_printed(actor_ci), "--look=off: the raw art everywhere")
+	assert_true(cards.draw_on(actor_ci, "cover_low", Rect2(0, 0, 144, 48)))
+	assert_false(cards._use_print, "the twin is only for that one draw")

@@ -1,17 +1,14 @@
 class_name PropCards
 extends RefCounted
-## The city's street props standing up under an angled view (night n8, lane city): a prop named in
-## city_facades.json `props` draws as a card from its five-facing strip (keyed by the view row's
-## art, p55 / p70; cut by tools/art/city_prop_cut.py from the library's prop sheets) instead of
-## its flat top-down art. The facing comes from the command's turn (front, three-quarter, side,
-## three-quarter away, back; the other side mirrored); the card's foot sits on the footprint's
-## south edge and it rises by the art's aspect over the squashed ground. ChunkLift orders the
-## cards with the roofs by south edge. Render only.
+## The city's street props standing up under an angled view (night n8, lane city): a
+## city_facades.json `props` row draws as a card from its five-facing strip (art key p55 / p70,
+## tools/art/city_prop_cut.py) facing by the command's turn (the other side mirrored), its foot on
+## the footprint's south edge, rising by the art's aspect over the squashed ground; ChunkLift
+## orders it by south edge. Render only.
 
 const FACINGS: int = 5
 const TABLE: String = "res://data/tables/city_facades.json"
-## The boss arenas' and the dev arena's cover kinds (ArenaFloorView) and quest 1's stage props
-## (StageView: the payphone, the hide-spot dumpster) drawn as the street's cards.
+## The arenas' cover (ArenaFloorView) and quest 1's stage props (StageView) as street cards.
 const ARENA_KIND: Dictionary[String, String] = {
 	"cover_low": "crate_stack",
 	"cover_high": "dumpster",
@@ -27,10 +24,13 @@ static var _named: PropCards = null
 static var _named_art: String = "-"
 
 var _strip: Dictionary[int, Texture2D] = {}
+## optional (`print_art`): the strip pre-printed the world's way (tools/art/print_twin.py) for a
+## canvas under the item print (PropOcclusion's redraw: it snaps orange crates to vermilion)
+var _print: Dictionary[int, Texture2D] = {}
+var _use_print: bool = false
 var _cell_w_px: Dictionary[int, float] = {}
 var _turn: Dictionary[int, float] = {}
-## optional per row: the card's foot in the flat art's frame (px from its centre; a lamp's post
-## base at one end of its arm) and `mirror` (the strip's side view faces the other way)
+## optional per row: `foot_m` (a lamp's post base, px from the flat art's centre), `mirror`
 var _foot: Dictionary[int, Vector2] = {}
 var _mirror: Dictionary[int, bool] = {}
 var _names: Array[String] = []
@@ -52,6 +52,8 @@ static func make(
 		var w_m: float = row["cell_w_m"]
 		var turns: float = row.get("turn", 0.0)
 		out._strip[t] = tex
+		if row.has("print_art"):
+			out._print[t] = art_texture(str(row["print_art"]), art, fallback)  # null: none
 		out._cell_w_px[t] = w_m * SimConst.PX_PER_M
 		out._turn[t] = turns * PI * 0.5
 		if row.has("foot_m"):
@@ -85,8 +87,7 @@ static func named() -> PropCards:
 
 
 ## Draws the card of the prop called `name` facing the camera on `ci` (from its _draw), its foot at
-## `foot` px, at `px_per_m`; false (nothing drawn) when the table has no such card. Leaves the
-## canvas transform at identity.
+## `foot` px, at `px_per_m`; false when the table has no such card. Transform left at identity.
 func draw_named(ci: CanvasItem, name: String, foot: Vector2, px_per_m: float) -> bool:
 	var t: int = _names.find(name)
 	if t < 0 or not _strip.has(t):
@@ -97,32 +98,30 @@ func draw_named(ci: CanvasItem, name: String, foot: Vector2, px_per_m: float) ->
 	return true
 
 
-## The arena's cover `kind` as its card on ground rect `r` under this run's view (named(), then
-## draw_on); false under a flat or perspective view, or for a kind with no card.
+## named().draw_on(ci, kind, r) under this run's view; false under a flat or perspective view.
 static func stand(ci: CanvasItem, kind: String, r: Rect2) -> bool:
 	var cards: PropCards = named()
 	return cards != null and cards.draw_on(ci, kind, r)
 
 
-## Draws the card for an arena cover `kind` (ARENA_KIND) standing on ground rect `r` (px, from
-## ci's _draw): over a footprint shadow, as wide as r's long side, facing the camera when r runs
-## east-west, side-on when it runs north-south. False (nothing drawn) for any other kind.
+## Draws the card for an arena cover `kind` (ARENA_KIND) on ground rect `r` (px, ci's _draw) over a
+## footprint shadow, r's long side wide, side-on when r runs north-south; false for any other kind.
 func draw_on(ci: CanvasItem, kind: String, r: Rect2) -> bool:
 	var t: int = _names.find(ARENA_KIND.get(kind, ""))
 	if t < 0 or not _strip.has(t):
 		return false
 	var item: RID = ci.get_canvas_item()
 	RenderingServer.canvas_item_add_rect(item, r, ARENA_SHADOW)
-	var wide: bool = r.size.x >= r.size.y
-	var foot: Vector2 = Vector2(r.get_center().x, r.end.y)
-	draw(item, t, 0.0 if wide else PI * 0.5, foot, maxf(r.size.x, r.size.y))
+	var rot: float = 0.0 if r.size.x >= r.size.y else PI * 0.5
+	_use_print = _print.get(t) != null and item_printed(ci)
+	draw(item, t, rot, Vector2(r.get_center().x, r.end.y), maxf(r.size.x, r.size.y))
+	_use_print = false
 	RenderingServer.canvas_item_add_set_transform(item, Transform2D.IDENTITY)
 	return true
 
 
-## The screen rect (ci's local px) that draw_on's card for cover `kind` on ground rect `r` covers:
-## the cell's full height over the footprint's south edge, as wide as r's long side. Empty under a
-## flat or perspective view or for a kind with no card (PropOcclusion's hit and cut area).
+## The screen rect (ci's local px) draw_on's card for cover `kind` on ground rect `r` covers (the
+## cell over the footprint's south edge); empty under a flat or perspective view or with no card.
 static func stand_rect(kind: String, r: Rect2) -> Rect2:
 	var cards: PropCards = named()
 	var t: int = -1 if cards == null else cards._names.find(ARENA_KIND.get(kind, ""))
@@ -133,6 +132,12 @@ static func stand_rect(kind: String, r: Rect2) -> Rect2:
 	var aspect: float = strip.get_height() * float(FACINGS) / strip.get_width()
 	var h: float = w * aspect / ViewMode.shared().ground_k()
 	return Rect2(r.get_center().x - w * 0.5, r.end.y - h, w, h)
+
+
+## True when `ci` draws through the actor layer's item print (look_d4_item), not the world print.
+static func item_printed(ci: CanvasItem) -> bool:
+	var m: ShaderMaterial = ci.material as ShaderMaterial
+	return m != null and m.shader != null and m.shader.resource_path == PrintStage.ITEM_SHADER
 
 
 ## The art at `path` with `<art>` set to the view's art key, else its fallback key's; null if none.
@@ -182,7 +187,7 @@ func foot_at(t: int, rot: float, at: Vector2, ext: Vector2) -> Vector2:
 ## Draws prop t's card into `item`; `foot` is the footprint's south-edge centre in world px; `w`
 ## the cell's width in px (default: the table's, at the city's scale).
 func draw(item: RID, t: int, rot: float, foot: Vector2, w: float = -1.0) -> void:
-	var strip: Texture2D = _strip[t]
+	var strip: Texture2D = _print[t] if _use_print else _strip[t]
 	var cell: Vector2 = Vector2(strip.get_width() / float(FACINGS), strip.get_height())
 	w = _cell_w_px[t] if w < 0.0 else w
 	var h: float = w * cell.y / cell.x / ViewMode.shared().ground_k()

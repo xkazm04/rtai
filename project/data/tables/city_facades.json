@@ -76,7 +76,8 @@
     },
     "crate_stack": {
       "art": "res://features/city/art/view/<art>/prop_crate_stack.png",
-      "cell_w_m": 3.2
+      "cell_w_m": 3.2,
+      "print_art": "res://features/city/art/view/<art>/prop_crate_stack_print.png"
     },
     "dumpster": {
       "art": "res://features/city/art/view/<art>/prop_dumpster.png",
@@ -123,7 +124,8 @@
     },
     "traffic_cone": {
       "art": "res://features/city/art/view/<art>/prop_traffic_cone.png",
-      "cell_w_m": 0.65
+      "cell_w_m": 0.65,
+      "print_art": "res://features/city/art/view/<art>/prop_traffic_cone_print.png"
     },
     "traffic_light": {
       "art": "res://features/city/art/view/<art>/prop_traffic_light.png",
