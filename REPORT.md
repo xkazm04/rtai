@@ -72,7 +72,6 @@ Each: options, the default built, how to see it.
    `van_cream_turn_tilt70_64ppm_olive_left_cream_right.mp4`.
 7. **Pickup's C in-between:** row C (built) vs the better-turned `_c` redraw (`PICKUP_C_REDO`).
 8. **Stage cars over the actors:** ON (built) vs under.
-
 9. **Servo's stage van:** (a) the city van row, cream, matching its top-down print (built); (b) the
    library's ochre `depot_van` as a new atlas row for the stage only (needs a top-down print too, or
    `top` and the card disagree again). See `van_cream_servo_depot_combo_64ppm_seed2_f120_olive_left_cream_right.png`.
