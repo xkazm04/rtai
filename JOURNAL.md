@@ -424,3 +424,48 @@ NEXT (iteration 12):
   press (L3, R3); the d-pad (whole, and each arm lit); Start and Select as small pill keys. No maker marks, no logos,
   no brand-specific colours. Why: on the Deck profile the prompts are `[A]`-style text; the handheld tier's
   prompts would read in the game's own drawn style instead. Low priority: after every rivet / seams REQUEST.
+- Time correction: the it12 stamps above were estimates and run ahead of the clock; the real times are rumble
+  commit ~14:47, the card walk ~14:57, the mutate run 14:45-14:56, 9bbbd091 at 15:00.
+- MILESTONE 15:01 mutate.mjs on player_settings.gd at 690ea895 (36 mutants): **66.7 % (24/36)**
+  (`evidence/it12/mutate-player-settings.log`). The only survivor on an it12 line (48: an old file's missing `rumble`
+  -> off) was killed since by 4bf3ad95 (planted by hand). Pre-existing survivors: 22 / 45 (defaults overwritten by the
+  load path), 33 (`or -> and` on the parse guard), 71 / 72 (the save's return/close), **79 (the master-bus volume line
+  deleted: no test saw the volume reach the AudioServer)**, 88 / 90 (apply_frame_cap's `> 0` / `>= 0`: equivalent on the
+  offered caps and the rows' -1), 96 (rebind's guard).
+- FRICTION 15:00 (~1 min): the first gate on 883167c8 refused to start (exit 2, dirty tree: the uncommitted mutate log
+  and the gate's own log written inside the worktree). Gate and reel logs now go to `gtai-d9x/scratch/it12/` and are
+  copied in after.
+- MILESTONE 15:03 reels on 9bbbd091 (headless, perf's command, run during the gate, logs outside the tree): top /
+  tilt70 / combo / combo + deck **19/19, 0 SCRIPT ERROR** (`evidence/it12/reels-summary.log`).
+- MILESTONE 15:09 evidence gate on 9bbbd091 (`--no-bench --no-release`, log written outside the tree): lint 15/15, unit
+  1721/0, scenarios 53/53, parity bit-exact over 1200 steps (planted mutation caught at 629), look goldens 11/11:
+  **top bit-identical** with the it12 code (`evidence/it12/evidence-run-9bbbd091.log`).
+- MILESTONE 15:11 (ec9dace0) a test that apply() sets the master bus volume (0 -> the -80 dB floor): kills survivor 79;
+  planted by hand (the line deleted) -> FAIL at :106 (0 dB, expected -6.02); restored. Test-only, after the gate.
+- RESULT 15:14 rumble live under `deck` (headless, 2400 ticks, the boss bot, combo): the King fight **3 pulses**,
+  Servo **2** (`evidence/it12/{king,servo}-rumble-deck.log`; the reel had 4 at it7). Sparse but not silent; the exit log
+  has no per-kind split, so which were hurts is unmeasured. Seen in both logs: a shader-compiler `ERROR`
+  (`custom_samplers ... tex_builtin`) from `kill_char_fx.gd:189` at arena start: combat code, not handheld's; not a
+  SCRIPT ERROR (the reel gate counts those). LEDGER readiness row updated.
+- Registry rules applied this iteration: on-device-verification-harness (the end cards walked on the real scene, pad
+  events through the Input singleton, the quest runner's own fail / success, a still per card, the log as the proof);
+  fire-tv-device-realities (the paid card's wait on the closing lines looked like a dead card for 240 frames: read the
+  game's own gate before calling a fault); perf-regression-gating (the gate before and after; logs out of the tree so
+  the gate's clean-tree check holds); adaptive-fidelity-tiers (the rumble row behind the handheld tier, the desktop card
+  one condition away); generative-artifact-gating / motion-quality-gating (every still looked at before frames.json).
+- Session end 15:16: every change committed; no Godot of mine running; no bench lock taken this iteration (no number
+  kept that needs it); scratch dev files out of project/; scratch at `gtai-d9x/scratch/it12/` and `padwalk2/`.
+
+NEXT (iteration 13):
+1. A per-kind pulse count in HandheldRumble's exit log (`rumble: 3 pulses (boss_engaged 1, rivet_hurt 2)`), then the
+   King / Servo counts again: is a boss fight's rumble felt enough? (A tiny core change: lint, --changed, the gate.)
+2. The glyph REQUEST (`ui_pad_glyphs_v1`): read the asset lane's journal; if served, the glyph cells behind the
+   handheld rows (`PadGlyphs` -> a TextureRect in the prompt line), the text labels as the fallback.
+3. Mutation survivors left on player_settings.gd (pre-existing): 33 (the parse guard's `or -> and`), 71 / 72 (save's
+   store result / close), 96 (rebind's guard); 22 / 45 / 88 / 90 are equivalent or default-overwritten.
+4. Carried: NAT-06 parity on the Linux `.so` in WSL; the draw_scale HUD side effect (if Call 5 b/c); rumble on blasts
+   and crashes (needs a bus event: a REQUEST to whoever owns combat, not handheld's file).
+5. End of day (by 18:30): delete the HKCU DirectX UserGpuPreferences value for gtai-d9x/handheld-godot/..._hh.exe and
+   that copy; the BC7 scratch worktree `gtai-d9x/scratch/hh-bc7` (git worktree remove); the scratch dirs
+   `gtai-d9x/scratch/{padwalk,padwalk2,it12}`; the freeze exe `build/export/windows/RTAI.exe` with the exact command
+   in REPORT.
