@@ -561,3 +561,29 @@ looked at old vs new on one contact).
   profile row sits at a slightly shallower camera than its other facings. WALK_FILL = still mean
   height / walk mean height (checked: reproduces 1.11 / 1.08 on the old grids): jogger 1.12, shopper
   1.09. Unit 20/0, lint 15/15, provenance 2 lines.
+- 14:35 MILESTONE (a1580b10): riot 55 row 2 from the library's rfresh234 (cop_riot_walk_armed_55_v3b, A,
+  copy by example): frame 3 now plants the other boot (my named fault since it4, closed). Looked old vs new
+  row 2 (scratch `it9/riot_r2_ab.png`); rows 3/4 of rfresh234 are byte-identical to rfresh; FILL stays
+  1.08. ACK assets: OFFER rfresh234 taken (v3b, the pick).
+- 14:34 FILMED the board A/B (`res://dev/showcase/street_crowd.gd`, windowed d3d12, 64 px/m, --fixed-fps
+  60 --write-movie: works with -s): --heavy tilt70 / tilt, --cops tilt, peds tilt70, before = the HEAD~
+  grids via lfs smudge + the old FILLs, 0 ERROR in all 8 runs, the tree restored and re-imported (0 ERROR).
+  The board walks east-west only, so it shows the profile facings (SWAT 70 5 px -> 0). The arena city
+  block (seed 5) cops stand in a line from tick ~60 (stand frame): no stride to judge there; those two
+  arena films deleted. Masters: 4 board clips + peds close-up + 3 cell contacts; frames.json 15 (riot
+  profile-scale still and the 32 px/m kerb duplicate out, files kept).
+- 14:39 FINDING (next job): the game's ped walks trail the library: hat, hood, punk, elder at v1, cap
+  and worker at v2, while the library has v2/v3 cells and is fixing row 2 of cap/punk/hat/hood/suit/
+  worker/elder now (rounds 1535/1540).
+- REQUEST to assets: when rounds 1535/1540 are graded, name ONE game-ready `<strip>_cells/` folder per 70
+  ped walk (cap, elder, hat, hood, punk, suit, worker) and per unarmed patrol walk (55 and 70), with the
+  keyed base sheet it splices on and each row's library id/round/prompt_hash (I splice on the head line
+  with tools/art/walk_splice_rows.py, cut with street_walk.py; same layout as delivered). Why: the city
+  crowd walks two-pose shuffles on several of these; the owner judges the crowd at 32 px/m.
+- 14:44 GATE director reel it7 at defce5b3 (art since it6: the walk grids + WALK_FILL): top, tilt70, combo
+  19/19 down, 0 SCRIPT ERROR, 2 engine ERROR lines each (the baseline shader-sampler note + exit leak)
+  (`evidence/d9-seams/director-reel-it7-*.log`).
+- 14:44 GATE evidence at defce5b3: lint, scenarios 52, parity bit-exact, selftest goldens 11/11 (worst
+  0.27) + block 5/5, release-compile 602/0 PASS; unit 1717/0 but FAIL-flagged "tree changed during run":
+  FRICTION (mine, 1 min): I edited JOURNAL/REPORT while it ran. Re-run on a clean tree below; never edit
+  the worktree during an evidence run (write notes to scratch, paste after).

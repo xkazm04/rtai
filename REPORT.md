@@ -95,6 +95,23 @@ Branch `d9-seams`. Evidence: `C:\Users\kazda\kiro\gtai-masters\d9\seams\` (`fram
    release-compile 605/0, scenarios 52/0, director reel top/tilt70/combo 19/19, 0 SCRIPT ERROR
    (`evidence/d9-seams/director-reel-merge-it6-*.log`, `mergetrial-it6-gates.txt`); still
    `merge_trial_seams_rivet_king_combo_64ppm_seed2_f150_f250.png`.
+17. **Spliced walk rows keep a level head** (item 5, d84ad031, it7): the library draws every walk row with
+   all four heads on one line (the passing frames' feet rise); my it4 splice stood the fresh rows on the
+   foot line instead, so the head dipped 3-7 px at each passing frame (SWAT 55 3/4-toward 7, SWAT 70
+   profile 5, riot 55 profile 3). `tools/art/walk_splice_rows.py` hangs them from the head line; every
+   recipe was first reproduced byte-exact. The patrol 55 takes the library's fresh rows 2 and 5 (both now
+   alternate). Board clips `walk_headline_before_after_{swat_riot70,swat_riot55,patrol55}_board_*_64ppm.mp4`,
+   grids `armed_walk_grids_headline_before_after_cells.png`.
+18. **The riot 55 turn toward the camera alternates its stride** (item 5, a1580b10, it7): row 2 from the
+   library's copy-by-example v3b (A); the old row drew frame 3 as frame 1 (a named fault since it4).
+   `riot55_row2_before_after_cells.png`. Every living city cop's walk now alternates in all five facings
+   at 55.
+19. **The jogger and the shopper walk the library's fixed sheets** (beyond the brief, a3ff1c51, it7): the
+   jogger's walk was at a shallower camera than her still card (long legs, small head: she changed shape
+   on starting to jog); v3 matches the card. The shopper's every facing now alternates its stride.
+   `peds_jogger_shopper_before_after_board_tilt70_64ppm_f150_x2.png` + clip,
+   `jogger_still_vs_walk_v1_vs_v3_cells.png`. Owner eye: the shopper's new profile row sits at a slightly
+   shallower camera than her other facings.
 
 **The set in one clip:** `seams_d9_set_combined_52s.mp4` (52 s, captioned per item).
 
@@ -128,8 +145,10 @@ director reel (`--fixed-fps 60 --quit-after 14000`) top 19/19, tilt70 19/19, com
 0 SCRIPT ERROR (`evidence/d9-seams/director-reel-it1-*.log`). Not yet run: `tools/evidence/run.mjs --no-bench`.
 
 ## What does not work yet
-- The riot 55 3/4-toward row repeats a frame (frames 1 and 3 share one stride; the asset lane got no
-  gain in 3 tries). The SWAT 55 size pop is fixed in post (it5).
+- The SWAT back rows (55 and 70, the library's mirror-fixed row 5) let the head move 3-5 px over the
+  stride (drawn, not a splice; left). The riot 55 repeat is fixed (it7, item 18).
+- Seven of the nine ped walks (cap, elder, hat, hood, punk, suit, worker) and the unarmed patrol still use
+  older library sheets than the library's fixed rows (a REQUEST to assets for one drop-in folder each).
 - The sim bike is off by default (Call 3).
 - After merge, rebuild native (`just native`): `project/native/bin` is git-ignored, and the old DLL
   would treat bikes as cars (no crash; parity would fail).
