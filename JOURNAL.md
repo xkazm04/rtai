@@ -1305,3 +1305,12 @@ Rules applied: concept-scene-parity (the card takes the print's teal plate, colo
 generative-artifact-gating (no new art; a shader recolour judged on screen at 48/64/32 px/m),
 motion-quality-gating (the hijacked car judged in a driven clip, before/after same scene),
 depth-ordered-layered-art (n/a: no order change), sprite-and-atlas-production (atlases untouched).
+MILESTONE 05:50 combined clip re-cut (masters vehicles_set_tilt70_combined.mp4, 55 s, frames.json
+entry 1 note): segment 5 (Servo depot combo 32 px/m seed 2, 361 frames, 0 SCRIPT ERROR) on 80926b7c,
+Dent's seized van in teal; new segment 6, the soul-hijacked traffic sedan at tilt70 (soul70c, 5.5 s).
+Looked at 46 s and 52 s; s5's first caption ("bay 3 over it") was wrong (the van is thrown off the
+bay by then): re-captioned. Recipe scratch/vehicles/it20/set/seg.sh. FRICTION (again): ffmpeg concat
+lists need C:/ paths, not /c/ (opens C:/c/...).
+LOOKED 05:53 the driven car soul-hijacked (vehicle_frame --clip --soul --view=tilt70, 240 frames,
+0 SCRIPT ERROR): the service-car path (b.state HIJACKED) paints teal too, 11.5k teal px from f120.
+Scratch: the .avi captures and the showcase shot dirs deleted (1.1 GB -> 119 MB).
