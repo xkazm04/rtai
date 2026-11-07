@@ -70,3 +70,20 @@ func test_the_box_paper_clears_the_folded_ghost_card() -> void:
 		var paper_left: float = HudDialogue.box_of(screen).position.x - 10.0
 		assert_gt(paper_left, card_right, "the paper starts right of the card at %s" % screen)
 		assert_almost_eq(HudDialogue.box_of(screen).get_center().x, screen.x * 0.5, 0.01)
+
+
+func test_the_box_fits_its_line_between_the_min_and_the_full_height() -> void:
+	var font: Font = ThemeDB.fallback_font
+	var w: float = 1000.0
+	var short: String = "Bring her back."
+	var size: int = HudDialogue.fit_size(font, short, w, HudDialogue.BOX_H - HudDialogue.WORDS_TOP)
+	assert_eq(size, HudDialogue.FIT_SIZES[0], "a short line keeps the largest size")
+	var low: float = HudDialogue.fit_height(font, short, w, size)
+	assert_between(low, HudDialogue.BOX_MIN_H, 170.0, "a one-line bark gets the short box")
+	var bit: String = "Patch only connects calm customers. Thanks for not being on fire. "
+	var long: String = bit.repeat(4)
+	size = HudDialogue.fit_size(font, long, w, HudDialogue.BOX_H - HudDialogue.WORDS_TOP)
+	var high: float = HudDialogue.fit_height(font, long, w, size)
+	assert_eq(high, HudDialogue.BOX_H, "a long line gets the full box")
+	assert_lt(HudDialogue.box_of(Vector2(1920, 1080), low).position.y, 1080.0)
+	assert_eq(HudDialogue.box_of(Vector2(1920, 1080), low).end.y, 1080.0 - HudView.MARGIN)
