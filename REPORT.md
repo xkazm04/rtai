@@ -1,7 +1,21 @@
-# REPORT: d9 lane `seams` (running; final at 18:40)
+# REPORT: d9 lane `seams` (final, freeze 18:30)
 
 Branch `d9-seams`. Evidence: `C:\Users\kazda\kiro\gtai-masters\d9\seams\` (`frames.json`), logs in
 `evidence/d9-seams/`. Journal: `JOURNAL.md`.
+
+## The exe (freeze, it11)
+`build/export/windows/RTAI.exe` (+ `gtai_sim.windows.template_release.x86_64.dll` beside it), exported at
+b51247bb (code = b026010d) with
+`"$GODOT_BIN" --headless --path project --export-release windows-showcase ../build/export/windows/RTAI.exe`
+(exit 0, 28 s). Smoke: `RTAI.exe --headless --fixed-fps 60 --quit-after 600 -- --boss=king --phase=1 --bot=boss
+--seed=2 --rigs --view=combo`: exit 0, 0 SCRIPT ERROR (the engine's known shader-sampler ERROR line only).
+Try the King and his gang: `RTAI.exe -- --boss=king --phase=1 --view=combo` (and `--phase=3` for his stride).
+
+## Merge note for the Director
+vs d9-rivet e2400dc4: conflicts only `JOURNAL.md` (add/add: keep either lane's, they are lane journals) and
+`tools/debt/baseline.json` dev_loc (both lanes accepted rises from 18799: keep both lines, chained: seams
+18799 -> 18805, then rivet +69 -> 18874; total 18874), then `node tools/debt/debt.mjs --update`. Trial merge
+it11 gates: MERGE_GATES.
 
 ## What works (with evidence)
 1. **The dead behind the arena's kerb barrier** (item 1, commit 38a90b52). Measured cause: the two
@@ -196,7 +210,9 @@ director reel (`--fixed-fps 60 --quit-after 14000`) top 19/19, tilt70 19/19, com
    rim. `KingLegsCard.SHEETS["gang"] = "gang_legs"`. Filmed phase 1, combo, seed 2, 64 and 32 px/m: before, royal
    purple-and-gold legs under steel bodies; after, the legs carry the torsos' steel and the royal dress is the
    King's alone. Gates at b026010d: reels 19/19 x3 fully down, 0 SCRIPT ERROR; evidence at b026010d all PASS (lint 15/15, unit 1727/0, scenarios 53, parity bit-exact, look goldens 11/11 + block 5/5, release-compile 602/0).
-   `king_gang_steel_legs_before_after_combo_64ppm_seed2_phase1_f150-420.mp4` (+ `_f200.png`, `_32ppm_..._x3.png`).
+   `king_gang_steel_legs_before_after_combo_64ppm_seed2_phase1_f150-420.mp4` (+ `_f200.png`, `_32ppm_..._x3.png`);
+   at 70 (tilt70, play): `king_gang_steel_legs70_before_after_tilt70_64ppm_seed2_phase1_f200.png`. The King's 70
+   stride after f99bf5d6 is filmed too: `king_legs_stride70_before_after_tilt70_64ppm_seed2_phase3_f120-480.mp4`.
 
 ## What does not work yet
 - (closed it9, measured) The SWAT back rows (55 and 70, row 5) move the head 3 px (1.6 % of the figure) at 55

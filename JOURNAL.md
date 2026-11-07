@@ -930,3 +930,36 @@ NEXT (it11), replaces the lists above:
   generative-artifact-gating (the gang's parts legs' pale rim is the owner's "white background" again: why the
   drawn sheet wins), engine-integration-safety (view only: no sim, parity/goldens re-run; `top` has no sheet).
 - Session end 17:32: all committed; scratch avi/png/probe logs deleted; frames.json 15.
+
+## it11 (director iteration 17), 17:34-18:30, BUILD to the freeze
+- Read: JOURNAL NEXT it11, git log, d9-rivet JOURNAL (it22: walk at 55, no REQUEST to seams), the asset lane's
+  JOURNAL (it94 17:26: **DELIVERED gang_legs_55 + gang_legs_70 to seams**, A, round 20261107-1820, note
+  `deliveries/seams_gang_legs_it94.md`). ACK assets: received, landed (b026010d), filmed. None other open.
+- 17:36 LOOKED at gang_legs_55 on magenta: 25 steel poses, ink only, no rim/backing (the 1.7 % near-white
+  opaque pixels are steel highlights, the King's sheet has 1.1 %). Import settings identical to king_legs.
+- 17:38 MILESTONE (b026010d): `art/p55|p70/gang_legs.png` + `KingLegsCard.SHEETS["gang"] = "gang_legs"`
+  (one value back: "king_legs"); test: the gang's sheet is not the King's and is a drop-in on his canvas at
+  55 and 70; PLANTED "king_legs" -> caught. Provenance lines (round, prompt_hash cb240ad99625 / bb13015c638d).
+  FILMED phase 1, combo, seed 2, 64 and 32 px/m, f200 + clip f150-420 (before = the King's sheet): LOOKED:
+  after, the bodyguards' legs carry their torsos' steel (grey, thin gold rings), the purple-and-gold is the
+  King's alone; at 32 px/m the steel reads darker but stays a leg shape. frames.json 9 replaced.
+- 17:48 GATES at b026010d: evidence all PASS (lint 15/15, unit 1727/0, scenarios 53, parity bit-exact, mutation
+  caught at 629, look goldens 11/11 worst 0.27 + block 5/5, release-compile 602/0); director reel top / tilt70 /
+  combo 19/19 FULLY down, 0 SCRIPT ERROR, known engine ERROR lines only (`evidence/d9-seams/*-it11-*`).
+  Logged to scratch during the run (it10's lesson), copied in after.
+- 17:50 FILMED at 70 (tilt70, never eases, 64 px/m, seed 2): the gang phase 1 (before/after still: stubby
+  foreshortened steel legs under the steel torso, consistent) and the King's 70 stride phase 3 (CYCLE_CELL {}
+  vs 80; clip f120-480). LOOKED: same frames, slightly different poses, boots planted; matches it10's
+  measure (a pose every 17.0 px before, 14.6 after). NEXT 5 closed. frames.json 8/9 notes cite both.
+- 17:52 EXE `build/export/windows/RTAI.exe` exported (exit 0, 28 s) at b51247bb; smoke the King phase 1 combo
+  600 frames: exit 0, 0 SCRIPT ERROR.
+- 17:53 TRIAL MERGE vs d9-rivet e2400dc4 (scratch worktree, detached, 2c84666c): conflicts only JOURNAL.md and
+  the debt baseline (rivet +69 now: chained 18799 -> 18805 -> 18874); debt --check ok. Gates running.
+DECISION seams/gang-legs (it11): Call 5 default moves from (a) the King's legs to (c) the gang's own steel legs,
+because filmed they keep the royal dress the King's and match the steel bodies; (a) and (b) one value away.
+Logged in docs/decisions.md.
+- Registry rules applied it11: generative-artifact-gating (looked at the served sheet on a contrasting ground for
+  rim/backing before landing), depth-ordered-layered-art (same z, hip and sole lines as the King's: a drop-in),
+  motion-quality-gating (judged in motion at 32/64, 55 and 70, before/after by the one value), sprite-and-atlas-
+  production (same canvas/cell layout, import settings diffed), engine-integration-safety (view only; parity,
+  goldens, replay re-run green).
