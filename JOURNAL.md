@@ -589,3 +589,37 @@ NEXT (iteration 19 = the freeze session, 18:30 freeze, 18:40 REPORT):
 5. Clean-up at the freeze: remove the scratch worktrees `gtai-d9x/scratch/perf-before`, `perf-bc7cv`, `perf-base`
    (`git worktree remove`), `gtai-d9x/scratch/godot-src` (several GB; L7 / L9 are dropped), `scratch/tmp-perf`,
    `scratch/gates-it18`, `scratch/l11.log`, `scratch/l10exe.log`, `scratch/export-cap.log`.
+
+## Iteration 21 by the Director's count (17:02-18:02, BUILD)
+- Read: JOURNAL it18 + NEXT, git log -15, the rivet / seams / handheld journals: no new REQUEST to perf. Registry rules
+  applied: measurement-honesty (an outlier was chased to a cause before a number was believed; F18 corrects my own it18
+  digest; the L13 win is quoted against its spread, the pause card's wash is recorded), perf-regression-gating (the gate
+  ran on a committed tree with no `project/` edit while it ran; L13 was built in the scratch worktree meanwhile),
+  runtime-observation-evidence (every arm's still was looked at; screen grabs on the shared monitor proved useless until
+  the window was pinned TOPMOST), render-submission-economy (a still card should cost no submissions at all).
+- GATE 17:02-17:15 at bf6398e1 (NEXT 1 of it18 closed; `evidence/perf/gates-it21/`, private TEMP): lint 15/15, unit
+  1706 / 0, scenarios 52, parity bit-exact + planted mutation caught, look goldens 11/11 + block 5/5, export-audit 600 / 0.
+- L13 HYPOTHESIS (before building, from the brief's "low_processor_mode where it fits (menus)"): the slice's title card
+  is a still frame drawn every vblank; in low-processor mode `Main::iteration` draws only on a RenderingServer write.
+  Expected: title near 0 cores, no pixel; pause card WASH (the city view writes shader params every frame).
+- FINDING F18 17:20 (source, `platform/windows/os_windows.cpp:2630-2675`): the Windows `add_frame_delay` override spins
+  `YieldProcessor()` for the last `delay_resolution` (1 ms) of each limited frame: F15 / L11's +0.06 core. My it18 digest
+  ("no engine path spins") read `core/os/os.cpp` only: WRONG, corrected in the LEDGER.
+- FRICTION 17:10-17:35 (25 min): one "on" run read 0.01 cores in PLAY. Chased it: 2 of 9 on-runs, then 3 of 6 OFF runs,
+  then main 3982af1a (1 of 5) and `--strip-prefetch=off` (1 of 5), and with the window pinned TOPMOST: the same freeze.
+  FINDING F19: quest 1 under `--autostart` freezes ~1 run in 4 at Rivet's "Okay" line, Esc dead, 0.002-0.023 cores
+  (blocked, not idle), on main too: not a perf lever, not L13 / L3. In the LEDGER and REPORT.
+- MILESTONE 17:38 L13 KEPT (0f725304): `boot/menu_idle.gd` (MenuIdle, a child of Game; reads `current_scene as
+  Quest1Game`, so `quest1_game.gd` (272 lines, debt ratchet) is untouched), `test_menu_idle` (5). Title off 0.037 / 0.023 /
+  0.033 -> on 0.000 / 0.004 / 0.014 cores (-88 %, lock held, CONTENDED 4-8), 0 client pixels differ > 15; pause WASH ->
+  `PAUSED_IDLE = false`. Unit 1711 / 0, lint 15/15, release-compile 601 / 0. Headless / movie: never processes, so the
+  goldens / reels / parity cannot move (same argument as L12; the freeze session's gate covers it). DECISION in
+  docs/decisions.md.
+- 17:39 F19 hunt (`evidence/perf/f19-freeze/hunt.ps1`, head, TOPMOST, lock held): run 1 normal (0.18 cores), run 2 FROZE:
+  `Process.Responding` false, `thread_cpu` 0.005 cores total and 0 on the main thread over 3 s (blocked in a wait).
+  Main-thread waits in our code: `chunk_source.take` (WorkerThreadPool wait), `save_worker` flush (`Thread.wait_to_finish`;
+  quest 1 autosaves at start), `load_threaded_get`. Not root-caused. REPORT "FYI F-19" for the owner.
+- REQUEST to seams (FYI, your lane takes the merge seams and small asks; the Director decides who owns it): F19 above.
+  Quest 1 under `--autostart` freezes ~1 run in 4 at Rivet's "Okay" line, main 3982af1a included (1 of 5), main thread
+  parked in a wait. Repro: `evidence/perf/f19-freeze/hunt.ps1 -Runs 6` (stops at the first freeze, writes the thread split).
+  I am not touching the save / stream code (not perf's, and not root-caused).

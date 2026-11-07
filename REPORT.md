@@ -61,10 +61,24 @@ Journal: `JOURNAL.md`. Clips and stills: `C:\Users\kazda\kiro\gtai-masters\d9\pe
   18 ms) for a smaller cost than first measured: **+0.06 of a core on the riot, +0.09 on the drive** (two copies of the same
   setting differ by up to 0.03). All of it is on the game's main thread. A different present mode (mailbox) gives the same
   steadiness for the same CPU, so there is no cheaper way to (b) on this engine. Evidence: `evidence/perf/l11-present/`.
+- **Why it costs that (F18, found 17:20 in the engine's Windows source):** the limiter sleeps to 1 ms before the frame is
+  due and then spins the CPU for that last millisecond (1 ms of 16.7 = 0.06 of a core): the measured cost, exactly. The
+  engine's low-power mode sleeps instead of spinning but wakes up to ~1 ms late; whether that keeps (b)'s steadiness is a
+  later A/B, so (b) may become nearly free.
 - **Options:** (a) no limiter at 60 Hz (default: least CPU). (b) the limiter at 60 Hz too (steadier delivery). (c) a
   'frame pacing: efficient / steady' option in the settings, default (a). Evidence: `evidence/perf/l10-cap/ab.json`.
 - **Recommended:** (c) when a settings screen for it exists; (a) until then. The bigger lever above 60 Hz is drawing
   in-between positions (interpolation), which would make 144 Hz look smoother than 60: a look change, so a later Call.
+
+### FYI F-19 (not a choice, needs an owner): quest 1 can freeze at its first line, on main too
+- Found 17:10-17:40 while measuring L13: started with `--autostart`, quest 1 **freezes in about 1 run in 4** (9 of 33 windowed
+  runs, editor binary): the picture stops on Rivet's "Okay" line, Esc does nothing, Windows marks the game "not responding",
+  and its main thread uses 0 CPU (it is stuck waiting, not busy). It happens on this morning's **main** too (1 of 5), with
+  every perf lever switched off, and with the window on top. So it is an existing bug, not a perf change.
+- Suspects (the only places the main thread waits on another thread): the city chunk reads (`chunk_source.gd` `take`), the
+  autosave thread (`save_worker.gd`, quest 1 saves as it starts), the threaded texture loads. Evidence:
+  `evidence/perf/f19-freeze/` (the hunt script, the frozen run's thread split and log), LEDGER F19.
+- Not yet checked: whether a real Start click (not `--autostart`) freezes too, and the release export.
 
 ## Kept so far (pixel-free, on the branch; numbers in LEDGER)
 
@@ -74,6 +88,10 @@ Journal: `JOURNAL.md`. Clips and stills: `C:\Users\kazda\kiro\gtai-masters\d9\pe
 - **L12 the same cap while minimized** (16:52): a minimized game used to spin at ~145 loops a second and cost MORE CPU
   than on screen (riot 0.35 -> 0.58 cores); now the King fight minimized costs **0.73 -> 0.38 cores (-49 %)**, the same ticks,
   nothing on screen changes (`--frame-cap=off` is the before).
+- **L13 the title card idles** (17:26): the slice's title card is a still picture but was redrawn 60 times a second;
+  it now runs in the engine's low-processor mode (a frame is drawn only when something on it changes, a button's hover
+  still redraws at once): **0.033 -> 0.004 cores (-88 %)**, the card pixel-identical. The pause card measured no gain (the
+  city behind it redraws anyway), so it is left as it was (one value, `MenuIdle.PAUSED_IDLE`). `--menu-idle=off` is the before.
 - L2 CircleFan fan build (riot p99 22.2 -> 11.9 ms), L3 strip prefetch (riot worst 27.2 -> 18.0 ms), L5 snapshot passes
   (-40 % of that pass's CPU, no frame claim), **L8 lossless WebP effort** (14:05): the pck 227.7 -> 215.2 MB
   (-12.5 MB) with every mip of every texture decoding bit-identical; costs ~1.7x texture encode at import.

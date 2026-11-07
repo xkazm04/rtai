@@ -301,7 +301,13 @@ CONTENDED(2-8) in 14 of 36 runs (the other lanes' Godots), 0 script errors in 36
   cores: less than drawing a still card costs (0.03), so the main thread is blocked, not idle. Counts (windowed, editor
   binary): d9-perf with MenuIdle 3 of 10, d9-perf `--menu-idle=off` 4 of 12, d9-perf `--menu-idle=off --strip-prefetch=off`
   (no L3) 1 of 5, **main 3982af1a 1 of 5**; with the window pinned TOPMOST too (so not occlusion). So it is not a perf lever.
-  Not root-caused (no stack taken: the session ran out). It is a game bug a player can hit at the first line of the slice;
+  17:39 (`evidence/perf/f19-freeze/`, `hunt.ps1`): a frozen run reads `Process.Responding = false` (a normal run: true) and
+  `thread_cpu.ps1` finds **0 CPU on the engine's main thread over 3 s** (process 0.005 cores): the main thread is parked in a
+  blocking wait (a deadlock or a wait that never returns), not a slow loop. The waits the main thread can make in our code:
+  `features/city/stream/chunk_source.gd` `take()` (`WorkerThreadPool.wait_for_task_completion`), `core/save/save_worker.gd`
+  `flush()` / `_collect()` (`Thread.wait_to_finish`; the quest autosaves as it starts), and `ResourceLoader.load_threaded_get`
+  (`street_strips.gd` = L3, but L3 off still froze; `city_textures.gd`). Not root-caused (no native stack: the official
+  build has no symbols; the session ran out). It is a game bug a player can hit at the first line of the slice;
   REPORT carries it to the owner. Next: `thread_cpu.ps1` + a native stack dump (procdump / `--gpu-validation` off) of a
   frozen run, and the same count on the release export. A CPU number from a windowed quest-1 run must check the run did not freeze.
 
