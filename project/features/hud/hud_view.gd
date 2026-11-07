@@ -15,6 +15,11 @@ const ICON_W: float = 190.0
 ## n8-hud: the narrowest notice paper (its tape strip needs the width) and the ticket's name size.
 const NOTICE_MIN_W: float = 240.0
 const WEAPON_SIZE: int = 24
+## n8-hud: the beat panel as wide as its words and its heat pips (BEAT_FIT), at most BEAT_MAX_W;
+## false = the fixed 640 px strip. BEAT_PAD: the paper right of the longer of the two.
+const BEAT_FIT: bool = true
+const BEAT_MAX_W: float = 640.0
+const BEAT_PAD: float = 30.0
 
 var state: HudState = HudState.new()
 var art: HudArt = null
@@ -52,13 +57,25 @@ static func subtitle_top(screen_h: float) -> float:
 
 
 func _top_left() -> void:
-	_panel(Rect2(MARGIN, MARGIN, 640, 96))
+	_panel(Rect2(MARGIN, MARGIN, beat_width(state.head, state.heat_max), 96))
 	_say(Vector2(MARGIN + 18, MARGIN + 38), state.head, 30)
 	_say(Vector2(MARGIN + 18, MARGIN + 80), state.heat_label, 24)
 	for i: int in state.heat_max:
 		var pip: Rect2 = Rect2(MARGIN + 110 + i * 46, MARGIN + 52, 38, 38)
 		var id: StringName = &"wanted_pip_police" if i < state.heat else &"wanted_pip_empty"
 		draw_texture_rect(art.texture(id), pip, false)
+
+
+## The beat panel's width: the head's words at 30 px or the heat row (label + pips), whichever
+## is longer, plus BEAT_PAD; never wider than BEAT_MAX_W (the fixed strip when not BEAT_FIT).
+static func beat_width(head: String, heat_max: int) -> float:
+	if not BEAT_FIT:
+		return BEAT_MAX_W
+	var words: float = (
+		ThemeDB.fallback_font.get_string_size(head, HORIZONTAL_ALIGNMENT_LEFT, -1, 30).x
+	)
+	var pips: float = 110.0 + maxf(heat_max - 1, 0) * 46.0 + 38.0
+	return minf(maxf(18.0 + words, pips) + BEAT_PAD, BEAT_MAX_W)
 
 
 ## The one-line notice: centred just above the subtitle box, clear of the objective prompt; n8-hud:

@@ -65,3 +65,13 @@ func test_the_drawn_panels_carry_no_red() -> void:
 				if c.a > 0.5 and c.s > 0.45 and c.v > 0.35 and hue_off < 0.04:
 					red += 1
 		assert_lt(red, 40, "%s has %d red px (sampled)" % [id, red])
+
+
+func test_the_beat_panel_fits_its_words_and_pips() -> void:
+	var short: float = HudView.beat_width("4/6  Get Gloria back", 3)
+	var long: float = HudView.beat_width("5/6  Rated for Appliances, then the docks and home", 3)
+	assert_lt(short, 420.0, "a short head leaves the field: %.0f" % short)
+	assert_gt(long, short, "a longer head widens the paper")
+	assert_lte(long, HudView.BEAT_MAX_W)
+	var pips_only: float = HudView.beat_width("", 5)
+	assert_gte(pips_only, 110.0 + 4 * 46.0 + 38.0, "five pips fit on the paper")
