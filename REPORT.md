@@ -1,6 +1,6 @@
-# n8 street: the street cast under the angled view (REPORT, freeze at iteration 14)
+# n8 street: the street cast under the angled view (REPORT, freeze at iteration 15)
 
-Written 05:20, updated 06:25 (it12), 07:05 (it13) and at the freeze (it14, 07:55): the gates, the exe
+Written 05:20, updated 06:25 (it12), 07:05 (it13) at the it14 freeze (07:55) and at the it15 freeze (08:25): the gates, the exe
 and its command lines below are on the final code. Lane journal: `JOURNAL.md`. Stills and clips:
 `C:\Users\kazda\kiro\gtai-masters\n8\street\` (`frames.json`, 15 entries, best first;
 the combined clip `street_combined_tilt70_50s.mp4`).
@@ -26,12 +26,15 @@ selected by the view row's art key (`p70` / `p55`) or `cards`, never by a pitch.
 - (it14) **The suit and cap peds wear their v3 look as one set** (still, walk, fall): the library's
   ped_suit_70_v3 / ped_cap_70_v3 (A) with the walks redrawn on my REQUEST (ped_suit_walk_70_v4,
   ped_cap_walk_70_v2, A). Before, a dark charcoal suit fell into a lighter grey corpse; now one
-  warm-grey suit. The cap ped wears an oatmeal hoodie under a near-black cap; his fall grids are
-  toned to it (`tools/art/street_value_match.py`, no v3 fall drawn yet). At 32 px/m the crowd's
+  warm-grey suit. The cap ped wears an oatmeal hoodie under a near-black cap; (it15) his long fall
+  is the library's drawn v3 fall (ped_cap_fall_70_v4, A, served on my REQUEST at 07:46), his short
+  fall stays toned (`tools/art/street_value_match.py`; no v1-layout v3 twin exists). At 32 px/m the crowd's
   value spread widens (the cap peds read as light figures under dark caps).
   `peds_suit_cap_v3_before_after_tilt70_32ppm_kill_light_t59_240.png` (masters, frames.json #2),
   close-ups `ped_suit_v3_identity_before_after_tilt70_64ppm_kill_light_t59_72_240.png`,
-  `ped_cap_v3_identity_before_after_tilt70_64ppm_kill_light_t59_68_72_240.png`.
+  `ped_cap_v3_identity_before_after_tilt70_64ppm_kill_light_t59_68_72_240.png`; it15 (in
+  `evidence/`): `ped_cap_long_fall_toned_vs_v4_grid.png`,
+  `ped_cap_fall_v4_tilt70_64ppm_board_kill_light_t59_65_72_240_x2.png`.
 - **Contractors** (quest 1 dock): standing cards and drawn corpses at both pitches, one body
   length at every pitch. `contractor_drawn_corpse_before_after_tilt70_48ppm_x2_quest1_dock9.png`.
 - **Hit reactions and deaths at height**: cops, riot, SWAT, thug and peds buckle, fall and lie as
@@ -68,8 +71,8 @@ selected by the view row's art key (`p70` / `p55`) or `cards`, never by a pitch.
   grid). Scouted for it12: walk while no gun is out, the parts when it comes out (a pop to judge).
 - **Falls a touch lighter than walks** for the jogger, the worker and the hood (cloth median value
   +0.07-0.13 measured, it14). At 32 px/m each reads as the same person; a value tone was tried on
-  the jogger and rejected (it speckles the leggings). The cap's fall carries a tone in place of a
-  drawn v3 fall (REQUEST to assets: ped_cap_fall_70_v3).
+  the jogger and rejected (it speckles the leggings). The cap's long fall is drawn in v3 since it15;
+  his short fall still carries the tone.
 - The city seed-5 corpse "black bar" was the blood's head mark (view, it12), fixed on n8-view.
 
 ## Calls for the owner
@@ -93,8 +96,9 @@ selected by the view row's art key (`p70` / `p55`) or `cards`, never by a pitch.
    `quest1_dock9_corpse_decay_before_after_combo_32ppm_t15000.png`. `top` keeps every corpse
    (its sprite path is untouched); the same law in quest 1's sim would be the quest's call.
 
-8. **The cap ped's fall** (it14): toned to the v3 oatmeal hoodie (BUILT) vs a drawn v3 fall
-   (REQUESTed, not served before the freeze); before = the six p70 files at e87ed678.
+8. **The cap ped's fall** (it14, it15): the long fall is now the drawn v3 fall (BUILT, it15:
+   ped_cap_fall_70_v4); the short fall stays toned to the v3 oatmeal hoodie (BUILT) vs a drawn v1-layout
+   v3 twin (not REQUESTed in time); before = the six p70 files at e87ed678.
    `ped_cap_v3_identity_before_after_tilt70_64ppm_kill_light_t59_68_72_240.png`.
 
 Exe (`build/export/windows/RTAI.exe`, exported 07:47 from 2de46fa1, the final code; built with
@@ -122,8 +126,8 @@ numbers above stand; tonight's changes are texture swaps of the same size).
 
 ## Next steps
 
-1. Cut `ped_cap_fall_70_v3` when assets serve it (`street_fall.py --back-from-away`) and retire the
-   cap fall tone.
+1. The cap's short fall: REQUEST a v1-layout v3 twin (ped_cap_fall_70 round 0137's poses in the
+   ped_cap_70_v3 identity), cut it with `street_fall.py`, retire the last tone.
 2. City cops still glide on head cards over parts: every city cop is armed from tick 60, so a
    walk grid needs armed walk strips (REQUEST them, or a pose-held whole figure per weapon).
 3. SWAT's p70 camera-facing long corpse is a touch short (1.43x): a library redraw.

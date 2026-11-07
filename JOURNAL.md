@@ -1462,3 +1462,21 @@ NEXT (after the freeze; for a later night or the Director's merge):
   (`street_value_match.py ped_worker_walk.png ped_worker_long_fall.png <out>`), for a later night.
 - Session end 08:01: tree clean; the freeze state is 2de46fa1's code (gates and the exe on it), the
   later commits are docs and evidence. Scratch renders deleted (logs kept).
+
+## Iteration 15 (08:00, BUILD, freeze 08:30)
+Read: JOURNAL tail, git log, the other lanes' journals (view's l.1137 REQUEST was answered at my
+l.1189; no new REQUEST to street), the library: **ped_cap_fall_70_v4 (A, 07:46) served my it14
+REQUEST** (v3 B with a lighter hoodie superseded by it).
+- MILESTONE 7db6c352: the cap ped's long fall drawn in his v3 identity: `street_fall.py
+  keyed/street/ped_cap_fall_70_v4.png .../p70/ped_cap_long_fall.png --back-from-away` (no stretch;
+  lying frames raw 1.77x / 1.70x of the stand). The tone retires on that grid; the short grid keeps
+  it (the v4 sheet is the long layout). LOOKED: the grid toned (it14) | v4 side by side
+  (evidence/ped_cap_long_fall_toned_vs_v4_grid.png): same poses and lengths, the hoodie a truer
+  oatmeal (less pink), the cap darker. Board `-s res://dev/showcase/street_crowd.gd -- --view=tilt70
+  --ppm=64 --kill=light` exit 0, 0 SCRIPT ERROR: t59/65/72/240 one oatmeal hoodie standing,
+  buckling, lying (evidence/ped_cap_fall_v4_tilt70_64ppm_board_kill_light_t59_65_72_240_x2.png).
+  Provenance x1. Unit --changed (full) 1513/0, lint 15/15 (hook).
+- DECISION street/ped-v3-identity re-check (docs/decisions.md).
+- Registry rules applied (it15): generative-artifact-gating (A grade, judged beside the walk it
+  meets), sprite-and-atlas-production (the same cut script and cell rule), motion-quality-gating
+  (stand -> buckle -> lie on the deterministic board), render-submission-economy (a texture swap).
