@@ -1248,3 +1248,21 @@ MILESTONE 05:18 exe dry run (de-risks the freeze): `--export-release windows-sho
 --fixed-fps 60 --quit-after 200 --write-movie <abs> -- --boss=servo --bot=boss --servo-ghost=dent
 --view=combo --rigs --seed=2`: exit 0, 0 SCRIPT ERROR, the cream van seized at f130 (looked; raw
 .avi deleted). REPORT ## Exe written with the command lines (the freeze re-exports HEAD).
+MEASURED 05:23 VAN_BETWEEN_55 (the seized depot van turns at 55 under combo): cut p55 with
+van_cream_between_55 (9 columns, 4032 x 4480, uncompressed import: +32 MB of texture), VehicleViews.FINE
+"p55": [4] (scratch edit), filmed Servo depot combo 64 px/m seed 2 (600 frames, 0 SCRIPT ERROR) against
+the built atlas: 11 of frames 100-299 differ, by 50-72 px each (noise; no cell change). No gain on
+screen: NOT adopted, scratch edits reverted (git checkout of the two files, re-imported, tree clean).
+FRICTION: a Python output path written /c/Users/... resolves to C:\c\Users on Windows; C:\c is an
+unrelated pre-existing folder (not touched; my file was not written there). Use C:/ paths in Python.
+Rules applied: motion-quality-gating (the 55 in-betweens judged on the moving seize, A/B same seed).
+
+NEXT (iteration 20, in order):
+1. Answer any REQUEST to vehicles (none at 05:24). If view answers the bay-number stroke REQUEST,
+   merge n8-view and film the depot at 32 px/m (bay 3 over the cream van).
+2. Raise the weakest item. Candidates: the cream van in the King boulevard / quest 1 if vans park
+   there (look at 32 px/m); a traffic van at 48 px/m (vehicle_frame, a seed that spawns one).
+3. Freeze 08:30: re-export `windows-showcase` from HEAD (REPORT ## Exe has the line; 10 s),
+   smoke it, final gates (unit no-arg, reel top + tilt70, scenarios, top framemd5), finish
+   REPORT.md (gates line 8 -> the final commit).
+Session end ~05:30.
