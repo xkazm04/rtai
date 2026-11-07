@@ -454,3 +454,23 @@ NEXT (it6), replaces the list above:
 - 13:32 FINDING: the 70 armed grids measured the same way (head line + head width per facing): no scale
   outlier. SWAT 70's spliced profile row (round 1315) has head width 63 px vs 61-67 on the other facings;
   its head line (24-30) moves with the stride bob, as drawn. Nothing to scale at 70.
+
+## Iteration 6 (director it8, 13:33-14:33), BUILD
+
+Read: JOURNAL it5 NEXT, git log, d9-rivet JOURNAL (it13: no REQUEST to seams), library JOURNAL (13:24: no
+open REQUEST; my swat55 r2 REQUEST withdrawn, ACKed). Registry rules applied: depth-ordered-layered-art
+(the print's value steps, not hue, separate layers: leaf over soil over rim), generative-artifact-gating
+(all 10 cells looked at before/after the lift; a palette guard on the reserved vermilion),
+motion-quality-gating (before/after the same scene, seed and frame, at 32 and 64 px/m).
+- 13:45 MILESTONE item 4 quality (36d9b37b): the planter's dark mass at 32 px/m (NEXT 3 of it5) measured: the
+  world print's density (0.93 - lum) * 1.25 put planter_v3's leaves (lum 0.46) in the mid wash and its soil
+  (0.20) in the dark wash, so leaves, soil and rim printed as one block; the p70 (n8) strip prints the same.
+  New tool `tools/art/planter_value_lift.py` lifts leaf V**0.58 and soil V**0.45 at half chroma (leaf
+  lum 0.46 -> 0.61, soil 0.25 -> 0.45) on both strips. FRICTION (3 min): the first stronger soil lift
+  turned the brown orange: 82 px at 55 over the vermilion plate's 0.26 threshold (offline check of the
+  shader's formula); the soil now loses half its chroma and the tool fails above density 0.2 (max 0.07).
+  Filmed city_frame focus 11 at tilt70 and tilt, 32 and 64 px/m: the two rosettes read light in every
+  box. Masters `planter_value_lift_before_after_p70_p55_{32ppm_cityframe11_x3,64ppm_cityframe11}.png`.
+  test_prop_cards 13/0, lint 15/15. Provenance: 2 lines. DECISION in docs/decisions.md.
+  Still: at 32 px/m the box's rim and inner ink stroke stay dark (the props' 4 px inner stroke over a
+  ~1 m box); left.
