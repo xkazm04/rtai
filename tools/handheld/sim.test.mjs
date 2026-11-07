@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { affinityMask, deviceRow, gpuIndexFrom, parseArgs } from './sim.mjs';
+import { affinityMask, deviceRow, gpuIndexFrom, parseArgs, projectDir } from './sim.mjs';
 
 test('affinity mask covers the first n logical CPUs', () => {
   assert.equal(affinityMask(8), '255');
@@ -18,4 +18,11 @@ test('a dashed device id finds its row; args split at --', () => {
   assert.equal(deviceRow('switch-handheld').sim_threads, 3);
   const a = parseArgs(['--device=deck40', '--ticks=600', '--no-device', '--', '--ppm=48']);
   assert.deepEqual([a.device, a.ticks, a.noDevice, a.extra], ['deck40', 600, true, ['--ppm=48']]);
+});
+
+const BACKSLASH = String.fromCharCode(92);
+
+test('--project picks another checkout, else this one', () => {
+  assert.match(projectDir(parseArgs(['--project=C:/x/scratch/project'])).replaceAll(BACKSLASH, '/'), /scratch\/project$/);
+  assert.match(projectDir(parseArgs([])).replaceAll(BACKSLASH, '/'), /d9-handheld\/project$|\/project$/);
 });

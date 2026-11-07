@@ -9,7 +9,8 @@
 // Usage: node tools/handheld/sim.mjs --device=deck [--scene=reel|city|king|servo] [--ticks=1800]
 //   [--gpu=igpu|dgpu|<index>] [--threads=<n>] [--priority=belownormal|normal] [--label=<name>]
 //   [--out=<dir>] [--no-device] [--movie=<abs .avi>] [--renderer=forward_plus|mobile|compat]
-//   [--bin=<gui exe>] [--suspend=<after s>:<for s>] [-- <extra user args for the arena>]
+//   [--bin=<gui exe>] [--suspend=<after s>:<for s>] [--project=<dir>] [-- <extra user args for the arena>]
+// --project=<dir> runs another checkout's project (an import-settings A/B arm in a scratch worktree).
 // --no-device runs the same pin/GPU without the --device flag (the desktop row: the A side).
 import { spawn, spawnSync } from 'node:child_process';
 import { mkdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs';
@@ -47,6 +48,9 @@ export function deviceRow(id, table = JSON.parse(readFileSync(join(ROOT, 'projec
   const want = id.replaceAll('-', '_');
   return table.devices.find((d) => d.id === want) ?? null;
 }
+
+/** The Godot project to run: `--project=<dir>` (an A/B arm in a scratch worktree), else this checkout's. */
+export const projectDir = (a) => (a.project ? resolve(a.project) : join(ROOT, 'project'));
 
 /** Affinity mask over the first `n` logical CPUs (on SMT, n = 2 x cores). */
 export const affinityMask = (n) => (2n ** BigInt(n) - 1n).toString();
