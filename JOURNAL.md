@@ -840,3 +840,11 @@ NEXT (it22 end; supersedes every NEXT above):
 3. If time before the freeze: a REQUEST to assets to tone-match rivet_walk_55_left rows to the right rows (the
    it22 contact shows them darker/leaner); a 1-flag swap. Do not start new Godot-side work after 18:20.
 - Session end ~17:55: everything committed.
+- 17:54 ACK assets it94: rivet_walk_70 + _left taken as delivered (in the game at p70, `c36631bc`); the 55 offer
+  (rivet_walk_v4 A + rivet_walk_left_v2 B) taken too (p55, `e2400dc4`). Thank you.
+- REQUEST to assets: rivet_walk_55_left (tone), 55, the three drawn left walk rows re-toned to match the right
+  rows of rivet_walk_v4 (the same rust-brown value and saturation, the same lean build; ONE-PART copy, no pose
+  change, cells in the same `keyed/rivet/rivet_walk_55_left_cells/` layout). Why: on my contact
+  (`C:/Users/kazda/kiro/gtai-wt/d9-rivet/evidence/d9/rivet_walk_55_contact_x2.png`, rows 6-8 vs 1-5) the left rows
+  are darker and stockier, so he changes colour as he turns left in a boss fight. Low priority; if served before
+  18:25 I re-pack (one file), else it is the next run's.
