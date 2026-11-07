@@ -32,6 +32,19 @@
       "zoom_k": 1
     },
     {
+      "id": "deck_bench",
+      "max_fps": 0,
+      "note": "the Deck's profile uncapped (vsync off, max_fps 0): the simulator's headroom measure, never a play mode",
+      "sim_gpu": "integrated",
+      "sim_threads": 8,
+      "stretch_mode": "canvas_items",
+      "tier": "handheld",
+      "vsync": "disabled",
+      "window_h": 800,
+      "window_w": 1280,
+      "zoom_k": 1
+    },
+    {
       "id": "handheld_1080",
       "max_fps": 60,
       "note": "Windows handheld class (Ryzen Z1/Z2 or Lunar Lake class APUs, 7 to 8.8-inch 1920x1080 panels): runs the Windows build; stretch_mode viewport draws at the 1280x800 base and scales up",
