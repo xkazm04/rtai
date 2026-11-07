@@ -1016,3 +1016,12 @@ shadow band, no new item or pass; measured the drive's draw calls), depth-ordere
 cast stays on the shadow band under every card), concept-scene-parity + motion-quality-gating
 (same seed, scenario and frame before/after, one data value apart; judged at 32 and 48 px/m),
 tiling-texture-acceptance (n/a this session: no strip changed).
+- MILESTONE aa795463 + 0952dd47 the lamp post (cast_m 1.6) and traffic light (1.8) take the pole
+  cast too (data only). EVIDENCE same drive at zoom 1.5 (48 px/m), HEAD vs HEAD+cast_m, located by
+  frame diff: the corner lamp's flat silhouette streaked up-left to the corner and the traffic
+  light's arm shadow floated up-right of its card as a separate hatched bar; after, a thin stroke
+  from each post base, down-right with the cars' shadows. `it25_lamp_cast_tilt70_48ppm_before_top_
+  after_bottom.png`, `it25_traffic_light_cast_tilt70_48ppm_before_after_x2.png` (named in the
+  sign's frames.json note; frames.json stays 15). No blob for the globe/signal head (DECISION).
+  GATE `top` framemd5 IDENTICAL after each (top25b, top25c vs top22.md5). Unit full no-arg at
+  7d9b32a1: 1524 passed, 0 failed (no FLAKY). Lint 15/15 every commit.

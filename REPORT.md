@@ -28,7 +28,8 @@ head commit. Branch `n8-city`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n8\ci
    `it16_lamp_busstop_v4_48ppm_before_after.png`, `it22_busstop_lamp_v55_tilt48_before_after_x2.png`,
    `it22_kerb_bollard_sign_tilt70_32ppm_before_after_x3.png` (+ the 48 px/m close-up),
    `it19_quest1_tuckin_crates_tilt70_32ppm_before_after_x2.png`, `it25_street_sign_cast_tilt70_32ppm_before_after_x3.png`
-   (the sign's pole casts a hatched stroke from its foot, `cast_m` in its props row).
+   (the sign, lamp and traffic light cast a hatched pole stroke from the foot, down-right like every
+   other shadow: `cast_m` in their props rows; `it25_lamp_cast_...`, `it25_traffic_light_cast_...`).
 4. **Boss arena dressing** (item 4). Servo's depot (shutter bays, conveyors, cartons, pallets, roll
    cages) and the King's district stand as cards around the arena at 55 and 70, swapping with combo.
    Evidence: `it7_depot_dressing_tilt55_before_after.jpg`, `it7_king_district_dressing_tilt55_before_after.jpg`,
@@ -57,8 +58,9 @@ head commit. Branch `n8-city`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n8\ci
 ## What does not work / gaps
 
 - The baked crowd (multimesh peds) is not occluded, only rigs.
-- The other kerb props keep their flat art's hatched silhouette as the ground shadow (the street
-  sign has a drawn pole cast since iteration 25; the bollard's and lamp's read as shadows).
+- The squat kerb props keep their flat art's hatched silhouette as the ground shadow (it reads as
+  one); the three poles (street sign, lamp, traffic light) cast a drawn stroke since iteration 25,
+  without a blob for the lamp globe or the signal head.
 - The 55 street sign and lamp are B sheets (a little steep); accepted for the matched design.
 - Roof dressing cards (`roof_dressing_v3`) not integrated: the baked roofs already paint them.
 
