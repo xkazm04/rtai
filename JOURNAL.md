@@ -893,3 +893,25 @@ SCRIPT ERROR: view's merge kept top too.
 all non-collar gate clusters are amber lenses (hue > 30); no rust cluster. Not a guarantee (the
 pickup is variant 5 of 9 in traffic; not seen near the camera): closed unless one shows.
 Evidence json: evidence/n8-vehicles/iteration16.json.
+03:12 GATE scenarios (raw `run_scenarios.gd`, on f09f4456 + the merge): 52 ran, 1 failed:
+scenario_rig_stress "200 people: rig p50 1.124 ms > 1.000 ms" (the wall-clock budget; ran while
+other lanes' Godot runs loaded the machine). Re-run alone via `node tools/tests/run_scenarios.mjs
+--only=scenario_rig_stress --quiet-wait=3`: 1 passed. Replay, vehicle drive ("replay":
+"identical"), quest1 pass.
+MILESTONE 03:17 brief item 5, the traffic density cost on the real drive (until now only the
+synthetic card bench of 23:20). bench.lock taken by me (absent before; released by the script),
+view's recipe (scratch/vehicles/it16/bench.sh): release export `windows-bench` of f09f4456 (with
+the n8-view merge), `RTAI-bench.exe -- --scenario=drive_dense --secs=30 --zoom=<1.0|1.5>
+--vsync=disabled --view=<top|tilt70>`, 2 runs each, alternated. evidence/n8-vehicles/bench-it16/:
+| run | render CPU avg / p99 ms | draw calls | rig p50 / p99 ms | visible | p99 CPU ms | low 1 % fps |
+| 32 px/m top 1 / 2 | 0.355 / 0.717, 0.360 / 0.786 | 371 / 371 | 0.444 / 1.00, 0.444 / 1.07 | 22.7 | 32.5 / 32.0 | 30.1 / 30.5 |
+| 32 px/m tilt70 1 / 2 | 0.416 / 0.812, 0.370 / 0.759 | 361 / 363 | 0.581 / 1.44, 0.547 / 1.42 | 24.8 | 32.2 / 32.0 | 28.6 / 29.4 |
+| 48 px/m top 1 / 2 | 0.325 / 0.699, 0.351 / 0.727 | 252 / 252 | 0.456 / 1.05, 0.478 / 1.26 | 9.8 | 32.1 / 32.2 | 29.2 / 29.1 |
+| 48 px/m tilt70 1 / 2 | 0.326 / 0.686, 0.378 / 0.717 | 254 / 255 | 0.559 / 1.40, 0.606 / 1.41 | 10.9 | 32.1 / 32.1 | 29.7 / 29.9 |
+Reading: the cards cost nothing visible on the drive: render CPU within run-to-run noise (+0.01 to
++0.06 ms), draw calls 10 FEWER at 32 px/m (the culled card MultiMesh vs the flat car layers) and +2
+to +3 at 48; rig time +0.1 ms p50 / +0.4 ms p99 at 70 (two more people in view: the 70 view shows
+more ground; view's it5 finding, not the cars). avg frame 16.7 ms in every run, 0 frames over
+50 ms; the p99 ~32 ms / low 1 % ~30 fps are the vsync-off present stalls in BOTH views (the raw
+frame_ms alternates ~2 / ~31 ms; view's note). Not CONTENDED by the lock rule (lock held), but
+other lanes' Godot processes may have run: GPU-side numbers are not isolated.
