@@ -24,8 +24,11 @@ const RADIUS_M: float = 14.0
 const SELECT_EVERY: int = 4
 const PX_PER_M: float = 32.0
 const MAX_STEPS: int = 4
+## Each body plan's pool also holds the fresh corpses' slots (RigSelect.CORPSE_PINS).
 const PREWARM: Dictionary[int, int] = {
-	BodyPlan.Kind.RIVET: 1, BodyPlan.Kind.COP: MAX_FULL, BodyPlan.Kind.PED: MAX_FULL
+	BodyPlan.Kind.RIVET: 1,
+	BodyPlan.Kind.COP: MAX_FULL + RigSelect.CORPSE_PINS,
+	BodyPlan.Kind.PED: MAX_FULL + RigSelect.CORPSE_PINS,
 }
 
 var feed: RigFeed = RigFeed.new(512)
@@ -36,6 +39,9 @@ var prewarm_ms: float = 0.0
 ## Per-frame cost of the rig work (selection + pose steps), for the section 20 rig budget.
 var last_us: int = 0
 var ticks_stepped: int = 0
+## How long a fresh corpse keeps its rig past the living MAX_FULL (RigSelect.fresh_dead): until it
+## leaves the feed by default; a host with a crowd atlas (the city) sets CORPSE_HOLD_TICKS.
+var corpse_hold_ticks: int = RigSelect.HOLD_NO_ATLAS
 
 var _clock: SimClock = null
 var _last_tick: int = 0
@@ -44,6 +50,7 @@ var _by_actor: Dictionary[int, CutRig] = {}
 var _full: PackedByteArray = PackedByteArray()
 var _rank: Dictionary[int, int] = {}
 var _select_in: int = 0
+var _died_at: Dictionary[int, int] = {}
 
 
 func setup(ctx: WorldContext) -> void:
@@ -131,7 +138,14 @@ func _assign() -> void:
 	if _select_in > 0 and _remap():
 		return
 	_select_in = SELECT_EVERY
-	var chosen: PackedInt32Array = RigSelect.nearest(feed, focus, RADIUS_M * PX_PER_M, MAX_FULL)
+	var pins: Dictionary[int, int] = RigSelect.fresh_dead(
+		feed, _by_actor, _died_at, ticks_stepped, corpse_hold_ticks
+	)
+	if not ViewMode.shared().cards:  # top's atlas corpse is a drawn body: flat views stay as they were
+		pins.clear()
+	var chosen: PackedInt32Array = RigSelect.nearest(
+		feed, focus, RADIUS_M * PX_PER_M, MAX_FULL, pins
+	)
 	@warning_ignore("return_value_discarded")
 	_full.resize(feed.count)
 	_full.fill(0)
@@ -140,7 +154,7 @@ func _assign() -> void:
 	for r: int in chosen.size():
 		var i: int = chosen[r]
 		keep[feed.ids[i]] = i
-		_rank[feed.ids[i]] = r
+		_rank[feed.ids[i]] = 0 if pins.has(feed.ids[i]) else r  # a fall poses at the full rate
 		_full[i] = 1
 	for actor: int in _by_actor.keys():
 		if not keep.has(actor):

@@ -13,6 +13,11 @@ const ROLL_S: float = 1.6
 var px: float = 32.0
 var pal: PaletteTokens = PaletteTokens.shared()
 
+## n8-view: under a card view the bays' apron marks (the box and its number, the seize's target)
+## draw apart, on ServoBodyView's marks child over the vehicles band, so a stage van parked on a
+## bay never hides its number (vehicles it16 REQUEST). False (flat views) = one ground pass.
+var marks_apart: bool = false
+
 
 func draw(c: CanvasItem, t: ServoTuning, origin: Vector2, running_s: float) -> void:
 	var u: float = clampf(running_s / ROLL_S, 0.0, 1.0)
@@ -20,6 +25,12 @@ func draw(c: CanvasItem, t: ServoTuning, origin: Vector2, running_s: float) -> v
 	for i: int in t.bays.size():
 		_bay(c, origin + t.bays[i], t.bay_w_m, i + 1, open)
 	_belt(c, t, origin, running_s)
+
+
+## The bays' apron marks alone (marks_apart: the marks child draws them over the vehicles band).
+func marks(c: CanvasItem, t: ServoTuning, origin: Vector2) -> void:
+	for i: int in t.bays.size():
+		_mark(c, origin + t.bays[i], t.bay_w_m, i + 1)
 
 
 ## A roller door seen from above: the door strip, slats, two bumpers and the apron number; `open`
@@ -48,19 +59,8 @@ func _bay(c: CanvasItem, at: Vector2, w: float, n: int, open: float) -> void:
 		c.draw_rect(
 			Rect2(bump - Vector2(0.18, 0.3) * px, Vector2(0.36, 0.6) * px), pal.color(&"ink")
 		)
-	var apron: Rect2 = Rect2((at + Vector2(-w * 0.5, 0.6)) * px, Vector2(w, 2.2) * px)
-	c.draw_rect(apron, Color(pal.color(&"paper"), 0.12))
-	c.draw_rect(apron, Color(pal.color(&"paper"), 0.5), false, 2.0)
-	var font_px: int = int(px * 0.9)
-	c.draw_string(
-		ThemeDB.fallback_font,
-		(at + Vector2(-0.3, 2.3)) * px,
-		str(n),
-		HORIZONTAL_ALIGNMENT_LEFT,
-		-1,
-		font_px,
-		Color(pal.color(&"paper"), 0.6)
-	)
+	if not marks_apart:
+		_mark(c, at, w, n)
 
 
 ## The belt: rails, rollers, chevrons (moving at belt_mps after `running_s`) and riding cartons.
@@ -100,3 +100,20 @@ func _belt(c: CanvasItem, t: ServoTuning, origin: Vector2, running_s: float) -> 
 			int(h),
 			pal.color(&"ink")
 		)
+
+
+## A bay's apron: the painted box and the bay number.
+func _mark(c: CanvasItem, at: Vector2, w: float, n: int) -> void:
+	var apron: Rect2 = Rect2((at + Vector2(-w * 0.5, 0.6)) * px, Vector2(w, 2.2) * px)
+	c.draw_rect(apron, Color(pal.color(&"paper"), 0.12))
+	c.draw_rect(apron, Color(pal.color(&"paper"), 0.5), false, 2.0)
+	var font_px: int = int(px * 0.9)
+	c.draw_string(
+		ThemeDB.fallback_font,
+		(at + Vector2(-0.3, 2.3)) * px,
+		str(n),
+		HORIZONTAL_ALIGNMENT_LEFT,
+		-1,
+		font_px,
+		Color(pal.color(&"paper"), 0.6)
+	)
