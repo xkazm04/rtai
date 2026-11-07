@@ -43,3 +43,32 @@ func test_cut_polys_fall_back_to_the_area_quad_without_city_outlines() -> void:
 		cut[0],
 		PackedVector2Array([area.position, Vector2(40.0, -40.0), area.end, Vector2(10.0, 10.0)])
 	)
+
+
+func test_cut_polys_take_city_outlines_and_drop_degenerate_ones() -> void:
+	var stub: GDScript = GDScript.new()
+	stub.source_code = (
+		"extends RefCounted\n\nstatic func named() -> Object:\n\treturn RefCounted.new()\n\n"
+		+ "static func stand_polys(_k: String, _r: Rect2) -> Array:\n"
+		+ "\treturn [PackedVector2Array([Vector2(0, 0), Vector2(4, 0), Vector2(0, 4)]),"
+		+ " PackedVector2Array([Vector2(1, 1)]), 7]\n"
+	)
+	assert_eq(stub.reload(), OK)
+	var was: Array = [ArenaPropCards._looked, ArenaPropCards._script, ArenaPropCards._has_polys]
+	ArenaPropCards._looked = true
+	ArenaPropCards._script = stub
+	ArenaPropCards._has_polys = true
+	var cut: Array[PackedVector2Array] = ArenaPropCards.cut_polys(
+		"cover_low", Rect2(), Rect2(0, 0, 9, 9)
+	)
+	ArenaPropCards._has_polys = false
+	var rect_only: Array[PackedVector2Array] = ArenaPropCards.cut_polys(
+		"cover_low", Rect2(), Rect2(0, 0, 9, 9)
+	)
+	ArenaPropCards._looked = was[0]
+	ArenaPropCards._script = was[1]
+	ArenaPropCards._has_polys = was[2]
+	assert_eq(cut.size(), 1, "the triangle kept, the 1-point outline and the non-polygon dropped")
+	assert_eq(cut[0].size(), 3)
+	assert_eq(rect_only.size(), 1)
+	assert_eq(rect_only[0].size(), 4, "no stand_polys: the area quad")
