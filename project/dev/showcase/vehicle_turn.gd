@@ -5,11 +5,16 @@ extends Node2D
 ##   godot --rendering-driver d3d12 --fixed-fps 60 --path project
 ##     res://dev/showcase/vehicle_turn.tscn
 ##     --write-movie <abs>.avi --quit-after 400 -- --view=tilt70 --ppm=64 [--blend=8] [--upright=1]
+##     [--set=street]: the taxi, the parked pickup and the ambulance instead
 
 ## [art id, footprint length m, width m]: the sedan, the police car, the van; the bike (atlas row
 ## VehicleViews.BIKE_ART, no sim bike yet) below the police car.
 const CARS: Array[Vector3] = [
 	Vector3(0, 4.6, 1.9), Vector3(8, 4.8, 1.95), Vector3(4, 5.2, 2.1), Vector3(9, 2.1, 0.8)
+]
+## --set=street: the taxi, the parked pickup, the ambulance (footprints from the traffic atlas).
+const STREET: Array[Vector3] = [
+	Vector3(3, 4.85, 1.95), Vector3(5, 5.15, 2.0), Vector3(6, 5.75, 2.2)
 ]
 const GAP_M: float = 6.0
 const DEG_PER_TICK: float = 1.0
@@ -20,11 +25,13 @@ const FOOT: Color = Color(0.0, 0.0, 0.0, 0.35)
 var _cards: VehicleCards = null
 var _tick: int = 0
 var _ppm: float = 32.0
+var _cars: Array[Vector3] = CARS
 
 
 func _ready() -> void:
 	var args: ArenaArgs = ArenaArgs.parse()
 	_ppm = args.number("--ppm", _ppm)
+	_cars = STREET if args.text("--set") == "street" else CARS
 	VehicleCards.blend_deg = args.number("--blend", VehicleCards.blend_deg)
 	VehicleCards.upright_k = args.number("--upright", VehicleCards.upright_k)
 	var cam: Camera2D = Camera2D.new()
@@ -48,8 +55,8 @@ func _process(_delta: float) -> void:
 		return
 	_cards.begin(tex)
 	var head: Vector2 = _head()
-	for i: int in CARS.size():
-		_cards.put(int(CARS[i].x), _at(i), head, Color.WHITE)
+	for i: int in _cars.size():
+		_cards.put(int(_cars[i].x), _at(i), head, Color.WHITE)
 	_cards.finish()
 
 
@@ -62,10 +69,10 @@ func _draw() -> void:
 		draw_line(Vector2(-14, k) * m, Vector2(14, k) * m, GRID, 1.0)
 	var head: Vector2 = _head()
 	var side: Vector2 = head.orthogonal()
-	for i: int in CARS.size():
+	for i: int in _cars.size():
 		var c: Vector2 = _at(i) * m
-		var hl: Vector2 = head * CARS[i].y * 0.5 * m
-		var hw: Vector2 = side * CARS[i].z * 0.5 * m
+		var hl: Vector2 = head * _cars[i].y * 0.5 * m
+		var hw: Vector2 = side * _cars[i].z * 0.5 * m
 		draw_colored_polygon(
 			PackedVector2Array([c + hl + hw, c + hl - hw, c - hl - hw, c - hl + hw]), FOOT
 		)

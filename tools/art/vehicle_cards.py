@@ -48,6 +48,24 @@ BIKE = True
 BIKE_SHEET = "bike_{pitch}_v3.png"
 BIKE_M = (2.1, 1.1)  # length, height (m): no top-down footprint to measure
 COLS = 9 if BETWEEN else 5
+# Per sheet id: in-between slot (0-3 = A-D) -> a one-drawing redraw (keyed/vehicle/<name>.png,
+# {p} = pitch); None keeps the row sheet's own drawing. An id not listed takes <id>_between_c_{p}
+# for C when it exists. The C redos "_v2" (turned ~20-25 deg by a turn reference) replace the
+# 2257 ones (under-turned ~8-10): drop "_v2" for the old. The taxi's own row C is the better turned
+# (its _c is the spare); the pickup's row C (A, the sheet's design) over its _c (better turned, a
+# flatter camera and heavier rust): PICKUP_C_REDO = True takes the _c.
+PICKUP_C_REDO = False
+REDRAWS = {
+    "sedan": {2: "sedan_between_c_{p}_v2"},
+    "police_car": {2: "police_car_between_c_{p}_v2"},
+    "taxi": {2: None},
+    "parked_pickup": {2: "parked_pickup_between_c_{p}" if PICKUP_C_REDO else None},
+    "ambulance": {1: "ambulance_between_b_{p}", 2: "ambulance_between_c_{p}_v2"},
+}
+# Row sheets drawn at another scale than their five-view sheet (taxi ~1.6x): every in-between is
+# scaled to its neighbours like a redraw, its paint graded to theirs (the brighter yellow).
+ROW_FIT = {"taxi"}
+FIT_BY = "area"
 ROWS = [
     ("sedan", 1.45, (1.0, 1.0, 1.0)),
     ("sedan", 1.45, (0.93, 0.93, 0.93)),  # sedan_b: the small hatch, a shade darker
@@ -137,17 +155,21 @@ def runs_of(sheet: Image.Image, n: int) -> list[Image.Image]:
     return out
 
 
-def betweens(lib: Path, sid: str, pitch: int) -> tuple[list[Image.Image], bool]:
-    """The four in-betweens (A-D), C from its own redraw when it exists ([] when none), and
-    whether C is that redraw."""
+def betweens(lib: Path, sid: str, pitch: int) -> tuple[list[Image.Image], set]:
+    """The four in-betweens (A-D) ([] when none) and the slots taken from a one-drawing redraw
+    (REDRAWS, else the legacy <id>_between_c_<pitch>.png for C)."""
     f = lib / "keyed" / "vehicle" / f"{sid}_between_{pitch}.png"
     if not BETWEEN or not f.exists():
-        return [], False
+        return [], set()
     out = runs_of(Image.open(f).convert("RGBA"), 4)
-    c = lib / "keyed" / "vehicle" / f"{sid}_between_c_{pitch}.png"
-    if c.exists():
-        out[2] = one_view(Image.open(c).convert("RGBA"))
-    return out, c.exists()
+    picks = dict(REDRAWS.get(sid, {2: sid + "_between_c_{p}"}))
+    done = set()
+    for j, name in picks.items():
+        g = lib / "keyed" / "vehicle" / (name.format(p=pitch) + ".png") if name else None
+        if g is not None and g.exists():
+            out[j] = one_view(Image.open(g).convert("RGBA"))
+            done.add(j)
+    return out, done
 
 
 def one_view(sheet: Image.Image) -> Image.Image:
@@ -189,6 +211,17 @@ def match_paint(v: Image.Image, refs: list) -> Image.Image:
     out = rgb.convert("RGBA")
     out.putalpha(v.getchannel("A"))
     return out
+
+
+def fit_k(v: Image.Image, nbrs: list) -> float:
+    """The scale that gives `v` its neighbours' mean size (each (view, its k)): by the inked area's
+    square root (FIT_BY = "area": a car's plan area barely changes as it turns, while its screen
+    width falls ~30 % from the side view to the 3/4 away, so a width match shrank the C cells), or
+    by width ("width", the cut before iteration 14)."""
+    if FIT_BY == "width":
+        return sum(n.width * k for n, k in nbrs) / len(nbrs) / v.width
+    size = lambda im: math.sqrt(float((np.array(im)[:, :, 3] > 40).sum()))  # noqa: E731
+    return sum(size(n) * k for n, k in nbrs) / len(nbrs) / size(v)
 
 
 def paint(im: Image.Image, gain: tuple) -> Image.Image:
@@ -241,14 +274,14 @@ def build(root: Path, lib: Path, pitch: int) -> Image.Image:
         drop = height * 0.5 * cos_p * PPM  # bbox centre -> ground centre (screen px)
         for col, v in enumerate(vs):
             paste(atlas, v, ks[col], (col, row, gain), drop)
-        bs, c_redo = betweens(lib, sid, pitch)
+        bs, redone = betweens(lib, sid, pitch)
         if bs:
             fine.append(row)
-        for j, v in enumerate(bs):
+        for j, v in enumerate(bs):  # slot j sits between views j and j + 1
             kb = k
-            if j == 2 and c_redo:  # C between the side (2) and the 3/4 away (3)
-                kb = (vs[2].width * ks[2] + vs[3].width * ks[3]) * 0.5 / v.width
-                v = match_paint(v, [vs[2], vs[3]]) if MATCH_C else v
+            if j in redone or sid in ROW_FIT:  # scaled to its neighbours, its paint graded to theirs
+                kb = fit_k(v, [(vs[j], ks[j]), (vs[j + 1], ks[j + 1])])
+                v = match_paint(v, [vs[j], vs[j + 1]]) if MATCH_C else v
             paste(atlas, v, kb, (5 + j, row, gain), drop)
     print(f"fine rows (VehicleViews.FINE): {fine}")
     return atlas if fine else atlas.crop((0, 0, CELL_PX * 5, atlas.height))  # no in-betweens: 5

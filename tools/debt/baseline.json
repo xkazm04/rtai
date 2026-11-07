@@ -8,7 +8,8 @@
         "2026-11-06: dev/showcase/vehicle_states: the vehicles lane's damage/fire/skid film scene (dev only, n8) (dev_loc 18193 -> 18288)",
         "2026-11-06: n8 vehicles: the depth film scene (vehicle_frame --scene=depth), dev only (dev_loc 18287 -> 18327)",
         "2026-11-06: n8 vehicles: dev/bench/vehicle_cards_cost (the traffic card cost bench, the rig_bench pattern: its own cmdline flags) (dev_loc 18327 -> 18493)",
-        "2026-11-06: vehicles: the turn film shows the bike row (dev/showcase/vehicle_turn.gd +3 lines) (dev_loc 18493 -> 18496)"
+        "2026-11-06: vehicles: the turn film shows the bike row (dev/showcase/vehicle_turn.gd +3 lines) (dev_loc 18493 -> 18496)",
+        "2026-11-07: vehicles: the turn film's --set=street (taxi, pickup, ambulance) to judge the new p70 in-betweens; dev only (dev_loc 18496 -> 18503)"
       ],
       "files": {
         "project/dev/arena": 1034,
@@ -32,11 +33,11 @@
         "project/dev/save_crash_writer.gd": 18,
         "project/dev/selftest": 1446,
         "project/dev/servo": 434,
-        "project/dev/showcase": 5667,
+        "project/dev/showcase": 5674,
         "project/dev/view": 158,
         "project/dev/weapon_art": 506
       },
-      "total": 18496
+      "total": 18503
     },
     "direct_cmdline_reads": {
       "accepted": [

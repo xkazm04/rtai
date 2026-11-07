@@ -15,7 +15,7 @@ const CELL_PX: int = 448
 const BIKE_ART: int = 9
 ## Per view art key, the rows whose in-betweens are drawn (vehicle_cards.py prints them; the unit
 ## test checks them against the atlas). Missing: five views a row.
-const FINE: Dictionary[String, PackedInt32Array] = {"p70": [0, 1, 2, 4, 7, 8]}
+const FINE: Dictionary[String, PackedInt32Array] = {"p70": [0, 1, 2, 3, 4, 5, 6, 7, 8]}
 
 
 ## The view for a nose angle `a_deg` (ground, y down: 90 = nose down the screen): x = the cell
