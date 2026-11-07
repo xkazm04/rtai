@@ -75,7 +75,8 @@ Branch `d9-seams`. Evidence: `C:\Users\kazda\kiro\gtai-masters\d9\seams\` (`fram
    small (helmet 52 px vs 57-61, head line 12 px low); scaled 1.06 about each sole with a new tool
    (`tools/art/walk_facing_scale.py`), FILL 1.08 -> 1.07; the riot 55 profile row (round 1330) the same way (head line 24 -> 13 px, FILL 1.09 -> 1.08).
    `swat55_facing2_scale106_before_after_grid.png`, `riot55_facing3_scale106_before_after_grid.png`.
-   Not seen in play yet: at seed 5 no SWAT turned to that facing in 460 frames.
+   In play: `swat55_facing2_scale106_before_after_tilt_48ppm_seed5_f2_x3.png` (the crosswalk SWAT on that
+   facing, frames 1-12), `riot55_facing3_scale106_before_after_tilt_48ppm_seed5_f62_x3.png`.
 
 **The set in one clip:** `seams_d9_set_combined_52s.mp4` (52 s, captioned per item).
 

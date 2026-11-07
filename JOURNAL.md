@@ -434,3 +434,20 @@ NEXT (it6):
   swat_walk_armed_55 row 2 and cop_riot_walk_armed_55 row 3 were drawn ~6 % small against rows 1/3 and
   2/4 (head line + head width). I scaled them 1.06 in post (ddef1441, 0d8842bf), so nothing is owed. A check
   you could add: each row's passing-frame height against the strip's other rows, not only its old self.
+- 13:34 MILESTONE (NEXT 2 of it6 done): the SWAT 55 facing-2 fix seen in play. A temporary push_warning in
+  StreetWalkerCards.place (reverted, tree clean) logged the SWAT draws on column 2: the crosswalk SWAT at
+  seed 5 turns through it in frames 1-12. Before/after at frame 2 (48 px/m, tilt, x3):
+  `swat55_facing2_scale106_before_after_tilt_48ppm_seed5_f2_x3.png`: after, his helmet line meets his
+  neighbours'. Caveat: the before ran the old grid at FILL 1.07 (my swap script's FILL sed was a no-op),
+  a 1 % step on every SWAT, not on this facing's 6 %. The earlier "fill_only" still deleted from masters.
+  FINDING: cross-actor size comparisons in play are confounded by StreetCrowdCards.SCALE_VAR (0.16 per
+  actor); judge a facing fix on the same actor before/after only.
+
+NEXT (it6), replaces the list above:
+1. Read d9-rivet + assets journals for REQUESTs first (none open to seams at 13:34).
+2. Gates are green at 407cc4f8 (code since: none; only JOURNAL/REPORT). Re-run evidence + reels only
+   after a code change.
+3. Weakest left: riot 55 row 2 repeats a frame (assets: no gain x3, named fault); the 55 planter reads as
+   a dark mass at 32 px/m (city's tool; owner eye); Call 2's corpse "through" the barrier (sim, not built).
+4. Owner Calls 1-3 stand. Freeze 18:30: export RTAI.exe (`"$GODOT_BIN" --headless --path project
+   --export-release windows-showcase ../build/export/windows/RTAI.exe`), REPORT final by 18:40.
