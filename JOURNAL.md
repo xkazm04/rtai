@@ -860,3 +860,8 @@ NEXT:
   for the owner: the dock guard's concept-approved orange-vermilion hi-vis). Delete it9-it11 scratch
   frames after the REPORT. Nothing into the worktree during a gate run.
 - 04:14 Session end. All committed.
+- 04:21 Director reel (headless, `arena.tscn --fixed-fps 60 --quit-after 14000 -- --bot=reel
+  --reel=director --loadout=pistol --rigs --view=<v>`) at 236c2f13 (= d60b7f4c's code: the memo
+  card in every chapter): `top` 19/19 chapters all down, `tilt70` 19/19 all down, 0 SCRIPT ERROR
+  both (`evidence/director-reel-n8hud-it11-{top,tilt70}.log`). The freeze still re-runs it.
+- 04:22 Session end. All committed.
