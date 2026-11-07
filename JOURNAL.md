@@ -903,3 +903,30 @@ upright card). Alternative one value away. REPORT Call 5.
   (worst 0.27) + block 5/5, release-compile 602/0 PASS; unit 1726/0 but marked FAIL "tree changed during run" because
   I appended to JOURNAL.md while it ran (mine, 0 min lost: re-run on the clean tree below).
   (`evidence/d9-seams/evidence-it10-298af5a1-dirty.log`)
+- 17:31 GATE evidence it10 CLEAN at a9b978d8: lint 15/15, unit 1726/0, scenarios 53, parity bit-exact (mutation caught
+  at 629), look goldens 11/11 (worst 0.27) + block 5/5, release-compile 602/0: all PASS
+  (`evidence/d9-seams/evidence-it10-a9b978d8.log`). `top` holds (no legs sheet at 90; goldens did not move).
+- 17:34 MEASURED the stride at 70 (tilt70 King fight, never eases; same temporary probe, reverted from git): same 379
+  walking frames (817 px), a pose every 17.0 px (7.6/s) before, 14.6 px (8.9/s) after = the sheet's drawn quarter cycle
+  (80 x 0.713 / 4 = 14.3). A small change at 70 (the 55 one was 2x). The 70 cycle rests on an ESTIMATED boot length
+  (~55 cell px from the passing rows' foot band): unfilmed at 70 after f99bf5d6 (NEXT 5).
+
+NEXT (it11), replaces the lists above:
+1. Read d9-rivet + assets journals for REQUESTs (none open to seams at 17:25). Watch assets for `gang_legs_55/70`
+   (REQUEST it10): when A/B, drop the PNGs in as art/p<pitch>/gang_legs.png (same layout as king_legs), set
+   `KingLegsCard.SHEETS["gang"] = "gang_legs"` (one value), provenance lines, film phase 1 combo 64 + 32 px/m
+   (`res://dev/arena/arena.tscn -- --boss=king --phase=1 --bot=boss --seed=2 --rigs --view=combo --boss-cam --ppm=64`;
+   --boss-cam only to frame them) and re-check `CYCLE_CELL` against its profile column if its stride differs.
+2. Gates last green: evidence it10 (clean run at a9b978d8, see the line below) + reels it10 at 298af5a1 (19/19 x3).
+3. Freeze 18:30: export RTAI.exe (`"$GODOT_BIN" --headless --path project --export-release windows-showcase
+   ../build/export/windows/RTAI.exe`), REPORT final by 18:40. Owner Calls 1-5 (5 is new: the gang's legs).
+4. A last trial merge vs d9-rivet near the freeze (it9 recipe: conflicts JOURNAL.md add/add and
+   tools/debt/baseline.json: keep both accepted lines, chain, `node tools/debt/debt.mjs --update`).
+5. Weakest left: the King's 70 stride is measured close (drawn ~57 vs gait 64 world px per cycle) but unfilmed after
+   f99bf5d6 at 70 (tilt70, before the ease); elder 3/4-away walk (asset-named); Call 2's corpse-at-a-wall.
+- Registry rules applied it10: motion-quality-gating (the stride measured in the real fight as ground px per drawn pose
+  before/after, same frames; the gang judged in motion at 32 and 64 before calling the fix good: it was worse),
+  depth-ordered-layered-art (the legs card under the bust's hem for every court rig that has a sheet),
+  generative-artifact-gating (the gang's parts legs' pale rim is the owner's "white background" again: why the
+  drawn sheet wins), engine-integration-safety (view only: no sim, parity/goldens re-run; `top` has no sheet).
+- Session end 17:32: all committed; scratch avi/png/probe logs deleted; frames.json 15.
