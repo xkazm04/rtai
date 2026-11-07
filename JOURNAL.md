@@ -867,3 +867,25 @@ REQUEST to street.
   kneel) instead of the flat guard_down sprite: StreetQuestCards.draw_down, called by CastView
   where it drew guard_down; opaque (the sprite's DOWN_FADE 0.8 alpha would show the ground through
   a drawn body); fallen forward along the guard's facing (CastView has no blow direction).
+- MILESTONE 72dde64b (brief 4+5): **quest 1's dead dock contractors lie as drawn people** under
+  the card views (contractor_fall_70 B lying frame; StreetQuestCards.draw_down where CastView drew
+  the flat guard_down sprite). LOOKED quest 1 Dock 9 t14100 at tilt70 48 px/m x2, before =
+  `DOWN = {}` (a local edit, restored; a separate run: quest runs differ in blood and heap size):
+  before, every dead guard is a white top-down sprawl; after, orange-vested contractors lie with
+  their rifles beside them. First film: the gate heap of five all lay the same way (charging
+  west, fallen forward) = clones; added a per-spot turn (spread_of: -45/0/+45 deg from the ground
+  point, render only, no RNG stream; SPREAD 0 = the alternative); the re-film shows one diagonal
+  in the heap, still mostly side-on. No fall animation (CastView has no death clock; the corpse
+  appears at death as the sprite did). Size: the standing card's height (WIDTH_M x the cell
+  aspect) at the grid's STILL_PX, so the corpse is in the walkers' proportions.
+- DECISION street/contractor-corpse: opaque (the sprite's DOWN_FADE 0.8 would show the ground
+  through a drawn body), fallen along the facing turned by spot. Alternatives: tint DOWN_FADE (one
+  argument), SPREAD 0.
+- EVIDENCE: masters contractor_drawn_corpse_before_after_tilt70_48ppm_x2_quest1_dock9.png
+  (frames.json #5; dropped the 12 s walk9 city clip, covered by the 40 s city clip #10).
+- GATE unit no-arg on 72dde64b: 1516 passed, 0 failed, no FLAKY.
+- PREPARED (scratch it9/p55, not in the project yet): the 55 fall grids for the boss arenas
+  (cop_patrol/cop_riot/swat/thug_fall_55 B, stretch 1.45 as their notes, --back-from-away); LOOKED
+  the four grids (the p55 patrol cop is the 55 sheet's brighter police blue, as its p55 card).
+  Needs grid_of to fall back per row (today a "p55" key would drop the peds' p70 fallback):
+  scratch it9/p55/apply.py does both.
