@@ -204,12 +204,15 @@
       "total": 15
     },
     "files_past_soft_cap": {
+      "accepted": [
+        "2026-11-07: vehicles: StageView hands its cars to VehicleStageCards under a tilt (+4 lines: the cards field, ensure, the flat-body skip) (files_past_soft_cap 68 -> 68)"
+      ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 266,
         "project/boot/collect_call/view/cast_view.gd": 225,
         "project/boot/collect_call/view/collect_call_view.gd": 236,
         "project/boot/collect_call/view/fx_view.gd": 271,
-        "project/boot/collect_call/view/stage_view.gd": 201,
+        "project/boot/collect_call/view/stage_view.gd": 205,
         "project/boot/quest1_game.gd": 269,
         "project/dev/arena/arena_game.gd": 294,
         "project/dev/arena/arena_rigs.gd": 291,
