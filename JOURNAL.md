@@ -1120,3 +1120,9 @@ failed. FRICTION: not comparable with it17's no-arg 1545; the no-arg run comes a
 Rules applied: generative-artifact-gating (judge the art as it prints in the game, under the grade,
 not in the atlas), sprite-and-atlas-production (the fix in the cutter, reproducible, 0 = previous
 bit-exact; no hand repaint).
+LOOKED 04:33 King boulevard (`res://dev/arena/arena.tscn -- --boss=king --bot=boss --view=combo
+--ppm=<32|64> --rigs --seed=2`, 600 fixed-fps frames, 0 SCRIPT ERROR both): the powers pad's 4
+parked cars stand as p55 cards from f30 (f0 draws them flat: the stage cards attach in the first
+_process; one frame, not worth a change). Nothing owed on the boulevard.
+GATE 04:40 on 7f9cbf26: unit no-arg 1549 passed, 0 failed, no FLAKY; director reel top 19/19 and
+tilt70 19/19 all down, 0 SCRIPT ERROR (evidence/n8-vehicles/director-reel-it18-*.log).
