@@ -110,7 +110,8 @@ priority, the CPU's own 2-CU Radeon), never a device claim. Details and sources:
   effect (if Call 5 b/c), the King fight's rumble count, the dev-arena experiments E1-E3/E7 re-labelled "at 32 px/m".
 - The Linux build: NAT-06 parity on the Linux `.so` (in WSL), a real Vulkan run (needs a Linux PC or a Deck).
 - Steam Input's origin glyphs through the Steam backend (and a drawn ink glyph set: REQUEST to assets
-  `ui_pad_glyphs_v1`, it12), rumble on blasts and crashes (no bus event), aim assist (a design call).
+  `ui_pad_glyphs_v1`, it12), rumble on blasts and crashes (no bus event), aim assist (a design call), a light
+  pulse when Rivet's blow lands on a boss (it12: a boss fight pulses only on his hurts, King 2 in 40 s of the bot).
 - A/Bs: `handheld_1080` viewport vs native stretch; the iGPU frame is fill-bound (E6), so next: a lower 2D draw size
   scaled up (viewport stretch below 1280x800) and the print grain / light passes off on the handheld tier,
   the Switch-class budget at 3 threads.

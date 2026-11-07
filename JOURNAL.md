@@ -469,3 +469,29 @@ NEXT (iteration 13):
    that copy; the BC7 scratch worktree `gtai-d9x/scratch/hh-bc7` (git worktree remove); the scratch dirs
    `gtai-d9x/scratch/{padwalk,padwalk2,it12}`; the freeze exe `build/export/windows/RTAI.exe` with the exact command
    in REPORT.
+- MILESTONE 15:20 (36f992dd) NEXT 1 done: the rumble exit log counts pulses per kind. Re-run under `deck` (headless,
+  2400 ticks, the boss bot): **King 3 = boss_engaged 1 + rivet_hurt 2; Servo 2 = boss_engaged 1 + rivet_hurt 1**
+  (`evidence/it12/{king,servo}-rumble-deck-kinds.log`). FINDING: in a boss fight the pad only answers Rivet being hurt;
+  **his own blows landing on a boss never pulse** (no bus event for a hit on a boss; `pedestrian_struck` /
+  `actor_knocked_down` are street events). Owed: a "hit landed" pulse (light, 60-80 ms) from a view-side read of the
+  boss's hurt tick, as `feel_hurt` does for Rivet (the view reads, never writes the sim), behind the handheld rows.
+- MILESTONE 15:24 evidence gate on 36f992dd: lint 15/15, unit 1722/0, scenarios 53/53, parity bit-exact (planted caught
+  at 629), look goldens 11/11 (worst 0.27): **top bit-identical** (`evidence/it12/evidence-run-36f992dd.log`).
+  15:26 the deck reel on 36f992dd (the only reel with a rumble node; top / tilt70 / combo have none, unchanged since
+  9bbbd091): **19/19, 0 SCRIPT ERROR**, rumble `{ rivet_hurt: 3 }` (`evidence/it12/reel-deck-36f992dd.log`).
+- Session end 15:27: every change committed; no Godot of mine running; no bench lock taken this iteration; scratch dev
+  files out of project/.
+
+NEXT (iteration 13; supersedes the list above, whose item 1 is done):
+1. A light "hit landed" pulse when Rivet's blow lands on a boss (a view-side read of the boss fighter's hurt tick, the
+   same pattern as `feel_hurt`: the view reads, never writes the sim), handheld rows only; then King / Servo counts
+   again (it12: only Rivet's hurts pulse, King 2 in 40 s).
+2. The glyph REQUEST (`ui_pad_glyphs_v1`): read the asset lane's journal; if served, glyph cells behind the handheld
+   rows (the text labels as the fallback).
+3. Mutation survivors left on player_settings.gd (pre-existing): 33, 71 / 72, 96 (79 killed by ec9dace0).
+4. Carried: NAT-06 parity on the Linux `.so` in WSL; the draw_scale HUD side effect (if Call 5 b/c); rumble on blasts
+   and crashes (needs a bus event from combat: a REQUEST, not handheld's file).
+5. End of day (by 18:30): delete the HKCU DirectX UserGpuPreferences value for gtai-d9x/handheld-godot/..._hh.exe and
+   that copy; the BC7 scratch worktree `gtai-d9x/scratch/hh-bc7` (git worktree remove); the scratch dirs
+   `gtai-d9x/scratch/{padwalk,padwalk2,it12}`; the freeze exe `build/export/windows/RTAI.exe` with the exact command
+   in REPORT.
