@@ -978,3 +978,57 @@ Call (the gate is crude for lit amber: 255,170,0 is "vermilion" by it).
 Session end 03:32.
 NEXT addendum (iteration 17): item 3 is now the taxi's lit rear lamps under the grade (LAMP_DEG 10 -> 14
 on lit lenses vs a Call); the pickup is closed.
+
+## Iteration 17 (2026-11-07 03:29 - 04:29), BUILD
+
+Read: JOURNAL (it16 NEXT + CORRECTION), git log, lane journals: view has not moved the bay markers
+yet (its it10 offer stands; no new REQUEST to vehicles). bench.lock held by city at 03:29, free 03:32.
+MILESTONE 5820d218 brief item 5 for real: VehicleFrameBench (dev/showcase/vehicle_frame_bench.gd):
+vehicle_frame `--frames=<json> [--frames-ticks=<n>] [--spans=<json>]` keeps CitySystem's own traffic
+targets (270/120/10, the game's, not the showcase's 6 cars), takes no shots, vsync off, attaches
+FightFrames (+ NodeSpans) after the bake, and writes the cards drawn per frame (<json>.cards.json).
+Recipe: scratch/vehicles/it17/drive.sh <label> <view> 600 (editor binary, d3d12, 1280x720 window,
+600 ticks: hijack at 31, full throttle, S-bend, handbrake slide, stop). Under bench.lock (mine),
+3 runs per view, alternated, settled = after 1000 ms wall:
+| run | wall mean/p50 ms | script process p50 | render CPU p50 | draws | cards avg/max |
+| top 1-3 | 0.87/0.74, 0.76/0.65, 0.94/0.87 | 0.22, 0.22, 0.29 | 0.18, 0.17, 0.23 | 177 | 0 |
+| tilt70 1-3 | 1.72/1.58, 1.11/0.96, 1.31/1.21 | 0.85, 0.50, 0.65 | 0.28, 0.17, 0.20 | 181-182 | 3.8 / 6 |
+0 frames over 33 ms settled, 0 SCRIPT ERROR. GPU 0.11 vs 0.11-0.13 ms. NodeSpans (one run each):
+vehicle_view.gd 0.488 ms mean per frame at tilt70 vs 0.123 top: the cards' script, not the GPU.
+MEASURED (temporary timers, not committed) inside _draw_cards at tilt70: people_near for the front
+grid 84 us, cars_near(me, 1e6) 111 us (builds all ~130 sim cars), the put loop 185 us (wear/duty on
+every car before put() culls it), parked 1.6 us, finish 10 us.
+MILESTONE 1b6740ac cars_near(me, VehicleCull.reach_m(cards.seen, me)): the farthest corner of the
+cull rect, so exact. vehicle_view.gd 0.488 -> 0.294 / 0.286 ms (2 NodeSpans runs); script process
+p50 0.51-0.53 ms (3 runs, was 0.50-0.85: noisy). IDENTITY: main scene `--arena=city --bot=rivet
+--rigs --seed=<7|11> --view=tilt70`, 300 fixed-fps frames, framemd5 before == after (both seeds);
+top seed 2 == it16's top md5. FRICTION: vehicle_frame's shots are NOT repeatable run to run (the
+same code twice differs round the walkers and every carnage frame: wall-clock animation), so they
+cannot prove identity; the fixed-fps main scene can (repeat run identical).
+Evidence: evidence/n8-vehicles/bench-it17/ (summary.json with every run and the spans rows; logs;
+cards.json; identity/*.md5). Raw per-frame series (1.5 MB each) kept in scratch/vehicles/it17/raw.
+TRIED and REVERTED (not committed): the front grid's people query cut to the same reach
+(min(NEAR_M, reach + |(HALF_M, FRONT_M)|), exact: framemd5 tilt70 seeds 7 and 11 identical to
+1b6740ac): vehicle_view.gd 0.299 / 0.287 ms (2 spans runs) vs 0.294 / 0.286 without it, script
+process p50 0.42-0.48 vs 0.51-0.53 (3 runs each, inside the run-to-run spread). No measured gain:
+the cost is the full GDScript pass over the sim snapshot (~400 records, twice: people and cars),
+not the appends. Kept out: code with no measured win. The pass itself would need a native radius
+query on CitySim (native/, the sim: not this lane; parity-gated). Brief item 5 closes at: the
+traffic cards cost +0.17 ms script per frame over top on the real drive (~1 % of a 60 fps frame),
+GPU and draw calls within noise (181 vs 177), 0 hitches. Run under bench.lock (mine, released).
+DECISION (taxi lit rear lamps, it16 NEXT 3): no LAMP_DEG change tonight; a Call. The lit lens
+prints (233,140,0) under the grade: hue 36 deg, amber to the eye (looked: masters
+pickup_rust_and_taxi_lamps_city_tilt70_32ppm_seed13_crop3x.png); the gate r - max(g,b) >= 79 needs
+g >= 155 at that r (hue ~40) to let it through, so LAMP_DEG 10 -> 14+ on every row's lit lenses,
+which also moves the police light bar's amber lens that the siren shader finds by colour (r > g +
+0.12: a re-cut and a re-film of the siren test). Not worth the police lens risk for lamps that
+already read amber; the owner decides whether the gate or the lamps move.
+GATE 04:00 on 1b6740ac: director reel (headless, `--bot=reel --reel=director --loadout=pistol --rigs
+--view=<v>`, --fixed-fps 60 --quit-after 7600) top 19/19 all down, tilt70 19/19 all down, 0 SCRIPT
+ERROR each (evidence/n8-vehicles/director-reel-it17-*.log). Unit (full, no-arg) 1545 passed, 0
+failed, no FLAKY. Lint 15/15. top framemd5 seed 2 == it16.
+Rules applied: motion-quality-gating / perf (a bench is evidence only for the code it runs: the
+probe runs the real VehicleView; the per-node spans name the cost before any fix; every fix
+proved pixel-identical on fixed-fps frames, a fix with no measured gain reverted),
+sprite-and-atlas-production (cull before work: the query bounded by the same rect the cards cull
+with), depth-ordered-layered-art (the front grid's reach derived from its own box, not guessed).
