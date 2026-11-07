@@ -814,4 +814,13 @@ NEXT (iteration 16, in order):
 3. Exe at the freeze (int-day recipe in docs/decisions.md), REPORT.md by 08:40 with every Call:
    bike, wreck fire size, rotation density, the depot van colour, the pickup C (row vs _c), stage
    cars over the actors, the taxi paint (+12 built vs +16 vs the sheet's).
-Session end 02:47.
+02:45 READ for NEXT 2 (palette.json): vermilion's layers are actors, fx, world_markers, hud; its uses
+threat, danger_cue, pickup, objective, rivet_collar, hit_flash. NOT the vehicles layer: the taxi and
+lamp fixes are what the table requires, not taste. VehicleFire draws on the vehicles band
+(vehicle_view.gd: fire.z_index = car.z_index + 1), so the wreck fire's vermilion-gate pixels sit
+on a layer the table does not allow. Options for NEXT 2: (a) the fire on the fx band (fx allows
+vermilion, but a burning car is not one of its listed uses unless it counts as danger_cue); (b) the
+fire's cores turned toward yellow in vehicle_fire's sheet cut (a LAMP_DEG-style turn); (c) a debt
+row in accent_debt.json naming the fire. Measure first (vehicle_frame crash, graded); decide (b)
+if its look survives at 64 px/m, else raise a Call.
+Session end 02:46.
