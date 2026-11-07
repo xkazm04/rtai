@@ -9,7 +9,7 @@
 // Usage: node tools/handheld/sim.mjs --device=deck [--scene=reel|city|king|servo] [--ticks=1800]
 //   [--gpu=igpu|dgpu|<index>] [--threads=<n>] [--priority=belownormal|normal] [--label=<name>]
 //   [--out=<dir>] [--no-device] [--movie=<abs .avi>] [--renderer=forward_plus|mobile|compat]
-//   [--bin=<gui exe>] [-- <extra user args for the arena>]
+//   [--bin=<gui exe>] [--suspend=<after s>:<for s>] [-- <extra user args for the arena>]
 // --no-device runs the same pin/GPU without the --device flag (the desktop row: the A side).
 import { spawn, spawnSync } from 'node:child_process';
 import { mkdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs';
@@ -22,7 +22,7 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(HERE, '..', '..');
 export const SCENES = {
   reel: ['--rigs', '--bot=reel', '--reel=director', '--view=tilt70'],
-  city: ['--arena=city', '--rigs', '--view=tilt70'],
+  city: ['--arena=city', '--bot=course', '--seed=2', '--rigs', '--view=tilt70'],
   king: ['--rigs', '--boss=king', '--bot=boss', '--view=combo'],
   servo: ['--rigs', '--boss=servo', '--bot=boss', '--view=combo'],
 };
@@ -83,6 +83,14 @@ export function adapterLine(logPath) {
   } catch { return 'unknown (no log)'; }
 }
 
+/** The frame that carried the suspend (the longest wall time) and the sim ticks it advanced. */
+export function resumeFrame(frames) {
+  let i = 0;
+  frames.wall_ms.forEach((w, k) => { if (w > frames.wall_ms[i]) i = k; });
+  return { frame: i, wall_ms: Math.round(frames.wall_ms[i]), ticks_advanced: i > 0 ? frames.tick[i] - frames.tick[i - 1] : null,
+    next_wall_ms: frames.wall_ms.slice(i + 1, i + 6).map((w) => Math.round(w * 10) / 10) };
+}
+
 const median = (xs) => { const s = [...xs].sort((p, q) => p - q); return s.length ? s[s.length >> 1] : null; };
 const pct = (xs, p) => { const s = [...xs].sort((x, y) => x - y); return s.length ? s[Math.min(s.length - 1, Math.floor(s.length * p))] : null; };
 const r2 = (x) => (x == null ? null : Math.round(x * 100) / 100);
@@ -114,6 +122,7 @@ async function main() {
   const threads = a.threads || row.sim_threads || 16;
   const gpuIndex = a.renderer === 'compat' ? null : detectGpu(g.bin, a.gpu);
   const label = a.label || `${a.noDevice ? 'desktop' : row.id}-${a.scene}-${a.gpu}-t${threads}-${a.renderer || 'forward_plus'}`;
+  a.out = resolve(a.out);
   mkdirSync(a.out, { recursive: true });
   const framesPath = join(a.out, `${label}.frames.json`).replaceAll('\\', '/');
   const before = contention();
@@ -129,7 +138,14 @@ async function main() {
   let sampled = '';
   sampler.stdout.on('data', (d) => { sampled += d.toString(); });
   const game = spawn('powershell', ['-NoProfile', '-NonInteractive', '-Command', ps], { windowsHide: true, stdio: 'inherit' });
-  const timer = setTimeout(() => killTree(game.pid), (a.ticks / 60 + 120) * 1000);
+  let suspended = '';
+  const [afterS, forS] = (a.suspend || '').split(':').map(Number);
+  if (forS > 0) {
+    const sus = spawn('powershell', ['-NoProfile', '-NonInteractive', '-File', join(HERE, 'suspend.ps1'), '-Tag', framesPath,
+      '-AfterS', String(afterS), '-ForS', String(forS)], { windowsHide: true });
+    sus.stdout.on('data', (d) => { suspended += d.toString(); });
+  }
+  const timer = setTimeout(() => killTree(game.pid), (a.ticks / 60 + 120 + (forS || 0)) * 1000);
   const code = await new Promise((done) => game.on('close', done));
   clearTimeout(timer);
   await new Promise((done) => { sampler.on('close', done); setTimeout(done, 5000); });
@@ -140,6 +156,7 @@ async function main() {
     scene_args: SCENES[a.scene], extra: a.extra, renderer: a.renderer || 'forward_plus', gpu: a.gpu, gpu_index: gpuIndex, threads, priority: a.priority,
     ticks: a.ticks, exit: code, adapter, contended: before.count > 0 ? `CONTENDED (${before.count} other Godot runs)` : 'quiet',
     at: new Date().toISOString(), summary: summarize(JSON.parse(readFileSync(framesPath, 'utf8')), samples), samples };
+  if (forS > 0) doc.suspend = { ...JSON.parse(suspended.trim() || '{}'), resume: resumeFrame(JSON.parse(readFileSync(framesPath, 'utf8'))) };
   const outPath = join(a.out, `${label}.json`);
   writeFileSync(outPath, `${JSON.stringify(doc, null, 2)}\n`);
   console.log(`${label}: ${doc.contended} ${JSON.stringify(doc.summary)}`);
