@@ -1058,3 +1058,13 @@ gang: street's it10 notes). The throne-car's p70 is a lifted stack (pitch-agnost
 - NOTE to city: the arena's crate stack turns vermilion-orange when the King's cone first covers it
   (f960, seed 2) and stays: if intended (a danger/damaged state), fine; if not, the colour law
   keeps vermilion for danger marks, objectives, Rivet's collar and the King's cape.
+- GATE 05:12 at ba67b4a2: unit full no-arg 1517 passed / 0 failed, 0 FLAKY (`unit-it13b.log`);
+  scenarios 52 ran, 0 failed (`scenarios-it13.log`; vehicle drive timing CONTENDED, passes); lint
+  15/15 (hook). The trial tree's prototype reverted (`git checkout --` on the three files).
+- Registry rules applied it13: concept-scene-parity (the occlusion fault seen only on the merged
+  tree with city's cards: judged where the art meets the code), depth-ordered-layered-art (a hidden
+  body's ink bounded by the occluder's real silhouette, not its bounds), motion-quality-gating (both
+  fixes judged over 200+ frames in motion, before/after, same seed), generative-artifact-gating (no
+  new art; the held fix changes selection only, not the frozen art), combat-pacing-and-dramatic-arc
+  (n/a this iteration), perf-regression-gating (the outline cut computed once per prop with a hit;
+  city's prototype caches the bitmap polys per facing).

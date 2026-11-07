@@ -41,7 +41,8 @@ under `evidence/n8-view/`. Full log: `JOURNAL.md`.
    CameraRig (`lead_combo_vs_combo_lead_{15,25}mps_48ppm_t150.png`).
 7. **Draw order**: Tonnage's legs in the depth sort (order probe 0/9 wrong at 70); the King's accents in
    the order probe; the King on foot behind his wreck (car pairs 10/10 wrong -> 0/10); PropOcclusion
-   (a rig behind a prop shows through it).
+   (a rig behind a prop shows through it); it13: the silhouette cut to a card's opaque outline (city's `stand_polys`, REQUESTed;
+   the rect until then): `prop_occlusion_card_outline_before_after_combo_64ppm.mp4`.
 8. **A fresh corpse keeps its drawn fall** (street's REQUEST, it12): under a card view a body that
    dies on its full rig keeps it in a slot past the living 16 (at most 4), until it leaves the feed
    in the arena / quest 1 (no atlas there), 90 ticks in the city (then street's atlas lying frame).
@@ -100,6 +101,9 @@ hand fix, unit 1639/0, director reel top + combo 19/19 all down, 0 SCRIPT ERROR.
   test case lives on in view's follow test.
 - city + hud: `BossView.attach` was 41 lines (gd-size) at it11's heads; gone at it12's heads (lint
   15/15 on the merge with no hand fix).
+
+- it13: PropOcclusion reads city's `PropCards.stand_polys` by method presence (REQUESTed from
+  city); merge order does not matter, without it the cut stays the card's rect.
 
 ## Exe
 (at the freeze: `build/export/windows/RTAI.exe`, the int-day recipe)
