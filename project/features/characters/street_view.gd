@@ -17,6 +17,7 @@ static func step(rig: CutRig) -> void:
 	RiotShieldCard.step(rig)
 	StreetCrowdCards.step(rig)
 	StreetWalkerCards.step(rig)
+	RivetFrames.step(rig)  # d9 rivet: Rivet's whole figure
 	if rig.plan.art_dir == ThugPlan.ART_DIR and not rig.body.has_meta(LIT):
 		_lift(rig)
 

@@ -76,16 +76,16 @@ func _process(_delta: float) -> void:
 		var grip: ArsenalTable.Grip = arsenal.grip_of(pilot.hold.held)
 		var hold: HeldTable.Hold = HeldTable.shipped().hold_of(pilot.hold.held)
 		rig.hold = hold.id if hold != null else &""
+		rig.set_meta(RivetFrames.WEAPON, pilot.hold.held)  # d9 rivet: picks his drawn strip
 		rig.grip = hold.kind if hold != null else RigGrip.Kind.ONE_HAND
 		rig.reload_k = arsenal.reload_phase(arena.gun if arena != null else null)
 		var mag: bool = grip != null and not NO_MAG.has(grip.id)  # a bottle or a tank: no magazine
 		mag = mag and not (art.has(id) and art.part_texture(id, "mag") != null)  # weapon-art's own
-		var now: int = arena.tick if arena != null else 0
-		_mag_view().feed(rig, rig.reload_k if mag else -1.0, now, id)
+		_mag_view().feed(rig, rig.reload_k if mag else -1.0, arena.tick if arena != null else 0, id)
 		_back_tank(rig, grip != null and ON_BACK.has(grip.id))
 	if rig != null and not rig.gun_out:
 		rig.held_shift = Vector2.ZERO
-	if rig == null or not rig.gun_out or not art.has(id):
+	if rig == null or not rig.gun_out or not art.has(id) or RivetFrames.owns_weapon(rig):
 		if _sprite != null:
 			_sprite.visible = false
 		if _rag != null:
