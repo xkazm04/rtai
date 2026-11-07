@@ -1,10 +1,13 @@
-# n8 view lane: REPORT (freeze candidate it16, 07:25; the freeze session confirms at 08:30)
+# n8 view lane: REPORT (the freeze, it17 07:50; no code after the it16 candidate: the gated build IS the freeze)
 
 **Gates at cc76970c** (code = e369f4b0, it15's last code commit): `node tools/evidence/run.mjs --no-bench`
 all PASS (lint 15/15, unit 1524/0, scenarios 52, parity exact + planted caught, selftest goldens
 11/11 + 5/5, release-compile 561/0: `evidence/n8-view/evidence-run-it16.log`); the director reel
 on n8-view HEAD top 19/19 and combo 19/19 chapters down, 0 SCRIPT ERROR; on the it16 trial merge of
-all five lanes the same (`director-reel-it16-trial-*.log`). `top` stays the default and draws
+all five lanes the same (`director-reel-it16-trial-*.log`). **Final trial merge it17** on the lanes'
+freeze-time heads (07:44, n8-view + city 7d73de04, street 2de46fa1, vehicles 0f4810f0, hud f80e09ba):
+lint 15/15, unit 1690/0, reel top + combo 19/19, 0 SCRIPT ERROR, no code conflict
+(`evidence/n8-view/*-it17-trial.log`). `top` stays the default and draws
 today's art: look goldens, replay and parity did not move.
 
 Lane `view`, branch `n8-view`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n8\view\` (`frames.json`,
@@ -102,6 +105,13 @@ under `evidence/n8-view/`. Full log: `JOURNAL.md`.
   them up on the merge. They no longer interleave with Rivet's rig in the depth sort (they fight at
   range at Dock 9; no overlap seen).
 
+- FOUND it17 on the final merge (not fixed): in the city block at tilt70 (seed 5, tick 900, 32 px/m)
+  two dead cops lying just north of the kerb barrier draw their heads and shoulders OVER the
+  barrier's top face (masters `FOUND_corpse_head_over_barrier_merged_it17_tilt70_32ppm_seed5_t900_crop3x.png`).
+  `PropOcclusion` models every body as upright (its patch and silhouette run from the feet up the
+  screen), so a lying figure whose head points south into a prop makes no hit. Not landed at the
+  freeze: it is a view + street + city seam (the down figure's extent, the barrier's height class).
+
 ## Calls for the owner
 (Each: options, the default built, how to see it.)
 1. **The King's bust size.** Built 2.0x; option 1.75x (`KingArt.STRIPS["king"][2]`). See
@@ -172,13 +182,23 @@ hand fix, unit 1639/0, director reel top + combo 19/19 all down, 0 SCRIPT ERROR.
   (`--boss-cam`, off by default since d8) keeps the bust under the bar; its band `HUD_PX` (58 px)
   predates hud's paper banner (ends ~63 px) and crest (~88 px at the left). Next: make BossCam the
   boss fight's camera and read the band from `BossBar` after the merge.
+- it17 (07:40-07:50, the final trial on the lanes' freeze-time heads; n8-view code = e369f4b0):
+  + city 7d73de04, street 2de46fa1, vehicles 0f4810f0, hud f80e09ba onto the it16 merge: conflicts in
+  JOURNAL.md / REPORT.md ONLY (each lane's own); the it16 `cast_view.gd` resolution (street's hunk)
+  still applies if the Director merges from main fresh. `--import` 0 errors, debt-ratchet ok
+  without an accept on this incremental merge, lint 15/15, unit 1690/0, director reel top + combo
+  19/19, 0 SCRIPT ERROR; quest 1 at combo 48 px/m 0 SCRIPT ERROR
+  (`quest1_merged_it17_freeze_heads_combo_48ppm_t2400_t13700.png`). vehicles' ada297fe (three p55
+  cells mirrored, art + cutter) landed after this trial.
 - it13: PropOcclusion reads city's `PropCards.stand_polys` by method presence (landed on n8-city
   8c982682 + 55ede50c, checked on the 05:56 trial merge); merge order does not matter, without it
   the cut stays the card's rect.
 
 ## Exe
 `build/export/windows/RTAI.exe` (the `windows-showcase` preset: boots into the dev arena; embedded pck,
-the native DLL beside it). Recipe (proven it16 06:55, 10 s, 0 errors; re-run at the freeze HEAD):
+the native DLL beside it). **The freeze exe** was built 07:20 at cc76970c; no code changed after it
+(`git diff e369f4b0 HEAD -- project native tools` is empty), so it is the freeze HEAD's build; re-smoked
+07:39 with Call 7's line, 0 SCRIPT ERROR. Recipe (proven it16 06:55, 10 s, 0 errors):
 `export APPDATA=C:/Users/kazda/kiro/gtai-n8/appdata/view; "$GODOT_BIN" --headless --path project --export-release windows-showcase ../build/export/windows/RTAI.exe`.
 Smoke: `RTAI.exe -- --rigs --boss=king --seed=2 --view=combo` (eases to 55 at the engage, p55 cards).
 Try: `RTAI.exe -- --rigs --boss=king --phase=3 --view=combo [--ppm=64]`, `RTAI.exe -- --rigs --boss=servo --view=combo`,
@@ -194,3 +214,6 @@ Try: `RTAI.exe -- --rigs --boss=king --phase=3 --view=combo [--ppm=64]`, `RTAI.e
 4. Re-take the frame cost on an idle machine (every take tonight was CONTENDED by the other lanes).
 5. Make `BossCam` the boss fight's camera (today behind `--boss-cam`) so the King's bust never rams
    under hud's banner, with its band read from `BossBar` (bar + paper + crest) after the merge.
+6. Lying bodies in `PropOcclusion`: give a dead rig a lying patch (the down figure's screen extent,
+   from street's cards) and no x-ray silhouette, and decide with city whether the kerb barrier is an
+   occluding height; film the city block at tilt70 seed 5 around tick 900 before/after (it17 FOUND).
