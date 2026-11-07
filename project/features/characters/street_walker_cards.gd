@@ -5,13 +5,26 @@ extends RefCounted
 ## instead of a head card over top-down parts. The parts are hidden, not freed. WALKS grids (5
 ## facings x 4 stride frames, street_walk.py) step by rig.phase; a row without one bobs and sways.
 ## A flinch keeps the figure; a death holds it DEATH_HOLD of the family, then the parts take the
-## fall and the corpse (falls()). No strip for the view (p55, top) = nothing here runs.
+## fall and the corpse (falls()). p55 (n8 it6): the 55 top rows, still with the bob (no 55 walk
+## grids). No strip for the view (top) = nothing here runs.
 ## ENABLED false = the head cards (before).
 const ENABLED: bool = true
 const DIR: String = "res://features/characters/art/view/"
 ## view art -> card row (the head the person draws, StreetCrowdCards included) -> strip file.
 const STRIPS: Dictionary[String, Dictionary] = {
 	"p70":
+	{
+		"ped/head_hair": "ped_suit_full.png",
+		"ped/head_bald": "ped_elder_full.png",
+		"ped/head_hat": "ped_hat_full.png",
+		"ped/head_hood": "ped_hood_full.png",
+		"ped/head_cap": "ped_cap_full.png",
+		"ped/head_punk": "ped_punk_full.png",
+		"ped/head_shopper": "ped_shopper_full.png",
+		"ped/head_jogger": "ped_jogger_full.png",
+		"ped/head_worker": "ped_worker_full.png",
+	},
+	"p55":
 	{
 		"ped/head_hair": "ped_suit_full.png",
 		"ped/head_bald": "ped_elder_full.png",
