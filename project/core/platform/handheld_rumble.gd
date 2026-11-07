@@ -17,6 +17,10 @@ const PULSES: Dictionary[StringName, Vector3] = {
 	&"hijacked": Vector3(0.3, 0.1, 0.12),
 	&"whispers": Vector3(0.2, 0.0, 0.4),
 }
+## The rest in sim ticks after a felt hurt of a kind before the next one of that kind pulses (it14:
+## a fast gun lands a boss hit every 2 ticks, so 70 ms pulses chained into one buzz; 8 ticks = at
+## most 7.5 taps a second, the stock gun's 16-tick shortest gap untouched; 0 = before).
+const REST_TICKS: Dictionary[StringName, int] = {&"boss_hit": 8}
 
 ## The live node (null without a rumble row: feel_hurt() is then a no-op, the desktop's case).
 static var _live: HandheldRumble = null
@@ -29,10 +33,16 @@ var played: int = 0
 ## Pulses played per kind (the exit log names them: which hits a fight is felt by).
 var by_kind: Dictionary[StringName, int] = {}
 var last: Vector3 = Vector3.ZERO
+## The shortest gap in sim ticks between two fresh hurts per kind (see(); the log names it).
+var min_gap: Dictionary[StringName, int] = {}
+## Fresh hurts not felt because their kind was resting (REST_TICKS; the log names it).
+var rested: int = 0
 var _until_ms: int = 0
 var _strength: float = 0.0
 ## The last hurt tick seen per kind (feel_hurt, feel_landed); the first one seen only primes.
 var _seen: Dictionary[StringName, int] = {}
+## The last felt hurt tick per kind (REST_TICKS counts from it).
+var _felt: Dictionary[StringName, int] = {}
 
 
 func _init(rumble_gain: float = 1.0) -> void:
@@ -61,7 +71,13 @@ func _ready() -> void:
 func _exit_tree() -> void:
 	if _live == self:
 		_live = null
-	Log.info("device", "rumble: %d pulses played %s" % [played, by_kind])
+	Log.info(
+		"device",
+		(
+			"rumble: %d pulses played %s, %d rested, shortest gaps (ticks) %s"
+			% [played, by_kind, rested, min_gap]
+		)
+	)
 
 
 ## A view's per-frame read of Rivet's `hurt_tick` (the sim's Fighter.hurt_tick, set by every
@@ -80,13 +96,23 @@ static func feel_landed(hurt_tick: int) -> void:
 		_live.see(&"boss_hit", hurt_tick)
 
 
-## True when `hurt_tick` is a new hurt for `kind` (and plays its pulse); the first call only primes.
+## True when `hurt_tick` is a new hurt for `kind` (and plays its pulse unless the kind is resting,
+## REST_TICKS); the first call only primes.
 func see(kind: StringName, hurt_tick: int) -> bool:
 	var fresh: bool = _seen.has(kind) and hurt_tick > _seen[kind]
+	if fresh and _seen[kind] > 0:
+		var gap: int = hurt_tick - _seen[kind]
+		var was: int = min_gap.get(kind, gap)
+		min_gap[kind] = mini(gap, was)
 	_seen[kind] = hurt_tick
-	if fresh:
-		_fire(kind)
-	return fresh
+	if not fresh:
+		return false
+	if _felt.has(kind) and hurt_tick - _felt[kind] < REST_TICKS.get(kind, 0):
+		rested += 1
+		return true
+	_felt[kind] = hurt_tick
+	_fire(kind)
+	return true
 
 
 ## Rivet's hurt (see()); the tests' name for it.

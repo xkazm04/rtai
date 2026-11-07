@@ -1,0 +1,5 @@
+[INFO] bosses: king phase 1 (procession)
+[INFO] bosses: king engaged in king_boulevard, phase 1
+[INFO] bosses: king phase 2 (court)
+[INFO] bosses: king: 4 king_gang
+[INFO] device: rumble: 59 pulses played { &"boss_engaged": 1, &"boss_hit": 56, &"rivet_hurt": 2 }, 0 rested, shortest gaps (ticks) { &"boss_hit": 16, &"rivet_hurt": 189 }

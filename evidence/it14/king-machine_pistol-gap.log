@@ -1,0 +1,8 @@
+[INFO] bosses: king phase 1 (procession)
+[INFO] bosses: king engaged in king_boulevard, phase 1
+[INFO] gunplay: arena: Rivet holds the table machine_pistol
+[INFO] bosses: king phase 2 (court)
+[INFO] bosses: king: 4 king_gang
+[INFO] bosses: king phase 3 (on_foot)
+[INFO] bosses: king defeated
+[INFO] device: rumble: 105 pulses played { &"boss_engaged": 1, &"boss_hit": 104 }, 112 rested, shortest gaps (ticks) { &"boss_hit": 2 }

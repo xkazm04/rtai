@@ -153,3 +153,28 @@ func test_each_bus_event_plays_its_own_kind() -> void:
 	Events.whispers_spiked.emit()
 	var want: Dictionary = {&"knocked_down": 1, &"boss_engaged": 1, &"hijacked": 1, &"whispers": 1}
 	assert_eq(rumble.by_kind, want)
+
+
+func test_a_boss_hit_rests_its_ticks_after_a_felt_one() -> void:
+	var rumble: HandheldRumble = HandheldRumble.new(1.0)
+	var rest: int = HandheldRumble.REST_TICKS[&"boss_hit"]
+	assert_false(rumble.see(&"boss_hit", 100), "primes")
+	assert_true(rumble.see(&"boss_hit", 102))
+	assert_true(rumble.see(&"boss_hit", 101 + rest), "fresh, but resting: not felt")
+	assert_eq(rumble.by_kind[&"boss_hit"], 1)
+	assert_eq(rumble.rested, 1)
+	assert_true(rumble.see(&"boss_hit", 102 + rest), "the rest is over")
+	assert_eq(rumble.by_kind[&"boss_hit"], 2)
+	assert_eq(rumble.min_gap[&"boss_hit"], 1)
+	rumble.free()
+
+
+func test_a_resting_boss_hit_never_holds_back_a_hurt() -> void:
+	var rumble: HandheldRumble = HandheldRumble.new(1.0)
+	assert_false(rumble.see(&"boss_hit", 100))
+	assert_false(rumble.see_hurt(100))
+	assert_true(rumble.see(&"boss_hit", 101))
+	assert_true(rumble.see_hurt(102), "a hurt has no rest of its own")
+	assert_eq(rumble.by_kind, {&"boss_hit": 1, &"rivet_hurt": 1} as Dictionary[StringName, int])
+	assert_eq(rumble.rested, 0)
+	rumble.free()
