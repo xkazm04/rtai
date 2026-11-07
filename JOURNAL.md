@@ -108,3 +108,14 @@ NEXT (iteration 2):
   for PlayStation / Nintendo-layout pads under the handheld rows. 22 unit tests in the four touched files pass; lint 15/15.
 - FRICTION Godot writes `vendor_id` as a decimal string in `get_joy_info` (itos), not an int: the classifier takes both
   (model knowledge of the engine source; unverified without a pad: no pad on this PC).
+- MILESTONE 11:37 evidence gate `--no-bench --no-release` on 9b35dd21 (rumble + glyphs in): lint 15/15, unit 1708/0,
+  scenarios 52/52, parity bit-exact over 1200 steps (planted mutation caught at 629), selftest look goldens 11/11
+  (worst 0.27), block goldens 5/5, world lock 0.00 %: **top bit-identical** with the device work in
+  (`evidence/it4/evidence-run-9b35dd21.log`). Release-compile skipped (the shared temp-dir clash above).
+- 11:37 E5/E6 A/B on the bench lock (taken 11:37:45, perf had just released it): city scene, 1200 ticks, 3 interleaved
+  rounds of deck / deck40 / deck_bench / deck_bench_z1.
+- RESULT 11:45 E5 (`deck40` vs `deck`, city, CONTENDED: 1-4 other Godot runs, bench lock held): both lock to the cap
+  (25.05 / 16.63 ms p50); GPU busy 38 % vs 55 % of each second (-31 %), pinned CPU 4.31 vs 5.81 % (-26 %, spread 1.03):
+  the 40 Hz mode is a real power cut on the simulator; KEPT as the battery row. E6 (zoom_k 1.5 vs 1.0, uncapped): render
+  GPU 8.91 vs 8.88 ms, p50 9.55 vs 9.56: **no difference**; the iGPU frame is fill-bound. DROPPED as a lever.
+- CORRECTION to my answer to perf above: the zoom is NOT a CPU/GPU cut (E6 measured none); nothing for perf to take.

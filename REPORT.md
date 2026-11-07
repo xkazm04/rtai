@@ -16,6 +16,13 @@ priority, the CPU's own 2-CU Radeon), never a device claim. Details and sources:
   (`"$GODOT_BIN" --headless --path project --export-release linux-showcase ../build/export/linux/RTAI.x86_64`),
   running the city under the Deck profile in WSLg on the AMD iGPU (`tools/handheld/wsl_run.sh`; `evidence/sim/e4-linux-wslg/`).
 - Pause on focus-out (the Steam overlay) under a handheld profile.
+- Pad rumble under the handheld rows (`HandheldRumble` on the Events bus: Rivet hit, a car strike, a tackle, a boss
+  stepping in, a hijack, the whispers; desktop none) and prompts that name a PlayStation / Nintendo-layout pad's own
+  buttons (`PadGlyphs`, handheld rows). Unit-tested; **never felt**: no pad on this PC.
+- The 40 Hz battery row (`deck40`) measured against `deck` on the city block: GPU busy 38 % vs 55 % of each second,
+  pinned CPU -26 % (E5, CONTENDED); the 1.5x handheld zoom costs nothing (E6).
+- The desktop game unmoved with all of it in: evidence gate on 9b35dd21 lint 15/15, unit 1708/0, scenarios 52/52,
+  parity bit-exact, look goldens 11/11 (`evidence/it4/`).
 - Clips at 1280x800 on the iGPU: `gtai-masters/d9/handheld/deck-king-1280x800-igpu.mp4`, `deck-city-1280x800-igpu.mp4`.
 
 ## Calls for the owner
@@ -27,10 +34,17 @@ priority, the CPU's own 2-CU Radeon), never a device claim. Details and sources:
 2. **The ghost-form panel on a handheld** (`still-king-33.png`): it covers about a third of the width and a quarter
    of the height of a 1280x800 panel, bottom-left. a) keep; b) a compact handheld panel (owed to the hud work);
    default built: a (nothing changed).
+3. **Pad prompts for a PlayStation pad on the desktop too?** Built: only under the handheld rows (the desktop keeps
+   the Xbox names: "the desktop must not move"). a) keep handheld-only; b) every run (one condition in
+   `PadGlyphs.active_family`). Default built: a.
+4. **Rumble on the desktop?** Built: handheld rows only. a) keep; b) a `rumble` value on the desktop row (one data
+   value), plus a settings toggle (owed either way). Default built: a.
 
 ## Owed / next
 - The Linux build: NAT-06 parity on the Linux `.so` (in WSL), a real Vulkan run (needs a Linux PC or a Deck).
-- Rumble, glyph images per pad type, aim assist (a design call), a pad-only
+- Glyph images per pad type, a PlayStation pad behind Steam Input (Steam's origin glyphs), a rumble settings toggle,
+  rumble on blasts and crashes (no bus event), aim assist (a design call), a pad-only
   walk through menus and the dialogue.
-- A/Bs: `deck40` vs `deck` (CPU/GPU busy as the power proxy), `handheld_1080` viewport vs native stretch,
+- A/Bs: `handheld_1080` viewport vs native stretch; the iGPU frame is fill-bound (E6), so next: a lower 2D draw size
+  scaled up (viewport stretch below 1280x800) and the print grain / light passes off on the handheld tier,
   the Switch-class budget at 3 threads.
