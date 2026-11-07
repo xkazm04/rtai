@@ -60,3 +60,10 @@
   but the git-ignored .so).
 - WSLg: Mesa d3d12 Gallium (OpenGL) is there, no Vulkan-on-D3D12 ICD (only lavapipe, CPU): the Linux build in WSL can
   run Compatibility on a chosen adapter (MESA_D3D12_DEFAULT_ADAPTER_NAME), Forward+ only on the CPU rasteriser.
+- FRICTION 11:00 the reel tilt70 gate booted while handheld_focus_pause.gd still had the discarded-return parse error
+  (fixed 10:55): 2 SCRIPT ERROR, LaunchArgs failed to load. My edit during a gate run, not a regression: invalid run,
+  re-run queued after combo/deck. Lesson: never edit project/ while a gate run is live.
+- MILESTONE 11:02 the Linux .so (release + debug) built in the sniper SDK container in ~3 min; `linux-showcase`
+  exports (292 MB + 396 KB .so). E4: the export runs the city under `deck` in WSLg on the AMD iGPU through Mesa
+  GL-on-D3D12 (`GALLIUM_DRIVER=d3d12` needed, else llvmpipe): p50 19.8 ms, p99 38.6. A path proof, not a renderer verdict.
+- 11:03 reel combo 19/19, 0 SCRIPT ERROR.
