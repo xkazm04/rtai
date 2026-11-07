@@ -1,16 +1,12 @@
 class_name StreetWalkerCards
 extends RefCounted
 ## Lane n8 street: under a view row with a WALK strip (p70) a pedestrian draws as one whole-figure
-## card at its feet (the library's ped_*_70 top row: five facings, the left three mirrored by
-## RigHeadCard.frame_of) instead of a head card over top-down parts, which read as a sack on pills
-## under the tilt. The parts are hidden, not freed; the card is the person's head card with its
-## strip swapped. Where the library has a WALK strip (WALKS: 5 facings x 4 stride frames,
-## street_walk.py) the card steps through the frames by rig.phase; the others keep a gait bob and
-## sway until their strips land (REQUEST to assets, n8 it4). A flinch keeps the figure; a death
-## holds it for DEATH_HOLD of the family, then the person drops back to the parts and the head
-## card for good, so the fall and the corpse draw as before (falls()).
-## No strip for the view (p55, top) = nothing here runs. ENABLED false = the head cards (before).
-
+## card at its feet (the library's ped_*_70 rows; the left three facings mirrored by frame_of)
+## instead of a head card over top-down parts. The parts are hidden, not freed. WALKS grids (5
+## facings x 4 stride frames, street_walk.py) step by rig.phase; a row without one bobs and sways.
+## A flinch keeps the figure; a death holds it DEATH_HOLD of the family, then the parts take the
+## fall and the corpse (falls()). No strip for the view (p55, top) = nothing here runs.
+## ENABLED false = the head cards (before).
 const ENABLED: bool = true
 const DIR: String = "res://features/characters/art/view/"
 ## view art -> card row (the head the person draws, StreetCrowdCards included) -> strip file.
@@ -35,7 +31,13 @@ const WALKS: Dictionary[String, Dictionary] = {
 	"p70":
 	{
 		"ped/head_hair": "ped_suit_walk.png",
+		"ped/head_bald": "ped_elder_walk.png",
+		"ped/head_hat": "ped_hat_walk.png",
 		"ped/head_hood": "ped_hood_walk.png",
+		"ped/head_cap": "ped_cap_walk.png",
+		"ped/head_punk": "ped_punk_walk.png",
+		"ped/head_shopper": "ped_shopper_walk.png",
+		"ped/head_jogger": "ped_jogger_walk.png",
 		"ped/head_worker": "ped_worker_walk.png",
 	},
 }
@@ -43,7 +45,13 @@ const WALKS: Dictionary[String, Dictionary] = {
 ## the size step (still figure height / walk figure height, per cell, the mean of the facings).
 const WALK_FILL: Dictionary[String, float] = {
 	"ped_suit_walk.png": 1.06,
+	"ped_elder_walk.png": 1.07,
+	"ped_hat_walk.png": 1.07,
 	"ped_hood_walk.png": 1.07,
+	"ped_cap_walk.png": 1.10,
+	"ped_punk_walk.png": 1.00,
+	"ped_shopper_walk.png": 1.08,
+	"ped_jogger_walk.png": 1.11,
 	"ped_worker_walk.png": 1.11,
 }
 const STRIDE_FRAMES: int = 4

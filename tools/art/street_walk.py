@@ -2,7 +2,10 @@
 game grid: 5 columns (facing camera, 3/4 toward, side, 3/4 away, back; the RigHeadCard frame order)
 x 4 rows (contact, pass, contact, pass), every cell the same size, cell_h px tall.
 
-usage: python -I tools/art/street_walk.py <keyed_walk.png> <out.png> [cell_h=192]
+usage: python -I tools/art/street_walk.py <keyed_walk.png> <out.png> [cell_h=192] [--copy=F:I<J ...]
+
+--copy=F:I<J draws facing F's frame I as its frame J (a library B fix: a frame that pops in the
+loop is replaced by its stride twin, e.g. ped_shopper row 4 frame 1 -> frame 3: --copy=3:0<2).
 
 Finds the five bands of figures (alpha row runs, else the emptiest scanline near each fifth) and the
 four figures in each band (the four widest column runs). Each figure keeps its place in its stride:
@@ -49,7 +52,8 @@ def _figures(solid: np.ndarray, y0: int, y1: int) -> list:
 
 
 def main() -> None:
-    args = sys.argv[1:]
+    copies = [a[7:] for a in sys.argv[1:] if a.startswith("--copy=")]
+    args = [a for a in sys.argv[1:] if not a.startswith("--copy=")]
     cell_h = int(args[2]) if len(args) > 2 else 192
     rgba = np.asarray(Image.open(args[0]).convert("RGBA"))
     solid = rgba[:, :, 3] > 128
@@ -76,6 +80,12 @@ def main() -> None:
         at = (int(round(cw / 2 + dx)), ch - 2 - dy - crop.shape[0])
         cell.paste(Image.fromarray(crop), at)
         grid.paste(cell.resize((w, cell_h), Image.LANCZOS), (f * w, i * cell_h))
+    for c in copies:
+        f, rest = c.split(":")
+        i, j = (int(v) for v in rest.split("<"))
+        src = grid.crop((int(f) * w, j * cell_h, int(f) * w + w, j * cell_h + cell_h))
+        grid.paste(src, (int(f) * w, i * cell_h))
+        print(f"facing {f}: frame {i} drawn as frame {j}")
     grid.save(args[1])
     print(f"{args[1]}: 5 facings x 4 frames of {w}x{cell_h} (crop cell {cw}x{ch})")
 
