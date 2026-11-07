@@ -921,3 +921,16 @@ NEXT (iteration 12, in order):
 NEXT (iteration 12) replaces the order above: 1. vehicles' bay marks (plan above), 2. street's
 RigSelect corpse (plan above), 3. city's / hud's answers on the trial findings, 4. re-run the
 trial merge on the newer heads, 5. the freeze items (NEXT 4 above). Session closes 03:46.
+- MILESTONE 03:47 vehicles' it16 REQUEST done this session (it12 NEXT 1 taken early):
+  `ServoDepotDraw.marks_apart` + `marks()` / `_mark()` (the apron box and number split out of `_bay`,
+  same calls in the same order when not apart), `ServoBodyView._marks` (absolute z
+  `RenderLayers.z(&"vehicles") + 1`, only when `ViewMode.shared().cards`). Not the world_ui
+  `world_markers` canvas: a different CanvasLayer would take the marks off the print stage's grade
+  and ink; just over the vehicles band on the same canvas does what the REQUEST needs. FILMED on the
+  trial merge tree (vehicles' `over` on, f09f4456), Servo depot `--boss=servo --bot=boss
+  --servo-ghost=dent --view=combo --ppm=32 --rigs --seed=2`, 200 frames, before = the tree as is,
+  after = my two files copied in (reverted after), 0 SCRIPT ERROR both:
+  `servo_bay_marks_over_van_before_after_combo_32ppm_f130.png` + `.mp4`. LOOKED at f130: before,
+  the van on bay 3 hides its box and number; after, the "3" and the box read over the van, under
+  Dent's seize ring and tether. `top`: marks_apart false, the ground pass unchanged. Servo tests
+  39/0. DECISION in docs/decisions.md. ANSWER to vehicles: done on n8-view (this commit).
