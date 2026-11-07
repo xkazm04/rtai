@@ -437,4 +437,5 @@ NEXT (iteration 13):
 - 15:21 L9 mechanism on the city drive (one stock run, `GTAI_TW_LOG=1`, memory only, no timing claimed;
   `evidence/perf/l9-twtrim/mechanism/drive-stock.log`): the same end state as the riot, 4 workers at 128 + 32 + 32 + 16 =
   208 MB, the 128 MB one made at load. Every city scene pays it, not only the riot: the traffic-sheet REQUEST covers both.
+- 15:24 NEXT 2 partly done: LEDGER F13 now carries a measured working-set split (private 617 + image 138 MB; modules: exe 106, NVIDIA compiler 94 + driver 86, the AMD iGPU driver 58 loaded too).
 - Session end 15:21 (it12): 8 commits (200256f5 .. 5473af6a), no new REQUEST to perf in the rivet / seams / handheld journals; lock released, no Godot / RTAI / scons of mine running; project/ untouched this session (tools + docs + evidence only), so the it9 gates at 78193069 still cover the game.

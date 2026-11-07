@@ -186,7 +186,12 @@ CONTENDED(2-8) in 14 of 36 runs (the other lanes' Godots), 0 script errors in 36
   (4 MB policy). The process working set (~745 MB steady) = Godot's own allocations ~138 MB (the perf HUD's `mem`,
   `Performance.MEMORY_STATIC`) + the staging pages (resident: the 4 MB trim took riot60's steady set 788 -> 574) + ~400 MB
   of exe image, D3D12 runtime, the GPU driver's user-mode part and its shader cache (the remainder: not split further
-  today; a VMMap read is the next tool). Lesson: on this game the biggest RAM item the project controls is the size of its
+  today; a VMMap read is the next tool). **Measured 15:24** (one riot60 run of the head release exe at the 60 fps
+  cap, `Get-Process` + the perf counters at t = 22 s, memory only): working set 755 MB = **private 617** + shared / image
+  138; commit (private bytes) 1488 MB, mostly never touched. Mapped module images 447 MB over 97 modules: the exe 106,
+  the NVIDIA shader compiler `nvgpucomp64` 94, the NVIDIA D3D12 driver `nvwgf2umx` 86, **the AMD iGPU's driver `amdxx64`
+  58 (loaded although the game renders on the 4090: D3D12 adapter enumeration)**. So the private 617 = Godot static ~138
+  + staging ~208 + ~271 of driver / runtime heaps, thread stacks and audio (not split further). Lesson: on this game the biggest RAM item the project controls is the size of its
   largest texture (it sets a staging buffer per worker), not the total art bytes; the GDScript heap is small.
 - F1 (10:27): `--rendering-driver vulkan` without `--gpu-index` crashes at start in `amdxc64.dll` (the
   AMD iGPU's driver) with exit 0xC0000005; `--gpu-index 0` = the RTX 4090 runs. D3D12 (the project's
