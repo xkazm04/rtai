@@ -353,3 +353,11 @@ NEXT (it5):
 4. Re-run `node tools/evidence/run.mjs --no-bench` (logs to scratch) at the head: d6ffd600 + e6ba3ec3 are
    art + FILL only since the it4 gate (16eb6d86); the reels if gameplay code changes.
 5. Freeze 18:30: export RTAI.exe, REPORT final (Calls 1 and 3 stand).
+- 12:40 FINDING (NEXT 1 tried): the director reel windowed at tilt70 48 px/m to tick 5700 (through the
+  riot_cop chapter at 5040) with the temporary log (reverted): cops step every frame (COPDBG samples),
+  but none strikes, throws or reloads. The grid -> parts swap is not seen in the judged scenes; leave
+  the rule as built (drop NEXT 1 unless a staged melee shows it).
+- 12:46 GATE evidence at 6110bbf9 (the 55 fresh rows, SWAT 55/70): lint 15/15, unit 1713/0, scenarios
+  52/52, parity bit-exact, selftest look goldens 11/11, release-compile 602/0: all PASS
+  (`evidence/d9-seams/evidence-it4-6110bbf9.log`). Gameplay code unchanged since the it4 reels (16eb6d86:
+  19/19 x3), only art + FILL.
