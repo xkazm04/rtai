@@ -1333,3 +1333,16 @@ _fall_70_v3 B round 0740, the library's own note: torque v3 "NO GAIN, v2 stays t
   warm mid-grey suit), same layout as the shipped walk strips (5 facings x the stride row), so
   street can move the p70 suit and cap peds to the v3 look in one swap (still + walk; the falls
   follow: ped_suit_fall_70_v3 already uses the v3 suit). Low priority, after any owner list.
+- GATE scenarios (headless run_scenarios.gd on 49b57ffb + a5c7d30e's tree, other lanes running):
+  52 ran, 0 failed, 0 SCRIPT ERROR, exit 0.
+- EVIDENCE 32 px/m (the brief's pair) for 3e0996c2: the heavy board `--view=tilt --ppm=32`, before
+  = it12's p55 table; 0 SCRIPT ERROR both. LOOKED t150 x2: same lengths and spots; the riot torsos
+  less stretched, SWAT a touch lighter navy with its vermilion patch clearer. Small at 32 px/m.
+  evidence/riot_swat_long_fall_55_before_after_tilt_32ppm_x2_heavy_board_t150.png.
+  FRICTION: a first pair at `--view=combo` showed no change: the board has no boss, so combo
+  draws p70; a p55 change is judged at `--view=tilt`.
+- LOOKED (identity across a ped's life at p70): still / walk / buckle / mid-fall / lying for suit,
+  cap, punk, shopper, worker (evidence/peds_70_still_walk_fall_identity_check_...png). The fall
+  grids run a touch lighter (suit fall v3: warmer mid-grey; median value ~+10-15 % with the skin
+  in), but each reads as the same person; no recolour (street_tone.py is blue-only; a value tone
+  for greys is a next-session item if the owner sees a pop).
