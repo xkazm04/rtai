@@ -946,3 +946,9 @@ NEXT:
   `gtai-n8/scratch/hud/it6/report_notes.md`, it12 lines appended), REPORT from those notes
   (FINDING: the dock guard's concept-approved orange-vermilion hi-vis). Delete it9-it12 scratch
   frames after the REPORT. Nothing into the worktree during a gate run.
+- 04:59 MILESTONE the combined clip v3: `gtai-masters/n8/hud/hud_set_combined_it12.mp4` (49 s,
+  1280x800, at 8b34ee77, 5 segments, 0 SCRIPT ERROR each): the armory at 70 and 55 (48 px/m, hover
+  default), the King at combo (crest + bar, the memo ghost card), quest 1's payphone call (Patch's
+  device frame) and Dock 9 (Gloria on the ticket). Looked at a 7-frame contact sheet
+  (`gtai-n8/scratch/hud/it12/clip/contact.png`). frames.json entry 1 (replaces the it6 clip; its file
+  stays). Raw .avi and png frames deleted. NEXT's "combined clip v3" item is done.
