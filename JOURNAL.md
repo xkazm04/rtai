@@ -1310,3 +1310,26 @@ _fall_70_v3 B round 0740, the library's own note: torque v3 "NO GAIN, v2 stays t
 - DECISION street/quest1-corpse-decay (docs/decisions.md).
 - ANSWER to view (it15 NOTE, corpse pile): done on n8-street 432c5ef9 (DOWN_FADE as the base tint,
   the live fight's decay as the cap). Re-check on the next trial merge at Dock 9 t15000.
+- GATE director reel on 49b57ffb (the it1 command, headless): `top` 19/19 chapters all down,
+  `combo` 19/19 all down, 0 SCRIPT ERROR both (exit 0). Unit no-arg on 49b57ffb: 1529/0, no FLAKY.
+- MILESTONE a5c7d30e: **under p70 the thug lies as thug_fall_70_v3** (B, round 0740: standing-
+  build legs, lying frames drawn long raw ~1.5x; the library's own note: v2 and v3 bracket the 70
+  geometry). Cut street_fall.py `--back-from-away`, no stretch. FILMED the Ohm beat (`--bot=ghosts
+  --ghost=ohm --rigs --seed=4 --ppm=48 --view=tilt70`, 900 frames at 30 fps), before = the 0315
+  grid post-stretched 1.4; 0 SCRIPT ERROR both. LOOKED s8.6/9.0/9.4/12 x2 crops: same spot and
+  length, v3's head box square (the stretch had made it tall), the claw cleaner. A small gain, taken
+  for one law across the p70 long falls. Torque's gang: nothing in game uses a gang fall row.
+  evidence/thug_long_fall_70_v3_before_after_tilt70_48ppm_x2_ohmbeat_s8.6-12.png,
+  thug_fall_grids_70_old_v3_x0.3.png. Provenance x1. Raw .avi deleted.
+- TRIED and KEPT AS IS (not committed): the library's ped_suit_70_v3 and ped_cap_70_v3 raises (A,
+  01:35: the suit's jacket/trousers and the cap/hoodie value splits at 32 px/m) for the p70 still
+  figures (ped_suit_full / ped_cap_full, the head cards). LOOKED them beside the shipped still and
+  walk strips (evidence/ped_suit_cap_70_v3_vs_shipped_full_and_walk_x900.png): the v3 cap wears an
+  oatmeal hoodie where the walk strip (ped_cap_walk_70) and the fall grid wear brown, so a cap ped
+  would flip colour each time it stops or starts; the suit v3 is a warmer, lighter grey than its
+  walk_70_v2. A still-only swap would pop; kept the shipped stills (one identity per ped).
+- REQUEST to assets: ped_cap_walk_70 v2 and ped_suit_walk_70 v3 redrawn from the **v3 identity
+  sheets** (ped_cap_70_v3: near-black brown cap, oatmeal hoodie, charcoal jeans; ped_suit_70_v3:
+  warm mid-grey suit), same layout as the shipped walk strips (5 facings x the stride row), so
+  street can move the p70 suit and cap peds to the v3 look in one swap (still + walk; the falls
+  follow: ped_suit_fall_70_v3 already uses the v3 suit). Low priority, after any owner list.
