@@ -52,6 +52,8 @@ Every look has a flag one value away (`PAPER`, `FACES`, `SEE`, `ON_TICKET`, `FIT
 - Director reel at 2a8a045c (it19, headless, `--bot=reel --reel=director --loadout=pistol --rigs`):
   `top` 19/19 chapters down, `tilt70` 19/19 down, 0 SCRIPT ERROR both
   (`evidence/director-reel-n8hud-it19-{top,tilt70}.log`).
+- Full gate run at 38bc8bee (it19, `evidence_run_it19.log`): lint 15/15, unit 1529/0, scenarios
+  52/52, parity bit-exact + planted mutation caught at step 629, look goldens 11/11 + block 5/5 (top did not move), export-audit 563/0.
 - FREEZE: re-run all four gates + the reel on the final head.
 
 ## What does not work / not done
@@ -63,6 +65,11 @@ Every look has a flag one value away (`PAPER`, `FACES`, `SEE`, `ON_TICKET`, `FIT
   (assets' B note); the chainsaw got a top-plane raise (0505), the rest wait for a raise.
 - Quest 1's Dock 9 crate row sits under the HUD's top-right corner at tilt70 (stage placement; the
   see-through corners soften it).
+- The dialogue box over a fight: quest 1's Mertz engage puts his 3-line intro (the box at its
+  fitted max, ~35 % of the screen's height at 1280x800) over the lower street while play runs (view's
+  merged clip `quest1_mertz_ease_before_after_combo_32ppm_merged_t15200_15600.mp4`). Built: opaque,
+  never pauses. Options: the box's see-through over Rivet/a hostile (as the corners, but text must
+  stay legible: ~70 %), a slimmer box in a fight, or pause on a boss intro. Not built tonight.
 - `--write-movie` ignores `--resolution`: 1080p arena shots need `window_width/height_override` in
   the local override.cfg (JOURNAL it19).
 

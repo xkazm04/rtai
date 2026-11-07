@@ -1154,3 +1154,24 @@ integrating), `accessibility` (value contrast of the icon on the cream ticket).
   ON_TICKET, FIT_BOX, --pickup-crate).
 Registry rules applied (2nd half): `motion-quality-gating` (the set judged as one clip across seven
 scenes, not stills), `concept-scene-parity` (the real arena, boss and quest scenes).
+- GATE 07:00 full evidence run at 38bc8bee (`gtai-n8/scratch/hud/evidence_run_it19.log`, the tree
+  untouched during the run): lint 15/15, unit 1529/0, scenarios 52/52, parity bit-exact + planted
+  mutation caught at 629, look goldens 11/11 + block 5/5 (top did not move), export-audit 563/0.
+- NOTE from view's JOURNAL l.1282 (no REQUEST): on the merged tree, Mertz's 3-line engage intro
+  fills the dialogue box to its fitted max (~35 % of the 1280x800 height) over the lower street
+  while play runs. Looked at view's clip frame (`it19/mertz_view.png`): Mertz and the crate row stay
+  clear; the lower street (where Rivet comes from) is under the box. Added to REPORT ("does not
+  work" + options); not built: a see-through dialogue must keep its text legible (a fork for the owner).
+
+NEXT (supersedes it16's):
+- FREEZE 08:30 (the next session): the gates are green at 38bc8bee and the reel 19/19 top + tilt70
+  at the same project tree, so on an unchanged tree only export + REPORT remain: export
+  `build/export/windows/RTAI.exe` (`windows-showcase`, the recipe in REPORT "Exe"), smoke it
+  (`RTAI.exe -- --armory --view=tilt70 --rigs` for a few seconds), fill REPORT's "FILL IN" (exe time
+  and size), drop "DRAFT" from its title, commit. If code changes before the freeze, re-run the
+  gates and the reel first.
+- If time before the freeze: the dialogue box over a fight (REPORT "does not work"): the cheapest
+  form is HudSee for HudDialogue at a legible alpha (~0.7) over Rivet/a hostile; film Mertz's engage
+  (quest1_clip --ticks=15200-15600 --view=combo) before/after. A DECISION + Call either way.
+- Delete it9-it19 scratch frames after the REPORT (the masters hold every referenced still/clip;
+  keep the logs).
