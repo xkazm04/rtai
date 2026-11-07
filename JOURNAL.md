@@ -893,3 +893,12 @@ NEXT (it25 end, for the next run): see REPORT `## Next steps` (Calls 1-2 to land
   `--fixed-fps 144`, the flash at the drawn pistol's muzzle in his hands (frame ~479), not the ground fallback:
   `evidence/d9/rivet_muzzle_144hz_king_combo_48ppm_seed1_f470_505_step3.png`. 0 SCRIPT ERROR in all three runs.
   Scratch deleted. No more Godot work after this (18:11).
+- 18:12 Read d9-seams and the asset lane journal again: no new REQUEST/NOTE to rivet; the p55 left walk tone
+  match not served (stays in REPORT Next steps). `git diff 261f9fac..HEAD -- project tools` is empty: the freeze
+  exe (on 261f9fac) is the code at HEAD.
+NEXT (it25 end, final for d9; supersedes every NEXT above): the REPORT is final (`## Next steps` there). For the
+  next run: 1. land the owner's picks for Call 1 (size; 1.25 m recommended) and Call 2 (walk; drawn built);
+  2. after the Director merges d9-seams, re-run the reels x3 + evidence on the merge; 3. main's switch to combo;
+  4. a drawn walk per hold family (REQUEST to assets); 5. the p55 left walk tone, a drawn reload, the facing-cell
+  muzzles, the armory row if picked.
+- Session end 18:12: everything committed; no Godot process of mine running; scratch deleted.
