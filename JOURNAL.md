@@ -1391,3 +1391,20 @@ NOTE to city (no action needed): since dd288959 a stage view (quest 1, the arena
 `VehicleParked.live` on _enter_tree under a card view, so your ChunkLift hands those scenes' kerb cars
 over too and VehicleStageCards draws them. city_facades.json's doc line ("the arena city has none and
 keeps its flat cars") goes stale on the merged tree; reword it when you next touch the file.
+MEASURED mutate vehicle_stage_cards.gd (--max=12, test_vehicle_stage_kerb + test_vehicle_stage_cards)
+at ad00066a: 75.0 % (9/12); survivors :35 (`_on` false -> true), :62 (attach's `_follow()` deleted),
+:159 (`cards.front.clear()` deleted). bae619d5 adds a walk-off test (a fighter leaves the front box:
+the car back over the actors): re-run 83.3 % (10/12). Left :35 and :62, both equivalent (ensure runs
+refresh() on the attach frame, which sets `_on` and calls `_follow()` itself).
+Scratch it21: raw .avi deleted; the trial worktree removed; my it20 mutate worktree
+(gtai-mutate-0de94ca0 at 33bf691e) removed.
+
+NEXT (iteration 22, in order):
+1. Answer any REQUEST to vehicles. Read city's journal for the NOTE (kerb claim) reply.
+2. Raise the weakest item. Candidates: the arena's city block (`--arena=city --view=tilt70`) on a
+   trial merge with n8-city: its kerb cars now stand too (claimed by ArenaFloorView); look at 32/48
+   px/m that nothing doubles and the depth reads. Quest 1 under combo at Dock 9 (70 in play).
+3. Freeze 08:30: re-export `windows-showcase` from HEAD (REPORT ## Exe), smoke it, final gates
+   (unit no-arg, reel top + tilt70, scenarios, top framemd5, evidence --no-bench with the tree still),
+   finish REPORT.md (gates item 9 -> the final commit).
+Session end ~06:50.
