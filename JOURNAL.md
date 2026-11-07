@@ -1090,3 +1090,22 @@ NEXT (iteration 14, in order):
 4. The freeze (08:30): delete the trial tree (`git worktree remove` on
    %TEMP%/view-trial-it11), director reel top + combo on n8-view, evidence run --no-bench, the
    exe, REPORT final.
+
+## Iteration 14 (05:21-06:21, BUILD)
+Read: JOURNAL, git log, the four lane journals. city: no answer yet to the it13 stand_polys
+REQUEST or the crate-colour NOTE (its last session closed before 05:08). vehicles it19 (l.1223):
+REQUEST to view: the Servo bay numbers need an ink stroke or dark backing (bay 3 fades over the
+cream stage van roof at 32 px/m). street, hud: no new REQUEST to view.
+- 05:22-05:26 TRIAL MERGE refreshed on the newest heads (n8-view 0afbbefa + city aa795463, street
+  82c6f40c, vehicles 2bccd4d1, hud c36dac9e; `trial_merge.sh`, view's side on conflicts as it11),
+  `--import` exit 0.
+- MILESTONE c3deecd3 ANSWER to vehicles (it19 REQUEST): under a card view (marks_apart) the bay
+  number draws an ink stroke (`ServoDepotDraw.NUMBER_INK_M` 0.12 m, >= 3 px) under a paper fill at
+  0.9 (was 0.6); flat views run the same single call with the same args (top unchanged). Chose the
+  stroke over a dark backing plate (a second box on the apron reads heavy on the bare floor).
+  FILMED on the trial merge with vehicles' cream van: Servo depot combo 32 px/m seed 2, 200 frames
+  before/after, 0 SCRIPT ERROR each. LOOKED f130: before, bay 3's "3" is gone on the cream roof;
+  after, it reads (ink-ringed paper); bays 1, 2, 4 on the bare floor read a touch firmer, not heavy.
+  Masters: `servo_bay_number_ink_combo_32ppm_seed2_f130_before_top_after_bottom_x2.png` (+ the
+  full-frame pair). No unit test: a draw-only change (a recorder would need a canvas); the film is
+  the proof. Lint 15/15. DECISION view/servo bay number ink.
