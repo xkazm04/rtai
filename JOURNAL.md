@@ -510,3 +510,31 @@ NEXT (it13 end, 13:56; supersedes every NEXT above):
   --view=tilt --ppm=64 --seed=3 --rigs`, 480 frames, 0 SCRIPT ERROR): the gun in his right claw, the cable arm near,
   no floating bell. `gtai-masters/d9/rivet/rivet_homing_shard_left_p55_component_cut_gunplay_tilt_64ppm_x3_seed3_t276_296.png`.
 - FRICTION (~3 min): a heredoc with backslash paths broke a python str.replace of REPORT.md; used Edit instead.
+- 14:28 MILESTONE NEXT 3 the frame cost under the bench lock (gtai-n5/bench.lock held, 3 before / 3 after
+  interleaved, rig_bench --view=tilt70): median p50 50 people 0.943 -> 0.776 ms, 200 people 1.319 -> 1.179 ms; no
+  added cost. `evidence/d9/rivet-frame-cost-it16.md`. FRICTION (~1 min): an `&&` chain stopped on the bench's
+  expected exit 1 and left `RivetFrames.ENABLED = false` in the tree; caught by `git diff --stat` and reverted before
+  anything else ran or was committed. Rule for me: toggle-run-restore with `;`, and check the diff after.
+- 14:36 GATES it16 evidence run on 0ee23a95 (code 90c46dfc): all PASS, look goldens 11/11 + block 5/5 (top did not
+  move), parity exact, scenarios 52, unit 1705/0, release-compile 600/0. (The "14:3x" gates line above was 14:24.)
+- Scratch: the frame sequences (flm, flm2, hs, q1, fs; ~2.8 GB) deleted; composites in masters.
+- Registry rules applied it16: sprite-and-atlas-production (the strips re-cut from the manifest, deterministic, only
+  the left rows moved; provenance per file; the library audit for newer graded sheets); generative-artifact-gating
+  (every swapped sheet and every re-cut judged on a contact before it shipped; the component cut rejected for the p55
+  baton on sight); motion-quality-gating (the plasma sword, the left holds and the flamer judged in the arena at
+  64 px/m, before/after at the same seed and frame; the face live in quest 1); realtime-combat-semantics (view only:
+  fires_drawn reads rig.aim_at, the shot origin and the jet are the sim's); depth-ordered-layered-art (no stray
+  neighbour piece drawn beside the figure).
+
+NEXT (it16 end, 14:37; supersedes every NEXT above):
+1. Watch assets for the electro baton REQUEST (it16): when rivet_eq_electro_baton_70/55 (+ _left) land A/B, swap the
+   manifest rows, re-cut (`python -I tools/art/rivet_frames.py --manifest=tools/art/rivet_frames.json`; check the
+   left rows' cc on a contact), provenance, film `--bot=pit --loadout=electro_baton --fire-stills` at tilt70 + tilt.
+2. The flamer's one-frame tail: RivetHeldView publishes FIRE for FIRE_TICKS after a shot, so when the aim swings into a
+   drawn octant after the trigger is released a short drawn flame shows (gunplay seed 3 t368). For CONE weapons key
+   the drawn fire cell on the stream actually emitting (cooldown near interval) or latch the aim at the last shot.
+3. A facing (non-fire) cell's muzzle for the other holds (REPORT does-not 1).
+4. The mood bust live in quest 1 (the stills reached t9050, Gloria's hand-over; rivet-feels-good comes at the TUCK-IN
+   fire): film later ticks.
+5. A new combined clip of the set (the 35 s one is from it10: no left-strip cleanup, no v4 sword, no portrait v2).
+6. The armory/rack showing him holding each weapon (brief item 6; the rack is hud's): FireStills' crops are the cells.

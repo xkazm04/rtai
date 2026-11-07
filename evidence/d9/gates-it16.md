@@ -9,6 +9,8 @@ drawn flame needs the aim 90c46dfc):
   note, the resources-in-use exit leak) (`reel-director-it16-<view>.log`).
 - Unit: `--select` runs while iterating (hud dialogue 10/0; rivet frames + muzzle + revive 13/0; `--changed` 1688/0
   on the left-strip tree); the full no-arg run: see below.
-- Not run this iteration: `node tools/evidence/run.mjs --no-bench` (last PASS on cc7f418b, it13). The changes since are
-  view-only under card views (RivetFrames, strips, the muzzle table, the portrait row); `top` draws none of them.
+- `node tools/evidence/run.mjs --no-bench` on 0ee23a95 (code = 90c46dfc; lane-private TEMP, no worktree writes while it
+  ran, 14:29-14:36): lint 15/15, unit 1705/0, scenarios 52, parity exact + planted mutation caught at step 629, look
+  goldens 11/11 (worst 0.27) + block 5/5 (worst 0.22): `top` did not move; release-compile 600 loaded / 0 failed:
+  all PASS.
 - Unit, the full no-arg run on 90c46dfc's tree: 1705 passed / 0 failed / 0 skipped (no FLAKY).
