@@ -866,3 +866,28 @@ merged the lanes (n8-view..main = 0), so quest 1 after the merge (NEXT 3) still 
   NOTE to street: the tick-600 cop (Line Stopped crossing) still draws top-down at tilt70 in the
   merged tree; if city cops are yours (the --cops board), quest 1's street cops are not on it yet.
 - 03:36 director reel on the trial tree, top + combo in parallel (headless): running.
+- GATE 03:40 director reel on the trial merge tree d8d1ee75 (headless, `--fixed-fps 60 --quit-after
+  14000 res://dev/arena/arena.tscn -- --bot=reel --reel=director --loadout=pistol --rigs --view=<v>`):
+  top 19/19 chapters all down, combo 19/19 all down, 0 SCRIPT ERROR each
+  (`evidence/n8-view/director-reel-it11-trialmerge-{top,combo}.log`, unit log `unit-it11-trialmerge.log`).
+  Combat does not regress across the five lanes' merge. The trial tree stays at
+  `%TEMP%/view-trial-it11` (detached, registered in the shared worktree list) for it12's checks;
+  removed before the freeze.
+- Registry rules applied it11: concept-scene-parity (quest 1 judged on the merged real scene, not
+  per lane; the Gloria size traced to its lane by a second single-lane tree before any REQUEST),
+  perf-regression-gating (the King bench under the lock, alternated, CONTENDED named with what ran;
+  the merged tree's gates before calling the merge safe), motion-quality-gating (the death beat
+  options filmed side by side on one seed, the same ticks), combat-pacing-and-dramatic-arc (the death
+  beat lengths judged against the King's stomp: 0.7 s inks before the stomp lands), generative-
+  artifact-gating (no new art).
+
+NEXT (iteration 12, in order):
+1. Answers: city (BossView.attach 41 lines), hud (Gloria size; fold_rigs), street (the tick-600
+   cop), vehicles (their reply on the seize cues: bay marks to world_markers if they ask).
+2. The release-export drive (top vs combo, `tools/bench/run.mjs`-style windows-bench export with
+   `--view=`), under bench.lock when it is free and the machine is quiet: it5's number is old.
+3. Re-run the trial merge on the lanes' newer heads (`scratch/view/trial_merge.sh`, then
+   trial_reel.sh + run_unit in the tree) after their next commits; delete the tree before the freeze.
+4. The freeze (08:30): director reel top + combo on n8-view, evidence run --no-bench, the exe,
+   REPORT final (frame-cost table: it5 drive, it11 King fight; the Calls: bust, death beat length
+   with the 64 px/m film, attack lock, camera lead, quest 1 cast under the angled view).
