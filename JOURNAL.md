@@ -1042,3 +1042,7 @@ l.866): quest 1's tick-600 cop (Line Stopped crossing) still draws top-down at t
   after its full rig is released (~frame 525) no corpse draws at all (no atlas cell either), so the
   RigSelect hold decides whether a corpse is seen there; the riot (city_bench) does draw atlas
   corpses (now the drawn lying frames, b5f5f10c).
+- LOOKED the riot at 32 px/m (`--zoom=1.0`; SimConst.PX_PER_M 32 at zoom 1, so `--zoom=1.5` above
+  is 48 px/m), after only: the drawn corpses read as lying people at the shipped zoom too.
+  evidence/riot_atlas_corpse_drawn_after_tilt70_32ppm_f1200.png (+ masters, not in frames.json).
+- GATE unit no-arg on b5f5f10c: 1521 passed, 0 failed, no FLAKY.
