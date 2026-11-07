@@ -1498,3 +1498,6 @@ NEXT (after the freeze):
    short grid's tone retires too. Cut with street_fall.py (with the stretch it used, see l.624ff).
 2. City cops: armed walk strips (REQUEST) before any walk grid can show in the city.
 3. SWAT p70 front corpse 1.43x short (library redraw); cultists / Torque's gang when they spawn.
+- GATE director reel `--view=combo` on 7db6c352 (08:15-08:20): 19/19 chapters, every chapter all
+  down, 0 SCRIPT ERROR, exit 0. All three views gated on the final code. REPORT updated.
+- Session end 08:21: tree clean after this commit; freeze = 7db6c352's code, exe from it.

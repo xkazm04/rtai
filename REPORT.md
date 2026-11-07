@@ -121,7 +121,7 @@ Freeze (it15), on the final code 7db6c352 (the later commits are docs only):
 selftest (look goldens 11/11 worst 0.27, block goldens 5/5 worst 0.22, no new off-doctrine accents),
 export-audit 561 loaded / 0 failed. Director reel (headless, `--fixed-fps 60 --quit-after 14000
 res://dev/arena/arena.tscn -- --bot=reel --reel=director --loadout=pistol --rigs --view=<v>`):
-`top` 19/19, `tilt70` 19/19 (it15, on 7db6c352), `combo` 19/19 (it14) chapters, every chapter all down, 0 SCRIPT ERROR (exit
+`top`, `tilt70` and `combo` each 19/19 (it15, on 7db6c352) chapters, every chapter all down, 0 SCRIPT ERROR (exit
 0). `top` stays bit-identical (look goldens). Bench: not re-run at the freeze (it10's CONTENDED
 numbers above stand; tonight's changes are texture swaps of the same size).
 
