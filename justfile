@@ -41,3 +41,9 @@ audit:
 
 mutate *args="":
     node tools/mutate/mutate.mjs {{args}}
+
+dev *args:
+    node tools/dev/run.mjs {{args}}
+
+cites *args="--all":
+    node tools/evidence/cites.mjs {{args}}
