@@ -1329,7 +1329,7 @@ NEXT (iteration 16) is the it15 NEXT above, items 1-2 (item 3 done).
   "resources still in use at exit" are headless noise). The freeze re-exports at the final HEAD.
 - CLEAN 06:54: removed the leftover mutate worktree `%TEMP%/gtai-mutate-7564d746` (mine, it15's
   re-run at e369f4b0; no process held it, the run ledger had only hud and street runs).
-- TRIAL MERGE it16 07:00-07:08 (%TEMP%/view-trial-it11 -> 691768ec): + city f14b97c9, street
+- TRIAL MERGE it16 06:56-07:04 (%TEMP%/view-trial-it11 -> 691768ec): + city f14b97c9, street
   49b57ffb, vehicles 907d73b3, hud 38bc8bee, n8-view f4a95f31. Conflicts: JOURNAL/REPORT (ours),
   the debt baseline, and ONE code conflict: `project/boot/collect_call/view/cast_view.gd` `_draw`
   (the guard / corpse branch), where the earlier trial base had the plain `_sprite` lines and street
@@ -1337,8 +1337,26 @@ NEXT (iteration 16) is the it15 NEXT above, items 1-2 (item 3 done).
   a superset; view's QuestGuardCast branch above it is untouched). Merged, cast_view.gd is 230 lines
   (debt +1 over either side's 229): the debt ratchet needs `--accept-regression` on the merge.
   `--import` exit 0, 0 parse errors. Merge notes in REPORT.
-- LOOKED 07:12 quest 1 on the it16 merge, combo 48 px/m, stills 13900/14400/15500/16080, 0 SCRIPT
+- LOOKED 07:05 quest 1 on the it16 merge, combo 48 px/m, stills 13900/14400/15500/16080, 0 SCRIPT
   ERROR: at 14400 five fresh contractor bodies lie in their hi-vis (street's cards), not it15's
   ~30-deep pile; at 15500 the dead have faded out, blood and dropped guns stay; Mertz's line box
   over the lower half (hud). View's QuestGuardCast and street's decay work together. Masters
   `quest1_dock9_merged_it16_corpse_decay_guard_cast_combo_48ppm_t14400_t15500.png`.
+- GATE 07:06 trial reel on the it16 merge (691768ec): top 19/19 and combo 19/19 chapters all down,
+  0 SCRIPT ERROR (`evidence/n8-view/director-reel-it16-trial-{top,combo}.log`).
+- MEASURE 07:06-07:11 frame cost at 58dee013 (code = it15's e369f4b0), under bench.lock (taken
+  noclobber, released by the script), CONTENDED: three other lanes' Godot runs were up at the start
+  and at the end (`bench-it16/other_godot_at_end.txt`). `scratch/view/bench16.sh`, evidence
+  `evidence/n8-view/bench-it16/`.
+  City drive, release export `windows-bench` drive_dense 48 px/m, 30 s x 2, top/combo alternated:
+  render CPU avg top 0.309 / 0.289, combo 0.294 / 0.302 ms; draw calls 252 / 253 vs 255 / 255; rig
+  p50 0.445 / 0.419 vs 0.523 / 0.518 ms (p99 0.93 / 0.85 vs 1.15 / 1.22); visible actors 9.8 / 9.8
+  vs 10.9 / 11.4. Combo costs ~+0.09 ms rig p50 (one more actor in the 70 frame), render CPU flat:
+  the same as it5 and it11. The wall frame times are NOT a verdict: every run (both views) paced at
+  ~16.7 ms avg with a 3 ms / 30 ms alternation and 256 frames over 25 ms, i.e. presentation pacing
+  on this shared desktop, not the game.
+  King fight, editor binary (`--boss=king --bot=boss --seed=2 --rigs`, 1500 ticks, vsync off,
+  x2 alternated): wall p50 top 4.64 / 4.41, combo 3.16 / 2.94 ms; p99 top 8.41 / 8.87, combo
+  6.76 / 6.83; draw calls p50 498 vs 670; render CPU p50 0.47 / 0.34 vs 0.35 / 0.34 ms. Combo stays
+  under top (it11: 3.81 / 4.06 vs 4.96 / 5.17): more draw calls (the cards), less flush/draw time.
+- REPORT: Exe recipe and Next steps drafted; frame cost updated with the it16 take.

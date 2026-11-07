@@ -78,6 +78,12 @@ under `evidence/n8-view/`. Full log: `JOURNAL.md`.
   p50 top 4.96 / 5.17 ms, combo 3.81 / 4.06 ms; p99 top 11.1 / 9.9, combo 8.0 / 8.7. Combo was 3.3x
   top at it8 and 1.6x at it9; the held floor, the PropOcclusion and frame-rig fixes took it under top.
 
+- **it16 re-take at the freeze candidate** (58dee013, under bench.lock, CONTENDED by three other
+  lanes' Godot runs; `evidence/n8-view/bench-it16/`): drive render CPU top 0.31 / 0.29, combo 0.29 /
+  0.30 ms; draw calls 252-253 vs 255; rig p50 0.43-0.45 vs 0.52 ms; King fight wall p50 top 4.64 /
+  4.41, combo 3.16 / 2.94 ms, p99 8.4-8.9 vs 6.8. The drive's wall frame times paced at ~16.7 ms in
+  both views (a 3 / 30 ms present alternation on the shared desktop): not a verdict.
+
 ## What does not work / not done
 - Servo has no p70 PART sheet (the parts are top views); p70 uses the p55 parts. Servo is a boss
   (55 under combo), so this only shows under `tilt70`.
@@ -137,7 +143,7 @@ hand fix, unit 1639/0, director reel top + combo 19/19 all down, 0 SCRIPT ERROR.
   down, 0 SCRIPT ERROR (`evidence/n8-view/director-reel-it15-trial-*.log`). `ViewPitchQuest` adds
   one call in `boot/quest1_game.gd` `_casts()` (after `GhostAttackViews.attach_quest`): no other
   lane touches that function.
-- it16: trial merge refreshed 07:00-07:08 (n8-view f4a95f31 + city f14b97c9, street 49b57ffb,
+- it16: trial merge refreshed 06:56-07:04 (n8-view f4a95f31 + city f14b97c9, street 49b57ffb,
   vehicles 907d73b3, hud 38bc8bee): one CODE conflict, `boot/collect_call/view/cast_view.gd`
   `_draw`'s guard/corpse branch: take street's hunk whole (`StreetQuestCards.draw_guard` +
   `StreetQuestCorpses.draw`; view's `QuestGuardCast` branch above it merges clean). The merged file
@@ -158,4 +164,10 @@ Try: `RTAI.exe -- --rigs --boss=king --phase=3 --view=combo [--ppm=64]`, `RTAI.e
 `RTAI.exe -- --arena=city --rigs --view=tilt70`, `RTAI.exe -- --rigs --view=combo_lead` (Call 4).
 
 ## Next steps
-(at the freeze)
+1. Servo's p70 PART sheet (his parts are top views; p70 borrows p55's): only `tilt70` shows it,
+   because combo fights him at 55. REQUEST to assets if `tilt70` boss fights are ever wanted.
+2. After the owner's Rivet pick: the whole-figure Rivet frames per pitch (p55 for bosses, p70 for
+   play) register through `data/tables/card_sets/` like street's heads; the held-weapon parts keyed
+   by the art key (it13) then retire.
+3. The Calls for the owner (1-6) are each one value; flip the chosen ones on main after the merge.
+4. Re-take the frame cost on an idle machine (every take tonight was CONTENDED by the other lanes).
