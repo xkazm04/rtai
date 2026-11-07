@@ -824,3 +824,72 @@ fire's cores turned toward yellow in vehicle_fire's sheet cut (a LAMP_DEG-style 
 row in accent_debt.json naming the fire. Measure first (vehicle_frame crash, graded); decide (b)
 if its look survives at 64 px/m, else raise a Call.
 Session end 02:46.
+
+## Iteration 16 (2026-11-07 02:45 - 03:45), BUILD
+
+Read: JOURNAL, git log, the lane journals. view ANSWERED my it14 REQUEST in part (n8-view it10,
+1dd745b8): under a card view Dent's tether and the seized car's heat halo draw at vehicles + 1;
+Dent's soul halo stays with the ghost body (feed it to VehicleFront: it is the player's form at
+Rivet's position, which the front grid already gets); bay 3's marker is a ground mark (view
+offers to move it to world_markers). No other REQUEST to vehicles.
+MEASURED 02:50 NEXT 2, the colour audit at the angled view:
+- the wreck fire (p70 fx_fire.png): 55,546 of 170,298 visible px pass the vermilion gate (p55
+  44,354 of 135,283), all flame-loop cells, hue ~12, sat ~0.84. A hue turn toward yellow does not
+  survive: +10 deg leaves 51,653, +25 deg 21,141; clearing them needs a yellow fire. Fire kills
+  within FIRE_R (VehicleContacts.burn): a danger cue. Kept; a Call (palette.json's vermilion
+  layers lack `vehicles`). The `top` fire (features/fx/art/fx_fire.png) is the same: 65,737 px.
+- the city at tilt70 (main scene `-- --arena=city --view=tilt70 --seed=<2|7|11|23> --rigs`,
+  frames 60/120/180, 32 px/m, 0 SCRIPT ERROR): per frame 81-196 gate px; 78 are Rivet's collar
+  (the centre cluster, 232,80,42), the rest lit amber lenses the grade pushes over the gate (the
+  ambulance's roof beacon 243,156,1 at seed 7 f180; a taxi's side lamp 217,128,0): they read
+  amber to the eye (looked, crop x3). No pickup on screen in those 12 frames; its atlas row has 42
+  px over the gate and 840 within 20 of it (130,697 within 40): not measured graded.
+MILESTONE 47324e53 merge n8-view (JOURNAL.md ours; tools/debt/baseline.json: took view's, then
+`--update --accept-regression` (the merged tree carries both sides' accepted dev lines: dev_loc
+18157); lint 15/15).
+MILESTONE f09f4456 VehicleStageCards.over = true. FILMED Servo depot (`res://dev/arena/arena.tscn
+-- --boss=servo --bot=boss --servo-ghost=dent --view=combo --ppm=<32|64> --rigs --seed=2`, 300
+frames each, over off/on, 0 SCRIPT ERROR all four): on, the van stands in front of its bay's
+shutter (off: the shutter and the bay box drew over its roof), the tether and the heat halo over
+the van (view's fix). First try on: Servo's arm went under the wreck at f240 (his centre lies past
+the front box's HALF_M while his arm reaches over the car): a fighter wider than WIDE_M (0.6 m
+radius; people 0.45) now adds its left and right edges to the front grid; re-filmed: the arm over
+the wreck as with off. Kept cost: bay 3's number hides under the van parked on it.
+Quest 1 (`-s res://dev/frames/quest1_clip.gd -- --stills=600,2400,6000,13700 --rigs --view=tilt70
+--ppm=32`) on vs off: 4 stills pixel-identical, 0 SCRIPT ERROR.
+Masters: servo_van_over_combo_{32,64}ppm_off_left_on_right.mp4, servo_van_over_combo_32ppm_f180_
+crop2x_off_left_on_right.png (frames.json entry 4; dropped fire_tilt70_32ppm_before_after.mp4,
+its 64 px/m close-up stays), servo_van_over_combo_64ppm_f120_off_left_on_right.png,
+servo_wreck_boss_edges_combo_32ppm_f240_crop2x_off_left_on_right.png.
+GATE unit (the --changed run fell back to FULL after the merge) on the merged tree + over: 1526
+passed, 0 failed, no FLAKY. lint 15/15. Test: test_vehicle_stage_cards 6/0 (over on and off, the
+wide fighter's edges).
+REQUEST to view: move the Servo depot's bay markers (the box and its number, the seize's target)
+to the world_markers canvas (your it10 offer), so a van parked on bay 3 no longer hides its
+number now that VehicleStageCards.over is on (f09f4456).
+DECISIONS: over on, the wreck fire's vermilion (docs/decisions.md).
+Rules applied: depth-ordered-layered-art (the band order decided by filming both settings at
+close range, the front box widened by the body's real radius, not a guessed constant), concept-
+scene-parity (the real boss arena and quest 1, not a dev rig), generative-artifact-gating (the
+fire's colour measured with the game's gate before and after a candidate fix, the fix rejected on
+numbers), motion-quality-gating (300-frame on/off clips in sync).
+
+## Calls for the owner (carry to REPORT)
+- The wreck fire's colour: built = the sheet's red-orange cores (vermilion by the gate: a danger
+  cue, it kills within FIRE_R) on the vehicles band. Options: palette.json lists `vehicles` for
+  vermilion's danger_cue; or the fire on the fx band (z 400: over the roofs, a wreck behind a
+  facade burns through it); or a yellow fire (+25 deg still fails the gate). See
+  fire_tilt70_64ppm_closeup_before_top_after_bottom.png.
+- Stage cars over the actors: built ON (servo_van_over_combo_32ppm_off_left_on_right.mp4, right);
+  `VehicleStageCards.over = false` is the old look. Bay 3's number hides under a parked van until
+  view moves the bay markers to world_markers.
+03:10 GATES on f09f4456 (with the n8-view merge): director reel (`res://dev/arena/arena.tscn --
+--bot=reel --reel=director --loadout=pistol --rigs --view=<v>`, headless, --fixed-fps 60
+--quit-after 7600) top 19/19 all down, tilt70 19/19 all down, 0 SCRIPT ERROR, exit 0 each
+(evidence/n8-vehicles/director-reel-it16-*.log). `top` bit-identity (`-- --arena=city --bot=rivet
+--seed=2 --rigs`, 300 frames, framemd5): 300/300 video + 300/300 audio equal to top_head.md5, 0
+SCRIPT ERROR: view's merge kept top too.
+03:12 MEASURED the pickup rust graded: every 10th frame 0-180 of the four city seeds (76 frames):
+all non-collar gate clusters are amber lenses (hue > 30); no rust cluster. Not a guarantee (the
+pickup is variant 5 of 9 in traffic; not seen near the camera): closed unless one shows.
+Evidence json: evidence/n8-vehicles/iteration16.json.
