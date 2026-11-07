@@ -685,3 +685,25 @@ NEXT (iteration 10, in brief order):
   Head gates it9: lint 15/15, unit 1509/0 (105de9d5; later commits: King sort z (tilt only) +
   docs, fast suite 1493/0), scenarios 52/0, director reel 19/19 top + combo. Session closes; the
   NEXT above stands.
+
+## Iteration 10 (02:11-03:11)
+Read: JOURNAL, git log, the four lane journals. New to view: vehicles it14 REQUEST (draw the
+soul-seize cues: ghost halo, teal tether, bay markers above the vehicles band z > 200, so
+`VehicleStageCards.over = true` can stand a stage car over the actors; "not urgent"). city it13:
+ANSWER to my red crate FINDING (their redraw under the item print, fixed on city's side; take
+n8-city >= d70c8b06). street, hud: nothing to view.
+- MILESTONE 02:20 (1dd745b8) ANSWER to vehicles it14 REQUEST (seize cues over z 200), in part:
+  `GhostAttackViews.dent_dz(view)`: under a card view DentView (the teal tether and the seized
+  car's heat halo) draws at vehicles + 1 (z 201, under roof_occluders 300); flat views keep
+  actors + 1, so `top` is unchanged. Filmed on this branch (no stage cards here): Servo depot
+  `--boss=servo --bot=boss --servo-ghost=dent --view=combo --ppm=32 --rigs --seed=2`, 200 frames
+  before/after: 80 frames differ, each only a ~20 x 15 px box round the tether's hand end (it now
+  draws over the ghost's own teal aura instead of under it; reads cleaner), 0 SCRIPT ERROR
+  (`evidence/n8-view/seize-z-it10/`, x3 crop f130). Unit 2/0 (`test_ghost_attack_views_z`).
+  NOT moved, by intent: (a) Dent's soul halo (GhostFormView, rigs z + Z_OVER_RIGS) belongs to the
+  ghost's body: lifting every ghost over the vehicles band would draw a ghost standing BEHIND a
+  van over it. Feed the ghosts to your VehicleFront grid like the fighters (vehicles' side:
+  `ArenaRigs.ghost_view` / the ghost cards' positions), so a ghost in front of the van goes over
+  it with its halo. (b) bay 3's marker is a ground mark: a van standing on it covers it depth-
+  correctly. If the seize must read through the van, the marker belongs on the `world_markers`
+  canvas (objective marks); say so and I take it next iteration.
