@@ -6,7 +6,8 @@
 // An arm is `<name>:<extra user args>[^<extra engine args>]` (space separated, comma-free), e.g.
 // `mobile:^--rendering-method mobile` A/Bs the renderer without touching the project. A name ending
 // `@exe` (e.g. `rel@exe:`) runs the exported windows-bench release build (EXE) instead of the editor
-// binary: the release-vs-debug baseline; export it first (`node tools/bench/run.mjs` or the line in LEDGER). Takes C:/Users/kazda/kiro/gtai-n5/bench.lock
+// binary: the release-vs-debug baseline; `@exe-<dir>` runs build/export/<dir>/RTAI-bench.exe instead (L7: the
+// same pck beside another export template); export it first (`node tools/bench/run.mjs` or the line in LEDGER). Takes C:/Users/kazda/kiro/gtai-n5/bench.lock
 // (noclobber) for the whole run; every run is stamped CONTENDED when another Godot was up.
 // Writes <out>/<scene>-<arm>-<round>.json (the scene's own log) and <out>/ab.json (the summary).
 import { spawn } from 'node:child_process';
@@ -97,11 +98,12 @@ async function runOnce(sceneName, arm, round, outDir) {
   const others = foreignGodot().length;
   const env = { ...process.env, APPDATA: process.env.APPDATA_PERF ?? 'C:/Users/kazda/kiro/gtai-d9x/appdata/perf' };
   const sampler = startSampler();
-  const exe = arm.name.endsWith('@exe');
+  const exeDir = arm.name.match(/@exe(?:-([\w.-]+))?$/)?.[1] ?? (arm.name.endsWith('@exe') ? 'windows-bench' : null);
+  const exe = exeDir !== null;
   if (exe && sc.scene !== 'res://dev/bench/city_bench.tscn') return { error: `${sceneName}: @exe runs city_bench presets only` };
   // A release template refuses a scene path (disable_path_overrides): the bench export boots city_bench.
   const args = [...sc.engine, ...arm.engine, ...(exe || !sc.scene ? [] : [sc.scene]), '--', ...user, ...arm.user];
-  const res = exe ? await runExe(sc.headless ? ['--headless', ...args] : args, env)
+  const res = exe ? await runExe(sc.headless ? ['--headless', ...args] : args, env, exeDir)
     : await runGodot(args, { headless: !!sc.headless, env, timeoutMs: 6 * 60 * 1000, name: `perf-ab-${sceneName}` });
   const proc = sampler.stop();
   const errors = (res.out.match(new RegExp(SCRIPT_ERROR.source, 'g')) ?? []).length;
@@ -111,11 +113,12 @@ async function runOnce(sceneName, arm, round, outDir) {
 }
 
 /** The exported release build (EXE), registered in the run ledger like a runGodot call. */
-async function runExe(args, env) {
-  if (!existsSync(EXE)) return { status: -1, out: `no ${EXE}: export windows-bench first`, timedOut: false, durationMs: 0 };
+async function runExe(args, env, dir) {
+  const exePath = dir === 'windows-bench' ? EXE : join(ROOT, 'build', 'export', dir, 'RTAI-bench.exe');
+  if (!existsSync(exePath)) return { status: -1, out: `no ${exePath}: export windows-bench first`, timedOut: false, durationMs: 0 };
   const entry = register({ kind: 'perf-ab-exe' });
   try {
-    return await runProcess(EXE, args, { cwd: join(ROOT, 'build', 'export', 'windows-bench'), env,
+    return await runProcess(exePath, args, { cwd: join(ROOT, 'build', 'export', dir), env,
       timeoutMs: 6 * 60 * 1000, onSpawn: (pid) => entry.setChild(pid) });
   } finally {
     entry.release();

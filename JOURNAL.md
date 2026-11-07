@@ -286,3 +286,23 @@ NEXT (iteration 7):
   (12), both used by 2D. So `disable_3d=yes` is a candidate for the size template; to verify at build time that ArrayMesh
   and MultiMesh survive it (2D MeshInstance2D / MultiMeshInstance2D need them) and that GUT (addons) still loads.
 - Session end 13:52 (it6): 7 commits (cd227d3f .. this), gates green at 7bdb9f6e, lock released, no Godot of mine running.
+
+## Iteration 9 by the Director's count (my 7th session; 13:46-14:46, BUILD)
+- Read: JOURNAL it6 + NEXT, git log -30, d9-rivet / d9-seams / d9-handheld journals: no new REQUEST to perf. Registry
+  rules applied: measurement-honesty (an estimate is labelled an estimate until the real pck is measured; a build that
+  differs in more than one thing is not credited to the strip alone), perf-regression-gating (the same pck under both
+  templates, interleaved), render-submission-economy (n/a this session: size and boot).
+- 13:47 NEXT 2 (size lever) started: Godot 4.7.2-stable source shallow-cloned to `gtai-d9x/scratch/godot-src/godot`;
+  the D3D12 (Mesa NIR, PIX, Agility 1.618.5), AccessKit, WinRT and ANGLE deps installed with the tree's own
+  `misc/scripts/install_*.py` (into its `bin/build_deps`: MSYSTEM is set in this shell). Usage grep of the project
+  (addons excluded): no physics body/area/ray, no navigation, no 3D node, no network, no video, no noise, no mp3;
+  RegEx is used (arena_tuning, quest_condition); ogg + wav audio. Profile `tools/perf/template/strip.py`.
+- 13:50 compile started: `scons platform=windows arch=x86_64 target=template_release profile=strip.py -j10`, MSVC 14.3,
+  BelowNormal priority (children inherit), no LTO (the official build uses production LTO: the template comparison
+  carries that difference too, named in the row). This build loads the machine: no bench numbers of mine while it runs.
+- 13:55 L8 estimate (pixel-free size lever, `tools/perf/webp_effort.py`): every lossless `.ctex` is WebP lossless
+  (RIFF in the header) at Godot's default effort (quality 25, method 2). On 30 PNGs spread over the 1221 (size-sorted):
+  q25 m2 9.38 MB / 5.6 s encode; q50 m4 8.96 (-4.5 %, 1.3x encode); q75 m4 8.89 (-5.2 %, 1.7x); q100 m6 8.6 (-8.4 %,
+  29x encode); decode bit-exact in every case, decode time WASH. Textures are 209 of the pck's 228 MB.
+- 13:58 ab.mjs: an arm `<name>@exe-<dir>` runs `build/export/<dir>/RTAI-bench.exe` (the same pck beside another
+  template); boot.sh `EXE_B=<path>` compares two exes.
