@@ -877,3 +877,29 @@ upright card). Alternative one value away. REPORT Call 5.
   cream/white rim or backing, no teal, no police blue, no red. Why: since it2 the four bodyguards stand on the
   King's own legs (filmed it10, phase 1, combo); their own top-down parts legs sprawl with a pale rim. When served
   A/B I swap `KingLegsCard.SHEETS["gang"]` to "gang_legs" (one value), with a provenance line.
+- 17:05 PROBE + FINDING (motion-quality-gating): the King's drawn boots skate at 55. His legs card stepped by the
+  parts' gait phase (RigGait: one cycle per `stride` world px); the probe in the real fight (phase 3, combo, seed 2)
+  measured 64 world px per gait cycle, card scale 0.54-0.56 at 55. The 55 sheet's profile column draws contact
+  rows 180/173 px wide with a 64 px boot: two heel-to-heel steps of 116 = 232 cell px per cycle = ~125 world px.
+  So the drawn legs cycled twice per drawn stride of ground: boots running at 2x the ground speed. At 70 the drawn
+  cycle (~80 cell px x 0.71 = 57) is close to the gait's 64.
+- 17:12 MILESTONE (f99bf5d6): `KingLegsCard.CYCLE_CELL` {55: 232, 70: 80} + `walk_row`: the legs card keeps its own
+  phase (meta on the legs sprite) advanced by the ground walked / (cycle x card scale); `{}` = the old gait phase.
+  MEASURED in the real fight, same 349 walking frames (782 px): a new pose every 17.4 px (7.7/s) before, 26.1 px
+  (5.2/s) after; the drawn quarter cycle is ~31 px. PLANTED by hand: phase x2 -> the walk-row test fails; 55 cycle
+  115 -> the cycle test fails; a constant step -> compile error (unused var). Clip
+  `king_legs_stride_before_after_combo_64ppm_seed2_phase3_f200-420_x2.mp4` (frames.json 9). LOOKED: same frame,
+  same pose set; after, the steps are slower and heavier, the boot stays planted while the floor passes.
+  FRICTION (1 min): a `Dictionary.get` into a typed float parameter is a warning-as-error (Variant); typed local.
+  `tools/godot/check.mjs` on any King script FAILS by a depended-script chain under --check-only (king_art.gd
+  unchanged fails the same): not a signal; the unit load is.
+- 17:14 REPORT items 24-25 + Call 5, two decision lines (298af5a1). frames.json 15: in the stride clip (9) and the
+  gang pair (10); out the King 70 legs film (8 covers 70) and the arm-rim still (both still cited by REPORT).
+- FRICTION (1 min): evidence run refused the tree: its own log was written under evidence/ (untracked). Log to
+  scratch, copy in after (as rivet did).
+- 17:22 GATE director reel it10 at 298af5a1 (code since it9: KingLegsCard SHEETS + walk_row): top, tilt70, combo 19/19
+  FULLY down, 0 SCRIPT ERROR, the 2 known ^ERROR lines each (`evidence/d9-seams/director-reel-it10-*.log`).
+- 17:22 GATE evidence it10 at 298af5a1: lint, scenarios 53, parity bit-exact (mutation caught at 629), look goldens 11/11
+  (worst 0.27) + block 5/5, release-compile 602/0 PASS; unit 1726/0 but marked FAIL "tree changed during run" because
+  I appended to JOURNAL.md while it ran (mine, 0 min lost: re-run on the clean tree below).
+  (`evidence/d9-seams/evidence-it10-298af5a1-dirty.log`)
