@@ -33,7 +33,28 @@ Branch `d9-seams`. Evidence: `C:\Users\kazda\kiro\gtai-masters\d9\seams\` (`fram
    `sim_bike_top_vs_tilt70_32ppm_seed7_f420_x2.png`, `sim_bike_{tilt70,top}_traffic_seed7_bikes025.mp4`.
 6. **release_compile per worktree/pid** (item 6, 6e49a298): two passes in parallel in one
    worktree, 599 loaded / 0 failed each, both scratch dirs removed (`evidence/d9-seams/`).
+7. **Armed city cops walk as drawn figures** (item 5, 49ad9fd6, it3): `StreetCopWalk`: at 70 every
+   living patrol cop (cap) and riot cop (helmet) draws its armed walk grid (pistol two-handed; baton +
+   shield), 5 facings x 4 stride frames by the gait phase, the stand frame when still, instead of a head
+   card gliding over parts. The grid holds through aim and fire (no swap per shot); a baton strike, a
+   throw or a reload shows the parts. Art: cop_patrol_walk_armed_v2 (B) and cop_riot_walk_armed_v4 (A),
+   toned to the cop cards' navy; the riot sheet's orange armband greyed (vermilion is reserved,
+   `tools/art/street_armband.py`). `cop_armed_walk_before_after_tilt70_48ppm_seed5_f400_x1.5.png`,
+   `cop_armed_walk_before_after_tilt70_32ppm_seed5_f400.png`, `cop_armed_walk_tilt70_48ppm_seed5_{before,after}.mp4`.
+   Not yet: SWAT cops and every 55 cop (no armed sheets: REQUEST to assets).
+8. **The sim bike has a rider** (item 3, f9f348b6, it3): card row 9 from bike_rider_70/55 (A), the
+   `top` print from bike_rider_top_v1 (A, cream/ink duotone). Only row 9 / cell 9 landed (the other
+   rows byte-identical). `sim_bike_rider_top_vs_tilt70_32ppm_seed7_f420_x2.png`, `..._crop3x.png`,
+   `sim_bike_rider_{top,t70}_32_seed7_bikes025.mp4`.
+9. **The King's drawn legs at 70** (item 2, 4aa2a0e0, it3): king_legs_70_v3 (A, no hip ring) under the
+   70 bust with a per-pitch lift (`KingLegsCard.LIFT` {55: 0.5, 70: 0.74}: the hem over the thigh tops);
+   55 now on king_legs_55_v2 (A, the profile strides). `king_legs70_before_after_tilt70_{64,32}ppm_seed2_f150_x{2,3}.png`,
+   `king_legs70_tilt70_64ppm_seed2.mp4`, `king_legs55v2_combo_64ppm_seed2.mp4`.
 
+Gates it3: director reel at 4aa2a0e0 top/tilt70/combo 19/19 down, 0 SCRIPT ERROR
+(`evidence/d9-seams/director-reel-it3-*.log`); evidence at f74bb3ed (items 5 + the rider): lint 15/15, unit 1711/0, scenarios 52/52,
+parity bit-exact (bikes in it), selftest look goldens 11/11 (worst 0.27), release-compile 602/0, all
+PASS (`evidence/d9-seams/evidence-it3-f74bb3ed.log`).
 Gates it2: director reel after the legs ON top/tilt70/combo 19/19 down, 0 SCRIPT ERROR
 (`evidence/d9-seams/director-reel-it2-*.log`); evidence at e8c6ad01 (bikes 0.06): lint, unit
 1705/0, scenarios 52/52, parity, release-compile 601/0 pass, selftest FAIL (top look goldens 2/11);
@@ -46,9 +67,9 @@ director reel (`--fixed-fps 60 --quit-after 14000`) top 19/19, tilt70 19/19, com
 0 SCRIPT ERROR (`evidence/d9-seams/director-reel-it1-*.log`). Not yet run: `tools/evidence/run.mjs --no-bench`.
 
 ## What does not work yet
-- The King's legs at 70 (king_legs_70 drawn ~40 % too tall; v2 asked of assets).
-- The sim bike has no rider (REQUEST `bike_rider_55/70/top` to assets); it is off by default.
-- Item 5 (armed city cops walk): both armed sheets cut cleanly at 70 (scratch); wiring next.
+- SWAT cops and every cop at 55 still glide on head cards over parts (no armed walk sheets yet:
+  REQUEST `swat_walk_armed_70`, then the three at 55).
+- The sim bike is off by default (Call 3).
 - After merge, rebuild native (`just native`): `project/native/bin` is git-ignored, and the old DLL
   would treat bikes as cars (no crash; parity would fail).
 
@@ -56,7 +77,9 @@ director reel (`--fixed-fps 60 --quit-after 14000`) top 19/19, tilt70 19/19, com
 1. **The King's legs meet the bust.** Built (it2, ON at 55): the bust and his arms rise half the legs'
    cell onto `king_legs_55` (the legs scaled with the bust: cell width = the bust's cell width), the
    hem over the legs' hips; he is a head taller than before. Still: `king_drawn_legs_before_after_combo_64ppm_seed2_f150_x2.png`.
-   Options: (a) the built 0.5 lift; (b) a smaller lift (`KingLegsCard.LIFT`, e.g. 0.35: shorter legs
+   it3: at 70 (play, before the ease) he stands on king_legs_70_v3, the bust raised 0.74 of the
+   foreshortened 70 cell so the hem covers the thigh tops (`king_legs70_before_after_tilt70_64ppm_seed2_f150_x2.png`).
+   Options: (a) the built lifts (55: 0.5, 70: 0.74); (b) a smaller lift (`KingLegsCard.LIFT`, e.g. 0.35: shorter legs
    showing, the hem lower); (c) legs hidden under a longer drawn robe (an asset ask); (d) off
    (`KingLegsCard.ON` false: the rim-stripped parts, it1).
 2. **A corpse that fell "through" the barrier** reads as lying behind it (its boots show north of
@@ -65,7 +88,7 @@ director reel (`--fixed-fps 60 --quit-after 14000`) top 19/19, tilt70 19/19, com
 3. **The sim bike in traffic.** Default built: share 0 (no bikes), because bikes in traffic move the
    `top` look goldens (selftest 2/11 at 6 %), and `top` must not move. Options: (a) bikes on at 6 %
    (`traffic.bike_share` 0.06) and rebaseline the top look goldens now; (b) on at the switch to combo
-   (the goldens move then anyway); (c) a higher share. Riderless until assets serve `bike_rider_*`.
+   (the goldens move then anyway); (c) a higher share. It now carries a rider at every pitch (it3).
    See: `RTAI.exe` is the showcase (arena); the traffic is the main scene:
    `"$GODOT_BIN" --path project -- --view=tilt70 --seed=7 --rigs --bikes=0.25` (and without `--view` for top).
 

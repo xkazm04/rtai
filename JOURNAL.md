@@ -249,3 +249,18 @@ while not aiming (city cops aim most of a fight: they would flicker between the 
   32ppm_seed7_f420_x2.png`, `..._crop3x.png`, two 5 s clips. FRICTION: the first film showed the old
   riderless bike: a changed PNG needs `--import` before a non-editor run (3 min). FINDING: --ppm only
   works in the arena scene; the main scene films at 32 (my "64" capture was 32: deleted).
+- 11:46 GATE evidence at f74bb3ed (items 5 + rider): lint 15/15, unit 1711/0, scenarios 52/52, parity
+  bit-exact, selftest look goldens 11/11 (worst 0.27), release-compile 602/0: all PASS. Log
+  `evidence/d9-seams/evidence-it3-f74bb3ed.log`. FRICTION: the first try refused a dirty tree (my own
+  JOURNAL edit + the log written inside the worktree): logs now go to scratch, copied in afterwards.
+- 11:52 MILESTONE item 2 at 70 (4aa2a0e0): king_legs_70_v3 (A; the assets lane's v3 drops v2's hip
+  ring) under the 70 bust; KingLegsCard.LIFT is per pitch now {55: 0.5, 70: 0.74} (0.74 = sole line 0.94
+  - the assets lane's 0.2 hem overlap); the 55 sheet swapped to king_legs_55_v2 (A, the profile strides;
+  v1 B was in). Masters `king_legs70_before_after_tilt70_{64,32}ppm_seed2_f150_x{2,3}.png`, clips at 64
+  (tilt70) and the 55 v2 combo clip. Before at 70 he was a bust with no legs at all.
+  FINDING: a small dark disc with a cream rim shows under his boots at both pitches: the pelvis part,
+  which stays at ground height (it was hidden behind the un-lifted bust). Fix next: KingLegsCard hides
+  rig.pelvis_spr with the leg parts (after the reels: they reload scripts per view).
+DECISION item 2 (70): LIFT 0.74 at 70 (the assets lane's mock overlap 0.2 read as the approved king_70
+stubs); one value per pitch in KingLegsCard.LIFT. Rejected: v4 (B: hollow thigh tubes show under the hem).
+- 11:55 GATE director reel it3 (at 4aa2a0e0: armed cops, rider, legs 70): top, tilt70, combo 19/19 down, 0 SCRIPT ERROR (`evidence/d9-seams/director-reel-it3-*.log`).
