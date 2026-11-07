@@ -1,4 +1,4 @@
-# n8 view lane: REPORT (DRAFT it11, 03:25; final at the freeze)
+# n8 view lane: REPORT (DRAFT it13, 05:00; final at the freeze)
 
 Lane `view`, branch `n8-view`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n8\view\` (`frames.json`,
 15 entries, best first; the combined reel `view_set_combined_n8_it11.mp4`, 86 s). Repo evidence
@@ -30,6 +30,9 @@ under `evidence/n8-view/`. Full log: `JOURNAL.md`.
    (B, toned to the p55 tan) from the library's served 70 sheets; Servo keyed by the art key (under
    combo he drew today's top-down parts all fight: fixed, `servo_combo_art_key_before_after_32ppm.png`);
    `KingArt`, `KingAccents`, `KingCarWalls` keyed by `ViewMode.art_pitch()` (no drawn cape fan mid-ease);
+   Rivet's held weapon picks its part by the art key too (it13: under combo the boss fight drew the
+   top-down part made at 70 all fight; now `tilt`'s 55 part, swapped on the cards' frame; no art
+   changed: `held_art_key_before_after_combo_48ppm.mp4`);
    the King-down return seen live with Ohm (`king_down_return_ohm_combo_*.mp4`) and with Tonnage in
    form (`tonnage_king_down_swap_combo_{32,64}ppm.mp4`, dev flag `--ghost-at`).
 6. **The camera at 70**: city on foot and driving (`city_{foot,drive}_top_vs_tilt70_32ppm.mp4`); the boss
@@ -44,6 +47,8 @@ under `evidence/n8-view/`. Full log: `JOURNAL.md`.
    in the arena / quest 1 (no atlas there), 90 ticks in the city (then street's atlas lying frame).
    `arena_corpse_keeps_rig_before_after_tilt70_48ppm_seed5.mp4`. Dent's p70 card re-cut from the
    library's dent_v2 70 A (drawn tan): `dent70_v2_before_after_tilt70_64ppm_f160_f200_x2.png`.
+   The Servo depot's bay apron marks draw over the vehicles band under a card view (vehicles'
+   REQUEST, it11): `servo_bay_marks_over_van_before_after_combo_32ppm_f130.png` (+ `.mp4`).
 9. **Frame cost combo vs top**: see the table below (release export: the city drive; the King fight
    in the editor binary, because the release export drops `dev/bots`).
 
