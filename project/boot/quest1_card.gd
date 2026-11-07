@@ -23,6 +23,8 @@ const CONTROLS_PAD: String = (
 const FOCUS_BORDER: int = 4
 
 var start_button: Button = null
+## d9-handheld: the pause card is up (B on a pad resumes, the handheld convention).
+var pause_up: bool = false
 var _panel: PanelContainer = PanelContainer.new()
 var _box: VBoxContainer = VBoxContainer.new()
 var _text: QuestText = QuestText.new()
@@ -72,6 +74,7 @@ func show_title(can_continue: bool = false) -> void:
 ## Pause: the controls, then the settings panel (volume, reduced motion, rebinding) if given.
 func show_pause(settings_panel: Control = null) -> void:
 	_clear()
+	pause_up = true
 	_label(_t(&"SLICE__PAUSED", "Paused"), 48, Ink.INK)
 	_label(controls_text(), 20, Ink.INK)
 	if settings_panel != null:
@@ -103,10 +106,20 @@ func show_failed(can_continue: bool) -> void:
 
 func hide_all() -> void:
 	_panel.visible = false
+	pause_up = false
+
+
+## B (ui_cancel on a pad) on the pause card resumes. Pad events only: the keyboard's Esc is
+## both ui_cancel and the game's pause toggle, which already resumes.
+func _unhandled_input(event: InputEvent) -> void:
+	if pause_up and event is InputEventJoypadButton and event.is_action_pressed(&"ui_cancel"):
+		get_viewport().set_input_as_handled()
+		resume_pressed.emit()
 
 
 func _clear() -> void:
 	_panel.visible = true
+	pause_up = false
 	for c: Node in _box.get_children():
 		c.queue_free()
 		_box.remove_child(c)

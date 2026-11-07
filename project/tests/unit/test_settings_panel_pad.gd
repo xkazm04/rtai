@@ -95,6 +95,24 @@ func test_handheld_card_is_pad_first_and_desktop_unchanged() -> void:
 	plain.free()
 
 
+func test_b_on_the_pause_card_resumes_and_esc_is_left_to_pause() -> void:
+	var card: Quest1Card = Quest1Card.new()
+	add_child_autofree(card)
+	watch_signals(card)
+	card.show_pause()
+	_pad(JOY_BUTTON_B)
+	assert_signal_emit_count(card, "resume_pressed", 1, "B resumes from the pause card")
+	var esc: InputEventKey = InputEventKey.new()
+	esc.keycode = KEY_ESCAPE
+	esc.physical_keycode = KEY_ESCAPE
+	esc.pressed = true
+	get_viewport().push_input(esc)
+	assert_signal_emit_count(card, "resume_pressed", 1, "Esc stays the game's pause toggle")
+	card.hide_all()
+	_pad(JOY_BUTTON_B)
+	assert_signal_emit_count(card, "resume_pressed", 1, "no card up: B is the game's again")
+
+
 func _pad(button: JoyButton) -> void:
 	for down: bool in [true, false]:
 		var ev: InputEventJoypadButton = InputEventJoypadButton.new()
