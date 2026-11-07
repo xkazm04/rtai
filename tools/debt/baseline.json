@@ -5,7 +5,8 @@
         "2026-11-06: d8 chars: --order-probe measures ghost-card vs rig pairs (the brief's draw-order item, measured before/after) (dev_loc 18080 -> 18115)",
         "2026-11-06: n8-hud: the dialogue evidence board (dev/showcase/dialogue_board*.gd, the asset_board launcher pattern: a -s launcher reads its own args) (dev_loc 18115 -> 18206)",
         "2026-11-06: n8-hud dialogue board grows a full-HUD still (every panel up over a game frame): dev-only evidence code (dev_loc 18206 -> 18239)",
-        "2026-11-06: 2026-11-07: n8-hud: quest1_clip takes --view (film the payphone call under tilt70, dev only, +2) and Quest1Game._dev_rigs folds the rig cast's ghost card beside the subtitle box (StoryForms.fold_rigs, +1) (dev_loc 18239 -> 18241)"
+        "2026-11-06: 2026-11-07: n8-hud: quest1_clip takes --view (film the payphone call under tilt70, dev only, +2) and Quest1Game._dev_rigs folds the rig cast's ghost card beside the subtitle box (StoryForms.fold_rigs, +1) (dev_loc 18239 -> 18241)",
+        "2026-11-06: n8-hud it7: dev/showcase/boss_taunt{,_run}.gd, the live boss-taunt layout shot (strip vs box, dev evidence for the owner's call, never shipped) (dev_loc 18241 -> 18359)"
       ],
       "files": {
         "project/dev/arena": 1034,
@@ -29,11 +30,11 @@
         "project/dev/save_crash_writer.gd": 18,
         "project/dev/selftest": 1446,
         "project/dev/servo": 434,
-        "project/dev/showcase": 5576,
+        "project/dev/showcase": 5694,
         "project/dev/view": 158,
         "project/dev/weapon_art": 506
       },
-      "total": 18241
+      "total": 18359
     },
     "direct_cmdline_reads": {
       "accepted": [
