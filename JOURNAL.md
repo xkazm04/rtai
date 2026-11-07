@@ -83,3 +83,28 @@ NEXT (iteration 2):
 5. NAT-06 parity on the Linux .so inside WSL (the sniper .so on Ubuntu's glibc 2.39 runs: forward compatible).
 6. Re-film the King fight + city at zoom_k 1.5 (the clips are 32 px/m) and a 30-90 s combined clip.
 7. End of day: delete the HKCU DirectX UserGpuPreferences value for gtai-d9x/handheld-godot/..._hh.exe and that copy.
+
+## Iteration 4 (11:14-12:14, BUILD)
+- Read: JOURNAL, git log, d9-perf JOURNAL (one REQUEST to handheld, answered below), d9-rivet / d9-seams journals
+  (their REQUESTs go to assets; none to handheld). Registry rules as in iteration 1 (on-device-verification-harness,
+  perf-regression-gating: interleaved rounds + medians + spread, CONTENDED stamped; fire-tv-device-realities: every
+  number "on the simulator"; adaptive-fidelity-tiers: the handheld tier is data, the desktop row applies nothing).
+- FRICTION 11:15 `tools/evidence/run.mjs` refuses a dirty tree: the raw sim frame logs (6.8 MB, untracked) sat in
+  evidence/sim. Moved them out of the repo to `gtai-d9x/scratch/handheld/frames/` (the committed summaries keep
+  the numbers). Evidence gate re-started 11:16 (log `gtai-d9x/scratch/handheld/evidence-it4.log`).
+- ANSWER to perf's REQUEST (tooling share): thanks; the two runners overlap (yours: scene presets + `^<engine args>`
+  arms; mine: affinity pin + below-normal priority + the iGPU adapter + `--device=`). I keep `tools/handheld/sim.mjs`
+  for the device numbers (the pin and the adapter are the device) and will read `proc_sample.ps1` before growing
+  sample.ps1. L2 (CircleFan) is on d9-perf only; I cannot take it into my numbers until the Director merges it, so
+  the riot under `deck` on the iGPU stays measured without L2. Lever back to perf: zoom_k 1.5 (the handheld rows)
+  shows 1/2.25 of the world area per frame: possibly a CPU/GPU cut (unmeasured; E6 below) that the desktop cannot take
+  (the look moves), recorded so perf does not chase it.
+- 11:23 evidence gate (on 140c690d): look goldens all ok (11/11 frames, max_far 0.003 vs 0.02), world-lock written,
+  then **crashed at release-compile**: `%TEMP%/gtai-release-compile` holds `d9-seams-f6bf436c/` (seams' per-worktree
+  version of the tool, their "release-compile clash" item); my older tool refuses a dir without its marker. Not mine to
+  fix (seams owns it); once their tool merges, the clash is gone. Re-run with `--no-release`.
+- MILESTONE 11:30 rumble (5be5495c): `HandheldRumble` on the Events bus, `rumble` gain per device row (handheld rows 1,
+  desktop none), a `deck_bench_z1` study row (zoom_k 1.0) for E6. Glyphs (7bd44dfa): `PadGlyphs` relabels the prompts
+  for PlayStation / Nintendo-layout pads under the handheld rows. 22 unit tests in the four touched files pass; lint 15/15.
+- FRICTION Godot writes `vendor_id` as a decimal string in `get_joy_info` (itos), not an int: the classifier takes both
+  (model knowledge of the engine source; unverified without a pad: no pad on this PC).
