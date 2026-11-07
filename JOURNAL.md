@@ -1175,3 +1175,7 @@ NEXT (supersedes it16's):
   (quest1_clip --ticks=15200-15600 --view=combo) before/after. A DECISION + Call either way.
 - Delete it9-it19 scratch frames after the REPORT (the masters hold every referenced still/clip;
   keep the logs).
+- 07:01 EXE exported at 1fab97c0 (`windows-showcase`, 0 errors): `build/export/windows/RTAI.exe`
+  262 MB + the sim DLL. Smoke (`--log-file`, 240 frames each): `-- --armory --view=tilt70 --rigs`
+  and `-- --boss=king --view=combo --rigs`, 0 errors, frame 239 looked at
+  (`it19/exe_smoke.png`). REPORT's Exe filled. The freeze re-exports only if code changes.

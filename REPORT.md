@@ -95,7 +95,12 @@ Every look has a flag one value away (`PAPER`, `FACES`, `SEE`, `ON_TICKET`, `FIT
   `RTAI.exe -- --armory --view=tilt --rigs` (55), `RTAI.exe -- --armory --pickup-crate=on --view=tilt70 --rigs`,
   `RTAI.exe -- --boss=king --view=combo --rigs`, `RTAI.exe -- --boss=servo --view=combo --rigs`.
   The taunt shot and the dialogue board are dev-only (-s scripts): see the masters stills.
-- FREEZE: FILL IN the build time and size.
+- Built at 07:01 from 1fab97c0 (project tree = 38bc8bee, gates green): `build/export/windows/RTAI.exe`
+  (262 MB, embedded pck, + `gtai_sim.windows.template_release.x86_64.dll` beside it), export 0 errors.
+  Smoke: `RTAI.exe --log-file <f> --write-movie <dir>/f.png --fixed-fps 60 --quit-after 240 -- --armory
+  --view=tilt70 --rigs` and `-- --boss=king --view=combo --rigs`: 241 frames each, 0 errors in the
+  log; looked at frame 239 of each (the floor showcase + rack + chip faces; the King's paper banner).
+  FREEZE: re-export only if the code changed after 38bc8bee.
 
 ## Merge notes for the Director
 - hud touches `features/hud/`, `features/bosses/boss_bar.gd`, `features/police/heat_meter.gd`, the
