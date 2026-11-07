@@ -55,6 +55,7 @@ COLS = 9 if BETWEEN else 5
 # (its _c is the spare); the pickup's row C (A, the sheet's design) over its _c (better turned, a
 # flatter camera and heavier rust): PICKUP_C_REDO = True takes the _c.
 PICKUP_C_REDO = False
+TAXI_HUE = 12.0
 REDRAWS = {
     "sedan": {2: "sedan_between_c_{p}_v2"},
     "police_car": {2: "police_car_between_c_{p}_v2"},
@@ -66,6 +67,11 @@ REDRAWS = {
 # scaled to its neighbours like a redraw, its paint graded to theirs (the brighter yellow).
 ROW_FIT = {"taxi"}
 FIT_BY = "area"
+# Row -> degrees its saturated mid paint turns toward yellow (hue 20-50 deg, saturation >= 0.35; the
+# ink, glass and red lamps untouched). The taxi: the city's warm light and grade print the sheet's
+# mustard (hue ~37) at ~(160, 75, 5), past the palette's vermilion gate (r - max(g, b) >= 79,
+# PaletteTokens): measured 5.7k vermilion px per taxi at 32 px/m in the tilt70 city. 0 = the sheet's.
+HUE_DEG = {3: TAXI_HUE}
 ROWS = [
     ("sedan", 1.45, (1.0, 1.0, 1.0)),
     ("sedan", 1.45, (0.93, 0.93, 0.93)),  # sedan_b: the small hatch, a shade darker
@@ -235,6 +241,23 @@ def paint(im: Image.Image, gain: tuple) -> Image.Image:
     return Image.fromarray(np.clip(px, 0, 255).astype(np.uint8))
 
 
+def hue_turn(im: Image.Image, deg: float) -> Image.Image:
+    if deg == 0.0:
+        return im
+    px = np.array(im).astype(np.float32) / 255.0
+    rgb = px[:, :, :3]
+    mx, mn = rgb.max(2), rgb.min(2)
+    c = mx - mn
+    sat = np.where(mx > 0, c / np.maximum(mx, 1e-6), 0.0)
+    r, g = rgb[:, :, 0], rgb[:, :, 1]
+    # red the maximum: hue = 60 (g - b) / c (b the minimum in the window)
+    h = np.where(c > 0, 60.0 * (g - mn) / np.maximum(c, 1e-6), 0.0)
+    on = (px[:, :, 3] > 0) & (r >= mx) & (sat >= 0.35) & (h >= 20.0) & (h <= 50.0)
+    h2 = np.clip(h + deg * np.clip((h - 20.0) / 8.0, 0.0, 1.0), 0.0, 58.0)
+    px[:, :, 1] = np.where(on, mn + c * h2 / 60.0, g)
+    return Image.fromarray(np.clip(px * 255.0, 0, 255).astype(np.uint8))
+
+
 def amber(im: Image.Image) -> Image.Image:
     """The colour law: red only for blood. Turns the sheets' red-orange lamp lenses amber
     (r dominant over g and b by 1.8x), keeping their value."""
@@ -250,7 +273,7 @@ def paste(atlas: Image.Image, v: Image.Image, k: float, at: tuple, lift: float) 
     """`v` scaled by `k` into cell (col, row) at `at`, its ground centre at the cell centre."""
     col, row, gain = at
     w, h = max(1, round(v.width * k)), max(1, round(v.height * k))
-    im = amber(paint(v.resize((w, h), Image.LANCZOS), gain))
+    im = amber(hue_turn(paint(v.resize((w, h), Image.LANCZOS), gain), HUE_DEG.get(row, 0.0)))
     cx = col * CELL_PX + CELL_PX // 2
     cy = row * CELL_PX + CELL_PX // 2
     x, y = round(cx - w / 2), round(cy - lift - h / 2)
