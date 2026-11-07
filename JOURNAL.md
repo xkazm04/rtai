@@ -73,10 +73,32 @@ vehicle_handling.json (mass, vmax, accel), the share drawn from its OWN rng stre
 spawner sequence (and the scenarios) do not move when the share is 0, VehicleCards.ROWS 9 -> 10,
 and a flat top print (traffic atlas row 9) cut from the bike card's top facing.
 
+- 10:20 FRICTION: my first reel run omitted `--fixed-fps 60`; headless frames outran the sim ticks
+  and `--quit-after 14000` ended `top` at tick ~6300 (17/19 down, 0 SCRIPT ERROR). Harness error,
+  not a regression: killed my own run (taskkill /T on its timeout.exe), re-running all three with
+  `--fixed-fps 60` (as the n8 gates did).
+- 10:24 ACK assets: `king_legs` 55 (B: side stride short, col 1 row 3 shows a sole) and 70 (B: drawn
+  too tall, ~40 % of the figure vs the approved stubs ~16 %; v2 queued) are in the catalog,
+  keyed/boss/king_legs_{55,70}.png in my layout (55: 1090x670, cells 218x134; 70: 1230x490, cells
+  246x98; soles at 94 %, hip centred under the bust column). Thank you. I build 55 now; 70 waits for
+  v2 (or a squash value). The 55 mock under the bust (library evidence/king_legs/) reads as one figure.
+
+Plan, the King's drawn legs (it2): `KingLegsCard` (features/bosses/king/, <120 LOC), called from
+KingArt.dress: when `art/p<pitch>/king_legs.png` exists, a Sprite2D sibling of the bust card (same
+parent and scale; hframes 5, vframes 5; column = the bust card's facing frame, flip_h with it; row 0
+standing, rows 1-4 the stride by the rig's walked distance like StreetQuestCards.PATROL_WALK),
+offset (-cw/2, -ch*0.94) at the feet, z just under the bust; the leg part sprites (thigh, shin,
+foot, both sides) hidden while it shows. Data row like STRIPS: [name, soles anchor 0.94,
+squash_y 1.0 (70: ~0.7 until v2)]. Provenance per cut. Film combo 32/64 (standing + walking),
+before = today's parts. Then the owner call on the overlap (REPORT call 1).
+
 NEXT:
-1. Read the reel results (evidence/d9-seams/director-reel-it1-*.log): 19/19 down, 0 SCRIPT ERROR each.
-2. Item 3 sim bike (scope above): native C++ + GDScript twin (parity 1200 steps), vehicle tables, art id 9,
-   small traffic share; top-down print for `top` from the bike's top facing.
-3. Item 2 second half when `king_legs_*` lands (check catalog.json); item 5 armed walk (catalog
-   `cop_*_walk*` with a held weapon); the planter's in-game frame (find a planter: city_facades props).
-4. Not yet run: `node tools/evidence/run.mjs --no-bench` (scenarios, parity, top bit-identical).
+1. Read the reel results (evidence/d9-seams/director-reel-it1-*.log): 19/19 down, 0 SCRIPT ERROR each
+   (if this session ended before they finished, re-run `scratch/seams/reels.sh`, now with --fixed-fps 60).
+2. Item 2 second half FIRST (brief order; the 55 sheet is in): the legs card, plan above.
+3. Item 3 sim bike (scope above): native C++ + GDScript twin (parity 1200 steps), vehicle tables,
+   art id 9, its own rng stream for the share, flat top print for `top`.
+4. Item 5: armed walk strips at 70 are in the catalog: cop_patrol_walk_armed_v2 (B, 20261107-1030)
+   and cop_riot_walk_armed_v4 (A, 20261107-1050); build the grid as StreetQuestCards.PATROL_WALK.
+5. The planter's in-game frame (find a planter: city_facades props); `node tools/evidence/run.mjs
+   --no-bench` (scenarios, parity, top bit-identical) before the next REPORT update.
