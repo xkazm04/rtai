@@ -136,7 +136,8 @@ Every look has a flag one value away (`PAPER`, `FACES`, `SEE`, `ON_TICKET`, `FIT
 - BossCam (view's note, view JOURNAL l.1385): the paper banner hangs ~5 px and the crest ~30 px
   below `BossCam.HUD_PX`. Looked on n8-hud with the dev `--boss-cam` (King, combo 48 px/m, seed 2,
   f500/560/620/700, 0 SCRIPT ERROR): the crest ends at y ~90 and the throne's top at y ~228, so the bust
-  stays whole under the banner (masters `king_boss_cam_banner_hud_combo_48ppm_seed2_*`). If `--boss-cam`
+  stays whole under the banner (masters `king_boss_cam_banner_hud_combo_48ppm_seed2_*`; Servo the same,
+  its body tops out at y ~180: `servo_boss_cam_banner_hud_combo_48ppm_seed2_*`). If `--boss-cam`
   ships (view's Call), have `HUD_PX` read `BossBar` (bar + `PAPER_GROW.z`) after the merge (d9).
 
 ## Next steps

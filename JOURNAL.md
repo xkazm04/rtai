@@ -1305,3 +1305,13 @@ lines into `BossTaunt`; boss busts once approved; Rivet's dialogue face after th
   11's note names them (the list stays at 15). Scratch frames deleted.
 Registry rules applied (it22): `motion-quality-gating` (judged across four frames of the live fight,
 not one still), `concept-scene-parity` (the real boss arena at 48 px/m).
+- 08:16 LOOKED (evidence, no code) the Servo fight the same way (`--boss=servo`, combo 48 px/m,
+  seed 2, `--boss-cam`, exit 0, 0 SCRIPT ERROR): f500-700 Servo's body tops out at y ~180, clear of the
+  banner; only the parked van at the top edge passes under the paper's right end (scenery, harmless).
+  Masters `servo_boss_cam_banner_hud_combo_48ppm_seed2_f500_560_620_700.png`. REPORT line extended.
+- 08:17 Session end: the project tree is still at f80e09ba (gates, reel, exe all green there); it22
+  added evidence + REPORT/JOURNAL lines only. Scratch frames deleted (script + logs kept).
+NEXT (supersedes it21's): nothing owed for the freeze. After the run: the assets lane's raises for
+the heavy/long showcase top views, then re-import (`tools/art/showcase_import.py`); boss taunt lines
+into `BossTaunt`; boss busts once approved; Rivet's dialogue face after the Rivet triage; if
+`--boss-cam` ships, `BossCam.HUD_PX` reads `BossBar` (bar + paper) after the merge.
