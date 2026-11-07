@@ -1,0 +1,102 @@
+{
+  "$id": "gtai.devices/1",
+  "additionalProperties": false,
+  "properties": {
+    "default": {
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "type": "string"
+    },
+    "devices": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "max_fps": {
+            "maximum": 240,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "note": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "sim_gpu": {
+            "enum": [
+              "discrete",
+              "integrated"
+            ],
+            "type": "string"
+          },
+          "sim_threads": {
+            "maximum": 16,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "stretch_mode": {
+            "enum": [
+              "canvas_items",
+              "viewport"
+            ],
+            "type": "string"
+          },
+          "tier": {
+            "enum": [
+              "full",
+              "handheld"
+            ],
+            "type": "string"
+          },
+          "vsync": {
+            "enum": [
+              "adaptive",
+              "disabled",
+              "enabled",
+              "mailbox"
+            ],
+            "type": "string"
+          },
+          "window_h": {
+            "maximum": 4320,
+            "minimum": 240,
+            "type": "integer"
+          },
+          "window_w": {
+            "maximum": 7680,
+            "minimum": 320,
+            "type": "integer"
+          },
+          "zoom_k": {
+            "maximum": 3,
+            "minimum": 0.5,
+            "type": "number"
+          }
+        },
+        "required": [
+          "id",
+          "note"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schema": {
+      "const": "gtai.devices/1",
+      "type": "string"
+    }
+  },
+  "required": [
+    "default",
+    "devices",
+    "doc",
+    "schema"
+  ],
+  "type": "object"
+}

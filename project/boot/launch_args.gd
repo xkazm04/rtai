@@ -75,6 +75,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--pickup-hover",
 	# n8-hud: --pickup-crate=on|off lays a floor gun's showcase drawing in an open crate (else hover)
 	"--pickup-crate",
+	# d9-handheld: --device=<devices.json id> the handheld profile (window, frame cap, stretch)
+	"--device",
 ]
 
 var _values: Dictionary[String, String] = {}
@@ -83,6 +85,12 @@ var _unknown: Array[String] = []
 
 func _init() -> void:
 	parse(OS.get_cmdline_user_args())
+
+
+## d9-handheld: a `--device=` profile sets the window and the frame cap before the main scene.
+func _ready() -> void:
+	if has("--device"):
+		DeviceProfile.select(value("--device")).apply(get_window())
 
 
 ## Parses `--flag` and `--flag=value` pairs; unknown ones are kept for unknown().
