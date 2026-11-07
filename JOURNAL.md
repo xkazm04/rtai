@@ -779,3 +779,4 @@ moved to `ArenaFloorStatic`, `_prop`'s `side` line split in two. city's `_prop` 
 frame (they did not on the it9 trial merge: stand_rect from static props), they must ask the held
 child to redraw (`_static.queue_redraw()`).
 - GATE 02:51 scenarios at 3c5aacba (`run_scenarios.mjs --quiet-wait=3`): 52 passed, 0 SCRIPT ERROR, none contended (`evidence/n8-view/scenarios-it10.log`).
+- GATE 02:57 director reel (headless, `--quit-after 14000 res://dev/arena/arena.tscn -- --bot=reel --reel=director --loadout=pistol --rigs --view=<v>`) at 025f48ac: 19/19 chapters all down, 0 SCRIPT ERROR, top + combo (`evidence/n8-view/director-reel-it10-{top,combo}.log`). Session closes (02:58): head gates lint 15/15, unit 1511/0, scenarios 52/0, reels 19/19; scratch frames deleted (crops in evidence + masters). NEXT above stands.
