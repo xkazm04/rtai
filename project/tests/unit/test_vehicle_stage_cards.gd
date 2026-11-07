@@ -57,14 +57,35 @@ func _one_south() -> PackedVector2Array:
 
 
 func test_on_a_print_a_car_with_a_fighter_in_front_drops_under_the_actors() -> void:
+	var was: bool = VehicleStageCards.over
 	var node: VehicleStageCards = _stand("tilt70")
 	node._view = node.get_parent() as Node2D  # as if hosted on a print's actor layer
 	node._people = _one_south
+	VehicleStageCards.over = false
 	node._process(0.0)
-	assert_eq(node.cards.count_under(), 0, "over off (the default): no front grid")
+	assert_eq(node.cards.count_under(), 0, "over off: no front grid")
 	VehicleStageCards.over = true
 	node._process(0.0)
-	VehicleStageCards.over = false
+	VehicleStageCards.over = was
 	assert_eq(node.cards.count(), 2)
 	assert_eq(node.cards.count_under(), 1, "only the car at (0, 4)")
 	assert_eq(VehicleStageCards.fighters(null).size(), 0)
+
+
+func test_over_is_on_since_the_seize_cues_draw_over_the_vehicles_band() -> void:
+	assert_true(VehicleStageCards.over)
+
+
+func test_a_wide_fighter_gives_its_edges_to_the_front_grid() -> void:
+	var bus: EventBus = autofree(EventBus.new())
+	var reg: RngRegistry = RngRegistry.new(5)
+	var arena: CombatArena = CombatArena.new(CombatTuning.shipped(), bus, reg.stream(&"combat"))
+	arena.rivet.pos = Vector2(1, 1)
+	var base: int = VehicleStageCards.fighters(arena).size()
+	var boss: Fighter = Fighter.new()
+	boss.radius_m = 1.6
+	boss.pos = Vector2(10, 0)
+	arena.boss = boss
+	var pts: PackedVector2Array = VehicleStageCards.fighters(arena)
+	assert_eq(pts.size(), base + 3, "the boss's centre and both edges")
+	assert_true(pts.has(Vector2(8.4, 0)) and pts.has(Vector2(11.6, 0)))

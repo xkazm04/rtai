@@ -14,10 +14,13 @@ extends Node2D
 ## WHITE: the seize reads by Dent's halo and teal tether; Color(0.62, 0.95, 0.9) tints the card
 ## (a multiply: it turned the olive depot van and its lamps green, not teal).
 const SOUL: Color = Color.WHITE
-## True: on a print the cards draw in the vehicles band over the actors with the front grid. Off:
-## it hid the Servo bay's marker, Dent's halo and the teal tether under the van (the seize's cues,
-## drawn in the actors band); turn on once those draw over the vehicles band.
-static var over: bool = false
+## A fighter wider than this (radius, m) adds its edges to the front grid (people are 0.45).
+const WIDE_M: float = 0.6
+## True: on a print the cards draw in the vehicles band over the actors with the front grid (the
+## depot van stands in front of its bay's shutter, a fighter behind it is covered). On since view's
+## GhostAttackViews.dent_dz drew the tether and the seized car's halo over the vehicles band; the
+## bay's number still hides under a van parked on it (a ground mark). False: the iteration-11 look.
+static var over: bool = true
 
 var cards: VehicleCards = VehicleCards.new()
 var _cars: Callable = Callable()
@@ -68,7 +71,9 @@ static func ensure(
 	return node
 
 
-## The ground points (m) of `arena`'s living fighters: Rivet, the hostiles, the boss.
+## The ground points (m) of `arena`'s living fighters: Rivet, the hostiles, the boss. A body wider
+## than WIDE_M also gives its left and right edges (a boss's centre can sit past the front box's
+## HALF_M while its arm reaches over the car: Servo beside the depot van's wreck).
 static func fighters(arena: CombatArena) -> PackedVector2Array:
 	var out: PackedVector2Array = PackedVector2Array()
 	if arena == null:
@@ -76,9 +81,12 @@ static func fighters(arena: CombatArena) -> PackedVector2Array:
 	var all: Array[Fighter] = arena.hostiles.duplicate()
 	all.append_array([arena.rivet, arena.boss])
 	for f: Fighter in all:
-		if f != null and f.alive():
-			@warning_ignore("return_value_discarded")
-			out.append(f.pos)
+		if f == null or not f.alive():
+			continue
+		@warning_ignore("return_value_discarded")
+		out.append(f.pos)
+		if f.radius_m > WIDE_M:
+			out.append_array([f.pos - Vector2(f.radius_m, 0.0), f.pos + Vector2(f.radius_m, 0.0)])
 	return out
 
 
