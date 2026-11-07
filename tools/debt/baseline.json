@@ -7,7 +7,8 @@
         "2026-11-06: n8-view: the order probe logs the first wrong car pair's tick (to film it) (dev_loc 18145 -> 18150)",
         "2026-11-06: n8-view: the order probe logs the first wrong car pair's tick (to film it) (dev_loc 18150 -> 18151)",
         "2026-11-06: dev order probe logs each wrong ghost pair's tick (+1 dev line) (dev_loc 18151 -> 18152)",
-        "2026-11-06: n8-view it7: quest1_clip --view flag (+2 dev lines) for quest 1 stills under tilt70 (dev_loc 18152 -> 18154)"
+        "2026-11-06: n8-view it7: quest1_clip --view flag (+2 dev lines) for quest 1 stills under tilt70 (dev_loc 18152 -> 18154)",
+        "2026-11-07: lead_showcase takes --view and --speed to film the camera lead (combo vs combo_lead) with the real CameraRig (dev_loc 17762 -> 17769)"
       ],
       "files": {
         "project/dev/arena": 642,
@@ -29,13 +30,13 @@
         "project/dev/rivet_motion": 1234,
         "project/dev/save_crash_loop.gd": 14,
         "project/dev/save_crash_writer.gd": 18,
-        "project/dev/selftest": 1446,
+        "project/dev/selftest": 1453,
         "project/dev/servo": 434,
         "project/dev/showcase": 5452,
         "project/dev/view": 195,
         "project/dev/weapon_art": 506
       },
-      "total": 17762
+      "total": 17769
     },
     "direct_cmdline_reads": {
       "accepted": [

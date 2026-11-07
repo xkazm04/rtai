@@ -707,3 +707,30 @@ n8-city >= d70c8b06). street, hud: nothing to view.
   it with its halo. (b) bay 3's marker is a ground mark: a van standing on it covers it depth-
   correctly. If the seize must read through the van, the marker belongs on the `world_markers`
   canvas (objective marks); say so and I take it next iteration.
+- MILESTONE 02:33 (cca797f9) NEXT 3 of it9: the dock arenas (King boulevard, Servo depot, dev
+  stations; `arena.cells == null`) now hold their floor tiles and props on `ArenaFloorView._static`
+  like the city block (redraw only on a new stage, a `ViewMode.revision`, or under a perspective
+  eye). Tiles + rim, barrier runs, crate rows moved to `ArenaFloorStatic` (static, any canvas
+  item), the same calls in the same order: the floor file 201 -> 173 lines. PROOF of identity:
+  `--boss=king --bot=boss --seed=2 --rigs --view=<v>`, 240 frames each, before (4fc67214) vs
+  after, PNG per frame: top 0/240 differ, combo 0/240 differ (combo's ease and card swap at tick
+  32 inside the window), 0 SCRIPT ERROR. DECISION in docs/decisions.md.
+  FRICTION: the first after-run had 10 SCRIPT ERROR (a new class_name not in the class cache:
+  run `--import` after adding a class before any direct Godot run; the runners do it themselves).
+  `tools/godot/check.mjs` on arena_floor_view.gd reports the CutRig-cycle false FAIL (street's
+  FRICTION); the recording is the real compile check.
+- 02:34 bench.lock taken by me (absent before), `scratch/view/bench10.sh`: it9's King fight
+  command, top/combo alternated x2, -> `evidence/n8-view/bench-it10/`; the script releases it.
+- MEASURE 02:39-02:41 the King fight after the held dock floor, bench.lock held (taken 02:38,
+  released by the script), it9's command (`--path project --disable-vsync --resolution 1920x1080
+  res://dev/arena/arena.tscn -- --boss=king --bot=boss --seed=2 --rigs --view=<v> --frames=<json>
+  --frames-ticks=1500`), top/combo alternated x2, head cca797f9, `evidence/n8-view/bench-it10/`:
+  | run | p50 ms | p99 ms | low 1 % fps | over 33 ms settled |
+  | top 1 / 2 | 7.34 / 9.75 | 17.6 / 19.8 | 46 / 12 | 1 / 6 |
+  | combo 1 / 2 | 5.85 / 4.86 | 16.2 / 11.7 | 40 / 69 | 7 / 1 |
+  CONTENDED: other lanes ran street_crowd + a city trial render (GPU) and a GUT + a scenarios run
+  during it (the lock guards benches only); top itself sits 1.3-4 ms over it9's 6.0 / 5.7. Reading,
+  within one contended window and alternated: combo's p50 is now at or under top's (it9: 1.6x top;
+  it8: 3.3x). Take the quiet re-take before the freeze (NEXT).
+  FRICTION 02:38: my first take put `--disable-vsync --resolution` after `--` (user args): every
+  run paced at 16.67 ms p50; discarded, re-run with the engine flags before the scene path.

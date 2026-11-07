@@ -10,6 +10,8 @@ extends "res://dev/selftest/city_selftest.gd"
 ## lead-showcase.json (lead per shot, ticks per frame around the hit).
 ##   godot --fixed-fps 60 --path project res://dev/selftest/lead_showcase.tscn -- --out=<dir>
 ##   [--mode=on_foot] [--reduced-motion] (look-ahead cap halved, no shake, no hit-stop)
+##   [--view=<id>] (ViewMode reads it: a row's lead_k, e.g. combo vs combo_lead)
+##   [--speed=<m/s>] (default SPEED_MPS)
 
 const SPEED_MPS: float = 15.0
 const SHOTS: Array[int] = [0, 30, 60, 150]
@@ -17,6 +19,7 @@ const SHOTS: Array[int] = [0, 30, 60, 150]
 var _log: Array[Dictionary] = []
 var _mode: StringName = &"car"
 var _reduced: bool = false
+var _speed: float = SPEED_MPS
 
 
 func _ready() -> void:
@@ -27,6 +30,10 @@ func _ready() -> void:
 			_mode = StringName(arg.substr(7))
 		elif arg == "--reduced-motion":
 			_reduced = true
+		elif arg.begins_with("--speed="):
+			_speed = arg.substr(8).to_float()
+		elif arg.begins_with("--view="):
+			pass  # ViewMode.shared() reads it
 		else:
 			get_tree().quit(2)
 			return
@@ -43,7 +50,7 @@ func _ready() -> void:
 	var driven: int = 0
 	for at: int in SHOTS:
 		while driven < at:
-			_city.focus += Vector2(SPEED_MPS, 0.0) * SimClock.TICK_DT
+			_city.focus += Vector2(_speed, 0.0) * SimClock.TICK_DT
 			_city.target = _city.focus
 			_view.markers.move(ring, _city.focus * SimConst.PX_PER_M)
 			driven += 1
