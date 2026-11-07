@@ -1261,3 +1261,15 @@ NEXT (iteration 15, in order):
   combat-pacing-and-dramatic-arc (the boss pitch now marks quest 1's boss beat as it marks the
   arena bosses': the camera tells the player the fight changed), perf-regression-gating (one node,
   one bool read per frame; nothing measured, nothing claimed).
+- GATE 06:30 unit full no-arg at 971fc2c5: 1524 passed, 0 failed, no FLAKY, exit 0
+  (`evidence/n8-view/unit-it15.log`). Lint 15/15 (hook).
+- TRIAL MERGE + n8-view 971fc2c5 (06:31, `3e16cc20`, debt baseline: view's side + update),
+  `--import` 0. Quest 1 under combo at 48 px/m on the merge (stills 15200-17200, 0 SCRIPT ERROR):
+  log "-> boss" at 15600, "-> play" at 16000 (Mertz down by then: "Torch the crates", his lying
+  figure at the crates; his "Hold still!" line is still on screen after he is down: the quest's
+  line timing, not view's). Masters `quest1_mertz_combo_48ppm_merged_t15600_55_t16000_play.png`,
+  named in the frames.json entry. LOOKED: at 55 the street's cards and city's crate stack read at
+  48 px/m; nothing view-owned misplaced. The fight is short (~12 s), so the 1 s ease each way is a
+  big share of it: REPORT Call 6 (option `ViewPitchQuest.ON` false).
+- GATE 06:32 director reel on the it15 trial merge (`trial_reel.sh`): top 19/19 and combo 19/19
+  chapters all down, 0 SCRIPT ERROR (`evidence/n8-view/director-reel-it15-trial-{top,combo}.log`).

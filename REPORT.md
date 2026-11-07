@@ -39,6 +39,11 @@ under `evidence/n8-view/`. Full log: `JOURNAL.md`.
    camera keeps the King's lifted crown under the bar (`boss_cam_*`); quest 1 ships the rig cast under
    a card view (`quest1_dock9_shipped_*`); the camera lead at driving speed filmed on the real
    CameraRig (`lead_combo_vs_combo_lead_{15,25}mps_48ppm_t150.png`).
+   it15: **quest 1's boss eases combo to 55 too.** Quest 1 had no arena hook, so Mertz's fight stayed
+   at 70; now `ViewPitchQuest` eases to 55 while he is up and back to 70 when he is down (ease at
+   tick 15270, back at ~16000): `quest1_mertz_engage_ease_combo_32ppm_t15000_15700.mp4`, on the
+   merge at 48 px/m `quest1_mertz_combo_48ppm_merged_t15600_55_t16000_play.png`. `ViewPitchQuest.ON`
+   false = 70 all quest.
 7. **Draw order**: Tonnage's legs in the depth sort (order probe 0/9 wrong at 70); the King's accents in
    the order probe; the King on foot behind his wreck (car pairs 10/10 wrong -> 0/10); PropOcclusion
    (a rig behind a prop shows through it); it13: the silhouette cut to a card's opaque outline
@@ -101,6 +106,11 @@ under `evidence/n8-view/`. Full log: `JOURNAL.md`.
 5. **Quest 1's cast under the angled view.** Built: the rig cast (cards) when the view draws cards;
    option the sprite cast (`Quest1Game.RIGS_UNDER_CARDS` false), which lies flat on tilted ground.
    See `quest1_dock9_shipped_before_after_tilt70_32ppm.png`.
+6. **Quest 1's Mertz as a combo boss.** Built: his fight eases to 55 like the arena bosses (it lasts
+   ~12 s, so the 1 s ease each way is a large share of it); option 70 all quest
+   (`ViewPitchQuest.ON` false). See `quest1_mertz_engage_ease_combo_32ppm_t15000_15700.mp4` and
+   `quest1_mertz_combo_48ppm_merged_t15600_55_t16000_play.png`. Exe: `RTAI.exe -- --view=combo`, play
+   quest 1 to Dock 9's crates ("Rated for Appliances").
 
 ## Merge notes for the Director
 Trial merge it11 (03:15-03:40, a throwaway detached tree): city, street, vehicles and hud onto
