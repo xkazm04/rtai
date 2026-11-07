@@ -21,8 +21,14 @@ func test_voice_only_callers_get_the_device_not_a_face() -> void:
 
 func test_no_row_means_no_face() -> void:
 	var book: PortraitBook = PortraitBook.new()
-	assert_null(book.face("rivet"))
 	assert_null(book.face("lady-cathode"))
+	assert_null(book.face("nobody"))
+
+
+func test_rivet_speaks_with_his_approved_bust() -> void:
+	var book: PortraitBook = PortraitBook.new()
+	assert_not_null(book.face("rivet"))
+	assert_false(book.is_device("rivet"))
 
 
 func test_every_row_art_loads() -> void:
@@ -60,7 +66,7 @@ func test_the_feed_fills_the_face_from_the_speaker() -> void:
 	assert_not_null(state.portrait)
 	assert_false(state.portrait_device)
 	assert_eq(state.portrait_key, "gunsmith")
-	feed.face(state, "rivet", "rivet-line-stopped")
+	feed.face(state, "lady-cathode", "")
 	assert_null(state.portrait)
 
 

@@ -1,5 +1,5 @@
 {
-  "doc": "Who is speaking, as a face (n8-hud): the dialogue box shows a speaker's bust from this table, the mood bust on the lines named in mood_lines (presentation only: quest text and ids are read, never edited). kind device = a voice-only caller drawn as the device they speak through. A speaker with no row (Rivet while his look is in triage, any design proposal) shows the name alone. Only owner-approved looks get a row.",
+  "doc": "Who is speaking, as a face (n8-hud): the dialogue box shows a speaker's bust from this table, the mood bust on the lines named in mood_lines (presentation only: quest text and ids are read, never edited). kind device = a voice-only caller drawn as the device they speak through. A speaker with no row (any design proposal) shows the name alone; Rivet's row is the approved production sheet's front bust (d9 rivet). Only owner-approved looks get a row.",
   "schema": "gtai.portraits/1",
   "speakers": [
     {
@@ -73,6 +73,14 @@
         "mertz-appliances"
       ],
       "source": "library portrait_mertz_55 A (round 20261106-2050, concept-matched, quest 1)"
+    },
+    {
+      "art": "res://features/hud/art/portraits/rivet.png",
+      "id": "rivet",
+      "kind": "face",
+      "mood_art": "",
+      "mood_lines": [],
+      "source": "d9 rivet interim: the front facing of the owner-approved production sheet rivet_55_v2 (library A, round 20261106-2215), cut at the chest by tools/art/rivet_portrait.py; a concept-matched portrait_rivet_55 is REQUESTed from assets (one-file swap)"
     },
     {
       "art": "res://features/hud/art/portraits/scientist.png",
