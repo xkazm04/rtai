@@ -1384,3 +1384,37 @@ NEXT (iteration 14 = the freeze iteration if the runner gives one before 08:30):
   decay), a5c7d30e (thug v3 at p70), + evidence/docs. Gates on the it13 code: lint 15/15, unit
   1529/0, scenarios 52/0, reels top/combo 19/19 (tilt70 19/19 on it12's code), evidence run PASS
   except the unit row's tree-changed flag (mine).
+
+## Iteration 14 (2026-11-07 07:28, BUILD, the freeze iteration)
+
+Read: JOURNAL, git log, the four lane journals (no new REQUEST to street; view's l.1192/1210 NOTEs
+are the it13 corpse pile, answered), the assets JOURNAL: street's REQUEST l.1331 SERVED 2/2
+(ped_cap_walk_70_v2 A, ped_suit_walk_70_v4 A, which supersedes the gain-matched v3 B). Asset queue
+done for the night (no runner).
+- MILESTONE 739803bb: **the suit ped in its v3 identity at p70** (ped_suit_70_v3 still by
+  street_head.py band 1.0 192 px; ped_suit_walk_70_v4 by street_walk.py; WALK_FILL 1.06 -> 1.09,
+  re-measured with scratch walk_fill.py on the new cut). His long fall (ped_suit_fall_70_v3) already
+  wore the v3 suit: before, a dark charcoal walker fell into a lighter warm-grey corpse; now one
+  suit. LOOKED: the cut sheet (shipped vs new still/walk beside the shipped long fall,
+  evidence/ped_cap_suit_70_v3_still_walk_vs_long_fall_cut.png), the board `--kill=light`
+  tilt70 64 px/m t59/72/240 before|after (evidence/ped_suit_v3_identity_..._t59_72_240.png).
+- MILESTONE 983bf079: **the cap ped in its v3 identity at p70** (ped_cap_70_v3 still,
+  ped_cap_walk_70_v2 strides, WALK_FILL 1.10 -> 1.12 measured). No v3 cap fall exists, so both fall
+  grids (ped_cap_fall, ped_cap_long_fall) toned by the new tools/art/street_value_match.py: the
+  low-saturation cloth's value quantile-matched to the walk strip (101 quantiles, RGB x new/old
+  value so hue stays, the lifted pixels -15 % saturation, skin over sat 0.52 untouched). LOOKED the
+  cells at full size beside the walk and the board 64 px/m t59/68/72/240 before|after: one oatmeal
+  hoodie standing, buckling, lying (the toned fall a touch pinker than the walk; same person).
+  At 32 px/m (evidence/peds_suit_cap_v3_before_after_tilt70_32ppm_kill_light_t59_240.png, masters
+  frames.json #2) the cap peds read as light figures under dark caps: the crowd's value spread
+  widens. All films exit 0, 0 SCRIPT ERROR. Provenance x6. Unit selects 14/0, lint 15/15 (hook).
+- DECISION street/ped-v3-identity (docs/decisions.md).
+- REQUEST to assets (low, after the owner list; the tone covers it tonight): ped_cap_fall_70_v3,
+  the round-0630 ped_cap_fall_70_v2 poses redrawn in the ped_cap_70_v3 identity (near-black brown
+  cap, oatmeal hoodie, charcoal jeans), same 5 x 3 layout, so the tone can retire.
+- Registry rules applied (it14): generative-artifact-gating (the v3 sheets taken only as a set,
+  judged in the scene beside the fall grids they meet), sprite-and-atlas-production (the same cut
+  scripts, cell rule, 192 px and a re-measured size step per strip), concept-scene-parity (one
+  board, same deterministic ticks, before = the six files at e87ed678 restored), motion-quality-
+  gating (identity judged across stand -> buckle -> lie, t59-240), render-submission-economy (a
+  texture swap: same strip sizes per cell, no new draw).
