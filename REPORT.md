@@ -45,14 +45,14 @@ head commit. Branch `n8-city`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n8\ci
    view). tilt70 had 6 frames over 25 ms (top 0, worst 39 ms, none over 50): not attributed, and the
    chunk slice is not it. `evidence/drive-cost-it25.json`.
 
-## Gates (iteration 22, head f07b348e)
+## Gates (iteration 25, head 9614fc50)
 
 - `top` bit-identical: `--arena=city --bot=rivet --seed=2 --rigs --quit-after 301` framemd5 identical
-  to the it19 baseline (617 lines), 0 SCRIPT ERROR.
-- lint 15/15; unit (full no-arg) 1523 passed, 0 failed.
+  to the it19 baseline (617 lines) at 0952dd47 (every city change), 0 SCRIPT ERROR.
+- lint 15/15; unit (full no-arg) 1524 passed, 0 failed (7d9b32a1).
 - Director reel at tilt70 (`--bot=reel --reel=director --loadout=pistol --rigs --view=tilt70`, 7600
-  frames headless): 19/19 chapters down, 0 SCRIPT ERROR (`evidence/director-reel-it22-tilt70.log`).
-- Scenarios: 52 ran, 0 failed (vehicle drive timing CONTENDED, labelled by the runner).
+  frames headless): 19/19 chapters down, 0 SCRIPT ERROR (`evidence/director-reel-it25-tilt70.log`, 9614fc50).
+- Scenarios: 52 ran, 0 failed at 0d9002a1 (vehicle drive timing CONTENDED, labelled by the runner).
 - Last `evidence/run.mjs --no-bench`: PASS at 7b63bcb1 (iteration 19). FREEZE: re-run.
 
 ## What does not work / gaps

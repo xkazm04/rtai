@@ -1042,3 +1042,7 @@ NEXT (iteration 26, in order):
    each in ChunkLift.draw's shadow branch, keyed by a second props field), judged at 48 px/m.
 4. Freeze items (08:30): `top` framemd5, the exe export (int-day recipe), REPORT final (head, exe
    command lines, gates).
+- (05:32) NEXT 1 part 1 done: GATE director reel at tilt70 on 9614fc50 (`--headless --fixed-fps 60
+  --quit-after 7600 res://dev/arena/arena.tscn -- --bot=reel --reel=director --loadout=pistol
+  --rigs --view=tilt70`): 19/19 chapters, every one all down, 0 SCRIPT ERROR, exit 0
+  (`evidence/director-reel-it25-tilt70.log`). Left for iteration 26: evidence/run.mjs --no-bench.
