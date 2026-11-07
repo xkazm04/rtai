@@ -2,8 +2,9 @@ class_name BossTaunt
 extends Control
 ## n8-hud: a boss's taunt as a short paper strip hanging under the boss bar, its tail pointing at
 ## the crest (the boss's face is already there), instead of the full dialogue box: in a fight the
-## box covers the lower third of the field and the ghost-form card. Words only, ink on cream, at
-## most MAX_LINES lines; it fades in and out and never waits on play. Render only: the caller sets
+## box covers the lower third of the field and the ghost-form card. Words only, ink on the box's
+## torn memo paper (HudArt's 9-slice, its tape below the bar), at most MAX_LINES lines; it fades
+## in and out and never waits on play. Render only: the caller sets
 ## `words` (already translated; empty = none). No boss line system exists yet: the dev shot
 ## (dev/showcase/boss_taunt.gd) fills it; the box form stays one value away (FORM).
 
@@ -12,15 +13,17 @@ const FORM: StringName = &"strip"
 const ENTER_S: float = 0.18
 const EXIT_S: float = 0.22
 ## The strip's gap under the bar, its padding, the tail's height (screen px at 1080p).
-const GAP: float = 16.0
+const GAP: float = 34.0
 const PAD: Vector2 = Vector2(16.0, 10.0)
-const TAIL_H: float = 14.0
+const TAIL_H: float = 32.0
 const MAX_LINES: int = 2
 ## The words' sizes, largest first: the first that fits MAX_LINES is drawn.
 const FIT_SIZES: Array[int] = [22, 20, 18]
 
 ## The words on the strip; empty fades it out.
 var words: String = ""
+## The memo paper (HudArt's 9-slice memo frame, the dialogue box's paper); null = flat cream.
+var art: HudArt = null
 var _shown: String = ""
 var _alpha: float = 0.0
 
@@ -28,6 +31,8 @@ var _alpha: float = 0.0
 func _ready() -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	if art == null:
+		art = HudArt.new()
 
 
 func _process(_delta: float) -> void:
@@ -88,8 +93,13 @@ func _draw() -> void:
 		Vector2(x - 6.0, r.position.y - TAIL_H),
 	]
 	draw_colored_polygon(tail, ink)
-	draw_rect(r.grow(3.0), ink)
-	draw_rect(r, Color(Ink.CREAM, _alpha))
+	var memo: Texture2D = art.texture(art.memo_art) if art != null else null
+	if memo != null:
+		var paper: Rect2 = r.grow_individual(14.0, 16.0, 14.0, 16.0)
+		HudView.nine(self, memo, paper, art.memo_margin_px, art.memo_scale, Color(1, 1, 1, _alpha))
+	else:
+		draw_rect(r.grow(3.0), ink)
+		draw_rect(r, Color(Ink.CREAM, _alpha))
 	var tail_in: PackedVector2Array = [tail[0] + Vector2(4, 0), tail[1] - Vector2(4, 0), tail[2]]
 	draw_colored_polygon(tail_in, Color(Ink.CREAM, _alpha))
 	var at: Vector2 = r.position + Vector2(PAD.x, PAD.y + font.get_ascent(f.x))
