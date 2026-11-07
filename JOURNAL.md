@@ -639,7 +639,7 @@ NEXT (iteration 15):
   `ui_pad_glyphs_v1` still not served (0 catalog hits): NEXT 3 waits again. perf's it18 FYI (L12 minimized cap,
   `tools/perf/thread_cpu.ps1`): ANSWER: read; the device rows' `max_fps` 60 / 40 / 30 are all <= 60, so L12 leaves
   them as they are and adds the alt-tab battery case on a Windows handheld for free; thread_cpu noted for the next CPU move.
-- RESULT 17:30 **E13c, editor = release = Windows = Linux; E13b withdrawn (my mislabel)**. Cause found by reading the
+- RESULT 17:30 (DECISION handheld/linux-dev-preset, docs/decisions.md) **E13c, editor = release = Windows = Linux; E13b withdrawn (my mislabel)**. Cause found by reading the
   logs: it14's "quest 1" logs carry `boot: booted` and no `quest1:` line: they were recorded through `main.tscn` (the
   city-block World), and the slice exports boot quest 1, a different simulation, so tick 60 (the first checkpoint)
   differs by construction. Built a `linux-dev` preset (main.tscn, as windows-dev). Matrix, every replay identical,
