@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Unit + integration tests headless (TST-01 layers 1-2): import, load every script, then GUT.
 //   node tools/tests/run_unit.mjs [--select=<name|glob>[,..]]... [--test=<test function>]
-//                                 [--changed[=<git ref>]] [--fast] [--all] [--no-rerun]
+//                                 [--changed[=<git ref>]] [--fast] [--all] [--no-rerun] | --failed
 // No args = EVERYTHING (the gate). --fast skips the slow tier (tools/tests/tiers.json). --select
 // takes test file basenames (test_x, x or a glob). --test runs the files that define that test
 // function. --changed maps the changed files to tests (tools/tests/test_map.mjs), skipping the slow
@@ -9,10 +9,14 @@
 // After failures each failing test FILE is re-run once in isolation: fail-then-pass is FLAKY
 // (loud line, one JSON line in the machine-wide ledger, see flakes.mjs; the run stays ok, the
 // summary says FLAKY n and the evidence carries metrics.flaky); failing twice fails the run.
-// --no-rerun turns that off. Selections write a temp gutconfig under build/test-results/ (dirs emptied, tests = the files).
+// --no-rerun turns that off. --failed re-runs only the files that failed in the previous
+// build/test-results/unit-tests.junit.xml (with --test= when they share one failing name).
+// A red run prints one triage block per failure (tools/tests/triage.mjs: cause, REACHED / FULL /
+// UNMAPPED / UNREACHED verdict against your diff, flake history, rerun command) and writes
+// build/test-results/unit-triage.json (gtai.unit-triage/1); a green run removes it. Selections write a temp gutconfig under build/test-results/ (dirs emptied, tests = the files).
 // Guards GUT's silent-green hazard (a test file that fails to parse is skipped and GUT exits 0):
 // any SCRIPT ERROR / Parse Error line, or zero tests run, is a failure.
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { PROJECT, ROOT, readJson } from '../lib/repo.mjs';
@@ -20,6 +24,7 @@ import { SCRIPT_ERROR, describe, removeStale, runGodot } from '../lib/godot.mjs'
 import { digestLines, parseJunit, slowest } from './junit.mjs';
 import { classifyRerun, flakeEntry, recordFlake } from './flakes.mjs';
 import { changedFiles, mapChanges, realIndex } from './test_map.mjs';
+import { TRIAGE_NAME, blockLines, triage, writeTriage } from './triage.mjs';
 
 export const JUNIT_NAME = 'unit-tests.junit.xml';
 export const LOG_NAME = 'unit-tests.log';
@@ -31,9 +36,9 @@ export class UsageError extends Error {}
 
 const godot = (name, args, opts = {}) => runGodot(args, { name, ...opts });
 
-/** argv -> {select, test, changed (false | true | ref), all, fast}; unknown args throw UsageError. */
+/** argv -> {select, test, changed (false | true | ref), all, fast, rerun, failed}; unknown args throw UsageError. */
 export function parseArgs(argv) {
-  const o = { select: [], test: null, changed: false, all: false, fast: false, rerun: true };
+  const o = { select: [], test: null, changed: false, all: false, fast: false, rerun: true, failed: false };
   const unknown = [];
   for (const a of argv) {
     const k = a.split('=')[0];
@@ -42,6 +47,7 @@ export function parseArgs(argv) {
     else if (k === '--test' && v) o.test = v;
     else if (k === '--changed') o.changed = v || true;
     else if (a === '--no-rerun') o.rerun = false;
+    else if (a === '--failed') o.failed = true;
     else if (FLAGS.includes(a)) o[a.slice(2)] = true;
     else unknown.push(a);
   }
@@ -55,9 +61,31 @@ const stem = (p) => p.split('/').pop().replace(/\.gd$/, '');
 /** Slow tier (tools/tests/tiers.json), as paths relative to project/. */
 export const slowTier = () => readJson(join(ROOT, 'tools', 'tests', 'tiers.json')).slow;
 
+const previousJunit = () => {
+  const p = join(ROOT, 'build', 'test-results', JUNIT_NAME);
+  return existsSync(p) ? readFileSync(p, 'utf8') : null;
+};
+
+/** --failed: the files (and, when they share one, the test name) that failed in `xml`. */
+function failedPlan(o, index, xml) {
+  if (o.select.length || o.changed || o.test) throw new UsageError('--failed takes no --select, --test or --changed');
+  if (xml == null) throw new UsageError(`no previous unit run to re-run (build/test-results/${JUNIT_NAME} is missing)`);
+  const failed = parseJunit(xml).cases.filter((c) => c.status === 'fail');
+  if (!failed.length) throw new UsageError('the previous unit run had no failures to re-run');
+  const named = [...new Set(failed.map((c) => c.file.slice('res://'.length)))].sort();
+  const files = named.filter((f) => index.tests[f] !== undefined);
+  const notes = [`--failed: ${failed.length} test(s) in ${files.length} file(s) from the previous run`];
+  if (files.length < named.length) notes.push(`--failed: ${named.length - files.length} file(s) no longer exist`);
+  if (!files.length) throw new UsageError('none of the previously failing test files exists any more');
+  const names = [...new Set(failed.map((c) => c.name))];
+  return { files, skipped: 0, notes, targeted: true, testName: names.length === 1 ? names[0] : null };
+}
+
 /** Which test files to run. -> {files: null (everything, the config's own dirs) | string[] (relative
- *  to project/), skipped, notes, targeted}. Throws UsageError for a select that matches nothing. */
-export function buildPlan(o, index = realIndex(), slow = slowTier(), changedList = null) {
+ *  to project/), skipped, notes, targeted, testName}. Throws UsageError for a select that matches
+ *  nothing. `previous` is the last run's junit text (null = none; default: read from build/). */
+export function buildPlan(o, index = realIndex(), slow = slowTier(), changedList = null, previous = undefined) {
+  if (o.failed) return failedPlan(o, index, previous === undefined ? previousJunit() : previous);
   const all = Object.keys(index.tests).sort();
   const fastOnly = (list) => (o.all ? list : list.filter((f) => !slow.includes(f)));
   const notes = [];
@@ -122,7 +150,9 @@ async function gutPass(outDir, files, testName, junitName) {
 
 export async function runUnit(outDir, opts = {}) {
   mkdirSync(outDir, { recursive: true });
-  const plan = buildPlan({ select: [], test: null, changed: false, all: false, fast: false, rerun: true, ...opts });
+  const o = { select: [], test: null, changed: false, all: false, fast: false, rerun: true, failed: false, ...opts };
+  const index = realIndex();
+  const plan = buildPlan(o, index);
   if (plan.files && plan.files.length === 0) {
     return { ok: true, counts: NONE, summary: `unit-tests: ${plan.notes.at(-1)}; 0 passed, 0 failed, 0 skipped`,
       artifacts: [], notes: plan.notes, digest: [], slowest: [], ran: 0 };
@@ -162,9 +192,22 @@ export async function runUnit(outDir, opts = {}) {
   const durationMs = steps.reduce((a, [, r]) => a + r.durationMs, 0);
   const errs = steps.flatMap(([, r]) => scriptErrors(r.out));
   const flakyLines = flake.flaky.map((c) => `FLAKY: ${c.file} ${c.name}`);
-  return { ok, counts, summary, durationMs, notes: [...plan.notes, ...flake.notes], ran: gut.cases.length,
-    artifacts: [JUNIT_NAME, LOG_NAME, ...(flake.rerun ? [RERUN_JUNIT] : [])], ...(n ? { metrics: { flaky: n } } : {}),
-    flaky: flakyLines, digest: [...digestLines(flake.failing), ...errs], slowest: slowest(gut.cases) };
+  const tri = triageFor(outDir, ok, { failing: flake.failing, gut, steps, o, index });
+  return { ok, counts, summary, durationMs, notes: [...plan.notes, ...flake.notes, ...tri.notes], ran: gut.cases.length,
+    artifacts: [JUNIT_NAME, LOG_NAME, ...(flake.rerun ? [RERUN_JUNIT] : []), ...(tri.written ? [TRIAGE_NAME] : [])],
+    ...(n ? { metrics: { flaky: n } } : {}), flaky: flakyLines, digest: [...digestLines(flake.failing), ...errs],
+    errors: errs, triage: tri.entries, slowest: slowest(gut.cases) };
+}
+
+/** Triage of a red run (written to unit-triage.json), or removal of a stale one; never throws. */
+function triageFor(outDir, ok, { failing, gut, steps, o, index }) {
+  try {
+    const entries = ok ? [] : triage({ failing, gutOut: gut.r.out, outs: steps.map(([, r]) => r.out), index,
+      changed: changedFiles(o.changed && o.changed !== true ? o.changed : null) });
+    return { entries, written: Boolean(writeTriage(outDir, entries, ok)), notes: [] };
+  } catch (e) {
+    return { entries: [], written: false, notes: [`triage not written: ${e.message}`] };
+  }
 }
 
 /** Re-runs each failing test file once in isolation. -> {flaky, failing, rerun (godot result), notes};
@@ -185,7 +228,13 @@ export function report(result, full) {
   for (const n of result.notes ?? []) console.log(`note: ${n}`);
   console.log(result.summary);
   for (const l of result.flaky ?? []) console.log(l);
-  for (const l of result.digest ?? []) console.log(`  FAIL ${l}`);
+  if (result.triage?.length) {
+    for (const e of result.triage) console.log(blockLines(e).join('\n'));
+    const shown = new Set(result.triage.flatMap((e) => [e.message, ...e.cause]));
+    for (const l of (result.errors ?? []).filter((x) => !shown.has(x))) console.log(`  ERROR ${l}`);
+    const again = result.triage.some((e) => e.name) ? '; re-run just the failures: node tools/tests/run_unit.mjs --failed' : '';
+    console.log(`triage: build/test-results/${TRIAGE_NAME}${again}`);
+  } else for (const l of result.digest ?? []) console.log(`  FAIL ${l}`);
   if (full && result.slowest?.length) console.log(`10 slowest tests:\n${result.slowest.join('\n')}`);
   if (result.durationMs) console.log(`log: build/test-results/${LOG_NAME} (${(result.durationMs / 1000).toFixed(1)} s)`);
 }
@@ -203,6 +252,6 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
     console.error(`run_unit: ${e.message}`);
     process.exit(2);
   }
-  report(result, !opts.select.length && !opts.test && !opts.changed);
+  report(result, !opts.select.length && !opts.test && !opts.changed && !opts.failed);
   process.exit(result.ok ? 0 : 1);
 }

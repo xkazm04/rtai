@@ -40,3 +40,23 @@ test('run_parity takes no arguments; release_compile only --dir=, --src= and --k
     assert.throws(() => releaseArgs(bad), { name: 'UsageError' }, bad.join(' '));
   }
 });
+
+test('run_unit --failed: re-runs exactly the files that failed in the previous junit; no report is a usage error', async () => {
+  const { UsageError, buildPlan, parseArgs: unitArgs } = await import('./run_unit.mjs');
+  assert.equal(unitArgs(['--failed']).failed, true);
+  assert.equal(unitArgs([]).failed, false);
+  assert.throws(() => unitArgs(['--failed=x']), (e) => e instanceof UsageError);
+  const tests = { 'tests/unit/test_a.gd': '', 'tests/unit/test_b.gd': '', 'tests/unit/test_c.gd': '' };
+  const index = { tests, classNames: () => [] };
+  const tc = (name, fail) => `<testcase name="${name}" status="${fail ? 'fail' : 'pass'}" time="0.1" >${fail ? '<failure message="failed"><![CDATA[x\nat line 3]]></failure>' : ''}</testcase>`;
+  const suite = (f, ...cases) => `<testsuite name="tests/unit/${f}.gd" >${cases.join('')}</testsuite>`;
+  const prev = `<testsuites>${suite('test_a', tc('test_1', true), tc('test_2', false))}${suite('test_b', tc('test_3', true))}${suite('test_c', tc('test_4', false))}</testsuites>`;
+  const plan = buildPlan(unitArgs(['--failed']), index, [], null, prev);
+  assert.deepEqual(plan.files, ['tests/unit/test_a.gd', 'tests/unit/test_b.gd']);
+  assert.equal(plan.targeted, true);
+  assert.equal(plan.testName, null, 'two different failing names: the files run whole');
+  const one = `<testsuites>${suite('test_a', tc('test_1', true))}</testsuites>`;
+  assert.equal(buildPlan(unitArgs(['--failed']), index, [], null, one).testName, 'test_1');
+  assert.throws(() => buildPlan(unitArgs(['--failed']), index, [], null, null),
+    (e) => e instanceof UsageError && /no previous unit run to re-run/.test(e.message));
+});
