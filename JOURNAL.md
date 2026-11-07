@@ -886,3 +886,36 @@ NEXT:
 - ANSWER to view (REQUEST l.862): the Dock 9 Gloria at 13700 is the HUD's weapon icon, not a floor
   pickup (quest 1 draws no PickupsView). Fixed on n8-hud 93c8bd2a: the icon now sits on the ammo
   ticket's paper, the street left of the ticket (the crates, the label) is clear.
+- 04:36 MILESTONE d63fb403 Juno Stitch's busts re-cut from portrait_nurse_55_v4 (assets 0505, B, my
+  REQUEST l.819): the head box from above at ~45-50 like the cast (v3 eye level). Raw key, not the
+  brown pass (it greys her tan body, looked side by side `gtai-n8/scratch/hud/it12/nurse/
+  v3_v4raw_v4brown.png`); raw rust under the nurse vermilion guard (sampled 21/57 vs 60). Board
+  at 1280x800 before/after (`dialogue_nurse_v4_1280x800_before_after.png`), 0 SCRIPT ERROR. 2
+  provenance lines. Not taken: sister_suction v3 (a DESIGN PROPOSAL, stays off the game).
+- 04:38 MILESTONE 3b7cdeb2 the 70 showcase chainsaw from the 0505 raise (B, my REQUEST l.824,
+  view 1 = keyed/weapon/chainsaw_70_v2.png; `showcase_import.py` SOURCE override, only p70 moved).
+  Filmed in the armory tilt70 at 32 and 48 px/m, seed 1, frame 89, 0 SCRIPT ERROR; the frame diff
+  only the chainsaw's crate: the engine top under the arched handle, it lies in the crate like its
+  neighbours (`chainsaw_v2_tilt70_{32,48}_before_after_x3.png`). 1 provenance line.
+- 04:46 Gates at 3b7cdeb2 (`gtai-n8/scratch/hud/evidence_run_it12.log`, the tree untouched during the
+  run): lint 15/15, unit 1519/0, scenarios 52/52, parity bit-exact + planted mutation at 629, look
+  goldens 11/11 + block 5/5 (top did not move), export-audit 560/0.
+- 04:40 Live quest 1 at Dock 9 (`quest1_clip.gd --resolution 1280x800 -- --view=tilt70
+  --stills=13700,13800`, 0 SCRIPT ERROR): Gloria on the ticket, the first crate of the row beside it
+  (`quest1_dock9_icon_on_ticket_tilt70_1280x800(_x2).png`). The rest of the row and the label still
+  sit under the HUD's top-right corner at this camera: the stage's crate placement, not the icon.
+- 04:48 MILESTONE 6e8daf39 the ticket for all 17 showcase weapons (the dialogue board now saves
+  `ticket_<id>.png`; contact `hud_tickets_all_weapons_1280x800_contact.png`): every icon fits the
+  paper and the long names (Rocket Launcher, Machine Pistol) clear the icon; the name's first
+  letter touched the perforation -> TEXT_SRC 140 -> 152. Debt +22 dev lines accepted with the
+  reason. Thin pieces (katana, baton, plasma sword) are small at 180 px wide but read.
+- Director reel not re-run: no reel chapter draws HudView (quest 1 only) and the chainsaw/nurse are
+  art swaps on paths the reel at 236c2f13 already ran. The freeze re-runs it.
+- frames.json: entry 13 = the icon on the ticket (1280x800 before/after); entry 12's 1080p full HUD
+  re-shot at 93c8bd2a.
+Registry rules applied it12: `concept-scene-parity` (a teammate's read of the real quest scene taken
+as the defect report, verified on the live Dock 9 still), `generative-artifact-gating` (newest
+graded sheet per id, the colour guard on the cut, raw over a post pass that hurt the read; 3
+provenance lines), `sprite-and-atlas-production` (the cut tools re-run, nothing hand-edited; the
+ticket a 3-slice of the drawn art, not a stretch), `accessibility` (the names keep 24 px with paper
+between them and the perforation), `motion-quality-gating` (armory film, same seed and frame).
