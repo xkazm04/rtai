@@ -1141,3 +1141,11 @@ cream stage van roof at 32 px/m). street, hud: no new REQUEST to view.
   `QuestGuardCast.ON = false`: `-s res://dev/frames/quest1_clip.gd -- --ticks=13560-13900
   --view=tilt70 --ppm=48`). View no longer sends quest 1's guards there, but any rig whose part
   is freed mid-fall (a dropped gun?) hits it: `for c: Variant in ...: if is_instance_valid(c):`.
+- GATE 05:49 at 2ee50990 (code as 105961e2): unit full no-arg 1521 passed / 0 failed, 0 FLAKY
+  (`unit-it14.log`); scenarios 52 ran, 0 failed (`scenarios-it14.log`; vehicle drive timing
+  CONTENDED, passes); lint 15/15. Trial merge (05:26 heads + QuestGuardCast): director reel top
+  19/19 and combo 19/19 chapters all down, 0 SCRIPT ERROR (`director-reel-it14-trial-*.log`).
+  MEASURE mutate quest_guard_cast.gd (--tests=test_quest_guard_cast): 5 killed / 0 survived (100 %).
+  Also filmed n8-view ALONE quest 1 13700 tilt70 48 px/m: the contractors draw as flat top-down
+  hi-vis sprites until street's cards merge (`quest1_dock9_guards_cast_n8view_alone_*_crop.png`).
+  frames.json: the Dock 9 contractors pair in at #5; servo_combo_art_key out (file stays).
