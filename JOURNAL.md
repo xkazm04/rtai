@@ -1025,3 +1025,8 @@ NEXT (supersedes it12's):
   (FINDING: the dock guard's concept-approved orange-vermilion hi-vis; add the see-through corners
   to "what works"). Delete it9-it13 scratch frames after the REPORT. Nothing into the worktree
   during a gate run.
+- 05:45 The 1080p ticket contact re-shot at e3b1e573 (`it13/board.sh tickets 1920x1080`, 0 SCRIPT
+  ERROR): all 17 showcase weapons on the ticket at 930x405 crops, the thin pieces (katana, baton,
+  plasma sword) at the 240 px cap span the paper and read; the names clear the icons. Replaces
+  `gtai-masters/n8/hud/hud_tickets_all_weapons_1920x1080_contact.png` (it12's was before the cap).
+  NEXT's "1080p ticket contact" item is done. Session end: all committed.
