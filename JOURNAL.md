@@ -985,3 +985,7 @@ NEXT (it12, after the freeze), replaces the lists above:
   boot/sole-band ratio 64/72 applied to 55) -> cycle (95-b)+(92-b) = 77-89 cell px; shipped 80 is inside the range,
   at most ~10 % short (a pose every 14.6 vs up to 16.2 world px). Kept at the freeze (a code change would need
   the gates again); if re-tuned, 84 is the midpoint (`KingLegsCard.CYCLE_CELL[70]`).
+- 18:10 (it18 session) d9-rivet head now 94757f93 (+2 commits since 873a00c1: its JOURNAL and REPORT only, the ACK of
+  our HeldMuzzle NOTE). `git merge-tree HEAD 94757f93`: the same two conflicts (JOURNAL.md add/add, debt baseline);
+  the it11 trial merge holds. REPORT merge note says so. No REQUEST open to seams. No code change before the freeze:
+  CYCLE_CELL[70] 84 would need the gates again (unit + 3 reels > the 20 min left), stays in Next steps.

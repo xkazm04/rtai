@@ -12,7 +12,7 @@ b51247bb (code = b026010d) with
 Try the King and his gang: `RTAI.exe -- --boss=king --phase=1 --view=combo` (and `--phase=3` for his stride).
 
 ## Merge note for the Director
-vs d9-rivet e2400dc4 (its freeze head 873a00c1 adds only docs and evidence since; same two conflicts, re-checked 18:07): conflicts only `JOURNAL.md` (add/add: keep either lane's, they are lane journals) and
+vs d9-rivet e2400dc4 (its heads 873a00c1 and 94757f93 add only docs and evidence since; same two conflicts, re-checked 18:07 and 18:10): conflicts only `JOURNAL.md` (add/add: keep either lane's, they are lane journals) and
 `tools/debt/baseline.json` dev_loc (both lanes accepted rises from 18799: keep both lines, chained: seams
 18799 -> 18805, then rivet +69 -> 18874; total 18874), then `node tools/debt/debt.mjs --update`. Trial merge
 it11 gates: on 2c84666c (scratch, detached, native DLLs from this worktree) lint 15/15 over 1226 files, unit 1748/0, release-compile 606/0, scenarios 53/53, director reel top / tilt70 / combo 19/19 fully down, 0 SCRIPT ERROR (`evidence/d9-seams/mergetrial-it11-*.log`, `director-reel-merge-it11-*.log`).
