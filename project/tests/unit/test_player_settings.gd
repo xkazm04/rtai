@@ -22,12 +22,25 @@ func test_settings_round_trip_and_rebind() -> void:
 
 func test_bad_file_falls_back_to_defaults() -> void:
 	var f: FileAccess = FileAccess.open(_path, FileAccess.WRITE)
-	var body: String = '{"schema": "gtai.player-settings/1", "volume": "loud", "keys": {"fire": "Q"}}'
+	var body: String = (
+		'{"schema": "gtai.player-settings/1", "volume": "loud", "reduced_motion": "yes",'
+		+ ' "keys": {"fire": "Q"}}'
+	)
 	assert_true(f.store_string(body))
 	f.close()
 	var back: PlayerSettings = PlayerSettings.load_or_default(_path)
 	assert_almost_eq(back.volume, 0.8, 0.0001)
 	assert_eq(back.keys.size(), 0, "fire is not keyboard-rebindable")
+	assert_false(back.reduced_motion, "a non-bool flag falls back to off")
+
+
+func test_apply_carries_the_saved_rebinds() -> void:
+	PlayerActions.shipped().install()
+	var s: PlayerSettings = PlayerSettings.new()
+	s.keys = {"interact": "G"} as Dictionary[String, String]
+	s.apply()
+	assert_eq(ObjectiveHint.key_name(&"interact"), "G", "apply() rebinds what was saved")
+	PlayerActions.shipped().install()
 
 
 func test_frame_cap_round_trips_and_bad_caps_fall_back() -> void:
