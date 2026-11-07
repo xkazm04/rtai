@@ -111,7 +111,7 @@ func _tickets(out: String, px: Vector2i) -> void:
 		for i: int in 3:
 			await get_tree().process_frame
 		var img: Image = get_tree().root.get_texture().get_image()
-		var w: int = mini(620, px.x)
-		var crop: Image = img.get_region(Rect2i(px.x - w, 0, w, 300))
+		var w: int = px.x * 31 / 64  # the HUD scales with the window: 620 x 300 at 1280 x 800
+		var crop: Image = img.get_region(Rect2i(px.x - w, 0, w, px.y * 3 / 8))
 		@warning_ignore("return_value_discarded")
 		crop.save_png("%s/ticket_%s.png" % [out, id])
