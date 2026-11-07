@@ -434,3 +434,6 @@ NEXT (iteration 13):
 4. At the freeze: export `build/export/windows/RTAI.exe` (windows-showcase), REPORT final; remove the scratch worktrees
    (perf-before, perf-bc7cv, perf-base) and `gtai-d9x/scratch/godot-src` (several GB) unless NEXT 3 runs.
 5. REQUESTs: none open to perf (read the journals first).
+- 15:21 L9 mechanism on the city drive (one stock run, `GTAI_TW_LOG=1`, memory only, no timing claimed;
+  `evidence/perf/l9-twtrim/mechanism/drive-stock.log`): the same end state as the riot, 4 workers at 128 + 32 + 32 + 16 =
+  208 MB, the 128 MB one made at load. Every city scene pays it, not only the riot: the traffic-sheet REQUEST covers both.
