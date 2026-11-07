@@ -636,3 +636,47 @@ director-reel-it11-*.log). NEXT item 3 DONE.
 01:29 GATE full unit on cf22afec: 1512 passed, 0 failed, no FLAKY. Evidence json:
 evidence/n8-vehicles/iteration11.json.
 Session end 01:30. NEXT for iteration 12 = items 1, 2, 4 of the NEXT above (3 done).
+
+## Iteration 14 (2026-11-07 01:31 - 02:31), BUILD
+
+Read: JOURNAL, git log (iterations 12-13 left no commits or entries), the lane journals: no new
+REQUEST to vehicles. The asset lane SERVED my REQUEST: taxi_between_70 (B, all four right, ~1.6x
+the sheet's scale, brighter yellow), parked_pickup_between_70 (A) + its _c (B, better turned,
+flatter camera, heavier rust), ambulance_between_70 (B: use A and D; its B is a plain side view),
+ambulance_between_b_70 (B, 0155) and ambulance_between_c_70_v2 (B, 0140); and unasked, for my
+"weakest C" Call: sedan_between_c_70_v2 and police_car_between_c_70_v2 (B, 0145, turned ~20-25
+by a turn reference). Looked at every sheet on a grey contact sheet before cutting.
+MILESTONE 01:55 8c634dc8 every sim car turns through nine views on p70 (FINE rows 0-8).
+vehicle_cards.py: REDRAWS (per sheet id, per slot: a one-drawing redraw or the row's own),
+ROW_FIT (the taxi row sheet fitted to its neighbours like a redraw), FIT_BY = "area": the first
+cut scaled redraws to the neighbours' mean WIDTH and the strip showed every C cell visibly small
+(a car's screen width falls ~30 % from the side to the 3/4 away); by the inked area's square root
+they sit at their neighbours' size (looked: p70_nine_view_rows_it14.png). Re-cut vs HEAD: only
+col 7 of rows 0 1 2 7 8 and cols 5-8 of rows 3 5 6 changed; rows 4 and 9 and every drawn column
+bit-exact; 0 red px. Provenance line with every round + prompt_hash. vehicle_turn --set=street.
+FRICTION (cost ~15 min): the atlas is in git LFS: `git show HEAD:<png> > file` writes the POINTER;
+Godot's import then fails ("Not a PNG file") and leaves the .import `valid=false`, and a later
+--import does not retry (the cached md5 matches). Fix: `git cat-file blob HEAD:<png> | git lfs
+smudge`, restore the .import from git, delete the cache's .md5, --import. My first before AND after
+films were made on that broken state (empty cards / identical films): caught by looking, re-filmed.
+Seen, not explained: in the turn film the VAN region differs before/after (both draw the same B
+cell; the van's cells are bit-identical; sedan, police, bike regions identical at the same frame).
+Small (a few px of scale/offset); not chased.
+FILMS (masters, frames.json entry 4): turn360_tilt70_64ppm_street_between_before_after.mp4 (taxi,
+pickup, ambulance: five views left, nine right), street_between_tilt70_64ppm_before_left_after_right.png,
+turn360_tilt70_64ppm_cv2_before_after.mp4 (sedan/police C v2). LOOKED: at 200 deg the sedan C now
+sits on its footprint (before: small, under-turned, the footprint showing past it).
+GATES on 8c634dc8: lint 15/15; full unit 1512 passed / 0 failed, no FLAKY; `top` framemd5 (main
+scene `--arena=city --bot=rivet --seed=2 --rigs`, 301 frames) vs top_head.md5: IDENTICAL (301 +
+301), 0 SCRIPT ERROR; city tilt70 seed 7 900 frames 0 SCRIPT ERROR (the ambulance card on the road).
+Rules applied: generative-artifact-gating (every B used per its note: the ambulance row B and the
+C-grade C never integrated, the taxi spare C skipped, red lamp segments amber), sprite-and-atlas-
+production (one cutter, unchanged cells proven bit-exact, provenance, FINE checked by the unit
+test), motion-quality-gating (judged on the 360 film, before/after at 64 px/m),
+depth-ordered-layered-art (ground-centre anchor kept: depth unchanged).
+DECISION vehicles: every p70 row nine views, FIT_BY area (docs/decisions.md).
+
+## Calls for the owner (add to REPORT)
+- The pickup's C in-between: the row sheet's (built; design exact, ~30-35 deg past the side) vs
+  the _c redraw (better turned ~15-18, flatter camera, heavier rust): PICKUP_C_REDO in
+  tools/art/vehicle_cards.py, then re-cut. See turn360_tilt70_64ppm_street_between_before_after.mp4.
