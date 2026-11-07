@@ -1340,3 +1340,13 @@ dialogue face after the Rivet triage; `BossCam.HUD_PX` reads `BossBar` if `--bos
 NEXT: unchanged from it22/it23 (assets' raises for the heavy/long showcase top views then re-import
 via `tools/art/showcase_import.py`; boss taunt lines into `BossTaunt`; boss busts once approved;
 Rivet's dialogue face after the Rivet triage; `BossCam.HUD_PX` reads `BossBar` if `--boss-cam` ships).
+
+## Iteration 25 (08:25-08:26, BUILD, 5 min before the freeze)
+- 08:25 Read: JOURNAL it24 NEXT, git status (clean, HEAD fa45e02d), every `REQUEST to hud` line in the
+  lane journals: only view l.862, answered at it21 (l.886). `git diff f80e09ba HEAD -- project` empty.
+- DECISION hud/it25: the freeze stays at f80e09ba (5 min left: no change could be gated, reel-checked
+  and re-exported). `build/export/windows/RTAI.exe` is f80e09ba's code; REPORT stands as written.
+- Registry rules applied it25: `motion-quality-gating` (a gated freeze is not moved without its gates).
+NEXT: unchanged from it22-it24 (assets' raises for the heavy/long showcase top views then re-import
+via `tools/art/showcase_import.py`; boss taunt lines into `BossTaunt`; boss busts once approved;
+Rivet's dialogue face after the Rivet triage; `BossCam.HUD_PX` reads `BossBar` if `--boss-cam` ships).
