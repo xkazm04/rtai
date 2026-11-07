@@ -679,3 +679,28 @@ the others were older v1/v2 bases in the game, so they upgrade whole).
   (`evidence/d9-seams/evidence-it8-90e9a69c.log`).
 - 15:38 LOOKED: the asset lane's named weak row (elder 70 row 4, 3/4 away) in the new grid: frame 3
   plants the centre foot where frame 1 plants lower-left: a small alternation, not a repeat; kept.
+- 15:46 GATE director reel it8 at 90e5a006 (code since it7: StreetQuestCards hold, the crowd grids):
+  top, tilt70, combo 19/19 down, 0 SCRIPT ERROR, 2 engine ERROR lines each (the baseline shader-sampler
+  note + exit leak) (`evidence/d9-seams/director-reel-it8-*.log`).
+- 15:45 DECLINED the standing OFFER swat_walk_armed_70_v2_rfresh13_cells (row 1 B): the game's SWAT 70
+  toward row already alternates and is toned to the cop navy; the offered row is narrower (the asset
+  lane's own named fix). The rfresh35 patrol 55 offer was superseded by rfresh235 (taken it7).
+- 15:47 Masters: combined clip now `seams_d9_set_combined_58s.mp4` (+ the crowd before/after, 6 s);
+  frames.json 15 entries; board avi captures deleted.
+
+NEXT (it9), replaces the list above:
+1. Read d9-rivet + assets journals for REQUESTs first (none open to seams at 15:13).
+2. The patrol hold (90e9a69c) is unfilmed in the case it fixes: find a way into quest 1 at a render
+   rate above the tick (e.g. quest1_clip with two draws per step, or the main scene's quest entry flag)
+   and film the patrol at `--fixed-fps 120` before (HOLD_FRAMES 1) / after; or leave it unit-only.
+3. Weakest left: SWAT 55/70 back rows' 3-5 px head move (drawn), elder 3/4 away weak alternation (asset
+   named), the planter's dark inner stroke at 32 px/m, Call 2's corpse "through" the barrier (sim).
+4. Gates green at 90e9a69c (evidence it8) + reels it8 at 90e5a006. Re-run after code.
+5. Freeze 18:30: export RTAI.exe (`"$GODOT_BIN" --headless --path project --export-release windows-showcase
+   ../build/export/windows/RTAI.exe`), REPORT final by 18:40. Owner Calls 1-3 stand.
+- Registry rules applied it8: sprite-and-atlas-production (splice on the head line, FILL by measured mean
+  height), motion-quality-gating (grids old/new, then every facing filmed in motion with --spin; the
+  hold judged by a pixel diff before claiming a visible change), generative-artifact-gating (base re-cut
+  vs the game grid before splicing; the asset lane's weak row looked at), depth-ordered-layered-art (no
+  layer change).
+- Session end 15:48: all committed; scratch avi deleted (masters hold the mp4s and stills).

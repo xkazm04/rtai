@@ -130,7 +130,7 @@ Branch `d9-seams`. Evidence: `C:\Users\kazda\kiro\gtai-masters\d9\seams\` (`fram
    note: the quest 1 clip tool cannot show it (it steps between every frame: before and after are
    pixel-identical), and my it7 "flip" was the walk's passing frame; the fix is unfilmed in play.
 
-**The set in one clip:** `seams_d9_set_combined_52s.mp4` (52 s, captioned per item).
+**The set in one clip:** `seams_d9_set_combined_58s.mp4` (58 s, captioned per item; it8 adds the crowd walk cells).
 
 Gates it6: evidence at 2ef868fc (arm rim): all PASS, lint 15/15, unit 1717/0, scenarios 52/52, parity,
 selftest 11/11, release-compile 602/0 (`evidence/d9-seams/evidence-it6b-2ef868fc.log`); director reel at
@@ -157,7 +157,7 @@ selftest alone at share 0: look goldens 11/11 (worst 0.27). Evidence at eac11147
 scenarios 52/52, parity, selftest (look goldens 11/11), release-compile 601/0 PASS; unit 1705 passed /
 0 failed but marked FAIL by the tree-changed guard (I edited REPORT.md during the run; no test failed).
 Logs `evidence/d9-seams/evidence-it2-*.log`.
-Gates it8: evidence at 90e9a69c all PASS (lint 15/15, unit 1718/0, scenarios 52, parity, goldens 11/11, release-compile 602/0) (`evidence/d9-seams/evidence-it8-90e9a69c.log`); director reel it8 below.
+Gates it8: evidence at 90e9a69c all PASS (lint 15/15, unit 1718/0, scenarios 52, parity, goldens 11/11, release-compile 602/0) (`evidence/d9-seams/evidence-it8-90e9a69c.log`); director reel it8 at 90e5a006 top/tilt70/combo 19/19 down, 0 SCRIPT ERROR (`evidence/d9-seams/director-reel-it8-*.log`).
 Gates it7: evidence at a8940e1b all PASS (unit 1717/0, scenarios 52, parity, goldens 11/11, release-compile 602/0); director reel it7 19/19 x3, 0 SCRIPT ERROR.
 Gates it1: lint 15/15; unit no-arg 1696 passed / 0 failed (at 966a2a79);
 director reel (`--fixed-fps 60 --quit-after 14000`) top 19/19, tilt70 19/19, combo 19/19 down,
