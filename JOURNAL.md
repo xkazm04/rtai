@@ -1457,3 +1457,19 @@ no art touched.
 NEXT (the Director / d9): unchanged from it33 (1. apply `it33/d9_city_occlusion_extra_v2.patch`, view
 finds the node under actor_layer() by type, mutate city_occlusion.gd; 2. land planter_v3 55 +
 provenance, film `--view=tilt` 48 px/m; 3. the release-compile temp-dir collision). REPORT.md stands.
+
+## Iteration 38 (08:40-08:44, REPORT)
+Read: JOURNAL NEXT, git log, REPORT.md.
+- (08:41) Checked every evidence path REPORT.md cites. Results: 28 masters files plus frames.json,
+  5 `evidence/` files, `data/tables/city_facades.json`, the three scratch files (it32 planter, it33
+  v2 patch), view's FOUND_corpse still in view's masters, and the exe with its DLL (07:21). All exist.
+  `git diff 7a43f001 HEAD -- project` = the one tests/unit file, so the exe still matches the shipped code.
+- REPORT.md: added the missing "What blocked me (and for how long)" section. It is built from the
+  JOURNAL FRICTION entries; no hard BLOCKED. Re-stamped the header. Nothing was built.
+Registry rules applied it38: generative-artifact-gating / motion-quality-gating spirit (every claim
+names evidence that exists; nothing new built after the freeze).
+- Session end 08:44. Tree clean after this commit.
+
+NEXT (the Director / d9): unchanged from it33 (1. apply `it33/d9_city_occlusion_extra_v2.patch`, view
+finds the node under actor_layer() by type, mutate city_occlusion.gd; 2. land planter_v3 55 +
+provenance, film `--view=tilt` 48 px/m; 3. the release-compile temp-dir collision). REPORT.md final.

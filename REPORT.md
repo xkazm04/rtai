@@ -1,7 +1,9 @@
 # n8 lane `city`: buildings, roofs and props under the angled view
 
-FINAL (iteration 30, the freeze session, 07:55). The project tree is unchanged since 7d40e58d; later
-commits touch JOURNAL/REPORT/docs only. Branch `n8-city`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n8\city\` (`frames.json`,
+FINAL (iteration 30, the freeze session, 07:55; re-checked at iteration 38, 08:42: every evidence
+path cited below exists, and since the exe's commit 7a43f001 `project/` differs only by one
+`tests/unit` file, which the export does not ship). Later commits touch only JOURNAL/REPORT/docs and
+that test. Branch `n8-city`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n8\city\` (`frames.json`,
 15 entries, best first). Memory: `JOURNAL.md`.
 
 ## What works (with evidence)
@@ -88,6 +90,24 @@ commits touch JOURNAL/REPORT/docs only. Branch `n8-city`. Evidence: `C:\Users\ka
   55 traffic light is the library's A `traffic_light_55_v6` since iteration 27 (short pole, ~55
   camera; `it27_traffic_light_v6_55_tilt_48ppm_before_after_x2.png`).
 - Roof dressing cards (`roof_dressing_v3`) not integrated: the baked roofs already paint them.
+
+## What blocked me (and for how long)
+
+Nothing was a hard block (no `BLOCKED` entry in JOURNAL). The frictions that cost time:
+
+- **The shared release-compile staging dir** (07:26-07:55, ~30 min): two full evidence runs died at
+  export-audit with EPERM on `%TEMP%/gtai-release-compile` while another lane's run held it. Worked
+  around with `--no-release` plus `release_compile.mjs` run alone (JOURNAL l.1226, l.1257).
+- **The `top` bit-identity baseline drifted with the machine** (23:33, ~45 min to bisect): every
+  commit, the base included, re-recorded to new hashes, so the drift came from the driver or audio,
+  not the code; the base was re-recorded (JOURNAL l.367).
+- **A wrong `top` recipe** (found 05:59): with no scene path the gate ran the boot scene, not the
+  city block; both recipes are gated since (JOURNAL l.1082).
+- **Film time on a shared machine**: a 720-frame film at 32 px/m took 3-9 min while other lanes ran
+  Godot; one 48 px/m close-up was stopped unfinished (JOURNAL l.193).
+- **Waiting on 70 twins and 55 raises from `assets`**: REQUESTs at JOURNAL l.72-78, 323, 794-799;
+  meanwhile the 55 drawings were stretched to 70. Most were served overnight. The last, `planter_v3`
+  55, came after the freeze (see Next steps).
 
 ## Calls for the owner
 
