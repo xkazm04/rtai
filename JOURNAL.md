@@ -1191,3 +1191,18 @@ NEXT (supersedes it16's):
   1920x1080` + it19's 1280x800 board, 0 SCRIPT ERROR): `gtai-masters/n8/hud/hud_tickets_all_weapons_
   {1280x800,1920x1080}_contact.png` replaced (17 tickets each; looked at the 1080p one at 1/3: every
   name and icon reads, the heavy three now in the set's rust/brass). Board frames deleted. Head clean.
+
+## Iteration 20 (2026-11-07 07:10, BUILD)
+Read: JOURNAL (it19 NEXT), git log, the four lane journals (no new REQUEST to hud), the catalog
+since 0745: two raises touch hud's ids. `showcase_electro_gun_v2` 70 (round 0830, B: the design
+fixed, the camera still mixed) and `portrait_nurse_v5` (0835, C; its notes name the keyed post fix
+`portrait_nurse_55_v4_rustbrown.png`, no Codex).
+- LOOKED, NOT TAKEN: electro gun 70 v2. The set's p70 is the middle (side) cut; v2's middle is a
+  plain side profile with less of the design (no wood grain on the grip, a thinner insulator stack)
+  than today's p70 (the A 55 sheet's side view, the owner's design exact). Views 1/5 look down the
+  long axis: a coil tube, not the set's convention. `design_cut.py` SHOWCASE_SOURCE unchanged.
+- MILESTONE 2b4a961e Juno Stitch's busts re-cut from `portrait_nurse_55_v4_rustbrown`: red-hue px
+  738 -> 265 / 990 -> 225 at 320 px, the drawing identical. Looked: the busts before/after
+  (masters `dialogue_nurse_rustbrown_busts_before_after.png`) and both nurse lines on the board at
+  1280x800 (`it20/board.sh rb`), 0 SCRIPT ERROR. Unit 21/0, lint 15/15 (hook). 2 provenance lines.
+  DECISION hud/dialogue nurse rustbrown.
