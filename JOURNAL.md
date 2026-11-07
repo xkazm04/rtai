@@ -825,3 +825,45 @@ NEXT (iteration 9):
   NEXT 1b: read their catalog notes, cut them with street_fall.py if their identity matches the
   in-game cards, FALLS rows under "p55" (and p70 through FALLBACK only if no 70 twin comes).
   Session stopped here (not enough time left for a cut + film + gates cycle).
+
+## Iteration 9 (2026-11-07 03:15, BUILD)
+Read: JOURNAL, git log, the library catalog: my 03:14 check was wrong, the riot/SWAT fall strips
+(cop_riot_fall_70, swat_fall_70 B) had landed at 02:30 with the patrol's round 0300; also thug,
+contractor, cultist, torque_gang falls at 70 (0315) and 55 (0325/0335). Other lanes' journals: no
+REQUEST to street.
+- MILESTONE 9fa20822 (brief 5, NEXT 1): **the riot cop and SWAT fall and lie as drawn under p70.**
+  street_fall.py `--stretch=1.3` (riot: drawn 1.18x/1.10x) / `1.35` (SWAT: 1.18x/1.06x), both
+  `--back-from-away` (their notes: the drawn back corpse reads as a kneel); FALLS rows
+  cop/head_helmet, cop/head_swat. The riot shield: the drawing carries it on the arm (buckle,
+  mid-fall) and flat beside the body (lying); the upright RiotShieldCard plate is a child of the
+  torso, hidden with the parts, so no double shield at any tick looked (62/65/68/90/150/240).
+  New board switch `--heavy` (8 riot + 8 SWAT, so --kill-spread shows each in all 8 directions);
+  debt +4 dev lines accepted. Unit test: every FALLS grid exists, all three cops have one.
+- LOOKED the board tilt70 64 and 32 px/m (x2 crop), before = the two rows removed (a local edit,
+  restored): before, the parts sprawl with white limbs and crescent shields; after, 16 drawn
+  corpses along their blows, shields flat. One riot cop at 32 px/m t62 still stands in both runs
+  (its death starts a few ticks later; drawn by t68), not a missed row.
+- GATE unit no-arg on 9fa20822: 1514 passed, 0 failed, no FLAKY (46 s).
+- MILESTONE a376cbdb (brief 2+5, NEXT 1b): **the robot thug powers down and lies as drawn under
+  p70** (thug_fall_70 B, stretch 1.4, --back-from-away: "row 5 reads as a standing robot with
+  raised claws"). FALLS row "thug" (RigHeadCard's row key for ThugPlan's art_dir); the death is
+  kill_robot's death_robot family, a HumanReact, so the drawn fall takes it with no code.
+  Filming FRICTION: `--bot=ghosts` needs the scene path `res://dev/arena/arena.tscn` (the
+  arena is main_scene.showcase, not main); the Kerf beat's thug dies by Kerf's cut (a signature
+  slice: the parts in halves, not the drawn fall, correct), the Ohm beat's by a power-down.
+  PROBE (temporary printerr in strip_of, restored): thug dead/dying, row "thug", art p70.
+  LOOKED Ohm beat seed 4 48 px/m x2: before = the dead thug's parts as one ink sprawl (the
+  brief's complaint, now at death); after = the lit steel robot slumps and lies on its side.
+  The living thug's long-armed parts swap to the compact drawing at the blow (same spot/height).
+- EVIDENCE (masters n8/street, frames.json 15 entries, 4 new at #2-#4, #7):
+  cops_riot_swat_drawn_fall_before_after_tilt70_64ppm_board_t65_t150.png,
+  thug_drawn_fall_before_after_tilt70_48ppm_x2_ohmbeat.png,
+  thug_drawn_fall_before_after_tilt70_48ppm_x2_ohmbeat_realtime_then_0.25x.mp4 (10 s),
+  cops_riot_swat_drawn_fall_before_after_tilt70_32ppm_x2_board_t62-150.png. Dropped (superseded,
+  files deleted): the patrol 32 px/m pair, the ped t59-150 still (the clip #5 stays), the city
+  walkers 32 pair, the it2 Kerf-beat 32 px/m cops/thug pair.
+- IN PROGRESS (brief 4+5): quest 1's dead dock contractors draw as the drawn lying frame
+  (contractor_fall_70 B, stretch 1.4, --back-from-away: the back row's lying frame read as a
+  kneel) instead of the flat guard_down sprite: StreetQuestCards.draw_down, called by CastView
+  where it drew guard_down; opaque (the sprite's DOWN_FADE 0.8 alpha would show the ground through
+  a drawn body); fallen forward along the guard's facing (CastView has no blow direction).
