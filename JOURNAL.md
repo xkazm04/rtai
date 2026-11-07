@@ -1182,3 +1182,45 @@ NEXT (iteration 12):
   reel above, NEXT 2 is done; NEXT for it12 is 1 (freeze), 3, 4.
 - Session end 05:41: tree clean, every change committed. Commits it11: b7691fe0 (atlas death
   frames), a7b72448 (quest 1 patrol walk), 82c6f40c (REPORT draft), + docs/evidence.
+
+## Iteration 12 (05:47, BUILD; session stops 06:47)
+Read: JOURNAL (it11 NEXT), git log, the four lane journals, the library catalog (new: round
+20261107-0610/0630/0650 POST FIX BY EXAMPLE fall redraws for every street id).
+- REQUEST from view (n8-view JOURNAL l.1137, StreetWalkerCards.step's typed `for c: CanvasItem`
+  loop over HID throws on a part freed since it was hidden: 102 SCRIPT ERRORs at quest 1 Dock 9 on
+  the trial merge). ANSWER: fixed d61f48bc. step goes through StreetView.hide_all (index loop,
+  is_instance_valid, as release() did); unit +1 (a freed item is skipped, the live one hidden).
+  Not re-run on view's trial merge (their QuestGuardCast keeps the guards off that path now);
+  view: re-check on the next trial merge with `QuestGuardCast.ON = false` if you want the repro.
+- MILESTONE b398a319 (brief 5, quality raise): **people fall and lie as the round-0630 redraws**
+  (lying frames drawn long raw ~1.3-1.8x, natural proportions, no post stretch): nine peds (suit
+  v3, worker v3, the rest v2) and the three cops at p70, the patrol cop at p55
+  (StreetWalkerFall.LONG_FALLS; LONG false = it9's FALLS). Every grid cut `--back-from-away`:
+  LOOKED the redraws' drawn back corpse is still a vertical figure head-up, which at 70 reads as a
+  person standing (the old ped grids had it too: the it8 "peds keep their drawn back corpses" was
+  wrong at 32 px/m). Robots (thug, torque_gang) keep their grids: their redraws drew the stretch
+  as legs twice their length (the library's own finding). The contractor keeps its grid (its
+  corpse length is sized by StreetQuestCards.body_m; not re-judged this session). The atlas far
+  corpses read StreetWalkerFall.table(), so they follow LONG.
+  FRICTION/FIX: ped_cap_fall_70_v2 draws its grid in the right two-thirds of the sheet, so the
+  width-thirds column split found an empty column; street_fall.py now splits the drawn width
+  (re-cut of cop_riot_fall_70 with its old args is bit-identical to the shipped grid).
+  FILMED the board (street_crowd.gd `--kill=light --kill-spread`, peds / `--cops` / `--heavy`,
+  tilt70 64 px/m, + peds 32 px/m), before = LONG false, after = true, 0 SCRIPT ERROR all 8 runs.
+  LOOKED: at 32 px/m before, two back-fallen pedestrians stand upright on the lane line (centre,
+  right); after, all 16 lie. Frames t59-150: the suit buckles and falls away identically, at t72
+  the before stands up on its back corpse, the after lies on the diagonal from its feet. Cops: the
+  camera-facing corpses lose the stretched torso (riot clearly); SWAT's camera-facing corpse a
+  touch shorter (row 1 1.43x), still lying. p55 (`--view=tilt --cops`): long and natural.
+  Evidence: evidence/peds_long_fall_back_corpse_before_after_tilt70_32ppm_board_t150.png,
+  peds_long_fall_frames_before_after_tilt70_64ppm_t59-150.png, riot_swat_long_fall_..._t150.png,
+  peds/cops_long_fall_before_after_tilt70_64ppm_board_t150.png; masters frames.json #1-#3 (dropped
+  #3 old riot/swat board, the walkers board still and the cop-tone CALL still from the list; files
+  kept, REPORT cites them). Provenance x13. Unit (street selects) 26/0. Lint 15/15.
+- FOUND + FIXED 6d177df4: a dying patrol cop changed colour (alive: navy head card over navy
+  parts; the fall grid: the sheet's brighter police-blue shirt) at both pitches, since it8 (the
+  old grids were not toned either). street_tone.py on both long grids against the pitch's
+  cop_patrol_card (70: value x0.66; 55: value x0.68). LOOKED t59/72/150 p55 and p70 before/after:
+  one navy from standing to corpse. evidence/cop_patrol_fall_tone_before_after_p55_p70_64ppm_
+  t59_72_150.png (masters too). Riot/SWAT grids already read with their cards: untouched.
+- DECISION street/long-falls (docs/decisions.md).
