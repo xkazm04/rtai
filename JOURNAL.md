@@ -1155,3 +1155,9 @@ new_top_s2 (video + audio), 0 SCRIPT ERROR (evidence/n8-vehicles/identity-it18/t
 CORRECTION: the "GATE 04:47 top identity" line above ran at ~04:44 (clock).
 04:48 REPORT.md draft committed (replaces view's merged REPORT on this branch). Scratch: it18 raw
 .avi deleted (843 MB -> 66 MB).
+GATE 04:47 scenarios on the REPORT-draft tree (raw run_scenarios.gd): 52 ran, 0 failed, exit 0
+(evidence/n8-vehicles/scenarios-it18.log).
+MILESTONE 04:50 the combined clip (masters vehicles_set_tilt70_combined.mp4, 49 s, frames.json entry
+1) re-cut: segments 2 (main scene `-- --view=tilt70 --seed=7 --rigs`, 721 frames) and 5 (Servo
+depot combo 32 px/m seed 2, from 1 s, 5 s) re-rendered on HEAD, 0 SCRIPT ERROR both; 1, 3, 4 from
+it16. Looked at 15 s and 47 s. Recipe scratch/vehicles/it18/set/seg.sh.
