@@ -13,7 +13,7 @@ const ON: bool = true
 ## Adds a ViewPitchEase under `view` when the shared view row eases; null when it does not.
 static func attach(view: Node, arena: CombatArena, clock: SimClock) -> ViewPitchEase:
 	var pitch: ViewPitch = ViewPitch.of(String(ViewMode.shared().id))
-	if not ON or ViewMode.shared().is_flat() or not pitch.eases():
+	if not ON or not pitch.eases():  # a flat row (top) never eases
 		return null
 	var ease: ViewPitchEase = ViewPitchEase.new()
 	ease.name = &"view_pitch_ease"
