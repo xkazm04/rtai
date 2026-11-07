@@ -28,8 +28,8 @@ var _carded: bool = false
 var _parked: PackedVector4Array = PackedVector4Array()
 var _order_of: CityChunk = null
 var _rev_frames: int = 0
-## props rows with `cast_m` (a pole): the shadow command draws as a stroke this long (px)
-var _cast_px: Dictionary[int, float] = {}
+## props rows with `cast_m` (a pole): the shadow command's stroke length, `cast_blob_m` (px)
+var _cast_px: Dictionary[int, Vector2] = {}
 
 
 ## The lift for this run's view, null when flat (or a perspective top_lift).
@@ -70,7 +70,8 @@ func _setup(d: Dictionary, tex: CityTextures, is_building: Array[bool], art: Str
 		var prow: Dictionary = props.get(tex.names[i], {})
 		if prow.has("cast_m") and cards.has(i):
 			var cast_m: float = prow["cast_m"]
-			_cast_px[i] = cast_m * SimConst.PX_PER_M
+			var blob_m: float = prow.get("cast_blob_m", 0.0)
+			_cast_px[i] = Vector2(cast_m, blob_m) * SimConst.PX_PER_M
 	var k: float = d["height_k"]
 	var dflt: Dictionary = d["default"]
 	var by_name: Dictionary = d["by_name"]
@@ -171,7 +172,10 @@ func draw(item: RID, t: int, rot: float, at: Vector2, shadow: bool = false) -> v
 		var w: float = POLE_CAST_W_M * SimConst.PX_PER_M
 		var foot: Vector2 = cards.foot_at(t, rot, ground, extent(t, rot))
 		RenderingServer.canvas_item_add_set_transform(item, Transform2D(PI * 0.25, foot))
-		RenderingServer.canvas_item_add_rect(item, Rect2(0.0, -w * 0.5, _cast_px[t], w), SHADOW)
+		var c: Vector2 = _cast_px[t]  # a blob (globe, signal head) ends the stroke without overlap
+		RenderingServer.canvas_item_add_rect(item, Rect2(0.0, -w * 0.5, c.x - c.y, w), SHADOW)
+		if c.y > 0.0:
+			RenderingServer.canvas_item_add_circle(item, Vector2(c.x, 0.0), c.y, SHADOW)
 		return
 	if cards.has(t):
 		cards.draw(item, t, rot, cards.foot_at(t, rot, at, extent(t, rot)))

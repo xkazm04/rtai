@@ -93,6 +93,7 @@
     },
     "lamp_post": {
       "art": "res://features/city/art/view/<art>/prop_lamp_post.png",
+      "cast_blob_m": 0.18,
       "cast_m": 1.6,
       "cell_w_m": 1.15,
       "cell_w_m_p70": 1.45,
@@ -141,6 +142,7 @@
     },
     "traffic_light": {
       "art": "res://features/city/art/view/<art>/prop_traffic_light.png",
+      "cast_blob_m": 0.15,
       "cast_m": 1.8,
       "cell_w_m": 1.4,
       "foot_m": [

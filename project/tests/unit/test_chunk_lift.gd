@@ -99,3 +99,16 @@ func test_only_a_pole_prop_takes_its_shadow_command() -> void:
 	assert_false(lift.takes(1, true), "a building's shadow stays the baked silhouette")
 	assert_false(lift.takes(0, false), "the road stays flat")
 	assert_true(lift.takes(1, false) and lift.takes(2, false), "roofs and cards stand")
+
+
+func test_a_lamp_cast_ends_in_its_globe_blob() -> void:
+	var tex: CityTextures = CityTextures.new({"textures": []})
+	tex.names.assign(["street_sign", "lamp_post"])
+	tex.size_px.assign([Vector2(40, 40), Vector2(40, 40)])
+	var built: Array[bool] = [false, false]
+	var d: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(ChunkLift.TABLE))
+	var lift: ChunkLift = ChunkLift.new()
+	lift._setup(d, tex, built, "p70")
+	assert_eq(lift._cast_px[0].y, 0.0, "the street sign: a bare stroke")
+	assert_gt(lift._cast_px[1].y, 0.0, "the lamp: a globe blob")
+	assert_lt(lift._cast_px[1].y, lift._cast_px[1].x * 0.25, "the blob stays small beside the pole")
