@@ -25,11 +25,14 @@ func test_straight_down_the_sprite_draws() -> void:
 
 
 func test_the_downed_contractor_grid_has_whole_cells() -> void:
-	var tex: Texture2D = load(StreetQuestCards.DOWN["p70"]) as Texture2D
-	assert_not_null(tex)
-	if tex != null:
-		assert_eq(tex.get_width() % RigHeadCard.FRAMES, 0, "five facings")
-		assert_eq(tex.get_height() % StreetWalkerFall.FALL_FRAMES, 0, "three fall frames")
+	for art: String in ["p55", "p70"]:
+		var path: String = StreetQuestCards.DOWN.get(art, "")
+		assert_true(path.contains("/%s/" % art), "%s lies as its own drawing" % art)
+		var tex: Texture2D = load(path) as Texture2D
+		assert_not_null(tex, path)
+		if tex != null:
+			assert_eq(tex.get_width() % RigHeadCard.FRAMES, 0, "five facings")
+			assert_eq(tex.get_height() % StreetWalkerFall.FALL_FRAMES, 0, "three fall frames")
 
 
 func test_corpses_on_different_spots_fall_three_ways() -> void:

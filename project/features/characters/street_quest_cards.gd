@@ -15,10 +15,14 @@ const GUARD: Dictionary[String, String] = {
 	"p55": P55 + "contractor_card.png",
 	"p70": P70 + "contractor_card.png",
 }
-## A downed guard's drawn lying frame (street_fall.py from keyed contractor_fall_70 B: the grid's
-## last row, feet at the cell centre), fallen forward along its facing, mirrored as the standing
-## card, opaque; art with no grid draws StreetWalkerFall.FALLBACK's. {} = the flat sprite (before).
-const DOWN: Dictionary[String, String] = {"p70": P70 + "contractor_fall.png"}
+## A downed guard's drawn lying frame (street_fall.py from keyed contractor_fall_55 / _70 B:
+## the grid's last row, feet at the cell centre), fallen forward along its facing, mirrored as
+## the standing card, opaque; art with no grid draws StreetWalkerFall.FALLBACK's. {} = the flat
+## sprite (before).
+const DOWN: Dictionary[String, String] = {
+	"p55": P55 + "contractor_fall.png",
+	"p70": P70 + "contractor_fall.png",
+}
 ## The corpse's turn off the facing (rad), picked per ground spot (-1, 0, +1 x SPREAD): guards
 ## charging one way fall one way, a heap of clones; 0 = all along their facing.
 const SPREAD: float = PI * 0.25
