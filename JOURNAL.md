@@ -333,3 +333,23 @@ NEXT:
    in the arena city block, seed 5); if it pops, hold the grid through the strike.
 3. Item 4: owner eye on the v3 planter at 32 (dark mass); a value lift is a city-tool question.
 4. Calls 1 and 3 stand (legs lift, bike share 0). Freeze 18:30: export RTAI.exe, REPORT final.
+- 12:31 MILESTONE item 5 (e6ba3ec3): round 1320-1330 fresh rows landed at 55 (patrol r3 A, riot r3 A +
+  r4 B, SWAT r2-r4 A), spliced with `scratch/seams/cops2/splice_row.py`, re-cut, re-toned; FILL patrol
+  1.07, riot 1.09, SWAT 1.08. Masters 55 pairs (48 x1.5, 32) and the after clip re-shot. Seen: the SWAT
+  55 fresh 3/4-toward row is ~8 % shorter than the front row (a small pop on that turn).
+- 12:34 FINDING item 5 (NEXT 2): with a temporary log in StreetCopWalk.strip_of (reverted), 3600 ticks of
+  the arena city block (seed 5, tilt70, windowed) had no cop strike, throw or reload, and the director
+  reel (headless, tilt70) logged none either (whether the card views step headless is unchecked). The
+  grid -> parts swap is rare in play; judging it in motion needs a staged melee (a riot cop next to
+  Rivet). Not built.
+
+NEXT (it5):
+1. Item 5: a staged baton strike at 48 px/m to judge the grid -> parts swap (a dev flag or the reel's
+   riot_cop chapter windowed: `--bot=reel --reel=director --view=tilt70`, ticks 5040+); if it pops,
+   hold the grid through the strike (StreetCopWalk.strip_of: drop the strike_arm test).
+2. Item 5 art: REQUEST to assets if wanted: swat_walk_armed_55 row 2 at the front row's figure height;
+   cop_riot_walk_armed_55 row 2 (repeats).
+3. Item 4: owner eye on the v3 planter at 32 (a dark mass); a value lift is city's tool.
+4. Re-run `node tools/evidence/run.mjs --no-bench` (logs to scratch) at the head: d6ffd600 + e6ba3ec3 are
+   art + FILL only since the it4 gate (16eb6d86); the reels if gameplay code changes.
+5. Freeze 18:30: export RTAI.exe, REPORT final (Calls 1 and 3 stand).

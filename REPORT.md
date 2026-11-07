@@ -56,8 +56,8 @@ Branch `d9-seams`. Evidence: `C:\Users\kazda\kiro\gtai-masters\d9\seams\` (`fram
 10. **Every armed city cop walks drawn, SWAT included and at 55** (item 5, ffbb9c44 + d6ffd600, it4):
    at 70 the SWAT walk on swat_walk_armed_70_v2 (B) with the asset lane's fresh profile row (round
    1315, A) spliced in, so all 5 facings alternate; at 55 the patrol, riot and SWAT cops walk on the
-   round-1310 sheets (B, interim: the asset lane's fresh rows, round 1320, drop in), each toned to its
-   own card's navy. `StreetCopWalk.FILL` is keyed per pitch. No living city cop draws a head card
+   round-1310 sheets (B) with the asset lane's fresh rows spliced in (e6ba3ec3: patrol r3, riot r3-r4,
+   SWAT r2-r4, rounds 1320-1330), each toned to its own card's navy. `StreetCopWalk.FILL` is keyed per pitch. No living city cop draws a head card
    over parts at either pitch any more (a baton strike, a throw or a reload still shows the parts).
    `cop_armed_walk55_before_after_tilt_48ppm_seed5_f400_x1.5.png`, `..._32ppm_seed5_f400.png`,
    `swat_armed_walk70_before_after_tilt70_48ppm_seed5_f400_x1.5.png`, 6 s clips before/after.
@@ -86,8 +86,8 @@ director reel (`--fixed-fps 60 --quit-after 14000`) top 19/19, tilt70 19/19, com
 0 SCRIPT ERROR (`evidence/d9-seams/director-reel-it1-*.log`). Not yet run: `tools/evidence/run.mjs --no-bench`.
 
 ## What does not work yet
-- The 55 armed walks are the asset lane's interim B sheets (a repeated row in each); the fresh rows
-  (round 1320) drop in by re-running street_walk.py + street_tone.py.
+- The 55 SWAT's fresh 3/4-toward row draws ~8 % shorter than its front row (a small size pop on that
+  turn); the riot 55 row 2 still repeats a frame (assets: C on its fresh try).
 - The sim bike is off by default (Call 3).
 - After merge, rebuild native (`just native`): `project/native/bin` is git-ignored, and the old DLL
   would treat bikes as cars (no crash; parity would fail).
