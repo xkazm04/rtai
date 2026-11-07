@@ -284,3 +284,4 @@ NEXT:
 5. Re-run `node tools/evidence/run.mjs --no-bench` (logs to scratch, then copy in) at the head; the
    reels ran at 4aa2a0e0 (19/19 x3); bb7077f5 only hides the King's pelvis (render).
 6. Rivet lane asked nothing of seams (its "grey blob in the Servo fight" is theirs to identify first).
+- 12:01 GATE unit no-arg at cf2bae52 (incl. the pelvis fix bb7077f5): 1713 passed / 0 failed.

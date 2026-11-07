@@ -56,7 +56,7 @@ Branch `d9-seams`. Evidence: `C:\Users\kazda\kiro\gtai-masters\d9\seams\` (`fram
 Gates it3: director reel at 4aa2a0e0 top/tilt70/combo 19/19 down, 0 SCRIPT ERROR
 (`evidence/d9-seams/director-reel-it3-*.log`); evidence at f74bb3ed (items 5 + the rider): lint 15/15, unit 1711/0, scenarios 52/52,
 parity bit-exact (bikes in it), selftest look goldens 11/11 (worst 0.27), release-compile 602/0, all
-PASS (`evidence/d9-seams/evidence-it3-f74bb3ed.log`).
+PASS (`evidence/d9-seams/evidence-it3-f74bb3ed.log`); unit no-arg at cf2bae52 1713/0.
 Gates it2: director reel after the legs ON top/tilt70/combo 19/19 down, 0 SCRIPT ERROR
 (`evidence/d9-seams/director-reel-it2-*.log`); evidence at e8c6ad01 (bikes 0.06): lint, unit
 1705/0, scenarios 52/52, parity, release-compile 601/0 pass, selftest FAIL (top look goldens 2/11);
