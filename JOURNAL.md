@@ -821,3 +821,22 @@ NEXT (17:13; replaces NEXT 1 of 17:05, the rest stands): 1. When the walk cells 
   (the p55 left rows' tone/lean mismatch caught on the contact, noted rather than hidden); realtime-combat-semantics
   (view only; reels 19/19 x3, parity exact); depth-ordered-layered-art (the walk grid is the same card: the same
   sort, shadow and occlusion path as the facings).
+- 17:50 Masters: a fresh director-reel still (NEXT 2 of it21): `rivet_reel_director_tilt70_48ppm_claw_pistol_mp_rocket_flamer_electro_molotov_katana_it22.png`
+  (`--write-movie --quit-after 3200 -- --bot=reel --reel=director --loadout=pistol --rigs --view=tilt70 --ppm=48`,
+  0 SCRIPT ERROR, chapters claw..katana all down; frames 230-2900, 1:1 crops). frames.json entry 4 (the p55 baton
+  smear entry out, file kept). Seen: the reel camera frames the targets, Rivet sits left of centre; every chapter
+  shows him as one drawn figure with the weapon in his hands. .avi deleted.
+- 17:52 Trial exe export on a5ee24ac (26 s, 0 SCRIPT ERROR; `RTAI.exe --headless --quit-after 300 -- --rigs
+  --view=tilt70` exit 0). REPORT `## Exe for the owner` with the command lines.
+
+NEXT (it22 end; supersedes every NEXT above):
+1. FREEZE 18:30: re-export `build/export/windows/RTAI.exe` on the final commit (`"$GODOT_BIN" --headless --path
+   project --export-release windows-showcase ../build/export/windows/RTAI.exe`, 26 s), smoke it (line above), update
+   REPORT `## Exe for the owner` with the commit; commit.
+2. REPORT final by 18:40: rewrite the header ("in progress" -> final), What works (add the walk: p70 + p55, the
+   clip and still; reels 19/19 x3 it22; evidence ALL PASS on e2400dc4), What does not (the walk only bare-claw; the
+   p55 left rows' tone; a weapon-out walk keeps the bob), what blocked (FRICTION lines today), Calls (1 size, 2 walk:
+   drawn built), Next steps.
+3. If time before the freeze: a REQUEST to assets to tone-match rivet_walk_55_left rows to the right rows (the
+   it22 contact shows them darker/leaner); a 1-flag swap. Do not start new Godot-side work after 18:20.
+- Session end ~17:55: everything committed.

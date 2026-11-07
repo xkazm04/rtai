@@ -140,6 +140,15 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
 - Reload: no drawn reload frame; he keeps the equipped strip through it (it7 check: the "bare figure" seen in it6
   was the equipped back views, which show the small guns barely; no change made).
 
+## Exe for the owner
+- Trial export it22 (17:52, on a5ee24ac, 26 s, 0 SCRIPT ERROR; smoke `RTAI.exe --headless --quit-after 300 -- --rigs
+  --view=tilt70` exit 0): `GODOT_BIN="C:/Users/kazda/kiro/gtai-spike/tools/godot/Godot_v4.7.2-stable_win64_console.exe"`,
+  `"$GODOT_BIN" --headless --path project --export-release windows-showcase ../build/export/windows/RTAI.exe`
+  -> `build/export/windows/RTAI.exe` (+ `gtai_sim.windows.template_release.x86_64.dll` beside it). Re-exported at
+  the freeze on the final commit.
+- See Rivet: `RTAI.exe -- --rigs --view=tilt70` (play, p70), `RTAI.exe -- --rigs --view=combo` (boss fights, p55);
+  befores: `--rivet-walk=bob`, `--rivet-height=<m>`.
+
 ## Calls for the owner
 1. **Rivet's size.** Built 1.1 m standing (~35 px at 32 px/m, the asset lane's mock), p55 1.3 m.
    Options: 1.25 m / 1.4 m, each one launch flag in the exe since it21: `RTAI.exe -- --rigs --rivet-height=1.25`
