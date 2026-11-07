@@ -1,6 +1,6 @@
 """d9 rivet: cut a library Rivet sheet (keyed, transparent) into one game strip of whole figures.
 
-usage: python -I tools/art/rivet_frames.py <keyed.png> <out.png> <counts> [--left=<keyed_left.png>]
+usage: python -I tools/art/rivet_frames.py <keyed.png> <out.png> <counts> [--left=<keyed_left.png>] [--cc=<band,..>]
        [--fig_h=110] [--json=<out.json>]
 
 <counts> = figures per band, top to bottom, e.g. 5,6 (the base sheet: five facings, then walk,
@@ -27,6 +27,7 @@ import sys
 
 import numpy as np
 from PIL import Image
+from scipy import ndimage
 
 PAD = 2
 JUMP = 1.12
@@ -61,7 +62,29 @@ def _bands(solid: np.ndarray, n: int) -> list:
     return spans
 
 
-def _figures(solid: np.ndarray, y0: int, y1: int, n: int) -> list:
+def _components(solid: np.ndarray, y0: int, y1: int, n: int) -> list:
+    """--cc bands: figures whose blades overlap in x. The n largest alpha components are the
+    figures; every other piece joins the figure whose centroid is nearest in x. Each figure keeps
+    its own mask, so a neighbour's blade inside its box is not drawn."""
+    lab, k = ndimage.label(solid[y0:y1])
+    sizes = ndimage.sum(np.ones_like(lab), lab, range(1, k + 1))
+    cx = [c[1] for c in ndimage.center_of_mass(np.ones_like(lab), lab, range(1, k + 1))]
+    seeds = sorted(np.argsort(sizes)[::-1][:n], key=lambda i: cx[i])
+    owner = [min(range(n), key=lambda j: abs(cx[i] - cx[seeds[j]])) for i in range(k)]
+    out = []
+    for j in range(n):
+        full = np.zeros_like(solid)
+        full[y0:y1] = np.isin(lab, [i + 1 for i in range(k) if owner[i] == j])
+        rows, cols = np.where(full.any(axis=1))[0], np.where(full.any(axis=0))[0]
+        f = _measure(full, cols[0], rows[0], cols[-1] + 1, rows[-1] + 1)
+        f["mask"] = full[rows[0] : rows[-1] + 1, cols[0] : cols[-1] + 1]
+        out.append(f)
+    return out
+
+
+def _figures(solid: np.ndarray, y0: int, y1: int, n: int, cc: bool = False) -> list:
+    if cc:
+        return _components(solid, y0, y1, n)
     sub = solid[y0:y1]
     prof = sub.sum(axis=0)
     runs = _runs(prof > 1)
@@ -105,11 +128,11 @@ def _measure(solid: np.ndarray, x0: int, y0: int, x1: int, y1: int) -> dict:
             "head_w": float(best[0]), "h": y1 - y0}
 
 
-def _sheet(path: str, counts: list) -> tuple:
+def _sheet(path: str, counts: list, cc: tuple = ()) -> tuple:
     rgba = Image.open(path).convert("RGBA")
     solid = np.asarray(rgba)[:, :, 3] > 128
     bands = _bands(solid, len(counts))
-    return rgba, [_figures(solid, b[0], b[1], n) for b, n in zip(bands, counts)]
+    return rgba, [_figures(solid, b[0], b[1], n, i in cc) for i, (b, n) in enumerate(zip(bands, counts))]
 
 
 def _manifest(path: str) -> None:
@@ -119,6 +142,8 @@ def _manifest(path: str) -> None:
     for art, rows in man["strips"].items():
         for name, row in rows.items():
             argv = [f"{lib}/{row['sheet']}", f"{out}/{art}/{name}.png", row["counts"]]
+            if "cc" in row:
+                argv.append(f"--cc={row['cc']}")
             if "act_k" in row:
                 argv.append(f"--act_k={row['act_k']}")
             if "left" in row:
@@ -135,7 +160,8 @@ def main() -> None:
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     counts = [int(c) for c in args[2].split(",")]
     fig_h = float(opts.get("fig_h", 110))
-    rgba, bands = _sheet(args[0], counts)
+    cc = tuple(int(c) for c in opts["cc"].split(",")) if "cc" in opts else ()
+    rgba, bands = _sheet(args[0], counts, cc)
     ref_w = float(np.median([f["head_w"] for f in bands[0]]))
     k0 = fig_h / float(np.median([f["h"] for f in bands[0]]))
     items = [(rgba, f, k0) for f in bands[0]]
@@ -156,7 +182,11 @@ def main() -> None:
     out = Image.new("RGBA", (cw * len(items), ch), (0, 0, 0, 0))
     for i, (src, f, k) in enumerate(items):
         x0, y0, x1, y1 = f["box"]
-        fig = src.crop((x0, y0, x1, y1)).convert("RGBa")
+        fig = src.crop((x0, y0, x1, y1))
+        if "mask" in f:  # a --cc figure: only its own pieces
+            alpha = np.asarray(fig)[:, :, 3] * f["mask"]
+            fig.putalpha(Image.fromarray(alpha.astype(np.uint8)))
+        fig = fig.convert("RGBa")
         size = (max(1, round((x1 - x0) * k)), max(1, round((y1 - y0) * k)))
         fig = fig.resize(size, Image.LANCZOS).convert("RGBA")
         px = i * cw + round(cw / 2 - (f["ax"] - x0) * k)
