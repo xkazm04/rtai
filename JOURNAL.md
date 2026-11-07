@@ -240,3 +240,14 @@ NEXT (iteration 8):
 5. NAT-06 parity on the Linux `.so` inside WSL.
 6. End of day: delete the HKCU DirectX UserGpuPreferences value for gtai-d9x/handheld-godot/..._hh.exe and that copy;
    the freeze exe (`build/export/windows/RTAI.exe`).
+
+## Iteration 10 (12:56-13:56, BUILD)
+- Read: JOURNAL it7 + NEXT, git log -15, the other lanes' journals. **REQUEST from perf** (it5, L4): a BC7 arm on the
+  iGPU Deck row (BC7 cut the riot's peak VRAM 883 -> 554 MB on the 4090 at no frame cost; on a shared-memory handheld
+  it is RAM back, and the GPU side may move where bandwidth is scarce). Answering it first this iteration (E10).
+- 12:58 (8a37f4a9) `sim.mjs --project=<dir>`: an A/B arm can run another checkout's project (import settings differ,
+  code identical). Node tests 4/0, lint 15/15.
+- 12:58 scratch worktree `gtai-d9x/scratch/hh-bc7` (detached at 8a37f4a9, my .godot cache copied in, native bin +
+  override.cfg copied): the 712 `features/{characters,city,vehicles}/art/**/*.png.import` set to `compress/mode=2` +
+  `high_quality=true` (perf's arm), `--import` 90 s, 712 `.bptc.ctex` written, 0 errors.
+- 13:00 E10 running (bench lock): deck_bench city / city BC7 / king / king BC7, 1200 ticks, 3 interleaved rounds.
