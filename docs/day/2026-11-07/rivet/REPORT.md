@@ -83,6 +83,13 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
    or a REQUEST to assets for a 4-frame stride grid per facing (street's `ped_*_walk` shape).
 3. **Left facings with a one-handed weapon.** Built (it6): the asset lane's drawn left views at 70 and 55 (weapon
    in his right claw); two-handed holds mirror. Option: mirror everything (swaps the gun hand: against the hand rule).
+4. **Rivet's dialogue face.** Built (it10): the approved sheet's front bust in quest 1's box (still:
+   `gtai-masters\d9\rivet\rivet_dialogue_face_quest1_payphone_tilt70_32ppm_1080p_t3450.png`). Options: keep it until
+   the concept-matched `portrait_rivet_55` lands (REQUESTed; one file), or the name alone until then (drop the
+   `rivet` row in `data/tables/portraits.json`).
+5. **The flamer's flame off the side/camera octants.** Built (it10): the facing cell + the game jet from the drawn
+   nozzle (one flame). Option: the drawn flame cell in every octant (`RivetStrips.CONE` empty): a bigger drawn
+   flame, but two flames when he fires diagonally (before/after still in frames.json).
 
 ## Next steps
 See JOURNAL `NEXT:`.
