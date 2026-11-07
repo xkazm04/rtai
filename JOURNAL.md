@@ -1375,9 +1375,16 @@ Registry rules applied it33: generative-artifact-gating's gate-before-claim spir
 (a drop-in must pass the gates, not just apply); no art touched.
 
 NEXT (the Director / d9):
-1. Apply `it33/d9_city_occlusion_extra_v2.patch` (not it32's), give view a handle to the node
-   (return it from `attach`), view fills `extra` from ArenaFloorView; run mutate on city_occlusion.gd.
+1. Apply `it33/d9_city_occlusion_extra_v2.patch` (not it32's); view finds the node under actor_layer()
+   by type and fills `extra` from ArenaFloorView; run mutate on city_occlusion.gd.
 2. Land `planter_v3` 55 (it32 scratch strip + one provenance line), film `--view=tilt` 48 px/m.
 3. The release-compile temp-dir collision; ChunkSwap only if a streamed scene eases its pitch live.
-- Session end 08:15. Shipped project files unchanged since 7d40e58d; the freeze evidence, `top`
+- (08:14) Shipped project files unchanged since 7d40e58d; the freeze evidence, `top`
   framemd5, the reel and the exe (7d73de04) stand.
+- (08:15, scratch-tried, reverted) The handle for view: `attach -> CityOcclusion` + a
+  `CityView.occlusion` field passed unit but FAILED lint `debt-ratchet` (city_view.gd 259 -> 261,
+  a file already past the soft cap may not grow). Reverted with `git checkout --` on the three paths.
+  The handle needs no city change: `attach` adds the node as a child of `view.actor_layer()`
+  (city_occlusion.gd:63), so view finds it there by type (`is CityOcclusion`). v2 stands as the
+  drop-in; NEXT 1 corrected: no `attach` change. REPORT updated.
+- Session end 08:15. Tree clean after this commit; the exe (7d73de04), `top` framemd5, the reel and scenarios stand.

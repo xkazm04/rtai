@@ -136,7 +136,9 @@ path goes on the command line (a release template refuses one). Smoke-run: the f
   City's half is a verified drop-in: `gtai-n8/scratch/city/it33/d9_city_occlusion_extra_v2.patch`
   (`git apply` clean at 108d740e; a public `extra` list + a static `CityOcclusion.merge_extra` with
   its own unit case; lint 15/15 and `--select=test_city_occlusion,test_city_crowd_occlusion` 9/0
-  with it applied). View still needs a handle to the node (`attach` returns void).
+  with it applied). View's handle: the node is a child of `view.actor_layer()` (`attach` adds it
+  there), so view finds it by type; returning it from `attach` and storing it on CityView was tried
+  and fails the debt ratchet (city_view.gd 259 -> 261, past the soft cap).
 - Tooling (not city's): give `release_compile.mjs`'s staging dir a per-worktree/pid name, so
   parallel lanes' evidence runs stop colliding (EPERM).
 - 70 twins and raises as the library serves them (the traffic light 55 short pole: served and cut at iteration 27).
