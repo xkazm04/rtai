@@ -1075,3 +1075,7 @@ cone, f960 seed 2). Library: nothing new for building/prop since 0525 (all cut o
   the black kite beside the top crate (f1000, f1080); after, gone, and at f1040 the ink stays inside
   the crates. `it26_card_outline_cut_king_combo_64ppm_before_after_x3.png` (frames.json #6, the
   it22 bus stop 55 pair dropped from frames.json, kept for REPORT). 0 SCRIPT ERROR both runs.
+- EVIDENCE the crate colour (05:58), same repro, before = the trial tree with 0cb6aa27's
+  prop_cards.gd: the whole crate stack vermilion-orange from f960 on; after (55ede50c) cream like
+  the floor print. `it26_crate_print_twin_king_combo_64ppm_before_after_x3.png`, named in the it26
+  frames.json entry's note. 0 SCRIPT ERROR. Raw .avi deleted.
