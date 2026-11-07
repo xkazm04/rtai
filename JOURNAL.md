@@ -1476,3 +1476,17 @@ GATE on 299d849f: unit no-arg 1566 passed, 0 failed, no FLAKY (46 s); lint 15/15
 both commits (the atlases are art-keyed p70/p55; service_cards is loaded only by the showcase).
 REPORT: works items 9 (truck + depot van) and 10 (side redraws); does-not-work line reworded (cut,
 showcase only, truck fitted ~5.3 m); Call 9 points at the ochre van; new Call 11 (truck length).
+GATE on ccba2871 (code = 299d849f): director reel top 19/19 and tilt70 19/19 all down, 0 SCRIPT ERROR,
+exit 0 (the exit-time "resources still in use" line as in it21); scenarios 52 ran, 0 failed (vehicle
+drive CONTENDED); `top` framemd5 (--arena=city --bot=rivet --seed=2 --rigs, 300 frames) IDENTICAL to
+it21. evidence/n8-vehicles/iteration22.json. Scratch it22: raw .avi deleted.
+
+NEXT (iteration 23 = the freeze session, in order):
+1. Answer any REQUEST to vehicles; library check (new 70/55 sides or in-betweens: a fresh cut
+   compared with the committed atlas pixel-by-pixel shows what SIDE_REDO would take on sight).
+2. Freeze 08:30: re-export `windows-showcase` from HEAD (REPORT ## Exe), smoke it (Servo combo), run
+   `node tools/evidence/run.mjs --no-bench` on HEAD, set REPORT works item 11 (Gates) to the final
+   commit, finish REPORT.md by 08:40.
+3. If time before the freeze: the 55 side views of the street rows when the library draws them; the
+   truck at true length needs a per-atlas cell size in VehicleCards (Call 11), not before a sim truck.
+Session end ~07:20.

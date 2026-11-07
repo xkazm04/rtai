@@ -61,9 +61,9 @@ The view lane's REPORT.md came in with the n8-view merge; this file replaces it 
    at 70 now share the 3/4 views' steep camera (the old sides popped to a tall door band); the taxi's
    cab-yellow redraw is graded to its mustard neighbours.
    `street_side_redraws_turn360_tilt70_64ppm_before_top_after_bottom.mp4`.
-11. **Gates (it21, 7a993845, after the n8-view merge):** unit 1563/0 no FLAKY; director reel 19/19
-   all down in `top` and `tilt70`, 0 SCRIPT ERROR; lint 15/15; `top` framemd5 identical to it20;
-   scenarios 52/0 (`evidence/n8-vehicles/iteration21.json`). `tools/evidence/run.mjs --no-bench`
+11. **Gates (it22, 299d849f):** unit 1566/0 no FLAKY; director reel 19/19
+   all down in `top` and `tilt70`, 0 SCRIPT ERROR; lint 15/15; `top` framemd5 identical to it21;
+   scenarios 52/0 (`evidence/n8-vehicles/iteration22.json`). `tools/evidence/run.mjs --no-bench`
    all PASS on aa086daa (it20; parity bit-exact, selftest goldens, release-compile 566/0); the
    freeze re-runs everything on its HEAD.
 
