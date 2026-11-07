@@ -761,3 +761,25 @@ NEXT:
   with the ticket, like the cash frame's banknote end), not the memo 9-slice; or an ink drop shadow
   under the bare icon.
 - 03:34 Session end. All committed.
+
+## Iteration 11 (BUILD, 03:32-04:32)
+
+- 03:33 Read JOURNAL, git log, the lane journals (no REQUEST to hud; city's it12 note on quest 1's
+  flat street stands: it is n8-city's work, clean on merge) and the library catalog: the asset lane
+  raised the portraits overnight (rounds 2050, 0400, 0410), but the game's quest-1 faces were still
+  the 20:55 cut of round 1540 (B, eye-level camera). Worse: the in-game nurse wore the 1540 sheet's
+  VERMILION chest stripe (a colour-law break I had not caught at it1).
+- 03:45 MILESTONE 41b4692d the quest-1 cast's faces re-cut by `tools/art/portrait_cut.py` from the
+  newest sheets: gunsmith, scientist, Mertz (2050 A), dock guard v2 (0400 A), nurse v3 (0410 B, the
+  stripe muted plum in the raw sheet; camera still short). Looked: the old/new busts side by side
+  (`gtai-n8/scratch/hud/it11/portraits_old_vs_new.jpg`), then the dialogue board at 1280x800 before
+  (old busts swapped in by FILE COPY, then `--import`) / after and at 1080p close, over the tilt70
+  city frame, 0 SCRIPT ERROR all. Every emotion pair now differs at a glance. Side effect accepted:
+  Mertz's mood bust is 23 px wider, so his line fits one size down, the size the others have.
+  10 provenance lines, docs(decisions) hud/dialogue faces raised. `--select=test_hud_dialogue,
+  test_hud_art,test_story_forms,test_boss_taunt` 31/0, lint 15/15.
+- Masters: `dialogue_faces_1280x800_before_after.png` (frames.json 11; entry 15, Servo's crest,
+  dropped from the list, its file stays), `dialogue_faces_1080p_close_after.png`,
+  `hud_full_1920x1080_after.png` re-shot at HEAD (fitted panels + the new Brass).
+- Not taken: `portrait_don_fax_55_v2` (A): Don Fax is voice-only by design (the payphone frame);
+  the three DESIGN PROPOSAL raises (valet, sister suction, lady cathode) stay off the game.
