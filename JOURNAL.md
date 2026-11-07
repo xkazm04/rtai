@@ -261,3 +261,9 @@ NEXT (supersedes every NEXT above):
    re-film with the 55 left views.
 4. Every weapon at each pitch (`--loadout=<id>`), the frame cost under the bench lock, a combined 30-90 s clip.
 5. Rivet's dialogue face (a bust from rivet_70_v3 frame 0 or a REQUEST to assets), the armory showing him holding each.
+- 12:15 the it6 Servo "grey blob" (`gtai-d9/scratch/rivet/it6/servo_zoom.png`): a cream-rimmed top-down PART with a
+  claw-like silhouette, beside and over the drawn figure; the parts' sticker rim says it is a rig/weapon part, not
+  a card. Suspects for NEXT 2: Rivet's cable-claw shot / claw-strike part (a node outside the rig that
+  RivetFrames' hide list misses), or a dropped hand part. Film `--boss=servo --view=top` vs combo at the same seed
+  and frame to see what it is in top.
+- Session end 12:16: everything committed (16da537f + this note); scratch PNG sequences deleted (5.7 GB).
