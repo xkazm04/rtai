@@ -330,3 +330,32 @@ NEXT (iteration 11):
 - RESULT 14:01 E11 BC7 on `switch_handheld` (`evidence/sim/e11-bc7-switch/`, 7 of 8 CONTENDED): city private + GPU
   shared 2.26 -> 1.38 GB, render GPU -11 %; reel 1.52 -> 1.13 GB; the 30 cap holds in all. E10's ~1.3 GB inference
   measured at 1.38. LEDGER E11, the Switch-class readiness row updated.
+- MILESTONE 14:17 NEXT 3 done, live: a scratch pad walk (`gtai-d9x/scratch/padwalk/zz_pad_walk*.gd`, not committed:
+  a bare SceneTree loader that loads a Node walker at runtime, because a `-s` script cannot compile against the
+  autoloads) under `--device=deck`, pad events through `Input.parse_input_event` only: title focus Start -> A starts
+  quest 1 -> Start pauses (focus Resume) -> d-pad -> the cap's Toggle -> A: cap 30, Engine.max_fps 30, focus kept ->
+  A: 40 / 40 (`evidence/it11/padwalk-deck.log`). Looking at the first pause still: the card was keyboard-first (WASD
+  line, seven keyboard rebind rows) and the focus mark a faint outline at 7 inches.
+- MILESTONE 14:21 (955f56cb) the cards pad first on a handheld tier: the controls line from the bound pad buttons
+  (`ObjectiveHint.with_keys(..., pad)`), a 4 px ink focus border, the keyboard rebind rows hidden; LaunchArgs installs
+  the game's actions at boot under a handheld row (the title card showed `[fire]`/`[melee]` raw: the actions were only
+  installed at session start). Desktop unchanged (test: the shipped CONTROLS line, no focus override, 10 rows).
+  Stills looked at: `gtai-masters/d9/handheld/padwalk-deck-title-1280x800.png`, `padwalk-deck-pause-cap40-1280x800.png`.
+  frames.json: + the two pad stills; - the superseded 32 px/m city clip and still-king-33 (Call 2 now points at the
+  48 px/m King still); files deleted; 15 entries.
+- FRICTION 14:12-14:18 (~6 min): the gate on 80a4fce9 FAILED lint (debt ratchet) and unit ("tree changed") on my own
+  scratch file `project/dev/zz_pad_walk.gd`, created while the gate ran (unit itself 1717/0; scenarios 53/53, parity,
+  goldens 11/11 green). Rule for me: no files under `project/` while a gate runs; scratch Godot scripts go in, run,
+  and come out between gates.
+- Registry rules applied this iteration: on-device-verification-harness (drive the real input path, pad events through
+  the Input singleton on the real scene, a still per step, the log as the proof); fire-tv-device-realities (an engine
+  default is not a device default: probe it, here `ui_accept` with no pad button); perf-regression-gating (E11
+  interleaved, the arm verified to differ by its memory before its frame numbers were read, CONTENDED stated);
+  adaptive-fidelity-tiers (the pad-first card behind the handheld tier, the desktop card one condition away);
+  motion-quality-gating / generative-artifact-gating (each still looked at before it went into frames.json).
+- MILESTONE 14:29 evidence gate on 955f56cb (`--no-bench --no-release`): lint 15/15, unit 1718/0, scenarios 53/53, parity
+  bit-exact over 1200 steps (planted mutation caught at 629), look goldens 11/11: **top bit-identical** with the it11
+  code (`evidence/it11/evidence-run-955f56cb.log`).
+- 14:30 reels on 955f56cb started (headless, `--fixed-fps 60 --quit-after 14000 res://dev/arena/arena.tscn -- --bot=reel
+  --reel=director --loadout=pistol --rigs --view=<v>`, + `--device=deck` on combo; perf's command), and mutate.mjs on
+  quest1_settings_panel.gd (10 mutants, test_settings_panel_pad).

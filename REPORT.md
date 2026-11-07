@@ -47,7 +47,18 @@ priority, the CPU's own 2-CU Radeon), never a device claim. Details and sources:
   scaled 1.35x; the ghost-form panel is whole (`handheld1080-city-48ppm-drawn-16x9-t720.png`). The it7 "clipped panel"
   was the movie capture (it records 1280x800 of the 1422-wide canvas).
 - (it10) **A frame cap in the pause card on a handheld** (device / 30 / 40 / 60, saved with the settings; the desktop card
-  does not show it). Unit-tested; not yet seen on screen.
+  does not show it). (it11) **Seen on screen and walked on the pad**: see below.
+- (it11) **A pad could not press any menu button: fixed.** Godot 4.7.2's default `ui_accept` / `ui_cancel` carry no pad
+  button (probed on the engine), so on a Deck the title card's Start was focused but A did nothing. A is on `ui_accept`
+  and B on `ui_cancel` on every run now (`input_actions.json` `menu_pad`). The pause card kept losing the pad's focus on
+  each settings press (its rows rebuild): it keeps it now. Live pad walk under `--device=deck` (pad events only): A on
+  Start, Start pauses, the d-pad reaches the frame cap, A cycles it 30 -> 40 and `Engine.max_fps` follows
+  (`evidence/it11/padwalk-deck.log`). On a handheld tier the cards are pad first: the controls line names the pad's
+  buttons, a thick ink focus mark, no keyboard rebind rows (`gtai-masters/d9/handheld/padwalk-deck-pause-cap40-1280x800.png`,
+  `padwalk-deck-title-1280x800.png`, looked at). The desktop card is unchanged (tested). Call 7.
+- (it11) **BC7 on the Switch-class row** (E11, CONTENDED, bench lock): the city 2.26 -> 1.38 GB (RAM + GPU shared), the
+  reel 1.52 -> 1.13 GB, the 30 cap holds; it10's ~1.3 GB inference measured at 1.38. Part of Call 6.
+- (it11) Gates on 955f56cb: lint 15/15, unit 1718/0, scenarios 53/53, parity bit-exact (planted mutation caught at 629), look goldens 11/11: **top bit-identical** (`evidence/it11/evidence-run-955f56cb.log`); release-compile still skipped (seams' temp-dir clash).
 
 ## What does not work yet
 - Rumble on every hit Rivet takes is in (it7: the view reads his hurt tick; no sim change); its live pulse count is
@@ -60,7 +71,7 @@ priority, the CPU's own 2-CU Radeon), never a device claim. Details and sources:
    a) 48 px/m (`zoom_k` 1.5): **the default built** for every handheld row; b) 40 px/m (`zoom_k` 1.25): more street in
    view; c) 32 (as desktop). One data value in `project/data/tables/devices.json`. Desktop does not change.
    Try it: `RTAI.exe -- --arena=city --bot=course --seed=2 --rigs --view=tilt70 --device=deck`.
-2. **The ghost-form panel on a handheld** (`still-king-33.png`): it covers about a third of the width and a quarter
+2. **The ghost-form panel on a handheld** (`still-king-48ppm-real-20.png`): it covers about a third of the width and a quarter
    of the height of a 1280x800 panel, bottom-left. a) keep; b) a compact handheld panel (owed to the hud work);
    default built: a (nothing changed).
 3. **Pad prompts for a PlayStation pad on the desktop too?** Built: only under the handheld rows (the desktop keeps
@@ -81,6 +92,12 @@ priority, the CPU's own 2-CU Radeon), never a device claim. Details and sources:
    only in the handheld (Deck / Linux) build, by a build step that rewrites the imports in the export copy
    (`node tools/handheld/bc7_arm.mjs <copy>/project`, then `--import`, then export). Stills:
    `gtai-masters/d9/handheld/e10-city-deck-lossless-vs-bc7-48ppm-t720.png` and `-crop-x2`.
+
+7. **Pad buttons in the menus on the desktop too?** Built: **every run** gets A on `ui_accept` and B on `ui_cancel`
+   (without them a pad cannot press Start; no gate sends pad events, so `top`, replay and the goldens cannot move).
+   a) every run (built); b) handheld rows only (one `if` in `LaunchArgs._ready`). And on a handheld tier the pause card
+   hides the keyboard rebind rows (Steam Input remaps a Deck's pad): a) hide (built); b) keep them for a Windows handheld
+   with a keyboard attached (one condition in `Quest1SettingsPanel._build_rows`).
 
 ## Owed / next
 - (it7) The draw_scale HUD side

@@ -176,7 +176,15 @@ stick, 2/3 right stick, 4 LT, 5 RT.
   A on "Toggle" the pad had no focus left to move; the panel now restores the focus to the same slot, and a pad button
   cancels a keyboard rebind's wait. Proven in `test_settings_panel_pad` (A cycles the frame cap 0 -> 30 -> 40 and reaches
   `Engine.max_fps`, the focus stays, the d-pad moves on; planted: no restore -> both tests fail). The dialogue box needs
-  no input (its lines run on timers). Owed: the same walk on a real pad through Steam Input (no pad on this PC).
+  no input (its lines run on timers). On a handheld tier (955f56cb) the cards are pad first: the controls line is built
+  from the bound pad buttons (`ObjectiveHint.with_keys(..., pad)`: "[L-stick] move  [R-stick] aims  [RT] fires / [X]:
+  electroshock  [A]: use  [Start]: pause", relabelled for a PlayStation / Nintendo-layout pad), the focused button gets a
+  4 px ink border (the default focus outline is faint at 7 inches), and the keyboard rebind rows are hidden (Valve's
+  "no keyboard / mouse text" for Verified; a Deck remaps in Steam Input). **Live pad walk** (it11, `--device=deck`, pad
+  events through `Input.parse_input_event` only): title focus Start -> A starts quest 1 -> Start pauses (focus Resume)
+  -> d-pad up to the cap's Toggle -> A: cap 30, `Engine.max_fps` 30, the focus kept -> A: 40 / 40
+  (`evidence/it11/padwalk-deck.log`, stills `gtai-masters/d9/handheld/padwalk-deck-*.png`). Owed: the same walk on a
+  real pad through Steam Input (no pad on this PC).
 - On-screen keyboard: the game has no text entry today; nothing owed until it does.
 - Pause on focus-out: **built** behind the handheld profiles (`HandheldFocusPause`, added by `LaunchArgs` when the row's
   tier is `handheld`): `NOTIFICATION_APPLICATION_FOCUS_OUT` (the Steam overlay, a Windows handheld's shell, alt-tab)
