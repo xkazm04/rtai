@@ -75,6 +75,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--pickup-hover",
 	# n8-hud: --pickup-crate=on|off lays a floor gun's showcase drawing in an open crate (else hover)
 	"--pickup-crate",
+	# d9-perf: --perf-hud draws the frame-budget overlay (dev/perf/perf_hud.gd), read only
+	"--perf-hud",
 ]
 
 var _values: Dictionary[String, String] = {}

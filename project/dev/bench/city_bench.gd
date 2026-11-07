@@ -17,6 +17,7 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--fx-feed",
 	"--spans",
 	"--blood",
+	"--perf-hud",  # d9-perf: the live frame-budget overlay (PerfHud)
 	"--view"  # read by ViewMode.shared() (the view lab A/B); top = the default
 ]
 const VSYNC: Dictionary[String, DisplayServer.VSyncMode] = {
@@ -78,10 +79,10 @@ func _ready() -> void:
 	_characters.rivet_on_foot = _args["--scenario"] == "riot"
 	_city.body.on = _characters.rivet_on_foot  # in a car Rivet has no body (features/bodies)
 	await _characters.bake()
-	var prewarm_us: int = await _view.prewarm()
-	printerr("city_bench: prewarm %.1f ms" % (prewarm_us / 1000.0))
+	printerr("city_bench: prewarm %.1f ms" % ((await _view.prewarm()) / 1000.0))
 	add_child(world)
 	_world = world
+	PerfHud.attach(self)
 	if _args["--spans"] != "":
 		NodeSpans.attach(self, ArenaArgs.parse(["--spans=" + _args["--spans"]]))
 	_last_us = Time.get_ticks_usec()
