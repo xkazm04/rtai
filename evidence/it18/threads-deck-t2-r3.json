@@ -1,0 +1,32 @@
+{
+    "schema":  "gtai.thread-cpu/1",
+    "pid":  41876,
+    "wallMs":  12046.7,
+    "totalCores":  0.4462,
+    "groups":  [
+                   {
+                       "group":  "[Godot_v4.7.2-stable_win64.exe]",
+                       "threads":  1,
+                       "cores":  0.4397
+                   },
+                   {
+                       "group":  "[msvcrt.dll]",
+                       "threads":  1,
+                       "cores":  0.0065
+                   }
+               ],
+    "threads":  [
+                    {
+                        "tid":  30632,
+                        "name":  "",
+                        "module":  "Godot_v4.7.2-stable_win64.exe",
+                        "cores":  0.4397
+                    },
+                    {
+                        "tid":  22556,
+                        "name":  "",
+                        "module":  "msvcrt.dll",
+                        "cores":  0.0065
+                    }
+                ]
+}

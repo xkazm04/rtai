@@ -1,0 +1,3 @@
+e15-switch_handheld-t3-r1: CONTENDED (3 other Godot runs) {"frames":1199,"low1_fps":13.3740498533646,"over33_settled":740,"over50_settled":1,"p50_ms":33.3019981384277,"p99_ms":36.9199981689453,"ticks":2394,"worst_ms":487.798004150391,"worst_settled_ms":487.798004150391,"render_gpu_ms_p50":10.23,"render_gpu_ms_p95":10.72,"render_cpu_ms_p50":0.66,"render_cpu_ms_p95":1.02,"process_ms_p50":6.77,"process_ms_p95":10,"loop_ms_p50":1.91,"loop_ms_p95":2.91,"draw_calls_p50":701,"draw_calls_p95":711,"affinity_seen":[7],"cpu_machine_pct_p50":2.03,"cpu_pinned_pct_p50":10.81,"ws_mb_max":1298.5,"private_mb_max":1321,"gpu_dedicated_mb_max":81.7,"gpu_shared_mb_max":935.1}
+-> C:\Users\kazda\kiro\gtai-d9x\scratch\it18\sim-switch_handheld-t3-r1\e15-switch_handheld-t3-r1.json
+sim exit 0

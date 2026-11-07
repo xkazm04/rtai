@@ -108,9 +108,10 @@ priority, the CPU's own 2-CU Radeon), never a device claim. Details and sources:
   survivors on the gap guard (:103) now killed by a test (planted by hand -> FAIL), the other 7 equivalent.
 - (it18) **E15, who pays the CPU on a Deck row** (perf's `thread_cpu.ps1`, the city, the iGPU, bench lock, 1 run per arm):
   the engine main thread carries 0.527 of 0.534 cores at 60 Hz and 0.318 of 0.33 at 40 Hz; the worker pool and the
-  driver threads barely show. **E15b**, the control: pinned to 2 threads (1 core) the Deck row still holds 60 at the
-  median (16.66 ms) but the tail grows (5 vs 1 settled frames over 33 ms, the worst 447 vs 37 ms). So a Deck's
-  single-core speed decides a steady 60 and its other cores keep the loads off the main thread. *Estimate, not measured*:
+  driver threads barely show. **E15b**, the control (3 interleaved rounds): pinned to 2 threads (1 core) the Deck
+  row still holds 60 at the median (16.66 ms) in every round; the tail (settled frames over 33 ms: 5 / 17 / 4 on one
+  core vs 1 / 12 / 4 on four) is inside the contention noise, so my first-round "the tail grows" is withdrawn. So a
+  Deck's single-core speed decides a steady 60; whether its spare cores buy a smoother tail needs a quiet machine. *Estimate, not measured*:
   a Zen 2 core does ~1.6-2x less per thread than this Zen 4, ~0.85-1.05 of a Deck core at 60 Hz: tight; the 40 Hz row
   is the margin (`evidence/it18/`, LEDGER E15 / E15b; both CONTENDED or single runs, labelled).
 
