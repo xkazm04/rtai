@@ -29,7 +29,7 @@ export const RERUN_JUNIT = 'unit-tests.rerun.junit.xml';
 
 export class UsageError extends Error {}
 
-const godot = (name, args) => runGodot(args, { name });
+const godot = (name, args, opts = {}) => runGodot(args, { name, ...opts });
 
 /** argv -> {select, test, changed (false | true | ref), all, fast}; unknown args throw UsageError. */
 export function parseArgs(argv) {
@@ -127,7 +127,8 @@ export async function runUnit(outDir, opts = {}) {
     return { ok: true, counts: NONE, summary: `unit-tests: ${plan.notes.at(-1)}; 0 passed, 0 failed, 0 skipped`,
       artifacts: [], notes: plan.notes, digest: [], slowest: [], ran: 0 };
   }
-  const probe = await godot('version', ['--version']);
+  // ensure: false - the explicit --import step below refreshes the cache; letting the probe do it too ran two imports
+  const probe = await godot('version', ['--version'], { ensure: false });
   if (probe.status !== 0) {
     const summary = `unit-tests: ${probe.out.split('\n')[0]}; 0 passed, 0 failed, 0 skipped`;
     return { ok: false, counts: { ...NONE }, summary, artifacts: [], notes: plan.notes, digest: [], slowest: [] };
