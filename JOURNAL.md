@@ -1030,3 +1030,27 @@ NEXT (supersedes it12's):
   plasma sword) at the 240 px cap span the paper and read; the names clear the icons. Replaces
   `gtai-masters/n8/hud/hud_tickets_all_weapons_1920x1080_contact.png` (it12's was before the cap).
   NEXT's "1080p ticket contact" item is done. Session end: all committed.
+
+## Iteration 16 (2026-11-07 05:42, BUILD)
+Read: JOURNAL (it13 NEXT; it14/it15 left no entry), git log, the four lane journals (no new
+REQUEST to hud; view's it14 answered vehicles' bay-number ink), the catalog since 0505: no raise
+for hud's ids (sister_suction v3, lady_cathode v3 are proposals; rivet_eq_* is the equipped form,
+frozen tonight).
+- MILESTONE 9e2b05cc the ghost chip faces (GhostChipFace): each chip on the ghost-form card shows
+  that ghost's own drawn face, frame 0 of its approved p55 card strip cut to an 84 px disc
+  (`tools/art/ghost_chip_cut.py`), at 0.92 of the chip's radius, instead of the D5 ink glyphs (the
+  last learned-symbol piece on the HUD). The current form keeps its teal ring + size; the cooldown
+  pie sweeps over the face. Looked: armory tilt70 32 and 48 (seed 1, f89; diff only the chips'
+  box), the Tonnage morph via `forms_lineup.gd --morph` under --write-movie (teal ring at f60, the
+  sweep at f150/f190), inset 0.84 vs 0.92 (0.84 faces ~44 px: too small). 0 SCRIPT ERROR each.
+  Masters `ghost_chip_faces_tilt70_{32,48}_before_after_x2.png`, `ghost_chip_faces_morph_cooldown_x2.png`;
+  frames.json entry 11 (replaces the it11 paper pair). 4 derived provenance lines.
+- FRICTION (mine): python's text-mode write turned ghost_form_hud.gd CRLF (git warned); sed'd back
+  to LF before staging. The debt ratchet held the card file at 200 lines: the header rewrapped.
+- DECISION (docs/decisions.md hud/ghost chip faces): faces over glyphs; one HUD icon in every view
+  (screen space, like the weapon icon cut); FACES false = the glyph card.
+Registry rules applied it16: `sprite-and-atlas-production` (cut by a re-runnable tool from the
+shipped strip, sized to 1:1 at 1080p, no hand edits), `generative-artifact-gating` (only owner-
+approved art in the game; provenance carried to the derived file), `accessibility` (a face reads
+without learning a symbol; the current form keeps two cues, colour and size), `motion-quality-
+gating` (the sweep and the ring judged across the morph, not one still).
