@@ -1149,3 +1149,4 @@ cream stage van roof at 32 px/m). street, hud: no new REQUEST to view.
   Also filmed n8-view ALONE quest 1 13700 tilt70 48 px/m: the contractors draw as flat top-down
   hi-vis sprites until street's cards merge (`quest1_dock9_guards_cast_n8view_alone_*_crop.png`).
   frames.json: the Dock 9 contractors pair in at #5; servo_combo_art_key out (file stays).
+- CORRECTION 05:51: Mertz was never on a rig in quest 1 (ArenaRigs skips the quest's BOSS; CastView draws him): QuestGuardCast leaves him as he was. The decision line now says so; the 105961e2 message's "Mertz ... keep their rigs" is loose wording.
