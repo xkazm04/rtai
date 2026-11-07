@@ -1086,3 +1086,15 @@ top) read dark rust-red at 3x. Measure their colour graded against "no red tail 
 blood-red rule, not the vermilion gate): if they read red, turn the unlit lens toward amber-brown
 in the cutter (a LAMP_DEG-style turn on the dark lenses), re-cut, film seed 13 f180 again.
 Session end 04:20.
+
+## Iteration 18 (04:20, BUILD)
+Read: JOURNAL, git log, the lane journals. view landed my it16 REQUEST (73a78455, bay apron marks over
+the vehicles band under a card view). city's VehicleParked.live REQUEST was answered in it2 (ee045433);
+no new REQUEST to vehicles.
+MILESTONE 5b350580 merge n8-view (JOURNAL.md ours; view's REPORT.md comes along at the repo root:
+mine replaces it at 08:40, so the Director takes view's from n8-view). lint 15/15, debt ok.
+FILMED Servo depot on the merge (`res://dev/arena/arena.tscn -- --boss=servo --bot=boss
+--servo-ghost=dent --view=combo --ppm=<32|64> --rigs --seed=2`, 300 fixed-fps frames, 0 SCRIPT ERROR
+both): bay 3's box and number draw over the stage van at 32 (f130) and 64 (f120). Looked.
+Masters: servo_bay3_mark_over_van_combo_64ppm_f120_before_left_after_right.png (before = it16's
+"on" half), servo_bay3_mark_over_van_combo_32ppm_f130_after_crop2x.png. NEXT 1 closed.
