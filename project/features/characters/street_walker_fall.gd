@@ -89,7 +89,15 @@ const OCT: StringName = &"street_fall_oct"
 ## The fall grid the person draws now, as "<art>/<file>" ("" = none: alive, the row has none in
 ## the art or its FALLBACK, or DRAWN off).
 static func grid_of(rig: CutRig, art: String, row: String) -> String:
-	if not DRAWN or not down(rig):
+	if not down(rig):
+		return ""
+	return path_of(art, row)
+
+
+## The fall grid a row draws in an art once down, as "<art>/<file>" ("" = none or DRAWN off);
+## StreetStrips prefetches it while the person still stands.
+static func path_of(art: String, row: String) -> String:
+	if not DRAWN:
 		return ""
 	var own: Dictionary = table().get(art, {})
 	var from: String = art if own.has(row) else FALLBACK

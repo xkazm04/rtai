@@ -4,6 +4,7 @@ extends Node
 
 const KNOWN_FLAGS: PackedStringArray = [
 	"--seed",
+	"--strip-prefetch",
 	"--replay",
 	"--record",
 	"--devtools",

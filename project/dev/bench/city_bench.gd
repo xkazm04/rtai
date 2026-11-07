@@ -4,8 +4,7 @@ extends Node
 ## only) or as an exported build (windowed, vsync off, uncapped). Writes gtai.bench/1 JSON.
 ## Usage: <godot|exe> [--headless --fixed-fps 60] [--path project] res://dev/bench/city_bench.tscn
 ##        -- --scenario=drive|riot --secs=60 --zoom=0.4 --out=<json path> [--fx-feed=off]
-##        [--blood=noir|ink] [--spans=<json>] (perf-city: NodeSpans' per-node cost, slows
-##        the frame: profile only)
+##        [--blood=noir|ink] [--spans=<json>] (NodeSpans' per-node cost: profile only)
 
 const KNOWN_FLAGS: PackedStringArray = [
 	"--scenario",
@@ -17,7 +16,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--fx-feed",
 	"--spans",
 	"--blood",
-	"--perf-hud",  # d9-perf: the live frame-budget overlay (PerfHud)
+	"--perf-hud",  # d9-perf: PerfHud; --strip-prefetch=off: L3's before (A/B)
+	"--strip-prefetch",
 	"--view"  # read by ViewMode.shared() (the view lab A/B); top = the default
 ]
 const VSYNC: Dictionary[String, DisplayServer.VSyncMode] = {
