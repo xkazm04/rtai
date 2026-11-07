@@ -93,6 +93,13 @@ under `evidence/n8-view/`. Full log: `JOURNAL.md`.
   0.30 ms; draw calls 252-253 vs 255; rig p50 0.43-0.45 vs 0.52 ms; King fight wall p50 top 4.64 /
   4.41, combo 3.16 / 2.94 ms, p99 8.4-8.9 vs 6.8. The drive's wall frame times paced at ~16.7 ms in
   both views (a 3 / 30 ms present alternation on the shared desktop): not a verdict.
+- **it17 at the freeze HEAD** (code e369f4b0, 07:58-08:03, under bench.lock, the quietest take of the
+  night: one other Godot console up at the start, two at the end, so still CONTENDED;
+  `evidence/n8-view/bench-it17/`): drive render CPU top 0.29 / 0.29, combo 0.29 / 0.29 ms; draw calls
+  252 vs 255; rig p50 0.43 vs 0.52 ms (p99 1.06 vs 1.05-1.25); King fight wall p50 top 4.23 / 3.76,
+  combo 2.89 / 2.94 ms, p99 8.0 / 7.3 vs 6.3 / 6.4, worst settled 10.5-13.8 ms in both. **Verdict:
+  combo costs ~+0.09 ms rig time and +3 draw calls on the drive (render CPU flat), and is cheaper
+  than top in the King fight**; the same answer in four takes (it5, it11, it16, it17).
 
 ## What does not work / not done
 - Servo has no p70 PART sheet (the parts are top views); p70 uses the p55 parts. Servo is a boss
@@ -218,7 +225,8 @@ Try: `RTAI.exe -- --rigs --boss=king --phase=3 --view=combo [--ppm=64]`, `RTAI.e
 4. Re-take the frame cost on an idle machine (every take tonight was CONTENDED by the other lanes).
 5. Make `BossCam` the boss fight's camera (today behind `--boss-cam`) so the King's bust never rams
    under hud's banner, with its band read from `BossBar` (bar + paper + crest) after the merge.
-6. The crowd's dead behind the arena's kerb barriers (it17 FOUND): view + city choose the seam
-   (the arena's `wall_high` props as `CityOccluders` entries, or the crowd snapshot in PropOcclusion,
-   which then also wants the lying-rig patch tried it17); film the city block at tilt70 seed 5 tick
-   900 before/after.
+6. The crowd's dead behind the arena's kerb barriers (it17 FOUND; city confirmed it in their it31):
+   the agreed d9 seam is an `extra` occluder list on city's `CityOcclusion` that the arena fills
+   (each tall prop's ground rect + its lift at the live pitch, from `ArenaFloorView`), merged into
+   `CityCrowdOcclusion.patches` so its existing lying box (0.9 m) serves both. View fills the list;
+   city merges it. Film the city block at tilt70 seed 5 tick 900 before/after.

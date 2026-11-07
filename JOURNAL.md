@@ -1470,3 +1470,17 @@ NEXT (iteration 17, the freeze at 08:30):
   holds on the merge), vehicles' p55 depot van parked in bay 3 over its floor number, the inked
   bay numbers 1-4. Masters `king_merged_it17_freeze_heads_combo_32ppm_seed2_t1150.png`,
   `servo_merged_it17_freeze_heads_combo_32ppm_seed2_t900.png`. Nothing view-owned misplaced.
+- READ 07:59 city's it31 ANSWER to the 07:55 NOTE: same cause (CityCrowdOcclusion's only occluders
+  are the streamed buildings); d9 design: an `extra` occluder list on CityOcclusion that the arena
+  fills (ground rect + the 3.0 m lift at the live pitch), merged into `patches`, reusing its lying
+  box. Agreed: view fills the list from `ArenaFloorView`, city merges it. REPORT Next steps 6.
+- MEASURE 07:58-08:03 frame cost at the freeze HEAD (code e369f4b0) under bench.lock (taken
+  noclobber, released by `scratch/view/bench17.sh`), the quietest machine of the night (one other
+  Godot console at the start, two at the end: CONTENDED, lightly). `evidence/n8-view/bench-it17/`,
+  summarised by `scratch/view/bsum.py`. Drive (release `windows-bench`, drive_dense 48 px/m, 30 s,
+  top/combo x2): render CPU 0.293 / 0.285 vs 0.291 / 0.289 ms; draws 252 vs 255; rig p50 0.431 /
+  0.428 vs 0.521 / 0.520 ms; wall avg 16.67-16.68 in all four (presentation pacing, not a verdict).
+  King fight (editor, seed 2, 1500 ticks, vsync off): wall p50 top 4.23 / 3.76 vs combo 2.89 / 2.94,
+  p99 8.03 / 7.26 vs 6.34 / 6.44, draws p50 498 vs 670, render CPU p50 0.46 / 0.35 vs 0.34 / 0.35.
+  Same verdict as it5/it11/it16: combo ~+0.09 ms rig on the drive, cheaper than top in the King
+  fight. REPORT Frame cost updated.
