@@ -505,3 +505,16 @@ combo/tilt70.
   by a luma ramp (ink under luma 45 kept). Evidence `kerf70_amber_rings_before_after_cards_and_64ppm.png`
   (cards + in game at 64 px/m, tilt70, the amber joint reads). No provenance line: the same served
   sheet as it5's line, retoned.
+- MILESTONE 01:00 item 8, the King fight's frame cost, combo vs top (under bench.lock, taken 00:57,
+  released by the script; editor binary (debug), dev arena: a release export drops dev/arena, so
+  this is NOT a release number). `--boss=king --bot=boss --seed=2 --rigs --view=<v> --disable-vsync
+  --resolution 1920x1080 --frames=<json> --frames-ticks=1500`, top/combo alternated x2
+  (`evidence/n8-view/bench-it8-king/`):
+  top p50 5.87 / 5.93 ms, p99 12.6 / 12.5; combo p50 19.3 / 21.3 ms, p99 29.5 / 30.9, low 1 % 31 fps.
+  FOUND: combo's frame was 3.3x top's, all in script `_process` (11.5 ms vs 0.5). `--spans`:
+  `view_pitch_ease.gd` 6.45 ms mean per frame (0 under top). Cause: `RigHeadCard.rows_of(art)` was
+  uncached (a `ResourceLoader.exists` per card row + the RigCardSets merge) and
+  `ViewPitchCourt.dress` calls it per court strip per card per frame. Fix (commit after a5500f67):
+  cache rows_of per art folder (pure in the folder: strips and RigCardSets load once). Spans after:
+  ease 0.60 ms; the rest of combo's extra is the tilt itself (arena_floor_view draw 2.6 vs 0.84 ms,
+  prop_occlusion 1.25 ms). Unit (rig_head_card, view_pitch, card sets, king art) 40/0.
