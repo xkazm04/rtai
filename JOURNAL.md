@@ -918,3 +918,30 @@ facing-0 fill), concept-scene-parity + motion-quality-gating (same scenario, see
 and after, the props located by a frame diff, judged at 32 and 48 px/m), depth-ordered-layered-art
 (the new cards ride the existing roofs band by south edge), render-submission-economy (two more
 card kinds, one textured rect each, no new pass).
+- MILESTONE f07b348e the bench's 55 strip from bench_v5 (A: v3's views 2-4 exactly, views 1/5
+  redrawn so the seat reads as a plane; dark iron as the 70). Same cell, 1 provenance line. Looked
+  at the 55 v3 | v5 | 70 strips side by side (scratch lib22/bench_cmp.jpg); not filmed.
+- GATE director reel at tilt70 on 0a96d574 (`--fixed-fps 60 --quit-after 7600 res://dev/arena/arena.tscn
+  -- --bot=reel --reel=director --loadout=pistol --rigs --view=tilt70`, headless): 19/19 chapters
+  down, 0 SCRIPT ERROR (`evidence/director-reel-it22-tilt70.log`). Unit full no-arg 1523/0 at
+  196e0722. Scenarios `run_scenarios.gd` 52 ran, 0 failed (vehicle drive CONTENDED by the runner).
+- MILESTONE 83c77181 REPORT.md draft (what works with evidence, gaps, Calls, next); the freeze
+  session fills the exe and the final gates. DECISIONs in docs/decisions.md (one design per prop
+  across the pitches; kerb sign and bollard cards).
+- FOUND (04:29) the library's facade v2 sheets (0525 round: facade_kit_v2 70 A / 55 B, facade_shop_v2
+  70 A / 55 A, facade_tall_v2 55 A, facade_tall_v3 70): exact redraws of the untapered keys with raw
+  rectangular roofs and muted brick (kit 70 redcheck 434 -> 24 px). NOT cut this session:
+  `city_facade_cut.py` holds hand-measured bay boxes and wall bands per sheet (STYLES /
+  STYLES_70), so each sheet needs its boxes re-measured and the strip looked at bay by bay.
+- Also new: roof_dressing_v4 55/70 (it19 DECISION stands: the baked roofs paint their dressing).
+
+NEXT (iteration 23, in order):
+1. The facade v2 sheets: measure each sheet's three wall-bay boxes and band (alpha runs on the top
+   row, as the 55/70 originals), add them to STYLES / STYLES_70 pointing at the v2 files, cut, look
+   at old | new strips side by side, film the facade drive at tilt70 32 px/m and `tilt` 48 px/m
+   before/after (`git show <rev>:<png> | git lfs smudge` for a before, or a throwaway worktree).
+   kit 55 is B: the bottom-row roof lips bow; we cut only the top-row walls, so it does not apply.
+2. Film the bench v5 under `tilt` (facade drive, 48 px/m) if a bench is in frame.
+3. Freeze items (08:30): evidence --no-bench, `top` framemd5, the exe export (int-day recipe),
+   REPORT final (head, exe command lines).
+- Session end ~04:40. Head = this JOURNAL commit.

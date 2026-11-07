@@ -36,12 +36,14 @@ head commit. Branch `n8-city`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n8\ci
    ~3.3x to record but the time slice spreads it over ~3 frames (per-frame streaming p99 2.27 ->
    2.62 ms). `evidence/drive-cost-it11.json`, `evidence/chunk-cost-it10.json`.
 
-## Gates (iteration 22, head 196e0722 + this draft)
+## Gates (iteration 22, head f07b348e)
 
 - `top` bit-identical: `--arena=city --bot=rivet --seed=2 --rigs --quit-after 301` framemd5 identical
   to the it19 baseline (617 lines), 0 SCRIPT ERROR.
 - lint 15/15; unit (full no-arg) 1523 passed, 0 failed.
-- Director reel at tilt70 and scenarios: see JOURNAL iteration 22 (run at 04:30).
+- Director reel at tilt70 (`--bot=reel --reel=director --loadout=pistol --rigs --view=tilt70`, 7600
+  frames headless): 19/19 chapters down, 0 SCRIPT ERROR (`evidence/director-reel-it22-tilt70.log`).
+- Scenarios: 52 ran, 0 failed (vehicle drive timing CONTENDED, labelled by the runner).
 - Last `evidence/run.mjs --no-bench`: PASS at 7b63bcb1 (iteration 19). FREEZE: re-run.
 
 ## What does not work / gaps
@@ -74,5 +76,8 @@ put the exact command lines here.
 
 ## Next steps
 
+- The facade v2 sheets (library 0525: exact redraws with raw rectangular roofs and muted brick,
+  70 kit/shop A, 55 shop/tall A, 55 kit B) are not cut yet: `city_facade_cut.py` holds hand-measured
+  bay boxes per sheet, so they need re-measuring.
 - 70 twins and raises as the library serves them (traffic light 55 with a shorter pole).
 - Occlude the baked crowd; a drawn shadow for the kerb sign.
