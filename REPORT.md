@@ -1,7 +1,7 @@
-# n8 street: the street cast under the angled view (REPORT, DRAFT at iteration 13)
+# n8 street: the street cast under the angled view (REPORT, freeze at iteration 14)
 
-DRAFT: written 05:20, updated 06:25 (it12) and 07:05 (it13) so the freeze has a base. The freeze iteration (08:30) completes the gates,
-the exe command lines and the final evidence numbers. Lane journal: `JOURNAL.md`. Stills and clips:
+Written 05:20, updated 06:25 (it12), 07:05 (it13) and at the freeze (it14, 07:55): the gates, the exe
+and its command lines below are on the final code. Lane journal: `JOURNAL.md`. Stills and clips:
 `C:\Users\kazda\kiro\gtai-masters\n8\street\` (`frames.json`, 15 entries, best first;
 the combined clip `street_combined_tilt70_50s.mp4`).
 
@@ -23,6 +23,15 @@ selected by the view row's art key (`p70` / `p55`) or `cards`, never by a pitch.
   still figures cut from the 55 sheets (no 55 walk strips), bobbing; mild crowd variety (scale
   +-8 %, value +-7 %).
   `peds_walkers_tilt70_64ppm_board_t120.png`.
+- (it14) **The suit and cap peds wear their v3 look as one set** (still, walk, fall): the library's
+  ped_suit_70_v3 / ped_cap_70_v3 (A) with the walks redrawn on my REQUEST (ped_suit_walk_70_v4,
+  ped_cap_walk_70_v2, A). Before, a dark charcoal suit fell into a lighter grey corpse; now one
+  warm-grey suit. The cap ped wears an oatmeal hoodie under a near-black cap; his fall grids are
+  toned to it (`tools/art/street_value_match.py`, no v3 fall drawn yet). At 32 px/m the crowd's
+  value spread widens (the cap peds read as light figures under dark caps).
+  `peds_suit_cap_v3_before_after_tilt70_32ppm_kill_light_t59_240.png` (masters, frames.json #2),
+  close-ups `ped_suit_v3_identity_before_after_tilt70_64ppm_kill_light_t59_72_240.png`,
+  `ped_cap_v3_identity_before_after_tilt70_64ppm_kill_light_t59_68_72_240.png`.
 - **Contractors** (quest 1 dock): standing cards and drawn corpses at both pitches, one body
   length at every pitch. `contractor_drawn_corpse_before_after_tilt70_48ppm_x2_quest1_dock9.png`.
 - **Hit reactions and deaths at height**: cops, riot, SWAT, thug and peds buckle, fall and lie as
@@ -57,6 +66,10 @@ selected by the view row's art key (`p70` / `p55`) or `cards`, never by a pitch.
   spawns them in the game tonight, so there is nothing to judge in motion.
 - **City cops still glide** on head cards over parts (only quest 1's patrol cops use the walk
   grid). Scouted for it12: walk while no gun is out, the parts when it comes out (a pop to judge).
+- **Falls a touch lighter than walks** for the jogger, the worker and the hood (cloth median value
+  +0.07-0.13 measured, it14). At 32 px/m each reads as the same person; a value tone was tried on
+  the jogger and rejected (it speckles the leggings). The cap's fall carries a tone in place of a
+  drawn v3 fall (REQUEST to assets: ped_cap_fall_70_v3).
 - The city seed-5 corpse "black bar" was the blood's head mark (view, it12), fixed on n8-view.
 
 ## Calls for the owner
@@ -80,17 +93,40 @@ selected by the view row's art key (`p70` / `p55`) or `cards`, never by a pitch.
    `quest1_dock9_corpse_decay_before_after_combo_32ppm_t15000.png`. `top` keeps every corpse
    (its sprite path is untouched); the same law in quest 1's sim would be the quest's call.
 
-Exe command lines: (freeze) `RTAI.exe --arena=city --rigs --view=tilt70`, quest 1
-`RTAI.exe --view=tilt70`, the boss fights `--boss=king --view=combo`.
+8. **The cap ped's fall** (it14): toned to the v3 oatmeal hoodie (BUILT) vs a drawn v3 fall
+   (REQUESTed, not served before the freeze); before = the six p70 files at e87ed678.
+   `ped_cap_v3_identity_before_after_tilt70_64ppm_kill_light_t59_68_72_240.png`.
+
+Exe (`build/export/windows/RTAI.exe`, exported 07:47 from 2de46fa1, the final code; built with
+`APPDATA=C:/Users/kazda/kiro/gtai-n8/appdata/street "$GODOT_BIN" --headless --path project
+--export-release windows-showcase ../build/export/windows/RTAI.exe`). Smoke-tested: the city at
+tilt70 32 px/m seed 5 draws the same frame as the editor at tick 540
+(`evidence/exe_vs_editor_city_tilt70_32ppm_seed5_t540_x2.png`). Command lines:
+- the city block, play pitch: `RTAI.exe -- --arena=city --rigs --view=tilt70`
+- the same at close range: `RTAI.exe -- --arena=city --rigs --view=tilt70 --ppm=48`
+- a boss fight under combo: `RTAI.exe -- --boss=king --rigs --view=combo`
+- the director reel: `RTAI.exe -- --bot=reel --reel=director --loadout=pistol --rigs --view=tilt70`
+- `top` (unchanged): drop `--view`.
 
 ## Gates
 
-it13: `node tools/evidence/run.mjs --no-bench` on 6a4d0679 ALL PASS (lint 15/15, unit 1529/0,
-scenarios 52, parity with the planted mutation caught, selftest look goldens 11/11 and block 5/5,
-export-audit 561/0); director reel `top` 19/19 and `combo` 19/19 all down, 0 SCRIPT ERROR (on
-49b57ffb); `tilt70` 19/19 on it12's code. (freeze: re-run if code changes) lint, unit, scenarios, `node tools/evidence/run.mjs --no-bench`, the director reel under
-`top`, `tilt70` and `combo`.
+Freeze (it14), on the final code 2de46fa1 (the later commits are docs and evidence only):
+`node tools/evidence/run.mjs --no-bench` ALL PASS (07:39-07:46, tree clean): lint 15/15, unit
+1529/0, scenarios 52, parity native == GDScript 1200 steps (planted mutation caught at step 629),
+selftest (look goldens 11/11 worst 0.27, block goldens 5/5 worst 0.22, no new off-doctrine accents),
+export-audit 561 loaded / 0 failed. Director reel (headless, `--fixed-fps 60 --quit-after 14000
+res://dev/arena/arena.tscn -- --bot=reel --reel=director --loadout=pistol --rigs --view=<v>`):
+`top` 19/19, `tilt70` 19/19, `combo` 19/19 chapters, every chapter all down, 0 SCRIPT ERROR (exit
+0). `top` stays bit-identical (look goldens). Bench: not re-run at the freeze (it10's CONTENDED
+numbers above stand; tonight's changes are texture swaps of the same size).
 
 ## Next steps
 
-(freeze)
+1. Cut `ped_cap_fall_70_v3` when assets serve it (`street_fall.py --back-from-away`) and retire the
+   cap fall tone.
+2. City cops still glide on head cards over parts: every city cop is armed from tick 60, so a
+   walk grid needs armed walk strips (REQUEST them, or a pose-held whole figure per weapon).
+3. SWAT's p70 camera-facing long corpse is a touch short (1.43x): a library redraw.
+4. Kronk's cultists and Torque's gang: cards and falls are ready to cut the day they spawn.
+5. Rivet's whole-figure frames (the owner's triage) will change how a cop or ped stands next to
+   him: re-judge the street cast's scale beside the final Rivet.

@@ -1418,3 +1418,31 @@ done for the night (no runner).
   board, same deterministic ticks, before = the six files at e87ed678 restored), motion-quality-
   gating (identity judged across stand -> buckle -> lie, t59-240), render-submission-economy (a
   texture swap: same strip sizes per cell, no new draw).
+- GATE evidence `node tools/evidence/run.mjs --no-bench` on the clean 2de46fa1 (07:39-07:46, full
+  log scratch/street/evidence-it14.log): ALL PASS: lint 15/15, unit 1529/0, scenarios 52, parity
+  (mutation caught at 629), selftest (look goldens 11/11 worst 0.27, block 5/5 worst 0.22),
+  export-audit 561/0.
+- GATE director reel on 2de46fa1 (the it1 command, headless, run alongside the evidence run):
+  `tilt70`, `combo`, `top` each 19/19 chapters, every chapter all down, 0 SCRIPT ERROR, exit 0.
+- EXPORT (07:47): `APPDATA=.../appdata/street "$GODOT_BIN" --headless --path project
+  --export-release windows-showcase ../build/export/windows/RTAI.exe` exit 0 (RTAI.exe 290 MB +
+  gtai_sim release dll). SMOKE: `RTAI.exe --rendering-driver d3d12 --quit-after 600 --write-movie
+  ... -- --arena=city --rigs --view=tilt70 --ppm=32 --seed=5` exit 0, then the same in the editor:
+  LOOKED t540 side by side, the same frame (tilt70 head cards; Rivet's swing a tick apart).
+  The exe log ends in the usual exit-leak lines (693 ObjectDB, 114 resources at exit), no
+  SCRIPT ERROR. evidence/exe_vs_editor_city_tilt70_32ppm_seed5_t540_x2.png. Raw .avi deleted.
+- MEASURED (it13's "falls a touch lighter"): cloth median value walk -> long fall: suit 0.40 -> 0.38
+  and cap 0.47 -> 0.47 (matched now); jogger 0.31 -> 0.42, worker 0.32 -> 0.45, hood 0.51 -> 0.59,
+  hat 0.65 -> 0.72 (part pose: a lying body shows more lit back and less shadow). TRIED, REJECTED:
+  street_value_match.py on the jogger's fall (sat 0.25 / 0.35): at the shipped cell size her
+  leggings already read as the walk's charcoal; the tight cut speckles them. Not committed.
+- REPORT final (freeze): it14 swap, call 8 (cap fall tone), the exe and its command lines, gates,
+  next steps.
+NEXT (after the freeze; for a later night or the Director's merge):
+1. When assets serve ped_cap_fall_70_v3: `street_fall.py <keyed> project/features/characters/art/
+   view/p70/ped_cap_long_fall.png --back-from-away` (and the short grid from its v1-layout twin if
+   one comes), drop the tone, film the `--kill=light` board at 32/64 px/m.
+2. City cops: armed walk strips (REQUEST) before any walk grid can show in the city.
+3. SWAT p70 front corpse 1.43x short (library redraw); cultists / Torque's gang when they spawn.
+- Session end (it14): commits 739803bb (suit v3), 983bf079 (cap v3 + street_value_match.py),
+  2de46fa1 (docs), + this freeze commit. Tree clean after it.
