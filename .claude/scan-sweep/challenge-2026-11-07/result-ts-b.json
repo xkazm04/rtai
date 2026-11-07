@@ -1,0 +1,33 @@
+{
+  "card": "ts-b",
+  "status": "landed",
+  "shas": [
+    "500c2a69",
+    "e8284cbd"
+  ],
+  "tests_added": 14,
+  "cases_red_before": 13,
+  "cases_green_after": 14,
+  "guard_cases": [
+    "GUARD: changed=[project/core/clock/sim_loop.gd], test reaching SimLoop through a one-hop dependent -> REACHED by project/core/clock/sim_loop.gd with the chain",
+    "GUARD: two hops past the one-hop index -> UNMAPPED: the map is not exhaustive (with the walked chain), never UNREACHED",
+    "GUARD: a change that maps FULL (autoload, tests/support, project.godot) -> FULL: <reason>, never UNREACHED",
+    "GUARD: a change outside project/ (native/, tools/) -> UNMAPPED, never UNREACHED",
+    "GUARD: a walk that meets an autoload reaches every test -> UNMAPPED with the autoload chain (written after the fix, not watched red)"
+  ],
+  "gates": {
+    "node-test": 0,
+    "lint": 0,
+    "unit": 0
+  },
+  "files_changed": 6,
+  "lines_changed": 512,
+  "deviations_from_card": "AGENTS.md not edited (coordinator-owned; the line is in shared_lines). triage.mjs has its own bounded breadth-first referrer walk over the reach index data (reach.refs/names/autoloadOf) for the case reachOf's one hop cannot see. It is the only way to say UNREACHED honestly without editing reach_index.mjs, which is outside the write set. reachOf + formatChain still give every REACHED verdict and every chain. Verdicts beyond the card: FULL: <reason>; UNMAPPED (outside project/, a test not in the index, a chain past one hop, a walk capped at 2000 files, or an autoload on the walk); NO DIFF when nothing changed. flakes in the JSON is {count,last,lanes}. --failed refuses to combine with --select/--test/--changed (exit 2) and passes --test= only when every failure shares one name (GUT unit_test_name is one substring). UsageError has name 'Error', so the new parseArgs test checks instanceof.",
+  "shared_lines": {
+    "AGENTS.md": "| `node tools/tests/run_unit.mjs --failed` | | re-runs only the files that failed in the previous `build/test-results/unit-tests.junit.xml` (exit 2 if there is none). Every red run prints one triage block per failure (cause lines from junit + the ERROR/at:/frame under that test in the log; verdict REACHED by <path> / FULL / UNMAPPED: the map is not exhaustive / UNREACHED (only after an exhaustive referrer walk) / PARSE <file:line>; flake history; paste-ready rerun) and writes `build/test-results/unit-triage.json` (`gtai.unit-triage/1`): read that instead of grepping the log |",
+    "justfile": "",
+    "docs/decisions.md": "- [2026-11-07] DECISION test-suite: run_unit triage says UNREACHED (\"suspect the base or the machine\") only after a breadth-first walk over every file that names or res://-references a changed file ran dry; a chain past reachOf's one hop, an autoload on the walk, a path outside project/, or a capped walk prints UNMAPPED: the map is not exhaustive. Rejected: calling everything reachOf misses UNREACHED (wrong for multi-hop tests, the critic's guard), and re-running at the merge-base (`--base`, ~40 s import per use; kept as the follow-up)."
+  },
+  "real_tree_output": "(1) throwaway test_zz_triage_probe.gd (push_error + assert_eq(1,2)), node tools/tests/run_unit.mjs --select=test_zz_triage_probe:\nunit-tests: gut exit 1; gut rerun exit 1; 1 failing (0 passed, 1 failed, 0 skipped)\n  FAIL res://tests/unit/test_zz_triage_probe.gd:6 test_triage_probe_fails - [1] expected to equal [2]:  throwaway probe: must fail\n    cause: ERROR: triage probe: a planted engine error\n    cause: at: push_error (core/variant/variant_utility.cpp:1023)\n    cause: [0] test_triage_probe_fails (res://tests/unit/test_zz_triage_probe.gd:5)\n    verdict: REACHED by project/tests/unit/test_zz_triage_probe.gd\n      via tests/unit/test_zz_triage_probe.gd (is the change)\n    rerun: node tools/tests/run_unit.mjs --select=test_zz_triage_probe --test=test_triage_probe_fails\ntriage: build/test-results/unit-triage.json; re-run just the failures: node tools/tests/run_unit.mjs --failed\n(2) then node tools/tests/run_unit.mjs --failed --no-rerun: 'note: --failed: 1 test(s) in 1 file(s) from the previous run' and the same block.\n(3) first probe draft did not parse (an untyped assert_eq arg, warning-as-error): 'unit-tests: gut reported script errors; zero tests ran' + verdict 'PARSE res://tests/unit/test_zz_triage_probe.gd:8 does not parse (GUT skips such a file silently; every test in it is unrun)', rerun --select=test_zz_triage_probe.\n(4) verdictOf on the real index: sim_loop.gd vs test_arena_hooks -> 'REACHED by project/core/clock/sim_loop.gd | core/clock/sim_loop.gd <- boot/world.gd (names SimLoop) <- tests/unit/test_arena_hooks.gd (names World)'; sim_loop.gd vs test_save_slots -> UNREACHED after an exhaustive walk over the 957-file reach index (928 ms; with a 400-file cap it was UNMAPPED 'walk stopped').\nProbe files deleted (.gd + .uid), never committed. Full suite after: 1814 passed, 0 failed; the green run removed unit-triage.json.",
+  "notes": "Red before: 13 (10 triage.test cases, the module was missing; 2 junit cause cases; 1 --failed case). Green after: all 14 new cases + 117/117 node tests. On this GUT config push_error did not turn a test into \"Unexpected Errors\"; the engine-error cause path is pinned by the junit fixture, and logSlice was shown on the real log. A full exhaustive walk costs about 1 s once per run (memoised referrers) and only runs for failures reachOf does not reach. No debt-ratchet change."
+}

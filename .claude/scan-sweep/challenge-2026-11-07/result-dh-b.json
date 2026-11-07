@@ -1,0 +1,31 @@
+{
+  "card": "dh-b",
+  "status": "landed",
+  "shas": [
+    "35da7bc9",
+    "f6a2642a",
+    "90f448dc"
+  ],
+  "tests_added": 26,
+  "cases_red_before": 24,
+  "cases_green_after": 26,
+  "guard_cases": [
+    "runWorldLock: exit 0, no SCRIPT ERROR, a fresh ok:true world-lock.json still holds (tools/selftest/run.test.mjs); it was red before only because the stage could not take a stub runner"
+  ],
+  "gates": {
+    "node-test": 1,
+    "lint": 0,
+    "unit": null
+  },
+  "files_changed": 10,
+  "lines_changed": 624,
+  "deviations_from_card": "project/dev/showcase/reel_director.gd NOT changed. The reel is launched as arena.tscn --bot=reel, and ReelDirector is a hook, not the entry. A RUN_TICKS const there would only be read if the runner kept a --bot -> hook map, which is the kind of central list the coordinator_note forbids. The value would also copy ReelChapters' per-chapter ticks (length() sums them at runtime, and --chapter changes it), so it would drift. And it would raise the dev_loc debt metric, which needs --accept-regression. RUN_TICKS derivation is built and tested against fixtures/reel.gd (acceptance 3). The flag spec is read only from the entry's own script (a scene's root script, or the -s script), from const KNOWN_FLAGS or const KNOWN. The card's \"*_args.gd helper\" fallback and following a load() of a runner script were not built: an entry like rig_bench.gd, which loads rig_bench_run.gd, reports \"flags unchecked: no declared spec\". AGENTS.md and docs/decisions.md were not edited (coordinator-owned); the lines are in shared_lines. Added tools/selftest/run.test.mjs (a test file outside the write set, allowed as tests). Runner options parsed by run.mjs: --windowed, --timeout=<s>, --result=<file>, --dry-run. Engine options placed before the scene: --quit-after, --fixed-fps. These are run.mjs's own CLI, not game flags.",
+  "shared_lines": {
+    "AGENTS.md": "| `node tools/dev/run.mjs <entry> [--windowed] [--timeout=<s>] [--result=<file>] [--dry-run] [--quit-after=<n>] [entry flags] [-- verbatim]` | | one front door for a dev scene or -s script: a bare name is searched in `project/dev`, and the scene path goes before `--`, flags after. A flag missing from the entry's OWN declared `const KNOWN_FLAGS`/`KNOWN` exits 2 with a did-you-mean and nothing is spawned; an entry with no declared list launches with \"flags unchecked: no declared spec\". A declared `const RUN_TICKS: int = <n>` adds `--fixed-fps 60 --quit-after <n>` unless given. Log to `build/dev/`; ends with one `tools/lib/dev_verdict.mjs` line (`ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; ...`) to paste into a REPORT |",
+    "AGENTS.md (node-tests row)": "extend the Node tooling test glob with \"tools/dev/*.test.mjs\" \"tools/selftest/*.test.mjs\"",
+    "justfile": "dev *args:\n    node tools/dev/run.mjs {{args}}",
+    "docs/decisions.md": "- [2026-11-07] DECISION dev-harness: dev entries launch through tools/dev/run.mjs, which checks flags only against the list the entry's own script already declares (KNOWN_FLAGS/KNOWN) and otherwise launches with \"flags unchecked: no declared spec\". Every dev run and selftest stage is judged by tools/lib/dev_verdict.mjs (exit code, SCRIPT ERROR, unknown-arg warnings, result freshness). Rejected: a flag spec in boot/arena_args.gd or any central flag catalogue (the owner-rejected launch-flag registry, ArgSpec card voided), and a RUN_TICKS const in reel_director.gd (it is a hook, not the entry, and would copy ReelChapters' ticks)."
+  },
+  "real_tree_output": "$ node tools/dev/run.mjs stations_check --timeout=900 --result=<wt>/build/dev/stations.json -- --out=<wt>/build/dev/stations.json\nrun: godot --headless --path project -s res://dev/arena/stations_check.gd -- --out=.../build/dev/stations.json\ngodot: class cache stale (.godotglobal_script_class_cache.cfg is missing): running --import first\ngodot: --import done in 66.3 s\nrun: log ...\builddevstations_check-2026-11-07T22-17-28-372Z.log\nok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; flags unchecked: no declared spec   (exit 0)\n$ node tools/dev/run.mjs arena --bot=pit --dry-run\nrun: godot --headless --path project res://dev/arena/arena.tscn -- --bot=pit\nrun: dry run, nothing launched; flags unchecked: no declared spec   (exit 0)\n$ node tools/dev/run.mjs bake_city --chek --dry-run\nrun: unknown flag --chek for res://dev/bake_city.gd (did you mean --check?)\nrun: refused before launch; flags checked: 1 against KNOWN_FLAGS (res://dev/bake_city.gd)   (exit 2)",
+  "notes": "node-test gate exit 1 is pre-existing and environmental: godot.test.mjs \"removeStale only deletes explicit files under <repo>/build or the temp dir\" fails because this worktree sits under %TEMP%, so <repo>/project counts as a safe root. Neither file was touched; with my 26 new tests the run is 105/106. Lint 0 on every commit (pre-commit hook). Unit suite not run: no .gd under project/ changed (the two fixtures live in tools/dev/fixtures, outside lint and Godot). The selftest change is stricter than before: a windowed stage that logs a SCRIPT ERROR or an unknown-arg warning now fails even with an ok JSON. That is the card's intent, but it was not exercised on a GPU here. Every acceptance case passes: 1 arena scene before --; 2 arena unchecked + fixture --bto -> exit 2 \"did you mean --bot?\"; 3 RUN_TICKS 900 derived, explicit 20000 kept; 4-7 verdict lines; 8 runWorldLock with status 1 + ok:true -> ok false."
+}
