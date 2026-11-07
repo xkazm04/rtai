@@ -914,3 +914,14 @@ NEXT (it25 end, final for d9; supersedes every NEXT above): the REPORT is final 
   Registry rules applied it26: motion-quality-gating (nothing claimed without its run; the exe stays the gated
   code).
 NEXT (it26 end): unchanged from the it25 final NEXT above; the REPORT is final.
+
+## it27 (18:16-18:19, BUILD; 14 min to the freeze)
+- 18:16 Read JOURNAL tail, git log, d9-seams JOURNAL (its it20 freeze check: no REQUEST/NOTE to rivet; trial merge
+  vs dacaac88 holds).
+- 18:17 Freeze check: `build/export/windows/RTAI.exe` present (18:00 export on 261f9fac);
+  `git diff 261f9fac..HEAD -- project tools` empty, so the exe is HEAD's code. Asset library: no new rivet sheet
+  since it26 (plasma sword newest still the shipped 70_v2 / 55_v4 A; the 55 left walk tone fix still not served).
+  Tree clean.
+- No code change: the gates (unit + evidence + 3 reels) do not fit in the 13 min left. Registry rule applied:
+  motion-quality-gating (the exe stays the gated code; nothing claimed without its run).
+NEXT (it27 end): unchanged from the it25 final NEXT; the REPORT is final.
