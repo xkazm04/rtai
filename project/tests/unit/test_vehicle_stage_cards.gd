@@ -1,6 +1,6 @@
 extends GutTest
 ## n8 vehicles: a stage's cars (the arena's powers pad, quest 1's ghost cars) stand as cards under a
-## tilt with card art, a soul-seized one tinted teal; `top` draws none (the flat print stays).
+## tilt with card art, a soul-seized one tinted SOUL; `top` draws none (the flat print stays).
 
 var _saved: ViewMode = null
 var _cars: Array[VehicleBody] = []
