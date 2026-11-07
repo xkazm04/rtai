@@ -48,7 +48,8 @@ static func step(rig: CutRig) -> void:
 		if not ViewMode.shared().cards or _key(rig).is_empty():
 			return
 		_build(rig)
-	_place(rig)
+	if not rig.head_card.has_meta(RivetFrames.ON):  # d9: Rivet's whole figure places itself
+		_place(rig)
 
 
 ## The hit flash (CutRig.set_tint): a raw card takes the tinted part material while lit, then

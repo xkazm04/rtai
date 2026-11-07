@@ -153,7 +153,7 @@ func hits() -> Array[Hit]:
 	_ends.clear()
 	var lift: Vector2 = ViewMode.shared().lift_px(1.0) * RigCastShadows.BODY_IN_HIPS
 	for rig: CutRig in rigs:
-		var hip: float = RigTilt.hip_h(rig) * absf(rig.global_scale.x)
+		var hip: float = RigCastShadows.hip_px(rig)
 		var head: Vector2 = rig.global_position + lift * hip / SimConst.PX_PER_M
 		_ends += PackedVector2Array([to_local(rig.global_position), to_local(head)])
 	for s: ArenaStation in arena.stations.stations:

@@ -1,0 +1,546 @@
+{
+  "doc": "d9 rivet: the muzzle point of Rivet's drawn strip cells, measured by tools/art/rivet_muzzle.py (px from the cell's top-left, unmirrored). The flamer's facing cells 0-4: the wand's nozzle; fire cells 5/6: the drawn flash's root; a one-handed left strip's cells 0-2: the gun's left tip. RivetMuzzle publishes it as HeldMuzzle while the drawn figure carries the weapon; a cell without a point keeps the caller's fallback spot.",
+  "schema": "gtai.rivet-muzzle/1",
+  "strips": {
+    "p55": {
+      "rivet_eq_electro_baton": {
+        "cells": {
+          "5": [
+            158,
+            69
+          ]
+        }
+      },
+      "rivet_eq_electro_gun": {
+        "cells": {
+          "5": [
+            101,
+            65
+          ],
+          "6": [
+            83,
+            87
+          ]
+        }
+      },
+      "rivet_eq_electro_gun_left": {
+        "cells": {
+          "0": [
+            7,
+            44
+          ],
+          "1": [
+            5,
+            44
+          ],
+          "2": [
+            3,
+            44
+          ]
+        }
+      },
+      "rivet_eq_flamethrower": {
+        "cells": {
+          "0": [
+            164,
+            94
+          ],
+          "1": [
+            159,
+            87
+          ],
+          "2": [
+            160,
+            67
+          ],
+          "3": [
+            155,
+            62
+          ],
+          "4": [
+            156,
+            60
+          ],
+          "5": [
+            159,
+            94
+          ],
+          "6": [
+            111,
+            62
+          ]
+        }
+      },
+      "rivet_eq_gatling": {
+        "cells": {
+          "5": [
+            144,
+            73
+          ],
+          "6": [
+            94,
+            92
+          ]
+        }
+      },
+      "rivet_eq_gloria": {
+        "cells": {
+          "5": [
+            100,
+            59
+          ],
+          "6": [
+            62,
+            88
+          ]
+        }
+      },
+      "rivet_eq_hand_cannon": {
+        "cells": {
+          "5": [
+            128,
+            42
+          ],
+          "6": [
+            80,
+            58
+          ]
+        }
+      },
+      "rivet_eq_hand_cannon_left": {
+        "cells": {
+          "0": [
+            9,
+            53
+          ],
+          "1": [
+            4,
+            54
+          ],
+          "2": [
+            2,
+            54
+          ]
+        }
+      },
+      "rivet_eq_homing_shard": {
+        "cells": {
+          "5": [
+            137,
+            56
+          ],
+          "6": [
+            75,
+            83
+          ]
+        }
+      },
+      "rivet_eq_homing_shard_left": {
+        "cells": {
+          "0": [
+            6,
+            47
+          ],
+          "1": [
+            2,
+            48
+          ],
+          "2": [
+            43,
+            78
+          ]
+        }
+      },
+      "rivet_eq_machine_pistol": {
+        "cells": {
+          "5": [
+            105,
+            58
+          ],
+          "6": [
+            63,
+            85
+          ]
+        }
+      },
+      "rivet_eq_machine_pistol_left": {
+        "cells": {
+          "0": [
+            10,
+            46
+          ],
+          "1": [
+            4,
+            47
+          ],
+          "2": [
+            2,
+            46
+          ]
+        }
+      },
+      "rivet_eq_mini_nuke": {
+        "cells": {
+          "5": [
+            98,
+            73
+          ],
+          "6": [
+            73,
+            75
+          ]
+        }
+      },
+      "rivet_eq_pistol": {
+        "cells": {
+          "5": [
+            116,
+            51
+          ],
+          "6": [
+            50,
+            67
+          ]
+        }
+      },
+      "rivet_eq_pistol_left": {
+        "cells": {
+          "0": [
+            8,
+            48
+          ],
+          "1": [
+            6,
+            48
+          ],
+          "2": [
+            2,
+            48
+          ]
+        }
+      },
+      "rivet_eq_plasma_rifle": {
+        "cells": {
+          "5": [
+            117,
+            71
+          ],
+          "6": [
+            68,
+            98
+          ]
+        }
+      },
+      "rivet_eq_ray_gun": {
+        "cells": {
+          "5": [
+            117,
+            51
+          ],
+          "6": [
+            82,
+            61
+          ]
+        }
+      },
+      "rivet_eq_ray_gun_left": {
+        "cells": {
+          "0": [
+            8,
+            48
+          ],
+          "1": [
+            5,
+            49
+          ],
+          "2": [
+            2,
+            48
+          ]
+        }
+      },
+      "rivet_eq_rocket_launcher": {
+        "cells": {
+          "5": [
+            90,
+            64
+          ],
+          "6": [
+            50,
+            73
+          ]
+        }
+      }
+    },
+    "p70": {
+      "rivet_eq_electro_baton": {
+        "cells": {
+          "5": [
+            211,
+            113
+          ]
+        }
+      },
+      "rivet_eq_electro_gun": {
+        "cells": {
+          "5": [
+            132,
+            91
+          ],
+          "6": [
+            70,
+            89
+          ]
+        }
+      },
+      "rivet_eq_electro_gun_left": {
+        "cells": {
+          "0": [
+            2,
+            72
+          ],
+          "1": [
+            20,
+            68
+          ],
+          "2": [
+            23,
+            69
+          ]
+        }
+      },
+      "rivet_eq_flamethrower": {
+        "cells": {
+          "0": [
+            188,
+            130
+          ],
+          "1": [
+            202,
+            128
+          ],
+          "2": [
+            197,
+            103
+          ],
+          "3": [
+            195,
+            93
+          ],
+          "4": [
+            199,
+            91
+          ],
+          "5": [
+            195,
+            134
+          ],
+          "6": [
+            141,
+            80
+          ]
+        }
+      },
+      "rivet_eq_gatling": {
+        "cells": {
+          "5": [
+            169,
+            102
+          ],
+          "6": [
+            96,
+            86
+          ]
+        }
+      },
+      "rivet_eq_gloria": {
+        "cells": {
+          "5": [
+            143,
+            85
+          ],
+          "6": [
+            82,
+            83
+          ]
+        }
+      },
+      "rivet_eq_hand_cannon": {
+        "cells": {
+          "5": [
+            161,
+            75
+          ],
+          "6": [
+            83,
+            82
+          ]
+        }
+      },
+      "rivet_eq_hand_cannon_left": {
+        "cells": {
+          "0": [
+            2,
+            65
+          ],
+          "1": [
+            12,
+            65
+          ],
+          "2": [
+            19,
+            66
+          ]
+        }
+      },
+      "rivet_eq_homing_shard": {
+        "cells": {
+          "5": [
+            160,
+            90
+          ],
+          "6": [
+            95,
+            85
+          ]
+        }
+      },
+      "rivet_eq_homing_shard_left": {
+        "cells": {
+          "0": [
+            4,
+            68
+          ],
+          "1": [
+            3,
+            65
+          ],
+          "2": [
+            2,
+            68
+          ]
+        }
+      },
+      "rivet_eq_machine_pistol": {
+        "cells": {
+          "5": [
+            157,
+            69
+          ],
+          "6": [
+            81,
+            96
+          ]
+        }
+      },
+      "rivet_eq_machine_pistol_left": {
+        "cells": {
+          "0": [
+            2,
+            63
+          ],
+          "1": [
+            2,
+            63
+          ],
+          "2": [
+            4,
+            63
+          ]
+        }
+      },
+      "rivet_eq_mini_nuke": {
+        "cells": {
+          "5": [
+            116,
+            95
+          ],
+          "6": [
+            73,
+            90
+          ]
+        }
+      },
+      "rivet_eq_pistol": {
+        "cells": {
+          "5": [
+            169,
+            75
+          ],
+          "6": [
+            87,
+            93
+          ]
+        }
+      },
+      "rivet_eq_pistol_left": {
+        "cells": {
+          "0": [
+            2,
+            63
+          ],
+          "1": [
+            5,
+            63
+          ],
+          "2": [
+            8,
+            62
+          ]
+        }
+      },
+      "rivet_eq_plasma_rifle": {
+        "cells": {
+          "5": [
+            150,
+            81
+          ],
+          "6": [
+            90,
+            87
+          ]
+        }
+      },
+      "rivet_eq_ray_gun": {
+        "cells": {
+          "5": [
+            216,
+            114
+          ],
+          "6": [
+            131,
+            116
+          ]
+        }
+      },
+      "rivet_eq_ray_gun_left": {
+        "cells": {
+          "0": [
+            8,
+            64
+          ],
+          "1": [
+            5,
+            63
+          ],
+          "2": [
+            2,
+            65
+          ]
+        }
+      },
+      "rivet_eq_rocket_launcher": {
+        "cells": {
+          "5": [
+            130,
+            72
+          ],
+          "6": [
+            81,
+            95
+          ]
+        }
+      }
+    }
+  }
+}

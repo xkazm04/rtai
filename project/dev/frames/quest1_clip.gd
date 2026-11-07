@@ -16,6 +16,7 @@ extends SceneTree
 ##   [--blade=<from>-<to>] (n7-melee: the pad draws the blade on key 2 at <from>, closes and
 ##   swings at the bot's target, puts it away at <to>)
 ##   [--view=<id>] (n8-view: the view row ViewMode.shared reads, e.g. tilt70; default top)
+##   [--rivet-walk=bob] [--rivet-height=<m>] (d9-rivet: CastFlags, the walk's before, his size)
 
 const KNOWN_FLAGS: PackedStringArray = [
 	"--out",
@@ -32,6 +33,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--quest-blade",
 	"--blade",
 	"--view",
+	"--rivet-walk",
+	"--rivet-height",
 ]
 const RECORDER: String = "res://dev/frames/quest1_clip_rec.gd"
 const COUNTER: String = "res://tests/support/error_counter.gd"
