@@ -26,7 +26,7 @@ const TUNE_TICK: int = 300
 
 var session: ArenaSession = null
 var view: CollectCallView = null
-var px_per_m: float = 32.0
+var px_per_m: float = 32.0 * DeviceProfile.zoom()  # d9-handheld: a --device row's zoom_k
 var hud: ArenaHud = ArenaHud.new()
 var panel: ArenaPanel = ArenaPanel.new()
 var tuning: ArenaTuning = null

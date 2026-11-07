@@ -35,6 +35,11 @@ static func shared() -> DeviceProfile:
 	return _shared
 
 
+## This run's camera zoom factor (1 on the desktop).
+static func zoom() -> float:
+	return shared().zoom_k
+
+
 ## Picks this run's profile from a `--device=` value (a dash reads as an underscore).
 static func select(flag_value: String) -> DeviceProfile:
 	_shared = DeviceProfile.of(flag_value.replace("-", "_"))

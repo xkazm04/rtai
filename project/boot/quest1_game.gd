@@ -105,7 +105,7 @@ func _begin(opened: Quest1Session) -> void:
 	add_child(session.world)
 	if DisplayServer.get_name() != "headless":
 		view = CollectCallView.new()
-		view.px_per_m = px_per_m
+		view.px_per_m = px_per_m * DeviceProfile.shared().zoom_k
 		view.objective_view = ObjectiveView.new()
 		var live: LiveInput = session.live
 		view.objective_view.pad_prompts = func() -> bool: return live.pad_last
