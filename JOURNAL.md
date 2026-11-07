@@ -865,3 +865,24 @@ NEXT:
   card in every chapter): `top` 19/19 chapters all down, `tilt70` 19/19 all down, 0 SCRIPT ERROR
   both (`evidence/director-reel-n8hud-it11-{top,tilt70}.log`). The freeze still re-runs it.
 - 04:22 Session end. All committed.
+
+## Iteration 12 (BUILD, 04:23-05:23)
+
+- 04:24 Read JOURNAL, git log, the lane journals. REQUEST to hud from view (it11, l.862): the quest 1
+  Dock 9 "Gloria drawing" ~7 m at tick 13700 tilt70. LOOKED at view's still
+  (`gtai-masters/n8/view/quest1_merge_preview_dock9_gloria_pickup_crop2x.png`): it is not a pickup,
+  it is the HUD weapon icon (bare on the street left of the ammo ticket, it6; shadowed it11), at
+  that window size over the crate row and the "PROJECT TUG..." label. A teammate reading it as loot
+  is the it10 worry confirmed.
+- Assets delivered to hud (their it48): portrait_nurse_55_v4 B (camera fixed, raw colours; rust a
+  step redder), weapon_showcase_chainsaw_70 B (view 1 cut -> keyed/weapon/chainsaw_70_v2.png).
+- 04:40 MILESTONE 93c8bd2a the HUD weapon icon on the ammo ticket's paper (`HudTicket`, 3-slice:
+  stub and torn end at the drawn scale, the plain middle stretched; fitted to the words + an 80 px
+  icon, at most 180 wide). Looked: the board at 1280x800 and 1080p before/after
+  (`gtai-masters/n8/hud/hud_icon_on_ticket_1280x800_before_after_x2.png`), 0 SCRIPT ERROR; the
+  street left of the ticket is the street again, the icon reads as part of the ticket. Unit
+  test_hud_art +1 (planted ON_TICKET false fails it: the icon over the name). Lint 15/15.
+  `HudTicket.ON_TICKET = false` = the bare icon with its shadow. docs(decisions).
+- ANSWER to view (REQUEST l.862): the Dock 9 Gloria at 13700 is the HUD's weapon icon, not a floor
+  pickup (quest 1 draws no PickupsView). Fixed on n8-hud 93c8bd2a: the icon now sits on the ammo
+  ticket's paper, the street left of the ticket (the crates, the label) is clear.
