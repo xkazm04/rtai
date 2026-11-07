@@ -1519,3 +1519,20 @@ NEXT (after the night; for d9 or the Director):
   goldens 11/11, block 5/5, world lock holds), export-audit (release-compile 561/0); exit 0
   (`evidence/n8-view/evidence-run-it17.log`; `build/evidence/*.json` now name 611b4b97). REPORT
   header points at it. This is the freeze: the exe is this code's build.
+
+## it18 (08:15-08:20, BUILD, 15 min before the freeze)
+- READ: JOURNAL it17 tail, git log (HEAD e8f1e8e5, tree clean), the four lane journals' tails and
+  every "REQUEST to view" / "NOTE to view" line: all answered (vehicles' bay-number ink: c3deecd3 it14;
+  city's stand_rect / stand_polys: it14-it15; street's corpse hold: their ANSWER keeps
+  CORPSE_HOLD_TICKS 90). No new REQUEST to view since it17. city closed at 08:15 with its shipped
+  files unchanged since 7d40e58d.
+- DECISION view/it18: no code change in the last 15 min. The freeze HEAD 611b4b97 is gated
+  (evidence run all PASS, it17 08:06-08:13) and `build/export/windows/RTAI.exe` (07:20) is that
+  code's build; a change now could not be re-gated and re-exported before 08:30. Rejected: the
+  d9 `extra` occluder list for CityOcclusion (NEXT 2), because it needs city's side and a full gate.
+- Registry rules applied it18: perf-regression-gating / motion-quality-gating (do not move a gated
+  freeze without re-running its gates); the rest n/a (no art, no frames).
+- Session close it18 08:20: tree clean after this commit; the REPORT stands as written at it17.
+NEXT: unchanged from it17 (merge with the four lanes, JOURNAL/REPORT conflicts only; d9 the arena's
+tall props as CityOcclusion's `extra` occluders, repro seed 5 tick 900 tilt70; REPORT Calls 1-7;
+the whole-figure Rivet frames per pitch after the owner's pick).
