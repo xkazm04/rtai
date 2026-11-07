@@ -9,9 +9,12 @@
 // Commit first: the evidence names HEAD, and PoF treats evidence from another commit as stale.
 // A dirty tree is refused (the evidence would describe code that is not HEAD) unless
 // --allow-dirty, which says so in every summary. A run that dirties the tree (import churn)
-// fails the unit-tests evidence.
+// fails the unit-tests evidence. Both checks ignore the inert set (scope.mjs: docs/**, evidence/**,
+// root JOURNAL.md / REPORT.md), which no kind reads; uncommitted inert paths are only named in a
+// summary suffix.
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { pathToFileURL } from 'node:url';
 import { ROOT, dirtyLines, git, godotBin, godotVersion } from '../lib/repo.mjs';
 import { runLint } from '../lint/lint.mjs';
 import { runUnit } from '../tests/run_unit.mjs';
@@ -21,27 +24,52 @@ import { releaseCompile } from '../tests/release_compile.mjs';
 import { runBench } from '../bench/run.mjs';
 import { runSelftest } from '../selftest/run.mjs';
 import { makeEnvelope } from './envelope.mjs';
+import { classify, inertNote } from './scope.mjs';
 
 const OUT = join(ROOT, 'build', 'evidence');
 const FLAGS = ['--allow-dirty', '--no-parity', '--no-bench', '--bench-headless', '--no-selftest', '--no-release'];
-const allowDirty = process.argv.includes('--allow-dirty');
-const unknown = process.argv.slice(2).filter((a) => !FLAGS.includes(a));
+
+/** The start gate over porcelain lines: refuse (exit 2) on code dirt unless allowDirty; inert dirt only adds a note. */
+export function dirtyGate(lines, allowDirty) {
+  const c = classify(lines);
+  if (c.code && !allowDirty) {
+    const messages = ['evidence: working tree is dirty; commit first (or pass --allow-dirty):'];
+    for (const l of c.codeLines.slice(0, 20)) messages.push(`  ${l}`);
+    return { exit: 2, messages, note: '' };
+  }
+  const dirty = c.code ? ` [dirty tree: ${c.code} uncommitted paths]` : '';
+  return { exit: null, messages: [], note: dirty + inertNote(c.inert) };
+}
+
+/**
+ * Fails `unit` when the run added code-path porcelain lines (import churn); inert churn is ignored.
+ * Lines compare without leading space: dirtyLines() trims the first line, wherever it lands.
+ */
+export function applyChurn(unit, before, after) {
+  const seen = new Set(before.map((l) => l.trimStart()));
+  const churn = classify(after.filter((l) => !seen.has(l.trimStart()))).codeLines;
+  if (!churn.length) return unit;
+  return {
+    ...unit,
+    ok: false,
+    summary: `${unit.summary}; tree changed during run (${churn.length} paths, import churn): ${churn.slice(0, 3).join(', ')}`,
+  };
+}
 
 async function main() {
+  const unknown = process.argv.slice(2).filter((a) => !FLAGS.includes(a));
   if (unknown.length) {
     console.error(`evidence: unknown argument(s) ${unknown.join(' ')}`);
     return 2;
   }
   const before = dirtyLines();
-  if (before.length && !allowDirty) {
-    console.error('evidence: working tree is dirty; commit first (or pass --allow-dirty):');
-    for (const l of before.slice(0, 20)) console.error(`  ${l}`);
-    return 2;
-  }
+  const gate = dirtyGate(before, process.argv.includes('--allow-dirty'));
+  for (const m of gate.messages) console.error(m);
+  if (gate.exit !== null) return gate.exit;
   const commit = git('rev-parse', 'HEAD');
   const version = godotVersion();
   const base = { commit, godotVersion: version ?? 'unavailable' };
-  const dirtyNote = before.length ? ` [dirty tree: ${before.length} uncommitted paths]` : '';
+  const dirtyNote = gate.note;
   mkdirSync(OUT, { recursive: true });
 
   const lint = runLint();
@@ -59,12 +87,7 @@ async function main() {
 
   let unit;
   if (version) {
-    unit = await runUnit(OUT);
-    const churn = dirtyLines().filter((l) => !before.includes(l));
-    if (churn.length) {
-      unit.ok = false;
-      unit.summary += `; tree changed during run (${churn.length} paths, import churn): ${churn.slice(0, 3).join(', ')}`;
-    }
+    unit = applyChurn(await runUnit(OUT), before, dirtyLines());
   } else {
     unit = { ok: false, summary: `unit-tests: Godot not found (GODOT_BIN=${godotBin()})` };
   }
@@ -107,4 +130,6 @@ async function releaseEvidence() {
   return { ok: r.ok, summary, counts: { passed: ran, failed: r.failed.length, skipped: 0 } };
 }
 
-process.exit(await main());
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  process.exit(await main());
+}
