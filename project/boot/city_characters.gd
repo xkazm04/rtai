@@ -39,6 +39,7 @@ func _init(city: CitySystem, view: CityView, ctx: WorldContext) -> void:
 	view.actor_layer().add_child(rigs)
 	rigs.setup(ctx)
 	rigs.set_process(false)
+	rigs.corpse_hold_ticks = RigSelect.CORPSE_HOLD_TICKS  # the crowd atlas takes the corpse after
 	view.before_render = _before_render
 	blood = CityBlood.attach(city, view)
 	blood.follow(rigs.feed)
