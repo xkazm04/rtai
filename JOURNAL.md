@@ -634,3 +634,17 @@ NEXT (iteration 15):
 - Cleanup 17:09: WSL `~/hh14/rel` (the showcase export copy) and `gtai-d9x/scratch/it14/winslice` deleted; kept for it15:
   WSL `~/hh14/{project,slice,Godot editor}` and `build/export/linux-slice/`. No Godot / RTAI process of mine running.
 - Session end 17:10 (it14): 9 commits (7ae230b4 .. this), every change committed; no bench lock taken (no timing kept).
+## iteration 15 (17:09, session ends 18:09 at the latest)
+- Read: JOURNAL it14 + NEXT + the 17:08 LEAD, git log, the rivet / seams / perf journals, the asset library journal.
+  `ui_pad_glyphs_v1` still not served (0 catalog hits): NEXT 3 waits again. perf's it18 FYI (L12 minimized cap,
+  `tools/perf/thread_cpu.ps1`): ANSWER: read; the device rows' `max_fps` 60 / 40 / 30 are all <= 60, so L12 leaves
+  them as they are and adds the alt-tab battery case on a Windows handheld for free; thread_cpu noted for the next CPU move.
+- RESULT 17:30 **E13c, editor = release = Windows = Linux; E13b withdrawn (my mislabel)**. Cause found by reading the
+  logs: it14's "quest 1" logs carry `boot: booted` and no `quest1:` line: they were recorded through `main.tscn` (the
+  city-block World), and the slice exports boot quest 1, a different simulation, so tick 60 (the first checkpoint)
+  differs by construction. Built a `linux-dev` preset (main.tscn, as windows-dev). Matrix, every replay identical,
+  exit 0: editor logs (Win seed 7, Linux seed 11) in windows-dev and linux-dev release; a windows-dev release recording
+  (seed 13) on Windows and Linux release; a linux-dev release recording (seed 17, 1496 ticks) on Linux release, Windows
+  release and the Windows editor; a quest 1 log recorded in the editor (`quest1.tscn --autostart`, 425 ticks) in the
+  editor, windows-slice and linux-slice. Why a slice exe records nothing: `--autostart` is debug-only, so the headless
+  release exe waits on the title card (by design). Evidence `evidence/it15/`. No SIM-05 REQUEST needed.

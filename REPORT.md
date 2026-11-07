@@ -83,13 +83,18 @@ priority, the CPU's own 2-CU Radeon), never a device claim. Details and sources:
   in 40 s); now 80 taps + 145 rested, the stock gun's fight unchanged (59 / 63 pulses, 0 rested)
   (`evidence/it14/*-gap.log`). DECISION handheld/boss-hit-rest.
 - (it14) **E13, the sim is the same on Linux**: in WSL Ubuntu with the official 4.7.2 Linux editor (sha512 checked),
-  NAT-06 parity on the Linux `.so` is exact over 1200 steps (planted fault caught at 629, as on Windows), and quest 1
+  NAT-06 parity on the Linux `.so` is exact over 1200 steps (planted fault caught at 629, as on Windows), and city-block World
   replays cross both ways identical (Windows-recorded 1800 ticks on Linux, Linux-recorded 3600 ticks on Windows):
-  a replay made on a Deck runs the same on the PC (`evidence/it14/linux/`; a save file across the two OSes is not tested). Idle input and the debug `.so`. E13b (the release exports, a new `linux-slice` preset): an editor-recorded replay **diverges at tick 60 in the release exports of both OSes alike**, so the editor and a shipped build differ, not Windows and Linux; and a release exe writes no `--record` file on `--quit-after`. An open finding for the replay owner (the Director), under "does not work".
+  a replay made on a Deck runs the same on the PC (`evidence/it14/linux/`; a save file across the two OSes is not tested). Idle input and the debug `.so`.
+- (it15) **E13c, editor = release = Windows = Linux**: every replay identical across the four builds (the editor and the
+  release `windows-dev` / new `linux-dev` exports for the city-block World; the editor, `windows-slice` and `linux-slice`
+  for a quest 1 log), the release `.so` / `.dll` included; a release build records too (Windows seed 13, Linux seed 17,
+  each replayed on the other OS identical). it14's "E13b diverges at tick 60" is **withdrawn**: my mislabel (World logs fed
+  to the quest 1 slice, a different simulation); no SIM-05 finding (`evidence/it15/`, LEDGER E13c).
 
 ## What does not work yet
-- (it14) A quest 1 replay recorded in the editor diverges at tick 60 in a release export (`windows-slice` and `linux-slice` alike),
-  and a release exe with `--record` and `--quit-after` writes no file (`evidence/it14/linux/slice-*`). Cause unmeasured.
+- (it15) The slice exe cannot record quest 1: `--autostart` is debug-only (`quest1_card.gd:70`), so a headless release
+  exe waits on the title card. By design for a shipped build; a recording from a played (pad-driven) session is untested.
 - Rumble on every hit Rivet takes is in (it7: the view reads his hurt tick; no sim change); its live pulse count is
   owed. The release-compile step of the evidence gate collides with seams' new temp-dir layout
   (their item; skipped with `--no-release`).
@@ -131,8 +136,7 @@ priority, the CPU's own 2-CU Radeon), never a device claim. Details and sources:
 ## Owed / next
 - (it7) The draw_scale HUD side
   effect (if Call 5 b/c), the King fight's rumble count, the dev-arena experiments E1-E3/E7 re-labelled "at 32 px/m".
-- The Linux build: a real Vulkan run (needs a Linux PC or a Deck); a `linux-slice` export to replay through the release
-  `.so` (E13b); a save round trip Windows <-> Linux (Steam Cloud's root override, LEDGER section 1). NAT-06 on Linux: done (E13).
+- The Linux build: a real Vulkan run (needs a Linux PC or a Deck); the release `.so` replays: done (E13c); a save round trip Windows <-> Linux (Steam Cloud's root override, LEDGER section 1). NAT-06 on Linux: done (E13).
 - Steam Input's origin glyphs through the Steam backend (and a drawn ink glyph set: REQUEST to assets
   `ui_pad_glyphs_v1`, it12), rumble on blasts and crashes (no bus event), aim assist (a design call); whether the boss_hit
   rest (8 ticks, it14) reads as taps on a real pad.
