@@ -6,6 +6,8 @@ extends Node2D
 ##     res://dev/showcase/vehicle_turn.tscn
 ##     --write-movie <abs>.avi --quit-after 400 -- --view=tilt70 --ppm=64 [--blend=8] [--upright=1]
 ##     [--set=street]: the taxi, the parked pickup and the ambulance instead
+##     [--set=service]: the delivery truck and the depot van (art/<key>/service_cards.png, no sim
+##     archetype yet: tools/art/vehicle_cards.py --set=service)
 
 ## [art id, footprint length m, width m]: the sedan, the police car, the van; the bike (atlas row
 ## VehicleViews.BIKE_ART, no sim bike yet) below the police car.
@@ -16,6 +18,9 @@ const CARS: Array[Vector3] = [
 const STREET: Array[Vector3] = [
 	Vector3(3, 4.85, 1.95), Vector3(5, 5.15, 2.0), Vector3(6, 5.75, 2.2)
 ]
+## --set=service: rows of the service atlas (the delivery truck, the depot van; lengths as cut).
+const SERVICE: Array[Vector3] = [Vector3(0, 5.3, 2.3), Vector3(1, 4.9, 2.0)]
+const SERVICE_DIR: String = "res://features/vehicles/art/%s/service_cards.png"
 const GAP_M: float = 6.0
 const DEG_PER_TICK: float = 1.0
 const ASPHALT: Color = Color(0.27, 0.27, 0.28)
@@ -26,12 +31,17 @@ var _cards: VehicleCards = null
 var _tick: int = 0
 var _ppm: float = 32.0
 var _cars: Array[Vector3] = CARS
+var _service: Texture2D = null
 
 
 func _ready() -> void:
 	var args: ArenaArgs = ArenaArgs.parse()
 	_ppm = args.number("--ppm", _ppm)
 	_cars = STREET if args.text("--set") == "street" else CARS
+	if args.text("--set") == "service":
+		_cars = SERVICE
+		var path: String = SERVICE_DIR % ViewMode.shared().art
+		_service = load(path) as Texture2D if ResourceLoader.exists(path) else null
 	VehicleCards.blend_deg = args.number("--blend", VehicleCards.blend_deg)
 	VehicleCards.upright_k = args.number("--upright", VehicleCards.upright_k)
 	var cam: Camera2D = Camera2D.new()
@@ -50,7 +60,7 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	_tick += 1
 	queue_redraw()
-	var tex: Texture2D = VehicleCards.atlas()
+	var tex: Texture2D = _service if _cars == SERVICE else VehicleCards.atlas()
 	if tex == null:
 		return
 	_cards.begin(tex)
@@ -83,4 +93,6 @@ func _head() -> Vector2:
 
 
 func _at(i: int) -> Vector2:
+	if _cars == SERVICE:  # two long bodies: side on, they must not touch
+		return Vector2((i - 0.5) * 7.0, 0.0)
 	return Vector2((i - 1) * GAP_M, 0.0) if i < 3 else Vector2(0.0, 4.5)

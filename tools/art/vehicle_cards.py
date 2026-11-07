@@ -22,7 +22,7 @@ geometry (L |cos| + W |sin|) was tried and rejected: the sheets' own 3/4 views a
 so A and D came out half as big again as their neighbours. The runtime's VehicleViews.FINE lists
 the rows filled per pitch (printed here).
 
-Usage: python tools/art/vehicle_cards.py <library root> <pitch> [--out=<png>]
+Usage: python tools/art/vehicle_cards.py <library root> <pitch> [--set=service] [--out=<png>]
 Writes project/features/vehicles/art/p<pitch>/traffic_cards.png by default.
 """
 
@@ -132,19 +132,38 @@ def green_key(im: Image.Image, tol: float = 24.0) -> Image.Image:
     return Image.fromarray(np.clip(px, 0, 255).astype(np.uint8))
 
 
+# --set=service: the delivery truck and the depot van (no sim archetype yet) into their own
+# five-view showcase atlas (p<pitch>/service_cards.png), so the traffic atlas every card view loads
+# does not grow by two rows. Per pitch the library sheet (best grade, latest round).
+SERVICE = [("delivery_truck", 2.9, (1.0, 1.0, 1.0)), ("depot_van", 2.3, (1.0, 1.0, 1.0))]
+SERVICE_M = [6.4, 4.9]  # side-view lengths (m), no top-down footprint; the truck then fits the 7 m cell (x0.82)
+SERVICE_PICKS = {"delivery_truck": {55: "delivery_truck_55_v2"}, "depot_van": {55: "depot_van_55_v3"}}
+# Per service row, degrees its saturated mid paint turns toward yellow: the truck's 70 cab is drawn
+# amber-orange (the library note: match the 55 sheet's mustard; 1463 vermilion-gate px raw in view 0).
+SERVICE_HUE = {0: 12.0}
+# A service row whose views overflow the cell (the 6.4 m truck's diagonals at 70) is scaled down as
+# a whole, one k for all five views (no size pop on the turn), to fit FIT_PX.
+FIT_PX = CELL_PX - 8
+_SET: list = []
+
+
 def rows_of() -> list:
+    if _SET:
+        return SERVICE
     return ROWS + ([("bike", BIKE_M[1], (1.0, 1.0, 1.0))] if BIKE else [])
 
 
 def sheet_of(lib: Path, sid: str, pitch: int) -> Image.Image:
     if sid == "bike":
         return green_key(Image.open(lib / "sheets" / "vehicle" / BIKE_SHEET.format(pitch=pitch)))
-    name = SHEET_PICKS.get(sid, {}).get(pitch, f"{sid}_{pitch}")
+    name = (SHEET_PICKS | SERVICE_PICKS).get(sid, {}).get(pitch, f"{sid}_{pitch}")
     return Image.open(lib / "keyed" / "vehicle" / f"{name}.png").convert("RGBA")
 
 
 def footprints(root: Path) -> list[float]:
     """Each art id's top-down length (m) from the traffic atlas (3 x 3 cells of 512 x 256)."""
+    if _SET:
+        return SERVICE_M
     a = np.array(Image.open(root / TOPDOWN).convert("RGBA"))[:, :, 3]
     out = []
     for i in range(9):
@@ -316,7 +335,7 @@ def paste(atlas: Image.Image, v: Image.Image, k: float, at: tuple, lift: float) 
     """`v` scaled by `k` into cell (col, row) at `at`, its ground centre at the cell centre."""
     col, row, gain = at
     w, h = max(1, round(v.width * k)), max(1, round(v.height * k))
-    turn = 0.0 if (row in _PICKED and col < 5) else HUE_DEG.get(row, 0.0)
+    turn = 0.0 if (row in _PICKED and col < 5) else (SERVICE_HUE if _SET else HUE_DEG).get(row, 0.0)
     im = amber(hue_turn(paint(v.resize((w, h), Image.LANCZOS), gain), turn))
     im = hue_turn(im, LAMP_DEG, 0.8, 0.7, 42.0)
     top = DARK_LAMP_V_SIREN if rows_of()[row][0] == "police_car" else DARK_LAMP_V[1]
@@ -344,6 +363,10 @@ def build(root: Path, lib: Path, pitch: int) -> Image.Image:
             vs[2] = one_view(Image.open(redo).convert("RGBA"))
             ks[2] = lengths[row] * PPM / vs[2].width
         drop = height * 0.5 * cos_p * PPM  # bbox centre -> ground centre (screen px)
+        if _SET:  # each view within FIT_PX wide and, lifted by drop, inside the cell's height
+            shrink = min(1.0, min(min(FIT_PX / v.width, (FIT_PX - 2 * drop) / v.height) / kc for v, kc in zip(vs, ks)))
+            ks, drop = [kc * shrink for kc in ks], drop * shrink
+            print(f"{sid}: scaled x{shrink:.3f} to fit the cell")
         for col, v in enumerate(vs):
             paste(atlas, v, ks[col], (col, row, gain), drop)
         bs, redone = betweens(lib, sid, pitch)
@@ -367,6 +390,9 @@ def main() -> None:
     root = Path(__file__).resolve().parents[2]
     out = root / f"project/features/vehicles/art/p{pitch}/traffic_cards.png"
     for a in sys.argv[3:]:
+        if a == "--set=service":
+            _SET.append(a)
+            out = out.with_name("service_cards.png")
         if a.startswith("--out="):
             out = Path(a[6:])
     out.parent.mkdir(parents=True, exist_ok=True)
