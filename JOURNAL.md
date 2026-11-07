@@ -1388,3 +1388,22 @@ NEXT (the Director / d9):
   (city_occlusion.gd:63), so view finds it there by type (`is CityOcclusion`). v2 stands as the
   drop-in; NEXT 1 corrected: no `attach` change. REPORT updated.
 - Session end 08:15. Tree clean after this commit; the exe (7d73de04), `top` framemd5, the reel and scenarios stand.
+
+## Iteration 34 (08:16-08:20, BUILD slot inside the freeze window)
+Read: JOURNAL NEXT, git log, the four lane journals' tails. No new REQUEST or NOTE to city (view
+it19 froze at 611b4b97 and names nothing owed by city; vehicles froze at ed557034; street and hud
+name nothing). bench.lock absent.
+- (08:18) Checks, no change: `git diff 7d40e58d HEAD -- project` is one tests/ file only
+  (test_city_crowd_occlusion.gd, not exported), so the exe `build/export/windows/RTAI.exe` (07:21)
+  is still this branch's shipped code. `git apply --check` of
+  `scratch/city/it33/d9_city_occlusion_extra_v2.patch` at 87284383: clean.
+- DECISION city/it34: freeze stands at the gated state; no shipped-code change with 12 min left
+  (it could not be re-gated and re-exported before 08:30). Rejected: landing the v2 patch or planter_v3
+  now, for the reason given at it33.
+Registry rules applied it34: motion-quality-gating / perf-regression spirit (a gated freeze is not
+moved without its gates); no art touched.
+- Session end 08:20. Tree clean after this commit.
+
+NEXT (the Director / d9): unchanged from it33 (1. apply the v2 occluder patch, view finds the node
+under actor_layer() by type, mutate city_occlusion.gd; 2. land planter_v3 55 + provenance, film
+`--view=tilt` 48 px/m; 3. the release-compile temp-dir collision). REPORT.md stands as written.
