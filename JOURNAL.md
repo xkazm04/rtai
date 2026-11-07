@@ -952,3 +952,25 @@ NEXT:
   device frame) and Dock 9 (Gloria on the ticket). Looked at a 7-frame contact sheet
   (`gtai-n8/scratch/hud/it12/clip/contact.png`). frames.json entry 1 (replaces the it6 clip; its file
   stays). Raw .avi and png frames deleted. NEXT's "combined clip v3" item is done.
+- 05:01 MILESTONE 7aa9611e the thin pieces on the ticket (wider than 5x their height: katana,
+  electro baton, plasma sword) run to 240 px instead of 180 (`HudTicket.THIN_MAX_W`; = ICON_MAX_W is
+  the single cap): at 180 the katana drew 29 px tall; at 240 the baton's coil and the sword's blade
+  read (`hud_ticket_thin_icons_1280x800_before_after.png`; all 17 re-shot in
+  `hud_tickets_all_weapons_1280x800_contact.png`). Unit test_hud_art +1. docs(decisions).
+- 05:04 Full unit at 7aa9611e: 1520 passed, 0 failed, 0 FLAKY (`gtai-n8/scratch/hud/it12/unit_full2.log`).
+  Lint 15/15 (hook). The scenarios/parity/goldens ran green at 3b7cdeb2; since then only HUD
+  ticket drawing (quest 1 only), a dev board and tests changed: the freeze gate re-runs all.
+
+NEXT (supersedes the 04:57 NEXT):
+- Work items 1-4 evidenced, the combined clip v3 done. Weakest left: the Servo taunt waits for
+  lines; the long guns on the wall overlap the cops at 55 (the hub layout); the 1080p ticket
+  contact is from 006aeaba (before the thin cap: re-shoot with `board.sh` at 1920x1080 if it goes
+  in the REPORT); quest 1's Dock 9 crate row under the HUD corner (stage placement: REPORT note).
+- Watch the catalog for raises to hud's ids (portraits of the quest-1 cast, weapon_showcase_*):
+  re-cut with `portrait_cut.py` / `showcase_import.py`, provenance, film.
+- Freeze 08:30: the director reel (top + tilt70), `node tools/evidence/run.mjs --no-bench`, export
+  `build/export/windows/RTAI.exe` (`windows-showcase` preset, recipe in
+  `gtai-n8/scratch/hud/it6/report_notes.md`, it12 lines appended), REPORT from those notes
+  (FINDING: the dock guard's concept-approved orange-vermilion hi-vis). Delete it9-it12 scratch
+  frames after the REPORT. Nothing into the worktree during a gate run.
+- 05:05 Session end. All committed.
