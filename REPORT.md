@@ -26,7 +26,9 @@ The view lane's REPORT.md came in with the n8-view merge; this file replaces it 
 4. **Depth:** a card with someone just in front draws under the actors, else over
    (`depth_tilt70_48ppm_ba_still.png`); stage cars (Servo depot, powers pad) stand over the actors
    with the seize cues and bay 3's number drawn over them (view's 1dd745b8 + 73a78455 merged:
-   `servo_bay3_mark_over_van_combo_64ppm_f120_before_left_after_right.png`).
+   `servo_bay3_mark_over_van_combo_64ppm_f120_before_left_after_right.png`). Bay 3's number reads
+   over the cream van at 32 px/m since view's ink stroke (c3deecd3, merged it21 at 81762e2e):
+   `servo_bay3_ink_over_cream_van_combo_32ppm_seed2_f60_before_left_after_right_crop3x.png`.
 5. **Kerb-parked cars** as cards through city's ChunkLift hand-off (`VehicleParked.live`).
 6. **Colour law:** no red lamps (red lens segments amber in the cutter; lit lenses LAMP_DEG; the
    unlit rear lenses, which printed rust-red under the city grade, DARK_LAMP_DEG in it18:
@@ -55,9 +57,6 @@ The view lane's REPORT.md came in with the n8-view merge; this file replaces it 
 - The bike has no sim archetype: it draws only in `dev/showcase/vehicle_turn.tscn`.
 - The driven car's hijack enter/exit keeps Rivet's current rig (Rivet frozen tonight).
 - The main scene ignores `--ppm`: city stills at 48/64 px/m come from the showcases, not the drive.
-- Bay 3's pale number fades over the cream van roof at 32 px/m in the Servo depot before Dent seizes
-  it (REQUEST to view: an ink stroke on the bay numbers; once seized the teal van carries it:
-  `soul_seized_van_servo_depot_combo_32ppm_seed2_f130_before_left_after_right_crop.png`).
 
 ## Calls for the owner
 Each: options, the default built, how to see it.

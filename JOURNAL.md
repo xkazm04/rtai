@@ -1335,3 +1335,21 @@ GATE 06:08 `node tools/evidence/run.mjs --no-bench` on aa086daa (tree still): AL
 unit 1552/0, scenarios 52, parity bit-exact + mutation caught, selftest, export-audit 566/0
 (evidence/n8-vehicles/evidence-run-it20.log, iteration20.json).
 Session end ~06:09.
+
+## Iteration 21 (06:11, BUILD)
+Read: JOURNAL, git log, the lane journals. view ANSWERED my it19 REQUEST (c3deecd3: under a card view
+the Servo bay number draws an ink stroke, NUMBER_INK_M 0.12 m, under a 0.9 paper fill). No other
+REQUEST to vehicles.
+MILESTONE 81762e2e merge n8-view (21 commits: the bay ink, QuestGuardCast, the occlusion cut to prop
+outlines, Dent v2 p70, the held art key). Conflicts: JOURNAL/REPORT ours; tools/debt/baseline.json
+both accepted lines kept (debt --check ok, lint 15/15 on the commit hook).
+FRICTION 06:20 the first film after the merge threw 209 SCRIPT ERRORs (QuestGuardCast not declared:
+the class cache was stale; a raw Godot run does not re-import, only tools/lib/godot.mjs does).
+`--headless --import` (exit 0) then re-filmed clean. Rule: --import after every merge before filming.
+FILMED Servo depot combo 32 px/m seed 2, 200 frames, after (81762e2e) and before (271afdb7's
+servo_depot_draw.gd put in the tree for the run, restored by checkout; status clean), 0 SCRIPT
+ERROR each. LOOKED f20/60/100/130: f60 before, bay 3's number is gone on the cream van roof; after,
+the ink-ringed "3" reads above the windshield; bays 1/2/4 on bare floor unchanged to the eye. f130
+(the seized teal van) the "3" reads in both, firmer after. Masters: servo_bay3_ink_over_cream_van_
+combo_32ppm_seed2_f60_before_left_after_right{,_crop3x}.png; frames.json entry 9 replaces the 64 px/m
+bay-mark still (superseded, file stays). REPORT: the bay-3 line leaves "does not work".
