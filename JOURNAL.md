@@ -410,3 +410,19 @@ DECISION Servo bay marks: see docs/decisions.md (glyph box test; whole-apron and
   fault: head line 24 px vs 13 and 19 on its neighbour facings. Scaled 1.06 with walk_facing_scale.py
   (head line -> 13), FILL 1.09 -> 1.08 (mean 174.55 -> 176.75 px); test_street_cop_walk pins 1.08.
   Patrol 55 measured: no outlier. Masters `riot55_facing3_scale106_before_after_grid.png`.
+- 13:22 MILESTONE (0d8842bf): the riot 55 profile scale landed and filmed in play: seed 5 tilt 48 px/m f62,
+  a riot cop walking in profile beside a SWAT, before visibly smaller, after the same height
+  (`riot55_facing3_scale106_before_after_tilt_48ppm_seed5_f62_x3.png`, `..._f20_140.mp4`). test_street_cop_walk
+  6/0. frames.json: in at 3 (the riderless bike clip out, file kept). DECISION line in docs/decisions.md.
+
+NEXT (it6):
+1. Gates at the head (0d8842bf: art + FILL + one test value since the it5 gate at ddef1441): `node
+   tools/evidence/run.mjs --no-bench` (logs to scratch, no worktree writes while it runs). Reels only if
+   gameplay code changes (it5 reels at 3f4732db: 19/19 x3).
+2. The SWAT 55 facing-2 fix is not yet seen in play (no SWAT turned to it at seed 5 f0-460): try seed 5
+   past f460 or another seed under `--view=tilt` at 48 px/m; or the director reel windowed at combo.
+3. Riot 55 row 2 still repeats a frame (assets: no gain in 3 tries). A post option to judge: copy row 2
+   frame 1 from row 1/3 shapes is not honest; leave as named fault unless assets retry.
+4. Owner Calls 1-3 stand. Read d9-rivet and assets journals for REQUESTs first.
+5. Freeze 18:30: export RTAI.exe (`"$GODOT_BIN" --headless --path project --export-release windows-showcase
+   ../build/export/windows/RTAI.exe`), REPORT final by 18:40.
