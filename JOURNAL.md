@@ -1006,3 +1006,22 @@ alpha, text keeps its size; 35 % keeps the words readable), `concept-scene-parit
 `motion-quality-gating` (judged on the live quest scene, before/after on the same ticks, the ease
 measured frame by frame, a false trigger caught in motion that a still could not show),
 `depth-ordered-layered-art` (the HUD stays the top layer; it yields rather than reorders).
+- 05:39 Gates at 4e31d5b3 (`node tools/evidence/run.mjs --no-bench`, the tree untouched during the
+  run; `gtai-n8/scratch/hud/evidence_run_it13.log`): lint 15/15, unit 1525/0 (0 FLAKY), scenarios
+  52/52, parity bit-exact + planted mutation at 629, look goldens 11/11 + block 5/5 (top did not
+  move), export-audit 562/0. Scratch: it13 raw frames deleted (masters hold the pair + clip).
+- Director reel not re-run: no reel chapter draws HudView (quest 1 only); the freeze re-runs it.
+
+NEXT (supersedes it12's):
+- Work items 1-4 evidenced + it13's see-through corners. Weakest left: the Servo taunt waits for
+  lines; the 1080p ticket contact is from 006aeaba (before the thin cap: re-shoot with
+  `gtai-n8/scratch/hud/it12/board.sh tickets 1920x1080` if it goes in the REPORT); the
+  see-through alpha (HudSee.SEE_A 0.35) could be a Call for the owner (35 vs 50 %, one value).
+- Watch the catalog for raises to hud's ids (quest-1 cast portraits, weapon_showcase_*): re-cut
+  with `portrait_cut.py` / `showcase_import.py`, provenance, film.
+- Freeze 08:30: the director reel (top + tilt70), `node tools/evidence/run.mjs --no-bench`, export
+  `build/export/windows/RTAI.exe` (`windows-showcase` preset, recipe in
+  `gtai-n8/scratch/hud/it6/report_notes.md`, it12 + it13 lines appended), REPORT from those notes
+  (FINDING: the dock guard's concept-approved orange-vermilion hi-vis; add the see-through corners
+  to "what works"). Delete it9-it13 scratch frames after the REPORT. Nothing into the worktree
+  during a gate run.
