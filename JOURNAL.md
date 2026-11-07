@@ -546,3 +546,8 @@ NEXT (iteration 16):
 - 16:35 LEDGER L11 row + F15 replication note; REPORT Call P-3 re-measured paragraph (+0.06..+0.09 core, mailbox no cheaper).
 - 16:34 NEXT 2 (L10 on the release exe): `windows-bench` exported at 873070a4 to `build/export/windows-bench-cap/` (10 s,
   exit 0; pck 215.21 MB), job `evidence/perf/l10-exe/` running (riot60 + drive60, hz144 vs hz144cap @exe, 3 pairs).
+- MILESTONE 16:42 L10 on the release exe (NEXT 2 closed; `evidence/perf/l10-exe/ab.json`, windows-bench export of 873070a4,
+  lock held, 12 runs, CONTENDED 1-3 of 3 per arm, 0 errors): SIMULATED 144 Hz uncapped -> capped riot60 0.68 ±0.04 -> 0.39
+  ±0.03 cores (-43 %), drive60 0.47 ±0.03 -> 0.29 ±0.02 (-38 %), duplicate frames 2450 -> 0, skipped tick images 0 -> 0,
+  working set WASH. LEDGER L10 row + two rows in the final table (main column = the head exe without the cap: main's
+  city_bench has no `--max-fps`, so it cannot run the arm; said so in the table); REPORT kept-list updated.
