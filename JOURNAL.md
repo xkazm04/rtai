@@ -1187,3 +1187,7 @@ NEXT (supersedes it16's):
 - Scratch cleaned: every movie frame sequence in it9-it19 and the raw clip segments deleted
   (2.2 GB -> 545 MB); the masters hold every referenced still and clip; logs + scripts kept.
 - 07:09 Session end: all committed; tree clean. Head = this commit.
+- 07:12 The all-weapons ticket contacts re-shot after the heavy v3 icons (`it19/board.sh v3
+  1920x1080` + it19's 1280x800 board, 0 SCRIPT ERROR): `gtai-masters/n8/hud/hud_tickets_all_weapons_
+  {1280x800,1920x1080}_contact.png` replaced (17 tickets each; looked at the 1080p one at 1/3: every
+  name and icon reads, the heavy three now in the set's rust/brass). Board frames deleted. Head clean.
