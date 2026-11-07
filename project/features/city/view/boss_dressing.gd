@@ -22,9 +22,16 @@ var _rev: int = -1
 var _tex: Dictionary[String, Texture2D] = {}
 
 
+## BossView's hook: add() with nothing to discard at the call site (BossView.attach stays <= 40
+## lines once the lanes merge).
+static func attach(floor: Node2D, arena_id: String, origin: Vector2) -> void:
+	@warning_ignore("return_value_discarded")
+	add(floor, arena_id, origin)
+
+
 ## Adds the dressing of the boss's arena beside `floor` (the arena floor view); null when the
 ## view is flat, the table has no row for the arena, or the floor has no parent yet.
-static func attach(floor: Node2D, arena_id: String, origin: Vector2) -> BossDressing:
+static func add(floor: Node2D, arena_id: String, origin: Vector2) -> BossDressing:
 	if floor == null or floor.get_parent() == null or ViewMode.shared().is_flat():
 		return null
 	var d: BossDressing = BossDressing.from_table(arena_id)

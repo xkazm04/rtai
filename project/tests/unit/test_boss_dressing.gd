@@ -28,4 +28,4 @@ func test_the_flat_view_attaches_none() -> void:
 	var floor: Node2D = autofree(Node2D.new())
 	var parent: Node2D = autofree(Node2D.new())
 	parent.add_child(floor)
-	assert_null(BossDressing.attach(floor, "depot", Vector2.ZERO), "top is untouched")
+	assert_null(BossDressing.add(floor, "depot", Vector2.ZERO), "top is untouched")
