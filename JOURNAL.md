@@ -1301,7 +1301,7 @@ NEXT (iteration 16, in order):
    Calls 1-6).
 3. If time before the freeze: the Mertz return to 70 filmed in motion (ticks 15700-16100 on the
    merge, combo 48 px/m), and a ghost on screen through Mertz's ease (quest 1's Tonnage voice).
-- MILESTONE 06:47 (NEXT 3 done early) the Mertz return to 70 in motion on the it15 merge, combo
+- MILESTONE 06:45 (NEXT 3 done early) the Mertz return to 70 in motion on the it15 merge, combo
   48 px/m, ticks 15600-16100, 0 SCRIPT ERROR: log "55.0 -> play at tick 15872" (Mertz down),
   "cards art p70 (pitch 62.5) at tick 15902". (The clip's first frame is 15600, so its "-> boss"
   line logs at 15600, not at the real engage 15270.) Masters
@@ -1311,3 +1311,6 @@ NEXT (iteration 16, in order):
   15920 on the p70 cards; 16080 at 70, the crates burning with Tonnage in form among them. A
   ghost on screen through quest 1's ease, seen live (the it15 NEXT 3's second half too).
 NEXT (iteration 16) is the it15 NEXT above, items 1-2 (item 3 done).
+- GATE 06:50 scenarios at 7097ee82: 52 ran, 0 failed, 0 SCRIPT ERROR, Godot exit 0
+  (`evidence/n8-view/scenarios-it15.log`; vehicle drive timing CONTENDED, passes). With unit
+  1524/0 (06:30), lint 15/15 and the trial reel top + combo 19/19, it15's change is gated.
