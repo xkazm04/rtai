@@ -22,8 +22,8 @@ const PATROL: Dictionary[String, String] = {
 	"p55": P55 + "cop_patrol_card.png",
 	"p70": P70 + "cop_patrol_card.png",
 }
-## A walking patrol cop's grid (street_walk.py from keyed cop_patrol_walk_70 / _55 B, row 4 as
-## frames 1-2-1-4, then street_tone.py: the strip's blue matched to PATROL's navy): 5 facings x 4
+## A walking patrol cop's grid (street_walk.py from keyed cop_patrol_walk_70_v4 / _55_v4 A, all
+## rows alternate, then street_tone.py: the strip's blue matched to PATROL's navy): 5 facings x 4
 ## stride frames, stepping by the distance walked (one cycle = STRIDE_M).
 ## {} = the standing card glides.
 const PATROL_WALK: Dictionary[String, String] = {
