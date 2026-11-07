@@ -46,7 +46,8 @@ const FALLS: Dictionary[String, Dictionary] = {
 ## LONG (it12): the round-0630 redraws (POST FIX BY EXAMPLE), the lying frames drawn long raw
 ## (~1.4-1.7x of standing, not a post stretch), every back corpse the 3/4-away one
 ## (--back-from-away: the drawn back corpse read as a person standing); the robots keep FALLS
-## (their redraw drew the stretch as long legs). LONG false = FALLS (it7-it9).
+## at 70 (their 70 redraw drew the stretch as long legs); at 55 (it13) the riot cop, SWAT and the
+## thug lie as their round-0650/0710 redraws (A). LONG false = FALLS (it7-it9).
 const LONG: bool = true
 const LONG_FALLS: Dictionary[String, Dictionary] = {
 	"p70":
@@ -68,9 +69,9 @@ const LONG_FALLS: Dictionary[String, Dictionary] = {
 	"p55":
 	{
 		"cop/head_cap": "cop_patrol_long_fall.png",
-		"cop/head_helmet": "cop_riot_fall.png",
-		"cop/head_swat": "swat_fall.png",
-		"thug": "thug_fall.png",
+		"cop/head_helmet": "cop_riot_long_fall.png",
+		"cop/head_swat": "swat_long_fall.png",
+		"thug": "thug_long_fall.png",
 	},
 }
 const FALL_FRAMES: int = 3
