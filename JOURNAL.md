@@ -1413,3 +1413,35 @@ NEXT (iteration 17, the freeze at 08:30):
   --boss=king --seed=2 --view=combo --ppm=48 --boss-cam` exit 0, 0 SCRIPT ERROR, no unknown-flag
   line, p55 cards at tick 35 (BossCam lives in features/bosses, so the release build carries it).
   Lanes' journals re-read 07:38: no new REQUEST or NOTE to view.
+
+## Iteration 17 (07:39-08:30, BUILD; the freeze)
+- READ 07:40: own JOURNAL (it16 NEXT), git log, REPORT, the four lanes' journals: no new REQUEST or
+  NOTE to view. The exe from the it16 freeze dry run is on disk (`build/export/windows/RTAI.exe`,
+  07:20, code e369f4b0). All four lanes have moved since the it16 trial merge (street 2de46fa1,
+  vehicles f9b7451c, city 7d73de04, hud f80e09ba): a last trial merge on their freeze-time heads +
+  the reel in both views is the most useful thing view can add before 08:30 (no code on n8-view:
+  the gated freeze stays valid).
+- TRIAL MERGE it17 07:40-07:44 (%TEMP%/view-trial-it11 691768ec -> 03493113, `trial_merge.sh`):
+  + city 7d73de04, street 2de46fa1, vehicles 0f4810f0 (its head moved to ada297fe at 07:4x: three
+  p55 cells mirrored, art + cutter only), hud f80e09ba. n8-view has no code since f4a95f31 (the it16
+  trial's view side; `git diff f4a95f31 HEAD -- project tools native` empty). Conflicts: JOURNAL.md
+  and REPORT.md only (checked per merge: every file the script kept "ours" is one of those two);
+  NO code conflict this time (it16's cast_view.gd hunk is already in the base). `--import` exit 0,
+  0 parse errors; debt-ratchet ok with no accept.
+- GATE 07:44-07:50 on the it17 merge 03493113: lint 15/15 (1204 files); unit 1690 passed / 0 failed
+  / 0 skipped, no FLAKY (54 s); director reel top 19/19 and combo 19/19 chapters all down, 0 SCRIPT
+  ERROR. Evidence `evidence/n8-view/{lint,unit}-it17-trial.log`, `director-reel-it17-trial-*.log`.
+- LOOKED 07:46 quest 1 on the it17 merge, combo 48 px/m (`qmerge.sh`, stills 2400/6000/13700, 0
+  SCRIPT ERROR): the payphone street with street's 70 peds and vehicles' cars under hud's boxes;
+  Dock 9 with the contractors' bodies in hi-vis and blood, Rivet with Gloria. Masters
+  `quest1_merged_it17_freeze_heads_combo_48ppm_t2400_t13700.png`.
+- LOOKED 07:47 the city block on the it17 merge, tilt70 32 px/m seed 5 tick 900 (0 SCRIPT ERROR):
+  the cop ring on cards, the jersey barriers, crates, peds. FOUND (not fixed): two dead cops lying
+  just north of the kerb barrier have their heads and shoulders drawn OVER the barrier's top face
+  (masters `FOUND_corpse_head_over_barrier_merged_it17_tilt70_32ppm_seed5_t900_crop3x.png`). Cause
+  (read, not yet proven by a test): `PropOcclusion` treats every body as upright: `body_patch` and
+  `silhouette` run from the feet UP the screen, so a lying figure whose head points south into a
+  prop's drawn area makes no hit and the prop is not redrawn over it. A fix wants a lying patch
+  (the down figure's screen extent, no x-ray silhouette for the dead) and the down figure's extent
+  from street's cards. DECISION freeze-it17: not landed before the freeze (a view+street seam, ~30
+  lines + a test + the full re-gate does not fit 08:30 safely; the gated freeze stays). Next steps 6.
