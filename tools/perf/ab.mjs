@@ -4,7 +4,8 @@
 //   node tools/perf/ab.mjs --scenes=king,drive70,riot --arms=base:,lever:--some-flag [--pairs=3]
 //        [--out=evidence/perf/<name>] [--headless] [--no-lock]
 // An arm is `<name>:<extra user args>[^<extra engine args>]` (space separated, comma-free), e.g.
-// `mobile:^--rendering-method mobile` A/Bs the renderer without touching the project. A name ending
+// `mobile:^--rendering-method mobile` A/Bs the renderer without touching the project. A third `^` segment
+// sets env vars for that arm (`KEY=VAL ...`): `stock@exe-windows-bench-tw:^^GTAI_TW_TRIM_MB=0` (L9: one binary, two arms). A name ending
 // `@exe` (e.g. `rel@exe:`) runs the exported windows-bench release build (EXE) instead of the editor
 // binary: the release-vs-debug baseline; `@exe-<dir>` runs build/export/<dir>/RTAI-bench.exe instead (L7: the
 // same pck beside another export template); export it first (`node tools/bench/run.mjs` or the line in LEDGER). Takes C:/Users/kazda/kiro/gtai-n5/bench.lock
@@ -66,8 +67,9 @@ function parseArgs(argv) {
   }
   o.arms = o.arms.split(',').map((s) => {
     const i = s.indexOf(':');
-    const [user, engine = ''] = s.slice(i + 1).split('^');
-    return { name: s.slice(0, i), user: user.split(' ').filter(Boolean), engine: engine.split(' ').filter(Boolean) };
+    const [user, engine = '', envs = ''] = s.slice(i + 1).split('^');
+    const env = Object.fromEntries(envs.split(' ').filter(Boolean).map((kv) => [kv.split('=')[0], kv.split('=').slice(1).join('=')]));
+    return { name: s.slice(0, i), user: user.split(' ').filter(Boolean), engine: engine.split(' ').filter(Boolean), env };
   });
   o.scenes = o.scenes.split(',');
   return o;
@@ -96,7 +98,7 @@ async function runOnce(sceneName, arm, round, outDir) {
   rmSync(file, { force: true });
   const user = sc.user.map((u) => u.replace('OUT', file));
   const others = foreignGodot().length;
-  const env = { ...process.env, APPDATA: process.env.APPDATA_PERF ?? 'C:/Users/kazda/kiro/gtai-d9x/appdata/perf' };
+  const env = { ...process.env, APPDATA: process.env.APPDATA_PERF ?? 'C:/Users/kazda/kiro/gtai-d9x/appdata/perf', ...arm.env };
   const sampler = startSampler();
   const exeDir = arm.name.match(/@exe(?:-([\w.-]+))?$/)?.[1] ?? (arm.name.endsWith('@exe') ? 'windows-bench' : null);
   const exe = exeDir !== null;

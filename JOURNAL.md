@@ -359,3 +359,18 @@ NEXT (iteration 10):
 5. Answer REQUESTs (none open to perf at 14:35).
 - Session end 14:36 (it9): 9 commits (3302a019 .. this), gates green at 78193069 (L8), reel 19/19 x3, lock released,
   no Godot / scons of mine running.
+
+## Iteration 12 by the Director's count (14:37-15:37, BUILD)
+- Read: JOURNAL it9 + NEXT, git log -30, the rivet / seams / handheld journals: no REQUEST open to perf. Registry rules
+  applied: measurement-honesty (the final table carries a head-vs-head A-vs-A arm, the F12 floor), perf-regression-gating
+  (one interleaved job, the same machine state for both builds), perf-instrumentation (L9's mechanism is measured by
+  a log line in the engine, not inferred from the working set alone).
+- 14:38 NEXT 1 (final table): scratch `perf-base` moved to main 3982af1a (project.godot reverted, detached), the 256
+  chunks copied (the generator is unchanged since main), textures reimported at main's WebP q25 m2 (24 s; ctex 203 MB
+  vs head 191 MB by `du -m`), `windows-bench` exported to `build/export/windows-bench-main/` (pck 227.70 MB, matches
+  it4's main). `windows-bench-head2` = a copy of the head export (A-vs-A). Job 14:39: riot / drive70 / riot60 / drive60,
+  arms main / head / head2, 3 rounds, lock held (`evidence/perf/final-exe/`).
+- 14:42 NEXT 4 (RAM): source read of 4.7.2's RenderingDevice: each transfer worker (up to 16 = the core count) keeps a
+  CPU staging buffer of next_pow2(its largest upload) until shutdown. L9 hypothesis in the LEDGER before building; patch
+  `tools/perf/template/tw_trim.py` applied to the scratch tree (env-gated: one binary, two arms); `ab.mjs` arms take
+  env vars (third `^` segment). Build waits for the A/B to end (no contention of my own numbers).
