@@ -1,8 +1,8 @@
 class_name CityView
 extends Node2D
-## Draws the city: a camera on the CitySystem's focus, the resident chunks (ChunkView, time
-## sliced) and the actors (one write_render() per frame into CrowdLayers). Reads no frame delta
-## (SIM-01): everything it shows is sim state. Render only; never needed headless or in replay.
+## Draws the city: a camera on the CitySystem's focus, the resident chunks (ChunkView, time sliced)
+## and the actors (one write_render() per frame into CrowdLayers). No frame delta (SIM-01): all
+## it shows is sim state; under a lift CityOcclusion. Render only; never headless or in replay.
 ## Layers come from the render stack table (core/render/README.md): the world (this node's
 ## canvas: ground, decals, shadows, props, roofs), the D4 print pass (look_d4, reads the world
 ## through the screen texture) on the `print` canvas, the actors (look_d4_item) on `actors`.
@@ -78,6 +78,7 @@ func setup(city: CitySystem) -> void:
 	textures = CityTextures.new(tex_table)
 	chunks = ChunkView.new(get_canvas_item(), textures)
 	prop_lights = CityPropLights.new(lights, tex_table)
+	CityOcclusion.attach(self, city, _item_mat)
 	city.sim.set_render(crowd.rids(), CrowdLayers.placeholder_clips())
 	set_look_enabled(look_enabled)
 	set_noir(NoirLook.requested())
@@ -215,8 +216,7 @@ func _build_layers() -> void:
 	_actors = actors
 	actors.layer = RenderLayers.canvas(&"actors")
 	actors.follow_viewport_enabled = true
-	var item_shader: Shader = load(ITEM_SHADER)
-	_item_mat.shader = item_shader
+	_item_mat.shader = load(ITEM_SHADER) as Shader
 	add_child(actors)
 	crowd.attach(actors)
 	_build_fx(actors)

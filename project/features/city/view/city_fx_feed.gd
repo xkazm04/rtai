@@ -12,6 +12,8 @@ const REBIRTH_M: float = 4.0
 const PENDING: int = 1
 const FLYING: int = 2
 
+## The last snapshot observed (CityOcclusion's crowd reads it instead of taking a second one).
+var last_snap: PackedFloat64Array = PackedFloat64Array()
 var triggers: FxTriggers
 ## The car lights (night), fed the same snapshot; null = none.
 var headlights: CityHeadlights = null
@@ -40,6 +42,7 @@ func _init(t: FxTriggers) -> void:
 ## Diffs `snap` (CitySimBackend.snapshot(): actor records, then projectile records) at `tick`.
 ## The first observe only primes: nothing already flying or dead fires.
 func observe(snap: PackedFloat64Array, tick: int) -> void:
+	last_snap = snap
 	_seen.fill(0)
 	var n: int = snap.size()
 	var r: int = 0

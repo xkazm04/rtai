@@ -126,6 +126,8 @@ func _prop(ci: CanvasItem, at: Vector2, p: ArenaStation.Prop) -> void:
 	var r: Rect2 = Rect2(Ink.px(at - p.size * 0.5), p.size * Ink.PX_PER_M)
 	var h_m: float = PROP_H_M.get(p.kind, 0.0)
 	var up: Vector2 = ViewMode.shared().lift_at(ci.get_global_transform() * r.get_center(), h_m)
+	if up != Vector2.ZERO and PropCards.stand(ci, p.kind, r):  # n8 city: the cover as cards
+		return
 	if ViewMode.shared().eye_h_m > 0.0 and up != Vector2.ZERO:  # top_lift: swept, leaning out
 		for i: int in PROP_SLICES:
 			ci.draw_rect(Rect2(r.position + up * (float(i) / PROP_SLICES), r.size), side)
