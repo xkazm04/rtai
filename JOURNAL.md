@@ -646,7 +646,7 @@ flatter camera, heavier rust), ambulance_between_70 (B: use A and D; its B is a 
 ambulance_between_b_70 (B, 0155) and ambulance_between_c_70_v2 (B, 0140); and unasked, for my
 "weakest C" Call: sedan_between_c_70_v2 and police_car_between_c_70_v2 (B, 0145, turned ~20-25
 by a turn reference). Looked at every sheet on a grey contact sheet before cutting.
-MILESTONE 01:55 8c634dc8 every sim car turns through nine views on p70 (FINE rows 0-8).
+MILESTONE 01:45 8c634dc8 every sim car turns through nine views on p70 (FINE rows 0-8).
 vehicle_cards.py: REDRAWS (per sheet id, per slot: a one-drawing redraw or the row's own),
 ROW_FIT (the taxi row sheet fitted to its neighbours like a redraw), FIT_BY = "area": the first
 cut scaled redraws to the neighbours' mean WIDTH and the strip showed every C cell visibly small
@@ -680,3 +680,29 @@ DECISION vehicles: every p70 row nine views, FIT_BY area (docs/decisions.md).
 - The pickup's C in-between: the row sheet's (built; design exact, ~30-35 deg past the side) vs
   the _c redraw (better turned ~15-18, flatter camera, heavier rust): PICKUP_C_REDO in
   tools/art/vehicle_cards.py, then re-cut. See turn360_tilt70_64ppm_street_between_before_after.mp4.
+01:52 FILM the 32 px/m twin (vehicle_turn --set=street --ppm=32): masters
+turn360_tilt70_32ppm_street_nine_views.mp4 (after only). FRICTION: the swapped-in "before" at 32
+drew NO taxi at all (pickup and ambulance fine) although the 64 px/m before with the same HEAD
+atlas drew it, and the arena films of iterations 11 showed HEAD's taxi: an artefact of the atlas
+swap + reimport, not used as evidence. Next time film a before from a throwaway detached worktree
+(LFS checkout + --import), not by swapping the atlas in place.
+Not started (too big for the 30 min left; needs the cast's z on the print actor layer, a boss
+arena re-film and the reel): the stage cards' front grid (NEXT 2 of iteration 11).
+Evidence json: evidence/n8-vehicles/iteration14.json.
+
+## Calls for the owner (carry to REPORT; with the earlier ones: bike, wreck fire size, rotation
+## density, the depot van colour; "the C in-between is the weakest" is now answered by the C v2s)
+- The pickup's C in-between (row C built vs the better-turned _c redraw), see above.
+
+NEXT (iteration 15, in order):
+1. The stage cards' depth: a VehicleFront grid from the arena's fighters (stage.arena.rivet,
+   hostiles, boss: Fighter.pos in m, alive()) fed in VehicleStageCards._process; the cards' band
+   over the actors and `cards.under` just under them ON THE PRINT ACTOR LAYER (find the cast's
+   z there first: CastView / ArenaFloorView, view's files, read only). Film the Servo depot fight
+   (combo, 32 px/m) hook on/off, the reel in both views, `top` identity (no node in top).
+2. p55 in-betweens: none in the library (boss arenas park few cars); leave five unless the asset
+   lane serves them unasked.
+3. Exe at the freeze (int-day recipe in docs/decisions.md), REPORT.md by 08:40 with every Call.
+01:58 GATE director reel on 8a4d1ff8 (`res://dev/arena/arena.tscn -- --bot=reel --reel=director
+--loadout=pistol --rigs --view=<v>`, headless, --fixed-fps 60 --quit-after 7600): top 19/19 all
+down, tilt70 19/19 all down, 0 SCRIPT ERROR, exit 0 each (evidence/n8-vehicles/director-reel-it14-*.log).
