@@ -85,6 +85,7 @@ func fill_view(view: CollectCallView, stage: CollectCallStage, system: QuestSyst
 	fill(view.hud_view.state, stage, system)
 	if stage == null:
 		return
+	HandheldRumble.feel_hurt(stage.arena.rivet.hurt_tick)  # d9-handheld: no-op without a rumble row
 	var off: Vector2 = Vector2(0.0, view.forms_lift_m)
 	if stage.pilot != null:
 		off += KerfGlide.offset_m(stage.pilot.kerf, stage.tick)

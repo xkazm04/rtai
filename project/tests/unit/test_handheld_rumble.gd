@@ -39,3 +39,19 @@ func test_events_bus_drives_it_when_in_the_tree() -> void:
 func test_desktop_row_has_no_rumble_and_deck_does() -> void:
 	assert_eq(DeviceProfile.of("desktop").rumble, 0.0)
 	assert_gt(DeviceProfile.of("deck").rumble, 0.0)
+
+
+func test_a_rising_hurt_tick_plays_rivet_hurt_once() -> void:
+	var rumble: HandheldRumble = HandheldRumble.new(1.0)
+	assert_false(rumble.see_hurt(-1000000), "the first read only primes")
+	assert_true(rumble.see_hurt(120))
+	assert_false(rumble.see_hurt(120), "the same hurt is not felt twice")
+	assert_eq(rumble.played, 1)
+	assert_eq(rumble.last, HandheldRumble.pulse(&"rivet_hurt", 1.0))
+	rumble.free()
+
+
+func test_feel_hurt_without_a_live_rumble_is_a_no_op() -> void:
+	assert_null(HandheldRumble._live)
+	HandheldRumble.feel_hurt(5)
+	assert_null(HandheldRumble._live)

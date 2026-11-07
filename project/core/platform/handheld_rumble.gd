@@ -8,6 +8,7 @@ extends Node
 
 const PULSES: Dictionary[StringName, Vector3] = {
 	&"player_hit": Vector3(0.3, 0.8, 0.18),
+	&"rivet_hurt": Vector3(0.25, 0.55, 0.12),
 	&"struck_killed": Vector3(0.4, 0.6, 0.16),
 	&"struck": Vector3(0.3, 0.3, 0.1),
 	&"knocked_down": Vector3(0.5, 0.2, 0.1),
@@ -16,12 +17,18 @@ const PULSES: Dictionary[StringName, Vector3] = {
 	&"whispers": Vector3(0.2, 0.0, 0.4),
 }
 
+## The live node (null without a rumble row: feel_hurt() is then a no-op, the desktop's case).
+static var _live: HandheldRumble = null
+
 var gain: float = 1.0
 ## Pulses played (tests and the log read it).
 var played: int = 0
 var last: Vector3 = Vector3.ZERO
 var _until_ms: int = 0
 var _strength: float = 0.0
+## The last Rivet hurt tick seen (feel_hurt); the first one seen only sets it.
+var _hurt_seen: int = -1
+var _hurt_primed: bool = false
 
 
 func _init(rumble_gain: float = 1.0) -> void:
@@ -29,6 +36,7 @@ func _init(rumble_gain: float = 1.0) -> void:
 
 
 func _ready() -> void:
+	_live = self
 	var bus: Node = get_node_or_null(^"/root/Events")
 	if bus == null:
 		return
@@ -47,7 +55,27 @@ func _ready() -> void:
 
 
 func _exit_tree() -> void:
+	if _live == self:
+		_live = null
 	Log.info("device", "rumble: %d pulses played" % played)
+
+
+## A view's per-frame read of Rivet's `hurt_tick` (the sim's Fighter.hurt_tick, set by every
+## CombatArena.damage on him: guards, the pit, the bosses): a rise plays `rivet_hurt`. Reads only.
+static func feel_hurt(hurt_tick: int) -> void:
+	if _live != null:
+		@warning_ignore("return_value_discarded")
+		_live.see_hurt(hurt_tick)
+
+
+## True when `hurt_tick` is a new hurt (and plays the pulse); the first call only primes.
+func see_hurt(hurt_tick: int) -> bool:
+	var fresh: bool = _hurt_primed and hurt_tick > _hurt_seen
+	_hurt_seen = hurt_tick
+	_hurt_primed = true
+	if fresh:
+		_fire(&"rivet_hurt")
+	return fresh
 
 
 ## The pulse `kind` at `rumble_gain`: weak, strong, seconds (zero for an unknown kind).
