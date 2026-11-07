@@ -1186,3 +1186,20 @@ kept across frames; the snapshot shared with the rig feed), motion-quality-gatin
 parity (same seed and scene, one const apart; judged on the riot and the drive in motion, frame
 diffs every 30 frames), generative-artifact-gating (traffic light v6: A, used as is, stacked against
 the old 55 and the 70 before cutting), tiling-texture-acceptance (n/a).
+- READ (07:11) the edge flash's cause: ChunkView._slice draws a chunk over several frames
+  (BUDGET_US 1500, ground commands first), so a chunk activated while on screen shows its ground
+  before its sidewalk items for a frame. Fix idea: keep a chunk's pooled items invisible
+  (canvas_item_set_visible) until `activated`, only under a lifted view (under `top` the boot fill
+  is visible progressively and the `top` framemd5 must not move). Not landed: no time to gate it.
+
+NEXT (iteration 28, freeze session, in order):
+1. Director reel tilt70 log `evidence/director-reel-it27-tilt70.log` (started 07:10 on 7d40e58d):
+   check 19/19, 0 SCRIPT ERROR; if the session ended first, re-run it.
+2. Freeze items (08:30): `top` framemd5 both recipes (boot scene vs top22.md5; the city arena vs
+   it26/topbase_arena.md5), `node tools/evidence/run.mjs --no-bench`, scenarios, the exe export
+   (int-day recipe in docs/decisions.md) to build/export/windows/RTAI.exe, REPORT final (head, exe
+   command lines, gates).
+3. Only if time before the freeze: the ChunkView edge flash (above), gated to lifted views, judged on
+   the riot f560-575 with a framemd5 `top` check.
+4. REPORT's combined clip (it25 set, 55 s) predates the crowd occlusion and the 55 traffic light:
+   refresh only if the freeze leaves time.
