@@ -67,8 +67,13 @@ TAXI_SHEET = False
 # VehicleViews.FINE with it.
 VAN_SHEET = True
 VAN_BETWEEN_55 = False
+# True: the 55 van from van_cream_55_v3 (A: van_cream_70's design at a true 55, no roof rails) and the
+# 55 police car from police_car_55_v6 (B: the side view at the 3/4s' camera, ~50, not ~28; one lens
+# order); False: van_cream_55 (van_55's rails and camera spread) and police_car_55 (1725 B).
+P55_V = True
 SHEET_PICKS = ({"taxi": {70: "taxi_70_v3"}} if TAXI_SHEET else {}) | (
-    {"van": {70: "van_cream_70", 55: "van_cream_55"}} if VAN_SHEET else {})
+    {"van": {70: "van_cream_70", 55: "van_cream_55_v3" if P55_V else "van_cream_55"}} if VAN_SHEET else {}
+) | ({"police_car": {55: "police_car_55_v6"}} if P55_V else {})
 # Grade the cream in-betweens' light paint to their five-view neighbours (False: as drawn, a shade peach).
 CREAM_GRADE = True
 BETWEEN_PICKS = {"van": {70: "van_cream_between_70"} | ({55: "van_cream_between_55"} if VAN_BETWEEN_55 else {})} if VAN_SHEET else {}
@@ -149,8 +154,8 @@ SERVICE_PICKS = {"delivery_truck": {55: "delivery_truck_55_v2"}, "depot_van": {5
 # drawn (the car turns back on itself between the 3/4 and the side, its roller door swaps sides).
 MIRROR_34 = {
     ("delivery_truck", 55): (1,), ("depot_van", 55): (1, 3), ("depot_van", 70): (1, 3),
-    ("van", 55): (1,), ("parked_pickup", 55): (1,), ("police_car", 55): (1,),
-}
+    ("parked_pickup", 55): (1,), ("police_car", 55): (1,),
+} | ({} if P55_V else {("van", 55): (1,)})  # van_cream_55_v3 is drawn the right way
 # Per service row, degrees its saturated mid paint turns toward yellow: the truck's 70 cab is drawn
 # amber-orange (the library note: match the 55 sheet's mustard; 1463 vermilion-gate px raw in view 0).
 SERVICE_HUE = {0: 12.0}

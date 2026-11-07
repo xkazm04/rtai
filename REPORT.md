@@ -61,7 +61,16 @@ The view lane's REPORT.md came in with the n8-view merge; this file replaces it 
    at 70 now share the 3/4 views' steep camera (the old sides popped to a tall door band); the taxi's
    cab-yellow redraw is graded to its mustard neighbours.
    `street_side_redraws_turn360_tilt70_64ppm_before_top_after_bottom.mp4`.
-11. **Gates (it22, 299d849f):** unit 1566/0 no FLAKY; director reel 19/19
+12. **Every card turns one way at 55 too (it23, 0f4810f0 + ada297fe):** some library turntables draw
+   the 3/4 views turned the other way from their side view (nose down-left beside a nose-right side),
+   so the card turned back on itself through the 3/4s: the 55 delivery truck, the depot van at both
+   pitches, and at 55 the traffic van, parked pickup and police car (boss arenas under combo). The
+   cutter mirrors those cells in place (`MIRROR_34`); the 70 rows were already right (looked row by
+   row). The 70 depot van now takes the 55 design (square pad: one van across the combo swap).
+   `service_turn_mirror_fix_tilt_64ppm_f15-135_f210-330_before_top_after_bottom.png`,
+   `traffic55_turn_dir_fix_tilt55_64ppm_f30-45-60_before_after_main_then_street.png`,
+   `service_turn360_64ppm_before_left_after_right_tilt55_top_tilt70_bottom.mp4`.
+13. **Gates (it22, 299d849f):** unit 1566/0 no FLAKY; director reel 19/19
    all down in `top` and `tilt70`, 0 SCRIPT ERROR; lint 15/15; `top` framemd5 identical to it21;
    scenarios 52/0 (`evidence/n8-vehicles/iteration22.json`). `tools/evidence/run.mjs --no-bench`
    all PASS on 1651d3d6 (it22; parity bit-exact, selftest goldens, release-compile 567/0); the
@@ -115,6 +124,11 @@ Each: options, the default built, how to see it.
 11. **The delivery truck's length:** (a) fitted into the shared 7 m card cell, ~5.3 m (built); (b) a
    per-atlas cell size in VehicleCards, the drawn 6.4 m (a runtime change; worth it once the sim has
    a truck). See `service_truck_depot_van_turn_strip_tilt70_64ppm.png`.
+12. **55 van and police sheets:** (a) van_cream_55_v3 (the 70 van's design, no roof rails) and
+   police_car_55_v6 (side view at the 3/4s' camera) (built, `P55_V = True` in
+   `tools/art/vehicle_cards.py`); (b) the earlier van_cream_55 (roof rails) and police_car_55 (the side
+   flattens to ~28 deg). See them in the King's boulevard and Servo's depot: `RTAI.exe -- --boss=king
+   --view=combo --rigs`.
 
 ## Exe
 `build/export/windows/RTAI.exe` (preset `windows-showcase`: boots the arena; embedded pck + the sim DLL
