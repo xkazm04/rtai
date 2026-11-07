@@ -386,3 +386,41 @@ NEXT (iteration 12):
 5. End of day (by 18:30): delete the HKCU DirectX UserGpuPreferences value for
    gtai-d9x/handheld-godot/..._hh.exe and that copy; the BC7 scratch worktree `gtai-d9x/scratch/hh-bc7` (git worktree
    remove); the freeze exe `build/export/windows/RTAI.exe` with the exact command in REPORT.
+
+## Iteration 12 (14:40-15:40, BUILD)
+- Read: JOURNAL it11 + NEXT, git log, decisions tail, the rivet / seams / perf journals: no new REQUEST to handheld.
+  The 035643c7 gate was green (26654624). Plan: NEXT 4 a rumble setting in the pause card (handheld rows), NEXT 3 the
+  paid / failed cards walked live on a pad, NEXT 2 the glyph REQUEST to assets, then the gate + reels.
+- MILESTONE 14:52 (690ea895) NEXT 4: a rumble setting in the pause card on a handheld tier: "Rumble: full / half / off"
+  (PlayerSettings.rumble 1 / 0.5 / 0, saved; apply() sets `HandheldRumble.player_gain`, which multiplies the device
+  row's gain). Desktop card unchanged (the desktop row has no rumble node, the row is handheld-only). Tests: A on its
+  Toggle cycles full -> half -> off -> full with the focus kept, half plays a half pulse, off plays none; round trip;
+  a bad level (0.7) falls back to full. 19/19, lint 15/15.
+- 14:55 mutate.mjs on player_settings.gd at 690ea895 started (36 mutants; `evidence/it12/mutate-player-settings.log`).
+  An early survivor was real: line 48 (`else 1.0 -> 0.0`): **every settings file saved before today has no `rumble`
+  key**, and that mutant loads it as rumble off. (4bf3ad95) a test for an old file (frame_cap only -> rumble full);
+  planted by hand -> FAIL at :79; restored.
+- MILESTONE 15:05 NEXT 3 done, live: the failed and paid cards walked on pad events only under `--device=deck`
+  (scratch `gtai-d9x/scratch/padwalk2/`, copied into project/dev for the run and removed; no gate was running;
+  `evidence/it12/padwalk-deck-cards.log`). The real failure (the quest runner's fail, no checkpoint: Quit only): focus
+  Quit, A pressed it. With a checkpoint (`show_failed(true)`): focus Retry, d-pad down Quit, up Retry, A on Retry
+  restarted the contract (active, card hidden). The real success: the paid card holds until the closing lines play out
+  (780 frames, by design: `lines.busy()`), then focus Quit, A pressed it. FRICTION ~3 min: the first run read the paid
+  card 240 frames after the success and saw no card: not a fault, the lines were still playing.
+  Stills looked at; `gtai-masters/d9/handheld/padwalk-deck-failed-paid-1280x800.png` (both cards side by side) replaces
+  the E8b x2 crop in frames.json (cited nowhere; file deleted); 15 entries.
+- DECISION handheld/glyph-images: the pad prompts stay ink text labels (`[A]`, `[RT]`, `[Cross]`) on the handheld rows.
+  For a Steam build the glyphs that match whatever pad is in hand come from Steam Input
+  (`ISteamInput::GetGlyphPNGForActionOrigin` / `GetGlyphSVGForActionOrigin`, through the Steam backend only, STEAM
+  rule): owed with the Steam port. A drawn ink set (below) would replace the bracket text in the game's own style.
+  Rejected: our own glyph PNGs drawn now without the Steam origin lookup (they would still be wrong for a pad Steam
+  Input remaps).
+- REQUEST to assets: `ui_pad_glyphs_v1`, no pitch (flat screen UI, the HUD's ink-on-paper style, ink outline + print
+  grain, no teal/blue/red/vermilion). One sheet, each glyph on its own cell, transparent background, ~96 px source
+  per cell (shown at 28-40 px on a 7" 1280x800 panel, so a heavy ink line and a large letter/shape): face buttons as
+  round keys with the letters A, B, X, Y; the same four round keys with the shapes cross, circle, square, triangle
+  instead of letters; shoulder keys LB, RB and the triggers LT, RT (and the plain shapes for a pad that has L1/R1/L2/R2
+  and L/R/ZL/ZR: draw the letter text as separate cells: L1 R1 L2 R2 L R ZL ZR); left stick, right stick, a stick
+  press (L3, R3); the d-pad (whole, and each arm lit); Start and Select as small pill keys. No maker marks, no logos,
+  no brand-specific colours. Why: on the Deck profile the prompts are `[A]`-style text; the handheld tier's
+  prompts would read in the game's own drawn style instead. Low priority: after every rivet / seams REQUEST.

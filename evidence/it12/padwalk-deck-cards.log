@@ -1,0 +1,22 @@
+[INFO] device: profile deck: window 1280x800, max_fps 60, vsync enabled, stretch canvas_items, zoom_k 1.50, tier handheld, rumble 1.00
+[INFO] quest1: city cells: 2 chunks in 18 ms
+[INFO] quest1: street filled in 16 chunk passes
+[INFO] quest1: started: Rivet is the player's (seed 20261102)
+[INFO] padwalk: after A: session true
+[INFO] quest1: contract failed at b1-dumpster
+[INFO] padwalk: real fail: state failed focus Quit
+[INFO] padwalk: shot padwalk-deck-failed (0)
+[INFO] padwalk: A on the failed card: quit_pressed 1
+[INFO] padwalk: failed + checkpoint: focus Retry from the last checkpoint
+[INFO] padwalk: d-pad down: focus Quit
+[INFO] padwalk: d-pad up: focus Retry from the last checkpoint
+[INFO] padwalk: shot padwalk-deck-failed-retry (0)
+[INFO] quest1: city cells: 2 chunks in 21 ms
+[INFO] quest1: street filled in 16 chunk passes
+[INFO] quest1: started: Rivet is the player's (seed 20261102)
+[INFO] padwalk: A on Retry: session true state active card false
+[INFO] quest1: paid +1500 at tick 865
+[INFO] padwalk: the paid card came after 780 frames (the closing lines play out first)
+[INFO] padwalk: real success: state succeeded paid true focus Quit
+[INFO] padwalk: shot padwalk-deck-paid (0)
+[INFO] padwalk: A on the paid card: quit_pressed 2

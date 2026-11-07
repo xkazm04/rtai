@@ -11,6 +11,10 @@ priority, the CPU's own 2-CU Radeon), never a device claim. Details and sources:
   has 8); ~0.95 GB private RAM, ~0.6 GB GPU memory (`evidence/sim/`).
 - A 20 s freeze mid-fight resumes cleanly: the sim advances 1 tick over it, exit 0 (`evidence/sim/e2-suspend-deck-reel.json`).
 - Every action on the pad: radio and reload moved to R3 (radio sat on the Guide button, which a handheld keeps).
+- **Every card of quest 1 on a pad alone** (it11-12): title, pause, failed (Retry / Quit) and paid, walked live under
+  `--device=deck` with pad events only (`evidence/it11/padwalk-deck.log`, `evidence/it12/padwalk-deck-cards.log`; still
+  `gtai-masters/d9/handheld/padwalk-deck-failed-paid-1280x800.png`). On a handheld tier the pause card offers the frame
+  cap (device / 30 / 40 / 60) and the rumble level (full / half / off, it12), both saved.
 - **The native Linux build**: the CitySim `.so` built in Valve's Steam Runtime "sniper" SDK container
   (`sh tools/handheld/build_linux_so.sh`), the `linux-showcase` export
   (`"$GODOT_BIN" --headless --path project --export-release linux-showcase ../build/export/linux/RTAI.x86_64`),
@@ -105,9 +109,8 @@ priority, the CPU's own 2-CU Radeon), never a device claim. Details and sources:
 - (it7) The draw_scale HUD side
   effect (if Call 5 b/c), the King fight's rumble count, the dev-arena experiments E1-E3/E7 re-labelled "at 32 px/m".
 - The Linux build: NAT-06 parity on the Linux `.so` (in WSL), a real Vulkan run (needs a Linux PC or a Deck).
-- Glyph images per pad type, a PlayStation pad behind Steam Input (Steam's origin glyphs), a rumble settings toggle,
-  rumble on blasts and crashes (no bus event), aim assist (a design call), a pad-only
-  walk through menus and the dialogue.
+- Steam Input's origin glyphs through the Steam backend (and a drawn ink glyph set: REQUEST to assets
+  `ui_pad_glyphs_v1`, it12), rumble on blasts and crashes (no bus event), aim assist (a design call).
 - A/Bs: `handheld_1080` viewport vs native stretch; the iGPU frame is fill-bound (E6), so next: a lower 2D draw size
   scaled up (viewport stretch below 1280x800) and the print grain / light passes off on the handheld tier,
   the Switch-class budget at 3 threads.
