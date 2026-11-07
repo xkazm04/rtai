@@ -1,15 +1,13 @@
 class_name PropOcclusion
 extends Node2D
-## View lab (docs/view-lab/PLAN.md; tilted --view only): the arena's standing props (walls, the
-## dumpster, crate rows: ArenaFloorView.PROP_H_M at or over MIN_H_M) are drawn with the floor,
-## under every actor. Under a tilt their faces and tops rise up the screen, so a body standing
-## just north of one (behind it: the camera sits south) would draw over the prop. Each frame this
-## node, on the actor layer over the bodies, redraws every prop with a body behind it (the floor's
-## own _prop: pixel-identical) and that body as an ink silhouette cut to the prop's drawn area:
-## hidden behind the prop, never vanished. A body in front of such a prop whose screen box meets it
-## is lifted over this node (FRONT_DZ) for the frame. (A scissor did not work on this layer:
-## clip_children and a clip_contents Control both drew nothing or one row.) Only made when the view
-## occludes (view.json `occlude`, default true under a tilt); never straight down: bit-identical.
+## View lab (tilted --view only): the arena's standing props (walls, the dumpster, crate rows:
+## ArenaFloorView.PROP_H_M at or over MIN_H_M) are drawn with the floor, under every actor. Under a
+## tilt they rise up the screen, so a body just north of one (behind it: the camera sits south)
+## would draw over it. Each frame this node, on the actor layer over the bodies, redraws every prop
+## with a body behind it (the floor's own _prop: pixel-identical) and that body as an ink silhouette
+## cut to the prop's drawn area: hidden, never vanished; a corpse (PropLying) is hidden, no ink. A
+## body in front of such a prop whose screen box meets it is lifted over this node (FRONT_DZ).
+## Only made when the view occludes (view.json `occlude`, under a tilt): `top` is bit-identical.
 
 ## Props lower than this hide nothing worth a patch (a cone).
 const MIN_H_M: float = 1.0
@@ -171,7 +169,7 @@ func _hits_of(at: Vector2, p: ArenaStation.Prop, rigs: Array[CutRig], out: Array
 	var cut: Array[PackedVector2Array] = []
 	for i: int in rigs.size():
 		var feet: Vector2 = _ends[i * 2]
-		if not body_patch(feet, _ends[i * 2 + 1], area).has_area():
+		if not PropLying.patch(self, rigs[i], feet, _ends[i * 2 + 1], area).has_area():
 			continue
 		var h: Hit = Hit.new()
 		h.area = area
@@ -179,7 +177,7 @@ func _hits_of(at: Vector2, p: ArenaStation.Prop, rigs: Array[CutRig], out: Array
 		h.cut = cut
 		h.prop = p
 		h.feet = feet
-		h.head = _ends[i * 2 + 1]
+		h.head = feet if rigs[i].dead and PropLying.ON else _ends[i * 2 + 1]  # a corpse: no ink
 		if feet.y < r.position.y:  # north of the prop's north edge: behind it
 			out.append(h)
 		else:

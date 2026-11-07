@@ -25,6 +25,9 @@ var hidden_frames: int = 0
 ## The crowd's patches over the run and the time spent finding them (us).
 var crowd_patches: int = 0
 var crowd_us: int = 0
+## Tall props outside the streamed chunks (the arena's kerb barriers): view's ArenaFloorView
+## fills this each frame (ground rect + drawn area at the live pitch); merged into the crowd scan.
+var extra: Array[CityOccluders.Bld] = []
 var _city: CitySystem = null
 var _near: CityOccluders = null
 var _view: CityView = null
@@ -124,6 +127,7 @@ func _scan_crowd() -> Array[Rect2]:
 	var view_px: Rect2 = get_global_transform_with_canvas().affine_inverse() * screen
 	var n: int = _patches.size()
 	var blds: Array[CityOccluders.Bld] = _near.in_rect(view_px)
+	merge_extra(blds, extra, view_px)
 	var areas: Array[Rect2] = []
 	if not blds.is_empty():
 		areas = CityCrowdOcclusion.patches(_snapshot(), blds, view_px, _patches)
@@ -185,3 +189,12 @@ func _draw_ink() -> void:
 				@warning_ignore("return_value_discarded")
 				part.append(part[0])
 				_ink.draw_polyline(part, PropOcclusion.RIM, Ink.LINE_PX * 0.5)
+
+
+## Appends the extra occluders whose drawn area meets the view to `blds` (a fresh in_rect array).
+static func merge_extra(
+	blds: Array[CityOccluders.Bld], more: Array[CityOccluders.Bld], view_px: Rect2
+) -> void:
+	for b: CityOccluders.Bld in more:
+		if b.area.intersects(view_px):
+			blds.append(b)
