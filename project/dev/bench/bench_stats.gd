@@ -21,6 +21,9 @@ var draws: PackedInt32Array = PackedInt32Array()
 var render_cpu_ms: PackedFloat64Array = PackedFloat64Array()
 ## d9-perf: the render server's GPU ms per frame (the viewport's timestamp queries).
 var render_gpu_ms: PackedFloat64Array = PackedFloat64Array()
+## d9-perf: the peak video memory and texture memory (bytes) over the measured frames.
+var vram_peak: float = 0.0
+var tex_peak: float = 0.0
 var _rig_us: int = 0
 var _rig_ticks: int = 0
 var _rigs_max: int = 0
@@ -68,6 +71,8 @@ func add_render(draw_calls: int, vp: RID) -> void:
 	render_cpu_ms.append(RenderingServer.viewport_get_measured_render_time_cpu(vp))
 	@warning_ignore("return_value_discarded")
 	render_gpu_ms.append(RenderingServer.viewport_get_measured_render_time_gpu(vp))
+	vram_peak = maxf(vram_peak, Performance.get_monitor(Performance.RENDER_VIDEO_MEM_USED))
+	tex_peak = maxf(tex_peak, Performance.get_monitor(Performance.RENDER_TEXTURE_MEM_USED))
 
 
 func metrics() -> Dictionary[String, float]:
@@ -103,6 +108,8 @@ func metrics() -> Dictionary[String, float]:
 		"renderCpuMsP99": _pct(render_cpu_ms, 0.99),
 		"renderGpuMsAvg": _mean(render_gpu_ms),
 		"renderGpuMsP99": _pct(render_gpu_ms, 0.99),
+		"vramPeakMb": vram_peak / 1048576.0,
+		"texMemPeakMb": tex_peak / 1048576.0,
 	}
 
 

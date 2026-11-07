@@ -39,3 +39,4 @@ func test_render_series_skip_the_warm_up_and_carry_gpu() -> void:
 	assert_eq(s.render_gpu_ms.size(), 5, "one GPU sample a measured frame")
 	assert_true(s.metrics().has("renderGpuMsAvg"))
 	assert_true(s.metrics().has("renderGpuMsP99"))
+	assert_true(s.metrics().has("vramPeakMb"))

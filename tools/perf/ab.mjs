@@ -74,7 +74,7 @@ export function readLog(kind, doc) {
   if (kind === 'bench') {
     const m = doc.metrics ?? {};
     return { wall: doc.frame_ms, side: { draws: m.drawCallsAvg, renderCpu: m.renderCpuMsAvg,
-      renderGpu: m.renderGpuMsAvg, sim: m.simStepMsPerTick } };
+      renderGpu: m.renderGpuMsAvg, sim: m.simStepMsPerTick, vramMb: m.vramPeakMb, texMb: m.texMemPeakMb } };
   }
   let t = 0;
   let k = 0;
@@ -162,7 +162,7 @@ export function summarise(results, arms) {
       const runs = byArm[arm.name] ?? [];
       const row = {};
       for (const m of METRICS) row[m] = verdict(base.map((r) => r.stats[m]), runs.map((r) => r.stats[m]));
-      for (const s of ['draws', 'renderCpu', 'renderGpu', 'process', 'sim', 'cpuCores', 'peakWsMb', 'threads']) {
+      for (const s of ['draws', 'renderCpu', 'renderGpu', 'process', 'sim', 'vramMb', 'texMb', 'cpuCores', 'peakWsMb', 'threads']) {
         row[s] = verdict(base.map((r) => r.side[s] ?? NaN), runs.map((r) => r.side[s] ?? NaN));
       }
       row.contended = runs.filter((r) => r.contended).length;
@@ -207,7 +207,7 @@ async function main() {
     for (const [arm, row] of Object.entries(rows)) {
       const f = (v) => `${v.b.median.toFixed(2)}±${(v.b.spread / 2).toFixed(2)}${arm === o.arms[0].name ? '' : ` ${v.call}`}`;
       console.log(`${scene} ${arm}: p50 ${f(row.p50)} p99 ${f(row.p99)} p99.9 ${f(row.p999)} worst ${f(row.worst)} draws ${f(row.draws)}`
-        + ` renderCpu ${f(row.renderCpu)} cpu ${f(row.cpuCores)} ws ${f(row.peakWsMb)} contended ${row.contended} errors ${row.scriptErrors}`);
+        + ` renderCpu ${f(row.renderCpu)} gpu ${f(row.renderGpu)} vram ${f(row.vramMb)} cpu ${f(row.cpuCores)} ws ${f(row.peakWsMb)} contended ${row.contended} errors ${row.scriptErrors}`);
     }
   }
 }
