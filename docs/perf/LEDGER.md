@@ -175,6 +175,12 @@ CONTENDED(2-8) in 14 of 36 runs (the other lanes' Godots), 0 script errors in 36
   `Performance` monitors); `ab.mjs` carries both (`gpu`, `vram` in its console rows). Closes the n/m GPU column.
 - it5: a project arm needs no runner change: `name:^--path <other project dir>` (the last `--path` wins), so
   an import-setting lever A/Bs from a scratch worktree with its own `.godot` cache (no reimport churn here).
+- it18: `tools/perf/thread_cpu.ps1 -ProcessId <pid> [-Seconds 10] [-Delay 0]` (`gtai.thread-cpu/1` JSON): where a
+  process's CPU goes, per thread. Two samples of every thread's CPU time, the thread's name (`GetThreadDescription`)
+  and the module of its Win32 start address (`NtQueryInformationThread` class 9), grouped by name-or-module: the
+  engine's main thread lands on `[Godot*.exe]` / `[RTAI*.exe]`, Godot's own threads on `[msvcrt.dll]` (std threads),
+  the GPU driver's on its DLL (`nvwgf2umx.dll` ...). Read-only (query rights). It answers "which thread pays" when
+  `ab.mjs`'s process CPU moves (L11).
 - Existing instruments reused: `FightFrames` (`--frames=<json>`: per-frame wall, process, flush, draw,
   pump, physics, render CPU/GPU, draw calls, pipeline compiles), `NodeSpans` (`--spans=<json>`: per-node
   `_process` and `_draw` cost: the per-system report), `city_bench.tscn` (`gtai.bench/1`).
@@ -263,6 +269,15 @@ CONTENDED(2-8) in 14 of 36 runs (the other lanes' Godots), 0 script errors in 36
   (the limiter's `Sleep` wake-ups plus the frame work no longer overlapping the present wait). Kept as Call P-3, not a default.
 
 ## Research digest
+- Present modes on D3D12 (it18, source read of 4.7.2 `drivers/d3d12/rendering_device_driver_d3d12.cpp`
+  `swap_chain_resize`, for L11): `VSYNC_ENABLED` = `Present(1, 0)`; `VSYNC_MAILBOX` = `Present(1, DXGI_PRESENT_RESTART)`
+  (still synced to the vblank, but a newer present discards the queued ones, so the queue never holds stale images);
+  `VSYNC_DISABLED` = `Present(0, ALLOW_TEARING)`; **`VSYNC_ADAPTIVE` is marked "Unsupported" and falls to `Present(1, 0)`,
+  the same as Enabled.** And the limiter (`core/os/os.cpp` `OS::add_frame_delay`): a target advanced by 1e6 / max_fps us
+  a frame, clamped to one frame either side of now, slept with `OS_Windows::delay_usec` = `Sleep(us / 1000)` (whole ms,
+  truncated; `timeBeginPeriod(1)` at boot). The D3D12 fence wait is `WaitForSingleObjectEx` (no spin). Lessons: on this
+  driver an "adaptive" arm is an A-vs-A of "enabled" for free (L11 uses it as the noise floor), and no engine path spins,
+  so any CPU a limiter adds is wake-up / scheduling cost or the driver's, which `thread_cpu.ps1` can split.
 - Frame limiter and pacing (it15): Godot's `Engine.max_fps` docs (stable): limiting the FPS reduces power use; with
   vsync Enabled / Adaptive the refresh rate is the ceiling; on VRR displays a limit a few fps under the refresh cuts input
   lag. The docs' 'Fixing jitter, stutter and input lag' page: jitter is most often a tick-rate vs refresh-rate mismatch;
