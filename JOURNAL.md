@@ -1490,3 +1490,10 @@ NEXT (iteration 23 = the freeze session, in order):
 3. If time before the freeze: the 55 side views of the street rows when the library draws them; the
    truck at true length needs a per-atlas cell size in VehicleCards (Call 11), not before a sim truck.
 Session end ~07:20.
+GATE 07:24 `node tools/evidence/run.mjs --no-bench` on 1651d3d6: all PASS (lint 15/15, unit 1566/0,
+scenarios 52, parity bit-exact + planted mutation caught at step 629, selftest look goldens 11/11 +
+block 5/5, export-audit release-compile 567/0).
+EXE dry run 07:24: `windows-showcase` exported from 1651d3d6 (exit 0, RTAI.exe 269 MB + the sim DLL);
+smoke `RTAI.exe --fixed-fps 60 --quit-after 200 -- --boss=servo --bot=boss --servo-ghost=dent
+--view=combo --rigs --seed=2` exit 0, 0 SCRIPT ERROR. The freeze re-exports HEAD.
+Session end ~07:26. Head = this commit. Tree clean.
