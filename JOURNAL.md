@@ -202,3 +202,26 @@ NEXT (it6 early, superseded below the continued entry):
   `%TEMP%\gtai-release-compile` (not made by this lane, no marker); scenarios/goldens/parity on it6 code owed.
   Ask the Director who owns that dir (or run release_compile with a lane-private TEMP: `TEMP=<lane dir> node ...`
   next session, if the tool honours TEMP). Session end 11:30; everything committed.
+
+## Iteration 7 (11:31-12:31)
+- Read: JOURNAL (it6 NEXT), git log, d9-seams JOURNAL (no REQUEST to rivet; seams fixed release_compile's
+  default dir on its branch, 6e49a298, per-worktree/pid).
+- MILESTONE gates on feb56ca2 (`evidence/d9/gates-it7.md`): `node tools/evidence/run.mjs --no-bench` with TEMP/TMP
+  set to a lane-private dir: lint 15/15, unit 1695/0, scenarios 52 (replay incl.), parity exact + planted caught,
+  look goldens 11/11 + block 5/5, release-compile 599 loaded / 0 failed. EXIT 0 in 8 min. The it3-it6 BLOCKED is
+  cleared for this lane (the foreign `%TEMP%\gtai-release-compile` stays; seams' fix lands with the merge).
+- Found by film (64 px/m, `--bot=gunplay --weapon=pistol --view=tilt70 --seed=3`): under the drawn figure nothing
+  published HeldMuzzle (the held part is hidden), so the muzzle flash printed on the ground ~1.3 m off his gun
+  (WeaponFxArt's GUN_SIDE_M fallback) and the tracer left from there.
+- MILESTONE `f7334278` RivetMuzzle: `tools/art/rivet_muzzle.py` measures each equipped strip's fire cells (5, 6:
+  the drawn flash's root = the biggest pale-hot blob's pixel nearest the body, off the visor, right of the body in
+  the side cell so a launcher's back-blast loses) and each left strip's gun tip (leftmost px in the arm band) ->
+  `data/tables/rivet_muzzle.json` (gtai.rivet-muzzle/1, 76 points; blades, baton, bottle excluded). RivetFrames.publish
+  publishes the current cell's point (mirrored with flip_h) as HeldMuzzle; a facing cell keeps the fallback.
+  Three measure rounds judged on contact sheets (round 1 took flash tips, round 2 the visor and chest highlights).
+  Before/after: `gtai-masters/d9/rivet/rivet_muzzle_before_after_pistol_left_tilt70_64ppm_seed3_f290_297.png`
+  (the flash now bursts from the drawn pistol's muzzle; the tracer leaves from it). New test_rivet_muzzle (3).
+- Seen (flamer, 64 px/m): firing to his left-down, the drawn side cell's flame points left while the game's jet
+  tongues go down-left from the wand: two flames for one stream when the aim sits between octants. Candidate:
+  for streams, the facing cell (no drawn flame) + the game jet, which needs a facing muzzle point. Open.
+- Seen (machine_pistol reload, frames 324-396): the bare base figure, no weapon, through the whole reload.
