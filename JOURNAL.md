@@ -802,3 +802,44 @@ A at 55/70; depot_dressing_v3 70 B "no gain").
   letters); bollard: a 0.9 m dark iron post with a cream band, no hazard stripes.
 - GATE unit full no-arg at 5f35e2a4: 1521 passed, 0 failed; lint 15/15 every commit. `top` cannot
   move: only p55 strips and a p55 width key changed (p55 is never drawn under top).
+- (03:28) FINDING CityOcclusion's cost is not the per-rig building query: culling rigs whose feet
+  are off screen (+3.5 m margin) measured 0.148 -> 0.147 ms mean, p99 0.483 -> 0.466 (city_bench
+  `--scenario=drive --view=tilt70 --zoom=1.0 --secs=30 --spans`, bench.lock HELD, before =
+  ca539e27 worktree). No gain, so REVERTED (not committed). What is left is the per-frame
+  RigCastShadows.collect walk and the draw (~0.03 ms); at 0.15 ms of a 16.7 ms frame it is closed
+  as not worth more code. The it11 0.21 ms was at zoom 0.4 with ~400 actors.
+- MILESTONE combined clip of the set refreshed: `gtai-masters/n8/city/it19_city_set_tilt70_combo_56s.mp4`
+  (facade drive tilt70 32 then 48 px/m, then the King fight under combo 48 px/m; 3ba29fd0..942fc2a9;
+  0 SCRIPT ERROR x3), replaces the it7 clip in frames.json (#12).
+- MILESTONE 678c7382 (it13 NEXT 5) quest 1's TUCK-IN crates stand under a tilt: PropBox (two
+  layers: the flat stencilled crate art as the top lifted 1.0 m, a front face from the art's south
+  band darkened and ink-ruled, a ground shadow); StageView's flat fallback line now calls
+  PropBox.draw_on (same line count, debt unchanged). Two-layer REBUILD (not a stretch): the quest
+  art has no sheet. EVIDENCE `gtai-masters/n8/city/it19_quest1_tuckin_crates_tilt70_32ppm_before_after_x2.png`
+  (quest1_clip --stills=13700 --view=tilt70, ca539e27 vs 678c7382; frames.json #8, replacing the
+  it11 depot combo pair, superseded by the v4 cover). Judged: the ten crates read as boxes on the
+  dock, the south row in front of the north row's face. `top` quest stills at ticks 4000 and
+  13700: pixel-identical to ca539e27. DECISION in docs/decisions.md.
+- GATE unit full no-arg at 678c7382: 1523 passed, 0 failed (2 new tests), no FLAKY. Lint 15/15.
+
+Registry rules applied this session: generative-artifact-gating (A raises used as is; bench_v3 B
+used with its note read: views 1/5 accepted so one design spans the strip; traffic_light_v3 B and
+roof_dressing_v3 A declined with reasons), sprite-and-atlas-production (same cut tool and cell
+rule; per-pitch widths instead of re-cutting), depth-ordered-layered-art (PropBox draws shadow,
+front, top in order and the stage's rows north to south so a south crate covers the north row's
+face), concept-scene-parity + motion-quality-gating (same scenario/seed/tick before and after in a
+throwaway worktree, judged at 32 and 48 px/m), tiling-texture-acceptance (not touched this
+session), render-submission-economy (PropBox adds 3 draw commands per quest crate; the occlusion
+cull measured and dropped because it bought nothing).
+
+NEXT (iteration 20, in order):
+1. Read the asset lane's answers to the it19 REQUESTs (bus_stop 55 + lamp 55 twins of the v4 70
+   designs; street_sign + bollard 70/55). Cut what lands (city_prop_cut.py from a scratch copy),
+   film combo's swap on the King fight (no design change at 70 -> 55).
+2. Street sign / bollard: if the sheets land, add props rows (city_facades.json) and film a kerb.
+3. The burning TUCK-IN crates (tuckin_crate_hit) under tilt70 at the sabotage tick (same PropBox
+   path; check the fire FX sits on the lifted top, not the ground).
+4. Before the freeze: evidence --no-bench, scenarios, the reel at tilt70 19/19, the `top`
+   framemd5 on the city arena, the exe export, REPORT (Calls: facade height, occlusion style,
+   lamp 70 width, the TUCK-IN two-layer box vs a drawn sheet).
+- Session end ~03:45. Head = this JOURNAL commit.
