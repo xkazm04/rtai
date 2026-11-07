@@ -1512,3 +1512,42 @@ GATE after bea2c74d (an art-only cell change): vehicle unit tests 21/0; the full
 1651d3d6 (above). The freeze re-runs everything on its HEAD. Scratch it22: raw .avi deleted.
 NEXT (iteration 23, the freeze), unchanged from above, with 1 = judge the police re-key first.
 Session end 07:29. Head = this commit. Tree clean.
+
+## Iteration 23 (BUILD, 07:29 - ; freeze 08:30)
+Read: JOURNAL tail, git log, the lane journals (no new REQUEST to vehicles; city's l.171 `live` answered
+in it21), the library catalog (new since it22: police_car_70_v2/v3 B, police_car_55_v5/v6 B,
+depot_van_70_v2 A "one design at both pitches", depot_van_top_v1-v4 (top prints for Call 9(b)),
+van_cream_55_v2/v3).
+FOUND (looking at the depot_van_70_v2 cut beside the committed atlases): the 55 delivery truck's
+column 1 and the depot van's columns 1 and 3 (at 55, and in depot_van_70_v2) are drawn turned the other
+way from their side view (nose down-LEFT beside a nose-right side; the 70 truck and every traffic row:
+nose down-right in column 1, tail down-left in column 3). Filmed at 55 (it22's strip and again today):
+on a down-right heading (frames 15-60) both service vans showed nose down-left, and at 210-240 the
+truck pointed up-right on an up-left heading: the card turns back on itself through the 3/4s. it22's
+"no pop" look missed it because truck and van were wrong together.
+MILESTONE 0f4810f0 the cutter mirrors such columns in place (`MIRROR_34`, data; drop an entry to cut
+as drawn); the p70 depot van from depot_van_70_v2 (A: the 55_v3 square-pad design, so the combo swap
+keeps one van; the old 70 had an X-frame). Truck rows unchanged at 70 (0 px). A first try mirrored the
+55 truck's column 3 too: the film showed it wrong at 225-300; per-column now. FILMED vehicle_turn
+--set=service tilt + tilt70 64 px/m before/after, 380 frames, 0 SCRIPT ERROR each.
+FRICTION: `git show HEAD:<png>` gives the LFS pointer (the first "before" film drew empty cells and
+the .import went valid=false): pipe through `git lfs smudge`. That film was deleted, never used.
+FOUND then (looking at every traffic row's columns 1-3, both pitches): at 55 the van, parked pickup and
+police car rows have the same column-1 fault; the 70 rows are all right.
+MILESTONE ada297fe those three p55 cells mirrored (MIRROR_34; a fresh p55 cut differs from the
+committed atlas in exactly those three cells). FILMED vehicle_turn tilt 64 px/m main + street sets
+before/after, 0 SCRIPT ERROR: frames 30-60 now point the same way as the sedan/taxi/ambulance.
+NOTE: mirroring the 55 police 3/4 puts its blue lens on the image right in that view (the siren
+flashes both lenses; minor). police_car_55_v6 and police_car_70_v3 (B, one lens order) not taken:
+not judged in motion before the freeze.
+Masters: service_turn_mirror_fix_tilt{,70}_64ppm_f15-135_f210-330_before_top_after_bottom.png,
+service_turn360_64ppm_before_left_after_right_tilt55_top_tilt70_bottom.mp4,
+traffic55_turn_dir_fix_tilt55_64ppm_f30-45-60_before_after_main_then_street.png. frames.json: entry 8
+(was the it22 service strip at 70, now a before) and 10 (the Servo bay ink, minor) replaced.
+Rules applied: sprite-and-atlas-production (a rotation set's columns share one turn direction; check
+the atlas cell by cell against a reference row), motion-quality-gating (the fault only shows turning:
+judged frame by frame on a known heading, before/after, same scene), generative-artifact-gating (A/B
+sheets only; a generated turntable's mirrored 3/4 caught before it shipped to 70),
+concept-scene-parity (one design across the 70/55 swap), depth-ordered-layered-art (mirrored in place
+about the cell centre: the ground centre and shadow stay put).
+GATE unit --changed 1550/0 and lint 15/15 (pre-commit) on both commits.
