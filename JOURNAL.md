@@ -902,3 +902,15 @@ NEXT (it25 end, final for d9; supersedes every NEXT above): the REPORT is final 
   4. a drawn walk per hold family (REQUEST to assets); 5. the p55 left walk tone, a drawn reload, the facing-cell
   muzzles, the armory row if picked.
 - Session end 18:12: everything committed; no Godot process of mine running; scratch deleted.
+
+## it26 (18:13-18:17, BUILD; 17 min to the freeze)
+- 18:13 Read JOURNAL tail, git log, d9-seams JOURNAL (it19 session: no REQUEST/NOTE to rivet; its trial merge vs
+  dacaac88 holds) and the asset lane JOURNAL (rounds 1905/1915 are weapon showcases, nothing for rivet).
+- 18:15 Checked at the freeze: `build/export/windows/RTAI.exe` present (18:00 export on 261f9fac);
+  `git diff 261f9fac..HEAD -- project tools` empty, so the exe is HEAD's code. Plasma sword: the catalog's
+  newest equipped are 70_v2 A and 55_v4 A, both already shipped (REPORT What works, b2614b45 / a2f9c77e); no newer
+  redraw landed. Tree clean.
+- No code change: a change needs the gates again (unit + evidence + 3 reels), which is more than the 15 min left.
+  Registry rules applied it26: motion-quality-gating (nothing claimed without its run; the exe stays the gated
+  code).
+NEXT (it26 end): unchanged from the it25 final NEXT above; the REPORT is final.
