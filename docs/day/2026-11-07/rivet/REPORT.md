@@ -13,8 +13,14 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
 - **Drawn left views for the one-handed holds at 70** (`1e00b083`, it6): the asset lane answered the REQUEST
   (`rivet_eq_<id>_70_left`, 6 A / 2 B); each is its own 3-cell strip `rivet_eq_<id>_left.png`, picked for the
   three left octants, weapon in his right claw, never mirrored. Still: `gtai-masters\d9\rivet\rivet_pistol_left_drawn_tilt70_64ppm_x3_t75_125_425_450.png`.
-- **Plasma sword redraw** (`b2614b45`, it6): equipped 70_v2 (A) and 55_v3 (B), both hands on the hilt, blade
-  about 2x. Still: `gtai-masters\d9\rivet\rivet_plasma_sword_redraw_tilt70_64ppm_x3_t204_264_300.png`.
+- **Plasma sword redraw** (`b2614b45`, it6; p55 `a2f9c77e`, it16): equipped 70_v2 (A) and 55_v4 (A: v3 was B, a
+  claw on the emitter in view 1, fixed by the asset lane), both claws on the haft, blade about 2x. Stills:
+  `gtai-masters\d9\rivet\rivet_plasma_sword_redraw_tilt70_64ppm_x3_t204_264_300.png`,
+  `gtai-masters\d9\rivet\rivet_plasma_sword_55_v4_swings_tilt_p55_64ppm_seed3_t282_302_322.png`.
+- **Left strips clean** (`ebacd1ab`, it16): 7 of 16 drawn left strips carried a neighbour figure's gun bell, flame or
+  spark at a cell edge (a floating piece beside him on a left turn); all cut by component now; the p55 baton, homing
+  shard and molotov left views are the library's A redos (tip spark; the gun in the far claw). Before/after:
+  `gtai-masters\d9\rivet\rivet_left_strips_before_after_component_cut_p55_p70_16strips.png`.
 - **Blade action rows sized** (it6): katana, plasma sword, chainsaw at both pitches (manifest `act_k`), the p55
   sword's overlapping swings cut by component (`--cc`). Contact: `gtai-masters\d9\rivet\rivet_blades_act_k_tuned_p70_p55_contact.jpg`.
 - **Fire frames for streams and autos** (`657a4b28`, it6): a shot within 7 ticks draws the fire cell (the flamer
@@ -45,9 +51,13 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
   cop at 32 px/m: `gtai-masters\d9\rivet\rivet_shadow_drawn_height_beside_cop_city_tilt70_32ppm_x4_seed5_f60.png`.
 - **The combined clip** (35 s, city 32, flamer 64, King + Kerf + roll 48, Servo 48):
   `gtai-masters\d9\rivet\rivet_d9_set_city32_flamer64_king_servo48_combined_35s.mp4`.
-- **Rivet's dialogue face** (`2b41bdeb`, it10): the front bust of the approved rivet_55_v2 sheet (portraits.json
-  row `rivet`, `tools/art/rivet_portrait.py`); his 9 quest-1 lines show a face. A concept-matched portrait is
-  REQUESTed from assets (one-file swap). Live in quest 1 at 1080p: `gtai-masters\d9\rivet\rivet_dialogue_face_quest1_payphone_tilt70_32ppm_1080p_t3450.png`.
+- **Rivet's dialogue face** (`e978f01f`, it16): the library's concept-matched portrait_rivet_55_v2 (A), neutral +
+  mood bust at the cast's 320 px; the mood bust on rivet-feels-good and rivet-sorry-not-sorry. Before (it10's sheet
+  cut) / after, live in quest 1 at 1080p:
+  `gtai-masters\d9\rivet\rivet_dialogue_face_before_after_portrait_v2_quest1_payphone_tilt70_32ppm_1080p_t3350.png`.
+- **The flamer's drawn flame follows the aim** (`90c46dfc`, it16): the it13 "red jet" was a drawn flame pointing
+  left (the head's octant) beside the game's jet at ~124 deg (the aim); the drawn flame now needs the aim within
+  22.5 deg. Before/after: `gtai-masters\d9\rivet\rivet_flamer_drawn_flame_needs_aim_before_after_gunplay_tilt70_64ppm_seed3_t359_380.png`.
 - **The frame cost** (`f599a528`, CONTENDED: another lane held the bench lock): rig_bench `--view=tilt70`, the drawn
   figure vs the head card over parts: 50 people p50 0.866 -> 0.78 ms, 200 people 1.276 -> 1.09-1.15 ms. No added
   cost (`evidence/d9/rivet-frame-cost-it10.md`).
@@ -83,10 +93,10 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
   ticks keeps the old spot (the other holds are drawn every which way in their facings; no generic rule held).
 - The Servo bay number printed over Rivet under combo: REQUEST to seams (it10), served on `d9-seams` at 3f4732db
   (ServoDepotDraw.cover); not on this branch until the Director merges both.
-- The electro baton's swing cell reads weakly at 64 px/m (a small spark; the baton barely shows) in the
-  every-weapon capture at both pitches: to judge in motion.
-- The flamer in the every-weapon capture (both pitches): a red jet streaks down-left about 30-40 deg off the drawn
-  flame; not judged yet (the it10 one-flame rule holds on the side octants; this may be a burning target).
+- The electro baton reads as part of his forearm at 32-64 px/m (the rod is his arm's rust-brown; only the tip spark
+  reads): an art fault, REQUESTed from assets (it16: a dark steel rod angled out of the claw, 1.3x longer).
+- The flamer: one frame after the trigger is released can still show a short drawn flame while the aim swings (the
+  fire cell outlives the last shot by 7 ticks).
 - Walk: one drawn walk and one sprint pose per sheet; built bob + sway on the facing.
 - Reload: no drawn reload frame; he keeps the equipped strip through it (it7 check: the "bare figure" seen in it6
   was the equipped back views, which show the small guns barely; no change made).
@@ -99,10 +109,10 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
    or a REQUEST to assets for a 4-frame stride grid per facing (street's `ped_*_walk` shape).
 3. **Left facings with a one-handed weapon.** Built (it6): the asset lane's drawn left views at 70 and 55 (weapon
    in his right claw); two-handed holds mirror. Option: mirror everything (swaps the gun hand: against the hand rule).
-4. **Rivet's dialogue face.** Built (it10): the approved sheet's front bust in quest 1's box (still:
-   `gtai-masters\d9\rivet\rivet_dialogue_face_quest1_payphone_tilt70_32ppm_1080p_t3450.png`). Options: keep it until
-   the concept-matched `portrait_rivet_55` lands (REQUESTed; one file), or the name alone until then (drop the
-   `rivet` row in `data/tables/portraits.json`).
+4. **Rivet's dialogue face.** Built (it16): the concept-matched portrait_rivet_55_v2; the mood bust (eye bars
+   narrowed, head lowered) on his two "other voice" lines (still:
+   `gtai-masters\d9\rivet\rivet_dialogue_face_before_after_portrait_v2_quest1_payphone_tilt70_32ppm_1080p_t3350.png`).
+   Options: more mood lines (rivet-everybody-screamed, rivet-my-hands; one value, `mood_lines`), or none.
 5. **The flamer's flame off the side/camera octants.** Built (it10): the facing cell + the game jet from the drawn
    nozzle (one flame). Option: the drawn flame cell in every octant (`RivetStrips.CONE` empty): a bigger drawn
    flame, but two flames when he fires diagonally (before/after still in frames.json).

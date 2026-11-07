@@ -503,3 +503,10 @@ NEXT (it13 end, 13:56; supersedes every NEXT above):
   on his left), poses and pitch as rivet_eq_electro_baton_70_v2 / _55_v2; no blue, no teal, no red. Why: the owner's
   d8 note (no weapon looked natural in his hand) needs every weapon to read at play zoom; the baton is the one that
   does not.
+- 14:3x GATES it16 on 90c46dfc: director reel 19/19 fully down in tilt70, combo, top; 0 SCRIPT ERROR; 0 p_frame; the 2
+  known ^ERROR lines each. Unit full no-arg 1705/0. Lint 15/15. Evidence run not re-run (it13 PASS; view-only since).
+  `evidence/d9/gates-it16.md`.
+- Seen in play: the p55 homing shard's left facings on the component cut (`--bot=gunplay --weapon=homing_shard
+  --view=tilt --ppm=64 --seed=3 --rigs`, 480 frames, 0 SCRIPT ERROR): the gun in his right claw, the cable arm near,
+  no floating bell. `gtai-masters/d9/rivet/rivet_homing_shard_left_p55_component_cut_gunplay_tilt_64ppm_x3_seed3_t276_296.png`.
+- FRICTION (~3 min): a heredoc with backslash paths broke a python str.replace of REPORT.md; used Edit instead.
