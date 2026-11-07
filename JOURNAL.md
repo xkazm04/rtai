@@ -486,3 +486,21 @@ NEXT (iteration 13):
   (59.94 Hz: no-op, no log line) exit 0, 182 frames, 0 duplicate / 0 skipped, 0 SCRIPT ERROR. Scenarios + the director reel
   top / tilt70 / combo running (15:57 / 15:59).
 - COMMITS: 813b7976 (bench tooling), 314632c4 (FrameCap).
+- GATE 16:08 at c46b80c1 (FrameCap inside): scenarios 52 ran / 0 failed (replay_60s identical), release-compile 599 loaded /
+  0 failed (private TEMP: the shared `%TEMP%/gtai-release-compile` belongs to another lane's run), director reel top / tilt70 /
+  combo 19/19 chapters fully down, 0 SCRIPT ERROR (`evidence/perf/gates-it15/`). Evidence `--no-bench` at c46b80c1 (private TEMP): lint 15/15, unit 1703 / 0, scenarios 52, parity bit-exact + planted mutation caught, look goldens 11/11 (worst 0.27) + block 5/5 (worst 0.22): `top` unmoved, export-audit 599 / 0: all PASS.
+- REQUESTs read 16:00: handheld's E12 (FYI: the L9 trim on the iGPU takes 128 MB off shared GPU memory, 176 MB off the working
+  set): it backs the traffic-sheet REQUEST (now to seams). Nothing else open to perf.
+
+NEXT (iteration 16):
+1. Freeze prep: at 18:30 export `build/export/windows/RTAI.exe` (windows-showcase) and name the command in REPORT; REPORT final
+   with the L10 row in the final table (the simulated 144 Hz case: main has no cap, head does); remove the scratch worktrees
+   (perf-before, perf-bc7cv, perf-base) and `gtai-d9x/scratch/godot-src` (several GB) plus `gtai-d9x/scratch/tmp-perf`.
+2. L10 on the release exe and the King: re-export windows-bench (FrameCap + the bench's `--max-fps`), riot60 / drive60
+   hz144 vs hz144cap `@exe`; King under combo with engine `--disable-vsync --max-fps 144` vs `60` (the arena never resets
+   the limiter). Expect the same ~40 %.
+3. L11 (Call P-3 follow-up): why a 60 fps limiter on vsync costs +0.1 core and whether another present mode gets the
+   smooth p99 for less: `--vsync=mailbox` / `adaptive` and the limiter at the display's exact rate (59.94) vs 60, ABAB on
+   riot60 + drive60, counting `multiTick` and the presented p99.
+4. If seams serves the traffic-sheet split: `GTAI_TW_LOG=1` on windows-bench-tw (expect 208 -> ~112 MB staging) + the RAM job.
+- Session end 16:09 (it15): 5 commits (813b7976 .. this); L10 KEPT as the new baseline; lock released, no Godot of mine running; scratch build logs removed.
