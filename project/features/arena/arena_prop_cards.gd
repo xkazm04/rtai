@@ -19,6 +19,8 @@ static var _script: Script = null
 static var _looked: bool = false
 ## Whether that script has PropCards.stand_rect (city a1fe2bbf or later).
 static var _has_rect: bool = false
+## Whether it has PropCards.stand_polys (the card's opaque outline; view it13's REQUEST to city).
+static var _has_polys: bool = false
 ## The crate stack card's cell width (m), from city's table (city_facades.json props).
 static var _crate_w_m: float = 3.2
 
@@ -67,6 +69,28 @@ static func stand_rect(kind: String, r: Rect2) -> Rect2:
 	return got if got is Rect2 else Rect2()
 
 
+## PropOcclusion's cut for cover `kind` on ground rect `r`: the card's opaque outline(s) (local px,
+## city's PropCards.stand_polys) when city has them, else `area` as one quad (the card's rect or
+## the lifted box). The rect alone inked a hidden body over the card's see-through corners (the
+## crate stack's pyramid: a black kite beside the top crate, it13).
+static func cut_polys(kind: String, r: Rect2, area: Rect2) -> Array[PackedVector2Array]:
+	var out: Array[PackedVector2Array] = []
+	if _cards() != null and _has_polys:
+		var got: Variant = _script.call("stand_polys", kind, r)
+		for poly: Variant in got if got is Array else []:
+			var pts: PackedVector2Array = (
+				poly if poly is PackedVector2Array else PackedVector2Array()
+			)
+			if pts.size() >= 3:
+				out.append(pts)
+	if out.is_empty():
+		var ne: Vector2 = Vector2(area.end.x, area.position.y)
+		out.append(
+			PackedVector2Array([area.position, ne, area.end, Vector2(area.position.x, area.end.y)])
+		)
+	return out
+
+
 static func _foot(r: Rect2) -> Vector2:
 	return Vector2(r.get_center().x, r.end.y)
 
@@ -79,6 +103,7 @@ static func _cards() -> Object:
 			_crate_w_m = _cell_w_m("crate_stack", _crate_w_m)
 			for m: Dictionary in _script.get_script_method_list():
 				_has_rect = _has_rect or m.get("name", "") == "stand_rect"
+				_has_polys = _has_polys or m.get("name", "") == "stand_polys"
 	if _script == null:
 		return null
 	var got: Variant = _script.call("named")

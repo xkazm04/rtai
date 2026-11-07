@@ -60,7 +60,7 @@ func _draw() -> void:
 	if stage.heat.level > 0:
 		for p: Vector2 in stage.patrol_pos:
 			_sprite("cop", p, _size(&"cop"), Vector2.DOWN)
-	if fighters_on_rigs:
+	if fighters_on_rigs and not QuestGuardCast.ON:
 		for h: Fighter in stage.arena.hostiles:
 			if h.kind == Fighter.Kind.BOSS:
 				_mertz(h)
@@ -80,6 +80,10 @@ func _draw() -> void:
 
 
 func _rivet(r: Fighter) -> void:
+	if fighters_on_rigs:  # the rigs draw Rivet; the guards came through _draw (QuestGuardCast)
+		if stage.hidden_in == "":
+			_hauler_marks()
+		return
 	var at: Vector2 = r.pos
 	if stage.hidden_in != "":
 		var peek: String = _lod_art("rivet_peek")

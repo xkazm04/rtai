@@ -158,8 +158,10 @@ func test_corpse_pins_are_capped_latest_deaths_first() -> void:
 	var died_at: Dictionary[int, int] = {}
 	for r: int in range(1, 7):
 		_rigs.feed.flags[r] = RigFeed.Flag.DEAD
-		died_at[100 + r] = r
-	var pins: Dictionary[int, int] = RigSelect.fresh_dead(_rigs.feed, _rigs._by_actor, died_at, 10)
+		died_at[100 + r] = 5000 + r  # late in a run: the hold counts from the death tick
+	var pins: Dictionary[int, int] = RigSelect.fresh_dead(
+		_rigs.feed, _rigs._by_actor, died_at, 5010
+	)
 	assert_eq(pins.size(), RigSelect.CORPSE_PINS)
 	assert_false(pins.has(101), "the oldest death is not pinned")
 	assert_true(pins.has(106))
