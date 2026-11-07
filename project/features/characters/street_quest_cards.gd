@@ -33,11 +33,19 @@ const DOWN: Dictionary[String, String] = {
 ## The corpse's turn off the facing (rad), picked per ground spot (-1, 0, +1 x SPREAD): guards
 ## charging one way fall one way, a heap of clones; 0 = all along their facing.
 const SPREAD: float = PI * 0.25
+## A patrol cop's facing follows its walk (CastView passes a fixed one): the last frame's cop
+## nearest the drawn point (within MATCH_M) gives the step; standing, the last facing holds.
+const FOLLOW_WALK: bool = true
+const MATCH_M: float = 1.5
 ## The card's drawn width (m): the pudgy contractor's shoulders, about Rivet's width.
 const WIDTH_M: float = 1.15
 ## The feet's height in the cell (from the top): the strip pads 2 px under the boots.
 const FOOT_Y: float = 0.985
 static var _tex: Dictionary[String, Texture2D] = {}
+## Render-only walk memory: last frame's / this frame's drawn patrol points (px) and facings.
+static var _frame: int = -1
+static var _was: Array[Vector4] = []
+static var _now: Array[Vector4] = []
 
 
 ## Draws the guard's card on `canvas` at `at_px` (canvas px) and returns true; false = no card for
@@ -52,7 +60,30 @@ static func draw_guard(
 static func draw_patrol(
 	canvas: CanvasItem, at_px: Vector2, facing: Vector2, px_per_m: float, tint: Color = Color.WHITE
 ) -> bool:
-	return _card(canvas, PATROL, at_px, facing, px_per_m, tint)
+	if not ViewMode.shared().cards:
+		return false
+	var face: Vector2 = walk_facing(at_px, facing, px_per_m) if FOLLOW_WALK else facing
+	return _card(canvas, PATROL, at_px, face, px_per_m, tint)
+
+
+## The facing of the patrol cop drawn at `at_px` this frame: its step since the nearest cop drawn
+## last frame, else that cop's facing, else `fallback` (a new cop).
+static func walk_facing(at_px: Vector2, fallback: Vector2, px_per_m: float) -> Vector2:
+	var frame: int = Engine.get_process_frames()
+	if frame != _frame:
+		_frame = frame
+		_was = _now
+		_now = []
+	var face: Vector2 = fallback
+	var best: float = MATCH_M * px_per_m
+	for w: Vector4 in _was:
+		var d: float = at_px.distance_to(Vector2(w.x, w.y))
+		if d <= best:
+			best = d
+			var step: Vector2 = at_px - Vector2(w.x, w.y)
+			face = step.normalized() if step.length() > 0.01 else Vector2(w.z, w.w)
+	_now.append(Vector4(at_px.x, at_px.y, face.x, face.y))
+	return face
 
 
 static func _card(

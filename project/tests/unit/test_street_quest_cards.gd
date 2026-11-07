@@ -52,3 +52,15 @@ func test_corpses_on_different_spots_fall_three_ways() -> void:
 func test_the_corpse_is_one_body_length_at_every_pitch() -> void:
 	# the 70 card: 1.15 m wide x 192 / (705 / 5) -> about 1.57 m, not the longer 55 drawing's 1.73
 	assert_almost_eq(StreetQuestCards.body_m(), 1.566, 0.01, "sized by the p70 standing card")
+
+
+func test_a_walking_patrol_cop_faces_its_step_and_holds_it_standing() -> void:
+	var at: Vector2 = Vector2(5000.0, 5000.0)
+	var first: Vector2 = StreetQuestCards.walk_facing(at, Vector2.DOWN, 32.0)
+	assert_eq(first, Vector2.DOWN, "a new cop takes the given facing")
+	await get_tree().process_frame
+	var walked: Vector2 = StreetQuestCards.walk_facing(at + Vector2(-2.0, 0.0), Vector2.DOWN, 32.0)
+	assert_almost_eq(walked.x, -1.0, 0.001, "walking left faces left")
+	await get_tree().process_frame
+	var still: Vector2 = StreetQuestCards.walk_facing(at + Vector2(-2.0, 0.0), Vector2.DOWN, 32.0)
+	assert_almost_eq(still.x, -1.0, 0.001, "standing keeps the last facing")
