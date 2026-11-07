@@ -1,4 +1,9 @@
-# d9 rivet REPORT (final, 18:05; branch d9-rivet at the freeze)
+# d9 rivet REPORT (final, 18:40, it30; branch d9-rivet at the freeze)
+
+The same text is also at the lane root as `REPORT.md`. Path check at 18:42: all 35 `gtai-masters/d9/rivet/` files
+and all 16 `evidence/d9/` paths cited below exist (each `<view>` name stands for its top, tilt70 and combo logs).
+`build/export/windows/RTAI.exe` and `gtai-masters/d9/rivet/frames.json` (15 entries) exist too. No code changed after
+the 18:00 export: `git diff 261f9fac..HEAD -- project tools` is empty, so the exe is HEAD's code.
 
 Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, every weapon in his hands.
 

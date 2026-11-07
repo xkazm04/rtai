@@ -952,3 +952,13 @@ NEXT (it29 end, final for d9): 1. swap in `keyed/rivet/rivet_walk_55_left_tone_c
   a 48 px/m King engage clip; 2. land the owner's Call 1 (size) and Call 2 (walk) picks; 3. after the Director merges
   d9-seams, re-run the reels x3 + evidence on the merge (expected conflicts: JOURNAL.md add/add, debt baseline);
   4. main's switch to combo; 5. a drawn walk per hold family, a drawn reload, facing-cell muzzles, the armory row.
+
+## it30 (18:40-18:45, REPORT)
+- 18:40 Read JOURNAL tail, git log. REPORT phase: nothing built.
+- 18:42 Path check: every cited path in the REPORT exists (35 masters files, 16 `evidence/d9/` paths; the `<view>`
+  logs as top/tilt70/combo), plus `build/export/windows/RTAI.exe` and masters `frames.json`. `git diff
+  261f9fac..HEAD -- project tools` is empty (the exe is HEAD's code).
+- REPORT header set to final 18:40; copied to the lane root as `REPORT.md` (same text; seams keeps its at the root too).
+- FRICTION (~3 min): a heredoc wrote a backslash literal wrong, and a CRLF header failed a byte match; done with Edit.
+NEXT (it30, final for d9): unchanged from the it29 NEXT (tone cells for the p55 left walk, the owner's Calls 1-2,
+  re-gate on the merge with d9-seams, main's switch to combo, a walk per hold family).
