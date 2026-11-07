@@ -147,7 +147,10 @@ SERVICE_PICKS = {"delivery_truck": {55: "delivery_truck_55_v2"}, "depot_van": {5
 # beside a nose-right side): the atlas convention (every traffic row, the 70 truck) is nose down-right
 # in column 1 and the tail down-left in column 3, so these are mirrored in place. Empty: the sheets as
 # drawn (the car turns back on itself between the 3/4 and the side, its roller door swaps sides).
-MIRROR_34 = {("delivery_truck", 55): (1,), ("depot_van", 55): (1, 3), ("depot_van", 70): (1, 3)}
+MIRROR_34 = {
+    ("delivery_truck", 55): (1,), ("depot_van", 55): (1, 3), ("depot_van", 70): (1, 3),
+    ("van", 55): (1,), ("parked_pickup", 55): (1,), ("police_car", 55): (1,),
+}
 # Per service row, degrees its saturated mid paint turns toward yellow: the truck's 70 cab is drawn
 # amber-orange (the library note: match the 55 sheet's mustard; 1463 vermilion-gate px raw in view 0).
 SERVICE_HUE = {0: 12.0}
