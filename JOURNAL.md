@@ -979,3 +979,4 @@ NEXT (it12, after the freeze), replaces the lists above:
 4. If the lane runs again: assets' gang_legs spares (_b) are B (black shins), keep the A sheets; the elder's
    3/4-away walk; Call 2's body stopped at a wall; Call 4 c (cars knock Rivet down).
 - Session end ~18:06: all committed; scratch avi/png deleted; frames.json 15 (entry 0 the 63 s set clip).
+- 18:07 d9-rivet head 873a00c1 vs e2400dc4: docs/evidence only (no code), merge-tree shows the same two conflicts and the same baseline total 18868: the it11 trial merge holds. REPORT merge note says so.
