@@ -335,3 +335,27 @@ NEXT (iteration 7):
   19/19 chapters fully down each, 0 SCRIPT ERROR (`evidence/perf/gates-it9/reel-*-chapters.txt`).
 - 14:26 L7 LTO build (MSVC production=yes lto=full, 6.8 min): **74.2 MB** (LTO inlines: +7 MB over no-LTO; official 109.3).
   Same 712 classes as the no-LTO strip (probe), riot smoke exit 0 / 0 ERROR. A/B official vs stripl started 14:29.
+- MILESTONE 14:33 L7 LTO A/B (`evidence/perf/l7-stripl/ab.json`, lock held): riot p50 slower in every pair (3.59/4.49/3.50
+  vs 4.51/5.59/3.98), drive70 2.04 -> 2.22, riot60 CPU 0.26 -> 0.29; RAM -8..-12 MB. **L7 DROPPED on MSVC** (LEDGER,
+  DECISION line): the official template is MinGW-GCC + LTO, and an MSVC 4.7.2 build is ~10 % slower a frame here with or
+  without LTO, which hides any strip effect. REPORT got a kept / dropped summary.
+- Cleaned: `build/export/windows-bench-strip*` removed (the exes stay in `gtai-d9x/scratch/godot-src/strip-{nolto,lto}.exe`).
+  `build/export/windows-bench` is now a 14:05 export of 5ad88dab (L8 inside, pck 215.2 MB).
+- Scratch kept: `gtai-d9x/scratch/godot-src` (4.7.2 source + deps + MSVC objects, ~several GB: remove at the freeze unless
+  the MinGW retry runs), `gtai-d9x/scratch/classprobe` (the ClassDB probe pck + official/strip class lists),
+  `gtai-d9x/scratch/perf-l8` (the q25 ctex copies for ctex_same.py). perf-base now carries the L8 project setting
+  (uncommitted, scratch) and q75 imports: for an F12 A-vs-A that is fine (same pixels), but it is no longer "lossless q25".
+
+NEXT (iteration 10):
+1. The final table owed at the freeze (it6 NEXT 1): this morning's main (3982af1a) vs d9-perf HEAD on the release exe
+   (riot, drive70, riot60, drive60; lock held) + the editor King / reel / quest 1, with an A-vs-A pair (F12). Main needs
+   a scratch worktree at 3982af1a: copy perf-base's `.godot` and the 256 baked chunks in, `--import`, export windows-bench
+   to a second dir, `@exe-<dir>` arm (ab.mjs now takes it).
+2. L7 retry only if cheap: llvm-mingw (the engine's own build containers use it / MinGW-GCC) + `lto=full`, with an
+   UNSTRIPPED build of the same toolchain as the A-vs-A; otherwise leave L7 dropped.
+3. riot60's exe worst frame (presented hitch) with --perf-hud; the King on a release build (a `windows-perf` preset).
+4. RAM: the release exe sits at ~750 MB with ~850 MB VRAM on a discrete GPU: read `Performance` static vs video memory
+   and the resource list to find what the CPU side holds (possible lever: textures kept in RAM after upload).
+5. Answer REQUESTs (none open to perf at 14:35).
+- Session end 14:36 (it9): 9 commits (3302a019 .. this), gates green at 78193069 (L8), reel 19/19 x3, lock released,
+  no Godot / scons of mine running.
