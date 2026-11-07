@@ -976,3 +976,5 @@ gate counts them: the grade pushes even LAMP_DEG's turned amber over r - max(g, 
 for iteration 17: LAMP_DEG 10 -> 14 on lit lenses (re-cut, film the siren lens test again), or a
 Call (the gate is crude for lit amber: 255,170,0 is "vermilion" by it).
 Session end 03:32.
+NEXT addendum (iteration 17): item 3 is now the taxi's lit rear lamps under the grade (LAMP_DEG 10 -> 14
+on lit lenses vs a Call); the pickup is closed.
