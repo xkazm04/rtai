@@ -19,9 +19,10 @@ const FILL_M: float = 1.3
 ## A standing drawing (the molotov's bottle) is never taller than this in the straw.
 const STAND_M: float = 0.7
 ## Where the weapon's bottom edge rests, as a fraction of the cut (x, y) from its top-left: the
-## straw's front edge, under the hollow (measured on the cuts: p55 it5, the v2 p70 it8). A 55
-## drawing has depth (drawn lying, seen from the side and above): its bottom sits here.
-const BED: Dictionary[String, Vector2] = {"p70": Vector2(0.5, 0.62), "p55": Vector2(0.5, 0.56)}
+## straw's front edge, under the hollow (measured on the cuts: p55 it5, the v3 p70 it10: hollow
+## 0.42-0.64, straw front 0.65-0.74). A 55 drawing has depth (drawn lying, seen from the side and
+## above): its bottom sits here.
+const BED: Dictionary[String, Vector2] = {"p70": Vector2(0.5, 0.66), "p55": Vector2(0.5, 0.56)}
 ## The ink shadow under the crate (ground ellipse, fraction of LONG_M, alpha).
 const SHADOW_W: float = 0.56
 const SHADOW_H: float = 0.3
