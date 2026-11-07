@@ -39,6 +39,12 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
 - **Ghost form swap back and the roll** (it10, King, Kerf, combo p55, 48 px/m): the drawn figure comes back inside
   the exit ring (f434-442) with the pistol strip, firing by f464; the roll ball spins over the roll (f606-624):
   `gtai-masters\d9\rivet\rivet_ghost_kerf_swap_back_and_roll_king_combo_p55_48ppm_x1.5_seed1_f404_632.png`.
+- **The shadow from the drawing** (`61fbbdf8`, it10): his cast shadow and occlusion silhouette take the drawn
+  height (1.1 m p70, 1.3 m p55), the roll ball casts a ball's shadow; before, the hidden parts' 1.8 m plan.
+  Before/after: `gtai-masters\d9\rivet\rivet_shadow_drawn_height_and_roll_before_after_king_combo_48ppm_x1.5_seed1.png`; beside a
+  cop at 32 px/m: `gtai-masters\d9\rivet\rivet_shadow_drawn_height_beside_cop_city_tilt70_32ppm_x4_seed5_f60.png`.
+- **The combined clip** (35 s, city 32, flamer 64, King + Kerf + roll 48, Servo 48):
+  `gtai-masters\d9\rivet\rivet_d9_set_city32_flamer64_king_servo48_combined_35s.mp4`.
 - **The Servo "grey blob" (it6) is gone at HEAD**: the same run (`--boss=servo --bot=boss --view=combo --seed=1`)
   shows no part beside him; it was his top-down parts (the reload magazine, fixed in `f3038865`):
   `gtai-masters\d9\rivet\rivet_servo_grey_blob_was_the_reload_mag_it6_vs_it10_combo_48ppm.png`.
@@ -51,7 +57,6 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
   0 SCRIPT ERROR (`evidence/d9/reel-director-it3-*.log`).
 
 ## What does not (yet)
-- The cast shadow is the shared rig-height shadow (long for a 1.1 m robot).
 - A facing cell (no fire drawn) has no measured muzzle except the flamer's: a flash outside the fire cell's 7
   ticks keeps the old spot (the other holds are drawn every which way in their facings; no generic rule held).
 - The Servo bay number prints over Rivet (and every body) under combo: n8-view's apron marks sit at z vehicles+1.

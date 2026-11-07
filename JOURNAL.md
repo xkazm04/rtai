@@ -299,3 +299,21 @@ NEXT (supersedes every NEXT above):
   --view=combo --ppm=48 --seed=1`, frames 466-478.
 - Seen (both films, combo, f0-f1): for the first frame Rivet's top-down parts show a pale outline at his feet
   under the drawn figure (RivetFrames' first step runs after the first draw). One frame at spawn; noted, not fixed.
+- MILESTONE ghost form swap back + roll (it7 NEXT 3), filmed `--boss=king --bot=boss --ghost=kerf --view=combo
+  --ppm=48 --seed=1 --loadout=pistol` (720 frames, 0 SCRIPT ERROR): Kerf from ~f60; the drawn figure returns
+  inside the exit ring (f434-442) with the pistol strip, fires by f464; the roll ball spins f606-624.
+  `gtai-masters/d9/rivet/rivet_ghost_kerf_swap_back_and_roll_king_combo_p55_48ppm_x1.5_seed1_f404_632.png`.
+- Seen in that film: his cast shadow was the hidden parts' plan (hip_z 250: a 1.8 m figure's shadow from a 1.1 m
+  robot) and stayed a full upright shadow under the roll ball.
+- MILESTONE `61fbbdf8` the shadow from the drawing: `RigCastShadows.CAST_HIP` (a meta any card rig can publish;
+  `RigCastShadows.hip_px` reads it, else the plan's hip): RivetFrames.place publishes HEIGHT_M (by art key) x the
+  plan's sprawl/tuck factor, the roll ball 0.45; PropOcclusion's silhouette takes the same height. top unchanged
+  (no cast shadows there; RivetFrames releases and removes the meta). Before/after King combo 48 px/m:
+  `rivet_shadow_drawn_height_and_roll_before_after_king_combo_48ppm_x1.5_seed1.png`; the city at 32 beside a cop:
+  `rivet_shadow_drawn_height_beside_cop_city_tilt70_32ppm_x4_seed5_f60.png` (his shadow now shorter than the
+  cop's, as his height). `--changed` unit 1684/0. DECISION rivet/shadow (docs/decisions.md).
+- MILESTONE the combined clip (owed since it3): `gtai-masters/d9/rivet/rivet_d9_set_city32_flamer64_king_servo48_combined_35s.mp4`
+  (34.7 s: city 32 px/m, flamer 64, King with Kerf + roll 48, Servo 48; centre crops, captions). Looked at a frame
+  from each segment. frames.json: 15 entries (the clip first; shadow, ghost, flamer before/after in; the strips
+  contact, blades contact and muzzle contact out of the list, files kept: REPORT cites them).
+- Scratch sequences deleted (6.2 GB).
