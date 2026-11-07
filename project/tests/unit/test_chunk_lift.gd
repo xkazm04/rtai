@@ -54,8 +54,9 @@ func test_heights_come_from_the_table() -> void:
 	var lift: ChunkLift = _lift(70.0)
 	assert_eq(lift.height_m[1], 21.0 * 0.5, "building_tall at height_k 0.5")
 	assert_eq(lift.height_m[2], 8.5 * 0.5, "building_warehouse at height_k 0.5")
-	assert_eq(lift.style_of[1], lift.style_of[0], "default is the tenement style")
-	assert_ne(lift.style_of[2], lift.style_of[1], "the warehouse is shop style")
+	assert_ne(lift.style_of[1], lift.style_of[0], "the 21 m landmark is the tall style")
+	assert_ne(lift.style_of[2], lift.style_of[0], "the warehouse is shop style")
+	assert_ne(lift.style_of[2], lift.style_of[1], "shop is not tall")
 
 
 func test_parked_cars_go_to_vehicle_parked_not_the_draw_order() -> void:

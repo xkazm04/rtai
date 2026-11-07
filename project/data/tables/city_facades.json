@@ -17,11 +17,11 @@
     },
     "building_helipad": {
       "height_m": 18,
-      "style": "tenement"
+      "style": "tall"
     },
     "building_hq": {
       "height_m": 17,
-      "style": "tenement"
+      "style": "tall"
     },
     "building_long": {
       "height_m": 12,
@@ -33,7 +33,7 @@
     },
     "building_tall": {
       "height_m": 21,
-      "style": "tenement"
+      "style": "tall"
     },
     "building_warehouse": {
       "height_m": 8.5,
@@ -151,6 +151,11 @@
     "shop": {
       "art": "res://features/city/art/view/<art>/facade_shop.png",
       "bay_m": 4.1,
+      "bays": 3
+    },
+    "tall": {
+      "art": "res://features/city/art/view/<art>/facade_tall.png",
+      "bay_m": 4.2,
       "bays": 3
     },
     "tenement": {

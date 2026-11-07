@@ -26,6 +26,14 @@ STYLES = {
         (238, 616),
         12,
     ),
+    # the six-storey landmark kit (round 2210, B: roofs straightened by the library's untaper;
+    # squatter storeys than the kit's, so its bays sit on the 17-21 m landmarks only)
+    "tall": (
+        "keyed/building/facade_tall_55_untapered.png",
+        [(260, 507), (644, 891), (1028, 1275)],
+        (130, 749),
+        12,
+    ),
 }
 # the 70 twins (round 2110, A): same four-piece layout; the wall band starts under the roof's
 # front ink and ends at the ground ink, as the 55 cut does (rows measured on the keyed sheets)
@@ -40,6 +48,12 @@ STYLES_70 = {
         "keyed/building/facade_shop_70_untapered.png",
         [(42, 381), (412, 752), (783, 1125)],
         (338, 570),
+        12,
+    ),
+    "tall": (
+        "keyed/building/facade_tall_70_untapered.png",
+        [(259, 509), (643, 893), (1026, 1276)],
+        (182, 740),
         12,
     ),
 }
