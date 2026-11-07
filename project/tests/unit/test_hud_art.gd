@@ -92,3 +92,24 @@ func test_the_icon_shadow_stays_off_the_ticket() -> void:
 	# the icon's box ends 8 px left of the ticket: a wider offset would print ink on the paper
 	assert_between(HudView.ICON_SHADOW.x, 0.0, 8.0)
 	assert_between(HudView.ICON_SHADOW_A, 0.0, 1.0)
+
+
+func test_the_icon_sits_on_the_ticket_clear_of_the_words() -> void:
+	# view's quest 1 note: the bare icon on the street read as a floor pickup; on the paper it is HUD
+	var art: HudArt = HudArt.new()
+	var showcase: WeaponShowcase = WeaponShowcase.new()
+	for id: StringName in [&"gloria", &"rocket_launcher", &"molotov"]:
+		var icon: Texture2D = showcase.texture(id, WeaponShowcase.ICON)
+		assert_not_null(icon, "%s has an icon" % id)
+		var state: HudState = HudState.new()
+		state.weapon = String(id).replace("_", " ")
+		state.ammo = 12
+		var words: float = HudTicket.words_w(art, state, HudView.WEAPON_SIZE)
+		var w: float = HudTicket.width(art, words, icon)
+		assert_gte(w, HudTicket.W, "%s: never narrower than the drawn ticket" % id)
+		var box: Rect2 = Rect2(1000.0 - w, 140.0, w, HudTicket.H)
+		var r: Rect2 = HudTicket.icon_rect(box, icon)
+		assert_true(box.encloses(r), "%s: the icon on the paper" % id)
+		var words_end: float = box.position.x + HudTicket.text_x(art) + words
+		assert_gte(r.position.x, words_end + HudTicket.GAP - 0.5, "%s: clear of the name" % id)
+		assert_lte(r.end.x, box.end.x - 20.0, "%s: clear of the torn end's hatch" % id)

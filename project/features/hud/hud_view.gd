@@ -103,17 +103,21 @@ func _top_right(screen: Vector2) -> void:
 	if state.weapon == "":
 		_say(box.position + Vector2(112, 76), state.unarmed_label, 22)
 	else:
-		_ammo_ticket(Rect2(screen.x - MARGIN - 260, MARGIN + 104, 260, 124))
+		var tw: float = HudTicket.width(
+			art, HudTicket.words_w(art, state, WEAPON_SIZE), state.weapon_icon
+		)
+		_ammo_ticket(Rect2(screen.x - MARGIN - tw, MARGIN + 104, tw, HudTicket.H))
 
 
 ## The ammo ticket: the bullet stub left of x 120 (authored px), text from x 135; a count only when
-## the weapon has a magazine.
+## the weapon has a magazine. n8-hud: the weapon's icon on the ticket's paper (HudTicket).
 func _ammo_ticket(r: Rect2) -> void:
-	draw_texture_rect(art.texture(&"ammo_ticket"), r, false)
-	var k: float = r.size.x / art.size_px(&"ammo_ticket").x
-	var at: Vector2 = r.position + Vector2(140.0 * k, r.size.y * 0.5)
+	HudTicket.frame(self, art, r)
+	var at: Vector2 = r.position + Vector2(HudTicket.text_x(art), r.size.y * 0.5)
 	_say(at, state.weapon.to_upper(), WEAPON_SIZE)
-	if state.weapon_icon != null:
+	if state.weapon_icon != null and HudTicket.ON_TICKET:
+		_icon(state.weapon_icon, HudTicket.icon_rect(r, state.weapon_icon))
+	elif state.weapon_icon != null:
 		_icon(
 			state.weapon_icon, Rect2(r.position.x - ICON_W, r.position.y + 14.0, ICON_W - 8.0, 96.0)
 		)
