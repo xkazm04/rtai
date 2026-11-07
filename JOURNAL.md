@@ -915,3 +915,25 @@ more ground; view's it5 finding, not the cars). avg frame 16.7 ms in every run, 
 50 ms; the p99 ~32 ms / low 1 % ~30 fps are the vsync-off present stalls in BOTH views (the raw
 frame_ms alternates ~2 / ~31 ms; view's note). Not CONTENDED by the lock rule (lock held), but
 other lanes' Godot processes may have run: GPU-side numbers are not isolated.
+MILESTONE 03:21 the combined clip of the set (the lane's evidence rule; none existed):
+masters vehicles_set_tilt70_combined.mp4, 49 s, five captioned segments rendered fresh on
+03862a1d (vehicle_turn --set=street tilt70 64 px/m; the city tilt70 32 px/m seed 7; vehicle_frame
+--clip tilt70 48 px/m (its camera keeps the ground flat: noted in frames.json); vehicle_states
+tilt70 64 px/m; the Servo depot combo 32 px/m with over on), 0 SCRIPT ERROR each. frames.json:
+entry 1 (dropped depth_tilt70_48ppm_before_after.mp4; its still stays). Scratch frames deleted.
+
+NEXT (iteration 17, in order):
+1. If view moves the bay markers to world_markers (my it16 REQUEST): re-film the Servo depot f60
+   (combo 32) and check bay 3's number shows over the parked van. Else nothing owed there.
+2. Raise the weakest item. Candidates: (a) the drive film's flat ground: vehicle_frame's camera
+   does not tilt the ground; film the driven car in the real tilted city instead (main scene
+   `--arena=city --view=tilt70` has no car bot: check `--bot=` options for a driving bot, or REQUEST
+   view); (b) the parked pickup under the grade (no pickup on screen in 76 frames: find a seed
+   with one near the camera, measure its rust against the gate); (c) the depot van at 64 px/m
+   under combo (Servo depot --ppm=64) close-up still for REPORT.
+3. Exe at the freeze (int-day recipe in docs/decisions.md; the windows-bench export worked on this
+   tree at 03:13), REPORT.md by 08:40 with every Call: bike (showcase only vs a sim archetype),
+   wreck fire size, the wreck fire's vermilion (palette layer), rotation density (nine views),
+   the depot van colour, the pickup C (row vs _c), stage cars over the actors (now ON), the taxi
+   paint (+12 built vs +16 vs the sheet's).
+Session end 03:22.
