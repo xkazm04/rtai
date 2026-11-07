@@ -98,7 +98,7 @@ func test_the_icon_sits_on_the_ticket_clear_of_the_words() -> void:
 	# view's quest 1 note: the bare icon on the street read as a floor pickup; on the paper it is HUD
 	var art: HudArt = HudArt.new()
 	var showcase: WeaponShowcase = WeaponShowcase.new()
-	for id: StringName in [&"gloria", &"rocket_launcher", &"molotov"]:
+	for id: StringName in [&"gloria", &"rocket_launcher", &"molotov", &"katana"]:
 		var icon: Texture2D = showcase.texture(id, WeaponShowcase.ICON)
 		assert_not_null(icon, "%s has an icon" % id)
 		var state: HudState = HudState.new()
@@ -113,3 +113,11 @@ func test_the_icon_sits_on_the_ticket_clear_of_the_words() -> void:
 		var words_end: float = box.position.x + HudTicket.text_x(art) + words
 		assert_gte(r.position.x, words_end + HudTicket.GAP - 0.5, "%s: clear of the name" % id)
 		assert_lte(r.end.x, box.end.x - 20.0, "%s: clear of the torn end's hatch" % id)
+
+
+func test_a_thin_icon_runs_wider_on_the_ticket() -> void:
+	var katana: Texture2D = WeaponShowcase.new().texture(&"katana", WeaponShowcase.ICON)
+	var sz: Vector2 = HudTicket.icon_size(katana)
+	assert_gt(sz.x, HudTicket.ICON_MAX_W, "the blade gets the thin cap")
+	assert_lte(sz.x, HudTicket.THIN_MAX_W)
+	assert_lte(sz.y, HudTicket.ICON_H)

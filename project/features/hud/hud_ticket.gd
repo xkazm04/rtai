@@ -19,12 +19,18 @@ const ICON_H: float = 80.0
 const ICON_MAX_W: float = 180.0
 const GAP: float = 22.0
 const RIGHT_PAD: float = 30.0
+## A blade or baton (wider than THIN_ASPECT x its height) may run to THIN_MAX_W: at 180 px the
+## katana drew 29 px tall. THIN_MAX_W = ICON_MAX_W is the single cap.
+const THIN_ASPECT: float = 5.0
+const THIN_MAX_W: float = 240.0
 
 
-## The icon's drawn size on the paper: ICON_H tall, no wider than ICON_MAX_W, aspect kept.
+## The icon's drawn size on the paper: ICON_H tall, no wider than ICON_MAX_W (THIN_MAX_W for a
+## thin piece), aspect kept.
 static func icon_size(icon: Texture2D) -> Vector2:
 	var src: Vector2 = Vector2(icon.get_size())
-	var k: float = minf(ICON_H / src.y, ICON_MAX_W / src.x)
+	var cap: float = THIN_MAX_W if src.x > src.y * THIN_ASPECT else ICON_MAX_W
+	var k: float = minf(ICON_H / src.y, cap / src.x)
 	return src * k
 
 
