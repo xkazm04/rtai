@@ -72,3 +72,30 @@ NEXT:
 3. Then: muzzle origin from the frame (HeldPitchArt.publish_muzzle), smear, ghost-form hide, hit flash
    (RigHeadCard.on_tint already tints head_card), shadow, depth sort, occlusion silhouette.
 4. Film: city block tilt70 32/64 px/m, King/Servo combo swap, before/after vs main. Gates.
+
+### Iteration 3, continued (10:00-10:45)
+- (Time note: I misread the clock at 10:00 as 10:34 and wrote the NEXT above early; the session went on.)
+- MILESTONE `26aed6b4`: `RivetFrames` in the game (called from `StreetView.step`, not CutRig: the debt
+  ratchet holds cut_rig.gd at 265 lines). RivetHeldView publishes the held id as rig meta `rivet_weapon` and
+  hides its part while the drawn frame carries the weapon (`owns_weapon`). Net-zero lines in RivetHeldView.
+- FRICTION: `node tools/godot/check.mjs` on cut_rig.gd / street_walker_cards.gd fails "depended scripts"
+  even on untouched files (cyclic class refs under --check-only); the unit run compiles everything: trust it.
+- MILESTONE: the city block pistol at 48 px/m: the drawn Rivet holds the pistol, the fire cell on shots.
+- `19ddf549`: p55 height 1.3 (the King engage showed him small at p55; street's x1.18 step).
+- Gates: unit 1691/0; director reel 19/19 down in tilt70, combo, top; 0 SCRIPT ERROR (`evidence/d9/`).
+- Before/after 32 + 64 px/m and reel crops in `gtai-masters/d9/rivet/` (frames.json 4 entries).
+- Found in the reel at 48 px/m: the flamethrower's back tank still drew beside him -> `_back_tank` gated on
+  `owns_weapon` (uncommitted until the evidence gate finishes, then commit).
+- REPORT skeleton `docs/day/2026-11-07/rivet/REPORT.md` with Calls 1-3 (size, walk, left one-handed).
+
+NEXT (supersedes the NEXT above; items 1-2 there are done):
+1. Commit the `_back_tank` gate after `node tools/evidence/run.mjs --no-bench` reports (log in
+   `gtai-d9/scratch/rivet/evidence-it3.log`); copy its summary into `evidence/d9/`.
+2. Shot origin + muzzle flash from the drawn frame: a per-strip muzzle point per cell (measure in
+   rivet_frames.py: the flash's centroid in the fire cells, the weapon tip in the facings) -> JSON sidecar,
+   `HeldPitchArt.publish_muzzle` from it. The sim's shot origin must not move (view only).
+3. Film the combo swap at the King and Servo engage (`--boss=king --view=combo`, `--boss=servo`), 48 px/m.
+4. Ghost forms (Rivet hidden: check the swap back), death beat 1.0 s in the sprawl cell, roll spin, hit flash,
+   occlusion silhouette, cast shadow length for Rivet.
+5. Tune act_k for katana / plasma_sword / chainsaw action rows by eye; plasma sword `_v3` swap when it lands.
+6. Every weapon fired once at each pitch (`--loadout=<id>`), frame cost under the bench lock.

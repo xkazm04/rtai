@@ -1,0 +1,34 @@
+# d9 rivet REPORT (in progress; the final at 18:40)
+
+Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, every weapon in his hands.
+
+## What works (with evidence)
+- **The frame set** (`f852d9b3`): the 36 owner-picked sheets cut into strips by
+  `tools/art/rivet_frames.py --manifest=tools/art/rivet_frames.json` under
+  `project/features/characters/art/view/<p70|p55>/` (`rivet_frames.png` 14 cells, `rivet_eq_<weapon>.png` 8 cells).
+  Contact sheets: `C:\Users\kazda\kiro\gtai-masters\d9\rivet\rivet_strips_p70_contact_cut_fig110.jpg`, `..._p55_...`.
+- **In the game** (`26aed6b4`, `19ddf549`): `RivetFrames` (features/characters/rivet_frames.gd) draws him as one
+  figure under card views; the weapon's own strip while it is out; RivetHeldView's pasted part hidden then.
+  Before/after: `gtai-masters\d9\rivet\rivet_before_after_city_tilt70_pistol_32ppm_x3_and_64ppm_x2_seed5_t120_300_400.png`.
+- **Gates (it3):** unit 1691 passed / 0 failed; director reel 19/19 chapters down in `tilt70`, `combo`, `top`,
+  0 SCRIPT ERROR (`evidence/d9/reel-director-it3-*.log`).
+
+## What does not (yet)
+- The cast shadow is the shared rig-height shadow (long for a 1.1 m robot).
+- The shot origin and muzzle flash still come from the hidden claw (realtime-combat-semantics: the origin
+  must not move; the flash should sit on the drawn muzzle).
+- Walk: one drawn walk and one sprint pose per sheet; built bob + sway on the facing.
+- The combo swap is in (the strip follows the art key) but not yet filmed at the engage.
+
+## Calls for the owner
+1. **Rivet's size.** Built 1.1 m standing (~35 px at 32 px/m, the asset lane's mock), p55 1.3 m.
+   Options: 1.25 m / 1.4 m (`RivetFrames.HEIGHT_M`). He reads smaller than the parts rig did (before/after still).
+2. **The walk.** The sheets carry one walk and one sprint drawing. Built: the facing with a bob and sway
+   (the street walkers' no-grid path, no pops). Options: alternate facing / walk drawing (a 2-frame step),
+   or a REQUEST to assets for a 4-frame stride grid per facing (street's `ped_*_walk` shape).
+3. **Left facings with a one-handed weapon.** Built: base drawn-left figure + the old held part (the
+   brief's fallback), two-handed holds mirror. Option: mirror everything (swaps the gun hand: against the
+   hand rule). REQUEST to assets sent for drawn equipped left views.
+
+## Next steps
+See JOURNAL `NEXT:`.
