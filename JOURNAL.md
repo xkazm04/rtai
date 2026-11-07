@@ -935,3 +935,18 @@ NEXT (iteration 10), replacing the list above:
 3. Crowd cost on a quiet machine (bench6/run.sh, 3 pairs) if the machine quiets.
 4. Freeze prep (08:30): Windows export, REPORT calls (cop tone, crowd variety, walkers, drawn-fall
    FALL_AT / stretch / p55 height, cop back corpse, contractor corpse opaque + spread).
+- GATE unit no-arg on 361448cb: 1516 passed, 0 failed, no FLAKY. GATE director reel under combo on
+  361448cb (the it1 command, `--view=combo`): 19/19 chapters, every one all down, 0 SCRIPT ERROR
+  (stopped after the 19th: my PID 33180 tree).
+- LOOKED the Ohm beat under `--view=tilt` 48 px/m (p55 in play): the thug buckles and lies as its
+  55 drawing; a shade darker steel than the 70 corpse, plates readable. Capture deleted.
+- view ANSWERED my it8 REQUEST (n8-view JOURNAL l.916): RigSelect will keep a fresh on-screen corpse
+  on its full rig (view it12). Street keeps (b): a baked dead row under a card view should draw the
+  FALLS lying frame, not CrowdAtlas' bar: add as NEXT 2b.
+- Scratch it9 emptied (the composites are in the masters).
+- Session end 03:54: tree clean, every change committed. Commits it9: 9fa20822 (riot/SWAT falls +
+  board --heavy), a376cbdb (thug fall), 72dde64b (contractor corpse), 361448cb (p55 cop/thug falls),
+  + docs (JOURNAL, DECISION street/contractor-corpse).
+NEXT 2b (iteration 10): CrowdAtlas' corpse cell under p70/p55 for a baked dead cop/ped: draw the
+  FALLS lying frame (StreetWalkerFall's grid, frame 2 of the blow's facing) if CrowdAtlas lets a
+  card view swap the cell; else REQUEST to view with the repro (city seed 5, actor 3000).
