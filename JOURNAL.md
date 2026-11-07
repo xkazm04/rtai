@@ -99,3 +99,33 @@ NEXT (supersedes the NEXT above; items 1-2 there are done):
    occlusion silhouette, cast shadow length for Rivet.
 5. Tune act_k for katana / plasma_sword / chainsaw action rows by eye; plasma sword `_v3` swap when it lands.
 6. Every weapon fired once at each pitch (`--loadout=<id>`), frame cost under the bench lock.
+
+### Iteration 3, end (10:35)
+- MILESTONE `6f6ddce4`: the back tank (flamer / gatling) hides while the drawn frame carries the weapon;
+  verified on the city block at 48 px/m (`gtai-masters/d9/rivet/rivet_flamethrower_city_..._t120_200_280_350.png`).
+- Gates on 19ddf549 (`evidence/d9/gates-it3.md`): scenarios 52/0 (replay incl.), look goldens 11/11, parity
+  exact + planted caught, unit 1691/0, reel 19/19 x3 views, 0 SCRIPT ERROR.
+- FRICTION/BLOCKED (~0 min lost, gate owed): evidence's release-compile refuses
+  `%TEMP%\gtai-release-compile` ("exists but was not created by release_compile"): a dir this lane did not
+  make (probably another lane's run); left alone. Re-run `node tools/tests/release_compile.mjs` next session;
+  if still there, ask the Director.
+- Combo swap filmed at the King engage (art p55 at tick 32): `rivet_combo_swap_king_engage_..._48ppm_x2_...png`.
+- frames.json: 6 entries.
+- Registry rules applied: sprite-and-atlas-production (uniform cells, one anchor, premultiplied resample,
+  manifest-reproducible); motion-quality-gating (judged in motion on the real scenes: city block, reel,
+  King engage; the swap frame checked frame by frame); depth-ordered-layered-art (the whole figure takes
+  the head card's z; the hidden parts keep their nodes so release restores them).
+
+NEXT (supersedes both NEXT above):
+1. Fire state for streams and auto weapons: the flamer shows no fire cell (no recoil kick). Plan: replace
+   `rig.set_meta(RivetFrames.WEAPON, ...)` in RivetHeldView._process with ONE call
+   `RivetFrames.publish(rig, pilot.hold.held, arena)` (keeps _process at 40 lines) that also sets
+   `rivet_fire` = trigger.cooldown > spec.interval_ticks - 7 when `arena.gun.trigger.spec.id == held`;
+   `cell_of` reads it beside the recoil. RivetFrames is at 200 lines: fold `falls_back` into an `_oct(rig)`
+   helper shared with `cell_of` to make room (debt ratchet: files_past_soft_cap must not grow).
+2. Shot origin + muzzle flash from the drawn frame (per-cell muzzle point measured in rivet_frames.py ->
+   JSON sidecar -> HeldPitchArt.publish_muzzle). View only: the sim's origin does not move.
+3. Servo engage film; ghost form swap back; death beat in the sprawl cell; roll spin; hit flash; occlusion.
+4. act_k by eye for katana / plasma_sword / chainsaw; watch for the plasma sword `_v3` (asset lane).
+5. Every weapon at each pitch (`--loadout=<id>`), the frame cost under the bench lock, the release-compile gate.
+6. Check the asset lane's answer to the equipped-left REQUEST (gtai-art/library catalog, ids rivet_eq_*_left).
