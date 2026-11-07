@@ -798,3 +798,17 @@ NEXT (iteration 9):
 - DECISION street/cop-back-corpse written to docs/decisions.md.
 - Session end: every change committed (74cb66dd post-pose fix, 5b7906bd patrol cop fall,
   e47c984c board --cops, + docs). Scratch city.avi (it8) kept for NEXT 2, delete after.
+- PROBE (NEXT 2, temporary printerr in CharacterRigs._assign, not committed, restored): on the
+  city seed 5 run actor 3000 is RELEASED from its full rig on the tick it dies ("release 3000
+  in_feed 20 dead true", right after "death_melee on 3000, frame 513"), still in the feed. So it
+  is the LOD budget: RigSelect.nearest keeps the 16 nearest the focus (ArenaRigs.focus_m: the box
+  centre of Rivet, his aim point and every hostile within FOCUS_REACH_M), the crowd of cops north
+  of Rivet pulls that centre away, and the dead cop at the box's south edge is the 17th. It then
+  draws as the baked crowd atlas row (CrowdAtlas, DEAD -> its corpse cell): the short black bar
+  on the crosswalk is that cell under tilt. Not street's selection code (CharacterRigs/RigSelect
+  are chars/view, ArenaRigs is dev/arena). Street's share: the atlas corpse under a card view
+  should be the drawn lying frame (StreetWalkerFall's grid, frame 2 of the blow's facing) rather
+  than a bar. NEXT 2 becomes: (a) REQUEST to view: RigSelect keeps a dying/fresh corpse within
+  RADIUS_M ahead of the living past the 16th (or ranks dead by distance to Rivet, not the focus);
+  (b) street: look at CrowdAtlas' corpse cell under p70 and, if cheap, draw the FALLS lying frame
+  for a baked dead row.
