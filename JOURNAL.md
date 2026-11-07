@@ -734,3 +734,84 @@ NEXT (iteration 15, replaces the NEXT above):
    bike (showcase only vs a sim archetype), wreck fire size, rotation density (nine views now on
    every p70 row), the depot van colour, the pickup C (row vs _c), stage cars over the actors.
 Session end 02:06.
+
+## Iteration 15 (2026-11-07 02:08 - 03:08), BUILD
+
+Read: JOURNAL, git log, the lane journals: no new REQUEST to vehicles; view has not answered my
+it14 REQUEST (seize cues over z 200), so NEXT 1 waits and over stays false. NEXT 2 taken.
+MEASURED 02:12 the taxi prints as VERMILION under the angled view. The palette's own gate
+(PaletteTokens.classify: r - max(g, b) >= 79, blood excluded) on the main scene `-- --arena=city
+--view=tilt70 --seed=11 --rigs` frame 170 (32 px/m): 5,777 px, 5,695 of them on the taxi (median
+160,75,5), the other 57 Rivet's collar. Cause: the car shader keeps the atlas colour; the city's
+warm light/grade takes the sheet's mustard (202,138,38; hue 37) to (160,75,5) while the sedan only
+dims evenly (183,171,149 -> 153,127,95).
+MILESTONE ca7c255d the taxi row's saturated mid paint (hue 20-50, sat >= 0.35) turns 12 deg toward
+yellow in the cutter (HUE_DEG / TAXI_HUE, tools/art/vehicle_cards.py), p70 and p55 (combo's hard
+swap must not change its hue). TAXI_HUE 0 re-cuts HEAD bit-exact; +12 changes row 3 only. Filmed
++12 and +16 in the city: both 0 taxi vermilion px (p90 r-gb 87 -> 49 / 35); +16 reads olive, +12
+a mustard cab yellow: built +12. 64 px/m art close-up (vehicle_turn --set=street): ink, roof sign,
+checker, amber lamps unchanged.
+MILESTONE 8db2a46d the amber lamps: the sheets' lens orange (~239,151,7) passes the gate even in
+the atlas (ambulance row 3,610 px, police 3,405, others 40-800). Lit lenses (value >= 0.7, sat >=
+0.8, hue 20-42) turn 10 deg toward yellow (LAMP_DEG) on every row but the police car's (its siren
+shader's lens() finds the amber lens by colour, r > g + 0.2: a turned lens sits at 0.204, too
+close). Atlas: every non-police row <= 42 gate px (ambulance 7). City seed 7 f180: frame 445 -> 147
+(57 collar). The hue window stops at 42 so the taxi's turned highlights (hue ~49) are not turned
+again (the first try at 50 hit 7,316 taxi px). Only police cars carry the siren bit (checked).
+FRICTION: the main scene has no --ppm (the zoom is CameraRig's mode table): the city before/after
+is 32 px/m only; the 64 px/m close-up is the ungraded turn film (it cannot show the grade's shift).
+Checked: the it3 still city_tilt70_64ppm_it3_f300.png (main scene "--ppm=64") has the 32 px/m
+framing, so it was 32 (not in frames.json; the frames.json 48/64 entries come from dev scenes that
+read --ppm: vehicle_states, vehicle_frame, the arena).
+EVIDENCE (masters, frames.json entry 2): taxi_paint_city_tilt70_32ppm_f170_before_left_after_right.png,
+taxi_paint_city_tilt70_32ppm_before_left_after_right.mp4 (300 frames, in sync),
+taxi_paint_turn_tilt70_64ppm_before_left_after_right.png, taxi_hue_options_city_tilt70_32ppm_crop2x_head_12_16.png,
+amber_lamps_city_tilt70_32ppm_crop2x_before_left_after_right.png, amber_lamps_atlas_p70_ambulance_before_top_after_bottom.png.
+(frames.json kept at 15: dropped damage_tilt70_32ppm_before_after.mp4, its 64 px/m twin stays.)
+GATES: lint 15/15 (both commits); full unit on ca7c255d 1513 passed / 0 failed, no FLAKY; vehicle
+tests on 8db2a46d 26/0; `top` framemd5 (`--arena=city --bot=rivet --seed=2 --rigs`, 301 frames) on
+ca7c255d vs top_head.md5: IDENTICAL 301 + 301, 0 SCRIPT ERROR (8db2a46d is atlas-only: top never
+reads the card atlas). City tilt70 seeds 2 7 11 23, 0 SCRIPT ERROR.
+Rules applied: generative-artifact-gating (the colour law measured with the game's own classifier,
+not by eye; the fix in the cutter, reversible by one constant), sprite-and-atlas-production (one
+cutter, HEAD reproduced bit-exact at 0, changed rows named, provenance with sha), concept-scene-
+parity (judged in the real graded city, not the ungraded turn rig), motion-quality-gating (a
+300-frame before/after clip, same seed).
+DECISIONS: the taxi hue, the lamp hue (docs/decisions.md).
+
+## Calls for the owner (carry to REPORT)
+- The taxi's paint: built +12 deg (mustard cab yellow; 0 vermilion px) vs +16 (olive) vs the
+  sheet's (prints as vermilion beside Rivet's collar). TAXI_HUE in tools/art/vehicle_cards.py.
+  See taxi_hue_options_city_tilt70_32ppm_crop2x_head_12_16.png.
+- (withdrawn: the police car's parked amber lens; built in aaaaf876, see below.)
+02:40 GATE director reel on 8db2a46d (`res://dev/arena/arena.tscn -- --bot=reel --reel=director
+--loadout=pistol --rigs --view=<v>`, headless, --fixed-fps 60 --quit-after 7600): top 19/19 all
+down, tilt70 19/19 all down, 0 SCRIPT ERROR, exit 0 each (evidence/n8-vehicles/director-reel-it15-*.log).
+Caveat: the police edit (aaaaf876) landed on disk while the tilt70 run was going; the card shader
+loads when the first car draws, so that run may have used either shader. Both are colour-only.
+MILESTONE aaaaf876 the police bar's amber lens turns too (LAMP_DEG on every row) and the siren
+shader's amber lens test loosens to r > g + 0.12 (was 0.2). Checked in Python BEFORE filming: the
+new test on the new atlas finds the same lens (70: 2,842 -> 2,841 px; 55: 1,663 -> 1,664; blue
+2,553 / 1,346 unchanged); police row gate px 3,405 -> 2. FILMED vehicle_states (`--view=tilt70
+--ppm=64`, 300 frames, 0 SCRIPT ERROR both; the before = 8db2a46d's atlas + shader swapped in,
+restored and re-imported after, cmp-checked): lit-amber and lit-blue px per frame equal within 1 %
+through the whole flash cycle; looked: the amber phase lights the same lens, the tail lamps go
+orange -> amber. Masters: siren_amber_lit_tilt70_64ppm_crop2x_before_left_after_right.png,
+siren_blue_lit_tilt70_64ppm_before_left_after_right.png. Vehicle tests 26/0, lint 15/15.
+Tried and dropped: a graded 48 px/m taxi close-up from vehicle_frame (--car-zoom): no taxi on its
+fixed route (<= 4 taxi-coloured px in any frame).
+GATE full unit on aaaaf876: 1513 passed, 0 failed, no FLAKY. Servo depot combo 32 px/m (seed 2,
+300 frames) on aaaaf876: 0 SCRIPT ERROR, the van and the seize cues as before (looked at f130).
+Evidence json: evidence/n8-vehicles/iteration15.json.
+
+NEXT (iteration 16, in order):
+1. If view answers the it14 REQUEST (seize cues over z 200): VehicleStageCards.over = true, re-film
+   the Servo depot (combo 32 + 64 px/m) on/off, the reel in both views.
+2. The rest of the colour audit at the angled view: the parked pickup's rust (row 5: 25,909 atlas
+   px within 50 of the gate, 42 over it) and the fire (vehicle_states: the burning wreck dominates
+   the frame's vermilion count, ~4,400 px at 64 px/m). Measure the fire in the graded city
+   crash (vehicle_frame); fire may be allowed as danger, so read palette.json's accent uses first.
+3. Exe at the freeze (int-day recipe in docs/decisions.md), REPORT.md by 08:40 with every Call:
+   bike, wreck fire size, rotation density, the depot van colour, the pickup C (row vs _c), stage
+   cars over the actors, the taxi paint (+12 built vs +16 vs the sheet's).
+Session end 02:47.
