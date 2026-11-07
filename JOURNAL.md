@@ -1252,3 +1252,9 @@ NEXT (supersedes it19's):
   (`node tools/evidence/run.mjs --no-bench`, ~8 min, commit first), reel (`it20/reel.sh`, ~6 min),
   re-export (REPORT "Exe"), smoke.
 - Watch the catalog for raises to hud's ids; electro gun 70 v2 was looked at and not taken (it20).
+- 07:53 LOOKED (evidence, no code) the rack bottle under the 55 view: armory tilt at 48 px/m (seed 1
+  f89, 0 SCRIPT ERROR, `it20/r55_48.png`): the bottle and rag read between the flamethrower and the
+  baton; a cop's head overlaps its foot (the cops stand in front of the wall, as for every piece).
+  frames.json 6's note names the it20 rack pair. Scratch frames deleted (logs, scripts, stills kept).
+- 07:54 Session end: all committed; tree clean; the project tree last changed at f80e09ba (gates,
+  reel and exe all at that head). NEXT above stands.
