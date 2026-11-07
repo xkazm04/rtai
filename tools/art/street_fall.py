@@ -9,8 +9,9 @@ usage: python -I tools/art/street_fall.py <keyed_fall.png> <out.png> [stand_px=1
 rows is drawn as tall as the standing one; it is stretched K along the fall axis (vertical), about
 the feet, so the corpse lies a body's length from them.
 
-The feet: standing and mid-fall (frames 0-1) the lowest rows of the figure (their x centroid on the
-bottom line); lying (frame 2) the end of the body away from the facing's fall direction (the 5 %
+The feet: buckling (frame 0) the box centre on the bottom line, as the walker strips are placed
+(a held case would pull a centroid sideways and jump at the blow); mid-fall the lowest rows' x
+centroid; lying (frame 2) the end of the body away from the facing's fall direction (the 5 %
 of the figure's pixels lowest along it). Scaled so the buckling figures (frame 0) stand stand_px
 tall on average: 0.93 of the still strip's ~190 px figure in its 192 px cell (StreetWalkerCards'
 px per HEIGHT_M), so the grid shares the still's px/m. Raw art. Deterministic.
@@ -52,7 +53,9 @@ def _main(mask: np.ndarray) -> np.ndarray:
 
 def _feet(mask: np.ndarray, facing: int, frame: int) -> tuple:
     ys, xs = np.nonzero(mask)
-    if frame < 2:
+    if frame == 0:  # the box centre, as street_head/street_walk place the walker (no jump)
+        return mask.shape[1] / 2.0, float(ys.max())
+    if frame == 1:
         y1 = ys.max()
         low = ys >= y1 - max(3, int((y1 - ys.min()) * 0.06))
         return float(xs[low].mean()), float(y1)
