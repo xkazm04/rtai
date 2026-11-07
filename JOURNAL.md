@@ -1669,3 +1669,13 @@ Freeze: tree clean after this commit; exe = 08:13 export from ed557034. REPORT h
 NEXT: unchanged from it26 (judge taxi_55_v4 / parked_pickup_55_v4 / delivery_truck 70_v2 + 55_v3 as 55/70
 pairs with vehicle_turn_check + a turn film each; police_car_70_v3; depot_van_top_v4 for Call 9(b); the
 pickup miss (margin 0.009) in vehicle_turn_check).
+
+## Iteration 30 (REPORT, 08:40-08:44)
+Read: JOURNAL tail, git log, REPORT.md. Built nothing. Checked every path REPORT cites (43 unique
+file references): all resolve in the masters folder, `evidence/n8-vehicles/` or `project/` (the one
+`..._48ppm_..._crop.png` pattern matches quest1_dock9_kerb_cars_tilt70_48ppm_..._crop.png). frames.json
+holds 15 entries; build/export/windows/RTAI.exe (08:13, 269 MB) + the sim DLL in place. REPORT header
+names it30. No project change since ed557034, so the exe is the code head.
+NEXT: unchanged from it26 (judge taxi_55_v4 / parked_pickup_55_v4 / delivery_truck 70_v2 + 55_v3 as 55/70
+pairs with vehicle_turn_check + a turn film each; police_car_70_v3; depot_van_top_v4 for Call 9(b); the
+pickup miss (margin 0.009) in vehicle_turn_check; a sim bike and truck archetype).

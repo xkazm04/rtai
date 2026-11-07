@@ -1,6 +1,6 @@
 # REPORT: night lane `vehicles` (n8, 2026-11-06 20:00 to 2026-11-07 09:00)
 
-Written through iterations 18-29; it26 (08:07-08:19) took the final exe (08:13, ed557034); it27 re-ran lint at the freeze head (15/15, `lint-it27.log`); it29 (08:31) smoked that exe on `--arena=city --view=tilt70 --rigs`: exit 0, 0 SCRIPT ERROR (`smoke-it29.log`).
+Written through iterations 18-30; it26 (08:07-08:19) took the final exe (08:13, ed557034); it27 re-ran lint at the freeze head (15/15, `lint-it27.log`); it29 (08:31) smoked that exe on `--arena=city --view=tilt70 --rigs`: exit 0, 0 SCRIPT ERROR (`smoke-it29.log`). it30 (08:40, REPORT) re-checked every path this report cites: all 43 resolve (masters, `evidence/n8-vehicles/`, `project/`), `frames.json` has 15 entries, the exe (08:13) is in place; no code changed since ed557034.
 Branch `n8-vehicles`. Evidence: `evidence/n8-vehicles/` (gate logs, bench, identity md5s) and the
 masters in `C:\Users\kazda\kiro\gtai-masters\n8\vehicles\` (`frames.json`, 15 entries, best first).
 The view lane's REPORT.md came in with the n8-view merge; this file replaces it on this branch
