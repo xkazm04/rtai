@@ -581,3 +581,27 @@ NEXT (iteration 9, in brief order):
   the floor's tilted draw (+1.8 ms) is what remains. Re-take the frames under the lock (NEXT 1).
 - GATE unit full no-arg at cb1290b7 (the head): 1506 passed / 0 failed, 0 FLAKY
   (`evidence/n8-view/unit-it8-head.log`). Session ends (01:26); NEXT stands (1a done).
+
+## Iteration 9 (01:26-02:26)
+Read: JOURNAL, git log, the four lane journals. New to view: city it12 REQUEST (PropOcclusion's
+area = `PropCards.stand_rect` when it has one) and city it12 NEXT 3 (a rig list for
+RigCastShadows.collect: "REQUEST to view if view exposes one", conditional). hud it7: no request.
+- MILESTONE 01:30 (commit c38c82e5) city's REQUEST answered: `ArenaPropCards.stand_rect(kind, r)`
+  calls city's `PropCards.stand_rect` by path (the class is absent on this branch), empty when city
+  is not merged, under a flat view, or for walls; `PropOcclusion.drawn_area` takes it when it has an
+  area, else the lifted box as before. Unit (arena prop cards + prop occlusion) 9/0; lint 15/15.
+  PROVED on a throwaway trial merge of n8-city (a1fe2bbf..c63a03a4) into this head (scratch worktree,
+  removed after): `--boss=king --bot=boss --seed=2 --rigs --view=combo`, 1500 frames headless:
+  occlusion 5 body-frames (frames 743-988) on this branch -> 114 (frames 336-1001) merged: the
+  crate cards stand ~2.6 m on screen, so a body 1-1.8 m north of a crate row is now redrawn under
+  it (logs `evidence/n8-view/occ-it9/`). 0 SCRIPT ERROR both.
+  MERGE NOTE for the Director: n8-view and n8-city both edit `ArenaFloorView._prop` (view: the
+  `ArenaPropCards.draw` elif, it6, city's own REQUEST; city: `PropCards.stand` early return, it11).
+  Take city's hunk: PropCards.stand is the same cards drawn by their owner, and stand_rect then
+  matches what is drawn; ArenaPropCards.draw is left unused (its stand_rect bridge stays).
+  Also `dev/frames/quest1_clip.gd`'s `--view` doc line conflicts (n8-hud/n8-city vs mine): same
+  flag, take either line. `tools/debt/baseline.json`: take either side and `debt.mjs --update`.
+- FINDING for city (seen on the trial merge, King fight seed 2 tick 362, combo, 32 and 48 px/m):
+  the boulevard's middle crate row draws as a RED-ORANGE crate stack beside two cream stacks.
+  Red is blood only, vermilion only for danger/objectives/Rivet's collar/the King's cape: is that
+  card a vermilion danger mark by intent? If not, retone it like the cream stacks.
