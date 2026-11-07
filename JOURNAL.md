@@ -1535,3 +1535,16 @@ Read: JOURNAL tail, git log, the other lanes' journals (no new REQUEST to street
 NEXT: the it15/it16 NEXT list stands (REQUESTs: ped_cap_fall_70_v5, cop armed walk strips at p70;
 the SWAT p70 front corpse 1.43x short; cultists / Torque's gang when they spawn).
 - Session end 08:33: tree clean after this commit.
+
+## Iteration 19 (08:40, REPORT, deadline 09:00)
+Read: JOURNAL tail, git log, REPORT.md.
+- REPORT.md finalized: title (final, it19), a new "What blocked me (and for how long)" section
+  (gate under contention 23:45-00:05, no quiet machine for the bench, REQUESTs served in 1-2
+  iterations, no spawn for cultists / Torque's gang, check.mjs and mid-run-edit friction).
+- CHECK: every evidence path REPORT cites exists (masters n8/street, lane evidence/, and
+  project/data/tables/corpse_decay.json); the exe build/export/windows/RTAI.exe (08:11) present.
+  No code since 7db6c352, so the it15 gates still describe HEAD.
+NEXT: the REPORT's Next steps (ped_cap_fall_70_v5 short-fall twin, armed cop walk strips at p70,
+SWAT p70 front corpse 1.43x short, cultists / Torque's gang when they spawn, re-judge scale beside
+the final Rivet).
+- Session end: tree clean after this commit.

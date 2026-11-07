@@ -1,6 +1,7 @@
-# n8 street: the street cast under the angled view (REPORT, freeze at iteration 15)
+# n8 street: the street cast under the angled view (REPORT, final, iteration 19)
 
-Written 05:20, updated 06:25 (it12), 07:05 (it13) at the it14 freeze (07:55) and at the it15 freeze (08:25): the gates, the exe
+Written 05:20, updated 06:25 (it12), 07:05 (it13) at the it14 freeze (07:55), at the it15 freeze (08:25)
+and checked at 08:41 (it19: every evidence path below re-verified on disk; no code since 7db6c352): the gates, the exe
 and its command lines below are on the final code. Lane journal: `JOURNAL.md`. Stills and clips:
 `C:\Users\kazda\kiro\gtai-masters\n8\street\` (`frames.json`, 15 entries, best first;
 the combined clip `street_combined_tilt70_50s.mp4`).
@@ -53,7 +54,7 @@ selected by the view row's art key (`p70` / `p55`) or `cards`, never by a pitch.
   `riot_swat_long_fall_55_before_after_tilt_64ppm_heavy_board_t150.png`,
   `evidence/thug_long_fall_70_v3_before_after_tilt70_48ppm_x2_ohmbeat_s8.6-12.png`.
 - (it13) **Quest 1's dead contractors leave the floor** under the card views as the live fight's
-  corpses do (6 s, then ink out over 1.2 s; `corpse_decay.json`): Dock 9 no longer stacks ~30
+  corpses do (6 s, then ink out over 1.2 s; `project/data/tables/corpse_decay.json`): Dock 9 no longer stacks ~30
   bodies over the kerb and the bench (view's note). `quest1_dock9_corpse_decay_before_after_combo_32ppm_t15000.png`.
 - **Far corpses** (the baked crowd atlas): every DEATH cell is drawn under the card views: 0.1 s
   the drawn mid-fall, then the lying body (it10 + it11), instead of a top-down stump cut at the
@@ -74,6 +75,23 @@ selected by the view row's art key (`p70` / `p55`) or `cards`, never by a pitch.
   the jogger and rejected (it speckles the leggings). The cap's long fall is drawn in v3 since it15;
   his short fall still carries the tone.
 - The city seed-5 corpse "black bar" was the blood's head mark (view, it12), fixed on n8-view.
+
+## What blocked me (and for how long)
+
+- **Gating under contention, ~20 min (23:45-00:05):** `node tools/evidence/run.mjs --no-bench` hit
+  the 10 min background limit while scenarios waited for a quiet machine (my own reels were
+  running). Fixed by running the gate alone; scenarios passed at 00:03, the full gate later.
+- **A quiet machine for the crowd bench, never (01:42-02:00 and after):** bench.lock was held by
+  view at 01:42 and free at 02:00 with 6 other Godot processes up. The it10 crowd numbers were
+  taken with bench.lock held but are labelled CONTENDED; no uncontended number exists.
+- **Library turnaround, not blocking:** each REQUEST (cop walk, the v3 suit/cap walks, the long
+  falls, ped_cap_fall_70_v4) came back within 1-2 iterations; the cap's short-fall twin
+  (ped_cap_fall_70_v5) and armed cop walk strips were REQUESTed too late (it16) for tonight.
+- **No spawn for Kronk's cultists or Torque's gang** in the game: their art is ready but cannot be
+  judged in motion (whole night; out of this lane's scope to spawn them).
+- Smaller friction (minutes each, in JOURNAL): `tools/godot/check.mjs` fails on any features
+  script in this worktree (judged by `--import` + the unit run instead); the evidence run marks a tree
+  edited mid-run FAIL (I appended to JOURNAL during the it14 run; re-run clean on 6a4d0679).
 
 ## Calls for the owner
 
