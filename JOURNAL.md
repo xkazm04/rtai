@@ -746,3 +746,15 @@ NEXT: as it22 (F19 native stack, the owner's Calls P-1 / P-2 / P-3, L7 with the 
 
 NEXT: as it22 (F19 native stack, the owner's Calls P-1 / P-2 / P-3, L7 with the official toolchain).
 - Session end 18:32 (it25): all committed.
+
+## Iteration 28 (REPORT, 18:40-18:45)
+- Read: JOURNAL it25 + NEXT, git log -8, REPORT.md (final since it22).
+- Checked every evidence path REPORT cites: all present (evidence/perf/*, the exe 18:05 + DLL, tools/perf/*, perf_hud.gd,
+  masters stills, frames.json 14/14 files). Exe still newer than the last `project/` commit (ca5817a4, 17:51).
+- REPORT: added the clip list (before/after with the perf HUD, the brief's deliverable, was only implied via frames.json)
+  and a REPORT-phase check note. No Godot run, no `project/` change, no lock taken.
+- Registry rules applied: runtime-observation-evidence (every cited artifact checked on disk), perf-regression-gating
+  (artifact vs last code commit).
+
+NEXT: as it22 (F19 native stack of the frozen main thread; the owner's Calls P-1 / P-2 / P-3; L7 with the official toolchain).
+- Session end 18:45 (it28): all committed.
