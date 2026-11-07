@@ -123,9 +123,10 @@ func _scan_crowd() -> Array[Rect2]:
 	var screen: Rect2 = Rect2(Vector2.ZERO, get_viewport_rect().size)
 	var view_px: Rect2 = get_global_transform_with_canvas().affine_inverse() * screen
 	var n: int = _patches.size()
-	var areas: Array[Rect2] = CityCrowdOcclusion.patches(
-		_city.sim.snapshot(), _near.in_rect(view_px), view_px, _patches
-	)
+	var blds: Array[CityOccluders.Bld] = _near.in_rect(view_px)
+	var areas: Array[Rect2] = []
+	if not blds.is_empty():  # no building on screen: no snapshot
+		areas = CityCrowdOcclusion.patches(_city.sim.snapshot(), blds, view_px, _patches)
 	crowd_patches += _patches.size() - n
 	crowd_us += Time.get_ticks_usec() - t0
 	return areas
