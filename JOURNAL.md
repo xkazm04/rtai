@@ -989,3 +989,5 @@ NEXT (it12, after the freeze), replaces the lists above:
   our HeldMuzzle NOTE). `git merge-tree HEAD 94757f93`: the same two conflicts (JOURNAL.md add/add, debt baseline);
   the it11 trial merge holds. REPORT merge note says so. No REQUEST open to seams. No code change before the freeze:
   CYCLE_CELL[70] 84 would need the gates again (unit + 3 reels > the 20 min left), stays in Next steps.
+- 18:12 checked at the freeze: `build/export/windows/RTAI.exe` present (17:52 export at b51247bb; only docs since),
+  masters frames.json 15 entries, every file present; tree clean. NEXT unchanged (it12 list above). Session end.
