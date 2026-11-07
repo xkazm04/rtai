@@ -599,3 +599,36 @@ looked at old vs new on one contact).
 - 14:58 MERGE SEAM vs d9-rivet head (3c9def9a): `git merge-tree` conflicts in JOURNAL.md only (add/add);
   shared + auto-merged: docs/decisions.md, provenance, prop_occlusion.gd, tools/debt/baseline.json (new
   since it6: both lanes moved the baseline; after the merge run `node tools/debt/debt.mjs --update`).
+- 15:11 GATE evidence it7c at a8940e1b (quest patrol v4 + docs): lint 15/15, unit 1717/0, scenarios 52,
+  parity bit-exact, selftest goldens 11/11 + block 5/5, release-compile 602/0: all PASS
+  (`evidence/d9-seams/evidence-it7c-a8940e1b.log`).
+- 15:03 FILMED quest 1 Line Stopped `res://dev/frames/quest1_clip.gd -- --ppm=48 --view=tilt70|tilt
+  --ticks=600-760` (1920x1080, d3d12), before (v1 via lfs smudge) / after v4: 4 runs, 0 SCRIPT ERROR,
+  import 0 ERROR, tree restored. Masters `quest1_patrol_walk_v1_vs_v4_tilt70_tilt_48ppm_t660-722_strip.png`
+  (rows: before 70, after 70, before 55, after 55; every 4th clip frame).
+- 15:04 FINDING (pre-existing, n8 street code, NOT from today's art; same in before and after): in that
+  clip the patrol cop flips between the STANDING card and a walk frame every few frames (a stutter).
+  Cause read in `StreetQuestCards.walk_facing` (street_quest_cards.gd:95-117): `_moving` is the step
+  since the previous RENDER frame > MOVING_PX (0.2 px); a frame drawn with no sim tick in between (the
+  clip tool's sampling; and in play any display faster than the 60 Hz tick, e.g. 144 Hz) has step 0 ->
+  the standing card. Unconfirmed in a 60 fps windowed run (the clip's per-file tick spacing is 2).
+  Fix idea (next): hold `_moving` for ~0.15 s (9 ticks) after the last step (or judge moving by walked
+  px per second, not per frame), test: two frames with no step between steps stay walking.
+
+NEXT (it8), replaces the list above:
+1. Read d9-rivet + assets journals for REQUESTs first; assets owes the answer to my 14:39 REQUEST (one
+   game-ready cells folder per 70 ped walk + key/round/hash): splice each with
+   `tools/art/walk_splice_rows.py <keyed> <cells> <out> 1 2 3 4 5`, cut `street_walk.py ... 192`, FILL =
+   still mean h / walk mean h (scratch `it9/build.sh` + the mean-height snippet in JOURNAL it7), film
+   `res://dev/showcase/street_crowd.gd -- --view=tilt70 --ppm=64` (+ --write-movie) before/after.
+2. The quest patrol stand/walk stutter (15:04 FINDING): confirm at --fixed-fps 60 windowed and with the
+   clip; fix with a hold; unit test; film before/after.
+3. Gates green at a95de60e (evidence it7c) / f7b133ff (it7b) + reels it7 at defce5b3. Re-run after code.
+4. Freeze 18:30: export RTAI.exe (`"$GODOT_BIN" --headless --path project --export-release windows-showcase
+   ../build/export/windows/RTAI.exe`), REPORT final by 18:40. Owner Calls 1-3 stand.
+- Registry rules applied it7: sprite-and-atlas-production (a splice keeps the sheet's own registration;
+  one cell per grid; FILL measured per grid against its still card), motion-quality-gating (per-frame
+  head-line measure, then before/after films at the same seed/frames: board, quest 1),
+  generative-artifact-gating (every recipe reproduced byte-exact before changing an input; all cells
+  looked at old vs new), depth-ordered-layered-art (no layer change: whole-figure grids only).
+- Session end 15:12: all committed; scratch avi/PNG sequences deleted (masters hold the mp4s and stills).
