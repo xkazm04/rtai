@@ -90,3 +90,21 @@ func test_the_rack_hangs_handguns_flat_under_a_form_and_all_muzzle_up_in_top() -
 		k += 1
 	assert_eq(rack._cords.size(), flat * 2, "one cord per flat gun")
 	assert_eq(rack._pegs.size(), k, "one peg per hung weapon")
+
+
+func test_the_rack_hangs_the_molotov_at_the_show_minimum_only_under_a_form() -> void:
+	var rack: WeaponRackView = WeaponRackView.new()
+	add_child_autofree(rack)
+	var k: int = WeaponRackView.ORDER.find(&"molotov")
+	for id: StringName in WeaponRackView.ORDER.slice(0, k):
+		k -= 0 if rack.art.has(id) else 1
+	rack._form = ""
+	rack._hang()
+	var s: Sprite2D = rack._sprites[k]
+	var top_m: float = s.texture.get_width() * s.scale.x / SimConst.PX_PER_M
+	assert_almost_eq(top_m, rack.art.length_m(&"molotov"), 0.001, "top: the drawn length")
+	rack._form = "p70"
+	rack._hang()
+	s = rack._sprites[k]
+	var show_m: float = s.texture.get_width() * s.scale.x / SimConst.PX_PER_M
+	assert_almost_eq(show_m, WeaponRackView.MIN_SHOW_M, 0.001, "a form: the bottle reads")

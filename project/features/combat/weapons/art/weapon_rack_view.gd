@@ -51,6 +51,10 @@ const FLAT: Array[StringName] = [
 const FLAT_SCALE: float = 0.9
 const FLAT_Y_M: float = 1.0
 const HOOK_M: float = 0.12
+## n8-hud it20: under a form a showcase piece hangs at least this long: the molotov (0.48 m, an
+## icon 3.4x as long as tall) stood a 4 px sliver at 32 px/m; at 0.7 (the floor bottle's cap) it
+## reads. Every other weapon is 0.7 m or longer. 0.0 = the drawn lengths, one value away.
+const MIN_SHOW_M: float = 0.7
 
 ## The board's left end, bottom edge (hub-relative metres + the stage base, set by the hook).
 var origin_m: Vector2 = Vector2.ZERO
@@ -90,7 +94,8 @@ func _hang() -> void:
 		if s.texture == null:
 			continue
 		var flat: bool = icon != null and FLAT.has(id)
-		var len_px: float = art.length_m(id) * SimConst.PX_PER_M * (FLAT_SCALE if flat else 1.0)
+		var len_m: float = art.length_m(id) if icon == null else maxf(art.length_m(id), MIN_SHOW_M)
+		var len_px: float = len_m * SimConst.PX_PER_M * (FLAT_SCALE if flat else 1.0)
 		s.scale = Vector2.ONE * len_px / maxf(s.texture.get_width(), 1.0)
 		if flat:
 			_hang_flat(s, k)
