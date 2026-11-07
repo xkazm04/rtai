@@ -1,13 +1,11 @@
 class_name GhostFormHud
 extends Control
-## The ghost-form HUD widget in screen space (bottom left), D5 style: a paper card with an ink
-## rim holding one chip per ghost in the cycle order. The current form's chip is filled soul
-## teal and larger; the selected (next) ghost carries an ink chevron and the key hint; a ghost
-## on cooldown is swept over in ink (a pie that shrinks as it cools). Under the chips the Madness
-## bar, with the selected ghost's cost marked as a notch (a refused activation reads before Q).
-## A ghost still locked (GhostLocks: before its act) shows a padlock in a dimmed chip and no
-## name; G passes it by. Plain values only (sync() fills them from GhostForms); words come
-## translated by the caller.
+## The ghost-form HUD (bottom left): a paper card, one chip per ghost in the cycle order (its face:
+## GhostChipFace). The current form's chip is soul teal and larger; the selected (next) ghost has
+## an ink chevron and the key hint; a cooling ghost is swept in ink (a shrinking pie). Under the
+## chips the Madness bar, the selected ghost's cost a notch. A locked ghost (GhostLocks) shows a
+## padlock in a dimmed chip and no name; G passes it by. Plain values only (sync() fills them from
+## GhostForms); words come translated by the caller.
 
 const PAPER: Color = Color("e9dcc3")
 const INK: Color = Color("17131b")
@@ -16,6 +14,9 @@ const CHIP_R: float = 26.0
 const GAP: float = 84.0
 const MARGIN: float = 36.0
 const TEXT_SIZE: int = 18
+## n8-hud: the card on the HUD's torn memo paper (HudArt's 9-slice, the dialogue box's paper);
+## false = the flat D5 card with its ink rim.
+const MEMO: bool = true
 
 var order: Array[StringName] = []
 ## Translated display names by form id (the caller resolves ghost.<id>.name).
@@ -68,12 +69,20 @@ func _draw() -> void:
 	var shown: Array[StringName] = shown_chips()
 	var w: float = GAP * float(maxi(shown.size(), 1)) + 24.0
 	var card: Rect2 = Rect2(Vector2(MARGIN, screen.y - MARGIN - 158.0), Vector2(w, 158.0))
-	draw_rect(card.grow(4.0), INK)
-	draw_rect(card, PAPER)
+	if MEMO:
+		HudPaper.draw(self, paper_of(card))
+	else:
+		draw_rect(card.grow(4.0), INK)
+		draw_rect(card, PAPER)
 	for i: int in shown.size():
 		var c: Vector2 = card.position + Vector2(12.0 + GAP * (float(i) + 0.5), 60.0)
 		_chip(shown[i], c)
 	_madness(Rect2(card.position + Vector2(16.0, 128.0), Vector2(w - 32.0, 14.0)))
+
+
+## n8-hud: the memo paper round `card`: the tape above the names, the torn hatch outside the words.
+static func paper_of(card: Rect2) -> Rect2:
+	return card.grow_individual(16.0, 34.0, 10.0, 16.0) if MEMO else card.grow(4.0)
 
 
 ## The chips the card draws: every ghost, or folded (compact) the current form or the selected one.
@@ -95,6 +104,7 @@ func _chip(id: StringName, c: Vector2) -> void:
 		r *= 1.0 + 0.12 * sin(morph_k * PI)
 	draw_circle(c, r + 3.0, INK)
 	draw_circle(c, r, TEAL if on else PAPER)
+	var face: bool = GhostChipFace.draw(self, id, c, r)  # n8-hud: the ghost's face, else the glyph
 	var cool: float = cooling.get(id, 0.0)
 	if cool > 0.0:
 		_pie(c, r, cool)
@@ -110,7 +120,8 @@ func _chip(id: StringName, c: Vector2) -> void:
 		TEXT_SIZE,
 		INK
 	)
-	_glyph(id, c, r * 0.55, PAPER if on else INK)
+	if not face:
+		_glyph(id, c, r * 0.55, PAPER if on else INK)
 	if id == selected and not on:
 		_chevron(c, r, font)
 

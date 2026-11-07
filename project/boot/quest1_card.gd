@@ -58,6 +58,8 @@ func show_title(can_continue: bool = false) -> void:
 	@warning_ignore("return_value_discarded")
 	_button(_t(&"SLICE__QUIT", "Quit"), quit_pressed)
 	(first if first != null else start_button).grab_focus.call_deferred()
+	if LaunchArgs.has("--autostart") and OS.is_debug_build():  # n8-hud: film the opening
+		start_pressed.emit.call_deferred()
 
 
 ## Pause: the controls, then the settings panel (volume, reduced motion, rebinding) if given.

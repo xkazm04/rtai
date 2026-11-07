@@ -12,11 +12,24 @@ var heat_max: int = 3
 var cash: int = 0
 ## The weapon in hand, display text; empty = unarmed.
 var weapon: String = ""
+## n8-hud: the weapon's HUD icon (its showcase icon cut, else the shipped icon); null = no icon.
+var weapon_icon: Texture2D = null
 ## The magazine count drawn on the ammo ticket; -1 draws no count (e.g. the nail gun).
 var ammo: int = -1
 ## The subtitle box: speaker and words; an empty speaker hides the box.
 var speaker: String = ""
 var words: String = ""
+## n8-hud: the speaker's face (PortraitBook): a bust, or the device of a voice-only caller; null =
+## the name alone. `portrait_key` changes when the speaker changes (the face enters again).
+var portrait: Texture2D = null
+var portrait_device: bool = false
+var portrait_key: String = ""
+## n8-hud: the whole line (the box picks its text size on it, so typing never changes the size);
+## empty = fit on `words`.
+var full_words: String = ""
+## n8-hud: screen points (px) the top corners must not hide: a corner over one turns see-through
+## (HudSee). The caller fills them (quest 1: Rivet and the objective's goal); empty = opaque.
+var clear_px: PackedVector2Array = PackedVector2Array()
 ## One line under the beat panel (the save notice); empty hides it.
 var notice: String = ""
 ## Translated labels (HUD__HEAT, HUD__UNARMED).
@@ -32,3 +45,7 @@ func say(who: String, line: String) -> void:
 func silent() -> void:
 	speaker = ""
 	words = ""
+	portrait = null
+	portrait_device = false
+	portrait_key = ""
+	full_words = ""

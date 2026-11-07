@@ -42,6 +42,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--wound-hold",
 	# n7-ranged: --shot-trail=off draws no fading path behind a round that hit (the before)
 	"--shot-trail",
+	# n8-hud: --autostart presses quest 1's Start (debug builds; films the opening without a click)
+	"--autostart",
 	# n7-melee: --quest-blade=off gives quest 1 no carried blade (the before); =<id> another one
 	"--quest-blade",
 	# n7-melee: --hit-cues=off gives melee and ghost hits no sound of their own (the before)
@@ -67,6 +69,12 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--held-pitch",
 	# d8-weapons: --shot-lift=off draws rounds and hits on the ground under a tilt (the before)
 	"--shot-lift",
+	# n8-hud: --showcase=off keeps the shipped pickup parts under a tilt (the before)
+	"--showcase",
+	# n8-hud: --pickup-hover=off lays a floor gun's showcase drawing on its disc (no hover)
+	"--pickup-hover",
+	# n8-hud: --pickup-crate=on|off lays a floor gun's showcase drawing in an open crate (else hover)
+	"--pickup-crate",
 ]
 
 var _values: Dictionary[String, String] = {}
