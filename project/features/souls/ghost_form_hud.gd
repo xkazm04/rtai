@@ -16,6 +16,9 @@ const CHIP_R: float = 26.0
 const GAP: float = 84.0
 const MARGIN: float = 36.0
 const TEXT_SIZE: int = 18
+## n8-hud: the card on the HUD's torn memo paper (HudArt's 9-slice, the dialogue box's paper);
+## false = the flat D5 card with its ink rim.
+const MEMO: bool = true
 
 var order: Array[StringName] = []
 ## Translated display names by form id (the caller resolves ghost.<id>.name).
@@ -68,12 +71,20 @@ func _draw() -> void:
 	var shown: Array[StringName] = shown_chips()
 	var w: float = GAP * float(maxi(shown.size(), 1)) + 24.0
 	var card: Rect2 = Rect2(Vector2(MARGIN, screen.y - MARGIN - 158.0), Vector2(w, 158.0))
-	draw_rect(card.grow(4.0), INK)
-	draw_rect(card, PAPER)
+	if MEMO:
+		HudPaper.draw(self, paper_of(card))
+	else:
+		draw_rect(card.grow(4.0), INK)
+		draw_rect(card, PAPER)
 	for i: int in shown.size():
 		var c: Vector2 = card.position + Vector2(12.0 + GAP * (float(i) + 0.5), 60.0)
 		_chip(shown[i], c)
 	_madness(Rect2(card.position + Vector2(16.0, 128.0), Vector2(w - 32.0, 14.0)))
+
+
+## n8-hud: the memo paper round `card`: the tape above the names, the torn hatch outside the words.
+static func paper_of(card: Rect2) -> Rect2:
+	return card.grow_individual(16.0, 34.0, 10.0, 16.0) if MEMO else card.grow(4.0)
 
 
 ## The chips the card draws: every ghost, or folded (compact) the current form or the selected one.

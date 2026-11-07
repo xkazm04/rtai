@@ -65,7 +65,8 @@ func test_the_feed_fills_the_face_from_the_speaker() -> void:
 
 
 func test_the_box_paper_clears_the_folded_ghost_card() -> void:
-	var card_right: float = GhostFormHud.MARGIN + GhostFormHud.GAP + 24.0 + 4.0  # one chip + rim
+	var one_chip: Rect2 = Rect2(GhostFormHud.MARGIN, 0.0, GhostFormHud.GAP + 24.0, 158.0)
+	var card_right: float = GhostFormHud.paper_of(one_chip).end.x  # the folded card's paper
 	for screen: Vector2 in [Vector2(1920, 1080), Vector2(1728, 1080)]:
 		var paper_left: float = HudDialogue.box_of(screen).position.x - 10.0
 		assert_gt(paper_left, card_right, "the paper starts right of the card at %s" % screen)
