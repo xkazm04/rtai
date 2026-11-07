@@ -49,6 +49,10 @@ CAM_Y = 0.7
 VISOR_FLAT = 2.0
 ## Blades, the baton and the bottle: no muzzle flash (the swing's smear, the lit rag instead).
 NO_FLASH = ("katana", "chainsaw", "plasma_sword", "electro_baton", "molotov")
+## Left cells whose gun is held low at the hip (the asset lane's hand fix: the gun in the far
+## claw), so the near cable spike is the leftmost px of the arm band: the bell mouth, read by eye
+## on a x5 zoom of the cut cell (d9 it16). Re-read it when the strip is re-cut from another sheet.
+LEFT_PINNED = {("p55", "rivet_eq_homing_shard_left", 2): [43, 78]}
 
 
 def flash_core(rgba):
@@ -135,7 +139,7 @@ def measure(out_dir, strips):
             for c in range(LEFT_CELLS) if left else face + FIRE_CELLS:
                 cell = im[:, c * w : (c + 1) * w]
                 if left:
-                    p = left_point(cell)
+                    p = LEFT_PINNED.get((art, name, c)) or left_point(cell)
                 elif c in face:
                     p = shape_point(cell, 5, FACE_BAND)  # the wand's nozzle
                 else:

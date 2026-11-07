@@ -1,5 +1,5 @@
 {
- "doc": "d9 rivet: the owner-judged Rivet sheets (n8 verdict page, 2026-11-07) cut into game strips by rivet_frames.py --manifest. base = five facings + three drawn left facings + walk, sprint, roll, claw strike, hit, death; eq_<weapon> = five facings + fire/swing right, toward camera, at rest. Swap a sheet here and re-run (the plasma sword redraw is one line). rivet_eq_<weapon>_left = three drawn left facings holding a one-handed weapon in his right claw (the asset lane's answer to the d9 REQUEST), its own strip so the equipped cells never move.",
+ "doc": "d9 rivet: the owner-judged Rivet sheets (n8 verdict page, 2026-11-07) cut into game strips by rivet_frames.py --manifest. base = five facings + three drawn left facings + walk, sprint, roll, claw strike, hit, death; eq_<weapon> = five facings + fire/swing right, toward camera, at rest. Swap a sheet here and re-run (the plasma sword redraw is one line). rivet_eq_<weapon>_left = three drawn left facings holding a one-handed weapon in his right claw (the asset lane's answer to the d9 REQUEST), its own strip so the equipped cells never move. A _left row cuts by component (cc 0): the three left figures stand close and a gun or a spark of one crossed into its neighbour's column cut (a floating bell or flame beside him); p55 electro_baton_left keeps the column cut (its figures split into several large components).",
  "fig_h": 110,
  "library": "C:/Users/kazda/kiro/gtai-art/library/keyed/rivet",
  "out": "project/features/characters/art/view",
@@ -16,13 +16,14 @@
    },
    "rivet_eq_electro_baton_left": {
     "counts": "3",
-    "sheet": "rivet_eq_electro_baton_55_left.png"
+    "sheet": "rivet_eq_electro_baton_55_left_v2.png"
    },
    "rivet_eq_electro_gun": {
     "counts": "5,3",
     "sheet": "rivet_eq_electro_gun_55_v3.png"
    },
    "rivet_eq_electro_gun_left": {
+    "cc": "0",
     "counts": "3",
     "sheet": "rivet_eq_electro_gun_55_left.png"
    },
@@ -43,6 +44,7 @@
     "sheet": "rivet_eq_hand_cannon_55_v2.png"
    },
    "rivet_eq_hand_cannon_left": {
+    "cc": "0",
     "counts": "3",
     "sheet": "rivet_eq_hand_cannon_55_left.png"
    },
@@ -51,8 +53,9 @@
     "sheet": "rivet_eq_homing_shard_55.png"
    },
    "rivet_eq_homing_shard_left": {
+    "cc": "0",
     "counts": "3",
-    "sheet": "rivet_eq_homing_shard_55_left.png"
+    "sheet": "rivet_eq_homing_shard_55_left_v2.png"
    },
    "rivet_eq_katana": {
     "act_k": 0.95,
@@ -64,6 +67,7 @@
     "sheet": "rivet_eq_machine_pistol_55.png"
    },
    "rivet_eq_machine_pistol_left": {
+    "cc": "0",
     "counts": "3",
     "sheet": "rivet_eq_machine_pistol_55_left.png"
    },
@@ -76,14 +80,16 @@
     "sheet": "rivet_eq_molotov_55.png"
    },
    "rivet_eq_molotov_left": {
+    "cc": "0",
     "counts": "3",
-    "sheet": "rivet_eq_molotov_55_left.png"
+    "sheet": "rivet_eq_molotov_55_left_v2.png"
    },
    "rivet_eq_pistol": {
     "counts": "5,3",
     "sheet": "rivet_eq_pistol_55_v4.png"
    },
    "rivet_eq_pistol_left": {
+    "cc": "0",
     "counts": "3",
     "sheet": "rivet_eq_pistol_55_left.png"
    },
@@ -102,6 +108,7 @@
     "sheet": "rivet_eq_ray_gun_55.png"
    },
    "rivet_eq_ray_gun_left": {
+    "cc": "0",
     "counts": "3",
     "sheet": "rivet_eq_ray_gun_55_left.png"
    },
@@ -127,6 +134,7 @@
     "sheet": "rivet_eq_electro_baton_70_v2.png"
    },
    "rivet_eq_electro_baton_left": {
+    "cc": "0",
     "counts": "3",
     "sheet": "rivet_eq_electro_baton_70_left_v2_s.png"
    },
@@ -135,6 +143,7 @@
     "sheet": "rivet_eq_electro_gun_70_v3.png"
    },
    "rivet_eq_electro_gun_left": {
+    "cc": "0",
     "counts": "3",
     "sheet": "rivet_eq_electro_gun_70_left_v2.png"
    },
@@ -155,6 +164,7 @@
     "sheet": "rivet_eq_hand_cannon_70_v2.png"
    },
    "rivet_eq_hand_cannon_left": {
+    "cc": "0",
     "counts": "3",
     "sheet": "rivet_eq_hand_cannon_70_left.png"
    },
@@ -163,6 +173,7 @@
     "sheet": "rivet_eq_homing_shard_70.png"
    },
    "rivet_eq_homing_shard_left": {
+    "cc": "0",
     "counts": "3",
     "sheet": "rivet_eq_homing_shard_70_left_s.png"
    },
@@ -176,6 +187,7 @@
     "sheet": "rivet_eq_machine_pistol_70_v2.png"
    },
    "rivet_eq_machine_pistol_left": {
+    "cc": "0",
     "counts": "3",
     "sheet": "rivet_eq_machine_pistol_70_left.png"
    },
@@ -188,6 +200,7 @@
     "sheet": "rivet_eq_molotov_70.png"
    },
    "rivet_eq_molotov_left": {
+    "cc": "0",
     "counts": "3",
     "sheet": "rivet_eq_molotov_70_left.png"
    },
@@ -196,6 +209,7 @@
     "sheet": "rivet_eq_pistol_70.png"
    },
    "rivet_eq_pistol_left": {
+    "cc": "0",
     "counts": "3",
     "sheet": "rivet_eq_pistol_70_left.png"
    },
@@ -213,6 +227,7 @@
     "sheet": "rivet_eq_ray_gun_70_v2.png"
    },
    "rivet_eq_ray_gun_left": {
+    "cc": "0",
     "counts": "3",
     "sheet": "rivet_eq_ray_gun_70_left.png"
    },
