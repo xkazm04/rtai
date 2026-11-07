@@ -33,4 +33,4 @@ func test_the_banner_paper_clears_the_name_and_the_bar() -> void:
 	assert_gte(name_top - paper.position.y, 40.0, "the name clears the top band (22 px + tape)")
 	assert_gte(paper.end.y - bar.end.y, 28.0, "the torn bottom clears the bar")
 	assert_gte(bar.position.x - paper.position.x, 24.0, "the left end under the crest")
-	assert_gte(paper.end.x - bar.end.x, 24.0, "the right hatch clears the phase count")
+	assert_gte(paper.end.x - bar.end.x, 40.0, "the right hatch clears the phase count")

@@ -19,7 +19,7 @@ const CREST_GAP: float = 14.0
 ## hangs from the top edge like a pinned banner (the bar band stays BossCam.HUD_PX); the words in
 ## ink on it. false = the bare bar, cream on ink.
 const PAPER: bool = true
-const PAPER_GROW: Vector3 = Vector3(26.0, 26.0, 30.0)
+const PAPER_GROW: Vector3 = Vector3(26.0, 44.0, 30.0)
 const PAPER_TOP: float = -40.0
 
 var fight: BossFight = null
