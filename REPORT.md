@@ -15,7 +15,8 @@ The view lane's REPORT.md came in with the n8-view merge; this file replaces it 
    three mirrors (boss arenas park few cars). Wheels, glass, lamps and a ground shadow are in the
    art; the flat ink shadow stays under the card. 360-degree turns filmed at 32 and 64 px/m:
    `turn360_tilt70_64ppm_between_before_after.mp4`, `turn360_tilt70_64ppm_street_between_before_after.mp4`.
-2. **The set:** sedan (three variants + grey), taxi, van (also the depot van), parked pickup,
+2. **The set:** sedan (three variants + grey), taxi, van (also the depot van; cream since it19, the
+   top print's paint, one cream through its 64 px/m turn), parked pickup,
    ambulance, police car (police-blue light bar that flashes above 1 m/s), and the bike (atlas row
    9, both pitches, showcase only: the sim has no bike). All keyed by the view row's art key
    (`p70` / `p55`): `top` draws today's flat atlas, bit-identical (framemd5 seed 2, it18).
@@ -42,7 +43,8 @@ The view lane's REPORT.md came in with the n8-view merge; this file replaces it 
 - The bike has no sim archetype: it draws only in `dev/showcase/vehicle_turn.tscn`.
 - The driven car's hijack enter/exit keeps Rivet's current rig (Rivet frozen tonight).
 - The main scene ignores `--ppm`: city stills at 48/64 px/m come from the showcases, not the drive.
-- The depot van is cream on the flat print and olive as a card (van_cream needs in-betweens: REQUEST).
+- Bay 3's pale number fades over the cream van roof at 32 px/m in the Servo depot (REQUEST to view:
+  an ink stroke on the bay numbers; `van_cream_servo_depot_combo_32ppm_seed2_f130_olive_left_cream_right_crop.png`).
 
 ## Calls for the owner
 Each: options, the default built, how to see it.
@@ -59,8 +61,12 @@ Each: options, the default built, how to see it.
    `bike_turn_strip_tilt70_64ppm.png`.
 4. **Wreck fire:** size as built; its vermilion cores kept as a danger cue (decision 2026-11-07).
 5. **Rotation density:** nine views on every p70 row (built) vs five.
-6. **Depot van colour:** (a) olive card (built); (b) a paint gain; (c) van_cream (sheets exist,
-   in-betweens requested).
+6. **Van / depot van colour:** (a) olive cards (`VAN_SHEET = False` in `tools/art/vehicle_cards.py`,
+   then re-cut); (b) a paint gain; (c) the cream repaints, matching the top-down print (built since
+   iteration 19: van_cream_70 + its in-betweens, van_cream_55). The cream reads as a van on the depot
+   floor where the olive printed a brown block; it costs bay 3's number contrast at 32 px/m. See
+   `van_cream_servo_depot_combo_64ppm_seed2_f120_olive_left_cream_right.png`,
+   `van_cream_turn_tilt70_64ppm_olive_left_cream_right.mp4`.
 7. **Pickup's C in-between:** row C (built) vs the better-turned `_c` redraw (`PICKUP_C_REDO`).
 8. **Stage cars over the actors:** ON (built) vs under.
 
@@ -68,4 +74,5 @@ Each: options, the default built, how to see it.
 (at the freeze) `build/export/windows/RTAI.exe`, with the command lines.
 
 ## Next steps
-- A sim bike; the cream depot van once its in-betweens land; p55 in-betweens if bosses park more cars.
+- A sim bike; the 55 van in-betweens (`VAN_BETWEEN_55`, sheets exist) and other p55 in-betweens if bosses
+  park turning cars.
