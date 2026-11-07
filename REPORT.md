@@ -9,6 +9,10 @@ priority, the CPU's own 2-CU Radeon), never a device claim. Details and sources:
 (smoke: `RTAI.exe --headless --quit-after 300` exit 0, 0 SCRIPT ERROR). The Deck profile in it:
 `RTAI.exe -- --arena=city --bot=course --seed=2 --rigs --view=tilt70 --device=deck` (and `--device=deck40`,
 `--device=switch_handheld`).
+(it18) The owner's lines checked in this exe: the city course with `--device=deck`, `deck40`, `switch_handheld` and
+no device, headless, `--quit-after 900`: exit 0 and 0 SCRIPT ERROR each, the device row live on the three handheld runs
+(its rumble line in the exit log) and absent on the desktop run (`evidence/it18/exe-try/`). Every run, desktop included,
+ends with Godot's "105 resources still in use at exit" line: a shutdown note common to all four, not a handheld one.
 
 ## What works (with evidence)
 - `--device=deck|deck40|handheld_1080|switch-handheld` (devices.json, one row per device; no flag = desktop, untouched).
