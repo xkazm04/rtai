@@ -72,6 +72,11 @@ FIT_BY = "area"
 # mustard (hue ~37) at ~(160, 75, 5), past the palette's vermilion gate (r - max(g, b) >= 79,
 # PaletteTokens): measured 5.7k vermilion px per taxi at 32 px/m in the tilt70 city. 0 = the sheet's.
 HUE_DEG = {3: TAXI_HUE}
+# The lit amber lenses (value >= 0.7, saturation >= 0.8, hue 20-42) turn LAMP_DEG toward yellow on
+# every row but the police car's (its siren shader finds the amber lens by colour): the sheets'
+# lens orange (~239, 151, 7) passes the vermilion gate even before the grade. 0 = the sheets'.
+LAMP_DEG = 10.0
+POLICE_ROW = 8
 ROWS = [
     ("sedan", 1.45, (1.0, 1.0, 1.0)),
     ("sedan", 1.45, (0.93, 0.93, 0.93)),  # sedan_b: the small hatch, a shade darker
@@ -241,7 +246,8 @@ def paint(im: Image.Image, gain: tuple) -> Image.Image:
     return Image.fromarray(np.clip(px, 0, 255).astype(np.uint8))
 
 
-def hue_turn(im: Image.Image, deg: float) -> Image.Image:
+def hue_turn(im: Image.Image, deg: float, min_s: float = 0.35, min_v: float = 0.0, max_h: float = 50.0
+) -> Image.Image:
     if deg == 0.0:
         return im
     px = np.array(im).astype(np.float32) / 255.0
@@ -252,7 +258,7 @@ def hue_turn(im: Image.Image, deg: float) -> Image.Image:
     r, g = rgb[:, :, 0], rgb[:, :, 1]
     # red the maximum: hue = 60 (g - b) / c (b the minimum in the window)
     h = np.where(c > 0, 60.0 * (g - mn) / np.maximum(c, 1e-6), 0.0)
-    on = (px[:, :, 3] > 0) & (r >= mx) & (sat >= 0.35) & (h >= 20.0) & (h <= 50.0)
+    on = (px[:, :, 3] > 0) & (r >= mx) & (sat >= min_s) & (mx >= min_v) & (h >= 20.0) & (h <= max_h)
     h2 = np.clip(h + deg * np.clip((h - 20.0) / 8.0, 0.0, 1.0), 0.0, 58.0)
     px[:, :, 1] = np.where(on, mn + c * h2 / 60.0, g)
     return Image.fromarray(np.clip(px * 255.0, 0, 255).astype(np.uint8))
@@ -274,6 +280,7 @@ def paste(atlas: Image.Image, v: Image.Image, k: float, at: tuple, lift: float) 
     col, row, gain = at
     w, h = max(1, round(v.width * k)), max(1, round(v.height * k))
     im = amber(hue_turn(paint(v.resize((w, h), Image.LANCZOS), gain), HUE_DEG.get(row, 0.0)))
+    im = hue_turn(im, 0.0 if row == POLICE_ROW else LAMP_DEG, 0.8, 0.7, 42.0)
     cx = col * CELL_PX + CELL_PX // 2
     cy = row * CELL_PX + CELL_PX // 2
     x, y = round(cx - w / 2), round(cy - lift - h / 2)
