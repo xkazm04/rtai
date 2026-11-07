@@ -45,14 +45,14 @@ const WALKS: Dictionary[String, Dictionary] = {
 ## the size step (still figure height / walk figure height, per cell, the mean of the facings).
 const WALK_FILL: Dictionary[String, float] = {
 	"ped_suit_walk.png": 1.09,
-	"ped_elder_walk.png": 1.07,
-	"ped_hat_walk.png": 1.07,
+	"ped_elder_walk.png": 1.08,
+	"ped_hat_walk.png": 1.06,
 	"ped_hood_walk.png": 1.07,
 	"ped_cap_walk.png": 1.12,
-	"ped_punk_walk.png": 1.00,
+	"ped_punk_walk.png": 1.01,
 	"ped_shopper_walk.png": 1.09,
 	"ped_jogger_walk.png": 1.12,
-	"ped_worker_walk.png": 1.11,
+	"ped_worker_walk.png": 1.13,
 }
 const STRIDE_FRAMES: int = 4
 ## The frame a person stands in (pass: the feet together).
