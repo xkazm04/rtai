@@ -120,6 +120,21 @@ func draw_on(ci: CanvasItem, kind: String, r: Rect2) -> bool:
 	return true
 
 
+## The screen rect (ci's local px) that draw_on's card for cover `kind` on ground rect `r` covers:
+## the cell's full height over the footprint's south edge, as wide as r's long side. Empty under a
+## flat or perspective view or for a kind with no card (PropOcclusion's hit and cut area).
+static func stand_rect(kind: String, r: Rect2) -> Rect2:
+	var cards: PropCards = named()
+	var t: int = -1 if cards == null else cards._names.find(ARENA_KIND.get(kind, ""))
+	if t < 0 or not cards._strip.has(t):
+		return Rect2()
+	var strip: Texture2D = cards._strip[t]
+	var w: float = maxf(r.size.x, r.size.y)
+	var aspect: float = strip.get_height() * float(FACINGS) / strip.get_width()
+	var h: float = w * aspect / ViewMode.shared().ground_k()
+	return Rect2(r.get_center().x - w * 0.5, r.end.y - h, w, h)
+
+
 ## The art at `path` with `<art>` set to the view's art key, else its fallback key's; null if none.
 static func art_texture(path: String, art: String, fallback: Dictionary) -> Texture2D:
 	var want: String = art if art != "" else str(fallback.get("", "p55"))

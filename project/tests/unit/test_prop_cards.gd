@@ -88,3 +88,18 @@ func test_quest_stage_props_stand_by_their_own_names() -> void:
 	assert_true(cards.draw_on(ci, "payphone", Rect2(0, 0, 62, 24)), "quest 1's payphone stands")
 	assert_false(cards.draw_on(ci, "cash_taped", Rect2(0, 0, 64, 40)), "the cash stays flat")
 	assert_eq(PropCards.ARENA_KIND["dumpster"], "dumpster", "the hide spot is the dumpster card")
+
+
+func test_stand_rect_is_the_card_over_the_south_edge() -> void:
+	var saved: ViewMode = ViewMode._shared
+	var r: Rect2 = Rect2(0, 0, 144, 48)
+	ViewMode._shared = ViewMode.of("top")
+	assert_false(PropCards.stand_rect("cover_low", r).has_area(), "top: the box's own area")
+	ViewMode._shared = ViewMode.of("tilt70")
+	var got: Rect2 = PropCards.stand_rect("cover_low", r)
+	var wall: Rect2 = PropCards.stand_rect("wall_high", r)
+	ViewMode._shared = saved
+	assert_eq(got.end.y, r.end.y, "the card stands on the footprint's south edge")
+	assert_eq(got.size.x, 144.0, "as wide as the long side")
+	assert_lt(got.position.y, r.position.y - 48.0, "the crate card rises well over its box")
+	assert_false(wall.has_area(), "walls keep their box")
