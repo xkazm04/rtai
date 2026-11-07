@@ -18,10 +18,10 @@ const LEFT: PackedByteArray = [0, 0, 0, 1, 1, 1, 0, 0]
 ## The facings' median figure height in the strips (rivet_frames.json fig_h) and the feet's pad.
 const FIG_PX: float = 110.0
 const PAD_PX: float = 2.0
-## Rivet's standing height on screen (m): ~35 px at 32 px/m (the asset lane's mock).
-## p55: the 55 drawings carry a smaller helmet over longer legs (StreetWalkerCards' x1.18 step).
-const HEIGHT_M: float = 1.1
-const HEIGHT_BY_ART: Dictionary[String, float] = {"p55": 1.3}
+## Rivet's standing height on screen (m). n9: the owner's +50 % (1.1 -> 1.65 m, ~53 px at
+## 32 px/m); p55 in proportion (1.3 -> 1.95: the 55 drawings, a smaller helmet over longer legs).
+const HEIGHT_M: float = 1.65
+const HEIGHT_BY_ART: Dictionary[String, float] = {"p55": 1.95}
 const ROLL_SHADOW: float = 0.45  # the roll ball's cast-shadow height, in standing heights
 ## The fire cell: a recoil (RigClips.recoil, 0.4-1.6) above FIRE_RECOIL, or a shot left within
 ## FIRE_TICKS (streams and autos: RivetHeldView publishes it from the trigger's cooldown).

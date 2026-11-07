@@ -25,11 +25,13 @@ func test_flags_bring_back_the_old_defaults() -> void:
 
 
 func test_rivet_height_scales_his_drawn_height_at_every_art_key() -> void:
-	# d9 Call 1: the built 1.1 m is the default; --rivet-height=1.4 brings an option into the exe.
-	assert_almost_eq(RivetFrames.height_k, 1.0, 0.0001, "1.1 m built")
+	# n9: the owner's 1.65 m is the default (d9 built 1.1); --rivet-height=<m> brings an option.
+	assert_almost_eq(RivetFrames.height_k, 1.0, 0.0001, "1.65 m built")
+	assert_almost_eq(RivetFrames.HEIGHT_M, 1.65, 0.0001, "the owner's +50 %")
+	assert_almost_eq(RivetFrames.HEIGHT_BY_ART["p55"], 1.95, 0.0001, "p55 in proportion")
 	CastFlags._read = false
 	CastFlags.apply(PackedStringArray(["--rivet-height=1.4"]))
 	assert_almost_eq(RivetFrames.height_k * RivetFrames.HEIGHT_M, 1.4, 0.0001)
 	CastFlags._read = false
 	CastFlags.apply(PackedStringArray(["--rivet-height=9"]))
-	assert_almost_eq(RivetFrames.height_k * RivetFrames.HEIGHT_M, 2.0, 0.0001, "clamped")
+	assert_almost_eq(RivetFrames.height_k * RivetFrames.HEIGHT_M, 2.5, 0.0001, "clamped")
