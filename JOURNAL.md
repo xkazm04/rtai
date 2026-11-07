@@ -1046,3 +1046,34 @@ l.866): quest 1's tick-600 cop (Line Stopped crossing) still draws top-down at t
   is 48 px/m), after only: the drawn corpses read as lying people at the shipped zoom too.
   evidence/riot_atlas_corpse_drawn_after_tilt70_32ppm_f1200.png (+ masters, not in frames.json).
 - GATE unit no-arg on b5f5f10c: 1521 passed, 0 failed, no FLAKY.
+- GATE director reel under tilt70 on b5f5f10c (headless, the it1 command): 19/19 chapters, every
+  one all down, 0 SCRIPT ERROR (exit 0). (Headless skips the atlas bake, so the reel does not
+  exercise the stamp; the riot films above do, 0 SCRIPT ERROR.)
+- Registry rules applied (it10): concept-scene-parity (every before one data value or HEAD's file
+  away, same seed/scenario, separate runs said so), motion-quality-gating (the patrol walk judged
+  in a clip because stills jump ticks; the city death judged frame by frame 508-528, which
+  disproved my it9 scout), generative-artifact-gating (cop_patrol_v2 A cut and rejected on sight:
+  the `navy` fix greys it), sprite-and-atlas-production (the atlas dump looked at before trusting
+  the screen: it showed the 90 deg orientation fault; one cell size, one px/m rule),
+  render-submission-economy (far corpses stay in the one MultiMesh: the stamp edits the atlas
+  once at load, 0 extra draws), depth-ordered-layered-art (the patrol card stands on its ground
+  point, drawn where the sprite was in CastView's order).
+- Scratch it10: the .avi captures deleted at session end; composites are in masters/evidence.
+NEXT (iteration 11):
+1. The atlas DEATH frames 0-2 still show the baked parts falling top-down for ~0.3 s before the
+   drawn lying cell (a jump for far deaths): stamp them from the fall grid (buckle, mid-fall,
+   lying) if a clip of the riot at 0.25x shows the jump; else leave.
+2. Under combo the atlas is baked once at load (p70 art); at p55 far corpses keep the 70 drawing
+   (the pedestrians have no p55 grids anyway). Check `--view=tilt` (p55 at load) bakes the p55 cop
+   and thug lying frames: one riot still at tilt.
+3. Re-run scenarios on the head (b5f5f10c touches crowd_baker; scenarios are headless so the bake
+   is a no-op, expected 52/0), then the full evidence run `node tools/evidence/run.mjs --no-bench`
+   before the freeze.
+4. Freeze prep (08:30): Windows export (int-day recipe), REPORT.md: what works (cards for cops,
+   peds, thug, contractors + patrol, drawn falls at 70/55, atlas corpses, crowd cost +0.33 ms /
+   +93 draws CONTENDED), calls (cop tone navy vs police blue, crowd variety, drawn-fall FALL_AT /
+   stretch / p55 height, cop back corpse, contractor corpse opaque + spread, atlas corpse on/off),
+   what does not (cultists / Torque's gang: no spawn; cop walk strip REQUESTed; the seed-5 bar).
+- Session end 04:46: tree clean, every change committed. Commits it10: ec42c9a1 (contractor corpse
+  one length), ada46751 (quest 1 patrol cop card), 87e385dd (patrol walk facing), b5f5f10c (atlas
+  corpse), + evidence (bench) and docs.
