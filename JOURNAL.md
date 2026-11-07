@@ -1524,3 +1524,14 @@ Read: JOURNAL tail, git log, the other lanes' journals (no new REQUEST to street
 NEXT: the it15/it16 NEXT list stands (REQUESTs: ped_cap_fall_70_v5, cop armed walk strips at p70;
 the SWAT p70 front corpse 1.43x short; cultists / Torque's gang when they spawn).
 - Session end: tree clean after this commit.
+
+## Iteration 18 (08:30, STABILIZE, report 08:40)
+Read: JOURNAL tail, git log, the other lanes' journals (no new REQUEST to street).
+- CHECK: since 7db6c352 only JOURNAL.md, REPORT.md and docs/decisions.md changed (git diff --stat),
+  so the it15 gates (evidence ALL PASS, reel 19/19 in top, tilt70, combo) still describe HEAD.
+  `node tools/lint/lint.mjs` re-run 08:31: all 15 checks pass over 1133 files.
+- The exe `build/export/windows/RTAI.exe` (08:11, from 7db6c352) is present; masters frames.json
+  holds 15 entries; REPORT.md is current. No bug found to fix; no code change.
+NEXT: the it15/it16 NEXT list stands (REQUESTs: ped_cap_fall_70_v5, cop armed walk strips at p70;
+the SWAT p70 front corpse 1.43x short; cultists / Torque's gang when they spawn).
+- Session end 08:33: tree clean after this commit.
