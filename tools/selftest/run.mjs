@@ -9,8 +9,16 @@ import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { ROOT } from '../lib/repo.mjs';
 import { removeStale, runGodot } from '../lib/godot.mjs';
+import { verdict } from '../lib/dev_verdict.mjs';
 
 const windowed = (args) => runGodot(args, { headless: false, timeoutMs: 180000 });
+
+/** Runs `args` and judges it (tools/lib/dev_verdict.mjs) against `file`: an exit 1, a timeout or a
+ *  SCRIPT ERROR fails the stage even behind an ok JSON. Resolves the verdict. */
+async function judged(run, args, file) {
+  const startedAt = Date.now();
+  return verdict(await run(args), { resultFile: file, startedAt });
+}
 
 export const RESULT_NAME = 'selftest-result.json';
 export const GOLDEN_NAME = 'look-golden-result.json';
@@ -23,20 +31,20 @@ function siteDirs(outDir, out, site) {
 }
 
 /** The look golden frames: { ok, frames, summary }; frames is [] when it did not run. */
-export async function runLookGolden(outDir0, out0, site = 'junction') {
+export async function runLookGolden(outDir0, out0, site = 'junction', run = windowed) {
   const [outDir, out, siteArg] = siteDirs(outDir0, out0, site);
   removeStale(join(outDir, GOLDEN_NAME));
-  const res = await windowed(['--fixed-fps', '60', 'res://dev/selftest/look_golden.tscn', '--',
-    `--out=${out}`, ...siteArg]);
   const file = join(outDir, GOLDEN_NAME);
-  if (!existsSync(file)) return { ok: false, frames: [], summary: `look goldens: no result (exit ${res.status})` };
+  const v = await judged(run, ['--fixed-fps', '60', 'res://dev/selftest/look_golden.tscn', '--',
+    `--out=${out}`, ...siteArg], file);
+  if (!existsSync(file)) return { ok: false, frames: [], summary: `look goldens: no result (${v.line})` };
   const r = JSON.parse(readFileSync(file, 'utf8'));
   const frames = r.frames ?? [];
   const worst = Math.max(0, ...frames.map((f) => f.mean ?? 255));
   const bad = frames.filter((f) => !f.ok).map((f) => `${f.look}@${f.ppm}${f.grade && f.grade !== 'day' ? `-${f.grade}` : ''}`);
-  return { ok: res.status === 0 && r.ok === true && frames.length > 0, frames,
+  return { ok: v.ok && r.ok === true && frames.length > 0, frames,
     summary: `${site === 'junction' ? 'look' : site} goldens ${frames.length - bad.length}/${frames.length} within mean ${r.max_mean} (worst ${worst.toFixed(2)})`
-      + (bad.length ? `; OFF: ${bad.join(', ')}` : '') };
+      + (bad.length ? `; OFF: ${bad.join(', ')}` : '') + (v.ok ? '' : `; ${v.line}`) };
 }
 
 /** Splits audit offenders into tolerated debt (data/tables/accent_debt.json: accent + layer + ppm
@@ -56,13 +64,13 @@ export function judgeAccents(offenders, debtRows) {
 
 /** The colour-doctrine audit (dev/selftest/accent_audit.gd). Gating: an offender not covered by
  *  accent_debt.json (or above its max_px) fails the selftest. { ok, frames, offenders, summary }. */
-export async function runAccentAudit(outDir0, out0, site = 'junction') {
+export async function runAccentAudit(outDir0, out0, site = 'junction', run = windowed) {
   const [outDir, out, siteArg] = siteDirs(outDir0, out0, site);
   removeStale(join(outDir, 'accent-audit.json'));
-  await windowed(['--fixed-fps', '60', 'res://dev/selftest/accent_audit.tscn', '--', `--out=${out}`,
-    ...siteArg]);
   const file = join(outDir, 'accent-audit.json');
-  if (!existsSync(file)) return { ok: false, frames: [], offenders: [], summary: 'accent audit: no result' };
+  const v = await judged(run, ['--fixed-fps', '60', 'res://dev/selftest/accent_audit.tscn', '--', `--out=${out}`,
+    ...siteArg], file);
+  if (!existsSync(file)) return { ok: false, frames: [], offenders: [], summary: `accent audit: no result (${v.line})` };
   const r = JSON.parse(readFileSync(file, 'utf8'));
   const frames = r.frames ?? [];
   const offenders = frames.flatMap((f) => f.offenders.map((o) => `${f.ppm} px/m ${o}`));
@@ -75,56 +83,55 @@ export async function runAccentAudit(outDir0, out0, site = 'junction') {
     + `, cop looks still vermilion (debt, cops go cop_blue): ${looks.filter((x) => x.kind === 'cop' && x.vermilion > 0).map((x) => `${x.tag} ${x.vermilion}`).join(', ') || 'none'}` : '';
   const debtRows = JSON.parse(readFileSync(join(ROOT, 'project', 'data', 'tables', 'accent_debt.json'), 'utf8')).rows;
   const { debt, fresh } = judgeAccents(offenders, debtRows);
-  const verdict = fresh.length ? `NEW off-doctrine: ${fresh.join('; ')}` : 'no new off-doctrine accents';
+  const doctrine = fresh.length ? `NEW off-doctrine: ${fresh.join('; ')}` : 'no new off-doctrine accents';
   // debt rows are measured at the junction: only that site can report one paid off
   const paid = site !== 'junction' ? [] : debtRows.filter((d) => !offenders.some((o) => o.startsWith(`${d.ppm} px/m ${d.accent} on ${d.layer}:`)))
     .map((d) => d.id);
-  return { ok: fresh.length === 0, frames, offenders,
-    summary: `${site === 'junction' ? '' : `${site} `}accent pixels ${share}${crowd}; ${verdict}${debt.length ? `; known debt: ${debt.join('; ')}` : ''}`
-      + (paid.length ? `; debt rows no longer seen (delete them): ${paid.join(', ')}` : '') };
+  return { ok: v.ok && fresh.length === 0, frames, offenders,
+    summary: `${site === 'junction' ? '' : `${site} `}accent pixels ${share}${crowd}; ${doctrine}${debt.length ? `; known debt: ${debt.join('; ')}` : ''}`
+      + (paid.length ? `; debt rows no longer seen (delete them): ${paid.join(', ')}` : '') + (v.ok ? '' : `; ${v.line}`) };
 }
 
 /** The print pass's world lock (dev/selftest/world_lock.gd): the paused junction panned by a whole
  *  number of px at 32 / 48 / 64 px/m must move rigidly (world_px fed every frame). Gating. */
-export async function runWorldLock(outDir, out) {
-  removeStale(join(outDir, 'world-lock.json'));
-  await windowed(['res://dev/selftest/world_lock.tscn', '--', `--out=${out}`]);
-
+export async function runWorldLock(outDir, out, run = windowed) {
   const file = join(outDir, 'world-lock.json');
-  if (!existsSync(file)) return { ok: false, frames: [], summary: 'world lock: no result' };
+  removeStale(file);
+  const v = await judged(run, ['res://dev/selftest/world_lock.tscn', '--', `--out=${out}`], file);
+  if (!existsSync(file)) return { ok: false, frames: [], summary: `world lock: no result (${v.line})` };
   const r = JSON.parse(readFileSync(file, 'utf8'));
   const frames = r.frames ?? [];
   const detail = frames.map((f) => `${f.ppm}: ${(f.differing_share * 100).toFixed(2)} %`).join(', ');
-  return { ok: r.ok === true && frames.length > 0, frames,
-    summary: `world lock ${r.ok ? 'holds' : 'SWIMS'} (${detail} of the overlap differs after a pan, max ${r.max_share * 100} %)` };
+  return { ok: v.ok && r.ok === true && frames.length > 0, frames,
+    summary: `world lock ${r.ok ? 'holds' : 'SWIMS'} (${detail} of the overlap differs after a pan, max ${r.max_share * 100} %)`
+      + (v.ok ? '' : `; ${v.line}`) };
 }
 
-export async function runSelftest(outDir) {
+export async function runSelftest(outDir, run = windowed) {
   mkdirSync(outDir, { recursive: true });
   const out = outDir.replace(/\\/g, '/');
   for (const stale of [RESULT_NAME, 'selftest-32ppm.png', 'selftest-48ppm.png']) {
     removeStale(join(outDir, stale));
   }
-  const res = await windowed(['res://dev/selftest/city_selftest.tscn', '--', `--out=${out}`]);
-
   const file = join(outDir, RESULT_NAME);
+  const v = await judged(run, ['res://dev/selftest/city_selftest.tscn', '--', `--out=${out}`], file);
   if (!existsSync(file)) {
-    return { ok: false, summary: `selftest: no result (exit ${res.status}; needs a display)` };
+    return { ok: false, summary: `selftest: no result (${v.line}; needs a display)` };
   }
   const r = JSON.parse(readFileSync(file, 'utf8'));
   const frames = r.frames ?? [];
   const pngs = frames.map((f) => f.file).filter((f) => existsSync(join(outDir, f)));
-  const cityOk = res.status === 0 && r.ok === true && pngs.length === frames.length && frames.length > 0;
+  const cityOk = v.ok && r.ok === true && pngs.length === frames.length && frames.length > 0;
   const detail = frames.map((f) => `${f.ppm} px/m ${f.ok ? 'ok' : `FAIL (${f.why})`}, ${f.visible_actors} actors, `
     + `${f.distinct_colours} colours`).join('; ');
-  const gold = await runLookGolden(outDir, out);
-  const accents = await runAccentAudit(outDir, out);
+  const gold = await runLookGolden(outDir, out, 'junction', run);
+  const accents = await runAccentAudit(outDir, out, 'junction', run);
   // the same gates at a street between two built blocks (roofs, cast shadows, kerb props): the
   // junction alone never saw a prop's vermilion or a roof's shadow
-  const blockGold = await runLookGolden(outDir, out, 'block');
-  const blockAccents = await runAccentAudit(outDir, out, 'block');
-  const lock = await runWorldLock(outDir, out);
-  const summary = `selftest: D4 city frames ${cityOk ? 'rendered' : 'FAILED'} (${detail}); ${r.art_loaded} art textures, `
+  const blockGold = await runLookGolden(outDir, out, 'block', run);
+  const blockAccents = await runAccentAudit(outDir, out, 'block', run);
+  const lock = await runWorldLock(outDir, out, run);
+  const summary = `selftest: D4 city frames ${cityOk ? 'rendered' : `FAILED: ${v.line}`} (${detail}); ${r.art_loaded} art textures, `
     + `${r.placeholders} placeholders, prewarm ${Math.round(r.prewarm_ms)} ms; ${gold.summary}; ${accents.summary}; `
     + `${blockGold.summary}; ${blockAccents.summary}; ${lock.summary}`;
   const metrics = { lookGoldenFrames: gold.frames.length, lookGoldenOk: gold.ok ? 1 : 0, artLoaded: r.art_loaded,
