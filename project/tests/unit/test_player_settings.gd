@@ -111,3 +111,38 @@ func test_apply_sets_the_master_bus_volume() -> void:
 	AudioServer.set_bus_volume_db(0, before)
 	PlayerActions.shipped().install()
 	HandheldRumble.player_gain = 1.0
+
+
+## Mutation survivor :33 (`or -> and`): a file that parses but is not an object is the defaults.
+func test_a_json_array_file_is_the_defaults() -> void:
+	assert_eq(DirAccess.make_dir_recursive_absolute(_path.get_base_dir()), OK)
+	var f: FileAccess = FileAccess.open(_path, FileAccess.WRITE)
+	assert_true(f.store_string("[0.2, true]"))
+	f.close()
+	var back: PlayerSettings = PlayerSettings.load_or_default(_path)
+	assert_eq(back.volume, PlayerSettings.new().volume)
+	assert_false(back.reduced_motion)
+
+
+## Mutation survivor :71 (`sort_keys` true -> false): the saved file is canonical (sorted keys).
+func test_save_writes_sorted_keys() -> void:
+	assert_eq(DirAccess.make_dir_recursive_absolute(_path.get_base_dir()), OK)
+	assert_eq(PlayerSettings.new().save(_path), OK)
+	var text: String = FileAccess.get_file_as_string(_path)
+	var order: Array[int] = []
+	for k: String in ["frame_cap", "keys", "reduced_motion", "rumble", "schema", "volume"]:
+		order.append(text.find('"%s"' % k))
+	for i: int in range(1, order.size()):
+		assert_gt(order[i], order[i - 1], "key %d is after key %d" % [i, i - 1])
+
+
+## Mutation survivor :96 (`or -> and`): an unknown action or an unknown key name changes nothing.
+func test_rebind_ignores_an_unknown_action_or_key() -> void:
+	PlayerActions.shipped().install()
+	var s: PlayerSettings = PlayerSettings.new()
+	s.rebind(&"interact", "NotAKeyName")
+	assert_eq(ObjectiveHint.key_name(&"interact"), "E", "a bad key name leaves the default")
+	assert_false(s.keys.has("interact"))
+	s.rebind(&"no_such_action", "K")
+	assert_false(InputMap.has_action(&"no_such_action"))
+	assert_true(s.keys.is_empty())
