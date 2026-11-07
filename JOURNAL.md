@@ -744,3 +744,19 @@ NEXT (after the day run, if the lane continues):
   / none, headless, `--quit-after 900`): exit 0, 0 SCRIPT ERROR each; the device row live only on the handheld runs. The
   "105 resources still in use at exit" line shows on all four, desktop included: not a handheld issue (f350f826,
   `evidence/it18/exe-try/`). Scratch `it18b` deleted. Session end 18:11: all committed, no process or lock of mine left.
+
+## Iteration 19 (BUILD, 18:13-18:30, the freeze)
+- Read 18:13: JOURNAL it18 + NEXT, git log -8. The freeze is already done: the exe ran the owner's lines in it18
+  (f350f826), and the REPORT is final. `frames.json`: 15 entries, every file present (checked).
+- The rivet / seams / perf journals: perf's it21 REQUEST to handheld (an FYI: L13 title card idle, L14 minimized
+  low-processor mode, F19 quest 1 frozen ~1 in 4 under `--autostart`) was **not answered in it18**. ANSWER to perf: read,
+  thanks; neither L13 nor L14 touches a row's `max_fps`; L14 is Windows-only value, as you say. F19: none of my timed numbers
+  are quest 1 runs (E0-E15b are the reel, the city and the bosses). My quest 1 runs are the pad walks (state reads, e.g.
+  `Engine.max_fps` 30) and E14 (hash-checked), so F19 changes no number of mine. Added to REPORT ("What blocked" / perf's FYIs).
+- The asset library: `ui_pad_glyphs_v1` is still not in `catalog.json` or anywhere else in the library (grep 0): unserved,
+  as REPORT says.
+- No `project/` change, no Godot run, no lock taken this iteration. Registry rule applied: perf-regression-gating (before
+  I wrote "no number affected", I checked each quest 1 run of mine for whether it was timed).
+
+NEXT: as it18 (quiet-machine E15b, the owner's Calls -> `devices.json` defaults, a real Vulkan run).
+- Session end 18:17 (it19): all committed.

@@ -137,6 +137,11 @@ ends with Godot's "105 resources still in use at exit" line: a shutdown note com
 - Perf's FYI (their it18): `boot/minimized_cap.gd` caps a minimized window at the tick; my rows' `max_fps` 60 / 40 / 30
   stay in charge (cap <= 60), so after the merge a Windows handheld sent to the background stops spinning. Not on this
   branch; nothing to change here.
+- Perf's second FYI (their it21): L13 idles quest 1's title card in low-processor mode (a Deck player sitting in the
+  menu costs ~0.004 cores on this PC) and L14 adds low-processor mode while minimized (Windows-only value: SteamOS's
+  limiter already sleeps). Neither touches a row's cap. Their F19 (quest 1 frozen ~1 in 4 under `--autostart`, a run
+  reading ~0.005 cores): none of my CPU or frame numbers are quest 1 runs (E0-E15b are the reel, the city and the
+  bosses; E14's quest 1 runs are hash-checked, not timed), so no number of mine is affected. Checked it19.
 
 ## Calls for the owner
 1. **Handheld zoom** (stills: `gtai-masters/d9/handheld/zoom-city-deck-32ppm.png`, `-40ppm`, `-48ppm`, all 1280x800
