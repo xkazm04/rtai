@@ -1462,3 +1462,11 @@ NEXT (iteration 17, the freeze at 08:30):
   `FOUND_corpse_head_over_barrier_merged_it17_tilt70_32ppm_seed5_t900_crop3x.png`). Your
   `CityCrowdOcclusion` already has the lying box; it needs the arena's tall props as occluders (or
   view feeds the crowd snapshot to PropOcclusion). For d9; not a freeze change.
+- LOOKED 07:56-07:58 view's bosses on the it17 merge, combo 32 px/m seed 2 `--bot=boss --bot-human`
+  (the shipped follow camera), 0 SCRIPT ERROR each. King t1150: the 2.0x bust with the cape on the
+  card (no train), the throne-car, the gang's cards, hud's boss bar and the ghost wheel. Servo t900:
+  "-> boss at tick 1", p55 cards at tick 32; Servo's p55 card on the stood crates' row, the beam's
+  target circle fixed where Rivet stood when the wind-up began while Rivet is clear of it (item 3
+  holds on the merge), vehicles' p55 depot van parked in bay 3 over its floor number, the inked
+  bay numbers 1-4. Masters `king_merged_it17_freeze_heads_combo_32ppm_seed2_t1150.png`,
+  `servo_merged_it17_freeze_heads_combo_32ppm_seed2_t900.png`. Nothing view-owned misplaced.
