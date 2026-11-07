@@ -734,3 +734,48 @@ n8-city >= d70c8b06). street, hud: nothing to view.
   it8: 3.3x). Take the quiet re-take before the freeze (NEXT).
   FRICTION 02:38: my first take put `--disable-vsync --resolution` after `--` (user args): every
   run paced at 16.67 ms p50; discarded, re-run with the engine flags before the scene path.
+  (The bench evidence + this JOURNAL entry landed inside 3c5aacba: the hook had rejected their own
+  commit on the then-unstaged lead_showcase edit and left them staged.)
+- MILESTONE 02:47 (3c5aacba) NEXT 1 of it9, the camera lead FILMED with the real CameraRig:
+  `lead_showcase` (the city selftest junction, CityView feeds the rig from a focus driven east)
+  takes `--view=<id>` and `--speed=<m/s>`. `godot --fixed-fps 60 --path project
+  res://dev/selftest/lead_showcase.tscn -- --out=<dir> --view=<combo|combo_lead> --speed=<15|25>`,
+  48 px/m (car mode), 0 SCRIPT ERROR x4. Lead at tick 150 (settled): combo 4.93 m @15, 6.58 m @25
+  (the cap); combo_lead 7.40 m @15, 9.87 m @25 (`evidence/n8-view/lead-it10/*.json`). Checked the
+  selftest really draws the tilt: `--view=top` vs combo at tick 0 differ everywhere (compressed
+  crosswalks, the crowd as cards). Masters: `lead_combo_vs_combo_lead_{25,15}mps_48ppm_t150.png`
+  (frames.json #9, replacing the arena cover cards still: city's PropCards own that at the merge).
+  Looked at: the focus sits further back in the frame with combo_lead. Road ahead of the focus to
+  the frame edge (1280 px window = 26.7 m at 48 px/m, half 13.3 m + the lead): combo 19.9 m,
+  combo_lead 23.2 m at 25 m/s (0.8 s vs 0.93 s of travel). Default stays combo (x1); the Call
+  is the owner's (REPORT).
+- GATE unit full no-arg at 3c5aacba: 1511 passed / 0 failed, 0 FLAKY (`evidence/n8-view/unit-it10.log`).
+  Lint 15/15 at each commit (the hook).
+- Registry rules applied it10: depth-ordered-layered-art (the seize cue's z chosen against the
+  band table, the ghost's own halo left with its body so a ghost behind a van stays behind it;
+  bay marks stay ground), perf-regression-gating (the held floor proved pixel-identical before it
+  was timed; the bench labelled CONTENDED with what ran beside it; the vsync-paced first take
+  discarded, not reported), motion-quality-gating (the lead filmed on the real CameraRig, settled
+  tick, two speeds; the selftest's tilt verified against top before trusting the stills),
+  concept-scene-parity (the Dent tether judged in the Servo depot fight, not a probe),
+  generative-artifact-gating (no new art this iteration).
+
+NEXT (iteration 11, in brief order):
+1. Quiet re-take of the King fight frames (top vs combo, `scratch/view/bench10.sh`, engine flags
+   before the scene path) when no other lane renders; then the release-export number for item 8
+   (the dev arena is not in a release export: use `tools/bench/run.mjs` crowded drive top vs combo).
+2. Vehicles' answer on the seize cues: if they want bay 3's marker through the van, move the bay
+   marks to the `world_markers` canvas under card views (servo_bays / depot draw; mine: Servo).
+3. Quest 1 at tilt70 after the Director merges city + street (check the arena_floor_view merge:
+   city's `PropCards.stand` hunk now sits in `_prop`, which the held `_ground` calls for every
+   arena: the cards are held too; expect the King occlusion count ~114 on the merge).
+4. Before the freeze: director reel 19/19 top + combo, evidence run --no-bench, export the exe,
+   REPORT with the Calls (King bust size, death beat length, attack lock, camera lead at speed:
+   combo vs combo_lead with the it10 stills, cover as one stack, quest 1's cast under the angled view).
+MERGE NOTE it10 for the Director: `ArenaFloorView` changed again (cca797f9): `_draw` no longer
+tiles/props per frame on dock arenas (`_held` -> `_ground` for every arena), `_barrier`/`_crate_row`
+moved to `ArenaFloorStatic`, `_prop`'s `side` line split in two. city's `_prop` hunk
+(`PropCards.stand` early return) still goes into `_prop` as before; if city's cards change per
+frame (they did not on the it9 trial merge: stand_rect from static props), they must ask the held
+child to redraw (`_static.queue_redraw()`).
+- GATE 02:51 scenarios at 3c5aacba (`run_scenarios.mjs --quiet-wait=3`): 52 passed, 0 SCRIPT ERROR, none contended (`evidence/n8-view/scenarios-it10.log`).
