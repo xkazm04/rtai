@@ -1,6 +1,7 @@
 class_name StreetQuestCards
 extends RefCounted
-## Lane n8 street: quest 1's dock contractors under a card view. Straight down CastView draws each
+## Lane n8 street: quest 1's dock contractors (and patrol cops: PATROL) under a card view.
+## Straight down CastView draws each
 ## as the flat `dock_guard` sprite turned to its facing; seen from a raised camera that reads as a
 ## disc on the ground. Under a view row with `cards` and a strip for its art (GUARD), the guard
 ## draws as one standing whole-figure card instead: the library's contractor sheet (hard hat, hi-vis
@@ -14,6 +15,12 @@ const P70: String = "res://features/characters/art/view/p70/"
 const GUARD: Dictionary[String, String] = {
 	"p55": P55 + "contractor_card.png",
 	"p70": P70 + "contractor_card.png",
+}
+## Quest 1's patrol cops (CastView draws them while Rivet is hot): the library's cop_patrol sheet's
+## top row, the same recipe and width, `navy` as the cop head cards (the cop-tone call's default).
+const PATROL: Dictionary[String, String] = {
+	"p55": P55 + "cop_patrol_card.png",
+	"p70": P70 + "cop_patrol_card.png",
 }
 ## A downed guard's drawn lying frame (street_fall.py from keyed contractor_fall_55 / _70 B:
 ## the grid's last row, feet at the cell centre), fallen forward along its facing, mirrored as
@@ -38,13 +45,29 @@ static var _tex: Dictionary[String, Texture2D] = {}
 static func draw_guard(
 	canvas: CanvasItem, at_px: Vector2, facing: Vector2, px_per_m: float, tint: Color = Color.WHITE
 ) -> bool:
+	return _card(canvas, GUARD, at_px, facing, px_per_m, tint)
+
+
+## Draws a quest 1 patrol cop's standing card (as draw_guard); false = the caller draws its sprite.
+static func draw_patrol(
+	canvas: CanvasItem, at_px: Vector2, facing: Vector2, px_per_m: float, tint: Color = Color.WHITE
+) -> bool:
+	return _card(canvas, PATROL, at_px, facing, px_per_m, tint)
+
+
+static func _card(
+	canvas: CanvasItem,
+	strips: Dictionary[String, String],
+	at_px: Vector2,
+	facing: Vector2,
+	px_per_m: float,
+	tint: Color
+) -> bool:
 	var view: ViewMode = ViewMode.shared()
-	var path: String = GUARD.get(view.art, "")
+	var path: String = strips.get(view.art, "")
 	if not view.cards or path.is_empty():
 		return false
-	if not _tex.has(path):
-		_tex[path] = load(path) as Texture2D
-	var tex: Texture2D = _tex[path]
+	var tex: Texture2D = _load(path)
 	var cell: Vector2 = Vector2(tex.get_width() / float(RigHeadCard.FRAMES), tex.get_height())
 	var f: Vector2i = RigHeadCard.frame_of(facing.angle())
 	var w: float = WIDTH_M * px_per_m

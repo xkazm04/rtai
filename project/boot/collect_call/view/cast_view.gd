@@ -59,7 +59,8 @@ func _draw() -> void:
 		_ally(tag, stage.layout.places.actors[tag].at)
 	if stage.heat.level > 0:
 		for p: Vector2 in stage.patrol_pos:
-			_sprite("cop", p, _size(&"cop"), Vector2.DOWN)
+			if not StreetQuestCards.draw_patrol(self, Ink.px(p), Vector2.DOWN, Ink.PX_PER_M):
+				_sprite("cop", p, _size(&"cop"), Vector2.DOWN)
 	if fighters_on_rigs:
 		for h: Fighter in stage.arena.hostiles:
 			if h.kind == Fighter.Kind.BOSS:

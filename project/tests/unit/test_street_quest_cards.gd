@@ -4,12 +4,13 @@ extends GutTest
 
 func test_the_contractor_strip_loads_per_pitch_with_whole_frames() -> void:
 	for art: String in ["p55", "p70"]:
-		var path: String = StreetQuestCards.GUARD.get(art, "")
-		assert_true(path.contains("/%s/" % art), "%s draws its own contractor" % art)
-		var tex: Texture2D = load(path) as Texture2D
-		assert_not_null(tex, path)
-		if tex != null:
-			assert_eq(tex.get_width() % RigHeadCard.FRAMES, 0, "%s whole frames" % art)
+		for strips: Dictionary[String, String] in [StreetQuestCards.GUARD, StreetQuestCards.PATROL]:
+			var path: String = strips.get(art, "")
+			assert_true(path.contains("/%s/" % art), "%s draws its own card" % art)
+			var tex: Texture2D = load(path) as Texture2D
+			assert_not_null(tex, path)
+			if tex != null:
+				assert_eq(tex.get_width() % RigHeadCard.FRAMES, 0, "%s whole frames" % art)
 
 
 func test_straight_down_the_sprite_draws() -> void:
@@ -21,6 +22,10 @@ func test_straight_down_the_sprite_draws() -> void:
 	assert_false(
 		StreetQuestCards.draw_down(canvas, Vector2.ZERO, Vector2.RIGHT, 32.0),
 		"the shipped view keeps the guard_down sprite"
+	)
+	assert_false(
+		StreetQuestCards.draw_patrol(canvas, Vector2.ZERO, Vector2.DOWN, 32.0),
+		"the shipped view keeps the cop sprite"
 	)
 
 

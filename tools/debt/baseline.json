@@ -207,11 +207,12 @@
     "files_past_soft_cap": {
       "accepted": [
         "2026-11-06: n8 street: cast_view +1 line (the StreetQuestCards hook: quest 1's contractors stand as cards under card views) and quest1_clip +1 (--view for filming quest 1 under a tilt) (files_past_soft_cap 68 -> 68)",
-        "2026-11-07: n8 street it8: cut_rig +1 line (StreetView.post after the react's post pose: the drawn falls were turned by it); dev/showcase +9 (the street board's --cops evidence switch) (files_past_soft_cap 68 -> 68)"
+        "2026-11-07: n8 street it8: cut_rig +1 line (StreetView.post after the react's post pose: the drawn falls were turned by it); dev/showcase +9 (the street board's --cops evidence switch) (files_past_soft_cap 68 -> 68)",
+        "2026-11-07: cast_view +1: quest 1 patrol cop card branch (street it10), as the it4 contractor card (files_past_soft_cap 68 -> 68)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 266,
-        "project/boot/collect_call/view/cast_view.gd": 226,
+        "project/boot/collect_call/view/cast_view.gd": 227,
         "project/boot/collect_call/view/collect_call_view.gd": 236,
         "project/boot/collect_call/view/fx_view.gd": 271,
         "project/boot/collect_call/view/stage_view.gd": 201,
