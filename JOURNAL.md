@@ -706,3 +706,31 @@ NEXT (iteration 15, in order):
 01:58 GATE director reel on 8a4d1ff8 (`res://dev/arena/arena.tscn -- --bot=reel --reel=director
 --loadout=pistol --rigs --view=<v>`, headless, --fixed-fps 60 --quit-after 7600): top 19/19 all
 down, tilt70 19/19 all down, 0 SCRIPT ERROR, exit 0 each (evidence/n8-vehicles/director-reel-it14-*.log).
+MILESTONE 02:04 edc95d54 the stage cards' front grid (iteration 11 NEXT 2), built and OFF.
+VehicleStageCards.over: on a print the cards go to the vehicles band (z 200, over the actors at
+100) and their under layer to actors - 1 (z_as_relative off), the front grid fed each frame with
+the arena's living fighters (Rivet, hostiles, boss: VehicleStageCards.fighters). FILMED the Servo
+depot (`res://dev/arena/arena.tscn -- --boss=servo --bot=boss --servo-ghost=dent --view=combo
+--ppm=32 --rigs --seed=2`, 300 frames, over on/off, 0 SCRIPT ERROR both): with over ON the van
+covers bay 3's marker, Dent's halo and the teal tether end (drawn in the actors band) - the very
+cues the seize reads by since SOUL went WHITE. Worse at close range, so over = false (the picture
+as before; the unit test runs both settings). Still: masters
+servo_van_over_actors_left_under_right_over_combo_32ppm_f130.png (left today's, right over; not
+in frames.json: a rejected option).
+REQUEST to view: on the print actor layer, draw the soul-seize cues (the ghost's halo, the teal
+tether, the bay markers: cast_view / stage overlays, actors band today) above the vehicles band
+(z > 200), so a stage car can stand over the actors (VehicleStageCards.over = true) without hiding
+them. Not urgent: the arena cars are parked; people walk round them.
+GATE full unit on edc95d54: 1513 passed, 0 failed, no FLAKY. lint 15/15. `top` unaffected (no
+node in top; the stage cards' code path returns before attach without a card atlas).
+
+NEXT (iteration 15, replaces the NEXT above):
+1. If view answers the REQUEST (seize cues over z 200): VehicleStageCards.over = true, re-film the
+   Servo depot (combo 32 + 64 px/m) on/off, the reel in both views.
+2. Raise the weakest item: the taxi's paint under the scene grade reads orange (atlas mustard
+   211,138,41 -> frame ~179,85,21); measure it in the city tilt70 grade next to vermilion (Rivet's
+   collar) and, if they collide, a value-only gain on row 3 in vehicle_cards.py (a Call if not).
+3. Exe at the freeze (int-day recipe in docs/decisions.md), REPORT.md by 08:40 with every Call:
+   bike (showcase only vs a sim archetype), wreck fire size, rotation density (nine views now on
+   every p70 row), the depot van colour, the pickup C (row vs _c), stage cars over the actors.
+Session end 02:06.
