@@ -178,3 +178,18 @@ func test_a_resting_boss_hit_never_holds_back_a_hurt() -> void:
 	assert_eq(rumble.by_kind, {&"boss_hit": 1, &"rivet_hurt": 1} as Dictionary[StringName, int])
 	assert_eq(rumble.rested, 0)
 	rumble.free()
+
+
+func test_the_shortest_gap_skips_the_tick_zero_prime() -> void:
+	var rumble: HandheldRumble = HandheldRumble.new(1.0)
+	assert_false(rumble.see(&"boss_hit", 0), "primes")
+	assert_true(rumble.see(&"boss_hit", 40))
+	assert_false(rumble.min_gap.has(&"boss_hit"), "no gap from the never-hurt prime")
+	assert_true(rumble.see(&"boss_hit", 41))
+	assert_eq(rumble.min_gap[&"boss_hit"], 1, "a gap from tick 40, not 0")
+	var later: HandheldRumble = HandheldRumble.new(1.0)
+	assert_false(later.see(&"rivet_hurt", 1))
+	assert_true(later.see(&"rivet_hurt", 4))
+	assert_eq(later.min_gap[&"rivet_hurt"], 3, "a prime at tick 1 is a real hurt tick")
+	rumble.free()
+	later.free()

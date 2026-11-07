@@ -658,3 +658,26 @@ NEXT (iteration 15):
   re-run on Windows: the same hashes (write @1800 `13e5ad9f..`, +600 `300113db..`; the Linux slot `4c7b248f..` /
   `d16071f6..`). The two WSL runs (`evidence/it15/lin_save.sh`) used the first version (`--mode= --dir=` flags; the
   body is the same code). dev_loc +85 accepted (`--accept-regression`): a dev-only tool, not exported.
+- RESEARCH 17:31 (from the code, LEDGER section 1) the Verified on-screen keyboard item does not apply: no `LineEdit` /
+  `TextEdit` / `SpinBox` ships. Valve's "per-device settings out of Steam Cloud": the saves are `user://profile/`, the
+  settings `user://settings.json`, so an Auto-Cloud rule on `profile/` alone keeps them apart, no code change.
+- Cleanup 17:26-17:32 (end-of-day items, mine only, each looked at first): the HKCU DirectX UserGpuPreferences value for
+  `gtai-d9x/handheld-godot/Godot_v4.7.2-stable_win64_hh.exe` (= `GpuPreference=1;`, no process from it running) and that
+  folder; `git worktree remove --force` of the BC7 scratch `gtai-d9x/scratch/hh-bc7` (its re-imported `.import` files
+  were the E10/E11 arm, numbers in LEDGER); the scratch dirs `padwalk`, `padwalk2`, `it12`, `it13`, `it14`, `handheld`
+  and my `it11-*` files (the two pad walkers named in frames.json kept in `evidence/it11/padwalk/`,
+  `evidence/it12/padwalk2/`); WSL `~/hh14`, `~/hh15`; `build/export/linux*`. WSL itself left running (other work in
+  that distro: not mine to stop). Kept for the freeze: `scratch/it15` (the gate's TEMP, the reels).
+- FRICTION 17:25 the evidence gate refused the tree again (its own log and the live mutate log are untracked under
+  `evidence/`): re-run with `--allow-dirty`, the log in scratch; the dirt was only those untracked logs, nothing in
+  `project/`. For next time: point the mutate and gate logs at scratch, copy in after.
+- MILESTONE 17:40 gate on 3c96af2c: lint 15/15, unit **1735 / 0** (the step says FAIL only for "tree changed during run":
+  my copy of the two walker folders into `evidence/` while it ran), scenarios 53/53, parity exact (629), look goldens
+  11/11 (worst 0.27) + block 5/5, export-audit 601/0: **top bit-identical** (`evidence/it15/evidence-run-3c96af2c.log`).
+  Reels on 3c96af2c: **top / tilt70 / combo / combo + deck 19/19, 0 SCRIPT ERROR** (`reels-summary-3c96af2c.log`).
+- RESULT 17:44 NEXT 2: `handheld_rumble.gd` mutation **85.5 %** (53 killed / 9 survived, 5 invalid, 877 s) on 68c5ee42
+  (`evidence/it15/mutate-rumble-68c5ee42.log`; it13's 86.7 % was over the pre-rest file). The 9: :30 :40 :41 initial
+  values, :134 :136 ms boundary / rounding, :142 the pad call with no pad (it13's equivalents); :110 `REST_TICKS.get(kind,
+  0)` -> 1 is equivalent (a fresh hurt is always > the felt tick, so a rest of 1 never holds one); :103 `_seen[kind] > 0`
+  (`>=`, `> 1`): real, the shortest-gap guard. Test `test_the_shortest_gap_skips_the_tick_zero_prime`; both planted by
+  hand -> FAIL (:187, :193), the file restored (git diff empty). 55 / 62 = 88.7 % counting the two by hand (not re-run).

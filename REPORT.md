@@ -94,6 +94,11 @@ priority, the CPU's own 2-CU Radeon), never a device claim. Details and sources:
 - (it15) **E14, a save crosses Windows <-> Linux**: a quest 1 autosave (the real `Save` engine, a scripted input tape)
   written on Windows resumes on Linux at the same state hash and runs +600 ticks to the same hash, and the reverse
   (`dev/save_cross.gd`; a flipped byte is refused). A Deck save resumes on the PC; Steam Cloud's root override is the rest.
+- (it15) Gate on 3c96af2c (E13c + E14): lint 15/15, unit 1735 / 0, scenarios 53/53, parity exact (planted caught at 629),
+  look goldens 11/11 (worst 0.27) + block 5/5, export-audit 601 / 0: **top bit-identical**; the unit step reads FAIL only for
+  "tree changed during run" (I copied two evidence folders in while it ran), no test failed. Reels top / tilt70 / combo /
+  combo + deck **19/19, 0 SCRIPT ERROR**. `handheld_rumble.gd` mutation **85.5 %** (53 / 62) on 68c5ee42; the two
+  survivors on the gap guard (:103) now killed by a test (planted by hand -> FAIL), the other 7 equivalent.
 
 ## What does not work yet
 - (it15) The slice exe cannot record quest 1: `--autostart` is debug-only (`quest1_card.gd:70`), so a headless release
