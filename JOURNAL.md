@@ -1508,3 +1508,7 @@ police_car_side_70 at 07:09 and is making police_car_70_v2/v3 and 55 v5/v6. Not 
 committed atlas got only the taxi side cell (3, 2) pasted from the fresh cut (verified: the only
 changed cell). Provenance line's sha updated. NEXT 1 for the freeze: judge the police re-key + v2/v3
 before a re-cut (or leave the atlas as is: a fresh cut is no longer the committed one for row 8).
+GATE after bea2c74d (an art-only cell change): vehicle unit tests 21/0; the full gates ran on
+1651d3d6 (above). The freeze re-runs everything on its HEAD. Scratch it22: raw .avi deleted.
+NEXT (iteration 23, the freeze), unchanged from above, with 1 = judge the police re-key first.
+Session end 07:29. Head = this commit. Tree clean.
