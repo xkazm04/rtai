@@ -1054,3 +1054,47 @@ shipped strip, sized to 1:1 at 1080p, no hand edits), `generative-artifact-gatin
 approved art in the game; provenance carried to the derived file), `accessibility` (a face reads
 without learning a symbol; the current form keeps two cues, colour and size), `motion-quality-
 gating` (the sweep and the ring judged across the morph, not one still).
+- 05:57 Full unit at 9e2b05cc: 1527/0, 0 FLAKY. Quest 1's folded card at 6700 (1280x800 + 1080p):
+  Tonnage's face reads (`ghost_chip_faces_quest1_folded_1280x800_1080p.png`).
+- MILESTONE 2e5f39d3 quest 1's control prompt ("Answer the payphone: [E]", ObjectiveView) on the
+  memo paper (`ObjectiveView.prompt_paper`, grow 26/30/44/24) instead of the flat cream box, the
+  last flat panel on quest 1's screen; the tape tucks under the beat panel. Looked: ticks
+  600/2400/13700 at 1280x800 and 1080p; the 1080p take put the last glyph on the hatch at right 34
+  -> 44. Masters `quest1_prompt_paper_1280x800_1080p_before_after.png` (frames.json 9, replaces
+  crate_v3), `quest1_prompt_paper_three_prompts_1280x800.png`, `hud_full_1920x1080_it16.png`.
+  Unit test_objective_prompt_paper (new). DECISION hud/prompt paper.
+- 06:12 Gates at 610da507 (`evidence_run_it16.log`, the tree untouched; the first try refused the
+  dirty JOURNAL: commit it first): lint 15/15, unit 1528/0, scenarios 52/52, parity bit-exact +
+  mutation at 629, look goldens 11/11 + block 5/5 (top did not move), export-audit 563/0.
+- MILESTONE 009f8050 + 8ee9483f the boss bar as a paper banner hanging from the screen's top edge
+  (`BossBar.paper_of`: top -40 so the torn top band and tape are off screen, 26 left / 44 right /
+  30 below), the name and count in ink, the crest pinning its left end. The bar keeps its place:
+  `BossCam.HUD_PX` and every view's framing unchanged. Takes: paper top 2 put the torn band on the
+  name; -24 left the bottom edge through the bar and a tape sliver; -40/30 clean; right 26 put
+  "1 / 3" on the hatch at 2x -> 44. Looked: King + Servo at combo (arena --rigs --seed=2 f150,
+  1280x800), 0 SCRIPT ERROR. Masters `bossbar_paper_king_combo_before_after_x2.png` (frames.json
+  12), `bossbar_paper_king_servo_combo_1280x800_before_after.png`. DECISION hud/boss bar banner.
+- FRICTION: `--resolution 1920x1080` on arena.tscn still renders 1280x800 (the 1080p boss bar
+  is untested live; the quest-1 clip honours it).
+- 06:27 Full unit at 8ee9483f: 1529/0, 0 FLAKY. Lint 15/15 (hook).
+- Director reel not re-run this session: the boss bar is drawn in its boss chapters (render only,
+  the same path the arena films ran with 0 SCRIPT ERROR). RUN IT AT THE FREEZE, top + tilt70.
+Registry rules applied (it16, the 2nd half): `accessibility` (the words keep size and place; they
+gain contrast, ink on paper over cream-on-outline over a busy arena; every take checked for a glyph
+on the hatch at 2x), `concept-scene-parity` (judged on the live quest and boss scenes),
+`depth-ordered-layered-art` (the crest over the banner, the banner over the arena, never the reverse).
+
+NEXT (supersedes it13's):
+- Work items 1-4 evidenced; it16 put the last three off-style pieces on the paper style (ghost chip
+  faces, the quest-1 prompt, the boss bar banner). Weakest left: the 1080p boss bar is unlooked
+  (arena.tscn ignores --resolution: try `--window-size` / override.cfg, or the dialogue board);
+  the Servo taunt waits for lines; HudSee.SEE_A 35 vs 50 % (a Call).
+- Watch the catalog for raises to hud's ids (quest-1 cast portraits, weapon_showcase_*): re-cut
+  with `portrait_cut.py` / `showcase_import.py`, provenance, film.
+- Freeze 08:30: the director reel (top + tilt70; it covers the boss banner and the chip faces),
+  `node tools/evidence/run.mjs --no-bench`, export `build/export/windows/RTAI.exe`
+  (`windows-showcase` preset, recipe in `gtai-n8/scratch/hud/it6/report_notes.md`, it16 lines
+  appended), REPORT from those notes (FINDING: the dock guard's concept-approved orange-vermilion
+  hi-vis; "what works" adds the see-through corners, chip faces, prompt paper, boss banner; Calls:
+  the boss banner vs the bare bar, chip faces vs glyphs). Delete it9-it16 scratch frames after the
+  REPORT. Nothing into the worktree during a gate run.
