@@ -28,6 +28,9 @@ priority, the CPU's own 2-CU Radeon), never a device claim. Details and sources:
   (70 s: the King fight, then the city), `deck-king-48ppm-1280x800-igpu.mp4`, `deck-city-48ppm-1280x800-igpu.mp4`;
   the 32 px/m "before" clips `deck-king-1280x800-igpu.mp4`, `deck-city-1280x800-igpu.mp4`.
 
+- The fill-rate lever: drawing the 2D frame at 960x600 and scaling it to the 1280x800 panel cuts render GPU on the iGPU
+  9.10 -> 5.27 ms (-42 %, E8, a study row `deck_bench_ds75`); the look is not judged yet (next iteration: stills, a Call).
+
 ## What does not work yet
 - Rumble is near-silent in the arena: 1 pulse in a 40 s King fight, 0 in the director reel (`player_hit` is not emitted
   where Rivet takes damage). The release-compile step of the evidence gate collides with seams' new temp-dir layout

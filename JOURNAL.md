@@ -155,3 +155,10 @@ NEXT (iteration 5):
 5. NAT-06 parity on the Linux `.so` inside WSL.
 6. End of day: delete the HKCU DirectX UserGpuPreferences value for gtai-d9x/handheld-godot/..._hh.exe and that copy;
    the freeze exe.
+- RESULT 12:05 E8 (started early from NEXT 2): `draw_scale` on a row (viewport stretch draws at base x scale);
+  `deck_bench_ds75` (960x600 scaled to 1280x800) vs `deck_bench`, city, 2 rounds (3/4 CONTENDED, bench lock held):
+  render GPU 9.10 -> 5.27 ms (-42 %), frame p50 9.68 -> 5.98. The biggest lever so far on the simulator; NOT the
+  baseline yet: the look is unjudged. Unit (device profile, rumble) 13/0, lint 15/15; full gate owed (rows only,
+  the desktop never calls apply()).
+  -> NEXT 2 becomes: stills of `deck` vs a `deck` + draw_scale 0.75 / 0.85 at 48 px/m, look at them on a 7" scale,
+  then a Call for the owner (a/b with the clip) and, if kept, draw_scale on the `deck` rows = the new baseline.
