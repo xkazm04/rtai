@@ -843,3 +843,8 @@ NEXT (it10), replaces the lists above:
   a person 0.4: no overlap). FRICTION (1 min, mine): my first bar (2.5 m) was a guess and failed at 2.44 m,
   a clean pass round him; set from the geometry instead, the measure written into the const's comment.
   Scenarios 53 passed (`evidence/d9-seams/scenarios-it9-traffic-yields.log`), lint 15/15.
+
+NEXT (it10) addendum: item 4's yield scenario is DONE (5076c02b). Gates last green: evidence it9 at 0a950b56
+(all PASS) + reels it9 at 5fa6baee + scenarios 53/53 at 5076c02b (the only change since 0a950b56 is that
+scenario + docs). Start at item 1 (journals), then a last trial merge near the freeze, then the exe at 18:30.
+- Session end 16:48: all committed; scratch avi deleted (masters hold the mp4s and stills); frames.json 15.
