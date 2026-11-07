@@ -14,7 +14,7 @@ const DENSE_RA: float = 45.0
 const DENSE_RB: float = 80.0
 const DENSE_R_MIN: float = 36.0
 const FACADE_SPEED: float = 8.0
-const FACADE_LOOK: Vector2 = Vector2(0.0, -8.0)
+const FACADE_LOOK: Vector2 = Vector2(0.0, -12.0)
 
 var scenario: String = "drive"
 var route: BenchRoute = BenchRoute.new()
