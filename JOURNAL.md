@@ -1007,3 +1007,15 @@ l.866): quest 1's tick-600 cop (Line Stopped crossing) still draws top-down at t
   cards, fall cards and plates); 1 % low 47.8 -> 44.5 fps; 0 hitches over 50 ms both; 16 full rigs
   max both. Run-to-run spread of top alone 4.87-5.95 ms avg, so the +0.33 is inside one run's noise
   but in the same direction in all 3 pairs. evidence/street-bench-it10/ (summary.json + 6 runs).
+- MILESTONE 87e385dd: quest 1's patrol cop card **faces its walk** (StreetQuestCards.walk_facing:
+  the step since the nearest cop drawn last frame within 1.5 m, render only, no sim read beyond
+  patrol_pos; standing keeps the last facing; FOLLOW_WALK false = CastView's fixed DOWN). FOUND:
+  `--stills` cannot show it (the stills jump ticks, so no step is seen: the card faces DOWN);
+  filmed with `--ticks=600-760` (81 frames, 0 SCRIPT ERROR): the cop walks left side-on (the
+  mirrored side frame), then exits. evidence/quest1_patrol_cop_walk_facing_tilt70_48ppm_t600-760
+  .mp4 + _sheet.png. Unit 6/6 (new test: a step left faces left, standing holds). No walk frames
+  (no whole-figure cop walk strip; the d8 walkers' strips are peds only): the card glides; a
+  REQUEST below.
+- REQUEST to assets: cop_patrol_walk, 70 then 55: a 4-frame walk strip per facing (the ped_*_walk
+  layout: five facings x 4 stride frames, the cop_patrol_70 B identity after its recolour, navy
+  uniform, no gun drawn), for quest 1's patrol cops (StreetQuestCards) and the city cops' walkers.
