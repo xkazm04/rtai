@@ -798,3 +798,15 @@ NEXT: as it18 (quiet-machine E15b, the owner's Calls -> `devices.json` defaults,
 
 NEXT: as it18 (quiet-machine E15b, the owner's Calls -> `devices.json` defaults, a real Vulkan run).
 - Session end 18:27 (it22): all committed.
+
+## Iteration 23 (STABILIZE, 18:30-18:33, past the freeze)
+- Read 18:30: JOURNAL it22 + NEXT, git log -5. The rivet / seams / perf journals: no new REQUEST to handheld (the
+  last one, perf l.637 L13 FYI, was answered in it19; rivet it28 and seams it21 are freeze checks; perf it24 too).
+- `ui_pad_glyphs_v1`: 0 hits in the library `catalog.json`: still unserved, as REPORT says.
+- The owner's exe `build/export/windows/RTAI.exe` (17:44) is still newer than the last `project/` commit (0ee1ba66,
+  17:42); no `project/` change since; worktree clean. `frames.json`: 15 entries, every file present. REPORT stays final.
+- No bug found to fix, no `project/` change, no Godot run, no lock taken. Registry rule applied: perf-regression-gating
+  (the exe checked against the last code commit, not assumed current).
+
+NEXT: as it18 (quiet-machine E15b, the owner's Calls -> `devices.json` defaults, a real Vulkan run).
+- Session end 18:33 (it23): all committed.
