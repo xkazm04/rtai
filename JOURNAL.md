@@ -211,3 +211,41 @@ NEXT:
   weapon and shield parts included) and picks vframes by the file suffix: name the grids
   `cop_patrol_armed_walk.png` / `cop_riot_armed_walk.png` (must end `_walk.png`); release() restores
   the parts and drops back to the head card when strip_of returns "" (stopped, aiming, firing, hit).
+
+## Iteration 3 (director it5, 11:24-12:24), BUILD
+
+Read: JOURNAL it2, git log, d9-rivet JOURNAL (it6: no REQUEST to seams; a "grey blob" near Rivet in the
+Servo fight is theirs to identify first), catalog: bike_rider 55/70 (A) + bike_rider_top_v1 (A) and
+king_legs_70_v2 (B) have landed. Plan: item 5 (armed cop walk at 70) first, then the bike rider, then
+king_legs 70.
+Registry rules applied: depth-ordered-layered-art (one whole-figure card replaces head card + parts,
+the parts hidden not freed, so a strike's swing still draws on the parts), sprite-and-atlas-production
+(the grids keep street_walk.py's cell layout and the walk fill per file), motion-quality-gating (no swap
+per shot: the grid holds through aim and fire), generative-artifact-gating (looked at both sheets cell
+by cell before landing; the riot sheet's orange armband broke the colour rule and was greyed).
+- 11:31 MILESTONE item 5 (49ad9fd6): StreetCopWalk; every living city cop at 70 (patrol cap, riot
+  helmet) walks as its drawn armed grid (pistol two-handed / baton + shield), stepping by rig.phase,
+  stand frame when still. Grids: cop_patrol_walk_armed_v2 (B) + cop_riot_walk_armed_v4 (A), toned to
+  the cop cards' navy (street_tone.py); the riot armband orange -> steel grey (new
+  tools/art/street_armband.py). StreetWalkerCards stays 200 lines (cop branch moved into strip_of).
+  Masters: `cop_armed_walk_before_after_tilt70_48ppm_seed5_f400_x1.5.png`, `..._32ppm_seed5_f400.png`,
+  before/after 8 s clips at 48. Unit 20/0 (--select), lint 15/15. FINDING: the SWAT cops (helmet +
+  visor, pistol) still draw head card over parts: no armed SWAT sheet exists. 55 has no armed grids.
+DECISION item 5: the grid holds through aiming and firing (the drawn arms already point the weapon
+along the facing; a swap per shot flickers); a baton strike, a throw or a reload shows the parts.
+Alternative one value away: StreetCopWalk.ENABLED false = head cards (before). Rejected: a grid only
+while not aiming (city cops aim most of a fight: they would flicker between the two looks).
+- REQUEST to assets: `swat_walk_armed_70` (the SWAT cop: helmet + visor, pistol held two-handed, as
+  cop_patrol_walk_armed_70_v2's layout: 5 facings nose-to-camera .. back x 4 stride rows, contact/pass/
+  contact/pass, same cell size, transparent or #00B140; NO orange/red armband: vermilion is reserved).
+  Then the three armed walks at 55 (`cop_patrol_walk_armed_55`, `cop_riot_walk_armed_55`,
+  `swat_walk_armed_55`) to the same layout, drawn as the 55 cop cards. Why: brief item 5; every city cop
+  is armed from tick 60 and the SWAT and every 55 cop still glide on head cards over parts.
+- 11:40 MILESTONE item 3 rider (f9f348b6): the sim bike carries a seated rider at both pitches (card row 9
+  from bike_rider_70/55, A) and in `top` (cell 9 of the five traffic atlases from bike_rider_top_v1, A,
+  cream/ink duotone). vehicle_cards.py BIKE_RIDER (False = riderless bike_v3), bike_top_print.py RIDER.
+  Re-cutting the p70 atlas no longer reproduces rows 0-8 (the library moved since n8), so only row 9 was
+  pasted into the committed atlases (rows 0-8 byte-identical). Masters `sim_bike_rider_top_vs_tilt70_
+  32ppm_seed7_f420_x2.png`, `..._crop3x.png`, two 5 s clips. FRICTION: the first film showed the old
+  riderless bike: a changed PNG needs `--import` before a non-editor run (3 min). FINDING: --ppm only
+  works in the arena scene; the main scene films at 32 (my "64" capture was 32: deleted).
