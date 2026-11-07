@@ -203,3 +203,11 @@ NEXT:
 4. Item 3 owner Call: bikes ON (0.06) needs a top look-golden rebaseline; a rider (REQUEST above).
    After merge the Director must rebuild native (`just native`): project/native/bin is git-ignored.
 5. REPORT.md: Calls 1 (legs lift), 3 (bike share/rider) updated with it2 evidence.
+- 11:21 GATE (eac11147, share 0): lint, scenarios 52/52, parity bit-exact, selftest look goldens 11/11
+  (worst 0.27), release-compile 601/0 PASS; unit 1705/0 but flagged by the tree-changed guard
+  (FRICTION: I edited REPORT.md during the run; next time edit nothing in the worktree while it runs).
+  Logs `evidence/d9-seams/evidence-it2-*.log`. REPORT updated (works 4-5, Calls 1 and 3).
+- Item 5 detail for NEXT 2: StreetWalkerCards._build hides every CanvasItem under the rig (held
+  weapon and shield parts included) and picks vframes by the file suffix: name the grids
+  `cop_patrol_armed_walk.png` / `cop_riot_armed_walk.png` (must end `_walk.png`); release() restores
+  the parts and drops back to the head card when strip_of returns "" (stopped, aiming, firing, hit).
