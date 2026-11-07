@@ -1314,3 +1314,31 @@ NEXT (iteration 16) is the it15 NEXT above, items 1-2 (item 3 done).
 - GATE 06:50 scenarios at 7097ee82: 52 ran, 0 failed, 0 SCRIPT ERROR, Godot exit 0
   (`evidence/n8-view/scenarios-it15.log`; vehicle drive timing CONTENDED, passes). With unit
   1524/0 (06:30), lint 15/15 and the trial reel top + combo 19/19, it15's change is gated.
+
+## Iteration 16 (06:52-07:52, BUILD; freeze 08:30 falls in iteration 17)
+- READ 06:53: own JOURNAL (it15 NEXT), git log, the four lanes' journals. No open REQUEST to view.
+  street answered the it15 corpse-pile NOTE (n8-street 432c5ef9: quest 1's drawn dead contractors
+  decay as the live fight's, StreetQuestCorpses; DECAY false = keep all). torque_gang_fall* in the
+  library are street-class (street integrates them).
+- MILESTONE 06:55 the exe recipe proven before the freeze: `APPDATA=.../appdata/view "$GODOT_BIN"
+  --headless --path project --export-release windows-showcase ../build/export/windows/RTAI.exe`,
+  exit 0 in 10 s, 0 errors (`evidence/n8-view/export-it16-dry.log`). Smoke
+  `RTAI.exe --headless --quit-after 900 -- --rigs --boss=king --seed=2 --view=combo`: exit 0,
+  0 SCRIPT ERROR, "pitch ease 70.0 -> boss at tick 4", "cards art p55 (pitch 62.1) at tick 35"
+  (`evidence/n8-view/exe-smoke-it16-king-combo.log`; the one engine `custom_samplers` line and
+  "resources still in use at exit" are headless noise). The freeze re-exports at the final HEAD.
+- CLEAN 06:54: removed the leftover mutate worktree `%TEMP%/gtai-mutate-7564d746` (mine, it15's
+  re-run at e369f4b0; no process held it, the run ledger had only hud and street runs).
+- TRIAL MERGE it16 07:00-07:08 (%TEMP%/view-trial-it11 -> 691768ec): + city f14b97c9, street
+  49b57ffb, vehicles 907d73b3, hud 38bc8bee, n8-view f4a95f31. Conflicts: JOURNAL/REPORT (ours),
+  the debt baseline, and ONE code conflict: `project/boot/collect_call/view/cast_view.gd` `_draw`
+  (the guard / corpse branch), where the earlier trial base had the plain `_sprite` lines and street
+  now draws `StreetQuestCards.draw_guard` + `StreetQuestCorpses.draw`: took street's hunk whole (it is
+  a superset; view's QuestGuardCast branch above it is untouched). Merged, cast_view.gd is 230 lines
+  (debt +1 over either side's 229): the debt ratchet needs `--accept-regression` on the merge.
+  `--import` exit 0, 0 parse errors. Merge notes in REPORT.
+- LOOKED 07:12 quest 1 on the it16 merge, combo 48 px/m, stills 13900/14400/15500/16080, 0 SCRIPT
+  ERROR: at 14400 five fresh contractor bodies lie in their hi-vis (street's cards), not it15's
+  ~30-deep pile; at 15500 the dead have faded out, blood and dropped guns stay; Mertz's line box
+  over the lower half (hud). View's QuestGuardCast and street's decay work together. Masters
+  `quest1_dock9_merged_it16_corpse_decay_guard_cast_combo_48ppm_t14400_t15500.png`.
