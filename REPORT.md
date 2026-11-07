@@ -127,7 +127,10 @@ path goes on the command line (a release template refuses one). Smoke-run: the f
   dead behind them at tilt70 (view's NOTE, repro `--arena=city --seed=5`, tick 900, 32 px/m; still in
   view's masters `FOUND_corpse_head_over_barrier_merged_it17_tilt70_32ppm_seed5_t900_crop3x.png`):
   `CityCrowdOcclusion.patches` only takes streamed buildings; feed the arena's tall props in as
-  `Bld`-shaped occluders (d9).
+  `Bld`-shaped occluders (d9). Agreed split with `view`: an `extra` occluder list on CityOcclusion,
+  filled by view's `ArenaFloorView` (ground rect + the 3.0 m lift at the live pitch), merged into
+  `_scan_crowd`. The premise is unit-proven at ea4d38c0 (`test_a_kerb_barrier_shaped_occluder_hides_
+  a_lying_body_behind_it`: a 6 x 0.6 m wall hides a body lying behind it, not one in front; test-only).
 - Tooling (not city's): give `release_compile.mjs`'s staging dir a per-worktree/pid name, so
   parallel lanes' evidence runs stop colliding (EPERM).
 - 70 twins and raises as the library serves them (the traffic light 55 short pole: served and cut at iteration 27).

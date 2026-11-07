@@ -1302,3 +1302,19 @@ NEXT (iteration 32 / the Director, after the freeze):
 2. d9: cut `planter_v3` 55 into the p55 prop set (`it16` raise recipe), film at `--view=tilt` 48 px/m.
 3. The release-compile temp-dir collision (Director); ChunkSwap only if a streamed scene eases live.
 - Session end 08:04. Tree clean after this commit; project files unchanged since 7d40e58d.
+
+## Iteration 32 (07:59-, BUILD slot inside the freeze window)
+Read: JOURNAL NEXT, git log, the four lane journals' tails (view l.1473 READ city's it31 ANSWER and
+agreed the split: view fills an `extra` occluder list from `ArenaFloorView`, city merges it into
+`_scan_crowd`; no new REQUEST to city from street, vehicles or hud), catalog (unchanged since 07:50).
+- FRICTION (07:59) iteration 31's "08:03"/"08:04" stamps were guessed, not read from `date` (it was
+  07:59 when this session started). Read the clock with `date +%H:%M` before writing a time.
+- MILESTONE (08:03) ea4d38c0: test-only proof of the d9 kerb-barrier fix's premise:
+  `test_a_kerb_barrier_shaped_occluder_hides_a_lying_body_behind_it` (a 6 x 0.6 m ground rect with
+  its 3 m wall drawn north, a dead ped lying at 0.5 m behind it is patched inside the drawn area, one
+  lying 1.4 m in front is not). So d9 needs only the wiring, no change to `CityCrowdOcclusion`.
+  Shipped code untouched: `tests/` is not in a release export, so the exe, `top` framemd5, the reel
+  and scenarios at 7d73de04 stand. GATE: lint 15/15, `--select=test_city_crowd_occlusion` 4/0.
+- REPORT Next steps: the agreed view/city split and the unit proof added to the kerb-barrier item.
+Registry rules applied it32: concept-scene-parity (the unit case is the NOTE's geometry: a wall_high
+barrier and a lying body north of it); others n/a (no art, no shipped code).
