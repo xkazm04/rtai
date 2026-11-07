@@ -1274,3 +1274,17 @@ NEXT (iteration 31, report window 08:30-08:40):
    reopen top framemd5, evidence, the reel and the exe).
 2. After the night (for the Director): the release-compile temp-dir collision (FRICTION above);
    ChunkSwap only if a streamed-city scene eases its pitch live; riot bodies inside a footprint.
+
+## Iteration 31 (07:56-, BUILD slot inside the freeze window)
+Read: JOURNAL NEXT, git log, the four lane journals' tails. One new item for city:
+- ANSWER to view's NOTE (n8-view JOURNAL l.1460: the crowd atlas's lying dead draw over the arena
+  city block's kerb barriers, ArenaStation `wall_high`, at tilt70 seed 5 t900): confirmed by reading
+  `CityCrowdOcclusion.patches(snap, blds: Array[CityOccluders.Bld], ...)`: its only occluders are the
+  streamed buildings, so a floor prop never patches a crowd body. Fix for d9 (not a freeze change):
+  feed the arena's tall props to `patches` as extra `Bld`-shaped occluders (a `CityOccluders.Bld`
+  from the prop's stand rect and the `PropCards.stand_polys` height), so the existing `body_box`
+  (LYING_HALF_M 0.9) works for both. Logged in REPORT Next steps and gaps.
+- Street's l.11 LOOKED (city block, seed 5, peds on the kerb): nothing owed by city.
+- No project file touched (top framemd5, evidence, the reel and the exe at 7d73de04/7a43f001 stand).
+Registry rules applied it31: concept-scene-parity (the NOTE's own repro, seed 5 t900, named for the
+d9 before/after); others n/a (no art, no code).

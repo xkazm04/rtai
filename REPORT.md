@@ -121,6 +121,11 @@ path goes on the command line (a release template refuses one). Smoke-run: the f
 
 ## Next steps
 
+- The arena city block's kerb barriers (ArenaStation `wall_high`) do not hide the crowd atlas's lying
+  dead behind them at tilt70 (view's NOTE, repro `--arena=city --seed=5`, tick 900, 32 px/m; still in
+  view's masters `FOUND_corpse_head_over_barrier_merged_it17_tilt70_32ppm_seed5_t900_crop3x.png`):
+  `CityCrowdOcclusion.patches` only takes streamed buildings; feed the arena's tall props in as
+  `Bld`-shaped occluders (d9).
 - Tooling (not city's): give `release_compile.mjs`'s staging dir a per-worktree/pid name, so
   parallel lanes' evidence runs stop colliding (EPERM).
 - 70 twins and raises as the library serves them (the traffic light 55 short pole: served and cut at iteration 27).
