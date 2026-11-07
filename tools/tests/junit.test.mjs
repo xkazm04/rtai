@@ -25,3 +25,24 @@ test('slowest sorts by time', () => {
   const r = parseJunit(XML);
   assert.match(slowest(r.cases, 1)[0], /0\.400 s .*test_bad/);
 });
+
+const ENGINE = `<testsuites><testsuite name="tests/unit/test_vehicle_view.gd" tests="1" failures="1" >
+      <testcase name="test_glow_is_lit" assertions="0" status="fail" classname="tests/unit/test_vehicle_view.gd" time="0.1" >
+      <failure message="failed"><![CDATA[Unexpected Errors:
+[1] <engine>!actions.custom_samplers.has(tex_builtin)
+[2] <engine>Parameter "t" is null]]></failure></testcase>
+  </testsuite></testsuites>`;
+
+test('an engine-error failure keeps its numbered error lines as cause, and the digest line carries them', () => {
+  const [c] = parseJunit(ENGINE).cases;
+  assert.equal(c.message, 'Unexpected Errors:');
+  assert.deepEqual(c.cause, ['[1] <engine>!actions.custom_samplers.has(tex_builtin)', '[2] <engine>Parameter "t" is null']);
+  const [line] = digestLines([c]);
+  assert.ok(line.includes('[1] <engine>!actions.custom_samplers.has(tex_builtin)') && line.includes('[2] <engine>Parameter "t" is null'), line);
+});
+
+test('an assertion failure has no cause beyond its message (the "at line" is the line, not a cause)', () => {
+  const bad = parseJunit(XML).cases.find((c) => c.name === 'test_bad');
+  assert.deepEqual(bad.cause, []);
+  assert.deepEqual(parseJunit(XML).cases.find((c) => c.name === 'test_ok').cause, []);
+});
