@@ -43,7 +43,14 @@ under `evidence/n8-view/`. Full log: `JOURNAL.md`.
    in the editor binary, because the release export drops `dev/bots`).
 
 ## Frame cost (item 8)
-(fill at the freeze: it5 release drive; it9/it10/it11 King fight; label CONTENDED where so)
+- **City drive, release export** (`windows-bench`, drive_dense 48 px/m, 30 s x 2 per view, under
+  bench.lock, CONTENDED by a GUT run and a render; `evidence/n8-view/bench-it11-drive/`): combo vs
+  top render CPU 0.34 / 0.31 ms, draw calls 254 / 252, rig p50 0.57 / 0.44 ms, visible actors
+  10.9 / 9.8. The same as it5's take: combo costs ~0.1 ms a frame.
+- **King fight, editor binary** (`--boss=king --bot=boss --seed=2 --rigs`, 1500 ticks, vsync off,
+  1920x1080, x2 alternated, under bench.lock, CONTENDED by one render; `evidence/n8-view/bench-it11/`):
+  p50 top 4.96 / 5.17 ms, combo 3.81 / 4.06 ms; p99 top 11.1 / 9.9, combo 8.0 / 8.7. Combo was 3.3x
+  top at it8 and 1.6x at it9; the held floor, the PropOcclusion and frame-rig fixes took it under top.
 
 ## What does not work / not done
 - Servo has no p70 PART sheet (the parts are top views); p70 uses the p55 parts. Servo is a boss

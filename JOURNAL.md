@@ -891,3 +891,18 @@ NEXT (iteration 12, in order):
 4. The freeze (08:30): director reel top + combo on n8-view, evidence run --no-bench, the exe,
    REPORT final (frame-cost table: it5 drive, it11 King fight; the Calls: bust, death beat length
    with the 64 px/m film, attack lock, camera lead, quest 1 cast under the angled view).
+- MEASURE 03:39-03:41 NEXT 2 done early: the city drive in a RELEASE export (`windows-bench`,
+  exported at 7a9ad790, `scratch/view/export11.sh`), `drive_dense` 48 px/m, 30 s x 2 per view,
+  top/combo alternated, bench.lock held (03:38:43, released by `drive11.sh`),
+  `evidence/n8-view/bench-it11-drive/`:
+  | metric | top r1 / r2 | combo r1 / r2 |
+  | renderCpuMsAvg | 0.312 / 0.285 | 0.344 / 0.332 |
+  | drawCallsAvg | 252.0 / 251.8 | 254.2 / 254.2 |
+  | rigMsP50 | 0.446 / 0.436 | 0.572 / 0.564 |
+  | rigMsP99 | 1.035 / 0.819 | 1.327 / 1.348 |
+  | visibleAvg | 9.8 / 9.8 | 10.9 / 11.0 |
+  | p99CpuMs / low1Fps | 32.1 / 31.0, 19.6 / 45.8 | 32.1 / 29.2, 33.2 / 27.6 |
+  CONTENDED: a headless GUT run and a windowed 1280x800 render by other lanes were seen during it
+  (`contention.txt`, sampled every 20 s). Reading: the same as it5 after six iterations of view work:
+  combo costs ~+2 draw calls, ~+0.12 ms rig p50, one more visible actor (70 shows more ground);
+  render CPU +0.04 ms. The p99 / low-1 % rows are the known ~32 ms vsync-off present stalls, in both.
