@@ -76,6 +76,14 @@ HUE_DEG = {3: TAXI_HUE}
 # every row (the police bar's too: vehicle_cards.gdshader lens() tests r > g + 0.12 for it): the
 # sheets' lens orange (~239, 151, 7) passes the vermilion gate even before the grade. 0 = the sheets'.
 LAMP_DEG = 10.0
+# The unlit lenses (value 0.3-0.6, saturation >= 0.8, hue 20-42: the rear lamps' inner block, the
+# van's and pickup's tail lamps, the ambulance bar) turn DARK_LAMP_DEG toward yellow: the city's grade
+# prints the sheets' (155, 90, 6) at ~(97, 34, 0), hue 20, a rust-red tail lamp (red is blood only).
+# On the police row value < 0.6 keeps them out of vehicle_cards.gdshader lens() (r > 0.6), so the
+# siren finds the same lens pixels (0.7 there would drop 3 of them at 70). 0 = the sheets'.
+DARK_LAMP_DEG = 10.0
+DARK_LAMP_V = (0.3, 0.7)
+DARK_LAMP_V_SIREN = 0.6
 ROWS = [
     ("sedan", 1.45, (1.0, 1.0, 1.0)),
     ("sedan", 1.45, (0.93, 0.93, 0.93)),  # sedan_b: the small hatch, a shade darker
@@ -245,8 +253,8 @@ def paint(im: Image.Image, gain: tuple) -> Image.Image:
     return Image.fromarray(np.clip(px, 0, 255).astype(np.uint8))
 
 
-def hue_turn(im: Image.Image, deg: float, min_s: float = 0.35, min_v: float = 0.0, max_h: float = 50.0
-) -> Image.Image:
+def hue_turn(im: Image.Image, deg: float, min_s: float = 0.35, min_v: float = 0.0, max_h: float = 50.0,
+             max_v: float = 2.0) -> Image.Image:
     if deg == 0.0:
         return im
     px = np.array(im).astype(np.float32) / 255.0
@@ -257,7 +265,7 @@ def hue_turn(im: Image.Image, deg: float, min_s: float = 0.35, min_v: float = 0.
     r, g = rgb[:, :, 0], rgb[:, :, 1]
     # red the maximum: hue = 60 (g - b) / c (b the minimum in the window)
     h = np.where(c > 0, 60.0 * (g - mn) / np.maximum(c, 1e-6), 0.0)
-    on = (px[:, :, 3] > 0) & (r >= mx) & (sat >= min_s) & (mx >= min_v) & (h >= 20.0) & (h <= max_h)
+    on = (px[:, :, 3] > 0) & (r >= mx) & (sat >= min_s) & (mx >= min_v) & (mx < max_v) & (h >= 20.0) & (h <= max_h)
     h2 = np.clip(h + deg * np.clip((h - 20.0) / 8.0, 0.0, 1.0), 0.0, 58.0)
     px[:, :, 1] = np.where(on, mn + c * h2 / 60.0, g)
     return Image.fromarray(np.clip(px * 255.0, 0, 255).astype(np.uint8))
@@ -280,6 +288,8 @@ def paste(atlas: Image.Image, v: Image.Image, k: float, at: tuple, lift: float) 
     w, h = max(1, round(v.width * k)), max(1, round(v.height * k))
     im = amber(hue_turn(paint(v.resize((w, h), Image.LANCZOS), gain), HUE_DEG.get(row, 0.0)))
     im = hue_turn(im, LAMP_DEG, 0.8, 0.7, 42.0)
+    top = DARK_LAMP_V_SIREN if rows_of()[row][0] == "police_car" else DARK_LAMP_V[1]
+    im = hue_turn(im, DARK_LAMP_DEG, 0.8, DARK_LAMP_V[0], 42.0, top)
     cx = col * CELL_PX + CELL_PX // 2
     cy = row * CELL_PX + CELL_PX // 2
     x, y = round(cx - w / 2), round(cy - lift - h / 2)
