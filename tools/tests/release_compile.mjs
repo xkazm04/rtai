@@ -126,15 +126,27 @@ export async function releaseCompile({ dir, keep = false, src = PROJECT, timeout
     timedOut: imp.timedOut || res.timedOut };
 }
 
+export class UsageError extends Error {
+  name = 'UsageError';
+}
+
+/** argv -> {dir, src, keep}; an unknown flag or an empty value is a UsageError (a typo'd --dir used to
+ *  fall back to the default scratch dir silently). */
+export function parseArgs(argv) {
+  const o = { dir: undefined, src: undefined, keep: false };
+  for (const a of argv) {
+    const m = /^--(dir|src)=(.+)$/.exec(a);
+    if (m) o[m[1]] = m[2];
+    else if (a === '--keep') o.keep = true;
+    else throw new UsageError(`unknown or malformed argument: ${a} (usage: [--dir=<scratch dir>] [--src=<project dir>] [--keep])`);
+  }
+  return o;
+}
+
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  const arg = (k) => process.argv.find((a) => a.startsWith(`--${k}=`))?.slice(k.length + 3);
   try {
-    const src = arg('src');
-    const r = await releaseCompile({
-      dir: arg('dir'),
-      keep: process.argv.includes('--keep'),
-      src: src ? resolve(src) : PROJECT,
-    });
+    const { dir, src, keep } = parseArgs(process.argv.slice(2));
+    const r = await releaseCompile({ dir, keep, src: src ? resolve(src) : PROJECT });
     if (r.ran === null) {
       console.error(`release_compile: the load pass did not run (exit ${r.status})\n${r.out.slice(-2000)}`);
       process.exit(2);
@@ -144,6 +156,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
     console.log(`release_compile: ${r.ran} loaded, ${r.failed.length} failed`);
     process.exit(r.ok ? 0 : 1);
   } catch (e) {
+    if (e instanceof UsageError) { console.error(`release_compile: ${e.message}`); process.exit(2); }
     if (!(e instanceof Refused)) throw e;
     console.error(`release_compile: refused: ${e.message}`);
     process.exit(2);

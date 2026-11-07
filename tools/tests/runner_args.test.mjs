@@ -28,3 +28,15 @@ test('bench: NaN, zero runs or secs, and unknown flags are usage errors', () => 
     assert.throws(() => benchArgs(bad), { name: 'UsageError' }, bad.join(' '));
   }
 });
+
+test('run_parity takes no arguments; release_compile only --dir=, --src= and --keep', async () => {
+  const { parseArgs: parityArgs } = await import('./run_parity.mjs');
+  const { parseArgs: releaseArgs } = await import('./release_compile.mjs');
+  assert.deepEqual(parityArgs([]), {});
+  assert.throws(() => parityArgs(['--steps=100']), { name: 'UsageError' }, 'a step count it would silently ignore');
+  assert.deepEqual(releaseArgs(['--dir=C:/t/x', '--src=p', '--keep']), { dir: 'C:/t/x', src: 'p', keep: true });
+  assert.deepEqual(releaseArgs([]), { dir: undefined, src: undefined, keep: false });
+  for (const bad of [['--dri=x'], ['--dir='], ['--keep=no'], ['x']]) {
+    assert.throws(() => releaseArgs(bad), { name: 'UsageError' }, bad.join(' '));
+  }
+});

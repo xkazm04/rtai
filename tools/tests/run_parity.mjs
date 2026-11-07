@@ -40,7 +40,21 @@ export async function runParity(outDir, steps = 1200) {
     summary, metrics, artifacts: [RESULT_NAME, LOG_NAME] };
 }
 
+export class UsageError extends Error {
+  name = 'UsageError';
+}
+
+/** The CLI takes no arguments: refuse any rather than silently run 1200 steps for `--steps=100`. */
+export function parseArgs(argv) {
+  if (argv.length) throw new UsageError(`takes no arguments, got: ${argv.join(' ')}`);
+  return {};
+}
+
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  try { parseArgs(process.argv.slice(2)); } catch (e) {
+    console.error(`run_parity: ${e.message}`);
+    process.exit(2);
+  }
   const r = await runParity(join(ROOT, 'build', 'test-results'));
   console.log(r.summary);
   process.exit(r.ok ? 0 : 1);
