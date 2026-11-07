@@ -597,3 +597,28 @@ NEXT (it16 end, 14:37; supersedes every NEXT above):
   wall (WeaponRackView, n8-hud's) would get a row above the board with each weapon's equipped strip REST cell (17
   drawn Rivets). It reads as a lineup of clones in the world, so it is a look the owner should pick: a Call, not a
   default; FireStills' crops (the every-weapon contacts in masters) already show him holding each weapon.
+- 15:26 GATES it19 on 6443bc82 (`evidence/d9/gates-it19.md`): director reel 19/19 fully down in top, tilt70, combo
+  (the baton chapter 1/1), 0 SCRIPT ERROR, 0 p_frame, the 2 known ^ERROR lines each; unit full 1706/0; lint 15/15.
+  FRICTION (~3 min): the first reel run used the brief's `--quit-after 14000`, which ends headless at chapter 17-18,
+  before the baton chapter; re-ran at 20000 (as it16). Rule: count the chapters, not the "down" lines.
+- Scratch: every film and still sequence deleted (it19 holds contacts only, 129 MB).
+- Registry rules applied it19: sprite-and-atlas-production (the baton re-cut from the manifest, deterministic, only
+  its 4 strips moved; provenance per file; re-import before filming); generative-artifact-gating (the v3 sheets
+  judged on an old/new contact before shipping; the stray tip spark caught there and cut away); motion-quality-gating
+  (the baton judged in the pit at 64 px/m at both pitches, before/after at the same seed and frames; the combined
+  clip judged per segment; the mood bust judged in quest 1, with the stills-mode fade told apart from the art);
+  realtime-combat-semantics (art only: the muzzle table re-measured unchanged; the reel's kills unchanged);
+  depth-ordered-layered-art (no stray neighbour piece beside the figure).
+
+NEXT (it19 end, 15:27; supersedes every NEXT above):
+1. Watch assets for the REQUEST rivet_eq_electro_baton_70_v4 (it19): when it lands A/B, swap the p70 manifest line,
+   re-cut (`python -I tools/art/rivet_frames.py --manifest=tools/art/rivet_frames.json`), check a contact,
+   `--import`, provenance, film `--bot=pit --loadout=electro_baton --view=tilt70 --ppm=64 --seed=3` before/after.
+2. The armory (Call 6): build only if the owner picks the wall row (WeaponRackView's row above the board, the
+   equipped strips' REST cell, under a form only; top unchanged).
+3. A facing cell's muzzle for the other holds (REPORT does-not 1): low value, as non-cone weapons always draw the
+   fire cell while a shot is up; only a flash's tail past FIRE_TICKS falls back.
+4. `--arena=city --bot=reel` films the top view under `--view=tilt70` (it19 friction): find why if a city reel
+   film is wanted; the city films use `--bot=gunplay`.
+5. At the freeze: the exe (`build/export/windows/RTAI.exe`), the final REPORT.
+- Session end 15:27: everything committed.
