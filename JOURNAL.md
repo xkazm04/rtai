@@ -1161,3 +1161,29 @@ MILESTONE 04:50 the combined clip (masters vehicles_set_tilt70_combined.mp4, 49 
 1) re-cut: segments 2 (main scene `-- --view=tilt70 --seed=7 --rigs`, 721 frames) and 5 (Servo
 depot combo 32 px/m seed 2, from 1 s, 5 s) re-rendered on HEAD, 0 SCRIPT ERROR both; 1, 3, 4 from
 it16. Looked at 15 s and 47 s. Recipe scratch/vehicles/it18/set/seg.sh.
+MILESTONE 230c786f the stage cards stand on the frame ensure() attaches them (refresh(), the body
+_process runs): the King boulevard (combo 32 px/m seed 2) f0 drew a parked sedan as the flat white
+print, now its card (masters king_boulevard_stage_car_f0_flat_left_card_right_combo_32ppm_crop2x.png).
+New unit test fails without it (planted by hand: the refresh line replaced by pass -> 1 failing),
+passes with it. Stale "bay number hides" comment on `over` fixed. Decision line.
+GATE on 230c786f: unit no-arg 1550 passed, 0 failed, no FLAKY; director reel top 19/19 and tilt70
+19/19 all down, 0 SCRIPT ERROR (evidence/n8-vehicles/director-reel-it18b-*.log); lint 15/15.
+Evidence json: evidence/n8-vehicles/iteration18.json.
+Rules applied this iteration: generative-artifact-gating (the lenses and the taxi judged as they
+print under the city grade, not in the atlas; a library sheet taken only after a filmed side by
+side), sprite-and-atlas-production (every art change in the cutter, flag 0 = bit-exact), concept-
+scene-parity (the depot van's cream option held back: its in-betweens would pop olive),
+motion-quality-gating (the taxi v3 through a full turn at 64 px/m; the attach-frame pop seen in
+motion, f0), depth-ordered-layered-art (bay mark over the van checked at both zooms).
+
+NEXT (iteration 19, in order):
+1. If assets serve van_cream_between_70 (my REQUEST): cut a VAN_SHEET option like TAXI_SHEET (the
+   van row's five views + in-betweens from van_cream), film the depot van and a traffic van turn at
+   64 px/m, side by side for the depot van Call. Default stays olive.
+2. Raise the weakest item: (a) ambulance_v2 70 / ambulance_v3 55 (native amber lamps, superseding
+   the post-recoloured keys): cut, compare atlas rows, adopt only if bit-for-bit nothing worse;
+   (b) the city at 48/64 px/m needs a scene that honours --ppm with traffic (the main scene ignores
+   it): check dev/showcase/vehicle_frame --clip for a zoom flag.
+3. Freeze 08:30: export the exe (int-day recipe in docs/decisions.md; windows-bench worked at 03:13),
+   finish REPORT.md (draft committed: add the exe command lines, final gates).
+Session end 04:57.
