@@ -142,5 +142,8 @@ func test_follow_folds_the_rig_casts_own_form_card_and_skips_without_one() -> vo
 	view.hud_view.state.say("Rivet", "Okay.")
 	s._process(0.0)
 	assert_true(v.hud.compact, "a line is up: folded on the rigs too")
+	view.hud_view.state.silent()
+	s._process(0.0)
+	assert_false(v.hud.compact, "the line closed: unfolded (n8-hud's fold_rigs case, kept)")
 	StoryForms.follow(host, view, stage, null)
 	assert_eq(host.get_child_count(), 1, "no form view (no pilot): nothing added")
