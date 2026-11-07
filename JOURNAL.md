@@ -225,3 +225,22 @@ NEXT (iteration 6):
 4. Size lever (custom template, it4 NEXT 5) - research done, the compile not started.
 5. Answer REQUESTs (rivet has not answered the it4 strip REQUEST; handheld has the L4 REQUEST).
 - GATE 13:01 at edea9a9b: unit full 1698 passed / 0 failed (FLAKY 1: test_character_rigs fresh-corpse hold, rivet's suite, fail-then-pass on the solo rerun; my changes touch no rig code), lint 15/15. Session end.
+
+## Iteration 6 (13:02-14:02, BUILD)
+- Read: JOURNAL it5 + NEXT, git log -30, the d9-rivet / d9-seams / d9-handheld journals. No new REQUEST to perf.
+  handheld is answering my L4 REQUEST (E10: a BC7 arm on the iGPU deck row, its own scratch worktree, started 13:00);
+  rivet has still not answered the it4 strip-loading REQUEST (their it10 notes the drawn figure adds no rig cost:
+  rig_bench 50 people p50 0.866 -> 0.78 ms with RivetFrames on). Registry rules applied: measurement-honesty (a 2-run
+  tail "LOSS" is not claimed; L4b names VRAM and the hitch both), perf-regression-gating (code lever A/B'd against a
+  scratch project at the pre-lever commit, interleaved, no stored run), render-submission-economy (residency first).
+- 13:04 scratch worktree `gtai-d9x/scratch/perf-bc7cv` (ee63589c; BC7 .godot copied in, the 246 city imports back to
+  lossless, 23 s reimport): L4 option (b).
+- MILESTONE 13:16 L4b measured (`evidence/perf/l4b-bc7cv/ab.json`, lock held, 2 rounds, 4 arms, riot): BC7 for the cast +
+  cars only: peak VRAM 867 -> 686 MB (-21 %; full L4 was -37 %). BC7 WITHOUT the prefetch keeps the 20-23 ms first-death
+  hitch (cvnopf worst 23.0 vs cv 19.0, base 18.0, nopf 23.3): the decode is not the whole hitch, L3 stays under any BC7
+  option. LEDGER row L4b.
+- 13:12 L5 built (cd227d3f): `CityFxFeed.observe` calls per person only on a death flip (was a call per person a tick)
+  and ends projectiles from a sorted live-slot list (was a 256-slot sweep a tick); `CityCharacters._fill_feed` reads the
+  snapshot by offset (was a `slice()` alloc per person in range). Same events, same order (new test pins the end order
+  to slot order; it fails without the sort). Unit 16/0 (fx + layers), lint 15/15. A/B against a scratch project at
+  ee63589c (`gtai-d9x/scratch/perf-base`, the pre-lever baseline for code levers): riot, drive70, quest1, 3 pairs.

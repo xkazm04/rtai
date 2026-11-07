@@ -21,4 +21,7 @@ Journal: `JOURNAL.md`. Clips and stills: `C:\Users\kazda\kiro\gtai-masters\d9\pe
 - **Look at:** `gtai-masters\d9\perf\l4-riot64-lossless-vs-bc7-x2.png` and `l4-drive64-lossless-vs-bc7-x2.png`
   (left lossless, right BC7, centre crop x2).
 - **Options:** (a) keep lossless (default); (b) BC7 for characters + vehicles only, keeping the city's ground
-  grain lossless (most of the riot's pixel difference; not yet measured on its own); (c) BC7 for all three.
+  and facades lossless: measured 13:16 (LEDGER L4b), riot peak VRAM 867 -> 686 MB (-21 %, about half of (c)'s
+  saving), frame times unchanged; its pixel difference: see below; (c) BC7 for all three.
+- **Measured on the way:** BC7 does not remove the first-death hitch by itself (worst frame 23 ms without the
+  worker-thread strip prefetch, 18-19 ms with it), so the prefetch (kept lever L3) stays whichever option you pick.
