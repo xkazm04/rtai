@@ -114,6 +114,9 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
   `gtai-masters/d9/rivet/rivet_electro_baton_smear_under_drawn_figure_before_after_pit_tilt70_p70_tilt_p55_64ppm_x2_seed3_f324_345.png`.
   Gates it20: director reel 19/19 in top, tilt70, combo (the baton chapter 1/1), 0 SCRIPT ERROR
   (`evidence/d9/reel-director-it20-<view>.log`); unit 1692/0 (--changed: full suite); lint 15/15.
+  Evidence run on 3c588ddb (code a6d6ea6e): all PASS, look goldens 11/11 + block 5/5 (top did not move), parity
+  exact, scenarios 52, unit 1708/0, release-compile 600/0. The baton 70 v5 (A, drawn arcs) is served; it goes in
+  next (then p70 leaves NO_ARC).
 
 ## What does not (yet)
 - A facing cell (no fire drawn) has no measured muzzle except the flamer's: a flash outside the fire cell's 7

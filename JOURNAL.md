@@ -658,3 +658,31 @@ NEXT (it19 end, 15:27; supersedes every NEXT above):
 - 16:07 Evidence run 1 on 5e… (a6d6ea6e + reel logs): look goldens 11/11 ok (top did not move), parity exact +
   planted caught, scenarios ran; then release-compile REFUSED: `%TEMP%\gtai-release-compile` exists without its
   marker (another run's, not mine; not touched). BLOCKED ~0 min: re-run with a lane-private TEMP (as it7).
+- 16:17 GATES it20 evidence run 2 on 3c588ddb (code a6d6ea6e), lane-private TEMP: all PASS: lint 15/15, unit
+  1708/0, scenarios 52, parity exact + planted caught (step 629), look goldens 11/11 + block 5/5 (top did not move),
+  release-compile 600/0.
+- ACK assets: rivet_eq_electro_baton_70_v5 (A, round 20261107-1625, prompt_hash 813b8fb2b5fb) taken; it goes in next
+  iteration. Views 2-3 trailing the rod backward: judged in the game first, no redraw asked yet.
+- 16:18 v5 cut tried (manifest p70 line -> v5, re-cut: only the p70 baton strip moved): the facings carry the L hold,
+  the side strike (cell 5) and the follow-through (cell 7) carry the drawn arcs; cell 4 has a stray speck left of
+  the figure (a column-cut neighbour piece, as p55 cell 4 in it19). Not enough session left to cut by component,
+  film and gate: REVERTED (`git restore` of the strip and the manifest); the branch stays at the gated state.
+- Registry rules applied it20: motion-quality-gating (the smear judged in the pit at 64 px/m at both pitches, three
+  candidates filmed at the same seed and frames, the shipped one before/after; the refactor proved pixel-identical);
+  depth-ordered-layered-art (the crescent under his card so the drawn weapon reads over it; no game arc over a drawn
+  one); realtime-combat-semantics (view only: the smear's `on` is MeleeSwing.cutting as before; reels 19/19 x3);
+  sprite-and-atlas-production (the v5 re-cut deterministic, judged on a contact before shipping: a stray caught);
+  generative-artifact-gating (v5 judged on a v3/v5 sheet contact and on the cut strip).
+
+NEXT (it20 end, 16:20; supersedes every NEXT above):
+1. The baton 70 v5 (A): in `tools/art/rivet_frames.json` p70 `rivet_eq_electro_baton` set `"sheet":
+   "rivet_eq_electro_baton_70_v5.png"` and `"cc": "0"` (cell 4's stray speck); re-cut (`python -I
+   tools/art/rivet_frames.py --manifest=tools/art/rivet_frames.json`), check the strip on a contact (no speck, the
+   arcs in cells 5 and 7 whole), `--import`; drop "p70" from `RivetStrips.NO_ARC` (v5 draws its arc: no game smear
+   over it) and move `test_a_strip_with_no_drawn_arc...` to `ViewMode.of("tilt")` (p55); `python -I
+   tools/art/rivet_muzzle.py` (the p70 tip stays measured: harmless) + `--check`; provenance line (round
+   20261107-1625, prompt_hash 813b8fb2b5fb, grade A); film `--bot=pit --loadout=electro_baton --view=tilt70 --ppm=64
+   --seed=3 --rigs --clean` before/after (f60, 150, 300, 324-345); judge views 2-3 (the rod trails backward).
+2. The armory (Call 6): only if the owner picks the wall row.
+3. At the freeze: the exe (`build/export/windows/RTAI.exe`), the final REPORT.
+- Session end 16:21: everything committed but this JOURNAL tail (committed next).
