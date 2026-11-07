@@ -1,0 +1,15 @@
+18:08:25
+riot60 v60 r0: p50 16.64 p99 44.85 worst 66.3 draws 831 cpu 0.54 cores ws 842 MB steady 842 last 842 frames 1653 noTick 10 multiTick 32 errors 0 CONTENDED(2)
+riot60 cap r0: p50 16.67 p99 32.51 worst 124.3 draws 831 cpu 0.59 cores ws 844 MB steady 843 last 843 frames 1655 noTick 6 multiTick 20 errors 0
+riot60 lpcap r0: p50 16.64 p99 35.07 worst 80.7 draws 830 cpu 0.46 cores ws 840 MB steady 839 last 663 frames 1639 noTick 10 multiTick 42 errors 0
+riot60 lpcap r1: p50 16.68 p99 37.93 worst 67.0 draws 831 cpu 0.51 cores ws 839 MB steady 838 last 839 frames 1643 noTick 5 multiTick 35 errors 0
+riot60 cap r1: p50 16.67 p99 36.38 worst 56.5 draws 831 cpu 0.52 cores ws 842 MB steady 841 last 842 frames 1651 noTick 2 multiTick 26 errors 0
+riot60 v60 r1: p50 16.66 p99 38.91 worst 74.3 draws 831 cpu 0.56 cores ws 847 MB steady 845 last 373 frames 1643 noTick 12 multiTick 42 errors 0
+riot60 v60 r2: p50 16.64 p99 37.07 worst 91.0 draws 831 cpu 0.57 cores ws 844 MB steady 843 last 844 frames 1652 noTick 35 multiTick 51 errors 0
+riot60 cap r2: p50 16.67 p99 26.50 worst 42.5 draws 831 cpu 0.57 cores ws 842 MB steady 842 last 842 frames 1679 noTick 0 multiTick 3 errors 0
+riot60 lpcap r2: p50 16.62 p99 45.53 worst 98.0 draws 831 cpu 0.50 cores ws 840 MB steady 839 last 840 frames 1630 noTick 6 multiTick 43 errors 0
+riot60 v60: p50 16.64±0.01 p99 38.91±3.89 p99.9 66.63±5.25 worst 74.31±12.36 draws 830.60±0.19 renderCpu 1.01±0.05 gpu 2.41±0.21 vram 883.35±20.00 cpu 0.56±0.01 ws 844.12±2.56 wsSteady 843.09±1.78 wsLast 841.52±235.62 frames 1652.00±5.00 noTick 12.00±12.50 multiTick 42.00±9.50 contended 1 errors 0
+riot60 cap: p50 16.67±0.00 LOSS p99 32.51±4.94 WASH p99.9 55.48±17.92 WASH worst 56.52±40.92 WASH draws 830.98±0.28 WASH renderCpu 0.96±0.07 WASH gpu 1.62±0.36 WIN vram 867.35±24.00 WASH cpu 0.57±0.04 WASH ws 842.28±0.75 WASH wsSteady 841.55±0.73 WASH wsLast 842.28±0.74 WASH frames 1655.00±14.00 WASH noTick 2.00±3.00 WASH multiTick 20.00±11.50 WASH contended 0 errors 0
+riot60 lpcap: p50 16.64±0.03 WASH p99 37.93±5.23 WASH p99.9 66.03±7.99 WASH worst 80.74±15.50 WASH draws 830.74±0.62 WASH renderCpu 1.05±0.04 WASH gpu 1.91±0.22 WIN vram 867.85±7.88 WASH cpu 0.50±0.02 WIN ws 839.64±0.61 WASH wsSteady 838.71±0.41 WIN wsLast 838.87±88.42 WASH frames 1639.00±6.50 WASH noTick 6.00±2.50 WASH multiTick 42.00±4.00 WASH contended 0 errors 0
+exit 0
+18:14:18

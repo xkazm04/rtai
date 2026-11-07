@@ -95,6 +95,9 @@ lower than main's exe), or minimize it (L12 + L14); `RTAI.exe -- --frame-cap=off
   engine's low-power mode sleeps instead of spinning but wakes up to ~1 ms late; whether that keeps (b)'s steadiness is a
   later A/B, so (b) may become nearly free. (L14 already uses exactly that mode while minimized, where pacing does not
   matter: ~-0.06 of a core, F18's size, so the mechanism is confirmed; the on-screen pacing A/B is not done.)
+- **Tried at 18:08 (L15, one job, a loaded machine):** the limiter in low-power mode during play costs less CPU
+  (riot 0.57 -> 0.50 of a core) but paces like no limiter at all (slowest 1 % 32.5 -> 37.9 ms, skipped tick images 20 -> 42
+  per 30 s): the steadiness and the spin come together on this engine, so (b) is not free. The options stand as written.
 - **Options:** (a) no limiter at 60 Hz (default: least CPU). (b) the limiter at 60 Hz too (steadier delivery). (c) a
   'frame pacing: efficient / steady' option in the settings, default (a). Evidence: `evidence/perf/l10-cap/ab.json`.
 - **Recommended:** (c) when a settings screen for it exists; (a) until then. The bigger lever above 60 Hz is drawing
@@ -151,6 +154,7 @@ lower than main's exe), or minimize it (L12 + L14); `RTAI.exe -- --frame-cap=off
 - **L9** an engine patch that frees the oversized upload buffers: works (-96..-112 MB), but needs a custom template (L7's
   loss). Call P-2 option (b) reaches the same RAM with the stock engine.
 - **L11** mailbox present mode: same as the limiter for the same CPU (WASH).
+- **L15** low-power mode under the 60 Hz limiter in play: -0.07 core but the limiter's steadier pacing is gone.
 - **L13's pause card**: no gain (the city behind it redraws every frame): left off (`MenuIdle.PAUSED_IDLE = false`).
 - **L5** gives -40 % of its pass's CPU (microbench) but no frame-level win beyond the noise; kept as a CPU cut only.
 
@@ -176,7 +180,8 @@ lower than main's exe), or minimize it (L12 + L14); `RTAI.exe -- --frame-cap=off
 ## Next steps
 1. F19: a stack of the frozen main thread (procdump / a debug template) and the real Start click; the save worker and
    `chunk_source.take` are the suspects.
-2. Call P-3 (b) at ~0 cost: an on-screen pacing A/B of low-processor mode + the 60 Hz limiter (sleep, no spin; F18).
+2. Call P-3 (b): L15 says low-power mode loses the pacing; the next try is a spin shorter than 1 ms (an engine setting
+   upstream, `delay_resolution`), re-measured on an idle machine.
 3. Call P-2 (b): the traffic-sheet split (vehicles' files; REQUEST in JOURNAL), then measure the -96 MB.
 4. L7 again with the official toolchain (llvm-mingw + LTO) and an unstripped A-vs-A build.
 5. Interpolated drawing above 60 Hz (`SimClock.alpha()` has no reader): smoother on 144 Hz, a look change: a Call.

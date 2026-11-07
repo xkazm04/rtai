@@ -686,3 +686,10 @@ NEXT (iteration 22 = the freeze session, 18:30 freeze, 18:40 REPORT):
 - Registry rules applied (it22): perf-regression-gating (gates on the committed tree; the dirty-tree FAIL re-run rather
   than waved through), measurement-honesty (no new number claimed in the freeze; the final table quotes only A/B'd rows
   with their arms), runtime-observation-evidence (the exe booted and its log read, not just exported).
+- 18:07 L15 HYPOTHESIS (Call P-3 (b) for free?): low-processor mode under the 60 fps limiter skips F18's 1 ms spin; if it
+  keeps the limiter's pacing in play, (b) costs vsync-only CPU. Bench only: a scratch worktree at e941b5b5 whose local
+  override.cfg sets `application/run/low_processor_mode=true` (`^--path` arm). Risk: the sleep path wakes late.
+- RESULT 18:14 L15 DROPPED (`evidence/perf/l15-lowproc-pace/`, lock held, 3 rounds, 0 errors; the machine was loaded:
+  every arm's p99 ~2x L11's, so only the arm order is read): CPU v60 0.56 / cap 0.57 / lpcap 0.50 cores; p99 38.9 / 32.5 /
+  37.9 ms; skipped tick images 42 / 20 / 42. Low-power mode drops the spin and the steadiness with it. Call P-3 unchanged.
+  Scratch worktree `perf-lp` removed.
