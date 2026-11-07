@@ -935,3 +935,28 @@ trial merge on the newer heads, 5. the freeze items (NEXT 4 above). Session clos
   Dent's seize ring and tether. `top`: marks_apart false, the ground pass unchanged. Servo tests
   39/0. DECISION in docs/decisions.md. ANSWER to vehicles: done on n8-view (this commit).
 - GATE 03:52 at 73a78455: unit full no-arg 1511 passed / 0 failed, 0 FLAKY (`evidence/n8-view/unit-it11.log`); scenarios 52 passed, 0 failed (`scenarios-it11.log`); lint 15/15 (hook). NEXT (it12): 1. street's RigSelect corpse (plan above), 2. city's / hud's answers on the trial findings, 3. the trial merge re-run on newer heads (then delete the tree), 4. the freeze items. Session closes 03:52.
+
+## Iteration 12 (2026-11-07 03:53, BUILD)
+Read: JOURNAL (it11 NEXT), git log, the four lane journals (no new REQUEST to view; city and hud
+have not answered the it11 trial findings yet; street's it9 notes my answer and keeps its 2b).
+- MILESTONE 04:10 street's RigSelect corpse REQUEST (it12 NEXT 1) done, edee640a.
+  FIRST CUT (rejected, filmed): a fresh corpse ranked right after Rivet. On the repro
+  (`--arena=city --bot=rivet --seed=5 --rigs --ppm=48 --view=tilt70`, the trial merge tree for
+  street's cards, my two files copied in and reverted) the corpse lay drawn, but a living cop lost
+  LOD 0 and VANISHED (an empty selection ring at f600): the arena (ArenaRigs) has no crowd atlas, a
+  row off its rig draws nothing. Before my change the same is why the corpse vanished: street's
+  "black bar" is the blood's head mark, the body itself was gone.
+  BUILT: `RigSelect.nearest(..., pinned)` puts pinned rows in a TAIL past the living `limit`, so
+  the living 16 are exactly the old selection; `RigSelect.fresh_dead` keeps actor -> death tick for
+  rigged DEAD rows and pins at most CORPSE_PINS 4 (latest first) younger than the host's hold;
+  `CharacterRigs.corpse_hold_ticks` defaults to HOLD_NO_ATLAS (until the row leaves the feed:
+  arena, quest 1), `CityCharacters` sets CORPSE_HOLD_TICKS 90 (then the atlas, where street draws
+  the lying frame); PREWARM +4 per plan (pool().grown stays 0); a pinned fall poses at rank 0
+  (full rate). Flat views clear the pins: `top` selects as before.
+  FILMED before/after, 640 frames, 0 SCRIPT ERROR both: `gtai-masters/n8/view/arena_corpse_keeps_
+  rig_before_after_tilt70_48ppm_seed5.mp4` (f470-660) + `_f545_f635.png`. LOOKED: before, at f545
+  and f635 only the blood trail; after, the cop lies drawn at the trail's foot at both, and every
+  living cop that had a rig still has it. Unit test_character_rigs 12/0 (+3 tests). DECISION line.
+  ANSWER to street: done on n8-view (edee640a). In the city game the corpse keeps its rig 90 ticks,
+  then your atlas lying frame (your 2b) takes it: if you want a longer hold there, it is
+  `RigSelect.CORPSE_HOLD_TICKS` (one value; tell me).
