@@ -85,9 +85,21 @@ Branch `d9-seams`. Evidence: `C:\Users\kazda\kiro\gtai-masters\d9\seams\` (`fram
    the mid wash; ink, concrete and outline unchanged; `top` untouched (card views only).
    `planter_value_lift_before_after_p70_p55_32ppm_cityframe11_x3.png`, `..._64ppm_cityframe11.png`.
 
+15. **The King's press plates lose their cream rim** (item 2, 2ef868fc, it6): his arm parts (the gold
+   plates at his hips under the lifted bust) carried the same cream sticker rim the owner named on his
+   legs; off under every card view (`BodyPlan.arm_rim`), `top` and Rivet unchanged.
+   `king_arm_rim_before_after_combo_{64,32}ppm_seed2_f150_x3.png`.
+16. **The two d9 lanes merge clean** (it6): a scratch merge of d9-seams (6fba6bcd) and d9-rivet's head
+   conflicts only in JOURNAL.md (add/add: keep both); `prop_occlusion.gd` (touched by both) merges on
+   disjoint hunks and the two changes are compatible. On the merge: lint 15/15, unit 1730/0,
+   release-compile 605/0, scenarios 52/0, director reel top/tilt70/combo 19/19, 0 SCRIPT ERROR
+   (`evidence/d9-seams/director-reel-merge-it6-*.log`, `mergetrial-it6-gates.txt`); still
+   `merge_trial_seams_rivet_king_combo_64ppm_seed2_f150_f250.png`.
+
 **The set in one clip:** `seams_d9_set_combined_52s.mp4` (52 s, captioned per item).
 
-Gates it6: evidence at b2b5c9b9 (the planter lift): lint 15/15, unit 1717/0, scenarios 52/52, parity
+Gates it6: evidence at 2ef868fc (arm rim): all PASS, lint 15/15, unit 1717/0, scenarios 52/52, parity,
+selftest 11/11, release-compile 602/0 (`evidence/d9-seams/evidence-it6b-2ef868fc.log`). Evidence at b2b5c9b9 (the planter lift): lint 15/15, unit 1717/0, scenarios 52/52, parity
 bit-exact, selftest look goldens 11/11 (worst 0.27) + block 5/5, release-compile 602/0, all PASS
 (`evidence/d9-seams/evidence-it6-b2b5c9b9.log`). Gameplay code unchanged since the it5 reels.
 Gates it5: evidence at ddef1441 (Servo marks + SWAT 55 scale): lint 15/15, unit 1717/0, scenarios 52/52,

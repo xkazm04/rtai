@@ -491,3 +491,17 @@ motion-quality-gating (before/after the same scene, seed and frame, at 32 and 64
   `mergetrial-it6-gates.txt`. Filmed the merge: King fight combo 64 px/m seed 2 f150/f250 (King on drawn
   legs, Rivet's drawn figure, the kerb line under the King): masters `merge_trial_seams_rivet_king_combo_64ppm_seed2_f150_f250.png`.
   The two lanes merge clean today but for the JOURNAL add/add (keep both).
+- 14:05 FINDING + fix (2ef868fc), from the trial-merge film: the King's gold press plates (his arm parts,
+  shown at his hips under the lifted bust) still drew Rivet's cream sticker rim (RigBuild HALO_ARM on every
+  arm part): the same white edge the owner named on his legs. `BodyPlan.arm_rim` (default true); KingPlan
+  sets it off under a card view; `top` and Rivet keep it. test_king_plan_legs +4 asserts. Filmed combo
+  seed 2 f150 at 64 and 32 px/m (before = arm_rim forced true, the same frames): masters
+  `king_arm_rim_before_after_combo_{64,32}ppm_seed2_f150_x3.png` (in frames.json at 8, the SWAT facing
+  still out, file kept). FRICTION (1 min): restoring my temporary "before" edit with `git checkout --`
+  also dropped the uncommitted fix line; re-added by hand before the commit (diff checked). Use a sed
+  toggle back, never checkout, on a file with uncommitted work.
+- Cleaned: the trial-merge worktree removed (`git worktree remove`, pruned), PNG sequences deleted.
+- 14:16 GATE evidence at 2ef868fc (arm rim): lint 15/15, unit 1717/0, scenarios 52/52, parity bit-exact,
+  selftest look goldens 11/11 + block 5/5, release-compile 602/0: all PASS
+  (`evidence/d9-seams/evidence-it6b-2ef868fc.log`). Director reels at 2ef868fc running (scratch
+  `director-reel-it6-*.log`).
