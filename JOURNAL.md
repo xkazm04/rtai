@@ -1085,3 +1085,27 @@ NEXT (iteration 11):
 - GATE scenarios on 60b94826 (head, after b5f5f10c): 52 ran, 0 failed, 0 SCRIPT ERROR (exit 0). NEXT 3's
   scenarios done; the full evidence run (`node tools/evidence/run.mjs --no-bench`) remains for
   it11. Session end 04:52, tree clean.
+
+## Iteration 11 (04:53, BUILD; session stops 05:53)
+Read: JOURNAL (it10 NEXT), git log, the four lane journals. view (it12, l.960) left one value open
+for street: `RigSelect.CORPSE_HOLD_TICKS` (90 in the city game, then street's atlas lying frame).
+- ANSWER to view: keep CORPSE_HOLD_TICKS 90. After 1.5 s the full rig's drawn fall has been lying
+  ~1.1 s and the atlas cell it hands to is the same drawn lying frame (b5f5f10c), so a longer hold
+  only spends rig slots; no change asked.
+- FOUND (NEXT 1, from it10's atlas dump `scratch/street/it10/atlas_death.png`): DEATH cells 0-2 of
+  every look are the top-down stump (feet and legs from above, cut at the shoulders by the cell's
+  bottom edge), identical across the 3 cells (no motion), held 0.3 s before the drawn lying cell 3:
+  a far death shows a cut stump, then pops to a whole body.
+- MILESTONE (NEXT 1): **far deaths fall as drawn** under the card views. StreetCrowdCorpse.stamp now
+  writes every atlas DEATH cell: `FROM_FALL` [1, 2, 2, 2] (cell 0 = the drawn mid-fall, 0.1 s;
+  cells 1-3 = the lying frame); `fall_cell(art, row, fall)` cuts any fall grid frame (lying_cell
+  calls it with the last). FILMED the 400-actor riot (`city_bench.tscn --scenario=riot --zoom=1.5
+  --view=tilt70`, write-movie 1000 frames) after and before (HEAD's file copied in, then restored),
+  0 SCRIPT ERROR both. FOUND: the riot is not run-identical (a pixel diff of a/ vs b/ diverges from
+  f97), so the before/after are separate runs; the same death (a brown-hooded ped at ~(1085,435))
+  lands a few px apart in both. LOOKED f100-124 x2: before, f104-f120 a cut stump (legs from above,
+  cut at the shoulders) then the body pops in at f124; after, f104 the drawn mid-fall (tipped
+  body), f108 on the whole lying body. evidence/riot_atlas_death_frames_before_after_tilt70_48ppm_
+  x2_f100-124.png; masters frames.json #3 (dropped the crowd-variety CALL still from frames.json,
+  file kept for REPORT). Unit 4/4 (+1 test: one fall frame per DEATH cell, the held one is the
+  lying frame, the mid-fall is its own drawing). Lint 15/15. DECISION street/atlas-death-frames.

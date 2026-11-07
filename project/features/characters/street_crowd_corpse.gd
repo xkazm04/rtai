@@ -14,6 +14,9 @@ const DIR: String = "res://features/characters/art/view/"
 const SIDE: int = 2
 ## The share of the cell the body may span (the rest: the bilinear edge and the quad's rim).
 const FIT: float = 0.95
+## Atlas DEATH frame i (CrowdAtlas.FRAMES: 4 at 10 fps) shows fall grid frame FROM_FALL[i]
+## (0 buckle, 1 mid-fall, 2 lying): 0.1 s mid-fall, then the drawn corpse. [2, 2, 2, 2] = no motion.
+const FROM_FALL: PackedInt32Array = [1, 2, 2, 2]
 
 
 ## Stamps every look's lying frame into `image` (the atlas being baked) when the view draws cards.
@@ -22,18 +25,23 @@ static func stamp(image: Image, rigs: Array[CutRig]) -> void:
 	if not ENABLED or not view.cards:
 		return
 	var death: int = CrowdAtlas.Clip.DEATH
-	var col: int = CrowdAtlas.CLIP_FIRST[death] + CrowdAtlas.FRAMES[death] - 1
 	for look: int in rigs.size():
 		var rig: CutRig = rigs[look]
 		var row: String = RigHeadCard.key_of(rig.plan, rig.variant.head) if rig.variant else ""
-		var lying: Image = lying_cell(view.art, row)
-		if lying != null:
-			_blit(image, lying, col, look)
+		for f: int in CrowdAtlas.FRAMES[death]:
+			var body: Image = fall_cell(view.art, row, FROM_FALL[mini(f, FROM_FALL.size() - 1)])
+			if body != null:
+				_blit(image, body, CrowdAtlas.CLIP_FIRST[death] + f, look)
 
 
-## The lying frame for `row` under `art` (or StreetWalkerFall.FALLBACK's), cropped to the body and
-## scaled to atlas px; null = no drawn fall for the row.
+## The lying frame for `row` under `art`; null = no drawn fall for the row.
 static func lying_cell(art: String, row: String) -> Image:
+	return fall_cell(art, row, StreetWalkerFall.FALL_FRAMES - 1)
+
+
+## Fall frame `fall` for `row` under `art` (or StreetWalkerFall.FALLBACK's), cropped to the body,
+## scaled to atlas px and turned to the bake's +y; null = no drawn fall for the row.
+static func fall_cell(art: String, row: String, fall: int) -> Image:
 	var own: Dictionary = StreetWalkerFall.FALLS.get(art, {})
 	var from: String = art if own.has(row) else StreetWalkerFall.FALLBACK
 	var rows: Dictionary = StreetWalkerFall.FALLS.get(from, {})
@@ -48,7 +56,10 @@ static func lying_cell(art: String, row: String) -> Image:
 	grid.convert(Image.FORMAT_RGBA8)
 	var n: int = StreetWalkerFall.FALL_FRAMES
 	var cell: Vector2i = Vector2i(grid.get_width() / RigHeadCard.FRAMES, grid.get_height() / n)
-	var frame: Image = grid.get_region(Rect2i(cell.x * SIDE, cell.y * (n - 1), cell.x, cell.y))
+	var at: int = clampi(fall, 0, n - 1)
+	var frame: Image = grid.get_region(Rect2i(cell.x * SIDE, cell.y * at, cell.x, cell.y))
+	if frame.get_used_rect().size == Vector2i.ZERO:
+		return null
 	var body: Image = frame.get_region(frame.get_used_rect())
 	var h: float = StreetWalkerCards.HEIGHT_BY_ART.get(from, StreetWalkerCards.HEIGHT_M)
 	var k: float = h * CharacterRigs.PX_PER_M / StreetWalkerFall.STILL_PX * CrowdAtlas.BAKE_ZOOM

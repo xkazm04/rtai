@@ -21,3 +21,18 @@ func test_straight_down_the_atlas_is_untouched() -> void:
 	image.fill(Color.WHITE)
 	StreetCrowdCorpse.stamp(image, [])
 	assert_eq(image.get_pixel(5, 5), Color.WHITE, "the shipped view keeps the baked cells")
+
+
+func test_every_death_frame_has_a_drawn_fall_frame() -> void:
+	assert_eq(
+		StreetCrowdCorpse.FROM_FALL.size(),
+		CrowdAtlas.FRAMES[CrowdAtlas.Clip.DEATH],
+		"one fall frame per atlas DEATH frame: no top-down stump left"
+	)
+	var last: int = StreetCrowdCorpse.FROM_FALL[StreetCrowdCorpse.FROM_FALL.size() - 1]
+	assert_eq(last, StreetWalkerFall.FALL_FRAMES - 1, "the held corpse is the lying frame")
+	var mid: Image = StreetCrowdCorpse.fall_cell("p70", "cop/head_cap", 1)
+	var lying: Image = StreetCrowdCorpse.lying_cell("p70", "cop/head_cap")
+	assert_not_null(mid, "the mid-fall frame cuts")
+	if mid != null and lying != null:
+		assert_ne(mid.get_size(), lying.get_size(), "the mid-fall is its own drawing")
