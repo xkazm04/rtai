@@ -1349,3 +1349,9 @@ NEXT (the Director / d9):
   void, so view needs a handle to the node (return it, or find it under `view.actor_layer()`'s
   canvas), and attach only runs when the lift occludes: confirm the arena city block attaches one.
   Not applied: no caller fills it tonight, and a shipped-code change reopens the freeze gates.
+- (08:09) One open point closed: the arena city block does attach a CityOcclusion (its only caller is
+  `city_view.gd:81`, and view's l.1455 log of that repro prints "crowd 0 patches", CityOcclusion's
+  exit line), so the patch has a live node; view still needs a handle to it (attach returns void).
+- Session end 08:09. Tree clean. Shipped project files unchanged since 7d40e58d; this iteration added
+  one tests/ case (ea4d38c0, full unit 1531/0) and docs. The freeze evidence, `top` framemd5, the
+  reel and the exe (7d73de04) stand.
