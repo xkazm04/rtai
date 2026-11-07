@@ -451,3 +451,6 @@ NEXT (it6), replaces the list above:
    a dark mass at 32 px/m (city's tool; owner eye); Call 2's corpse "through" the barrier (sim, not built).
 4. Owner Calls 1-3 stand. Freeze 18:30: export RTAI.exe (`"$GODOT_BIN" --headless --path project
    --export-release windows-showcase ../build/export/windows/RTAI.exe`), REPORT final by 18:40.
+- 13:32 FINDING: the 70 armed grids measured the same way (head line + head width per facing): no scale
+  outlier. SWAT 70's spliced profile row (round 1315) has head width 63 px vs 61-67 on the other facings;
+  its head line (24-30) moves with the stride bob, as drawn. Nothing to scale at 70.
