@@ -399,18 +399,18 @@ DECISION Servo bay marks: see docs/decisions.md (glyph box test; whole-apron and
   outlier (the back rows run tall in every grid: a drawing convention, left).
   WITHDRAWN REQUEST to assets: `swat_walk_armed_55` row 2 (fixed in post, ddef1441). The riot 55 row 2
   request stays closed as your NO GAIN (3 tries).
-- 13:10 MILESTONE the combined clip owed by the brief: `gtai-masters/d9/seams/seams_d9_set_combined_52s.mp4`
+- ~13:05 MILESTONE the combined clip owed by the brief: `gtai-masters/d9/seams/seams_d9_set_combined_52s.mp4`
   (10 captioned segments, items 1-5 + the Servo marks at 1/3 speed; one frame per segment looked at).
   frames.json: 15 entries, the clip first, the Servo pair second (the 32 px/m cop pair at 70 and the King
   f150-450 grid out of the list, files kept).
-- 13:12 GATE evidence at ddef1441 (Servo marks + SWAT 55 scale): lint 15/15, unit 1717/0, scenarios 52/52,
+- ~13:09 GATE evidence at ddef1441 (Servo marks + SWAT 55 scale): lint 15/15, unit 1717/0, scenarios 52/52,
   parity bit-exact (planted caught), selftest look goldens 11/11 (worst 0.27) + block 5/5, release-compile
   602/0: all PASS (`evidence/d9-seams/evidence-it5-ddef1441.log`; ran to scratch, copied in).
-- 13:14 FINDING + fix (item 5): the riot 55 profile column (the round-1330 fresh row 3, A) is the same
+- ~13:10 FINDING + fix (item 5): the riot 55 profile column (the round-1330 fresh row 3, A) is the same
   fault: head line 24 px vs 13 and 19 on its neighbour facings. Scaled 1.06 with walk_facing_scale.py
   (head line -> 13), FILL 1.09 -> 1.08 (mean 174.55 -> 176.75 px); test_street_cop_walk pins 1.08.
   Patrol 55 measured: no outlier. Masters `riot55_facing3_scale106_before_after_grid.png`.
-- 13:22 MILESTONE (0d8842bf): the riot 55 profile scale landed and filmed in play: seed 5 tilt 48 px/m f62,
+- 13:15 MILESTONE (0d8842bf): the riot 55 profile scale landed and filmed in play: seed 5 tilt 48 px/m f62,
   a riot cop walking in profile beside a SWAT, before visibly smaller, after the same height
   (`riot55_facing3_scale106_before_after_tilt_48ppm_seed5_f62_x3.png`, `..._f20_140.mp4`). test_street_cop_walk
   6/0. frames.json: in at 3 (the riderless bike clip out, file kept). DECISION line in docs/decisions.md.
