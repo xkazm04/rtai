@@ -579,3 +579,5 @@ NEXT (iteration 9, in brief order):
   court bust, cape, one bell, gang cards as built. Unit view_pitch/rig_head_card/ghost_card 29/0.
   Combo's script extra over top is now ~0.6 ms (ease 0.18 + occlusion 0.36 + depth sort 0.16);
   the floor's tilted draw (+1.8 ms) is what remains. Re-take the frames under the lock (NEXT 1).
+- GATE unit full no-arg at cb1290b7 (the head): 1506 passed / 0 failed, 0 FLAKY
+  (`evidence/n8-view/unit-it8-head.log`). Session ends (01:26); NEXT stands (1a done).
