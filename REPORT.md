@@ -177,6 +177,20 @@ director reel (`--fixed-fps 60 --quit-after 14000`) top 19/19, tilt70 19/19, com
    Scenario `traffic_yields_rivet` (real World, a car at 12 m/s at a standing Rivet): off 0.10 m (through him),
    on 2.44 m closest (stops, then pulls round him); scenarios 53 passed.
 
+24. **The King's drawn boots keep pace with the ground** (item 2, f99bf5d6, it10): the legs card's walk row
+   follows the distance walked over the sheet's drawn cycle (`KingLegsCard.CYCLE_CELL`: 55 two profile steps of
+   116 cell px, 70 two of 40), not the old parts' gait phase. Probe in the real fight: the gait cycle is 64 world
+   px against the 55 sheet's ~125 at his scale, so his boots ran at twice the ground speed. Same 349 walking
+   frames (782 px): a new pose every 17.4 px (7.7/s) before, 26.1 px (5.2/s) after. A heavier, planted stride.
+   `king_legs_stride_before_after_combo_64ppm_seed2_phase3_f200-420_x2.mp4`. 2 tests, 2 planted faults caught.
+25. **The King's bodyguards on drawn legs, by decision** (item 2, d561498d + 6220e46f, it10): found filming
+   phase 1 (every earlier King take was phase 3, after the gang falls): since it2 the four bodyguards stood
+   on small copies of the King's drawn legs (`KingArt.dress` runs for every court rig). Fixed to their own
+   parts first, then judged: on their gang_parts legs they sprawl grey top-down limbs with a pale rim under the
+   upright bust; on drawn legs they read as upright figures. Kept the drawn legs (`KingLegsCard.SHEETS`),
+   the parts one value away; `gang_legs_55/70` asked of assets. Call 5.
+   `king_gang_own_legs_before_after_combo_{64ppm_seed2_phase1_f200,32ppm_seed2_phase1_f200_x3}.png`.
+
 ## What does not work yet
 - (closed it9, measured) The SWAT back rows (55 and 70, row 5) move the head 3 px (1.6 % of the figure) at 55
   and 5 px (2.8 %) at 70, a regular two-per-stride bob (2/7/3/7 px from the cell top), about a walking
@@ -220,6 +234,12 @@ director reel (`--fixed-fps 60 --quit-after 14000`) top 19/19, tilt70 19/19, com
    (c) cars knock him down (sim work in both twins, not built). Before/after:
    `traffic_yields_to_rivet_before_after_tilt70_64ppm_seed7_bikes025_f300-720.mp4` (+ `_f300-660_strip.png`).
    Try: `"$GODOT_BIN" --path project -- --view=tilt70 --seed=7 --rigs --bikes=0.25 --traffic-yields`.
+5. **The King's bodyguards' legs** (it10). Default built: (a) they stand on the King's drawn legs (purple
+   and gold bands, his sheet at their card scale), upright figures. (b) Their own n8 parts legs (drop "gang"
+   from `KingLegsCard.SHEETS`): grey top-down limbs that sprawl under the upright bust, with a pale rim.
+   (c) Their own drawn legs in the gang's steel and black (REQUESTed of assets as `gang_legs_55/70`; one
+   value when they land). Still: `king_gang_own_legs_before_after_combo_64ppm_seed2_phase1_f200.png` (left a,
+   right b). Try: `"$GODOT_BIN" --path project res://dev/arena/arena.tscn -- --boss=king --phase=1 --view=combo`.
 
 ## Next steps
 See JOURNAL `NEXT:`.
