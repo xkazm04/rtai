@@ -733,3 +733,16 @@ NEXT (iteration 17, in order):
 4. CityOcclusion's remaining 0.21 ms (RigCastShadows.collect walk), under bench.lock.
 5. Before the freeze: full gates (unit no-arg, scenarios, evidence --no-bench, reel tilt70),
    the exe export, REPORT (Calls: facade height, occlusion style, the lamp's 70 cell width).
+- (03:04, after the NEXT above) MILESTONE 0ad898a9 NEXT 1's first half: the arena cover's 55
+  strips from the library's A raises (dumpster_v4, crates_v4, round 20261107-0205), cut by
+  city_prop_cut.py; the crate's world-print twin re-baked by print_twin.py; 3 provenance lines.
+  EVIDENCE `gtai-masters/n8/city/it16_king_cover_crates_v4_combo48_before_after_x2.png` (not in
+  frames.json, full at 15): `res://dev/arena/arena.tscn -- --boss=king --bot=boss --seed=2 --rigs
+  --view=combo --ppm=48`, frame 6.3 s (combo at 55), 94930301-tree vs 0ad898a9: the two-plus-one
+  stack with clear cream plank tops vs the flatter three-plus-one; the same footprint. 0 SCRIPT
+  ERROR both. No dumpster in that frame: the dumpster v4 is NOT yet seen in motion (the depot
+  fight `--boss=servo` has the cover_high dumpsters). The crate redraw (print twin) not re-checked
+  on view's stand_rect merge. GATE unit --select prop cards / chunk lift / occlusion 21/0; lint 15/15.
+NEXT (iteration 17) replaces NEXT 1 above: (a) film the dumpster v4 on the depot fight under combo
+48 vs 94930301; (b) the remaining 55 raises (hydrant_v3, newsstand_v2, planter_v2,
+vending_machine_v3, barrel_cluster_v3, trash_can_v3); NEXT 2-5 as above.
