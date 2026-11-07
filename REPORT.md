@@ -137,12 +137,25 @@ hand fix, unit 1639/0, director reel top + combo 19/19 all down, 0 SCRIPT ERROR.
   down, 0 SCRIPT ERROR (`evidence/n8-view/director-reel-it15-trial-*.log`). `ViewPitchQuest` adds
   one call in `boot/quest1_game.gd` `_casts()` (after `GhostAttackViews.attach_quest`): no other
   lane touches that function.
+- it16: trial merge refreshed 07:00-07:08 (n8-view f4a95f31 + city f14b97c9, street 49b57ffb,
+  vehicles 907d73b3, hud 38bc8bee): one CODE conflict, `boot/collect_call/view/cast_view.gd`
+  `_draw`'s guard/corpse branch: take street's hunk whole (`StreetQuestCards.draw_guard` +
+  `StreetQuestCorpses.draw`; view's `QuestGuardCast` branch above it merges clean). The merged file
+  is 230 lines (229 on either side), so `debt.mjs --update` needs `--accept-regression`. Director reel
+  top + combo 19/19 all down, 0 SCRIPT ERROR (`evidence/n8-view/director-reel-it16-trial-*.log`);
+  quest 1 Dock 9 at combo 48 px/m: street's corpse decay and view's guard cast together, 0 SCRIPT
+  ERROR (`quest1_dock9_merged_it16_corpse_decay_guard_cast_combo_48ppm_t14400_t15500.png`).
 - it13: PropOcclusion reads city's `PropCards.stand_polys` by method presence (landed on n8-city
   8c982682 + 55ede50c, checked on the 05:56 trial merge); merge order does not matter, without it
   the cut stays the card's rect.
 
 ## Exe
-(at the freeze: `build/export/windows/RTAI.exe`, the int-day recipe)
+`build/export/windows/RTAI.exe` (the `windows-showcase` preset: boots into the dev arena; embedded pck,
+the native DLL beside it). Recipe (proven it16 06:55, 10 s, 0 errors; re-run at the freeze HEAD):
+`export APPDATA=C:/Users/kazda/kiro/gtai-n8/appdata/view; "$GODOT_BIN" --headless --path project --export-release windows-showcase ../build/export/windows/RTAI.exe`.
+Smoke: `RTAI.exe -- --rigs --boss=king --seed=2 --view=combo` (eases to 55 at the engage, p55 cards).
+Try: `RTAI.exe -- --rigs --boss=king --phase=3 --view=combo [--ppm=64]`, `RTAI.exe -- --rigs --boss=servo --view=combo`,
+`RTAI.exe -- --arena=city --rigs --view=tilt70`, `RTAI.exe -- --rigs --view=combo_lead` (Call 4).
 
 ## Next steps
 (at the freeze)
