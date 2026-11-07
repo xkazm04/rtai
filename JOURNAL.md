@@ -593,4 +593,5 @@ NEXT (iteration 13, in order):
 4. facade_tall (B 2210, untapered) as a `tall` style for the 17-21 m landmarks (by_name rows).
 5. Quest 1: the TUCK-IN crate stack under a tilt (branded quest art; a two-layer top+front rebuild
    from tuckin_crate, or the crates_70 card with the stencil decal) if it shows on the quest film.
-6. Re-run unit no-arg clean (no edits during the run) to turn the evidence unit row green.
+6. (done 01:40) unit no-arg re-run on a clean tree at 87647f49: 1520 passed, 0 failed, 0 skipped,
+   no FLAKY, no tree change.
