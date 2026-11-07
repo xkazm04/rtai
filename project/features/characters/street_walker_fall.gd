@@ -35,12 +35,19 @@ const FALLS: Dictionary[String, Dictionary] = {
 		"cop/head_swat": "swat_fall.png",
 		"thug": "thug_fall.png",
 	},
+	"p55":
+	{
+		"cop/head_cap": "cop_patrol_fall.png",
+		"cop/head_helmet": "cop_riot_fall.png",
+		"cop/head_swat": "swat_fall.png",
+		"thug": "thug_fall.png",
+	},
 }
 const FALL_FRAMES: int = 3
 ## Each fall frame's start, of the death family's progress (the lying frame from FALL_AT[2] on).
 const FALL_AT: PackedFloat32Array = [0.0, 0.18, 0.4]
-## Art with no fall grids of its own (p55: boss fights under combo) draws this art's, at that art's
-## height, as d8 drew the 55 drawings at 70; "" = the hold and the parts there.
+## A row with no fall grid in the view's art (p55's pedestrians: boss fights under combo) draws this
+## art's, at that art's height, as d8 drew the 55 drawings at 70; "" = the hold and the parts there.
 const FALLBACK: String = "p70"
 ## The px a standing figure of HEIGHT_M is drawn in the grid (the still strip's cell height).
 const STILL_PX: float = 192.0
@@ -52,7 +59,8 @@ const OCT: StringName = &"street_fall_oct"
 static func grid_of(rig: CutRig, art: String, row: String) -> String:
 	if not DRAWN or not down(rig):
 		return ""
-	var from: String = art if FALLS.has(art) else FALLBACK
+	var own: Dictionary = FALLS.get(art, {})
+	var from: String = art if own.has(row) else FALLBACK
 	var rows: Dictionary = FALLS.get(from, {})
 	return from + "/" + str(rows[row]) if rows.has(row) else ""
 

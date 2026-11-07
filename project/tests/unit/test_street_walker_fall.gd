@@ -60,6 +60,8 @@ func test_only_the_dying_and_the_dead_draw_a_fall_grid() -> void:
 	assert_eq(StreetWalkerFall.grid_of(rig, "p70", row), "p70/ped_hood_fall.png", "dead: the grid")
 	assert_eq(StreetWalkerFall.grid_of(rig, "p55", row), "p70/ped_hood_fall.png", "55: the 70 grid")
 	assert_eq(StreetWalkerFall.grid_of(rig, "p70", "ped/head_none"), "", "a row with no grid")
+	var cop: String = "cop/head_cap"
+	assert_eq(StreetWalkerFall.grid_of(rig, "p55", cop), "p55/cop_patrol_fall.png", "55: its own")
 
 
 func test_every_fall_grid_exists_and_all_three_cops_have_one() -> void:
