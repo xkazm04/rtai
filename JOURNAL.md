@@ -1090,3 +1090,24 @@ cone, f960 seed 2). Library: nothing new for building/prop since 0525 (all cut o
   Unit full no-arg at 55ede50c: 1526 passed, 0 failed, no FLAKY. Lint 15/15.
 - REPORT: occlusion item names the card outline + crate twin; Gates section at 55ede50c with both
   `top` recipes.
+- MILESTONE 3703b010 (NEXT 3) the lamp's and traffic light's pole cast ends in a round ground blob
+  for the globe / signal head: props row `cast_blob_m` (lamp 0.18, traffic light 0.15 m, schema'd),
+  ChunkLift.draw adds one circle at the stroke's end and shortens the stroke by the radius (no
+  doubled alpha); `_cast_px` now Vector2 (length, radius) so chunk_lift.gd stays 199 lines. 1 test.
+  EVIDENCE `city_bench --scenario=drive --view=tilt70 --zoom=1.5 --secs=30` (48 px/m), 1500 frames,
+  before = the same tree without `cast_blob_m`; contact sheets of every diff cluster at 30-frame
+  steps: only the lamp casts change. Tried 0.22 m first: a ladle; cut to 0.18.
+  `it26_lamp_globe_blob_tilt70_48ppm_before_after_x3.png` (f180, f330), named in the it25 sign
+  entry's note in frames.json. LOOKED the traffic light under 55 (`--view=tilt --zoom=1.5
+  --secs=10`, f300/f420): a small flattened blob at the stroke's end, reads as the signal head; no
+  pair kept. 0 SCRIPT ERROR all runs.
+- GATE `top` boot-scene framemd5 at 3703b010: IDENTICAL to top22.md5. Unit --select=test_chunk_lift,
+  test_prop_cards 21/0. Lint 15/15.
+- DECISION lines (pole cast blob, card outline for PropOcclusion) in docs/decisions.md; REPORT
+  props + gaps updated.
+Registry rules applied it26: depth-ordered-layered-art (the occluder's real silhouette bounds the
+hidden body's ink; the blob stays on the shadow band under every card), render-submission-economy
+(one circle per pole into the existing shadow band; the outline traced once per strip facing and
+cached), concept-scene-parity + motion-quality-gating (same seed, scene and frames before/after, one
+data value or one method apart; the outline judged on view's own repro at 64 px/m; the blob at 48
+px/m over a 25 s drive), generative-artifact-gating (no new art), tiling-texture-acceptance (n/a).
