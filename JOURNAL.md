@@ -780,3 +780,24 @@ frame (they did not on the it9 trial merge: stand_rect from static props), they 
 child to redraw (`_static.queue_redraw()`).
 - GATE 02:51 scenarios at 3c5aacba (`run_scenarios.mjs --quiet-wait=3`): 52 passed, 0 SCRIPT ERROR, none contended (`evidence/n8-view/scenarios-it10.log`).
 - GATE 02:57 director reel (headless, `--quit-after 14000 res://dev/arena/arena.tscn -- --bot=reel --reel=director --loadout=pistol --rigs --view=<v>`) at 025f48ac: 19/19 chapters all down, 0 SCRIPT ERROR, top + combo (`evidence/n8-view/director-reel-it10-{top,combo}.log`). Session closes (02:58): head gates lint 15/15, unit 1511/0, scenarios 52/0, reels 19/19; scratch frames deleted (crops in evidence + masters). NEXT above stands.
+
+## Iteration 11 (2026-11-07 02:59 - 03:59), BUILD
+
+Read: JOURNAL, git log, the four lane journals: no new REQUEST to view (vehicles it15 read
+before my 02:20 answer to their it14 seize-cue REQUEST; their NEXT 1 waits on it), main has not
+merged the lanes (n8-view..main = 0), so quest 1 after the merge (NEXT 3) still waits.
+- 03:00 machine busy (two windowed movie renders by street / vehicles, a headless reel): no bench.
+- MILESTONE 03:06 the lane's combined clip (owed by common.md, absent until now):
+  `gtai-masters/n8/view/view_set_combined_n8_it11.mp4`, 86 s, 1920x1080 60 fps, 8 titled segments
+  from the masters clips (ring lock, car-line lock, death beat x2, Tonnage + Ohm through the King-
+  down return, quest 1 Dock 9, city on foot and driving top vs tilt70). Script
+  `scratch/view/combined/make.sh`. Looked at a 6-still contact sheet: titles legible, each
+  segment's before/after sides as titled. frames.json #1 (dropped the Dent tone pair: #9 covers Dent).
+- MILESTONE 03:14 the death beat's Call filmed at 64 px/m (the close-up owed since it4): the seed-2
+  King phase 3 death (no bot, dies tick 1727), `combat.json rivet.death_beat_s` 0.7 / 1.0 / 1.5
+  (edited per run by `scratch/view/dbeat.sh`, restored with `git checkout --`), respawn ticks
+  1769 / 1787 / 1817, 0 SCRIPT ERROR x3. `death_beat_length_07_10_15_combo_64ppm.mp4` (+ `_seq.png`),
+  frames.json #4 (dropped the Kerf rings pair: #8 covers Kerf). LOOKED: 0.7 s inks before the
+  King's stomp lands over the corpse; 1.0 s shows one stomp over the sprawl, then ink; 1.5 s holds a
+  second look at the King standing on the wreck. Close up the King's body covers half the sprawl.
+  Default stays 1.0 s.
