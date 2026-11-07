@@ -77,3 +77,16 @@ func test_kerb_off_claims_nothing() -> void:
 	VehicleStageCards.kerb = false
 	VehicleStageCards.claim()
 	assert_false(VehicleParked.live)
+
+
+func test_on_the_city_the_cards_stand_in_the_vehicles_band() -> void:
+	ViewMode._shared = ViewMode.of("tilt70")
+	var layer: CanvasLayer = CanvasLayer.new()  # the city's actor layer
+	add_child_autofree(layer)
+	var view: Node2D = Node2D.new()
+	layer.add_child(view)
+	var node: VehicleStageCards = VehicleStageCards.attach(view, _none)
+	assert_eq(node.z_index, RenderLayers.z(&"vehicles"), "over the actors, like the print")
+	assert_eq(node.cards.under.z_index, RenderLayers.z(&"actors") - 1)
+	var flat: VehicleStageCards = _stand()  # a host off any canvas layer: the old floor draw
+	assert_eq(flat.z_index, 0)

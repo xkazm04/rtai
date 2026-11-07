@@ -37,6 +37,8 @@ var _on: bool = false
 var _view: Node2D = null
 ## True when this node draws the kerb-car registry (a stage view claimed it).
 var _parked: bool = false
+## True when the cards stand in the vehicles band with the front grid (a print, or the city).
+var _banded: bool = false
 
 
 ## Cards for `cars` (() -> Array[VehicleBody]) under `view`, a StageView drawing in Ink px.
@@ -51,12 +53,11 @@ static func attach(view: Node2D, cars: Callable) -> VehicleStageCards:
 		up = up.get_parent()
 	if up == null:
 		view.add_child(node)
+		if view.get_parent() is CanvasLayer:  # on the city's actor layer (quest 1 on the city)
+			node._band()
 		return node
 	node._view = view
-	if over:
-		node.z_index = RenderLayers.z(&"vehicles")
-		node.cards.under.z_as_relative = false
-		node.cards.under.z_index = RenderLayers.z(&"actors") - 1
+	node._band()
 	(up as PrintStage).actor_layer().add_child(node)
 	node._follow()
 	return node
@@ -77,6 +78,15 @@ static func release() -> void:
 	if _claimed:
 		VehicleParked.live = false
 		_claimed = false
+
+
+## With `over`: the vehicles band over the actors, a card with a fighter in front just under them.
+func _band() -> void:
+	_banded = over
+	if over:
+		z_index = RenderLayers.z(&"vehicles")
+		cards.under.z_as_relative = false
+		cards.under.z_index = RenderLayers.z(&"actors") - 1
 
 
 ## Under a print's actor layer: the stage view's transform, then Ink px -> sim px.
@@ -147,7 +157,7 @@ func refresh() -> void:
 		return
 	cards.begin(tex)
 	cards.front.clear()
-	if _view != null and over and _people.is_valid():
+	if _banded and over and _people.is_valid():
 		for p: Vector2 in _people.call():
 			cards.front.add(p)
 	var list: Array[VehicleBody] = _cars.call()

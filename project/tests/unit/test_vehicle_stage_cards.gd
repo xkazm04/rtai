@@ -71,6 +71,7 @@ func test_on_a_print_a_car_with_a_fighter_in_front_drops_under_the_actors() -> v
 	var was: bool = VehicleStageCards.over
 	var node: VehicleStageCards = _stand("tilt70")
 	node._view = node.get_parent() as Node2D  # as if hosted on a print's actor layer
+	node._banded = true
 	node._people = _one_south
 	VehicleStageCards.over = false
 	node._process(0.0)
