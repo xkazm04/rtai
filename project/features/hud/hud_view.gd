@@ -19,7 +19,7 @@ const WEAPON_SIZE: int = 24
 ## false = the fixed 640 px strip. BEAT_PAD: the paper right of the longer of the two.
 const BEAT_FIT: bool = true
 const BEAT_MAX_W: float = 640.0
-const BEAT_PAD: float = 30.0
+const BEAT_PAD: float = 40.0
 
 var state: HudState = HudState.new()
 var art: HudArt = null
