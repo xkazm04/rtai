@@ -1,0 +1,42 @@
+{
+ "branch": "n8-vehicles",
+ "commits": {
+  "54cc531b": "a stage's cars stand as cards under a tilt (VehicleStageCards; StageView keeps the flat shadow)",
+  "79c678ad": "stage cards ride a print's actor layer (the print crushed the olive depot van); SOUL = WHITE; no node in top",
+  "b3d21e7d": "the bike as card row 9 of both atlases (bike_v3 B 70 + 55, keyed from the green original); the card grid reads its rows from the atlas"
+ },
+ "evidence_dir": "C:/Users/kazda/kiro/gtai-masters/n8/vehicles",
+ "films": {
+  "bike": "turn360_tilt70_{64,32}ppm_with_bike.mp4, bike_turn_strip_tilt70_64ppm.png, bike_turn_strip_tilt55_64ppm.png (vehicle_turn, 0 ERROR)",
+  "powers_pad": "powers_pad_cars_tilt70_24ppm_before_top_after_bottom.mp4 + _zoom_ png (--start=pad --view=tilt70)",
+  "servo_depot_van": "servo_depot_van_combo_32ppm_before_top_after_bottom.mp4 + _zoom_ png (--boss=servo --bot=boss --servo-ghost=dent --view=combo; before = the hook off)"
+ },
+ "gates": {
+  "director_reel": "19/19 chapters all down, 0 SCRIPT ERROR in top and tilt70 on 5a5a5106 (director-reel-it11-*.log; --fixed-fps 60 --quit-after 7600, headless)",
+  "lint": "15/15 (pre-commit on every commit)",
+  "mutation": "features/vehicles/vehicle_views.gd at 305fad98: 91.7 % (11 killed / 12; the survivor `>=` -> `>` at a = 0 is equivalent)",
+  "scenarios": "52 ran, 0 failed, exit 0, 0 SCRIPT ERROR on b3d21e7d",
+  "top_bit_identity": "main scene --arena=city --bot=rivet --seed=2 --rigs, 301 frames on b3d21e7d: IDENTICAL to top_head.md5 (301 + 301); arena pad --ppm=24 90 frames hook on vs off on 79c678ad: IDENTICAL (90 + 90, cursor matched)",
+  "unit": "1509 passed, 0 failed on b3d21e7d (no FLAKY); stage cards + views + cards + dent quest + boss bot ghost 12/0 on 79c678ad"
+ },
+ "measures": {
+  "atlas_p55": {
+   "after": "2240x4480 (bike row)",
+   "before": "2240x4032"
+  },
+  "atlas_p70": {
+   "after": "4032x4480 (bike row)",
+   "before": "4032x4032"
+  },
+  "atlas_rows_0_8_changed_px": 0,
+  "bike_teal_px_after_spill_fix": {
+   "before_fix_p70": 64,
+   "p55": 13,
+   "p70": 4
+  }
+ },
+ "unmeasured": [
+  "stage cards' cost (the arena holds 4 cars: not benched)",
+  "the full unit run after 54cc531b (only the selected files)"
+ ]
+}
