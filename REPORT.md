@@ -77,7 +77,18 @@ Each: options, the default built, how to see it.
    `top` and the card disagree again). See `van_cream_servo_depot_combo_64ppm_seed2_f120_olive_left_cream_right.png`.
 
 ## Exe
-(at the freeze) `build/export/windows/RTAI.exe`, with the command lines.
+`build/export/windows/RTAI.exe` (preset `windows-showcase`: boots the arena; embedded pck + the sim DLL
+beside it). Export (10 s; dry run at 05:18 on e8a597e8, the freeze re-exports HEAD):
+`"$GODOT_BIN" --headless --path project --export-release windows-showcase ../build/export/windows/RTAI.exe`
+See the vehicles (`top` stays the default; add `--view=<top|tilt70|combo>`):
+- Servo depot (the cream stage van, combo): `RTAI.exe -- --boss=servo --view=combo --rigs`
+- King boulevard (parked cars at 55): `RTAI.exe -- --boss=king --view=combo --rigs`
+- the city traffic at 70: `RTAI.exe -- --arena=city --view=tilt70 --rigs`
+- the director reel: `RTAI.exe -- --bot=reel --reel=director --loadout=pistol --rigs --view=tilt70`
+Smoke-tested: `RTAI.exe --fixed-fps 60 --quit-after 200 -- --boss=servo --bot=boss --servo-ghost=dent
+--view=combo --rigs --seed=2`, exit 0, 0 SCRIPT ERROR, the cream van seized at f130 (looked).
+The turn showcase (`dev/showcase/vehicle_turn.tscn`) is a dev scene: run it from the editor build
+(`"$GODOT_BIN" --path project res://dev/showcase/vehicle_turn.tscn -- --view=tilt70 --ppm=64`).
 
 ## Next steps
 - A sim bike; the 55 van in-betweens (`VAN_BETWEEN_55`, sheets exist) and other p55 in-betweens if bosses

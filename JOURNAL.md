@@ -1243,3 +1243,8 @@ van seized over Servo (looked at 46 s); the others as it18 (no van in them). fra
 NOTED (REPORT, Call 9): the library's delivery_truck_70 (A) and depot_van_70 (A, an ochre courier
 van) have no sim archetype and no top-down print; Servo's stage van is the van row. Cutting depot_van
 for the stage alone would bring back the card-vs-print mismatch just fixed, so it is a Call.
+MILESTONE 05:18 exe dry run (de-risks the freeze): `--export-release windows-showcase
+../build/export/windows/RTAI.exe` on e8a597e8, 10 s, exit 0, 0 ERROR lines; smoke `RTAI.exe
+--fixed-fps 60 --quit-after 200 --write-movie <abs> -- --boss=servo --bot=boss --servo-ghost=dent
+--view=combo --rigs --seed=2`: exit 0, 0 SCRIPT ERROR, the cream van seized at f130 (looked; raw
+.avi deleted). REPORT ## Exe written with the command lines (the freeze re-exports HEAD).
