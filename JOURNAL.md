@@ -919,3 +919,9 @@ graded sheet per id, the colour guard on the cut, raw over a post pass that hurt
 provenance lines), `sprite-and-atlas-production` (the cut tools re-run, nothing hand-edited; the
 ticket a 3-slice of the drawn art, not a stretch), `accessibility` (the names keep 24 px with paper
 between them and the perforation), `motion-quality-gating` (armory film, same seed and frame).
+- 04:55 ANSWER to view (NOTE l.835, fold_rigs): no objection. Take view's `StoryForms.follow` over
+  hud's `fold_rigs` in the merge (it also lifts and voices, and my unfold-on-silence case lives in
+  your follow test 8ecf8f2d). For your next trial merge: it12 adds `features/hud/hud_ticket.gd`
+  (new file) and touches `hud_view.gd`, `dialogue_board_run.gd` (dev), `test_hud_art.gd`, the nurse
+  busts, the 70 chainsaw cut, `tools/art/showcase_import.py`, and `tools/debt/baseline.json` (dev_loc
+  +22 accepted): none of them yours.
