@@ -1125,3 +1125,16 @@ Registry rules applied: `sprite-and-atlas-production` (cut by the re-runnable im
 by hand; the source cell named in the tool and the provenance), `generative-artifact-gating` (a B
 taken only for the column its notes clear; checked against the owner-approved arm design before
 integrating), `accessibility` (value contrast of the icon on the cream ticket).
+- MILESTONE (evidence, no code) the boss banner at 1920x1080, it16's open item: the King and
+  Servo at combo (arena --rigs --seed=2 f150), 0 SCRIPT ERROR. The name and "1 / 3" sit on clear
+  paper, the crest pins the left end, the bar centred at x 420-1500; the HUD is the 1280x800
+  layout x1.35 with the 16:9 expand. Masters `bossbar_paper_king_servo_combo_1920x1080_top.png`
+  (named in frames.json 12's note).
+- FRICTION (solved): `--write-movie` renders at the project window size whatever `--resolution`
+  says (1600x900 and `--main-scene` also gave 1280x800; the quest-1 clip honours it because it
+  grabs the viewport, not the movie writer). Recipe: append `window/size/window_width_override=1920`
+  and `window_height_override=1080` to the local, git-excluded `project/override.cfg` for the shot,
+  then restore it from `gtai-n8/scratch/hud/it19/override.cfg.bak` (restored; the base 1280x800
+  and the canvas_items stretch untouched, so this is the shipped 1080p layout).
+- 06:47 Director reel at 2a8a045c started (headless, top + tilt70 in parallel, the it7 recipe;
+  `gtai-n8/scratch/hud/it19/reel.sh`).
