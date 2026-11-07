@@ -167,3 +167,32 @@ NEXT (iteration 5):
   camera 1.33x. Fix first thing next: CameraRig / quest 1 px/m x draw_scale (DeviceProfile.zoom() could return
   zoom_k x draw_scale) so the A/B compares the same view; re-measure (E6 says the zoom itself costs nothing).
 - Session end 12:09: tree clean, every change committed; no Godot of mine left running.
+
+## Iteration 7 (12:10-13:10, BUILD)
+- Read: JOURNAL, git log -30, the other lanes' journals (no new REQUEST to handheld; perf's tooling REQUEST answered in it4).
+- MILESTONE 12:10 (5826e666) E8 framing fix: `DeviceProfile.view_zoom()` = zoom_k x draw_scale under viewport stretch;
+  world.gd / quest1_game.gd / the dev arena all read `DeviceProfile.zoom()`; desktop 1.0 (x 1.0 exact). Unit 18/0, lint 15/15.
+- 12:11 rows `deck_bench_ds85` (study) and `deck_ds75` (the lever as a 60 Hz play row for the owner's look call).
+  Bench lock taken 12:11 (no other Godot up at the start); E8b A/B running: deck_bench / ds85 / ds75, city, 3 interleaved rounds.
+- RESULT 12:17 E8b (deck_bench / ds85 / ds75, city, 3 rounds, all CONTENDED 1-3 other Godot, bench lock held): render GPU
+  8.91 / 6.69 / 5.31 ms, p50 9.54 / 7.37 / 6.05. **VOID as a same-framing A/B**: see the next FINDING (zoom_k never applied
+  in the dev arena, so ds rows ran at 32 x 0.75 drawn = ~43 px/m effective vs 32). Kept in evidence as the record.
+- FINDING 12:20 (the big one) the it4 "48 px/m" clips and stills are **32 px/m**: `still-city-48ppm-15.png` is pixel-for-pixel
+  the explicit `--ppm=32` still. Cause: the dev arena reads `px_per_m = 32 * DeviceProfile.zoom()` in a member initializer,
+  which runs when the main scene is built, before `LaunchArgs._ready` selected the profile (desktop row: 1.0). Quest 1 and the
+  city drive (world.gd) read later, so they were right. Fix 4a773812: select in `LaunchArgs._init`. Consequences: **E6 was
+  void** (both sides at 32 px/m), E5 is unaffected (both rows at the same zoom), E8 (it6) compared 32 vs ~43 px/m. frames.json
+  entries corrected (ppm 32, "mislabelled" note); LEDGER corrected below. Re-measure E6 + E8 (E8c) and re-film at real 48.
+- FRICTION 12:21 two parse errors (return value discarded = error) slipped into a sim run because I ran sim before the unit
+  test: the run used a broken LaunchArgs (frames void, deleted). Rule for me: `node tools/godot/check.mjs` on every touched
+  .gd before any Godot run.
+- MILESTONE 12:23 rumble on every hit Rivet takes (31e7b1e6): view-side read of `rivet.hurt_tick` in HudFeed ->
+  `HandheldRumble.feel_hurt` (static, a no-op without a rumble row). Not a bus signal: combat_arena.gd is at the 300-line
+  hard stop and `player_hit` has desktop listeners. DECISION in docs/decisions.md. Unit 24/0.
+- MILESTONE 12:29 focus-out pause proven live (e2f222df): `scenario_handheld_focus_pause` (quest 1 running 30 ticks,
+  NOTIFICATION_APPLICATION_FOCUS_OUT propagated from root: paused, world stopped, pad off; planted fault = no handheld
+  node: stays live). 1 ran, 0 failed. HandheldFocusPause got `target_quest` (null = current scene) and an is_inside_tree guard.
+- MILESTONE 12:20 E8b look stills at real 48 px/m, same framing (`e8b-deck-vs-ds75-48ppm-city-t720*.png`, looked at):
+  0.75 is softer (grain, hatched shadows, cracks, Rivet's ink line); and the HUD lays out in 960x600, so the ghost-form
+  panel is 1.33x bigger on the panel. DECISION: draw_scale stays a Call (deck_ds75 row), not the Deck baseline.
+- 12:24 E8c running (bench lock): deck_bench (z 1.5) / deck_bench_z1 / ds85 / ds75, city, 3 rounds: E6 + E8 re-measured.
