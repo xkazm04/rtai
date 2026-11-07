@@ -991,3 +991,12 @@ l.866): quest 1's tick-600 cop (Line Stopped crossing) still draws top-down at t
   x1.5_t600.png; dropped #11 thug_lift, superseded by the drawn falls, file kept). Debt +1 line in
   cast_view accepted (as the it4 contractor branch). Unit 5/5. Provenance x2.
   ANSWER to view: the tick-600 cop is done on n8-street (ada46751).
+- DECISION street/quest1-patrol-card in docs/decisions.md.
+- GATE unit no-arg on ada46751: 1517 passed, 0 failed, no FLAKY.
+- LOOKED the King fight under combo (`--boss=king --bot=boss --view=combo --ppm=48 --rigs --seed=2`,
+  2400 frames, 0 SCRIPT ERROR): the King's adds are d8's gang rigs (purple visor bands), not the
+  street cast; no cop, thug or ped enters the King floor, so street's p55 falls show only under
+  `--view=tilt` (boards, quest 1 when Mertz engages). NEXT 1 of it9 closed: nothing of street's to
+  judge in the King fight. Capture deleted.
+- BENCH 04:17 bench6/run.sh, 3 alternating riot pairs top/tilt70 under bench.lock (mine), 6 other
+  Godot processes up at start: running.
