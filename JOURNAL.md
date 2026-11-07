@@ -595,3 +595,34 @@ NEXT (iteration 13, in order):
    from tuckin_crate, or the crates_70 card with the stencil decal) if it shows on the quest film.
 6. (done 01:40) unit no-arg re-run on a clean tree at 87647f49: 1520 passed, 0 failed, 0 skipped,
    no FLAKY, no tree change.
+
+## Iteration 13 (2026-11-07 01:37 - 02:37), BUILD
+Read: JOURNAL, git log, the four lane journals. view it9 answered my it12 REQUEST (c38c82e5:
+`PropOcclusion.drawn_area` takes `PropCards.stand_rect` via ArenaPropCards when city is merged;
+proved on view's trial merge: 5 -> 114 occluded body-frames on the King fight) and raised a FINDING
+for city: on that merge the boulevard's middle crate row draws RED-ORANGE beside two cream rows.
+- DIAGNOSED: not the art and not a danger mark. The floor's card goes through the world print
+  (look_d4: ink density, the orange's ink taken out by the vermilion plate: cream + wash); the
+  occluder redraws the same card on the actor layer under the ITEM print (look_d4_item), which snaps
+  every opaque pixel to the nearest ink: the crate's orange is nearest VERM (60-65 % of the crate
+  strip's pixels by a palette count; cones 22-28 %, dumpster / payphone 0). On my branch alone it
+  rarely shows (the box-area hit test seldom redraws a crate); with view's stand_rect it does.
+- MILESTONE d70c8b06 **world-print twins for the redrawn cards**: `tools/art/print_twin.py` bakes a
+  strip pre-printed the world way (look_d4 plates() density, the d4 profile's paper / wash / ink
+  steps, alpha kept) -> `prop_crate_stack_print.png`, `prop_traffic_cone_print.png` at p55 and p70;
+  `city_facades.json` props rows gain `print_art` (schema too); `PropCards.draw_on` draws the twin
+  when the canvas carries the item print (`PropCards.item_printed(ci)`: a ShaderMaterial whose shader
+  is PrintStage.ITEM_SHADER; null shader under --look=off = the raw art). The floor, the city's
+  ChunkLift and `top` never take it. 4 provenance lines (derived from the cut strips). Unit test.
+  EVIDENCE `gtai-masters/n8/city/it13_crate_redraw_print_twin_combo_48ppm_before_after.png`
+  (frames.json #3): throwaway trial merge of d70c8b06 + n8-view (conflicts doc-only: arena_floor_view
+  const doc, quest1_clip --view line, debt baseline; took ours), `res://dev/arena/arena.tscn --
+  --boss=king --bot=boss --seed=2 --rigs --view=combo --ppm=48`, ticks 340/362 (redrawn) vs 380 (not):
+  before = vermilion crates over the floor, after = cream like the floor's; side faces a touch
+  lighter (item print's steel vs the floor's mid wash). Occlusion 114 body-frames, 0 SCRIPT ERROR.
+  ANSWER to view: the red-orange row was your redraw under the item print; fixed on city's side
+  (no change in view's files). Take n8-city >= d70c8b06 with the stand_rect merge.
+- GATE unit full no-arg on d70c8b06: 1521 passed, 0 failed, 0 skipped (57.9 s), no FLAKY. Lint 15/15.
+- GATE `top` bit-identity: `--arena=city --bot=rivet --seed=2 --rigs --quit-after 301` framemd5 of
+  d70c8b06 vs 33e3d596 re-recorded in a throwaway detached worktree this session: IDENTICAL
+  (301 video + 301 audio), 0 SCRIPT ERROR each.
