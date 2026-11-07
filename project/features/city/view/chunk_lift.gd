@@ -7,6 +7,10 @@ extends RefCounted
 const TABLE: String = "res://data/tables/city_facades.json"
 ## Frames a live pitch (combo) must hold before the chunks redraw at it.
 const SETTLE_FRAMES: int = 12
+## The bake's prop shadow offset (ChunkBuild.add: 0.18 m down-right); a pole's cast falls that way.
+const PROP_SHADOW_M: float = 0.18
+const POLE_CAST_W_M: float = 0.12
+const SHADOW: Color = Color(0.09, 0.075, 0.106, 0.45)  # ChunkView.SHADOW: the band's modulate
 
 var height_m: PackedFloat32Array = PackedFloat32Array()
 var style_of: PackedInt32Array = PackedInt32Array()
@@ -24,6 +28,8 @@ var _carded: bool = false
 var _parked: PackedVector4Array = PackedVector4Array()
 var _order_of: CityChunk = null
 var _rev_frames: int = 0
+## props rows with `cast_m` (a pole): the shadow command draws as a stroke this long (px)
+var _cast_px: Dictionary[int, float] = {}
 
 
 ## The lift for this run's view, null when flat (or a perspective top_lift).
@@ -60,6 +66,11 @@ func _setup(d: Dictionary, tex: CityTextures, is_building: Array[bool], art: Str
 	var props: Dictionary = d.get("props", {})
 	var fb: Dictionary = d["art_fallback"]
 	cards = PropCards.make(props, tex.names, art, fb)
+	for i: int in tex.names.size():
+		var prow: Dictionary = props.get(tex.names[i], {})
+		if prow.has("cast_m") and cards.has(i):
+			var cast_m: float = prow["cast_m"]
+			_cast_px[i] = cast_m * SimConst.PX_PER_M
 	var k: float = d["height_k"]
 	var dflt: Dictionary = d["default"]
 	var by_name: Dictionary = d["by_name"]
@@ -147,8 +158,21 @@ func stands(t: int) -> bool:
 	return _is_building[t] or cards.has(t)
 
 
-## Draws standing t at ground centre `at` px: a prop card on its south edge, or face + roof.
-func draw(item: RID, t: int, rot: float, at: Vector2) -> void:
+## True when draw() takes command t: a standing building or prop card, or (shadow) a pole's cast.
+func takes(t: int, shadow: bool) -> bool:
+	return _cast_px.has(t) if shadow else stands(t)
+
+
+## Draws standing t at ground centre `at` px: a prop card on its south edge, or face + roof; a
+## pole's shadow command (`at` carries the bake's offset) as a stroke from its foot, down-right.
+func draw(item: RID, t: int, rot: float, at: Vector2, shadow: bool = false) -> void:
+	if shadow:
+		var ground: Vector2 = at - Vector2.ONE * PROP_SHADOW_M * SimConst.PX_PER_M
+		var w: float = POLE_CAST_W_M * SimConst.PX_PER_M
+		var foot: Vector2 = cards.foot_at(t, rot, ground, extent(t, rot))
+		RenderingServer.canvas_item_add_set_transform(item, Transform2D(PI * 0.25, foot))
+		RenderingServer.canvas_item_add_rect(item, Rect2(0.0, -w * 0.5, _cast_px[t], w), SHADOW)
+		return
 	if cards.has(t):
 		cards.draw(item, t, rot, cards.foot_at(t, rot, at, extent(t, rot)))
 		return

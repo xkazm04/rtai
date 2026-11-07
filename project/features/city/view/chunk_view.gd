@@ -130,8 +130,8 @@ func _slice(chunk: CityChunk, t0: int) -> void:
 		var item: RID = items[q + 4 * (SHADOW_BAND if shadow else _band_of[t])]
 		var sz: Vector2 = _tex.size_px[t]
 		var at: Vector2 = pos * SimConst.PX_PER_M + (_shadow_extra[t] if shadow else Vector2.ZERO)
-		if lift != null and not shadow and lift.stands(t):
-			lift.draw(item, t, chunk.xf[o + 2], at)
+		if lift != null and lift.takes(t, shadow):
+			lift.draw(item, t, chunk.xf[o + 2], at, shadow)
 		else:
 			RenderingServer.canvas_item_add_set_transform(item, Transform2D(chunk.xf[o + 2], at))
 			RenderingServer.canvas_item_add_texture_rect(

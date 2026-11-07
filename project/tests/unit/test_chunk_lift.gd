@@ -84,3 +84,18 @@ func test_parked_cars_stay_flat_without_a_live_vehicle_view() -> void:
 	assert_eq(lift.count(c), 3, "the sedan stays a flat prop")
 	assert_false(VehicleParked._chunks.has(c.key()), "nothing handed over")
 	VehicleParked.clear()
+
+
+func test_only_a_pole_prop_takes_its_shadow_command() -> void:
+	var tex: CityTextures = CityTextures.new({"textures": []})
+	tex.names.assign(["road", "building_tall", "street_sign", "bollard"])
+	tex.size_px.assign([Vector2(256, 256), Vector2(269, 269), Vector2(40, 40), Vector2(20, 20)])
+	var built: Array[bool] = [false, true, false, false]
+	var d: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(ChunkLift.TABLE))
+	var lift: ChunkLift = ChunkLift.new()
+	lift._setup(d, tex, built, "p70")
+	assert_true(lift.takes(2, true), "the street sign (cast_m) draws its cast stroke")
+	assert_false(lift.takes(3, true), "the bollard keeps its flat art's shadow")
+	assert_false(lift.takes(1, true), "a building's shadow stays the baked silhouette")
+	assert_false(lift.takes(0, false), "the road stays flat")
+	assert_true(lift.takes(1, false) and lift.takes(2, false), "roofs and cards stand")

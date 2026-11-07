@@ -130,6 +130,7 @@
     },
     "street_sign": {
       "art": "res://features/city/art/view/<art>/prop_street_sign.png",
+      "cast_m": 1,
       "cell_w_m": 0.9
     },
     "traffic_cone": {
