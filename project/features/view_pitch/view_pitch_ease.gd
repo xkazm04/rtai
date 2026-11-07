@@ -16,10 +16,21 @@ var boss_on: Callable = Callable()
 var _boss: bool = false
 var _from: float = 0.0
 var _since: int = 0
+## ViewPitchCards.holders under the parent, walked again when the tree gains or loses one.
+var _holders: Array[Node] = []
+var _stale: bool = true
 
 
 func _ready() -> void:
 	_from = pitch.play_pitch
+	@warning_ignore("return_value_discarded")
+	get_tree().node_added.connect(_on_tree_change)
+	@warning_ignore("return_value_discarded")
+	get_tree().node_removed.connect(_on_tree_change)
+
+
+func _on_tree_change(n: Node) -> void:
+	_stale = _stale or n is CutRig or n.name == ViewPitchCards.GHOST
 
 
 func _process(_delta: float) -> void:
@@ -37,7 +48,10 @@ func _process(_delta: float) -> void:
 		view.art = art
 		var at: String = "(pitch %.1f) at tick %d" % [view.pitch_deg, clock.tick()]
 		Log.info("view", "cards art %s %s" % [art, at])
-	ViewPitchCards.apply(get_parent(), pitch, mix)
+	if _stale and get_parent() != null:
+		_holders = ViewPitchCards.holders(get_parent())
+		_stale = false
+	ViewPitchCards.apply_to(_holders, pitch, mix)
 
 
 ## The pitch at `tick` with the boss engaged or not: a change of target starts a new ease from

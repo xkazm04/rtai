@@ -571,3 +571,11 @@ NEXT (iteration 9, in brief order):
   under a tilt) do not run there.
   Session ends here (01:20). Head: lint 15/15, unit 1506/0 (+ the targeted 12/0 after the
   PropOcclusion edit), scenarios 52 (2 wall-clock, passed alone). NEXT stands as written above.
+- MILESTONE 01:29 NEXT 1a done early: ViewPitchEase keeps `ViewPitchCards.holders` (ghost cards +
+  rigs) and walks the tree again only when it gains or loses a CutRig or a ghost card
+  (node_added/node_removed); head cards are still read through the rig each frame. Spans, seed 2,
+  combo, fixed 60 fps, 900 frames: ViewPitchEase 0.80 -> 0.18 ms mean; the same "cards art p55
+  (pitch 62.1) at tick 32" swap; 0 SCRIPT ERROR; still at frame 400 (`--boss-cam`): the King's p55
+  court bust, cape, one bell, gang cards as built. Unit view_pitch/rig_head_card/ghost_card 29/0.
+  Combo's script extra over top is now ~0.6 ms (ease 0.18 + occlusion 0.36 + depth sort 0.16);
+  the floor's tilted draw (+1.8 ms) is what remains. Re-take the frames under the lock (NEXT 1).
