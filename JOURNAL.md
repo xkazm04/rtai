@@ -605,3 +605,13 @@ RigCastShadows.collect: "REQUEST to view if view exposes one", conditional). hud
   the boulevard's middle crate row draws as a RED-ORANGE crate stack beside two cream stacks.
   Red is blood only, vermilion only for danger/objectives/Rivet's collar/the King's cape: is that
   card a vermilion danger mark by intent? If not, retone it like the cream stacks.
+- MILESTONE 01:50 city it12 NEXT 3 answered (their conditional REQUEST): `RigDepthSort.on(layer)`
+  returns the actor layer's sorter (null: flat view, no rig cast, freed; a WeakRef in the layer's
+  meta `rig_depth_sort`), and its `frame_rigs` are this frame's visible rigs once its process
+  (priority 100) ran. A node at priority > 100 or in `_draw` (CityOcclusion 101, RigCastShadows'
+  draw) reads them instead of walking the actor layer (400 crowd children on the drive).
+  PropOcclusion now does. Under a flat view (top_lift's cast shadows) there is no sorter: keep
+  the walk. Identity: King seed 2 combo 1500 frames, occlusion "5 body-frames, 743-988" as before,
+  order probe 0 wrong (`evidence/n8-view/occ-it9/king_combo_seed2_after_frame_rigs.log`).
+  RigDepthSort._process calls `_with_cards` always (levels() with no card: the same sums).
+  Unit (depth sort, occlusion, prop cards, cast shadows) 19/0.

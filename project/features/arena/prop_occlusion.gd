@@ -149,13 +149,12 @@ static func _poly(r: Rect2) -> PackedVector2Array:
 func hits() -> Array[Hit]:
 	var out: Array[Hit] = []
 	var arena: ArenaStage = _floor.stage as ArenaStage
-	if arena == null:
+	var sorter: RigDepthSort = RigDepthSort.on(_layer)  # its rigs: this frame's, collected once
+	if arena == null or sorter == null:
 		return out
 	_front.clear()
 	_front_of.clear()
-	var rigs: Array[CutRig] = []
-	for c: Node in _layer.get_children():
-		RigCastShadows.collect(c, 0, rigs)
+	var rigs: Array[CutRig] = sorter.frame_rigs
 	_ends.clear()
 	var lift: Vector2 = ViewMode.shared().lift_px(1.0) * RigCastShadows.BODY_IN_HIPS
 	for rig: CutRig in rigs:

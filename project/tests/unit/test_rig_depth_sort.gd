@@ -48,3 +48,13 @@ func test_a_wide_ghost_card_overlaps_a_body_its_own_half_width_away() -> void:
 	assert_eq(narrow, [0, 0] as Array[int], "two narrow bodies 60 px apart do not overlap")
 	var wide: Array[int] = RigDepthSort.levels_w(bodies, [50.0, 14.0] as Array[float], 50.0)
 	assert_eq(wide, [0, 1] as Array[int], "the wide card overlaps: the nearer cop climbs over it")
+
+
+func test_the_layer_names_its_sorter_and_forgets_a_freed_one() -> void:
+	var layer: Node2D = autofree(Node2D.new())
+	assert_null(RigDepthSort.on(layer), "no sorter: the caller walks the layer itself")
+	var s: RigDepthSort = RigDepthSort.new()
+	layer.set_meta(&"rig_depth_sort", weakref(s))
+	assert_eq(RigDepthSort.on(layer), s)
+	s.free()
+	assert_null(RigDepthSort.on(layer), "a freed sorter is never handed out")

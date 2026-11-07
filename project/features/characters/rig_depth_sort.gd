@@ -14,25 +14,23 @@ extends Node2D
 const STEP: int = 32
 ## Behind-the-car rigs stay under the car (KingCarStack.BEHIND_Z + this many levels at most).
 const BEHIND_MAX_LEVEL: int = 1
-## Levels above this share the top band (the actors band is 100 wide: 2 x STEP + the parts' 31
-## stays under the vehicles band).
+## Levels above this share the top band (actors band 100 wide: 2 x STEP + parts' 31 < vehicles).
 const MAX_LEVEL: int = 2
 ## The on-screen body box used for the overlap test (m): width, and the height the tilt raises.
 const BODY_W_M: float = 0.9
 const BODY_H_M: float = 1.8
 
-## The screen box (global px) north of the King's car where the cast's rigs draw behind the car
-## (KingCarStack.BEHIND_Z), as KingCarStack.sort_rigs does for King's own rigs; empty = no car.
-## Only near the car, so the boss's ground tells (z just under the actors) never cover Rivet.
+## The screen box (global px) north of the King's car where the cast draws behind it (BEHIND_Z, as
+## KingCarStack.sort_rigs); empty = no car. Only near the car: the ground tells never cover Rivet.
 static var far_box: Rect2 = Rect2()
 
+var frame_rigs: Array[CutRig] = []
 var _layer: Node = null
 ## Rivet's followers (held weapon, magazine) and their own z before any level.
 var _follow_base: Dictionary[CanvasItem, int] = {}
 
 
-## Adds the sorter to the actor `layer` under a tilted view (pitch below 90); else nothing.
-## Also the view's cast shadows (RigCastShadows: only when the view row sets cast_k).
+## Adds the sorter to actor `layer` under a tilt, and RigCastShadows (when the row sets cast_k).
 static func attach(layer: Node) -> void:
 	RigCastShadows.attach(layer)
 	if ViewMode.shared().is_flat():
@@ -41,19 +39,27 @@ static func attach(layer: Node) -> void:
 	var s: RigDepthSort = RigDepthSort.new()
 	s._layer = layer
 	s.process_priority = 100  # after CharacterRigs and the boss views have posed this frame
+	layer.set_meta(&"rig_depth_sort", weakref(s))
 	layer.add_child(s)
 
 
+## The sorter on actor `layer` (null: flat view, no rig cast, freed); its frame_rigs: this frame's
+## visible rigs once its process (priority 100) ran, so a later node never walks the layer again.
+static func on(layer: Node) -> RigDepthSort:
+	var w: WeakRef = layer.get_meta(&"rig_depth_sort", WeakRef.new())  # an empty ref: no sorter
+	var got: Object = w.get_ref()
+	return got as RigDepthSort
+
+
 func _process(_delta: float) -> void:
-	var rigs: Array[CutRig] = []
+	var found: Array[CutRig] = []
 	var follow: Array[CanvasItem] = []
 	var cards: Array[Sprite2D] = []
 	for c: Node in _layer.get_children():
-		_collect(c, 0, rigs, follow, cards)
-	var level: Dictionary[CutRig, int] = levels(rigs, _box())
-	if not cards.is_empty():
-		level = _with_cards(rigs, cards)
-	for rig: CutRig in rigs:
+		_collect(c, 0, found, follow, cards)
+	frame_rigs = found
+	var level: Dictionary[CutRig, int] = _with_cards(found, cards)  # levels() when no card
+	for rig: CutRig in found:
 		if rig.get_parent() is CharacterRigs:
 			var far: bool = far_box.has_point(rig.global_position)
 			rig.depth_base = KingCarStack.BEHIND_Z if far else 0
@@ -89,8 +95,7 @@ func _with_cards(rigs: Array[CutRig], cards: Array[Sprite2D]) -> Dictionary[CutR
 	return out
 
 
-## How far a ground-level view just under the actors (the boss's tell zones) drops under a tilt,
-## so a body behind the King's car (BEHIND_Z) still stands over it; 0 straight down.
+## How far the boss's tell zones drop under a tilt, so a body behind the car stands over them.
 static func ground_dz() -> int:
 	return 0 if ViewMode.shared().is_flat() else KingCarStack.BEHIND_Z
 
