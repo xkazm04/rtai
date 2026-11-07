@@ -78,9 +78,12 @@
       "art": "res://features/hud/art/portraits/rivet.png",
       "id": "rivet",
       "kind": "face",
-      "mood_art": "",
-      "mood_lines": [],
-      "source": "d9 rivet interim: the front facing of the owner-approved production sheet rivet_55_v2 (library A, round 20261106-2215), cut at the chest by tools/art/rivet_portrait.py; a concept-matched portrait_rivet_55 is REQUESTed from assets (one-file swap)"
+      "mood_art": "res://features/hud/art/portraits/rivet_mood.png",
+      "mood_lines": [
+        "rivet-feels-good",
+        "rivet-sorry-not-sorry"
+      ],
+      "source": "library portrait_rivet_55_v2 A (round 20261107-1420, concept-matched, the d9 rivet REQUEST), cut by tools/art/portrait_cut.py; the mood bust (eye bars narrowed, head lowered) on his two other-voice lines"
     },
     {
       "art": "res://features/hud/art/portraits/scientist.png",

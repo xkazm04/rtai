@@ -29,6 +29,9 @@ func test_rivet_speaks_with_his_approved_bust() -> void:
 	var book: PortraitBook = PortraitBook.new()
 	assert_not_null(book.face("rivet"))
 	assert_false(book.is_device("rivet"))
+	var mood: Texture2D = book.face("rivet", "rivet-feels-good")
+	assert_not_null(mood)
+	assert_ne(book.face("rivet", "rivet-who-is-this"), mood)
 
 
 func test_every_row_art_loads() -> void:
