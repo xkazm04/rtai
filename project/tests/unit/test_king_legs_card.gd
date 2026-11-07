@@ -82,6 +82,15 @@ func test_the_king_and_his_gang_have_a_sheet_at_both_pitches() -> void:
 			assert_not_null(KingLegsCard.sheet(pitch, KingLegsCard.SHEETS[art_dir]), art_dir)
 
 
+func test_the_gang_stands_on_its_own_steel_sheet() -> void:
+	var gang: String = KingLegsCard.SHEETS[GangPlan.ART_DIR]
+	assert_ne(gang, KingLegsCard.SHEETS["king"], "the bodyguards no longer wear the King's legs")
+	for pitch: int in [55, 70]:
+		var own: Texture2D = KingLegsCard.sheet(pitch, gang)
+		var king: Texture2D = KingLegsCard.sheet(pitch, KingLegsCard.SHEETS["king"])
+		assert_eq(own.get_size(), king.get_size(), "a drop-in on the King's canvas at %d" % pitch)
+
+
 func test_the_walk_row_follows_the_ground_walked() -> void:
 	var rig: CutRig = autofree(CutRig.new())
 	var legs: Node = autofree(Node.new())

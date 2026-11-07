@@ -38,8 +38,9 @@ const ON: bool = true
 ## here keeps its leg parts. it10: the gang's bodyguards stand on the King's sheet too (it was so
 ## by accident since it2: KingArt.dress runs for every court rig); on their own gang_parts legs
 ## they sprawl grey top-down limbs with a pale rim under the upright bust (filmed phase 1, combo,
-## 32 and 64 px/m). Drop "gang" for the parts; "gang_legs" when the gang's own sheet lands.
-const SHEETS: Dictionary[String, String] = {"king": "king_legs", "gang": "king_legs"}
+## 32 and 64 px/m). it11: their own steel sheet (assets gang_legs_55/70, the King's layout,
+## hip and sole lines); "king_legs" puts them back on his, drop "gang" for the parts.
+const SHEETS: Dictionary[String, String] = {"king": "king_legs", "gang": "gang_legs"}
 
 static var _tex: Dictionary[String, Texture2D] = {}
 
