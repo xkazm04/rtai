@@ -1,0 +1,65 @@
+﻿{
+    "schema":  "gtai.thread-cpu/1",
+    "pid":  66948,
+    "wallMs":  10021.7,
+    "totalCores":  0.3275,
+    "groups":  [
+                   {
+                       "group":  "[Godot_v4.7.2-stable_win64.exe]",
+                       "threads":  1,
+                       "cores":  0.3181
+                   },
+                   {
+                       "group":  "[msvcrt.dll]",
+                       "threads":  1,
+                       "cores":  0.0031
+                   },
+                   {
+                       "group":  "_loop",
+                       "threads":  1,
+                       "cores":  0.0031
+                   },
+                   {
+                       "group":  "[nvwgf2umx.dll]",
+                       "threads":  1,
+                       "cores":  0.0016
+                   },
+                   {
+                       "group":  "[amdxx64.dll]",
+                       "threads":  1,
+                       "cores":  0.0016
+                   }
+               ],
+    "threads":  [
+                    {
+                        "tid":  13792,
+                        "name":  "",
+                        "module":  "Godot_v4.7.2-stable_win64.exe",
+                        "cores":  0.3181
+                    },
+                    {
+                        "tid":  33172,
+                        "name":  "_loop",
+                        "module":  "msvcrt.dll",
+                        "cores":  0.0031
+                    },
+                    {
+                        "tid":  67672,
+                        "name":  "",
+                        "module":  "msvcrt.dll",
+                        "cores":  0.0031
+                    },
+                    {
+                        "tid":  66596,
+                        "name":  "",
+                        "module":  "amdxx64.dll",
+                        "cores":  0.0016
+                    },
+                    {
+                        "tid":  7040,
+                        "name":  "",
+                        "module":  "nvwgf2umx.dll",
+                        "cores":  0.0016
+                    }
+                ]
+}

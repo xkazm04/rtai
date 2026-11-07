@@ -1,0 +1,65 @@
+﻿{
+    "schema":  "gtai.thread-cpu/1",
+    "pid":  33352,
+    "wallMs":  10015,
+    "totalCores":  0.4431,
+    "groups":  [
+                   {
+                       "group":  "[Godot_v4.7.2-stable_win64.exe]",
+                       "threads":  1,
+                       "cores":  0.4306
+                   },
+                   {
+                       "group":  "[amdxx64.dll]",
+                       "threads":  1,
+                       "cores":  0.0062
+                   },
+                   {
+                       "group":  "_loop",
+                       "threads":  1,
+                       "cores":  0.0031
+                   },
+                   {
+                       "group":  "[msvcrt.dll]",
+                       "threads":  1,
+                       "cores":  0.0016
+                   },
+                   {
+                       "group":  "[nvwgf2umx.dll]",
+                       "threads":  1,
+                       "cores":  0.0016
+                   }
+               ],
+    "threads":  [
+                    {
+                        "tid":  48528,
+                        "name":  "",
+                        "module":  "Godot_v4.7.2-stable_win64.exe",
+                        "cores":  0.4306
+                    },
+                    {
+                        "tid":  59972,
+                        "name":  "",
+                        "module":  "amdxx64.dll",
+                        "cores":  0.0062
+                    },
+                    {
+                        "tid":  40192,
+                        "name":  "_loop",
+                        "module":  "msvcrt.dll",
+                        "cores":  0.0031
+                    },
+                    {
+                        "tid":  43568,
+                        "name":  "",
+                        "module":  "nvwgf2umx.dll",
+                        "cores":  0.0016
+                    },
+                    {
+                        "tid":  35356,
+                        "name":  "",
+                        "module":  "msvcrt.dll",
+                        "cores":  0.0016
+                    }
+                ]
+}

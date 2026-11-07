@@ -57,6 +57,10 @@ Journal: `JOURNAL.md`. Clips and stills: `C:\Users\kazda\kiro\gtai-masters\d9\pe
 - **Found on the way (F15):** on a 60 Hz monitor, adding the same 60 fps limiter on top of vsync makes delivery steadier: the
   slowest 1 % of frames 20.4 -> 17.1 ms, and the 1-3 skipped ticks per 30 s gone. Cost: +30 % process CPU on the riot
   (0.37 -> 0.48 of a core), 0.25 -> 0.30 on the drive.
+- **Re-measured at 16:31 (L11, 3 more pairs):** the same steadiness (riot: slowest 1 % 19.8 -> 16.9 ms, worst frame 35 ->
+  18 ms) for a smaller cost than first measured: **+0.06 of a core on the riot, +0.09 on the drive** (two copies of the same
+  setting differ by up to 0.03). All of it is on the game's main thread. A different present mode (mailbox) gives the same
+  steadiness for the same CPU, so there is no cheaper way to (b) on this engine. Evidence: `evidence/perf/l11-present/`.
 - **Options:** (a) no limiter at 60 Hz (default: least CPU). (b) the limiter at 60 Hz too (steadier delivery). (c) a
   'frame pacing: efficient / steady' option in the settings, default (a). Evidence: `evidence/perf/l10-cap/ab.json`.
 - **Recommended:** (c) when a settings screen for it exists; (a) until then. The bigger lever above 60 Hz is drawing
