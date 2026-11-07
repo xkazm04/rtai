@@ -1,0 +1,3 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+run_parity: {"backends":["gdscript","native"],"body_knockdowns":2,"checks":40,"counters_a":[150,69,23,6,92,156,10,21,462,80],"counters_b":[150,69,23,6,92,156,10,21,462,80],"debug_build":true,"exact":true,"first_mismatch_step":-1,"max_abs_diff":0.0,"planted_first_mismatch_step":629,"planted_mutation_caught":true,"snapshot_floats":3516,"step_ms_a":3.13093583333333,"step_ms_b":0.0434883333333333,"steps":1200}

@@ -86,6 +86,10 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--rivet-walk",
 	# d9-perf: --perf-hud draws the frame-budget overlay (dev/perf/perf_hud.gd), read only
 	"--perf-hud",
+	# d9-handheld: --device=<devices.json id> the handheld profile (window, frame cap, stretch)
+	"--device",
+	# d9-handheld: --save-cross=write|read,<dir>[,ticks,after,idle] (dev/save_cross.gd, E14)
+	"--save-cross",
 ]
 
 var _values: Dictionary[String, String] = {}
@@ -94,6 +98,24 @@ var _unknown: Array[String] = []
 
 func _init() -> void:
 	parse(OS.get_cmdline_user_args())
+	if has("--device"):  # d9-handheld: selected here, before the main scene's initializers read it
+		@warning_ignore("return_value_discarded")
+		DeviceProfile.select(value("--device"))
+
+
+## d9-handheld: the menu pad buttons (every run); a `--device=` profile sets the window and the
+## frame cap before the main scene.
+func _ready() -> void:
+	@warning_ignore("return_value_discarded")
+	PlayerActions.install_menu_pad()  # every run: a pad presses the cards' buttons (A) too
+	if has("--device"):
+		var profile: DeviceProfile = DeviceProfile.shared()
+		profile.apply(get_window())
+		if profile.is_handheld():
+			add_child(HandheldFocusPause.new())
+			PlayerActions.shipped().install()  # the title card names the pad's buttons
+		if profile.rumble > 0.0:
+			add_child(HandheldRumble.new(profile.rumble))
 
 
 ## Parses `--flag` and `--flag=value` pairs; unknown ones are kept for unknown().

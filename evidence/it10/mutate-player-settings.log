@@ -1,0 +1,25 @@
+mutate: worktree C:\Users\kazda\AppData\Local\Temp\gtai-mutate-64a99786 at 08b496d3 (reused)
+mutate: 10/33 mutant(s); baseline run of test_player_settings
+mutate: baseline green in 78.3 s; per-mutant timeout 237 s
+mutate: [1/10] features/player/player_settings.gd:21 literal  0 -> 1  killed  (15.9 s)
+mutate: [2/10] features/player/player_settings.gd:29 cmp_flip  != -> ==  killed  (17.5 s)
+mutate: [3/10] features/player/player_settings.gd:32 cmp_flip  != -> ==  killed  (15.4 s)
+mutate: [4/10] features/player/player_settings.gd:36 literal  0.0 -> 1.0  killed  (14.6 s)
+mutate: [5/10] features/player/player_settings.gd:38 boolean  false -> true  survived  (16.2 s)
+mutate: [6/10] features/player/player_settings.gd:42 literal  0 -> 1  killed  (14.2 s)
+mutate: [7/10] features/player/player_settings.gd:74 delete  apply_frame_cap() -> pass  survived  (17.7 s)
+mutate: [8/10] features/player/player_settings.gd:79 boundary  > -> >=  killed  (16.3 s)
+mutate: [9/10] features/player/player_settings.gd:87 boolean  or -> and  survived  (15.9 s)
+mutate: [10/10] features/player/player_settings.gd:87 cmp_flip  == -> !=  killed  (14.2 s)
+mutate features/player/player_settings.gd: 10 mutant(s) (sampled from 33), tests: test_player_settings
+  features/player/player_settings.gd:38 boolean  false -> true  survived
+  features/player/player_settings.gd:74 delete  apply_frame_cap() -> pass  survived
+  features/player/player_settings.gd:87 boolean  or -> and  survived
+  features/player/player_settings.gd:21 literal  0 -> 1  killed
+  features/player/player_settings.gd:29 cmp_flip  != -> ==  killed
+  features/player/player_settings.gd:32 cmp_flip  != -> ==  killed
+  features/player/player_settings.gd:36 literal  0.0 -> 1.0  killed
+  features/player/player_settings.gd:42 literal  0 -> 1  killed
+  features/player/player_settings.gd:79 boundary  > -> >=  killed
+  features/player/player_settings.gd:87 cmp_flip  == -> !=  killed
+score 70.0% = killed 7 / (killed 7 + survived 3); timeout 0, invalid 0; 238 s

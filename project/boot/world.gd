@@ -62,6 +62,7 @@ func _register_features(with_views: bool) -> void:
 		if LaunchArgs.has("--look"):
 			view.look_id = StringName(LaunchArgs.value("--look"))
 		view.rig = CameraRig.new()
+		view.rig.zoom_k = DeviceProfile.zoom()
 		view.rig.snap(&"car")
 		view.rig.reduced_motion = LaunchArgs.has("--reduced-motion")
 		view.markers.reduced_motion = view.rig.reduced_motion

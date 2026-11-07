@@ -8,7 +8,7 @@ extends RefCounted
 const MEET_ORDER: Array[String] = ["Juno", "Brass", "Dr. Kilohm", "Don Fax"]
 ## Glyph labels for a pad in the common A/B/X/Y layout (Godot's JoyButton / JoyAxis numbers).
 const PAD_BUTTONS: Dictionary[int, String] = {
-	0: "A", 1: "B", 2: "X", 3: "Y", 4: "Back", 6: "Start", 9: "LB", 10: "RB"
+	0: "A", 1: "B", 2: "X", 3: "Y", 4: "Back", 6: "Start", 7: "L3", 8: "R3", 9: "LB", 10: "RB"
 }
 const PAD_AXES: Dictionary[int, String] = {4: "LT", 5: "RT"}
 
@@ -82,11 +82,11 @@ static func pad_name(action: StringName) -> String:
 		if ev is InputEventJoypadButton:
 			var b: InputEventJoypadButton = ev
 			if PAD_BUTTONS.has(b.button_index):
-				return PAD_BUTTONS[b.button_index]
+				return PadGlyphs.label(PAD_BUTTONS[b.button_index])
 		if ev is InputEventJoypadMotion:
 			var m: InputEventJoypadMotion = ev
 			if PAD_AXES.has(m.axis):
-				return PAD_AXES[m.axis]
+				return PadGlyphs.label(PAD_AXES[m.axis])
 	return key_name(action)
 
 

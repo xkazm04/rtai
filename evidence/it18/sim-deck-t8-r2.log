@@ -1,0 +1,3 @@
+e15-deck-t8-r2: CONTENDED (4 other Godot runs) {"frames":2357,"low1_fps":17.1245460202856,"over33_settled":12,"over50_settled":5,"p50_ms":16.6790008544922,"p99_ms":22.7310009002686,"ticks":2393,"worst_ms":590.9580078125,"worst_settled_ms":590.9580078125,"render_gpu_ms_p50":9.21,"render_gpu_ms_p95":10.15,"render_cpu_ms_p50":0.79,"render_cpu_ms_p95":1.24,"process_ms_p50":6.06,"process_ms_p95":8.18,"loop_ms_p50":1.41,"loop_ms_p95":1.82,"draw_calls_p50":701,"draw_calls_p95":711,"affinity_seen":[255],"cpu_machine_pct_p50":3.23,"cpu_pinned_pct_p50":6.46,"ws_mb_max":1318.8,"private_mb_max":1317.6,"gpu_dedicated_mb_max":81.8,"gpu_shared_mb_max":943.1}
+-> C:\Users\kazda\kiro\gtai-d9x\scratch\it18\sim-deck-t8-r2\e15-deck-t8-r2.json
+sim exit 0

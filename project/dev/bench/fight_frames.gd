@@ -134,6 +134,8 @@ func write() -> void:
 		"summary": summary(),
 		"hitches": _hitches(),
 		"engine_ms_at_first": _engine_ms_at_first(),
+		"tex_mb_end": Performance.get_monitor(Performance.RENDER_TEXTURE_MEM_USED) / 1048576.0,
+		"video_mb_end": Performance.get_monitor(Performance.RENDER_VIDEO_MEM_USED) / 1048576.0,
 		"wall_ms": Array(_wall),
 		"loop_ms": Array(_loop),
 		"process_ms": Array(_proc),

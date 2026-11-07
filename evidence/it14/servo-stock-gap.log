@@ -1,0 +1,3 @@
+[INFO] bosses: servo phase 1 (depot)
+[INFO] bosses: servo engaged in depot, phase 1
+[INFO] device: rumble: 63 pulses played { &"boss_engaged": 1, &"boss_hit": 61, &"rivet_hurt": 1 }, 0 rested, shortest gaps (ticks) { &"boss_hit": 21 }

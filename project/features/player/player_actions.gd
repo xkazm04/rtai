@@ -66,6 +66,24 @@ func install() -> void:
 			InputMap.action_add_event(id, ev)
 
 
+## d9-handheld: the table's `menu_pad` buttons added to the engine's ui_* actions (idempotent),
+## so a pad can press the focused card button (A) and cancel (B); the keyboard keeps its keys.
+static func install_menu_pad(t: DataTable = DataTable.open(TABLE, SCHEMA)) -> int:
+	var added: int = 0
+	var menu: Dictionary = t.raw.get("menu_pad", {})
+	for action: String in menu:
+		var buttons: Variant = menu[action]
+		if action == "doc" or not InputMap.has_action(action) or not buttons is Array:
+			continue
+		for b: Variant in buttons:
+			var j: InputEventJoypadButton = InputEventJoypadButton.new()
+			j.button_index = _int(b) as JoyButton
+			if not InputMap.action_has_event(action, j):
+				InputMap.action_add_event(action, j)
+				added += 1
+	return added
+
+
 static func events_of(row: Dictionary) -> Array[InputEvent]:
 	var out: Array[InputEvent] = []
 	for key: Variant in row.get("keys", []):

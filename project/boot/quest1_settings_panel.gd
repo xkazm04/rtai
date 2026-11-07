@@ -1,20 +1,27 @@
 class_name Quest1SettingsPanel
 extends VBoxContainer
-## The pause card's settings: master volume, reduced motion, and a keyboard rebind per action
-## (press the button, then the new key; Esc cancels). Every change is applied and saved at once
-## (PlayerSettings); `changed` tells the game to refresh what reads the flags.
+## The pause card's settings: master volume, reduced motion, a frame cap and the rumble level on a
+## handheld device row (device / 30 / 40 / 60; full / half / off), and a keyboard rebind per action
+## (press the button, then the new key; Esc or any pad button cancels). Every change is applied and
+## saved at once (PlayerSettings, to `save_path`; "" = not saved); `changed` tells the game to
+## refresh what reads the flags. A rebuild keeps the focus on the same button (d9-handheld: a pad
+## or keyboard player pressing Toggle would otherwise lose the focus with the freed button, and the
+## pad could no longer move in the card).
 
 signal changed
 
 const STEP: float = 0.1
+const REBINDS: Array[StringName] = PlayerSettings.REBINDABLE
 
 var settings: PlayerSettings
+var save_path: String = PlayerSettings.PATH
 var _waiting: StringName = &""
 var _text: QuestText = QuestText.new()
 
 
-func _init(p_settings: PlayerSettings) -> void:
+func _init(p_settings: PlayerSettings, p_save_path: String = PlayerSettings.PATH) -> void:
 	settings = p_settings
+	save_path = p_save_path
 	add_theme_constant_override(&"separation", 6)
 
 
@@ -23,7 +30,14 @@ func _ready() -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if _waiting == &"" or not event is InputEventKey or not event.is_pressed():
+	if _waiting == &"" or not event.is_pressed():
+		return
+	if event is InputEventJoypadButton:
+		get_viewport().set_input_as_handled()
+		_waiting = &""
+		_rebuild()
+		return
+	if not event is InputEventKey:
 		return
 	var key: InputEventKey = event
 	get_viewport().set_input_as_handled()
@@ -35,6 +49,26 @@ func _input(event: InputEvent) -> void:
 
 
 func _rebuild() -> void:
+	var focus: Vector2i = focused_slot()
+	_build_rows()
+	if focus.x >= 0 and focus.x < get_child_count():
+		var row: Node = get_child(focus.x)
+		if focus.y < row.get_child_count() and row.get_child(focus.y) is Button:
+			(row.get_child(focus.y) as Button).grab_focus()
+
+
+## The focused button as (row, child) in this panel, or (-1, -1).
+func focused_slot() -> Vector2i:
+	var owner_c: Control = get_viewport().gui_get_focus_owner() if is_inside_tree() else null
+	if owner_c == null or not is_ancestor_of(owner_c):
+		return Vector2i(-1, -1)
+	var row: Node = owner_c.get_parent()
+	if row.get_parent() != self:
+		return Vector2i(-1, -1)
+	return Vector2i(row.get_index(), owner_c.get_index())
+
+
+func _build_rows() -> void:
 	for c: Node in get_children():
 		remove_child(c)
 		c.queue_free()
@@ -47,7 +81,19 @@ func _rebuild() -> void:
 		rm_key, "Reduced motion: on" if settings.reduced_motion else "Reduced motion: off"
 	)
 	_row(rm, [[_text.resolve(&"SLICE__TOGGLE", "Toggle"), _toggle_motion]])
-	for action: StringName in PlayerSettings.REBINDABLE:
+	if DeviceProfile.shared().is_handheld():
+		_row(
+			cap_label(settings.frame_cap), [[_text.resolve(&"SLICE__TOGGLE", "Toggle"), _cycle_cap]]
+		)
+		_row(
+			rumble_label(settings.rumble),
+			[[_text.resolve(&"SLICE__TOGGLE", "Toggle"), _cycle_rumble]]
+		)
+	# d9-handheld: no keyboard rebind rows on a handheld tier (the pad has none; Steam Input remaps)
+	var rebinds: Array[StringName] = REBINDS.duplicate()
+	if DeviceProfile.shared().is_handheld():
+		rebinds.clear()
+	for action: StringName in rebinds:
 		var bound: String = "..." if _waiting == action else ObjectiveHint.key_name(action)
 		var label: String = String(action).replace("_", " ")
 		_row(
@@ -68,6 +114,7 @@ func _row(text: String, buttons: Array) -> void:
 		var b: Button = Button.new()
 		b.text = str(spec[0])
 		b.add_theme_font_size_override(&"font_size", 18)
+		Quest1Card.mark_focus(b)
 		var cb: Callable = spec[1]
 		@warning_ignore("return_value_discarded")
 		b.pressed.connect(cb)
@@ -87,6 +134,34 @@ func _toggle_motion() -> void:
 	_rebuild()
 
 
+func cap_label(cap: int) -> String:
+	if cap <= 0:
+		return _text.resolve(&"SLICE__FRAME_CAP_DEVICE", "Frame cap: device")
+	return _text.resolve(&"SLICE__FRAME_CAP", "Frame cap: %d fps") % cap
+
+
+func _cycle_cap() -> void:
+	var caps: Array[int] = PlayerSettings.FRAME_CAPS
+	settings.frame_cap = caps[(caps.find(settings.frame_cap) + 1) % caps.size()]
+	_commit()
+	_rebuild()
+
+
+func rumble_label(level: float) -> String:
+	if level >= 1.0:
+		return _text.resolve(&"SLICE__RUMBLE_FULL", "Rumble: full")
+	if level > 0.0:
+		return _text.resolve(&"SLICE__RUMBLE_HALF", "Rumble: half")
+	return _text.resolve(&"SLICE__RUMBLE_OFF", "Rumble: off")
+
+
+func _cycle_rumble() -> void:
+	var levels: Array[float] = PlayerSettings.RUMBLE_LEVELS
+	settings.rumble = levels[(levels.find(settings.rumble) + 1) % levels.size()]
+	_commit()
+	_rebuild()
+
+
 func _wait(action: StringName) -> void:
 	_waiting = action
 	_rebuild()
@@ -94,7 +169,7 @@ func _wait(action: StringName) -> void:
 
 func _commit() -> void:
 	settings.apply()
-	var err: Error = settings.save()
+	var err: Error = settings.save(save_path) if save_path != "" else OK
 	if err != OK:
 		Log.warn("settings", "cannot save settings (%d)" % err)
 	changed.emit()

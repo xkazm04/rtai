@@ -9,6 +9,9 @@
       "minLength": 1,
       "type": "string"
     },
+    "menu_pad": {
+      "type": "object"
+    },
     "move": {
       "type": "object"
     },

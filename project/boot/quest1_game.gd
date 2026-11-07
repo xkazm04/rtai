@@ -105,7 +105,7 @@ func _begin(opened: Quest1Session) -> void:
 	add_child(session.world)
 	if DisplayServer.get_name() != "headless":
 		view = CollectCallView.new()
-		view.px_per_m = px_per_m
+		view.px_per_m = px_per_m * DeviceProfile.zoom()
 		view.objective_view = ObjectiveView.new()
 		var live: LiveInput = session.live
 		view.objective_view.pad_prompts = func() -> bool: return live.pad_last
@@ -220,7 +220,7 @@ func _replay(path: String) -> void:
 
 
 func _settings_panel() -> Quest1SettingsPanel:
-	var panel: Quest1SettingsPanel = Quest1SettingsPanel.new(settings)
+	var panel: Quest1SettingsPanel = Quest1SettingsPanel.new(settings, settings_path)
 	@warning_ignore("return_value_discarded")
 	panel.changed.connect(
 		func() -> void: view.fx_view.reduced_motion = settings.reduced_motion if view else false

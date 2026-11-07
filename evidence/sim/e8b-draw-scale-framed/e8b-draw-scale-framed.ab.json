@@ -1,0 +1,155 @@
+{
+  "schema": "gtai.handheld-ab/1",
+  "name": "e8b-draw-scale-framed",
+  "rounds": 3,
+  "at": "2026-11-07T11:17:37.831Z",
+  "table": [
+    {
+      "variant": "--device=deck_bench --scene=city --ticks=1200",
+      "runs": 3,
+      "contended": 3,
+      "p50_ms": {
+        "median": 9.54,
+        "spread": 0.12
+      },
+      "p99_ms": {
+        "median": 14.87,
+        "spread": 1.4
+      },
+      "low1_fps": {
+        "median": 56.5,
+        "spread": 9.74
+      },
+      "over33_settled": {
+        "median": 0,
+        "spread": 0
+      },
+      "render_gpu_ms_p50": {
+        "median": 8.91,
+        "spread": 0.1
+      },
+      "render_cpu_ms_p50": {
+        "median": 0.48,
+        "spread": 0.07
+      },
+      "process_ms_p50": {
+        "median": 4.05,
+        "spread": 0.14
+      },
+      "cpu_pinned_pct_p50": {
+        "median": 7.11,
+        "spread": 0.71
+      },
+      "private_mb_max": {
+        "median": 1334.1,
+        "spread": 49.9
+      },
+      "gpu_shared_mb_max": {
+        "median": 943.1,
+        "spread": 64
+      },
+      "gpu_dedicated_mb_max": {
+        "median": 81.8,
+        "spread": 0.2
+      }
+    },
+    {
+      "variant": "--device=deck_bench_ds85 --scene=city --ticks=1200",
+      "runs": 3,
+      "contended": 3,
+      "p50_ms": {
+        "median": 7.37,
+        "spread": 0.34
+      },
+      "p99_ms": {
+        "median": 11.69,
+        "spread": 1.96
+      },
+      "low1_fps": {
+        "median": 75.56,
+        "spread": 31.39
+      },
+      "over33_settled": {
+        "median": 0,
+        "spread": 2
+      },
+      "render_gpu_ms_p50": {
+        "median": 6.69,
+        "spread": 0.22
+      },
+      "render_cpu_ms_p50": {
+        "median": 0.45,
+        "spread": 0.08
+      },
+      "process_ms_p50": {
+        "median": 3.5,
+        "spread": 0.37
+      },
+      "cpu_pinned_pct_p50": {
+        "median": 8.66,
+        "spread": 0.37
+      },
+      "private_mb_max": {
+        "median": 1320.5,
+        "spread": 78.6
+      },
+      "gpu_shared_mb_max": {
+        "median": 943.1,
+        "spread": 65
+      },
+      "gpu_dedicated_mb_max": {
+        "median": 77.7,
+        "spread": 0.3
+      }
+    },
+    {
+      "variant": "--device=deck_bench_ds75 --scene=city --ticks=1200",
+      "runs": 3,
+      "contended": 3,
+      "p50_ms": {
+        "median": 6.05,
+        "spread": 0.76
+      },
+      "p99_ms": {
+        "median": 11.43,
+        "spread": 3.47
+      },
+      "low1_fps": {
+        "median": 61.32,
+        "spread": 36.62
+      },
+      "over33_settled": {
+        "median": 1,
+        "spread": 2
+      },
+      "render_gpu_ms_p50": {
+        "median": 5.31,
+        "spread": 0.32
+      },
+      "render_cpu_ms_p50": {
+        "median": 0.41,
+        "spread": 0.02
+      },
+      "process_ms_p50": {
+        "median": 2.73,
+        "spread": 0.73
+      },
+      "cpu_pinned_pct_p50": {
+        "median": 9.79,
+        "spread": 0.13
+      },
+      "private_mb_max": {
+        "median": 1346.5,
+        "spread": 34.9
+      },
+      "gpu_shared_mb_max": {
+        "median": 943.1,
+        "spread": 0
+      },
+      "gpu_dedicated_mb_max": {
+        "median": 75.7,
+        "spread": 0
+      }
+    }
+  ]
+}

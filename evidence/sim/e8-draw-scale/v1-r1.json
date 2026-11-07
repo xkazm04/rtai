@@ -1,0 +1,176 @@
+{
+  "schema": "gtai.handheld-sim/1",
+  "label": "v1-r1",
+  "device": "deck_bench_ds75",
+  "scene": "city",
+  "scene_args": [
+    "--arena=city",
+    "--bot=course",
+    "--seed=2",
+    "--rigs",
+    "--view=tilt70"
+  ],
+  "extra": [],
+  "renderer": "forward_plus",
+  "gpu": "igpu",
+  "gpu_index": 1,
+  "threads": 8,
+  "priority": "belownormal",
+  "ticks": 1200,
+  "exit": 0,
+  "adapter": "D3D12 12_0 - Forward+ - Using Device #1: AMD - AMD Radeon(TM) Graphics",
+  "contended": "CONTENDED (1 other Godot runs)",
+  "at": "2026-11-07T11:05:34.053Z",
+  "summary": {
+    "frames": 3256,
+    "low1_fps": 88.2947863768956,
+    "over33_settled": 0,
+    "over50_settled": 0,
+    "p50_ms": 5.81799983978271,
+    "p99_ms": 10.1110000610352,
+    "ticks": 1193,
+    "worst_ms": 452.721008300781,
+    "worst_settled_ms": 14.5920000076294,
+    "render_gpu_ms_p50": 5.24,
+    "render_gpu_ms_p95": 6.01,
+    "render_cpu_ms_p50": 0.41,
+    "render_cpu_ms_p95": 0.69,
+    "process_ms_p50": 2.56,
+    "process_ms_p95": 5.2,
+    "loop_ms_p50": 0.01,
+    "loop_ms_p95": 1.31,
+    "draw_calls_p50": 701,
+    "draw_calls_p95": 731,
+    "affinity_seen": [
+      255
+    ],
+    "cpu_machine_pct_p50": 4.82,
+    "cpu_pinned_pct_p50": 9.63,
+    "ws_mb_max": 1399.6,
+    "private_mb_max": 1415.5,
+    "gpu_dedicated_mb_max": 76,
+    "gpu_shared_mb_max": 1007.1
+  },
+  "samples": [
+    {
+      "t_ms": 1284,
+      "cpu_machine_pct": 5.51,
+      "cpu_pinned_pct": 11.02,
+      "ws_mb": 285.1,
+      "private_mb": 239.4,
+      "gpu_dedicated_mb": 64,
+      "gpu_shared_mb": 58.8,
+      "affinity": 255
+    },
+    {
+      "t_ms": 3563,
+      "cpu_machine_pct": 6.26,
+      "cpu_pinned_pct": 12.51,
+      "ws_mb": 359.7,
+      "private_mb": 371.9,
+      "gpu_dedicated_mb": 78.7,
+      "gpu_shared_mb": 740.8,
+      "affinity": 255
+    },
+    {
+      "t_ms": 5593,
+      "cpu_machine_pct": 5.96,
+      "cpu_pinned_pct": 11.93,
+      "ws_mb": 1399.6,
+      "private_mb": 1415.5,
+      "gpu_dedicated_mb": 76,
+      "gpu_shared_mb": 1007.1,
+      "affinity": 255
+    },
+    {
+      "t_ms": 7638,
+      "cpu_machine_pct": 5.06,
+      "cpu_pinned_pct": 10.12,
+      "ws_mb": 1369.7,
+      "private_mb": 1385.8,
+      "gpu_dedicated_mb": 76,
+      "gpu_shared_mb": 1007.1,
+      "affinity": 255
+    },
+    {
+      "t_ms": 9681,
+      "cpu_machine_pct": 5.26,
+      "cpu_pinned_pct": 10.52,
+      "ws_mb": 1370,
+      "private_mb": 1380.8,
+      "gpu_dedicated_mb": 76,
+      "gpu_shared_mb": 1007.1,
+      "affinity": 255
+    },
+    {
+      "t_ms": 11718,
+      "cpu_machine_pct": 4.65,
+      "cpu_pinned_pct": 9.3,
+      "ws_mb": 1369.2,
+      "private_mb": 1380,
+      "gpu_dedicated_mb": 76,
+      "gpu_shared_mb": 1007.1,
+      "affinity": 255
+    },
+    {
+      "t_ms": 13759,
+      "cpu_machine_pct": 4.69,
+      "cpu_pinned_pct": 9.38,
+      "ws_mb": 1369.2,
+      "private_mb": 1380,
+      "gpu_dedicated_mb": 76,
+      "gpu_shared_mb": 1007.1,
+      "affinity": 255
+    },
+    {
+      "t_ms": 15792,
+      "cpu_machine_pct": 5.43,
+      "cpu_pinned_pct": 10.86,
+      "ws_mb": 1369.6,
+      "private_mb": 1380.1,
+      "gpu_dedicated_mb": 76,
+      "gpu_shared_mb": 1007.1,
+      "affinity": 255
+    },
+    {
+      "t_ms": 17830,
+      "cpu_machine_pct": 4.6,
+      "cpu_pinned_pct": 9.2,
+      "ws_mb": 1369.6,
+      "private_mb": 1380.1,
+      "gpu_dedicated_mb": 76,
+      "gpu_shared_mb": 1007.1,
+      "affinity": 255
+    },
+    {
+      "t_ms": 19857,
+      "cpu_machine_pct": 4.72,
+      "cpu_pinned_pct": 9.44,
+      "ws_mb": 1369.6,
+      "private_mb": 1380.1,
+      "gpu_dedicated_mb": 76,
+      "gpu_shared_mb": 1007.1,
+      "affinity": 255
+    },
+    {
+      "t_ms": 21897,
+      "cpu_machine_pct": 4.31,
+      "cpu_pinned_pct": 8.62,
+      "ws_mb": 1369.6,
+      "private_mb": 1380.1,
+      "gpu_dedicated_mb": 76,
+      "gpu_shared_mb": 1007.1,
+      "affinity": 255
+    },
+    {
+      "t_ms": 23945,
+      "cpu_machine_pct": 4.82,
+      "cpu_pinned_pct": 9.63,
+      "ws_mb": 1369.6,
+      "private_mb": 1380.1,
+      "gpu_dedicated_mb": 76,
+      "gpu_shared_mb": 1007.1,
+      "affinity": 255
+    }
+  ]
+}
