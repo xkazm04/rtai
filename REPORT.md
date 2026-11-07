@@ -3,6 +3,9 @@
 Every number is **on the simulator** (this PC under a device profile: 8 pinned threads, below-normal
 priority, the CPU's own 2-CU Radeon), never a device claim. Details and sources: `docs/handheld/LEDGER.md`.
 
+(it26, the REPORT phase, 18:40: every evidence path below re-checked on disk; one stale still name fixed in Call 5;
+`frames.json` 15 entries, all present; `git diff 0ee1ba66 HEAD -- project` still empty.)
+
 **The exe for the owner** (exported 17:44 from 0ee1ba66; every commit after it is docs and evidence, `git diff 0ee1ba66 HEAD -- project` is empty, so it is the freeze build):
 `build/export/windows/RTAI.exe` (328 MB, PCK embedded, + `gtai_sim.windows.template_release.x86_64.dll`), made with
 `"$GODOT_BIN" --headless --path project --export-release windows-showcase ../build/export/windows/RTAI.exe`
@@ -158,8 +161,8 @@ ends with Godot's "105 resources still in use at exit" line: a shutdown note com
 4. **Rumble on the desktop?** Built: handheld rows only. a) keep; b) a `rumble` value on the desktop row (one data
    value), plus a settings toggle (owed either way). Default built: a.
 
-5. **Draw the handheld frame smaller?** (`gtai-masters/d9/handheld/e8b-deck-vs-ds75-48ppm-city-t720.png` and its
-   `-crop-x2`: left the full 1280x800 draw, right 960x600 scaled up, the same framing.) a) full draw: **the default
+5. **Draw the handheld frame smaller?** (`gtai-masters/d9/handheld/e8b-deck-vs-ds75-48ppm-city-t720.png`: left the
+   full 1280x800 draw, right 960x600 scaled up, the same framing; the A/B numbers in `evidence/sim/e8c-zoom-and-draw-scale/`.) a) full draw: **the default
    built** (the Deck profile already has headroom: 8.1 ms of a 16.6 ms frame on a GPU weaker than a Deck's);
    b) 0.85 (-24 % GPU, a light softening); c) 0.75 (-37 % GPU, the grain, hatching and ink line go soft, and the HUD
    lays out in 960x600 so the ghost-form panel draws 1.33x bigger). One value (`draw_scale`) per row; try c:

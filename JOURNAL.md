@@ -810,3 +810,16 @@ NEXT: as it18 (quiet-machine E15b, the owner's Calls -> `devices.json` defaults,
 
 NEXT: as it18 (quiet-machine E15b, the owner's Calls -> `devices.json` defaults, a real Vulkan run).
 - Session end 18:33 (it23): all committed.
+
+## Iteration 26 (REPORT, 18:40)
+- Read: JOURNAL it23 + NEXT, git log -8, REPORT.md. Built nothing.
+- Checked every path REPORT.md cites (26 repo paths, 15 masters stills/clips, the `*-rumble-deck-hit.log` /
+  `*-gap.log` globs, `frames.json` 15/15 files): all present except `e8b-deck-vs-ds75-48ppm-city-t720-crop-x2.png`
+  (deleted in an earlier clean-up). Call 5 now cites the uncropped still + `evidence/sim/e8c-zoom-and-draw-scale/`.
+  `switch-handheld` in REPORT is valid (`DeviceProfile.select` maps `-` to `_`). `git diff 0ee1ba66 HEAD -- project`
+  empty: the 17:44 exe is still the branch build.
+- FRICTION: a stale still name survived 20 report checks because those checks counted `frames.json`, not REPORT's own
+  citations. Registry rule applied: perf-regression-gating (verify the artifact cited, not a proxy for it).
+
+NEXT: as it18 (quiet-machine E15b, the owner's Calls -> `devices.json` defaults, a real Vulkan run on a Linux PC or Deck).
+- Session end (it26): all committed.
