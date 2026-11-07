@@ -669,8 +669,14 @@ NEXT (iteration 10, in brief order):
 2. Quest 1 at tilt70 after the Director merges city + street (still not on main at 02:00): film the
    opening and Dock 9 again. If the merge lands, check the arena_floor_view conflict was taken as
    city's hunk (JOURNAL it9 MERGE NOTE) and re-run the King occlusion count (expect ~114).
-3. Combo's remaining frame cost: the arena floor's tilted draw (+1.8 ms); a cached floor layer
-   while the pitch does not move (ViewMode.revision) is the next win, in ArenaFloorView (arena's).
+3. Combo's remaining frame cost: the arena floor's tilted draw (+1.8 ms). FOUND (code read 02:08):
+   `ArenaFloorView._held` (the `_static` child redrawn only on a new stage / ViewMode.revision)
+   is used ONLY on the city (`arena.cells != null`); the King's boulevard and the depot are dock
+   floors (cells null), so `_draw` re-issues the tiles AND every lifted prop/card each frame (the
+   rings make it redraw). Fix: hold tiles + props in `_static` for every arena (it draws behind
+   the parent: tiles, props, then the parent's cars, labels, rings: today's order). Touches the
+   `top` path: prove pixel identity with the look goldens (evidence run) + a top still diff, then
+   spans + the King fight frames under the lock.
 4. Before the freeze: director reel 19/19 top + combo, evidence run --no-bench, export the exe,
    REPORT with the Calls (King bust size, death beat length, attack lock, camera lead at speed:
    combo vs combo_lead, cover as one stack, quest 1's cast under the angled view).
