@@ -132,7 +132,7 @@ async function main() {
   const framesPath = join(a.out, `${label}.frames.json`).replaceAll('\\', '/');
   const before = contention();
   const godotArgs = [...rendererArgs(a.renderer), ...(gpuIndex == null ? [] : ['--gpu-index', String(gpuIndex)]),
-    '--path', join(ROOT, 'project').replaceAll('\\', '/'), ...(a.movie ? ['--write-movie', a.movie, '--fixed-fps', '60'] : []),
+    '--path', projectDir(a).replaceAll('\\', '/'), ...(a.movie ? ['--write-movie', a.movie, '--fixed-fps', '60'] : []),
     'res://dev/arena/arena.tscn', '--', ...SCENES[a.scene], '--clean', `--frames=${framesPath}`,
     `--frames-ticks=${a.ticks}`, ...(a.noDevice ? [] : [`--device=${row.id}`]), ...a.extra];
   const ps = `$p = Start-Process -FilePath '${gui}' -ArgumentList '${godotArgs.join(' ')}' -PassThru; `
