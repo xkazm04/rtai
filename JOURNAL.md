@@ -887,3 +887,9 @@ NEXT (it25 end, for the next run): see REPORT `## Next steps` (Calls 1-2 to land
   the flash's own life is in ticks. The one frame-keyed light, the molotov rag (`_light_rag`), only shows while the
   held part is visible, i.e. never under the drawn figure. Not filmed above 60 Hz (unfilmed is not proven): a
   `--max-fps 144` check is next steps. No change.
+- 18:08-18:11 Servo before/after (same method as King; ENABLED flipped for the before run only, reverted, status
+  clean): masters `rivet_before_after_main_vs_drawn_servo_combo_p55_48ppm_x1.5_seed1_f60_200_300_400.png`
+  (frames.json entry 7; the flamer one-flame entry out, file kept; still 15). And the NOTE filmed: King at
+  `--fixed-fps 144`, the flash at the drawn pistol's muzzle in his hands (frame ~479), not the ground fallback:
+  `evidence/d9/rivet_muzzle_144hz_king_combo_48ppm_seed1_f470_505_step3.png`. 0 SCRIPT ERROR in all three runs.
+  Scratch deleted. No more Godot work after this (18:11).

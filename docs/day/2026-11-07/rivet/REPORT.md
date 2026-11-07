@@ -75,6 +75,13 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
   at the barge, 300): `gtai-masters/d9/rivet/rivet_before_after_main_vs_drawn_king_combo_p55_48ppm_x1.5_seed1_f40_120_200_300.png`
   (frames.json entry 6). Seen: one drawn figure with the gun in his hands, firing from it; he reads smaller and
   darker on the asphalt than the cream head card (Call 1). 0 SCRIPT ERROR in both runs.
+- **The same before/after at Servo** (it25, combo, 48 px/m, seed 1, frames 60/200/300/400):
+  `gtai-masters/d9/rivet/rivet_before_after_main_vs_drawn_servo_combo_p55_48ppm_x1.5_seed1_f60_200_300_400.png`
+  (frames.json entry 7). He sorts over the van's bumper in bay 3; 0 SCRIPT ERROR both runs.
+- **The muzzle at 144 Hz** (it25, the seams NOTE on HeldMuzzle being per render frame): King, combo, 48 px/m,
+  `--fixed-fps 144`, frames 470-505 every 3rd: the flash prints at the drawn pistol's muzzle in his hands, not
+  at the fallback spot on the ground (`evidence/d9/rivet_muzzle_144hz_king_combo_48ppm_seed1_f470_505_step3.png`).
+  By code the drawn muzzle is republished every process frame (`rivet_held_view.gd:79`). 0 SCRIPT ERROR.
 - **The frame cost** (it16, under the bench lock; 3 before / 3 after interleaved): rig_bench `--view=tilt70`, the
   drawn figure vs the head card over parts, median p50: 50 people 0.943 -> 0.776 ms, 200 people 1.319 -> 1.179 ms.
   No added cost (`evidence/d9/rivet-frame-cost-it16.md`; it10's contended runs agreed).
