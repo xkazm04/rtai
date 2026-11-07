@@ -1,10 +1,8 @@
 class_name PropCards
 extends RefCounted
-## The city's street props standing up under an angled view (night n8, lane city): a
-## city_facades.json `props` row draws as a card from its five-facing strip (art key p55 / p70,
-## tools/art/city_prop_cut.py) facing by the command's turn (the other side mirrored), its foot on
-## the footprint's south edge, rising by the art's aspect over the squashed ground; ChunkLift
-## orders it by south edge. Render only.
+## The city's street props standing up under an angled view (night n8, lane city): a `props` row
+## draws as a card from its five-facing strip (p55 / p70, tools/art/city_prop_cut.py) by the
+## command's turn (other side mirrored), foot on the footprint's south edge. Render only.
 
 const FACINGS: int = 5
 const TABLE: String = "res://data/tables/city_facades.json"
@@ -92,9 +90,7 @@ func draw_named(ci: CanvasItem, name: String, foot: Vector2, px_per_m: float) ->
 	var t: int = _names.find(name)
 	if t < 0 or not _strip.has(t):
 		return false
-	var item: RID = ci.get_canvas_item()
-	draw(item, t, 0.0, foot, _cell_w_px[t] * px_per_m / SimConst.PX_PER_M)
-	RenderingServer.canvas_item_add_set_transform(item, Transform2D.IDENTITY)
+	_draw_ci(ci, t, 0.0, foot, _cell_w_px[t] * px_per_m / SimConst.PX_PER_M)
 	return true
 
 
@@ -110,28 +106,30 @@ func draw_on(ci: CanvasItem, kind: String, r: Rect2) -> bool:
 	var t: int = _names.find(ARENA_KIND.get(kind, ""))
 	if t < 0 or not _strip.has(t):
 		return false
-	var item: RID = ci.get_canvas_item()
-	RenderingServer.canvas_item_add_rect(item, r, ARENA_SHADOW)
+	RenderingServer.canvas_item_add_rect(ci.get_canvas_item(), r, ARENA_SHADOW)
 	var rot: float = 0.0 if r.size.x >= r.size.y else PI * 0.5
+	_draw_ci(ci, t, rot, Vector2(r.get_center().x, r.end.y), maxf(r.size.x, r.size.y))
+	return true
+
+
+## Draws prop t on `ci` (from its _draw), the print twin under the item print, transform reset.
+func _draw_ci(ci: CanvasItem, t: int, rot: float, foot: Vector2, w: float) -> void:
+	var item: RID = ci.get_canvas_item()
 	_use_print = _print.get(t) != null and item_printed(ci)
-	draw(item, t, rot, Vector2(r.get_center().x, r.end.y), maxf(r.size.x, r.size.y))
+	draw(item, t, rot, foot, w)
 	_use_print = false
 	RenderingServer.canvas_item_add_set_transform(item, Transform2D.IDENTITY)
-	return true
 
 
 ## The screen rect (ci's local px) draw_on's card for cover `kind` on ground rect `r` covers (the
 ## cell over the footprint's south edge); empty under a flat or perspective view or with no card.
 static func stand_rect(kind: String, r: Rect2) -> Rect2:
-	var cards: PropCards = named()
-	var t: int = -1 if cards == null else cards._names.find(ARENA_KIND.get(kind, ""))
-	if t < 0 or not cards._strip.has(t):
-		return Rect2()
-	var strip: Texture2D = cards._strip[t]
-	var w: float = maxf(r.size.x, r.size.y)
-	var aspect: float = strip.get_height() * float(FACINGS) / strip.get_width()
-	var h: float = w * aspect / ViewMode.shared().ground_k()
-	return Rect2(r.get_center().x - w * 0.5, r.end.y - h, w, h)
+	return PropCardPolys.rect(named(), str(ARENA_KIND.get(kind, "")), r)
+
+
+## stand_rect's card as its opaque outline(s), same space (PropOcclusion's cut; PropCardPolys).
+static func stand_polys(kind: String, r: Rect2) -> Array[PackedVector2Array]:
+	return PropCardPolys.of(named(), str(ARENA_KIND.get(kind, "")), r, stand_rect(kind, r))
 
 
 ## True when `ci` draws through the actor layer's item print (look_d4_item), not the world print.

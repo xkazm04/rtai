@@ -124,3 +124,46 @@ func test_item_print_draws_the_world_printed_twin() -> void:
 	assert_false(PropCards.item_printed(actor_ci), "--look=off: the raw art everywhere")
 	assert_true(cards.draw_on(actor_ci, "cover_low", Rect2(0, 0, 144, 48)))
 	assert_false(cards._use_print, "the twin is only for that one draw")
+
+
+func test_stand_polys_trace_the_card_inside_its_rect() -> void:
+	var saved: ViewMode = ViewMode._shared
+	var r: Rect2 = Rect2(0, 0, 144, 48)
+	ViewMode._shared = ViewMode.of("top")
+	var flat: Array[PackedVector2Array] = PropCards.stand_polys("cover_low", r)
+	ViewMode._shared = ViewMode.of("tilt70")
+	var rect: Rect2 = PropCards.stand_rect("cover_low", r)
+	var polys: Array[PackedVector2Array] = PropCards.stand_polys("cover_low", r)
+	var wall: Array[PackedVector2Array] = PropCards.stand_polys("wall_high", r)
+	ViewMode._shared = saved
+	assert_true(flat.is_empty(), "top: no card, no outline")
+	assert_true(wall.is_empty(), "walls keep their box")
+	assert_false(polys.is_empty(), "the crate stack traces to an outline")
+	var area: float = 0.0
+	for poly: PackedVector2Array in polys:
+		for p: Vector2 in poly:
+			assert_true(rect.grow(0.01).has_point(p), "every point inside the card's rect")
+		area += absf(_area(poly))
+	var full: float = rect.get_area()
+	assert_lt(area, full * 0.95, "the see-through corners are cut out")
+	assert_gt(area, full * 0.2, "the crates themselves stay in")
+
+
+func test_a_mirrored_facing_mirrors_the_outline() -> void:
+	var tex: Texture2D = load("res://features/city/art/view/p70/prop_payphone.png")
+	var rect: Rect2 = Rect2(10, 20, 100, 200)
+	var a: Array[PackedVector2Array] = PropCardPolys.outlines(tex, Vector2i(1, 0), rect)
+	var b: Array[PackedVector2Array] = PropCardPolys.outlines(tex, Vector2i(1, 1), rect)
+	assert_eq(a.size(), b.size())
+	var p: Vector2 = a[0][0]
+	var q: Vector2 = b[0][b[0].size() - 1]
+	assert_almost_eq(q.x, rect.position.x + rect.end.x - p.x, 0.01, "u mirrored about the rect")
+	assert_almost_eq(q.y, p.y, 0.01)
+
+
+func _area(poly: PackedVector2Array) -> float:
+	var s: float = 0.0
+	for i: int in poly.size():
+		var j: int = (i + 1) % poly.size()
+		s += poly[i].x * poly[j].y - poly[j].x * poly[i].y
+	return s * 0.5
