@@ -104,7 +104,7 @@ static func strip_of(rig: CutRig) -> String:
 	var key: String = row_of(rig)
 	var grid: String = StreetWalkerFall.grid_of(rig, art, key)
 	if not grid.is_empty():
-		return DIR + art + "/" + grid
+		return DIR + grid
 	if not ped or falls(rig):
 		return ""
 	var walks: Dictionary = WALKS.get(art, {}) if FRAMES_ON else {}
@@ -179,10 +179,10 @@ static func _build(rig: CutRig, card: Sprite2D, path: String) -> void:
 
 static func _place(rig: CutRig, card: Sprite2D) -> void:
 	var k: float = 1.0 + StreetCrowdCards.SCALE_VAR * StreetCrowdCards.vary(rig.actor_id, 3)
-	var h: float = HEIGHT_BY_ART.get(ViewMode.shared().art, HEIGHT_M)
 	if card.vframes == StreetWalkerFall.FALL_FRAMES:
-		StreetWalkerFall.draw(rig, card, h * CharacterRigs.PX_PER_M * k / StreetWalkerFall.STILL_PX)
+		StreetWalkerFall.draw(rig, card, k)
 		return
+	var h: float = HEIGHT_BY_ART.get(ViewMode.shared().art, HEIGHT_M)
 	if card.vframes > 1:
 		k *= WALK_FILL.get(card.texture.resource_path.get_file(), 1.0)
 	var s: float = h * CharacterRigs.PX_PER_M * k * card.vframes / card.texture.get_height()

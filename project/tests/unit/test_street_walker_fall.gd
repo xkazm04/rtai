@@ -57,6 +57,6 @@ func test_only_the_dying_and_the_dead_draw_a_fall_grid() -> void:
 	var row: String = "ped/head_hood"
 	assert_eq(StreetWalkerFall.grid_of(rig, "p70", row), "", "alive: the walk")
 	rig.dead = true
-	assert_eq(StreetWalkerFall.grid_of(rig, "p70", row), "ped_hood_fall.png", "dead: the grid")
-	assert_eq(StreetWalkerFall.grid_of(rig, "p55", row), "", "no 55 fall grids")
+	assert_eq(StreetWalkerFall.grid_of(rig, "p70", row), "p70/ped_hood_fall.png", "dead: the grid")
+	assert_eq(StreetWalkerFall.grid_of(rig, "p55", row), "p70/ped_hood_fall.png", "55: the 70 grid")
 	assert_eq(StreetWalkerFall.grid_of(rig, "p70", "ped/head_none"), "", "a row with no grid")

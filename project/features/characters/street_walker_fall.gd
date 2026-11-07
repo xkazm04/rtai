@@ -35,17 +35,22 @@ const FALLS: Dictionary[String, Dictionary] = {
 const FALL_FRAMES: int = 3
 ## Each fall frame's start, of the death family's progress (the lying frame from FALL_AT[2] on).
 const FALL_AT: PackedFloat32Array = [0.0, 0.18, 0.4]
+## Art with no fall grids of its own (p55: boss fights under combo) draws this art's, at that art's
+## height, as d8 drew the 55 drawings at 70; "" = the hold and the parts there.
+const FALLBACK: String = "p70"
 ## The px a standing figure of HEIGHT_M is drawn in the grid (the still strip's cell height).
 const STILL_PX: float = 192.0
 const OCT: StringName = &"street_fall_oct"
 
 
-## The fall grid the person draws now ("" = none: alive, the row has none, or DRAWN off).
+## The fall grid the person draws now, as "<art>/<file>" ("" = none: alive, the row has none in
+## the art or its FALLBACK, or DRAWN off).
 static func grid_of(rig: CutRig, art: String, row: String) -> String:
 	if not DRAWN or not down(rig):
 		return ""
-	var rows: Dictionary = FALLS.get(art, {})
-	return str(rows.get(row, ""))
+	var from: String = art if FALLS.has(art) else FALLBACK
+	var rows: Dictionary = FALLS.get(from, {})
+	return from + "/" + str(rows[row]) if rows.has(row) else ""
 
 
 ## Dying or dead.
@@ -62,9 +67,12 @@ static func fall_frame(progress: float) -> int:
 	return f
 
 
-## Faces, frames and sizes a fall grid card (s: the still's scale for this person; the corpse
-## decay's sink read back from the rig, as CorpseFade shrinks the parts).
-static func draw(rig: CutRig, card: Sprite2D, s: float) -> void:
+## Faces, frames and sizes a fall grid card (k: the person's crowd scale; the height is the grid's
+## own art's; the corpse decay's sink read back from the rig, as CorpseFade shrinks the parts).
+static func draw(rig: CutRig, card: Sprite2D, k: float) -> void:
+	var from: String = card.texture.resource_path.get_base_dir().get_file()
+	var h: float = StreetWalkerCards.HEIGHT_BY_ART.get(from, StreetWalkerCards.HEIGHT_M)
+	var s: float = h * CharacterRigs.PX_PER_M * k / STILL_PX
 	var r: HumanReact = rig.react
 	if not card.has_meta(OCT):
 		var blow: Vector2 = r.dir.rotated(rig.facing) if r != null else Vector2.DOWN
@@ -74,9 +82,9 @@ static func draw(rig: CutRig, card: Sprite2D, s: float) -> void:
 	card.frame_coords = Vector2i(f.x, fall_frame(p))
 	card.flip_h = f.y == 1
 	var sink: float = absf(rig.scale.x) / maxf(CutRig.SC * rig.plan.size_k, 0.0001)
-	var k: float = s * minf(sink, 1.0)
+	var ks: float = s * minf(sink, 1.0)
 	card.global_rotation = 0.0
-	card.global_scale = Vector2(k, k)
+	card.global_scale = Vector2(ks, ks)
 	card.global_position = rig.global_position
 
 
