@@ -10,7 +10,7 @@
       "mood_lines": [
         "guard-who-do-we-call"
       ],
-      "source": "library portrait_dock_guard_55 B (concept-matched, quest 1)"
+      "source": "library portrait_dock_guard_55_v2 A (round 20261107-0400, concept-matched, quest 1)"
     },
     {
       "art": "res://features/hud/art/portraits/payphone.png",
@@ -28,7 +28,7 @@
       "mood_lines": [
         "brass-someday"
       ],
-      "source": "library portrait_gunsmith_55 B (concept-matched, quest 1)"
+      "source": "library portrait_gunsmith_55 A (round 20261106-2050, concept-matched, quest 1)"
     },
     {
       "art": "res://features/hud/art/portraits/king.png",
@@ -54,7 +54,7 @@
       "mood_lines": [
         "juno-real-name"
       ],
-      "source": "library portrait_nurse_55 B (concept-matched, quest 1)"
+      "source": "library portrait_nurse_55_v3 B (round 20261107-0410, colour fixed in the raw sheet: plum stripe, no vermilion; concept-matched, quest 1)"
     },
     {
       "art": "res://features/hud/art/portraits/payphone.png",
@@ -72,7 +72,7 @@
       "mood_lines": [
         "mertz-appliances"
       ],
-      "source": "library portrait_mertz_55 B (concept-matched, quest 1)"
+      "source": "library portrait_mertz_55 A (round 20261106-2050, concept-matched, quest 1)"
     },
     {
       "art": "res://features/hud/art/portraits/scientist.png",
@@ -82,7 +82,7 @@
       "mood_lines": [
         "kilohm-come-to-me"
       ],
-      "source": "library portrait_scientist_55 B (concept-matched, quest 1)"
+      "source": "library portrait_scientist_55 A (round 20261106-2050, concept-matched, quest 1)"
     },
     {
       "art": "res://features/hud/art/portraits/servo.png",
