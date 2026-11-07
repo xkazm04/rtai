@@ -60,7 +60,18 @@ TAXI_HUE = 12.0
 # ~49: no hue turn on them); its in-betweens (drawn mustard) keep TAXI_HUE (35 + 12 = ~47). False:
 # the 2021 sheet, every cell turned TAXI_HUE (the build since iteration 15). 55 has no v3 sheet.
 TAXI_SHEET = False
-SHEET_PICKS = {"taxi": {70: "taxi_70_v3"}} if TAXI_SHEET else {}
+# True: the van row from the asset lane's cream repaints (van_cream_<p>; at 70 its in-betweens
+# van_cream_between_70), the top-down print's cream (the build since iteration 19); False: the olive
+# van_<p> sheets. VAN_BETWEEN_55: the 55 in-betweens too (van_cream_between_55, B, glass hole-filled):
+# a nine-column p55 atlas (twice the texture) for parked boss-arena vans; add "p55": [4] to
+# VehicleViews.FINE with it.
+VAN_SHEET = True
+VAN_BETWEEN_55 = False
+SHEET_PICKS = ({"taxi": {70: "taxi_70_v3"}} if TAXI_SHEET else {}) | (
+    {"van": {70: "van_cream_70", 55: "van_cream_55"}} if VAN_SHEET else {})
+# Grade the cream in-betweens' light paint to their five-view neighbours (False: as drawn, a shade peach).
+CREAM_GRADE = True
+BETWEEN_PICKS = {"van": {70: "van_cream_between_70"} | ({55: "van_cream_between_55"} if VAN_BETWEEN_55 else {})} if VAN_SHEET else {}
 # Rows whose five views come from a SHEET_PICKS sheet this build (their HUE_DEG skips columns 0-4).
 _PICKED: set = set()
 REDRAWS = {
@@ -184,7 +195,7 @@ def runs_of(sheet: Image.Image, n: int) -> list[Image.Image]:
 def betweens(lib: Path, sid: str, pitch: int) -> tuple[list[Image.Image], set]:
     """The four in-betweens (A-D) ([] when none) and the slots taken from a one-drawing redraw
     (REDRAWS, else the legacy <id>_between_c_<pitch>.png for C)."""
-    f = lib / "keyed" / "vehicle" / f"{sid}_between_{pitch}.png"
+    f = lib / "keyed" / "vehicle" / (BETWEEN_PICKS.get(sid, {}).get(pitch, f"{sid}_between_{pitch}") + ".png")
     if not BETWEEN or not f.exists():
         return [], set()
     out = runs_of(Image.open(f).convert("RGBA"), 4)
@@ -237,6 +248,17 @@ def match_paint(v: Image.Image, refs: list) -> Image.Image:
     out = rgb.convert("RGBA")
     out.putalpha(v.getchannel("A"))
     return out
+
+
+def light_gain(v: Image.Image, refs: list) -> tuple:
+    """The per-channel gain that moves `v`'s light paint (opaque, mean > 140: the cream, not the ink,
+    glass or lamps) to its neighbours' mean: the cream in-betweens print ~8 bluer-short (peach)."""
+    def mean(im: Image.Image) -> np.ndarray:
+        px = np.array(im).astype(np.float32)
+        m = (px[:, :, 3] > 200) & (px[:, :, :3].mean(2) > 140)
+        return px[:, :, :3][m].mean(0)
+    k = np.mean([mean(r) for r in refs], 0) / mean(v)
+    return tuple(float(x) for x in k)
 
 
 def fit_k(v: Image.Image, nbrs: list) -> float:
@@ -332,7 +354,10 @@ def build(root: Path, lib: Path, pitch: int) -> Image.Image:
             if j in redone or sid in ROW_FIT:  # scaled to its neighbours, its paint graded to theirs
                 kb = fit_k(v, [(vs[j], ks[j]), (vs[j + 1], ks[j + 1])])
                 v = match_paint(v, [vs[j], vs[j + 1]]) if MATCH_C else v
-            paste(atlas, v, kb, (5 + j, row, gain), drop)
+            g = gain
+            if sid in BETWEEN_PICKS and CREAM_GRADE:  # the cream repaint's in-betweens to their neighbours
+                g = tuple(a * b for a, b in zip(gain, light_gain(v, [vs[j], vs[j + 1]])))
+            paste(atlas, v, kb, (5 + j, row, g), drop)
     print(f"fine rows (VehicleViews.FINE): {fine}")
     return atlas if fine else atlas.crop((0, 0, CELL_PX * 5, atlas.height))  # no in-betweens: 5
 
