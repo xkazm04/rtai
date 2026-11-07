@@ -1288,3 +1288,17 @@ Read: JOURNAL NEXT, git log, the four lane journals' tails. One new item for cit
 - No project file touched (top framemd5, evidence, the reel and the exe at 7d73de04/7a43f001 stand).
 Registry rules applied it31: concept-scene-parity (the NOTE's own repro, seed 5 t900, named for the
 d9 before/after); others n/a (no art, no code).
+- CATALOG (08:03): one new sheet for city since it30: `planter_v3` 55 A (07:37, "down from 70 by
+  example": the planter_70's design at 55, superseding the in-game planter_v2 55 set). Not cut at the
+  freeze (a project change reopens every gate with 27 min left); d9 next step in REPORT. Its 70
+  (planter_70 A) is the play set and already the in-game design.
+- Kerb-barrier occlusion draft: NOT attempted. The arena's `wall_high` lift lives in
+  `ArenaFloorView`, so the d9 hook is an `extra` occluder list on CityOcclusion that the arena
+  fills (ground rect + the 3.0 m lift at today's pitch) and `_scan_crowd` merges with `in_rect`;
+  too much new wiring to land and verify (repro, unit, scenarios, reel, exe) before 08:30.
+
+NEXT (iteration 32 / the Director, after the freeze):
+1. d9: the arena kerb-barrier occluders for the crowd's lying dead (design above, view's repro).
+2. d9: cut `planter_v3` 55 into the p55 prop set (`it16` raise recipe), film at `--view=tilt` 48 px/m.
+3. The release-compile temp-dir collision (Director); ChunkSwap only if a streamed scene eases live.
+- Session end 08:04. Tree clean after this commit; project files unchanged since 7d40e58d.

@@ -121,6 +121,8 @@ path goes on the command line (a release template refuses one). Smoke-run: the f
 
 ## Next steps
 
+- `planter_v3` 55 A landed in the library at 07:37 (the 70's design at 55, superseding the in-game
+  planter_v2 55 set): cut it into the p55 prop set (d9; the p70 planter is already that design).
 - The arena city block's kerb barriers (ArenaStation `wall_high`) do not hide the crowd atlas's lying
   dead behind them at tilt70 (view's NOTE, repro `--arena=city --seed=5`, tick 900, 32 px/m; still in
   view's masters `FOUND_corpse_head_over_barrier_merged_it17_tilt70_32ppm_seed5_t900_crop3x.png`):
