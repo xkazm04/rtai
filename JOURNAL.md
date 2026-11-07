@@ -1224,3 +1224,21 @@ Read: JOURNAL (it11 NEXT), git log, the four lane journals, the library catalog 
   one navy from standing to corpse. evidence/cop_patrol_fall_tone_before_after_p55_p70_64ppm_
   t59_72_150.png (masters too). Riot/SWAT grids already read with their cards: untouched.
 - DECISION street/long-falls (docs/decisions.md).
+- GATE unit no-arg on 6d177df4 (tree still): 1525 tests, 0 failures (junit), no FLAKY.
+- LOOKED the 400-actor riot (`city_bench.tscn --scenario=riot --zoom=1.5 --view=tilt70`, 1200
+  frames, 0 SCRIPT ERROR) on the head: the atlas far corpses lie as the long grids, none upright;
+  their size matches it11's evidence (a body lying flat at 70 projects ~2x a standing figure).
+- TRIED and REJECTED (not committed): the contractor's redraw (contractor_fall_70_v2, A, 1.6x raw)
+  for quest 1's corpses (LONG_DOWN in StreetQuestCards). Stills quest 1 `--stills=13840,13900
+  --ppm=48 --view=tilt70`, before = LONG false, 0 SCRIPT ERROR both. LOOKED t13900 x1.5: the
+  redraw's corpses are puffier and ~1.2x bulkier than the kept grid and drop the rifle that lies
+  beside each body in the kept one (the dropped gun tells the fight). Kept the it8 grid.
+  evidence/contractor_redraw_rejected_kept_top_redraw_bottom_tilt70_48ppm_x1.5_quest1_t13900.png.
+- GATE director reel `--view=tilt70` on 6d177df4 (headless, the it1 command): 19/19 chapters all
+  down, 0 SCRIPT ERROR (2 engine ERROR lines: the headless shader compiler on kill_char_fx, not
+  street's).
+- EVIDENCE: masters combined clip street_combined_tilt70_50s.mp4 (city 25 s, patrol walk 0.5x, cop
+  falls, the long-fall board before/after t59-150, the thug power-down), replacing the 40 s city
+  clip in frames.json (15 entries). LOOKED at 5/27/33/38/47 s. FRICTION: `--write-movie` under the
+  `-s` board script writes an empty AVI (SceneTree scripts are not captured), so the board part
+  is its tick stills at 1.25 fps.
