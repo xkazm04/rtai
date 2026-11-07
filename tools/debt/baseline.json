@@ -12,13 +12,14 @@
         "2026-11-07: n8 merge: view + street growth combined (each accepted on its lane; cast_view.gd conflict resolved by keeping both) (dev_loc 17769 -> 17942)",
         "2026-11-07: n8 merge: + vehicles growth combined (accepted on its lane) (dev_loc 17942 -> 18431)",
         "2026-11-07: n8 merge: + city growth combined (accepted on its lane) (dev_loc 18431 -> 18535)",
-        "2026-11-07: n8 merge: + hud growth combined (accepted on its lane); fold_rigs dropped for view's follow per both lanes' merge notes (dev_loc 18535 -> 18799)"
+        "2026-11-07: n8 merge: + hud growth combined (accepted on its lane); fold_rigs dropped for view's follow per both lanes' merge notes (dev_loc 18535 -> 18799)",
+        "2026-11-07: handheld E10: FightFrames logs Godot's texture and video memory at the end of a run (the OS GPU counter on the iGPU does not see a BC7 import); dev-only tooling (dev_loc 18799 -> 18801)"
       ],
       "files": {
         "project/dev/arena": 642,
         "project/dev/audio": 367,
         "project/dev/bake_city.gd": 32,
-        "project/dev/bench": 1658,
+        "project/dev/bench": 1660,
         "project/dev/bots": 399,
         "project/dev/enemy_ai": 662,
         "project/dev/frames": 464,
@@ -40,7 +41,7 @@
         "project/dev/view": 195,
         "project/dev/weapon_art": 506
       },
-      "total": 18799
+      "total": 18801
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -227,7 +228,8 @@
         "2026-11-07: quest1_game.gd +2: the one call that attaches ViewPitchQuest (quest 1 under combo eases at Mertz); the logic lives in features/view_pitch (files_past_soft_cap 67 -> 67)",
         "2026-11-07: n8 merge: view + street growth combined (each accepted on its lane; cast_view.gd conflict resolved by keeping both) (files_past_soft_cap 67 -> 67)",
         "2026-11-07: n8 merge: + vehicles growth combined (accepted on its lane) (files_past_soft_cap 67 -> 67)",
-        "2026-11-07: n8 merge: + city growth combined (accepted on its lane) (files_past_soft_cap 67 -> 67)"
+        "2026-11-07: n8 merge: + city growth combined (accepted on its lane) (files_past_soft_cap 67 -> 67)",
+        "2026-11-07: handheld E10: FightFrames logs Godot's texture and video memory at the end of a run (the OS GPU counter on the iGPU does not see a BC7 import); dev-only tooling (files_past_soft_cap 67 -> 67)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 262,
@@ -238,7 +240,7 @@
         "project/boot/quest1_game.gd": 272,
         "project/dev/arena/arena_game.gd": 294,
         "project/dev/audio/audio_riot.gd": 201,
-        "project/dev/bench/fight_frames.gd": 244,
+        "project/dev/bench/fight_frames.gd": 246,
         "project/dev/bench/node_spans.gd": 228,
         "project/dev/enemy_ai/enemy_rig_fight.gd": 243,
         "project/dev/ghost-powers/ghost_reel.gd": 209,
