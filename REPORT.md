@@ -36,7 +36,16 @@ The view lane's REPORT.md came in with the n8-view merge; this file replaces it 
    over `top` after two fixes (reach-bounded sim query, no hidden overlays), GPU and draw calls
    within noise, 0 hitches (`evidence/n8-vehicles/bench-it17/`). `bench-it16` measured the view's
    drive WITHOUT the cards (city_bench builds no VehicleView); read it as the view's cost only.
-8. **Gates (it18, 2bcfdc56):** unit 1549/0 no FLAKY; director reel 19/19 all down in `top` and
+8. **The soul's teal on a hijacked card** (it20, 80926b7c): the flat print marks a soul-hijacked
+   car with a teal plate; under the card views that cue was gone (a plain sedan: 11 136 teal px in
+   `top` at f320, 143 at tilt70). The card shader now paints the light paint teal (colour sampled
+   from the plate; ink, glass, tyres and the amber lamp kept): the traffic car in the drive and
+   Dent's seized van in the Servo depot read as the soul's, with the tether
+   (`soul_seized_van_servo_depot_combo_64ppm_seed2_f120_before_left_after_right.png`,
+   `soul_hijacked_traffic_top_left_tilt70_before_mid_after_right_f320_crop3x.png`).
+9. **Gates (it20, 80926b7c):** unit 1551/0 no FLAKY; director reel 19/19 all down in `top` and
+   `tilt70`, 0 SCRIPT ERROR; lint 15/15; `top` framemd5 identical; scenarios 52/0. Earlier gates
+   (it18, 2bcfdc56):** unit 1549/0 no FLAKY; director reel 19/19 all down in `top` and
    `tilt70`, 0 SCRIPT ERROR; lint 15/15; `top` framemd5 identical; scenarios: see JOURNAL.
 
 ## What does not work / not done
@@ -46,8 +55,9 @@ The view lane's REPORT.md came in with the n8-view merge; this file replaces it 
 - The bike has no sim archetype: it draws only in `dev/showcase/vehicle_turn.tscn`.
 - The driven car's hijack enter/exit keeps Rivet's current rig (Rivet frozen tonight).
 - The main scene ignores `--ppm`: city stills at 48/64 px/m come from the showcases, not the drive.
-- Bay 3's pale number fades over the cream van roof at 32 px/m in the Servo depot (REQUEST to view:
-  an ink stroke on the bay numbers; `van_cream_servo_depot_combo_32ppm_seed2_f130_olive_left_cream_right_crop.png`).
+- Bay 3's pale number fades over the cream van roof at 32 px/m in the Servo depot before Dent seizes
+  it (REQUEST to view: an ink stroke on the bay numbers; once seized the teal van carries it:
+  `soul_seized_van_servo_depot_combo_32ppm_seed2_f130_before_left_after_right_crop.png`).
 
 ## Calls for the owner
 Each: options, the default built, how to see it.
@@ -75,6 +85,13 @@ Each: options, the default built, how to see it.
 9. **Servo's stage van:** (a) the city van row, cream, matching its top-down print (built); (b) the
    library's ochre `depot_van` as a new atlas row for the stage only (needs a top-down print too, or
    `top` and the card disagree again). See `van_cream_servo_depot_combo_64ppm_seed2_f120_olive_left_cream_right.png`.
+
+10. **The soul-hijacked card:** (a) its light paint goes the soul's teal, like the print's plate
+   (built: `soul_k = 0.85`, `soul_lo = 0.18` in `vehicle_cards.gdshader`); (b) no paint, the seize
+   read by Dent's halo and tether only (`soul_k = 0.0`); (c) roof and hood only, sides kept
+   (`soul_lo = 0.3`). See `soul_hijacked_traffic_tilt70_drive_before_left_after_right.mp4`,
+   `soul_seized_van_servo_depot_combo_64ppm_seed2_f120_before_left_after_right.png`; in the exe:
+   `RTAI.exe -- --boss=servo --view=combo --rigs` (Dent seizes the bay 3 van).
 
 ## Exe
 `build/export/windows/RTAI.exe` (preset `windows-showcase`: boots the arena; embedded pck + the sim DLL
