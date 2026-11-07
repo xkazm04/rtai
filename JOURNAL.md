@@ -848,3 +848,11 @@ NEXT (it22 end; supersedes every NEXT above):
   (`C:/Users/kazda/kiro/gtai-wt/d9-rivet/evidence/d9/rivet_walk_55_contact_x2.png`, rows 6-8 vs 1-5) the left rows
   are darker and stockier, so he changes colour as he turns left in a boss fight. Low priority; if served before
   18:25 I re-pack (one file), else it is the next run's.
+- 17:57 The walk's frame cost: NOT measured (bench.lock held by another run at 17:56; unmeasured is not zero). By
+  code: the grid swaps the card's texture only when the walk starts or stops (path change -> _build), each stride
+  frame is a `.frame` set like the facings. The it16 rig_bench numbers stand for the rest (REPORT).
+- No open REQUEST to rivet in d9-seams or the asset lane (read 17:57). REPORT updated: What works (the walk),
+  What does not (walk limits), Exe (trial).
+NEXT (17:58; NEXT 1-3 of 17:53 stand): 0. If bench.lock is free before 18:20: rig_bench `--view=tilt70` with a
+  walking bare-claw Rivet is not in the bench (it arms him), so skip; say "unmeasured" in the final REPORT.
+- Session end 17:58: everything committed.
