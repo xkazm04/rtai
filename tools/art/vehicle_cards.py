@@ -74,6 +74,11 @@ CREAM_GRADE = True
 BETWEEN_PICKS = {"van": {70: "van_cream_between_70"} | ({55: "van_cream_between_55"} if VAN_BETWEEN_55 else {})} if VAN_SHEET else {}
 # Rows whose five views come from a SHEET_PICKS sheet this build (their HUE_DEG skips columns 0-4).
 _PICKED: set = set()
+# Rows whose side redraw (<id>_side_<p>) was drawn for a repaint sheet (taxi_side_70: taxi_70_v3's
+# native cab yellow): the side keeps its own hue (no HUE_DEG) and its paint is graded to its 3/4
+# neighbours (match_paint). Empty: the redraw takes the row's hue turn, as drawn.
+SIDE_NATIVE = {"taxi"}
+_NATIVE: set = set()
 REDRAWS = {
     "sedan": {2: "sedan_between_c_{p}_v2"},
     "police_car": {2: "police_car_between_c_{p}_v2"},
@@ -335,7 +340,7 @@ def paste(atlas: Image.Image, v: Image.Image, k: float, at: tuple, lift: float) 
     """`v` scaled by `k` into cell (col, row) at `at`, its ground centre at the cell centre."""
     col, row, gain = at
     w, h = max(1, round(v.width * k)), max(1, round(v.height * k))
-    turn = 0.0 if (row in _PICKED and col < 5) else (SERVICE_HUE if _SET else HUE_DEG).get(row, 0.0)
+    turn = 0.0 if (row in _PICKED and col < 5) or (row, col) in _NATIVE else (SERVICE_HUE if _SET else HUE_DEG).get(row, 0.0)
     im = amber(hue_turn(paint(v.resize((w, h), Image.LANCZOS), gain), turn))
     im = hue_turn(im, LAMP_DEG, 0.8, 0.7, 42.0)
     top = DARK_LAMP_V_SIREN if rows_of()[row][0] == "police_car" else DARK_LAMP_V[1]
@@ -361,6 +366,9 @@ def build(root: Path, lib: Path, pitch: int) -> Image.Image:
         redo = lib / "keyed" / "vehicle" / f"{sid}_side_{pitch}.png"
         if SIDE_REDO and redo.exists():  # the side redrawn at the sheet's steeper camera
             vs[2] = one_view(Image.open(redo).convert("RGBA"))
+            if sid in SIDE_NATIVE and not _SET:
+                _NATIVE.add((row, 2))
+                vs[2] = match_paint(vs[2], [vs[1], vs[3]])
             ks[2] = lengths[row] * PPM / vs[2].width
         drop = height * 0.5 * cos_p * PPM  # bbox centre -> ground centre (screen px)
         if _SET:  # each view within FIT_PX wide and, lifted by drop, inside the cell's height
