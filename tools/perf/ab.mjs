@@ -89,8 +89,11 @@ async function runOnce(sceneName, arm, round, outDir) {
   const others = foreignGodot().length;
   const env = { ...process.env, APPDATA: process.env.APPDATA_PERF ?? 'C:/Users/kazda/kiro/gtai-d9x/appdata/perf' };
   const sampler = startSampler();
-  const args = [...sc.engine, ...arm.engine, sc.scene, '--', ...user, ...arm.user];
-  const res = arm.name.endsWith('@exe') ? await runExe(sc.headless ? ['--headless', ...args] : args, env)
+  const exe = arm.name.endsWith('@exe');
+  if (exe && sc.scene !== 'res://dev/bench/city_bench.tscn') return { error: `${sceneName}: @exe runs city_bench presets only` };
+  // A release template refuses a scene path (disable_path_overrides): the bench export boots city_bench.
+  const args = [...sc.engine, ...arm.engine, ...(exe ? [] : [sc.scene]), '--', ...user, ...arm.user];
+  const res = exe ? await runExe(sc.headless ? ['--headless', ...args] : args, env)
     : await runGodot(args, { headless: !!sc.headless, env, timeoutMs: 6 * 60 * 1000, name: `perf-ab-${sceneName}` });
   const proc = sampler.stop();
   const errors = (res.out.match(new RegExp(SCRIPT_ERROR.source, 'g')) ?? []).length;

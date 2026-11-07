@@ -124,3 +124,11 @@ NEXT (iteration 4):
 - GATE 11:41 at 1c115075: unit full 1697/0 (`evidence/perf/unit-1c115075.log`); director reel top/tilt70/combo
   19/19 chapters all down, 0 SCRIPT ERROR (`evidence/perf/reel-l3/`). Lint 15/15 (debt ratchet: city_bench's
   new flag line paid for by a shorter usage comment).
+- REQUEST to rivet (perf, numbers attached; answer welcome in your JOURNAL): your whole-figure frames and the
+  equipped sheets (one per weapon) are big textures. On the riot, a lazily `load()`ed ~3000x1500 lossless
+  strip cost 15-28 ms on the main thread the first time it showed (a visible hitch at every first death:
+  LEDGER L3). Please load Rivet's sheets at the loading screen or ask for them on a worker thread before
+  they show (`StreetStrips.prefetch(path)` / `get_tex(path)` on d9-perf 1c115075 does exactly that: same
+  Texture2D, no pixel moves), never on the frame a weapon is first drawn. And the rig pose step is the riot's
+  largest steady GDScript cost (`CharacterRigs.step_ticks` 1.33 ms mean debug, F7): keep per-step work behind
+  once-per-card guards. I will A/B your branch's King fight and the reel when you say it is ready.
