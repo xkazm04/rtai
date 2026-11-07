@@ -738,3 +738,33 @@ portraits to the game lanes). Main has not moved (merge-base = main 0bea8b93).
   pre-commit lint passed on it, 15/15 over 1222 files.
   FRICTION (2 min, mine): a Python regex backreference in a heredoc wrote \x01 into the baseline; the
   pre-commit hook (debt-ratchet JSON parse) stopped the commit; fixed by hand.
+- 16:11 GATE on the trial merge ab6b34f2 (native DLLs copied from this worktree): unit 1735/0,
+  release-compile 605/0, director reel top / tilt70 / combo 19/19 FULLY down, 0 SCRIPT ERROR, 0 p_frame,
+  the 2 known ^ERROR lines each (`evidence/d9-seams/mergetrial-it9-*.log`, `director-reel-merge-it9-*.log`).
+  Scenarios on the merge running.
+- 16:11 FILMED the merge (film9.sh, 1280x800, d3d12, 0 SCRIPT ERROR both): the King fight combo 64 px/m
+  seed 2 f250 (--boss-cam to frame him) and the city block tilt70 32 px/m seed 5 f900. LOOKED: the King's
+  drawn legs stand over the floor marking (feet in front of it), his press plates carry no rim, Rivet's
+  drawn figure and shadow beside him; the city block's armed cops, shields and the crossing read; no
+  seam. Still `merge_trial_it9_seams_rivet_bd526bf9_king_combo_64ppm_seed2_f250_city_tilt70_32ppm_seed5_f900.png`
+  (masters; not in frames.json: not a before/after). Rivet at 1.1 m reads small beside the cops: that
+  is the rivet lane's own Call 1, not a seam. Avi deleted.
+- 16:14 SEAM READ (closed): when a body behind a kerb barrier makes PropOcclusion redraw the barrier, the
+  bodies in front of it are lifted by FRONT_DZ. Rivet's drawn figure is `rig.head_card` (RivetFrames),
+  a child of his rig, so it rides the lift; his held views map through RigDepthSort.rig_of. No change.
+  Still unfilmed (no staging flag): a DEAD Rivet behind a barrier (PropLying boxes from the hidden parts'
+  head; the parts plan is 1.8 m against the 1.1 m drawn sprawl, so the box runs long: a harmless extra
+  redraw of the barrier, never a short box, unless his drawn sprawl points another way than the parts).
+- 16:16 MEASURED + CLOSED (REPORT does-not list): the SWAT back row's head move is a regular two-per-stride
+  bob, 3 px = 1.6 % of the figure at 55, 5 px = 2.8 % at 70 (cell tops 2/7/3/7), about a walking head's
+  rise and fall, ~1.6 px at 32 px/m: not a fault. Every other SWAT row is 0-1 px (the head-line splice).
+- 16:17 MEASURED (REPORT): the planter's print density (0.67 mean) is mid-pack among the 70 props
+  (0.42-0.86); lifting it alone breaks the set. Left.
+- 16:18 NOTE to assets (not a REQUEST): your it88 portrait offer says "the game still shows the old d5 King
+  portrait (grey design)". It does not: the HUD's `king` portrait (data/tables/portraits.json) is the
+  shipped p55 bust card frame 0, by the owner's d8 verdict; the d5 portraits under
+  `features/characters/art/d5/portraits/` are read only by a dev showcase (`dev/showcase/d5_dialogue_run.gd`).
+  A swap to portrait_king_55_b is an owner call (and the hud lane's slot), not a seam; seams does not take it.
+- 16:18 Not built (decided): Call 2's option (a corpse stopped at a wall). A view-side redirect of the drawn
+  fall would have to match city's crowd-atlas corpse at the 90-tick swap (StreetCrowdCorpse.fall_cell),
+  a new jump seam across street, city and the arena's props; the owner has not picked it.

@@ -159,6 +159,7 @@ selftest alone at share 0: look goldens 11/11 (worst 0.27). Evidence at eac11147
 scenarios 52/52, parity, selftest (look goldens 11/11), release-compile 601/0 PASS; unit 1705 passed /
 0 failed but marked FAIL by the tree-changed guard (I edited REPORT.md during the run; no test failed).
 Logs `evidence/d9-seams/evidence-it2-*.log`.
+Trial merge it9 (d9-seams 67a7c264 + d9-rivet bd526bf9, scratch commit ab6b34f2, not a branch): lint 15/15, unit 1735/0, release-compile 605/0, director reel top/tilt70/combo 19/19 fully down, 0 SCRIPT ERROR (`evidence/d9-seams/mergetrial-it9-*.log`, `director-reel-merge-it9-*.log`). Conflicts: JOURNAL.md (add/add: keep both) and `tools/debt/baseline.json` (both lanes accepted a dev_loc rise from 18799: keep both lines, chain 18799 -> 18805 -> 18871, total 18871, then `node tools/debt/debt.mjs --update`). Still: `gtai-masters/d9/seams/merge_trial_it9_seams_rivet_bd526bf9_king_combo_64ppm_seed2_f250_city_tilt70_32ppm_seed5_f900.png`.
 Gates it8: evidence at 90e9a69c all PASS (lint 15/15, unit 1718/0, scenarios 52, parity, goldens 11/11, release-compile 602/0) (`evidence/d9-seams/evidence-it8-90e9a69c.log`); director reel it8 at 90e5a006 top/tilt70/combo 19/19 down, 0 SCRIPT ERROR (`evidence/d9-seams/director-reel-it8-*.log`).
 Gates it7: evidence at a8940e1b all PASS (unit 1717/0, scenarios 52, parity, goldens 11/11, release-compile 602/0); director reel it7 19/19 x3, 0 SCRIPT ERROR.
 Gates it1: lint 15/15; unit no-arg 1696 passed / 0 failed (at 966a2a79);
@@ -166,8 +167,12 @@ director reel (`--fixed-fps 60 --quit-after 14000`) top 19/19, tilt70 19/19, com
 0 SCRIPT ERROR (`evidence/d9-seams/director-reel-it1-*.log`). Not yet run: `tools/evidence/run.mjs --no-bench`.
 
 ## What does not work yet
-- The SWAT back rows (55 and 70, the library's mirror-fixed row 5) let the head move 3-5 px over the
-  stride (drawn, not a splice; left). The riot 55 repeat is fixed (it7, item 18).
+- (closed it9, measured) The SWAT back rows (55 and 70, row 5) move the head 3 px (1.6 % of the figure) at 55
+  and 5 px (2.8 %) at 70, a regular two-per-stride bob (2/7/3/7 px from the cell top), about a walking
+  head's own rise and fall; ~1.6 px at 32 px/m. Kept: not a fault. The riot 55 repeat is fixed (it7, item 18).
+- (measured it9) The planter's world print is not an outlier among the 70 props: mean print density 0.67
+  against 0.42-0.86 (bench 0.57, trash can 0.65, traffic cone 0.73, dumpster 0.86); lifting it alone would
+  break the set. Left as is.
 - The elder's 3/4-away walk row alternates weakly (the asset lane's named weak row; 4 fix asks failed).
 - The sim bike is off by default (Call 3).
 - After merge, rebuild native (`just native`): `project/native/bin` is git-ignored, and the old DLL
