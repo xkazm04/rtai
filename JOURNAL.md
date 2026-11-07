@@ -966,3 +966,13 @@ NEXT (iteration 17, replaces the NEXT above):
 4. Exe at the freeze, REPORT.md by 08:40 with every Call (list in the NEXT above) and the
    bench-it16 caveat (it measured the view without the cards).
 Session end 03:27.
+03:31 MEASURED NEXT 3 (the parked pickup under the grade), done: the city at tilt70 32 px/m, seeds
+3 5 13 17 29 31 (`-- --arena=city --view=tilt70 --seed=<n> --rigs`, 181 frames, 0 SCRIPT ERROR),
+frames every 30. A pickup at seed 13 f30/f60: its rust body prints (106,61,28), 2,035 / 1,229
+rust px, 0 / 2 vermilion-gate px: CLOSED (it stays brown under the grade). NEW: a taxi's lit rear
+lamps at seed 13 f180 print (233,140,0): 158 + 150 gate px (one taxi, both lamps). They read amber
+to the eye (masters pickup_rust_and_taxi_lamps_city_tilt70_32ppm_seed13_crop3x.png, right), but the
+gate counts them: the grade pushes even LAMP_DEG's turned amber over r - max(g, b) >= 79. Options
+for iteration 17: LAMP_DEG 10 -> 14 on lit lenses (re-cut, film the siren lens test again), or a
+Call (the gate is crude for lit amber: 255,170,0 is "vermilion" by it).
+Session end 03:32.
