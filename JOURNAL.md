@@ -1456,3 +1456,9 @@ NEXT (after the freeze; for a later night or the Director's merge):
   suit peds walk, buckle and lie in one look. Masters
   peds_suit_cap_v3_walk_fall_tilt70_64ppm_board_realtime_then_0.25x.mp4 (named in frames.json #2's
   note; frames.json stays at 15). Raw .avi deleted.
+- TRIED, KEPT OUT (08:00, time-boxed): street_value_match.py on the worker's long fall (default sat
+  0.47): the overalls darken toward the walk's olive, but at 32 px/m the step is barely visible and
+  a texture change now would cost a re-gate and a re-export before the stop. One command away
+  (`street_value_match.py ped_worker_walk.png ped_worker_long_fall.png <out>`), for a later night.
+- Session end 08:01: tree clean; the freeze state is 2de46fa1's code (gates and the exe on it), the
+  later commits are docs and evidence. Scratch renders deleted (logs kept).
