@@ -57,6 +57,7 @@ func _finish() -> void:
 		"p95_ms": _pct(sorted, 0.95),
 		"p99_ms": _pct(sorted, 0.99),
 		"max_ms": sorted[-1] / 1000.0 if not sorted.is_empty() else 0.0,
+		"wall_ms": _times.map(func(us: int) -> float: return us / 1000.0),  # d9-perf: ab.mjs `quest1`
 		"vsync": "off",
 		"size":
 		[get_viewport().get_visible_rect().size.x, get_viewport().get_visible_rect().size.y],

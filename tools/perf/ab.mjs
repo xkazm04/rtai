@@ -47,6 +47,9 @@ export const SCENES = {
     user: ['--scenario=drive_dense', '--zoom=1.5', '--view=tilt70', '--secs=30', '--vsync=enabled', '--out=OUT'] },
   riot60: { engine: CAP60, scene: 'res://dev/bench/city_bench.tscn', kind: 'bench',
     user: ['--scenario=riot', '--zoom=1.0', '--view=tilt70', '--secs=30', '--vsync=enabled', '--out=OUT'] },
+  // quest 1 from the Dock 9 fight (quest1_frames: its own one-tick-a-frame loop, 1200 frames, the play view).
+  quest1: { engine: [...WIN, '-s', 'res://dev/bench/quest1_frames.gd'], scene: '', kind: 'slice',
+    user: ['--out=OUT', '--view=tilt70'] },
   drive70h: { engine: ['--fixed-fps', '60'], headless: true, scene: 'res://dev/bench/city_bench.tscn', kind: 'bench',
     user: ['--scenario=drive_dense', '--zoom=1.5', '--view=tilt70', '--secs=30', '--out=OUT'] },
 };
@@ -71,6 +74,7 @@ function parseArgs(argv) {
 
 /** Frames of one log, warm-up / settle frames dropped, plus the side series (render, draws). */
 export function readLog(kind, doc) {
+  if (kind === 'slice') return { wall: doc.wall_ms ?? [], side: {} }; // quest1_frames: already past its warm-up
   if (kind === 'bench') {
     const m = doc.metrics ?? {};
     return { wall: doc.frame_ms, side: { draws: m.drawCallsAvg, renderCpu: m.renderCpuMsAvg,
@@ -96,7 +100,7 @@ async function runOnce(sceneName, arm, round, outDir) {
   const exe = arm.name.endsWith('@exe');
   if (exe && sc.scene !== 'res://dev/bench/city_bench.tscn') return { error: `${sceneName}: @exe runs city_bench presets only` };
   // A release template refuses a scene path (disable_path_overrides): the bench export boots city_bench.
-  const args = [...sc.engine, ...arm.engine, ...(exe ? [] : [sc.scene]), '--', ...user, ...arm.user];
+  const args = [...sc.engine, ...arm.engine, ...(exe || !sc.scene ? [] : [sc.scene]), '--', ...user, ...arm.user];
   const res = exe ? await runExe(sc.headless ? ['--headless', ...args] : args, env)
     : await runGodot(args, { headless: !!sc.headless, env, timeoutMs: 6 * 60 * 1000, name: `perf-ab-${sceneName}` });
   const proc = sampler.stop();

@@ -54,6 +54,10 @@ test('a bench log carries the render GPU ms from its metrics', () => {
   assert.equal(log.side.renderGpu, 1.5);
 });
 
+test('a slice log (quest1_frames) keeps every frame', () => {
+  assert.deepEqual(readLog('slice', { wall_ms: [900, 5, 6] }).wall, [900, 5, 6]);
+});
+
 test('procStats: steady CPU in cores after the boot samples, peak working set in MB', async () => {
   const { procStats } = await import('./ab.mjs');
   const row = (t, cpu, ws) => JSON.stringify({ t, cpu100ns: cpu, ws, threads: 30, procs: 2 });
