@@ -11,8 +11,8 @@ extends Node2D
 ## just under them when a fighter stands in front (VehicleFront fed with the arena's living
 ## fighters); else, and off a print, over the floor and under the actors.
 
-## WHITE: the seize reads by Dent's halo and teal tether; Color(0.62, 0.95, 0.9) tints the card
-## (a multiply: it turned the olive depot van and its lamps green, not teal).
+## WHITE: the seized card's teal is the shader's soul paint (VehicleCards.SOUL in its wear); a
+## multiply tint Color(0.62, 0.95, 0.9) turned the olive depot van and its lamps green, not teal.
 const SOUL: Color = Color.WHITE
 ## A fighter wider than this (radius, m) adds its edges to the front grid (people are 0.45).
 const WIDE_M: float = 0.6

@@ -51,7 +51,9 @@ func test_the_wreck_fire_stays_on_the_ground_without_cards() -> void:
 
 func test_wear_levels_follow_the_damage_state_and_seed_per_car() -> void:
 	assert_eq(VehicleCards.wear(VehicleBody.State.INTACT, 0), 0)
-	assert_eq(VehicleCards.wear(VehicleBody.State.HIJACKED, 0), 0, "hijacked: no dents")
+	var soul: int = VehicleCards.wear(VehicleBody.State.HIJACKED, 0)
+	assert_eq(soul, VehicleCards.SOUL, "hijacked: the soul's teal, no dents")
+	assert_eq(VehicleCards.wear(VehicleBody.State.HIJACKED, 5) % VehicleCards.SIREN % 4, 0)
 	assert_eq(VehicleCards.wear(VehicleBody.State.D1, 0) % 4, 1)
 	assert_eq(VehicleCards.wear(VehicleBody.State.D2, 5) % 4, 2)
 	assert_eq(VehicleCards.wear(VehicleBody.State.WRECK, 9) % 4, 3)
@@ -93,3 +95,11 @@ func test_only_a_moving_police_card_flashes_its_bar() -> void:
 	assert_eq(VehicleCards.duty(VehicleCards.POLICE_ART, 0.0), 0, "a parked cruiser stays dark")
 	assert_eq(VehicleCards.duty(0, 8.0), 0, "a sedan has no bar")
 	assert_true(VehicleCards.SIREN > VehicleCards.wear(VehicleBody.State.WRECK, 63), "a bit apart")
+
+
+func test_soul_bit_sits_above_the_siren_and_matches_the_shader() -> void:
+	var top: int = VehicleCards.SIREN + VehicleCards.wear(VehicleBody.State.WRECK, 63)
+	assert_gt(VehicleCards.SOUL, top, "a soul-hijacked cruiser on duty keeps both bits apart")
+	var code: String = (load(VehicleCards.SHADER) as Shader).code
+	assert_string_contains(code, "soul_bit = %.1f;" % float(VehicleCards.SOUL))
+	assert_string_contains(code, "siren_bit = %.1f;" % float(VehicleCards.SIREN))

@@ -7,6 +7,8 @@ shader_type canvas_item;
 // the print's ink, pale scratches, and for a wreck a burnt, desaturated body with dim embers.
 // custom.z >= siren_bit (VehicleCards.SIREN): the light bar flashes, its blue and amber lenses
 // (found by colour in the cell's top band, so the amber tail lamps never flash) lit in turn.
+// custom.z >= soul_bit (VehicleCards.SOUL, a soul-hijacked car): the light paint turns the soul's
+// teal (the flat print's teal plate), its shading kept; the ink, glass and tyres stay dark.
 
 uniform int cols = 5;
 uniform int rows = 9;
@@ -14,6 +16,10 @@ uniform vec3 ink = vec3(0.09, 0.075, 0.106);
 uniform vec3 scratch = vec3(0.78, 0.76, 0.72);
 uniform vec3 ember = vec3(1.0, 0.55, 0.12);
 uniform float siren_bit = 256.0;
+uniform float soul_bit = 512.0;
+uniform vec3 soul_teal = vec3(0.12, 0.68, 0.63);
+uniform float soul_k = 0.85;
+uniform float soul_lo = 0.18;
 uniform float siren_hz = 2.2;
 uniform float lens_band = 0.45;
 uniform float glow_px = 16.0;
@@ -24,6 +30,7 @@ varying vec2 nose;
 varying float level;
 varying float seed;
 varying float siren;
+varying float soul;
 
 float hash(vec2 p) {
 	return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
@@ -79,6 +86,8 @@ void vertex() {
 	float a = radians(c < 4.5 ? 90.0 - 45.0 * c : 67.5 - 45.0 * (c - 5.0));
 	nose = vec2(cos(a) * (INSTANCE_CUSTOM.y > 0.5 ? -1.0 : 1.0), sin(a));
 	float w = floor(INSTANCE_CUSTOM.z + 0.5);
+	soul = w >= soul_bit ? 1.0 : 0.0;
+	w = mod(w, soul_bit);
 	siren = w >= siren_bit ? 1.0 : 0.0;
 	w = mod(w, siren_bit);
 	level = mod(w, 4.0);
@@ -115,6 +124,10 @@ void fragment() {
 			float e = smoothstep(0.78, 0.84, fbm(local * 40.0 + o.yx));
 			col.rgb = mix(col.rgb, ember, e * 0.6);
 		}
+	}
+	if (soul > 0.5) {
+		float v = dot(col.rgb, vec3(0.299, 0.587, 0.114));
+		col.rgb = mix(col.rgb, soul_teal * (0.55 + 0.6 * v), smoothstep(soul_lo, soul_lo + 0.25, v) * soul_k);
 	}
 	if (siren > 0.5 && local.y < lens_band) {
 		// The lit lens's glow round it: 16 taps on two rings (TEXTURE is a stage built-in, so the

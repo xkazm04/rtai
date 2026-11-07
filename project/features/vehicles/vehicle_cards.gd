@@ -2,30 +2,28 @@ class_name VehicleCards
 extends Node2D
 ## n8 vehicles: every car under a tilted view as a ROTATION SET from art (render only). The atlas
 ## (tools/art/vehicle_cards.py, art/<view art key>/traffic_cards.png) holds, per sim car art id, the
-## library turntable's five rotations for that pitch (nose to the camera, three-quarter toward,
-## side, three-quarter away, tail), the car's ground centre at each cell's centre; the three other
-## eighths are those mirrored. A car draws the view nearest its heading, turned by the rest (at most
-## VIEW_DEG / 2), as an upright card stretched back by 1 / ground_k (the art's own proportions).
-## Within `blend_deg` of a view boundary the neighbours cross-fade (0 = hard swap). Keyed by view
-## art (p70 / p55; `top` none); a FINE row adds four 22.5-deg in-betweens (VehicleViews).
+## library turntable's five rotations for that pitch (nose to camera, three-quarter toward, side,
+## three-quarter away, tail; ground centre at the cell's centre), the other eighths mirrored. A car
+## draws the view nearest its heading, turned by the rest (<= VIEW_DEG / 2), as an upright card
+## stretched back by 1 / ground_k; within `blend_deg` of a view boundary the neighbours cross-fade.
+## Keyed by view art (p70 / p55; `top` none); a FINE row adds four 22.5-deg in-betweens.
 
 const DIR: String = "res://features/vehicles/art/%s/traffic_cards.png"
 const SHADER: String = "res://features/vehicles/vehicle_cards.gdshader"
 const ROWS: int = 9  # the sim's art ids 0-8; VehicleViews.BIKE_ART after them (no sim bike yet)
 const CELL_M: float = 7.0  # the atlas cell's side (m): CELL_PX 448 at 64 px/m
-## The cross-fade window around a view boundary (degrees of heading); 0 = hard swap.
-const BLEND_DEG: float = 0.0
+const BLEND_DEG: float = 0.0  # the cross-fade round a view boundary (deg of heading); 0 = hard swap
 const CAP: int = 256
 const WEAR_SEEDS: int = 64  # distinct dent patterns (the wear's seed range)
-## Added to a wear(): the car's light bar flashes (the shader's siren_bit; police on duty).
+## Added to a wear(): SIREN flashes the light bar (police on duty, duty()); SOUL paints the soul's
+## teal (a soul-hijacked car: the flat print's teal plate). The shader's siren_bit and soul_bit.
 const SIREN: int = 4 * WEAR_SEEDS
-## The police cruiser's art row, and the speed (m/s) over which its light bar flashes.
-const POLICE_ART: int = 8
-const DUTY_SPEED: float = 1.0
+const SOUL: int = 2 * SIREN
+const POLICE_ART: int = 8  # the police cruiser's art row
+const DUTY_SPEED: float = 1.0  # m/s: over it the cruiser's light bar flashes
 
 static var _tex: Dictionary[String, Texture2D] = {}
-## The live cross-fade window (dev scenes try others; the game keeps BLEND_DEG).
-static var blend_deg: float = BLEND_DEG
+static var blend_deg: float = BLEND_DEG  # live (dev scenes try others; the game: BLEND_DEG)
 ## How upright the card's vertical stays as it turns by the rest: 0 = the card rotates rigidly,
 ## 1 = only its long axis turns and its verticals stay screen-vertical (a yaw shear, no roll).
 static var upright_k: float = 0.0
@@ -34,9 +32,9 @@ static var upright_k: float = 0.0
 var front: VehicleFront = VehicleFront.new()
 ## The cards with someone in front, drawn just under the actors (VehicleView parents it there).
 var under: MultiMeshInstance2D = null
-## Skip cars whose ground point is off screen by more than a cell (VehicleView sets it).
+## Skip cars whose ground point is off screen by more than a cell (VehicleView sets it); `seen`
+## is this frame's cull rect (m; begin() sets it), empty without cull.
 var cull: bool = false
-## This frame's cull rect (m; begin() sets it), empty without cull.
 var seen: Rect2 = Rect2()
 var _mm: MultiMesh = null
 var _mm_under: MultiMesh = null
@@ -93,11 +91,13 @@ func begin(tex: Texture2D) -> void:
 	seen = VehicleCull.screen_m(self, CELL_M) if cull else Rect2()
 
 
-## The shader's wear for VehicleBody.State `state`: 0 intact (and hijacked), 1 dented (D1), 2
-## smashed (D2), 3 burnt wreck, plus 4 x a seed from `id` (two wrecks wear different dents).
+## The shader's wear for VehicleBody.State `state`: 0 intact, 1 dented (D1), 2 smashed (D2), 3 burnt
+## wreck, + 4 x a seed from `id` (two wrecks wear different dents); soul-hijacked: SOUL, no dents.
 static func wear(state: int, id: int) -> int:
 	var level: int = 0
 	match state:
+		VehicleBody.State.HIJACKED:
+			level = SOUL
 		VehicleBody.State.D1:
 			level = 1
 		VehicleBody.State.D2:
@@ -158,7 +158,7 @@ static func back_to_front(ys: PackedFloat32Array) -> Array[int]:
 	return order
 
 
-## The cards drawn this frame (all), and those under the actors (someone in front).
+## The cards drawn this frame (all; count_under(): those under the actors, someone in front).
 func count() -> int:
 	return _n
 
