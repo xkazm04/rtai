@@ -59,4 +59,4 @@ func test_only_the_dying_and_the_dead_draw_a_fall_grid() -> void:
 	rig.dead = true
 	assert_eq(StreetWalkerFall.grid_of(rig, "p70", row), "ped_hood_fall.png", "dead: the grid")
 	assert_eq(StreetWalkerFall.grid_of(rig, "p55", row), "", "no 55 fall grids")
-	assert_eq(StreetWalkerFall.grid_of(rig, "p70", "ped/head_punk"), "", "a row with no grid")
+	assert_eq(StreetWalkerFall.grid_of(rig, "p70", "ped/head_none"), "", "a row with no grid")
