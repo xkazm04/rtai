@@ -64,6 +64,8 @@ Every look has a flag one value away (`PAPER`, `FACES`, `SEE`, `ON_TICKET`, `FIT
 
 ## What does not work / not done
 - No vendor exists in the game: the rack and the crate are the showcase's display forms.
+- On the wall rack the molotov is a sliver (~10 px wide at 64 px/m, a speck at 32): the rack sizes
+  each piece by its length; a bottle needs a minimum width (`armory_showcase_64ppm_tilt70_tilt.png`, it20).
 - No boss taunt line system and no owner-signed boss lines: `BossTaunt` waits for a caller.
 - The car radio carries no speech (3 placeholder music loops): no speaker to frame; a
   `PortraitBook` `kind: device` row is the hook.

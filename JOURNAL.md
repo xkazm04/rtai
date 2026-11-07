@@ -1220,3 +1220,16 @@ fixed, the camera still mixed) and `portrait_nurse_v5` (0835, C; its notes name 
   the King's p70 bust card (the cape), the electro gun (the design's copper coil, as the assets lane
   measured). The dialogue board's full-HUD still puts the box over the 4-chip ghost card: board
   only (it does not fold the card); live, `GhostFormHud.compact` folds it while a line is up.
+- MILESTONE (evidence, no code) the showcase at 64 px/m, the third close-range zoom the brief names
+  (masters only had 32/48): the armory tilt70 and tilt at `--ppm=64` (seed 1 f89, 0 SCRIPT ERROR
+  each, `it20/film.sh`). Floor pieces hold their detail at both pitches (the electro gun's coil
+  rings, the shard's amethyst crystals, the drum bomb-thrower's rivets, the dish ray's bell). Weak
+  spot found: on the WALL RACK the molotov stands as a sliver (~10 px wide at 64, a speck at 32);
+  the floor bottle reads. Not fixed tonight (the rack sizes by length; a bottle needs a min width):
+  REPORT next steps. Master `armory_showcase_64ppm_tilt70_tilt.png` (named in frames.json 1's note).
+  Scratch frames deleted (it20 7.6 MB, logs + scripts kept).
+Registry rules applied (it20): `generative-artifact-gating` (a C sheet's note read for the keyed
+post fix it names; the B v2 electro gun checked against the A design before not taking it),
+`sprite-and-atlas-production` (the busts cut by `portrait_cut.py`, provenance per file),
+`accessibility` (red kept for blood: measured, not eyeballed), `motion-quality-gating` +
+`concept-scene-parity` (judged on the real armory scene at the third zoom).
