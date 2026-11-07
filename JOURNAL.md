@@ -265,3 +265,22 @@ DECISION item 2 (70): LIFT 0.74 at 70 (the assets lane's mock overlap 0.2 read a
 stubs); one value per pitch in KingLegsCard.LIFT. Rejected: v4 (B: hollow thigh tubes show under the hem).
 - 11:55 GATE director reel it3 (at 4aa2a0e0: armed cops, rider, legs 70): top, tilt70, combo 19/19 down, 0 SCRIPT ERROR (`evidence/d9-seams/director-reel-it3-*.log`).
 - 11:59 FIX (item 2): KingLegsCard.show_parts hides rig.pelvis_spr with the leg parts; the rimmed disc under the boots is gone at 55 and 70 (masters `king_pelvis_before_after_combo55_tilt70_64ppm_seed2_f150_x2.png`); unit test_king_legs_card 5/0.
+- 12:05 FRICTION item 4 (planter's in-game frame): the King's boulevard "planters" are crate stacks in
+  the arena; the streamed city paints planters sparsely (tile_painter) and none showed in the main scene
+  (--view=tilt seed 7) or the arena block (--view=tilt seed 5) at frame 180. 6 min, no frame yet.
+
+NEXT:
+1. Item 4 in-game frame: `dev/showcase/d5_hero_run.gd` places a planter at (-9.6, 4.85): film it under
+   `--view=tilt` (p55) at 32 and 64 (check its args), else find a planter tile in the streamed city
+   (tile_painter's prop slots) and teleport there.
+2. Item 5 follow-ups: when assets serve `swat_walk_armed_70` and the 55 armed walks (REQUEST it3), add
+   rows to StreetCopWalk.WALKS + FILL (street_walk.py, street_tone.py; street_armband.py if orange).
+   Judge a cop's baton strike swap (grid -> parts -> grid) in motion at 48 px/m; if it pops, consider a
+   short hold or keeping the grid through the strike.
+3. Item 2: the owner's Call 1 (lifts 55 0.5 / 70 0.74). Film the King walking at 70 across the ease to
+   55 (combo, before the engage) to check the swap between the two leg sheets.
+4. Item 3: bikes stay at share 0 (Call 3). The rider is in; nothing owed unless the owner turns them on
+   (then rebaseline the top look goldens).
+5. Re-run `node tools/evidence/run.mjs --no-bench` (logs to scratch, then copy in) at the head; the
+   reels ran at 4aa2a0e0 (19/19 x3); bb7077f5 only hides the King's pelvis (render).
+6. Rivet lane asked nothing of seams (its "grey blob in the Servo fight" is theirs to identify first).

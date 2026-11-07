@@ -49,7 +49,9 @@ Branch `d9-seams`. Evidence: `C:\Users\kazda\kiro\gtai-masters\d9\seams\` (`fram
 9. **The King's drawn legs at 70** (item 2, 4aa2a0e0, it3): king_legs_70_v3 (A, no hip ring) under the
    70 bust with a per-pitch lift (`KingLegsCard.LIFT` {55: 0.5, 70: 0.74}: the hem over the thigh tops);
    55 now on king_legs_55_v2 (A, the profile strides). `king_legs70_before_after_tilt70_{64,32}ppm_seed2_f150_x{2,3}.png`,
-   `king_legs70_tilt70_64ppm_seed2.mp4`, `king_legs55v2_combo_64ppm_seed2.mp4`.
+   `king_legs70_tilt70_64ppm_seed2.mp4`, `king_legs55v2_combo_64ppm_seed2.mp4`. The pelvis part now
+   hides with the leg parts (bb7077f5: it showed as a rimmed disc between the boots under the lifted
+   bust): `king_pelvis_before_after_combo55_tilt70_64ppm_seed2_f150_x2.png`.
 
 Gates it3: director reel at 4aa2a0e0 top/tilt70/combo 19/19 down, 0 SCRIPT ERROR
 (`evidence/d9-seams/director-reel-it3-*.log`); evidence at f74bb3ed (items 5 + the rider): lint 15/15, unit 1711/0, scenarios 52/52,
