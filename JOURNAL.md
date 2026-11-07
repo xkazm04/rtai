@@ -167,3 +167,8 @@ NEXT (iteration 5):
 5. Size lever: a custom export template without unused modules (exe 109 MB): research the 4.7 build profile
    (`build_profile` / the engine compilation configuration editor) and the compile time first.
 6. release_compile: re-run the evidence once seams' per-worktree temp dir lands (blocked twice today, not mine).
+- 12:06 MASTERS started: `C:\Users\kazda\kiro\gtai-masters\d9\perf\riot-l3-off-vs-on.mp4` (+ off/on singles, the end
+  still, frames.json 3 entries): the riot with --perf-hud, L3 off vs on, 1280x720 movie mode. Looked at the end
+  still: same scene both sides; HUD worst 18.9 vs 13.8 ms (RELATIVE, F4). The HUD's right edge clips at 1280 px
+  (the vram readout): a PerfHud placement fix is owed. The King + city drive pair (before = main) is still NEXT 1.
+- Boot rerun on one screen (12:02): exe median 2.58 s vs editor 4.08 s (LEDGER). Size research in the digest.
