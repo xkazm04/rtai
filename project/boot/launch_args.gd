@@ -94,6 +94,8 @@ func _ready() -> void:
 		profile.apply(get_window())
 		if profile.is_handheld():
 			add_child(HandheldFocusPause.new())
+		if profile.rumble > 0.0:
+			add_child(HandheldRumble.new(profile.rumble))
 
 
 ## Parses `--flag` and `--flag=value` pairs; unknown ones are kept for unknown().

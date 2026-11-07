@@ -23,6 +23,11 @@
             "minLength": 1,
             "type": "string"
           },
+          "rumble": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
           "sim_gpu": {
             "enum": [
               "discrete",

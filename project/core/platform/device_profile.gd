@@ -23,6 +23,8 @@ var max_fps: int = -1
 var vsync: String = ""
 var stretch_mode: String = ""
 var zoom_k: float = 1.0
+## The pad rumble gain (0 = none; HandheldRumble plays the pulses).
+var rumble: float = 0.0
 var tier: StringName = &"full"
 var ids: Array[String] = []
 
@@ -74,6 +76,8 @@ func _read(row: Dictionary) -> void:
 	stretch_mode = str(row.get("stretch_mode", ""))
 	var k: float = row.get("zoom_k", 1.0)
 	zoom_k = k
+	var r: float = row.get("rumble", 0.0)
+	rumble = r
 	tier = StringName(str(row.get("tier", "full")))
 
 
@@ -107,6 +111,6 @@ func apply(window: Window) -> void:
 
 func describe() -> String:
 	return (
-		"window %dx%d, max_fps %d, vsync %s, stretch %s, zoom_k %.2f, tier %s"
-		% [window_size.x, window_size.y, max_fps, vsync, stretch_mode, zoom_k, tier]
+		"window %dx%d, max_fps %d, vsync %s, stretch %s, zoom_k %.2f, tier %s, rumble %.2f"
+		% [window_size.x, window_size.y, max_fps, vsync, stretch_mode, zoom_k, tier, rumble]
 	)
