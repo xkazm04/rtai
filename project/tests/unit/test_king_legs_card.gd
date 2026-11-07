@@ -80,3 +80,24 @@ func test_the_king_and_his_gang_have_a_sheet_at_both_pitches() -> void:
 		assert_true(KingLegsCard.SHEETS.has(art_dir), art_dir)
 		for pitch: int in [55, 70]:
 			assert_not_null(KingLegsCard.sheet(pitch, KingLegsCard.SHEETS[art_dir]), art_dir)
+
+
+func test_the_walk_row_follows_the_ground_walked() -> void:
+	var rig: CutRig = autofree(CutRig.new())
+	var legs: Node = autofree(Node.new())
+	rig.speed_now = 100.0
+	rig.global_position = Vector2.ZERO
+	assert_eq(KingLegsCard.walk_row(rig, legs, 100.0), 1, "no ground walked yet: the first frame")
+	rig.global_position = Vector2(30.0, 0.0)
+	assert_eq(KingLegsCard.walk_row(rig, legs, 100.0), 2, "0.3 of a drawn cycle: the second frame")
+	rig.global_position = Vector2(30.0, 40.0)
+	assert_eq(KingLegsCard.walk_row(rig, legs, 100.0), 3, "0.7: the third, whatever the heading")
+	rig.global_position = Vector2(30.0, 80.0)
+	assert_eq(KingLegsCard.walk_row(rig, legs, 100.0), 1, "1.1: round the cycle again")
+	rig.speed_now = 0.0
+	assert_eq(KingLegsCard.walk_row(rig, legs, 100.0), 0, "standing")
+
+
+func test_a_drawn_cycle_is_longer_than_the_kings_gait_cycle_at_55() -> void:
+	# The probe of it10: the King's gait cycle is 64 world px at card scale 0.555 (55).
+	assert_gt(KingLegsCard.CYCLE_CELL[55] * 0.555, 64.0 * 1.5, "stepping by the gait would skate")

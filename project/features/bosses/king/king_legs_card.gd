@@ -18,6 +18,15 @@ const ROWS: int = 5
 const SOLE_Y: float = 0.94
 ## Walk frames per gait phase unit (RigGait: one unit = one stride cycle).
 const FRAMES_PER_CYCLE: float = 4.0
+## Ground travel per drawn walk cycle, in legs-cell px, per art pitch: the profile column's two
+## heel-to-heel steps (measured it10: 55 contact rows 180/173 px wide, a foot 64 -> 2 x 116; 70
+## 95/92, a foot ~55 -> 2 x 40). The walk row follows the distance walked over this, so a planted
+## boot keeps pace with the ground. it2-it9 stepped by the gait phase: the King's gait cycle is
+## 64 world px, the 55 sheet's 125 at his card scale, so his boots skated at twice the ground speed.
+## A pitch not listed steps by the gait phase.
+const CYCLE_CELL: Dictionary[int, float] = {55: 232.0, 70: 80.0}
+const META_PH: StringName = &"legs_walk_phase"
+const META_AT: StringName = &"legs_walk_at"
 ## How far the bust rises onto the legs, as a share of the legs' cell height (the bust card reaches
 ## the ground: with 0 the legs stand hidden behind it), per art pitch. The owner's call (REPORT
 ## call 1).
@@ -56,10 +65,11 @@ static func step(rig: CutRig) -> void:
 		legs.offset = Vector2(-cell.x * 0.5, -cell.y * SOLE_Y)
 	legs.visible = card.visible
 	show_parts(rig, false)
-	legs.frame = row_of(rig) * COLS + card.frame
 	legs.flip_h = card.flip_h
 	legs.global_rotation = 0.0
 	legs.global_scale = card.global_scale
+	var cycle: float = CYCLE_CELL.get(pitch, 0.0)
+	legs.frame = walk_row(rig, legs, cycle * legs.global_scale.x) * COLS + card.frame
 	var cell_h: float = legs.texture.get_height() / float(ROWS)
 	var lift: float = cell_h * LIFT.get(pitch, 0.5) * legs.global_scale.y
 	# The whole upper body rises (the torso carries the head, its card, this legs card and the arm
@@ -76,6 +86,21 @@ static func sheet(pitch: int, sheet_name: String = "king_legs") -> Texture2D:
 	if not _tex.has(path):
 		_tex[path] = load(path) as Texture2D if ResourceLoader.exists(path) else null
 	return _tex[path]
+
+
+## 0 standing, else 1-4 along the walk cycle by the ground walked since the last call (`cycle`:
+## world px per drawn cycle; 0 = by the gait phase). The legs card keeps its own phase.
+static func walk_row(rig: CutRig, legs: Node, cycle: float) -> int:
+	var at: Vector2 = legs.get_meta(META_AT, rig.global_position)
+	legs.set_meta(META_AT, rig.global_position)
+	if cycle <= 0.0:
+		return row_of(rig)
+	var ph: float = legs.get_meta(META_PH, 0.0)
+	ph = fposmod(ph + rig.global_position.distance_to(at) / cycle, 1.0)
+	legs.set_meta(META_PH, ph)
+	if rig.speed_now <= 6.0 or rig.dead:  # RigGait's moving threshold
+		return 0
+	return 1 + mini(floori(ph * 4.0), 3)
 
 
 ## 0 standing, else 1-4 along the walk cycle by the rig's gait phase.
