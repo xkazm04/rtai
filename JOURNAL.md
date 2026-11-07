@@ -937,3 +937,18 @@ NEXT (it27 end): unchanged from the it25 final NEXT; the REPORT is final.
 - Registry rule applied: motion-quality-gating (an ungated art swap does not go into the freeze exe).
 NEXT (it28 end): the it25 final NEXT, with the tone cells swapped in first (one strip rebuild for the p55 left walk
   rows, then the gates and a 48 px/m King engage clip to compare).
+
+## it29 (18:30-18:33, STABILIZE; report 18:40)
+- 18:30 Read JOURNAL tail, git log, d9-seams JOURNAL (its it21 freeze check: no REQUEST/NOTE to rivet; trial merge
+  vs 3a3d25a1 holds).
+- 18:31 Stabilize check: `build/export/windows/RTAI.exe` present (18:00 export on 261f9fac);
+  `git diff 261f9fac..HEAD -- project tools` empty, so the exe is HEAD's code and its gates (lint, unit, evidence
+  --no-bench, the reels in top/tilt70/combo) still stand. Masters `frames.json`: 15 entries, every file present.
+  No Godot process of mine running. Tree clean.
+- No code change: the p55 left walk tone cells (served 18:16) are an art swap, not a bug fix, and the gates do not
+  fit before 18:40; they stay REPORT Next steps item 5. REPORT.md is final.
+- Registry rule applied: motion-quality-gating (nothing ungated enters the freeze build).
+NEXT (it29 end, final for d9): 1. swap in `keyed/rivet/rivet_walk_55_left_tone_cells/` (p55 left walk rows), gates,
+  a 48 px/m King engage clip; 2. land the owner's Call 1 (size) and Call 2 (walk) picks; 3. after the Director merges
+  d9-seams, re-run the reels x3 + evidence on the merge (expected conflicts: JOURNAL.md add/add, debt baseline);
+  4. main's switch to combo; 5. a drawn walk per hold family, a drawn reload, facing-cell muzzles, the armory row.
