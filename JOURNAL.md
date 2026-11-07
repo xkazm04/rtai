@@ -1152,3 +1152,6 @@ depot van's cream option can turn without popping (owner Call l.619 option c).
 GATE 04:47 `top` identity on 2bcfdc56 (the n8-view merge + DARK_LAMP_DEG): main scene `--arena=city
 --bot=rivet --seed=2 --rigs --view=top`, 300 fixed-fps frames, framemd5 == it17's mk_top_s2 and
 new_top_s2 (video + audio), 0 SCRIPT ERROR (evidence/n8-vehicles/identity-it18/top_s2.md5).
+CORRECTION: the "GATE 04:47 top identity" line above ran at ~04:44 (clock).
+04:48 REPORT.md draft committed (replaces view's merged REPORT on this branch). Scratch: it18 raw
+.avi deleted (843 MB -> 66 MB).
