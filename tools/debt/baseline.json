@@ -6,7 +6,8 @@
         "2026-11-06: n8 street: dev/showcase/street_crowd board (16 peds of every look under --view; the evidence for the crowd's nine pedestrian card types), dev only, excluded from release (dev_loc 18115 -> 18241)",
         "2026-11-06: n8 street: cast_view +1 line (the StreetQuestCards hook: quest 1's contractors stand as cards under card views) and quest1_clip +1 (--view for filming quest 1 under a tilt) (dev_loc 18241 -> 18242)",
         "2026-11-06: n8 street: the crowd board's --kill evidence option (dev only, +30 lines) (dev_loc 18242 -> 18272)",
-        "2026-11-07: n8 street: the street crowd board's --kill-spread (+4 dev lines): the drawn-fall evidence needs every fall direction on one seeded board (dev_loc 18272 -> 18276)"
+        "2026-11-07: n8 street: the street crowd board's --kill-spread (+4 dev lines): the drawn-fall evidence needs every fall direction on one seeded board (dev_loc 18272 -> 18276)",
+        "2026-11-07: n8 street it8: cut_rig +1 line (StreetView.post after the react's post pose: the drawn falls were turned by it); dev/showcase +9 (the street board's --cops evidence switch) (dev_loc 18276 -> 18285)"
       ],
       "files": {
         "project/dev/arena": 1034,
@@ -30,11 +31,11 @@
         "project/dev/save_crash_writer.gd": 18,
         "project/dev/selftest": 1446,
         "project/dev/servo": 434,
-        "project/dev/showcase": 5612,
+        "project/dev/showcase": 5621,
         "project/dev/view": 158,
         "project/dev/weapon_art": 506
       },
-      "total": 18276
+      "total": 18285
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -123,7 +124,7 @@
         "project/dev/showcase/riso_cost.gd": 1,
         "project/dev/showcase/rivet_sprite.gd": 1,
         "project/dev/showcase/save_notice_frame.gd": 1,
-        "project/dev/showcase/street_crowd.gd": 2,
+        "project/dev/showcase/street_crowd.gd": 1,
         "project/dev/showcase/vehicle_frame.gd": 1,
         "project/dev/weapon_art/electro_cells.gd": 1,
         "project/dev/weapon_art/swat_lineup.gd": 1,
@@ -180,7 +181,7 @@
         "project/tests/run_scenarios.gd": 1,
         "project/tests/unit/test_launch_args.gd": 1
       },
-      "total": 155
+      "total": 154
     },
     "files_near_cap": {
       "files": {
@@ -204,7 +205,8 @@
     },
     "files_past_soft_cap": {
       "accepted": [
-        "2026-11-06: n8 street: cast_view +1 line (the StreetQuestCards hook: quest 1's contractors stand as cards under card views) and quest1_clip +1 (--view for filming quest 1 under a tilt) (files_past_soft_cap 68 -> 68)"
+        "2026-11-06: n8 street: cast_view +1 line (the StreetQuestCards hook: quest 1's contractors stand as cards under card views) and quest1_clip +1 (--view for filming quest 1 under a tilt) (files_past_soft_cap 68 -> 68)",
+        "2026-11-07: n8 street it8: cut_rig +1 line (StreetView.post after the react's post pose: the drawn falls were turned by it); dev/showcase +9 (the street board's --cops evidence switch) (files_past_soft_cap 68 -> 68)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 266,
@@ -240,7 +242,7 @@
         "project/features/bosses/servo/servo_moves.gd": 223,
         "project/features/bosses/servo/servo_rig.gd": 288,
         "project/features/bosses/servo/servo_swarm.gd": 208,
-        "project/features/characters/cut_rig.gd": 264,
+        "project/features/characters/cut_rig.gd": 265,
         "project/features/city/gen/tile_painter.gd": 243,
         "project/features/city/sim/sim_people.gd": 208,
         "project/features/city/view/city_view.gd": 259,

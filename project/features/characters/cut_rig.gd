@@ -181,6 +181,7 @@ func drive(dt: float) -> void:
 		StreetView.step(self)
 	if react != null:
 		react.post(self)
+		StreetView.post(self)
 	if hose != null:
 		RigHose.step(self, dt)
 	if absf(PartMaterials.view_px - _last_px) > 0.002:

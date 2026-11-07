@@ -89,7 +89,7 @@ static func step(rig: CutRig) -> void:
 		_build(rig, card, path)
 	for c: CanvasItem in rig.body.get_meta(HID):
 		c.visible = false
-	_place(rig, card)
+	place(rig, card)
 
 
 ## The strip a person draws now ("" = none: no card, no strip, hit or dead; anyone else (a cop)
@@ -177,7 +177,7 @@ static func _build(rig: CutRig, card: Sprite2D, path: String) -> void:
 	rig.body.set_meta(WAS, was)
 
 
-static func _place(rig: CutRig, card: Sprite2D) -> void:
+static func place(rig: CutRig, card: Sprite2D) -> void:
 	var k: float = 1.0 + StreetCrowdCards.SCALE_VAR * StreetCrowdCards.vary(rig.actor_id, 3)
 	if card.vframes == StreetWalkerFall.FALL_FRAMES:
 		StreetWalkerFall.draw(rig, card, k)

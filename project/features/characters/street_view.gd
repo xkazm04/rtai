@@ -21,6 +21,15 @@ static func step(rig: CutRig) -> void:
 		_lift(rig)
 
 
+## After the react's post pose (CutRig.drive): a drawn fall is placed again, since the post turns
+## the card's parent (a cop's head-and-chest card hangs under the turned torso: the 3/4-away
+## corpse drew upright, it8). Alive, with no fall grid or straight down (no card), nothing.
+static func post(rig: CutRig) -> void:
+	var card: Sprite2D = rig.head_card
+	if card != null and card.vframes == StreetWalkerFall.FALL_FRAMES and card.visible:
+		StreetWalkerCards.place(rig, card)
+
+
 static func _lift(rig: CutRig) -> void:
 	if not ViewMode.shared().cards or ViewMode.shared().art.is_empty():
 		return
