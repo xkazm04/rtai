@@ -724,3 +724,57 @@ NEXT (iteration 8):
   --kill-spread), 42b780f1 (seven drawn falls), the punk/shopper/worker-v2 commit, the FALLS
   generalisation, 235374e8 (p55 fallback), the box-centre anchor, + docs. NEXT (iteration 8): 1
   cop falls when served, 2 quiet crowd cost, 4 freeze prep (NEXT 3 done).
+
+## Iteration 8 (2026-11-07 02:27, BUILD)
+Read: JOURNAL, git log, the library catalog (cop_patrol_fall_70 B landed, round 20261107-0300,
+my it7 REQUEST 1 of 6; riot/SWAT falls not yet), the other lanes' journals (no REQUEST to street).
+- MILESTONE (brief 5, cops): **the patrol cop falls and lies as drawn under p70.** Cut
+  cop_patrol_fall_70 (B) with street_fall.py `--stretch=1.4` (drawn 1.09x, so ~1.5x as the ped
+  strips) `--back-from-away`; FALLS row "cop/head_cap". Provenance line added.
+- FOUND + FIXED (a real bug, it7's too): `react.post()` runs after StreetView.step in CutRig.drive
+  and turns the card's parent, so a drawn corpse was drawn rotated by the death pose. On the cops
+  it showed plainly (the 3/4-away corpse drew upright with a raised arm: I first took it for the
+  sheet's named "standing man with raised hands" fault and tried stretch 1.7 and the front corpse
+  turned 180 deg, neither helped; a frame probe showed the right cell drawn turned ~60 deg).
+  StreetView.post (new) places a falling card again after the post; the global_transform-only
+  try (skew) changed nothing and was reverted. The pedestrians had it too: the it7 board t150
+  (committed master) has several corpses lying at angles that are not the blow's; with the fix
+  all 16 lie along their blows. So it7's "lie as drawn in eight directions" was only partly true.
+  Straight down there is no card, so `top` is unchanged (post returns at once).
+- DECISION street/cop-back-corpse: the back facing's corpse is the 3/4-away row's (lying on the
+  up-right diagonal, 45 deg off the blow), not the drawn back one: with the rotation fixed the
+  drawn one is borderline (soles + hands by the cap read as lying or as a cop standing hands at
+  head), the diagonal reads as lying beyond doubt. Alternative: drop `--back-from-away` from the
+  cut (one flag). Peds keep their drawn back corpses.
+- LOOKED: the cop board (`--cops`, new dev switch: 12 patrol, 2 riot, 2 SWAT) `--kill=light
+  --kill-spread` at tilt70 64 and 32 px/m t59-150 (probe: walker i's frame_coords/flip/oct):
+  the 12 patrol cops buckle, fall and lie in eight directions as drawn people at their spots;
+  riot/SWAT still sprawl as the parts (white limbs), waiting for their strips.
+- Lint 15/15 after `debt --accept-regression` (cut_rig +1 line: the post call; dev/showcase +9:
+  the --cops switch).
+- EVIDENCE (masters n8/street, frames.json #1-#3 new, 15 entries; dropped the 32 px/m it7 fall
+  pair (its "after" carried the rotation), the walk9 frames clip and the p55 walkers board; the it7
+  drawn-fall strip and clip notes now say which angles were wrong):
+  cops_drawn_fall_before_after_tilt70_64ppm_board_t62-150.png (before row = the FALLS row removed:
+  the parts' white cross), cops_drawn_fall_before_after_tilt70_32ppm_t150_x2.png,
+  cops_drawn_fall_tilt70_64ppm_board_realtime_then_0.25x.mp4 (4 s), and
+  peds_drawn_fall_postfix_before_after_tilt70_64ppm_t150.png (it7 master | it8).
+- GATE unit no-arg on 74cb66dd's code (before the commits, same files): 1513 passed, 0 failed, no
+  FLAKY (91 s). Lint 15/15 on each of the three commits (hook).
+- GATE director reel under tilt70 on e47c984c (the it1 headless command): 19/19 chapters, every
+  one all down, 0 SCRIPT ERROR (stopped after the 19th; my PID).
+- LOOKED city block seed 5 tilt70 48 px/m 25 s (Rivet bot): 4 cops die by death_melee (frames
+  513/658/763/994); one lies as the drawn patrol corpse by the kerb (t1010). FOUND (older than
+  tonight): the first one (frame 513, under Rivet's claw on the crosswalk) vanishes ~10 ticks into
+  the death, leaving a short black bar and the blood trail; the it7 code (the four files from
+  be98fa1f) gives the identical frame 540, so it is not tonight's change. Not traced yet: suspect
+  the full-rig budget (MAX_FULL) handing the dead cop to the baked LOD, or the melee family's
+  slide. Captures deleted (city.avi kept in scratch until next iteration).
+- NOT DONE: crowd cost (brief 6): vehicles' Godot render and my reel up all session, no quiet window.
+- Registry rules applied (it8): generative-artifact-gating (the B sheet with its named fix (the
+  stretch), and the back corpse swapped for a frame that reads, by a reproducible cut flag, not a
+  hand edit), motion-quality-gating (the fall as a tick strip and a real-time-then-0.25x clip; a
+  frame probe before blaming the art), concept-scene-parity (before|after on one deterministic
+  board, the before one data row away; the it7 code re-run on the same city seed to rule my change
+  out), sprite-and-atlas-production (one cut script, one px/m with the ped strips),
+  render-submission-economy (still one sprite per dead cop, the parts hidden).
