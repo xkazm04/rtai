@@ -628,3 +628,33 @@ NEXT (it19 end, 15:27; supersedes every NEXT above):
   NEXT 6: if the 70 v4 does not bring the arc back, feed MeleeSmearView for strips without a drawn arc (a per-strip
   flag in RivetStrips, the smear's root at the drawn claw: the muzzle table's measure), never on top of a drawn arc.
   REPORT does-not updated. Session end 15:33: everything committed.
+
+## Iteration 20 (15:30-, BUILD)
+- Read: JOURNAL NEXT (it19 end), git log, seams JOURNAL (no REQUEST to rivet), the asset lane's JOURNAL (it88 read
+  my journal at 15:10, before the it19 baton 70 v4 REQUEST: not served yet; it drew showcase_plasma_sword_70_v3b A,
+  a showcase sheet: not a strip of mine).
+- 15:30 NEXT 6 built (the baton swings with no arc under the drawn figure).
+- MILESTONE `a6d6ea6e` the game smear under the drawn figure for a strike drawn with no arc: `RivetStrips.NO_ARC`
+  (per art key; the electro baton at p55 and p70) makes `RivetStrips.hides_held` false, so RivetHeldView keeps
+  posing the hidden held part; `RivetMuzzle.feed_smear` roots the crescent on the figure's axis at the strike cell's
+  measured tip height (`rivet_muzzle.py` STRIKE_TIP: cell 5's arm-band tip, checked on a crop: the spark's edge at
+  both pitches), as long as the drawn reach, z just under his card (head_z - 1). Top: no strip -> z 0 and the held
+  grip/length as before. rivet_held_view 288 -> 287 lines (debt baseline tightened).
+- Judged in three films (pit, `--loadout=electro_baton --seed=3 --ppm=64 --fixed-fps 60`, tilt70 + tilt, f324-345):
+  1. the hidden part's own grip and length: the crescent floated out past the drawn tip, detached (rejected);
+  2. rooted on the drawn figure: attached, ends at the tip, but drawn over him (covered the baton);
+  3. under his card: the baton and body read over the crescent (shipped). The refactor into feed_smear re-filmed:
+     pixel-identical to film 3 at 5 frames.
+- Test: `test_a_strip_with_no_drawn_arc_keeps_the_held_part_posing_for_the_smear` fails with the p70 entry planted
+  out ("baton at p70"), passes with it; every NO_ARC strip has its strike tip measured.
+- Masters `rivet_electro_baton_smear_under_drawn_figure_before_after_pit_tilt70_p70_tilt_p55_64ppm_x2_seed3_f324_345.png`
+  (before = the flag off at the same seed and frames). frames.json entry 3; the flamethrower-city entry out (entry
+  11 covers the flamer; file kept: JOURNAL cites it). DECISION rivet/no-arc-smear.
+- FRICTION (~2 min): `tools/godot/check.mjs` on rivet_muzzle.gd failed with only "Compilation failed" (depended
+  scripts); the unit run in the full project compiled it clean. FRICTION (~4 min): backslash paths in a heredoc
+  became `\r` in REPORT.md (twice: python and sed); forward slashes instead.
+- 15:58 GATES it20 reels on a6d6ea6e: director reel 19/19 fully down in top, tilt70, combo (baton 1/1), 0 SCRIPT
+  ERROR, 0 p_frame, the 2 known ^ERROR lines each. Unit --changed (= full suite) 1692/0. Lint 15/15.
+- 16:07 Evidence run 1 on 5e… (a6d6ea6e + reel logs): look goldens 11/11 ok (top did not move), parity exact +
+  planted caught, scenarios ran; then release-compile REFUSED: `%TEMP%\gtai-release-compile` exists without its
+  marker (another run's, not mine; not touched). BLOCKED ~0 min: re-run with a lane-private TEMP (as it7).

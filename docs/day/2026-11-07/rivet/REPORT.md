@@ -105,16 +105,23 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
 - **Gates (it3):** unit 1691 passed / 0 failed; director reel 19/19 chapters down in `tilt70`, `combo`, `top`,
   0 SCRIPT ERROR (`evidence/d9/reel-director-it3-*.log`).
 
+- **The baton's swing arc under the drawn figure (it20, a6d6ea6e):** the baton's drawn strike (v3 at both pitches)
+  has no arc and the game smear was off under the drawn figure, so a strike read as a still pose. A strip in
+  `RivetStrips.NO_ARC` (data: the electro baton at p55 and p70) now feeds the game's crescent, rooted on his body
+  axis at the strike cell's measured tip height (`rivet_muzzle.py` STRIKE_TIP) and ending at the drawn tip, drawn
+  just under his figure so the baton reads over it; the katana, chainsaw and sword keep only their drawn arcs. If
+  the 70 v4 brings a drawn arc back, the p70 entry leaves the list. Before/after, pit, 64 px/m, seed 3:
+  `gtai-masters/d9/rivet/rivet_electro_baton_smear_under_drawn_figure_before_after_pit_tilt70_p70_tilt_p55_64ppm_x2_seed3_f324_345.png`.
+  Gates it20: director reel 19/19 in top, tilt70, combo (the baton chapter 1/1), 0 SCRIPT ERROR
+  (`evidence/d9/reel-director-it20-<view>.log`); unit 1692/0 (--changed: full suite); lint 15/15.
+
 ## What does not (yet)
 - A facing cell (no fire drawn) has no measured muzzle except the flamer's: a flash outside the fire cell's 7
   ticks keeps the old spot (the other holds are drawn every which way in their facings; no generic rule held).
 - The Servo bay number printed over Rivet under combo: REQUEST to seams (it10), served on `d9-seams` at 3f4732db
   (ServoDepotDraw.cover); not on this branch until the Director merges both.
 - The p70 electro baton's facings still carry the rod along the forearm (the library's v3 is B with that named
-  fix) and its side strike lost the old sheet's drawn swing arc: REQUESTed as 70 v4 (it19). Under the drawn
-  figure the game's MeleeSmearView is not fed (RivetHeldView returns before `_feed_smear` once the strip owns the
-  weapon), so a melee swing's arc is only what its sheet draws: the baton (p55 always, p70 since v3) swings with
-  no arc. Fix options: the v4 art, or feed the smear for sheets without a drawn arc (a per-strip flag).
+  fix): REQUESTed as 70 v4 (it19), not served yet. (Its missing swing arc is fixed in it20, see What works.)
 - Walk: one drawn walk and one sprint pose per sheet; built bob + sway on the facing.
 - Reload: no drawn reload frame; he keeps the equipped strip through it (it7 check: the "bare figure" seen in it6
   was the equipped back views, which show the small guns barely; no change made).
