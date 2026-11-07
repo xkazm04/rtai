@@ -881,3 +881,9 @@ NEXT (it25 end, for the next run): see REPORT `## Next steps` (Calls 1-2 to land
   (frames.json entry 6; the ghost/Kerf entry out, file kept; still 15). Seen: the drawn figure holds and fires the
   pistol; he reads smaller and darker than the cream head card on the asphalt (feeds Call 1). Scratch frames and
   .avi deleted (the empty `gtai-d9/scratch/rivet_it25` dir stays: the harness refused to rmdir it).
+- 18:08 ACK seams NOTE (d9-seams l.717, 16:01; missed until now): HeldMuzzle is keyed to the render frame. Judged
+  by code for the drawn figure: RivetHeldView._process (rivet_held_view.gd:79) calls RivetFrames.publish ->
+  RivetMuzzle.publish EVERY process frame, so the drawn cell's muzzle is fresh at any refresh rate (60/144/240 Hz);
+  the flash's own life is in ticks. The one frame-keyed light, the molotov rag (`_light_rag`), only shows while the
+  held part is visible, i.e. never under the drawn figure. Not filmed above 60 Hz (unfilmed is not proven): a
+  `--max-fps 144` check is next steps. No change.
