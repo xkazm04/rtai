@@ -959,3 +959,13 @@ NEXT 2b (iteration 10): CrowdAtlas' corpse cell under p70/p55 for a baked dead c
   the same compromise d8 accepted for the atlas walkers). crowd_baker.gd / character_rigs.gd are
   chars/view files: it is a REQUEST, not a street edit; first check whether view's RigSelect change
   (it12) already makes the baked corpse rare on screen, then REQUEST only if it still shows.
+- MILESTONE 1ebcd60e (NEXT 2 above, done): under p55 (quest 1 when Mertz engages under combo,
+  --view=tilt) a dead contractor lies as its own 55 drawing (contractor_fall_55 B, round 0335,
+  stretch 1.45, --back-from-away); unit test covers both pitches (4/4). LOOKED quest 1 Dock 9
+  t14100 `--view=tilt` 48 px/m x2 (0 SCRIPT ERROR): the 55 corpses draw, rifles beside them.
+  FOUND: at 55 they read LARGE (a body longer than the cop beside them): draw_down sizes the
+  corpse from the standing card's height, and the 55 contractor card is taller (longer-legged 55
+  drawing). NEXT: size draw_down at p55 by the walkers' rule (StreetWalkerCards.HEIGHT_BY_ART
+  ratio) or cap h_m at the p70 card's; compare at 48 px/m both pitches. Capture deleted.
+- Session end 04:01: tree clean. Not re-gated after 1ebcd60e beyond lint 15/15 and the select
+  run: run the full unit no-arg first thing in iteration 10.
