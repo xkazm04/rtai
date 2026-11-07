@@ -1,0 +1,60 @@
+round 1/2 variant 0: v0-r0: CONTENDED (3 other Godot runs) {"frames":595,"low1_fps":8.27432139595,"over33_settled":359,"over50_settled":3,"p50_ms":33.3089981079102,"p99_ms":38.45800
+round 1/2 variant 1: v1-r0: CONTENDED (6 other Godot runs) {"frames":596,"low1_fps":2.86998119937732,"over33_settled":378,"over50_settled":1,"p50_ms":33.3400001525879,"p99_ms":35.89
+round 1/2 variant 2: v2-r0: CONTENDED (2 other Godot runs) {"frames":623,"low1_fps":18.3227922929699,"over33_settled":430,"over50_settled":3,"p50_ms":33.359001159668,"p99_ms":37.549
+round 1/2 variant 3: v3-r0: CONTENDED (2 other Godot runs) {"frames":623,"low1_fps":25.2168649520121,"over33_settled":405,"over50_settled":0,"p50_ms":33.3489990234375,"p99_ms":37.98
+round 2/2 variant 0: v0-r1: quiet {"frames":596,"low1_fps":8.81774616714007,"over33_settled":369,"over50_settled":2,"p50_ms":33.2830009460449,"p99_ms":38.5439987182617,"ticks":1194,
+round 2/2 variant 1: v1-r1: CONTENDED (5 other Godot runs) {"frames":594,"low1_fps":2.69615179982725,"over33_settled":327,"over50_settled":1,"p50_ms":33.3050003051758,"p99_ms":41.21
+round 2/2 variant 2: v2-r1: CONTENDED (4 other Godot runs) {"frames":623,"low1_fps":20.4906842376341,"over33_settled":392,"over50_settled":3,"p50_ms":33.3170013427734,"p99_ms":37.48
+round 2/2 variant 3: v3-r1: CONTENDED (1 other Godot runs) {"frames":623,"low1_fps":25.557037222778,"over33_settled":379,"over50_settled":0,"p50_ms":33.3240013122559,"p99_ms":37.273
+
+--device=switch_handheld --scene=city --ticks=1200  (2 runs, 1 contended)
+  p50_ms                    33.31  +-0.03
+  p99_ms                    38.54  +-0.09
+  low1_fps                   8.82  +-0.54
+  over33_settled              369  +-10
+  render_gpu_ms_p50          10.2  +-0.46
+  render_cpu_ms_p50          0.97  +-0.03
+  process_ms_p50              9.4  +-0.2
+  cpu_pinned_pct_p50        13.75  +-0.41
+  private_mb_max           1320.9  +-0.4
+  gpu_shared_mb_max         936.1  +-0
+  gpu_dedicated_mb_max         82  +-0.3
+
+--device=switch_handheld --scene=city --ticks=1200 --project=C:/Users/kazda/kiro/gtai-d9x/scratch/hh-bc7/project  (2 runs, 2 contended)
+  p50_ms                    33.34  +-0.03
+  p99_ms                    41.21  +-5.32
+  low1_fps                   2.87  +-0.17
+  over33_settled              378  +-51
+  render_gpu_ms_p50          9.11  +-0.04
+  render_cpu_ms_p50          0.98  +-0
+  process_ms_p50            11.16  +-1.65
+  cpu_pinned_pct_p50        13.51  +-0.16
+  private_mb_max            893.4  +-16.9
+  gpu_shared_mb_max         482.1  +-0
+  gpu_dedicated_mb_max       81.5  +-0.5
+
+--device=switch_handheld --scene=reel --ticks=1200  (2 runs, 2 contended)
+  p50_ms                    33.36  +-0.04
+  p99_ms                    37.55  +-0.07
+  low1_fps                  20.49  +-2.17
+  over33_settled              430  +-38
+  render_gpu_ms_p50          7.97  +-0.02
+  render_cpu_ms_p50           0.6  +-0.17
+  process_ms_p50             6.97  +-1.9
+  cpu_pinned_pct_p50        12.08  +-3.14
+  private_mb_max            942.8  +-3.8
+  gpu_shared_mb_max         581.1  +-0
+  gpu_dedicated_mb_max       80.3  +-0
+
+--device=switch_handheld --scene=reel --ticks=1200 --project=C:/Users/kazda/kiro/gtai-d9x/scratch/hh-bc7/project  (2 runs, 2 contended)
+  p50_ms                    33.35  +-0.02
+  p99_ms                    37.99  +-0.71
+  low1_fps                  25.56  +-0.34
+  over33_settled              405  +-26
+  render_gpu_ms_p50          7.86  +-0.13
+  render_cpu_ms_p50           0.6  +-0.19
+  process_ms_p50              7.1  +-2.33
+  cpu_pinned_pct_p50        11.22  +-2.99
+  private_mb_max            744.6  +-0.8
+  gpu_shared_mb_max         383.1  +-0
+  gpu_dedicated_mb_max       79.7  +-0

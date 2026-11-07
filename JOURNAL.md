@@ -306,3 +306,27 @@ NEXT (iteration 11):
    lines 38 and 87 are pre-existing (reduced_motion's fallback, rebind's or).
 6. Carried: the draw_scale HUD side effect (if Call 5 b/c), NAT-06 parity on the Linux `.so` in WSL, the King fight's
    rumble count, end-of-day: the HKCU DirectX UserGpuPreferences value and the _hh.exe copy, the freeze exe.
+
+## Iteration 11 (13:50-14:50, BUILD)
+- Read: JOURNAL it10 + NEXT, git log -30, decisions tail, the rivet / seams / perf journals: no new REQUEST to handheld
+  (perf read my E10 answer at 13:48). Plan: NEXT 5 (mutation score), NEXT 4 (BC7 on the Switch-class row), NEXT 3 (the
+  frame cap in the pause card on screen), then the carried items.
+- 13:53 NEXT 5: mutate.mjs on player_settings.gd at 9cffebaa, 12 mutants (`evidence/it11/mutate-player-settings.log`):
+  **66.7 % (8/12)**; line 74 (mine, it10) now killed. Survivors: 41 (`0.0 -> 1.0`: equivalent, int 1 is not an offered
+  cap), 38, 73, 87 (pre-existing). Tests added for 38 (a non-bool reduced_motion falls back off) and 73 (apply() rebinds
+  what was saved); 87 left (it would need an unknown action, which logs an engine error).
+- 13:53 E11 (bench lock 13:53-14:01): the BC7 arm re-synced to 9cffebaa (the scratch's FightFrames copy dropped: HEAD has
+  it), `bc7_arm.mjs` 0 changes (712 already BC7), `--import` 0 errors, 712 bptc.
+- FINDING 14:00 (NEXT 3 led here): **a pad could not press any card button.** Godot 4.7.2's default `ui_accept` and
+  `ui_cancel` have no pad button (probed with a throwaway SceneTree script: ui_accept = Enter / keypad Enter / Space;
+  the d-pad and left stick are on ui_up/down/left/right; Y on ui_select). The title / pause / paid cards are focused
+  Buttons: on a Deck the focus moved and Start could not be pressed. Second fault: the pause card's settings rows rebuild
+  on each press and free the focused button, so after A on "Toggle" the pad had nothing to move.
+- MILESTONE 14:05 (8959a913) `menu_pad` in input_actions.json (A -> ui_accept, B -> ui_cancel), installed at boot on every
+  run (DECISION handheld/menu-pad). (47668922) the panel restores the focused slot after a rebuild; a pad button cancels a
+  rebind wait; the panel saves to the game's settings path (a test never writes user://settings.json).
+  `test_settings_panel_pad` 3/3; planted (the restore -> pass): both walk tests FAIL with focus (-1, -1); restored green.
+  Lint 15/15 (the debt ratchet caught +1 line in quest1_game.gd: the save path went into the constructor instead).
+- RESULT 14:01 E11 BC7 on `switch_handheld` (`evidence/sim/e11-bc7-switch/`, 7 of 8 CONTENDED): city private + GPU
+  shared 2.26 -> 1.38 GB, render GPU -11 %; reel 1.52 -> 1.13 GB; the 30 cap holds in all. E10's ~1.3 GB inference
+  measured at 1.38. LEDGER E11, the Switch-class readiness row updated.
