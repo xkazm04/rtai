@@ -491,3 +491,9 @@ NEXT:
   Looked at 4.5 s / 7.5 s / 8.5 s: at 7.5 s the King's attack wedge reaches Rivet, the strip
   covers nothing of it. frames.json 15 (dropped the it5 clip, superseded by it6 + this clip for
   the King's crest, and the crate-ink still; both files deleted).
+- 01:13 Gates (`node tools/evidence/run.mjs --no-bench` at 4632084a, every change of this
+  iteration; `gtai-n8/scratch/hud/evidence_run_it7.log`): lint 15/15, unit 1512 passed 0 failed,
+  scenarios 52/52, parity bit-exact + planted mutation caught at step 629, look goldens 11/11 (top
+  did not move), export-audit 557/0. Nothing committed during the run.
+- 01:14 Director reel started at 4632084a (top + tilt70, headless, in parallel; logs to scratch
+  then `evidence/director-reel-n8hud-it7-*.log` once finished).
