@@ -2,7 +2,9 @@ class_name BenchDriver
 extends WorldSystem
 ## Drives the bench on the fixed tick (registered after the city): the drive moves the focus and
 ## the pursuit target along BenchRoute; the riot circles the target around the riot centre and
-## evicts one neighbouring chunk every CHURN_TICKS so chunk swaps keep happening.
+## evicts one neighbouring chunk every CHURN_TICKS so chunk swaps keep happening. `facade`
+## (n8 city, a film, not a bench) drives the same lap at FACADE_SPEED with the camera FACADE_LOOK
+## north of the car: the south faces of the blocks north of the road stand in frame.
 
 const RIOT: Vector2 = Vector2(64.0 * 8 + 12.0, 64.0 * 8 + 12.0)
 const CHURN_TICKS: int = 180
@@ -11,6 +13,8 @@ const RING: Array[Vector2i] = [Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0), 
 const DENSE_RA: float = 45.0
 const DENSE_RB: float = 80.0
 const DENSE_R_MIN: float = 36.0
+const FACADE_SPEED: float = 8.0
+const FACADE_LOOK: Vector2 = Vector2(0.0, -8.0)
 
 var scenario: String = "drive"
 var route: BenchRoute = BenchRoute.new()
@@ -52,7 +56,8 @@ func step(tick: int, _input: TickInput) -> void:
 			)
 			_city.residency.evict(c0 + RING[floori(float(tick) / CHURN_TICKS) % 4])
 		return
-	_s += route.speed_at(_s) * SimClock.TICK_DT
+	var facade: bool = scenario == "facade"
+	_s += (FACADE_SPEED if facade else route.speed_at(_s)) * SimClock.TICK_DT
 	var pos: Vector2 = route.at(_s)[0]
-	_city.focus = pos
+	_city.focus = pos + (FACADE_LOOK if facade else Vector2.ZERO)
 	_city.target = pos

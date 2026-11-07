@@ -8,13 +8,14 @@
         "2026-11-06: dev/showcase/vehicle_states: the vehicles lane's damage/fire/skid film scene (dev only, n8) (dev_loc 18193 -> 18288)",
         "2026-11-06: n8 vehicles: the depth film scene (vehicle_frame --scene=depth), dev only (dev_loc 18287 -> 18327)",
         "2026-11-06: n8 city: dev/bench/chunk_cost.gd, the angled view's streaming cost probe (brief item 5); a -s script cannot use the LaunchArgs autoload, so it reads the cmdline once (dev_loc 18327 -> 18426)",
-        "2026-11-07: n8 city it12: quest 1's payphone and hide-spot dumpsters stand as the city's cards under a tilt (StageView._sprite, +6); quest1_clip --view (+2, the same two lines as n8-hud 6fd17433, so a merge is identical) (dev_loc 18426 -> 18428)"
+        "2026-11-07: n8 city it12: quest 1's payphone and hide-spot dumpsters stand as the city's cards under a tilt (StageView._sprite, +6); quest1_clip --view (+2, the same two lines as n8-hud 6fd17433, so a merge is identical) (dev_loc 18426 -> 18428)",
+        "2026-11-07: n8 city: the bench driver's facade film scenario (the landmarks' south faces in frame, 5 lines) (dev_loc 18428 -> 18433)"
       ],
       "files": {
         "project/dev/arena": 1034,
         "project/dev/audio": 367,
         "project/dev/bake_city.gd": 32,
-        "project/dev/bench": 1487,
+        "project/dev/bench": 1492,
         "project/dev/bots": 399,
         "project/dev/enemy_ai": 662,
         "project/dev/frames": 464,
@@ -36,7 +37,7 @@
         "project/dev/view": 158,
         "project/dev/weapon_art": 506
       },
-      "total": 18428
+      "total": 18433
     },
     "direct_cmdline_reads": {
       "accepted": [
