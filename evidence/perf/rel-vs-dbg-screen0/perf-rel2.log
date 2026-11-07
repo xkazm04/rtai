@@ -1,0 +1,18 @@
+riot dbg r0: p50 5.78 p99 9.30 worst 13.9 draws 832 cpu 1.04 cores ws 848 MB errors 0 CONTENDED(10)
+riot rel@exe r0: p50 4.08 p99 7.24 worst 9.6 draws 832 cpu 1.01 cores ws 764 MB errors 0 CONTENDED(4)
+drive70 dbg r0: p50 2.95 p99 5.63 worst 7.3 draws 293 cpu 1.03 cores ws 919 MB errors 0 CONTENDED(4)
+drive70 rel@exe r0: p50 2.33 p99 4.27 worst 6.1 draws 293 cpu 1.04 cores ws 818 MB errors 0 CONTENDED(2)
+riot60 dbg r0: p50 16.68 p99 19.61 worst 23.5 draws 831 cpu 0.36 cores ws 912 MB errors 0 CONTENDED(2)
+riot60 rel@exe r0: p50 16.68 p99 20.00 worst 33.6 draws 832 cpu 0.29 cores ws 758 MB errors 0
+riot rel@exe r1: p50 3.87 p99 7.03 worst 8.7 draws 832 cpu 1.04 cores ws 757 MB errors 0
+riot dbg r1: p50 4.47 p99 8.36 worst 11.2 draws 832 cpu 1.01 cores ws 898 MB errors 0 CONTENDED(0)
+drive70 rel@exe r1: p50 2.46 p99 5.37 worst 10.6 draws 293 cpu 1.00 cores ws 814 MB errors 0 CONTENDED(0)
+drive70 dbg r1: p50 2.57 p99 5.22 worst 10.9 draws 293 cpu 1.01 cores ws 853 MB errors 0 CONTENDED(4)
+riot60 rel@exe r1: p50 16.68 p99 19.49 worst 24.3 draws 832 cpu 0.27 cores ws 754 MB errors 0 CONTENDED(2)
+riot60 dbg r1: p50 16.69 p99 19.86 worst 22.2 draws 831 cpu 0.35 cores ws 849 MB errors 0 CONTENDED(2)
+riot dbg: p50 5.78±0.65 p99 9.30±0.47 p99.9 12.28±0.72 worst 13.95±1.38 draws 831.94±0.08 renderCpu 0.65±0.09 cpu 1.04±0.01 ws 898.41±25.30 contended 2 errors 0
+riot rel@exe: p50 4.08±0.10 WIN p99 7.24±0.11 WIN p99.9 8.74±0.01 WIN worst 9.65±0.45 WIN draws 832.19±0.03 LOSS renderCpu 0.51±0.01 WASH cpu 1.04±0.01 WASH ws 764.30±3.53 WIN contended 1 errors 0
+drive70 dbg: p50 2.95±0.19 p99 5.63±0.21 p99.9 8.73±0.90 worst 10.88±1.78 draws 293.04±0.00 renderCpu 0.25±0.01 cpu 1.03±0.01 ws 919.39±33.11 contended 2 errors 0
+drive70 rel@exe: p50 2.46±0.07 WIN p99 5.37±0.55 WASH p99.9 10.47±2.60 WASH worst 10.59±2.27 WASH draws 293.04±0.00 WASH renderCpu 0.24±0.00 WASH cpu 1.04±0.02 WASH ws 818.05±1.85 WIN contended 2 errors 0
+riot60 dbg: p50 16.69±0.00 p99 19.86±0.13 p99.9 22.00±0.09 worst 23.51±0.64 draws 831.33±0.00 renderCpu 0.65±0.00 cpu 0.36±0.01 ws 912.04±31.31 contended 2 errors 0
+riot60 rel@exe: p50 16.68±0.00 WASH p99 20.00±0.25 WASH p99.9 23.48±0.27 LOSS worst 33.61±4.66 LOSS draws 831.97±0.21 LOSS renderCpu 0.58±0.03 WASH cpu 0.29±0.01 WIN ws 758.32±2.23 WIN contended 1 errors 0

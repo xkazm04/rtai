@@ -43,7 +43,9 @@ baseline through `windows-bench` is owed), bench.lock held, 11 of 12 runs UNCONT
 writes a summary, no series): owed. CPU in cores is ~1.0 in every uncapped run: one core kept busy;
 the process CPU at a 60 fps vsync cap is owed (the sampler is ready).)
 
-## Release-export baseline (it4, 11:45-11:49, at 87155de9): the shipped build vs the editor binary
+## Release-export baseline (it4, at 87155de9): the shipped build vs the editor binary
+**Current numbers: the `--screen 0` rerun (11:57-12:00) at the end of this section.** The first table
+(11:45-11:49) is kept for the record: its exe arm ran on the other monitor (F8) and is superseded.
 `node tools/perf/ab.mjs --scenes=riot,drive70,riot60 --arms=dbg:,rel@exe: --pairs=2` (`evidence/perf/rel-vs-dbg/ab.json`):
 the `windows-bench` release export (`--export-release windows-bench`, 256 baked chunks) against the editor
 binary on the same presets, 2 pairs interleaved. **CONTENDED: 8-17 other Godots in every run** (my own
@@ -63,10 +65,31 @@ evidence run plus the seams lane's), so read the ratios, not the ms; a quiet rer
 - **Size:** `RTAI-bench.exe` 109.3 MB (the stock release template: every engine module), `RTAI-bench.pck`
   227.7 MB, the sim DLL 0.4 MB. A custom template without unused modules (3D physics, navigation 3D, XR,
   ...) is the size lever: owed (a template build is ~30-60 min of compile).
-- F8 (11:49): **the release exe's drive70 tail is worse than the debug editor's** (p99 8.41 vs 5.78, worst
-  17.0 vs 10.2, both pairs) while its p50 is 22 % better: something in the shipped build loads or
-  streams on the frame (pck reads? first-use loads the editor had warm in its import cache?). Contended,
-  so it needs a quiet rerun first, then `--spans` on the exe (NodeSpans ships in the bench export).
+- F8 (11:49, RESOLVED 11:55): the release exe's worse drive70 tail above was **a window-placement
+  confound, not the build**. The editor binary reads the git-excluded `project/override.cfg` (windows on
+  screen 0, the 1920x1080 secondary); the exe has no override.cfg and opened on the primary ultrawide,
+  where present blocked: two exe runs there p50 16.6 / 12.0 ms, p99 43.3 / 17.6, worst swap 47 / 28 ms;
+  the same exe with `--screen 0`: p50 2.50 / 2.52, p99 4.14 / 4.41, worst 6.2 / 5.5 ms (better than the
+  editor's 5.78 p99). Every preset and `boot.sh` now pins `--screen 0` (commit after f60880a1); the table
+  above is superseded by the rerun below. Lesson (measurement-honesty): an arm that differs in anything
+  but the lever (here the monitor) is not an A/B. Player note: a window on a screen the frame cannot
+  present to directly (a different adapter or a scaled mode: unverified which) can cost 10+ ms a frame.
+
+**Rerun with `--screen 0` (11:57-12:00, `evidence/perf/rel-vs-dbg-screen0/ab.json`, 2 pairs, CONTENDED-stamped in
+10 of 12 runs but lightly: 0-4 other Godots in 11 of them, 10 in one): the release-export baseline.**
+| scene | build | p50 ms | p99 | p99.9 | worst | render CPU ms | CPU cores | peak RAM MB |
+|---|---|---|---|---|---|---|---|---|
+| riot (fixed 60) | editor (debug) | 5.78 ±0.65 | 9.30 ±0.47 | 12.28 | 13.95 | 0.65 | 1.04 | 898 |
+| riot (fixed 60) | **release exe** | **4.08 ±0.10 WIN** | **7.24 ±0.11 WIN** | **8.74 WIN** | **9.65 WIN** | 0.51 | 1.04 | **764 WIN** |
+| drive70 (fixed 60) | editor (debug) | 2.95 ±0.19 | 5.63 ±0.21 | 8.73 | 10.88 | 0.25 | 1.03 | 919 |
+| drive70 (fixed 60) | **release exe** | **2.46 ±0.07 WIN** | 5.37 WASH | 10.47 WASH | 10.59 WASH | 0.24 | 1.04 | **818 WIN** |
+| riot60 (vsync + 60 cap) | editor (debug) | 16.69 | 19.86 | 22.00 | 23.51 | 0.65 | **0.36** | 912 |
+| riot60 (vsync + 60 cap) | **release exe** | 16.68 | 20.00 WASH | 23.48 LOSS | 33.61 LOSS | 0.58 | **0.29 WIN** | **758 WIN** |
+- The shipped build runs the 400-actor riot frame in **4.08 ms p50 / 7.24 ms p99** (section 20's riot p99
+  budget is 7 ms: within 0.24 ms of it on this host) and holds the riot at the 60 fps cap with **0.29 of
+  one core and 758 MB**. The debug editor overstates the riot's CPU cost by ~40 % (p50) and its tail by ~30 %.
+- Watch: riot60's exe worst frame 33.6 / 24.3 ms (one each pair) against the editor's 23.5: a real-time
+  (presented) hitch, not a cost metric; owed a look with the perf HUD on the exe.
 
 ## Levers
 | # | lever | hypothesis / expected | change | A/B (median, spread) | verdict | commit |

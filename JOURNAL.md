@@ -143,3 +143,27 @@ NEXT (iteration 4):
 - GATE 11:52 `node tools/evidence/run.mjs --no-bench` at 87155de9: lint ok, unit 1697 / 0 failures, scenarios 52
   ran / 0 failed, parity exact (max_abs_diff 0), look goldens 11/11 ok (top unchanged). release_compile BLOCKED
   again on %TEMP%\gtai-release-compile (not mine; seams' per-worktree fix lands with their merge).
+- 11:54 F8 chased: NodeSpans on the exe vs the editor (drive70) showed the exe's SCRIPTS cheaper while its frames
+  were 4x slower, swap up to 47 ms. Cause: the exe has no override.cfg, so its window opened on the primary
+  ultrawide where present blocked (p50 12-17 ms); with `--screen 0` the same exe: p50 2.50, p99 4.1-4.4.
+  F8 RESOLVED as a placement confound; every preset + boot.sh pin `--screen 0`.
+- MILESTONE 12:00 RELEASE BASELINE (rerun, `evidence/perf/rel-vs-dbg-screen0/`): release exe riot p50 4.08 / p99 7.24
+  / p99.9 8.74 / worst 9.65 (all WIN vs the editor's 5.78 / 9.30 / 12.28 / 13.95); drive70 p50 2.46 vs 2.95 WIN, tail
+  WASH; riot at the 60 cap 0.29 cores vs 0.36, 758 vs 912 MB. Watch: riot60 exe worst 33.6 ms (presented hitch).
+- Registry rules applied (late it4): measurement-honesty (an arm that differs in more than the lever is not an
+  A/B: the monitor was a hidden second variable; the superseded table kept, marked), perf-regression-gating
+  (the build under test is the shipped build: debug overstated the riot's cost ~40 %).
+
+NEXT (iteration 5):
+1. Masters (owed deliverable): King fight + city drive clips with `--perf-hud`, before (main 3982af1a: a worktree
+   or `--strip-prefetch=off` for L3; L2 has no flag) / after, 32 px/m + a 48 or 64 close-up, frames.json in
+   `C:\Users\kazda\kiro\gtai-masters\d9\perf\`; numbers in movie mode are RELATIVE (F4).
+2. riot60's exe worst frame (33.6 / 24.3 ms at the cap): run the exe with --perf-hud at vsync + 60, find the hitch.
+3. Next CPU lever (F7 split, unowned files): `CityFxFeed.observe` 0.23 + the feed loop 0.39 ms (no slice per
+   person, fused kind filter) - small; measure on the exe (`rel@exe` vs a second export) since debug overstates.
+   The big one is the rig pose step (F7, rivet's files): REQUEST sent; after their merge.
+4. Quest 1 in the runner (quest1_frames.gd writes no series) and the King/reel on a release build (a bench
+   export that keeps dev/bots, or a `windows-perf` preset): the King's release number is unmeasured.
+5. Size lever: a custom export template without unused modules (exe 109 MB): research the 4.7 build profile
+   (`build_profile` / the engine compilation configuration editor) and the compile time first.
+6. release_compile: re-run the evidence once seams' per-worktree temp dir lands (blocked twice today, not mine).
