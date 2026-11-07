@@ -68,10 +68,7 @@ static func draw_down(
 	if not view.cards or stand.is_empty() or path.is_empty():
 		return false
 	var tex: Texture2D = _load(path)
-	var st: Texture2D = _load(stand)
-	# the standing contractor's height (m), as draw_guard sizes it, before the ground squash
-	var h_m: float = WIDTH_M * st.get_height() * RigHeadCard.FRAMES / float(st.get_width())
-	var s: float = h_m * px_per_m / StreetWalkerFall.STILL_PX
+	var s: float = body_m() * px_per_m / StreetWalkerFall.STILL_PX
 	var rows: int = StreetWalkerFall.FALL_FRAMES
 	var cell: Vector2 = Vector2(
 		tex.get_width() / float(RigHeadCard.FRAMES), tex.get_height() / float(rows)
@@ -83,6 +80,14 @@ static func draw_down(
 	canvas.draw_texture_rect_region(tex, dst, src, tint)
 	canvas.draw_set_transform(Vector2.ZERO)
 	return true
+
+
+## The corpse's body length (m): the FALLBACK (p70) standing card's height, as draw_guard sizes
+## it before the ground squash, for every pitch. The 55 contractor is a longer-legged drawing, so
+## sizing a 55 corpse by its own card laid it ~1.2x the 70 one, longer than the cop beside it.
+static func body_m() -> float:
+	var st: Texture2D = _load(GUARD[StreetWalkerFall.FALLBACK])
+	return WIDTH_M * st.get_height() * RigHeadCard.FRAMES / float(st.get_width())
 
 
 ## The turn for a corpse at `at_px`: a fixed pick from its spot (render only, no RNG stream).

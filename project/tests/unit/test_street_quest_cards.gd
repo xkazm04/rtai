@@ -42,3 +42,8 @@ func test_corpses_on_different_spots_fall_three_ways() -> void:
 	assert_eq(seen.size(), 3, "-45, 0 and +45 deg off the facing")
 	var at: Vector2 = Vector2(40.0, 90.0)
 	assert_eq(StreetQuestCards.spread_of(at), StreetQuestCards.spread_of(at), "fixed per spot")
+
+
+func test_the_corpse_is_one_body_length_at_every_pitch() -> void:
+	# the 70 card: 1.15 m wide x 192 / (705 / 5) -> about 1.57 m, not the longer 55 drawing's 1.73
+	assert_almost_eq(StreetQuestCards.body_m(), 1.566, 0.01, "sized by the p70 standing card")
