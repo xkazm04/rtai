@@ -1318,3 +1318,26 @@ agreed the split: view fills an `extra` occluder list from `ArenaFloorView`, cit
 - REPORT Next steps: the agreed view/city split and the unit proof added to the kerb-barrier item.
 Registry rules applied it32: concept-scene-parity (the unit case is the NOTE's geometry: a wall_high
 barrier and a lying body north of it); others n/a (no art, no shipped code).
+- GATE (08:04) full `node tools/tests/run_unit.mjs` at ea4d38c0: 1531 passed, 0 failed (1530 + the
+  new case), no FLAKY. Log `gtai-n8/scratch/city/it32_unit.log`.
+- d9 PREP (08:05, scratch only, no project file): `planter_v3` 55 A cut by
+  `tools/art/city_prop_cut.py <scratch lib> <out> 55 planter=planter_v3` (the sheet copied as
+  `planter_v3_55.png`, the cutter's `<id>_<pitch>` name) -> `gtai-n8/scratch/city/it32/out/p55/
+  prop_planter.png`, 1485x256, cell 297 px, facing 0 fills 0.99 (v2 0.99, the 70 0.99), so
+  `cell_w_m` 2 holds: a drop-in PNG + one provenance line (round 20261107-0950, prompt_hash
+  acc123f79174), no data change. LOOKED at `it32/planter_v2_top_v3_bottom.png` (in-game v2 above,
+  v3 below): v3 is the 70's design (soil showing, yellow-green rosettes, grey rim), so the combo
+  swap no longer changes the planter's plants and pot; facing-0 aspect 0.54 vs the 70's 0.52 (v2
+  0.71, the taller, plant-heavy one). Not landed: a p55 art change after the freeze-gated head
+  reopens the reel, `top` framemd5 and the exe for a prop only seen at 55 in boss arenas.
+Registry rules applied (cont.): generative-artifact-gating (A sheet only, cut by the lane's
+recorded cutter, looked at against the shipped strip), concept-scene-parity (one planter design
+across the 70/55 swap is the gain named), sprite-and-atlas-production (same 256 px cell, mipmapped).
+
+NEXT (the Director / d9):
+1. Land `planter_v3`: copy the scratch strip to `project/features/city/art/view/p55/prop_planter.png`,
+   add the provenance line, film `--view=tilt` 48 px/m (the facade bench, as at 3ba29fd0).
+2. The kerb-barrier crowd occluders: view fills an `extra` list from `ArenaFloorView`, city merges it
+   in `CityOcclusion._scan_crowd` (premise unit-proven at ea4d38c0).
+3. The release-compile temp-dir collision; ChunkSwap only if a streamed scene eases its pitch live.
+- Session end 08:07. Shipped project files unchanged since 7d40e58d (ea4d38c0 is tests/ only).
