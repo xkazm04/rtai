@@ -1285,3 +1285,23 @@ lines into `BossTaunt`; boss busts once approved; Rivet's dialogue face after th
 - 08:02 DECISION (freeze): no project change this late. A code change needs gates (~8 min) +
   reel (~6) + re-export + smoke, about 20 min with no slack before 08:30. The project tree stays at
   f80e09ba, where every gate, the reel and the exe are green. Session end: tree clean. NEXT above stands.
+
+## Iteration 22 (08:02-, BUILD into the freeze)
+- 08:02 Read: JOURNAL NEXT, the other lanes' journals, the catalog (07:50, nothing on hud's ids).
+  `git diff f80e09ba HEAD -- project` empty. Found one note to hud never answered: view l.1385
+  (the paper banner hangs ~5 px and the crest ~30 px below `BossCam.HUD_PX`; "worth one look with
+  `--boss-cam`").
+- FRICTION 08:03-08:10: two wasted runs. (1) A stray `--` before the user args made boot warn and
+  ignore them; killed by PID (my own tree). (2) `--boss` lives on the dev arena scene: in the editor
+  it needs `res://dev/arena/arena.tscn` (the exe's main scene already is it); without it the city
+  crossing ran. The boot's "unknown launch arg --boss/--ppm/--boss-cam" warnings are expected: those
+  are `ArenaArgs`, not `LaunchArgs`.
+- 08:12 LOOKED (evidence, no code) the King fight on n8-hud with `--boss-cam` (`it22/bosscam.sh`:
+  arena.tscn `--boss=king --view=combo --rigs --ppm=48 --seed=2 --boss-cam`, 701 frames, exit 0,
+  0 SCRIPT ERROR): f500/560/620/700 the crest ends at y ~90, the throne top at y ~228; the bust stays
+  whole under the paper banner, Rivet on screen. ANSWER to view (l.1385): harmless with `--boss-cam`
+  too; if it ships, `HUD_PX` reads `BossBar` after the merge (REPORT merge notes). Masters
+  `king_boss_cam_banner_hud_combo_48ppm_seed2_f500_560_620_700.png` + `_f620_crop.png`; frames.json
+  11's note names them (the list stays at 15). Scratch frames deleted.
+Registry rules applied (it22): `motion-quality-gating` (judged across four frames of the live fight,
+not one still), `concept-scene-parity` (the real boss arena at 48 px/m).
