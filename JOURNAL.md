@@ -1150,3 +1150,36 @@ cream stage van roof at 32 px/m). street, hud: no new REQUEST to view.
   hi-vis sprites until street's cards merge (`quest1_dock9_guards_cast_n8view_alone_*_crop.png`).
   frames.json: the Dock 9 contractors pair in at #5; servo_combo_art_key out (file stays).
 - CORRECTION 05:51: Mertz was never on a rig in quest 1 (ArenaRigs skips the quest's BOSS; CastView draws him): QuestGuardCast leaves him as he was. The decision line now says so; the 105961e2 message's "Mertz ... keep their rigs" is loose wording.
+- 05:52 city answered the it13 REQUEST: `PropCards.stand_polys` (n8-city 8c982682, parse fix
+  55ede50c). TRIAL MERGE rebuilt 05:53-05:56 on n8-view 3aa2b05a + city 55ede50c, street f67f272b,
+  vehicles cf72cfc4, hud 19924999 (view's side on the known conflicts), `--import` 0.
+- MILESTONE 05:57 the occlusion cut on city's REAL outlines (NEXT 1): King fight combo 64 px/m
+  seed 2 (`--bot-human --boss-cam`), 1110 frames, 0 SCRIPT ERROR. LOOKED f940-f1100 every 20 at
+  the crate stack: no black kite in any frame (it13's fault), at f1040 Rivet behind the top crate
+  shows his ink only inside the crate; the stack stays cream under the King's cone (city's colour
+  fix: the it13 NOTE is closed). Masters
+  `prop_occlusion_city_stand_polys_real_combo_64ppm_seed2_f940_f1100_every20.png`; frames.json's
+  occlusion entry notes it (the prototype pair stays the before/after). No code change on view's
+  side: the method-presence bridge picked it up as built.
+- Registry rules applied it14: concept-scene-parity (all three findings judged on the merged tree,
+  where the lanes' art meets view's code: the van under the number, street's contractors under the
+  rig cast, city's outlines under the cut), depth-ordered-layered-art (marks over the vehicles
+  band; the guards' order traded for identity, written as the cost), motion-quality-gating (Dock 9
+  340 ticks and the King fight 1110 frames in motion, before/after same seed), generative-artifact-
+  gating (no new art), combat-pacing-and-dramatic-arc (n/a: no sim change), perf-regression-gating
+  (no new per-frame work: the stroke is one draw call per bay, the guards' draw moves, not adds).
+- GATE 05:59 director reel on the 05:56 trial merge (city's stand_polys in): top 19/19 and combo
+  19/19 chapters all down, 0 SCRIPT ERROR (`director-reel-it14b-trial-*.log`).
+- Session close 06:00: tree clean after this commit. Commits it14: c3deecd3 (bay number ink),
+  92a3de77, 105961e2 (QuestGuardCast), bc84c69e, 2ee50990 (REPORT), c308f040 (evidence), 3aa2b05a
+  (decision wording), this one. Scratch .avi deleted; the throwaway tree
+  %TEMP%/view-street-check stays until the freeze (remove with the trial tree).
+NEXT (iteration 15, in order):
+1. Other lanes' journals: street's answer to the street_walker_cards.gd:91 REQUEST (if street
+   ships dock-guard RIG looks instead, put the contractors back on the rigs: QuestGuardCast.ON
+   false); vehicles/city on the bay number and stand_polys notes.
+2. Quality pass on the merged tree still owed: the city drive at tilt70 64 px/m (view's lead +
+   the lanes' cars), quest 1 under combo at 48 px/m (the contractors' corpses pile up all quest on
+   the cast path: street's sprite-path behaviour; judge if it reads as a mess at Dock 9, 15000).
+3. The freeze (08:30): `git worktree remove` %TEMP%/view-trial-it11 and %TEMP%/view-street-check,
+   director reel top + combo on n8-view, `evidence/run.mjs --no-bench`, the exe, REPORT final.

@@ -41,8 +41,10 @@ under `evidence/n8-view/`. Full log: `JOURNAL.md`.
    CameraRig (`lead_combo_vs_combo_lead_{15,25}mps_48ppm_t150.png`).
 7. **Draw order**: Tonnage's legs in the depth sort (order probe 0/9 wrong at 70); the King's accents in
    the order probe; the King on foot behind his wreck (car pairs 10/10 wrong -> 0/10); PropOcclusion
-   (a rig behind a prop shows through it); it13: the silhouette cut to a card's opaque outline (city's `stand_polys`, REQUESTed;
-   the rect until then): `prop_occlusion_card_outline_before_after_combo_64ppm.mp4`.
+   (a rig behind a prop shows through it); it13: the silhouette cut to a card's opaque outline
+   (`prop_occlusion_card_outline_before_after_combo_64ppm.mp4`); it14: re-filmed on city's REAL
+   `PropCards.stand_polys` (n8-city 55ede50c) on the trial merge: no kite f940-f1100, the crates
+   cream (`prop_occlusion_city_stand_polys_real_combo_64ppm_seed2_f940_f1100_every20.png`).
 8. **A fresh corpse keeps its drawn fall** (street's REQUEST, it12): under a card view a body that
    dies on its full rig keeps it in a slot past the living 16 (at most 4), until it leaves the feed
    in the arena / quest 1 (no atlas there), 90 ticks in the city (then street's atlas lying frame).
@@ -119,8 +121,9 @@ hand fix, unit 1639/0, director reel top + combo 19/19 all down, 0 SCRIPT ERROR.
   all down, 0 SCRIPT ERROR with QuestGuardCast (`evidence/n8-view/director-reel-it14-trial-*.log`).
   street's `StreetWalkerCards.step` loop at :91 needs an is_instance_valid guard (REQUESTed);
   QuestGuardCast keeps quest 1 off that path either way.
-- it13: PropOcclusion reads city's `PropCards.stand_polys` by method presence (REQUESTed from
-  city); merge order does not matter, without it the cut stays the card's rect.
+- it13: PropOcclusion reads city's `PropCards.stand_polys` by method presence (landed on n8-city
+  8c982682 + 55ede50c, checked on the 05:56 trial merge); merge order does not matter, without it
+  the cut stays the card's rect.
 
 ## Exe
 (at the freeze: `build/export/windows/RTAI.exe`, the int-day recipe)
