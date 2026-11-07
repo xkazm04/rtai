@@ -133,6 +133,12 @@ lower than main's exe), or minimize it (L12 + L14); `RTAI.exe -- --frame-cap=off
 - Dropped with numbers: L1 renderer/driver, L6 render thread, **L7 a stripped export template** (exe 109 -> 67-74 MB and
   ~-10 MB RAM, but the MSVC build is ~10 % slower a frame than the official MinGW-GCC template, LTO or not).
 
+## Clips with the perf HUD on (`C:\Users\kazda\kiro\gtai-masters\d9\perf\`, 14 entries in `frames.json`, all present)
+- `perf-set-combined.mp4` (69 s): King 32 px/m, city drive, the riot (L3 off vs on), King 48 px/m; left main, right d9-perf.
+- `king32-before-vs-after.mp4`, `king48-before-vs-after.mp4` (King under combo), `drive32-before-vs-after.mp4`,
+  `drive48-before-vs-after.mp4` (drive_dense, tilt70), `riot-l3-off-vs-on.mp4`; end stills `*-end.png`.
+- The pictures are the same left and right (that is the point); the HUD readouts carry the difference.
+
 ## Final table: this morning's main vs d9-perf (LEDGER "Final table"; release build unless marked)
 | scene | metric | main | d9-perf | verdict |
 |---|---|---|---|---|
@@ -185,3 +191,9 @@ lower than main's exe), or minimize it (L12 + L14); `RTAI.exe -- --frame-cap=off
 3. Call P-2 (b): the traffic-sheet split (vehicles' files; REQUEST in JOURNAL), then measure the -96 MB.
 4. L7 again with the official toolchain (llvm-mingw + LTO) and an unstripped A-vs-A build.
 5. Interpolated drawing above 60 Hz (`SimClock.alpha()` has no reader): smoother on 144 Hz, a look change: a Call.
+
+## REPORT-phase check (18:40, it28)
+Every evidence path cited above was checked to exist (`evidence/perf/*`, `build/export/windows/RTAI.exe` 18:05 and its
+DLL, `tools/perf/*`, `project/dev/perf/perf_hud.gd`, the masters stills and all 14 `frames.json` files). The exe is newer
+than the last `project/` commit on the branch (ca5817a4, 17:51), so the it22 gates still describe it. No Godot run, no
+`project/` change after the freeze.

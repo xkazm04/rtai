@@ -757,4 +757,5 @@ NEXT: as it22 (F19 native stack, the owner's Calls P-1 / P-2 / P-3, L7 with the 
   (artifact vs last code commit).
 
 NEXT: as it22 (F19 native stack of the frozen main thread; the owner's Calls P-1 / P-2 / P-3; L7 with the official toolchain).
-- Session end 18:45 (it28): all committed.
+- FRICTION 18:45: the first REPORT edit failed (a Python escape on a Windows path) and be2e34b2 went in with the JOURNAL only; REPORT fixed in the next commit.
+- Session end 18:47 (it28): all committed.
