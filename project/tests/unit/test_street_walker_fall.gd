@@ -70,3 +70,4 @@ func test_every_fall_grid_exists_and_all_three_cops_have_one() -> void:
 			assert_true(ResourceLoader.exists(path), path)
 	for row: String in ["cop/head_cap", "cop/head_helmet", "cop/head_swat"]:
 		assert_true(StreetWalkerFall.FALLS["p70"].has(row), row + " falls as drawn at 70")
+	assert_true(StreetWalkerFall.FALLS["p70"].has("thug"), "the robot thug powers down as drawn")

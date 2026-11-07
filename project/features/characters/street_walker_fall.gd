@@ -33,6 +33,7 @@ const FALLS: Dictionary[String, Dictionary] = {
 		"cop/head_cap": "cop_patrol_fall.png",
 		"cop/head_helmet": "cop_riot_fall.png",
 		"cop/head_swat": "swat_fall.png",
+		"thug": "thug_fall.png",
 	},
 }
 const FALL_FRAMES: int = 3
