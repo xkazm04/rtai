@@ -331,3 +331,7 @@ NEXT (iteration 7):
   (the evidence stamps it FAIL only because I edited LEDGER.md during the run: "tree changed"), scenarios 52/0, parity
   bit-exact + planted mutation caught, look goldens 11/11 (worst 0.27) + block 5/5 (worst 0.22), release-compile 598/0.
   Director reel top / tilt70 / combo started 14:23 (headless, --quit-after 14000, in parallel).
+- GATE 14:28 director reel (L8 inside, headless --fixed-fps 60 --quit-after 14000, pistol, --rigs): top / tilt70 / combo
+  19/19 chapters fully down each, 0 SCRIPT ERROR (`evidence/perf/gates-it9/reel-*-chapters.txt`).
+- 14:26 L7 LTO build (MSVC production=yes lto=full, 6.8 min): **74.2 MB** (LTO inlines: +7 MB over no-LTO; official 109.3).
+  Same 712 classes as the no-LTO strip (probe), riot smoke exit 0 / 0 ERROR. A/B official vs stripl started 14:29.
