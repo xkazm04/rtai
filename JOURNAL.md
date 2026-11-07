@@ -668,3 +668,4 @@ NEXT (iteration 14, in order):
 4. CityOcclusion's remaining 0.21 ms (RigCastShadows.collect walk), measured under bench.lock.
 5. Quest 1's TUCK-IN crate stack under a tilt if it shows on the quest film.
 6. Before the freeze: full gates (evidence --no-bench), the exe export, REPORT.
+- GATE unit full no-arg on c5ec22ff (clean tree): 1521 passed, 0 failed, 0 skipped, no FLAKY.
