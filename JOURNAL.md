@@ -623,3 +623,10 @@ NEXT (iteration 19 = the freeze session, 18:30 freeze, 18:40 REPORT):
   Quest 1 under `--autostart` freezes ~1 run in 4 at Rivet's "Okay" line, main 3982af1a included (1 of 5), main thread
   parked in a wait. Repro: `evidence/perf/f19-freeze/hunt.ps1 -Runs 6` (stops at the first freeze, writes the thread split).
   I am not touching the save / stream code (not perf's, and not root-caused).
+- GATE 17:43 at 2d81ee85 (L13 inside; `evidence/perf/gates-it21/reels-summary.txt`): director reel headless top / tilt70 /
+  combo 19/19 chapters all down, 0 SCRIPT ERROR. With the 17:15 evidence run at bf6398e1 (all PASS) and L13 a headless
+  no-op, the branch is gated; the freeze session re-runs `evidence/run.mjs --no-bench` on its HEAD.
+- 17:44 L14 HYPOTHESIS (from F18, before the numbers): MinimizedCap also turns low-processor mode on while minimized
+  (nothing is drawn, so no pixel), so the limiter sleeps the whole gap instead of spinning its last 1 ms. Expected: the
+  King minimized 0.38 -> ~0.32 cores (-0.06, F18's size); on screen unchanged. Built in the scratch worktree
+  `perf-before` at 2d81ee85 (`--frame-cap=spin` = L12 only); A/B `probe_king.ps1` spin / low / low / spin, lock held.
