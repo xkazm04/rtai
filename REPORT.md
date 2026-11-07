@@ -123,6 +123,9 @@ Every look has a flag one value away (`PAPER`, `FACES`, `SEE`, `ON_TICKET`, `FIT
   it21 (07:54), the 07:48 build again: `-- --boss=king --view=combo --rigs` and `-- --boss=servo --view=combo --rigs`,
   241 frames each, exit 0, 0 ERROR lines in either log; frame 239 of both looked at (the paper banner with
   the King's and Servo's crests, the ghost card): `gtai-n8/scratch/hud/it21/exe_boss_smoke.png`.
+  Also `-- --armory --view=tilt --rigs` and `-- --armory --pickup-crate=on --view=tilt70 --rigs` (07:59):
+  241 frames each, exit 0, 0 ERROR lines; frame 239 looked at (the p55 floor pieces + rack; the open crates):
+  `it21/exe_armory55_crate_smoke.png`. Every exe command line in this section is smoked on the shipped build.
 
 ## Merge notes for the Director
 - hud touches `features/hud/`, `features/bosses/boss_bar.gd`, `features/police/heat_meter.gd`, the

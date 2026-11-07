@@ -1278,3 +1278,7 @@ lines into `BossTaunt`; boss busts once approved; Rivet's dialogue face after th
   `date`. Clean as you go: deleted 15 raw frame-sequence folders in `scratch/hud/it9-it12`
   (board_*, q1_grid; ~300 MB) that no REPORT/JOURNAL/frames.json line names; logs, scripts and
   named stills kept (scratch 514 -> 216 MB).
+- 08:01 LOOKED (evidence, no code) the 07:48 exe's other REPORT command lines: `-- --armory
+  --view=tilt --rigs` and `-- --armory --pickup-crate=on --view=tilt70 --rigs`, 241 frames each,
+  exit 0, 0 ERROR lines; frame 239 looked at (p55 floor pieces + wall rack; the open crate rows):
+  `it21/exe_armory55_crate_smoke.png`. All five REPORT exe lines now smoked on the shipped build.
