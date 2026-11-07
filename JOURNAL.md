@@ -300,7 +300,7 @@ Registry rules applied: sprite-and-atlas-production (street_walk.py's one cell p
 measured per grid), generative-artifact-gating (looked at all 60 cells before and after the tone),
 motion-quality-gating (before/after at the same seed and frame, the clips in motion),
 depth-ordered-layered-art (a whole-figure card replaces head card + parts; parts hidden, not freed).
-- 12:20 MILESTONE item 5 (ffbb9c44): SWAT at 70 + patrol and riot at 55 walk as drawn armed grids.
+- 12:09 MILESTONE item 5 (ffbb9c44): SWAT at 70 + patrol and riot at 55 walk as drawn armed grids.
   Toned to their cards' navy (street_tone.py: swat hue -6.7 v x1.27; patrol55 royal -> navy v x0.62).
   StreetCopWalk.FILL is keyed `<art>/<file>` now: the 55 and 70 grids share file names (fill_of takes
   the resource path). FILL measured: swat70 1.14, patrol55 1.07, riot55 1.09. At 70 every city cop
@@ -309,3 +309,27 @@ depth-ordered-layered-art (a whole-figure card replaces head card + parts; parts
   `swat_armed_walk70_before_after_tilt70_48ppm_seed5_f400_x1.5.png`, 6 s clips before/after.
   FRICTION: my first SWAT "before" came from the it3 mp4 (trimmed -ss 1: not frame-aligned, a different
   scene); re-filmed with only the SWAT row removed (3 min).
+- 12:19 GATE evidence at 16eb6d86: lint 15/15, unit 1713/0, scenarios 52/52, parity bit-exact,
+  selftest look goldens 11/11 (worst 0.27), release-compile 602/0: all PASS; director reels at
+  16eb6d86 top/tilt70/combo 19/19 down, 0 SCRIPT ERROR (logs ran to scratch, copied in: no tree guard).
+- 12:15 FINDING item 2 (NEXT 3 of it3): the King's 70 -> 55 leg-sheet swap never shows in play: under
+  combo he engages at tick 1 seated in his car, the art key flips to p55 at tick 32 of the ease, and he
+  is on foot only in phase 3 (at 55). Nothing owed.
+- 12:22 MILESTONE item 4 filmed (6f28481c): city_frame focus 11 (a plaza, two planters, found by a
+  scratch scan of CityGen chunks for prop 33) + `--view` let through (ViewMode reads it). v2 -> v3 pair at
+  64 and 32 (masters `planter55_before_after_*`). FRICTION: city_frame's FOCI comment growth tripped
+  the dev_loc debt ratchet (+5) and gdlint line length: folded into existing lines (net 0 lines).
+- 12:26 MILESTONE item 5 (d6ffd600): the asset lane's fresh SWAT 70 profile row (round 1315, A, as
+  trimmed cells) spliced into the keyed v2 sheet on the old row's foot line (scratch
+  `cops2/splice_row.py`), re-cut; swat_walk_armed_55_v2 (B, interim) lands at 55 (FILL 1.07). Every
+  living city cop now walks drawn at 55 and 70. Masters pair at 55 re-shot with SWAT in.
+
+NEXT:
+1. Round 1320 (assets: fresh rows patrol55 r3, riot55 r2/r3/r4, swat55 r2/r3/r4) as
+   `<strip>_rfresh_cells/`: splice each fresh row with `scratch/seams/cops2/splice_row.py <keyed> <cells>
+   <row> <out>` (one row per call, chain them), then street_walk.py + street_tone.py (refs: the p55
+   cards), re-measure FILL, film seed 5 tick 400 at 48. Provenance line per file.
+2. Judge a cop's baton strike swap (grid -> parts -> grid) in motion at 48 px/m (riot cops strike
+   in the arena city block, seed 5); if it pops, hold the grid through the strike.
+3. Item 4: owner eye on the v3 planter at 32 (dark mass); a value lift is a city-tool question.
+4. Calls 1 and 3 stand (legs lift, bike share 0). Freeze 18:30: export RTAI.exe, REPORT final.

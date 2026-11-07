@@ -53,6 +53,23 @@ Branch `d9-seams`. Evidence: `C:\Users\kazda\kiro\gtai-masters\d9\seams\` (`fram
    hides with the leg parts (bb7077f5: it showed as a rimmed disc between the boots under the lifted
    bust): `king_pelvis_before_after_combo55_tilt70_64ppm_seed2_f150_x2.png`.
 
+10. **Every armed city cop walks drawn, SWAT included and at 55** (item 5, ffbb9c44 + d6ffd600, it4):
+   at 70 the SWAT walk on swat_walk_armed_70_v2 (B) with the asset lane's fresh profile row (round
+   1315, A) spliced in, so all 5 facings alternate; at 55 the patrol, riot and SWAT cops walk on the
+   round-1310 sheets (B, interim: the asset lane's fresh rows, round 1320, drop in), each toned to its
+   own card's navy. `StreetCopWalk.FILL` is keyed per pitch. No living city cop draws a head card
+   over parts at either pitch any more (a baton strike, a throw or a reload still shows the parts).
+   `cop_armed_walk55_before_after_tilt_48ppm_seed5_f400_x1.5.png`, `..._32ppm_seed5_f400.png`,
+   `swat_armed_walk70_before_after_tilt70_48ppm_seed5_f400_x1.5.png`, 6 s clips before/after.
+11. **The 55 planter in the streamed city** (item 4, filmed it4, 6f28481c): `city_frame` focus 11 is
+   a plaza with two planters; under `--view=tilt` the v3 box with its front face replaces v2's flat
+   print. `planter55_before_after_tilt_64ppm_cityframe11.png`, `..._32ppm_cityframe11_crop2x.png`.
+   Seen: at 32 px/m v3's plants read as a dark mass (v2's leaves were brighter); at 64 it reads well.
+
+Gates it4: evidence at 16eb6d86 (55 patrol/riot + SWAT 70 v2): lint 15/15, unit 1713/0, scenarios
+52/52, parity bit-exact, selftest look goldens 11/11 (worst 0.27), release-compile 602/0, all PASS
+(`evidence/d9-seams/evidence-it4-16eb6d86.log`); director reel at 16eb6d86 top/tilt70/combo 19/19
+down, 0 SCRIPT ERROR (`evidence/d9-seams/director-reel-it4-*.log`).
 Gates it3: director reel at 4aa2a0e0 top/tilt70/combo 19/19 down, 0 SCRIPT ERROR
 (`evidence/d9-seams/director-reel-it3-*.log`); evidence at f74bb3ed (items 5 + the rider): lint 15/15, unit 1711/0, scenarios 52/52,
 parity bit-exact (bikes in it), selftest look goldens 11/11 (worst 0.27), release-compile 602/0, all
@@ -69,8 +86,8 @@ director reel (`--fixed-fps 60 --quit-after 14000`) top 19/19, tilt70 19/19, com
 0 SCRIPT ERROR (`evidence/d9-seams/director-reel-it1-*.log`). Not yet run: `tools/evidence/run.mjs --no-bench`.
 
 ## What does not work yet
-- SWAT cops and every cop at 55 still glide on head cards over parts (no armed walk sheets yet:
-  REQUEST `swat_walk_armed_70`, then the three at 55).
+- The 55 armed walks are the asset lane's interim B sheets (a repeated row in each); the fresh rows
+  (round 1320) drop in by re-running street_walk.py + street_tone.py.
 - The sim bike is off by default (Call 3).
 - After merge, rebuild native (`just native`): `project/native/bin` is git-ignored, and the old DLL
   would treat bikes as cars (no crash; parity would fail).
