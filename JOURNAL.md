@@ -1149,3 +1149,6 @@ saturation and value, so a cream five-view row would pop olive at every 22.5-deg
 REQUEST to assets: van_cream_between, 70 (then 55), the four 22.5-deg in-betweens A-D of van_cream_70
 copied by example from van_between_70 (the same drawings, the game's top-down cream paint), so the
 depot van's cream option can turn without popping (owner Call l.619 option c).
+GATE 04:47 `top` identity on 2bcfdc56 (the n8-view merge + DARK_LAMP_DEG): main scene `--arena=city
+--bot=rivet --seed=2 --rigs --view=top`, 300 fixed-fps frames, framemd5 == it17's mk_top_s2 and
+new_top_s2 (video + audio), 0 SCRIPT ERROR (evidence/n8-vehicles/identity-it18/top_s2.md5).
