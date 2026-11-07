@@ -92,10 +92,23 @@ foot, both sides) hidden while it shows. Data row like STRIPS: [name, soles anch
 squash_y 1.0 (70: ~0.7 until v2)]. Provenance per cut. Film combo 32/64 (standing + walking),
 before = today's parts. Then the owner call on the overlap (REPORT call 1).
 
+- 10:24 MILESTONE gates: director reel `--fixed-fps 60 --quit-after 14000` (headless) top 19/19,
+  tilt70 19/19, combo 19/19 down, 0 SCRIPT ERROR each, clean logs (49281aeb). The first combo log
+  had NUL bytes: my first (stopped) script's loop survived TaskStop and wrote the same file; combo
+  re-run alone. Lesson: TaskStop does not stop a script's later loop iterations; kill by tree.
+- 10:27 MILESTONE (partial) item 2b: KingLegsCard + art/p55/king_legs.png + provenance, shipped OFF
+  (935fc30b). FINDING: the 2.0x bust card reaches the ground, so legs with their soles on the ground
+  point stand hidden behind it; LIFT 0.5 (the bust raised by half the legs' cell) shows the drawn
+  legs well (steel shins, gold sabatons, reads as his), BUT the press-plate arm parts stay at the old
+  height: a plate hangs by his feet (masters `WIP_king_drawn_legs_lift0.5_combo_64ppm_seed2_f150_parts_vs_legs.png`).
+  Fix next: raise the whole upper body (the rig's arm parts with the bust) by the same lift, then ON.
+DECISION item 2b: ship the legs card OFF this iteration (a detached arm plate is worse than the old
+legs); the bust's lift onto the legs is the owner's call 1 (default to build: 0.5 of the legs cell).
+
 NEXT:
-1. Read the reel results (evidence/d9-seams/director-reel-it1-*.log): 19/19 down, 0 SCRIPT ERROR each
-   (if this session ended before they finished, re-run `scratch/seams/reels.sh`, now with --fixed-fps 60).
-2. Item 2 second half FIRST (brief order; the 55 sheet is in): the legs card, plan above.
+1. Reels done (19/19 x3). Re-run `scratch/seams/reels.sh` (--fixed-fps 60) after every gameplay-touching change.
+2. Item 2 second half FIRST: KingLegsCard is in (OFF). Lift the arm parts with the bust (find where the
+   rig's upper body is offset: RigTilt.body_lift / rig.body), set ON, film combo 32/64 standing + walking.
 3. Item 3 sim bike (scope above): native C++ + GDScript twin (parity 1200 steps), vehicle tables,
    art id 9, its own rng stream for the share, flat top print for `top`.
 4. Item 5: armed walk strips at 70 are in the catalog: cop_patrol_walk_armed_v2 (B, 20261107-1030)

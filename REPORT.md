@@ -20,14 +20,19 @@ Branch `d9-seams`. Evidence: `C:\Users\kazda\kiro\gtai-masters\d9\seams\` (`fram
    worktree, 599 loaded / 0 failed each, both scratch dirs removed (`evidence/d9-seams/`).
 
 Gates this iteration: lint 15/15; unit no-arg 1696 passed / 0 failed (at 966a2a79);
-director reel top/tilt70/combo: see `evidence/d9-seams/director-reel-it1-*.log`.
+director reel (`--fixed-fps 60 --quit-after 14000`) top 19/19, tilt70 19/19, combo 19/19 down,
+0 SCRIPT ERROR (`evidence/d9-seams/director-reel-it1-*.log`). Not yet run: `tools/evidence/run.mjs --no-bench`.
 
 ## What does not work yet
-- Item 3 (sim bike), item 5 (armed city cops walk), item 2's drawn legs (waiting on assets).
+- Item 2's drawn legs: the assets lane served king_legs 55/70; `KingLegsCard` is built but OFF: with
+  the bust raised onto the legs the press-plate arm parts stay behind (still:
+  `WIP_king_drawn_legs_lift0.5_combo_64ppm_seed2_f150_parts_vs_legs.png`). Next: lift the arms too.
+- Item 3 (sim bike), item 5 (armed city cops walk).
 
 ## Calls for the owner
-1. **The King's legs meet the bust** (when `king_legs_*` lands). Default I will build: the bust's hem
-   overlaps the legs' hip line by ~12% of the leg cell, the legs scaled with the bust (cell width =
+1. **The King's legs meet the bust** (when `king_legs_*` lands). The 2.0x bust card reaches the ground,
+   so drawn legs mean a taller King: default I build, the bust rises by half the legs' cell (it1 WIP
+   still shows the legs reading well) with the hem over the legs' hips, the legs scaled with the bust (cell width =
    the bust's cell width), short wide-set legs. Option: legs hidden entirely under a longer drawn
    robe on the bust (an asset ask). Today: the cream backing is gone (stills above).
 2. **A corpse that fell "through" the barrier** reads as lying behind it (its boots show north of
