@@ -67,3 +67,19 @@
   exports (292 MB + 396 KB .so). E4: the export runs the city under `deck` in WSLg on the AMD iGPU through Mesa
   GL-on-D3D12 (`GALLIUM_DRIVER=d3d12` needed, else llvmpipe): p50 19.8 ms, p99 38.6. A path proof, not a renderer verdict.
 - 11:03 reel combo 19/19, 0 SCRIPT ERROR.
+- REQUESTs: none received (perf has no REQUEST for handheld; rivet/seams REQUESTs are to assets). None sent yet.
+  Idea for perf (iteration 2 REQUEST): share `tools/handheld/ab.mjs` (interleaved rounds) and the frame-log summary.
+
+- MILESTONE 11:11 gates on the final code: unit 1698 passed 0 failed; lint 15/15; the director reel top 19/19,
+  combo 19/19, combo + --device=deck 19/19, tilt70 re-run 19/19, all 0 SCRIPT ERROR (evidence/gates-it1b.log).
+  Not run this iteration: `tools/evidence/run.mjs --no-bench` (look goldens, replay, parity): first thing next.
+
+NEXT (iteration 2):
+1. `node tools/evidence/run.mjs --no-bench` for top bit-identical (look goldens, replay, parity).
+2. A/Bs on the bench lock: deck40 vs deck (CPU % of the pinned threads, GPU busy, as the power proxy);
+   handheld_1080 (viewport stretch) vs handheld_1080_native; switch_handheld at 3 threads (does the 30 cap hold?).
+3. Live proof of the focus-out pause (a scenario: quest 1 running, send NOTIFICATION_APPLICATION_FOCUS_OUT).
+4. Rumble behind a setting + the handheld rows (Input.start_joy_vibration on hit/blast/crash); glyph pad type.
+5. NAT-06 parity on the Linux .so inside WSL (the sniper .so on Ubuntu's glibc 2.39 runs: forward compatible).
+6. Re-film the King fight + city at zoom_k 1.5 (the clips are 32 px/m) and a 30-90 s combined clip.
+7. End of day: delete the HKCU DirectX UserGpuPreferences value for gtai-d9x/handheld-godot/..._hh.exe and that copy.
