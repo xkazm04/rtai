@@ -50,16 +50,28 @@ The view lane's REPORT.md came in with the n8-view merge; this file replaces it 
    Dent's seized van in the Servo depot read as the soul's, with the tether
    (`soul_seized_van_servo_depot_combo_64ppm_seed2_f120_before_left_after_right.png`,
    `soul_hijacked_traffic_top_left_tilt70_before_mid_after_right_f320_crop3x.png`).
-9. **Gates (it21, 7a993845, after the n8-view merge):** unit 1563/0 no FLAKY; director reel 19/19
+9. **The delivery truck and the depot van (it22, 4c16951c):** library A sheets at 70 and 55 cut as
+   five-view cards into their own showcase atlas (`art/p<pitch>/service_cards.png`; the shared
+   traffic atlas is uncompressed and would grow 14 MB for art no scene draws yet). The truck's cab
+   turned from amber-orange to mustard (vermilion-gate px 1463 -> 0). Filmed turning at 32 and 64
+   px/m, 0 SCRIPT ERROR: `service_truck_depot_van_turn360_64ppm_tilt70_left_tilt55_right.mp4`,
+   `service_truck_depot_van_turn_strip_tilt70_64ppm.png`. Run it from the editor build:
+   `"$GODOT_BIN" --path project res://dev/showcase/vehicle_turn.tscn -- --view=tilt70 --ppm=64 --set=service`.
+10. **Side views from the library's redraws (it22, 299d849f):** the taxi, pickup and ambulance sides
+   at 70 now share the 3/4 views' steep camera (the old sides popped to a tall door band); the taxi's
+   cab-yellow redraw is graded to its mustard neighbours.
+   `street_side_redraws_turn360_tilt70_64ppm_before_top_after_bottom.mp4`.
+11. **Gates (it21, 7a993845, after the n8-view merge):** unit 1563/0 no FLAKY; director reel 19/19
    all down in `top` and `tilt70`, 0 SCRIPT ERROR; lint 15/15; `top` framemd5 identical to it20;
    scenarios 52/0 (`evidence/n8-vehicles/iteration21.json`). `tools/evidence/run.mjs --no-bench`
    all PASS on aa086daa (it20; parity bit-exact, selftest goldens, release-compile 566/0); the
    freeze re-runs everything on its HEAD.
 
 ## What does not work / not done
-- The delivery truck and the dedicated depot van (library `delivery_truck_70` A, `depot_van_70` A,
-  an ochre courier van with hazard bumpers) have no sim archetype and no top-down print: they are
-  not cut. Servo's stage van and the city's vans draw the van row (cream). See Call 9.
+- The delivery truck and the dedicated depot van have no sim archetype and no top-down print: since
+  it22 they are cut as cards (both pitches) but draw only in the turn showcase. The truck is fitted
+  into the shared 7 m card cell (~5.3 m long, not its drawn 6.4 m). Servo's stage van and the city's
+  vans draw the van row (cream). See Call 9.
 - The bike has no sim archetype: it draws only in `dev/showcase/vehicle_turn.tscn`.
 - The driven car's hijack enter/exit keeps Rivet's current rig (Rivet frozen tonight).
 - The main scene ignores `--ppm`: city stills at 48/64 px/m come from the showcases, not the drive.
@@ -90,15 +102,19 @@ Each: options, the default built, how to see it.
 7. **Pickup's C in-between:** row C (built) vs the better-turned `_c` redraw (`PICKUP_C_REDO`).
 8. **Stage cars over the actors:** ON (built) vs under.
 9. **Servo's stage van:** (a) the city van row, cream, matching its top-down print (built); (b) the
-   library's ochre `depot_van` as a new atlas row for the stage only (needs a top-down print too, or
-   `top` and the card disagree again). See `van_cream_servo_depot_combo_64ppm_seed2_f120_olive_left_cream_right.png`.
-
+   library's ochre `depot_van`, cut since it22 (`service_cards.png` row 1), for the stage only (needs
+   a top-down print too, or `top` and the card disagree again). See the ochre van turning:
+   `service_truck_depot_van_turn360_64ppm_tilt70_left_tilt55_right.mp4`; `van_cream_servo_depot_combo_64ppm_seed2_f120_olive_left_cream_right.png`.
 10. **The soul-hijacked card:** (a) its light paint goes the soul's teal, like the print's plate
    (built: `soul_k = 0.85`, `soul_lo = 0.18` in `vehicle_cards.gdshader`); (b) no paint, the seize
    read by Dent's halo and tether only (`soul_k = 0.0`); (c) roof and hood only, sides kept
    (`soul_lo = 0.3`). See `soul_hijacked_traffic_tilt70_drive_before_left_after_right.mp4`,
    `soul_seized_van_servo_depot_combo_64ppm_seed2_f120_before_left_after_right.png`; in the exe:
    `RTAI.exe -- --boss=servo --view=combo --rigs` (Dent seizes the bay 3 van).
+
+11. **The delivery truck's length:** (a) fitted into the shared 7 m card cell, ~5.3 m (built); (b) a
+   per-atlas cell size in VehicleCards, the drawn 6.4 m (a runtime change; worth it once the sim has
+   a truck). See `service_truck_depot_van_turn_strip_tilt70_64ppm.png`.
 
 ## Exe
 `build/export/windows/RTAI.exe` (preset `windows-showcase`: boots the arena; embedded pck + the sim DLL

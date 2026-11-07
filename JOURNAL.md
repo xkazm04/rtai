@@ -1415,3 +1415,64 @@ framemd5 on vs off differ at 1 video frame (f28); two runs of the SAME build (of
 f33: run-to-run noise of a windowed city run, not the claim. Trial tree removed, .avi deleted.
 NEXT 2 updated: nothing owed on the arena city; the quest 1 combo look at Dock 9 stays a candidate.
 Session end 06:52.
+
+## Iteration 22 (06:51, BUILD)
+Read: JOURNAL, git log, the lane journals (view, street, city, hud): no new REQUEST to vehicles; city
+has not answered the it21 kerb-claim NOTE (none needed). Library re-checked for my classes: NEW since
+it21: delivery_truck_55_v2 A (0620), depot_van_55_v3 A (0705), and A-grade 70 side redraws for the
+taxi, parked pickup and ambulance (rotation 3 alone at the sheet camera), police_car_between_70
+re-keyed (06:54).
+Weakest item taken: brief item 2's last two vehicles. REPORT said "the delivery truck and the depot
+van are not cut".
+MILESTONE 4c16951c the delivery truck and the depot van as five-view cards at 70 and 55, in their own
+showcase atlas `art/p70|p55/service_cards.png` (`tools/art/vehicle_cards.py <lib> <pitch>
+--set=service`), filmed in `vehicle_turn --set=service`. Why a separate atlas: traffic_cards.png is
+uncompressed RGBA loaded by every card view; two more rows = +14 MB for art no scene draws yet.
+FOUND while looking at the first cut (tilt70 64 px/m strip): a dark dash floated above the depot van
+at the 3/4 views. Cause: the 6.4 m truck's diagonal views are taller than the 7 m card cell and
+spilled into the van's cell (rows 0-9 of its cell). Fix: the whole truck row scaled by one k so every
+view, lifted by its ground drop, fits the cell (x0.82 at 70, x0.84 at 55), and the depot van cut at
+4.9 m, so the truck still reads as the bigger body. Rejected: clamping (a 26 px ground-centre jump at
+the nose views at 64 px/m); a per-atlas cell size (a runtime change to VehicleCards; the way to a
+true-length truck once a sim archetype exists). The truck's 70 cab is drawn amber-orange (library
+note: match the 55 mustard): `SERVICE_HUE` turns it 12 deg toward yellow, vermilion-gate px in view 0
+1463 -> 0. The depot van's black-vermilion hazard bumpers are kept (danger marks).
+FILMED vehicle_turn --set=service at tilt70 and tilt (55), 64 and 32 px/m, 380 frames, 0 SCRIPT ERROR
+each. LOOKED (every 30 frames, both pitches): no stray marks, no overlap side-on (the pair 7 m apart),
+no size pop through the turn, mustard cab, roof pad and roller door read at 32 px/m.
+Test test_vehicle_service_cards (grid 5 x 2 per pitch, no FINE rows; no cell's art touches its cell's
+top or bottom edge: the spill above would fail it, by the numbers I measured on the bad cut, not
+re-run against it). Provenance: two lines. Debt: dev_loc +12 accepted with the reason. Decision line.
+FOUND (a fresh p70 cut differed from the committed atlas in rows 3/5/6 col 2 + the taxi's B/C, and
+police D): the library's new side redraws, which SIDE_REDO takes on sight. Looked old vs new in turn
+order (3/4, B, side, C, 3/4 away): the pickup and ambulance sides now share their neighbours' steep
+camera (the old sides showed a tall door band: a camera pop at the side view). The taxi's redraw is
+taxi_70_v3's cab yellow (atlas paint 240,210,3 vs its turned-mustard neighbours 192,161,35): a flash.
+MILESTONE 299d849f the p70 atlas re-cut on the side redraws; the taxi's side keeps its own hue and is
+graded to its neighbours (`SIDE_NATIVE = {"taxi"}`, match_paint: 175,150,30). p55 re-cut is
+bit-exact to the committed one (no new 55 sides).
+CORRECTION to 299d849f's message ("the other rows bit-exact"): police row 8, column 8 (D) also moved
+by 1654 px, the library's re-keyed police_car_between_70 (06:54). The rest of the rows are unchanged.
+FILMED vehicle_turn --set=street tilt70 64 px/m, 380 frames, before (the old atlas put back in for
+the run, then restored with git checkout and re-imported; git clean) vs after, 0 SCRIPT ERROR.
+LOOKED f150-210 (through the side view): after, the turn holds one camera through the side. City
+`--arena=city --view=tilt70 --seed=13 --rigs`, 181 frames, before/after: only f60 differs in 3 frames,
+a pickup side-on at the screen edge, its bed now seen from above as its neighbours; vermilion-gate px
+over f60/120/180 365 -> 381 (the pickup's lit amber lens now on screen).
+Masters: service_truck_depot_van_turn_strip_tilt{70,55}_64ppm.png, ..._turn360_64ppm_tilt70_left_
+tilt55_right.mp4, ..._tilt70_32ppm_f200_crop3x.png, street_side_redraws_turn_tilt70_64ppm_f150-210_
+before_left_after_right.png, street_side_redraws_turn360_tilt70_64ppm_before_top_after_bottom.mp4,
+pickup_side_redraw_city_tilt70_32ppm_seed13_f60_before_left_after_right_x3.png. frames.json: two new
+entries (8, 9); dropped kerb_cards_tilt70_48ppm (the Dock 9 entry covers it) and the sedan unlit
+lenses (minor); files stay.
+Rules applied: sprite-and-atlas-production (a cell that bleeds into its neighbour is an atlas fault:
+fit the content, pad the cell; atlas memory counted before growing a shared sheet),
+depth-ordered-layered-art (the ground centre kept at the cell centre, so the depth sort and the
+shadow stay under the body at every view), concept-scene-parity (the side redraws judged in the city
+at 32 px/m as well as the lab), motion-quality-gating (judged turning, frame by frame through the
+swap, before/after, same scene), generative-artifact-gating (only A sheets; the taxi redraw's paint
+drift found and graded before it shipped).
+GATE on 299d849f: unit no-arg 1566 passed, 0 failed, no FLAKY (46 s); lint 15/15. `top` untouched by
+both commits (the atlases are art-keyed p70/p55; service_cards is loaded only by the showcase).
+REPORT: works items 9 (truck + depot van) and 10 (side redraws); does-not-work line reworded (cut,
+showcase only, truck fitted ~5.3 m); Call 9 points at the ochre van; new Call 11 (truck length).
