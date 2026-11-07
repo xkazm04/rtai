@@ -99,3 +99,16 @@ func _bounds(p: PackedVector2Array) -> Rect2:
 	for v: Vector2 in p:
 		r = r.expand(v)
 	return r
+
+
+func test_extra_occluders_merge_only_when_their_drawn_area_meets_the_view() -> void:
+	var px: float = SimConst.PX_PER_M
+	var view: Rect2 = Rect2(Vector2.ZERO, Vector2(20.0, 20.0) * px)
+	var inside: CityOccluders.Bld = CityOccluders.Bld.new()
+	inside.area = Rect2(Vector2(2.0, 2.0) * px, Vector2(6.0, 3.6) * px)
+	var outside: CityOccluders.Bld = CityOccluders.Bld.new()
+	outside.area = Rect2(Vector2(40.0, 40.0) * px, Vector2(6.0, 3.6) * px)
+	var near: Array[CityOccluders.Bld] = []
+	CityOcclusion.merge_extra(near, [inside, outside] as Array[CityOccluders.Bld], view)
+	assert_eq(near.size(), 1)
+	assert_same(near[0], inside)

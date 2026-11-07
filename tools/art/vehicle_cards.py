@@ -46,7 +46,11 @@ MATCH_C = True
 # library's keyed side view sits on an opaque black box); False: the nine sim rows only.
 BIKE = True
 BIKE_SHEET = "bike_{pitch}_v3.png"
-BIKE_M = (2.1, 1.1)  # length, height (m): no top-down footprint to measure
+# d9 seams: the bike WITH a seated civilian rider (keyed/vehicle/bike_rider_<pitch>.png, A, round
+# 20261107-1210: bike_v3's drawing, one row of five); False: the riderless bike_v3 (a riderless bike in
+# traffic read as a bug). The rider lifts the body's height, so the ground centre drops further.
+BIKE_RIDER = True
+BIKE_M = (2.1, 1.6 if BIKE_RIDER else 1.1)  # length, height (m): no top-down footprint to measure
 COLS = 9 if BETWEEN else 5
 # Per sheet id: in-between slot (0-3 = A-D) -> a one-drawing redraw (keyed/vehicle/<name>.png,
 # {p} = pitch); None keeps the row sheet's own drawing. An id not listed takes <id>_between_c_{p}
@@ -200,6 +204,8 @@ def rows_of() -> list:
 
 
 def sheet_of(lib: Path, sid: str, pitch: int) -> Image.Image:
+    if sid == "bike" and BIKE_RIDER:
+        return Image.open(lib / "keyed" / "vehicle" / f"bike_rider_{pitch}.png").convert("RGBA")
     if sid == "bike":
         return green_key(Image.open(lib / "sheets" / "vehicle" / BIKE_SHEET.format(pitch=pitch)))
     name = (SHEET_PICKS | SERVICE_PICKS).get(sid, {}).get(pitch, f"{sid}_{pitch}")

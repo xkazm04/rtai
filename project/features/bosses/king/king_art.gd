@@ -73,6 +73,7 @@ static func dress(rig: CutRig) -> void:
 	var k: float = card.get_meta(META)
 	if k != 1.0:
 		card.scale *= k
+	KingLegsCard.step(rig)  # d9: the drawn legs under the bust (art/p<pitch>/king_legs.png)
 
 
 ## Swaps the card's strip; returns (the shared over the new cell width, for the step already

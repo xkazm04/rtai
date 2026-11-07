@@ -5,7 +5,7 @@ import assert from 'node:assert/strict';
 import { existsSync, mkdirSync, mkdtempSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
 import { homedir, tmpdir } from 'node:os';
 import { join, parse } from 'node:path';
-import { MARKER, Refused, guardDest, removeMarked, stageRelease } from './release_compile.mjs';
+import { MARKER, Refused, defaultDir, guardDest, removeMarked, stageRelease } from './release_compile.mjs';
 
 const fixture = () => {
   const base = mkdtempSync(join(tmpdir(), 'gtai-rc-test-'));
@@ -100,4 +100,14 @@ test('stages a marked copy without the excluded dirs, and removes a marked dir',
   } finally {
     f.done();
   }
+});
+
+test('the default scratch dir is per worktree and per process, never the old fixed dir', () => {
+  const a = defaultDir('C:/w/d9-seams', 11, 'T');
+  assert.equal(a, defaultDir('C:/w/d9-seams', 11, 'T'), 'stable for one worktree and pid');
+  assert.notEqual(a, defaultDir('C:/w/d9-seams', 12, 'T'), 'two runs in one worktree differ');
+  assert.notEqual(a, defaultDir('C:/w/d9-rivet', 11, 'T'), 'two worktrees differ');
+  assert.notEqual(a, defaultDir('C:/x/d9-seams', 11, 'T'), 'same folder name, other path: differ');
+  assert.notEqual(a, join('T', 'gtai-release-compile'));
+  assert.ok(a.startsWith(join('T', 'gtai-release-compile', 'd9-seams-')));
 });

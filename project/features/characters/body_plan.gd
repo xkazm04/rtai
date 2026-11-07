@@ -113,6 +113,9 @@ var limb_lod: bool = true
 ## n5-cast: a cream sticker rim under the thigh, shin and foot at gameplay scale
 ## (Rivet's lean piston legs).
 var leg_rim: bool = false
+## The cream sticker rim under the arm parts (upper, fore, hand); d9: the King drops it
+## under a card view.
+var arm_rim: bool = true
 ## n5-cast (r2_c7): the head prints the welder-visor slot at gameplay scale (PartMaterials HEAD;
 ## the helmet art must face +x). Rivet only; King's crown has no visor.
 var head_visor: bool = false

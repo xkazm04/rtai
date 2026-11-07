@@ -4,6 +4,8 @@ extends Node
 
 const KNOWN_FLAGS: PackedStringArray = [
 	"--seed",
+	"--bikes",  # d9: the sim bike's share of traffic (overrides vehicle_handling traffic.bike_share)
+	"--traffic-yields",  # d9: sim traffic brakes for Rivet on foot (CityVehicleWorld.yield_to_rivet)
 	"--replay",
 	"--record",
 	"--devtools",

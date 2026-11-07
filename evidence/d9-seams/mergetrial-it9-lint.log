@@ -1,0 +1,16 @@
+ok   gdformat
+ok   gdlint
+ok   gd-size
+ok   banned-api
+ok   steam-grep
+ok   text-resources
+ok   json-canonical
+ok   events-registry
+ok   autoload-budget
+ok   data-tables
+ok   sim-constants
+ok   layers
+ok   debt-ratchet
+ok   achievements-validate
+ok   achievements-drift
+lint: all 15 checks pass over 1222 GDScript files

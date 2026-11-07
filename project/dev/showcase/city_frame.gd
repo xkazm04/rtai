@@ -11,14 +11,13 @@ extends Node
 ##   [--look=<id>]  the look profile (default `auto`); [--foci=<i>,...] which FOCI to shoot.
 ##   [--pan=<frames>]  after each shot, pans east at PAN_MPS for that many frames, one PNG each,
 ##   plus city-<i>-<ppm>-pan.json (camera screen px per frame); [--nosnap] the sub-pixel camera.
-##   Run with --fixed-fps 60 for a deterministic frame (one sim tick per rendered frame).
+##   --fixed-fps 60: a deterministic frame (a tick per frame); [--view=<id>] read by ViewMode.
 
 const MASTER_SEED: int = 91
 const BASE: Vector2 = Vector2(64.0 * 8 + 12.0, 64.0 * 8 + 12.0)
-## 0-2 the d4-production streets; 3 the junction centre, 4 a street between two building
-## blocks, 5 and 6 the generator's STRIKE paint and fist stencil (GENERATOR 9), 7 a block with the
-## 2 x 2 T1-scale roof (GENERATOR 10), 8 and 9 blocks with its plates B and C (GENERATOR 12),
-## 10 the T1-scale long roof on a street-facing row (GENERATOR 13) (opt-in: --foci=3,4)
+## 0-2 d4-production streets; 3 the junction centre; 4 a street between two blocks; 5, 6 the STRIKE
+## paint and fist stencil (GENERATOR 9); 7 the 2 x 2 T1 roof (10); 8, 9 its plates B, C (12); 10 the
+## T1 long roof on a street row (13); 11 a plaza, 2 planters 4 m east (d9) (opt-in: --foci=3,4)
 const FOCI: Array[Vector2] = [
 	Vector2(30.0, -4.0),
 	Vector2(-4.0, 30.0),
@@ -30,7 +29,8 @@ const FOCI: Array[Vector2] = [
 	Vector2(92.0, 28.0),
 	Vector2(92.0, -100.0),
 	Vector2(156.0, -100.0),
-	Vector2(-28.0, 72.0)
+	Vector2(-28.0, 72.0),
+	Vector2(26.4, 16.1)
 ]
 const ZOOMS: Array[float] = [1.0, 1.5]
 const SETTLE_FRAMES: int = 60
@@ -112,7 +112,7 @@ func _parse_args() -> bool:
 			_zooms.clear()
 			for v: String in arg.substr(8).split(","):
 				_zooms.append(v.to_float())
-		else:
+		elif not arg.begins_with("--view="):  # ViewMode.shared() reads --view
 			printerr("city_frame: unknown argument %s" % arg)
 			return false
 	return true

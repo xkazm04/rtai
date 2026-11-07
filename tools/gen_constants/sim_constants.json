@@ -584,8 +584,6 @@
       "name": "flow"
     },
     {
-      "doc": "Player body contact (features/bodies): set_body(spec) before step(), body_result() after.",
-      "name": "body",
       "constants": [
         {
           "doc": "body x m",
@@ -701,7 +699,63 @@
           "type": "int",
           "value": 3
         }
-      ]
+      ],
+      "doc": "Player body contact (features/bodies): set_body(spec) before step(), body_result() after.",
+      "name": "body"
+    },
+    {
+      "constants": [
+        {
+          "doc": "traffic art id (VehicleCards row 9) that makes a K_CAR a bike",
+          "name": "ART_BIKE",
+          "type": "int",
+          "value": 9
+        },
+        {
+          "doc": "hull sample points, metres ahead/behind the centre",
+          "name": "BIKE_HULL_F",
+          "type": "float",
+          "value": 1.0
+        },
+        {
+          "doc": "hull sample points, metres to each side",
+          "name": "BIKE_HULL_S",
+          "type": "float",
+          "value": 0.375
+        },
+        {
+          "doc": "person footprint half length, m",
+          "name": "BIKE_HIT_F",
+          "type": "float",
+          "value": 1.25
+        },
+        {
+          "doc": "person footprint half width, m (the shove clears it: 0.675)",
+          "name": "BIKE_HIT_S",
+          "type": "float",
+          "value": 0.625
+        },
+        {
+          "doc": "bike vs car contact distance, m",
+          "name": "BIKE_RR",
+          "type": "float",
+          "value": 1.75
+        },
+        {
+          "doc": "bike vs bike contact distance, m",
+          "name": "BIKE_RR2",
+          "type": "float",
+          "value": 1.25
+        },
+        {
+          "doc": "share of a bike-car overlap the bike takes (mass ratio)",
+          "name": "BIKE_SHARE",
+          "type": "float",
+          "value": 0.875
+        }
+      ],
+      "doc": "d9 sim bike: a K_CAR with art 9, smaller hull, mass 200 vs a 1400 sedan",
+      "name": "bike"
     }
   ],
   "schema": "gtai.sim-constants/1"

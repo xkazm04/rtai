@@ -9,6 +9,9 @@ extends VehicleWorld
 const DRIVER_VMAX: float = 1.4
 
 var characters: CityCharacters = null
+## d9 seams (Call 4): true = sim traffic brakes for Rivet on foot as for a car hull and pulls round
+## him (CitySimCarPass); false = n8: traffic drives through him. Boot: --traffic-yields.
+var yield_to_rivet: bool = false
 var _city: CitySystem
 var _snap: PackedFloat64Array = PackedFloat64Array()
 var _stale: bool = true
@@ -84,7 +87,14 @@ func eject_driver(at: Vector2, away: Vector2, art: int) -> void:
 
 
 func set_obstacles(xy: PackedFloat64Array) -> void:
-	_city.sim.set_obstacles(xy)
+	_city.sim.set_obstacles(with_rivet(xy, _city.target, yield_to_rivet))
+
+
+## The service cars' hull points `xy`, with Rivet's ground point `at` first when `on` (the sim keeps
+## the first OBST_MAX points, so his is never the one cut; driving, `at` is his car's centre: a
+## point of its hull anyway).
+static func with_rivet(xy: PackedFloat64Array, at: Vector2, on: bool) -> PackedFloat64Array:
+	return PackedFloat64Array([at.x, at.y]) + xy if on else xy
 
 
 func strike_person(slot: int, vel: Vector2, kill: bool) -> bool:

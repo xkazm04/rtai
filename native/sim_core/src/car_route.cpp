@@ -6,7 +6,8 @@
 namespace gtai::sim {
 
 void CityCore::car(int i, double dt, double tgx, double tgy) {
-	Car c{i, px_[i], py_[i], dir_[i], 0.0, 0.0, kind_[i] == K_PCAR, false, 0.0, 0.0, 0.0};
+	Car c{i, px_[i], py_[i], dir_[i], 0.0, 0.0, kind_[i] == K_PCAR, false, 0.0, 0.0, 0.0, 0.0,
+			is_bike(i)};
 	c.ddx = DX[c.d];
 	c.ddy = DY[c.d];
 	if (ndir_[i] < 0) car_plan(c, tgx, tgy);

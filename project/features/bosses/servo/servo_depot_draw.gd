@@ -14,6 +14,11 @@ const ROLL_S: float = 1.6
 ## over the cream stage van at 32 px/m. Flat views keep the one faint paper pass.
 const NUMBER_INK_M: float = 0.12
 const NUMBER_ALPHA_APART: float = 0.9
+## d9-seams (rivet it10 REQUEST): a fighter's body box on the ground plane under a tilt (m): its
+## half width, how far north of its feet its drawn head reaches, how far south its feet reach.
+const BODY_HALF_M: float = 0.45
+const BODY_UP_M: float = 2.6
+const BODY_DOWN_M: float = 0.3
 
 var px: float = 32.0
 var pal: PaletteTokens = PaletteTokens.shared()
@@ -22,6 +27,10 @@ var pal: PaletteTokens = PaletteTokens.shared()
 ## draw apart, on ServoBodyView's marks child over the vehicles band, so a stage van parked on a
 ## bay never hides its number (vehicles it16 REQUEST). False (flat views) = one ground pass.
 var marks_apart: bool = false
+## d9-seams: per bay, true while a fighter's body box meets its number (cover()): that mark draws in
+## the ground pass, under the bodies, so a fighter walking a bay is not printed through by its
+## number; the other bays keep the apart pass over the vehicles band (the parked van).
+var under: Array[bool] = []
 
 
 func draw(c: CanvasItem, t: ServoTuning, origin: Vector2, running_s: float) -> void:
@@ -35,7 +44,42 @@ func draw(c: CanvasItem, t: ServoTuning, origin: Vector2, running_s: float) -> v
 ## The bays' apron marks alone (marks_apart: the marks child draws them over the vehicles band).
 func marks(c: CanvasItem, t: ServoTuning, origin: Vector2) -> void:
 	for i: int in t.bays.size():
-		_mark(c, origin + t.bays[i], t.bay_w_m, i + 1)
+		if not _under(i):
+			_mark(c, origin + t.bays[i], t.bay_w_m, i + 1)
+
+
+## Which bays' numbers a body meets this frame; `people` = (ground point m, radius m) per fighter.
+func cover(t: ServoTuning, origin: Vector2, people: Array[Vector3]) -> void:
+	@warning_ignore("return_value_discarded")
+	under.resize(t.bays.size())
+	for i: int in t.bays.size():
+		under[i] = meets(number_m(origin + t.bays[i]), people)
+
+
+## The painted apron box of the bay at `at` (m), in metres.
+static func apron_m(at: Vector2, w: float) -> Rect2:
+	return Rect2(at + Vector2(-w * 0.5, 0.6), Vector2(w, 2.2))
+
+
+## The bay number's glyph box (m): what prints through a body (the apron's faint line does not
+## decide: a wide Servo beside the van met bay 3's apron and dropped its number under the van).
+static func number_m(at: Vector2) -> Rect2:
+	return Rect2(at + Vector2(-0.3, 1.6), Vector2(0.6, 0.75))
+
+
+## True when any body box (x, y = feet m, z = radius m: a wide boss reaches further) meets `r`.
+static func meets(r: Rect2, people: Array[Vector3]) -> bool:
+	for p: Vector3 in people:
+		var half: float = BODY_HALF_M + p.z
+		var up: float = BODY_UP_M + p.z
+		var body: Rect2 = Rect2(p.x - half, p.y - up, half * 2.0, up + BODY_DOWN_M)
+		if body.intersects(r):
+			return true
+	return false
+
+
+func _under(i: int) -> bool:
+	return i < under.size() and under[i]
 
 
 ## A roller door seen from above: the door strip, slats, two bumpers and the apron number; `open`
@@ -64,7 +108,7 @@ func _bay(c: CanvasItem, at: Vector2, w: float, n: int, open: float) -> void:
 		c.draw_rect(
 			Rect2(bump - Vector2(0.18, 0.3) * px, Vector2(0.36, 0.6) * px), pal.color(&"ink")
 		)
-	if not marks_apart:
+	if not marks_apart or _under(n - 1):
 		_mark(c, at, w, n)
 
 
@@ -109,7 +153,8 @@ func _belt(c: CanvasItem, t: ServoTuning, origin: Vector2, running_s: float) -> 
 
 ## A bay's apron: the painted box and the bay number.
 func _mark(c: CanvasItem, at: Vector2, w: float, n: int) -> void:
-	var apron: Rect2 = Rect2((at + Vector2(-w * 0.5, 0.6)) * px, Vector2(w, 2.2) * px)
+	var m: Rect2 = apron_m(at, w)
+	var apron: Rect2 = Rect2(m.position * px, m.size * px)
 	c.draw_rect(apron, Color(pal.color(&"paper"), 0.12))
 	c.draw_rect(apron, Color(pal.color(&"paper"), 0.5), false, 2.0)
 	var font_px: int = int(px * 0.9)

@@ -65,9 +65,24 @@ func _process(_delta: float) -> void:
 	_rig.pose(_frame)
 	if _drone.sync([&"drone"]):  # n8: the air's drones follow the art key too
 		_paint.drone_tex = _drone.tex[&"drone"]
+	if _depot.marks_apart and moves().swarm.tuning != null:
+		_depot.cover(moves().swarm.tuning, moves().depot_origin, _bodies())
 	_ground.queue_redraw()
 	_air.queue_redraw()
 	_marks.queue_redraw()
+
+
+## d9-seams: the living fighters' feet (m) and radii, for the bay marks' cover().
+func _bodies() -> Array[Vector3]:
+	var out: Array[Vector3] = []
+	if arena == null:
+		return out
+	var all: Array[Fighter] = arena.hostiles.duplicate()
+	all.append_array([arena.rivet, arena.boss])
+	for f: Fighter in all:
+		if f != null and f.alive():
+			out.append(Vector3(f.pos.x, f.pos.y, f.radius_m))
+	return out
 
 
 func _draw() -> void:

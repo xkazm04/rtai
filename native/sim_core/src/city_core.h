@@ -124,6 +124,7 @@ private:
 		bool is_p, waiting;
 		double hhx, hhy, vv;
 		double ln;  // lane line steered to this step (car_pass)
+		bool bike;  // d9: a K_CAR with art ART_BIKE (smaller hull, lighter body)
 	};
 
 	double rnd();                                     // world.cpp
@@ -155,6 +156,8 @@ private:
 	double car_desired_speed(const Car &c);           // car_drive.cpp
 	void car_contacts(Car &c);                        // car_hit.cpp
 	void car_hull(Car &c);                            // car_hit.cpp
+	bool is_bike(int j) const { return kind_[j] == K_CAR && variant_[j] == ART_BIKE; }
+	void car_push(Car &c, int j, double rx, double ry, double d2);  // car_hit.cpp
 	void projectiles(double dt);                      // projectiles.cpp
 	bool projectile_sub(int k, double &x, double &y, double h);
 	int frame_of(int i, int &cell) const;             // render.cpp

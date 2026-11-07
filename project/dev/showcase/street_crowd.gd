@@ -2,7 +2,7 @@ extends SceneTree
 ## n8 street: the street crowd board launcher (windowed, d3d12); see StreetCrowdRun.
 ## Usage: <godot> --rendering-driver d3d12 --path project -s res://dev/showcase/street_crowd.gd
 ##        -- --out=<dir> [--view=<id>] [--ppm=<n>] [--kill=<light|blast|...>] [--kill-spread]
-##        [--cops] [--heavy]
+##        [--cops] [--heavy] [--spin]
 
 
 func _initialize() -> void:
@@ -17,7 +17,10 @@ func _initialize() -> void:
 			ppm = arg.substr(6).to_float()
 		elif arg.begins_with("--kill="):
 			kill = arg.substr(7)
-		elif not arg.begins_with("--view=") and not arg in ["--kill-spread", "--cops", "--heavy"]:
+		elif (
+			not arg.begins_with("--view=")
+			and not arg in "--kill-spread --cops --heavy --spin".split(" ")
+		):
 			# (ViewMode reads --view itself)
 			printerr("street_crowd: unknown argument %s" % arg)
 			quit(2)
@@ -30,6 +33,7 @@ func _initialize() -> void:
 	node.set("kill_spread", args.has("--kill-spread"))
 	node.set("cops", args.has("--cops") or args.has("--heavy"))
 	node.set("heavy", args.has("--heavy"))
+	node.set("spin", args.has("--spin"))
 	root.add_child(node)
 	_run(node)
 

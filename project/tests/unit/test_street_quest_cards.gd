@@ -86,6 +86,22 @@ func test_the_walked_distance_adds_up_and_standing_stops_the_stride() -> void:
 	await get_tree().process_frame
 	assert_not_null(StreetQuestCards.walk_facing(at + Vector2(7.0, 0.0), Vector2.DOWN, 32.0))
 	assert_almost_eq(StreetQuestCards._walked, 7.0, 0.001, "3 + 4 px walked")
+	for i: int in StreetQuestCards.HOLD_FRAMES:
+		await get_tree().process_frame
+		assert_not_null(StreetQuestCards.walk_facing(at + Vector2(7.0, 0.0), Vector2.DOWN, 32.0))
+	assert_false(StreetQuestCards._moving, "HOLD_FRAMES frames with no step: the standing card")
+
+
+## A frame drawn between two sim ticks (no step) keeps the walk: no stand/walk stutter.
+func test_a_frame_with_no_step_between_steps_keeps_walking() -> void:
+	var at: Vector2 = Vector2(7000.0, 7000.0)
+	assert_not_null(StreetQuestCards.walk_facing(at, Vector2.DOWN, 32.0))
 	await get_tree().process_frame
-	assert_not_null(StreetQuestCards.walk_facing(at + Vector2(7.0, 0.0), Vector2.DOWN, 32.0))
-	assert_false(StreetQuestCards._moving, "no step: the standing card")
+	assert_not_null(StreetQuestCards.walk_facing(at + Vector2(0.0, 1.0), Vector2.DOWN, 32.0))
+	await get_tree().process_frame
+	var face: Vector2 = StreetQuestCards.walk_facing(at + Vector2(0.0, 1.0), Vector2.UP, 32.0)
+	assert_true(StreetQuestCards._moving, "one frame with no step still walks")
+	assert_almost_eq(face.y, 1.0, 0.001, "and keeps the walked facing")
+	await get_tree().process_frame
+	assert_not_null(StreetQuestCards.walk_facing(at + Vector2(0.0, 2.0), Vector2.DOWN, 32.0))
+	assert_true(StreetQuestCards._moving, "the next step walks on")

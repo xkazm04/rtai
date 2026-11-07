@@ -45,14 +45,14 @@ const WALKS: Dictionary[String, Dictionary] = {
 ## the size step (still figure height / walk figure height, per cell, the mean of the facings).
 const WALK_FILL: Dictionary[String, float] = {
 	"ped_suit_walk.png": 1.09,
-	"ped_elder_walk.png": 1.07,
-	"ped_hat_walk.png": 1.07,
+	"ped_elder_walk.png": 1.08,
+	"ped_hat_walk.png": 1.06,
 	"ped_hood_walk.png": 1.07,
 	"ped_cap_walk.png": 1.12,
-	"ped_punk_walk.png": 1.00,
-	"ped_shopper_walk.png": 1.08,
-	"ped_jogger_walk.png": 1.11,
-	"ped_worker_walk.png": 1.11,
+	"ped_punk_walk.png": 1.01,
+	"ped_shopper_walk.png": 1.09,
+	"ped_jogger_walk.png": 1.12,
+	"ped_worker_walk.png": 1.13,
 }
 const STRIDE_FRAMES: int = 4
 ## The frame a person stands in (pass: the feet together).
@@ -92,16 +92,15 @@ static func step(rig: CutRig) -> void:
 	place(rig, card)
 
 
-## The strip a person draws now ("" = none: no card, no strip, hit or dead; anyone else (a cop)
-## only a FALLS grid while down).
+## The strip a person draws now ("" = none); a cop: a FALLS grid while down, else StreetCopWalk's.
 static func strip_of(rig: CutRig) -> String:
 	if not ENABLED or rig.head_card == null:
 		return ""
 	var ped: bool = rig.plan.art_dir == "ped"
-	if not ped and not StreetWalkerFall.down(rig):
-		return ""
 	var art: String = ViewMode.shared().art
 	var key: String = row_of(rig)
+	if not ped and not StreetWalkerFall.down(rig):
+		return StreetCopWalk.strip_of(rig, art, key)
 	var grid: String = StreetWalkerFall.grid_of(rig, art, key)
 	if not grid.is_empty():
 		return DIR + grid
@@ -184,7 +183,8 @@ static func place(rig: CutRig, card: Sprite2D) -> void:
 		return
 	var h: float = HEIGHT_BY_ART.get(ViewMode.shared().art, HEIGHT_M)
 	if card.vframes > 1:
-		k *= WALK_FILL.get(card.texture.resource_path.get_file(), 1.0)
+		var file: String = card.texture.resource_path.get_file()
+		k *= WALK_FILL.get(file, StreetCopWalk.fill_of(card.texture.resource_path))
 	var s: float = h * CharacterRigs.PX_PER_M * k * card.vframes / card.texture.get_height()
 	var walk: float = clampf(rig.speed_now / WALK_SPEED, 0.0, 1.0)
 	if card.vframes > 1:

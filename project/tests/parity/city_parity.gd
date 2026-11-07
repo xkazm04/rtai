@@ -72,12 +72,12 @@ func _side(sim: CitySimBackend, gen: CityGen) -> CitySpawner:
 	for cy: int in range(2, 9):
 		for cx: int in range(2, 9):
 			res.adopt(Vector2i(cx, cy), gen.gen_chunk(cx, cy))
-	var rng: RandomNumberGenerator = RngRegistry.new(SPAWN_SEED).stream(&"city_spawn")
-	var sp: CitySpawner = CitySpawner.new(sim, res, rng)
+	var reg: RngRegistry = RngRegistry.new(SPAWN_SEED)
+	var sp: CitySpawner = CitySpawner.new(sim, res, reg.stream(&"city_spawn"))
 	sp.targets = CityTargets.street(150, 70, 6)
-	var cam: Vector2 = RIOT - Vector2(150, 0)
+	sp.set_bikes(0.25, reg.stream(&"city_bikes"))  # d9: a quarter bikes, their branches compared
 	@warning_ignore("return_value_discarded")
-	sp.tick(cam, true)
+	sp.tick(RIOT - Vector2(150, 0), true)
 	sp.riot_c = RIOT
 	for k: int in 80:
 		@warning_ignore("return_value_discarded")

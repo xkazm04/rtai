@@ -8,7 +8,7 @@ extends Node
 ## whether the corpse lands where the body was (KILL_SHOTS replace SHOTS). kill_spread: walker i
 ## is hit from the west turned by i x 45 deg, so every fall direction (and facing row) shows.
 ## cops: the board walks cops instead (COP_LOOKS: twelve patrol, two riot, two SWAT); heavy: eight
-## riot and eight SWAT (HEAVY_LOOKS: with kill_spread each falls in all eight directions).
+## riot and eight SWAT (HEAVY_LOOKS: falls in 8 directions); spin: walker i heads i x 22.5 deg.
 
 const PX: float = 32.0
 const GROUND: String = "res://features/city/art/ground/"
@@ -27,6 +27,7 @@ var kill_class: String = ""
 var kill_spread: bool = false
 var cops: bool = false
 var heavy: bool = false
+var spin: bool = false
 var _pipe: DeathPipe = DeathPipe.make(ReactTable.shipped())
 var _world: CanvasLayer = CanvasLayer.new()
 var _post: CanvasLayer = CanvasLayer.new()
@@ -95,10 +96,11 @@ func _cast() -> void:
 	f.count = 0
 	for i: int in COUNT:
 		var lane: int = i % 4
-		var x: float = -7.0 + float(i >> 2) * 4.4 + lane * 1.1
+		var at: Vector2 = Vector2(-7.0 + float(i >> 2) * 4.4 + lane * 1.1, -2.4 + lane * 1.6)
+		at = Vector2(-6.0 + float(i >> 2) * 4.0, -3.0 + lane * 2.0) if spin else at
 		var kind: BodyPlan.Kind = BodyPlan.Kind.COP if cops else BodyPlan.Kind.PED
 		@warning_ignore("return_value_discarded")
-		f.put(i, i + 1, kind, Vector2(x, -2.4 + lane * 1.6) * PX, Vector2.ZERO)
+		f.put(i, i + 1, kind, at * PX, Vector2.ZERO)
 		f.looks[i] = (HEAVY_LOOKS[i] if heavy else COP_LOOKS[i]) if cops else LOOKS[i]
 
 
@@ -111,10 +113,10 @@ func _pose(t: int) -> void:
 		if f.flags[i] & RigFeed.Flag.DEAD:
 			f.vel[i] = Vector2.ZERO
 			continue
-		var east: bool = i % 2 == 0
+		var heading: float = i * TAU / COUNT if spin else (0.0 if i % 2 == 0 else PI)
 		f.clip[i] = RigClips.Clip.NONE
-		f.vel[i] = Vector2(38.0 if east else -38.0, 0.0)
-		f.face[i] = 0.0 if east else PI
+		f.vel[i] = Vector2.RIGHT.rotated(heading) * 38.0
+		f.face[i] = heading
 		f.pos[i] += f.vel[i] * SimClock.TICK_DT
 
 

@@ -12,7 +12,8 @@
         "2026-11-07: n8 merge: view + street growth combined (each accepted on its lane; cast_view.gd conflict resolved by keeping both) (dev_loc 17769 -> 17942)",
         "2026-11-07: n8 merge: + vehicles growth combined (accepted on its lane) (dev_loc 17942 -> 18431)",
         "2026-11-07: n8 merge: + city growth combined (accepted on its lane) (dev_loc 18431 -> 18535)",
-        "2026-11-07: n8 merge: + hud growth combined (accepted on its lane); fold_rigs dropped for view's follow per both lanes' merge notes (dev_loc 18535 -> 18799)"
+        "2026-11-07: n8 merge: + hud growth combined (accepted on its lane); fold_rigs dropped for view's follow per both lanes' merge notes (dev_loc 18535 -> 18799)",
+        "2026-11-07: d9 seams: street crowd board --spin (dev evidence: every facing row walks), +6 dev lines (dev_loc 18799 -> 18805)"
       ],
       "files": {
         "project/dev/arena": 642,
@@ -36,11 +37,11 @@
         "project/dev/save_crash_writer.gd": 18,
         "project/dev/selftest": 1453,
         "project/dev/servo": 434,
-        "project/dev/showcase": 6212,
+        "project/dev/showcase": 6218,
         "project/dev/view": 195,
         "project/dev/weapon_art": 506
       },
-      "total": 18799
+      "total": 18805
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -253,7 +254,7 @@
         "project/dev/showcase/reel_director.gd": 209,
         "project/dev/weapon_art/weapon_lineup_run.gd": 210,
         "project/features/arena/arena_rigs.gd": 291,
-        "project/features/arena/prop_occlusion.gd": 204,
+        "project/features/arena/prop_occlusion.gd": 202,
         "project/features/bosses/boss_bot.gd": 202,
         "project/features/bosses/boss_fight.gd": 269,
         "project/features/bosses/boss_hook.gd": 281,
