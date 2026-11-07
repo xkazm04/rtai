@@ -518,3 +518,47 @@ combo/tilt70.
   cache rows_of per art folder (pure in the folder: strips and RigCardSets load once). Spans after:
   ease 0.60 ms; the rest of combo's extra is the tilt itself (arena_floor_view draw 2.6 vs 0.84 ms,
   prop_occlusion 1.25 ms). Unit (rig_head_card, view_pitch, card sets, king art) 40/0.
+- MEASURE 01:03 after the rows_of cache, same command and lock (`evidence/n8-view/bench-it8-king-after/`):
+  combo p50 12.1 / 13.5 ms (was 19.3 / 21.3), p99 23.5 / 26.7 (was 29.5 / 30.9), script process
+  p50 4.5 / 5.4 ms (was 11.5). top p50 7.28 / 12.5 ms: top run 2 had a 3.6 s stall and top run 1 sits
+  1.4 ms over the first pair's 5.9, so the machine was busy under my lock (other lanes' work does
+  not take bench.lock): label this pair CONTENDED. Combo vs top by the clean first pair + the after
+  combo: ~12-13.5 vs ~5.9 ms p50, still about 2x: the rest is the tilt's own draw (floor view prop
+  cards 2.6 ms, PropOcclusion 1.25 ms, find_children walk 0.6 ms). NOT a release number (owed:
+  a release-export fight bench needs a shipped boss entry point; the bench export has none).
+- MILESTONE 01:08 (commit 823903aa) PropOcclusion (view's file): each rig's feet and head once a
+  frame instead of per prop, a Hit only for a body that meets the prop, unused `_patch` dropped.
+  Same seed 2, combo, `--fixed-fps 60 --quit-after 900`, old vs new: occlusion log identical
+  ("2 body-frames hidden over 900 frames, frames 743-744"), spans prop_occlusion 1.73 -> 0.36 ms
+  mean. Debt tightened (205 lines). Unit prop_occlusion/arena cards/depth sort 12/0.
+  Left in combo's extra after both fixes (spans, windowed, not under the lock): the floor view's
+  draw +1.8 ms (the arena floor redraws the tilted prop faces/cards every frame: the floor is
+  the arena's, the cards city's; a cached floor under a static camera pitch is the next win),
+  ViewPitchEase 0.6-0.8 ms (the find_children walk over the whole arena tree every frame).
+- GATE unit full no-arg at the rows_of cache (before the PropOcclusion edit): 1506 passed / 0
+  failed, 0 FLAKY (`evidence/n8-view/unit-it8.log`).
+- frames.json: 15 (Dock 9 tilt70 clip 4th; Kerf rings and Dent tone added; dropped the old Kerf
+  tilt-48 card pair, the King-down Ohm return clip and the city drive: still on disk).
+- Registry rules applied it8: perf-regression-gating (measured before a claim: frames + spans with
+  a view-free control (top), the same seed and command, alternated runs, the contended pair named;
+  a behaviour identity check (the occlusion count) for a perf refactor), depth-ordered-layered-art
+  (the occlusion refactor keeps the hidden/front split exactly), generative-artifact-gating +
+  sprite-and-atlas-production (the library sheet is retoned, never regenerated; badge and soul
+  colours masked out of the tone match; ink kept under the ring paint), concept-scene-parity (the
+  p70 cards judged against their p55 twins and in the arena at 64 px/m), motion-quality-gating
+  (quest 1 judged as a clip on the shipped path).
+
+NEXT (iteration 9, in brief order):
+1. Combo's frame cost, the rest: (a) ViewPitchCards.apply walks the whole arena tree twice a frame
+   (find_children for CutRig and ghost_card): keep a rig/ghost-card list refreshed on the tree's
+   node_added/node_removed for those types, read head_card fresh per rig; measure with `--spans`
+   (0.6-0.8 ms now). (b) the arena floor's tilted draw (+1.8 ms): say so to the owner, not mine
+   alone (ArenaFloorView + city's PropCards). Then re-take the King fight frames under bench.lock,
+   top/combo alternated x2 (the it8 after-pair was CONTENDED), and quest 1's rig cast vs sprites
+   (`dev/bench/quest1_frames.gd` takes no --view yet: add it, dev only).
+2. Quest 1 at tilt70 after the Director merges city + street: film the opening and Dock 9 again
+   (the street, props and cops are top-down on this branch).
+3. The order probe's phase-3 car pairs (it5's exact command, a still at the first wrong tick).
+4. Before the freeze: director reel 19/19 top + combo, evidence run --no-bench, export the exe,
+   REPORT with the Calls (King bust size, death beat length, attack lock, camera lead at speed,
+   cover as one stack, quest 1's cast under the angled view: rigs (built) vs sprites).
