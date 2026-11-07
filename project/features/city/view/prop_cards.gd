@@ -124,7 +124,7 @@ func _draw_ci(ci: CanvasItem, t: int, rot: float, foot: Vector2, w: float) -> vo
 ## The screen rect (ci's local px) draw_on's card for cover `kind` on ground rect `r` covers (the
 ## cell over the footprint's south edge); empty under a flat or perspective view or with no card.
 static func stand_rect(kind: String, r: Rect2) -> Rect2:
-	return PropCardPolys.rect(named(), str(ARENA_KIND.get(kind, "")), r)
+	return PropCardPolys.card_rect(named(), str(ARENA_KIND.get(kind, "")), r)
 
 
 ## stand_rect's card as its opaque outline(s), same space (PropOcclusion's cut; PropCardPolys).

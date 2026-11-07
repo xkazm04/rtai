@@ -28,7 +28,7 @@ static func of(cards: PropCards, name: String, r: Rect2, rect: Rect2) -> Array[P
 
 ## The screen rect PropCards.draw_on's card for `cards`' prop `name` on ground rect `r` covers: the
 ## cell's full height over the footprint's south edge, as wide as r's long side; empty with no card.
-static func rect(cards: PropCards, name: String, r: Rect2) -> Rect2:
+static func card_rect(cards: PropCards, name: String, r: Rect2) -> Rect2:
 	var t: int = -1 if cards == null else cards._names.find(name)
 	if t < 0 or not cards.has(t):
 		return Rect2()
