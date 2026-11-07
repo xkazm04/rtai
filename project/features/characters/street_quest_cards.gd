@@ -22,6 +22,17 @@ const PATROL: Dictionary[String, String] = {
 	"p55": P55 + "cop_patrol_card.png",
 	"p70": P70 + "cop_patrol_card.png",
 }
+## A walking patrol cop's grid (street_walk.py from keyed cop_patrol_walk_70 / _55 B, row 4 as
+## frames 1-2-1-4, then street_tone.py: the strip's blue matched to PATROL's navy): 5 facings x 4
+## stride frames, stepping by the distance walked (one cycle = STRIDE_M).
+## {} = the standing card glides.
+const PATROL_WALK: Dictionary[String, String] = {
+	"p55": P55 + "cop_patrol_walk.png",
+	"p70": P70 + "cop_patrol_walk.png",
+}
+const STRIDE_M: float = 1.4
+## A step shorter than this (px per frame) is standing: the standing card draws.
+const MOVING_PX: float = 0.2
 ## A downed guard's drawn lying frame (street_fall.py from keyed contractor_fall_55 / _70 B:
 ## the grid's last row, feet at the cell centre), fallen forward along its facing, mirrored as
 ## the standing card, opaque; art with no grid draws StreetWalkerFall.FALLBACK's. {} = the flat
@@ -46,6 +57,13 @@ static var _tex: Dictionary[String, Texture2D] = {}
 static var _frame: int = -1
 static var _was: Array[Vector4] = []
 static var _now: Array[Vector4] = []
+static var _was_d: Array[float] = []
+static var _now_d: Array[float] = []
+## The last walk_facing call's cop: walked px so far and whether it stepped this frame; the stride
+## row _card draws (-1 = a one-row strip).
+static var _walked: float = 0.0
+static var _moving: bool = false
+static var _stride: int = -1
 
 
 ## Draws the guard's card on `canvas` at `at_px` (canvas px) and returns true; false = no card for
@@ -62,8 +80,14 @@ static func draw_patrol(
 ) -> bool:
 	if not ViewMode.shared().cards:
 		return false
+	_moving = false
 	var face: Vector2 = walk_facing(at_px, facing, px_per_m) if FOLLOW_WALK else facing
-	return _card(canvas, PATROL, at_px, face, px_per_m, tint)
+	if not _moving or not PATROL_WALK.has(ViewMode.shared().art):
+		return _card(canvas, PATROL, at_px, face, px_per_m, tint)
+	_stride = posmod(floori(_walked / (STRIDE_M * px_per_m) * 4.0), 4)
+	var drawn: bool = _card(canvas, PATROL_WALK, at_px, face, px_per_m, tint)
+	_stride = -1
+	return drawn
 
 
 ## The facing of the patrol cop drawn at `at_px` this frame: its step since the nearest cop drawn
@@ -74,15 +98,22 @@ static func walk_facing(at_px: Vector2, fallback: Vector2, px_per_m: float) -> V
 		_frame = frame
 		_was = _now
 		_now = []
+		_was_d = _now_d
+		_now_d = []
 	var face: Vector2 = fallback
 	var best: float = MATCH_M * px_per_m
-	for w: Vector4 in _was:
+	_walked = 0.0
+	for i: int in _was.size():
+		var w: Vector4 = _was[i]
 		var d: float = at_px.distance_to(Vector2(w.x, w.y))
 		if d <= best:
 			best = d
 			var step: Vector2 = at_px - Vector2(w.x, w.y)
 			face = step.normalized() if step.length() > 0.01 else Vector2(w.z, w.w)
+			_walked = _was_d[i] + step.length()
+			_moving = step.length() > MOVING_PX
 	_now.append(Vector4(at_px.x, at_px.y, face.x, face.y))
+	_now_d.append(_walked)
 	return face
 
 
@@ -99,14 +130,22 @@ static func _card(
 	if not view.cards or path.is_empty():
 		return false
 	var tex: Texture2D = _load(path)
-	var cell: Vector2 = Vector2(tex.get_width() / float(RigHeadCard.FRAMES), tex.get_height())
+	var rows: int = 4 if _stride >= 0 else 1
+	var cell: Vector2 = Vector2(
+		tex.get_width() / float(RigHeadCard.FRAMES), tex.get_height() / float(rows)
+	)
 	var f: Vector2i = RigHeadCard.frame_of(facing.angle())
 	var w: float = WIDTH_M * px_per_m
 	var h: float = w * cell.y / cell.x / view.ground_k()
+	if _stride >= 0:  # the standing card's height, the walk cell's own aspect
+		var st: Texture2D = _load(PATROL[view.art])
+		h = w * st.get_height() * RigHeadCard.FRAMES / st.get_width() / view.ground_k()
+		w = h * view.ground_k() * cell.x / cell.y
 	var dst: Rect2 = Rect2(-w * 0.5, -h * FOOT_Y, w, h)
 	# mirrored frames flip about the feet point (a negative-width rect draws one width aside)
 	canvas.draw_set_transform(at_px, 0.0, Vector2(-1.0 if f.y == 1 else 1.0, 1.0))
-	canvas.draw_texture_rect_region(tex, dst, Rect2(cell.x * f.x, 0.0, cell.x, cell.y), tint)
+	var src: Rect2 = Rect2(cell.x * f.x, cell.y * maxi(_stride, 0), cell.x, cell.y)
+	canvas.draw_texture_rect_region(tex, dst, src, tint)
 	canvas.draw_set_transform(Vector2.ZERO)
 	return true
 

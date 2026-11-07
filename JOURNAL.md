@@ -1109,3 +1109,24 @@ for street: `RigSelect.CORPSE_HOLD_TICKS` (90 in the city game, then street's at
   x2_f100-124.png; masters frames.json #3 (dropped the crowd-variety CALL still from frames.json,
   file kept for REPORT). Unit 4/4 (+1 test: one fall frame per DEATH cell, the held one is the
   lying frame, the mid-fall is its own drawing). Lint 15/15. DECISION street/atlas-death-frames.
+- Library 05:06: my REQUEST served: cop_patrol_walk 70 B / 55 B (round 20261107-0540; drawn from
+  cop_patrol_70_v2, so its shirt is a lighter slate at 70 and royal at 55; rows 4-5 repeat frame 1
+  as 3, row 5 mirror-fixed in the key, row 4 to run as 1-2-1-4).
+- Evidence run started 05:07 and STOPPED by me 05:08 (taskkill of my own node tree): I began
+  editing street_quest_cards.gd while its unit pass ran, so it would have tested a mixed tree.
+  Re-run owed (NEXT).
+- MILESTONE: **quest 1's patrol cop walks** under the card views. Cut by street_walk.py (192 px,
+  --copy=3:0<2 = row 4 as 1-2-1-4), then NEW tools/art/street_tone.py: the strip's blue pixels'
+  mean hue/sat/value moved onto the standing card's navy (70: hue +13.6, sat x1.23, value x0.74;
+  55: hue -3.3, sat x0.88, value x0.66), LOOKED side by side with the standing cards: one uniform.
+  The `navy` fix would grey the lighter shirt (cop_patrol_v2, it10). StreetQuestCards: walk_facing
+  also keeps the walked px per drawn cop (render memory); draw_patrol draws PATROL_WALK's stride
+  frame (one 4-frame cycle per STRIDE_M 1.4 m) while the step is over MOVING_PX, the standing card
+  when still; the walk cell keeps the standing card's height and its own aspect. FILMED quest 1
+  Line Stopped `--ticks=600-760 --ppm=48 --view=tilt70` (81 frames, 0 SCRIPT ERROR): the cop walks
+  left side-on with contact and pass frames alternating, feet on the kerb line, navy as the
+  standing card; before = it10's sheet (the same shot, the card gliding:
+  evidence/quest1_patrol_cop_walk_facing_tilt70_48ppm_t600-760_sheet.png).
+  evidence/quest1_patrol_cop_walk_frames_tilt70_48ppm_x2_t686-710.png + _t600-760.mp4 (masters
+  too). Unit 12/12 (+2: the grid is 5x4 per pitch; walked px adds up, a still frame stops the
+  stride). Lint 15/15. Provenance x2. DECISION street/patrol-walk. 55 not filmed yet (NEXT).

@@ -64,3 +64,28 @@ func test_a_walking_patrol_cop_faces_its_step_and_holds_it_standing() -> void:
 	await get_tree().process_frame
 	var still: Vector2 = StreetQuestCards.walk_facing(at + Vector2(-2.0, 0.0), Vector2.DOWN, 32.0)
 	assert_almost_eq(still.x, -1.0, 0.001, "standing keeps the last facing")
+
+
+func test_the_patrol_walk_grid_has_five_facings_by_four_strides() -> void:
+	for art: String in ["p55", "p70"]:
+		var path: String = StreetQuestCards.PATROL_WALK.get(art, "")
+		assert_true(path.contains("/%s/" % art), "%s walks its own drawing" % art)
+		var tex: Texture2D = load(path) as Texture2D
+		assert_not_null(tex, path)
+		if tex != null:
+			assert_eq(tex.get_width() % RigHeadCard.FRAMES, 0, "five facings")
+			assert_eq(tex.get_height() % 4, 0, "four stride frames")
+
+
+func test_the_walked_distance_adds_up_and_standing_stops_the_stride() -> void:
+	var at: Vector2 = Vector2(9000.0, 9000.0)
+	assert_not_null(StreetQuestCards.walk_facing(at, Vector2.DOWN, 32.0))
+	await get_tree().process_frame
+	assert_not_null(StreetQuestCards.walk_facing(at + Vector2(3.0, 0.0), Vector2.DOWN, 32.0))
+	assert_true(StreetQuestCards._moving, "a 3 px step walks")
+	await get_tree().process_frame
+	assert_not_null(StreetQuestCards.walk_facing(at + Vector2(7.0, 0.0), Vector2.DOWN, 32.0))
+	assert_almost_eq(StreetQuestCards._walked, 7.0, 0.001, "3 + 4 px walked")
+	await get_tree().process_frame
+	assert_not_null(StreetQuestCards.walk_facing(at + Vector2(7.0, 0.0), Vector2.DOWN, 32.0))
+	assert_false(StreetQuestCards._moving, "no step: the standing card")
