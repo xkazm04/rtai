@@ -848,3 +848,32 @@ NEXT (it10) addendum: item 4's yield scenario is DONE (5076c02b). Gates last gre
 (all PASS) + reels it9 at 5fa6baee + scenarios 53/53 at 5076c02b (the only change since 0a950b56 is that
 scenario + docs). Start at item 1 (journals), then a last trial merge near the freeze, then the exe at 18:30.
 - Session end 16:48: all committed; scratch avi deleted (masters hold the mp4s and stills); frames.json 15.
+
+## it10 (16:49-17:49, iteration 16 by the Director's count)
+- Read: JOURNAL NEXT it10, git log, d9-rivet JOURNAL (it21 16:40: REQUEST to assets rivet_walk_70; no REQUEST to
+  seams), the asset lane's JOURNAL (it91-92: no REQUEST open; seams declined the portraits, noted). None open to seams.
+- 16:52 PROBE (temporary Log line in KingLegsCard.step, reverted from git, never committed): the King fight
+  `--boss=king --phase=3 --bot=boss --seed=2 --rigs --view=combo`, 900 frames. THREE rigs run the legs card: the
+  King (card scale 0.555 at 55) and two at 0.205. The 0.205 ones are the gang: `KingArt.dress` runs for every court
+  rig (KingRigs._place) and `KingLegsCard.step` never checked whose card it was.
+- 16:54 FILMED phase 1 (gang alive), combo, `--boss-cam --ppm=64` and 32, seed 2, f200: the four bodyguards stand on
+  small copies of the King's drawn legs, torsos lifted. Mine since it2 (7f522e54); every King take since was phase 3,
+  after the gang falls. Fixed first as a guard (d561498d: art_dir "king" only; test fails with the guard out).
+- 16:59 LOOKED at the fix before/after (`king_gang_own_legs_before_after_combo_64ppm_seed2_phase1_f200.png`,
+  `..._32ppm_..._x3.png`): the "after" is WORSE: on their own gang_parts legs the bodyguards sprawl grey top-down limb
+  parts with a pale rim (the owner's "white background" again), detached feet at 64 px/m; on the drawn legs they
+  read as upright figures, the purple-and-gold bands matching their visor band.
+DECISION seams/gang-legs: the gang stands on drawn legs (the King's sheet until its own lands), by decision now, not
+by accident: `KingLegsCard.SHEETS` art_dir -> sheet (`{"king": "king_legs", "gang": "king_legs"}`, 6220e46f). Why: at
+32 and 64 px/m the parts legs break the figure the owner asked to be redesigned on the King. Rejected: the parts
+(d561498d's guard; drop "gang" from SHEETS), the rim strip alone on the gang's parts (still top-down limbs under an
+upright card). Alternative one value away. REPORT Call 5.
+- REQUEST to assets: `gang_legs_55` and `gang_legs_70`, the King's bodyguards' drawn legs, COPY BY EXAMPLE of
+  king_legs_55_v2 (55) and king_legs_70_v3 (70): the SAME canvas, the same 5 x 5 cell layout (55: 1090x670, cells
+  218x134; 70: 1230x380, cells 246x76), the same facings order, standing row + 4-frame walk, the same hip line and
+  sole line, so they drop in at the King's scale and lift. Only the dress changes: the gang's heavy steel bot legs
+  (gunmetal grey steel shins and thighs, black joints, ONE thin gold ring at each knee and ankle like their gold
+  knuckle rings; no plum tights, no royal gold bands, no rivet rows: those are the King's), INK OUTLINE ONLY, no
+  cream/white rim or backing, no teal, no police blue, no red. Why: since it2 the four bodyguards stand on the
+  King's own legs (filmed it10, phase 1, combo); their own top-down parts legs sprawl with a pale rim. When served
+  A/B I swap `KingLegsCard.SHEETS["gang"]` to "gang_legs" (one value), with a provenance line.
