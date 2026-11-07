@@ -1446,3 +1446,8 @@ NEXT (after the freeze; for a later night or the Director's merge):
 3. SWAT p70 front corpse 1.43x short (library redraw); cultists / Torque's gang when they spawn.
 - Session end (it14): commits 739803bb (suit v3), 983bf079 (cap v3 + street_value_match.py),
   2de46fa1 (docs), + this freeze commit. Tree clean after it.
+- LOOKED (in the real scene, after the freeze commit): city `--arena=city --bot=rivet --rigs
+  --view=tilt70 --ppm=48 --seed=5` 1500 frames (exit 0, 0 SCRIPT ERROR), x3 crops: the v3 suit ped
+  walks the kerb as a warm-grey suit with his briefcase, apart from the bench and the kerb; the hood
+  and shopper unchanged. No cap ped in shot on this seed (the board pair covers it).
+  evidence/peds_city_tilt70_48ppm_seed5_botrivet_suit_v3_hood_shopper_x3.png. Raw .avi deleted.
