@@ -740,3 +740,7 @@ NEXT (after the day run, if the lane continues):
 2. The owner's Calls 1-8 -> set the handheld defaults in `devices.json`.
 3. A real device or a Linux PC for the Vulkan run (REPORT "Owed / next" 1).
 - Session end 18:08 (it18): commits cf31ba33 .. this; every change committed.
+- RESULT 18:10 the freeze exe runs the owner's REPORT lines (city course, `--device=deck` / `deck40` / `switch_handheld`
+  / none, headless, `--quit-after 900`): exit 0, 0 SCRIPT ERROR each; the device row live only on the handheld runs. The
+  "105 resources still in use at exit" line shows on all four, desktop included: not a handheld issue (f350f826,
+  `evidence/it18/exe-try/`). Scratch `it18b` deleted. Session end 18:11: all committed, no process or lock of mine left.
