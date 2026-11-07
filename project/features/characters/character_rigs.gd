@@ -93,6 +93,10 @@ func step_ticks(steps: int) -> void:
 			var every: int = rate_of(_rank[actor], zoom)
 			if (ticks_stepped + actor) % every == 0:
 				_by_actor[actor].drive(SimClock.TICK_DT * every)
+	if ViewMode.shared().cards:  # d9-rivet: a rig acquired on a frame that did not pose it (no tick
+		for actor: int in _by_actor:  # due, a half-rate rank) drew its hidden parts: pose it now
+			if _by_actor[actor].t_alive == 0.0:
+				_by_actor[actor].drive(SimClock.TICK_DT)
 	last_us = Time.get_ticks_usec() - t0
 
 
