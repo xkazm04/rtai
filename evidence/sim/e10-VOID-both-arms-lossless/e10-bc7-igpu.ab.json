@@ -1,0 +1,204 @@
+{
+  "schema": "gtai.handheld-ab/1",
+  "name": "e10-bc7-igpu",
+  "rounds": 3,
+  "at": "2026-11-07T12:07:35.580Z",
+  "table": [
+    {
+      "variant": "--device=deck_bench --scene=city --ticks=1200",
+      "runs": 3,
+      "contended": 3,
+      "p50_ms": {
+        "median": 9.26,
+        "spread": 0.22
+      },
+      "p99_ms": {
+        "median": 14.07,
+        "spread": 0.52
+      },
+      "low1_fps": {
+        "median": 66.68,
+        "spread": 10.49
+      },
+      "over33_settled": {
+        "median": 0,
+        "spread": 0
+      },
+      "render_gpu_ms_p50": {
+        "median": 8.11,
+        "spread": 0.08
+      },
+      "render_cpu_ms_p50": {
+        "median": 0.47,
+        "spread": 0.1
+      },
+      "process_ms_p50": {
+        "median": 3.81,
+        "spread": 0.37
+      },
+      "cpu_pinned_pct_p50": {
+        "median": 8.08,
+        "spread": 1.56
+      },
+      "private_mb_max": {
+        "median": 1354,
+        "spread": 61.4
+      },
+      "gpu_shared_mb_max": {
+        "median": 943.1,
+        "spread": 65
+      },
+      "gpu_dedicated_mb_max": {
+        "median": 81.8,
+        "spread": 0.3
+      }
+    },
+    {
+      "variant": "--device=deck_bench --scene=city --ticks=1200 --project=C:/Users/kazda/kiro/gtai-d9x/scratch/hh-bc7/project",
+      "runs": 3,
+      "contended": 3,
+      "p50_ms": {
+        "median": 9.13,
+        "spread": 0.11
+      },
+      "p99_ms": {
+        "median": 13.53,
+        "spread": 0.33
+      },
+      "low1_fps": {
+        "median": 67.74,
+        "spread": 0.61
+      },
+      "over33_settled": {
+        "median": 0,
+        "spread": 0
+      },
+      "render_gpu_ms_p50": {
+        "median": 8.14,
+        "spread": 0.05
+      },
+      "render_cpu_ms_p50": {
+        "median": 0.42,
+        "spread": 0.02
+      },
+      "process_ms_p50": {
+        "median": 3.59,
+        "spread": 0.12
+      },
+      "cpu_pinned_pct_p50": {
+        "median": 7.89,
+        "spread": 0.72
+      },
+      "private_mb_max": {
+        "median": 1321.5,
+        "spread": 96
+      },
+      "gpu_shared_mb_max": {
+        "median": 943.1,
+        "spread": 64
+      },
+      "gpu_dedicated_mb_max": {
+        "median": 81.8,
+        "spread": 0.2
+      }
+    },
+    {
+      "variant": "--device=deck_bench --scene=king --ticks=1200",
+      "runs": 3,
+      "contended": 2,
+      "p50_ms": {
+        "median": 7.26,
+        "spread": 0.18
+      },
+      "p99_ms": {
+        "median": 10.4,
+        "spread": 0.89
+      },
+      "low1_fps": {
+        "median": 79.07,
+        "spread": 6.2
+      },
+      "over33_settled": {
+        "median": 0,
+        "spread": 0
+      },
+      "render_gpu_ms_p50": {
+        "median": 6.78,
+        "spread": 0.12
+      },
+      "render_cpu_ms_p50": {
+        "median": 0.37,
+        "spread": 0.04
+      },
+      "process_ms_p50": {
+        "median": 1.71,
+        "spread": 0.31
+      },
+      "cpu_pinned_pct_p50": {
+        "median": 7.16,
+        "spread": 0.33
+      },
+      "private_mb_max": {
+        "median": 1003.4,
+        "spread": 2.7
+      },
+      "gpu_shared_mb_max": {
+        "median": 643.1,
+        "spread": 0
+      },
+      "gpu_dedicated_mb_max": {
+        "median": 80.6,
+        "spread": 0
+      }
+    },
+    {
+      "variant": "--device=deck_bench --scene=king --ticks=1200 --project=C:/Users/kazda/kiro/gtai-d9x/scratch/hh-bc7/project",
+      "runs": 3,
+      "contended": 2,
+      "p50_ms": {
+        "median": 7.3,
+        "spread": 0.03
+      },
+      "p99_ms": {
+        "median": 10.38,
+        "spread": 0.37
+      },
+      "low1_fps": {
+        "median": 82.14,
+        "spread": 1.62
+      },
+      "over33_settled": {
+        "median": 0,
+        "spread": 0
+      },
+      "render_gpu_ms_p50": {
+        "median": 6.72,
+        "spread": 0.01
+      },
+      "render_cpu_ms_p50": {
+        "median": 0.36,
+        "spread": 0.02
+      },
+      "process_ms_p50": {
+        "median": 1.57,
+        "spread": 0.15
+      },
+      "cpu_pinned_pct_p50": {
+        "median": 6.62,
+        "spread": 0.79
+      },
+      "private_mb_max": {
+        "median": 1003.9,
+        "spread": 3.3
+      },
+      "gpu_shared_mb_max": {
+        "median": 643.1,
+        "spread": 0
+      },
+      "gpu_dedicated_mb_max": {
+        "median": 80.6,
+        "spread": 0
+      }
+    }
+  ]
+}
