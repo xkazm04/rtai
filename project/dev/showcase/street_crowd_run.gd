@@ -7,6 +7,7 @@ extends Node
 ## react table) from the west and stops on its spot; the same run under `top` and a tilt shows
 ## whether the corpse lands where the body was (KILL_SHOTS replace SHOTS). kill_spread: walker i
 ## is hit from the west turned by i x 45 deg, so every fall direction (and facing row) shows.
+## cops: the board walks cops instead (COP_LOOKS: twelve patrol, two riot, two SWAT).
 
 const PX: float = 32.0
 const GROUND: String = "res://features/city/art/ground/"
@@ -16,11 +17,13 @@ const KILL_AT: int = 60
 const KILL_SHOTS: PackedInt32Array = [59, 62, 65, 68, 72, 90, 150, 240]
 ## The looks walked: every pedestrian look, the pooled ones (StreetCrowdCards.POOLS) twice.
 const LOOKS: PackedByteArray = [0, 1, 2, 3, 4, 7, 1, 4, 7, 1, 4, 7, 0, 2, 3, 1]
+const COP_LOOKS: PackedByteArray = [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 8, 8]
 
 var out_dir: String = ""
 var ppm: float = 48.0
 var kill_class: String = ""
 var kill_spread: bool = false
+var cops: bool = false
 var _pipe: DeathPipe = DeathPipe.make(ReactTable.shipped())
 var _world: CanvasLayer = CanvasLayer.new()
 var _post: CanvasLayer = CanvasLayer.new()
@@ -69,6 +72,7 @@ func shoot() -> int:
 			await RenderingServer.frame_post_draw
 			var img: Image = get_viewport().get_texture().get_image()
 			var tag: String = ViewMode.shared().id + ("" if kill_class == "" else "-" + kill_class)
+			tag += "-cops" if cops else ""
 			var file: String = "street-%s-%d-%d.png" % [tag, roundi(ppm), t]
 			ok = img != null and img.save_png(out_dir.path_join(file)) == OK and ok
 	return 0 if ok else 1
@@ -89,9 +93,10 @@ func _cast() -> void:
 	for i: int in COUNT:
 		var lane: int = i % 4
 		var x: float = -7.0 + float(i >> 2) * 4.4 + lane * 1.1
+		var kind: BodyPlan.Kind = BodyPlan.Kind.COP if cops else BodyPlan.Kind.PED
 		@warning_ignore("return_value_discarded")
-		f.put(i, i + 1, BodyPlan.Kind.PED, Vector2(x, -2.4 + lane * 1.6) * PX, Vector2.ZERO)
-		f.looks[i] = LOOKS[i]
+		f.put(i, i + 1, kind, Vector2(x, -2.4 + lane * 1.6) * PX, Vector2.ZERO)
+		f.looks[i] = COP_LOOKS[i] if cops else LOOKS[i]
 
 
 func _pose(t: int) -> void:
