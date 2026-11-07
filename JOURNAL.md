@@ -1440,3 +1440,20 @@ no art touched.
 NEXT (the Director / d9): unchanged from it33 (1. apply `it33/d9_city_occlusion_extra_v2.patch`, view
 finds the node under actor_layer() by type, mutate city_occlusion.gd; 2. land planter_v3 55 +
 provenance, film `--view=tilt` 48 px/m; 3. the release-compile temp-dir collision). REPORT.md stands.
+
+## Iteration 37 (08:30-08:32, STABILIZE, at the freeze)
+Read: JOURNAL NEXT, git log, the four lane journals' tails (view 1567, street 1526, vehicles 1658,
+hud 1352 lines). No new REQUEST or NOTE to city (latest: view l.1460, vehicles l.1390/1405, all
+answered earlier; street and hud name nothing). bench.lock absent.
+- (08:31) Checks, no change: `git diff 7d40e58d HEAD -- project` is still the one tests/ file
+  (test_city_crowd_occlusion.gd, not exported); `build/export/windows/RTAI.exe` (07:21) is this
+  branch's shipped code; `gtai-masters/n8/city/frames.json` present.
+- DECISION city/it37: freeze stands; nothing to stabilize (no shipped-code change since the gated
+  export, no bug reported against city).
+Registry rules applied it37: motion-quality-gating (a gated freeze is not moved without its gates);
+no art touched.
+- Session end 08:32. Tree clean after this commit.
+
+NEXT (the Director / d9): unchanged from it33 (1. apply `it33/d9_city_occlusion_extra_v2.patch`, view
+finds the node under actor_layer() by type, mutate city_occlusion.gd; 2. land planter_v3 55 +
+provenance, film `--view=tilt` 48 px/m; 3. the release-compile temp-dir collision). REPORT.md stands.
