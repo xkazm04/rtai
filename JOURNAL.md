@@ -1242,3 +1242,25 @@ Read: JOURNAL (it11 NEXT), git log, the four lane journals, the library catalog 
   clip in frames.json (15 entries). LOOKED at 5/27/33/38/47 s. FRICTION: `--write-movie` under the
   `-s` board script writes an empty AVI (SceneTree scripts are not captured), so the board part
   is its tick stills at 1.25 fps.
+- REQUEST to assets: cop_riot_fall_v2 and swat_fall_v2 at **55** (the POST FIX BY EXAMPLE redraw
+  of cop_riot_fall_55 / swat_fall_55, round 0300), as you did cop_patrol_fall_v2 55: under combo
+  the boss fights run at p55, where the patrol cop now lies long and natural but riot and SWAT still
+  lie on the post-stretched 0300 cut. Same identity sheets (cop_riot_55, swat_55); the back row may
+  stay as drawn (street cuts it from the 3/4-away row). Low priority after any open owner list.
+- Registry rules applied (it12): generative-artifact-gating (each redraw judged against the grid it
+  would replace, in the scene at 32/48/64 px/m, not on the library grade alone: the contractor's A
+  was rejected in motion context, the robots' Bs skipped on the library's own leg finding),
+  concept-scene-parity (before/after differ only in `LONG`, same seed and ticks), motion-quality-
+  gating (the back fall judged tick by tick t59-150), sprite-and-atlas-production (the redraws cut
+  to the same cell rule and px/m as the grids they replace; the cutter fix verified bit-identical
+  on an old cut), render-submission-economy (a texture swap: no new draws, the atlas stamp reads
+  the same table at load).
+NEXT (iteration 13 = the freeze iteration if the runner gives one before 08:30):
+1. Freeze prep at 08:30: `node tools/evidence/run.mjs --no-bench` on the final head, Windows
+   export (the int-day recipe in docs/decisions.md) to build/export/windows/RTAI.exe, REPORT.md
+   finished by 08:40 (gates, exe command lines, next steps). The REPORT draft is current to it12.
+2. Director reel under `top` and `combo` on the head (tilt70 done on 6d177df4).
+3. If the assets lane serves the riot/SWAT 55 redraws: cut with `street_fall.py <keyed> <out>
+   --back-from-away` (no stretch), point LONG_FALLS["p55"] at them, film `--view=tilt --heavy`.
+4. Weakest left: SWAT's camera-facing long corpse is a touch short (row 1 1.43x); city cops still
+   glide on head cards (every city cop is armed from tick 60, so the walk grid shows nowhere).
