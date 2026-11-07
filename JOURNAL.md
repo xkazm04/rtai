@@ -198,3 +198,7 @@ NEXT (it6 early, superseded below the continued entry):
    electro_baton 70_left v2 (round 1205) -> swap the sheet names. Re-run the manifest + provenance.
 5. Servo engage film; ghost form swap back; death beat; occlusion silhouette; every weapon at each pitch;
    frame cost under the bench lock; a combined clip 30-90 s.
+- BLOCKED (11:22-11:29, 7 min, and since it3): `node tools/evidence/run.mjs --no-bench` stops at release-compile on
+  `%TEMP%\gtai-release-compile` (not made by this lane, no marker); scenarios/goldens/parity on it6 code owed.
+  Ask the Director who owns that dir (or run release_compile with a lane-private TEMP: `TEMP=<lane dir> node ...`
+  next session, if the tool honours TEMP). Session end 11:30; everything committed.

@@ -9,3 +9,7 @@
 - Not re-run this session: `node tools/evidence/run.mjs --no-bench` (scenarios, look goldens, parity) and
   release-compile. `top` never reaches RivetFrames (RivetStrips.strip_of("") == ""), so the goldens are not
   expected to move; owed next session.
+- 11:22-11:29 `node tools/evidence/run.mjs --no-bench` on 3b-HEAD (after the magazine fix): BLOCKED again at
+  release-compile: `%TEMP%\gtai-release-compile exists but was not created by release_compile (no .gtai-release-compile)`;
+  no scenario-tests.json / parity.json written. The dir is not this lane's; left alone. Scenarios, goldens and
+  parity on it6 code remain OWED (last green: it3, 19ddf549).
