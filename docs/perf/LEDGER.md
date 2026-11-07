@@ -43,6 +43,31 @@ baseline through `windows-bench` is owed), bench.lock held, 11 of 12 runs UNCONT
 writes a summary, no series): owed. CPU in cores is ~1.0 in every uncapped run: one core kept busy;
 the process CPU at a 60 fps vsync cap is owed (the sampler is ready).)
 
+## Release-export baseline (it4, 11:45-11:49, at 87155de9): the shipped build vs the editor binary
+`node tools/perf/ab.mjs --scenes=riot,drive70,riot60 --arms=dbg:,rel@exe: --pairs=2` (`evidence/perf/rel-vs-dbg/ab.json`):
+the `windows-bench` release export (`--export-release windows-bench`, 256 baked chunks) against the editor
+binary on the same presets, 2 pairs interleaved. **CONTENDED: 8-17 other Godots in every run** (my own
+evidence run plus the seams lane's), so read the ratios, not the ms; a quiet rerun is owed.
+| scene | build | p50 ms | p99 | p99.9 | worst | render CPU ms | CPU cores | peak RAM MB |
+|---|---|---|---|---|---|---|---|---|
+| riot (fixed 60) | editor (debug) | 6.72 ±0.29 | 13.94 ±2.05 | 18.34 | 22.43 | 0.72 | 1.04 | 851 |
+| riot (fixed 60) | release exe | **5.33 ±0.09 WIN** | 14.28 WASH | 23.15 WASH | 25.62 WASH | 0.63 WIN | 0.95 | **681 WIN** |
+| drive70 (fixed 60) | editor (debug) | 3.70 ±0.17 | 5.78 ±0.02 | 8.50 | 10.20 | 0.30 | 1.02 | 855 |
+| drive70 (fixed 60) | release exe | **2.90 ±0.18 WIN** | **8.41 ±0.35 LOSS** | 12.84 LOSS | 17.00 LOSS | 0.28 | 0.99 | **681 WIN** |
+| riot60 (vsync + 60 cap, real time) | editor (debug) | 16.68 | 19.94 | 35.55 | 42.98 | 0.89 | **0.49** | 913 |
+| riot60 (vsync + 60 cap, real time) | release exe | 16.68 | 22.31 WASH | 72.39 WASH | 107.14 WASH | 0.87 | **0.41 WIN** | **675 WIN** |
+- **Least resources at the player's cap:** the 400-actor riot at 60 fps holds **0.41 of one core** and
+  **675 MB** in the release build (debug 0.49 / 913). Draw calls are identical (832 / 293).
+- **Boot** (`tools/perf/boot.sh 3`: boot + one city_bench frame + exit, windowed, CONTENDED): exe 2.48 / 2.86 /
+  2.90 s, editor 4.27 / 4.35 / 5.54 s: **median 2.86 s vs 4.35 s**.
+- **Size:** `RTAI-bench.exe` 109.3 MB (the stock release template: every engine module), `RTAI-bench.pck`
+  227.7 MB, the sim DLL 0.4 MB. A custom template without unused modules (3D physics, navigation 3D, XR,
+  ...) is the size lever: owed (a template build is ~30-60 min of compile).
+- F8 (11:49): **the release exe's drive70 tail is worse than the debug editor's** (p99 8.41 vs 5.78, worst
+  17.0 vs 10.2, both pairs) while its p50 is 22 % better: something in the shipped build loads or
+  streams on the frame (pck reads? first-use loads the editor had warm in its import cache?). Contended,
+  so it needs a quiet rerun first, then `--spans` on the exe (NodeSpans ships in the bench export).
+
 ## Levers
 | # | lever | hypothesis / expected | change | A/B (median, spread) | verdict | commit |
 |---|---|---|---|---|---|---|

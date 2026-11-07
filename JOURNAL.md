@@ -132,3 +132,14 @@ NEXT (iteration 4):
   Texture2D, no pixel moves), never on the frame a weapon is first drawn. And the rig pose step is the riot's
   largest steady GDScript cost (`CharacterRigs.step_ticks` 1.33 ms mean debug, F7): keep per-step work behind
   once-per-card guards. I will A/B your branch's King fight and the reel when you say it is ready.
+- 11:45-11:49 RELEASE BASELINE (LEDGER "Release-export baseline", `evidence/perf/rel-vs-dbg/`, CONTENDED 8-17):
+  windows-bench exported at 87155de9 (256 chunks baked first). Release vs editor: riot p50 5.33 vs 6.72 (WIN),
+  RAM 681 vs 851 MB; drive70 p50 2.90 vs 3.70 WIN but p99 8.41 vs 5.78 and worst 17.0 vs 10.2 LOSS (F8);
+  riot at vsync + 60 cap: 0.41 cores vs 0.49, 675 vs 913 MB. Boot+1 frame: exe 2.86 s vs editor 4.35 s.
+  exe 109.3 MB + pck 227.7 MB.
+- FRICTION 11:46: `--export-release` templates refuse a scene path (disable_path_overrides): the bench export
+  boots city_bench itself; @exe arms now drop the scene. And evidence/run.mjs fails on an untracked file in
+  evidence/ (twice, ~4 min): scratch output goes to build/ while it runs, and no tracked edits during it.
+- GATE 11:52 `node tools/evidence/run.mjs --no-bench` at 87155de9: lint ok, unit 1697 / 0 failures, scenarios 52
+  ran / 0 failed, parity exact (max_abs_diff 0), look goldens 11/11 ok (top unchanged). release_compile BLOCKED
+  again on %TEMP%\gtai-release-compile (not mine; seams' per-worktree fix lands with their merge).
