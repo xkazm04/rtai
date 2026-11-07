@@ -16,7 +16,10 @@ import { foreignGodot } from '../lib/run_ledger.mjs';
 import { frameStats, verdict } from './stats.mjs';
 
 const LOCK = 'C:/Users/kazda/kiro/gtai-n5/bench.lock';
-const WIN = ['--rendering-driver', 'd3d12', '--disable-vsync', '--resolution', '1920x1080'];
+// --fixed-fps 60 with vsync off: every frame steps exactly one sim tick and runs as fast as it can,
+// so a frame's wall time is the cost of one 60 Hz gameplay frame. Uncapped without it, most frames
+// carry no tick (the riot at ~400 fps ticks every 6-7th frame) and p50 reads the cheap ones (F3).
+const WIN = ['--rendering-driver', 'd3d12', '--disable-vsync', '--fixed-fps', '60', '--resolution', '1920x1080'];
 
 /** Scene presets: engine args, scene, user args (`OUT` is replaced by the log path), log kind. */
 export const SCENES = {
