@@ -1284,3 +1284,20 @@ NEXT (iteration 15, in order):
   desaturated lying figure with the blood on top), where it14's merge drew them full hi-vis: the
   pile now reads as dead and behind the living. It is still ~30 deep along the kerb (the quest
   keeps every guard_down); a cap stays street's / the quest's call.
+- MEASURE mutate view_pitch_quest.gd (--tests=test_view_pitch_quest) at 091393b0: 8 killed / 1
+  survived (88.9 %), 1 invalid; the survivor (`or -> and` on the attach guard) was equivalent:
+  `is_flat()` is redundant with `not pitch.eases()` (a flat row never eases). Dropped it
+  (e369f4b0; test_view_pitch_quest + test_view_pitch 14/0); re-run: 8 killed / 0 survived (100 %).
+- Session close it15: tree clean after this commit. Commits it15: 9390c30f (reel refresh notes),
+  fc98bb7c (ViewPitchQuest), 971fc2c5, 7abddcdd (evidence), 091393b0, e369f4b0 (mutant), this one.
+  Scratch: it15 raw .avi and PNG frame dirs deleted; the trial tree (%TEMP%/view-trial-it11, now
+  at 3e16cc20 = the it15 merge) and %TEMP%/view-street-check stay until the freeze.
+NEXT (iteration 16, in order):
+1. Other lanes' journals: street's answer to the corpse-pile NOTE (now greyed; a cap?), any REQUEST.
+2. The freeze (08:30): `git worktree remove` %TEMP%/view-trial-it11 and %TEMP%/view-street-check,
+   director reel top + combo on n8-view HEAD, `node tools/evidence/run.mjs --no-bench` with the tree
+   STILL (no JOURNAL append mid-run), the exe (`build/export/windows/RTAI.exe`, the int-day recipe
+   in docs/decisions.md; smoke `RTAI.exe -- --view=combo`), REPORT final (## Exe, ## Next steps;
+   Calls 1-6).
+3. If time before the freeze: the Mertz return to 70 filmed in motion (ticks 15700-16100 on the
+   merge, combo 48 px/m), and a ghost on screen through Mertz's ease (quest 1's Tonnage voice).
