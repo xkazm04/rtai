@@ -67,3 +67,26 @@ func test_the_rack_hangs_icons_under_a_form_and_parts_in_top() -> void:
 	var pistol: Sprite2D = rack._sprites[0]
 	assert_eq(pistol.texture, rack.showcase.texture(&"pistol", WeaponShowcase.ICON))
 	assert_null(pistol.material, "the showcase icon is already inked")
+
+
+func test_the_rack_hangs_handguns_flat_under_a_form_and_all_muzzle_up_in_top() -> void:
+	var rack: WeaponRackView = WeaponRackView.new()
+	add_child_autofree(rack)
+	rack._form = ""
+	rack._hang()
+	for s: Sprite2D in rack._sprites:
+		assert_almost_eq(s.rotation, -PI * 0.5, 0.0001, "top: every part muzzle up")
+	assert_eq(rack._cords.size(), 0, "top: no hook cords")
+	rack._form = "p70"
+	rack._hang()
+	var k: int = 0
+	var flat: int = 0
+	for id: StringName in WeaponRackView.ORDER:
+		if not rack.art.has(id):
+			continue
+		var want: float = 0.0 if WeaponRackView.FLAT.has(id) else -PI * 0.5
+		assert_almost_eq(rack._sprites[k].rotation, want, 0.0001, "%s hangs as designed" % id)
+		flat += 1 if WeaponRackView.FLAT.has(id) else 0
+		k += 1
+	assert_eq(rack._cords.size(), flat * 2, "one cord per flat gun")
+	assert_eq(rack._pegs.size(), k, "one peg per hung weapon")
