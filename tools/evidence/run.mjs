@@ -90,7 +90,7 @@ async function laterKinds(version) {
   const out = [['scenario-tests', await runScenarios(OUT)]];
   if (!process.argv.includes('--no-parity')) out.push(['parity', await runParity(OUT)]);
   if (!process.argv.includes('--no-selftest')) out.push(['selftest', await runSelftest(OUT)]);
-  if (!process.argv.includes('--no-release')) out.push(['export-audit', releaseEvidence()]); // release-compile; the PCK audit (EXP-05) joins this kind
+  if (!process.argv.includes('--no-release')) out.push(['export-audit', await releaseEvidence()]); // release-compile; the PCK audit (EXP-05) joins this kind
   if (!process.argv.includes('--no-bench')) {
     out.push(['bench', await runBench(OUT, { headless: process.argv.includes('--bench-headless') })]);
   }
@@ -98,11 +98,11 @@ async function laterKinds(version) {
 }
 
 /** export-audit, part 1: what a release export ships still compiles (tools/tests/release_compile.mjs). */
-function releaseEvidence() {
-  const r = releaseCompile();
+async function releaseEvidence() {
+  const r = await releaseCompile();
   const ran = r.ran ?? 0;
   const summary = r.ran === null
-    ? `release-compile: the load pass did not run (exit ${r.status})`
+    ? `release-compile: the load pass did not run (${r.timedOut ? 'timed out' : `exit ${r.status}`})`
     : `release-compile: ${ran} loaded, ${r.failed.length} failed${r.failed.length ? ` (${r.failed.slice(0, 3).join(', ')})` : ''}`;
   return { ok: r.ok, summary, counts: { passed: ran, failed: r.failed.length, skipped: 0 } };
 }

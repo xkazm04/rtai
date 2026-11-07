@@ -15,7 +15,9 @@ import {
 import { basename, dirname, join, resolve, sep } from 'node:path';
 import { homedir, tmpdir } from 'node:os';
 import { pathToFileURL } from 'node:url';
-import { PROJECT, ROOT, godotBin, run } from '../lib/repo.mjs';
+import { PROJECT, ROOT, godotBin } from '../lib/repo.mjs';
+import { HEADLESS_TIMEOUT_MS, runProcess } from '../lib/godot.mjs';
+import { register } from '../lib/run_ledger.mjs';
 
 export const EXCLUDED = ['tests', 'dev', 'addons/gut'];
 export const MARKER = '.gtai-release-compile';
@@ -99,24 +101,36 @@ export function failures(out) {
   return [...out.matchAll(/load_release: FAILED (res:\/\/\S+)/g)].map((m) => m[1]);
 }
 
-export function releaseCompile({ dir, keep = false, src = PROJECT } = {}) {
-  const bin = godotBin();
+/** One Godot run on the scratch project, through the launcher's tree-kill timeout and the run ledger
+ *  (a raw spawnSync here hung evidence forever on a hanging load script and was invisible to contention). */
+async function godotOn(dest, args, timeoutMs) {
+  const entry = register({ kind: 'release-compile' });
+  try {
+    return await runProcess(godotBin(), ['--headless', '--path', dest, ...args],
+      { timeoutMs, onSpawn: (pid) => entry.setChild(pid) });
+  } finally {
+    entry.release();
+  }
+}
+
+export async function releaseCompile({ dir, keep = false, src = PROJECT, timeoutMs = HEADLESS_TIMEOUT_MS } = {}) {
   const dest = stageRelease(dir ?? join(tmpdir(), 'gtai-release-compile'), src);
-  const imp = run(bin, ['--headless', '--path', dest, '--import']);
-  const res = run(bin, ['--headless', '--path', dest, '-s', 'res://load_release.gd']);
+  const imp = await godotOn(dest, ['--import'], timeoutMs);
+  const res = await godotOn(dest, ['-s', 'res://load_release.gd'], timeoutMs);
   if (!keep) removeMarked(dest);
   const failed = failures(res.out);
   const ran = /load_release: (\d+) loaded, (\d+) failed/.exec(res.out);
   const errors = [...res.out.matchAll(/^(?:SCRIPT ERROR|ERROR): .*$/gm)].map((m) => m[0]);
   const ok = ran !== null && failed.length === 0 && res.status === 0;
-  return { ok, ran: ran ? Number(ran[1]) : null, failed, errors, status: res.status, importStatus: imp.status, out: res.out };
+  return { ok, ran: ran ? Number(ran[1]) : null, failed, errors, status: res.status, importStatus: imp.status, out: res.out,
+    timedOut: imp.timedOut || res.timedOut };
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const arg = (k) => process.argv.find((a) => a.startsWith(`--${k}=`))?.slice(k.length + 3);
   try {
     const src = arg('src');
-    const r = releaseCompile({
+    const r = await releaseCompile({
       dir: arg('dir'),
       keep: process.argv.includes('--keep'),
       src: src ? resolve(src) : PROJECT,
