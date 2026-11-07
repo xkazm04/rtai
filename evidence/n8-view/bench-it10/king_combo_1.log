@@ -1,0 +1,30 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+D3D12 12_0 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce RTX 4090
+
+[INFO] bosses: king phase 1 (procession)
+[INFO] bosses: king engaged in king_boulevard, phase 1
+[INFO] arena: powers pad: 4 cars parked
+[INFO] arena: arena open: 20 stations
+[INFO] characters: prewarmed 33 rigs in 118.9 ms
+[INFO] arena: cast rigs: true
+[INFO] view: pitch ease 70.0 -> boss at tick 4
+[INFO] bench: HITCH 103.0 ms (process 62.3 flush 4.1 draw 36.3 pump 0.2) tick 7
+[INFO] view: cards art p55 (pitch 62.1) at tick 35
+[INFO] bench: HITCH 34.4 ms (process 30.0 flush 2.4 draw 2.0 pump 0.0) tick 35
+[INFO] bench: HITCH 50.4 ms (process 18.5 flush 29.9 draw 1.9 pump 0.1) tick 39
+[INFO] bench: HITCH 53.2 ms (process 7.2 flush 1.6 draw 1.3 pump 43.1) tick 209
+[INFO] bench: HITCH 41.3 ms (process 5.8 flush 32.9 draw 2.4 pump 0.2) tick 446
+[INFO] bench: HITCH 36.9 ms (process 6.9 flush 27.8 draw 2.1 pump 0.1) tick 957
+[INFO] bench: HITCH 37.2 ms (process 6.1 flush 29.0 draw 2.1 pump 0.1) tick 994
+[INFO] bench: HITCH 42.1 ms (process 4.6 flush 4.0 draw 1.7 pump 31.8) tick 1201
+[INFO] bench: HITCH 38.7 ms (process 4.8 flush 31.3 draw 2.5 pump 0.1) tick 1237
+[INFO] bench: HITCH 44.3 ms (process 6.1 flush 35.6 draw 2.5 pump 0.1) tick 1301
+[INFO] bench: fight frames -> C:/Users/kazda/kiro/gtai-wt/n8-view/evidence/n8-view/bench-it10/king_combo_1.json {"frames":3825,"low1_fps":39.9984000595005,"over33_settled":7,"over50_settled":1,"p50_ms":5.84700012207031,"p99_ms":16.1490001678467,"ticks":1493,"worst_ms":102.955001831055,"worst_settled_ms":53.2120018005371}
+[INFO] view: occlusion: 11 body-frames hidden over 3826 frames, frames 1938-2582
+[INFO] arena: react: 0 wounds (0 on a shield), 0 deaths, 0 ducks
+WARNING: 1 RID of type "CanvasItem" was leaked.
+   at: _free_rids (servers/rendering/renderer_canvas_cull.cpp:2733)
+WARNING: 591 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 94 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

@@ -1,0 +1,17 @@
+{
+  "beat": "b4-dock",
+  "frames": 900,
+  "from_tick": 13560,
+  "label": "CONTENDED (shared machine, other lanes running)",
+  "max_ms": 28.893,
+  "p50_ms": 5.707,
+  "p95_ms": 9.389,
+  "p99_ms": 14.777,
+  "scene": "res://boot/quest1.tscn (quest 1 on the city, 300 people, 32 px/m)",
+  "schema": "gtai.slice-frames/1",
+  "size": [
+    1422.0,
+    800.0
+  ],
+  "vsync": "off"
+}

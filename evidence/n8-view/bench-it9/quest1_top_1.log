@@ -1,0 +1,15 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+D3D12 12_0 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce RTX 4090
+
+[INFO] quest1: city cells: 2 chunks in 22 ms
+[INFO] quest1: street filled in 16 chunk passes
+[INFO] characters: prewarmed 33 rigs in 119.1 ms
+[INFO] quest1: started: Rivet is the player's (seed 20261102)
+[INFO] souls: ghost voice: tonnage beside Rivet
+[INFO] payphone: Patch connected the call at Factory Row corner
+[INFO] souls: ghost voice: tonnage beside Rivet
+[INFO] bench: {"beat":"b4-dock","frames":900,"from_tick":13560,"label":"CONTENDED (shared machine, other lanes running)","max_ms":24.878,"p50_ms":3.831,"p95_ms":6.649,"p99_ms":12.232,"scene":"res://boot/quest1.tscn (quest 1 on the city, 300 people, 32 px/m)","schema":"gtai.slice-frames/1","size":[1422.0,800.0],"vsync":"off"}
+WARNING: 427 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 90 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

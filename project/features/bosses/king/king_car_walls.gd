@@ -39,9 +39,9 @@ static var _tex: Dictionary[String, Texture2D] = {}
 ## Draws the stack from art and returns true; false (nothing drawn) when this pitch has no walls.
 static func draw(ci: CanvasItem, at: Vector2, heading: float, l: float, w: float) -> bool:
 	var view: ViewMode = ViewMode.shared()
-	var side: Texture2D = _wall(view.pitch_deg, "car_side")
-	var front: Texture2D = _wall(view.pitch_deg, "car_front")
-	var rear: Texture2D = _wall(view.pitch_deg, "car_rear")
+	var side: Texture2D = _wall(view.art_pitch(), "car_side")
+	var front: Texture2D = _wall(view.art_pitch(), "car_front")
+	var rear: Texture2D = _wall(view.art_pitch(), "car_rear")
 	if side == null or front == null or rear == null:
 		return false
 	var origin: Vector2 = ci.get_global_transform() * at
@@ -91,7 +91,7 @@ static func _proud(i: int) -> float:
 ## The hood cannon from `tail` to `tip` (car px): the barrel from art for this pitch (breech at the
 ## strip's left) on KingCarTrim's swivel mount; with no strip, KingCarTrim's drawn barrel.
 static func cannon(ci: CanvasItem, tail: Vector2, tip: Vector2) -> void:
-	var tex: Texture2D = _wall(ViewMode.shared().pitch_deg, "cannon")
+	var tex: Texture2D = _wall(ViewMode.shared().art_pitch(), "cannon")
 	if tex == null:
 		KingCarTrim.cannon(ci, tail, tip)
 		return
@@ -106,13 +106,13 @@ static func cannon(ci: CanvasItem, tail: Vector2, tip: Vector2) -> void:
 ## Where the hood cannon stands (and its coins fly from): on the roof art's ring when drawn.
 static func mount_k() -> float:
 	var view: ViewMode = ViewMode.shared()
-	var art: bool = view.has_lift() and _wall(view.pitch_deg, "car_roof") != null
+	var art: bool = view.has_lift() and _wall(view.art_pitch(), "car_roof") != null
 	return ART_MOUNT_K if art else MOUNT_K
 
 
 ## The roof from art for this pitch over `body` (car px, nose +x); false when it has none.
 static func roof(ci: CanvasItem, body: Rect2) -> bool:
-	var tex: Texture2D = _wall(ViewMode.shared().pitch_deg, "car_roof")
+	var tex: Texture2D = _wall(ViewMode.shared().art_pitch(), "car_roof")
 	if tex == null:
 		return false
 	ci.draw_rect(body.grow(INK_PX), Ink.INK)
@@ -126,7 +126,7 @@ static func roof(ci: CanvasItem, body: Rect2) -> bool:
 static func throne(ci: CanvasItem, at: Vector2, p: float, up: Vector2) -> bool:
 	var view: ViewMode = ViewMode.shared()
 	var back: bool = up.x > 0.0  # the tail (-x) faces the camera (down the screen)
-	var tex: Texture2D = _wall(view.pitch_deg, "throne_back" if back else "throne_front")
+	var tex: Texture2D = _wall(view.art_pitch(), "throne_back" if back else "throne_front")
 	if tex == null or up == Vector2.ZERO:
 		return false
 	var u: Vector2 = up.normalized()

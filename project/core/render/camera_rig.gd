@@ -132,7 +132,8 @@ func step(tick: int, vel_mps: Vector2) -> void:
 	var per: float = m["look_ahead_m_per_mps"]
 	var cap: float = m["look_ahead_max_m"]
 	cap *= _scale("look_ahead_scale")
-	var want: Vector2 = (vel_mps * per).limit_length(cap)
+	var lead: float = ViewMode.shared().lead_k  # a view row's lead at speed (1: camera.json)
+	var want: Vector2 = (vel_mps * per * lead).limit_length(cap * lead)
 	for i: int in steps:
 		_look_m = _look_m.lerp(want, look_ease)
 

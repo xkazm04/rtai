@@ -36,12 +36,21 @@ static func attach(
 	if stage.pilot.dent != null:
 		v.dent = DentView.new()
 		v.dent.dent = stage.pilot.dent
-		_add(layer, v.dent, stage, reduced_motion, 1)
+		_add(layer, v.dent, stage, reduced_motion, dent_dz(ViewMode.shared()))
 	v.kerf = KerfView.new()
 	_add(layer, v.kerf, stage, reduced_motion, 1)
 	v.ohm = OhmView.new()
 	_add(layer, v.ohm, stage, reduced_motion, 2)
 	return v
+
+
+## Dent's z step over the actors band. Under a card view his tether and the seized car's heat halo
+## draw just over the vehicles band, so a stage car standing over the actors (vehicles' stage
+## cards) never hides the seize it is the target of (vehicles it14 REQUEST); flat views keep 1.
+static func dent_dz(view: ViewMode) -> int:
+	if view == null or not view.cards:
+		return 1
+	return RenderLayers.z(&"vehicles") - RenderLayers.z(&"actors") + 1
 
 
 ## Quest 1 (both casts): the views on `cc`'s printed layer, CastView keeping Tonnage's marks.

@@ -10,10 +10,13 @@ extends BossView
 var _rig: ServoRig = ServoRig.new()
 var _ground: Node2D = Node2D.new()
 var _air: Node2D = Node2D.new()
+## n8-view: the bays' apron marks over the vehicles band under a card view (ServoDepotDraw).
+var _marks: Node2D = Node2D.new()
 var _paint: ServoDraw = ServoDraw.new()
 var _depot: ServoDepotDraw = ServoDepotDraw.new()
 var _cut: ServoCut = ServoCut.new()
 var _frame: int = 0
+var _drone: ServoParts = ServoParts.new()
 ## Seconds the conveyor has run (it starts with rush hour, phase 2); one frame = one tick here.
 var _belt_s: float = 0.0
 
@@ -30,11 +33,17 @@ func _ready() -> void:
 	add_child(_ground)
 	add_child(_rig)
 	add_child(_air)
+	_depot.marks_apart = ViewMode.shared().cards
+	if _depot.marks_apart:
+		_marks.z_as_relative = false
+		_marks.z_index = RenderLayers.z(&"vehicles") + 1
+		add_child(_marks)
 	@warning_ignore("return_value_discarded")
 	ServoHorn.attach(self, fight)  # rush hour's shift horn (render side)
 	var errs: Array[Error] = [
 		_ground.draw.connect(_draw_ground),
 		_air.draw.connect(_draw_air),
+		_marks.draw.connect(_draw_marks),
 	]
 	if arena != null:  # Kerf's cut drones fall in two halves (ServoCut)
 		errs.append(arena.kill_landed.connect(_on_kill))
@@ -54,8 +63,11 @@ func _process(_delta: float) -> void:
 	if fight.phase >= 1 and fight.state != BossFight.State.DEFEATED:
 		_belt_s += SimClock.TICK_DT
 	_rig.pose(_frame)
+	if _drone.sync([&"drone"]):  # n8: the air's drones follow the art key too
+		_paint.drone_tex = _drone.tex[&"drone"]
 	_ground.queue_redraw()
 	_air.queue_redraw()
+	_marks.queue_redraw()
 
 
 func _draw() -> void:
@@ -67,6 +79,11 @@ func _draw_ground() -> void:
 		_depot.draw(_ground, moves().swarm.tuning, moves().depot_origin, _belt_s)
 	_paint.parcels(_ground, moves().swarm)
 	_paint.tells(_ground, fight, moves())
+
+
+func _draw_marks() -> void:
+	if moves().swarm.tuning != null:
+		_depot.marks(_marks, moves().swarm.tuning, moves().depot_origin)
 
 
 func _draw_air() -> void:

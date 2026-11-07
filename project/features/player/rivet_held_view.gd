@@ -91,7 +91,7 @@ func _process(_delta: float) -> void:
 		if _rag != null:
 			_rag.visible = false
 		return
-	if id != _shown or rig.plan.size_k != _shown_size:
+	if id != _shown or rig.plan.size_k != _shown_size or HeldPitchArt.stale(_sprite):
 		_swap(id, pilot.hold.held, rig.plan.size_k)
 	if arena != null and arena.gun != null and arena.gun.trigger.spec.id == pilot.hold.held:
 		var t: Trigger = arena.gun.trigger

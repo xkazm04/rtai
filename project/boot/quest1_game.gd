@@ -9,6 +9,8 @@ extends Node
 signal started
 
 const QUIT_POINT: String = "quit"
+## n8-view: under a view that draws the standing cards the quest's cast is the rig cast (_dev_rigs).
+const RIGS_UNDER_CARDS: bool = true
 
 var session: Quest1Session = null
 var view: CollectCallView = null
@@ -26,8 +28,7 @@ var _ended: bool = false
 var _audio: StageAudio = null
 ## The city's crowd atlas and near rigs (quest 1 on the city; Rivet is the quest's cast).
 var _characters: CityCharacters = null
-## The ghost forms and voices on the sprite cast (null under --rigs).
-var _story: StoryForms = null
+var _story: StoryForms = null  # the ghost forms and voices on the sprite cast (null on the rigs)
 
 
 func _enter_tree() -> void:
@@ -227,21 +228,21 @@ func _settings_panel() -> Quest1SettingsPanel:
 	return panel
 
 
-## rivet-arsenal (dev, debug builds only): `-- --rigs` draws quest 1's fighters on the cast rigs
-## with Rivet's held weapon, swings and reloads (the arena's ArenaRigs, loaded at run time: dev/ is
-## not in release exports). Without the flag quest 1 keeps its sprite cast, and the ghost forms and
-## voices show through StoryForms (the rig cast brings its own GhostFormView).
+## Quest 1's fighters on the cast rigs (ArenaRigs: Rivet's held weapon, swings, reloads) when
+## the view draws the standing cards (n8-view: under combo / tilt70 the sprite cast lay flat on
+## the tilted ground), or on `-- --rigs` in a debug build (rivet-arsenal). Otherwise (`top`,
+## today's ship) the sprite cast stays, and the ghost forms and voices show through StoryForms
+## (the rigs bring their own, StoryForms.follow folds it). RIGS_UNDER_CARDS false = sprites always.
 func _dev_rigs() -> void:
-	if not LaunchArgs.has("--rigs") or not OS.is_debug_build():
+	var dev: bool = LaunchArgs.has("--rigs") and OS.is_debug_build()
+	if not dev and not (RIGS_UNDER_CARDS and ViewMode.shared().cards):
 		_story = StoryForms.attach(self, view, session.stage, settings.reduced_motion)
 		return
-	var script: GDScript = load("res://dev/arena/arena_rigs.gd") as GDScript
-	if script == null:
-		return
-	var cast: Node = script.new()
+	var cast: ArenaRigs = ArenaRigs.new()
 	add_child(cast)
-	var ok: Variant = cast.call("attach", session.stage, view, session.world.context())
+	var ok: bool = cast.attach(session.stage, view, session.world.context())
 	Log.info("quest1", "cast rigs: %s" % ok)
+	StoryForms.follow(self, view, session.stage, cast.ghost_view)
 
 
 ## The cast (_dev_rigs), then the ghosts' attack views over either cast (lane ghost-powers,
@@ -250,6 +251,8 @@ func _casts() -> void:
 	_dev_rigs()
 	@warning_ignore("return_value_discarded")
 	GhostAttackViews.attach_quest(view, session.stage, settings.reduced_motion)
+	@warning_ignore("return_value_discarded")
+	ViewPitchQuest.attach(view, session.stage.arena, session.world.context().clock)
 	if _story != null:  # n7-melee: the sprite cast draws the carried blade (rigs: RivetHeldView)
 		@warning_ignore("return_value_discarded")
 		CastBladeView.attach(view, session.stage)

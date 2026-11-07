@@ -125,3 +125,25 @@ func test_the_subtitle_lift_is_zero_at_32_ppm_and_clears_tonnage_at_64() -> void
 
 func test_the_shipped_table_turns_the_subtitle_lift_on() -> void:
 	assert_true(GhostFormTable.load_default().story_lift)
+
+
+func test_follow_folds_the_rig_casts_own_form_card_and_skips_without_one() -> void:
+	var view: CollectCallView = _view()
+	var stage: CollectCallStage = _stage(true)
+	var host: Node = _host()
+	var v: GhostFormView = GhostFormView.make(stage, null, null)
+	add_child_autofree(v)
+	StoryForms.follow(host, view, stage, v)
+	assert_eq(host.get_child_count(), 1, "one follower on the rig cast's form view")
+	var s: StoryForms = host.get_child(0) as StoryForms
+	assert_eq(s.form_view, v, "the rigs' own view, not a second one")
+	assert_false(view.cast_view.forms_drawn, "the sprite cast is not told to step out")
+	v.hud.sync(v.pilot.ghosts.forms)
+	view.hud_view.state.say("Rivet", "Okay.")
+	s._process(0.0)
+	assert_true(v.hud.compact, "a line is up: folded on the rigs too")
+	view.hud_view.state.silent()
+	s._process(0.0)
+	assert_false(v.hud.compact, "the line closed: unfolded (n8-hud's fold_rigs case, kept)")
+	StoryForms.follow(host, view, stage, null)
+	assert_eq(host.get_child_count(), 1, "no form view (no pilot): nothing added")

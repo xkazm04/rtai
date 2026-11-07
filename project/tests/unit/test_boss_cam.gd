@@ -43,3 +43,20 @@ func test_keep_in_holds_the_boss_on_screen() -> void:
 	# the ghost card's band at the bottom counts too: 3 m below the boss lies above the card
 	var card: Vector2 = Vector2(0.0, 6.0)
 	assert_eq(BossCam.keep_in(Vector2.ZERO, half, Vector2(0, 5), 3.0, card), Vector2(0, 1.5))
+
+
+func test_hold_top_keeps_the_lifted_boss_under_the_bar() -> void:
+	var saved: ViewMode = ViewMode._shared
+	var half: Vector2 = Vector2(10, 6.25)
+	var bands: Vector2 = Vector2(0.8, 2.8)
+	ViewMode._shared = ViewMode.of("top")
+	assert_eq(BossCam.hold_top(Vector2(0, 0), half, Vector2(0, 0), bands), 0.0, "flat: unchanged")
+	ViewMode._shared = ViewMode.of("tilt")
+	var lift_m: float = -ViewMode._shared.lift_px(BossCam.BOSS_TOP_M).y / SimConst.PX_PER_M
+	assert_gt(lift_m, 0.5, "a tilt lifts the boss's top up the screen")
+	# planted: the boss's ground point 3 m below the screen top (fits flat, bust under the bar)
+	var y: float = BossCam.hold_top(Vector2(0, 0), half, Vector2(0, -3.25), bands)
+	var top_y: float = -3.25 - lift_m
+	assert_true(top_y - BossCam.TOP_MARGIN_M >= y - half.y + bands.x - 0.001, "the top clears")
+	assert_lt(y, 0.0, "the view rose to keep the lifted top in")
+	ViewMode._shared = saved

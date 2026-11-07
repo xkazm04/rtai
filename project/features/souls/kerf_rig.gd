@@ -42,7 +42,7 @@ const BOB_K: float = 0.035
 ## Tilted view: the v2 facing card (GhostCard, art/view/<art>/kerf_card.png: the tall lanky biped
 ## whose forearms are blades, Rivet-tall), its width (m), the ground point's height in the card and
 ## its soul halo alpha. It replaces the hull, cables and every limb (v2 is a different body plan).
-const CARD_M: float = 0.8
+const CARD_M: float = 0.96  # owner d8: 20 % bigger overall than the d8 0.8
 const CARD_ANCHOR: float = 0.97
 const CARD_HALO_A: float = 0.4
 ## The card's lean into the glide at full sweep (GhostCard.lean, by the facing's screen x).

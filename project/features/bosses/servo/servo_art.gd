@@ -6,6 +6,7 @@ extends RefCounted
 ## holds). A part with no file for the pitch, and every part straight down (`top`), loads today's.
 
 const DIR: String = "res://features/bosses/servo/art/p%d/%s.png"
+const FALLBACK_PITCH: int = 55
 ## Under a view with lift Servo stands: his upper body (pelvis, wings, torso, head) draws this many
 ## metres over his feet and the legs and pad arms stretch up to it (they lay flat as a decal
 ## beside an upright Rivet). 0 = flat under every view.
@@ -14,17 +15,37 @@ const STAND_M: float = 1.6
 const FOOT_M: Vector2 = Vector2(4.4, 2.4)
 
 
-## The texture path ServoRig loads for part `n` under the active view.
+## The texture path ServoRig loads for part `n` under the active view: keyed by the row's art
+## (ViewMode.art_pitch, so the combined view swaps with its cards, not mid-ease). n8: a row with
+## art but no part for its pitch (p70) takes the nearest drawn pitch's (FALLBACK_PITCH) before
+## today's: the boss palette at every angled pitch. A lab row without art keeps d8's lookup.
 static func path(n: StringName) -> String:
-	return path_at(n, ViewMode.shared().pitch_deg)
+	var vm: ViewMode = ViewMode.shared()
+	return path_at(n, vm.art_pitch(), not vm.art.is_empty())
 
 
-static func path_at(n: StringName, pitch_deg: float) -> String:
+static func path_at(n: StringName, pitch_deg: float, fallback: bool = false) -> String:
 	if pitch_deg < 90.0:
 		var p: String = DIR % [roundi(pitch_deg), n]
 		if ResourceLoader.exists(p):
 			return p
+		var f: String = DIR % [FALLBACK_PITCH, n]
+		if fallback and ResourceLoader.exists(f):
+			return f
 	return ServoRig.ART % n
+
+
+## The view's art key ServoRig last loaded under (a change reloads the parts).
+static func key() -> String:
+	return ViewMode.shared().art
+
+
+## The textures of parts `names` under the active view (path()).
+static func parts(names: Array[StringName]) -> Dictionary[StringName, Texture2D]:
+	var out: Dictionary[StringName, Texture2D] = {}
+	for n: StringName in names:
+		out[n] = load(path(n)) as Texture2D
+	return out
 
 
 ## Under a view with lift: draws the stood body's cast shadow (its footprint FOOT_M, across x

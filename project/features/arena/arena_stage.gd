@@ -136,13 +136,13 @@ func _clear(at: Vector2) -> bool:
 
 ## Rivet destroyed in the arena: he is back at the hub at full hp and the pit starts over.
 func _respawn() -> void:
-	if arena.rivet.alive():
+	if death_beat.holding(arena.rivet.alive()) or arena.rivet.alive():
 		return
 	deaths += 1
 	arena.rivet.hp = arena.rivet.max_hp
 	arena.rivet.pos = plan.rivet_start
 	pit.reset(arena)
-	Log.info("arena", "Rivet destroyed: back at the hub (deaths %d)" % deaths)
+	Log.info("arena", "Rivet destroyed: back at the hub (deaths %d, tick %d)" % [deaths, tick])
 
 
 func telemetry_dict() -> Dictionary:
