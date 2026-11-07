@@ -6,7 +6,9 @@ at a 70-degree pitch that view is nearly plan), turned nose to +x and scaled to 
 the side view's measured length) at the atlas's 80 px/m, centred in a 512 x 256 cell. Every traffic
 atlas (intact, hijack, d1, d2; and the vehicles feature's wreck atlas) grows from 3 x 3 to 3 x 4
 cells (1536 x 1024) with the bike at cell 9 = (0, 3); cells 10 and 11 stay empty. A bike has no
-damage states: d1/d2/wreck repeat the intact print. Idempotent: re-running on a 3 x 4 atlas
+damage states: d1/d2/wreck repeat the intact print. The print is a cream/ink duotone (the traffic
+atlas's own paper and ink): the look's item shader re-inks hues, and the card's gold tank printed
+as red under `top` (red is only for blood). Idempotent: re-running on a 3 x 4 atlas
 rewrites cell 9.
 
 usage: python tools/art/bike_top_print.py [--check]
@@ -32,6 +34,8 @@ PPM = 80.0
 BIKE_ROW, TAIL_COL = 9, 4
 LENGTH_M = 2.1
 CELL_ID = 9
+INK = (23, 19, 27)  # palette ink
+CREAM = (242, 232, 213)  # palette paper
 
 
 def bike_print() -> Image.Image:
@@ -42,7 +46,19 @@ def bike_print() -> Image.Image:
     top = tail.rotate(-90, expand=True)  # nose away (screen up) -> nose to +x
     w = round(LENGTH_M * PPM)
     h = max(1, round(top.height * PPM / CARD_PPM))  # the width keeps the card's scale
-    return top.resize((w, h), Image.LANCZOS)
+    return duotone(top.resize((w, h), Image.LANCZOS))
+
+
+def duotone(img: Image.Image) -> Image.Image:
+    """Luminance mapped ink -> cream (levels 0.05..0.80, gamma 0.8); alpha kept."""
+    r, g, b, a = img.split()
+    lum = Image.merge("RGB", (r, g, b)).convert("L")
+    lut = [round(255 * min(1.0, max(0.0, (v / 255 - 0.05) / 0.75)) ** 0.8) for v in range(256)]
+    lum = lum.point(lut)
+    ink, cream = Image.new("RGB", img.size, INK), Image.new("RGB", img.size, CREAM)
+    out = Image.composite(cream, ink, lum).convert("RGBA")
+    out.putalpha(a)
+    return out
 
 
 def place(atlas_path: Path, bike: Image.Image) -> Image.Image:

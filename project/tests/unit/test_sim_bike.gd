@@ -43,7 +43,5 @@ func test_the_bike_maps_to_its_profile() -> void:
 	assert_lt(VehicleProfile.load_all()[&"bike"].mass, VehicleProfile.load_all()[&"sedan"].mass)
 
 
-func test_the_table_share_is_small() -> void:
-	var share: float = CitySpawner.table_bike_share()
-	assert_gt(share, 0.0)
-	assert_lt(share, 0.15, "a small share of traffic")
+func test_the_table_share_is_off_until_the_goldens_move() -> void:
+	assert_eq(CitySpawner.table_bike_share(), 0.0, "bikes in traffic move the top look goldens")

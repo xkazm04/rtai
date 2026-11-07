@@ -22,6 +22,8 @@ var residency: CityResidency = null
 var spawner: CitySpawner = null
 var source: ChunkSource = null
 var gen: CityGen = null
+## d9: the sim bike's traffic share; < 0 = the table's traffic.bike_share (boot: --bikes).
+var bike_share: float = -1.0
 ## Where the bubble is centred, and what police pursue (the player, once it exists).
 var focus: Vector2 = START
 var target: Vector2 = START
@@ -50,8 +52,8 @@ func setup(ctx: WorldContext) -> void:
 	residency = CityResidency.new(source, sim, SimConst.CITY_CHUNKS)
 	spawner = CitySpawner.new(sim, residency, ctx.rng.stream(SPAWN_STREAM))
 	spawner.rb = RB
-	spawner.bike_share = CitySpawner.table_bike_share()  # d9: its own stream, cars never move
-	spawner.bike_rng = ctx.rng.stream(BIKE_STREAM)
+	var share: float = bike_share if bike_share >= 0.0 else CitySpawner.table_bike_share()
+	spawner.set_bikes(share, ctx.rng.stream(BIKE_STREAM))  # d9: its own stream, cars never move
 	spawner.targets = CityTargets.street(270, 120, 10)
 	body = RivetBody.new(BodyTable.load_default(), target)
 	body.bind(ctx.events)

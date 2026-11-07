@@ -49,6 +49,8 @@ func _ready() -> void:
 ## Every feature system, in a fixed order, before any replay runs. Views only when drawing.
 func _register_features(with_views: bool) -> void:
 	var city: CitySystem = CitySystem.new()
+	if LaunchArgs.value("--bikes").is_valid_float():  # d9: the sim bike's share (dev, filming)
+		city.bike_share = clampf(float(LaunchArgs.value("--bikes")), 0.0, 1.0)
 	add_system(city)
 	vehicles = VehicleService.new()
 	add_system(vehicles)
