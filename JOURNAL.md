@@ -648,3 +648,13 @@ NEXT (iteration 15):
   release and the Windows editor; a quest 1 log recorded in the editor (`quest1.tscn --autostart`, 425 ticks) in the
   editor, windows-slice and linux-slice. Why a slice exe records nothing: `--autostart` is debug-only, so the headless
   release exe waits on the title card (by design). Evidence `evidence/it15/`. No SIM-05 REQUEST needed.
+- RESULT 17:24 **E14, a save crosses Windows <-> Linux** (the item owed since it14): `dev/save_cross.gd`
+  (+ `save_cross_run.gd`; dev/ only; `--save-cross=write|read,<dir>[,ticks,after[,idle]]`) plays quest 1 on a scripted tape (moves + fire; differs from an idle tape at 1800, so input
+  is exercised), autosaves through the real Save engine and resumes through `Quest1Autosave.accept`. Win seed 7 @1800
+  -> Linux same hash, +600 same; Linux seed 11 @2400 -> Windows same, +600 same. Control: a flipped payload digit ->
+  quarantined, refused (exit 1). Evidence `evidence/it15/save-*`, `slots/`.
+- FRICTION 17:27 (~6 min) lint refused E14: a lane-named `dev/handheld/`, a raw `OS.get_cmdline_user_args` read, gdformat.
+  Moved to `dev/save_cross.gd` + `_run.gd`, the args through one `LaunchArgs` flag `--save-cross` (KNOWN_FLAGS);
+  re-run on Windows: the same hashes (write @1800 `13e5ad9f..`, +600 `300113db..`; the Linux slot `4c7b248f..` /
+  `d16071f6..`). The two WSL runs (`evidence/it15/lin_save.sh`) used the first version (`--mode= --dir=` flags; the
+  body is the same code). dev_loc +85 accepted (`--accept-regression`): a dev-only tool, not exported.

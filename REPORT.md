@@ -91,6 +91,9 @@ priority, the CPU's own 2-CU Radeon), never a device claim. Details and sources:
   for a quest 1 log), the release `.so` / `.dll` included; a release build records too (Windows seed 13, Linux seed 17,
   each replayed on the other OS identical). it14's "E13b diverges at tick 60" is **withdrawn**: my mislabel (World logs fed
   to the quest 1 slice, a different simulation); no SIM-05 finding (`evidence/it15/`, LEDGER E13c).
+- (it15) **E14, a save crosses Windows <-> Linux**: a quest 1 autosave (the real `Save` engine, a scripted input tape)
+  written on Windows resumes on Linux at the same state hash and runs +600 ticks to the same hash, and the reverse
+  (`dev/save_cross.gd`; a flipped byte is refused). A Deck save resumes on the PC; Steam Cloud's root override is the rest.
 
 ## What does not work yet
 - (it15) The slice exe cannot record quest 1: `--autostart` is debug-only (`quest1_card.gd:70`), so a headless release
@@ -136,7 +139,7 @@ priority, the CPU's own 2-CU Radeon), never a device claim. Details and sources:
 ## Owed / next
 - (it7) The draw_scale HUD side
   effect (if Call 5 b/c), the King fight's rumble count, the dev-arena experiments E1-E3/E7 re-labelled "at 32 px/m".
-- The Linux build: a real Vulkan run (needs a Linux PC or a Deck); the release `.so` replays: done (E13c); a save round trip Windows <-> Linux (Steam Cloud's root override, LEDGER section 1). NAT-06 on Linux: done (E13).
+- The Linux build: a real Vulkan run (needs a Linux PC or a Deck); the release `.so` replays: done (E13c); a save round trip Windows <-> Linux: done (E14); Steam Cloud's root override (LEDGER section 1) needs Steamworks. NAT-06 on Linux: done (E13).
 - Steam Input's origin glyphs through the Steam backend (and a drawn ink glyph set: REQUEST to assets
   `ui_pad_glyphs_v1`, it12), rumble on blasts and crashes (no bus event), aim assist (a design call); whether the boss_hit
   rest (8 ticks, it14) reads as taps on a real pad.

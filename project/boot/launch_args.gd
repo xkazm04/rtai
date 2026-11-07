@@ -77,6 +77,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--pickup-crate",
 	# d9-handheld: --device=<devices.json id> the handheld profile (window, frame cap, stretch)
 	"--device",
+	# d9-handheld: --save-cross=write|read,<dir>[,ticks,after,idle] (dev/save_cross.gd, E14)
+	"--save-cross",
 ]
 
 var _values: Dictionary[String, String] = {}
