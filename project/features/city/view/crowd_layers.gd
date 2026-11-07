@@ -14,7 +14,7 @@ const INK: Color = Color(0.09, 0.075, 0.106)
 const PAPER: Color = Color(0.949, 0.91, 0.835)
 const STEEL: Color = Color(0.561, 0.533, 0.506)
 ## Moving traffic art (night lane d4-production): cells of 6.4 x 3.2 m at 80 px/m (512 x 256 px),
-## cell = the sim car art id (custom.x: CitySpawner CAR_ART 0-7, ART_POLICE_CAR 8), nose to +x.
+## cell = the sim car art id (custom.x: CAR_ART 0-7, ART_POLICE_CAR 8, ART_BIKE 9), nose to +x.
 ## The grid is read from the texture size, so a re-laid-out atlas cannot silently mis-address it.
 ## Live only when the file is in the tree and holds every art id; else the steel quad.
 const TRAFFIC_ATLAS: String = "res://features/city/art/vehicles/traffic_atlas.png"
@@ -77,12 +77,12 @@ func _plug_traffic() -> void:
 
 
 ## The atlas grid for a texture of `size` px: whole 512 x 256 cells holding at least every car art
-## id (0 .. CitySpawner.ART_POLICE_CAR); else (0, 0).
+## id (0 .. CitySpawner.ART_BIKE: d9 the 3 x 4 atlas, tools/art/bike_top_print.py); else (0, 0).
 static func traffic_grid(size: Vector2i) -> Vector2i:
 	if size.x % TRAFFIC_CELL_PX.x != 0 or size.y % TRAFFIC_CELL_PX.y != 0:
 		return Vector2i.ZERO
 	var cells: Vector2i = size / TRAFFIC_CELL_PX
-	if cells.x * cells.y <= CitySpawner.ART_POLICE_CAR:
+	if cells.x * cells.y <= CitySpawner.ART_BIKE:
 		return Vector2i.ZERO
 	return cells
 

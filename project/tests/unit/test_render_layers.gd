@@ -120,10 +120,13 @@ func test_look_toggle_keeps_a_layer_material_it_did_not_set() -> void:
 
 
 func test_traffic_grid_is_read_from_the_atlas_size() -> void:
-	assert_eq(CrowdLayers.traffic_grid(Vector2i(1536, 768)), Vector2i(3, 3), "n-d4's 3 x 3 atlas")
+	assert_eq(CrowdLayers.traffic_grid(Vector2i(1536, 1024)), Vector2i(3, 4), "d9: 3 x 4 (bike)")
 	assert_eq(CrowdLayers.traffic_grid(Vector2i(2048, 768)), Vector2i(4, 3))
 	assert_eq(
-		CrowdLayers.traffic_grid(Vector2i(1024, 1024)), Vector2i.ZERO, "2 x 4: no cell 8 (police)"
+		CrowdLayers.traffic_grid(Vector2i(1536, 768)), Vector2i.ZERO, "3 x 3: no cell 9 (bike)"
+	)
+	assert_eq(
+		CrowdLayers.traffic_grid(Vector2i(1024, 1024)), Vector2i.ZERO, "2 x 4: no cell 9 (bike)"
 	)
 	assert_eq(CrowdLayers.traffic_grid(Vector2i(1500, 768)), Vector2i.ZERO, "not whole cells")
 

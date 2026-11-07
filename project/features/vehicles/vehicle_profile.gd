@@ -53,7 +53,7 @@ static func load_all(path: String = TABLE) -> Dictionary[StringName, VehicleProf
 
 
 ## The archetype of a sim car art id (the d4 traffic atlas cell: 0-2 sedans, 3 taxi, 4 van,
-## 5 pickup, 6 ambulance, 7 grey sedan, 8 cruiser). sedan_b drives as the hatchback profile.
+## 5 pickup, 6 ambulance, 7 grey sedan, 8 cruiser, 9 bike). sedan_b drives as the hatchback profile.
 static func archetype_of_variant(variant: int, police: bool) -> StringName:
 	if police:
 		return &"police_cruiser"
@@ -66,6 +66,7 @@ static func archetype_of_variant(variant: int, police: bool) -> StringName:
 		&"pickup",
 		&"ambulance",
 		&"sedan",
-		&"sedan"
+		&"sedan",
+		&"bike",
 	]
 	return BY_CELL[posmod(variant, BY_CELL.size())]

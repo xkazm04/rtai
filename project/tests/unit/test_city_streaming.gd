@@ -73,6 +73,26 @@ func test_spawner_fills_the_bubble_from_its_stream() -> void:
 	assert_eq(counts[0], counts[1], "same stream, same spawns")
 
 
+## d9: bikes come from their own stream: the cars' spawn draws (positions, counts) do not move.
+func test_bikes_draw_from_their_own_stream() -> void:
+	var made: Array[int] = []
+	var bikes: Array[int] = []
+	for share: float in [0.0, 1.0]:
+		var sim: CitySimRef = CitySimRef.new()
+		sim.init(3)
+		var res: CityResidency = CityResidency.new(ChunkSource.new(_gen, _dir), sim, 16)
+		res.update(Vector2(700, 700))
+		var sp: CitySpawner = CitySpawner.new(sim, res, RngRegistry.new(11).stream(&"city_spawn"))
+		sp.targets = CityTargets.street(60, 20, 2)
+		sp.bike_share = share
+		sp.bike_rng = RngRegistry.new(11).stream(&"city_bikes")
+		made.append(sp.tick(Vector2(700, 700), true))
+		bikes.append(sim.get_variants().count(SimConst.ART_BIKE))
+	assert_eq(made[0], made[1], "the same spawns either way")
+	assert_eq(bikes[0], 0)
+	assert_eq(bikes[1], 20, "share 1: every traffic car (the 20 targeted) a bike")
+
+
 func _residency() -> CityResidency:
 	var sim: CitySimRef = CitySimRef.new()
 	sim.init(1)

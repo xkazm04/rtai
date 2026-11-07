@@ -13,6 +13,7 @@ var _y: float = 0.0
 var _hx: float = 0.0
 var _hy: float = 0.0
 var _vv: float = 0.0
+var _bike: bool = false  # d9: this car is a bike (CitySimCarPush)
 
 
 func _init(state: CitySimState, hash_grid: CitySimHash, flow: CitySimFlow) -> void:
@@ -25,6 +26,7 @@ func _init(state: CitySimState, hash_grid: CitySimHash, flow: CitySimFlow) -> vo
 func car(i: int, dt: float, tgx: float, tgy: float) -> void:
 	var x: float = _s.px[i]
 	var y: float = _s.py[i]
+	_bike = CitySimCarPush.is_bike(_s, i)
 	_r.begin(i)
 	if _s.ndir[i] < 0:
 		_r.plan(i, x, y, tgx, tgy)
@@ -116,22 +118,17 @@ func _contacts(i: int) -> void:
 			if _s.mode[j] != SimConst.M_DEAD:
 				_hit_person(j, rx, ry)
 			continue
-		var d2: float = rx * rx + ry * ry
-		if d2 < 4.84 and d2 > 1e-9:
-			var dd: float = sqrt(d2)
-			var push: float = (2.2 - dd) * 0.5
-			_x -= rx / dd * push
-			_y -= ry / dd * push
-			_s.px[j] += rx / dd * push
-			_s.py[j] += ry / dd * push
-			_vv *= 0.9
+		var o: PackedFloat64Array = CitySimCarPush.push(_s, _bike, j, rx, ry)
+		_x -= o[0]
+		_y -= o[1]
+		_vv *= o[2]
 
 
 ## A person inside the car's footprint: killed above 4 m/s, else shoved sideways.
 func _hit_person(j: int, rx: float, ry: float) -> void:
 	var f: float = rx * _hx + ry * _hy
 	var s: float = -rx * _hy + ry * _hx
-	if absf(f) >= 2.6 or absf(s) >= 1.3:
+	if absf(f) >= (SimConst.BIKE_HIT_F if _bike else 2.6) or absf(s) >= CitySimCarPush.hit_s(_bike):
 		return
 	if _vv > 4.0:
 		_s.mode[j] = SimConst.M_DEAD
@@ -142,7 +139,7 @@ func _hit_person(j: int, rx: float, ry: float) -> void:
 		_s.counters[SimConst.CN_KILLED] += 1
 		return
 	var sg: float = 1.0 if s >= 0.0 else -1.0
-	var push: float = 1.35 - absf(s)
+	var push: float = (0.675 if _bike else 1.35) - absf(s)
 	_s.px[j] += -_hy * sg * push
 	_s.py[j] += _hx * sg * push
 
@@ -150,8 +147,10 @@ func _hit_person(j: int, rx: float, ry: float) -> void:
 ## Six hull sample points against solid cells: push out along the shallowest axis.
 func _hull() -> void:
 	for p: int in 6:
-		var f: float = 2.3 if p < 2 else (-2.3 if p < 4 else 0.0)
-		var s: float = 0.95 if (p % 2) == 0 else -0.95
+		var hf: float = SimConst.BIKE_HULL_F if _bike else 2.3
+		var hs: float = SimConst.BIKE_HULL_S if _bike else 0.95
+		var f: float = hf if p < 2 else (-hf if p < 4 else 0.0)
+		var s: float = hs if (p % 2) == 0 else -hs
 		var qxx: float = _x + _hx * f - _hy * s
 		var qyy: float = _y + _hy * f + _hx * s
 		var ix: int = floori(qxx)

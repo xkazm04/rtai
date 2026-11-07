@@ -13,7 +13,7 @@ uniform vec2 world_px = vec2(0.0);  // the camera's world offset in screen px: t
 uniform float shadow_k = 0.62;     // drop-shadow ink tint per unit alpha
 uniform vec3 steel_out = vec3(0.640, 0.600, 0.630);   // the flat wash value steel prints at
 // cells: an atlas grid for a MultiMesh whose instance custom.x is the cell (moving traffic: n-d4's
-// traffic_atlas, 3 x 3); 1 x 1 = the texture as is (every other user)
+// traffic_atlas, 3 x 4 with d9's bike); 1 x 1 = the texture as is (every other user)
 uniform ivec2 cells = ivec2(1, 1);
 // the output inks (palette.json paper / ink via look_profiles.json `tones`); CREAM / INK below stay the
 // classification centres the art is painted in

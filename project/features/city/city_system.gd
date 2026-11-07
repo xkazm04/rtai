@@ -8,6 +8,7 @@ extends WorldSystem
 
 const SIM_STREAM: StringName = &"city_sim"
 const SPAWN_STREAM: StringName = &"city_spawn"
+const BIKE_STREAM: StringName = &"city_bikes"
 const DISTRICT: String = "res://data/tables/city_district.json"
 const TEXTURES: String = "res://data/tables/city_textures.json"
 const START: Vector2 = Vector2(64.0 * 4 + 12.0, 64.0 * 4 + 14.0)
@@ -49,6 +50,8 @@ func setup(ctx: WorldContext) -> void:
 	residency = CityResidency.new(source, sim, SimConst.CITY_CHUNKS)
 	spawner = CitySpawner.new(sim, residency, ctx.rng.stream(SPAWN_STREAM))
 	spawner.rb = RB
+	spawner.bike_share = CitySpawner.table_bike_share()  # d9: its own stream, cars never move
+	spawner.bike_rng = ctx.rng.stream(BIKE_STREAM)
 	spawner.targets = CityTargets.street(270, 120, 10)
 	body = RivetBody.new(BodyTable.load_default(), target)
 	body.bind(ctx.events)

@@ -133,6 +133,20 @@
     },
     "schema": {
       "const": "gtai.vehicle_handling/1"
+    },
+    "traffic": {
+      "additionalProperties": false,
+      "properties": {
+        "bike_share": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "bike_share"
+      ],
+      "type": "object"
     }
   },
   "required": [

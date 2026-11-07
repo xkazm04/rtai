@@ -8,7 +8,7 @@
     "ram_per_dv": 5.5,
     "wreck_s": 45
   },
-  "doc": "Player-car handling per archetype (arcade top-down model, features/vehicles VehicleBody). Speeds m/s, accelerations m/s^2, steer_rate rad/s at full lock, steer_in_s = seconds from centre to full lock (the steering slew: a key press turns in over this time, a release or a counter-steer returns twice as fast), grip = lateral friction acceleration, drift_at = lateral slip m/s above which slide_grip applies, handbrake_grip = grip multiplier with the handbrake held. mass kg (impulse split). damage: hp per car, dv_min = closing speed (m/s) under which an impact does no damage, per_dv hp per m/s above it against walls and props, ram_per_dv the same car against car (rams read as carnage, kerb scrapes do not wreck), d1_at / d2_at = hp lost at the two damage states, then a wreck at hp; wrecks stay wreck_s seconds. kill_at = speed (m/s) above which a car kills a person it hits (below: knockdown).",
+  "doc": "Player-car handling per archetype (arcade top-down model, features/vehicles VehicleBody). Speeds m/s, accelerations m/s^2, steer_rate rad/s at full lock, steer_in_s = seconds from centre to full lock (the steering slew: a key press turns in over this time, a release or a counter-steer returns twice as fast), grip = lateral friction acceleration, drift_at = lateral slip m/s above which slide_grip applies, handbrake_grip = grip multiplier with the handbrake held. mass kg (impulse split). damage: hp per car, dv_min = closing speed (m/s) under which an impact does no damage, per_dv hp per m/s above it against walls and props, ram_per_dv the same car against car (rams read as carnage, kerb scrapes do not wreck), d1_at / d2_at = hp lost at the two damage states, then a wreck at hp; wrecks stay wreck_s seconds. kill_at = speed (m/s) above which a car kills a person it hits (below: knockdown). traffic.bike_share = the share of sim traffic spawned as bikes (art 9), drawn from its own rng stream (city_bikes) so the cars' spawn sequence does not move; 0 = no bikes.",
   "kill_at": 4,
   "profiles": [
     {
@@ -24,6 +24,21 @@
       "slide_grip": 8.5,
       "steer_in_s": 0.26,
       "steer_rate": 1.9,
+      "vmax": 24
+    },
+    {
+      "accel": 11,
+      "brake": 15,
+      "drag": 2,
+      "drift_at": 2.2,
+      "grip": 17,
+      "handbrake_grip": 0.25,
+      "id": "bike",
+      "mass": 200,
+      "reverse_max": 3,
+      "slide_grip": 9,
+      "steer_in_s": 0.1,
+      "steer_rate": 3.4,
       "vmax": 24
     },
     {
@@ -117,5 +132,8 @@
       "vmax": 23
     }
   ],
-  "schema": "gtai.vehicle_handling/1"
+  "schema": "gtai.vehicle_handling/1",
+  "traffic": {
+    "bike_share": 0.06
+  }
 }

@@ -12,6 +12,12 @@ const LANE_OFF: Array[float] = [2.0, -2.0, -2.0, 2.0]
 const CAR_ART: Array[int] = [0, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3]
 const ART_POLICE_CAR: int = 8
 const ART_COP: int = 7
+const ART_BIKE: int = SimConst.ART_BIKE
+
+## d9 the sim bike: the share of traffic spawned as bikes (vehicle_handling.json traffic.bike_share)
+## and its own stream (CitySystem: `city_bikes`), so the cars' spawn draws never move; null = none.
+var bike_share: float = 0.0
+var bike_rng: RandomNumberGenerator = null
 
 var targets: CityTargets = CityTargets.new()
 var riot_c: Vector2 = Vector2.ZERO
@@ -69,6 +75,8 @@ func try_car(cam: Vector2, r0: float, r1: float, police: bool) -> bool:
 		return _spawn(spec + [SimConst.F_PROMOTED, 17.0, lane, d]) >= 0
 	var art: int = CAR_ART[_rng.randi_range(0, 11)]
 	var vmax: float = _rng.randf_range(9.0, 13.0)
+	if bike_rng != null and bike_rng.randf() < bike_share:
+		art = ART_BIKE
 	return _spawn([SimConst.K_CAR, x, y, DX[d], DY[d], art, 0, vmax, lane, d]) >= 0
 
 
@@ -134,3 +142,15 @@ func _dens(p: Vector2, car: bool) -> bool:
 
 func _spawn(spec: Array) -> int:
 	return _sim.spawn(PackedFloat64Array(spec))
+
+
+## d9: spawn `share` of the traffic as bikes, drawn from `rng` (not the spawner's stream).
+func set_bikes(share: float, rng: RandomNumberGenerator) -> void:
+	bike_share = share
+	bike_rng = rng
+
+
+## The table's bike share (0 when the table has none).
+static func table_bike_share() -> float:
+	var t: DataTable = DataTable.open(VehicleProfile.TABLE, VehicleProfile.SCHEMA)
+	return t.num(t.object(t.raw, "traffic"), "bike_share") if t.raw.has("traffic") else 0.0

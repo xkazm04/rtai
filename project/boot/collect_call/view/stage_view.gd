@@ -12,7 +12,7 @@ const STENCIL_MIN_R: float = 5.0
 ## The ghost powers' cars (the arena's powers pad, quest 1's ghost_cars) in the city's traffic
 ## print: one atlas per VehicleBody.State (intact, d1, d2, the soul-hijacked teal plate, the burnt
 ## wreck), cell = the car's art id, nose to +x
-## (CrowdLayers TRAFFIC_CELL_PX on a 3 x 3 grid), the car-shaped ink shadow under it.
+## (CrowdLayers TRAFFIC_CELL_PX on a 3 x 4 grid), the car-shaped ink shadow under it.
 const CAR_ATLAS: Array[Texture2D] = [
 	preload("res://features/city/art/vehicles/traffic_atlas.png"),
 	preload("res://features/city/art/vehicles/traffic_atlas_d1.png"),

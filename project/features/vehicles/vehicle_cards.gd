@@ -10,7 +10,7 @@ extends Node2D
 
 const DIR: String = "res://features/vehicles/art/%s/traffic_cards.png"
 const SHADER: String = "res://features/vehicles/vehicle_cards.gdshader"
-const ROWS: int = 9  # the sim's art ids 0-8; VehicleViews.BIKE_ART after them (no sim bike yet)
+const ROWS: int = 9  # the sim's car art ids 0-8; row 9 the sim bike (BIKE_ART), read from the sheet
 const CELL_M: float = 7.0  # the atlas cell's side (m): CELL_PX 448 at 64 px/m
 const BLEND_DEG: float = 0.0  # the cross-fade round a view boundary (deg of heading); 0 = hard swap
 const CAP: int = 256

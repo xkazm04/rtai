@@ -16,7 +16,8 @@ void CityCore::car_contacts(Car &c) {
 			if (mode_[j] == M_DEAD) continue;
 			double f = rx * c.hhx + ry * c.hhy;
 			double s = -rx * c.hhy + ry * c.hhx;
-			if (!(std::fabs(f) < 2.6 && std::fabs(s) < 1.3)) continue;
+			double hf = c.bike ? BIKE_HIT_F : 2.6, hs = c.bike ? BIKE_HIT_S : 1.3;
+			if (!(std::fabs(f) < hf && std::fabs(s) < hs)) continue;
 			if (c.vv > 4.0) {
 				mode_[j] = M_DEAD;
 				t2_[j] = 0.0;
@@ -26,14 +27,16 @@ void CityCore::car_contacts(Car &c) {
 				counters_[CN_KILLED] += 1;
 			} else {
 				double sg = s >= 0.0 ? 1.0 : -1.0;
-				double push = 1.35 - std::fabs(s);
+				double push = (c.bike ? 0.675 : 1.35) - std::fabs(s);
 				px_[j] += -c.hhy * sg * push;
 				py_[j] += c.hhx * sg * push;
 			}
 			continue;
 		}
 		double d2 = rx * rx + ry * ry;
-		if (d2 < 4.84 && d2 > 1e-9) {
+		if (c.bike || is_bike(j)) {
+			car_push(c, j, rx, ry, d2);
+		} else if (d2 < 4.84 && d2 > 1e-9) {
 			double dd = std::sqrt(d2);
 			double push = (2.2 - dd) * 0.5;
 			c.x -= rx / dd * push;
@@ -45,11 +48,27 @@ void CityCore::car_contacts(Car &c) {
 	}
 }
 
+// d9: a bike in a car-car contact: a shorter reach, and the lighter body takes more of the overlap.
+void CityCore::car_push(Car &c, int j, double rx, double ry, double d2) {
+	bool both = c.bike && is_bike(j);
+	double rr = both ? BIKE_RR2 : BIKE_RR;
+	if (!(d2 < rr * rr && d2 > 1e-9)) return;
+	double dd = std::sqrt(d2);
+	double share = both ? 0.5 : (c.bike ? BIKE_SHARE : 1.0 - BIKE_SHARE);
+	double over = rr - dd;
+	c.x -= rx / dd * over * share;
+	c.y -= ry / dd * over * share;
+	px_[j] += rx / dd * over * (1.0 - share);
+	py_[j] += ry / dd * over * (1.0 - share);
+	c.vv *= 0.9;
+}
+
 // Six hull sample points against solid cells: push out along the shallowest axis.
 void CityCore::car_hull(Car &c) {
 	for (int p = 0; p < 6; p++) {
-		double f = p < 2 ? 2.3 : (p < 4 ? -2.3 : 0.0);
-		double s = (p % 2) == 0 ? 0.95 : -0.95;
+		double hf = c.bike ? BIKE_HULL_F : 2.3, hs = c.bike ? BIKE_HULL_S : 0.95;
+		double f = p < 2 ? hf : (p < 4 ? -hf : 0.0);
+		double s = (p % 2) == 0 ? hs : -hs;
 		double qxx = c.x + c.hhx * f - c.hhy * s;
 		double qyy = c.y + c.hhy * f + c.hhx * s;
 		int ix = floori(qxx), iy = floori(qyy);
