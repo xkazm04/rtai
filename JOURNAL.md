@@ -288,3 +288,24 @@ NEXT:
 - 12:04 NOTE for NEXT 1: d5_hero_run draws the old flat props (features/city/art/props/), not the p55
   cards: dead end. Planters only dress PLAZA tiles (tile_painter.PLAZA_PROPS / PLAZA_SLOTS, 3 slots a
   tile): find a plaza tile in the streamed city (the baked chunk map) and start there under `--view=tilt`.
+
+## Iteration 4 (director it6, 12:04-13:04), BUILD
+
+Read: JOURNAL it3 + NEXT, git log, d9-rivet JOURNAL (no REQUEST to seams), library JOURNAL + catalog:
+round 1310 served my it3 REQUEST: swat_walk_armed_70_v2 (B, row 5 mirror-fixed in post; a fresh
+profile row 3 queued as round 1315), cop_patrol_walk_armed_55 (B), cop_riot_walk_armed_55 (B; v2 C);
+swat_walk_armed_55 not graded yet. ACK assets' NOTE: the riot patch is hue 22 (not vermilion); the 55
+riot sheet draws no band at all, so nothing to grey there.
+Registry rules applied: sprite-and-atlas-production (street_walk.py's one cell per grid, the fill
+measured per grid), generative-artifact-gating (looked at all 60 cells before and after the tone),
+motion-quality-gating (before/after at the same seed and frame, the clips in motion),
+depth-ordered-layered-art (a whole-figure card replaces head card + parts; parts hidden, not freed).
+- 12:20 MILESTONE item 5 (ffbb9c44): SWAT at 70 + patrol and riot at 55 walk as drawn armed grids.
+  Toned to their cards' navy (street_tone.py: swat hue -6.7 v x1.27; patrol55 royal -> navy v x0.62).
+  StreetCopWalk.FILL is keyed `<art>/<file>` now: the 55 and 70 grids share file names (fill_of takes
+  the resource path). FILL measured: swat70 1.14, patrol55 1.07, riot55 1.09. At 70 every city cop
+  is now a drawn figure; at 55 only SWAT still draws head card over parts (swat_walk_armed_55 owed).
+  Masters: `cop_armed_walk55_before_after_tilt_{48ppm_..._x1.5,32ppm_...}.png`,
+  `swat_armed_walk70_before_after_tilt70_48ppm_seed5_f400_x1.5.png`, 6 s clips before/after.
+  FRICTION: my first SWAT "before" came from the it3 mp4 (trimmed -ss 1: not frame-aligned, a different
+  scene); re-filmed with only the SWAT row removed (3 min).
