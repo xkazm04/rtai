@@ -1025,3 +1025,20 @@ tiling-texture-acceptance (n/a this session: no strip changed).
   sign's frames.json note; frames.json stays 15). No blob for the globe/signal head (DECISION).
   GATE `top` framemd5 IDENTICAL after each (top25b, top25c vs top22.md5). Unit full no-arg at
   7d9b32a1: 1524 passed, 0 failed (no FLAKY). Lint 15/15 every commit.
+- GATE scenarios (raw run_scenarios.gd) at 0d9002a1: 52 ran, 0 failed, exit 0 (vehicle drive
+  CONTENDED, labelled by the runner).
+- LOOKED the pole casts at 55 (`city_bench --scenario=drive --view=tilt --zoom=1.5`, 10 s, a
+  crossroads with a traffic light and lamp at each corner): every cast falls from its post base
+  down-right (flatter on the 55 ground), the four corners consistent. 0 SCRIPT ERROR. Not kept
+  (no before; the 70 pairs carry the change).
+- Session end ~05:30. Head = this JOURNAL commit. Tree clean.
+
+NEXT (iteration 26, in order):
+1. Director reel at tilt70 on HEAD (the pole cast touches ChunkView's shadow path; the reel's
+   arena draws no streamed city, so expected 19/19, 0 SCRIPT ERROR), then `evidence/run.mjs
+   --no-bench` (last PASS at 7b63bcb1).
+2. Library check for new building/prop sheets (70 twins, traffic light 55 shorter pole); cut A's.
+3. If time: a globe blob at the lamp cast's end and a head blob for the traffic light (one rect
+   each in ChunkLift.draw's shadow branch, keyed by a second props field), judged at 48 px/m.
+4. Freeze items (08:30): `top` framemd5, the exe export (int-day recipe), REPORT final (head, exe
+   command lines, gates).
