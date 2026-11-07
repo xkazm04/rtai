@@ -20,6 +20,8 @@ SOURCE = {
     # the assets lane, 21:0x: weapon_showcase_heavy's icon column is washed-out cream; cut from 70
     ("rocket_launcher", "icon"): "70",
     ("flamethrower", "icon"): "70",
+    # n8-hud it12: the assets lane's 0505 raise (B, hud's REQUEST): the chainsaw's top plane shows
+    ("chainsaw", "p70"): "70_v2",
 }
 OUT = "project/features/combat/weapons/art/showcase"
 
