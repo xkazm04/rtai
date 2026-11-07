@@ -925,3 +925,15 @@ NEXT (it26 end): unchanged from the it25 final NEXT above; the REPORT is final.
 - No code change: the gates (unit + evidence + 3 reels) do not fit in the 13 min left. Registry rule applied:
   motion-quality-gating (the exe stays the gated code; nothing claimed without its run).
 NEXT (it27 end): unchanged from the it25 final NEXT; the REPORT is final.
+
+## it28 (18:23-18:26, BUILD; 7 min to the freeze)
+- 18:23 Read JOURNAL tail, git log, d9-seams JOURNAL (its it21 freeze check: no REQUEST/NOTE to rivet; trial merge
+  vs 3a3d25a1 holds).
+- 18:24 Asset library: the it22 REQUEST (p55 left walk tone) was served at 18:16 as
+  `keyed/rivet/rivet_walk_55_left_tone_cells/` (tone-matched v2 cells; the drawn v3 overshot the tone and was not
+  delivered, catalog l.20172). Not swapped in: the gates (unit + evidence + 3 reels) do not fit before 18:30.
+  REPORT Next steps item 5 now names the cells. Exe `build/export/windows/RTAI.exe` (18:00, 261f9fac) is still
+  HEAD's code (`git diff 261f9fac..HEAD -- project tools` empty).
+- Registry rule applied: motion-quality-gating (an ungated art swap does not go into the freeze exe).
+NEXT (it28 end): the it25 final NEXT, with the tone cells swapped in first (one strip rebuild for the p55 left walk
+  rows, then the gates and a 48 px/m King engage clip to compare).

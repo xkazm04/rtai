@@ -238,5 +238,7 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
    go 19/19 in top, tilt70 and combo with 0 SCRIPT ERROR.
 4. A drawn walk per weapon (today a weapon-out walk keeps the equipped facing with the bob): a REQUEST to assets
    per hold family (one-handed gun, two-handed gun, blade) rather than 17 sheets.
-5. Tone-match the p55 left walk rows (REQUEST to assets open, it22); a drawn reload frame; a measured muzzle for
+5. Swap in the tone-matched p55 left walk cells (served 18:16 by assets as
+   `library/keyed/rivet/rivet_walk_55_left_tone_cells/`, tone-matched from v2 so the poses are the same; the drawn
+   `rivet_walk_55_left_v3` came out too light and was not delivered); they came after the freeze cut-off, so they are not in the exe; a drawn reload frame; a measured muzzle for
    the facing cells of the remaining weapons; the armory row (Call 6) if the owner picks it.
