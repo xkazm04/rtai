@@ -670,3 +670,7 @@ NEXT:
   `gtai-n8/scratch/hud/it6/report_notes.md`, updated it9), REPORT from those notes. Delete the it9
   scratch frames after the REPORT. Nothing into the worktree during a gate run.
 - 02:51 Session end. All committed.
+- 02:50 The NEXT candidate "the notice floats above a short box" checked in code (HudView._notice):
+  it sits at a fixed height that clears the full box, with or without a line up. Riding the fitted
+  box would make it jump between lines; a stable notice is the better read. Closed, no change.
+  Scratch it9 trimmed to the frames the masters crops came from (1.3 GB -> 42 MB).
