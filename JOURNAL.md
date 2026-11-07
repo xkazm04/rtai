@@ -996,3 +996,10 @@ NEXT (iteration 13, in order):
    the asset lane is serving view's REQUESTs (dent_v2 came at 04:00).
 3. The freeze (08:30): delete the trial tree (`git worktree remove` on %TEMP%/view-trial-it11),
    director reel top + combo on n8-view, evidence run --no-bench, the exe, REPORT final.
+- MEASURE 04:24-04:33 mutation test of rig_select.gd (`tools/mutate/mutate.mjs --max=12
+  --tests=test_character_rigs`): 10 killed / 1 survived (90.9 %), 1 timeout (line 64's `>` -> `<=`
+  makes the pin-cap loop endless: a hang, which the test run catches as a timeout). Survivor
+  line 62 `tick - seen < hold` -> `+`: the cap test used ticks near 0. Fixed (the test counts from
+  a late death tick, 5000); re-run `--ops=arith`: 5/5 killed (100 %).
+- Session close 04:34: tree clean, every change committed. Commits it12: edee640a (corpse rig),
+  2685766e (Dent v2 + trial evidence), the test tightening, + JOURNAL/REPORT/evidence. NEXT as above.
