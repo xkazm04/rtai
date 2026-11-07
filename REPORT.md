@@ -3,6 +3,13 @@
 Every number is **on the simulator** (this PC under a device profile: 8 pinned threads, below-normal
 priority, the CPU's own 2-CU Radeon), never a device claim. Details and sources: `docs/handheld/LEDGER.md`.
 
+**The exe for the owner** (exported 17:44 from 0ee1ba66; the freeze session re-exports if HEAD moves):
+`build/export/windows/RTAI.exe` (328 MB, PCK embedded, + `gtai_sim.windows.template_release.x86_64.dll`), made with
+`"$GODOT_BIN" --headless --path project --export-release windows-showcase ../build/export/windows/RTAI.exe`
+(smoke: `RTAI.exe --headless --quit-after 300` exit 0, 0 SCRIPT ERROR). The Deck profile in it:
+`RTAI.exe -- --arena=city --bot=course --seed=2 --rigs --view=tilt70 --device=deck` (and `--device=deck40`,
+`--device=switch_handheld`).
+
 ## What works (with evidence)
 - `--device=deck|deck40|handheld_1080|switch-handheld` (devices.json, one row per device; no flag = desktop, untouched).
 - The simulator: `node tools/handheld/sim.mjs --device=deck --scene=reel|city|king|servo` (affinity, iGPU, frame log,

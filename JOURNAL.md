@@ -681,3 +681,27 @@ NEXT (iteration 15):
   0)` -> 1 is equivalent (a fresh hurt is always > the felt tick, so a rest of 1 never holds one); :103 `_seen[kind] > 0`
   (`>=`, `> 1`): real, the shortest-gap guard. Test `test_the_shortest_gap_skips_the_tick_zero_prime`; both planted by
   hand -> FAIL (:187, :193), the file restored (git diff empty). 55 / 62 = 88.7 % counting the two by hand (not re-run).
+- MILESTONE 17:44 unit (no-arg) on 0ee1ba66: **1736 / 1736** (+1, the gap test). The freeze exe exported early:
+  `build/export/windows/RTAI.exe` (328 MB + the release dll) from 0ee1ba66 with `"$GODOT_BIN" --headless --path project
+  --export-release windows-showcase ../build/export/windows/RTAI.exe`; smoke `--headless --quit-after 300` exit 0,
+  0 SCRIPT ERROR. Named at the top of REPORT.
+- FRICTION 17:32-17:45 my first mutate command's trailing `echo exit >> ...$(git rev-parse --short HEAD).log` ran after
+  HEAD had moved, so the exit line went to a new file and my wait loop never ended (stopped it; stray file deleted).
+  Lesson: resolve the log name once into a variable before the run.
+- Registry rules applied this iteration: on-device-verification-harness (the release builds, the real thing a Deck
+  runs, judged rather than the editor: E13c through `windows-dev` / `linux-dev` / the slices; a save resumed through the
+  title card's own Continue path, `Quest1Autosave.accept`, not a test shortcut); perf-regression-gating (a negative
+  control for every "identical": a flipped save byte refused; the gate on the committed tree, reels in four views;
+  mutation survivors planted by hand); fire-tv-device-realities (the device runs a different binary and main scene:
+  it14's "divergence" was a scene mismatch between builds, caught by reading the boot lines before blaming the sim);
+  adaptive-fidelity-tiers (the cloud layout keeps device settings out of the synced saves, so a Deck's 40 Hz cap never
+  lands on the desktop); controller-latency-instrumentation (no new latency number this iteration: none claimed).
+
+NEXT (iteration 16 = the freeze session, 18:30 freeze, 18:40 REPORT):
+1. If HEAD moved past 0ee1ba66: re-export `build/export/windows/RTAI.exe` (`"$GODOT_BIN" --headless --path project
+   --export-release windows-showcase ../build/export/windows/RTAI.exe`, mkdir first), smoke it, update the REPORT header.
+2. REPORT final by 18:40: change the title from "in progress"; the port readiness table (LEDGER) is current through E14;
+   "what blocked": the glyph REQUEST `ui_pad_glyphs_v1` unserved all day (assets drew Rivet / weapons first).
+3. Re-read the glyph REQUEST in the asset journal; answer any REQUEST in the other lanes' journals.
+4. Clean-up left: `gtai-d9x/scratch/it15` (gate TEMP, reels, the windev / linuxdev / winslice exports, ~1 GB);
+   the loose `gtai-d9x/scratch/evidence-run-{035643c7,955f56cb,80a4fce9}.log` and `mutate-panel*.log` if mine (check).
