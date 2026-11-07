@@ -529,3 +529,65 @@ NEXT:
   (recipe in `gtai-n8/scratch/hud/it6/report_notes.md`, updated it7: Calls incl. the boss taunt
   strip vs box); REPORT from those notes.
 - 01:40 Session end. All committed.
+
+## Iteration 8 (BUILD, 01:31-02:31)
+
+- 01:32 Read JOURNAL, git log, the other lanes' journals (no REQUEST to hud; city's note: quest 1
+  under tilt70 is flat on n8-hud because the city art is on n8-city, a clean merge for the Director)
+  and the assets JOURNAL: NEW `weapon_crate_open_70_v2` (round 20261107-0150, B: values fixed, deep
+  amber planks / cream straw / dark hollow / bold outline; camera ~55-60, shallower than 2300's
+  ~65-70; "for hud: v2 view 1 has the better value read, 2300 view 1 the steeper camera").
+- 01:33 Gates started at fc2736f3 (`evidence_run_it8.log`): lint 15/15, unit 1512 passed 0 failed,
+  parity bit-exact + planted mutation caught at 629, look goldens 11/11 + block 5/5, export-audit
+  557/0; FAIL scenario_corpse_horde (wall-clock: "the step grew with the dead 1304 -> 3235 us", a
+  budget not under the CONTENDED rule) and unit flagged FAIL "tree changed during run".
+- FRICTION (mine): I wrote the new crate cut and crate_cut.py into the worktree while the gate run
+  ran; the evidence run marks unit FAIL on any tree change. Rule (again, it5): nothing into the
+  worktree during a gate run, JOURNAL included; draft in scratch.
+- corpse_horde re-run alone (`node tools/tests/run_scenarios.mjs --only=scenario_corpse_horde`):
+  1 passed. A contended wall-clock miss on the shared machine; nothing of mine touches corpses.
+- 01:36 Judged the v2 crate before wiring: mock with the pistol, plasma rifle and chainsaw lying in
+  each cut, full size and at 32 px/m (`gtai-n8/scratch/hud/it8/crate70_mock_guns{,_32x4}.png`):
+  v2 reads as a crate, the tan guns pop off its dark hollow; 2300 is one flat yellow mass.
+- 01:45 MILESTONE 91a864ac the 70 open crate from the v2 sheet: `crate_cut.py` VIEW["p70"] =
+  ("70_v2", 0) (the 2300 sheet one value away; its straw fix keyed to that sheet only), BED p70
+  re-measured on the cut 0.58 -> 0.62 (a luminance profile down the middle: hollow 0.50-0.60,
+  straw front 0.61-0.64, rim 0.66), 1 provenance line (prompt_hash f74a4af6fc14). Lint 15/15.
+- Filmed after `--import` (the it6 rule): `arena.tscn -- --armory --ppm=<32|48> --view=tilt70
+  --rigs --seed=1 --pickup-crate=on`, frame 89, 0 SCRIPT ERROR both. Masters:
+  `crate_v2_tilt70_{32,48}_before_after_crop2x.png` (before = the 2300 inked crate, the same
+  command at it6), and the call stills `call_pickup_hover_vs_crate_{32,48}_crop2x.png` re-cut with
+  the v2 70 crate (only the 70 crate quadrant replaced; aligned by template match, mean diff 1.7).
+  Looked at all of them: the 32 px/m armory now shows 16 wooden crates with X-bracing instead of a
+  tan band; at 70 and 55 the crates now share one value family. Weaker read: the katana's dark
+  blade on the dark hollow.
+- DECISION (docs/decisions.md hud/pickup crate 70 art): v2 over 2300 for the value read at the
+  shipped zoom; the hover stays the default (the call unchanged).
+- frames.json 15: +2 crate pairs; dropped `call_pickup_hover_vs_crate_48` (the crate 48 pair is
+  the close-up) and `dialogue_contact_1080p` (superseded by the live call); kept the 1280x800 HUD.
+- 02:05 Gates (`node tools/evidence/run.mjs --no-bench` at 91a864ac, the tree untouched during the
+  run; `gtai-n8/scratch/hud/evidence_run_it8b.log`): lint 15/15, unit 1512 passed 0 failed,
+  scenarios 52/52 (rig_stress missed under contention, re-judged alone: within budget;
+  corpse_horde passed this time), parity bit-exact + planted mutation caught at step 629, look
+  goldens 11/11 + block 5/5 (top did not move), export-audit 557/0.
+- Director reel not re-run: 91a864ac changes only the crate art drawn under `--pickup-crate=on`
+  (no reel chapter turns it on); the last reel 19/19 in top and tilt70 is at a91232c4 (it7).
+- FINDING (not built): the katana's dark blade reads weakest on the v2 crate's dark hollow (48 px/m).
+  Candidates if it matters to the owner: bed thin blades on the cream straw band, or a paper rim
+  on a pickup in a crate. Noted in the REPORT notes.
+
+Registry rules applied this iteration: `sprite-and-atlas-production` (the v2 crate cut by the same
+re-runnable tool into the same cell, the alternative sheet one value away), `generative-artifact-
+gating` (a B sheet used for what its notes name as fixed; its named weakness, the shallower
+camera, weighed and accepted; 1 provenance line), `concept-scene-parity` + `motion-quality-gating`
+(judged in the real armory at the same seed and frame before/after, at 32 and 48 px/m, not only on
+the mock), `accessibility` (the call decided at the shipped 32 px/m), `depth-ordered-layered-art`
+(the gun's bed re-measured so its bottom rests on the straw front, never over the front wall).
+
+NEXT:
+- Work items 1-4 evidenced; it8 raised the open crate at 70. Remaining polish, weakest first: the
+  katana in the crate (above); Servo's taunt waits for lines.
+- Freeze 08:30: export `build/export/windows/RTAI.exe` with the `windows-showcase` preset (recipe
+  in `gtai-n8/scratch/hud/it6/report_notes.md`, updated it8); REPORT from those notes. Run
+  `--import` (or a gate) before any filming; write nothing into the worktree during a gate run.
+- 02:06 Session end. All committed.
