@@ -96,3 +96,18 @@ func test_frame_cap_drives_the_engine_and_device_restores_it() -> void:
 	assert_eq(Engine.max_fps, 40, "apply() carries the cap with the other settings")
 	PlayerActions.shipped().install()
 	Engine.max_fps = before
+
+
+func test_apply_sets_the_master_bus_volume() -> void:
+	var before: float = AudioServer.get_bus_volume_db(0)
+	var s: PlayerSettings = PlayerSettings.new()
+	s.volume = 0.5
+	s.apply()
+	assert_almost_eq(AudioServer.get_bus_volume_db(0), linear_to_db(0.5), 0.01)
+	s.volume = 0.0
+	s.apply()
+	var floor_db: float = linear_to_db(0.0001)
+	assert_almost_eq(AudioServer.get_bus_volume_db(0), floor_db, 0.01, "0 is silent, not -inf")
+	AudioServer.set_bus_volume_db(0, before)
+	PlayerActions.shipped().install()
+	HandheldRumble.player_gain = 1.0
