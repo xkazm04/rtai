@@ -172,3 +172,7 @@ NEXT (iteration 5):
   still: same scene both sides; HUD worst 18.9 vs 13.8 ms (RELATIVE, F4). The HUD's right edge clips at 1280 px
   (the vram readout): a PerfHud placement fix is owed. The King + city drive pair (before = main) is still NEXT 1.
 - Boot rerun on one screen (12:02): exe median 2.58 s vs editor 4.08 s (LEDGER). Size research in the digest.
+- 12:12 FRICTION: PerfHud clips on the right in a 1280-wide movie (window 1280x800). Sizing the panel to its widest
+  line did NOT fix it (still clipped: the viewport rect and the drawn space disagree, likely the stretch mode
+  / content scale): reverted, owed with a look at `get_viewport_rect()` vs `get_visible_rect()` under the stretch.
+- NEXT addendum: 7. PerfHud clipping (above), before the King/drive masters are filmed (NEXT 1).
