@@ -76,7 +76,8 @@ The view lane's REPORT.md came in with the n8-view merge; this file replaces it 
    `police55_lens_swap_34_cell_before_left_after_right_x2.png`):
    `p55_van_v3_servo_depot_combo_32ppm_seed2_f60_150_290_before_left_after_right_x3.png` (Servo's
    bay 3 van parked, seized, burnt).
-13. **Gates (final, it23 on 42b01ee9; 8562bf13 = + one p55 police cell):** unit 1566/1566 on both; director reel 19/19 chapters down in `top`
+13. **Gates (final, it23 on 42b01ee9; 8562bf13 = + one p55 police cell):** unit 1566/1566 on
+   both; director reel 19/19 chapters down in `top`
    and `tilt70`, 0 SCRIPT ERROR, exit 0; lint 15/15; `top` framemd5 (city block, seed 2) identical to
    it22 over its 300 frames; `tools/evidence/run.mjs --no-bench` all PASS on ada297fe (the same code;
    42b01ee9 changes only the p55 atlas and the cutter): scenarios 52, parity bit-exact + the planted

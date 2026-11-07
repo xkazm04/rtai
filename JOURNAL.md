@@ -1596,3 +1596,6 @@ EXE 08:03 re-exported from 8562bf13 (exit 0), smoke Servo combo exit 0, 0 SCRIPT
 `top` nor tilt70 loads.)
 NEXT (after the night run): 2-4 above.
 Session end ~08:05. Tree clean after this commit.
+08:06 LOOKED the bike row (9) at 70 and 55, columns 0-4: nose down-right in 1, nose right in the side,
+tail down-left in 3 at both pitches: right. Every vehicle row in both traffic atlases and the service
+atlas now turns one way. Scratch it23 cleaned (pngs, avis); logs kept.
