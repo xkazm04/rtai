@@ -386,3 +386,27 @@ the same seed and frames, a clip in motion).
   The misfilmed full-frame pair was deleted from masters.
 - ACK rivet it10 REQUEST (Servo bay number over actors): served at 3f4732db, evidence above.
 DECISION Servo bay marks: see docs/decisions.md (glyph box test; whole-apron and always-under rejected).
+- 13:00 GATE director reel it5 at 3f4732db (Servo marks): top, tilt70, combo 19/19 down, 0 SCRIPT ERROR
+  (`evidence/d9-seams/director-reel-it5-*.log`).
+- 13:02 MILESTONE item 5 (ddef1441): the SWAT 55 walk's 3/4-toward facing (the round-1320 fresh row, my
+  it4 finding) scaled 1.06 about each figure's sole by a new repo tool `tools/art/walk_facing_scale.py`
+  (grid F:K; places by the scaled figure's measured sole, so no foot-line bob; fails if a figure leaves
+  its cell). Measured first: helmet 52 px vs 57-61 in the other facings, head line 12 px under the
+  front's (192 px cell); 1.06 splits the height (3 %) and helmet (10 %) gaps. FILL 1.08 -> 1.07 (mean
+  figure height 177.3 -> 179.4 px). Masters `swat55_facing2_scale106_before_after_grid.png`. In game
+  (seed 5 tilt 48 px/m, f0-460) no SWAT shows facing 2: the before/after film differs only by FILL's
+  1 % step (`..._ingame_..._fill_only.png`, labelled as such). The 70 grids measured too: no facing
+  outlier (the back rows run tall in every grid: a drawing convention, left).
+  WITHDRAWN REQUEST to assets: `swat_walk_armed_55` row 2 (fixed in post, ddef1441). The riot 55 row 2
+  request stays closed as your NO GAIN (3 tries).
+- 13:10 MILESTONE the combined clip owed by the brief: `gtai-masters/d9/seams/seams_d9_set_combined_52s.mp4`
+  (10 captioned segments, items 1-5 + the Servo marks at 1/3 speed; one frame per segment looked at).
+  frames.json: 15 entries, the clip first, the Servo pair second (the 32 px/m cop pair at 70 and the King
+  f150-450 grid out of the list, files kept).
+- 13:12 GATE evidence at ddef1441 (Servo marks + SWAT 55 scale): lint 15/15, unit 1717/0, scenarios 52/52,
+  parity bit-exact (planted caught), selftest look goldens 11/11 (worst 0.27) + block 5/5, release-compile
+  602/0: all PASS (`evidence/d9-seams/evidence-it5-ddef1441.log`; ran to scratch, copied in).
+- 13:14 FINDING + fix (item 5): the riot 55 profile column (the round-1330 fresh row 3, A) is the same
+  fault: head line 24 px vs 13 and 19 on its neighbour facings. Scaled 1.06 with walk_facing_scale.py
+  (head line -> 13), FILL 1.09 -> 1.08 (mean 174.55 -> 176.75 px); test_street_cop_walk pins 1.08.
+  Patrol 55 measured: no outlier. Masters `riot55_facing3_scale106_before_after_grid.png`.

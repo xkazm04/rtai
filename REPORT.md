@@ -66,6 +66,23 @@ Branch `d9-seams`. Evidence: `C:\Users\kazda\kiro\gtai-masters\d9\seams\` (`fram
    print. `planter55_before_after_tilt_64ppm_cityframe11.png`, `..._32ppm_cityframe11_crop2x.png`.
    Seen: at 32 px/m v3's plants read as a dark mass (v2's leaves were brighter); at 64 it reads well.
 
+12. **Servo's bay number no longer prints over the fighters** (the rivet lane's REQUEST, 3f4732db, it5):
+   under a card view each bay's apron mark still draws over the vehicles band (so the parked stage van
+   shows bay 3, the n8 fix), except while a living fighter's body box meets the number's glyph: then
+   that mark draws on the ground, under the bodies (`ServoDepotDraw.cover`). `top` unchanged.
+   `servo_bay_number_under_bodies_before_after_combo_48ppm_x2_seed1_f480.png`, `..._f400_500.mp4`.
+13. **No size pop on the SWAT and riot 55 turns** (item 5, ddef1441, it5): the round-1320 3/4-toward row was drawn
+   small (helmet 52 px vs 57-61, head line 12 px low); scaled 1.06 about each sole with a new tool
+   (`tools/art/walk_facing_scale.py`), FILL 1.08 -> 1.07; the riot 55 profile row (round 1330) the same way (head line 24 -> 13 px, FILL 1.09 -> 1.08).
+   `swat55_facing2_scale106_before_after_grid.png`, `riot55_facing3_scale106_before_after_grid.png`.
+   Not seen in play yet: at seed 5 no SWAT turned to that facing in 460 frames.
+
+**The set in one clip:** `seams_d9_set_combined_52s.mp4` (52 s, captioned per item).
+
+Gates it5: evidence at ddef1441 (Servo marks + SWAT 55 scale): lint 15/15, unit 1717/0, scenarios 52/52,
+parity bit-exact, selftest look goldens 11/11 (worst 0.27), release-compile 602/0, all PASS
+(`evidence/d9-seams/evidence-it5-ddef1441.log`); director reel at 3f4732db top/tilt70/combo 19/19 down,
+0 SCRIPT ERROR (`evidence/d9-seams/director-reel-it5-*.log`).
 Gates it4: evidence at 16eb6d86 (55 patrol/riot + SWAT 70 v2): lint 15/15, unit 1713/0, scenarios
 52/52, parity bit-exact, selftest look goldens 11/11 (worst 0.27), release-compile 602/0, all PASS
 (`evidence/d9-seams/evidence-it4-16eb6d86.log`; again all PASS at 6110bbf9 with the 55 fresh rows:
@@ -87,8 +104,8 @@ director reel (`--fixed-fps 60 --quit-after 14000`) top 19/19, tilt70 19/19, com
 0 SCRIPT ERROR (`evidence/d9-seams/director-reel-it1-*.log`). Not yet run: `tools/evidence/run.mjs --no-bench`.
 
 ## What does not work yet
-- The 55 SWAT's fresh 3/4-toward row draws ~8 % shorter than its front row (a small size pop on that
-  turn); the riot 55 row 2 still repeats a frame (assets: C on its fresh try).
+- The riot 55 3/4-toward row repeats a frame (frames 1 and 3 share one stride; the asset lane got no
+  gain in 3 tries). The SWAT 55 size pop is fixed in post (it5).
 - The sim bike is off by default (Call 3).
 - After merge, rebuild native (`just native`): `project/native/bin` is git-ignored, and the old DLL
   would treat bikes as cars (no crash; parity would fail).
