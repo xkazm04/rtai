@@ -128,6 +128,18 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
   Gates it21 (`evidence/d9/gates-it21.md`): director reel 19/19 fully down in top, tilt70, combo (the baton 1/1),
   0 SCRIPT ERROR; evidence run on 64953f9b (+ the `--rivet-height` flag): ALL PASS, look goldens 11/11 (top did
   not move), parity exact, scenarios 52, unit 1709/0, release-compile 600/0.
+- **The drawn walk (it22, `c36631bc` p70, `e2400dc4` p55; the owner's Call 2):** bare-claw Rivet walks on a drawn
+  4-frame stride per facing (5 facings + the 3 drawn left views, never a mirror), picked by the stride phase, no
+  built bob over drawn legs; the asset lane's walk cells (p70: rivet_walk_b B / rivet_walk B / rivet_walk_left A;
+  p55: rivet_walk_v4 A / rivet_walk_left_v2 B) packed by `tools/art/rivet_walk.py` (one scale per grid, a common
+  foot line), the hand side checked per row (`evidence/d9/rivet_walk_70_contact_x2.png`, `..._55_...`).
+  Before = `--rivet-walk=bob`. Clip (quest 1, tilt70, 64 px/m x2 then 32 px/m x3):
+  `gtai-masters/d9/rivet/rivet_walk_70_bob_vs_drawn_quest1_tilt70_64ppm_x2_32ppm_x3_t748_920_15fps.mp4`.
+  Fresh reel still (tilt70, 48 px/m, eight chapters):
+  `gtai-masters/d9/rivet/rivet_reel_director_tilt70_48ppm_claw_pistol_mp_rocket_flamer_electro_molotov_katana_it22.png`.
+  Gates it22 (`evidence/d9/gates-it22.md`): director reel 19/19 fully down in top, tilt70, combo, 0 SCRIPT ERROR;
+  evidence run on e2400dc4 ALL PASS (look goldens 11/11: top did not move; parity exact; scenarios 52; unit
+  1712/0; release-compile 601/0).
 
 ## What does not (yet)
 - A facing cell (no fire drawn) has no measured muzzle except the flamer's: a flash outside the fire cell's 7
@@ -137,6 +149,9 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
 - The p70 electro baton (v5): its toward-camera strike draws no arc, and the right-facing views
   trail the rod behind him (it21; judged acceptable, a one-copy redraw is on offer).
 - Walk: drawn bare-claw only (it22, p70 and p55); every weapon-out walk keeps the equipped facing with the bob.
+  The arenas always arm him, so the drawn walk is seen in quest 1 (and the hub/city with no gun out), not in the
+  director reel or the boss arenas. The p55 left walk rows are darker and stockier than the right rows (REQUEST to
+  assets for a tone match, it22). He also "walks" on the stride while climbing out of quest 1's dumpster.
 - Reload: no drawn reload frame; he keeps the equipped strip through it (it7 check: the "bare figure" seen in it6
   was the equipped back views, which show the small guns barely; no change made).
 
