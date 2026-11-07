@@ -1581,3 +1581,16 @@ Calls 1-7; the whole-figure Rivet frames per pitch after the owner's pick).
 NEXT: unchanged from it17 (merge with the four lanes, JOURNAL/REPORT conflicts only; d9 the
 arena's tall props as CityOcclusion's `extra` occluders, repro seed 5 tick 900 tilt70; REPORT
 Calls 1-7; the whole-figure Rivet frames per pitch after the owner's pick).
+
+## it22 (08:40-08:44, REPORT)
+- READ: JOURNAL it21 tail, git log (HEAD fb2b9e6b, tree clean), REPORT.md (it17).
+- CHECKED every evidence path the REPORT cites (brace/glob names expanded): all exist in
+  `gtai-masters/n8/view/` (80 files, frames.json), `evidence/n8-view/` (bench-it11/-it11-drive/-it16/-it17,
+  evidence-run-it16/-it17, director-reel-it16/-it17-trial-*), `gtai-n8/scratch/view/prop_occlusion_lie_wip.gd`,
+  `build/export/windows/RTAI.exe` (07:20).
+- REPORT: it22 final header; the card_sets line says street.json is on n8-street (n8-view alone ships
+  view.json); new section "What blocked me (and for how long)". No code; freeze HEAD stays 611b4b97.
+- Registry rules applied it22: perf-regression-gating (a gated freeze is not moved); the rest n/a.
+NEXT: the Director's merge (JOURNAL/REPORT conflicts only; cast_view.gd: street's hunk); REPORT Calls 1-7;
+d9 the arena's tall props as CityOcclusion's `extra` occluders (seed 5 tick 900 tilt70); idle-machine
+frame cost; BossCam as the boss camera; the whole-figure Rivet frames per pitch after the owner's pick.

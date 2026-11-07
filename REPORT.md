@@ -1,5 +1,9 @@
 # n8 view lane: REPORT (the freeze, it17 07:50; no code after the it16 candidate: the gated build IS the freeze)
 
+**it22 08:40, final:** the freeze HEAD stays 611b4b97 (code e369f4b0); it18-it21 changed JOURNAL only (no
+REQUEST to view open in any lane). Every evidence path below was re-checked at 08:41 (masters folder, 80 files;
+`evidence/n8-view/`; the exe 07:20).
+
 **Gates at the freeze HEAD 611b4b97** (08:06-08:13, `evidence/n8-view/evidence-run-it17.log`; the same as at
 cc76970c; code = e369f4b0, it15's last code commit): `node tools/evidence/run.mjs --no-bench`
 all PASS (lint 15/15, unit 1524/0, scenarios 52, parity exact + planted caught, selftest goldens
@@ -19,7 +23,7 @@ under `evidence/n8-view/`. Full log: `JOURNAL.md`.
 
 1. **The view code is open to the lanes.** `RigCardSets.all()` merges every
    `data/tables/card_sets/<lane>.json` (`gtai.card-set/1`) over `RigCardSets.SETS`; street registers
-   its heads there (`card_sets/street.json`) without touching view files. `RigDepthSort.on(layer)`
+   its heads there (`card_sets/street.json`, on n8-street; n8-view alone ships `card_sets/view.json`) without touching view files. `RigDepthSort.on(layer)`
    hands later nodes the frame's visible rigs (city's occlusion and shadows use it);
    `ArenaPropCards.stand_rect` for city's prop cards; `ViewPitchCards.holders` for every per-pitch
    holder under combo.
@@ -123,6 +127,18 @@ under `evidence/n8-view/`. Full log: `JOURNAL.md`.
   tried (dead hits 2 -> 192 body-frames) and left the frame pixel-identical, so it was NOT landed
   (`scratch/view/prop_occlusion_lie_wip.gd`). The fix is one seam: hand the arena's tall props to
   CityOcclusion as occluders, or feed the crowd snapshot to PropOcclusion.
+
+## What blocked me (and for how long)
+- Nothing blocked a work item outright; no BLOCKED entry in JOURNAL. The costs, in time:
+- **The bench lock / a shared machine, all night:** every frame-cost take (it5, it11, it16, it17) ran under
+  bench.lock but CONTENDED by other lanes' Godot runs; each take ~5-10 min. The verdict agreed in all four,
+  but no take is an idle-machine number (Next step 4).
+- **The camera lead at driving speed (01:52, ~30 min):** the city bench has no CameraRig and no clock, so
+  `combo_lead` drew the same frames as `combo`; filmed later on the real CameraRig (`lead_combo_vs_combo_lead_*`).
+- **The King fight in the release export:** its bot is dev-only, so that half of the frame cost is the editor binary.
+- **The corpse-over-barrier seam (it17, ~15 min measured):** needs city's `CityOcclusion` side; not fixable
+  inside view's files alone before the freeze (Next step 6).
+- it18-it21 (08:16-08:33): no code by decision: nothing could be re-gated and re-exported before 08:30.
 
 ## Calls for the owner
 (Each: options, the default built, how to see it.)
