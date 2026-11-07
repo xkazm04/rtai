@@ -6,7 +6,8 @@
 # no physics body, area, ray or nav node: grep in LEDGER L7), XR, networking, video, the 3D import formats and
 # the GPU/CPU texture compressors (import-time only). Kept: GDScript, D3D12 + Vulkan, glslang (RD shaders),
 # text_server_adv, freetype, svg, regex (arena_tuning, quest_condition), ogg/vorbis + wav, the image decoders the
-# imported textures use (png built in, webp, jpg, bcdec), mbedtls, zip, interactive_music.
+# imported textures use (png built in, webp, jpg, bcdec), mbedtls, zip, interactive_music, and astcenc (the
+# statically linked ANGLE references it: the link fails without it).
 disable_3d = "yes"
 disable_physics_2d = "yes"
 disable_physics_3d = "yes"
@@ -14,7 +15,7 @@ disable_navigation_2d = "yes"
 disable_navigation_3d = "yes"
 disable_xr = "yes"
 
-module_astcenc_enabled = "no"
+
 module_basis_universal_enabled = "no"
 module_betsy_enabled = "no"
 module_bmp_enabled = "no"
