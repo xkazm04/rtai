@@ -262,3 +262,20 @@ NEXT (iteration 6):
 - MILESTONE 13:35 L4b pixels (riot, 64 px/m, same movie frame, floor exact): PSNR 26.0 dB (full L4 24.8); the ground
   and facades exact, the whole difference on the figures' ink outlines; by eye the same at x4. CORRECTION of it5:
   the asphalt was not most of L4's riot difference. Masters frames.json 13 (two l4b stills). REPORT P-1 (b) updated.
+- 13:44 DECISION lines (docs/decisions.md): L5 kept without a frame claim, L6 render thread stays Safe, F12 method rule.
+- Scratch worktrees now: `gtai-d9x/scratch/perf-before` (BC7 all, 2507d642), `perf-bc7cv` (BC7 cast + cars, ee63589c),
+  `perf-base` (lossless, moved to cd227d3f for the A-vs-A; F12: use it only beside an A-vs-A). All three go at the
+  freeze (`git worktree remove --force`). Gate scratch: `gtai-d9x/scratch/perf-gates` (private TEMP, reel logs, l4b frames).
+
+NEXT (iteration 7):
+1. The final table owed at the freeze: this morning's main vs d9-perf HEAD on the release exe (riot, drive70, riot60,
+   drive60; lock held) + the editor King / reel / quest 1, one job, flag-free arms through two exports (main and head),
+   with an A-vs-A pair of the head export beside it (F12).
+2. Size lever (it4 NEXT 5): clone Godot 4.7.2 source to gtai-d9x/scratch, a `build_profile` + `optimize=size` Windows
+   release template; compile at low priority (`start /low`, -j6) and only while no lane holds bench.lock; measure exe MB,
+   boot (boot.sh), then the gates on an export made with it. Check first whether anything uses 3D nodes (disable_3d).
+3. riot60's exe worst frame (it4 NEXT 2): the exe at vsync + 60 with --perf-hud, find the presented hitch.
+4. The King on a release build (owed since it3): a `windows-perf` preset that keeps dev/bots, or a debug export.
+5. F7 rig pose step: rivet's files; re-send the REQUEST with the L5 microbench method (calls are the cost) once they answer.
+6. REQUESTs: none open to perf. Rivet still owes the it4 strip REQUEST answer; handheld's E10 (BC7 on the iGPU) result
+   to read and fold into Call P-1.
