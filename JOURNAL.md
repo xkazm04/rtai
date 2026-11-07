@@ -1360,3 +1360,15 @@ NEXT (iteration 16) is the it15 NEXT above, items 1-2 (item 3 done).
   6.76 / 6.83; draw calls p50 498 vs 670; render CPU p50 0.47 / 0.34 vs 0.35 / 0.34 ms. Combo stays
   under top (it11: 3.81 / 4.06 vs 4.96 / 5.17): more draw calls (the cards), less flush/draw time.
 - REPORT: Exe recipe and Next steps drafted; frame cost updated with the it16 take.
+- GATE 07:12-07:19 `node tools/evidence/run.mjs --no-bench` at cc76970c (tree still during the run):
+  PASS lint 15/15, unit 1524/0, scenarios 52, parity (exact, planted caught at 629), selftest (look
+  goldens 11/11 + block 5/5, world lock holds), export-audit (release-compile 561/0); exit 0
+  (`evidence/n8-view/evidence-run-it16.log`, `build/evidence/*.json`). Code = it15's e369f4b0.
+- FREEZE DRY RUN 07:20 (`scratch/view/freeze.sh` at cc76970c): director reel on n8-view HEAD top
+  19/19 and combo 19/19 chapters full, 0 SCRIPT ERROR (`evidence/n8-view/director-reel-freeze-*.log`);
+  the exe `build/export/windows/RTAI.exe` (windows-showcase) exit 0, 0 errors
+  (`export-freeze.log`); smoke `-- --rigs --boss=king --seed=2 --view=combo` 0 SCRIPT ERROR, p55
+  cards at tick 35 (`exe-smoke-freeze.log`). LOOKED at the exe's own frame 400 (`--write-movie`,
+  combo 32 px/m): the King's bust card on the throne-car, the gang's cards, Rivet at 55, the HUD
+  ghost wheel; masters `exe_it16_king_combo_32ppm_f400.png`. If no code lands before 08:30 this
+  exe IS the freeze exe; else re-run freeze.sh.
