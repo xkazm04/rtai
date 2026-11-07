@@ -1515,3 +1515,12 @@ answered in it14), the library's keyed/street (newest ped_cap_fall_70_v4 07:46, 
 NEXT: the it15 NEXT list stands (cap short fall v5, cop armed walks, the SWAT p70 front corpse
 1.43x short, cultists / Torque's gang when they spawn). REPORT.md is current for the freeze.
 - Session end 08:22: tree clean after this commit.
+
+## Iteration 17 (08:23, BUILD, freeze 08:30)
+Read: JOURNAL tail, git log, the other lanes' journals (no new REQUEST to street).
+- DECISION street/it17-hold: same as it16. With 7 min to the freeze, no change can be re-gated.
+  The freeze stays 7db6c352 (evidence ALL PASS, reel 19/19 in top, tilt70 and combo, exe exported
+  from it). REPORT.md is current.
+NEXT: the it15/it16 NEXT list stands (REQUESTs: ped_cap_fall_70_v5, cop armed walk strips at p70;
+the SWAT p70 front corpse 1.43x short; cultists / Torque's gang when they spawn).
+- Session end: tree clean after this commit.
