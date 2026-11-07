@@ -324,3 +324,10 @@ NEXT (iteration 7):
   riot60 CPU 0.26 -> 0.29 cores LOSS, RAM -13..-20 MB WASH, 0 errors. Boot 7 rounds 2394 vs 2403 ms WASH (CONTENDED).
   Reading: the official template is LTO (production=yes); mine was not. 14:17 LTO build of the same profile started
   (production=yes, BelowNormal, -j12); the no-LTO exe kept as `gtai-d9x/scratch/godot-src/strip-nolto.exe`.
+- 14:19 FINDING: `production=yes` on MSVC means NO LTO (`platform/windows/detect.py`: "No LTO by default for MSVC,
+  doesn't help"); the official Windows templates are MinGW-GCC builds with LTO. No MinGW sysroot on this PC (LLVM only).
+  So the closest match is MSVC `production=yes lto=full` (/GL + LTCG): started 14:19 (full rebuild, BelowNormal, -j12).
+- GATE 14:22 at 78193069 (L8 inside, `build/evidence-it9.log`, private TEMP): lint 15/15, unit 1699 passed / 0 failed
+  (the evidence stamps it FAIL only because I edited LEDGER.md during the run: "tree changed"), scenarios 52/0, parity
+  bit-exact + planted mutation caught, look goldens 11/11 (worst 0.27) + block 5/5 (worst 0.22), release-compile 598/0.
+  Director reel top / tilt70 / combo started 14:23 (headless, --quit-after 14000, in parallel).
