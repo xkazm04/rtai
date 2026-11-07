@@ -1346,3 +1346,18 @@ _fall_70_v3 B round 0740, the library's own note: torque v3 "NO GAIN, v2 stays t
   grids run a touch lighter (suit fall v3: warmer mid-grey; median value ~+10-15 % with the skin
   in), but each reads as the same person; no recolour (street_tone.py is blue-only; a value tone
   for greys is a next-session item if the owner sees a pop).
+- Registry rules applied (it13): generative-artifact-gating (each redraw judged against the grid
+  it replaces in the scene, and the ped v3 raises rejected for the still alone because the walk
+  and fall strips of the same ped wear the old palette: one identity per figure beats one better
+  frame), concept-scene-parity (before/after differ by one table value or flag, same seed and
+  ticks; quest stills are "same tick", the quest's dialogue/cops differ run to run),
+  motion-quality-gating (the thug judged across s8.6-12 of the Ohm beat, the cops t65/t72/t150,
+  the corpse decay across t13700-15000), depth-ordered-layered-art (the decayed corpses stop
+  drawing over the bench card; the draw order itself is CastView's and unchanged),
+  sprite-and-atlas-production (the 55 redraws cut by the same cell rule and px/m as the grids they
+  replace), render-submission-economy (a texture swap; a fully decayed corpse issues no draw).
+- GATE evidence `node tools/evidence/run.mjs --no-bench` on 7f0fc736 (07:04-07:11): lint, scenarios
+  52, parity (planted mutation caught at step 629), selftest (look goldens 11/11, block goldens 5/5,
+  no new off-doctrine accents), export-audit (561 loaded, 0 failed) PASS; unit 1529/0 but marked
+  FAIL "tree changed during run: M JOURNAL.md" (FRICTION, mine: I appended to the journal while it
+  ran). Re-run on the clean commit below.
