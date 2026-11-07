@@ -58,7 +58,9 @@ priority, the CPU's own 2-CU Radeon), never a device claim. Details and sources:
   `padwalk-deck-title-1280x800.png`, looked at). The desktop card is unchanged (tested). Call 7.
 - (it11) **BC7 on the Switch-class row** (E11, CONTENDED, bench lock): the city 2.26 -> 1.38 GB (RAM + GPU shared), the
   reel 1.52 -> 1.13 GB, the 30 cap holds; it10's ~1.3 GB inference measured at 1.38. Part of Call 6.
-- (it11) Gates on 955f56cb: lint 15/15, unit 1718/0, scenarios 53/53, parity bit-exact (planted mutation caught at 629), look goldens 11/11: **top bit-identical** (`evidence/it11/evidence-run-955f56cb.log`); release-compile still skipped (seams' temp-dir clash).
+- (it11) B on a pad resumes from the pause card (pad events only; Esc stays the pause toggle). Reels on 955f56cb:
+  top / tilt70 / combo / combo + deck 19/19, 0 SCRIPT ERROR (`evidence/it11/reels-summary.log`); the gate re-run on
+  035643c7 green the same way (unit 1719/0, goldens 11/11). Gates on 955f56cb: lint 15/15, unit 1718/0, scenarios 53/53, parity bit-exact (planted mutation caught at 629), look goldens 11/11: **top bit-identical** (`evidence/it11/evidence-run-955f56cb.log`); release-compile still skipped (seams' temp-dir clash).
 
 ## What does not work yet
 - Rumble on every hit Rivet takes is in (it7: the view reads his hurt tick; no sim change); its live pulse count is

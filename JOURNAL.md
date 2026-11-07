@@ -359,3 +359,30 @@ NEXT (iteration 11):
 - 14:30 reels on 955f56cb started (headless, `--fixed-fps 60 --quit-after 14000 res://dev/arena/arena.tscn -- --bot=reel
   --reel=director --loadout=pistol --rigs --view=<v>`, + `--device=deck` on combo; perf's command), and mutate.mjs on
   quest1_settings_panel.gd (10 mutants, test_settings_panel_pad).
+- MILESTONE 14:32 reels on 955f56cb (headless, perf's command): top / tilt70 / combo / combo + deck **19/19, 0 SCRIPT
+  ERROR** (`evidence/it11/reels-summary.log`, 33207d49).
+- 14:33 mutate.mjs on quest1_settings_panel.gd at 384adc66 (10 mutants, test_settings_panel_pad;
+  `evidence/it11/mutate-settings-panel.log`): **50 % (5/10)**. Survivors: 25 (the row spacing 6 -> 7: cosmetic), 74
+  (`queue_free` -> pass: the rows are removed anyway, a leak no test sees), 122 / 123 (`_volume`: pre-existing, tested
+  elsewhere, outside this run's test list), 134 (`cap <= 0` -> `<= 1`: equivalent, the caps are 0/30/40/60). Every it11
+  line (focused_slot, the restore, the pad cancel, the save path) killed.
+- MILESTONE 14:33 (035643c7) B on a pad resumes from the pause card (Quest1Card, pad events only: the keyboard's Esc is
+  both ui_cancel and the game's pause toggle and would toggle twice); test, planted (no emit) -> FAIL.
+- MILESTONE 14:38 evidence gate on 035643c7: lint 15/15, unit 1719/0, scenarios 53/53, parity bit-exact (planted caught at
+  629), look goldens 11/11: **top bit-identical** (`evidence/it11/evidence-run-035643c7.log`). The reels ran on 955f56cb;
+  035643c7 adds only Quest1Card's B handler (the reel never opens the card).
+- Session end 14:39: every change committed; no Godot of mine running; bench lock released (14:01); scratch dev files
+  out of project/.
+
+NEXT (iteration 12):
+1. If the 035643c7 gate above is not green, fix that first (`evidence/it11/evidence-run-035643c7.log`).
+2. Glyph images for the pad prompts (owed since it4): the `[A]` / `[RT]` text labels are legible but Valve's
+   "glyphs match the controller" prefers images; a small drawn set through the asset lane (a REQUEST: ink on paper, the
+   Deck / Xbox-style and PlayStation families) behind the handheld rows, or record it as owed with the text labels.
+3. The paid and failed cards on a pad (A on Quit / Retry: covered by menu_pad, not yet walked live); the scratch walker
+   is at `gtai-d9x/scratch/padwalk/` (copy into project/dev only between gates, never while a gate runs).
+4. Carried: NAT-06 parity on the Linux `.so` in WSL; the King fight's rumble count (`--log=` in sim.mjs); the draw_scale
+   HUD side effect (if Call 5 b/c); a rumble settings toggle (the pause card has room now on handheld rows).
+5. End of day (by 18:30): delete the HKCU DirectX UserGpuPreferences value for
+   gtai-d9x/handheld-godot/..._hh.exe and that copy; the BC7 scratch worktree `gtai-d9x/scratch/hh-bc7` (git worktree
+   remove); the freeze exe `build/export/windows/RTAI.exe` with the exact command in REPORT.

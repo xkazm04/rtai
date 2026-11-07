@@ -184,7 +184,8 @@ stick, 2/3 right stick, 4 LT, 5 RT.
   events through `Input.parse_input_event` only): title focus Start -> A starts quest 1 -> Start pauses (focus Resume)
   -> d-pad up to the cap's Toggle -> A: cap 30, `Engine.max_fps` 30, the focus kept -> A: 40 / 40
   (`evidence/it11/padwalk-deck.log`, stills `gtai-masters/d9/handheld/padwalk-deck-*.png`). Owed: the same walk on a
-  real pad through Steam Input (no pad on this PC).
+  real pad through Steam Input (no pad on this PC). B on a pad resumes from the pause card (035643c7; pad events only,
+  the keyboard's Esc is already the pause toggle).
 - On-screen keyboard: the game has no text entry today; nothing owed until it does.
 - Pause on focus-out: **built** behind the handheld profiles (`HandheldFocusPause`, added by `LaunchArgs` when the row's
   tier is `handheld`): `NOTIFICATION_APPLICATION_FOCUS_OUT` (the Steam overlay, a Windows handheld's shell, alt-tab)
