@@ -118,13 +118,21 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
   exact, scenarios 52, unit 1708/0, release-compile 600/0. The baton 70 v5 (A, drawn arcs) is served; it goes in
   next (then p70 leaves NO_ARC).
 
+- **The electro baton at 70 = v5 (it21, 613490f1; the it19 REQUEST served A):** the rod is drawn clear of the
+  forearm in all five facings (an L hold: the arm down, the rod out from the claw), and the side strike and
+  follow-through draw their own pale arc again, so p70 left `RivetStrips.NO_ARC` (no game crescent over a drawn
+  arc; p55 v3 keeps the game smear). Accepted: the toward-camera strike has no arc now, and in the right-facing
+  views the rod trails behind him, carried low (the asset lane offers a one-copy redraw if the owner wants it
+  ahead). Before/after, pit, tilt70, 64 px/m, seed 3:
+  `gtai-masters/d9/rivet/rivet_electro_baton_70_v5_before_after_pit_tilt70_64ppm_x2_seed3_f60_150_300_324_345.png`.
+
 ## What does not (yet)
 - A facing cell (no fire drawn) has no measured muzzle except the flamer's: a flash outside the fire cell's 7
   ticks keeps the old spot (the other holds are drawn every which way in their facings; no generic rule held).
 - The Servo bay number printed over Rivet under combo: REQUEST to seams (it10), served on `d9-seams` at 3f4732db
   (ServoDepotDraw.cover); not on this branch until the Director merges both.
-- The p70 electro baton's facings still carry the rod along the forearm (the library's v3 is B with that named
-  fix): REQUESTed as 70 v4 (it19), not served yet. (Its missing swing arc is fixed in it20, see What works.)
+- The p70 electro baton (v5): its toward-camera strike draws no arc, and the right-facing views
+  trail the rod behind him (it21; judged acceptable, a one-copy redraw is on offer).
 - Walk: one drawn walk and one sprint pose per sheet; built bob + sway on the facing.
 - Reload: no drawn reload frame; he keeps the equipped strip through it (it7 check: the "bare figure" seen in it6
   was the equipped back views, which show the small guns barely; no change made).

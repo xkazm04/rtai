@@ -686,3 +686,24 @@ NEXT (it20 end, 16:20; supersedes every NEXT above):
 2. The armory (Call 6): only if the owner picks the wall row.
 3. At the freeze: the exe (`build/export/windows/RTAI.exe`), the final REPORT.
 - Session end 16:21: everything committed but this JOURNAL tail (committed next).
+
+## Iteration 21 (16:19-, BUILD)
+- Read: JOURNAL NEXT (it20 end), git log, seams JOURNAL (it9: no REQUEST to rivet; it notes Rivet at 1.1 m reads
+  small beside the cops = my Call 1), the asset lane's JOURNAL (it89: no REQUEST open; it offers a v5 views 2-3
+  mirror if the backward trail reads wrong in the game).
+- 16:20-16:32 NEXT 1 built. MILESTONE `613490f1` the p70 electro baton = the library's v5 (A): manifest line ->
+  v5 + `cc: "0"`, re-cut (only that strip moved), checked on a v3/v5 contact and a 2x crop of cells 2-4 (no speck;
+  arcs whole in cells 5 and 7), `--import`; p70 out of `RivetStrips.NO_ARC`; the test moved to p55 and now asserts
+  the p70 baton hides the held part (fails with p70 back in NO_ARC: checked); muzzle table re-measured (p70 strike
+  tip 175,109 -> 211,113: unused now); provenance (catalog id rivet_eq_electro_baton_v5, round 20261107-1625,
+  prompt_hash 813b8fb2b5fb, A). Figure heights measured on every p70 strip: ~110 px, v5 in line.
+- Filmed before/after (arena scene, `--bot=pit --loadout=electro_baton --view=tilt70 --ppm=64 --seed=3 --rigs
+  --clean`, 361 frames, 0 SCRIPT ERROR each; before = the it20 strip + flag + muzzle restored for the run, then put
+  back and re-imported). Judged: the rod reads as its own stick in every facing; the side strike's drawn arc reads
+  under the rod; the toward-camera strike (f300) loses the game's chevron smear (it read as an odd pentagon from
+  above: accepted); the right-facing views trail the rod (carried low: accepted, no redraw asked). Masters
+  `rivet_electro_baton_70_v5_before_after_pit_tilt70_64ppm_x2_seed3_f60_150_300_324_345.png` (frames.json entry 5,
+  replacing the v3 entry; that file kept: REPORT cites it). DECISION rivet/baton-v5.
+- FRICTION (~4 min): the first films ran the main scene (city crossing, "unknown launch arg --bot=pit"): I left out
+  `res://dev/arena/arena.tscn` before `--` (the it13 rule, JOURNAL l.389). The first before film also had the new
+  muzzle table: re-filmed with all three files restored.
