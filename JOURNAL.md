@@ -674,3 +674,43 @@ bench.lock held by view at 01:42 (then free at 02:00 with 6 other Godot processe
   beside him in frame 3; the patrol cop's pistol may fall beside the hand. The street lane plays
   them through StreetWalkerFall (one FALLS row each); cops die in every chase, and at 32 px/m their
   parts' corpse reads as a white cross.
+- MILESTONE 235374e8: under p55 (combo's boss fights, `--view=tilt`) a dying walker falls as the
+  p70 drawing at its p70 height (StreetWalkerFall.FALLBACK "p70"; "" = the hold and the parts), so
+  combo's pitch swap no longer turns a drawn corpse back into the parts' cross. LOOKED the board
+  `--view=tilt` 64 px/m t150: all 16 lie as drawn at the cast's size; tilt70 board t150 pixel-
+  identical to the committed run. Master peds_drawn_fall_p55_fallback_tilt_64ppm_board_spread_t150.png.
+  Walker unit tests 18/18 (fall, cards, crowd).
+- EVIDENCE clip peds_drawn_fall_before_after_tilt70_64ppm_board_spread.mp4 (6.4 s: the pop to the
+  parts | the drawn fall, real time then 0.25x; the board under --write-movie). frames.json #2; the
+  it3 blast still out (superseded). Raw .avi deleted.
+- GATE scenarios (headless, started 02:14 on the nine-fall head; I edited street_walker_* while it
+  ran, view code only): 52 ran, 1 failed = scenario_rig_stress "50 people: rig p50 1.055 ms > 1.000"
+  (a wall-clock budget, measured while my board renders and 2-3 other lanes' Godot runs were up).
+  Re-run alone through `node tools/tests/run_scenarios.mjs --only=rig_stress`: 1 passed, exit 0.
+  The it7 code returns at once without a card view (rig_stress runs `top`). 0 SCRIPT ERROR.
+- NOT DONE: brief 6 crowd cost on a quiet machine (bench.lock free at 02:00 but 2-3 other lanes'
+  Godot processes up all session: a pair would repeat it6's CONTENDED pair).
+
+Registry rules applied (it7): sprite-and-atlas-production (the fall strips cut by one script with
+a fixed cell order and a named anchor rule, the feet, so every frame lands on the ground point; the
+library's B fix applied as a reproducible flag; one shared px/m with the still strips; the worker's
+superseding v2 taken by its note, the suit's v2 rejected by its), generative-artifact-gating (B
+sheets only with their named fix; the stray neighbour hand removed by rule, not by hand; the
+shopper's green fruits checked against the key; cop_patrol_v2 A declined for a named identity
+risk), motion-quality-gating (the fall judged as a tick strip and a before|after clip at real time
+and 0.25x, eight blow directions on one board), concept-scene-parity (every before|after on one
+seeded board, the before one constant away; pixel-identity used to prove a refactor), depth-
+ordered-layered-art (the corpse is the head card's own sprite: the rig's depth sort, the decay's
+modulate and the stain order unchanged), render-submission-economy (still one sprite per person
+dead or alive; the parts stay hidden, so a drawn corpse costs less than the parts' corpse).
+
+NEXT (iteration 8):
+1. Cop fall strips (REQUEST above): when cop_*_fall_70 land, cut with street_fall.py (--stretch
+   as their notes say) and add FALLS rows "cop/head_cap", "cop/head_helmet", "cop/head_swat"; the
+   riot cop's shield card (RiotShieldCard) must hide while the fall draws (check it re-shows), and
+   film the city bot run (cops die there: seed 5 ticks 500-1000) top | tilt70 at 48 px/m.
+2. Crowd cost on a quiet machine (it6 NEXT 1, bench6/run.sh, 3 pairs), if the machine quiets.
+3. The suit's standing anchor leans ~0.2 m toward the briefcase (the bottom-rows rule catches the
+   case): if it reads at 64 px/m in motion, add a per-sheet x override to street_fall.py.
+4. Freeze prep (08:30): the Windows export and REPORT calls (cop tone, crowd variety, walkers,
+   the drawn fall's speed FALL_AT and the stretch, p55 height).
