@@ -288,14 +288,14 @@ NEXT (iteration 8):
 - 13:37 mutation on player_settings.gd (`evidence/it10/mutate-player-settings.log`): 70 % (7/10). Survivors: line 74
   (mine: apply() -> apply_frame_cap deleted), 38 and 87 (pre-existing). 13:46 a test for 74 added (apply() carries the
   cap); planted by hand (the call -> pass): FAIL "[77] expected to equal [40]"; restored, 4/4 green.
-- Session end 13:47: every change committed; no Godot of mine running; bench lock released (13:27).
+- MILESTONE 13:49 reels on eae1ea23 (4 in parallel, `--quit-after 14000`): top / tilt70 / combo / combo + deck 19/19,
+  0 SCRIPT ERROR (`evidence/it10/reels-summary.log`, the per-reel logs beside it).
+- Session end 13:50: every change committed; no Godot of mine running; bench lock released (13:27).
 
 NEXT (iteration 11):
-1. The it10 gate is green on 71c4a111 (above); the last commit only adds a test: re-run the full gate once more
-   on the HEAD with the reels (item 2).
-2. The reels on the it10 code (top / tilt70 / combo / combo + deck, `--quit-after 14000`): PlayerSettings.apply() now
-   applies a frame cap (a no-op on desktop: frame_cap 0 and the desktop row's max_fps -1), FightFrames logs two more
-   keys (dev). Expect 19/19, 0 SCRIPT ERROR.
+1. The it10 gate is green on 71c4a111 and the reels on eae1ea23 (only a test added between): re-run the full gate
+   on the next code change.
+2. (done 13:49: the reels 19/19 x4 on eae1ea23.)
 3. The frame cap in the pause card seen on screen: quest 1 under `--device=deck`, open the pause card (Start on the pad),
    cycle the cap, a still; then read Engine.max_fps in the log.
 4. BC7 on the Switch-class row (E10 on `switch_handheld`, the reel and the city, 2 rounds) and on the Linux build in
