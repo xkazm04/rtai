@@ -690,9 +690,7 @@ the others were older v1/v2 bases in the game, so they upgrade whole).
 
 NEXT (it9), replaces the list above:
 1. Read d9-rivet + assets journals for REQUESTs first (none open to seams at 15:13).
-2. The patrol hold (90e9a69c) is unfilmed in the case it fixes: find a way into quest 1 at a render
-   rate above the tick (e.g. quest1_clip with two draws per step, or the main scene's quest entry flag)
-   and film the patrol at `--fixed-fps 120` before (HOLD_FRAMES 1) / after; or leave it unit-only.
+2. (done 15:59, see below) The patrol hold is filmed at 240 Hz.
 3. Weakest left: SWAT 55/70 back rows' 3-5 px head move (drawn), elder 3/4 away weak alternation (asset
    named), the planter's dark inner stroke at 32 px/m, Call 2's corpse "through" the barrier (sim).
 4. Gates green at 90e9a69c (evidence it8) + reels it8 at 90e5a006. Re-run after code.
@@ -704,3 +702,13 @@ NEXT (it9), replaces the list above:
   vs the game grid before splicing; the asset lane's weak row looked at), depth-ordered-layered-art (no
   layer change).
 - Session end 15:48: all committed; scratch avi deleted (masters hold the mp4s and stills).
+- 15:59 FILMED + CONFIRMED the hold in play: `res://boot/quest1.tscn --fixed-fps 240 -- --autostart
+  --view=tilt70 --ppm=48` (capture 1280x800: the local override.cfg), before = HOLD_FRAMES 1 (the old
+  rule; const edited and restored from git), after = 4. Before: in 16 consecutive frames the patrol cop
+  draws the standing card on 12 and the walk frame only on the 4 frames with a sim tick (a hard flicker
+  at any display rate over 60 Hz); after: the walk frame on every frame. Masters
+  `quest1_patrol_hold_before_after_240hz_tilt70_48ppm_quarter_speed.mp4` (every frame at 60 fps) +
+  `_16frames.png`; frames.json: replaces the old SWAT 70 armed walk still. 0 SCRIPT ERROR both runs.
+  FRICTION (3 min, mine): deleted the first captures before checking the clip (an fps filter had
+  dropped 3 of 4 frames, hiding the flicker); re-shot. LESSON: build `setpts=N/60/TB` from a 240 fps
+  capture, and keep the source until the master is looked at.

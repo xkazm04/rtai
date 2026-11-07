@@ -126,9 +126,11 @@ Branch `d9-seams`. Evidence: `C:\Users\kazda\kiro\gtai-masters\d9\seams\` (`fram
    alternation; kept).
 22. **Quest 1's patrol cop keeps its stride between sim ticks** (90e9a69c, it8): it stood only when its
    point did not move since the previous render frame; on a display over 60 Hz most frames have no sim
-   step, so it would flick to the standing card. Now 4 frames with no step stand (unit-tested). Honest
-   note: the quest 1 clip tool cannot show it (it steps between every frame: before and after are
-   pixel-identical), and my it7 "flip" was the walk's passing frame; the fix is unfilmed in play.
+   step, so it flicked to the standing card. Now 4 frames with no step stand (unit-tested). Filmed in
+   quest 1 at `--fixed-fps 240` (4 render frames per tick): before, the standing card on 3 frames of 4
+   (a hard flicker on any 120/144/240 Hz monitor); after, a steady walk:
+   `quest1_patrol_hold_before_after_240hz_tilt70_48ppm_quarter_speed.mp4` (+ `_16frames.png`). The
+   quest 1 clip tool cannot show it (it steps between every frame: pixel-identical).
 
 **The set in one clip:** `seams_d9_set_combined_58s.mp4` (58 s, captioned per item; it8 adds the crowd walk cells).
 
