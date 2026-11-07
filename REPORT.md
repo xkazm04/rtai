@@ -69,13 +69,19 @@ head commit. Branch `n8-city`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n8\ci
 
 ## What does not work / gaps
 
-- The baked crowd (multimesh peds) is not occluded, only rigs.
+- The baked crowd is hidden behind the lifted roofs since iteration 27 (`CityCrowdOcclusion`,
+  `it27_crowd_occlusion_riot_drive_tilt70_32ppm_before_after.png`; cost 110-205 us/frame CONTENDED);
+  riot bodies the sim leaves inside a footprint still draw over it.
+- A pre-existing one-frame dark rect at the screen's top edge in the riot (f569, also with the crowd
+  pass off; two frames with it on): ChunkView's per-frame budget slicing, not fixed.
 - The squat kerb props keep their flat art's hatched silhouette as the ground shadow (it reads as
   one); the three poles (street sign, lamp, traffic light) cast a drawn stroke since iteration 25, and
   since iteration 26 the lamp's and the traffic light's end in a round blob for the globe / signal
   head (`cast_blob_m`; `it26_lamp_globe_blob_tilt70_48ppm_before_after_x3.png`,
   `it26_traffic_light_head_blob_tilt70_48ppm_before_after_x2.png`).
-- The 55 street sign and lamp are B sheets (a little steep); accepted for the matched design.
+- The 55 street sign and lamp are B sheets (a little steep); accepted for the matched design. The
+  55 traffic light is the library's A `traffic_light_55_v6` since iteration 27 (short pole, ~55
+  camera; `it27_traffic_light_v6_55_tilt_48ppm_before_after_x2.png`).
 - Roof dressing cards (`roof_dressing_v3`) not integrated: the baked roofs already paint them.
 
 ## Calls for the owner
@@ -100,5 +106,5 @@ put the exact command lines here.
 
 ## Next steps
 
-- 70 twins and raises as the library serves them (traffic light 55 with a shorter pole).
-- Occlude the baked crowd.
+- 70 twins and raises as the library serves them (the traffic light 55 short pole: served and cut at iteration 27).
+- ChunkView's one-frame edge flash (riot f569).

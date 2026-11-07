@@ -1137,3 +1137,52 @@ NEXT (iteration 27, in order):
   down-right fall as the lamp's. `it26_traffic_light_head_blob_tilt70_48ppm_before_after_x2.png`
   (named in the it25 sign entry's frames.json note). 0 SCRIPT ERROR both. Raw .avi deleted.
 - Session end 06:31. Head = this commit. Tree clean.
+
+## Iteration 27 (06:31-07:31, BUILD)
+Read: JOURNAL, git log, the lane journals. view filmed city's real stand_polys on its 05:56 trial
+merge (MILESTONE 05:57: the occlusion cut and the cream crates on the real code): my it26 NOTE is
+answered. No new REQUEST to city. Library (catalog 06:30): NEW `traffic_light_v6` 55 A (0735, the
+asset lane's answer to city's "shorter pole" NEXT: v5's design with the poles cut to ~4.2x the flange).
+- MILESTONE 6806351d the p55 traffic light strip from `traffic_light_55_v6` (A, prompt_hash
+  570fd0647811; cut by tools/art/city_prop_cut.py through a scratch lib copy named
+  traffic_light_v6_55.png; cell 137x256, facing0 0.87). LOOKED the strips stacked (old 55 / v6 /
+  70): v6 sits between them, the flange and the head's top seen from above. EVIDENCE `city_bench
+  --scenario=drive --view=tilt --zoom=1.5 --secs=10` (48 px/m), before = HEAD's 2000 B strip:
+  f300/f420 differ only at the light; after, the head's top plane and the flange read as 55, the old
+  read near side-on. `it27_traffic_light_v6_55_tilt_48ppm_before_after_x2.png`. 0 SCRIPT ERROR both.
+  Provenance line. Lint 15/15; test_prop_cards + test_chunk_lift 21/0.
+- FOUND the REPORT gap (the baked crowd is not occluded) in the riot at tilt70: cops and rioters on
+  the north sidewalk draw over a building's lifted roof (`riot --view=tilt70 --zoom=1.0` f400).
+- MILESTONE f14b97c9 + 60ff77fd + c78a59c3 `CityCrowdOcclusion`: CityOcclusion pastes the printed
+  world over each multimesh ped/cop whose feet are north of a building, inside its drawn area (the
+  rigs' rule and patch; no ink silhouette for the crowd; a lying body gets a 1.8 m square); the rigs
+  in front of a building that hid a crowd body are lifted as for a hidden rig. Positions from the rig
+  feed's per-tick snapshot (`CityFxFeed.last_snap`, new), else one own `snapshot()`.
+  `CityOccluders.in_rect` lists the screen's candidate buildings once and keeps them until the view
+  moves 8 m or a chunk streams (`stamped + dropped`). `CityOcclusion.CROWD` false = the old look.
+  3 tests (`test_city_crowd_occlusion`).
+  COST (CONTENDED: other lanes running, no bench lock taken): first cut 885-902 us/frame on the
+  riot (in_rect walked every building of the 128 m chunks each frame: 400-750 us); with the kept
+  candidates + a zone union pre-reject (a per-frame grid was slower: dictionary inserts) riot
+  138-173, drive 150-205, the arena city on foot 66 us/frame. Tried RECT_SLACK_M 16: no better.
+  EVIDENCE riot f300 (x2) + drive f600 (x3), before = CROWD false, same seed and scene:
+  `it27_crowd_occlusion_riot_drive_tilt70_32ppm_before_after.png` (frames.json #4; the it1 facades
+  true-height pair dropped from frames.json: iteration 1's look, superseded by it22/it25). LOOKED:
+  riot, the roof's north half reads (its vent box) and the bodies are cut at its edge; drive, the
+  walker standing on a roof gone. Left: riot bodies the sim leaves INSIDE a footprint still draw
+  (their feet are south of the north edge: the in-front rule). 0 SCRIPT ERROR every run.
+- FOUND (not city's change; pre-existing) a one-frame dark rect (ground drawn before the sidewalk)
+  at the top edge of the riot at f569 in the BEFORE run too (CROWD false); with the crowd pass on
+  it lasts 2 frames (f569-570). Isolated: patches discarded + snapshot -> still; a 200 us busy-wait
+  instead -> not; no snapshot (last_snap) -> still 2 frames. Likely ChunkView's per-frame
+  BUDGET_US slicing at the screen edge; NEXT, not fixed.
+- GATE `top` (07:06): the city arena (`res://dev/arena/arena.tscn -- --arena=city --bot=rivet
+  --seed=2 --rigs`, 301 frames) at c78a59c3 framemd5 IDENTICAL to the branch base (it26
+  topbase_arena.md5). Unit full no-arg at f14b97c9: 1530 passed, 0 failed. Lint 15/15 every commit.
+Registry rules applied it27: depth-ordered-layered-art (the crowd is ordered against the roofs by
+the same feet-vs-north-edge rule as the rigs, so the two never disagree), render-submission-economy
+(no new draw items: the crowd's patches join the rigs' patch list in one draw; the candidate list
+kept across frames; the snapshot shared with the rig feed), motion-quality-gating + concept-scene-
+parity (same seed and scene, one const apart; judged on the riot and the drive in motion, frame
+diffs every 30 frames), generative-artifact-gating (traffic light v6: A, used as is, stacked against
+the old 55 and the 70 before cutting), tiling-texture-acceptance (n/a).
