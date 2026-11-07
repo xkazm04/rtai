@@ -1071,3 +1071,18 @@ NEXT (iteration 18, in order):
    bench-it16 as the view's cost WITHOUT cards and bench-it17 as the cards' cost (with the fixes).
 GATE 04:13 scenarios on 2872a8c2 (raw run_scenarios.gd): 52 ran, 0 failed, exit 0.
 Session end 04:14.
+MEASURED 04:18 the taxi lamps' Call, side by side: the p70 atlas re-cut with LAMP_DEG 14 (the cutter
+imported with the constant overridden, into scratch; the 10 cut re-made the committed atlas
+bit-exact), swapped in for one film and restored (git clean after): city tilt70 seed 13, 181
+fixed-fps frames, 0 SCRIPT ERROR both. Frame f180 vermilion-gate px 351 (10) -> 333 (14); the
+taxi's ~308 lamp px stay; f60 85 -> 82. By eye the same amber both ways (masters
+taxi_lamps_lampdeg10_left_14_right_city_tilt70_32ppm_seed13_f180_crop3x.png). Police lens px by an
+approximate shader test 4,102 -> 3,575 (-13 %). So LAMP_DEG cannot clear it short of a yellow
+lamp: the Call stands (the gate learns lit amber, or the lamps go yellow), built = 10.
+FRICTION: PIL's ImageChops.difference(...).getbbox() on RGBA looks at alpha only: two RGBA images
+with equal alpha read "identical". Compare with numpy (any channel), as above.
+NEW for iteration 18: in the same crop the sedan's UNLIT rear lenses (back view, the car at the
+top) read dark rust-red at 3x. Measure their colour graded against "no red tail lamps" (the
+blood-red rule, not the vermilion gate): if they read red, turn the unlit lens toward amber-brown
+in the cutter (a LAMP_DEG-style turn on the dark lenses), re-cut, film seed 13 f180 again.
+Session end 04:20.
