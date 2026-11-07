@@ -30,17 +30,17 @@ func test_without_a_left_strip_the_base_figure_draws() -> void:
 
 func test_the_flamer_fires_its_drawn_flame_only_along_side_and_camera() -> void:
 	for o: int in 8:
-		assert_eq(RivetFrames.fires_drawn(&"flamethrower", o), o in [0, 2, 4], "octant %d" % o)
-		assert_true(RivetFrames.fires_drawn(&"pistol", o), "pistol octant %d" % o)
+		assert_eq(RivetStrips.fires_drawn(&"flamethrower", o), o in [0, 2, 4], "octant %d" % o)
+		assert_true(RivetStrips.fires_drawn(&"pistol", o), "pistol octant %d" % o)
 
 
 func test_the_flamer_drawn_flame_needs_the_aim_along_it() -> void:
 	# d9 it16: the head read octant 4 (screen left) while the jet left at ~124 deg (down-left).
-	assert_false(RivetFrames.fires_drawn(&"flamethrower", 4, deg_to_rad(124.0)))
-	assert_true(RivetFrames.fires_drawn(&"flamethrower", 4, deg_to_rad(170.0)))
-	assert_true(RivetFrames.fires_drawn(&"flamethrower", 0, deg_to_rad(-15.0)))
-	assert_false(RivetFrames.fires_drawn(&"flamethrower", 2, deg_to_rad(50.0)))
-	assert_true(RivetFrames.fires_drawn(&"pistol", 4, deg_to_rad(124.0)))
+	assert_false(RivetStrips.fires_drawn(&"flamethrower", 4, deg_to_rad(124.0)))
+	assert_true(RivetStrips.fires_drawn(&"flamethrower", 4, deg_to_rad(170.0)))
+	assert_true(RivetStrips.fires_drawn(&"flamethrower", 0, deg_to_rad(-15.0)))
+	assert_false(RivetStrips.fires_drawn(&"flamethrower", 2, deg_to_rad(50.0)))
+	assert_true(RivetStrips.fires_drawn(&"pistol", 4, deg_to_rad(124.0)))
 
 
 func test_the_flamer_facings_carry_the_nozzle_at_both_pitches() -> void:
@@ -48,3 +48,17 @@ func test_the_flamer_facings_carry_the_nozzle_at_both_pitches() -> void:
 		var path: String = RivetStrips.DIR + art + "/rivet_eq_flamethrower.png"
 		for cell: int in 5:
 			assert_gt(RivetMuzzle.point(path, cell).x, 0.0, "%s cell %d" % [art, cell])
+
+
+func test_a_cone_burst_that_went_off_its_drawn_flame_keeps_the_facing_cell() -> void:
+	# d9 it16: the stream stopped (t367), the fire latch held 3 more frames while the aim swung
+	# into screen left: a drawn flame with no jet. The burst keeps its facing cell to the end.
+	var rig: CutRig = add_child_autofree(CutRig.new())
+	rig.aiming = true
+	rig.aim_at = Vector2(-100.0, 150.0)  # ~124 deg: off the left octant's drawn flame
+	assert_false(RivetStrips.draws_fire(rig, &"flamethrower", 4, true))
+	rig.aim_at = Vector2(-100.0, 0.0)  # swung onto screen left, latch still up
+	assert_false(RivetStrips.draws_fire(rig, &"flamethrower", 4, true))
+	assert_false(RivetStrips.draws_fire(rig, &"flamethrower", 4, false))  # the latch clears
+	assert_true(RivetStrips.draws_fire(rig, &"flamethrower", 4, true))  # a new burst on the flame
+	assert_true(RivetStrips.draws_fire(rig, &"pistol", 3, true))
