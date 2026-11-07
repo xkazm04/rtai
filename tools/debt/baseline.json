@@ -215,14 +215,15 @@
         "2026-11-06: collect_call_view +1 line: the death beat's ink veil (owner d8); collect_call_stage shrank 266->262 in the same change (files_past_soft_cap 68 -> 68)",
         "2026-11-06: n8-view it7: ArenaRigs + ArenaRobotRigs moved dev/arena -> features/arena (quest 1 ships the rig cast under a card view; decision 2026-11-04 re-check); quest1_game +3 lines (files_past_soft_cap 68 -> 68)",
         "2026-11-07: merge n8-view into n8-vehicles: both sides' accepted dev lines (vehicles' dev films and bench, view's lead showcase) (files_past_soft_cap 67 -> 67)",
-        "2026-11-07: cast_view.gd +4: quest 1's rig cast leaves the contractors to the cast view (QuestGuardCast), _rivet steps out for the rigs (files_past_soft_cap 67 -> 67)"
+        "2026-11-07: cast_view.gd +4: quest 1's rig cast leaves the contractors to the cast view (QuestGuardCast), _rivet steps out for the rigs (files_past_soft_cap 67 -> 67)",
+        "2026-11-07: stage_view.gd +8: the stage view claims the kerb-car registry on _enter_tree (before quest 1 fills its street) and releases it on _exit_tree, so quest 1's and the arena city's kerb cars stand as cards under a tilt (n8 vehicles it21) (files_past_soft_cap 67 -> 67)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 262,
         "project/boot/collect_call/view/cast_view.gd": 229,
         "project/boot/collect_call/view/collect_call_view.gd": 237,
         "project/boot/collect_call/view/fx_view.gd": 271,
-        "project/boot/collect_call/view/stage_view.gd": 205,
+        "project/boot/collect_call/view/stage_view.gd": 213,
         "project/boot/quest1_game.gd": 270,
         "project/dev/arena/arena_game.gd": 294,
         "project/dev/audio/audio_riot.gd": 201,

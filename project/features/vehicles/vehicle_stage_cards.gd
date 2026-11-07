@@ -21,6 +21,12 @@ const WIDE_M: float = 0.6
 ## GhostAttackViews.dent_dz drew the tether and the seized car's halo over the vehicles band (and
 ## ServoBodyView the bay's apron mark, view 73a78455). False: the iteration-11 look.
 static var over: bool = true
+## True: with no VehicleView in the scene (quest 1 and the arena's city block), these cards also
+## stand the city's kerb-parked cars (VehicleParked, handed over by city's ChunkLift while `live`),
+## which else stay flat top-down props under a tilt. False: the kerb cars stay flat (the before).
+static var kerb: bool = true
+## True while a stage view holds the kerb-car registry (claim()); its cards draw the kerb cars.
+static var _claimed: bool = false
 
 var cards: VehicleCards = VehicleCards.new()
 var _cars: Callable = Callable()
@@ -29,6 +35,8 @@ var _people: Callable = Callable()
 var _on: bool = false
 ## The stage view whose Ink-px space the cards follow when hosted on a print's actor layer.
 var _view: Node2D = null
+## True when this node draws the kerb-car registry (a stage view claimed it).
+var _parked: bool = false
 
 
 ## Cards for `cars` (() -> Array[VehicleBody]) under `view`, a StageView drawing in Ink px.
@@ -37,6 +45,7 @@ static func attach(view: Node2D, cars: Callable) -> VehicleStageCards:
 	node._cars = cars
 	node.scale = Vector2.ONE * Ink.PX_PER_M / SimConst.PX_PER_M  # cards place in sim px
 	node.add_child(node.cards)
+	node._parked = _claimed
 	var up: Node = view.get_parent()
 	while up != null and not up is PrintStage:
 		up = up.get_parent()
@@ -51,6 +60,23 @@ static func attach(view: Node2D, cars: Callable) -> VehicleStageCards:
 	(up as PrintStage).actor_layer().add_child(node)
 	node._follow()
 	return node
+
+
+## A stage view entering the tree claims the kerb cars (VehicleParked.live) under a card view when
+## no VehicleView holds them, BEFORE the city chunks are drawn (quest 1 fills its street in _ready
+## and ChunkLift hands a chunk's cars over only as it orders it). `top`: no atlas, no claim.
+static func claim() -> void:
+	if kerb and not VehicleParked.live and VehicleCards.atlas() != null:
+		VehicleParked.clear()  # no cars of an earlier city (ChunkLift hands them in from here on)
+		VehicleParked.live = true
+		_claimed = true
+
+
+## The stage view leaving the tree hands the registry back (the kerb cars flat again).
+static func release() -> void:
+	if _claimed:
+		VehicleParked.live = false
+		_claimed = false
 
 
 ## Under a print's actor layer: the stage view's transform, then Ink px -> sim px.
@@ -105,6 +131,11 @@ func _process(_delta: float) -> void:
 	refresh()
 
 
+## True when this node draws the city's kerb-parked cars.
+func parked() -> bool:
+	return _parked
+
+
 ## Puts this frame's cards (none and hidden without a card atlas); `_process` runs it every frame.
 func refresh() -> void:
 	var tex: Texture2D = VehicleCards.atlas()
@@ -123,6 +154,11 @@ func refresh() -> void:
 	for b: VehicleBody in list:
 		var worn: int = VehicleCards.wear(b.state, b.id) + VehicleCards.duty(b.art, b.vel.length())
 		cards.put(b.art, b.pos, b.head, tint_of(b.state), worn)
+	if _parked:  # the kerb cars round the screen (stage metres are the city's on the city)
+		var seen: Rect2 = VehicleCull.screen_m(cards, VehicleCards.CELL_M)
+		if seen.has_area():
+			var at: Vector2 = seen.get_center()
+			VehicleParked.put_near(cards, at, VehicleCull.reach_m(seen, at))
 	cards.finish()
 
 

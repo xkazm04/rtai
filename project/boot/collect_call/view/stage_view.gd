@@ -28,6 +28,14 @@ var zones: bool = true
 var _cards: VehicleStageCards = null  # n8: the cars stand as cards under a tilt
 
 
+func _enter_tree() -> void:
+	VehicleStageCards.claim()  # n8: kerb cars as cards, claimed before the street is drawn
+
+
+func _exit_tree() -> void:
+	VehicleStageCards.release()
+
+
 func _process(_delta: float) -> void:
 	queue_redraw()
 	_cards = VehicleStageCards.ensure(_cards, self, stage)
