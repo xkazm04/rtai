@@ -6,6 +6,7 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--seed",
 	"--strip-prefetch",
 	"--frame-cap",  # d9-perf L10: off = uncapped vsync on a display faster than 60 Hz (FrameCap)
+	"--menu-idle",  # d9-perf L13: off = the title card redraws every frame (MenuIdle)
 	"--replay",
 	"--record",
 	"--devtools",

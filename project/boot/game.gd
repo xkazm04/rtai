@@ -5,10 +5,12 @@ extends Node
 
 ## L10: the frame limiter at the sim tick rate on a display faster than it (FrameCap).
 ## L12: the same cap while the window is minimized (MinimizedCap).
+## L13: low-processor mode while the slice's title card is up (MenuIdle).
 func _ready() -> void:
 	var flag: String = LaunchArgs.value("--frame-cap")
 	FrameCap.apply(flag)
 	add_child(MinimizedCap.new(flag))
+	add_child(MenuIdle.new(LaunchArgs.value("--menu-idle")))
 
 
 func is_dev_build() -> bool:
