@@ -46,6 +46,10 @@ func _ready() -> void:
 		bus.connect(signal_name, handler)
 
 
+func _exit_tree() -> void:
+	Log.info("device", "rumble: %d pulses played" % played)
+
+
 ## The pulse `kind` at `rumble_gain`: weak, strong, seconds (zero for an unknown kind).
 static func pulse(kind: StringName, rumble_gain: float) -> Vector3:
 	var p: Vector3 = PULSES.get(kind, Vector3.ZERO)

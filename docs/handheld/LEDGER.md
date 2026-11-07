@@ -137,8 +137,11 @@ stick, 2/3 right stick, 4 LT, 5 RT.
   `LaunchArgs` when the device row sets `rumble` (every handheld row 1.0; desktop none): Rivet hit (0.3/0.8, 180 ms),
   a car strikes a person (killed 0.4/0.6, 160 ms; knocked 0.3/0.3, 100 ms), a tackle knock-down (0.5/0.2, 100 ms), a boss
   steps in (0.6/0.6, 500 ms), a hijack (0.3/0.1, 120 ms), the whispers spike (0.2/0, 400 ms); a weaker pulse never cuts a
-  stronger running one. Owed: a blast and a car crash (no bus event for either), a settings toggle, and the feel on a
-  real pad (this PC has no pad attached: the calls are unit-tested, never felt).
+  stronger running one. **Live check** (`--device=deck`, headless, the pulse count logged on exit): the King fight
+  2400 ticks = **1 pulse** (the boss stepping in); the director reel 6000 ticks = **0**. Rivet's hits in the arena and
+  the boss fights never reach the bus: `player_hit` is emitted only by quest 1's robo-tazer (`combat_arena.gd`) and the
+  pit AI (`enemy_pit.gd`). Owed: `player_hit` at Rivet's damage chokepoint (every hit he takes), a blast and a car crash
+  event, a settings toggle, and the feel on a real pad (no pad on this PC: unit-tested, never felt).
 - Aim assist for twin-stick aim: not found. Owed (a design call for the owner: magnetism toward the nearest target in a cone).
 - Menus and the dialogue: owed, a pad-only walk through quest 1's start, the settings panel and the dialogue box (iteration 2).
 - On-screen keyboard: the game has no text entry today; nothing owed until it does.

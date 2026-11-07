@@ -128,3 +128,8 @@ NEXT (iteration 2):
 - RESULT 11:52 E7 Switch-class budget (3 threads, 30 cap, CONTENDED): the cap holds (p50 33.3, p99 ~37 ms) in the
   reel and the city; city memory ~2.3 GB (RAM + GPU shared) on x86. The CPU is the risk on an A57-class core
   (model-knowledge ratio, not measured).
+- FINDING 11:57 rumble live (`HandheldRumble` logs its pulse count on exit): King fight under `deck` 2400 ticks = 1 pulse
+  (boss_engaged), director reel 6000 ticks = 0. The bus is thin where a pad should be felt: `player_hit` comes only from
+  quest 1's robo-tazer and the pit AI, not from Rivet's damage chokepoint; no fire / blast / crash events. Logs
+  `evidence/it4/rumble-*-deck.log`. Owed next: emit `player_hit` where Rivet takes damage (gameplay: Events only, the
+  emit is a sim-side fact, so it must not change replay; check the replay/parity gate after).
