@@ -179,10 +179,10 @@ static func _put(mm: MultiMesh, i: int, xf: Transform2D, c: Color, b: VehicleBod
 	mm.set_instance_custom_data(i, Color(float(b.art), float(b.state), 0.0, 0.0))
 
 
-## Overlays for the marked sim traffic (VehicleTraffic.state D1 / HIJACKED) at its car_xf.
+## Overlays for the marked sim traffic (VehicleTraffic.state D1 / HIJACKED); flat views only.
 func _marked_traffic(counts: PackedInt32Array) -> void:
 	var book: VehicleTraffic = service.traffic
-	if book == null or book.state.is_empty():
+	if book == null or book.state.is_empty() or VehicleCards.atlas() != null:
 		return
 	var recs: PackedFloat64Array = service.world.cars_near(service.world.player_pos(), 1e6)
 	for r: int in range(0, recs.size(), VehicleWorld.CAR_STRIDE):
