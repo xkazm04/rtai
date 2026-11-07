@@ -586,3 +586,9 @@ NEXT (iteration 7):
    Torque's gang in features/); re-check the other lanes' journals for a REQUEST.
 5. Freeze prep (08:30): the Windows export and the REPORT's calls (cop tone, crowd variety,
    walkers, the walker's death, the contractor's orange, p55 height).
+- MEASURE rig_bench headless (16 full rigs, 540 ticks), CONTENDED (2-3 other Godot processes; both
+  runs exit 1: the section-20 judge fails under load, top too): rigMsP50 top 0.746 / 0.750 ms
+  (50 / 200 people) vs tilt70 0.969 / 1.085: ratio 1.30 / 1.45, it3's quiet pair 1.20 / 1.44. The
+  nine walkers (stride frames, the fall follow) add no rig cost beyond the load noise; the riot
+  pair's +0.7 ms of rigs above is most likely contention. NEXT 1 stays (quiet machine) but the
+  "hide once" change is not justified by this data. JSONs: masters n8/street/bench/it6/.
