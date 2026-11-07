@@ -520,3 +520,44 @@ NEXT (it7):
    dark (the props' 4 px inner stroke); Call 2's corpse "through" the barrier (sim, not built).
 5. Owner Calls 1-3 stand. Freeze 18:30: export RTAI.exe (`"$GODOT_BIN" --headless --path project
    --export-release windows-showcase ../build/export/windows/RTAI.exe`), REPORT final by 18:40.
+
+## Iteration 7 (director it9, 14:19-15:19), BUILD
+
+Read: JOURNAL it6 NEXT, git log, d9-rivet JOURNAL (it16: no REQUEST to seams), library JOURNAL (it85: no
+open REQUEST; OFFER cop_patrol_walk_armed_55_rfresh235_cells = row 2 copy-by-example B + row 5 A;
+round 1525 = riot 55 row 2 copy-by-example, running; `cop_riot_walk_armed_55_rfresh234_cells/` already
+on disk, not graded yet). Registry rules applied: sprite-and-atlas-production (a splice must keep the
+sheet's own registration: the library hangs every figure from one head line), motion-quality-gating
+(measured per frame, then filmed before/after at the same seed and frames in motion),
+generative-artifact-gating (every recipe reproduced byte-exact before changing one input; all 80 cells
+looked at old vs new on one contact).
+- 14:21 ACK assets: OFFER cop_patrol_walk_armed_55_rfresh235_cells taken (rows 2 and 5 new to the game).
+- 14:23 FINDING (my it4 splice): every library-drawn walk row, fresh strips included, has all four
+  figure tops on one line (top offset 0; the passing frames' feet rise 4-26 px). My scratch
+  `cops2/splice_row.py` stood the trimmed rfresh cells on the band's foot line instead, so a spliced row
+  dipped the head at each passing frame. Measured in the shipped grids (head-top spread per facing over
+  4 frames): SWAT 55 3/4-toward 7 px, SWAT 70 profile 5, riot 55 profile 3, patrol 55 profile 2; with
+  the rfresh235 rows the patrol's 3/4-toward and back would have dipped 9 and 8.
+- 14:26 MILESTONE (d84ad031): `tools/art/walk_splice_rows.py` (repo) hangs each fresh row from the head
+  line (foot line minus the tallest fresh figure). All four recipes (patrol 55, riot 55 + profile 1.06,
+  SWAT 55 + 3/4 1.06, SWAT 70) first reproduced byte-exact with the old splice (scratch `it9/build.sh old`),
+  then rebuilt: every spliced facing's head spread 0-2 px. Patrol 55 takes rfresh235 rows 2 and 5;
+  FILL patrol 55 1.07 -> 1.08 (mean figure 178.0 -> 175.8 px), the others unchanged at 2 dp. SWAT 55/70
+  back rows keep a 3-5 px spread: the library's own post-fixed row 5, not a splice (left).
+  Provenance: 4 lines. test_street_cop_walk + walker cards 14/0, lint 15/15.
+- 14:29 FRICTION (8 min): my "before" grids came from `git show HEAD:<png>`: Git LFS pointer text, not
+  PNGs. The import failed (ERR_FILE_CORRUPT), the two before-films logged 12820 / 4039 errors (void,
+  deleted), and the 4 `.import` files were left `valid=false` even after the new PNGs came back (the
+  import cache kept the failed attempt). Fixed: `.import` restored from git, the 6 `*_armed_walk.png-*.md5`
+  cache entries removed, re-import 0 ERROR. Old grids now via `git show <rev>:<png> | git lfs smudge`.
+  LESSON: in this repo a PNG at a past revision needs `| git lfs smudge`; check `head -c 8` is `\x89PNG`.
+- 14:32 MILESTONE (a3ff1c51), quality raise beyond the brief (n8 street's crowd, on main, no lane owns it
+  today): the head-line audit of all 17 walk grids found no other splice fault (elder 10 px, hood 7 px
+  are drawn bobs, head UP at the passing frames, natural). But the library has two fixed ped sheets the
+  game never took: jogger 70 v3 (B; the camera-fixed v2 regen + row 4 by example) and shopper 70 v3 +
+  rall rows (every facing alternates). Looked: the game's jogger walk was a shallower camera than her
+  still card (long legs, small head), so she changed shape on starting to jog; v3 matches the still
+  (scratch `it9/jog_contact.png`). Shopper rall: frames 1/3 now swap the stride; watch point: its
+  profile row sits at a slightly shallower camera than its other facings. WALK_FILL = still mean
+  height / walk mean height (checked: reproduces 1.11 / 1.08 on the old grids): jogger 1.12, shopper
+  1.09. Unit 20/0, lint 15/15, provenance 2 lines.
