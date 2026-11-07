@@ -90,8 +90,11 @@ func _init() -> void:
 		DeviceProfile.select(value("--device"))
 
 
-## d9-handheld: a `--device=` profile sets the window and the frame cap before the main scene.
+## d9-handheld: the menu pad buttons (every run); a `--device=` profile sets the window and the
+## frame cap before the main scene.
 func _ready() -> void:
+	@warning_ignore("return_value_discarded")
+	PlayerActions.install_menu_pad()  # every run: a pad presses the cards' buttons (A) too
 	if has("--device"):
 		var profile: DeviceProfile = DeviceProfile.shared()
 		profile.apply(get_window())

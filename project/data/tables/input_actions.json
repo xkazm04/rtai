@@ -8,6 +8,15 @@
     "stick_deadzone": 0.25
   },
   "doc": "Quest 1's gameplay actions as data (STM-09): the bit each takes in TickInput.buttons, its default keys (physical key names), mouse buttons and gamepad buttons/axes. Registered into the InputMap at boot (PlayerActions.install), rebindable later. Bits 0 (car: enter/exit, VehicleService.BIT_USE) and 1 (handbrake, VehicleService.BIT_HANDBRAKE) are the vehicles lane's contract; Space is both melee (on foot) and handbrake (driving). On the pad, R3 is both reload (on foot) and radio_next (driving), as R is on the keyboard; nothing is bound to the Guide button (a handheld's system button: Steam on a Deck, the overlay on a Windows handheld; d9-handheld).",
+  "menu_pad": {
+    "doc": "The engine's menu actions get pad buttons at boot (PlayerActions.install_menu_pad, every run; d9-handheld): Godot 4.7's defaults give ui_up/down/left/right the d-pad and the left stick but no pad button on ui_accept or ui_cancel, so a pad could move the focus on the title and pause cards but never press a button (a Deck could not start the game). Values are joypad button indices (0 = the bottom face button, 1 = the right one); added beside the keyboard defaults.",
+    "ui_accept": [
+      0
+    ],
+    "ui_cancel": [
+      1
+    ]
+  },
   "move": {
     "accel_mps2": 30,
     "brake_mps2": 40,
