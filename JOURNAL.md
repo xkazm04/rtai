@@ -542,3 +542,47 @@ row-5 mirror post fixes applied by assets where the hand allows; the row-4 pilot
 - GATE unit no-arg on aa9f60ef: 1511 passed, 0 failed, no FLAKY. Lint 15/15 (pre-commit).
 - frames.json: the p55 board (#4) in, the death-follow strip replaces the it5 death-hold strip;
   15 entries. Scratch .avi captures deleted.
+- MILESTONE 1c8b1431: p55 walkers stand 2.0 m (StreetWalkerCards.HEIGHT_BY_ART; p70 stays 1.7).
+  LOOKED city seed 5 48 px/m t8, x2 crops of the hat and hood walkers beside a cop: p70 1.7 | p55
+  1.7 | p55 2.0. At 1.7 the 55 drawings (longer legs, smaller heads, cells ~0.83 as wide) read
+  about two-thirds of a cop and smaller than their p70 twins; at 2.0 the bulk matches p70 and the
+  cops. Master peds_walkers_height_p70_p55_1.7_p55_2.0_48ppm_x2_city_seed5_t8.png.
+- GATE director reel under combo on aa9f60ef (p55 walkers in): 19/19 chapters, every chapter all
+  down (14 x 1/1, 2 x 2/2, 3 x 4/4), 0 SCRIPT ERROR, exit 0.
+- GATE `top` holds on dce89b5b (it6 code but the p55 height): `node tools/selftest/run.mjs` exit 0,
+  look goldens 11/11 (worst 0.27), block goldens 5/5 (worst 0.22), crowd atlas 6/6 on doctrine,
+  world lock 0.00 %. (The it6 code reads WALKS / STRIPS / HEIGHT_BY_ART only under a card view.)
+- MEASURE (brief 6) crowd cost with all nine walkers, CONTENDED (no bench.lock held by anyone, mine
+  taken; 4 then 2 other Godot processes at launch): city_bench riot, 400 on foot, 32 px/m, 30 s, one
+  pair top / tilt70: avgFrameMs 5.34 -> 6.42, p99CpuMs 16.8 -> 20.7, low1Fps 46.3 -> 34.7,
+  drawCallsAvg 685 -> 797 (it4: 800, so the hidden parts saved no draw calls), rigMsPerTick 0.84 ->
+  1.54 (it4 clean pair: 0.74 -> 0.99), simStepMsPerTick 0.126 -> 0.132 (the view-free control,
+  flat). NOT a verdict: contended, one pair. If the +0.7 ms of rigs holds on a quiet machine, the
+  suspect is StreetWalkerCards.step re-hiding every cached part each tick (cheap per call, ~20
+  parts x 16 full rigs) -> hide once and re-hide only after RigHeadCard/RigBuild re-show.
+  JSONs: masters n8/street/bench/it6/.
+
+Registry rules applied (it6): sprite-and-atlas-production (the six walk grids cut by script with
+the one fixed cell order; the library's B fix applied as a named, reproducible cut flag, not a hand
+edit; the size step measured per grid; per-pitch height as data), motion-quality-gating (the gait
+judged as a clip and a tick strip; the death judged as a tick strip with the remaining jump named),
+concept-scene-parity (every before|after on one seeded run, the before made by one constant or the
+previous commit's file), generative-artifact-gating (B sheets only with their named fix; the
+elder's repeated away frames accepted and named; A sheets for p55), render-submission-economy
+(the walker is still one sprite per person; the cost pair measured, labelled CONTENDED, and the
+suspect named rather than guessed away), depth-ordered-layered-art (the card stays the head card's
+own sprite: the rig's depth sort and the cast shadows unchanged, confirmed in the city crop).
+
+NEXT (iteration 7):
+1. Crowd cost on a quiet machine (bench.lock, 0 other Godot): 3 pairs city_bench riot top vs
+   tilt70 (scratch/street/bench6/run.sh, set 3 pairs). If rigMsPerTick rises over it4's +0.25,
+   make StreetWalkerCards.step hide the parts once (a dirty flag) and re-measure.
+2. The death swap's remaining jump: try DEATH_HOLD 0.45 with the follow (the parts' head is then
+   past the feet: the figure would shorten to MIN_LEN, then the corpse) and film the `--kill=light`
+   board against 0.3; or a REQUEST to assets for a fall strip per type (5 facings x 3 frames).
+3. 55 walk grids: REQUEST to assets (ped_*_walk_55, the 70 recipe) if combo's boss fights show
+   pedestrians gliding at p55 (the King's street fight: film `--boss=king --view=combo --rigs`).
+4. The thug / cultist / Torque's gang items stay as it3-it4 left them (no code names cultists or
+   Torque's gang in features/); re-check the other lanes' journals for a REQUEST.
+5. Freeze prep (08:30): the Windows export and the REPORT's calls (cop tone, crowd variety,
+   walkers, the walker's death, the contractor's orange, p55 height).
