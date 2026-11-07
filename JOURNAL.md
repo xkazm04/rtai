@@ -362,7 +362,7 @@ NEXT (it10 end, 13:03; supersedes every NEXT above):
 2. After the respawn he lies in the DEATH sprawl at the hub 1.5 s+: check `top` for the same hold (the death beat
    is meant as 1.0 s in his sprawl at the death spot with the veil). If the sprawl should end at the teleport, key
    cell_of's DEATH on react.dying only while the veil is up.
-3. Gates on cfe5eea4: director reel x3 (count `^ERROR` lines too) and `node tools/evidence/run.mjs --no-bench`
+3. Gates: the reels on cfe5eea4 are done (it10b, 19/19 x3); owed `node tools/evidence/run.mjs --no-bench` on the head
    (do not write in the worktree while it runs).
 4. The spawn frame: f0 draws his top-down parts' pale rim under the figure (the rig draws once before its first
    drive). Hide the parts at build under a card view, or run RivetFrames once at rig attach.
@@ -381,3 +381,4 @@ NEXT (it10 end, 13:03; supersedes every NEXT above):
   parts; the bay number's z vs the actors band sent to seams); realtime-combat-semantics (view only: the flamer's
   jet keeps the true aim and the sim's shot origin; the drawn flame yields to it); sprite-and-atlas-production
   (the portrait cut at the sheet's own resolution, reproducible with `--check`; provenance per file).
+- 13:05 gates it10b on cfe5eea4: director reel 19/19 x3, 0 SCRIPT ERROR, 0 p_frame (evidence/d9/gates-it10.md). Session end.
