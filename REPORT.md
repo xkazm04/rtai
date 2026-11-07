@@ -148,6 +148,16 @@ priority, the CPU's own 2-CU Radeon), never a device claim. Details and sources:
    hides the keyboard rebind rows (Steam Input remaps a Deck's pad): a) hide (built); b) keep them for a Windows handheld
    with a keyboard attached (one condition in `Quest1SettingsPanel._build_rows`).
 
+8. **What the Deck runs: a native Linux build or the Windows build under Proton?** (it15: the evidence is logs, no
+   still: `evidence/it15/`, LEDGER E4 / E13 / E13c / E14.) The native build is proven on the simulator so far: the
+   sniper-runtime `.so` builds, exports (`linux-slice`, 292 MB), runs the city in WSLg, replays identical with the
+   Windows editor and release builds, and a save resumes across the two OSes at the same hash. Proton would run the
+   Windows build unchanged but turns D3D12 into Vulkan through vkd3d-proton. a) **native Linux depot + Proton as the
+   fallback** (the recommendation: Valve recommends Vulkan for battery; one more depot and one more CI export);
+   b) Proton only (one build, no Linux depot; D3D12 translated); c) both, picked by Steam per OS (a) with the Windows
+   depot also marked for Proton. Nothing is built either way until the Steam port: today both exports exist. A real
+   Vulkan run on a Linux PC or a Deck is what decides it (WSLg has no Vulkan here).
+
 ## Owed / next
 - (it7) The draw_scale HUD side
   effect (if Call 5 b/c), the King fight's rumble count, the dev-arena experiments E1-E3/E7 re-labelled "at 32 px/m".
