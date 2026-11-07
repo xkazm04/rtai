@@ -661,3 +661,16 @@ NEXT (iteration 22 = the freeze session, 18:30 freeze, 18:40 REPORT):
    `perf-base` (my own; check `git status` in each first), `gtai-d9x/scratch/godot-src` (several GB; F18 was read from it,
    cite the file/lines, the tree is not needed), `scratch/tmp-perf`, `scratch/gates-it18`, `scratch/gates-it21`,
    `scratch/l11.log`, `scratch/l10exe.log`, `scratch/export-cap.log`.
+
+## Iteration 22 (17:53-18:40, the freeze session)
+- 17:54 Read JOURNAL / git log; no new REQUEST to perf in the rivet / seams / handheld journals (handheld's last answers
+  to perf are read and already in REPORT Call P-1 / P-2).
+- FRICTION 17:54 (1 min): `evidence/run.mjs` refused a dirty tree because I sent its log under `evidence/`; logs now go
+  to `gtai-d9x/scratch/gates-it22/`.
+- 17:54 Gates on HEAD 5f436fc8 started (`evidence/run.mjs --no-bench`, private TEMP).
+- 17:55 LEDGER final table: + the minimized King row (L12 + L14) and the title row (L13); commit ids filled in for L10
+  (314632c4), L13 (0f725304), L14 (ca5817a4). REPORT made final: one-paragraph summary, the final table, what does not
+  work, blocked, tooling, next steps.
+- 17:56 Clean-up: scratch worktrees `perf-before`, `perf-base`, `perf-bc7cv` removed (all mine; the bc7cv one held the
+  L4b BC7 import params: saved first as `evidence/perf/l4b-bc7cv/bc7cv-import.patch.gz`, 466 `.png.import`, 41 kB, so
+  Call P-1 (b) is `git apply` away). `godot-src` (F18 cited by file / lines) and the old gate / log scratch deleted.

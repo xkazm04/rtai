@@ -1,11 +1,19 @@
-# perf lane - day run d9 (2026-11-07) - REPORT (in progress; final at 18:40)
+# perf lane - day run d9 (2026-11-07) - REPORT (final)
 
 Branch `d9-perf` (cut from main `3982af1a`). Full numbers, method and every lever: `docs/perf/LEDGER.md`.
 Journal: `JOURNAL.md`. Clips and stills: `C:\Users\kazda\kiro\gtai-masters\d9\perf\` (`frames.json`).
 
+## In one paragraph
+Nothing on screen changed (every kept lever is pixel-free: `top` bit-identical, goldens, parity, the reels), and the
+game is lighter: on the shipped release build the 400-actor riot's slow frames are halved (p99 12.5 -> 8.1 ms, worst
+25.3 -> 12.2 ms, never over 25 ms now), the pck is 12.5 MB smaller, a > 60 Hz monitor costs ~40 % less CPU (no
+duplicate frames), a minimized game about half the CPU, and the title card ~nothing. The biggest remaining wins
+move pixels or need a file in another lane, so they are Calls below (BC7: a third of the VRAM; the traffic-sheet
+split: ~96 MB of RAM; steadier 60 Hz pacing for ~0.06 of a core).
+
 ## Calls for the owner
 
-(filled as the levers that move a pixel are measured; each has a default that is already built)
+(each has a default that is already built; the default is "no change")
 
 ### Call P-1: compress the drawn art as BC7 (a third of the VRAM, no frame cost) - default built: lossless (no change)
 - **What:** the 712 textures under `features/{characters,city,vehicles}/art` imported as VRAM-compressed BC7
@@ -64,7 +72,8 @@ Journal: `JOURNAL.md`. Clips and stills: `C:\Users\kazda\kiro\gtai-masters\d9\pe
 - **Why it costs that (F18, found 17:20 in the engine's Windows source):** the limiter sleeps to 1 ms before the frame is
   due and then spins the CPU for that last millisecond (1 ms of 16.7 = 0.06 of a core): the measured cost, exactly. The
   engine's low-power mode sleeps instead of spinning but wakes up to ~1 ms late; whether that keeps (b)'s steadiness is a
-  later A/B, so (b) may become nearly free.
+  later A/B, so (b) may become nearly free. (L14 already uses exactly that mode while minimized, where pacing does not
+  matter: ~-0.06 of a core, F18's size, so the mechanism is confirmed; the on-screen pacing A/B is not done.)
 - **Options:** (a) no limiter at 60 Hz (default: least CPU). (b) the limiter at 60 Hz too (steadier delivery). (c) a
   'frame pacing: efficient / steady' option in the settings, default (a). Evidence: `evidence/perf/l10-cap/ab.json`.
 - **Recommended:** (c) when a settings screen for it exists; (a) until then. The bigger lever above 60 Hz is drawing
@@ -80,7 +89,7 @@ Journal: `JOURNAL.md`. Clips and stills: `C:\Users\kazda\kiro\gtai-masters\d9\pe
   `evidence/perf/f19-freeze/` (the hunt script, the frozen run's thread split and log), LEDGER F19.
 - Not yet checked: whether a real Start click (not `--autostart`) freezes too, and the release export.
 
-## Kept so far (pixel-free, on the branch; numbers in LEDGER)
+## What works: kept on the branch (pixel-free; numbers and A/B method in LEDGER)
 
 - **L10 frame cap at the tick rate on > 61 Hz displays** (15:48): simulated 144 Hz riot 0.68 -> 0.42 cores, drive 0.52 ->
   0.30, the King under combo 0.80 -> 0.47, duplicate frames 2450 -> 0 per 30 s; **on the shipped release build (16:42)
@@ -99,3 +108,54 @@ Journal: `JOURNAL.md`. Clips and stills: `C:\Users\kazda\kiro\gtai-masters\d9\pe
   (-12.5 MB) with every mip of every texture decoding bit-identical; costs ~1.7x texture encode at import.
 - Dropped with numbers: L1 renderer/driver, L6 render thread, **L7 a stripped export template** (exe 109 -> 67-74 MB and
   ~-10 MB RAM, but the MSVC build is ~10 % slower a frame than the official MinGW-GCC template, LTO or not).
+
+## Final table: this morning's main vs d9-perf (LEDGER "Final table"; release build unless marked)
+| scene | metric | main | d9-perf | verdict |
+|---|---|---|---|---|
+| riot, 400 actors, fixed 60 | p99 / p99.9 / worst ms | 12.53 / 24.00 / 25.33 | **8.09 / 10.36 / 12.16** | WIN -35 / -57 / -52 % (L2 + L3) |
+| riot | p50, draws, CPU, RAM | 3.85 ms, 832, 1.03, 754 MB | 4.08 ms, 832, 1.01, 756 MB | WASH |
+| city drive at 70, 48 px/m | p50 / p99 / worst ms | 2.30 / 4.28 / 6.34 | 2.14 / 4.13 / 5.98 | WASH |
+| riot / drive at 60 Hz, vsync | CPU cores | 0.34 / 0.18 | 0.32 / 0.18 | WASH (this PC's panel) |
+| riot / drive, simulated 144 Hz | CPU cores, duplicate frames | 0.68 / 0.47, 2450 | **0.39 / 0.29, 0** | WIN -43 / -38 % (L10) |
+| King under combo, minimized (editor) | CPU cores | 0.73-0.75 | **0.34-0.35** | WIN ~-53 % (L12 + L14) |
+| slice title card (editor) | CPU cores | 0.033 | **0.004** | WIN -88 % (L13) |
+| pck | MB | 227.70 | **215.21** | -12.5 MB, pixel-exact (L8) |
+| boot to first frame | s (release vs editor binary, it4) | | 2.58 vs 4.08 | (no lever moved it; L7 WASH) |
+
+## What does not work / dropped (with numbers in LEDGER)
+- **L1** Mobile / GL Compatibility / Vulkan: no win (Vulkan crashed 8 of 9, F1); Forward+ on D3D12 stays.
+- **L6** the separate render thread: +16 % CPU, no frame win.
+- **L7** a stripped export template: exe -32..-39 %, ~-10 MB RAM, but my MSVC build is ~10 % slower a frame than the
+  official MinGW-GCC template. Retry only with the official toolchain.
+- **L9** an engine patch that frees the oversized upload buffers: works (-96..-112 MB), but needs a custom template (L7's
+  loss). Call P-2 option (b) reaches the same RAM with the stock engine.
+- **L11** mailbox present mode: same as the limiter for the same CPU (WASH).
+- **L13's pause card**: no gain (the city behind it redraws every frame): left off (`MenuIdle.PAUSED_IDLE = false`).
+- **L5** gives -40 % of its pass's CPU (microbench) but no frame-level win beyond the noise; kept as a CPU cut only.
+
+## What blocked me (and for how long)
+- F19 chase (17:10-17:35, 25 min): runs reading ~0 CPU were quest 1 frozen, not the lever (FYI F-19 above).
+- Earlier sessions (JOURNAL): the shared machine (CONTENDED in most runs: numbers are A/B'd in one job with the lock
+  held, and an A-vs-A arm sets the floor), a 10-min runner limit waiting on the bench lock (L4, re-run), a void L10 job
+  (I edited `project/` under it), `city_bench` rejecting unknown args (11:30).
+
+## Tooling built today (stays; documented in LEDGER "Tooling built today")
+- `tools/perf/ab.mjs` + `stats.mjs` (+ test) + `proc_sample.ps1`: interleaved A/B jobs (flag, `@exe`, `^--path` and env
+  arms), medians, spreads, WIN / WASH / LOSS against the spread, CONTENDED tagging, bench.lock queueing.
+- `--perf-hud` (`dev/perf/perf_hud.gd`): live frame-budget overlay (frame bars, p50 / p99 / worst, process / physics /
+  render CPU / GPU ms, draws, objects, nodes, RAM / VRAM).
+- `city_bench` additions: GPU ms (timestamp queries), peak VRAM / texture memory, tick cadence per frame
+  (duplicate frames, skipped tick images), `--max-fps`.
+- `tools/perf/thread_cpu.ps1`: per-thread CPU split by thread name / start module (which thread pays).
+- `tools/perf/boot.sh` (boot to first frame), `webp_effort.py`, `ctex_same.py` (every mip of every texture decoded and
+  compared), `template/strip.py` + `tw_trim.py` (engine build profiles), the probes under `evidence/perf/l12-*`, `l13-*`,
+  `l14-*`, and `evidence/perf/f19-freeze/hunt.ps1`.
+- Shared with the handheld lane (REQUESTs both ways in JOURNAL): its E10 / E12 rows were measured with these.
+
+## Next steps
+1. F19: a stack of the frozen main thread (procdump / a debug template) and the real Start click; the save worker and
+   `chunk_source.take` are the suspects.
+2. Call P-3 (b) at ~0 cost: an on-screen pacing A/B of low-processor mode + the 60 Hz limiter (sleep, no spin; F18).
+3. Call P-2 (b): the traffic-sheet split (vehicles' files; REQUEST in JOURNAL), then measure the -96 MB.
+4. L7 again with the official toolchain (llvm-mingw + LTO) and an unstripped A-vs-A build.
+5. Interpolated drawing above 60 Hz (`SimClock.alpha()` has no reader): smoother on 144 Hz, a look change: a Call.
