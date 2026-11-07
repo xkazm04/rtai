@@ -864,3 +864,57 @@ NEXT (iteration 20, in order):
 - Session end ~04:02. Head = this JOURNAL commit. NEXT (iteration 20): as listed above (1: the
   asset lane's answers to the bus_stop/lamp 55 + street_sign/bollard REQUESTs; 2: their props rows;
   4: the freeze items: reel at tilt70 19/19, exe export, REPORT).
+
+## Iteration 22 (04:02-05:02, BUILD)
+
+Read: JOURNAL, git log, the other lanes' journals (no new REQUEST to city; view's it19 BossView
+REQUEST answered last session), the library catalog (new since it19: bus_stop_v3 55 A, lamp_v5 55
+B, street_sign 70 B + street_sign_v2 70 A / 55 B, bollard 70 A / 55 A, depot_dressing_v3 55 A,
+traffic_light_v5 55 B, bench_v4 55 B). The assets lane served all four it19 REQUESTs.
+
+- MILESTONE 2248587a the bus stop and lamp 55 strips from the 55 twins of the 70 picks
+  (bus_stop_v3 A, lamp_v5 B: a little steep, a globe sliver, accepted at game size because it is
+  the 70 lamp_v4's design and paint). Combo's hard swap 70 -> 55 now keeps one design for every
+  prop strip (it19 FOUND: these two were the last that changed). Same cell widths and foot_m.
+- EVIDENCE `city_bench --scenario=facade --zoom=1.5 --view=tilt --secs=24` (48 px/m), 937c4d54
+  p55 strips vs 2248587a, frame at 10.5 s: the black-slab shelter becomes the ribbed grey roof
+  with the cream fascia (as at 70); the lamp gets the bolted plate.
+  `gtai-masters/n8/city/it22_busstop_lamp_v55_tilt48_before_after_x2.png` (frames.json #4).
+  0 SCRIPT ERROR both. FRICTION: `git show <rev>:<png> > file` writes the LFS POINTER (pngs are
+  LFS here): Godot then marks the texture `valid=false` in its .import (ERR_FILE_CORRUPT) and the
+  run draws without it. Use `git show <rev>:<png> | git lfs smudge > file`. The first "before"
+  was discarded for this reason; the .import files were restored from git and re-imported clean.
+- MILESTONE a8b36021 the street sign and bollard stand up under a tilt (the last two KerbDresser
+  kerb props that stayed flat): props rows street_sign (cell 0.9 m: the blade) and bollard (0.4 m,
+  the flat footprint), strips from the REQUESTed sheets (street_sign_v2 70 A / 55 B, bollard
+  70 A / 55 A), mipmapped (the importer defaulted to mipmaps off for the new files: set to true as
+  every prop strip). Turn 0 like the other kerb props (blade face-on along the kerb). 6 provenance
+  lines.
+- EVIDENCE `city_bench --scenario=drive --zoom=1.0 --view=tilt70 --secs=30` (32 px/m), old table
+  vs new table, the kerb props found by a frame diff (the facade route has none): before a flat
+  disc / a flat diagonal blade, after the cast-iron post with its cream band and the pole with its
+  blank blade. `it22_kerb_bollard_sign_tilt70_32ppm_before_after_x3.png` (frames.json #6).
+  0 SCRIPT ERROR both. Judged: at 32 px/m they are small (13 x 25 px for the bollard) but read as
+  posts standing on the pavement, not marks on it.
+- MILESTONE 0a96d574 Servo's depot dressing at 55 from depot_dressing_v3 (A, the exact redraw
+  with muted dark-brown brick; warm-red px on the bay pieces 6171 -> 4909): same 8 pieces in the
+  same order, sizes within 1 px. EVIDENCE `res://dev/arena/arena.tscn -- --boss=servo --bot=boss
+  --rigs --seed=2 --view=combo --ppm=48` frame 880: the three shutter bays draw with the brown
+  brick, 0 SCRIPT ERROR. `it22_depot_bays_v3_combo48_frame880.png` (not in frames.json: a colour
+  shift only).
+- DECISION traffic_light_v5 55 (B) NOT cut: the current p55 strip already has the 70's layout
+  (pole left, head right) and a sane pole; v5's pole is ~5.4x the flange (B note). bench_v4 55
+  (B) NOT cut: the library keeps bench_v3 the pick (v4's end views overshoot to ~65-70).
+- frames.json: the two new pairs in, the it7 dumpster (superseded by the v4 cover) and the it13
+  crate print-twin detail out (15 entries).
+- GATE `top` bit-identity at 0a96d574 vs the it19 baseline (408e72d6): `--arena=city --bot=rivet
+  --seed=2 --rigs --quit-after 301` framemd5 IDENTICAL (617 lines), 0 SCRIPT ERROR. Lint 15/15
+  every commit. Unit --select=test_prop_cards 11/0.
+
+Registry rules applied: generative-artifact-gating (each sheet's grade and note read; A used as
+is, two B's used for the design match with the fault named, two B's declined with reasons),
+sprite-and-atlas-production (one cut tool, mipmaps on every card strip, cell widths from the
+facing-0 fill), concept-scene-parity + motion-quality-gating (same scenario, seed and frame before
+and after, the props located by a frame diff, judged at 32 and 48 px/m), depth-ordered-layered-art
+(the new cards ride the existing roofs band by south edge), render-submission-economy (two more
+card kinds, one textured rect each, no new pass).
