@@ -46,6 +46,8 @@ Branch `d9-seams`. Evidence: `C:\Users\kazda\kiro\gtai-masters\d9\seams\` (`fram
    `top` print from bike_rider_top_v1 (A, cream/ink duotone). Only row 9 / cell 9 landed (the other
    rows byte-identical). `sim_bike_rider_top_vs_tilt70_32ppm_seed7_f420_x2.png`, `..._crop3x.png`,
    `sim_bike_rider_{top,t70}_32_seed7_bikes025.mp4`.
+   Close-up it9 at 64 px/m (a real 64 px/m render, not a crop): `sim_bike_rider_tilt70_vs_top_64ppm_seed7_bikes025_f380-500.mp4`
+   + `sim_bike_rider_tilt70_vs_top_64ppm_seed7_f430-485_x12.png`.
 9. **The King's drawn legs at 70** (item 2, 4aa2a0e0, it3): king_legs_70_v3 (A, no hip ring) under the
    70 bust with a per-pitch lift (`KingLegsCard.LIFT` {55: 0.5, 70: 0.74}: the hem over the thigh tops);
    55 now on king_legs_55_v2 (A, the profile strides). `king_legs70_before_after_tilt70_{64,32}ppm_seed2_f150_x{2,3}.png`,
@@ -175,6 +177,9 @@ director reel (`--fixed-fps 60 --quit-after 14000`) top 19/19, tilt70 19/19, com
   break the set. Left as is.
 - The elder's 3/4-away walk row alternates weakly (the asset lane's named weak row; 4 fix asks failed).
 - The sim bike is off by default (Call 3).
+- Traffic drives through Rivet on foot (filmed it9 with the bike, 64 px/m, tilt70 and top): the city sim has no
+  vehicle-vs-player contact (`CitySimBody` resolves people only; no car step reads the body). Pre-existing for
+  every car (by code reading), not the bike's. Call 4.
 - After merge, rebuild native (`just native`): `project/native/bin` is git-ignored, and the old DLL
   would treat bikes as cars (no crash; parity would fail).
 
@@ -196,6 +201,12 @@ director reel (`--fixed-fps 60 --quit-after 14000`) top 19/19, tilt70 19/19, com
    (the goldens move then anyway); (c) a higher share. It now carries a rider at every pitch (it3).
    See: `RTAI.exe` is the showcase (arena); the traffic is the main scene:
    `"$GODOT_BIN" --path project -- --view=tilt70 --seed=7 --rigs --bikes=0.25` (and without `--view` for top).
+
+4. **Traffic and Rivet on foot** (found it9 filming the bike close up): every vehicle passes through
+   him, and while they overlap the depth sort flips between bike-over-Rivet and Rivet-over-bike. Default
+   built: as is (pre-existing; sim and goldens untouched). Options: (a) as is; (b) cars brake for the
+   player body (sim, both twins: parity, scenarios and the top goldens move); (c) cars knock him down
+   (b plus a hit). See `sim_bike_rider_tilt70_vs_top_64ppm_seed7_bikes025_f380-500.mp4`.
 
 ## Next steps
 See JOURNAL `NEXT:`.

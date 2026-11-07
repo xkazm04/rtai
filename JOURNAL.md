@@ -768,3 +768,18 @@ portraits to the game lanes). Main has not moved (merge-base = main 0bea8b93).
 - 16:18 Not built (decided): Call 2's option (a corpse stopped at a wall). A view-side redirect of the drawn
   fall would have to match city's crowd-atlas corpse at the 90-tick swap (StreetCrowdCorpse.fall_cell),
   a new jump seam across street, city and the arena's props; the owner has not picked it.
+- 16:12 GATE scenarios on the trial merge: 52 passed (`evidence/d9-seams/mergetrial-it9-scenarios.log`).
+  Rivet's branch touches no native/ or sim code (diff vs the merge base), so parity carries over.
+  Scratch worktree removed (`git worktree remove --force`).
+- 16:17 FILMED (evidence gap closed: item 3 had only 32 px/m films + a 3x crop): the sim bike at a REAL
+  64 px/m in the city drive, `res://boot/main.tscn -- [--view=tilt70] --seed=7 --rigs --bikes=0.25`
+  (`--ppm` is an arena flag: the drive's zoom is camera.json `on_foot` ppm, set to 64 for the take and
+  restored from git; tree clean after). 0 SCRIPT ERROR both. LOOKED: card row 9 (rider, tank, wheels)
+  reads clean at 64 in tilt70, the top print reads as a bike from above.
+- 16:18 FINDING (pre-existing, not the bike's): the bike drives THROUGH the idle Rivet; while they overlap
+  the depth order flips (bike over him, then him over the bike). By code: the city sim's player body
+  (`CitySimBody`) resolves people only, no car step reads BD_*, and nothing in features/bodies or
+  features/player checks a car. So every car does it. Not fixed (sim, both twins, moves parity/scenarios/
+  goldens): REPORT does-not + Call 4. Masters `sim_bike_rider_tilt70_vs_top_64ppm_seed7_bikes025_f380-500.mp4`
+  (frames.json entry 15, replacing the older 32 px/m drawn-legs still that entry 11 covers at 64) +
+  `_f430-485_x12.png`. Avi deleted.
