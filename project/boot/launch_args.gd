@@ -5,6 +5,7 @@ extends Node
 const KNOWN_FLAGS: PackedStringArray = [
 	"--seed",
 	"--strip-prefetch",
+	"--frame-cap",  # d9-perf L10: off = uncapped vsync on a display faster than 60 Hz (FrameCap)
 	"--replay",
 	"--record",
 	"--devtools",
