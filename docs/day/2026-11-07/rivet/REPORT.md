@@ -70,6 +70,11 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
   And a burst that went off its drawn flame keeps the facing cell to its end (`e6a74d74`): the fire latch drew a
   phantom flame with no jet for 3 frames after the stream stopped. Before/after:
   `gtai-masters\d9\rivet\rivet_flamer_phantom_flame_before_after_tilt70_64ppm_x1.5_seed3_t362_373.png`.
+- **Before/after in a boss fight at 48 px/m (it25):** today's main under combo (the head card over parts, the
+  held pistol part) against the drawn p55 figure, the King fight, same seed, camera and frames (40, 120, 200 firing
+  at the barge, 300): `gtai-masters/d9/rivet/rivet_before_after_main_vs_drawn_king_combo_p55_48ppm_x1.5_seed1_f40_120_200_300.png`
+  (frames.json entry 6). Seen: one drawn figure with the gun in his hands, firing from it; he reads smaller and
+  darker on the asphalt than the cream head card (Call 1). 0 SCRIPT ERROR in both runs.
 - **The frame cost** (it16, under the bench lock; 3 before / 3 after interleaved): rig_bench `--view=tilt70`, the
   drawn figure vs the head card over parts, median p50: 50 people 0.943 -> 0.776 ms, 200 people 1.319 -> 1.179 ms.
   No added cost (`evidence/d9/rivet-frame-cost-it16.md`; it10's contended runs agreed).

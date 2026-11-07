@@ -874,3 +874,10 @@ NEXT (17:58; NEXT 1-3 of 17:53 stand): 0. If bench.lock is free before 18:20: ri
 NEXT (it25 end, for the next run): see REPORT `## Next steps` (Calls 1-2 to land as defaults; the seams merge;
   main's combo switch; a walk per hold family; the p55 left walk tone; reload frame; armory row if picked).
 - Session end ~18:08: everything committed; no Godot work after the freeze export.
+- 18:03-18:07 The one missing deliverable, the boss before/after at 48 px/m against main: King, combo, seed 1,
+  pistol, `--write-movie --fixed-fps 60 --quit-after 420` twice (before = `RivetFrames.ENABLED = false` for that run
+  only, reverted with `git checkout -- project/features/characters/rivet_frames.gd`, status clean after); 0 SCRIPT
+  ERROR both. Masters `rivet_before_after_main_vs_drawn_king_combo_p55_48ppm_x1.5_seed1_f40_120_200_300.png`
+  (frames.json entry 6; the ghost/Kerf entry out, file kept; still 15). Seen: the drawn figure holds and fires the
+  pistol; he reads smaller and darker than the cream head card on the asphalt (feeds Call 1). Scratch frames and
+  .avi deleted (the empty `gtai-d9/scratch/rivet_it25` dir stays: the harness refused to rmdir it).
