@@ -603,3 +603,9 @@ NEXT (iteration 7):
   toward the facing (mid-fall, ~45 deg), lying on the ground at the feet's spot; same identity,
   camera and palette as ped_<type>_70 A/B. The street lane plays it through DEATH_HOLD instead of
   the follow, so the figure ends where the parts' corpse lies.
+- GATE scenarios on bc9e7c4f (the it6 code; headless): 52 ran, 0 failed, 0 SCRIPT ERROR, exit 0
+  (vehicle timings labelled CONTENDED by the runner). Owed on the it6 head: parity and
+  export-audit (no native or sim change in it6: view code only), the top director reel (the it6
+  code returns at once without a card view; top goldens 11/11 above).
+- Session end 01:41: tree clean, every change committed (5f3727fe, 325645a6, aa9f60ef, 1c8b1431
+  + docs). NEXT (iteration 7) as listed above.
