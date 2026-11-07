@@ -44,12 +44,13 @@ float fbm(vec2 p) {
 	return 0.55 * vnoise(p) + 0.3 * vnoise(p * 2.3) + 0.15 * vnoise(p * 5.1);
 }
 
-// 1 for a blue lens pixel, 2 for an amber one, 0 otherwise.
+// 1 for a blue lens pixel, 2 for an amber one, 0 otherwise. The amber lens is the cutter's yellower
+// amber (LAMP_DEG in tools/art/vehicle_cards.py), so r leads g by 0.12, not the sheet's 0.2.
 float lens(vec3 c) {
 	if (c.b > 0.6 && c.b > c.r + 0.3 && c.b > c.g + 0.2) {
 		return 1.0;
 	}
-	return (c.r > 0.6 && c.r > c.g + 0.2 && c.g > c.r * 0.2 && c.b < c.r * 0.35) ? 2.0 : 0.0;
+	return (c.r > 0.6 && c.r > c.g + 0.12 && c.g > c.r * 0.2 && c.b < c.r * 0.35) ? 2.0 : 0.0;
 }
 
 // A light-bar lens pixel lit (its half of the cycle: blue first, then amber) or dimmed.

@@ -73,10 +73,9 @@ FIT_BY = "area"
 # PaletteTokens): measured 5.7k vermilion px per taxi at 32 px/m in the tilt70 city. 0 = the sheet's.
 HUE_DEG = {3: TAXI_HUE}
 # The lit amber lenses (value >= 0.7, saturation >= 0.8, hue 20-42) turn LAMP_DEG toward yellow on
-# every row but the police car's (its siren shader finds the amber lens by colour): the sheets'
-# lens orange (~239, 151, 7) passes the vermilion gate even before the grade. 0 = the sheets'.
+# every row (the police bar's too: vehicle_cards.gdshader lens() tests r > g + 0.12 for it): the
+# sheets' lens orange (~239, 151, 7) passes the vermilion gate even before the grade. 0 = the sheets'.
 LAMP_DEG = 10.0
-POLICE_ROW = 8
 ROWS = [
     ("sedan", 1.45, (1.0, 1.0, 1.0)),
     ("sedan", 1.45, (0.93, 0.93, 0.93)),  # sedan_b: the small hatch, a shade darker
@@ -280,7 +279,7 @@ def paste(atlas: Image.Image, v: Image.Image, k: float, at: tuple, lift: float) 
     col, row, gain = at
     w, h = max(1, round(v.width * k)), max(1, round(v.height * k))
     im = amber(hue_turn(paint(v.resize((w, h), Image.LANCZOS), gain), HUE_DEG.get(row, 0.0)))
-    im = hue_turn(im, 0.0 if row == POLICE_ROW else LAMP_DEG, 0.8, 0.7, 42.0)
+    im = hue_turn(im, LAMP_DEG, 0.8, 0.7, 42.0)
     cx = col * CELL_PX + CELL_PX // 2
     cy = row * CELL_PX + CELL_PX // 2
     x, y = round(cx - w / 2), round(cy - lift - h / 2)
