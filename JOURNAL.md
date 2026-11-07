@@ -1599,3 +1599,19 @@ Session end ~08:05. Tree clean after this commit.
 08:06 LOOKED the bike row (9) at 70 and 55, columns 0-4: nose down-right in 1, nose right in the side,
 tail down-left in 3 at both pitches: right. Every vehicle row in both traffic atlases and the service
 atlas now turns one way. Scratch it23 cleaned (pngs, avis); logs kept.
+
+## Iteration 26 (BUILD, 08:07-08:30)
+Read: JOURNAL tail, git log, the lane journals (no new REQUEST to vehicles).
+08:12 MILESTONE NEXT 4, the cutter self-check: `tools/art/vehicle_turn_check.py <atlas.png>...
+[--exempt=9] [--margin=0.02]` (advisory, exit 1 on a flag). Per row it compares the box-normalised
+alpha silhouettes of the 3/4 cells (cols 1, 3) with the side cell and its mirror (cosine): turning one
+way, col 1 sits nearer the side (+) and col 3 nearer the mirror (-). MEASURED
+(evidence/n8-vehicles/turn-check-it26.log): the four committed atlases flagged 0 (bike exempt); the
+atlases from before tonight's mirrors (ada297fe~1 p55 traffic, 0f4810f0~1 service) flagged 4 of the 5
+rows mirrored by hand (p55 van, police car, truck col 1, depot van cols 1+3). MISSED: the p55 parked
+pickup (margin 0.009, below the 0.02 threshold). FALSE POSITIVE: the bike (-0.033/-0.042 at col 1,
+mirror-built, its narrow side silhouette; checked right by eye at 08:06), hence `--exempt`. The old
+p70 depot van is a different sheet from today's, so no 70 before/after was possible. A heuristic, not
+a gate: it points at a row to look at turning, nothing more.
+Rules applied: generative-artifact-gating (an automatic screen in front of the human look, its miss
+and false-positive rates written down), sprite-and-atlas-production (one turn direction per row).
