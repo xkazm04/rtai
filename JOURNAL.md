@@ -1109,3 +1109,35 @@ cream stage van roof at 32 px/m). street, hud: no new REQUEST to view.
   Masters: `servo_bay_number_ink_combo_32ppm_seed2_f130_before_top_after_bottom_x2.png` (+ the
   full-frame pair). No unit test: a draw-only change (a recorder would need a canvas); the film is
   the proof. Lint 15/15. DECISION view/servo bay number ink.
+- 05:29-05:31 QUALITY PASS on the merged tree (NEXT 3). Servo depot combo 64 px/m seed 2, 900
+  frames (`--bot-human --boss-cam`), 0 SCRIPT ERROR: LOOKED at f150-880 (6 frames): the HUD boss bar
+  covers the bay numbers (right), the van sits under the marks, Rivet/ghost/Servo order holds;
+  nothing view-owned misplaced. Quest 1 tilt70 32 px/m stills 600/2400/6000/13700 (shipped path):
+  the street stands at 70; at 13700 (Dock 9) the dead "cops" at the crossing were TOP-DOWN parts.
+- FOUND 05:33-05:38 (view's): quest 1's fighters are Fighter GUARD contractors (CombatArena.
+  spawn_guard: the hi-vis dock guards with rifles, street's StreetQuestCards.draw_guard/draw_down
+  cards on the sprite path). Since it7 view's rig cast is the shipped path under card views and
+  ArenaRigs dresses every hostile as BodyPlan COP: BLUE POLICE at Dock 9 (colour law: police blue
+  for police only). And on the merged tree their deaths throw SCRIPT ERRORs: Dock 9 ticks
+  13560-13900 tilt70 48 px/m = 102 x "Trying to assign invalid previously freed instance" at
+  street_walker_cards.gd:91 (StreetWalkerCards.step, the typed `for c: CanvasItem in HID` loop over
+  a rig item freed after the fall card hid it), and the corpses fall to gore blobs. Checked on a
+  throwaway n8-street-alone tree (%TEMP%/view-street-check): the sprite path draws the hi-vis
+  guards standing and lying, no rig.
+- MILESTONE 105961e2 `QuestGuardCast.ON`: under quest 1's rig cast the contractors stay on the cast
+  view (ArenaRigs skips them; CastView draws them through its own loop, street's cards on the
+  merge, and `_rivet` steps out for the rigs); Rivet, Mertz and the dev arena keep their rigs.
+  FILMED on the trial merge, Dock 9 ticks 13560-13900, tilt70 48 px/m, 1920x1080, before (ON
+  false: 102 SCRIPT ERROR) / after (0 SCRIPT ERROR):
+  `quest1_dock9_guards_cast_before_after_tilt70_48ppm.mp4` + `_t13840_crop.png`. LOOKED: before,
+  blue cops and gore blobs where they die; after, hi-vis contractors stand, shoot and lie drawn,
+  Rivet on his card. Depth: the guards no longer interleave with Rivet's rig (they shoot from
+  range; no overlap in the 340 ticks). Unit test_quest_guard_cast 3 cases (+ story forms, slice
+  closure 15/0). Debt: cast_view.gd 225 -> 229 accepted with the reason. DECISION line.
+- REQUEST to street: `StreetWalkerCards.step` (street_walker_cards.gd:91) assigns through a typed
+  `CanvasItem` loop over the HID list, and a rig item it hid can be freed later (as `release()`
+  already guards with is_instance_valid): on the merged tree a dying COP rig with the cop fall
+  grid threw 102 SCRIPT ERRORs in quest 1 Dock 9 (repro on the trial merge with
+  `QuestGuardCast.ON = false`: `-s res://dev/frames/quest1_clip.gd -- --ticks=13560-13900
+  --view=tilt70 --ppm=48`). View no longer sends quest 1's guards there, but any rig whose part
+  is freed mid-fall (a dropped gun?) hits it: `for c: Variant in ...: if is_instance_valid(c):`.
