@@ -9,7 +9,8 @@
         "2026-11-06: dev order probe logs each wrong ghost pair's tick (+1 dev line) (dev_loc 18151 -> 18152)",
         "2026-11-06: n8-view it7: quest1_clip --view flag (+2 dev lines) for quest 1 stills under tilt70 (dev_loc 18152 -> 18154)",
         "2026-11-07: lead_showcase takes --view and --speed to film the camera lead (combo vs combo_lead) with the real CameraRig (dev_loc 17762 -> 17769)",
-        "2026-11-07: merge n8-view into n8-vehicles: both sides' accepted dev lines (vehicles' dev films and bench, view's lead showcase) (dev_loc 17769 -> 18157)"
+        "2026-11-07: merge n8-view into n8-vehicles: both sides' accepted dev lines (vehicles' dev films and bench, view's lead showcase) (dev_loc 17769 -> 18157)",
+        "2026-11-07: n8 vehicles it17: VehicleFrameBench (the real drive's frame time with the traffic cards, brief item 5) (dev_loc 18157 -> 18246)"
       ],
       "files": {
         "project/dev/arena": 642,
@@ -33,11 +34,11 @@
         "project/dev/save_crash_writer.gd": 18,
         "project/dev/selftest": 1453,
         "project/dev/servo": 434,
-        "project/dev/showcase": 5674,
+        "project/dev/showcase": 5763,
         "project/dev/view": 195,
         "project/dev/weapon_art": 506
       },
-      "total": 18157
+      "total": 18246
     },
     "direct_cmdline_reads": {
       "accepted": [

@@ -18,6 +18,8 @@ static var blind: bool = false
 static var car_zoom: bool = false
 ## --grade=<id>: a lights.json grade (night shows the car and fire lights).
 static var grade: StringName = &""
+## --frames (VehicleFrameBench): keep CitySystem's own traffic targets (the game's drive).
+static var game_traffic: bool = false
 
 
 class Blind:
@@ -113,7 +115,8 @@ class Depth:
 static func build(world: World, parent: Node, look: StringName, carnage: bool) -> Array[Object]:
 	var city: CitySystem = CitySystem.new(true)
 	world.add_system(city)
-	city.spawner.targets = CityTargets.street(140, 6, 1)
+	if not game_traffic:
+		city.spawner.targets = CityTargets.street(140, 6, 1)
 	var svc: VehicleService = VehicleService.new()
 	world.add_system(svc)
 	var vw: CityVehicleWorld = Blind.new(city) if blind else CityVehicleWorld.new(city)

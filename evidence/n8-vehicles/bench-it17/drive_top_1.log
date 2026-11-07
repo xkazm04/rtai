@@ -1,0 +1,7 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+D3D12 12_0 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce RTX 4090
+
+[INFO] characters: prewarmed 33 rigs in 94.1 ms
+vehicle_frame: input set at tick 0
+[INFO] bench: HITCH 102.1 ms (process 2.3 flush 0.1 draw 99.6 pump 0.1) tick 34
+[INFO] bench: fight frames -> C:/Users/kazda/kiro/gtai-wt/n8-vehicles/evidence/n8-vehicles/bench-it17/drive_top_1.json {"frames":10985,"low1_fps":344.66911922859,"over33_settled":0,"over50_settled":0,"p50_ms":0.737999975681305,"p99_ms":2.04699993133545,"ticks":566,"worst_ms":102.060997009277,"worst_settled_ms":7.0479998588562}
