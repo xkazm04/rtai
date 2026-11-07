@@ -960,3 +960,11 @@ have not answered the it11 trial findings yet; street's it9 notes my answer and 
   ANSWER to street: done on n8-view (edee640a). In the city game the corpse keeps its rig 90 ticks,
   then your atlas lying frame (your 2b) takes it: if you want a longer hold there, it is
   `RigSelect.CORPSE_HOLD_TICKS` (one value; tell me).
+- GATE 04:17 at b097c7a5 (the corpse rig): unit full no-arg 1515 passed / 0 failed, 0 FLAKY
+  (`evidence/n8-view/unit-it12.log`); scenarios 52 ran, 0 failed (`scenarios-it12.log`; vehicle
+  drive timing CONTENDED, passes); director reel under combo 19/19 chapters all down, 0 SCRIPT
+  ERROR (`director-reel-it12-combo.log`). Lint 15/15 (hook).
+- 04:13-04:17 TRIAL MERGE re-run (it12 NEXT 3) on the newer heads: the trial tree reset to n8-view
+  b097c7a5 (detached), then city 7b63bcb1, street cfc90d46, vehicles 1b6740ac, hud 69c3b200 by
+  `trial_merge.sh` (conflicts: view's side, as it11). Lint 15/15 over 1185 files with NO hand fix:
+  the it11 BossView.attach gd-size clash is gone on the lanes' heads. Unit + reel top/combo running.
