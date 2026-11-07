@@ -1,13 +1,11 @@
 class_name RivetFrames
 extends RefCounted
-## Lane d9 rivet: under a view row with card art (p70 in play, p55 in boss fights) Rivet draws as
-## one whole-figure drawing at his feet instead of the head card over top-down parts (the parts are
-## hidden, not freed; StreetWalkerCards' pattern). Strips (tools/art/rivet_frames.py): BASE (5
-## facings, 3 drawn left, walk, sprint, roll, claw strike, hit, death) and one EQ strip per weapon
-## (5 facings holding it, fire or swing right, at the camera, at rest), used while it is out. A
-## one-handed hold turned left (no drawn left view: a mirror swaps the weapon hand) keeps the base
-## left figure + RivetHeldView's held part (logged). The art key's change swaps the strip (the
-## combo's hard swap). Straight down nothing runs. ENABLED false = the head card (before).
+## Lane d9 rivet: under a card-art view (p70 play, p55 boss) Rivet is one whole-figure drawing at
+## his feet, the head card's parts hidden (StreetWalkerCards' way). Strips (art/rivet_frames.py):
+## BASE (5 facings, 3 drawn left, walk, sprint, roll, claw, hit, death); EQ per weapon (5 facings,
+## fire/swing right, at the camera, at rest); a one-handed hold turned left draws its LEFT strip (3
+## drawn left views: a mirror swaps the hand), else the base left + the held part (logged). The art
+## key's change swaps the strip (the combo's hard swap). Top: nothing runs. ENABLED false = before.
 enum Cell { WALK = 8, SPRINT = 9, ROLL = 10, CLAW = 11, HIT = 12, DEATH = 13 }
 enum Eq { FIRE_SIDE = 5, FIRE_CAM = 6, REST = 7 }
 
@@ -16,6 +14,7 @@ const DIR: String = "res://features/characters/art/view/"
 const BASE: String = "rivet_frames.png"
 const BASE_CELLS: int = 14
 const EQ_CELLS: int = 8
+const LEFT_CELLS: int = 3
 ## Base cells: screen octant of the look (0 = screen right, +1 = 45 deg toward the camera) -> cell.
 const BASE_OCT: PackedInt32Array = [2, 1, 0, 5, 6, 7, 4, 3]
 ## Equipped: the five right-turned facings; the left octants mirror 1, 2, 3 (two-handed holds).
@@ -59,7 +58,10 @@ static func step(rig: CutRig) -> void:
 	if rig.plan.art_dir != "rivet":
 		return
 	var weapon: StringName = weapon_of(rig)
-	var path: String = strip_of(ViewMode.shared().art, weapon) if rig.head_card != null else ""
+	var art: String = ViewMode.shared().art
+	var path: String = strip_of(art, weapon) if rig.head_card != null else ""
+	if path != "" and LEFT[oct_of(rig)] == 1 and ONE_HAND.has(weapon):
+		path = left_of(art, weapon)
 	if not ENABLED or path.is_empty():
 		release(rig)
 		return
@@ -85,22 +87,25 @@ static func strip_of(art: String, weapon: StringName) -> String:
 
 ## The weapon out (RivetHeldView publishes the held id while the gun is up), &"" = none.
 static func weapon_of(rig: CutRig) -> StringName:
-	return StringName(str(rig.get_meta(WEAPON, ""))) if rig.gun_out else &""
+	var down: bool = rig.dead or (rig.react != null and rig.react.dying)
+	return StringName(str(rig.get_meta(WEAPON, ""))) if rig.gun_out and not down else &""
 
 
 ## True while the drawn frame carries the weapon (RivetHeldView hides its held part then).
 static func owns_weapon(rig: CutRig) -> bool:
 	var card: Sprite2D = rig.head_card
-	return card != null and card.hframes == EQ_CELLS and str(card.get_meta(ON, "")) != ""
+	return card != null and card.hframes != BASE_CELLS and str(card.get_meta(ON, "")) != ""
 
 
 ## The cell and mirror for the rig's state: Vector2i(cell, flip).
-static func cell_of(rig: CutRig, eq: bool) -> Vector2i:
-	var o: int = posmod(roundi(rig.head.global_rotation / (PI * 0.25)), 8)
+static func cell_of(rig: CutRig, cells: int) -> Vector2i:
+	var o: int = oct_of(rig)
 	var left: int = LEFT[o]
+	if cells == LEFT_CELLS:
+		return Vector2i(clampi(o - 3, 0, 2), 0)
 	if rig.dead or (rig.react != null and rig.react.dying):
 		return Vector2i(Cell.DEATH, 0)
-	if not eq:
+	if cells == BASE_CELLS:
 		if rig.clips.rolling():
 			return Vector2i(Cell.ROLL, 0)
 		if rig.clips.active() == RigClips.Clip.PUNCH or rig.clips.strike_t >= 0.0:
@@ -115,20 +120,24 @@ static func cell_of(rig: CutRig, eq: bool) -> Vector2i:
 	return Vector2i(EQ_OCT[o], left)
 
 
-## True when the weapon's frames can not draw this octant (a one-handed hold turned left).
-static func falls_back(rig: CutRig, weapon: StringName) -> bool:
-	var o: int = posmod(roundi(rig.head.global_rotation / (PI * 0.25)), 8)
-	return LEFT[o] == 1 and ONE_HAND.has(weapon)
+## The screen octant of the look (0 = screen right, +1 = 45 deg toward the camera).
+static func oct_of(rig: CutRig) -> int:
+	return posmod(roundi(rig.head.global_rotation / (PI * 0.25)), 8)
+
+
+## A one-handed hold turned left: its drawn left strip, else the base (the fallback, logged once).
+static func left_of(art: String, weapon: StringName) -> String:
+	var path: String = DIR + art + "/rivet_eq_" + String(weapon) + "_left.png"
+	if ResourceLoader.exists(path):
+		return path
+	if not _logged.has(weapon):
+		_logged[weapon] = true
+		Log.info("rivet", "no drawn left view for %s at %s: base left + held part" % [weapon, art])
+	return DIR + art + "/" + BASE
 
 
 static func place(rig: CutRig, card: Sprite2D) -> void:
-	var weapon: StringName = weapon_of(rig)
-	var eq: bool = card.hframes == EQ_CELLS
-	if eq and falls_back(rig, weapon):
-		_log_fallback(weapon)
-		_set_strip(rig, card, strip_of(ViewMode.shared().art, &""))
-		eq = false
-	var c: Vector2i = cell_of(rig, eq)
+	var c: Vector2i = cell_of(rig, card.hframes)
 	card.frame = c.x
 	card.flip_h = c.y == 1
 	var h: float = HEIGHT_BY_ART.get(ViewMode.shared().art, HEIGHT_M)
@@ -166,7 +175,7 @@ static func release(rig: CutRig) -> void:
 
 
 static func _build(rig: CutRig, card: Sprite2D, path: String) -> void:
-	_set_strip(rig, card, path)
+	_set_strip(card, path)
 	if rig.body.has_meta(HID):
 		return
 	var hid: Array[CanvasItem] = []
@@ -179,22 +188,13 @@ static func _build(rig: CutRig, card: Sprite2D, path: String) -> void:
 	rig.body.set_meta(WAS, was)
 
 
-static func _set_strip(_rig: CutRig, card: Sprite2D, path: String) -> void:
+static func _set_strip(card: Sprite2D, path: String) -> void:
 	if str(card.get_meta(ON, "")) == path:
 		return
-	if not _tex.has(path):
-		_tex[path] = load(path) as Texture2D
-	card.texture = _tex[path]
-	card.hframes = BASE_CELLS if path.ends_with(BASE) else EQ_CELLS
+	card.texture = _tex.get_or_add(path, load(path) as Texture2D)
+	var left: bool = path.ends_with("_left.png")
+	card.hframes = BASE_CELLS if path.ends_with(BASE) else (LEFT_CELLS if left else EQ_CELLS)
 	card.vframes = 1
 	var w: float = card.texture.get_width() / float(card.hframes)
-	var cell: Vector2 = Vector2(w, card.texture.get_height())
-	card.offset = Vector2(-cell.x * 0.5, -(cell.y - PAD_PX))
+	card.offset = Vector2(-w * 0.5, PAD_PX - card.texture.get_height())
 	card.set_meta(ON, path)
-
-
-static func _log_fallback(weapon: StringName) -> void:
-	if _logged.has(weapon):
-		return
-	_logged[weapon] = true
-	Log.info("rivet", "no drawn left view for %s: base left figure + held part" % weapon)
