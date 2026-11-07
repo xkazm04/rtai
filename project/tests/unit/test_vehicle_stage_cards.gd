@@ -47,6 +47,17 @@ func test_a_tilt_stands_every_car_and_tints_the_seized_one() -> void:
 		assert_eq(VehicleStageCards.tint_of(st), Color.WHITE)
 
 
+func test_ensure_stands_the_cards_the_frame_it_attaches_them() -> void:
+	ViewMode._shared = ViewMode.of("tilt70")
+	var host: Node2D = Node2D.new()
+	add_child_autofree(host)
+	var stage: CollectCallStage = CollectCallStage.new(StageLayout.shipped())
+	var node: VehicleStageCards = VehicleStageCards.ensure(null, host, stage)
+	assert_true(VehicleStageCards.standing(node), "no flat car body on the attach frame")
+	ViewMode._shared = ViewMode.of("top")
+	assert_null(VehicleStageCards.ensure(null, host, stage), "top adds no node")
+
+
 func test_the_cards_place_in_sim_px_under_an_ink_px_view() -> void:
 	var node: VehicleStageCards = _stand("tilt70")
 	assert_almost_eq(node.scale.x * SimConst.PX_PER_M, Ink.PX_PER_M, 0.0001)

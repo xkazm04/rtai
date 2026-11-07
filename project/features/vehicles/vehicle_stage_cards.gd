@@ -18,8 +18,8 @@ const SOUL: Color = Color.WHITE
 const WIDE_M: float = 0.6
 ## True: on a print the cards draw in the vehicles band over the actors with the front grid (the
 ## depot van stands in front of its bay's shutter, a fighter behind it is covered). On since view's
-## GhostAttackViews.dent_dz drew the tether and the seized car's halo over the vehicles band; the
-## bay's number still hides under a van parked on it (a ground mark). False: the iteration-11 look.
+## GhostAttackViews.dent_dz drew the tether and the seized car's halo over the vehicles band (and
+## ServoBodyView the bay's apron mark, view 73a78455). False: the iteration-11 look.
 static var over: bool = true
 
 var cards: VehicleCards = VehicleCards.new()
@@ -68,6 +68,7 @@ static func ensure(
 		return have
 	var node: VehicleStageCards = attach(view, stage.cars)
 	node._people = fighters.bind(stage.arena)
+	node.refresh()  # stand this frame: the stage view's _draw follows and asks standing()
 	return node
 
 
@@ -101,6 +102,11 @@ func on() -> bool:
 
 
 func _process(_delta: float) -> void:
+	refresh()
+
+
+## Puts this frame's cards (none and hidden without a card atlas); `_process` runs it every frame.
+func refresh() -> void:
 	var tex: Texture2D = VehicleCards.atlas()
 	_on = tex != null
 	if _view != null:
