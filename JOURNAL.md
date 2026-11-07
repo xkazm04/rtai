@@ -1177,3 +1177,8 @@ NEXT (iteration 12):
 - Session end 05:31: tree clean after this commit.
 - GATE unit no-arg on 5bf868a1 (tree still): 1524 passed, 0 failed, no FLAKY (exit 0). NEXT 2's
   unit half done; the top/tilt70 reels remain.
+- GATE director reel on f314e2fc (headless, the it1 command): `--view=tilt70` 19/19 chapters all
+  down, 0 SCRIPT ERROR; default `top` 19/19 all down, 0 SCRIPT ERROR (exit 0 both). With the combo
+  reel above, NEXT 2 is done; NEXT for it12 is 1 (freeze), 3, 4.
+- Session end 05:41: tree clean, every change committed. Commits it11: b7691fe0 (atlas death
+  frames), a7b72448 (quest 1 patrol walk), 82c6f40c (REPORT draft), + docs/evidence.
