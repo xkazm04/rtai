@@ -254,3 +254,11 @@ NEXT (iteration 6):
 - L6 `--render-thread separate` (research sub-agent: still experimental in the docs, D3D12 shutdown drops the pipeline
   cache #119000, texture uploads stay on the calling thread on Forward+): vs L5 frame times WASH, CPU 0.99 -> 1.15
   cores LOSS: DROPPED. Quest 1 baseline row filled (p50 3.63, p99 6.49, worst 18.8 ms, 1035 MB, CONTENDED).
+- GATE 13:40 at 7bdb9f6e (L5 inside): `node tools/evidence/run.mjs --no-bench` with a lane-private TEMP
+  (`gtai-d9x/scratch/perf-gates`): lint 15/15, unit 1699/0, scenarios 52/0, parity bit-exact + planted mutation caught,
+  look goldens 11/11 + block 5/5 (top did not move), **release-compile 598/0 (unblocked: the private TEMP is the fix)**.
+  Director reel headless `--quit-after 14000` top / tilt70 / combo: 19/19 chapters fully down each, 0 SCRIPT ERROR
+  (`evidence/perf/gates-it6/`).
+- MILESTONE 13:35 L4b pixels (riot, 64 px/m, same movie frame, floor exact): PSNR 26.0 dB (full L4 24.8); the ground
+  and facades exact, the whole difference on the figures' ink outlines; by eye the same at x4. CORRECTION of it5:
+  the asphalt was not most of L4's riot difference. Masters frames.json 13 (two l4b stills). REPORT P-1 (b) updated.
