@@ -25,6 +25,10 @@ const CONE_TOL: float = PI / 8.0
 ## A cone burst that went off its drawn flame (rig meta): it keeps the facing cell until the fire
 ## latch clears, which outlives the stream by RivetFrames.FIRE_TICKS while the aim swings.
 const CONE_OFF: StringName = &"rivet_cone_off"
+## Equipped strips per art key whose strike cells draw no swing arc: under them RivetHeldView
+## keeps posing the hidden held part so the game's smear (MeleeSmearView) still sweeps the cut.
+## The katana, chainsaw and plasma sword sheets draw their own arc (no game smear over it).
+const NO_ARC: Dictionary[String, Array] = {"p55": [&"electro_baton"], "p70": [&"electro_baton"]}
 static var _logged: Dictionary[StringName, bool] = {}
 
 
@@ -47,6 +51,15 @@ static func left_of(art: String, weapon: StringName) -> String:
 		_logged[weapon] = true
 		Log.info("rivet", "no drawn left view for %s at %s: base left + held part" % [weapon, art])
 	return DIR + art + "/" + BASE
+
+
+## True while the drawn figure carries the weapon and draws its whole read: RivetHeldView shows
+## nothing then. A strip in NO_ARC keeps the hidden held part posing for the smear.
+static func hides_held(rig: CutRig) -> bool:
+	if not RivetFrames.owns_weapon(rig):
+		return false
+	var no_arc: Array = NO_ARC.get(ViewMode.shared().art, [])
+	return not no_arc.has(RivetFrames.weapon_of(rig))
 
 
 ## Whether the rig's equipped strip draws its fire cell this frame (`firing`: a shot or a strike

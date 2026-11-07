@@ -32,6 +32,30 @@ static func publish(rig: CutRig) -> void:
 	HeldMuzzle.publish(card, card.offset + Vector2(w - p.x if card.flip_h else p.x, p.y))
 
 
+## d9 it20: feeds RivetHeldView's smear from `held` (the held part, hidden under a drawn figure)
+## with `on` (the cut runs); `over_rigs` = the smear holder's z above the rigs. Under a drawn figure
+## whose strike draws no arc (RivetStrips.NO_ARC) the cut is rooted on the figure's axis at the
+## strike cell's measured tip height, as long as its reach to that tip (the hidden part's own grip
+## and length put the crescent out past the drawn tip), just under the figure's card (head_z) so
+## the drawn weapon reads over it. Else the held part's grip and length, as before.
+static func feed_smear(
+	smear: MeleeSmearView, rig: CutRig, held: Sprite2D, on: bool, over_rigs: int
+) -> void:
+	var len_px: float = held.get_rect().end.x * absf(held.global_scale.x)
+	var root: Vector2 = held.global_position
+	var eq: String = RivetStrips.strip_of(ViewMode.shared().art, RivetFrames.weapon_of(rig))
+	var tip: Vector2 = point(eq, RivetFrames.Eq.FIRE_SIDE)
+	var drawn: bool = RivetFrames.owns_weapon(rig) and tip.x >= 0.0
+	smear.z_index = rig.plan.head_z - 1 - over_rigs if drawn else 0
+	if drawn:
+		var tex: Texture2D = load(eq) as Texture2D
+		var card: Sprite2D = rig.head_card
+		root = card.to_global(Vector2(0.0, RivetFrames.PAD_PX - tex.get_height() + tip.y))
+		var half: float = tex.get_width() / float(RivetFrames.EQ_CELLS) * 0.5
+		len_px = (tip.x - half) * absf(card.global_scale.x)
+	smear.feed(root, held.global_rotation, len_px, on)
+
+
 static func _table() -> Dictionary:
 	if _loaded:
 		return _points

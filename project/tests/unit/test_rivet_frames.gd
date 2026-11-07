@@ -62,3 +62,32 @@ func test_a_cone_burst_that_went_off_its_drawn_flame_keeps_the_facing_cell() -> 
 	assert_false(RivetStrips.draws_fire(rig, &"flamethrower", 4, false))  # the latch clears
 	assert_true(RivetStrips.draws_fire(rig, &"flamethrower", 4, true))  # a new burst on the flame
 	assert_true(RivetStrips.draws_fire(rig, &"pistol", 3, true))
+
+
+func test_a_strip_with_no_drawn_arc_keeps_the_held_part_posing_for_the_smear() -> void:
+	# d9 it20: the baton's strike cells draw no swing arc (p55 v3, p70 v3), so the game's smear
+	# sweeps the cut from the hidden held part; the katana's sheet draws its own arc.
+	var saved: ViewMode = ViewMode._shared
+	ViewMode._shared = ViewMode.of("tilt70")
+	var rig: CutRig = add_child_autofree(CutRig.new())
+	rig.head_card = autofree(Sprite2D.new())
+	rig.head_card.hframes = RivetFrames.EQ_CELLS
+	rig.head_card.set_meta(RivetFrames.ON, P70 + "rivet_eq_electro_baton.png")
+	rig.gun_out = true
+	rig.set_meta(RivetFrames.WEAPON, &"electro_baton")
+	var art: String = ViewMode._shared.art
+	assert_false(RivetStrips.hides_held(rig), "baton at " + art)
+	rig.set_meta(RivetFrames.WEAPON, &"katana")
+	assert_true(RivetStrips.hides_held(rig), "katana at " + art)
+	rig.head_card.hframes = RivetFrames.BASE_CELLS  # the bare-claw strip carries no weapon
+	assert_false(RivetStrips.hides_held(rig))
+	ViewMode._shared = saved
+
+
+func test_every_no_arc_strip_has_its_strike_tip_measured() -> void:
+	# The smear's reach under the drawn figure (RivetMuzzle.smear_root): the side strike cell's tip.
+	for art: String in RivetStrips.NO_ARC:
+		for w: StringName in RivetStrips.NO_ARC[art]:
+			var eq: String = RivetStrips.strip_of(art, w)
+			var tip: Vector2 = RivetMuzzle.point(eq, RivetFrames.Eq.FIRE_SIDE)
+			assert_gt(tip.x, 0.0, "%s %s" % [art, w])

@@ -18,6 +18,7 @@ whose muzzle could be measured -> [x, y] px from the cell's top-left (unmirrored
   The wand points right in all five drawn facings: the rightmost px in FACE_BAND (the nozzle ring).
   Other holds are drawn every which way in their facings (the pistol at image left in cell 0): no
   facing point, they fire from their fire cells.
+- A swing with no drawn arc (STRIKE_TIP): its side strike cell's (5) tip, the smear's reach.
 - A one-handed hold's drawn left strip (cells 0-2): the gun points left, so the muzzle is the
   leftmost opaque pixel in the arm band (ARM_BAND of the figure height, below the helmet).
 
@@ -49,6 +50,9 @@ CAM_Y = 0.7
 VISOR_FLAT = 2.0
 ## Blades, the baton and the bottle: no muzzle flash (the swing's smear, the lit rag instead).
 NO_FLASH = ("katana", "chainsaw", "plasma_sword", "electro_baton", "molotov")
+## Swings whose strike cell draws no arc (RivetStrips.NO_ARC): the side strike cell's (5) weapon
+## tip, the arm band's rightmost px, so the game's smear reaches the drawn tip (RivetMuzzle).
+STRIKE_TIP = ("electro_baton",)
 ## Left cells whose gun is held low at the hip (the asset lane's hand fix: the gun in the far
 ## claw), so the near cable spike is the leftmost px of the arm band: the bell mouth, read by eye
 ## on a x5 zoom of the cut cell (d9 it16). Re-read it when the strip is re-cut from another sheet.
@@ -123,11 +127,24 @@ def left_point(cell):
     return [x, int(y0 + col.mean())]
 
 
+def im_w(out_dir, art, name):
+    return Image.open(f"{out_dir}/{art}/{name}.png").size[0]
+
+
+def cell_of(out_dir, art, name, c, w):
+    im = np.asarray(Image.open(f"{out_dir}/{art}/{name}.png").convert("RGBA"))
+    return im[:, c * w : (c + 1) * w]
+
+
 def measure(out_dir, strips):
     table = {}
     for art in sorted(strips):
         rows = {}
         for name in sorted(strips[art]):
+            if name[9:] in STRIKE_TIP:
+                w = im_w(out_dir, art, name) // EQ_CELLS
+                rows[name] = {"cells": {"5": shape_point(cell_of(out_dir, art, name, 5, w), 5)}}
+                continue
             if not name.startswith("rivet_eq_") or name[9:].split("_left")[0] in NO_FLASH:
                 continue
             im = np.asarray(Image.open(f"{out_dir}/{art}/{name}.png").convert("RGBA"))
