@@ -115,3 +115,91 @@ NEXT:
    and cop_riot_walk_armed_v4 (A, 20261107-1050); build the grid as StreetQuestCards.PATROL_WALK.
 5. The planter's in-game frame (find a planter: city_facades props); `node tools/evidence/run.mjs
    --no-bench` (scenarios, parity, top bit-identical) before the next REPORT update.
+
+## Iteration 2 (10:28-11:28), BUILD
+
+Read: JOURNAL it1, git log, d9-rivet JOURNAL (it3: RivetFrames in, nothing asked of seams), catalog
+(king_legs 70 v2 not landed yet). Registry rules applied this iteration: depth-ordered-layered-art
+(the legs card one z under the bust, the upper body as one lifted group so no part floats between
+layers), engine-integration-safety (native and GDScript twin op-for-op; plain doubles, never Vector2
+in the twin; parity with the new branch exercised, not just the old one), vehicle-archetype-balance
+(the bike's mass ratio drives its push share, its hull and footprint from its drawn size),
+generative-artifact-gating (looked at every frame and the plan print before landing it).
+
+- 10:33 FRICTION: filmed the King with `res://boot/main.tscn` (no boss flags: ignored) then the arena
+  without `--bot=boss --boss-cam` (a static frame: nobody moves). The it1 flags are in frames.json:
+  `--boss=king --phase=3 --bot=boss --seed=2 --rigs --view=combo --boss-cam`. 4 min lost.
+- 10:34 FINDING: the legs card is a child of the head (card's parent), so lifting the torso lifted the
+  legs too (hidden behind the bust again). Fix: lift the torso first, then pin the legs to the ground.
+- 10:35 MILESTONE item 2b: the King's drawn legs ON at 55 (7f522e54). KingLegsCard lifts the whole
+  torso (head card + arm parts: the press plates sit at his sides) by LIFT 0.5 of the legs cell; RigTilt
+  sets torso.position fresh each step, so no drift. Unit test: soles on the ground point, torso up.
+  Masters: `king_drawn_legs_before_after_combo_64ppm_seed2_f150_x2.png`, the 64 px/m clip, a 4-beat
+  grid, the 32 px/m before/after. 70 keeps the rim-stripped parts until king_legs_70 v2 (combo eases to
+  55 at the engage, so the fight itself is on the drawn legs).
+- 10:37 MILESTONE gates: director reel it2 (legs ON) top/tilt70/combo 19/19 down, 0 SCRIPT ERROR (bb2c1df8).
+- 10:43 FRICTION: the worktree's native/godot-cpp submodule is empty; copied int-day's built copy
+  (same pinned commit e103d348, read-only on int-day). Debug DLL 2 min, release ~8 min.
+- 10:45 MILESTONE item 3 (sim): the bike in the native core and the GDScript twin (car_hit.cpp
+  car_push / bike hull / footprint; CitySimCarPush). Parity: native == reference bit for bit over 1200
+  steps with a QUARTER of the parity traffic bikes (city_parity sets share 0.25 from its own stream),
+  planted mutation caught at step 629.
+- 10:54 MILESTONE item 3 committed (e8c6ad01): constants via gen_constants (exact floats: hull 1.0 x
+  0.375, footprint 1.25 x 0.625, reach 1.75 / 1.25, share 0.875 = 1400 / (1400 + 200)); the
+  `bike` profile in vehicle_handling.json (mass 200, vmax 24; a hijacked bike drives on it);
+  traffic.bike_share 0.06 from rng stream `city_bikes`; the 3 x 4 traffic atlases with the bike's plan
+  print at cell 9 (tools/art/bike_top_print.py). Unit 1689/0 (--changed: full fast suite).
+- 10:56 FINDING (filmed main scene seed 7, frames 420-480): the bike passes in traffic at tilt70 (card
+  row 9) and in top (cell 9). Two faults: (1) in `top` the look's item shader re-inks the card's gold
+  tank as RED (colour rule): the print becomes a cream/ink duotone (tool updated, lands after the
+  evidence run); (2) the bike has NO RIDER at either pitch: a riderless bike in traffic reads as a bug
+  at close range. REQUEST below; owner Call.
+
+DECISION item 3: car vs car keeps its exact old code path (C++) and arithmetic (twin), so a city with no
+bikes steps bit-identically; the bike's share comes from its own stream so the cars' spawn draws do not
+move; scenarios that build their own CitySpawner (city_chase, streaming) get no bikes. Alternative one
+value away: `traffic.bike_share` 0 = no bikes. Rejected: per-art hull tables in the sim (more parity
+surface for one archetype).
+DECISION item 3: the `top` print is the 70 card's tail facing (nearly plan at 70), turned nose to +x,
+2.1 m at 80 px/m, cream/ink duotone. Rejected: an AI top-down image now (no image lock needed for a
+REQUEST; the asset lane serves it better).
+
+### REQUESTs
+- REQUEST to assets: `bike_rider_55` and `bike_rider_70` (the sim bike in traffic carries no rider; a
+  riderless motorbike reads as a bug). The same bike as bike_v3 (rows/cells as vehicle_cards.py BIKE:
+  5 facings nose-to-camera .. tail, same cell size and ground centre) WITH a civilian rider seated
+  (helmet, jacket in the street cast's muted palette; no teal, no police blue, no red, no vermilion), ink
+  outline, transparent or #00B140. Plus `bike_rider_top`: the same bike and rider straight down, nose to
+  +x, 2.1 m long, for the flat traffic atlas (cream/ink print like the cars). Why: owner Call 3 -> b
+  (a sim bike); the bike now drives in traffic at 6 %.
+- 11:03 GATE (e8c6ad01, share 0.06): lint 15/15, unit 1705/0, scenarios 52/52, parity bit-exact (bikes
+  in it), release-compile 601/0, BUT selftest FAIL: top look goldens 2/11 within mean 4 (worst 14.56).
+  Re-ran selftest alone with traffic.bike_share 0: look goldens 11/11 (worst 0.27). The bikes in
+  traffic are what moves `top` (they replace cars in the golden frames).
+DECISION item 3: the bike ships at traffic.bike_share 0 (binding: `top` look goldens must not move);
+`--bikes=<share>` (boot: LaunchArgs -> CitySystem.bike_share) shows them for filming and the owner's
+exe. Turning them on = one data value + a top look-golden rebaseline (owner Call). Rejected: moving the
+goldens now.
+- 11:06 MILESTONE item 3 art: the top print is a cream/ink duotone now (no red), 84a774a5. Filmed
+  `--bikes=0.25` seed 7 (masters `sim_bike_top_vs_tilt70_32ppm_seed7_f420_x2.png`, two 4 s clips).
+  FRICTION: the first `--bikes` read went through OS.get_cmdline_user_args in CitySpawner: the debt
+  ratchet (direct_cmdline_reads 157 -> 158) failed the commit; moved to boot/world.gd via LaunchArgs.
+- 11:05 item 5 scoping: street_walk.py cuts both armed sheets cleanly at 70 (scratch
+  `gtai-d9/scratch/seams/cops/`: cop_patrol_walk_armed_70_v2 B -> 5 x 4 of 173 x 192, two-handed
+  pistol; cop_riot_walk_armed_70_v4 A -> 5 x 4 of 148 x 192, baton + shield). NOTE the riot sheet's
+  armband is orange (near vermilion: colour rule) -> check against cop_riot_card's before landing.
+
+NEXT:
+1. Re-run `node tools/evidence/run.mjs --no-bench` at the head (it2 close run below; expect selftest
+   11/11 at share 0) and the reels (`scratch/seams/reels2.sh`) if gameplay code changed.
+2. Item 5 armed cops walk (70): StreetWalkerCards.strip_of returns "" for cops unless down. Add a
+   COP_WALKS {"p70": {"cop/head_cap": "cop_patrol_walk_armed.png", "cop/head_helmet":
+   "cop_riot_walk_armed.png"}} used when a cop is alive, moving (speed_now > MOVING), not aiming, no
+   c_recoil/strike, not hit; the held weapon part + RiotShieldCard must hide while the strip shows
+   (check what _build's hid list covers). street_tone.py to match the card's navy. WALK_FILL per file.
+   Film the city block `--arena=city --seed=5 --rigs --view=tilt70` 32/48 px/m, before = head cards.
+3. Item 2: king_legs_70 v2 when it lands (art/p70/king_legs.png; the 70 strip ~40 % too tall: squash
+   or wait). The planter's in-game frame (item 4) still owed.
+4. Item 3 owner Call: bikes ON (0.06) needs a top look-golden rebaseline; a rider (REQUEST above).
+   After merge the Director must rebuild native (`just native`): project/native/bin is git-ignored.
+5. REPORT.md: Calls 1 (legs lift), 3 (bike share/rider) updated with it2 evidence.
