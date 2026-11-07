@@ -25,4 +25,5 @@ static func build(size_k: float = SIZE_K) -> BodyPlan:
 	# d9 (owner: "Legs do have white background"): under the card views the bust stands on these
 	# legs; Rivet's cream leg sticker rim read as a white backing: ink outline only. `top` keeps it.
 	p.leg_rim = LEG_RIM_TOP and not ViewMode.shared().cards
+	p.arm_rim = not ViewMode.shared().cards  # the press plates at his sides: the same white edge
 	return p

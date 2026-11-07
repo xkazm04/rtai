@@ -42,7 +42,7 @@ static func build(rig: CutRig) -> void:
 	for s: int in 2:
 		var side: RigLimbs = rig.sides[s]
 		for spr: Sprite2D in [side.upper, side.fore, side.hand]:
-			if spr != null:
+			if spr != null and p.arm_rim:
 				_halo(rig, spr, -16, HALO_ARM)
 		if p.leg_rim:
 			for spr: Sprite2D in [side.thigh, side.shin, side.foot]:
