@@ -1,4 +1,4 @@
-# d9 rivet REPORT (in progress; the final at 18:40)
+# d9 rivet REPORT (final, 18:05; branch d9-rivet at the freeze)
 
 Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, every weapon in his hands.
 
@@ -73,6 +73,9 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
 - **The frame cost** (it16, under the bench lock; 3 before / 3 after interleaved): rig_bench `--view=tilt70`, the
   drawn figure vs the head card over parts, median p50: 50 people 0.943 -> 0.776 ms, 200 people 1.319 -> 1.179 ms.
   No added cost (`evidence/d9/rivet-frame-cost-it16.md`; it10's contended runs agreed).
+  Re-checked at the freeze (it25, bench lock held, 3 runs on 0f8bc386, every strip swap through the walk in):
+  median p50 50 people 0.811 ms, 200 people 1.079 ms, inside the it16 after band (`evidence/d9/rivet-frame-cost-it25.md`).
+  The bench arms Rivet, so the drawn bare-claw walk grid is not exercised there: its cost is unmeasured.
 - **Gates (it16):** director reel 19/19 in `tilt70`, `combo`, `top`, 0 SCRIPT ERROR on 90c46dfc and e6a74d74;
   unit 1705/0; evidence run all PASS (look goldens 11/11 + block 5/5: `top` did not move; parity exact;
   release-compile 600/0) (`evidence/d9/gates-it16.md`).
@@ -156,13 +159,28 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
   was the equipped back views, which show the small guns barely; no change made).
 
 ## Exe for the owner
-- Trial export it22 (17:52, on a5ee24ac, 26 s, 0 SCRIPT ERROR; smoke `RTAI.exe --headless --quit-after 300 -- --rigs
-  --view=tilt70` exit 0): `GODOT_BIN="C:/Users/kazda/kiro/gtai-spike/tools/godot/Godot_v4.7.2-stable_win64_console.exe"`,
+- **Final export at the freeze** (18:00, on `261f9fac`; every later commit is docs only): 13 s, exit 0, 0 SCRIPT
+  ERROR. Smokes: `RTAI.exe --headless --quit-after 300 -- --rigs --view=tilt70` exit 0, and
+  `RTAI.exe --headless --quit-after 300 -- --rigs --view=combo --boss=king` exit 0, 0 SCRIPT ERROR (the engine's
+  known custom_samplers and "resources still in use" ^ERROR lines only).
+  Command lines (Git Bash, from the worktree root, `APPDATA=C:/Users/kazda/kiro/gtai-d9/appdata/rivet`):
+  `GODOT_BIN="C:/Users/kazda/kiro/gtai-spike/tools/godot/Godot_v4.7.2-stable_win64_console.exe"`,
   `"$GODOT_BIN" --headless --path project --export-release windows-showcase ../build/export/windows/RTAI.exe`
-  -> `build/export/windows/RTAI.exe` (+ `gtai_sim.windows.template_release.x86_64.dll` beside it). Re-exported at
-  the freeze on the final commit.
-- See Rivet: `RTAI.exe -- --rigs --view=tilt70` (play, p70), `RTAI.exe -- --rigs --view=combo` (boss fights, p55);
-  befores: `--rivet-walk=bob`, `--rivet-height=<m>`.
+  -> `C:/Users/kazda/kiro/gtai-wt/d9-rivet/build/export/windows/RTAI.exe` (+ `gtai_sim.windows.template_release.x86_64.dll` beside it).
+- See Rivet: `RTAI.exe -- --rigs --view=tilt70` (play, p70), `RTAI.exe -- --rigs --view=combo` (boss fights, p55),
+  `RTAI.exe -- --rigs --view=combo --boss=king` / `--boss=servo` (the hard swap at the engage);
+  befores: `--rivet-walk=bob`, `--rivet-height=<m>` (Call 1: try `--rivet-height=1.25`).
+
+## What blocked (and for how long)
+- Iterations 1-2 (morning): exited in 5 s on billing (API credit); iteration 3 was the first that ran.
+- release-compile in the evidence run refused a `%TEMP%/gtai-release-compile` dir another run had made (it3-it6,
+  about 7 min of my time, the gate owed for three iterations); fixed by running with a lane-private TEMP.
+- Every weapon fired at each pitch: a 17 x 2 batch of arena films (~25 min lost, too slow); solved with a dev
+  `FireStills` stills mode (it13).
+- Finding a bare-claw walk to film (~12 min, it22): the arenas always arm Rivet; filmed in quest 1 stills mode.
+- The bench lock was held by another run at 17:56 (it22); taken free at 17:58 (it25).
+- Small: backslash paths written as CR by heredocs (~8 min over the day), check.mjs "depended scripts" false
+  failures (~2 min), the brief's `--quit-after 14000` ends headless top before chapter 19 (ran longer).
 
 ## Calls for the owner
 1. **Rivet's size.** Built 1.1 m standing (~35 px at 32 px/m, the asset lane's mock), p55 1.3 m.
@@ -201,4 +219,12 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
    none (the default).
 
 ## Next steps
-See JOURNAL `NEXT:`.
+1. Owner Calls 1 (size: 1.25 m recommended) and 2 (walk: drawn built): one flag each; land the picks as defaults.
+2. Merge with d9-seams (its trial merge on e2400dc4 conflicted only JOURNAL.md and the debt baseline); then the
+   Servo bay number sits under Rivet in combo (seams' ServoDepotDraw.cover).
+3. Main's switch to combo (the owner's call n-2): Rivet's whole-figure frames are in at p70 and p55; the reels
+   go 19/19 in top, tilt70 and combo with 0 SCRIPT ERROR.
+4. A drawn walk per weapon (today a weapon-out walk keeps the equipped facing with the bob): a REQUEST to assets
+   per hold family (one-handed gun, two-handed gun, blade) rather than 17 sheets.
+5. Tone-match the p55 left walk rows (REQUEST to assets open, it22); a drawn reload frame; a measured muzzle for
+   the facing cells of the remaining weapons; the armory row (Call 6) if the owner picks it.

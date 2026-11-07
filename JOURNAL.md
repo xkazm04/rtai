@@ -856,3 +856,21 @@ NEXT (it22 end; supersedes every NEXT above):
 NEXT (17:58; NEXT 1-3 of 17:53 stand): 0. If bench.lock is free before 18:20: rig_bench `--view=tilt70` with a
   walking bare-claw Rivet is not in the bench (it arms him), so skip; say "unmeasured" in the final REPORT.
 - Session end 17:58: everything committed.
+
+## it25 (17:57-18:10, BUILD into the freeze)
+- Read: JOURNAL it22 NEXT, git log, d9-seams tail (no open REQUEST to rivet), the library catalog (plasma sword:
+  p70 v2 A / p55 v4 A already in the game since it6/it16; rivet_walk_55_left tone match not served yet).
+- 17:58 MILESTONE `261f9fac` the frame cost re-checked under the bench lock (free at 17:58; want + lock taken and
+  removed): 3 runs on 0f8bc386, median p50 50 people 0.811 ms, 200 people 1.079 ms, inside it16's after band
+  (0.776 / 1.179) and under it16's before (0.943 / 1.319). The bench arms Rivet: the walk grid stays unmeasured.
+  `evidence/d9/rivet-frame-cost-it25.md`.
+- 18:00 FREEZE export on 261f9fac: `"$GODOT_BIN" --headless --path project --export-release windows-showcase
+  ../build/export/windows/RTAI.exe` exit 0 in 13 s, 0 SCRIPT ERROR; smokes tilt70 and `--view=combo --boss=king`
+  exit 0, 0 SCRIPT ERROR. Everything after is docs only.
+- 18:05 REPORT final: header, the it25 frame cost, Exe (final export + smokes + the boss swap command lines), a
+  new `## What blocked (and for how long)`, Next steps. masters frames.json: 15 entries, every file present.
+- Registry rules applied it25: motion-quality-gating / sprite-and-atlas-production (cost measured under the lock,
+  the unmeasured walk said so, not zero); realtime-combat-semantics (no code change at the freeze).
+NEXT (it25 end, for the next run): see REPORT `## Next steps` (Calls 1-2 to land as defaults; the seams merge;
+  main's combo switch; a walk per hold family; the p55 left walk tone; reload frame; armory row if picked).
+- Session end ~18:08: everything committed; no Godot work after the freeze export.
