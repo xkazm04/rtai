@@ -1199,3 +1199,36 @@ Session end 05:01.
 the camera's car mode, 48 px/m, while driving (and `--car-zoom` holds 48 on foot); the combined
 clip's segment 3 is that. 64 px/m with traffic has no scene; the turn showcase covers 64. Nothing to
 build. NEXT for iteration 19: 1 (van_cream if served), then the freeze (3).
+
+## Iteration 19 (04:58, BUILD)
+Read: JOURNAL, git log, the lane journals (no new REQUEST to vehicles), the library catalog.
+LIBRARY 05:00: my REQUEST served: van_cream_between_70 (A, round 20261107-0555, 04:59) and
+van_cream_between_55 (B, the key's glass hole post-fixed, 05:01). NEXT 1 taken.
+MILESTONE VAN_SHEET in the cutter (van_cream_<p> five views; BETWEEN_PICKS: van_cream_between_70);
+False re-cuts HEAD's p70 and p55 atlases bit-exact (git hash-object == HEAD blob). Cut cream, looked
+at the row in turn order (70 and 55): the same drawings, one cream, but the in-betweens' paint mean
+(238,223,198)/(235,220,194) vs the five views' (237,226,205): a shade peach. CREAM_GRADE: a per-
+channel gain on the in-betweens' light paint (opaque, mean > 140) to their neighbours' mean ->
+(235-237, 224-226, 202-205). Only row 4 changes in either atlas.
+FILMED (before = HEAD atlas, after = the cut, same seed, 0 SCRIPT ERROR all six): turn showcase
+`res://dev/showcase/vehicle_turn.tscn -- --view=tilt70 --ppm=64` (361 frames): one cream through all
+16 cells, no pop (strip every 15 deg, looked); Servo depot `res://dev/arena/arena.tscn -- --boss=servo
+--bot=boss --servo-ghost=dent --view=combo --ppm=<64|32> --rigs --seed=2` (300 frames): the olive
+printed a dark brown block, the cream reads as a van and matches the top print. COST: bay 3's pale
+number fades over the cream roof at 32 px/m (f130; at 64 it is faint but there).
+DECISION cream default (Call 6 now built as (c)); olive one flag away (VAN_SHEET = False);
+VAN_BETWEEN_55 = False (parked arena vans; a nine-column p55 atlas would double its texture).
+Decision line. Provenance: 2 lines (p70, p55: van_cream_70 3f55d9e6440b, van_cream_between_70
+607ea04ab608, van_cream_55 25d348a218f6).
+REQUEST to view: the Servo bay numbers (world_markers) need an ink stroke or dark backing: the pale
+number fades over a cream van roof at 32 px/m (masters van_cream_servo_depot_combo_32ppm_seed2_f130_
+olive_left_cream_right_crop.png).
+Masters: van_cream_servo_depot_combo_64ppm_seed2_f120_olive_left_cream_right.png,
+van_cream_turn_tilt70_64ppm_olive_left_cream_right.mp4 (frames.json 2 and 3), van_cream_turn_tilt70_
+64ppm_olive_top_cream_bottom_every15deg.png, van_cream_servo_depot_combo_32ppm_..._crop.png.
+FRICTION: my frames.json edit capped the list at 15 and dropped the two weakest (last) old entries
+(the four new ones: two in, two out of the list); their files stay in masters.
+Rules applied: concept-scene-parity (the card takes the top print's paint), generative-artifact-
+gating (judged in the depot under the grade and through a filmed turn, not in the sheet),
+sprite-and-atlas-production (cutter flag, False bit-exact; the grade reproducible), motion-quality-
+gating (the 64 px/m turn, every 15 deg).
