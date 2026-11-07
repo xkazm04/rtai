@@ -99,7 +99,8 @@ Branch `d9-seams`. Evidence: `C:\Users\kazda\kiro\gtai-masters\d9\seams\` (`fram
 **The set in one clip:** `seams_d9_set_combined_52s.mp4` (52 s, captioned per item).
 
 Gates it6: evidence at 2ef868fc (arm rim): all PASS, lint 15/15, unit 1717/0, scenarios 52/52, parity,
-selftest 11/11, release-compile 602/0 (`evidence/d9-seams/evidence-it6b-2ef868fc.log`). Evidence at b2b5c9b9 (the planter lift): lint 15/15, unit 1717/0, scenarios 52/52, parity
+selftest 11/11, release-compile 602/0 (`evidence/d9-seams/evidence-it6b-2ef868fc.log`); director reel at
+2ef868fc top/tilt70/combo 19/19 down, 0 SCRIPT ERROR (`evidence/d9-seams/director-reel-it6-*.log`). Evidence at b2b5c9b9 (the planter lift): lint 15/15, unit 1717/0, scenarios 52/52, parity
 bit-exact, selftest look goldens 11/11 (worst 0.27) + block 5/5, release-compile 602/0, all PASS
 (`evidence/d9-seams/evidence-it6-b2b5c9b9.log`). Gameplay code unchanged since the it5 reels.
 Gates it5: evidence at ddef1441 (Servo marks + SWAT 55 scale): lint 15/15, unit 1717/0, scenarios 52/52,

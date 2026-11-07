@@ -505,3 +505,18 @@ motion-quality-gating (before/after the same scene, seed and frame, at 32 and 64
   selftest look goldens 11/11 + block 5/5, release-compile 602/0: all PASS
   (`evidence/d9-seams/evidence-it6b-2ef868fc.log`). Director reels at 2ef868fc running (scratch
   `director-reel-it6-*.log`).
+- 14:18 GATE director reel it6 at 2ef868fc: top, tilt70, combo 19/19 down, 0 SCRIPT ERROR, 2 engine ERROR
+  lines each (the baseline shader-sampler note + exit leak) (`evidence/d9-seams/director-reel-it6-*.log`).
+
+NEXT (it7):
+1. Read d9-rivet + assets journals for REQUESTs first (none open to seams at 14:18).
+2. Gates green at 2ef868fc (evidence + reels). Re-run only after a code change.
+3. Re-run the trial merge near the freeze if d9-rivet moves a lot (recipe: `T=$(git merge-tree --write-tree
+   d9-seams d9-rivet | head -1)`; `git commit-tree $T -p d9-seams -p d9-rivet`; `git worktree add --detach
+   <scratch> <sha>`; `git lfs pull`; copy `project/native/bin`; lint, run_unit, release_compile, scenarios,
+   `scratch/seams/reels_merge.sh`; then `git worktree remove --force`). Watch: a dead Rivet behind a kerb
+   barrier (PropLying boxes from the hidden head part; rivet draws a DEATH sprawl cell): film it once merged.
+4. Weakest left: riot 55 row 2 repeats a frame (named fault); the planter's rim/inner stroke at 32 px/m stays
+   dark (the props' 4 px inner stroke); Call 2's corpse "through" the barrier (sim, not built).
+5. Owner Calls 1-3 stand. Freeze 18:30: export RTAI.exe (`"$GODOT_BIN" --headless --path project
+   --export-release windows-showcase ../build/export/windows/RTAI.exe`), REPORT final by 18:40.
