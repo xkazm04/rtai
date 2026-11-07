@@ -1077,3 +1077,8 @@ NEXT (iteration 11):
 - Session end 04:46: tree clean, every change committed. Commits it10: ec42c9a1 (contractor corpse
   one length), ada46751 (quest 1 patrol cop card), 87e385dd (patrol walk facing), b5f5f10c (atlas
   corpse), + evidence (bench) and docs.
+- DONE NEXT 2 (04:48): riot `--view=tilt` (p55 at load) 48 px/m f1200, 0 SCRIPT ERROR: the far
+  corpses are drawn there too; the riot cop lies as its 55 drawing (cooler blue, the shield), the
+  pedestrians as the p70 grids (per-row fallback), as designed. Separate run from the tilt70 one
+  (different camera pitch, so blood and heap differ). evidence/riot_atlas_corpse_tilt70_vs_tilt_
+  48ppm_f1200.png. NEXT 2 struck from the list above; 1, 3, 4 remain.
