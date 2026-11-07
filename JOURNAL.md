@@ -1409,3 +1409,7 @@ NEXT (iteration 17, the freeze at 08:30):
    HEAD + the exe + smoke, ~4 min) and `node tools/evidence/run.mjs --no-bench` (~7 min, tree still).
 3. `git worktree remove --force` %TEMP%/view-trial-it11 and %TEMP%/view-street-check (both mine).
 4. REPORT final by 08:40: header time, Calls 1-7, the Exe section (already filled), Next steps 1-5.
+- CHECK 07:39 Call 7's exe line in the release exe: `RTAI.exe --headless --quit-after 600 -- --rigs
+  --boss=king --seed=2 --view=combo --ppm=48 --boss-cam` exit 0, 0 SCRIPT ERROR, no unknown-flag
+  line, p55 cards at tick 35 (BossCam lives in features/bosses, so the release build carries it).
+  Lanes' journals re-read 07:38: no new REQUEST or NOTE to view.
