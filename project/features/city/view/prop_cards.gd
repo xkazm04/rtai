@@ -49,7 +49,7 @@ static func make(
 		var tex: Texture2D = art_texture(str(row["art"]), art, fallback)
 		if tex == null:
 			continue
-		var w_m: float = row["cell_w_m"]
+		var w_m: float = row.get("cell_w_m_" + art, row["cell_w_m"])  # a pitch's own strip width
 		var turns: float = row.get("turn", 0.0)
 		out._strip[t] = tex
 		if row.has("print_art"):
