@@ -976,3 +976,43 @@ NEXT (iteration 23, in order):
 3. Freeze items (08:30): evidence --no-bench, `top` framemd5, the exe export (int-day recipe),
    REPORT final (head, exe command lines).
 - Session end ~04:52. Head = this JOURNAL commit.
+
+## Iteration 25 (04:50-05:50, BUILD)
+
+Read: JOURNAL, git log, the other lanes' journals (no new REQUEST to city), the library catalog
+(nothing new for building/prop since the facade v2/v3 rounds cut in it22).
+- DECISION (04:58) the kerb street sign keeps its flat art's hatched shadow this night (it22 NEXT 2,
+  judged on the it22 48 px/m pair): the stroke starts at the card's foot and reads as the pole's
+  cast shadow; its fault is the direction (up-right, where the bollard's falls down-right). The
+  fix needs a shadow hook for card props in ChunkView._slice (the baked shadow command carries the
+  bake's offset, not the foot) and chunk_view.gd sits at 200 lines; not worth the `top` risk this
+  late. Stays in REPORT gaps.
+- (05:00) REVISED the DECISION above: with time left the fix was small. MILESTONE 1f9ede57 the
+  street sign casts a pole's shadow: props row `cast_m` 1.0 (schema'd), ChunkLift.takes(t, shadow)
+  + draw(..., shadow) draw its baked shadow command as a 0.12 m hatched stroke from the card's foot,
+  down-right (the bake's 0.18 m offset). ChunkView's line count unchanged (200); ChunkLift 195.
+  Tried 0.2 m first: a ladder at 48 px/m (hatch rungs across), rejected. 1 unit test.
+  EVIDENCE `city_bench --scenario=drive --view=tilt70 --secs=30` zoom 1.0 and 1.5, frame 21 s,
+  before = the same tree without `cast_m` (the sign found by a frame diff, only 6 frames differ):
+  `it25_street_sign_cast_tilt70_32ppm_before_after_x3.png` (frames.json, replacing the it10 kerb
+  cars pair) + the 48 px/m close-up. 0 SCRIPT ERROR all runs.
+- GATE `top` framemd5 at 1f9ede57's tree (`--arena=city --bot=rivet --seed=2 --rigs --quit-after
+  301`): IDENTICAL to top22.md5 (617 lines), 0 SCRIPT ERROR. Unit --select=test_chunk_lift,
+  test_prop_cards 18/0. Lint 15/15.
+- FRICTION `tools/godot/check.mjs res://features/city/view/chunk_view.gd` reports "Failed to compile
+  depended scripts" while the real runs load it clean (0 SCRIPT ERROR); chunk_lift.gd alone checks
+  ok. Not chased (a -s parse of a file whose deps name autoloads); the runs are the proof.
+- MILESTONE (04:54) the combined clip re-cut on 0a630cfe: `it25_city_set_tilt70_combo_55s.mp4`
+  (facade drive tilt70 32 px/m 0-16 s + the tall landmark 26-33 s, the kerb at 48 px/m incl. the
+  sign and bollard cards, the King fight combo 48 px/m), 33 MB, 0 SCRIPT ERROR x3; replaces the
+  it19 clip (deleted) in frames.json and REPORT. Looked at 5, 30, 40, 50 s.
+- MILESTONE 3fbd1a7a the cost refreshed at 0a630cfe under bench.lock (held 04:54-04:59; other
+  lanes' Godot runs live: wall-clock): drive 1.04 (top) vs 1.28 ms (tilt70) per frame, p99 CPU 2.05
+  vs 3.15, draw calls 823 vs 961; chunk record 0.80 vs 3.48 ms p50 sliced over 39 frames, no
+  streaming frame over 1.72 ms. tilt70 had 6 frames over 25 ms (top 0), not attributed (not the
+  chunk slice). `evidence/drive-cost-it25.json`, REPORT item 5.
+Registry rules applied: render-submission-economy (the pole cast is one rect into the existing
+shadow band, no new item or pass; measured the drive's draw calls), depth-ordered-layered-art (the
+cast stays on the shadow band under every card), concept-scene-parity + motion-quality-gating
+(same seed, scenario and frame before/after, one data value apart; judged at 32 and 48 px/m),
+tiling-texture-acceptance (n/a this session: no strip changed).
