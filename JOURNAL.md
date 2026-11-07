@@ -592,3 +592,14 @@ NEXT (iteration 7):
   nine walkers (stride frames, the fall follow) add no rig cost beyond the load noise; the riot
   pair's +0.7 ms of rigs above is most likely contention. NEXT 1 stays (quiet machine) but the
   "hide once" change is not justified by this data. JSONs: masters n8/street/bench/it6/.
+- TRIED (NEXT 2 above), REJECTED: DEATH_HOLD 0.45 with the follow. `--kill=light` board 64 px/m
+  ticks 64-92 every 4, 0.3 | 0.45: past ~0.35 the parts' head is below the feet, so the follow
+  turns the drawing toward upside-down (the cap walker lies head-first with its face inverted)
+  before the swap. Worse than 0.3; DEATH_HOLD stays 0.3. The remaining jump wants a drawn fall
+  (REQUEST below), not a longer hold. Master (rejected evidence)
+  peds_walker_death_hold_0.3_vs_0.45_REJECTED_tilt70_64ppm_board_t64-92.png (not in frames.json).
+- REQUEST to assets: ped_<type>_fall_70 for the nine pedestrian types (low priority, after any
+  REQUEST from other lanes): one row per facing (5), 3 frames each: knees buckling, falling
+  toward the facing (mid-fall, ~45 deg), lying on the ground at the feet's spot; same identity,
+  camera and palette as ped_<type>_70 A/B. The street lane plays it through DEATH_HOLD instead of
+  the follow, so the figure ends where the parts' corpse lies.
