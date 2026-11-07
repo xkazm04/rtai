@@ -148,7 +148,7 @@ it11 gates: MERGE_GATES.
    `quest1_patrol_hold_before_after_240hz_tilt70_48ppm_quarter_speed.mp4` (+ `_16frames.png`). The
    quest 1 clip tool cannot show it (it steps between every frame: pixel-identical).
 
-**The set in one clip:** `seams_d9_set_combined_58s.mp4` (58 s, captioned per item; it8 adds the crowd walk cells).
+**The set in one clip:** `seams_d9_set_combined_63s.mp4` (63 s, captioned per item; it8 adds the crowd walk cells, it11 the gang's steel legs).
 
 Gates it6: evidence at 2ef868fc (arm rim): all PASS, lint 15/15, unit 1717/0, scenarios 52/52, parity,
 selftest 11/11, release-compile 602/0 (`evidence/d9-seams/evidence-it6b-2ef868fc.log`); director reel at
