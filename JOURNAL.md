@@ -1656,3 +1656,16 @@ JOURNAL.md, REPORT.md and evidence logs, so build/export/windows/RTAI.exe (08:13
 gtai_sim.windows.template_release.x86_64.dll beside it) still matches the code head.
 Freeze: tree clean after this commit; exe = 08:13 export from ed557034. REPORT unchanged (covers it26/it27).
 NEXT: unchanged from it26/it27.
+
+## Iteration 29 (STABILIZE, 08:30-08:34)
+Read: JOURNAL tail, git log, the lane journals for REQUESTs to vehicles (none open: city l.171 `live` was
+answered in it17-ish, see l.1358/1391; view's l.936 is an ANSWER to us). Verified ed557034..HEAD touches
+no `project/` file (0 of 6 changed paths), so the 08:13 exe is the code head. No Godot process of ours
+running. 08:31 exe smoke on the play view: `RTAI.exe --rendering-driver d3d12 --arena=city --view=tilt70
+--rigs --seed=2 --fixed-fps 60 --quit-after 200`: exit 0, 0 SCRIPT ERROR (evidence/n8-vehicles/smoke-it29.log);
+the tail carries the same `--quit-after` teardown leaks as smoke-it26 (ObjectDB / resources in use at
+exit, fewer than it26), not a new error class.
+Freeze: tree clean after this commit; exe = 08:13 export from ed557034. REPORT header names it29.
+NEXT: unchanged from it26 (judge taxi_55_v4 / parked_pickup_55_v4 / delivery_truck 70_v2 + 55_v3 as 55/70
+pairs with vehicle_turn_check + a turn film each; police_car_70_v3; depot_van_top_v4 for Call 9(b); the
+pickup miss (margin 0.009) in vehicle_turn_check).
