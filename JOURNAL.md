@@ -574,3 +574,58 @@ sprite-and-atlas-production (one cutter, rows 0-8 proven unchanged bit-exact, pr
 round + prompt_hash per pitch, the grid read from the atlas not hard-coded), motion-quality-gating
 (judged on the 360 film at both zooms), depth-ordered-layered-art (ground-centre anchor: the bike
 sorts like a car).
+01:00 GATES on b3d21e7d: full unit 1509 passed / 0 failed (48 s, no FLAKY); scenarios 52 ran, 0 failed,
+exit 0, 0 SCRIPT ERROR (the exit leak report is the pre-existing one); `top` framemd5 (main scene
+`--arena=city --bot=rivet --seed=2 --rigs`, 301 frames) vs top_head.md5: IDENTICAL (301 + 301).
+MUTATE features/vehicles/vehicle_views.gd at 305fad98 (test_vehicle_views + test_vehicle_cards, 12
+sampled of 52): 91.7 % = killed 11 / (11 + 1 survived); the survivor `a >= 0.0 -> a > 0.0` (line
+27) is equivalent (at a = 0 the sign is never read: flip is false).
+00:58 the bike on the 55 set (`--view=tilt`, 64 px/m): turns cleanly; masters
+bike_turn_strip_tilt55_64ppm.png. Quest 1: collect_call_city.json ghost_cars is [] (owner call
+d7 ghost-powers-5), so quest 1 draws no car today.
+MILESTONE 01:12 54cc531b + 01:20 79c678ad a stage's cars stand as cards. FOUND: StageView._car
+(boot/collect_call/view/stage_view.gd, which ArenaFloorView extends) printed every arena car flat
+from the top-down traffic atlas under ANY view: the powers pad's gearbox cars and the Servo depot's
+van (a judged boss arena: Dent seizes it and rams Servo). New VehicleStageCards
+(features/vehicles): the stage's cars through VehicleCards (wear, duty), StageView keeps their flat
+ink shadow and skips the flat body (2 hook lines + a field; no lane touched stage_view.gd tonight;
+ArenaFloorView, which view edits, untouched). First cut was a child of the stage view: on the
+printed arena path that is the WORLD canvas, and the print crushed the olive van to black hatched
+ink (looked: servo frames 60/130/170); now it rides the PrintStage actor layer (the city's cars'
+canvas), following the stage view's transform. The seized car's teal multiply (SOUL) turned the
+olive van and its lamps green: SOUL = WHITE (the seize reads by Dent's halo and teal tether); the
+teal value is one line away. `top` adds no node at all.
+FRICTION: a windowed arena run reads the real mouse for Rivet's aim: two `top` films differed in 78
+of 90 frames only round Rivet (I moved the cursor between runs). Film before and after
+back-to-back, or use a bot. With the cursor matched: hook on vs off IDENTICAL (90 + 90).
+FILMS (masters, in frames.json): servo_depot_van_combo_32ppm_{zoom_..png,..mp4} before top / after
+bottom (`res://dev/arena/arena.tscn -- --boss=servo --bot=boss --servo-ghost=dent --view=combo
+--ppm=32 --rigs --seed=2`; before = the hook line off); powers_pad_cars_tilt70_24ppm_{..png,..mp4}
+(`-- --start=pad --view=tilt70 --ppm=24`). 0 SCRIPT ERROR in every run. Unit: test_vehicle_stage_cards
+3 (top draws none, a tilt stands both cars, the sim-px scale) + dent quest / boss bot ghost: 12/0.
+Seen, not fixed: the depot van's colour changes with the view (cream flat print, olive card: the
+library van); the taxi's mustard reads orange in the arena (as on the turn film: the scene's grade,
+not vermilion, but close: a Call). The stage cards have no front grid: always under the actors.
+DECISION vehicles: stage cars as cards (docs/decisions.md, amended for the actor layer and SOUL).
+
+## Calls for the owner (add to REPORT)
+- Bike: now BUILT as card row 9 (bike_v3 B), but the sim has no bike: (a) leave it showcase-only
+  (built), (b) a sim archetype with art id VehicleViews.BIKE_ART (sim work). See
+  bike_turn_strip_tilt70_64ppm.png and turn360_tilt70_64ppm_with_bike.mp4
+  (exe: `RTAI.exe res://dev/showcase/vehicle_turn.tscn -- --view=tilt70 --ppm=64` is a dev scene;
+  the clip is the evidence).
+- The depot van (Servo's arena) changes colour with the view: cream top-down print vs the library's
+  olive van card. Options: (a) olive everywhere (built under the tilt), (b) a paint gain for the
+  depot van's row (cream, value-only gains exist in vehicle_cards.py), (c) REQUEST a cream van sheet.
+
+NEXT (iteration 12, in order):
+1. If the asset lane served taxi/parked_pickup/ambulance_between_70: cut them (BETWEEN rows 3 5 6),
+   add the rows to VehicleViews.FINE (test_vehicle_views checks the atlas), film the turn at 64.
+2. The stage cards' depth: a VehicleFront grid from the arena's fighters (ArenaStage targets +
+   Rivet) so a car with nobody in front draws OVER people behind it (now always under the actors).
+   Needs the fighters' ground points each frame: read ArenaStage from VehicleStageCards (no edit
+   to ArenaFloorView, which view owns tonight).
+3. The director reel 19/19 in top + tilt70 on HEAD (last 34018b19; StageView changed this time:
+   the reel runs on the arena) - RUN IT FIRST next session.
+4. Exe at the freeze (int-day recipe in docs/decisions.md), REPORT.md by 08:40 with every Call in
+   this JOURNAL (bike, wreck fire size, rotation density, the C in-between, the depot van colour).
