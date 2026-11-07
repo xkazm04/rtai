@@ -1,9 +1,9 @@
-# REPORT: lane handheld (d9, 2026-11-07), in progress
+# REPORT: lane handheld (d9, 2026-11-07), final at the 18:30 freeze
 
 Every number is **on the simulator** (this PC under a device profile: 8 pinned threads, below-normal
 priority, the CPU's own 2-CU Radeon), never a device claim. Details and sources: `docs/handheld/LEDGER.md`.
 
-**The exe for the owner** (exported 17:44 from 0ee1ba66; the freeze session re-exports if HEAD moves):
+**The exe for the owner** (exported 17:44 from 0ee1ba66; every commit after it is docs and evidence, `git diff 0ee1ba66 HEAD -- project` is empty, so it is the freeze build):
 `build/export/windows/RTAI.exe` (328 MB, PCK embedded, + `gtai_sim.windows.template_release.x86_64.dll`), made with
 `"$GODOT_BIN" --headless --path project --export-release windows-showcase ../build/export/windows/RTAI.exe`
 (smoke: `RTAI.exe --headless --quit-after 300` exit 0, 0 SCRIPT ERROR). The Deck profile in it:
@@ -106,13 +106,32 @@ priority, the CPU's own 2-CU Radeon), never a device claim. Details and sources:
   "tree changed during run" (I copied two evidence folders in while it ran), no test failed. Reels top / tilt70 / combo /
   combo + deck **19/19, 0 SCRIPT ERROR**. `handheld_rumble.gd` mutation **85.5 %** (53 / 62) on 68c5ee42; the two
   survivors on the gap guard (:103) now killed by a test (planted by hand -> FAIL), the other 7 equivalent.
+- (it18) **E15, who pays the CPU on a Deck row** (perf's `thread_cpu.ps1`, the city, the iGPU, bench lock, 1 run per arm):
+  the engine main thread carries 0.527 of 0.534 cores at 60 Hz and 0.318 of 0.33 at 40 Hz; the worker pool and the
+  driver threads barely show. **E15b**, the control: pinned to 2 threads (1 core) the Deck row still holds 60 at the
+  median (16.66 ms) but the tail grows (5 vs 1 settled frames over 33 ms, the worst 447 vs 37 ms). So a Deck's
+  single-core speed decides a steady 60 and its other cores keep the loads off the main thread. *Estimate, not measured*:
+  a Zen 2 core does ~1.6-2x less per thread than this Zen 4, ~0.85-1.05 of a Deck core at 60 Hz: tight; the 40 Hz row
+  is the margin (`evidence/it18/`, LEDGER E15 / E15b; both CONTENDED or single runs, labelled).
 
 ## What does not work yet
 - (it15) The slice exe cannot record quest 1: `--autostart` is debug-only (`quest1_card.gd:70`), so a headless release
   exe waits on the title card. By design for a shipped build; a recording from a played (pad-driven) session is untested.
-- Rumble on every hit Rivet takes is in (it7: the view reads his hurt tick; no sim change); its live pulse count is
-  owed. The release-compile step of the evidence gate collides with seams' new temp-dir layout
-  (their item; skipped with `--no-release`).
+- Nothing on this list has been felt or seen on a real handheld: rumble, the 7-inch legibility, Zen 2 frame times,
+  battery hours, SteamOS suspend and the Vulkan path are all simulator or model-knowledge claims.
+- Rumble on blasts and car crashes: no bus event to hang it on (owed). Steam Input origin glyphs: owed (Steamworks).
+- (it11's release-compile clash with seams' temp dirs is gone: the it15 gate ran export-audit 601 / 0.)
+
+## What blocked, and for how long
+- The drawn pad glyph set (REQUEST to assets `ui_pad_glyphs_v1`, it12): **unserved all day** (the asset lane drew Rivet's
+  sheets and the weapons first, rightly). The prompts name the pad's buttons in text (`PadGlyphs`); a drawn set is owed.
+- Compatibility (OpenGL) on the iGPU: blocked on this PC (E1b: OpenGL takes the monitor's adapter, the RTX 4090).
+- A real Vulkan run of the Linux build: blocked (WSLg has no Vulkan-on-D3D12 ICD); needs a Linux PC or a Deck.
+- Contention: most numbers ran beside 1-4 other lanes' Godot runs (labelled CONTENDED); the bench lock waits were
+  short. Smaller losses, each in JOURNAL as FRICTION (lint on a lane-named dev folder ~6 min, a mutate log name ~13 min).
+- Perf's FYI (their it18): `boot/minimized_cap.gd` caps a minimized window at the tick; my rows' `max_fps` 60 / 40 / 30
+  stay in charge (cap <= 60), so after the merge a Windows handheld sent to the background stops spinning. Not on this
+  branch; nothing to change here.
 
 ## Calls for the owner
 1. **Handheld zoom** (stills: `gtai-masters/d9/handheld/zoom-city-deck-32ppm.png`, `-40ppm`, `-48ppm`, all 1280x800
@@ -157,13 +176,15 @@ priority, the CPU's own 2-CU Radeon), never a device claim. Details and sources:
    b) Proton only (one build, no Linux depot; D3D12 translated). Nothing is built either way until the Steam port: today both exports
    exist. A real Vulkan run on a Linux PC or a Deck is what decides it (WSLg has no Vulkan here).
 
-## Owed / next
-- (it7) The draw_scale HUD side
-  effect (if Call 5 b/c), the King fight's rumble count, the dev-arena experiments E1-E3/E7 re-labelled "at 32 px/m".
-- The Linux build: a real Vulkan run (needs a Linux PC or a Deck); the release `.so` replays: done (E13c); a save round trip Windows <-> Linux: done (E14); Steam Cloud's root override (LEDGER section 1) needs Steamworks. NAT-06 on Linux: done (E13).
-- Steam Input's origin glyphs through the Steam backend (and a drawn ink glyph set: REQUEST to assets
-  `ui_pad_glyphs_v1`, it12), rumble on blasts and crashes (no bus event), aim assist (a design call); whether the boss_hit
-  rest (8 ticks, it14) reads as taps on a real pad.
-- A/Bs: `handheld_1080` viewport vs native stretch; the iGPU frame is fill-bound (E6), so next: a lower 2D draw size
-  scaled up (viewport stretch below 1280x800) and the print grain / light passes off on the handheld tier,
-  the Switch-class budget at 3 threads.
+## Owed / next (in order)
+1. **A real device before any port promise**: a Deck (or a Linux PC with an AMD GPU) for the Vulkan run of the native
+   build, Zen 2 frame times at 4-15 W, battery hours, the shader cache's first run, Steam Input's default config, suspend
+   on SteamOS. E15 says watch the main thread first.
+2. Steam port plumbing (needs Steamworks): Steam Input origin glyphs through the Steam backend, Steam Cloud's root
+   override for `user://profile/` (LEDGER section 1), the Linux depot (Call 8).
+3. Controller polish: the drawn glyph set (`ui_pad_glyphs_v1`), rumble on blasts and crashes (a bus event first), aim
+   assist for twin-stick aiming (a design call), whether the `boss_hit` rest reads as taps on a real pad.
+4. The owner's Calls 1-8 decide the handheld defaults (zoom, draw scale, BC7, menus, the Linux build).
+5. If a Deck misses 60 on the main thread: profile the main thread on the Linux build (the sim already steps in native
+   code), then the 40 Hz row as the shipped battery default.
+6. Switch-class: nothing to build until the platform holder's programme and an engine port exist (LEDGER section 7).
