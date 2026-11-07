@@ -1195,3 +1195,7 @@ made the 2021 key's red segments amber). No visible gain and a worse gate at 55:
 library's "supersedes" note concerns its own keys; my atlas already gets the same result in post.
 NEXT 2 now reads: (b) only, then the freeze.
 Session end 05:01.
+05:03 NEXT 2(b) answered by reading: dev/showcase/vehicle_frame.tscn films the real city traffic at
+the camera's car mode, 48 px/m, while driving (and `--car-zoom` holds 48 on foot); the combined
+clip's segment 3 is that. 64 px/m with traffic has no scene; the turn showcase covers 64. Nothing to
+build. NEXT for iteration 19: 1 (van_cream if served), then the freeze (3).
