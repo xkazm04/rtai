@@ -341,3 +341,43 @@ NEXT (supersedes every NEXT above):
   0 SCRIPT ERROR): the face fades in on his first payphone line (t3050), where Patch's payphone sits; crisp,
   the faded cut blends into the paper: `gtai-masters/d9/rivet/rivet_dialogue_face_quest1_payphone_tilt70_32ppm_1080p_t3450.png`
   (frames.json: in, the duplicate Servo-swap entry out, file kept).
+- The death beat, filmed `--boss=king --bot=boss --bot-stand --view=combo --ppm=48 --seed=1 --loadout=pistol`
+  (1420 frames; headless probe: "Rivet destroyed: back at the hub", tick 1322): the ink veil darkens f1314-1326,
+  then he is at the hub in the drawn DEATH sprawl cell and stays in it through f1416 (1.5 s+, the film's end).
+  And a grey, cream-rimmed, torn-edged splat lies fixed on the ground near him at the hub: the it6 "grey blob" is
+  BACK, so it was not (only) the reload magazine; the it10 "closed" note above is wrong.
+  `gtai-masters/d9/rivet/rivet_death_respawn_sprawl_held_and_grey_part_king_combo_48ppm_x3_seed1_f1290_1338_1416.png`.
+- FOUND by that film's log: `Index p_frame = 3 is out of bounds (vframes * hframes = 3)` from RigHeadCard._place
+  every step a one-handed hold turned left (its own facing frame on my 3-cell left strip, before RivetFrames set
+  the right one). Engine ERRORs, not SCRIPT ERRORs: the reel counts never saw them (61 in the Kerf film). FIXED
+  `cfe5eea4`: RigHeadCard.step leaves the card to RivetFrames while it owns it. Probe: 18 ERROR lines -> 2 (a
+  shader-compiler note in kill_char_fx and the exit leak, not this lane's). Unit (rivet + head card + rigs) 33/0.
+  Rule for me: count `^ERROR` too, not only SCRIPT ERROR.
+
+NEXT (it10 end, 13:03; supersedes every NEXT above):
+1. The grey splat (above): film `--boss=king --bot=boss --bot-stand --view=top --seed=1` to f1420 and compare
+   with combo at the hub; grep the arena for ground decals spawned on Rivet's death/respawn (kill_char_fx char
+   marks? a dust/landing decal? a dropped item at the hub). If it is the top-down parts' char silhouette, it
+   should take the drawn figure (or skip) under a card view.
+2. After the respawn he lies in the DEATH sprawl at the hub 1.5 s+: check `top` for the same hold (the death beat
+   is meant as 1.0 s in his sprawl at the death spot with the veil). If the sprawl should end at the teleport, key
+   cell_of's DEATH on react.dying only while the veil is up.
+3. Gates on cfe5eea4: director reel x3 (count `^ERROR` lines too) and `node tools/evidence/run.mjs --no-bench`
+   (do not write in the worktree while it runs).
+4. The spawn frame: f0 draws his top-down parts' pale rim under the figure (the rig draws once before its first
+   drive). Hide the parts at build under a card view, or run RivetFrames once at rig attach.
+5. Every weapon fired once at each pitch (`--bot=gunplay --weapon=<id>` at tilt70 and combo), a contact per
+   pitch; the armory/rack showing him holding each weapon (brief item 6).
+6. The frame cost under the bench lock (it10 numbers are CONTENDED: `evidence/d9/rivet-frame-cost-it10.md`).
+7. Watch assets for portrait_rivet_55 (REQUEST it10): swap `project/features/hud/art/portraits/rivet.png`,
+   provenance; and seams for the bay-number REQUEST.
+- Session end 13:03: everything committed; scratch sequences deleted.
+- Deleted `gtai-masters/d9/rivet/rivet_servo_grey_blob_was_the_reload_mag_it6_vs_it10_combo_48ppm.png` (its name
+  made the claim the death film disproved; not in frames.json; REPORT no longer cites it).
+- Registry rules applied it10: motion-quality-gating (every change judged in motion on the arena, the King and
+  Servo fights and quest 1, before/after at the same seed and frame; the 35 s clip); generative-artifact-gating
+  (the flamer nozzle points and the bust cut judged on contact sheets; the generic facing rule rejected on sight);
+  depth-ordered-layered-art (the shadow and the occlusion silhouette follow the drawn figure, not the hidden
+  parts; the bay number's z vs the actors band sent to seams); realtime-combat-semantics (view only: the flamer's
+  jet keeps the true aim and the sim's shot origin; the drawn flame yields to it); sprite-and-atlas-production
+  (the portrait cut at the sheet's own resolution, reproducible with `--check`; provenance per file).

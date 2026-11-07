@@ -45,9 +45,6 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
   cop at 32 px/m: `gtai-masters\d9\rivet\rivet_shadow_drawn_height_beside_cop_city_tilt70_32ppm_x4_seed5_f60.png`.
 - **The combined clip** (35 s, city 32, flamer 64, King + Kerf + roll 48, Servo 48):
   `gtai-masters\d9\rivet\rivet_d9_set_city32_flamer64_king_servo48_combined_35s.mp4`.
-- **The Servo "grey blob" (it6) is gone at HEAD**: the same run (`--boss=servo --bot=boss --view=combo --seed=1`)
-  shows no part beside him; it was his top-down parts (the reload magazine, fixed in `f3038865`):
-  `gtai-masters\d9\rivet\rivet_servo_grey_blob_was_the_reload_mag_it6_vs_it10_combo_48ppm.png`.
 - **Rivet's dialogue face** (`2b41bdeb`, it10): the front bust of the approved rivet_55_v2 sheet (portraits.json
   row `rivet`, `tools/art/rivet_portrait.py`); his 9 quest-1 lines show a face. A concept-matched portrait is
   REQUESTed from assets (one-file swap). Live in quest 1 at 1080p: `gtai-masters\d9\rivet\rivet_dialogue_face_quest1_payphone_tilt70_32ppm_1080p_t3450.png`.
@@ -70,6 +67,10 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
   ticks keeps the old spot (the other holds are drawn every which way in their facings; no generic rule held).
 - The Servo bay number prints over Rivet (and every body) under combo: n8-view's apron marks sit at z vehicles+1.
   REQUEST to seams (JOURNAL it10): `gtai-masters\d9\rivet\servo_bay_number_prints_over_rivet_combo_48ppm_x4_seed1_f466_472_478.png`.
+- A grey, cream-rimmed splat lies on the ground near him (it6 in the Servo fight; it10 at the hub after his death
+  in the King fight): not identified yet (not the reload magazine, as first thought). Still:
+  `gtai-masters\d9\rivet\rivet_death_respawn_sprawl_held_and_grey_part_king_combo_48ppm_x3_seed1_f1290_1338_1416.png`.
+- After his death he lies in the drawn sprawl at the hub 1.5 s+ after the respawn (the same still): to check vs `top`.
 - The first frame after spawn shows his top-down parts' pale rim under the drawn figure (one frame).
 - Walk: one drawn walk and one sprint pose per sheet; built bob + sway on the facing.
 - Reload: no drawn reload frame; he keeps the equipped strip through it (it7 check: the "bare figure" seen in it6
