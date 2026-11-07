@@ -1,0 +1,77 @@
+mutate: worktree C:\Users\kazda\AppData\Local\Temp\gtai-mutate-64a99786 at 20abab6c (reused)
+mutate: 36/36 mutant(s); baseline run of test_player_settings, test_settings_panel_pad
+mutate: baseline green in 14.7 s; per-mutant timeout 90 s
+mutate: [1/36] features/player/player_settings.gd:21 literal  0.8 -> 1.8  killed  (12.5 s)
+mutate: [2/36] features/player/player_settings.gd:22 boolean  false -> true  killed  (11.3 s)
+mutate: [3/36] features/player/player_settings.gd:24 literal  0 -> 1  killed  (23.2 s)
+mutate: [4/36] features/player/player_settings.gd:25 literal  1.0 -> 0.0  killed  (13.5 s)
+mutate: [5/36] features/player/player_settings.gd:30 boolean  not -> (removed)  killed  (12.3 s)
+mutate: [6/36] features/player/player_settings.gd:33 cmp_flip  != -> ==  killed  (11.9 s)
+mutate: [7/36] features/player/player_settings.gd:33 boolean  or -> and  killed  (11.5 s)
+mutate: [8/36] features/player/player_settings.gd:33 boolean  not -> (removed)  killed  (13.0 s)
+mutate: [9/36] features/player/player_settings.gd:36 cmp_flip  != -> ==  killed  (13.5 s)
+mutate: [10/36] features/player/player_settings.gd:40 literal  0.0 -> 1.0  killed  (13.6 s)
+mutate: [11/36] features/player/player_settings.gd:40 literal  1.0 -> 0.0  killed  (12.6 s)
+mutate: [12/36] features/player/player_settings.gd:42 boolean  false -> true  killed  (14.7 s)
+mutate: [13/36] features/player/player_settings.gd:45 literal  0.0 -> 1.0  survived  (12.0 s)
+mutate: [14/36] features/player/player_settings.gd:46 literal  0 -> 1  killed  (13.4 s)
+mutate: [15/36] features/player/player_settings.gd:48 literal  1.0 -> 0.0  killed  (12.9 s)
+mutate: [16/36] features/player/player_settings.gd:49 literal  1.0 -> 0.0  killed  (12.1 s)
+mutate: [17/36] features/player/player_settings.gd:54 boolean  and -> or  killed  (11.8 s)
+mutate: [18/36] features/player/player_settings.gd:61 cmp_flip  == -> !=  killed  (11.4 s)
+mutate: [19/36] features/player/player_settings.gd:71 boolean  true -> false  killed  (11.6 s)
+mutate: [20/36] features/player/player_settings.gd:72 delete  file.close() -> pass  survived  (12.1 s)
+mutate: [21/36] features/player/player_settings.gd:79 delete  AudioServer.set_bus_volume_db(0, linear_to_db(maxf(volume, 0.0001))) -> pass  killed  (13.1 s)
+mutate: [22/36] features/player/player_settings.gd:79 literal  0 -> 1  killed  (13.1 s)
+mutate: [23/36] features/player/player_settings.gd:79 literal  0.0001 -> 1.0001  killed  (15.7 s)
+mutate: [24/36] features/player/player_settings.gd:81 delete  rebind(StringName(action), keys[action]) -> pass  killed  (12.9 s)
+mutate: [25/36] features/player/player_settings.gd:82 delete  apply_frame_cap() -> pass  killed  (13.9 s)
+mutate: [26/36] features/player/player_settings.gd:88 cmp_flip  > -> <=  killed  (12.9 s)
+mutate: [27/36] features/player/player_settings.gd:88 boundary  > -> >=  killed  (11.9 s)
+mutate: [28/36] features/player/player_settings.gd:88 literal  0 -> 1  survived  (12.1 s)
+mutate: [29/36] features/player/player_settings.gd:90 cmp_flip  >= -> <  killed  (11.8 s)
+mutate: [30/36] features/player/player_settings.gd:90 boundary  >= -> >  survived  (13.3 s)
+mutate: [31/36] features/player/player_settings.gd:90 literal  0 -> 1  survived  (12.2 s)
+mutate: [32/36] features/player/player_settings.gd:96 boolean  not -> (removed)  killed  (12.0 s)
+mutate: [33/36] features/player/player_settings.gd:96 boolean  or -> and  killed  (12.1 s)
+mutate: [34/36] features/player/player_settings.gd:96 cmp_flip  == -> !=  killed  (11.7 s)
+mutate: [35/36] features/player/player_settings.gd:100 delete  InputMap.action_erase_event(action, ev) -> pass  killed  (11.2 s)
+mutate: [36/36] features/player/player_settings.gd:103 delete  InputMap.action_add_event(action, k) -> pass  killed  (12.6 s)
+mutate features/player/player_settings.gd: 36 mutant(s), tests: test_player_settings, test_settings_panel_pad
+  features/player/player_settings.gd:45 literal  0.0 -> 1.0  survived
+  features/player/player_settings.gd:72 delete  file.close() -> pass  survived
+  features/player/player_settings.gd:88 literal  0 -> 1  survived
+  features/player/player_settings.gd:90 boundary  >= -> >  survived
+  features/player/player_settings.gd:90 literal  0 -> 1  survived
+  features/player/player_settings.gd:21 literal  0.8 -> 1.8  killed
+  features/player/player_settings.gd:22 boolean  false -> true  killed
+  features/player/player_settings.gd:24 literal  0 -> 1  killed
+  features/player/player_settings.gd:25 literal  1.0 -> 0.0  killed
+  features/player/player_settings.gd:30 boolean  not -> (removed)  killed
+  features/player/player_settings.gd:33 cmp_flip  != -> ==  killed
+  features/player/player_settings.gd:33 boolean  or -> and  killed
+  features/player/player_settings.gd:33 boolean  not -> (removed)  killed
+  features/player/player_settings.gd:36 cmp_flip  != -> ==  killed
+  features/player/player_settings.gd:40 literal  0.0 -> 1.0  killed
+  features/player/player_settings.gd:40 literal  1.0 -> 0.0  killed
+  features/player/player_settings.gd:42 boolean  false -> true  killed
+  features/player/player_settings.gd:46 literal  0 -> 1  killed
+  features/player/player_settings.gd:48 literal  1.0 -> 0.0  killed
+  features/player/player_settings.gd:49 literal  1.0 -> 0.0  killed
+  features/player/player_settings.gd:54 boolean  and -> or  killed
+  features/player/player_settings.gd:61 cmp_flip  == -> !=  killed
+  features/player/player_settings.gd:71 boolean  true -> false  killed
+  features/player/player_settings.gd:79 delete  AudioServer.set_bus_volume_db(0, linear_to_db(maxf(volume, 0.0001))) -> pass  killed
+  features/player/player_settings.gd:79 literal  0 -> 1  killed
+  features/player/player_settings.gd:79 literal  0.0001 -> 1.0001  killed
+  features/player/player_settings.gd:81 delete  rebind(StringName(action), keys[action]) -> pass  killed
+  features/player/player_settings.gd:82 delete  apply_frame_cap() -> pass  killed
+  features/player/player_settings.gd:88 cmp_flip  > -> <=  killed
+  features/player/player_settings.gd:88 boundary  > -> >=  killed
+  features/player/player_settings.gd:90 cmp_flip  >= -> <  killed
+  features/player/player_settings.gd:96 boolean  not -> (removed)  killed
+  features/player/player_settings.gd:96 boolean  or -> and  killed
+  features/player/player_settings.gd:96 cmp_flip  == -> !=  killed
+  features/player/player_settings.gd:100 delete  InputMap.action_erase_event(action, ev) -> pass  killed
+  features/player/player_settings.gd:103 delete  InputMap.action_add_event(action, k) -> pass  killed
+score 86.1% = killed 31 / (killed 31 + survived 5); timeout 0, invalid 0; 479 s

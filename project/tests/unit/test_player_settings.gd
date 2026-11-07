@@ -146,3 +146,17 @@ func test_rebind_ignores_an_unknown_action_or_key() -> void:
 	s.rebind(&"no_such_action", "K")
 	assert_false(InputMap.has_action(&"no_such_action"))
 	assert_true(s.keys.is_empty())
+
+
+## Mutation survivors :90 (`>= -> >`, `0 -> 1`): a row whose cap is 0 (uncapped) still sets it.
+func test_a_device_row_cap_of_zero_uncaps_the_engine() -> void:
+	var before: int = Engine.max_fps
+	var keep: DeviceProfile = DeviceProfile.shared()
+	var row: DeviceProfile = DeviceProfile.of("")
+	row.max_fps = 0
+	DeviceProfile._shared = row
+	Engine.max_fps = 77
+	PlayerSettings.new().apply_frame_cap()
+	assert_eq(Engine.max_fps, 0, "the row's 0 is a cap to set, not 'none'")
+	DeviceProfile._shared = keep
+	Engine.max_fps = before
