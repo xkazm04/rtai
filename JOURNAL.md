@@ -1175,3 +1175,5 @@ NEXT (iteration 12):
 4. The city cop walker (scratch patch) only if a scene shows cops holstered (quest 1 cops are
    already covered by StreetQuestCards).
 - Session end 05:31: tree clean after this commit.
+- GATE unit no-arg on 5bf868a1 (tree still): 1524 passed, 0 failed, no FLAKY (exit 0). NEXT 2's
+  unit half done; the top/tilt70 reels remain.
