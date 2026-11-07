@@ -75,8 +75,12 @@ director reel tilt70 19/19 0 SCRIPT ERROR, `top` city arena framemd5 identical t
 - The baked crowd is hidden behind the lifted roofs since iteration 27 (`CityCrowdOcclusion`,
   `it27_crowd_occlusion_riot_drive_tilt70_32ppm_before_after.png`; cost 110-205 us/frame CONTENDED);
   riot bodies the sim leaves inside a footprint still draw over it.
-- A pre-existing one-frame dark rect at the screen's top edge in the riot (f569, also with the crowd
-  pass off; two frames with it on): ChunkView's per-frame budget slicing, not fixed.
+- (Closed, iteration 30: not a game defect.) The dark band at the riot's top edge (f389, f569) is
+  the bench's own churn: `BenchDriver` evicts a chunk next to the riot every 180 ticks so swaps keep
+  happening, and an evicted chunk on screen goes and is redrawn. In play a chunk drops only beyond
+  330 m (`CityResidency.R_DROP`), off screen. A hide-until-whole swap was built and filmed: it made
+  the bench gap longer (2 -> 3-4 frames) and moved no pixel of the King's combo engage, so it was not
+  landed. `it30_riot_bench_churn_f568_f569_tilt70_32ppm.png`.
 - The squat kerb props keep their flat art's hatched silhouette as the ground shadow (it reads as
   one); the three poles (street sign, lamp, traffic light) cast a drawn stroke since iteration 25, and
   since iteration 26 the lamp's and the traffic light's end in a round blob for the globe / signal
@@ -92,7 +96,7 @@ director reel tilt70 19/19 0 SCRIPT ERROR, `top` city arena framemd5 identical t
 1. **Facade height.** Options: true height (`height_k` 1) or a shortened cut (0.5). Built: **0.5**
    (the north sidewalk stays visible; Rivet is not lost behind a roof lift). See
    `it1_height_k_1_vs_05_tilt70_32ppm.jpg`; exe:
-   `RTAI.exe res://dev/arena/arena.tscn -- --arena=city --bot=course --seed=2 --rigs --clean --view=tilt70`
+   `RTAI.exe -- --arena=city --bot=course --seed=2 --rigs --clean --view=tilt70`
    (change `height_k` in `data/tables/city_facades.json` to see 1.0).
 2. **Occlusion style.** Options: fade the building, cut it away, or an ink silhouette of the body.
    Built: **ink silhouette with a rim** (the arena's PropOcclusion look, so the city and the arenas
@@ -104,10 +108,22 @@ director reel tilt70 19/19 0 SCRIPT ERROR, `top` city arena framemd5 identical t
 
 ## Exe
 
-FREEZE: export to `build/export/windows/RTAI.exe` (the int-day recipe in `docs/decisions.md`) and
-put the exact command lines here.
+`C:/Users/kazda/kiro/gtai-wt/n8-city/build/export/windows/RTAI.exe` (282 MB, + the sim DLL beside
+it), exported 07:21 at 7a43f001 (the project tree of the final head: later commits touch only
+JOURNAL/REPORT/docs). Export: `"$GODOT_BIN" --headless --path project --export-release windows-showcase
+../build/export/windows/RTAI.exe` (exit 0). The showcase preset's main scene is the arena, so no scene
+path goes on the command line (a release template refuses one). Smoke-run: the first line below,
+600 frames, exit 0, 0 SCRIPT ERROR.
+
+- The city block at 70 (play): `RTAI.exe -- --arena=city --bot=course --seed=2 --rigs --clean --view=tilt70`
+- The same at 48 px/m: add `--ppm=48`; the shipped `top` look: drop `--view=tilt70`.
+- Walk it yourself: `RTAI.exe -- --arena=city --rigs --view=tilt70`
+- The King's district (combo, 70 easing to 55 on engage): `RTAI.exe -- --boss=king --rigs --view=combo`
+- Servo's depot: `RTAI.exe -- --boss=servo --rigs --view=combo`
 
 ## Next steps
 
 - 70 twins and raises as the library serves them (the traffic light 55 short pole: served and cut at iteration 27).
-- ChunkView's one-frame edge flash (riot f569).
+- If a streamed-city scene ever eases its pitch live (combo outside the boss arenas), ChunkView
+  releases every chunk at the 12-frame settle: keep the old chunk on screen until its redraw is whole
+  (the iteration 30 `ChunkSwap` draft, JOURNAL).

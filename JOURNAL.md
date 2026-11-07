@@ -1223,3 +1223,28 @@ Read: JOURNAL, git log, the lane journals (no new REQUEST to city). Iterations 2
 - FOUND (07:23) the riot edge flash reproduces on HEAD: `city_bench.tscn -- --scenario=riot
   --view=tilt70 --zoom=1.0 --secs=11`, 620 frames: f569 the top strip's mean luma 158 -> 133
   (the sidewalk under a freshly sliced chunk's asphalt), f570 150, f571 back to 158.
+- FRICTION (07:26) `node tools/evidence/run.mjs --no-bench` at 7a43f001 died at export-audit:
+  `release_compile.mjs` rmSync EPERM on `%TEMP%/gtai-release-compile`, a fixed temp path every
+  worktree shares (another lane's release-compile held it). lint/unit/scenarios/parity/selftest had
+  run (07:19-07:25). Not city's tool; re-run at 07:30. NOTE for the Director: give the
+  release-compile staging dir a per-worktree/pid name.
+- FOUND + CLOSED (07:29) the riot "edge flash" is the BENCH's churn, not a game defect:
+  `BenchDriver` (riot) calls `CityResidency.evict()` on a ring neighbour of the riot centre every
+  CHURN_TICKS 180 so swaps keep happening; the evicted chunk on screen goes and ChunkView redraws it
+  (dips at f389 and f569, 3 s apart). In play a chunk leaves only beyond R_DROP 330 m, off screen.
+  TRIED (not landed) a `ChunkSwap` (items hidden until a chunk's draw list is whole; a live pitch's
+  settle keeps the old chunk until the new is whole; + `ChunkItems`, the pool split out so
+  chunk_view stays under 200 lines; 3 tests passed, fast suite 1517/0): on the bench the gap grew
+  2 -> 3-4 frames (hidden while the 3-frame tilted slice records), and on the King's combo engage
+  (`arena.tscn -- --boss=king --bot=boss --seed=2 --rigs --view=combo --ppm=48`, 240 frames) no
+  pixel moved vs HEAD (the arenas do not stream chunks). Reverted; the draft is in
+  scratch/city/it30/src/. Still `it30_riot_bench_churn_f568_f569_tilt70_32ppm.png` (masters, not in
+  frames.json). REPORT gap closed.
+- EXE smoke (07:33) `RTAI.exe --quit-after 400 -- --boss=king --rigs --view=combo` (king engaged in
+  king_boulevard) and `--boss=servo` (engaged in depot): exit 0, 0 SCRIPT ERROR (only the usual
+  "resources still in use at exit" line of a --quit-after). REPORT Exe section written.
+Registry rules applied it30: motion-quality-gating (the flash measured as a per-frame luma series
+over all 620 frames, before vs after, not one still; the "fix" rejected because the motion got
+worse), concept-scene-parity (same seed, scene and frame count; one file apart), render-submission-
+economy (n/a: nothing landed), depth-ordered-layered-art / tiling-texture-acceptance /
+generative-artifact-gating (n/a: no new art).
