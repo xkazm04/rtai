@@ -162,3 +162,8 @@ NEXT (iteration 5):
   the desktop never calls apply()).
   -> NEXT 2 becomes: stills of `deck` vs a `deck` + draw_scale 0.75 / 0.85 at 48 px/m, look at them on a 7" scale,
   then a Call for the owner (a/b with the clip) and, if kept, draw_scale on the `deck` rows = the new baseline.
+- FINDING 12:08 E8 still (`gtai-masters/d9/handheld/e8-draw-scale-full-vs-075-crop-x2.png`, looked at): 960x600
+  scaled up is softer (ink lines, grain) but reads; the framing moved too: the smaller content_scale_size zooms the
+  camera 1.33x. Fix first thing next: CameraRig / quest 1 px/m x draw_scale (DeviceProfile.zoom() could return
+  zoom_k x draw_scale) so the A/B compares the same view; re-measure (E6 says the zoom itself costs nothing).
+- Session end 12:09: tree clean, every change committed; no Godot of mine left running.
