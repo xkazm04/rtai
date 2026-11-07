@@ -1,4 +1,4 @@
-# n8 hud lane: REPORT (final, it21, 08:05; the project tree frozen at f80e09ba)
+# n8 hud lane: REPORT (final, it21, 07:55; the project tree frozen at f80e09ba)
 
 Lane `hud`, branch `n8-hud`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n8\hud\` (`frames.json`,
 15 entries, best first; the combined clip `hud_set_combined_it19.mp4`, 61 s, 7 segments). Repo evidence under
@@ -120,7 +120,7 @@ Every look has a flag one value away (`PAPER`, `FACES`, `SEE`, `ON_TICKET`, `FIT
   log; looked at frame 239 of each (the floor showcase + rack + chip faces; the King's paper banner).
   Smoke frames: `gtai-n8/scratch/hud/it20/exe_smoke.png`
   (07:22 build, armory + King) and `exe2_smoke.png` (07:48 build, armory: the rack bottle at 0.7 m).
-  it21 (08:00), the 07:48 build again: `-- --boss=king --view=combo --rigs` and `-- --boss=servo --view=combo --rigs`,
+  it21 (07:54), the 07:48 build again: `-- --boss=king --view=combo --rigs` and `-- --boss=servo --view=combo --rigs`,
   241 frames each, exit 0, 0 ERROR lines in either log; frame 239 of both looked at (the paper banner with
   the King's and Servo's crests, the ghost card): `gtai-n8/scratch/hud/it21/exe_boss_smoke.png`.
 

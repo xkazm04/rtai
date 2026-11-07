@@ -1260,17 +1260,21 @@ NEXT (supersedes it19's):
   reel and exe all at that head). NEXT above stands.
 
 ## Iteration 21 (07:52-, BUILD into the freeze)
-- 07:55 Read: JOURNAL NEXT, the other lanes' journals (no open REQUEST to hud; view's l.862 was
+- 07:53 Read: JOURNAL NEXT, the other lanes' journals (no open REQUEST to hud; view's l.862 was
   answered in it12), the catalog (updated 07:50: vehicles/street only, nothing on hud's ids).
   `git diff f80e09ba HEAD -- project` empty: the gates, reel and exe at f80e09ba stand as the freeze's.
-- 08:00 LOOKED (evidence, no code) the 07:48 exe in the boss fights: `-- --boss=king --view=combo
+- 07:54 LOOKED (evidence, no code) the 07:48 exe in the boss fights: `-- --boss=king --view=combo
   --rigs` and `-- --boss=servo --view=combo --rigs`, 241 frames each, exit 0, 0 ERROR lines;
   frame 239 of both looked at (the paper banners with the King's and Servo's crests read, the ghost
   card under them): `gtai-n8/scratch/hud/it21/exe_boss_smoke.png` (raw frames deleted).
-- 08:05 REPORT final: DRAFT dropped, the freeze line and the boss smoke added.
+- 07:55 REPORT final: DRAFT dropped, the freeze line and the boss smoke added.
 Registry rules applied (it21): `motion-quality-gating` (the shipped exe judged on the real boss
 scenes, not the editor).
 
 NEXT (supersedes it20's): nothing owed for the freeze. After the run: the assets lane's raises for
 the heavy/long showcase top views, then re-import (`tools/art/showcase_import.py`); boss taunt
 lines into `BossTaunt`; boss busts once approved; Rivet's dialogue face after the Rivet triage.
+- 07:57 FRICTION: the it21 lines first carried guessed clock times (08:00/08:05); corrected from
+  `date`. Clean as you go: deleted 15 raw frame-sequence folders in `scratch/hud/it9-it12`
+  (board_*, q1_grid; ~300 MB) that no REPORT/JOURNAL/frames.json line names; logs, scripts and
+  named stills kept (scratch 514 -> 216 MB).
