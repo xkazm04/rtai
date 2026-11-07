@@ -13,7 +13,8 @@
         "2026-11-07: n8 merge: + vehicles growth combined (accepted on its lane) (dev_loc 17942 -> 18431)",
         "2026-11-07: n8 merge: + city growth combined (accepted on its lane) (dev_loc 18431 -> 18535)",
         "2026-11-07: n8 merge: + hud growth combined (accepted on its lane); fold_rigs dropped for view's follow per both lanes' merge notes (dev_loc 18535 -> 18799)",
-        "2026-11-07: d9-rivet FireStills: a dev-only capture of Rivet's drawn fire cell per weapon (the every-weapon-at-each-pitch evidence); 2 lines in arena_game.gd hook it under --fire-stills (dev_loc 18799 -> 18865)"
+        "2026-11-07: d9-rivet FireStills: a dev-only capture of Rivet's drawn fire cell per weapon (the every-weapon-at-each-pitch evidence); 2 lines in arena_game.gd hook it under --fire-stills (dev_loc 18799 -> 18865)",
+        "2026-11-07: d9-rivet: quest1_clip knows --rivet-walk/--rivet-height, the owner's Call 1/2 befores in quest 1 (3 lines) (dev_loc 18865 -> 18868)"
       ],
       "files": {
         "project/dev/arena": 708,
@@ -22,7 +23,7 @@
         "project/dev/bench": 1658,
         "project/dev/bots": 399,
         "project/dev/enemy_ai": 662,
-        "project/dev/frames": 464,
+        "project/dev/frames": 467,
         "project/dev/ghost-forms": 616,
         "project/dev/ghost-powers": 1137,
         "project/dev/gunplay": 674,
@@ -41,7 +42,7 @@
         "project/dev/view": 195,
         "project/dev/weapon_art": 506
       },
-      "total": 18865
+      "total": 18868
     },
     "direct_cmdline_reads": {
       "accepted": [

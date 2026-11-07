@@ -30,3 +30,16 @@ func test_no_grid_with_a_weapon_out_standing_or_with_the_bob_flag() -> void:
 	assert_eq(
 		got, want if ResourceLoader.exists(want) else "", "the grid only when the art has one"
 	)
+
+
+func test_the_p70_grid_ships_as_four_frames_by_eight_rows_of_one_cell_size() -> void:
+	var path: String = RivetStrips.DIR + "p70/" + RivetWalk.STRIP
+	assert_true(ResourceLoader.exists(path), "p70 has the drawn stride (it22)")
+	var tex: Texture2D = load(path) as Texture2D
+	assert_eq(tex.get_width() % RivetWalk.FRAMES, 0, "whole cells across")
+	assert_eq(tex.get_height() % RivetWalk.ROWS, 0, "whole cells down")
+	var cell_h: float = tex.get_height() / float(RivetWalk.ROWS)
+	assert_gt(cell_h, RivetFrames.FIG_PX, "a cell holds the 110 px figure")
+	var rig: CutRig = add_child_autofree(CutRig.new())
+	rig.speed_now = RivetFrames.MOVING + 10.0
+	assert_eq(RivetWalk.path_of(rig, "p70", &""), path, "walking bare-claw takes it")
