@@ -632,3 +632,32 @@ NEXT (it8), replaces the list above:
   generative-artifact-gating (every recipe reproduced byte-exact before changing an input; all cells
   looked at old vs new), depth-ordered-layered-art (no layer change: whole-figure grids only).
 - Session end 15:12: all committed; scratch avi/PNG sequences deleted (masters hold the mp4s and stills).
+
+## Iteration 8 (director it10, 15:13-16:13), BUILD
+
+Read: JOURNAL it7 NEXT, git log, d9-rivet JOURNAL (it17: no REQUEST to seams; its baton REQUEST went to
+assets), library JOURNAL it85 (15:00: my 14:39 REQUEST served: `deliveries/seams_ped_walk_cells_it85.md`
++ `.json`, 10 folders; named weak row elder 70 row 4). Registry rules applied: sprite-and-atlas-production
+(fresh rows hung from the sheet's own head line; one cell per grid; FILL rescaled by measured mean figure
+height), motion-quality-gating (old vs new grids on one contact, then a before/after film in motion at
+the same frames with every facing walking), generative-artifact-gating (each base re-cut and compared
+with the game grid first: suit and worker byte-exact, the jogger byte-exact from the it7 source sheet;
+the others were older v1/v2 bases in the game, so they upgrade whole).
+- 15:14 ACK assets: the ped walk cells manifest taken for cap, elder, hat, hood, punk, suit, worker,
+  jogger. NOT taken: the patrol 70/55 folders (v3 + row 2 v4): quest 1 already walks the whole v4 sheet
+  (A, a95de60e), which alternates every row.
+- 15:17 MILESTONE (c159e9d5): the eight 70 ped walk grids rebuilt (scratch `it10/build.sh`, splice only
+  the fresh rows: cap 2, elder 1 2, hat 2 4, hood 2, punk 2, suit 2, worker 2 4 5, jogger 2). Looked at
+  every cell old vs new (scratch `it10/contact_*.png`): frames 1/3 now swap the leading leg in the
+  facings where the old rows repeated them (cap 3/4 toward, hat profile, ...). Head-line spread <= 2 px
+  except elder 3/4 away 7 and hood 3/4 away 6 (drawn bobs: head UP at the passing frames). WALK_FILL =
+  old FILL x old mean h / new mean h: elder 1.07 -> 1.08, hat 1.07 -> 1.06, punk 1.00 -> 1.01, worker
+  1.11 -> 1.13 (cap, hood, suit, jogger hold). Unit 1701/0 (--changed ran the full set), lint 15/15,
+  import 0 ERROR, provenance 8 lines.
+- 15:20 MILESTONE (324dac8a): the crowd board's `--spin` (dev): 16 walkers in 16 headings, so every
+  facing walks (the board was east-west only). FILMED before (old grids + old FILLs, re-import) / after,
+  64 px/m tilt70, 183 frames each, 0 SCRIPT ERROR; tree restored, import 0 ERROR. Masters
+  `crowd_walk_cells_it85_before_after_spin_tilt70_64ppm.mp4` (+ `_cycle.png`, `_old_vs_new_grids_p70.png`);
+  frames.json: it replaces the jogger/shopper board still (the clip covers both).
+- FRICTION (2 min): the pre-commit hook (lint) blocked the --spin commit: gdformat, a 100-col line and
+  the debt ratchet (dev_loc +8). Squeezed to +6 and accepted with a recorded reason.
