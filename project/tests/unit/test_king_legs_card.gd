@@ -56,13 +56,10 @@ func test_show_parts_hides_the_pelvis_with_the_legs() -> void:
 	assert_true(rig.pelvis_spr.visible, "the parts' pelvis comes back without a sheet")
 
 
-func test_the_gang_keeps_its_own_legs() -> void:
-	var was: ViewMode = ViewMode._shared
-	ViewMode._shared = ViewMode.of("tilt")
-	ViewMode._shared.art = "p55"
+func test_an_art_dir_without_a_sheet_keeps_its_parts() -> void:
 	var rig: CutRig = autofree(CutRig.new())
 	rig.plan = BodyPlan.new()
-	rig.plan.art_dir = GangPlan.ART_DIR
+	rig.plan.art_dir = "thug"
 	rig.torso = Node2D.new()
 	rig.add_child(rig.torso)
 	var card: Sprite2D = Sprite2D.new()
@@ -73,7 +70,13 @@ func test_the_gang_keeps_its_own_legs() -> void:
 	rig.global_position = Vector2(100.0, 200.0)
 	KingLegsCard.step(rig)
 	var legs: Node = rig.torso.get_node_or_null(NodePath(KingLegsCard.NAME))
-	assert_null(legs, "no King legs under a bodyguard")
-	assert_true(rig.pelvis_spr.visible, "the bodyguard's own parts stay")
-	assert_eq(rig.torso.global_position, rig.global_position, "the bodyguard's torso is not lifted")
-	ViewMode._shared = was
+	assert_null(legs, "only the court's listed art dirs stand on drawn legs")
+	assert_true(rig.pelvis_spr.visible, "its own parts stay")
+	assert_eq(rig.torso.global_position, rig.global_position, "its torso is not lifted")
+
+
+func test_the_king_and_his_gang_have_a_sheet_at_both_pitches() -> void:
+	for art_dir: String in ["king", GangPlan.ART_DIR]:
+		assert_true(KingLegsCard.SHEETS.has(art_dir), art_dir)
+		for pitch: int in [55, 70]:
+			assert_not_null(KingLegsCard.sheet(pitch, KingLegsCard.SHEETS[art_dir]), art_dir)

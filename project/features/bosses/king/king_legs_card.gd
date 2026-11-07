@@ -10,7 +10,7 @@ extends RefCounted
 ## king_legs_70_v3 (A: no hip ring, the thigh tops start under the hem), 55 from king_legs_55_v2
 ## (A: the profile strides).
 
-const DIR: String = "res://features/bosses/king/art/p%d/king_legs.png"
+const DIR: String = "res://features/bosses/king/art/p%d/%s.png"
 const NAME: StringName = &"legs_card"
 const COLS: int = 5
 const ROWS: int = 5
@@ -25,11 +25,12 @@ const FRAMES_PER_CYCLE: float = 4.0
 const LIFT: Dictionary[int, float] = {55: 0.5, 70: 0.74}
 ## false: the leg parts as before (it1's default, while the arms stayed at the old height).
 const ON: bool = true
-## Whose bust stands on these legs: the King's art only. it10: KingArt.dress runs for every court
-## rig, so the gang's bodyguards (art_dir "gang", their own gang_parts legs) stood on small copies
-## of the King's legs, their torsos lifted (seen in phase 1; every earlier take was phase 3).
-## Adding "gang" is the one value back to that look.
-const ART_DIRS: Array[String] = ["king"]
+## Whose bust stands on drawn legs, and which sheet (art/p<pitch>/<sheet>.png); an art_dir not
+## here keeps its leg parts. it10: the gang's bodyguards stand on the King's sheet too (it was so
+## by accident since it2: KingArt.dress runs for every court rig); on their own gang_parts legs
+## they sprawl grey top-down limbs with a pale rim under the upright bust (filmed phase 1, combo,
+## 32 and 64 px/m). Drop "gang" for the parts; "gang_legs" when the gang's own sheet lands.
+const SHEETS: Dictionary[String, String] = {"king": "king_legs", "gang": "king_legs"}
 
 static var _tex: Dictionary[String, Texture2D] = {}
 
@@ -37,11 +38,11 @@ static var _tex: Dictionary[String, Texture2D] = {}
 ## After KingArt.dress: the legs card under the bust card, or the leg parts when there is no sheet.
 static func step(rig: CutRig) -> void:
 	var card: Sprite2D = rig.head_card
-	if card == null or rig.plan == null or not ART_DIRS.has(rig.plan.art_dir):
+	if card == null or rig.plan == null or not SHEETS.has(rig.plan.art_dir):
 		return
 	var legs: Sprite2D = card.get_parent().get_node_or_null(NodePath(NAME)) as Sprite2D
 	var pitch: int = roundi(ViewMode.shared().art_pitch())
-	var tex: Texture2D = sheet(pitch) if ON else null
+	var tex: Texture2D = sheet(pitch, SHEETS[rig.plan.art_dir]) if ON else null
 	if tex == null:
 		if legs != null and legs.visible:
 			legs.visible = false
@@ -70,8 +71,8 @@ static func step(rig: CutRig) -> void:
 
 
 ## The sheet for a pitch (null: none, the parts draw).
-static func sheet(pitch: int) -> Texture2D:
-	var path: String = DIR % pitch
+static func sheet(pitch: int, sheet_name: String = "king_legs") -> Texture2D:
+	var path: String = DIR % [pitch, sheet_name]
 	if not _tex.has(path):
 		_tex[path] = load(path) as Texture2D if ResourceLoader.exists(path) else null
 	return _tex[path]
