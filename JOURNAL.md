@@ -564,3 +564,36 @@ NEXT (it16 end, 14:37; supersedes every NEXT above):
 - Seen in the films: the pit's guards and the city block's cops are the arena's top-down rigs (with dev rings)
   beside the drawn Rivet under tilt70; that is ArenaRigs (not this lane's art, the same in it10's stills). The pit bot
   mostly walks (one gatling shot in 300 frames); gunplay is the bot for firing.
+- (clock: `date` read 15:08 at the clip commit; the session started 14:48. Times below by `date`.)
+- 15:09 Quest 1 stills t13000-18750 step 250 (`-s res://dev/frames/quest1_clip.gd -- --view=tilt70 --rigs`, 1080p,
+  0 SCRIPT ERROR, ran to the payout): his lines caught at Dock 9 (sorry-not-sorry t13750), b5 (everybody-screamed
+  t17000-17250) and b6 (i-have-a-job t18500-18750). The mood bust at t13750 looked washed out: the portrait fades in
+  over HudDialogue.ENTER_S on drawn frames only, and the stills mode draws no frame between stills, so a line's first
+  still is its fade's first frame (both art files measured: same alpha and value). Re-run t13660-13900 step 20: faint
+  at t13660 only, crisp from t13680. NEXT 4 done. Masters
+  `rivet_dialogue_face_live_quest1_mood_t13680_vs_neutral_t17250_t18750_tilt70_1080p.png` (REPORT; not in frames.json).
+- 15:10 NEXT 1: the asset lane served the baton REQUEST (rounds 20261107-1555/-1600): rivet_eq_electro_baton_55_v3 A,
+  _70_v3 B (named fix: the rod still continues the forearm line; the away views keep a short rod), _70_left_v3 A,
+  _55_left_v3 A. ACK assets: taken, all four.
+- MILESTONE `6443bc82` the baton v3 in the game: manifest swapped, re-cut (deterministic: only the 4 baton strips
+  moved). Contact old/new (scratch `it19/baton_v3_contact.png`): the dark rod reads in every row; p55 eq cell 4 had
+  cell 3's tip spark floating at its lower left (the column cut) -> that row cut by component (`cc: "0"`), clean.
+  Muzzle table re-measured: unchanged (no-flash weapon). Provenance x4. Lint 15/15; the rivet unit files 31/0.
+- FRICTION (~2 min): the first baton film showed the OLD strips: a game run (`--path project`, no editor) does not
+  re-import a changed PNG; ran `--import` once and re-filmed. Rule for me: `--import` after every re-cut, before
+  filming (the class-cache auto-import only fires on a stale class cache).
+- Filmed before/after `--bot=pit --loadout=electro_baton --view=tilt70|tilt --ppm=64 --seed=3 --rigs --clean` (361
+  frames each, 0 SCRIPT ERROR): the rod reads in the strikes at both pitches and in the p55 facings; the p70 facings
+  only a little better; the p70 side strike lost the old sheet's drawn swing arc (no game smear for the baton
+  there). Masters `rivet_electro_baton_v3_before_after_pit_tilt70_p70_and_tilt_p55_64ppm_x2_seed3_f60_150_300_310_330_350.png`
+  (frames.json entry 4; the pistol-muzzle entry out, file kept: REPORT cites it). DECISION rivet/baton-v3.
+- REQUEST to assets: rivet_eq_electro_baton_70_v4, 70, copy by example of rivet_eq_electro_baton_70_v3 with
+  rivet_eq_electro_baton_55_v3 as image 2 (your it85 NEXT): the rod ANGLED OUT from the claw in all five facings with
+  a background gap from the forearm (as 55 v3), the away views (views 4-5) the same long rod; keep the drawn swing
+  arc (the pale crescent) in the side strike and the follow-through (cells 6 and 8), as rivet_eq_electro_baton_70_v2
+  drew it; holds, hand rule, poses, pitch as v3; no blue, no teal, no red. Why: at 32-64 px/m the p70 facings still
+  read the rod as part of the forearm, and v3's side strike has no motion read.
+- Item 6 (the armory/rack showing him holding each weapon) designed, not built: under a card view the hub's weapon
+  wall (WeaponRackView, n8-hud's) would get a row above the board with each weapon's equipped strip REST cell (17
+  drawn Rivets). It reads as a lineup of clones in the world, so it is a look the owner should pick: a Call, not a
+  default; FireStills' crops (the every-weapon contacts in masters) already show him holding each weapon.

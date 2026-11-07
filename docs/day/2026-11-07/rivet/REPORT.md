@@ -57,6 +57,13 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
   mood bust at the cast's 320 px; the mood bust on rivet-feels-good and rivet-sorry-not-sorry. Before (it10's sheet
   cut) / after, live in quest 1 at 1080p:
   `gtai-masters\d9\rivet\rivet_dialogue_face_before_after_portrait_v2_quest1_payphone_tilt70_32ppm_1080p_t3350.png`.
+  Live in quest 1 at Dock 9 (it19, `--stills` t13660-13900 and t13000-18750, 0 SCRIPT ERROR): the mood bust
+  (eye bars narrowed, head lowered) on "Sorry! Sorry. Not sorry?", the neutral on "Everybody screamed" and "I have
+  a job": `gtai-masters\d9ivetivet_dialogue_face_live_quest1_mood_t13680_vs_neutral_t17250_t18750_tilt70_1080p.png`.
+- **The electro baton redraw** (`6443bc82`, it19, the it16 REQUEST served): the library's v3 (p55 A, p70 B, both
+  left A): a dark steel rod with a copper coil, 1.3x longer; p55 cut by component (a tip spark crossed a column
+  cut). The rod now reads in the strikes at both pitches and in the p55 facings. Before/after in the pit, 64 px/m:
+  `gtai-masters\d9ivetivet_electro_baton_v3_before_after_pit_tilt70_p70_and_tilt_p55_64ppm_x2_seed3_f60_150_300_310_330_350.png`.
 - **The flamer's drawn flame follows the aim** (`90c46dfc`, it16): the it13 "red jet" was a drawn flame pointing
   left (the head's octant) beside the game's jet at ~124 deg (the aim); the drawn flame now needs the aim within
   22.5 deg. Before/after: `gtai-masters\d9\rivet\rivet_flamer_drawn_flame_needs_aim_before_after_gunplay_tilt70_64ppm_seed3_t359_380.png`.
@@ -101,8 +108,8 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
   ticks keeps the old spot (the other holds are drawn every which way in their facings; no generic rule held).
 - The Servo bay number printed over Rivet under combo: REQUEST to seams (it10), served on `d9-seams` at 3f4732db
   (ServoDepotDraw.cover); not on this branch until the Director merges both.
-- The electro baton reads as part of his forearm at 32-64 px/m (the rod is his arm's rust-brown; only the tip spark
-  reads): an art fault, REQUESTed from assets (it16: a dark steel rod angled out of the claw, 1.3x longer).
+- The p70 electro baton's facings still carry the rod along the forearm (the library's v3 is B with that named
+  fix) and its side strike lost the old sheet's drawn swing arc: REQUESTed as 70 v4 (it19).
 - Walk: one drawn walk and one sprint pose per sheet; built bob + sway on the facing.
 - Reload: no drawn reload frame; he keeps the equipped strip through it (it7 check: the "bare figure" seen in it6
   was the equipped back views, which show the small guns barely; no change made).
