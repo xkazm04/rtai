@@ -11,7 +11,11 @@ atlas's own paper and ink): the look's item shader re-inks hues, and the card's 
 as red under `top` (red is only for blood). Idempotent: re-running on a 3 x 4 atlas
 rewrites cell 9.
 
-usage: python tools/art/bike_top_print.py [--check]
+RIDER (it3): the print is the library's top-down bike WITH its rider (keyed/vehicle/
+bike_rider_top_v1.png, A, round 20261107-1210, drawn nose to +x), cropped to its alpha, scaled to
+LENGTH_M along x (its own aspect), duotoned the same way. False: the riderless card tail above.
+
+usage: python tools/art/bike_top_print.py [--check] [--lib=<art library root>]
 """
 import sys
 from pathlib import Path
@@ -34,11 +38,24 @@ PPM = 80.0
 BIKE_ROW, TAIL_COL = 9, 4
 LENGTH_M = 2.1
 CELL_ID = 9
+RIDER = True
+RIDER_TOP = "keyed/vehicle/bike_rider_top_v1.png"
+LIB = "C:/Users/kazda/kiro/gtai-art/library"
 INK = (23, 19, 27)  # palette ink
 CREAM = (242, 232, 213)  # palette paper
 
 
+def rider_print() -> Image.Image:
+    lib = next((a[6:] for a in sys.argv if a.startswith("--lib=")), LIB)
+    top = Image.open(Path(lib) / RIDER_TOP).convert("RGBA")
+    top = top.crop(top.getchannel("A").getbbox())
+    w = round(LENGTH_M * PPM)
+    return duotone(top.resize((w, max(1, round(top.height * w / top.width))), Image.LANCZOS))
+
+
 def bike_print() -> Image.Image:
+    if RIDER:
+        return rider_print()
     sheet = Image.open(CARDS).convert("RGBA")
     x0, y0 = TAIL_COL * CARD_PX, BIKE_ROW * CARD_PX
     tail = sheet.crop((x0, y0, x0 + CARD_PX, y0 + CARD_PX))
