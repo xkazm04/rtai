@@ -39,6 +39,15 @@ priority, the CPU's own 2-CU Radeon), never a device claim. Details and sources:
 - The fill-rate lever (E8c, same framing, CONTENDED, bench lock): drawing the 2D frame smaller and scaling it to the
   1280x800 panel cuts render GPU on the iGPU 8.12 -> 6.21 ms at 0.85 (-24 %) and -> 5.14 ms at 0.75 (-37 %); the look
   softens (stills looked at; Call 5). The 48 px/m handheld zoom renders ~10 % cheaper than 32 (8.12 vs 9.01 ms).
+- (it10) **BC7 textures on the iGPU Deck row** (perf's L4, LEDGER E10, CONTENDED, bench lock): the city's process RAM
+  1386 -> 898 MB and the GPU's shared memory 1007 -> 489 MB (~1 GB back on a shared-memory handheld), render GPU 8.33 ->
+  7.37 ms (-12 %); the King fight: RAM -350 MB, frame time unchanged. Lossless vs BC7 at 48 px/m look the same to me at
+  2x (`gtai-masters/d9/handheld/e10-city-deck-lossless-vs-bc7-48ppm-t720*.png`). Call 6.
+- (it10) **A 1920x1080 Windows handheld's HUD fits**: under `handheld_1080` the frame is drawn at 1422x800 (16:9) and
+  scaled 1.35x; the ghost-form panel is whole (`handheld1080-city-48ppm-drawn-16x9-t720.png`). The it7 "clipped panel"
+  was the movie capture (it records 1280x800 of the 1422-wide canvas).
+- (it10) **A frame cap in the pause card on a handheld** (device / 30 / 40 / 60, saved with the settings; the desktop card
+  does not show it). Unit-tested; not yet seen on screen.
 
 ## What does not work yet
 - Rumble on every hit Rivet takes is in (it7: the view reads his hurt tick; no sim change); its live pulse count is
@@ -67,8 +76,14 @@ priority, the CPU's own 2-CU Radeon), never a device claim. Details and sources:
    lays out in 960x600 so the ghost-form panel draws 1.33x bigger). One value (`draw_scale`) per row; try c:
    `RTAI.exe -- --arena=city --bot=course --seed=2 --rigs --view=tilt70 --device=deck_ds75`.
 
+6. **BC7 texture compression** (perf's Call too; on the handheld it is a memory call more than a speed one). a) lossless
+   everywhere: **the default built**; b) BC7 for the character, city and vehicle art in every build (perf's L4); c) BC7
+   only in the handheld (Deck / Linux) build, by a build step that rewrites the imports in the export copy
+   (`node tools/handheld/bc7_arm.mjs <copy>/project`, then `--import`, then export). Stills:
+   `gtai-masters/d9/handheld/e10-city-deck-lossless-vs-bc7-48ppm-t720.png` and `-crop-x2`.
+
 ## Owed / next
-- (it7) The 1080 handheld row's HUD at 16:9 (a true window grab: the movie capture crops), the draw_scale HUD side
+- (it7) The draw_scale HUD side
   effect (if Call 5 b/c), the King fight's rumble count, the dev-arena experiments E1-E3/E7 re-labelled "at 32 px/m".
 - The Linux build: NAT-06 parity on the Linux `.so` (in WSL), a real Vulkan run (needs a Linux PC or a Deck).
 - Glyph images per pad type, a PlayStation pad behind Steam Input (Steam's origin glyphs), a rumble settings toggle,

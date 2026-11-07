@@ -251,3 +251,34 @@ NEXT (iteration 8):
   override.cfg copied): the 712 `features/{characters,city,vehicles}/art/**/*.png.import` set to `compress/mode=2` +
   `high_quality=true` (perf's arm), `--import` 90 s, 712 `.bptc.ctex` written, 0 errors.
 - 13:00 E10 running (bench lock): deck_bench city / city BC7 / king / king BC7, 1200 ticks, 3 interleaved rounds.
+- VOID 13:07 E10 (first run): both arms ran THIS checkout. My 8a37f4a9 edit to sim.mjs's `--path` line never applied
+  (a Python replace whose pattern did not match, unchecked), so `--project` was recorded but not passed. Caught because
+  4513c5ff's new FightFrames texture counter read 529.0 MB in both arms while a direct probe (a scratch SceneTree script,
+  GUI, both adapters) showed BC7 working: king_arena 8.4 -> 2.7 MB, boot texture memory 34.5 -> 17.0 MB, format 22 BPTC.
+  Fixed (`'--path', projectDir(a)`), evidence renamed `evidence/sim/e10-VOID-both-arms-lossless/` (kept as the record:
+  it is still a 6-vs-6 run-to-run noise sample of deck_bench: render GPU city 8.11 / 8.14, King 6.78 / 6.72).
+  FRICTION ~12 min. Rule for me: after a scripted edit, grep for the new text before running anything on it.
+- 13:15 E10 re-running (bench lock), the same 4 variants x 3 rounds.
+- 13:05 frame cap setting (owed in the readiness table): PlayerSettings.frame_cap (0 = the device row's own; 30/40/60),
+  saved in settings.json, applied to Engine.max_fps; the pause card's row shows only on a handheld tier. Tests written.
+- RESULT 13:27 E10 (valid; bench lock 13:19-13:27, all 12 runs CONTENDED 1-3 other Godot; `evidence/sim/e10-bc7-igpu/`):
+  lossless vs BC7 on deck_bench (iGPU, 8 threads, 48 px/m): **city** texture memory 529 -> 184 MB, video 843 -> 482 MB,
+  private RAM 1386 -> 898 MB, GPU shared 1007 -> 489 MB, render GPU 8.33 (+-0.07) -> 7.37 (+-0.37) ms (-12 %), p50 9.40 ->
+  8.03 (+-1.53); **King** texture 269 -> 123 MB, private 1004 -> 828, GPU shared 643 -> 469, render GPU 6.77 -> 6.66
+  (noise), p50 wash. LEDGER E10, commit 1deaad71 (+ `tools/handheld/bc7_arm.mjs`, the arm as a tool, 2 node tests).
+- ANSWER to perf's REQUEST (L4): on the iGPU Deck row BC7 is a memory win (~1 GB of a shared-memory device in the city)
+  and a small GPU win in the city (-12 %, unlike the 4090), none in the King fight. Look at 48 px/m: the same to my eye at
+  2x (mean |diff| 1.2/255). Numbers in my LEDGER E10; a REPORT Call 6 (lossless / BC7 everywhere / BC7 in a handheld
+  build only) that pairs with your L4 Call.
+- MILESTONE 13:28 NEXT 1 closed: under `handheld_1080` the drawn frame is 1422x800 (16:9 expand) and the ghost-form panel
+  is whole (`gtai-masters/d9/handheld/handheld1080-city-48ppm-drawn-16x9-t720.png`, looked at). The it7 crop was Movie
+  Maker recording 1280x800 of the 1422-wide canvas. The OS grab (`--grab`, grab_window.ps1) is NOT usable for a 1080
+  window here: the secondary monitor is smaller than 1920x1080 (the grab has the taskbar and black in it); deleted.
+- 13:29 frames.json: + E10 pair, + the 1080 drawn frame; dropped the three superseded 32 px/m clips (files deleted). 15 entries.
+- MILESTONE 13:30 (7d6b64d6) the frame cap setting: unit 13/0 (test_player_settings + test_device_profile). DECISIONs
+  bc7 and frame-cap in docs/decisions.md. REPORT: it10 items, Call 6.
+- Registry rules applied this iteration: perf-regression-gating (interleaved rounds, the noise stated, a VOID run named and
+  re-run rather than patched, the arm verified to differ before reading its numbers: the engine's own counter);
+  generative-artifact-gating / motion-quality-gating (a lossy lever's look judged at the same tick and framing, 2x crop);
+  adaptive-fidelity-tiers (BC7 as a build-tier lever, not a runtime branch); fire-tv-device-realities (the OS memory
+  counter on a UMA adapter did not see texture size: measure inside the engine as well).
