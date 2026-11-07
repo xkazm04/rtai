@@ -11,6 +11,7 @@ extends VBoxContainer
 signal changed
 
 const STEP: float = 0.1
+const REBINDS: Array[StringName] = PlayerSettings.REBINDABLE
 
 var settings: PlayerSettings
 var save_path: String = PlayerSettings.PATH
@@ -84,7 +85,11 @@ func _build_rows() -> void:
 		_row(
 			cap_label(settings.frame_cap), [[_text.resolve(&"SLICE__TOGGLE", "Toggle"), _cycle_cap]]
 		)
-	for action: StringName in PlayerSettings.REBINDABLE:
+	# d9-handheld: no keyboard rebind rows on a handheld tier (the pad has none; Steam Input remaps)
+	var rebinds: Array[StringName] = REBINDS.duplicate()
+	if DeviceProfile.shared().is_handheld():
+		rebinds.clear()
+	for action: StringName in rebinds:
 		var bound: String = "..." if _waiting == action else ObjectiveHint.key_name(action)
 		var label: String = String(action).replace("_", " ")
 		_row(
@@ -105,6 +110,7 @@ func _row(text: String, buttons: Array) -> void:
 		var b: Button = Button.new()
 		b.text = str(spec[0])
 		b.add_theme_font_size_override(&"font_size", 18)
+		Quest1Card.mark_focus(b)
 		var cb: Callable = spec[1]
 		@warning_ignore("return_value_discarded")
 		b.pressed.connect(cb)

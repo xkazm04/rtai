@@ -14,6 +14,13 @@ const CONTROLS: String = (
 	+ "Space / right click: electroshock    E: use (phones, hiding, allies, torch)\n"
 	+ "F: car (soon)    Esc: pause    Gamepad: sticks, RT fire, A use, X shock"
 )
+## d9-handheld: the controls on a handheld tier, pad first ([action] -> the pad's own button).
+const CONTROLS_PAD: String = (
+	"[move] move    [aim] aims    [fire] fires\n"
+	+ "[melee]: electroshock    [use]: use (phones, hiding, allies, torch)    [pause]: pause"
+)
+## d9-handheld: the focus mark on a handheld tier (a 7-inch panel at arm's length).
+const FOCUS_BORDER: int = 4
 
 var start_button: Button = null
 var _panel: PanelContainer = PanelContainer.new()
@@ -50,7 +57,7 @@ func show_title(can_continue: bool = false) -> void:
 	_clear()
 	_label(_t(&"SLICE__TITLE", "RTAI: Uprising"), 56, Ink.INK)
 	_label(_t(&"SLICE__QUEST_1", "Quest 1: Collect Call"), 34, Ink.VERMILION)
-	_label(_t(&"SLICE__CONTROLS", CONTROLS), 20, Ink.INK)
+	_label(controls_text(), 20, Ink.INK)
 	var first: Button = null
 	if can_continue:
 		first = _button(_t(&"SLICE__CONTINUE", "Continue"), continue_pressed)
@@ -66,7 +73,7 @@ func show_title(can_continue: bool = false) -> void:
 func show_pause(settings_panel: Control = null) -> void:
 	_clear()
 	_label(_t(&"SLICE__PAUSED", "Paused"), 48, Ink.INK)
-	_label(_t(&"SLICE__CONTROLS", CONTROLS), 20, Ink.INK)
+	_label(controls_text(), 20, Ink.INK)
 	if settings_panel != null:
 		_box.add_child(settings_panel)
 	var resume: Button = _button(_t(&"SLICE__RESUME", "Resume"), resume_pressed)
@@ -118,10 +125,31 @@ func _button(text: String, pressed: Signal) -> Button:
 	var b: Button = Button.new()
 	b.text = text
 	b.add_theme_font_size_override(&"font_size", 28)
+	mark_focus(b)
 	@warning_ignore("return_value_discarded")
 	b.pressed.connect(func() -> void: pressed.emit())
 	_box.add_child(b)
 	return b
+
+
+## The controls line: pad first on a handheld tier, the shipped keyboard line elsewhere.
+func controls_text() -> String:
+	if DeviceProfile.shared().is_handheld():
+		return ObjectiveHint.with_keys(_t(&"SLICE__CONTROLS_PAD", CONTROLS_PAD), true)
+	return _t(&"SLICE__CONTROLS", CONTROLS)
+
+
+## On a handheld tier the focused button gets a thick ink border (the default mark is a faint
+## outline a pad player cannot find on a 7-inch panel); unchanged elsewhere.
+static func mark_focus(b: Button) -> void:
+	if not DeviceProfile.shared().is_handheld():
+		return
+	var sb: StyleBoxFlat = StyleBoxFlat.new()
+	sb.draw_center = false
+	sb.border_color = Ink.INK
+	sb.set_border_width_all(FOCUS_BORDER)
+	sb.set_expand_margin_all(FOCUS_BORDER)
+	b.add_theme_stylebox_override(&"focus", sb)
 
 
 func _t(key: StringName, source: String) -> String:

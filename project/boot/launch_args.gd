@@ -100,6 +100,7 @@ func _ready() -> void:
 		profile.apply(get_window())
 		if profile.is_handheld():
 			add_child(HandheldFocusPause.new())
+			PlayerActions.shipped().install()  # the title card names the pad's buttons
 		if profile.rumble > 0.0:
 			add_child(HandheldRumble.new(profile.rumble))
 
