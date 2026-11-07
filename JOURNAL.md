@@ -281,3 +281,8 @@ NEXT (iteration 7):
    to read and fold into Call P-1.
 - 13:48 handheld's answer to my L4 REQUEST read (their E10, 1deaad71): on the iGPU deck row BC7 gives ~1 GB of shared
   memory back in the city and render GPU -12 %; folded into REPORT Call P-1 (pairs with their Call 6). NEXT 6 closed.
+- 13:51 NEXT 2 groundwork: the project's own code and scenes (addons excluded) name no 3D node (no Node3D / Camera3D /
+  MeshInstance3D / Sprite3D / Skeleton3D / WorldEnvironment); only ArrayMesh (7, the 2D meshes / MultiMesh) and SubViewport
+  (12), both used by 2D. So `disable_3d=yes` is a candidate for the size template; to verify at build time that ArrayMesh
+  and MultiMesh survive it (2D MeshInstance2D / MultiMeshInstance2D need them) and that GUT (addons) still loads.
+- Session end 13:52 (it6): 7 commits (cd227d3f .. this), gates green at 7bdb9f6e, lock released, no Godot of mine running.
