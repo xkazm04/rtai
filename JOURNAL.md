@@ -674,3 +674,37 @@ NEXT:
   it sits at a fixed height that clears the full box, with or without a line up. Riding the fitted
   box would make it jump between lines; a stable notice is the better read. Closed, no change.
   Scratch it9 trimmed to the frames the masters crops came from (1.3 GB -> 42 MB).
+
+## Iteration 10 (BUILD, 02:50-03:50)
+
+- 02:51 Read JOURNAL, git log, the lane journals (no REQUEST to hud; view notes the SIDE_X fix
+  reaches its path on merge) and the library catalog: the assets lane landed
+  `weapon_crate_open_70_v3` (round 20261107-0305, A: v2's three values at a ~65-70 camera, "supersedes
+  2300 and v2 for hud's ShowcaseCrate rotation 1"): the re-check trigger of the it8 v2 decision.
+- 03:04 MILESTONE 507d037c the 70 open crate from the v3 sheet: `crate_cut.py` VIEW["p70"] =
+  ("70_v3", 0) (p55 re-cut byte-identical), BED p70 re-measured on the cut 0.62 -> 0.66 (a luminance
+  profile down the middle: hollow 0.42-0.64, straw front 0.65-0.74, rim 0.76), 1 provenance line
+  (prompt_hash 62342be542e3), docs(decisions) hud/pickup crate 70 art v3. Lint 15/15,
+  `--select=test_showcase_crate,test_weapon_showcase` 13/0.
+- Filmed after `--import`: `dev/arena/arena.tscn -- --armory --ppm=<32|48> --view=tilt70 --rigs
+  --seed=1 --pickup-crate=on`, frame 89, 0 SCRIPT ERROR all; before = v2 + bed 0.62 (HEAD's art),
+  the frame diff's bbox only the crate rows. Looked at both: with v3 each gun lies inside a straw
+  ring on the dark hollow, seen from above like the 70 camera; with v2 the guns' bottoms rode over
+  the front wall (gatling, mini nuke). The mini nuke still overhangs the hollow's top (it is big):
+  accepted. Masters `crate_v3_tilt70_{32,48}_before_after_crop2x.png`; frames.json entry 8 now the
+  v3 48 pair (the v2 48 file stays in masters).
+- FRICTION (mine): the showcase PNGs are git LFS: `git show HEAD:<png> > file` writes the pointer,
+  not the image, and the import then marks the texture invalid (the `.import` lost its path; the
+  scene ran with "Failed loading resource" and 0 SCRIPT ERROR). Caught on the log, the `.import`
+  restored from HEAD, the before re-shot from a copy of the real PNG taken first. Rule: for a
+  before take keep a file copy, never `git show` a binary.
+- 03:10 The owner's call still `call_pickup_hover_vs_crate_32_crop2x.png` re-shot whole at 507d037c
+  (hover/crate x tilt70/tilt, 32 px/m, seed 1, frame 89, 0 SCRIPT ERROR all four): it now shows the
+  v3 crate and the flat handgun wall (the it8 cut predated both).
+
+Registry rules applied: `generative-artifact-gating` (an A sheet taken over the B it supersedes,
+judged in the scene before adopting; 1 provenance line), `sprite-and-atlas-production` (the same
+re-runnable cut tool, the alternative one value away), `concept-scene-parity` +
+`motion-quality-gating` (the real armory, the same seed and frame, 32 and 48 px/m),
+`depth-ordered-layered-art` (the bed re-measured so the gun's bottom rests on the straw front inside
+the near wall).
