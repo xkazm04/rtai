@@ -27,3 +27,5 @@ static func apply(args: PackedStringArray = OS.get_cmdline_user_args()) -> void:
 		elif arg.begins_with("--rivet-height="):
 			var m: float = clampf(arg.substr(15).to_float(), 0.8, 2.0)
 			RivetFrames.height_k = m / RivetFrames.HEIGHT_M
+		elif arg == "--rivet-walk=bob":
+			RivetWalk.enabled = false

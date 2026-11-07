@@ -11,3 +11,6 @@
 - Evidence run 2 on 64953f9b (code 129e3745: + `--rivet-height`), hands off: ALL PASS: lint 15/15, unit 1709/0,
   scenarios 52, parity exact + planted caught (step 629), selftest look goldens 11/11 within mean 4 (worst 0.27),
   release-compile 600/0.
+- it21b (RivetWalk wiring, inert until `rivet_walk.png` exists): director reel 19/19 fully down in top, tilt70,
+  combo, 0 SCRIPT ERROR, 0 p_frame, the 2 known ^ERROR lines (`reel-director-it21b-<view>.log`); unit full run
+  1711/0; lint 15/15. No evidence run (no strip yet: the walk path cannot fire).

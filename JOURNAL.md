@@ -766,3 +766,15 @@ NEXT (it21 end, 17:05; supersedes every NEXT above):
    frames.json (the 10:26 one is stale).
 3. At the freeze (18:30): the exe `build/export/windows/RTAI.exe` (`"$GODOT_BIN" --headless --path project
    --export-release windows-showcase ../build/export/windows/RTAI.exe`), the final REPORT by 18:40.
+- 17:05-17:12 NEXT 1's wiring built ahead of the art (inert until `art/view/<art>/rivet_walk.png` exists):
+  `RivetWalk` (path_of: bare-claw, moving, no roll/hit/strike/punch/death, flag on, strip exists; frame_of: BASE_OCT
+  row x 4 + the stride phase column), `RivetFrames.step` takes it, `_set_strip` 4 x 8 with the per-frame offset
+  and frame 0 before a swap, `cell_of` for the grid, no bob/sway on a drawn stride, `owns_weapon` false for it;
+  `--rivet-walk=bob` (CastFlags, KNOWN_FLAGS) keeps the before. test_rivet_walk (frame by octant + phase; no grid
+  with a weapon out, standing, or the bob flag). FRICTION (~1 min): `posmod` is int-only in GDScript; `fposmod`.
+  Gates: reels 19/19 x3, 0 SCRIPT ERROR, 0 p_frame; unit 1711/0; lint 15/15.
+NEXT (17:13; replaces NEXT 1 of 17:05, the rest stands): 1. When the walk cells are DELIVERED: run the packer (line
+  above), contact-check the hand side per row, `--import`, provenance; film bob vs drawn (`--rivet-walk=bob` the
+  before) in the city block and quest 1 at 32 and 64 px/m; judge the stride rate (one phase cycle = one stride:
+  check the feet do not skate); pick the default (DECISION), REPORT Call 2; evidence run hands off.
+- Session end 17:13: everything committed.

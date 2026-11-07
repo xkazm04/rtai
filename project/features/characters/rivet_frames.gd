@@ -49,6 +49,8 @@ static func step(rig: CutRig) -> void:
 	var weapon: StringName = weapon_of(rig)
 	var art: String = ViewMode.shared().art
 	var path: String = RivetStrips.strip_of(art, weapon) if rig.head_card != null else ""
+	if path != "" and RivetWalk.path_of(rig, art, weapon) != "":
+		path = RivetWalk.path_of(rig, art, weapon)
 	if path != "" and LEFT[oct_of(rig)] == 1 and RivetStrips.ONE_HAND.has(weapon):
 		path = RivetStrips.left_of(art, weapon)
 	if not ENABLED or path.is_empty():
@@ -85,7 +87,8 @@ static func drawn(rig: CutRig) -> bool:
 ## True while the drawn frame carries the weapon (RivetHeldView hides its held part then).
 static func owns_weapon(rig: CutRig) -> bool:
 	var card: Sprite2D = rig.head_card
-	return card != null and card.hframes != BASE_CELLS and card.has_meta(ON)
+	var bare: bool = card != null and card.hframes in [BASE_CELLS, RivetWalk.FRAMES]
+	return card != null and not bare and card.has_meta(ON)
 
 
 ## The cell and mirror for the rig's state: Vector2i(cell, flip).
@@ -96,6 +99,8 @@ static func cell_of(rig: CutRig, cells: int) -> Vector2i:
 		return Vector2i(clampi(o - 3, 0, 2), 0)
 	if rig.dead or (rig.react != null and rig.react.dying):
 		return Vector2i(Cell.DEATH, 0)
+	if cells == RivetWalk.FRAMES:
+		return Vector2i(RivetWalk.frame_of(o, rig.phase), 0)
 	if cells == BASE_CELLS:
 		if rig.clips.rolling():
 			return Vector2i(Cell.ROLL, 0)
@@ -124,7 +129,8 @@ static func place(rig: CutRig, card: Sprite2D) -> void:
 	var h: float = HEIGHT_BY_ART.get(ViewMode.shared().art, HEIGHT_M) * height_k
 	var s: float = h * CharacterRigs.PX_PER_M / FIG_PX
 	var walk: float = clampf(rig.speed_now / WALK_SPEED, 0.0, 1.0)
-	walk = walk if c.x != Cell.ROLL and c.x != Cell.DEATH else 0.0
+	var drawn_walk: bool = card.hframes == RivetWalk.FRAMES
+	walk = walk if c.x != Cell.ROLL and c.x != Cell.DEATH and not drawn_walk else 0.0
 	var stride: float = sin(TAU * rig.phase)
 	card.global_rotation = stride * SWAY * walk + _roll_spin(rig, c.x)
 	card.global_scale = Vector2(s, s)
@@ -177,11 +183,14 @@ static func _set_strip(card: Sprite2D, path: String) -> void:
 	if str(card.get_meta(ON, "")) == path:
 		return
 	card.texture = _tex.get_or_add(path, load(path) as Texture2D)
+	card.frame = 0  # the walk grid's 32 frames vs a strip's 3-14: never out of range mid-swap
 	var left: bool = path.ends_with("_left.png")
+	var grid: bool = path.ends_with(RivetWalk.STRIP)
 	card.hframes = (
 		BASE_CELLS if path.ends_with(RivetStrips.BASE) else (LEFT_CELLS if left else EQ_CELLS)
 	)
-	card.vframes = 1
+	card.hframes = RivetWalk.FRAMES if grid else card.hframes
+	card.vframes = RivetWalk.ROWS if grid else 1
 	var w: float = card.texture.get_width() / float(card.hframes)
-	card.offset = Vector2(-w * 0.5, PAD_PX - card.texture.get_height())
+	card.offset = Vector2(-w * 0.5, PAD_PX - card.texture.get_height() / float(card.vframes))
 	card.set_meta(ON, path)

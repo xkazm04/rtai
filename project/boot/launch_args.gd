@@ -77,6 +77,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--pickup-crate",
 	# d9-rivet: --rivet-height=<m> sets Rivet's drawn standing height under a card view (Call 1)
 	"--rivet-height",
+	# d9-rivet: --rivet-walk=bob keeps the facing card with the built bob (Call 2's before)
+	"--rivet-walk",
 ]
 
 var _values: Dictionary[String, String] = {}
