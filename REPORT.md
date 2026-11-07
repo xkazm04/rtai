@@ -12,7 +12,8 @@ head commit. Branch `n8-city`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n8\ci
    from two straight runs (no oblique side face). Art per pitch (`p55` / `p70`) from the library's
    facade kits; data in `data/tables/city_facades.json`. `top` builds none of it.
    Evidence: `it1_facades_32ppm_top_vs_tilt70.jpg`, `it16_facade_tall_48ppm_before_after.png`,
-   the set clip `it19_city_set_tilt70_combo_56s.mp4`.
+   `it22_facade_tall_v3_tilt70_32ppm_before_after_x2.png`, the set clip `it19_city_set_tilt70_combo_56s.mp4`.
+   All facade strips are from the library's latest raw sheets (0510/0525: muted brick and rust).
 2. **Occlusion** (item 2). A body behind a building draws as an ink silhouette with a rim over the
    exact world pixels (a back-buffer copy, no second print). `occlude: false` puts the old look back.
    Evidence: `it4_occlusion_32ppm_before_after_x3.png`.
@@ -76,8 +77,5 @@ put the exact command lines here.
 
 ## Next steps
 
-- The facade v2 sheets (library 0525: exact redraws with raw rectangular roofs and muted brick,
-  70 kit/shop A, 55 shop/tall A, 55 kit B) are not cut yet: `city_facade_cut.py` holds hand-measured
-  bay boxes per sheet, so they need re-measuring.
 - 70 twins and raises as the library serves them (traffic light 55 with a shorter pole).
 - Occlude the baked crowd; a drawn shadow for the kerb sign.

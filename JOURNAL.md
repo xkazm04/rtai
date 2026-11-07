@@ -945,3 +945,34 @@ NEXT (iteration 23, in order):
 3. Freeze items (08:30): evidence --no-bench, `top` framemd5, the exe export (int-day recipe),
    REPORT final (head, exe command lines).
 - Session end ~04:40. Head = this JOURNAL commit.
+- (04:30-04:48, NEXT 1 done early) MILESTONE e95c7cf6 + 52ebbc4a the facade v2 sheets: the
+  tenement/shop 70 (A) and tenement/shop/tall 55 (kit B: bowed roof lips, not used by the
+  top-row wall cut; shop/tall A) pieces measured with the cutter's alpha runs sit within 1 px of
+  the untapered keys, so city_facade_cut.py keeps its boxes and points at the v2 files (the
+  unchanged styles reproduce byte-identical). Looked at old | new strips: same crops, brick a
+  touch browner, rust muted. Frame check `--scenario=facade --zoom=1.5 --view=tilt` (the shop face
+  under its roof with the new 55 bus stop and lamp): `it22_facade_v2_busstop_lamp_tilt48_frame.png`.
+  5 provenance lines. 0 SCRIPT ERROR.
+- MILESTONE f9bbbe4f the tall 70 face from facade_tall_v3 (A, 0510, a new camera ~72-77):
+  NEW boxes measured (bays (188,504) (616,926) (1034,1345), band 255-659: from under the cornice
+  to the ground ink, as the old cut). FacadeStrips stretches each bay cell to the face's lift, so
+  the drawing nearer the in-game face aspect distorts least: in game a tall bay is ~0.9 tall per
+  unit width (21 m x height_k 0.5 at 70: lift = h * cos70 / sin70), v3 1.38, the 2210 cut 2.47.
+  EVIDENCE `--scenario=facade --zoom=1.0 --view=tilt70 --secs=60` frame 29 s, 52ebbc4a (smudged)
+  vs f9bbbe4f: six window rows, landings as grated floors from above, the shutter and door at the
+  street storey. `it22_facade_tall_v3_tilt70_32ppm_before_after_x2.png` (frames.json #9; the it7
+  p70 strips sheet dropped). Judged a modest gain (the world print greys both). 0 SCRIPT ERROR.
+  The tall landmark is on the facade lap only at ~28-31 s of a 60 s run at zoom 1.0 (not in 24 s).
+- GATE `top` framemd5 at 52ebbc4a IDENTICAL to the it19 baseline (617 lines). Unit
+  --select=test_chunk_lift,test_prop_cards 17/0. Lint 15/15 every commit.
+- FOUND: the same stretch argument applies at 55 (tall: in game ~1.75 per bay; the 55 v2 strip
+  2.78): a steeper 55 tall sheet would not help there; the tenement/shop strips not measured.
+
+NEXT (iteration 23, in order):
+1. Film the bench v5 under `tilt` (facade drive 48 px/m) and the new 70 tenement/shop faces in the
+   set clip; refresh the combined clip (30-90 s) with tonight's kerb sign/bollard and facades.
+2. The flat hatched shadow beside the kerb street sign (the flat art's shadow): a small card-side
+   ground shadow instead, if it reads wrong at 48 px/m (it22 48 px/m pair: a diagonal stroke).
+3. Freeze items (08:30): evidence --no-bench, `top` framemd5, the exe export (int-day recipe),
+   REPORT final (head, exe command lines).
+- Session end ~04:52. Head = this JOURNAL commit.
