@@ -644,3 +644,33 @@ bench.lock held by view at 01:42 (then free at 02:00 with 6 other Godot processe
   DECISION street/drawn-fall. FRICTION: `tools/godot/check.mjs` reports FAIL on any file in the
   CutRig dependency cycle (an untouched street_crowd_cards.gd too) with no root error; the GUT run
   is the real compile check. Debt ratchet: +4 dev lines accepted for --kill-spread.
+- MILESTONE (punk/shopper commit): all nine types fall as drawn (punk, shopper B 0137; the worker
+  from v2 0225, stretch 1.25 since v2 already lies 1.2x longer). LOOKED: the three new grids on a
+  contact sheet (the shopper's olive fruits survive the key), the board t150: all 16 walkers lie as
+  drawn people, none drop to the parts. Master peds_drawn_fall9_tilt70_64ppm_board_spread_t150.png.
+- GATE unit no-arg on the nine-fall head: 1513 passed, 0 failed, no FLAKY.
+- GATE director reel under tilt70 on the nine-fall head (the it1 headless command): 19/19
+  chapters, all down (14 x 1/1, 2 x 2/2, 3 x 4/4), 0 SCRIPT ERROR (stopped after the 19th).
+- GATE director reel under combo on the same code: 19/19, all down (same counts), 0 SCRIPT ERROR.
+- LOOKED city block seed 5 tilt70 48 px/m 25 s with the Rivet bot (no regression in the walking
+  crowd): no pedestrian dies in that run (the 4 deaths are cops, react ids 3000+), so the board
+  stays the drawn-fall evidence. The dying cops still sprawl as white-limbed parts with the head
+  card: the next drawn fall (REQUEST below). Capture deleted.
+- MILESTONE (the FALLS generalisation): any rig with a FALLS row takes the drawn fall while down
+  (StreetWalkerFall.down), not only pedestrians: a cop strip is one FALLS row ("cop/head_cap",
+  "cop/head_helmet", "cop/head_swat") when it lands. Unit no-arg caught my first order (a bare
+  rig has no plan): fixed, 1513/0; the board t150 is pixel-identical to the committed run.
+- SKIPPED cop_patrol_v2 70 A (round 0150): its gain is the torso/legs value split; my patrol card
+  cuts only the head band (cap, face, collar) and its own note says it was drawn from a target,
+  not the 55 sheet (the cap and sleeves may not pair with cop_patrol_55). Kept the 1940 B card.
+- frames.json: the drawn-fall tick strip (#2) and the 32 px/m pair (#3) in; the it6 death-follow
+  strip and the it4 hit-drop-to-parts still out (files kept, superseded). 15 entries.
+- REQUEST to assets: cop_patrol_fall_70, cop_riot_fall_70, swat_fall_70 (and cop_patrol_fall_55,
+  cop_riot_fall_55, swat_fall_55 after, for the boss arenas): the ped_*_fall_70 recipe exactly (5
+  rows = facings, 3 frames: knees buckling, mid-fall toward the facing, lying face down along the
+  facing at the feet's spot; same identity, camera and palette as cop_patrol_70 (1940) /
+  cop_riot_70 A / swat_70 A; police blue only on them). Please draw the facing-camera and back
+  lying frames ~2x the standing height (the ped strips' named fix). The riot cop drops the shield
+  beside him in frame 3; the patrol cop's pistol may fall beside the hand. The street lane plays
+  them through StreetWalkerFall (one FALLS row each); cops die in every chase, and at 32 px/m their
+  parts' corpse reads as a white cross.
