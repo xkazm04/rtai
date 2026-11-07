@@ -417,3 +417,36 @@ NEXT (it10 end, 13:03; supersedes every NEXT above):
   Rule for me: do not pick shots from pixels; read the game's own state.
 - The Servo bay number REQUEST: served by seams at 3f4732db on d9-seams (their JOURNAL ACK); REPORT updated.
 - Library: no portrait_rivet_55 yet (catalog), nothing new for rivet.
+- MILESTONE `c80d3107` NEXT 5, the guns: `FireStills` (dev, `project/dev/arena/fire_stills.gd`, `--fire-stills=<prefix>`
+  hooked in arena_game.gd under --rigs): each frame Rivet's card shows an equipped FIRE_SIDE (c5) / FIRE_CAM (c6) cell,
+  it saves a 320 px crop round his figure (3 stills, 20 ticks apart, then quits; a run that never fires quits at
+  tick 1500 with exit 1). The game's state, not pixels. 34 runs (17 x {tilt70 = p70, tilt = p55}), 64 px/m, seed 3,
+  real time 1280x800, 4 in parallel, ~3 min in all; 0 SCRIPT ERROR; every run 3 stills. Contacts (looked at both):
+  `gtai-masters/d9/rivet/rivet_every_weapon_fires_drawn_p70_tilt70_64ppm_seed3_firestills.png` and `..._p55_tilt_...`:
+  all 13 guns fire a drawn cell with the flash at the drawn weapon (side cells for pistol, gloria, plasma rifle,
+  gatling, rocket, flamer; camera cells for machine pistol, hand cannon, molotov, electro gun, ray gun, nuke; homing
+  shard side at p55, camera at p70). Debt baseline: accepted the dev rise (a new dev tool; 2 lines in arena_game.gd).
+  Found: the 4 melee ids are not in weapons.json, so `--bot=gunplay --weapon=katana` silently films Gloria (WARN
+  "the arena keeps Gloria"); the contact marks them "not captured" instead of showing a mislabelled shot.
+  Seen (both pitches): the flamer's drawn flame points left while a red jet streaks down-left ~30-40 deg off it;
+  not judged (a burning target or the it10 two-flame case on a side octant).
+  frames.json: the two contacts in at 3 and 4; the Servo gatling muzzle and the p55 left pistol out (files kept).
+
+NEXT (it13 end, 13:56; supersedes every NEXT above):
+1. The melee weapons at each pitch: katana, electro_baton, chainsaw, plasma_sword are not gunplay weapons. FireStills
+   catches strike cells too (strike_t >= 0 -> fire cells): run it with a melee bot and `--loadout=<id>` (the pit bot
+   `--bot=pit`, or the director reel with its chapter), tilt70 and tilt; add them to the two contacts.
+2. The flamer's red jet in the every-weapon contact (t369, both pitches): film `--bot=gunplay --weapon=flamethrower
+   --view=tilt70 --ppm=64 --seed=3` t340-400 and judge: a burning target, or the drawn side flame plus the game jet
+   on a diagonal aim (then fires_drawn's octant test needs the aim, not the head's octant).
+3. The frame cost under the bench lock (it10 numbers are CONTENDED: `evidence/d9/rivet-frame-cost-it10.md`).
+4. The armory/rack showing him holding each weapon (brief item 6): FireStills' crops are the drawn cells already;
+   the rack itself is hud's.
+5. Watch assets for portrait_rivet_55 (REQUEST it10): swap `project/features/hud/art/portraits/rivet.png`, provenance.
+6. A facing (non-fire) cell's muzzle for the other holds (REPORT does-not 1).
+- Registry rules applied it13: motion-quality-gating (the respawn judged on the real King fight at the same seed and
+  frame, before/after; every gun fired in the arena at both pitches, not in a lineup); generative-artifact-gating
+  (every contact looked at; the melee tiles caught as mislabelled before they shipped); realtime-combat-semantics
+  (view only: revive reads the sim's alive row, never writes it; FireStills reads the card); depth-ordered-layered-art
+  (no hidden part drawn on a rig's first frame); sprite-and-atlas-production (the strips unchanged; the capture keys
+  by the view's art key through --view).

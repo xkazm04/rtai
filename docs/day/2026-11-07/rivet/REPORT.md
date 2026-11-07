@@ -62,6 +62,10 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
 - **No parts on a rig's first frame** (it13, `6438394e`): a rig acquired on a frame with no tick due drew its hidden
   top-down parts once (f0 of the King film: a cream rim under him; at 144 Hz most frames have no tick due, so every
   newly selected cop and walker too). CharacterRigs poses it before it draws under card views; top unchanged.
+- **Every gun fired once at each pitch** (it13, `c80d3107`): `FireStills` (dev, `--fire-stills=<prefix>`) saves
+  Rivet's drawn fire cell from the game's state; 34 gunplay runs at 64 px/m, 0 SCRIPT ERROR. All 13 guns fire a drawn
+  cell at p70 and p55 with the flash at the drawn weapon: `gtai-masters\d9\rivet\rivet_every_weapon_fires_drawn_p70_tilt70_64ppm_seed3_firestills.png`,
+  `gtai-masters\d9\rivet\rivet_every_weapon_fires_drawn_p55_tilt_64ppm_seed3_firestills.png`.
 - **Gates (it13):** `node tools/evidence/run.mjs --no-bench` on cc7f418b (both fixes in): lint 15/15, unit 1704/0,
   scenarios 52, parity exact + planted caught, look goldens 11/11 + block 5/5 (top did not move), release-compile
   600/0, all PASS. Director reels: `evidence/d9/reel-director-it13-<view>.log`.
@@ -78,9 +82,11 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
   ticks keeps the old spot (the other holds are drawn every which way in their facings; no generic rule held).
 - The Servo bay number printed over Rivet under combo: REQUEST to seams (it10), served on `d9-seams` at 3f4732db
   (ServoDepotDraw.cover); not on this branch until the Director merges both.
-- Every weapon fired once at each pitch is not filmed yet (it13 tried a batch of gunplay films with an
-  automatic shot picker; the flash is the road paint's cream and the camera leads his aim off-centre, so the
-  picks missed him; a capture that writes stills on the fire cell's own tick is NEXT).
+- The 4 melee weapons (katana, electro_baton, chainsaw, plasma_sword) are not in the every-weapon capture: the
+  gunplay bot has no melee (the arena keeps Gloria); filmed so far: the katana in the director reel still and the
+  plasma sword redraw still (frames.json); electro_baton and chainsaw at each pitch are owed.
+- The flamer in the every-weapon capture (both pitches): a red jet streaks down-left about 30-40 deg off the drawn
+  flame; not judged yet (the it10 one-flame rule holds on the side octants; this may be a burning target).
 - Walk: one drawn walk and one sprint pose per sheet; built bob + sway on the facing.
 - Reload: no drawn reload frame; he keeps the equipped strip through it (it7 check: the "bare figure" seen in it6
   was the equipped back views, which show the small guns barely; no change made).
