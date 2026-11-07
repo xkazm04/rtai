@@ -33,3 +33,11 @@ Journal: `JOURNAL.md`. Clips and stills: `C:\Users\kazda\kiro\gtai-masters\d9\pe
   (c) buys the most; (c) BC7 for all three.
 - **Measured on the way:** BC7 does not remove the first-death hitch by itself (worst frame 23 ms without the
   worker-thread strip prefetch, 18-19 ms with it), so the prefetch (kept lever L3) stays whichever option you pick.
+
+## Kept so far (pixel-free, on the branch; numbers in LEDGER)
+
+- L2 CircleFan fan build (riot p99 22.2 -> 11.9 ms), L3 strip prefetch (riot worst 27.2 -> 18.0 ms), L5 snapshot passes
+  (-40 % of that pass's CPU, no frame claim), **L8 lossless WebP effort** (14:05): the pck 227.7 -> 215.2 MB
+  (-12.5 MB) with every mip of every texture decoding bit-identical; costs ~1.7x texture encode at import.
+- Dropped with numbers: L1 renderer/driver, L6 render thread, **L7 a stripped export template** (exe 109 -> 67-74 MB and
+  ~-10 MB RAM, but the MSVC build is ~10 % slower a frame than the official MinGW-GCC template, LTO or not).
