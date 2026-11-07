@@ -974,3 +974,35 @@ NEXT (supersedes the 04:57 NEXT):
   (FINDING: the dock guard's concept-approved orange-vermilion hi-vis). Delete it9-it12 scratch
   frames after the REPORT. Nothing into the worktree during a gate run.
 - 05:05 Session end. All committed.
+
+## Iteration 13 (2026-11-07 05:04, BUILD)
+Read: JOURNAL (it12 NEXT), git log, the four lane journals (no new REQUEST to hud; view's it13 is
+the held-art key fix and the trial merge on hud d63fb403), the library catalog since 0505: no
+raise for hud's ids (sister_suction v3 A, lady_cathode v3 A are portraits hud does not show:
+design proposals, not in PortraitBook).
+- 05:06 Looked fresh at the armory on HEAD (tilt 48, tilt70 32, seed 1, frame 89, 0 SCRIPT
+  ERROR): the wall/cop overlap at 55 is the dev hub's sparring line in front of the board (the
+  arena's layout, a dev station): not worth the hour. The shipped screen is quest 1.
+- MILESTONE 05:28 39b6a8e6 the see-through corners (HudSee, HudCorner): the beat panel and the
+  cash + ticket corner ease to 35 % in 0.2 s while Rivet, the objective's goal, a living hostile or
+  (heat > 0) a police patrol is under them or within 40 px. HudState.clear_px, filled by
+  HudFeed.fill_view (quest 1's view: 0 lines added; HudView 197 lines, ink_digits moved to
+  HudCash). Found the moment by a temporary tick log over a still scan of the whole quest
+  (1000-19000 step 100): Hot Walk Home t16399-16499 and t17199-17399, a patrol under the ticket.
+  Filmed `quest1_clip.gd --resolution 1280x800 -- --view=tilt70 --ticks=16300-16620` after and
+  with SEE false (before), 0 SCRIPT ERROR each: the fade at frame ~21, held to ~135, back by ~147
+  (measured on the cash paper's mean); looked at frame 80: the cop and the dead pile show through,
+  GLORIA and $0 stay readable. Masters `hud_see_through_cop_tilt70_1280x800_before_after(_x2).png`,
+  `hud_see_through_cop_tilt70_after.mp4`; frames.json entry 4 (replaces the fit-box pair).
+- FRICTION (mine): the first scan counted the patrols at heat 0 (CastView draws them only while
+  hot): the ticket faded over nothing on Hot Walk Home (frames 10-130 of the 17400 clip). Fixed
+  (heat > 0) with a test; re-filmed 17400-18990: no false fade. The feed's points were checked
+  against the objective ring and the living guards by a temporary log (goal (122,305) on the ring
+  at (122,297); the guards on their bodies); civilians (the crowd) do not count, by design.
+- DECISION (docs/decisions.md hud/see-through corners): fade over shrink (the names keep their
+  size) and over moving corners; SEE false = the opaque HUD. Unit test_hud_see 6/0, lint 15/15.
+Registry rules applied it13: `accessibility` (nothing shrinks: the HUD gets out of the way by
+alpha, text keeps its size; 35 % keeps the words readable), `concept-scene-parity` +
+`motion-quality-gating` (judged on the live quest scene, before/after on the same ticks, the ease
+measured frame by frame, a false trigger caught in motion that a still could not show),
+`depth-ordered-layered-art` (the HUD stays the top layer; it yields rather than reorders).
