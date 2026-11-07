@@ -235,7 +235,7 @@
         "project/dev/weapon_art/weapon_lineup_run.gd": 210,
         "project/features/arena/arena_floor_view.gd": 201,
         "project/features/arena/arena_rigs.gd": 291,
-        "project/features/arena/prop_occlusion.gd": 206,
+        "project/features/arena/prop_occlusion.gd": 205,
         "project/features/bosses/boss_bot.gd": 202,
         "project/features/bosses/boss_fight.gd": 269,
         "project/features/bosses/boss_hook.gd": 281,
