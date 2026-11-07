@@ -251,6 +251,8 @@ func _casts() -> void:
 	_dev_rigs()
 	@warning_ignore("return_value_discarded")
 	GhostAttackViews.attach_quest(view, session.stage, settings.reduced_motion)
+	@warning_ignore("return_value_discarded")
+	ViewPitchQuest.attach(view, session.stage.arena, session.world.context().clock)
 	if _story != null:  # n7-melee: the sprite cast draws the carried blade (rigs: RivetHeldView)
 		@warning_ignore("return_value_discarded")
 		CastBladeView.attach(view, session.stage)

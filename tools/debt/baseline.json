@@ -184,11 +184,12 @@
     },
     "files_near_cap": {
       "accepted": [
-        "2026-11-06: n8-view it7: ArenaRigs + ArenaRobotRigs moved dev/arena -> features/arena (quest 1 ships the rig cast under a card view; decision 2026-11-04 re-check); quest1_game +3 lines (files_near_cap 15 -> 16)"
+        "2026-11-06: n8-view it7: ArenaRigs + ArenaRobotRigs moved dev/arena -> features/arena (quest 1 ships the rig cast under a card view; decision 2026-11-04 re-check); quest1_game +3 lines (files_near_cap 15 -> 16)",
+        "2026-11-07: quest1_game.gd +2: the one call that attaches ViewPitchQuest (quest 1 under combo eases at Mertz); the logic lives in features/view_pitch (files_near_cap 16 -> 16)"
       ],
       "files": {
         "project/boot/collect_call/view/fx_view.gd": 271,
-        "project/boot/quest1_game.gd": 270,
+        "project/boot/quest1_game.gd": 272,
         "project/dev/arena/arena_game.gd": 294,
         "project/dev/showcase/city_fight.gd": 300,
         "project/features/arena/arena_rigs.gd": 291,
@@ -210,7 +211,8 @@
       "accepted": [
         "2026-11-06: collect_call_view +1 line: the death beat's ink veil (owner d8); collect_call_stage shrank 266->262 in the same change (files_past_soft_cap 68 -> 68)",
         "2026-11-06: n8-view it7: ArenaRigs + ArenaRobotRigs moved dev/arena -> features/arena (quest 1 ships the rig cast under a card view; decision 2026-11-04 re-check); quest1_game +3 lines (files_past_soft_cap 68 -> 68)",
-        "2026-11-07: cast_view.gd +4: quest 1's rig cast leaves the contractors to the cast view (QuestGuardCast), _rivet steps out for the rigs (files_past_soft_cap 67 -> 67)"
+        "2026-11-07: cast_view.gd +4: quest 1's rig cast leaves the contractors to the cast view (QuestGuardCast), _rivet steps out for the rigs (files_past_soft_cap 67 -> 67)",
+        "2026-11-07: quest1_game.gd +2: the one call that attaches ViewPitchQuest (quest 1 under combo eases at Mertz); the logic lives in features/view_pitch (files_past_soft_cap 67 -> 67)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 262,
@@ -218,7 +220,7 @@
         "project/boot/collect_call/view/collect_call_view.gd": 237,
         "project/boot/collect_call/view/fx_view.gd": 271,
         "project/boot/collect_call/view/stage_view.gd": 201,
-        "project/boot/quest1_game.gd": 270,
+        "project/boot/quest1_game.gd": 272,
         "project/dev/arena/arena_game.gd": 294,
         "project/dev/audio/audio_riot.gd": 201,
         "project/dev/bench/fight_frames.gd": 244,
