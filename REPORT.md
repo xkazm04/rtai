@@ -64,7 +64,7 @@ Branch `d9-seams`. Evidence: `C:\Users\kazda\kiro\gtai-masters\d9\seams\` (`fram
 11. **The 55 planter in the streamed city** (item 4, filmed it4, 6f28481c): `city_frame` focus 11 is
    a plaza with two planters; under `--view=tilt` the v3 box with its front face replaces v2's flat
    print. `planter55_before_after_tilt_64ppm_cityframe11.png`, `..._32ppm_cityframe11_crop2x.png`.
-   Seen: at 32 px/m v3's plants read as a dark mass (v2's leaves were brighter); at 64 it reads well.
+   Seen: at 32 px/m v3's plants read as a dark mass (v2's leaves were brighter); fixed it6 (14).
 
 12. **Servo's bay number no longer prints over the fighters** (the rivet lane's REQUEST, 3f4732db, it5):
    under a card view each bay's apron mark still draws over the vehicles band (so the parked stage van
@@ -78,8 +78,18 @@ Branch `d9-seams`. Evidence: `C:\Users\kazda\kiro\gtai-masters\d9\seams\` (`fram
    In play: `swat55_facing2_scale106_before_after_tilt_48ppm_seed5_f2_x3.png` (the crosswalk SWAT on that
    facing, frames 1-12), `riot55_facing3_scale106_before_after_tilt_48ppm_seed5_f62_x3.png`.
 
+14. **The planter's leaves read at the shipped zoom** (item 4, 36d9b37b, it6): the world print turned
+   planter_v3's leaves (lum 0.46) and brown soil (0.20) into its mid and dark washes, so at 32 px/m the box
+   printed as one dark block at both pitches (the n8 p70 strip too). `tools/art/planter_value_lift.py` lifts
+   the leaves into the light wash and the soil (at half chroma: a guard keeps it off the vermilion plate) into
+   the mid wash; ink, concrete and outline unchanged; `top` untouched (card views only).
+   `planter_value_lift_before_after_p70_p55_32ppm_cityframe11_x3.png`, `..._64ppm_cityframe11.png`.
+
 **The set in one clip:** `seams_d9_set_combined_52s.mp4` (52 s, captioned per item).
 
+Gates it6: evidence at b2b5c9b9 (the planter lift): lint 15/15, unit 1717/0, scenarios 52/52, parity
+bit-exact, selftest look goldens 11/11 (worst 0.27) + block 5/5, release-compile 602/0, all PASS
+(`evidence/d9-seams/evidence-it6-b2b5c9b9.log`). Gameplay code unchanged since the it5 reels.
 Gates it5: evidence at ddef1441 (Servo marks + SWAT 55 scale): lint 15/15, unit 1717/0, scenarios 52/52,
 parity bit-exact, selftest look goldens 11/11 (worst 0.27), release-compile 602/0, all PASS
 (`evidence/d9-seams/evidence-it5-ddef1441.log`); director reel at 3f4732db top/tilt70/combo 19/19 down,
