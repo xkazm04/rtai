@@ -10,6 +10,14 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
 - **In the game** (`26aed6b4`, `19ddf549`): `RivetFrames` (features/characters/rivet_frames.gd) draws him as one
   figure under card views; the weapon's own strip while it is out; RivetHeldView's pasted part hidden then.
   Before/after: `gtai-masters\d9\rivet\rivet_before_after_city_tilt70_pistol_32ppm_x3_and_64ppm_x2_seed5_t120_300_400.png`.
+- **Drawn left views for the one-handed holds at 70** (`1e00b083`, it6): the asset lane answered the REQUEST
+  (`rivet_eq_<id>_70_left`, 6 A / 2 B); each is its own 3-cell strip `rivet_eq_<id>_left.png`, picked for the
+  three left octants, weapon in his right claw, never mirrored. Still: `gtai-masters\d9\rivet\rivet_pistol_left_drawn_tilt70_64ppm_x3_t75_125_425_450.png`.
+  p55 still falls back (base left + held part, logged once per weapon) until the 55 left views land.
+- **Plasma sword redraw** (`b2614b45`, it6): equipped 70_v2 (A) and 55_v3 (B), both hands on the hilt, blade
+  about 2x. Still: `gtai-masters\d9\rivet\rivet_plasma_sword_redraw_tilt70_64ppm_x3_t204_264_300.png`.
+- **Blade action rows sized** (it6): katana, plasma sword, chainsaw at both pitches (manifest `act_k`), the p55
+  sword's overlapping swings cut by component (`--cc`). Contact: `gtai-masters\d9\rivet\rivet_blades_act_k_tuned_p70_p55_contact.jpg`.
 - **Gates (it3):** unit 1691 passed / 0 failed; director reel 19/19 chapters down in `tilt70`, `combo`, `top`,
   0 SCRIPT ERROR (`evidence/d9/reel-director-it3-*.log`).
 
@@ -26,9 +34,9 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
 2. **The walk.** The sheets carry one walk and one sprint drawing. Built: the facing with a bob and sway
    (the street walkers' no-grid path, no pops). Options: alternate facing / walk drawing (a 2-frame step),
    or a REQUEST to assets for a 4-frame stride grid per facing (street's `ped_*_walk` shape).
-3. **Left facings with a one-handed weapon.** Built: base drawn-left figure + the old held part (the
-   brief's fallback), two-handed holds mirror. Option: mirror everything (swaps the gun hand: against the
-   hand rule). REQUEST to assets sent for drawn equipped left views.
+3. **Left facings with a one-handed weapon.** Built (it6): the asset lane's drawn left views at 70 (weapon in
+   his right claw); at 55 the base drawn-left figure + the old held part until the 55 left views land;
+   two-handed holds mirror. Option: mirror everything (swaps the gun hand: against the hand rule).
 
 ## Next steps
 See JOURNAL `NEXT:`.

@@ -129,3 +129,42 @@ NEXT (supersedes both NEXT above):
 4. act_k by eye for katana / plasma_sword / chainsaw; watch for the plasma sword `_v3` (asset lane).
 5. Every weapon at each pitch (`--loadout=<id>`), the frame cost under the bench lock, the release-compile gate.
 6. Check the asset lane's answer to the equipped-left REQUEST (gtai-art/library catalog, ids rivet_eq_*_left).
+
+## Iteration 6 (10:34-11:34)
+- Read: JOURNAL, git log, d9-seams JOURNAL (no REQUEST to rivet; its REQUESTs go to assets), the asset lane's
+  JOURNAL + catalog. Iterations 4-5 left no commits here (this session picked up from the it3 NEXT).
+- The asset lane DELIVERED: the 8 one-handed `rivet_eq_<id>_70_left` (pistol, machine_pistol, hand_cannon,
+  ray_gun, molotov A; homing_shard B `_s`, electro_gun B `_s`, electro_baton B; v2 of the last two coming),
+  and the plasma sword redraw (equipped 70_v2 A, 55_v3 B). 55 left views queued there (round 1155).
+- MILESTONE `1e00b083`: left views as their own 3-cell strips `rivet_eq_<id>_left.png` (manifest rows, counts "3");
+  `RivetFrames.left_of` picks them for octants 3-5 of a one-handed hold, else the base left + held part (logged
+  once per weapon and art key). `weapon_of` is "" while he is down (the death cell lives on the base strip only;
+  before, a dying Rivet with a gun out could index cell 13 of an 8-cell strip). New `test_rivet_frames.gd` (4 tests).
+  Seen at 64 px/m (`--bot=rivet --loadout=pistol`): the pistol in his far right claw pointing left, cable arm near.
+- MILESTONE `b2614b45`: plasma sword redraw swapped in (manifest one line per pitch, as designed). Seen at 64 px/m
+  (`--bot=gunplay --weapon=plasma_sword`): both hands on the hilt, the long amber blade, the swing at the camera.
+- MILESTONE (blade rows): act_k by eye: p70 katana 1.0, plasma_sword 0.95, chainsaw 0.82; p55 katana 0.95,
+  plasma_sword 0.85, chainsaw 1.0 (the tool's helmet measure is fooled by the top fin: by eye on contact sheets,
+  two rounds). The p55 sword's side swing had lost its blade to the next cell (blades overlap in x): new `--cc`
+  band option cuts by connected component with per-figure masks. Provenance sha256 refreshed for the 6 re-cut strips.
+- Provenance: 10 new lines (8 left strips, 2 sword strips).
+- Gates it6: lint 15/15; unit 1695 passed / 0 failed (full run). Reel + evidence not re-run this session (strips
+  and the left-strip pick only; `top` never reaches RivetFrames: strip_of("") = "").
+- frames.json: 9 entries (2 stills + 1 contact added).
+- FRICTION (~4 min): a Python heredoc wrote `\r` in Windows paths as CR into REPORT.md; fixed in binary mode.
+- Registry rules applied: sprite-and-atlas-production (one manifest, per-figure masks when shapes overlap,
+  one anchor so the left strip and the equipped strip do not swim at the swap); motion-quality-gating (judged in
+  motion at 64 px/m on the arena, frame grids, not on the strip alone); generative-artifact-gating (the left
+  sheets checked against the hand rule before use: weapon hand, cable arm near, size beside the right facings).
+- DECISION rivet/left-strips: own 3-cell strip per weapon per art key (docs/decisions.md).
+
+NEXT (supersedes it3's):
+1. Gates on HEAD: director reel `--quit-after 14000` in top, tilt70, combo (0 SCRIPT ERROR, 19/19) and
+   `node tools/evidence/run.mjs --no-bench`; re-try `node tools/tests/release_compile.mjs` (the foreign temp dir).
+2. Fire state for streams/auto weapons (flamer shows no fire cell): `RivetFrames.publish(rig, held, arena)` from
+   RivetHeldView (see it3 NEXT 1). rivet_frames.gd is at 200 lines: make room first.
+3. Shot origin + muzzle flash from the drawn frame (per-cell muzzle point in rivet_frames.py -> JSON sidecar).
+4. Watch the asset lane: 55 left views (round 1155) -> manifest rows `rivet_eq_<id>_left` under p55; electro_gun /
+   electro_baton 70_left v2 (round 1205) -> swap the sheet names. Re-run the manifest + provenance.
+5. Servo engage film; ghost form swap back; death beat; occlusion silhouette; every weapon at each pitch;
+   frame cost under the bench lock; a combined clip 30-90 s.
