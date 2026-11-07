@@ -654,3 +654,23 @@ RigCastShadows.collect: "REQUEST to view if view exposes one", conditional). hud
   (`RTAI.exe -- --view=combo_lead` vs `--view=combo`). A dev drive with the real World camera is
   the way to film it (World._register_features makes the rig; the bench would need it + a clock).
 - GATE unit full no-arg at 105de9d5: 1509 passed / 0 failed, 0 FLAKY (`evidence/n8-view/unit-it9.log`).
+- Registry rules applied it9: perf-regression-gating (the King fight re-taken under the lock with
+  the same seed, command and alternation as it8's before; the one disturbance of mine named; quest 1
+  rig cast vs sprites labelled with its contended run), depth-ordered-layered-art (the occlusion
+  area follows the drawn card, not a guessed box; the wreck/King order judged against the ground
+  depth rule and seen on a still centred on the pair), concept-scene-parity (the trial merge judged
+  with city's real cards), motion-quality-gating (the lead study: no frame faked when the bench
+  could not show it; FRICTION logged), generative-artifact-gating (FINDING to city: a red crate card
+  breaks the colour rule).
+
+NEXT (iteration 10, in brief order):
+1. The camera lead filmed: a dev drive with the real World camera (World._register_features makes
+   the CameraRig; the bench has none): film combo vs combo_lead at speed, 48 px/m, side by side.
+2. Quest 1 at tilt70 after the Director merges city + street (still not on main at 02:00): film the
+   opening and Dock 9 again. If the merge lands, check the arena_floor_view conflict was taken as
+   city's hunk (JOURNAL it9 MERGE NOTE) and re-run the King occlusion count (expect ~114).
+3. Combo's remaining frame cost: the arena floor's tilted draw (+1.8 ms); a cached floor layer
+   while the pitch does not move (ViewMode.revision) is the next win, in ArenaFloorView (arena's).
+4. Before the freeze: director reel 19/19 top + combo, evidence run --no-bench, export the exe,
+   REPORT with the Calls (King bust size, death beat length, attack lock, camera lead at speed:
+   combo vs combo_lead, cover as one stack, quest 1's cast under the angled view).
