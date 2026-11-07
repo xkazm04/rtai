@@ -783,3 +783,34 @@ portraits to the game lanes). Main has not moved (merge-base = main 0bea8b93).
   goldens): REPORT does-not + Call 4. Masters `sim_bike_rider_tilt70_vs_top_64ppm_seed7_bikes025_f380-500.mp4`
   (frames.json entry 15, replacing the older 32 px/m drawn-legs still that entry 11 covers at 64) +
   `_f430-485_x12.png`. Avi deleted.
+- 16:22 DECISION seams/traffic-yields (Call 4 option b, built OFF): sim traffic brakes for Rivet on foot through
+  the obstacle feed both sim twins already brake for (set_obstacles: 12 m look-ahead, stop 5.5 m short, overtake
+  mid-block after 2.5 s, CitySimCarPass). His ground point goes FIRST in the feed (the sim keeps the first
+  OBST_MAX = 24 points, so his is never the one cut), in the boot adapter `CityVehicleWorld.set_obstacles`
+  (`yield_to_rivet`, `--traffic-yields`); driving, the point is his car's centre, already a hull point.
+  Why there: no native change (parity untouched), and the first try in VehicleService/VehicleContacts pushed
+  both files and the test file past the 200-line soft cap (debt ratchet files_past_soft_cap 67 -> 69), so
+  it moved to boot (148 -> 158 lines) with its own test file. Rejected: a sim-side body-vs-car contact
+  (both twins, a native rebuild, the knockdown rules; option c), and ON by default (moves scenarios and the
+  city traffic for top; the owner's call).
+- 16:24 MILESTONE (0a950b56): `CityVehicleWorld.with_rivet` + `yield_to_rivet` (default false) +
+  `--traffic-yields` (LaunchArgs.KNOWN_FLAGS). Unit `test_city_vehicle_world_yield` 4/4 (off = the feed
+  untouched, on = him first, kept under a full cap, default off) + test_vehicle_service + test_city_sim_pass
+  18/18; lint 15/15.
+- 16:27 FILMED before/after, `res://boot/main.tscn -- --view=tilt70 --seed=7 --rigs --bikes=0.25
+  [--traffic-yields]`, 64 px/m (camera.json on_foot 64 for the take, restored), 720 frames, 0 SCRIPT ERROR.
+  LOOKED: before, the van and then the bike drive through the idle Rivet; after, the van stops ~3 m short of
+  him and waits (he stands in a junction, where nothing overtakes), the bike queues behind it. Masters
+  `traffic_yields_to_rivet_before_after_tilt70_64ppm_seed7_bikes025_f300-720.mp4` (frames.json entry 4,
+  replacing the 55 armed-walk still: entry 3 covers armed walk) + `..._f300-660_strip.png`. Avi deleted.
+- 16:31 MUTATE (`tools/mutate/mutate.mjs --file=boot/city_vehicle_world.gd --tests=test_city_vehicle_world_yield
+  --max=8`): the sample of 8 from 101 landed only on the file's older lines (car/people queries), none on the
+  new ones: 0/7 killed, says nothing about the change (the tool has no line filter). Hand-planted the four
+  faults that matter instead (below).
+- 16:36 PLANTED by hand (each restored from git, tree clean after), `--select=test_city_vehicle_world_yield`:
+  flip `on` -> 3 fail; `off` adds him last -> 1 fails; default true -> 1 fails; drop the prefix -> fails by
+  a compile error (its unused parameters are warnings-as-errors), not an assertion. 4/4 caught. Not
+  unit-covered: the wiring line in `set_obstacles` (the film shows it).
+- 16:35 GATE evidence it9 at 0a950b56: lint 15/15, unit 1722/0, scenarios 52, parity bit-exact (planted
+  mutation caught at step 629), look goldens 11/11 (worst 0.27) + block 5/5, release-compile 602/0: all PASS
+  (`evidence/d9-seams/evidence-it9-0a950b56.log`). `top` holds: the flag is off by default.

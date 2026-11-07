@@ -162,11 +162,18 @@ scenarios 52/52, parity, selftest (look goldens 11/11), release-compile 601/0 PA
 0 failed but marked FAIL by the tree-changed guard (I edited REPORT.md during the run; no test failed).
 Logs `evidence/d9-seams/evidence-it2-*.log`.
 Trial merge it9 (d9-seams 67a7c264 + d9-rivet bd526bf9, scratch commit ab6b34f2, not a branch): lint 15/15, unit 1735/0, release-compile 605/0, director reel top/tilt70/combo 19/19 fully down, 0 SCRIPT ERROR (`evidence/d9-seams/mergetrial-it9-*.log`, `director-reel-merge-it9-*.log`). Conflicts: JOURNAL.md (add/add: keep both) and `tools/debt/baseline.json` (both lanes accepted a dev_loc rise from 18799: keep both lines, chain 18799 -> 18805 -> 18871, total 18871, then `node tools/debt/debt.mjs --update`). Still: `gtai-masters/d9/seams/merge_trial_it9_seams_rivet_bd526bf9_king_combo_64ppm_seed2_f250_city_tilt70_32ppm_seed5_f900.png`.
+Gates it9: evidence at 0a950b56 all PASS (lint 15/15, unit 1722/0, scenarios 52, parity, goldens 11/11 + block 5/5, release-compile 602/0) (`evidence/d9-seams/evidence-it9-0a950b56.log`).
 Gates it8: evidence at 90e9a69c all PASS (lint 15/15, unit 1718/0, scenarios 52, parity, goldens 11/11, release-compile 602/0) (`evidence/d9-seams/evidence-it8-90e9a69c.log`); director reel it8 at 90e5a006 top/tilt70/combo 19/19 down, 0 SCRIPT ERROR (`evidence/d9-seams/director-reel-it8-*.log`).
 Gates it7: evidence at a8940e1b all PASS (unit 1717/0, scenarios 52, parity, goldens 11/11, release-compile 602/0); director reel it7 19/19 x3, 0 SCRIPT ERROR.
 Gates it1: lint 15/15; unit no-arg 1696 passed / 0 failed (at 966a2a79);
 director reel (`--fixed-fps 60 --quit-after 14000`) top 19/19, tilt70 19/19, combo 19/19 down,
 0 SCRIPT ERROR (`evidence/d9-seams/director-reel-it1-*.log`). Not yet run: `tools/evidence/run.mjs --no-bench`.
+
+23. **Traffic can stop for Rivet on foot** (Call 4 option b, 0a950b56, it9, OFF by default): his ground point
+   goes first into the obstacle feed both sim twins already brake for, from the boot adapter; no native
+   change, parity bit-exact. On, the van stops ~3 m short of him and the bike queues behind it (filmed
+   before/after, tilt70 64 px/m, seed 7). Unit 4 tests, 4/4 hand-planted faults caught (one by a compile
+   error). Evidence it9 at 0a950b56 all PASS.
 
 ## What does not work yet
 - (closed it9, measured) The SWAT back rows (55 and 70, row 5) move the head 3 px (1.6 % of the figure) at 55
@@ -177,9 +184,9 @@ director reel (`--fixed-fps 60 --quit-after 14000`) top 19/19, tilt70 19/19, com
   break the set. Left as is.
 - The elder's 3/4-away walk row alternates weakly (the asset lane's named weak row; 4 fix asks failed).
 - The sim bike is off by default (Call 3).
-- Traffic drives through Rivet on foot (filmed it9 with the bike, 64 px/m, tilt70 and top): the city sim has no
-  vehicle-vs-player contact (`CitySimBody` resolves people only; no car step reads the body). Pre-existing for
-  every car (by code reading), not the bike's. Call 4.
+- Traffic drives through Rivet on foot by default (filmed it9 with the bike, 64 px/m, tilt70 and top): the city
+  sim has no vehicle-vs-player contact (`CitySimBody` resolves people only). Pre-existing for every car (by code
+  reading), not the bike's. A yield is built behind a flag (Call 4 b); a knock-down is not.
 - After merge, rebuild native (`just native`): `project/native/bin` is git-ignored, and the old DLL
   would treat bikes as cars (no crash; parity would fail).
 
@@ -204,9 +211,13 @@ director reel (`--fixed-fps 60 --quit-after 14000`) top 19/19, tilt70 19/19, com
 
 4. **Traffic and Rivet on foot** (found it9 filming the bike close up): every vehicle passes through
    him, and while they overlap the depth sort flips between bike-over-Rivet and Rivet-over-bike. Default
-   built: as is (pre-existing; sim and goldens untouched). Options: (a) as is; (b) cars brake for the
-   player body (sim, both twins: parity, scenarios and the top goldens move); (c) cars knock him down
-   (b plus a hit). See `sim_bike_rider_tilt70_vs_top_64ppm_seed7_bikes025_f380-500.mp4`.
+   built: (a) as is, the n8 traffic (top, goldens, scenarios untouched). (b) is BUILT behind a flag (it9,
+   0a950b56): `CityVehicleWorld.yield_to_rivet` (`--traffic-yields` to try it): cars brake for him as for a
+   parked car and overtake mid-block; standing in a junction he holds traffic up (no overtaking there).
+   Turning it on is one value, but it moves the city traffic, so scenarios/goldens get re-checked then.
+   (c) cars knock him down (sim work in both twins, not built). Before/after:
+   `traffic_yields_to_rivet_before_after_tilt70_64ppm_seed7_bikes025_f300-720.mp4` (+ `_f300-660_strip.png`).
+   Try: `"$GODOT_BIN" --path project -- --view=tilt70 --seed=7 --rigs --bikes=0.25 --traffic-yields`.
 
 ## Next steps
 See JOURNAL `NEXT:`.
