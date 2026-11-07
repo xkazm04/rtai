@@ -218,3 +218,5 @@ NEXT (iteration 5):
 - MILESTONE 12:48 evidence gate on 93c1fb69 `--no-bench --no-release`: lint 15/15, unit 1711/0, scenarios 53/53 (with
   handheld_focus_pause), parity bit-exact over 1200 steps (planted mutation caught at 629), look goldens 11/11 (worst
   0.27): **top bit-identical** (`evidence/it7/evidence-run-93c1fb69.log`). Release-compile still skipped (seams' temp-dir clash).
+- RESULT 12:52 E9 (handheld_1080 viewport vs native, city, 2 rounds, CONTENDED, bench lock 12:49-12:52): render GPU 9.86 vs
+  16.09 ms; p50 16.65 (vsync-locked) vs 17.44 (misses 60). Viewport stretch KEPT on the 1080 rows. LEDGER E9.
