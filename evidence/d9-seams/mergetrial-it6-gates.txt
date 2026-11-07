@@ -1,0 +1,11 @@
+lint: all 15 checks pass over 1221 GDScript files
+lint exit 0
+unit-tests: 1730 passed, 0 failed, 0 skipped (GUT, headless)
+unit exit 0
+release_compile: 605 loaded, 0 failed
+rc exit 0
+run_scenarios: 52 ran, 0 failed
+WARNING: 62714 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+ERROR: 147 resources still in use at exit (run with --verbose for details).
+ERROR: Pages in use exist at exit in PagedAllocator: N12VariantPools11BucketSmallE
+scen exit 0

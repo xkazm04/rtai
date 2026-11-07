@@ -474,13 +474,20 @@ motion-quality-gating (before/after the same scene, seed and frame, at 32 and 64
   test_prop_cards 13/0, lint 15/15. Provenance: 2 lines. DECISION in docs/decisions.md.
   Still: at 32 px/m the box's rim and inner ink stroke stay dark (the props' 4 px inner stroke over a
   ~1 m box); left.
-- 14:00 GATE evidence at b2b5c9b9 (planter lift): lint 15/15, unit 1717/0, scenarios 52/52, parity bit-exact,
+- 13:50 GATE evidence at b2b5c9b9 (planter lift): lint 15/15, unit 1717/0, scenarios 52/52, parity bit-exact,
   selftest look goldens 11/11 (worst 0.27) + block 5/5, release-compile 602/0: all PASS
   (`evidence/d9-seams/evidence-it6-b2b5c9b9.log`). Reels not re-run: art only since the it5 reels.
-- 14:01 MERGE SEAM check (this lane's job): `git merge-tree d9-seams d9-rivet` at d9-rivet's head: one
+- 13:52 MERGE SEAM check (this lane's job): `git merge-tree d9-seams d9-rivet` at d9-rivet's head: one
   conflict only, JOURNAL.md (add/add, both lanes' journals: the Director keeps both). Files both lanes
   touched: docs/decisions.md, steam/ai-provenance/2026-11.jsonl (append-only, auto-merged) and
   project/features/arena/prop_occlusion.gd (disjoint hunks: rivet's hip from RigCastShadows.hip_px, my
   PropLying corpse box; compatible: the corpse box reads the rig's head part, not the hip). A scratch
   merge commit (not a branch) is checked out at `scratch/seams/mergetrial` for lint/unit/release-compile/
   scenarios.
+- 13:59 GATE on the trial merge (d9-seams 6fba6bcd + d9-rivet head; scratch commit a24ae125, not a branch;
+  native DLLs copied from this worktree): lint 15/15, unit 1730/0, release-compile 605/0, scenarios 52/0;
+  director reel top / tilt70 / combo 19/19 down, 0 SCRIPT ERROR, 2 engine ERROR lines each (a shader
+  sampler note and the exit leak, both in my it5 baseline too). Logs `evidence/d9-seams/director-reel-merge-it6-*.log`,
+  `mergetrial-it6-gates.txt`. Filmed the merge: King fight combo 64 px/m seed 2 f150/f250 (King on drawn
+  legs, Rivet's drawn figure, the kerb line under the King): masters `merge_trial_seams_rivet_king_combo_64ppm_seed2_f150_f250.png`.
+  The two lanes merge clean today but for the JOURNAL add/add (keep both).
