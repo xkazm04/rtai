@@ -12,16 +12,18 @@ from pathlib import Path
 
 from PIL import Image
 
-# style -> (sheet, [(x0, x1) per bay piece], (y0, y1) wall band, side inset px)
+# style -> (sheet, [(x0, x1) per bay piece], (y0, y1) wall band, side inset px); the 55 sheets are
+# the 0525 v2 raw redraws of the untapered keys (pieces within 1 px of the keys the boxes were
+# measured on; kit_55_v2 B: its bottom-row roof lips bow, not used here)
 STYLES = {
     "tenement": (
-        "keyed/building/facade_kit_55_untapered.png",
+        "keyed/building/facade_kit_55_v2.png",
         [(73, 354), (442, 724), (812, 1094)],
         (172, 686),
         15,
     ),
     "shop": (
-        "keyed/building/facade_shop_55_untapered.png",
+        "keyed/building/facade_shop_55_v2.png",
         [(38, 381), (410, 754), (782, 1128)],
         (238, 616),
         12,
@@ -29,7 +31,7 @@ STYLES = {
     # the six-storey landmark kit (round 2210, B: roofs straightened by the library's untaper;
     # squatter storeys than the kit's, so its bays sit on the 17-21 m landmarks only)
     "tall": (
-        "keyed/building/facade_tall_55_untapered.png",
+        "keyed/building/facade_tall_55_v2.png",
         [(260, 507), (644, 891), (1028, 1275)],
         (130, 749),
         12,
