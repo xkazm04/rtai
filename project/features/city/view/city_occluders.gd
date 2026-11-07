@@ -9,10 +9,15 @@ extends RefCounted
 const CACHE_MAX: int = 48
 ## A building farther than this (m) from the body on either axis is not looked at.
 const REACH_M: float = 40.0
+## in_rect's candidate list holds while the view stays inside its rect grown by this much (m).
+const RECT_SLACK_M: float = 8.0
 
 var _lift: ChunkLift = null
 var _res: CityResidency = null
 var _cache: Dictionary[int, Array] = {}
+var _rect_at: Rect2 = Rect2()
+var _rect_list: Array[Bld] = []
+var _rect_rev: int = -1
 
 
 ## A building on the ground (px): its texture, turn, ground centre and rect, drawn area.
@@ -49,9 +54,47 @@ func collect(chunk: CityChunk, near_px: Vector2, out: Array[Bld]) -> void:
 	for b: Bld in of_chunk(chunk):
 		if absf(b.at.x - near_px.x) > reach or absf(b.at.y - near_px.y) > reach:
 			continue
-		var up: float = -_lift.lift_of(b.t).y
-		b.area = Rect2(b.r.position - Vector2(0.0, up), b.r.size + Vector2(0.0, up))
-		out.append(b)
+		out.append(_with_area(b))
+
+
+## The buildings whose drawn areas meet a screen rect (px), for the baked crowd (one query a frame,
+## CityCrowdOcclusion). The candidates (the resident chunks' buildings under the rect grown by
+## RECT_SLACK_M, and up to REACH_M south of it: a roof lifts north into view) are listed once and
+## kept until the rect leaves the grown one or a chunk streams; each frame only their areas are
+## taken at today's lift.
+func in_rect(view_px: Rect2) -> Array[Bld]:
+	var rev: int = _res.stamped + _res.dropped  # a chunk streamed in or out: list again
+	if rev != _rect_rev or not _rect_at.encloses(view_px):
+		_rect_rev = rev
+		_rect_at = view_px.grow(RECT_SLACK_M * SimConst.PX_PER_M)
+		_rect_list = _candidates(_rect_at)
+	var out: Array[Bld] = []
+	for b: Bld in _rect_list:
+		if _with_area(b).area.intersects(view_px):
+			out.append(b)
+	return out
+
+
+func _candidates(at_px: Rect2) -> Array[Bld]:
+	var out: Array[Bld] = []
+	var reach: Rect2 = at_px.grow_individual(0.0, 0.0, 0.0, REACH_M * SimConst.PX_PER_M)
+	var lo: Vector2 = reach.position / SimConst.PX_PER_M / SimConst.CHUNK_M
+	var hi: Vector2 = reach.end / SimConst.PX_PER_M / SimConst.CHUNK_M
+	for x: int in range(floori(lo.x), floori(hi.x) + 1):
+		for y: int in range(floori(lo.y), floori(hi.y) + 1):
+			var key: Vector2i = Vector2i(x, y)
+			if _res.is_resident(key):
+				for b: Bld in of_chunk(_res.chunk_at(key)):
+					if b.r.intersects(reach):
+						out.append(b)
+	return out
+
+
+## b with its drawn area at today's lift (combo eases it).
+func _with_area(b: Bld) -> Bld:
+	var up: float = -_lift.lift_of(b.t).y
+	b.area = Rect2(b.r.position - Vector2(0.0, up), b.r.size + Vector2(0.0, up))
+	return b
 
 
 ## A chunk's buildings (not its shadow commands), scanned on first use and kept.
@@ -61,6 +104,7 @@ func of_chunk(chunk: CityChunk) -> Array[Bld]:
 		return _cache[id]
 	if _cache.size() >= CACHE_MAX:
 		_cache.clear()
+		_rect_at = Rect2()  # the candidates came from the dropped lists: list them again
 	var list: Array[Bld] = []
 	for k: int in chunk.command_count():
 		var t: int = chunk.tex[k]

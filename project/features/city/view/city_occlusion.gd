@@ -15,10 +15,17 @@ const PATCH_W_M: float = 1.8
 const SHADER: String = "res://features/city/view/city_occlusion.gdshader"
 ## A body's feet this far (px) inside a building's north edge still count as behind it.
 const NORTH_TOL_PX: float = 4.0
+## The baked crowd behind a building is hidden too (CityCrowdOcclusion); false = it draws over
+## the roofs.
+const CROWD: bool = true
 
 ## Measured over the run (Log at exit): frames, body-frames hidden behind a building.
 var frames: int = 0
 var hidden_frames: int = 0
+## The crowd's patches over the run and the time spent finding them (us).
+var crowd_patches: int = 0
+var crowd_us: int = 0
+var _city: CitySystem = null
 var _near: CityOccluders = null
 var _view: CityView = null
 var _print: Material = null
@@ -38,6 +45,7 @@ static func attach(view: CityView, city: CitySystem, print_mat: Material) -> voi
 	o._near = CityOccluders.new(lift, city.residency)
 	o._layer = view.actor_layer()
 	o._view = view
+	o._city = city
 	o._print = print_mat
 	var mat: ShaderMaterial = ShaderMaterial.new()
 	mat.shader = load(SHADER) as Shader
@@ -66,7 +74,14 @@ func _process(_delta: float) -> void:
 
 
 func _exit_tree() -> void:
-	Log.info("city", "occlusion: %d body-frames hidden over %d frames" % [hidden_frames, frames])
+	var per: float = float(crowd_us) / maxf(1.0, float(frames))
+	Log.info(
+		"city",
+		(
+			"occlusion: %d body-frames hidden over %d frames; crowd %d patches, %.0f us/frame"
+			% [hidden_frames, frames, crowd_patches, per]
+		)
+	)
 
 
 ## This frame's hits: buildings with a body behind them, the body's silhouettes, the bodies to lift.
@@ -91,12 +106,29 @@ func _scan() -> void:
 				_hit_area.append(b.area)
 			else:
 				front[rig] = b.area
+	var areas: Array[Rect2] = _hit_area + _scan_crowd()
 	var lifted: Dictionary[CutRig, bool] = {}
 	for rig: CutRig in front:
-		for a: Rect2 in _hit_area:
+		for a: Rect2 in areas:
 			if a.intersects(front[rig]):
 				lifted[rig] = true
 	_lift_front(lifted)
+
+
+## The baked crowd's patches (appended to _patches); returns the drawn areas that hid one.
+func _scan_crowd() -> Array[Rect2]:
+	if not CROWD or _city == null or _city.sim == null:
+		return []
+	var t0: int = Time.get_ticks_usec()
+	var screen: Rect2 = Rect2(Vector2.ZERO, get_viewport_rect().size)
+	var view_px: Rect2 = get_global_transform_with_canvas().affine_inverse() * screen
+	var n: int = _patches.size()
+	var areas: Array[Rect2] = CityCrowdOcclusion.patches(
+		_city.sim.snapshot(), _near.in_rect(view_px), view_px, _patches
+	)
+	crowd_patches += _patches.size() - n
+	crowd_us += Time.get_ticks_usec() - t0
+	return areas
 
 
 ## Lifts the bodies in front of a redrawn building over this node (RigDepthSort reset their z).
