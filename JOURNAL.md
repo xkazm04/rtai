@@ -754,3 +754,10 @@ NEXT:
   export `build/export/windows/RTAI.exe` with the `windows-showcase` preset (recipe in
   `gtai-n8/scratch/hud/it6/report_notes.md`, it10 lines appended), REPORT from those notes. Delete
   the it9/it10 scratch frames after the REPORT. Nothing into the worktree during a gate run.
+- 03:33 TRIED and dropped (not committed): a memo-paper tab under the HUD weapon icon (NEXT 1).
+  On the 1280x800 board the 9-sliced memo at icon size is a cramped torn scrap, Gloria overhangs
+  its left edge, and it reads busier than the bare icon beside the clean ticket
+  (`gtai-n8/scratch/hud/it10/icon_tab_rejected.png`). If it returns: a drawn tab (one piece of art
+  with the ticket, like the cash frame's banknote end), not the memo 9-slice; or an ink drop shadow
+  under the bare icon.
+- 03:34 Session end. All committed.
