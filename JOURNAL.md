@@ -814,3 +814,25 @@ portraits to the game lanes). Main has not moved (merge-base = main 0bea8b93).
 - 16:35 GATE evidence it9 at 0a950b56: lint 15/15, unit 1722/0, scenarios 52, parity bit-exact (planted
   mutation caught at step 629), look goldens 11/11 (worst 0.27) + block 5/5, release-compile 602/0: all PASS
   (`evidence/d9-seams/evidence-it9-0a950b56.log`). `top` holds: the flag is off by default.
+- 16:39 MERGE SEAM re-check vs d9-rivet 5af5db29 (after my boot/ edits): still only JOURNAL.md (add/add) and
+  tools/debt/baseline.json (resolution above: keep both accepted lines, chain, then --update).
+
+NEXT (it10), replaces the lists above:
+1. Read d9-rivet + assets journals for REQUESTs first (none open to seams at 16:39).
+2. Gates green at 0a950b56 (evidence it9) + the trial merge it9 (ab6b34f2: unit 1735/0, release-compile 605/0,
+   scenarios 52, reels 19/19 x3). Reels it9 on 5fa6baee: see the line below (running at 16:38).
+3. Freeze 18:30: export RTAI.exe (`"$GODOT_BIN" --headless --path project --export-release windows-showcase
+   ../build/export/windows/RTAI.exe`), REPORT final by 18:40. Owner Calls 1-4 stand (4 is new: traffic and
+   Rivet on foot; b is built behind `--traffic-yields`).
+4. If time: a last trial merge near the freeze (recipe it6 NEXT 3 + the baseline resolution); a scenario for
+   the yield (cars stop short of the on-foot point, like scenario_vehicle_yield) if Call 4 goes to b.
+5. Weakest left: elder 3/4-away walk (asset-named), the corpse-at-a-wall option (Call 2), Rivet's 1.1 m
+   size beside the cops (rivet's Call 1, not mine).
+- Registry rules applied it9: depth-ordered-layered-art (the front lift read for Rivet's drawn card: it is the
+  rig's child), motion-quality-gating (the bike and the yield judged in motion at a real 64 px/m, before/after
+  at the same seed and frames; the bob measured per frame before calling it a fault), engine-integration-safety
+  (the yield in the adapter over an existing feed both twins read: no native change, parity re-run; off by
+  default), vehicle-archetype-balance / top-down-vehicle-handling-model (the bike's handling untouched; the
+  yield reuses the sim's car-following distances: 12 m look-ahead, 5.5 m stop), generative-artifact-gating
+  (no new art this iteration).
+- 16:40 GATE director reel it9 at 5fa6baee (code since it8: CityVehicleWorld.yield_to_rivet, off): top, tilt70, combo 19/19 FULLY down, 0 SCRIPT ERROR, 0 p_frame, the 2 known ^ERROR lines each (`evidence/d9-seams/director-reel-it9-*.log`).
