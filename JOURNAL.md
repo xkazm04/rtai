@@ -1082,3 +1082,6 @@ NEXT (iteration 11):
   pedestrians as the p70 grids (per-row fallback), as designed. Separate run from the tilt70 one
   (different camera pitch, so blood and heap differ). evidence/riot_atlas_corpse_tilt70_vs_tilt_
   48ppm_f1200.png. NEXT 2 struck from the list above; 1, 3, 4 remain.
+- GATE scenarios on 60b94826 (head, after b5f5f10c): 52 ran, 0 failed, 0 SCRIPT ERROR (exit 0). NEXT 3's
+  scenarios done; the full evidence run (`node tools/evidence/run.mjs --no-bench`) remains for
+  it11. Session end 04:52, tree clean.
