@@ -1391,3 +1391,21 @@ NEXT (iteration 16) is the it15 NEXT above, items 1-2 (item 3 done).
   horn cone and the crates in frame, Rivet on screen. Masters
   `king_boss_cam_merged_it16_combo_48ppm_seed2_f500_560_620_700.png`. REPORT Call 7 (the boss
   fight's camera: follow as built, BossCam recommended; one flag) and Next steps 5.
+- Registry rules applied it16: motion-quality-gating (the King fight judged across frames 500-700,
+  not one still; the reel by chapter counts on HEAD and on the merge), perf-regression-gating (the
+  frame cost re-taken under the lock at the freeze candidate, labelled CONTENDED, the drive's wall
+  frames rejected as a verdict because both views paced identically), concept-scene-parity (quest
+  1 and the King fight judged on the merged tree of all five lanes), combat-pacing-and-dramatic-arc
+  (Call 7: the boss must stay readable through his ram, the telegraph's source on screen).
+- Session close it16 07:37: tree clean after this commit. Commits it16: c88cc716, 58dee013,
+  cc76970c, 983e0ad3, 17512d7d, e1f058ee, 69310de6, this one. No code changed this session: the
+  code is it15's e369f4b0, gated at cc76970c. frames.json: entry 5 and 15 notes name the it16
+  merge stills. Scratch: it14's clip frame dirs (1.2 GB) and it16's frame dirs deleted; the trial
+  tree (%TEMP%/view-trial-it11 at 691768ec) and %TEMP%/view-street-check stay until the freeze.
+NEXT (iteration 17, the freeze at 08:30):
+1. Other lanes' journals: any REQUEST to view; hud's answer to the it16 banner NOTE.
+2. If no code lands: the freeze is done (exe at cc76970c-code, gated); just confirm
+   `build/export/windows/RTAI.exe` exists. If code lands: `bash scratch/view/freeze.sh` (reel on
+   HEAD + the exe + smoke, ~4 min) and `node tools/evidence/run.mjs --no-bench` (~7 min, tree still).
+3. `git worktree remove --force` %TEMP%/view-trial-it11 and %TEMP%/view-street-check (both mine).
+4. REPORT final by 08:40: header time, Calls 1-7, the Exe section (already filled), Next steps 1-5.
