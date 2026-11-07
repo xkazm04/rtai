@@ -1,6 +1,6 @@
-# n8 street: the street cast under the angled view (REPORT, DRAFT at iteration 12)
+# n8 street: the street cast under the angled view (REPORT, DRAFT at iteration 13)
 
-DRAFT: written 05:20, updated 06:25 (it12) so the freeze has a base. The freeze iteration (08:30) completes the gates,
+DRAFT: written 05:20, updated 06:25 (it12) and 07:05 (it13) so the freeze has a base. The freeze iteration (08:30) completes the gates,
 the exe command lines and the final evidence numbers. Lane journal: `JOURNAL.md`. Stills and clips:
 `C:\Users\kazda\kiro\gtai-masters\n8\street\` (`frames.json`, 15 entries, best first;
 the combined clip `street_combined_tilt70_50s.mp4`).
@@ -35,6 +35,14 @@ selected by the view row's art key (`p70` / `p55`) or `cards`, never by a pitch.
   `peds_long_fall_frames_before_after_tilt70_64ppm_t59-150.png`.
   `cops_drawn_fall_before_after_tilt70_64ppm_board_t62-150.png`,
   `cops_riot_swat_p55_falls_before_after_tilt_64ppm_board_t65_t150.png`.
+- (it13) **Under p55** (boss fights under combo) the riot cop, SWAT and the thug fall and lie as the
+  library's round-0650/0710 redraws (A, drawn long raw, no post stretch; my it12 REQUEST served);
+  **under p70** the thug as its v3 redraw (standing-build legs).
+  `riot_swat_long_fall_55_before_after_tilt_64ppm_heavy_board_t150.png`,
+  `evidence/thug_long_fall_70_v3_before_after_tilt70_48ppm_x2_ohmbeat_s8.6-12.png`.
+- (it13) **Quest 1's dead contractors leave the floor** under the card views as the live fight's
+  corpses do (6 s, then ink out over 1.2 s; `corpse_decay.json`): Dock 9 no longer stacks ~30
+  bodies over the kerb and the bench (view's note). `quest1_dock9_corpse_decay_before_after_combo_32ppm_t15000.png`.
 - **Far corpses** (the baked crowd atlas): every DEATH cell is drawn under the card views: 0.1 s
   the drawn mid-fall, then the lying body (it10 + it11), instead of a top-down stump cut at the
   shoulders. `riot_atlas_corpse_drawn_before_after_tilt70_48ppm_x1.4_f1200.png`,
@@ -67,12 +75,18 @@ selected by the view row's art key (`p70` / `p55`) or `cards`, never by a pitch.
    `peds_long_fall_back_corpse_before_after_tilt70_32ppm_board_t150.png`. The contractor's redraw
    was judged worse at quest 1 Dock 9 (puffier, loses its dropped rifle) and is not used.
 
+7. **Quest 1's corpses** (it13): decay as the live fight's (BUILT, `StreetQuestCorpses.DECAY =
+   true`) vs every corpse stays all quest at 0.8 alpha (`false`, as `top` draws them).
+   `quest1_dock9_corpse_decay_before_after_combo_32ppm_t15000.png`. `top` keeps every corpse
+   (its sprite path is untouched); the same law in quest 1's sim would be the quest's call.
+
 Exe command lines: (freeze) `RTAI.exe --arena=city --rigs --view=tilt70`, quest 1
 `RTAI.exe --view=tilt70`, the boss fights `--boss=king --view=combo`.
 
 ## Gates
 
-(freeze) lint, unit, scenarios, `node tools/evidence/run.mjs --no-bench`, the director reel under
+it13 head (a5c7d30e): lint 15/15; unit no-arg 1529/0 (on 49b57ffb, no FLAKY); director reel
+`top` 19/19 and `combo` 19/19 all down, 0 SCRIPT ERROR (on 49b57ffb). (freeze) lint, unit, scenarios, `node tools/evidence/run.mjs --no-bench`, the director reel under
 `top`, `tilt70` and `combo`.
 
 ## Next steps
