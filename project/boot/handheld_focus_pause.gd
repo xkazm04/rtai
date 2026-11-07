@@ -5,11 +5,17 @@ extends Node
 ## running fight, a Windows handheld's shell, alt-tab. It never unpauses (the player resumes).
 ## LaunchArgs adds it next to the profile; the desktop game never has one.
 
+## The quest to pause; null = the tree's current scene (the game; a scenario sets its own).
+var target_quest: Quest1Game = null
+
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_APPLICATION_FOCUS_OUT:
+		var target: Quest1Game = target_quest
+		if target == null and is_inside_tree():
+			target = get_tree().current_scene as Quest1Game
 		@warning_ignore("return_value_discarded")
-		pause(get_tree().current_scene as Quest1Game)
+		pause(target)
 
 
 ## Pauses `quest` when a run is live and not already paused; true when it did.
