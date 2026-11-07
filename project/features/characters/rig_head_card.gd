@@ -34,6 +34,9 @@ const OCT_FLIP: PackedByteArray = [0, 0, 0, 1, 1, 1, 0, 0]
 static var _tex: Dictionary[String, Texture2D] = {}
 static var _merged: Dictionary[String, Array] = {}
 static var _merged_art: String = "-"
+## rows_of per art folder: a pure function of the folder (the strips and RigCardSets load once),
+## asked per card per frame by the combined view's court (n8-view it8: uncached it cost ~6 ms).
+static var _rows_of: Dictionary[String, Dictionary] = {}
 
 
 ## Each pose step under a tilt (CutRig.drive): build the card once, then face and place it. A
@@ -100,6 +103,12 @@ static func rows() -> Dictionary[String, Array]:
 static func rows_of(art: String) -> Dictionary[String, Array]:
 	if art == "":
 		return CARDS
+	if not _rows_of.has(art):
+		_rows_of[art] = _rows_of_uncached(art)
+	return _rows_of[art]
+
+
+static func _rows_of_uncached(art: String) -> Dictionary[String, Array]:
 	var out: Dictionary[String, Array] = {}
 	for key: String in CARDS:
 		var row: Array = CARDS[key].duplicate()
