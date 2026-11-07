@@ -57,19 +57,28 @@ func test_only_the_dying_and_the_dead_draw_a_fall_grid() -> void:
 	var row: String = "ped/head_hood"
 	assert_eq(StreetWalkerFall.grid_of(rig, "p70", row), "", "alive: the walk")
 	rig.dead = true
-	assert_eq(StreetWalkerFall.grid_of(rig, "p70", row), "p70/ped_hood_fall.png", "dead: the grid")
-	assert_eq(StreetWalkerFall.grid_of(rig, "p55", row), "p70/ped_hood_fall.png", "55: the 70 grid")
+	var hood: String = "p70/" + str(StreetWalkerFall.table()["p70"][row])
+	assert_eq(StreetWalkerFall.grid_of(rig, "p70", row), hood, "dead: the grid")
+	assert_eq(StreetWalkerFall.grid_of(rig, "p55", row), hood, "55: the 70 grid")
 	assert_eq(StreetWalkerFall.grid_of(rig, "p70", "ped/head_none"), "", "a row with no grid")
 	var cop: String = "cop/head_cap"
-	assert_eq(StreetWalkerFall.grid_of(rig, "p55", cop), "p55/cop_patrol_fall.png", "55: its own")
+	var own: String = "p55/" + str(StreetWalkerFall.table()["p55"][cop])
+	assert_eq(StreetWalkerFall.grid_of(rig, "p55", cop), own, "55: its own")
 
 
 func test_every_fall_grid_exists_and_all_three_cops_have_one() -> void:
+	for table: Dictionary in [StreetWalkerFall.FALLS, StreetWalkerFall.LONG_FALLS]:
+		for art: String in table:
+			var rows: Dictionary = table[art]
+			for row: String in rows:
+				var path: String = "res://features/characters/art/view/%s/%s" % [art, rows[row]]
+				assert_true(ResourceLoader.exists(path), path)
 	for art: String in StreetWalkerFall.FALLS:
-		var rows: Dictionary = StreetWalkerFall.FALLS[art]
-		for row: String in rows:
-			var path: String = "res://features/characters/art/view/%s/%s" % [art, rows[row]]
-			assert_true(ResourceLoader.exists(path), path)
+		assert_eq(
+			StreetWalkerFall.LONG_FALLS[art].keys(),
+			StreetWalkerFall.FALLS[art].keys(),
+			"LONG swaps files, never rows (%s)" % art
+		)
 	for row: String in ["cop/head_cap", "cop/head_helmet", "cop/head_swat"]:
 		assert_true(StreetWalkerFall.FALLS["p70"].has(row), row + " falls as drawn at 70")
 	assert_true(StreetWalkerFall.FALLS["p70"].has("thug"), "the robot thug powers down as drawn")

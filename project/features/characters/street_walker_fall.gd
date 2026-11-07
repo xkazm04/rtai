@@ -43,6 +43,36 @@ const FALLS: Dictionary[String, Dictionary] = {
 		"thug": "thug_fall.png",
 	},
 }
+## LONG (it12): the round-0630 redraws (POST FIX BY EXAMPLE), the lying frames drawn long raw
+## (~1.4-1.7x of standing, not a post stretch), every back corpse the 3/4-away one
+## (--back-from-away: the drawn back corpse read as a person standing); the robots keep FALLS
+## (their redraw drew the stretch as long legs). LONG false = FALLS (it7-it9).
+const LONG: bool = true
+const LONG_FALLS: Dictionary[String, Dictionary] = {
+	"p70":
+	{
+		"ped/head_hair": "ped_suit_long_fall.png",
+		"ped/head_hood": "ped_hood_long_fall.png",
+		"ped/head_worker": "ped_worker_long_fall.png",
+		"ped/head_cap": "ped_cap_long_fall.png",
+		"ped/head_bald": "ped_elder_long_fall.png",
+		"ped/head_hat": "ped_hat_long_fall.png",
+		"ped/head_jogger": "ped_jogger_long_fall.png",
+		"ped/head_punk": "ped_punk_long_fall.png",
+		"ped/head_shopper": "ped_shopper_long_fall.png",
+		"cop/head_cap": "cop_patrol_long_fall.png",
+		"cop/head_helmet": "cop_riot_long_fall.png",
+		"cop/head_swat": "swat_long_fall.png",
+		"thug": "thug_fall.png",
+	},
+	"p55":
+	{
+		"cop/head_cap": "cop_patrol_long_fall.png",
+		"cop/head_helmet": "cop_riot_fall.png",
+		"cop/head_swat": "swat_fall.png",
+		"thug": "thug_fall.png",
+	},
+}
 const FALL_FRAMES: int = 3
 ## Each fall frame's start, of the death family's progress (the lying frame from FALL_AT[2] on).
 const FALL_AT: PackedFloat32Array = [0.0, 0.18, 0.4]
@@ -59,10 +89,15 @@ const OCT: StringName = &"street_fall_oct"
 static func grid_of(rig: CutRig, art: String, row: String) -> String:
 	if not DRAWN or not down(rig):
 		return ""
-	var own: Dictionary = FALLS.get(art, {})
+	var own: Dictionary = table().get(art, {})
 	var from: String = art if own.has(row) else FALLBACK
-	var rows: Dictionary = FALLS.get(from, {})
+	var rows: Dictionary = table().get(from, {})
 	return from + "/" + str(rows[row]) if rows.has(row) else ""
+
+
+## The fall grids drawn now: LONG_FALLS, or FALLS with LONG off.
+static func table() -> Dictionary[String, Dictionary]:
+	return LONG_FALLS if LONG else FALLS
 
 
 ## Dying or dead.

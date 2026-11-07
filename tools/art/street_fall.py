@@ -36,10 +36,14 @@ FALL_DIR = [(0.0, 1.0), (0.707, 0.707), (1.0, 0.0), (0.707, -0.707), (0.0, -1.0)
 
 
 def _thirds(solid: np.ndarray, y0: int, y1: int) -> list:
+    """The three columns, split at the profile's valleys near the thirds of the sheet's drawn
+    width (not the image's: ped_cap_fall_70_v2 draws its grid in the right two-thirds)."""
     prof = solid[y0:y1].sum(axis=0).astype(np.int64)
-    w = prof.size
-    cuts = [0] + [sw._valley(prof, w * k / 3 - w * 0.08, w * k / 3 + w * 0.08) for k in (1, 2)] + [w]
-    return list(zip(cuts, cuts[1:]))
+    cols = np.nonzero(solid.any(axis=0))[0]
+    a, w = int(cols.min()), int(cols.max()) + 1 - int(cols.min())
+    cuts = [0]
+    cuts += [a + sw._valley(prof[a:], w * k / 3 - w * 0.08, w * k / 3 + w * 0.08) for k in (1, 2)]
+    return list(zip(cuts, cuts[1:] + [prof.size]))
 
 
 def _main(mask: np.ndarray) -> np.ndarray:

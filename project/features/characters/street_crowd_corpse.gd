@@ -42,9 +42,9 @@ static func lying_cell(art: String, row: String) -> Image:
 ## Fall frame `fall` for `row` under `art` (or StreetWalkerFall.FALLBACK's), cropped to the body,
 ## scaled to atlas px and turned to the bake's +y; null = no drawn fall for the row.
 static func fall_cell(art: String, row: String, fall: int) -> Image:
-	var own: Dictionary = StreetWalkerFall.FALLS.get(art, {})
+	var own: Dictionary = StreetWalkerFall.table().get(art, {})
 	var from: String = art if own.has(row) else StreetWalkerFall.FALLBACK
-	var rows: Dictionary = StreetWalkerFall.FALLS.get(from, {})
+	var rows: Dictionary = StreetWalkerFall.table().get(from, {})
 	if not rows.has(row):
 		return null
 	var tex: Texture2D = load(DIR + from + "/" + str(rows[row])) as Texture2D
