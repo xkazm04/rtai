@@ -1,8 +1,9 @@
-# n8 street: the street cast under the angled view (REPORT, DRAFT at iteration 11)
+# n8 street: the street cast under the angled view (REPORT, DRAFT at iteration 12)
 
-DRAFT: written 05:20 so the freeze has a base. The freeze iteration (08:30) completes the gates,
+DRAFT: written 05:20, updated 06:25 (it12) so the freeze has a base. The freeze iteration (08:30) completes the gates,
 the exe command lines and the final evidence numbers. Lane journal: `JOURNAL.md`. Stills and clips:
-`C:\Users\kazda\kiro\gtai-masters\n8\street\` (`frames.json`, 15 entries, best first).
+`C:\Users\kazda\kiro\gtai-masters\n8\street\` (`frames.json`, 15 entries, best first;
+the combined clip `street_combined_tilt70_50s.mp4`).
 
 Judged at `--view=tilt70` (play), `--view=combo` (boss fights) and `--view=tilt` (p55: boss arenas,
 quest 1 when Mertz engages). `top` (the default) draws today's art: every street change is
@@ -26,6 +27,12 @@ selected by the view row's art key (`p70` / `p55`) or `cards`, never by a pitch.
   length at every pitch. `contractor_drawn_corpse_before_after_tilt70_48ppm_x2_quest1_dock9.png`.
 - **Hit reactions and deaths at height**: cops, riot, SWAT, thug and peds buckle, fall and lie as
   drawn at 70 and as their own 55 drawings at p55; the corpse lands where the body was.
+  (it12) The people lie as the library's round-0630 redraws (lying frames drawn long, no post
+  stretch) and every back corpse is the 3/4-away one: before, a pedestrian killed from the front
+  lay as a figure that read as a person standing on the lane. The patrol cop keeps its navy when
+  it dies (the fall grid toned to its card).
+  `peds_long_fall_back_corpse_before_after_tilt70_32ppm_board_t150.png`,
+  `peds_long_fall_frames_before_after_tilt70_64ppm_t59-150.png`.
   `cops_drawn_fall_before_after_tilt70_64ppm_board_t62-150.png`,
   `cops_riot_swat_p55_falls_before_after_tilt_64ppm_board_t65_t150.png`.
 - **Far corpses** (the baked crowd atlas): every DEATH cell is drawn under the card views: 0.1 s
@@ -55,6 +62,10 @@ selected by the view row's art key (`p70` / `p55`) or `cards`, never by a pitch.
    (`StreetWalkerCards.ENABLED = false`).
 5. **Far deaths**: mid-fall then corpse (BUILT, `StreetCrowdCorpse.FROM_FALL` [1,2,2,2]) vs the
    corpse at once ([2,2,2,2]).
+6. **The people's falls**: the round-0630 long redraws with the 3/4-away back corpse (BUILT,
+   `StreetWalkerFall.LONG = true`) vs the it9 grids post-stretched 1.3-1.5 (`LONG = false`).
+   `peds_long_fall_back_corpse_before_after_tilt70_32ppm_board_t150.png`. The contractor's redraw
+   was judged worse at quest 1 Dock 9 (puffier, loses its dropped rifle) and is not used.
 
 Exe command lines: (freeze) `RTAI.exe --arena=city --rigs --view=tilt70`, quest 1
 `RTAI.exe --view=tilt70`, the boss fights `--boss=king --view=combo`.
