@@ -4,8 +4,11 @@ extends Node
 
 
 ## L10: the frame limiter at the sim tick rate on a display faster than it (FrameCap).
+## L12: the same cap while the window is minimized (MinimizedCap).
 func _ready() -> void:
-	FrameCap.apply(LaunchArgs.value("--frame-cap"))
+	var flag: String = LaunchArgs.value("--frame-cap")
+	FrameCap.apply(flag)
+	add_child(MinimizedCap.new(flag))
 
 
 func is_dev_build() -> bool:
