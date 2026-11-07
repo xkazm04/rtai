@@ -88,10 +88,21 @@ static func _sprite(r: HeldPitchRow, art: WeaponArt) -> Sprite2D:
 	return lod
 
 
-## The held sprite for `id` under the launch view: the pitch part, else WeaponArt's top-down one.
+## The held sprite for `id` under the view's art key (ViewMode.art_pitch: under combo the card set's
+## pitch, not the live eased one), the pitch part, else WeaponArt's top-down one.
 func held(id: StringName, art: WeaponArt) -> Sprite2D:
-	var s: Sprite2D = make(id, ViewMode.shared().pitch_deg, art)
-	return s if s != null else art.make_held(id)
+	var s: Sprite2D = make(id, ViewMode.shared().art_pitch(), art)
+	s = s if s != null else art.make_held(id)
+	s.set_meta(&"view_art", ViewMode.shared().art)
+	return s
+
+
+## True when a held sprite was made under another art key than the view's now (combo's hard swap
+## between its play and boss sets): the holder makes it again. A null sprite is never stale.
+static func stale(s: Sprite2D) -> bool:
+	return (
+		s != null and str(s.get_meta(&"view_art", ViewMode.shared().art)) != ViewMode.shared().art
+	)
 
 
 ## Faces the part (`face`) and publishes its bore tip as this frame's muzzle (HeldMuzzle).

@@ -145,3 +145,25 @@ func test_a_disabled_row_keeps_the_top_down_part() -> void:
 	assert_null(h.make(&"gatling", 55.0, WeaponArt.new()))
 	r.enabled = true
 	assert_eq(h.row(&"gatling", 55.0), r)
+
+
+func test_held_follows_the_art_key_not_the_live_pitch() -> void:
+	var was: ViewMode = ViewMode._shared
+	var vm: ViewMode = ViewMode.of("combo")
+	ViewMode._shared = vm
+	vm.art = "p55"
+	vm.pitch_deg = 62.0  # mid-ease into a boss fight: the key already swapped, no "62" row
+	var boss: Sprite2D = _shipped().held(&"pistol", WeaponArt.new())
+	vm.art = "p70"
+	vm.pitch_deg = 58.0  # easing back out: the play set (no 70 row) draws top-down
+	var play: Sprite2D = _shipped().held(&"pistol", WeaponArt.new())
+	var boss_stale: bool = HeldPitchArt.stale(boss)
+	var play_stale: bool = HeldPitchArt.stale(play)
+	ViewMode._shared = was
+	assert_true(boss_stale, "made under p55, the view now p70: made again")
+	assert_false(play_stale)
+	assert_false(HeldPitchArt.stale(null))
+	assert_not_null(HeldPitchArt.row_of(boss), "the 55 part under the p55 key")
+	assert_null(HeldPitchArt.row_of(play), "the top-down part under the p70 key")
+	boss.free()
+	play.free()

@@ -1003,3 +1003,32 @@ NEXT (iteration 13, in order):
   a late death tick, 5000); re-run `--ops=arith`: 5/5 killed (100 %).
 - Session close 04:34: tree clean, every change committed. Commits it12: edee640a (corpse rig),
   2685766e (Dent v2 + trial evidence), the test tightening, + JOURNAL/REPORT/evidence. NEXT as above.
+
+## Iteration 13 (2026-11-07 04:34, BUILD)
+Read: JOURNAL (it12 NEXT), git log, the four lane journals: no new REQUEST to view; street has not
+answered on CORPSE_HOLD_TICKS (stays 90); hud answered the Gloria finding (the HUD icon, moved onto
+the ammo ticket, 93c8bd2a); city answered BossDressing.attach (it11). Library: nothing new for
+view's cast since dent_v2 (torque_gang_fall 70/55 B is street-class, and nothing spawns Torque's
+gang: street's it10 notes). The throne-car's p70 is a lifted stack (pitch-agnostic), so king_car
+70 B is not needed.
+- 04:37-04:40 TRIAL MERGE re-run on the newest heads (n8-view b1943c79 + city e95c7cf6, street
+  4ed5f41e, vehicles 3ff6b4bc, hud d63fb403), `--import` clean. FILMED the city block on foot at
+  tilt70 48 px/m seed 5 and 32 px/m seed 13 (720 frames each, 0 SCRIPT ERROR) to judge the shared
+  depth sort / occlusion against the lanes' new art. FOUND, not view's: (a) frames 0-2 show city's
+  ViewPrewarm (WLD-07) texture patch + FX sample at the camera centre; the shipped city game runs
+  it under the loading screen, the dev arena shows it (no action; noted for city); (b) two empty
+  selection rings at tick 120: present in `top` too (same seed), pre-existing arena slots. Nothing
+  in view's draw order misplaced in the sampled frames.
+- MILESTONE 04:55 combo's held weapon follows the ART key (FOUND while auditing every per-pitch
+  lookup in the merged tree for `roundi(pitch_deg)` / `.pitch_deg`: HeldPitchArt.held was the last
+  one keyed by the live pitch). Fix: `held()` asks `ViewMode.art_pitch()`, tags the sprite with
+  the art key, `HeldPitchArt.stale(s)` makes RivetHeldView re-make it on combo's swap (one
+  condition in rivet_held_view.gd, no line added: the debt ratchet's soft cap held it at 288).
+  FILMED King fight combo 48 px/m seed 2, 900 frames before/after, 0 SCRIPT ERROR:
+  `held_art_key_before_after_combo_48ppm.mp4` + `_f300_f600_x3.png`. LOOKED: before, the slim
+  top-down part all fight (drawn at 70 at tick 0, never re-made); after, the 55 three-quarter part
+  (what `tilt` draws) once the boss engages. At 48 px/m the 55 part reads chunkier than the slim
+  top-down stick: that is d8's tilt choice, followed, not re-judged (the held art is frozen; the
+  owner's equipped-Rivet frames replace both). Re-filmed on the final code: Rivet's crop at f600
+  pixel-identical. Test +1 (planted the old `pitch_deg` line: it fails). Lint 15/15, unit
+  --changed 1500/0. DECISION view/held-art-key.
