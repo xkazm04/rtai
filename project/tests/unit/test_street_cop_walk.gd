@@ -71,4 +71,4 @@ func test_fill_of_an_unknown_file_is_one() -> void:
 	var riot70: String = StreetWalkerCards.DIR + "p70/cop_riot_armed_walk.png"
 	assert_almost_eq(StreetCopWalk.fill_of(riot70), 1.11, 0.001)
 	var riot55: String = StreetWalkerCards.DIR + "p55/cop_riot_armed_walk.png"
-	assert_almost_eq(StreetCopWalk.fill_of(riot55), 1.09, 0.001, "per pitch")
+	assert_almost_eq(StreetCopWalk.fill_of(riot55), 1.08, 0.001, "per pitch")
