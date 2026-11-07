@@ -778,3 +778,23 @@ my it7 REQUEST 1 of 6; riot/SWAT falls not yet), the other lanes' journals (no R
   board, the before one data row away; the it7 code re-run on the same city seed to rule my change
   out), sprite-and-atlas-production (one cut script, one px/m with the ped strips),
   render-submission-economy (still one sprite per dead cop, the parts hidden).
+
+NEXT (iteration 9):
+1. Riot and SWAT fall strips (REQUEST it7, 2-3 of 6) when served: `street_fall.py <keyed> <out>
+   --stretch=<per note> [--back-from-away if the drawn back corpse reads upright]`, FALLS rows
+   "cop/head_helmet" (check RiotShieldCard hides while the fall draws and re-shows on release) and
+   "cop/head_swat"; film with the board `--cops` (looks 6 and 8 on walkers 12-15: widen COP_LOOKS
+   to show all 8 directions for them) at 64 and 32 px/m, before = the row removed.
+2. The vanishing city corpse (FOUND it8, older than tonight): `--arena=city --bot=rivet --seed=5
+   --rigs --ppm=48 --view=tilt70`, actor 3000 dies at frame 513 and is gone by ~525. Probe whether
+   it leaves ArenaRigs' feed (dev/arena/arena_rigs.gd fills it from the CombatArena) or keeps its row
+   with the card hidden; if the arena drops the fighter, it is not street's code: REQUEST to the
+   Director/combat with the probe; if the card, fix here. Also check `top` on the same seed.
+3. Crowd cost on a quiet machine (it6 NEXT 1, bench6/run.sh, 3 pairs) if the machine quiets.
+4. Freeze prep (08:30): the Windows export and REPORT calls (cop tone, crowd variety, walkers,
+   drawn-fall speed FALL_AT / stretch / p55 height, the cop back corpse from the 3/4-away row).
+- GATE director reel under combo on e47c984c (same command, `--view=combo`): 19/19 chapters, all
+  down, 0 SCRIPT ERROR (stopped after the 19th; my PID 67904, the other combo run is view's).
+- DECISION street/cop-back-corpse written to docs/decisions.md.
+- Session end: every change committed (74cb66dd post-pose fix, 5b7906bd patrol cop fall,
+  e47c984c board --cops, + docs). Scratch city.avi (it8) kept for NEXT 2, delete after.
