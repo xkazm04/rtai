@@ -5,20 +5,22 @@ extends Node
 ## (street-<view>-<ppm>-<i>.png). Windowed only (needs a GPU). Deterministic: no RNG.
 ## kill_class != "": at KILL_AT every walker dies by that hit class (DeathPipe, the shipped
 ## react table) from the west and stops on its spot; the same run under `top` and a tilt shows
-## whether the corpse lands where the body was (KILL_SHOTS replace SHOTS).
+## whether the corpse lands where the body was (KILL_SHOTS replace SHOTS). kill_spread: walker i
+## is hit from the west turned by i x 45 deg, so every fall direction (and facing row) shows.
 
 const PX: float = 32.0
 const GROUND: String = "res://features/city/art/ground/"
 const COUNT: int = 16
 const SHOTS: PackedInt32Array = [60, 120, 180]
 const KILL_AT: int = 60
-const KILL_SHOTS: PackedInt32Array = [59, 72, 90, 150, 240]
+const KILL_SHOTS: PackedInt32Array = [59, 62, 65, 68, 72, 90, 150, 240]
 ## The looks walked: every pedestrian look, the pooled ones (StreetCrowdCards.POOLS) twice.
 const LOOKS: PackedByteArray = [0, 1, 2, 3, 4, 7, 1, 4, 7, 1, 4, 7, 0, 2, 3, 1]
 
 var out_dir: String = ""
 var ppm: float = 48.0
 var kill_class: String = ""
+var kill_spread: bool = false
 var _pipe: DeathPipe = DeathPipe.make(ReactTable.shipped())
 var _world: CanvasLayer = CanvasLayer.new()
 var _post: CanvasLayer = CanvasLayer.new()
@@ -116,5 +118,6 @@ func _kill_all() -> void:
 		if rig == null:
 			continue
 		f.flags[i] = RigFeed.Flag.DEAD
+		var blow: Vector2 = Vector2.RIGHT.rotated(i * TAU / 8.0) if kill_spread else Vector2.RIGHT
 		@warning_ignore("return_value_discarded")
-		_pipe.kill(rig, StringName(kill_class), Vector2.RIGHT, &"")
+		_pipe.kill(rig, StringName(kill_class), blow, &"")

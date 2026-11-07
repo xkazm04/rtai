@@ -5,7 +5,8 @@
         "2026-11-06: d8 chars: --order-probe measures ghost-card vs rig pairs (the brief's draw-order item, measured before/after) (dev_loc 18080 -> 18115)",
         "2026-11-06: n8 street: dev/showcase/street_crowd board (16 peds of every look under --view; the evidence for the crowd's nine pedestrian card types), dev only, excluded from release (dev_loc 18115 -> 18241)",
         "2026-11-06: n8 street: cast_view +1 line (the StreetQuestCards hook: quest 1's contractors stand as cards under card views) and quest1_clip +1 (--view for filming quest 1 under a tilt) (dev_loc 18241 -> 18242)",
-        "2026-11-06: n8 street: the crowd board's --kill evidence option (dev only, +30 lines) (dev_loc 18242 -> 18272)"
+        "2026-11-06: n8 street: the crowd board's --kill evidence option (dev only, +30 lines) (dev_loc 18242 -> 18272)",
+        "2026-11-07: n8 street: the street crowd board's --kill-spread (+4 dev lines): the drawn-fall evidence needs every fall direction on one seeded board (dev_loc 18272 -> 18276)"
       ],
       "files": {
         "project/dev/arena": 1034,
@@ -29,15 +30,16 @@
         "project/dev/save_crash_writer.gd": 18,
         "project/dev/selftest": 1446,
         "project/dev/servo": 434,
-        "project/dev/showcase": 5608,
+        "project/dev/showcase": 5612,
         "project/dev/view": 158,
         "project/dev/weapon_art": 506
       },
-      "total": 18272
+      "total": 18276
     },
     "direct_cmdline_reads": {
       "accepted": [
-        "2026-11-06: n8 street: dev/showcase/street_crowd board (16 peds of every look under --view; the evidence for the crowd's nine pedestrian card types), dev only, excluded from release (direct_cmdline_reads 153 -> 154)"
+        "2026-11-06: n8 street: dev/showcase/street_crowd board (16 peds of every look under --view; the evidence for the crowd's nine pedestrian card types), dev only, excluded from release (direct_cmdline_reads 153 -> 154)",
+        "2026-11-07: n8 street: the street crowd board's --kill-spread (+4 dev lines): the drawn-fall evidence needs every fall direction on one seeded board (direct_cmdline_reads 154 -> 155)"
       ],
       "files": {
         "project/core/render/view_mode.gd": 1,
@@ -121,7 +123,7 @@
         "project/dev/showcase/riso_cost.gd": 1,
         "project/dev/showcase/rivet_sprite.gd": 1,
         "project/dev/showcase/save_notice_frame.gd": 1,
-        "project/dev/showcase/street_crowd.gd": 1,
+        "project/dev/showcase/street_crowd.gd": 2,
         "project/dev/showcase/vehicle_frame.gd": 1,
         "project/dev/weapon_art/electro_cells.gd": 1,
         "project/dev/weapon_art/swat_lineup.gd": 1,
@@ -178,7 +180,7 @@
         "project/tests/run_scenarios.gd": 1,
         "project/tests/unit/test_launch_args.gd": 1
       },
-      "total": 154
+      "total": 155
     },
     "files_near_cap": {
       "files": {
