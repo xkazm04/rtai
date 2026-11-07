@@ -706,3 +706,37 @@ NEXT (iteration 16 = the freeze session, 18:30 freeze, 18:40 REPORT):
 4. Clean-up left: `gtai-d9x/scratch/it15` (gate TEMP, reels, the windev / linuxdev / winslice exports, ~1 GB);
    the loose `gtai-d9x/scratch/evidence-run-{035643c7,955f56cb,80a4fce9}.log` and `mutate-panel*.log` if mine (check).
 - Session end 17:48 (it15): commits 68c5ee42 .. this, every change committed; no Godot, mutate or WSL run of mine left; no bench lock taken (no timing kept this iteration).
+
+## Iteration 18 (BUILD, the freeze session, 17:50-18:30)
+- Read 17:50: JOURNAL it15 + NEXT (no it16 / it17 sessions ran), git log -12; `git diff 0ee1ba66 HEAD -- project` empty, so
+  the 17:44 exe (`build/export/windows/RTAI.exe`, 328 MB + the release dll) is the freeze build, no re-export. The rivet /
+  seams / perf journals: perf's it18 REQUEST is an FYI (L12 `boot/minimized_cap.gd` caps a minimized window at the tick;
+  my rows' `max_fps` stay in charge; `tools/perf/thread_cpu.ps1`). ANSWER to perf: read; nothing to change on my rows; I
+  used thread_cpu.ps1 for E15 (from your worktree, read-only), thanks. The asset journal: `ui_pad_glyphs_v1` unserved.
+- RESULT 17:54 **E15** (bench lock 17:51-17:54): per-thread CPU of the city under `deck` / `deck40` on the iGPU: the
+  engine main thread 0.527 of 0.534 cores (60 Hz, CONTENDED) and 0.318 of 0.33 (40 Hz, quiet); workers and driver
+  threads <= 0.01. A Deck's single-core speed decides 60 (the Zen 2 vs Zen 4 ratio is a labelled estimate). cf31ba33.
+- RESULT 17:58 E15b round 1 (2 threads vs 8): the median holds 60 on one core; the tail looked worse (5 vs 1 frames >33
+  ms). Committed 80661ffc as a finding, then **re-run in 2 more interleaved rounds** (18:00-18:05): 17 vs 12 and 4 vs 4:
+  inside the contention noise, so the tail claim is **withdrawn** (891b45df). Lesson (again): one run per arm under
+  contention is a lead, never a finding; interleave before writing the verdict. The Switch-class row on 3 threads: the
+  same one-thread shape (main 0.304 of 0.311 cores), 30 cap holds.
+- MILESTONE 18:00 REPORT final (6f3a7407 + 891b45df): title "final", what blocked (the glyph REQUEST all day, OpenGL
+  on the iGPU, Vulkan in WSLg, contention), perf's FYI answered, the owed list in order.
+- Cleanup 18:07: `gtai-d9x/scratch/it15`, `scratch/it18`, my `evidence-run-80a4fce9.log` deleted (each checked: the
+  logs that REPORT / LEDGER name are in `evidence/it15`, `evidence/it18`). The other loose scratch files there are not
+  named in my journal: left. No Godot of mine running, the bench lock released, no image lock taken.
+- Gates: no `project/` change this iteration (docs + evidence only), so the it15 gate on 3c96af2c and the reels
+  (top / tilt70 / combo / combo + deck 19/19, 0 SCRIPT ERROR) still describe the code; lint 15/15 on every commit (hook).
+- Registry rules applied: perf-regression-gating (a single contended sample is not a verdict: E15b re-run interleaved
+  and the round-1 claim withdrawn in the same session); adaptive-fidelity-tiers (the 40 Hz row as the margin when the
+  main thread is the limit, not more cores); on-device-verification-harness (what only a device proves is listed, Zen 2
+  single-thread first); fire-tv-device-realities (a device's weakest axis is per-core speed, not core count: measure
+  the shape before scaling a budget); controller-latency-instrumentation (no new latency number: none claimed).
+
+NEXT (after the day run, if the lane continues):
+1. A quiet-machine A/B of E15b (2 vs 8 threads, 5 rounds, nothing else running) to settle whether the spare cores
+   buy a smoother tail.
+2. The owner's Calls 1-8 -> set the handheld defaults in `devices.json`.
+3. A real device or a Linux PC for the Vulkan run (REPORT "Owed / next" 1).
+- Session end 18:08 (it18): commits cf31ba33 .. this; every change committed.
