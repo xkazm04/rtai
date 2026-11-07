@@ -233,9 +233,8 @@
         "project/dev/showcase/d5_hero_run.gd": 265,
         "project/dev/showcase/reel_director.gd": 209,
         "project/dev/weapon_art/weapon_lineup_run.gd": 210,
-        "project/features/arena/arena_floor_view.gd": 201,
         "project/features/arena/arena_rigs.gd": 291,
-        "project/features/arena/prop_occlusion.gd": 205,
+        "project/features/arena/prop_occlusion.gd": 204,
         "project/features/bosses/boss_bot.gd": 202,
         "project/features/bosses/boss_fight.gd": 269,
         "project/features/bosses/boss_hook.gd": 281,
@@ -280,7 +279,7 @@
         "project/tests/unit/test_gun_fx.gd": 213,
         "project/tests/unit/test_weapon_art.gd": 223
       },
-      "total": 68
+      "total": 67
     },
     "lane_named_dev_dirs": {
       "files": {
