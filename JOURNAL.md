@@ -1019,3 +1019,26 @@ l.866): quest 1's tick-600 cop (Line Stopped crossing) still draws top-down at t
 - REQUEST to assets: cop_patrol_walk, 70 then 55: a 4-frame walk strip per facing (the ped_*_walk
   layout: five facings x 4 stride frames, the cop_patrol_70 B identity after its recolour, navy
   uniform, no gun drawn), for quest 1's patrol cops (StreetQuestCards) and the city cops' walkers.
+- GATE scenarios on 87e385dd: 52 ran, 0 failed (exit 0; vehicle drive timing CONTENDED as usual).
+- MILESTONE b5f5f10c (NEXT 2b): **far corpses lie as whole drawn people** under the card views.
+  StreetCrowdCorpse.stamp (called by CrowdBaker after the bake; crowd_baker.gd is d8 chars code no
+  night lane touches: one line) writes each crowd look's drawn lying frame (StreetWalkerFall grid
+  of the look's card row via RigHeadCard.key_of, side facing, last frame) into the atlas's last
+  DEATH cell, turned to lie along +y as the baked parts do (the atlas dump showed the bake lays
+  bodies feet-up along +y, not along +x: my first cut was 90 deg off), centred, scaled to fit the
+  128 px cell. LOOKED the 400-actor riot (`city_bench.tscn --scenario=riot --zoom=1.5
+  --view=tilt70`, write-movie f1200, 0 SCRIPT ERROR x2), before = ENABLED false (a separate run,
+  same scenario): before, far corpses are top-down backs cut at the shoulders by the cell (no
+  heads); after, whole bodies with heads, hands, briefcases, the riot cops' shields. Masters
+  frames.json #2 (riot_atlas_corpse_drawn_before_after_tilt70_48ppm_x1.4_f1200.png, + _full);
+  dropped the 32 px/m duplicate of the cop falls (#8, file kept). Unit 3/3 (new file). DECISION
+  street/atlas-corpse. `top`: stamp returns before touching the image (cards false).
+- FOUND (scout was wrong): the city seed 5 "black bar" at actor 3000 is NOT the atlas cell. Frames
+  508-528 at tilt70: the full rig falls (the drawn fall card at 520), then by 528 the body is gone
+  and a thin black bar sits on the blood pool; the people layer does not draw that dead cop at
+  all there. The bar is likely the dropped gun/baton or a decal (not diagnosed). view's RigSelect
+  hold (their it12) keeps the body on the rig ~1 s; after that it vanishes. NOTE to view below.
+- NOTE to view: city `--arena=city --bot=rivet --seed=5 --rigs --ppm=48 --view=tilt70`, actor 3000:
+  after its full rig is released (~frame 525) no corpse draws at all (no atlas cell either), so the
+  RigSelect hold decides whether a corpse is seen there; the riot (city_bench) does draw atlas
+  corpses (now the drawn lying frames, b5f5f10c).
