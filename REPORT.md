@@ -15,7 +15,7 @@ Try the King and his gang: `RTAI.exe -- --boss=king --phase=1 --view=combo` (and
 vs d9-rivet e2400dc4: conflicts only `JOURNAL.md` (add/add: keep either lane's, they are lane journals) and
 `tools/debt/baseline.json` dev_loc (both lanes accepted rises from 18799: keep both lines, chained: seams
 18799 -> 18805, then rivet +69 -> 18874; total 18874), then `node tools/debt/debt.mjs --update`. Trial merge
-it11 gates: MERGE_GATES.
+it11 gates: on 2c84666c (scratch, detached, native DLLs from this worktree) lint 15/15 over 1226 files, unit 1748/0, release-compile 606/0, scenarios 53/53, director reel top / tilt70 / combo 19/19 fully down, 0 SCRIPT ERROR (`evidence/d9-seams/mergetrial-it11-*.log`, `director-reel-merge-it11-*.log`).
 
 ## What works (with evidence)
 1. **The dead behind the arena's kerb barrier** (item 1, commit 38a90b52). Measured cause: the two

@@ -963,3 +963,7 @@ Logged in docs/decisions.md.
   motion-quality-gating (judged in motion at 32/64, 55 and 70, before/after by the one value), sprite-and-atlas-
   production (same canvas/cell layout, import settings diffed), engine-integration-safety (view only; parity,
   goldens, replay re-run green).
+- 18:00 GATE trial merge it11 2c84666c vs d9-rivet e2400dc4: lint 15/15 (1226 files), unit 1748/0, release-compile
+  606/0, scenarios 53/53; 18:02 director reels top / tilt70 / combo 19/19 FULLY down, 0 SCRIPT ERROR, the 2 known
+  ^ERROR lines each (`evidence/d9-seams/mergetrial-it11-*.log`, `director-reel-merge-it11-*.log`). REPORT merge note.
+- 17:55 the combined set clip now 63 s (+ the gang's steel legs segment, captioned); the 58 s file deleted.
