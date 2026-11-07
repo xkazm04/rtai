@@ -38,7 +38,7 @@ STYLES = {
     ),
 }
 # the 70 twins (tenement and shop: the 0525 v2 raw redraws, A, same boxes as the 2110 keys within
-# 1 px; tall: round 2210 untapered): same four-piece layout; the wall band starts under the roof's
+# 1 px; tall: the 0510 v3): same four-piece layout; the wall band starts under the roof's
 # front ink and ends at the ground ink, as the 55 cut does (rows measured on the keyed sheets)
 STYLES_70 = {
     "tenement": (
@@ -54,9 +54,11 @@ STYLES_70 = {
         12,
     ),
     "tall": (
-        "keyed/building/facade_tall_70_untapered.png",
-        [(259, 509), (643, 893), (1026, 1276)],
-        (182, 740),
+        # round 0510 v3 (A): raw, ~72-77, walls parallel, bay 1's street storey render; its
+        # shorter bays sit nearer the face's in-game aspect (~0.9 per bay at 70, height_k 0.5)
+        "keyed/building/facade_tall_70_v3.png",
+        [(188, 504), (616, 926), (1034, 1345)],
+        (255, 659),
         12,
     ),
 }
