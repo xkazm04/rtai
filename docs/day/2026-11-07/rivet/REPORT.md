@@ -125,6 +125,9 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
   views the rod trails behind him, carried low (the asset lane offers a one-copy redraw if the owner wants it
   ahead). Before/after, pit, tilt70, 64 px/m, seed 3:
   `gtai-masters/d9/rivet/rivet_electro_baton_70_v5_before_after_pit_tilt70_64ppm_x2_seed3_f60_150_300_324_345.png`.
+  Gates it21 (`evidence/d9/gates-it21.md`): director reel 19/19 fully down in top, tilt70, combo (the baton 1/1),
+  0 SCRIPT ERROR; evidence run on 64953f9b (+ the `--rivet-height` flag): ALL PASS, look goldens 11/11 (top did
+  not move), parity exact, scenarios 52, unit 1709/0, release-compile 600/0.
 
 ## What does not (yet)
 - A facing cell (no fire drawn) has no measured muzzle except the flamer's: a flash outside the fire cell's 7
@@ -146,7 +149,8 @@ Lane `rivet`, branch `d9-rivet`: Rivet as whole-figure drawn frames per pitch, e
    My recommendation: 1.25 m (the hero at least as tall as a passer-by, still a compact robot).
 2. **The walk.** The sheets carry one walk and one sprint drawing. Built: the facing with a bob and sway
    (the street walkers' no-grid path, no pops). Options: alternate facing / walk drawing (a 2-frame step),
-   or a REQUEST to assets for a 4-frame stride grid per facing (street's `ped_*_walk` shape).
+   or a REQUEST to assets for a 4-frame stride grid per facing (street's `ped_*_walk` shape). it21: REQUESTed
+   (rivet_walk_70 + _left, being drawn by the asset lane); the packer `tools/art/rivet_walk.py` is ready.
 3. **Left facings with a one-handed weapon.** Built (it6): the asset lane's drawn left views at 70 and 55 (weapon
    in his right claw); two-handed holds mirror. Option: mirror everything (swaps the gun hand: against the hand rule).
 4. **Rivet's dialogue face.** Built (it16): the concept-matched portrait_rivet_55_v2; the mood bust (eye bars
