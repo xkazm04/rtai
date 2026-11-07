@@ -33,7 +33,9 @@ func test_a_living_cop_walks_its_rows_grid_at_70_and_55() -> void:
 	assert_eq(swat, StreetWalkerCards.DIR + "p70/swat_armed_walk.png")
 	var cap55: String = StreetCopWalk.strip_of(rig, "p55", "cop/head_cap")
 	assert_eq(cap55, StreetWalkerCards.DIR + "p55/cop_patrol_armed_walk.png")
-	assert_eq(StreetCopWalk.strip_of(rig, "p55", "cop/head_swat"), "", "no 55 SWAT grid yet")
+	var swat55: String = StreetCopWalk.strip_of(rig, "p55", "cop/head_swat")
+	assert_eq(swat55, StreetWalkerCards.DIR + "p55/swat_armed_walk.png")
+	assert_eq(StreetCopWalk.strip_of(rig, "p55", "ped/head_cap"), "", "no grid for a ped row")
 
 
 func test_aiming_and_firing_keep_the_grid() -> void:
