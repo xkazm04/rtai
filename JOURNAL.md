@@ -562,3 +562,30 @@ NEXT (iteration 16):
   pause (pausing on focus loss changes the game: a design call, not perf's); `--frame-cap=off` turns off L10 and L12 together.
 - 16:56 gates for 9a2fcdc8 started (headless reels top / tilt70 / combo + scenarios, logs in `gtai-d9x/scratch/gates-it18/`);
   no `project/` edit while they run.
+- REQUEST to handheld (FYI, two things for your rows): (1) L12 (9a2fcdc8, `boot/minimized_cap.gd`): a minimized window
+  had no vsync wait and spun ~145 loops a second (King 0.73 cores minimized vs 0.33 on screen); it now caps at the
+  tick while minimized (0.38). Your device rows set `max_fps` 60 / 40 / 30 already, and `cap_when_minimized` keeps any
+  cap <= 60, so the rows are untouched; on a Windows handheld that is alt-tabbed / sent to the background this is
+  the battery case. (2) `tools/perf/thread_cpu.ps1 -ProcessId <pid>`: per-thread CPU by thread name / start module
+  (engine main thread vs Godot workers vs the GPU driver); use it if a device row's CPU moves and you need to know who pays.
+- GATE 17:00 at 9a2fcdc8 (L12 inside; `evidence/perf/gates-it18/`): director reel top / tilt70 / combo 19/19 chapters fully
+  down, 0 SCRIPT ERROR; scenarios 52 ran / 0 failed (replay_60s 3600 ticks, final cbeb734ff9b97c41, identical); unit 1706 /
+  0; lint 15/15. NOT run this session: `evidence/run.mjs --no-bench` (goldens + parity + export-audit): L12 is a no-op
+  headless by construction (`set_process(false)`), so the goldens / parity cannot move, but the freeze session runs it.
+- Session end 17:01 (it18): commits 873070a4 .. this (thread_cpu tool, L11 dropped, L10 release-build numbers, L12 kept,
+  docs); lock released; no Godot of mine running; `build/export/windows-bench-cap/` kept (the release export of 873070a4).
+
+NEXT (iteration 19 = the freeze session, 18:30 freeze, 18:40 REPORT):
+1. Gates on HEAD first: `node tools/evidence/run.mjs --no-bench` (private TEMP: the shared `%TEMP%/gtai-release-compile`
+   may belong to another lane) -> goldens 11/11 + block 5/5, parity exact, export-audit; it covers L12 for the goldens.
+2. Export `build/export/windows/RTAI.exe` (`"$GODOT_BIN" --headless --path project --export-release windows-showcase
+   ../build/export/windows/RTAI.exe`, mkdir first) and name it in REPORT with the exact command line.
+3. REPORT final: the L10 / L12 rows (simulated 144 Hz -43 / -38 % release build; minimized -49 %), Call P-3 revised
+   (+0.06..+0.09 core, mailbox no cheaper), the final table vs main, what does not work (L1, L6, L7, L9 engine patch,
+   L11), the open REQUEST to seams (traffic-sheet split, unanswered), the tooling list (ab.mjs, stats, proc_sample,
+   thread_cpu, perf HUD, NodeSpans reuse, probes).
+4. Optional, if time: a masters still/clip pair for L12 is not possible (nothing is drawn minimized); instead add the
+   `thread_cpu` minimized-vs-shown numbers as a frames.json `note` line? No: frames.json is images only. Skip.
+5. Clean-up at the freeze: remove the scratch worktrees `gtai-d9x/scratch/perf-before`, `perf-bc7cv`, `perf-base`
+   (`git worktree remove`), `gtai-d9x/scratch/godot-src` (several GB; L7 / L9 are dropped), `scratch/tmp-perf`,
+   `scratch/gates-it18`, `scratch/l11.log`, `scratch/l10exe.log`, `scratch/export-cap.log`.
