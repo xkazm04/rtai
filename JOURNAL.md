@@ -176,3 +176,23 @@ NEXT (iteration 5):
   line did NOT fix it (still clipped: the viewport rect and the drawn space disagree, likely the stretch mode
   / content scale): reverted, owed with a look at `get_viewport_rect()` vs `get_visible_rect()` under the stretch.
 - NEXT addendum: 7. PerfHud clipping (above), before the King/drive masters are filmed (NEXT 1).
+
+## Iteration 5 (12:10-13:10, BUILD)
+- Read: JOURNAL it4 + NEXT, git log, d9-rivet / d9-seams / d9-handheld journals: no new REQUEST to perf; rivet has
+  not answered the it4 REQUEST (strip loading off the draw frame, F7) yet. Registry rules applied this session:
+  measurement-honesty (F9: a lever's row must name every resource it moves; L3's VRAM was unmeasured),
+  render-submission-economy (texture residency before draw counts), perf-regression-gating (L4 interleaved,
+  arms that differ only in the import settings).
+- 12:15 PerfHud "clipping" (NEXT 7) RESOLVED, no code change: `--resolution 1280x720` makes a 1280x720 window
+  (canvas 1422x800 under stretch `expand`) while Movie Maker records the project's 1280x800, so the right
+  ~140 canvas px fall off the movie. Filmed without `--resolution`, the HUD sits inside (diag logged, reverted).
+- MILESTONE 12:21 MASTERS (NEXT 1): King under combo at 32 and 48 px/m, the city drive (drive_dense, tilt70) at 32
+  and 48 px/m, before (main 3982af1a + the HUD commit, scratch worktree `gtai-d9x/scratch/perf-before`) vs after
+  (d9-perf ce08ac63), side by side, perf HUD, movie mode 1280x800, CONTENDED (2-4 other Godots), 0 SCRIPT ERROR
+  in all 8 runs. `C:\Users\kazda\kiro\gtai-masters\d9\perf\` (frames.json 9 entries). Looked at all four end
+  stills: same frames; busy time WASH (as the A/B said: L2/L3 aim at the riot); VRAM higher after (F9).
+- ce08ac63 city_bench logs render GPU ms; 2507d642 peak VRAM + texture memory (ab.mjs prints gpu / vram).
+  Debt ratchet: both accepted with a reason (dev/bench +14 lines of tooling).
+- F9 / F10 (LEDGER): L3 costs ~+80-120 MB VRAM; every texture in the game imports lossless (1.44 GB if all
+  resident). L4 = BC7 for characters/city/vehicles art, in a scratch worktree (712 imports, 73 s reimport):
+  A/B queued behind handheld's bench.lock (held since 12:11).
