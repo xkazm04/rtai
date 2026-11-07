@@ -17,7 +17,7 @@
   "mutation": "features/vehicles/vehicle_views.gd at 305fad98: 91.7 % (11 killed / 12; the survivor `>=` -> `>` at a = 0 is equivalent)",
   "scenarios": "52 ran, 0 failed, exit 0, 0 SCRIPT ERROR on b3d21e7d",
   "top_bit_identity": "main scene --arena=city --bot=rivet --seed=2 --rigs, 301 frames on b3d21e7d: IDENTICAL to top_head.md5 (301 + 301); arena pad --ppm=24 90 frames hook on vs off on 79c678ad: IDENTICAL (90 + 90, cursor matched)",
-  "unit": "1509 passed, 0 failed on b3d21e7d (no FLAKY); stage cards + views + cards + dent quest + boss bot ghost 12/0 on 79c678ad"
+  "unit": "1512 passed, 0 failed on cf22afec (no FLAKY); 1509/0 on b3d21e7d"
  },
  "measures": {
   "atlas_p55": {
@@ -36,7 +36,6 @@
   }
  },
  "unmeasured": [
-  "stage cards' cost (the arena holds 4 cars: not benched)",
-  "the full unit run after 54cc531b (only the selected files)"
+  "stage cards' cost (the arena holds 4 cars: not benched)"
  ]
 }

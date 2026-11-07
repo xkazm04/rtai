@@ -629,3 +629,10 @@ NEXT (iteration 12, in order):
    the reel runs on the arena) - RUN IT FIRST next session.
 4. Exe at the freeze (int-day recipe in docs/decisions.md), REPORT.md by 08:40 with every Call in
    this JOURNAL (bike, wreck fire size, rotation density, the C in-between, the depot van colour).
+01:27 GATE director reel on 5a5a5106 (`res://dev/arena/arena.tscn -- --bot=reel --reel=director
+--loadout=pistol --rigs --view=<v>`, headless, --fixed-fps 60 --quit-after 7600): top 19/19 chapters
+all down, 0 SCRIPT ERROR; tilt70 19/19 all down, 0 SCRIPT ERROR (evidence/n8-vehicles/
+director-reel-it11-*.log). NEXT item 3 DONE.
+01:29 GATE full unit on cf22afec: 1512 passed, 0 failed, no FLAKY. Evidence json:
+evidence/n8-vehicles/iteration11.json.
+Session end 01:30. NEXT for iteration 12 = items 1, 2, 4 of the NEXT above (3 done).
