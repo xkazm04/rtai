@@ -102,7 +102,7 @@ func _fill_feed(focus: Vector2) -> void:
 		var p: Vector2 = Vector2(snap[r + 4], snap[r + 5])
 		if p.distance_squared_to(focus) > r2:
 			continue
-		_put_person(feed, snap.slice(r, r + SimConst.SNAP_STRIDE), variants, aim)
+		_put_person(feed, snap, r, variants, aim)  # by offset: no slice allocated a person
 	if rivet_on_foot:
 		var at: Vector2 = _city.target * SimConst.PX_PER_M
 		var vel: Vector2 = (at - _rivet_prev) / SimClock.TICK_DT
@@ -111,16 +111,19 @@ func _fill_feed(focus: Vector2) -> void:
 		feed.put(feed.count, RIVET_ID, BodyPlan.Kind.RIVET, at, vel)
 
 
+## The actor record at offset `r` of `a` (a snapshot) as one feed row.
 static func _put_person(
-	feed: RigFeed, a: PackedFloat64Array, variants: PackedByteArray, aim: Vector2
+	feed: RigFeed, a: PackedFloat64Array, r: int, variants: PackedByteArray, aim: Vector2
 ) -> void:
-	var slot: int = int(a[0])
-	var cop: bool = int(a[1]) == SimConst.K_COP
-	var mode: int = int(a[2])
-	var head: Vector2 = Vector2(a[6], a[7])
+	var slot: int = int(a[r])
+	var cop: bool = int(a[r + 1]) == SimConst.K_COP
+	var mode: int = int(a[r + 2])
+	var head: Vector2 = Vector2(a[r + 6], a[r + 7])
 	var px: float = SimConst.PX_PER_M
 	var kind: BodyPlan.Kind = BodyPlan.Kind.COP if cop else BodyPlan.Kind.PED
-	var i: int = feed.put(feed.count, slot, kind, Vector2(a[4], a[5]) * px, head * a[8] * px)
+	var i: int = feed.put(
+		feed.count, slot, kind, Vector2(a[r + 4], a[r + 5]) * px, head * a[r + 8] * px
+	)
 	feed.looks[i] = variants[slot] if slot < variants.size() else RigFeed.LOOK_AUTO
 	feed.face[i] = head.angle()
 	var fl: int = 0
@@ -133,6 +136,6 @@ static func _put_person(
 	if cop and mode != SimConst.M_DEAD and mode != SimConst.M_DOWN:
 		fl |= RigFeed.Flag.GUN_OUT
 		feed.aim[i] = aim
-		if a[10] > 0.0:
+		if a[r + 10] > 0.0:
 			fl |= RigFeed.Flag.AIMING
 	feed.flags[i] = fl
