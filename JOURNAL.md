@@ -1407,3 +1407,20 @@ moved without its gates); no art touched.
 NEXT (the Director / d9): unchanged from it33 (1. apply the v2 occluder patch, view finds the node
 under actor_layer() by type, mutate city_occlusion.gd; 2. land planter_v3 55 + provenance, film
 `--view=tilt` 48 px/m; 3. the release-compile temp-dir collision). REPORT.md stands as written.
+
+## Iteration 35 (08:18-08:21, BUILD slot inside the freeze window)
+Read: JOURNAL NEXT, git log, the four lane journals' tails. No new REQUEST or NOTE to city (the
+latest are view l.1049/1058/1460 and vehicles l.253/397/1390, all answered in earlier iterations;
+street and hud name nothing). bench.lock absent.
+- (08:19) Checks, no change: `git diff 7d40e58d HEAD -- project` is still the one tests/ file
+  (test_city_crowd_occlusion.gd, not exported); the exe `build/export/windows/RTAI.exe` (07:21) is
+  this branch's shipped code.
+- DECISION city/it35: freeze stands (same reason as it34: no shipped-code change can be re-gated and
+  re-exported before 08:30).
+Registry rules applied it35: motion-quality-gating (a gated freeze is not moved without its gates);
+no art touched.
+- Session end 08:21. Tree clean after this commit.
+
+NEXT (the Director / d9): unchanged from it33 (1. apply `it33/d9_city_occlusion_extra_v2.patch`, view
+finds the node under actor_layer() by type, mutate city_occlusion.gd; 2. land planter_v3 55 +
+provenance, film `--view=tilt` 48 px/m; 3. the release-compile temp-dir collision). REPORT.md stands.
