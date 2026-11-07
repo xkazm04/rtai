@@ -720,3 +720,16 @@ NEXT (after the run, for whoever picks the lane up):
 
 NEXT: as it22 (F19 native stack, the owner's Calls P-1 / P-2 / P-3, L7 with the official toolchain).
 - Session end 18:21 (it23): all committed.
+
+## Iteration 24 (BUILD, 18:20-18:30, after the freeze)
+- Read 18:21: JOURNAL it23 + NEXT, git log -5. The rivet (18:17) / seams (18:15) / handheld (18:20) journals: no new
+  REQUEST to perf (the only `REQUEST to perf` line, handheld l.533 E12 FYI, was answered and closed in it21/it23).
+- Checked again: the owner's exe (18:05) is newer than the last `project/` commit (ca5817a4, 17:51); worktree clean; no
+  Godot of mine running; bench.lock free (image.lock is held by another lane, not mine, not touched).
+- No lever started: a 3-pair interleaved A/B takes longer than the 9 min to the freeze, and a half-run number would break
+  measurement-honesty (unmeasured is never zero, a single arm is never a win). No `project/` change, no Godot run.
+- Registry rules applied: measurement-honesty (no experiment started that could not finish its ABAB), perf-regression-
+  gating (the exe still matches the last code commit).
+
+NEXT: as it22 (F19 native stack, the owner's Calls P-1 / P-2 / P-3, L7 with the official toolchain).
+- Session end 18:23 (it24): all committed.
