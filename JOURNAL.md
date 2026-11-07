@@ -726,3 +726,43 @@ NEXT (it20 end, 16:20; supersedes every NEXT above):
   reads him small beside the cops. Plan: `--rivet-height=<m>` (CastFlags, LaunchArgs) scales his drawn height at
   every art key (p55 in proportion), so each Call option is one flag in the exe; film the city block at 32 px/m
   tilt70 at 1.1 / 1.25 / 1.4 m beside the cast.
+- 16:45 MILESTONE `129e3745` `--rivet-height=<m>` (CastFlags -> RivetFrames.height_k; view only; p55 in proportion;
+  KNOWN_FLAGS; test in test_cast_flags). Filmed the city block (`--arena=city --weapon=pistol --bot=gunplay --clean
+  --rigs --cam=fight --reach=6 --view=tilt70 --seed=5 --ppm=32`, 420 frames, 0 SCRIPT ERROR, no unknown arg) at 1.1
+  / 1.25 / 1.4: the three runs differ only in pixels around Rivet (diff boxes measured at f120/300/400: the sim is the
+  same). Judged f300 beside a cop and two pedestrians: 1.1 reads smaller than all three, 1.25 a pedestrian's
+  height, 1.4 the cop's. Masters `rivet_size_options_1p1_1p25_1p4_beside_cop_and_peds_city_tilt70_32ppm_x2_seed5_f300.png`
+  (frames.json entry 2). REPORT Call 1 updated (exe line; recommendation 1.25 m; default unchanged). DECISION
+  rivet/height-flag. frames.json: the stale 10:26 reel still (`rivet_reel_director_tilt70_48ppm_..._t60-3080.png`)
+  fell out at 15 entries (file kept on disk): a fresh reel still is owed (NEXT).
+- FRICTION (~1 min): the REPORT path's backslashes became CR again (python string this time): fixed `64953f9b`.
+  Rule for me: forward slashes in every path I write into docs.
+- 17:01 GATES it21 evidence run 2 on 64953f9b: ALL PASS (`evidence/d9/gates-it21.md`).
+- ACK assets (it92 16:46): the walk REQUEST is being drawn (round 1750: rivet_walk_70, _b, _left; not yet graded).
+- `tools/art/rivet_walk.py` (new, not yet used by the game): packs the walk-cells delivery (20 `r_c.png` + 12 left)
+  into one 4 x 8 grid in RivetFrames' base cell order (rows 0-4 facings, 5-7 drawn left), one scale for every cell
+  (no size pulse), helmet-centred, feet PAD above each cell's bottom. Tried on ped_cap_walk_70's cells: feet on one
+  line, strides alternate.
+- Registry rules applied it21: sprite-and-atlas-production (the v5 re-cut by component, judged on a contact and a
+  2x crop; figure heights measured across all p70 strips, ~110 px; the walk packer: one scale per grid, a common
+  foot line); motion-quality-gating (the baton judged in motion at 64 px/m, before/after at the same seed and
+  frames; the size options at the shipped 32 px/m beside the cast); generative-artifact-gating (v5's speck caught
+  on the contact before shipping); realtime-combat-semantics (view only: reels 19/19 x3; the sim identical across
+  heights, measured); depth-ordered-layered-art (no game arc over a drawn one).
+
+NEXT (it21 end, 17:05; supersedes every NEXT above):
+1. The walk (Call 2), when the asset lane writes `DELIVERED to rivet:` (deliveries/rivet_walk_70_it92.md):
+   `python -I tools/art/rivet_walk.py <lib>/keyed/rivet/rivet_walk_70_cells <lib>/keyed/rivet/rivet_walk_70_left_cells
+   project/features/characters/art/view/p70/rivet_walk.png`, look at it on a contact (the claw/spike on his LEFT in
+   every row against rivet_frames.png cells 0-7), `--import`, provenance (per row, from the delivery). Wire a new
+   `RivetWalk` (own file; rivet_frames.gd is 187 lines): `RivetFrames.step` takes `DIR/<art>/rivet_walk.png` when
+   weapon_of == &"" and speed_now > MOVING and no roll/claw/hit/death and the strip exists and
+   `RivetWalk.enabled` (`--rivet-walk=bob` the before, KNOWN_FLAGS); `_set_strip`: hframes 4, vframes 8, offset y =
+   PAD - tex_h / 8; `cell_of` for hframes 4 -> BASE_OCT[o] * 4 + int(posmod(rig.phase, 1.0) * 4.0) (phase = one full
+   stride: the bob's abs(sin) gives two lifts per cycle); `place`: no bob/sway on a drawn stride; `owns_weapon`
+   false for the walk strip. Test: frame by phase and octant; the bob flag keeps the base strip. Film quest 1 /
+   the city block at 32 and 64 px/m bob vs drawn; DECISION; REPORT Call 2. p55: only if a 55 walk is served.
+2. A fresh director-reel still (tilt70 48 px/m, the claw, pistol, flamer, electro, molotov, katana chapters) for
+   frames.json (the 10:26 one is stale).
+3. At the freeze (18:30): the exe `build/export/windows/RTAI.exe` (`"$GODOT_BIN" --headless --path project
+   --export-release windows-showcase ../build/export/windows/RTAI.exe`), the final REPORT by 18:40.
