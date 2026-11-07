@@ -87,3 +87,21 @@ func test_the_box_fits_its_line_between_the_min_and_the_full_height() -> void:
 	assert_eq(high, HudDialogue.BOX_H, "a long line gets the full box")
 	assert_lt(HudDialogue.box_of(Vector2(1920, 1080), low).position.y, 1080.0)
 	assert_eq(HudDialogue.box_of(Vector2(1920, 1080), low).end.y, 1080.0 - HudView.MARGIN)
+
+
+func test_the_nurse_wears_no_vermilion() -> void:
+	# n8-hud it11: the 1540 cut showed a vermilion chest stripe (reserved: danger, objectives,
+	# Rivet's collar, the King's cape); the v3 sheet's stripe is muted plum
+	var book: PortraitBook = PortraitBook.new()
+	for line: String in ["juno-load-bearing", "juno-real-name"]:
+		var img: Image = book.face("nurse", line).get_image()
+		if img.is_compressed():
+			@warning_ignore("return_value_discarded")
+			img.decompress()
+		var hot: int = 0
+		for y: int in range(0, img.get_height(), 2):
+			for x: int in range(0, img.get_width(), 2):
+				var c: Color = img.get_pixel(x, y)
+				if c.a > 0.5 and c.s > 0.6 and c.v > 0.5 and (c.h < 0.055 or c.h > 0.97):
+					hot += 1
+		assert_lt(hot, 60, "%s: %d vermilion px (sampled)" % [line, hot])
