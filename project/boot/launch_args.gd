@@ -4,6 +4,11 @@ extends Node
 
 const KNOWN_FLAGS: PackedStringArray = [
 	"--seed",
+	"--bikes",  # d9: the sim bike's share of traffic (overrides vehicle_handling traffic.bike_share)
+	"--traffic-yields",  # d9: sim traffic brakes for Rivet on foot (CityVehicleWorld.yield_to_rivet)
+	"--strip-prefetch",
+	"--frame-cap",  # d9-perf L10/L12/L14: off = no caps (FrameCap, MinimizedCap); spin = no L14
+	"--menu-idle",  # d9-perf L13: off = the title card redraws every frame (MenuIdle)
 	"--replay",
 	"--record",
 	"--devtools",
@@ -42,6 +47,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--wound-hold",
 	# n7-ranged: --shot-trail=off draws no fading path behind a round that hit (the before)
 	"--shot-trail",
+	# n8-hud: --autostart presses quest 1's Start (debug builds; films the opening without a click)
+	"--autostart",
 	# n7-melee: --quest-blade=off gives quest 1 no carried blade (the before); =<id> another one
 	"--quest-blade",
 	# n7-melee: --hit-cues=off gives melee and ghost hits no sound of their own (the before)
@@ -62,6 +69,27 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--kerf-glide",
 	# view lab: the camera projection (data/tables/view.json; default top = the shipped view)
 	"--view",
+	# d8-weapons: --held-pitch=off draws the top-down held weapon under a tilt (the before);
+	# =squash keeps the camera squash on the 55 part
+	"--held-pitch",
+	# d8-weapons: --shot-lift=off draws rounds and hits on the ground under a tilt (the before)
+	"--shot-lift",
+	# n8-hud: --showcase=off keeps the shipped pickup parts under a tilt (the before)
+	"--showcase",
+	# n8-hud: --pickup-hover=off lays a floor gun's showcase drawing on its disc (no hover)
+	"--pickup-hover",
+	# n8-hud: --pickup-crate=on|off lays a floor gun's showcase drawing in an open crate (else hover)
+	"--pickup-crate",
+	# d9-rivet: --rivet-height=<m> sets Rivet's drawn standing height under a card view (Call 1)
+	"--rivet-height",
+	# d9-rivet: --rivet-walk=bob keeps the facing card with the built bob (Call 2's before)
+	"--rivet-walk",
+	# d9-perf: --perf-hud draws the frame-budget overlay (dev/perf/perf_hud.gd), read only
+	"--perf-hud",
+	# d9-handheld: --device=<devices.json id> the handheld profile (window, frame cap, stretch)
+	"--device",
+	# d9-handheld: --save-cross=write|read,<dir>[,ticks,after,idle] (dev/save_cross.gd, E14)
+	"--save-cross",
 ]
 
 var _values: Dictionary[String, String] = {}
@@ -70,6 +98,24 @@ var _unknown: Array[String] = []
 
 func _init() -> void:
 	parse(OS.get_cmdline_user_args())
+	if has("--device"):  # d9-handheld: selected here, before the main scene's initializers read it
+		@warning_ignore("return_value_discarded")
+		DeviceProfile.select(value("--device"))
+
+
+## d9-handheld: the menu pad buttons (every run); a `--device=` profile sets the window and the
+## frame cap before the main scene.
+func _ready() -> void:
+	@warning_ignore("return_value_discarded")
+	PlayerActions.install_menu_pad()  # every run: a pad presses the cards' buttons (A) too
+	if has("--device"):
+		var profile: DeviceProfile = DeviceProfile.shared()
+		profile.apply(get_window())
+		if profile.is_handheld():
+			add_child(HandheldFocusPause.new())
+			PlayerActions.shipped().install()  # the title card names the pad's buttons
+		if profile.rumble > 0.0:
+			add_child(HandheldRumble.new(profile.rumble))
 
 
 ## Parses `--flag` and `--flag=value` pairs; unknown ones are kept for unknown().

@@ -26,7 +26,7 @@ const TUNE_TICK: int = 300
 
 var session: ArenaSession = null
 var view: CollectCallView = null
-var px_per_m: float = 32.0
+var px_per_m: float = 32.0 * DeviceProfile.zoom()  # d9-handheld: a --device row's zoom_k
 var hud: ArenaHud = ArenaHud.new()
 var panel: ArenaPanel = ArenaPanel.new()
 var tuning: ArenaTuning = null
@@ -203,6 +203,8 @@ func _add_view() -> void:
 			"arena", "cast rigs: %s" % cast.attach(session.stage, view, session.world.context())
 		)
 		PropOcclusion.for_view(view)  # view lab: tall props over the bodies behind them
+		if ArenaArgs.parse().has("--fire-stills"):  # d9 rivet: his drawn fire cells (FireStills)
+			add_child(FireStills.new(cast, session, ArenaArgs.parse().text("--fire-stills"), 1500))
 	if session.city != null:
 		_characters = CityCharacters.new(session.city, view.city_view, session.world.context())
 		if cast != null:  # human-reactions: the street trips over the fight's dead

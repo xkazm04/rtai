@@ -4,6 +4,9 @@
 // loads every script/scene there (project/tests/load_release.gd). Needs Godot, so it is not part
 // of lint.
 // Usage: node tools/tests/release_compile.mjs [--dir=<scratch dir>] [--src=<project dir>] [--keep]
+// The default scratch dir is per worktree and per process (defaultDir: %TEMP%/gtai-release-compile/
+// <worktree>-<hash>/<pid>), so parallel evidence runs never share one (d9: EPERM on the fixed dir);
+// it is removed when the pass ends, also on a throw, unless --keep.
 // Exit 0 clean, 1 compile failures, 2 the pass could not run or refused its scratch dir.
 //
 // Deletion safety: this tool only ever removes a directory it created itself and stamped with
@@ -13,6 +16,7 @@ import {
   copyFileSync, cpSync, existsSync, lstatSync, mkdirSync, readdirSync, realpathSync, rmSync, writeFileSync,
 } from 'node:fs';
 import { basename, dirname, join, resolve, sep } from 'node:path';
+import { createHash } from 'node:crypto';
 import { homedir, tmpdir } from 'node:os';
 import { pathToFileURL } from 'node:url';
 import { PROJECT, ROOT, godotBin } from '../lib/repo.mjs';
@@ -101,6 +105,12 @@ export function failures(out) {
   return [...out.matchAll(/load_release: FAILED (res:\/\/\S+)/g)].map((m) => m[1]);
 }
 
+/** The default scratch dir: one per worktree (its folder name + a hash of its path) and process. */
+export function defaultDir(root = ROOT, pid = process.pid, base = tmpdir()) {
+  const tag = createHash('sha1').update(resolve(root).toLowerCase()).digest('hex').slice(0, 8);
+  return join(base, 'gtai-release-compile', `${basename(resolve(root))}-${tag}`, String(pid));
+}
+
 /** One Godot run on the scratch project, through the launcher's tree-kill timeout and the run ledger
  *  (a raw spawnSync here hung evidence forever on a hanging load script and was invisible to contention). */
 async function godotOn(dest, args, timeoutMs) {
@@ -114,10 +124,15 @@ async function godotOn(dest, args, timeoutMs) {
 }
 
 export async function releaseCompile({ dir, keep = false, src = PROJECT, timeoutMs = HEADLESS_TIMEOUT_MS } = {}) {
-  const dest = stageRelease(dir ?? join(tmpdir(), 'gtai-release-compile'), src);
-  const imp = await godotOn(dest, ['--import'], timeoutMs);
-  const res = await godotOn(dest, ['-s', 'res://load_release.gd'], timeoutMs);
-  if (!keep) removeMarked(dest);
+  const dest = stageRelease(dir ?? defaultDir(), src);
+  let imp;
+  let res;
+  try {
+    imp = await godotOn(dest, ['--import'], timeoutMs);
+    res = await godotOn(dest, ['-s', 'res://load_release.gd'], timeoutMs);
+  } finally {
+    if (!keep) removeMarked(dest);
+  }
   const failed = failures(res.out);
   const ran = /load_release: (\d+) loaded, (\d+) failed/.exec(res.out);
   const errors = [...res.out.matchAll(/^(?:SCRIPT ERROR|ERROR): .*$/gm)].map((m) => m[0]);

@@ -14,13 +14,28 @@ const DASHES: int = 14
 ## The dash's share of its step round the ring, and the wash's alpha under the gun.
 const DASH_K: float = 0.6
 const WASH_A: float = 0.2
-
+## d8-weapons: under a tilt the gun hovers over its disc (HOVER_M up, bobbing BOB_M), stood up for
+## the raised camera (its side view un-squashed), with an ink shadow on the disc: loot at a
+## glance under the angle. Straight down nothing moves (the flat path). `--shot-lift=off` = before.
+const HOVER_M: float = 0.35
+const BOB_M: float = 0.05
+const BOB_RAD_S: float = 2.4
+const SHADOW_A: float = 0.3
 static var disc: bool = not OS.get_cmdline_user_args().has("--pickup-disc=off")
 
 var carry: RivetCarry = null
+## n8-hud: a showcase drawing (WeaponShowcase, keyed by the view's art) is drawn for its camera:
+## stood up, never spun; `--pickup-hover=off` lays it on the disc (the owner's open hover call).
+var hover: bool = LaunchArgs.value("--pickup-hover") != "off"
 var art: WeaponArt = WeaponArt.new()
+var showcase: WeaponShowcase = WeaponShowcase.new()
+## n8-hud: under a tilt a showcase drawing lies in an open crate (ShowcaseCrate, `--pickup-crate`).
+var crates: ShowcaseCrate = ShowcaseCrate.new()
+var _crates: Array[Sprite2D] = []
 var _sprites: Array[Sprite2D] = []
 var _shown: Array[StringName] = []
+var _form: String = ""
+var _drawn: Array[bool] = []
 var _paper: Color = PaletteTokens.shared().color(&"paper")
 var _ink: Color = PaletteTokens.shared().color(&"ink")
 var _t: float = 0.0
@@ -33,25 +48,72 @@ func _process(_delta: float) -> void:
 	var ids: Array[StringName] = []
 	for it: WeaponPickups.Item in items:
 		ids.append(it.id)
-	if ids != _shown:
+	var form: String = WeaponShowcase.form_of(ViewMode.shared())
+	if ids != _shown or form != _form:
+		_form = form
 		_rebuild(ids)
+	var stand: bool = ShotLift.up_m() != Vector2.ZERO
 	for i: int in items.size():
 		_sprites[i].position = items[i].pos * SimConst.PX_PER_M
 		_sprites[i].rotation = sin(_t * TURN_RAD_S + i) * 0.5
+		if stand or _crates[i] != null:
+			_stand(_sprites[i], i)
 	queue_redraw()
+
+
+## Under a tilt: lift the gun HOVER_M (+ a bob) and stand its side view up (screen y undone).
+func _stand(s: Sprite2D, i: int) -> void:
+	var v: ViewMode = ViewMode.shared()
+	if _drawn[i]:  # n8-hud: the showcase drawing already faces this camera
+		s.rotation = 0.0
+		if _crates[i] != null:  # lying still on the crate's straw
+			_crates[i].position = s.position
+			ShowcaseCrate.size_crate(_crates[i], v.ground_k())
+			s.scale.y = s.scale.x / v.ground_k()
+			s.position += ShowcaseCrate.lie_px(
+				_crates[i], _form, s.texture.get_height() * s.scale.y
+			)
+			return
+		if hover:
+			s.position += v.lift_px(hover_m(_t, i))
+		s.scale.y = s.scale.x / v.ground_k()
+		return
+	s.position += v.lift_px(hover_m(_t, i))
+	s.rotation *= 0.5  # the sway, not a spin: a standing card turned far reads as a shear
+	s.scale.y = s.scale.x / v.ground_k()
+
+
+## The gun's height over its disc at view time `t` (s) for item `i` (render only, no RNG).
+static func hover_m(t: float, i: int) -> float:
+	return HOVER_M + BOB_M * sin(t * BOB_RAD_S + float(i) * 1.7)
 
 
 func _draw() -> void:
 	if carry == null:
 		return
 	var r: float = DISC_M * SimConst.PX_PER_M
-	for it: WeaponPickups.Item in carry.ground.items:
-		var at: Vector2 = it.pos * SimConst.PX_PER_M
+	var items: Array[WeaponPickups.Item] = carry.ground.items
+	for i: int in items.size():
+		var at: Vector2 = items[i].pos * SimConst.PX_PER_M
+		if i < _crates.size() and _crates[i] != null:
+			_crate_shadow(at)
+			continue
 		if disc:
 			draw_circle(at, r, _paper)
 			draw_arc(at, r, 0.0, TAU, 32, _ink, RING_PX, true)
 		else:
 			_dashed(at, r)
+		if ShotLift.up_m() != Vector2.ZERO:  # d8-weapons: the hovering gun's shadow on the disc
+			draw_circle(at, r * 0.45, Color(_ink, SHADOW_A))
+
+
+## n8-hud: the crate's ink shadow on the ground (an ellipse, flattened by the camera's y zoom).
+func _crate_shadow(at: Vector2) -> void:
+	var w: float = ShowcaseCrate.LONG_M * ShowcaseCrate.SHADOW_W * SimConst.PX_PER_M
+	var h: float = ShowcaseCrate.LONG_M * ShowcaseCrate.SHADOW_H * SimConst.PX_PER_M
+	draw_set_transform(at, 0.0, Vector2(1.0, h / w))
+	draw_circle(Vector2.ZERO, w, Color(_ink, ShowcaseCrate.SHADOW_A))
+	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 
 
 ## r2_w8's loot ring: a faint paper wash and a ring of paper dashes.
@@ -64,16 +126,41 @@ func _dashed(at: Vector2, r: float) -> void:
 
 
 func _rebuild(ids: Array[StringName]) -> void:
-	for s: Sprite2D in _sprites:
-		s.queue_free()
+	for s: Sprite2D in _sprites + _crates:
+		if s != null:
+			s.queue_free()
 	_sprites.clear()
+	_crates.clear()
+	_drawn.clear()
 	for id: StringName in ids:
 		var s: Sprite2D = Sprite2D.new()
-		s.texture = art.pickup_texture(id) if art.has(id) else null
+		s.texture = showcase.texture(id, _form)
+		_drawn.append(s.texture != null)
+		if s.texture == null:
+			s.texture = art.pickup_texture(id) if art.has(id) else null
 		var w: float = s.texture.get_width() if s.texture != null else 1.0
+		var standing: bool = _drawn[-1] and s.texture.get_height() > w
+		if standing:  # n8-hud: a drawing may stand (the molotov bottle): span its longer side
+			w = s.texture.get_height()
 		var span_m: float = maxf(art.length_m(id), art.pickup_min_span_m)  # r2_w8: fills the ring
+		_crates.append(_crate_for(_drawn[-1]))
+		if _crates[-1] != null:
+			span_m = ShowcaseCrate.fill_m(span_m, standing)
 		s.scale = Vector2.ONE * span_m * SimConst.PX_PER_M / maxf(w, 1.0)
 		PickupLook.dress(s, _outline)  # flat fills in ink (--pickup-print=on = before)
 		add_child(s)
 		_sprites.append(s)
 	_shown = ids
+
+
+## n8-hud: the open crate under a showcase drawing (added first: drawn behind the gun), or null.
+func _crate_for(drawn: bool) -> Sprite2D:
+	if not drawn or not ShowcaseCrate.on() or crates.texture(_form) == null:
+		return null
+	var c: Sprite2D = Sprite2D.new()
+	c.name = "Crate"
+	c.texture = crates.texture(_form)
+	ShowcaseCrate.size_crate(c, ViewMode.shared().ground_k())
+	PickupLook.dress(c, _outline)  # the pickups' bold ink: crates side by side stay apart at 32
+	add_child(c)
+	return c

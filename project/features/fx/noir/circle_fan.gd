@@ -9,8 +9,13 @@ extends RefCounted
 
 ## The engine's circle (servers/rendering/renderer_canvas_cull.cpp, canvas_item_add_circle).
 const SEGMENTS: int = 64
+## Cached colour runs kept at most (a fading pool prints a new colour every step).
+const RUNS_CAP: int = 64
 ## False prints every circle with its own draw_circle (the old path, for A/B and evidence).
 static var batched: bool = true
+static var _unit: PackedVector2Array = PackedVector2Array()
+static var _idx: PackedInt32Array = PackedInt32Array()
+static var _runs: Dictionary[Color, PackedColorArray] = {}
 
 var centres: PackedVector2Array = PackedVector2Array()
 var radii: PackedFloat64Array = PackedFloat64Array()
@@ -48,26 +53,75 @@ func print_on(ci: CanvasItem) -> void:
 		return
 	if centres.is_empty():
 		return
+	var pts: PackedVector2Array = points()
+	var cols: PackedColorArray = colour_runs()
+	var idx: PackedInt32Array = indices(centres.size())
+	RenderingServer.canvas_item_add_triangle_array(ci.get_canvas_item(), idx, pts, cols)
+
+
+## Every circle's fan: SEGMENTS + 1 rim points then its centre, in record order (d9-perf: the
+## float32 unit rim is computed once, so a point is one multiply and one add, the engine's own
+## float32 ops: bit-identical to the per-point _rim() build, test_circle_fan).
+func points() -> PackedVector2Array:
+	var unit: PackedVector2Array = _unit_rim()
 	var pts: PackedVector2Array = PackedVector2Array()
-	var cols: PackedColorArray = PackedColorArray()
-	var idx: PackedInt32Array = PackedInt32Array()
-	var f: PackedFloat32Array = PackedFloat32Array([TAU / SEGMENTS, 0.0, 0.0])
-	var step: float = f[0]  # the engine's real_t step
-	@warning_ignore_start("return_value_discarded")
+	@warning_ignore("return_value_discarded")
+	pts.resize(centres.size() * (SEGMENTS + 2))
+	var k: int = 0
+	var f: PackedFloat32Array = PackedFloat32Array([0.0])
 	for c: int in centres.size():
 		var at: Vector2 = centres[c]
-		f[1] = radii[c]
-		var r: float = f[1]  # the radius as the engine receives it (float)
-		var base: int = pts.size()
+		f[0] = radii[c]
+		var r: float = f[0]  # the radius as the engine receives it (float)
 		for i: int in SEGMENTS + 1:
-			pts.append(at + _rim(f, i * step, r))
-		pts.append(at)
-		for i: int in SEGMENTS + 2:
-			cols.append(colours[c])
+			pts[k] = at + unit[i] * r
+			k += 1
+		pts[k] = at
+		k += 1
+	return pts
+
+
+## Each circle's colour once per fan point (cached runs of SEGMENTS + 2, appended whole).
+func colour_runs() -> PackedColorArray:
+	var cols: PackedColorArray = PackedColorArray()
+	if _runs.size() > RUNS_CAP:  # fading colours must not grow the cache without bound
+		_runs.clear()
+	for c: Color in colours:
+		if not _runs.has(c):
+			var run: PackedColorArray = PackedColorArray()
+			@warning_ignore("return_value_discarded")
+			run.resize(SEGMENTS + 2)
+			run.fill(c)
+			_runs[c] = run
+		@warning_ignore("return_value_discarded")
+		cols.append_array(_runs[c])
+	return cols
+
+
+## The fans' triangles for `n` circles (centre, rim i, rim i + 1): the same for every soak of
+## that many circles, so it is built once up to the largest n and sliced.
+static func indices(n: int) -> PackedInt32Array:
+	var have: int = _idx.size() / (SEGMENTS * 3)
+	@warning_ignore_start("return_value_discarded")
+	for c: int in range(have, n):
+		var base: int = c * (SEGMENTS + 2)
 		for i: int in SEGMENTS:
-			idx.append_array([base + SEGMENTS + 1, base + i, base + i + 1])
+			_idx.append(base + SEGMENTS + 1)
+			_idx.append(base + i)
+			_idx.append(base + i + 1)
 	@warning_ignore_restore("return_value_discarded")
-	RenderingServer.canvas_item_add_triangle_array(ci.get_canvas_item(), idx, pts, cols)
+	return _idx.slice(0, n * SEGMENTS * 3)
+
+
+## The engine's fan rim for a unit radius, each point through _rim()'s float32 steps.
+static func _unit_rim() -> PackedVector2Array:
+	if _unit.is_empty():
+		var f: PackedFloat32Array = PackedFloat32Array([TAU / SEGMENTS, 0.0, 0.0])
+		var step: float = f[0]  # the engine's real_t step
+		for i: int in SEGMENTS + 1:
+			@warning_ignore("return_value_discarded")
+			_unit.append(_rim(f, i * step, 1.0))
+	return _unit
 
 
 ## One rim point of the engine's fan in float32: (cos a * r, sin a * r).

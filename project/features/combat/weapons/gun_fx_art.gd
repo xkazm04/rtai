@@ -60,12 +60,12 @@ static func draw_over(
 		var im: Vector4 = fx.impacts[i]
 		var age: int = tick - int(im.w)
 		if age < GunFx.IMPACT_TICKS:
-			var at: Vector2 = Vector2(im.x, im.y)
+			var at: Vector2 = ShotLift.hit_at(Vector2(im.x, im.y), int(im.z) % GunFx.SCORCH)
 			GunFxMarks.impact(ci, fx, at, fx.impact_dir[i], int(im.z) % GunFx.SCORCH, age)
 			if int(im.z) >= GunFx.SCORCH:
 				GunFxMarks.pop(ci, at, age)
 	for ef: Vector4 in fx.enemy_flashes:
-		_star(ci, Vector2(ef.x, ef.y), ef.w, 0.45 - 0.1 * float(tick - int(ef.z)), tick)
+		_star(ci, ShotLift.star_at(ef), ef.w, 0.45 - 0.1 * float(tick - int(ef.z)), tick)
 	var gun: GunHand = arena.gun
 	var row: Dictionary = fx.look(gun.trigger.spec.id)
 	var flash: int = row.get("muzzle_ticks", 2)
@@ -92,7 +92,7 @@ static func tracer(ci: CanvasItem, fx: GunFx, s: Shot, enemy_tail_m: float) -> v
 	var core_w: float = row.get("tracer_core_px", 4.0) if s.from_rivet else 4.0
 	var core: Color = Ink.CREAM if s.from_rivet else Ink.VERMILION
 	var dir: Vector2 = s.vel.normalized()
-	var head: Vector2 = s.pos
+	var head: Vector2 = s.pos + ShotLift.line(ci, s.pos - dir * tail_m, s.pos)  # d8: gun height
 	if s.from_rivet:
 		# never behind the muzzle, and from the claw side onto the sim's line over CONVERGE_M
 		var went: float = s.origin.distance_to(s.pos)
@@ -227,6 +227,6 @@ static func _claw_state(ci: CanvasItem, fx: GunFx, arena: CombatArena, tick: int
 		var k: float = (
 			1.0 - float(gun.trigger.reload_left) / maxf(gun.trigger.spec.reload_ticks, 1.0)
 		)
-		var at: Vector2 = Ink.px(arena.rivet.pos + Vector2(0.0, -1.5))
+		var at: Vector2 = Ink.px(arena.rivet.pos + Vector2(0.0, -1.5) + ShotLift.up_m() * 1.2)
 		ci.draw_arc(at, 11.0, 0.0, TAU, 24, Ink.INK, 7.0)
 		ci.draw_arc(at, 11.0, -PI / 2.0, -PI / 2.0 + TAU * k, 24, Ink.CREAM, 3.5)

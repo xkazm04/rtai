@@ -1,0 +1,17 @@
+{
+  "doc": "Lane d8-view70: the per-pitch card art and the combined view (features/view_pitch, data/tables/view.json rows tilt70 and combo). Station-only: no props, no spawns, nothing in the replay hash; straight down (the default top) the hook does nothing.",
+  "lane": "view-pitch",
+  "schema": "gtai.arena-station/1",
+  "stations": [
+    {
+      "area": "pit",
+      "id": "view_pitch",
+      "measures": [],
+      "name": "View pitch",
+      "props": [],
+      "script": "res://features/view_pitch/view_pitch_hook.gd",
+      "spawns": [],
+      "tuning": []
+    }
+  ]
+}

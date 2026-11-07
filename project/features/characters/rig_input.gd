@@ -19,6 +19,8 @@ static func apply(rig: CutRig, feed: RigFeed, i: int) -> void:
 	rig.clips.down = feed.has_flag(i, RigFeed.Flag.DOWN)
 	if feed.has_flag(i, RigFeed.Flag.DEAD):
 		rig.clips.die(feed.clip_arg[i] > 0.5)
+	elif rig.clips.death_t >= 0.0 and feed.kinds[i] == BodyPlan.Kind.RIVET:
+		revive(rig)
 	match feed.clip[i] as RigClips.Clip:
 		RigClips.Clip.PUNCH:
 			rig.clips.punch(maxi(1, int(feed.clip_arg[i])))
@@ -62,3 +64,15 @@ static func strike(rig: CutRig, packed: int) -> void:
 	var r: float = float((packed >> 12) & 63) * dt
 	rig.clips.strike(rig, w, a, r, (packed >> 18) & 3)
 	rig.clips.strike_t = float((packed >> 20) & 15) * dt  # n7-melee: in step with the sim's hit
+
+
+## d9-rivet: Rivet respawns on the same rig (the arena's hub, the stage's Toner Room): his row
+## alive again ends the death clip the DEAD flag latched, so he stands up instead of lying in his
+## sprawl while he walks. Other kinds keep their corpse (a dead row never turns live for them).
+static func revive(rig: CutRig) -> void:
+	rig.clips.death_t = -1.0
+	rig.dead = false
+	rig.c_sprawl = 0.0
+	if rig.react != null and rig.react.dying:
+		rig.react.clear()
+		rig.modulate = Color.WHITE

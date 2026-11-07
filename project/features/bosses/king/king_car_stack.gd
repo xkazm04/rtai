@@ -45,6 +45,8 @@ static func draw(ci: CanvasItem, at: Vector2, heading: float, l: float, w: float
 	if view.cast_k > 0.0:  # the cast shadow by height, thrown from the roof line (top_lift)
 		var off: Vector2 = view.cast_dir().rotated(-heading) * ROOF_M * view.cast_k * p
 		RigCastShadows.sweep(ci, _corners(l, w), off)
+	if KingCarWalls.draw(ci, at, heading, l, w):  # d8: the walls from art for this pitch
+		return
 	for i: int in SLICES:
 		var k: float = float(i) / float(SLICES - 1)
 		var z: float = ROOF_M * k
@@ -111,8 +113,8 @@ static func _wheels(ci: CanvasItem, z: float, l: float, w: float, p: float) -> v
 ## Ground-depth order against the car (registry measured-draw-order: the depth is the ground y):
 ## a rig standing on the car's far side (smaller ground y, inside far_box) draws behind the car
 ## (a relative z BEHIND_Z under it: the rigs are KingRigs' children, so show_behind_parent
-## would only put them behind KingRigs), the rest over it. King himself (on the roof) is never
-## behind. RigDepthSort.far_box carries it to the cast's rigs near the car (Rivet). Tilt only.
+## would only put them behind KingRigs), the rest over it. King on the roof (phases 0-1) is never
+## behind; on foot by his wreck (2+) he is. RigDepthSort.far_box carries it to the cast's rigs.
 static func sort_rigs(rigs: Dictionary, king_id: int, f: BossFight) -> void:
 	var car: Vector2 = f.body.pos
 	var km: KingMoves = f.moves as KingMoves
@@ -124,7 +126,7 @@ static func sort_rigs(rigs: Dictionary, king_id: int, f: BossFight) -> void:
 		if car != Vector2.INF and not RigDepthSort.far_box.has_area():  # the cast's rigs too
 			var dir: Vector2 = km.car_facing if f.phase >= 2 and km != null else f.body.facing
 			RigDepthSort.far_box = far_box(rig.get_parent() as Node2D, car, dir)
-		var behind: bool = car != Vector2.INF and id != king_id
+		var behind: bool = car != Vector2.INF and (id != king_id or f.phase >= 2)
 		var back: bool = behind and RigDepthSort.far_box.has_point(rig.global_position)
 		rig.depth_base = BEHIND_Z if back else 0  # RigDepthSort adds its level on top
 		rig.z_index = rig.depth_base
@@ -151,6 +153,8 @@ static func far_box(host: Node2D, car: Vector2, dir: Vector2) -> Rect2:
 ## px), `up` = the car-local lift per metre: the arch stacked in slices (ink silhouette, then gold
 ## from dark at the seat to bright at the top), the light line, ball finials and crest on top.
 static func throne(ci: CanvasItem, at: Vector2, p: float, up: Vector2) -> void:
+	if KingCarWalls.throne(ci, at, p, up):  # d8: the throne's card from art for this pitch
+		return
 	var r: float = KingCarTrim.THRONE_HW_M * p
 	var w: float = 0.16 * p
 	var a0: float = PI - KingCarTrim.THRONE_ARC

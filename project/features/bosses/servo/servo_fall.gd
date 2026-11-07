@@ -16,7 +16,7 @@ const WIND: Vector2 = Vector2(0.55, -0.85)
 const VISOR_TICKS: int = 80
 
 var px: float = 32.0
-var drone_tex: Texture2D = load(ServoRig.ART % "drone") as Texture2D
+var drone_tex: Texture2D = load(ServoArt.path(&"drone")) as Texture2D
 var _pal: PaletteTokens = PaletteTokens.shared()
 
 
@@ -28,6 +28,11 @@ static func scale_k(dt: int) -> float:
 ## Forward slump of the body (metres along the facing): he folds over his legs.
 static func slump_m(dt: int) -> float:
 	return 0.6 * (1.0 - exp(-dt / 16.0))
+
+
+## d8: the stood body's lift (ServoArt.stand) as he goes down: it sinks onto the floor (1 .. 0).
+static func stand_k(dt: int) -> float:
+	return exp(-dt / 16.0)
 
 
 ## How far the pads sag in toward the body (metres) and their scale (dropping to the floor).

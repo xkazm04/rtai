@@ -1,0 +1,15 @@
+[INFO] bosses: king phase 1 (procession)
+[INFO] bosses: king engaged in king_boulevard, phase 1
+[INFO] arena: powers pad: 4 cars parked
+[INFO] arena: arena open: 20 stations
+ERROR: Condition "!actions.custom_samplers.has(function->arguments[j].tex_builtin)" is true. Continuing.
+[INFO] characters: prewarmed 41 rigs in 108.1 ms
+[INFO] arena: cast rigs: true
+[INFO] view: pitch ease 70.0 -> boss at tick 1
+[INFO] view: cards art p55 (pitch 62.1) at tick 32
+[INFO] bosses: king phase 2 (court)
+[INFO] bosses: king: 4 king_gang
+[INFO] view: occlusion: 806 body-frames hidden over 2400 frames, frames 275-2400
+[INFO] device: rumble: 3 pulses played
+[INFO] arena: react: 0 wounds (0 on a shield), 0 deaths, 0 ducks
+ERROR: 94 resources still in use at exit (run with --verbose for details).

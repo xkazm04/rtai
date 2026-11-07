@@ -49,16 +49,20 @@ func _ready() -> void:
 ## Every feature system, in a fixed order, before any replay runs. Views only when drawing.
 func _register_features(with_views: bool) -> void:
 	var city: CitySystem = CitySystem.new()
+	if LaunchArgs.value("--bikes").is_valid_float():  # d9: the sim bike's share (dev, filming)
+		city.bike_share = clampf(float(LaunchArgs.value("--bikes")), 0.0, 1.0)
 	add_system(city)
 	vehicles = VehicleService.new()
 	add_system(vehicles)
 	var vworld: CityVehicleWorld = CityVehicleWorld.new(city)
+	vworld.yield_to_rivet = LaunchArgs.has("--traffic-yields")  # d9 seams: Call 4 (dev, filming)
 	vehicles.world = vworld
 	if with_views and DisplayServer.get_name() != "headless":
 		var view: CityView = CityView.new()
 		if LaunchArgs.has("--look"):
 			view.look_id = StringName(LaunchArgs.value("--look"))
 		view.rig = CameraRig.new()
+		view.rig.zoom_k = DeviceProfile.zoom()
 		view.rig.snap(&"car")
 		view.rig.reduced_motion = LaunchArgs.has("--reduced-motion")
 		view.markers.reduced_motion = view.rig.reduced_motion

@@ -1,0 +1,18 @@
+{
+  "doc": "n8-hud dev evidence only (boss_taunt.gd): the boss fight has no line system and no owner-signed boss lines yet. These are the voice bibles' ILLUSTRATIVE reference lines (pof/games/gtai/voices/<id>.md, model-written, not owner-chosen), used only to film where a boss's taunt would sit on screen. Never shipped: dev/ is dropped from release exports.",
+  "lines": [
+    {
+      "boss": "king",
+      "name": "The King",
+      "source": "voices/king.md reference line 1 (illustrative)",
+      "text": "Hear ye. The Crown has decreed that this street is royal. Kindly bleed elsewhere."
+    },
+    {
+      "boss": "king",
+      "name": "The King",
+      "source": "voices/king.md reference line 3 (illustrative)",
+      "text": "Sir Weldsalot! One knights you. One also fines you. Bow."
+    }
+  ],
+  "schema": "gtai.dev_boss_taunt/1"
+}

@@ -1,0 +1,7 @@
+[INFO] bosses: servo phase 1 (depot)
+[INFO] bosses: servo engaged in depot, phase 1
+[INFO] gunplay: arena: Rivet holds the table gatling
+[INFO] bosses: servo phase 2 (rush_hour)
+[INFO] bosses: servo phase 3 (overtime)
+[INFO] bosses: servo defeated
+[INFO] device: rumble: 362 pulses played { &"boss_engaged": 1, &"boss_hit": 361 }, shortest gaps (ticks) { &"boss_hit": 2 }

@@ -1,0 +1,175 @@
+{
+  "schema": "gtai.handheld-sim/1",
+  "label": "v1-r1",
+  "device": "deck_bench",
+  "scene": "reel",
+  "scene_args": [
+    "--rigs",
+    "--bot=reel",
+    "--reel=director",
+    "--view=tilt70"
+  ],
+  "extra": [],
+  "renderer": "mobile",
+  "gpu": "1",
+  "gpu_index": 1,
+  "threads": 8,
+  "priority": "belownormal",
+  "ticks": 1200,
+  "exit": 0,
+  "contended": "CONTENDED (1 other Godot runs)",
+  "at": "2026-11-07T09:35:23.034Z",
+  "summary": {
+    "frames": 2905,
+    "low1_fps": 71.546110432524,
+    "over33_settled": 1,
+    "over50_settled": 0,
+    "p50_ms": 7.04899978637695,
+    "p99_ms": 10.826000213623,
+    "ticks": 1193,
+    "worst_ms": 39.7929992675781,
+    "worst_settled_ms": 35.9300003051758,
+    "render_gpu_ms_p50": 6.34,
+    "render_gpu_ms_p95": 7.03,
+    "render_cpu_ms_p50": 0.25,
+    "render_cpu_ms_p95": 0.4,
+    "process_ms_p50": 1.76,
+    "process_ms_p95": 3.55,
+    "loop_ms_p50": 0.01,
+    "loop_ms_p95": 1.16,
+    "draw_calls_p50": 394,
+    "draw_calls_p95": 421,
+    "affinity_seen": [
+      255,
+      0
+    ],
+    "cpu_machine_pct_p50": 2.94,
+    "cpu_pinned_pct_p50": 5.88,
+    "ws_mb_max": 908.1,
+    "private_mb_max": 924,
+    "gpu_dedicated_mb_max": 79.1,
+    "gpu_shared_mb_max": 586.1
+  },
+  "samples": [
+    {
+      "t_ms": 1616,
+      "cpu_machine_pct": 6.02,
+      "cpu_pinned_pct": 12.04,
+      "ws_mb": 267.4,
+      "private_mb": 222.9,
+      "gpu_dedicated_mb": 62.7,
+      "gpu_shared_mb": 57.8,
+      "affinity": 255
+    },
+    {
+      "t_ms": 3867,
+      "cpu_machine_pct": 6.07,
+      "cpu_pinned_pct": 12.15,
+      "ws_mb": 605.8,
+      "private_mb": 616.1,
+      "gpu_dedicated_mb": 78.6,
+      "gpu_shared_mb": 458.1,
+      "affinity": 255
+    },
+    {
+      "t_ms": 5900,
+      "cpu_machine_pct": 3.32,
+      "cpu_pinned_pct": 6.63,
+      "ws_mb": 844.1,
+      "private_mb": 860.1,
+      "gpu_dedicated_mb": 78.8,
+      "gpu_shared_mb": 522.1,
+      "affinity": 255
+    },
+    {
+      "t_ms": 7933,
+      "cpu_machine_pct": 3.03,
+      "cpu_pinned_pct": 6.05,
+      "ws_mb": 844.5,
+      "private_mb": 860.4,
+      "gpu_dedicated_mb": 78.8,
+      "gpu_shared_mb": 522.1,
+      "affinity": 255
+    },
+    {
+      "t_ms": 9960,
+      "cpu_machine_pct": 2.94,
+      "cpu_pinned_pct": 5.88,
+      "ws_mb": 844.5,
+      "private_mb": 860.4,
+      "gpu_dedicated_mb": 78.8,
+      "gpu_shared_mb": 522.1,
+      "affinity": 255
+    },
+    {
+      "t_ms": 12001,
+      "cpu_machine_pct": 3.01,
+      "cpu_pinned_pct": 6.03,
+      "ws_mb": 907.9,
+      "private_mb": 923.9,
+      "gpu_dedicated_mb": 79.1,
+      "gpu_shared_mb": 586.1,
+      "affinity": 255
+    },
+    {
+      "t_ms": 14039,
+      "cpu_machine_pct": 2.4,
+      "cpu_pinned_pct": 4.79,
+      "ws_mb": 907.9,
+      "private_mb": 923.9,
+      "gpu_dedicated_mb": 79.1,
+      "gpu_shared_mb": 586.1,
+      "affinity": 255
+    },
+    {
+      "t_ms": 16066,
+      "cpu_machine_pct": 2.89,
+      "cpu_pinned_pct": 5.78,
+      "ws_mb": 908,
+      "private_mb": 923.9,
+      "gpu_dedicated_mb": 79.1,
+      "gpu_shared_mb": 586.1,
+      "affinity": 255
+    },
+    {
+      "t_ms": 18095,
+      "cpu_machine_pct": 2.84,
+      "cpu_pinned_pct": 5.68,
+      "ws_mb": 908.1,
+      "private_mb": 924,
+      "gpu_dedicated_mb": 79.1,
+      "gpu_shared_mb": 586.1,
+      "affinity": 255
+    },
+    {
+      "t_ms": 20113,
+      "cpu_machine_pct": 3.05,
+      "cpu_pinned_pct": 6.1,
+      "ws_mb": 908.1,
+      "private_mb": 924,
+      "gpu_dedicated_mb": 79.1,
+      "gpu_shared_mb": 586.1,
+      "affinity": 255
+    },
+    {
+      "t_ms": 22138,
+      "cpu_machine_pct": 2.6,
+      "cpu_pinned_pct": 5.21,
+      "ws_mb": 908.1,
+      "private_mb": 924,
+      "gpu_dedicated_mb": 79.1,
+      "gpu_shared_mb": 586.1,
+      "affinity": 255
+    },
+    {
+      "t_ms": 24163,
+      "cpu_machine_pct": 2.51,
+      "cpu_pinned_pct": 5.01,
+      "ws_mb": 908.1,
+      "private_mb": 924,
+      "gpu_dedicated_mb": 0,
+      "gpu_shared_mb": 0,
+      "affinity": 0
+    }
+  ]
+}

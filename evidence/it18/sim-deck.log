@@ -1,0 +1,3 @@
+e15-deck: CONTENDED (2 other Godot runs) {"frames":2379,"low1_fps":44.4130255593261,"over33_settled":1,"over50_settled":0,"p50_ms":16.6599998474121,"p99_ms":19.5450000762939,"ticks":2393,"worst_ms":398.303985595703,"worst_settled_ms":38.4249992370605,"render_gpu_ms_p50":8.84,"render_gpu_ms_p95":9.3,"render_cpu_ms_p50":0.62,"render_cpu_ms_p95":1.1,"process_ms_p50":4.84,"process_ms_p95":7.23,"loop_ms_p50":1.09,"loop_ms_p95":1.65,"draw_calls_p50":701,"draw_calls_p95":711,"affinity_seen":[255],"cpu_machine_pct_p50":3.01,"cpu_pinned_pct_p50":6.02,"ws_mb_max":1331.4,"private_mb_max":1334.9,"gpu_dedicated_mb_max":81.8,"gpu_shared_mb_max":943.1}
+-> C:\Users\kazda\kiro\gtai-d9x\scratch\it18\sim-deck\e15-deck.json
+sim exit 0

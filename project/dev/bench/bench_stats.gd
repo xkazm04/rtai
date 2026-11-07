@@ -19,12 +19,21 @@ var rig_ms: PackedFloat64Array = PackedFloat64Array()
 ## call count does not move with the machine's load, so it A/Bs on a busy machine).
 var draws: PackedInt32Array = PackedInt32Array()
 var render_cpu_ms: PackedFloat64Array = PackedFloat64Array()
+## d9-perf: the render server's GPU ms per frame (the viewport's timestamp queries).
+var render_gpu_ms: PackedFloat64Array = PackedFloat64Array()
+## d9-perf: the peak video memory and texture memory (bytes) over the measured frames.
+var vram_peak: float = 0.0
+var tex_peak: float = 0.0
 var _rig_us: int = 0
 var _rig_ticks: int = 0
 var _rigs_max: int = 0
 var _ticks: int = 0
 var _sim_us: int = 0
 var _stream_us: int = 0
+## Tick cadence (L10): frames that showed no new tick (a duplicate image) / two or more ticks
+## (a tick image skipped).
+var _no_tick: int = 0
+var _multi_tick: int = 0
 
 
 func add(ms: float, city_us: PackedInt64Array, swapped: bool, counts: Vector2i) -> void:
@@ -32,6 +41,8 @@ func add(ms: float, city_us: PackedInt64Array, swapped: bool, counts: Vector2i) 
 	if frames <= WARMUP_FRAMES:
 		return
 	_ticks += city_us[3]
+	_no_tick += 1 if city_us[3] == 0 else 0
+	_multi_tick += 1 if city_us[3] >= 2 else 0
 	_sim_us += city_us[2]
 	_stream_us += city_us[0] + city_us[1]
 	@warning_ignore_start("return_value_discarded")
@@ -55,14 +66,19 @@ func add_rig(us: int, ticks: int, full: int) -> void:
 	rig_ms.append(us / 1000.0)
 
 
-## One frame's draw calls and render CPU ms (call after add(); skipped in the warm-up).
-func add_render(draw_calls: int, cpu_ms: float) -> void:
+## One frame's draw calls and the viewport `vp`'s render CPU and GPU ms (call after add(); skipped
+## in the warm-up; the viewport needs viewport_set_measure_render_time).
+func add_render(draw_calls: int, vp: RID) -> void:
 	if frames <= WARMUP_FRAMES:
 		return
 	@warning_ignore("return_value_discarded")
 	draws.append(draw_calls)
 	@warning_ignore("return_value_discarded")
-	render_cpu_ms.append(cpu_ms)
+	render_cpu_ms.append(RenderingServer.viewport_get_measured_render_time_cpu(vp))
+	@warning_ignore("return_value_discarded")
+	render_gpu_ms.append(RenderingServer.viewport_get_measured_render_time_gpu(vp))
+	vram_peak = maxf(vram_peak, Performance.get_monitor(Performance.RENDER_VIDEO_MEM_USED))
+	tex_peak = maxf(tex_peak, Performance.get_monitor(Performance.RENDER_TEXTURE_MEM_USED))
 
 
 func metrics() -> Dictionary[String, float]:
@@ -88,6 +104,8 @@ func metrics() -> Dictionary[String, float]:
 		"visibleAvg": _mean_i(visible),
 		"visibleMax": float(_max_i(visible)),
 		"framesMeasured": float(n),
+		"framesNoTick": float(_no_tick),
+		"framesMultiTick": float(_multi_tick),
 		"rigMsP50": _pct(rig_ms, 0.5),
 		"rigMsP99": _pct(rig_ms, 0.99),
 		"rigMsPerTick": _rig_us / 1000.0 / maxi(1, _rig_ticks),
@@ -96,6 +114,10 @@ func metrics() -> Dictionary[String, float]:
 		"drawCallsAvg": _mean_i(draws),
 		"renderCpuMsAvg": _mean(render_cpu_ms),
 		"renderCpuMsP99": _pct(render_cpu_ms, 0.99),
+		"renderGpuMsAvg": _mean(render_gpu_ms),
+		"renderGpuMsP99": _pct(render_gpu_ms, 0.99),
+		"vramPeakMb": vram_peak / 1048576.0,
+		"texMemPeakMb": tex_peak / 1048576.0,
 	}
 
 

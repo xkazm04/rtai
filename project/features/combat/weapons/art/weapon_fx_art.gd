@@ -35,8 +35,7 @@ const NOZZLE_K: float = 0.45
 ## The cone slices' lick swing (rad) about the aim (the teardrops keep 0.18: at 0.18 the long
 ## cone slices lay parallel and banded like planks at 48 px/m).
 const CONE_LICK: float = 0.24
-## A round leaves the sim at the body centre; its art shows once it is this far out (past the
-## claw), so a rocket never draws over Rivet's chest. Smoke starts behind that point too.
+## A round's art (and smoke) shows once this far past the body centre: never over Rivet's chest.
 const CLEAR_M: float = 1.1
 ## The electro arc cell spans ARC_SPAN_PX part px (tail anchor to head); drawn at least ARC_MIN_M.
 const ARC_SPAN_PX: float = 296.0
@@ -74,7 +73,7 @@ static func shot(ci: CanvasItem, s: Shot, tick: int) -> bool:
 		return true
 	# drawn out of the held gun (left of the aim line), converging onto the sim's line by CONVERGE_M
 	var side: float = GUN_SIDE_M * clampf(1.0 - (went - CLEAR_M) / CONVERGE_M, 0.0, 1.0)
-	var at: Vector2 = s.pos + dir.orthogonal() * side
+	var at: Vector2 = ShotLift.round_at(ci, s, s.pos + dir.orthogonal() * side, went - CLEAR_M)
 	match s.spec.kind:
 		WeaponSpec.Kind.BULLET:
 			var fx: StringName = art().projectile_fx(s.spec.id)
@@ -199,12 +198,13 @@ static func _jet(ci: CanvasItem, s: Shot, dir: Vector2, went: float, tick: int) 
 		grow.y = -grow.y  # every other cone slice mirrored: their jags never line up as planks
 	# a second tongue halfway back to the previous puff closes the gap: one gushing jet
 	var gap: float = s.spec.speed_mps * float(s.spec.interval_ticks) / 120.0
+	var up: Vector2 = ShotLift.jet(ci, s, went)  # d8: at gun height, out of the drawn tip
 	if went > gap + CLEAR_M:
 		var back: Vector2 = Vector2(_jet_x(fx, went - gap, grow.x * 0.85), grow.y * 0.85)
-		_cell_v(ci, fx, f + 1, s.pos - dir * gap, -lick + 2.0 * dir.angle(), back, 1.0)
+		_cell_v(ci, fx, f + 1, s.pos - dir * gap + up, -lick + 2.0 * dir.angle(), back, 1.0)
 	grow.x = _jet_x(fx, went, grow.x)
-	_cell_v(ci, fx, f, s.pos, lick, grow, 1.0 - 0.35 * k)
-	WeaponFxEmber.draw(ci, s, dir, went, tick)
+	_cell_v(ci, fx, f, s.pos + up, lick, grow, 1.0 - 0.35 * k)
+	WeaponFxEmber.draw(ci, s, dir, went, tick, up)
 
 
 ## The long cone cells' x scale, capped so the tail `went` m out never reaches back over the gun

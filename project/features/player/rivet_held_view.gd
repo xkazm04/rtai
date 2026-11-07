@@ -76,30 +76,29 @@ func _process(_delta: float) -> void:
 		var grip: ArsenalTable.Grip = arsenal.grip_of(pilot.hold.held)
 		var hold: HeldTable.Hold = HeldTable.shipped().hold_of(pilot.hold.held)
 		rig.hold = hold.id if hold != null else &""
+		RivetFrames.publish(rig, pilot.hold.held, arena.gun if arena != null else null)  # d9 rivet
 		rig.grip = hold.kind if hold != null else RigGrip.Kind.ONE_HAND
 		rig.reload_k = arsenal.reload_phase(arena.gun if arena != null else null)
-		var mag: bool = grip != null and not NO_MAG.has(grip.id)  # a bottle or a tank: no magazine
+		var mag: bool = grip != null and not NO_MAG.has(grip.id) and not RivetFrames.drawn(rig)
 		mag = mag and not (art.has(id) and art.part_texture(id, "mag") != null)  # weapon-art's own
-		var now: int = arena.tick if arena != null else 0
-		_mag_view().feed(rig, rig.reload_k if mag else -1.0, now, id)
-		_back_tank(rig, grip != null and ON_BACK.has(grip.id))
+		_mag_view().feed(rig, rig.reload_k if mag else -1.0, arena.tick if arena != null else 0, id)
+		_back_tank(rig, grip != null and ON_BACK.has(grip.id) and not RivetFrames.owns_weapon(rig))
 	if rig != null and not rig.gun_out:
 		rig.held_shift = Vector2.ZERO
-	if rig == null or not rig.gun_out or not art.has(id):
+	if rig == null or not rig.gun_out or not art.has(id) or RivetStrips.hides_held(rig):
 		if _sprite != null:
 			_sprite.visible = false
 		if _rag != null:
 			_rag.visible = false
 		return
-	if id != _shown or rig.plan.size_k != _shown_size:
+	if id != _shown or rig.plan.size_k != _shown_size or HeldPitchArt.stale(_sprite):
 		_swap(id, pilot.hold.held, rig.plan.size_k)
 	if arena != null and arena.gun != null and arena.gun.trigger.spec.id == pilot.hold.held:
 		var t: Trigger = arena.gun.trigger
 		HeldTube.apply(_sprite, art, id, HeldTube.is_empty(t.ammo, t.spec.magazine, rig.reload_k))
 	rig.plan.hand_pistol = rig.plan.hand_closed
 	var hand: Sprite2D = rig.sides[rig.plan.gun_arm].hand
-	var tex: Vector2 = hand.texture.get_size()
-	var local: Vector2 = Vector2(tex.x * GRIP_U, tex.y * 0.5) + hand.offset
+	var local: Vector2 = hand.texture.get_size() * Vector2(GRIP_U, 0.5) + hand.offset
 	_sprite.global_position = hand.global_transform * local
 	_sprite.global_rotation = _held_angle(rig, hand)
 	_place_long(rig)
@@ -107,14 +106,15 @@ func _process(_delta: float) -> void:
 	_feed_smear(rig)
 	_sprite.visible = rig.grip != RigGrip.Kind.THROWN or rig.reload_k < 0.0 or rig.reload_k >= 1.0
 	_sprite.visible = _sprite.visible or RigThrow.lag_frame(rig)  # n7-ranged: cocked, then out
+	_sprite.visible = _sprite.visible and not RivetFrames.owns_weapon(rig)  # d9: the smear only
 	_light_rag(rig, id)
-	HeldMuzzle.publish(_sprite, art.muzzle_px(id) + _sprite.offset)  # the flash's spot (n7-ranged)
+	HeldPitchArt.publish_muzzle(_sprite, art.muzzle_px(id))  # the flash (n7), the 55 part faced (d8)
 
 
 func _swap(id: StringName, weapon: StringName, size_k: float) -> void:
 	if _sprite != null:
 		_sprite.queue_free()
-	_sprite = art.make_held(id)
+	_sprite = HeldPitchArt.shipped().held(id, art)  # d8-weapons: the tilt's own part, else top-down
 	_sprite.scale *= arsenal.held_k(weapon, size_k)
 	_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	_sprite.material = PartMaterials.get_mat(_print_kind(), false, 0)
@@ -177,8 +177,7 @@ func _feed_smear(rig: CutRig) -> void:
 	var on: bool = pilot.wielding() and pilot.melee.combo.ground == 0 and t >= 0.0
 	on = on and MeleeSwing.cutting(t, rig.clips.strike_ph)
 	_smear.tint = MeleeSmearView.tint_of(pilot.hold.held)
-	var len_px: float = _sprite.get_rect().end.x * absf(_sprite.global_scale.x)
-	_smear.feed(_sprite.global_position, _sprite.global_rotation, len_px, on)
+	RivetMuzzle.feed_smear(_smear, rig, _sprite, on, z_index - rigs.z_index)  # d9: a drawn root
 
 
 ## The current (or just ended) hit's sweep half-angle from its cone.
@@ -208,8 +207,7 @@ func _mag_view() -> RivetMagView:
 	return _mag
 
 
-## weapon-art's `tank` part on Rivet's back while a backpack weapon (the flamethrower) is carried in
-## the claw: across the shoulders, TANK_BACK_M behind the torso, turning with it.
+## weapon-art's `tank` on Rivet's back (the flamethrower): TANK_BACK_M behind the torso, turning.
 func _back_tank(rig: CutRig, on: bool) -> void:
 	var id: StringName = arsenal.art_id(pilot.hold.held)
 	if on and _tank == null:
@@ -235,6 +233,7 @@ func _back_tank(rig: CutRig, on: bool) -> void:
 		var back_px: float = (TANK_BACK_M + TANK_SWAP_M * swap) * WeaponArt.WORLD_PX_PER_M
 		_tank.global_position = rig.torso.global_position - fwd * back_px
 		_tank.global_rotation = fwd.angle() + PI * 0.5
+		_tank.z_index = ShotLift.back_z(fwd)  # d8-weapons: under the rig when he faces the camera
 		if _sprite != null and _sprite.visible:
 			_route_hose(fwd)
 

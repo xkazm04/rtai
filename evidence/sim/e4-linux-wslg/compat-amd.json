@@ -1,0 +1,25 @@
+{
+  "schema": "gtai.handheld-sim/1",
+  "label": "e4-linux-wslg-compat-amd",
+  "device": "deck",
+  "scene": "city (--arena=city --bot=course --seed=2 --rigs --view=tilt70)",
+  "build": "linux-showcase export, CitySim .so from the steamrt sniper SDK (glibc 2.31, g++ 10.3)",
+  "adapter": "OpenGL API 4.6 Mesa 25.2.8 - Compatibility - Using Device: Microsoft - D3D12 (AMD Radeon(TM) Graphics)",
+  "host": "WSL2 Ubuntu 24.04, WSLg, GALLIUM_DRIVER=d3d12, MESA_D3D12_DEFAULT_ADAPTER_NAME=AMD",
+  "pinned": "no (WSL VM)",
+  "summary": {
+    "frames": 956,
+    "low1_fps": 7.05779048425127,
+    "over33_settled": 20,
+    "over50_settled": 4,
+    "p50_ms": 19.7590007781982,
+    "p99_ms": 38.5629997253418,
+    "ticks": 1193,
+    "worst_ms": 785.075012207031,
+    "worst_settled_ms": 529.596008300781,
+    "render_gpu_ms_p50": 0,
+    "render_cpu_ms_p50": 4.55,
+    "process_ms_p50": 4.36,
+    "draw_calls_p50": 704
+  }
+}

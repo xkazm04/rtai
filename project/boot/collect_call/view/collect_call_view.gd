@@ -66,6 +66,7 @@ func _ready() -> void:
 	var layer: CanvasLayer = CanvasLayer.new()
 	layer.layer = RenderLayers.canvas(&"hud")
 	add_child(layer)
+	layer.add_child(DeathVeil.over(_stage))  # the death beat's ink, under the HUD
 	layer.add_child(hud_view)
 	if objective_view != null:
 		objective_view.stage = _stage
@@ -146,7 +147,7 @@ func fill_street(max_passes: int = 600) -> int:
 
 
 func _process(_delta: float) -> void:
-	hud_feed.fill(hud_view.state, _stage, _system)
+	hud_feed.fill_view(self, _stage, _system)
 	hud_view.state.notice = notice.text()
 	_hauler_kick()
 	_feel_kick()

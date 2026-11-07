@@ -50,7 +50,7 @@ func _init(layer: LightLayer, textures_table: Dictionary) -> void:
 		var y: float = at[1]
 		var prop: String = p["prop"]
 		if ids.has(prop):
-			_by_tex[ids[prop]] = Vector2(x, y)
+			_by_tex[ids[prop]] = _card_head(prop, Vector2(x, y))
 	@warning_ignore("return_value_discarded")
 	_h.resize(max_props)
 	_h.fill(-1)
@@ -120,3 +120,16 @@ func _hold(c: int, p: Vector3, tick: int) -> void:
 	else:
 		lights.move(_h[c], pos_px, 0.0)
 	held += 1 if _h[c] >= 0 else 0
+
+
+## Under an angled view a lamp standing as a card (city_facades.json props `light_m`) lights the
+## ground under its drawn head, not the flat art's arm end; `top` keeps `flat`.
+static func _card_head(prop: String, flat: Vector2) -> Vector2:
+	if PropCards.named() == null:
+		return flat
+	var props: Dictionary = CityGen.read_json(PropCards.TABLE).get("props", {})
+	var row: Dictionary = props.get(prop, {})
+	var at: Array = row.get("light_m", [flat.x, flat.y])
+	var x: float = at[0]
+	var y: float = at[1]
+	return Vector2(x, y)

@@ -3,7 +3,8 @@ extends Node2D
 ## Quest 1's places as flat placeholder ink: Factory Row's alley and dumpster, the payphones
 ## (ringing rings while Patch has a call), the Toner Room basement, Dock 9's floor, gates,
 ## catwalks and vault cage, the TUCK-IN crate stack with its bolt-through-a-robot mark, the
-## Harbor Road skip, and the cash taped under the phone.
+## Harbor Road skip, and the cash taped under the phone. Under a tilt the payphone and the
+## dumpsters stand as the city's cards on their footprint's south part (PropCards.stand).
 
 const KERB_ROWS: float = 338.0
 ## Places at least this big (m) get their name stencilled on the city street.
@@ -11,7 +12,7 @@ const STENCIL_MIN_R: float = 5.0
 ## The ghost powers' cars (the arena's powers pad, quest 1's ghost_cars) in the city's traffic
 ## print: one atlas per VehicleBody.State (intact, d1, d2, the soul-hijacked teal plate, the burnt
 ## wreck), cell = the car's art id, nose to +x
-## (CrowdLayers TRAFFIC_CELL_PX on a 3 x 3 grid), the car-shaped ink shadow under it.
+## (CrowdLayers TRAFFIC_CELL_PX on a 3 x 4 grid), the car-shaped ink shadow under it.
 const CAR_ATLAS: Array[Texture2D] = [
 	preload("res://features/city/art/vehicles/traffic_atlas.png"),
 	preload("res://features/city/art/vehicles/traffic_atlas_d1.png"),
@@ -21,14 +22,26 @@ const CAR_ATLAS: Array[Texture2D] = [
 ]
 const CAR_CELL_PX: Vector2 = Vector2(512.0, 256.0)
 const CAR_COLS: int = 3
+## The standing card's ground slab (m north of the footprint's south edge) where it is thinner.
+const SLAB_M: Dictionary[String, float] = {"payphone": 0.5}
 
 var stage: CollectCallStage
 ## The invented arena's floors and labels (off on the city, whose ground is the world).
 var zones: bool = true
+var _cards: VehicleStageCards = null  # n8: the cars stand as cards under a tilt
+
+
+func _enter_tree() -> void:
+	VehicleStageCards.claim()  # n8: kerb cars as cards, claimed before the street is drawn
+
+
+func _exit_tree() -> void:
+	VehicleStageCards.release()
 
 
 func _process(_delta: float) -> void:
 	queue_redraw()
+	_cards = VehicleStageCards.ensure(_cards, self, stage)
 
 
 func _draw() -> void:
@@ -144,7 +157,10 @@ func _road(r: Rect2) -> void:
 
 
 func _sprite(name: String, at: Vector2, size: Vector2) -> void:
-	draw_texture_rect(_art(name), Rect2(Ink.px(at - size * 0.5), size * Ink.PX_PER_M), false)
+	var r: Rect2 = Rect2(Ink.px(at - size * 0.5), size * Ink.PX_PER_M)
+	var slab: float = (SLAB_M[name] if SLAB_M.has(name) else size.y) * Ink.PX_PER_M
+	if not PropCards.stand(self, name, Rect2(r.position.x, r.end.y - slab, r.size.x, slab)):
+		PropBox.draw_on(self, name, _art(name), r, Ink.PX_PER_M)
 
 
 func _phone(phone: String, at: Vector2) -> void:
@@ -197,5 +213,7 @@ func _car(b: VehicleBody) -> void:
 	var tex: Texture2D = CAR_ATLAS[clampi(b.state, 0, CAR_ATLAS.size() - 1)]
 	draw_set_transform(Ink.px(b.pos + shadow), b.head.angle())
 	draw_texture_rect_region(tex, r, cell, VehicleView.SHADOW)
+	if VehicleStageCards.standing(_cards):  # the body is a card: only its flat shadow here
+		return
 	draw_set_transform(Ink.px(b.pos), b.head.angle())
 	draw_texture_rect_region(tex, r, cell)

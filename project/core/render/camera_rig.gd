@@ -20,6 +20,8 @@ var ease_ticks: int = 36
 var look_ease: float = 0.06
 var stop_cooldown: int = 20
 
+## d9-handheld: every mode's px/m x this (a device profile's zoom_k; 1 = camera.json as is).
+var zoom_k: float = 1.0
 var _from_ppm: float = 32.0
 var _ppm: float = 32.0
 var _ease_start: int = 0
@@ -132,7 +134,8 @@ func step(tick: int, vel_mps: Vector2) -> void:
 	var per: float = m["look_ahead_m_per_mps"]
 	var cap: float = m["look_ahead_max_m"]
 	cap *= _scale("look_ahead_scale")
-	var want: Vector2 = (vel_mps * per).limit_length(cap)
+	var lead: float = ViewMode.shared().lead_k  # a view row's lead at speed (1: camera.json)
+	var want: Vector2 = (vel_mps * per * lead).limit_length(cap * lead)
 	for i: int in steps:
 		_look_m = _look_m.lerp(want, look_ease)
 
@@ -170,7 +173,7 @@ func offset_px(px_per_m: float) -> Vector2:
 
 func _target_ppm() -> float:
 	var p: float = modes.get(mode, {"ppm": 32.0})["ppm"]
-	return p
+	return p * zoom_k
 
 
 func _amp_of(id: StringName) -> float:

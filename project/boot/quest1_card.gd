@@ -14,8 +14,17 @@ const CONTROLS: String = (
 	+ "Space / right click: electroshock    E: use (phones, hiding, allies, torch)\n"
 	+ "F: car (soon)    Esc: pause    Gamepad: sticks, RT fire, A use, X shock"
 )
+## d9-handheld: the controls on a handheld tier, pad first ([action] -> the pad's own button).
+const CONTROLS_PAD: String = (
+	"[move] move    [aim] aims    [fire] fires\n"
+	+ "[melee]: electroshock    [use]: use (phones, hiding, allies, torch)    [pause]: pause"
+)
+## d9-handheld: the focus mark on a handheld tier (a 7-inch panel at arm's length).
+const FOCUS_BORDER: int = 4
 
 var start_button: Button = null
+## d9-handheld: the pause card is up (B on a pad resumes, the handheld convention).
+var pause_up: bool = false
 var _panel: PanelContainer = PanelContainer.new()
 var _box: VBoxContainer = VBoxContainer.new()
 var _text: QuestText = QuestText.new()
@@ -50,7 +59,7 @@ func show_title(can_continue: bool = false) -> void:
 	_clear()
 	_label(_t(&"SLICE__TITLE", "RTAI: Uprising"), 56, Ink.INK)
 	_label(_t(&"SLICE__QUEST_1", "Quest 1: Collect Call"), 34, Ink.VERMILION)
-	_label(_t(&"SLICE__CONTROLS", CONTROLS), 20, Ink.INK)
+	_label(controls_text(), 20, Ink.INK)
 	var first: Button = null
 	if can_continue:
 		first = _button(_t(&"SLICE__CONTINUE", "Continue"), continue_pressed)
@@ -58,13 +67,16 @@ func show_title(can_continue: bool = false) -> void:
 	@warning_ignore("return_value_discarded")
 	_button(_t(&"SLICE__QUIT", "Quit"), quit_pressed)
 	(first if first != null else start_button).grab_focus.call_deferred()
+	if LaunchArgs.has("--autostart") and OS.is_debug_build():  # n8-hud: film the opening
+		start_pressed.emit.call_deferred()
 
 
 ## Pause: the controls, then the settings panel (volume, reduced motion, rebinding) if given.
 func show_pause(settings_panel: Control = null) -> void:
 	_clear()
+	pause_up = true
 	_label(_t(&"SLICE__PAUSED", "Paused"), 48, Ink.INK)
-	_label(_t(&"SLICE__CONTROLS", CONTROLS), 20, Ink.INK)
+	_label(controls_text(), 20, Ink.INK)
 	if settings_panel != null:
 		_box.add_child(settings_panel)
 	var resume: Button = _button(_t(&"SLICE__RESUME", "Resume"), resume_pressed)
@@ -94,10 +106,20 @@ func show_failed(can_continue: bool) -> void:
 
 func hide_all() -> void:
 	_panel.visible = false
+	pause_up = false
+
+
+## B (ui_cancel on a pad) on the pause card resumes. Pad events only: the keyboard's Esc is
+## both ui_cancel and the game's pause toggle, which already resumes.
+func _unhandled_input(event: InputEvent) -> void:
+	if pause_up and event is InputEventJoypadButton and event.is_action_pressed(&"ui_cancel"):
+		get_viewport().set_input_as_handled()
+		resume_pressed.emit()
 
 
 func _clear() -> void:
 	_panel.visible = true
+	pause_up = false
 	for c: Node in _box.get_children():
 		c.queue_free()
 		_box.remove_child(c)
@@ -116,10 +138,31 @@ func _button(text: String, pressed: Signal) -> Button:
 	var b: Button = Button.new()
 	b.text = text
 	b.add_theme_font_size_override(&"font_size", 28)
+	mark_focus(b)
 	@warning_ignore("return_value_discarded")
 	b.pressed.connect(func() -> void: pressed.emit())
 	_box.add_child(b)
 	return b
+
+
+## The controls line: pad first on a handheld tier, the shipped keyboard line elsewhere.
+func controls_text() -> String:
+	if DeviceProfile.shared().is_handheld():
+		return ObjectiveHint.with_keys(_t(&"SLICE__CONTROLS_PAD", CONTROLS_PAD), true)
+	return _t(&"SLICE__CONTROLS", CONTROLS)
+
+
+## On a handheld tier the focused button gets a thick ink border (the default mark is a faint
+## outline a pad player cannot find on a 7-inch panel); unchanged elsewhere.
+static func mark_focus(b: Button) -> void:
+	if not DeviceProfile.shared().is_handheld():
+		return
+	var sb: StyleBoxFlat = StyleBoxFlat.new()
+	sb.draw_center = false
+	sb.border_color = Ink.INK
+	sb.set_border_width_all(FOCUS_BORDER)
+	sb.set_expand_margin_all(FOCUS_BORDER)
+	b.add_theme_stylebox_override(&"focus", sb)
 
 
 func _t(key: StringName, source: String) -> String:

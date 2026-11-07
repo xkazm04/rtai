@@ -68,3 +68,23 @@ func test_the_shell_carries_the_teal_soul_seams_and_lenses() -> void:
 	assert_true(s.get_parent() is Sprite2D, "a child of the shell: it turns and kicks with it")
 	assert_true(s.visible, "shown without the dev flag --no-seams")
 	assert_eq(s.GOGGLES.size(), 2, "two lenses")
+
+
+func test_under_tilt_ohm_draws_its_card_over_the_shell_and_keeps_the_arms() -> void:
+	var saved: ViewMode = ViewMode._shared
+	ViewMode._shared = ViewMode.of("tilt")
+	var rig: OhmRig = OhmRig.new()
+	add_child_autofree(rig)
+	rig.pose()
+	var want: bool = ResourceLoader.exists(GhostCard.path_of(ViewMode.of("tilt").art, "ohm"))
+	assert_eq(rig._card.is_drawn(), want, "a card iff the view's strip exists")
+	for p: Sprite2D in rig._hide:
+		assert_eq(p.visible, not want, "shell, beard and hose hide under the card")
+	for a: Sprite2D in rig._arms:
+		assert_true(a.visible, "the cane and guard arms stay rig parts")
+	ViewMode._shared = ViewMode.of("top")
+	rig.pose()
+	assert_false(rig._card.is_drawn(), "straight down: no card")
+	for p: Sprite2D in rig._hide:
+		assert_true(p.visible)
+	ViewMode._shared = saved

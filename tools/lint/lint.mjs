@@ -80,13 +80,15 @@ function eventsRegistry() {
   return { name: 'events-registry', ok: !issues.length, issues };
 }
 
+/** Per-lane registration dirs under data/tables -> the schema every file in them obeys. */
+const LANE_TABLE_DIRS = { arena_stations: 'arena_station', card_sets: 'card_set' };
+
 /** DAT-03: every data/tables/<name>.json has data/schemas/<name>.schema.json and passes it. */
 function dataTables() {
   const issues = [];
   for (const table of walk(join(PROJECT, 'data', 'tables'), (n) => n.endsWith('.json'))) {
-    // arena_stations/<lane>.json: one file per lane, all under the one station schema
-    const station = basename(dirname(table)) === 'arena_stations';
-    const base = station ? 'arena_station' : basename(table, '.json');
+    // <dir>/<lane>.json: one file per lane, all under the dir's one schema (LANE_TABLE_DIRS)
+    const base = LANE_TABLE_DIRS[basename(dirname(table))] ?? basename(table, '.json');
     const schemaPath = join(PROJECT, 'data', 'schemas', `${base}.schema.json`);
     let schema;
     try {

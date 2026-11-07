@@ -1,0 +1,16 @@
+king base r0: p50 3.75 p99 7.40 worst 31.5 draws 648 cpu 0.98 cores ws 699 MB errors 0 CONTENDED(2)
+drive70 base r0: p50 2.52 p99 14.15 worst 56.9 draws 293 cpu 0.96 cores ws 837 MB errors 0
+riot base r0: p50 4.45 p99 14.19 worst 27.9 draws 832 cpu 1.00 cores ws 863 MB errors 0
+reel base r0: p50 4.25 p99 9.32 worst 23.7 draws 572 cpu 1.02 cores ws 741 MB errors 0
+king base r1: p50 3.75 p99 7.01 worst 9.5 draws 652 cpu 1.03 cores ws 703 MB errors 0
+drive70 base r1: p50 2.44 p99 4.56 worst 6.5 draws 293 cpu 1.04 cores ws 769 MB errors 0
+riot base r1: p50 4.51 p99 15.31 worst 30.9 draws 832 cpu 1.00 cores ws 834 MB errors 0
+reel base r1: p50 4.37 p99 10.27 worst 23.9 draws 572 cpu 1.02 cores ws 742 MB errors 0
+king base r2: p50 3.65 p99 9.01 worst 10.6 draws 652 cpu 1.02 cores ws 702 MB errors 0
+drive70 base r2: p50 2.57 p99 5.12 worst 6.6 draws 293 cpu 1.05 cores ws 771 MB errors 0
+riot base r2: p50 4.36 p99 14.55 worst 28.4 draws 832 cpu 1.00 cores ws 832 MB errors 0
+reel base r2: p50 4.37 p99 10.17 worst 27.3 draws 572 cpu 1.02 cores ws 739 MB errors 0
+king base: p50 3.75±0.05 p99 7.40±1.00 p99.9 10.22±7.73 worst 10.62±11.01 draws 651.91±2.31 renderCpu 0.39±0.02 cpu 1.02±0.02 ws 701.83±1.92 contended 1 errors 0
+drive70 base: p50 2.52±0.06 p99 5.12±4.79 p99.9 6.57±20.67 worst 6.62±25.19 draws 293.04±0.00 renderCpu 0.22±0.01 cpu 1.04±0.05 ws 771.20±34.07 contended 0 errors 0
+riot base: p50 4.45±0.07 p99 14.55±0.56 p99.9 27.25±0.95 worst 28.43±1.49 draws 832.07±0.05 renderCpu 0.53±0.02 cpu 1.00±0.00 ws 834.03±15.68 contended 0 errors 0
+reel base: p50 4.37±0.06 p99 10.17±0.47 p99.9 14.64±2.09 worst 23.88±1.84 draws 571.69±0.16 renderCpu 0.38±0.01 cpu 1.02±0.00 ws 741.36±1.38 contended 0 errors 0

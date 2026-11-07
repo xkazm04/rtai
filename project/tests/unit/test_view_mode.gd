@@ -61,3 +61,11 @@ func test_the_mouse_unprojects_onto_the_ground() -> void:
 	var screen: Vector2 = Vector2(ground.x, ground.y * v.ground_k())  # where the tilt draws it
 	assert_almost_eq(v.ground_of(screen).x, ground.x, 1e-4)
 	assert_almost_eq(v.ground_of(screen).y, ground.y, 1e-4)
+
+
+func test_a_live_pitch_change_moves_the_revision_and_the_projection() -> void:
+	var v: ViewMode = ViewMode.of("tilt")
+	var rev: int = ViewMode.revision
+	v.set_pitch(70.0)
+	assert_eq(ViewMode.revision, rev + 1, "cached drawings see the pitch move")
+	assert_almost_eq(v.ground_k(), sin(deg_to_rad(70.0)), 1e-6, "per-frame readers follow")

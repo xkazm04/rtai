@@ -1,0 +1,17 @@
+{"t_ms":1320,"cpu_machine_pct":5.67,"cpu_pinned_pct":5.67,"ws_mb":239.2,"private_mb":213.6,"gpu_dedicated_mb":71.8,"gpu_shared_mb":483.8,"affinity":65535}
+{"t_ms":3643,"cpu_machine_pct":7.36,"cpu_pinned_pct":7.36,"ws_mb":1128,"private_mb":1154.6,"gpu_dedicated_mb":81.9,"gpu_shared_mb":942.1,"affinity":65535}
+{"t_ms":5682,"cpu_machine_pct":4.31,"cpu_pinned_pct":4.31,"ws_mb":1301.5,"private_mb":1327.1,"gpu_dedicated_mb":82.1,"gpu_shared_mb":1006.1,"affinity":65535}
+{"t_ms":7720,"cpu_machine_pct":3.11,"cpu_pinned_pct":3.11,"ws_mb":1302.2,"private_mb":1326.7,"gpu_dedicated_mb":82.1,"gpu_shared_mb":1006.1,"affinity":65535}
+{"t_ms":9755,"cpu_machine_pct":2.45,"cpu_pinned_pct":2.45,"ws_mb":1302.3,"private_mb":1326.7,"gpu_dedicated_mb":82.1,"gpu_shared_mb":1006.1,"affinity":65535}
+{"t_ms":11791,"cpu_machine_pct":2.06,"cpu_pinned_pct":2.06,"ws_mb":1302.6,"private_mb":1327,"gpu_dedicated_mb":82.1,"gpu_shared_mb":1006.1,"affinity":65535}
+{"t_ms":13825,"cpu_machine_pct":2.11,"cpu_pinned_pct":2.11,"ws_mb":1303.6,"private_mb":1328.1,"gpu_dedicated_mb":82.1,"gpu_shared_mb":1006.1,"affinity":65535}
+{"t_ms":15860,"cpu_machine_pct":2.78,"cpu_pinned_pct":2.78,"ws_mb":1303.6,"private_mb":1328.1,"gpu_dedicated_mb":82.1,"gpu_shared_mb":1006.1,"affinity":65535}
+{"t_ms":17897,"cpu_machine_pct":3.07,"cpu_pinned_pct":3.07,"ws_mb":1303.6,"private_mb":1328.1,"gpu_dedicated_mb":82.1,"gpu_shared_mb":1006.1,"affinity":65535}
+{"t_ms":19939,"cpu_machine_pct":2.82,"cpu_pinned_pct":2.82,"ws_mb":1303.6,"private_mb":1328.1,"gpu_dedicated_mb":82.1,"gpu_shared_mb":1006.1,"affinity":65535}
+{"t_ms":21980,"cpu_machine_pct":2.58,"cpu_pinned_pct":2.58,"ws_mb":1303.6,"private_mb":1328.1,"gpu_dedicated_mb":82.1,"gpu_shared_mb":1006.1,"affinity":65535}
+{"t_ms":24017,"cpu_machine_pct":2.83,"cpu_pinned_pct":2.83,"ws_mb":1303.6,"private_mb":1328.1,"gpu_dedicated_mb":82.1,"gpu_shared_mb":1006.1,"affinity":65535}
+{"t_ms":26053,"cpu_machine_pct":2.59,"cpu_pinned_pct":2.59,"ws_mb":1303.7,"private_mb":1328.1,"gpu_dedicated_mb":82.1,"gpu_shared_mb":1006.1,"affinity":65535}
+{"t_ms":28099,"cpu_machine_pct":2.34,"cpu_pinned_pct":2.34,"ws_mb":1303.7,"private_mb":1328.1,"gpu_dedicated_mb":82.1,"gpu_shared_mb":1006.1,"affinity":65535}
+{"t_ms":30132,"cpu_machine_pct":2.83,"cpu_pinned_pct":2.83,"ws_mb":1303.7,"private_mb":1328.1,"gpu_dedicated_mb":82.1,"gpu_shared_mb":1006.1,"affinity":65535}
+{"t_ms":32172,"cpu_machine_pct":2.58,"cpu_pinned_pct":2.58,"ws_mb":1303.7,"private_mb":1328.1,"gpu_dedicated_mb":82.1,"gpu_shared_mb":1006.1,"affinity":65535}
+{"t_ms":34214,"cpu_machine_pct":2.25,"cpu_pinned_pct":2.25,"ws_mb":1303.7,"private_mb":1328.1,"gpu_dedicated_mb":0,"gpu_shared_mb":0,"affinity":0}

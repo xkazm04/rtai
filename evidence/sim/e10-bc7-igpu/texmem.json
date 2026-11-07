@@ -1,0 +1,10 @@
+{
+  "schema": "gtai.handheld-texmem/1",
+  "note": "Godot's own RENDER_TEXTURE_MEM_USED / RENDER_VIDEO_MEM_USED at the end of each run (FightFrames tex_mb_end / video_mb_end, 4513c5ff), read from the vN-rM.frames.json series before they were dropped from the commit (the raw series are not committed, as in every earlier experiment). v0 city lossless, v1 city BC7, v2 King lossless, v3 King BC7.",
+  "runs": {
+    "v0": {"tex_mb": [529.0, 529.0, 529.0], "video_mb": [850.7, 838.5, 842.7]},
+    "v1": {"tex_mb": [184.1, 184.1, 184.1], "video_mb": [473.7, 481.7, 481.7]},
+    "v2": {"tex_mb": [269.1, 269.1, 269.1], "video_mb": [528.3, 528.3, 528.3]},
+    "v3": {"tex_mb": [122.7, 122.7, 122.7], "video_mb": [381.9, 381.9, 381.9]}
+  }
+}

@@ -16,12 +16,19 @@ const CAST_DIR: Vector2 = Vector2(0.70710678, 0.70710678)
 static var _shared: ViewMode = null
 ## The camera's ground point in world px (PrintStage.place sets it each frame; read by lift_at).
 static var eye: Vector2 = Vector2.ZERO
+## Bumped by set_pitch (a combined view easing its pitch live): a drawing cached at one pitch (the
+## city floor's static props) redraws when it moves. Never moves in a fixed-pitch view.
+static var revision: int = 0
 
 var id: StringName = &"top"
 var pitch_deg: float = 90.0
 var height_k: float = 0.0
 ## The upright facing cards (RigHeadCard) under a tilt; false = the top-down head art only.
 var cards: bool = false
+## The facing cards' art folder (view.json `art`, e.g. "p55": RigHeadCard.rows_of); "" = the
+## base cards. Keyed per view row so each pitch draws its own sheets' art; a combined view may
+## set it live (the cards rebuild on their next step).
+var art: String = ""
 ## top_lift: a straight-down PERSPECTIVE camera this many metres above the ground
 ## (0 = orthographic): a height lifts away from the camera's ground point, so walls and bodies
 ## lean out from the screen centre.
@@ -31,6 +38,8 @@ var eye_h_m: float = 0.0
 var cast_k: float = 0.0
 ## Under a tilt: the standing props drawn over a body behind them (PropOcclusion); false = not.
 var occlude: bool = false
+## The look-ahead at speed (CameraRig: the in-car lead and its cap) x this; 1 = camera.json.
+var lead_k: float = 1.0
 var ids: Array[String] = []
 
 
@@ -56,11 +65,14 @@ static func of(want: String) -> ViewMode:
 			v.pitch_deg = row["pitch_deg"]
 			v.height_k = row["height_k"]
 			v.cards = row.get("cards", false) == true and v.pitch_deg < 90.0
+			v.art = str(row.get("art", ""))
 			var eye_h: float = row.get("eye_h_m", 0.0)
 			v.eye_h_m = eye_h
 			var cast: float = row.get("cast_k", 0.0)
 			v.cast_k = cast
 			v.occlude = row.get("occlude", true) == true and v.pitch_deg < 90.0
+			var lead: float = row.get("lead_k", 1.0)
+			v.lead_k = lead
 	if want != "" and not v.ids.has(want):
 		Log.warn("view", "unknown --view=%s; drawing %s" % [want, v.id])
 	return v
@@ -73,7 +85,23 @@ static func _flag_value(args: PackedStringArray) -> String:
 	return ""
 
 
+## A live pitch change (the combined view's ease, d8-view70): every per-frame reader follows on its
+## next frame; drawings cached at the old pitch see `revision` move and redraw.
+func set_pitch(deg: float) -> void:
+	pitch_deg = deg
+	revision += 1
+
+
 ## True for a straight-down view (no projection at all: today's game).
+## The pitch the drawn art is keyed by: the art key's own (`p55` -> 55, `p70` -> 70), else the live
+## pitch. Under combo the key hard-swaps while the live pitch eases, so art picked by this never
+## asks for a folder between the two (a rounded 63 has none).
+func art_pitch() -> float:
+	if art.length() > 1 and art.begins_with("p") and art.substr(1).is_valid_int():
+		return float(art.substr(1).to_int())
+	return pitch_deg
+
+
 func is_flat() -> bool:
 	return pitch_deg >= 90.0
 

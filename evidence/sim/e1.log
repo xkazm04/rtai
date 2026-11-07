@@ -1,0 +1,48 @@
+round 1/3 variant 0: v0-r0: CONTENDED (1 other Godot runs) {"frames":2683,"low1_fps":45.3985906012376,"over33_settled":2,"over50_settled":2,"p50_ms":7.60799980163574,"p99_ms":11.883
+round 1/3 variant 1: v1-r0: CONTENDED (1 other Godot runs) {"frames":2859,"low1_fps":66.1519416143346,"over33_settled":1,"over50_settled":0,"p50_ms":7.20699977874756,"p99_ms":10.920
+round 1/3 variant 2: v2-r0: CONTENDED (2 other Godot runs) {"frames":4456,"low1_fps":64.4924880007258,"over33_settled":2,"over50_settled":1,"p50_ms":3.95000004768372,"p99_ms":10.333
+round 2/3 variant 0: v0-r1: CONTENDED (1 other Godot runs) {"frames":2744,"low1_fps":71.7865548698979,"over33_settled":1,"over50_settled":0,"p50_ms":7.44500017166138,"p99_ms":10.814
+round 2/3 variant 1: v1-r1: CONTENDED (1 other Godot runs) {"frames":2905,"low1_fps":71.546110432524,"over33_settled":1,"over50_settled":0,"p50_ms":7.04899978637695,"p99_ms":10.8260
+round 2/3 variant 2: v2-r1: CONTENDED (2 other Godot runs) {"frames":4612,"low1_fps":76.0727112976475,"over33_settled":1,"over50_settled":0,"p50_ms":4.08400011062622,"p99_ms":10.182
+round 3/3 variant 0: v0-r2: CONTENDED (2 other Godot runs) {"frames":2808,"low1_fps":54.260014393007,"over33_settled":1,"over50_settled":0,"p50_ms":7.15899991989136,"p99_ms":12.1199
+round 3/3 variant 1: v1-r2: CONTENDED (3 other Godot runs) {"frames":2726,"low1_fps":49.9400719355503,"over33_settled":3,"over50_settled":0,"p50_ms":7.42600011825562,"p99_ms":14.381
+round 3/3 variant 2: v2-r2: CONTENDED (3 other Godot runs) {"frames":4509,"low1_fps":79.807274520505,"over33_settled":0,"over50_settled":0,"p50_ms":4.25299978256226,"p99_ms":10.0170
+
+--device=deck_bench --scene=reel --ticks=1200 --gpu=1 --renderer=forward_plus  (3 runs, 3 contended)
+  p50_ms                     7.45  +-0.45
+  p99_ms                    11.88  +-1.31
+  low1_fps                  54.26  +-26.39
+  over33_settled                1  +-1
+  render_gpu_ms_p50          6.69  +-0.55
+  render_cpu_ms_p50          0.26  +-0.06
+  process_ms_p50             1.99  +-0.47
+  cpu_pinned_pct_p50         6.09  +-0.96
+  private_mb_max            941.3  +-4.2
+  gpu_shared_mb_max         587.1  +-0
+  gpu_dedicated_mb_max       80.4  +-0
+
+--device=deck_bench --scene=reel --ticks=1200 --gpu=1 --renderer=mobile  (3 runs, 3 contended)
+  p50_ms                     7.21  +-0.38
+  p99_ms                    10.92  +-3.56
+  low1_fps                  66.15  +-21.61
+  over33_settled                1  +-2
+  render_gpu_ms_p50          6.34  +-0.18
+  render_cpu_ms_p50          0.25  +-0.01
+  process_ms_p50             1.85  +-0.23
+  cpu_pinned_pct_p50         5.88  +-0.65
+  private_mb_max              925  +-41.3
+  gpu_shared_mb_max         586.1  +-0
+  gpu_dedicated_mb_max       79.1  +-0
+
+--device=deck_bench --scene=reel --ticks=1200 --renderer=compat  (3 runs, 3 contended)
+  p50_ms                     4.08  +-0.3
+  p99_ms                    10.18  +-0.32
+  low1_fps                  76.07  +-15.31
+  over33_settled                1  +-2
+  render_gpu_ms_p50           0.5  +-0.07
+  render_cpu_ms_p50          1.22  +-0.06
+  process_ms_p50             1.33  +-0.06
+  cpu_pinned_pct_p50        11.35  +-0.3
+  private_mb_max            683.8  +-85.5
+  gpu_shared_mb_max          50.8  +-4
+  gpu_dedicated_mb_max      307.9  +-2

@@ -1,0 +1,26 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+D3D12 12_0 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce RTX 4090
+
+[INFO] bosses: king phase 1 (procession)
+[INFO] bosses: king engaged in king_boulevard, phase 1
+[INFO] arena: powers pad: 4 cars parked
+[INFO] arena: arena open: 20 stations
+[INFO] characters: prewarmed 33 rigs in 112.6 ms
+[INFO] arena: cast rigs: true
+[INFO] view: tick 0 order-probe view=tilt samples 1 rig pairs 0 wrong 0 mixed 0 car pairs 0 car wrong 0
+[INFO] view: tick 600 order-probe view=tilt samples 101 rig pairs 0 wrong 0 mixed 0 car pairs 103 car wrong 0
+[INFO] view: tick 1200 order-probe view=tilt samples 201 rig pairs 0 wrong 0 mixed 0 car pairs 253 car wrong 2
+[INFO] bosses: king phase 2 (court)
+[INFO] bosses: king: 4 king_gang
+[INFO] view: tick 1800 order-probe view=tilt samples 301 rig pairs 99 wrong 0 mixed 0 car pairs 314 car wrong 2
+[INFO] bosses: king: 4 king_gang
+[INFO] view: tick 2400 order-probe view=tilt samples 401 rig pairs 235 wrong 0 mixed 1 car pairs 346 car wrong 2
+[INFO] view: tick 3000 order-probe view=tilt samples 501 rig pairs 318 wrong 0 mixed 1 car pairs 356 car wrong 2
+[INFO] view: occlusion: 105 body-frames hidden over 3600 frames, frames 2285-2378
+[INFO] arena: react: 0 wounds (0 on a shield), 0 deaths, 0 ducks
+WARNING: 1 RID of type "CanvasItem" was leaked.
+   at: _free_rids (servers/rendering/renderer_canvas_cull.cpp:2733)
+WARNING: 623 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 93 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

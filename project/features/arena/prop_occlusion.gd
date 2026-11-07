@@ -1,15 +1,13 @@
 class_name PropOcclusion
 extends Node2D
-## View lab (docs/view-lab/PLAN.md; tilted --view only): the arena's standing props (walls, the
-## dumpster, crate rows: ArenaFloorView.PROP_H_M at or over MIN_H_M) are drawn with the floor,
-## under every actor. Under a tilt their faces and tops rise up the screen, so a body standing
-## just north of one (behind it: the camera sits south) would draw over the prop. Each frame this
-## node, on the actor layer over the bodies, redraws every prop with a body behind it (the floor's
-## own _prop: pixel-identical) and that body as an ink silhouette cut to the prop's drawn area:
-## hidden behind the prop, never vanished. A body in front of such a prop whose screen box meets it
-## is lifted over this node (FRONT_DZ) for the frame. (A scissor did not work on this layer:
-## clip_children and a clip_contents Control both drew nothing or one row.) Only made when the view
-## occludes (view.json `occlude`, default true under a tilt); never straight down: bit-identical.
+## View lab (tilted --view only): the arena's standing props (walls, the dumpster, crate rows:
+## ArenaFloorView.PROP_H_M at or over MIN_H_M) are drawn with the floor, under every actor. Under a
+## tilt they rise up the screen, so a body just north of one (behind it: the camera sits south)
+## would draw over it. Each frame this node, on the actor layer over the bodies, redraws every prop
+## with a body behind it (the floor's own _prop: pixel-identical) and that body as an ink silhouette
+## cut to the prop's drawn area: hidden, never vanished; a corpse (PropLying) is hidden, no ink. A
+## body in front of such a prop whose screen box meets it is lifted over this node (FRONT_DZ).
+## Only made when the view occludes (view.json `occlude`, under a tilt): `top` is bit-identical.
 
 ## Props lower than this hide nothing worth a patch (a cone).
 const MIN_H_M: float = 1.0
@@ -37,13 +35,13 @@ var _hits: Array[Hit] = []
 ## This frame's bodies in front of a prop that meets their screen box, and that prop (parallel).
 var _front: Array[CutRig] = []
 var _front_of: Array[ArenaStation.Prop] = []
+var _ends: PackedVector2Array = PackedVector2Array()  # each rig's (feet, head) this frame
 
 
-## A body hidden behind a prop: the prop's ground rect (local px), the body's feet and head.
+## A body hidden behind a prop: the prop's drawn area (local px), the prop, the body's feet, head.
 class Hit:
-	var r: Rect2
-	## The prop's drawn area (local px): its face and lifted top.
 	var area: Rect2
+	var cut: Array[PackedVector2Array]  # the silhouette's cut: the card's outline(s), else area
 	var prop: ArenaStation.Prop
 	var feet: Vector2
 	var head: Vector2
@@ -120,14 +118,15 @@ func _draw() -> void:
 			done[h.prop] = true
 			_floor._prop(self, base + h.prop.at, h.prop)
 	for h: Hit in _hits:
-		for part: PackedVector2Array in Geometry2D.intersect_polygons(
-			silhouette(h.feet, h.head), _poly(h.area)
-		):
-			if not Geometry2D.triangulate_polygon(part).is_empty():  # a sliver: nothing to ink
-				draw_colored_polygon(part, SILHOUETTE)
-				@warning_ignore("return_value_discarded")
-				part.append(part[0])
-				draw_polyline(part, RIM, Ink.LINE_PX * 0.5)
+		for cut: PackedVector2Array in h.cut:
+			for part: PackedVector2Array in Geometry2D.intersect_polygons(
+				silhouette(h.feet, h.head), cut
+			):
+				if not Geometry2D.triangulate_polygon(part).is_empty():  # a sliver: no ink
+					draw_colored_polygon(part, SILHOUETTE)
+					@warning_ignore("return_value_discarded")
+					part.append(part[0])
+					draw_polyline(part, RIM, Ink.LINE_PX * 0.5)
 
 
 ## An upright body from `feet` to `head` (local px): RigCastShadows' figure, its shoulders SIL_W_M.
@@ -140,23 +139,23 @@ static func silhouette(feet: Vector2, head: Vector2) -> PackedVector2Array:
 	return fig
 
 
-static func _poly(r: Rect2) -> PackedVector2Array:
-	var ne: Vector2 = Vector2(r.end.x, r.position.y)
-	return PackedVector2Array([r.position, ne, r.end, Vector2(r.position.x, r.end.y)])
-
-
 ## Every (body, prop) pair where the body stands behind the prop and its screen box meets the
 ## prop's drawn area, in this node's local px.
 func hits() -> Array[Hit]:
 	var out: Array[Hit] = []
 	var arena: ArenaStage = _floor.stage as ArenaStage
-	if arena == null:
+	var sorter: RigDepthSort = RigDepthSort.on(_layer)  # its rigs: this frame's, collected once
+	if arena == null or sorter == null:
 		return out
 	_front.clear()
 	_front_of.clear()
-	var rigs: Array[CutRig] = []
-	for c: Node in _layer.get_children():
-		RigCastShadows.collect(c, 0, rigs)
+	var rigs: Array[CutRig] = sorter.frame_rigs
+	_ends.clear()
+	var lift: Vector2 = ViewMode.shared().lift_px(1.0) * RigCastShadows.BODY_IN_HIPS
+	for rig: CutRig in rigs:
+		var hip: float = RigCastShadows.hip_px(rig)
+		var head: Vector2 = rig.global_position + lift * hip / SimConst.PX_PER_M
+		_ends += PackedVector2Array([to_local(rig.global_position), to_local(head)])
 	for s: ArenaStation in arena.stations.stations:
 		for p: ArenaStation.Prop in s.props:
 			if ArenaFloorView.PROP_H_M.get(p.kind, 0.0) >= MIN_H_M:
@@ -167,36 +166,33 @@ func hits() -> Array[Hit]:
 func _hits_of(at: Vector2, p: ArenaStation.Prop, rigs: Array[CutRig], out: Array[Hit]) -> void:
 	var r: Rect2 = Rect2(Ink.px(at - p.size * 0.5), p.size * Ink.PX_PER_M)
 	var area: Rect2 = drawn_area(r, p)
-	for rig: CutRig in rigs:
-		var feet: Vector2 = to_local(rig.global_position)
-		var hip: float = RigTilt.hip_h(rig) * absf(rig.global_scale.x)
-		var up: Vector2 = ViewMode.shared().lift_px(1.0) * hip * RigCastShadows.BODY_IN_HIPS
+	var cut: Array[PackedVector2Array] = []
+	for i: int in rigs.size():
+		var feet: Vector2 = _ends[i * 2]
+		if not PropLying.patch(self, rigs[i], feet, _ends[i * 2 + 1], area).has_area():
+			continue
 		var h: Hit = Hit.new()
-		h.r = r
 		h.area = area
+		cut = ArenaPropCards.cut_polys(p.kind, r, area) if cut.is_empty() else cut
+		h.cut = cut
 		h.prop = p
 		h.feet = feet
-		h.head = to_local(rig.global_position + up / SimConst.PX_PER_M)
-		if not _patch(h, area).has_area():
-			continue
+		h.head = feet if rigs[i].dead and PropLying.ON else _ends[i * 2 + 1]  # a corpse: no ink
 		if feet.y < r.position.y:  # north of the prop's north edge: behind it
 			out.append(h)
 		else:
-			_front.append(rig)
+			_front.append(rigs[i])
 			_front_of.append(p)
 
 
-## The prop's drawn area on screen (local px): its ground rect grown up the screen by its lift.
+## The prop's drawn area (local px): city's card (ArenaPropCards.stand_rect), else the box lifted.
 func drawn_area(r: Rect2, p: ArenaStation.Prop) -> Rect2:
+	var card: Rect2 = ArenaPropCards.stand_rect(p.kind, r)
+	if card.has_area():
+		return card
 	var h_m: float = ArenaFloorView.PROP_H_M.get(p.kind, 0.0)
 	var up: Vector2 = ViewMode.shared().lift_at(get_global_transform() * r.get_center(), h_m)
 	return Rect2(r.position + Vector2(0.0, up.y), r.size + Vector2(0.0, -up.y))
-
-
-func _patch(h: Hit, area: Rect2 = Rect2()) -> Rect2:
-	if not area.has_area():
-		area = drawn_area(h.r, h.prop)
-	return body_patch(h.feet, h.head, area)
 
 
 ## The part of a body's screen box (feet to head, local px) inside a prop's drawn `area`.

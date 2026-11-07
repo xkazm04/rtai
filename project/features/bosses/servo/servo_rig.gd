@@ -12,15 +12,8 @@ const ART_PPM: float = 96.0
 const ART: String = "res://features/bosses/servo/art/%s.png"
 const STRIDE_M: float = 2.2
 const FLASH_TICKS: int = 5
-const PARTS: Array[StringName] = [
-	&"head", &"pad", &"pelvis", &"torso", &"rack", &"rack3", &"thigh", &"shin", &"arm"
-]
-## The pads' art: pad_hazard (tools/art/servo_pad_rim.py: the sheet's ink and copper hazard rim)
-## or pad (the it13 cut: copper on mid brown, one brown band at 32 px/m).
-const PAD_ART: StringName = &"pad_hazard"
-## A docked drone: a cream body (metres square, ink rim) in each full rack cell, the sheet's cream
-## drones in the bays (the wing art alone printed them as dark cells). The flying drone's whole
-## sprite there was 18 rotor crosses: noise at 32 px/m. 0 = off.
+## A docked drone: a cream body (metres square, ink rim) in each full rack cell (the wing art alone
+## printed dark cells; the flying drone's sprite there was noise at 32 px/m). 0 = off.
 const DOCKED_M: float = 0.34
 ## The docked drones on the art's bays (ServoBays: a hub and rotor rings over the art's printed
 ## quad drone, the sheet's bays); false = the it14 cream squares on the sim's cells.
@@ -33,8 +26,7 @@ const PAD_AHEAD_M: float = 2.0
 ## (metres). The sheet's top view has two parallel legs under the torso (it13: 0.9 / 0.5, splayed).
 const LEG_SPLAY_M: float = 0.25
 const KNEE_OUT_M: float = 0.2
-## The struts' width against their art: the sheet's pad arms and legs are chunky blocks (it19:
-## 1.0, the art's 0.25 m piston). Render only.
+## The struts' width against their art: the sheet's chunky pad arms and legs (it19: 1.0).
 const ARM_W_K: float = 1.6
 const LEG_W_K: float = 1.3
 
@@ -43,7 +35,7 @@ var px: float = 32.0
 var fight: BossFight = null
 var rack: ServoRack = null
 var tick: int = 0
-var _tex: Dictionary[StringName, Texture2D] = {}
+var _parts: ServoParts = ServoParts.new()  # n8: the view's parts, by art key
 var _walk: float = 0.0
 var _last_pos: Vector2 = Vector2.ZERO
 var _spin: float = 0.0
@@ -55,19 +47,24 @@ var _shift: ServoShift = ServoShift.new()
 var _spine: ServoSpine = ServoSpine.new()
 var _bays: ServoBays = ServoBays.new()
 var _pad: ServoPad = ServoPad.new()
+var _up: Vector2 = Vector2.ZERO  # d8: the upper body's lift (m; ServoArt.stand); ZERO in top
 
 
 func _ready() -> void:
-	for n: StringName in PARTS:
-		_tex[n] = load(ART % n) as Texture2D
-	_tex[PAD_ART] = load(ART % PAD_ART) as Texture2D
-	_pad.tex = _tex[PAD_ART]
-	_spine.cap = _tex[&"head"]
+	_sync_art()
+
+
+func _sync_art() -> void:  # n8: the view's parts, again on an art key change (combo's swap)
+	if _parts.sync():
+		_pad.tex = _parts.tex[ServoParts.PAD]
+		_spine.cap = _parts.tex[&"head"]
+		_fall.drone_tex = _parts.tex[&"drone"]
 
 
 ## Called once per sim tick by the view: advances the gait and the pad spin, then redraws.
 func pose(p_tick: int) -> void:
 	tick = p_tick
+	_sync_art()
 	_fall.px = px
 	_shift.px = px
 	_spine.px = px
@@ -105,6 +102,7 @@ func _draw() -> void:
 	var k: float = 1.0 + 0.015 * sin(_walk * 2.0) if dt < 0 else ServoFall.scale_k(dt)
 	k *= ServoShift.lift_k(fight)
 	var tint: Color = _tint() if dt < 0 else ServoFall.tint(dt)
+	_up = ServoArt.stand(self, o, fwd, px) * (1.0 if dt < 0 else ServoFall.stand_k(dt))
 	for s: float in [-1.0, 1.0]:
 		_leg(o, fwd, side, s, tint)
 	var pad_w: float = PAD_OUT_M - (ServoFall.pad_in_m(dt) if dt >= 0 else 0.0)
@@ -113,11 +111,12 @@ func _draw() -> void:
 	_pad.spin = _spin
 	_pad.tint = tint
 	for s: float in [-1.0, 1.0]:
-		var pad: Vector2 = o + side * s * pad_w + fwd * PAD_AHEAD_M
-		_strut(&"arm", o + side * s * 0.9 + fwd * 0.2, pad, tint, ARM_W_K)
+		var pad: Vector2 = o + _up * 0.5 + side * s * pad_w + fwd * PAD_AHEAD_M
+		_strut(&"arm", o + _up + side * s * 0.9 + fwd * 0.2, pad, tint, ARM_W_K)
 		_pad.draw(self, pad, fwd.angle() - PI / 2, s, pad_k)
 		if _stage(&"recovery", false):
 			_pad.steam(self, pad, tick)
+	o += _up  # the upper body stands over the feet
 	_part(&"pelvis", o + fwd * 0.5, fwd.angle() - PI / 2, k, tint)
 	_wings(o, fwd, side, k, tint)
 	_spine.draw(self, o, fwd, k, tint)
@@ -137,9 +136,9 @@ func _draw() -> void:
 
 func _leg(o: Vector2, fwd: Vector2, side: Vector2, s: float, tint: Color) -> void:
 	# The target's top view: the legs step out in front of the rack, between the pads.
-	var hip: Vector2 = o + side * s * 0.6 + fwd * 0.5
+	var hip: Vector2 = o + _up + side * s * 0.6 + fwd * 0.5
 	var swing: float = sin(_walk + (PI if s > 0.0 else 0.0))
-	var foot: Vector2 = hip + side * s * LEG_SPLAY_M + fwd * (1.9 + 0.7 * swing)
+	var foot: Vector2 = hip - _up + side * s * LEG_SPLAY_M + fwd * (1.9 + 0.7 * swing)
 	var knee: Vector2 = (hip + foot) * 0.5 + side * s * KNEE_OUT_M
 	_strut(&"thigh", hip, knee, tint, LEG_W_K)
 	_strut(&"shin", knee, foot, tint, LEG_W_K)
@@ -147,7 +146,7 @@ func _leg(o: Vector2, fwd: Vector2, side: Vector2, s: float, tint: Color) -> voi
 
 func _wings(o: Vector2, fwd: Vector2, side: Vector2, k: float, tint: Color) -> void:
 	var rot: float = fwd.angle() - PI / 2
-	var wing: Texture2D = _tex[&"rack"]
+	var wing: Texture2D = _parts.tex[&"rack"]
 	for s: float in [-1.0, 1.0]:
 		if s > 0.0 and rack.count(ServoRack.Cell.BROKEN) > 0:
 			continue  # phase 3: the wing of ServoRack.break_wing (its across < 0 is our side +1)
@@ -193,7 +192,7 @@ func _bay_points(o: Vector2, fwd: Vector2, k: float) -> Array[Vector2]:
 func _wing_art(wing: Texture2D, tint: Color) -> void:
 	var sz: Vector2 = wing.get_size()
 	if rack.rows() == 3:
-		var deep: Texture2D = _tex[&"rack3"]
+		var deep: Texture2D = _parts.tex[&"rack3"]
 		draw_texture(deep, Vector2(-sz.x * 0.5, sz.y * 0.5 - deep.get_height()), tint)
 		return
 	draw_texture(wing, -sz * 0.5, tint)
@@ -219,7 +218,7 @@ func _docked(at: Vector2, rot: float, k: float, tint: Color) -> void:
 
 
 func _part(n: StringName, at: Vector2, rot: float, k: float, tint: Color) -> void:
-	var t: Texture2D = _tex[n]
+	var t: Texture2D = _parts.tex[n]
 	draw_set_transform(at * px, rot, Vector2(k, k) * px / ART_PPM)
 	draw_texture(t, -t.get_size() * 0.5, tint)
 	draw_set_transform(Vector2.ZERO)
@@ -227,7 +226,7 @@ func _part(n: StringName, at: Vector2, rot: float, k: float, tint: Color) -> voi
 
 ## A strut part (art long axis down the page) stretched from a to b.
 func _strut(n: StringName, a: Vector2, b: Vector2, tint: Color, wk: float) -> void:
-	var t: Texture2D = _tex[n]
+	var t: Texture2D = _parts.tex[n]
 	var len_px: float = a.distance_to(b) * px
 	var w: float = px / ART_PPM * wk
 	draw_set_transform(

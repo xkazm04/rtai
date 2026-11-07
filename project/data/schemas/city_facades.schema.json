@@ -1,0 +1,179 @@
+{
+  "$defs": {
+    "row": {
+      "additionalProperties": false,
+      "properties": {
+        "height_m": {
+          "maximum": 60,
+          "minimum": 0,
+          "type": "number"
+        },
+        "style": {
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "height_m",
+        "style"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "gtai.city-facades/1",
+  "additionalProperties": false,
+  "properties": {
+    "art_fallback": {
+      "additionalProperties": {
+        "pattern": "^p[0-9]+$",
+        "type": "string"
+      },
+      "type": "object"
+    },
+    "by_name": {
+      "additionalProperties": {
+        "$ref": "#/$defs/row"
+      },
+      "propertyNames": {
+        "pattern": "^[a-z][a-z0-9_]*$"
+      },
+      "type": "object"
+    },
+    "default": {
+      "$ref": "#/$defs/row"
+    },
+    "doc": {
+      "type": "string"
+    },
+    "height_k": {
+      "maximum": 2,
+      "minimum": 0,
+      "type": "number"
+    },
+    "occlude": {
+      "description": "CityOcclusion: redraw a building over a body behind it, the body as an ink silhouette (night n8 city); false = the body draws over the lifted roof",
+      "type": "boolean"
+    },
+    "parked_cards": {
+      "description": "ChunkLift: the kerb-parked cars go to VehicleParked as cards (n8 vehicles), not drawn flat",
+      "type": "boolean"
+    },
+    "props": {
+      "additionalProperties": {
+        "additionalProperties": false,
+        "properties": {
+          "art": {
+            "pattern": "^res://",
+            "type": "string"
+          },
+          "cast_blob_m": {
+            "exclusiveMinimum": 0,
+            "maximum": 1,
+            "type": "number"
+          },
+          "cast_m": {
+            "exclusiveMinimum": 0,
+            "maximum": 8,
+            "type": "number"
+          },
+          "cell_w_m": {
+            "exclusiveMinimum": 0,
+            "maximum": 12,
+            "type": "number"
+          },
+          "cell_w_m_p55": {
+            "exclusiveMinimum": 0,
+            "maximum": 12,
+            "type": "number"
+          },
+          "cell_w_m_p70": {
+            "exclusiveMinimum": 0,
+            "maximum": 12,
+            "type": "number"
+          },
+          "foot_m": {
+            "items": {
+              "maximum": 8,
+              "minimum": -8,
+              "type": "number"
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+          },
+          "light_m": {
+            "items": {
+              "maximum": 8,
+              "minimum": -8,
+              "type": "number"
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+          },
+          "mirror": {
+            "type": "boolean"
+          },
+          "print_art": {
+            "pattern": "^res://",
+            "type": "string"
+          },
+          "turn": {
+            "maximum": 3,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "art",
+          "cell_w_m"
+        ],
+        "type": "object"
+      },
+      "description": "PropCards: a city_textures prop name drawn standing as a card from its five-facing strip under an angled view (art with <art> = the view's art key); cell_w_m = one strip cell's width on the ground (cell_w_m_<art>, e.g. cell_w_m_p70, overrides it for that pitch's strip: a redrawn strip whose widest facing differs); turn = quarter turns from the art's front (south at turn 0) to the texture's; foot_m = the card's foot in the flat art's frame (m from its centre, turned with it; default the footprint's south-edge centre: a lamp's post base at one end of its arm); mirror = the strip's side views face the other way (true: the side view's front faces east, as the lamp's arm); light_m = a night lamp's light under the card (CityPropLights, m in the flat art's frame; replaces lights.json at_m under an angled view); print_art = the strip pre-printed the world way (tools/art/print_twin.py) for a redraw under the actor layer's item print; cast_m = a pole: its flat art's shadow command draws as a hatched stroke this long (m) from the card's foot, falling down-right as the bake's offset (absent: the flat art's silhouette); cast_blob_m = the radius (m) of a round ground blob ending that stroke (a lamp's globe, a signal head)",
+      "propertyNames": {
+        "pattern": "^[a-z][a-z0-9_]*$"
+      },
+      "type": "object"
+    },
+    "schema": {
+      "const": "gtai.city-facades/1"
+    },
+    "styles": {
+      "additionalProperties": {
+        "additionalProperties": false,
+        "properties": {
+          "art": {
+            "pattern": "^res://",
+            "type": "string"
+          },
+          "bay_m": {
+            "exclusiveMinimum": 0,
+            "type": "number"
+          },
+          "bays": {
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "art",
+          "bay_m",
+          "bays"
+        ],
+        "type": "object"
+      },
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema",
+    "doc",
+    "default",
+    "by_name",
+    "styles",
+    "height_k",
+    "art_fallback"
+  ],
+  "type": "object"
+}

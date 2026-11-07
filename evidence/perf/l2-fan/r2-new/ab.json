@@ -1,0 +1,292 @@
+{
+ "schema": "gtai.perf-ab/1",
+ "when": "2026-11-07T09:56:30.898Z",
+ "locked": true,
+ "arms": [
+  {
+   "name": "new",
+   "user": [],
+   "engine": []
+  }
+ ],
+ "summary": {
+  "riot": {
+   "new": {
+    "p50": {
+     "a": {
+      "median": 5.946,
+      "spread": 0,
+      "n": 1
+     },
+     "b": {
+      "median": 5.946,
+      "spread": 0,
+      "n": 1
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 0,
+     "call": "WASH"
+    },
+    "p99": {
+     "a": {
+      "median": 11.914,
+      "spread": 0,
+      "n": 1
+     },
+     "b": {
+      "median": 11.914,
+      "spread": 0,
+      "n": 1
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 0,
+     "call": "WASH"
+    },
+    "p999": {
+     "a": {
+      "median": 20.799,
+      "spread": 0,
+      "n": 1
+     },
+     "b": {
+      "median": 20.799,
+      "spread": 0,
+      "n": 1
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 0,
+     "call": "WASH"
+    },
+    "worst": {
+     "a": {
+      "median": 31.974,
+      "spread": 0,
+      "n": 1
+     },
+     "b": {
+      "median": 31.974,
+      "spread": 0,
+      "n": 1
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 0,
+     "call": "WASH"
+    },
+    "mean": {
+     "a": {
+      "median": 6.199293872694835,
+      "spread": 0,
+      "n": 1
+     },
+     "b": {
+      "median": 6.199293872694835,
+      "spread": 0,
+      "n": 1
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 0,
+     "call": "WASH"
+    },
+    "pace99": {
+     "a": {
+      "median": 7.4190000000000005,
+      "spread": 0,
+      "n": 1
+     },
+     "b": {
+      "median": 7.4190000000000005,
+      "spread": 0,
+      "n": 1
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 0,
+     "call": "WASH"
+    },
+    "over25": {
+     "a": {
+      "median": 1,
+      "spread": 0,
+      "n": 1
+     },
+     "b": {
+      "median": 1,
+      "spread": 0,
+      "n": 1
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 0,
+     "call": "WASH"
+    },
+    "draws": {
+     "a": {
+      "median": 831.888161808447,
+      "spread": 0,
+      "n": 1
+     },
+     "b": {
+      "median": 831.888161808447,
+      "spread": 0,
+      "n": 1
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 0,
+     "call": "WASH"
+    },
+    "renderCpu": {
+     "a": {
+      "median": 0.614374182626366,
+      "spread": 0,
+      "n": 1
+     },
+     "b": {
+      "median": 0.614374182626366,
+      "spread": 0,
+      "n": 1
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 0,
+     "call": "WASH"
+    },
+    "renderGpu": {
+     "a": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "b": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "delta": null,
+     "pct": null,
+     "noise": null,
+     "call": "WASH"
+    },
+    "process": {
+     "a": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "b": {
+      "median": null,
+      "spread": null,
+      "n": 0
+     },
+     "delta": null,
+     "pct": null,
+     "noise": null,
+     "call": "WASH"
+    },
+    "sim": {
+     "a": {
+      "median": 0.12518738845925,
+      "spread": 0,
+      "n": 1
+     },
+     "b": {
+      "median": 0.12518738845925,
+      "spread": 0,
+      "n": 1
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 0,
+     "call": "WASH"
+    },
+    "cpuCores": {
+     "a": {
+      "median": 1.0023632544235275,
+      "spread": 0,
+      "n": 1
+     },
+     "b": {
+      "median": 1.0023632544235275,
+      "spread": 0,
+      "n": 1
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 0,
+     "call": "WASH"
+    },
+    "peakWsMb": {
+     "a": {
+      "median": 853.30078125,
+      "spread": 0,
+      "n": 1
+     },
+     "b": {
+      "median": 853.30078125,
+      "spread": 0,
+      "n": 1
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 0,
+     "call": "WASH"
+    },
+    "threads": {
+     "a": {
+      "median": 75,
+      "spread": 0,
+      "n": 1
+     },
+     "b": {
+      "median": 75,
+      "spread": 0,
+      "n": 1
+     },
+     "delta": 0,
+     "pct": 0,
+     "noise": 0,
+     "call": "WASH"
+    },
+    "contended": 1,
+    "scriptErrors": 0
+   }
+  }
+ },
+ "raw": {
+  "riot": {
+   "new": [
+    {
+     "stats": {
+      "frames": 1681,
+      "mean": 6.199293872694835,
+      "p50": 5.946,
+      "p99": 11.914,
+      "p999": 20.799,
+      "worst": 31.974,
+      "low1Fps": 62.9720589270302,
+      "over25": 1,
+      "over50": 0,
+      "pace50": 0.7960000000000003,
+      "pace99": 7.4190000000000005
+     },
+     "side": {
+      "draws": 831.888161808447,
+      "renderCpu": 0.614374182626366,
+      "sim": 0.12518738845925,
+      "cpuCores": 1.0023632544235275,
+      "peakWsMb": 853.30078125,
+      "threads": 75
+     },
+     "errors": 0,
+     "contended": true,
+     "others": 4
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,41 @@
+{
+  "date": "2026-11-07",
+  "gates": {
+    "director_reel": {
+      "commit": "230c786f",
+      "logs": [
+        "director-reel-it18b-top.log",
+        "director-reel-it18b-tilt70.log"
+      ],
+      "tilt70": "19/19 all down, 0 SCRIPT ERROR",
+      "top": "19/19 all down, 0 SCRIPT ERROR"
+    },
+    "lint": "15/15",
+    "scenarios": {
+      "commit": "REPORT draft tree (before 230c786f)",
+      "failed": 0,
+      "log": "scenarios-it18.log",
+      "ran": 52
+    },
+    "top_identity": {
+      "commit": "2bcfdc56",
+      "file": "identity-it18/top_s2.md5",
+      "framemd5_seed2": "identical to it17"
+    },
+    "unit_full": {
+      "commit": "230c786f",
+      "failed": 0,
+      "flaky": 0,
+      "passed": 1550
+    }
+  },
+  "head": "230c786f",
+  "iteration": 18,
+  "lane": "vehicles",
+  "milestones": [
+    "5b350580 merge n8-view: bay 3's number over the stage van (filmed 32 + 64 px/m)",
+    "7f9cbf26 DARK_LAMP_DEG: unlit rear lenses hue 20-23 -> 31-33 on screen (seed 13 f180)",
+    "2bcfdc56 TAXI_SHEET option (taxi_70_v3), default off: a Call",
+    "230c786f stage cards stand on the attach frame (King boulevard f0)"
+  ]
+}

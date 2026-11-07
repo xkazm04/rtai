@@ -12,6 +12,10 @@ const TEXT_SIZE: int = 24
 ## Edge arrows stay below the beat panel and above the subtitle box (screen px).
 const TOP_CLEAR: float = 250.0
 const BOTTOM_CLEAR: float = 340.0
+## n8-hud: the prompt on the HUD's torn memo paper (HudPaper), grown PAPER_GROW (left, top, right,
+## bottom) round the words so the tape and the torn hatch clear them; false = the flat cream box.
+const PAPER: bool = true
+const PAPER_GROW: Vector4 = Vector4(26.0, 30.0, 44.0, 24.0)
 
 var stage: CollectCallStage
 var system: QuestSystem
@@ -44,9 +48,19 @@ func _prompt(words: String) -> void:
 	var font: Font = ThemeDB.fallback_font
 	var size: Vector2 = font.get_string_size(words, HORIZONTAL_ALIGNMENT_LEFT, -1, TEXT_SIZE)
 	var at: Vector2 = Vector2(48.0, 186.0)
-	draw_rect(Rect2(at - Vector2(14, 30), size + Vector2(28, 18)), Color(Ink.CREAM, 0.92))
-	draw_rect(Rect2(at - Vector2(14, 30), size + Vector2(28, 18)), Ink.INK, false, 3.0)
+	if PAPER:
+		HudPaper.draw(self, prompt_paper(at, size))
+	else:
+		draw_rect(Rect2(at - Vector2(14, 30), size + Vector2(28, 18)), Color(Ink.CREAM, 0.92))
+		draw_rect(Rect2(at - Vector2(14, 30), size + Vector2(28, 18)), Ink.INK, false, 3.0)
 	draw_string(font, at, words, HORIZONTAL_ALIGNMENT_LEFT, -1, TEXT_SIZE, Ink.INK)
+
+
+## n8-hud: the memo paper round the prompt's words (baseline `at`, measured `size`).
+static func prompt_paper(at: Vector2, size: Vector2) -> Rect2:
+	var g: Vector4 = PAPER_GROW
+	var words_box: Rect2 = Rect2(at - Vector2(0.0, size.y * 0.75), size)
+	return words_box.grow_individual(g.x, g.y, g.z, g.w)
 
 
 func _goal(goal_m: Vector2) -> void:

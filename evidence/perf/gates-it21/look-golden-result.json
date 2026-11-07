@@ -1,0 +1,120 @@
+{
+  "blessed": false,
+  "frames": [
+    {
+      "far": 0.000703125,
+      "file": "look-d1-32ppm.png",
+      "found": true,
+      "grade": "day",
+      "look": "d1",
+      "mean": 0.0644270833333333,
+      "ok": true,
+      "ppm": 32
+    },
+    {
+      "far": 0.001609375,
+      "file": "look-d1-48ppm.png",
+      "found": true,
+      "grade": "day",
+      "look": "d1",
+      "mean": 0.147,
+      "ok": true,
+      "ppm": 48
+    },
+    {
+      "far": 0.000703125,
+      "file": "look-d4-32ppm.png",
+      "found": true,
+      "grade": "day",
+      "look": "d4",
+      "mean": 0.0609114583333333,
+      "ok": true,
+      "ppm": 32
+    },
+    {
+      "far": 0.00190625,
+      "file": "look-d4-48ppm.png",
+      "found": true,
+      "grade": "day",
+      "look": "d4",
+      "mean": 0.154760416666667,
+      "ok": true,
+      "ppm": 48
+    },
+    {
+      "far": 0.0029375,
+      "file": "look-d4-64ppm.png",
+      "found": true,
+      "grade": "day",
+      "look": "d4",
+      "mean": 0.267770833333333,
+      "ok": true,
+      "ppm": 64
+    },
+    {
+      "far": 0.00165625,
+      "file": "look-d5-48ppm-ov.png",
+      "found": true,
+      "grade": "day",
+      "look": "d5",
+      "mean": 0.144973958333333,
+      "ok": true,
+      "ppm": 48
+    },
+    {
+      "far": 0.00203125,
+      "file": "look-d5-64ppm-ov.png",
+      "found": true,
+      "grade": "day",
+      "look": "d5",
+      "mean": 0.2001875,
+      "ok": true,
+      "ppm": 64
+    },
+    {
+      "far": 0.001296875,
+      "file": "look-auto-48ppm-ov.png",
+      "found": true,
+      "grade": "day",
+      "look": "auto",
+      "mean": 0.115338541666667,
+      "ok": true,
+      "ppm": 48
+    },
+    {
+      "far": 0.001625,
+      "file": "look-auto-56ppm-ov.png",
+      "found": true,
+      "grade": "day",
+      "look": "auto",
+      "mean": 0.153364583333333,
+      "ok": true,
+      "ppm": 56
+    },
+    {
+      "far": 0.001953125,
+      "file": "look-auto-64ppm-ov.png",
+      "found": true,
+      "grade": "day",
+      "look": "auto",
+      "mean": 0.189942708333333,
+      "ok": true,
+      "ppm": 64
+    },
+    {
+      "far": 0.0005625,
+      "file": "look-d4-48ppm-night.png",
+      "found": true,
+      "grade": "night",
+      "look": "d4",
+      "mean": 0.05946875,
+      "ok": true,
+      "ppm": 48
+    }
+  ],
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "max_far": 0.02,
+  "max_mean": 4.0,
+  "ok": true,
+  "schema": "gtai.look-golden/1"
+}

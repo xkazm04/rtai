@@ -1,0 +1,19 @@
+{"tag":"smoke-off","mode":"title","extra":"--menu-idle=off","others":12,"title":0.045,"ws_mb":619,"project":"scratch perf-before at bf6398e1 + L13 (title+pause variant)"}
+{"tag":"smoke-on","mode":"title","extra":"","others":12,"title":0.01,"ws_mb":616}
+{"tag":"t2-off","mode":"title","extra":"--menu-idle=off","others":0,"title":0.037,"ws_mb":605}
+{"tag":"t2-on","mode":"title","extra":"","others":0,"title":0.006,"ws_mb":603}
+{"tag":"t3-on","mode":"title","extra":"","others":10,"title":0.008,"ws_mb":618}
+{"tag":"t3-off","mode":"title","extra":"--menu-idle=off","others":8,"title":0.051,"ws_mb":607}
+{"tag":"p1-off","mode":"pause","extra":"--menu-idle=off","others":8,"play":0.27,"paused":0.185,"ws_mb":709}
+{"tag":"p1-on","mode":"pause","extra":"","others":10,"play":0.01,"paused":0.019,"ws_mb":715,"note":"F19 stall"}
+{"tag":"p1-lowproc","mode":"pause","extra":"--menu-idle=lowproc","others":6,"play":0.216,"paused":0.184,"ws_mb":716}
+{"tag":"p1-on2","mode":"pause","extra":"","others":2,"play":0.197,"paused":0.175,"ws_mb":729}
+{"tag":"p1-off2","mode":"pause","extra":"--menu-idle=off","others":0,"play":0.203,"paused":0.211,"ws_mb":711}
+{"tag":"p2-on","mode":"pause","extra":"","others":4,"play":0.174,"paused":0.152,"ws_mb":710,"started":true}
+{"tag":"p2-off","mode":"pause","extra":"--menu-idle=off","others":4,"play":0.19,"paused":0.154,"ws_mb":715,"started":true}
+{"tag":"p3-on","mode":"pause","extra":"","others":4,"play":0.205,"paused":0.203,"ws_mb":713,"started":true}
+{"tag":"p3-off","mode":"pause","extra":"--menu-idle=off","others":2,"play":0.216,"paused":0.156,"ws_mb":714,"started":true}
+{"tag":"p4-on","mode":"pause","extra":"","others":6,"play":0.197,"paused":0.142,"ws_mb":712,"started":true}
+{"tag":"p5-on","mode":"pause","extra":"","others":6,"play":0.19,"paused":0.141,"ws_mb":728,"started":true}
+{"tag":"p6-on","mode":"pause","extra":"","others":6,"play":0.005,"paused":0.01,"ws_mb":736,"started":true,"note":"F19 stall"}
+{"tag":"p7-on","mode":"pause","extra":"","others":6,"play":0.195,"paused":0.182,"ws_mb":727,"started":true}

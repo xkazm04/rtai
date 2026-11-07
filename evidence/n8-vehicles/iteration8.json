@@ -1,0 +1,49 @@
+{
+ "branch": "n8-vehicles",
+ "commits": {
+  "72918a76": "JOURNAL iteration 8",
+  "8d139438": "the p70 cards turn through nine views a half turn (22.5-deg in-betweens in atlas columns 5-8; VehicleViews; FINE checked against the atlas)",
+  "a265dfba": "the police C in-between graded to its neighbours (MATCH_C, paint hue only); decision line"
+ },
+ "evidence_dir": "C:/Users/kazda/kiro/gtai-masters/n8/vehicles",
+ "films": {
+  "drive": "drive_tilt70_48ppm_nine_views.mp4 (vehicle_frame --clip --view=tilt70, 0 SCRIPT ERROR)",
+  "police_c_match": "police_c_match_64ppm_before_top_after_bottom.png (framemd5: only the C frames 191-212, 326-347 differ)",
+  "turn_between": "turn360_tilt70_{64,32}ppm_between_before_after.mp4 (before = this head with the 5-column atlas), turn_between_sedan_64ppm_swap_before_after.png, between_atlas_rows_sedan_van_police_p70.png"
+ },
+ "gates": {
+  "director_reel": "not re-run: the arena reel loads no vehicles class; last 19/19 top + tilt70 on 34018b19",
+  "lint": "15/15 (pre-commit on every commit)",
+  "scenarios": "52 ran, 0 failed, exit 0, 0 SCRIPT ERROR on a265dfba (vehicle drive replay identical, timing CONTENDED)",
+  "top_bit_identity": "framemd5 main scene --arena=city --bot=rivet --seed=2 --rigs, 301 frames: HEAD a265dfba IDENTICAL to f3762816 (301 video + 301 audio), 0 SCRIPT ERROR",
+  "unit": "1505 passed, 0 failed on 8d139438 (no FLAKY); the vehicle files 13/0 on a265dfba"
+ },
+ "measures": {
+  "atlas_p70": {
+   "after": "4032x4032",
+   "before": "2240x4032",
+   "png_mb": 6.8
+  },
+  "max_turn_off_drawing_deg": {
+   "after_fine_rows": 11.25,
+   "before": 22.5
+  },
+  "police_c_blue_hsv": {
+   "after": [
+    0.6,
+    0.63,
+    0.32
+   ],
+   "before": [
+    0.6,
+    0.85,
+    0.52
+   ],
+   "neighbours_v": [
+    0.34,
+    0.35
+   ]
+  },
+  "turn_framemd5": "392 of 400 frames differ before/after, the 8 equal ones every 45 frames (the drawn views' own headings)"
+ }
+}

@@ -32,6 +32,7 @@ func bake(atlas: CrowdAtlas) -> void:
 			at = want
 			await RenderingServer.frame_post_draw
 			_capture(CrowdAtlas.CLIP_FIRST[c] + f)
+	StreetCrowdCorpse.stamp(_image, _rigs)  # n8 street: the drawn corpse under a card view
 	atlas.texture = ImageTexture.create_from_image(_image)
 	atlas.baked = true
 	_vp.queue_free()

@@ -109,7 +109,7 @@ func _coins() -> void:
 	var from: Vector2 = fight.origin
 	if fight.phase <= 1:  # out of the hood cannon's muzzle (see _car / _cannon), not the car's middle
 		var heading: Vector2 = KingBeats.car_dir(fight)
-		from = fight.body.pos + (heading * 0.2 + fight.aim * 0.22) * CAR_LEN_M
+		from = fight.body.pos + (heading * KingCarWalls.mount_k() + fight.aim * 0.22) * CAR_LEN_M
 	var span: float = maxf(a.range_m - from.distance_to(fight.origin), 0.5)
 	for i: int in COINS:
 		var u: float = fposmod(0.5 + float(i) * R2_A1, 1.0)
@@ -134,17 +134,9 @@ func _car(with_king: bool = true) -> void:
 	var body: Rect2 = Rect2(-l * 0.5, -w * 0.5, l, w)
 	if _car_up == Vector2.ZERO:  # under a tilt KingCarStack stacks them at bumper height
 		KingCarTrim.bumpers(self, l, w, p)  # rounded gold bars past both ends, under the body
-	draw_rect(body.grow(4.0), Ink.INK)
-	draw_rect(body, CAR_BLACK)
-	draw_rect(body.grow(-6.0), GOLD_DARK, false, 3.0)
-	draw_rect(body.grow(-11.0), GOLD, false, 2.0)  # the gilded inner trim (target 90-degree panel)
-	for cx: float in [-0.5, 0.5]:  # gold corner studs
-		for cy: float in [-0.5, 0.5]:
-			draw_circle(Vector2(l * cx * 0.94, w * cy * 0.86), 4.0, GOLD)
-	draw_rect(Rect2(l * 0.5 - 10.0, -w * 0.42, 10.0, w * 0.84), GOLD)  # the grille
-	draw_rect(Rect2(-l * 0.5, -w * 0.45, 8.0, w * 0.9), GOLD_DARK)  # rear bumper
-	KingCarTrim.draw(self, l, w, p)  # plum roof panels between gold bars, the side swags
-	_cannon(Vector2(l * 0.2, 0.0), l, _cannon_rot if with_king else 0.0)
+	if _car_up == Vector2.ZERO or not KingCarWalls.roof(self, body):  # d8: a court pitch's roof art
+		KingCarTrim.roof(self, body, p)  # black lacquer, gold trim and grille, plum panels, swags
+	_cannon(Vector2(l * KingCarWalls.mount_k(), 0.0), l, _cannon_rot if with_king else 0.0)
 	if _rigs == null:  # first pass: the gang at the four corners, King on the throne
 		for sx: float in [-0.36, 0.3]:
 			for sy: float in [-1.0, 1.0]:
@@ -195,7 +187,7 @@ func _cannon_raised(p: Vector2, tail: Vector2, tip: Vector2, n: Vector2) -> void
 	draw_colored_polygon(quad, Ink.INK)  # its shadow on the roof
 	draw_circle(p, 12.0, Ink.INK)
 	draw_circle(p + up * 0.5, 10.0, GOLD_DARK)  # the mount post
-	KingCarTrim.cannon(self, tail + up, tip + up)  # the King lane's barrel, lifted
+	KingCarWalls.cannon(self, tail + up, tip + up)  # lifted: the art barrel, else KingCarTrim's
 
 
 ## King on foot: the squat press body, plates out to the sides, cape behind.

@@ -1,0 +1,4 @@
+reels at 2d81ee85 (L13 inside), headless --fixed-fps 60 --quit-after 14000 res://dev/arena/arena.tscn -- --bot=reel --reel=director --loadout=pistol --rigs --view=<v>, 17:41-17:43:
+reel top: 19/19 chapters all down, 0 SCRIPT ERROR
+reel tilt70: 19/19 chapters all down, 0 SCRIPT ERROR
+reel combo: 19/19 chapters all down, 0 SCRIPT ERROR

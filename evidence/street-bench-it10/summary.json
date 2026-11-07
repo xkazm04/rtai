@@ -1,0 +1,85 @@
+{
+  "branch_head": "ada46751",
+  "contended": "CONTENDED: 4-6 other Godot processes (other lanes) up during every run",
+  "lock": "bench.lock held by street for the run",
+  "runs": {
+    "riot-tilt70-1": {
+      "actorsAvg": 399.8,
+      "avgFrameMs": 6.003,
+      "drawCallsAvg": 777.5,
+      "hitchesOver50": 0.0,
+      "low1Fps": 44.4,
+      "p50": 5.081,
+      "p95": 12.71,
+      "p99": 18.139
+    },
+    "riot-tilt70-2": {
+      "actorsAvg": 399.8,
+      "avgFrameMs": 5.488,
+      "drawCallsAvg": 777.5,
+      "hitchesOver50": 0.0,
+      "low1Fps": 44.2,
+      "p50": 4.549,
+      "p95": 12.278,
+      "p99": 17.335
+    },
+    "riot-tilt70-3": {
+      "actorsAvg": 399.8,
+      "avgFrameMs": 5.443,
+      "drawCallsAvg": 777.5,
+      "hitchesOver50": 0.0,
+      "low1Fps": 44.8,
+      "p50": 4.607,
+      "p95": 11.447,
+      "p99": 17.536
+    },
+    "riot-top-1": {
+      "actorsAvg": 399.8,
+      "avgFrameMs": 5.946,
+      "drawCallsAvg": 684.9,
+      "hitchesOver50": 0.0,
+      "low1Fps": 43.3,
+      "p50": 4.919,
+      "p95": 13.15,
+      "p99": 19.595
+    },
+    "riot-top-2": {
+      "actorsAvg": 399.8,
+      "avgFrameMs": 4.872,
+      "drawCallsAvg": 684.9,
+      "hitchesOver50": 0.0,
+      "low1Fps": 51.1,
+      "p50": 3.938,
+      "p95": 10.955,
+      "p99": 16.053
+    },
+    "riot-top-3": {
+      "actorsAvg": 399.8,
+      "avgFrameMs": 5.119,
+      "drawCallsAvg": 684.9,
+      "hitchesOver50": 0.0,
+      "low1Fps": 48.9,
+      "p50": 4.259,
+      "p95": 11.228,
+      "p99": 17.119
+    }
+  },
+  "summary": {
+    "tilt70": {
+      "avgFrameMs": 5.645,
+      "drawCallsAvg": 777.5,
+      "low1Fps": 44.467,
+      "p50": 4.746,
+      "p95": 12.145
+    },
+    "top": {
+      "avgFrameMs": 5.312,
+      "drawCallsAvg": 684.9,
+      "low1Fps": 47.767,
+      "p50": 4.372,
+      "p95": 11.778
+    }
+  },
+  "what": "crowd cost: 400-actor riot (dev/bench/city_bench.tscn --scenario=riot --secs=30 --zoom=1.0 --vsync=disabled), top vs tilt70, 3 alternating pairs, windowed d3d12, debug build, editor mode",
+  "when": "2026-11-07 04:17-04:19"
+}

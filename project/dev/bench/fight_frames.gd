@@ -2,10 +2,9 @@ class_name FightFrames
 extends Node
 ## perf-city: the live fight's frame log (dev arena `--frames=<json>`). Every rendered frame: the
 ## wall time since the last frame, the World's sim loop share, the render server's CPU / GPU time,
-## draw calls, pipeline compiles and the sim tick. On exit (window close or --quit-after) it writes
-## the series plus a summary: p50 / p99 / 1 % low / worst, the worst after the first second, and
-## every frame over 33 ms. Real time only: under --fixed-fps the wall times are the machine's,
-## the sim's delta is not.
+## draw calls, pipeline compiles and the sim tick. On exit (close, --quit-after) it writes the
+## series plus a summary: p50 / p99 / 1 % low / worst, the worst after the first second, every
+## frame over 33 ms. Wall time only: under --fixed-fps it is the machine's, not the sim's delta.
 
 const HITCH_MS: float = 33.0
 ## The target's "after the first second": frames inside the first SETTLE_MS of wall time are
@@ -44,6 +43,7 @@ var _written: bool = false
 ## The dev arena's hook: with --frames=<json> (and --frames-ticks=<n>) a probe joins `parent`.
 static func attach(parent: Node, args: ArenaArgs, on: World) -> void:
 	NodeSpans.attach(parent, args)  # --spans=<json>: per-node _process cost
+	PerfHud.attach(parent)  # d9-perf: --perf-hud, the live frame-budget overlay
 	if not args.has("--frames"):
 		return
 	var probe: FightFrames = FightFrames.new()
@@ -134,6 +134,8 @@ func write() -> void:
 		"summary": summary(),
 		"hitches": _hitches(),
 		"engine_ms_at_first": _engine_ms_at_first(),
+		"tex_mb_end": Performance.get_monitor(Performance.RENDER_TEXTURE_MEM_USED) / 1048576.0,
+		"video_mb_end": Performance.get_monitor(Performance.RENDER_VIDEO_MEM_USED) / 1048576.0,
 		"wall_ms": Array(_wall),
 		"loop_ms": Array(_loop),
 		"process_ms": Array(_proc),

@@ -1,0 +1,12 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[INFO] quest1: city cells: 2 chunks in 14 ms
+save_cross: wrote tick 1800 hash 13e5ad9f7b2aef6b1264621a2f84968e1f4d50400f11444377b7f14dab7b4c56
+[INFO] quest1: city cells: 2 chunks in 14 ms
+[INFO] save: resumed quest 1 at b1-dumpster (tick 1800)
+save_cross: resumed tick 1800 hash 13e5ad9f7b2aef6b1264621a2f84968e1f4d50400f11444377b7f14dab7b4c56
+save_cross: after +600 tick 2400 hash 300113db0bb5e009bed612a7b7ebf55791bdb6d3f101da9ec129c4b30f6daba9
+WARNING: 577 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 89 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

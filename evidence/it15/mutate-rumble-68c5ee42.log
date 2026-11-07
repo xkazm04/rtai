@@ -1,0 +1,139 @@
+mutate: worktree C:\Users\kazda\AppData\Local\Temp\gtai-mutate-64a99786 at 68c5ee42 (reused)
+mutate: 67/67 mutant(s); baseline run of test_handheld_rumble, test_player_settings, test_settings_panel_pad
+mutate: baseline green in 24.8 s; per-mutant timeout 90 s
+mutate: [1/67] core/platform/handheld_rumble.gd:28 literal  1.0 -> 0.0  killed  (15.1 s)
+mutate: [2/67] core/platform/handheld_rumble.gd:30 literal  1.0 -> 0.0  survived  (13.8 s)
+mutate: [3/67] core/platform/handheld_rumble.gd:32 literal  0 -> 1  killed  (12.8 s)
+mutate: [4/67] core/platform/handheld_rumble.gd:39 literal  0 -> 1  killed  (12.8 s)
+mutate: [5/67] core/platform/handheld_rumble.gd:40 literal  0 -> 1  survived  (12.6 s)
+mutate: [6/67] core/platform/handheld_rumble.gd:41 literal  0.0 -> 1.0  survived  (12.8 s)
+mutate: [7/67] core/platform/handheld_rumble.gd:49 literal  0.0 -> 1.0  killed  (11.9 s)
+mutate: [8/67] core/platform/handheld_rumble.gd:49 literal  1.0 -> 0.0  killed  (12.0 s)
+mutate: [9/67] core/platform/handheld_rumble.gd:55 cmp_flip  == -> !=  killed  (14.4 s)
+mutate: [10/67] core/platform/handheld_rumble.gd:65 literal  0 -> 1  killed  (11.9 s)
+mutate: [11/67] core/platform/handheld_rumble.gd:66 literal  1 -> 0  killed  (12.7 s)
+mutate: [12/67] core/platform/handheld_rumble.gd:68 delete  bus.connect(signal_name, handler) -> pass  invalid  (13.5 s)
+mutate: [13/67] core/platform/handheld_rumble.gd:72 cmp_flip  == -> !=  killed  (14.7 s)
+mutate: [14/67] core/platform/handheld_rumble.gd:86 cmp_flip  != -> ==  killed  (13.3 s)
+mutate: [15/67] core/platform/handheld_rumble.gd:88 delete  _live.see(&"rivet_hurt", hurt_tick) -> pass  invalid  (12.1 s)
+mutate: [16/67] core/platform/handheld_rumble.gd:94 cmp_flip  != -> ==  killed  (12.0 s)
+mutate: [17/67] core/platform/handheld_rumble.gd:96 delete  _live.see(&"boss_hit", hurt_tick) -> pass  invalid  (11.8 s)
+mutate: [18/67] core/platform/handheld_rumble.gd:102 boolean  and -> or  killed  (11.0 s)
+mutate: [19/67] core/platform/handheld_rumble.gd:102 cmp_flip  > -> <=  killed  (11.2 s)
+mutate: [20/67] core/platform/handheld_rumble.gd:102 boundary  > -> >=  killed  (11.2 s)
+mutate: [21/67] core/platform/handheld_rumble.gd:103 boolean  and -> or  killed  (11.6 s)
+mutate: [22/67] core/platform/handheld_rumble.gd:103 cmp_flip  > -> <=  killed  (11.0 s)
+mutate: [23/67] core/platform/handheld_rumble.gd:103 boundary  > -> >=  survived  (11.6 s)
+mutate: [24/67] core/platform/handheld_rumble.gd:103 literal  0 -> 1  survived  (12.7 s)
+mutate: [25/67] core/platform/handheld_rumble.gd:104 arith  - -> +  killed  (11.7 s)
+mutate: [26/67] core/platform/handheld_rumble.gd:108 boolean  not -> (removed)  killed  (12.6 s)
+mutate: [27/67] core/platform/handheld_rumble.gd:109 boolean  false -> true  killed  (11.4 s)
+mutate: [28/67] core/platform/handheld_rumble.gd:110 boolean  and -> or  killed  (10.9 s)
+mutate: [29/67] core/platform/handheld_rumble.gd:110 arith  - -> +  killed  (10.8 s)
+mutate: [30/67] core/platform/handheld_rumble.gd:110 cmp_flip  < -> >=  killed  (11.2 s)
+mutate: [31/67] core/platform/handheld_rumble.gd:110 boundary  < -> <=  killed  (10.4 s)
+mutate: [32/67] core/platform/handheld_rumble.gd:110 literal  0 -> 1  survived  (11.2 s)
+mutate: [33/67] core/platform/handheld_rumble.gd:111 arith  += -> -=  killed  (10.6 s)
+mutate: [34/67] core/platform/handheld_rumble.gd:111 literal  1 -> 0  killed  (11.3 s)
+mutate: [35/67] core/platform/handheld_rumble.gd:112 boolean  true -> false  killed  (11.8 s)
+mutate: [36/67] core/platform/handheld_rumble.gd:114 delete  _fire(kind) -> pass  killed  (12.6 s)
+mutate: [37/67] core/platform/handheld_rumble.gd:115 boolean  true -> false  killed  (11.4 s)
+mutate: [38/67] core/platform/handheld_rumble.gd:126 arith  * -> /  killed  (12.8 s)
+mutate: [39/67] core/platform/handheld_rumble.gd:126 arith  * -> /  killed  (11.2 s)
+mutate: [40/67] core/platform/handheld_rumble.gd:131 arith  * -> /  killed  (12.6 s)
+mutate: [41/67] core/platform/handheld_rumble.gd:134 cmp_flip  <= -> >  killed  (11.6 s)
+mutate: [42/67] core/platform/handheld_rumble.gd:134 boundary  <= -> <  killed  (12.4 s)
+mutate: [43/67] core/platform/handheld_rumble.gd:134 literal  0.0 -> 1.0  killed  (13.2 s)
+mutate: [44/67] core/platform/handheld_rumble.gd:134 boolean  or -> and  killed  (12.0 s)
+mutate: [45/67] core/platform/handheld_rumble.gd:134 cmp_flip  < -> >=  killed  (13.4 s)
+mutate: [46/67] core/platform/handheld_rumble.gd:134 boundary  < -> <=  survived  (14.5 s)
+mutate: [47/67] core/platform/handheld_rumble.gd:134 boolean  and -> or  killed  (13.6 s)
+mutate: [48/67] core/platform/handheld_rumble.gd:134 cmp_flip  < -> >=  killed  (12.6 s)
+mutate: [49/67] core/platform/handheld_rumble.gd:134 boundary  < -> <=  killed  (13.8 s)
+mutate: [50/67] core/platform/handheld_rumble.gd:135 boolean  false -> true  killed  (13.3 s)
+mutate: [51/67] core/platform/handheld_rumble.gd:136 arith  + -> -  killed  (12.7 s)
+mutate: [52/67] core/platform/handheld_rumble.gd:136 arith  * -> /  killed  (13.4 s)
+mutate: [53/67] core/platform/handheld_rumble.gd:136 literal  1000.0 -> 1001.0  survived  (13.4 s)
+mutate: [54/67] core/platform/handheld_rumble.gd:138 arith  += -> -=  killed  (13.5 s)
+mutate: [55/67] core/platform/handheld_rumble.gd:138 literal  1 -> 0  killed  (13.7 s)
+mutate: [56/67] core/platform/handheld_rumble.gd:139 literal  0 -> 1  killed  (14.4 s)
+mutate: [57/67] core/platform/handheld_rumble.gd:139 arith  + -> -  killed  (14.0 s)
+mutate: [58/67] core/platform/handheld_rumble.gd:139 literal  1 -> 0  killed  (15.4 s)
+mutate: [59/67] core/platform/handheld_rumble.gd:142 delete  Input.start_joy_vibration(pad, p.x, p.y, p.z) -> pass  survived  (15.2 s)
+mutate: [60/67] core/platform/handheld_rumble.gd:143 boolean  true -> false  killed  (15.1 s)
+mutate: [61/67] core/platform/handheld_rumble.gd:147 delete  _fire(&"player_hit") -> pass  killed  (17.2 s)
+mutate: [62/67] core/platform/handheld_rumble.gd:151 delete  _fire(&"struck_killed" if killed else &"struck") -> pass  invalid  (15.1 s)
+mutate: [63/67] core/platform/handheld_rumble.gd:155 delete  _fire(&"knocked_down") -> pass  killed  (12.9 s)
+mutate: [64/67] core/platform/handheld_rumble.gd:159 delete  _fire(&"boss_engaged") -> pass  killed  (11.7 s)
+mutate: [65/67] core/platform/handheld_rumble.gd:163 delete  _fire(&"hijacked") -> pass  killed  (11.8 s)
+mutate: [66/67] core/platform/handheld_rumble.gd:167 delete  _fire(&"whispers") -> pass  killed  (12.6 s)
+mutate: [67/67] core/platform/handheld_rumble.gd:172 delete  play(kind) -> pass  invalid  (13.7 s)
+mutate core/platform/handheld_rumble.gd: 67 mutant(s), tests: test_handheld_rumble, test_player_settings, test_settings_panel_pad
+  core/platform/handheld_rumble.gd:30 literal  1.0 -> 0.0  survived
+  core/platform/handheld_rumble.gd:40 literal  0 -> 1  survived
+  core/platform/handheld_rumble.gd:41 literal  0.0 -> 1.0  survived
+  core/platform/handheld_rumble.gd:103 boundary  > -> >=  survived
+  core/platform/handheld_rumble.gd:103 literal  0 -> 1  survived
+  core/platform/handheld_rumble.gd:110 literal  0 -> 1  survived
+  core/platform/handheld_rumble.gd:134 boundary  < -> <=  survived
+  core/platform/handheld_rumble.gd:136 literal  1000.0 -> 1001.0  survived
+  core/platform/handheld_rumble.gd:142 delete  Input.start_joy_vibration(pad, p.x, p.y, p.z) -> pass  survived
+  core/platform/handheld_rumble.gd:68 delete  bus.connect(signal_name, handler) -> pass  invalid
+  core/platform/handheld_rumble.gd:88 delete  _live.see(&"rivet_hurt", hurt_tick) -> pass  invalid
+  core/platform/handheld_rumble.gd:96 delete  _live.see(&"boss_hit", hurt_tick) -> pass  invalid
+  core/platform/handheld_rumble.gd:151 delete  _fire(&"struck_killed" if killed else &"struck") -> pass  invalid
+  core/platform/handheld_rumble.gd:172 delete  play(kind) -> pass  invalid
+  core/platform/handheld_rumble.gd:28 literal  1.0 -> 0.0  killed
+  core/platform/handheld_rumble.gd:32 literal  0 -> 1  killed
+  core/platform/handheld_rumble.gd:39 literal  0 -> 1  killed
+  core/platform/handheld_rumble.gd:49 literal  0.0 -> 1.0  killed
+  core/platform/handheld_rumble.gd:49 literal  1.0 -> 0.0  killed
+  core/platform/handheld_rumble.gd:55 cmp_flip  == -> !=  killed
+  core/platform/handheld_rumble.gd:65 literal  0 -> 1  killed
+  core/platform/handheld_rumble.gd:66 literal  1 -> 0  killed
+  core/platform/handheld_rumble.gd:72 cmp_flip  == -> !=  killed
+  core/platform/handheld_rumble.gd:86 cmp_flip  != -> ==  killed
+  core/platform/handheld_rumble.gd:94 cmp_flip  != -> ==  killed
+  core/platform/handheld_rumble.gd:102 boolean  and -> or  killed
+  core/platform/handheld_rumble.gd:102 cmp_flip  > -> <=  killed
+  core/platform/handheld_rumble.gd:102 boundary  > -> >=  killed
+  core/platform/handheld_rumble.gd:103 boolean  and -> or  killed
+  core/platform/handheld_rumble.gd:103 cmp_flip  > -> <=  killed
+  core/platform/handheld_rumble.gd:104 arith  - -> +  killed
+  core/platform/handheld_rumble.gd:108 boolean  not -> (removed)  killed
+  core/platform/handheld_rumble.gd:109 boolean  false -> true  killed
+  core/platform/handheld_rumble.gd:110 boolean  and -> or  killed
+  core/platform/handheld_rumble.gd:110 arith  - -> +  killed
+  core/platform/handheld_rumble.gd:110 cmp_flip  < -> >=  killed
+  core/platform/handheld_rumble.gd:110 boundary  < -> <=  killed
+  core/platform/handheld_rumble.gd:111 arith  += -> -=  killed
+  core/platform/handheld_rumble.gd:111 literal  1 -> 0  killed
+  core/platform/handheld_rumble.gd:112 boolean  true -> false  killed
+  core/platform/handheld_rumble.gd:114 delete  _fire(kind) -> pass  killed
+  core/platform/handheld_rumble.gd:115 boolean  true -> false  killed
+  core/platform/handheld_rumble.gd:126 arith  * -> /  killed
+  core/platform/handheld_rumble.gd:126 arith  * -> /  killed
+  core/platform/handheld_rumble.gd:131 arith  * -> /  killed
+  core/platform/handheld_rumble.gd:134 cmp_flip  <= -> >  killed
+  core/platform/handheld_rumble.gd:134 boundary  <= -> <  killed
+  core/platform/handheld_rumble.gd:134 literal  0.0 -> 1.0  killed
+  core/platform/handheld_rumble.gd:134 boolean  or -> and  killed
+  core/platform/handheld_rumble.gd:134 cmp_flip  < -> >=  killed
+  core/platform/handheld_rumble.gd:134 boolean  and -> or  killed
+  core/platform/handheld_rumble.gd:134 cmp_flip  < -> >=  killed
+  core/platform/handheld_rumble.gd:134 boundary  < -> <=  killed
+  core/platform/handheld_rumble.gd:135 boolean  false -> true  killed
+  core/platform/handheld_rumble.gd:136 arith  + -> -  killed
+  core/platform/handheld_rumble.gd:136 arith  * -> /  killed
+  core/platform/handheld_rumble.gd:138 arith  += -> -=  killed
+  core/platform/handheld_rumble.gd:138 literal  1 -> 0  killed
+  core/platform/handheld_rumble.gd:139 literal  0 -> 1  killed
+  core/platform/handheld_rumble.gd:139 arith  + -> -  killed
+  core/platform/handheld_rumble.gd:139 literal  1 -> 0  killed
+  core/platform/handheld_rumble.gd:143 boolean  true -> false  killed
+  core/platform/handheld_rumble.gd:147 delete  _fire(&"player_hit") -> pass  killed
+  core/platform/handheld_rumble.gd:155 delete  _fire(&"knocked_down") -> pass  killed
+  core/platform/handheld_rumble.gd:159 delete  _fire(&"boss_engaged") -> pass  killed
+  core/platform/handheld_rumble.gd:163 delete  _fire(&"hijacked") -> pass  killed
+  core/platform/handheld_rumble.gd:167 delete  _fire(&"whispers") -> pass  killed
+score 85.5% = killed 53 / (killed 53 + survived 9); timeout 0, invalid 5; 877 s

@@ -14,25 +14,23 @@ extends Node2D
 const STEP: int = 32
 ## Behind-the-car rigs stay under the car (KingCarStack.BEHIND_Z + this many levels at most).
 const BEHIND_MAX_LEVEL: int = 1
-## Levels above this share the top band (the actors band is 100 wide: 2 x STEP + the parts' 31
-## stays under the vehicles band).
+## Levels above this share the top band (actors band 100 wide: 2 x STEP + parts' 31 < vehicles).
 const MAX_LEVEL: int = 2
 ## The on-screen body box used for the overlap test (m): width, and the height the tilt raises.
 const BODY_W_M: float = 0.9
 const BODY_H_M: float = 1.8
 
-## The screen box (global px) north of the King's car where the cast's rigs draw behind the car
-## (KingCarStack.BEHIND_Z), as KingCarStack.sort_rigs does for King's own rigs; empty = no car.
-## Only near the car, so the boss's ground tells (z just under the actors) never cover Rivet.
+## The screen box (global px) north of the King's car where the cast draws behind it (BEHIND_Z, as
+## KingCarStack.sort_rigs); empty = no car. Only near the car: the ground tells never cover Rivet.
 static var far_box: Rect2 = Rect2()
 
+var frame_rigs: Array[CutRig] = []
 var _layer: Node = null
 ## Rivet's followers (held weapon, magazine) and their own z before any level.
 var _follow_base: Dictionary[CanvasItem, int] = {}
 
 
-## Adds the sorter to the actor `layer` under a tilted view (pitch below 90); else nothing.
-## Also the view's cast shadows (RigCastShadows: only when the view row sets cast_k).
+## Adds the sorter to actor `layer` under a tilt, and RigCastShadows (when the row sets cast_k).
 static func attach(layer: Node) -> void:
 	RigCastShadows.attach(layer)
 	if ViewMode.shared().is_flat():
@@ -41,16 +39,27 @@ static func attach(layer: Node) -> void:
 	var s: RigDepthSort = RigDepthSort.new()
 	s._layer = layer
 	s.process_priority = 100  # after CharacterRigs and the boss views have posed this frame
+	layer.set_meta(&"rig_depth_sort", weakref(s))
 	layer.add_child(s)
 
 
+## The sorter on actor `layer` (null: flat view, no rig cast, freed); its frame_rigs: this frame's
+## visible rigs once its process (priority 100) ran, so a later node never walks the layer again.
+static func on(layer: Node) -> RigDepthSort:
+	var w: WeakRef = layer.get_meta(&"rig_depth_sort", WeakRef.new())  # an empty ref: no sorter
+	var got: Object = w.get_ref()
+	return got as RigDepthSort
+
+
 func _process(_delta: float) -> void:
-	var rigs: Array[CutRig] = []
+	var found: Array[CutRig] = []
 	var follow: Array[CanvasItem] = []
+	var cards: Array[Sprite2D] = []
 	for c: Node in _layer.get_children():
-		_collect(c, 0, rigs, follow)
-	var level: Dictionary[CutRig, int] = levels(rigs, _box())
-	for rig: CutRig in rigs:
+		_collect(c, 0, found, follow, cards)
+	frame_rigs = found
+	var level: Dictionary[CutRig, int] = _with_cards(found, cards)  # levels() when no card
+	for rig: CutRig in found:
 		if rig.get_parent() is CharacterRigs:
 			var far: bool = far_box.has_point(rig.global_position)
 			rig.depth_base = KingCarStack.BEHIND_Z if far else 0
@@ -60,26 +69,85 @@ func _process(_delta: float) -> void:
 		_follow(f)
 
 
-## How far a ground-level view just under the actors (the boss's tell zones) drops under a tilt,
-## so a body behind the King's car (BEHIND_Z) still stands over it; 0 straight down.
+## Ghost cards (GhostCard, d8 chars) sort with the rigs: each card's z is moved so its effective z
+## sits at its own level's band over the cast's rigs; its host rig moves with it (Tonnage's walking
+## legs, Ohm's ground arms), else they ride the ghost view's fixed z.
+func _with_cards(rigs: Array[CutRig], cards: Array[Sprite2D]) -> Dictionary[CutRig, int]:
+	var bodies: Array[Node2D] = []
+	var half: Array[float] = []
+	var b: Vector2 = _box()
+	for r: CutRig in rigs:
+		bodies.append(r)
+		half.append(b.x * 0.5)
+	for c: Sprite2D in cards:
+		bodies.append(c.get_parent() as Node2D)
+		half.append(c.texture.get_width() / float(c.hframes) * absf(c.global_scale.x) * 0.5)
+	var lv: Array[int] = levels_w(bodies, half, b.y)
+	var out: Dictionary[CutRig, int] = {}
+	for i: int in rigs.size():
+		out[rigs[i]] = lv[i]
+	var base: int = eff_z(rigs[0].get_parent() as CanvasItem) if not rigs.is_empty() else 0
+	for j: int in cards.size():
+		var c: Sprite2D = cards[j]
+		var want: int = base + mini(lv[rigs.size() + j], MAX_LEVEL) * STEP
+		var host: Node2D = c.get_parent() as Node2D  # the whole ghost (legs, arms) moves with it
+		host.z_index += want - eff_z(c)
+	return out
+
+
+## How far the boss's tell zones drop under a tilt, so a body behind the car stands over them.
 static func ground_dz() -> int:
 	return 0 if ViewMode.shared().is_flat() else KingCarStack.BEHIND_Z
 
 
 ## The depth level of every rig (see the class doc); `box` = the body box in screen px.
 static func levels(rigs: Array[CutRig], box: Vector2) -> Dictionary[CutRig, int]:
-	var order: Array[CutRig] = rigs.duplicate()
-	order.sort_custom(func(a: CutRig, b: CutRig) -> bool: return _foot(a).y < _foot(b).y)
+	var bodies: Array[Node2D] = []
+	var half: Array[float] = []
+	for r: CutRig in rigs:
+		bodies.append(r)
+		half.append(box.x * 0.5)
+	var lv: Array[int] = levels_w(bodies, half, box.y)
 	var out: Dictionary[CutRig, int] = {}
-	for i: int in order.size():
-		var at: Vector2 = _foot(order[i])
-		var lv: int = 0
-		for j: int in i:
-			var d: Vector2 = at - _foot(order[j])
-			if absf(d.x) < box.x and d.y < box.y and d.y > 0.0:
-				lv = maxi(lv, out[order[j]] + 1)
-		out[order[i]] = lv
+	for i: int in rigs.size():
+		out[rigs[i]] = lv[i]
 	return out
+
+
+## levels() over bodies of their own half widths (px) at ground points (global positions); a pair
+## overlaps when closer across than the two halves and nearer by less than `box_h`.
+static func levels_w(bodies: Array[Node2D], half: Array[float], box_h: float) -> Array[int]:
+	var idx: Array[int] = []
+	for i: int in bodies.size():
+		idx.append(i)
+	idx.sort_custom(
+		func(a: int, b: int) -> bool:
+			return bodies[a].global_position.y < bodies[b].global_position.y
+	)
+	var out: Array[int] = []
+	@warning_ignore("return_value_discarded")
+	out.resize(bodies.size())
+	for k: int in idx.size():
+		var i: int = idx[k]
+		var lv: int = 0
+		for m: int in k:
+			var j: int = idx[m]
+			var d: Vector2 = bodies[i].global_position - bodies[j].global_position
+			if absf(d.x) < half[i] + half[j] and d.y < box_h and d.y > 0.0:
+				lv = maxi(lv, out[j] + 1)
+		out[i] = lv
+	return out
+
+
+static func eff_z(n: CanvasItem) -> int:
+	var z: int = 0
+	var at: CanvasItem = n
+	while at != null:
+		z += at.z_index
+		if not at.z_as_relative:
+			break
+		at = at.get_parent() as CanvasItem
+	return z
 
 
 static func _foot(rig: CutRig) -> Vector2:
@@ -94,7 +162,13 @@ func _box() -> Vector2:
 
 ## Rigs up to three levels down (layer > CharacterRigs > rig; layer > KingBodyView > KingRigs >
 ## rig), and Rivet's held weapon and magazine views.
-func _collect(n: Node, depth: int, rigs: Array[CutRig], follow: Array[CanvasItem]) -> void:
+func _collect(
+	n: Node, depth: int, rigs: Array[CutRig], follow: Array[CanvasItem], cards: Array[Sprite2D]
+) -> void:
+	if n is Sprite2D and n.name == &"ghost_card":
+		if (n as Sprite2D).is_visible_in_tree():
+			cards.append(n as Sprite2D)
+		return
 	if n is CutRig:
 		if (n as CutRig).is_visible_in_tree():
 			rigs.append(n as CutRig)
@@ -105,7 +179,7 @@ func _collect(n: Node, depth: int, rigs: Array[CutRig], follow: Array[CanvasItem
 	if depth >= 2:
 		return
 	for c: Node in n.get_children():
-		_collect(c, depth + 1, rigs, follow)
+		_collect(c, depth + 1, rigs, follow, cards)
 
 
 func _follow(f: CanvasItem) -> void:

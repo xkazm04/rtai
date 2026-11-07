@@ -1,0 +1,25 @@
+mutate: worktree C:\Users\kazda\AppData\Local\Temp\gtai-mutate-64a99786 at 955f56cb (reused)
+mutate: 10/73 mutant(s); baseline run of test_settings_panel_pad
+mutate: baseline green in 22.3 s; per-mutant timeout 90 s
+mutate: [1/10] boot/quest1_settings_panel.gd:25 literal  6 -> 7  survived  (13.0 s)
+mutate: [2/10] boot/quest1_settings_panel.gd:29 delete  _rebuild() -> pass  killed  (12.8 s)
+mutate: [3/10] boot/quest1_settings_panel.gd:63 cmp_flip  == -> !=  killed  (13.2 s)
+mutate: [4/10] boot/quest1_settings_panel.gd:63 boolean  or -> and  killed  (11.3 s)
+mutate: [5/10] boot/quest1_settings_panel.gd:63 boolean  not -> (removed)  killed  (13.5 s)
+mutate: [6/10] boot/quest1_settings_panel.gd:66 cmp_flip  != -> ==  killed  (10.8 s)
+mutate: [7/10] boot/quest1_settings_panel.gd:74 delete  c.queue_free() -> pass  survived  (12.1 s)
+mutate: [8/10] boot/quest1_settings_panel.gd:122 literal  1.0 -> 0.0  survived  (11.5 s)
+mutate: [9/10] boot/quest1_settings_panel.gd:123 delete  _commit() -> pass  survived  (10.5 s)
+mutate: [10/10] boot/quest1_settings_panel.gd:134 literal  0 -> 1  survived  (12.0 s)
+mutate boot/quest1_settings_panel.gd: 10 mutant(s) (sampled from 73), tests: test_settings_panel_pad
+  boot/quest1_settings_panel.gd:25 literal  6 -> 7  survived
+  boot/quest1_settings_panel.gd:74 delete  c.queue_free() -> pass  survived
+  boot/quest1_settings_panel.gd:122 literal  1.0 -> 0.0  survived
+  boot/quest1_settings_panel.gd:123 delete  _commit() -> pass  survived
+  boot/quest1_settings_panel.gd:134 literal  0 -> 1  survived
+  boot/quest1_settings_panel.gd:29 delete  _rebuild() -> pass  killed
+  boot/quest1_settings_panel.gd:63 cmp_flip  == -> !=  killed
+  boot/quest1_settings_panel.gd:63 boolean  or -> and  killed
+  boot/quest1_settings_panel.gd:63 boolean  not -> (removed)  killed
+  boot/quest1_settings_panel.gd:66 cmp_flip  != -> ==  killed
+score 50.0% = killed 5 / (killed 5 + survived 5); timeout 0, invalid 0; 145 s

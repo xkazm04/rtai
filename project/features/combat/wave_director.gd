@@ -116,3 +116,11 @@ func _next_wave(after: int) -> int:
 		if waves[i].encounter == _encounter:
 			return i
 	return -1
+
+
+## Wave `i`'s number within its encounter, from 1.
+func ordinal(i: int) -> int:
+	var n: int = 0
+	for k: int in i + 1:
+		n += 1 if waves[k].encounter == waves[i].encounter else 0
+	return n

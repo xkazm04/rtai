@@ -1,0 +1,47 @@
+{
+ "branch": "n8-vehicles",
+ "commits": {
+  "8db2a46d": "the amber lamps turned 10 deg toward yellow (LAMP_DEG), every row but the police car's",
+  "aaaaf876": "the police bar's amber lens turns too; the siren shader's amber lens test r > g + 0.12",
+  "ca7c255d": "the taxi row's paint turned 12 deg toward yellow (HUE_DEG/TAXI_HUE): no longer prints as vermilion"
+ },
+ "evidence_dir": "C:/Users/kazda/kiro/gtai-masters/n8/vehicles",
+ "films": {
+  "lamps": "amber_lamps_city_tilt70_32ppm_crop2x_before_left_after_right.png (seed 7 f180), amber_lamps_atlas_p70_ambulance_before_top_after_bottom.png",
+  "siren": "siren_amber_lit_tilt70_64ppm_crop2x_before_left_after_right.png, siren_blue_lit_tilt70_64ppm_before_left_after_right.png (vehicle_states --view=tilt70 --ppm=64, 300 frames, 0 ERROR)",
+  "taxi_city": "taxi_paint_city_tilt70_32ppm_f170_before_left_after_right.png + taxi_paint_city_tilt70_32ppm_before_left_after_right.mp4 (main scene --arena=city --view=tilt70 --seed=11 --rigs, 300 frames, 0 ERROR)",
+  "taxi_closeup": "taxi_paint_turn_tilt70_64ppm_before_left_after_right.png (vehicle_turn --set=street --ppm=64, ungraded)",
+  "taxi_options": "taxi_hue_options_city_tilt70_32ppm_crop2x_head_12_16.png"
+ },
+ "gates": {
+  "city_tilt70": "seeds 2 7 11 23, 900 frames each, 0 SCRIPT ERROR",
+  "director_reel": "19/19 chapters all down, 0 SCRIPT ERROR, exit 0 in top and tilt70 on 8db2a46d (director-reel-it15-*.log); the aaaaf876 shader edit landed during the tilt70 run",
+  "lint": "15/15 on ca7c255d, 8db2a46d, aaaaf876",
+  "servo_combo": "--boss=servo --bot=boss --servo-ghost=dent --view=combo --ppm=32 --rigs --seed=2, 300 frames on aaaaf876: 0 SCRIPT ERROR",
+  "top_bit_identity": "main scene --arena=city --bot=rivet --seed=2 --rigs, 301 frames on ca7c255d: IDENTICAL to top_head.md5 (301 + 301), 0 SCRIPT ERROR; 8db2a46d and aaaaf876 change only the card atlas and card shader, which top never draws",
+  "unit": "1513 passed, 0 failed on ca7c255d and on aaaaf876 (no FLAKY)"
+ },
+ "measures": {
+  "ambulance_city_seed7_f180": {
+   "after": 147,
+   "before": 445,
+   "note": "57 = Rivet's collar"
+  },
+  "atlas_p70_gate_px": {
+   "ambulance_row": "3610 -> 7",
+   "police_row": "3405 -> 2",
+   "taxi_row": "66 -> 0"
+  },
+  "siren_lens_px": {
+   "blue": "unchanged",
+   "p55_amber": "1663 -> 1664",
+   "p70_amber": "2842 -> 2841"
+  },
+  "taxi_city_seed11_f170": {
+   "after": 57,
+   "before": 5777,
+   "note": "57 = Rivet's collar"
+  },
+  "vermilion_gate": "PaletteTokens: r - max(g, b) >= 79, blood excluded"
+ }
+}

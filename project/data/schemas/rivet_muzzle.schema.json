@@ -1,0 +1,48 @@
+{
+  "$id": "gtai.rivet-muzzle/1",
+  "additionalProperties": false,
+  "properties": {
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schema": {
+      "const": "gtai.rivet-muzzle/1",
+      "type": "string"
+    },
+    "strips": {
+      "additionalProperties": {
+        "additionalProperties": {
+          "additionalProperties": false,
+          "properties": {
+            "cells": {
+              "additionalProperties": {
+                "items": {
+                  "maximum": 1024,
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "maxItems": 2,
+                "minItems": 2,
+                "type": "array"
+              },
+              "type": "object"
+            }
+          },
+          "required": [
+            "cells"
+          ],
+          "type": "object"
+        },
+        "type": "object"
+      },
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema",
+    "doc",
+    "strips"
+  ],
+  "type": "object"
+}

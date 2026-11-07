@@ -1,0 +1,6 @@
+unit-tests: 1698 passed, 0 failed, 0 skipped (GUT, headless)
+reel top : 19/19 chapters all down, 0 SCRIPT ERROR
+reel tilt70 : 19/19 chapters all down, 2 SCRIPT ERROR
+reel combo : 19/19 chapters all down, 0 SCRIPT ERROR
+reel deck --device=deck: 19/19 chapters all down, 0 SCRIPT ERROR
+reel tilt70 (re-run): 19/19 chapters all down, 0 SCRIPT ERROR

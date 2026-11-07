@@ -15,34 +15,26 @@ const PROP_FILL: Dictionary[String, Color] = {
 const FLOOR_TILE_M: float = 8.0
 ## The area's stencilled name, this far in from its top edge (below a station's edge wall).
 const LABEL_M: float = 2.2
-## The city's inked props as the arena's cover, so the arena reads as the game, not a sketch:
-## low cover is a row of crates (one crate of the stack, repeated along the box), high cover a
-## dumpster, the course's cones the street cone. Walls stay solid ink (architecture).
-## View lab: each solid prop kind's height (m) under a tilted --view (others are paint: 0).
-## top_lift: the swept slices that extrude a prop toward its leaning top.
+## The city's inked props as the arena's cover: low cover a crate row, high cover a dumpster, the
+## cones the street cone (cards under a tilt: ArenaPropCards); walls stay solid ink. PROP_H_M:
+## each solid kind's height (m) under a tilt; PROP_SLICES: top_lift's swept slices.
 const PROP_SLICES: int = 8
 const PROP_H_M: Dictionary[String, float] = {
 	"cone": 0.7, "cover_low": 1.0, "cover_high": 1.6, "wall_high": 3.0
 }
-const CRATES: Texture2D = preload("res://features/city/art/props/crate_stack.png")
-const CRATE_PX: Rect2 = Rect2(0.0, 0.0, 80.0, 80.0)
 const DUMPSTER: Texture2D = preload("res://features/city/art/props/dumpster.png")
 const CONE: Texture2D = preload("res://features/city/art/props/traffic_cone.png")
-## On the city block a pit wall is a row of inked concrete barrier segments (still solid), not
-## the arena's flat ink bar: the street's warm grey, a cream top edge, a joint every BARRIER_M.
-const BARRIER_FILL: Color = Color("#8E867C")
-const BARRIER_M: float = 2.0
 
 ## Off-screen margin for the target rings and tracks (m): wider than a ring (0.8 m) plus its line
 ## and anything the print pass samples around a pixel.
 const CULL_M: float = 3.0
 
 var _city: bool = false
-## perf-city: on the city block the props and the crowd rings are drawn once on this child (behind
-## this node, with its material: the same order and print), not re-issued every frame (0.5 ms of
-## a 60 fps frame in the city fight). Props and spawns never change after the stations load.
+## perf-city: the floor (dock tiles), props and crowd rings draw once on this child, not every
+## frame (0.5 ms on the city; it10: the dock arenas too, the King's boulevard and the depot).
 var _static: Node2D = null
 var _static_of: ArenaStage = null
+var _static_rev: int = 0
 
 
 func _draw() -> void:
@@ -50,14 +42,7 @@ func _draw() -> void:
 	if arena == null:
 		return
 	_city = arena.cells != null
-	for a: ArenaPlan.Area in arena.plan.areas:
-		if arena.cells == null:  # on the city proving block the city is the floor
-			_tiled(a.rect, "dock_floor", FLOOR_TILE_M)
-			_floor(a.rect, Color(0, 0, 0, 0), "")
-	if _city:
-		_held(arena)
-	else:
-		_props(self, arena)
+	_held(arena)
 	for b: VehicleBody in arena.cars():
 		_car(b)
 	draw_set_transform(Vector2.ZERO)
@@ -89,10 +74,20 @@ func _held(arena: ArenaStage) -> void:
 		_static.use_parent_material = true
 		add_child(_static)
 		@warning_ignore("return_value_discarded")
-		_static.draw.connect(func() -> void: _props(_static, _static_of))
-	if _static_of != arena or ViewMode.shared().eye_h_m > 0.0:  # a perspective eye moves
-		_static_of = arena
+		_static.draw.connect(func() -> void: _ground(_static, _static_of))
+	if _static_of != arena or _static_rev != ViewMode.revision or ViewMode.shared().eye_h_m > 0:
+		_static_of = arena  # a new stage, a combined view's eased pitch, a perspective eye
+		_static_rev = ViewMode.revision
 		_static.queue_redraw()
+
+
+## The held floor: each area's dock tiles (on the city proving block the city is the floor), then
+## the props, in the order a per-frame floor drew them (then the parent: cars, names, rings).
+func _ground(ci: CanvasItem, arena: ArenaStage) -> void:
+	if arena != null and not _city:
+		for a: ArenaPlan.Area in arena.plan.areas:
+			ArenaFloorStatic.tiles(ci, a.rect, _art("dock_floor"), FLOOR_TILE_M)
+	_props(ci, arena)
 
 
 ## The stations' props (on the city only what collides, and cones) and the crowd spawn rings.
@@ -126,22 +121,27 @@ func _cast(ci: CanvasItem, at: Vector2, p: ArenaStation.Prop) -> void:
 
 func _prop(ci: CanvasItem, at: Vector2, p: ArenaStation.Prop) -> void:
 	var fill: Color = PROP_FILL.get(p.kind, Ink.WASH)
-	var side: Color = (BARRIER_FILL if _city and p.kind == "wall_high" else fill).darkened(0.45)
+	var wall: bool = _city and p.kind == "wall_high"
+	var side: Color = (ArenaFloorStatic.BARRIER_FILL if wall else fill).darkened(0.45)
 	var r: Rect2 = Rect2(Ink.px(at - p.size * 0.5), p.size * Ink.PX_PER_M)
 	var h_m: float = PROP_H_M.get(p.kind, 0.0)
 	var up: Vector2 = ViewMode.shared().lift_at(ci.get_global_transform() * r.get_center(), h_m)
+	if up != Vector2.ZERO and PropCards.stand(ci, p.kind, r):  # n8 city: the cover as cards
+		return
 	if ViewMode.shared().eye_h_m > 0.0 and up != Vector2.ZERO:  # top_lift: swept, leaning out
 		for i: int in PROP_SLICES:
 			ci.draw_rect(Rect2(r.position + up * (float(i) / PROP_SLICES), r.size), side)
 		r.position += up
 		ci.draw_rect(r.grow(1.0), Ink.INK, false, Ink.LINE_PX)
+	elif up != Vector2.ZERO and ArenaPropCards.draw(ci, p.kind, r):  # city's standing cards
+		return
 	elif up != Vector2.ZERO:  # view lab: the south face, then the top at the prop's height
 		var face: Rect2 = Rect2(r.position.x, r.end.y + up.y, r.size.x, -up.y)
 		ci.draw_rect(face, side, true)  # the city barrier's face is its own concrete
 		ci.draw_rect(face, Ink.INK, false, Ink.LINE_PX)
 		r.position += up
 	if _city and p.kind == "wall_high":
-		_barrier(ci, r)
+		ArenaFloorStatic.barrier(ci, r)
 		return
 	match p.kind:
 		"cone":
@@ -151,36 +151,10 @@ func _prop(ci: CanvasItem, at: Vector2, p: ArenaStation.Prop) -> void:
 			ci.draw_texture_rect(DUMPSTER, r, false)
 			return
 		"cover_low":
-			_crate_row(ci, r)
+			ArenaFloorStatic.crate_row(ci, r)
 			return
 	ci.draw_rect(r, fill, true)
 	ci.draw_rect(r, Ink.INK, false, Ink.LINE_PX)
-
-
-## A concrete barrier run: fill, ink rim, a cream top edge and a joint line every BARRIER_M.
-func _barrier(ci: CanvasItem, r: Rect2) -> void:
-	ci.draw_rect(r, BARRIER_FILL, true)
-	var long_x: bool = r.size.x >= r.size.y
-	var step: float = BARRIER_M * Ink.PX_PER_M
-	var n: int = int(maxf(r.size.x, r.size.y) / step)
-	for i: int in range(1, n + 1):
-		var off: Vector2 = Vector2(step * i, 0.0) if long_x else Vector2(0.0, step * i)
-		var end: Vector2 = Vector2(0.0, r.size.y) if long_x else Vector2(r.size.x, 0.0)
-		ci.draw_line(r.position + off, r.position + off + end, Ink.INK, Ink.LINE_PX * 0.5)
-	var edge: Rect2 = r.grow(-Ink.LINE_PX * 1.5)
-	var top: Vector2 = Vector2(edge.size.x, 0.0) if long_x else Vector2(0.0, edge.size.y)
-	ci.draw_line(edge.position, edge.position + top, Ink.CREAM, Ink.LINE_PX)
-	ci.draw_rect(r, Ink.INK, false, Ink.LINE_PX)
-
-
-## Square crates along the box's long side (the last one squeezed to fit).
-func _crate_row(ci: CanvasItem, r: Rect2) -> void:
-	var side: float = minf(r.size.x, r.size.y)
-	var along: Vector2 = Vector2(side, 0.0) if r.size.x >= r.size.y else Vector2(0.0, side)
-	var n: int = maxi(roundi(maxf(r.size.x, r.size.y) / side), 1)
-	for i: int in n:
-		var cell: Rect2 = Rect2(r.position + along * i, Vector2(side, side))
-		ci.draw_texture_rect_region(CRATES, cell.intersection(r), CRATE_PX)
 
 
 func _ring(at: Vector2, radius_m: float, color: Color, ci: CanvasItem = self) -> void:

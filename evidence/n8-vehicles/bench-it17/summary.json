@@ -1,0 +1,1350 @@
+{
+ "runs": {
+  "drive_tilt70_1": {
+   "cards": {
+    "avg": 3.7650293255132,
+    "max": 6,
+    "p50": 4
+   },
+   "draw_calls_mean": 181.2,
+   "frames": 4967,
+   "over33": 0,
+   "process": {
+    "mean": 0.977,
+    "p50": 0.853,
+    "p99": 2.112
+   },
+   "render_cpu": {
+    "mean": 0.286,
+    "p50": 0.283,
+    "p99": 0.413
+   },
+   "render_gpu": {
+    "mean": 0.127,
+    "p50": 0.122,
+    "p99": 0.165
+   },
+   "under": {
+    "avg": 0.0,
+    "max": 0,
+    "p50": 0
+   },
+   "wall": {
+    "mean": 1.716,
+    "p50": 1.576,
+    "p99": 3.617
+   }
+  },
+  "drive_tilt70_2": {
+   "cards": {
+    "avg": 3.76219939294887,
+    "max": 6,
+    "p50": 4
+   },
+   "draw_calls_mean": 181.6,
+   "frames": 7665,
+   "over33": 0,
+   "process": {
+    "mean": 0.611,
+    "p50": 0.496,
+    "p99": 1.619
+   },
+   "render_cpu": {
+    "mean": 0.189,
+    "p50": 0.17,
+    "p99": 0.301
+   },
+   "render_gpu": {
+    "mean": 0.113,
+    "p50": 0.11,
+    "p99": 0.136
+   },
+   "under": {
+    "avg": 0.0,
+    "max": 0,
+    "p50": 0
+   },
+   "wall": {
+    "mean": 1.11,
+    "p50": 0.955,
+    "p99": 2.387
+   }
+  },
+  "drive_tilt70_3": {
+   "cards": {
+    "avg": 3.7601384083045,
+    "max": 6,
+    "p50": 4
+   },
+   "draw_calls_mean": 180.7,
+   "frames": 6546,
+   "over33": 0,
+   "process": {
+    "mean": 0.731,
+    "p50": 0.646,
+    "p99": 1.927
+   },
+   "render_cpu": {
+    "mean": 0.219,
+    "p50": 0.197,
+    "p99": 0.352
+   },
+   "render_gpu": {
+    "mean": 0.116,
+    "p50": 0.111,
+    "p99": 0.158
+   },
+   "under": {
+    "avg": 0.0,
+    "max": 0,
+    "p50": 0
+   },
+   "wall": {
+    "mean": 1.305,
+    "p50": 1.211,
+    "p99": 2.693
+   }
+  },
+  "drive_top_1": {
+   "cards": {
+    "avg": 0.0,
+    "max": 0,
+    "p50": 0
+   },
+   "draw_calls_mean": 177.0,
+   "frames": 9816,
+   "over33": 0,
+   "process": {
+    "mean": 0.311,
+    "p50": 0.225,
+    "p99": 1.284
+   },
+   "render_cpu": {
+    "mean": 0.213,
+    "p50": 0.179,
+    "p99": 0.368
+   },
+   "render_gpu": {
+    "mean": 0.105,
+    "p50": 0.105,
+    "p99": 0.13
+   },
+   "under": {
+    "avg": 0.0,
+    "max": 0,
+    "p50": 0
+   },
+   "wall": {
+    "mean": 0.868,
+    "p50": 0.739,
+    "p99": 2.047
+   }
+  },
+  "drive_top_2": {
+   "cards": {
+    "avg": 0.0,
+    "max": 0,
+    "p50": 0
+   },
+   "draw_calls_mean": 177.4,
+   "frames": 11204,
+   "over33": 0,
+   "process": {
+    "mean": 0.269,
+    "p50": 0.215,
+    "p99": 0.966
+   },
+   "render_cpu": {
+    "mean": 0.186,
+    "p50": 0.165,
+    "p99": 0.335
+   },
+   "render_gpu": {
+    "mean": 0.106,
+    "p50": 0.105,
+    "p99": 0.111
+   },
+   "under": {
+    "avg": 0.0,
+    "max": 0,
+    "p50": 0
+   },
+   "wall": {
+    "mean": 0.76,
+    "p50": 0.653,
+    "p99": 1.709
+   }
+  },
+  "drive_top_3": {
+   "cards": {
+    "avg": 0.0,
+    "max": 0,
+    "p50": 0
+   },
+   "draw_calls_mean": 176.5,
+   "frames": 9069,
+   "over33": 0,
+   "process": {
+    "mean": 0.337,
+    "p50": 0.285,
+    "p99": 1.269
+   },
+   "render_cpu": {
+    "mean": 0.232,
+    "p50": 0.231,
+    "p99": 0.329
+   },
+   "render_gpu": {
+    "mean": 0.112,
+    "p50": 0.11,
+    "p99": 0.132
+   },
+   "under": {
+    "avg": 0.0,
+    "max": 0,
+    "p50": 0
+   },
+   "wall": {
+    "mean": 0.94,
+    "p50": 0.872,
+    "p99": 2.089
+   }
+  },
+  "ppl_tilt70_1": {
+   "cards": {
+    "avg": 3.76600712793413,
+    "max": 6,
+    "p50": 4
+   },
+   "draw_calls_mean": 181.0,
+   "frames": 7425,
+   "over33": 0,
+   "process": {
+    "mean": 0.526,
+    "p50": 0.479,
+    "p99": 1.565
+   },
+   "render_cpu": {
+    "mean": 0.236,
+    "p50": 0.246,
+    "p99": 0.31
+   },
+   "render_gpu": {
+    "mean": 0.114,
+    "p50": 0.108,
+    "p99": 0.141
+   },
+   "under": {
+    "avg": 0.0,
+    "max": 0,
+    "p50": 0
+   },
+   "wall": {
+    "mean": 1.149,
+    "p50": 1.086,
+    "p99": 2.382
+   }
+  },
+  "ppl_tilt70_2": {
+   "cards": {
+    "avg": 3.77708082026538,
+    "max": 7,
+    "p50": 4
+   },
+   "draw_calls_mean": 180.7,
+   "frames": 7562,
+   "over33": 0,
+   "process": {
+    "mean": 0.521,
+    "p50": 0.468,
+    "p99": 1.598
+   },
+   "render_cpu": {
+    "mean": 0.228,
+    "p50": 0.224,
+    "p99": 0.31
+   },
+   "render_gpu": {
+    "mean": 0.115,
+    "p50": 0.112,
+    "p99": 0.137
+   },
+   "under": {
+    "avg": 0.0,
+    "max": 0,
+    "p50": 0
+   },
+   "wall": {
+    "mean": 1.127,
+    "p50": 1.053,
+    "p99": 2.451
+   }
+  },
+  "ppl_tilt70_3": {
+   "cards": {
+    "avg": 3.76575839083148,
+    "max": 6,
+    "p50": 4
+   },
+   "draw_calls_mean": 181.1,
+   "frames": 7929,
+   "over33": 0,
+   "process": {
+    "mean": 0.49,
+    "p50": 0.417,
+    "p99": 1.49
+   },
+   "render_cpu": {
+    "mean": 0.216,
+    "p50": 0.206,
+    "p99": 0.31
+   },
+   "render_gpu": {
+    "mean": 0.117,
+    "p50": 0.113,
+    "p99": 0.136
+   },
+   "under": {
+    "avg": 0.0,
+    "max": 0,
+    "p50": 0
+   },
+   "wall": {
+    "mean": 1.081,
+    "p50": 0.974,
+    "p99": 2.519
+   }
+  },
+  "ppl_top_1": {
+   "cards": {
+    "avg": 0.0,
+    "max": 0,
+    "p50": 0
+   },
+   "draw_calls_mean": 177.4,
+   "frames": 8790,
+   "over33": 0,
+   "process": {
+    "mean": 0.35,
+    "p50": 0.307,
+    "p99": 1.281
+   },
+   "render_cpu": {
+    "mean": 0.234,
+    "p50": 0.236,
+    "p99": 0.338
+   },
+   "render_gpu": {
+    "mean": 0.108,
+    "p50": 0.107,
+    "p99": 0.12
+   },
+   "under": {
+    "avg": 0.0,
+    "max": 0,
+    "p50": 0
+   },
+   "wall": {
+    "mean": 0.971,
+    "p50": 0.903,
+    "p99": 2.262
+   }
+  },
+  "ppl_top_2": {
+   "cards": {
+    "avg": 0.0,
+    "max": 0,
+    "p50": 0
+   },
+   "draw_calls_mean": 176.8,
+   "frames": 8674,
+   "over33": 0,
+   "process": {
+    "mean": 0.36,
+    "p50": 0.323,
+    "p99": 1.307
+   },
+   "render_cpu": {
+    "mean": 0.246,
+    "p50": 0.259,
+    "p99": 0.355
+   },
+   "render_gpu": {
+    "mean": 0.112,
+    "p50": 0.11,
+    "p99": 0.134
+   },
+   "under": {
+    "avg": 0.0,
+    "max": 0,
+    "p50": 0
+   },
+   "wall": {
+    "mean": 0.982,
+    "p50": 0.954,
+    "p99": 2.036
+   }
+  },
+  "ppl_top_3": {
+   "cards": {
+    "avg": 0.0,
+    "max": 0,
+    "p50": 0
+   },
+   "draw_calls_mean": 176.7,
+   "frames": 9924,
+   "over33": 0,
+   "process": {
+    "mean": 0.313,
+    "p50": 0.258,
+    "p99": 1.172
+   },
+   "render_cpu": {
+    "mean": 0.209,
+    "p50": 0.201,
+    "p99": 0.303
+   },
+   "render_gpu": {
+    "mean": 0.107,
+    "p50": 0.105,
+    "p99": 0.117
+   },
+   "under": {
+    "avg": 0.0,
+    "max": 0,
+    "p50": 0
+   },
+   "wall": {
+    "mean": 0.86,
+    "p50": 0.788,
+    "p99": 1.876
+   }
+  },
+  "reach_tilt70_1": {
+   "cards": {
+    "avg": 3.78110536346311,
+    "max": 7,
+    "p50": 4
+   },
+   "draw_calls_mean": 181.0,
+   "frames": 6853,
+   "over33": 0,
+   "process": {
+    "mean": 0.598,
+    "p50": 0.531,
+    "p99": 1.693
+   },
+   "render_cpu": {
+    "mean": 0.256,
+    "p50": 0.267,
+    "p99": 0.335
+   },
+   "render_gpu": {
+    "mean": 0.114,
+    "p50": 0.11,
+    "p99": 0.14
+   },
+   "under": {
+    "avg": 0.0,
+    "max": 0,
+    "p50": 0
+   },
+   "wall": {
+    "mean": 1.257,
+    "p50": 1.195,
+    "p99": 2.514
+   }
+  },
+  "reach_tilt70_2": {
+   "cards": {
+    "avg": 3.77237378101469,
+    "max": 6,
+    "p50": 4
+   },
+   "draw_calls_mean": 181.1,
+   "frames": 7361,
+   "over33": 0,
+   "process": {
+    "mean": 0.554,
+    "p50": 0.507,
+    "p99": 1.618
+   },
+   "render_cpu": {
+    "mean": 0.237,
+    "p50": 0.25,
+    "p99": 0.316
+   },
+   "render_gpu": {
+    "mean": 0.112,
+    "p50": 0.11,
+    "p99": 0.137
+   },
+   "under": {
+    "avg": 0.0,
+    "max": 0,
+    "p50": 0
+   },
+   "wall": {
+    "mean": 1.155,
+    "p50": 1.116,
+    "p99": 2.348
+   }
+  },
+  "reach_tilt70_3": {
+   "cards": {
+    "avg": 3.77848416853652,
+    "max": 7,
+    "p50": 4
+   },
+   "draw_calls_mean": 180.8,
+   "frames": 7173,
+   "over33": 0,
+   "process": {
+    "mean": 0.569,
+    "p50": 0.524,
+    "p99": 1.694
+   },
+   "render_cpu": {
+    "mean": 0.243,
+    "p50": 0.256,
+    "p99": 0.323
+   },
+   "render_gpu": {
+    "mean": 0.111,
+    "p50": 0.108,
+    "p99": 0.136
+   },
+   "under": {
+    "avg": 0.0,
+    "max": 0,
+    "p50": 0
+   },
+   "wall": {
+    "mean": 1.188,
+    "p50": 1.165,
+    "p99": 2.453
+   }
+  },
+  "reach_top_1": {
+   "cards": {
+    "avg": 0.0,
+    "max": 0,
+    "p50": 0
+   },
+   "draw_calls_mean": 176.6,
+   "frames": 7356,
+   "over33": 0,
+   "process": {
+    "mean": 0.388,
+    "p50": 0.329,
+    "p99": 1.396
+   },
+   "render_cpu": {
+    "mean": 0.254,
+    "p50": 0.264,
+    "p99": 0.38
+   },
+   "render_gpu": {
+    "mean": 0.11,
+    "p50": 0.106,
+    "p99": 0.133
+   },
+   "under": {
+    "avg": 0.0,
+    "max": 0,
+    "p50": 0
+   },
+   "wall": {
+    "mean": 1.16,
+    "p50": 0.986,
+    "p99": 5.593
+   }
+  },
+  "reach_top_2": {
+   "cards": {
+    "avg": 0.0,
+    "max": 0,
+    "p50": 0
+   },
+   "draw_calls_mean": 176.9,
+   "frames": 8879,
+   "over33": 0,
+   "process": {
+    "mean": 0.351,
+    "p50": 0.315,
+    "p99": 1.292
+   },
+   "render_cpu": {
+    "mean": 0.24,
+    "p50": 0.249,
+    "p99": 0.354
+   },
+   "render_gpu": {
+    "mean": 0.115,
+    "p50": 0.114,
+    "p99": 0.133
+   },
+   "under": {
+    "avg": 0.0,
+    "max": 0,
+    "p50": 0
+   },
+   "wall": {
+    "mean": 0.961,
+    "p50": 0.918,
+    "p99": 2.055
+   }
+  },
+  "reach_top_3": {
+   "cards": {
+    "avg": 0.0,
+    "max": 0,
+    "p50": 0
+   },
+   "draw_calls_mean": 176.7,
+   "frames": 9775,
+   "over33": 0,
+   "process": {
+    "mean": 0.319,
+    "p50": 0.261,
+    "p99": 1.238
+   },
+   "render_cpu": {
+    "mean": 0.219,
+    "p50": 0.205,
+    "p99": 0.36
+   },
+   "render_gpu": {
+    "mean": 0.109,
+    "p50": 0.106,
+    "p99": 0.128
+   },
+   "under": {
+    "avg": 0.0,
+    "max": 0,
+    "p50": 0
+   },
+   "wall": {
+    "mean": 0.872,
+    "p50": 0.799,
+    "p99": 1.934
+   }
+  }
+ },
+ "schema": "gtai.n8-vehicles-bench/1",
+ "spans": {
+  "spans_mk_tilt70_1": {
+   "frames": 8730,
+   "rows": [
+    {
+     "label": "vehicle_view.gd",
+     "max_ms": 2.35,
+     "mean_ms": 0.186,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.304
+    },
+    {
+     "label": "city_view.gd",
+     "max_ms": 2.283,
+     "mean_ms": 0.145,
+     "nodes_last_scan": 1,
+     "p99_ms": 1.057
+    },
+    {
+     "label": "world.gd",
+     "max_ms": 2.587,
+     "mean_ms": 0.029,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.44
+    },
+    {
+     "label": "city_blood.gd",
+     "max_ms": 0.89,
+     "mean_ms": 0.019,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.061
+    },
+    {
+     "label": "draw: vehicle_fire.gd",
+     "max_ms": 1.084,
+     "mean_ms": 0.018,
+     "nodes_last_scan": 0,
+     "p99_ms": 0.101
+    },
+    {
+     "label": "vehicle_frame.gd",
+     "max_ms": 0.247,
+     "mean_ms": 0.007,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.015
+    },
+    {
+     "label": "draw: world_markers.gd",
+     "max_ms": 0.084,
+     "mean_ms": 0.005,
+     "nodes_last_scan": 0,
+     "p99_ms": 0.008
+    },
+    {
+     "label": "flush: before the first queued call (engine work)",
+     "max_ms": 0.044,
+     "mean_ms": 0.004,
+     "nodes_last_scan": 0,
+     "p99_ms": 0.007
+    },
+    {
+     "label": "vehicle_frame_bench.gd",
+     "max_ms": 0.081,
+     "mean_ms": 0.003,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.005
+    },
+    {
+     "label": "vehicle_fire.gd",
+     "max_ms": 0.11,
+     "mean_ms": 0.003,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.006
+    },
+    {
+     "label": "vehicle_skids.gd",
+     "max_ms": 0.113,
+     "mean_ms": 0.002,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.004
+    },
+    {
+     "label": "Camera2D",
+     "max_ms": 0.076,
+     "mean_ms": 0.002,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.004
+    }
+   ]
+  },
+  "spans_mk_tilt70_2": {
+   "frames": 8746,
+   "rows": [
+    {
+     "label": "vehicle_view.gd",
+     "max_ms": 3.445,
+     "mean_ms": 0.182,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.295
+    },
+    {
+     "label": "city_view.gd",
+     "max_ms": 4.998,
+     "mean_ms": 0.144,
+     "nodes_last_scan": 1,
+     "p99_ms": 1.118
+    },
+    {
+     "label": "world.gd",
+     "max_ms": 0.895,
+     "mean_ms": 0.029,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.453
+    },
+    {
+     "label": "draw: vehicle_fire.gd",
+     "max_ms": 5.031,
+     "mean_ms": 0.02,
+     "nodes_last_scan": 0,
+     "p99_ms": 0.089
+    },
+    {
+     "label": "city_blood.gd",
+     "max_ms": 0.199,
+     "mean_ms": 0.018,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.063
+    },
+    {
+     "label": "vehicle_frame.gd",
+     "max_ms": 0.238,
+     "mean_ms": 0.007,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.019
+    },
+    {
+     "label": "draw: world_markers.gd",
+     "max_ms": 0.084,
+     "mean_ms": 0.005,
+     "nodes_last_scan": 0,
+     "p99_ms": 0.008
+    },
+    {
+     "label": "flush: before the first queued call (engine work)",
+     "max_ms": 0.134,
+     "mean_ms": 0.004,
+     "nodes_last_scan": 0,
+     "p99_ms": 0.006
+    },
+    {
+     "label": "vehicle_fire.gd",
+     "max_ms": 0.079,
+     "mean_ms": 0.003,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.006
+    },
+    {
+     "label": "vehicle_frame_bench.gd",
+     "max_ms": 0.14,
+     "mean_ms": 0.003,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.005
+    },
+    {
+     "label": "(new since last scan)",
+     "max_ms": 0.066,
+     "mean_ms": 0.002,
+     "nodes_last_scan": 0,
+     "p99_ms": 0.004
+    },
+    {
+     "label": "save.gd",
+     "max_ms": 0.06,
+     "mean_ms": 0.002,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.004
+    }
+   ]
+  },
+  "spans_ppl_tilt70_1": {
+   "frames": 7372,
+   "rows": [
+    {
+     "label": "vehicle_view.gd",
+     "max_ms": 11.945,
+     "mean_ms": 0.299,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.421
+    },
+    {
+     "label": "city_view.gd",
+     "max_ms": 1.522,
+     "mean_ms": 0.165,
+     "nodes_last_scan": 1,
+     "p99_ms": 1.145
+    },
+    {
+     "label": "world.gd",
+     "max_ms": 1.032,
+     "mean_ms": 0.035,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.438
+    },
+    {
+     "label": "city_blood.gd",
+     "max_ms": 0.186,
+     "mean_ms": 0.021,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.062
+    },
+    {
+     "label": "draw: vehicle_fire.gd",
+     "max_ms": 1.82,
+     "mean_ms": 0.019,
+     "nodes_last_scan": 0,
+     "p99_ms": 0.076
+    },
+    {
+     "label": "vehicle_frame.gd",
+     "max_ms": 0.111,
+     "mean_ms": 0.008,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.014
+    },
+    {
+     "label": "draw: world_markers.gd",
+     "max_ms": 0.098,
+     "mean_ms": 0.005,
+     "nodes_last_scan": 0,
+     "p99_ms": 0.008
+    },
+    {
+     "label": "vehicle_fire.gd",
+     "max_ms": 0.147,
+     "mean_ms": 0.004,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.005
+    },
+    {
+     "label": "flush: before the first queued call (engine work)",
+     "max_ms": 0.105,
+     "mean_ms": 0.004,
+     "nodes_last_scan": 0,
+     "p99_ms": 0.006
+    },
+    {
+     "label": "vehicle_frame_bench.gd",
+     "max_ms": 0.087,
+     "mean_ms": 0.003,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.005
+    },
+    {
+     "label": "vehicle_skids.gd",
+     "max_ms": 0.023,
+     "mean_ms": 0.003,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.004
+    },
+    {
+     "label": "draw: MultiMeshInstance2D in vehicle_view.gd",
+     "max_ms": 0.171,
+     "mean_ms": 0.002,
+     "nodes_last_scan": 0,
+     "p99_ms": 0.002
+    }
+   ]
+  },
+  "spans_ppl_tilt70_2": {
+   "frames": 7436,
+   "rows": [
+    {
+     "label": "vehicle_view.gd",
+     "max_ms": 0.558,
+     "mean_ms": 0.287,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.41
+    },
+    {
+     "label": "city_view.gd",
+     "max_ms": 1.503,
+     "mean_ms": 0.162,
+     "nodes_last_scan": 1,
+     "p99_ms": 1.153
+    },
+    {
+     "label": "world.gd",
+     "max_ms": 0.824,
+     "mean_ms": 0.035,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.45
+    },
+    {
+     "label": "draw: vehicle_fire.gd",
+     "max_ms": 1.635,
+     "mean_ms": 0.021,
+     "nodes_last_scan": 0,
+     "p99_ms": 0.117
+    },
+    {
+     "label": "city_blood.gd",
+     "max_ms": 0.134,
+     "mean_ms": 0.02,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.062
+    },
+    {
+     "label": "vehicle_frame.gd",
+     "max_ms": 0.131,
+     "mean_ms": 0.008,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.014
+    },
+    {
+     "label": "draw: world_markers.gd",
+     "max_ms": 0.174,
+     "mean_ms": 0.005,
+     "nodes_last_scan": 0,
+     "p99_ms": 0.009
+    },
+    {
+     "label": "vehicle_fire.gd",
+     "max_ms": 0.124,
+     "mean_ms": 0.004,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.005
+    },
+    {
+     "label": "flush: before the first queued call (engine work)",
+     "max_ms": 0.05,
+     "mean_ms": 0.004,
+     "nodes_last_scan": 0,
+     "p99_ms": 0.006
+    },
+    {
+     "label": "vehicle_frame_bench.gd",
+     "max_ms": 0.081,
+     "mean_ms": 0.003,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.005
+    },
+    {
+     "label": "vehicle_skids.gd",
+     "max_ms": 0.054,
+     "mean_ms": 0.003,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.004
+    },
+    {
+     "label": "Camera2D",
+     "max_ms": 0.076,
+     "mean_ms": 0.002,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.004
+    }
+   ]
+  },
+  "spans_reach_tilt70_1": {
+   "frames": 7781,
+   "rows": [
+    {
+     "label": "vehicle_view.gd",
+     "max_ms": 0.582,
+     "mean_ms": 0.294,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.434
+    },
+    {
+     "label": "city_view.gd",
+     "max_ms": 1.347,
+     "mean_ms": 0.155,
+     "nodes_last_scan": 1,
+     "p99_ms": 1.066
+    },
+    {
+     "label": "world.gd",
+     "max_ms": 1.24,
+     "mean_ms": 0.032,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.436
+    },
+    {
+     "label": "city_blood.gd",
+     "max_ms": 0.242,
+     "mean_ms": 0.02,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.065
+    },
+    {
+     "label": "draw: vehicle_fire.gd",
+     "max_ms": 2.911,
+     "mean_ms": 0.019,
+     "nodes_last_scan": 0,
+     "p99_ms": 0.083
+    },
+    {
+     "label": "vehicle_frame.gd",
+     "max_ms": 0.19,
+     "mean_ms": 0.007,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.011
+    },
+    {
+     "label": "draw: world_markers.gd",
+     "max_ms": 0.16,
+     "mean_ms": 0.005,
+     "nodes_last_scan": 0,
+     "p99_ms": 0.009
+    },
+    {
+     "label": "flush: before the first queued call (engine work)",
+     "max_ms": 0.11,
+     "mean_ms": 0.004,
+     "nodes_last_scan": 0,
+     "p99_ms": 0.007
+    },
+    {
+     "label": "vehicle_skids.gd",
+     "max_ms": 0.102,
+     "mean_ms": 0.003,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.004
+    },
+    {
+     "label": "vehicle_fire.gd",
+     "max_ms": 0.08,
+     "mean_ms": 0.003,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.006
+    },
+    {
+     "label": "vehicle_frame_bench.gd",
+     "max_ms": 0.08,
+     "mean_ms": 0.003,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.005
+    },
+    {
+     "label": "(new since last scan)",
+     "max_ms": 0.148,
+     "mean_ms": 0.002,
+     "nodes_last_scan": 0,
+     "p99_ms": 0.004
+    }
+   ]
+  },
+  "spans_reach_tilt70_2": {
+   "frames": 7984,
+   "rows": [
+    {
+     "label": "vehicle_view.gd",
+     "max_ms": 0.511,
+     "mean_ms": 0.286,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.427
+    },
+    {
+     "label": "city_view.gd",
+     "max_ms": 1.382,
+     "mean_ms": 0.149,
+     "nodes_last_scan": 1,
+     "p99_ms": 1.056
+    },
+    {
+     "label": "world.gd",
+     "max_ms": 0.82,
+     "mean_ms": 0.029,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.4
+    },
+    {
+     "label": "city_blood.gd",
+     "max_ms": 0.121,
+     "mean_ms": 0.019,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.058
+    },
+    {
+     "label": "draw: vehicle_fire.gd",
+     "max_ms": 1.236,
+     "mean_ms": 0.018,
+     "nodes_last_scan": 0,
+     "p99_ms": 0.066
+    },
+    {
+     "label": "vehicle_frame.gd",
+     "max_ms": 0.088,
+     "mean_ms": 0.007,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.011
+    },
+    {
+     "label": "draw: world_markers.gd",
+     "max_ms": 0.172,
+     "mean_ms": 0.005,
+     "nodes_last_scan": 0,
+     "p99_ms": 0.008
+    },
+    {
+     "label": "flush: before the first queued call (engine work)",
+     "max_ms": 0.11,
+     "mean_ms": 0.004,
+     "nodes_last_scan": 0,
+     "p99_ms": 0.006
+    },
+    {
+     "label": "vehicle_skids.gd",
+     "max_ms": 0.069,
+     "mean_ms": 0.003,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.004
+    },
+    {
+     "label": "vehicle_fire.gd",
+     "max_ms": 0.025,
+     "mean_ms": 0.003,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.005
+    },
+    {
+     "label": "vehicle_frame_bench.gd",
+     "max_ms": 0.07,
+     "mean_ms": 0.003,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.005
+    },
+    {
+     "label": "(new since last scan)",
+     "max_ms": 0.154,
+     "mean_ms": 0.002,
+     "nodes_last_scan": 0,
+     "p99_ms": 0.003
+    }
+   ]
+  },
+  "spans_tilt70": {
+   "frames": 6592,
+   "rows": [
+    {
+     "label": "vehicle_view.gd",
+     "max_ms": 1.243,
+     "mean_ms": 0.488,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.753
+    },
+    {
+     "label": "city_view.gd",
+     "max_ms": 1.82,
+     "mean_ms": 0.165,
+     "nodes_last_scan": 1,
+     "p99_ms": 1.145
+    },
+    {
+     "label": "world.gd",
+     "max_ms": 1.466,
+     "mean_ms": 0.036,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.446
+    },
+    {
+     "label": "city_blood.gd",
+     "max_ms": 0.113,
+     "mean_ms": 0.021,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.063
+    },
+    {
+     "label": "draw: vehicle_fire.gd",
+     "max_ms": 1.003,
+     "mean_ms": 0.019,
+     "nodes_last_scan": 0,
+     "p99_ms": 0.093
+    },
+    {
+     "label": "vehicle_frame.gd",
+     "max_ms": 0.19,
+     "mean_ms": 0.008,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.05
+    },
+    {
+     "label": "draw: world_markers.gd",
+     "max_ms": 0.134,
+     "mean_ms": 0.005,
+     "nodes_last_scan": 0,
+     "p99_ms": 0.008
+    },
+    {
+     "label": "vehicle_fire.gd",
+     "max_ms": 0.081,
+     "mean_ms": 0.004,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.006
+    },
+    {
+     "label": "flush: before the first queued call (engine work)",
+     "max_ms": 0.034,
+     "mean_ms": 0.004,
+     "nodes_last_scan": 0,
+     "p99_ms": 0.006
+    },
+    {
+     "label": "vehicle_frame_bench.gd",
+     "max_ms": 0.022,
+     "mean_ms": 0.003,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.005
+    },
+    {
+     "label": "vehicle_skids.gd",
+     "max_ms": 0.059,
+     "mean_ms": 0.003,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.004
+    },
+    {
+     "label": "Camera2D",
+     "max_ms": 0.098,
+     "mean_ms": 0.002,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.004
+    }
+   ]
+  },
+  "spans_top": {
+   "frames": 8256,
+   "rows": [
+    {
+     "label": "city_view.gd",
+     "max_ms": 1.831,
+     "mean_ms": 0.154,
+     "nodes_last_scan": 1,
+     "p99_ms": 1.039
+    },
+    {
+     "label": "vehicle_view.gd",
+     "max_ms": 0.408,
+     "mean_ms": 0.123,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.211
+    },
+    {
+     "label": "world.gd",
+     "max_ms": 1.449,
+     "mean_ms": 0.035,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.504
+    },
+    {
+     "label": "draw: vehicle_fire.gd",
+     "max_ms": 3.255,
+     "mean_ms": 0.023,
+     "nodes_last_scan": 0,
+     "p99_ms": 0.122
+    },
+    {
+     "label": "city_blood.gd",
+     "max_ms": 0.237,
+     "mean_ms": 0.022,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.067
+    },
+    {
+     "label": "vehicle_frame.gd",
+     "max_ms": 0.123,
+     "mean_ms": 0.008,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.032
+    },
+    {
+     "label": "draw: world_markers.gd",
+     "max_ms": 0.186,
+     "mean_ms": 0.006,
+     "nodes_last_scan": 0,
+     "p99_ms": 0.009
+    },
+    {
+     "label": "vehicle_frame_bench.gd",
+     "max_ms": 0.042,
+     "mean_ms": 0.004,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.006
+    },
+    {
+     "label": "vehicle_fire.gd",
+     "max_ms": 0.08,
+     "mean_ms": 0.004,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.007
+    },
+    {
+     "label": "flush: before the first queued call (engine work)",
+     "max_ms": 0.076,
+     "mean_ms": 0.004,
+     "nodes_last_scan": 0,
+     "p99_ms": 0.007
+    },
+    {
+     "label": "save.gd",
+     "max_ms": 0.179,
+     "mean_ms": 0.003,
+     "nodes_last_scan": 1,
+     "p99_ms": 0.004
+    },
+    {
+     "label": "(new since last scan)",
+     "max_ms": 0.194,
+     "mean_ms": 0.003,
+     "nodes_last_scan": 0,
+     "p99_ms": 0.005
+    }
+   ]
+  }
+ },
+ "what": "vehicle_frame's real drive (game traffic, 600 ticks, vsync off, 1280x720 windowed, d3d12, editor binary), settled = after the first 1000 ms of wall time; ms mean/p50/p99"
+}

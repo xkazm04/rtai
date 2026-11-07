@@ -1,0 +1,8 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+D3D12 12_0 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce RTX 4090
+
+[INFO] characters: prewarmed 33 rigs in 61.3 ms
+city_bench: prewarm 27.6 ms
+city_bench: drive_dense {"actorsAvg":395.349376114082,"avgFrameMs":16.6365472370766,"bloodDropDraws":1.0,"bloodFrames":1830.0,"bloodPoolDraws":300.0,"bloodUsPerFrame":30.075956284153,"drawCallsAvg":254.156862745098,"framesMeasured":1683.0,"fullRigsMax":16.0,"hitches25":256.0,"hitchesOver50":0.0,"hitchesWarmup":0.0,"low1Fps":27.5903706360554,"over50.game":0.0,"over50.outside":0.0,"over50.pipeline":0.0,"over50.present":0.0,"over50.render":0.0,"over50.unexplained":0.0,"p99CpuMs":33.158,"renderCpuMsAvg":0.332014259931521,"renderCpuMsP99":0.694000005722046,"rigMsP50":0.564,"rigMsP99":1.348,"rigMsPerTick":0.577014872099941,"simStepMsMax":0.338,"simStepMsPerTick":0.0741873884592505,"streamSpawnMsPerTick":0.127560380725758,"swapFrames":75.0,"visibleAvg":10.9667260843731,"visibleMax":27.0,"worstFrameMs":47.395,"worstSwapMs":31.881} -> C:/Users/kazda/kiro/gtai-wt/n8-view/evidence/n8-view/bench-it11-drive/drive48_combo_2.json
+city_bench: crowd 0 cowers (0 at a death), 0 trips, 0 deaths
+city_bench: crowd observe mean 10 us, worst 29 us over 1669 calls

@@ -4,7 +4,7 @@ extends SceneTree
 ## Needs a window (the headless display has no renderer); dev-only, never shipped.
 ## Usage: godot --path project --resolution 1920x1080 -s res://dev/frames/quest1_clip.gd
 ##   -- --out=<abs dir> [--ppm=32] [--stills=<tick,tick,...>] (stills only: no clip, no title)
-##   [--save=<abs file>] (the game writes its beat checkpoints there)
+##   [--save=<abs file>] (the game writes its beat checkpoints there) [--view=<id>] (n8 street)
 ##   [--continue] (with --save: press Continue on the title, save the first frames, quit)
 ##   [--rigs] (rivet-arsenal: the quest drawn on the cast rigs, Quest1Game._dev_rigs)
 ##   [--cam=fight] (rivet-arsenal: the camera leans toward the cop Rivet fights, render only)
@@ -15,6 +15,8 @@ extends SceneTree
 ##   [--quest-blade=off|<id>] (n7-melee: no carried blade / another one)
 ##   [--blade=<from>-<to>] (n7-melee: the pad draws the blade on key 2 at <from>, closes and
 ##   swings at the bot's target, puts it away at <to>)
+##   [--view=<id>] (n8-view: the view row ViewMode.shared reads, e.g. tilt70; default top)
+##   [--rivet-walk=bob] [--rivet-height=<m>] (d9-rivet: CastFlags, the walk's before, his size)
 
 const KNOWN_FLAGS: PackedStringArray = [
 	"--out",
@@ -30,6 +32,9 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--feel",
 	"--quest-blade",
 	"--blade",
+	"--view",
+	"--rivet-walk",
+	"--rivet-height",
 ]
 const RECORDER: String = "res://dev/frames/quest1_clip_rec.gd"
 const COUNTER: String = "res://tests/support/error_counter.gd"

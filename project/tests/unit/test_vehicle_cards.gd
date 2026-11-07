@@ -1,0 +1,119 @@
+extends GutTest
+## n8 vehicles: VehicleCards picks the rotation-set view nearest a car's heading (5 drawn + 3
+## mirrored) and turns the card by the rest, so the drawn nose always points along the heading.
+
+
+func test_the_five_drawn_views_and_their_mirrors() -> void:
+	assert_eq(VehicleViews.view_of(90.0), Vector3(0, 0, 90))  # nose down: nose to the camera
+	assert_eq(VehicleViews.view_of(45.0), Vector3(1, 0, 45))
+	assert_eq(VehicleViews.view_of(0.0), Vector3(2, 0, 0))  # side, nose right
+	assert_eq(VehicleViews.view_of(-45.0), Vector3(3, 0, -45))
+	assert_eq(VehicleViews.view_of(-90.0), Vector3(4, 0, -90))  # tail to the camera
+	assert_eq(VehicleViews.view_of(135.0), Vector3(1, 1, 135))
+	assert_eq(VehicleViews.view_of(180.0), Vector3(2, 1, -180))  # wrapf: 180 is -180
+	assert_eq(VehicleViews.view_of(-135.0), Vector3(3, 1, -135))
+
+
+func test_the_rest_never_passes_half_a_view() -> void:
+	for d: int in range(-180, 181, 3):
+		var pick: Vector3 = VehicleViews.view_of(float(d))
+		var rest: float = wrapf(float(d) - pick.z, -180.0, 180.0)
+		assert_true(absf(rest) <= VehicleViews.VIEW_DEG * 0.5 + 0.001, "heading %d" % d)
+
+
+func test_the_card_is_unsquashed_by_the_ground_scale() -> void:
+	var xf: Transform2D = VehicleCards.card_xf(Vector2(1.0, 2.0), 0.0)
+	var gk: float = ViewMode.shared().ground_k()
+	var s: float = VehicleCards.CELL_M * SimConst.PX_PER_M
+	assert_almost_eq(xf.x.x, s, 0.001)
+	assert_almost_eq(xf.y.y, s / gk, 0.001)
+	assert_eq(xf.origin, Vector2(1.0, 2.0) * SimConst.PX_PER_M)
+
+
+func test_rigid_turn_rolls_the_card_and_upright_keeps_it_vertical() -> void:
+	var keep: float = VehicleCards.upright_k
+	VehicleCards.upright_k = 0.0
+	var rigid: Transform2D = VehicleCards.card_xf(Vector2.ZERO, 20.0)
+	VehicleCards.upright_k = 1.0
+	var up: Transform2D = VehicleCards.card_xf(Vector2.ZERO, 20.0)
+	VehicleCards.upright_k = keep
+	assert_lt(rigid.y.x, -1.0, "rigid: the card's vertical leans with the turn")
+	assert_almost_eq(up.y.x, 0.0, 0.001)
+	assert_almost_eq(up.x, rigid.x, Vector2(0.001, 0.001))
+
+
+func test_the_wreck_fire_stays_on_the_ground_without_cards() -> void:
+	if VehicleCards.atlas() == null:  # `top` (the test default): flat bodies, no lift
+		assert_eq(VehicleFire.hood_lift(), Vector2.ZERO)
+	else:
+		assert_lt(VehicleFire.hood_lift().y, 0.0, "a card's bonnet is up the screen")
+
+
+func test_wear_levels_follow_the_damage_state_and_seed_per_car() -> void:
+	assert_eq(VehicleCards.wear(VehicleBody.State.INTACT, 0), 0)
+	var soul: int = VehicleCards.wear(VehicleBody.State.HIJACKED, 0)
+	assert_eq(soul, VehicleCards.SOUL, "hijacked: the soul's teal, no dents")
+	assert_eq(VehicleCards.wear(VehicleBody.State.HIJACKED, 5) % VehicleCards.SIREN % 4, 0)
+	assert_eq(VehicleCards.wear(VehicleBody.State.D1, 0) % 4, 1)
+	assert_eq(VehicleCards.wear(VehicleBody.State.D2, 5) % 4, 2)
+	assert_eq(VehicleCards.wear(VehicleBody.State.WRECK, 9) % 4, 3)
+	var a: int = VehicleCards.wear(VehicleBody.State.D1, 1)
+	var b: int = VehicleCards.wear(VehicleBody.State.D1, 2)
+	assert_ne(a, b, "two dented cars wear different dents")
+	assert_lt(VehicleCards.wear(VehicleBody.State.WRECK, -77), 4 * VehicleCards.WEAR_SEEDS)
+
+
+func test_cards_draw_north_to_south_whatever_the_put_order() -> void:
+	var ys: PackedFloat32Array = PackedFloat32Array([5.0, -5.0, 0.0, -5.0])
+	assert_eq(VehicleCards.back_to_front(ys), [1, 3, 2, 0] as Array[int])
+
+
+func test_a_card_with_someone_in_front_drops_under_the_actors() -> void:
+	var f: VehicleFront = VehicleFront.new()
+	assert_false(f.blocks(Vector2.ZERO), "nobody: the vehicles band")
+	f.add(Vector2(0.5, -2.0))  # behind the car: the card covers them, stays over
+	assert_false(f.blocks(Vector2.ZERO))
+	f.add(Vector2(5.0, 1.0))  # beside, too far across
+	assert_false(f.blocks(Vector2.ZERO))
+	f.add_people(PackedFloat64Array([7, -1.0, 2.0, 1.0]))  # in front but dead: ignored
+	assert_false(f.blocks(Vector2.ZERO))
+	f.add_people(PackedFloat64Array([8, -1.0, 2.0, 0.0]))  # in front, alive
+	assert_true(f.blocks(Vector2.ZERO))
+	assert_false(f.blocks(Vector2(0.0, 10.0)), "a car further south is not blocked")
+	var cards: VehicleCards = autofree(VehicleCards.new())
+	cards.front = f
+	cards.begin(null)
+	cards.put(0, Vector2.ZERO, Vector2.RIGHT, Color.WHITE)
+	cards.put(0, Vector2(0.0, 10.0), Vector2.RIGHT, Color.WHITE)
+	cards.finish()
+	assert_eq(cards.count(), 2)
+	assert_eq(cards.count_under(), 1)
+
+
+func test_only_a_moving_police_card_flashes_its_bar() -> void:
+	assert_eq(VehicleCards.duty(VehicleCards.POLICE_ART, 8.0), VehicleCards.SIREN)
+	assert_eq(VehicleCards.duty(VehicleCards.POLICE_ART, 0.0), 0, "a parked cruiser stays dark")
+	assert_eq(VehicleCards.duty(0, 8.0), 0, "a sedan has no bar")
+	assert_true(VehicleCards.SIREN > VehicleCards.wear(VehicleBody.State.WRECK, 63), "a bit apart")
+
+
+func test_soul_bit_sits_above_the_siren_and_matches_the_shader() -> void:
+	var top: int = VehicleCards.SIREN + VehicleCards.wear(VehicleBody.State.WRECK, 63)
+	assert_gt(VehicleCards.SOUL, top, "a soul-hijacked cruiser on duty keeps both bits apart")
+	var code: String = (load(VehicleCards.SHADER) as Shader).code
+	assert_string_contains(code, "soul_bit = %.1f;" % float(VehicleCards.SOUL))
+	assert_string_contains(code, "siren_bit = %.1f;" % float(VehicleCards.SIREN))
+
+
+func test_near_a_view_boundary_the_neighbours_cross_fade_to_one() -> void:
+	var keep: float = VehicleCards.blend_deg
+	VehicleCards.blend_deg = 20.0
+	var cards: VehicleCards = autofree(VehicleCards.new())
+	cards.begin(null)
+	cards.put(0, Vector2.ZERO, Vector2.RIGHT, Color.WHITE)  # mid-view: one card
+	assert_eq(cards.count(), 1)
+	cards.put(0, Vector2.ZERO, Vector2.from_angle(deg_to_rad(20.0)), Color.WHITE)  # 2.5 off
+	VehicleCards.blend_deg = keep
+	assert_eq(cards.count(), 3, "the neighbour view and the nearest one")
+	assert_almost_eq(cards._cs[1].a, 0.375, 0.001, "the neighbour fades in")
+	assert_almost_eq(cards._cs[2].a, 0.625, 0.001)

@@ -1,0 +1,174 @@
+{
+  "schema": "gtai.handheld-sim/1",
+  "label": "v2-r1",
+  "device": "deck_bench",
+  "scene": "reel",
+  "scene_args": [
+    "--rigs",
+    "--bot=reel",
+    "--reel=director",
+    "--view=tilt70"
+  ],
+  "extra": [],
+  "renderer": "compat",
+  "gpu": "igpu",
+  "gpu_index": null,
+  "threads": 8,
+  "priority": "belownormal",
+  "ticks": 1200,
+  "exit": 0,
+  "contended": "CONTENDED (2 other Godot runs)",
+  "at": "2026-11-07T09:35:53.702Z",
+  "summary": {
+    "frames": 4612,
+    "low1_fps": 76.0727112976475,
+    "over33_settled": 1,
+    "over50_settled": 0,
+    "p50_ms": 4.08400011062622,
+    "p99_ms": 10.1829996109009,
+    "ticks": 1193,
+    "worst_ms": 38.75,
+    "worst_settled_ms": 38.75,
+    "render_gpu_ms_p50": 0.5,
+    "render_gpu_ms_p95": 1,
+    "render_cpu_ms_p50": 1.22,
+    "render_cpu_ms_p95": 1.96,
+    "process_ms_p50": 1.33,
+    "process_ms_p95": 2.86,
+    "loop_ms_p50": 0.01,
+    "loop_ms_p95": 0.88,
+    "draw_calls_p50": 394,
+    "draw_calls_p95": 421,
+    "affinity_seen": [
+      255
+    ],
+    "cpu_machine_pct_p50": 5.58,
+    "cpu_pinned_pct_p50": 11.17,
+    "ws_mb_max": 415,
+    "private_mb_max": 683.8,
+    "gpu_dedicated_mb_max": 307.9,
+    "gpu_shared_mb_max": 50.8
+  },
+  "samples": [
+    {
+      "t_ms": 1271,
+      "cpu_machine_pct": 5.92,
+      "cpu_pinned_pct": 11.84,
+      "ws_mb": 210.6,
+      "private_mb": 191.2,
+      "gpu_dedicated_mb": 53.6,
+      "gpu_shared_mb": 26.8,
+      "affinity": 255
+    },
+    {
+      "t_ms": 3551,
+      "cpu_machine_pct": 6.13,
+      "cpu_pinned_pct": 12.25,
+      "ws_mb": 299.7,
+      "private_mb": 323.1,
+      "gpu_dedicated_mb": 238.5,
+      "gpu_shared_mb": 42.8,
+      "affinity": 255
+    },
+    {
+      "t_ms": 5591,
+      "cpu_machine_pct": 6.03,
+      "cpu_pinned_pct": 12.06,
+      "ws_mb": 405.9,
+      "private_mb": 630.6,
+      "gpu_dedicated_mb": 282.3,
+      "gpu_shared_mb": 50.8,
+      "affinity": 255
+    },
+    {
+      "t_ms": 7627,
+      "cpu_machine_pct": 5.81,
+      "cpu_pinned_pct": 11.61,
+      "ws_mb": 410.3,
+      "private_mb": 653.5,
+      "gpu_dedicated_mb": 282.3,
+      "gpu_shared_mb": 50.8,
+      "affinity": 255
+    },
+    {
+      "t_ms": 9648,
+      "cpu_machine_pct": 5.32,
+      "cpu_pinned_pct": 10.63,
+      "ws_mb": 410.3,
+      "private_mb": 653.5,
+      "gpu_dedicated_mb": 282.3,
+      "gpu_shared_mb": 50.8,
+      "affinity": 255
+    },
+    {
+      "t_ms": 11674,
+      "cpu_machine_pct": 5.35,
+      "cpu_pinned_pct": 10.7,
+      "ws_mb": 415,
+      "private_mb": 683.8,
+      "gpu_dedicated_mb": 305.9,
+      "gpu_shared_mb": 50.8,
+      "affinity": 255
+    },
+    {
+      "t_ms": 13704,
+      "cpu_machine_pct": 4.62,
+      "cpu_pinned_pct": 9.23,
+      "ws_mb": 409.5,
+      "private_mb": 678.2,
+      "gpu_dedicated_mb": 305.9,
+      "gpu_shared_mb": 50.8,
+      "affinity": 255
+    },
+    {
+      "t_ms": 15737,
+      "cpu_machine_pct": 5.38,
+      "cpu_pinned_pct": 10.76,
+      "ws_mb": 409.5,
+      "private_mb": 678.2,
+      "gpu_dedicated_mb": 305.9,
+      "gpu_shared_mb": 50.8,
+      "affinity": 255
+    },
+    {
+      "t_ms": 17777,
+      "cpu_machine_pct": 5.6,
+      "cpu_pinned_pct": 11.2,
+      "ws_mb": 402.1,
+      "private_mb": 670.7,
+      "gpu_dedicated_mb": 305.9,
+      "gpu_shared_mb": 50.8,
+      "affinity": 255
+    },
+    {
+      "t_ms": 19808,
+      "cpu_machine_pct": 5.96,
+      "cpu_pinned_pct": 11.93,
+      "ws_mb": 402.5,
+      "private_mb": 675,
+      "gpu_dedicated_mb": 307.9,
+      "gpu_shared_mb": 50.8,
+      "affinity": 255
+    },
+    {
+      "t_ms": 21837,
+      "cpu_machine_pct": 5.58,
+      "cpu_pinned_pct": 11.17,
+      "ws_mb": 402.5,
+      "private_mb": 675,
+      "gpu_dedicated_mb": 307.9,
+      "gpu_shared_mb": 50.8,
+      "affinity": 255
+    },
+    {
+      "t_ms": 23873,
+      "cpu_machine_pct": 5.56,
+      "cpu_pinned_pct": 11.13,
+      "ws_mb": 402.5,
+      "private_mb": 675,
+      "gpu_dedicated_mb": 307.9,
+      "gpu_shared_mb": 50.8,
+      "affinity": 255
+    }
+  ]
+}

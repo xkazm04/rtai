@@ -1,11 +1,9 @@
 class_name ChunkView
 extends RefCounted
 ## Draws resident chunks (WLD-02 stage 2): one chunk at a time, nearest first, its draw list
-## recorded into pooled RenderingServer canvas items, one per world render layer (ground,
-## ground_decals, building_shadows, props, roofs: core/render/README.md) per 64 m quadrant so
-## off-screen quadrants cull, time-sliced to BUDGET_US per frame. Items are cleared
-## and pooled, never freed mid-run (pooling cut the worst swap frame 6.1 -> 1.8 ms in the spike,
-## WLD-05). Render only: the sim's residency is CityResidency.
+## recorded into pooled canvas items, one per world render layer (ground, ground_decals,
+## building_shadows, props, roofs) per 64 m quadrant so off-screen quadrants cull, time-sliced to
+## BUDGET_US per frame. Items are pooled, never freed mid-run (WLD-05: worst swap 6.1 -> 1.8 ms).
 
 const R_DRAW: float = 190.0
 const BUDGET_US: int = 1500
@@ -35,6 +33,8 @@ var frame_cmds: int = 0
 var frame_swapped: bool = false
 var activated: int = 0
 var released: int = 0
+## lifted roofs over south faces under an angled view (null when flat: `top` untouched)
+var lift: ChunkLift = null
 var _parent: RID
 var _tex: CityTextures
 var _drawn: Dictionary[Vector2i, Array] = {}
@@ -65,6 +65,8 @@ func _init(parent: RID, textures: CityTextures) -> void:
 	_shadow_extra = casts.extra_px(textures.classes, SimConst.PX_PER_M, textures.names)
 	_core_on = casts.parapet_core_m > 0.0
 	_core_px = Vector2.ONE * (casts.parapet_core_m - casts.baked_m(&"building")) * SimConst.PX_PER_M
+	lift = ChunkLift.make(textures, _is_building)
+	_band_of = lift.cards.bands(_band_of) if lift != null else _band_of
 
 
 ## zoom: the camera zoom (1 = 32 px/m); the shadow strokes keep their screen spacing above 64 px/m.
@@ -75,6 +77,10 @@ func update(focus: Vector2, res: CityResidency, zoom: float = 1.0) -> void:
 		_shadow_mat.set_shader_parameter(&"zoom", zoom)
 	frame_cmds = 0
 	frame_swapped = false
+	if lift != null and lift.stale():  # a live pitch settled: redraw every chunk
+		_active = Vector2i(-1, -1)
+		for key: Vector2i in _drawn.keys():
+			_release(key)
 	for key: Vector2i in _drawn.keys():
 		if (
 			key != _active
@@ -113,20 +119,24 @@ func _slice(chunk: CityChunk, t0: int) -> void:
 		return
 	var items: Array = _drawn[_active]
 	var origin: Vector2 = Vector2(_active) * SimConst.CHUNK_M
-	var n: int = chunk.command_count()
+	var n: int = lift.count(chunk) if lift != null else chunk.command_count()
 	while _k < n:
-		var t: int = chunk.tex[_k]
-		var o: int = _k * CityChunk.XF_STRIDE
+		var c: int = lift.nth(_k, chunk) if lift != null else _k
+		var t: int = chunk.tex[c]
+		var o: int = c * CityChunk.XF_STRIDE
 		var pos: Vector2 = Vector2(chunk.xf[o], chunk.xf[o + 1])
 		var shadow: bool = chunk.xf[o + 3] > 0.5
 		var q: int = (1 if pos.x - origin.x >= 64.0 else 0) + (2 if pos.y - origin.y >= 64.0 else 0)
 		var item: RID = items[q + 4 * (SHADOW_BAND if shadow else _band_of[t])]
 		var sz: Vector2 = _tex.size_px[t]
 		var at: Vector2 = pos * SimConst.PX_PER_M + (_shadow_extra[t] if shadow else Vector2.ZERO)
-		RenderingServer.canvas_item_add_set_transform(item, Transform2D(chunk.xf[o + 2], at))
-		RenderingServer.canvas_item_add_texture_rect(
-			item, Rect2(-sz * 0.5, sz), _tex.rids[t], false, SHADOW if shadow else Color.WHITE
-		)
+		if lift != null and lift.takes(t, shadow):
+			lift.draw(item, t, chunk.xf[o + 2], at, shadow)
+		else:
+			RenderingServer.canvas_item_add_set_transform(item, Transform2D(chunk.xf[o + 2], at))
+			RenderingServer.canvas_item_add_texture_rect(
+				item, Rect2(-sz * 0.5, sz), _tex.rids[t], false, SHADOW if shadow else Color.WHITE
+			)
 		if shadow and _core_on and _is_building[t]:
 			var core_item: RID = items[q + 4 * CORE_BAND]
 			_core(core_item, t, chunk.xf[o + 2], pos * SimConst.PX_PER_M)

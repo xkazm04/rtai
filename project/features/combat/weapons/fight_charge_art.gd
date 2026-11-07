@@ -13,8 +13,10 @@ const TAIL_M: float = 3.2
 const JAG_M: float = 0.22
 
 
-## The claw charging: `frac` 0..1 of a full charge at the muzzle `at`.
-static func crackle(ci: CanvasItem, at: Vector2, frac: float, tick: int) -> void:
+## The claw charging: `frac` 0..1 of a full charge at the muzzle `ground` (d8: at the drawn
+## muzzle under a tilted view, ShotLift.claw_at; the ground point straight down).
+static func crackle(ci: CanvasItem, ground: Vector2, frac: float, tick: int) -> void:
+	var at: Vector2 = ShotLift.claw_at(ci, ground)
 	var far: float = lerpf(GATHER_FAR_M, GATHER_NEAR_M, frac)
 	var arcs: int = 2 + int(frac * 4.0)
 	for i: int in arcs:

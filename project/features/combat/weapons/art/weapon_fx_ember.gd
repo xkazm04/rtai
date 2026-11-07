@@ -46,8 +46,11 @@ static func rules() -> WeaponFxEmber:
 	return _rules
 
 
-## The embers of jet round `s` heading `dir`, `went` m out of its `range_m` at `tick`.
-static func draw(ci: CanvasItem, s: Shot, dir: Vector2, went: float, tick: int) -> void:
+## The embers of jet round `s` heading `dir`, `went` m out of its `range_m` at `tick`, shifted
+## by `up` m (d8: the jet's lift at gun height under a tilted view; ZERO straight down).
+static func draw(
+	ci: CanvasItem, s: Shot, dir: Vector2, went: float, tick: int, up: Vector2 = Vector2.ZERO
+) -> void:
 	var r: WeaponFxEmber = rules()
 	if not enabled or r.count <= 0 or went < WeaponFxArt.CLEAR_M:
 		return
@@ -61,7 +64,7 @@ static func draw(ci: CanvasItem, s: Shot, dir: Vector2, went: float, tick: int) 
 		var flip: float = 1.0 if i % 2 == 0 else -1.0
 		var off: float = lerpf(r.spread_m.x, r.spread_m.y, WeaponFxDebris.hash01(key, i + 320))
 		var lag: float = lerpf(r.lag_m.x, r.lag_m.y, WeaponFxDebris.hash01(key, i + 340))
-		var at: Vector2 = s.pos - dir * minf(lag, went) + side * flip * off * (0.4 + k)
+		var at: Vector2 = s.pos + up - dir * minf(lag, went) + side * flip * off * (0.4 + k)
 		var len_px: float = lerpf(r.size_px.x, r.size_px.y, WeaponFxDebris.hash01(key, i + 360))
 		var tilt: float = (WeaponFxDebris.hash01(key, i + 380) - 0.5) * TILT * 2.0
 		_fleck(ci, Ink.px(at), dir.rotated(tilt) * len_px, 1.0 - 0.4 * k)

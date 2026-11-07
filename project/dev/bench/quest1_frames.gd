@@ -2,12 +2,11 @@ extends SceneTree
 ## Frame time of the slice on the city (dev-only, never shipped): boot/quest1.tscn in a real
 ## window, vsync off, quest 1 fast-forwarded headlessly-in-place to `--from` (default: the
 ## Dock 9 fight) by the scripted pad, then `--frames` frames at one sim tick per frame, each
-## frame's wall time recorded. Writes p50/p95/p99/max ms as JSON to `--out`. Take it under
-## C:/Users/kazda/kiro/gtai-day-d5/bench.lock; the machine is shared, so label it CONTENDED.
+## frame's wall time recorded. Writes p50/p95/p99/max + wall_ms to `--out` (`ab.mjs` preset quest1).
 ## Usage: godot --rendering-driver d3d12 --path project --resolution 1920x1080
-##   -s res://dev/bench/quest1_frames.gd -- --out=<file.json> [--from=5800] [--frames=1200]
+##   -s res://dev/bench/quest1_frames.gd -- --out=<f> [--from=5800] [--frames=1200] [--view=<id>]
 
-const KNOWN_FLAGS: PackedStringArray = ["--out", "--from", "--frames"]
+const KNOWN_FLAGS: PackedStringArray = ["--out", "--from", "--frames", "--view"]
 const BODY: String = "res://dev/bench/quest1_frames_run.gd"
 
 

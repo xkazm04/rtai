@@ -1,4 +1,5 @@
 {
+  "aim_lock_at_windup": true,
   "arenas": {
     "depot": {
       "add_spawns": [],
@@ -401,6 +402,6 @@
       "script": "res://features/bosses/servo/servo_moves.gd"
     }
   },
-  "doc": "Act bosses as data (lane n7-king framework). A boss: hp, phases (entered by hp fraction), attacks with a tell (windup_s, aim_lock_s), an active window, a recovery whose first punish_s takes punish_k damage. Interface: n7-king JOURNAL REQUEST 1. One boss's special case lives in its script (features/bosses/<id>/), never here.",
+  "doc": "Act bosses as data (lane n7-king framework). A boss: hp, phases (entered by hp fraction), attacks with a tell (windup_s, aim_lock_s), an active window, a recovery whose first punish_s takes punish_k damage. Interface: n7-king JOURNAL REQUEST 1. One boss's special case lives in its script (features/bosses/<id>/), never here. aim_lock_at_windup (top level; owner d8 on the King's target circle): true = every attack's aim and ring freeze the moment its windup begins, so a step out of the ring dodges (aim_lock_s is then unused); false = the aim tracks Rivet until aim_lock_s before the active window (the d8 read).",
   "schema": "gtai.bosses/1"
 }
