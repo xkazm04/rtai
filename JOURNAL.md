@@ -1101,3 +1101,27 @@ NEXT (supersedes it13's):
 - 06:30 Session end: all committed (15ecfd9c + this line). Scratch it16 raw stills deleted (masters
   hold the pairs). The 1080p boss bar left for NEXT (arena.tscn renders 1280x800 under
   --resolution; the HUD is canvas_items-stretched, so 1080p is the same layout x1.35).
+
+## Iteration 19 (2026-11-07 06:29, BUILD)
+Read: JOURNAL (it16 NEXT; it17/it18 left no entry, the log ends at a47b382a), the four lane
+journals (no new REQUEST to hud; view's l.862 Dock 9 REQUEST was answered it12), the catalog since
+0505: one raise for hud's ids, `weapon_showcase_heavy_v3` (round 20261107-0745, B: "COLUMN 3 FIXED:
+the icons are rust-brown steel with brass bands ... For the HUD the icon column is now usable as
+is"). The library has no per-weapon cut of it (keyed/weapon/ still the 21:06 files).
+- MILESTONE 6dff9553 the rocket launcher, flamethrower and molotov HUD icons re-cut from v3's
+  icon column. `showcase_import.py` learned SHEET: (id, form) -> (keyed sheet, column, row), the
+  cell found by the alpha's column/row runs (the sheet is a clean 3 x 3). p70/p55 re-imported
+  byte-identical. Checked against `rivet-r2/out/arm_{rocket_launcher,flamethrower,molotov}.png`:
+  v3's flamethrower ring nozzle and single-tank look match the approved arm closer than the 2155
+  cage nozzle; the floor p70/p55 keep the 2155 drawings (same palette and silhouette).
+  Looked: tickets at 1280x800 (dialogue_board, before = the it2 cuts restored, after), the armory
+  wall rack tilt70 32 + 48 px/m (seed 1 f89; the frame diff only the rack's three icons), 0 SCRIPT
+  ERROR each. The molotov no longer melts cream-on-cream into the ticket; the grips show. On the
+  rack the v3 rocket launcher reads chunkier (icon 384x186 vs 384x114), still inside its slot.
+  Masters `hud_heavy_icons_v3_tickets_1280x800_before_after.png` (frames.json 14, replaces the it8
+  icon-on-ticket pair; that file stays), `armory_rack_heavy_icons_v3_tilt70_48ppm_before_after_x2.png`.
+  Unit test_hud_art + test_weapon_showcase 20/0; lint 15/15 (hook); 3 provenance lines.
+Registry rules applied: `sprite-and-atlas-production` (cut by the re-runnable import tool, never
+by hand; the source cell named in the tool and the provenance), `generative-artifact-gating` (a B
+taken only for the column its notes clear; checked against the owner-approved arm design before
+integrating), `accessibility` (value contrast of the icon on the cream ticket).
