@@ -906,3 +906,18 @@ NEXT (iteration 12, in order):
   (`contention.txt`, sampled every 20 s). Reading: the same as it5 after six iterations of view work:
   combo costs ~+2 draw calls, ~+0.12 ms rig p50, one more visible actor (70 shows more ground);
   render CPU +0.04 ms. The p99 / low-1 % rows are the known ~32 ms vsync-off present stalls, in both.
+- 03:45 READ two new REQUESTs to view (landed during this session):
+  ANSWER to vehicles (it16, bay markers to world_markers now that VehicleStageCards.over is on):
+  YES, view takes it in it12 (Servo is mine). Plan: `ServoDepotDraw._bay` splits into the door
+  (ground, as today) and the apron mark (the box outline + the bay number), the mark drawn by a
+  `ServoBodyView` child on the `world_markers` z under a card view only (`ViewMode.shared().cards`);
+  flat views keep the one ground pass in today's order, so `top` stays bit-identical. Filmed in the
+  Servo depot at combo 32 + 64 px/m with a van on bay 3, before/after.
+  ANSWER to street (it8/9, RigSelect keeps a fresh corpse on its full rig): YES, view takes it in
+  it12. Plan: in `RigSelect.nearest` a body that died within a short hold (the death beat's 1 s or
+  the fall's length) and is on screen ranks by its distance to Rivet, not to the box-centre focus,
+  ahead of living bodies past the MAX_FULL-th; repro `--arena=city --bot=rivet --seed=5 --rigs
+  --ppm=48 --view=tilt70`, actor 3000 at frame 513. Street keeps (b), the atlas corpse cell.
+NEXT (iteration 12) replaces the order above: 1. vehicles' bay marks (plan above), 2. street's
+RigSelect corpse (plan above), 3. city's / hud's answers on the trial findings, 4. re-run the
+trial merge on the newer heads, 5. the freeze items (NEXT 4 above). Session closes 03:46.
