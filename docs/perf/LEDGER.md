@@ -88,8 +88,12 @@ evidence run plus the seams lane's), so read the ratios, not the ms; a quiet rer
 - The shipped build runs the 400-actor riot frame in **4.08 ms p50 / 7.24 ms p99** (section 20's riot p99
   budget is 7 ms: within 0.24 ms of it on this host) and holds the riot at the 60 fps cap with **0.29 of
   one core and 758 MB**. The debug editor overstates the riot's CPU cost by ~40 % (p50) and its tail by ~30 %.
-- Watch: riot60's exe worst frame 33.6 / 24.3 ms (one each pair) against the editor's 23.5: a real-time
-  (presented) hitch, not a cost metric; owed a look with the perf HUD on the exe.
+- Watch: riot60's exe worst frame 33.6 / 24.3 ms against the editor's 23.5: frame by frame it is ONE frame
+  over 25 ms in 1684 (run 0, frame 1261; run 1 none over 25), isolated, not a pattern; real-time presented
+  frames, not a cost metric. Re-check with more pairs and the perf HUD on the exe.
+- **Boot to first frame, same screen** (`tools/perf/boot.sh 5`, `--screen 0`, boot + one city_bench frame + exit;
+  `evidence/perf/rel-vs-dbg-screen0/boot.log`): exe 3.95 / 2.55 / 2.41 / 2.69 / 2.58 s, editor 3.98 / 4.29 /
+  4.08 / 4.89 / 3.89 s: **median 2.58 s vs 4.08 s**. (The first table's 2.86 vs 4.35 s had the exe on the other screen.)
 
 ## Levers
 | # | lever | hypothesis / expected | change | A/B (median, spread) | verdict | commit |
