@@ -190,6 +190,13 @@ director reel (`--fixed-fps 60 --quit-after 14000`) top 19/19, tilt70 19/19, com
    upright bust; on drawn legs they read as upright figures. Kept the drawn legs (`KingLegsCard.SHEETS`),
    the parts one value away; `gang_legs_55/70` asked of assets. Call 5.
    `king_gang_own_legs_before_after_combo_{64ppm_seed2_phase1_f200,32ppm_seed2_phase1_f200_x3}.png`.
+26. **The King's bodyguards on their own steel legs** (item 2, b026010d, it11): assets served `gang_legs_55/70`
+   (grade A, round 20261107-1820) to the it10 REQUEST, a copy by example of the King's sheet (same canvas, cells,
+   hip and sole lines): gunmetal steel, black joints, a thin gold ring at knee and ankle, ink outline only, no
+   rim. `KingLegsCard.SHEETS["gang"] = "gang_legs"`. Filmed phase 1, combo, seed 2, 64 and 32 px/m: before, royal
+   purple-and-gold legs under steel bodies; after, the legs carry the torsos' steel and the royal dress is the
+   King's alone. Gates at b026010d: reels 19/19 x3 fully down, 0 SCRIPT ERROR; evidence at b026010d all PASS (lint 15/15, unit 1727/0, scenarios 53, parity bit-exact, look goldens 11/11 + block 5/5, release-compile 602/0).
+   `king_gang_steel_legs_before_after_combo_64ppm_seed2_phase1_f150-420.mp4` (+ `_f200.png`, `_32ppm_..._x3.png`).
 
 ## What does not work yet
 - (closed it9, measured) The SWAT back rows (55 and 70, row 5) move the head 3 px (1.6 % of the figure) at 55
@@ -234,12 +241,13 @@ director reel (`--fixed-fps 60 --quit-after 14000`) top 19/19, tilt70 19/19, com
    (c) cars knock him down (sim work in both twins, not built). Before/after:
    `traffic_yields_to_rivet_before_after_tilt70_64ppm_seed7_bikes025_f300-720.mp4` (+ `_f300-660_strip.png`).
    Try: `"$GODOT_BIN" --path project -- --view=tilt70 --seed=7 --rigs --bikes=0.25 --traffic-yields`.
-5. **The King's bodyguards' legs** (it10). Default built: (a) they stand on the King's drawn legs (purple
-   and gold bands, his sheet at their card scale), upright figures. (b) Their own n8 parts legs (drop "gang"
-   from `KingLegsCard.SHEETS`): grey top-down limbs that sprawl under the upright bust, with a pale rim.
-   (c) Their own drawn legs in the gang's steel and black (REQUESTed of assets as `gang_legs_55/70`; one
-   value when they land). Still: `king_gang_own_legs_before_after_combo_64ppm_seed2_phase1_f200.png` (left a,
-   right b). Try: `"$GODOT_BIN" --path project res://dev/arena/arena.tscn -- --boss=king --phase=1 --view=combo`.
+5. **The King's bodyguards' legs** (it10, it11). Default built: (c) their own drawn steel legs (assets
+   `gang_legs_55/70`, landed it11): gunmetal with a thin gold ring at knee and ankle, ink only. Options:
+   (a) the King's drawn legs (purple and gold, `KingLegsCard.SHEETS["gang"] = "king_legs"`); (b) their n8 parts
+   legs (drop "gang"): grey top-down limbs that sprawl under the upright bust, with a pale rim. Clip (left a,
+   right c): `king_gang_steel_legs_before_after_combo_64ppm_seed2_phase1_f150-420.mp4`; (b):
+   `king_gang_own_legs_before_after_combo_64ppm_seed2_phase1_f200.png`. Try: `RTAI.exe -- --boss=king --phase=1
+   --view=combo` (or `"$GODOT_BIN" --path project res://dev/arena/arena.tscn -- --boss=king --phase=1 --view=combo`).
 
 ## Next steps
 See JOURNAL `NEXT:`.
