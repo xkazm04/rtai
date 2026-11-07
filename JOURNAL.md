@@ -532,3 +532,31 @@ NEXT (iteration 13; supersedes the list above, whose item 1 is done):
   (`disable_path_overrides`): the bench export boots city_bench by itself, user args only.
 - REQUEST to perf (FYI, answer to theirs): E12 above: on the iGPU at 1280x800 the trim takes 128 MB off the GPU's shared
   memory and 176 MB off the working set in the riot; the p70 traffic sheet split carries the handheld case too.
+- MILESTONE 16:00 (f0c20255, af40d92d) mutation: player_settings.gd on 20abab6c **86.1 %** (31/36; it12 66.7 %), the :90
+  pair killed since by a 0-cap row test (planted: FAIL at :160); left :45 / :72 / :88, equivalent. handheld_rumble.gd on
+  cab191e0 **71.1 %** (32/45, 5 invalid); seven killed since by four tests (:62 the live node cleared on exit, :105 the
+  player level times the row gain, :108 an equal pulse restarts, :129-141 each bus event plays its kind), each planted
+  by hand -> FAIL; left: initial values (:26 :32 :33), the ms rounding (:110), the pad call with no pad (:116).
+  Full unit run on af40d92d: **1733/0**. The re-score on af40d92d is running (`gtai-d9x/scratch/it13/mutate-rumble2.log`).
+- Registry rules applied this iteration: on-device-verification-harness (the pulse counted on the real boss scenes,
+  by kind, through the exit log; the instrumented template run on the iGPU itself, not inferred from the RTX);
+  controller-latency-instrumentation (a pulse is a one-frame view read of a sim tick: the boss bar reads hurt_tick the
+  frame it changes, no queue); adaptive-fidelity-tiers (the pulse sits behind the rumble row, a no-op on desktop);
+  perf-regression-gating (the gate on a clean commit, killed and re-run when I dirtied it; top bit-identical;
+  mutation scores quoted, planted faults by hand); fire-tv-device-realities (shared memory is the device's memory: a
+  staging buffer that is free on a 24 GB card is 128 MB of a Deck's 16 GB).
+- Session end 16:10: every change committed; my mutate.mjs re-score may still run in its own temp worktree (not my
+  checkout); no bench lock taken (E12 is memory only, labelled n=1); scratch at `gtai-d9x/scratch/it13/` (tw copy 75 MB).
+
+NEXT (iteration 14):
+1. Read `gtai-d9x/scratch/it13/mutate-rumble2.log` (the re-score on af40d92d) and quote it in LEDGER / REPORT.
+2. The glyph REQUEST (`ui_pad_glyphs_v1`): read the asset lane's journal; if served, glyph cells behind the handheld
+   rows (the text labels as the fallback).
+3. A refractory gap for `boss_hit` if needed: log the shortest gap between two landed-hit pulses in ticks (the boss
+   bot with a fast gun, `--loadout=`), then decide (one data value).
+4. Carried: NAT-06 parity on the Linux `.so` in WSL; rumble on blasts and crashes (a bus event from combat: REQUEST);
+   E12 with `--device=deck` once a windows-bench export of this branch exists (bake the chunks first).
+5. End of day (by 18:30): delete the HKCU DirectX UserGpuPreferences value for gtai-d9x/handheld-godot/..._hh.exe and
+   that copy; the BC7 scratch worktree `gtai-d9x/scratch/hh-bc7` (git worktree remove); the scratch dirs
+   `gtai-d9x/scratch/{padwalk,padwalk2,it12,it13}`; the freeze exe `build/export/windows/RTAI.exe` with the exact
+   command in REPORT.

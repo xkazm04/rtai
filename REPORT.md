@@ -67,6 +67,17 @@ priority, the CPU's own 2-CU Radeon), never a device claim. Details and sources:
 - (it11) B on a pad resumes from the pause card (pad events only; Esc stays the pause toggle). Reels on 955f56cb:
   top / tilt70 / combo / combo + deck 19/19, 0 SCRIPT ERROR (`evidence/it11/reels-summary.log`); the gate re-run on
   035643c7 green the same way (unit 1719/0, goldens 11/11). Gates on 955f56cb: lint 15/15, unit 1718/0, scenarios 53/53, parity bit-exact (planted mutation caught at 629), look goldens 11/11: **top bit-identical** (`evidence/it11/evidence-run-955f56cb.log`); release-compile still skipped (seams' temp-dir clash).
+- (it13) **A landed hit on a boss is felt** (`boss_hit`, 70 ms, lighter than a hurt; the boss bar reads the boss's
+  hurt tick, view-side): the King fight under `deck` (40 s of the boss bot) 3 -> 59 pulses (56 landed + 2 hurts + 1
+  engaged), Servo 2 -> 63; the hurt counts unchanged, so nothing cut and the fight unmoved
+  (`evidence/it13/*-rumble-deck-hit.log`). Gate on cab191e0: lint 15/15, unit 1728/0, scenarios 53/53, parity
+  bit-exact, look goldens 11/11: **top bit-identical**; reels top / tilt70 / combo / combo + deck 19/19, 0 SCRIPT ERROR
+  (`evidence/it13/`). Mutation: player_settings.gd 66.7 -> 86.1 %, handheld_rumble.gd 71.1 % with seven survivors
+  killed since; the full unit run on af40d92d 1733/0.
+- (it13) **E12, perf's upload-buffer trim on the iGPU** (perf's instrumented export, 1280x800, the riot, 1 run per arm,
+  memory only): the stock engine holds 224 MB of staging; trimmed, the GPU's shared memory 1006 -> 878 MB and the
+  working set 1304 -> 1128 MB. On a Deck that memory is the RAM the game shares with the GPU: perf's traffic-sheet
+  split is worth ~128 MB there (`evidence/it13/tw-igpu/`).
 
 ## What does not work yet
 - Rumble on every hit Rivet takes is in (it7: the view reads his hurt tick; no sim change); its live pulse count is
