@@ -609,3 +609,38 @@ NEXT (iteration 7):
   code returns at once without a card view; top goldens 11/11 above).
 - Session end 01:41: tree clean, every change committed (5f3727fe, 325645a6, aa9f60ef, 1c8b1431
   + docs). NEXT (iteration 7) as listed above.
+
+## Iteration 7 (2026-11-07 01:42, BUILD)
+
+Read: JOURNAL, git log, the other lanes' journals (no REQUEST to street; view and hud note the
+street draws top-down on their branches: street's work lives here until the Director merges).
+bench.lock held by view at 01:42 (then free at 02:00 with 6 other Godot processes up: not quiet).
+
+- The fall REQUEST (it6) served by assets while I read: ped_*_fall_70 for all nine types (B, round
+  20261107-0137; named fix: the facing-camera and back corpses are drawn as tall as the standing
+  figure, stretch them along the fall axis), plus v2 of suit (v1 stays the pick) and worker (v2
+  supersedes: corpses 1.2x longer).
+- MILESTONE 42b780f1 + the punk/shopper commit (NEXT 2 closed, brief 5): **pedestrians fall and lie
+  as drawn under p70**. tools/art/street_fall.py (new) cuts a strip into 5 facings x 3 frames with
+  each figure's FEET at the cell centre (standing/mid-fall: the bottom rows' centroid; lying: the
+  body's end away from the facing's fall direction), drops loose specks and a neighbour row's reach
+  (the hood's stray hand, named in its cut note), scales to the still strip's px/m, applies the B
+  fix as `--stretch=1.5` (worker v2 1.25). StreetWalkerFall.FALLS/draw: dying or dead, the walker
+  keeps its card: buckle -> mid-fall -> lying at FALL_AT 0/0.18/0.4 of the family, the facing row
+  chosen from the blow's direction (RigHeadCard.frame_of, so 8 directions from 5 rows + mirror),
+  the feet on the rig root (which carries the knock-back slide), the lying frame is the corpse (no
+  swap to the parts: the jump is gone). CorpseFade's ink modulate is inherited; its sink is read
+  back from rig.scale. DRAWN false = it6. 2 unit tests added (5/5).
+  LOOKED: the 7 then 9 grids on contact sheets with the feet marked (all 45 cells; the suit's
+  briefcase pulls the standing anchor ~0.2 m toward the case: accepted), the board `--kill=light
+  --kill-spread` (new dev flag: walker i hit from i x 45 deg) at 64 and 32 px/m, ticks
+  59/62/65/68/72/150, DRAWN false | true: before, every walker pops to the white-limbed parts at
+  t68 and lies as an X; after, they buckle (t62-65), fall (t68) and lie as drawn people in eight
+  directions, each at the spot it stood. Masters:
+  peds_drawn_fall_before_after_tilt70_64ppm_board_t59-150.png (tick strip),
+  peds_drawn_fall_before_after_tilt70_{32,64}ppm_board_t150.png,
+  peds_drawn_fall9_tilt70_64ppm_board_spread_t150.png (all nine types).
+  Provenance: 10 lines (9 + the worker v2); the prov script's stale date fixed to 2026-11-07.
+  DECISION street/drawn-fall. FRICTION: `tools/godot/check.mjs` reports FAIL on any file in the
+  CutRig dependency cycle (an untouched street_crowd_cards.gd too) with no root error; the GUT run
+  is the real compile check. Debt ratchet: +4 dev lines accepted for --kill-spread.
