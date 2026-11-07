@@ -714,3 +714,13 @@ NEXT (iteration 8):
    case): if it reads at 64 px/m in motion, add a per-sheet x override to street_fall.py.
 4. Freeze prep (08:30): the Windows export and REPORT calls (cop tone, crowd variety, walkers,
    the drawn fall's speed FALL_AT and the stretch, p55 height).
+- MILESTONE (NEXT 3 above, done in it7): the buckle frame stands on its box centre, as
+  street_head/street_walk place the walker. Measured on the sheets (old anchor - box centre, cm at
+  1.7 m, per facing): suit -25/-34/-28/-14/+20, elder -29/-35/0/5/-4, shopper -3/-11/-22/1/-5, hood
+  0/-11/-13/-5/0: the case and the cane pulled the old anchor sideways, a jump at the blow. Nine
+  grids re-cut (deterministic), provenance re-hashed (9 lines). LOOKED the board t59/62/65 old |
+  new (the shift is a few px at 64 px/m; the masters' stills and clip stay valid). Lint 15/15.
+- Session end 02:27: tree clean, every change committed. Commits it7: 8762d7e7 (board
+  --kill-spread), 42b780f1 (seven drawn falls), the punk/shopper/worker-v2 commit, the FALLS
+  generalisation, 235374e8 (p55 fallback), the box-centre anchor, + docs. NEXT (iteration 8): 1
+  cop falls when served, 2 quiet crowd cost, 4 freeze prep (NEXT 3 done).
