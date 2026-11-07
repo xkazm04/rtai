@@ -1004,3 +1004,9 @@ NEXT (it12, after the freeze), replaces the lists above:
   trial merge holds. No REQUEST/NOTE open to seams. Exe `build/export/windows/RTAI.exe` present (17:52, b51247bb;
   only docs since); tree clean. No code change before the 18:30 freeze (gates would not fit in 7 min). NEXT unchanged
   (it12 list above). Session end.
+- 18:31 (it22 session, STABILIZE) freeze check: d9-rivet head now 78fef679 (+1 since 3a3d25a1: its JOURNAL and REPORT
+  only, `git diff --stat` 2 files). `git merge-tree` vs 78fef679: the same two conflicts (JOURNAL.md add/add,
+  tools/debt/baseline.json); the it11 trial merge holds; REPORT merge note says so. No REQUEST/NOTE open to seams.
+  Exe `build/export/windows/RTAI.exe` present (17:52, b51247bb); `git diff b51247bb..HEAD -- project tools` empty, so
+  the exe is HEAD's code. Past the freeze: no code change (stabilize; nothing red to fix). Registry rule applied:
+  motion-quality-gating (the exe and evidence stay the gated build). NEXT unchanged (it12 list above). Session end.
