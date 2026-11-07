@@ -1408,3 +1408,10 @@ NEXT (iteration 22, in order):
    (unit no-arg, reel top + tilt70, scenarios, top framemd5, evidence --no-bench with the tree still),
    finish REPORT.md (gates item 9 -> the final commit).
 Session end ~06:50.
+LOOKED 06:50 (NEXT 2 taken early) `--arena=city --bot=rivet --seed=2 --rigs --view=tilt70` on a
+second trial tree (6d21c9ec + n8-city), kerb on vs off, 300 frames each, 0 SCRIPT ERROR: this is the
+traffic city (a VehicleView holds VehicleParked, so the stage claim stands aside: no double draw).
+framemd5 on vs off differ at 1 video frame (f28); two runs of the SAME build (off) differ at f28 and
+f33: run-to-run noise of a windowed city run, not the claim. Trial tree removed, .avi deleted.
+NEXT 2 updated: nothing owed on the arena city; the quest 1 combo look at Dock 9 stays a candidate.
+Session end 06:52.
