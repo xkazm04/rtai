@@ -41,7 +41,7 @@ under `evidence/n8-view/`. Full log: `JOURNAL.md`.
    CameraRig (`lead_combo_vs_combo_lead_{15,25}mps_48ppm_t150.png`).
    it15: **quest 1's boss eases combo to 55 too.** Quest 1 had no arena hook, so Mertz's fight stayed
    at 70; now `ViewPitchQuest` eases to 55 while he is up and back to 70 when he is down (ease at
-   tick 15270, back at ~16000): `quest1_mertz_engage_ease_combo_32ppm_t15000_15700.mp4`, on the
+   tick 15270, back at ~16000): before/after on the merge `quest1_mertz_ease_before_after_combo_32ppm_merged_t15200_15600.mp4`, `quest1_mertz_engage_ease_combo_32ppm_t15000_15700.mp4`, on the
    merge at 48 px/m `quest1_mertz_combo_48ppm_merged_t15600_55_t16000_play.png`. `ViewPitchQuest.ON`
    false = 70 all quest.
 7. **Draw order**: Tonnage's legs in the depth sort (order probe 0/9 wrong at 70); the King's accents in

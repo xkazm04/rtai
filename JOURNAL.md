@@ -1273,3 +1273,14 @@ NEXT (iteration 15, in order):
   big share of it: REPORT Call 6 (option `ViewPitchQuest.ON` false).
 - GATE 06:32 director reel on the it15 trial merge (`trial_reel.sh`): top 19/19 and combo 19/19
   chapters all down, 0 SCRIPT ERROR (`evidence/n8-view/director-reel-it15-trial-{top,combo}.log`).
+- MILESTONE 06:36 the Mertz ease before/after on the merge (same ticks 15200-15600, combo 32 px/m,
+  before = `ViewPitchQuest.ON` false in the trial tree only, reverted): 0 SCRIPT ERROR both;
+  `quest1_mertz_ease_before_after_combo_32ppm_merged_t15200_15600.mp4`, frames.json entry 7 (the
+  n8-view-alone clip and the 48 px/m pair named in its note). LOOKED (frames 20/120/190): the same
+  until 15270; then the right side's ground foreshortens (the block's lifted faces deepen, more
+  street in frame), the crate line and Mertz at the right edge in both; Mertz's dialogue box covers
+  the lower half in both (hud's).
+- NOTE (street's, not a fault): on the it15 merge the Dock 9 dead contractors draw GREYED (a
+  desaturated lying figure with the blood on top), where it14's merge drew them full hi-vis: the
+  pile now reads as dead and behind the living. It is still ~30 deep along the kerb (the quest
+  keeps every guard_down); a cap stays street's / the quest's call.
