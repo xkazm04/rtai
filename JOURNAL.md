@@ -1187,3 +1187,11 @@ NEXT (iteration 19, in order):
 3. Freeze 08:30: export the exe (int-day recipe in docs/decisions.md; windows-bench worked at 03:13),
    finish REPORT.md (draft committed: add the exe command lines, final gates).
 Session end 04:57.
+MEASURED 05:00 NEXT 2(a) taken early: the ambulance row cut from ambulance_70_v2 (B) and
+ambulance_55_v3 (A) (scratch, the cutter imported with SHEET_PICKS overridden; nothing committed):
+row 6 only changes; red px 0 -> 0 both; vermilion-gate px 70: 4 -> 4, 55: 16 -> 42. Looked at the
+p70 row side by side: the same drawing, lamps alike at atlas scale (the cutter's amber() already
+made the 2021 key's red segments amber). No visible gain and a worse gate at 55: NOT adopted. The
+library's "supersedes" note concerns its own keys; my atlas already gets the same result in post.
+NEXT 2 now reads: (b) only, then the freeze.
+Session end 05:01.
