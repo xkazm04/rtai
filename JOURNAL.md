@@ -264,3 +264,4 @@ while not aiming (city cops aim most of a fight: they would flicker between the 
 DECISION item 2 (70): LIFT 0.74 at 70 (the assets lane's mock overlap 0.2 read as the approved king_70
 stubs); one value per pitch in KingLegsCard.LIFT. Rejected: v4 (B: hollow thigh tubes show under the hem).
 - 11:55 GATE director reel it3 (at 4aa2a0e0: armed cops, rider, legs 70): top, tilt70, combo 19/19 down, 0 SCRIPT ERROR (`evidence/d9-seams/director-reel-it3-*.log`).
+- 11:59 FIX (item 2): KingLegsCard.show_parts hides rig.pelvis_spr with the leg parts; the rimmed disc under the boots is gone at 55 and 70 (masters `king_pelvis_before_after_combo55_tilt70_64ppm_seed2_f150_x2.png`); unit test_king_legs_card 5/0.

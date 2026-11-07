@@ -44,3 +44,13 @@ func test_the_legs_stand_on_the_ground_and_the_upper_body_rises() -> void:
 	assert_eq(legs.global_position, rig.global_position, "the soles on the ground point")
 	assert_lt(rig.torso.global_position.y, rig.global_position.y, "bust and arms rise together")
 	ViewMode._shared = was
+
+
+func test_show_parts_hides_the_pelvis_with_the_legs() -> void:
+	var rig: CutRig = autofree(CutRig.new())
+	rig.pelvis_spr = Sprite2D.new()
+	rig.add_child(rig.pelvis_spr)
+	KingLegsCard.show_parts(rig, false)
+	assert_false(rig.pelvis_spr.visible, "no ground-level pelvis under the lifted bust")
+	KingLegsCard.show_parts(rig, true)
+	assert_true(rig.pelvis_spr.visible, "the parts' pelvis comes back without a sheet")

@@ -79,7 +79,11 @@ static func row_of(rig: CutRig) -> int:
 	return 1 + posmod(floori(rig.phase * FRAMES_PER_CYCLE), 4)
 
 
+## The leg parts and the pelvis (it3: the pelvis stays at ground height while the torso rises, so
+## under the lifted bust it showed as a rimmed disc between the drawn boots).
 static func show_parts(rig: CutRig, shown: bool) -> void:
+	if rig.pelvis_spr != null:
+		rig.pelvis_spr.visible = shown
 	for side: RigLimbs in rig.sides:
 		for spr: Sprite2D in [side.thigh, side.shin, side.foot]:
 			if spr != null:
