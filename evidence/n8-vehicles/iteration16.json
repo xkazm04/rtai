@@ -1,0 +1,34 @@
+{
+ "branch": "n8-vehicles",
+ "commits": {
+  "47324e53": "merge n8-view (dent_dz: the tether and the heat halo over the vehicles band)",
+  "f09f4456": "VehicleStageCards.over = true; a fighter wider than WIDE_M adds its edges to the front grid"
+ },
+ "evidence_dir": "C:/Users/kazda/kiro/gtai-masters/n8/vehicles",
+ "films": {
+  "quest1": "-s res://dev/frames/quest1_clip.gd -- --stills=600,2400,6000,13700 --rigs --view=tilt70 --ppm=32: over on vs off, 4 stills pixel-identical, 0 SCRIPT ERROR",
+  "servo_over": "servo_van_over_combo_{32,64}ppm_off_left_on_right.mp4 (res://dev/arena/arena.tscn -- --boss=servo --bot=boss --servo-ghost=dent --view=combo --ppm=<32|64> --rigs --seed=2, 300 frames each setting, 0 SCRIPT ERROR)",
+  "servo_stills": "servo_van_over_combo_32ppm_f180_crop2x_off_left_on_right.png, servo_van_over_combo_64ppm_f120_off_left_on_right.png, servo_wreck_boss_edges_combo_32ppm_f240_crop2x_off_left_on_right.png"
+ },
+ "gates": {
+  "director_reel": "19/19 chapters all down, 0 SCRIPT ERROR, exit 0 in top and tilt70 on f09f4456 (director-reel-it16-*.log)",
+  "lint": "15/15 on 47324e53 and f09f4456",
+  "top_bit_identity": "main scene --arena=city --bot=rivet --seed=2 --rigs, 300 frames on f09f4456 (with the n8-view merge): 300/300 video and 300/300 audio frame md5s equal to top_head.md5, 0 SCRIPT ERROR",
+  "unit": "1526 passed, 0 failed on the merged tree + over (FULL, no FLAKY)"
+ },
+ "measures": {
+  "city_tilt70_gate_clusters": "seeds 2 7 11 23, every 10th frame 0-180 (76 frames): non-collar clusters are lit amber lenses (hue > 30); the only hue < 30 cluster is Rivet's collar; no pickup rust over the gate seen",
+  "drive_bench": "evidence/n8-vehicles/bench-it16: city_bench drive_dense top vs tilt70 (release export, bench.lock held). CAUTION: city_bench has no VehicleView, so these numbers are the angled view's cost WITHOUT the traffic cards (the crowd's flat car layer in both views); not a measure of the cards",
+  "fire_gate_px": {
+   "hue_turn_p70": {
+    "10": 51653,
+    "15": 48822,
+    "20": 43921,
+    "25": 21141
+   },
+   "p55": "44354 of 135283",
+   "p70": "55546 of 170298 visible",
+   "top_fx_fire": "65737 of 162084"
+  }
+ }
+}

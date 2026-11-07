@@ -1,0 +1,39 @@
+{
+  "change": "81762e2e merge n8-view (bay number ink); dd288959+7a993845 quest 1 / arena city kerb cars as cards (stage view claims VehicleParked; vehicles band on the city)",
+  "date": "2026-11-07",
+  "iteration": 21,
+  "lane": "vehicles",
+  "gates": {
+    "commit": "7a993845",
+    "director_reel": {
+      "logs": [
+        "director-reel-it21-top.log",
+        "director-reel-it21-tilt70.log"
+      ],
+      "top": "19/19 all down, 0 SCRIPT ERROR",
+      "tilt70": "19/19 all down, 0 SCRIPT ERROR"
+    },
+    "lint": "15/15",
+    "scenarios": {
+      "ran": 52,
+      "failed": 0,
+      "log": "scenarios-it21.log",
+      "note": "vehicle drive timing CONTENDED"
+    },
+    "top_identity": {
+      "file": "identity-it21/top_s2.md5",
+      "framemd5_seed2": "identical to it20 (600 lines)"
+    },
+    "unit_full": {
+      "passed": 1563,
+      "failed": 0,
+      "flaky": 0
+    },
+    "film": "quest 1 Dock 9 tilt70 32/48 px/m on a trial merge with n8-city bf579226, before = kerb false, 0 SCRIPT ERROR; Servo depot combo 32 px/m seed 2 before/after the bay ink, 0 SCRIPT ERROR"
+  },
+  "masters": [
+    "quest1_dock9_kerb_cars_tilt70_32ppm_t13700_before_left_after_right_crop2x.png",
+    "quest1_dock9_kerb_cars_tilt70_48ppm_t13700_before_left_after_right_crop.png",
+    "servo_bay3_ink_over_cream_van_combo_32ppm_seed2_f60_before_left_after_right_crop3x.png"
+  ]
+}

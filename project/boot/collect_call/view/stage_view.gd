@@ -25,10 +25,20 @@ const CAR_COLS: int = 3
 var stage: CollectCallStage
 ## The invented arena's floors and labels (off on the city, whose ground is the world).
 var zones: bool = true
+var _cards: VehicleStageCards = null  # n8: the cars stand as cards under a tilt
+
+
+func _enter_tree() -> void:
+	VehicleStageCards.claim()  # n8: kerb cars as cards, claimed before the street is drawn
+
+
+func _exit_tree() -> void:
+	VehicleStageCards.release()
 
 
 func _process(_delta: float) -> void:
 	queue_redraw()
+	_cards = VehicleStageCards.ensure(_cards, self, stage)
 
 
 func _draw() -> void:
@@ -197,5 +207,7 @@ func _car(b: VehicleBody) -> void:
 	var tex: Texture2D = CAR_ATLAS[clampi(b.state, 0, CAR_ATLAS.size() - 1)]
 	draw_set_transform(Ink.px(b.pos + shadow), b.head.angle())
 	draw_texture_rect_region(tex, r, cell, VehicleView.SHADOW)
+	if VehicleStageCards.standing(_cards):  # the body is a card: only its flat shadow here
+		return
 	draw_set_transform(Ink.px(b.pos), b.head.angle())
 	draw_texture_rect_region(tex, r, cell)

@@ -18,6 +18,8 @@ static var blind: bool = false
 static var car_zoom: bool = false
 ## --grade=<id>: a lights.json grade (night shows the car and fire lights).
 static var grade: StringName = &""
+## --frames (VehicleFrameBench): keep CitySystem's own traffic targets (the game's drive).
+static var game_traffic: bool = false
 
 
 class Blind:
@@ -82,12 +84,39 @@ class Carnage:
 		return TickInput.new()
 
 
+## --scene=depth (n8): Rivet walks a loop round the parked sedan, behind it (north: the card covers
+## him) and in front of it (south: he must draw over the card), every LOOP ticks.
+class Depth:
+	extends Route
+	## Walking pace: the focus moves at CitySystem.FOCUS_SPEED * axis / 127 (16 = 3.1 m/s).
+	const W: int = 16
+	const LOOP: int = 410
+	const WALK: Array[Array] = [
+		[20, 0, 0, 0],
+		[80, 0, -W, 0],
+		[160, 0, 0, W],
+		[270, 0, W, 0],
+		[350, 0, 0, -W],
+		[LOOP, 0, -W, 0],
+	]
+
+	func sample(tick: int) -> TickInput:
+		for row: Array in WALK:
+			var until: int = row[0]
+			var mx: int = row[2]
+			var my: int = row[3]
+			if tick % LOOP < until:
+				return TickInput.new(0, mx, my)
+		return TickInput.new()
+
+
 ## [VehicleService, CityCharacters, CityView]; `parent` receives the view. carnage: Rivet stands
 ## by a stopped taxi (to hijack) with a stopped sedan and pickup 40 / 47 m down the lane to ram.
 static func build(world: World, parent: Node, look: StringName, carnage: bool) -> Array[Object]:
 	var city: CitySystem = CitySystem.new(true)
 	world.add_system(city)
-	city.spawner.targets = CityTargets.street(140, 6, 1)
+	if not game_traffic:
+		city.spawner.targets = CityTargets.street(140, 6, 1)
 	var svc: VehicleService = VehicleService.new()
 	world.add_system(svc)
 	var vw: CityVehicleWorld = Blind.new(city) if blind else CityVehicleWorld.new(city)

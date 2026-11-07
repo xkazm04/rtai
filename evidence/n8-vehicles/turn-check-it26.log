@@ -1,0 +1,43 @@
+project/features/vehicles/art/p55/traffic_cards.png row 0: col1 +0.032 col3 -0.032 ok
+project/features/vehicles/art/p55/traffic_cards.png row 1: col1 +0.032 col3 -0.032 ok
+project/features/vehicles/art/p55/traffic_cards.png row 2: col1 +0.032 col3 -0.032 ok
+project/features/vehicles/art/p55/traffic_cards.png row 3: col1 +0.043 col3 -0.029 ok
+project/features/vehicles/art/p55/traffic_cards.png row 4: col1 +0.048 col3 -0.033 ok
+project/features/vehicles/art/p55/traffic_cards.png row 5: col1 -0.009 col3 +0.009 ok
+project/features/vehicles/art/p55/traffic_cards.png row 6: col1 +0.087 col3 -0.025 ok
+project/features/vehicles/art/p55/traffic_cards.png row 7: col1 +0.032 col3 -0.032 ok
+project/features/vehicles/art/p55/traffic_cards.png row 8: col1 +0.036 col3 -0.037 ok
+project/features/vehicles/art/p55/traffic_cards.png row 9: col1 -0.033 col3 +0.009 exempt
+project/features/vehicles/art/p70/traffic_cards.png row 0: col1 +0.010 col3 -0.011 ok
+project/features/vehicles/art/p70/traffic_cards.png row 1: col1 +0.011 col3 -0.011 ok
+project/features/vehicles/art/p70/traffic_cards.png row 2: col1 +0.010 col3 -0.011 ok
+project/features/vehicles/art/p70/traffic_cards.png row 3: col1 +0.011 col3 -0.011 ok
+project/features/vehicles/art/p70/traffic_cards.png row 4: col1 +0.010 col3 -0.008 ok
+project/features/vehicles/art/p70/traffic_cards.png row 5: col1 +0.002 col3 -0.002 ok
+project/features/vehicles/art/p70/traffic_cards.png row 6: col1 +0.042 col3 -0.018 ok
+project/features/vehicles/art/p70/traffic_cards.png row 7: col1 +0.010 col3 -0.011 ok
+project/features/vehicles/art/p70/traffic_cards.png row 8: col1 +0.009 col3 -0.009 ok
+project/features/vehicles/art/p70/traffic_cards.png row 9: col1 -0.042 col3 +0.042 exempt
+project/features/vehicles/art/p55/service_cards.png row 0: col1 +0.032 col3 -0.006 ok
+project/features/vehicles/art/p55/service_cards.png row 1: col1 +0.031 col3 -0.013 ok
+project/features/vehicles/art/p70/service_cards.png row 0: col1 +0.026 col3 -0.023 ok
+project/features/vehicles/art/p70/service_cards.png row 1: col1 +0.016 col3 -0.006 ok
+flagged 0
+exit 0
+--- before the it22/it23 mirrors:
+C:/Users/kazda/kiro/gtai-n8/scratch/vehicles/it26/old_p55_traffic.png row 0: col1 +0.032 col3 -0.032 ok
+C:/Users/kazda/kiro/gtai-n8/scratch/vehicles/it26/old_p55_traffic.png row 1: col1 +0.032 col3 -0.032 ok
+C:/Users/kazda/kiro/gtai-n8/scratch/vehicles/it26/old_p55_traffic.png row 2: col1 +0.032 col3 -0.032 ok
+C:/Users/kazda/kiro/gtai-n8/scratch/vehicles/it26/old_p55_traffic.png row 3: col1 +0.043 col3 -0.029 ok
+C:/Users/kazda/kiro/gtai-n8/scratch/vehicles/it26/old_p55_traffic.png row 4: col1 -0.040 col3 -0.023 FLAGGED
+C:/Users/kazda/kiro/gtai-n8/scratch/vehicles/it26/old_p55_traffic.png row 5: col1 +0.009 col3 +0.009 ok
+C:/Users/kazda/kiro/gtai-n8/scratch/vehicles/it26/old_p55_traffic.png row 6: col1 +0.087 col3 -0.025 ok
+C:/Users/kazda/kiro/gtai-n8/scratch/vehicles/it26/old_p55_traffic.png row 7: col1 +0.032 col3 -0.032 ok
+C:/Users/kazda/kiro/gtai-n8/scratch/vehicles/it26/old_p55_traffic.png row 8: col1 -0.029 col3 -0.028 FLAGGED
+C:/Users/kazda/kiro/gtai-n8/scratch/vehicles/it26/old_p55_traffic.png row 9: col1 -0.033 col3 +0.009 exempt
+C:/Users/kazda/kiro/gtai-n8/scratch/vehicles/it26/old_p55_service.png row 0: col1 -0.032 col3 -0.006 FLAGGED
+C:/Users/kazda/kiro/gtai-n8/scratch/vehicles/it26/old_p55_service.png row 1: col1 -0.031 col3 +0.013 FLAGGED
+C:/Users/kazda/kiro/gtai-n8/scratch/vehicles/it26/old_p70_service.png row 0: col1 +0.026 col3 -0.023 ok
+C:/Users/kazda/kiro/gtai-n8/scratch/vehicles/it26/old_p70_service.png row 1: col1 +0.013 col3 -0.010 ok
+flagged 4
+exit 1

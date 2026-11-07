@@ -1,17 +1,16 @@
 extends Node
 ## Vehicles evidence frames (lane d-vehicles): the real World + CitySystem + CityView +
 ## CityCharacters + VehicleService (as World._register_features wires them) and the real camera
-## rig, which eases from on_foot (32 px/m) to car (48 px/m, look-ahead) on vehicle_entered. Rivet
-## stands beside a parked sedan, gets in, drives a fixed route (full throttle through a pedestrian
-## in the lane, an S-bend, a handbrake slide), and frames are saved at fixed sim ticks; --clip
+## rig (on_foot 32 px/m -> car 48 px/m on vehicle_entered). Rivet gets in a parked sedan, drives
+## a set route (a pedestrian in the lane, an S-bend, a handbrake slide); shots at set ticks; --clip
 ## saves every 2nd tick for 20 s (assemble with ffmpeg at 30 fps). Windowed only. Usage:
 ##   godot --rendering-driver d3d12 --path project res://dev/showcase/vehicle_frame.tscn --
-##     --out=<dir> [--clip] [--look=<id>] [--scene=carnage|yield] [--soul] [--cue-shots]
+##     --out=<dir> [--clip] [--look=<id>] [--scene=carnage|yield|depth] [--soul] [--cue-shots]
 ## --scene=yield: Rivet stays on foot beside the parked sedan while three cars stop behind it;
 ## --blind hands traffic no obstacles (the behaviour before set_obstacles); --car-zoom starts the
 ## camera at 48 px/m. --grade=night prints the night grade (car and fire lights on).
-## --soul-traffic soul-hijacks the civilian sim cars within 60 m at tick SOUL_TRAFFIC_TICK.
-## --cue-shots also saves a frame 1 and 20 ticks after every crash / car_wreck cue.
+## --soul-traffic soul-hijacks civilian cars within 60 m. --cue-shots: a frame 1 and 20 ticks after
+## each crash / car_wreck cue. --frames=<json>: VehicleFrameBench (the drive's cost, no shots).
 
 const MASTER_SEED: int = 31
 const SHOTS: Dictionary[int, String] = {
@@ -52,11 +51,20 @@ const YIELD_SHOTS: Dictionary[int, String] = {
 }
 const SOUL_TRAFFIC_TICK: int = 30
 const CLIP_TICKS: int = 20 * SimClock.TICK_RATE
+const DEPTH_SHOTS: Dictionary[int, String] = {
+	50: "depth-west",
+	140: "depth-south",
+	200: "depth-front",
+	240: "depth-front-east",
+	320: "depth-north",
+	400: "depth-behind",
+}
 
 var _out: String = "user://vehicle_frame"
 var _clip: bool = false
 var _look: StringName = &""
 var _carnage: bool = false
+var _depth: bool = false
 var _soul: bool = false
 var _soul_traffic: bool = false
 var _cue_shots: bool = false
@@ -81,6 +89,8 @@ func _ready() -> void:
 	_world.loop().set_input(
 		VehicleFrameSetup.Carnage.new() if _carnage else VehicleFrameSetup.Route.new()
 	)
+	if _depth:
+		_world.loop().set_input(VehicleFrameSetup.Depth.new())
 	if VehicleFrameSetup.chasers:
 		_world.loop().set_input(InputSource.new())
 	printerr("vehicle_frame: input set at tick %d" % _world.context().clock.tick())
@@ -92,6 +102,7 @@ func _ready() -> void:
 	@warning_ignore("return_value_discarded")
 	DirAccess.make_dir_recursive_absolute(_out)
 	_world.set_process(true)
+	VehicleFrameBench.attach(self, _world, view)
 
 
 func _process(_delta: float) -> void:
@@ -114,7 +125,7 @@ func _process(_delta: float) -> void:
 		if not _clip and tick >= t and not _done.has(t):
 			_done[t] = true
 			name = "%03d-%s" % [t, _shots[t]]
-	if name != "":
+	if name != "" and not VehicleFrameBench.on:
 		_done[tick] = true
 		_shoot(name)
 
@@ -161,6 +172,9 @@ func _parse_args() -> bool:
 		elif arg == "--scene=yield":
 			VehicleFrameSetup.chasers = true
 			_shots = YIELD_SHOTS.duplicate()
+		elif arg == "--scene=depth":
+			_depth = true
+			_shots = DEPTH_SHOTS.duplicate()
 		elif arg == "--scene=carnage":
 			_carnage = true
 			_shots = CARNAGE_SHOTS.duplicate()
@@ -168,6 +182,10 @@ func _parse_args() -> bool:
 			VehicleFrameSetup.grade = StringName(arg.substr(8))
 		elif arg.begins_with("--look="):
 			_look = StringName(arg.substr(7))
+		elif arg == "--no-front":
+			VehicleFront.off = true  # n8: the before of the cards-under-the-actors fix
+		elif arg.begins_with(ViewMode.FLAG + "=") or VehicleFrameBench.flag(arg):
+			pass  # the view (ViewMode.shared()); --frames* (VehicleFrameBench, the drive's cost)
 		else:
 			printerr("vehicle_frame: unknown argument %s" % arg)
 			return false

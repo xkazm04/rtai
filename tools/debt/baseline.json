@@ -9,13 +9,14 @@
         "2026-11-06: dev order probe logs each wrong ghost pair's tick (+1 dev line) (dev_loc 18151 -> 18152)",
         "2026-11-06: n8-view it7: quest1_clip --view flag (+2 dev lines) for quest 1 stills under tilt70 (dev_loc 18152 -> 18154)",
         "2026-11-07: lead_showcase takes --view and --speed to film the camera lead (combo vs combo_lead) with the real CameraRig (dev_loc 17762 -> 17769)",
-        "2026-11-07: n8 merge: view + street growth combined (each accepted on its lane; cast_view.gd conflict resolved by keeping both) (dev_loc 17769 -> 17942)"
+        "2026-11-07: n8 merge: view + street growth combined (each accepted on its lane; cast_view.gd conflict resolved by keeping both) (dev_loc 17769 -> 17942)",
+        "2026-11-07: n8 merge: + vehicles growth combined (accepted on its lane) (dev_loc 17942 -> 18431)"
       ],
       "files": {
         "project/dev/arena": 642,
         "project/dev/audio": 367,
         "project/dev/bake_city.gd": 32,
-        "project/dev/bench": 1388,
+        "project/dev/bench": 1554,
         "project/dev/bots": 399,
         "project/dev/enemy_ai": 662,
         "project/dev/frames": 464,
@@ -33,16 +34,17 @@
         "project/dev/save_crash_writer.gd": 18,
         "project/dev/selftest": 1453,
         "project/dev/servo": 434,
-        "project/dev/showcase": 5625,
+        "project/dev/showcase": 5948,
         "project/dev/view": 195,
         "project/dev/weapon_art": 506
       },
-      "total": 17942
+      "total": 18431
     },
     "direct_cmdline_reads": {
       "accepted": [
         "2026-11-06: n8-view it7: ArenaRigs + ArenaRobotRigs moved dev/arena -> features/arena (quest 1 ships the rig cast under a card view; decision 2026-11-04 re-check); quest1_game +3 lines (direct_cmdline_reads 153 -> 153)",
-        "2026-11-07: n8 merge: view + street growth combined (each accepted on its lane; cast_view.gd conflict resolved by keeping both) (direct_cmdline_reads 153 -> 154)"
+        "2026-11-07: n8 merge: view + street growth combined (each accepted on its lane; cast_view.gd conflict resolved by keeping both) (direct_cmdline_reads 153 -> 154)",
+        "2026-11-07: n8 merge: + vehicles growth combined (accepted on its lane) (direct_cmdline_reads 154 -> 155)"
       ],
       "files": {
         "project/core/render/view_mode.gd": 1,
@@ -56,6 +58,7 @@
         "project/dev/bench/city_bench.gd": 1,
         "project/dev/bench/quest1_frames.gd": 1,
         "project/dev/bench/rig_bench_run.gd": 1,
+        "project/dev/bench/vehicle_cards_cost_run.gd": 1,
         "project/dev/enemy_ai/aim_lead_ab.gd": 1,
         "project/dev/enemy_ai/enemy_pit_view.gd": 1,
         "project/dev/enemy_ai/enemy_rig_fight_run.gd": 1,
@@ -183,7 +186,7 @@
         "project/tests/run_scenarios.gd": 1,
         "project/tests/unit/test_launch_args.gd": 1
       },
-      "total": 154
+      "total": 155
     },
     "files_near_cap": {
       "accepted": [
@@ -216,14 +219,15 @@
         "2026-11-06: n8-view it7: ArenaRigs + ArenaRobotRigs moved dev/arena -> features/arena (quest 1 ships the rig cast under a card view; decision 2026-11-04 re-check); quest1_game +3 lines (files_past_soft_cap 68 -> 68)",
         "2026-11-07: cast_view.gd +4: quest 1's rig cast leaves the contractors to the cast view (QuestGuardCast), _rivet steps out for the rigs (files_past_soft_cap 67 -> 67)",
         "2026-11-07: quest1_game.gd +2: the one call that attaches ViewPitchQuest (quest 1 under combo eases at Mertz); the logic lives in features/view_pitch (files_past_soft_cap 67 -> 67)",
-        "2026-11-07: n8 merge: view + street growth combined (each accepted on its lane; cast_view.gd conflict resolved by keeping both) (files_past_soft_cap 67 -> 67)"
+        "2026-11-07: n8 merge: view + street growth combined (each accepted on its lane; cast_view.gd conflict resolved by keeping both) (files_past_soft_cap 67 -> 67)",
+        "2026-11-07: n8 merge: + vehicles growth combined (accepted on its lane) (files_past_soft_cap 67 -> 67)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 262,
         "project/boot/collect_call/view/cast_view.gd": 231,
         "project/boot/collect_call/view/collect_call_view.gd": 237,
         "project/boot/collect_call/view/fx_view.gd": 271,
-        "project/boot/collect_call/view/stage_view.gd": 201,
+        "project/boot/collect_call/view/stage_view.gd": 213,
         "project/boot/quest1_game.gd": 272,
         "project/dev/arena/arena_game.gd": 294,
         "project/dev/audio/audio_riot.gd": 201,

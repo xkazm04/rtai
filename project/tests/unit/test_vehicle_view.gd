@@ -93,3 +93,17 @@ func test_without_the_burnt_atlas_a_wreck_is_its_d2_cell_darkened() -> void:
 	var d2: MultiMeshInstance2D = nodes[1 + VehicleBody.State.D2]
 	var wreck: MultiMeshInstance2D = nodes[1 + VehicleBody.State.WRECK]
 	assert_eq(wreck.texture, d2.texture)
+
+
+func test_under_a_card_view_marked_traffic_fills_no_hidden_layer() -> void:
+	var saved: ViewMode = ViewMode._shared
+	ViewMode._shared = ViewMode.of("tilt70")
+	var svc: VehicleService = _service()
+	svc.traffic.state[4] = VehicleBody.State.D1
+	var view: VehicleView = _view(svc)
+	view._process(0.0)
+	var carded: bool = VehicleCards.atlas() != null
+	ViewMode._shared = saved
+	assert_true(carded, "tilt70 has a card atlas")
+	assert_eq(view._bodies[VehicleBody.State.D1].visible_instance_count, 0)
+	assert_false(view._crowd_car.visible, "the flat car layer (and its mirrors) hidden")

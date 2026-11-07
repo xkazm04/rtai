@@ -1,0 +1,43 @@
+{
+ "change": "4c16951c the delivery truck and depot van cut as five-view cards at 70/55 (service_cards.png, showcase); 299d849f the p70 traffic atlas re-cut on the library's A side redraws (taxi graded, SIDE_NATIVE)",
+ "date": "2026-11-07",
+ "gates": {
+  "commit": "ccba2871",
+  "director_reel": {
+   "logs": [
+    "director-reel-it22-top.log",
+    "director-reel-it22-tilt70.log"
+   ],
+   "tilt70": "19/19 all down, 0 SCRIPT ERROR",
+   "top": "19/19 all down, 0 SCRIPT ERROR"
+  },
+  "film": "vehicle_turn --set=service tilt70/tilt 32+64 px/m; --set=street tilt70 64 px/m before/after; city tilt70 seed 13 181 frames before/after; 0 SCRIPT ERROR each",
+  "lint": "15/15",
+  "scenarios": {
+   "failed": 0,
+   "log": "scenarios-it22.log",
+   "note": "vehicle drive timing CONTENDED",
+   "ran": 52
+  },
+  "top_identity": {
+   "file": "identity-it22/top_s2.md5",
+   "framemd5_seed2": "identical to it21 (--arena=city --bot=rivet --seed=2 --rigs, 300 frames)"
+  },
+  "unit_full": {
+   "failed": 0,
+   "flaky": 0,
+   "passed": 1566
+  }
+ },
+ "iteration": 22,
+ "lane": "vehicles",
+ "masters": [
+  "service_truck_depot_van_turn_strip_tilt70_64ppm.png",
+  "service_truck_depot_van_turn_strip_tilt55_64ppm.png",
+  "service_truck_depot_van_turn360_64ppm_tilt70_left_tilt55_right.mp4",
+  "service_truck_depot_van_tilt70_32ppm_f200_crop3x.png",
+  "street_side_redraws_turn_tilt70_64ppm_f150-210_before_left_after_right.png",
+  "street_side_redraws_turn360_tilt70_64ppm_before_top_after_bottom.mp4",
+  "pickup_side_redraw_city_tilt70_32ppm_seed13_f60_before_left_after_right_x3.png"
+ ]
+}

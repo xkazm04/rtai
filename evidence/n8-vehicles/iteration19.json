@@ -1,0 +1,38 @@
+{
+  "date": "2026-11-07",
+  "gates": {
+    "director_reel": {
+      "commit": "cb28d762 tree (art 3202cd13)",
+      "logs": [
+        "director-reel-it19-top.log",
+        "director-reel-it19-tilt70.log"
+      ],
+      "tilt70": "19/19 all down, 0 SCRIPT ERROR",
+      "top": "19/19 all down, 0 SCRIPT ERROR"
+    },
+    "lint": "15/15",
+    "scenarios": {
+      "commit": "cb28d762 tree",
+      "failed": 0,
+      "log": "scenarios-it19.log",
+      "ran": 52
+    },
+    "top_identity": {
+      "commit": "3202cd13",
+      "file": "identity-it19/top_s2.md5",
+      "framemd5_seed2": "identical to it18 (600 lines, video + audio)"
+    },
+    "unit_full": {
+      "commit": "3202cd13 tree",
+      "failed": 0,
+      "flaky": 0,
+      "passed": 1550
+    }
+  },
+  "head": "90638596",
+  "iteration": 19,
+  "lane": "vehicles",
+  "milestones": [
+    "3202cd13 VAN_SHEET: the van row from van_cream_70 (+ van_cream_between_70, CREAM_GRADE) and van_cream_55; olive one flag away, bit-exact"
+  ]
+}

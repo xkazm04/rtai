@@ -1,0 +1,29 @@
+{
+ "branch": "n8-vehicles",
+ "commits": {
+  "8a4d1ff8": "JOURNAL iteration 14 + decision line",
+  "8c634dc8": "every sim car turns through nine views a half turn on p70 (taxi, parked pickup, ambulance in-betweens; sedan and police C v2; REDRAWS, ROW_FIT, FIT_BY area)"
+ },
+ "evidence_dir": "C:/Users/kazda/kiro/gtai-masters/n8/vehicles",
+ "films": {
+  "c_v2": "turn360_tilt70_64ppm_cv2_before_after.mp4 (sedan, police car, van, bike; 0 ERROR)",
+  "rows": "p70_nine_view_rows_it14.png (the atlas rows sedan, police, taxi, pickup, ambulance in turn order)",
+  "street_32": "turn360_tilt70_32ppm_street_nine_views.mp4 (after only: the swapped-in 32 px/m before dropped the taxi, an import artefact of the swap, not used)",
+  "street_between": "turn360_tilt70_64ppm_street_between_before_after.mp4 + street_between_tilt70_64ppm_before_left_after_right.png (vehicle_turn --set=street, 0 ERROR)"
+ },
+ "gates": {
+  "city_tilt70": "--arena=city --bot=rivet --view=tilt70 --seed=7 --rigs, 900 frames: 0 SCRIPT ERROR",
+  "director_reel": "19/19 chapters all down, 0 SCRIPT ERROR, exit 0 in top and tilt70 on 8a4d1ff8 (director-reel-it14-*.log; --fixed-fps 60 --quit-after 7600, headless)",
+  "lint": "15/15 on 8c634dc8",
+  "top_bit_identity": "main scene --arena=city --bot=rivet --seed=2 --rigs, 301 frames on 8c634dc8: IDENTICAL to top_head.md5 (301 + 301), 0 SCRIPT ERROR",
+  "unit": "1512 passed, 0 failed on 8c634dc8 (no FLAKY)"
+ },
+ "measures": {
+  "atlas_p70": {
+   "after": "4032x4480, FINE rows 0-8",
+   "before": "4032x4480, FINE rows 0 1 2 4 7 8"
+  },
+  "cells_changed": "col 7 of rows 0 1 2 7 8, cols 5-8 of rows 3 5 6; every other cell bit-exact",
+  "red_px": 0
+ }
+}
