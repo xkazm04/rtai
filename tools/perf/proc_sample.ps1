@@ -12,7 +12,7 @@ while ($true) {
     $grew = $false
     foreach ($p in $all) { if ($ids.ContainsKey([int]$p.ParentProcessId) -and -not $ids.ContainsKey([int]$p.ProcessId)) { $ids[[int]$p.ProcessId] = $true; $grew = $true } }
   }
-  $mine = @($all | Where-Object { $ids.ContainsKey([int]$_.ProcessId) -and $_.Name -like 'Godot*' })
+  $mine = @($all | Where-Object { $ids.ContainsKey([int]$_.ProcessId) -and ($_.Name -like 'Godot*' -or $_.Name -like 'RTAI*') })
   $cpu = 0; $ws = 0; $th = 0
   foreach ($p in $mine) { $cpu += [double]$p.KernelModeTime + [double]$p.UserModeTime; $ws += [double]$p.WorkingSetSize; $th += [int]$p.ThreadCount }
   $t = [DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()

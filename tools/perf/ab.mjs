@@ -4,18 +4,21 @@
 //   node tools/perf/ab.mjs --scenes=king,drive70,riot --arms=base:,lever:--some-flag [--pairs=3]
 //        [--out=evidence/perf/<name>] [--headless] [--no-lock]
 // An arm is `<name>:<extra user args>[^<extra engine args>]` (space separated, comma-free), e.g.
-// `mobile:^--rendering-method mobile` A/Bs the renderer without touching the project. Takes C:/Users/kazda/kiro/gtai-n5/bench.lock
+// `mobile:^--rendering-method mobile` A/Bs the renderer without touching the project. A name ending
+// `@exe` (e.g. `rel@exe:`) runs the exported windows-bench release build (EXE) instead of the editor
+// binary: the release-vs-debug baseline; export it first (`node tools/bench/run.mjs` or the line in LEDGER). Takes C:/Users/kazda/kiro/gtai-n5/bench.lock
 // (noclobber) for the whole run; every run is stamped CONTENDED when another Godot was up.
 // Writes <out>/<scene>-<arm>-<round>.json (the scene's own log) and <out>/ab.json (the summary).
 import { spawn } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { ROOT } from '../lib/repo.mjs';
-import { describe, runGodot, SCRIPT_ERROR } from '../lib/godot.mjs';
-import { foreignGodot } from '../lib/run_ledger.mjs';
+import { describe, runGodot, runProcess, SCRIPT_ERROR } from '../lib/godot.mjs';
+import { foreignGodot, register } from '../lib/run_ledger.mjs';
 import { frameStats, verdict } from './stats.mjs';
 
 const LOCK = 'C:/Users/kazda/kiro/gtai-n5/bench.lock';
+export const EXE = join(ROOT, 'build', 'export', 'windows-bench', 'RTAI-bench.exe');
 // --fixed-fps 60 with vsync off: every frame steps exactly one sim tick and runs as fast as it can,
 // so a frame's wall time is the cost of one 60 Hz gameplay frame. Uncapped without it, most frames
 // carry no tick (the riot at ~400 fps ticks every 6-7th frame) and p50 reads the cheap ones (F3).
@@ -76,13 +79,26 @@ async function runOnce(sceneName, arm, round, outDir) {
   const others = foreignGodot().length;
   const env = { ...process.env, APPDATA: process.env.APPDATA_PERF ?? 'C:/Users/kazda/kiro/gtai-d9x/appdata/perf' };
   const sampler = startSampler();
-  const res = await runGodot([...sc.engine, ...arm.engine, sc.scene, '--', ...user, ...arm.user],
-    { headless: !!sc.headless, env, timeoutMs: 6 * 60 * 1000, name: `perf-ab-${sceneName}` });
+  const args = [...sc.engine, ...arm.engine, sc.scene, '--', ...user, ...arm.user];
+  const res = arm.name.endsWith('@exe') ? await runExe(sc.headless ? ['--headless', ...args] : args, env)
+    : await runGodot(args, { headless: !!sc.headless, env, timeoutMs: 6 * 60 * 1000, name: `perf-ab-${sceneName}` });
   const proc = sampler.stop();
   const errors = (res.out.match(new RegExp(SCRIPT_ERROR.source, 'g')) ?? []).length;
   if (!existsSync(file)) return { error: `${sceneName}/${arm.name}: no log (${describe(res)}) ${res.out.slice(-400)}` };
   const log = readLog(sc.kind, JSON.parse(readFileSync(file, 'utf8')));
   return { stats: frameStats(log.wall), side: { ...log.side, ...proc }, errors, contended: others > 0 || foreignGodot().length > 0, others };
+}
+
+/** The exported release build (EXE), registered in the run ledger like a runGodot call. */
+async function runExe(args, env) {
+  if (!existsSync(EXE)) return { status: -1, out: `no ${EXE}: export windows-bench first`, timedOut: false, durationMs: 0 };
+  const entry = register({ kind: 'perf-ab-exe' });
+  try {
+    return await runProcess(EXE, args, { cwd: join(ROOT, 'build', 'export', 'windows-bench'), env,
+      timeoutMs: 6 * 60 * 1000, onSpawn: (pid) => entry.setChild(pid) });
+  } finally {
+    entry.release();
+  }
 }
 
 /** The process sampler (proc_sample.ps1) over this runner's Godot children. stop() returns the
