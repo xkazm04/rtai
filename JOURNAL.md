@@ -674,3 +674,15 @@ NEXT (iteration 22 = the freeze session, 18:30 freeze, 18:40 REPORT):
 - 17:56 Clean-up: scratch worktrees `perf-before`, `perf-base`, `perf-bc7cv` removed (all mine; the bc7cv one held the
   L4b BC7 import params: saved first as `evidence/perf/l4b-bc7cv/bc7cv-import.patch.gz`, 466 `.png.import`, 41 kB, so
   Call P-1 (b) is `git apply` away). `godot-src` (F18 cited by file / lines) and the old gate / log scratch deleted.
+- GATE 18:02 `evidence/run.mjs --no-bench` at 5f436fc8: lint 15/15, scenarios 52/0, parity exact, goldens 11/11 + block
+  5/5, release-compile 601/0; unit read FAIL only for "tree changed during run" (my REPORT / LEDGER edits under it,
+  counts 1712/0). FRICTION (self-inflicted, 3 min): never edit the tree under an evidence run. Committed 72ac1254, re-ran
+  unit clean: 1712/0 (18:04).
+- GATE 18:04 reels at 72ac1254: top / tilt70 / combo 19/19 chapters down, 0 SCRIPT ERROR (`evidence/perf/gates-it22/`).
+- MILESTONE 18:05 exe: `build/export/windows/RTAI.exe` (324.5 MB, windows-showcase, 22 s, 0 errors); headless smoke
+  `--quit-after 600` exit 0, 0 SCRIPT ERROR. The `shader_compiler.cpp:1329 custom_samplers` ERROR line is in every arena
+  run since this morning's L2 reels: pre-existing, not a perf lever. REPORT: gates + exe sections (user flags go after
+  `--`: `RTAI.exe -- --frame-cap=off`).
+- Registry rules applied (it22): perf-regression-gating (gates on the committed tree; the dirty-tree FAIL re-run rather
+  than waved through), measurement-honesty (no new number claimed in the freeze; the final table quotes only A/B'd rows
+  with their arms), runtime-observation-evidence (the exe booted and its log read, not just exported).

@@ -11,6 +11,27 @@ duplicate frames), a minimized game about half the CPU, and the title card ~noth
 move pixels or need a file in another lane, so they are Calls below (BC7: a third of the VRAM; the traffic-sheet
 split: ~96 MB of RAM; steadier 60 Hz pacing for ~0.06 of a core).
 
+## Gates at the freeze (`evidence/perf/gates-it22/`)
+- `node tools/evidence/run.mjs --no-bench` at 5f436fc8 (18:02): lint 15/15, scenarios 52 / 0, parity native == GDScript bit
+  for bit (1200 steps, planted mutation caught), look goldens 11/11 + block 5/5, world lock holds, release-compile 601 / 0.
+  Its unit step read FAIL only because I edited REPORT / LEDGER under it ("tree changed during run": docs, no `project/`
+  file); the counts were 1712 / 0. Re-run clean on the committed 72ac1254 (18:04): **unit 1712 passed, 0 failed**.
+- Director reel at 72ac1254, headless `--fixed-fps 60 --quit-after 14000`: **top, tilt70, combo 19/19 chapters down,
+  0 SCRIPT ERROR** each.
+- The engine prints one `shader_compiler.cpp:1329 custom_samplers` ERROR line in every arena run, and the leak count at
+  `--quit-after`; both are in this morning's L2 reel logs too (`evidence/perf/reel-l2/`), not from a perf lever.
+
+## The exe for the owner
+`build/export/windows/RTAI.exe` (324.5 MB, pck embedded; + `gtai_sim.windows.template_release.x86_64.dll` beside it),
+exported 18:05 from 72ac1254 in 22 s, 0 errors:
+```
+export APPDATA=C:/Users/kazda/kiro/gtai-d9x/appdata/perf
+"$GODOT_BIN" --headless --path project --export-release windows-showcase ../build/export/windows/RTAI.exe
+```
+Smoke: `build/export/windows/RTAI.exe --headless --quit-after 600` exits 0, the arena opens, 0 SCRIPT ERROR
+(`evidence/perf/gates-it22/exe-smoke.log`). To see the levers: run it on a > 60 Hz monitor (L10: Task Manager CPU ~40 %
+lower than main's exe), or minimize it (L12 + L14); `RTAI.exe -- --frame-cap=off` gives main's behaviour for both.
+
 ## Calls for the owner
 
 (each has a default that is already built; the default is "no change")

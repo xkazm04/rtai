@@ -1,0 +1,15 @@
+{
+  "schema": "pof.godot-evidence/1",
+  "kind": "export-audit",
+  "gameId": "gtai",
+  "commit": "5f436fc8d7a55f63572a144dd2aaaa35efee4dcf",
+  "builtAt": "2026-11-07T17:02:36.278Z",
+  "godotVersion": "4.7.2.stable.official.ed1daf0bf",
+  "status": "pass",
+  "summary": "release-compile: 601 loaded, 0 failed",
+  "counts": {
+    "passed": 601,
+    "failed": 0,
+    "skipped": 0
+  }
+}
