@@ -1,4 +1,11 @@
-# n8 view lane: REPORT (DRAFT it14, 05:50; final at the freeze)
+# n8 view lane: REPORT (freeze candidate it16, 07:25; the freeze session confirms at 08:30)
+
+**Gates at cc76970c** (code = e369f4b0, it15's last code commit): `node tools/evidence/run.mjs --no-bench`
+all PASS (lint 15/15, unit 1524/0, scenarios 52, parity exact + planted caught, selftest goldens
+11/11 + 5/5, release-compile 561/0: `evidence/n8-view/evidence-run-it16.log`); the director reel
+on n8-view HEAD top 19/19 and combo 19/19 chapters down, 0 SCRIPT ERROR; on the it16 trial merge of
+all five lanes the same (`director-reel-it16-trial-*.log`). `top` stays the default and draws
+today's art: look goldens, replay and parity did not move.
 
 Lane `view`, branch `n8-view`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n8\view\` (`frames.json`,
 15 entries, best first; the combined reel `view_set_combined_n8_it15.mp4`, 75 s, its first and last segments filmed on all five lanes merged). Repo evidence
