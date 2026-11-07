@@ -44,7 +44,7 @@ const WALKS: Dictionary[String, Dictionary] = {
 ## A grid's cell carries stride headroom, so its figures fill less of it than the still strip's:
 ## the size step (still figure height / walk figure height, per cell, the mean of the facings).
 const WALK_FILL: Dictionary[String, float] = {
-	"ped_suit_walk.png": 1.06,
+	"ped_suit_walk.png": 1.09,
 	"ped_elder_walk.png": 1.07,
 	"ped_hat_walk.png": 1.07,
 	"ped_hood_walk.png": 1.07,
