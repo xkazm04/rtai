@@ -693,3 +693,17 @@ NEXT (iteration 22 = the freeze session, 18:30 freeze, 18:40 REPORT):
   every arm's p99 ~2x L11's, so only the arm order is read): CPU v60 0.56 / cap 0.57 / lpcap 0.50 cores; p99 38.9 / 32.5 /
   37.9 ms; skipped tick images 42 / 20 / 42. Low-power mode drops the spin and the steadiness with it. Call P-3 unchanged.
   Scratch worktree `perf-lp` removed.
+- 18:17 Clean-up: scratch `tmp-perf` and `gates-it22` deleted (the gate logs are in `evidence/perf/gates-it22/`); no
+  scratch worktree of mine left; bench.lock released by ab.mjs; no Godot of mine running. Build exports kept:
+  `build/export/windows/` (the owner's exe) and `build/export/windows-bench/` (the bench harness); the other three
+  bench exports (~900 MB) deleted.
+- Session end 18:18 (it22, the freeze): commits 72ac1254 (REPORT final, LEDGER final rows), e941b5b5 (gates + exe),
+  a26a7df3 (L15), this. REPORT.md is final.
+
+NEXT (after the run, for whoever picks the lane up):
+1. F19 (quest 1 freeze ~1 in 4 under `--autostart`, main too): a native stack of the parked main thread; suspects
+   `chunk_source.take`, the save worker flush, `load_threaded_get`. Repro `evidence/perf/f19-freeze/hunt.ps1`.
+2. The owner's Calls P-1 (BC7: `gunzip -c evidence/perf/l4b-bc7cv/bc7cv-import.patch.gz | git apply` is option (b)),
+   P-2 (the traffic-sheet split: vehicles' files, REQUEST open), P-3 (pacing option).
+3. L7 with the official toolchain (llvm-mingw + LTO) and an unstripped A-vs-A build; L15 again on an idle machine only
+   if a pacing option gets built.

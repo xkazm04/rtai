@@ -23,7 +23,7 @@ split: ~96 MB of RAM; steadier 60 Hz pacing for ~0.06 of a core).
 
 ## The exe for the owner
 `build/export/windows/RTAI.exe` (324.5 MB, pck embedded; + `gtai_sim.windows.template_release.x86_64.dll` beside it),
-exported 18:05 from 72ac1254 in 22 s, 0 errors:
+exported 18:05 from 72ac1254 in 22 s, 0 errors (later commits touch docs and evidence only, no `project/` file):
 ```
 export APPDATA=C:/Users/kazda/kiro/gtai-d9x/appdata/perf
 "$GODOT_BIN" --headless --path project --export-release windows-showcase ../build/export/windows/RTAI.exe
@@ -180,8 +180,8 @@ lower than main's exe), or minimize it (L12 + L14); `RTAI.exe -- --frame-cap=off
 ## Next steps
 1. F19: a stack of the frozen main thread (procdump / a debug template) and the real Start click; the save worker and
    `chunk_source.take` are the suspects.
-2. Call P-3 (b): L15 says low-power mode loses the pacing; the next try is a spin shorter than 1 ms (an engine setting
-   upstream, `delay_resolution`), re-measured on an idle machine.
+2. Call P-3 (b): L15 says low-power mode loses the pacing; the next try is a shorter final spin (an engine change
+   upstream: the Windows limiter's 1 ms `delay_resolution`), re-measured on an idle machine.
 3. Call P-2 (b): the traffic-sheet split (vehicles' files; REQUEST in JOURNAL), then measure the -96 MB.
 4. L7 again with the official toolchain (llvm-mingw + LTO) and an unstripped A-vs-A build.
 5. Interpolated drawing above 60 Hz (`SimClock.alpha()` has no reader): smoother on 144 Hz, a look change: a Call.
