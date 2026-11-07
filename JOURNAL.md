@@ -999,3 +999,8 @@ NEXT (it12, after the freeze), replaces the lists above:
   to seams; `git merge-tree` vs dacaac88 the same conflicts (JOURNAL.md add/add, debt baseline); exe
   `build/export/windows/RTAI.exe` present; tree clean. No code change before the 18:30 freeze (the gates would not
   fit in 14 min). NEXT unchanged (it12 list above). Session end.
+- 18:23 (it21 session) freeze check: d9-rivet head now 3a3d25a1 (+2 since dacaac88: JOURNAL.md only, its it26/it27
+  freeze checks). `git merge-tree` vs 3a3d25a1: the same two conflicts (JOURNAL.md add/add, debt baseline); the it11
+  trial merge holds. No REQUEST/NOTE open to seams. Exe `build/export/windows/RTAI.exe` present (17:52, b51247bb;
+  only docs since); tree clean. No code change before the 18:30 freeze (gates would not fit in 7 min). NEXT unchanged
+  (it12 list above). Session end.
