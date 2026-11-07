@@ -1274,3 +1274,39 @@ NEXT (iteration 13 = the freeze iteration if the runner gives one before 08:30):
   hide_all), b398a319 (the long falls), 6d177df4 (patrol fall tone), + evidence/docs. Gates on
   the it12 code: lint 15/15, unit 1525/0, scenarios 52/0, reel tilt70 19/19. Owed for the freeze:
   the evidence run, reels under top and combo, the export, REPORT final (NEXT above).
+
+## Iteration 13 (06:37, BUILD; session stops 07:37)
+Read: JOURNAL (it12 NEXT), git log, the four lane journals (view it15: a NOTE to street on quest 1's
+corpse pile, no other REQUEST), the library catalog (new since it12: cop_riot/swat_fall_55_v2 A
+round 0650 = my it12 REQUEST served; thug/torque_gang_fall_55_v2 A round 0710; thug/torque_gang
+_fall_70_v3 B round 0740, the library's own note: torque v3 "NO GAIN, v2 stays the pick").
+- MILESTONE 3e0996c2 (it12 NEXT 3): **under p55 the riot cop, SWAT and the thug fall and lie as
+  the round-0650/0710 redraws** (A, lying frames drawn long raw ~1.3x = the 55 geometric length),
+  street_fall.py `--back-from-away`, no stretch, LONG_FALLS["p55"]. Provenance x3.
+  FILMED the heavy board `--view=tilt --ppm=64 --kill=light --kill-spread --heavy`, before = HEAD's
+  table (the 0300 strips post-stretched 1.45), 0 SCRIPT ERROR both. LOOKED t65/t72/t150: same
+  lengths and spots, the diagonal riot and SWAT corpses lose the stretched torsos (natural), the
+  shields lie flat beside the bodies, no jump between frames. The thug's p55 grid: looked side by
+  side with the old one (x0.25): legs at standing build, the lying frame a little shorter, not
+  filmed (no thug on the board; the thug dies in the arena/boss beats).
+  Evidence: evidence/riot_swat_long_fall_55_before_after_tilt_64ppm_heavy_board_t150.png,
+  ..._t65_t72.png, riot_swat_thug_fall_grids_55_old_new_x0.25.png (masters: the t150 pair).
+  Unit (--changed = full unit dir) 1509/0. Lint 15/15.
+- MILESTONE 432c5ef9 (view's it15 NOTE): **quest 1's drawn dead contractors decay under the card
+  views** as the live fight's do (corpse_decay.json bodies: 6 s at CastView's DOWN_FADE 0.8 alpha,
+  then ink out + fade 1.2 s; StreetQuestCorpses, stateless by Fighter.hurt_tick vs arena.tick).
+  The NOTE: DOWN_FADE dropped on the card path, ~30 standing-height corpses stacked over the kerb
+  and the bench at Dock 9. Both points closed: the base tint is DOWN_FADE (unit test pins
+  BASE == CastView.DOWN_FADE), and the cap is the decay. DECAY false = it12. Debt: cast_view.gd
+  stays 227 lines (one call changed, the helper lives in StreetQuestCorpses).
+  FILMED quest1_clip `--stills=14400,15000 --ppm=32 --view=combo`, before = DECAY false, and
+  `--stills=13700,13900,14400 --ppm=48 --view=tilt70` after; 0 SCRIPT ERROR all three runs.
+  LOOKED t15000 combo: before ~30 corpses in four piles (kerb, bench, centre line, crossing);
+  after only the last seconds' kills lie, the bench card and the DOCK 9 sign read again, the blood
+  stays. 48 px/m: the right-side wave of t13700 is gone by t14400, the fresh wave lies whole.
+  (The quest runs differ run to run, it2's note: a cop in the after only.)
+  Evidence: evidence/quest1_dock9_corpse_decay_before_after_combo_32ppm_t15000.png (masters too),
+  quest1_dock9_corpse_decay_tilt70_48ppm_t13700_13900_14400.png. Unit 12/0 (selects). Lint 15/15.
+- DECISION street/quest1-corpse-decay (docs/decisions.md).
+- ANSWER to view (it15 NOTE, corpse pile): done on n8-street 432c5ef9 (DOWN_FADE as the base tint,
+  the live fight's decay as the cap). Re-check on the next trial merge at Dock 9 t15000.
