@@ -10,6 +10,11 @@ extends RefCounted
 ## Seconds the doors take to roll up once rush hour starts.
 const ROLL_S: float = 1.6
 
+## n8-view (vehicles it19 REQUEST): the apart number's ink stroke (m) and paper alpha, so it reads
+## over the cream stage van at 32 px/m. Flat views keep the one faint paper pass.
+const NUMBER_INK_M: float = 0.12
+const NUMBER_ALPHA_APART: float = 0.9
+
 var px: float = 32.0
 var pal: PaletteTokens = PaletteTokens.shared()
 
@@ -108,12 +113,19 @@ func _mark(c: CanvasItem, at: Vector2, w: float, n: int) -> void:
 	c.draw_rect(apron, Color(pal.color(&"paper"), 0.12))
 	c.draw_rect(apron, Color(pal.color(&"paper"), 0.5), false, 2.0)
 	var font_px: int = int(px * 0.9)
-	c.draw_string(
-		ThemeDB.fallback_font,
-		(at + Vector2(-0.3, 2.3)) * px,
-		str(n),
-		HORIZONTAL_ALIGNMENT_LEFT,
-		-1,
-		font_px,
-		Color(pal.color(&"paper"), 0.6)
-	)
+	var pos: Vector2 = (at + Vector2(-0.3, 2.3)) * px
+	var fill: Color = Color(pal.color(&"paper"), 0.6)
+	if marks_apart:  # over a parked van's pale roof: an ink stroke under a firmer paper number
+		var stroke: int = maxi(3, roundi(px * NUMBER_INK_M))
+		c.draw_string_outline(
+			ThemeDB.fallback_font,
+			pos,
+			str(n),
+			HORIZONTAL_ALIGNMENT_LEFT,
+			-1,
+			font_px,
+			stroke,
+			pal.color(&"ink")
+		)
+		fill = Color(pal.color(&"paper"), NUMBER_ALPHA_APART)
+	c.draw_string(ThemeDB.fallback_font, pos, str(n), HORIZONTAL_ALIGNMENT_LEFT, -1, font_px, fill)
