@@ -114,6 +114,10 @@ stick, 2/3 right stick, 4 LT, 5 RT.
 - Aim assist for twin-stick aim: not found. Owed (a design call for the owner: magnetism toward the nearest target in a cone).
 - Menus and the dialogue: owed, a pad-only walk through quest 1's start, the settings panel and the dialogue box (iteration 2).
 - On-screen keyboard: the game has no text entry today; nothing owed until it does.
+- Pause on focus-out: **built** behind the handheld profiles (`HandheldFocusPause`, added by `LaunchArgs` when the row's
+  tier is `handheld`): `NOTIFICATION_APPLICATION_FOCUS_OUT` (the Steam overlay, a Windows handheld's shell, alt-tab)
+  pauses a live quest 1 run like the pause button; it never unpauses. Desktop unchanged (089afea8). Unit-tested on the
+  no-run guard; owed: a live proof (a scenario that sends the focus-out to a running quest).
 
 ## 6. Text legibility at 1280x800
 
