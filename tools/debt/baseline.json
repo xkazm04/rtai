@@ -7,7 +7,8 @@
         "2026-11-06: n8 street: cast_view +1 line (the StreetQuestCards hook: quest 1's contractors stand as cards under card views) and quest1_clip +1 (--view for filming quest 1 under a tilt) (dev_loc 18241 -> 18242)",
         "2026-11-06: n8 street: the crowd board's --kill evidence option (dev only, +30 lines) (dev_loc 18242 -> 18272)",
         "2026-11-07: n8 street: the street crowd board's --kill-spread (+4 dev lines): the drawn-fall evidence needs every fall direction on one seeded board (dev_loc 18272 -> 18276)",
-        "2026-11-07: n8 street it8: cut_rig +1 line (StreetView.post after the react's post pose: the drawn falls were turned by it); dev/showcase +9 (the street board's --cops evidence switch) (dev_loc 18276 -> 18285)"
+        "2026-11-07: n8 street it8: cut_rig +1 line (StreetView.post after the react's post pose: the drawn falls were turned by it); dev/showcase +9 (the street board's --cops evidence switch) (dev_loc 18276 -> 18285)",
+        "2026-11-07: street board --heavy: 4 dev lines (8 riot + 8 SWAT for the drawn-fall evidence) (dev_loc 18285 -> 18289)"
       ],
       "files": {
         "project/dev/arena": 1034,
@@ -31,11 +32,11 @@
         "project/dev/save_crash_writer.gd": 18,
         "project/dev/selftest": 1446,
         "project/dev/servo": 434,
-        "project/dev/showcase": 5621,
+        "project/dev/showcase": 5625,
         "project/dev/view": 158,
         "project/dev/weapon_art": 506
       },
-      "total": 18285
+      "total": 18289
     },
     "direct_cmdline_reads": {
       "accepted": [
