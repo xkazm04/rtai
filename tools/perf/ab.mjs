@@ -141,9 +141,14 @@ export function startSampler(skip = 3) {
 export function procStats(text, skip = 3) {
   const rows = text.split(String.fromCharCode(10)).map((l) => l.trim()).filter((l) => l.startsWith('{')).map((l) => JSON.parse(l)).filter((r) => r.procs > 0);
   const steady = rows.slice(skip);
-  const out = { cpuCores: NaN, peakWsMb: NaN, threads: NaN };
+  const out = { cpuCores: NaN, peakWsMb: NaN, wsMb: NaN, lastWsMb: NaN, threads: NaN };
   if (!rows.length) return out;
   out.peakWsMb = Math.max(...rows.map((r) => r.ws)) / 1048576;
+  // L9: the steady working set (median after the boot samples) and the last sample: the peak keeps
+  // a load-time spike that a release later in the run (a freed upload buffer) never shows.
+  const ws = steady.map((r) => r.ws).sort((x, y) => x - y);
+  if (ws.length) out.wsMb = ws[Math.floor(ws.length / 2)] / 1048576;
+  if (steady.length) out.lastWsMb = steady[steady.length - 1].ws / 1048576;
   out.threads = Math.max(...rows.map((r) => r.threads));
   if (steady.length >= 2) {
     const a = steady[0];
@@ -171,7 +176,7 @@ export function summarise(results, arms) {
       const runs = byArm[arm.name] ?? [];
       const row = {};
       for (const m of METRICS) row[m] = verdict(base.map((r) => r.stats[m]), runs.map((r) => r.stats[m]));
-      for (const s of ['draws', 'renderCpu', 'renderGpu', 'process', 'sim', 'vramMb', 'texMb', 'cpuCores', 'peakWsMb', 'threads']) {
+      for (const s of ['draws', 'renderCpu', 'renderGpu', 'process', 'sim', 'vramMb', 'texMb', 'cpuCores', 'peakWsMb', 'wsMb', 'lastWsMb', 'threads']) {
         row[s] = verdict(base.map((r) => r.side[s] ?? NaN), runs.map((r) => r.side[s] ?? NaN));
       }
       row.contended = runs.filter((r) => r.contended).length;
@@ -203,7 +208,7 @@ async function main() {
           ((results[scene] ??= {})[arm.name] ??= []).push(r);
           const s = r.stats;
           console.log(`${scene} ${arm.name} r${round}: p50 ${s.p50.toFixed(2)} p99 ${s.p99.toFixed(2)} worst ${s.worst.toFixed(1)} `
-            + `draws ${Math.round(r.side.draws)} cpu ${r.side.cpuCores.toFixed(2)} cores ws ${Math.round(r.side.peakWsMb)} MB errors ${r.errors}${r.contended ? ` CONTENDED(${r.others})` : ''}`);
+            + `draws ${Math.round(r.side.draws)} cpu ${r.side.cpuCores.toFixed(2)} cores ws ${Math.round(r.side.peakWsMb)} MB steady ${Math.round(r.side.wsMb)} last ${Math.round(r.side.lastWsMb)} errors ${r.errors}${r.contended ? ` CONTENDED(${r.others})` : ''}`);
         }
       }
     }
@@ -216,7 +221,7 @@ async function main() {
     for (const [arm, row] of Object.entries(rows)) {
       const f = (v) => `${v.b.median.toFixed(2)}±${(v.b.spread / 2).toFixed(2)}${arm === o.arms[0].name ? '' : ` ${v.call}`}`;
       console.log(`${scene} ${arm}: p50 ${f(row.p50)} p99 ${f(row.p99)} p99.9 ${f(row.p999)} worst ${f(row.worst)} draws ${f(row.draws)}`
-        + ` renderCpu ${f(row.renderCpu)} gpu ${f(row.renderGpu)} vram ${f(row.vramMb)} cpu ${f(row.cpuCores)} ws ${f(row.peakWsMb)} contended ${row.contended} errors ${row.scriptErrors}`);
+        + ` renderCpu ${f(row.renderCpu)} gpu ${f(row.renderGpu)} vram ${f(row.vramMb)} cpu ${f(row.cpuCores)} ws ${f(row.peakWsMb)} wsSteady ${f(row.wsMb)} wsLast ${f(row.lastWsMb)} contended ${row.contended} errors ${row.scriptErrors}`);
     }
   }
 }

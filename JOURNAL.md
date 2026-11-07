@@ -374,3 +374,26 @@ NEXT (iteration 10):
   CPU staging buffer of next_pow2(its largest upload) until shutdown. L9 hypothesis in the LEDGER before building; patch
   `tools/perf/template/tw_trim.py` applied to the scratch tree (env-gated: one binary, two arms); `ab.mjs` arms take
   env vars (third `^` segment). Build waits for the A/B to end (no contention of my own numbers).
+- MILESTONE 14:52 final table (`evidence/perf/final-exe/`, 36 runs, lock held, CONTENDED 2-8 in 14): main vs head on the
+  release exe: riot p99 12.53 -> 8.09, p99.9 24.0 -> 10.4, worst 25.3 -> 12.2 ms (head vs head2 A-vs-A: 8.09 vs 8.71,
+  10.4 vs 11.5, 12.2 vs 12.4: the win is 5-7x the floor); drive70, riot60, drive60 WASH on every metric; pck -12.5 MB.
+  Working set bimodal (~690 or ~755 MB) on every arm, run to run: the RAM noise floor. LEDGER "Final table" (200256f5).
+- 14:53-14:57 L9 build: the patched 4.7.2 template (MSVC production + lto=full, the it9 strip profile; 3.9 min, the
+  header change recompiles the renderer) -> `build/export/windows-bench-tw/` (the head pck) + `scratch/godot-src/tw-lto.exe`.
+- MILESTONE 14:59 L9 mechanism (one riot run each, GTAI_TW_LOG=1, `build/tw/riot-{stock,trim}.log`): STOCK ends with 4
+  workers holding 128 + 32 + 32 + 16 = **208 MB of CPU staging** for the session (the 128 MB one = the vehicles'
+  `p70/traffic_cards.png`, 4032 x 4480 = 69 MB RGBA, ~92 MB with mips: the biggest texture in the game); TRIM frees all
+  four after load and re-creates 16-32 MB only on the death frames' strip uploads (then frees them again); end state
+  ~1.3 MB. 0 errors, the riot completes.
+- FRICTION 15:00 (~2 min): the sampler logs the PEAK working set only, which keeps the load spike in both arms and would
+  hide a steady-state release: job stopped (my stale lock removed, pid gone), `procStats` now also gives the steady
+  median (`wsMb`) and the last sample (`lastWsMb`); job restarted 15:01 (`evidence/perf/l9-twtrim/`).
+- 15:05 L9 trim-at-4-MB job 1 (`evidence/perf/l9-twtrim/`, 18 runs, lock held, CONTENDED 2-16 in every run: frame times
+  unusable): Godot's video-memory monitor -200 MB on all three scenes (riot 867 -> 661, drive70 902 -> 680, riot60
+  883 -> 661, spreads <= 30: WIN); riot60 steady working set 788 -> 574 (WIN), drive70's working set WASH.
+- 15:08 L9 riot rerun (`evidence/perf/l9-twtrim-riot/`, 4 pairs, 0 contended): VRAM 867 -> 708 WIN, but **p99 worse in
+  all 4 pairs** (11.7 / 10.7 / 8.5 / 9.2 vs 9.3 / 7.6 / 7.2 / 7.8 ms; median 7.77 -> 10.73, inside the 1.6 spread by
+  the rule, so "WASH" by the verdict, a loss by the pair pattern) and **steady working set +60 MB** (746 -> 806 LOSS).
+  Reading: trimming at 4 MB churns: every death re-creates a 16-32 MB upload buffer (allocation + fresh page faults)
+  and frees it a few frames later. The 4 MB policy is DROPPED. Next arm (no rebuild, env only): GTAI_TW_TRIM_MB=32
+  frees only the outlier (the 128 MB traffic-sheet buffer), the strip-sized ones stay. Job 15:09 (`l9-t32/`).

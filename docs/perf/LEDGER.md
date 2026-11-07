@@ -233,6 +233,13 @@ CONTENDED(2-8) in 14 of 36 runs (the other lanes' Godots), 0 script errors in 36
   mechanism (a microbench) for that reason.
 
 ## Research digest
+- Godot 4.7.2 source, `servers/rendering/rendering_device.cpp` (`_acquire_transfer_worker`, `_free_transfer_workers`,
+  `_submit_transfer_workers`; read it12 for L9): since the 4.4 transfer-worker rework every texture's initial data is
+  copied through a per-worker CPU staging buffer of next_pow2(the largest upload that worker took), kept until
+  shutdown; the pool grows to the core count under concurrent uploads, and no project setting reaches it
+  (`staging_buffer/*` are the frame-local pool). Lesson: on a game with a few huge art sheets, the engine's resident
+  CPU memory is set by the single biggest texture times the upload concurrency, not by the art's total size. A
+  profile cannot see this (no monitor exposes it); a log line in the engine did (`GTAI_TW_LOG=1` in the L9 patch).
 - Godot 4.4 release / dev 3 (godotengine.org, GH-92797): 2D batching came to the RD renderers (Forward+,
   Mobile) in 4.4, so the "Compatibility batches, Forward+ does not" folklore is out of date; the batching
   setting `rendering/2d/batching/uniform_set_cache_size` (default 256) is the knob a maintainer suggested
