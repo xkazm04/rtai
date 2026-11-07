@@ -1,0 +1,27 @@
+Godot Engine v4.7.2.stable.custom_build.ed1daf0bf (2026-08-17 01:18:38 UTC) - https://godotengine.org
+D3D12 12_0 - Forward+ - Using Device #1: AMD - AMD Radeon(TM) Graphics
+gtai-tw: alloc worker 0 16 KB (pool 1)
+gtai-tw: alloc worker 0 512 KB (pool 1)
+
+gtai-tw: alloc worker 0 2048 KB (pool 1)
+gtai-tw: alloc worker 0 8192 KB (pool 1)
+gtai-tw: alloc worker 0 16384 KB (pool 1)
+gtai-tw: alloc worker 1 4096 KB (pool 2)
+gtai-tw: alloc worker 2 4096 KB (pool 4)
+gtai-tw: alloc worker 3 4096 KB (pool 4)
+gtai-tw: alloc worker 3 8192 KB (pool 4)
+gtai-tw: alloc worker 1 8192 KB (pool 4)
+gtai-tw: alloc worker 2 8192 KB (pool 4)
+gtai-tw: alloc worker 1 131072 KB (pool 4)
+[INFO] characters: prewarmed 41 rigs in 133.0 ms
+gtai-tw: alloc worker 3 16384 KB (pool 4)
+gtai-tw: alloc worker 2 32768 KB (pool 4)
+gtai-tw: alloc worker 3 32768 KB (pool 4)
+gtai-tw: alloc worker 0 32768 KB (pool 4)
+city_bench: prewarm 193.5 ms
+city_bench: riot {"actorsAvg":399.795315315315,"avgFrameMs":10.3214637837838,"bloodDropDraws":1692.0,"bloodFrames":2922.0,"bloodPoolDraws":300.0,"bloodUsPerFrame":363.232717316906,"drawCallsAvg":830.158558558559,"framesMeasured":2775.0,"fullRigsMax":20.0,"hitches25":5.0,"hitchesOver50":0.0,"hitchesWarmup":5.0,"low1Fps":50.1748054382321,"over50.game":0.0,"over50.outside":0.0,"over50.pipeline":0.0,"over50.present":0.0,"over50.render":0.0,"over50.unexplained":0.0,"p99CpuMs":15.269,"renderCpuMsAvg":0.537134054394456,"renderCpuMsP99":0.910000026226044,"renderGpuMsAvg":9.63038522393854,"renderGpuMsP99":10.9160003662109,"rigMsP50":1.032,"rigMsP99":2.189,"rigMsPerTick":1.32448719441211,"simStepMsMax":0.547,"simStepMsPerTick":0.148148428405122,"streamSpawnMsPerTick":0.0723329452852154,"swapFrames":51.0,"texMemPeakMb":551.9765625,"visibleAvg":285.898018018018,"visibleMax":367.0,"vramPeakMb":903.9140625,"worstFrameMs":34.233,"worstSwapMs":12.421} -> C:\Users\kazda\kiro\gtai-d9x\scratch\it13\tw\riot-stock.json
+city_bench: crowd 23 cowers (23 at a death), 4 trips, 16 deaths
+city_bench: crowd observe mean 155 us, worst 708 us over 1785 calls
+[INFO] city: occlusion: 0 body-frames hidden over 2923 frames; crowd 17930 patches, 93 us/frame
+WARNING: 1 ObjectDB instance was leaked at exit (run with `--verbose` for details).
+   at: ObjectDB::cleanup (core\object\object.cpp:2536)

@@ -523,3 +523,12 @@ NEXT (iteration 13; supersedes the list above, whose item 1 is done):
 - FRICTION 15:40 a first gate (started 15:38) shared the tree while I edited a test and ran `--select` into the same
   `build/test-results/`: killed it (my PID only) and re-ran on a clean commit. Rule kept: no edits under project/ and
   no unit runs while a gate is up; docs drafts go to scratch and land after.
+- RESULT 15:57 E12 (supersedes "not measured" in the answer to perf above): perf's L9 instrumented template (their
+  `windows-bench-tw` export copied to `gtai-d9x/scratch/it13/tw/`) on the **2-CU Radeon iGPU**, 1280x800, 60 cap, the
+  riot 30 s, `GTAI_TW_TRIM_MB=0` (stock) vs 32, 1 run each, memory only: stock holds 128 + 32 + 32 + 32 = 224 MB of
+  staging; trim: working set 1304 -> 1128 MB, private 1328 -> 1163, **GPU shared 1006 -> 878 MB (-128)**, dedicated 82
+  both. On a shared-memory GPU the outlier buffer is the iGPU's memory: perf's sheet split is worth ~128 MB on a Deck.
+  (`evidence/it13/tw-igpu/`; LEDGER E12.) FRICTION 2 min: the release template refuses a scene path
+  (`disable_path_overrides`): the bench export boots city_bench by itself, user args only.
+- REQUEST to perf (FYI, answer to theirs): E12 above: on the iGPU at 1280x800 the trim takes 128 MB off the GPU's shared
+  memory and 176 MB off the working set in the riot; the p70 traffic sheet split carries the handheld case too.

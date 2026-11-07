@@ -1,0 +1,16 @@
+{"t_ms":1333,"cpu_machine_pct":6.19,"cpu_pinned_pct":6.19,"ws_mb":270.9,"private_mb":295.2,"gpu_dedicated_mb":81.4,"gpu_shared_mb":686.1,"affinity":65535}
+{"t_ms":3633,"cpu_machine_pct":5.9,"cpu_pinned_pct":5.9,"ws_mb":1124.3,"private_mb":1160.4,"gpu_dedicated_mb":81.6,"gpu_shared_mb":878.1,"affinity":65535}
+{"t_ms":5681,"cpu_machine_pct":2.81,"cpu_pinned_pct":2.81,"ws_mb":1126.4,"private_mb":1162.3,"gpu_dedicated_mb":81.6,"gpu_shared_mb":878.1,"affinity":65535}
+{"t_ms":7725,"cpu_machine_pct":2.77,"cpu_pinned_pct":2.77,"ws_mb":1126.9,"private_mb":1162,"gpu_dedicated_mb":81.6,"gpu_shared_mb":878.1,"affinity":65535}
+{"t_ms":9756,"cpu_machine_pct":2.5,"cpu_pinned_pct":2.5,"ws_mb":1127.1,"private_mb":1162.2,"gpu_dedicated_mb":81.6,"gpu_shared_mb":878.1,"affinity":65535}
+{"t_ms":11828,"cpu_machine_pct":3.11,"cpu_pinned_pct":3.11,"ws_mb":1127.3,"private_mb":1162.4,"gpu_dedicated_mb":81.6,"gpu_shared_mb":878.1,"affinity":65535}
+{"t_ms":13870,"cpu_machine_pct":3.06,"cpu_pinned_pct":3.06,"ws_mb":1127.3,"private_mb":1162.4,"gpu_dedicated_mb":81.6,"gpu_shared_mb":878.1,"affinity":65535}
+{"t_ms":15902,"cpu_machine_pct":2.79,"cpu_pinned_pct":2.79,"ws_mb":1127.6,"private_mb":1162.7,"gpu_dedicated_mb":81.6,"gpu_shared_mb":878.1,"affinity":65535}
+{"t_ms":17942,"cpu_machine_pct":3.11,"cpu_pinned_pct":3.11,"ws_mb":1127.9,"private_mb":1163,"gpu_dedicated_mb":81.6,"gpu_shared_mb":878.1,"affinity":65535}
+{"t_ms":19980,"cpu_machine_pct":2.88,"cpu_pinned_pct":2.88,"ws_mb":1128,"private_mb":1163,"gpu_dedicated_mb":81.6,"gpu_shared_mb":878.1,"affinity":65535}
+{"t_ms":22025,"cpu_machine_pct":2.72,"cpu_pinned_pct":2.72,"ws_mb":1128,"private_mb":1163,"gpu_dedicated_mb":81.6,"gpu_shared_mb":878.1,"affinity":65535}
+{"t_ms":24090,"cpu_machine_pct":3.03,"cpu_pinned_pct":3.03,"ws_mb":1128,"private_mb":1163,"gpu_dedicated_mb":81.6,"gpu_shared_mb":878.1,"affinity":65535}
+{"t_ms":26132,"cpu_machine_pct":2.77,"cpu_pinned_pct":2.77,"ws_mb":1128,"private_mb":1163,"gpu_dedicated_mb":81.6,"gpu_shared_mb":878.1,"affinity":65535}
+{"t_ms":28163,"cpu_machine_pct":2.69,"cpu_pinned_pct":2.69,"ws_mb":1128,"private_mb":1163,"gpu_dedicated_mb":81.6,"gpu_shared_mb":878.1,"affinity":65535}
+{"t_ms":30209,"cpu_machine_pct":2.96,"cpu_pinned_pct":2.96,"ws_mb":1128.1,"private_mb":1163.1,"gpu_dedicated_mb":81.6,"gpu_shared_mb":878.1,"affinity":65535}
+{"t_ms":32244,"cpu_machine_pct":3.41,"cpu_pinned_pct":3.41,"ws_mb":1128.1,"private_mb":1163.1,"gpu_dedicated_mb":0,"gpu_shared_mb":0,"affinity":0}
