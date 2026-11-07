@@ -914,3 +914,24 @@ NEXT (iteration 10):
 4. Freeze prep (08:30): the Windows export and REPORT calls (cop tone, crowd variety, walkers,
    drawn-fall speed FALL_AT / stretch / p55 height, cop back corpse, contractor corpse opaque +
    spread).
+- GATE scenarios on 72dde64b: 52 ran, 0 failed (exit 0; vehicle drive timing CONTENDED as usual,
+  another lane's scenarios ran alongside).
+- MILESTONE 361448cb (NEXT 1 above, done this session): **under p55 the cops and the thug fall as
+  their own 55 drawings** (cop_patrol/cop_riot/swat_fall_55 round 0300, thug_fall_55 round 0335, B,
+  stretch 1.45 = the notes' factor, --back-from-away). grid_of falls back per row (a "p55" FALLS
+  dict no longer drops the pedestrians' p70 fallback); test: p55 cop -> its own grid, p55 ped ->
+  the p70 grid. FRICTION: `FALLS.get(art, {}).has(row)` is a parse error (Variant method call,
+  warnings are errors); a typed local fixes it. tools/godot/check.mjs reports the known
+  CutRig-cycle false FAIL on this file; GUT is the compile check (19/19).
+  LOOKED the heavy board `--view=tilt` 64 px/m t65/t150, before = HEAD's file (p70 grids at p55
+  height): after shows the faces/visors at 55 as the 55 standing cards do, the same blues as the
+  55 cards; corpses lie along the blows. Masters: cops_riot_swat_p55_falls_before_after_tilt_64ppm_
+  board_t65_t150.png (frames.json #6, replacing the it8 postfix still; its file kept).
+NEXT (iteration 10), replacing the list above:
+1. Film a boss fight under combo with cops/thugs dying at p55 (`--boss=king --view=combo` or
+   `--view=tilt`): check the p55 grids in play, the thug's p55 card vs its p55 fall.
+2. Contractor 55 (only under --view=tilt in quest 1): StreetQuestCards.DOWN "p55" from
+   contractor_fall_55 (B) if quest 1 is ever judged at 55. Cultist / Torque falls wait for a spawn.
+3. Crowd cost on a quiet machine (bench6/run.sh, 3 pairs) if the machine quiets.
+4. Freeze prep (08:30): Windows export, REPORT calls (cop tone, crowd variety, walkers, drawn-fall
+   FALL_AT / stretch / p55 height, cop back corpse, contractor corpse opaque + spread).
