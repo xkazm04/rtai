@@ -1,0 +1,17 @@
+scenarios: budget missed under contention (city_chase); waiting up to 5 min for a quiet machine
+scenarios: machine quiet after 30 s: re-judging city_chase alone
+file:///C:/Users/kazda/kiro/gtai-wt/d9-perf/tools/tests/release_compile.mjs:65
+    throw new Refused(`${d} exists but was not created by release_compile (no ${MARKER})`);
+          ^
+
+Refused [Error]: C:\Users\kazda\AppData\Local\Temp\gtai-release-compile exists but was not created by release_compile (no .gtai-release-compile)
+    at removeMarked (file:///C:/Users/kazda/kiro/gtai-wt/d9-perf/tools/tests/release_compile.mjs:65:11)
+    at stageRelease (file:///C:/Users/kazda/kiro/gtai-wt/d9-perf/tools/tests/release_compile.mjs:82:3)
+    at releaseCompile (file:///C:/Users/kazda/kiro/gtai-wt/d9-perf/tools/tests/release_compile.mjs:104:16)
+    at releaseEvidence (file:///C:/Users/kazda/kiro/gtai-wt/d9-perf/tools/evidence/run.mjs:102:13)
+    at laterKinds (file:///C:/Users/kazda/kiro/gtai-wt/d9-perf/tools/evidence/run.mjs:93:73)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async main (file:///C:/Users/kazda/kiro/gtai-wt/d9-perf/tools/evidence/run.mjs:72:29)
+    at async file:///C:/Users/kazda/kiro/gtai-wt/d9-perf/tools/evidence/run.mjs:110:14
+
+Node.js v24.14.0

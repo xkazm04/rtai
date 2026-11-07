@@ -60,3 +60,33 @@ Branch `d9-perf`, cut from main `3982af1a`. Ledger: `docs/perf/LEDGER.md`. Evide
   the soak is already retained, so the lever was the one-off build cost of the retained picture;
   the picture is the invariant: arrays proven identical, not "looks the same"), measurement-honesty
   (CONTENDED stamped; the city_bench pixel compare judged against an A-vs-A rerun, not against zero).
+- 11:08 GATE unit full no-arg at 0afd7a88: 1692 passed / 0 failed (`evidence/perf/unit-0afd7a88.log`).
+  Lint 15/15 at every commit (the hook). `node tools/evidence/run.mjs --no-bench` running at 0d3b0d56.
+- REQUEST to handheld (tooling share, answer welcome either way): `tools/perf/ab.mjs` (interleaved A/B,
+  scene presets king/drive70/riot/reel at fixed 60, arms with `^<engine args>` so a device profile is
+  just engine args, e.g. `deck:^--resolution 1280x800 --rendering-method mobile`), `proc_sample.ps1`
+  (CPU cores + peak RAM of the run) and `--perf-hud` (dev arena + city_bench) are on d9-perf. And:
+  L2 (0afd7a88, CircleFan) cut the riot's death spikes ~8x on this host's CPU: it is a pure CPU win,
+  so it should carry to a Deck-class CPU too; please take it into your device numbers. Send me any
+  lever that wins on your profile and I will A/B it here.
+
+NEXT (iteration 4):
+1. (done 11:17, green except release_compile: see GATE above.)
+2. Director reel 19/19 in top, tilt70, combo with `--quit-after 14000` at the L2 head (combat must not regress).
+3. Lever L3: `city_view.gd` _process (riot mean 2.2 ms, p99 4.4, max 22) = chunks.update + prop_lights.update
+   + sim.write_render (native) + fx/glow/ground/lights/markers.step + noir: NodeSpans splits it no further,
+   so add a span inside (or read the code: what runs per tick for 400 actors) and A/B the smallest fix.
+   Also `city_blood.gd` (p99 2.2) and `city_occlusion.gd` (0.72 mean).
+4. A code-lever A/B switch: arms swap a file today; build `--ab-<lever>` flags or a worktree pair so
+   code levers interleave without hand swaps.
+5. The release-export baseline (`windows-bench` export + the same presets on the exe) and quest 1 in the
+   runner; the process CPU % at a 60 fps vsync cap (sampler ready); boot time to first frame; pck size.
+6. Masters: King fight + city drive before/after clips with --perf-hud (movie numbers RELATIVE, F4),
+   frames.json in `C:\Users\kazda\kiro\gtai-masters\d9\perf\`.
+- GATE 11:17 `node tools/evidence/run.mjs --no-bench` at 0d3b0d56 (L2 inside): lint ok, unit ok, scenarios
+  52 ran / 0 failed (city_chase missed its wall budget under contention and passed re-judged alone),
+  parity exact (max_abs_diff 0, planted mutation caught at step 629), selftest ok, look goldens 11/11 ok.
+  BLOCKED (minutes, not mine): the run then died in `release_compile` on
+  `%TEMP%\gtai-release-compile` (created by another worktree, no marker): the seams lane's item
+  (their 6e49a298 makes the dir per worktree + process); the release-compile evidence comes with their merge.
+  Log: `evidence/perf/evidence-0d3b0d56.log`. Director reel x3 views still owed (NEXT 2).
