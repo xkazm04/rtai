@@ -1514,3 +1514,8 @@ NEXT (after the night; for d9 or the Director):
   --view=combo` (both p55 cards), `--arena=city --rigs --view=tilt70`, `--rigs --view=combo_lead`
   (the occluder made: a tilted view): all exit 0, 0 SCRIPT ERROR, no unknown flag. With the 07:39
   Call 7 line and the 07:20 smoke, every owner command line in REPORT has run in this exe.
+- GATE 08:06-08:13 `node tools/evidence/run.mjs --no-bench` at the freeze HEAD 611b4b97 (tree still):
+  PASS lint 15/15, unit 1524/0, scenarios 52, parity (exact, planted caught at 629), selftest (look
+  goldens 11/11, block 5/5, world lock holds), export-audit (release-compile 561/0); exit 0
+  (`evidence/n8-view/evidence-run-it17.log`; `build/evidence/*.json` now name 611b4b97). REPORT
+  header points at it. This is the freeze: the exe is this code's build.

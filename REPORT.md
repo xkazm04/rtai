@@ -1,6 +1,7 @@
 # n8 view lane: REPORT (the freeze, it17 07:50; no code after the it16 candidate: the gated build IS the freeze)
 
-**Gates at cc76970c** (code = e369f4b0, it15's last code commit): `node tools/evidence/run.mjs --no-bench`
+**Gates at the freeze HEAD 611b4b97** (08:06-08:13, `evidence/n8-view/evidence-run-it17.log`; the same as at
+cc76970c; code = e369f4b0, it15's last code commit): `node tools/evidence/run.mjs --no-bench`
 all PASS (lint 15/15, unit 1524/0, scenarios 52, parity exact + planted caught, selftest goldens
 11/11 + 5/5, release-compile 561/0: `evidence/n8-view/evidence-run-it16.log`); the director reel
 on n8-view HEAD top 19/19 and combo 19/19 chapters down, 0 SCRIPT ERROR; on the it16 trial merge of
