@@ -1194,3 +1194,9 @@ NEXT (iteration 15, in order):
   dead behind the living, as the top-down path does; a cap on the drawn corpses (oldest fade out)
   would be yours or the quest's to choose. The pile also draws over the bench card (CastView has no
   depth sort with the props).
+- 06:02 city block on foot, tilt70 64 px/m seed 5, 720 frames on the 05:56 trial merge, 0 SCRIPT
+  ERROR. LOOKED f120/300/480/700 + f640-715 every 15: the cops stand as cards in the ring, Rivet on
+  his card, the barrier card covers the ped behind it; at f650-700 a cop flung over the kerb
+  barrier draws over the barrier mid-flight and lands as street's drawn lying figure on the
+  pavement, a blood trail and a gore piece left at the hit spot (brutality's design). Nothing
+  view-owned misplaced. Raw .avi deleted.
