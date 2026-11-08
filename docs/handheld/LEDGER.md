@@ -264,7 +264,7 @@ near its 12 px recommendation** (static read only; owed: a runtime probe over ev
   (the Windows build) as the fallback. **Re-check trigger: a real Vulkan run on a Deck or a Linux PC.** Until then
   both exports exist (`linux-slice`, `windows-showcase`) and nothing on Steam is set up.
 - **h-3 B, the compact ghost-form card (handheld rows only):** `devices.json` `hud: compact` -> `GhostFormLayout.compact()`
-  (chips r 19 at a 50 px pitch, margin 22, card 120 px, Madness bar 9 px, one name: the selected ghost's; the faces
+  (chips r 19 at a 50 px pitch, margin 22, card 122 px, Madness bar 9 px, one name: the selected ghost's; the faces
   name the rest). Four ghosts at 1280x800, with the memo paper: **~386x208 px (30 % of the width x 26 % of the height)
   -> ~250x170 px (20 % x 21 %)**, about half the area. **Legibility, measured on the still** (zoomed crop): the name's cap
   height ~13-14 px at the unchanged 18 px font = ~1.5 mm on the Deck's 7-inch panel (216 ppi); Valve's Deck Verified

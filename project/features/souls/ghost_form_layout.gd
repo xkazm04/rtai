@@ -32,9 +32,9 @@ static func compact() -> GhostFormLayout:
 	l.chip_r = 19.0
 	l.gap = 50.0
 	l.margin = 22.0
-	l.card_h = 120.0
+	l.card_h = 122.0
 	l.chip_y = 46.0
-	l.bar_y = 104.0
+	l.bar_y = 106.0
 	l.bar_h = 9.0
 	l.all_names = false
 	return l

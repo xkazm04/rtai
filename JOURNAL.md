@@ -68,3 +68,9 @@ NEXT (iteration 2):
   from 0.48 g to 0.8 g tall. Looked at: `glyphs-deck-inkbox-title-prompt-card-crop-x2.png`. Owed: on the folded ghost
   card the LB glyph touches the Madness bar by ~1 px (move the bar 2 px down in the compact layout).
 NEXT (iteration 2), updated: (2) done but the 1 px touch; (3) the boss cam's zoom at 40 px/m; (4) research loop; (5) REPORT.
+- 01:51 The 1 px touch: compact Madness bar 104 -> 106, card 120 -> 122 (still 48 % of the full card's area); tests green.
+  Not re-filmed (session end): the next iteration's first still should confirm the gap.
+NEXT (iteration 2), final: (a) one still of the folded card to confirm the LB / bar gap; (b) the boss cam's zoom at
+  40 px/m (Rivet looked small in the King stills: measure his px height vs the city); (c) research loop: the 40 Hz row
+  and the combo framing at 1280x800 on main once world's BC7 merges; (d) REPORT.md at the freeze with the Calls
+  (glyphs and the compact card on the desktop too? the keyboard twin `ui_kb_glyphs_v1`), and the exe line.
