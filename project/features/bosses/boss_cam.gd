@@ -15,7 +15,10 @@ extends Node
 const FLAG: String = "--boss-cam"
 const FRAME_K: float = 0.45
 ## Farther apart than this (a respawn, the procession's far end) it follows Rivet alone.
-const FAR_M: float = 20.0
+## Between NEAR_M and FAR_M the lean fades out on a smoothstep: a hard switch at 20 m snapped
+## the King clip 76 px in one frame (n9 it7, the procession closing at ~15 m/s).
+const NEAR_M: float = 14.0
+const FAR_M: float = 28.0
 ## The boss bar's band at the top of the screen (BossBar.TOP + BAR_H + its title), screen px.
 const HUD_PX: float = BossBar.TOP + BossBar.BAR_H + 10.0
 
@@ -49,6 +52,13 @@ static func wanted() -> bool:
 	return OS.get_cmdline_user_args().has(FLAG) or DeviceProfile.shared().boss_cam
 
 
+## The point the camera leans to: FRAME_K of the way from Rivet `r` to the boss `b` when they
+## are within NEAR_M, Rivet alone past FAR_M, a smoothstep between (no step in the focus).
+static func aim(r: Vector2, b: Vector2) -> Vector2:
+	var k: float = FRAME_K * (1.0 - smoothstep(NEAR_M, FAR_M, r.distance_to(b)))
+	return r.lerp(b, k)
+
+
 ## `focus` moved so a view of `half_m` (half the screen, metres) stays inside `area`; on an
 ## axis where the view is wider than the area it sits on the area's centre.
 static func clamp_focus(focus: Vector2, half_m: Vector2, area: Rect2) -> Vector2:
@@ -80,7 +90,7 @@ func _process(_delta: float) -> void:
 		return
 	var r: Vector2 = hook.rivet_pos()
 	var b: Vector2 = hook.fight.body.pos
-	var at: Vector2 = r if r.distance_to(b) > FAR_M else r.lerp(b, FRAME_K)
+	var at: Vector2 = aim(r, b)
 	var half: Vector2 = _half_m()
 	var m_per_px: float = half.y / maxf(view.get_viewport_rect().size.y * 0.5, 1.0)
 	var hud_m: float = HUD_PX * m_per_px

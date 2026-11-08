@@ -60,3 +60,24 @@ func test_hold_top_keeps_the_lifted_boss_under_the_bar() -> void:
 	assert_true(top_y - BossCam.TOP_MARGIN_M >= y - half.y + bands.x - 0.001, "the top clears")
 	assert_lt(y, 0.0, "the view rose to keep the lifted top in")
 	ViewMode._shared = saved
+
+
+func test_aim_leans_near_and_follows_rivet_far() -> void:
+	var r: Vector2 = Vector2(0, 0)
+	var near: Vector2 = Vector2(10, 0)
+	assert_eq(BossCam.aim(r, near), r.lerp(near, BossCam.FRAME_K), "near: the full lean")
+	var far: Vector2 = Vector2(BossCam.FAR_M + 1.0, 0)
+	assert_eq(BossCam.aim(r, far), r, "far: Rivet alone")
+
+
+func test_aim_has_no_step_across_the_band() -> void:
+	# planted: the boss closing 0.25 m a tick (the King's procession) from 30 m to 10 m; the
+	# focus moves at most 0.4 m a tick (16 px at 40 px/m), never the old 1.9 m snap at 20 m
+	var r: Vector2 = Vector2(0, 0)
+	var last: Vector2 = BossCam.aim(r, Vector2(30, 0))
+	var worst: float = 0.0
+	for i: int in range(1, 81):
+		var now: Vector2 = BossCam.aim(r, Vector2(30.0 - 0.25 * i, 0))
+		worst = maxf(worst, now.distance_to(last))
+		last = now
+	assert_lt(worst, 0.4, "the largest focus move a tick")
