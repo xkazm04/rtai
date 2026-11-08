@@ -7,8 +7,8 @@ extends RefCounted
 ## slot), --rivet-tan=<0..1> (1 = the full tan), --gun-grey (look-8: held guns in the old grey
 ## print, not the tan inks); d9: --rivet-height=<m> (his drawn standing height at play; n9 builds
 ## 1.65, p55 in proportion); n9: --rivet-flame=cone (d9's flamer), =side (no diagonal cells),
-## --rivet-walk=4 (d9's 4-frame walk by the gait phase). Read once, before the first
-## plan or material.
+## --rivet-walk=4 (d9's 4-frame walk by the gait phase), --rivet-reload=off (no drawn reload).
+## Read once, before the first plan or material.
 
 static var _read: bool = false
 
@@ -43,3 +43,5 @@ static func apply(args: PackedStringArray = OS.get_cmdline_user_args()) -> void:
 			RivetWalk.armed = false
 		elif arg == "--rivet-knock=off":
 			RivetKnock.enabled = false
+		elif arg == "--rivet-reload=off":
+			RivetReload.enabled = false

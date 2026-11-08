@@ -49,7 +49,7 @@ static func step(rig: CutRig) -> void:
 	var walk: String = RivetWalk.path_of(rig, art, weapon) if path != "" else ""
 	if path != "" and LEFT[oct_of(rig)] == 1 and RivetStrips.ONE_HAND.has(weapon):
 		path = RivetStrips.left_of(art, weapon)
-	path = walk if walk != "" else RivetStrips.diag_or(rig, art, weapon, path)
+	path = walk if walk != "" else RivetReload.held_or(rig, art, weapon, path)
 	path = RivetKnock.path_or(rig, art, path)  # n9: a car's knock wins over the DOWN sprawl
 	if not ENABLED or path.is_empty():
 		release(rig)
@@ -100,6 +100,8 @@ static func cell_of(rig: CutRig, cells: int, walk_ph: float = -1.0) -> Vector2i:
 		return Vector2i(Cell.DEATH, 0)
 	if walk_ph >= 0.0:
 		return Vector2i(RivetWalk.frame_of(o, walk_ph, cells), 0)
+	if RivetReload.shows(rig.head_card):
+		return RivetReload.cell_of(rig, o)
 	if cells == BASE_CELLS:
 		if rig.clips.rolling():
 			return Vector2i(Cell.ROLL, 0)
@@ -189,9 +191,7 @@ static func _set_strip(card: Sprite2D, path: String) -> void:
 	card.frame = 0  # the walk grid's 32 frames vs a strip's 3-14: never out of range mid-swap
 	var left: bool = path.ends_with("_left.png")
 	var cols: int = RivetWalk.cols_of(path)
-	card.hframes = (
-		BASE_CELLS if path.ends_with(RivetStrips.BASE) else RivetStrips.cells_of(path, left)
-	)
+	card.hframes = RivetStrips.cells_of(path, left)
 	card.hframes = cols if cols > 0 else card.hframes
 	card.vframes = RivetWalk.ROWS if cols > 0 else 1
 	var w: float = card.texture.get_width() / float(card.hframes)

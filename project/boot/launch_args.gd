@@ -93,6 +93,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	# n9-rivet: --rivet-flame=cone brings back d9's flamer (the drawn flame on 3 octants only);
 	# --rivet-flame=side fires the side cell on the diagonals too (no drawn diagonal flame)
 	"--rivet-flame",
+	# n9-rivet: --rivet-reload=off keeps the at-rest cell through a reload (no drawn reload)
+	"--rivet-reload",
 	# d9-perf: --perf-hud draws the frame-budget overlay (dev/perf/perf_hud.gd), read only
 	"--perf-hud",
 	# d9-handheld: --device=<devices.json id> the handheld profile (window, frame cap, stretch)

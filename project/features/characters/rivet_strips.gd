@@ -70,6 +70,8 @@ static func small_cell(o: int, cells: int) -> int:
 
 ## The cell count of a non-grid strip, and its feet's pad above the cell bottom (px).
 static func cells_of(path: String, left: bool) -> int:
+	if path.ends_with(BASE):
+		return RivetFrames.BASE_CELLS
 	return DIAG_CELLS if path.ends_with(DIAG) else (RivetFrames.LEFT_CELLS if left else 8)
 
 
