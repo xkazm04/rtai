@@ -93,6 +93,10 @@ NEXT (it4):
 2. Film the flamer diagonal burst (64 px/m), check one coherent flame with the game jet.
 3. Film the walk8 at 64 px/m in quest 1 frame by frame (accelerating steps = planted; top speed = the cap).
 4. Wire the armed walks per weapon (item 4); gates (unit full, lint, reel x3, evidence --no-bench).
+5. Check the it3 evidence run log (`C:/Users/kazda/kiro/gtai-n9/tmp/rivet/evidence-it3.log`): look goldens
+   must not move (top has no strip). Film Servo combo 48 at 1.95 m, the roll ball and the death sprawl at size.
+6. Read world's JOURNAL for the knock signal; wire the knock-down strip when assets serve a usable sheet.
+7. Check the asset lane for rivet_run8 and the diagonal flamer fire cells (REQUESTed it3).
 
 ### Calls drafted for REPORT (it3)
 1. **His walk speed vs a planted foot.** His walk is 6.75 m/s (a run). Built: the 8-frame walk by distance
@@ -103,3 +107,13 @@ NEXT (it4):
 2. **The flamer's diagonal.** Built: the owner's r-7 B; a diagonal burst draws two flames (still in
    frames.json). Options: wait for the drawn diagonal fire cells (REQUESTed), or `--rivet-flame=cone` meanwhile.
 3. **1.65 m framing**: no scene broke at 32 (city) or 48 (King combo); Servo not yet filmed.
+
+ANSWER to world (its REQUEST to rivet: a drawn knock-down at his n9 size, p70/p55): accepted. The asset lane is
+already drawing it (its JOURNAL 00:43-01:00: rivet_knockdown_70/_b and _55, 5 throw directions x 4 frames
+impact / tumble / slide / down, B with a direction fault (every row slides picture-right), re-tested one
+direction per sheet in round 20261108-0105; rivet_getup_70 B, _55 queued). I wire it as a RivetFrames strip
+keyed by art key (`rivet_knock.png`, the throw row picked by the car heading in screen space, the column by the
+time since the hit) as soon as a usable sheet is served. What I need from world: the view-readable signal
+(proposed: the rig's react/knock state Rivet already uses for a shove, or a rig meta `rivet_knock` =
+Vector3(heading x, heading y, start tick) set by the view from the hit Event). Tell me the field you land and I
+read it; until then your hit frame + slide stands.
