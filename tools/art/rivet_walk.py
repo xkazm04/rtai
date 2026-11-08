@@ -16,6 +16,8 @@ hold without drawn left views: the heavy and flamer armed walks; the equipped st
 --tone=<ref.png> matches the grid's per-channel mean and spread (opaque pixels, straight RGB, alpha
 untouched) to the reference strip's, so the walk does not change tone when the strip swaps (the armed
 walks against the weapon's equipped strip: the library sheets read ~10-20 levels lighter).
+--k=<k,kl> fixed scales for the right and left rows instead of the median height (the run8 cells are
+pre-scaled by dome width to the walk8 rows, and run poses change the height: pass walk8's scales).
 """
 
 import json
@@ -77,6 +79,8 @@ def main() -> None:
     left = _mirrored(rows) if args[1] == "mirror" else _rows(args[1], 3, cols)
     k = fig_h / float(np.median([c["h"] for r in rows for c in r]))
     kl = fig_h / float(np.median([c["h"] for r in left for c in r]))
+    if "k" in opts:  # fixed scales "k,kl" (cells pre-scaled to another grid's rows: the run to walk8)
+        k, kl = (float(v) for v in opts["k"].split(","))
     items = [(c, k) for r in rows for c in r] + [(c, kl) for r in left for c in r]
     half = max(max(c["ax"] - c["box"][0], c["box"][2] - c["ax"]) * s for c, s in items)
     up = max(c["h"] * s for c, s in items)

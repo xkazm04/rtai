@@ -6,6 +6,7 @@ func after_each() -> void:
 	RivetWalk.enabled = true
 	RivetWalk.frames = 8
 	RivetWalk.armed = true
+	RivetWalk.run = true
 
 
 func test_the_frame_follows_the_octant_row_and_the_stride_phase() -> void:
@@ -91,3 +92,17 @@ func test_the_grid_columns_by_strip_name() -> void:
 	assert_eq(RivetWalk.cols_of(RivetStrips.DIR + "p70/" + RivetWalk.STRIP4), 4)
 	assert_eq(RivetWalk.cols_of(RivetStrips.DIR + "p70/rivet_eq_pistol.png"), 0)
 	assert_eq(RivetWalk.cols_of(RivetStrips.DIR + "p70/" + RivetStrips.BASE), 0)
+
+
+func test_bare_claw_runs_on_the_drawn_run_above_the_run_speed() -> void:
+	# n9 it4: the library's run8 at p70 (55 not yet: row 4 missing), walk8 below RUN_FROM_MPS
+	var rig: CutRig = add_child_autofree(CutRig.new())
+	rig.speed_now = RivetWalk.RUN_FROM_MPS * CharacterRigs.PX_PER_M + 10.0
+	var run: String = RivetStrips.DIR + "p70/" + RivetWalk.RUN
+	assert_eq(RivetWalk.path_of(rig, "p70", &""), run, "fast: the run")
+	assert_eq(RivetWalk.cols_of(run), 8, "8 frames")
+	RivetWalk.run = false
+	assert_true(RivetWalk.path_of(rig, "p70", &"").ends_with(RivetWalk.STRIP), "--rivet-walk=walk8")
+	RivetWalk.run = true
+	rig.speed_now = RivetWalk.RUN_FROM_MPS * CharacterRigs.PX_PER_M - 10.0
+	assert_true(RivetWalk.path_of(rig, "p70", &"").ends_with(RivetWalk.STRIP), "slow: the walk")

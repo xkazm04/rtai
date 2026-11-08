@@ -11,10 +11,17 @@ extends RefCounted
 ## n9 it4: a weapon out walks on its drawn armed grid (`rivet_walk_eq_<weapon>.png`, 4 frames, the
 ## library's armed walks for the weapon each draws) until a shot or a strike latches the equipped
 ## strip's fire cell; --rivet-walk-armed=off keeps the equipped facing card (d9's bob).
+## n9 it4: bare-claw above RUN_FROM_MPS he runs on the library's 8-frame run (`rivet_run8.png`,
+## flight frames; the profile stance foot travels 0.62 x his height per step: RUN_CYCLE_CELL),
+## cadence capped at MAX_RUN_CYCLES_S; --rivet-walk=walk8 keeps the walk at every speed.
 
 const STRIP: String = "rivet_walk8.png"
 const STRIP4: String = "rivet_walk.png"
 const ARMED: String = "rivet_walk_eq_"
+const RUN: String = "rivet_run8.png"
+const RUN_CYCLE_CELL: Dictionary[String, float] = {"p70": 136.0}
+const RUN_FROM_MPS: float = 2.5
+const MAX_RUN_CYCLES_S: float = 3.5
 const ROWS: int = 8
 const CYCLE_CELL: Dictionary[String, float] = {"p70": 60.0, "p55": 60.0}
 const MAX_CYCLES_S: float = 2.0
@@ -23,6 +30,7 @@ const META_AT: StringName = &"rivet_walk_at"
 static var enabled: bool = true
 static var frames: int = 8
 static var armed: bool = true
+static var run: bool = true
 
 
 ## The walk grid under `art`, "" when it is off, the art has none, or he is not walking bare-claw.
@@ -34,6 +42,9 @@ static func path_of(rig: CutRig, art: String, weapon: StringName) -> String:
 	if rig.clips.active() == RigClips.Clip.PUNCH:
 		return ""
 	var name: String = STRIP if frames == 8 else STRIP4
+	var fast: bool = rig.speed_now > RUN_FROM_MPS * CharacterRigs.PX_PER_M
+	if run and frames == 8 and fast and ResourceLoader.exists(RivetStrips.DIR + art + "/" + RUN):
+		name = RUN
 	if weapon != &"":
 		if not armed or RivetStrips.fire_latched(rig):
 			return ""
@@ -54,7 +65,7 @@ static func is_armed(card: Sprite2D) -> bool:
 
 ## The columns of walk grid `path`, 0 when it is not one.
 static func cols_of(path: String) -> int:
-	if path.ends_with("/" + STRIP):
+	if path.ends_with("/" + STRIP) or path.ends_with("/" + RUN):
 		return 8
 	return 4 if path.ends_with("/" + STRIP4) or path.get_file().begins_with(ARMED) else 0
 
@@ -70,10 +81,12 @@ static func frame_of(o: int, phase: float, n: int = frames) -> int:
 static func phase_of(rig: CutRig, art: String, scale: float) -> float:
 	var at: Vector2 = rig.get_meta(META_AT, rig.global_position)
 	rig.set_meta(META_AT, rig.global_position)
-	var cycle: float = CYCLE_CELL.get(art, 0.0) * scale
+	var card: Sprite2D = rig.head_card
+	var running: bool = card != null and str(card.get_meta(RivetFrames.ON, "")).ends_with("/" + RUN)
+	var cycle: float = (RUN_CYCLE_CELL if running else CYCLE_CELL).get(art, 0.0) * scale
 	if (frames != 8 and not is_armed(rig.head_card)) or cycle <= 0.0:
 		return rig.phase
-	cycle = maxf(cycle, rig.speed_now / MAX_CYCLES_S)
+	cycle = maxf(cycle, rig.speed_now / (MAX_RUN_CYCLES_S if running else MAX_CYCLES_S))
 	var was: float = rig.get_meta(META_PH, 0.0)
 	var ph: float = fposmod(was + rig.global_position.distance_to(at) / cycle, 1.0)
 	rig.set_meta(META_PH, ph)

@@ -35,5 +35,7 @@ static func apply(args: PackedStringArray = OS.get_cmdline_user_args()) -> void:
 			RivetWalk.enabled = false
 		elif arg == "--rivet-walk=4":
 			RivetWalk.frames = 4
+		elif arg == "--rivet-walk=walk8":
+			RivetWalk.run = false
 		elif arg == "--rivet-walk-armed=off":
 			RivetWalk.armed = false
