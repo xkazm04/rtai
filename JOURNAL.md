@@ -512,3 +512,66 @@ real King fight, before/after from one build with the toggle off).
   left-profile run vs the armed walk's short steps; helmet the same size in both, the run's rifle drawn a little shorter.
   `gtai-masters/n9/rivet/rivet_armed_run_rifle_p55_before_after_king_combo_48ppm_x1.5_seed1_f16_56.png` + half-speed
   mp4s; frames.json 15 (dropped the it5 flamer diagonal-cells 32 px/m still: superseded by the every-direction entry).
+- Gates on 6e47f4a1 (the p55 rifle run): director reel `reel-director-it9-<v>.log` 19/19 fully down in top, tilt70,
+  combo, 0 SCRIPT ERROR, exit 0 (commit 31a0b44a).
+- MEASURED / ACCEPTANCE (it8 NEXT 4) **the gatling's left-profile run plants** (RUN_ROW_K 0.94): King fight tilt70
+  64 px/m seed 1 `--loadout=gatling` (the gunplay seed 3 never runs him in left profile). `it9/footlock9.py` (it3's
+  footlock: camera shift by phase correlation on the asphalt, the stance boot = his lowest pixels): averaged per held
+  cell, the stance boot's ground x is 564.8 / 561.0 / 566.4, 457.2 / 453.5 / 455.2, 345.4 / 342.3 / 346.6 px over three
+  cells per stance (+-3 px = 5 cm) while the body moves 56 px over it; one step 112 px = 1.75 m. Inside a 4-frame hold
+  the figure is still and the ground scrolls 7 px/frame: the 8-cel cycle's limit (a 16-cel run would halve it).
+  `gtai-masters/n9/rivet/rivet_gatling_run_left_profile_footlock_king_tilt70_64ppm_x2_seed1_f40_80.png` (ground-aligned
+  tiles, the boot lands in front, passes under, trails; looked at it). frames.json: replaces the 32 px/m claw-pistol still.
+- MILESTONE `4dcacec3` **the drawn katana run at 55** (library blade 55, 7 A / 1 B, served 06:29) + **the katana 70
+  re-packed with blade L1 v3** at the library's hand scale (my it8 REQUEST a, served 06:12): L1 v3 now matches the other
+  rows (looked at v2 vs v3 rows beside each other), travel -46/-47 = run8's (no row k). Blade 55 in cell px: profiles =
+  run8 55's, 3/4 toward right 46/54.5 -> RUN_ROW_K 0.84, toward left 53/55 (within 5 %: none). Select 30/30, lint 15/15.
+  Film (King combo 48 px/m seed 1 `--loadout=katana`, 0 SCRIPT ERROR both; before `--rivet-walk=walk8`): open strides,
+  the hilt in the claw on the left rows. `rivet_armed_run_katana_p55_before_after_king_combo_48ppm_x1.5_seed1_f16_56.png`
+  + half-speed mp4; frames.json 15 (replaces the 64 px/m claw-pistol walk still).
+- Item 5a (the tone-matched p55 left walk cells, d9 REPORT): SUPERSEDED. They tone the d9 4-frame p55 walk
+  (`rivet_walk.png`), which only `--rivet-walk=4` still reads since walk8 (it3). Not packed.
+- Item 5b (a drawn reload): the library's it102 OFFER (`deliveries/rivet_reload_it102.md`, one-hand / two-hand / heavy
+  x 70 / 55 x right / left) predates the claw: the reload is drawn with the cable arm and the wrench claw. Wiring it now
+  would put a second arm design on screen for a second. REQUEST below; the wiring (reload_k >= 0 -> the reload cell per
+  facing) is NEXT once a claw version lands.
+
+REQUEST to assets: rivet_reload_{onehand,twohand,heavy}_{70,55}_claw (+ the _left sheets) (pitch 70 / 55): the it102 reload
+OFFER re-drawn with the plated pincer CLAW as the free arm (the cable arm and the wrench claw are gone from every walk and
+run since your it124 claw rounds), copy by example of your own it102 picks (same layout: the top row five facings in one
+reload pose, the bottom row the 3-frame reload at 3/4 toward right; the lefts drawn, the weapon in the far hand, the claw
+doing the reload), and the figure's proportions taken from the claw armed walk at that pitch (`rivet_walk_armed_<family>_<pitch>_claw`),
+not from the equipped sheet, so the reload cell does not pop the dome bigger mid-fight. Why: the reload is the last
+held pose that still shows the d9 arm; rivet wires it as the reload cell per facing (reload_k >= 0) when it lands.
+- Evidence run --no-bench on 4dcacec3 (06:39-06:48, the tree held still): lint PASS, unit **1835/0**, scenarios 54 PASS,
+  parity PASS (planted mutation caught at step 629), selftest PASS (look goldens 11/11 worst 0.27, block 5/5 worst 0.22:
+  nothing moved), release-compile 615/0, exit 0.
+- MILESTONE `b43824fd` **the drawn gatling run at 55** (library heavy 55, 6 A / 2 B, served 06:41; its lefts are drawn
+  where the heavy 55 armed walk mirrored them). Cell px vs run8 55: 3/4 toward right 42/54.5 -> 0.77, right profile =,
+  3/4 toward left 45.5/55 -> 0.83, left profile (L2 B) 46/50 -> 0.92. Select 23/23, lint 15/15. **Every armed run the
+  library has drawn now ships: pistol, plasma rifle, katana, gatling at 70 and 55.**
+  Film + measure (King combo 48 px/m seed 1 `--loadout=gatling`, 0 SCRIPT ERROR both): footlock9 on the left-profile run:
+  after, the stance boot per held cell 603/602/608, 530/520/520/526, 447/443/449, 368/360/366 px (planted +-3-5 px =
+  6-10 cm at 48 px/m); before (`--rivet-walk=walk8`, the armed walk): 599, 575, 540, 520, 497, 477, 444 (the foot slides
+  ~25 px per held cell, never plants). One combined still of the three new 55 runs:
+  `rivet_armed_runs_p55_rifle_katana_gatling_before_after_king_combo_48ppm_x1.5_seed1_f16_56.png` + the gatling 55
+  half-speed mp4; frames.json 14 (the combined entry replaces the separate rifle / katana entries).
+
+### Calls drafted for REPORT (it9 additions)
+13 (update). **Armed runs coverage**: drawn armed runs now ship for pistol, plasma rifle, katana and gatling at BOTH
+    pitches. The flamer (library rounds 0700 / 0705 running) and the other 13 weapons keep the armed walk at run speed.
+15. **The 55 row 2 shortfall**: the library's 3/4 toward-right row at 55 strides 0.77-0.84 of run8 in all four weapons;
+    built: RUN_ROW_K steps it on a shorter cycle (planted, but a slightly quicker cadence on that one facing). Option: a
+    v2 row per weapon by legs-by-example (the library offered; it did not land for the one-hand at 0645).
+
+NEXT (it10):
+1. The reels on b43824fd (`reel-director-it9b-<v>.log`): commit them if 19/19 x3 with 0 SCRIPT ERROR, else bisect
+   4dcacec3 / b43824fd.
+2. The flamer run at 70 then 55 (library rounds 0700 / 0705, my it8 REQUEST c): pack like b43824fd (70: --k
+   0.6433,0.6471 --tone=p70/rivet_eq_flamethrower.png; 55: --k 0.6111,0.6197), measure every row with
+   `gtai-n9/tmp/rivet/it8/travel_grid.py` vs run8 at that pitch, RUN_ROW_K for > 5 % off, flip the unit test's
+   "the flamer falls back to its armed walk" to another weapon without a run (e.g. the shotgun), film at 64 px/m.
+3. The reload: when the claw REQUEST above lands, cut it with the equipped cutter and wire reload_k >= 0 -> the reload
+   cell per facing; check its dome against the walk cell at 64 px/m before wiring.
+4. Freeze prep (10:30): the exe (`--export-release windows-showcase ../build/export/windows/RTAI.exe`), REPORT.md with
+   Calls 1-15, the combined 30-90 s clip of the set.
