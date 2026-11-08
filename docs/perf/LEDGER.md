@@ -177,6 +177,24 @@ So BC7 is what L4 predicted: VRAM -350..-360 MB on the city scenes with no frame
 upload buffer is a 32 MB one (Item 2). Resident RAM moves less than the estimated -96 MB on the desktop (the
 working set includes the driver's mapped copy; within the spread). handheld's E16 owns the Deck row.
 
+### L16 (it3): the engine's delta smoothing for mailbox (FrameDeltaSmoother)
+Source (Godot 4.7.2 `main/main_timer_sync.cpp`, `DeltaSmoother::smooth_delta`, lines 264-266): "only attempt
+smoothing if vsync is selected": `if (vsync_mode != VSYNC_ENABLED) return p_delta;`. So under the mailbox default the
+engine hands `World._process` the raw, load-jittered delta, and `SimClock.advance` steps 0 or 2 ticks in some frames:
+the mechanism of the pacing A/B's no-tick frames. Hypothesis: the engine's own rule (snap the delta to whole display
+intervals, carry the remainder, pass hitches raw) applied in `World._smoothed` under mailbox brings the no-tick
+frames back to Enabled's ~0, with no CPU and no pixel (fixed-fps, headless, movie and replay runs never arm it).
+Built: `core/clock/frame_delta_smoother.gd` (FrameDeltaSmoother: TOLERANCE 0.35 interval, LONG_S 1 s), `World._smoothed`
+(armed only with `--delta-smooth=on`, windowed, not filming, vsync mode MAILBOX; interval = 1 / min(refresh, max_fps)),
+`test_frame_delta_smoother` (6; `test_raw_jittered_frames_skip_ticks` shows the raw deltas give 0 / 2-tick frames,
+`test_jittered_frames_step_one_tick_each` that the smoothed ones give exactly one). Commit 36234341, default OFF.
+A/B (`evidence/perf/n9-dsmooth/`, drive60, `mbox:--vsync=mailbox` vs `smooth:--vsync=mailbox --delta-smooth=on`,
+3 pairs, bench.lock, 03:30-03:35, CONTENDED(2) in 6 / 6, my own pre-commit unit run overlapped r1-r2):
+no-tick frames mbox 7 / 3 / 1 vs **smooth 2 / 0 / 1**, double-tick 8 / 6 / 2 vs 5 / 2 / 4; CPU 0.28 vs 0.25 (WASH),
+p99 23.6 vs 24.7 (WASH). **Direction right, inside the noise (medians 3 vs 1, spread 3): not claimed.** Not yet
+proven armed in the bench (no log line). Next: a Log line when armed, then 6+ pairs on a quieter machine, riot60 too;
+keep if no-tick frames reach Enabled's level, then default on (still pixel-free: only which frame a tick lands on).
+
 ### Item 2 (it2): the traffic-sheet split is moot under BC7
 n9-world 3e02d3b8 imports the p70 traffic sheet as BC7: `traffic_cards.png-313d05e5...bptc.ctex` = **18,063,412 B**
 (4032 x 4480 x 1 B), one upload into a **32 MB** pow2 staging buffer (L9's mechanism), against 128 MB lossless. The

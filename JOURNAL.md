@@ -184,3 +184,28 @@ NOTE to world (answer to your it1 REQUEST, part 2): combo's rig cost is spread o
   drive's traffic differs by world's bikes, not BC7). frames.json 4 entries. Scratch .avi deleted.
 - 03:15 pacing A/B 2 (drive60 + riot60, enab vs mbox, 3 pairs, bench.lock) running: firms up or drops the it3
   "mailbox drops tick images under load" signal.
+- 03:22 pacing A/B 2 (drive60 + riot60, enab vs mbox): pooled 9 rounds an arm, no-tick frames Enabled 6 vs mailbox 51,
+  CPU WASH, p99 mixed. DECISION perf/f19-mailbox-pacing (kept; steady is the one-value fix). Pause-card still of the
+  pacing row taken via a scratch `-s` script (deleted): `gtai-masters/n9/perf/pause-card-pacing-row.png`, looked at.
+- 03:27 FOUND the mechanism: Godot 4.7.2 smooths the frame delta only under VSYNC_ENABLED (main_timer_sync.cpp
+  264-266), so mailbox feeds SimClock raw jittered deltas. L16 built: FrameDeltaSmoother + World._smoothed behind
+  `--delta-smooth=on` (default off), tests 6 / 0 (one fails on raw deltas). Commit 36234341.
+- 03:35 L16 A/B (drive60 x3, contended): no-tick 7/3/1 -> 2/0/1, double 8/6/2 -> 5/2/4, CPU WASH: direction right,
+  inside the noise; not claimed. LEDGER "L16".
+- FRICTION: the pre-commit hook ran lint (+ a Godot import) while the A/B ran; the commit sat 2+ min. Commit
+  before starting an A/B, not during.
+- Scratch worktrees kept for it4: `gtai-n9/tmp/perf/prof3` (main da108c13), `world3` (n9-world 746c2856, main's DLLs).
+  Remove with `git worktree remove --force` when done.
+
+NEXT (it4):
+1. L16: add a Log.info line when World arms the smoother (prove it is on in the bench), then the A/B again with 6
+   pairs on drive60 + riot60 (`--arms=mbox:--vsync=mailbox,smooth:--vsync=mailbox --delta-smooth=on`), plus an
+   `enab:--vsync=enabled` arm as the floor. Keep (default on under mailbox) if no-tick frames fall to Enabled's level;
+   then the unit no-arg run, `node tools/evidence/run.mjs --no-bench` (look goldens must stay 11 / 11: fixed-fps runs
+   never arm it), and the reel x3.
+2. If L16 holds: re-check whether "steady" is still needed for pacing (mbox+smooth vs mbox60), update Call P-1 / P-3.
+3. Merge-readiness: the full gates on HEAD (unit no-arg, evidence --no-bench, reel x3) after L16 lands.
+4. REPORT.md draft (Calls: P-1 mailbox default + the pacing trade, P-3 pacing default, the BC7 numbers), frames.json
+   grows with the next clips (a combined clip of the set, 30-90 s).
+5. Then the research loop: the combo card cost is structural (LEDGER "World's REQUEST, part 2"); next candidates:
+   city_view _process (F6, 2.2 ms mean in the riot), the occlusion pass, the crowd atlas bake time at boot.

@@ -1,0 +1,8 @@
+drive60 mbox r0: p50 16.69 p99 25.25 worst 52.9 draws 293 cpu 0.28 cores ws 905 MB steady 901 last 905 frames 1683 noTick 7 multiTick 8 errors 0 CONTENDED(2)
+drive60 smooth r0: p50 16.69 p99 28.51 worst 35.9 draws 293 cpu 0.32 cores ws 902 MB steady 899 last 902 frames 1681 noTick 2 multiTick 5 errors 0 CONTENDED(2)
+drive60 smooth r1: p50 16.69 p99 24.70 worst 29.4 draws 293 cpu 0.25 cores ws 844 MB steady 839 last 844 frames 1681 noTick 0 multiTick 2 errors 0 CONTENDED(2)
+drive60 mbox r1: p50 16.69 p99 23.59 worst 30.3 draws 293 cpu 0.27 cores ws 841 MB steady 837 last 841 frames 1682 noTick 3 multiTick 6 errors 0 CONTENDED(2)
+drive60 mbox r2: p50 16.69 p99 22.72 worst 42.3 draws 293 cpu 0.29 cores ws 903 MB steady 900 last 903 frames 1683 noTick 1 multiTick 2 errors 0 CONTENDED(2)
+drive60 smooth r2: p50 16.69 p99 20.89 worst 39.1 draws 293 cpu 0.25 cores ws 842 MB steady 838 last 842 frames 1680 noTick 1 multiTick 4 errors 0 CONTENDED(2)
+drive60 mbox: p50 16.69±0.00 p99 23.59±1.27 p99.9 35.78±6.24 worst 42.31±11.32 draws 292.83±0.14 renderCpu 0.33±0.03 gpu 2.56±0.11 vram 915.91±0.00 cpu 0.28±0.01 ws 903.16±32.11 wsSteady 899.55±31.88 wsLast 903.16±32.11 frames 1683.00±0.50 noTick 3.00±3.00 multiTick 6.00±3.00 contended 3 errors 0
+drive60 smooth: p50 16.69±0.00 WASH p99 24.70±3.81 WASH p99.9 34.28±3.38 WASH worst 35.86±4.84 WASH draws 292.89±0.07 WASH renderCpu 0.34±0.02 WASH gpu 2.28±0.15 WASH vram 900.29±8.00 WASH cpu 0.25±0.04 WASH ws 844.29±30.15 WASH wsSteady 838.83±30.32 WASH wsLast 844.29±30.15 WASH frames 1681.00±0.50 WIN noTick 1.00±1.00 WASH multiTick 4.00±1.50 WASH contended 3 errors 0
