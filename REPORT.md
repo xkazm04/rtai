@@ -1,4 +1,4 @@
-# n9 rivet: REPORT (DRAFT written in it12 at 08:45; finished at the freeze)
+# n9 rivet: REPORT (FINAL; finished by the Director at 10:00 because every billing path ran out at 09:08)
 
 Lane `rivet`, branch `n9-rivet`, 2026-11-08 00:55-11:00. The owner's note: "he is smaller than before - 50% size
 increase will be needed, flying instead of walking. As the animation degraded and don't fit now".
@@ -27,11 +27,14 @@ up, the reload, each captioned with view, zoom and speed, before | after where o
    ~25 px of slide every held cell. Quest 1's sprint (13.6 m/s) is near-planted on the same cycle (Call 1). Stills:
    `rivet_run_footlock_world_before_after_quest1_tilt70_64ppm_t383_398.png`,
    `rivet_gatling_run_left_profile_footlock_king_tilt70_64ppm_x2_seed1_f40_80.png`.
-4. **Weapon-out walks and runs** (`2c46aeb4`, `f2e05223`, `e4e150ec`, `b31577a4` ... `4594b19d`): drawn armed walks per
-   hold family (one-hand gun, two-hand gun, blade, heavy, flamer) with the plated claw, each on its own measured
-   cycle, tone-matched to the equipped strips; **drawn armed runs for pistol, plasma rifle, katana, gatling and
-   flamer at both pitches**, short-stride rows stepped by `RUN_ROW_K` so they plant too. Stills: the armed-run
-   before/afters at 64 px/m (tilt70) and 48 px/m (King combo, p55).
+4. **Weapon-out walks and runs** (`2c46aeb4`, `f2e05223`, `e4e150ec`, `b31577a4` ... `4594b19d`): drawn armed walks for
+   the five weapons the library drew, one per hold family (pistol, plasma rifle, katana, gatling, flamer; the other 12
+   keep the facing card, Call 3) with the plated claw, each on its own measured cycle, tone-matched to the equipped
+   strips; **drawn armed runs for the same five at both pitches**, short-stride rows stepped by `RUN_ROW_K` so they
+   plant too. Stills: `rivet_armed_run_pistol_before_after_arena_gunplay_tilt70_64ppm_seed3_f20_176.png`,
+   `rivet_armed_run_katana_before_after_reel_katana_tilt70_64ppm_f46_62.png`, `rivet_armed_run_flamer_before_after_king_tilt70_64ppm_seed1_f36_76.png`,
+   `rivet_armed_runs_p55_rifle_katana_gatling_before_after_king_combo_48ppm_x1.5_seed1_f16_56.png`,
+   `rivet_armed_run_flamer_p55_before_after_king_combo_48ppm_x1.5_seed1_f16_56.png`; the armed walks under "Further evidence".
 5. **Cars knock Rivet down, drawn** (`a4656a3e`, `f28589e8`, `4e4a0bf3`, `425ad75d`; world's REQUEST): the library's
    knock-down strip (4 throw axes, impact / tumble / slide / down) + the get-up kneel, read from world's knock field.
    Stills: `rivet_knockdown_before_after_city_car_tilt70_64ppm_t198_294.png` and the 32 px/m twin.
@@ -63,7 +66,7 @@ latest).
 
 ## What blocked, and for how long
 
-- it1 and it2 exited in 5-7 s on billing (00:55-00:54 lost to the late start; the first working iteration was it3).
+- it1 and it2 exited in 5-7 s on billing; it3 (from 00:54) was the first iteration that ran.
 - Waiting on art: every drawn item above waited on a library round (30-60 min each); the wiring was built ahead so no
   session idled. ~10 min total FRICTION on scene flags and a GDScript typed-dictionary read (JOURNAL it3, it10).
 - The three-in-parallel director reel can starve tilt70's last chapter (16000 frames headless): re-run alone (it10).
