@@ -380,3 +380,12 @@ NEXT (it11):
   (a cell-override hook in CityResidency / ChunkSource, the way kerb_dresser.gd:152 stamps C_PROP at generation).
   Both twins read the same cells, so parity needs no new code; the arena's scenarios (arena-*-telemetry) and the
   replay must be re-checked (a dead cop then stops at the barrier).
+
+## it13 (2026-11-08 04:10-05:10) BUILD
+(it11 and it12 left no entries and no commits; resuming from it10's NEXT. Journal first, commit early.)
+- READ journals: rivet (no new REQUEST to world; waits on assets' knock-down strips, now served as one-direction
+  strips), perf (no REQUEST to world), handheld (none to world). Assets: **the 5 walker dead sheets were served at
+  02:39** (`deliveries/dead_plan_v1_it121.md` it124 section: ped_cap A, ped_elder B, ped_hat B, ped_jogger A,
+  ped_punk A) and no open REQUEST to assets.
+- Plan: item 2 follow-up first (wire the 5 walker sheets: the riot's "straight old frame" fault (a) from it4), then
+  item 4's arena props into the sim cells if time remains.
