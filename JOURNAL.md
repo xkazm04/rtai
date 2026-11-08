@@ -725,3 +725,12 @@ NEXT (it24+):
    --no-bench`), the director reel x3 (`evidence/n9-world/reel3.sh it24`), the exe (`build/export/windows/RTAI.exe`,
    the REPORT command line), REPORT.md finalised (remove DRAFT; it23's items are in it),
    `git worktree remove --force C:/Users/kazda/kiro/gtai-n9/tmp/world/before`.
+- FOUND (08:14) the outlasting pools, now seen in a 32 px/m CLIP (`quest1_clip.gd --rigs --view=tilt70 --ppm=32
+  --ticks=13560-14700`, 0 SCRIPT ERROR): by clip frame 300 (~t14160) two ink-outlined pools lie empty on the Dock 9
+  crossing, their bodies decayed (StreetQuestCorpses' decay) while CombatBlood's pools persist. Reads as empty
+  pools at the shipped zoom. Grid of frames 100/300/450/570: `gtai-n9/tmp/world/pools_outlast_bodies_32ppm_it23.png`.
+NEXT 2 amended (it24): confirmed, worth fixing. Sketch: quest 1 only, the pool fades with its body: CollectCallView
+knows each dead hostile's age (StreetQuestCorpses.tint_of(age).a); CombatBlood/BloodFx would need a per-splash
+fade hook (BloodFx is shared: check its decal fade API first; combat_blood.gd is at 297 lines, so a small
+quest-side helper class rather than growth there). Alternative: slow the quest corpse decay so bodies outlast
+the pools (one StreetQuestCorpses value; check the corpse cap). Judge in a 32 px/m clip pair, never stills.
