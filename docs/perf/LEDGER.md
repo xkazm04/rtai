@@ -146,6 +146,14 @@ the cadence (multiTick 0-3, best p99) for +0.08 core. So the F-19 trade is now: 
 (the freeze is worse than a hitch); added to Call P-1 (mailbox default) for the owner, with "steady by default on
 Windows" as the one-value alternative (`PlayerSettings` default pacing).
 
+Second run (`evidence/perf/n9-pacing2/`, drive60 + riot60, enab vs mbox, 3 pairs, bench.lock, 03:15-03:22, CONTENDED
+in 5-6 of 6 runs per arm): CPU WASH again (drive 0.33 vs 0.29, riot 0.47 vs 0.45); p99 mixed (drive 22.2 vs 23.9 WASH,
+riot 27.1 vs **20.9** mbox WIN). Frames that carried no tick per round: drive enab 0 / 0 / 2 vs **mbox 1 / 7 / 14**;
+riot enab 1 / 3 / 0 vs mbox 0 / 0 / 6. **Pooled over both runs (9 rounds an arm): no-tick frames Enabled 6, mailbox
+51**, mailbox + steady 1 (3 rounds). So the signal holds: on a loaded machine mailbox skips a tick image ~5 times
+per 30 s (median), Enabled ~0, at the same CPU; the frame-time tail itself is not worse. Kept as built (Enabled is
+the F-19 freeze); steady fixes it for +0.08 core; the owner chooses the Windows default pacing (Call P-1 / P-3).
+
 ### Item 4 (it3): the desktop table on world's BC7 (main da108c13 vs n9-world 746c2856)
 world's 3e02d3b8 (BC7 for the drawn art, combo default, bikes 6 %) + its it2-it7 commits, vs main. Scratch worktrees
 (`gtai-n9/tmp/perf/prof3` = main, `world3` = world's committed tree with its `.godot` imports copied, main's native DLLs:

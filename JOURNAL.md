@@ -176,3 +176,11 @@ NOTE to world (answer to your it1 REQUEST, part 2): combo's rig cost is spread o
 - 03:06 item 4: BC7 desktop table, main da108c13 vs n9-world 746c2856 (world's committed tree, its .godot copied,
   main's DLLs: world's bin DLL carries its uncommitted knock sim), scratch worktrees under gtai-n9/tmp/perf
   (prof3 = main, world3), `ab.mjs --scenes=king,drive70,riot --pairs=3`, `evidence/perf/n9-bc7-table/`.
+- 03:11 MILESTONE item 4 (desktop table on world's BC7, LEDGER "Item 4"): VRAM drive70 900 -> 548 MB, riot 899 -> 536 MB
+  (-352 / -362), frame time WASH on king / riot, drive70 p99 5.58 -> 5.14 (-8 %, spreads 0.03 / 0.07), GPU -0.03 ms;
+  RAM moves less than the -96 MB estimate (King 801 -> 733 within main's spread 49). Deck row = handheld's E16.
+- 03:14 MILESTONE item 5 (owner clips): `gtai-masters/n9/perf/king32-main-vs-bc7.mp4` and `drive32-main-vs-bc7.mp4`
+  (movie mode, perf HUD, left main, right world's BC7), end stills looked at (VRAM 635 vs 413, 917 vs 546 MB; the
+  drive's traffic differs by world's bikes, not BC7). frames.json 4 entries. Scratch .avi deleted.
+- 03:15 pacing A/B 2 (drive60 + riot60, enab vs mbox, 3 pairs, bench.lock) running: firms up or drops the it3
+  "mailbox drops tick images under load" signal.
