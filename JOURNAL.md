@@ -640,3 +640,17 @@ NEXT (it23+):
 3. The freeze (10:30): the full gate (`node tools/evidence/run.mjs --no-bench`), the director reel x3 with
    `--quit-after 16000` (`evidence/n9-world/reel3.sh it23`), the exe (`build/export/windows/RTAI.exe`), REPORT.md
    finalised (remove DRAFT; it22's items are in it), `git worktree remove --force C:/Users/kazda/kiro/gtai-n9/tmp/world/before`.
+- (07:21) Full unit at 19d43e8d: **1842/0** (`gtai-n9/tmp/world/unit22.log`): NEXT 1's check is done.
+- (07:22-07:25) TRIED NEXT 2 (the pools under the plan corpse) and NOT landed: `_locate(victim)` returning the
+  settled plan pelvis (`StreetQuestDeadPlan.rest_m`) moves CombatBlood's whole kill splash, and its signature-kill
+  veto (`SignatureKills.marked_near`, VETO_M 1.2 m from the victim's spot) would miss when the pelvis offset
+  (PELVIS_K 0.45 x body ~0.8 m) + the push (up to 0.9 m) put the spot over 1.2 m away: a double blood on a
+  signature kill. Not landed untested. Patch kept: `gtai-n9/tmp/world/patch22/pool_rest_it22.patch` (collect_call_view
+  stays 233 lines, the debt ratchet holds). To land it: give CombatBlood the veto spot apart from the pool spot
+  (a second locate, or veto on `h.pos`), or film a Gloria signature kill at Dock 9 and count the splashes.
+- (07:26) Director reel x3 started at 7a7a94ac (code = 19d43e8d): `evidence/n9-world/director-reel-it22*`.
+NEXT (it23+) amended: NEXT 1 done (unit green); NEXT 2 has the patch and the veto problem above; NEXT 3 stands.
+- (07:27) Director reel at 7a7a94ac (code = 19d43e8d): top / tilt70 / combo **19/19 chapters down, 0 SCRIPT
+  ERROR**, exit 0 each (`evidence/n9-world/director-reel-it22*`). With the full unit 1842/0 at 19d43e8d, only the
+  evidence gate (scenarios / parity / goldens) is from 46dbea4b; 19d43e8d is view-only (quest 1's soaks), the
+  freeze session re-runs the full gate anyway.
