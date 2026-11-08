@@ -111,5 +111,10 @@ in brackets.
 
 ## Next steps
 
-- The exe: `"$GODOT_BIN" --headless --path project --export-release windows-showcase ../build/export/windows/RTAI.exe`.
+- The exe (exported 09:03 on fe8f95a0, the code of 5c77021f; re-exported at the freeze if code changes):
+  `export APPDATA=C:/Users/kazda/kiro/gtai-n9/appdata/rivet; "$GODOT_BIN" --headless --path project --export-release windows-showcase ../build/export/windows/RTAI.exe`
+  -> `C:\Users\kazda\kiro\gtai-wt\n9-rivet\build\export\windows\RTAI.exe` (347 MB + the release sim DLL beside it).
+  Smoke: `RTAI.exe --rendering-driver d3d12 --quit-after 600 --log-file <log>`: boots, exit 0, 0 errors.
+  The owner's befores in the exe: `--rivet-height=1.1`, `--rivet-walk=4`, `--rivet-walk-armed=off`, `--rivet-flame=all|cone`,
+  `--rivet-reload=off`, `--rivet-knock=off` (after `--`).
 - The combined clip is built (64.6 s); it has no bare-walk (walk8) segment yet.

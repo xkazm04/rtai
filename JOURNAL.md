@@ -772,3 +772,9 @@ NEXT (it13, the freeze at 10:30):
    only if code changed after 5c77021f). Clean the masters folder of files neither frames.json, REPORT nor the
    combined clip names (the half-speed mp4s are the clip's sources: list them in REPORT or delete them).
 4. Read the other journals once more for a REQUEST to rivet (none through 08:30).
+- Tried a bare walk8 clip segment (city `--bot=rivet`, 64 px/m, before `--rivet-walk=4`): he walks with a gun out (the
+  armed walk), so `=4` changed nothing; dropped. The combined clip re-captioned 1-11 in order (no gap), 64.6 s; looked
+  at frames at 1 / 20 / 45 / 60 s. Scratch .avi deleted (it12 72 MB left: the clip's segments).
+- MILESTONE (early fallback) **the exe** exported 09:03 on fe8f95a0 (`--export-release windows-showcase
+  ../build/export/windows/RTAI.exe`, 14 s, 347 MB + the release sim DLL); smoke `--quit-after 600 --log-file`: boots,
+  exit 0, 0 errors. Lines in REPORT "Next steps". Re-export at the freeze only if code changes.
