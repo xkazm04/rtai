@@ -2,6 +2,20 @@
 
 Branch `n9-world`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n9\world\` (frames.json, 15 entries) and
 `evidence/n9-world/` in this worktree. Every item below names its commit and DECISION (docs/decisions.md).
+The whole set in one clip (87.6 s, each segment titled by item): `world_n9_set_combined_32-64ppm.mp4`.
+
+## The exe for the owner
+
+`build/export/windows/RTAI.exe` (521 MB, pck embedded, + `gtai_sim.windows.template_release.x86_64.dll` beside
+it), exported at a8fbe016 (code = 6ca2448f, fully gated) with:
+
+    export APPDATA=C:/Users/kazda/kiro/gtai-n9/appdata/world
+    "$GODOT_BIN" --headless --path project --export-release windows-showcase ../build/export/windows/RTAI.exe
+
+Boots with no flags into combo (70 in play). Smoke: `RTAI.exe --headless --quit-after 600`, exit 0, 0 SCRIPT
+ERROR. To see the work:
+- the city block and its dead: `RTAI.exe -- --arena=city --rigs`
+- the King's robe (combo, 70 easing to 55 on engage): `RTAI.exe -- --boss=king --rigs`
 
 ## What works, with its evidence
 
