@@ -318,3 +318,19 @@ NEXT (iteration 5), supersedes the list above:
 - 04:59 E19 launched under bench.lock: deck_bench (uncapped) city tilt70 vs city_combo, 3 rounds.
 - FRICTION: my E19 command ended `...; rm -f bench.lock` after a `&&` chain that starts with the noclobber take: had the
   take failed it would have deleted another lane's lock. It succeeded (LOCKED). Pattern to use: `take && { run; rm; }`.
+- 05:03 E19 (LEDGER s8, 492ecabb): deck_bench city tilt70 vs combo, 3 rounds, bench lock (all CONTENDED): p50 9.21 vs
+  9.40 ms, render GPU 8.39 vs 8.38, GPU shared +63 MB (+-65): no measured cost for combo on the Deck row.
+- 05:14 GATE evidence run `--no-bench` at 017b8e44: lint, unit 1843/0, scenarios 54, parity (629), look goldens 11/11,
+  release-compile 619/0: all PASS (`evidence/n9h/it5/gates/evidence-run-017b8e44.txt`). FRICTION: the first try wrote its
+  log inside the tree and refused itself (dirty); write the log to `gtai-n9/tmp/handheld/` and copy it in after.
+
+NEXT (iteration 6):
+1. Read the other journals for REQUESTs at the start AND mid-session; the asset lane's JOURNAL (grep "handheld").
+2. Research loop: the CPU question is now "only a Deck can say" (E18). Candidates, best first: (a) E17 on combo
+   (deck vs deck40 on `city_combo`, the battery proxy on the view main will ship); (b) the King and Servo fights on
+   `deck` at combo with the boss count at 18 (a still per boss, the 720p row too); (c) when world's branch head has the
+   dead redesign + combo + BC7 together, a Deck-row A/B on a scratch worktree at that head (E16b's recipe: detached
+   worktree, copy a `.godot`, the DLLs, `zoom_k` 1.25 locally) to re-base the Deck numbers on what main will be.
+3. Freeze 10:30: export `build/export/windows/RTAI.exe` (`"$GODOT_BIN" --headless --path project --export-release
+   windows-showcase ../build/export/windows/RTAI.exe`), final gates on the head (reel x3 + evidence run with the log
+   outside the tree), REPORT final (gates line, exe line, Calls 1-4, frames.json 15 entries all present).
