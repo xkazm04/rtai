@@ -754,3 +754,23 @@ NEXT 2 (it24) amended: the patch is the table's law for quest 1 (worth landing f
 --ticks=13560-16000 so frames past t14800 show the pools going); the 6-10 s of empty pools after a body decays is
 the table's own design (stains outlive bodies): raise it as a call for the owner (options: as built; stains
 linger 6 s like the bodies; bodies linger 12 s at Dock 9) rather than change corpse_decay.json (the live fight's law).
+
+## it25 (08:24-09:24, BUILD)
+Read: JOURNAL it23 NEXT, git log -30, the other journals (rivet, perf, handheld: no REQUEST to world; perf's NOTE
+to world FYI: BC7 +194 MB install, -45-60 MB download, ~-350 MB VRAM, measured on a trial merge of n9-world b888fe20
++ n9-perf: no code conflicts), assets JOURNAL (king_bust_70_hem queued 2nd, "NOT started: past the freeze").
+Registry rules applied: `motion-quality-gating` (pools judged in a clip pair from one build and one tick window,
+never stills: stills mode skips CombatBlood's growth), `generative-artifact-gating` (the combined clip cut only from
+evidenced clips, each segment titled with its item).
+- (08:25) NEXT 2: the stain-life patch applied (`StreetQuestCorpses.stain_life` + one line in `_ready_blood`); new
+  unit test `test_quest_blood_takes_the_live_fights_stain_life`; --select 14/0; PLANTED FAULT (linger <- fade_ticks)
+  caught (240 vs 720), restored. Clip pair started at 32 px/m, t14000-16000 (before = d1e38256 in the scratch
+  worktree `gtai-n9/tmp/world/before`, after = this tree).
+- FRICTION (08:26, 2 min): the scratch worktree's before arm hit SCRIPT ERRORs (a stale class cache: it had been at
+  14992d61); killed my PID, `--import` there, relaunched clean. Lesson: `--import` a scratch worktree after checkout.
+- MILESTONE (08:31) the combined clip of the set (the brief's "one combined clip, 30-90 s"; owed since it1):
+  `gtai-masters/n9/world/world_n9_set_combined_32-64ppm.mp4`, 87.6 s, 13 segments titled by item (1 combo boot,
+  bikes; 2 the dead: riot 32/64, block, Dock 9 fall/spread/pools, reel; 3 car knock; 4 walls: kerb barrier, city
+  wall; 5 the robe still), cut by `gtai-n9/tmp/world/combo_set/make.sh` from the evidenced clips only. Contact sheet
+  looked at (`combo_set/sheet.png`): every segment reads. frames.json entry 0; the bikes clip it contains dropped
+  from the list (on disk), 15 entries.
