@@ -45,8 +45,8 @@ func test_short_or_unknown_data_is_null_not_garbage() -> void:
 	assert_eq(grew, OK)
 
 
-func test_async_is_the_default_and_sync_is_one_flag_away() -> void:
-	assert_true(CrowdReadback.async_on(), "no --crowd-readback flag: async")
+func test_sync_is_the_default_and_async_is_one_flag_away() -> void:
+	assert_false(CrowdReadback.async_on(), "no --crowd-readback flag: sync (the look goldens)")
 	assert_true(LaunchArgs.KNOWN_FLAGS.has("--crowd-readback"))
 
 

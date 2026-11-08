@@ -8,14 +8,18 @@ extends RefCounted
 ## a callback a frame or two later (on the main thread), so nothing ever waits on a fence.
 ## Same bytes: the copy is recorded before the next frame redraws the viewport (the render graph
 ## keeps that order), so a cell holds the frame it was asked for, exactly as before.
-## `-- --crowd-readback=sync` = the old synchronous get_image (the A/B arm; it can freeze).
+## n9-perf it2: the DEFAULT is the synchronous get_image again: the async bytes land a frame or two
+## later, and the windowed look goldens drew the crowd before the atlas was in (5 / 11 off, worst
+## 6.46; sync 11 / 11). F-19 is fixed by the mailbox present (LEDGER), so the stall no longer
+## freezes. `-- --crowd-readback=async` = this async path (pixel-moving until the golden frames
+## wait for `pending == 0`).
 
 var pending: int = 0
 var failed: int = 0
 
 
 static func async_on() -> bool:
-	return LaunchArgs.value("--crowd-readback") != "sync"
+	return LaunchArgs.value("--crowd-readback") == "async"
 
 
 ## Asks for the frame just drawn in `vp`; `done` is called with the Image (null on failure) when

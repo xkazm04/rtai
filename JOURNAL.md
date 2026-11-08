@@ -141,3 +141,11 @@ NEXT (it3) FIRST, before everything above:
    readback goes back to sync for the bake (F-19 no longer needs it). If (a): read the golden capture's frame timing;
    mailbox must not change a pixel, or it is an owner Call. Also compare main da108c13 itself (world's 11 / 11 is on
    its own re-blessed branch).
+- 02:40 BISECT (a): selftest with `vsync_mode.windows=1` in a temporary override.cfg line (restored): the SAME miss
+  (5 / 11, worst 6.46): mailbox is NOT the cause.
+- 02:42 BISECT (b): selftest with `CrowdReadback.async_on()` forced false (scratch, restored): **look goldens 11 / 11,
+  worst 0.27**: the async crowd readback (827aefe3) was moving the goldens. FIX: sync is the default again,
+  `--crowd-readback=async` the arm; test_crowd_readback flipped; 16 / 0. DECISION perf/crowd-readback-sync-default.
+  Not yet re-run: the full evidence gate on the fix commit (it3 item 0 now = re-run `node tools/evidence/run.mjs
+  --no-bench` and confirm 11 / 11 + block 5 / 5; then the director reel x3).
+NEXT (it3) item 0 replaced: re-run the evidence gate on the fix; then items 1-6 above.
