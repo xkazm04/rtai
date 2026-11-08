@@ -362,3 +362,14 @@ budget, the one site to lift on a 720p row is that count (16 -> 18 px authored, 
   Confirms E5 (d9, at 48 px/m: GPU busy 55 -> 38 %, pinned CPU -26 %) at the owner's 40 px/m: the zoom did not move
   the 40 Hz saving. The APU's power should track that busy share (inferred: only a Deck can measure watts), so the 40 Hz row is the battery mode (the player's
   frame cap in the pause card reaches it). JSONs: `evidence/n9h/it2/e17/`.
+
+- **The keyboard twin (n9 it3, an owner Call):** `ui_kb_glyphs_v1` (the asset lane's own-list delivery, 38 cells incl.
+  `move_keys`, `aim_mouse`, `mouse_left`, wide SPACE / Shift / Ctrl / Tab) draws in the same three places as the pad set,
+  but only on the desktop study row `desktop_kb_glyphs` (`glyphs: kb`; `is_desktop()` stays true, nothing else is
+  applied). `GlyphCells` holds both sets (atlas, ink-box json, label -> cell); `PadGlyphArt.glyph_set()` picks pad on a
+  handheld row, kb on the study row, none on the shipped desktop. The key labels are what `ObjectiveHint.key_name`
+  returns from the InputMap (`W A S D`, `mouse`, `LMB`, `Space`, `E`, `Escape`), so a rebind follows; a key with no cell
+  stays bracketed text. Wide keys cap at 2.4 heights (SPACE was 0.55 g tall at the pad set's 1.5). Stills (RTX, 1280x800):
+  `gtai-masters/n9/handheld/kbglyphs-desktop-title-after.png` vs `kbglyphs-desktop-title-before.png` (the shipped text),
+  `kbglyphs-desktop-title-prompt-crop-x2.png`. Valve's rule "prompts do not flip to keyboard glyphs unless the mouse is
+  really used" is about the handheld rows (they stay pad); this row is a desktop look. Owner Call: ship it on the desktop?

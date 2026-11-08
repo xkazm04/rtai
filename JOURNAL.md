@@ -142,3 +142,18 @@ desktop study row, or a launch flag in KNOWN_FLAGS); the desktop default must no
   (5) Copy `keyed/ui/ui_kb_glyphs_v1.png` + the inkbox json (`glyph_inkbox.py --schema=gtai.kb_glyph_atlas/1`),
   `--import`, provenance line. (6) Tests: kb region("E") = key_e, region("A") = key_a in kb / face_a on a handheld,
   the desktop row draws no glyph. Stills: the title card and the quest 1 prompt on `--device=desktop_kb_glyphs`.
+
+## Iteration 3 (BUILD), 02:28-03:28
+
+- 02:29 READ: JOURNAL NEXT, git log, the other journals: no REQUEST to handheld (rivet / world / perf). Registry rules
+  applied: generative-artifact-gating (the kb atlas taken as delivered, every cell checked present by a test; provenance
+  line with each round's prompt_hash), adaptive-fidelity-tiers (the glyph set is one row value, the shipped row untouched).
+- 02:38 MILESTONE (NEXT item 1): the keyboard twin `ui_kb_glyphs_v1` wired behind the desktop study row
+  `desktop_kb_glyphs` (`glyphs: kb`, schema enum): `GlyphCells` (both sets' atlas, ink-box json, label -> cell maps:
+  `W A S D` -> move_keys, `mouse` -> aim_mouse, LMB / RMB, letters, digits, arrows, Escape / Space / Shift / Ctrl / Tab),
+  `PadGlyphArt.glyph_set()`; `Quest1Card.controls_text()` uses the pad-first text with key glyphs on that row;
+  `action_hint` returns "[Q]" in the kb set (the ghost card draws the Q keycap). The kb json is the ink-box trim
+  (`glyph_inkbox.py --schema=gtai.kb_glyph_atlas/1`). Wide keys cap at 2.4 heights (`KB_WIDE_K`; SPACE 0.55 g -> 0.9 g).
+  Stills (scratch keyboard-event walker, `evidence/n9h/it3/kbwalk/`): title, quest 1 prompt ("Walk [WASD] to the
+  dumpster, hide: [E]", the ghost card's Q keycap), pause; desktop before shot = unchanged text. Looked at all.
+  frames.json 15 entries. Tests `test_kb_glyph_set` (8). Commit ca917066. DECISION `handheld/kb-glyphs-study`.
