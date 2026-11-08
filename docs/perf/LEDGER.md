@@ -323,6 +323,48 @@ release-compile 617 / 0 PASS; unit 1835 / 0 passed but the stage is marked FAIL 
 JOURNAL / REPORT during the run): owed, a clean re-run. L20 on the drive: 3432 body-frames hidden, 5154 crowd patches,
 the same as before it.
 
+### L20b (it6): near() keeps only the buildings that can meet the body box
+Hypothesis (before building): `_scan` keeps a building only when `body_patch` (the body box grown by the ink line,
+intersected with the drawn area) has area. The drawn area shares the ground rect's x-span and bottom (the lift only
+raises its top), so a building whose rect does not overlap the box's x-span, or whose ground line is above the box's
+top, has no patch at any lift. Filtering those inside `collect` (read off a packed (left, right, bottom) float32
+triple per building, built with the cached list) skips `_with_area` + the append + the `body_patch` call for most of
+the ~1200 buildings a rig's 4 chunks hold: expected near 540 -> ~150-250 us a riot frame. Exact: the box is grown one
+more pixel, float32 values compared in float64, so only zero-area patches are dropped.
+Change (6496dbdb): `CityOccluders.near(at_m, body)` / `collect(..., body)`; `CityOcclusion.body_box` (body_patch now
+`body_box(...).intersection(area)`); `merge_extra` moved to CityOccluders to keep city_occlusion.gd under 200 lines.
+Test (`test_city_occluders`): per body, the buildings with a patch from the filtered query == those from the
+unfiltered query, in order, 60 positions + 120 at building edges (touching and +-0.5 px), at tilt70 and at 55 (combo's
+taller lift); asserts > 50 patches and > 1000 skipped (not vacuous). 3 planted faults (each edge moved 8 px) caught.
+A/B (cvprof timers, L20 vs L20b, 3 interleaved pairs per scene, CONTENDED 0-8 other Godots;
+`evidence/perf/n9-it6/l20/ab-l20b.txt`):
+
+| scene | near L20 (us/frame) | near L20b | median | occlusion _process L20 -> L20b |
+|---|---|---|---|---|
+| riot (tilt70, 17 rigs) | 548 / 652 / 543 | 258 / 241 / 253 | **548 -> 253 (-54 %)** | 686 / 818 / 678 -> 410 / - / 401 |
+| drive_dense (tilt70, 9 rigs) | 543 / 719 / 541 | 206 / 193 / 233 | **543 -> 206 (-62 %)** | 700 / - / 698 -> 362 / - / 404 |
+
+Behaviour: drive 3432 hidden body-frames and 5154 crowd patches in every run, riot 0 / 11669 (= L20). KEPT.
+
+### L20c (it6): a column index per chunk
+Hypothesis: after L20b each rig still walks ~1200 packed entries (~15 us a rig). Index each chunk's buildings by
+128 px screen column (a building under every column its rect's x-span touches); the body box (~80 px wide) reads one
+or two columns, merged ascending and deduplicated, then the same exact tests run. Exact: a building that passes the
+x test shares a column with the box (floor is monotone, the same float32 values). Expected near -40..-60 %.
+Change (700712c7): `CityOccluderCols` (new file), built in `of_chunk`, cleared with the cache. Test: a box over 1-6
+columns returns exactly the rule's buildings once each in list order (3 planted faults caught: the column span, the
+dedupe, the column range). A/B (L20b vs L20c, 3 pairs, CONTENDED 0-8; `ab-l20c.txt`):
+
+| scene | near L20b | near L20c | median |
+|---|---|---|---|
+| riot | 231 / 251 / 246 | 124 / 129 / 138 | **246 -> 129 (-48 %)**, ranges apart |
+| drive_dense | 212 / 205 / 224 | 184 / 203 / 209 | 212 -> 203: WASH |
+
+Same counts as above in all 12 runs, 0 SCRIPT ERROR. KEPT (riot win; the drive's remaining ~200 us is per-call
+overhead or the hit path, not split yet). L20 + L20b + L20c together: the riot's per-rig query **~650 (L20's old
+median of 705 / 652) -> ~130 us a frame**, the occlusion `_process` ~800 -> ~280 us. No frame-total claim (its spread is
+larger than 0.5 ms under contention).
+
 ### Item 2 (it2): the traffic-sheet split is moot under BC7
 n9-world 3e02d3b8 imports the p70 traffic sheet as BC7: `traffic_cards.png-313d05e5...bptc.ctex` = **18,063,412 B**
 (4032 x 4480 x 1 B), one upload into a **32 MB** pow2 staging buffer (L9's mechanism), against 128 MB lossless. The
