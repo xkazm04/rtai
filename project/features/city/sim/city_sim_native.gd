@@ -45,7 +45,8 @@ func clear_chunk(cx: int, cy: int) -> void:
 
 
 func cell_at(x: float, y: float) -> int:
-	var c: Variant = _call(&"cell_at", [x, y])
+	# Object.call, not _call's callv: no Array a call (the blood drops ask ~160 times a riot tick, L22)
+	var c: Variant = _o.call(&"cell_at", x, y) if _o != null else null
 	return c if c is int else 0
 
 
