@@ -103,3 +103,16 @@ func test_a_kill_cut_warms_a_cold_rig() -> void:
 	assert_false(rig.limbs_cold, "the copies are posed")
 	for g: Node2D in groups:
 		g.free()
+
+
+func test_a_view_change_keeps_a_walkers_halos_hidden() -> void:
+	var rig: CutRig = _rig()
+	_card(rig)
+	RigBuild.on_view(rig, 0.1)
+	assert_false(rig.halos.is_empty())
+	for h: Sprite2D in rig.halos:
+		assert_false(h.visible, "a card's hidden part keeps its rim hidden")
+	rig.head_card.remove_meta(StreetWalkerCards.ON)
+	RigBuild.on_view(rig, 0.1)
+	for h: Sprite2D in rig.halos:
+		assert_true(h.visible, "the parts draw again: their rims too")

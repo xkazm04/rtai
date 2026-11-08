@@ -182,7 +182,7 @@ static func on_view(rig: CutRig, px: float) -> void:
 			Vector2.ONE * (1.0 + CutRig.COLLAR_K * (1.0 - smoothstep(0.11, 0.14, px)))
 		)
 	for i: int in rig.halos.size():
-		rig.halos[i].visible = hk > 0.01 and not rig.limbs_cold  # a cold rig's parts stay hidden
+		rig.halos[i].visible = hk > 0.01 and not StreetWalkerCards.hides_parts(rig)
 		if rig.halo_limb[i] == HALO_LEG:
 			rig.halos[i].scale = Vector2(
 				1.0 + 0.04 * CutRig.RIM_K * hk, 1.0 + CutRig.LEG_RIM_W * hk
