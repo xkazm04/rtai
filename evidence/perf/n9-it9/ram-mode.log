@@ -1,0 +1,36 @@
+drive70 main@exe-windows-bench-main r0: p50 2.13 p99 4.79 worst 13.0 draws 293 cpu 1.04 cores ws 756 MB steady 754 last 756 frames 1681 noTick 0 multiTick 0 errors 0
+drive70 head@exe r0: p50 1.91 p99 3.62 worst 5.3 draws 293 cpu 1.05 cores ws 754 MB steady 752 last 754 frames 1681 noTick 0 multiTick 0 errors 0
+riot main@exe-windows-bench-main r0: p50 3.91 p99 7.75 worst 15.0 draws 734 cpu 1.03 cores ws 764 MB steady 754 last 754 frames 1681 noTick 0 multiTick 0 errors 0
+riot head@exe r0: p50 3.36 p99 7.07 worst 12.6 draws 734 cpu 1.02 cores ws 752 MB steady 751 last 752 frames 1681 noTick 0 multiTick 0 errors 0
+drive70 head@exe r1: p50 2.04 p99 3.80 worst 4.5 draws 293 cpu 1.09 cores ws 753 MB steady 753 last 753 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(0)
+drive70 main@exe-windows-bench-main r1: p50 2.29 p99 4.32 worst 6.2 draws 293 cpu 1.02 cores ws 760 MB steady 758 last 552 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(2)
+riot head@exe r1: p50 3.43 p99 6.76 worst 12.5 draws 734 cpu 1.02 cores ws 816 MB steady 816 last 816 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(2)
+riot main@exe-windows-bench-main r1: p50 4.40 p99 8.62 worst 18.4 draws 734 cpu 1.02 cores ws 754 MB steady 754 last 622 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(2)
+drive70 main@exe-windows-bench-main r2: p50 2.64 p99 4.77 worst 6.3 draws 293 cpu 1.03 cores ws 815 MB steady 814 last 815 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(2)
+drive70 head@exe r2: p50 2.14 p99 3.80 worst 4.6 draws 293 cpu 1.09 cores ws 755 MB steady 753 last 755 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(2)
+riot main@exe-windows-bench-main r2: p50 4.18 p99 8.49 worst 16.0 draws 734 cpu 1.02 cores ws 687 MB steady 687 last 687 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(2)
+riot head@exe r2: p50 3.50 p99 7.39 worst 15.0 draws 734 cpu 1.01 cores ws 752 MB steady 751 last 752 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(2)
+drive70 head@exe r3: p50 2.00 p99 3.93 worst 11.1 draws 293 cpu 1.10 cores ws 765 MB steady 749 last 751 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(2)
+drive70 main@exe-windows-bench-main r3: p50 2.30 p99 4.40 worst 10.6 draws 293 cpu 1.02 cores ws 756 MB steady 755 last 382 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(2)
+riot head@exe r3: p50 3.20 p99 5.92 worst 14.6 draws 734 cpu 1.02 cores ws 759 MB steady 751 last 751 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(2)
+riot main@exe-windows-bench-main r3: p50 4.07 p99 8.01 worst 13.7 draws 734 cpu 1.02 cores ws 817 MB steady 816 last 817 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(2)
+drive70 main@exe-windows-bench-main r4: p50 2.22 p99 4.31 worst 6.0 draws 293 cpu 1.07 cores ws 764 MB steady 752 last 754 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(2)
+drive70 head@exe r4: p50 1.84 p99 3.53 worst 4.2 draws 293 cpu 1.09 cores ws 755 MB steady 752 last 755 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(2)
+riot main@exe-windows-bench-main r4: p50 3.87 p99 7.23 worst 15.4 draws 734 cpu 1.01 cores ws 750 MB steady 750 last 750 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(2)
+riot head@exe r4: p50 3.50 p99 7.11 worst 13.0 draws 734 cpu 1.02 cores ws 758 MB steady 751 last 751 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(2)
+drive70 head@exe r5: p50 1.95 p99 3.75 worst 5.8 draws 293 cpu 1.09 cores ws 757 MB steady 751 last 754 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(2)
+drive70 main@exe-windows-bench-main r5: p50 2.53 p99 4.61 worst 7.4 draws 293 cpu 1.05 cores ws 755 MB steady 753 last 554 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(2)
+riot head@exe r5: p50 4.03 p99 7.96 worst 14.1 draws 734 cpu 1.02 cores ws 754 MB steady 754 last 754 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(2)
+riot main@exe-windows-bench-main r5: p50 4.95 p99 10.96 worst 20.6 draws 734 cpu 0.98 cores ws 750 MB steady 750 last 750 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(2)
+drive70 main@exe-windows-bench-main r6: p50 2.71 p99 7.03 worst 19.5 draws 293 cpu 0.97 cores ws 757 MB steady 756 last 757 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(2)
+drive70 head@exe r6: p50 2.59 p99 6.32 worst 12.9 draws 293 cpu 0.96 cores ws 754 MB steady 753 last 754 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(2)
+riot main@exe-windows-bench-main r6: p50 6.43 p99 13.08 worst 20.2 draws 734 cpu 0.89 cores ws 766 MB steady 753 last 754 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(2)
+riot head@exe r6: p50 5.36 p99 10.55 worst 20.8 draws 734 cpu 0.89 cores ws 755 MB steady 752 last 752 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(2)
+drive70 head@exe r7: p50 2.53 p99 6.75 worst 15.1 draws 293 cpu 0.98 cores ws 757 MB steady 755 last 757 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(2)
+drive70 main@exe-windows-bench-main r7: p50 3.18 p99 7.32 worst 12.0 draws 293 cpu 0.90 cores ws 757 MB steady 755 last 757 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(2)
+riot head@exe r7: p50 5.00 p99 11.81 worst 20.3 draws 734 cpu 0.92 cores ws 752 MB steady 751 last 752 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(4)
+riot main@exe-windows-bench-main r7: p50 5.62 p99 12.26 worst 20.3 draws 734 cpu 0.96 cores ws 752 MB steady 751 last 752 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(4)
+drive70 main@exe-windows-bench-main: p50 2.53±0.53 p99 4.77±1.50 p99.9 9.44±6.21 worst 10.63±6.78 draws 292.78±0.00 renderCpu 0.25±0.06 gpu 0.22±0.01 vram 884.10±24.09 cpu 1.03±0.08 ws 757.44±29.98 wsSteady 755.36±31.20 wsLast 756.01±216.47 frames 1681.00±0.00 noTick 0.00±0.00 multiTick 0.00±0.00 contended 7 errors 0
+drive70 head@exe: p50 2.04±0.38 WASH p99 3.80±1.61 WASH p99.9 4.98±5.38 WASH worst 5.79±5.46 WASH draws 292.78±0.00 WASH renderCpu 0.23±0.05 WASH gpu 0.22±0.02 WASH vram 883.91±16.00 WASH cpu 1.09±0.07 WASH ws 754.78±5.70 WASH wsSteady 752.62±2.72 WASH wsLast 754.39±3.31 WASH frames 1681.00±0.00 WASH noTick 0.00±0.00 WASH multiTick 0.00±0.00 WASH contended 7 errors 0
+riot main@exe-windows-bench-main: p50 4.40±1.28 p99 8.62±2.92 p99.9 15.45±3.59 worst 18.42±3.48 draws 734.10±0.18 renderCpu 0.46±0.16 gpu 0.42±0.16 vram 882.72±32.00 cpu 1.02±0.07 ws 754.17±64.78 wsSteady 753.15±64.70 wsLast 751.96±97.64 frames 1681.00±0.00 noTick 0.00±0.00 multiTick 0.00±0.00 contended 7 errors 0
+riot head@exe: p50 3.50±1.08 WASH p99 7.39±2.95 WASH p99.9 13.26±3.62 WASH worst 14.60±4.16 WASH draws 734.19±0.11 WASH renderCpu 0.42±0.16 WASH gpu 0.31±0.13 WASH vram 882.72±24.00 WASH cpu 1.02±0.07 WASH ws 754.55±32.44 WASH wsSteady 751.36±32.63 WASH wsLast 751.83±32.51 WASH frames 1681.00±0.00 WASH noTick 0.00±0.00 WASH multiTick 0.00±0.00 WASH contended 7 errors 0

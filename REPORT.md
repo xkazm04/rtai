@@ -88,6 +88,15 @@ Numbers, methods and every A/B: `docs/perf/LEDGER.md` section "n9 night". Clips 
    riot's p99 still overlaps (not claimed). The drive is a WASH (ranges overlap). Open, not claimed: main's
    process settled at ~820 MB in 6 of 17 release runs, this branch at ~755 MB in all 34 (LEDGER "the release
    riot at a quieter moment").
+14. **it9: the release build measured over 8 interleaved pairs: this branch is faster in every pair.** On the
+   shipped `windows-bench` exports (main da108c13 vs this branch, 32 runs, 0 errors), this branch's p50 was under
+   main's in **8 of 8 rounds on the drive and 8 of 8 on the riot**, in both arm orders. Median paired gap: **riot
+   -0.75 ms (-18 %), drive -0.34 ms (-15 %)**. With it8's quiet rounds that makes 12 of 12 on each scene. Most of the
+   rounds ran next to other lanes' Godots (CONTENDED), so the absolute numbers drift from round to round, and the
+   claim rests on the pairing, not on separated ranges. p99 is not claimed. Draw counts are identical
+   (no pixel moved). The RAM question is answered: the ~815 MB state appears on both builds (main 8 of 33 runs
+   tonight, this branch 1 of 50), so it is a per-run state that this branch hits less often, not a saving to claim
+   (LEDGER "the release build, 8 pairs").
 
 ## What does not
 - The first L17 test was vacuous. It compared `MultiMesh.buffer`, which a headless run keeps empty. The mutation run

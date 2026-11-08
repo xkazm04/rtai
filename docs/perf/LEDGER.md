@@ -625,6 +625,30 @@ An earlier run (`evidence/perf/n9-final-it8/`, 07:20, 2 arms) is VOID for head: 
 uncommitted L27 arm (FRICTION it8). Owed at the freeze: the same table on the final HEAD, on the release exports
 (`@exe` arms, as d9's final table), when the machine is quieter.
 
+## Final table n9, the release build, 8 pairs (it9, 08:06-08:14): head under main in 16 of 16 paired rounds; the RAM mode on both
+`node tools/perf/ab.mjs --scenes=drive70,riot --pairs=8 --arms=main@exe-windows-bench-main:,head@exe:`
+(`evidence/perf/n9-it9/ram-mode/` + `ram-mode.log`). The same exports as it8 (main da108c13 from prof3, head efa848cb;
+HEAD c18385e4 differs from efa848cb only in docs and a `dev/` comment, which the export drops). 32 runs, 0 errors,
+bench.lock via ab.mjs, **CONTENDED(2-4) in 14 of 16 rounds** (the other lanes' Godots), the arm order alternating
+per round. p50 ms per round (main / head):
+
+| scene | r0 | r1 | r2 | r3 | r4 | r5 | r6 | r7 | median | paired diff (median) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| drive70 | 2.13 / 1.91 | 2.29 / 2.04 | 2.64 / 2.14 | 2.30 / 2.00 | 2.22 / 1.84 | 2.53 / 1.95 | 2.71 / 2.59 | 3.18 / 2.53 | 2.42 / 2.02 | **-0.34 ms (-15 %)** |
+| riot | 3.91 / 3.36 | 4.40 / 3.43 | 4.18 / 3.50 | 4.07 / 3.20 | 3.87 / 3.50 | 4.95 / 4.03 | 6.43 / 5.36 | 5.62 / 5.00 | 4.29 / 3.50 | **-0.75 ms (-18 %)** |
+
+Head is under main in **8 of 8 rounds on each scene** (both arm orders), the sign test's two-sided p = 0.008 a
+scene. Across tonight's release runs (it8 quiet + this) head is under main in 12 of 12 riot rounds and 12 of 12
+drive70 rounds. ab.mjs's range rule still prints WASH (the contention drift across rounds, 1.9 -> 2.6 ms for head
+alone, is wider than the gap), so the claim is the paired one: **riot p50 -0.75 ms, drive70 p50 -0.34 ms on the
+shipped build, every pair the same way**. The it8 A-vs-A (head vs a byte copy, 0.14 ms on the quiet riot) is under
+both gaps. p99 / worst: not claimed (overlap). Draws identical (293, 734): pixel-free.
+**The steady-RAM mode (~815 MB vs ~752 MB) shows up on both builds**: main 2 of 16 (drive70 r2 814, riot r3 816;
+plus one 687 low), head 1 of 16 (riot r1 816). Over tonight's exe runs: main 8 of 33, head 1 of 50 (Fisher's exact
+p = 0.002). So head is NOT immune: the mode is a per-run state (an allocator / driver pool that sometimes keeps
+~63 MB more), and head hits it less often. Not claimed as a RAM win: a frequency, not a level. A bisect would need
+~20 runs an arm to tell 24 % from 2 %: not worth the freeze hours. Watch item closed as "real on both, rarer on head".
+
 ## Final table n9, the release riot at a quieter moment (it8, 07:56-08:01): a riot p50 WIN; the RAM split open
 The same three exports, riot only, `--pairs=4` (`evidence/perf/n9-ram-exe-it8/`: ab.json + run.txt), 0-2 other
 Godots (CONTENDED(2) in 5 of 12 runs: main 3 of 4, head 1, head2 1; main's two quiet rounds read 3.62 and 4.67), 0

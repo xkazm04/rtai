@@ -560,3 +560,16 @@ NEXT (it9), replaces the list above:
    REPORT final. No tree edits under project/ while an ab `head:` arm or the gate runs.
 4. Levers: perf-owned files are below the floor now (L26 / L27); the riot's frame is the rigs (other lanes' files).
 5. Scratch: cvprof, prof3, world3, head2 (delete after the freeze), build/export/windows-bench-main + -head2.
+
+## it9 (2026-11-08 08:03-09:0x) BUILD
+- 08:03 READ: JOURNAL NEXT, git log, the other journals: no REQUEST to perf. handheld 07:48: "tick 5800 is the
+  Toner Room dialogue, not Dock 9 (perf's preset comment is stale)". ANSWER: fixed (c18385e4: quest1_frames.gd,
+  ab.mjs, a correction line under the LEDGER's quest 1 row). Registry rules applied: measurement-honesty (the
+  bimodal RAM question gets 8 pairs before any claim), runtime-observation-evidence (close-ups looked at before they
+  enter frames.json), perf-regression-gating (bench.lock via ab.mjs for every kept number).
+- 08:06 the RAM-mode run: `ab.mjs --scenes=drive70,riot --pairs=8 --arms=main@exe-windows-bench-main:,head@exe:`
+  -> `evidence/perf/n9-it9/ram-mode/` (6 Godots up: CONTENDED labels per run).
+- 08:07 trial merge for the shipping table: scratch world3 = n9-world b888fe20 + n9-perf c18385e4 (scratch commit
+  6e36e936, never pushed): only JOURNAL.md / REPORT.md conflict (lane docs); project.godot, city_residency.gd and
+  docs/decisions.md auto-merge; lint 15 / 15 on the merge. NOTE for the Director: n9-perf merges onto world's head
+  without code conflicts.
