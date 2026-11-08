@@ -256,3 +256,8 @@ NEXT (it6):
 5. Armed walks: the per-strip cycle (measure each armed grid's profile stance travel per frame step like it5); the claw
    REQUEST (the spike vs claw swap on a shot).
 6. Size films owed: Servo combo 48 at 1.95 m, the roll ball and the death sprawl at size, beside a car.
+- Evidence run --no-bench on 37c891de (03:28-03:37, the tree held still): PASS lint, unit 1824/0, parity, selftest (look goldens
+  11/11 worst 0.27, block 5/5 worst 0.22: nothing moved), release-compile 614/0; scenarios 53/54: FAIL scenario_corpse_horde
+  (a wall-clock check: "the step grew with the dead 1082 -> 2668 us", not a rivet path; the shared machine was busy).
+  Re-run alone at 03:39: `run_scenarios.mjs --only=scenario_corpse_horde` PASS. Read as contention; re-check in it6's evidence run.
+- it6 lead for the 6.75 m/s run film: the reel's `claw_combo` chapter (dev/showcase/reel_chapters.gd l.41, mode `claw`).
