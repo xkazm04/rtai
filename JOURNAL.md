@@ -744,3 +744,13 @@ NEXT 2 (it24), concrete: in `CollectCallView._ready_blood` give quest 1's blood 
 read the table the way StreetQuestCorpses._table() does). One line + a DECISION; the pools still outlive the
 bodies ~6 s by the table's design (a call for the owner if that still reads as empty pools). Film a 32 px/m clip
 pair (`--ticks=13560-14700`), unit --changed, then the gate.
+- (08:21) TRIED NEXT 2 (quest 1's blood takes the live fight's stain life: `StreetQuestCorpses.stain_life(fx)` +
+  one line in `_ready_blood`) and NOT landed: the 32 px/m clip t13560-14700 is the same as the before at frames 300
+  and 570 (`gtai-n9/tmp/world/stainlife_ba.png`, left = before). The empty pools there are ~8 s old, inside the
+  table's 12 s stain linger, so the change only cuts the minutes-long tail and cannot show in this window. Patch:
+  `gtai-n9/tmp/world/stain_life_it23.patch` (collect_call_view stays at the 237 baseline with it). Tree back at
+  90420187's code (= e3c54005, gated).
+NEXT 2 (it24) amended: the patch is the table's law for quest 1 (worth landing for the long tail: film
+--ticks=13560-16000 so frames past t14800 show the pools going); the 6-10 s of empty pools after a body decays is
+the table's own design (stains outlive bodies): raise it as a call for the owner (options: as built; stains
+linger 6 s like the bodies; bodies linger 12 s at Dock 9) rather than change corpse_decay.json (the live fight's law).
