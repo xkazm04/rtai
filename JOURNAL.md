@@ -77,7 +77,8 @@ a pistol in his claw while he holds the ray gun. Plan: wire them per weapon for 
 - Gates it3: unit full 1816/0 (on b06c962f); lint 15/15; director reel (`res://dev/arena/arena.tscn --quit-after 20000
   -- --bot=reel --reel=director --loadout=pistol --rigs --view=<v>`, headless, on 620bd6f7) 19/19 chapters fully
   down in tilt70, combo and top, 0 SCRIPT ERROR, exit 0 (`evidence/n9/reel-director-it3-<view>.log`).
-  Evidence run --no-bench on 493d0483 (01:41-01:51, exit 0): PASS lint, unit, scenarios, parity, selftest (look
+  Evidence run --no-bench on 493d0483 (01:41-01:51): PASS lint, scenarios 54, parity, unit 1816/0 but the stage
+  FAILED on "tree changed during run" (my JOURNAL commits mid-run: re-run it4 with the tree still), selftest (look
   goldens 11/11 + block 5/5 within mean 4: top did not move), release-compile 614/0.
 
 REQUEST to assets: rivet_eq_flamethrower_fire_diag_70 and _55, pitch 70 and 55, the flamer's FIRE cells at
