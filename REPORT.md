@@ -1,4 +1,4 @@
-# REPORT: night n10, lane world (draft, updated 2026-11-08 ~22:56)
+# REPORT: night n10, lane world (draft, updated 2026-11-09 00:21)
 
 Evidence: `C:\Users\kazda\kiro\gtai-masters\n10\world\` (`frames.json`). Every performance number is unmeasured so far.
 
@@ -10,13 +10,13 @@ Evidence: `C:\Users\kazda\kiro\gtai-masters\n10\world\` (`frames.json`). Every p
    - A body's head lies up, up-right, up-left, right or left, picked by the blow's screen direction and the pose, with no free turn. No head points at the camera. Pose E is only ever mirrored.
    - The far crowd's baked corpses follow the same headings through a view-only shader snap.
    - Each near body has a contact shadow (its own silhouette, down the sun).
-   - Dock 9's push is wider (1.9 m range, 1.4 m cap).
+   - Dock 9's push is measured between the drawn bodies and relaxed so neighbours on two sides do not cancel (1.9 m range, 2.2 m cap, `016cd98f`). `dead_dock9_centres_64.png` and `dead_dock9_centres_32.png` against the same tick before it: the top-left body no longer lies across its neighbour.
    - Same seed and tick, before = `StreetDeadHeading.ENABLED` false: `dead_dock9_before_after_64.png`, `dead_dock9_before_after_32.png`, `dead_riot_before_after_64.png`, `dead_riot_before_after_32.png`.
 
 ## What does not work yet
 
 - **The art is still the n9 plan poses.** This is the code half of the owner's note: the poses are placed on drawn headings but are not yet drawn for this camera. REQUEST 2 in JOURNAL asks for them.
-- **Dock 9's top pair of bodies still touches**, and an arm touches between the lower two (`dead_dock9_before_after_64.png`).
+- **Dock 9's top three bodies are still tight.** A boot crosses the kneeling body and a hand touches in the top pair (`dead_dock9_centres_64.png`). Two wider settings (2.1 m / 3.0 m and 2.3 m / 2.4 m) stacked two bodies instead, so I stopped at 1.9 / 2.2. Why the wider ones stack is not established.
 - **The far crowd has no contact shadow** (near rigs and Dock 9 only).
 - **The lamp post card stays as drawn.** I had called it a stub and asked for a lamp three times a person's height (REQUEST 1), then measured it: 65 px against Rivet's 53 px at 32 px/m, and the half-height walls are 49-121 px, so a taller lamp would stand over the walls. REQUEST 1 is withdrawn; the art is the library's `lamp_70_v4`, drawn for this camera.
 - **Item 2's audit is by eye from one still, except the fire escape.** Parked cars and kerb furniture stand. Roofs and roof gear are the biggest plan-view read left and need art. The fire escape is closed from the source: the city generator never places one, so the streets draw none; only the alley arena has four.

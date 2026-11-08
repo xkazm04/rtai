@@ -84,3 +84,19 @@ FRICTION [00:05] `tools/evidence/run.mjs --no-bench`, started 23:27 on 4558d018,
 NEXT: (0) `git log` for this JOURNAL / REPORT / decisions commit; if missing, stage those three paths and commit in the background (the hook's lint can pass 10 minutes). (1) Gates owed: read `build/evidence/` and the log above or re-run `tools/evidence/run.mjs --no-bench` alone with a wait longer than 30 minutes; director reel x3 at `--quit-after 40000` NOT run. Unit full is green at 4558d018 (1968/0). (2) Dock 9's top pair still touches. `StreetQuestDeadPlan.push_of` measures between sim points, but the drawn body sits at `at + head * pelvis`: measure between drawn centres (store each centre beside `_pushed`, the test at `test_street_quest_dead_plan.gd:85` should still hold with no stored centre), or try SPACE_M 2.4 / PUSH_MAX_M 1.9. Film with `res://dev/frames/quest1_clip_rec.gd` (`--out= --before --zoom= --every=`), t13800 at 64 px/m. Not touched this session because the evidence run needs a clean code tree. (3) Far-crowd contact shadow: about 2 px at crowd scale, low value; report it rather than build it. (4) Item 1 alternative not filmed: `keyed/building/facade_half_*_70_strip_p70.png` from `deliveries/facade_half_it180.md`. (5) REQUEST 2 (broken poses drawn at 70) has no delivery; the library has nothing newer than 22:00 on 2026-11-08.
 
 CORRECTION [00:08] The evidence run did finish, after the FRICTION line above: on 4558d018 lint, unit 1968/0, parity, selftest and export-audit PASS; **scenario-tests FAIL, TIMED OUT after 1594 s, 0 of 0 reported** (`build/evidence/scenario-tests.json`). A timeout under load, not a failing scenario, but no scenario result exists on this branch. NEXT (1) becomes: run the scenarios alone on a quiet machine first (`"$GODOT_BIN" --headless --path project -s res://tests/run_scenarios.gd`), then the director reel x3.
+
+
+---- session 00:08 (iteration 10) ----
+Read at open: no new delivery in `library/deliveries/` (newest still `facade_half_it180.md`, 17:41 on 11-08); no `REQUEST -> world` from another lane.
+
+MILESTONE [00:18] Dock 9's push (NEXT 2) landed as 016cd98f, split into `StreetQuestDeadPush`. It now measures between drawn cell centres and relaxes over 8 passes (one summed pass let neighbours on two sides cancel). Unit: test_street_quest_dead_plan 12/0 in the commit's final state; the three-file select was 33/0 before the lint rename. Lint 15/15 in the hook. DECISION world/dock9-push-centres.
+Filmed Dock 9 at 64 px/m (t13800, seed the same) at four settings, looked at each:
+| SPACE_M / PUSH_MAX_M | result |
+|---|---|
+| 1.9 / 2.2 (shipped) | no body on another; a boot still crosses the kneeling body, a hand touches in the top pair |
+| 2.1 / 3.0 | two bodies stacked at the top right (two helmets side by side) |
+| 2.3 / 2.4 | two bodies stacked, worse |
+| 1.9 / 1.4 summed, spots (item 3, the before) | top pair overlapped at the helmets |
+So it is a modest gain, not a solved pile. The debug log of first-sight centres (one run, not kept) showed every later body ending at or past SPACE_M from the others it knew at that moment, so the stacks at wider settings are NOT a spacing shortfall at first sight. Unverified guess: bodies keep moving after their first sight, or are placed against neighbours first seen later.
+FRICTION [00:17] First commit attempt of this change failed in the hook on `gdlint` (function-variable-name for `_pose_a`-style throwaways), though the shell line exited 0. The file count of the commit output was the only sign. Replaced them with `assert_gte` on the returned pose.
+Evidence: `dead_dock9_centres_64.png`, `dead_dock9_centres_32.png`. First composition of the 64 pair had the before panel at 1.35x the after, so the sizes lied; rebuilt at matched scale and the note reworded to what the frame shows.
