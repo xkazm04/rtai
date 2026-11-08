@@ -43,6 +43,30 @@ observe ~22 us native (one block 52.6) against 115-423 us script. The SCRIPT ERR
 script compiling before the autoloads exist; none falls inside the timing blocks. **Not a bench number**: the release riot A/B is item 3.
 The DLLs are git-ignored: until a merge rebuilds `template_release` with scons, the export silently keeps the script loop.
 
+### Item 3 (it6): the riot release A/B against main 9bbe6d0a: head wins at combo, NOT a quiet run
+`node tools/perf/ab.mjs --no-lock --scenes=riotc --pairs=6 --arms=main@exe-windows-bench-main:,head@exe: --out=evidence/perf/n10-riotc`
+(`--no-lock` because ab.mjs's own lock is the old n5 path: `gtai-n10/bench.lock` was held by hand around it). Release `windows-bench`
+exports (each log `debug_build: false`), main from the 9bbe6d0a worktree with its own DLL (no `scan_dead_flips` in it), head cfdb53e4 with
+the new release DLL (the symbol is in it), the same 256 baked chunks (hash lists compared). `riotc` = the new preset: `riot` at `--view=combo`,
+the view main boots; the logs say `view: combo`. 400-actor riot, 30 s, 1920x1080, fixed 60 uncapped, arm order alternating, 0 errors, 739 draws on both.
+**CONTENDED throughout**: 0-10 other Godots up (`CONTENDED(n)` in the runner's rows), the machine never went quiet this iteration.
+
+| round | frame p50 ms main / head | rigMsP50 main / head |
+|---|---|---|
+| 0 | 6.15 / 4.78 | 1.740 / 0.983 |
+| 1 | 5.60 / 4.70 | 1.678 / 0.950 |
+| 2 | 5.72 / 3.59 | 1.652 / 0.753 |
+| 3 | 6.75 / 4.86 | 1.648 / 0.932 |
+| 4 | 7.01 / 6.35 | 1.750 / 1.060 |
+| 5 | 5.32 / 4.66 | 1.587 / 0.964 |
+
+Head is lower in **6 of 6** rounds on both columns: frame p50 median paired delta **-1.14 ms**, rig p50 median 1.665 -> 0.957 ms (-0.72; at most 1 ms in 5 of 6 head rounds, 1.060 in round 4).
+**ab.mjs's range rule still prints WASH** (half-spreads 0.85 and 1.38 ms: the contention swings both arms); the claim rests on the paired ordering (sign test two-sided p = 0.03), not on that rule. p99 and worst: no claim.
+The two head cuts are not separated: this is items 1 and 2 together.
+At the older `riot` preset (`--view=tilt70`), 4 + 6 pairs (`evidence/perf/n10-riot-b1`, `n10-riot-b2`, same exports, CONTENDED): frame p50 head lower in 7 of 10, median -0.56 ms, WASH, not claimed; rig p50 head lower in 10 of 10, median -0.54 ms.
+Slip recorded: batch b2 was run as "combo" with `--view=combo` appended to the arms; the preset's own `--view=tilt70` comes first and wins, so b2 is tilt70 (its logs say so) and was renamed. Use the `riotc` preset.
+Process CPU and RAM columns: several rounds read NaN (the sampler under load), so no CPU or RAM claim from these runs.
+
 ## n9 night (2026-11-08, branch n9-perf from main da108c13)
 
 ### F19 quest-1 freeze: located in the engine (it1, 00:56-01:56)
