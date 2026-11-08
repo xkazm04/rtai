@@ -109,7 +109,7 @@ func test_extra_occluders_merge_only_when_their_drawn_area_meets_the_view() -> v
 	var outside: CityOccluders.Bld = CityOccluders.Bld.new()
 	outside.area = Rect2(Vector2(40.0, 40.0) * px, Vector2(6.0, 3.6) * px)
 	var near: Array[CityOccluders.Bld] = []
-	CityOcclusion.merge_extra(near, [inside, outside] as Array[CityOccluders.Bld], view)
+	CityOccluders.merge_extra(near, [inside, outside] as Array[CityOccluders.Bld], view)
 	assert_eq(near.size(), 1)
 	assert_same(near[0], inside)
 
@@ -140,3 +140,48 @@ func test_collect_survives_the_cache_reset() -> void:
 		o.collect(_chunk([Vector3(1, 10, 10), Vector3(2, 12 + k % 3, 10)]), Vector2(320, 320), out)
 		counts.append(out.size())
 	assert_eq(counts.count(2), counts.size(), "every chunk, before and after the reset")
+
+
+func test_the_body_filter_drops_only_buildings_without_a_patch() -> void:
+	var rows: Array[Vector3] = []
+	for i: int in 300:
+		rows.append(Vector3(1 + i % 2, fmod(i * 7.31, 128.0), fmod(i * 3.77, 128.0)))
+	for view: String in ["tilt70", "tilt"]:  # combo eases to 55: a taller lift
+		ViewMode._shared = ViewMode.of(view)
+		var o: CityOccluders = _occ()
+		var c: CityChunk = _chunk(rows)
+		var feet: Array[Vector2] = []
+		for q: int in 60:
+			feet.append(Vector2(fmod(q * 397.0 + 13.0, 4096.0), fmod(q * 211.0 + 7.0, 4096.0)))
+		var half: float = CityOcclusion.PATCH_W_M * SimConst.PX_PER_M * 0.5 + Ink.LINE_PX
+		for k: int in 20:  # bodies at a building's edges, just touching it and a hair either side
+			var r: Rect2 = o.of_chunk(c)[k * 13].r
+			for e: float in [-0.5, 0.0, 0.5]:
+				feet.append(Vector2(r.end.x + half + e, r.get_center().y))
+				feet.append(Vector2(r.position.x - half + e, r.end.y + e))
+		var counts: Vector2i = _filtered(o, c, feet)
+		assert_gt(counts.x, 50, "%s: many bodies meet a building (the compare is not empty)" % view)
+		assert_gt(counts.y, 1000, "%s: and the filter skips buildings" % view)
+
+
+## Per body: the buildings with a patch, unfiltered vs filtered, must match in order. Returns
+## (patches, buildings skipped by the filter).
+func _filtered(o: CityOccluders, c: CityChunk, feet: Array[Vector2]) -> Vector2i:
+	var counts: Vector2i = Vector2i.ZERO
+	for at: Vector2 in feet:
+		var head: Vector2 = at - Vector2(0.0, CityOcclusion.BODY_H_M * SimConst.PX_PER_M)
+		var all: Array[CityOccluders.Bld] = []
+		o.collect(c, at, all)
+		var got: Array[CityOccluders.Bld] = []
+		o.collect(c, at, got, CityOcclusion.body_box(at, head).grow(1.0))
+		var want: Array[CityOccluders.Bld] = all.filter(
+			func(b: CityOccluders.Bld) -> bool:
+				return CityOcclusion.body_patch(at, head, b.area).has_area()
+		)
+		var kept: Array[CityOccluders.Bld] = got.filter(
+			func(b: CityOccluders.Bld) -> bool:
+				return CityOcclusion.body_patch(at, head, b.area).has_area()
+		)
+		assert_eq(kept, want, "body at %s: the same patches, in order" % at)
+		counts += Vector2i(want.size(), all.size() - got.size())
+	return counts

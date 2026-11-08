@@ -99,7 +99,8 @@ func _scan() -> void:
 	for rig: CutRig in rigs:
 		var feet: Vector2 = rig.global_position
 		var head: Vector2 = feet - Vector2(0.0, BODY_H_M * SimConst.PX_PER_M)
-		for b: CityOccluders.Bld in _near.near(feet / SimConst.PX_PER_M):
+		var box: Rect2 = body_box(feet, head).grow(1.0)  # a building outside it has no patch
+		for b: CityOccluders.Bld in _near.near(feet / SimConst.PX_PER_M, box):
 			var patch: Rect2 = body_patch(feet, head, b.area)
 			if not patch.has_area():
 				continue
@@ -127,7 +128,7 @@ func _scan_crowd() -> Array[Rect2]:
 	var view_px: Rect2 = get_global_transform_with_canvas().affine_inverse() * screen
 	var n: int = _patches.size()
 	var blds: Array[CityOccluders.Bld] = _near.in_rect(view_px)
-	merge_extra(blds, extra, view_px)
+	CityOccluders.merge_extra(blds, extra, view_px)
 	var areas: Array[Rect2] = []
 	if not blds.is_empty():
 		areas = CityCrowdOcclusion.patches(_snapshot(), blds, view_px, _patches)
@@ -163,11 +164,15 @@ static func silhouette(feet: Vector2, head: Vector2) -> PackedVector2Array:
 	return fig
 
 
-## The part of a body's screen box (feet to head, px; PATCH_W_M wide) inside a building's area.
-static func body_patch(feet: Vector2, head: Vector2, area: Rect2) -> Rect2:
+## A body's screen box (feet to head, px; PATCH_W_M wide), grown by the ink line.
+static func body_box(feet: Vector2, head: Vector2) -> Rect2:
 	var w: float = PATCH_W_M * SimConst.PX_PER_M
-	var body: Rect2 = Rect2(feet.x - w * 0.5, head.y, w, feet.y - head.y)
-	return body.grow(Ink.LINE_PX).intersection(area)
+	return Rect2(feet.x - w * 0.5, head.y, w, feet.y - head.y).grow(Ink.LINE_PX)
+
+
+## The part of a body's box inside a building's area.
+static func body_patch(feet: Vector2, head: Vector2, area: Rect2) -> Rect2:
+	return body_box(feet, head).intersection(area)
 
 
 ## The printed world over every hidden part of a body (this node's screen-copy shader).
@@ -189,12 +194,3 @@ func _draw_ink() -> void:
 				@warning_ignore("return_value_discarded")
 				part.append(part[0])
 				_ink.draw_polyline(part, PropOcclusion.RIM, Ink.LINE_PX * 0.5)
-
-
-## Appends the extra occluders whose drawn area meets the view to `blds` (a fresh in_rect array).
-static func merge_extra(
-	blds: Array[CityOccluders.Bld], more: Array[CityOccluders.Bld], view_px: Rect2
-) -> void:
-	for b: CityOccluders.Bld in more:
-		if b.area.intersects(view_px):
-			blds.append(b)

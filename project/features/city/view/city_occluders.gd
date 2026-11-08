@@ -18,6 +18,9 @@ var _cache: Dictionary[int, Array] = {}
 ## Each cached list's building positions (px), in list order: near() scans these packed values and
 ## touches a Bld only on a hit (reading b.at off ~300 objects a rig was ~50 us a rig a frame).
 var _ats: Dictionary[int, PackedVector2Array] = {}
+## Each cached list's ground rects as (left, right, bottom) px triples, in list order: near()'s
+## body filter reads these instead of the Bld (the drawn area shares the rect's x-span and bottom).
+var _box: Dictionary[int, PackedFloat32Array] = {}
 var _rect_at: Rect2 = Rect2()
 var _rect_list: Array[Bld] = []
 var _rect_rev: int = -1
@@ -37,8 +40,10 @@ func _init(lift: ChunkLift, res: CityResidency = null) -> void:
 	_res = res
 
 
-## The buildings of the resident chunks around a ground point (m), with their drawn areas.
-func near(at_m: Vector2) -> Array[Bld]:
+## The buildings of the resident chunks around a ground point (m), with their drawn areas. With a
+## body box (px), only those whose drawn area can meet it: the x-spans overlap and the building's
+## ground line is not above the box's top (any other building's area misses the box at every lift).
+func near(at_m: Vector2, body: Rect2 = Rect2()) -> Array[Bld]:
 	var out: Array[Bld] = []
 	var keys: Dictionary[Vector2i, bool] = {}
 	for d: Vector2 in [Vector2(-16, -4), Vector2(16, -4), Vector2(-16, 28), Vector2(16, 28)]:
@@ -47,16 +52,25 @@ func near(at_m: Vector2) -> Array[Bld]:
 	for key: Vector2i in keys:
 		var chunk: CityChunk = _res.chunk_at(key) if _res.is_resident(key) else null
 		if chunk != null:
-			collect(chunk, at_m * SimConst.PX_PER_M, out)
+			collect(chunk, at_m * SimConst.PX_PER_M, out, body)
 	return out
 
 
-## Appends chunk's buildings within REACH_M of near_px, their drawn areas at today's lift.
-func collect(chunk: CityChunk, near_px: Vector2, out: Array[Bld]) -> void:
+## Appends chunk's buildings within REACH_M of near_px (and meeting body, when it has an area: see
+## near), their drawn areas at today's lift.
+func collect(chunk: CityChunk, near_px: Vector2, out: Array[Bld], body: Rect2 = Rect2()) -> void:
 	var reach: float = REACH_M * SimConst.PX_PER_M
 	var list: Array[Bld] = of_chunk(chunk)
-	var ats: PackedVector2Array = _ats[chunk.get_instance_id()]
+	var id: int = chunk.get_instance_id()
+	var ats: PackedVector2Array = _ats[id]
+	var box: PackedFloat32Array = _box[id]
+	var band: bool = body.has_area()
+	var x0: float = body.position.x
+	var x1: float = body.end.x
+	var top: float = body.position.y
 	for k: int in ats.size():
+		if band and (box[k * 3 + 1] < x0 or box[k * 3] > x1 or box[k * 3 + 2] < top):
+			continue
 		var at: Vector2 = ats[k]
 		if absf(at.x - near_px.x) > reach or absf(at.y - near_px.y) > reach:
 			continue
@@ -106,9 +120,11 @@ func of_chunk(chunk: CityChunk) -> Array[Bld]:
 	if _cache.size() >= CACHE_MAX:
 		_cache.clear()
 		_ats.clear()
+		_box.clear()
 		_rect_at = Rect2()  # the candidates came from the dropped lists: list them again
 	var list: Array[Bld] = []
 	var ats: PackedVector2Array = PackedVector2Array()
+	var box: PackedFloat32Array = PackedFloat32Array()
 	for k: int in chunk.command_count():
 		var t: int = chunk.tex[k]
 		var o: int = k * CityChunk.XF_STRIDE
@@ -123,9 +139,20 @@ func of_chunk(chunk: CityChunk) -> Array[Bld]:
 		list.append(b)
 		@warning_ignore("return_value_discarded")
 		ats.append(b.at)
+		for v: float in [b.r.position.x, b.r.end.x, b.r.end.y]:
+			@warning_ignore("return_value_discarded")
+			box.append(v)
 	_cache[id] = list
 	_ats[id] = ats
+	_box[id] = box
 	return list
+
+
+## Appends the extra occluders whose drawn area meets the view to `blds` (a fresh in_rect array).
+static func merge_extra(blds: Array[Bld], more: Array[Bld], view_px: Rect2) -> void:
+	for b: Bld in more:
+		if b.area.intersects(view_px):
+			blds.append(b)
 
 
 ## Cached chunks (for the tests and the probe).
