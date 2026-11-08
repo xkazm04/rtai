@@ -1,0 +1,19 @@
+{
+  "schema": "pof.godot-evidence/1",
+  "kind": "unit-tests",
+  "gameId": "gtai",
+  "commit": "b0f1024e24d42d8bdda2eb04e7d3e03a24784f9d",
+  "builtAt": "2026-11-08T02:34:25.550Z",
+  "godotVersion": "4.7.2.stable.official.ed1daf0bf",
+  "status": "pass",
+  "summary": "unit-tests: 1830 passed, 0 failed, 0 skipped (GUT, headless)",
+  "counts": {
+    "passed": 1830,
+    "failed": 0,
+    "skipped": 0
+  },
+  "artifacts": [
+    "unit-tests.junit.xml",
+    "unit-tests.log"
+  ]
+}
