@@ -25,7 +25,8 @@
         "2026-11-07: d9 merge: perf + handheld bench growth combined (each accepted on its lane) (dev_loc 19123 -> 19147)",
         "2026-11-08: n9 world item 3: dev/showcase/car_knock_clip (the car knock-down's filmed evidence on the real city, bodies_clip's pattern) (dev_loc 19147 -> 19325)",
         "2026-11-08: n9 world item 4 evidence clip dev/showcase/dead_wall_clip (dev-only, the car_knock_clip pattern: one cmdline read, ~190 dev lines) (dev_loc 19325 -> 19514)",
-        "2026-11-08: dev/frames: quest1_clip --cam=dead (n9 world it22), a capture camera for Dock 9 at 64 px/m (item 2 evidence) (dev_loc 19514 -> 19571)"
+        "2026-11-08: dev/frames: quest1_clip --cam=dead (n9 world it22), a capture camera for Dock 9 at 64 px/m (item 2 evidence) (dev_loc 19514 -> 19571)",
+        "2026-11-08: dev/frames: quest_dead_cam heap anchor + ease (n9 world it22), Dock 9 64 px/m capture (dev_loc 19571 -> 19591)"
       ],
       "files": {
         "project/dev/arena": 708,
@@ -34,7 +35,7 @@
         "project/dev/bench": 1684,
         "project/dev/bots": 399,
         "project/dev/enemy_ai": 662,
-        "project/dev/frames": 524,
+        "project/dev/frames": 544,
         "project/dev/ghost-forms": 616,
         "project/dev/ghost-powers": 1137,
         "project/dev/gunplay": 674,
@@ -56,7 +57,7 @@
         "project/dev/view": 195,
         "project/dev/weapon_art": 506
       },
-      "total": 19571
+      "total": 19591
     },
     "direct_cmdline_reads": {
       "accepted": [
