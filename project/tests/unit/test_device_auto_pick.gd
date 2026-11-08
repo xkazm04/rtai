@@ -47,6 +47,14 @@ func test_the_rog_ally_and_the_legion_go_family_pick_their_row() -> void:
 	assert_eq(DeviceProfile.auto_pick("", Vector2i(1920, 1200), "83N1"), "handheld_1080", "Go 2")
 
 
+func test_the_rog_xbox_ally_family_picks_its_row() -> void:
+	# n10 it13: full product names from HHD's comments on its DMI match (LEDGER section 9)
+	var fhd: Vector2i = Vector2i(1920, 1080)
+	assert_eq(DeviceProfile.auto_pick("", fhd, "ROG Xbox Ally RC73YA_RC73YA"), "handheld_1080")
+	assert_eq(DeviceProfile.auto_pick("", fhd, "ROG Xbox Ally X RC73XA_RC73XA"), "handheld_1080")
+	assert_eq(DeviceProfile.auto_pick("", fhd, "ROG XBOX Ally X RC74XA RC74XA"), "handheld_1080")
+
+
 func test_a_type_number_only_matches_the_whole_name() -> void:
 	for model: String in ["83E1ABCDEF", "X83E1", "83e1", "83E"]:
 		assert_eq(DeviceProfile.model_row(model), "", model)
