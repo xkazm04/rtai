@@ -48,8 +48,7 @@ var _pending: Array[Vector4] = []
 var _named: Dictionary[int, Vector2] = {}
 var _k: int = 0
 var _tick: int = 0
-## `walkers` sorted by x, once a step (StainCover's window search, perf L23).
-var _by_x: PackedVector2Array = PackedVector2Array()
+var _by_x: PackedVector2Array = PackedVector2Array()  # walkers sorted by x a step (L23)
 
 
 ## One body's stains, drawn once (local px around the body's centre).
@@ -109,12 +108,14 @@ func step(tick: int, feed: RigFeed) -> void:
 	var t0: int = Time.get_ticks_usec()
 	var dead: Dictionary[int, Vector2] = {}
 	walkers.clear()
+	var flags: PackedByteArray = feed.flags  # locals: a member lookup a step, not a row (L25)
+	var pos: PackedVector2Array = feed.pos
 	for i: int in feed.count:
-		if (feed.flags[i] & RigFeed.Flag.DEAD) != 0:
-			dead[feed.ids[i]] = feed.pos[i]
+		if (flags[i] & RigFeed.Flag.DEAD) != 0:
+			dead[feed.ids[i]] = pos[i]  # the few dead rows only
 		else:
 			@warning_ignore("return_value_discarded")
-			walkers.append(feed.pos[i])
+			walkers.append(pos[i])
 	step_bodies(tick, dead)
 	spent_us += Time.get_ticks_usec() - t0
 	steps += 1

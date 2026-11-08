@@ -65,3 +65,24 @@ func test_step_sorts_the_walkers_it_measures() -> void:
 	)
 	assert_eq(stains.walkers[0], Vector2(300, 5), "the host's walkers keep their order")
 	stains.free()
+
+
+func test_step_reads_the_living_rows_as_walkers_and_soaks_the_dead() -> void:
+	var stains: CorpseStains = CorpseStains.new(4)
+	var feed: RigFeed = RigFeed.new(8)
+	var want: PackedVector2Array = PackedVector2Array()
+	for r: int in 6:
+		var at: Vector2 = Vector2(40.0 * r, 7.0 * r)
+		var i: int = feed.put(r, 10 + r, BodyPlan.Kind.PED, at, Vector2.ZERO)
+		if r % 3 == 1:
+			feed.flags[i] = RigFeed.Flag.DEAD
+		else:
+			@warning_ignore("return_value_discarded")
+			want.append(at)
+	feed.count = 6
+	stains.on_bled(Vector2(42, 8), Vector2.RIGHT)
+	stains.step(5, feed)
+	assert_eq(stains.walkers, want, "every living row, in feed order")
+	assert_eq(stains.soaked, 1, "the death found the dead row 1 (id 11)")
+	assert_eq(stains.nearest_soak(Vector2.ZERO), Vector2(40, 7))
+	stains.free()
