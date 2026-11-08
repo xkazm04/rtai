@@ -16,12 +16,13 @@ extends RefCounted
 ## speed. RUN_CYCLE_CELL (it5): in the grid's profile rows the stance foot moves 62-67 cell px from
 ## contact to push-off, two frame steps, so one frame step = ~32 cell px of ground and a cycle 8 x
 ## that (it4 wired 136 = the travel per half cycle: the legs churned 1.9x, the foot slid back).
+## it6: p55 measured the same way: ~53 cell px over two steps, 26.5 a step, a cycle of 212.
 
 const STRIP: String = "rivet_walk8.png"
 const STRIP4: String = "rivet_walk.png"
 const ARMED: String = "rivet_walk_eq_"
 const RUN: String = "rivet_run8.png"
-const RUN_CYCLE_CELL: Dictionary[String, float] = {"p70": 258.0}
+const RUN_CYCLE_CELL: Dictionary[String, float] = {"p70": 258.0, "p55": 212.0}
 const RUN_FROM_MPS: float = 2.5
 const MAX_RUN_CYCLES_S: float = 3.5
 const ROWS: int = 8

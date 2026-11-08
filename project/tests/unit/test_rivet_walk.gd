@@ -115,3 +115,12 @@ func test_the_run_cycle_is_the_drawn_stance_travel_per_frame_step() -> void:
 	assert_between(step_cell, 31.0, 34.0)
 	var cycle_m: float = RivetWalk.RUN_CYCLE_CELL["p70"] / RivetFrames.FIG_PX * RivetFrames.HEIGHT_M
 	assert_lt(6.75 / cycle_m, RivetWalk.MAX_RUN_CYCLES_S, "the run's cadence is under the cap")
+
+
+func test_every_run_strip_has_a_measured_cycle() -> void:
+	# n9 it6: the p55 run (row 4 served): its profile stance foot moves ~53 cell px over two steps
+	for art: String in ["p70", "p55"]:
+		assert_true(ResourceLoader.exists(RivetStrips.DIR + art + "/" + RivetWalk.RUN), art)
+		var cycle: float = RivetWalk.RUN_CYCLE_CELL.get(art, 0.0)
+		assert_gt(cycle, 0.0, art + ": a run cycle")
+	assert_between(RivetWalk.RUN_CYCLE_CELL["p55"] / 8.0, 25.0, 28.0)
