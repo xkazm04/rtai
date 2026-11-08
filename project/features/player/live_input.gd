@@ -31,6 +31,10 @@ var _latched: int = 0
 
 func _init(p_actions: PlayerActions) -> void:
 	actions = p_actions
+	# n9-handheld: a handheld row starts pad-first (its pad is the device): the title card eats the
+	# pad's first press before a session's input exists, so the first prompt named the keys.
+	pad_last = DeviceProfile.shared().is_handheld()
+	mouse_aims = not pad_last
 
 
 func sample(_tick: int) -> TickInput:
