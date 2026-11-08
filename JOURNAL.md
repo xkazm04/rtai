@@ -450,9 +450,9 @@ hide CityBlood.stains and look; then the rig's wound nodes under HumanReact / Bl
 - READ journals: rivet it7 landed the drawn knock-down on `rivet_knock` (RivetKnock, filmed on a scratch merge with
   this branch: no REQUEST to world; it reads the meta as specified); perf / handheld: no REQUEST to world.
 - Plan: NEXT 1 (which node draws the red clumps on a plan-pose corpse; move it to the rest pelvis), then film.
-- (05:20-05:40) NEXT 1 (the stain clumps) re-judged on it13's own 64 px/m crop: the red clumps sit on the dead
+- (05:12-05:15) NEXT 1 (the stain clumps) re-judged on it13's own 64 px/m crop: the red clumps sit on the dead
   riot cops' belts (the pelvis), not at the feet: no defect worth a change; dropped.
-- FOUND (05:40) filming item 2 at quest 1 Dock 9 (`dev/frames/quest1_clip.gd --rigs --view=tilt70 --stills=13800`,
+- FOUND (05:20) filming item 2 at quest 1 Dock 9 (`dev/frames/quest1_clip.gd --rigs --view=tilt70 --stills=13800`,
   32 px/m): **the dock contractors still lie "like in the bed"**: every dead contractor is the same straight
   forward-fallen frame, heads one way, three in a row on the crossing. Cause (a probe log in StreetDeadPlan.draw:
   0 calls in quest 1): quest 1's contractors are not rigs; `QuestGuardCast` keeps them on the cast view, where
@@ -461,13 +461,13 @@ hide CityBlood.stains and look; then the rig's wound nodes under HumanReact / Bl
   most-seen death scene, so this is item 2's biggest remaining gap.
   The before from 98a04b79 in the scratch worktree is unusable (the old commit's city did not stream: bare sand,
   quest stuck at 2/6 with the n9 DLLs); befores now come from the same build with the toggle off.
-REQUEST to assets: dead_plan_contractor (pitch "plan", straight down, flat on the ground; one sheet serves 70 and
+REQUEST to assets: dead_plan_v1_contractor (cells as `keyed/street/dead_plan_v1_contractor_cells/` like the 13; pitch "plan", straight down, flat on the ground; one sheet serves 70 and
 55): quest 1's dock contractor (keyed `street/contractor_70.png` A is the by-example source: the vermilion hard
 hat with the taped flashlight, moustache, vermilion hi-vis vest with cream bands, violet-black fatigues) in the
 same 5 lying poses and cut as the delivered dead_plan_v1 sheets (A face-down crumple, B on the back spread and
 broken, C side curl, D twisted sprawl, E legs folded under, torso fallen sideways; 384 px cells, the 269 px
-longest-pose rule, pelvis at the cell centre, head toward the top, transparent ground, no blood; his rifle (the one in
-contractor_70) lies flat on the ground a hand's width from the nearer hand, inside the cell: the corpse is drawn as
-one cell, the game has no separate dropped-rifle sprite for him). The pudgy build stays pudgy (do not slim him to the walkers).
+longest-pose rule, pelvis at the cell centre, head toward the top, transparent ground, no blood, NO rifle in the hands
+(corrected 05:26: the game already draws each dead contractor's dropped rifle on the ground beside him; a wiring
+check with a stand-in strip showed it, so a drawn rifle would double it). The pudgy build stays pudgy (do not slim him to the walkers).
 Why: Dock 9 (quest 1, the most-seen fight) still lays every dead contractor as one straight frame, heads one way
 (`gtai-masters/n9/world/` dock9 still to come); the owner's verdict "they lay down like in the bed now".
