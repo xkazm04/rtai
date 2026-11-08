@@ -16,8 +16,10 @@ whose muzzle could be measured -> [x, y] px from the cell's top-left (unmirrored
 - The cone weapon's facing cells (FACE_WEAPONS, cells 0-4): the flamer fires from its facing
   cells off the side and camera octants (RivetFrames), so its game jet must leave the drawn wand.
   The wand points right in all five drawn facings: the rightmost px in FACE_BAND (the nozzle ring).
-  Other holds are drawn every which way in their facings (the pistol at image left in cell 0): no
-  facing point, they fire from their fire cells.
+- n10: a gun's facing cells where it fires off its fire cell's tolerance (RivetStrips.GUN_TOL) and
+  the drawn gun points right (GUN_FACE_CELLS: cell 3 at 7 and 5 mirrored, cell 4 straight up, cell 1
+  for GUN_FACE_TOWARD only): the rightmost px of the arm band, so the flash leaves the gun instead
+  of the helmet. The one-handers' cell 1 draws the gun at image left: no point, the fallback spot.
 - A swing with no drawn arc (STRIKE_TIP): its side strike cell's (5) tip, the smear's reach.
 - A one-handed hold's drawn left strip (cells 0-2): the gun points left, so the muzzle is the
   leftmost opaque pixel in the arm band (ARM_BAND of the figure height, below the helmet).
@@ -42,6 +44,18 @@ SCHEMA = "gtai.rivet-muzzle/1"
 FIRE_CELLS = (5, 6)
 FACE_CELLS = (0, 1, 2, 3, 4)
 FACE_WEAPONS = ("flamethrower",)
+GUN_FACE_CELLS = (3, 4)
+GUN_FACE_ONE_HAND = ("pistol", "machine_pistol", "hand_cannon", "ray_gun", "homing_shard")
+GUN_FACE_TOWARD = (
+    "electro_gun",
+    "gloria",
+    "plasma_rifle",
+    "gatling",
+    "rocket_launcher",
+    "mini_nuke",
+)
+## The gatling's back view hides the gun behind him: the arm band's right tip is a hose.
+GUN_FACE_HIDDEN = {("gatling", 4)}
 ## The p70 wand is held low (the nozzle at ~0.8 of the figure in the three-quarter facings).
 FACE_BAND = (0.38, 0.86)
 EQ_CELLS = 8
@@ -131,6 +145,12 @@ def left_point(cell):
     return [x, int(y0 + col.mean())]
 
 
+def gun_face_cells(weapon):
+    cells = GUN_FACE_CELLS if weapon in GUN_FACE_ONE_HAND + GUN_FACE_TOWARD else ()
+    cells = (1,) + cells if weapon in GUN_FACE_TOWARD else cells
+    return tuple(c for c in cells if (weapon, c) not in GUN_FACE_HIDDEN)
+
+
 def im_w(out_dir, art, name):
     return Image.open(f"{out_dir}/{art}/{name}.png").size[0]
 
@@ -156,13 +176,14 @@ def measure(out_dir, strips):
             n = LEFT_CELLS if left else EQ_CELLS
             w = im.shape[1] // n
             cells = {}
-            face = FACE_CELLS if name[9:] in FACE_WEAPONS else ()
+            flamer = name[9:] in FACE_WEAPONS
+            face = FACE_CELLS if flamer else gun_face_cells(name[9:])
             for c in range(LEFT_CELLS) if left else face + FIRE_CELLS:
                 cell = im[:, c * w : (c + 1) * w]
                 if left:
                     p = LEFT_PINNED.get((art, name, c)) or left_point(cell)
                 elif c in face:
-                    p = shape_point(cell, 5, FACE_BAND)  # the wand's nozzle
+                    p = shape_point(cell, 5, FACE_BAND if flamer else ARM_BAND)  # the nozzle
                 else:
                     p = fire_point(cell, c) or shape_point(cell, c)
                 if p is not None:
@@ -226,7 +247,7 @@ def main(argv):
     doc = (
         "d9 rivet: the muzzle point of Rivet's drawn strip cells, measured by "
         "tools/art/rivet_muzzle.py (px from the cell's top-left, unmirrored). The flamer's facing "
-        "cells 0-4: the wand's nozzle; fire cells 5/6: the drawn flash's root; a one-handed left strip's cells 0-2: the gun's left tip. RivetMuzzle "
+        "cells 0-4: the wand's nozzle; a gun's facing cells 1/3/4: its right tip; fire cells 5/6: the drawn flash's root; a one-handed left strip's cells 0-2: the gun's left tip. RivetMuzzle "
         "publishes it as HeldMuzzle while the drawn figure carries the weapon; a cell without a "
         "point keeps the caller's fallback spot."
     )
