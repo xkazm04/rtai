@@ -263,3 +263,40 @@ near its 12 px recommendation** (static read only; owed: a runtime probe over ev
 - **h-5 A, the Linux depot:** DECISION `handheld/linux-depot`: a native Linux depot (sniper-runtime `.so`), Proton
   (the Windows build) as the fallback. **Re-check trigger: a real Vulkan run on a Deck or a Linux PC.** Until then
   both exports exist (`linux-slice`, `windows-showcase`) and nothing on Steam is set up.
+- **h-3 B, the compact ghost-form card (handheld rows only):** `devices.json` `hud: compact` -> `GhostFormLayout.compact()`
+  (chips r 19 at a 50 px pitch, margin 22, card 120 px, Madness bar 9 px, one name: the selected ghost's; the faces
+  name the rest). Four ghosts at 1280x800, with the memo paper: **~386x208 px (30 % of the width x 26 % of the height)
+  -> ~250x170 px (20 % x 21 %)**, about half the area. **Legibility, measured on the still** (zoomed crop): the name's cap
+  height ~13-14 px at the unchanged 18 px font = ~1.5 mm on the Deck's 7-inch panel (216 ppi); Valve's Deck Verified
+  text guidance (as read in section 1): at least 9 px, 12 px recommended at 1280x800: above both. Chips 38 px across
+  (current 45 px) = 4.4 / 5.2 mm. Stills (the King, iGPU, 40 px/m, t=18 s, `deck_hud_full` left = before, `deck` right):
+  `gtai-masters/n9/handheld/ghostpanel-king-deck-before-after-40ppm-1280x800.png`. The way back: `hud: full` (study row
+  `deck_hud_full`). Desktop untouched (the full layout = the authored constants, `test_ghost_form_layout`).
+- **The drawn pad glyphs** (`ui_pad_glyphs_v1`, the asset lane's it98 delivery, 36 cells): `PadGlyphArt` replaces the
+  bracketed pad names on the handheld rows: the quest 1 objective prompt (glyphs 1.4x the 24 px text = 34 px = 4 mm),
+  the title and pause cards' controls line (30 px images in a RichTextLabel), and the ghost card's key hint (LB / RB from
+  the InputMap, 25 px). PlayStation / Nintendo-layout names map to their own cells (Cross, L1, ZR, ...). Stills from a
+  pad-only walk (`evidence/n9h/it1/padwalk/`): `glyphs-deck-title-1280x800.png`, `glyphs-deck-pause-1280x800.png`,
+  `glyphs-deck-quest1-prompt-40ppm-1280x800.png`, `glyphs-deck-title-and-prompt-crop-x2.png`. Steam Input origin glyphs
+  still owed with the Steam port (a remapped pad).
+- **Clips at 40 px/m on the iGPU** (movie mode: frame numbers are not speed numbers): `deck-city-40ppm-1280x800-igpu.mp4`,
+  `deck-king-40ppm-compact-1280x800-igpu.mp4`.
+- **E16 (n9 it1), the Deck row on world's BC7 commit** (n9-world 3e02d3b8, BC7 on 772 imports, in a detached scratch
+  worktree under my tmp; its `devices.json` set to `zoom_k` 1.25 locally so both arms frame at 40 px/m) vs this branch
+  (lossless). `sim.mjs --device=deck --scene=city --ticks=1200`, 2 interleaved rounds per arm, the iGPU, 8 pinned
+  threads; **CONTENDED** (3-6 other Godot runs up, no bench lock: memory is trustworthy, the ms are indicative).
+  Confound: world's commit also turns sim bikes on at 6 % (more vehicles in the BC7 arm, so its savings are if anything
+  understated).
+
+  | metric | lossless r1 / r2 | BC7 r1 / r2 | change (median of 2) |
+  |---|---|---|---|
+  | frame p50 (vsync 60) | 16.65 / 16.69 ms | 16.65 / 16.66 ms | locked both |
+  | frame p99 | 19.3 / 19.9 ms | 20.0 / 19.9 ms | noise |
+  | render GPU p50 | 8.69 / 8.78 ms | 7.84 / 7.65 ms | **-11 %** |
+  | render GPU p95 | 9.45 / 9.40 ms | 8.64 / 8.04 ms | -11 % |
+  | GPU shared memory max | 1119 / 1118 MB | 568 / 601 MB | **-48 % (-534 MB)** |
+  | private RAM max | 1493 / 1494 MB | 1213 / 1055 MB | -24 % (wide spread) |
+  | pinned CPU p50 | 6.7 / 6.9 % | 6.3 / 5.8 % | noise |
+
+  Kept (world's change, the owner's p-1 B): on a 16 GB shared-memory Deck the city fits in about half the GPU memory
+  and the iGPU has ~1 ms more headroom. JSONs: `evidence/n9h/it1/bc7/`. Re-take under the bench lock once main has it.
