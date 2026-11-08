@@ -527,3 +527,9 @@ NOTE: use the arena's Z zoom key or a camera flag) is still owed, after NEXT 1 (
   with `--resolution 1920x1080`), so no usable frame. Raw .avi deleted. For it17: the arena's `--cam=fight`-style
   lead does not exist here; use a melee loadout (the bot closes in) or a scratch camera offset toward the
   nearest dead.
+
+## it19 (2026-11-08 05:59-06:59) BUILD
+(it17 / it18 left no entries; resuming from it16's NEXT.)
+- READ journals: rivet / perf / handheld: no new REQUEST to world. Assets it131 DELIVERED
+  `dead_plan_v1_contractor` (round 20261108-0640, prompt_hash f3627a126e86, grade B: pose D reads as a second
+  face-down). Plan: NEXT 1 (wire it, film Dock 9 after at 32 + 64), then the freeze prep.
