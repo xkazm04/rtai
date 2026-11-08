@@ -399,7 +399,7 @@ budget, the one site to lift on a 720p row is that count (16 -> 18 px authored, 
 | device | state on the simulator | the next step a port needs | only real hardware can prove | effort |
 |---|---|---|---|---|
 | Steam Deck | **plays end to end on the pad at 1280x800**, 40 px/m, vsync-locked 60 on the 2-CU iGPU with ~7 ms spare (render GPU 7.7 ms, 0.6 GB GPU memory, ~1 GB RAM with world's BC7, E20/E20b); text above Valve's 9 px; native Linux build runs in WSLg | a real Vulkan run of the Linux build (or the Windows build under Proton); vendoring GodotSteam (the Deck check and the glyph call are stubbed behind the interface, one call each, n10) | Zen 2 frame times at 4-15 W, battery hours, the first-run shader cache, suspend on SteamOS, the 90 Hz OLED | Linux + Proton check 2-3 days; Verified polish 3-5 days |
-| Windows handhelds | the Deck work applies (`handheld_1080` is a handheld row); 1080p drawn at 1280x800 and scaled holds 60 at 9.9 ms GPU (E9); text x >= 12 px; 19 firmware strings from public tables pick the row by themselves (ROG Ally and Ally X, Legion Go / Go S / Go 2, AYANEO, AYN, GPD, OneXPlayer, section 9) | the firmware strings of the MSI Claw line and the ROG Xbox Ally (one device each, or a DMI dump); a controller-first shell (launch and play with no mouse); Windows display scaling 125-200 % | the Z1 / Z2 / Lunar Lake drivers, VRR, TDP presets, the 1.35x scale-up on a 7-8" panel | 1-2 days on top of the Deck |
+| Windows handhelds | the Deck work applies (`handheld_1080` is a handheld row); 1080p drawn at 1280x800 and scaled holds 60 at 9.9 ms GPU (E9); text x >= 12 px; 22 firmware strings from public tables pick the row by themselves (ROG Ally and Ally X, Legion Go / Go S / Go 2, AYANEO, AYN, GPD, OneXPlayer, section 9) | the firmware strings of the MSI Claw line and the ROG Xbox Ally (one device each, or a DMI dump); a controller-first shell (launch and play with no mouse); Windows display scaling 125-200 % | the Z1 / Z2 / Lunar Lake drivers, VRR, TDP presets, the 1.35x scale-up on a 7-8" panel | 1-2 days on top of the Deck |
 | Switch-class | a **budget only** (`switch_handheld`: 1280x720, 30 cap, 3 threads, the iGPU): the 30 cap holds; the city 1.38 GB with BC7 (E11) | everything: the platform holder's developer program, a kit, an engine port for 4.7, CitySim for aarch64 | all of it (an A57-class core is the CPU risk) | 3-6 months per platform; $800-$10,000/yr middleware + kits under NDA |
 
 ### Steam Deck
@@ -446,7 +446,7 @@ config, suspend / resume on SteamOS, the 90 Hz OLED panel.
 
 ### Windows handhelds
 
-Works: a listed firmware model picks `handheld_1080` by itself and opens fullscreen (section 9: 19 strings from public tables; the
+Works: a listed firmware model picks `handheld_1080` by itself and opens fullscreen (section 9: 22 strings from public tables; the
 MSI Claw line and the ROG Xbox Ally are not); every handheld-row change applies to `handheld_1080` (40 px/m, the compact card, the drawn glyphs); the 1080p
 screen drawn at 1280x800 and scaled (stretch `viewport`) holds 60 at 9.9 ms GPU where the native 1080 draw misses at
 16.1 ms (E9); the 16:9 drawn frame is 1422x800 and the HUD fits (it10 still); texts measure x >= 12 px at 1080.

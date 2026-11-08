@@ -5,20 +5,21 @@ Branch `n10-handheld`, cut from main 9bbe6d0a, with `n10-world` aadc7430 merged 
 ## What works (with evidence)
 
 1. **The rows on the new main, with lane world's walls.** Re-run after the merge: the director reel in combo, headless, under `--device=deck`, `deck40`, `handheld_1080`, `switch-handheld`: 19 of 19 chapters fully down on every row, 0 SCRIPT ERROR (`evidence/n10h/it5/reel/`). I stopped the four runs about 10 minutes after their last chapter, so **no exit code was observed**. Windowed city in combo on the iGPU on all four rows, exit 0 (`evidence/n10h/it5/sim/`, LEDGER E22). The walls read as two whole storeys with the grey print kept, at 32, 40 and 64 px/m on the Deck row and at 40 on `handheld_1080` (stills looked at; `frames.json`).
-2. **Windows handheld model strings.** 19 strings on `handheld_1080` from public tables, each source named in LEDGER section 9. New tonight: the ROG Ally (`ROG Ally RC71L`) and the Legion Go, Go S and Go 2 (Lenovo's type numbers, in a new whole-name list `models_exact`). Tested in `test_device_auto_pick`. None confirmed on a device.
+2. **Windows handheld model strings.** 22 strings on `handheld_1080` from public tables, each source named in LEDGER section 9. New tonight: the ROG Ally (`ROG Ally RC71L`), the Legion Go, Go S and Go 2 (Lenovo's type numbers, in a new whole-name list `models_exact`) and the ROG Xbox Ally family (three substrings of the product name, one public source: HHD's DMI match). Tested in `test_device_auto_pick`. None confirmed on a device.
 3. **The Steam checks, as far as they go with no Steam app.** `Platform.hardware()` is the auto-pick's first check, and the prompts now ask `SteamGlyphs.texture()` first, so one backend line is the whole glyph swap (`test_steam_glyphs`: a fake backend returning a real PNG swaps the glyph; no path or a bad path keeps the drawn one). The GodotSteam method names in the comments are now read from 4.24's source. Nothing has run against Steam.
 4. **The research loop and the port readiness table.** Table updated (LEDGER section 7). The loop stopped by the brief's rule: Windows display scaling and the controller-first shell both give nothing this simulator can measure (LEDGER section 9).
 
-Gates on this work, head 0822e5cc: the lint hook passed on the commit. The director reel in top, tilt70 and combo, `--quit-after 40000`: 19 of 19 chapters fully down, 0 SCRIPT ERROR, **exit 0 observed on all three** (`evidence/n10h/it9/reel/`). Each log carries two engine lines marked ERROR, neither a script error: a shader-compiler condition raised from `kill_char_fx.gd:189` (also in the it5 Deck reel) and "90-91 resources still in use at exit". Lint 15 / 15 and full unit 1971 passed, 0 failed, 371 files (`build/evidence/unit-tests.junit.xml`, this run). Mutation on `steam_glyphs.gd` at 0822e5cc: 4 mutants, 2 killed, 0 survived, **2 undecided** (both on line 26, the unreadable-image guard, timed out at 300 s on the loaded machine). The tool prints 100 %, which counts only the 2 decided. **The evidence run (`node tools/evidence/run.mjs --no-bench`) on 0822e5cc passed lint and unit, then was stopped at its 40-minute limit while re-judging `rig_stress`: scenarios, parity and release-compile have no verdict on this head and are owed.**
+Gates on the head of the code, **bc26203a** (it13): `node tools/evidence/run.mjs --no-bench` exit 0: lint 15 / 15, full unit 1972 passed / 0 failed, scenarios 55 passed, parity bit for bit over 1200 steps with the planted mutation caught, selftest, release-compile 632 loaded / 0 failed (`evidence/n10h/it13/evidence-bc26203a.log`). The director reel in top, tilt70 and combo, `--quit-after 40000`: 19 of 19 chapters fully down, 0 SCRIPT ERROR, **exit 0 observed on all three** (`evidence/n10h/it13/reel/`). Engine ERROR lines in those logs, none a script error: the shader-compiler condition from `kill_char_fx.gd:189`, the resources-at-exit count, and on the combo reel two `triangulation failed` lines from `rig_cast_shadows.gd:48` (see below). The bench was not part of this run. Mutation on `steam_glyphs.gd` at bc26203a, `--tests=test_steam_glyphs`: 4 mutants, 3 killed, 0 survived, **1 timeout** (line 26, `or -> and`, 351 s; the tool's 100 % counts only the 3 decided, so it is not a score for that mutant).
 
 ## What does not work yet
 
 - **E22's `handheld_1080` miss in the city (p50 27 ms, one run, 9 other Godot processes) did not reproduce.** The interleaved A/B (E22b, 4 runs per arm, 1 to 6 other Godot runs, `evidence/n10h/it13/sim/`): pre-merge a1c1edfd and head both hold 60 (p50 16.68 ms each). Contention fits the old miss but is not proven: no run here went past 6 others.
 - **The storeys' cost on `handheld_1080`, measured:** render GPU +0.19 ms (median 8.65 -> 8.84, every head run above every pre run, draws 623 on both), about 1 % of the frame, on the PC simulator, CONTENDED. This prices `aadc7430`'s storeys only: `height_k` is 0.5 on both arms, so half height against full height stays unmeasured here.
 - **The quest 1 freeze on a handheld row:** 0 frozen in 8 runs on each arm of the enabled / mailbox A/B (one round short of the plan). That is a small sample. The rows keep `vsync: enabled` (DECISION `handheld/rows-keep-vsync`).
-- **The MSI Claw line and the ROG Xbox Ally do not pick their row:** only board names are public.
+- **The MSI Claw line does not pick its row:** only board names are public (HHD matches them on the board too).
+- **A cast shadow can fail to draw for a frame (not this lane's code, not fixed here):** `rig_cast_shadows.gd:48` hands `draw_colored_polygon` a polygon the engine cannot triangulate: `Invalid polygon data, triangulation failed` twice in the combo reel at bc26203a (0 at 0822e5cc), 3 and 1 in the it5 `handheld_1080` and `switch-handheld` reels, intermittent. It is an engine ERROR line, not a SCRIPT ERROR, so the gates do not catch it. Cause not looked into; the figure's hip height near zero is a guess.
 - **The rich-text card keeps the drawn glyphs** when Steam's would show in the prompts: a remapped pad would see both.
-- The ESteamHardwareType numbers 0-3 are not confirmed: GodotSteam's source binds the names in that order, not the values.
+- The ESteamHardwareType numbers 0-3 are read from Steamworks.NET's enums generated from the SDK headers, a mirror, and have not run against Steam.
 
 ## What blocked, and for how long
 
@@ -32,6 +33,7 @@ Gates on this work, head 0822e5cc: the lint hook passed on the commit. The direc
 
 ## Next steps
 
-- Read the evidence run on 0822e5cc; the exe at the freeze.
+- The exe at the freeze.
+- The shadow polygon in `rig_cast_shadows.gd:48`: guard or fix the degenerate figure, in whichever lane owns the cast shadow.
 - Merge `n10-world` again if it lands more wall work (none since aadc7430: pole shadows and corpses).
-- One DMI dump each for the MSI Claw line and the ROG Xbox Ally; the numeric hardware types against the SDK header when GodotSteam is vendored.
+- One DMI dump for the MSI Claw line; the numeric hardware types against the SDK header itself when GodotSteam is vendored.
