@@ -40,6 +40,17 @@ const DIAG: String = "_diag.png"
 const DIAG_CELLS: int = 4
 const DIAG_CELL: PackedInt32Array = [-1, 0, -1, 2, -1, 3, -1, 1]
 const DIAG_FOOT_PX: Dictionary[String, float] = {"p70": 35.0, "p55": 15.0}
+## n9 it10: the drawn flame's screen angle (deg, y down) in the fire cell each octant shows
+## (side 0 / 180, camera 90, the diagonal cells as drawn: measured by the yellow's long axis). A
+## burst whose aim is over FLAME_TOL off it keeps the facing cell and the game jet alone (one
+## flame): straight up there is no drawn flame (the side cell drew it sideways under an up jet).
+## --rivet-flame=all draws the fire cell at any aim (it9).
+const FLAME_DEG: Dictionary[String, PackedFloat32Array] = {
+	"p70/flamethrower": [0.0, 40.0, 90.0, 140.0, 180.0, -151.0, 0.0, -26.0],
+	"p55/flamethrower": [0.0, 35.0, 90.0, 144.0, 180.0, -159.0, 0.0, -20.0],
+}
+const FLAME_TOL: float = PI / 6.0
+static var flame_all: bool = false
 static var cone: Array[StringName] = []
 static var diag: bool = true
 static var _logged: Dictionary[StringName, bool] = {}
@@ -55,12 +66,16 @@ static func strip_of(art: String, weapon: StringName) -> String:
 	return eq if weapon != &"" and ResourceLoader.exists(eq) else base
 
 
-## `path`, or the weapon's drawn diagonal fire strip while a shot latches at a diagonal octant.
+## `path`, or the weapon's drawn diagonal fire strip while a shot latches at a diagonal octant
+## and its drawn flame lies along the aim (draws_fire; n9 it10).
 static func diag_or(rig: CutRig, art: String, weapon: StringName, path: String) -> String:
-	if not diag or weapon == &"" or cone.has(weapon) or DIAG_CELL[RivetFrames.oct_of(rig)] < 0:
+	var o: int = RivetFrames.oct_of(rig)
+	if not diag or weapon == &"" or cone.has(weapon) or DIAG_CELL[o] < 0:
 		return path
 	var d: String = DIR + art + "/rivet_eq_" + String(weapon) + DIAG
-	return d if fire_latched(rig) and ResourceLoader.exists(d) else path
+	if not fire_latched(rig) or not ResourceLoader.exists(d):
+		return path
+	return d if draws_fire(rig, weapon, o, true) else path
 
 
 ## A short strip's cell for octant `o`: a drawn left strip (3) or a diagonal fire strip (4).
@@ -110,16 +125,21 @@ static func fire_latched(rig: CutRig) -> bool:
 ## is up); a cone burst that went off its drawn flame stays on the facing cell to its end.
 static func draws_fire(rig: CutRig, weapon: StringName, o: int, firing: bool) -> bool:
 	var was_off: bool = rig.get_meta(CONE_OFF, false) == true
-	var off: bool = firing and (was_off or not fires_drawn(weapon, o, aim_of(rig)))
+	var aim: float = aim_of(rig)
+	var off: bool = firing and (was_off or not fires_drawn(weapon, o, aim, ViewMode.shared().art))
 	rig.set_meta(CONE_OFF, off)
 	return firing and not off
 
 
 ## The cone (the flamer) fires its drawn flame along the side and camera octants while the aim
 ## (NAN = the head's) is within CONE_TOL of it; else the facing cell fires (not two flames).
-static func fires_drawn(weapon: StringName, o: int, aim: float = NAN) -> bool:
+static func fires_drawn(weapon: StringName, o: int, aim: float = NAN, art: String = "") -> bool:
 	if not cone.has(weapon):
-		return true
+		var deg: PackedFloat32Array = FLAME_DEG.get(art + "/" + String(weapon), [])
+		if flame_all or is_nan(aim) or deg.is_empty():
+			return true
+		var drawn: float = deg[o] if diag or DIAG_CELL[o] < 0 else 180.0 * RivetFrames.LEFT[o]
+		return absf(angle_difference(aim, deg_to_rad(drawn))) <= FLAME_TOL
 	var off: float = 0.0 if is_nan(aim) else absf(angle_difference(aim, o * PI * 0.25))
 	return o in [0, 2, 4] and off <= CONE_TOL
 

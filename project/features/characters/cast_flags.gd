@@ -7,6 +7,7 @@ extends RefCounted
 ## slot), --rivet-tan=<0..1> (1 = the full tan), --gun-grey (look-8: held guns in the old grey
 ## print, not the tan inks); d9: --rivet-height=<m> (his drawn standing height at play; n9 builds
 ## 1.65, p55 in proportion); n9: --rivet-flame=cone (d9's flamer), =side (no diagonal cells),
+## =all (the fire cell at any aim),
 ## --rivet-walk=4 (d9's 4-frame walk by the gait phase), --rivet-reload=off (no drawn reload).
 ## Read once, before the first plan or material.
 
@@ -33,6 +34,8 @@ static func apply(args: PackedStringArray = OS.get_cmdline_user_args()) -> void:
 			RivetStrips.cone = RivetStrips.CONE_D9.duplicate()
 		elif arg == "--rivet-flame=side":
 			RivetStrips.diag = false
+		elif arg == "--rivet-flame=all":
+			RivetStrips.flame_all = true
 		elif arg == "--rivet-walk=bob":
 			RivetWalk.enabled = false
 		elif arg == "--rivet-walk=4":

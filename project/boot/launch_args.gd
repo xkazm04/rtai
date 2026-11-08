@@ -91,7 +91,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	# n9-rivet: --rivet-knock=off keeps the death sprawl while a car's knock lies him down
 	"--rivet-knock",
 	# n9-rivet: --rivet-flame=cone brings back d9's flamer (the drawn flame on 3 octants only);
-	# --rivet-flame=side fires the side cell on the diagonals too (no drawn diagonal flame)
+	# --rivet-flame=side fires the side cell on the diagonals too (no drawn diagonal flame);
+	# --rivet-flame=all draws the fire cell at any aim (it9: the side flame under an up jet)
 	"--rivet-flame",
 	# n9-rivet: --rivet-reload=off keeps the at-rest cell through a reload (no drawn reload)
 	"--rivet-reload",

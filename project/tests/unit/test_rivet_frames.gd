@@ -7,6 +7,7 @@ const P55: String = "res://features/characters/art/view/p55/"
 
 func after_each() -> void:
 	RivetStrips.cone = []
+	RivetStrips.flame_all = false
 
 
 func test_top_has_no_strip() -> void:
@@ -33,10 +34,27 @@ func test_without_a_left_strip_the_base_figure_draws() -> void:
 
 
 func test_the_flamer_fires_its_drawn_flame_in_every_direction() -> void:
-	# n9: the owner's r-7 B (cone empty): the drawn flame cell at every octant and aim
+	# n9: the owner's r-7 B (cone empty): the drawn flame cell wherever one is drawn along the aim
 	assert_true(RivetStrips.cone.is_empty())
-	for o: int in 8:
-		assert_true(RivetStrips.fires_drawn(&"flamethrower", o, deg_to_rad(o * 45.0 + 30.0)))
+	for art: String in ["p70", "p55"]:
+		var key: String = art + "/flamethrower"
+		var deg: PackedFloat32Array = RivetStrips.FLAME_DEG.get(key, PackedFloat32Array())
+		assert_eq(deg.size(), 8, key)
+		for o: int in deg.size():
+			var along: float = deg_to_rad(deg[o] + 20.0)
+			assert_true(RivetStrips.fires_drawn(&"flamethrower", o, along, art), "%s %d" % [art, o])
+		assert_true(RivetStrips.fires_drawn(&"flamethrower", 7, deg_to_rad(-40.0), art))
+
+
+func test_a_flame_burst_off_its_drawn_flame_keeps_the_facing_cell() -> void:
+	# n9 it10: aimed straight up (octant 6) the side cell drew its flame sideways under an up jet
+	for art: String in ["p70", "p55"]:
+		assert_false(RivetStrips.fires_drawn(&"flamethrower", 6, deg_to_rad(-85.0), art), art)
+		assert_false(RivetStrips.fires_drawn(&"flamethrower", 7, deg_to_rad(-64.0), art), art)
+		assert_true(RivetStrips.fires_drawn(&"pistol", 6, deg_to_rad(-85.0), art), "a gun: any aim")
+	RivetStrips.flame_all = true
+	assert_true(RivetStrips.fires_drawn(&"flamethrower", 6, deg_to_rad(-85.0), "p55"), "=all")
+	RivetStrips.flame_all = false
 
 
 func test_the_d9_cone_fires_its_drawn_flame_only_along_side_and_camera() -> void:
