@@ -13,8 +13,8 @@ Gates on this work, head 0822e5cc: the lint hook passed on the commit. The direc
 
 ## What does not work yet
 
-- **`handheld_1080` did not hold 60 in the city after the merge:** p50 27.0 ms, 991 frames in the run, with 9 other Godot processes going (E22). Render GPU is 9.3 ms, against E9's 60 hold at 9.9. One contended run with no pre-merge arm: not attributed to the walls or to anything else. The Deck row held its lock in the same batch (p50 16.66 ms).
-- **The walls' cost on a handheld row is unmeasured.** E22 has no pre-merge arm, so it says the rows run, not what the walls cost.
+- **E22's `handheld_1080` miss in the city (p50 27 ms, one run, 9 other Godot processes) did not reproduce.** The interleaved A/B (E22b, 4 runs per arm, 1 to 6 other Godot runs, `evidence/n10h/it13/sim/`): pre-merge a1c1edfd and head both hold 60 (p50 16.68 ms each). Contention fits the old miss but is not proven: no run here went past 6 others.
+- **The storeys' cost on `handheld_1080`, measured:** render GPU +0.19 ms (median 8.65 -> 8.84, every head run above every pre run, draws 623 on both), about 1 % of the frame, on the PC simulator, CONTENDED. This prices `aadc7430`'s storeys only: `height_k` is 0.5 on both arms, so half height against full height stays unmeasured here.
 - **The quest 1 freeze on a handheld row:** 0 frozen in 8 runs on each arm of the enabled / mailbox A/B (one round short of the plan). That is a small sample. The rows keep `vsync: enabled` (DECISION `handheld/rows-keep-vsync`).
 - **The MSI Claw line and the ROG Xbox Ally do not pick their row:** only board names are public.
 - **The rich-text card keeps the drawn glyphs** when Steam's would show in the prompts: a remapped pad would see both.
@@ -24,7 +24,7 @@ Gates on this work, head 0822e5cc: the lint hook passed on the commit. The direc
 
 - The machine is heavily loaded (7-9 other Godot runs at a time): commits wait minutes on the lint hook, and plain file reads time out.
 - Iteration 1 lost about 25 minutes to my own hunt script (void runs, not counted). Iteration 5 lost one unit run to my own `timeout` wrapper, which killed the runner before it reported.
-- Iteration 9: the pre-merge A/B for E22 was not run. `bench.lock` was held by lane perf when I tried at 23:27, and the run's rule is to skip the bench for that iteration. The scratch arm is ready for a later one.
+- Iteration 9: the pre-merge A/B for E22 waited an iteration on `bench.lock` (held by lane perf at 23:27, the run's rule); run at it13.
 
 ## Calls for the owner
 
@@ -33,6 +33,5 @@ Gates on this work, head 0822e5cc: the lint hook passed on the commit. The direc
 ## Next steps
 
 - Read the evidence run on 0822e5cc; the exe at the freeze.
-- E22's 60 Hz miss: the interleaved pre-merge A/B on `handheld_1080` in the city (a1c1edfd vs head, scratch worktree ready). It prices `aadc7430`'s storeys only, because `height_k` is already 0.5 at a1c1edfd.
 - Merge `n10-world` again if it lands more wall work (none since aadc7430: pole shadows and corpses).
 - One DMI dump each for the MSI Claw line and the ROG Xbox Ally; the numeric hardware types against the SDK header when GodotSteam is vendored.
