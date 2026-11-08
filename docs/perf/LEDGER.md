@@ -23,6 +23,7 @@ frozen when the process uses < 0.05 cores 12-15 s in (`evidence/perf/f19-freeze/
 | rtsep | `--render-thread separate` | 3 / 8 | not a workaround |
 | novsync | `--disable-vsync` (uncapped, ~1 core) | **0 / 8** | the first arm without a freeze (vsync arms ~1 in 3 over ~40 runs; 0 / 8 at p = 1/3 is ~4 % by chance): the freeze is tied to the vsync present path, or to its timing. Next: `--disable-vsync --max-fps 60` and the mailbox mode, to tell the two apart |
 | novsync60 | `--disable-vsync --max-fps 60` (the same pacing and CPU as the vsync runs: 0.21-0.28 cores) | **0 / 8** | not timing: with vsync off, 0 of 16 froze across both arms, against ~1 in 3 with it on. The hang follows the D3D12 vsync present (`Present(1, 0)`): a present that never completes blocks the queue, and the next frame fence never signals. Candidate workaround (an owner Call: tearing): vsync off + the 60 fps limiter, or the mailbox mode (untested) |
+| mailbox | vsync MAILBOX (`display/window/vsync/vsync_mode=3` via a temporary local override.cfg line, restored after) | **0 / 8** | still vsync-synced (`Present(1, DXGI_PRESENT_RESTART)`, no tearing) and no freeze: **the fix candidate**. Owed: the 40-run acceptance, pacing / CPU A/B vs Enabled, the release export, the real Start click |
 | cdb | WinDbg's cdb attached non-invasively to each frozen run (`stacks-cdb-{2,4,6,8}.txt`) | 4 / 8 | **the same main-thread stack in all 4** (below) |
 
 Frozen main thread (all 4): `ntdll!NtWaitForSingleObject` <- `KERNELBASE!WaitForSingleObjectEx` <- `+0x1389030` <-
