@@ -558,3 +558,6 @@ NEXT (iteration 9) (2a done at 07:39: both boss clips on the iGPU with the ease 
   scenarios, not the selected unit tests; the pad-first line's one mutant killed; the line-59 survivor (mouse motion
   flipping on the desktop) is covered by b7621d73's desktop test (not re-mutated).
 - Cleaned masters: 4 superseded stills no doc or frames.json named (deleted); raw .avi deleted after encoding.
+- 08:20 click-flips shown live: the pad walker + one InputEventMouseMotion after the first prompt (iGPU, scratch
+  `evidence/n9h/it9/clickflip/`): b7621d73~ flips to "[W A S D] ... [E]", b7621d73 keeps the drawn glyphs. Still to
+  masters `clickflips-deck-quest1-prompt-after-mouse-motion-before-after-crop-x2.png` (not in frames.json: 15 entries).

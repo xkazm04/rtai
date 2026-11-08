@@ -624,4 +624,6 @@ budget, the one site to lift on a 720p row is that count (16 -> 18 px authored, 
   "changing between controller and keyboard/mouse icons" is listed as a common problem; "only switching to
   mouse/keyboard mode if a mouse click event is received"; mouse events should move the camera "without perturbing
   simultaneous controller functionality". `LiveInput.click_flips` (= is_handheld()): mouse motion sets `mouse_aims` but
-  leaves `pad_last`; a click or a key clears it. Owed with the Steam port: Steam Input action origins decide the glyphs.
+  leaves `pad_last`; a click or a key clears it. Shown live (the pad walker + one mouse motion, iGPU; before = b7621d73~):
+  `gtai-masters/n9/handheld/clickflips-deck-quest1-prompt-after-mouse-motion-before-after-crop-x2.png`. Owed with the Steam
+  port: Steam Input action origins decide the glyphs.

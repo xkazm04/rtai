@@ -86,6 +86,7 @@ The research loop since:
   Deck recommendations name pad / keyboard icon flipping as a common problem and say to switch to mouse/keyboard mode
   "only ... if a mouse click event is received". On a handheld row mouse motion (a Deck trackpad in Steam's default
   layout) still aims but keeps the pad glyphs; a click or a key hands them to the keys. The desktop unchanged; 2 tests.
+  Shown live (pad walker + one mouse motion, iGPU): `clickflips-deck-quest1-prompt-after-mouse-motion-before-after-crop-x2.png`.
 - **The Deck set filmed at combo, the view main plays** (it9, the Radeon iGPU, each run in its own app data, the adapter
   and 0 SCRIPT ERROR on its engine log, movie mode, CONTENDED): the city (`deck-city-combo-40ppm-1280x800-igpu.mp4`,
   20 s: the course bot's hub waypoints walk into a roof in the city block at ~12 s, so it is cut there) and quest 1 Dock 9
