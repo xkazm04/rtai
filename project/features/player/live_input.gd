@@ -20,6 +20,10 @@ var mouse_aims: bool = true
 ## true once a pad was used last, false once a key or the mouse was: the prompts name the pad's
 ## buttons or the keys (aim is not affected; that is mouse_aims).
 var pad_last: bool = false
+## n9-handheld: the pad aim assist (PadAimAssist.wire, an `aim_assist` device row); null = raw.
+var assist: AimAssist = null
+var aim_origin: Callable = func() -> Vector2: return Vector2.ZERO
+var aim_targets: Callable = func() -> Array[RangeTarget]: return []
 ## rivet-arsenal: a wheel notch presses and releases inside one frame, so polling misses it; the
 ## notch's action bits are latched here and ride the next sampled tick as one press.
 var _latched: int = 0
@@ -62,6 +66,10 @@ func note_event(event: InputEvent) -> void:
 func _aim() -> Vector2:
 	var stick: Vector2 = Input.get_vector(&"aim_left", &"aim_right", &"aim_up", &"aim_down")
 	if stick.length() >= actions.stick_deadzone:
+		if assist != null:
+			var targets: Array[RangeTarget] = aim_targets.call()
+			var at: Vector2 = aim_origin.call()
+			return assist.bend(stick.normalized(), at, targets, true).normalized()
 		return stick.normalized()
 	var from: Vector2 = origin_px.call()
 	if not mouse_aims or viewport == null or from == Vector2.INF:

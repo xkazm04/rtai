@@ -10,6 +10,9 @@
       "items": {
         "additionalProperties": false,
         "properties": {
+          "aim_assist": {
+            "type": "boolean"
+          },
           "draw_scale": {
             "maximum": 1,
             "minimum": 0.25,

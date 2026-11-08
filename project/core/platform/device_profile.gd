@@ -33,6 +33,8 @@ var hud: StringName = &"full"
 ## The drawn prompt glyphs on a non-handheld row: "" (the bracketed text) or kb (the keyboard
 ## twin, a desktop study row; PadGlyphArt). A handheld row always draws the pad set.
 var glyphs: StringName = &""
+## The pad aim assist (PadAimAssist: weapons.json `aim_assist` bends the right stick's heading).
+var aim_assist: bool = false
 var ids: Array[String] = []
 
 
@@ -90,6 +92,7 @@ func _read(row: Dictionary) -> void:
 	tier = StringName(str(row.get("tier", "full")))
 	hud = StringName(str(row.get("hud", "full")))
 	glyphs = StringName(str(row.get("glyphs", "")))
+	aim_assist = row.get("aim_assist", false) == true
 
 
 ## True for the shipped desktop game (a row that changes nothing).

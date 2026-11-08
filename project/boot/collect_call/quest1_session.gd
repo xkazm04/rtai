@@ -67,7 +67,7 @@ static func open(events: EventBus, data: DataStore, seed: int = MASTER_SEED) -> 
 	if on_city:
 		s._add_city()
 	s.master_seed = seed
-	s.live = LiveInput.new(s.actions)
+	s.live = PadAimAssist.wired(LiveInput.new(s.actions), s.stage.get.bind(&"arena"))
 	s.tape = InputTape.new(s.live)
 	s.world.loop().set_input(s.tape)
 	var loaded: QuestLoader.Result = QuestLoader.load_package(
