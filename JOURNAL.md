@@ -316,3 +316,10 @@ NEXT (it8):
   not touched by this change: rig stress has no cars near the body). Parity bit-exact, unit 1824/0, lint 15/15.
   Not run this session: the director reel (no view code changed: RivetBody's knock is inert with speed 0) and
   evidence --no-bench; it8 runs both after turning the hit on.
+
+## it10 (2026-11-08 03:20-04:20) BUILD
+(it8 and it9 left no entries and no commits; resuming from it7's NEXT. Journal first, commit early.)
+- READ journals: rivet (no new REQUEST; waits on the `rivet_knock` field, it5 NEXT 6), perf (BC7 desktop table on
+  world's 746c2856: VRAM drive70 900 -> 548 MB, riot 899 -> 536 MB; no REQUEST), handheld (none to world).
+- Plan: item 3 to ON (struck-at-speed scenario, the creeping arm, scenario_vehicle_yield), then the `rivet_knock`
+  rig meta for rivet.
