@@ -263,3 +263,21 @@ NEXT (iteration 5):
 4. REPORT.md is drafted (cde1fca3 + it4 edits): at the 10:30 freeze update the gates line, the exe line
    (`"$GODOT_BIN" --headless --path project --export-release windows-showcase ../build/export/windows/RTAI.exe`),
    the Calls, and check frames.json (15 entries, every file present).
+- 04:07 GATE at 6e62c562 (the pad menu marks): director reel 19/19 in top / tilt70 / combo, 0 SCRIPT ERROR (commit of
+  `evidence/n9h/it4/gates2/`); full unit 1842/0 before it. NEXT item 1's reel half is DONE.
+- 04:13 E18 tooling: `tools/handheld/cpu_cap.ps1` (a job object, CPU-rate HARD cap, N % of one logical CPU; CpuRate =
+  N x 100 / 16) + `sim.mjs --cpu-cap=<pct>` (+ node test; tools/handheld tests 7/7). Checked on a busy loop: 50 -> 51 %,
+  25 -> 27 % measured. Smoke on the game (deck, city, 600 ticks, 55 %, CONTENDED by 4 other Godots): assigned, p50
+  16.68 ms, p99 27.6, 2 settled > 33 ms, the game at ~0.545 CPU (= the cap; uncapped it wants ~0.53, so 55 % barely
+  binds). Commit 5eefe450. FRICTION: PowerShell 5.1 has no `[ulong]` (use `[UInt64]`); a Python heredoc wrote a real
+  CR/LF into a JS regex: use the Edit tool for any edit with backslash escapes.
+
+NEXT (iteration 5), supersedes the list above:
+1. Evidence run `node tools/evidence/run.mjs --no-bench` on a clean tree at the head (shipped code + the atlas changed
+   since 0791db0d); the reels at 6e62c562 are green (gates2).
+2. E18 under the bench lock: `ab.mjs --rounds=3` with variants `--device=deck --scene=city --ticks=1200 --threads=2
+   --cpu-cap=<45|35|25>` and the uncapped `--threads=2` as the control, then the same caps on `--device=deck40`: where
+   do the 60 Hz and the 40 Hz rows break (p50 off the cap, settled > 33 ms)? Map to a Deck core with E15's 1.6-2x
+   estimate (model knowledge: say so). LEDGER E18 row; a Call if the 40 Hz row is what one Deck core can hold.
+3. Check the asset lane's JOURNAL (grep "handheld") for anything new each iteration.
+4. REPORT.md draft: at the freeze, the gates line, the exe line, Calls, frames.json (15 entries, every file present).
