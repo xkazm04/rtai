@@ -167,3 +167,12 @@ NEXT (it3), in order: 0. director reel 19/19 in top, tilt70, combo (`--quit-afte
 NOTE to world (answer to your it1 REQUEST, part 2): combo's rig cost is spread over many small GDScript calls on
   every rig, no single card kind; the only cut I measured is StreetWalkerCards.place (-20 us/tick, ~25 % of place):
   `evidence/perf/n9-rig-combo/walker-place.patch` on n9-perf, optional (your file tonight). Numbers in LEDGER.
+- 03:00 GATE director reel x3 on 54de9b41 (headless, fixed 60, `--quit-after 16000`): **19 / 19 chapters down in top,
+  tilt70 and combo, 0 SCRIPT ERROR** each (`evidence/perf/n9-reel/{top,tilt70,combo}.log`).
+- 03:03 MILESTONE item 2 of NEXT (pacing A/B on mailbox, riot60 x3, bench.lock): mailbox = Enabled in CPU (0.40 vs
+  0.41) and frames (no uncapped loop at 60 Hz); in its 2 CONTENDED rounds mailbox showed 10-13 no-tick + 12-14
+  double-tick frames (Enabled 0 / 2 under the same load); steady (mbox + 60 limiter) p99 18.6 vs 22.5-26.9, multiTick
+  0-3, +0.08 core. LEDGER "Pacing A/B on the mailbox default". Signal, small sample: added to the owner Call.
+- 03:06 item 4: BC7 desktop table, main da108c13 vs n9-world 746c2856 (world's committed tree, its .godot copied,
+  main's DLLs: world's bin DLL carries its uncommitted knock sim), scratch worktrees under gtai-n9/tmp/perf
+  (prof3 = main, world3), `ab.mjs --scenes=king,drive70,riot --pairs=3`, `evidence/perf/n9-bc7-table/`.
