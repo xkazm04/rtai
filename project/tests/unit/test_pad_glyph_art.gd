@@ -46,17 +46,19 @@ func test_a_shoulder_bar_draws_wider_not_shorter() -> void:
 	assert_gt(bar.y, g * 0.75)  # was 0.48 g inside the square cell
 
 
-## n9 it4: the marks the atlas lacks stay text, never another family's mark (Deck Verified).
-func test_a_mark_the_atlas_lacks_stays_text() -> void:
-	for pad_label: String in GlyphCells.STAND_INS:
-		assert_false(PadGlyphArt.region(pad_label, GlyphCells.PAD).has_area(), pad_label)
-	var r: Array = PadGlyphArt.runs("Pause: [+]")
-	assert_eq(r.size(), 1)
-	assert_eq(str(r[0]), "Pause: [+]")
-	assert_true(PadGlyphArt.region("Options", GlyphCells.PAD).has_area(), "Options draws its own")
-
-
-func test_the_stand_ins_point_at_cells_the_atlas_has() -> void:
-	for pad_label: String in GlyphCells.STAND_INS:
-		var cell: String = GlyphCells.STAND_INS[pad_label]
-		assert_true(GlyphCells.PAD_CELL.values().has(cell), "%s -> %s" % [pad_label, cell])
+## n9 it4: every family's own menu marks (the asset lane's appendix, it127): the Nintendo-layout
+## "+" / "-" and the PlayStation Create draw their own cells, never the Xbox View / Menu.
+func test_each_family_draws_its_own_menu_marks() -> void:
+	var own: Dictionary[String, String] = {
+		"+": "pad_plus", "-": "pad_minus", "Create": "pad_create"
+	}
+	for pad_label: String in own:
+		assert_eq(GlyphCells.PAD_CELL[pad_label], own[pad_label], pad_label)
+		var r: Rect2 = PadGlyphArt.region(pad_label, GlyphCells.PAD)
+		assert_true(r.has_area(), pad_label)
+		assert_ne(
+			r, PadGlyphArt.region("Start", GlyphCells.PAD), pad_label + " is not the Menu mark"
+		)
+		assert_ne(
+			r, PadGlyphArt.region("Back", GlyphCells.PAD), pad_label + " is not the View mark"
+		)
