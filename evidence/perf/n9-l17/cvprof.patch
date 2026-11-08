@@ -119,6 +119,188 @@ index 0ee2abf7..6b64200c 100644
  	if hose != null:
  		RigHose.step(self, dt)
  	if absf(PartMaterials.view_px - _last_px) > 0.002:
+diff --git a/project/features/city/stream/city_residency.gd b/project/features/city/stream/city_residency.gd
+index 5c3be6ca..343f01ce 100644
+--- a/project/features/city/stream/city_residency.gd
++++ b/project/features/city/stream/city_residency.gd
+@@ -17,6 +17,10 @@ var _source: ChunkSource
+ var _sim: CitySimBackend
+ var _chunks: int = SimConst.CITY_CHUNKS
+ var _resident: Dictionary[Vector2i, CityChunk] = {}
++## resident_keys(), sorted once a change (read only): ChunkView asks every frame, city_system,
++## the prop lights and the noir lamps / shadows too; the lambda sort of ~70 keys cost ~0.1 ms.
++var _keys: Array[Vector2i] = []
++var _keys_stale: bool = true
+ 
+ 
+ func _init(source: ChunkSource, sim: CitySimBackend, city_chunks: int) -> void:
+@@ -33,11 +37,12 @@ static func rect_dist(key: Vector2i, p: Vector2) -> float:
+ 
+ ## Once per tick: drop far chunks, then stamp every needed one (nearest first, ties by key).
+ func update(focus: Vector2) -> void:
+-	for key: Vector2i in _sorted(_resident.keys()):
++	for key: Vector2i in resident_keys():
+ 		if rect_dist(key, focus) > R_DROP:
+ 			_sim.clear_chunk(key.x, key.y)
+ 			@warning_ignore("return_value_discarded")
+ 			_resident.erase(key)
++			_keys_stale = true
+ 			dropped += 1
+ 	var c0: Vector2i = Vector2i(
+ 		floori(focus.x / SimConst.CHUNK_M), floori(focus.y / SimConst.CHUNK_M)
+@@ -65,6 +70,7 @@ func adopt(key: Vector2i, chunk: CityChunk) -> void:
+ 		return
+ 	_sim.stamp_chunk(key.x, key.y, chunk.tiles, chunk.cells)
+ 	_resident[key] = chunk
++	_keys_stale = true
+ 	stamped += 1
+ 
+ 
+@@ -74,6 +80,7 @@ func evict(key: Vector2i) -> void:
+ 		_sim.clear_chunk(key.x, key.y)
+ 		@warning_ignore("return_value_discarded")
+ 		_resident.erase(key)
++		_keys_stale = true
+ 		dropped += 1
+ 
+ 
+@@ -85,8 +92,13 @@ func chunk_at(key: Vector2i) -> CityChunk:
+ 	return _resident.get(key)
+ 
+ 
++## The resident keys in row order (y, then x). Read only: the same array until residency changes.
+ func resident_keys() -> Array[Vector2i]:
+-	return _sorted(_resident.keys())
++	if _keys_stale:
++		_keys = _sorted(_resident.keys())
++		_keys.make_read_only()
++		_keys_stale = false
++	return _keys
+ 
+ 
+ func density(x: float, y: float, car: bool) -> int:
+diff --git a/project/features/city/view/city_occluders.gd b/project/features/city/view/city_occluders.gd
+index 4731e028..bc41df32 100644
+--- a/project/features/city/view/city_occluders.gd
++++ b/project/features/city/view/city_occluders.gd
+@@ -15,6 +15,9 @@ const RECT_SLACK_M: float = 8.0
+ var _lift: ChunkLift = null
+ var _res: CityResidency = null
+ var _cache: Dictionary[int, Array] = {}
++## Each cached list's building positions (px), in list order: near() scans these packed values and
++## touches a Bld only on a hit (reading b.at off ~300 objects a rig was ~50 us a rig a frame).
++var _ats: Dictionary[int, PackedVector2Array] = {}
+ var _rect_at: Rect2 = Rect2()
+ var _rect_list: Array[Bld] = []
+ var _rect_rev: int = -1
+@@ -51,17 +54,15 @@ func near(at_m: Vector2) -> Array[Bld]:
+ ## Appends chunk's buildings within REACH_M of near_px, their drawn areas at today's lift.
+ func collect(chunk: CityChunk, near_px: Vector2, out: Array[Bld]) -> void:
+ 	var reach: float = REACH_M * SimConst.PX_PER_M
+-	for b: Bld in of_chunk(chunk):
+-		if absf(b.at.x - near_px.x) > reach or absf(b.at.y - near_px.y) > reach:
++	var list: Array[Bld] = of_chunk(chunk)
++	var ats: PackedVector2Array = _ats[chunk.get_instance_id()]
++	for k: int in ats.size():
++		var at: Vector2 = ats[k]
++		if absf(at.x - near_px.x) > reach or absf(at.y - near_px.y) > reach:
+ 			continue
+-		out.append(_with_area(b))
++		out.append(_with_area(list[k]))
+ 
+ 
+-## The buildings whose drawn areas meet a screen rect (px), for the baked crowd (one query a frame,
+-## CityCrowdOcclusion). The candidates (the resident chunks' buildings under the rect grown by
+-## RECT_SLACK_M, and up to REACH_M south of it: a roof lifts north into view) are listed once and
+-## kept until the rect leaves the grown one or a chunk streams; each frame only their areas are
+-## taken at today's lift.
+ func in_rect(view_px: Rect2) -> Array[Bld]:
+ 	var rev: int = _res.stamped + _res.dropped  # a chunk streamed in or out: list again
+ 	if rev != _rect_rev or not _rect_at.encloses(view_px):
+@@ -104,8 +105,10 @@ func of_chunk(chunk: CityChunk) -> Array[Bld]:
+ 		return _cache[id]
+ 	if _cache.size() >= CACHE_MAX:
+ 		_cache.clear()
++		_ats.clear()
+ 		_rect_at = Rect2()  # the candidates came from the dropped lists: list them again
+ 	var list: Array[Bld] = []
++	var ats: PackedVector2Array = PackedVector2Array()
+ 	for k: int in chunk.command_count():
+ 		var t: int = chunk.tex[k]
+ 		var o: int = k * CityChunk.XF_STRIDE
+@@ -118,7 +121,10 @@ func of_chunk(chunk: CityChunk) -> Array[Bld]:
+ 		var ext: Vector2 = _lift.extent(t, b.rot)
+ 		b.r = Rect2(b.at - ext * 0.5, ext)
+ 		list.append(b)
++		@warning_ignore("return_value_discarded")
++		ats.append(b.at)
+ 	_cache[id] = list
++	_ats[id] = ats
+ 	return list
+ 
+ 
+diff --git a/project/features/city/view/city_occlusion.gd b/project/features/city/view/city_occlusion.gd
+index d6c87408..78eb7d64 100644
+--- a/project/features/city/view/city_occlusion.gd
++++ b/project/features/city/view/city_occlusion.gd
+@@ -66,7 +66,11 @@ static func attach(view: CityView, city: CitySystem, print_mat: Material) -> voi
+ 	o._layer.add_child(o)
+ 
+ 
++static var OPROF: PackedInt64Array = PackedInt64Array([0, 0, 0, 0, 0, 0])
++
++
+ func _process(_delta: float) -> void:
++	var _p0: int = Time.get_ticks_usec()
+ 	var printed: bool = _view.look_params == null or _view.look_params.printed
+ 	_ink.material = _print if _view.look_enabled and printed else null  # as the crowd's print
+ 	_scan()
+@@ -74,10 +78,13 @@ func _process(_delta: float) -> void:
+ 	hidden_frames += _hits.size()
+ 	queue_redraw()
+ 	_ink.queue_redraw()
++	OPROF[5] += Time.get_ticks_usec() - _p0
+ 
+ 
+ func _exit_tree() -> void:
+ 	var per: float = float(crowd_us) / maxf(1.0, float(frames))
++	var fr: float = maxf(1.0, float(frames))
++	print("OCCPROF collect %.1f | near %.1f | crowd+lift %.1f | rigs %.1f | layer children %.1f | process %.1f" % [OPROF[0] / fr, OPROF[1] / fr, OPROF[2] / fr, OPROF[3] / fr, OPROF[4] / fr, OPROF[5] / fr])
+ 	Log.info(
+ 		"city",
+ 		(
+@@ -92,9 +99,14 @@ func _scan() -> void:
+ 	_patches.clear()
+ 	_hits.clear()
+ 	_hit_area.clear()
++	var _o0: int = Time.get_ticks_usec()
+ 	var rigs: Array[CutRig] = []
+ 	for c: Node in _layer.get_children():
+ 		RigCastShadows.collect(c, 0, rigs)
++	var _o1: int = Time.get_ticks_usec()
++	OPROF[0] += _o1 - _o0
++	OPROF[3] += rigs.size()
++	OPROF[4] += _layer.get_child_count()
+ 	var front: Dictionary[CutRig, Rect2] = {}
+ 	for rig: CutRig in rigs:
+ 		var feet: Vector2 = rig.global_position
+@@ -109,6 +121,8 @@ func _scan() -> void:
+ 				_hit_area.append(b.area)
+ 			else:
+ 				front[rig] = b.area
++	var _o2: int = Time.get_ticks_usec()
++	OPROF[1] += _o2 - _o1
+ 	var areas: Array[Rect2] = _hit_area + _scan_crowd()
+ 	var lifted: Dictionary[CutRig, bool] = {}
+ 	for rig: CutRig in front:
+@@ -116,6 +130,7 @@ func _scan() -> void:
+ 			if a.intersects(front[rig]):
+ 				lifted[rig] = true
+ 	_lift_front(lifted)
++	OPROF[2] += Time.get_ticks_usec() - _o2
+ 
+ 
+ ## The baked crowd's patches (appended to _patches); returns the drawn areas that hid one.
 diff --git a/project/features/city/view/city_view.gd b/project/features/city/view/city_view.gd
 index 43e3320f..a3846019 100644
 --- a/project/features/city/view/city_view.gd

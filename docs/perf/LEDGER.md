@@ -299,6 +299,26 @@ riot tick). Microbench (`evidence/perf/n9-l17/cow_bench.gd.txt`, headless, 200 x
 0.117 / 0.112: **no copy** (the cost does not grow with capacity). Refuted; nothing built. The feed's 1.2 us a row is
 GDScript call and arithmetic cost, the lever there is native (a sim-side feed fill), not GDScript reshaping.
 
+### L20 (it5): CityOccluders scans packed building positions
+Split (cvprof timers, riot, CONTENDED 6): city_occlusion._process 1085 us a frame = the per-rig building query
+(`near` -> `collect`) **883**, crowd patches + lift 124, the rig walk 70. collect() read `b.at` off every Bld object of
+1-4 chunks (~300 buildings a chunk) for each of ~17 rigs, every frame, to keep those inside a 40 m box. Hypothesis: the
+object property reads dominate; a per-chunk PackedVector2Array of the positions (list order, built with the cached
+list, cleared with it) scanned instead, a Bld touched only on a hit: -30..-50 % of `near`. No pixel: the same loop
+order and the same float32 compares, so the same buildings in the same order (test: `collect` == the reach rule over
+`of_chunk`, 40 queries over a 300-building chunk, compared by identity and order; survives the CACHE_MAX reset).
+A/B (riot x2 interleaved by swapping city_occluders.gd, CONTENDED 4-6; `evidence/perf/n9-l17/ab-l20.txt`): near old
+705 / 652 us vs new 542 / 543 (**-17..-23 %**, ranges apart); occlusion _process 853 / 795 -> 679 / 680 (**~-150 us a
+riot frame**). KEPT (mechanism win; the frame total's spread is larger, no frame claim). Next (L20b): the 40 m box is
+far looser than what _scan keeps (a building whose drawn area meets a ~1 x 1.8 m body patch): an exact tighter
+prefilter could cut most of the remaining ~540 us.
+
+### Gates (it5) on 78e039b7 (L17 + L18)
+`node tools/evidence/run.mjs --no-bench` (`evidence/perf/n9-l17/evidence-it5.txt`): lint 15 / 15, unit 1833 / 0,
+scenarios 54 / 54, parity bit-exact (mutation caught at 629), selftest look goldens 11 / 11 (worst 0.27),
+release-compile 617 / 0. Mutation on fx_pool.gd at 9944fd7d: 90.9 % (10 / 11; the survivor deletes the
+RenderingServer call, invisible headless by construction; `mutate-fx_pool-2.txt`).
+
 ### Item 2 (it2): the traffic-sheet split is moot under BC7
 n9-world 3e02d3b8 imports the p70 traffic sheet as BC7: `traffic_cards.png-313d05e5...bptc.ctex` = **18,063,412 B**
 (4032 x 4480 x 1 B), one upload into a **32 MB** pow2 staging buffer (L9's mechanism), against 128 MB lossless. The

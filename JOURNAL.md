@@ -305,3 +305,33 @@ NEXT (it5):
   started (background, `evidence-it5.txt`).
 - 05:07 L19 refuted before building: `feed.looks[i] = v` through another object's property is NOT a copy-on-write
   (microbench: 0.13 us a row for 4 writes at any capacity, the same as in the owner). LEDGER L19.
+- 05:08 city_occlusion split (cvprof timers, riot, CONTENDED 6): _process 1085 us a frame = **the per-rig building
+  query (`CityOccluders.near` -> `collect`) 883**, crowd + lift 124, rig collect 70 (17 rigs, 12 layer children).
+  collect() reads `b.at` off every Bld object of 1-4 chunks (~300 a chunk) for every rig, every frame.
+- 05:09 L20 built in the scratch worktree only (the evidence gate runs from this tree): CityOccluders caches each
+  chunk's building positions as a PackedVector2Array (list order) and scans that, touching a Bld only on a hit;
+  same loop order, same float32 compares. Test written (`collect` == the reach rule over of_chunk, 40 queries over a
+  300-building chunk, in order; survives the CACHE_MAX reset). Timer A/B old / new x2 running.
+
+NEXT (it6):
+1. If L20 (CityOccluders packed positions) is not committed yet: port `gtai-n9/tmp/perf/occluders_new.gd` into
+   `project/features/city/view/city_occluders.gd`, the tests in `gtai-n9/tmp/perf/occ_test_add.gd` appended to
+   test_city_occlusion.gd, run `--select=test_city_occlusion`, commit; LEDGER L20 with the cvprof numbers
+   (`cvprof/out/ab-l20.txt`).
+2. L20b, the bigger cut: `near()`'s 40 m reach box is far looser than what _scan keeps (a building whose drawn area
+   meets the body's ~1 x 1.8 m patch). An exact tighter prefilter (the area's x-span and the lift's max `up` bound)
+   would skip most of the 300-a-chunk scan per rig: est. near 540 -> <150 us a riot frame. Prove with a test that
+   _scan's patches / hits / lifted set are identical over many rig positions, old filter vs new.
+3. Gates on HEAD after L20: unit no-arg, `node tools/evidence/run.mjs --no-bench` (log OUTSIDE the tree: a log file
+   inside it makes the tree dirty and evidence refuses), the reel x3 (`--quit-after 16000`) since L17 / L18 / L20 touch
+   game code (FxPool, CityResidency, CityOccluders; pixel-free by test, but the reel is the combat gate).
+4. The final table (main da108c13 vs n9-perf HEAD) at the freeze: `ab.mjs --scenes=king,drive70,riot --arms=main:^--path
+   <prof3>/project,head:` + an A-vs-A (F12). The scratch worktree `gtai-n9/tmp/perf/cvprof` (timers; never commit it)
+   stays for more splits; remove `world3` when done.
+5. Remaining per-frame owners in the riot (LEDGER "CityView._process per call"): the rig step 1.4-1.8 ms (dense
+   GDScript, a C++ port is the lever: multi-session, and a REQUEST-level change in shared rig files), the feed 0.5 ms
+   (native fill is the lever), city_blood 0.8 ms (not split yet: next split).
+- 05:15 GATE evidence --no-bench on 78e039b7 (L17 + L18): ALL PASS: lint 15 / 15, unit 1833 / 0, scenarios 54 / 54,
+  parity exact, look goldens 11 / 11 (worst 0.27), release-compile 617 / 0. Mutation fx_pool at 9944fd7d: 90.9 %.
+- 05:16 L20 A/B (riot x2): near 705 / 652 -> 542 / 543 us, occlusion _process ~-150 us a frame (ranges apart).
+  Ported into the branch (`city_occluders.gd` + 2 tests in test_city_occlusion, 11 / 0). NEXT item 1 is DONE.

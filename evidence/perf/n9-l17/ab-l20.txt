@@ -1,0 +1,4 @@
+old r1 godots=6 OCCPROF collect 46.3 | near 704.7 | crowd+lift 97.1 | rigs 16.9 | layer children 12.0 | process 853.1 | occlusion: 0 body-frames hidden over 1829 frames err=0
+new r1 godots=6 OCCPROF collect 41.7 | near 542.0 | crowd+lift 90.5 | rigs 16.9 | layer children 12.0 | process 678.8 | occlusion: 0 body-frames hidden over 1829 frames err=0
+old r2 godots=4 OCCPROF collect 45.2 | near 651.7 | crowd+lift 93.4 | rigs 16.9 | layer children 12.0 | process 795.1 | occlusion: 0 body-frames hidden over 1829 frames err=0
+new r2 godots=6 OCCPROF collect 41.8 | near 542.7 | crowd+lift 90.6 | rigs 16.9 | layer children 12.0 | process 679.6 | occlusion: 0 body-frames hidden over 1829 frames err=0
