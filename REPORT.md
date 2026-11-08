@@ -2,8 +2,9 @@
 
 Lane `rivet`, branch `n9-rivet`, 2026-11-08 00:55-11:00. The owner's note: "he is smaller than before - 50% size
 increase will be needed, flying instead of walking. As the animation degraded and don't fit now".
-Evidence: `C:\Users\kazda\kiro\gtai-masters\n9\rivet\` (`frames.json`, 15 stills, best first) and `evidence/n9/`
-(gate logs, sheet metadata). Every still was looked at; the befores come from the same build with a flag.
+Evidence: `C:\Users\kazda\kiro\gtai-masters\n9\rivet\` (`frames.json`, 15 stills, best first; the combined clip
+`rivet_n9_set_combined.mp4`, 64.6 s: the size at 32 px/m, the planted runs, the 55 runs, the knock-down, the gun fired
+up, the reload, each captioned with view, zoom and speed, before | after where one exists) and `evidence/n9/` (gate logs, sheet metadata). Every still was looked at; the befores come from the same build with a flag.
 
 ## What works (with its evidence)
 
@@ -111,4 +112,4 @@ in brackets.
 ## Next steps
 
 - The exe: `"$GODOT_BIN" --headless --path project --export-release windows-showcase ../build/export/windows/RTAI.exe`.
-- The combined 30-90 s clip of the set.
+- The combined clip is built (64.6 s); it has no bare-walk (walk8) segment yet.
