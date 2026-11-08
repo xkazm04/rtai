@@ -155,3 +155,43 @@ root are the measured ones: the walk grid never fires).
   CLAW (an identity swap on the fire latch, d9's walk has it too vs the base): a Call, or a REQUEST for the claw in
   the armed walks. The armed figure reads a touch narrower than the equipped card at the same height.
 - Gates it4: unit full 1818/0 (on 9bfc3cf3); lint 15/15.
+- Evidence run --no-bench on a4aceb8c (02:21-02:30, the tree held still): ALL PASS: lint, unit 1818/0, scenarios 54,
+  parity, selftest (look goldens 11/11 worst 0.27, block 5/5: nothing moved), release-compile 614/0.
+- Reels it4 on a4aceb8c: 19/19 fully down in tilt70, combo, top, 0 SCRIPT ERROR (`evidence/n9/reel-director-it4-<v>.log`).
+- Filmed gatling + flamer armed walks (64 px/m): both stride, the 3/4-away rows turn with him. Walk -> stop swap on
+  the pistol's drawn left rows (f286-304): hand, gun and tone carry across. frames.json now 7 entries.
+- MILESTONE `567c1128` **the drawn run at 70 (item 3, the glide at speed)**: the asset lane served rivet_run8_70 (02:30,
+  `deliveries/rivet_run8_it121.md`: rows A 5 / B 3; profile travel 0.60-0.63 x H per step). Packed at walk8's scales
+  (`rivet_walk.py --k=0.6433,0.6471`: the cells are scaled by dome width to the walk8 rows) + tone-matched to walk8.
+  Above `RUN_FROM_MPS` 2.5 he runs: cycle `RUN_CYCLE_CELL` 136 cell px (2 x 0.62 x 110), cap 3.5 cycles/s. At 6.75 m/s
+  one cycle = 136/110 x 1.65 m = 2.04 m -> 3.3 cycles/s = 26 drawn fps: under the cap, so **the run plants at top
+  speed** (by the numbers; NOT YET FILMED). `--rivet-walk=walk8` = before. p55: row 4 not served, walk8 stays.
+  Provenance line: prompt_hash owed (no catalog entry yet; rounds 20261108-0140/-0155 named by job).
+- Unit full on 567c1128: 1819/0. Lint 15/15.
+- Measured (crude foot-band, profile rows): the armed sheets' contact spread reads ~1.3-1.5x walk8's; they use the
+  walk8 CYCLE_CELL 60 now. Only matters under ~1.8 m/s (the cap rules above); a per-strip cycle is a follow-up.
+- FRICTION (~3 min): the gunplay bot keeps the gun out, so a bare-claw run never shows in it: film the run in the reel's
+  bare chapters or quest 1 (`dev/frames/quest1_clip.gd`, it has `--rivet-walk`).
+
+REQUEST to assets: rivet_walk_armed_onehand_70 and the other armed walks (twohand, blade, heavy, flamer) at 70 and 55, the
+free arm as the CLAW (pincer on the plated arm, as `rivet_eq_<weapon>_70` A draws it), because the armed walks draw the free
+arm as the cable SPIKE while the equipped strips draw the claw: on every shot the figure swaps arms (filmed it4,
+`gtai-masters/n9/rivet/rivet_armed_walk_pistol_before_after_arena_tilt70_64ppm_seed3_f60_81.png`). Copy by example
+from the delivered pick cells, arms only, legs untouched. One-hand pistol 70 first. Also: rivet_run8_55 row 4 (the cut).
+
+### Calls drafted for REPORT (it4 additions)
+4. **Weapon-out walk: replace or blend.** Built: replace the facing card with the drawn armed walk while moving (until a
+   shot), for the 5 weapons that have one; the 12 others keep the card. Option: `--rivet-walk-armed=off`.
+5. **Armed walk's free arm** (spike vs the equipped strip's claw): REQUESTed the claw; meanwhile the swap shows on a shot.
+6. **The run threshold** (2.5 m/s) and its cap (3.5 cycles/s): data values in `RivetWalk`.
+
+NEXT (it5):
+1. Commit the it4b reel logs (started 02:41 on 567c1128), if 19/19 x3.
+2. FILM the run: 64 px/m frame by frame, a planted foot against the asphalt (the acceptance), before `--rivet-walk=walk8`;
+   in quest 1 or the reel's bare-claw chapters; 32 px/m before/after. The walk8 at low speed too (owed since it3).
+3. Read the asset lane for run8 70 v3 fixes (row 5 arms, L1 slots 7-8) and run8 55 row 4: re-pack (`--k` = the 55
+   walk8 scales from `evidence/n9/rivet_walk8_55.json`) and add `RUN_CYCLE_CELL["p55"]` (2 x 0.50 x 110 = 110).
+4. Film the katana armed walk (reel blade chapter) and the plasma rifle/pistol at 55 in a boss fight (combo 48).
+5. Size: Servo combo 48 at 1.95 m, the roll ball and death sprawl at size, beside a car (owed since it3).
+6. world's knock-down field: read their JOURNAL; wire `rivet_knock` when a usable sheet + signal exist.
+7. A per-strip cycle for the armed grids (measure the profile contact travel properly, as walk8's measure).
