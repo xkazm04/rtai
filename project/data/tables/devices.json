@@ -12,6 +12,7 @@
     },
     {
       "aim_assist": true,
+      "boss_cam": true,
       "hud": "compact",
       "id": "deck",
       "max_fps": 60,
@@ -28,6 +29,7 @@
     },
     {
       "aim_assist": true,
+      "boss_cam": true,
       "hud": "compact",
       "id": "deck40",
       "max_fps": 40,
@@ -44,6 +46,7 @@
     },
     {
       "aim_assist": true,
+      "boss_cam": true,
       "hud": "compact",
       "id": "deck_bench",
       "max_fps": 0,
@@ -60,6 +63,7 @@
     },
     {
       "aim_assist": true,
+      "boss_cam": true,
       "hud": "compact",
       "id": "deck_bench_z1",
       "max_fps": 0,
@@ -76,6 +80,7 @@
     },
     {
       "aim_assist": true,
+      "boss_cam": true,
       "draw_scale": 0.75,
       "hud": "compact",
       "id": "deck_bench_ds75",
@@ -93,6 +98,7 @@
     },
     {
       "aim_assist": true,
+      "boss_cam": true,
       "draw_scale": 0.85,
       "hud": "compact",
       "id": "deck_bench_ds85",
@@ -110,6 +116,7 @@
     },
     {
       "aim_assist": true,
+      "boss_cam": true,
       "hud": "full",
       "id": "deck_hud_full",
       "max_fps": 60,
@@ -126,6 +133,7 @@
     },
     {
       "aim_assist": true,
+      "boss_cam": true,
       "draw_scale": 0.75,
       "hud": "compact",
       "id": "deck_ds75",
@@ -143,6 +151,7 @@
     },
     {
       "aim_assist": true,
+      "boss_cam": true,
       "hud": "compact",
       "id": "handheld_1080",
       "max_fps": 60,
@@ -159,6 +168,7 @@
     },
     {
       "aim_assist": true,
+      "boss_cam": true,
       "hud": "compact",
       "id": "handheld_1080_native",
       "max_fps": 60,
@@ -175,6 +185,7 @@
     },
     {
       "aim_assist": true,
+      "boss_cam": true,
       "hud": "compact",
       "id": "switch_handheld",
       "max_fps": 30,

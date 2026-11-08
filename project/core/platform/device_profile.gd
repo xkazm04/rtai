@@ -35,6 +35,9 @@ var hud: StringName = &"full"
 var glyphs: StringName = &""
 ## The pad aim assist (PadAimAssist: weapons.json `aim_assist` bends the right stick's heading).
 var aim_assist: bool = false
+## The boss fight's camera frames Rivet and the boss together (BossCam, the clip cam) instead of
+## following Rivet: the 7-inch panel at 40 px/m keeps the fight on screen (n9 it6).
+var boss_cam: bool = false
 var ids: Array[String] = []
 
 
@@ -93,6 +96,7 @@ func _read(row: Dictionary) -> void:
 	hud = StringName(str(row.get("hud", "full")))
 	glyphs = StringName(str(row.get("glyphs", "")))
 	aim_assist = row.get("aim_assist", false) == true
+	boss_cam = row.get("boss_cam", false) == true
 
 
 ## True for the shipped desktop game (a row that changes nothing).

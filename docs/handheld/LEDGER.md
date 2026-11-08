@@ -273,6 +273,13 @@ stick, 2/3 right stick, 4 LT, 5 RT.
   no-run guard; proven live in `scenario_handheld_focus_pause` (e2f222df: quest 1 running, the OS focus-out
   propagated: paused with the handheld node, live without it as the planted fault; re-read n9 it2).
 
+- **The boss camera on handheld rows (n9 it6, DECISION `handheld/boss-cam`):** the boss fights use `BossCam` (frames
+  Rivet and the boss together, the screen kept on the fight's floor) on every handheld row (`boss_cam: true`); the
+  desktop keeps the follow camera. Servo at t900 on `deck_bench`: the follow camera showed half the screen as paper
+  past the yard's edge (also on `deck_bench_z1` and the desktop); the boss cam fills it with the yard, Servo and Rivet
+  both in (t1800 too). The King's road is narrower than the 20 m-tall screen, so paper below it stays either way.
+  Stills: `gtai-masters/n9/handheld/bosscam-deck-servo-before-after-40ppm-1280x800-t900.png`, `evidence/n9h/it6/bosscam/`.
+
 ## 6. Text legibility at 1280x800
 
 The project's base viewport is 1280x800 (`canvas_items` stretch), the Deck's panel exactly: the HUD draws 1:1 at its

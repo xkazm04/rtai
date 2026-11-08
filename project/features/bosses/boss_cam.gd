@@ -1,16 +1,16 @@
 class_name BossCam
 extends Node
-## Dev `--boss-cam` (clips): the arena camera frames Rivet and the boss together, sitting
-## FRAME_K of the way from Rivet to the boss, so a filmed attack keeps both on screen. View
-## only (SIM-03): it sets CollectCallView.focus, never the sim; without the flag the camera
-## follows Rivet. The centre is clamped so the screen stays on the fight's floor
-## (BossHook.bounds, the arena record's area): no off-area ground at the boulevard's edge. The
-## floor's top edge clears the boss bar: the clamp lets the screen rise HUD_PX (the bar's band,
-## in screen pixels) above the floor, so a boss at the top edge (Servo's bays) is never under it.
-## The boss wins over the floor: after the clamp the view shifts so the boss and BOSS_MARGIN_M
-## round it stay on screen between the bar and the ghost card at the bottom (keep_in): a boss on
-## the floor's bottom edge (Servo at the conveyor) shows a strip of off-floor ground rather than
-## standing under the ghost card or off the screen.
+## Dev `--boss-cam` (clips) and the handheld rows (devices.json `boss_cam`): the arena camera frames
+## Rivet and the boss together, sitting FRAME_K of the way from Rivet to the boss, so a filmed
+## attack keeps both on screen. View only (SIM-03): it sets CollectCallView.focus, never the sim;
+## without the flag or the row the camera follows Rivet. The centre is clamped so the screen stays
+## on the fight's floor (BossHook.bounds, the arena record's area): no off-area ground at the
+## boulevard's edge. The floor's top edge clears the boss bar: the clamp lets the screen rise HUD_PX
+## (the bar's band, in screen pixels) above the floor, so a boss at the top edge (Servo's bays) is
+## never under it. The boss wins over the floor: after the clamp the view shifts so the boss and
+## BOSS_MARGIN_M round it stay on screen between the bar and the ghost card at the bottom (keep_in):
+## a boss on the floor's bottom edge (Servo at the conveyor) shows a strip of off-floor ground
+## rather than standing under the ghost card or off the screen.
 
 const FLAG: String = "--boss-cam"
 const FRAME_K: float = 0.45
@@ -44,8 +44,9 @@ var view: CollectCallView = null
 var hook: BossHook = null
 
 
+## The dev flag, or a device row with `boss_cam` (the handheld rows: DeviceProfile.boss_cam).
 static func wanted() -> bool:
-	return OS.get_cmdline_user_args().has(FLAG)
+	return OS.get_cmdline_user_args().has(FLAG) or DeviceProfile.shared().boss_cam
 
 
 ## `focus` moved so a view of `half_m` (half the screen, metres) stays inside `area`; on an
