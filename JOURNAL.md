@@ -122,3 +122,22 @@ NEXT (it3):
 4. The full gates on this branch before the freeze: `node tools/tests/run_unit.mjs` (no-arg), `node tools/evidence/run.mjs
    --no-bench`, the director reel x3 views (`--quit-after 16000`).
 5. Owner clips: the King fight and the city drive with the perf HUD, before/after (gtai-masters/n9/perf, frames.json).
+6. A still of the pacing row in the real pause card (owed: Esc during the opening dialogue did not open the pause
+   card in the release exe at 02:29; press it after the first beat, or film the settings panel via a dev path).
+- 02:27 full unit suite 1823 / 0 (53.6 s). Evidence `--no-bench` started 02:28 (log in gtai-n9/tmp/perf/evidence-it2.log).
+- 02:37 GATE RESULT `node tools/evidence/run.mjs --no-bench` at 40fb2da3: lint PASS, scenarios 54 / 54, parity bit-exact
+  (mutation caught at 629), release-compile 615 / 0, unit 1823 / 0 (flagged FAIL only because I appended to JOURNAL.md
+  during the run). **selftest FAIL: look goldens 5 / 11 within mean 4 (worst 6.46; OFF d1@32, d1@48, d4@32, d4@48,
+  d4@64, auto@48), block goldens 1 / 5 (worst 7.51)** (`evidence/perf/n9-gates/selftest-it2-40fb2da3.json`).
+  The selftest is WINDOWED (`--fixed-fps 60`), so two suspects on this branch: (a) the mailbox default (06c48c1b) and
+  (b) it1's async crowd readback (827aefe3), whose atlas may land a frame later than the synchronous read did, so an
+  early golden frame draws the crowd before the atlas is in. Not yet bisected. **This branch is NOT mergeable until it is.**
+
+NEXT (it3) FIRST, before everything above:
+0. Bisect the golden miss: run the selftest (`node -e "import('./tools/selftest/run.mjs').then(m => m.runSelftest('build/sel'))"`
+   or the evidence run with `--no-parity --no-release`) with (a) `display/window/vsync/vsync_mode.windows=1` in the
+   local override.cfg (restore it after), (b) `--crowd-readback=sync` if the selftest scenes accept it (else revert
+   827aefe3 in a scratch worktree). If (b): the golden frames must wait for the atlas (CrowdReadback ready) or the
+   readback goes back to sync for the bake (F-19 no longer needs it). If (a): read the golden capture's frame timing;
+   mailbox must not change a pixel, or it is an owner Call. Also compare main da108c13 itself (world's 11 / 11 is on
+   its own re-blessed branch).
