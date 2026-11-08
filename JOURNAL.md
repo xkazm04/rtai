@@ -128,3 +128,7 @@ NEXT (iteration 3), refined for item 1 (the keyboard twin): the desktop labels c
 E F Q R G P -> key_*, Escape -> key_esc, Space / Shift / Ctrl / Tab -> key_*, 1-4 -> key_1..4. The title card would
 use `with_keys(CONTROLS_PAD, false)` when the kb glyphs are on. Gate it off by default (a devices.json field on a
 desktop study row, or a launch flag in KNOWN_FLAGS); the desktop default must not move.
+- 02:30 `tools/handheld/glyph_inkbox.py`: the ink-box trim (alpha > 24) that made `ui_pad_glyphs_v1.json` in it1 was an
+  uncommitted inline script; now a tool, checked byte-identical against the shipped pad json (`--schema=` `--doc=`).
+  Ran it on the keyboard twin: 38 cells -> `C:/Users/kazda/kiro/gtai-n9/tmp/handheld/ui_kb_glyphs_v1.inkbox.json`
+  (scratch, ready for NEXT item 1).
