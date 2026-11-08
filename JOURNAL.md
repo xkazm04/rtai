@@ -284,3 +284,37 @@ NEXT (iteration 5), supersedes the list above:
 - 04:24 GATE evidence run (`--no-bench`) at 39df106e (it4's head: aim-assist proof, glyph appendix, cpu_cap tool): lint, unit 1842/0,
   scenarios 54, parity (mutation caught at 629), selftest (look goldens 11/11), release-compile 619/0: all PASS
   (`evidence/n9h/it4/gates2/evidence-run-39df106e.txt`). NEXT item 1 DONE; it5 starts at item 2 (E18).
+
+## Iteration 5 (04:26 - 05:26), BUILD
+
+- 04:27 READ: JOURNAL NEXT, git log, rivet / world / perf journals: no REQUEST to handheld. Assets JOURNAL (grep
+  handheld): nothing new since the it127 appendix (wired 6e62c562). Registry rules applied: perf-regression-gating
+  (interleaved rounds, medians + spread, bench lock, CONTENDED per run), on-device-verification-harness (every number
+  "on the simulator"; the Deck-core mapping is an estimate from public scores, said so), adaptive-fidelity-tiers (a
+  handheld-only HUD value, the desktop untouched).
+- 04:28 E18 launched under bench.lock (taken noclobber): `ab.mjs --rounds=3`, city, 1200 ticks, `--threads=2`
+  (1 core + SMT), `deck` with cap none / 45 / 35 / 25 %, then `deck40` with none / 35 / 25 / 18 %.
+- Research (LEDGER s1 to add): Cinebench R23 single-core, the Deck APU ~975 (cpu-monkey), the 7800X3D stock 1796
+  (overclocking.com review): ratio ~1.84 (E15's model estimate was 1.6-2x). So a Deck core at full clock ~ a 54 % cap
+  here; ~45 % with the X3D cache's game edge and the Deck clocking down under GPU load (an estimate).
+- 04:33 First round read: the cap binds (25 % cap -> the process at ~0.29 of a core, like the busy-loop check) yet
+  p50 stays 16.67 ms: E15's 0.53 cores at 60 Hz was mostly frame-pacing wait, not work. Rounds 2-3 decide.
+- Built (no Godot run yet, the A/B holds the machine): the boss bar's phase count 16 -> 18 px on the compact-HUD rows
+  (`BossBar.count_px`, the right end kept), the legibility walker reads it, unit test; DECISION handheld/boss-count-18.
+- 04:40 E18 read (12 runs, 5 CONTENDED): uncapped 59.9 ticks/s, 0 stalls; every cap keeps p50 on 16.6 ms but freezes
+  0.2-3.5 s, non-monotonic (45 % 47.9 ticks/s, 35 % 52.9, 25 % 55.0). DROPPED as a slower-core model (a hard cap runs
+  full speed then stops; a slow core stretches every frame); the 40 Hz half stopped before its first run, lock
+  released 04:41. Kept: E15's 0.53 core is an upper bound; ~0.55-0.92 of one Deck core at 60 Hz (estimate, sourced
+  1.84x). LEDGER E18 + s1 (95f119f6). `evidence/n9h/it5/e18/analyse.mjs` reads ticks/s and stalls per frame.
+- 04:45 MILESTONE the boss count 16 -> 18 px on the compact rows (3778c3ac): probe Deck x 9 -> 10 / cap 12 -> 13 (every
+  Deck text now x >= 10), 720p x 8 -> 9 / cap 10 -> 12; digits on the King still 12 -> 13 px (`deck_hud_full` = the
+  before side), 10 -> 11 at 720p. Looked at the x4 crop: larger, right end kept, clear paper. Debt dev_loc +3 accepted.
+  Still to masters (`count-deck-16-vs-18-crop-x4.png`, replaced the kb-glyphs "after" duplicate in frames.json, 15).
+- 04:53 GATE at 3778c3ac: director reel 19/19 fully down in top / tilt70 / combo, 0 SCRIPT ERROR (d135d4a1); full unit
+  1843/0 (e339b9f4); lint green.
+- 04:58 `sim.mjs --scene=city_combo` (03f8a023): world's branch boots combo (3e02d3b8), so the Deck rows will play the
+  city in combo after the merge. Deck still at 40 px/m, iGPU: frames well, the compact card clear of the street; Rivet
+  ~35 px vs cops ~60 (his 1.1 m here; rivet's 1.65 m is on its branch). Looked at it.
+- 04:59 E19 launched under bench.lock: deck_bench (uncapped) city tilt70 vs city_combo, 3 rounds.
+- FRICTION: my E19 command ended `...; rm -f bench.lock` after a `&&` chain that starts with the noclobber take: had the
+  take failed it would have deleted another lane's lock. It succeeded (LOCKED). Pattern to use: `take && { run; rm; }`.

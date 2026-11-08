@@ -419,6 +419,16 @@ budget, the one site to lift on a 720p row is that count (16 -> 18 px authored, 
   Deck can settle it (port readiness: "real frame times on Zen 2"). `cpu_cap.ps1` stays as a sustained-throughput
   check, labelled as such. The lever stays the same: the 40 Hz row (E17) or work off the main thread.
   JSONs: `evidence/sim/e18-deck60/` (+ `e18-deck60.txt`), the analysis table `evidence/n9h/it5/e18/table.txt`.
+- **E19 (n9 it5), the combo switch on the Deck row:** world's branch boots `combo` (3e02d3b8), so after the merge the
+  handheld rows play the city in combo, while every Deck city number so far was tilt70. `sim.mjs --scene=city_combo`
+  (new) vs `--scene=city`, `deck_bench` (uncapped: the frame is the cost), 1200 ticks, 8 pinned threads, the 2-CU
+  iGPU, `ab.mjs --rounds=3`, bench.lock held 04:59-05:03, **all 6 runs CONTENDED** (1 other Godot run). Medians of 3:
+  frame p50 9.21 (+-0.24) vs 9.40 (+-0.30) ms; p99 13.85 vs 14.09 ms; render GPU p50 8.39 vs 8.38 ms; process 3.91
+  vs 3.98 ms; GPU shared 1055 vs 1118 MB (+-65); private RAM 1473 vs 1494 MB (+-63). **Every delta is inside the
+  spread: no measured cost for combo on the Deck row**; the 60 Hz frame keeps ~7 ms of headroom on the weaker-than-Deck
+  iGPU. Still at 40 px/m: `evidence/n9h/it5/combo/deck-city-combo-t14.png` (framing reads; the compact card clear of
+  the street). Lossless textures on this branch: world's BC7 takes ~0.5 GB of GPU memory off both arms (E16b).
+  JSONs: `evidence/sim/e19-combo-city/`.
 - **E16b (n9 it4), the re-take under the bench lock**, on world's later head b0f1024e (BC7 since 746c2856, plus the
   dead redesign and the car knock-down) in my own detached worktree (`gtai-n9/tmp/handheld/w16`, its `.godot` copied
   from perf's world3 at 746c2856 and re-imported, 0 SCRIPT ERROR; `devices.json` `zoom_k` 1.25 locally) vs this branch
