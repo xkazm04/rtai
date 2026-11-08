@@ -654,3 +654,27 @@ NEXT (it23+) amended: NEXT 1 done (unit green); NEXT 2 has the patch and the vet
   ERROR**, exit 0 each (`evidence/n9-world/director-reel-it22*`). With the full unit 1842/0 at 19d43e8d, only the
   evidence gate (scenarios / parity / goldens) is from 46dbea4b; 19d43e8d is view-only (quest 1's soaks), the
   freeze session re-runs the full gate anyway.
+## it23 (2026-11-08 07:28-08:28) BUILD
+- READ (07:30) rivet / perf / handheld journals and the asset lane: no REQUEST to world. All five items are
+  evidenced; this session raises the weakest: item 2's ink-outlined CombatBlood pools over the Dock 9 plan corpses
+  (it22 NEXT 2), with the signature-kill veto kept on the victim's own spot.
+- (07:40) FOUND while filming the first after (pool_at wired): zero pixels moved vs the before. Logged
+  (temporary Log, reverted): every kill reached `kill_human` at his own spot. Cause: `CombatArena.damage` emits
+  `actor_killed` BEFORE the hp drops, and with no veto on quest 1 the bleed runs synchronously, so `spot_m`'s
+  alive() test returned his standing spot. `pool_m` now skips alive() (`_laid_m`). The new dead-plan test forces a
+  card view (`ViewMode._shared = tilt70`); a planted fault (pool_m back on spot_m) is caught (it passed before:
+  headless unit runs are not a card view, so the plan branch never ran in the old soak test either).
+- MILESTONE (07:50) e3c54005 item 2: quest 1's kill pools lie under the plan corpse (DECISION
+  world/quest-pool-under-plan-corpse). `CombatBlood.pool_at` (unset = the d9 spot; CityBlood never sets it) =
+  `StreetQuestDeadPlan.pool_m`; the signature-kill veto still asks at the victim's own spot (it22's blocker).
+  combat_blood.gd stays 297 lines (three typed temporaries folded), collect_call_view 236 (baseline 237). Clip pair
+  from one build at 64 px/m, t13560-13860 (before = pool_at unset, a local edit restored): before, the pools spread
+  beside the bodies and the lowest body had none under him; after, each pool grows from under its body (frame 100),
+  later pools outlast the decayed bodies (by design). `gtai-masters/n9/world/dock9_pool_under_corpse_*` (2 crops +
+  the half-speed clip); frames.json entry 5 (the dead-spread 32 px/m crop dropped from it, on disk). Unit
+  --select 25/0, lint 15/15, 0 SCRIPT ERROR in both runs.
+Registry rules applied: `depth-ordered-layered-art` (blood under the body it came from, judged in motion),
+`motion-quality-gating` (the clip pair from one build and one tick range; a zero pixel diff treated as "not
+working", not as "no visible change"), `realtime-combat-semantics` (one blood per kill: the signature veto kept on
+the victim's spot).
+- (07:52) Full gate started at e3c54005 (`evidence/n9-world/gate-it23.log`); the reel x3 after it.
