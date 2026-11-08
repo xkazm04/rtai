@@ -86,6 +86,9 @@ ERROR. To see the work:
    - At 70 the bust covers most of it (Call C-4).
    - Filmed at 32 px/m (it4, 2x crops) and at a true 64 px/m (it23, combo and tilt70, before | after from one
      build: `king_robe_before_after_combo55_tilt70_64ppm_phase3_seed2_t1400.png`).
+   - At 70 the bust's fur and cape now hang to an inked hem over the robe instead of ending on a straight cut
+     (it25, assets king_bust_70_hem_v2; DECISION world/king-bust-hem; 64 px/m tilt70 t1400 / t1700:
+     `king_bust_hem_before_after_tilt70_64ppm_phase3_seed2_t1400_t1700_x2.png`).
 
 ## What does not (yet)
 
@@ -119,12 +122,15 @@ ERROR. To see the work:
   - Options: (a) as built; (b) no jitter; (c) a longer shotgun slide; (d) the dock fall at 0.25 s
     (`StreetQuestDeadPlan.FALL_TICKS` 15).
 - **C-4 the robe at 70.**
-  - At 64 px/m the 70 bust card ends on a hard horizontal cut (the fur and cape sliced straight) above the legs.
-    This was there before the robe too (d9 bust art); boss fights run in combo (55), where it does not show.
-  - Options: (a) as built (bust LIFT 0.74 hides most of the robe); (b) LIFT 0.6 so more robe shows; (c) a shorter
-    drawn 70 robe; (d) an assets redraw of the 70 bust with the cape hanging past its bottom edge (REQUESTed
-    as king_bust_70_hem). Drawing the robe in front of the bust was tried and does not help: the robe's top edge
-    sits on the same line, and it hides his sword arm (`gtai-n9/tmp/world/robe_front_tried_it23.png`).
+  - At 64 px/m the shipped 70 bust card ended on a hard horizontal cut (the fur and cape sliced straight) above
+    the legs (d9 bust art, there before the robe too).
+  - Built (it25, DECISION world/king-bust-hem): (d) assets' redraw of the 70 bust with the fur and cape hanging
+    to an irregular inked hem over the robe (king_bust_70_hem_v2, grade A), the bust's anchor kept:
+    `king_bust_hem_before_after_tilt70_64ppm_phase3_seed2_t1400_t1700_x2.png` (left = the cut card).
+  - Options still open: (a) the cut card (`KingArt.HEM` false); (b) LIFT 0.6 so more robe shows; (c) a shorter
+    drawn 70 robe. The redraw is the library's, not the shipped pixels (faces, chain and fur spots redrawn; at
+    64 px/m it reads as the same King). Drawing the robe in front of the bust was tried in it23 and does not help.
+
 - **C-5 the car knock-down.**
   - Built: threshold 5 m/s, slide 0.8 x the car's speed, 1.2 s down, damage 2.5 x (speed - 2.5).
   - Options: (a) as built; (b) slide_k 0.5; (c) threshold 8 m/s.

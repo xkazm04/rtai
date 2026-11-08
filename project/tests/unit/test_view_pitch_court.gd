@@ -2,7 +2,7 @@ extends GutTest
 ## Lane d8-view70: the King's court strips (KingArt) keyed by the card folder under combo.
 
 const COURT_55: String = "res://features/bosses/king/art/p55/king_bust_card.png"
-const COURT_70: String = "res://features/bosses/king/art/p70/king_bust_card.png"
+const COURT_70: String = "res://features/bosses/king/art/p70/king_bust_hem_card.png"  # n9 world
 ## The width factor view70 padded the p70 court cells by (d8's 1.5); n8 raised KingArt's factor,
 ## so the p70 bust now draws KingArt's factor over this one larger, the same growth as at 55.
 const PAD_K: float = 1.5
@@ -36,7 +36,8 @@ func test_the_p70_court_strip_draws_the_bust_as_wide_as_its_own_row() -> void:
 	var own: Array = RigHeadCard.rows_of("p70")["king"]
 	var own_tex: Texture2D = load(str(own[0])) as Texture2D
 	var court_tex: Texture2D = load(COURT_70) as Texture2D
-	assert_eq(court_tex.get_height(), own_tex.get_height(), "the same cell height")
+	var hem: int = KingArt.HEM_STRIP[70][1]
+	assert_eq(court_tex.get_height() - hem, own_tex.get_height(), "the same cell height + the hem")
 	assert_almost_eq(
 		float(court_tex.get_width()), own_tex.get_width() * PAD_K, 1.0, "cells padded by the factor"
 	)
@@ -96,3 +97,14 @@ func test_the_p70_slot_holds_the_court_set_so_70_compares_the_pitch_alone() -> v
 		var p: String = KingArt.PARTS_DIR % [70, set_dir, "l_foot"]
 		assert_true(ResourceLoader.exists(p), p)
 	assert_true(KingArt.strip_path("king", 90.0).is_empty(), "straight down: no court art")
+
+
+func test_the_p70_hem_sheet_keeps_the_busts_anchor() -> void:
+	# n9 world: the hem rows hang below the shipped card, so the anchor point stays where it was.
+	var row: Array = ViewPitchCourt.court_row("king", "p70")
+	var tex: Texture2D = load(COURT_70) as Texture2D
+	var anchor: float = row[1]
+	var hem: int = KingArt.HEM_STRIP[70][1]
+	var want: float = KingArt.STRIPS["king"][1] * (tex.get_height() - hem)
+	assert_almost_eq(anchor * tex.get_height(), want, 0.01, "the anchor in the shipped rows")
+	assert_eq(KingArt.anchor_k("king", KingArt.strip_path("king", 55.0)), 1.0, "55: no hem")
