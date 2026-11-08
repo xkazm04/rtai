@@ -90,3 +90,13 @@ NEXT (it4):
 2. Film the flamer diagonal burst (64 px/m), check one coherent flame with the game jet.
 3. Film the walk8 at 64 px/m in quest 1 frame by frame (accelerating steps = planted; top speed = the cap).
 4. Wire the armed walks per weapon (item 4); gates (unit full, lint, reel x3, evidence --no-bench).
+
+### Calls drafted for REPORT (it3)
+1. **His walk speed vs a planted foot.** His walk is 6.75 m/s (a run). Built: the 8-frame walk by distance
+   with the cadence held at 2 cycles/s: planted while he starts, stops and turns; at top speed the feet cover
+   27 % of the ground. Options: (a) a drawn run cycle (REQUEST rivet_run8, the default path), (b) a slower
+   walk (sim: combat.json walk_mps, the owner's 2026-11-04 baseline; not this lane's), (c) the cap value
+   (`RivetWalk.MAX_CYCLES_S`, one data value: 3.0 = a scuttle, more planted, busier legs).
+2. **The flamer's diagonal.** Built: the owner's r-7 B; a diagonal burst draws two flames (still in
+   frames.json). Options: wait for the drawn diagonal fire cells (REQUESTed), or `--rivet-flame=cone` meanwhile.
+3. **1.65 m framing**: no scene broke at 32 (city) or 48 (King combo); Servo not yet filmed.
