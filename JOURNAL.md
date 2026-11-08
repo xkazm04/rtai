@@ -84,7 +84,7 @@ NEXT (iteration 2), final: (a) one still of the folded card to confirm the LB / 
   ~5 px (`gtai-masters/n9/handheld/ghostcard-deck-lb-gap-fixed-crop-x2.png`). (b) The boss cam honours `zoom_k`: Rivet
   measures ~42 px tall in the King arena at 40 px/m = 1.1 m x ~38 px/m (he looks small because he is 1.1 m: rivet's
   1.65 m lands on its branch, ~66 px then). Nothing to fix on my side.
-- 02:20 MILESTONE the runtime legibility probe (owed since d9, LEDGER section 6): `TextProbe` + `legibility_walk.gd`
+- 02:04 MILESTONE the runtime legibility probe (owed since d9, LEDGER section 6): `TextProbe` + `legibility_walk.gd`
   (quest 1 under `deck` on pad events: title, quest HUD, pause) measure each text's cap and x-height ink px from the
   glyph cache; the draw_string sizes from a reviewed table. Deck: nothing below 9 px under the strict x-height reading
   (smallest: the boss count x 9 / cap 12, the 18 px texts x 10 / cap 13); every cap >= 12. Matches the pixels of the
@@ -92,3 +92,24 @@ NEXT (iteration 2), final: (a) one still of the folded card to confirm the LB / 
 - FRICTION: a `-s` SceneTree script cannot name autoloads (`Log`) at compile time: split into a launcher + a Node
   walker (the pad walker's pattern). Headless GUT's window is ~64x40, so the viewport stretch reads 0.05: the probe
   takes the stretch as a parameter in tests.
+- 02:12 MILESTONE E17 (LEDGER section 8): `deck` 60 vs `deck40` at 40 px/m, city, iGPU, 3 interleaved rounds, bench lock
+  held, all CONTENDED: GPU busy per second -30 % (54 -> 37 %), pinned CPU -24 %; confirms d9's E5 at the new zoom.
+  FRICTION: `ab.mjs` ignores `--out` (writes `evidence/sim/<name>/`): moved by hand to `evidence/n9h/it2/e17/`.
+- 02:15 Legibility on the other rows: `handheld_1080` all >= x 12; `switch_handheld` (base x 0.9) the boss bar count
+  "1 / 3" draws at 14 px = x 8 / cap 10 (digits only: its smallest character is the cap, 10 px); everything else >= 9.
+  The walk now scales the draw_string table by the window stretch. Commit 4723a988.
+- 02:17 Research: Valve's "SteamOS Compatible" label (May 2025) is derived from the Deck review, pass/fail, no extra
+  testing: the Deck review gates every SteamOS handheld (LEDGER section 1, sources).
+- frames.json (gtai-masters/n9/handheld): 13 entries; added the card-gap crop and the probed pause card (it replaces
+  the it1 pause still, file deleted, LEDGER reference updated).
+- No REQUESTs to handheld in rivet / world / perf this iteration; none sent.
+
+NEXT (iteration 3):
+1. The keyboard twin `ui_kb_glyphs_v1` as an owner Call: refactor `PadGlyphArt` into a glyph set (atlas + cell map;
+   the kb map: "W A S D" -> move_keys, "mouse" -> aim_mouse, E / F / Q / Esc / Space / Shift -> key_*), drawn on the
+   desktop only behind a study row or flag (desktop default unchanged); trim the kb cells to ink boxes like the pad's;
+   stills of the title card and the quest 1 prompt; provenance line. Gates: lint, full unit, reel x3.
+2. The Switch-class 720p boss count (x 8): an owed note or a row-level text scale; decide by a still.
+3. Re-take E16 (BC7) under the bench lock once world's commit is on main; the combo framing at 1280x800 on main.
+4. REPORT.md at the freeze: Calls (kb glyphs on the desktop? a larger handheld text scale? the 40 Hz battery row as
+   the Deck default?), the exe line, frames.json check.

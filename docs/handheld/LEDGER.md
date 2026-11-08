@@ -22,6 +22,14 @@ Lines marked *(model knowledge)* were not checked against a source.
 - **System:** runs under Proton or native; anti-cheat and some codecs are the usual blockers.
 - Recommendations ([recommendations](https://partner.steamgames.com/doc/steamdeck/recommendations)): Vulkan "for best performance and battery life"; per-device graphics settings kept out of Steam Cloud; other aspect ratios; offline single-player; prompts do not flip to keyboard glyphs unless the mouse is really used.
 - Suspend/resume: no published developer rule found; Valve made suspend a core feature ([TweakTown](https://www.tweaktown.com/news/80659/steam-decks-suspend-and-resume-feature-was-top-priority-for-valve/index.html)).
+- **SteamOS Compatible** (researched n9 it2): since May 2025 (with the first third-party SteamOS handheld) Steam shows a
+  pass/fail "SteamOS Compatible / Unsupported" label for non-Deck SteamOS devices: the game and all its middleware
+  (launchers, anti-cheat) must run on SteamOS, native or under Proton. It is derived from the Deck review with no extra
+  testing, and a Deck rating gives an equal or better SteamOS label; it says the game runs, not how well. So the Deck
+  review is the one gate for every SteamOS handheld; their speed is still ours to budget (the `handheld_1080` row).
+  Sources: [PCWorld](https://www.pcworld.com/article/2780157/valves-new-steamos-compatibility-ratings-go-beyond-the-steam-deck.html),
+  [Windows Central](https://www.windowscentral.com/gaming/steam/valve-steamos-compatibility-system-for-non-steam-deck-devices-legion-go-s),
+  [Engadget](https://engadget.com/gaming/valve-made-a-steam-deck-verified-program-for-things-that-arent-steam-decks-224535134.html).
 
 ### Proton vs a native Linux build (Godot 4)
 - Godot supports the Deck through its standard Linux export templates. [Godot consoles doc](https://docs.godotengine.org/en/4.5/tutorials/platform/consoles.html)
@@ -338,7 +346,7 @@ budget, the one site to lift on a 720p row is that count (16 -> 18 px authored, 
   and the iGPU has ~1 ms more headroom. JSONs: `evidence/n9h/it1/bc7/`. Re-take under the bench lock once main has it.
 
 - **E17 (n9 it2), the 40 Hz row at the new zoom:** `deck` (60 cap) vs `deck40` (40 cap), both 40 px/m, city, 1200
-  ticks, the iGPU, 8 pinned threads, 3 interleaved rounds (`tools/handheld/ab.mjs`), bench lock held about 02:06-02:14;
+  ticks, the iGPU, 8 pinned threads, 3 interleaved rounds (`tools/handheld/ab.mjs`), bench lock held about 02:05-02:12;
   **all 6 runs CONTENDED** (other lanes' Godot runs up): the ms are indicative, the ratios are what we keep.
 
   | metric (median of 3, +- spread) | deck (60) | deck40 (40) | change |
