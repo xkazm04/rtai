@@ -54,7 +54,9 @@ Numbers, methods and every A/B: `docs/perf/LEDGER.md` section "n9 night". Clips 
    The occlusion pass as a whole: ~800 -> ~280 us a riot frame. Hidden bodies and crowd patches identical in every
    run; tests compare the filtered query to the plain scan per body, in order, at 70 and 55 (6 planted faults
    caught). I split city_blood too: ~0.6 ms a riot frame, mostly the blood drops' wall checks (82 live drops a
-   tick, ~2 us each through a Callable into the sim) and the corpse stains (0.15 ms): the next lever (L22).
+   tick, ~2 us each through a Callable into the sim) and the corpse stains (0.15 ms). L22a (cell_at without an
+   Array a call) cut the drops' step 337 / 413 -> 283 / 294 us; the per-cell cache is next. Gates on 1d5a65c1:
+   ALL PASS (unit 1838 / 0), the reel 19 / 19 in top, tilt70, combo.
    Gates on 6b75d795: ALL PASS (unit 1837 / 0, scenarios 54 / 54, parity exact, look goldens 11 / 11,
    release-compile 618 / 0); the reel 19 / 19 in top, tilt70, combo on L20b.
 

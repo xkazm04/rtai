@@ -388,9 +388,10 @@ BloodFx.step_ticks is 115 us a frame vs 328 with it: **the wall checks are ~210 
 (a fresh 2-element Array and a Variant dispatch every call). Cells change only on a chunk stamp / clear.
 Probe A (`evidence/perf/n9-it6/l22/`): `cell_at` as `_o.call(&"cell_at", x, y)` (the same native method, no Array):
 step_ticks old 337 / 413 (+ 327 / 347 / 380 from the split runs) vs new **283 / 294 us** (2 interleaved pairs,
-CONTENDED 0-4; ranges apart, about -17 %, ~-55 us a riot frame); live drops 82.1 a tick in every run. NOT YET KEPT:
-it is a sim-wrapper file (every cell_at caller gains), so it lands next iteration with a test (native == ref
-`cell_at` over a stamped chunk) and the full gate. The bigger cut is a per-cell solid cache in CityBlood invalidated
+CONTENDED 0-4; ranges apart, about -17 %, ~-55 us a riot frame); live drops 82.1 a tick in every run. **KEPT as L22a
+(1d5a65c1)**: test `test_city_sim_native_cells` (native == ref `cell_at` over 4 stamped chunks, past them and off the
+map; a planted x / y swap caught); gate on 1d5a65c1 ALL PASS (unit 1838 / 0, scenarios 54 / 54, parity exact, look
+goldens 11 / 11, release-compile 618 / 0), the reel 19 / 19 in top, tilt70, combo, 0 SCRIPT ERROR. The bigger cut is a per-cell solid cache in CityBlood invalidated
 by the sim's chunk stamp / clear (exact; est. most of the 210 us).
 
 ### Gates (it6)

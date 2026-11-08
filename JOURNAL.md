@@ -416,3 +416,20 @@ NEXT (it7) amended, item 2 first:
     other `_call(..., [..])` wrappers called per tick (tile_at, etc.) for the same cut. Full gate + reel after.
 2b. Then the per-cell solid cache in CityBlood._solid, invalidated on the sim's chunk stamp / clear (exact), with the
     drop / decal sequence test.
+- 06:13 MILESTONE L22a committed 1d5a65c1 (CitySimNative.cell_at via Object.call; test_city_sim_native_cells, a planted
+  x / y swap caught). 06:15 GATE reel x3 on it: 19 / 19 full, 0 SCRIPT ERROR (`evidence/perf/n9-it6/reel-l22a/`).
+  06:22 GATE evidence --no-bench on 1d5a65c1: ALL PASS (lint 15 / 15, unit 1838 / 0, scenarios 54 / 54, parity exact,
+  look goldens 11 / 11, release-compile 618 / 0). NEXT item 2a is DONE.
+
+NEXT (it7), replaces the lists above:
+1. L22b: a per-cell solid cache in CityBlood._solid (or BloodFx), invalidated on the sim's chunk stamp / clear (check
+   what CitySimNative exposes: a map version or the residency's stamped + dropped, as CityOccluders.in_rect uses),
+   exact by test (the drop / decal sequence of a scripted spray into a wall, old vs new). Ceiling: ~210 us a riot frame
+   minus L22a's ~55. Also look at the other per-tick `_call(..., [..])` wrappers in city_sim_native.gd (26 of them:
+   the hot ones per tick, e.g. tile_at, snapshot readers) for L22a's cut.
+2. Small occlusion levers (near()'s key Dictionary, the silhouette once per rig): < 0.1 ms, only with a test.
+3. Freeze 10:30: the final table (main da108c13 via `gtai-n9/tmp/perf/prof3` vs HEAD, `ab.mjs --scenes=king,drive70,riot`,
+   bench.lock) + an A-vs-A for the floor (F12); export `build/export/windows/RTAI.exe`; final gates on the head (reel x3
+   + the evidence run with its log OUTSIDE the tree); REPORT final.
+4. Scratch: `gtai-n9/tmp/perf/cvprof` (timers for occlusion + blood + counters, never commit; arms in `arms/`),
+   `prof3` (main) for item 3, `world3` (keep until the freeze).
