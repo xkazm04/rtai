@@ -404,3 +404,15 @@ NEXT (it7):
 - 06:07 GATE director reel x3 on 6b75d795 (L20c): 19 / 19 chapters fully down in top, tilt70, combo, 0 SCRIPT ERROR
   (`evidence/perf/n9-it6/reel-l20c/`). NEXT item 1 is DONE. world's branch changes 1 line of boot/city_blood.gd;
   nobody touches features/fx/noir/blood_fx.gd (L22 is free to take).
+- 06:09 L22 ceiling probe (riot, no wall checks: measurement only): BloodFx.step_ticks 115 vs 328 us: the wall checks
+  are ~65 %. The chain is solid.call -> CityBlood._solid -> CitySimNative.cell_at -> `_call` -> `callv` (an Array a call).
+- 06:12 L22 probe A (cvprof, 2 pairs): `cell_at` via `_o.call(&"cell_at", x, y)`: step_ticks 337 / 413 -> 283 / 294 us
+  (~-17 %, ranges apart, live drops identical). Not ported yet (a sim-wrapper file: test + full gate first).
+  LEDGER "L22 probes". Arm in `cvprof/arms/l22/`, cvprof restored to the branch's city_sim_native.gd.
+
+NEXT (it7) amended, item 2 first:
+2a. Port L22 probe A (`evidence/perf/n9-it6/l22/cell_at-call.diff`) into project/features/city/sim/city_sim_native.gd
+    with a unit test (native cell_at == the ref's over a stamped chunk, incl. out-of-range points); also look at the
+    other `_call(..., [..])` wrappers called per tick (tile_at, etc.) for the same cut. Full gate + reel after.
+2b. Then the per-cell solid cache in CityBlood._solid, invalidated on the sim's chunk stamp / clear (exact), with the
+    drop / decal sequence test.

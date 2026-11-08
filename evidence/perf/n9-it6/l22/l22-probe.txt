@@ -1,0 +1,24 @@
+== ceil-nowall
+BLOODPROF blood.step 239.6 | beat 2.7 | pop 2.0 | stains 159.8 | frames 1829
+BLOODCNT per tick: slots 320.0 | live 85.2 | ticks 3602
+BLOODPROF2 step_ticks 115.2 | leak 2.2 | meshes 6.6 | resolve+mat 110.7
+== ceil-wall
+BLOODPROF blood.step 430.2 | beat 2.1 | pop 1.5 | stains 130.1 | frames 1829
+BLOODCNT per tick: slots 320.0 | live 82.1 | ticks 3602
+BLOODPROF2 step_ticks 327.5 | leak 1.7 | meshes 5.4 | resolve+mat 91.5
+== csn-new-1
+BLOODPROF blood.step 390.9 | beat 2.2 | pop 1.6 | stains 137.4 | frames 1829
+BLOODCNT per tick: slots 320.0 | live 82.1 | ticks 3602
+BLOODPROF2 step_ticks 283.2 | leak 1.7 | meshes 5.5 | resolve+mat 96.3
+== csn-old-1
+BLOODPROF blood.step 438.1 | beat 2.3 | pop 1.7 | stains 136.5 | frames 1829
+BLOODCNT per tick: slots 320.0 | live 82.1 | ticks 3602
+BLOODPROF2 step_ticks 337.0 | leak 1.8 | meshes 5.6 | resolve+mat 89.5
+== csn-new-2
+BLOODPROF blood.step 403.7 | beat 2.4 | pop 1.8 | stains 140.2 | frames 1829
+BLOODCNT per tick: slots 320.0 | live 82.1 | ticks 3602
+BLOODPROF2 step_ticks 294.0 | leak 1.9 | meshes 5.9 | resolve+mat 97.4
+== csn-old-2
+BLOODPROF blood.step 539.6 | beat 3.2 | pop 2.2 | stains 162.0 | frames 1829
+BLOODCNT per tick: slots 320.0 | live 82.1 | ticks 3602
+BLOODPROF2 step_ticks 412.9 | leak 2.3 | meshes 7.7 | resolve+mat 111.4

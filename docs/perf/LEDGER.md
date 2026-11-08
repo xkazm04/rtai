@@ -381,6 +381,18 @@ chunk calls, 139 candidates, 30 kept, near 200 us (the kept path: `_with_area`'s
 silhouette of the ~1.9 hidden bodies a frame). Next lever there: a per-frame chunk-key cache in near() (riot) and
 the silhouette only once per rig (drive); small (< 0.1 ms each).
 
+### L22 probes (it6): the blood drops' wall check
+Ceiling (cvprof, riot, one run an arm, measurement only: the drops fly through walls): with no wall check
+BloodFx.step_ticks is 115 us a frame vs 328 with it: **the wall checks are ~210 us (65 %)**. Each check is
+`solid.call` -> `CityBlood._solid` -> `CitySimNative.cell_at` -> `_call(&"cell_at", [x, y])` -> `Object.callv`
+(a fresh 2-element Array and a Variant dispatch every call). Cells change only on a chunk stamp / clear.
+Probe A (`evidence/perf/n9-it6/l22/`): `cell_at` as `_o.call(&"cell_at", x, y)` (the same native method, no Array):
+step_ticks old 337 / 413 (+ 327 / 347 / 380 from the split runs) vs new **283 / 294 us** (2 interleaved pairs,
+CONTENDED 0-4; ranges apart, about -17 %, ~-55 us a riot frame); live drops 82.1 a tick in every run. NOT YET KEPT:
+it is a sim-wrapper file (every cell_at caller gains), so it lands next iteration with a test (native == ref
+`cell_at` over a stamped chunk) and the full gate. The bigger cut is a per-cell solid cache in CityBlood invalidated
+by the sim's chunk stamp / clear (exact; est. most of the 210 us).
+
 ### Gates (it6)
 On 8990b643 (L20, the clean re-run owed from it5; `evidence/perf/n9-it6/evidence-8990b643.txt`) and on 6b75d795
 (L20b + L20c; `evidence-6b75d795.txt`): ALL PASS: lint 15 / 15, unit 1835 / 0 and 1837 / 0, scenarios 54 / 54, parity
