@@ -17,7 +17,7 @@
       "vsync": "enabled",
       "window_h": 800,
       "window_w": 1280,
-      "zoom_k": 1.5
+      "zoom_k": 1.25
     },
     {
       "id": "deck40",
@@ -31,7 +31,7 @@
       "vsync": "enabled",
       "window_h": 800,
       "window_w": 1280,
-      "zoom_k": 1.5
+      "zoom_k": 1.25
     },
     {
       "id": "deck_bench",
@@ -45,7 +45,7 @@
       "vsync": "disabled",
       "window_h": 800,
       "window_w": 1280,
-      "zoom_k": 1.5
+      "zoom_k": 1.25
     },
     {
       "id": "deck_bench_z1",
@@ -74,7 +74,7 @@
       "vsync": "disabled",
       "window_h": 800,
       "window_w": 1280,
-      "zoom_k": 1.5
+      "zoom_k": 1.25
     },
     {
       "draw_scale": 0.85,
@@ -89,7 +89,7 @@
       "vsync": "disabled",
       "window_h": 800,
       "window_w": 1280,
-      "zoom_k": 1.5
+      "zoom_k": 1.25
     },
     {
       "draw_scale": 0.75,
@@ -104,7 +104,7 @@
       "vsync": "enabled",
       "window_h": 800,
       "window_w": 1280,
-      "zoom_k": 1.5
+      "zoom_k": 1.25
     },
     {
       "id": "handheld_1080",
@@ -118,7 +118,7 @@
       "vsync": "enabled",
       "window_h": 1080,
       "window_w": 1920,
-      "zoom_k": 1.5
+      "zoom_k": 1.25
     },
     {
       "id": "handheld_1080_native",
@@ -132,7 +132,7 @@
       "vsync": "enabled",
       "window_h": 1080,
       "window_w": 1920,
-      "zoom_k": 1.5
+      "zoom_k": 1.25
     },
     {
       "id": "switch_handheld",
@@ -146,9 +146,9 @@
       "vsync": "enabled",
       "window_h": 720,
       "window_w": 1280,
-      "zoom_k": 1.5
+      "zoom_k": 1.25
     }
   ],
-  "doc": "Handheld lane (docs/handheld/LEDGER.md): the device profile per target, picked by the launch flag --device=<id> (a dash in the id reads as an underscore: --device=switch-handheld). The default `desktop` applies nothing: the shipped game is untouched. A row may set window_w/window_h (the window's size in px: the device's panel), max_fps (Engine.max_fps; 0 = uncapped), vsync (enabled, disabled, adaptive, mailbox), stretch_mode (canvas_items = draw at the window's size, the shipped mode; viewport = draw at the project's 1280x800 base and scale the image up: a fill-rate lever for a 1080p panel), zoom_k (the camera's px/m x this: a 7-inch panel at arm's length shows a metre at about half the visual angle of a desktop monitor), rumble (the pad rumble gain 0..1, HandheldRumble on the Events bus; absent = none), tier (full or handheld: the effect tier the views may read). sim_threads and sim_gpu are for the PC simulator only (tools/handheld/sim.mjs): the logical CPUs the process is pinned to and the GPU class it renders on (integrated = the CPU's own Radeon, weaker than a Deck's).",
+  "doc": "Handheld lane (docs/handheld/LEDGER.md): the device profile per target, picked by the launch flag --device=<id> (a dash in the id reads as an underscore: --device=switch-handheld). The default `desktop` applies nothing: the shipped game is untouched. A row may set window_w/window_h (the window's size in px: the device's panel), max_fps (Engine.max_fps; 0 = uncapped), vsync (enabled, disabled, adaptive, mailbox), stretch_mode (canvas_items = draw at the window's size, the shipped mode; viewport = draw at the project's 1280x800 base and scale the image up: a fill-rate lever for a 1080p panel), zoom_k (the camera's px/m x this: a 7-inch panel at arm's length shows a metre at about half the visual angle of a desktop monitor; the handheld rows take 1.25 = 40 px/m, the owner's pick of 2026-11-07), rumble (the pad rumble gain 0..1, HandheldRumble on the Events bus; absent = none), tier (full or handheld: the effect tier the views may read). sim_threads and sim_gpu are for the PC simulator only (tools/handheld/sim.mjs): the logical CPUs the process is pinned to and the GPU class it renders on (integrated = the CPU's own Radeon, weaker than a Deck's).",
   "schema": "gtai.devices/1"
 }

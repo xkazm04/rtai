@@ -15,7 +15,7 @@ func test_deck_row_is_the_panel_at_60() -> void:
 	assert_eq(p.id, &"deck")
 	assert_eq(p.window_size, Vector2i(1280, 800))
 	assert_eq(p.max_fps, 60)
-	assert_almost_eq(p.zoom_k, 1.5, 0.001)
+	assert_almost_eq(p.zoom_k, 1.25, 0.001)
 	assert_true(p.is_handheld())
 	assert_false(p.is_desktop())
 
@@ -58,5 +58,14 @@ func test_focus_pause_leaves_a_quest_without_a_run_alone() -> void:
 
 func test_view_zoom_keeps_the_framing_under_a_smaller_draw() -> void:
 	assert_eq(DeviceProfile.of("").view_zoom(), 1.0)
-	assert_almost_eq(DeviceProfile.of("deck").view_zoom(), 1.5, 0.001)
-	assert_almost_eq(DeviceProfile.of("deck_bench_ds75").view_zoom(), 1.5 * 0.75, 0.001)
+	assert_almost_eq(DeviceProfile.of("deck").view_zoom(), 1.25, 0.001)
+	assert_almost_eq(DeviceProfile.of("deck_bench_ds75").view_zoom(), 1.25 * 0.75, 0.001)
+
+
+func test_every_handheld_row_draws_at_40_ppm() -> void:
+	# owner h-1 B: 32 px/m x 1.25 = 40 px/m on every handheld row but the zoom study row
+	var p: DeviceProfile = DeviceProfile.of("")
+	for id: String in p.ids:
+		var row: DeviceProfile = DeviceProfile.of(id)
+		if row.is_handheld() and id != "deck_bench_z1":
+			assert_almost_eq(row.zoom_k, 1.25, 0.001, id)
