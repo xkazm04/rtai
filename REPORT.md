@@ -88,6 +88,10 @@ The research loop since:
   determinism note narrowed (the CitySim is already strict-FP, NAT-07; the engine's own math on an arm64 build is the
   open part, LEDGER section 1).
 
+Gates (it8): at 8c1acea1 (the boss cam ease) the evidence run `--no-bench` all PASS (lint, unit 1855/0, scenarios 54,
+parity, look goldens 11/11, release-compile 620/0, `evidence/n9h/it8/gates/evidence-run-8c1acea1.txt`); the director
+reel 19/19 fully down, 0 SCRIPT ERROR in top, tilt70 and combo at 630f91a7 (the shipped-code change; 8c1acea1 adds a
+test and a comment); mutation score on `cam_follow.gd` 19/20 (95 %), the survivor then killed by a test.
 Gates (it7): at 2d6a14a7 (the boss-cam band, the last shipped-code change before the `deck30` data row) full unit 1847/0 and
 the director reel 19/19 fully down, 0 SCRIPT ERROR in top, tilt70 and combo (`evidence/n9h/it7/gates/`).
 At 32f498d8 the evidence run `--no-bench` all PASS (lint, unit 1848/0, scenarios 54, parity (mutation caught at 629),

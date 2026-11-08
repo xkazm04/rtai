@@ -329,7 +329,18 @@ stick, 2/3 right stick, 4 LT, 5 RT.
   a brief catch-up after a jolt runs faster than the framing's own peak (11.3 -> 17.3 px/tick King). Hit-stops still
   stop the camera dead (the sim holds; the same with or without). Clips: `deck-king-40ppm-bosscam-ease-before-after-halfspeed.mp4`
   (the two worst jolts, half speed), `deck-king-40ppm-bosscam-ease-1280x800-igpu.mp4` (45 s). Mutation score on
-  `cam_follow.gd`: see JOURNAL it8. KEPT (handheld rows and `--boss-cam` only; `--boss-cam-ease=off` is the before).
+  `cam_follow.gd`: 19/20 (95 %); the survivor (a hit-stop on the very first frame) then killed by a test (8c1acea1).
+- **Scoping note (n9 it8): drawing between ticks, the cure for 40 Hz (E21).** `SimClock.alpha()` already exists
+  (accumulator / TICK_DT) and no view reads it: every view draws the last tick, so a 25 ms frame shows 1 or 2 ticks
+  of motion. Drawing at `tick - 1 + alpha` (the previous and the current tick's positions, lerped) makes each 40 Hz
+  frame advance exactly 1.5 ticks (the remainder pattern 0.5, 0 alternates with the 1, 2 tick counts), at the cost of
+  one tick (16.7 ms) of display latency. It is view only (SIM-03 safe; replay, parity and goldens untouched when
+  alpha is not read). Size: 18 view files read sim positions directly (`.pos`: collect_call 6, souls 5, bosses 3,
+  vehicles, player, combat, arena 1 each), plus the city's native buffers (vehicles, crowds) and the cameras
+  (FeelCam, BossCam, CollectCallView); each needs the previous tick's copy. The camera alone is not enough: with
+  only the camera smoothed, the sprites it follows (Rivet) would judder against a smooth background. Estimate:
+  2-3 days with a per-tick snapshot helper and a parity-style test; until then 30 and 60 are the even modes
+  (REPORT Call 4). OWED, not started. KEPT (handheld rows and `--boss-cam` only; `--boss-cam-ease=off` is the before).
 
 ## 6. Text legibility at 1280x800
 

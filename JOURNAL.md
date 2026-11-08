@@ -479,3 +479,30 @@ NEXT (iteration 8):
   FRICTION (~3 min): concurrent runs share APPDATA, so the iGPU King run's engine log rotated away (adapter "unknown",
   its SCRIPT ERROR count lost; labelled so in frames.json). Next time: one APPDATA per concurrent run.
 - 07:15 LEDGER (it7 correction + the ease table), REPORT (works: the ease; the "starts" item removed from not-working).
+- 07:19 MUTATION `cam_follow.gd` at 630f91a7: 19/20 killed (95 %); the survivor (`ticks <= 0` -> `< 0`: a hit-stop on a
+  fresh follower's first frame returned INF) killed by a new test, 8c1acea1. GATE at 630f91a7: director reel 19/19
+  fully down in top / tilt70 / combo, 0 SCRIPT ERROR (`evidence/n9h/it8/gates/`).
+- 07:21 FRICTION (~1 min): the evidence run refuses a dirty tree: the raw sim logs (.frames.json, .log) moved out to
+  `gtai-n9/tmp/handheld/it8/raw/`.
+- 07:31 GATE evidence run `--no-bench` at 8c1acea1: lint, unit 1855/0, scenarios 54, parity, look goldens 11/11,
+  release-compile 620/0: all PASS (`evidence/n9h/it8/gates/evidence-run-8c1acea1.txt`).
+- 07:32 LEDGER scoping note for 40 Hz (NEXT 2b): `SimClock.alpha()` exists, unread; drawing at tick-1+alpha makes every
+  40 Hz frame advance 1.5 ticks (+16.7 ms latency); 18 view files read `.pos`, plus the native buffers and the cameras;
+  the camera alone would make Rivet judder against the ground; ~2-3 days; owed. Mid-session READ: rivet (it10), world,
+  perf: no REQUEST to handheld; assets: latest it137 (rivet reload claw), nothing for handheld.
+
+NEXT (iteration 9):
+1. Read the other journals for REQUESTs at the start AND mid-session; the asset lane's deliveries (grep "handheld").
+   Never edit the tree while an evidence run is going; keep raw sim logs outside the tree (the dirty check); give each
+   concurrent Godot run its own APPDATA (`appdata/handheld-<run>`, with the export_templates junction NOT needed for
+   sim runs) so engine logs do not rotate each other away.
+2. Research loop, best first: (a) the Servo clip at 1280x800 on the iGPU with the ease (replace frames.json entry 4,
+   `deck-servo-40ppm-bosscam-1280x800-igpu.mp4`, pre-ease), a run with its own APPDATA so the adapter line and the
+   SCRIPT ERROR count are on record; re-take the King iGPU clip the same way if time (entry 14's log was lost);
+   (b) the ease on `deck40` (2-tick frames: CamFollow.advance spreads the target) filmed at 40 fps, a motion read
+   with a ground-band phase correlation (fix pancorr.py: correlate y 420-620, not the whole frame; it7's lesson);
+   (c) near the freeze, re-run E20 on world's final head (recipe in it6 NEXT) with `deck` and `deck30`.
+3. Freeze 10:30: export `build/export/windows/RTAI.exe` (`"$GODOT_BIN" --headless --path project --export-release
+   windows-showcase ../build/export/windows/RTAI.exe`), final gates on the head (reel x3 + evidence run with the log
+   outside the tree), REPORT final (gates line, exe line, Calls 1-5, frames.json 15 entries all present: check every
+   file exists; masters has 31 files, the superseded bc7 still and band clip are still referenced by LEDGER/REPORT).
