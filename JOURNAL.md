@@ -376,3 +376,28 @@ NEXT (it6), replaces the list above (item 1 DONE: L20 is in 52ff53f0):
   committed 700712c7 after the pre-commit hook caught of_chunk at 44 lines and the test file at 212 (the index moved
   to `CityOccluderCols`, the query tests to `test_city_occluders`; 3 planted faults re-caught on the moved code).
 - 05:52 LEDGER L20b / L20c (465a52c6).
+- 05:56 city_blood split (cvprof timers; `evidence/perf/n9-it6/split/`): riot blood.step 450-496 us a frame
+  (BloodFx.step_ticks 347-380: 82 live drops a tick x 2 BloodFx, ~2 us a drop-step through `solid.call` ->
+  `CityBlood._solid` -> `sim.cell_at`; _resolve 91-101), CorpseStains.step 140-159: ~0.6 ms = the 0.80 NodeSpans row.
+  FRICTION: the first split run had 3668 SCRIPT ERRORs (cvprof's class cache did not know the new CityOccluderCols
+  file: run `--import` in a scratch worktree after adding a class file); its blood numbers (37 us) are void.
+- 05:58 occlusion counts after L20c: riot 0 candidates / 33 chunk calls a frame (near 120-143 us = per-call
+  overhead), drive 139 candidates, 30 kept (near 200 us: the kept path + the hidden bodies' silhouettes).
+- 06:02 GATE evidence --no-bench on 6b75d795 (L20b + L20c): ALL PASS: lint 15 / 15, unit 1837 / 0, scenarios 54 / 54,
+  parity exact, look goldens 11 / 11, release-compile 618 / 0. Reel x3 on it running (`gtai-n9/tmp/perf/reel6b`).
+- LEDGER split + gates (it6), REPORT item 11.
+
+NEXT (it7):
+1. Copy the reel x3 from `gtai-n9/tmp/perf/reel6b/` (on 6b75d795 = L20c) into `evidence/perf/n9-it6/reel-l20c/`;
+   check 19 / 19 full in each view and 0 SCRIPT ERROR (the awk PARTIAL check in it6), commit.
+2. L22 (blood drops): hand BloodFx a direct cell lookup (a typed callable-free path: e.g. a `CitySim` ref +
+   `cell_at`, or a cached per-cell solid byte grid for the resident area) instead of `solid.call` -> `_solid`, and skip
+   the 320-slot walk when `drops == 0`. Exactness test first: a scripted spray into a wall, the drop / decal sequence
+   (positions, sizes, dirs, wall_hits) identical old vs new. BloodFx is `features/fx/noir/` (no lane owns it tonight;
+   check the world journal first: the dead redesign may touch blood). A/B with the cvprof timers (riot x3 pairs).
+3. Small occlusion levers: near()'s 4-corner keys without the Dictionary / array literal (keep the insertion order
+   and the float32 Vector2 math), the silhouette once per rig (drive). < 0.1 ms each: only with a test.
+4. The final table at the freeze (main da108c13 via `gtai-n9/tmp/perf/prof3` vs HEAD: `ab.mjs --scenes=king,drive70,riot`,
+   bench.lock) + an A-vs-A for the floor (F12); export the exe at 10:30; REPORT final.
+5. cvprof scratch worktree: timers for occlusion, blood (city_blood / combat_blood / blood_fx) and the occluder
+   counters are applied (never commit it); `arms/` holds every A/B arm.

@@ -1,4 +1,4 @@
-# n9 perf REPORT (branch `n9-perf`, cut from main da108c13; DRAFT it5, final at the freeze)
+# n9 perf REPORT (branch `n9-perf`, cut from main da108c13; DRAFT it6, final at the freeze)
 
 Numbers, methods and every A/B: `docs/perf/LEDGER.md` section "n9 night". Clips and stills:
 `C:\Users\kazda\kiro\gtai-masters\n9\perf\` (`frames.json`).
@@ -46,6 +46,17 @@ Numbers, methods and every A/B: `docs/perf/LEDGER.md` section "n9 night". Clips 
    11 / 11, release-compile 617 / 0. The fx_pool mutation score is 90.9 %. On 28d8c8f7 (+ L20): every stage passed on
    content (unit 1835 / 0, scenarios 54 / 54, parity exact, look goldens 11 / 11, release-compile 617 / 0), but the run
    is marked FAIL because I edited JOURNAL / REPORT while it ran (the tree-changed guard). It must be re-run untouched.
+
+11. **The research loop, it6: the occlusion query cut to a fifth.** L20b keeps only the buildings whose ground rect
+   can meet the body box (exact: any other building's drawn area misses the box at every lift); L20c indexes each
+   chunk's buildings by screen column so a body reads one or two columns. The riot's per-rig query went
+   ~650 (L20's before) -> 253 (L20b) -> 129 us a frame (L20c); the drive 543 -> 206 us (L20b; L20c a wash there).
+   The occlusion pass as a whole: ~800 -> ~280 us a riot frame. Hidden bodies and crowd patches identical in every
+   run; tests compare the filtered query to the plain scan per body, in order, at 70 and 55 (6 planted faults
+   caught). I split city_blood too: ~0.6 ms a riot frame, mostly the blood drops' wall checks (82 live drops a
+   tick, ~2 us each through a Callable into the sim) and the corpse stains (0.15 ms): the next lever (L22).
+   Gates on 6b75d795: ALL PASS (unit 1837 / 0, scenarios 54 / 54, parity exact, look goldens 11 / 11,
+   release-compile 618 / 0); the reel 19 / 19 in top, tilt70, combo on L20b.
 
 ## What does not
 - The first L17 test was vacuous. It compared `MultiMesh.buffer`, which a headless run keeps empty. The mutation run

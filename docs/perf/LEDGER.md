@@ -365,6 +365,29 @@ overhead or the hit path, not split yet). L20 + L20b + L20c together: the riot's
 median of 705 / 652) -> ~130 us a frame**, the occlusion `_process` ~800 -> ~280 us. No frame-total claim (its spread is
 larger than 0.5 ms under contention).
 
+### Split (it6): city_blood and the occlusion query's remaining cost (cvprof timers, CONTENDED 4-6)
+Riot (tilt70, 30 s, fixed 60; `evidence/perf/n9-it6/split/`): `CityBlood._process` = **blood.step 450-496 us a
+frame** (BloodFx.step_ticks 347-380, CombatBlood._resolve + the shader parameter 91-101, the leak 2, the splat meshes
+6-7) + **CorpseStains.step 140-159** + the kill beat 2-3 + the muzzle pop 2: ~0.6-0.66 ms, which matches the 0.80 ms
+NodeSpans row (it4). The drive: blood.step 32, stains 9 (no deaths). BloodFx in the riot: 320 drop slots, **82 live a
+tick**, 2 BloodFx stepped a frame (blood + oil): ~2 us a live drop-step. Its cost per drop is `_hit_wall` ->
+`BloodMarks.wall_normal` -> `solid.call` (a Callable into `CityBlood._solid` -> the native `sim.cell_at`, 1-3 calls a
+drop a tick) plus the Vector2 updates. Next lever (L22, not built): hand BloodFx a direct cell lookup instead of the
+Callable chain, and skip the 320-slot walk when `drops == 0`; est. step_ticks -30..-50 % (~-150 us a riot frame); the
+exactness test is the same drop / decal sequence over a scripted spray into a wall.
+The occlusion query after L20c (per frame): riot 33 chunk calls, **0 candidates, 0 kept** (no rig stands near a
+building), near 143 us = per-call overhead (the 4-corner key Dictionary, residency lookups, the timers); drive 13
+chunk calls, 139 candidates, 30 kept, near 200 us (the kept path: `_with_area`'s lift lookup, `body_patch`, and the
+silhouette of the ~1.9 hidden bodies a frame). Next lever there: a per-frame chunk-key cache in near() (riot) and
+the silhouette only once per rig (drive); small (< 0.1 ms each).
+
+### Gates (it6)
+On 8990b643 (L20, the clean re-run owed from it5; `evidence/perf/n9-it6/evidence-8990b643.txt`) and on 6b75d795
+(L20b + L20c; `evidence-6b75d795.txt`): ALL PASS: lint 15 / 15, unit 1835 / 0 and 1837 / 0, scenarios 54 / 54, parity
+bit-exact (mutation caught at 629), look goldens 11 / 11 (worst 0.27), release-compile 617 / 0 and 618 / 0. The director
+reel x3 (headless, fixed 60, `--quit-after 16000`) on 6496dbdb (L20b): 19 / 19 chapters fully down in top, tilt70,
+combo, 0 SCRIPT ERROR (`evidence/perf/n9-it6/reel/`).
+
 ### Item 2 (it2): the traffic-sheet split is moot under BC7
 n9-world 3e02d3b8 imports the p70 traffic sheet as BC7: `traffic_cards.png-313d05e5...bptc.ctex` = **18,063,412 B**
 (4032 x 4480 x 1 B), one upload into a **32 MB** pow2 staging buffer (L9's mechanism), against 128 MB lossless. The
