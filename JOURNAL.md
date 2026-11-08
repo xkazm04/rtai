@@ -586,3 +586,30 @@ code moves after ce862403.
   are encoded in gtai-masters).
 NEXT (it20+) amended: drop NEXT 2 (the wall overlap) unless a shot shows a body over a roof edge again; the rest
 stands (Dock 9 at 64 optional, the freeze list).
+## it22 (2026-11-08 06:44-07:44) BUILD
+- READ (06:45) rivet / perf / handheld journals: no REQUEST to world. Assets asked for world's word on
+  dead_plan_v1_contractor pose D (reads as a second face-down): ANSWER to assets: accepted as served (grade B), no
+  redraw asked; at 64 px/m it reads as a different body because the push and the jitter turn it. Plan: the weakest
+  evidence gap first, Dock 9 at 64 px/m (owed since it16).
+- MILESTONE (06:52) 165d50a0 `quest1_clip.gd --cam=dead` (dev, render only, like rivet-arsenal's --cam=fight): the
+  capture camera leans toward the dead; first Dock 9 frame at 64 px/m. FOUND at once: five contractors heap on the
+  crossing into one orange blob at 64 (the it19 "they overlap" honest limit, now plain).
+- MILESTONE (06:55) 3e7e39de item 2: the dock dead push off the bodies already lying (DECISION
+  world/quest-dead-spread): within SPACE_M 1.6 m, up to PUSH_MAX_M 0.9 m, fixed at first sight (earlier dead never
+  move), eased in with the fall. Same seed/tick at 64: before three merged in the middle, after each body reads.
+  New unit test 1; --changed 1825/0; lint 15/15. `gtai-masters/n9/world/dock9_dead_spread_before_after_tilt70_64ppm_t13800.png`,
+  the 32 px/m crop x3 `dock9_dead_spread_before_after_tilt70_32ppm_t13800_crop3x.png` (before = the d9 planks).
+- (07:00) 46dbea4b the dev cam holds the densest heap (CLUSTER_M 3) and eases (0.06/frame): the latest-hurt anchor
+  wandered to other kill sites (shots into old corpses re-stamp hurt_tick). Clip before | after at 64 px/m, half
+  speed, t13560-13860 (`dock9_dead_spread_before_after_tilt70_64ppm_t13560-13860_halfspeed.mp4`; before = SPACE_M 0
+  local edit, restored, never committed). 0 SCRIPT ERROR in all six runs. frames.json: 15 (the riot full 64 still
+  and the 32 fall clip dropped as superseded; FRICTION: I dropped two other entries by mistake first and re-entered
+  them from the journal facts, marked so in their notes).
+- FOUND (07:01) in the 64 px/m clip: the dark-red ink-outlined blood pools (KillView's parts: its `gib_layer` sits
+  at z +3 above the cast view's corpses; `ground` at -1) draw OVER the dead contractors, in both arms (pre-existing,
+  not the push). Frame: `gtai-n9/tmp/world/pools_over_dead_t13800_64ppm.png` (left = before, right = after). A
+  pool over a body reads wrong ("blood pooling over time" belongs under him). Not fixed this session (kill_view.gd
+  is combat's shared view; needs a look at what the shape is: a gib part vs a pool decal).
+Registry rules applied: `depth-ordered-layered-art` (found the pool-over-corpse order break, logged with the
+frame), `motion-quality-gating` (before/after from the same seed and ticks in motion; a capture camera that
+wandered was judged a capture fault and fixed before filming), `generative-artifact-gating` (no new art).
