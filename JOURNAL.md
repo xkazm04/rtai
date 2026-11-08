@@ -592,7 +592,8 @@ held pose that still shows the d9 arm; rivet wires it as the reload cell per fac
 NEXT (it10):
 1. (done in it9: the reels on b43824fd `reel-director-it9b-<v>.log` are 19/19 fully down in top, tilt70, combo, 0
    SCRIPT ERROR, exit 0, 06:50-06:58.)
-2. (70 done in it9, a1fff33e; its reels green, committed.) A full unit run + evidence --no-bench on the it9 head.
+2. (70 done in it9, a1fff33e; its reels green, committed. Full unit on 5da575a2 = **1835/0**, 07:11-07:13; the last
+   evidence --no-bench is on 4dcacec3: re-run it on the it10 head with the tree held still.)
    The flamer run at 55 (library round 0705): pack like a1fff33e with --k 0.6111,0.6197
    --tone=p55/rivet_eq_flamethrower.png, measure with `gtai-n9/tmp/rivet/it8/travel_grid.py` vs p55 run8, RUN_ROW_K for
    > 5 % off, add it to the unit test's p55 asserts, film (King combo 48 px/m `--loadout=flamethrower`, footlock9).
