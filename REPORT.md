@@ -21,6 +21,8 @@ The owner's picks of 2026-11-07, in the brief's order:
    floor under the strict x-height reading (smallest: the boss count x 9 / cap 12; the 18 px texts x 10 / cap 13).
    Stills: `ghostpanel-king-deck-before-after-40ppm-1280x800.png`, `ghostcard-deck-lb-gap-fixed-crop-x2.png`.
    The desktop card is unchanged (`desktop` row has no `hud`).
+   The one text that sat at the floor, the boss bar's phase count "1 / 3", draws at 18 px instead of 16 on the
+   compact-HUD rows (it5, DECISION `handheld/boss-count-18`; the desktop stays 16).
 3. **The drawn pad glyphs (`ui_pad_glyphs_v1`).** `PadGlyphArt` draws the bracketed pad names as the ink glyphs in the
    quest 1 prompt, the title and pause controls line and the ghost card's key hint, on the handheld rows (b349c3bf,
    DECISION `handheld/drawn-pad-glyphs`, provenance line in `steam/ai-provenance/2026-11.jsonl`). Each cell draws by its

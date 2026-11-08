@@ -13,6 +13,12 @@ Lines marked *(model knowledge)* were not checked against a source.
 - APU: Zen 2, 4 cores / 8 threads, 2.4-3.5 GHz; GPU 8 RDNA 2 CUs at 1.0-1.6 GHz (1.6 TFLOPS FP32); APU power 4-15 W. [steamdeck.com/tech](https://www.steamdeck.com/en/tech), [LCD spec PDF](https://cdn.steamstatic.com/steamdeck/images/press/techspecs/steamdeck_techspecs.pdf)
 - 16 GB LPDDR5 shared (5500 MT/s LCD, 6400 MT/s OLED); the GPU has 1 GB reserved by default (BIOS UMA frame buffer, max 4 GB) and SteamOS moves more on demand. [Windows Central](https://www.windowscentral.com/gaming/pc-gaming/how-to-increase-vram-on-steam-deck)
 - Screens: LCD 7" 1280x800 16:10 60 Hz; OLED 7.4" 1280x800 up to 90 Hz HDR. Batteries 40 Wh / 50 Wh. [spec PDF](https://cdn.steamstatic.com/steamdeck/images/press/techspecs/steamdeck_techspecs.pdf), [tech](https://www.steamdeck.com/en/tech)
+- **Single-thread speed vs this PC** (researched n9 it5, for E15 / E18): Cinebench R23 single-core, the Deck's APU
+  ~975 ([cpu-monkey](https://www.cpu-monkey.com/en/cpu-valve_steam_deck_amd_custom_apu_0405)), the 7800X3D stock 1796
+  ([overclocking.com review](https://en.overclocking.com/review-amd-ryzen-7-7800x3d-the-new-king-of-gaming/5/)):
+  **~1.84x** per thread (E15's model estimate was 1.6-2x). A render benchmark, not a game: the X3D's cache helps a
+  game's main thread more, and the Deck's CPU clocks below 3.5 GHz when the GPU takes the 15 W, so the real gap in
+  play is likely wider *(model knowledge)*. One Deck core is ~0.54 of one core here at best.
 - Quick access menu: refresh slider 40-60 Hz (LCD); frame limiter 1:1, 1:2, 1:4 of the refresh (60/30/15 or 40/20/10); a TDP limit and half-rate shading. [BoilingSteam](https://boilingsteam.com/steamos-3-2-introduces-flexible-refresh-rates-for-the-steam-deck), [SDHQ](https://steamdeckhq.com/tips-and-guides/the-sdhq-performance-settings-encyclopedia/)
 
 ### Steam Deck Verified (Valve's criteria, [partner.steamgames.com/doc/steamdeck/compat](https://partner.steamgames.com/doc/steamdeck/compat))
@@ -300,6 +306,14 @@ recommendation; the x-height is 9-11 px on 13 of the 28 probed items** (the 16-2
 7-inch panel 10 px = 1.2 mm. A larger handheld text scale (e.g. 1.15x on the 16-20 px fonts, behind the rows) is a
 Call, not built: the cap reading passes everywhere, and the cards are laid out around these sizes.
 
+**n9 it5: the boss count lifted (3778c3ac, DECISION `handheld/boss-count-18`).** The one text at the floor, the boss
+bar's "1 / 3", draws at 18 px on the compact-HUD rows (`BossBar.count_px`; the desktop keeps 16, its right end kept on
+the banner). The walk re-run (`evidence/n9h/it5/legibility-{deck,switch_handheld}/`, 0 SCRIPT ERROR): **`deck` x 9 ->
+10 / cap 12 -> 13, so every text on the Deck row now has x-height >= 10 px** (the smallest are the pause card's 18 px
+-, + and Toggle, x 10 / cap 13); `switch_handheld` x 8 -> 9 / cap 10 -> 12 (no text below 9 under either reading).
+On the pixels of the King arena (iGPU, t = 14 s, `--seed=2`): the digit height 12 -> 13 px on `deck` (`deck_hud_full`
+is the 16 px before side), 10 -> 11 px at 720p. Still: `gtai-masters/n9/handheld/count-deck-16-vs-18-crop-x4.png`.
+
 **The other rows (it2, the walk on the dGPU; the draw sizes scaled by the window stretch)**
 (`evidence/n9h/it2/legibility/legibility-<row>.json`): `handheld_1080` (1920x1080, the base drawn and scaled 1.35x):
 every text 22 px or more, x-height >= 12, nothing near the floor. `switch_handheld` (1280x720, the 1280x800 base
@@ -380,6 +394,31 @@ budget, the one site to lift on a 720p row is that count (16 -> 18 px authored, 
   uncapped demand is ~0.53, so 55 % barely binds). Owed (E18): 45 / 35 / 25 % under the bench lock, interleaved, to
   find where 60 Hz and the 40 Hz row break. Caveat: a rate cap throttles in slices, so it models a slower core's
   throughput, not its latency (`evidence/n9h/it4/e18-smoke/`).
+- **E18 (n9 it5), the slower-core sweep: DROPPED as a model** (the finding kept). `ab.mjs --rounds=3`, `deck`, city,
+  1200 ticks, pinned to 2 threads (1 core + SMT), the 2-CU iGPU, below-normal priority, **bench.lock held** 04:28-04:40;
+  5 of 12 runs CONTENDED (1-2 other Godot runs, labelled per run). Read per frame by
+  `evidence/n9h/it5/e18/analyse.mjs` (the sim's ticks per wall second from frame 60 on: real time = 60; stalls = frames
+  over 100 ms). Medians of 3, the spread in brackets:
+
+  | cap (of one logical CPU) | frame p50 | ticks / s | stalls > 100 ms | worst frame | settled > 33 ms |
+  |---|---|---|---|---|---|
+  | none (uses 0.40-0.50 core) | 16.62 ms | **59.94** (59.92-59.99) | **0** (0-0) | 21-24 ms | 0 (0-2) |
+  | 45 % | 16.65 ms | 47.9 (35.6-58.3) | 2 (2-39) | 0.5-3.5 s | 13 (4-77) |
+  | 35 % | 16.62 ms | 52.9 (51.1-56.3) | 28 (2-36) | 0.2-1.1 s | 41 (11-44) |
+  | 25 % | 16.62 ms | 55.0 (39.2-56.5) | 3 (2-51) | 0.4-1.2 s | 14 (4-61) |
+
+  **Why dropped:** every cap leaves p50 on the 60 Hz vsync and instead freezes the game for 0.2-3.5 s at a time, and
+  the result does not fall in order with the cap (45 % is worse than 25 %): Windows' hard cap lets the process run at
+  full speed until its share for the interval is spent, then stops it. A slower core stretches every frame a little;
+  this stretches none and stops some. It cannot place the 60 Hz break, so the 40 Hz half was not run (stopped before
+  its first run, the lock released). **The finding kept:** the uncapped game's 0.40-0.50 core at 60 Hz (E15: 0.53)
+  is not all work. `wall - pump` (pump = the pacing wait) shows the frame mostly waiting, and a 25 % cap still moved
+  the sim at 55 ticks/s between freezes, catching up ticks without drawing. So E15's "0.85-1.05 of a Deck core" is an
+  upper bound. With the sourced 1.84x (section 1), the real demand sits somewhere between ~0.3 and ~0.5 core here,
+  **~0.55-0.92 of one Deck core at 60 Hz** (an estimate on a render benchmark's ratio, not a measurement). Only a
+  Deck can settle it (port readiness: "real frame times on Zen 2"). `cpu_cap.ps1` stays as a sustained-throughput
+  check, labelled as such. The lever stays the same: the 40 Hz row (E17) or work off the main thread.
+  JSONs: `evidence/sim/e18-deck60/` (+ `e18-deck60.txt`), the analysis table `evidence/n9h/it5/e18/table.txt`.
 - **E16b (n9 it4), the re-take under the bench lock**, on world's later head b0f1024e (BC7 since 746c2856, plus the
   dead redesign and the car knock-down) in my own detached worktree (`gtai-n9/tmp/handheld/w16`, its `.godot` copied
   from perf's world3 at 746c2856 and re-imported, 0 SCRIPT ERROR; `devices.json` `zoom_k` 1.25 locally) vs this branch
