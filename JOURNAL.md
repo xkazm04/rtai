@@ -74,7 +74,10 @@ a pistol in his claw while he holds the ray gun. Plan: wire them per weapon for 
     `..._flamer_every_direction_before_after_diagonal_two_flames_..._f349_358_367.png`.
 - FRICTION (~3 min): `--boss=king` is an arena flag: the first King film ran the city block (unknown arg
   warnings). Boss fights: `res://dev/arena/arena.tscn -- --boss=king --bot=boss --view=combo ...`.
-- Gates it3: unit full 1816/0 (on b06c962f); lint 15/15. Reels and evidence run NOT run yet (owed it4).
+- Gates it3: unit full 1816/0 (on b06c962f); lint 15/15; director reel (`res://dev/arena/arena.tscn --quit-after 20000
+  -- --bot=reel --reel=director --loadout=pistol --rigs --view=<v>`, headless, on 620bd6f7) 19/19 chapters fully
+  down in tilt70, combo and top, 0 SCRIPT ERROR, exit 0 (`evidence/n9/reel-director-it3-<view>.log`).
+  Evidence run --no-bench: started 01:41 (log `C:/Users/kazda/kiro/gtai-n9/tmp/rivet/evidence-it3.log`); check it4.
 
 REQUEST to assets: rivet_eq_flamethrower_fire_diag_70 and _55, pitch 70 and 55, the flamer's FIRE cells at
 the four diagonals (3/4 toward right, 3/4 away right, and the drawn 3/4 toward left / 3/4 away left, never
