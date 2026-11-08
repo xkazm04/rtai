@@ -635,6 +635,20 @@ evidence run plus the seams lane's), so read the ratios, not the ms; a quiet rer
   `evidence/perf/rel-vs-dbg-screen0/boot.log`): exe 3.95 / 2.55 / 2.41 / 2.69 / 2.58 s, editor 3.98 / 4.29 /
   4.08 / 4.89 / 3.89 s: **median 2.58 s vs 4.08 s**. (The first table's 2.86 vs 4.35 s had the exe on the other screen.)
 
+## Final table n9, quest 1 and the director reel (it10, 09:00-): main da108c13 vs n9-perf dc9ea2fd vs a byte copy
+The two brief scenes missing from tonight's tables. `node tools/perf/ab.mjs --scenes=quest1 --pairs=3
+--arms=main:^--path <gtai-n9/tmp/perf/prof3>/project,head:,head2:^--path <gtai-n9/tmp/perf/head2>/project`
+(`evidence/perf/n9-it10/quest1/` + `quest1.log`), then `--scenes=reel` the same (`reel/` + `reel.log`). Editor binary,
+windowed D3D12 1920x1080, fixed 60 uncapped, bench.lock via ab.mjs, 0 errors. head = this branch's project
+(project/ unchanged since efa848cb but for comments); head2 = its byte copy (F12's A-vs-A floor). quest1 =
+`quest1_frames.gd` from tick 5800 (the Toner Room dialogue), 1200 frames; no draws / GPU / VRAM in that log (n/m).
+Quest 1: 9 runs, 3 labelled CONTENDED. Median ± half-spread:
+
+| scene | metric | main | head | head2 (A-vs-A) | verdict |
+|---|---|---|---|---|---|
+| quest 1 | p50 / p99 / p99.9 ms | 3.43 ±0.80 / 6.50 / 16.19 | 3.32 ±0.34 / 6.91 / 16.59 | 3.56 ±0.05 / 6.23 / 15.15 | WASH (head vs head2 0.24 ms > head vs main 0.11) |
+| quest 1 | CPU cores, steady RAM | 1.04, 1068 MB (1067-1069) | 1.02, 1069 (1006-1069) | 0.98, 1006 (1004-1007) | WASH; the RAM is the per-run ~60 MB state seen on the release riot (head 1 / 3 runs low, head2 3 / 3): not a saving |
+
 ## Final table n9 (it8, 07:28-07:34, PROVISIONAL): main da108c13 vs n9-perf 1365b7f3 vs a byte copy (A-vs-A)
 `node tools/perf/ab.mjs --scenes=king,drive70,riot --pairs=3 --arms=main:^--path <gtai-n9/tmp/perf/prof3>/project,head:,head2:^--path <gtai-n9/tmp/perf/head2>/project`
 (`evidence/perf/n9-final-1365b7f3/`: ab.json + run.txt). Editor binary (debug), windowed D3D12 1920x1080, fixed 60

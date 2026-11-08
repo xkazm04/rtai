@@ -109,6 +109,10 @@ Numbers, methods and every A/B: `docs/perf/LEDGER.md` section "n9 night". Clips 
    blocks are stored raw while lossless textures are WebP. Compressed in 1 MB chunks, the way a store's depot
    does it, it is 213 -> 155 MB (LZMA) or 216 -> 168 MB (zlib): **about 45-60 MB less to download, about 194 MB more
    on disk, about 350 MB less on the GPU** (LEDGER "What ships", `tools/perf/pck_download.py`).
+16. **it10: the F-19 control arms and the quest 1 row.** On main's old code a real Start press freezes the editor
+    binary (5 / 20) but neither exported build (release 0 / 20, debug 0 / 20): item 1 and Call P-1. Quest 1 (editor
+    binary, 3 pairs, main / head / a byte copy): WASH on every metric (p50 3.43 / 3.32 / 3.56 ms; the head-vs-copy
+    floor is larger than head vs main). LEDGER "Final table n9, quest 1 and the director reel".
 
 ## What does not
 - The first L17 test was vacuous. It compared `MultiMesh.buffer`, which a headless run keeps empty. The mutation run
