@@ -54,6 +54,14 @@ const NEAR_M: float = 3.0
 const MEMORY: int = 256
 const NODE: String = "DeadPlan"
 const PICK: StringName = &"street_dead_plan"
+## n9 item 4 (view half): the head end lies HEAD_K of standing past the pelvis (the longest pose:
+## 1.4 x standing); the pose is pulled back short of the first solid along the blow.
+const HEAD_K: float = 0.7
+const FREE_STEPS: int = 8
+const FREE: StringName = &"street_dead_plan_free"
+
+## The city's solid test (px -> bool: a building or prop cell; set by the boot). Unset = no bound.
+static var solid: Callable = Callable()
 
 ## actor id -> Vector3(x, y, pose): the poses lying now, so neighbours differ (view-side only).
 static var _lying: Dictionary[int, Vector3] = {}
@@ -103,7 +111,7 @@ static func draw(rig: CutRig, card: Sprite2D, row: String, ks: float, p: float) 
 	var h: int = _hash(rig.actor_id)
 	var jitter: float = JITTER_RAD * (float(posmod(h >> 4, 1001)) / 500.0 - 1.0)
 	var m: Vector2 = motion(kind, p)
-	var pelvis: float = PELVIS_K * StreetWalkerFall.STILL_PX * ks
+	var pelvis: float = _bounded(card, rig.global_position, blow, ks)
 	var at: Vector2 = rig.global_position + blow * (pelvis - m.x * CharacterRigs.PX_PER_M)
 	plan.frame = pose
 	plan.flip_h = (h & 1) == 1
@@ -130,12 +138,33 @@ static func drop(card: Sprite2D) -> void:
 	if plan != null:
 		card.remove_child(plan)
 		plan.queue_free()
+	card.remove_meta(FREE)
 	card.self_modulate.a = 1.0
 
 
-## Forgets the poses lying now (a new scene).
+## Forgets the poses lying now.
 static func reset() -> void:
 	_lying.clear()
+
+
+## The pelvis offset along the blow (px), pulled back short of the first solid; once per card.
+static func _bounded(card: Sprite2D, at: Vector2, blow: Vector2, ks: float) -> float:
+	var pelvis: float = PELVIS_K * StreetWalkerFall.STILL_PX * ks
+	var reach: float = pelvis + HEAD_K * StreetWalkerFall.STILL_PX * ks
+	if not card.has_meta(FREE):
+		card.set_meta(FREE, free_px(at, blow, reach))
+	var free: float = card.get_meta(FREE)
+	return pelvis - (reach - free)
+
+
+## How far (px, up to `reach`) from `at` along `dir` stays clear of `solid`.
+static func free_px(at: Vector2, dir: Vector2, reach: float) -> float:
+	if not solid.is_valid():
+		return reach
+	for k: int in range(1, FREE_STEPS + 1):
+		if solid.call(at + dir * (reach * k / FREE_STEPS)):
+			return reach * (k - 1) / FREE_STEPS
+	return reach
 
 
 static func _settle(p: float) -> float:

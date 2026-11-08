@@ -64,3 +64,12 @@ func test_the_crowd_atlas_gets_a_plan_pose_turned_to_the_bake() -> void:
 	if a != null:
 		assert_lte(maxi(a.get_width(), a.get_height()), CrowdAtlas.CELL_PX)
 	assert_null(StreetCrowdCorpse.plan_cell("p70", "ped/head_jogger", 0))
+
+
+func test_a_lying_body_stops_short_of_the_first_wall() -> void:
+	var wall_x: float = 40.0
+	StreetDeadPlan.solid = func(px: Vector2) -> bool: return px.x >= wall_x
+	assert_almost_eq(StreetDeadPlan.free_px(Vector2.ZERO, Vector2.RIGHT, 80.0), 30.0, 0.001)
+	assert_almost_eq(StreetDeadPlan.free_px(Vector2.ZERO, Vector2.LEFT, 80.0), 80.0, 0.001)
+	StreetDeadPlan.solid = Callable()
+	assert_almost_eq(StreetDeadPlan.free_px(Vector2.ZERO, Vector2.RIGHT, 80.0), 80.0, 0.001)
