@@ -434,3 +434,13 @@ NEXT (it14):
 5. Before the freeze: the full gate (`node tools/evidence/run.mjs --no-bench`), the director reel x3 at the head,
    REPORT.md, the exe. Remove the scratch worktree `gtai-n9/tmp/world/before` (now at 06c64742) once the last
    before/after is filmed.
+- (04:50-04:59) TRIED NEXT 1 (stains on the plan pose's torso) and NOT landed: `StreetDeadPlan.rest_of(actor, at)`
+  (the plan pose's rest pelvis kept in `_lying`) read by a new `CorpseStains.body_at` callable set in CityBlood.
+  Lint 15/15, unit --changed 1818/0, but the riot at 64 px/m t22 is **pixel-identical where it matters**: the red
+  clumps on the dead riot cops' chests did not move. So those clumps are not CityBlood's CorpseStains soaks (or
+  that path never draws the riot's dead): likely the rig's own wound marks / a CombatBlood body splat. Files
+  restored to HEAD; the diff is kept at `C:/Users/kazda/kiro/gtai-n9/tmp/world/stain_rest_of_it13.patch` (it also
+  carries comment compaction that keeps street_dead_plan.gd at 200 and corpse_stains.gd at 245 lines).
+NEXT (it14) amended, item 1 first: find which node draws the red clumps on a plan-pose corpse (in the riot at t22,
+hide CityBlood.stains and look; then the rig's wound nodes under HumanReact / BloodMarks), move THAT to
+`StreetDeadPlan.rest_of`, then film the before/after. The rest of it13's NEXT stands.
