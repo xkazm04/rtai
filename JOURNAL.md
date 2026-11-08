@@ -186,7 +186,7 @@ from the delivered pick cells, arms only, legs untouched. One-hand pistol 70 fir
 6. **The run threshold** (2.5 m/s) and its cap (3.5 cycles/s): data values in `RivetWalk`.
 
 NEXT (it5):
-1. Commit the it4b reel logs (started 02:41 on 567c1128), if 19/19 x3.
+1. (done 02:43) it4b reels on 567c1128 (the run): 19/19 fully down in tilt70, combo, top, 0 SCRIPT ERROR (committed).
 2. FILM the run: 64 px/m frame by frame, a planted foot against the asphalt (the acceptance), before `--rivet-walk=walk8`;
    in quest 1 or the reel's bare-claw chapters; 32 px/m before/after. The walk8 at low speed too (owed since it3).
 3. Read the asset lane for run8 70 v3 fixes (row 5 arms, L1 slots 7-8) and run8 55 row 4: re-pack (`--k` = the 55
