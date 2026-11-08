@@ -23,6 +23,8 @@ extends RefCounted
 ## it7: above RUN_FROM_MPS a weapon out runs on its drawn armed run (`rivet_run8_eq_<weapon>.png`,
 ## the library's run8 legs + the claw armed walk's arms, my it6 REQUEST) where the art key has one,
 ## stepped on RUN_CYCLE_CELL (its legs are run8's, frame by frame); else the armed walk as before.
+## it8: RUN_ROW_K ("<art>/<weapon>/<octant>"): a drawn run row whose stride is shorter than run8's
+## (the library's travel x H) steps on a cycle shortened by that ratio, so its stance foot plants.
 
 const STRIP: String = "rivet_walk8.png"
 const STRIP4: String = "rivet_walk.png"
@@ -32,6 +34,8 @@ const ARMED_RUN: String = "rivet_run8_eq_"
 const RUN_CYCLE_CELL: Dictionary[String, float] = {"p70": 258.0, "p55": 212.0}
 const RUN_FROM_MPS: float = 2.5
 const MAX_RUN_CYCLES_S: float = 3.5
+## the heavy run's left profile (L2 v2): 0.535 x H of travel against run8 L2's 0.605
+const RUN_ROW_K: Dictionary[String, float] = {"p70/gatling/4": 0.88}
 const ROWS: int = 8
 const CYCLE_CELL: Dictionary[String, float] = {"p70": 60.0, "p55": 60.0}
 const ARMED_CYCLE_CELL: Dictionary[String, float] = {
@@ -112,7 +116,7 @@ static func phase_of(rig: CutRig, art: String, scale: float) -> float:
 	rig.set_meta(META_AT, rig.global_position)
 	var card: Sprite2D = rig.head_card
 	var running: bool = card != null and is_run(str(card.get_meta(RivetFrames.ON, "")))
-	var cycle: float = cycle_cell(card, art, running) * scale
+	var cycle: float = cycle_cell(card, art, running) * scale * row_k(card, art, rig)
 	if (frames != 8 and not is_armed(rig.head_card)) or cycle <= 0.0:
 		return rig.phase
 	cycle = maxf(cycle, rig.speed_now / (MAX_RUN_CYCLES_S if running else MAX_CYCLES_S))
@@ -130,3 +134,13 @@ static func cycle_cell(card: Sprite2D, art: String, running: bool) -> float:
 		var w: String = str(card.get_meta(RivetFrames.ON, "")).get_file().trim_prefix(ARMED)
 		return ARMED_CYCLE_CELL.get(art + "/" + w.get_basename(), CYCLE_CELL.get(art, 0.0))
 	return CYCLE_CELL.get(art, 0.0)
+
+
+## The stride ratio of the drawn run row `card` shows for `rig`'s octant (RUN_ROW_K, else 1).
+static func row_k(card: Sprite2D, art: String, rig: CutRig) -> float:
+	var file: String = str(card.get_meta(RivetFrames.ON, "")).get_file() if card != null else ""
+	if not file.begins_with(ARMED_RUN):
+		return 1.0
+	var weapon: String = file.trim_prefix(ARMED_RUN).get_basename()
+	var key: String = "%s/%s/%d" % [art, weapon, RivetFrames.oct_of(rig)]
+	return RUN_ROW_K.get(key, 1.0)

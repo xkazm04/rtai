@@ -143,10 +143,10 @@ func test_an_armed_grid_steps_on_its_own_measured_cycle() -> void:
 
 func test_a_weapon_out_runs_on_its_drawn_armed_run_above_the_run_speed() -> void:
 	# n9 it7: the library's armed runs (one-hand pistol, two-hand rifle at p70): run8's legs
-	# it8: the blade run (the katana)
+	# it8: the blade run (the katana), the heavy run (the gatling)
 	var rig: CutRig = add_child_autofree(CutRig.new())
 	rig.speed_now = RivetWalk.RUN_FROM_MPS * CharacterRigs.PX_PER_M + 10.0
-	for w: StringName in [&"pistol", &"plasma_rifle", &"katana"]:
+	for w: StringName in [&"pistol", &"plasma_rifle", &"katana", &"gatling"]:
 		var path: String = RivetStrips.DIR + "p70/" + RivetWalk.ARMED_RUN + String(w) + ".png"
 		assert_eq(RivetWalk.path_of(rig, "p70", w), path, "%s runs drawn" % w)
 		assert_eq(RivetWalk.cols_of(path), 8)
@@ -162,3 +162,21 @@ func test_a_weapon_out_runs_on_its_drawn_armed_run_above_the_run_speed() -> void
 	rig.set_meta(RivetFrames.FIRE, true)
 	RivetWalk.run = true
 	assert_eq(RivetWalk.path_of(rig, "p70", &"pistol"), "", "a shot latches the fire cell")
+
+
+func test_a_short_drawn_run_row_steps_on_its_own_stride() -> void:
+	# n9 it8: the heavy run's left profile travels 0.535 x H, run8's 0.605: its cycle shrinks
+	var rig: CutRig = add_child_autofree(CutRig.new())
+	var head: Node2D = Node2D.new()
+	rig.add_child(head)
+	rig.head = head
+	var card: Sprite2D = autofree(Sprite2D.new())
+	card.set_meta(RivetFrames.ON, RivetStrips.DIR + "p70/" + RivetWalk.ARMED_RUN + "gatling.png")
+	head.rotation = PI
+	assert_eq(RivetWalk.row_k(card, "p70", rig), RivetWalk.RUN_ROW_K["p70/gatling/4"])
+	assert_between(RivetWalk.row_k(card, "p70", rig), 0.85, 0.9)
+	head.rotation = 0.0
+	assert_eq(RivetWalk.row_k(card, "p70", rig), 1.0, "the right profile is run8's stride")
+	card.set_meta(RivetFrames.ON, RivetStrips.DIR + "p70/" + RivetWalk.RUN)
+	head.rotation = PI
+	assert_eq(RivetWalk.row_k(card, "p70", rig), 1.0, "the bare run")
