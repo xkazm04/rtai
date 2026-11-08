@@ -544,6 +544,19 @@ NEXT (it9), replaces it8's list:
    delete after the freeze), build/export/windows-bench-main + -head2 (git-ignored).
 - 07:56-08:01 MILESTONE the release riot, quieter (0-2 Godots), 4 pairs: riot p50 main 3.62-4.67 vs head 3.17-3.53,
   head2 3.35-3.59 (8 of 8 head rounds under every main round, head vs head2 0.14): **riot p50 4.29 -> 3.38 ms**, the
-  first frame-level win of tonight's CPU cuts (p99 overlaps: not claimed). The steady-RAM split REFUTED (main 751-754
-  MB quiet). LEDGER "the release riot at a quieter moment", REPORT item 13. NEXT item 1's RAM question is answered;
+  first frame-level win of tonight's CPU cuts (p99 overlaps: not claimed). The steady-RAM split looked refuted on
+  the riot (main 751-754 MB quiet) - CORRECTED at 08:01 below. LEDGER "the release riot at a quieter moment", REPORT item 13. NEXT item 1's RAM question is answered;
   item 1 becomes: the same quiet riot run with `--pairs=5` on the final HEAD at the freeze (confirm), plus drive70.
+- 08:00 drive70 quiet exe, 4 pairs: p50 WASH (main 2.11-2.52, head 1.78-2.12, head2 1.88-2.45); main's steady RAM
+  817 MB in r0. Correction: the RAM split is NOT refuted: main ~817-821 MB in 6 of 17 exe runs tonight, head + head2
+  0 of 34. Open watch item (LEDGER, REPORT corrected).
+
+NEXT (it9), replaces the list above:
+1. The RAM mode: is main's ~820 MB steady state (6 / 17 exe runs; head 0 / 34) real, and which commit removes it?
+   drive70 + riot, `--pairs=8`, main@exe vs head@exe, quiet machine; if it holds, bisect with exports of 2-3
+   intermediate commits (F-19 mailbox 06c48c1b, L18 73f30553, L20 52ff53f0) as `@exe-<dir>` arms.
+2. At the freeze: the quiet release riot again on the final HEAD (`--pairs=5`) to confirm 4.29 -> 3.38 ms.
+3. Freeze 10:30: `build/export/windows/RTAI.exe` (windows-showcase), final gates if project/ changed after efa848cb,
+   REPORT final. No tree edits under project/ while an ab `head:` arm or the gate runs.
+4. Levers: perf-owned files are below the floor now (L26 / L27); the riot's frame is the rigs (other lanes' files).
+5. Scratch: cvprof, prof3, world3, head2 (delete after the freeze), build/export/windows-bench-main + -head2.

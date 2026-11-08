@@ -85,8 +85,9 @@ Numbers, methods and every A/B: `docs/perf/LEDGER.md` section "n9 night". Clips 
    reads WASH everywhere. A quieter re-run of the riot on the release build (4 pairs) is clearer: **riot p50
    4.29 -> 3.38 ms**. Both copies of this branch ran under every main round (3.17-3.59 vs 3.62-4.67 ms), and the
    two copies differed by only 0.14 ms. That matches the ~0.7 ms the CPU cuts measured inside the frame. The
-   riot's p99 still overlaps (not claimed). The RAM difference seen under load was the machine: main read 751-754 MB
-   once it was quiet (LEDGER "the release riot at a quieter moment").
+   riot's p99 still overlaps (not claimed). The drive is a WASH (ranges overlap). Open, not claimed: main's
+   process settled at ~820 MB in 6 of 17 release runs, this branch at ~755 MB in all 34 (LEDGER "the release
+   riot at a quieter moment").
 
 ## What does not
 - The first L17 test was vacuous. It compared `MultiMesh.buffer`, which a headless run keeps empty. The mutation run
