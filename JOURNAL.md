@@ -402,3 +402,18 @@ it124 grades kept: elder B (pose B face alive at ~4 px at 64), hat B (E the weak
   `before` moved to it) | after, city_bench riot tilt70 t 22 s at 32 and 64: before the cap walkers lie as straight
   planks, after twisted sprawls, neighbours in different poses (`gtai-masters/n9/world/dead_plan_walkers_riot_*`,
   3 frames.json entries; frames.json pruned to 15).
+- (04:33-04:38) Item 4 follow-up, the kerb barrier: the d9 repro (`res://dev/arena/arena.tscn -- --arena=city
+  --seed=5 --rigs --view=tilt70`, tick 900; NB the arena is its own scene: `--arena=city` on the main scene is an
+  unknown arg) shows **no deaths** at t900 in this build (no bot: kills 0), so the "dead cop through the barrier"
+  frame cannot be re-taken as it was. It does show the root: a sim walker strolls across the barrier's top (the
+  sim never sees the arena's props).
+- MILESTONE (04:40) item 4: the arena's solid props into the sim cells (DECISION world/arena-solids-to-sim):
+  `ArenaSession.SOLID_TO_SIM` hands `stage.walls.boxes` (wall_high / cover_high / cover_low) to
+  `CityResidency.solids`; `CityResidency.with_solids` stamps them C_PROP into each adopted chunk's cells (a copy;
+  no rects = no copy). FRICTION: a PackedByteArray assigned to a local is the same array in Godot 4 (the first
+  version wrote into the cached chunk; the unit test caught it, `duplicate()` fixed it). New
+  test_residency_solids 3/3, lint 15/15. Seen: before a walker crosses the barrier's top, after the crowd keeps to
+  the pavement south of it (`gtai-masters/n9/world/arena_barrier_solid_to_sim_*`, frames.json 15).
+- DECISION world/car-knock-damage-event-only (it10 NEXT 3): the knock damage stays on the Event (no Rivet hp in the
+  city; the arena's sim body does not steer Rivet).
+- (04:43) Scenarios 55/55 with the arena solids on (replay unmoved). Director reel not re-run for this change: it plays the dev arena, never the city block (its it10 log has no city / chunk line), so SOLID_TO_SIM cannot reach it.
