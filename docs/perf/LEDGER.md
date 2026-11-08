@@ -81,8 +81,21 @@ Bench (release `windows-bench`, `riotc` = combo, 400 actors, 6 interleaved pairs
 | 4 | 3.61 / 3.77 | 0.777 / 0.862 |
 | 5 | 3.36 / 3.89 | 0.712 / 0.917 |
 
-Frame p50 head lower in 1 of 6; rig p50 head higher in 6 of 6 (median +0.065 ms). **WASH at best: no gain measured, so it is not the baseline.** What this does NOT show: that the fill caused the rise. The rig timer does not contain the fill, and render CPU (0.72 -> 0.79 ms in round 0, higher in 6 of 6) and the C++ sim step (higher in 5 of 6) also rose, and the change cannot touch either. So the whole head process ran slower, which fits a confound between the two exports (made an hour apart) at least as well as a cost of the feed. An untested alternative explanation for the rig rise: ten fresh arrays a tick arrive cold in cache. Neither is established.
+Frame p50 head lower in 1 of 6; rig p50 head higher in 6 of 6 (median +0.065 ms). **WASH at best: no gain measured, so it is not the baseline.** What this does NOT show: that the fill caused the rise. The rig timer does not contain the fill, and render CPU (0.72 -> 0.79 ms in round 0, higher in 6 of 6) and the C++ sim step (higher in 5 of 6) also rose, and the change cannot touch either. So the whole head process read slower; the A/A control below shows the bench does that with no code change.
 The microbench's ~340 us saving did not appear at the bench. It was the debug binary on a synthetic snapshot; the release GDScript loop was never timed, so the micro does not say what the release saves.
+
+### The A/A control (it7): what this bench reads with no change at all
+Same code in both arms: the export of cfdb53e4's code from 23:26 against a fresh export at 40fab8c7 (409ec9d3 put the code back, `git diff d0569d17 HEAD -- project native` empty). `riotc`, 6 interleaved pairs, CONTENDED(8-10), my two reels up too (`evidence/perf/n10-feed/aa/`).
+
+| metric | old (per round) | new (per round) | median new - old | new lower in |
+|---|---|---|---|---|
+| frame p50 ms | 3.94 2.93 2.87 3.70 3.38 3.60 | 3.64 3.44 3.74 3.59 3.63 4.03 | +0.34 | 2 of 6 |
+| rig p50 ms | 0.831 0.627 0.614 0.782 0.710 0.766 | 0.756 0.714 0.786 0.753 0.772 0.866 | +0.075 | 2 of 6 |
+| sim step ms/tick | 0.135 0.108 0.108 0.126 0.122 0.124 | 0.124 0.119 0.126 0.123 0.124 0.133 | +0.006 | 2 of 6 |
+| render CPU ms | 0.584 0.394 0.398 0.516 0.484 0.485 | 0.527 0.451 0.500 0.476 0.506 0.576 | +0.04 | 2 of 6 |
+
+Identical code differs by up to +0.87 / -0.30 ms frame p50 in a single pair, and the median leans the same way the feed A/B did (rig p50 +0.075 here, +0.065 there). **So idea 1's result is inside the bench's floor at this load: not a measured gain and not a measured regression.** The revert stands because no gain was shown, not because the fill was shown slower. Six pairs under CONTENDED(0-10) cannot resolve a frame-p50 effect of about 0.3 ms or smaller; idea 2 below is smaller than that.
+Item 3's claim (6 of 6, median -1.14 ms frame p50; rig p50 1.665 -> 0.957) is larger than any single A/A pair's difference (0.87 ms), so the A/A does not undo it, but item 3 was run before this control existed and it is still CONTENDED.
 
 ## n9 night (2026-11-08, branch n9-perf from main da108c13)
 
