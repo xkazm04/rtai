@@ -48,3 +48,11 @@ func test_no_strip_keeps_the_drawn_frame() -> void:
 	var canvas: Node2D = autofree(Node2D.new())
 	var h: Fighter = _guard(3, Vector2.RIGHT)
 	assert_false(StreetQuestDeadPlan.draw(canvas, Vector2.ZERO, h, PPM, Color.WHITE))
+
+
+func test_a_plan_corpse_lies_opaque_and_still_fades() -> void:
+	assert_eq(StreetQuestDeadPlan.ground_tint(StreetQuestCorpses.BASE).a, 1.0)
+	var half: Color = StreetQuestCorpses.BASE
+	half.a *= 0.5
+	assert_almost_eq(StreetQuestDeadPlan.ground_tint(half).a, 0.5, 0.001)
+	assert_eq(StreetQuestDeadPlan.ground_tint(Color(1, 1, 1, 0)).a, 0.0)

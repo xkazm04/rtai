@@ -34,6 +34,8 @@ CLASSES = {
     "ped_hat": ("street", ["dead_plan_v1_ped_hat", "dead_plan_v1_ped_hat_e2"]),
     "ped_jogger": ("street", ["dead_plan_v1_ped_jogger", "dead_plan_v1_ped_jogger_e2"]),
     "ped_punk": ("street", ["dead_plan_v1_ped_punk", "dead_plan_v1_ped_punk_e2"]),
+    # it131 delivery (quest 1's dock contractor; n9 world it16 REQUEST)
+    "contractor": ("street", ["dead_plan_v1_contractor"]),
 }
 
 

@@ -11,6 +11,10 @@ extends RefCounted
 ## No strip (or ENABLED false) = StreetQuestCards.draw_down's drawn frame (the before).
 
 const ENABLED: bool = true
+## it19: a plan corpse lies opaque (as the rigs' StreetDeadPlan) through the linger, and fades with
+## the decay as before; at the cast view's 0.8 the heaped bodies showed through each other.
+## false = the cast view's DOWN_FADE alpha (it16).
+const OPAQUE: bool = true
 const PATH: String = "res://features/characters/art/view/plan/dead_contractor.png"
 ## The quest's fighter ids live apart from the rigs' actor ids in StreetDeadPlan's neighbour memory.
 const ID_BASE: int = -1000000
@@ -32,12 +36,21 @@ static func draw(
 	var w: float = _tex.get_width() / float(StreetDeadPlan.POSES)
 	var hgt: float = float(_tex.get_height())
 	var pose: int = StreetDeadPlan.pick(ID_BASE - h.id, &"", at_px)
+	var c: Color = ground_tint(tint)
 	canvas.draw_set_transform_matrix(t)
 	canvas.draw_texture_rect_region(
-		_tex, Rect2(-w * 0.5, -hgt * 0.5, w, hgt), Rect2(w * pose, 0.0, w, hgt), tint
+		_tex, Rect2(-w * 0.5, -hgt * 0.5, w, hgt), Rect2(w * pose, 0.0, w, hgt), c
 	)
 	canvas.draw_set_transform(Vector2.ZERO)
 	return true
+
+
+## The corpse's colour from StreetQuestCorpses' decay tint: OPAQUE lifts the cast view's alpha to 1.
+static func ground_tint(tint: Color) -> Color:
+	var c: Color = tint
+	if OPAQUE:
+		c.a = minf(1.0, tint.a / StreetQuestCorpses.BASE.a)
+	return c
 
 
 ## The corpse's ground transform: the cell centre (the pelvis) along the blow, the head along it.
