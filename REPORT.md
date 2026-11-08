@@ -141,7 +141,8 @@ tilt70 and combo at 98cacb86, the last shipped-code change (`evidence/n9h/it6/ga
 ## What does not work yet
 
 - The 40 Hz row judders: the 60 Hz tick over 25 ms frames steps 1, 2, 1, 2 ticks a frame, so pans and sprites move
-  10, 20, 10, 20 px (E21). The cure (every view drawn between two ticks) is owed; 30 and 60 are even (Call 4).
+  10, 20, 10, 20 px (E21); the boss-cam ease does not change it (E21c, it10: median unevenness 0.50 with and without).
+  The cure (every view drawn between two ticks) is owed; 30 and 60 are even (Call 4).
 - Steam Input origin glyphs (a remapped pad) need the Steam backend: owed with the Steam port.
 - Nothing here is proven on a Deck: watts, battery hours, Zen 2 single-thread frame times (E18:
   ~0.55-0.92 of one Deck core at 60 Hz, an estimate the simulator cannot pin down), the shader cache's first run, suspend on SteamOS, the Linux build under real Vulkan.
@@ -178,5 +179,8 @@ tilt70 and combo at 98cacb86, the last shipped-code change (`evidence/n9h/it6/ga
 ## Next steps
 
 - The freeze: the final gates, the exe (`build/export/windows/RTAI.exe`, the export line here), this report final.
+- Windows handhelds still need `--device=handheld_1080`: their firmware model strings are unconfirmed (LEDGER, it10);
+  one device each (or a DMI database) gives the `models` list for the auto-pick.
+- The Steam backend: `IsSteamRunningOnSteamDeck()` as the auto-pick's first check, Steam Input origin glyphs.
 - A real port: see the LEDGER's port readiness table (Steam Deck: Linux build + Proton check 2-3 days, Verified
   polish 3-5 days; Switch-class: the platform holder's program, an engine port, 3-6 months).

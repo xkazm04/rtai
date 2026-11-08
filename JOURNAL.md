@@ -601,3 +601,16 @@ near-final head); freeze steps as in it9 NEXT 3.
   tasklist test); stopped it. Use the task notification, not a hand-rolled until on a process list.
 - 09:05 E21c (closes it8 NEXT 2b): the King on deck40 at 40 fps, ease on vs off, ground-band phase correlation:
   median unevenness 0.50 both: the ease cannot fix the 1:2 cadence (it steps on ticks). Looked at t15. Raw .avi deleted.
+
+NEXT (iteration 11; the freeze is 10:30, REPORT by 10:40):
+1. Read the other journals for REQUESTs at the start AND mid-session; the asset lane's deliveries (grep "handheld").
+   Never edit the tree while an evidence run or an A/B on this tree is going; raw sim logs outside the tree; one
+   APPDATA per concurrent Godot run; wait on task notifications, not hand-rolled process-list loops.
+2. Before the freeze (pick by time left): (a) if world's head moves past e3c54005 with code, re-run E20b (recipe in it6
+   NEXT; `mergewt2` was removed); (b) a DMI-based Deck check for a launch outside Steam is unverified: leave owed;
+   (c) REPORT pass: "What works" item list is long: put the it9/it10 items (pad-first, click-flips, auto-pick, E20b) in
+   the order the owner reads them; Calls 1-5 still current.
+3. Freeze 10:30: export `build/export/windows/RTAI.exe` (`"$GODOT_BIN" --headless --path project --export-release
+   windows-showcase ../build/export/windows/RTAI.exe`), final gates on the head (reel x3 via
+   `gtai-n9/tmp/handheld/reel3.sh` + evidence run `--no-bench` with the log outside the tree), REPORT final (gates line,
+   exe line with the exact commands, Calls 1-5, frames.json 15 entries: all present at 08:49), header "FINAL".
