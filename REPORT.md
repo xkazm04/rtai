@@ -1,4 +1,4 @@
-# REPORT: night n10, lane world (draft, updated 2026-11-09 00:21)
+# REPORT: night n10, lane world (draft, updated 2026-11-09 00:54)
 
 Evidence: `C:\Users\kazda\kiro\gtai-masters\n10\world\` (`frames.json`). Every performance number is unmeasured so far.
 
@@ -33,7 +33,9 @@ Evidence: `C:\Users\kazda\kiro\gtai-masters\n10\world\` (`frames.json`). Every p
 - `node tools/tests/run_unit.mjs` (full) at `4558d018`: 1968 passed, 0 failed, 0 skipped.
 - **`tools/evidence/run.mjs --no-bench` on `4558d018`: NOT green.** Lint, unit (1968 / 0), parity (1200 steps, planted mutation caught), selftest (look goldens 11/11) and export-audit (release-compile 632 / 0) PASS. **scenario-tests FAIL: timed out after 1594 s, with 0 scenarios reported**, while my film and other lanes were loading the machine. So no scenario has a result on this branch, and that includes the replay.
 - `node tools/tests/run_scenarios.mjs` on `016cd98f`: **55 passed**, 0 SCRIPT ERROR, with `replay_60s` (3600 ticks) and the quest 1 input replay identical (`build/test-results/scenario-tests.log`). This replaces the timeout above as the scenario result; `tools/evidence/run.mjs` itself has not been re-run.
-- Director reel on `016cd98f`, the brief's exact command, top / tilt70 / combo: **19 chapters each, all fully down, 0 SCRIPT ERROR.** Caveat: all 19 chapters also log `no carry (run with --loadout=pistol); <weapon> skipped`, so these runs do not show the chapters' weapons being carried. See Call w-4.
+- Director reel on `016cd98f`, the brief's exact command, top / tilt70 / combo: 19 chapters each, all fully down, 0 SCRIPT ERROR, but all 19 chapters log `no carry`, so no weapon is given (Call w-4). Once with `--loadout=pistol` at combo on `6ea62a9e`: 19 chapters, all down, 0 `no carry`, 0 SCRIPT ERROR.
+- `node tools/tests/run_unit.mjs` (full) on `6ea62a9e`: **1972 passed, 0 failed, 0 skipped.**
+- The scenario and reel runs above predate `6525a2e3` (the ring search, a view-only change to quest 1's corpses).
 - Not exported yet.
 
 ## What blocked me
@@ -45,7 +47,7 @@ Evidence: `C:\Users\kazda\kiro\gtai-masters\n10\world\` (`frames.json`). Every p
 
 - **w-1, the set of headings.** Five headings, heads never toward the camera. A blow toward the camera turns the body away, so it no longer falls that way. Frame: `dead_riot_before_after_64.png`. The tables are `StreetDeadHeading.HEAD_DEG` and `HEAD_DEG_ODD`; `ENABLED` false restores n9.
 - **w-3, a walk that slides between 1.8 and 2.5 m/s.** From the code, Rivet's walk holds its cadence at 2 cycles a second above 1.8 m/s, so a stick walk at 2.5 m/s slides about 28 % until the run takes over. Raising `RivetWalk.MAX_CYCLES_S` to about 2.8 would plant it but makes the walk's legs churn faster. Left as built; it is the Rivet lane's tuning. Frame: `move_oblique_walk_64_sheet.png`, which shows why it is unread: the boots are hidden in the toward and 3/4 rows.
-- **w-4, the director reel gate does not carry its weapons.** With the brief's command (no `--loadout=pistol`), `stage.pilot` has no carry, so all 19 chapters log `no carry ... skipped` and go down without the chapter's weapon. The gate is green as written but proves less than it reads. Frame: none, it is the log (`reel_director.gd:155`). Suggest adding `--loadout=pistol` to the gate.
+- **w-4, the director reel gate gives no weapons.** The briefed command has no `--loadout=pistol`, so `stage.pilot` has no carry and all 19 chapters log `no carry ... skipped` (`reel_director.gd:155`) and go down without the chapter's weapon. Run once with the flag at combo on `6ea62a9e`: 19 chapters, all down, 0 `no carry`, 0 SCRIPT ERROR. Suggest adding the flag to the gate; I did not change the gate. top and tilt70 with the flag were not run.
 - **w-2, roofs.** Roofs are drawn straight down and are the largest plan-view area left under the 70 camera. Fixing that is a new art round for every roof type, not code. Frame: `audit_street_combo_32.png`.
 
 ## Next steps
