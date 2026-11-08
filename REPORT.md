@@ -1,4 +1,4 @@
-# n9 perf REPORT (branch `n9-perf`, cut from main da108c13; DRAFT it6, final at the freeze)
+# n9 perf REPORT (branch `n9-perf`, cut from main da108c13; DRAFT it9, final at the freeze)
 
 Numbers, methods and every A/B: `docs/perf/LEDGER.md` section "n9 night". Clips and stills:
 `C:\Users\kazda\kiro\gtai-masters\n9\perf\` (`frames.json`).
@@ -127,4 +127,10 @@ Numbers, methods and every A/B: `docs/perf/LEDGER.md` section "n9 night". Clips 
   core. The alternative is one value away: the `pacing` default in `PlayerSettings`.
 
 ## Next steps
-- See JOURNAL.md NEXT.
+- The riot's frame is now mostly the rigs (gait, pose, street walkers, head cards: ~1.4 ms a riot tick), in the
+  rivet and world lanes' files: the per-system numbers are in the LEDGER for whoever takes them.
+- The feed's snapshot scan (~120 us a riot tick) is the last perf-owned GDScript cost worth moving, and it needs
+  native code: after world's native work (knock, walls) is merged.
+- A stripped export template is worth retrying only with the official toolchain (MinGW-GCC + LTO); the MSVC build
+  cost ~10 % frame time (L7).
+- See JOURNAL.md NEXT for the session-level list.
