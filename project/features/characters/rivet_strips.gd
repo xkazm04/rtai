@@ -54,6 +54,10 @@ const FLAME_TOL: float = PI / 6.0
 ## aimed over GUN_TOL off it keeps the facing cell (fired up the screen, the side cell drew the gun
 ## and its flash sideways under an up tracer). --rivet-flame=all = any aim (it11).
 const GUN_TOL: float = PI / 4.0
+## n10: a burst already drawing its fire cell keeps it within this extra angle: an aim on the
+## tolerance's edge (a 45 deg shot) lost the cell to one tick of float noise for the whole latch.
+const FIRE_HOLD: float = PI / 30.0
+const DREW: StringName = &"rivet_fire_drew"
 static var flame_all: bool = false
 static var cone: Array[StringName] = []
 static var diag: bool = true
@@ -130,23 +134,28 @@ static func fire_latched(rig: CutRig) -> bool:
 static func draws_fire(rig: CutRig, weapon: StringName, o: int, firing: bool) -> bool:
 	var was_off: bool = rig.get_meta(CONE_OFF, false) == true
 	var aim: float = NAN if rig.clips.strike_t >= 0.0 else aim_of(rig)
-	var off: bool = firing and (was_off or not fires_drawn(weapon, o, aim, ViewMode.shared().art))
+	var slack: float = FIRE_HOLD if rig.get_meta(DREW, false) == true else 0.0
+	var art: String = ViewMode.shared().art
+	var off: bool = firing and (was_off or not fires_drawn(weapon, o, aim, art, slack))
 	rig.set_meta(CONE_OFF, off)
+	rig.set_meta(DREW, firing and not off)
 	return firing and not off
 
 
 ## The cone (the flamer) fires its drawn flame along the side and camera octants while the aim
 ## (NAN = the head's) is within CONE_TOL of it; else the facing cell fires (not two flames).
-static func fires_drawn(weapon: StringName, o: int, aim: float = NAN, art: String = "") -> bool:
+static func fires_drawn(
+	weapon: StringName, o: int, aim: float = NAN, art: String = "", slack: float = 0.0
+) -> bool:
 	if not cone.has(weapon):
 		var deg: PackedFloat32Array = FLAME_DEG.get(art + "/" + String(weapon), [])
 		if flame_all or is_nan(aim):
 			return true
 		if deg.is_empty():
 			var gun: float = 90.0 if o == 2 else 180.0 * RivetFrames.LEFT[o]
-			return absf(angle_difference(aim, deg_to_rad(gun))) <= GUN_TOL
+			return absf(angle_difference(aim, deg_to_rad(gun))) <= GUN_TOL + slack
 		var drawn: float = deg[o] if diag or DIAG_CELL[o] < 0 else 180.0 * RivetFrames.LEFT[o]
-		return absf(angle_difference(aim, deg_to_rad(drawn))) <= FLAME_TOL
+		return absf(angle_difference(aim, deg_to_rad(drawn))) <= FLAME_TOL + slack
 	var off: float = 0.0 if is_nan(aim) else absf(angle_difference(aim, o * PI * 0.25))
 	return o in [0, 2, 4] and off <= CONE_TOL
 

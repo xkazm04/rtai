@@ -10,6 +10,61 @@ func after_each() -> void:
 	RivetStrips.flame_all = false
 
 
+## A drawn p70 Rivet standing with the pistol at octant `o` (aim along it), posed once.
+func _drawn_rig(o: int) -> CutRig:
+	var rig: CutRig = add_child_autofree(CutRig.new())
+	rig.plan = RivetPlan.build()
+	for n: StringName in [&"head", &"body"]:
+		var node: Node2D = Node2D.new()
+		rig.add_child(node)
+		rig.set(n, node)
+	var card: Sprite2D = Sprite2D.new()
+	rig.head.add_child(card)
+	rig.head_card = card
+	rig.head.rotation = o * PI * 0.25
+	rig.gun_out = true
+	rig.aiming = true
+	rig.aim_at = rig.global_position + Vector2.from_angle(o * PI * 0.25) * 128.0
+	rig.set_meta(RivetFrames.WEAPON, &"pistol")
+	RivetFrames.step(rig)
+	return rig
+
+
+func test_the_shots_own_frame_takes_the_fire_cell() -> void:
+	# n10: the pose ran before publish raised the fire latch, so the first frame of every shot kept
+	# the facing cell, no muzzle point, and the flash drew at the fallback spot beside him
+	var was: ViewMode = ViewMode._shared
+	ViewMode._shared = ViewMode.of("tilt70")
+	var rig: CutRig = _drawn_rig(0)
+	assert_ne(rig.head_card.frame, RivetFrames.Eq.FIRE_SIDE, "no shot yet: the facing cell")
+	var reg: RngRegistry = RngRegistry.new(1)
+	var gun: GunHand = GunHand.make(WeaponTable.shipped(), &"pistol", reg.stream(&"gunplay"))
+	gun.trigger.cooldown = gun.trigger.spec.interval_ticks  # the tick the shot left
+	RivetFrames.publish(rig, &"pistol", gun)
+	assert_eq(rig.head_card.frame, RivetFrames.Eq.FIRE_SIDE, "the shot's own frame")
+	assert_true(HeldMuzzle.fresh(), "the drawn muzzle is published on that frame")
+	HeldMuzzle.reset()
+	ViewMode._shared = was
+
+
+func test_a_burst_on_the_tolerance_edge_keeps_its_fire_cell() -> void:
+	# n10: a 45 deg shot sat on GUN_TOL; float noise dropped the cell one tick into the latch
+	var rig: CutRig = add_child_autofree(CutRig.new())
+	var aim: Callable = func(deg: float) -> void:
+		rig.aim_at = rig.global_position + Vector2.from_angle(deg_to_rad(deg)) * 128.0
+	rig.aiming = true
+	aim.call(44.9)
+	assert_true(RivetStrips.draws_fire(rig, &"pistol", 1, true), "on the cell")
+	aim.call(45.3)
+	assert_true(RivetStrips.draws_fire(rig, &"pistol", 1, true), "noise past the edge holds it")
+	aim.call(60.0)
+	assert_false(RivetStrips.draws_fire(rig, &"pistol", 1, true), "the aim really left")
+	aim.call(44.0)
+	assert_false(RivetStrips.draws_fire(rig, &"pistol", 1, true), "off stays off to the burst end")
+	assert_false(RivetStrips.draws_fire(rig, &"pistol", 1, false), "the latch clears")
+	assert_true(RivetStrips.draws_fire(rig, &"pistol", 1, true), "the next burst decides afresh")
+
+
 func test_top_has_no_strip() -> void:
 	assert_eq(RivetStrips.strip_of("", &"pistol"), "")
 
