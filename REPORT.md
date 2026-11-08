@@ -24,7 +24,11 @@ Branch `n9-world`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n9\world\` (frame
      family, neighbours within 3 m differ, a slide of 0.35-1.2 m into the sim rest and a small settle. The baked
      far crowd dead take them too.
    - Riot before/after at 32 and 64 px/m: straight planks -> twisted sprawls.
-   - Quest 1's dock contractors (not rigs) are wired the same way and wait on one sheet (see "does not").
+   - Quest 1's dock contractors (not rigs, drawn by `StreetQuestCards`) lie in the same five poses since it19
+     (918cbe58: assets `dead_plan_v1_contractor`, grade B; drawn opaque, DECISION world/quest-dead-plan-opaque).
+     Dock 9 at 32 px/m, t13800: before three planks side by side, heads one way; after twisted sprawls along
+     each blow, neighbours differ (`dock9_contractors_dead_before_after_tilt70_32ppm_t13800_crop3x.png`, a 20 s
+     clip `dock9_contractors_dead_after_tilt70_32ppm_t13450-14050.mp4`).
 3. **Cars knock Rivet down** (703c287b, b0f1024e, 0c04d16b; DECISIONs world/car-hits-rivet-sim, -on,
    world/car-knock-damage-event-only).
    - Both twins, bit-exact. Above 5 m/s a car throws him along its heading; below it, the car brakes and stops at
@@ -49,10 +53,10 @@ Branch `n9-world`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n9\world\` (frame
 
 ## What does not (yet)
 
-- **Quest 1 Dock 9's dead contractors still lie in the old straight frame**: they draw through
-  `StreetQuestCards`, not the rigs, so the redesign missed them until it16. The code is in (b5c5a28f). The sheet is
-  REQUESTed from assets (`dead_plan_v1_contractor`). Before still:
-  `dock9_contractors_dead_before_tilt70_32ppm_t13800*.png`.
+- **Dock 9 at 64 px/m is not filmed**: the fight lies off-frame at 64 (tried `--cam=fight` and a 4K window,
+  which stretches the same world area). The 32 px/m crop x3 is the close look (an upscale, labelled so).
+- The Dock 9 dead heap on the crossing, because the quest kills them there; they overlap one another. The
+  contractor sheet's pose D reads as a second face-down (assets graded it B).
 - At a wall the lying pose's hood and one hand overlap the building's edge by ~0.3 m (64 px/m close-up: it reads as a
   body slumped against the wall, feet out). The view bound pulls the pose back along the blow only; left as is.
 - The knock damage is an Event only (the city has no Rivet hp outside the pits).
@@ -85,8 +89,7 @@ Branch `n9-world`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n9\world\` (frame
 
 ## Next steps
 
-1. Pack `dead_plan_v1_contractor` when served (`python tools/art/dead_plan.py --only=contractor`, add it to
-   CLASSES). Then film Dock 9 before/after at 32 and 64 px/m.
+1. Dock 9 at 64 px/m (needs a camera lead toward the crossing), and assets' pose D redrawn if the owner asks.
 2. Optional: bound the lying pose by its own sideways extent at a wall (the ~0.3 m hand/hood overlap).
 3. Freeze: the full gate (`node tools/evidence/run.mjs --no-bench`), the director reel x3 at the head, the exe
    (`build/export/windows/RTAI.exe`), this report finalised.
