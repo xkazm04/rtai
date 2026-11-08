@@ -1,0 +1,203 @@
+diff --git a/project/boot/city_characters.gd b/project/boot/city_characters.gd
+index dca7d81a..1abc7dc9 100644
+--- a/project/boot/city_characters.gd
++++ b/project/boot/city_characters.gd
+@@ -68,27 +68,43 @@ func _before_render(focus: Vector2) -> void:
+ 		skipped_frames += 1
+ 		return
+ 	_primed = true
++	var _t17: int = Time.get_ticks_usec()
+ 	_fill_feed(focus)
++	CityView.PROF[17] += Time.get_ticks_usec() - _t17
++	var _t18: int = Time.get_ticks_usec()
+ 	crowd.observe(rigs, maxi(steps, 1))  # human-reactions: a startled pedestrian cowers
++	CityView.PROF[18] += Time.get_ticks_usec() - _t18
+ 	if _view.look_params != null:
+ 		PartMaterials.set_flat_below(_view.look_params.parts_flat_below)
+ 	rigs.focus = focus * SimConst.PX_PER_M
+ 	rigs.zoom = _view.zoom
+ 	_last_tick = _clock.tick()
++	var _t19: int = Time.get_ticks_usec()
+ 	rigs.step_ticks(steps)
++	CityView.PROF[19] += Time.get_ticks_usec() - _t19
+ 	_slots.clear()
+ 	for i: int in rigs.feed.count:
+ 		if rigs.full_row(i) and rigs.feed.ids[i] != RIVET_ID:
+ 			_slots.append(rigs.feed.ids[i])
++	var _t5: int = Time.get_ticks_usec()
+ 	_city.sim.set_rig_slots(PackedInt32Array(_slots))
++	CityView.PROF[5] += Time.get_ticks_usec() - _t5
+ 
+ 
+ ## One row per live person within FEED_RADIUS_M of the focus, then Rivet.
+ func _fill_feed(focus: Vector2) -> void:
++	var _a0: int = Time.get_ticks_usec()
+ 	var snap: PackedFloat64Array = _city.sim.snapshot()
++	var _a1: int = Time.get_ticks_usec()
++	CityView.PROF[6] += _a1 - _a0
+ 	if _view.fx_feed != null:
+ 		_view.fx_feed.observe(snap, _clock.tick())
++	var _a2: int = Time.get_ticks_usec()
++	CityView.PROF[14] += _a2 - _a1
+ 	var variants: PackedByteArray = _city.sim.get_variants()
++	CityView.PROF[15] += Time.get_ticks_usec() - _a2
++	CityView.PROF[13] += snap.size()
++	var _l0: int = Time.get_ticks_usec()
+ 	var feed: RigFeed = rigs.feed
+ 	feed.count = 0
+ 	var r2: float = FEED_RADIUS_M * FEED_RADIUS_M
+@@ -102,7 +118,11 @@ func _fill_feed(focus: Vector2) -> void:
+ 		var p: Vector2 = Vector2(snap[r + 4], snap[r + 5])
+ 		if p.distance_squared_to(focus) > r2:
+ 			continue
++		var _p0: int = Time.get_ticks_usec()
+ 		_put_person(feed, snap, r, variants, aim)  # by offset: no slice allocated a person
++		CityView.PROF[9] += Time.get_ticks_usec() - _p0
++		CityView.PROF[10] += 1
++	CityView.PROF[11] += Time.get_ticks_usec() - _l0
+ 	if rivet_on_foot:
+ 		var at: Vector2 = _city.target * SimConst.PX_PER_M
+ 		var vel: Vector2 = (at - _rivet_prev) / SimClock.TICK_DT
+diff --git a/project/features/characters/character_rigs.gd b/project/features/characters/character_rigs.gd
+index 831435a2..f214726c 100644
+--- a/project/features/characters/character_rigs.gd
++++ b/project/features/characters/character_rigs.gd
+@@ -83,10 +83,12 @@ func step_ticks(steps: int) -> void:
+ 	var t0: int = Time.get_ticks_usec()
+ 	PartMaterials.set_view(zoom)
+ 	var d5: bool = RigDetail.set_view(zoom)
++	var b0: int = Time.get_ticks_usec()
+ 	_assign()
+ 	for actor: int in _by_actor:
+ 		if d5 or RigDetail.is_on(_by_actor[actor]):
+ 			RigDetail.sync(_by_actor[actor])
++	CutRig.PROF[7] += Time.get_ticks_usec() - b0
+ 	for _k: int in steps:
+ 		ticks_stepped += 1
+ 		for actor: int in _by_actor:
+diff --git a/project/features/characters/cut_rig.gd b/project/features/characters/cut_rig.gd
+index 0ee2abf7..6b64200c 100644
+--- a/project/features/characters/cut_rig.gd
++++ b/project/features/characters/cut_rig.gd
+@@ -163,7 +163,11 @@ func reset_state(at_facing: float) -> void:
+ 
+ 
+ ## One pose step of dt seconds (the manager calls it on the 60 Hz tick).
++static var PROF: PackedInt64Array = PackedInt64Array([0, 0, 0, 0, 0, 0, 0, 0])
++
++
+ func drive(dt: float) -> void:
++	var a0: int = Time.get_ticks_usec()
+ 	t_alive += dt
+ 	speed_now = vel_in.length()
+ 	clips.sample(self, dt)
+@@ -174,14 +178,27 @@ func drive(dt: float) -> void:
+ 	rotation = facing
+ 	RigTilt.aim_up(self)
+ 	RigGait.step(self, dt)
++	var a1: int = Time.get_ticks_usec()
+ 	RigPose.step(self)
++	var a2: int = Time.get_ticks_usec()
++	PROF[0] += a1 - a0
++	PROF[1] += a2 - a1
+ 	if tilt_up != Vector2.ZERO:
+ 		RigTilt.lift_upper(self)
++		var a3: int = Time.get_ticks_usec()
+ 		RigHeadCard.step(self)
++		var a4: int = Time.get_ticks_usec()
+ 		StreetView.step(self)
++		var a5: int = Time.get_ticks_usec()
++		PROF[2] += a3 - a2
++		PROF[3] += a4 - a3
++		PROF[4] += a5 - a4
++	var a6: int = Time.get_ticks_usec()
+ 	if react != null:
+ 		react.post(self)
+ 		StreetView.post(self)
++	PROF[5] += Time.get_ticks_usec() - a6
++	PROF[6] += 1
+ 	if hose != null:
+ 		RigHose.step(self, dt)
+ 	if absf(PartMaterials.view_px - _last_px) > 0.002:
+diff --git a/project/features/city/view/city_view.gd b/project/features/city/view/city_view.gd
+index 43e3320f..a3846019 100644
+--- a/project/features/city/view/city_view.gd
++++ b/project/features/city/view/city_view.gd
+@@ -136,21 +136,38 @@ func prewarm() -> int:
+ 	return us
+ 
+ 
++static var PROF: PackedInt64Array = PackedInt64Array([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]); static var PROF_N: int = 0
++const PROF_NAMES: Array[String] = ["place_camera","chunks.update","prop_lights.update","before_render","write_render","BR.set_rig_slots","FF.snapshot","PC.update_look","PC.fx+glow","FF.put_person","FF.put_count","FF.loop_total","PC.ground.step","FF.snap_floats","FF.observe","FF.variants","PROCESS_TOTAL","BR.fill_feed","BR.crowd.observe","BR.step_ticks"]
++
++
+ func _process(_delta: float) -> void:
+ 	if _city == null or warming:
+ 		return
++	PROF_N += 1
++	var _t99: int = Time.get_ticks_usec()
+ 	var focus: Vector2 = _city.focus
++	var _t0: int = Time.get_ticks_usec()
+ 	_place_camera(focus)
++	PROF[0] += Time.get_ticks_usec() - _t0
++	var _t1: int = Time.get_ticks_usec()
+ 	chunks.update(focus, _city.residency, zoom)
++	PROF[1] += Time.get_ticks_usec() - _t1
++	var _t2: int = Time.get_ticks_usec()
+ 	prop_lights.update(_city.residency, focus, clock.tick() if clock != null else 0)
++	PROF[2] += Time.get_ticks_usec() - _t2
+ 	var half: Vector2 = get_viewport_rect().size * 0.5 / (zoom * SimConst.PX_PER_M)
+ 	half += Vector2.ONE * VIEW_MARGIN_M + kick_px.abs() / SimConst.PX_PER_M  # an offset view
+ 	half.y /= ViewMode.shared().ground_k()  # --view: a tilt sees more ground north-south
++	var _t3: int = Time.get_ticks_usec()
+ 	if before_render.is_valid():
+ 		before_render.call(focus)
++	PROF[3] += Time.get_ticks_usec() - _t3
++	var _t4: int = Time.get_ticks_usec()
+ 	_city.sim.write_render(focus.x - half.x, focus.y - half.y, focus.x + half.x, focus.y + half.y)
++	PROF[4] += Time.get_ticks_usec() - _t4
+ 	var counts: PackedInt32Array = _city.sim.get_render_counts()
+ 	visible_actors = counts[SimConst.RL_PEDS] + counts[SimConst.RL_CARS] if counts.size() > 2 else 0
++	PROF[16] += Time.get_ticks_usec() - _t99
+ 
+ 
+ ## Camera on the focus; world_px locks the print pass's grime and hatch to the world.
+@@ -162,7 +179,9 @@ func _place_camera(focus: Vector2) -> void:
+ 		zoom = rig.ppm() / SimConst.PX_PER_M
+ 		offset += rig.offset_px(SimConst.PX_PER_M)
+ 	camera.zoom = ViewMode.shared().zoom_of(zoom)  # --view: exactly ONE * zoom when flat
++	var _t7: int = Time.get_ticks_usec()
+ 	_update_look()
++	PROF[7] += Time.get_ticks_usec() - _t7
+ 	var cam: Vector2 = focus * SimConst.PX_PER_M + offset
+ 	camera.position = (cam * zoom).round() / zoom if snap_px else cam
+ 	fx_triggers.rig = rig
+@@ -176,9 +195,13 @@ func _place_camera(focus: Vector2) -> void:
+ 		o.update(look_now, zoom * SimConst.PX_PER_M, world_px)
+ 	lights.set_page_age(LookOverlay.page_age_of(_overlays))
+ 	lights.step(tick, world_px)
++	var _t8: int = Time.get_ticks_usec()
+ 	fx.step(tick, world_px)
+ 	fx.glow.step(tick, world_px)
++	PROF[8] += Time.get_ticks_usec() - _t8
++	var _t12: int = Time.get_ticks_usec()
+ 	fx.ground.step(tick, world_px)
++	PROF[12] += Time.get_ticks_usec() - _t12
+ 	markers.step(tick)
+ 	_look_mat.set_shader_parameter(&"world_px", world_px)
+ 	if noir != null:
+@@ -255,5 +278,14 @@ func actor_layer() -> CanvasLayer:
+ 
+ 
+ func _exit_tree() -> void:
++	var line: String = "CVPROF frames=%d" % PROF_N
++	for i: int in PROF_NAMES.size():
++		line += " | %s %.1f" % [PROF_NAMES[i], float(PROF[i]) / maxf(1.0, PROF_N)]
++	print(line)
++	var cn: Array[String] = ["gait+", "pose", "lift", "headcard", "street", "post", "drives", "assign"]
++	var l2: String = "RIGPROF"
++	for i: int in 8:
++		l2 += " | %s %.1f" % [cn[i], float(CutRig.PROF[i]) / maxf(1.0, PROF_N)]
++	print(l2)
+ 	if chunks != null:
+ 		chunks.dispose()

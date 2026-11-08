@@ -226,6 +226,65 @@ Caught before the flip: World armed it in ANY windowed mailbox run, including `-
 goldens): a fixed 16.667 ms delta snapped to the 59.94 Hz interval (16.683) would add a sim tick every ~1000 frames.
 7852a8d4 arms it only in a real-time window (`LaunchArgs.engine_fixed_fps()`), `test_fixed_fps_is_never_real_time`.
 
+### CityView._process per call (it5): where the riot's 3.4 ms goes
+Scratch timers (`evidence/perf/n9-l17/cvprof.patch`, never committed; the rig internals are `n9-rig-combo/prof.patch`),
+city_bench windowed d3d12, vsync off, `--fixed-fps 60` (1826 frames = one tick a frame), 6342fcd0, CONTENDED (1-3 other
+Godots). Mean us a frame:
+
+| call | riot (tilt70, zoom 1.0) | drive_dense (tilt70, zoom 1.5) |
+|---|---|---|
+| CityView._process total | 2450-3000 | 1171 |
+| before_render (CityCharacters) | 2134-2587 | 987 |
+| . rigs.step_ticks (10 full drives a tick) | 1407-1796 | 804 |
+| . . gait+ / pose / street / headcard / lift / assign | 324 / 434 / 412 / 113 / 23 / 132 | 218 / 304 / 189 / 98 / 16 / 75 |
+| . _fill_feed | 494-569 | 156 |
+| . . snapshot / fx_feed.observe / variants | 20 / 125 / 5 | 19 / 71 / 5 |
+| . . the loop (5653 floats = ~400 records; **262 rows put a tick**) | 387, of which _put_person 305 (1.2 us a row) | |
+| . crowd.observe | 127-149 | 9 |
+| _place_camera | 209-275 | 43 |
+| . **fx.ground.step** (FxPool: the ground marks) | **127-157** | 2 |
+| . fx.step / glow.step | 37-47 / 7-9 | 4 / 2 |
+| chunks.update | 85-104 | 122 |
+| write_render | 16-25 | 13 |
+
+Reading: the rig step is ~60 % and is spread over dense GDScript math (RigPose / RigArm / RigGait / StreetView: no
+allocation or lookup to strip; the cut is a C++ port of the pose step, a multi-session job and the rivet lane's rig
+files tonight). The feed is per-row call cost over 262 rows. The one pure-waste item: **FxPool.step re-reads ~14
+String-keyed Dictionary values a live particle a tick** (the ground pool holds the riot's casings and ink splats,
+90 / 240-tick lives): L17.
+
+### L17 (it5): FxPool reads a cached FxKindRow, not the kind Dictionary
+Hypothesis: the ground pool's per-particle cost is the Dictionary lookups (String keys hashed every read), not the
+MultiMesh writes; caching the kind's constants once at put cuts fx.ground.step ~40-60 % (-50..-80 us a riot frame,
+~1-2 % of the frame: a mechanism win, below the frame-level noise, the L5 precedent). No pixel: the same values and
+float ops (`test_fx_pool`: the MultiMesh buffer bit-identical to the verbatim old step over 260 ticks of every kind).
+Change: `core/render/fx_kind_row.gd` (new), `fx_pool.gd` (`row_of` replaces `kind_of`; a spawn's `count` particles
+share one row). Commit 4b7c1e44.
+A/B (scratch timers in `cvprof`, riot tilt70 windowed, fixed 60, arms interleaved by swapping fx_pool.gd, two jobs,
+CONTENDED 0-4 other Godots; `evidence/perf/n9-l17/ab-l17.txt`, `ab-l17b.txt`), fx.ground.step us a frame:
+
+| arm | job 1 (3 rounds) | job 2 (3 rounds) | median of all |
+|---|---|---|---|
+| old (6342fcd0) | 135 / 152 / 135 | 129 / 159 / 145 | **140** |
+| L17 (row cache) | 107 / 86 / 97 | 104 / 85 / 101 | **99 (-29 %)**: every L17 round under every old round |
+| L17b (+ skip the rewrite of a held particle) | | 111 / 123 / 112 | 112: worse than L17 |
+
+fx + glow (the other two pools) 44-53 -> 31-42 us. **L17 KEPT** (mechanism WIN, -40 us a riot frame; no frame-level
+claim: the frame total's spread is ~0.5 ms). **L17b DROPPED** (9944fd7d): the riot's ground pool is mostly moving
+casings, so the held check costs more than the skipped writes save.
+Test lesson (FRICTION it5): the first test compared `MultiMesh.buffer`, which is EMPTY headless (the dummy renderer
+keeps no instance data): the mutation run scored 27 % (`mutate-fx_pool.txt`). `FxPool.mirror` (sized by tests only;
+one `is_empty()` a write in the game) now carries what each slot shows; the test compares that.
+
+### L18 (it5): CityResidency.resident_keys() sorted once a change
+Found reading ChunkView.update (85-122 us a frame): `resident_keys()` returns `_sorted(_resident.keys())`, a
+`sort_custom` with a GDScript lambda over ~70 keys, on every call: ChunkView every frame (`_nearest_undrawn`),
+`CityResidency.update` every tick, city_system, the prop lights, the noir lamps and shadows. Hypothesis: the sort is
+most of chunks.update's steady cost; cached until adopt / evict / drop, chunks.update falls ~50 %+ on the drive. No
+pixel and no sim change: the order is a total order on unique keys, so the cached array is the array a fresh sort
+returns (test: row order, the same object until a change, rebuilt on evict / drop / adopt; read only, so no caller can
+reorder it). Commit 73f30553.
+
 ### Item 2 (it2): the traffic-sheet split is moot under BC7
 n9-world 3e02d3b8 imports the p70 traffic sheet as BC7: `traffic_cards.png-313d05e5...bptc.ctex` = **18,063,412 B**
 (4032 x 4480 x 1 B), one upload into a **32 MB** pow2 staging buffer (L9's mechanism), against 128 MB lossless. The

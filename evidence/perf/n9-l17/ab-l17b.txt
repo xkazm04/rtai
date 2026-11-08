@@ -1,0 +1,9 @@
+old r1 godots_before=0 PC.fx+glow 44.0 PC.ground.step 129.4 PROCESS_TOTAL 2549.2  err=0
+l17 r1 godots_before=0 PC.fx+glow 42.3 PC.ground.step 103.8 PROCESS_TOTAL 3301.0  err=0
+l17b r1 godots_before=2 PC.fx+glow 38.0 PC.ground.step 110.8 PROCESS_TOTAL 2543.3  err=0
+old r2 godots_before=0 PC.fx+glow 53.0 PC.ground.step 158.6 PROCESS_TOTAL 3102.4  err=0
+l17 r2 godots_before=2 PC.fx+glow 30.6 PC.ground.step 84.5 PROCESS_TOTAL 2487.5  err=0
+l17b r2 godots_before=0 PC.fx+glow 42.4 PC.ground.step 123.1 PROCESS_TOTAL 2657.5  err=0
+old r3 godots_before=1 PC.fx+glow 47.5 PC.ground.step 144.5 PROCESS_TOTAL 2835.5  err=0
+l17 r3 godots_before=4 PC.fx+glow 37.3 PC.ground.step 100.6 PROCESS_TOTAL 2984.5  err=0
+l17b r3 godots_before=2 PC.fx+glow 38.3 PC.ground.step 111.6 PROCESS_TOTAL 2458.5  err=0

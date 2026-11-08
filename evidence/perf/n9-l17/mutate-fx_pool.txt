@@ -1,0 +1,29 @@
+mutate: worktree C:\Users\kazda\kiro\gtai-n9\tmp\perf\gtai-mutate-c8e58c79 at 4b7c1e44 (created)
+mutate: 12/63 mutant(s); baseline run of test_fx_pool
+mutate: baseline green in 59.2 s; per-mutant timeout 180 s
+mutate: [1/12] core/render/fx_pool.gd:46 cmp_flip  == -> !=  survived  (19.2 s)
+mutate: [2/12] core/render/fx_pool.gd:51 arith  += -> -=  killed  (16.1 s)
+mutate: [3/12] core/render/fx_pool.gd:51 literal  1 -> 0  killed  (15.8 s)
+mutate: [4/12] core/render/fx_pool.gd:60 boundary  >= -> >  killed  (17.2 s)
+mutate: [5/12] core/render/fx_pool.gd:66 literal  1.0 -> 0.0  survived  (17.2 s)
+mutate: [6/12] core/render/fx_pool.gd:67 arith  * -> /  survived  (14.4 s)
+mutate: [7/12] core/render/fx_pool.gd:67 arith  * -> /  survived  (13.1 s)
+mutate: [8/12] core/render/fx_pool.gd:69 literal  1.0 -> 0.0  survived  (16.6 s)
+mutate: [9/12] core/render/fx_pool.gd:69 literal  1.0 -> 0.0  survived  (14.9 s)
+mutate: [10/12] core/render/fx_pool.gd:74 literal  1 -> 0  timeout  (180.4 s)
+mutate: [11/12] core/render/fx_pool.gd:94 arith  * -> /  survived  (16.5 s)
+mutate: [12/12] core/render/fx_pool.gd:99 arith  + -> -  survived  (21.3 s)
+mutate core/render/fx_pool.gd: 12 mutant(s) (sampled from 63), tests: test_fx_pool
+  core/render/fx_pool.gd:46 cmp_flip  == -> !=  survived
+  core/render/fx_pool.gd:66 literal  1.0 -> 0.0  survived
+  core/render/fx_pool.gd:67 arith  * -> /  survived
+  core/render/fx_pool.gd:67 arith  * -> /  survived
+  core/render/fx_pool.gd:69 literal  1.0 -> 0.0  survived
+  core/render/fx_pool.gd:69 literal  1.0 -> 0.0  survived
+  core/render/fx_pool.gd:94 arith  * -> /  survived
+  core/render/fx_pool.gd:99 arith  + -> -  survived
+  core/render/fx_pool.gd:74 literal  1 -> 0  timeout
+  core/render/fx_pool.gd:51 arith  += -> -=  killed
+  core/render/fx_pool.gd:51 literal  1 -> 0  killed
+  core/render/fx_pool.gd:60 boundary  >= -> >  killed
+score 27.3% = killed 3 / (killed 3 + survived 8); timeout 1, invalid 0; 431 s

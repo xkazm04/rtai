@@ -263,3 +263,39 @@ NEXT (it5):
   then only the inert-by-default smoother arm and LaunchArgs.engine_fixed_fps changed: no reel re-run needed unless a
   game file changes in it5).
 - it4 ends 04:35. NEXT (it5) as written above; item 2 (the evidence gate) is DONE on 10a2348a.
+
+## it5 (2026-11-08 04:35-05:34) BUILD
+- READ: JOURNAL it4 NEXT, git log, world (it13: no REQUEST to perf), rivet / handheld (none to perf).
+  Registry rules applied: perf-instrumentation (scratch timers in a throwaway worktree, patch kept as evidence),
+  measurement-honesty (CONTENDED labels, a cut must clear the measured spread).
+- Plan: item 1 (CityView._process per-call breakdown on riot + drive70), then the smallest cut behind a flag + A/B.
+- 04:41 CityView._process per call (scratch timers, worktree `gtai-n9/tmp/perf/cvprof`, patch kept as
+  `evidence/perf/n9-l17/cvprof.patch`; riot + drive_dense, fixed 60, CONTENDED): riot total 2.45-3.0 ms =
+  before_render 2.1-2.6 (rigs.step_ticks 1.4-1.8: pose 434, street 412, gait 324, assign 132, headcard 113 us;
+  _fill_feed 0.5: 262 feed rows a tick at 1.2 us each; crowd.observe 0.13-0.15), fx.ground.step 0.13-0.16, chunks
+  0.09. Table in LEDGER "CityView._process per call". The rig step is dense GDScript math (a C++ port is the real
+  lever, multi-session); the one pure waste: FxPool.step's ~14 String-keyed Dictionary reads a particle a tick.
+- 04:45 MILESTONE L17 committed 4b7c1e44: FxKindRow (the kind's constants cached at put), `test_fx_pool` (MultiMesh
+  buffer bit-identical to the verbatim old step, 260 ticks, every real kind) 13 / 0 with test_fx_system, lint 15 / 15.
+  Running: the mutation check (`evidence/perf/n9-l17/mutate-fx_pool.txt`) and the timer ABAB (old vs new FxPool in
+  cvprof, riot x3 a arm).
+- 04:48 L17 timer ABAB (cvprof, riot x3 a arm, interleaved, CONTENDED 0-2 Godots): fx.ground.step old 135 / 152 /
+  135 us vs L17 107 / 86 / 97: median -29 %, ranges apart (WIN at the mechanism); fx + glow 44 -> 34 us. Frame total
+  inside the noise (not claimed).
+- FRICTION (04:50): the mutation run on 4b7c1e44 scored 27 % (3 / 11 killed): velocity and size mutants survived.
+  Cause: a headless MultiMesh (the dummy renderer) keeps no data, `mm.buffer` is empty on both sides, the compare was
+  vacuous. Fix in 76090884: FxPool.mirror (tests size it; each instance write lands there too), the test compares
+  the shown instances through it. Lesson: never compare RenderingServer-backed data in a headless unit test.
+- 04:52 MILESTONE L17b committed 76090884: FxPool skips the rewrite of a held particle (zero velocity, grow 0, alpha
+  1.0, the same anim cell as `steps` ticks ago; a per-slot `fresh` flag on put / swap-in). test_fx_pool: shown
+  instances bit-identical over 260 ticks of every real kind + fewer writes than the every-slot path. Lint 15 / 15.
+- 04:58 L17b A/B (cvprof, riot, old / L17 / L17b x3, CONTENDED 0-4): fx.ground.step medians 145 / 101 / 112 us: the
+  held skip is worse than L17 alone (the riot's ground pool is mostly moving casings). DROPPED in 9944fd7d (the
+  mirror test kept). LEDGER L17 table.
+- 05:01 L18 committed 73f30553: CityResidency.resident_keys() sorted once a residency change (it lambda-sorted ~70
+  keys on every call: ChunkView every frame, update() every tick, city_system, prop lights, noir lamps / shadows).
+  Test in test_city_streaming (row order, same array until a change, rebuilt on evict / drop / adopt). Timer A/B on
+  drive_dense running (`cvprof/arms/run_res.sh`).
+- Combined clip done: `gtai-masters/n9/perf/perf-set-n9.mp4` (46 s: King 32 combo main vs BC7, drive 32 tilt70 main
+  vs BC7, the pause card's pacing row; captions burned in; stills at 10 s and 42 s looked at), frames.json entry 1
+  (6 entries).
