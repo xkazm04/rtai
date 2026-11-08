@@ -12,14 +12,16 @@ extends RefCounted
 ## library's armed walks for the weapon each draws) until a shot or a strike latches the equipped
 ## strip's fire cell; --rivet-walk-armed=off keeps the equipped facing card (d9's bob).
 ## n9 it4: bare-claw above RUN_FROM_MPS he runs on the library's 8-frame run (`rivet_run8.png`,
-## flight frames; the profile stance foot travels 0.62 x his height per step: RUN_CYCLE_CELL),
-## cadence capped at MAX_RUN_CYCLES_S; --rivet-walk=walk8 keeps the walk at every speed.
+## flight frames), cadence capped at MAX_RUN_CYCLES_S; --rivet-walk=walk8 keeps the walk at every
+## speed. RUN_CYCLE_CELL (it5): in the grid's profile rows the stance foot moves 62-67 cell px from
+## contact to push-off, two frame steps, so one frame step = ~32 cell px of ground and a cycle 8 x
+## that (it4 wired 136 = the travel per half cycle: the legs churned 1.9x, the foot slid back).
 
 const STRIP: String = "rivet_walk8.png"
 const STRIP4: String = "rivet_walk.png"
 const ARMED: String = "rivet_walk_eq_"
 const RUN: String = "rivet_run8.png"
-const RUN_CYCLE_CELL: Dictionary[String, float] = {"p70": 136.0}
+const RUN_CYCLE_CELL: Dictionary[String, float] = {"p70": 258.0}
 const RUN_FROM_MPS: float = 2.5
 const MAX_RUN_CYCLES_S: float = 3.5
 const ROWS: int = 8

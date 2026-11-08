@@ -106,3 +106,12 @@ func test_bare_claw_runs_on_the_drawn_run_above_the_run_speed() -> void:
 	RivetWalk.run = true
 	rig.speed_now = RivetWalk.RUN_FROM_MPS * CharacterRigs.PX_PER_M - 10.0
 	assert_true(RivetWalk.path_of(rig, "p70", &"").ends_with(RivetWalk.STRIP), "slow: the walk")
+
+
+func test_the_run_cycle_is_the_drawn_stance_travel_per_frame_step() -> void:
+	# n9 it5: the profile rows' stance foot moves 62-67 cell px over two frame steps (contact to
+	# push-off), so one frame step is ~32 cell px of ground; the run (6.75 m/s) plants under the cap
+	var step_cell: float = RivetWalk.RUN_CYCLE_CELL["p70"] / 8.0
+	assert_between(step_cell, 31.0, 34.0)
+	var cycle_m: float = RivetWalk.RUN_CYCLE_CELL["p70"] / RivetFrames.FIG_PX * RivetFrames.HEIGHT_M
+	assert_lt(6.75 / cycle_m, RivetWalk.MAX_RUN_CYCLES_S, "the run's cadence is under the cap")
