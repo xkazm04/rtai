@@ -7,6 +7,7 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--bikes",  # d9: the sim bike's share of traffic (overrides vehicle_handling traffic.bike_share)
 	"--traffic-yields",  # d9: sim traffic brakes for Rivet on foot (CityVehicleWorld.yield_to_rivet)
 	"--strip-prefetch",
+	"--crowd-readback",  # n9-perf F-19: sync = the old blocking get_image (CrowdReadback)
 	"--frame-cap",  # d9-perf L10/L12/L14: off = no caps (FrameCap, MinimizedCap); spin = no L14
 	"--menu-idle",  # d9-perf L13: off = the title card redraws every frame (MenuIdle)
 	"--replay",
