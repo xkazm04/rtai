@@ -20,6 +20,7 @@ var _frame_probes: Array[Callable] = []
 var _last_us: int = 0
 var _loop_ms: float = 0.0
 var _prewarming: bool = false
+var _smooth: FrameDeltaSmoother = null
 
 
 ## The one place a WorldContext is assembled. Tests call it with fresh instances or fakes.
@@ -108,8 +109,26 @@ func _process(delta: float) -> void:
 		_hitches.frame((now - _last_us) / 1000.0, _loop_ms + _probe_ms())
 	_last_us = now
 	if _loop != null and not _prewarming:
-		_loop.frame(delta)
+		_loop.frame(_smoothed(delta))
 	_loop_ms = (Time.get_ticks_usec() - now) / 1000.0
+
+
+## n9-perf: the frame delta snapped to the display interval under mailbox (FrameDeltaSmoother;
+## the engine smooths only VSYNC_ENABLED). `--delta-smooth=on` arms it in a real-time mailbox
+## window (off by default: L16 a wash); never headless, filming, --fixed-fps or other vsync.
+func _smoothed(delta: float) -> float:
+	if _smooth == null:
+		var hz: float = DisplayServer.screen_get_refresh_rate()
+		var realtime: bool = FrameDeltaSmoother.realtime_window(LaunchArgs.engine_fixed_fps())
+		var vsync: int = DisplayServer.window_get_vsync_mode()
+		var on: bool = FrameDeltaSmoother.wanted(
+			LaunchArgs.value("--delta-smooth"), realtime, vsync, hz
+		)
+		hz = minf(hz, Engine.max_fps) if Engine.max_fps > 0 else hz
+		_smooth = FrameDeltaSmoother.new(1.0 / hz if on else 0.0)
+		if on:
+			Log.info("world", "delta smoothing on: %.2f Hz interval (mailbox)" % hz)
+	return _smooth.smooth(delta)
 
 
 ## A per-frame cost (ms) of a view or another node, added to the hitch log's game time.

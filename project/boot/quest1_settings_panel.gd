@@ -1,7 +1,8 @@
 class_name Quest1SettingsPanel
 extends VBoxContainer
 ## The pause card's settings: master volume, reduced motion, a frame cap and the rumble level on a
-## handheld device row (device / 30 / 40 / 60; full / half / off), and a keyboard rebind per action
+## handheld device row (device / 30 / 40 / 60; full / half / off), the frame pacing elsewhere
+## (efficient / steady, n9 Call P-3), and a keyboard rebind per action
 ## (press the button, then the new key; Esc or any pad button cancels). Every change is applied and
 ## saved at once (PlayerSettings, to `save_path`; "" = not saved); `changed` tells the game to
 ## refresh what reads the flags. A rebuild keeps the focus on the same button (d9-handheld: a pad
@@ -89,6 +90,11 @@ func _build_rows() -> void:
 			rumble_label(settings.rumble),
 			[[_text.resolve(&"SLICE__TOGGLE", "Toggle"), _cycle_rumble]]
 		)
+	else:
+		_row(
+			pacing_label(settings.pacing),
+			[[_text.resolve(&"SLICE__TOGGLE", "Toggle"), _cycle_pacing]]
+		)
 	# d9-handheld: no keyboard rebind rows on a handheld tier (the pad has none; Steam Input remaps)
 	var rebinds: Array[StringName] = REBINDS.duplicate()
 	if DeviceProfile.shared().is_handheld():
@@ -158,6 +164,19 @@ func rumble_label(level: float) -> String:
 func _cycle_rumble() -> void:
 	var levels: Array[float] = PlayerSettings.RUMBLE_LEVELS
 	settings.rumble = levels[(levels.find(settings.rumble) + 1) % levels.size()]
+	_commit()
+	_rebuild()
+
+
+func pacing_label(pacing: String) -> String:
+	if pacing == "steady":
+		return _text.resolve(&"SLICE__PACING_STEADY", "Frame pacing: steady")
+	return _text.resolve(&"SLICE__PACING_EFFICIENT", "Frame pacing: efficient")
+
+
+func _cycle_pacing() -> void:
+	var all: Array[String] = PlayerSettings.PACINGS
+	settings.pacing = all[(all.find(settings.pacing) + 1) % all.size()]
 	_commit()
 	_rebuild()
 

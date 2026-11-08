@@ -1,0 +1,33 @@
+mutate: worktree C:\Users\kazda\kiro\gtai-n9\tmp\perf\gtai-mutate-c8e58c79 at 4bc6d82c (reused)
+mutate: 14/14 mutant(s); baseline run of test_corpse_stains_cover, test_corpse_stains
+mutate: baseline green in 24.7 s; per-mutant timeout 90 s
+mutate: [1/14] features/fx/stain_cover.gd:11 literal  1.0 -> 0.0  killed  (13.3 s)
+mutate: [2/14] features/fx/stain_cover.gd:12 arith  * -> /  killed  (16.1 s)
+mutate: [3/14] features/fx/stain_cover.gd:13 literal  2.0 -> 3.0  survived  (14.7 s)
+mutate: [4/14] features/fx/stain_cover.gd:14 arith  - -> +  killed  (14.9 s)
+mutate: [5/14] features/fx/stain_cover.gd:14 arith  - -> +  killed  (11.9 s)
+mutate: [6/14] features/fx/stain_cover.gd:14 literal  1.0 -> 0.0  survived  (14.7 s)
+mutate: [7/14] features/fx/stain_cover.gd:16 cmp_flip  > -> <=  killed  (11.8 s)
+mutate: [8/14] features/fx/stain_cover.gd:16 boundary  > -> >=  survived  (14.5 s)
+mutate: [9/14] features/fx/stain_cover.gd:16 arith  + -> -  killed  (21.1 s)
+mutate: [10/14] features/fx/stain_cover.gd:16 arith  + -> -  killed  (15.1 s)
+mutate: [11/14] features/fx/stain_cover.gd:16 literal  1.0 -> 0.0  survived  (13.2 s)
+mutate: [12/14] features/fx/stain_cover.gd:18 cmp_flip  < -> >=  killed  (12.6 s)
+mutate: [13/14] features/fx/stain_cover.gd:18 boundary  < -> <=  survived  (13.1 s)
+mutate: [14/14] features/fx/stain_cover.gd:19 arith  / -> *  killed  (13.7 s)
+mutate features/fx/stain_cover.gd: 14 mutant(s), tests: test_corpse_stains_cover, test_corpse_stains
+  features/fx/stain_cover.gd:13 literal  2.0 -> 3.0  survived
+  features/fx/stain_cover.gd:14 literal  1.0 -> 0.0  survived
+  features/fx/stain_cover.gd:16 boundary  > -> >=  survived
+  features/fx/stain_cover.gd:16 literal  1.0 -> 0.0  survived
+  features/fx/stain_cover.gd:18 boundary  < -> <=  survived
+  features/fx/stain_cover.gd:11 literal  1.0 -> 0.0  killed
+  features/fx/stain_cover.gd:12 arith  * -> /  killed
+  features/fx/stain_cover.gd:14 arith  - -> +  killed
+  features/fx/stain_cover.gd:14 arith  - -> +  killed
+  features/fx/stain_cover.gd:16 cmp_flip  > -> <=  killed
+  features/fx/stain_cover.gd:16 arith  + -> -  killed
+  features/fx/stain_cover.gd:16 arith  + -> -  killed
+  features/fx/stain_cover.gd:18 cmp_flip  < -> >=  killed
+  features/fx/stain_cover.gd:19 arith  / -> *  killed
+score 64.3% = killed 9 / (killed 9 + survived 5); timeout 0, invalid 0; 231 s

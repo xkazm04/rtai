@@ -1,0 +1,233 @@
+diff --git a/project/boot/city_blood.gd b/project/boot/city_blood.gd
+index 1016df9e..d29a5dcc 100644
+--- a/project/boot/city_blood.gd
++++ b/project/boot/city_blood.gd
+@@ -58,14 +58,36 @@ func follow(feed: RigFeed) -> void:
+ 	blood.bled.connect(stains.on_bled)
+ 
+ 
++static var BPROF: PackedInt64Array = PackedInt64Array([0, 0, 0, 0, 0])
++
++
++func _exit_tree() -> void:
++	var fr: float = maxf(1.0, float(BPROF[4]))
++	print("BLOODPROF blood.step %.1f | beat %.1f | pop %.1f | stains %.1f | frames %d" % [BPROF[0] / fr, BPROF[1] / fr, BPROF[2] / fr, BPROF[3] / fr, BPROF[4]])
++	var d: PackedInt64Array = BloodFx.DCNT
++	print("BLOODCNT per tick: slots %.1f | live %.1f | ticks %d" % [d[0] / maxf(1.0, d[3]), d[1] / maxf(1.0, d[3]), d[3]])
++	var c: PackedInt64Array = CombatBlood.CPROF
++	print("BLOODPROF2 step_ticks %.1f | leak %.1f | meshes %.1f | resolve+mat %.1f" % [c[0] / fr, c[1] / fr, c[2] / fr, c[3] / fr])
++
++
+ func _process(_delta: float) -> void:
+ 	if _view.clock != null:
++		BPROF[4] += 1
++		var t0: int = Time.get_ticks_usec()
+ 		blood.step(_view.clock.tick(), _view.world_px)
++		var t1: int = Time.get_ticks_usec()
+ 		beat.step(_view.clock.tick())
++		var t2: int = Time.get_ticks_usec()
+ 		if pop != null:
+ 			pop.step(_view.clock.tick())
++		var t3: int = Time.get_ticks_usec()
+ 		if stains != null:
+ 			stains.step(_view.clock.tick(), _feed)
++		var t4: int = Time.get_ticks_usec()
++		BPROF[0] += t1 - t0
++		BPROF[1] += t2 - t1
++		BPROF[2] += t3 - t2
++		BPROF[3] += t4 - t3
+ 
+ 
+ ## World px -> screen uv through the view's camera.
+diff --git a/project/features/city/view/city_occluders.gd b/project/features/city/view/city_occluders.gd
+index 4731e028..23e401fb 100644
+--- a/project/features/city/view/city_occluders.gd
++++ b/project/features/city/view/city_occluders.gd
+@@ -15,6 +15,14 @@ const RECT_SLACK_M: float = 8.0
+ var _lift: ChunkLift = null
+ var _res: CityResidency = null
+ var _cache: Dictionary[int, Array] = {}
++## Each cached list's building positions (px), in list order: near() scans these packed values and
++## touches a Bld only on a hit (reading b.at off ~300 objects a rig was ~50 us a rig a frame).
++var _ats: Dictionary[int, PackedVector2Array] = {}
++## Each cached list's ground rects as (left, right, bottom) px triples, in list order: near()'s
++## body filter reads these instead of the Bld (the drawn area shares the rect's x-span and bottom).
++var _box: Dictionary[int, PackedFloat32Array] = {}
++## Each cached list's indices (ascending) by screen column (CityOccluderCols).
++var _cols: Dictionary[int, CityOccluderCols] = {}
+ var _rect_at: Rect2 = Rect2()
+ var _rect_list: Array[Bld] = []
+ var _rect_rev: int = -1
+@@ -29,13 +37,18 @@ class Bld:
+ 	var area: Rect2
+ 
+ 
++static var CNT: PackedInt64Array = PackedInt64Array([0, 0, 0])
++
++
+ func _init(lift: ChunkLift, res: CityResidency = null) -> void:
+ 	_lift = lift
+ 	_res = res
+ 
+ 
+-## The buildings of the resident chunks around a ground point (m), with their drawn areas.
+-func near(at_m: Vector2) -> Array[Bld]:
++## The buildings of the resident chunks around a ground point (m), with their drawn areas. With a
++## body box (px), only those whose drawn area can meet it: the x-spans overlap and the building's
++## ground line is not above the box's top (any other building's area misses the box at every lift).
++func near(at_m: Vector2, body: Rect2 = Rect2()) -> Array[Bld]:
+ 	var out: Array[Bld] = []
+ 	var keys: Dictionary[Vector2i, bool] = {}
+ 	for d: Vector2 in [Vector2(-16, -4), Vector2(16, -4), Vector2(-16, 28), Vector2(16, 28)]:
+@@ -44,24 +57,37 @@ func near(at_m: Vector2) -> Array[Bld]:
+ 	for key: Vector2i in keys:
+ 		var chunk: CityChunk = _res.chunk_at(key) if _res.is_resident(key) else null
+ 		if chunk != null:
+-			collect(chunk, at_m * SimConst.PX_PER_M, out)
++			collect(chunk, at_m * SimConst.PX_PER_M, out, body)
+ 	return out
+ 
+ 
+-## Appends chunk's buildings within REACH_M of near_px, their drawn areas at today's lift.
+-func collect(chunk: CityChunk, near_px: Vector2, out: Array[Bld]) -> void:
++## Appends chunk's buildings within REACH_M of near_px (and meeting body, when it has an area: see
++## near), their drawn areas at today's lift.
++func collect(chunk: CityChunk, near_px: Vector2, out: Array[Bld], body: Rect2 = Rect2()) -> void:
+ 	var reach: float = REACH_M * SimConst.PX_PER_M
+-	for b: Bld in of_chunk(chunk):
+-		if absf(b.at.x - near_px.x) > reach or absf(b.at.y - near_px.y) > reach:
++	var list: Array[Bld] = of_chunk(chunk)
++	var id: int = chunk.get_instance_id()
++	var ats: PackedVector2Array = _ats[id]
++	var box: PackedFloat32Array = _box[id]
++	var band: bool = body.has_area()
++	var x0: float = body.position.x
++	var x1: float = body.end.x
++	var top: float = body.position.y
++	var ks: PackedInt32Array = (
++		_cols[id].between(x0, x1) if band else PackedInt32Array(range(ats.size()))
++	)
++	CNT[0] += ks.size()
++	CNT[1] += 1
++	for k: int in ks:
++		if band and (box[k * 3 + 1] < x0 or box[k * 3] > x1 or box[k * 3 + 2] < top):
+ 			continue
+-		out.append(_with_area(b))
++		var at: Vector2 = ats[k]
++		if absf(at.x - near_px.x) > reach or absf(at.y - near_px.y) > reach:
++			continue
++		CNT[2] += 1
++		out.append(_with_area(list[k]))
+ 
+ 
+-## The buildings whose drawn areas meet a screen rect (px), for the baked crowd (one query a frame,
+-## CityCrowdOcclusion). The candidates (the resident chunks' buildings under the rect grown by
+-## RECT_SLACK_M, and up to REACH_M south of it: a roof lifts north into view) are listed once and
+-## kept until the rect leaves the grown one or a chunk streams; each frame only their areas are
+-## taken at today's lift.
+ func in_rect(view_px: Rect2) -> Array[Bld]:
+ 	var rev: int = _res.stamped + _res.dropped  # a chunk streamed in or out: list again
+ 	if rev != _rect_rev or not _rect_at.encloses(view_px):
+@@ -104,8 +130,14 @@ func of_chunk(chunk: CityChunk) -> Array[Bld]:
+ 		return _cache[id]
+ 	if _cache.size() >= CACHE_MAX:
+ 		_cache.clear()
++		_ats.clear()
++		_box.clear()
++		_cols.clear()
+ 		_rect_at = Rect2()  # the candidates came from the dropped lists: list them again
+ 	var list: Array[Bld] = []
++	var ats: PackedVector2Array = PackedVector2Array()
++	var box: PackedFloat32Array = PackedFloat32Array()
++	var cols: CityOccluderCols = CityOccluderCols.new()
+ 	for k: int in chunk.command_count():
+ 		var t: int = chunk.tex[k]
+ 		var o: int = k * CityChunk.XF_STRIDE
+@@ -118,10 +150,26 @@ func of_chunk(chunk: CityChunk) -> Array[Bld]:
+ 		var ext: Vector2 = _lift.extent(t, b.rot)
+ 		b.r = Rect2(b.at - ext * 0.5, ext)
+ 		list.append(b)
++		@warning_ignore("return_value_discarded")
++		ats.append(b.at)
++		for v: float in [b.r.position.x, b.r.end.x, b.r.end.y]:
++			@warning_ignore("return_value_discarded")
++			box.append(v)
++		cols.add(list.size() - 1, b.r)
+ 	_cache[id] = list
++	_ats[id] = ats
++	_box[id] = box
++	_cols[id] = cols
+ 	return list
+ 
+ 
++## Appends the extra occluders whose drawn area meets the view to `blds` (a fresh in_rect array).
++static func merge_extra(blds: Array[Bld], more: Array[Bld], view_px: Rect2) -> void:
++	for b: Bld in more:
++		if b.area.intersects(view_px):
++			blds.append(b)
++
++
+ ## Cached chunks (for the tests and the probe).
+ func cached() -> int:
+ 	return _cache.size()
+diff --git a/project/features/fx/combat_blood.gd b/project/features/fx/combat_blood.gd
+index bd5930a6..4f7bdd38 100644
+--- a/project/features/fx/combat_blood.gd
++++ b/project/features/fx/combat_blood.gd
+@@ -240,21 +240,31 @@ func print_material() -> ShaderMaterial:
+ 
+ 
+ ## Advances the blood to sim tick `tick` (once a frame); world_px locks the print grain.
++static var CPROF: PackedInt64Array = PackedInt64Array([0, 0, 0, 0])
++
++
+ func step(tick: int, world_px: Vector2) -> void:
+ 	var t0: int = Time.get_ticks_usec()
+ 	_mat.set_shader_parameter(&"world_px", world_px)
+ 	_resolve()
+ 	var n: int = clampi(tick - _tick, 0, max_steps) if _tick >= 0 else 1
+ 	_tick = tick
++	var c0: int = Time.get_ticks_usec()
+ 	if n > 0:
+ 		blood.step_ticks(n)
+ 		if oil != null:
+ 			oil.step_ticks(n)
++		var c1: int = Time.get_ticks_usec()
++		CPROF[0] += c1 - c0
+ 		if player_px.is_valid():
+ 			var at: Vector2 = player_px.call()
+ 			leak.step(n, at, oil if oil != null else blood)
++		CPROF[1] += Time.get_ticks_usec() - c1
++	var c2: int = Time.get_ticks_usec()
+ 	for m: BloodSplatMesh in _meshes:
+ 		m.update(world_px, blood.tick)
++	CPROF[2] += Time.get_ticks_usec() - c2
++	CPROF[3] += c0 - t0
+ 	last_us = Time.get_ticks_usec() - t0
+ 	frames += 1
+ 	spent_us += last_us + _new_draw_us()
+diff --git a/project/features/fx/noir/blood_fx.gd b/project/features/fx/noir/blood_fx.gd
+index 344e69db..e5ab464e 100644
+--- a/project/features/fx/noir/blood_fx.gd
++++ b/project/features/fx/noir/blood_fx.gd
+@@ -175,13 +175,20 @@ func has_pool_at(at: Vector2, r: float) -> bool:
+ 	return _ring.has_pool_at(at, r)
+ 
+ 
++static var DCNT: PackedInt64Array = PackedInt64Array([0, 0, 0, 0])
++
++
+ func step_ticks(n: int) -> void:
+ 	var ph: Dictionary = p["physics"]
+ 	var drag: float = ph["drag"]
+ 	var land: float = ph["land_speed_px"]
+ 	for _t: int in n:
+ 		tick += 1
++		DCNT[0] += _pos.size()
++		DCNT[3] += 1
+ 		for i: int in _pos.size():
++			if _life[i] > 0:
++				DCNT[1] += 1
+ 			if _life[i] <= 0 or (solid.is_valid() and _hit_wall(i)):
+ 				continue
+ 			_pos[i] += _vel[i]

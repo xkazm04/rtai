@@ -24,3 +24,26 @@ func test_headless_apply_leaves_the_limiter_alone() -> void:
 	var before: int = Engine.max_fps
 	FrameCap.apply("")
 	assert_eq(Engine.max_fps, before)
+
+
+func test_the_pacing_option_caps_a_tick_rate_display_only_when_steady() -> void:
+	assert_eq(FrameCap.pacing_cap(0, false), 0, "efficient: no limiter at 60 Hz")
+	assert_eq(FrameCap.pacing_cap(0, true), SimClock.TICK_RATE, "steady: the limiter on top")
+	assert_eq(FrameCap.pacing_cap(60, false), 60, "a fast display keeps its tick-rate cap")
+	assert_eq(FrameCap.pacing_cap(90, true), 90, "an explicit cap wins")
+
+
+func test_headless_pacing_leaves_the_limiter_alone() -> void:
+	var before: int = Engine.max_fps
+	FrameCap.apply("")
+	FrameCap.apply_pacing(true)
+	assert_eq(Engine.max_fps, before)
+
+
+## F-19 (n9): with D3D12 vsync Enabled quest 1 froze ~2 in 5 windowed starts (the main thread in
+## RenderingDevice::_begin_frame's fence wait); mailbox (still synced, no tearing) froze 0 / 107.
+func test_windows_boots_in_mailbox_vsync() -> void:
+	var key: String = "display/window/vsync/vsync_mode.windows"
+	var raw: Variant = ProjectSettings.get_setting(key, -1)
+	var mode: int = raw if raw is int else -1
+	assert_eq(mode, DisplayServer.VSYNC_MAILBOX, "Windows (D3D12) boots in mailbox")

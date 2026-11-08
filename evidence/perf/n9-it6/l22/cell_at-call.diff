@@ -1,0 +1,4 @@
+48c48
+< 	var c: Variant = _call(&"cell_at", [x, y])
+---
+> 	var c: Variant = _o.call(&"cell_at", x, y) if _o != null else null

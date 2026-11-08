@@ -1,0 +1,28 @@
+Proposed for world (owner of street_walker_cards.gd tonight), measured in a throwaway worktree (prof3.patch arms):
+StreetWalkerCards.place(): (1) the walk grid's fill cached per texture (today WALK_FILL.get's default
+StreetCopWalk.fill_of(path) builds two strings every tick, eagerly, even when the key hits); (2) one
+global_transform set instead of global_rotation + global_scale + global_position (each setter re-reads the
+parent's global transform). Same values up to float rounding of the intermediate decomposition (skew 0).
+(3) row_of(): read the street_row meta when present before formatting RigHeadCard.key_of's "%s/%s".
+
+static var _fills: Dictionary = {}
+
+static func _fill(tex: Texture2D) -> float:
+	if _fills.has(tex):
+		return _fills[tex]
+	var f: float = WALK_FILL.get(tex.resource_path.get_file(), StreetCopWalk.fill_of(tex.resource_path))
+	_fills[tex] = f
+	return f
+
+# in place():
+	if card.vframes > 1:
+		k *= _fill(card.texture)
+	...
+	card.global_transform = Transform2D(
+		stride * SWAY * walk + fall.x, Vector2(s, s * fall.y), 0.0,
+		rig.global_position - Vector2(0.0, absf(stride) * BOB_PX * walk)
+	)
+
+# row_of():
+	if rig.head_card.has_meta(&"street_row"):
+		return rig.head_card.get_meta(&"street_row")

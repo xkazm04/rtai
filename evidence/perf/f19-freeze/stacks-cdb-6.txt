@@ -1,0 +1,881 @@
+﻿
+************* Path validation summary **************
+Response                         Time (ms)     Location
+Deferred                                       srv*C:\Users\kazda\kiro\gtai-n9\tools\symcache*https://msdl.microsoft.com/download/symbols
+
+************* Preparing the environment for Debugger Extensions Gallery repositories **************
+   ExtensionRepository : Implicit
+   UseExperimentalFeatureForNugetShare : true
+   AllowNugetExeUpdate : true
+   NonInteractiveNuget : true
+   AllowNugetMSCredentialProviderInstall : true
+   AllowParallelInitializationOfLocalRepositories : true
+
+   -- Configuring repositories
+      ----> Repository : LocalInstalled, Enabled: true
+      ----> Repository : UserExtensions, Enabled: true
+
+>>>>>>>>>>>>> Preparing the environment for Debugger Extensions Gallery repositories completed, duration 0.000 seconds
+
+************* Waiting for Debugger Extensions Gallery to Initialize **************
+
+>>>>>>>>>>>>> Waiting for Debugger Extensions Gallery to Initialize completed, duration 0.015 seconds
+   ----> Repository : UserExtensions, Enabled: true, Packages count: 0
+   ----> Repository : LocalInstalled, Enabled: true, Packages count: 46
+
+Microsoft (R) Windows Debugger Version 10.0.29680.1004 AMD64
+Copyright (c) Microsoft Corporation. All rights reserved.
+
+*** wait with pending attach
+
+************* Path validation summary **************
+Response                         Time (ms)     Location
+Deferred                                       srv*C:\Users\kazda\kiro\gtai-n9\tools\symcache*https://msdl.microsoft.com/download/symbols
+Symbol search path is: srv*C:\Users\kazda\kiro\gtai-n9\tools\symcache*https://msdl.microsoft.com/download/symbols
+Executable search path is: 
+WARNING: Process 47492 is not attached as a debuggee
+         The process can be examined but debug events will not be received
+................................................................
+..................................
+Loading unloaded module list
+...
+(b984.ba6c): Wake debugger - code 80000007 (first chance)
+
++------------------------------------------------------------------------+
+| This target supports Hardware-enforced Stack Protection. A HW based    |
+| "Shadow Stack" may be available to assist in debugging and analysis.   |
+| See aka.ms/userhsp for more info.                                      |
+|                                                                        |
+| dps @ssp                                                               |
+|                                                                        |
++------------------------------------------------------------------------+
+
+ntdll!NtWaitForSingleObject+0x14:
+00007ff9`59221dd4 c3              ret
+0:000> cdb: Reading initial command '~*kn 40; q'
+
+.  0  Id: b984.ba6c Suspend: 1 Teb: 000000d8`f9276000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`f9bff478 00007ff9`5643be9f     ntdll!NtWaitForSingleObject+0x14
+01 000000d8`f9bff480 00007ff7`4de6bc8b     KERNELBASE!WaitForSingleObjectEx+0xaf
+02 000000d8`f9bff520 00007ff7`4fdcacf5     Godot_v4_7_2_stable_win64!NoHotPatch+0x138905b
+03 000000d8`f9bff550 00007ff7`4fdcb8a7     Godot_v4_7_2_stable_win64!NoHotPatch+0x32e80c5
+04 000000d8`f9bff6a0 00007ff7`4fe6442e     Godot_v4_7_2_stable_win64!NoHotPatch+0x32e8c77
+05 000000d8`f9bff720 00007ff7`4cb3dba2     Godot_v4_7_2_stable_win64!NoHotPatch+0x33817fe
+06 000000d8`f9bff860 00007ff7`4cae2ef1     Godot_v4_7_2_stable_win64!NoHotPatch+0x5af72
+07 000000d8`f9bff9f0 00007ff7`4cb32b42     Godot_v4_7_2_stable_win64!NoHotPatch+0x2c1
+08 000000d8`f9bffa30 00007ff7`4cb32b7e     Godot_v4_7_2_stable_win64!NoHotPatch+0x4ff12
+09 000000d8`f9bffe10 00007ff7`4cae10c9     Godot_v4_7_2_stable_win64!NoHotPatch+0x4ff4e
+0a 000000d8`f9bffe60 00007ff7`4cae13f6     Godot_v4_7_2_stable_win64+0x10c9
+0b 000000d8`f9bfff00 00007ff9`5793dda7     Godot_v4_7_2_stable_win64+0x13f6
+0c 000000d8`f9bfff30 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+0d 000000d8`f9bfff60 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+   1  Id: b984.f12c Suspend: 1 Teb: 000000d8`f9278000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`fa3ff4f8 00007ff9`590e4d0e     ntdll!NtWaitForWorkViaWorkerFactory+0x14
+01 000000d8`fa3ff500 00007ff9`5793dda7     ntdll!TppWorkerThread+0x37e
+02 000000d8`fa3ff860 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+03 000000d8`fa3ff890 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+   2  Id: b984.102c0 Suspend: 1 Teb: 000000d8`f927a000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`fabff468 00007ff9`590e4d0e     ntdll!NtWaitForWorkViaWorkerFactory+0x14
+01 000000d8`fabff470 00007ff9`5793dda7     ntdll!TppWorkerThread+0x37e
+02 000000d8`fabff7d0 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+03 000000d8`fabff800 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+   3  Id: b984.2664 Suspend: 1 Teb: 000000d8`f927c000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`fb3ff728 00007ff9`590e4d0e     ntdll!NtWaitForWorkViaWorkerFactory+0x14
+01 000000d8`fb3ff730 00007ff9`5793dda7     ntdll!TppWorkerThread+0x37e
+02 000000d8`fb3ffa90 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+03 000000d8`fb3ffac0 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+   4  Id: b984.a444 Suspend: 1 Teb: 000000d8`f927e000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`fbbff458 00007ff9`590e4d0e     ntdll!NtWaitForWorkViaWorkerFactory+0x14
+01 000000d8`fbbff460 00007ff9`5793dda7     ntdll!TppWorkerThread+0x37e
+02 000000d8`fbbff7c0 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+03 000000d8`fbbff7f0 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+   5  Id: b984.6df0 Suspend: 1 Teb: 000000d8`f9280000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`fc3feea8 00007ff9`56442773     ntdll!NtWaitForMultipleObjects+0x14
+01 000000d8`fc3feeb0 00007ff9`52ce3438     KERNELBASE!WaitForMultipleObjectsEx+0x123
+02 000000d8`fc3ff1a0 00007ff9`52ce3113     CoreMessaging!Microsoft::CoreUI::Dispatch::WaitController::Callback_WaitAny+0xc8
+03 000000d8`fc3ff290 00007ff9`52ce2d6e     CoreMessaging!Microsoft::CoreUI::Dispatch::Win32EventLoopBridge::Callback_DoWait+0x123
+04 000000d8`fc3ff360 00007ff9`52cf0d2c     CoreMessaging!Microsoft::CoreUI::Dispatch::Win32EventLoopBridge::Callback_Wait+0x5e
+05 000000d8`fc3ff420 00007ff9`52cf02b7     CoreMessaging!Microsoft::CoreUI::Dispatch::WaitCollection::Callback_DoGeneralWait+0x1ec
+06 000000d8`fc3ff4f0 00007ff9`52ce8604     CoreMessaging!Microsoft::CoreUI::Dispatch::WaitController::Callback_OnDispatch+0xf7
+07 000000d8`fc3ff5e0 00007ff9`52ce819d     CoreMessaging!Microsoft::CoreUI::Dispatch::Dispatcher::Callback_DispatchLoop+0x334
+08 000000d8`fc3ff6e0 00007ff9`52ce9008     CoreMessaging!Microsoft::CoreUI::Dispatch::EventLoop::Callback_RunCoreLoop+0x11d
+09 000000d8`fc3ff750 00007ff9`52d4b406     CoreMessaging!Microsoft::CoreUI::Dispatch::Win32EventLoopBridge::Callback_Run+0xd8
+0a 000000d8`fc3ff830 00007ff9`52d4455f     CoreMessaging!Microsoft::CoreUI::Dispatch::EventLoop::Callback_Run+0x156
+0b 000000d8`fc3ff8c0 00007ff9`52d207db     CoreMessaging!Microsoft::CoreUI::Messaging::MessageSession::Microsoft_CoreUI_IExportMessageSession_Run$+0x33
+0c 000000d8`fc3ff8f0 00007ff9`2b4ba7bd     CoreMessaging!Microsoft::CoreUI::IExportMessageSession::ExportAdapter$::Run+0x5b
+0d 000000d8`fc3ff930 00007ff9`2b4b1119     inputhost!MessagingThread::ThreadProc+0xb5
+0e 000000d8`fc3ff980 00007ff9`5793dda7     inputhost!<lambda_376318154f061e76a4fa5387c7eed0ca>::<lambda_invoker_cdecl>+0x9
+0f 000000d8`fc3ff9b0 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+10 000000d8`fc3ff9e0 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+   6  Id: b984.c568 Suspend: 1 Teb: 000000d8`f9282000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`fcbffc68 00007ff9`591197be     ntdll!NtWaitForAlertByThreadId+0x14
+01 000000d8`fcbffc70 00007ff9`56442a58     ntdll!RtlSleepConditionVariableSRW+0x1de
+02 000000d8`fcbffd10 00007ff7`51878d15     KERNELBASE!SleepConditionVariableSRW+0x38
+03 000000d8`fcbffd50 00007ff7`50408abd     Godot_v4_7_2_stable_win64!NoHotPatch+0x4d960e5
+04 000000d8`fcbffda0 00007ff7`517d4b1a     Godot_v4_7_2_stable_win64!NoHotPatch+0x3925e8d
+05 000000d8`fcbffe00 00007ff9`5899f0ad     Godot_v4_7_2_stable_win64!NoHotPatch+0x4cf1eea
+06 000000d8`fcbffe30 00007ff9`5899f17c     msvcrt!_callthreadstartex+0x1d
+07 000000d8`fcbffe60 00007ff9`5793dda7     msvcrt!_threadstartex+0x7c
+08 000000d8`fcbffe90 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+09 000000d8`fcbffec0 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+   7  Id: b984.35b8 Suspend: 1 Teb: 000000d8`f9284000 Unfrozen "WorkerThread 0"
+ # Child-SP          RetAddr               Call Site
+00 000000d8`fd3ff898 00007ff9`591197be     ntdll!NtWaitForAlertByThreadId+0x14
+01 000000d8`fd3ff8a0 00007ff9`56442a58     ntdll!RtlSleepConditionVariableSRW+0x1de
+02 000000d8`fd3ff940 00007ff7`509375b0     KERNELBASE!SleepConditionVariableSRW+0x38
+03 000000d8`fd3ff980 00007ff7`50408abd     Godot_v4_7_2_stable_win64!NoHotPatch+0x3e54980
+04 000000d8`fd3ffa10 00007ff7`517d4b1a     Godot_v4_7_2_stable_win64!NoHotPatch+0x3925e8d
+05 000000d8`fd3ffa70 00007ff9`5899f0ad     Godot_v4_7_2_stable_win64!NoHotPatch+0x4cf1eea
+06 000000d8`fd3ffaa0 00007ff9`5899f17c     msvcrt!_callthreadstartex+0x1d
+07 000000d8`fd3ffad0 00007ff9`5793dda7     msvcrt!_threadstartex+0x7c
+08 000000d8`fd3ffb00 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+09 000000d8`fd3ffb30 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+   8  Id: b984.982c Suspend: 1 Teb: 000000d8`f9286000 Unfrozen "WorkerThread 1"
+ # Child-SP          RetAddr               Call Site
+00 000000d8`fdbff6a8 00007ff9`591197be     ntdll!NtWaitForAlertByThreadId+0x14
+01 000000d8`fdbff6b0 00007ff9`56442a58     ntdll!RtlSleepConditionVariableSRW+0x1de
+02 000000d8`fdbff750 00007ff7`509375b0     KERNELBASE!SleepConditionVariableSRW+0x38
+03 000000d8`fdbff790 00007ff7`50408abd     Godot_v4_7_2_stable_win64!NoHotPatch+0x3e54980
+04 000000d8`fdbff820 00007ff7`517d4b1a     Godot_v4_7_2_stable_win64!NoHotPatch+0x3925e8d
+05 000000d8`fdbff880 00007ff9`5899f0ad     Godot_v4_7_2_stable_win64!NoHotPatch+0x4cf1eea
+06 000000d8`fdbff8b0 00007ff9`5899f17c     msvcrt!_callthreadstartex+0x1d
+07 000000d8`fdbff8e0 00007ff9`5793dda7     msvcrt!_threadstartex+0x7c
+08 000000d8`fdbff910 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+09 000000d8`fdbff940 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+   9  Id: b984.d708 Suspend: 1 Teb: 000000d8`f9288000 Unfrozen "WorkerThread 2"
+ # Child-SP          RetAddr               Call Site
+00 000000d8`fe3ff548 00007ff9`591197be     ntdll!NtWaitForAlertByThreadId+0x14
+01 000000d8`fe3ff550 00007ff9`56442a58     ntdll!RtlSleepConditionVariableSRW+0x1de
+02 000000d8`fe3ff5f0 00007ff7`509375b0     KERNELBASE!SleepConditionVariableSRW+0x38
+03 000000d8`fe3ff630 00007ff7`50408abd     Godot_v4_7_2_stable_win64!NoHotPatch+0x3e54980
+04 000000d8`fe3ff6c0 00007ff7`517d4b1a     Godot_v4_7_2_stable_win64!NoHotPatch+0x3925e8d
+05 000000d8`fe3ff720 00007ff9`5899f0ad     Godot_v4_7_2_stable_win64!NoHotPatch+0x4cf1eea
+06 000000d8`fe3ff750 00007ff9`5899f17c     msvcrt!_callthreadstartex+0x1d
+07 000000d8`fe3ff780 00007ff9`5793dda7     msvcrt!_threadstartex+0x7c
+08 000000d8`fe3ff7b0 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+09 000000d8`fe3ff7e0 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  10  Id: b984.aed4 Suspend: 1 Teb: 000000d8`f928a000 Unfrozen "WorkerThread 3"
+ # Child-SP          RetAddr               Call Site
+00 000000d8`febff698 00007ff9`591197be     ntdll!NtWaitForAlertByThreadId+0x14
+01 000000d8`febff6a0 00007ff9`56442a58     ntdll!RtlSleepConditionVariableSRW+0x1de
+02 000000d8`febff740 00007ff7`509375b0     KERNELBASE!SleepConditionVariableSRW+0x38
+03 000000d8`febff780 00007ff7`50408abd     Godot_v4_7_2_stable_win64!NoHotPatch+0x3e54980
+04 000000d8`febff810 00007ff7`517d4b1a     Godot_v4_7_2_stable_win64!NoHotPatch+0x3925e8d
+05 000000d8`febff870 00007ff9`5899f0ad     Godot_v4_7_2_stable_win64!NoHotPatch+0x4cf1eea
+06 000000d8`febff8a0 00007ff9`5899f17c     msvcrt!_callthreadstartex+0x1d
+07 000000d8`febff8d0 00007ff9`5793dda7     msvcrt!_threadstartex+0x7c
+08 000000d8`febff900 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+09 000000d8`febff930 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  11  Id: b984.3990 Suspend: 1 Teb: 000000d8`f928c000 Unfrozen "WorkerThread 4"
+ # Child-SP          RetAddr               Call Site
+00 000000d8`ff3ffb08 00007ff9`591197be     ntdll!NtWaitForAlertByThreadId+0x14
+01 000000d8`ff3ffb10 00007ff9`56442a58     ntdll!RtlSleepConditionVariableSRW+0x1de
+02 000000d8`ff3ffbb0 00007ff7`509375b0     KERNELBASE!SleepConditionVariableSRW+0x38
+03 000000d8`ff3ffbf0 00007ff7`50408abd     Godot_v4_7_2_stable_win64!NoHotPatch+0x3e54980
+04 000000d8`ff3ffc80 00007ff7`517d4b1a     Godot_v4_7_2_stable_win64!NoHotPatch+0x3925e8d
+05 000000d8`ff3ffce0 00007ff9`5899f0ad     Godot_v4_7_2_stable_win64!NoHotPatch+0x4cf1eea
+06 000000d8`ff3ffd10 00007ff9`5899f17c     msvcrt!_callthreadstartex+0x1d
+07 000000d8`ff3ffd40 00007ff9`5793dda7     msvcrt!_threadstartex+0x7c
+08 000000d8`ff3ffd70 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+09 000000d8`ff3ffda0 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  12  Id: b984.5ff0 Suspend: 1 Teb: 000000d8`f928e000 Unfrozen "WorkerThread 5"
+ # Child-SP          RetAddr               Call Site
+00 000000d8`ffbffc68 00007ff9`591197be     ntdll!NtWaitForAlertByThreadId+0x14
+01 000000d8`ffbffc70 00007ff9`56442a58     ntdll!RtlSleepConditionVariableSRW+0x1de
+02 000000d8`ffbffd10 00007ff7`509375b0     KERNELBASE!SleepConditionVariableSRW+0x38
+03 000000d8`ffbffd50 00007ff7`50408abd     Godot_v4_7_2_stable_win64!NoHotPatch+0x3e54980
+04 000000d8`ffbffde0 00007ff7`517d4b1a     Godot_v4_7_2_stable_win64!NoHotPatch+0x3925e8d
+05 000000d8`ffbffe40 00007ff9`5899f0ad     Godot_v4_7_2_stable_win64!NoHotPatch+0x4cf1eea
+06 000000d8`ffbffe70 00007ff9`5899f17c     msvcrt!_callthreadstartex+0x1d
+07 000000d8`ffbffea0 00007ff9`5793dda7     msvcrt!_threadstartex+0x7c
+08 000000d8`ffbffed0 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+09 000000d8`ffbfff00 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  13  Id: b984.d93c Suspend: 1 Teb: 000000d8`f9290000 Unfrozen "WorkerThread 6"
+ # Child-SP          RetAddr               Call Site
+00 000000d8`807ffaf8 00007ff9`591197be     ntdll!NtWaitForAlertByThreadId+0x14
+01 000000d8`807ffb00 00007ff9`56442a58     ntdll!RtlSleepConditionVariableSRW+0x1de
+02 000000d8`807ffba0 00007ff7`509375b0     KERNELBASE!SleepConditionVariableSRW+0x38
+03 000000d8`807ffbe0 00007ff7`50408abd     Godot_v4_7_2_stable_win64!NoHotPatch+0x3e54980
+04 000000d8`807ffc70 00007ff7`517d4b1a     Godot_v4_7_2_stable_win64!NoHotPatch+0x3925e8d
+05 000000d8`807ffcd0 00007ff9`5899f0ad     Godot_v4_7_2_stable_win64!NoHotPatch+0x4cf1eea
+06 000000d8`807ffd00 00007ff9`5899f17c     msvcrt!_callthreadstartex+0x1d
+07 000000d8`807ffd30 00007ff9`5793dda7     msvcrt!_threadstartex+0x7c
+08 000000d8`807ffd60 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+09 000000d8`807ffd90 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  14  Id: b984.7e0 Suspend: 1 Teb: 000000d8`f9292000 Unfrozen "WorkerThread 7"
+ # Child-SP          RetAddr               Call Site
+00 000000d8`80fffab8 00007ff9`591197be     ntdll!NtWaitForAlertByThreadId+0x14
+01 000000d8`80fffac0 00007ff9`56442a58     ntdll!RtlSleepConditionVariableSRW+0x1de
+02 000000d8`80fffb60 00007ff7`509375b0     KERNELBASE!SleepConditionVariableSRW+0x38
+03 000000d8`80fffba0 00007ff7`50408abd     Godot_v4_7_2_stable_win64!NoHotPatch+0x3e54980
+04 000000d8`80fffc30 00007ff7`517d4b1a     Godot_v4_7_2_stable_win64!NoHotPatch+0x3925e8d
+05 000000d8`80fffc90 00007ff9`5899f0ad     Godot_v4_7_2_stable_win64!NoHotPatch+0x4cf1eea
+06 000000d8`80fffcc0 00007ff9`5899f17c     msvcrt!_callthreadstartex+0x1d
+07 000000d8`80fffcf0 00007ff9`5793dda7     msvcrt!_threadstartex+0x7c
+08 000000d8`80fffd20 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+09 000000d8`80fffd50 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  15  Id: b984.681c Suspend: 1 Teb: 000000d8`f9294000 Unfrozen "WorkerThread 8"
+ # Child-SP          RetAddr               Call Site
+00 000000d8`817ff7d8 00007ff9`591197be     ntdll!NtWaitForAlertByThreadId+0x14
+01 000000d8`817ff7e0 00007ff9`56442a58     ntdll!RtlSleepConditionVariableSRW+0x1de
+02 000000d8`817ff880 00007ff7`509375b0     KERNELBASE!SleepConditionVariableSRW+0x38
+03 000000d8`817ff8c0 00007ff7`50408abd     Godot_v4_7_2_stable_win64!NoHotPatch+0x3e54980
+04 000000d8`817ff950 00007ff7`517d4b1a     Godot_v4_7_2_stable_win64!NoHotPatch+0x3925e8d
+05 000000d8`817ff9b0 00007ff9`5899f0ad     Godot_v4_7_2_stable_win64!NoHotPatch+0x4cf1eea
+06 000000d8`817ff9e0 00007ff9`5899f17c     msvcrt!_callthreadstartex+0x1d
+07 000000d8`817ffa10 00007ff9`5793dda7     msvcrt!_threadstartex+0x7c
+08 000000d8`817ffa40 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+09 000000d8`817ffa70 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  16  Id: b984.fe08 Suspend: 1 Teb: 000000d8`f9296000 Unfrozen "WorkerThread 9"
+ # Child-SP          RetAddr               Call Site
+00 000000d8`81fffae8 00007ff9`591197be     ntdll!NtWaitForAlertByThreadId+0x14
+01 000000d8`81fffaf0 00007ff9`56442a58     ntdll!RtlSleepConditionVariableSRW+0x1de
+02 000000d8`81fffb90 00007ff7`509375b0     KERNELBASE!SleepConditionVariableSRW+0x38
+03 000000d8`81fffbd0 00007ff7`50408abd     Godot_v4_7_2_stable_win64!NoHotPatch+0x3e54980
+04 000000d8`81fffc60 00007ff7`517d4b1a     Godot_v4_7_2_stable_win64!NoHotPatch+0x3925e8d
+05 000000d8`81fffcc0 00007ff9`5899f0ad     Godot_v4_7_2_stable_win64!NoHotPatch+0x4cf1eea
+06 000000d8`81fffcf0 00007ff9`5899f17c     msvcrt!_callthreadstartex+0x1d
+07 000000d8`81fffd20 00007ff9`5793dda7     msvcrt!_threadstartex+0x7c
+08 000000d8`81fffd50 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+09 000000d8`81fffd80 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  17  Id: b984.beb8 Suspend: 1 Teb: 000000d8`f9298000 Unfrozen "WorkerThread 10"
+ # Child-SP          RetAddr               Call Site
+00 000000d8`827ffae8 00007ff9`591197be     ntdll!NtWaitForAlertByThreadId+0x14
+01 000000d8`827ffaf0 00007ff9`56442a58     ntdll!RtlSleepConditionVariableSRW+0x1de
+02 000000d8`827ffb90 00007ff7`509375b0     KERNELBASE!SleepConditionVariableSRW+0x38
+03 000000d8`827ffbd0 00007ff7`50408abd     Godot_v4_7_2_stable_win64!NoHotPatch+0x3e54980
+04 000000d8`827ffc60 00007ff7`517d4b1a     Godot_v4_7_2_stable_win64!NoHotPatch+0x3925e8d
+05 000000d8`827ffcc0 00007ff9`5899f0ad     Godot_v4_7_2_stable_win64!NoHotPatch+0x4cf1eea
+06 000000d8`827ffcf0 00007ff9`5899f17c     msvcrt!_callthreadstartex+0x1d
+07 000000d8`827ffd20 00007ff9`5793dda7     msvcrt!_threadstartex+0x7c
+08 000000d8`827ffd50 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+09 000000d8`827ffd80 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  18  Id: b984.fd60 Suspend: 1 Teb: 000000d8`f929a000 Unfrozen "WorkerThread 11"
+ # Child-SP          RetAddr               Call Site
+00 000000d8`82fffc38 00007ff9`591197be     ntdll!NtWaitForAlertByThreadId+0x14
+01 000000d8`82fffc40 00007ff9`56442a58     ntdll!RtlSleepConditionVariableSRW+0x1de
+02 000000d8`82fffce0 00007ff7`509375b0     KERNELBASE!SleepConditionVariableSRW+0x38
+03 000000d8`82fffd20 00007ff7`50408abd     Godot_v4_7_2_stable_win64!NoHotPatch+0x3e54980
+04 000000d8`82fffdb0 00007ff7`517d4b1a     Godot_v4_7_2_stable_win64!NoHotPatch+0x3925e8d
+05 000000d8`82fffe10 00007ff9`5899f0ad     Godot_v4_7_2_stable_win64!NoHotPatch+0x4cf1eea
+06 000000d8`82fffe40 00007ff9`5899f17c     msvcrt!_callthreadstartex+0x1d
+07 000000d8`82fffe70 00007ff9`5793dda7     msvcrt!_threadstartex+0x7c
+08 000000d8`82fffea0 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+09 000000d8`82fffed0 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  19  Id: b984.aa04 Suspend: 1 Teb: 000000d8`f929c000 Unfrozen "WorkerThread 12"
+ # Child-SP          RetAddr               Call Site
+00 000000d8`837ff9d8 00007ff9`591197be     ntdll!NtWaitForAlertByThreadId+0x14
+01 000000d8`837ff9e0 00007ff9`56442a58     ntdll!RtlSleepConditionVariableSRW+0x1de
+02 000000d8`837ffa80 00007ff7`509375b0     KERNELBASE!SleepConditionVariableSRW+0x38
+03 000000d8`837ffac0 00007ff7`50408abd     Godot_v4_7_2_stable_win64!NoHotPatch+0x3e54980
+04 000000d8`837ffb50 00007ff7`517d4b1a     Godot_v4_7_2_stable_win64!NoHotPatch+0x3925e8d
+05 000000d8`837ffbb0 00007ff9`5899f0ad     Godot_v4_7_2_stable_win64!NoHotPatch+0x4cf1eea
+06 000000d8`837ffbe0 00007ff9`5899f17c     msvcrt!_callthreadstartex+0x1d
+07 000000d8`837ffc10 00007ff9`5793dda7     msvcrt!_threadstartex+0x7c
+08 000000d8`837ffc40 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+09 000000d8`837ffc70 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  20  Id: b984.65f8 Suspend: 1 Teb: 000000d8`f929e000 Unfrozen "WorkerThread 13"
+ # Child-SP          RetAddr               Call Site
+00 000000d8`83fffc58 00007ff9`591197be     ntdll!NtWaitForAlertByThreadId+0x14
+01 000000d8`83fffc60 00007ff9`56442a58     ntdll!RtlSleepConditionVariableSRW+0x1de
+02 000000d8`83fffd00 00007ff7`509375b0     KERNELBASE!SleepConditionVariableSRW+0x38
+03 000000d8`83fffd40 00007ff7`50408abd     Godot_v4_7_2_stable_win64!NoHotPatch+0x3e54980
+04 000000d8`83fffdd0 00007ff7`517d4b1a     Godot_v4_7_2_stable_win64!NoHotPatch+0x3925e8d
+05 000000d8`83fffe30 00007ff9`5899f0ad     Godot_v4_7_2_stable_win64!NoHotPatch+0x4cf1eea
+06 000000d8`83fffe60 00007ff9`5899f17c     msvcrt!_callthreadstartex+0x1d
+07 000000d8`83fffe90 00007ff9`5793dda7     msvcrt!_threadstartex+0x7c
+08 000000d8`83fffec0 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+09 000000d8`83fffef0 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  21  Id: b984.5600 Suspend: 1 Teb: 000000d8`f92a0000 Unfrozen "WorkerThread 14"
+ # Child-SP          RetAddr               Call Site
+00 000000d8`847ffb98 00007ff9`591197be     ntdll!NtWaitForAlertByThreadId+0x14
+01 000000d8`847ffba0 00007ff9`56442a58     ntdll!RtlSleepConditionVariableSRW+0x1de
+02 000000d8`847ffc40 00007ff7`509375b0     KERNELBASE!SleepConditionVariableSRW+0x38
+03 000000d8`847ffc80 00007ff7`50408abd     Godot_v4_7_2_stable_win64!NoHotPatch+0x3e54980
+04 000000d8`847ffd10 00007ff7`517d4b1a     Godot_v4_7_2_stable_win64!NoHotPatch+0x3925e8d
+05 000000d8`847ffd70 00007ff9`5899f0ad     Godot_v4_7_2_stable_win64!NoHotPatch+0x4cf1eea
+06 000000d8`847ffda0 00007ff9`5899f17c     msvcrt!_callthreadstartex+0x1d
+07 000000d8`847ffdd0 00007ff9`5793dda7     msvcrt!_threadstartex+0x7c
+08 000000d8`847ffe00 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+09 000000d8`847ffe30 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  22  Id: b984.d6e4 Suspend: 1 Teb: 000000d8`f92a2000 Unfrozen "WorkerThread 15"
+ # Child-SP          RetAddr               Call Site
+00 000000d8`84fffc98 00007ff9`591197be     ntdll!NtWaitForAlertByThreadId+0x14
+01 000000d8`84fffca0 00007ff9`56442a58     ntdll!RtlSleepConditionVariableSRW+0x1de
+02 000000d8`84fffd40 00007ff7`509375b0     KERNELBASE!SleepConditionVariableSRW+0x38
+03 000000d8`84fffd80 00007ff7`50408abd     Godot_v4_7_2_stable_win64!NoHotPatch+0x3e54980
+04 000000d8`84fffe10 00007ff7`517d4b1a     Godot_v4_7_2_stable_win64!NoHotPatch+0x3925e8d
+05 000000d8`84fffe70 00007ff9`5899f0ad     Godot_v4_7_2_stable_win64!NoHotPatch+0x4cf1eea
+06 000000d8`84fffea0 00007ff9`5899f17c     msvcrt!_callthreadstartex+0x1d
+07 000000d8`84fffed0 00007ff9`5793dda7     msvcrt!_threadstartex+0x7c
+08 000000d8`84ffff00 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+09 000000d8`84ffff30 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  23  Id: b984.9ebc Suspend: 1 Teb: 000000d8`f92a4000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`857ff7c8 00007ff9`56442773     ntdll!NtWaitForMultipleObjects+0x14
+01 000000d8`857ff7d0 00007ff9`57df9abe     KERNELBASE!WaitForMultipleObjectsEx+0x123
+02 (Inline Function) --------`--------     combase!WaitCoalesced+0x79
+03 000000d8`857ffac0 00007ff9`57df231f     combase!CROIDTable::WorkerThreadLoop+0xae
+04 000000d8`857ffd30 00007ff9`57df222f     combase!CRpcThread::WorkerLoop+0x5b
+05 000000d8`857ffda0 00007ff9`5793dda7     combase!CRpcThreadCache::RpcWorkerThreadEntry+0x4f
+06 000000d8`857ffdd0 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+07 000000d8`857ffe00 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  24  Id: b984.8fe4 Suspend: 1 Teb: 000000d8`f92a6000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`85fffb48 00007ff9`590e4d0e     ntdll!NtWaitForWorkViaWorkerFactory+0x14
+01 000000d8`85fffb50 00007ff9`5793dda7     ntdll!TppWorkerThread+0x37e
+02 000000d8`85fffeb0 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+03 000000d8`85fffee0 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  25  Id: b984.888 Suspend: 1 Teb: 000000d8`f92a8000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`867ff658 00007ff9`590e4d0e     ntdll!NtWaitForWorkViaWorkerFactory+0x14
+01 000000d8`867ff660 00007ff9`5793dda7     ntdll!TppWorkerThread+0x37e
+02 000000d8`867ff9c0 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+03 000000d8`867ff9f0 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  26  Id: b984.ba64 Suspend: 1 Teb: 000000d8`f92aa000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`86fff468 00007ff9`56442773     ntdll!NtWaitForMultipleObjects+0x14
+01 000000d8`86fff470 00007ff9`57df25aa     KERNELBASE!WaitForMultipleObjectsEx+0x123
+02 000000d8`86fff760 00007ff9`57df23e4     combase!WaitCoalesced+0xca
+03 000000d8`86fff9f0 00007ff9`57df222f     combase!CRpcThread::WorkerLoop+0x120
+04 000000d8`86fffa60 00007ff9`5793dda7     combase!CRpcThreadCache::RpcWorkerThreadEntry+0x4f
+05 000000d8`86fffa90 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+06 000000d8`86fffac0 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  27  Id: b984.b1d8 Suspend: 1 Teb: 000000d8`f92ac000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`877ffb58 00007ff9`575bbc41     win32u!NtUserMsgWaitForMultipleObjectsEx+0x14
+01 000000d8`877ffb60 00007ff9`575bbbab     SHCORE!WorkThreadManager::CThread::WaitForThreadUpdate+0x71
+02 000000d8`877ffbd0 00007ff9`575d663e     SHCORE!WorkThreadManager::CThread::WaitForWork+0x3b
+03 000000d8`877ffc00 00007ff9`575c8027     SHCORE!WorkThreadManager::CThread::ThreadProc+0x1ae
+04 000000d8`877ffc60 00007ff9`575c7fc1     SHCORE!WorkThreadManager::CThread::s_ExecuteThreadProc+0x4b
+05 000000d8`877ffca0 00007ff9`5793dda7     SHCORE!<lambda_9844335fc14345151eefcc3593dd6895>::<lambda_invoker_cdecl>+0x11
+06 000000d8`877ffcd0 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+07 000000d8`877ffd00 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  28  Id: b984.bc94 Suspend: 1 Teb: 000000d8`f92ae000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`87fffa18 00007ff9`56442773     ntdll!NtWaitForMultipleObjects+0x14
+01 000000d8`87fffa20 00007ff9`5695b357     KERNELBASE!WaitForMultipleObjectsEx+0x123
+02 000000d8`87fffd10 00007ff9`5793dda7     CRYPT32!ILS_WaitForThreadProc+0x37
+03 000000d8`87fffd50 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+04 000000d8`87fffd80 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  29  Id: b984.6ca8 Suspend: 1 Teb: 000000d8`f92b2000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`887ff678 00007ff9`5643be9f     ntdll!NtWaitForSingleObject+0x14
+01 000000d8`887ff680 00007ff9`40177d70     KERNELBASE!WaitForSingleObjectEx+0xaf
+02 000000d8`887ff720 00007ff9`406ca2aa     nvwgf2umx!NVDEV_Thunk+0x245f0
+03 000000d8`887ff760 00007ff9`5793dda7     nvwgf2umx!NVDEV_Thunk+0x576b2a
+04 000000d8`887ff790 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+05 000000d8`887ff7c0 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  30  Id: b984.8810 Suspend: 1 Teb: 000000d8`f92b4000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`88fff7f8 00007ff9`56442773     ntdll!NtWaitForMultipleObjects+0x14
+01 000000d8`88fff800 00007ff9`56442641     KERNELBASE!WaitForMultipleObjectsEx+0x123
+02 000000d8`88fffaf0 00007ff9`3f962c36     KERNELBASE!WaitForMultipleObjects+0x11
+03 000000d8`88fffb30 00007ff9`406ca2aa     nvwgf2umx!NVAPI_DirectMethods+0x32d16
+04 000000d8`88fffbc0 00007ff9`5793dda7     nvwgf2umx!NVDEV_Thunk+0x576b2a
+05 000000d8`88fffbf0 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+06 000000d8`88fffc20 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  31  Id: b984.e688 Suspend: 1 Teb: 000000d8`f92b6000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`897ff918 00007ff9`5643be9f     ntdll!NtWaitForSingleObject+0x14
+01 000000d8`897ff920 00007ff9`401dba4f     KERNELBASE!WaitForSingleObjectEx+0xaf
+02 000000d8`897ff9c0 00007ff9`406ca2aa     nvwgf2umx!NVDEV_Thunk+0x882cf
+03 000000d8`897ffb20 00007ff9`5793dda7     nvwgf2umx!NVDEV_Thunk+0x576b2a
+04 000000d8`897ffb50 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+05 000000d8`897ffb80 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  32  Id: b984.358c Suspend: 1 Teb: 000000d8`f92b8000 Unfrozen "D3D Background Thread 0"
+ # Child-SP          RetAddr               Call Site
+00 000000d8`89fff698 00007ff9`591197be     ntdll!NtWaitForAlertByThreadId+0x14
+01 000000d8`89fff6a0 00007ff9`56442a58     ntdll!RtlSleepConditionVariableSRW+0x1de
+02 000000d8`89fff740 00007ff9`56393d2d     KERNELBASE!SleepConditionVariableSRW+0x38
+03 000000d8`89fff780 00007ff9`5638f4a9     msvcp_win!Concurrency::details::stl_condition_variable_win7::wait+0x19
+04 000000d8`89fff7b0 00007ff8`b19ce02a     msvcp_win!Cnd_wait+0x19
+05 000000d8`89fff7e0 00007ff8`b1a6ee54     D3D12Core!BackgroundTaskScheduler::Scheduler::TaskThread+0xfa
+06 000000d8`89fff8f0 00007ff9`56a7cd30     D3D12Core!std::thread::_Invoke<std::tuple<<lambda_d058723838c64a4098625abb67620994> >,0>+0x14
+07 000000d8`89fff920 00007ff9`5793dda7     ucrtbase!thread_start<unsigned int (__cdecl*)(void *),1>+0x30
+08 000000d8`89fff950 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+09 000000d8`89fff980 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  33  Id: b984.cf70 Suspend: 1 Teb: 000000d8`f92ba000 Unfrozen "D3D Background Thread 1"
+ # Child-SP          RetAddr               Call Site
+00 000000d8`8a7ffa38 00007ff9`591197be     ntdll!NtWaitForAlertByThreadId+0x14
+01 000000d8`8a7ffa40 00007ff9`56442a58     ntdll!RtlSleepConditionVariableSRW+0x1de
+02 000000d8`8a7ffae0 00007ff9`56393d2d     KERNELBASE!SleepConditionVariableSRW+0x38
+03 000000d8`8a7ffb20 00007ff9`5638f4a9     msvcp_win!Concurrency::details::stl_condition_variable_win7::wait+0x19
+04 000000d8`8a7ffb50 00007ff8`b19ce02a     msvcp_win!Cnd_wait+0x19
+05 000000d8`8a7ffb80 00007ff8`b1a6ee54     D3D12Core!BackgroundTaskScheduler::Scheduler::TaskThread+0xfa
+06 000000d8`8a7ffc90 00007ff9`56a7cd30     D3D12Core!std::thread::_Invoke<std::tuple<<lambda_d058723838c64a4098625abb67620994> >,0>+0x14
+07 000000d8`8a7ffcc0 00007ff9`5793dda7     ucrtbase!thread_start<unsigned int (__cdecl*)(void *),1>+0x30
+08 000000d8`8a7ffcf0 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+09 000000d8`8a7ffd20 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  34  Id: b984.1140 Suspend: 1 Teb: 000000d8`f92bc000 Unfrozen "D3D Background Thread 2"
+ # Child-SP          RetAddr               Call Site
+00 000000d8`8afff638 00007ff9`591197be     ntdll!NtWaitForAlertByThreadId+0x14
+01 000000d8`8afff640 00007ff9`56442a58     ntdll!RtlSleepConditionVariableSRW+0x1de
+02 000000d8`8afff6e0 00007ff9`56393d2d     KERNELBASE!SleepConditionVariableSRW+0x38
+03 000000d8`8afff720 00007ff9`5638f4a9     msvcp_win!Concurrency::details::stl_condition_variable_win7::wait+0x19
+04 000000d8`8afff750 00007ff8`b19ce02a     msvcp_win!Cnd_wait+0x19
+05 000000d8`8afff780 00007ff8`b1a6ee54     D3D12Core!BackgroundTaskScheduler::Scheduler::TaskThread+0xfa
+06 000000d8`8afff890 00007ff9`56a7cd30     D3D12Core!std::thread::_Invoke<std::tuple<<lambda_d058723838c64a4098625abb67620994> >,0>+0x14
+07 000000d8`8afff8c0 00007ff9`5793dda7     ucrtbase!thread_start<unsigned int (__cdecl*)(void *),1>+0x30
+08 000000d8`8afff8f0 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+09 000000d8`8afff920 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  35  Id: b984.10334 Suspend: 1 Teb: 000000d8`f92be000 Unfrozen "D3D Background Thread 3"
+ # Child-SP          RetAddr               Call Site
+00 000000d8`8b7ff5e8 00007ff9`591197be     ntdll!NtWaitForAlertByThreadId+0x14
+01 000000d8`8b7ff5f0 00007ff9`56442a58     ntdll!RtlSleepConditionVariableSRW+0x1de
+02 000000d8`8b7ff690 00007ff9`56393d2d     KERNELBASE!SleepConditionVariableSRW+0x38
+03 000000d8`8b7ff6d0 00007ff9`5638f4a9     msvcp_win!Concurrency::details::stl_condition_variable_win7::wait+0x19
+04 000000d8`8b7ff700 00007ff8`b19ce02a     msvcp_win!Cnd_wait+0x19
+05 000000d8`8b7ff730 00007ff8`b1a6ee54     D3D12Core!BackgroundTaskScheduler::Scheduler::TaskThread+0xfa
+06 000000d8`8b7ff840 00007ff9`56a7cd30     D3D12Core!std::thread::_Invoke<std::tuple<<lambda_d058723838c64a4098625abb67620994> >,0>+0x14
+07 000000d8`8b7ff870 00007ff9`5793dda7     ucrtbase!thread_start<unsigned int (__cdecl*)(void *),1>+0x30
+08 000000d8`8b7ff8a0 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+09 000000d8`8b7ff8d0 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  36  Id: b984.50d0 Suspend: 1 Teb: 000000d8`f92c2000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`8bfff6a8 00007ff9`56442773     ntdll!NtWaitForMultipleObjects+0x14
+01 000000d8`8bfff6b0 00007ff9`56442641     KERNELBASE!WaitForMultipleObjectsEx+0x123
+02 000000d8`8bfff9a0 00007ff9`3f962c36     KERNELBASE!WaitForMultipleObjects+0x11
+03 000000d8`8bfff9e0 00007ff9`406ca2aa     nvwgf2umx!NVAPI_DirectMethods+0x32d16
+04 000000d8`8bfffa70 00007ff9`5793dda7     nvwgf2umx!NVDEV_Thunk+0x576b2a
+05 000000d8`8bfffaa0 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+06 000000d8`8bfffad0 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  37  Id: b984.10788 Suspend: 1 Teb: 000000d8`f92c4000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`8c7ffa18 00007ff9`56442773     ntdll!NtWaitForMultipleObjects+0x14
+01 000000d8`8c7ffa20 00007ff9`56442641     KERNELBASE!WaitForMultipleObjectsEx+0x123
+02 000000d8`8c7ffd10 00007ff9`3f962c36     KERNELBASE!WaitForMultipleObjects+0x11
+03 000000d8`8c7ffd50 00007ff9`406ca2aa     nvwgf2umx!NVAPI_DirectMethods+0x32d16
+04 000000d8`8c7ffde0 00007ff9`5793dda7     nvwgf2umx!NVDEV_Thunk+0x576b2a
+05 000000d8`8c7ffe10 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+06 000000d8`8c7ffe40 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  38  Id: b984.8aa0 Suspend: 1 Teb: 000000d8`f92c6000 Unfrozen "SDL_joystick"
+ # Child-SP          RetAddr               Call Site
+00 000000d8`8cfffa58 00007ff9`573caea2     win32u!NtUserGetMessage+0x14
+01 000000d8`8cfffa60 00007ff7`4df8af57     user32!GetMessageW+0x22
+02 000000d8`8cfffac0 00007ff7`4e047d38     Godot_v4_7_2_stable_win64!NoHotPatch+0x14a8327
+03 000000d8`8cfffb70 00007ff7`4e06841e     Godot_v4_7_2_stable_win64!NoHotPatch+0x1565108
+04 000000d8`8cfffbb0 00007ff9`5899f0ad     Godot_v4_7_2_stable_win64!NoHotPatch+0x15857ee
+05 000000d8`8cfffbe0 00007ff9`5899f17c     msvcrt!_callthreadstartex+0x1d
+06 000000d8`8cfffc10 00007ff9`5793dda7     msvcrt!_threadstartex+0x7c
+07 000000d8`8cfffc40 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+08 000000d8`8cfffc70 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  39  Id: b984.fd74 Suspend: 1 Teb: 000000d8`f92c8000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`8d7ffbe8 00007ff9`59190fd4     ntdll!NtDelayExecution+0x14
+01 000000d8`8d7ffbf0 00007ff9`564ab9c1     ntdll!RtlDelayExecution+0x34
+02 000000d8`8d7ffc20 00007ff7`4de3458d     KERNELBASE!SleepEx+0x91
+03 000000d8`8d7ffcb0 00007ff7`50408abd     Godot_v4_7_2_stable_win64!NoHotPatch+0x135195d
+04 000000d8`8d7ffdb0 00007ff7`517d4b1a     Godot_v4_7_2_stable_win64!NoHotPatch+0x3925e8d
+05 000000d8`8d7ffe10 00007ff9`5899f0ad     Godot_v4_7_2_stable_win64!NoHotPatch+0x4cf1eea
+06 000000d8`8d7ffe40 00007ff9`5899f17c     msvcrt!_callthreadstartex+0x1d
+07 000000d8`8d7ffe70 00007ff9`5793dda7     msvcrt!_threadstartex+0x7c
+08 000000d8`8d7ffea0 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+09 000000d8`8d7ffed0 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  40  Id: b984.5674 Suspend: 1 Teb: 000000d8`f92ca000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`8dfff658 00007ff9`590dba2b     ntdll!NtWaitForAlertByThreadId+0x14
+01 000000d8`8dfff660 00007ff9`56443ac8     ntdll!RtlSleepConditionVariableCS+0x14b
+02 000000d8`8dfff6d0 00007ff9`2c255a23     KERNELBASE!SleepConditionVariableCS+0x38
+03 000000d8`8dfff700 00007ff9`2c255c2f     amdxx64+0x95a23
+04 000000d8`8dfff770 00007ff9`2cecf3a4     amdxx64+0x95c2f
+05 000000d8`8dfff7a0 00007ff9`5793dda7     amdxx64!boost::serialization::singleton<std::set<boost::serialization::void_cast_detail::void_caster const * __ptr64,boost::serialization::void_cast_detail::void_caster_compare,std::allocator<boost::serialization::void_cast_detail::void_caster const * __ptr64> > >::is_destroyed+0x329f4
+06 000000d8`8dfff7d0 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+07 000000d8`8dfff800 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  41  Id: b984.f8e4 Suspend: 1 Teb: 000000d8`f92cc000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`8e7ff988 00007ff9`590dba2b     ntdll!NtWaitForAlertByThreadId+0x14
+01 000000d8`8e7ff990 00007ff9`56443ac8     ntdll!RtlSleepConditionVariableCS+0x14b
+02 000000d8`8e7ffa00 00007ff9`2c255a23     KERNELBASE!SleepConditionVariableCS+0x38
+03 000000d8`8e7ffa30 00007ff9`2c255c2f     amdxx64+0x95a23
+04 000000d8`8e7ffaa0 00007ff9`2cecf3a4     amdxx64+0x95c2f
+05 000000d8`8e7ffad0 00007ff9`5793dda7     amdxx64!boost::serialization::singleton<std::set<boost::serialization::void_cast_detail::void_caster const * __ptr64,boost::serialization::void_cast_detail::void_caster_compare,std::allocator<boost::serialization::void_cast_detail::void_caster const * __ptr64> > >::is_destroyed+0x329f4
+06 000000d8`8e7ffb00 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+07 000000d8`8e7ffb30 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  42  Id: b984.d5bc Suspend: 1 Teb: 000000d8`f92ce000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`8efff828 00007ff9`590dba2b     ntdll!NtWaitForAlertByThreadId+0x14
+01 000000d8`8efff830 00007ff9`56443ac8     ntdll!RtlSleepConditionVariableCS+0x14b
+02 000000d8`8efff8a0 00007ff9`2c255a23     KERNELBASE!SleepConditionVariableCS+0x38
+03 000000d8`8efff8d0 00007ff9`2c255c2f     amdxx64+0x95a23
+04 000000d8`8efff940 00007ff9`2cecf3a4     amdxx64+0x95c2f
+05 000000d8`8efff970 00007ff9`5793dda7     amdxx64!boost::serialization::singleton<std::set<boost::serialization::void_cast_detail::void_caster const * __ptr64,boost::serialization::void_cast_detail::void_caster_compare,std::allocator<boost::serialization::void_cast_detail::void_caster const * __ptr64> > >::is_destroyed+0x329f4
+06 000000d8`8efff9a0 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+07 000000d8`8efff9d0 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  43  Id: b984.759c Suspend: 1 Teb: 000000d8`f92d0000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`8f7ff818 00007ff9`590dba2b     ntdll!NtWaitForAlertByThreadId+0x14
+01 000000d8`8f7ff820 00007ff9`56443ac8     ntdll!RtlSleepConditionVariableCS+0x14b
+02 000000d8`8f7ff890 00007ff9`2c255a23     KERNELBASE!SleepConditionVariableCS+0x38
+03 000000d8`8f7ff8c0 00007ff9`2c255c2f     amdxx64+0x95a23
+04 000000d8`8f7ff930 00007ff9`2cecf3a4     amdxx64+0x95c2f
+05 000000d8`8f7ff960 00007ff9`5793dda7     amdxx64!boost::serialization::singleton<std::set<boost::serialization::void_cast_detail::void_caster const * __ptr64,boost::serialization::void_cast_detail::void_caster_compare,std::allocator<boost::serialization::void_cast_detail::void_caster const * __ptr64> > >::is_destroyed+0x329f4
+06 000000d8`8f7ff990 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+07 000000d8`8f7ff9c0 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  44  Id: b984.c50c Suspend: 1 Teb: 000000d8`f92d2000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`8ffffaf8 00007ff9`590dba2b     ntdll!NtWaitForAlertByThreadId+0x14
+01 000000d8`8ffffb00 00007ff9`56443ac8     ntdll!RtlSleepConditionVariableCS+0x14b
+02 000000d8`8ffffb70 00007ff9`2c255a23     KERNELBASE!SleepConditionVariableCS+0x38
+03 000000d8`8ffffba0 00007ff9`2c255c2f     amdxx64+0x95a23
+04 000000d8`8ffffc10 00007ff9`2cecf3a4     amdxx64+0x95c2f
+05 000000d8`8ffffc40 00007ff9`5793dda7     amdxx64!boost::serialization::singleton<std::set<boost::serialization::void_cast_detail::void_caster const * __ptr64,boost::serialization::void_cast_detail::void_caster_compare,std::allocator<boost::serialization::void_cast_detail::void_caster const * __ptr64> > >::is_destroyed+0x329f4
+06 000000d8`8ffffc70 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+07 000000d8`8ffffca0 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  45  Id: b984.91f0 Suspend: 1 Teb: 000000d8`f92d4000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`907ffc48 00007ff9`590dba2b     ntdll!NtWaitForAlertByThreadId+0x14
+01 000000d8`907ffc50 00007ff9`56443ac8     ntdll!RtlSleepConditionVariableCS+0x14b
+02 000000d8`907ffcc0 00007ff9`2c255a23     KERNELBASE!SleepConditionVariableCS+0x38
+03 000000d8`907ffcf0 00007ff9`2c255c2f     amdxx64+0x95a23
+04 000000d8`907ffd60 00007ff9`2cecf3a4     amdxx64+0x95c2f
+05 000000d8`907ffd90 00007ff9`5793dda7     amdxx64!boost::serialization::singleton<std::set<boost::serialization::void_cast_detail::void_caster const * __ptr64,boost::serialization::void_cast_detail::void_caster_compare,std::allocator<boost::serialization::void_cast_detail::void_caster const * __ptr64> > >::is_destroyed+0x329f4
+06 000000d8`907ffdc0 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+07 000000d8`907ffdf0 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  46  Id: b984.fb08 Suspend: 1 Teb: 000000d8`f92d6000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`90fff6f8 00007ff9`590dba2b     ntdll!NtWaitForAlertByThreadId+0x14
+01 000000d8`90fff700 00007ff9`56443ac8     ntdll!RtlSleepConditionVariableCS+0x14b
+02 000000d8`90fff770 00007ff9`2c255a23     KERNELBASE!SleepConditionVariableCS+0x38
+03 000000d8`90fff7a0 00007ff9`2c255c2f     amdxx64+0x95a23
+04 000000d8`90fff810 00007ff9`2cecf3a4     amdxx64+0x95c2f
+05 000000d8`90fff840 00007ff9`5793dda7     amdxx64!boost::serialization::singleton<std::set<boost::serialization::void_cast_detail::void_caster const * __ptr64,boost::serialization::void_cast_detail::void_caster_compare,std::allocator<boost::serialization::void_cast_detail::void_caster const * __ptr64> > >::is_destroyed+0x329f4
+06 000000d8`90fff870 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+07 000000d8`90fff8a0 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  47  Id: b984.7854 Suspend: 1 Teb: 000000d8`f92d8000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`917ffad8 00007ff9`590dba2b     ntdll!NtWaitForAlertByThreadId+0x14
+01 000000d8`917ffae0 00007ff9`56443ac8     ntdll!RtlSleepConditionVariableCS+0x14b
+02 000000d8`917ffb50 00007ff9`2c255a23     KERNELBASE!SleepConditionVariableCS+0x38
+03 000000d8`917ffb80 00007ff9`2c255c2f     amdxx64+0x95a23
+04 000000d8`917ffbf0 00007ff9`2cecf3a4     amdxx64+0x95c2f
+05 000000d8`917ffc20 00007ff9`5793dda7     amdxx64!boost::serialization::singleton<std::set<boost::serialization::void_cast_detail::void_caster const * __ptr64,boost::serialization::void_cast_detail::void_caster_compare,std::allocator<boost::serialization::void_cast_detail::void_caster const * __ptr64> > >::is_destroyed+0x329f4
+06 000000d8`917ffc50 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+07 000000d8`917ffc80 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  48  Id: b984.8f00 Suspend: 1 Teb: 000000d8`f92da000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`91fff918 00007ff9`590dba2b     ntdll!NtWaitForAlertByThreadId+0x14
+01 000000d8`91fff920 00007ff9`56443ac8     ntdll!RtlSleepConditionVariableCS+0x14b
+02 000000d8`91fff990 00007ff9`2c255a23     KERNELBASE!SleepConditionVariableCS+0x38
+03 000000d8`91fff9c0 00007ff9`2c255c2f     amdxx64+0x95a23
+04 000000d8`91fffa30 00007ff9`2cecf3a4     amdxx64+0x95c2f
+05 000000d8`91fffa60 00007ff9`5793dda7     amdxx64!boost::serialization::singleton<std::set<boost::serialization::void_cast_detail::void_caster const * __ptr64,boost::serialization::void_cast_detail::void_caster_compare,std::allocator<boost::serialization::void_cast_detail::void_caster const * __ptr64> > >::is_destroyed+0x329f4
+06 000000d8`91fffa90 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+07 000000d8`91fffac0 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  49  Id: b984.fc88 Suspend: 1 Teb: 000000d8`f92dc000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`927ff628 00007ff9`590dba2b     ntdll!NtWaitForAlertByThreadId+0x14
+01 000000d8`927ff630 00007ff9`56443ac8     ntdll!RtlSleepConditionVariableCS+0x14b
+02 000000d8`927ff6a0 00007ff9`2c255a23     KERNELBASE!SleepConditionVariableCS+0x38
+03 000000d8`927ff6d0 00007ff9`2c255c2f     amdxx64+0x95a23
+04 000000d8`927ff740 00007ff9`2cecf3a4     amdxx64+0x95c2f
+05 000000d8`927ff770 00007ff9`5793dda7     amdxx64!boost::serialization::singleton<std::set<boost::serialization::void_cast_detail::void_caster const * __ptr64,boost::serialization::void_cast_detail::void_caster_compare,std::allocator<boost::serialization::void_cast_detail::void_caster const * __ptr64> > >::is_destroyed+0x329f4
+06 000000d8`927ff7a0 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+07 000000d8`927ff7d0 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  50  Id: b984.60dc Suspend: 1 Teb: 000000d8`f92de000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`92fff7d8 00007ff9`590dba2b     ntdll!NtWaitForAlertByThreadId+0x14
+01 000000d8`92fff7e0 00007ff9`56443ac8     ntdll!RtlSleepConditionVariableCS+0x14b
+02 000000d8`92fff850 00007ff9`2c255a23     KERNELBASE!SleepConditionVariableCS+0x38
+03 000000d8`92fff880 00007ff9`2c255c2f     amdxx64+0x95a23
+04 000000d8`92fff8f0 00007ff9`2cecf3a4     amdxx64+0x95c2f
+05 000000d8`92fff920 00007ff9`5793dda7     amdxx64!boost::serialization::singleton<std::set<boost::serialization::void_cast_detail::void_caster const * __ptr64,boost::serialization::void_cast_detail::void_caster_compare,std::allocator<boost::serialization::void_cast_detail::void_caster const * __ptr64> > >::is_destroyed+0x329f4
+06 000000d8`92fff950 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+07 000000d8`92fff980 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  51  Id: b984.a814 Suspend: 1 Teb: 000000d8`f92e0000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`937ffd18 00007ff9`590dba2b     ntdll!NtWaitForAlertByThreadId+0x14
+01 000000d8`937ffd20 00007ff9`56443ac8     ntdll!RtlSleepConditionVariableCS+0x14b
+02 000000d8`937ffd90 00007ff9`2c255a23     KERNELBASE!SleepConditionVariableCS+0x38
+03 000000d8`937ffdc0 00007ff9`2c255c2f     amdxx64+0x95a23
+04 000000d8`937ffe30 00007ff9`2cecf3a4     amdxx64+0x95c2f
+05 000000d8`937ffe60 00007ff9`5793dda7     amdxx64!boost::serialization::singleton<std::set<boost::serialization::void_cast_detail::void_caster const * __ptr64,boost::serialization::void_cast_detail::void_caster_compare,std::allocator<boost::serialization::void_cast_detail::void_caster const * __ptr64> > >::is_destroyed+0x329f4
+06 000000d8`937ffe90 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+07 000000d8`937ffec0 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  52  Id: b984.9ba4 Suspend: 1 Teb: 000000d8`f92e2000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`93fffbc8 00007ff9`590dba2b     ntdll!NtWaitForAlertByThreadId+0x14
+01 000000d8`93fffbd0 00007ff9`56443ac8     ntdll!RtlSleepConditionVariableCS+0x14b
+02 000000d8`93fffc40 00007ff9`2c255a23     KERNELBASE!SleepConditionVariableCS+0x38
+03 000000d8`93fffc70 00007ff9`2c255c2f     amdxx64+0x95a23
+04 000000d8`93fffce0 00007ff9`2cecf3a4     amdxx64+0x95c2f
+05 000000d8`93fffd10 00007ff9`5793dda7     amdxx64!boost::serialization::singleton<std::set<boost::serialization::void_cast_detail::void_caster const * __ptr64,boost::serialization::void_cast_detail::void_caster_compare,std::allocator<boost::serialization::void_cast_detail::void_caster const * __ptr64> > >::is_destroyed+0x329f4
+06 000000d8`93fffd40 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+07 000000d8`93fffd70 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  53  Id: b984.7cd0 Suspend: 1 Teb: 000000d8`f92e4000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`947ffca8 00007ff9`590dba2b     ntdll!NtWaitForAlertByThreadId+0x14
+01 000000d8`947ffcb0 00007ff9`56443ac8     ntdll!RtlSleepConditionVariableCS+0x14b
+02 000000d8`947ffd20 00007ff9`2c255a23     KERNELBASE!SleepConditionVariableCS+0x38
+03 000000d8`947ffd50 00007ff9`2c255c2f     amdxx64+0x95a23
+04 000000d8`947ffdc0 00007ff9`2cecf3a4     amdxx64+0x95c2f
+05 000000d8`947ffdf0 00007ff9`5793dda7     amdxx64!boost::serialization::singleton<std::set<boost::serialization::void_cast_detail::void_caster const * __ptr64,boost::serialization::void_cast_detail::void_caster_compare,std::allocator<boost::serialization::void_cast_detail::void_caster const * __ptr64> > >::is_destroyed+0x329f4
+06 000000d8`947ffe20 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+07 000000d8`947ffe50 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  54  Id: b984.6994 Suspend: 1 Teb: 000000d8`f92e6000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`94fffc78 00007ff9`590dba2b     ntdll!NtWaitForAlertByThreadId+0x14
+01 000000d8`94fffc80 00007ff9`56443ac8     ntdll!RtlSleepConditionVariableCS+0x14b
+02 000000d8`94fffcf0 00007ff9`2c3db4cc     KERNELBASE!SleepConditionVariableCS+0x38
+03 000000d8`94fffd20 00007ff9`2c3e0d2d     amdxx64!AmdLiquidVrD3D11WrapDeviceContext+0x4427c
+04 000000d8`94fffd70 00007ff9`2cecf3a4     amdxx64!AmdLiquidVrD3D11WrapDeviceContext+0x49add
+05 000000d8`94fffda0 00007ff9`5793dda7     amdxx64!boost::serialization::singleton<std::set<boost::serialization::void_cast_detail::void_caster const * __ptr64,boost::serialization::void_cast_detail::void_caster_compare,std::allocator<boost::serialization::void_cast_detail::void_caster const * __ptr64> > >::is_destroyed+0x329f4
+06 000000d8`94fffdd0 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+07 000000d8`94fffe00 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  55  Id: b984.f5c4 Suspend: 1 Teb: 000000d8`f92e8000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`957ff8b8 00007ff9`590dba2b     ntdll!NtWaitForAlertByThreadId+0x14
+01 000000d8`957ff8c0 00007ff9`56443ac8     ntdll!RtlSleepConditionVariableCS+0x14b
+02 000000d8`957ff930 00007ff9`2c3db4cc     KERNELBASE!SleepConditionVariableCS+0x38
+03 000000d8`957ff960 00007ff9`2c3e0d2d     amdxx64!AmdLiquidVrD3D11WrapDeviceContext+0x4427c
+04 000000d8`957ff9b0 00007ff9`2cecf3a4     amdxx64!AmdLiquidVrD3D11WrapDeviceContext+0x49add
+05 000000d8`957ff9e0 00007ff9`5793dda7     amdxx64!boost::serialization::singleton<std::set<boost::serialization::void_cast_detail::void_caster const * __ptr64,boost::serialization::void_cast_detail::void_caster_compare,std::allocator<boost::serialization::void_cast_detail::void_caster const * __ptr64> > >::is_destroyed+0x329f4
+06 000000d8`957ffa10 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+07 000000d8`957ffa40 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  56  Id: b984.b0d0 Suspend: 1 Teb: 000000d8`f92ea000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`95fff838 00007ff9`590dba2b     ntdll!NtWaitForAlertByThreadId+0x14
+01 000000d8`95fff840 00007ff9`56443ac8     ntdll!RtlSleepConditionVariableCS+0x14b
+02 000000d8`95fff8b0 00007ff9`2c3db4cc     KERNELBASE!SleepConditionVariableCS+0x38
+03 000000d8`95fff8e0 00007ff9`2c3e0d2d     amdxx64!AmdLiquidVrD3D11WrapDeviceContext+0x4427c
+04 000000d8`95fff930 00007ff9`2cecf3a4     amdxx64!AmdLiquidVrD3D11WrapDeviceContext+0x49add
+05 000000d8`95fff960 00007ff9`5793dda7     amdxx64!boost::serialization::singleton<std::set<boost::serialization::void_cast_detail::void_caster const * __ptr64,boost::serialization::void_cast_detail::void_caster_compare,std::allocator<boost::serialization::void_cast_detail::void_caster const * __ptr64> > >::is_destroyed+0x329f4
+06 000000d8`95fff990 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+07 000000d8`95fff9c0 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  57  Id: b984.f578 Suspend: 1 Teb: 000000d8`f92ec000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`967ffc18 00007ff9`590dba2b     ntdll!NtWaitForAlertByThreadId+0x14
+01 000000d8`967ffc20 00007ff9`56443ac8     ntdll!RtlSleepConditionVariableCS+0x14b
+02 000000d8`967ffc90 00007ff9`2c3db4cc     KERNELBASE!SleepConditionVariableCS+0x38
+03 000000d8`967ffcc0 00007ff9`2c3e0d2d     amdxx64!AmdLiquidVrD3D11WrapDeviceContext+0x4427c
+04 000000d8`967ffd10 00007ff9`2cecf3a4     amdxx64!AmdLiquidVrD3D11WrapDeviceContext+0x49add
+05 000000d8`967ffd40 00007ff9`5793dda7     amdxx64!boost::serialization::singleton<std::set<boost::serialization::void_cast_detail::void_caster const * __ptr64,boost::serialization::void_cast_detail::void_caster_compare,std::allocator<boost::serialization::void_cast_detail::void_caster const * __ptr64> > >::is_destroyed+0x329f4
+06 000000d8`967ffd70 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+07 000000d8`967ffda0 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  58  Id: b984.7b4c Suspend: 1 Teb: 000000d8`f92ee000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`96fffdc8 00007ff9`590dba2b     ntdll!NtWaitForAlertByThreadId+0x14
+01 000000d8`96fffdd0 00007ff9`56443ac8     ntdll!RtlSleepConditionVariableCS+0x14b
+02 000000d8`96fffe40 00007ff9`2c3db4cc     KERNELBASE!SleepConditionVariableCS+0x38
+03 000000d8`96fffe70 00007ff9`2c3e0d2d     amdxx64!AmdLiquidVrD3D11WrapDeviceContext+0x4427c
+04 000000d8`96fffec0 00007ff9`2cecf3a4     amdxx64!AmdLiquidVrD3D11WrapDeviceContext+0x49add
+05 000000d8`96fffef0 00007ff9`5793dda7     amdxx64!boost::serialization::singleton<std::set<boost::serialization::void_cast_detail::void_caster const * __ptr64,boost::serialization::void_cast_detail::void_caster_compare,std::allocator<boost::serialization::void_cast_detail::void_caster const * __ptr64> > >::is_destroyed+0x329f4
+06 000000d8`96ffff20 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+07 000000d8`96ffff50 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  59  Id: b984.b540 Suspend: 1 Teb: 000000d8`f92f0000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`977ffdc8 00007ff9`590dba2b     ntdll!NtWaitForAlertByThreadId+0x14
+01 000000d8`977ffdd0 00007ff9`56443ac8     ntdll!RtlSleepConditionVariableCS+0x14b
+02 000000d8`977ffe40 00007ff9`2c3db4cc     KERNELBASE!SleepConditionVariableCS+0x38
+03 000000d8`977ffe70 00007ff9`2c3e0d2d     amdxx64!AmdLiquidVrD3D11WrapDeviceContext+0x4427c
+04 000000d8`977ffec0 00007ff9`2cecf3a4     amdxx64!AmdLiquidVrD3D11WrapDeviceContext+0x49add
+05 000000d8`977ffef0 00007ff9`5793dda7     amdxx64!boost::serialization::singleton<std::set<boost::serialization::void_cast_detail::void_caster const * __ptr64,boost::serialization::void_cast_detail::void_caster_compare,std::allocator<boost::serialization::void_cast_detail::void_caster const * __ptr64> > >::is_destroyed+0x329f4
+06 000000d8`977fff20 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+07 000000d8`977fff50 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  60  Id: b984.4f6c Suspend: 1 Teb: 000000d8`f92f2000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`97fffc58 00007ff9`590dba2b     ntdll!NtWaitForAlertByThreadId+0x14
+01 000000d8`97fffc60 00007ff9`56443ac8     ntdll!RtlSleepConditionVariableCS+0x14b
+02 000000d8`97fffcd0 00007ff9`2c3db4cc     KERNELBASE!SleepConditionVariableCS+0x38
+03 000000d8`97fffd00 00007ff9`2c3e0d2d     amdxx64!AmdLiquidVrD3D11WrapDeviceContext+0x4427c
+04 000000d8`97fffd50 00007ff9`2cecf3a4     amdxx64!AmdLiquidVrD3D11WrapDeviceContext+0x49add
+05 000000d8`97fffd80 00007ff9`5793dda7     amdxx64!boost::serialization::singleton<std::set<boost::serialization::void_cast_detail::void_caster const * __ptr64,boost::serialization::void_cast_detail::void_caster_compare,std::allocator<boost::serialization::void_cast_detail::void_caster const * __ptr64> > >::is_destroyed+0x329f4
+06 000000d8`97fffdb0 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+07 000000d8`97fffde0 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  61  Id: b984.dfe8 Suspend: 1 Teb: 000000d8`f92f4000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`987ffc28 00007ff9`590dba2b     ntdll!NtWaitForAlertByThreadId+0x14
+01 000000d8`987ffc30 00007ff9`56443ac8     ntdll!RtlSleepConditionVariableCS+0x14b
+02 000000d8`987ffca0 00007ff9`2c3db4cc     KERNELBASE!SleepConditionVariableCS+0x38
+03 000000d8`987ffcd0 00007ff9`2c3e0d2d     amdxx64!AmdLiquidVrD3D11WrapDeviceContext+0x4427c
+04 000000d8`987ffd20 00007ff9`2cecf3a4     amdxx64!AmdLiquidVrD3D11WrapDeviceContext+0x49add
+05 000000d8`987ffd50 00007ff9`5793dda7     amdxx64!boost::serialization::singleton<std::set<boost::serialization::void_cast_detail::void_caster const * __ptr64,boost::serialization::void_cast_detail::void_caster_compare,std::allocator<boost::serialization::void_cast_detail::void_caster const * __ptr64> > >::is_destroyed+0x329f4
+06 000000d8`987ffd80 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+07 000000d8`987ffdb0 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  62  Id: b984.5a3c Suspend: 1 Teb: 000000d8`f92f6000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`98fffca8 00007ff9`590dba2b     ntdll!NtWaitForAlertByThreadId+0x14
+01 000000d8`98fffcb0 00007ff9`56443ac8     ntdll!RtlSleepConditionVariableCS+0x14b
+02 000000d8`98fffd20 00007ff9`2c1de607     KERNELBASE!SleepConditionVariableCS+0x38
+03 000000d8`98fffd50 00007ff9`2c1de519     amdxx64+0x1e607
+04 000000d8`98fffda0 00007ff9`2cecf3a4     amdxx64+0x1e519
+05 000000d8`98fffdd0 00007ff9`5793dda7     amdxx64!boost::serialization::singleton<std::set<boost::serialization::void_cast_detail::void_caster const * __ptr64,boost::serialization::void_cast_detail::void_caster_compare,std::allocator<boost::serialization::void_cast_detail::void_caster const * __ptr64> > >::is_destroyed+0x329f4
+06 000000d8`98fffe00 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+07 000000d8`98fffe30 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  63  Id: b984.3ff8 Suspend: 1 Teb: 000000d8`f92f8000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`997ff7a8 00007ff9`5643be9f     ntdll!NtWaitForSingleObject+0x14
+01 000000d8`997ff7b0 00007ff9`2c2cd1f5     KERNELBASE!WaitForSingleObjectEx+0xaf
+02 000000d8`997ff850 00007ff9`2c2cd0d0     amdxx64!boost::serialization::singleton<boost::serialization::extended_type_info_typeid<_SC_PRIMSHADER_CONTROL_FLAGS> >::singleton<boost::serialization::extended_type_info_typeid<_SC_PRIMSHADER_CONTROL_FLAGS> >+0x6b3b5
+03 000000d8`997ff880 00007ff9`2c2cd32f     amdxx64!boost::serialization::singleton<boost::serialization::extended_type_info_typeid<_SC_PRIMSHADER_CONTROL_FLAGS> >::singleton<boost::serialization::extended_type_info_typeid<_SC_PRIMSHADER_CONTROL_FLAGS> >+0x6b290
+04 000000d8`997ff8b0 00007ff9`2c2cd4d9     amdxx64!boost::serialization::singleton<boost::serialization::extended_type_info_typeid<_SC_PRIMSHADER_CONTROL_FLAGS> >::singleton<boost::serialization::extended_type_info_typeid<_SC_PRIMSHADER_CONTROL_FLAGS> >+0x6b4ef
+05 000000d8`997ff8e0 00007ff9`2cecf3a4     amdxx64!boost::serialization::singleton<boost::serialization::extended_type_info_typeid<_SC_PRIMSHADER_CONTROL_FLAGS> >::singleton<boost::serialization::extended_type_info_typeid<_SC_PRIMSHADER_CONTROL_FLAGS> >+0x6b699
+06 000000d8`997ff910 00007ff9`5793dda7     amdxx64!boost::serialization::singleton<std::set<boost::serialization::void_cast_detail::void_caster const * __ptr64,boost::serialization::void_cast_detail::void_caster_compare,std::allocator<boost::serialization::void_cast_detail::void_caster const * __ptr64> > >::is_destroyed+0x329f4
+07 000000d8`997ff940 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+08 000000d8`997ff970 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  64  Id: b984.1e00 Suspend: 1 Teb: 000000d8`f92fa000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`99fff7a8 00007ff9`56442773     ntdll!NtWaitForMultipleObjects+0x14
+01 000000d8`99fff7b0 00007ff9`56442641     KERNELBASE!WaitForMultipleObjectsEx+0x123
+02 000000d8`99fffaa0 00007ff9`3f962c36     KERNELBASE!WaitForMultipleObjects+0x11
+03 000000d8`99fffae0 00007ff9`406ca2aa     nvwgf2umx!NVAPI_DirectMethods+0x32d16
+04 000000d8`99fffb70 00007ff9`5793dda7     nvwgf2umx!NVDEV_Thunk+0x576b2a
+05 000000d8`99fffba0 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+06 000000d8`99fffbd0 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  65  Id: b984.d620 Suspend: 1 Teb: 000000d8`f92fc000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`9a7ffa38 00007ff9`5643be9f     ntdll!NtWaitForSingleObject+0x14
+01 000000d8`9a7ffa40 00007ff9`3ff7f562     KERNELBASE!WaitForSingleObjectEx+0xaf
+02 000000d8`9a7ffae0 00007ff9`406ca2aa     nvwgf2umx!OpenAdapter10+0x147262
+03 000000d8`9a7ffb10 00007ff9`5793dda7     nvwgf2umx!NVDEV_Thunk+0x576b2a
+04 000000d8`9a7ffb40 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+05 000000d8`9a7ffb70 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  66  Id: b984.ef54 Suspend: 1 Teb: 000000d8`f92fe000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`9afff928 00007ff9`56442773     ntdll!NtWaitForMultipleObjects+0x14
+01 000000d8`9afff930 00007ff9`56442641     KERNELBASE!WaitForMultipleObjectsEx+0x123
+02 000000d8`9afffc20 00007ff7`513efeb9     KERNELBASE!WaitForMultipleObjects+0x11
+03 000000d8`9afffc60 00007ff7`513f015d     Godot_v4_7_2_stable_win64!NoHotPatch+0x490d289
+04 000000d8`9afffcc0 00007ff7`513f0806     Godot_v4_7_2_stable_win64!NoHotPatch+0x490d52d
+05 000000d8`9afffd30 00007ff7`51b70c8b     Godot_v4_7_2_stable_win64!NoHotPatch+0x490dbd6
+06 000000d8`9afffdf0 00007ff7`530cc67f     Godot_v4_7_2_stable_win64!NoHotPatch+0x508e05b
+07 000000d8`9afffe80 00007ff7`513f357b     Godot_v4_7_2_stable_win64!NoHotPatch+0x65e9a4f
+08 000000d8`9afffec0 00007ff9`5899f0ad     Godot_v4_7_2_stable_win64!NoHotPatch+0x491094b
+09 000000d8`9affff00 00007ff9`5899f17c     msvcrt!_callthreadstartex+0x1d
+0a 000000d8`9affff30 00007ff9`5793dda7     msvcrt!_threadstartex+0x7c
+0b 000000d8`9affff60 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+0c 000000d8`9affff90 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  67  Id: b984.b960 Suspend: 1 Teb: 000000d8`f9300000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`9b7ff638 00007ff9`590e4d0e     ntdll!NtWaitForWorkViaWorkerFactory+0x14
+01 000000d8`9b7ff640 00007ff9`5793dda7     ntdll!TppWorkerThread+0x37e
+02 000000d8`9b7ff9a0 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+03 000000d8`9b7ff9d0 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  68  Id: b984.5844 Suspend: 1 Teb: 000000d8`f9302000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`9bfff738 00007ff9`590e4d0e     ntdll!NtWaitForWorkViaWorkerFactory+0x14
+01 000000d8`9bfff740 00007ff9`5793dda7     ntdll!TppWorkerThread+0x37e
+02 000000d8`9bfffaa0 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+03 000000d8`9bfffad0 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  69  Id: b984.cf98 Suspend: 1 Teb: 000000d8`f9304000 Unfrozen "_loop"
+ # Child-SP          RetAddr               Call Site
+00 000000d8`9c7ff1b8 00007ff9`59190fd4     ntdll!NtDelayExecution+0x14
+01 000000d8`9c7ff1c0 00007ff9`564ab9c1     ntdll!RtlDelayExecution+0x34
+02 000000d8`9c7ff1f0 00007ff7`4d136a4a     KERNELBASE!SleepEx+0x91
+03 000000d8`9c7ff280 00007ff7`4d014798     Godot_v4_7_2_stable_win64!NoHotPatch+0x653e1a
+04 000000d8`9c7ff720 00007ff7`508f803f     Godot_v4_7_2_stable_win64!NoHotPatch+0x531b68
+05 000000d8`9c7ff7b0 00007ff7`5060d0de     Godot_v4_7_2_stable_win64!NoHotPatch+0x3e1540f
+06 000000d8`9c7ff860 00007ff7`5039e2df     Godot_v4_7_2_stable_win64!NoHotPatch+0x3b2a4ae
+07 000000d8`9c7ff900 00007ff7`50408abd     Godot_v4_7_2_stable_win64!NoHotPatch+0x38bb6af
+08 000000d8`9c7ffa40 00007ff7`517d4b1a     Godot_v4_7_2_stable_win64!NoHotPatch+0x3925e8d
+09 000000d8`9c7ffaa0 00007ff9`5899f0ad     Godot_v4_7_2_stable_win64!NoHotPatch+0x4cf1eea
+0a 000000d8`9c7ffad0 00007ff9`5899f17c     msvcrt!_callthreadstartex+0x1d
+0b 000000d8`9c7ffb00 00007ff9`5793dda7     msvcrt!_threadstartex+0x7c
+0c 000000d8`9c7ffb30 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+0d 000000d8`9c7ffb60 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  70  Id: b984.7ff4 Suspend: 1 Teb: 000000d8`f9306000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`9cfffad8 00007ff9`56442773     ntdll!NtWaitForMultipleObjects+0x14
+01 000000d8`9cfffae0 00007ff9`56442641     KERNELBASE!WaitForMultipleObjectsEx+0x123
+02 000000d8`9cfffdd0 00007ff9`3869534c     KERNELBASE!WaitForMultipleObjects+0x11
+03 000000d8`9cfffe10 00007ff9`5793dda7     amdihk64!Terminate+0x1c2c
+04 000000d8`9cfffe60 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+05 000000d8`9cfffe90 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+
+  71  Id: b984.19c8 Suspend: 1 Teb: 000000d8`f9308000 Unfrozen
+ # Child-SP          RetAddr               Call Site
+00 000000d8`9d7ff5a8 00007ff9`56442773     ntdll!NtWaitForMultipleObjects+0x14
+01 000000d8`9d7ff5b0 00007ff9`56442641     KERNELBASE!WaitForMultipleObjectsEx+0x123
+02 000000d8`9d7ff8a0 00007ff9`38696625     KERNELBASE!WaitForMultipleObjects+0x11
+03 000000d8`9d7ff8e0 00007ff9`5793dda7     amdihk64!Terminate+0x2f05
+04 000000d8`9d7ff930 00007ff9`5913ee4c     KERNEL32!BaseThreadInitThunk+0x17
+05 000000d8`9d7ff960 00000000`00000000     ntdll!RtlUserThreadStart+0x2c
+quit:
+NatVis script unloaded from 'C:\Users\kazda\kiro\gtai-n9\tools\windbg\Visualizers\atlmfc.natvis'
+NatVis script unloaded from 'C:\Users\kazda\kiro\gtai-n9\tools\windbg\Visualizers\concurrency.natvis'
+NatVis script unloaded from 'C:\Users\kazda\kiro\gtai-n9\tools\windbg\Visualizers\cpp_rest.natvis'
+NatVis script unloaded from 'C:\Users\kazda\kiro\gtai-n9\tools\windbg\Visualizers\ObjectiveC.natvis'
+NatVis script unloaded from 'C:\Users\kazda\kiro\gtai-n9\tools\windbg\Visualizers\stl.natvis'
+NatVis script unloaded from 'C:\Users\kazda\kiro\gtai-n9\tools\windbg\Visualizers\Windows.Data.Json.natvis'
+NatVis script unloaded from 'C:\Users\kazda\kiro\gtai-n9\tools\windbg\Visualizers\Windows.Devices.Geolocation.natvis'
+NatVis script unloaded from 'C:\Users\kazda\kiro\gtai-n9\tools\windbg\Visualizers\Windows.Devices.Sensors.natvis'
+NatVis script unloaded from 'C:\Users\kazda\kiro\gtai-n9\tools\windbg\Visualizers\Windows.Media.natvis'
+NatVis script unloaded from 'C:\Users\kazda\kiro\gtai-n9\tools\windbg\Visualizers\windows.natvis'
+NatVis script unloaded from 'C:\Users\kazda\kiro\gtai-n9\tools\windbg\Visualizers\winrt.natvis'

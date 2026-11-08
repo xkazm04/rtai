@@ -1,0 +1,45 @@
+--- arms/fx/cur.gd	2026-11-08 07:17:00.000857800 +0100
++++ arms/fx/h1.gd	2026-11-08 07:17:10.721786200 +0100
+@@ -58,6 +58,8 @@
+ ## Advances `steps` ticks, expires the dead (swap-remove), writes the MultiMesh at `tick`. (L17b
+ ## skipped the rewrite of a held particle: +11 us a riot frame, the casings move; dropped, LEDGER.)
+ func step(steps: int, tick: int, mm: MultiMesh) -> void:
++	var dt: float = SimClock.TICK_DT
++	var mirrored: bool = not mirror.is_empty()
+ 	var i: int = 0
+ 	while i < alive:
+ 		var r: FxKindRow = row_of[i]
+@@ -65,21 +67,26 @@
+ 		if age >= r.life_i:
+ 			_swap_out(i)
+ 			continue
+-		var drag: float = r.drag
+-		for s: int in steps:
+-			pos[i] += vel[i] * SimClock.TICK_DT
+-			vel[i] *= maxf(0.0, 1.0 - drag * SimClock.TICK_DT)
+-		var size: float = r.size_m * PX_PER_M * (1.0 + r.grow * age * SimClock.TICK_DT) * 0.5
++		var p: Vector2 = pos[i]
++		if steps > 0:  # the same float ops in the same order, through locals (L26)
++			var v: Vector2 = vel[i]
++			var damp: float = maxf(0.0, 1.0 - r.drag * dt)
++			for s: int in steps:
++				p += v * dt
++				v *= damp
++			pos[i] = p
++			vel[i] = v
++		var size: float = r.size_m * PX_PER_M * (1.0 + r.grow * age * dt) * 0.5
+ 		var col: Color = r.color
+ 		col.a = clampf((1.0 - float(age) / r.life) / (1.0 - r.fade_from), 0.0, 1.0)
+ 		var sd: float = seed_of[i]
+ 		var cell_now: float = r.cell(age, sd)
+-		var xf: Transform2D = Transform2D(rot[i], Vector2.ONE * size, 0.0, pos[i])
++		var xf: Transform2D = Transform2D(rot[i], Vector2.ONE * size, 0.0, p)
+ 		var cu: Color = Color(r.shape_id, sd, cell_now, r.rim)
+ 		mm.set_instance_transform_2d(i, xf)
+ 		mm.set_instance_color(i, col)
+ 		mm.set_instance_custom_data(i, cu)
+-		if not mirror.is_empty():
++		if mirrored:
+ 			mirror_write(mirror, i, xf, col, cu)
+ 		i += 1
+ 	mm.visible_instance_count = alive

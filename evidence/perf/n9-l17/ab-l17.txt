@@ -1,0 +1,6 @@
+old r1 godots_before=2 PC.fx+glow 44.3 PC.ground.step 135.4 PROCESS_TOTAL 2618.9  err=0
+new r1 godots_before=2 PC.fx+glow 40.4 PC.ground.step 106.6 PROCESS_TOTAL 2970.9  err=0
+old r2 godots_before=2 PC.fx+glow 49.6 PC.ground.step 152.4 PROCESS_TOTAL 2984.8  err=0
+new r2 godots_before=2 PC.fx+glow 31.1 PC.ground.step 86.0 PROCESS_TOTAL 2559.7  err=0
+old r3 godots_before=0 PC.fx+glow 43.7 PC.ground.step 134.5 PROCESS_TOTAL 2583.6  err=0
+new r3 godots_before=2 PC.fx+glow 34.2 PC.ground.step 96.6 PROCESS_TOTAL 2776.6  err=0

@@ -1,0 +1,73 @@
+﻿Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+D3D12 12_0 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce RTX 4090
+
+[INFO] quest1: city cells: 2 chunks in 14 ms
+[INFO] quest1: street filled in 16 chunk passes
+[INFO] characters: prewarmed 41 rigs in 90.8 ms
+[INFO] quest1: started: Rivet is the player's (seed 20261102)
+WARNING: The separate rendering thread feature is experimental. Feel free to try it since it will eventually become a stable feature.
+However, bear in mind that at the moment it can lead to project crashes or instability.
+So, unless you want to test the engine, set the "rendering/driver/threads/thread_model" project setting to 'Safe'.
+   at: setup2 (main/main.cpp:3518)
+ERROR: Condition "p_image.is_null() || p_image->is_empty()" is true.
+   at: _texture_2d_update (servers/rendering/renderer_rd/storage_rd/texture_storage.cpp:1617)
+ERROR: This function (texture_get_format) can only be called from the render thread. 
+   at: texture_get_format (servers/rendering/rendering_device.cpp:2922)
+   GDScript backtrace (most recent call first):
+       [0] request (res://features/characters/crowd_readback.gd:31)
+       [1] _capture (res://features/characters/crowd_baker.gd:129)
+       [2] bake (res://features/characters/crowd_baker.gd:38)
+ERROR: This function (texture_get_data_async) can only be called from the render thread. 
+   at: texture_get_data_async (servers/rendering/rendering_device.cpp:2793)
+   GDScript backtrace (most recent call first):
+       [0] request (res://features/characters/crowd_readback.gd:34)
+       [1] _capture (res://features/characters/crowd_baker.gd:129)
+       [2] bake (res://features/characters/crowd_baker.gd:38)
+ERROR: This function (texture_get_format) can only be called from the render thread. 
+   at: texture_get_format (servers/rendering/rendering_device.cpp:2922)
+   GDScript backtrace (most recent call first):
+       [0] request (res://features/characters/crowd_readback.gd:31)
+       [1] _capture (res://features/characters/crowd_baker.gd:129)
+       [2] bake (res://features/characters/crowd_baker.gd:38)
+ERROR: This function (texture_get_data_async) can only be called from the render thread. 
+   at: texture_get_data_async (servers/rendering/rendering_device.cpp:2793)
+   GDScript backtrace (most recent call first):
+       [0] request (res://features/characters/crowd_readback.gd:34)
+       [1] _capture (res://features/characters/crowd_baker.gd:129)
+       [2] bake (res://features/characters/crowd_baker.gd:38)
+ERROR: This function (texture_get_format) can only be called from the render thread. 
+   at: texture_get_format (servers/rendering/rendering_device.cpp:2922)
+   GDScript backtrace (most recent call first):
+       [0] request (res://features/characters/crowd_readback.gd:31)
+       [1] _capture (res://features/characters/crowd_baker.gd:129)
+       [2] bake (res://features/characters/crowd_baker.gd:38)
+ERROR: This function (texture_get_data_async) can only be called from the render thread. 
+   at: texture_get_data_async (servers/rendering/rendering_device.cpp:2793)
+   GDScript backtrace (most recent call first):
+       [0] request (res://features/characters/crowd_readback.gd:34)
+       [1] _capture (res://features/characters/crowd_baker.gd:129)
+       [2] bake (res://features/characters/crowd_baker.gd:38)
+ERROR: This function (texture_get_format) can only be called from the render thread. 
+   at: texture_get_format (servers/rendering/rendering_device.cpp:2922)
+   GDScript backtrace (most recent call first):
+       [0] request (res://features/characters/crowd_readback.gd:31)
+       [1] _capture (res://features/characters/crowd_baker.gd:129)
+       [2] bake (res://features/characters/crowd_baker.gd:38)
+ERROR: This function (texture_get_data_async) can only be called from the render thread. 
+   at: texture_get_data_async (servers/rendering/rendering_device.cpp:2793)
+   GDScript backtrace (most recent call first):
+       [0] request (res://features/characters/crowd_readback.gd:34)
+       [1] _capture (res://features/characters/crowd_baker.gd:129)
+       [2] bake (res://features/characters/crowd_baker.gd:38)
+ERROR: This function (texture_get_format) can only be called from the render thread. 
+   at: texture_get_format (servers/rendering/rendering_device.cpp:2922)
+   GDScript backtrace (most recent call first):
+       [0] request (res://features/characters/crowd_readback.gd:31)
+       [1] _capture (res://features/characters/crowd_baker.gd:129)
+       [2] bake (res://features/characters/crowd_baker.gd:38)
+ERROR: This function (texture_get_data_async) can only be called from the render thread. 
+   at: texture_get_data_async (servers/rendering/rendering_device.cpp:2793)
+   GDScript backtrace (most recent call first):
+       [0] request (res://features/characters/crowd_readback.gd:34)
+       [1] _capture (res://features/characters/crowd_baker.gd:129)
+       [2] bake (res://features/characters/crowd_baker.gd:38)

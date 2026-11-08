@@ -1,0 +1,133 @@
+diff --git a/project/boot/quest1_game.gd b/project/boot/quest1_game.gd
+index de88deef..f0adad3f 100644
+--- a/project/boot/quest1_game.gd
++++ b/project/boot/quest1_game.gd
+@@ -146,6 +146,15 @@ func _process(_delta: float) -> void:
+ 	if session == null or _ended:
+ 		return
+ 	session.autosave.poll()
++	var hb: int = Engine.get_meta(&"hb", 0)
++	Engine.set_meta(&"hb", hb + 1)
++	if hb == 0:
++		@warning_ignore("return_value_discarded")
++		RenderingServer.frame_pre_draw.connect(_hbp.bind("RS pre"))
++		@warning_ignore("return_value_discarded")
++		RenderingServer.frame_post_draw.connect(_hbp.bind("RS post"))
++	if hb < 90 or hb % 30 == 0:
++		printerr("HB %d pf%d" % [hb, Engine.get_process_frames()])
+ 	if session.paid() and not session.system.runner.lines.busy():
+ 		_end()
+ 	elif session.failed():
+@@ -270,3 +279,8 @@ func _bind_live() -> void:
+ ## owner's 2026-11-06 call; else the id, e.g. katana).
+ static func blade_of(flag: String) -> StringName:
+ 	return &"" if flag == "" or flag == "off" else StringName(flag)
++
++
++func _hbp(what: String) -> void:
++	if Engine.get_meta(&"hb", 0) < 90:
++		printerr(what)
+diff --git a/project/core/save/save_worker.gd b/project/core/save/save_worker.gd
+index e4bd9099..9c273980 100644
+--- a/project/core/save/save_worker.gd
++++ b/project/core/save/save_worker.gd
+@@ -74,7 +74,9 @@ func _take_pending() -> Dictionary:
+ 
+ 
+ func _collect() -> void:
++	printerr("WT> save f%d" % Engine.get_process_frames())
+ 	var raw: Variant = _thread.wait_to_finish()
++	printerr("WT< save")
+ 	var result: Result = raw if raw is Result else Result.new()
+ 	_thread = null
+ 	completed += 1
+diff --git a/project/features/characters/crowd_baker.gd b/project/features/characters/crowd_baker.gd
+index e3b8fae3..2f758c1f 100644
+--- a/project/features/characters/crowd_baker.gd
++++ b/project/features/characters/crowd_baker.gd
+@@ -30,7 +30,9 @@ func bake(atlas: CrowdAtlas) -> void:
+ 			var want: float = _frame_time(c as CrowdAtlas.Clip, f)
+ 			_advance(want - at)
+ 			at = want
++			printerr("CB> await c%d f%d pf%d" % [c, f, Engine.get_process_frames()])
+ 			await RenderingServer.frame_post_draw
++			printerr("CB> cap")
+ 			_capture(CrowdAtlas.CLIP_FIRST[c] + f)
+ 	StreetCrowdCorpse.stamp(_image, _rigs)  # n8 street: the drawn corpse under a card view
+ 	atlas.texture = ImageTexture.create_from_image(_image)
+@@ -112,6 +114,7 @@ func _advance(seconds: float) -> void:
+ func _capture(col: int) -> void:
+ 	var cell: int = CrowdAtlas.CELL_PX
+ 	var shot: Image = _vp.get_texture().get_image()
++	printerr("CB< cap")
+ 	if shot == null or shot.is_empty():
+ 		return
+ 	shot.convert(Image.FORMAT_RGBA8)
+diff --git a/project/features/characters/street_strips.gd b/project/features/characters/street_strips.gd
+index 566b3d3d..646b1132 100644
+--- a/project/features/characters/street_strips.gd
++++ b/project/features/characters/street_strips.gd
+@@ -27,9 +27,13 @@ static func get_tex(path: String) -> Texture2D:
+ 	if _asked.has(path):
+ 		@warning_ignore("return_value_discarded")
+ 		_asked.erase(path)
++		printerr("WT> strip %s f%d" % [path, Engine.get_process_frames()])
+ 		t = ResourceLoader.load_threaded_get(path) as Texture2D
++		printerr("WT< strip")
+ 	if t == null:
++		printerr("WT> sload %s f%d" % [path, Engine.get_process_frames()])
+ 		t = load(path) as Texture2D
++		printerr("WT< sload")
+ 	_tex[path] = t
+ 	return t
+ 
+@@ -38,6 +42,7 @@ static func get_tex(path: String) -> Texture2D:
+ static func prefetch(path: String) -> void:
+ 	if path.is_empty() or _tex.has(path) or _asked.has(path) or not enabled():
+ 		return
++	printerr("WT= req %s f%d" % [path, Engine.get_process_frames()])
+ 	if ResourceLoader.load_threaded_request(path, "Texture2D") == OK:
+ 		_asked[path] = true
+ 
+diff --git a/project/features/city/stream/chunk_source.gd b/project/features/city/stream/chunk_source.gd
+index d4fed9f1..c5a50376 100644
+--- a/project/features/city/stream/chunk_source.gd
++++ b/project/features/city/stream/chunk_source.gd
+@@ -36,7 +36,9 @@ func prefetch(key: Vector2i) -> void:
+ ## when the file is corrupt (the reason lands in `failures`).
+ func take(key: Vector2i) -> CityChunk:
+ 	if _tasks.has(key):
++		printerr("WT> take %s f%d" % [key, Engine.get_process_frames()])
+ 		var err: int = WorkerThreadPool.wait_for_task_completion(_tasks[key])
++		printerr("WT< take %s" % key)
+ 		assert(err == OK or err == ERR_INVALID_PARAMETER)
+ 		@warning_ignore("return_value_discarded")
+ 		_tasks.erase(key)
+diff --git a/project/features/city/view/city_textures.gd b/project/features/city/view/city_textures.gd
+index fe4bcfb9..0b7aec98 100644
+--- a/project/features/city/view/city_textures.gd
++++ b/project/features/city/view/city_textures.gd
+@@ -65,7 +65,9 @@ func _init(texture_table: Dictionary) -> void:
+ func _collect(path: String) -> Texture2D:
+ 	if path == "":
+ 		return null
++	printerr("WT> ctex %s" % path)
+ 	var tex: Texture2D = ResourceLoader.load_threaded_get(path)
++	printerr("WT< ctex")
+ 	if tex == null:
+ 		failures.append("%s: did not load" % path)
+ 	return tex
+diff --git a/project/features/city/view/view_prewarm.gd b/project/features/city/view/view_prewarm.gd
+index b135787f..9aa63290 100644
+--- a/project/features/city/view/view_prewarm.gd
++++ b/project/features/city/view/view_prewarm.gd
+@@ -27,7 +27,9 @@ func run() -> int:
+ 	var tick: int = _view.clock.tick() if _view.clock != null else 0
+ 	var light: int = _warm_fx(centre, tick)
+ 	for i: int in WARM_FRAMES:
++		printerr("PW> await %d pf%d" % [i, Engine.get_process_frames()])
+ 		await RenderingServer.frame_post_draw
++		printerr("PW< await")
+ 	RenderingServer.free_rid(item)
+ 	_view.fx.clear()
+ 	_view.lights.remove(light)

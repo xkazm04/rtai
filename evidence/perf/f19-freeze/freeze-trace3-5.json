@@ -1,0 +1,12 @@
+﻿{
+    "schema":  "gtai.thread-cpu/1",
+    "pid":  46536,
+    "wallMs":  2029.1,
+    "totalCores":  0,
+    "groups":  [
+
+               ],
+    "threads":  [
+
+                ]
+}

@@ -1,0 +1,8 @@
+cur r1 godots_before=10 BLOODPROF blood.step 364.2 PC.ground.step 79.5 FF.observe 120.5 PROCESS_TOTAL 2277.5 BR.crowd.observe 120.8  err=0
+h1 r1 godots_before=10 BLOODPROF blood.step 367.5 PC.ground.step 80.0 FF.observe 120.9 PROCESS_TOTAL 2269.4 BR.crowd.observe 121.5  err=0
+cur r2 godots_before=10 BLOODPROF blood.step 346.2 PC.ground.step 74.6 FF.observe 114.5 PROCESS_TOTAL 2149.2 BR.crowd.observe 116.2  err=0
+h1 r2 godots_before=4 BLOODPROF blood.step 347.5 PC.ground.step 75.5 FF.observe 115.7 PROCESS_TOTAL 2160.0 BR.crowd.observe 118.2  err=0
+cur r3 godots_before=4 BLOODPROF blood.step 367.6 PC.ground.step 79.7 FF.observe 120.3 PROCESS_TOTAL 2267.7 BR.crowd.observe 127.0  err=0
+h1 r3 godots_before=6 BLOODPROF blood.step 347.8 PC.ground.step 75.6 FF.observe 116.3 PROCESS_TOTAL 2186.0 BR.crowd.observe 117.7  err=0
+cur r4 godots_before=6 BLOODPROF blood.step 355.1 PC.ground.step 78.7 FF.observe 117.1 PROCESS_TOTAL 2199.7 BR.crowd.observe 119.2  err=0
+h1 r4 godots_before=6 BLOODPROF blood.step 366.8 PC.ground.step 81.6 FF.observe 121.4 PROCESS_TOTAL 2295.7 BR.crowd.observe 122.6  err=0

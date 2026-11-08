@@ -1,0 +1,161 @@
+diff --git a/project/boot/city_blood.gd b/project/boot/city_blood.gd
+index 1016df9e..fbf188e6 100644
+--- a/project/boot/city_blood.gd
++++ b/project/boot/city_blood.gd
+@@ -15,6 +15,9 @@ var stains: CorpseStains = null
+ ## The muzzle's one lit frame (features/fx/muzzle_pop.gd); null when game.muzzle_pop.on is false.
+ var pop: MuzzlePop = null
+ var _feed: RigFeed = null
++## The wall checks' per-cell answers, live only inside blood.step (perf L22b): empty outside it.
++var _cells: CitySolidMemo = null
++var _stepping: bool = false
+ var _city: CitySystem
+ var _view: CityView
+ 
+@@ -60,7 +63,11 @@ func follow(feed: RigFeed) -> void:
+ 
+ func _process(_delta: float) -> void:
+ 	if _view.clock != null:
++		_cells = _solid_memo()
++		_stepping = true
+ 		blood.step(_view.clock.tick(), _view.world_px)
++		_stepping = false
++		_cells.clear()
+ 		beat.step(_view.clock.tick())
+ 		if pop != null:
+ 			pop.step(_view.clock.tick())
+@@ -75,5 +82,11 @@ func _to_uv(px: Vector2) -> Vector2:
+ 
+ 
+ func _solid(px: Vector2) -> bool:
+-	var c: int = _city.sim.cell_at(px.x / SimConst.PX_PER_M, px.y / SimConst.PX_PER_M)
+-	return c == SimConst.C_BUILD or c == SimConst.C_PROP
++	return _cells.solid(px) if _stepping else CitySolidMemo.ask(_city.sim, px)
++
++
++## The memo for the city's current sim (made again when the sim is replaced).
++func _solid_memo() -> CitySolidMemo:
++	if _cells == null or not _cells.serves(_city.sim):
++		_cells = CitySolidMemo.new(_city.sim)
++	return _cells
++++ new file project/features/city/sim/city_solid_memo.gd
+class_name CitySolidMemo
+extends RefCounted
+## "Is the world px `p` inside a building or a prop?" for the blood's wall checks, memoised per
+## 1 m sim cell (perf L22b). A drop moves a few px a tick and a cell is 32 px, so most of the
+## riot's ~160 checks a tick hit a cell already asked this frame and skip the native call.
+## Exact while the map holds still: the owner clears it around every batch of questions (the
+## sim stamps and clears chunks on the main thread, never inside one).
+
+var _sim: CitySimBackend
+var _memo: Dictionary[int, bool] = {}
+
+
+func _init(sim: CitySimBackend) -> void:
+	_sim = sim
+
+
+func solid(p: Vector2) -> bool:
+	var x: float = p.x / SimConst.PX_PER_M
+	var y: float = p.y / SimConst.PX_PER_M
+	var ix: int = floori(x)
+	var iy: int = floori(y)
+	if ix < 0 or iy < 0 or ix >= SimConst.W or iy >= SimConst.W:
+		return false  # off the map: cell 0, neither a building nor a prop
+	var key: int = iy * SimConst.W + ix
+	var known: Variant = _memo.get(key)
+	if known != null:
+		return known
+	var s: bool = _is_solid(_sim.cell_at(x, y))
+	_memo[key] = s
+	return s
+
+
+## The unmemoised answer (outside a batch).
+static func ask(sim: CitySimBackend, p: Vector2) -> bool:
+	return _is_solid(sim.cell_at(p.x / SimConst.PX_PER_M, p.y / SimConst.PX_PER_M))
+
+
+static func _is_solid(c: int) -> bool:
+	return c == SimConst.C_BUILD or c == SimConst.C_PROP
+
+
+## True when this memo answers for `sim`.
+func serves(sim: CitySimBackend) -> bool:
+	return sim == _sim
+
+
+## Forget every answer (call before and after a batch: the map may change between frames).
+func clear() -> void:
+	_memo.clear()
+
+
+## Cells answered since the last clear (tests).
+func size() -> int:
+	return _memo.size()
++++ new file project/tests/unit/test_city_solid_memo.gd
+extends GutTest
+## CitySolidMemo (perf L22b): the memoised wall answer equals the direct one over stamped chunks,
+## repeated points, the map's edges and off the map; a clear forgets a chunk dropped since.
+
+
+func _sim(native: bool) -> CitySimBackend:
+	var gen: CityGen = CityGen.from_tables(
+		"res://data/tables/city_district.json", "res://data/tables/city_textures.json"
+	)
+	var sim: CitySimBackend = CitySimNative.new() if native else CitySimRef.new()
+	sim.init(7)
+	var res: CityResidency = CityResidency.new(ChunkSource.new(gen), sim, SimConst.CITY_CHUNKS)
+	for cy: int in range(2, 4):
+		for cx: int in range(2, 4):
+			res.adopt(Vector2i(cx, cy), gen.gen_chunk(cx, cy))
+	return sim
+
+
+func _sweep(sim: CitySimBackend) -> void:
+	var memo: CitySolidMemo = CitySolidMemo.new(sim)
+	var span: float = SimConst.CHUNK_M * 5.0 * SimConst.PX_PER_M
+	var solid: int = 0
+	for k: int in 6000:  # px; every point asked twice (the second answer comes from the memo)
+		var p: Vector2 = Vector2(fmod(k * 211.3, span) - 300.0, fmod(k * 97.7, span) - 300.0)
+		var want: bool = CitySolidMemo.ask(sim, p)
+		assert_eq(memo.solid(p), want, "first ask at %s" % p)
+		assert_eq(
+			memo.solid(p + Vector2(0.25, -0.25)), CitySolidMemo.ask(sim, p + Vector2(0.25, -0.25))
+		)
+		solid += 1 if want else 0
+	assert_gt(solid, 200, "the sweep crosses solid cells (the compare is not all false)")
+	assert_lt(memo.size(), 6000, "the nudged second ask mostly shares the first one's cell")
+	for p: Vector2 in [Vector2(-0.5, 40.0), Vector2(40.0, -0.5), Vector2(SimConst.W * 32.0, 9.0)]:
+		assert_false(memo.solid(p), "off the map at %s" % p)
+
+
+func test_ref_memo_matches_direct() -> void:
+	_sweep(_sim(false))
+
+
+func test_native_memo_matches_direct() -> void:
+	if not CitySimNative.available():
+		pending("the native library is not loaded")
+		return
+	_sweep(_sim(true))
+
+
+func test_clear_forgets_a_dropped_chunk() -> void:
+	var sim: CitySimBackend = _sim(false)
+	var memo: CitySolidMemo = CitySolidMemo.new(sim)
+	var hit: Vector2 = Vector2.ZERO
+	var base: float = 2.0 * SimConst.CHUNK_M * SimConst.PX_PER_M
+	for k: int in 4000:
+		var p: Vector2 = Vector2(base + fmod(k * 41.3, 2000.0), base + fmod(k * 17.9, 2000.0))
+		if memo.solid(p):
+			hit = p
+			break
+	assert_ne(hit, Vector2.ZERO, "found a solid cell in chunk (2, 2)")
+	sim.clear_chunk(2, 2)
+	assert_true(memo.solid(hit), "the memo holds its answer until cleared (the owner's contract)")
+	memo.clear()
+	assert_eq(memo.size(), 0)
+	assert_false(memo.solid(hit), "after a clear it asks the sim again")
+	assert_true(memo.serves(sim))
+	assert_false(memo.serves(CitySimRef.new()))

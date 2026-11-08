@@ -48,6 +48,7 @@ var _pending: Array[Vector4] = []
 var _named: Dictionary[int, Vector2] = {}
 var _k: int = 0
 var _tick: int = 0
+var _by_x: PackedVector2Array = PackedVector2Array()  # walkers sorted by x a step (L23)
 
 
 ## One body's stains, drawn once (local px around the body's centre).
@@ -107,12 +108,14 @@ func step(tick: int, feed: RigFeed) -> void:
 	var t0: int = Time.get_ticks_usec()
 	var dead: Dictionary[int, Vector2] = {}
 	walkers.clear()
+	var flags: PackedByteArray = feed.flags  # locals: a member lookup a step, not a row (L25)
+	var pos: PackedVector2Array = feed.pos
 	for i: int in feed.count:
-		if (feed.flags[i] & RigFeed.Flag.DEAD) != 0:
-			dead[feed.ids[i]] = feed.pos[i]
+		if (flags[i] & RigFeed.Flag.DEAD) != 0:
+			dead[feed.ids[i]] = pos[i]  # the few dead rows only
 		else:
 			@warning_ignore("return_value_discarded")
-			walkers.append(feed.pos[i])
+			walkers.append(pos[i])
 	step_bodies(tick, dead)
 	spent_us += Time.get_ticks_usec() - t0
 	steps += 1
@@ -122,6 +125,8 @@ func step(tick: int, feed: RigFeed) -> void:
 ## city's rig feed, quest 1's CombatArena) hands its dead this way.
 func step_bodies(tick: int, dead: Dictionary[int, Vector2]) -> void:
 	_tick = tick
+	_by_x = walkers.duplicate()
+	_by_x.sort()
 	_match(dead)
 	for s: Soak in _soaks:
 		if s.slot < 0:
@@ -140,12 +145,7 @@ func step_bodies(tick: int, dead: Dictionary[int, Vector2]) -> void:
 
 ## 0 while a walker stands on the body at `at` (px), 1 once every walker is CLEAR_M away.
 func _uncovered(at: Vector2) -> float:
-	var a: float = 1.0
-	var clear2: float = pow(CLEAR_M * SimConst.PX_PER_M, 2.0)
-	for w: Vector2 in walkers:
-		if at.distance_squared_to(w) < clear2:
-			var m: float = at.distance_to(w) / SimConst.PX_PER_M
-			a = minf(a, smoothstep(COVER_M, CLEAR_M, m))
+	var a: float = StainCover.cover(at, _by_x)
 	if a < 0.5 and first_cover < 0:
 		first_cover = _tick
 	return a

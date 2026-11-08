@@ -1,0 +1,12 @@
+riot60 enab r0: p50 16.68 p99 28.02 worst 42.2 draws 733 cpu 0.44 cores ws 901 MB steady 900 last 689 frames 1681 noTick 0 multiTick 2 errors 0 CONTENDED(4)
+riot60 mbox r0: p50 16.68 p99 30.61 worst 51.4 draws 733 cpu 0.44 cores ws 839 MB steady 839 last 839 frames 1680 noTick 13 multiTick 14 errors 0 CONTENDED(4)
+riot60 mbox60 r0: p50 16.67 p99 17.80 worst 22.2 draws 734 cpu 0.46 cores ws 928 MB steady 927 last 928 frames 1679 noTick 0 multiTick 0 errors 0
+riot60 mbox60 r1: p50 16.67 p99 18.55 worst 24.4 draws 734 cpu 0.51 cores ws 866 MB steady 855 last 856 frames 1679 noTick 0 multiTick 0 errors 0
+riot60 mbox r1: p50 16.69 p99 19.50 worst 21.0 draws 734 cpu 0.37 cores ws 846 MB steady 845 last 846 frames 1683 noTick 0 multiTick 2 errors 0
+riot60 enab r1: p50 16.68 p99 19.62 worst 25.2 draws 735 cpu 0.37 cores ws 900 MB steady 885 last 885 frames 1683 noTick 0 multiTick 2 errors 0
+riot60 enab r2: p50 16.69 p99 22.54 worst 33.8 draws 734 cpu 0.41 cores ws 843 MB steady 833 last 833 frames 1682 noTick 0 multiTick 2 errors 0 CONTENDED(0)
+riot60 mbox r2: p50 16.68 p99 26.93 worst 36.3 draws 733 cpu 0.40 cores ws 905 MB steady 905 last 905 frames 1682 noTick 10 multiTick 12 errors 0 CONTENDED(4)
+riot60 mbox60 r2: p50 16.67 p99 20.80 worst 50.3 draws 733 cpu 0.49 cores ws 839 MB steady 839 last 839 frames 1677 noTick 1 multiTick 3 errors 0 CONTENDED(4)
+riot60 enab: p50 16.68±0.00 p99 22.54±4.20 p99.9 30.00±6.89 worst 33.85±8.49 draws 734.08±0.80 renderCpu 0.60±0.04 gpu 3.86±0.27 vram 898.72±20.00 cpu 0.41±0.03 ws 899.77±28.80 wsSteady 884.98±33.37 wsLast 833.25±98.08 frames 1682.00±1.00 noTick 0.00±0.00 multiTick 2.00±0.00 contended 2 errors 0
+riot60 mbox: p50 16.68±0.00 WASH p99 26.93±5.56 WASH p99.9 32.38±8.20 WASH worst 36.30±15.20 WASH draws 733.48±0.29 WASH renderCpu 0.61±0.10 WASH gpu 3.31±0.46 WASH vram 898.72±15.00 WASH cpu 0.40±0.03 WASH ws 845.57±32.82 WASH wsSteady 845.12±33.02 WASH wsLast 845.57±32.82 WASH frames 1682.00±1.50 WASH noTick 10.00±6.50 WASH multiTick 12.00±6.00 WASH contended 2 errors 0
+riot60 mbox60: p50 16.67±0.00 WIN p99 18.55±1.50 WASH p99.9 23.27±8.13 WASH worst 24.37±14.05 WASH draws 734.32±0.70 WASH renderCpu 0.60±0.05 WASH gpu 3.18±0.49 WASH vram 898.72±17.00 WASH cpu 0.49±0.02 LOSS ws 865.70±44.05 WASH wsSteady 855.18±43.94 WASH wsLast 855.73±44.05 WASH frames 1679.00±1.00 WIN noTick 0.00±0.50 WASH multiTick 0.00±1.50 WASH contended 1 errors 0

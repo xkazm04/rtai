@@ -1,0 +1,15 @@
+riot main@x r0: p50 3.88 p99 10.77 worst 17.2 cpu 1.03 cores ws 754 MB steady 754 last 754 errors 0 CONTENDED(2)
+riot head@x r0: p50 3.38 p99 7.45 worst 12.8 cpu 1.01 cores ws 753 MB steady 753 last 753 errors 0
+riot head2@x r0: p50 3.50 p99 7.09 worst 15.3 cpu 1.01 cores ws 753 MB steady 753 last 753 errors 0
+riot head2@x r1: p50 3.52 p99 8.02 worst 15.5 cpu 0.98 cores ws 754 MB steady 754 last 754 errors 0 CONTENDED(0)
+riot head@x r1: p50 3.19 p99 6.57 worst 11.5 cpu 1.01 cores ws 757 MB steady 756 last 757 errors 0 CONTENDED(2)
+riot main@x r1: p50 4.29 p99 8.85 worst 20.4 cpu 1.02 cores ws 751 MB steady 751 last 751 errors 0 CONTENDED(2)
+riot main@x r2: p50 3.62 p99 8.10 worst 13.5 cpu 1.04 cores ws 753 MB steady 753 last 753 errors 0
+riot head@x r2: p50 3.53 p99 8.59 worst 13.8 cpu 1.03 cores ws 752 MB steady 751 last 752 errors 0
+riot head2@x r2: p50 3.59 p99 6.87 worst 14.3 cpu 1.02 cores ws 755 MB steady 755 last 729 errors 0
+riot head2@x r3: p50 3.35 p99 9.24 worst 17.6 cpu 1.05 cores ws 754 MB steady 754 last 754 errors 0
+riot head@x r3: p50 3.17 p99 5.84 worst 11.1 cpu 1.00 cores ws 756 MB steady 754 last 756 errors 0
+riot main@x r3: p50 4.67 p99 8.27 worst 15.0 cpu 1.02 cores ws 754 MB steady 754 last 754 errors 0
+riot main@x: p50 4.29±0.52 p99 8.85±1.33 p99.9 13.94±1.38 worst 17.19±3.43 draws 734.25±0.07 renderCpu 0.45±0.04 gpu 0.38±0.02 vram 866.72±24.00 cpu 1.03±0.01 ws
+riot head@x: p50 3.38±0.18 WASH p99 7.45±1.37 WASH p99.9 10.62±1.74 WASH worst 12.85±1.30 WASH draws 734.21±0.04 WASH renderCpu 0.41±0.02 WASH gpu 0.32±0.02 WIN vr
+riot head2@x: p50 3.52±0.12 WASH p99 8.02±1.18 WASH p99.9 13.53±2.05 WASH worst 15.54±1.64 WASH draws 734.22±0.09 WASH renderCpu 0.44±0.02 WASH gpu 0.34±0.04 WASH 

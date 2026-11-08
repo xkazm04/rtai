@@ -1,0 +1,97 @@
+diff --git a/project/features/characters/character_rigs.gd b/project/features/characters/character_rigs.gd
+index 831435a2..f214726c 100644
+--- a/project/features/characters/character_rigs.gd
++++ b/project/features/characters/character_rigs.gd
+@@ -83,10 +83,12 @@ func step_ticks(steps: int) -> void:
+ 	var t0: int = Time.get_ticks_usec()
+ 	PartMaterials.set_view(zoom)
+ 	var d5: bool = RigDetail.set_view(zoom)
++	var b0: int = Time.get_ticks_usec()
+ 	_assign()
+ 	for actor: int in _by_actor:
+ 		if d5 or RigDetail.is_on(_by_actor[actor]):
+ 			RigDetail.sync(_by_actor[actor])
++	CutRig.PROF[7] += Time.get_ticks_usec() - b0
+ 	for _k: int in steps:
+ 		ticks_stepped += 1
+ 		for actor: int in _by_actor:
+diff --git a/project/features/characters/cut_rig.gd b/project/features/characters/cut_rig.gd
+index 0ee2abf7..6b64200c 100644
+--- a/project/features/characters/cut_rig.gd
++++ b/project/features/characters/cut_rig.gd
+@@ -163,7 +163,11 @@ func reset_state(at_facing: float) -> void:
+ 
+ 
+ ## One pose step of dt seconds (the manager calls it on the 60 Hz tick).
++static var PROF: PackedInt64Array = PackedInt64Array([0, 0, 0, 0, 0, 0, 0, 0])
++
++
+ func drive(dt: float) -> void:
++	var a0: int = Time.get_ticks_usec()
+ 	t_alive += dt
+ 	speed_now = vel_in.length()
+ 	clips.sample(self, dt)
+@@ -174,14 +178,27 @@ func drive(dt: float) -> void:
+ 	rotation = facing
+ 	RigTilt.aim_up(self)
+ 	RigGait.step(self, dt)
++	var a1: int = Time.get_ticks_usec()
+ 	RigPose.step(self)
++	var a2: int = Time.get_ticks_usec()
++	PROF[0] += a1 - a0
++	PROF[1] += a2 - a1
+ 	if tilt_up != Vector2.ZERO:
+ 		RigTilt.lift_upper(self)
++		var a3: int = Time.get_ticks_usec()
+ 		RigHeadCard.step(self)
++		var a4: int = Time.get_ticks_usec()
+ 		StreetView.step(self)
++		var a5: int = Time.get_ticks_usec()
++		PROF[2] += a3 - a2
++		PROF[3] += a4 - a3
++		PROF[4] += a5 - a4
++	var a6: int = Time.get_ticks_usec()
+ 	if react != null:
+ 		react.post(self)
+ 		StreetView.post(self)
++	PROF[5] += Time.get_ticks_usec() - a6
++	PROF[6] += 1
+ 	if hose != null:
+ 		RigHose.step(self, dt)
+ 	if absf(PartMaterials.view_px - _last_px) > 0.002:
+--- dev/prof_run.gd
+extends RefCounted
+
+
+func run(tree: SceneTree) -> int:
+	for view: String in ["top", "combo", "top", "combo"]:
+		ViewMode._shared = ViewMode.of(view)
+		for i: int in 8:
+			CutRig.PROF[i] = 0
+		var bus: EventBus = EventBus.new()
+		var data: DataStore = DataStore.new()
+		var ctx: WorldContext = World.build_context(bus, data, 9)
+		var rigs: CharacterRigs = CharacterRigs.new()
+		tree.root.add_child(rigs)
+		rigs.setup(ctx)
+		var stress: RigStress = RigStress.new(rigs, 50)
+		stress.run(600)
+		var m: Dictionary[String, float] = stress.metrics()
+		var p: PackedInt64Array = CutRig.PROF
+		printerr(
+			"PROF %s p50 %.3f ms | drives %d | us/tick: gait+ %.1f pose %.1f lift %.1f headcard %.1f street %.1f post %.1f assign %.1f"
+			% [view, m["rigMsP50"], p[6], p[0] / 600.0, p[1] / 600.0, p[2] / 600.0, p[3] / 600.0, p[4] / 600.0, p[5] / 600.0, p[7] / 600.0]
+		)
+		rigs.free()
+		bus.free()
+		data.free()
+	return 0
+--- dev/prof_scratch.gd
+extends SceneTree
+
+
+func _initialize() -> void:
+	var script: GDScript = load("res://dev/prof_run.gd")
+	var runner: Object = script.new()
+	runner.call("run", self)
+	quit(0)

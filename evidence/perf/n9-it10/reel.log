@@ -1,0 +1,12 @@
+reel main r0: p50 4.70 p99 12.30 worst 25.0 draws 528 cpu 1.03 cores ws 805 MB steady 798 last 592 frames - noTick - multiTick - errors 0
+reel head r0: p50 6.10 p99 17.20 worst 24.5 draws 523 cpu 1.00 cores ws 807 MB steady 805 last 720 frames - noTick - multiTick - errors 0 CONTENDED(0)
+reel head2 r0: p50 5.57 p99 12.02 worst 27.1 draws 527 cpu 1.02 cores ws 810 MB steady 808 last 810 frames - noTick - multiTick - errors 0 CONTENDED(2)
+reel head2 r1: p50 5.71 p99 13.73 worst 27.5 draws 525 cpu 1.00 cores ws 821 MB steady 817 last 608 frames - noTick - multiTick - errors 0 CONTENDED(2)
+reel head r1: p50 5.63 p99 19.80 worst 32.4 draws 526 cpu 0.97 cores ws 819 MB steady 817 last 819 frames - noTick - multiTick - errors 0 CONTENDED(2)
+reel main r1: p50 6.17 p99 13.45 worst 24.0 draws 525 cpu 1.00 cores ws 819 MB steady 817 last 819 frames - noTick - multiTick - errors 0 CONTENDED(6)
+reel main r2: p50 5.89 p99 15.26 worst 22.5 draws 526 cpu 1.00 cores ws 822 MB steady 818 last 777 frames - noTick - multiTick - errors 0 CONTENDED(2)
+reel head r2: p50 5.56 p99 12.15 worst 20.7 draws 526 cpu 1.02 cores ws 822 MB steady 820 last 821 frames - noTick - multiTick - errors 0 CONTENDED(2)
+reel head2 r2: p50 5.96 p99 13.31 worst 33.4 draws 526 cpu 1.00 cores ws 824 MB steady 819 last 823 frames - noTick - multiTick - errors 0 CONTENDED(2)
+reel main: p50 5.89±0.74 p99 13.45±1.48 p99.9 18.39±2.36 worst 24.02±1.25 draws 526.47±1.77 renderCpu 0.45±0.05 gpu 0.44±0.04 vram NaN±NaN cpu 1.00±0.01 ws 819.24±8.33 wsSteady 816.70±9.83 wsLast 777.49±113.78 frames NaN±NaN noTick NaN±NaN multiTick NaN±NaN contended 2 errors 0
+reel head: p50 5.63±0.27 WASH p99 17.20±3.83 WASH p99.9 20.65±6.52 WASH worst 24.47±5.81 WASH draws 525.95±1.72 WASH renderCpu 0.49±0.04 WASH gpu 0.52±0.12 WASH vram NaN±NaN WASH cpu 1.00±0.03 WASH ws 819.28±7.52 WASH wsSteady 817.46±7.38 WASH wsLast 819.28±50.26 WASH frames NaN±NaN WASH noTick NaN±NaN WASH multiTick NaN±NaN WASH contended 3 errors 0
+reel head2: p50 5.71±0.19 WASH p99 13.31±0.86 WASH p99.9 18.03±4.17 WASH worst 27.55±3.17 WASH draws 525.85±0.69 WASH renderCpu 0.44±0.02 WASH gpu 0.51±0.02 WASH vram NaN±NaN WASH cpu 1.00±0.01 WASH ws 820.94±7.14 WASH wsSteady 816.56±5.69 WASH wsLast 810.15±107.40 WASH frames NaN±NaN WASH noTick NaN±NaN WASH multiTick NaN±NaN WASH contended 3 errors 0

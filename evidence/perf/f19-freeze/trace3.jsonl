@@ -1,0 +1,11 @@
+{"tag":"trace3","run":1,"cores":0.182,"responding":true,"pid":64152}
+{"tag":"trace3","run":2,"cores":0.234,"responding":true,"pid":20620}
+{"tag":"trace3","run":3,"cores":0.188,"responding":true,"pid":59260}
+{"tag":"trace3","run":4,"cores":0.182,"responding":true,"pid":37512}
+{"tag":"trace3","run":5,"cores":0.026,"responding":false,"pid":46536}
+{"tag":"trace3","run":6,"cores":0.224,"responding":true,"pid":53360}
+{"tag":"trace3","run":7,"cores":0.016,"responding":false,"pid":12960}
+{"tag":"trace3","run":8,"cores":0.219,"responding":true,"pid":48656}
+{"tag":"trace3","runs":8,"frozen":2}
+
+[exited with code 0]

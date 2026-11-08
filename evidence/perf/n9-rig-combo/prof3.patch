@@ -1,0 +1,222 @@
+diff --git a/project/features/characters/character_rigs.gd b/project/features/characters/character_rigs.gd
+index 831435a2..f214726c 100644
+--- a/project/features/characters/character_rigs.gd
++++ b/project/features/characters/character_rigs.gd
+@@ -83,10 +83,12 @@ func step_ticks(steps: int) -> void:
+ 	var t0: int = Time.get_ticks_usec()
+ 	PartMaterials.set_view(zoom)
+ 	var d5: bool = RigDetail.set_view(zoom)
++	var b0: int = Time.get_ticks_usec()
+ 	_assign()
+ 	for actor: int in _by_actor:
+ 		if d5 or RigDetail.is_on(_by_actor[actor]):
+ 			RigDetail.sync(_by_actor[actor])
++	CutRig.PROF[7] += Time.get_ticks_usec() - b0
+ 	for _k: int in steps:
+ 		ticks_stepped += 1
+ 		for actor: int in _by_actor:
+diff --git a/project/features/characters/cut_rig.gd b/project/features/characters/cut_rig.gd
+index 0ee2abf7..9ce96458 100644
+--- a/project/features/characters/cut_rig.gd
++++ b/project/features/characters/cut_rig.gd
+@@ -163,7 +163,11 @@ func reset_state(at_facing: float) -> void:
+ 
+ 
+ ## One pose step of dt seconds (the manager calls it on the 60 Hz tick).
++static var PROF: PackedInt64Array = PackedInt64Array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
++
++
+ func drive(dt: float) -> void:
++	var a0: int = Time.get_ticks_usec()
+ 	t_alive += dt
+ 	speed_now = vel_in.length()
+ 	clips.sample(self, dt)
+@@ -174,14 +178,27 @@ func drive(dt: float) -> void:
+ 	rotation = facing
+ 	RigTilt.aim_up(self)
+ 	RigGait.step(self, dt)
++	var a1: int = Time.get_ticks_usec()
+ 	RigPose.step(self)
++	var a2: int = Time.get_ticks_usec()
++	PROF[0] += a1 - a0
++	PROF[1] += a2 - a1
+ 	if tilt_up != Vector2.ZERO:
+ 		RigTilt.lift_upper(self)
++		var a3: int = Time.get_ticks_usec()
+ 		RigHeadCard.step(self)
++		var a4: int = Time.get_ticks_usec()
+ 		StreetView.step(self)
++		var a5: int = Time.get_ticks_usec()
++		PROF[2] += a3 - a2
++		PROF[3] += a4 - a3
++		PROF[4] += a5 - a4
++	var a6: int = Time.get_ticks_usec()
+ 	if react != null:
+ 		react.post(self)
+ 		StreetView.post(self)
++	PROF[5] += Time.get_ticks_usec() - a6
++	PROF[6] += 1
+ 	if hose != null:
+ 		RigHose.step(self, dt)
+ 	if absf(PartMaterials.view_px - _last_px) > 0.002:
+diff --git a/project/features/characters/rig_head_card.gd b/project/features/characters/rig_head_card.gd
+index 471bc83f..35f35ba9 100644
+--- a/project/features/characters/rig_head_card.gd
++++ b/project/features/characters/rig_head_card.gd
+@@ -49,7 +49,9 @@ static func step(rig: CutRig) -> void:
+ 			return
+ 		_build(rig)
+ 	if not rig.head_card.has_meta(RivetFrames.ON):  # d9: Rivet's whole figure places itself
++		var t0: int = Time.get_ticks_usec()
+ 		_place(rig)
++		CutRig.PROF[17] += Time.get_ticks_usec() - t0
+ 
+ 
+ ## The hit flash (CutRig.set_tint): a raw card takes the tinted part material while lit, then
+diff --git a/project/features/characters/street_view.gd b/project/features/characters/street_view.gd
+index e3893d44..d1a26017 100644
+--- a/project/features/characters/street_view.gd
++++ b/project/features/characters/street_view.gd
+@@ -14,10 +14,19 @@ const LIT: StringName = &"street_lit"
+ 
+ 
+ static func step(rig: CutRig) -> void:
++	var t0: int = Time.get_ticks_usec()
+ 	RiotShieldCard.step(rig)
++	var t1: int = Time.get_ticks_usec()
+ 	StreetCrowdCards.step(rig)
++	var t2: int = Time.get_ticks_usec()
+ 	StreetWalkerCards.step(rig)
++	var t3: int = Time.get_ticks_usec()
+ 	RivetFrames.step(rig)  # d9 rivet: Rivet's whole figure
++	var t4: int = Time.get_ticks_usec()
++	CutRig.PROF[8] += t1 - t0
++	CutRig.PROF[9] += t2 - t1
++	CutRig.PROF[10] += t3 - t2
++	CutRig.PROF[11] += t4 - t3
+ 	if rig.plan.art_dir == ThugPlan.ART_DIR and not rig.body.has_meta(LIT):
+ 		_lift(rig)
+ 
+diff --git a/project/features/characters/street_walker_cards.gd b/project/features/characters/street_walker_cards.gd
+index 6fcaf1b5..35e48638 100644
+--- a/project/features/characters/street_walker_cards.gd
++++ b/project/features/characters/street_walker_cards.gd
+@@ -79,18 +79,28 @@ const WAS: StringName = &"street_walker_was"
+ 
+ ## Each pose step under a tilt (StreetView, after RigHeadCard and StreetCrowdCards).
+ static func step(rig: CutRig) -> void:
++	var t0: int = Time.get_ticks_usec()
+ 	if rig.head_card != null and not rig.head_card.has_meta(StreetStrips.PREF):
+ 		StreetStrips.prefetch_fall(rig, ViewMode.shared().art, row_of(rig))
+ 	var path: String = strip_of(rig)
++	var t1: int = Time.get_ticks_usec()
++	CutRig.PROF[12] += t1 - t0
+ 	if path.is_empty():
+ 		release(rig)
+ 		return
+ 	var card: Sprite2D = rig.head_card
+ 	if str(card.get_meta(ON, "")) != path:
+ 		_build(rig, card, path)
++	var t2: int = Time.get_ticks_usec()
+ 	var hid: Array[CanvasItem] = rig.body.get_meta(HID)
+ 	StreetView.hide_all(hid)
++	var t3: int = Time.get_ticks_usec()
+ 	place(rig, card)
++	var t4: int = Time.get_ticks_usec()
++	CutRig.PROF[13] += t2 - t1
++	CutRig.PROF[14] += t3 - t2
++	CutRig.PROF[15] += t4 - t3
++	CutRig.PROF[16] += 1
+ 
+ 
+ ## The strip a person draws now ("" = none); a cop: a FALLS grid while down, else StreetCopWalk's.
+@@ -130,7 +140,22 @@ static func falls(rig: CutRig) -> bool:
+ 
+ 
+ ## The card row the person's head card draws (StreetCrowdCards' pick, else the look's head).
++static var OPT_XFORM: bool = false
++static var OPT_ROW: bool = false
++static var _fills: Dictionary = {}
++
++
++static func _fill(tex: Texture2D) -> float:
++	if OPT_ROW and _fills.has(tex):
++		return _fills[tex]
++	var f: float = WALK_FILL.get(tex.resource_path.get_file(), StreetCopWalk.fill_of(tex.resource_path))
++	_fills[tex] = f
++	return f
++
++
+ static func row_of(rig: CutRig) -> String:
++	if OPT_ROW and rig.head_card.has_meta(&"street_row"):
++		return rig.head_card.get_meta(&"street_row")
+ 	var base: String = RigHeadCard.key_of(rig.plan, rig.variant.head) if rig.variant != null else ""
+ 	return str(rig.head_card.get_meta(&"street_row", base))
+ 
+@@ -182,8 +207,7 @@ static func place(rig: CutRig, card: Sprite2D) -> void:
+ 		return
+ 	var h: float = HEIGHT_BY_ART.get(ViewMode.shared().art, HEIGHT_M)
+ 	if card.vframes > 1:
+-		var file: String = card.texture.resource_path.get_file()
+-		k *= WALK_FILL.get(file, StreetCopWalk.fill_of(card.texture.resource_path))
++		k *= _fill(card.texture)
+ 	var s: float = h * CharacterRigs.PX_PER_M * k * card.vframes / card.texture.get_height()
+ 	var walk: float = clampf(rig.speed_now / WALK_SPEED, 0.0, 1.0)
+ 	if card.vframes > 1:
+@@ -194,6 +218,9 @@ static func place(rig: CutRig, card: Sprite2D) -> void:
+ 		walk = 0.0
+ 	var stride: float = sin(TAU * rig.phase)
+ 	var fall: Vector2 = StreetWalkerFall.pose(rig, card)
+-	card.global_rotation = stride * SWAY * walk + fall.x
+-	card.global_scale = Vector2(s, s * fall.y)
+-	card.global_position = rig.global_position - Vector2(0.0, absf(stride) * BOB_PX * walk)
++	if OPT_XFORM:
++		card.global_transform = Transform2D(stride * SWAY * walk + fall.x, Vector2(s, s * fall.y), 0.0, rig.global_position - Vector2(0.0, absf(stride) * BOB_PX * walk))
++	else:
++		card.global_rotation = stride * SWAY * walk + fall.x
++		card.global_scale = Vector2(s, s * fall.y)
++		card.global_position = rig.global_position - Vector2(0.0, absf(stride) * BOB_PX * walk)
+--- project/dev/prof_run.gd
+extends RefCounted
+
+
+func run(tree: SceneTree) -> int:
+	for arm: int in 6:
+		var view: String = "combo"
+		StreetWalkerCards.OPT_XFORM = arm % 2 == 1
+		StreetWalkerCards.OPT_ROW = arm % 2 == 1
+		printerr("ARM opt=%s" % (arm % 2 == 1))
+		ViewMode._shared = ViewMode.of(view)
+		for i: int in 20:
+			CutRig.PROF[i] = 0
+		var bus: EventBus = EventBus.new()
+		var data: DataStore = DataStore.new()
+		var ctx: WorldContext = World.build_context(bus, data, 9)
+		var rigs: CharacterRigs = CharacterRigs.new()
+		tree.root.add_child(rigs)
+		rigs.setup(ctx)
+		var stress: RigStress = RigStress.new(rigs, 50)
+		stress.run(600)
+		var m: Dictionary[String, float] = stress.metrics()
+		var p: PackedInt64Array = CutRig.PROF
+		printerr(
+			"PROF %s p50 %.3f ms | drives %d | us/tick: gait+ %.1f pose %.1f lift %.1f headcard %.1f street %.1f post %.1f assign %.1f"
+			% [view, m["rigMsP50"], p[6], p[0] / 600.0, p[1] / 600.0, p[2] / 600.0, p[3] / 600.0, p[4] / 600.0, p[5] / 600.0, p[7] / 600.0]
+		)
+		printerr(
+			"PROF2 %s us/tick: shield %.1f crowd %.1f walker %.1f rivet %.1f | walker: strip %.1f build %.1f hide %.1f place %.1f (n %d) | head: place %.1f"
+			% [view, p[8] / 600.0, p[9] / 600.0, p[10] / 600.0, p[11] / 600.0, p[12] / 600.0, p[13] / 600.0, p[14] / 600.0, p[15] / 600.0, p[16], p[17] / 600.0]
+		)
+		rigs.free()
+		bus.free()
+		data.free()
+	return 0
+--- project/dev/prof_scratch.gd
+extends SceneTree
+
+
+func _initialize() -> void:
+	var script: GDScript = load("res://dev/prof_run.gd")
+	var runner: Object = script.new()
+	runner.call("run", self)
+	quit(0)

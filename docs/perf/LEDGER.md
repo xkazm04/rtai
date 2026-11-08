@@ -4,6 +4,539 @@ Branch `d9-perf`, cut from main `3982af1a`. Every number here names its build, s
 instrument. Host: Ryzen 7 7800X3D (8C/16T), RTX 4090 (+ the AMD iGPU), Windows 11, Godot 4.7.2.
 **Host ms are host ms**: nothing here is a Steam Deck or handheld figure (that is the `handheld` lane's).
 
+## n9 night (2026-11-08, branch n9-perf from main da108c13)
+
+### F19 quest-1 freeze: located in the engine (it1, 00:56-01:56)
+Machine: the shared PC (RTX 4090 + an AMD iGPU), 2-4 other lanes' Godot processes up the whole time (CONTENDED: freeze
+counts only, no timing claims). Windowed D3D12, the editor binary, `res://boot/quest1.tscn -- --autostart`, a run is
+frozen when the process uses < 0.05 cores 12-15 s in (`evidence/perf/f19-freeze/hunt2.ps1`; a frozen run also reads
+`Responding = false`). All under `evidence/perf/f19-freeze/`.
+
+| step | what | frozen / runs | finding |
+|---|---|---|---|
+| trace1 | printerr around every main-thread wait in our GDScript (chunk take, save collect, threaded texture gets) + a 30-frame heartbeat (`trace.patch`) | 3 / 7 | every freeze right after Start (frame 0-29), NO traced wait open: not chunk_source / save_worker / load_threaded_get |
+| trace3 | + crowd bake and prewarm traces, a per-frame heartbeat, RS frame_pre/post_draw | 2 / 8 | both stop at `CB> cap`: the main thread inside `CrowdBaker._capture` -> `_vp.get_texture().get_image()` |
+| fix40 | CrowdReadback (async readback, 827aefe3; atlas md5 identical) | 2 / 4 | still freezes: not the fix (stopped early) |
+| trace4 | async readback + traces | 2 / 6 | stops after `HB pf6` / `pf8`, no GDScript wait open: inside the engine's frame |
+| nobake | crowd bake skipped (scratch hook) | 1 / 3 | the bake is not needed for the freeze |
+| vulkan | `--rendering-driver vulkan` | n/a | crashes at boot in `amdxc64.dll` (the iGPU's driver): no Vulkan arm on this PC (`vulkan-boot-crash.log`) |
+| rtsep | `--render-thread separate` | 3 / 8 | not a workaround |
+| novsync | `--disable-vsync` (uncapped, ~1 core) | **0 / 8** | the first arm without a freeze (vsync arms ~1 in 3 over ~40 runs; 0 / 8 at p = 1/3 is ~4 % by chance): the freeze is tied to the vsync present path, or to its timing. Next: `--disable-vsync --max-fps 60` and the mailbox mode, to tell the two apart |
+| novsync60 | `--disable-vsync --max-fps 60` (the same pacing and CPU as the vsync runs: 0.21-0.28 cores) | **0 / 8** | not timing: with vsync off, 0 of 16 froze across both arms, against ~1 in 3 with it on. The hang follows the D3D12 vsync present (`Present(1, 0)`): a present that never completes blocks the queue, and the next frame fence never signals. Candidate workaround (an owner Call: tearing): vsync off + the 60 fps limiter, or the mailbox mode (untested) |
+| mailbox | vsync MAILBOX (`display/window/vsync/vsync_mode=3` via a temporary local override.cfg line, restored after) | **0 / 8** | still vsync-synced (`Present(1, DXGI_PRESENT_RESTART)`, no tearing) and no freeze: **the fix candidate**. Owed: the 40-run acceptance, pacing / CPU A/B vs Enabled, the release export, the real Start click |
+| cdb | WinDbg's cdb attached non-invasively to each frozen run (`stacks-cdb-{2,4,6,8}.txt`) | 4 / 8 | **the same main-thread stack in all 4** (below) |
+| mb40 (it2) | the fix committed: `display/window/vsync/vsync_mode.windows=3` (mailbox) in project.godot, 06c48c1b; 40 runs | **0 parked / 40**, 1 exited | 39 runs drew at 0.15-0.33 cores. Run 16 read 0 CPU but `thread_cpu.ps1` found **no thread at all** 1 s later (every real freeze kept ~30 waiting threads): the process was gone, with no crash output, at 01:58:48 while my unit run (`--import`) was rewriting this worktree's `.godot/`. hunt2 counted it as a freeze; it now records `exited` / `exitCode` / `kind` and only counts a live 0-CPU process |
+| mb40b (it2) | the same commit, hunt2 with exit detection + cdb on any freeze, nothing else run from this worktree | **0 / 40** | 40 / 40 reached quest 1 (`started`), 0.16-0.34 cores, no exit, no freeze (02:09-02:21) |
+| rel20 (it2) | the **release** `windows-slice` export of the same tree (`build/export/slice/RTAI-slice.exe`), a **real Start press** (`hunt2.ps1 -Exe ... -PressStart`: Alt tap + SetForegroundWindow + Enter on the focused Start; no `--autostart`) | **0 / 20** | 20 / 20 reached quest 1 (`started` from the log), 0.13-0.24 cores (`rel20.jsonl`, `rel-start-pressed.jpg`). The control arm (a release export on Enabled) ran in it10: 0 / 20, see "F19 it10" |
+
+Frozen main thread (all 4): `ntdll!NtWaitForSingleObject` <- `KERNELBASE!WaitForSingleObjectEx` <- `+0x1389030` <-
+`+0x32e7c60` <- `+0x32e8890` <- `+0x33816e0` <- main loop (offsets from the exe's only export, `NoHotPatch`; the official
+build ships no PDB). Named from the static disassembly (`disasm-main-thread.txt`, `cdb -z` on the exe):
+- `+0x1389030` = the D3D12 driver's **fence_wait**: `ID3D12Fence::SetEventOnCompletion` (vtable slot 9, `+0x48`) then
+  `WaitForSingleObjectEx(event, INFINITE, FALSE)`;
+- `+0x32e8890` = **`RenderingDevice::_begin_frame`** (references `Condition "!reset" is true.` / `_begin_frame` /
+  `servers/rendering/rendering_devi...`); `+0x32e7c60`, called from it, is the per-frame stall that waits for the frame
+  slot's fence (`_stall_for_frame`);
+- `+0x33816e0` = `RenderingServerDefault::_draw` (`Prepare Render Frame`).
+
+So the freeze is **`_begin_frame` waiting forever for an earlier frame's GPU fence**: the GPU never finishes that frame.
+Every other thread is idle (16 WorkerThreadPool threads, D3D12Core's 4 background threads and the NVIDIA driver threads
+all in plain waits), so no CPU thread holds it up. The device is not removed (a removed device signals its fences to
+UINT64_MAX and the wait would return). Most likely the frame's submission waits on the GPU queue for a semaphore that is
+never signalled. Prime suspect: the RenderingDevice texture-upload transfer workers, whose semaphores the frame
+submission waits on, at the first frames after Start when the quest's view, fonts and atlases upload. Synchronous
+readbacks (`get_image`) hit the same wait first, which is why trace3 caught it there. A game-script fix cannot reach it.
+Owed: confirm the semaphore (cdb on the queue's fences, or a 4.7.2 debug template with symbols), then an engine patch
+or a script workaround that keeps texture uploads out of the first frames.
+
+### F19 fix (it2, 01:52-): mailbox vsync on Windows
+- **Shipped:** `display/window/vsync/vsync_mode.windows=3` (VSYNC_MAILBOX on Windows only; Linux / the Deck keep their
+  rows' own vsync). On D3D12 mailbox is `Present(1, DXGI_PRESENT_RESTART)`: still one present per vblank, no tearing,
+  the same 0.15-0.33 cores in quest 1 as Enabled (mb40). Checked live (a scratch probe, deleted): the window reports
+  mode 3. `test_frame_cap.test_windows_boots_in_mailbox_vsync` pins it (on the old tree the key is absent: -1 != 3).
+- **Counts:** Enabled ~2 in 5 (it1, counted from the jsonl files: 17 of 41 runs at 0 CPU (trace1 4/8, trace3 2/8,
+  fix40 2/4, nobake 1/3, rtsep 3/8, cdb 4/8, hunt 1/2), plus trace4 2/6 from its logs: 19 / 47). Mailbox:
+  **0 parked-fence freezes in 107 valid runs** (it1 8, mb40 39 + 1 exited, mb40b 40, rel20 20): the acceptance
+  (0 in 40 windowed `--autostart` runs) is met twice, plus the release build with a real Start press. Even at 1 in 4,
+  0 / 107 by chance is ~4e-14. CONTENDED throughout (other lanes' Godots up): counts only.
+- **Why mailbox avoids it** (source read, `drivers/d3d12/rendering_device_driver_d3d12.cpp` `swap_chain_resize`):
+  Enabled = `Present(1, 0)`, mailbox = `Present(1, DXGI_PRESENT_RESTART)`; both wait for vblank, the only difference
+  is RESTART dropping any queued present instead of queuing behind it. So the hang needs a queued present: a frame
+  submitted behind a present that the compositor never retires leaves that frame's fence unsignalled and
+  `_begin_frame` waits forever. A hypothesis from the source + the counts, not a driver-level proof.
+- **Release + real Start:** `--autostart` is debug-only (`quest1_card.gd`), so rel20 presses Start for real
+  (`-PressStart`: an Alt tap lets the background shell SetForegroundWindow, then Enter on the focused Start). Two
+  first tries failed: hunt2 hid the exported exe's own window (`-WindowStyle Hidden` only hides the console wrapper
+  of the editor binary). hunt2 now classifies each run `ok` / `idle` (title still up, the press missed) / `frozen`
+  (0 CPU, not responding) / `exited`.
+- **The engine bug stays upstream-worthy:** a frame fence never signalled after a `Present(1, 0)` on this PC (RTX 4090
+  driver, a hybrid AMD iGPU) is a driver or engine bug; mailbox avoids it. Owner Call: keep mailbox (default) or Enabled.
+
+### F19 it10 (08:27-08:54): the old code freezes in the editor binary, not in the exported builds
+The brief asked whether the real Start click and the release export freeze too. rel20 (it2) answered it only on the
+fix. it10 ran the control arms on **main da108c13 (vsync Enabled, no fix)**, all with a real Start press
+(`hunt2.ps1 -PressStart`: Alt tap + SetForegroundWindow + Enter on the focused Start, no `--autostart`), windowed
+D3D12 1920x1080, 20 runs an arm, cdb on any freeze (`F19_CDB=1`), CONTENDED (5-6 Godot processes in tasklist incl. this run's; handheld's
+E20b bench held bench.lock; counts only, no timing claims). `evidence/perf/f19-freeze/{relmain,edpress,dbgpress}.jsonl`:
+
+| arm (main da108c13, vsync Enabled, real Start press) | binary | frozen / runs |
+|---|---|---|
+| relmain: `windows-slice` **release** export (`--export-release`, 326 MB exe, pck embedded) | template_release | **0 / 20** |
+| dbgpress: `windows-slice` **debug** export (`--export-debug`) | template_debug | **0 / 20** |
+| edpress: the **editor binary** on main's project (`-Project <prof3>/project`, new hunt2 switch) | editor (tools) | **5 / 20** (runs 2, 4, 8, 12, 20) |
+| (it1, for reference) the editor binary, `--autostart` | editor (tools) | 19 / 47 |
+
+- **The real Start press freezes too** (5 / 20 in the editor binary): `--autostart` is not the trigger.
+- **Neither exported build froze: 0 / 40**, against 5 / 20 in the editor binary (Fisher one-sided p = 0.003; release
+  alone 0 / 20 vs 5 / 20: p = 0.024). The freeze follows the editor (tools) binary running the project from its
+  `res://` files, not the export templates. What differs is not measured: the editor binary reads every texture from
+  `.godot/imported/*.ctex` files instead of one pck, and carries the tools build's extra work, so the uploads that
+  race the present land at different moments. 0 / 40 is not proof of 0: the 95 % upper bound on the exported builds'
+  rate is ~7 % a run.
+- **The stacks** (`stacks-edpress-{2,4,8,12,20}.txt`, all five the same): `WaitForSingleObjectEx` <- fence_wait
+  `+0x138905b` <- `_stall_for_frame` `+0x32e80c5` <- `+0x32e95ed` <- `+0x32f0670` <- `+0x35be1c6` <- ... 22 frames down
+  through the script call path. it1's four `--autostart` stacks went `_stall_for_frame` <- `_begin_frame`
+  (`+0x32e8c77`) <- `RenderingServerDefault::_draw`; these reach the same stall from a synchronous call made by script
+  (trace3 caught the crowd bake's `get_image` readback as the first wait after Start). The same root, a GPU fence that
+  is never signalled, caught at a different first wait.
+- **What it changes:** players of the shipped build were most likely never hit (0 / 40 exported), so mailbox's cost
+  (a skipped tick image under load, ~5 per 30 s on a loaded machine; LEDGER "Pacing A/B") is paid by every Windows
+  player for a hang seen in the editor binary. Kept as built (DECISION perf/f19-mailbox-scope): a fatal hang that a
+  20-run sample cannot exclude outweighs a rare skipped image, and steady pacing removes that for +0.08 core. The
+  alternative goes to the owner (Call P-1): mailbox in editor runs only (`vsync_mode.editor=3` instead of
+  `vsync_mode.windows=3`; probed at 08:59 in the editor binary: `editor=true`, the window boots in mode 3; the export
+  side rests on the docs, as templates carry no `editor` tag; a `-s` probe in a debug export printed nothing, so it is
+  not run-verified: `evidence/perf/f19-freeze/scope-probe/`) and Enabled for players.
+
+### World's REQUEST (it2): the card rigs under combo
+world (it1): rig_stress p50 at 50 people, combo 1.1-1.4 ms vs top 0.5-0.76 (section 20's provisional 1 ms). Profile
+(scratch timers in `CutRig.drive` / `CharacterRigs.step_ticks` in a throwaway worktree of 06c48c1b, 50 people,
+600 ticks, top / combo / top / combo, CONTENDED; `evidence/perf/n9-rig-combo/prof.txt`, the patch `prof.patch`):
+
+| us per tick | top | combo |
+|---|---|---|
+| rig p50 (ms) | 0.81 / 0.72 | **1.26 / 1.21** |
+| pose steps | 4800 | 5184 (+8 %: the cards' t_alive == 0 re-drive) |
+| clips + springs + hips + gait | 277 / 235 | 325 / 306 |
+| RigPose.step | 422 / 359 | 435 / 416 |
+| RigTilt.lift_upper | - | 20 / 20 |
+| **RigHeadCard.step** | - | **137 / 91** |
+| **StreetView.step** (shield, crowd cards, walker cards, Rivet frames) | - | **347 / 233** |
+| assign + RigDetail.sync | 118 / 85 | 95 / 93 |
+
+So combo's extra ~0.45-0.5 ms a tick is StreetView.step (~0.23-0.35) + RigHeadCard.step (~0.09-0.14) + the extra
+pose steps; the cut rig's own posing is unchanged. And under cards the drawn card shows the figure while the cut rig
+still runs its full pose (clips, springs, gait, RigPose: ~0.7 ms) underneath. Levers for it3 (in characters' files,
+so REQUESTs with these numbers): (a) break StreetView.step down per card kind and cut its per-tick work (dirty
+flags: re-place a card only when its frame or facing changed); (b) skip RigPose for rigs whose parts a card hides
+(if the walk phase comes from RigGait alone).
+
+### World's REQUEST, part 2 (it3): StreetView.step per card kind
+Hypothesis: combo's extra rig cost sits in one card kind's per-tick work that a dirty flag removes. Scratch timers
+(`evidence/perf/n9-rig-combo/prof3.patch`, a throwaway worktree of 54de9b41, 50 people, 600 ticks, combo only;
+CONTENDED: my 3 director reels were running). Warm runs (the first run of a process includes the strip loads):
+
+| us per tick (combo) | warm run 1 | warm run 2 |
+|---|---|---|
+| RiotShieldCard.step | 13 | 16 |
+| StreetCrowdCards.step | 12 | 15 |
+| **StreetWalkerCards.step** | **157** | **206** |
+| - strip_of (row_of + key_of string formats, StreetCopWalk / Fall lookups) | 57 | 75 |
+| - re-hiding the hidden parts each tick (hide_all) | 26 | 32 |
+| - place (fill_of strings + 3 global setters), ~7.6 cards a tick | 58 | 80 |
+| RivetFrames.step | 31 | 39 |
+| RigHeadCard._place (rows()[_key] format + global setters) | 66 | 88 |
+
+Prototype (same scratch tree, ABABAB, opt = per-texture fill cache + one `global_transform` set + `street_row`
+read before `key_of`): walker place **59 / 66 / 59 vs 81 / 80 / 113 us** (about -20 us a tick), strip_of
+unchanged (77-87 vs 75-134, noise). Result: **a wash for the budget**: -20 to -30 us of combo's ~450 us extra (~5 %).
+The cost is spread over many small GDScript calls (string formats, meta reads, the `global_*` setters) on every
+rig; no single card kind holds it. Skipping RigPose under a whole-figure card saves at most the carded rigs' share
+(~8 of 50 here, ~65 us). The real lever is structural (cards placed by one batched pass, or the card placement in
+the native sim); not for tonight. The patch for the place() cut is `walker-place.patch` (world owns
+street_walker_cards.gd tonight), offered, not required. Not kept on this branch (not my file).
+
+### Pacing A/B on the mailbox default (it3): vsync Enabled vs mailbox vs mailbox + steady
+Hypothesis: mailbox (the F-19 fix) could run the loop uncapped at 60 Hz (no queued present to block on) and cost
+CPU, or pace worse (a restart drops a queued image); steady (the 60 fps limiter on top) should hold the cadence at
+L11's ~+0.07 core. `node tools/perf/ab.mjs --scenes=riot60 --pairs=3 --arms=enab:--vsync=enabled,mbox:--vsync=mailbox,
+mbox60:--vsync=mailbox --max-fps=60` (editor binary, windowed D3D12 1920x1080, real time, 60 Hz panel; bench.lock
+held by ab.mjs; 02:57-03:03; CONTENDED 2 / 3 enab, 2 / 3 mbox, 1 / 3 mbox60; 0 errors). `evidence/perf/n9-pacing/`.
+
+| riot60, median of 3 (spread) | Enabled (old default, efficient) | **mailbox (new default, efficient)** | mailbox + 60 limiter (steady) |
+|---|---|---|---|
+| frames in 30 s | 1682 | 1682 (not uncapped: mailbox blocks at 60 Hz too) | 1679 |
+| process CPU (cores) | 0.41 ±0.03 | 0.40 ±0.03 (WASH) | 0.49 ±0.02 (+0.08, the limiter's spin, L11 / L15) |
+| frame p99 (ms) | 22.5 ±4.2 | 26.9 ±5.6 (WASH) | **18.6 ±1.5** |
+| worst frame (ms) | 33.9 | 36.3 | 24.4 |
+| tick images skipped (noTick / multiTick) per round | 0/2, 0/2, 0/2 | **13/14, 0/2, 10/12** | 0/0, 0/0, 1/3 |
+| working set (MB) | 900 | 846 (WASH, ±33) | 866 |
+
+Reading: mailbox costs nothing in CPU or frame count at 60 Hz, and its uncontended round (r1) paced like Enabled;
+in its two CONTENDED(4) rounds it showed 10-13 frames that carried no tick and 12-14 that carried two (a dropped
+or doubled tick image: a visible hitch), where Enabled under the same contention showed 0 / 2. Plausible mechanism:
+DXGI_PRESENT_RESTART discards the queued image after a late frame, so the sim's cadence and the presented one slip
+for a frame. **Small sample (2 contended rounds a side): a signal, not a verdict.** Steady on top of mailbox holds
+the cadence (multiTick 0-3, best p99) for +0.08 core. So the F-19 trade is now: mailbox (no D3D12 fence hang, 0 in
+107 runs) with an occasional dropped tick image on a loaded machine, unless the player picks steady. Kept as built
+(the freeze is worse than a hitch); added to Call P-1 (mailbox default) for the owner, with "steady by default on
+Windows" as the one-value alternative (`PlayerSettings` default pacing).
+
+Second run (`evidence/perf/n9-pacing2/`, drive60 + riot60, enab vs mbox, 3 pairs, bench.lock, 03:15-03:22, CONTENDED
+in 5-6 of 6 runs per arm): CPU WASH again (drive 0.33 vs 0.29, riot 0.47 vs 0.45); p99 mixed (drive 22.2 vs 23.9 WASH,
+riot 27.1 vs **20.9** mbox WIN). Frames that carried no tick per round: drive enab 0 / 0 / 2 vs **mbox 1 / 7 / 14**;
+riot enab 1 / 3 / 0 vs mbox 0 / 0 / 6. **Pooled over both runs (9 rounds an arm): no-tick frames Enabled 6, mailbox
+51**, mailbox + steady 1 (3 rounds). So the signal holds: on a loaded machine mailbox skips a tick image ~5 times
+per 30 s (median), Enabled ~0, at the same CPU; the frame-time tail itself is not worse. Kept as built (Enabled is
+the F-19 freeze); steady fixes it for +0.08 core; the owner chooses the Windows default pacing (Call P-1 / P-3).
+
+### Item 4 (it3): the desktop table on world's BC7 (main da108c13 vs n9-world 746c2856)
+world's 3e02d3b8 (BC7 for the drawn art, combo default, bikes 6 %) + its it2-it7 commits, vs main. Scratch worktrees
+(`gtai-n9/tmp/perf/prof3` = main, `world3` = world's committed tree with its `.godot` imports copied, main's native DLLs:
+world's bin DLL carries its uncommitted knock sim). `node tools/perf/ab.mjs --scenes=king,drive70,riot --pairs=3
+--arms=main:^--path <prof3>/project,world:^--path <world3>/project` (editor binary, windowed D3D12 1920x1080,
+`--fixed-fps 60 --disable-vsync`: one tick a frame, as fast as it can; bench.lock held; 03:06-03:11; CONTENDED 1-2 of
+3 per arm; 0 errors). `evidence/perf/n9-bc7-table/`. Median of 3 (spread):
+
+| scene | metric | main (lossless) | world (BC7) | verdict |
+|---|---|---|---|---|
+| King under combo | p50 / p99 / p99.9 ms | 4.51 / 9.44 / 12.31 | 4.74 / 9.15 / 11.86 | WASH (spread 0.6 / 1.4 / 1.5) |
+| King | process CPU, working set | 1.03 cores, 801 MB (±49) | 1.01, **733 MB (±4)** | RAM -68 MB (WASH by the spread rule: main's spread 49) |
+| drive70 (drive_dense, 48 px/m) | p50 / p99 / p99.9 ms | 3.04 / 5.58 / 8.38 | 2.62 / **5.14** / 7.41 | p99 WIN -8 % (spreads 0.03 / 0.07), the rest WASH |
+| drive70 | GPU ms, VRAM, working set | 0.24, **900 MB**, 839 MB | 0.21, **548 MB**, 840 MB | **VRAM -352 MB (-39 %)**, GPU -0.03 ms WIN, RAM WASH |
+| riot (400 actors, 32 px/m) | p50 / p99 / p99.9 ms | 4.91 / 10.85 / 19.69 | 4.72 / 10.52 / 16.67 | WASH |
+| riot | VRAM, working set (steady / last) | **899 MB**, 911 / 911 MB | **536 MB**, 835 / 789 MB | **VRAM -362 MB (-40 %)** (world's own A/B: -361), RAM WASH by spread |
+| riot | draws | 734 | 736 (+2: the bikes) | not a cost |
+
+(The King's VRAM reads NaN: the arena's FightFrames log has no VRAM field; its working set carries the signal.)
+So BC7 is what L4 predicted: VRAM -350..-360 MB on the city scenes with no frame-time cost; the 128 MB traffic-sheet
+upload buffer is a 32 MB one (Item 2). Resident RAM moves less than the estimated -96 MB on the desktop (the
+working set includes the driver's mapped copy; within the spread). handheld's E16 owns the Deck row.
+
+### L16 (it3): the engine's delta smoothing for mailbox (FrameDeltaSmoother)
+Source (Godot 4.7.2 `main/main_timer_sync.cpp`, `DeltaSmoother::smooth_delta`, lines 264-266): "only attempt
+smoothing if vsync is selected": `if (vsync_mode != VSYNC_ENABLED) return p_delta;`. So under the mailbox default the
+engine hands `World._process` the raw, load-jittered delta, and `SimClock.advance` steps 0 or 2 ticks in some frames:
+the mechanism of the pacing A/B's no-tick frames. Hypothesis: the engine's own rule (snap the delta to whole display
+intervals, carry the remainder, pass hitches raw) applied in `World._smoothed` under mailbox brings the no-tick
+frames back to Enabled's ~0, with no CPU and no pixel (fixed-fps, headless, movie and replay runs never arm it).
+Built: `core/clock/frame_delta_smoother.gd` (FrameDeltaSmoother: TOLERANCE 0.35 interval, LONG_S 1 s), `World._smoothed`
+(armed only with `--delta-smooth=on`, windowed, not filming, vsync mode MAILBOX; interval = 1 / min(refresh, max_fps)),
+`test_frame_delta_smoother` (6; `test_raw_jittered_frames_skip_ticks` shows the raw deltas give 0 / 2-tick frames,
+`test_jittered_frames_step_one_tick_each` that the smoothed ones give exactly one). Commit 36234341, default OFF.
+A/B (`evidence/perf/n9-dsmooth/`, drive60, `mbox:--vsync=mailbox` vs `smooth:--vsync=mailbox --delta-smooth=on`,
+3 pairs, bench.lock, 03:30-03:35, CONTENDED(2) in 6 / 6, my own pre-commit unit run overlapped r1-r2):
+no-tick frames mbox 7 / 3 / 1 vs **smooth 2 / 0 / 1**, double-tick 8 / 6 / 2 vs 5 / 2 / 4; CPU 0.28 vs 0.25 (WASH),
+p99 23.6 vs 24.7 (WASH). **Direction right, inside the noise (medians 3 vs 1, spread 3): not claimed.** Not yet
+proven armed in the bench (no log line). Next: a Log line when armed, then 6+ pairs on a quieter machine, riot60 too;
+keep if no-tick frames reach Enabled's level, then default on (still pixel-free: only which frame a tick lands on).
+
+**A/B 2 (it4, `evidence/perf/n9-dsmooth2/`):** drive60 + riot60, arms `enab:--vsync=enabled`, `mbox:--vsync=mailbox`,
+`smooth:--vsync=mailbox --delta-smooth=on`, 4 pairs (ABC interleaved), bench.lock held by ab.mjs, 03:44-03:59, CONTENDED
+in 2-4 of 4 rounds per arm, 0 errors. Frames that carried no tick, per round:
+
+| scene | Enabled | mailbox | mailbox + smoothing |
+|---|---|---|---|
+| drive60 | 0 / 0 / 0 / 0 | 17 / 12 / 1 / 0 | 2 / 2 / 3 / 0 |
+| riot60 | 1 / 1 / 2 / 0 | 11 / 13 / 3 / 0 | 4 / 0 / 0 / 0 |
+| pooled (8 rounds) | **4** | **57** | **11** (-81 % vs mailbox) |
+| CPU, median (spread) | drive 0.30 (0.04), riot 0.44 (0.05) | 0.27 (0.01), 0.46 (0.04) | 0.35 (0.08), 0.45 (0.03): WASH |
+| p99 ms, median (spread) | 24.5 (3.7), 24.1 (2.0) | 26.6 (4.8), 27.2 (4.7) | 25.9 (4.1), 26.7 (3.8): WASH |
+
+Smoothing beats plain mailbox in 5 pairs, loses 1 (drive r2: 3 vs 1), ties 2 (both 0); with it3's 3 pairs, 7 / 1 / 3.
+Per-round spreads overlap (mailbox's own spread is 6-9 frames, it swings with the contention), so ab.mjs calls it WASH;
+the pooled count and the pair signs agree, and the mechanism is the engine's own rule for Enabled. Not past the noise
+on the per-round median; flipped to the default (7852a8d4) on the pooled count (pixel-free: only which frame a tick lands on),
+with the confirmation A/B (`n9-dsmooth3`, off vs the default, on the commit) as the keep-or-drop.
+**Confirmation A/B 3 (`evidence/perf/n9-dsmooth3/`, on 7852a8d4, `off:--vsync=mailbox --delta-smooth=off` vs `on:--vsync=mailbox`,
+drive60 + riot60, 4 pairs, bench.lock, 04:06-04:16, CONTENDED in 2-4 of 4 rounds per arm, 0 errors):** no-tick frames
+drive off 7 / 0 / 0 / 2 vs on **37** / 0 / 2 / 0 (the 37 is a round with a 122 ms stall and 1661 frames: under heavy
+contention the deltas leave the tolerance and pass raw), riot off 1 / 0 / 0 / 1 vs on 0 / 0 / 0 / 0; CPU 0.31 vs 0.30,
+0.42 vs 0.41 (WASH); riot p99 20.9 vs 19.9 (spreads 1.1 / 0.3, a hint only).
+**Verdict over the three A/Bs (19 pairs mailbox vs smoothing): smoothing fewer no-tick frames in 10, more in 3, tied in 6;
+pooled 79 vs 53.** A sign test of 10 / 3 is p ~0.09: inside the noise. **DROPPED as a default** (back to `--delta-smooth=on`
+as the arm, the commit after 7852a8d4); the `--fixed-fps` guard stays (it keeps the arm out of the goldens). Lesson:
+this machine's contention swings mailbox's no-tick count from 0 to 17 per round; a pacing lever needs a quiet machine
+or 10+ pairs, not 4.
+Caught before the flip: World armed it in ANY windowed mailbox run, including `--fixed-fps` ones (the selftest's look
+goldens): a fixed 16.667 ms delta snapped to the 59.94 Hz interval (16.683) would add a sim tick every ~1000 frames.
+7852a8d4 arms it only in a real-time window (`LaunchArgs.engine_fixed_fps()`), `test_fixed_fps_is_never_real_time`.
+
+### CityView._process per call (it5): where the riot's 3.4 ms goes
+Scratch timers (`evidence/perf/n9-l17/cvprof.patch`, never committed; the rig internals are `n9-rig-combo/prof.patch`),
+city_bench windowed d3d12, vsync off, `--fixed-fps 60` (1826 frames = one tick a frame), 6342fcd0, CONTENDED (1-3 other
+Godots). Mean us a frame:
+
+| call | riot (tilt70, zoom 1.0) | drive_dense (tilt70, zoom 1.5) |
+|---|---|---|
+| CityView._process total | 2450-3000 | 1171 |
+| before_render (CityCharacters) | 2134-2587 | 987 |
+| . rigs.step_ticks (10 full drives a tick) | 1407-1796 | 804 |
+| . . gait+ / pose / street / headcard / lift / assign | 324 / 434 / 412 / 113 / 23 / 132 | 218 / 304 / 189 / 98 / 16 / 75 |
+| . _fill_feed | 494-569 | 156 |
+| . . snapshot / fx_feed.observe / variants | 20 / 125 / 5 | 19 / 71 / 5 |
+| . . the loop (5653 floats = ~400 records; **262 rows put a tick**) | 387, of which _put_person 305 (1.2 us a row) | |
+| . crowd.observe | 127-149 | 9 |
+| _place_camera | 209-275 | 43 |
+| . **fx.ground.step** (FxPool: the ground marks) | **127-157** | 2 |
+| . fx.step / glow.step | 37-47 / 7-9 | 4 / 2 |
+| chunks.update | 85-104 | 122 |
+| write_render | 16-25 | 13 |
+
+Reading: the rig step is ~60 % and is spread over dense GDScript math (RigPose / RigArm / RigGait / StreetView: no
+allocation or lookup to strip; the cut is a C++ port of the pose step, a multi-session job and the rivet lane's rig
+files tonight). The feed is per-row call cost over 262 rows. The one pure-waste item: **FxPool.step re-reads ~14
+String-keyed Dictionary values a live particle a tick** (the ground pool holds the riot's casings and ink splats,
+90 / 240-tick lives): L17.
+
+### L17 (it5): FxPool reads a cached FxKindRow, not the kind Dictionary
+Hypothesis: the ground pool's per-particle cost is the Dictionary lookups (String keys hashed every read), not the
+MultiMesh writes; caching the kind's constants once at put cuts fx.ground.step ~40-60 % (-50..-80 us a riot frame,
+~1-2 % of the frame: a mechanism win, below the frame-level noise, the L5 precedent). No pixel: the same values and
+float ops (`test_fx_pool`: the MultiMesh buffer bit-identical to the verbatim old step over 260 ticks of every kind).
+Change: `core/render/fx_kind_row.gd` (new), `fx_pool.gd` (`row_of` replaces `kind_of`; a spawn's `count` particles
+share one row). Commit 4b7c1e44.
+A/B (scratch timers in `cvprof`, riot tilt70 windowed, fixed 60, arms interleaved by swapping fx_pool.gd, two jobs,
+CONTENDED 0-4 other Godots; `evidence/perf/n9-l17/ab-l17.txt`, `ab-l17b.txt`), fx.ground.step us a frame:
+
+| arm | job 1 (3 rounds) | job 2 (3 rounds) | median of all |
+|---|---|---|---|
+| old (6342fcd0) | 135 / 152 / 135 | 129 / 159 / 145 | **140** |
+| L17 (row cache) | 107 / 86 / 97 | 104 / 85 / 101 | **99 (-29 %)**: every L17 round under every old round |
+| L17b (+ skip the rewrite of a held particle) | | 111 / 123 / 112 | 112: worse than L17 |
+
+fx + glow (the other two pools) 44-53 -> 31-42 us. **L17 KEPT** (mechanism WIN, -40 us a riot frame; no frame-level
+claim: the frame total's spread is ~0.5 ms). **L17b DROPPED** (9944fd7d): the riot's ground pool is mostly moving
+casings, so the held check costs more than the skipped writes save.
+Test lesson (FRICTION it5): the first test compared `MultiMesh.buffer`, which is EMPTY headless (the dummy renderer
+keeps no instance data): the mutation run scored 27 % (`mutate-fx_pool.txt`). `FxPool.mirror` (sized by tests only;
+one `is_empty()` a write in the game) now carries what each slot shows; the test compares that.
+
+### L18 (it5): CityResidency.resident_keys() sorted once a change
+Found reading ChunkView.update (85-122 us a frame): `resident_keys()` returns `_sorted(_resident.keys())`, a
+`sort_custom` with a GDScript lambda over ~70 keys, on every call: ChunkView every frame (`_nearest_undrawn`),
+`CityResidency.update` every tick, city_system, the prop lights, the noir lamps and shadows. Hypothesis: the sort is
+most of chunks.update's steady cost; cached until adopt / evict / drop, chunks.update falls ~50 %+ on the drive. No
+pixel and no sim change: the order is a total order on unique keys, so the cached array is the array a fresh sort
+returns (test: row order, the same object until a change, rebuilt on evict / drop / adopt; read only, so no caller can
+reorder it). Commit 73f30553.
+A/B (cvprof timers, drive_dense tilt70 zoom 1.5, fixed 60, interleaved by swapping city_residency.gd, CONTENDED 3-6
+other Godots; `evidence/perf/n9-l17/ab-l18.txt`): chunks.update old 122.4 / 117.9 / 124.9 us vs new 115.6 / 113.7 /
+107.4: median 122.4 -> 113.7 (-7 %, -9 us a frame; every new round under every old round). Smaller than hoped: the
+sort was ~5-10 us a call, chunks.update's steady cost is the time-sliced chunk build itself (`_slice`, real work while
+driving). Plus the per-tick `CityResidency.update` sort (not under these timers). **KEPT** as a small CPU cut (no
+pixel, no sim change); no frame claim.
+
+### L19 (it5, refuted before building): copy-on-write in `feed.looks[i] = v`
+Hypothesis: `_put_person` writes `feed.looks / face / flags / aim[i]` through another object's packed-array property;
+if GDScript does that as get -> copy-on-write -> set-back, each write copies the whole array (262 rows x 3-4 writes a
+riot tick). Microbench (`evidence/perf/n9-l17/cow_bench.gd.txt`, headless, 200 x 262 rows, capacity 64 / 512 / 4096):
+4 writes through the property 0.129 / 0.130 / 0.135 us a row vs the same 4 writes in a method of the owner 0.120 /
+0.117 / 0.112: **no copy** (the cost does not grow with capacity). Refuted; nothing built. The feed's 1.2 us a row is
+GDScript call and arithmetic cost, the lever there is native (a sim-side feed fill), not GDScript reshaping.
+
+### L20 (it5): CityOccluders scans packed building positions
+Split (cvprof timers, riot, CONTENDED 6): city_occlusion._process 1085 us a frame = the per-rig building query
+(`near` -> `collect`) **883**, crowd patches + lift 124, the rig walk 70. collect() read `b.at` off every Bld object of
+1-4 chunks (~300 buildings a chunk) for each of ~17 rigs, every frame, to keep those inside a 40 m box. Hypothesis: the
+object property reads dominate; a per-chunk PackedVector2Array of the positions (list order, built with the cached
+list, cleared with it) scanned instead, a Bld touched only on a hit: -30..-50 % of `near`. No pixel: the same loop
+order and the same float32 compares, so the same buildings in the same order (test: `collect` == the reach rule over
+`of_chunk`, 40 queries over a 300-building chunk, compared by identity and order; survives the CACHE_MAX reset).
+A/B (riot x2 interleaved by swapping city_occluders.gd, CONTENDED 4-6; `evidence/perf/n9-l17/ab-l20.txt`): near old
+705 / 652 us vs new 542 / 543 (**-17..-23 %**, ranges apart); occlusion _process 853 / 795 -> 679 / 680 (**~-150 us a
+riot frame**). KEPT (mechanism win; the frame total's spread is larger, no frame claim). Next (L20b): the 40 m box is
+far looser than what _scan keeps (a building whose drawn area meets a ~1 x 1.8 m body patch): an exact tighter
+prefilter could cut most of the remaining ~540 us.
+
+### Gates (it5) on 78e039b7 (L17 + L18)
+`node tools/evidence/run.mjs --no-bench` (`evidence/perf/n9-l17/evidence-it5.txt`): lint 15 / 15, unit 1833 / 0,
+scenarios 54 / 54, parity bit-exact (mutation caught at 629), selftest look goldens 11 / 11 (worst 0.27),
+release-compile 617 / 0. Mutation on fx_pool.gd at 9944fd7d: 90.9 % (10 / 11; the survivor deletes the
+RenderingServer call, invisible headless by construction; `mutate-fx_pool-2.txt`).
+On 28d8c8f7 (+ L20; `evidence-it5b.txt`): lint, scenarios 54 / 54, parity exact, look goldens 11 / 11 (worst 0.27),
+release-compile 617 / 0 PASS; unit 1835 / 0 passed but the stage is marked FAIL by the tree-changed guard (I edited
+JOURNAL / REPORT during the run): owed, a clean re-run. L20 on the drive: 3432 body-frames hidden, 5154 crowd patches,
+the same as before it.
+
+### L20b (it6): near() keeps only the buildings that can meet the body box
+Hypothesis (before building): `_scan` keeps a building only when `body_patch` (the body box grown by the ink line,
+intersected with the drawn area) has area. The drawn area shares the ground rect's x-span and bottom (the lift only
+raises its top), so a building whose rect does not overlap the box's x-span, or whose ground line is above the box's
+top, has no patch at any lift. Filtering those inside `collect` (read off a packed (left, right, bottom) float32
+triple per building, built with the cached list) skips `_with_area` + the append + the `body_patch` call for most of
+the ~1200 buildings a rig's 4 chunks hold: expected near 540 -> ~150-250 us a riot frame. Exact: the box is grown one
+more pixel, float32 values compared in float64, so only zero-area patches are dropped.
+Change (6496dbdb): `CityOccluders.near(at_m, body)` / `collect(..., body)`; `CityOcclusion.body_box` (body_patch now
+`body_box(...).intersection(area)`); `merge_extra` moved to CityOccluders to keep city_occlusion.gd under 200 lines.
+Test (`test_city_occluders`): per body, the buildings with a patch from the filtered query == those from the
+unfiltered query, in order, 60 positions + 120 at building edges (touching and +-0.5 px), at tilt70 and at 55 (combo's
+taller lift); asserts > 50 patches and > 1000 skipped (not vacuous). 3 planted faults (each edge moved 8 px) caught.
+A/B (cvprof timers, L20 vs L20b, 3 interleaved pairs per scene, CONTENDED 0-8 other Godots;
+`evidence/perf/n9-it6/l20/ab-l20b.txt`):
+
+| scene | near L20 (us/frame) | near L20b | median | occlusion _process L20 -> L20b |
+|---|---|---|---|---|
+| riot (tilt70, 17 rigs) | 548 / 652 / 543 | 258 / 241 / 253 | **548 -> 253 (-54 %)** | 686 / 818 / 678 -> 410 / - / 401 |
+| drive_dense (tilt70, 9 rigs) | 543 / 719 / 541 | 206 / 193 / 233 | **543 -> 206 (-62 %)** | 700 / - / 698 -> 362 / - / 404 |
+
+Behaviour: drive 3432 hidden body-frames and 5154 crowd patches in every run, riot 0 / 11669 (= L20). KEPT.
+
+### L20c (it6): a column index per chunk
+Hypothesis: after L20b each rig still walks ~1200 packed entries (~15 us a rig). Index each chunk's buildings by
+128 px screen column (a building under every column its rect's x-span touches); the body box (~80 px wide) reads one
+or two columns, merged ascending and deduplicated, then the same exact tests run. Exact: a building that passes the
+x test shares a column with the box (floor is monotone, the same float32 values). Expected near -40..-60 %.
+Change (700712c7): `CityOccluderCols` (new file), built in `of_chunk`, cleared with the cache. Test: a box over 1-6
+columns returns exactly the rule's buildings once each in list order (3 planted faults caught: the column span, the
+dedupe, the column range). A/B (L20b vs L20c, 3 pairs, CONTENDED 0-8; `ab-l20c.txt`):
+
+| scene | near L20b | near L20c | median |
+|---|---|---|---|
+| riot | 231 / 251 / 246 | 124 / 129 / 138 | **246 -> 129 (-48 %)**, ranges apart |
+| drive_dense | 212 / 205 / 224 | 184 / 203 / 209 | 212 -> 203: WASH |
+
+Same counts as above in all 12 runs, 0 SCRIPT ERROR. KEPT (riot win; the drive's remaining ~200 us is per-call
+overhead or the hit path, not split yet). L20 + L20b + L20c together: the riot's per-rig query **~650 (L20's old
+median of 705 / 652) -> ~130 us a frame**, the occlusion `_process` ~800 -> ~280 us. No frame-total claim (its spread is
+larger than 0.5 ms under contention).
+
+### Split (it6): city_blood and the occlusion query's remaining cost (cvprof timers, CONTENDED 4-6)
+Riot (tilt70, 30 s, fixed 60; `evidence/perf/n9-it6/split/`): `CityBlood._process` = **blood.step 450-496 us a
+frame** (BloodFx.step_ticks 347-380, CombatBlood._resolve + the shader parameter 91-101, the leak 2, the splat meshes
+6-7) + **CorpseStains.step 140-159** + the kill beat 2-3 + the muzzle pop 2: ~0.6-0.66 ms, which matches the 0.80 ms
+NodeSpans row (it4). The drive: blood.step 32, stains 9 (no deaths). BloodFx in the riot: 320 drop slots, **82 live a
+tick**, 2 BloodFx stepped a frame (blood + oil): ~2 us a live drop-step. Its cost per drop is `_hit_wall` ->
+`BloodMarks.wall_normal` -> `solid.call` (a Callable into `CityBlood._solid` -> the native `sim.cell_at`, 1-3 calls a
+drop a tick) plus the Vector2 updates. Next lever (L22, not built): hand BloodFx a direct cell lookup instead of the
+Callable chain, and skip the 320-slot walk when `drops == 0`; est. step_ticks -30..-50 % (~-150 us a riot frame); the
+exactness test is the same drop / decal sequence over a scripted spray into a wall.
+The occlusion query after L20c (per frame): riot 33 chunk calls, **0 candidates, 0 kept** (no rig stands near a
+building), near 143 us = per-call overhead (the 4-corner key Dictionary, residency lookups, the timers); drive 13
+chunk calls, 139 candidates, 30 kept, near 200 us (the kept path: `_with_area`'s lift lookup, `body_patch`, and the
+silhouette of the ~1.9 hidden bodies a frame). Next lever there: a per-frame chunk-key cache in near() (riot) and
+the silhouette only once per rig (drive); small (< 0.1 ms each).
+
+### L22 probes (it6): the blood drops' wall check
+Ceiling (cvprof, riot, one run an arm, measurement only: the drops fly through walls): with no wall check
+BloodFx.step_ticks is 115 us a frame vs 328 with it: **the wall checks are ~210 us (65 %)**. Each check is
+`solid.call` -> `CityBlood._solid` -> `CitySimNative.cell_at` -> `_call(&"cell_at", [x, y])` -> `Object.callv`
+(a fresh 2-element Array and a Variant dispatch every call). Cells change only on a chunk stamp / clear.
+Probe A (`evidence/perf/n9-it6/l22/`): `cell_at` as `_o.call(&"cell_at", x, y)` (the same native method, no Array):
+step_ticks old 337 / 413 (+ 327 / 347 / 380 from the split runs) vs new **283 / 294 us** (2 interleaved pairs,
+CONTENDED 0-4; ranges apart, about -17 %, ~-55 us a riot frame); live drops 82.1 a tick in every run. **KEPT as L22a
+(1d5a65c1)**: test `test_city_sim_native_cells` (native == ref `cell_at` over 4 stamped chunks, past them and off the
+map; a planted x / y swap caught); gate on 1d5a65c1 ALL PASS (unit 1838 / 0, scenarios 54 / 54, parity exact, look
+goldens 11 / 11, release-compile 618 / 0), the reel 19 / 19 in top, tilt70, combo, 0 SCRIPT ERROR. The bigger cut is a per-cell solid cache in CityBlood invalidated
+by the sim's chunk stamp / clear (exact; est. most of the 210 us).
+
+### L22b (it7): a per-cell solid memo for the wall checks: DROPPED (a wash)
+Hypothesis: a drop moves a few px a tick and a sim cell is 32 px, so a per-frame `Dictionary[int, bool]` of the cells
+already asked (cleared after each blood.step; exact while the map holds still) skips most native `cell_at` calls:
+est. -100 us of step_ticks. Built (`evidence/perf/n9-it7/l22b/l22b.diff`: CitySolidMemo + CityBlood, a test that the
+memo == the direct answer over a sweep, off the map, and forgets a cleared chunk). A/B (cvprof, riot, 6 interleaved
+pairs, CONTENDED 2-9; `ab-l22b.txt`): step_ticks old 343 / 294 / 310 / 333 / 401 / 276, new 265 / 255 / 301 / 386 /
+254 / 265 (raw medians 322 -> 265, 5 of 6 pairs better). But the unchanged CorpseStains.step in the same runs swings
+with the machine (129-190 us), and **step_ticks / stains** is old 2.01-2.12 (median 2.06) vs new 1.95-2.04 (median 1.97):
+~-4 %, ~-13 us, ranges overlapping. The raw -17 % was machine load. The memo's floori + Dictionary.get + the Callable
+into `_solid` cost about what L22a's direct `Object.call` costs. **Dropped**; not committed. The remaining wall-check
+cost is the GDScript per-drop work itself (a C++ drop step is the lever, not worth it at ~0.2 ms).
+Lesson (measurement-honesty): an in-run control (an unchanged system timed in the same frames) is what separates a
+lever from the machine; raw medians of 3 pairs on a shared box were not enough here.
+
+### L23 (it7): the corpse soaks measure only the walkers near them: KEPT (4bc6d82c)
+Split first (cvprof timers in CorpseStains, riot; `evidence/perf/n9-it7/l23/split-t0.txt`): step 138 us = the feed
+scan 39 + `_match` 10.5 + the soak loop 84.5, of which **`_uncovered` 69.5**: 14.8 live soaks x 263 feed rows, every
+walker measured for every soak. Hypothesis: sort the walkers by x once a step (native `PackedVector2Array.sort`) and
+`bsearch` each soak's CLEAR_M x-window (+1 px for the float32 edge); the same distance test on what is left, and minf is
+order-free, so the alpha is bit-identical. Est. -50 us. Change: `StainCover.cover(at, by_x)` (new file: the debt ratchet
+keeps corpse_stains.gd at <= 245 lines; it is 244), `CorpseStains._by_x` sorted in `step_bodies`. Test
+`test_corpse_stains_cover`: cover == the old full scan over 60 hashed scenes of 0-300 walkers (ties in x every third
+scene), at the window's edges (+-0.001 px), with none; the host's `walkers` keep their order.
+A/B (cvprof, riot, 4 interleaved pairs, CONTENDED 0-2; `ab-l23.txt`): CorpseStains.step old **141 / 133 / 144 / 135**
+vs new **103 / 102 / 106 / 107 us** (median 138 -> 104, **-25 %, -34 us a riot frame**, ranges apart); the control
+blood.step 370-406 in both arms. **KEPT**: the new baseline. Mutation (`mutate-l23.txt`, stain_cover.gd at 4bc6d82c):
+9 killed / 5 survived (64.3 %); all 5 survivors are equivalent mutants (the two +1 px window margins -> 0, the break's
+`>` -> `>=`, and on clear2 `<` -> `<=` and pow 2 -> 3: smoothstep is already 1 at and past CLEAR_M), so every
+non-equivalent fault is caught. Reel x3 on 4bc6d82c: 19 / 19 fully down in top, tilt70, combo, 0 SCRIPT ERROR
+(`evidence/perf/n9-it7/reel-l23/`).
+
+### L24 (it7): CityOccluders.near without its key Dictionary: KEPT (509580ac)
+The it6 counts: the riot's near() finds 0 candidates in 33 chunk calls a frame, so its ~130 us is per-call overhead.
+Hypothesis: the 4-element array literal and the `Dictionary[Vector2i, bool]` of corner keys (built, then iterated) plus
+`is_resident` + `chunk_at` (two lookups) are most of it; two `range` loops over the corners' chunk span (32 x 32 m < a
+128 m chunk: 1-2 a side) give the same keys in the same order (lo / hi are the same float32 corner sums), and
+`chunk_at` alone returns null off the residency. Est. -40 us riot. Test (`test_city_occluders`): near == the old
+Dictionary walk over 400 queries around the chunk seams with one chunk missing, with and without a body box; a swapped
+loop order and a dropped seam row are both caught.
+A/B (cvprof, 3 interleaved pairs, CONTENDED 2-6, `evidence/perf/n9-it7/l24/ab-l24.txt`), near us a frame: riot old
+**139 / 132 / 156** vs new **97 / 101 / 102** (median -38 us, -27 %, ranges apart; near / crowd+lift, an unchanged
+timer in the same frames: 1.28-1.34 vs 1.05-1.06); drive old 206 / 217 / 219 vs new 180 / 210 / 161 (near / crowd+lift
+1.72-1.74 vs 1.54-1.56: -10 %). Hidden body-frames and crowd patches identical (riot 0 / 11669, drive 3432 / 5154).
+**KEPT**. Gates on 6fed0aad (L23 + L24): ALL PASS (lint 15 / 15, unit 1842 / 0, scenarios 54 / 54, parity exact, look
+goldens 11 / 11, release-compile 619 / 0; `evidence/perf/n9-it7/evidence-6fed0aad.txt`); the reel x3 19 / 19, 0 SCRIPT
+ERROR (`evidence/perf/n9-it7/reel-l24/`).
+
+### L25 (it7): CorpseStains.step reads the feed through locals: KEPT (6ce43cd0)
+The feed scan was 39 us of the 138 (split above): ~3 member reads (`feed.flags[i]`, `feed.pos[i]`, `feed.ids[i]`) a
+row over 263 rows. Hypothesis: GDScript resolves a member of another object by name each read; hoisting the packed
+arrays into locals (read only: the same arrays, no copy, L19) cuts the scan by half. A/B (cvprof, riot, 3 interleaved
+pairs on L23, CONTENDED 2-4, `evidence/perf/n9-it7/l23/ab-l25.txt`): CorpseStains.step **101.5 / 111.8 / 100.0 ->
+86.9 / 91.8 / 86.1 us** (median -15 us, -14 %, ranges apart), the blood.step control 375-420 in both arms. The
+committed form keeps `feed.ids` a member read on the few dead rows (the debt cap: the file is at 245 lines); the
+living rows read exactly as in the measured arm. Test: step's walkers are every living row in feed order and the
+death soaks the dead row (a planted wrong-row read caught). CorpseStains.step over it7: **138 -> ~87 us a riot frame**.
+Gates on 6ce43cd0 (L23 + L24 + L25): ALL PASS (lint 15 / 15, unit 1843 / 0, scenarios 54 / 54, parity exact, look
+goldens 11 / 11 (worst 0.27), release-compile 619 / 0; `evidence/perf/n9-it7/evidence-6ce43cd0.txt`); the reel x3
+19 / 19 fully down in top, tilt70, combo, 0 SCRIPT ERROR (`evidence/perf/n9-it7/reel-l25/`).
+
+### L26 (it8): FxPool.step moves each particle through locals: DROPPED (a wash)
+Hypothesis: the per-step `pos[i] += vel[i] * dt; vel[i] *= maxf(...)` reads and writes two member packed arrays a
+step, recomputes the drag factor a step and checks `mirror.is_empty()` a particle; moving the step into locals (the
+same float ops in the same order: bit-identical) and hoisting the factor and the check cuts fx.ground.step ~15 %.
+(The read-only arrays `born`, `row_of`, `rot`, `seed_of` can NOT be hoisted: `_swap_out` writes them mid-loop, and a
+write through the member while a local shares the buffer would copy the whole array, then read a stale local.)
+A/B (cvprof, riot tilt70 windowed, fixed 60, 3 interleaved pairs, bench.lock held, CONTENDED 0-8 other Godots,
+`evidence/perf/n9-it8/l26/ab-l26.txt`, arm `l26.diff`), PC.ground.step us a frame / the blood.step control:
+cur 81.1 / 93.9 / 90.5 (ratio 0.221 / 0.218 / 0.227), L26 84.8 / 90.3 / 79.9 (ratio 0.225 / 0.217 / 0.226): **a wash**
+(ratio medians 0.221 vs 0.225). The step's cost is the three MultiMesh instance writes a particle, not the motion.
+Not committed. Kept from it: `test_fx_pool` now steps 0, 1 and 2 ticks (a frame with no tick was not covered).
+Rejected without building: one `multimesh_set_buffer` a frame instead of three instance calls a particle: GDScript
+would write 16 floats a particle into a packed array (16 indexed stores vs 3 validated native calls, ~the same cost),
+and the 2D buffer layout (8-float transform rows) is a new place for a pixel to move.
+
+### L27 (it8): CityFxFeed.observe reads the dead flags through a local: DROPPED (a wash)
+Hypothesis (L25's pattern): observe reads `_dead[i]` a person record (~400 a riot tick, 117-120 us); a local copy
+of the array (written back once, so a copy only on a frame with a flip) cuts the loop ~10 %. A/B (cvprof, riot, 4
+interleaved pairs, bench.lock held, CONTENDED 4-10, `evidence/perf/n9-it8/l27/`), FF.observe us a frame:
+cur 120.5 / 114.5 / 120.3 / 117.1, L27 120.9 / 115.7 / 116.3 / 121.4 (control BR.crowd.observe 116-127 in both):
+**a wash**. Lesson with L25 and L26: a read of the script's OWN member is already a cheap indexed access; L25 won
+because it read members of ANOTHER object (`feed.flags[i]`: a named property get a read). The remaining per-record
+cost is the snapshot reads and the int() conversions themselves: the next step there is native, not GDScript.
+Not committed.
+
+### Gates (it6)
+On 8990b643 (L20, the clean re-run owed from it5; `evidence/perf/n9-it6/evidence-8990b643.txt`) and on 6b75d795
+(L20b + L20c; `evidence-6b75d795.txt`): ALL PASS: lint 15 / 15, unit 1835 / 0 and 1837 / 0, scenarios 54 / 54, parity
+bit-exact (mutation caught at 629), look goldens 11 / 11 (worst 0.27), release-compile 617 / 0 and 618 / 0. The director
+reel x3 (headless, fixed 60, `--quit-after 16000`) on 6496dbdb (L20b): 19 / 19 chapters fully down in top, tilt70,
+combo, 0 SCRIPT ERROR (`evidence/perf/n9-it6/reel/`).
+
+### Item 2 (it2): the traffic-sheet split is moot under BC7
+n9-world 3e02d3b8 imports the p70 traffic sheet as BC7: `traffic_cards.png-313d05e5...bptc.ctex` = **18,063,412 B**
+(4032 x 4480 x 1 B), one upload into a **32 MB** pow2 staging buffer (L9's mechanism), against 128 MB lossless. The
+-96 MB the split was for comes with BC7 itself; no texture of the sheet is over 32 MB. Not split (DECISION
+perf/traffic-split-under-bc7); `tools/art/split_sheet.py` stays for a lossless build. Owed: the resident-memory A/B
+lossless vs BC7 (world's item 1 job, `ab.mjs --scenes=riot,drive70`), read from world's evidence when it lands.
+
+### Item 3 (it2): the frame-pacing option (Call P-3 C)
+"Frame pacing: efficient / steady" in the pause card's settings (non-handheld rows; a handheld row keeps its 30 / 40 /
+60 cap row), saved as `pacing` in `gtai.player-settings/1`. efficient (default) = the boot cap from FrameCap (none at
+60 Hz, the tick rate above 61 Hz); steady = `FrameCap.pacing_cap`: the tick-rate limiter on top of vsync at 60 Hz too
+(L10 / L11: p99 ~20 -> ~17 ms, +0.06..+0.09 core). No-op headless and when filming. d6e93b92, tests in
+`test_frame_cap`, `test_player_settings`, `test_settings_panel_pad` (the desktop rebind rows moved down one).
+Owed: the steady-vs-efficient A/B on mailbox (L11 measured them on Enabled).
+
 ## Method (applies to every row)
 - **Runner:** `node tools/perf/ab.mjs --scenes=<..> --arms=<name>:<user args>[^<engine args>],... --pairs=N --out=<dir>`.
   It runs each scene once per arm per round, alternating the arm order every round (A B / B A ...), so a
@@ -48,6 +581,7 @@ scratch project at ee63589c = main + L2 + L3, preset `quest1` = `quest1_frames.g
 Dock 9 fight in the play view, windowed D3D12 1920x1080, editor binary, bench.lock held, CONTENDED(4) in 3 of 3 runs
 (the rivet lane filming)):** p50 3.63 ±0.01, p99 6.49 ±0.15, p99.9 9.70 ±0.60, worst 18.77 ±1.48 ms, CPU 0.96 cores,
 peak RAM 1035 MB (the highest of the five scenes). Draws / render CPU / VRAM are not logged by quest1_frames (n/m).
+*(Correction, n9 it9: tick 5800 is the Toner Room dialogue, not the Dock 9 fight, which is near tick 13000 (handheld n9 07:48). The quest1 row measures that dialogue stretch of the city; the comments in quest1_frames.gd and ab.mjs are fixed.)*
 
 ## Release-export baseline (it4, at 87155de9): the shipped build vs the editor binary
 **Current numbers: the `--screen 0` rerun (11:57-12:00) at the end of this section.** The first table
@@ -100,6 +634,144 @@ evidence run plus the seams lane's), so read the ratios, not the ms; a quiet rer
 - **Boot to first frame, same screen** (`tools/perf/boot.sh 5`, `--screen 0`, boot + one city_bench frame + exit;
   `evidence/perf/rel-vs-dbg-screen0/boot.log`): exe 3.95 / 2.55 / 2.41 / 2.69 / 2.58 s, editor 3.98 / 4.29 /
   4.08 / 4.89 / 3.89 s: **median 2.58 s vs 4.08 s**. (The first table's 2.86 vs 4.35 s had the exe on the other screen.)
+
+## Final table n9, quest 1 and the director reel (it10, 09:00-09:07): main da108c13 vs n9-perf dc9ea2fd vs a byte copy
+The two brief scenes missing from tonight's tables. `node tools/perf/ab.mjs --scenes=quest1 --pairs=3
+--arms=main:^--path <gtai-n9/tmp/perf/prof3>/project,head:,head2:^--path <gtai-n9/tmp/perf/head2>/project`
+(`evidence/perf/n9-it10/quest1/` + `quest1.log`), then `--scenes=reel` the same (`reel/` + `reel.log`). Editor binary,
+windowed D3D12 1920x1080, fixed 60 uncapped, bench.lock via ab.mjs, 0 errors. head = this branch's project
+(project/ unchanged since efa848cb but for comments); head2 = its byte copy (F12's A-vs-A floor). quest1 =
+`quest1_frames.gd` from tick 5800 (the Toner Room dialogue), 1200 frames; no draws / GPU / VRAM in that log (n/m).
+Quest 1: 9 runs, 3 labelled CONTENDED. Median ± half-spread:
+
+| scene | metric | main | head | head2 (A-vs-A) | verdict |
+|---|---|---|---|---|---|
+| quest 1 | p50 / p99 / p99.9 ms | 3.43 ±0.80 / 6.50 / 16.19 | 3.32 ±0.34 / 6.91 / 16.59 | 3.56 ±0.05 / 6.23 / 15.15 | WASH (head vs head2 0.24 ms > head vs main 0.11) |
+| quest 1 | CPU cores, steady RAM | 1.04, 1068 MB (1067-1069) | 1.02, 1069 (1006-1069) | 0.98, 1006 (1004-1007) | WASH; the RAM is the per-run ~60 MB state seen on the release riot (head 1 / 3 runs low, head2 3 / 3): not a saving |
+| reel (director, pistol, tilt70, 3600 ticks) | p50 / p99 / p99.9 ms | 5.89 ±0.74 / 13.45 / 18.39 | 5.63 ±0.27 / 17.20 ±3.83 / 20.65 | 5.71 ±0.19 / 13.31 / 18.03 | WASH (head's p99 spread 3.8 ms; head vs head2 0.08 ms p50) |
+| reel | CPU cores, steady RAM, draws, render CPU / GPU ms | 1.00, 817 MB, 526, 0.45 / 0.44 | 1.00, 817, 526, 0.49 / 0.52 | 1.00, 817, 526, 0.44 / 0.51 | WASH; draws vary 523-528 a run in every arm (the reel's frames are not draw-deterministic run to run), the medians agree |
+
+Reel: 9 runs, 8 labelled CONTENDED (2-6 Godots). Reading: tonight's kept CPU cuts sit in the riot's systems (FX,
+occlusion, stains, blood), which quest 1's dialogue stretch and the reel barely exercise, so a wash is the expected
+result here, and the A-vs-A floor (0.1-0.25 ms p50) leaves no room to claim a ~0.1 ms move. Nothing regressed.
+
+## Final table n9 (it8, 07:28-07:34, PROVISIONAL): main da108c13 vs n9-perf 1365b7f3 vs a byte copy (A-vs-A)
+`node tools/perf/ab.mjs --scenes=king,drive70,riot --pairs=3 --arms=main:^--path <gtai-n9/tmp/perf/prof3>/project,head:,head2:^--path <gtai-n9/tmp/perf/head2>/project`
+(`evidence/perf/n9-final-1365b7f3/`: ab.json + run.txt). Editor binary (debug), windowed D3D12 1920x1080, fixed 60
+uncapped (vsync off: the cost of one gameplay frame), bench.lock held by ab.mjs, arm order rotating, 0 script errors
+in 27 runs, **CONTENDED in 25 of 27 runs (1-8 other Godots: the other lanes' gates and reels)**. `head2` = a byte
+copy of head's project (its `.godot`, DLLs) in another dir: a head-vs-main move counts only beyond head-vs-head2 (F12).
+main = da108c13 = main's project today (`git diff da108c13 main -- project native` is empty). Median ± half-spread:
+
+| scene | metric | main | head | head2 (A-vs-A) | verdict |
+|---|---|---|---|---|---|
+| King under combo | p50 / p99 / p99.9 ms | 4.51 / 10.31 / 14.64 | 5.10 / 10.19 / 13.28 | 4.14 / 9.03 / 12.67 | WASH (head vs head2 0.96 ms at p50) |
+| King | CPU cores, steady RAM | 1.00, 746 MB | 1.01, 790 | 1.01, 790 | WASH (spread 24-32 MB) |
+| drive70 | p50 / p99 / p99.9 ms | 3.54 / 6.98 / 14.58 | **2.24 / 4.66 / 9.58** | 2.59 / 6.44 / 12.27 | p50 -1.3 ms vs main but head vs head2 = 0.35: **WASH by F12** (direction: head under main in 3 / 3 rounds, 2.19-2.72 vs 2.67-3.79) |
+| drive70 | render CPU / GPU ms, VRAM | 0.30 / 0.25, 916 MB | 0.23 / 0.23, 932 | 0.26 / 0.22, 916 | WASH |
+| riot (400 actors) | p50 / p99 / p99.9 ms | 4.84 / 11.32 / 17.73 | 4.26 / 11.31 / 19.32 | 5.67 / 12.63 / 23.20 | WASH (head vs head2 1.4 ms at p50) |
+| riot | CPU cores, steady RAM, draws | 1.03, 859 MB, 734 | 1.01, 864, 734 | 0.94, 861, 734 | WASH; draws identical (pixel-free levers) |
+
+Reading: on this contended machine the A-vs-A floor (0.35-1.4 ms at p50) is larger than every CPU lever kept tonight
+(L17-L25 sum to ~0.7 ms a riot frame by their own in-run timers: FxPool -40 us, the occlusion query 705 -> ~100 us,
+CorpseStains 138 -> 87 us, the blood wall checks -55 us, residency -7 % of chunks.update). So the frame table claims
+NO frame-level win; the wins are the mechanism numbers in each L row (in-run controls, ranges apart). The night's
+frame-level results stand where they were measured: F-19 (0 / 40 freezes), BC7 VRAM -352 / -362 MB (Item 4).
+An earlier run (`evidence/perf/n9-final-it8/`, 07:20, 2 arms) is VOID for head: its r1 head runs carried the
+uncommitted L27 arm (FRICTION it8). Owed at the freeze: the same table on the final HEAD, on the release exports
+(`@exe` arms, as d9's final table), when the machine is quieter.
+
+## What ships (it9, 08:14-08:22): main vs a trial merge of world's head + this branch, release exports
+The Director merges four lanes; world carries BC7 + combo + bikes, this branch the CPU cuts + mailbox. A scratch
+trial merge (`gtai-n9/tmp/perf/world3`, commit 6e36e936 = n9-world b888fe20 + n9-perf c18385e4, never pushed: only
+JOURNAL.md / REPORT.md conflict, the code auto-merges, lint 15 / 15; world's DLLs copied) exported as `windows-bench`
+to `build/export/windows-bench-merge/`. `node tools/perf/ab.mjs --scenes=drive70,riot --pairs=4
+--arms=main@exe-windows-bench-main:,merge@exe-windows-bench-merge:` (`evidence/perf/n9-it9/ship-merge/` + `.log`),
+16 runs, 0 errors, bench.lock via ab.mjs, CONTENDED(2-8) in 7 of 8 rounds. Median ± half-spread:
+
+| scene | metric | main da108c13 | merge | verdict |
+|---|---|---|---|---|
+| drive70 | p50 / p99 ms | 2.24 / 4.51 | 2.09 / 3.97 | WASH (merge under main in 3 of 4 rounds) |
+| drive70 | VRAM MB | 884 | **528 (-356, -40 %)** | **WIN** (spread 8-16) |
+| drive70 | steady RAM MB | 754 | 692 (688-753) | WASH by spread (3 of 4 merge runs at ~690) |
+| riot | p50 / p99 ms | 4.50 / 8.54 | 4.37 / 9.07 | WASH (merge under main in 3 of 4 rounds; world adds rig cost, see draws) |
+| riot | VRAM MB | 899 | **549 (-350, -39 %)** | **WIN** |
+| riot | draws | 734 | 739 | +5 (world's content: bikes / robe; not a perf regression to chase) |
+
+**The pck: install up, download down.** BC7 blocks are stored raw in the pck (343.9 of 411.7 MB are `.bptc.ctex`),
+while a lossless `.ctex` is WebP, already entropy-coded. So the install grows and the download shrinks
+(`evidence/perf/n9-it9/pck-size.txt`, `python -I tools/perf/pck_download.py <pck>...`: every 1 MB chunk compressed
+alone, the way a chunked depot store works):
+
+| build | pck on disk | LZMA, 1 MB chunks | zlib, 1 MB chunks | xz -6, whole file |
+|---|---|---|---|---|
+| main (lossless) | 217.8 MB | 213.4 MB | 216.0 MB | 210.2 MB |
+| merge (BC7) | 411.7 MB (+194) | **154.9 MB (-27 %)** | 168.1 MB (-22 %) | 145.7 MB |
+
+L4 (d9) recorded the install side (+160 MB then) and guessed that depot compression shrinks the download; this
+measures it: **a player downloads ~45-60 MB less, installs ~194 MB more, and the GPU holds ~350 MB less.** Which
+codec the store uses is not measured here (the two codecs bracket it). NOTE to world (FYI, no work asked).
+
+## Final table n9, the release build, 8 pairs (it9, 08:06-08:14): head under main in 16 of 16 paired rounds; the RAM mode on both
+`node tools/perf/ab.mjs --scenes=drive70,riot --pairs=8 --arms=main@exe-windows-bench-main:,head@exe:`
+(`evidence/perf/n9-it9/ram-mode/` + `ram-mode.log`). The same exports as it8 (main da108c13 from prof3, head efa848cb;
+HEAD c18385e4 differs from efa848cb only in docs and a `dev/` comment, which the export drops). 32 runs, 0 errors,
+bench.lock via ab.mjs, **CONTENDED(2-4) in 14 of 16 rounds** (the other lanes' Godots), the arm order alternating
+per round. p50 ms per round (main / head):
+
+| scene | r0 | r1 | r2 | r3 | r4 | r5 | r6 | r7 | median | paired diff (median) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| drive70 | 2.13 / 1.91 | 2.29 / 2.04 | 2.64 / 2.14 | 2.30 / 2.00 | 2.22 / 1.84 | 2.53 / 1.95 | 2.71 / 2.59 | 3.18 / 2.53 | 2.42 / 2.02 | **-0.34 ms (-15 %)** |
+| riot | 3.91 / 3.36 | 4.40 / 3.43 | 4.18 / 3.50 | 4.07 / 3.20 | 3.87 / 3.50 | 4.95 / 4.03 | 6.43 / 5.36 | 5.62 / 5.00 | 4.29 / 3.50 | **-0.75 ms (-18 %)** |
+
+Head is under main in **8 of 8 rounds on each scene** (both arm orders), the sign test's two-sided p = 0.008 a
+scene. Across tonight's release runs (it8 quiet + this) head is under main in 12 of 12 riot rounds and 12 of 12
+drive70 rounds. ab.mjs's range rule still prints WASH (the contention drift across rounds, 1.9 -> 2.6 ms for head
+alone, is wider than the gap), so the claim is the paired one: **riot p50 -0.75 ms, drive70 p50 -0.34 ms on the
+shipped build, every pair the same way**. The it8 A-vs-A (head vs a byte copy, 0.14 ms on the quiet riot) is under
+both gaps. p99 / worst: not claimed (overlap). Draws identical (293, 734): pixel-free.
+**The steady-RAM mode (~815 MB vs ~752 MB) shows up on both builds**: main 2 of 16 (drive70 r2 814, riot r3 816;
+plus one 687 low), head 1 of 16 (riot r1 816). Over tonight's exe runs: main 8 of 33, head 1 of 50 (Fisher's exact
+p = 0.002). So head is NOT immune: the mode is a per-run state (an allocator / driver pool that sometimes keeps
+~63 MB more), and head hits it less often. Not claimed as a RAM win: a frequency, not a level. A bisect would need
+~20 runs an arm to tell 24 % from 2 %: not worth the freeze hours. Watch item closed as "real on both, rarer on head".
+
+## Final table n9, the release riot at a quieter moment (it8, 07:56-08:01): a riot p50 WIN; the RAM split open
+The same three exports, riot only, `--pairs=4` (`evidence/perf/n9-ram-exe-it8/`: ab.json + run.txt), 0-2 other
+Godots (CONTENDED(2) in 5 of 12 runs: main 3 of 4, head 1, head2 1; main's two quiet rounds read 3.62 and 4.67), 0
+script errors. Per round, p50 ms: **main 3.88 / 4.29 / 3.62 / 4.67, head 3.38 / 3.19 / 3.53 / 3.17, head2 3.50 /
+3.52 / 3.59 / 3.35**. Both copies of head sit under every main round (head + head2 3.17-3.59 vs main 3.62-4.67), and
+head vs head2 is 0.14 ms (the F12 floor of this run). **riot p50 4.29 -> 3.38 ms (medians, -0.9 ms; by the ranges at
+least -0.03, typically -0.5..-1.0)**: in line with the ~0.7 ms of CPU cuts the in-run timers measured (L17-L25).
+ab.mjs's own spread rule prints WASH (main's half-spread 0.52); the claim rests on the 8-of-8 ordering and the
+small A-vs-A gap, and it is the riot's p50 only: p99 main 8.1-10.8, head 5.8-8.6, head2 6.9-9.2 overlap (not
+claimed). GPU 0.38 -> 0.32 ms reads WIN in ab.mjs but head2 0.34: not claimed.
+Steady RAM: main 751-754 MB in 4 of 4 quiet riot runs, head 751-756, head2 753-755. **But drive70, quiet, 4 pairs
+(08:00, `evidence/perf/n9-drive-exe-it8/`)**: main's steady RAM was 817 MB in r0 (751-756 in r1-r3). Over every exe
+run tonight main shows the ~817-821 MB mode in **6 of 17** runs, head and head2 in **0 of 34**: NOT refuted, an open
+watch item (a ~65 MB mode only main hits; next: a 2-arm bisect over the branch's commits on drive70 / riot, 8+ runs
+an arm, before any claim). drive70 p50 per round: main 2.15 / 2.29 / 2.52 / 2.11, head 1.78 / 1.98 / 2.12 / 1.81,
+head2 2.45 / 1.88 / 1.97 / 2.11: **WASH** (ranges overlap; direction: head under main in 4 of 4 pairs, head2 in 2).
+
+## Final table n9, the release build (it8, 07:45-07:53): main da108c13 vs efa848cb vs a byte copy, as shipped
+`node tools/perf/ab.mjs --scenes=riot,drive70,riot60 --pairs=3 --arms=main@exe-windows-bench-main:,head@exe:,head2@exe-windows-bench-head2:`
+(`evidence/perf/n9-final-exe-efa848cb/`). `windows-bench` release exports, the official 4.7.2 template: main from
+prof3 (pck 217.77 MB), head from efa848cb (pck 217.78 MB), head2 a byte copy of head's export dir (F12). 27 runs, 0
+script errors, **CONTENDED in 23 of 27 (up to 10 other Godots)**: riot p50 3.4-7.5 ms against d9's quiet 4.08.
+Median ± half-spread:
+
+| scene | metric | main | head | head2 (A-vs-A) | verdict |
+|---|---|---|---|---|---|
+| riot (fixed 60) | p50 / p99 / p99.9 ms | 3.88 / 8.20 / 12.10 | 5.08 / 11.83 / 19.29 | 3.48 / 8.33 / 12.53 | WASH (head's r0 / r1 ran under 2-3 other Godots: 6.67 / 5.08; r2 3.38 under main's 3.86) |
+| drive70 (fixed 60) | p50 / p99 ms | 2.08 / 4.13 | 1.97 / 4.22 | 1.82 / 3.46 | WASH |
+| riot60 (vsync + 60 cap) | process CPU, cores | 0.38 (0.32-0.40) | 0.32 (0.29-0.34) | 0.30 (0.30-0.38) | WASH by spread (direction: head under main's median in 3 / 3 rounds) |
+| all three | steady RAM MB | 816 / 818 / 755 | 752 / 754 / 753 | 751 / 754 / 753 | WASH by spread; **watch**: main is bimodal (5 of 9 runs at 816-821, the rest 750-755), head and head2 751-756 in 18 of 18 |
+| riot | draws, VRAM | 734, 883 MB | 734, 899 | 734, 883 | identical draws (pixel-free); VRAM inside its 16 MB step |
+
+So tonight's release build costs what main's does on this host, within a floor this loaded machine sets at
+~0.15-1.6 ms p50 (head vs head2). Not claimed, worth a quiet re-run: the steady-RAM split (main's ~820 MB mode never
+appeared on head in 18 runs) and riot60's -0.06 core. Owed at the freeze: this table again if HEAD's project
+changes, preferably at a quieter moment (`--pairs=5`).
 
 ## Final table (it12, 14:39-14:52): this morning's main vs d9-perf HEAD, both as the shipped release build
 `node tools/perf/ab.mjs --scenes=riot,drive70,riot60,drive60 --arms=main@exe-windows-bench-main:,head@exe:,head2@exe-windows-bench-head2: --pairs=3 --out=evidence/perf/final-exe`
@@ -201,6 +873,10 @@ CONTENDED(2-8) in 14 of 36 runs (the other lanes' Godots), 0 script errors in 36
   engine's main thread lands on `[Godot*.exe]` / `[RTAI*.exe]`, Godot's own threads on `[msvcrt.dll]` (std threads),
   the GPU driver's on its DLL (`nvwgf2umx.dll` ...). Read-only (query rights). It answers "which thread pays" when
   `ab.mjs`'s process CPU moves (L11).
+- n9 it9: `python -I tools/perf/pck_download.py <a.pck> [<b.pck>...]`: the download size of an exported pck as a
+  chunked depot store sees it (every 1 MB chunk compressed alone, LZMA preset 6 and zlib 6: the band). Install and
+  download move apart once textures are BC7 (section "What ships"). A trial-merge arm: merge the lanes in a scratch
+  worktree, export `windows-bench` into `build/export/<dir>/`, and A/B it as `name@exe-<dir>:`.
 - Existing instruments reused: `FightFrames` (`--frames=<json>`: per-frame wall, process, flush, draw,
   pump, physics, render CPU/GPU, draw calls, pipeline compiles), `NodeSpans` (`--spans=<json>`: per-node
   `_process` and `_draw` cost: the per-system report), `city_bench.tscn` (`gtai.bench/1`).

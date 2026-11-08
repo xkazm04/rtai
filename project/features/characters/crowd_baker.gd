@@ -4,13 +4,17 @@ extends Node
 ## through every clip on the fixed tick and captured frame by frame into one atlas image
 ## (25 captures, then the viewport and the rigs are freed). Headless (no GPU) it leaves the
 ## atlas unbaked; the layout and the clip table do not depend on it.
-## Await bake(): it spans about 30 rendered frames, at load only (never in play).
+## Await bake(): it spans about 30 rendered frames, at load only (never in play). The captures
+## are read back asynchronously (CrowdReadback, n9-perf): no synchronous GPU stall per capture.
 
 const TICK: float = 1.0 / 60.0
+## Frames to wait for the last readbacks before the bake gives up on them (they land in 1-3).
+const WAIT_FRAMES: int = 120
 
 var _rigs: Array[CutRig] = []
 var _vp: SubViewport = null
 var _image: Image = null
+var _readback: CrowdReadback = CrowdReadback.new()
 
 
 func bake(atlas: CrowdAtlas) -> void:
@@ -32,12 +36,24 @@ func bake(atlas: CrowdAtlas) -> void:
 			at = want
 			await RenderingServer.frame_post_draw
 			_capture(CrowdAtlas.CLIP_FIRST[c] + f)
+	await _drain()
 	StreetCrowdCorpse.stamp(_image, _rigs)  # n8 street: the drawn corpse under a card view
 	atlas.texture = ImageTexture.create_from_image(_image)
 	atlas.baked = true
 	_vp.queue_free()
 	_rigs.clear()
 	PartMaterials.set_view(saved_zoom)
+
+
+## Waits (rendered frames, at most WAIT_FRAMES) for the readbacks still in flight.
+func _drain() -> void:
+	var waited: int = 0
+	while _readback.pending > 0 and waited < WAIT_FRAMES:
+		await RenderingServer.frame_post_draw
+		waited += 1
+	var missing: int = _readback.pending + _readback.failed
+	if missing > 0:
+		Log.warn("characters", "crowd atlas: %d captures missing" % missing)
 
 
 func _make_stage() -> void:
@@ -110,9 +126,12 @@ func _advance(seconds: float) -> void:
 
 
 func _capture(col: int) -> void:
+	_readback.request(_vp, _blit.bind(col))
+
+
+func _blit(shot: Image, col: int) -> void:
 	var cell: int = CrowdAtlas.CELL_PX
-	var shot: Image = _vp.get_texture().get_image()
-	if shot == null or shot.is_empty():
+	if shot == null or shot.is_empty() or _image == null:
 		return
 	shot.convert(Image.FORMAT_RGBA8)
 	for look: int in CrowdAtlas.LOOKS:

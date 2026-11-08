@@ -109,6 +109,6 @@ func test_extra_occluders_merge_only_when_their_drawn_area_meets_the_view() -> v
 	var outside: CityOccluders.Bld = CityOccluders.Bld.new()
 	outside.area = Rect2(Vector2(40.0, 40.0) * px, Vector2(6.0, 3.6) * px)
 	var near: Array[CityOccluders.Bld] = []
-	CityOcclusion.merge_extra(near, [inside, outside] as Array[CityOccluders.Bld], view)
+	CityOccluders.merge_extra(near, [inside, outside] as Array[CityOccluders.Bld], view)
 	assert_eq(near.size(), 1)
 	assert_same(near[0], inside)

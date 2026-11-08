@@ -1,0 +1,6 @@
+extends SceneTree
+
+
+func _process(_d: float) -> bool:
+	printerr("PROBE editor=%s template=%s setting=%s window=%s" % [OS.has_feature("editor"), OS.has_feature("template"), ProjectSettings.get_setting("display/window/vsync/vsync_mode"), DisplayServer.window_get_vsync_mode()])
+	return true

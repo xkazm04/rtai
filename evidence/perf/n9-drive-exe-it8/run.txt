@@ -1,0 +1,15 @@
+drive70 main@x r0: p50 2.15 p99 4.13 worst 6.6 cpu 1.06 cores ws 829 MB steady 817 last 819 errors 0
+drive70 head@x r0: p50 1.78 p99 3.43 worst 4.8 cpu 1.09 cores ws 755 MB steady 755 last 755 errors 0
+drive70 head2@x r0: p50 2.45 p99 5.60 worst 37.7 cpu 1.05 cores ws 751 MB steady 751 last 751 errors 0
+drive70 head2@x r1: p50 1.88 p99 3.75 worst 5.2 cpu 1.07 cores ws 765 MB steady 752 last 754 errors 0
+drive70 head@x r1: p50 1.98 p99 3.90 worst 7.0 cpu 1.06 cores ws 756 MB steady 754 last 756 errors 0
+drive70 main@x r1: p50 2.29 p99 5.27 worst 26.4 cpu 1.04 cores ws 752 MB steady 751 last 752 errors 0
+drive70 main@x r2: p50 2.52 p99 5.52 worst 8.4 cpu 1.03 cores ws 759 MB steady 756 last 757 errors 0
+drive70 head@x r2: p50 2.12 p99 4.16 worst 6.4 cpu 1.06 cores ws 757 MB steady 755 last 757 errors 0
+drive70 head2@x r2: p50 1.97 p99 5.00 worst 6.5 cpu 1.08 cores ws 756 MB steady 753 last 756 errors 0
+drive70 head2@x r3: p50 2.11 p99 4.38 worst 12.6 cpu 1.03 cores ws 758 MB steady 755 last 758 errors 0
+drive70 head@x r3: p50 1.81 p99 3.80 worst 10.0 cpu 1.08 cores ws 761 MB steady 758 last 761 errors 0
+drive70 main@x r3: p50 2.11 p99 5.56 worst 17.3 cpu 1.05 cores ws 766 MB steady 751 last 752 errors 0
+drive70 main@x: p50 2.29±0.21 p99 5.52±0.72 p99.9 14.66±5.48 worst 17.27±9.91 draws 292.78±0.00 renderCpu 0.23±0.03 gpu 0.22±0.01 vram 884.10±16.09 cpu 1.05±0.01
+drive70 head@x: p50 1.98±0.17 WASH p99 3.90±0.36 WIN p99.9 6.17±2.08 WASH worst 7.04±2.56 WASH draws 292.78±0.00 WASH renderCpu 0.23±0.02 WASH gpu 0.21±0.01 WASH v
+drive70 head2@x: p50 2.11±0.29 WASH p99 5.00±0.92 WASH p99.9 7.57±12.16 WASH worst 12.63±16.27 WASH draws 292.78±0.00 WASH renderCpu 0.24±0.03 WASH gpu 0.22±0.00 W

@@ -1,0 +1,19 @@
+== blood-riot-3
+BLOODPROF blood.step 495.7 | beat 2.9 | pop 2.2 | stains 158.7 | frames 1829
+BLOODPROF2 step_ticks 380.0 | leak 2.4 | meshes 7.2 | resolve+mat 101.0
+OCCCNT per frame: candidates 0.0 | chunk calls 33.3 | kept 0.0
+OCCPROF collect 48.4 | near 143.6 | crowd+lift 104.4 | rigs 16.9 | layer children 12.0 | process 301.5
+[INFO] city: occlusion: 0 body-frames hidden over 1829 frames; crowd 11669 patches, 101 us/frame
+== blood-drive_dense-3
+BLOODPROF blood.step 31.5 | beat 2.1 | pop 1.1 | stains 8.9 | frames 1829
+BLOODPROF2 step_ticks 21.6 | leak 2.1 | meshes 2.0 | resolve+mat 1.7
+OCCCNT per frame: candidates 138.6 | chunk calls 13.3 | kept 29.5
+OCCPROF collect 41.8 | near 200.1 | crowd+lift 114.4 | rigs 9.4 | layer children 12.0 | process 361.0
+[INFO] city: occlusion: 3432 body-frames hidden over 1829 frames; crowd 5154 patches, 110 us/frame
+== bcnt
+BLOODPROF blood.step 450.4 | beat 2.5 | pop 1.9 | stains 139.7 | frames 1829
+BLOODCNT per tick: slots 320.0 | live 82.1 | ticks 3602
+BLOODPROF2 step_ticks 347.0 | leak 1.9 | meshes 6.2 | resolve+mat 90.8
+OCCCNT per frame: candidates 0.0 | chunk calls 33.3 | kept 0.0
+OCCPROF collect 41.3 | near 120.8 | crowd+lift 93.5 | rigs 16.9 | layer children 12.0 | process 259.9
+[INFO] city: occlusion: 0 body-frames hidden over 1829 frames; crowd 11669 patches, 91 us/frame

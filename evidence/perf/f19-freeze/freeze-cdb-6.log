@@ -1,0 +1,24 @@
+﻿Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+D3D12 12_0 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce RTX 4090
+
+[INFO] quest1: city cells: 2 chunks in 21 ms
+[INFO] quest1: street filled in 16 chunk passes
+[INFO] characters: prewarmed 41 rigs in 122.5 ms
+[INFO] quest1: started: Rivet is the player's (seed 20261102)
+HB pf0
+CB> req 0
+HB pf1
+CB> req 1
+HB pf2
+CB< got 0
+CB> req 2
+HB pf3
+CB< got 1
+CB> req 3
+HB pf4
+CB< got 2
+CB> req 4
+HB pf5
+CB< got 3
+CB> req 5
+HB pf6

@@ -1,0 +1,21 @@
+﻿{
+    "schema":  "gtai.thread-cpu/1",
+    "pid":  79224,
+    "wallMs":  2020.1,
+    "totalCores":  0.0155,
+    "groups":  [
+                   {
+                       "group":  "[msvcrt.dll]",
+                       "threads":  1,
+                       "cores":  0.0155
+                   }
+               ],
+    "threads":  [
+                    {
+                        "tid":  67188,
+                        "name":  "",
+                        "module":  "msvcrt.dll",
+                        "cores":  0.0155
+                    }
+                ]
+}
