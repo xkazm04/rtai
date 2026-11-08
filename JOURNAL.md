@@ -74,3 +74,21 @@ NEXT (iteration 2), final: (a) one still of the folded card to confirm the LB / 
   40 px/m (Rivet looked small in the King stills: measure his px height vs the city); (c) research loop: the 40 Hz row
   and the combo framing at 1280x800 on main once world's BC7 merges; (d) REPORT.md at the freeze with the Calls
   (glyphs and the compact card on the desktop too? the keyboard twin `ui_kb_glyphs_v1`), and the exe line.
+
+## Iteration 2 (BUILD), 01:51-02:51
+
+- 01:53 READ: JOURNAL NEXT, the other journals: no REQUEST to handheld (world uses my `bc7_arm.mjs` for its BC7 step).
+  Registry rules applied: on-device-verification-harness (numbers labelled "on the simulator", a probe that reads the
+  live tree, cross-checked on pixels), adaptive-fidelity-tiers (a bigger text scale stays a row value / a Call).
+- 01:57 (a) Still of the folded card (King, `--device=deck`, iGPU, quiet): the LB glyph now clears the Madness bar by
+  ~5 px (`gtai-masters/n9/handheld/ghostcard-deck-lb-gap-fixed-crop-x2.png`). (b) The boss cam honours `zoom_k`: Rivet
+  measures ~42 px tall in the King arena at 40 px/m = 1.1 m x ~38 px/m (he looks small because he is 1.1 m: rivet's
+  1.65 m lands on its branch, ~66 px then). Nothing to fix on my side.
+- 02:20 MILESTONE the runtime legibility probe (owed since d9, LEDGER section 6): `TextProbe` + `legibility_walk.gd`
+  (quest 1 under `deck` on pad events: title, quest HUD, pause) measure each text's cap and x-height ink px from the
+  glyph cache; the draw_string sizes from a reviewed table. Deck: nothing below 9 px under the strict x-height reading
+  (smallest: the boss count x 9 / cap 12, the 18 px texts x 10 / cap 13); every cap >= 12. Matches the pixels of the
+  King still. Commit 8ea46cd4 (debt ratchet: dev_loc +241 accepted with a reason).
+- FRICTION: a `-s` SceneTree script cannot name autoloads (`Log`) at compile time: split into a launcher + a Node
+  walker (the pad walker's pattern). Headless GUT's window is ~64x40, so the viewport stretch reads 0.05: the probe
+  takes the stretch as a parameter in tests.
