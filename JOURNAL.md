@@ -381,7 +381,9 @@ centred on his ground point, so it sorts with the car by his body, not by a foot
   (`gtai-masters/n9/rivet/rivet_armed_run_pistol_before_after_arena_gunplay_tilt70_64ppm_seed3_f20_176.png` + mp4).
   DECISION rivet/armed-run. frames.json 14.
 - Reels it7b (`reel-director-it7b-<v>.log`): top ran on 4c315b3d; tilt70 and combo started after rivet_walk.gd changed
-  (b31577a4's code, before gdformat's whitespace): 19/19 0 SCRIPT ERROR so far (top, tilt70).
+  (b31577a4's code, before gdformat's whitespace): 19/19 fully down, 0 SCRIPT ERROR, exit 0 in all three; top re-run
+  on b31577a4 (`reel-director-it7c-top.log`, 05:21-05:24): 19/19 fully down, 0 SCRIPT ERROR, exit 0. So every view
+  has a green reel on the armed-run head.
 - OWED: the armed-run provenance lines carry no prompt_hash (the rows are not in catalog.json or metrics.jsonl yet at
   05:14; refs name the cell folders + row ids): fill them when the library's catalog lists them.
 - FRICTION (~3 min): deleted the knock clip frame dirs while cleaning (the masters keep the sheets and both mp4s).
@@ -394,7 +396,7 @@ centred on his ground point, so it sorts with the car by his body, not by a foot
     matches the walk; the lying body reads ~1.3x his standing height at 64 px/m. Option: one value per art key.
 
 NEXT (it8):
-1. Check `reel-director-it7b-combo.log`, then the director reel top on b31577a4 (`reels.sh it7c` or top alone).
+1. (done in it7: the reels are green on b31577a4 in all three views.)
 2. Armed runs as the library serves them: twohand/blade/heavy at 70 then 55: pack each like b31577a4 (one grid per
    weapon name; blade -> katana, heavy -> gatling; check each grid's legs travel = run8's before reusing RUN_CYCLE_CELL).
 3. Film the knock's other rows (toward / away / left): world's clip has one car heading; a scratch drive with the car
