@@ -545,6 +545,7 @@ scratch project at ee63589c = main + L2 + L3, preset `quest1` = `quest1_frames.g
 Dock 9 fight in the play view, windowed D3D12 1920x1080, editor binary, bench.lock held, CONTENDED(4) in 3 of 3 runs
 (the rivet lane filming)):** p50 3.63 ±0.01, p99 6.49 ±0.15, p99.9 9.70 ±0.60, worst 18.77 ±1.48 ms, CPU 0.96 cores,
 peak RAM 1035 MB (the highest of the five scenes). Draws / render CPU / VRAM are not logged by quest1_frames (n/m).
+*(Correction, n9 it9: tick 5800 is the Toner Room dialogue, not the Dock 9 fight, which is near tick 13000 (handheld n9 07:48). The quest1 row measures that dialogue stretch of the city; the comments in quest1_frames.gd and ab.mjs are fixed.)*
 
 ## Release-export baseline (it4, at 87155de9): the shipped build vs the editor binary
 **Current numbers: the `--screen 0` rerun (11:57-12:00) at the end of this section.** The first table

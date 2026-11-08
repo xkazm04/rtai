@@ -49,7 +49,7 @@ export const SCENES = {
     user: ['--scenario=drive_dense', '--zoom=1.5', '--view=tilt70', '--secs=30', '--vsync=enabled', '--out=OUT'] },
   riot60: { engine: CAP60, scene: 'res://dev/bench/city_bench.tscn', kind: 'bench',
     user: ['--scenario=riot', '--zoom=1.0', '--view=tilt70', '--secs=30', '--vsync=enabled', '--out=OUT'] },
-  // quest 1 from the Dock 9 fight (quest1_frames: its own one-tick-a-frame loop, 1200 frames, the play view).
+  // quest 1 from tick 5800 (the Toner Room dialogue; Dock 9 is near 13000, handheld n9): quest1_frames, 1200 frames.
   quest1: { engine: [...WIN, '-s', 'res://dev/bench/quest1_frames.gd'], scene: '', kind: 'slice',
     user: ['--out=OUT', '--view=tilt70'] },
   drive70h: { engine: ['--fixed-fps', '60'], headless: true, scene: 'res://dev/bench/city_bench.tscn', kind: 'bench',
