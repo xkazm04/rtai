@@ -234,3 +234,16 @@ NEXT (it5):
 5. Item 1: the city with bikes under combo in the real city (city_bench draws flat without --view: find why).
 6. Remove the scratch "before" worktree (`git worktree remove C:/Users/kazda/kiro/gtai-n9/tmp/world/before`)
    once the last before/after is filmed.
+
+### Item 3 insertion points (read only, it4 02:30; for it5)
+- Spec: `BD_CAR_HIT = 13` (m/s; 0 = off, so every existing parity case stays exact) and `BD_CAR_DMG = 14`, `BD_LEN`
+  13 -> 15 in BOTH `native/sim_core/src/sim_constants.h:130` and `project/features/city/sim/sim_constants.gd:129`
+  (lint `sim-constants` compares them).
+- Contact: `CityCore::body_resolve()` (`native/sim_core/src/body.cpp:89`) after the people loop and before
+  `solid(BD_R)`; twin `SimBody.resolve()` (`project/features/city/sim/sim_body.gd:129`), op for op. Cars: the hull
+  test in `car_hit.cpp` (`car_contacts` l.7, `car_hull` l.67) gives the footprint; at speed >= BD_CAR_HIT append a
+  hit (car vx, vy, speed) to `body_result()` after the knocks (a new count field, so RivetBody's reader changes
+  in the same commit); below it push the body out of the hull (no walk-through). The low-speed yield
+  (`yield_to_rivet`, boot/city_vehicle_world.gd + scenario_traffic_yields_rivet) stays the rule that stops the car.
+- Then `just native` (debug + release), parity (a new case with the hit on), the two scenarios, the Event and the
+  rig meta `rivet_knock` promised to rivet.
