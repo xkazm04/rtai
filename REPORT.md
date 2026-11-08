@@ -1,0 +1,51 @@
+# n9 perf REPORT (branch `n9-perf`, cut from main da108c13; DRAFT it4, final at the freeze)
+
+Numbers, methods and every A/B: `docs/perf/LEDGER.md` section "n9 night". Clips and stills:
+`C:\Users\kazda\kiro\gtai-masters\n9\perf\` (`frames.json`).
+
+## What works, with its evidence
+
+1. **The quest 1 freeze (F-19) is found and fixed.**
+   - Located with native stacks of 4 frozen runs (cdb, all the same): `RenderingServerDefault::_draw ->
+     RenderingDevice::_begin_frame -> D3D12 fence_wait (WaitForSingleObjectEx INFINITE)`. The GPU never finishes a
+     frame that queued behind a vsync `Present(1, 0)`. It is an engine/driver hang, not our GDScript. None of the
+     suspects (`chunk_source.take`, `save_worker`, threaded texture loads) was open (trace rounds, LEDGER "F19").
+   - Vsync off: 0 / 16. Vsync Enabled: 19 / 47 frozen. **Mailbox: 0 parked-fence freezes in 107 valid runs**
+     (mb40b 0 / 40 windowed `--autostart`, rel20 0 / 20 in the release export with a real Start press).
+   - Fix: `display/window/vsync/vsync_mode.windows=3` (mailbox, Windows only, no tearing). Commit 06c48c1b.
+     `test_frame_cap.test_windows_boots_in_mailbox_vsync` fails on the old tree.
+2. **The frame-pacing option** (efficient / steady) is in the pause card's settings and saved with them. The desktop
+   default is efficient. Commit d6e93b92. Still: `gtai-masters/n9/perf/pause-card-pacing-row.png`.
+3. **The traffic-sheet split is not needed under BC7.** world's BC7 import of the p70 sheet is 18 MB (a 32 MB staging
+   buffer, was 128 MB). The splitter (`tools/art/split_sheet.py`, bands stack back byte-identical) stays for a
+   lossless build. DECISION perf/traffic-split-under-bc7.
+4. **The BC7 table on world's branch** (desktop, bench.lock): VRAM drive70 900 -> 548 MB, riot 899 -> 536 MB;
+   drive70 p99 -8 %; the other frame times WASH. Clips `king32-main-vs-bc7.mp4`, `drive32-main-vs-bc7.mp4`.
+5. **world's REQUEST (the combo rig cost):** profiled per card kind. It is spread over many small GDScript calls,
+   not one hotspot. The one cut measured (StreetWalkerCards.place, -20 us/tick) is a wash; the patch is offered.
+6. **The crowd bake's readback** stays synchronous by default (the async arm moved the look goldens: 5 / 11 -> 11 / 11
+   with sync). DECISION perf/crowd-readback-sync-default.
+7. Gates on 54de9b41: unit 1823 / 0, scenarios 54 / 54, parity bit-exact, release-compile 615 / 0, look goldens
+   11 / 11, block goldens 5 / 5, the director reel 19 / 19 with 0 SCRIPT ERROR in top, tilt70 and combo.
+
+## What does not
+- Mailbox drops a tick image on a loaded machine: no-tick frames pooled over 9 rounds, Enabled 6 vs mailbox 51,
+  at the same CPU. Steady fixes it for +0.08 core. L16 (the engine's own delta smoothing, re-applied under
+  mailbox) is built behind `--delta-smooth=on`. Over three A/Bs (19 pairs) it had fewer no-tick frames in 10 pairs,
+  more in 3 and tied in 6. That is inside this machine's noise, so it stays off (DECISION perf/mailbox-delta-smoothing).
+- The frozen-fence root cause inside the driver/engine is a hypothesis from the source + the counts (a queued present
+  never retired), not a driver-level proof.
+
+## What blocked, and for how long
+- No debugger on the machine at the start (it1, ~10 min to install WinDbg/cdb).
+- The bench lock is shared; several A/Bs waited 1-10 min, and most numbers are labelled CONTENDED.
+
+## Calls for the owner
+- **P-1 Mailbox as the Windows default (built).** It ends the quest 1 freeze (0 / 107 vs ~2 in 5). The cost: an
+  occasional skipped tick image under load. The alternative is one value away: `display/window/vsync/vsync_mode.windows`
+  back to 1 (Enabled), which brings the freeze back.
+- **P-3 Pacing default (built: efficient).** "steady" by default on Windows removes the skipped tick images for +0.08
+  core. The alternative is one value away: the `pacing` default in `PlayerSettings`.
+
+## Next steps
+- See JOURNAL.md NEXT.

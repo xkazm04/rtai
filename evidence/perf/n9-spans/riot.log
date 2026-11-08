@@ -1,0 +1,12 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+D3D12 12_0 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce RTX 4090
+
+[INFO] characters: prewarmed 41 rigs in 97.4 ms
+city_bench: prewarm 11.7 ms
+city_bench: riot {"actorsAvg":399.790600832838,"avgFrameMs":8.01843367043428,"bloodDropDraws":1698.0,"bloodFrames":1828.0,"bloodPoolDraws":301.0,"bloodUsPerFrame":833.759299781182,"drawCallsAvg":733.888756692445,"framesMeasured":1681.0,"framesMultiTick":0.0,"framesNoTick":0.0,"fullRigsMax":20.0,"hitches25":6.0,"hitchesOver50":0.0,"hitchesWarmup":1.0,"low1Fps":40.197202747597,"over50.game":0.0,"over50.outside":0.0,"over50.pipeline":0.0,"over50.present":0.0,"over50.render":0.0,"over50.unexplained":0.0,"p99CpuMs":17.437,"renderCpuMsAvg":0.746017847243411,"renderCpuMsP99":2.88599991798401,"renderGpuMsAvg":0.744045209283633,"renderGpuMsP99":2.62199997901917,"rigMsP50":1.971,"rigMsP99":4.872,"rigMsPerTick":2.10243426531826,"simStepMsMax":2.518,"simStepMsPerTick":0.158863771564545,"streamSpawnMsPerTick":0.147810826888757,"swapFrames":51.0,"texMemPeakMb":547.03515625,"visibleAvg":288.505651397977,"visibleMax":368.0,"vramPeakMb":898.72265625,"worstFrameMs":40.11,"worstSwapMs":25.29} -> C:/Users/kazda/kiro/gtai-wt/n9-perf/evidence/perf/n9-spans/riot-tilt70-bench.json
+city_bench: crowd 22 cowers (22 at a death), 4 trips, 17 deaths
+city_bench: crowd observe mean 170 us, worst 2337 us over 1800 calls
+[INFO] city: occlusion: 0 body-frames hidden over 1829 frames; crowd 11669 patches, 114 us/frame
+[INFO] bench: node spans -> C:/Users/kazda/kiro/gtai-wt/n9-perf/evidence/perf/n9-spans/riot-tilt70.spans.json (1800 frames, 25 rows)
+WARNING: 1 ObjectDB instance was leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)

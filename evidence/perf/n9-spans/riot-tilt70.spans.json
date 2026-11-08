@@ -1,0 +1,201 @@
+{
+  "flush_order": [
+    "flush: before the first queued call (engine work) 0.006",
+    "draw: MultiMeshInstance2D in light_layer.gd 0.015",
+    "draw: MultiMeshInstance2D in fx_system.gd 0.005",
+    "draw: MultiMeshInstance2D in fx_system.gd 0.005",
+    "draw: MultiMeshInstance2D in fx_system.gd 0.005",
+    "draw: world_markers.gd 0.013",
+    "draw: Sprite2D in Node2D 0.005",
+    "draw: Sprite2D in Node2D 0.005",
+    "draw: Sprite2D in Node2D 0.004",
+    "draw: Sprite2D in Node2D 0.005",
+    "draw: Sprite2D in Node2D 0.004",
+    "draw: Sprite2D in Node2D 0.004",
+    "draw: Sprite2D in Node2D 0.005",
+    "draw: Sprite2D in Node2D 0.005",
+    "draw: Sprite2D in Node2D 0.004",
+    "draw: Sprite2D in Node2D 0.087",
+    "draw: Node2D in blood_fx.gd 0.007",
+    "draw: city_occlusion.gd 0.009"
+  ],
+  "frames": 1800,
+  "rows": [
+    {
+      "label": "city_view.gd",
+      "max_ms": 12.836,
+      "mean_ms": 3.406,
+      "nodes_last_scan": 1,
+      "p99_ms": 6.476
+    },
+    {
+      "label": "city_occlusion.gd",
+      "max_ms": 3.893,
+      "mean_ms": 1.045,
+      "nodes_last_scan": 1,
+      "p99_ms": 3.312
+    },
+    {
+      "label": "city_blood.gd",
+      "max_ms": 5.649,
+      "mean_ms": 0.797,
+      "nodes_last_scan": 1,
+      "p99_ms": 2.994
+    },
+    {
+      "label": "world.gd",
+      "max_ms": 14.143,
+      "mean_ms": 0.332,
+      "nodes_last_scan": 1,
+      "p99_ms": 2.327
+    },
+    {
+      "label": "draw: blood_fx.gd",
+      "max_ms": 7.982,
+      "mean_ms": 0.175,
+      "nodes_last_scan": 0,
+      "p99_ms": 1.68
+    },
+    {
+      "label": "draw: Sprite2D in Node2D",
+      "max_ms": 2.198,
+      "mean_ms": 0.11,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.241
+    },
+    {
+      "label": "draw: Node2D in city_occlusion.gd",
+      "max_ms": 27.031,
+      "mean_ms": 0.108,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.732
+    },
+    {
+      "label": "draw: Node2D in corpse_stains.gd",
+      "max_ms": 3.569,
+      "mean_ms": 0.103,
+      "nodes_last_scan": 0,
+      "p99_ms": 1.185
+    },
+    {
+      "label": "draw: Node2D in blood_fx.gd",
+      "max_ms": 2.523,
+      "mean_ms": 0.038,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.348
+    },
+    {
+      "label": "city_bench.gd",
+      "max_ms": 4.976,
+      "mean_ms": 0.03,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.064
+    },
+    {
+      "label": "draw: world_markers.gd",
+      "max_ms": 0.055,
+      "mean_ms": 0.008,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.015
+    },
+    {
+      "label": "draw: MultiMeshInstance2D in fx_system.gd",
+      "max_ms": 2.056,
+      "mean_ms": 0.007,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.012
+    },
+    {
+      "label": "draw: city_occlusion.gd",
+      "max_ms": 2.028,
+      "mean_ms": 0.007,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.013
+    },
+    {
+      "label": "flush: before the first queued call (engine work)",
+      "max_ms": 0.066,
+      "mean_ms": 0.007,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.016
+    },
+    {
+      "label": "Camera2D",
+      "max_ms": 0.013,
+      "mean_ms": 0.004,
+      "nodes_last_scan": 1,
+      "p99_ms": 0.007
+    },
+    {
+      "label": "platform.gd",
+      "max_ms": 0.017,
+      "mean_ms": 0.004,
+      "nodes_last_scan": 1,
+      "p99_ms": 0.008
+    },
+    {
+      "label": "save.gd",
+      "max_ms": 0.117,
+      "mean_ms": 0.004,
+      "nodes_last_scan": 1,
+      "p99_ms": 0.01
+    },
+    {
+      "label": "menu_idle.gd",
+      "max_ms": 0.019,
+      "mean_ms": 0.004,
+      "nodes_last_scan": 1,
+      "p99_ms": 0.011
+    },
+    {
+      "label": "minimized_cap.gd",
+      "max_ms": 0.036,
+      "mean_ms": 0.003,
+      "nodes_last_scan": 1,
+      "p99_ms": 0.008
+    },
+    {
+      "label": "(new since last scan)",
+      "max_ms": 2.055,
+      "mean_ms": 0.003,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.004
+    },
+    {
+      "label": "draw: MultiMeshInstance2D in light_layer.gd",
+      "max_ms": 0.015,
+      "mean_ms": 0.002,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.005
+    },
+    {
+      "label": "draw: cut_rig.gd",
+      "max_ms": 0.054,
+      "mean_ms": 0.0,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.003
+    },
+    {
+      "label": "draw: Node2D in cut_rig.gd",
+      "max_ms": 0.032,
+      "mean_ms": 0.0,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.003
+    },
+    {
+      "label": "draw: Node2D in Node2D",
+      "max_ms": 0.109,
+      "mean_ms": 0.0,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.007
+    },
+    {
+      "label": "draw: muzzle_pop.gd",
+      "max_ms": 0.016,
+      "mean_ms": 0.0,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.007
+    }
+  ],
+  "schema": "gtai.node-spans/1"
+}

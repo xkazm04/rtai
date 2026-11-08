@@ -235,3 +235,25 @@ NEXT it4 item 1 updated: the Log line is in (this commit); go straight to the 6-
   off 7/0/0/2 vs on 37/0/2/0 (a 122 ms stall round), riot 1/0/0/1 vs 0/0/0/0. Over 3 A/Bs (19 pairs) smoothing wins
   10, loses 3, ties 6 (sign test p ~0.09): INSIDE THE NOISE. **DROPPED as a default**, back to `--delta-smooth=on`
   (the arm); the fixed-fps guard kept. DECISION perf/mailbox-delta-smoothing rewritten; LEDGER "L16" verdict.
+- 04:21 GATE unit no-arg on 34bf44f2: **1831 / 0**.
+- 04:23 Riot spans on HEAD (`evidence/perf/n9-spans/`, city_bench riot tilt70, fixed 60, vsync off, windowed d3d12,
+  CONTENDED: 6 Godots up, 0 SCRIPT ERROR): per-node _process mean / p99 ms: **city_view.gd 3.41 / 6.48**,
+  city_occlusion 1.05 / 3.31, city_blood 0.80 / 2.99, world 0.33 / 2.33, draw blood_fx 0.18. city_view grew from
+  F6's 2.2 (d9 morning) to 3.4: the next lever is inside CityView._process (chunks.update, prop_lights.update,
+  write_render, lights.step, fx / fx.glow / fx.ground step, overlays, noir.light_street).
+- REPORT.md drafted (lane root): items 1-7 with evidence, Calls P-1 / P-3; final at the freeze.
+
+NEXT (it5):
+1. Break CityView._process down per call (scratch timers in a throwaway worktree, never committed, the patch kept as
+   evidence like `n9-rig-combo/prof.patch`): riot + drive70, find the 1-2 calls that carry the 3.4 ms. Write the
+   hypothesis + expected gain in LEDGER, then the smallest cut behind a flag, `ab.mjs --scenes=riot,drive70 --pairs=4`
+   under bench.lock (fixed-fps arms: a cost lever, not pacing, so 4 pairs suffice), and the pixel check (top
+   bit-identical: `node tools/evidence/run.mjs --no-bench` selftest goldens 11 / 11).
+2. Gates on HEAD before the freeze: `node tools/evidence/run.mjs --no-bench` (not run since 40fb2da3 / selftest
+   6d365066; since then only World._smoothed (inert by default), the smoother, LaunchArgs.engine_fixed_fps changed)
+   and the reel x3 (`--quit-after 16000`) again if any game file changes.
+3. Clips: a combined 30-90 s clip of the set (ffmpeg concat of king32 / drive32 + the pacing-row still) for frames.json.
+4. The final table (main da108c13 vs n9-perf HEAD) for the LEDGER at the freeze: `ab.mjs --scenes=king,drive70,riot
+   --arms=main:^--path <prof3>/project,head:` + an A-vs-A (F12).
+5. Scratch worktrees still up: `gtai-n9/tmp/perf/prof3` (main), `world3` (n9-world 746c2856): keep prof3 for item 4,
+   remove world3 (`git worktree remove --force`) once world's final BC7 table is not needed.
