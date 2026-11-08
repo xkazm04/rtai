@@ -118,3 +118,40 @@ time since the hit) as soon as a usable sheet is served. What I need from world:
 (proposed: the rig's react/knock state Rivet already uses for a shove, or a rig meta `rivet_knock` =
 Vector3(heading x, heading y, start tick) set by the view from the hit Event). Tell me the field you land and I
 read it; until then your hit frame + slide stands.
+
+## it4 (01:53-02:53)
+
+Read: JOURNAL it3, git log, the other lanes' journals (world: REQUEST to rivet = the knock-down, answered it3,
+no new field named yet; perf / handheld: no REQUEST to rivet; handheld notes Rivet looked small at 40 px/m in
+the King stills: that was before or after c0b0bea0? their branch is cut from main, so d9's 1.3 m: expected), the
+asset lane's JOURNAL tail and deliveries (`rivet_down_it118.md`, `rivet_walk_armed_it99.md`). rivet_run8: 70 row 3
+B (stance travel 0.62 x height, flight 0.16 x), fixes + all 55 rows in rounds 20261108-0155/-0200: NOT delivered yet.
+Registry rules applied: sprite-and-atlas (one scale per grid, a common foot line, and NEW: one tone per figure
+across the strips it swaps between: a per-channel mean/spread match to the strip it swaps with); motion-quality
+(a still card that translates = a glide; the acceptance is legs that alternate in step with the ground walked);
+realtime-combat-semantics (the fire latch takes the equipped strip's fire cell, so the drawn muzzle and the flash
+root are the measured ones: the walk grid never fires).
+
+- MILESTONE `2c46aeb4` **weapon-out walks (item 4)**: the library's armed walks wired per weapon each draws:
+  pistol (one-hand, drawn left rows v5 / 55 left), plasma rifle (two-hand, left v3 / 55 left v4), katana (blade,
+  left v3 / 55 left v4), gatling (heavy, left v3 / 55 mirrored), flamethrower (flamer v2, mirrored left: no drawn
+  left exists). Packed by `tools/art/rivet_walk.py` (new `mirror` left source) into `rivet_walk_eq_<weapon>.png`.
+  `RivetWalk.path_of` takes it while moving with that weapon out and no fire latch (`RivetStrips.fire_latched`:
+  recoil, the FIRE latch, a strike), so a shot swaps to the equipped strip's fire cell and its measured muzzle.
+  `RivetFrames.owns_weapon` is true on an armed grid (the held part stays hidden). The left-view override no longer
+  replaces an armed grid (the grid has its own left rows). `--rivet-walk-armed=off` = d9's facing card.
+  Provenance: 10 lines (spliced left grids name both rounds and prompt hashes from the it99/it105 delivery).
+- MILESTONE `9bfc3cf3` **tone match**: the armed sheets read 10-20 levels lighter than the equipped strips (p70
+  pistol R 115 vs 95): a visible pop on every shot. `rivet_walk.py --tone=<ref>` matches the opaque pixels'
+  per-channel mean and spread to the weapon's own equipped strip; now within ~2 levels.
+- FRICTION (~2 min): a static func named `firing` shadowed `draws_fire`'s `firing` parameter -> the script
+  failed to compile and every caller reported "nonexistent function"; renamed `fire_latched`.
+- FRICTION (~1 min): the pre-commit debt ratchet counts dev LOC: adding the flag to quest1_clip's own list grew
+  dev/frames by 1 line; dropped (film the armed walk in the arena).
+- Evidence (0 SCRIPT ERROR in all films): pistol before/after at 64 and 32 px/m, plasma rifle at 64 (tilt70 arena
+  gunplay seed 3), in `gtai-masters/n9/rivet/` + frames.json. The katana is not a gunplay weapon (the arena keeps
+  Gloria): film it in the reel or quest 1 next.
+- Seen in the films: the walk family draws his free arm as the cable SPIKE where the equipped strips draw the
+  CLAW (an identity swap on the fire latch, d9's walk has it too vs the base): a Call, or a REQUEST for the claw in
+  the armed walks. The armed figure reads a touch narrower than the equipped card at the same height.
+- Gates it4: unit full 1818/0 (on 9bfc3cf3); lint 15/15.
