@@ -67,6 +67,23 @@ At the older `riot` preset (`--view=tilt70`), 4 + 6 pairs (`evidence/perf/n10-ri
 Slip recorded: batch b2 was run as "combo" with `--view=combo` appended to the arms; the preset's own `--view=tilt70` comes first and wins, so b2 is tilt70 (its logs say so) and was renamed. Use the `riotc` preset.
 Process CPU and RAM columns: several rounds read NaN (the sampler under load), so no CPU or RAM claim from these runs.
 
+### Item 4, idea 1: the rig feed's fill in C++ (it7): built, measured, reverted, NOT the baseline
+Hypothesis: `_fill_feed`'s loop is a dense GDScript scan (n9 table above: 387 us a riot tick, debug); `CitySim.fill_feed_rows` writes RigFeed's ten columns, matching the script's float32 arithmetic. Commit 4f153362, reverted by 409ec9d3 (the code stays in git; `evidence/perf/n10-feed/`). `test_city_feed_rows` compared the native rows with the script's on synthetic and live-sim snapshots.
+Micro (`evidence/perf/n10-feed/micro_debug_editor.log`, debug editor binary, synthetic 400 people / 262 rows, about 20 Godot processes up, CONTENDED): ~10 us native vs ~350 us script.
+Bench (release `windows-bench`, `riotc` = combo, 400 actors, 6 interleaved pairs, against the export of the previous head, under gtai-n10/bench.lock, CONTENDED 0-6; my own mutation runs were also up; `evidence/perf/n10-feed/riotc/`). Workloads identical (actors 399.79, visible 288.51, full rigs 20, draws 739):
+
+| round | frame p50 before / head ms | rig p50 before / head ms |
+|---|---|---|
+| 0 | 4.68 / 5.50 | 0.949 / 0.994 |
+| 1 | 4.75 / 4.30 | 0.961 / 0.965 |
+| 2 | 4.75 / 5.20 | 0.962 / 1.007 |
+| 3 | 3.88 / 4.29 | 0.807 / 0.967 |
+| 4 | 3.61 / 3.77 | 0.777 / 0.862 |
+| 5 | 3.36 / 3.89 | 0.712 / 0.917 |
+
+Frame p50 head lower in 1 of 6; rig p50 head higher in 6 of 6 (median +0.065 ms). **WASH at best: no gain measured, so it is not the baseline.** What this does NOT show: that the fill caused the rise. The rig timer does not contain the fill, and render CPU (0.72 -> 0.79 ms in round 0, higher in 6 of 6) and the C++ sim step (higher in 5 of 6) also rose, and the change cannot touch either. So the whole head process ran slower, which fits a confound between the two exports (made an hour apart) at least as well as a cost of the feed. An untested alternative explanation for the rig rise: ten fresh arrays a tick arrive cold in cache. Neither is established.
+The microbench's ~340 us saving did not appear at the bench. It was the debug binary on a synthetic snapshot; the release GDScript loop was never timed, so the micro does not say what the release saves.
+
 ## n9 night (2026-11-08, branch n9-perf from main da108c13)
 
 ### F19 quest-1 freeze: located in the engine (it1, 00:56-01:56)
