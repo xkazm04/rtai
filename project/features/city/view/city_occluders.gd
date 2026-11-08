@@ -21,6 +21,8 @@ var _ats: Dictionary[int, PackedVector2Array] = {}
 ## Each cached list's ground rects as (left, right, bottom) px triples, in list order: near()'s
 ## body filter reads these instead of the Bld (the drawn area shares the rect's x-span and bottom).
 var _box: Dictionary[int, PackedFloat32Array] = {}
+## Each cached list's indices (ascending) by screen column (CityOccluderCols).
+var _cols: Dictionary[int, CityOccluderCols] = {}
 var _rect_at: Rect2 = Rect2()
 var _rect_list: Array[Bld] = []
 var _rect_rev: int = -1
@@ -68,7 +70,10 @@ func collect(chunk: CityChunk, near_px: Vector2, out: Array[Bld], body: Rect2 = 
 	var x0: float = body.position.x
 	var x1: float = body.end.x
 	var top: float = body.position.y
-	for k: int in ats.size():
+	var ks: PackedInt32Array = (
+		_cols[id].between(x0, x1) if band else PackedInt32Array(range(ats.size()))
+	)
+	for k: int in ks:
 		if band and (box[k * 3 + 1] < x0 or box[k * 3] > x1 or box[k * 3 + 2] < top):
 			continue
 		var at: Vector2 = ats[k]
@@ -121,10 +126,12 @@ func of_chunk(chunk: CityChunk) -> Array[Bld]:
 		_cache.clear()
 		_ats.clear()
 		_box.clear()
+		_cols.clear()
 		_rect_at = Rect2()  # the candidates came from the dropped lists: list them again
 	var list: Array[Bld] = []
 	var ats: PackedVector2Array = PackedVector2Array()
 	var box: PackedFloat32Array = PackedFloat32Array()
+	var cols: CityOccluderCols = CityOccluderCols.new()
 	for k: int in chunk.command_count():
 		var t: int = chunk.tex[k]
 		var o: int = k * CityChunk.XF_STRIDE
@@ -142,9 +149,11 @@ func of_chunk(chunk: CityChunk) -> Array[Bld]:
 		for v: float in [b.r.position.x, b.r.end.x, b.r.end.y]:
 			@warning_ignore("return_value_discarded")
 			box.append(v)
+		cols.add(list.size() - 1, b.r)
 	_cache[id] = list
 	_ats[id] = ats
 	_box[id] = box
+	_cols[id] = cols
 	return list
 
 
