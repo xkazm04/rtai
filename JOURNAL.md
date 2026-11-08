@@ -78,3 +78,71 @@ one sheet serves 70 and 55.
   (scratch "before" worktree ready and imported at `C:/Users/kazda/kiro/gtai-n9/tmp/world/before`: main +
   combo + bikes 0.06, lossless, so only BC7 differs; arms `lossless:^--path <that>/project` vs `bc7:`, under
   bench.lock); frames.json.
+
+- MILESTONE (01:30) the dense drive at 32 px/m shows sim bikes with riders in lane at the table's 6 % (no
+  flag): `gtai-masters/n9/world/city_bench_drive_dense_bike_in_traffic_32ppm_x3_t4s.png` + grid + 20 s mp4;
+  frames.json started (5 entries). Open: `city_bench.tscn` with no `--view` drew FLAT (top prints, no cards)
+  although ViewMode's default is combo: find what it reads (a dev bench; perf's ab.mjs scenes pass --view, so
+  no number moved), and film the bikes again in the real city (`--seed=7 --rigs`, drive or a bot) under combo.
+
+### Scoping for items 3 and 4 (read only, it1)
+- Item 3 (cars knock Rivet down). Rivet is the sim's one body (`native/sim_core/src/body.cpp`,
+  `features/city/sim/sim_body.gd`, spec SimConst.BD_*; RivetBody builds the spec and reads `body_result`).
+  `body_resolve()` pushes him out of people only. Plan: a new spec field BD_CAR_HIT (m/s; 0 = off, so parity's
+  existing cases stay exact) from vehicle_handling.json (`rivet_hit_at`, proposal 5 m/s = 18 km/h) and
+  BD_CAR_HIT_DMG; in body_resolve (both twins, op for op) after the people loop: each live K_CAR / K_PCAR whose
+  hull (the car_hit.cpp footprint test) overlaps the body circle: speed >= BD_CAR_HIT -> record a hit
+  (slot, car vx, vy, speed) appended to body_result after the knocks; else push the body out of the hull (no
+  walk-through) and keep the yield (`yield_to_rivet` default ON = seams' low-speed rule: cars brake for him).
+  RivetBody reads the hit -> Events -> Rivet down for down_s along the car heading, slide sqrt(2*8*m),
+  damage = k * (speed - threshold) + base (data). View: his hit frame + a slide (REQUEST rivet for a drawn
+  knock-down). Parity: a new case with BD_CAR_HIT on (bikes in it); scenarios: struck at speed, a car creeping.
+  Rebuild `just native` (debug + release).
+- Item 4 (bodies stop at walls). `down()` (body.cpp) already runs `solid(0.3)` on a tier-0 slider, so cells
+  stop it; the kerb barrier is a PROP on a walkable cell, tier-1 people skip solid, and the drawn corpse lies
+  ~1.4-1.7x standing past the sim point along the blow. Three fixes: props' footprints as solids in the slide
+  (both twins), tier-1 too, and the view's lying direction/length bounded by the first solid along it.
+  Before/after: the kerb-barrier scene seed 5 tick 900.
+
+REQUEST to assets: king_robe_70, pitch 70, and king_robe_55, pitch 55: the King's approved bust with its robe's
+hem extended down to the boots (a long drawn robe over the legs, the boot toes showing at the hem's front),
+copied BY EXAMPLE from the approved King bust (the shipped p70 / p55 King cards) and `king_legs_70` /
+`king_legs_55` (the stride's leg length and the boots); the 5 facings of the bust's sheet, the robe's hem cut as a
+separate layer if you can (hem strip below the waist: the game sways it with the stride), the cape stays
+vermilion, the ink outline and print grain of the cast. Why: the owner's call s-1 C ("the King's legs go under a
+longer drawn robe"); the drawn legs read as thin under the bust today.
+
+REQUEST to rivet: a drawn knock-down for Rivet at his n9 size, p70 and p55 (struck by a car: thrown off his feet
+along the car's heading, 3 frames: hit, airborne/tumble, down; plus the get-up), keyed by art key like his
+other strips. Until it lands, world's item 3 draws his hit frame plus a slide. Why: the owner's call s-4 C
+(cars knock Rivet down).
+
+- MILESTONE (01:40) full evidence at c3b30b76 (`node tools/evidence/run.mjs --no-bench`): lint 15/15, unit 1816/0,
+  parity bit-exact (1200 steps, planted mutation caught at 629), selftest look goldens 11/11 worst 0.00 + block 5/5
+  worst 0.00, no new off-doctrine accents, release-compile 614/0; scenarios 53/54: **rig_stress failed its 1 ms rig
+  p50 under combo even alone on a quiet machine (1.149 ms)**.
+- Measured (01:42, alternating, quiet-ish): rig p50 at 50 people combo 1.318 / 1.105 vs top 0.724 / 0.490 ms. Card
+  rigs cost ~2x; never gated before (the scenario ran in top). DECISION: the scenario gates `top` (the F-09b
+  baseline) and logs `COMBO ... (not gated)`; DEVIATION STD-20-RIG in docs/decisions.md. After: 1 ran, 0 failed;
+  top 0.76 / 0.72 ms, COMBO 1.387 ms (`evidence/n9-world/rig-stress-it1.log`).
+
+REQUEST to perf: the card rigs under combo / tilt70 cost ~2x top's rig work (scenario_rig_stress, 50 people, quiet:
+combo p50 1.11-1.39 ms vs top 0.49-0.76; section 20 says 1 ms provisional). Since n9-world 3e02d3b8 combo is the
+default, so this is the shipped camera's cost. A profile of CharacterRigs.step under `--view=combo` (RigHeadCard /
+the card build per tick?) and a cut would let world gate combo again (DEVIATION STD-20-RIG names the re-check).
+
+### Calls for the owner (collect for REPORT)
+- C-1 rig cost under combo: ~1.1-1.4 ms p50 at 50 people vs the provisional 1 ms (top 0.5-0.76). Default built:
+  gate top, log combo (DEVIATION). Options: (a) as built until perf cuts it; (b) raise the provisional budget to
+  1.5 ms for card views; (c) fewer full rigs under combo (MAX_FULL 12; one constant).
+- C-2 the dead as plan-view poses rotated along the blow (DECISION world/dead-plan-view), art requested (dead_plan_v1).
+
+NEXT (it2):
+1. Read the journals (perf / rivet / handheld; assets' replies to dead_plan_v1, king_robe_*).
+2. Item 1 owed: the BC7 riot VRAM A/B under bench.lock: `node tools/perf/ab.mjs --scenes=riot,drive70 --pairs=2
+   --arms=lossless:^--path C:/Users/kazda/kiro/gtai-n9/tmp/world/before/project,bc7: --out=evidence/n9-world/bc7-ab`
+   (the scratch worktree = main + combo + bikes 0.06, lossless, imported; remove it with `git worktree remove` after);
+   the city with bikes under combo in the real city (not city_bench: it draws traffic flat with no --view; find why
+   and note it); a before/after still at 32 + a 64 close-up; frames.json to 8+ entries.
+3. Item 3 (cars knock Rivet down), per the scoping above: BD_CAR_HIT in both twins, parity case, `just native`.
+4. Item 4 (bodies stop at walls), then item 2 wiring when the art lands; item 5 when king_robe_* lands.
