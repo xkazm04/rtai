@@ -90,3 +90,12 @@ func test_the_desktop_and_a_docked_deck_keep_the_desktop() -> void:
 	assert_eq(DeviceProfile.auto_pick("0", Vector2i(1280, 800)), "", "SteamDeck=0 opts out")
 	assert_eq(DeviceProfile.auto_pick("1", Vector2i(1920, 1080)), "", "docked on a TV")
 	assert_eq(DeviceProfile.auto_pick("1", Vector2i(1280, 720)), "", "another SteamOS box")
+
+
+func test_a_deck_that_picked_itself_fills_its_screen() -> void:
+	# n9 it10: --device= on the simulator keeps a panel-sized window; the real Deck fills its panel
+	var sim: DeviceProfile = DeviceProfile.of("deck")
+	assert_eq(sim.window_mode(), Window.MODE_WINDOWED)
+	var real: DeviceProfile = DeviceProfile.of("deck")
+	real.fill_screen = true
+	assert_eq(real.window_mode(), Window.MODE_FULLSCREEN)

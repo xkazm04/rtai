@@ -1,0 +1,8 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+D3D12 12_0 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce RTX 4090
+
+[INFO] device: profile deck: window 1280x800, max_fps 60, vsync enabled, stretch canvas_items, zoom_k 1.25, tier handheld, rumble 1.00
+[INFO] characters: prewarmed 41 rigs in 101.0 ms
+[INFO] boot: RTAI: Uprising booted on backend null
+[INFO] world: prewarm 35.6 ms
+[INFO] device: rumble: 0 pulses played {  }, 0 rested, shortest gaps (ticks) {  }

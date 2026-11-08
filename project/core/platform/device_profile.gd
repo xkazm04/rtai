@@ -40,6 +40,9 @@ var aim_assist: bool = false
 ## The boss fight's camera frames Rivet and the boss together (BossCam, the clip cam) instead of
 ## following Rivet: the 7-inch panel at 40 px/m keeps the fight on screen (n9 it6).
 var boss_cam: bool = false
+## The row fills the screen instead of opening a panel-sized window: set when the device picked
+## itself (a real Deck, LaunchArgs); `--device=` on the simulator keeps the window (n9 it10).
+var fill_screen: bool = false
 var ids: Array[String] = []
 
 
@@ -146,9 +149,16 @@ func apply(window: Window) -> void:
 	elif stretch_mode == "canvas_items":
 		window.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
 	if window_size != Vector2i.ZERO:
-		window.mode = Window.MODE_WINDOWED
-		window.size = window_size
+		window.mode = window_mode()
+		if window.mode == Window.MODE_WINDOWED:
+			window.size = window_size
 	Log.info("device", "profile %s: %s" % [id, describe()])
+
+
+## The window mode apply() sets on a row with a panel size: fullscreen on the device itself (a
+## Deck in desktop mode would put the taskbar over a 1280x800 window), a window on the simulator.
+func window_mode() -> Window.Mode:
+	return Window.MODE_FULLSCREEN if fill_screen else Window.MODE_WINDOWED
 
 
 func describe() -> String:

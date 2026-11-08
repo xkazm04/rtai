@@ -703,6 +703,9 @@ for middleware plus kits under NDA.
   the screen query. A docked Deck (a 1080p TV) and other SteamOS boxes keep the desktop row. Owed with the Steam
   port: `IsSteamRunningOnSteamDeck()` through `steam_backend.gd` as the first check. Only a Deck can prove what
   gamescope reports as the screen size in game mode (the panel is natively portrait; both ways are accepted).
+  Follow-up (DECISION `handheld/deck-fills-screen`): an auto-picked Deck opens fullscreen (`fill_screen`), so desktop
+  mode's taskbar does not cover a 1280x800 window; `--device=` keeps the simulator's window (live `--device=deck`:
+  window 1280x800 as before). The fullscreen path is proven by a unit test only; a Deck in desktop mode proves it.
 - **E20b (n9 it10), the Deck rows re-based on world's near-final head:** scratch worktree `gtai-n9/tmp/handheld/mergewt2`
   = this branch (b89d9e22) + `merge --no-commit n9-world` (code head e3c54005: BC7, combo, bikes 6 %, the dead
   redesign, the knock-down, the robe); again only JOURNAL, REPORT and the debt baseline conflict, the code merges

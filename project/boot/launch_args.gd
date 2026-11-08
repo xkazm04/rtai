@@ -106,8 +106,8 @@ func _init() -> void:
 	var want: String = value("--device") if has("--device") else _auto_device()
 	_device_on = has("--device") or want != ""
 	if _device_on:
-		@warning_ignore("return_value_discarded")
-		DeviceProfile.select(want)
+		var profile: DeviceProfile = DeviceProfile.select(want)
+		profile.fill_screen = not has("--device")  # picked by itself: the real device's screen
 
 
 ## n9-handheld: with no `--device=`, a Steam Deck picks its row (DeviceProfile.auto_pick); the
