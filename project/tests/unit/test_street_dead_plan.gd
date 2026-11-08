@@ -14,7 +14,12 @@ func test_every_mapped_row_has_a_five_pose_strip() -> void:
 
 
 func test_an_unmapped_row_keeps_its_drawn_lying_frame() -> void:
-	assert_eq(StreetDeadPlan.path_of("ped/head_jogger"), "")
+	assert_eq(StreetDeadPlan.path_of("boss/king"), "")
+
+
+func test_every_drawn_walker_row_lies_in_a_plan_pose() -> void:
+	for row: String in StreetWalkerCards.ROWS:
+		assert_true(StreetDeadPlan.CLASS_OF.has(row), row + " has no plan dead strip")
 
 
 func test_neighbours_never_share_a_pose() -> void:
@@ -63,7 +68,8 @@ func test_the_crowd_atlas_gets_a_plan_pose_turned_to_the_bake() -> void:
 	assert_not_null(e)
 	if a != null:
 		assert_lte(maxi(a.get_width(), a.get_height()), CrowdAtlas.CELL_PX)
-	assert_null(StreetCrowdCorpse.plan_cell("p70", "ped/head_jogger", 0))
+	assert_not_null(StreetCrowdCorpse.plan_cell("p70", "ped/head_jogger", 0))
+	assert_null(StreetCrowdCorpse.plan_cell("p70", "boss/king", 0))
 
 
 func test_a_lying_body_stops_short_of_the_first_wall() -> void:

@@ -2,7 +2,7 @@
 the pelvis at the cell centre, the still strip's 192 px standing height) into one 1920 x 384 strip per
 class under project/features/characters/art/view/plan/, and appends the provenance lines.
 
-    python tools/art/dead_plan.py [--provenance]
+    python tools/art/dead_plan.py [--provenance] [--only=a,b]
 """
 
 import hashlib
@@ -28,6 +28,12 @@ CLASSES = {
     "cop_riot": ("street", ["dead_plan_v1_cop_riot"]),
     "swat": ("street", ["dead_plan_v1_swat"]),
     "thug": ("street", ["dead_plan_v1_thug"]),
+    # it124 delivery (the 5 walker rows; n9 world it13)
+    "ped_cap": ("street", ["dead_plan_v1_ped_cap", "dead_plan_v1_ped_cap_e2"]),
+    "ped_elder": ("street", ["dead_plan_v1_ped_elder", "dead_plan_v1_ped_elder_e2"]),
+    "ped_hat": ("street", ["dead_plan_v1_ped_hat", "dead_plan_v1_ped_hat_e2"]),
+    "ped_jogger": ("street", ["dead_plan_v1_ped_jogger", "dead_plan_v1_ped_jogger_e2"]),
+    "ped_punk": ("street", ["dead_plan_v1_ped_punk", "dead_plan_v1_ped_punk_e2"]),
 }
 
 
@@ -52,7 +58,7 @@ def provenance(path: Path, ids: list[str], catalog: dict) -> dict:
         "accepted_by": "agent:n9-world lane (the owner's verdict on the dead, 2026-11-07; REQUEST dead_plan_v1)",
         "date": "2026-11-08",
         "file": path.relative_to(REPO).as_posix(),
-        "human_edits": "n9 world it4 packed the library's cut cells (deliveries/dead_plan_v1_it121.md, "
+        "human_edits": "n9 world packed the library's cut cells (deliveries/dead_plan_v1_it121.md, "
         "tools/dead_plan_cut.py keyed + one scale per sheet) A-E into one strip, no resample (tools/art/dead_plan.py)",
         "model": "codex-cli built-in image_gen (ChatGPT Pro plan; image model not reported)",
         "prompt_ref": "gtai-art/library/" + hashes,
@@ -67,7 +73,10 @@ def provenance(path: Path, ids: list[str], catalog: dict) -> dict:
 def main() -> None:
     catalog = {r["id"]: r for r in json.loads((LIB / "catalog.json").read_text(encoding="utf-8"))}
     lines = []
+    only = [a.split("=", 1)[1].split(",") for a in sys.argv if a.startswith("--only=")]
     for name, (folder, ids) in CLASSES.items():
+        if only and name not in only[0]:
+            continue
         path = pack(name, folder)
         lines.append(json.dumps(provenance(path, ids, catalog), sort_keys=True))
         print(path.relative_to(REPO).as_posix())

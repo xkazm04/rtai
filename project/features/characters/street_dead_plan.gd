@@ -1,15 +1,10 @@
 class_name StreetDeadPlan
 extends RefCounted
-## n9 world: the dead redesigned from scratch (the owner: "they lay down like in the bed now").
-## At impact (StreetWalkerFall's lying frame) a card view swaps the drawn fall grid's lying frame
-## for one of five PLAN-view lying poses (drawn straight down, art/view/plan/dead_<class>.png: A
-## face-down crumple, B on the back spread and broken, C side curl, D twisted sprawl, E folded and
-## tipped over), laid on the ground plane so the camera's own tilt foreshortens it at 70 and 55,
-## its head along the blow. The pose is picked by the death family (the weapon class), then the
-## first one no neighbour within NEAR_M already shows. It lands slightly big, slides along the blow
-## into its rest and rocks back a few degrees (the settle). The rest is the sim point: the view
-## never moves the body past where the sim put it. ENABLED false = the drawn lying frame (d9).
-
+## n9 world: the dead redesigned ("they lay down like in the bed now"). At impact a card view
+## swaps the fall grid's lying frame for one of five PLAN poses (art/view/plan/dead_<class>.png:
+## A face-down crumple, B back spread, C side curl, D twisted sprawl, E folded on the side) on
+## the ground plane, head along the blow, picked by death family, then the first no neighbour
+## within NEAR_M shows; it slides into the sim rest and rocks back. ENABLED false = d9's frame.
 const ENABLED: bool = true
 const DIR: String = "res://features/characters/art/view/plan/dead_"
 const POSES: int = 5
@@ -19,6 +14,11 @@ const CLASS_OF: Dictionary[String, String] = {
 	"ped/head_hood": "ped_hood",
 	"ped/head_worker": "ped_worker",
 	"ped/head_shopper": "ped_shopper",
+	"ped/head_cap": "ped_cap",
+	"ped/head_bald": "ped_elder",
+	"ped/head_hat": "ped_hat",
+	"ped/head_jogger": "ped_jogger",
+	"ped/head_punk": "ped_punk",
 	"cop/head_cap": "cop_patrol",
 	"cop/head_helmet": "cop_riot",
 	"cop/head_swat": "swat",
