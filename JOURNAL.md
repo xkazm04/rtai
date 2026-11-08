@@ -512,3 +512,13 @@ NEXT (it17):
 3. Before the freeze (10:30): the full gate (`node tools/evidence/run.mjs --no-bench`), the director reel x3 at the
    head with `--quit-after 16000`, the exe (`build/export/windows/RTAI.exe`), REPORT.md finalised (remove DRAFT).
    Remove the scratch worktree `gtai-n9/tmp/world/before` (`git worktree remove --force`) after the last before.
+- MILESTONE (05:49) item 2's city-block before/after (owed since it4), NEXT 2 done: `res://dev/arena/arena.tscn --
+  --arena=city --rigs --view=tilt70 --bot=pit`, `--fixed-fps 60 --quit-after 1500` (kills 8 by t1398, 0 SCRIPT
+  ERROR both arms); before = StreetDeadPlan.ENABLED false in the same build (local edit, restored, never
+  committed). Same tick t24 s: before the riot cop is the straight plank, after a face-down crumple with bent
+  knees: a moderate change at 32 px/m on this body. `gtai-masters/n9/world/dead_plan_city_block_before_after_tilt70_32ppm*`
+  (still + 12 s clip; frames.json 15: the King robe combo55 clip dropped, its stills stay). Raw .avi deleted.
+  Seen but not checked: a brown lying figure at the bottom of the frame is identical in both arms (a crowd-atlas
+  corpse or a sitting ped?): look at it in it17 before calling the block done.
+NEXT (it17) amended: item 2 above is done at 32; the block at 64 px/m (`--ppm=64` does not zoom the arena, it4
+NOTE: use the arena's Z zoom key or a camera flag) is still owed, after NEXT 1 (the contractor sheet).
