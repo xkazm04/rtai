@@ -9,9 +9,11 @@ var pos: PackedVector2Array = PackedVector2Array()
 var vel: PackedVector2Array = PackedVector2Array()
 var rot: PackedFloat32Array = PackedFloat32Array()
 var born: PackedInt32Array = PackedInt32Array()
-var kind_of: Array[Dictionary] = []
+var row_of: Array[FxKindRow] = []
 var seed_of: PackedFloat32Array = PackedFloat32Array()
 var alive: int = 0
+var _last_kind: Dictionary = {}
+var _last_row: FxKindRow = null
 
 
 func _init(cap: int) -> void:
@@ -26,7 +28,7 @@ func _init(cap: int) -> void:
 	@warning_ignore("return_value_discarded")
 	seed_of.resize(cap)
 	@warning_ignore("return_value_discarded")
-	kind_of.resize(cap)
+	row_of.resize(cap)
 
 
 func capacity() -> int:
@@ -41,7 +43,10 @@ func put(k: Dictionary, at: Transform2D, v: Vector2, tick: int, s: float) -> voi
 	vel[i] = v
 	rot[i] = at.get_rotation()
 	born[i] = tick
-	kind_of[i] = k
+	if _last_row == null or not is_same(k, _last_kind):  # a spawn puts `count` of one kind
+		_last_kind = k
+		_last_row = FxKindRow.of(k)
+	row_of[i] = _last_row
 	seed_of[i] = s
 	alive += 1
 
@@ -50,25 +55,22 @@ func put(k: Dictionary, at: Transform2D, v: Vector2, tick: int, s: float) -> voi
 func step(steps: int, tick: int, mm: MultiMesh) -> void:
 	var i: int = 0
 	while i < alive:
-		var k: Dictionary = kind_of[i]
-		var life: float = k["life_ticks"]
+		var r: FxKindRow = row_of[i]
 		var age: int = tick - born[i]
-		if age >= int(life):
+		if age >= r.life_i:
 			_swap_out(i)
 			continue
-		var drag: float = k["drag"]
+		var drag: float = r.drag
 		for s: int in steps:
 			pos[i] += vel[i] * SimClock.TICK_DT
 			vel[i] *= maxf(0.0, 1.0 - drag * SimClock.TICK_DT)
-		var size_m: float = k["size_m"]
-		var grow: float = k["grow"]
-		var size: float = size_m * PX_PER_M * (1.0 + grow * age * SimClock.TICK_DT) * 0.5
-		var col: Color = k["color"]
-		var fade_from: float = k.get("fade_from", 0.0)
-		col.a = clampf((1.0 - float(age) / life) / (1.0 - fade_from), 0.0, 1.0)
+		var size: float = r.size_m * PX_PER_M * (1.0 + r.grow * age * SimClock.TICK_DT) * 0.5
+		var col: Color = r.color
+		col.a = clampf((1.0 - float(age) / r.life) / (1.0 - r.fade_from), 0.0, 1.0)
 		mm.set_instance_transform_2d(i, Transform2D(rot[i], Vector2.ONE * size, 0.0, pos[i]))
 		mm.set_instance_color(i, col)
-		mm.set_instance_custom_data(i, custom_of(k, age, seed_of[i]))
+		var sd: float = seed_of[i]
+		mm.set_instance_custom_data(i, Color(r.shape_id, sd, r.cell(age, sd), r.rim))
 		i += 1
 	mm.visible_instance_count = alive
 
@@ -103,5 +105,5 @@ func _swap_out(i: int) -> void:
 	vel[i] = vel[alive]
 	rot[i] = rot[alive]
 	born[i] = born[alive]
-	kind_of[i] = kind_of[alive]
+	row_of[i] = row_of[alive]
 	seed_of[i] = seed_of[alive]
