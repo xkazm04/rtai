@@ -401,6 +401,5 @@ NEXT (it8):
    weapon name; blade -> katana, heavy -> gatling; check each grid's legs travel = run8's before reusing RUN_CYCLE_CELL).
 3. Film the knock's other rows (toward / away / left): world's clip has one car heading; a scratch drive with the car
    turned, or wait for world's real-city clip on main.
-4. Full unit run on 4b912de0 started 05:25 (`gtai-n9/tmp/rivet/unit_it7.log`: read its result first); then the evidence
-   run --no-bench on the it7 head.
+4. (it7: full unit on 4b912de0 = **1834/0**, 05:25-05:27.) The evidence run --no-bench on the it7 head.
 5. Size films owed: Servo combo 48 at 1.95 m, the roll ball and the death sprawl at size, beside a car.
