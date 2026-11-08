@@ -492,6 +492,26 @@ budget, the one site to lift on a 720p row is that count (16 -> 18 px authored, 
   The combo view keeps the 40 Hz saving (E17 tilt70: -30 % / -24 %; E5 d9: -31 % / -26 %): three views and two zooms
   agree, so the battery-mode call (REPORT Call 4) does not depend on the view. JSONs: `evidence/n9h/it6/e17c/`.
 
+- **E20 (n9 it6), the Deck row re-based on what main will be:** a scratch worktree (`gtai-n9/tmp/handheld/mergewt`) =
+  this branch at eff2388f merged with n9-world at d5006d22 (combo boot, sim bikes 6 %, BC7, the plan-pose dead, cars
+  knock Rivet down, bodies stop at walls), world's native DLLs, world's `.godot` copied then `--import` (23 s, 0 errors).
+  **The code merges cleanly**: only `JOURNAL.md` (add/add) and `tools/debt/baseline.json` conflict (take either side,
+  re-run `debt.mjs --update`). `deck`, `city_combo`, 1200 ticks, the iGPU, 3 interleaved rounds, bench lock, 3 of 6 runs
+  quiet.
+
+  | metric (median of 3, +- spread) | this branch | + n9-world (main-to-be) | change |
+  |---|---|---|---|
+  | frame p50 (vsync 60) | 16.64 +-0.06 ms | 16.66 +-0.04 ms | locked both |
+  | settled frames > 33 ms | 0 +-2 | 0 +-2 | the same |
+  | render GPU p50 | 8.65 +-0.16 ms | 7.69 +-0.34 ms | **-11 %** |
+  | GPU shared memory max | 1055 +-64 MB | 600 +-65 MB | **-43 %** |
+  | private RAM max | 1430 +-64 MB | 991 +-69 MB | **-31 %** |
+  | pinned CPU p50 | 6.53 +-1.32 % | 6.68 +-0.69 % | the same (bikes, knock-downs and the dead cost no measured CPU) |
+
+  The Deck baseline after tonight's merge: vsync-locked 60 with render GPU ~7.7 ms on a GPU a quarter of a Deck's,
+  ~1 GB private RAM, 0.6 GB GPU memory. E16b's BC7 gain carries through world's later work unchanged. JSONs:
+  `evidence/n9h/it6/e20/`.
+
 - **The keyboard twin (n9 it3, an owner Call):** `ui_kb_glyphs_v1` (the asset lane's own-list delivery, 38 cells incl.
   `move_keys`, `aim_mouse`, `mouse_left`, wide SPACE / Shift / Ctrl / Tab) draws in the same three places as the pad set,
   but only on the desktop study row `desktop_kb_glyphs` (`glyphs: kb`; `is_desktop()` stays true, nothing else is
