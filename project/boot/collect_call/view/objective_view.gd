@@ -46,13 +46,19 @@ func _draw() -> void:
 
 func _prompt(words: String) -> void:
 	var font: Font = ThemeDB.fallback_font
+	var glyphs: bool = PadGlyphArt.active()  # n9-handheld: the drawn pad glyphs on a handheld
 	var size: Vector2 = font.get_string_size(words, HORIZONTAL_ALIGNMENT_LEFT, -1, TEXT_SIZE)
+	if glyphs:
+		size = PadGlyphArt.line_size(words, TEXT_SIZE)
 	var at: Vector2 = Vector2(48.0, 186.0)
 	if PAPER:
 		HudPaper.draw(self, prompt_paper(at, size))
 	else:
 		draw_rect(Rect2(at - Vector2(14, 30), size + Vector2(28, 18)), Color(Ink.CREAM, 0.92))
 		draw_rect(Rect2(at - Vector2(14, 30), size + Vector2(28, 18)), Ink.INK, false, 3.0)
+	if glyphs:
+		PadGlyphArt.draw_line(self, at, words, TEXT_SIZE, Ink.INK)
+		return
 	draw_string(font, at, words, HORIZONTAL_ALIGNMENT_LEFT, -1, TEXT_SIZE, Ink.INK)
 
 

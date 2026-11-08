@@ -59,7 +59,7 @@ func show_title(can_continue: bool = false) -> void:
 	_clear()
 	_label(_t(&"SLICE__TITLE", "RTAI: Uprising"), 56, Ink.INK)
 	_label(_t(&"SLICE__QUEST_1", "Quest 1: Collect Call"), 34, Ink.VERMILION)
-	_label(controls_text(), 20, Ink.INK)
+	_controls_line()
 	var first: Button = null
 	if can_continue:
 		first = _button(_t(&"SLICE__CONTINUE", "Continue"), continue_pressed)
@@ -76,7 +76,7 @@ func show_pause(settings_panel: Control = null) -> void:
 	_clear()
 	pause_up = true
 	_label(_t(&"SLICE__PAUSED", "Paused"), 48, Ink.INK)
-	_label(controls_text(), 20, Ink.INK)
+	_controls_line()
 	if settings_panel != null:
 		_box.add_child(settings_panel)
 	var resume: Button = _button(_t(&"SLICE__RESUME", "Resume"), resume_pressed)
@@ -132,6 +132,22 @@ func _label(text: String, size: int, color: Color) -> void:
 	l.add_theme_font_size_override(&"font_size", size)
 	l.add_theme_color_override(&"font_color", color)
 	_box.add_child(l)
+
+
+## The controls line; on a handheld row the pad names are the drawn ink glyphs (PadGlyphArt).
+func _controls_line() -> void:
+	if not PadGlyphArt.active():
+		_label(controls_text(), 20, Ink.INK)
+		return
+	var r: RichTextLabel = RichTextLabel.new()
+	r.bbcode_enabled = true
+	r.fit_content = true
+	r.scroll_active = false
+	r.autowrap_mode = TextServer.AUTOWRAP_OFF
+	r.add_theme_font_size_override(&"normal_font_size", 20)
+	r.add_theme_color_override(&"default_color", Ink.INK)
+	r.text = "[center]%s[/center]" % PadGlyphArt.bbcode(controls_text(), 30)
+	_box.add_child(r)
 
 
 func _button(text: String, pressed: Signal) -> Button:
