@@ -533,3 +533,13 @@ NOTE: use the arena's Z zoom key or a camera flag) is still owed, after NEXT 1 (
 - READ journals: rivet / perf / handheld: no new REQUEST to world. Assets it131 DELIVERED
   `dead_plan_v1_contractor` (round 20261108-0640, prompt_hash f3627a126e86, grade B: pose D reads as a second
   face-down). Plan: NEXT 1 (wire it, film Dock 9 after at 32 + 64), then the freeze prep.
+- MILESTONE (06:05) 918cbe58 item 2, NEXT 1 done: `dead_plan_v1_contractor` packed (`tools/art/dead_plan.py`
+  CLASSES + `--only=contractor --provenance`), BC7 `.import` params copied from dead_thug (the `.bptc.ctex` is
+  there), StreetQuestDeadPlan picks it up with no code change. FOUND on the first after at Dock 9: the plan
+  corpses drew at the cast view's 0.8 alpha, so the bodies heaped on the crossing showed through each other;
+  `OPAQUE` (DECISION world/quest-dead-plan-opaque) lifts the linger alpha to 1, the decay fade kept (new test 1).
+- (06:09) Dock 9 filmed at 32 px/m, t13800: before three planks side by side, heads one way; after the A-E poses
+  along each blow, neighbours differ, opaque; they heap on the crossing (the quest kills them there), the blood
+  pools grow under them in the 20 s clip (t13450-14050). frames.json entry 2 (the wall's 32 px/m still dropped,
+  still on disk). 64 px/m: NOT filmed: the dock fight lies off-frame at 64 (tried `--cam=fight`, and a 4K window:
+  the canvas stretches, same world area). 0 SCRIPT ERROR in all four runs.
