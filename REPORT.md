@@ -1,4 +1,4 @@
-# n9 lane `world`: REPORT (DRAFT written 05:45 in it16; the freeze session finalises it)
+# n9 lane `world`: REPORT (FINAL; hand freeze by the Director, see the last section)
 
 Branch `n9-world`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n9\world\` (frames.json, 15 entries) and
 `evidence/n9-world/` in this worktree. Every item below names its commit and DECISION (docs/decisions.md).
@@ -155,3 +155,11 @@ ERROR. To see the work:
    64 px/m (kept as a patch under `gtai-n9/tmp/world/`); only if a shot shows a body over a roof edge again.
 3. Freeze: the full gate (`node tools/evidence/run.mjs --no-bench`), the director reel x3 at the head, the exe
    (`build/export/windows/RTAI.exe`), this report finalised.
+
+## Final gates and the exe (the hand freeze, 2026-11-08 10:00-10:55)
+
+Every billing path ran out at 09:08 (the subscription's weekly limit; all three API keys out of credit), so the lane's own freeze session never ran. The Director ran this freeze by hand. Logs: `C:\Users\kazda\kiro\gtai-n9\tmp\world\final\`.
+
+- At `1290ef7b`: evidence `--no-bench` ALL PASS: lint 15/15, unit 1847/0, scenarios 55, parity bit-exact (mutation caught at 629), look goldens 11/11, release-compile 617/0.
+- Director reel: top 19/19, combo 19/19 (run alone), tilt70 19/19 with `--quit-after 40000`, 0 SCRIPT ERROR. The reel's `--quit-after 16000` cuts off the last chapters under tilt70 / combo (17-18 of 19 rows, every printed row fully down, the count varying run to run, also when run alone), so a short count at 16000 is the limit and not a failing chapter. 16000 no longer reliably covers the reel: raise it.
+- The exe: `build/export/windows/RTAI.exe` (521 MB, plus the release sim DLL), exported at that head with `"$GODOT_BIN" --headless --path project --export-release windows-showcase ../build/export/windows/RTAI.exe`, 0 export errors. Smoke `RTAI.exe --headless --quit-after 600`: exit 0, 0 SCRIPT ERROR.
