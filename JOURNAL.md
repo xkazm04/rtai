@@ -36,8 +36,28 @@ Branch `n9-handheld` cut from main at da108c13 (d9 merged). Evidence: `evidence/
   goldens re-blessed). No REQUEST to handheld in rivet / world / perf. Starting item 5 (the Deck re-measure on world's
   BC7 commit) in a detached scratch worktree under my tmp (world's checkout untouched).
 - 01:29 GATE the director reel, headless `--quit-after 16000 res://dev/arena/arena.tscn -- --rigs --bot=reel --reel=director`:
-  top 19/19, tilt70 19/19, combo 19/19 chapters all down, 0 SCRIPT ERROR each (`evidence/n9h/it1/gates/`), on 6c... HEAD
+  top 19/19, tilt70 19/19, combo 19/19 chapters all down, 0 SCRIPT ERROR each (`evidence/n9h/it1/gates/`), on 956b8dea
   with the compact card and the glyph hint. (First launch went to the boot scene, which ignores --bot: killed my 3 PIDs.)
 - 01:31 MILESTONE item 5 (BC7 re-measure, E16 in the LEDGER): world 3e02d3b8 vs this branch, the Deck row, city, iGPU,
   2 interleaved rounds, CONTENDED: GPU shared memory -48 % (1119 -> ~585 MB), render GPU p50 -11 % (8.7 -> 7.7 ms), both
   vsync-locked 16.6 ms. Scratch worktree removed.
+- 01:33 GATE evidence run (`tools/evidence/run.mjs --no-bench`, 956b8dea): lint PASS, scenarios 54 PASS, parity PASS
+  (mutation caught at 629), selftest PASS (look goldens 11/11, worst 0.27), release-compile 617/0 PASS; unit 1825 passed
+  0 failed but marked FAIL "tree changed during run" (I appended JOURNAL mid-run). Re-run on a clean tree below.
+- 01:36 Films on the iGPU at 40 px/m: city with the compact card (`deck-city-40ppm-compact-1280x800-igpu.mp4`), quest 1
+  with the glyphs (`deck-quest1-40ppm-glyphs-1280x800-igpu.mp4`, the pad walker with `--gpu-index 1 --write-movie`);
+  the set clip `n9-handheld-set-deck-40ppm.mp4` (64 s); `frames.json` 11 entries. Raw .avi deleted.
+- Looked at: the LB hint glyph on the ghost card reads small (~20x11 px): the shoulder art is a short bar in a square
+  cell (the asset lane flagged it). Fix next: per-cell scale (wide glyphs drawn by their ink box, not the cell).
+- No REQUESTs to handheld from rivet / world / perf this iteration; none sent.
+
+NEXT (iteration 2):
+1. Re-check the clean-tree evidence run's result (started ~01:40, log `C:/Users/kazda/kiro/gtai-n9/tmp/handheld/evidence-run2.log`;
+   copy the summary to `evidence/n9h/it1/`); if unit is green, item 1-4 gates are closed.
+2. The shoulder / trigger glyph scale: trim each cell to its ink box in `PadGlyphArt` (or a per-cell scale table) so
+   LB / RB / LT / RT read as large as the face buttons; re-shoot the quest 1 fold and the King card.
+3. The glyph hint in the full card (desktop layout on a handheld with `hud: full`) and the boss cam: check that the
+   King / Servo arenas honour `zoom_k` (Rivet looked small at 40 px/m in the King still: measure his px height).
+4. Research loop: the Deck at 40 px/m: the combo view's framing at 1280x800; the 40 Hz row on world's BC7 (once on main).
+5. REPORT.md at the 10:30 freeze: Calls (glyphs on the desktop too? the keyboard twin `ui_kb_glyphs_v1`; compact card
+   on the desktop?), the exe line.
