@@ -120,6 +120,32 @@ rig; no single card kind holds it. Skipping RigPose under a whole-figure card sa
 the native sim); not for tonight. The patch for the place() cut is `walker-place.patch` (world owns
 street_walker_cards.gd tonight), offered, not required. Not kept on this branch (not my file).
 
+### Pacing A/B on the mailbox default (it3): vsync Enabled vs mailbox vs mailbox + steady
+Hypothesis: mailbox (the F-19 fix) could run the loop uncapped at 60 Hz (no queued present to block on) and cost
+CPU, or pace worse (a restart drops a queued image); steady (the 60 fps limiter on top) should hold the cadence at
+L11's ~+0.07 core. `node tools/perf/ab.mjs --scenes=riot60 --pairs=3 --arms=enab:--vsync=enabled,mbox:--vsync=mailbox,
+mbox60:--vsync=mailbox --max-fps=60` (editor binary, windowed D3D12 1920x1080, real time, 60 Hz panel; bench.lock
+held by ab.mjs; 02:57-03:03; CONTENDED 2 / 3 enab, 2 / 3 mbox, 1 / 3 mbox60; 0 errors). `evidence/perf/n9-pacing/`.
+
+| riot60, median of 3 (spread) | Enabled (old default, efficient) | **mailbox (new default, efficient)** | mailbox + 60 limiter (steady) |
+|---|---|---|---|
+| frames in 30 s | 1682 | 1682 (not uncapped: mailbox blocks at 60 Hz too) | 1679 |
+| process CPU (cores) | 0.41 ±0.03 | 0.40 ±0.03 (WASH) | 0.49 ±0.02 (+0.08, the limiter's spin, L11 / L15) |
+| frame p99 (ms) | 22.5 ±4.2 | 26.9 ±5.6 (WASH) | **18.6 ±1.5** |
+| worst frame (ms) | 33.9 | 36.3 | 24.4 |
+| tick images skipped (noTick / multiTick) per round | 0/2, 0/2, 0/2 | **13/14, 0/2, 10/12** | 0/0, 0/0, 1/3 |
+| working set (MB) | 900 | 846 (WASH, ±33) | 866 |
+
+Reading: mailbox costs nothing in CPU or frame count at 60 Hz, and its uncontended round (r1) paced like Enabled;
+in its two CONTENDED(4) rounds it showed 10-13 frames that carried no tick and 12-14 that carried two (a dropped
+or doubled tick image: a visible hitch), where Enabled under the same contention showed 0 / 2. Plausible mechanism:
+DXGI_PRESENT_RESTART discards the queued image after a late frame, so the sim's cadence and the presented one slip
+for a frame. **Small sample (2 contended rounds a side): a signal, not a verdict.** Steady on top of mailbox holds
+the cadence (multiTick 0-3, best p99) for +0.08 core. So the F-19 trade is now: mailbox (no D3D12 fence hang, 0 in
+107 runs) with an occasional dropped tick image on a loaded machine, unless the player picks steady. Kept as built
+(the freeze is worse than a hitch); added to Call P-1 (mailbox default) for the owner, with "steady by default on
+Windows" as the one-value alternative (`PlayerSettings` default pacing).
+
 ### Item 2 (it2): the traffic-sheet split is moot under BC7
 n9-world 3e02d3b8 imports the p70 traffic sheet as BC7: `traffic_cards.png-313d05e5...bptc.ctex` = **18,063,412 B**
 (4032 x 4480 x 1 B), one upload into a **32 MB** pow2 staging buffer (L9's mechanism), against 128 MB lossless. The
