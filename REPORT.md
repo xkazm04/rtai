@@ -68,7 +68,7 @@ The research loop since:
   Rivet 19.8 m from the King, the focus jumped 76 px as the 20 m switch flipped); the lean now fades on a smoothstep
   between 14 and 28 m (unchanged within 14 m). Over 2700 frames the worst focus move is 11.3 px (King), 14.7 px
   (Servo's charges); the re-filmed King clip (`deck-king-40ppm-bosscam-band-1280x800-igpu.mp4`, iGPU, 0 SCRIPT ERROR)
-  has no jump at frame 155 by phase correlation (62 px before).
+  has no jump at frame 155 by phase correlation (62 px before); two smaller speed steps remain (see below).
 - **E21, the 40 Hz cadence** (it7, 7a6681e2): filmed at each row's own rate, `deck40` steps 1, 2, 1, 2 ticks a frame and
   73 % of its pan steps go 1:2; a new `deck30` row pans as evenly as 60. Battery proxy (bench lock, 3 rounds): GPU busy
   per second 36 % -> 27 % (-25 %) from 40 to 30; CPU the same (the sim ticks 60 Hz either way).
@@ -96,7 +96,8 @@ tilt70 and combo at 98cacb86, the last shipped-code change (`evidence/n9h/it6/ga
 - The 40 Hz row judders: the 60 Hz tick over 25 ms frames steps 1, 2, 1, 2 ticks a frame, so pans and sprites move
   10, 20, 10, 20 px (E21). The cure (every view drawn between two ticks) is owed; 30 and 60 are even (Call 4).
 - The two 20-24 px one-frame camera starts left in the King clip (frames 707, 1265, the same before and after the
-  boss-cam fix) are not BossCam (its focus moves <= 11.3 px a frame); suspected the hit feel's kick (FeelCam), unproven.
+  boss-cam fix) are not the hit feel's kick (probed: 1-1.5 px kicks, none at those ticks) but steps in BossCam's speed
+  (vertical 1 -> 10 px a frame in one frame as a keep-in margin engages): an acceleration limit is owed.
 - Steam Input origin glyphs (a remapped pad) need the Steam backend: owed with the Steam port.
 - Nothing here is proven on a Deck: watts, battery hours, Zen 2 single-thread frame times (E18:
   ~0.55-0.92 of one Deck core at 60 Hz, an estimate the simulator cannot pin down), the shader cache's first run, suspend on SteamOS, the Linux build under real Vulkan.

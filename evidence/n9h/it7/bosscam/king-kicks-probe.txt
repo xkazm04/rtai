@@ -1,0 +1,95 @@
+[INFO] view: KICK fire t=169 v=(1.411869, 0.506584) w=gloria
+[INFO] view: KICK hit t=182 v=(-0.941246, -0.337722) len=5 w=gloria
+[INFO] view: KICK fire t=193 v=(1.340161, 0.673771) w=gloria
+[INFO] view: KICK hit t=198 v=(-0.893441, -0.449181) len=5 w=gloria
+[INFO] view: KICK fire t=217 v=(0.071906, 1.498276) w=gloria
+[INFO] view: KICK hit t=221 v=(-0.047937, -0.99885) len=5 w=gloria
+[INFO] view: KICK fire t=241 v=(-0.799435, 1.269214) w=gloria
+[INFO] view: KICK hit t=247 v=(0.532956, -0.846143) len=5 w=gloria
+[INFO] view: KICK fire t=265 v=(-0.671225, 1.341439) w=gloria
+[INFO] view: KICK hit t=272 v=(0.447483, -0.894292) len=5 w=gloria
+[INFO] view: KICK fire t=289 v=(-0.536456, 1.400791) w=gloria
+[INFO] view: KICK hit t=296 v=(0.357637, -0.933861) len=5 w=gloria
+[INFO] view: KICK fire t=313 v=(-0.396606, 1.446618) w=gloria
+[INFO] view: KICK hit t=320 v=(0.264404, -0.964412) len=5 w=gloria
+[INFO] view: KICK fire t=337 v=(-0.216541, 1.484288) w=gloria
+[INFO] view: KICK hit t=344 v=(0.14436, -0.989525) len=5 w=gloria
+[INFO] view: KICK fire t=361 v=(-0.070051, 1.498363) w=gloria
+[INFO] view: KICK hit t=368 v=(0.0467, -0.998909) len=5 w=gloria
+[INFO] view: KICK fire t=385 v=(0.07715, 1.498015) w=gloria
+[INFO] view: KICK hit t=392 v=(-0.051434, -0.998676) len=5 w=gloria
+[INFO] view: KICK fire t=409 v=(0.223638, 1.483235) w=gloria
+[INFO] view: KICK hit t=416 v=(-0.149092, -0.988823) len=5 w=gloria
+[INFO] view: KICK fire t=433 v=(0.483145, 1.42006) w=gloria
+[INFO] view: KICK hit t=440 v=(-0.322097, -0.946707) len=5 w=gloria
+[INFO] view: KICK fire t=457 v=(0.959556, 1.152932) w=gloria
+[INFO] view: KICK hit t=466 v=(-0.639704, -0.768621) len=5 w=gloria
+[INFO] view: KICK fire t=481 v=(1.058095, 1.063219) w=gloria
+[INFO] view: KICK hit t=489 v=(-0.705397, -0.708813) len=5 w=gloria
+[INFO] view: KICK fire t=505 v=(0.919927, 1.184793) w=gloria
+[INFO] view: KICK hit t=512 v=(-0.613285, -0.789862) len=5 w=gloria
+[INFO] view: KICK fire t=529 v=(0.799456, 1.2692) w=gloria
+[INFO] view: KICK hit t=536 v=(-0.532971, -0.846134) len=5 w=gloria
+[INFO] view: KICK fire t=553 v=(0.67119, 1.341456) w=gloria
+[INFO] view: KICK hit t=560 v=(-0.44746, -0.894304) len=5 w=gloria
+[INFO] view: KICK fire t=577 v=(0.536456, 1.400791) w=gloria
+[INFO] view: KICK hit t=584 v=(-0.357637, -0.933861) len=5 w=gloria
+[INFO] view: KICK fire t=601 v=(0.396597, 1.446621) w=gloria
+[INFO] view: KICK hit t=608 v=(-0.264398, -0.964414) len=5 w=gloria
+[INFO] view: KICK fire t=625 v=(0.252892, 1.478528) w=gloria
+[INFO] view: KICK hit t=632 v=(-0.168595, -0.985685) len=5 w=gloria
+[INFO] view: KICK fire t=649 v=(0.105379, 1.496294) w=gloria
+[INFO] view: KICK hit t=656 v=(-0.070253, -0.997529) len=5 w=gloria
+[INFO] view: KICK fire t=673 v=(-0.41465, 1.44155) w=gloria
+[INFO] view: KICK hit t=681 v=(0.276434, -0.961033) len=5 w=gloria
+[INFO] view: KICK fire t=697 v=(-0.64101, 1.356136) w=gloria
+[INFO] view: KICK hit t=705 v=(0.42734, -0.904091) len=5 w=gloria
+[INFO] view: KICK fire t=721 v=(-0.890522, 1.20705) w=gloria
+[INFO] view: KICK hit t=724 v=(0.593681, -0.8047) len=5 w=gloria
+[INFO] view: KICK fire t=745 v=(-1.5, 0.000898) w=gloria
+[INFO] view: KICK fire t=769 v=(-1.485248, -0.209851) w=gloria
+[INFO] view: KICK fire t=793 v=(-1.495303, -0.118613) w=gloria
+[INFO] view: KICK hit t=800 v=(0.996869, 0.079076) len=5 w=gloria
+[INFO] view: KICK fire t=817 v=(-1.489722, -0.175299) w=gloria
+[INFO] view: KICK fire t=841 v=(-1.476882, -0.262333) w=gloria
+[INFO] view: KICK fire t=865 v=(-1.493176, -0.142917) w=gloria
+[INFO] view: KICK hit t=870 v=(0.995451, 0.095278) len=5 w=gloria
+[INFO] view: KICK fire t=889 v=(-1.462936, -0.331391) w=gloria
+[INFO] view: KICK fire t=913 v=(-1.496017, -0.109246) w=gloria
+[INFO] view: KICK hit t=918 v=(0.997344, 0.072831) len=5 w=gloria
+[INFO] view: KICK fire t=937 v=(-1.46387, -0.327237) w=gloria
+[INFO] view: KICK fire t=961 v=(-1.495727, -0.113143) w=gloria
+[INFO] view: KICK hit t=966 v=(0.997151, 0.075429) len=5 w=gloria
+[INFO] view: KICK fire t=985 v=(-1.443607, -0.407431) w=gloria
+[INFO] view: KICK fire t=1009 v=(-1.17557, -0.931684) w=gloria
+[INFO] view: KICK hit t=1015 v=(0.783714, 0.621122) len=5 w=gloria
+[INFO] view: KICK fire t=1033 v=(-1.089106, -1.03143) w=gloria
+[INFO] view: KICK hit t=1040 v=(0.726071, 0.68762) len=5 w=gloria
+[INFO] view: KICK fire t=1057 v=(-1.206947, -0.890662) w=gloria
+[INFO] view: KICK hit t=1064 v=(0.804631, 0.593775) len=5 w=gloria
+[INFO] view: KICK fire t=1081 v=(-1.288431, -0.768078) w=gloria
+[INFO] view: KICK hit t=1088 v=(0.858954, 0.512052) len=5 w=gloria
+[INFO] view: KICK fire t=1105 v=(-1.357508, -0.638101) w=gloria
+[INFO] view: KICK hit t=1112 v=(0.905005, 0.425401) len=5 w=gloria
+[INFO] view: KICK fire t=1129 v=(-1.427446, -0.460865) w=gloria
+[INFO] view: KICK fire t=1153 v=(-1.49607, -0.108514) w=gloria
+[INFO] view: KICK hit t=1159 v=(0.99738, 0.072342) len=5 w=gloria
+[INFO] view: KICK fire t=1177 v=(-1.46329, -0.329823) w=gloria
+[INFO] view: KICK fire t=1201 v=(-1.495926, -0.110481) w=gloria
+[INFO] view: KICK hit t=1206 v=(0.997284, 0.073654) len=5 w=gloria
+[INFO] view: KICK fire t=1225 v=(-1.499738, -0.028018) w=gloria
+[INFO] view: KICK hit t=1230 v=(0.999826, 0.018678) len=5 w=gloria
+[INFO] view: KICK fire t=1249 v=(-1.367016, 0.617469) w=gloria
+[INFO] view: KICK hit t=1255 v=(0.911344, -0.411646) len=5 w=gloria
+[INFO] view: KICK fire t=1273 v=(-1.184483, 0.920326) w=gloria
+[INFO] view: KICK hit t=1277 v=(0.789656, -0.61355) len=5 w=gloria
+[INFO] view: KICK fire t=1297 v=(-0.920427, 1.184404) w=gloria
+[INFO] view: KICK hit t=1303 v=(0.613618, -0.789603) len=5 w=gloria
+[INFO] view: KICK fire t=1321 v=(-0.924626, 1.181129) w=gloria
+[INFO] view: KICK hit t=1326 v=(0.616418, -0.787419) len=5 w=gloria
+[INFO] view: KICK fire t=1345 v=(-0.826784, 1.25157) w=gloria
+[INFO] view: KICK hit t=1350 v=(0.55119, -0.83438) len=5 w=gloria
+[INFO] view: KICK fire t=1369 v=(-0.771435, 1.286425) w=gloria
+[INFO] view: KICK hit t=1376 v=(0.51429, -0.857616) len=5 w=gloria
+[INFO] view: KICK fire t=1393 v=(-0.803957, 1.266354) w=gloria
+[INFO] view: KICK hit t=1397 v=(0.535972, -0.844236) len=5 w=gloria

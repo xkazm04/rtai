@@ -297,8 +297,12 @@ stick, 2/3 right stick, 4 LT, 5 RT.
   read by **phase correlation** per frame (`evidence/n9h/it7/bosscam/pancorr.py`, the image shift itself, not a luma
   difference, which the ground's grain dominates under any pan): the 62 px jump at frame 155 is gone; the largest one-frame
   moves left are 24 px (frame 1265) and 20 px (707), identical in both clips, each a start from rest that then runs at
-  6-10 px; the focus log moves <= 11.3 px a frame, so a second camera input adds the rest: suspected the hit
-  feel's directional kick (FeelCam, on Rivet's hits, the desktop's too), not proven.
+  6-10 px. **Not FeelCam** (a temporary Log on every kick and shake, `evidence/n9h/it7/bosscam/king-kicks-probe.txt`:
+  the King run's kicks are 1-1.5 px and none fires at ticks 709 or 1267). The focus log shows what they are: **a step in
+  the camera's speed**, not in its place: at frame 738 the focus's vertical speed goes 1.0 -> 9.9 px a frame in one frame,
+  at 1280 -3.6 -> +11.2 (the boss or Rivet reaching a keep-in margin, after which the camera moves at their speed). The
+  image shift reads ~2x the focus log's px (24 vs 11.2; the log converts at 40 px/m, unexplained, owed). The cure is an
+  acceleration limit on the focus (a speed that ramps over a few frames), not a lagging damper: owed (it8).
 
 ## 6. Text legibility at 1280x800
 

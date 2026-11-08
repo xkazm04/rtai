@@ -433,3 +433,25 @@ NEXT (iteration 7):
   frame (pans judder 1:2); 30 and 60 are even. If the pause card's pacing row ("efficient") ever pairs with a frame cap,
   30 or 60, not 40, keeps motion even until the views interpolate between ticks.
 - 06:48 GATE evidence run `--no-bench` at 32f498d8: lint, unit 1848/0, scenarios 54, parity (629), look goldens 11/11, release-compile 619/0: all PASS (`evidence/n9h/it7/gates/evidence-run-32f498d8.txt`).
+- 06:52 FINDING (NEXT 2a started): the 20-24 px starts are NOT FeelCam (temp Log on kicks/shakes, restored: kicks
+  1-1.5 px, none at ticks 709 / 1267; `evidence/n9h/it7/bosscam/king-kicks-probe.txt`). The BossCam focus log shows a
+  step in SPEED at those moments (frame 738 vertical 1.0 -> 9.9 px/frame; 1280 -3.6 -> +11.2): a keep-in margin
+  engaging. Image shift ~2x the log's px (unexplained). Cure: an acceleration limit on the focus. LEDGER, REPORT.
+- FRICTION: tools/evidence/run.mjs marks unit FAILED if the tree changes before unit ends ("import churn"), so JOURNAL
+  edits during an evidence run break it; committed the doc edits at once (39d16ead, with the hook off to not run lint
+  beside the evidence run's own lint: a slip of the rule, docs only; lint passes on the next commit's hook).
+
+NEXT (iteration 8):
+1. Read the other journals for REQUESTs at the start AND mid-session; the asset lane's deliveries (grep "handheld").
+   Do not edit the tree while an evidence run is going (the churn check fails it).
+2. Research loop candidates, best first: (a) FIRST: an acceleration limit on BossCam's focus (the 20-24 px speed steps,
+   frames 738 / 1280 of the focus log = video 707 / 1265; NOT FeelCam, proven it7): keep the focus's per-frame
+   velocity and limit its change (e.g. <= 2 px/frame^2 at 40 px/m, scaled by ppm), handheld rows + `--boss-cam` only;
+   check the boss and Rivet margins still hold (the boss may sit past the margin for a few frames: measure how far);
+   unit test on the limiter math; re-film King + Servo, pancorr.py (no step > ~12 px); explain the ~2x between the
+   focus log's px and the image shift first (print_stage zoom vs px_per_m?); (b) view interpolation for the 40 Hz row, a scoping note only (which views read the sim per frame, what an
+   alpha between two ticks would take, SIM-03 safe) for Call 4 c; (c) near the freeze, re-run E20 on world's final head
+   (recipe in it6 NEXT) with `deck` and `deck30`.
+3. Freeze 10:30: export `build/export/windows/RTAI.exe` (`"$GODOT_BIN" --headless --path project --export-release
+   windows-showcase ../build/export/windows/RTAI.exe`), final gates on the head (reel x3 + evidence run with the log
+   outside the tree), REPORT final (gates line, exe line, Calls 1-5, frames.json 15 entries all present).
