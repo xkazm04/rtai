@@ -36,11 +36,13 @@ const RUN_FROM_MPS: float = 2.5
 const MAX_RUN_CYCLES_S: float = 3.5
 ## measured on the packed grids (cell px of stance travel, the row's vs run8's same row): the
 ## heavy left profile 59 / 63; the one-hand 55 3/4 toward right (row 2 B) 43 / 54.5, toward
-## left 49 / 55
+## left 49 / 55; the two-hand 55 3/4 toward right (row 2 B) 41.5 / 54.5, toward left 49 / 55
 const RUN_ROW_K: Dictionary[String, float] = {
 	"p70/gatling/4": 0.94,
 	"p55/pistol/1": 0.79,
 	"p55/pistol/3": 0.89,
+	"p55/plasma_rifle/1": 0.76,
+	"p55/plasma_rifle/3": 0.89,
 }
 const ROWS: int = 8
 const CYCLE_CELL: Dictionary[String, float] = {"p70": 60.0, "p55": 60.0}

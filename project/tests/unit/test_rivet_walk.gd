@@ -155,6 +155,9 @@ func test_a_weapon_out_runs_on_its_drawn_armed_run_above_the_run_speed() -> void
 		assert_eq(tex.get_width() % 8 + tex.get_height() % RivetWalk.ROWS, 0, "whole cells")
 	var p55: String = RivetStrips.DIR + "p55/" + RivetWalk.ARMED_RUN + "pistol.png"
 	assert_eq(RivetWalk.path_of(rig, "p55", &"pistol"), p55, "it8: the pistol runs drawn at 55")
+	var rifle55: String = RivetStrips.DIR + "p55/" + RivetWalk.ARMED_RUN + "plasma_rifle.png"
+	var rifle_run: String = RivetWalk.path_of(rig, "p55", &"plasma_rifle")
+	assert_eq(rifle_run, rifle55, "it9: the rifle runs drawn at 55")
 	var flamer: String = RivetWalk.path_of(rig, "p70", &"flamethrower")
 	assert_true(
 		flamer.get_file().begins_with(RivetWalk.ARMED), "no drawn armed run: the armed walk"
