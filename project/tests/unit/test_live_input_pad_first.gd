@@ -1,7 +1,8 @@
 extends GutTest
 ## features/player LiveInput (n9-handheld): a handheld row starts pad-first, so quest 1's first
 ## prompt names the pad's buttons (the title card eats the pad's first press before the session's
-## input exists); a key or the mouse still hands the prompts back. The desktop starts on the keys.
+## input exists); a key or a click still hands the prompts back, mouse motion (a Deck trackpad)
+## does not. The desktop starts on the keys and any mouse use hands them back.
 
 var _saved: DeviceProfile = null
 
@@ -48,3 +49,26 @@ func test_the_first_quest_prompt_names_the_pad_on_a_deck() -> void:
 	)
 	assert_eq(words.find("L-stick"), 6, words)
 	assert_false(words.contains("W A S D"), words)
+
+
+func test_mouse_motion_aims_but_keeps_the_pad_prompts_on_a_handheld() -> void:
+	DeviceProfile._shared = DeviceProfile.of("deck")
+	var live: LiveInput = LiveInput.new(PlayerActions.shipped())
+	var motion: InputEventMouseMotion = InputEventMouseMotion.new()
+	motion.relative = Vector2(14, -3)
+	live.note_event(motion)
+	assert_true(live.mouse_aims, "a trackpad still aims")
+	assert_true(live.pad_last, "but the prompts stay on the pad")
+	var click: InputEventMouseButton = InputEventMouseButton.new()
+	click.button_index = MOUSE_BUTTON_LEFT
+	click.pressed = true
+	live.note_event(click)
+	assert_false(live.pad_last, "a click hands them to the keys")
+
+
+func test_mouse_motion_hands_the_prompts_back_on_the_desktop() -> void:
+	DeviceProfile._shared = DeviceProfile.of("desktop")
+	var live: LiveInput = LiveInput.new(PlayerActions.shipped())
+	live.pad_last = true
+	live.note_event(InputEventMouseMotion.new())
+	assert_false(live.pad_last)

@@ -20,6 +20,10 @@ var mouse_aims: bool = true
 ## true once a pad was used last, false once a key or the mouse was: the prompts name the pad's
 ## buttons or the keys (aim is not affected; that is mouse_aims).
 var pad_last: bool = false
+## n9-handheld: on a handheld row only a click or a key hands the prompts to the keys; mouse motion
+## (a Deck trackpad in Steam's default layout) still aims but leaves them on the pad (Valve's Deck
+## recommendation: switch to mouse/keyboard mode only on a mouse click). The desktop: any mouse use.
+var click_flips: bool = false
 ## n9-handheld: the pad aim assist (PadAimAssist.wire, an `aim_assist` device row); null = raw.
 var assist: AimAssist = null
 var aim_origin: Callable = func() -> Vector2: return Vector2.ZERO
@@ -35,6 +39,7 @@ func _init(p_actions: PlayerActions) -> void:
 	# pad's first press before a session's input exists, so the first prompt named the keys.
 	pad_last = DeviceProfile.shared().is_handheld()
 	mouse_aims = not pad_last
+	click_flips = pad_last
 
 
 func sample(_tick: int) -> TickInput:
@@ -56,7 +61,8 @@ func sample(_tick: int) -> TickInput:
 func note_event(event: InputEvent) -> void:
 	if event is InputEventMouseMotion or event is InputEventMouseButton:
 		mouse_aims = true
-		pad_last = false
+		if not (click_flips and event is InputEventMouseMotion):
+			pad_last = false
 		_latch_wheel(event as InputEventMouseButton)
 	elif event is InputEventKey:
 		pad_last = false
