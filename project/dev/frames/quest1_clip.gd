@@ -36,6 +36,7 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--view",
 	"--rivet-walk",
 	"--rivet-height",
+	"--ghost-voice",
 ]
 const RECORDER: String = "res://dev/frames/quest1_clip_rec.gd"
 const COUNTER: String = "res://tests/support/error_counter.gd"
