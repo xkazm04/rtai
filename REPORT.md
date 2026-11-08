@@ -1,4 +1,4 @@
-# n9 perf REPORT (branch `n9-perf`, cut from main da108c13; DRAFT it10, final at the freeze)
+# n9 perf REPORT (FINAL; branch `n9-perf`, cut from main da108c13; hand freeze by the Director, see the last section)
 
 Numbers, methods and every A/B: `docs/perf/LEDGER.md` section "n9 night". Clips and stills:
 `C:\Users\kazda\kiro\gtai-masters\n9\perf\` (`frames.json`).
@@ -149,3 +149,11 @@ Numbers, methods and every A/B: `docs/perf/LEDGER.md` section "n9 night". Clips 
 - A stripped export template is worth retrying only with the official toolchain (MinGW-GCC + LTO); the MSVC build
   cost ~10 % frame time (L7).
 - See JOURNAL.md NEXT for the session-level list.
+
+## Final gates and the exe (the hand freeze, 2026-11-08 10:00-10:55)
+
+Every billing path ran out at 09:08 (the subscription's weekly limit; all three API keys out of credit), so the lane's own freeze session never ran. The Director ran this freeze by hand. Logs: `C:\Users\kazda\kiro\gtai-n9\tmp\perf\final\`.
+
+- At `a83b562e`: evidence `--no-bench` ALL PASS: lint 15/15, unit 1843/0, scenarios 54, parity bit-exact, look goldens 11/11, release-compile 619/0. The planned quiet release riot confirm did not run.
+- Director reel: top 19/19, tilt70 and combo 19/19 with `--quit-after 40000`, 0 SCRIPT ERROR. The exe was exported at 1694ef7d (a83b562e adds only a log). The reel's `--quit-after 16000` cuts off the last chapters under tilt70 / combo (17-18 of 19 rows, every printed row fully down, the count varying run to run, also when run alone), so a short count at 16000 is the limit and not a failing chapter. 16000 no longer reliably covers the reel: raise it.
+- The exe: `build/export/windows/RTAI.exe` (327 MB, plus the release sim DLL), exported at that head with `"$GODOT_BIN" --headless --path project --export-release windows-showcase ../build/export/windows/RTAI.exe`, 0 export errors. Smoke `RTAI.exe --headless --quit-after 600`: exit 0, 0 SCRIPT ERROR.
