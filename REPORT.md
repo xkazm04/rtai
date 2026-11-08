@@ -10,13 +10,13 @@ Evidence: `C:\Users\kazda\kiro\gtai-masters\n10\world\` (`frames.json`). Every p
    - A body's head lies up, up-right, up-left, right or left, picked by the blow's screen direction and the pose, with no free turn. No head points at the camera. Pose E is only ever mirrored.
    - The far crowd's baked corpses follow the same headings through a view-only shader snap.
    - Each near body has a contact shadow (its own silhouette, down the sun).
-   - Dock 9's push is measured between the drawn bodies and relaxed so neighbours on two sides do not cancel (1.9 m range, 2.2 m cap, `016cd98f`). `dead_dock9_centres_64.png` and `dead_dock9_centres_32.png` against the same tick before it: the top-left body no longer lies across its neighbour.
+   - Dock 9's dead no longer touch once settled. The push measures between the drawn bodies, relaxes over 8 passes, and a body a crowd still defeats takes the nearest clear spot (`SPACE_M` 2.1, cap 2.4). `dead_dock9_centres_64.png` and `dead_dock9_centres_32.png`, same tick t13900: before, three bodies chain together; after, four lie clear.
    - Same seed and tick, before = `StreetDeadHeading.ENABLED` false: `dead_dock9_before_after_64.png`, `dead_dock9_before_after_32.png`, `dead_riot_before_after_64.png`, `dead_riot_before_after_32.png`.
 
 ## What does not work yet
 
 - **The art is still the n9 plan poses.** This is the code half of the owner's note: the poses are placed on drawn headings but are not yet drawn for this camera. REQUEST 2 in JOURNAL asks for them.
-- **Dock 9's top three bodies are still tight.** A boot crosses the kneeling body and a hand touches in the top pair (`dead_dock9_centres_64.png`). Two wider settings (2.1 m / 3.0 m and 2.3 m / 2.4 m) stacked two bodies instead, so I stopped at 1.9 / 2.2. Why the wider ones stack is not established.
+- **While a body is still falling, it can pass over a neighbour.** Its push eases in over 24 ticks, so for that moment it can overlap one already lying (`DRAWDBG`: t13800, age 9). Settled frames are clear; the mid-fall crossing is not fixed.
 - **The far crowd has no contact shadow** (near rigs and Dock 9 only).
 - **The lamp post card stays as drawn.** I had called it a stub and asked for a lamp three times a person's height (REQUEST 1), then measured it: 65 px against Rivet's 53 px at 32 px/m, and the half-height walls are 49-121 px, so a taller lamp would stand over the walls. REQUEST 1 is withdrawn; the art is the library's `lamp_70_v4`, drawn for this camera.
 - **Item 2's audit is by eye from one still, except the fire escape.** Parked cars and kerb furniture stand. Roofs and roof gear are the biggest plan-view read left and need art. The fire escape is closed from the source: the city generator never places one, so the streets draw none; only the alley arena has four.
@@ -32,7 +32,8 @@ Evidence: `C:\Users\kazda\kiro\gtai-masters\n10\world\` (`frames.json`). Every p
 - Eight film runs (Dock 9 and riot, 32 and 64 px/m, before and after): 0 SCRIPT ERROR each.
 - `node tools/tests/run_unit.mjs` (full) at `4558d018`: 1968 passed, 0 failed, 0 skipped.
 - **`tools/evidence/run.mjs --no-bench` on `4558d018`: NOT green.** Lint, unit (1968 / 0), parity (1200 steps, planted mutation caught), selftest (look goldens 11/11) and export-audit (release-compile 632 / 0) PASS. **scenario-tests FAIL: timed out after 1594 s, with 0 scenarios reported**, while my film and other lanes were loading the machine. So no scenario has a result on this branch, and that includes the replay.
-- **Not run yet:** the director reel in top, tilt70 and combo.
+- `node tools/tests/run_scenarios.mjs` on `016cd98f`: **55 passed**, 0 SCRIPT ERROR, with `replay_60s` (3600 ticks) and the quest 1 input replay identical (`build/test-results/scenario-tests.log`). This replaces the timeout above as the scenario result; `tools/evidence/run.mjs` itself has not been re-run.
+- Director reel on `016cd98f`, the brief's exact command, top / tilt70 / combo: **19 chapters each, all fully down, 0 SCRIPT ERROR.** Caveat: all 19 chapters also log `no carry (run with --loadout=pistol); <weapon> skipped`, so these runs do not show the chapters' weapons being carried. See Call w-4.
 - Not exported yet.
 
 ## What blocked me
@@ -44,6 +45,7 @@ Evidence: `C:\Users\kazda\kiro\gtai-masters\n10\world\` (`frames.json`). Every p
 
 - **w-1, the set of headings.** Five headings, heads never toward the camera. A blow toward the camera turns the body away, so it no longer falls that way. Frame: `dead_riot_before_after_64.png`. The tables are `StreetDeadHeading.HEAD_DEG` and `HEAD_DEG_ODD`; `ENABLED` false restores n9.
 - **w-3, a walk that slides between 1.8 and 2.5 m/s.** From the code, Rivet's walk holds its cadence at 2 cycles a second above 1.8 m/s, so a stick walk at 2.5 m/s slides about 28 % until the run takes over. Raising `RivetWalk.MAX_CYCLES_S` to about 2.8 would plant it but makes the walk's legs churn faster. Left as built; it is the Rivet lane's tuning. Frame: `move_oblique_walk_64_sheet.png`, which shows why it is unread: the boots are hidden in the toward and 3/4 rows.
+- **w-4, the director reel gate does not carry its weapons.** With the brief's command (no `--loadout=pistol`), `stage.pilot` has no carry, so all 19 chapters log `no carry ... skipped` and go down without the chapter's weapon. The gate is green as written but proves less than it reads. Frame: none, it is the log (`reel_director.gd:155`). Suggest adding `--loadout=pistol` to the gate.
 - **w-2, roofs.** Roofs are drawn straight down and are the largest plan-view area left under the 70 camera. Fixing that is a new art round for every roof type, not code. Frame: `audit_street_combo_32.png`.
 
 ## Next steps
