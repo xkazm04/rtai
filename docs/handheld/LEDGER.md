@@ -291,6 +291,8 @@ scaled **0.9x**): the Controls' smallest is the pause card's 18 px buttons at 16
 fail, but it is digits only (no lowercase), so its smallest character is the cap height, 10 px. Nintendo publishes
 no legibility number (its guidelines sit behind the developer program); applying the Deck's rule to the Switch-class
 budget, the one site to lift on a 720p row is that count (16 -> 18 px authored, or a text scale on the row).
+**Judged on the still** (the King on `switch_handheld`, iGPU, t=18 s, `evidence/n9h/it2/legibility/switch720-king-count-crop-x4.png`):
+"1 / 3" reads cleanly at ~10 px digit height; **no change** (the row is a budget, not a port).
 
 ## 7. Port readiness (filled as the loop goes)
 
