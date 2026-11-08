@@ -217,7 +217,15 @@ stick, 2/3 right stick, 4 LT, 5 RT.
   each kind rests on its own, so a hurt is never held back; 0 = before): King gatling 80 played + 145 rested (the same
   225 hits), machine pistol 105 + 112, Servo gatling 126 + 236; the stock gun 59 / 63, 0 rested (it13's exactly)
   (`evidence/it14/*-gap.log`, `before/`). Only a pad in hand can say whether 8 ticks reads as taps (one value).
-- Aim assist for twin-stick aim: not found. Owed (a design call for the owner: magnetism toward the nearest target in a cone).
+- Aim assist for twin-stick aim: **exists but is never called** (corrected n9 it3; d9 read "not found"). The gunplay
+  lane built it (7ed93057, the owner's decision 2 "light, pad only"): `features/combat/weapons/aim_assist.gd`
+  `AimAssist.bend()`, numbers in `weapons.json` `aim_assist` (cone 8 deg, range 25 m, bends 35 % of the way, the mouse
+  raw), loaded into `WeaponTable.aim_assist`; but no shipped code calls `bend()` (only `test_gunplay_weapons`), and the
+  only `RangeTarget` lists live in `ProjectileSim`, which runs in the dev range views alone. So a pad aims raw today
+  everywhere. Owed (designed, JOURNAL it3 NEXT): `LiveInput` bends the right stick's heading (before `pack_aim`, so a
+  replay records the bent heading) with a targets Callable that each session fills from its stage's hostiles (quest 1:
+  cops; the arena: its enemies and the boss), on the handheld rows (a `devices.json` field); the desktop pad as an owner
+  Call (the owner's decision 2 says pad only, not handheld only).
 - Menus: **broken on a pad until it11, fixed** (8959a913, 47668922). Godot 4.7.2's default `ui_accept` and `ui_cancel` carry
   **no pad button** (probed on the engine: `ui_accept` = Enter, keypad Enter, Space; `ui_up/down/left/right` = the d-pad
   and the left stick; `ui_select` = Y). The title, pause and paid cards are focus-driven Buttons: a pad moved the focus
