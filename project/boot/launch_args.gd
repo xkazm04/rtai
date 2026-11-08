@@ -87,7 +87,7 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--rivet-walk",
 	# d9-perf: --perf-hud draws the frame-budget overlay (dev/perf/perf_hud.gd), read only
 	"--perf-hud",
-	"--delta-smooth",  # n9-perf: on = FrameDeltaSmoother under mailbox (World._smoothed), A/B arm
+	"--delta-smooth",  # n9-perf: off = no FrameDeltaSmoother under mailbox (World._smoothed, L16)
 	# d9-handheld: --device=<devices.json id> the handheld profile (window, frame cap, stretch)
 	"--device",
 	# d9-handheld: --save-cross=write|read,<dir>[,ticks,after,idle] (dev/save_cross.gd, E14)
@@ -118,6 +118,11 @@ func _ready() -> void:
 			PlayerActions.shipped().install()  # the title card names the pad's buttons
 		if profile.rumble > 0.0:
 			add_child(HandheldRumble.new(profile.rumble))
+
+
+## n9-perf: the ENGINE ran with `--fixed-fps` (each frame a fixed delta, not the wall clock).
+func engine_fixed_fps() -> bool:
+	return OS.get_cmdline_args().has("--fixed-fps")
 
 
 ## Parses `--flag` and `--flag=value` pairs; unknown ones are kept for unknown().

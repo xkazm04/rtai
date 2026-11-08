@@ -17,6 +17,21 @@ var _interval: float = 0.0
 var _carry: float = 0.0
 
 
+## Whether World arms it: on by default (L16) under mailbox vsync in a real-time window;
+## `--delta-smooth=off` is the before. Enabled vsync is smoothed by the engine itself.
+static func wanted(flag: String, realtime: bool, vsync_mode: int, hz: float) -> bool:
+	return flag != "off" and realtime and vsync_mode == DisplayServer.VSYNC_MAILBOX and hz > 0.0
+
+
+## A window running on the wall clock: not headless, not filming, not `--fixed-fps` (a fixed
+## delta is whole ticks already; snapping it to a 59.94 Hz interval would drift the sim, so
+## the windowed look goldens and every fixed-fps bench keep the raw delta).
+static func realtime_window(fixed_fps: bool) -> bool:
+	if fixed_fps:
+		return false
+	return DisplayServer.get_name() != "headless" and Engine.get_write_movie_path() == ""
+
+
 ## `interval_s` = 1 / the display refresh rate; 0 or less = off (every delta passes raw).
 func _init(interval_s: float) -> void:
 	_interval = interval_s

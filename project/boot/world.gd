@@ -114,14 +114,16 @@ func _process(delta: float) -> void:
 
 
 ## n9-perf: the frame delta snapped to the display interval under mailbox (FrameDeltaSmoother;
-## the engine smooths only VSYNC_ENABLED). `--delta-smooth=on` arms it (off = the before, the
-## default until its A/B); never headless, filming or with vsync off / enabled.
+## the engine smooths only VSYNC_ENABLED). On by default in a real-time mailbox window (L16);
+## `--delta-smooth=off` = the before. Never headless, filming, --fixed-fps or vsync off / enabled.
 func _smoothed(delta: float) -> float:
 	if _smooth == null:
 		var hz: float = DisplayServer.screen_get_refresh_rate()
-		var on: bool = LaunchArgs.value("--delta-smooth") == "on" and hz > 0.0
-		on = on and DisplayServer.get_name() != "headless" and Engine.get_write_movie_path() == ""
-		on = on and DisplayServer.window_get_vsync_mode() == DisplayServer.VSYNC_MAILBOX
+		var realtime: bool = FrameDeltaSmoother.realtime_window(LaunchArgs.engine_fixed_fps())
+		var vsync: int = DisplayServer.window_get_vsync_mode()
+		var on: bool = FrameDeltaSmoother.wanted(
+			LaunchArgs.value("--delta-smooth"), realtime, vsync, hz
+		)
 		hz = minf(hz, Engine.max_fps) if Engine.max_fps > 0 else hz
 		_smooth = FrameDeltaSmoother.new(1.0 / hz if on else 0.0)
 		if on:

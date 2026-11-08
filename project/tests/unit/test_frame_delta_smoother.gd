@@ -56,3 +56,24 @@ func test_carry_keeps_the_long_run_time() -> void:
 		raw += d
 		smoothed += s.smooth(d)
 	assert_almost_eq(smoothed, raw, HZ60, "within one interval of wall time")
+
+
+func test_wanted_by_default_under_mailbox_in_real_time() -> void:
+	assert_true(FrameDeltaSmoother.wanted("", true, DisplayServer.VSYNC_MAILBOX, 59.94))
+	assert_false(
+		FrameDeltaSmoother.wanted("off", true, DisplayServer.VSYNC_MAILBOX, 59.94), "the before"
+	)
+	assert_false(
+		FrameDeltaSmoother.wanted("", false, DisplayServer.VSYNC_MAILBOX, 59.94), "fixed / headless"
+	)
+	assert_false(
+		FrameDeltaSmoother.wanted("", true, DisplayServer.VSYNC_ENABLED, 59.94), "engine smooths"
+	)
+	assert_false(
+		FrameDeltaSmoother.wanted("", true, DisplayServer.VSYNC_MAILBOX, 0.0), "no refresh rate"
+	)
+
+
+func test_fixed_fps_is_never_real_time() -> void:
+	# a windowed --fixed-fps run (the look goldens) must keep the raw delta: the sim would drift
+	assert_false(FrameDeltaSmoother.realtime_window(true))
