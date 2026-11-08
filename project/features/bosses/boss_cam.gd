@@ -42,14 +42,28 @@ const TOP_MARGIN_M: float = 1.0
 ## Rivet is kept on screen with this margin when the boss's own margins leave room (the boss wins;
 ## n8 it7: at 64 px/m the frame held the boss and lost Rivet ~10 m away).
 const RIVET_MARGIN_M: float = 1.5
+## The focus's speed changes by at most this many screen px a tick (CamFollow; n9-handheld it8):
+## a keep-in margin engaging started a pan at 20 px a frame in one frame. `--boss-cam-ease=off`
+## (the before) or 0 = the framing exactly, every frame.
+const ACCEL_PX: float = 3.0
+## A focus jump farther than this (m) cuts instead of easing (a respawn, the first frame).
+const SNAP_M: float = 10.0
+const EASE_OFF: String = "--boss-cam-ease=off"
 
 var view: CollectCallView = null
 var hook: BossHook = null
+var _follow: CamFollow = CamFollow.new()
+var _tick: int = -1
+var _accel_px: float = 0.0 if _has(EASE_OFF) else ACCEL_PX
 
 
 ## The dev flag, or a device row with `boss_cam` (the handheld rows: DeviceProfile.boss_cam).
 static func wanted() -> bool:
-	return OS.get_cmdline_user_args().has(FLAG) or DeviceProfile.shared().boss_cam
+	return _has(FLAG) or DeviceProfile.shared().boss_cam
+
+
+static func _has(flag: String) -> bool:
+	return OS.get_cmdline_user_args().has(flag)
 
 
 ## The point the camera leans to: FRAME_K of the way from Rivet `r` to the boss `b` when they
@@ -99,7 +113,11 @@ func _process(_delta: float) -> void:
 	var with_r: Vector2 = keep_in(on_floor, half, r, RIVET_MARGIN_M, bands)
 	var held_x: Vector2 = keep_in(with_r, half, b, BOSS_MARGIN_X_M, bands)
 	var y: float = keep_in(with_r, half, b, BOSS_MARGIN_M, bands).y
-	view.focus = Vector2(held_x.x, hold_top(Vector2(held_x.x, y), half, b, bands))
+	var framed: Vector2 = Vector2(held_x.x, hold_top(Vector2(held_x.x, y), half, b, bands))
+	var now: int = hook.fight.now()
+	var ticks: int = now - _tick if _tick >= 0 and now >= _tick else 1
+	_tick = now
+	view.focus = _follow.advance(framed, ticks, _accel_px * m_per_px, SNAP_M)
 
 
 ## The focus y that keeps the boss's lifted top (BOSS_TOP_M up the screen under a tilt) and

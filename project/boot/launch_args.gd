@@ -53,6 +53,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--quest-blade",
 	# n7-melee: --hit-cues=off gives melee and ghost hits no sound of their own (the before)
 	"--hit-cues",
+	# n9-handheld it8: --boss-cam-ease=off = BossCam's framing exactly (no CamFollow; the before)
+	"--boss-cam-ease",
 	# n7-melee: --tell-cues=off gives the ghost attacks' wind-ups and whiffs no sound (the before)
 	"--tell-cues",
 	# n7-melee: --whiff makes the ghost reel's Tonnage slam once onto empty road (dev film)
