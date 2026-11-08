@@ -12,6 +12,8 @@ const SPRAWL: float = 1.05
 
 ## The BODY group of the rig cut in the death sprawl (centred on its parts, in the rig parent's px).
 static func cut(rig: CutRig) -> Node2D:
+	if rig.limbs_cold:  # posed by this cut: the solves must run
+		RigPose.warm_limbs(rig)
 	var saved: Dictionary[Node2D, Transform2D] = {}
 	_save(rig, saved)
 	var keep: Array = [

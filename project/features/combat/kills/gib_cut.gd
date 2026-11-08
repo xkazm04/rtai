@@ -10,6 +10,8 @@ extends RefCounted
 ## Node2D groups by SignatureKill.PIECE_IDS index (a group may be empty: no sprites). With
 ## `whole` the BODY group holds every sprite and the HAT group a copy of the head (the cap).
 static func cut(rig: CutRig, whole: bool = false) -> Array[Node2D]:
+	if rig.limbs_cold:  # a walker card hid the parts: posed now, for the copies
+		RigPose.warm_limbs(rig)
 	var kind_of: Dictionary[Node, int] = _limb_kinds(rig)
 	var groups: Array[Node2D] = []
 	var sums: PackedVector2Array = PackedVector2Array()
