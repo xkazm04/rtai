@@ -587,3 +587,9 @@ near-final head); freeze steps as in it9 NEXT 3.
   1847/0; lint 15/15; live: SteamDeck=1 on this 1920x1080 screen -> "the desktop row", no variable -> no line, 0 SCRIPT
   ERROR. DECISION handheld/deck-auto-pick. FRICTION: my edits landed in the project while the A/B's branch arm was
   still running (same code path with `--device=`; noted in E20b). Next time: edit only after an A/B ends.
+- 08:47 GATE at 6f320d24: director reel 19/19 fully down in top / tilt70 / combo, 0 SCRIPT ERROR; 08:48 evidence run
+  `--no-bench` all PASS (lint, unit 1863/0, scenarios 54, parity, goldens 11/11, release-compile 620/0);
+  `evidence/n9h/it10/gates/`. Scratch merge worktree removed. Masters frames.json: 15 entries, all files present.
+- 08:51 MILESTONE 3d235479 an auto-picked Deck opens fullscreen (`fill_screen`; SteamOS desktop mode's taskbar would
+  cover a 1280x800 window); `--device=` keeps the window (live `--device=deck`: window 1280x800); test; unit --select
+  24/0; lint 15/15; DECISION handheld/deck-fills-screen. Mutation on device_profile.gd started at 3d235479.

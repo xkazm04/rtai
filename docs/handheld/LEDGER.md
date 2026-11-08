@@ -726,3 +726,16 @@ for middleware plus kits under NDA.
   (-10 % / -44 % / -30 %). Both rows hold their caps (vsync 60 at 16.7 ms; 33.3 ms at 30: its `over33_settled` ~340
   counts frames a hair over the 33 ms line, the cap itself, not misses). `deck30` costs a third less pinned CPU than
   `deck` on both trees. JSONs and the log: `evidence/n9h/it10/e20b/`.
+- **Windows handhelds picking their own row (n9 it10): researched, not built.** Steam sets no `SteamDeck` variable on
+  Windows, so an Ally / Legion Go / Claw-class handheld still needs `--device=handheld_1080` (or a settings choice).
+  Probe on this PC (`evidence/n9h/it10/probe_model.gd.txt`, Godot 4.7.2): `OS.get_model_name()` on Windows returns
+  the system model ("X670 AORUS ELITE AX", the same as WMI `Win32_ComputerSystem.Model`), so a model match is possible;
+  `DisplayServer.screen_get_dpi()` returns the *effective* DPI (96 at 100 % scaling), not the panel's physical size,
+  so "a small 1080p screen" cannot be read that way. The firmware model strings of the handhelds are **not confirmed**
+  by any source found (retail SKUs only: ROG Ally RC71L, Legion Go 83E1, Claw A1M,
+  [ASUS spec](https://rog.asus.com/gaming-handhelds/rog-ally/rog-ally-2023/spec),
+  [comparison listing](https://comparisontabl.es/handheld-gaming-pc/msi-claw-a1m-ultra-5-135h-vs-lenovo-legion-go/)),
+  so no guessed strings are shipped. The design when they are known (a DMI database or one device each): a `models`
+  substring list on the `handheld_1080` row of `devices.json`, matched in `DeviceProfile.auto_pick` after the Deck
+  check, fullscreen like the Deck. Owed: the strings, and the same check on a Deck's Linux DMI (`board_vendor`
+  "Valve") for a launch outside Steam, unverified here.

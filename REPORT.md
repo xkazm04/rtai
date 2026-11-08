@@ -88,7 +88,8 @@ The research loop since:
   screen is 1280x800; a docked Deck or a SteamOS desktop keeps the desktop; `--device=desktop` or `SteamDeck=0` opts
   out. The desktop never reaches the screen query (no variable here). Live here: `SteamDeck=1` on the 1920x1080
   screen logs "the desktop row" (the docked case), 0 SCRIPT ERROR (`evidence/n9h/it10/auto-*.log`). Tests 2; Steamworks' `IsSteamRunningOnSteamDeck`
-  joins as the first check with the Steam port.
+  joins as the first check with the Steam port. A Deck that picked itself opens fullscreen (3d235479, DECISION
+  `handheld/deck-fills-screen`: desktop mode's taskbar would cover a 1280x800 window); `--device=` keeps the window.
 - **A trackpad no longer flips the prompts on a handheld** (it9, b7621d73, DECISION `handheld/click-flips`): Valve's
   Deck recommendations name pad / keyboard icon flipping as a common problem and say to switch to mouse/keyboard mode
   "only ... if a mouse click event is received". On a handheld row mouse motion (a Deck trackpad in Steam's default
@@ -116,6 +117,9 @@ The research loop since:
   determinism note narrowed (the CitySim is already strict-FP, NAT-07; the engine's own math on an arm64 build is the
   open part, LEDGER section 1).
 
+Gates (it10): at 6f320d24 (the Deck auto-pick) the director reel 19/19 fully down, 0 SCRIPT ERROR in top, tilt70 and
+combo; the evidence run `--no-bench` all PASS (lint, unit 1863/0, scenarios 54, parity, look goldens 11/11,
+release-compile 620/0, `evidence/n9h/it10/gates/`). 3d235479 (fill_screen) after it: unit --select 24/0, lint 15/15.
 Gates (it8): at 8c1acea1 (the boss cam ease) the evidence run `--no-bench` all PASS (lint, unit 1855/0, scenarios 54,
 parity, look goldens 11/11, release-compile 620/0, `evidence/n9h/it8/gates/evidence-run-8c1acea1.txt`); the director
 reel 19/19 fully down, 0 SCRIPT ERROR in top, tilt70 and combo at 630f91a7 (the shipped-code change; 8c1acea1 adds a
