@@ -428,3 +428,7 @@ NEXT (iteration 7):
   deck40 -> deck30 GPU busy per second 359 -> 270 ms (-25 %), pinned CPU 4.71 -> 4.32 % (noise). LEDGER E21, REPORT
   (it7 items, Call 4 rewritten: 40 or 30, with the two clips in masters). FRICTION: ab.mjs ignores `--out`, writes
   under `evidence/sim/<name>/` (moved the ab.json by hand).
+- 06:41 Mid-session READ: rivet (it8), world (06:25), perf: no REQUEST to handheld; the asset lane: nothing new for
+  handheld. NOTE to perf (FYI, no work asked): E21 (LEDGER s4) shows a 40 fps cap steps the 60 Hz sim 1, 2, 1, 2 ticks a
+  frame (pans judder 1:2); 30 and 60 are even. If the pause card's pacing row ("efficient") ever pairs with a frame cap,
+  30 or 60, not 40, keeps motion even until the views interpolate between ticks.
