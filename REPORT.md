@@ -95,6 +95,7 @@ Branch `n9-world`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n9\world\` (frame
 ## Next steps
 
 1. Dock 9 at 64 px/m (needs a camera lead toward the crossing), and assets' pose D redrawn if the owner asks.
-2. Optional: bound the lying pose by its own sideways extent at a wall (the ~0.3 m hand/hood overlap).
+2. The wall overlap: a probe that reaches the jitter-swung hand was tried in it19 and showed no visible gain at
+   64 px/m (kept as a patch under `gtai-n9/tmp/world/`); only if a shot shows a body over a roof edge again.
 3. Freeze: the full gate (`node tools/evidence/run.mjs --no-bench`), the director reel x3 at the head, the exe
    (`build/export/windows/RTAI.exe`), this report finalised.
