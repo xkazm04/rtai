@@ -774,3 +774,17 @@ evidenced clips, each segment titled with its item).
   wall; 5 the robe still), cut by `gtai-n9/tmp/world/combo_set/make.sh` from the evidenced clips only. Contact sheet
   looked at (`combo_set/sheet.png`): every segment reads. frames.json entry 0; the bikes clip it contains dropped
   from the list (on disk), 15 entries.
+- MILESTONE (08:35) 6ca2448f NEXT 2 landed: quest 1's blood pools fade like the live fight's stains
+  (`StreetQuestCorpses.stain_life`, CombatBlood's decal life = corpse_decay.json stains 12 s + 4 s, as CorpseFade;
+  was blood_fx.json's 60 s + 120 s). Clip pair from one head at 32 px/m, t14000-16000 (before = d1e38256 in the
+  scratch worktree, after = this tree; 0 SCRIPT ERROR both): the same until ~t15000 (pools still inside the 12 s
+  linger); from ~t15400 the empty pools by the bench and the kerb are gone in the after, at t16000 the crossing
+  pool is down to specks (before: all still full). Looked at the grid (`gtai-n9/tmp/world/pool25/grid.png`).
+  Masters: `dock9_pools_fade_stain_life_before_after_tilt70_32ppm_t14000-16000.mp4` + the t15400/t16000 still
+  (not in frames.json: 15 entries). DECISION world/quest-pool-stain-life; REPORT C-6 now "built (a)", (b)/(c) open
+  (the ~6 s of empty pools is the table's own law: stains outlive bodies). 2006 raw PNG frames deleted (7.5 GB).
+- (08:45) GATE at 6ca2448f, clean tree, no edits during the run (`node tools/evidence/run.mjs --no-bench`, rc 0):
+  lint 15/15, unit **1846/0**, scenarios 55, parity bit-exact (planted 629), look goldens 11/11 + block 5/5 worst
+  0.00, release-compile 617/0 (`evidence/n9-world/gate-it25.log`). Director reel x3 at 6ca2448f (run beside the
+  gate, logs outside the tree, copied in after): top / tilt70 / combo **19/19 chapters fully down, 0 SCRIPT ERROR**,
+  exit 0 each (`evidence/n9-world/director-reel-it25*`).
