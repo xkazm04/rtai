@@ -261,3 +261,68 @@ NEXT (it6):
   (a wall-clock check: "the step grew with the dead 1082 -> 2668 us", not a rivet path; the shared machine was busy).
   Re-run alone at 03:39: `run_scenarios.mjs --only=scenario_corpse_horde` PASS. Read as contention; re-check in it6's evidence run.
 - it6 lead for the 6.75 m/s run film: the reel's `claw_combo` chapter (dev/showcase/reel_chapters.gd l.41, mode `claw`).
+
+## it6 (03:39-04:39)
+
+Read: JOURNAL it5, git log, the other journals (world: ANSWER to rivet, the knock field landed at 0c04d16b on n9-world:
+`CityCharacters.KNOCK_META` = `&"rivet_knock"` Vector3(hx, hy, tick) on Rivet's CutRig while down 1.2 s, plus
+RigFeed.Flag.DOWN -> rig.dead (the death sprawl shows meanwhile); film with `res://dev/showcase/car_knock_clip.tscn --
+--out=<dir> --view=tilt70 --zoom=2`, hit at tick 196. perf / handheld: no REQUEST to rivet), the asset lane (SERVED
+it124 `rivet_walk_armed_claw_it124.md`: all 20 claw armed walks, 19 A / 1 B; run8 70 rows 4 v3 / 5 v4 A (the limp and
+same-side contacts fixed), run8 55 row 4 v5 B: the 55 run COMPLETE; knockdown sheets still in redraw: away v4 04:11,
+left/right v2 03:55). Registry rules applied: sprite-and-atlas (one scale per figure: the claw grids packed at the
+it4 scales within 1 %, one tone per figure swap: tone-matched to the equipped strip again); motion-quality (a stride's
+cycle is the drawn stance travel per frame step, measured per grid, never shared between grids drawn by different
+rounds); realtime-combat-semantics (the shot still swaps to the equipped strip's fire cell and its measured muzzle:
+nothing in the fire path moved).
+
+- MILESTONE `f2e05223` **the armed walks draw the claw (my it4 REQUEST, served)**: 10 grids re-packed from the claw
+  cells (`rivet_walk.py`, --tone to each equipped strip). The gatling 55 and the flamer keep mirrored lefts (their
+  equipped strips mirror: a drawn left would put the weapon in the other hand on every shot; DECISION rivet/armed-claw).
+  Looked at the pistol 70, katana 55 and flamer 70 grids: the pincer on the free arm in every cell.
+  Film: pistol before (it4 spike) / after (claw), arena gunplay seed 3, tilt70, 64 and 32 px/m, f60-102, 0 SCRIPT
+  ERROR; at 55 in the King fight (combo 48, seed 1): left-profile armed walk with the claw, the shot, the roll.
+  `gtai-masters/n9/rivet/rivet_armed_walk_claw_*` (frames.json now 13).
+- MILESTONE `8fc2314a` **the run at 55** (the library's run8_55, all 8 rows) + run8 70 rows 4 v3 / 5 v4: packed at the
+  walk8 scales (`--k`), tone-matched to walk8. `RUN_CYCLE_CELL["p55"]` = 212, measured as it5 (profile stance boot ~53
+  cell px over two frame steps; the same probe gives 64.6 -> 258 at p70, it5's value). Unit test: every run strip has a
+  measured cycle. Looked at the 55 grid: rows alternate; nits as the library lists (row 2's black stub in 5/6/8; row 1
+  reads the leg swap weakly).
+- MILESTONE `e4e150ec` **each armed walk on its own cycle** (`ARMED_CYCLE_CELL`, 66-81 cell px; flamer keeps 60):
+  measured on the profile rows (`evidence/n9/rivet_walk_armed_cycle.md`); the shared 60 churned the armed legs 10-35 %
+  fast. Below the cap only: at his 6.75 m/s the 2/s cap gives 3.4 m per cycle against a ~1.1 m drawn armed stride =
+  **the armed walk still glides at top speed** (needs a drawn armed run: REQUEST below).
+- Gates it6: unit select 26/26, 20/20, 24/24; lint 15/15 on every commit; director reel 19/19 fully down in top,
+  tilt70, combo, 0 SCRIPT ERROR on 8fc2314a (`reel-director-it6-<v>.log`) and on the armed cycles (`it6b`).
+- FRICTION (~8 min): the before film. `git show HEAD~1:<png>` writes the Git LFS POINTER (104 SCRIPT ERRORs: a null
+  texture); use `git show ... | git lfs smudge`. And a running game does not re-import: swap the PNG, `--import`, film,
+  restore, `touch`, `--import` again (check the `.godot/imported/*.md5` source_md5 against `md5sum`).
+- FRICTION (~3 min): the reel's katana chapter (`--chapter=katana`) is a dash-in, it never shows the armed walk long
+  enough to judge; the katana claw walk is unfilmed (looked at its grid only).
+
+REQUEST to assets: rivet_run8_armed_onehand_70 (then twohand, blade, heavy at 70, then 55): Rivet's 8-frame RUN with a
+weapon out, because the armed walk (4 frames, ~1.1 m a cycle) glides at his 6.75 m/s top speed (the 2/s cadence cap
+covers 3.4 m per cycle). Layout exactly as rivet_run8 (5 right rows x 8 + 3 left rows x 8, contact, down, passing, up,
+contact other foot, down, passing, up; the same foot line and dome width as the run8 cells), LEGS copied by example from
+the delivered run8 rows (their stance travel 0.60-0.63 x height per step is what plants), ARMS and weapon copied from the
+claw armed walk (`rivet_walk_armed_onehand_70_claw_cells`, the gun forward in the hand side it draws, the claw free arm).
+One-hand pistol 70 first.
+
+### Calls drafted for REPORT (it6 additions)
+9. **Mirrored lefts on the gatling 55 and the flamer armed walks**: the library drew claw lefts; wiring them makes the
+   weapon change hands on a shot until the equipped strips get drawn lefts. Built: mirrored (consistent). Option: one
+   argument to `rivet_walk.py` (the drawn left folder) + the equipped strips' drawn lefts (REQUEST).
+10. **The armed walk at top speed**: still a glide (cadence cap). Options: an armed run (REQUESTed, built ahead: the
+    cycle table takes a new grid by name), or raise `MAX_CYCLES_S` for armed grids (4 frames at ~6/s: planted but a
+    scuttle).
+
+NEXT (it7):
+1. The knock-down: wire `rivet_knock` (Vector3 hx, hy, tick; `CityCharacters.KNOCK_META` on n9-world, absent here:
+   read it with a default) to a RivetFrames strip `rivet_knock.png` per art key, the row by the car heading in screen
+   space (toward/away/left/right), the column by ticks since the hit; it must win over the DOWN sprawl while set. The
+   library's sheets: `keyed/rivet/rivet_knockdown_{toward,away,left,right}_{70,55}[_vN].png` (check its JOURNAL for the
+   picks; away 70 v4 at 04:11). Film with world's `car_knock_clip.tscn` once world merges or on a scratch merge.
+2. Full unit run result of it6 (started 04:16, `gtai-n9/tmp/rivet/unit_it6.log`); the evidence run --no-bench.
+3. The bare-claw run at 6.75 m/s still unfilmed (it5 NEXT 2): a `--weapon=none` path or the city block bare.
+4. The armed run when the library serves it (pack like run8, add `ARMED_CYCLE_CELL` entries from its profile rows).
+5. Size films owed: Servo combo 48 at 1.95 m, the roll ball and the death sprawl at size, beside a car.
