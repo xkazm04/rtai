@@ -226,6 +226,10 @@ stick, 2/3 right stick, 4 LT, 5 RT.
   replay records the bent heading) with a targets Callable that each session fills from its stage's hostiles (quest 1:
   cops; the arena: its enemies and the boss), on the handheld rows (a `devices.json` field); the desktop pad as an owner
   Call (the owner's decision 2 says pad only, not handheld only).
+  **Wired n9 it3 (33f80d56)** as designed: `PadAimAssist.wire(live, stage.get.bind("arena"))` in `Quest1Session.open`
+  and `ArenaSession`, on every row with `aim_assist: true` (all handheld rows, tested); `test_pad_aim_assist` (the
+  desktop aims raw, the targets are the living hostiles + the boss, a 5 deg offset bends toward the hostile). Not yet
+  shown live (owed: a pad-event walk in the King arena logging the raw vs the packed heading).
 - Menus: **broken on a pad until it11, fixed** (8959a913, 47668922). Godot 4.7.2's default `ui_accept` and `ui_cancel` carry
   **no pad button** (probed on the engine: `ui_accept` = Enter, keypad Enter, Space; `ui_up/down/left/right` = the d-pad
   and the left stick; `ui_select` = Y). The title, pause and paid cards are focus-driven Buttons: a pad moved the focus

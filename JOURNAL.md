@@ -172,3 +172,15 @@ the it98 pad glyph look (cream fill, brush-ink rim, mustard bevel, 128 px cell, 
 a small round button with a "+", the same with a "-" (the Nintendo-layout Start / Back), and the PlayStation Create
 button (a small pill with its three-short-lines-and-dot mark, no brand name or logo). Why: Valve's Deck Verified rule
 "glyphs must match the inputs being used"; on a Nintendo-layout pad the pause prompt shows the Xbox menu mark today.
+- 02:55 LEDGER: the port readiness table carries the n9 work per device (a786f8dd).
+- 03:00 FINDING: the pad aim assist exists (gunplay 7ed93057, `weapons.json` `aim_assist`, the owner's decision 2) but
+  `AimAssist.bend()` was called nowhere in the shipped game: a pad aimed raw everywhere (d9's LEDGER said "not found";
+  corrected, 9f6dd9b3). FRICTION: my first draft named a new class `AimAssist` and collided with it (caught by the
+  parse: always grep a class_name before adding one).
+- 03:10 MILESTONE: the assist wired on the handheld rows (`devices.json` `aim_assist: true` on all 11, schema):
+  `PadAimAssist.wire` / `.wired` in `Quest1Session.open` and `ArenaSession` (targets = the stage arena's living hostiles
+  + boss, read each tick; origin = Rivet), `LiveInput` bends the right-stick heading before `pack_aim` (the TickInput
+  carries the bent heading: replays hold). Tests `test_pad_aim_assist` (4). Commit 33f80d56. DECISION
+  `handheld/pad-aim-assist` (desktop pad = an owner Call).
+- FRICTION: gdformat on Windows rewrote two new files with CRLF, and a later Python text replace silently missed
+  (matched nothing). Normalize with `sed -i 's/\r$//'` after gdformat; assert the match in replace scripts.
