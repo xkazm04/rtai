@@ -310,3 +310,9 @@ NEXT (it8):
   stopped), and ADD a struck-at-speed scenario that spawns the car with its speed already set (find which spawn
   spec index is v vs vmax, or spawn 6 m behind on a straight with nothing ahead) and expects one
   `rivet_knocked` (use an Array[int] counter: a PackedInt32Array captured in a lambda is a copy).
+- (03:18) Gate at f371edfb (car hit off by data): full scenarios 53/54 at 03:14-03:18; the one failure,
+  scenario_rig_stress, was an engine error from the headless dummy renderer ("Parameter t is null",
+  texture_storage.h:85 texture_2d_initialize) while the machine was shared; re-run alone: **pass** (FLAKY,
+  not touched by this change: rig stress has no cars near the body). Parity bit-exact, unit 1824/0, lint 15/15.
+  Not run this session: the director reel (no view code changed: RivetBody's knock is inert with speed 0) and
+  evidence --no-bench; it8 runs both after turning the hit on.
