@@ -7,12 +7,14 @@ extends RefCounted
 ## screen space, columns impact / tumble / slide / down) instead of the death sprawl. The column
 ## steps on the time since the hit (the slide decelerates over the 1.2 s down); the lying cells turn
 ## by the heading's angle off the row's axis (<= 45 deg, the library's rule for the diagonals).
-## --rivet-knock=off keeps the death sprawl (the it6 look).
+## The rig stays down a few ticks after the knock clears (its rise): the down cell holds until
+## then (it7 film: the upright sprawl popped in for ~0.33 s). --rivet-knock=off: the sprawl.
 enum Row { TOWARD = 0, AWAY = 1, RIGHT = 2, LEFT = 3 }
 
 const STRIP: String = "rivet_knock.png"
 const KNOCK: StringName = &"rivet_knock"
 const T0: StringName = &"rivet_knock_t0"
+const LAST: StringName = &"rivet_knock_last"
 const CELLS: int = 4
 ## The first tick of each column (impact, tumble, slide, down) since the hit, at 60 Hz.
 const FROM_TICK: PackedInt32Array = [0, 6, 24, 54]
@@ -24,7 +26,12 @@ static var enabled: bool = true
 
 ## The knock strip under `art` while the knock is on (and the drawn figure `path` is), else `path`.
 static func path_or(rig: CutRig, art: String, path: String) -> String:
-	if not enabled or path.is_empty() or not rig.has_meta(KNOCK):
+	if not enabled or path.is_empty():
+		return path
+	var down: bool = rig.dead or (rig.react != null and rig.react.dying)
+	if not rig.has_meta(KNOCK) and not (down and rig.has_meta(LAST)):
+		if rig.has_meta(LAST):
+			rig.remove_meta(LAST)
 		return path
 	var knock: String = RivetStrips.DIR + art + "/" + STRIP
 	return knock if ResourceLoader.exists(knock) else path
@@ -59,13 +66,15 @@ static func turn_of(h: Vector2, col: int) -> float:
 
 ## Poses `card` (scale `s`, the figure's) on the knock strip: the cell centre on his ground point.
 static func place(rig: CutRig, card: Sprite2D, s: float, h_px: float) -> void:
-	var k: Vector3 = rig.get_meta(KNOCK, Vector3.ZERO)
+	var k: Vector3 = rig.get_meta(KNOCK, rig.get_meta(LAST, Vector3.ZERO))
+	rig.set_meta(LAST, k)
 	var t0: Vector2 = rig.get_meta(T0, Vector2(-1.0, 0.0))
 	if t0.x != k.z:  # a new knock: count from this pose step (CutRig.drive runs on the tick)
 		t0 = Vector2(k.z, rig.t_alive)
 		rig.set_meta(T0, t0)
 	var head: Vector2 = Vector2(k.x, k.y)
 	var col: int = col_of(roundi((rig.t_alive - t0.y) / SimClock.TICK_DT))
+	col = col if rig.has_meta(KNOCK) else CELLS - 1  # the rise's tail: still lying
 	card.hframes = CELLS
 	card.vframes = CELLS
 	card.frame = row_of(head) * CELLS + col

@@ -65,3 +65,25 @@ func test_place_centres_the_cell_on_his_ground_point() -> void:
 	assert_eq(card.offset, Vector2(-w * 0.5, -w * 0.5))
 	assert_eq(card.global_position, rig.global_position)
 	assert_true(rig.has_meta(RigCastShadows.CAST_HIP))
+
+
+func test_the_down_cell_holds_while_the_rig_is_still_down_after_the_knock_clears() -> void:
+	var rig: CutRig = add_child_autofree(CutRig.new())
+	var card: Sprite2D = autofree(Sprite2D.new())
+	rig.add_child(card)
+	var base: String = RivetStrips.DIR + "p70/" + RivetStrips.BASE
+	var knock: String = RivetStrips.DIR + "p70/" + RivetKnock.STRIP
+	card.texture = load(knock) as Texture2D
+	card.set_meta(RivetFrames.ON, knock)
+	rig.set_meta(RivetKnock.KNOCK, Vector3(0.0, 1.0, 50.0))
+	RivetKnock.place(rig, card, 0.5, 52.8)
+	assert_eq(card.frame, RivetKnock.Row.TOWARD * RivetKnock.CELLS, "impact")
+	rig.remove_meta(RivetKnock.KNOCK)
+	rig.dead = true
+	assert_eq(RivetKnock.path_or(rig, "p70", base), knock, "still down: the knock strip holds")
+	RivetKnock.place(rig, card, 0.5, 52.8)
+	assert_eq(card.frame, RivetKnock.Row.TOWARD * RivetKnock.CELLS + 3, "the down cell")
+	rig.dead = false
+	assert_eq(RivetKnock.path_or(rig, "p70", base), base, "up: the figure is back")
+	rig.dead = true
+	assert_eq(RivetKnock.path_or(rig, "p70", base), base, "a later death is the sprawl")
