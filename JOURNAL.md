@@ -301,3 +301,12 @@ NEXT (it8):
 4. Item 4 sim half (props in the thrown slide, both twins) + the kerb barrier before/after (seed 5, tick 900).
 5. Item 2 follow-ups (the 5 walker sheets when served; kill_marks follow the plan pose; Dock 9 + city block film).
 6. Remove the scratch "before" worktree once the last before/after is filmed.
+- (03:14) PROBE on (a) (scenario edited temporarily, reverted): with speed_mps 5 the n8 arm's car reaches 4 m
+  from Rivet at t 287 (4.8 s) moving **0.33 m/s and braking** (cars_near v 0.326 -> 0.307), so it is under the
+  threshold: the brake branch is right and no knock is the correct result. That arm is really the "car creeping
+  into him" case (d9's 0.10 m "through" was a crawl). Also seen: the body resolves to x 299.01 while the target is
+  300 (pushed ~1 m by something other than the car: f = 3.01 > 2.72, so not the hull; check people/solids).
+  So for it8: keep the n8 arm as the creeping case (expect: no knock, closest >= the hull's front 2.3 m, the car
+  stopped), and ADD a struck-at-speed scenario that spawns the car with its speed already set (find which spawn
+  spec index is v vs vmax, or spawn 6 m behind on a straight with nothing ahead) and expects one
+  `rivet_knocked` (use an Array[int] counter: a PackedInt32Array captured in a lambda is a copy).
