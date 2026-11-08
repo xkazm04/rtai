@@ -143,6 +143,7 @@ static func draw(rig: CutRig, card: Sprite2D, k: float) -> void:
 	card.global_rotation = 0.0
 	card.global_scale = Vector2(ks, ks)
 	card.global_position = rig.global_position
+	StreetDeadPlan.draw(rig, card, StreetWalkerCards.row_of(rig), ks, p)  # n9: the plan-view dead
 
 
 ## (rotation rad, the figure's length factor) for the rig now; (0, 1) when not dying in the hold.
