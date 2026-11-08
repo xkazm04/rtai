@@ -9,6 +9,10 @@ extends RefCounted
 
 const RIVET_ID: int = 1 << 20
 const FEED_RADIUS_M: float = CharacterRigs.RADIUS_M + 4.0
+## n9 (the owner's s-4 C): on Rivet's rig while a car's knock-down lasts, removed when he is up:
+## Vector3(the car's ground heading x, y, SimClock tick at the hit). Lane rivet reads it for the
+## drawn knock-down; until then his row carries RigFeed.Flag.DOWN (the tackle sprawl and rise).
+const KNOCK_META: StringName = &"rivet_knock"
 
 ## Rivet stands at the city's target (on foot); false while Rivet is in a car.
 var rivet_on_foot: bool = true
@@ -76,6 +80,7 @@ func _before_render(focus: Vector2) -> void:
 	rigs.zoom = _view.zoom
 	_last_tick = _clock.tick()
 	rigs.step_ticks(steps)
+	_mark_knock()
 	_slots.clear()
 	for i: int in rigs.feed.count:
 		if rigs.full_row(i) and rigs.feed.ids[i] != RIVET_ID:
@@ -107,8 +112,23 @@ func _fill_feed(focus: Vector2) -> void:
 		var at: Vector2 = _city.target * SimConst.PX_PER_M
 		var vel: Vector2 = (at - _rivet_prev) / SimClock.TICK_DT
 		_rivet_prev = at
-		@warning_ignore("return_value_discarded")
-		feed.put(feed.count, RIVET_ID, BodyPlan.Kind.RIVET, at, vel)
+		var row: int = feed.put(feed.count, RIVET_ID, BodyPlan.Kind.RIVET, at, vel)
+		if _city.body != null and _city.body.knocked():
+			feed.flags[row] |= RigFeed.Flag.DOWN
+
+
+## Sets or clears KNOCK_META on Rivet's rig from the city body (read only: the sim owns the knock).
+func _mark_knock() -> void:
+	var rig: CutRig = rigs.rig_for(RIVET_ID)
+	if rig == null:
+		return
+	var b: RivetBody = _city.body
+	if rivet_on_foot and b != null and b.knocked():
+		if not rig.has_meta(KNOCK_META):
+			var h: Vector2 = b.knock_heading
+			rig.set_meta(KNOCK_META, Vector3(h.x, h.y, float(_clock.tick())))
+	elif rig.has_meta(KNOCK_META):
+		rig.remove_meta(KNOCK_META)
 
 
 ## The actor record at offset `r` of `a` (a snapshot) as one feed row.
