@@ -50,6 +50,10 @@ const FLAME_DEG: Dictionary[String, PackedFloat32Array] = {
 	"p55/flamethrower": [0.0, 35.0, 90.0, 144.0, 180.0, -159.0, 0.0, -20.0],
 }
 const FLAME_TOL: float = PI / 6.0
+## n9 it12: a gun's fire cell draws its gun along the side (0 / 180) or the camera (90); a shot
+## aimed over GUN_TOL off it keeps the facing cell (fired up the screen, the side cell drew the gun
+## and its flash sideways under an up tracer). --rivet-flame=all = any aim (it11).
+const GUN_TOL: float = PI / 4.0
 static var flame_all: bool = false
 static var cone: Array[StringName] = []
 static var diag: bool = true
@@ -125,7 +129,7 @@ static func fire_latched(rig: CutRig) -> bool:
 ## is up); a cone burst that went off its drawn flame stays on the facing cell to its end.
 static func draws_fire(rig: CutRig, weapon: StringName, o: int, firing: bool) -> bool:
 	var was_off: bool = rig.get_meta(CONE_OFF, false) == true
-	var aim: float = aim_of(rig)
+	var aim: float = NAN if rig.clips.strike_t >= 0.0 else aim_of(rig)
 	var off: bool = firing and (was_off or not fires_drawn(weapon, o, aim, ViewMode.shared().art))
 	rig.set_meta(CONE_OFF, off)
 	return firing and not off
@@ -136,8 +140,11 @@ static func draws_fire(rig: CutRig, weapon: StringName, o: int, firing: bool) ->
 static func fires_drawn(weapon: StringName, o: int, aim: float = NAN, art: String = "") -> bool:
 	if not cone.has(weapon):
 		var deg: PackedFloat32Array = FLAME_DEG.get(art + "/" + String(weapon), [])
-		if flame_all or is_nan(aim) or deg.is_empty():
+		if flame_all or is_nan(aim):
 			return true
+		if deg.is_empty():
+			var gun: float = 90.0 if o == 2 else 180.0 * RivetFrames.LEFT[o]
+			return absf(angle_difference(aim, deg_to_rad(gun))) <= GUN_TOL
 		var drawn: float = deg[o] if diag or DIAG_CELL[o] < 0 else 180.0 * RivetFrames.LEFT[o]
 		return absf(angle_difference(aim, deg_to_rad(drawn))) <= FLAME_TOL
 	var off: float = 0.0 if is_nan(aim) else absf(angle_difference(aim, o * PI * 0.25))

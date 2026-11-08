@@ -51,9 +51,20 @@ func test_a_flame_burst_off_its_drawn_flame_keeps_the_facing_cell() -> void:
 	for art: String in ["p70", "p55"]:
 		assert_false(RivetStrips.fires_drawn(&"flamethrower", 6, deg_to_rad(-85.0), art), art)
 		assert_false(RivetStrips.fires_drawn(&"flamethrower", 7, deg_to_rad(-64.0), art), art)
-		assert_true(RivetStrips.fires_drawn(&"pistol", 6, deg_to_rad(-85.0), art), "a gun: any aim")
+		assert_false(
+			RivetStrips.fires_drawn(&"pistol", 6, deg_to_rad(-85.0), art), "a gun aimed up"
+		)
+		assert_true(RivetStrips.fires_drawn(&"pistol", 0, deg_to_rad(-30.0), art), "a gun along")
+		assert_true(
+			RivetStrips.fires_drawn(&"pistol", 2, deg_to_rad(100.0), art), "a gun at the camera"
+		)
+		assert_true(RivetStrips.fires_drawn(&"pistol", 4, deg_to_rad(-150.0), art), "a gun left")
+		assert_false(
+			RivetStrips.fires_drawn(&"pistol", 5, deg_to_rad(-130.0), art), "away diagonal"
+		)
 	RivetStrips.flame_all = true
 	assert_true(RivetStrips.fires_drawn(&"flamethrower", 6, deg_to_rad(-85.0), "p55"), "=all")
+	assert_true(RivetStrips.fires_drawn(&"pistol", 6, deg_to_rad(-85.0), "p55"), "=all: a gun")
 	RivetStrips.flame_all = false
 
 
@@ -71,7 +82,8 @@ func test_the_flamer_drawn_flame_needs_the_aim_along_it() -> void:
 	assert_true(RivetStrips.fires_drawn(&"flamethrower", 4, deg_to_rad(170.0)))
 	assert_true(RivetStrips.fires_drawn(&"flamethrower", 0, deg_to_rad(-15.0)))
 	assert_false(RivetStrips.fires_drawn(&"flamethrower", 2, deg_to_rad(50.0)))
-	assert_true(RivetStrips.fires_drawn(&"pistol", 4, deg_to_rad(124.0)))
+	assert_false(RivetStrips.fires_drawn(&"pistol", 4, deg_to_rad(124.0)), "n9 it12: GUN_TOL")
+	assert_true(RivetStrips.fires_drawn(&"pistol", 4, deg_to_rad(150.0)))
 
 
 func test_the_flamer_facings_carry_the_nozzle_at_both_pitches() -> void:
