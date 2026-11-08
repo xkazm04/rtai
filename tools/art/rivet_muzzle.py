@@ -56,6 +56,9 @@ GUN_FACE_TOWARD = (
 )
 ## The gatling's back view hides the gun behind him: the arm band's right tip is a hose.
 GUN_FACE_HIDDEN = {("gatling", 4)}
+## n10: the barrels spin up on a facing cell before the first round (WeaponFxSpin rings the muzzle):
+## the side-aim facing (cell 2) carries the point too, or the whirl sits on the fallback spot.
+GUN_FACE_SPIN = ("gatling",)
 ## The p70 wand is held low (the nozzle at ~0.8 of the figure in the three-quarter facings).
 FACE_BAND = (0.38, 0.86)
 EQ_CELLS = 8
@@ -148,6 +151,7 @@ def left_point(cell):
 def gun_face_cells(weapon):
     cells = GUN_FACE_CELLS if weapon in GUN_FACE_ONE_HAND + GUN_FACE_TOWARD else ()
     cells = (1,) + cells if weapon in GUN_FACE_TOWARD else cells
+    cells = (2,) + cells if weapon in GUN_FACE_SPIN else cells
     return tuple(c for c in cells if (weapon, c) not in GUN_FACE_HIDDEN)
 
 
