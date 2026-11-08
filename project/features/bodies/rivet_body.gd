@@ -29,6 +29,12 @@ var knocks: PackedFloat64Array = PackedFloat64Array()
 ## A one-step radial pulse (features/souls: the Hauler stomp): [radius m, knock slide m/s, down s].
 ## While set, the next spec() knocks down every person inside the radius, then clears it.
 var pulse: Vector3 = Vector3.ZERO
+## n9 knocked down by a car (bodies.json car_hit): the slide velocity m/s, the seconds left lying
+## (0 = up), and the hit's heading (unit, the car's) and speed m/s, read by the view.
+var knock_vel: Vector2 = Vector2.ZERO
+var knock_left: float = 0.0
+var knock_heading: Vector2 = Vector2.ZERO
+var knock_speed: float = 0.0
 var _events: EventBus = null
 
 
@@ -43,6 +49,8 @@ func bind(events: EventBus) -> void:
 
 ## The sim spec for a step in which Rivet moves from the resolved `pos` to `want`.
 func spec(want: Vector2) -> PackedFloat64Array:
+	if knock_left > 0.0:
+		want = _knock_step()
 	vel = (want - pos) / SimClock.TICK_DT
 	if vel.length() > TELEPORT_MPS:
 		vel = Vector2.ZERO
@@ -64,6 +72,7 @@ func spec(want: Vector2) -> PackedFloat64Array:
 	var back: BodyRule = table.rule(PERSON, body_class)
 	var blocked: bool = back != null and back.run == &"blocked"
 	s[SimConst.BD_RUN_IN] = table.run_mps(PERSON) if blocked else 0.0
+	s[SimConst.BD_CAR_HIT] = table.car_hit.x if body_class == CLASS else 0.0
 	pos = want
 	if pulse.x > 0.0:
 		_pulse(s)
@@ -91,8 +100,34 @@ func take(result: PackedFloat64Array) -> void:
 		return
 	pos = Vector2(result[SimConst.BR_X], result[SimConst.BR_Y])
 	knocks = result.slice(SimConst.BR_HEAD)
+	if result[SimConst.BR_HIT] > 0.0 and knock_left <= 0.0:
+		_knocked(Vector2(result[SimConst.BR_HHX], result[SimConst.BR_HHY]), result[SimConst.BR_HIT])
 	if _events == null:
 		return
 	for k: int in range(0, knocks.size(), SimConst.BR_STRIDE):
 		var at: Vector2 = Vector2(knocks[k + 1], knocks[k + 2])
 		_events.actor_knocked_down.emit(RIVET_ACTOR_ID, int(knocks[k]), PERSON, at)
+
+
+func knocked() -> bool:
+	return knock_left > 0.0
+
+
+## One tick of the car knock: slide along it at the sim's slide deceleration, count the lying time.
+func _knock_step() -> Vector2:
+	var at: Vector2 = pos + knock_vel * SimClock.TICK_DT
+	knock_vel = knock_vel.move_toward(Vector2.ZERO, SLIDE_DECEL * SimClock.TICK_DT)
+	knock_left = maxf(0.0, knock_left - SimClock.TICK_DT)
+	return at
+
+
+## A car at speed hit him: the slide along its heading, the lying time, the damage and the Events.
+func _knocked(heading: Vector2, speed: float) -> void:
+	var ch: Vector4 = table.car_hit
+	knock_heading = heading
+	knock_speed = speed
+	knock_vel = heading * speed * ch.y
+	knock_left = ch.z
+	var dmg: float = maxf(0.0, ch.w * (speed - ch.x * 0.5))
+	if _events != null:
+		_events.rivet_knocked.emit(heading, speed, dmg)

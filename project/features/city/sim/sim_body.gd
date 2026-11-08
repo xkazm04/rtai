@@ -12,6 +12,8 @@ var bx: float = 0.0
 var by: float = 0.0
 var spec: PackedFloat64Array = SimArrays.f64(SimConst.BD_LEN)
 var knocks: PackedFloat64Array = PackedFloat64Array()
+## n9: this step's car hit (speed m/s, heading x, heading y; 0 speed = none), see CitySimBodyCars.
+var hit: PackedFloat64Array = PackedFloat64Array([0.0, 0.0, 0.0])
 var _s: CitySimState
 var _h: CitySimHash
 var _solid: CitySimSolid
@@ -29,6 +31,12 @@ func set_spec(p_spec: PackedFloat64Array) -> void:
 	spec = p_spec.duplicate()
 	bx = spec[SimConst.BD_X]
 	by = spec[SimConst.BD_Y]
+
+
+## Before each step: no knockdowns and no car hit yet.
+func clear_step() -> void:
+	knocks.clear()
+	hit.fill(0.0)
 
 
 ## Person i at the scratch (x, y), moving at (pvx, pvy) m/s, against the body.
@@ -129,6 +137,8 @@ func down(i: int, dt: float) -> void:
 func resolve() -> void:
 	if spec[SimConst.BD_ON] == 0.0:
 		return
+	if spec[SimConst.BD_CAR_HIT] > 0.0:
+		CitySimBodyCars.resolve(_s, _h, self, hit)
 	var rs: float = spec[SimConst.BD_R] + spec[SimConst.BD_RP]
 	for _it: int in 2:
 		for j: int in _h.query(bx, by, 1):
@@ -152,10 +162,11 @@ func resolve() -> void:
 	by = _solid.y
 
 
-## BR_X, BR_Y, BR_N, then BR_STRIDE floats per knockdown this step (slot, x, y).
+## BR_X, BR_Y, BR_N, BR_HIT, BR_HHX, BR_HHY, then BR_STRIDE floats per knockdown (slot, x, y).
 func result() -> PackedFloat64Array:
 	@warning_ignore("integer_division")
 	var n: int = knocks.size() / SimConst.BR_STRIDE
 	var out: PackedFloat64Array = PackedFloat64Array([bx, by, float(n)])
+	out.append_array(hit)
 	out.append_array(knocks)
 	return out

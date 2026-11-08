@@ -88,6 +88,7 @@ void CityCore::down(int i, double dt) {
 // The body out of every live tier-A person it still overlaps (twice), then out of solid cells.
 void CityCore::body_resolve() {
 	if (body_[BD_ON] == 0.0) return;
+	if (body_[BD_CAR_HIT] > 0.0) body_cars();
 	double rs = body_[BD_R] + body_[BD_RP];
 	for (int it = 0; it < 2; it++) {
 		int n = query(bx_, by_, 1, qbuf_);
@@ -110,11 +111,54 @@ void CityCore::body_resolve() {
 	by_ = cy_;
 }
 
+// n9: the body against every live tier-A car's hull (grown by the body radius). A car at or above
+// BD_CAR_HIT knocks it down along the car's heading (the first such car this step is reported, and
+// it loses 0.6 of its speed to the blow); a slower car brakes hard (half its speed each tick of
+// contact) and shoves the body aside: either way the body is pushed out of the hull along its
+// shallower axis, so no car drives through it (and a standing body never blocks a lane for good).
+void CityCore::body_cars() {
+	double r = body_[BD_R];
+	int n = query(bx_, by_, 1, qbuf_);
+	for (int q = 0; q < n; q++) {
+		int j = qbuf_[q];
+		int kj = kind_[j];
+		if (alive_[j] == 0 || (kj != K_CAR && kj != K_PCAR) || tier_[j] != 0) continue;
+		double hhx = hx_[j], hhy = hy_[j];
+		double rx = bx_ - px_[j], ry = by_ - py_[j];
+		double f = rx * hhx + ry * hhy;
+		double s = -rx * hhy + ry * hhx;
+		bool bk = is_bike(j);
+		double hf = (bk ? BIKE_HULL_F : 2.3) + r, hs = (bk ? BIKE_HULL_S : 0.95) + r;
+		if (!(std::fabs(f) < hf && std::fabs(s) < hs)) continue;
+		if (v_[j] >= body_[BD_CAR_HIT]) {
+			if (hit_[0] == 0.0) {
+				hit_[0] = v_[j];
+				hit_[1] = hhx;
+				hit_[2] = hhy;
+			}
+			v_[j] *= 0.4;
+		} else {
+			v_[j] *= 0.5;
+		}
+		double pf = hf - std::fabs(f), ps = hs - std::fabs(s);
+		if (ps <= pf) {
+			double sg = s >= 0.0 ? 1.0 : -1.0;
+			bx_ += -hhy * sg * ps;
+			by_ += hhx * sg * ps;
+		} else {
+			double sg = f >= 0.0 ? 1.0 : -1.0;
+			bx_ += hhx * sg * pf;
+			by_ += hhy * sg * pf;
+		}
+	}
+}
+
 std::vector<double> CityCore::body_result() const {
 	std::vector<double> out;
 	out.push_back(bx_);
 	out.push_back(by_);
 	out.push_back((double)(knocks_.size() / BR_STRIDE));
+	out.insert(out.end(), hit_, hit_ + 3);
 	out.insert(out.end(), knocks_.begin(), knocks_.end());
 	return out;
 }

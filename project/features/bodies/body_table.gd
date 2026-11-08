@@ -9,6 +9,9 @@ const SCHEMA: String = "gtai.bodies/1"
 const RESULTS: Array[StringName] = [&"blocked", &"knockdown", &"shove", &"stagger"]
 
 var flee_s: float = 0.0
+## n9 car_hit (cars knock Rivet down): x = speed_mps (0 = off), y = slide_k, z = down_s,
+## w = damage_per_mps (bodies.json car_hit).
+var car_hit: Vector4 = Vector4.ZERO
 var _radius: Dictionary[StringName, float] = {}
 var _run: Dictionary[StringName, float] = {}
 var _mass: Dictionary[StringName, float] = {}
@@ -23,6 +26,13 @@ static func load_default() -> BodyTable:
 static func from_table(t: DataTable) -> BodyTable:
 	var b: BodyTable = BodyTable.new()
 	b.flee_s = t.num(t.raw, "flee_s")
+	var ch: Dictionary = t.object(t.raw, "car_hit")
+	b.car_hit = Vector4(
+		t.num(ch, "speed_mps"),
+		t.num(ch, "slide_k"),
+		t.num(ch, "down_s"),
+		t.num(ch, "damage_per_mps")
+	)
 	var live: Array[StringName] = []
 	for row: Variant in t.array(t.raw, "classes"):
 		var c: Dictionary = row if row is Dictionary else {}
