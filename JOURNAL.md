@@ -195,3 +195,64 @@ NEXT (it5):
 5. Size: Servo combo 48 at 1.95 m, the roll ball and death sprawl at size, beside a car (owed since it3).
 6. world's knock-down field: read their JOURNAL; wire `rivet_knock` when a usable sheet + signal exist.
 7. A per-strip cycle for the armed grids (measure the profile contact travel properly, as walk8's measure).
+
+## it5 (02:45-03:45)
+
+Read: JOURNAL it4, git log, the other journals (world: the knock field ANSWERED to rivet = `Events.rivet_knocked(heading,
+speed_mps)` + rig meta `rivet_knock` = Vector3(hx, hy, tick), its sim half in progress, nothing sets it yet; perf / handheld:
+no REQUEST to rivet), the asset lane (it124: SERVED rivet_eq_flamethrower_fire_diag 70 v2 A + 55 A; run8 70 rows 5 and L1 v3
+B; run8 55 row 4 still regenerating, row 5 fix queued). Registry rules applied: sprite-and-atlas (one scale per figure: the
+diagonal fire cells sized by the library's house rule, the side-fire robot, not the facings; a common foot line, here held
+above the cell bottom because the flame reaches under it); motion-quality (judge a stride in WORLD space: crops registered on
+the asphalt, a stance foot must hold between pose switches; the cycle length comes from the drawn stance travel per frame
+step); realtime-combat-semantics (the jet's root = the drawn nozzle, measured per diagonal cell).
+
+- MILESTONE `5ea8e2ae` run8 70 re-packed with the library's rows 5 and L1 v3 (the away arms pump, the 3/4-left arms);
+  provenance names the 0215 jobs.
+- MILESTONE `6d0b1a29` **the flamer's drawn diagonal fire cells (item 2 done as the owner picked)**: `rivet_eq_flamethrower_diag.png`
+  at p70/p55 (tools/art/rivet_flame_diag.py: 4 cells by octant, side-fire robot height 82/84 px, foot line 35/15 px above the
+  cell bottom = `RivetStrips.DIAG_FOOT_PX`), `RivetStrips.diag_or` swaps it in while a shot latches at a diagonal octant;
+  `rivet_muzzle.py measure_diag` measured the 8 nozzles (looked at them: all on the nozzle ring). `--rivet-flame=side` = it3.
+  Film (64 px/m tilt70 arena gunplay seed 3, f348-366, 0 SCRIPT ERROR): the drawn flame now leaves the nozzle down-left with
+  the jet instead of screen-left beside it. Residual: drawn ~35 deg vs the jet ~60 deg on this aim (inside octant 3).
+  `gtai-masters/n9/rivet/rivet_flamer_diagonal_cells_before_after_arena_tilt70_64ppm_seed3_f348_366.png`.
+- FRICTION (~8 min): my first flame mask kept the flame's ink outline (the robot read as the whole cell), and the game's
+  side-fire cell is a crouch (83 px vs 110 for the facings): took the library's own measure (tallest non-flame columns).
+- MILESTONE `f727612d` **the run's cycle fixed (item 3)**: measured in the game grid's profile rows, the stance foot moves
+  62-67 cell px from contact to push-off = TWO frame steps, so a cycle is 8 x ~32 = 258 cell px (3.87 m). it4 wired 136 (I
+  read the travel as a half cycle): at the 6.75 m/s run the legs churned 1.9x and the stance foot slid backwards. walk8's 60
+  re-checked the same way: right (~7.5 px per step, the foot on the ground the whole step).
+- Measured in quest 1 (64 px/m tilt70, every tick, crops registered on the asphalt by phase correlation): he SPRINTS there,
+  ~14.5 px/tick = 13.6 m/s; at that speed the 3.5/s cap gives a 3.9 m cycle, within 1 % of the drawn 3.87 m, so the sprint
+  was already near-planted and stays so. A held pose still slides ~15 px (0.23 m) with the body for its ~2 ticks, then the
+  switch puts the stance boot back (the 8-frame sawtooth). The walk8 before: one pose rides the body. Still:
+  `gtai-masters/n9/rivet/rivet_run_footlock_world_before_after_quest1_tilt70_64ppm_t383_398.png` (frames.json now 9).
+- FRICTION (~10 min): no scene I tried shows the bare-claw RUN at 6.75 m/s for long: the arena hub (`--bot=rivet`,
+  `--bot=forms`) hands him a gun (armed walk), gunplay keeps the gun out, quest 1 opens with a 15-tick dash then sprints.
+  The 6.75 m/s run is still UNFILMED; the fix there is by measure + unit test only.
+- Gates it5: unit select 23/23 + 25/25; lint 15/15 on every commit; director reel on f727612d 19/19 fully down in top,
+  tilt70, combo, 0 SCRIPT ERROR (`evidence/n9/reel-director-it5-<v>.log`, `05dd6fa0`).
+
+### Calls drafted for REPORT (it5 additions)
+7. **The diagonal flame vs the jet angle**: the drawn diagonal is ~35 deg; the jet follows the aim anywhere inside the octant
+   (up to 22 deg off). Options: keep (built), hide the jet's first metre while the drawn flame shows, or ask the library for a
+   steeper second diagonal. `--rivet-flame=side|cone` are the befores.
+8. **The sprint sawtooth**: 8 poses per 3.87 m at 13.6 m/s = a new pose every ~2 ticks; between them a pose slides 0.23 m.
+   Options: keep (built), a 12-16-frame sprint (REQUEST), or a slower sprint (sim, not this lane's).
+- Unit full on 05dd6fa0: **1824/0**. Flamer diagonal at 32 px/m filmed (before `--rivet-flame=side` / after, f351-366,
+  0 SCRIPT ERROR): `gtai-masters/n9/rivet/rivet_flamer_diagonal_cells_before_after_arena_tilt70_32ppm_x2_seed3_f351_366.png`;
+  frames.json now 10.
+
+NEXT (it6):
+1. Evidence run --no-bench on this branch (started 03:28 on the JOURNAL commit; check its result in `build/evidence/`).
+2. FILM the bare-claw RUN at 6.75 m/s (the it5 cycle fix): find or add a bare-claw path (the reel's claw chapters with
+   `--loadout=` empty? the city block with no weapon? a `--weapon=none` in the gunplay bot?), world-registered crops
+   (`gtai-n9/tmp/rivet/scripts/footlock.py` + `worldstrip.py`: copy them into tools/ if they stay).
+3. run8 55: when the library serves row 4 (and the row 5 fix), pack with `--k` = the 55 walk8 scales
+   (`evidence/n9/rivet_walk8_55.json`) and add `RUN_CYCLE_CELL["p55"]` measured the same way as it5 (profile stance foot
+   travel per frame step x 8), NOT 2 x travel.
+4. world's knock: wire `rivet_knock` (Vector3 hx, hy, tick) to the knock-down strip once world lands the field and the
+   library serves rivet_knockdown_70/_55.
+5. Armed walks: the per-strip cycle (measure each armed grid's profile stance travel per frame step like it5); the claw
+   REQUEST (the spike vs claw swap on a shot).
+6. Size films owed: Servo combo 48 at 1.95 m, the roll ball and the death sprawl at size, beside a car.
