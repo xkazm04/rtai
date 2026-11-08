@@ -355,3 +355,24 @@ NEXT (it6), replaces the list above (item 1 DONE: L20 is in 52ff53f0):
    + an A-vs-A for the floor (F12).
 5. Scratch worktrees: `gtai-n9/tmp/perf/cvprof` (timers, never commit), `prof3` (main) for item 4, `world3` (handheld
    read it; keep until the freeze).
+
+## it6 (2026-11-08 05:28-06:28) BUILD
+- 05:28 READ: JOURNAL NEXT, git log, the other journals: world it16 (no REQUEST to perf; its it1 REQUEST answered in
+  it3), handheld (none; its E20 holds bench.lock), rivet (none). Registry rules applied: measurement-honesty (every
+  A/B is 3 interleaved pairs, CONTENDED labelled, the drive's L20c -4 % called a wash), perf-instrumentation (timers
+  only in the cvprof scratch worktree; the arms and logs kept as evidence), motion-quality-gating (the lever is pixel-free
+  by an exactness test, not by eye; the reel is the combat gate).
+- 05:42 GATE evidence --no-bench on 8990b643 (= L20, the clean re-run owed from it5): ALL PASS: lint 15 / 15, unit
+  1835 / 0, scenarios 54 / 54, parity exact (629), look goldens 11 / 11 (worst 0.27), release-compile 617 / 0
+  (`evidence/perf/n9-it6/evidence-8990b643.txt`; the log written outside the tree, no doc edits during the run).
+- 05:40 L20b A/B (cvprof, 3 pairs riot + drive): the per-rig query median 548 -> 253 us (riot), 543 -> 206 (drive),
+  identical hidden / crowd counts. MILESTONE committed 6496dbdb (test: patches per body = the unfiltered scan, 3
+  planted faults caught).
+- FRICTION (05:45): `tools/godot/check.mjs` fails on city_occluders.gd for both arms ("Identifier not found: Log" in a
+  dependency: --check-only has no autoloads); the bench run is the real parse check for view files.
+- 05:43 GATE director reel x3 on 6496dbdb (headless, fixed 60, `--quit-after 16000`): 19 / 19 chapters fully down in
+  top, tilt70, combo, 0 SCRIPT ERROR (`evidence/perf/n9-it6/reel/`).
+- 05:47 L20c A/B (L20b vs L20c, 3 pairs): riot query 246 -> 129 us (-48 %), drive 212 -> 203 (wash). MILESTONE
+  committed 700712c7 after the pre-commit hook caught of_chunk at 44 lines and the test file at 212 (the index moved
+  to `CityOccluderCols`, the query tests to `test_city_occluders`; 3 planted faults re-caught on the moved code).
+- 05:52 LEDGER L20b / L20c (465a52c6).
