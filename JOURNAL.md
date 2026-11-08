@@ -686,8 +686,10 @@ NEXT (it11):
    one pincer claw + the weapon in a fist; the picks are `_build` / `_v2` / `_claw` per row of its table, and where
    dome/h is > 5 % off the claw walk it says "pack by DOME WIDTH" (one-hand 70 -8 %, heavy 70 +11 %, two-hand 55 +9 %,
    one-hand 70 left +8 %, two-hand 70 left +8 %, heavy 70 left +6 %, heavy 55 +6 %). Not cut in it10 (no time).
-   The evidence run --no-bench on 491e206f started 07:56; at 08:05 it waited for a quiet machine (city_chase
-   CONTENDED): read `gtai-n9/tmp/rivet/it10/evidence.log` first.)
+   Evidence run --no-bench on 491e206f (07:56-08:07): lint PASS, unit **1839/0**, scenarios 54 ran PASS but
+   CONTENDED (city_chase nav 15979 us > 2000 beside 1 other run; the machine never went quiet in 5 min: that budget
+   is NOT judged), parity PASS (mutation caught at step 629), selftest PASS (look goldens 11/11 worst 0.27: nothing
+   moved), release-compile 616/0, exit 0. Re-run `--only=city_chase` on a quiet machine before the freeze.)
 1. The reload art: the round 0725 picks above (`rivet_reload_{onehand,twohand,heavy}_{70,55}_claw` + lefts),
    cut it with the equipped cutter (`tools/art/rivet_frames.py` manifest) into `p70|p55/rivet_reload_{pistol,
    plasma_rifle,gatling}.png` (8 cells) + `_left.png` (3 cells) at the equipped strip's FIG_PX; check the dome
