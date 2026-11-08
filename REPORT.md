@@ -1,4 +1,4 @@
-# n9 perf REPORT (branch `n9-perf`, cut from main da108c13; DRAFT it4, final at the freeze)
+# n9 perf REPORT (branch `n9-perf`, cut from main da108c13; DRAFT it5, final at the freeze)
 
 Numbers, methods and every A/B: `docs/perf/LEDGER.md` section "n9 night". Clips and stills:
 `C:\Users\kazda\kiro\gtai-masters\n9\perf\` (`frames.json`).
@@ -27,8 +27,29 @@ Numbers, methods and every A/B: `docs/perf/LEDGER.md` section "n9 night". Clips 
    with sync). DECISION perf/crowd-readback-sync-default.
 7. Gates on 54de9b41: unit 1823 / 0, scenarios 54 / 54, parity bit-exact, release-compile 615 / 0, look goldens
    11 / 11, block goldens 5 / 5, the director reel 19 / 19 with 0 SCRIPT ERROR in top, tilt70 and combo.
+8. **The research loop, it5: where the riot's frame goes, and three pixel-free CPU cuts.** I split
+   CityView._process call by call with scratch timers (LEDGER "CityView._process per call"). The rig pose step is
+   ~60 % of it (dense GDScript math, no waste to strip), the feed is 262 rows a tick at 1.2 us each, and the
+   occlusion pass spent 883 us of its 1.05 ms on a per-rig building query. Kept, each bit-identical by test, each A/B'd
+   with interleaved arms (every new round under every old round):
+   - L17 FxPool reads a cached per-kind row instead of ~14 String-keyed Dictionary reads a particle a tick: the
+     riot's ground marks 140 -> 99 us a frame (-29 %).
+   - L18 CityResidency sorts its resident keys once a change, not on every call: chunks.update 122 -> 114 us (-7 %).
+   - L20 CityOccluders scans packed building positions: the occluder query 705 / 652 -> 542 / 543 us, about
+     -150 us a riot frame; the drive hides the same 3432 body-frames.
+   Together about -0.2 ms of main-thread CPU in a riot frame. That is below the frame-to-frame noise on this shared
+   machine, so no frame-time win is claimed. Dropped with numbers: L17b (skip held particles: slower than L17).
+   Refuted before building: L19 (no copy-on-write in packed-array writes through another object).
+9. **A combined clip of the set:** `gtai-masters/n9/perf/perf-set-n9.mp4` (46 s, the King and the drive with the
+   perf HUD, main vs BC7, then the pacing row).
+10. Gates on 78e039b7 (L17 + L18): all PASS: unit 1833 / 0, scenarios 54 / 54, parity bit-exact, look goldens
+   11 / 11, release-compile 617 / 0. The fx_pool mutation score is 90.9 %. On 28d8c8f7 (+ L20): every stage passed on
+   content (unit 1835 / 0, scenarios 54 / 54, parity exact, look goldens 11 / 11, release-compile 617 / 0), but the run
+   is marked FAIL because I edited JOURNAL / REPORT while it ran (the tree-changed guard). It must be re-run untouched.
 
 ## What does not
+- The first L17 test was vacuous. It compared `MultiMesh.buffer`, which a headless run keeps empty. The mutation run
+  caught it (27 %); the test now compares through `FxPool.mirror` (90.9 %).
 - Mailbox drops a tick image on a loaded machine: no-tick frames pooled over 9 rounds, Enabled 6 vs mailbox 51,
   at the same CPU. Steady fixes it for +0.08 core. L16 (the engine's own delta smoothing, re-applied under
   mailbox) is built behind `--delta-smooth=on`. Over three A/Bs (19 pairs) it had fewer no-tick frames in 10 pairs,

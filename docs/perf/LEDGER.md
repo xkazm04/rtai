@@ -318,6 +318,10 @@ prefilter could cut most of the remaining ~540 us.
 scenarios 54 / 54, parity bit-exact (mutation caught at 629), selftest look goldens 11 / 11 (worst 0.27),
 release-compile 617 / 0. Mutation on fx_pool.gd at 9944fd7d: 90.9 % (10 / 11; the survivor deletes the
 RenderingServer call, invisible headless by construction; `mutate-fx_pool-2.txt`).
+On 28d8c8f7 (+ L20; `evidence-it5b.txt`): lint, scenarios 54 / 54, parity exact, look goldens 11 / 11 (worst 0.27),
+release-compile 617 / 0 PASS; unit 1835 / 0 passed but the stage is marked FAIL by the tree-changed guard (I edited
+JOURNAL / REPORT during the run): owed, a clean re-run. L20 on the drive: 3432 body-frames hidden, 5154 crowd patches,
+the same as before it.
 
 ### Item 2 (it2): the traffic-sheet split is moot under BC7
 n9-world 3e02d3b8 imports the p70 traffic sheet as BC7: `traffic_cards.png-313d05e5...bptc.ctex` = **18,063,412 B**

@@ -335,3 +335,23 @@ NEXT (it6):
   parity exact, look goldens 11 / 11 (worst 0.27), release-compile 617 / 0. Mutation fx_pool at 9944fd7d: 90.9 %.
 - 05:16 L20 A/B (riot x2): near 705 / 652 -> 542 / 543 us, occlusion _process ~-150 us a frame (ranges apart).
   Ported into the branch (`city_occluders.gd` + 2 tests in test_city_occlusion, 11 / 0). NEXT item 1 is DONE.
+- 05:20 L20 behaviour check on the drive (it hides bodies; the riot hides none): with L20 "3432 body-frames hidden,
+  crowd 5154 patches" = the two pre-L20 drive runs exactly (`cvprof/out/drive-l20.log`). Evidence --no-bench on HEAD
+  28d8c8f7 (with L20) running, log `gtai-n9/tmp/perf/evidence-it5b.txt`.
+- 05:26 GATE evidence --no-bench on 28d8c8f7 (+ L20): lint, scenarios 54 / 54, parity exact, look goldens 11 / 11
+  (worst 0.27), release-compile 617 / 0 PASS; unit 1835 / 0 passed but the stage is FAIL by the tree-changed guard.
+- FRICTION (05:26): I edited JOURNAL.md / REPORT.md while the evidence gate ran; its guard flags ANY tree change
+  during the unit stage (docs included). Lesson: write docs in a scratch file during a gate, paste after.
+- REPORT.md draft updated (items 8-10: it5's split + L17 / L18 / L20, the clip, the gates).
+
+NEXT (it6), replaces the list above (item 1 DONE: L20 is in 52ff53f0):
+1. Re-run `node tools/evidence/run.mjs --no-bench` on HEAD WITHOUT touching the tree (log under gtai-n9/tmp/perf),
+   then the director reel x3 (`--quit-after 16000`, top / tilt70 / combo): L17 / L18 / L20 touch game code.
+2. L20b: an exact tighter prefilter in CityOccluders.near (the drawn area vs the body patch instead of a 40 m box);
+   prove that _scan's patches / hits / lifted set are identical over many rig positions (test), then a cvprof A/B
+   (the occlusion timers are in `evidence/perf/n9-l17/cvprof.patch`; the cvprof worktree has them applied).
+3. Split city_blood (0.8 ms mean in the riot spans) the same way.
+4. The final table at the freeze (main da108c13 via prof3 vs HEAD, `ab.mjs --scenes=king,drive70,riot`, bench.lock)
+   + an A-vs-A for the floor (F12).
+5. Scratch worktrees: `gtai-n9/tmp/perf/cvprof` (timers, never commit), `prof3` (main) for item 4, `world3` (handheld
+   read it; keep until the freeze).
