@@ -323,3 +323,53 @@ NEXT (it8):
   world's 746c2856: VRAM drive70 900 -> 548 MB, riot 899 -> 536 MB; no REQUEST), handheld (none to world).
 - Plan: item 3 to ON (struck-at-speed scenario, the creeping arm, scenario_vehicle_yield), then the `rivet_knock`
   rig meta for rivet.
+Registry rules applied: `realtime-combat-semantics` (one knock per hit, the second contact while he lies ignored:
+the scenario asserts exactly 1), `rigid-body-simulation-stability` (a thrown body stops on the step that would
+overlap a solid instead of being pushed sideways: no skating along a facade, no tunnelling: <= 0.1 m per step),
+`engine-integration-safety` (both twins op for op; the branch proven exercised by parity: off in native only ->
+diverges at step 329), `perf-regression-gating` (the gate re-run before claiming; debt ratchet accepted by name).
+- MILESTONE (03:30) item 3 ON at b0f1024e (DECISION world/car-hits-rivet-on): `car_hit.speed_mps` 5. it7's
+  "no knock" was right: a traffic car brakes for a person in its lane (sim_cars `_desired_speed`, f < 7 m) and
+  reaches him at 0.33 m/s = the creeping case. New `scenario_car_knocks_rivet`: he runs across 2.5 m in front of
+  a 12 m/s car -> exactly 1 knock, 12 m/s, heading +x, 6.6 m slide, 23.75 dmg. traffic_yields_rivet's n8 arm =
+  the creeping car (closest 2.33 m in (1.0, 3.0], 0 knocks); vehicle_yield's Rivet waits 9 m off the lane.
+- MILESTONE (03:38) the full gate at b0f1024e (car hit ON), scratch worktree `gtai-n9/tmp/world/gate`:
+  lint 15/15, unit 1830/0, scenarios 55/55, parity bit-exact (planted 629), look goldens 11/11 + block 5/5 worst
+  0.00 (none moved), release-compile 616/0 (`evidence/n9-world/it10-gate/`).
+- MILESTONE (03:45) item 3 view at 0c04d16b: Rivet's feed row carries RigFeed.Flag.DOWN while `body.knocked()`
+  (his drawn sprawl slides with the body, then the rise); the rig meta `rivet_knock` lands. Filmed with the new
+  `dev/showcase/car_knock_clip.tscn` (real city, --before = car_hit off, --creep): before the car drives over
+  him, after he is thrown 6 m and the car stops behind him (`gtai-masters/n9/world/car_knock_*`, 4 entries in
+  frames.json). Honest limits: the clip's road has no building in frame, so the tilt shows only on his p70 card;
+  the sprawl is always head up-screen (does not turn with the heading). Director reel it10 at 0c04d16b: top /
+  tilt70 / combo 19/19 chapters down, 0 SCRIPT ERROR.
+- MILESTONE (04:00) item 4 sim half at a42e54f0 (DECISION world/dead-stop-at-walls-sim): the dead slide (people.cpp
+  ped M_DEAD = `CitySimSolid.slide_dead`) does not take a step that overlaps a solid cell; the slide ends. Native
+  debug + release rebuilt; parity bit-exact and the branch is exercised (native-only off: parity diverges at step
+  329); scenarios 55/55 (replay unmoved); unit 1830/0. NOT covered: the arena's kerb barrier is a scene prop the
+  sim never sees (walkable cell), so the seed 5 tick 900 before/after will not change from this alone.
+
+ANSWER to rivet (the knock field, landed at 0c04d16b on n9-world): `CityCharacters.KNOCK_META` = `&"rivet_knock"`
+on Rivet's CutRig (`rigs.rig_for(CityCharacters.RIVET_ID)`), Vector3(car heading x, heading y, SimClock tick at
+the hit; the first frame after it), set once per knock, removed when he is up (car_hit.down_s 1.2 s). While it
+is set his feed row also carries RigFeed.Flag.DOWN (rig.clips.down -> rig.dead: your RivetFrames already shows
+his death sprawl then). Wire the drawn knock-down to the meta and, if it fights the DOWN sprawl, tell me and I drop
+the flag. Film it with `res://dev/showcase/car_knock_clip.tscn -- --out=<dir> --view=tilt70 --zoom=2` (hit at
+tick 196).
+
+### Calls for the owner (add)
+- C-5 the car knock-down: threshold 5 m/s (a braking car's crawl never floors him), slide 0.8 x the car's speed
+  (6.6 m at 12 m/s), 1.2 s down, damage 2.5 x (speed - 2.5) (23.75 at 12 m/s; Event only: the city has no Rivet
+  hp outside the pits yet). Options: (a) as built; (b) slide_k 0.5 (4 m: less cartoon); (c) threshold 8 (only a
+  fast car floors him). All one bodies.json value.
+
+NEXT (it11):
+1. Read the journals (rivet: the knock meta ANSWER above; assets: the 5 walker dead sheets, rivet_knockdown).
+2. Item 4: stamp the arena's / scene props into the sim cells as C_PROP (the kerb barrier: find where the arena
+   builds its props and whether `stamp_chunk` cells can carry them), then film the kerb barrier seed 5 tick 900
+   before/after; film a city dead stopping at a facade (riot near a wall) at 32 + 64.
+3. Item 3: the knock damage into the active pit (`EnemyPit._hurt_rivet`) where one runs (quest 1) or record
+   "Event only" as the DECISION; a real-game clip (`--arena=city` with a car) once rivet wires the drawn knock.
+4. Item 2 follow-ups (walker sheets when served; kill_marks follow the plan pose; Dock 9 + city block film).
+5. Remove scratch worktrees `gtai-n9/tmp/world/before` and `gtai-n9/tmp/world/gate` when the last before/after is
+   filmed (gate's `build/evidence` already copied).
