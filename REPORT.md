@@ -1,4 +1,4 @@
-# n9 perf REPORT (branch `n9-perf`, cut from main da108c13; DRAFT it9, final at the freeze)
+# n9 perf REPORT (branch `n9-perf`, cut from main da108c13; DRAFT it10, final at the freeze)
 
 Numbers, methods and every A/B: `docs/perf/LEDGER.md` section "n9 night". Clips and stills:
 `C:\Users\kazda\kiro\gtai-masters\n9\perf\` (`frames.json`).
@@ -12,6 +12,11 @@ Numbers, methods and every A/B: `docs/perf/LEDGER.md` section "n9 night". Clips 
      suspects (`chunk_source.take`, `save_worker`, threaded texture loads) was open (trace rounds, LEDGER "F19").
    - Vsync off: 0 / 16. Vsync Enabled: 19 / 47 frozen. **Mailbox: 0 parked-fence freezes in 107 valid runs**
      (mb40b 0 / 40 windowed `--autostart`, rel20 0 / 20 in the release export with a real Start press).
+   - it10, the control arms on main (vsync Enabled, a real Start press, 20 runs each): the editor binary **5 / 20**
+     frozen, the release export **0 / 20**, a debug export **0 / 20** (Fisher p = 0.003, exported vs editor). The
+     real Start click freezes too, but only in the editor binary: the shipped build was most likely never hit (0 / 40
+     bounds its rate under ~7 % a run). All five new stacks wait on the same never-signalled GPU fence, reached from a
+     synchronous readback after Start (LEDGER "F19 it10").
    - Fix: `display/window/vsync/vsync_mode.windows=3` (mailbox, Windows only, no tearing). Commit 06c48c1b.
      `test_frame_cap.test_windows_boots_in_mailbox_vsync` fails on the old tree.
 2. **The frame-pacing option** (efficient / steady) is in the pause card's settings and saved with them. The desktop
@@ -122,7 +127,11 @@ Numbers, methods and every A/B: `docs/perf/LEDGER.md` section "n9 night". Clips 
 ## Calls for the owner
 - **P-1 Mailbox as the Windows default (built).** It ends the quest 1 freeze (0 / 107 vs ~2 in 5). The cost: an
   occasional skipped tick image under load. The alternative is one value away: `display/window/vsync/vsync_mode.windows`
-  back to 1 (Enabled), which brings the freeze back.
+  back to 1 (Enabled), which brings the freeze back. **New (it10):** on the old code the freeze hit the editor binary
+  (5 / 20) and neither exported build (0 / 40). So a middle option exists: mailbox only in editor runs
+  (`vsync_mode.editor=3` instead of `.windows=3`; untested, verify the feature-tag override in a run first) and
+  Enabled for players, who then keep every tick image. Built default: mailbox for everyone (a fatal hang that 40 runs
+  cannot exclude outweighs a rare skipped image).
 - **P-3 Pacing default (built: efficient).** "steady" by default on Windows removes the skipped tick images for +0.08
   core. The alternative is one value away: the `pacing` default in `PlayerSettings`.
 

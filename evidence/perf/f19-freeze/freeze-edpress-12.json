@@ -1,0 +1,21 @@
+﻿{
+    "schema":  "gtai.thread-cpu/1",
+    "pid":  62720,
+    "wallMs":  2032.8,
+    "totalCores":  0.0077,
+    "groups":  [
+                   {
+                       "group":  "[nvwgf2umx.dll]",
+                       "threads":  1,
+                       "cores":  0.0077
+                   }
+               ],
+    "threads":  [
+                    {
+                        "tid":  10676,
+                        "name":  "",
+                        "module":  "nvwgf2umx.dll",
+                        "cores":  0.0077
+                    }
+                ]
+}

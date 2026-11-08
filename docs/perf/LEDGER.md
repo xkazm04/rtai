@@ -27,7 +27,7 @@ frozen when the process uses < 0.05 cores 12-15 s in (`evidence/perf/f19-freeze/
 | cdb | WinDbg's cdb attached non-invasively to each frozen run (`stacks-cdb-{2,4,6,8}.txt`) | 4 / 8 | **the same main-thread stack in all 4** (below) |
 | mb40 (it2) | the fix committed: `display/window/vsync/vsync_mode.windows=3` (mailbox) in project.godot, 06c48c1b; 40 runs | **0 parked / 40**, 1 exited | 39 runs drew at 0.15-0.33 cores. Run 16 read 0 CPU but `thread_cpu.ps1` found **no thread at all** 1 s later (every real freeze kept ~30 waiting threads): the process was gone, with no crash output, at 01:58:48 while my unit run (`--import`) was rewriting this worktree's `.godot/`. hunt2 counted it as a freeze; it now records `exited` / `exitCode` / `kind` and only counts a live 0-CPU process |
 | mb40b (it2) | the same commit, hunt2 with exit detection + cdb on any freeze, nothing else run from this worktree | **0 / 40** | 40 / 40 reached quest 1 (`started`), 0.16-0.34 cores, no exit, no freeze (02:09-02:21) |
-| rel20 (it2) | the **release** `windows-slice` export of the same tree (`build/export/slice/RTAI-slice.exe`), a **real Start press** (`hunt2.ps1 -Exe ... -PressStart`: Alt tap + SetForegroundWindow + Enter on the focused Start; no `--autostart`) | **0 / 20** | 20 / 20 reached quest 1 (`started` from the log), 0.13-0.24 cores (`rel20.jsonl`, `rel-start-pressed.jpg`). Not run: a release export on Enabled (the control arm for the release build) |
+| rel20 (it2) | the **release** `windows-slice` export of the same tree (`build/export/slice/RTAI-slice.exe`), a **real Start press** (`hunt2.ps1 -Exe ... -PressStart`: Alt tap + SetForegroundWindow + Enter on the focused Start; no `--autostart`) | **0 / 20** | 20 / 20 reached quest 1 (`started` from the log), 0.13-0.24 cores (`rel20.jsonl`, `rel-start-pressed.jpg`). The control arm (a release export on Enabled) ran in it10: 0 / 20, see "F19 it10" |
 
 Frozen main thread (all 4): `ntdll!NtWaitForSingleObject` <- `KERNELBASE!WaitForSingleObjectEx` <- `+0x1389030` <-
 `+0x32e7c60` <- `+0x32e8890` <- `+0x33816e0` <- main loop (offsets from the exe's only export, `NoHotPatch`; the official
@@ -71,6 +71,40 @@ or a script workaround that keeps texture uploads out of the first frames.
   (0 CPU, not responding) / `exited`.
 - **The engine bug stays upstream-worthy:** a frame fence never signalled after a `Present(1, 0)` on this PC (RTX 4090
   driver, a hybrid AMD iGPU) is a driver or engine bug; mailbox avoids it. Owner Call: keep mailbox (default) or Enabled.
+
+### F19 it10 (08:27-08:54): the old code freezes in the editor binary, not in the exported builds
+The brief asked whether the real Start click and the release export freeze too. rel20 (it2) answered it only on the
+fix. it10 ran the control arms on **main da108c13 (vsync Enabled, no fix)**, all with a real Start press
+(`hunt2.ps1 -PressStart`: Alt tap + SetForegroundWindow + Enter on the focused Start, no `--autostart`), windowed
+D3D12 1920x1080, 20 runs an arm, cdb on any freeze (`F19_CDB=1`), CONTENDED (5-6 Godot processes in tasklist incl. this run's; handheld's
+E20b bench held bench.lock; counts only, no timing claims). `evidence/perf/f19-freeze/{relmain,edpress,dbgpress}.jsonl`:
+
+| arm (main da108c13, vsync Enabled, real Start press) | binary | frozen / runs |
+|---|---|---|
+| relmain: `windows-slice` **release** export (`--export-release`, 326 MB exe, pck embedded) | template_release | **0 / 20** |
+| dbgpress: `windows-slice` **debug** export (`--export-debug`) | template_debug | **0 / 20** |
+| edpress: the **editor binary** on main's project (`-Project <prof3>/project`, new hunt2 switch) | editor (tools) | **5 / 20** (runs 2, 4, 8, 12, 20) |
+| (it1, for reference) the editor binary, `--autostart` | editor (tools) | 19 / 47 |
+
+- **The real Start press freezes too** (5 / 20 in the editor binary): `--autostart` is not the trigger.
+- **Neither exported build froze: 0 / 40**, against 5 / 20 in the editor binary (Fisher one-sided p = 0.003; release
+  alone 0 / 20 vs 5 / 20: p = 0.024). The freeze follows the editor (tools) binary running the project from its
+  `res://` files, not the export templates. What differs is not measured: the editor binary reads every texture from
+  `.godot/imported/*.ctex` files instead of one pck, and carries the tools build's extra work, so the uploads that
+  race the present land at different moments. 0 / 40 is not proof of 0: the 95 % upper bound on the exported builds'
+  rate is ~7 % a run.
+- **The stacks** (`stacks-edpress-{2,4,8,12,20}.txt`, all five the same): `WaitForSingleObjectEx` <- fence_wait
+  `+0x138905b` <- `_stall_for_frame` `+0x32e80c5` <- `+0x32e95ed` <- `+0x32f0670` <- `+0x35be1c6` <- ... 22 frames down
+  through the script call path. it1's four `--autostart` stacks went `_stall_for_frame` <- `_begin_frame`
+  (`+0x32e8c77`) <- `RenderingServerDefault::_draw`; these reach the same stall from a synchronous call made by script
+  (trace3 caught the crowd bake's `get_image` readback as the first wait after Start). The same root, a GPU fence that
+  is never signalled, caught at a different first wait.
+- **What it changes:** players of the shipped build were most likely never hit (0 / 40 exported), so mailbox's cost
+  (a skipped tick image under load, ~5 per 30 s on a loaded machine; LEDGER "Pacing A/B") is paid by every Windows
+  player for a hang seen in the editor binary. Kept as built (DECISION perf/f19-mailbox-scope): a fatal hang that a
+  20-run sample cannot exclude outweighs a rare skipped image, and steady pacing removes that for +0.08 core. The
+  alternative goes to the owner (Call P-1): mailbox in editor runs only (`vsync_mode.editor=3` instead of
+  `vsync_mode.windows=3`, untested: verify the feature-tag override in a run before switching) and Enabled for players.
 
 ### World's REQUEST (it2): the card rigs under combo
 world (it1): rig_stress p50 at 50 people, combo 1.1-1.4 ms vs top 0.5-0.76 (section 20's provisional 1 ms). Profile

@@ -592,3 +592,13 @@ NEXT (it9), replaces the list above:
   brief asks whether the release export froze too. Exported main da108c13 (scratch prof3, vsync Enabled) as
   windows-slice to `gtai-n9/tmp/perf/slice-main/RTAI-slice.exe` (exit 0, 23 s); `hunt2.ps1 -Exe ... -PressStart
   -Runs 20 -Tag relmain` with F19_CDB=1 running -> `evidence/perf/f19-freeze/relmain.jsonl`.
+- 08:36 relmain (main's release export, vsync Enabled, real Start press): **0 / 20 frozen**, all 20 reached quest 1.
+- 08:37-08:46 edpress (main's project in the editor binary, real Start press; new `hunt2 -Project`): **5 / 20 frozen**
+  (runs 2, 4, 8, 12, 20), cdb stacks all identical: the fence wait <- `_stall_for_frame` <- a synchronous readback
+  path from script (it1's `--autostart` stacks came through `_begin_frame`). Same never-signalled GPU fence.
+- 08:38 / 08:46-08:54 dbgpress (main's `--export-debug` windows-slice, real Start press): **0 / 20**.
+- MILESTONE F-19 picture complete: the real Start click freezes too, but only in the editor binary; the exported builds
+  ran 0 / 40 on the old code (Fisher p = 0.003 vs the editor's 5 / 20). LEDGER "F19 it10", REPORT item 1 + Call P-1
+  (the middle option: mailbox in editor runs only, `vsync_mode.editor=3`, untested), DECISION perf/f19-mailbox-scope
+  (keep mailbox for every Windows run: 0 / 40 bounds the player rate under ~7 %, not at 0).
+- Scratch added: `gtai-n9/tmp/perf/slice-main`, `slice-main-dbg` (main's exports; delete after the freeze).
