@@ -128,7 +128,17 @@ NEXT (iteration 3), refined for item 1 (the keyboard twin): the desktop labels c
 E F Q R G P -> key_*, Escape -> key_esc, Space / Shift / Ctrl / Tab -> key_*, 1-4 -> key_1..4. The title card would
 use `with_keys(CONTROLS_PAD, false)` when the kb glyphs are on. Gate it off by default (a devices.json field on a
 desktop study row, or a launch flag in KNOWN_FLAGS); the desktop default must not move.
-- 02:30 `tools/handheld/glyph_inkbox.py`: the ink-box trim (alpha > 24) that made `ui_pad_glyphs_v1.json` in it1 was an
+- 02:26 `tools/handheld/glyph_inkbox.py`: the ink-box trim (alpha > 24) that made `ui_pad_glyphs_v1.json` in it1 was an
   uncommitted inline script; now a tool, checked byte-identical against the shipped pad json (`--schema=` `--doc=`).
   Ran it on the keyboard twin: 38 cells -> `C:/Users/kazda/kiro/gtai-n9/tmp/handheld/ui_kb_glyphs_v1.inkbox.json`
   (scratch, ready for NEXT item 1).
+- 02:28 Design for NEXT item 1 (read the code, not started: not finishable with gates before 02:51):
+  (1) `DeviceProfile.glyphs` (StringName, "" default) parsed like `hud`; schema enum [kb, pad]; a desktop study row
+  `desktop_kb_glyphs` {id, glyphs: kb, note} (is_desktop() stays true: nothing applied). (2) Move the cell maps out of
+  `pad_glyph_art.gd` (186 lines) into `glyph_cells.gd` (PAD + KB maps, the kb atlas paths); `PadGlyphArt.active()` =
+  handheld or kb; `region()` / `texture()` / `bbcode()` pick the set (caches per set: tests switch profiles).
+  (3) Guard `ghost_form_hud.gd:52` with a pad check (in kb mode `action_hint` would return pad labels).
+  (4) `Quest1Card.controls_text()`: kb -> `ObjectiveHint.with_keys(CONTROLS_PAD, false)` (the bracketed keys).
+  (5) Copy `keyed/ui/ui_kb_glyphs_v1.png` + the inkbox json (`glyph_inkbox.py --schema=gtai.kb_glyph_atlas/1`),
+  `--import`, provenance line. (6) Tests: kb region("E") = key_e, region("A") = key_a in kb / face_a on a handheld,
+  the desktop row draws no glyph. Stills: the title card and the quest 1 prompt on `--device=desktop_kb_glyphs`.
