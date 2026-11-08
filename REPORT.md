@@ -67,6 +67,8 @@ Numbers, methods and every A/B: `docs/perf/LEDGER.md` section "n9 night". Clips 
    code inline and catch planted faults; hidden bodies and crowd patches are identical. L22b (a per-cell cache for
    the blood's wall checks) looked like -17 % in raw medians but only -4 % against an unchanged timer in the same
    frames, so it was dropped: the shared machine moved, not the code.
+   L25 (the corpse soaks read the rig feed through locals) took CorpseStains.step on to ~87 us (138 at the start of it7).
+   Gates on 6ce43cd0 (with L25): ALL PASS (unit 1843 / 0); the reel 19 / 19 in top, tilt70, combo.
    Gates on 6fed0aad: ALL PASS (unit 1842 / 0, scenarios 54 / 54, parity exact, look goldens 11 / 11,
    release-compile 619 / 0); the reel 19 / 19 in top, tilt70, combo, 0 SCRIPT ERROR.
 

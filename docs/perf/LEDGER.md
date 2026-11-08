@@ -441,6 +441,19 @@ timer in the same frames: 1.28-1.34 vs 1.05-1.06); drive old 206 / 217 / 219 vs 
 goldens 11 / 11, release-compile 619 / 0; `evidence/perf/n9-it7/evidence-6fed0aad.txt`); the reel x3 19 / 19, 0 SCRIPT
 ERROR (`evidence/perf/n9-it7/reel-l24/`).
 
+### L25 (it7): CorpseStains.step reads the feed through locals: KEPT (6ce43cd0)
+The feed scan was 39 us of the 138 (split above): ~3 member reads (`feed.flags[i]`, `feed.pos[i]`, `feed.ids[i]`) a
+row over 263 rows. Hypothesis: GDScript resolves a member of another object by name each read; hoisting the packed
+arrays into locals (read only: the same arrays, no copy, L19) cuts the scan by half. A/B (cvprof, riot, 3 interleaved
+pairs on L23, CONTENDED 2-4, `evidence/perf/n9-it7/l23/ab-l25.txt`): CorpseStains.step **101.5 / 111.8 / 100.0 ->
+86.9 / 91.8 / 86.1 us** (median -15 us, -14 %, ranges apart), the blood.step control 375-420 in both arms. The
+committed form keeps `feed.ids` a member read on the few dead rows (the debt cap: the file is at 245 lines); the
+living rows read exactly as in the measured arm. Test: step's walkers are every living row in feed order and the
+death soaks the dead row (a planted wrong-row read caught). CorpseStains.step over it7: **138 -> ~87 us a riot frame**.
+Gates on 6ce43cd0 (L23 + L24 + L25): ALL PASS (lint 15 / 15, unit 1843 / 0, scenarios 54 / 54, parity exact, look
+goldens 11 / 11 (worst 0.27), release-compile 619 / 0; `evidence/perf/n9-it7/evidence-6ce43cd0.txt`); the reel x3
+19 / 19 fully down in top, tilt70, combo, 0 SCRIPT ERROR (`evidence/perf/n9-it7/reel-l25/`).
+
 ### Gates (it6)
 On 8990b643 (L20, the clean re-run owed from it5; `evidence/perf/n9-it6/evidence-8990b643.txt`) and on 6b75d795
 (L20b + L20c; `evidence-6b75d795.txt`): ALL PASS: lint 15 / 15, unit 1835 / 0 and 1837 / 0, scenarios 54 / 54, parity

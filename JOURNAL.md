@@ -469,3 +469,18 @@ NEXT (it8):
 4. Scratch: cvprof (timers: occlusion, blood, CorpseStains CSP via arms/cs/t0.gd; never commit), prof3, world3.
 - 06:58 GATE evidence --no-bench on 6fed0aad (L23 + L24): ALL PASS: lint 15 / 15, unit 1842 / 0, scenarios 54 / 54,
   parity exact (629), look goldens 11 / 11 (worst 0.27), release-compile 619 / 0 (`evidence/perf/n9-it7/evidence-6fed0aad.txt`).
+- 07:00 L25 A/B (3 pairs on L23): CorpseStains.step 101.5 / 111.8 / 100.0 -> 86.9 / 91.8 / 86.1 us, ranges apart.
+  MILESTONE committed 6ce43cd0 after the debt ratchet caught the file at 247 lines (cap 245: `ids` stays a member read
+  on the dead rows only, the _by_x doc folded into a trailing comment). NEXT item 1 below is DONE.
+- 07:13 GATE on 6ce43cd0 (L25): evidence --no-bench ALL PASS (lint 15 / 15, unit 1843 / 0, scenarios 54 / 54, parity
+  exact, look goldens 11 / 11, release-compile 619 / 0); the reel x3 19 / 19, 0 SCRIPT ERROR.
+
+NEXT (it8), replaces it7's list (item 1 there is DONE as L25):
+1. The hoist audit over other per-row riot loops in files no lane edits tonight (FxPool.step, CityOcclusion's per-rig
+   loop, CrowdReact is already hoisted; world edits city_characters.gd and the street_* files: not those). Each: a
+   cvprof arm, 3 pairs with an in-run control timer, a test, keep only if ranges apart.
+2. Freeze 10:30: the final table (main da108c13 via `gtai-n9/tmp/perf/prof3` vs HEAD, `ab.mjs --scenes=king,drive70,riot`,
+   bench.lock) + an A-vs-A for the floor (F12); export `build/export/windows/RTAI.exe`; final gates on the head (reel x3
+   + the evidence run, log OUTSIDE the tree, no tree edits during it); REPORT final.
+3. Scratch: cvprof (timers: occlusion, blood, CorpseStains via arms/cs/t0.gd; never commit; run `--import` there after
+   adding / removing a class file), prof3, world3.
