@@ -471,3 +471,23 @@ longest-pose rule, pelvis at the cell centre, head toward the top, transparent g
 check with a stand-in strip showed it, so a drawn rifle would double it). The pudgy build stays pudgy (do not slim him to the walkers).
 Why: Dock 9 (quest 1, the most-seen fight) still lays every dead contractor as one straight frame, heads one way
 (`gtai-masters/n9/world/` dock9 still to come); the owner's verdict "they lay down like in the bed now".
+- MILESTONE (05:28) b5c5a28f item 2 follow-up wired: `StreetQuestDeadPlan` (DECISION world/quest-dead-plan),
+  tried first by `StreetQuestCorpses.draw`: a dead contractor lies in StreetDeadPlan's A-E poses along the blow
+  (away from his facing, + the spot's SPREAD pick + the id's jitter), neighbours differ (StreetDeadPlan.pick, ids at
+  ID_BASE). Off until `plan/dead_contractor.png` exists. Wiring check with ped_worker's strip as a local stand-in
+  (never committed, `gtai-n9/tmp/world/dock9/wiring_check_standin_ped_worker_NOT_ART.png`): poses differ, heads
+  away from Rivet, sizes match the drawn frame, and it showed the dropped rifles the old frame hid (REQUEST
+  corrected: no rifle in the cell). New test_street_quest_dead_plan 4; with the quest/plan neighbours 27/0.
+  Dock 9 before (today's frame) kept at `gtai-masters/n9/world/dock9_contractors_dead_before_tilt70_32ppm_t13800*.png`
+  (not in frames.json until the after exists).
+- MILESTONE (05:36) 76a8af00 item 4 filmed on the real city: `dev/showcase/dead_wall_clip.tscn` (a pedestrian 1.5 m
+  from a building face thrown east at 16 m/s; `--ref` = the GDScript twin, so the scratch worktree at 14992d61
+  films d9's slide with no native rebuild). Before: rest x 282.4, he lies on the roof 2.4 m inside the building;
+  after: rest x 279.6 at the face (280.0). 64 px/m t66/t74/t150 + clip, 32 px/m t150
+  (`gtai-masters/n9/world/dead_wall_*`, 3 frames.json entries; 3 older entries pruned to keep 15).
+  Honest limit: the lying plan pose's arm and head still reach ~0.4 m over the roof edge (the view bound pulls
+  the pose back along the blow only, not by the pose's own sideways extent), and the mid-fall card's arm crosses
+  it at t74. FRICTION: debt ratchet (dev_loc, one cmdline read) accepted by name, as for car_knock_clip.
+Registry rules applied this session: `generative-artifact-gating` (a stand-in strip only as a labelled wiring check,
+never shipped or filmed as the result), `rigid-body-simulation-stability` (judged the rest point against the face
+in numbers, not only by eye), `motion-quality-gating` (the before/after from the same seed and tick, in motion).
