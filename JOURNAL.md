@@ -299,3 +299,9 @@ NEXT (it5):
 - Combined clip done: `gtai-masters/n9/perf/perf-set-n9.mp4` (46 s: King 32 combo main vs BC7, drive 32 tilt70 main
   vs BC7, the pause card's pacing row; captions burned in; stills at 10 s and 42 s looked at), frames.json entry 1
   (6 entries).
+- 05:06 L18 A/B (cvprof, drive_dense x3, CONTENDED 3-6): chunks.update median 122 -> 114 us (-7 %, ranges apart):
+  KEPT as a small cut, no frame claim (the steady cost is the time-sliced chunk build). Full unit run on HEAD started.
+- 05:06 GATE unit no-arg on 73f30553: **1833 / 0** (`evidence/perf/n9-l17/unit-it5.txt`). Evidence --no-bench
+  started (background, `evidence-it5.txt`).
+- 05:07 L19 refuted before building: `feed.looks[i] = v` through another object's property is NOT a copy-on-write
+  (microbench: 0.13 us a row for 4 writes at any capacity, the same as in the owner). LEDGER L19.

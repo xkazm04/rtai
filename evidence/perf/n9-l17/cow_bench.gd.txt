@@ -1,0 +1,48 @@
+extends SceneTree
+## Scratch: is `obj.packed[i] = v` (another object's property) a copy-on-write per write?
+
+
+func _init() -> void:
+	for cap: int in [64, 512, 4096]:
+		var f: Feed = Feed.new(cap)
+		var rows: int = mini(262, cap)
+		var reps: int = 200
+		var t0: int = Time.get_ticks_usec()
+		for r: int in reps:
+			for i: int in rows:
+				f.looks[i] = 3
+				f.face[i] = 0.5
+				f.flags[i] = 1
+				f.aim[i] = Vector2(1, 2)
+		var t1: int = Time.get_ticks_usec()
+		for r: int in reps:
+			for i: int in rows:
+				f.put4(i)
+		var t2: int = Time.get_ticks_usec()
+		var n: float = float(reps * rows)
+		print("cap %d: via property %.3f us/row, 4 writes in a method of the owner %.3f us/row" % [cap, (t1 - t0) / n, (t2 - t1) / n])
+	quit()
+
+
+static func _own(f: Feed, i: int) -> void:
+	var looks: PackedByteArray = f.looks
+	looks[i] = 3
+
+
+class Feed:
+	var looks: PackedByteArray = PackedByteArray()
+	var face: PackedFloat32Array = PackedFloat32Array()
+	var flags: PackedByteArray = PackedByteArray()
+	var aim: PackedVector2Array = PackedVector2Array()
+
+	func _init(cap: int) -> void:
+		var _rlooks: int = looks.resize(cap)
+		var _rface: int = face.resize(cap)
+		var _rflags: int = flags.resize(cap)
+		var _raim: int = aim.resize(cap)
+
+	func put4(i: int) -> void:
+		looks[i] = 3
+		face[i] = 0.5
+		flags[i] = 1
+		aim[i] = Vector2(1, 2)

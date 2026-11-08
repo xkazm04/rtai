@@ -1,0 +1,6 @@
+res_old r1 godots_before=5 chunks.update 122.4 prop_lights.update 1.8 PROCESS_TOTAL 1187.8  err=0
+res_new r1 godots_before=6 chunks.update 115.6 prop_lights.update 1.7 PROCESS_TOTAL 1173.9  err=0
+res_old r2 godots_before=3 chunks.update 117.9 prop_lights.update 1.7 PROCESS_TOTAL 1125.8  err=0
+res_new r2 godots_before=3 chunks.update 113.7 prop_lights.update 1.7 PROCESS_TOTAL 1193.1  err=0
+res_old r3 godots_before=4 chunks.update 124.9 prop_lights.update 1.8 PROCESS_TOTAL 1201.1  err=0
+res_new r3 godots_before=4 chunks.update 107.4 prop_lights.update 1.8 PROCESS_TOTAL 1206.6  err=0

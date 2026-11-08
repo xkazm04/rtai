@@ -284,6 +284,20 @@ most of chunks.update's steady cost; cached until adopt / evict / drop, chunks.u
 pixel and no sim change: the order is a total order on unique keys, so the cached array is the array a fresh sort
 returns (test: row order, the same object until a change, rebuilt on evict / drop / adopt; read only, so no caller can
 reorder it). Commit 73f30553.
+A/B (cvprof timers, drive_dense tilt70 zoom 1.5, fixed 60, interleaved by swapping city_residency.gd, CONTENDED 3-6
+other Godots; `evidence/perf/n9-l17/ab-l18.txt`): chunks.update old 122.4 / 117.9 / 124.9 us vs new 115.6 / 113.7 /
+107.4: median 122.4 -> 113.7 (-7 %, -9 us a frame; every new round under every old round). Smaller than hoped: the
+sort was ~5-10 us a call, chunks.update's steady cost is the time-sliced chunk build itself (`_slice`, real work while
+driving). Plus the per-tick `CityResidency.update` sort (not under these timers). **KEPT** as a small CPU cut (no
+pixel, no sim change); no frame claim.
+
+### L19 (it5, refuted before building): copy-on-write in `feed.looks[i] = v`
+Hypothesis: `_put_person` writes `feed.looks / face / flags / aim[i]` through another object's packed-array property;
+if GDScript does that as get -> copy-on-write -> set-back, each write copies the whole array (262 rows x 3-4 writes a
+riot tick). Microbench (`evidence/perf/n9-l17/cow_bench.gd.txt`, headless, 200 x 262 rows, capacity 64 / 512 / 4096):
+4 writes through the property 0.129 / 0.130 / 0.135 us a row vs the same 4 writes in a method of the owner 0.120 /
+0.117 / 0.112: **no copy** (the cost does not grow with capacity). Refuted; nothing built. The feed's 1.2 us a row is
+GDScript call and arithmetic cost, the lever there is native (a sim-side feed fill), not GDScript reshaping.
 
 ### Item 2 (it2): the traffic-sheet split is moot under BC7
 n9-world 3e02d3b8 imports the p70 traffic sheet as BC7: `traffic_cards.png-313d05e5...bptc.ctex` = **18,063,412 B**
