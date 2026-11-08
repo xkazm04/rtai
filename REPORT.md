@@ -109,6 +109,17 @@ in brackets.
     = the side cell at any aim (the gun and its flash sideways, the flash beside him: two origins). Option: drawn away
     and away-diagonal gun fire cells per hold family (an asset ask).
 
+## Further evidence in the folder (not in frames.json; each looked at when made)
+
+- Weapon-out walks (item 4): `rivet_armed_walk_pistol_before_after_arena_tilt70_{32ppm_seed3_f60_102,64ppm_seed3_f60_81}.png`,
+  `rivet_armed_walk_claw_pistol_before_after_arena_tilt70_{32ppm_x2,64ppm}_seed3_f60_102.png`,
+  `rivet_armed_walk_claw_pistol_p55_king_combo_48ppm_x1.5_seed1_f100_220.png`,
+  `rivet_armed_walk_plasma_rifle_arena_tilt70_64ppm_seed3_f60_102.png`, `rivet_armed_walk_gatling_flamer_arena_tilt70_64ppm_seed3_f60_144.png`.
+- Armed runs at 55 (item 4): `rivet_armed_run_{katana,rifle}_p55_before_after_king_combo_48ppm_x1.5_seed1_f16_56.png`.
+- The flamer's diagonal cells at 32 px/m (item 2): `rivet_flamer_diagonal_cells_before_after_arena_tilt70_32ppm_x2_seed3_f351_366.png`.
+- The combined clip's sources (half-speed before / after pairs at 64 and 48 px/m): `rivet_armed_run_*_halfspeed.mp4`,
+  `rivet_armed_run_pistol_arena_gunplay_tilt70_64ppm_seed3_f0_200.mp4`, `rivet_knockdown{,_BEFORE_sprawl}_city_car_tilt70_64ppm_t150_350.mp4`.
+
 ## Next steps
 
 - The exe (exported 09:03 on fe8f95a0, the code of 5c77021f; re-exported at the freeze if code changes):
