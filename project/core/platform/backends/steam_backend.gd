@@ -6,8 +6,8 @@ extends PlatformBackend
 ## degrades to NullBackend and logs why (STM-05).
 
 const NOT_READY: String = "GodotSteam not vendored yet"
-## ESteamHardwareType's values (k_ESteamHardwareTypeNone, ...SteamDeck): check against the SDK
-## header when GodotSteam is vendored (LEDGER, n10).
+## ESteamHardwareType's values (k_ESteamHardwareTypeNone, ...SteamDeck), read from Steamworks.NET's
+## enums generated from the SDK headers (LEDGER section 9); not run against Steam.
 const HARDWARE_NONE: int = 0
 const HARDWARE_DECK: int = 1
 
