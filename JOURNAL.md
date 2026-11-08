@@ -613,3 +613,30 @@ stands (Dock 9 at 64 optional, the freeze list).
 Registry rules applied: `depth-ordered-layered-art` (found the pool-over-corpse order break, logged with the
 frame), `motion-quality-gating` (before/after from the same seed and ticks in motion; a capture camera that
 wandered was judged a capture fault and fixed before filming), `generative-artifact-gating` (no new art).
+- (07:14) GATE at 6d075951 (code = 46dbea4b), `node tools/evidence/run.mjs --no-bench`, rc 0: lint 15/15, unit
+  **1841/0**, scenarios 55 (0 CONTENDED), parity bit-exact (planted 629), look goldens 11/11 + block 5/5 worst
+  0.00, release-compile 617/0. `evidence/n9-world/gate-it22.log` (292bca4b).
+- CORRECTED (07:20) the 07:01 FOUND: the red clumps on/beside the dead are CorpseStains' soaks (fed the fighter's
+  standing spot); the big ink-outlined shapes are a separate layer (CombatBlood pools at the death spot, grown
+  in clip mode; stills mode skips their growth, so stills vs clip frames are never a fair pair).
+- MILESTONE (07:28) 19d43e8d item 2: the soaks lie on the plan corpse (DECISION world/quest-soak-on-plan-corpse):
+  `StreetQuestDeadPlan.dead_px` / `lying_m` hand CorpseStains the drawn pelvis when CastView draws the dead (the
+  rigs' dead keep his spot); collect_call_view.gd 237 -> 234 lines (the debt ratchet refused +5 on a past-cap
+  file, so the loop moved into the feature). Same seed/tick at 64, stills pair and clip pair: the soaks sit on
+  each torso, not on the road beside him and over the neighbour. A moderate change, landed because it is the
+  soak's stated design ("the stains lie on the dead"). `gtai-masters/n9/world/dock9_soak_on_body_*`; frames.json
+  15 (the riot 64 clip dropped from it, on disk). Unit --select 20/0 + 25/0; 0 SCRIPT ERROR in every run.
+- Code moved after the it22 gate (19d43e8d): the freeze session re-runs the gate + the reel x3.
+
+NEXT (it23+):
+1. Read the journals. Full unit at 19d43e8d was started at 07:29 (`gtai-n9/tmp/world/unit22.log`); if it is red,
+   fix first.
+2. Item 2 quality: the CombatBlood pools (ink-outlined, at each death spot) draw over a neighbouring plan corpse at
+   Dock 9 as the dead decay (64 px/m clip, t13860: `gtai-n9/tmp/world/soak_clip_ba_150.png`). Options: feed
+   CombatBlood's pool spot the plan pelvis too (as 19d43e8d did for the soaks: find where the pool takes its
+   position, `_locate` in collect_call_view `_ready_blood`), or put the pools under the cast view (z). Judge in
+   a clip pair (`quest1_clip.gd --rigs --view=tilt70 --ppm=64 --cam=dead --ticks=13560-13860`), never a still vs
+   a clip.
+3. The freeze (10:30): the full gate (`node tools/evidence/run.mjs --no-bench`), the director reel x3 with
+   `--quit-after 16000` (`evidence/n9-world/reel3.sh it23`), the exe (`build/export/windows/RTAI.exe`), REPORT.md
+   finalised (remove DRAFT; it22's items are in it), `git worktree remove --force C:/Users/kazda/kiro/gtai-n9/tmp/world/before`.

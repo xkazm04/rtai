@@ -32,6 +32,13 @@ Branch `n9-world`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n9\world\` (frame
    - They fall into the pose (db8cdbb8, DECISION world/quest-dead-fall): over 0.4 s from the blow the body lands
      a touch large near where he stood, slides 0.6 m along the blow and turns into its rest; it popped in one
      frame before (`dock9_contractor_fall_before_after_tilt70_32ppm_halfspeed.mp4`).
+   - A later body slides clear of those already down (3e7e39de, DECISION world/quest-dead-spread): within 1.6 m,
+     up to 0.9 m, the earlier dead never move. Filmed at 64 px/m for the first time (a dev capture lean,
+     `quest1_clip.gd --cam=dead`): before, three contractors in the middle of the crossing merged into one orange
+     blob; after, each body reads (`dock9_dead_spread_before_after_tilt70_64ppm_t13800.png`, the half-speed
+     clip `dock9_dead_spread_before_after_tilt70_64ppm_t13560-13860_halfspeed.mp4`, the 32 px/m crop x3).
+   - The blood soaked into each body lies on the drawn corpse (19d43e8d, DECISION world/quest-soak-on-plan-corpse),
+     not beside it at his standing spot (`dock9_soak_on_body_before_after_tilt70_64ppm_t13800.png`).
 3. **Cars knock Rivet down** (703c287b, b0f1024e, 0c04d16b; DECISIONs world/car-hits-rivet-sim, -on,
    world/car-knock-damage-event-only).
    - Both twins, bit-exact. Above 5 m/s a car throws him along its heading; below it, the car brakes and stops at
@@ -56,12 +63,12 @@ Branch `n9-world`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n9\world\` (frame
 
 ## What does not (yet)
 
-- **Dock 9 at 64 px/m is not filmed**: the fight lies off-frame at 64 (tried `--cam=fight` and a 4K window,
-  which stretches the same world area). The 32 px/m crop x3 is the close look (an upscale, labelled so).
-- The Dock 9 dead heap on the crossing, because the quest kills them there; they overlap one another. The
-  contractor sheet's pose D reads as a second face-down (assets graded it B).
+- The Dock 9 dead still lie close on the crossing (the quest kills them there); the push separates them but
+  limbs still touch. The contractor sheet's pose D reads as a second face-down (assets graded it B).
 - At a wall the lying pose's hood and one hand overlap the building's edge by ~0.3 m (64 px/m close-up: it reads as a
   body slumped against the wall, feet out). The view bound pulls the pose back along the blow only; left as is.
+- At Dock 9 the ink-outlined blood pools (laid at each death spot) draw over a neighbouring plan corpse as the
+  dead decay (64 px/m, t13860); the plan pose's pelvis offset and the push moved the bodies off their pools.
 - The knock damage is an Event only (the city has no Rivet hp outside the pits).
 - rig cost under combo is above the provisional 1 ms (C-1).
 
@@ -94,7 +101,7 @@ Branch `n9-world`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n9\world\` (frame
 
 ## Next steps
 
-1. Dock 9 at 64 px/m (needs a camera lead toward the crossing), and assets' pose D redrawn if the owner asks.
+1. Assets' pose D redrawn if the owner asks.
 2. The wall overlap: a probe that reaches the jitter-swung hand was tried in it19 and showed no visible gain at
    64 px/m (kept as a patch under `gtai-n9/tmp/world/`); only if a shot shows a body over a roof edge again.
 3. Freeze: the full gate (`node tools/evidence/run.mjs --no-bench`), the director reel x3 at the head, the exe
