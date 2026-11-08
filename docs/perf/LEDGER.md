@@ -34,6 +34,15 @@ transforms, feet) stay identical to an always-posed rig, warm_limbs lands within
 warms on the next step, a kill's cut warms a cold rig, the rims stay hidden. Full unit on d006d70e: exit 0. Owed: the director
 reel x3, the evidence gate, a mutation run on the cold path.
 
+### Item 2 (it5): the feed's dead-flip scan runs in C++ (cfdb53e4)
+`CitySim.scan_dead_flips` (static, `native/sim_core/src/snapshot.cpp`) finds the rare death flip in the snapshot; `CityFxFeed.native_scan`
+picks it when the library has the method, the GDScript loop stays as the no-DLL fallback. Tests: `test_fx_triggers` (the native
+scan fires what the script loop fires), `scons tests` 0 failed.
+Micro only so far, `evidence/perf/n10-scan/` (debug editor binary, a synthetic 400 people, about 10 Godots up, CONTENDED):
+observe ~22 us native (one block 52.6) against 115-423 us script. The SCRIPT ERROR lines at the top of `micro.out.txt` are the scratch `-s`
+script compiling before the autoloads exist; none falls inside the timing blocks. **Not a bench number**: the release riot A/B is item 3.
+The DLLs are git-ignored: until a merge rebuilds `template_release` with scons, the export silently keeps the script loop.
+
 ## n9 night (2026-11-08, branch n9-perf from main da108c13)
 
 ### F19 quest-1 freeze: located in the engine (it1, 00:56-01:56)
