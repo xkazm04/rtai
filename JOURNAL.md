@@ -326,3 +326,14 @@ NEXT (it7):
 3. The bare-claw run at 6.75 m/s still unfilmed (it5 NEXT 2): a `--weapon=none` path or the city block bare.
 4. The armed run when the library serves it (pack like run8, add `ARMED_CYCLE_CELL` entries from its profile rows).
 5. Size films owed: Servo combo 48 at 1.95 m, the roll ball and the death sprawl at size, beside a car.
+- Unit full on e4e150ec's code: **1826/0**. Evidence run --no-bench on 7a746165 (04:18-04:32, tree held still): ALL PASS:
+  lint 15/15, unit 1826/0, scenarios 54 (city_chase nav budget CONTENDED: 2 other runs, not judged), parity, selftest
+  (look goldens 11/11 worst 0.27, block 5/5 worst 0.22: nothing moved), release-compile 614/0.
+- it7 prep for the knock-down (NEXT 1): every strip is now A in the library (JOURNAL 04:15): p70 = toward_70,
+  away_70_v4, right_70_v2, left_70_v2; p55 = toward_55_v2, away_55_v3, right_55, left_55. Each is 1 x 4 (impact,
+  tumble, slide, down) on a 2172 px sheet: cut by QUARTER columns (543 px; some 55 figures touch). Scale: the lying
+  frame's dome is ~178 px vs walk8's profile dome ~92 px -> k ~ 0.52 x walk8's 0.6433 = ~0.33 at p70 (FIRST ESTIMATE:
+  the library says away v4 is ~1.2x the toward strip: measure each strip). Draft packer (not in the repo):
+  `gtai-n9/tmp/rivet/scripts/rivet_knock_draft.py` (make it premultiplied like rivet_walk.py before it lands).
+  `rivet_frames.gd` is at 199 lines: the knock goes in a new `RivetKnock` class, hooked at the DEATH branch (l.101):
+  while the rig has `rivet_knock` meta, the knock strip wins over the DOWN sprawl.
