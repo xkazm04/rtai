@@ -60,7 +60,9 @@ ERROR. To see the work:
      the half-speed clip `..._t13560-13860_halfspeed.mp4`).
    - The pools fade like the live fight's stains (12 s + 4 s; it25, DECISION world/quest-pool-stain-life), no
      longer lying on the crossing for minutes after their bodies went
-     (`dock9_pools_fade_stain_life_before_after_tilt70_32ppm_t14000-16000.mp4`, 32 px/m).
+     (`dock9_pools_fade_stain_life_before_after_tilt70_32ppm_t14000-16000.mp4`, 32 px/m; the close-up
+     `..._64ppm_t14600-15800.mp4` and its t15400 / t15800 still: at t15800 the after's pools are fading, the
+     before's stay full).
 3. **Cars knock Rivet down** (703c287b, b0f1024e, 0c04d16b; DECISIONs world/car-hits-rivet-sim, -on,
    world/car-knock-damage-event-only).
    - Both twins, bit-exact. Above 5 m/s a car throws him along its heading; below it, the car brakes and stops at
@@ -135,7 +137,8 @@ ERROR. To see the work:
   - Built (it25, DECISION world/quest-pool-stain-life): (a) quest 1 takes the live fight's stain life (12 s +
     4 s), so the pools go ~6-10 s after their bodies instead of minutes. Clip pair from one head, 32 px/m,
     t14000-16000: `gtai-masters/n9/world/dock9_pools_fade_stain_life_before_after_tilt70_32ppm_t14000-16000.mp4`
-    and the t15400 / t16000 still.
+    and the t15400 / t16000 still; the 64 px/m close-up `..._64ppm_t15400_t15800.png` shows what (b) would
+    shorten: at t15400 the heap's bodies are gone and its pools still lie as one dark mass for ~6 s.
   - Options still open: (b) as (a) plus stains linger 6 s like the bodies (one corpse_decay.json value, which
     also changes the live fight); (c) Dock 9's bodies linger 12 s.
 

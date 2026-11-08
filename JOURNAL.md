@@ -788,3 +788,13 @@ evidenced clips, each segment titled with its item).
   0.00, release-compile 617/0 (`evidence/n9-world/gate-it25.log`). Director reel x3 at 6ca2448f (run beside the
   gate, logs outside the tree, copied in after): top / tilt70 / combo **19/19 chapters fully down, 0 SCRIPT ERROR**,
   exit 0 each (`evidence/n9-world/director-reel-it25*`).
+- (08:47) The exe exported at a8fbe016 (code = 6ca2448f, gated): `build/export/windows/RTAI.exe` 521 MB + the release
+  DLL, rc 0, 0 export errors; smoke `RTAI.exe --headless --quit-after 600` exit 0, 0 SCRIPT ERROR (one engine
+  "custom_samplers" message under the headless dummy renderer). REPORT: "The exe for the owner" with the command
+  lines (bb645641). A fallback for the freeze: re-export only if code lands after a8fbe016.
+- MILESTONE (08:52) the pools' 64 px/m close-up (the brief's per-subject close-up), one head, `--cam=dead
+  --ticks=14600-15800`, 0 SCRIPT ERROR both arms: t15000 the same (fresh heap); t15400 the heap's bodies decayed,
+  both arms keep the pools as one dark mass (inside the 12 s linger: Call C-6 (b) is what would shorten it);
+  t15800 the after's pools fading, the before's full. Masters: `dock9_pools_fade_stain_life_before_after_tilt70_
+  64ppm_t15400_t15800.png` (frames.json, replacing the superseded robe 32 px/m x2 crop, on disk) + the clip. Raw
+  PNGs deleted.
