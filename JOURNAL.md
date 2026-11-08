@@ -61,3 +61,10 @@ NEXT (iteration 2):
 4. Research loop: the Deck at 40 px/m: the combo view's framing at 1280x800; the 40 Hz row on world's BC7 (once on main).
 5. REPORT.md at the 10:30 freeze: Calls (glyphs on the desktop too? the keyboard twin `ui_kb_glyphs_v1`; compact card
    on the desktop?), the exe line.
+- 01:45 GATE clean-tree evidence run at b345645c: lint, unit 1825/0, scenarios 54, parity, selftest (goldens 11/11),
+  release-compile 617/0: all PASS (`evidence/n9h/it1/gates/evidence-run-b345645c.txt`). NEXT item 1 done.
+- 01:48 MILESTONE (NEXT item 2): the glyphs draw by each cell's trimmed ink box (`ui_pad_glyphs_v1.json` now holds the
+  ink boxes, alpha > 24), fitted to the glyph height and at most 1.5x it wide (`PadGlyphArt.fit`): LB / RB / Start went
+  from 0.48 g to 0.8 g tall. Looked at: `glyphs-deck-inkbox-title-prompt-card-crop-x2.png`. Owed: on the folded ghost
+  card the LB glyph touches the Madness bar by ~1 px (move the bar 2 px down in the compact layout).
+NEXT (iteration 2), updated: (2) done but the 1 px touch; (3) the boss cam's zoom at 40 px/m; (4) research loop; (5) REPORT.

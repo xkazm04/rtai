@@ -35,3 +35,12 @@ func test_action_hint_names_the_bound_pad_button() -> void:
 	PlayerActions.shipped().install()
 	assert_eq(PadGlyphArt.action_hint(&"power_hauler", "Q"), "[LB]")
 	assert_eq(PadGlyphArt.action_hint(&"no_such_action", "Q"), "Q")
+
+
+func test_a_shoulder_bar_draws_wider_not_shorter() -> void:
+	var g: float = 30.0
+	var face: Vector2 = PadGlyphArt.fit(PadGlyphArt.region("A"), g)
+	var bar: Vector2 = PadGlyphArt.fit(PadGlyphArt.region("LB"), g)
+	assert_almost_eq(face.y, g, 0.5)
+	assert_almost_eq(bar.x, g * PadGlyphArt.WIDE_K, 0.5)
+	assert_gt(bar.y, g * 0.75)  # was 0.48 g inside the square cell

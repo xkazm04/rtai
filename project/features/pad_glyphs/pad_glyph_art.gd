@@ -10,6 +10,11 @@ const ATLAS_PNG: String = "res://features/pad_glyphs/ui_pad_glyphs_v1.png"
 const ATLAS_JSON: String = "res://features/pad_glyphs/ui_pad_glyphs_v1.json"
 ## A glyph's height against the text's font size (a 24 px line draws 34 px glyphs).
 const GLYPH_K: float = 1.4
+## A wide glyph (a shoulder bar, Start) may draw this many glyph heights wide, so it reads as tall
+## as it can; the atlas json holds each cell's trimmed ink box, not the 128 px cell.
+const WIDE_K: float = 1.5
+## The air either side of a glyph, in glyph heights (the trimmed boxes touch their ink).
+const SIDE_K: float = 0.08
 ## The prompt's pad label (PadGlyphs.label: Xbox, PlayStation or Nintendo names) -> its cell.
 const CELL: Dictionary[String, String] = {
 	"A": "face_a",
@@ -117,6 +122,13 @@ static func runs(text: String) -> Array:
 	return out
 
 
+## The drawn size of a glyph whose ink box is `cell`, for a glyph height `g`: as tall as `g`, at
+## most WIDE_K x `g` wide, its aspect kept.
+static func fit(cell: Rect2, g: float) -> Vector2:
+	var s: float = minf(g / maxf(cell.size.y, 1.0), WIDE_K * g / maxf(cell.size.x, 1.0))
+	return cell.size * s
+
+
 ## The drawn width and height of `text` at `font_size` in the fallback font (glyphs included).
 static func line_size(text: String, font_size: int) -> Vector2:
 	var font: Font = ThemeDB.fallback_font
@@ -124,7 +136,8 @@ static func line_size(text: String, font_size: int) -> Vector2:
 	var g: float = float(font_size) * GLYPH_K
 	for run: Variant in runs(text):
 		if run is Rect2:
-			w += g
+			var cell: Rect2 = run
+			w += fit(cell, g).x + 2.0 * SIDE_K * g
 		else:
 			w += font.get_string_size(str(run), HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x
 	return Vector2(w, maxf(g, font.get_height(font_size)))
@@ -138,10 +151,11 @@ static func draw_line(ci: CanvasItem, at: Vector2, text: String, size: int, ink:
 	var x: float = at.x
 	for run: Variant in runs(text):
 		if run is Rect2:
-			var top: float = at.y - float(size) * 0.36 - g * 0.5
 			var cell: Rect2 = run
-			ci.draw_texture_rect_region(texture(), Rect2(x, top, g, g), cell)
-			x += g
+			var sz: Vector2 = fit(cell, g)
+			var top: float = at.y - float(size) * 0.36 - sz.y * 0.5
+			ci.draw_texture_rect_region(texture(), Rect2(Vector2(x + SIDE_K * g, top), sz), cell)
+			x += sz.x + 2.0 * SIDE_K * g
 		else:
 			ci.draw_string(
 				font, Vector2(x, at.y), str(run), HORIZONTAL_ALIGNMENT_LEFT, -1, size, ink
@@ -155,9 +169,10 @@ static func bbcode(text: String, px: int) -> String:
 	for run: Variant in runs(text):
 		if run is Rect2:
 			var r: Rect2 = run
+			var sz: Vector2 = fit(r, float(px))
 			out += (
 				"[img region=%d,%d,%d,%d width=%d height=%d]%s[/img]"
-				% [r.position.x, r.position.y, r.size.x, r.size.y, px, px, ATLAS_PNG]
+				% [r.position.x, r.position.y, r.size.x, r.size.y, sz.x, sz.y, ATLAS_PNG]
 			)
 		else:
 			out += str(run).replace("[", "[lb]")
