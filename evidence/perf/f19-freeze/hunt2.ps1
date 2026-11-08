@@ -3,7 +3,8 @@
 # kind=exited (its exit code kept; it2: an exited run looked like a freeze); either log is copied as freeze-<tag>-<n>.log.
 # -Exe <path> runs an exported exe instead (no --path). One JSON line per run.
 param([int]$Runs = 10, [string]$Tag = 'x', [int]$Settle = 12, [string]$Exe = '', [string]$Extra = '',
-  [switch]$NoAutostart, [string]$Driver = 'd3d12', [string]$EngineExtra = '', [switch]$PressStart)
+  [switch]$NoAutostart, [string]$Driver = 'd3d12', [string]$EngineExtra = '', [switch]$PressStart, [string]$Project = '')
+# -Project <dir> (it10): another project dir for the editor binary (default: this worktree's project/).
 # -PressStart (it2): no --autostart; 6 s in, a posted Enter (WM_KEYDOWN / WM_KEYUP VK_RETURN) to the game window presses
 # the focused Start button through the real UI path (the release build ignores --autostart). `started` = the log says so.
 Add-Type -Namespace F19 -Name W -MemberDefinition @'
@@ -22,7 +23,7 @@ for ($n = 1; $n -le $Runs; $n++) {
   $a = @('--rendering-driver', $Driver, '--resolution', '1920x1080')
   if ($EngineExtra -ne '') { $a += $EngineExtra.Split(' ') }
   $bin = $godot
-  if ($Exe -ne '') { $bin = $Exe } else { $a = @('--path', "$repo\project") + $a + @('res://boot/quest1.tscn') }
+  if ($Exe -ne '') { $bin = $Exe } else { $pd = if ($Project -ne '') { $Project } else { "$repo\project" }; $a = @('--path', $pd) + $a + @('res://boot/quest1.tscn') }
   $a += @('--')
   if (-not $NoAutostart) { $a += @('--autostart') }
   if ($Extra -ne '') { $a += $Extra.Split(' ') }
