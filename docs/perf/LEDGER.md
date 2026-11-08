@@ -95,6 +95,31 @@ so REQUESTs with these numbers): (a) break StreetView.step down per card kind an
 flags: re-place a card only when its frame or facing changed); (b) skip RigPose for rigs whose parts a card hides
 (if the walk phase comes from RigGait alone).
 
+### World's REQUEST, part 2 (it3): StreetView.step per card kind
+Hypothesis: combo's extra rig cost sits in one card kind's per-tick work that a dirty flag removes. Scratch timers
+(`evidence/perf/n9-rig-combo/prof3.patch`, a throwaway worktree of 54de9b41, 50 people, 600 ticks, combo only;
+CONTENDED: my 3 director reels were running). Warm runs (the first run of a process includes the strip loads):
+
+| us per tick (combo) | warm run 1 | warm run 2 |
+|---|---|---|
+| RiotShieldCard.step | 13 | 16 |
+| StreetCrowdCards.step | 12 | 15 |
+| **StreetWalkerCards.step** | **157** | **206** |
+| - strip_of (row_of + key_of string formats, StreetCopWalk / Fall lookups) | 57 | 75 |
+| - re-hiding the hidden parts each tick (hide_all) | 26 | 32 |
+| - place (fill_of strings + 3 global setters), ~7.6 cards a tick | 58 | 80 |
+| RivetFrames.step | 31 | 39 |
+| RigHeadCard._place (rows()[_key] format + global setters) | 66 | 88 |
+
+Prototype (same scratch tree, ABABAB, opt = per-texture fill cache + one `global_transform` set + `street_row`
+read before `key_of`): walker place **59 / 66 / 59 vs 81 / 80 / 113 us** (about -20 us a tick), strip_of
+unchanged (77-87 vs 75-134, noise). Result: **a wash for the budget**: -20 to -30 us of combo's ~450 us extra (~5 %).
+The cost is spread over many small GDScript calls (string formats, meta reads, the `global_*` setters) on every
+rig; no single card kind holds it. Skipping RigPose under a whole-figure card saves at most the carded rigs' share
+(~8 of 50 here, ~65 us). The real lever is structural (cards placed by one batched pass, or the card placement in
+the native sim); not for tonight. The patch for the place() cut is `walker-place.patch` (world owns
+street_walker_cards.gd tonight), offered, not required. Not kept on this branch (not my file).
+
 ### Item 2 (it2): the traffic-sheet split is moot under BC7
 n9-world 3e02d3b8 imports the p70 traffic sheet as BC7: `traffic_cards.png-313d05e5...bptc.ctex` = **18,063,412 B**
 (4032 x 4480 x 1 B), one upload into a **32 MB** pow2 staging buffer (L9's mechanism), against 128 MB lossless. The

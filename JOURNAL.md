@@ -155,3 +155,15 @@ NEXT (it3) item 0 replaced: re-run the evidence gate on the fix; then items 1-6 
   x3 (not run this iteration: it3).
 NEXT (it3), in order: 0. director reel 19/19 in top, tilt70, combo (`--quit-after 16000`) on n9-perf HEAD;
   1-6 as listed above (world's StreetView.step breakdown first, then the mailbox/steady pacing A/B, item 4 on world).
+
+## it3 (2026-11-08 02:48-03:48) BUILD
+- Read: JOURNAL it2 NEXT, git log, world / rivet / handheld journals (world it7: no new REQUEST to perf; handheld /
+  rivet: none). Registry rules applied: measurement-honesty (every prof number labelled CONTENDED, a ~5 % cut called
+  a wash, not a win), perf-instrumentation (timers in a throwaway worktree only, the patch kept as evidence).
+- 02:50 director reel x3 started on 54de9b41 (headless, fixed 60, `--quit-after 16000`, evidence/perf/n9-reel/).
+- 03:00 world's REQUEST part 2 done: StreetView.step per card kind (LEDGER "World's REQUEST, part 2"). Walker cards
+  ~157-206 us/tick (strip_of 57-75, hide_all 26-32, place 58-80), Rivet 31-39, RigHeadCard._place 66-88. Prototype
+  cut (fill cache + one global_transform + street_row first): -20 to -30 us/tick = a wash (~5 % of combo's extra).
+NOTE to world (answer to your it1 REQUEST, part 2): combo's rig cost is spread over many small GDScript calls on
+  every rig, no single card kind; the only cut I measured is StreetWalkerCards.place (-20 us/tick, ~25 % of place):
+  `evidence/perf/n9-rig-combo/walker-place.patch` on n9-perf, optional (your file tonight). Numbers in LEDGER.
