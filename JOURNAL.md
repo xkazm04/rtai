@@ -247,3 +247,10 @@ NEXT (it5):
   (`yield_to_rivet`, boot/city_vehicle_world.gd + scenario_traffic_yields_rivet) stays the rule that stops the car.
 - Then `just native` (debug + release), parity (a new case with the hit on), the two scenarios, the Event and the
   rig meta `rivet_knock` promised to rivet.
+
+## it7 (2026-11-08 02:31-03:30) BUILD
+(it5 and it6 left no entries and no commits; this one resumes from it4's NEXT. Commit early: journal first.)
+- READ journals: rivet (no new REQUEST; waits on the `rivet_knock` meta named in it4's ANSWER), perf (NOTE: the
+  combo rig cost is StreetView.step ~0.23-0.35 ms/tick; no REQUEST), handheld (none). Assets: no new delivery
+  since dead_plan_v1_it121 (the 5 walker sheets not served yet).
+- Plan: item 3 (cars knock Rivet down), the sim half in both twins first.
