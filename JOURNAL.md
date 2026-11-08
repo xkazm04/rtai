@@ -734,3 +734,13 @@ knows each dead hostile's age (StreetQuestCorpses.tint_of(age).a); CombatBlood/B
 fade hook (BloodFx is shared: check its decal fade API first; combat_blood.gd is at 297 lines, so a small
 quest-side helper class rather than growth there). Alternative: slow the quest corpse decay so bodies outlast
 the pools (one StreetQuestCorpses value; check the corpse cap). Judge in a 32 px/m clip pair, never stills.
+- (08:17) Read for NEXT 2 (no edit): the live fight already has the law. corpse_decay.json: bodies linger 6 s +
+  fade 1.2 s; stains (incl. "the blood decals and pools") linger 12 s + fade 4 s ("stains outlive the bodies and
+  fade slower"), applied by `CorpseFade` (`fx.set_decal_life(s.linger_ticks, s.fade_ticks)`,
+  features/combat/decay/corpse_fade.gd:78). Quest 1 runs no CorpseDecayHook, so its CombatBlood keeps
+  blood_fx.json's shipped decal row (minutes): the pools outlast the bodies by minutes, not 6-10 s.
+NEXT 2 (it24), concrete: in `CollectCallView._ready_blood` give quest 1's blood the live fight's stain life
+(`blood.blood.set_decal_life(...)` with the CorpseDecay table's stains linger/fade ticks, as CorpseFade does;
+read the table the way StreetQuestCorpses._table() does). One line + a DECISION; the pools still outlive the
+bodies ~6 s by the table's design (a call for the owner if that still reads as empty pools). Film a 32 px/m clip
+pair (`--ticks=13560-14700`), unit --changed, then the gate.
