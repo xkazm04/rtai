@@ -17,6 +17,9 @@ extends RefCounted
 ## contact to push-off, two frame steps, so one frame step = ~32 cell px of ground and a cycle 8 x
 ## that (it4 wired 136 = the travel per half cycle: the legs churned 1.9x, the foot slid back).
 ## it6: p55 measured the same way: ~53 cell px over two steps, 26.5 a step, a cycle of 212.
+## it6: each armed grid has its own cycle (ARMED_CYCLE_CELL, "<art>/<weapon>"): the profile
+## rows' stance boot from contact to the next contact (two of the 4 frame steps) x 2, mean of
+## the right and left rows (evidence/n9/rivet_walk_armed_cycle.md); the flamer shuffles: CYCLE_CELL.
 
 const STRIP: String = "rivet_walk8.png"
 const STRIP4: String = "rivet_walk.png"
@@ -27,6 +30,16 @@ const RUN_FROM_MPS: float = 2.5
 const MAX_RUN_CYCLES_S: float = 3.5
 const ROWS: int = 8
 const CYCLE_CELL: Dictionary[String, float] = {"p70": 60.0, "p55": 60.0}
+const ARMED_CYCLE_CELL: Dictionary[String, float] = {
+	"p70/pistol": 76.0,
+	"p70/plasma_rifle": 76.0,
+	"p70/katana": 66.0,
+	"p70/gatling": 68.0,
+	"p55/pistol": 77.0,
+	"p55/plasma_rifle": 74.0,
+	"p55/katana": 72.0,
+	"p55/gatling": 81.0,
+}
 const MAX_CYCLES_S: float = 2.0
 const META_PH: StringName = &"rivet_walk_phase"
 const META_AT: StringName = &"rivet_walk_at"
@@ -86,7 +99,7 @@ static func phase_of(rig: CutRig, art: String, scale: float) -> float:
 	rig.set_meta(META_AT, rig.global_position)
 	var card: Sprite2D = rig.head_card
 	var running: bool = card != null and str(card.get_meta(RivetFrames.ON, "")).ends_with("/" + RUN)
-	var cycle: float = (RUN_CYCLE_CELL if running else CYCLE_CELL).get(art, 0.0) * scale
+	var cycle: float = cycle_cell(card, art, running) * scale
 	if (frames != 8 and not is_armed(rig.head_card)) or cycle <= 0.0:
 		return rig.phase
 	cycle = maxf(cycle, rig.speed_now / (MAX_RUN_CYCLES_S if running else MAX_CYCLES_S))
@@ -94,3 +107,13 @@ static func phase_of(rig: CutRig, art: String, scale: float) -> float:
 	var ph: float = fposmod(was + rig.global_position.distance_to(at) / cycle, 1.0)
 	rig.set_meta(META_PH, ph)
 	return ph
+
+
+## The drawn cycle in cell px of the grid `card` shows under `art` (it6: per armed grid).
+static func cycle_cell(card: Sprite2D, art: String, running: bool) -> float:
+	if running:
+		return RUN_CYCLE_CELL.get(art, 0.0)
+	if is_armed(card):
+		var w: String = str(card.get_meta(RivetFrames.ON, "")).get_file().trim_prefix(ARMED)
+		return ARMED_CYCLE_CELL.get(art + "/" + w.get_basename(), CYCLE_CELL.get(art, 0.0))
+	return CYCLE_CELL.get(art, 0.0)

@@ -124,3 +124,18 @@ func test_every_run_strip_has_a_measured_cycle() -> void:
 		var cycle: float = RivetWalk.RUN_CYCLE_CELL.get(art, 0.0)
 		assert_gt(cycle, 0.0, art + ": a run cycle")
 	assert_between(RivetWalk.RUN_CYCLE_CELL["p55"] / 8.0, 25.0, 28.0)
+
+
+func test_an_armed_grid_steps_on_its_own_measured_cycle() -> void:
+	# n9 it6: the armed grids' strides are 66-81 cell px a cycle, walk8's 60
+	var card: Sprite2D = autofree(Sprite2D.new())
+	card.vframes = RivetWalk.ROWS
+	card.set_meta(RivetFrames.ON, RivetStrips.DIR + "p70/" + RivetWalk.ARMED + "pistol.png")
+	assert_eq(RivetWalk.cycle_cell(card, "p70", false), RivetWalk.ARMED_CYCLE_CELL["p70/pistol"])
+	card.set_meta(RivetFrames.ON, RivetStrips.DIR + "p70/" + RivetWalk.ARMED + "flamethrower.png")
+	assert_eq(
+		RivetWalk.cycle_cell(card, "p70", false), RivetWalk.CYCLE_CELL["p70"], "no measure: walk8's"
+	)
+	card.set_meta(RivetFrames.ON, RivetStrips.DIR + "p70/" + RivetWalk.STRIP)
+	assert_eq(RivetWalk.cycle_cell(card, "p70", false), RivetWalk.CYCLE_CELL["p70"], "bare claw")
+	assert_eq(RivetWalk.cycle_cell(card, "p55", true), RivetWalk.RUN_CYCLE_CELL["p55"], "the run")
