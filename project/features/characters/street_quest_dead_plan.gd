@@ -15,6 +15,14 @@ const ENABLED: bool = true
 ## the decay as before; at the cast view's 0.8 the heaped bodies showed through each other.
 ## false = the cast view's DOWN_FADE alpha (it16).
 const OPAQUE: bool = true
+## it19: the fall into the pose (the cast view pops a guard from standing to lying): over FALL_TICKS
+## from the killing blow the body slides SLIDE_M along the blow into its rest, turns TWIST_RAD into
+## it and lands from StreetDeadPlan.LAND_SCALE, eased out. FALL_TICKS 0 = the it16 pop.
+const FALL_TICKS: int = 24
+const SLIDE_M: float = 0.6
+const TWIST_RAD: float = 0.35
+## An age past the fall (a settled corpse).
+const SETTLED: int = 1 << 20
 const PATH: String = "res://features/characters/art/view/plan/dead_contractor.png"
 ## The quest's fighter ids live apart from the rigs' actor ids in StreetDeadPlan's neighbour memory.
 const ID_BASE: int = -1000000
@@ -23,16 +31,16 @@ static var _tex: Texture2D = null
 static var _looked: bool = false
 
 
-## Draws the dead guard `h` at `at_px` in a plan pose; false = no strip or no card view (the
-## caller draws the drawn frame or the sprite).
-static func draw(
-	canvas: CanvasItem, at_px: Vector2, h: Fighter, px_per_m: float, tint: Color
-) -> bool:
+## Draws the dead guard `h` at `at_px` in a plan pose at the arena tick `now`; false = no strip or
+## no card view (the caller draws the drawn frame or the sprite).
+static func draw(canvas: CanvasItem, at_px: Vector2, h: Fighter, px_per_m: float, now: int) -> bool:
 	if not ENABLED or not ViewMode.shared().cards or _strip() == null:
 		return false
+	var age: int = now - h.hurt_tick
+	var tint: Color = StreetQuestCorpses.tint_of(age, StreetQuestCorpses.BASE)
 	if tint.a <= 0.0:
 		return true  # decayed away (StreetQuestCorpses)
-	var t: Transform2D = transform_of(at_px, h, px_per_m)
+	var t: Transform2D = transform_of(at_px, h, px_per_m, age)
 	var w: float = _tex.get_width() / float(StreetDeadPlan.POSES)
 	var hgt: float = float(_tex.get_height())
 	var pose: int = StreetDeadPlan.pick(ID_BASE - h.id, &"", at_px)
@@ -53,8 +61,11 @@ static func ground_tint(tint: Color) -> Color:
 	return c
 
 
-## The corpse's ground transform: the cell centre (the pelvis) along the blow, the head along it.
-static func transform_of(at_px: Vector2, h: Fighter, px_per_m: float) -> Transform2D:
+## The corpse's ground transform `age` ticks after the blow: the cell centre (the pelvis) along the
+## blow, the head along it, the fall's slide, turn and landing still to go (fall_left).
+static func transform_of(
+	at_px: Vector2, h: Fighter, px_per_m: float, age: int = SETTLED
+) -> Transform2D:
 	var blow: Vector2 = blow_of(at_px, h.facing)
 	var pose: int = StreetDeadPlan.pick(ID_BASE - h.id, &"", at_px)
 	var hv: int = StreetDeadPlan._hash(ID_BASE - h.id)
@@ -64,9 +75,21 @@ static func transform_of(at_px: Vector2, h: Fighter, px_per_m: float) -> Transfo
 		head = PI - head
 	var jitter: float = StreetDeadPlan.JITTER_RAD * (float(posmod(hv >> 4, 1001)) / 500.0 - 1.0)
 	var s: float = StreetQuestCards.body_m() * px_per_m / StreetWalkerFall.STILL_PX
+	var left: float = fall_left(age)
 	var pelvis: float = StreetDeadPlan.PELVIS_K * StreetWalkerFall.STILL_PX * s
-	var at: Vector2 = at_px + blow * pelvis
-	return Transform2D(blow.angle() - head + jitter, Vector2(-s if flip else s, s), 0.0, at)
+	var at: Vector2 = at_px + blow * (pelvis - SLIDE_M * px_per_m * left)
+	var turn: float = TWIST_RAD * left * (-1.0 if flip else 1.0)
+	var k: float = s * lerpf(1.0, StreetDeadPlan.LAND_SCALE, left)
+	var angle: float = blow.angle() - head + jitter + turn
+	return Transform2D(angle, Vector2(-k if flip else k, k), 0.0, at)
+
+
+## The share of the fall still to go `age` ticks after the blow (1 at the blow, 0 settled).
+static func fall_left(age: int) -> float:
+	if FALL_TICKS <= 0:
+		return 0.0
+	var t: float = clampf(float(age) / float(FALL_TICKS), 0.0, 1.0)
+	return (1.0 - t) * (1.0 - t)
 
 
 ## The blow's direction on the ground: away from the facing, turned by the spot's spread pick.

@@ -47,7 +47,7 @@ func test_no_strip_keeps_the_drawn_frame() -> void:
 		return
 	var canvas: Node2D = autofree(Node2D.new())
 	var h: Fighter = _guard(3, Vector2.RIGHT)
-	assert_false(StreetQuestDeadPlan.draw(canvas, Vector2.ZERO, h, PPM, Color.WHITE))
+	assert_false(StreetQuestDeadPlan.draw(canvas, Vector2.ZERO, h, PPM, 0))
 
 
 func test_a_plan_corpse_lies_opaque_and_still_fades() -> void:
@@ -56,3 +56,22 @@ func test_a_plan_corpse_lies_opaque_and_still_fades() -> void:
 	half.a *= 0.5
 	assert_almost_eq(StreetQuestDeadPlan.ground_tint(half).a, 0.5, 0.001)
 	assert_eq(StreetQuestDeadPlan.ground_tint(Color(1, 1, 1, 0)).a, 0.0)
+
+
+func test_the_fall_slides_turns_and_lands_into_the_rest() -> void:
+	var at: Vector2 = Vector2(100, 200)
+	var h: Fighter = _guard(9, Vector2.UP)
+	var rest: Transform2D = StreetQuestDeadPlan.transform_of(at, h, PPM)
+	var blow: Vector2 = StreetQuestDeadPlan.blow_of(at, h.facing)
+	var hit: Transform2D = StreetQuestDeadPlan.transform_of(at, h, PPM, 0)
+	var short: float = (rest.origin - hit.origin).dot(blow)
+	assert_almost_eq(short, StreetQuestDeadPlan.SLIDE_M * PPM, 0.01, "slides SLIDE_M into the rest")
+	var turned: float = absf(angle_difference(hit.get_rotation(), rest.get_rotation()))
+	assert_almost_eq(turned, StreetQuestDeadPlan.TWIST_RAD, 0.001, "turns TWIST_RAD into the rest")
+	assert_gt(absf(hit.get_scale().y), absf(rest.get_scale().y), "lands from LAND_SCALE")
+	var ticks: int = StreetQuestDeadPlan.FALL_TICKS
+	var done: Transform2D = StreetQuestDeadPlan.transform_of(at, h, PPM, ticks)
+	assert_almost_eq(done.origin.distance_to(rest.origin), 0.0, 0.001, "settled at FALL_TICKS")
+	assert_true(
+		StreetQuestDeadPlan.fall_left(6) < 1.0 - 6.0 / StreetQuestDeadPlan.FALL_TICKS, "eased out"
+	)

@@ -19,9 +19,9 @@ static var _decay: CorpseDecay = null
 ## CastView's card corpse: the dead guard `h` at `at_px`, drawn by StreetQuestCards.draw_down
 ## at its decay tint for the arena tick `now`; false = no card art (CastView draws the sprite).
 static func draw(canvas: CanvasItem, at_px: Vector2, px_per_m: float, h: Fighter, now: int) -> bool:
-	var tint: Color = tint_of(now - h.hurt_tick, BASE)
-	if StreetQuestDeadPlan.draw(canvas, at_px, h, px_per_m, tint):  # n9 world: the plan dead
+	if StreetQuestDeadPlan.draw(canvas, at_px, h, px_per_m, now):  # n9 world: the plan dead
 		return true
+	var tint: Color = tint_of(now - h.hurt_tick, BASE)
 	return StreetQuestCards.draw_down(canvas, at_px, h.facing, px_per_m, tint)
 
 
