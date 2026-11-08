@@ -239,7 +239,8 @@ stick, 2/3 right stick, 4 LT, 5 RT.
 - Pause on focus-out: **built** behind the handheld profiles (`HandheldFocusPause`, added by `LaunchArgs` when the row's
   tier is `handheld`): `NOTIFICATION_APPLICATION_FOCUS_OUT` (the Steam overlay, a Windows handheld's shell, alt-tab)
   pauses a live quest 1 run like the pause button; it never unpauses. Desktop unchanged (089afea8). Unit-tested on the
-  no-run guard; owed: a live proof (a scenario that sends the focus-out to a running quest).
+  no-run guard; proven live in `scenario_handheld_focus_pause` (e2f222df: quest 1 running, the OS focus-out
+  propagated: paused with the handheld node, live without it as the planted fault; re-read n9 it2).
 
 ## 6. Text legibility at 1280x800
 
@@ -274,11 +275,20 @@ recommendation; the x-height is 9-11 px on 13 of the 28 probed items** (the 16-2
 7-inch panel 10 px = 1.2 mm. A larger handheld text scale (e.g. 1.15x on the 16-20 px fonts, behind the rows) is a
 Call, not built: the cap reading passes everywhere, and the cards are laid out around these sizes.
 
+**The other rows (it2, the walk on the dGPU; the draw sizes scaled by the window stretch)**
+(`evidence/n9h/it2/legibility/legibility-<row>.json`): `handheld_1080` (1920x1080, the base drawn and scaled 1.35x):
+every text 22 px or more, x-height >= 12, nothing near the floor. `switch_handheld` (1280x720, the 1280x800 base
+scaled **0.9x**): the Controls' smallest is the pause card's 18 px buttons at 16 px = x 9 / cap 12 (at the floor);
+**the boss bar's round count "1 / 3" draws at 14 px = x 8 / cap 10**: under Valve's rule read on x-height it would
+fail, but it is digits only (no lowercase), so its smallest character is the cap height, 10 px. Nintendo publishes
+no legibility number (its guidelines sit behind the developer program); applying the Deck's rule to the Switch-class
+budget, the one site to lift on a 720p row is that count (16 -> 18 px authored, or a text scale on the row).
+
 ## 7. Port readiness (filled as the loop goes)
 
 | device | works on the simulator today | owed | only real hardware can prove | effort |
 |---|---|---|---|---|
-| Steam Deck | `--device=deck` (1280x800, 60 cap, vsync) and `deck40`; on 8 pinned threads + the 2-CU iGPU the reel runs vsync-locked 16.6 ms and ~134 fps uncapped (render GPU 6.7 ms); ~0.95 GB private RAM, ~0.6 GB GPU memory; the King fight and the city filmed at 1280x800; the native Linux build (sniper-SDK `.so`, `linux-showcase` export) runs the city in WSLg; a 20 s freeze resumes cleanly; focus-out pauses quest 1; the HUD's smallest text is above Valve's 9 px; every action on the pad (radio/reload fixed); rumble on the bus events and PlayStation / Nintendo-layout prompt names under the handheld rows (it4); the 40 Hz row cuts GPU busy 55 -> 38 % of each second and pinned CPU -26 % (E5); the 1.5x zoom cost: see E8c (E6 was void); clips of the King fight and the city at 48 px/m (it7; the it4 "48" set was really 32 px/m); every card of quest 1 (title, pause, failed, paid) walked live on pad events alone (A / B; Godot 4.7 gave the pad no `ui_accept`: fixed it11; the end cards it12) and the pause card keeps the pad's focus; a player frame cap (device / 30 / 40 / 60, it10) and a rumble level (full / half / off, it12) in the pause card on handheld rows; replays hold across editor / release and Windows / Linux, the release `.so` included (E13c), and a quest 1 autosave resumes across the two OSes at the same hash (E14); no text entry, so no on-screen keyboard is needed (it15); the CPU side is one thread: the engine main thread carries 0.527 of the 0.534 cores at 60 Hz, 0.318 of 0.33 at 40 Hz (E15, so a Deck's single-core speed decides 60, not its 4 cores) | the Linux build's real Vulkan run (a Deck or a Linux PC: WSLg has no Vulkan-on-D3D12), a `just native` recipe for the sniper container build (NAT-06 parity on the Linux `.so`: done, E13; replays cross editor / release and Windows / Linux identical, the release `.so` included, for the city-block World and quest 1: E13c); or the Windows build under Proton with `driver.windows=vulkan` (D3D12 goes through vkd3d-proton); Steam Input origin glyphs through the Steam backend (and the drawn ink set, REQUEST `ui_pad_glyphs_v1`); rumble on blasts and car crashes (no bus event) and a per-kind pulse count in the exit log (it12 live, `deck`, 2400 ticks, the boss bot: the King fight 3 pulses = boss_engaged 1 + rivet_hurt 2, Servo 2 = 1 + 1, the director reel 4 at it7: every pulse after the boss steps in is Rivet hurt; his own blows on a boss now pulse too: a light `boss_hit`, it13, King 59 = 56 landed + 2 hurts + 1 engaged, `evidence/it13/*-rumble-deck-hit.log`); a live proof of the focus-out pause; the zoom call (Call 1); the BC7 call (Call 6: ~1 GB less shared memory in the city, E10) | real frame times on Zen 2 at 4-15 W, battery hours, the shader cache's first run, Steam Input's default config, suspend/resume on SteamOS, the 90 Hz OLED | Linux build + Proton check: 2-3 days; Verified polish (glyphs, rumble, menus, focus pause): 3-5 days |
+| Steam Deck | `--device=deck` (1280x800, 60 cap, vsync) and `deck40`; on 8 pinned threads + the 2-CU iGPU the reel runs vsync-locked 16.6 ms and ~134 fps uncapped (render GPU 6.7 ms); ~0.95 GB private RAM, ~0.6 GB GPU memory; the King fight and the city filmed at 1280x800; the native Linux build (sniper-SDK `.so`, `linux-showcase` export) runs the city in WSLg; a 20 s freeze resumes cleanly; focus-out pauses quest 1; the HUD's smallest text is above Valve's 9 px (n9 runtime probe over quest 1's title, HUD and pause card: every x-height >= 9 px, every cap >= 12, section 6); every action on the pad (radio/reload fixed); rumble on the bus events and PlayStation / Nintendo-layout prompt names under the handheld rows (it4); the 40 Hz row cuts GPU busy 55 -> 38 % of each second and pinned CPU -26 % (E5); the 1.5x zoom cost: see E8c (E6 was void); clips of the King fight and the city at 48 px/m (it7; the it4 "48" set was really 32 px/m); every card of quest 1 (title, pause, failed, paid) walked live on pad events alone (A / B; Godot 4.7 gave the pad no `ui_accept`: fixed it11; the end cards it12) and the pause card keeps the pad's focus; a player frame cap (device / 30 / 40 / 60, it10) and a rumble level (full / half / off, it12) in the pause card on handheld rows; replays hold across editor / release and Windows / Linux, the release `.so` included (E13c), and a quest 1 autosave resumes across the two OSes at the same hash (E14); no text entry, so no on-screen keyboard is needed (it15); the CPU side is one thread: the engine main thread carries 0.527 of the 0.534 cores at 60 Hz, 0.318 of 0.33 at 40 Hz (E15, so a Deck's single-core speed decides 60, not its 4 cores) | the Linux build's real Vulkan run (a Deck or a Linux PC: WSLg has no Vulkan-on-D3D12), a `just native` recipe for the sniper container build (NAT-06 parity on the Linux `.so`: done, E13; replays cross editor / release and Windows / Linux identical, the release `.so` included, for the city-block World and quest 1: E13c); or the Windows build under Proton with `driver.windows=vulkan` (D3D12 goes through vkd3d-proton); Steam Input origin glyphs through the Steam backend (and the drawn ink set, REQUEST `ui_pad_glyphs_v1`); rumble on blasts and car crashes (no bus event) and a per-kind pulse count in the exit log (it12 live, `deck`, 2400 ticks, the boss bot: the King fight 3 pulses = boss_engaged 1 + rivet_hurt 2, Servo 2 = 1 + 1, the director reel 4 at it7: every pulse after the boss steps in is Rivet hurt; his own blows on a boss now pulse too: a light `boss_hit`, it13, King 59 = 56 landed + 2 hurts + 1 engaged, `evidence/it13/*-rumble-deck-hit.log`); the zoom call (Call 1); the BC7 call (Call 6: ~1 GB less shared memory in the city, E10) | real frame times on Zen 2 at 4-15 W, battery hours, the shader cache's first run, Steam Input's default config, suspend/resume on SteamOS, the 90 Hz OLED | Linux build + Proton check: 2-3 days; Verified polish (glyphs, rumble, menus, focus pause): 3-5 days |
 | Windows handhelds | `--device=handheld_1080` (1920x1080, stretch `viewport` = drawn at 1280x800 and scaled) | (E9 done: viewport stretch holds 60 at 9.9 ms GPU, the native 1080 draw misses at 16.1; it10: the 16:9 drawn frame is 1422x800 and the HUD fits, `handheld1080-city-48ppm-drawn-16x9-t720.png`); the look of the 1.35x scale-up on a real 7-8" panel; the controller-first shell (launch and play with no mouse); Windows display scaling 125-200 % | the Z1/Z2/Lunar Lake drivers, VRR, TDP presets | 1-2 days on top of the Deck work |
 | Switch-class | `--device=switch_handheld` as a budget only (1280x720, 30 cap, 3 threads, the iGPU): the 30 cap holds in the reel and the city, ~2.3 GB RAM + GPU memory on x86 (E7); with BC7 the city is 1.38 GB and the reel 1.13 GB, the cap still holds (E11, measured); the CPU on an A57-class core is the risk (not simulable) | everything: the platform holder's developer program, a dev kit, an engine port (W4 Consoles lists Godot 4.4-4.6, the project is 4.7), CitySim statically linked for aarch64, replay/parity re-proved on ARM, memory under ~3.2 GB (Switch) / 9 GB (successor; BC7 takes 0.88 GB off the city on this row, E11: 1.38 GB on x86, so the 2017 budget is reachable on memory) | all of it | 3-6 months per platform (a porting studio or W4 + our own work), $800-$10,000/yr middleware plus kits under NDA |
 
@@ -302,7 +312,7 @@ Call, not built: the cap reading passes everywhere, and the cards are laid out a
   bracketed pad names on the handheld rows: the quest 1 objective prompt (glyphs 1.4x the 24 px text = 34 px = 4 mm),
   the title and pause cards' controls line (30 px images in a RichTextLabel), and the ghost card's key hint (LB / RB from
   the InputMap, 25 px). PlayStation / Nintendo-layout names map to their own cells (Cross, L1, ZR, ...). Stills from a
-  pad-only walk (`evidence/n9h/it1/padwalk/`): `glyphs-deck-title-1280x800.png`, `glyphs-deck-pause-1280x800.png`,
+  pad-only walk (`evidence/n9h/it1/padwalk/`): `glyphs-deck-title-1280x800.png`, `legibility-deck-pause-1280x800.png` (it2, supersedes the it1 pause still),
   `glyphs-deck-quest1-prompt-40ppm-1280x800.png`, `glyphs-deck-title-and-prompt-crop-x2.png`. Steam Input origin glyphs
   still owed with the Steam port (a remapped pad).
 - **Clips at 40 px/m on the iGPU** (movie mode: frame numbers are not speed numbers): `deck-city-40ppm-1280x800-igpu.mp4`,
@@ -326,3 +336,19 @@ Call, not built: the cap reading passes everywhere, and the cards are laid out a
 
   Kept (world's change, the owner's p-1 B): on a 16 GB shared-memory Deck the city fits in about half the GPU memory
   and the iGPU has ~1 ms more headroom. JSONs: `evidence/n9h/it1/bc7/`. Re-take under the bench lock once main has it.
+
+- **E17 (n9 it2), the 40 Hz row at the new zoom:** `deck` (60 cap) vs `deck40` (40 cap), both 40 px/m, city, 1200
+  ticks, the iGPU, 8 pinned threads, 3 interleaved rounds (`tools/handheld/ab.mjs`), bench lock held about 02:06-02:14;
+  **all 6 runs CONTENDED** (other lanes' Godot runs up): the ms are indicative, the ratios are what we keep.
+
+  | metric (median of 3, +- spread) | deck (60) | deck40 (40) | change |
+  |---|---|---|---|
+  | frame p50 | 16.63 +-0.01 ms | 25.05 +-0.10 ms | locked at the cap both |
+  | render GPU per frame p50 | 8.92 +-0.66 ms | 9.30 +-0.07 ms | the same work per frame |
+  | **GPU busy per second** (fps x render GPU) | ~535 ms (54 %) | ~372 ms (37 %) | **-30 %** |
+  | **pinned CPU p50** | 7.12 +-2.09 % | 5.38 +-1.10 % | **-24 %** |
+  | private RAM max | 1493 MB | 1429 MB | noise (+-65) |
+
+  Confirms E5 (d9, at 48 px/m: GPU busy 55 -> 38 %, pinned CPU -26 %) at the owner's 40 px/m: the zoom did not move
+  the 40 Hz saving. The APU's power should track that busy share (inferred: only a Deck can measure watts), so the 40 Hz row is the battery mode (the player's
+  frame cap in the pause card reaches it). JSONs: `evidence/n9h/it2/e17/`.

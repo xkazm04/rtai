@@ -7,7 +7,8 @@ extends Node
 ## Writes `<out>/legibility.json` + one PNG per stop. Dev only; never shipped.
 ## Run through legibility_walk.gd (a SceneTree script cannot name the autoloads at compile time).
 
-## The font sizes the draw_string sites pass (authored px; the HUD layers draw 1:1 at 1280x800).
+## The font sizes the draw_string sites pass (authored px at the 1280x800 base, scaled to the
+## window).
 const DRAW_SIZES: Dictionary[String, int] = {
 	"boss bar count (BossBar 16)": 16,
 	"ghost card name / key hint (GhostFormLayout 18)": 18,
@@ -45,8 +46,8 @@ func _walk() -> void:
 	game.boot()
 	_report["device"] = device
 	_report["window"] = [root.size.x, root.size.y]
-	_report["draw_sizes"] = _draw_sizes()
 	await _frames(20)
+	_report["draw_sizes"] = _draw_sizes(root.get_final_transform().get_scale().y)
 	await _stop("title")
 	_pad(JOY_BUTTON_A)
 	await _frames(360)
@@ -68,11 +69,13 @@ func _walk() -> void:
 	get_tree().quit(0)
 
 
-func _draw_sizes() -> Array[Dictionary]:
+## Each draw_string size in window px: the authored size x `stretch` (the base-to-window factor).
+func _draw_sizes(stretch: float) -> Array[Dictionary]:
 	var rows: Array[Dictionary] = []
 	for site: String in DRAW_SIZES:
-		var row: Dictionary = TextProbe.size_row(ThemeDB.fallback_font, DRAW_SIZES[site])
+		var row: Dictionary = TextProbe.size_row(ThemeDB.fallback_font, DRAW_SIZES[site] * stretch)
 		row["site"] = site
+		row["authored_px"] = DRAW_SIZES[site]
 		rows.append(row)
 	return rows
 
