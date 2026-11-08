@@ -469,6 +469,22 @@ budget, the one site to lift on a 720p row is that count (16 -> 18 px authored, 
   the 40 Hz saving. The APU's power should track that busy share (inferred: only a Deck can measure watts), so the 40 Hz row is the battery mode (the player's
   frame cap in the pause card reaches it). JSONs: `evidence/n9h/it2/e17/`.
 
+- **E17c (n9 it6), the 40 Hz row on combo** (the view main plays after world's switch): `deck` vs `deck40` on
+  `sim.mjs --scene=city_combo`, 1200 ticks, the iGPU, 8 pinned threads, 3 interleaved rounds, bench lock held
+  05:17-05:22, all 6 runs CONTENDED (1-2 other Godots).
+
+  | metric (median of 3, +- spread) | deck (60) | deck40 (40) | change |
+  |---|---|---|---|
+  | frame p50 | 16.66 +-0.02 ms | 24.94 +-0.28 ms | locked at the cap both |
+  | render GPU per frame p50 | 8.73 +-0.33 ms | 8.96 +-0.12 ms | the same work per frame |
+  | **GPU busy per second** (fps x render GPU) | ~524 ms (52 %) | ~358 ms (36 %) | **-32 %** |
+  | **pinned CPU p50** | 6.34 +-2.71 % | 4.71 +-0.45 % | **-26 %** |
+  | settled frames > 33 ms | 0 +-1 | 1 +-1 | noise |
+  | private RAM / GPU shared max | 1494 / 1118 MB | 1495 / 1118 MB | the same |
+
+  The combo view keeps the 40 Hz saving (E17 tilt70: -30 % / -24 %; E5 d9: -31 % / -26 %): three views and two zooms
+  agree, so the battery-mode call (REPORT Call 4) does not depend on the view. JSONs: `evidence/n9h/it6/e17c/`.
+
 - **The keyboard twin (n9 it3, an owner Call):** `ui_kb_glyphs_v1` (the asset lane's own-list delivery, 38 cells incl.
   `move_keys`, `aim_mouse`, `mouse_left`, wide SPACE / Shift / Ctrl / Tab) draws in the same three places as the pad set,
   but only on the desktop study row `desktop_kb_glyphs` (`glyphs: kb`; `is_desktop()` stays true, nothing else is

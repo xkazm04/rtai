@@ -1,0 +1,32 @@
+round 1/3 variant 0: v0-r0: CONTENDED (2 other Godot runs) {"frames":1185,"low1_fps":47.0612224670942,"over33_settled":0,"over50_settled":0,"p50_ms":16.6609992980957,"p99_ms":20.131
+round 1/3 variant 1: v1-r0: CONTENDED (2 other Godot runs) {"frames":789,"low1_fps":32.2574140261098,"over33_settled":0,"over50_settled":0,"p50_ms":24.9419994354248,"p99_ms":30.2320
+round 2/3 variant 0: v0-r1: CONTENDED (1 other Godot runs) {"frames":1182,"low1_fps":49.3538762471315,"over33_settled":0,"over50_settled":0,"p50_ms":16.6359996795654,"p99_ms":19.691
+round 2/3 variant 1: v1-r1: CONTENDED (1 other Godot runs) {"frames":794,"low1_fps":32.0776278005414,"over33_settled":1,"over50_settled":0,"p50_ms":24.9139995574951,"p99_ms":30.2490
+round 3/3 variant 0: v0-r2: CONTENDED (2 other Godot runs) {"frames":1178,"low1_fps":38.3403725770577,"over33_settled":1,"over50_settled":1,"p50_ms":16.6580009460449,"p99_ms":21.333
+round 3/3 variant 1: v1-r2: CONTENDED (2 other Godot runs) {"frames":797,"low1_fps":32.6964338922322,"over33_settled":1,"over50_settled":0,"p50_ms":25.1959991455078,"p99_ms":29.4290
+
+--device=deck --scene=city_combo --ticks=1200  (3 runs, 3 contended)
+  p50_ms                    16.66  +-0.02
+  p99_ms                    20.13  +-1.64
+  low1_fps                  47.06  +-11.01
+  over33_settled                0  +-1
+  render_gpu_ms_p50          8.73  +-0.33
+  render_cpu_ms_p50          0.57  +-0.33
+  process_ms_p50             5.25  +-2.71
+  cpu_pinned_pct_p50         6.34  +-2.71
+  private_mb_max           1493.8  +-64.9
+  gpu_shared_mb_max        1118.1  +-65
+  gpu_dedicated_mb_max       66.4  +-0.8
+
+--device=deck40 --scene=city_combo --ticks=1200  (3 runs, 3 contended)
+  p50_ms                    24.94  +-0.28
+  p99_ms                    30.23  +-0.82
+  low1_fps                  32.26  +-0.62
+  over33_settled                1  +-1
+  render_gpu_ms_p50          8.96  +-0.12
+  render_cpu_ms_p50          0.53  +-0.09
+  process_ms_p50             6.03  +-0.86
+  cpu_pinned_pct_p50         4.71  +-0.45
+  private_mb_max           1495.3  +-66.4
+  gpu_shared_mb_max        1118.1  +-65
+  gpu_dedicated_mb_max       66.4  +-0.3

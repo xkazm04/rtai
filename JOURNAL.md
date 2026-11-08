@@ -334,3 +334,20 @@ NEXT (iteration 6):
 3. Freeze 10:30: export `build/export/windows/RTAI.exe` (`"$GODOT_BIN" --headless --path project --export-release
    windows-showcase ../build/export/windows/RTAI.exe`), final gates on the head (reel x3 + evidence run with the log
    outside the tree), REPORT final (gates line, exe line, Calls 1-4, frames.json 15 entries all present).
+
+## Iteration 6 (05:16 - 06:16), BUILD
+
+- 05:17 READ: JOURNAL NEXT, git log; rivet (it7 knock-down), world (it16 the corpse stains), perf (L20): no REQUEST to
+  handheld. Assets JOURNAL (grep handheld): nothing new since it127 (wired). Registry rules applied:
+  perf-regression-gating (interleaved rounds, medians + spread, bench lock, CONTENDED per run),
+  on-device-verification-harness (every number "on the simulator"), adaptive-fidelity-tiers (a handheld-row value,
+  the desktop untouched), motion-quality-gating (the stills tick-exact, same tick both sides).
+- 05:22 E17c (bench lock 05:17-05:22, 3 rounds, all CONTENDED): `deck` vs `deck40` on `city_combo`: GPU busy per second
+  -32 % (52 -> 36 %), pinned CPU -26 %, frame locked at both caps: the 40 Hz saving holds on combo (LEDGER E17c).
+- 05:27 The zoom before/after the brief owed (32 vs 40 px/m, tick-exact via arena `--shot`): `deck_bench_z1` vs
+  `deck_bench`, King t900 and city_combo t600, + a Servo still. Looked at all: the 40 side reads larger, the HUD
+  unchanged. To masters: `zoom-deck-king-32-vs-40ppm-1280x800-t900.png`, `zoom-deck-city-combo-32-vs-40ppm-1280x800-t600.png`
+  (frames.json 15: replaced the "after alone" panel still and the quest 1 prompt still, both covered by other entries).
+- FINDING: in the Servo fight at t900 half the 1280x800 screen is paper beyond the arena edge, on `deck`, `deck_bench_z1`
+  and the desktop alike: the shipped arena camera follows Rivet; the frame-the-fight BossCam exists only behind the dev
+  `--boss-cam` flag.
