@@ -17,6 +17,10 @@ var _source: ChunkSource
 var _sim: CitySimBackend
 var _chunks: int = SimConst.CITY_CHUNKS
 var _resident: Dictionary[Vector2i, CityChunk] = {}
+## resident_keys(), sorted once a change (read only): ChunkView asks every frame, city_system,
+## the prop lights and the noir lamps / shadows too; the lambda sort of ~70 keys cost ~0.1 ms.
+var _keys: Array[Vector2i] = []
+var _keys_stale: bool = true
 
 
 func _init(source: ChunkSource, sim: CitySimBackend, city_chunks: int) -> void:
@@ -33,11 +37,12 @@ static func rect_dist(key: Vector2i, p: Vector2) -> float:
 
 ## Once per tick: drop far chunks, then stamp every needed one (nearest first, ties by key).
 func update(focus: Vector2) -> void:
-	for key: Vector2i in _sorted(_resident.keys()):
+	for key: Vector2i in resident_keys():
 		if rect_dist(key, focus) > R_DROP:
 			_sim.clear_chunk(key.x, key.y)
 			@warning_ignore("return_value_discarded")
 			_resident.erase(key)
+			_keys_stale = true
 			dropped += 1
 	var c0: Vector2i = Vector2i(
 		floori(focus.x / SimConst.CHUNK_M), floori(focus.y / SimConst.CHUNK_M)
@@ -65,6 +70,7 @@ func adopt(key: Vector2i, chunk: CityChunk) -> void:
 		return
 	_sim.stamp_chunk(key.x, key.y, chunk.tiles, chunk.cells)
 	_resident[key] = chunk
+	_keys_stale = true
 	stamped += 1
 
 
@@ -74,6 +80,7 @@ func evict(key: Vector2i) -> void:
 		_sim.clear_chunk(key.x, key.y)
 		@warning_ignore("return_value_discarded")
 		_resident.erase(key)
+		_keys_stale = true
 		dropped += 1
 
 
@@ -85,8 +92,13 @@ func chunk_at(key: Vector2i) -> CityChunk:
 	return _resident.get(key)
 
 
+## The resident keys in row order (y, then x). Read only: the same array until residency changes.
 func resident_keys() -> Array[Vector2i]:
-	return _sorted(_resident.keys())
+	if _keys_stale:
+		_keys = _sorted(_resident.keys())
+		_keys.make_read_only()
+		_keys_stale = false
+	return _keys
 
 
 func density(x: float, y: float, car: bool) -> int:

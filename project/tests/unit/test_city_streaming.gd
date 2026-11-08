@@ -93,6 +93,28 @@ func test_bikes_draw_from_their_own_stream() -> void:
 	assert_eq(bikes[1], 20, "share 1: every traffic car (the 20 targeted) a bike")
 
 
+func test_resident_keys_stay_sorted_and_are_rebuilt_only_on_a_change() -> void:
+	var a: CityResidency = _residency()
+	a.update(Vector2(700, 700))
+	var k1: Array[Vector2i] = a.resident_keys()
+	assert_eq(k1, CityResidency._sorted(k1.duplicate()), "row order")
+	assert_true(is_same(k1, a.resident_keys()), "no change: the same sorted array, no re-sort")
+	assert_true(k1.is_read_only(), "callers cannot reorder the cache")
+	a.evict(k1[0])
+	var k2: Array[Vector2i] = a.resident_keys()
+	assert_false(k2.has(k1[0]), "an evict rebuilds")
+	assert_eq(k2.size(), k1.size() - 1)
+	a.update(Vector2(1300, 700))  # drops the west, adopts the east
+	var k3: Array[Vector2i] = a.resident_keys()
+	var fresh: Array[Vector2i] = []
+	for key: Vector2i in k3:
+		assert_true(a.is_resident(key))
+		fresh.append(key)
+	assert_eq(k3, CityResidency._sorted(fresh), "after update: row order")
+	assert_false(k3.has(Vector2i(3, 5)), "a dropped key left the cache")
+	assert_true(k3.has(Vector2i(10, 5)), "an adopted key joined it")
+
+
 func _residency() -> CityResidency:
 	var sim: CitySimRef = CitySimRef.new()
 	sim.init(1)
