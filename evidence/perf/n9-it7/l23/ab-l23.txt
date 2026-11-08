@@ -1,0 +1,8 @@
+old r1 godots_before=0 BLOODPROF blood.step 405.8 | beat 2.7 | pop 1.9 | stains 141.1 | frames 1829  err=0
+new r1 godots_before=0 BLOODPROF blood.step 391.9 | beat 2.5 | pop 1.8 | stains 102.9 | frames 1829  err=0
+old r2 godots_before=2 BLOODPROF blood.step 369.7 | beat 2.2 | pop 1.6 | stains 132.5 | frames 1829  err=0
+new r2 godots_before=0 BLOODPROF blood.step 389.2 | beat 2.4 | pop 1.7 | stains 102.3 | frames 1829  err=0
+old r3 godots_before=0 BLOODPROF blood.step 404.9 | beat 2.6 | pop 1.8 | stains 144.2 | frames 1829  err=0
+new r3 godots_before=2 BLOODPROF blood.step 394.4 | beat 2.6 | pop 1.8 | stains 105.5 | frames 1829  err=0
+old r4 godots_before=0 BLOODPROF blood.step 374.8 | beat 2.3 | pop 1.7 | stains 134.8 | frames 1829  err=0
+new r4 godots_before=2 BLOODPROF blood.step 404.5 | beat 2.4 | pop 1.9 | stains 107.0 | frames 1829  err=0
