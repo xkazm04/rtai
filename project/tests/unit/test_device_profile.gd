@@ -75,3 +75,18 @@ func test_every_handheld_row_draws_at_40_ppm() -> void:
 		var row: DeviceProfile = DeviceProfile.of(id)
 		if row.is_handheld() and id != "deck_bench_z1":
 			assert_almost_eq(row.zoom_k, 1.25, 0.001, id)
+
+
+func test_a_steam_deck_picks_its_row_by_itself() -> void:
+	# n9 it10: Steam sets SteamDeck=1 on SteamOS; the Deck's panel is 1280x800 (either way up)
+	assert_eq(DeviceProfile.auto_pick("1", Vector2i(1280, 800)), "deck")
+	assert_eq(DeviceProfile.auto_pick("1", Vector2i(800, 1280)), "deck")
+	assert_eq(DeviceProfile.auto_pick("1\n", Vector2i(1280, 800)), "deck")
+	assert_true(DeviceProfile.of(DeviceProfile.auto_pick("1", Vector2i(1280, 800))).is_handheld())
+
+
+func test_the_desktop_and_a_docked_deck_keep_the_desktop() -> void:
+	assert_eq(DeviceProfile.auto_pick("", Vector2i(1280, 800)), "", "no Steam variable")
+	assert_eq(DeviceProfile.auto_pick("0", Vector2i(1280, 800)), "", "SteamDeck=0 opts out")
+	assert_eq(DeviceProfile.auto_pick("1", Vector2i(1920, 1080)), "", "docked on a TV")
+	assert_eq(DeviceProfile.auto_pick("1", Vector2i(1280, 720)), "", "another SteamOS box")

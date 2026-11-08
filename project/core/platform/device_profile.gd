@@ -7,6 +7,8 @@ extends RefCounted
 ## read tier and zoom_k. Render and window only: a profile never writes to the sim.
 
 const TABLE: String = "res://data/tables/devices.json"
+## The Steam Deck's panel (LCD and OLED alike), what auto_pick() matches.
+const DECK_PANEL: Vector2i = Vector2i(1280, 800)
 const VSYNC: Dictionary[String, DisplayServer.VSyncMode] = {
 	"adaptive": DisplayServer.VSYNC_ADAPTIVE,
 	"disabled": DisplayServer.VSYNC_DISABLED,
@@ -58,6 +60,18 @@ static func zoom() -> float:
 static func select(flag_value: String) -> DeviceProfile:
 	_shared = DeviceProfile.of(flag_value.replace("-", "_"))
 	return _shared
+
+
+## The row a run with no `--device=` picks by itself (n9 it10): `deck` when Steam says this is a
+## Deck (it puts SteamDeck=1 in every game's environment on SteamOS; a launch option
+## `SteamDeck=0 %command%` opts out) AND the screen is the Deck's 1280x800 panel (either way up),
+## so a docked Deck on a TV or a SteamOS desktop box keeps the desktop; "" = the table's default.
+static func auto_pick(steam_deck_env: String, screen: Vector2i) -> String:
+	if steam_deck_env.strip_edges() != "1":
+		return ""
+	if screen == DECK_PANEL or screen == Vector2i(DECK_PANEL.y, DECK_PANEL.x):
+		return "deck"
+	return ""
 
 
 ## The device row `want` from the table ("" = the table's default).
