@@ -48,6 +48,10 @@ The research loop since:
   rows before it is packed (replays record the bent heading) (33f80d56, DECISION `handheld/pad-aim-assist`). Live in
   the King arena on pad events: a 5 deg stick error stays 5 deg beyond 25 m and bends to 3.25 deg inside it on `deck`;
   `desktop` stays raw (7c993d29, `evidence/n9h/it4/aimwalk/`).
+- **E18, a slower core: the tool dropped, the estimate tightened.** A Windows job CPU hard cap on the game (45 / 35 /
+  25 % of one core, bench lock, 3 rounds) freezes it for 0.2-3.5 s instead of stretching frames, so it cannot find
+  where 60 Hz breaks. Kept: E15's 0.53 core is an upper bound (much of it is pacing wait); with the sourced 1.84x
+  single-thread ratio the city needs ~0.55-0.92 of one Deck core at 60 Hz (LEDGER E18, 95f119f6).
 - **The 40 Hz row at 40 px/m** (E17, bench lock, 3 rounds, CONTENDED): GPU busy per second -30 %, pinned CPU -24 %.
 - **Legibility on the other rows:** `handheld_1080` every x-height >= 12 px; `switch_handheld` (720p) the boss count's
   digits at cap 10 px, judged legible on a still, everything else >= 9.
@@ -64,8 +68,8 @@ and combo at 33f80d56. Commits since are docs and evidence only. (Freeze: re-run
 ## What does not work yet
 
 - Steam Input origin glyphs (a remapped pad) need the Steam backend: owed with the Steam port.
-- Nothing here is proven on a Deck: watts, battery hours, Zen 2 single-thread frame times (E15 estimates 60 Hz is
-  tight on one Deck core), the shader cache's first run, suspend on SteamOS, the Linux build under real Vulkan.
+- Nothing here is proven on a Deck: watts, battery hours, Zen 2 single-thread frame times (E18:
+  ~0.55-0.92 of one Deck core at 60 Hz, an estimate the simulator cannot pin down), the shader cache's first run, suspend on SteamOS, the Linux build under real Vulkan.
 
 ## What blocked, and for how long
 
@@ -80,8 +84,10 @@ and combo at 33f80d56. Commits since are docs and evidence only. (Freeze: re-run
    Try: `RTAI.exe -- --device=desktop_kb_glyphs`.
 2. **The pad aim assist for a desktop pad too?** The owner's decision 2 said "pad only", not "handheld only".
    a) handheld rows only (built); b) every pad (`aim_assist: true` on the `desktop` row).
-3. **A larger handheld text scale?** Every text clears Valve's 9 px floor on the Deck row; the smallest (the boss count,
-   x 9) sits at the floor. a) keep (built); b) a row-level text scale for handhelds (owed work, ~half a day).
+3. **A larger handheld text scale?** Every text clears Valve's 9 px floor on the Deck row; since it5 the one text that
+   sat at the floor (the boss count) draws at 18 px on handheld rows, so the smallest is now x-height 10 / cap 13 (the
+   pause card's -, + and Toggle). a) keep (built); b) a row-level text scale for every handheld text (owed work, ~half
+   a day; re-lays the cards). Still: `count-deck-16-vs-18-crop-x4.png`.
 4. **The 40 Hz row as the Deck default?** E17: GPU busy -30 %, pinned CPU -24 % (a battery proxy). a) 60 with the
    player's 30 / 40 / 60 cap in the pause card (built); b) 40 by default.
 
