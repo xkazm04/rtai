@@ -549,3 +549,12 @@ NEXT (iteration 9) (2a done at 07:39: both boss clips on the iGPU with the ease 
   card; he comes into frame within seconds: no handheld change.
 - 08:04 MUTATION `live_input.gd` started at 5224bd98 (68 mutants, tests: aim_reach, live_input_pad_first,
   pad_aim_assist, player_input, prompt_device).
+- 08:12 GATE evidence run `--no-bench` at 3928fe2b: lint, unit 1859/0, scenarios 54, parity, look goldens 11/11,
+  release-compile 620/0: all PASS (`evidence/n9h/it9/gates/evidence-run-3928fe2b.txt`).
+- 08:10 RESEARCH (Valve's Deck recommendations page, fetched): switch to mouse/keyboard mode "only ... if a mouse click
+  event is received". LiveInput flipped the prompts on any mouse motion (a Deck trackpad). MILESTONE b7621d73
+  `click_flips` on handheld rows (motion still aims); tests 2 (select 28/0); lint 15/15; DECISION handheld/click-flips.
+- 08:16 MUTATION `live_input.gd` at 5224bd98: 30.9 % file-wide (21/68); the old sample/aim code is reached by the
+  scenarios, not the selected unit tests; the pad-first line's one mutant killed; the line-59 survivor (mouse motion
+  flipping on the desktop) is covered by b7621d73's desktop test (not re-mutated).
+- Cleaned masters: 4 superseded stills no doc or frames.json named (deleted); raw .avi deleted after encoding.

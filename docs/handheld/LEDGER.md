@@ -619,3 +619,9 @@ budget, the one site to lift on a 720p row is that count (16 -> 18 px authored, 
   Looked at: at Dock 9 the top-right money + weapon cards (~340x220 px, 27 % x 27 % of 1280x800) sit over the crate row
   while the objective is the rifle; HudSee fades that corner once the crates are the goal (n8-hud), so no change. Rivet
   reads small beside the contractors on this branch (1.1 m; rivet's lane brings 1.65 m).
+- **Click-only flips on the handheld rows (n9 it9, b7621d73, DECISION `handheld/click-flips`).** Valve's recommendations
+  page, re-read in it9 ([recommendations](https://partner.steamgames.com/doc/steamdeck/recommendations)): prompts
+  "changing between controller and keyboard/mouse icons" is listed as a common problem; "only switching to
+  mouse/keyboard mode if a mouse click event is received"; mouse events should move the camera "without perturbing
+  simultaneous controller functionality". `LiveInput.click_flips` (= is_handheld()): mouse motion sets `mouse_aims` but
+  leaves `pad_last`; a click or a key clears it. Owed with the Steam port: Steam Input action origins decide the glyphs.

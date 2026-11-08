@@ -82,6 +82,10 @@ The research loop since:
   match the Deck. A handheld row's live input now starts pad-first until a key or the mouse is used; the desktop starts
   on the keys as before. Still `padfirst-deck-quest1-first-prompt-before-after-crop-x2.png`, clip
   `deck-quest1-40ppm-glyphs-padfirst-1280x800-igpu.mp4` (iGPU, 0 SCRIPT ERROR); 4 tests.
+- **A trackpad no longer flips the prompts on a handheld** (it9, b7621d73, DECISION `handheld/click-flips`): Valve's
+  Deck recommendations name pad / keyboard icon flipping as a common problem and say to switch to mouse/keyboard mode
+  "only ... if a mouse click event is received". On a handheld row mouse motion (a Deck trackpad in Steam's default
+  layout) still aims but keeps the pad glyphs; a click or a key hands them to the keys. The desktop unchanged; 2 tests.
 - **The Deck set filmed at combo, the view main plays** (it9, the Radeon iGPU, each run in its own app data, the adapter
   and 0 SCRIPT ERROR on its engine log, movie mode, CONTENDED): the city (`deck-city-combo-40ppm-1280x800-igpu.mp4`,
   20 s: the course bot's hub waypoints walk into a roof in the city block at ~12 s, so it is cut there) and quest 1 Dock 9
@@ -105,6 +109,11 @@ Gates (it8): at 8c1acea1 (the boss cam ease) the evidence run `--no-bench` all P
 parity, look goldens 11/11, release-compile 620/0, `evidence/n9h/it8/gates/evidence-run-8c1acea1.txt`); the director
 reel 19/19 fully down, 0 SCRIPT ERROR in top, tilt70 and combo at 630f91a7 (the shipped-code change; 8c1acea1 adds a
 test and a comment); mutation score on `cam_follow.gd` 19/20 (95 %), the survivor then killed by a test.
+Gates (it9): at 2f842523 (pad-first) the director reel 19/19 fully down, 0 SCRIPT ERROR in top, tilt70 and combo; at
+3928fe2b the evidence run `--no-bench` all PASS (lint, unit 1859/0, scenarios 54, parity (mutation caught at 629), look
+goldens 11/11, release-compile 620/0, `evidence/n9h/it9/gates/evidence-run-3928fe2b.txt`); mutation on `live_input.gd`
+at 5224bd98: 30.9 % file-wide (21/68: the old sample / aim code is covered by the scenarios, not these unit tests),
+the one mutant on the pad-first lines killed (`evidence/n9h/it9/gates/mutate-live_input-5224bd98.txt`).
 Gates (it7): at 2d6a14a7 (the boss-cam band, the last shipped-code change before the `deck30` data row) full unit 1847/0 and
 the director reel 19/19 fully down, 0 SCRIPT ERROR in top, tilt70 and combo (`evidence/n9h/it7/gates/`).
 At 32f498d8 the evidence run `--no-bench` all PASS (lint, unit 1848/0, scenarios 54, parity (mutation caught at 629),
