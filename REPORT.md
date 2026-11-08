@@ -82,6 +82,13 @@ The research loop since:
   match the Deck. A handheld row's live input now starts pad-first until a key or the mouse is used; the desktop starts
   on the keys as before. Still `padfirst-deck-quest1-first-prompt-before-after-crop-x2.png`, clip
   `deck-quest1-40ppm-glyphs-padfirst-1280x800-igpu.mp4` (iGPU, 0 SCRIPT ERROR); 4 tests.
+- **A Deck picks its own row** (it10, d6df5bc7, DECISION `handheld/deck-auto-pick`): every handheld change sat behind
+  `--device=`, and a real Deck launches with no flags, so a Deck player would have got the desktop game. Now a run with
+  no `--device=` takes the `deck` row when Steam's `SteamDeck=1` is set (the Steam client sets it on SteamOS) and the
+  screen is 1280x800; a docked Deck or a SteamOS desktop keeps the desktop; `--device=desktop` or `SteamDeck=0` opts
+  out. The desktop never reaches the screen query (no variable here). Live here: `SteamDeck=1` on the 1920x1080
+  screen logs "the desktop row" (the docked case), 0 SCRIPT ERROR (`evidence/n9h/it10/auto-*.log`). Tests 2; Steamworks' `IsSteamRunningOnSteamDeck`
+  joins as the first check with the Steam port.
 - **A trackpad no longer flips the prompts on a handheld** (it9, b7621d73, DECISION `handheld/click-flips`): Valve's
   Deck recommendations name pad / keyboard icon flipping as a common problem and say to switch to mouse/keyboard mode
   "only ... if a mouse click event is received". On a handheld row mouse motion (a Deck trackpad in Steam's default
@@ -93,6 +100,9 @@ The research loop since:
   into the Quartermaster (`deck-quest1-dock9-combo-40ppm-1280x800-igpu.mp4`, 45 s: the pad glyphs in the fight prompts,
   the compact card and the dialogue cards clear of each other). The set clip `n9-handheld-set-deck-40ppm.mp4` re-cut
   (63 s, captions) from the eased boss takes, these two and the pad-first quest 1.
+- **E20b, the Deck rows on world's near-final head** (it10, e3c54005 merged in a scratch tree; the code merges
+  cleanly; bench lock, 3 rounds, all 12 runs CONTENDED): `deck` render GPU 8.89 -> 8.02 ms, GPU memory 1118 -> 601 MB,
+  RAM 1493 -> 992 MB; `deck30` the same shape (7.94 ms, 632 MB, 1040 MB) and a third less pinned CPU. LEDGER E20b.
 - **E21, the 40 Hz cadence** (it7, 7a6681e2): filmed at each row's own rate, `deck40` steps 1, 2, 1, 2 ticks a frame and
   73 % of its pan steps go 1:2; a new `deck30` row pans as evenly as 60. Battery proxy (bench lock, 3 rounds): GPU busy
   per second 36 % -> 27 % (-25 %) from 40 to 30; CPU the same (the sim ticks 60 Hz either way).

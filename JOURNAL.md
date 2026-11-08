@@ -561,3 +561,29 @@ NEXT (iteration 9) (2a done at 07:39: both boss clips on the iGPU with the ease 
 - 08:20 click-flips shown live: the pad walker + one InputEventMouseMotion after the first prompt (iGPU, scratch
   `evidence/n9h/it9/clickflip/`): b7621d73~ flips to "[W A S D] ... [E]", b7621d73 keeps the drawn glyphs. Still to
   masters `clickflips-deck-quest1-prompt-after-mouse-motion-before-after-crop-x2.png` (not in frames.json: 15 entries).
+
+NEXT (iteration 10): start at it9 NEXT 2b (the ease on deck40 at 40 fps, ground-band pancorr) and 2c (E20 on world's
+near-final head); freeze steps as in it9 NEXT 3.
+
+## Iteration 10 (orchestrator it12, 08:24 - 09:24), BUILD
+
+- 08:25 READ: JOURNAL, git log; rivet (it11) / world (it24) / perf (it9) journals: no REQUEST to handheld; perf 08:22
+  FINDING the merged (BC7) pck is 411.7 MB vs 217.8 (download est. 155 MB LZMA): a Deck install-size line for the
+  LEDGER. Assets: latest it137 (rivet reload claw), nothing for handheld. Registry rules applied: perf-regression-gating
+  (interleaved rounds, medians with the spread, CONTENDED labels, the bench lock), on-device-verification-harness
+  ("on the simulator"), motion-quality-gating (the 40 Hz read on static ground).
+- 08:28 E20b setup: scratch worktree `gtai-n9/tmp/handheld/mergewt2` = b89d9e22 + `merge --no-commit n9-world`
+  (code head e3c54005, hooks off): again only JOURNAL, REPORT and the debt baseline conflict (ours taken), the code
+  merges cleanly; world's DLLs + `.godot` copied, `--import` 20 s, 0 errors. Running deck / deck30 x (this branch,
+  + world), city_combo, 3 rounds, bench lock (2 other Godots up at the start: CONTENDED rounds labelled).
+- 08:34 MILESTONE E20b (bench lock 08:29-08:34, all 12 runs CONTENDED by 2-7 other Godots): with world's head the Deck
+  row keeps E20's shape: `deck` render GPU 8.89 -> 8.02 ms, GPU shared 1118 -> 601 MB, RAM 1493 -> 992 MB; `deck30`
+  7.94 ms / 632 MB / 1040 MB; caps held. LEDGER E20b; evidence `evidence/n9h/it10/e20b/`.
+- 08:30 FINDING while re-laying out LEDGER section 7 (the port readiness table: one 1,500-word cell per device, now a
+  summary table + per-device lists): nothing picks the Deck row without `--device=`, and a real Deck launches with no
+  flags. RESEARCH: Steam sets `SteamDeck=1` on SteamOS (both modes), overridable; SteamOS desktops report it too;
+  `IsSteamRunningOnSteamDeck()` is authoritative (Steam backend, owed).
+- 08:38 MILESTONE d6df5bc7 `DeviceProfile.auto_pick` (env 1 AND a 1280x800 panel -> deck); tests 2; unit --changed
+  1847/0; lint 15/15; live: SteamDeck=1 on this 1920x1080 screen -> "the desktop row", no variable -> no line, 0 SCRIPT
+  ERROR. DECISION handheld/deck-auto-pick. FRICTION: my edits landed in the project while the A/B's branch arm was
+  still running (same code path with `--device=`; noted in E20b). Next time: edit only after an A/B ends.

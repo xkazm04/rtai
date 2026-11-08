@@ -1,0 +1,64 @@
+round 1/3 variant 0: v0-r0: CONTENDED (2 other Godot runs) {"frames":1185,"low1_fps":44.9507225106655,"over33_settled":0,"over50_settled":0,"p50_ms":16.6609992980957,"p99_ms":20.086
+round 1/3 variant 1: v1-r0: CONTENDED (6 other Godot runs) {"frames":1184,"low1_fps":47.8564303438529,"over33_settled":0,"over50_settled":0,"p50_ms":16.673999786377,"p99_ms":19.7080
+round 1/3 variant 2: v2-r0: CONTENDED (6 other Godot runs) {"frames":599,"low1_fps":26.8530867953321,"over33_settled":354,"over50_settled":0,"p50_ms":33.375,"p99_ms":36.633998870849
+round 1/3 variant 3: v3-r0: CONTENDED (7 other Godot runs) {"frames":599,"low1_fps":25.255819982787,"over33_settled":327,"over50_settled":0,"p50_ms":33.2879981994629,"p99_ms":37.423
+round 2/3 variant 0: v0-r1: CONTENDED (2 other Godot runs) {"frames":1148,"low1_fps":9.64996359354562,"over33_settled":8,"over50_settled":5,"p50_ms":16.5860004425049,"p99_ms":26.479
+round 2/3 variant 1: v1-r1: CONTENDED (2 other Godot runs) {"frames":1181,"low1_fps":41.0437417922136,"over33_settled":0,"over50_settled":0,"p50_ms":16.6700000762939,"p99_ms":21.475
+round 2/3 variant 2: v2-r1: CONTENDED (3 other Godot runs) {"frames":599,"low1_fps":26.111364988943,"over33_settled":331,"over50_settled":0,"p50_ms":33.2610015869141,"p99_ms":37.451
+round 2/3 variant 3: v3-r1: CONTENDED (2 other Godot runs) {"frames":599,"low1_fps":26.1978992531554,"over33_settled":345,"over50_settled":0,"p50_ms":33.2779998779297,"p99_ms":37.24
+round 3/3 variant 0: v0-r2: CONTENDED (2 other Godot runs) {"frames":1180,"low1_fps":44.5454139688825,"over33_settled":1,"over50_settled":0,"p50_ms":16.6599998474121,"p99_ms":19.805
+round 3/3 variant 1: v1-r2: CONTENDED (2 other Godot runs) {"frames":1181,"low1_fps":46.107738374882,"over33_settled":0,"over50_settled":0,"p50_ms":16.6499996185303,"p99_ms":19.7560
+round 3/3 variant 2: v2-r2: CONTENDED (2 other Godot runs) {"frames":599,"low1_fps":26.0968277019429,"over33_settled":337,"over50_settled":0,"p50_ms":33.2700004577637,"p99_ms":38.04
+round 3/3 variant 3: v3-r2: CONTENDED (2 other Godot runs) {"frames":599,"low1_fps":26.3826722009875,"over33_settled":355,"over50_settled":0,"p50_ms":33.3219985961914,"p99_ms":37.09
+
+--device=deck --scene=city_combo --ticks=1200  (3 runs, 3 contended)
+  p50_ms                    16.66  +-0.07
+  p99_ms                    20.09  +-6.67
+  low1_fps                  44.55  +-35.3
+  over33_settled                1  +-8
+  render_gpu_ms_p50          8.89  +-0.93
+  render_cpu_ms_p50          0.54  +-0.37
+  process_ms_p50                5  +-4.75
+  cpu_pinned_pct_p50         6.36  +-2.42
+  private_mb_max           1493.4  +-65.9
+  gpu_shared_mb_max        1118.1  +-65
+  gpu_dedicated_mb_max       66.6  +-0.2
+
+--device=deck --scene=city_combo --ticks=1200 --project=C:/Users/kazda/kiro/gtai-n9/tmp/handheld/mergewt2/project  (3 runs, 3 contended)
+  p50_ms                    16.67  +-0.02
+  p99_ms                    19.76  +-1.77
+  low1_fps                  46.11  +-6.81
+  over33_settled                0  +-0
+  render_gpu_ms_p50          8.02  +-0.1
+  render_cpu_ms_p50          0.52  +-0.05
+  process_ms_p50             5.07  +-0.48
+  cpu_pinned_pct_p50         6.23  +-0.5
+  private_mb_max            991.7  +-64.5
+  gpu_shared_mb_max         601.1  +-65
+  gpu_dedicated_mb_max       81.2  +-0.2
+
+--device=deck30 --scene=city_combo --ticks=1200  (3 runs, 3 contended)
+  p50_ms                    33.27  +-0.11
+  p99_ms                    37.45  +-1.41
+  low1_fps                  26.11  +-0.76
+  over33_settled              337  +-23
+  render_gpu_ms_p50          8.82  +-0.5
+  render_cpu_ms_p50          0.62  +-0.08
+  process_ms_p50             7.37  +-0.91
+  cpu_pinned_pct_p50         4.21  +-0.24
+  private_mb_max           1492.1  +-67.8
+  gpu_shared_mb_max        1119.1  +-64
+  gpu_dedicated_mb_max       66.6  +-0.8
+
+--device=deck30 --scene=city_combo --ticks=1200 --project=C:/Users/kazda/kiro/gtai-n9/tmp/handheld/mergewt2/project  (3 runs, 3 contended)
+  p50_ms                    33.29  +-0.04
+  p99_ms                    37.24  +-0.33
+  low1_fps                   26.2  +-1.13
+  over33_settled              345  +-28
+  render_gpu_ms_p50          7.94  +-0.63
+  render_cpu_ms_p50           0.6  +-0.18
+  process_ms_p50             7.26  +-1.78
+  cpu_pinned_pct_p50         4.06  +-0.77
+  private_mb_max           1039.5  +-66.7
+  gpu_shared_mb_max         632.1  +-65
+  gpu_dedicated_mb_max       81.5  +-0.5

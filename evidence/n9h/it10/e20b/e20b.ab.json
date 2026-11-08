@@ -1,0 +1,204 @@
+{
+  "schema": "gtai.handheld-ab/1",
+  "name": "e20b",
+  "rounds": 3,
+  "at": "2026-11-08T07:34:48.016Z",
+  "table": [
+    {
+      "variant": "--device=deck --scene=city_combo --ticks=1200",
+      "runs": 3,
+      "contended": 3,
+      "p50_ms": {
+        "median": 16.66,
+        "spread": 0.07
+      },
+      "p99_ms": {
+        "median": 20.09,
+        "spread": 6.67
+      },
+      "low1_fps": {
+        "median": 44.55,
+        "spread": 35.3
+      },
+      "over33_settled": {
+        "median": 1,
+        "spread": 8
+      },
+      "render_gpu_ms_p50": {
+        "median": 8.89,
+        "spread": 0.93
+      },
+      "render_cpu_ms_p50": {
+        "median": 0.54,
+        "spread": 0.37
+      },
+      "process_ms_p50": {
+        "median": 5,
+        "spread": 4.75
+      },
+      "cpu_pinned_pct_p50": {
+        "median": 6.36,
+        "spread": 2.42
+      },
+      "private_mb_max": {
+        "median": 1493.4,
+        "spread": 65.9
+      },
+      "gpu_shared_mb_max": {
+        "median": 1118.1,
+        "spread": 65
+      },
+      "gpu_dedicated_mb_max": {
+        "median": 66.6,
+        "spread": 0.2
+      }
+    },
+    {
+      "variant": "--device=deck --scene=city_combo --ticks=1200 --project=C:/Users/kazda/kiro/gtai-n9/tmp/handheld/mergewt2/project",
+      "runs": 3,
+      "contended": 3,
+      "p50_ms": {
+        "median": 16.67,
+        "spread": 0.02
+      },
+      "p99_ms": {
+        "median": 19.76,
+        "spread": 1.77
+      },
+      "low1_fps": {
+        "median": 46.11,
+        "spread": 6.81
+      },
+      "over33_settled": {
+        "median": 0,
+        "spread": 0
+      },
+      "render_gpu_ms_p50": {
+        "median": 8.02,
+        "spread": 0.1
+      },
+      "render_cpu_ms_p50": {
+        "median": 0.52,
+        "spread": 0.05
+      },
+      "process_ms_p50": {
+        "median": 5.07,
+        "spread": 0.48
+      },
+      "cpu_pinned_pct_p50": {
+        "median": 6.23,
+        "spread": 0.5
+      },
+      "private_mb_max": {
+        "median": 991.7,
+        "spread": 64.5
+      },
+      "gpu_shared_mb_max": {
+        "median": 601.1,
+        "spread": 65
+      },
+      "gpu_dedicated_mb_max": {
+        "median": 81.2,
+        "spread": 0.2
+      }
+    },
+    {
+      "variant": "--device=deck30 --scene=city_combo --ticks=1200",
+      "runs": 3,
+      "contended": 3,
+      "p50_ms": {
+        "median": 33.27,
+        "spread": 0.11
+      },
+      "p99_ms": {
+        "median": 37.45,
+        "spread": 1.41
+      },
+      "low1_fps": {
+        "median": 26.11,
+        "spread": 0.76
+      },
+      "over33_settled": {
+        "median": 337,
+        "spread": 23
+      },
+      "render_gpu_ms_p50": {
+        "median": 8.82,
+        "spread": 0.5
+      },
+      "render_cpu_ms_p50": {
+        "median": 0.62,
+        "spread": 0.08
+      },
+      "process_ms_p50": {
+        "median": 7.37,
+        "spread": 0.91
+      },
+      "cpu_pinned_pct_p50": {
+        "median": 4.21,
+        "spread": 0.24
+      },
+      "private_mb_max": {
+        "median": 1492.1,
+        "spread": 67.8
+      },
+      "gpu_shared_mb_max": {
+        "median": 1119.1,
+        "spread": 64
+      },
+      "gpu_dedicated_mb_max": {
+        "median": 66.6,
+        "spread": 0.8
+      }
+    },
+    {
+      "variant": "--device=deck30 --scene=city_combo --ticks=1200 --project=C:/Users/kazda/kiro/gtai-n9/tmp/handheld/mergewt2/project",
+      "runs": 3,
+      "contended": 3,
+      "p50_ms": {
+        "median": 33.29,
+        "spread": 0.04
+      },
+      "p99_ms": {
+        "median": 37.24,
+        "spread": 0.33
+      },
+      "low1_fps": {
+        "median": 26.2,
+        "spread": 1.13
+      },
+      "over33_settled": {
+        "median": 345,
+        "spread": 28
+      },
+      "render_gpu_ms_p50": {
+        "median": 7.94,
+        "spread": 0.63
+      },
+      "render_cpu_ms_p50": {
+        "median": 0.6,
+        "spread": 0.18
+      },
+      "process_ms_p50": {
+        "median": 7.26,
+        "spread": 1.78
+      },
+      "cpu_pinned_pct_p50": {
+        "median": 4.06,
+        "spread": 0.77
+      },
+      "private_mb_max": {
+        "median": 1039.5,
+        "spread": 66.7
+      },
+      "gpu_shared_mb_max": {
+        "median": 632.1,
+        "spread": 65
+      },
+      "gpu_dedicated_mb_max": {
+        "median": 81.5,
+        "spread": 0.5
+      }
+    }
+  ]
+}
