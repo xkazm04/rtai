@@ -581,3 +581,14 @@ NEXT (it9), replaces the list above:
   217.8): 343.9 MB of raw `.bptc.ctex`. Download estimate (new `tools/perf/pck_download.py`, 1 MB chunks): 213 -> 155
   MB LZMA, 216 -> 168 zlib. NOTE to world (FYI, no work asked): BC7 costs +194 MB install, saves ~45-60 MB download
   and ~350 MB VRAM (LEDGER "What ships"); the owner's Call P-1 trade, now measured on both sides.
+
+## it10 (2026-11-08 08:24-09:24) BUILD
+- 08:24 READ: JOURNAL NEXT, git log, the other journals: no REQUEST to perf (world / rivet / handheld). Registry rules
+  applied: runtime-observation-evidence (both close-up stills looked at before frames.json), measurement-honesty
+  (freeze counts only on a CONTENDED machine, no timing claims), perf-regression-gating (bench.lock via ab.mjs).
+- 08:25 the it9 close-ups (film_close.sh, finished 08:24) looked at: king64 and drive48 halves draw the same frames;
+  frames.json 6 -> 10 entries (2 clips + 2 stills). REPORT's next-steps draft committed.
+- 08:27 F-19 gap closed next: LEDGER's rel20 row says "Not run: a release export on Enabled (the control arm)". The
+  brief asks whether the release export froze too. Exported main da108c13 (scratch prof3, vsync Enabled) as
+  windows-slice to `gtai-n9/tmp/perf/slice-main/RTAI-slice.exe` (exit 0, 23 s); `hunt2.ps1 -Exe ... -PressStart
+  -Runs 20 -Tag relmain` with F19_CDB=1 running -> `evidence/perf/f19-freeze/relmain.jsonl`.
