@@ -254,3 +254,50 @@ NEXT (it5):
   combo rig cost is StreetView.step ~0.23-0.35 ms/tick; no REQUEST), handheld (none). Assets: no new delivery
   since dead_plan_v1_it121 (the 5 walker sheets not served yet).
 - Plan: item 3 (cars knock Rivet down), the sim half in both twins first.
+Registry rules applied: `engine-integration-safety` (one op order in both twins, the spec length and result
+layout generated from one source, tools/gen_constants), `realtime-combat-semantics` (one hit per knock: a second
+hit while he lies is ignored; the damage rides the Event, never a second hp owner), `rigid-body-simulation-stability`
+(push-out along the hull's shallower axis, no tunnelling: the hull test runs on the post-move car).
+- FRICTION (02:38-02:44): `native/godot-cpp` is an uninitialised submodule in this worktree (`scons` "missing
+  SConscript"). Copied the built tree from `gtai-wt/int-day/native/godot-cpp` (same pin e103d348), but scons
+  rebuilt godot-cpp anyway (~5 min, signature db). Incremental builds now take seconds.
+- FRICTION: my Python edits on Windows wrote CRLF (text mode) to 11 files; caught by git's warnings, converted
+  back with sed. Use `open(p, 'w', newline='')` / `newline='\n'` from now on.
+- MILESTONE (03:09) item 3, the sim half, at 703c287b (DECISION world/car-hits-rivet-sim):
+  - `BD_CAR_HIT` (spec 13, BD_LEN 14) and `BR_HIT/BR_HHX/BR_HHY` (body_result 3-5, BR_HEAD 6), from
+    tools/gen_constants/sim_constants.json.
+  - `body.cpp body_cars()` = `CitySimBodyCars.resolve()`: tier-A car hulls grown by the body radius; at or above
+    the threshold the first car reports (speed, heading) and keeps 0.4 of its speed; slower it brakes to half per
+    contact tick (stop-dead rejected: it parked a lane for good); the body is pushed out along the shallower axis.
+  - `RivetBody`: the hit starts the knock (input ignored, slide along the heading at slide_k x speed with the 8
+    m/s^2 decel, down_s lying, a second hit ignored), `Events.rivet_knocked(heading, speed_mps, damage)`
+    (events.json registered; damage = damage_per_mps x (speed - speed_mps/2)). bodies.json `car_hit`
+    {speed_mps, slide_k 0.8, down_s 1.2, damage_per_mps 2.5} + schema.
+  - Evidence: parity bit-exact over 1200 steps with the hit ON in the parity body (BD_CAR_HIT 5, a body 2.5 m
+    ahead of a tier-A car every third leg): body_car_hits 2, knockdowns 5, planted fault caught at 629
+    (`build/test-results/parity-result.json`). Unit 1824/0 (new test_rivet_car_knock 4/4), lint 15/15, native
+    debug + release rebuilt. Scenarios with it OFF: the 3 touched (traffic_yields_rivet, vehicle_yield,
+    bodies_tackle) pass; the full 54 ran at 02:57 with it ON: 52/54 (the two below).
+  - **Shipped OFF** (`car_hit.speed_mps` 0) because with 5 the World scenarios disagree:
+    (a) scenario_traffic_yields_rivet's n8 arm (car at 12 m/s from 24 m behind): the car now stops 2.33 m from
+    him (contact happens: d9 drove through at 0.10 m) but **no `rivet_knocked` arrives** (counter tried as a
+    PackedInt32Array: copied into the lambda, so wrong; then as Array[int]: still 0). Unsolved: either the car is
+    under 5 m/s at first contact (spawn spec index 7 = 12 may be vmax with v starting 0? measure s.v[slot] at
+    contact), or BR_HIT is lost between sim and RivetBody (CitySystem.step -> body.take; check `result.size()`
+    and BR_HIT that tick). The rewritten scenario (n8 expects >= 1 knock, yield expects 0) is in
+    `C:/Users/kazda/kiro/gtai-n9/tmp/world/yields_n9_knock.gd.txt`.
+    (b) scenario_vehicle_yield: Rivet stands at lane + (0, -6) and the passing cars brush him, so 1 of 3 cars
+    passes (needs 2). Fix: stand him off the carriageway in that scene (it is about parked cars, not him) or
+    turn `yield_to_rivet` on by default (the owner's "the car stops" low-speed rule = the traffic AI's yield).
+
+NEXT (it8):
+1. Item 3 to ON: debug (a) above with a one-off print of v_[slot] and body_result at contact in the n8 arm;
+   land the rewritten scenario; fix (b); set car_hit.speed_mps 5; full scenarios 54/54; parity again.
+2. Item 3 view: `rivet_knock` rig meta = Vector3(hx, hy, start tick) on Rivet's rig while `body.knocked()` (set in
+   boot/city_characters.gd from `_city.body`), removed when up (the ANSWER to rivet); the hit frame + slide until
+   rivet wires `rivet_knock.png`. Film at 64 px/m (a car at speed into him, a car creeping).
+3. Damage: the city has no Rivet hp outside the combat pits (EnemyPit.rivet_hp, BossHook); connect
+   `rivet_knocked` to the active pit's `_hurt_rivet` where one runs (quest 1), else Event only (DECISION).
+4. Item 4 sim half (props in the thrown slide, both twins) + the kerb barrier before/after (seed 5, tick 900).
+5. Item 2 follow-ups (the 5 walker sheets when served; kill_marks follow the plan pose; Dock 9 + city block film).
+6. Remove the scratch "before" worktree once the last before/after is filmed.
