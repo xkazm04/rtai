@@ -1,0 +1,49 @@
+extends SceneTree
+## CityFxFeed.observe, native scan vs the script loop, one process, interleaved blocks.
+## Synthetic riot snapshot: 400 person records, 30 projectiles, one death flip every 8th call.
+const PEOPLE: int = 400
+const PROJ: int = 30
+const BLOCKS: int = 8
+const CALLS: int = 400
+
+
+func _snap(flip: int) -> PackedFloat64Array:
+	var s: PackedFloat64Array = PackedFloat64Array()
+	@warning_ignore("return_value_discarded")
+	s.resize(PEOPLE * SimConst.SNAP_STRIDE + PROJ * SimConst.SNAP_PROJ_STRIDE)
+	for p: int in PEOPLE:
+		var r: int = p * SimConst.SNAP_STRIDE
+		s[r] = p
+		s[r + 1] = SimConst.K_COP if p % 5 == 0 else SimConst.K_PED
+		s[r + 2] = SimConst.M_DEAD if p < flip else 0
+		s[r + 4] = float(p)
+		s[r + 6] = 1.0
+	for k: int in PROJ:
+		var r: int = PEOPLE * SimConst.SNAP_STRIDE + k * SimConst.SNAP_PROJ_STRIDE
+		s[r] = SimConst.SNAP_PROJ_BASE + k
+		s[r + 1] = float(k)
+	return s
+
+
+func _block(native: bool, snaps: Array[PackedFloat64Array]) -> float:
+	var f: CityFxFeed = CityFxFeed.new(FxTriggers.new())
+	f.native_scan = native
+	f.observe(snaps[0], 0)
+	var t0: int = Time.get_ticks_usec()
+	for c: int in CALLS:
+		f.observe(snaps[(c / 8) % snaps.size()], c + 1)
+	return float(Time.get_ticks_usec() - t0) / CALLS
+
+
+func _init() -> void:
+	var snaps: Array[PackedFloat64Array] = []
+	for flip: int in 50:
+		snaps.append(_snap(flip))
+	var probe: CityFxFeed = CityFxFeed.new(FxTriggers.new())
+	print("native available: ", probe.native_scan)
+	for b: int in BLOCKS:
+		var first: bool = b % 2 == 0
+		var a: float = _block(first, snaps)
+		var c: float = _block(not first, snaps)
+		print("block %d native %.1f us, script %.1f us" % [b, a if first else c, c if first else a])
+	quit(0)

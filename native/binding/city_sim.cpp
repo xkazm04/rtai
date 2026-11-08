@@ -5,6 +5,7 @@
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
 
+#include <cstring>
 #include <vector>
 
 using namespace godot;
@@ -105,6 +106,15 @@ PackedFloat64Array CitySim::snapshot() const {
 	return out;
 }
 
+PackedInt32Array CitySim::scan_dead_flips(const PackedFloat64Array &snap, const PackedByteArray &dead) {
+	thread_local std::vector<int32_t> hits;
+	sim::scan_dead_flips(snap.ptr(), snap.size(), dead.ptr(), dead.size(), hits);
+	PackedInt32Array out;
+	out.resize((int64_t)hits.size());
+	memcpy(out.ptrw(), hits.data(), hits.size() * sizeof(int32_t));
+	return out;
+}
+
 void CitySim::set_render(const Array &mms, const PackedInt32Array &clips) {
 	if (mms.size() != sim::RL_COUNT || clips.size() < sim::CLIP_VARIANTS * sim::CLIPS * 3) {
 		UtilityFunctions::push_error("CitySim.set_render: needs 5 MultiMesh RIDs and the clip table");
@@ -177,6 +187,7 @@ void CitySim::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("step", "dt", "camx", "camy", "tgx", "tgy"), &CitySim::step);
 	ClassDB::bind_method(D_METHOD("get_counters"), &CitySim::get_counters);
 	ClassDB::bind_method(D_METHOD("snapshot"), &CitySim::snapshot);
+	ClassDB::bind_static_method("CitySim", D_METHOD("scan_dead_flips", "snap", "dead"), &CitySim::scan_dead_flips);
 	ClassDB::bind_method(D_METHOD("set_body", "spec"), &CitySim::set_body);
 	ClassDB::bind_method(D_METHOD("body_result"), &CitySim::body_result);
 	ClassDB::bind_method(D_METHOD("set_render", "mms", "clips"), &CitySim::set_render);

@@ -12,6 +12,12 @@
 
 namespace gtai::sim {
 
+// The view feed's scan (CityFxFeed.observe), no sim state: walks the actor records of a snapshot()
+// and writes out[0] = the offset the projectile records start at, out[1..] = the offset of every
+// person record (ped or cop) whose dead flag differs from dead[slot]. dead_n = dead's length.
+void scan_dead_flips(const double *snap, int64_t n, const uint8_t *dead, int64_t dead_n,
+		std::vector<int32_t> &out);
+
 class CityCore {
 public:
 	CityCore();

@@ -21,4 +21,21 @@ std::vector<double> CityCore::snapshot() const {
 	return out;
 }
 
+void scan_dead_flips(const double *snap, int64_t n, const uint8_t *dead, int64_t dead_n,
+		std::vector<int32_t> &out) {
+	out.clear();
+	out.push_back(0);
+	int64_t r = 0;
+	while (r + SNAP_STRIDE <= n && snap[r] < SNAP_PROJ_BASE) {
+		const int64_t i = (int64_t)snap[r];
+		const int kind = (int)snap[r + 1];
+		if (i >= 0 && i < dead_n && (kind == K_PED || kind == K_COP) &&
+				(((int)snap[r + 2] == M_DEAD) != (dead[i] != 0))) {
+			out.push_back((int32_t)r);
+		}
+		r += SNAP_STRIDE;
+	}
+	out[0] = (int32_t)r;
+}
+
 }  // namespace gtai::sim

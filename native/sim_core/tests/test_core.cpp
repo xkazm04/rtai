@@ -101,7 +101,34 @@ Chase chase() {
 
 }  // namespace
 
+// The feed scan: finds exactly the person records whose dead flag flipped, ignores cars, stops at
+// the projectile records.
+void scan_test() {
+	std::vector<double> snap(3 * SNAP_STRIDE + SNAP_PROJ_STRIDE, 0.0);
+	snap[0] = 1.0, snap[1] = K_PED, snap[2] = M_DEAD;  // flipped: was alive
+	const int car = SNAP_STRIDE;
+	snap[car] = 2.0, snap[car + 1] = K_CAR, snap[car + 2] = M_DEAD;  // a car: not a person
+	const int cop = 2 * SNAP_STRIDE;
+	snap[cop] = 3.0, snap[cop + 1] = K_COP, snap[cop + 2] = 0.0;  // was dead: back up
+	const int proj = 3 * SNAP_STRIDE;
+	snap[proj] = (double)SNAP_PROJ_BASE;
+	std::vector<uint8_t> dead(CAP, 0);
+	dead[3] = 1;
+	std::vector<int32_t> out;
+	scan_dead_flips(snap.data(), (int64_t)snap.size(), dead.data(), (int64_t)dead.size(), out);
+	check(out.size() == 3, "scan: two person flips");
+	check(out[0] == proj, "scan: stops at the first projectile record");
+	check(out[1] == 0 && out[2] == cop, "scan: flips in record order, the car skipped");
+	dead[1] = 1;
+	dead[3] = 0;
+	scan_dead_flips(snap.data(), (int64_t)snap.size(), dead.data(), (int64_t)dead.size(), out);
+	check(out.size() == 1, "scan: nothing changed, only the offset");
+	scan_dead_flips(snap.data(), 0, dead.data(), (int64_t)dead.size(), out);
+	check(out.size() == 1 && out[0] == 0, "scan: an empty snapshot");
+}
+
 int main() {
+	scan_test();
 	Run a = run(4242, 600);
 	Run b = run(4242, 600);
 	Run c = run(4243, 600);
