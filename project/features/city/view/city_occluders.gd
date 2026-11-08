@@ -47,14 +47,14 @@ func _init(lift: ChunkLift, res: CityResidency = null) -> void:
 ## ground line is not above the box's top (any other building's area misses the box at every lift).
 func near(at_m: Vector2, body: Rect2 = Rect2()) -> Array[Bld]:
 	var out: Array[Bld] = []
-	var keys: Dictionary[Vector2i, bool] = {}
-	for d: Vector2 in [Vector2(-16, -4), Vector2(16, -4), Vector2(-16, 28), Vector2(16, 28)]:
-		var p: Vector2 = (at_m + d) / SimConst.CHUNK_M
-		keys[Vector2i(floori(p.x), floori(p.y))] = true
-	for key: Vector2i in keys:
-		var chunk: CityChunk = _res.chunk_at(key) if _res.is_resident(key) else null
-		if chunk != null:
-			collect(chunk, at_m * SimConst.PX_PER_M, out, body)
+	# the chunks under the box's 4 corners (32 x 32 m < a chunk: 1-2 a side), in the corners' order
+	var lo: Vector2 = (at_m + Vector2(-16, -4)) / SimConst.CHUNK_M
+	var hi: Vector2 = (at_m + Vector2(16, 28)) / SimConst.CHUNK_M
+	for cy: int in range(floori(lo.y), floori(hi.y) + 1):
+		for cx: int in range(floori(lo.x), floori(hi.x) + 1):
+			var chunk: CityChunk = _res.chunk_at(Vector2i(cx, cy))
+			if chunk != null:
+				collect(chunk, at_m * SimConst.PX_PER_M, out, body)
 	return out
 
 

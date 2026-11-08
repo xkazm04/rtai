@@ -134,3 +134,40 @@ func test_a_wide_box_reads_each_building_once_over_its_columns() -> void:
 		)
 		assert_eq(got, want, "box %d: every building the rule keeps, once, in list order" % q)
 		assert_gt(want.size(), 0, "box %d is not empty" % q)
+
+
+## The pre-L24 near(): the 4 corners' chunk keys through a Dictionary (insertion order).
+func _old_near(o: CityOccluders, at_m: Vector2, body: Rect2) -> Array[CityOccluders.Bld]:
+	var out: Array[CityOccluders.Bld] = []
+	var keys: Dictionary[Vector2i, bool] = {}
+	for d: Vector2 in [Vector2(-16, -4), Vector2(16, -4), Vector2(-16, 28), Vector2(16, 28)]:
+		var p: Vector2 = (at_m + d) / SimConst.CHUNK_M
+		keys[Vector2i(floori(p.x), floori(p.y))] = true
+	for key: Vector2i in keys:
+		if o._res.is_resident(key):
+			o.collect(o._res.chunk_at(key), at_m * SimConst.PX_PER_M, out, body)
+	return out
+
+
+func test_near_reads_the_corner_chunks_in_the_old_order() -> void:
+	var res: CityResidency = CityResidency.new(null, null, SimConst.CITY_CHUNKS)
+	var o: CityOccluders = CityOccluders.new(_occ()._lift, res)
+	for key: Vector2i in [
+		Vector2i(0, 0), Vector2i(1, 0), Vector2i(0, 1), Vector2i(1, 1), Vector2i(2, 1)
+	]:
+		var rows: Array[Vector3] = []
+		for i: int in 60:
+			var m: Vector2 = Vector2(key) * SimConst.CHUNK_M
+			rows.append(
+				Vector3(1 + i % 2, m.x + fmod(i * 7.31, 128.0), m.y + fmod(i * 3.77, 128.0))
+			)
+		res._resident[key] = _chunk(rows)
+	var hits: int = 0
+	for q: int in 400:  # around the chunk seams (x 128 / 256, y 128), off the map's corner too
+		var at: Vector2 = Vector2(fmod(q * 37.7, 300.0) - 20.0, fmod(q * 23.3, 280.0) - 20.0)
+		var box: Rect2 = Rect2(at * SimConst.PX_PER_M - Vector2(16, 58), Vector2(32, 58))
+		for body: Rect2 in [Rect2(), box]:
+			var want: Array[CityOccluders.Bld] = _old_near(o, at, body)
+			assert_eq(o.near(at, body), want, "query %d at %s" % [q, at])
+			hits += want.size()
+	assert_gt(hits, 400, "the queries find buildings (the compare is not all empty)")
