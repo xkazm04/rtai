@@ -522,3 +522,8 @@ NEXT (it17):
   blood and no limbs (debris), not a body.
 NEXT (it17) amended: item 2 above is done at 32; the block at 64 px/m (`--ppm=64` does not zoom the arena, it4
 NOTE: use the arena's Z zoom key or a camera flag) is still owed, after NEXT 1 (the contractor sheet).
+- (05:53-05:58) TRIED the city block at 64 px/m (`--ppm=64` does zoom the arena city: HUD "64 px/m"): every kill of
+  the pit bot lands off-frame (it shoots from range; the window stays 1280x800 under the local override.cfg even
+  with `--resolution 1920x1080`), so no usable frame. Raw .avi deleted. For it17: the arena's `--cam=fight`-style
+  lead does not exist here; use a melee loadout (the bot closes in) or a scratch camera offset toward the
+  nearest dead.
