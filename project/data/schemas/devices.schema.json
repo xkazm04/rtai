@@ -52,6 +52,15 @@
             "type": "array",
             "uniqueItems": true
           },
+          "models_exact": {
+            "items": {
+              "minLength": 4,
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array",
+            "uniqueItems": true
+          },
           "note": {
             "minLength": 1,
             "type": "string"

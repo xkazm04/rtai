@@ -95,8 +95,9 @@ static func _set_or_pad() -> StringName:
 	return gs if gs != &"" else GlyphCells.PAD
 
 
-## `text` as runs: a String is words, a Rect2 is a glyph's atlas region ("[A]" -> the A cell).
-static func runs(text: String) -> Array:
+## `text` as runs: a String is words, a Rect2 is a glyph's atlas region ("[A]" -> the A cell), a
+## Texture2D is Steam's own glyph (SteamGlyphs, when the backend has one and `steam` is true).
+static func runs(text: String, steam: bool = true) -> Array:
 	var out: Array = []
 	var rest: String = text
 	while true:
@@ -104,11 +105,16 @@ static func runs(text: String) -> Array:
 		var close: int = rest.find("]", open + 1) if open >= 0 else -1
 		if open < 0 or close < 0:
 			break
-		var cell: Rect2 = region(rest.substr(open + 1, close - open - 1))
-		if cell.has_area():
+		var label: String = rest.substr(open + 1, close - open - 1)
+		var from_steam: Texture2D = SteamGlyphs.texture(label) if steam else null
+		var cell: Rect2 = region(label)
+		if from_steam != null or cell.has_area():
 			if open > 0:
 				out.append(rest.substr(0, open))
-			out.append(cell)
+			if from_steam != null:
+				out.append(from_steam)
+			else:
+				out.append(cell)
 		else:
 			out.append(rest.substr(0, close + 1))
 		rest = rest.substr(close + 1)
@@ -131,12 +137,19 @@ static func line_size(text: String, font_size: int) -> Vector2:
 	var w: float = 0.0
 	var g: float = float(font_size) * GLYPH_K
 	for run: Variant in runs(text):
-		if run is Rect2:
-			var cell: Rect2 = run
-			w += fit(cell, g).x + 2.0 * SIDE_K * g
+		if run is Rect2 or run is Texture2D:
+			w += fit(_cell_of(run), g).x + 2.0 * SIDE_K * g
 		else:
 			w += font.get_string_size(str(run), HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x
 	return Vector2(w, maxf(g, font.get_height(font_size)))
+
+
+## A glyph run's source rect: Steam's glyph is its whole image, a Rect2 is its atlas cell.
+static func _cell_of(run: Variant) -> Rect2:
+	if run is Texture2D:
+		var whole: Texture2D = run
+		return Rect2(Vector2.ZERO, whole.get_size())
+	return run
 
 
 ## Draws `text` on `ci` from baseline `at` (the theme's fallback font), each glyph centred on the
@@ -146,11 +159,14 @@ static func draw_line(ci: CanvasItem, at: Vector2, text: String, size: int, ink:
 	var g: float = float(size) * GLYPH_K
 	var x: float = at.x
 	for run: Variant in runs(text):
-		if run is Rect2:
-			var cell: Rect2 = run
+		if run is Rect2 or run is Texture2D:
+			var cell: Rect2 = _cell_of(run)
 			var sz: Vector2 = fit(cell, g)
 			var top: float = at.y - float(size) * 0.36 - sz.y * 0.5
-			ci.draw_texture_rect_region(texture(), Rect2(Vector2(x + SIDE_K * g, top), sz), cell)
+			var tex: Texture2D = texture()
+			if run is Texture2D:
+				tex = run
+			ci.draw_texture_rect_region(tex, Rect2(Vector2(x + SIDE_K * g, top), sz), cell)
 			x += sz.x + 2.0 * SIDE_K * g
 		else:
 			ci.draw_string(
@@ -160,10 +176,11 @@ static func draw_line(ci: CanvasItem, at: Vector2, text: String, size: int, ink:
 
 
 ## `text` as BBCode for a RichTextLabel: glyphs as atlas-region images `px` tall, words escaped.
+## Always the drawn set: an [img] tag names a res:// file, and Steam's glyph is a runtime image.
 static func bbcode(text: String, px: int) -> String:
 	var out: String = ""
 	var png: String = GlyphCells.ATLAS_PNG[_set_or_pad()]
-	for run: Variant in runs(text):
+	for run: Variant in runs(text, false):
 		if run is Rect2:
 			var r: Rect2 = run
 			var sz: Vector2 = fit(r, float(px))

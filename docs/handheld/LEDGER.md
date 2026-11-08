@@ -399,7 +399,7 @@ budget, the one site to lift on a 720p row is that count (16 -> 18 px authored, 
 | device | state on the simulator | the next step a port needs | only real hardware can prove | effort |
 |---|---|---|---|---|
 | Steam Deck | **plays end to end on the pad at 1280x800**, 40 px/m, vsync-locked 60 on the 2-CU iGPU with ~7 ms spare (render GPU 7.7 ms, 0.6 GB GPU memory, ~1 GB RAM with world's BC7, E20/E20b); text above Valve's 9 px; native Linux build runs in WSLg | a real Vulkan run of the Linux build (or the Windows build under Proton); vendoring GodotSteam (the Deck check and the glyph call are stubbed behind the interface, one call each, n10) | Zen 2 frame times at 4-15 W, battery hours, the first-run shader cache, suspend on SteamOS, the 90 Hz OLED | Linux + Proton check 2-3 days; Verified polish 3-5 days |
-| Windows handhelds | the Deck work applies (`handheld_1080` is a handheld row); 1080p drawn at 1280x800 and scaled holds 60 at 9.9 ms GPU (E9); text x >= 12 px; 11 confirmed firmware strings pick the row by themselves (ROG Ally X, AYANEO, AYN, GPD, OneXPlayer, section 9) | the firmware strings of the ROG Ally, Legion Go and MSI Claw (one device each, or a DMI dump); a controller-first shell (launch and play with no mouse); Windows display scaling 125-200 % | the Z1 / Z2 / Lunar Lake drivers, VRR, TDP presets, the 1.35x scale-up on a 7-8" panel | 1-2 days on top of the Deck |
+| Windows handhelds | the Deck work applies (`handheld_1080` is a handheld row); 1080p drawn at 1280x800 and scaled holds 60 at 9.9 ms GPU (E9); text x >= 12 px; 19 firmware strings from public tables pick the row by themselves (ROG Ally and Ally X, Legion Go / Go S / Go 2, AYANEO, AYN, GPD, OneXPlayer, section 9) | the firmware strings of the MSI Claw line and the ROG Xbox Ally (one device each, or a DMI dump); a controller-first shell (launch and play with no mouse); Windows display scaling 125-200 % | the Z1 / Z2 / Lunar Lake drivers, VRR, TDP presets, the 1.35x scale-up on a 7-8" panel | 1-2 days on top of the Deck |
 | Switch-class | a **budget only** (`switch_handheld`: 1280x720, 30 cap, 3 threads, the iGPU): the 30 cap holds; the city 1.38 GB with BC7 (E11) | everything: the platform holder's developer program, a kit, an engine port for 4.7, CitySim for aarch64 | all of it (an A57-class core is the CPU risk) | 3-6 months per platform; $800-$10,000/yr middleware + kits under NDA |
 
 ### Steam Deck
@@ -434,7 +434,7 @@ Owed (in order):
    Windows build under Proton with `driver.windows=vulkan` (D3D12 would go through vkd3d-proton).
 2. Vendoring GodotSteam (STM-01), then the two stubbed calls in `steam_backend.gd`: the hardware type (the auto-pick's
    first check, n10; SDK 1.65 removed `IsSteamRunningOnSteamDeck`, section 9) and Steam Input origin glyphs for a remapped
-   pad; the drawn set covers the default layouts. `Platform.action_glyph_path` still needs its caller in PadGlyphArt.
+   pad; the drawn set covers the default layouts. `SteamGlyphs` already asks `Platform.action_glyph_path` from the prompts (n10 it5), so the backend's line is the swap.
 3. A `just native` recipe for the sniper-container Linux build (parity on the `.so` is proven, E13).
 4. Rumble on blasts and car crashes (no bus event today).
 5. If the owner picks a 40 Hz mode: every view drawn between two ticks (~2-3 days, the scoping note under E21).
@@ -446,8 +446,8 @@ config, suspend / resume on SteamOS, the 90 Hz OLED panel.
 
 ### Windows handhelds
 
-Works: a listed firmware model picks `handheld_1080` by itself and opens fullscreen (section 9: 11 strings confirmed; the
-Ally, Legion Go and Claw are not); every handheld-row change applies to `handheld_1080` (40 px/m, the compact card, the drawn glyphs); the 1080p
+Works: a listed firmware model picks `handheld_1080` by itself and opens fullscreen (section 9: 19 strings from public tables; the
+MSI Claw line and the ROG Xbox Ally are not); every handheld-row change applies to `handheld_1080` (40 px/m, the compact card, the drawn glyphs); the 1080p
 screen drawn at 1280x800 and scaled (stretch `viewport`) holds 60 at 9.9 ms GPU where the native 1080 draw misses at
 16.1 ms (E9); the 16:9 drawn frame is 1422x800 and the HUD fits (it10 still); texts measure x >= 12 px at 1080.
 Owed: a controller-first shell (launch and play with no mouse); Windows display scaling at 125-200 %.
@@ -774,19 +774,50 @@ Shipped, each from a `DMI_PRODUCT_NAME` entry; a match is `contains`, case-sensi
 | `handheld_1080` | `G1619-01`, `G1618-03`, `G1617-01` | GPD Win Max, Win 3, Win Mini | same file |
 | `handheld_1080` | `ONE XPLAYER` | OneXPlayer (and the Mini Intel: the same string) | same file |
 | `handheld_1080` | `RC72LA` | ROG Ally X | the AMD PMF quirk patch, `DMI_MATCH(DMI_PRODUCT_NAME, "RC72LA")` ([LKML](https://lkml.iu.edu/hypermail/linux/kernel/2407.3/04376.html)), seen in the search index; `pmf-quirks.c` itself 404s at that path on master, so not re-read |
+| `handheld_1080` | `ROG Ally RC71L` (it5) | ROG Ally (matches `ROG Ally RC71L_RC71L` too) | a `dmidecode` dump, `Product Name: ROG Ally RC71L_RC71L` ([gist](https://gist.github.com/parkerlreed/012c3fd26891d05f9d467c08d4d6520f), read verbatim) and HandyGCCS's list, both spellings ([utilities.py](https://raw.githubusercontent.com/ShadowBlip/HandyGCCS/main/src/handycon/utilities.py), lines 125-126) |
+| `handheld_1080` `models_exact` | `83E1` (it5) | Legion Go | InputPlumber's DMI match, `product_name: "83E1"`, `sys_vendor: LENOVO` ([50-legion_go.yaml](https://raw.githubusercontent.com/ShadowBlip/InputPlumber/main/rootfs/usr/share/inputplumber/devices/50-legion_go.yaml)); HandyGCCS line 214 |
+| `handheld_1080` `models_exact` | `83L3`, `83N6`, `83Q2`, `83Q3` (it5) | Legion Go S | InputPlumber, `50-legion_go_s.yaml` (same folder) |
+| `handheld_1080` `models_exact` | `83N0`, `83N1` (it5) | Legion Go 2 | InputPlumber, `50-legion_go_2.yaml` (same folder) |
 
 Left out, with why:
-- **ROG Ally (RC71L):** the kernel matches it on the *board* name; its product string is not confirmed by a source read here.
-- **Legion Go:** the kernel matches `DMI_PRODUCT_VERSION` "Legion Go 8APU1", a field Godot does not read; `83E1` is a retail SKU in what was read.
-- **MSI Claw:** no `Claw` string in the DRM, oxpec or msi-wmi-platform tables.
+- **MSI Claw (every model):** InputPlumber matches each only on the *board* name (`MS-1T41`, `MS-1T42`, `MS-1T52`, `MS-1T91`, `MS-1T8K`), which Godot only reads when the product name is a placeholder; no source read gives the product name, and no `Claw` string is in the DRM, oxpec or msi-wmi-platform tables.
+- **ROG Xbox Ally / Ally X (`RC73XA`, `RC73YA`, `RC74XA`):** board names only in InputPlumber, the same gap.
 - **AYANEO `AIR`, `FLIP`, `GEEK`, `SLIDE`, `KUN`, `NEXT`:** real entries, but paired with a vendor (or a board) in the kernel and too plain alone. **GPD `WIN2`** and **`NEO-01` (OrangePi)** the same (the schema asks 6 characters at least).
 - **OneXPlayer X1 / F1 / G1, AOKZOE:** `oxpec.c` lists them by *board* name, which Godot only returns when the product name is a placeholder.
 
-So the three best-selling Windows handhelds are the ones still unconfirmed. One device each (or a DMI dump) fills those in; no guessed string ships.
+So the MSI Claw line and the ROG Xbox Ally are the ones still unconfirmed. One device each (or a DMI dump) fills those in; no guessed string ships. `models_exact` (it5) is a second list because a Lenovo type number is 4 characters: inside a longer name it is not unmistakable, so it must be the whole name (the `models` schema floor stays 6). A source caution on these rows: InputPlumber's `product_name` is the SMBIOS field Godot reads, but it is a third-party project's table and no device of ours confirmed it.
 Docked: a listed model on a screen past `MAX_PANEL_SIDE` (2560) keeps the desktop; a docked handheld on a 1080p TV cannot be told from its own panel and takes the row (`--device=desktop` opts out).
 
 ### Steam checks: the API moved under the brief (researched 2026-11-08)
 - **Steamworks SDK 1.65 (July 2026) removed the dedicated Deck check**: "Removed ISteamUtils::IsRunningOnSteamDeck(). Please use other feature specific methods below"; added `IsRunningOnSteamHardware()` returning `ESteamHardwareType`, "for analytics, support or diagnostic purposes. For functional decisions, see other SDK calls", `GetSteamHardwareDefaultConfig()` "to help choose default game settings", and `IsRunningUnderProton()` (Valve's changelog as quoted by [GamingOnLinux](https://www.gamingonlinux.com/2026/07/valves-steamworks-sdk-v1-65-brings-changes-for-steam-machine-steam-frame-and-steam-deck/)). Valve's [ISteamUtils page](https://partner.steamgames.com/doc/api/ISteamUtils) reads as *deprecated* where the changelog says *removed*; that page, and the enum values (None 0, SteamDeck 1, SteamMachine 2, SteamFrame 3), were read through a summarising fetch, not verbatim: check them against the SDK header when GodotSteam is vendored.
-- GodotSteam's latest is 4.24 on Steamworks 1.65; its GitHub repository was archived 2026-11-08 and the release notes point to Codeberg ([releases](https://github.com/GodotSteam/GodotSteam/releases)). STM-01 pins `v4.23.2-gde` or newer. godotsteam.com refused the fetch (403), so **the GodotSteam method names in `steam_backend.gd`'s comments are unconfirmed**.
+- GodotSteam's latest is 4.24 on Steamworks 1.65; its GitHub repository was archived 2026-11-08 and the release notes point to Codeberg ([releases](https://github.com/GodotSteam/GodotSteam/releases)). STM-01 pins `v4.23.2-gde` or newer. godotsteam.com refused the fetch (403); **the method names were then read from GodotSteam 4.24's source** ([godot4 branch on Codeberg](https://codeberg.org/godotsteam/godotsteam/src/branch/godot4/godotsteam.cpp), it5): `isRunningOnSteamHardware`, `getSteamHardwareDefaultConfig`, `isRunningUnderProton`, `getActionOriginFromXboxOrigin`, `getGlyphPNGForActionOrigin`, and the bound constants in the order NONE, STEAM_DECK, STEAM_MACHINE, STEAM_FRAME. That source binds names, not the numbers: the values 0-3 still want the SDK header. No `isSteamRunningOnSteamDeck` binding appears in that source, which fits the 1.65 removal.
 - Glyph calls, verbatim from [ISteamInput](https://partner.steamgames.com/doc/api/isteaminput): `GetGlyphPNGForActionOrigin(eOrigin, eSize, unFlags)` "Get a local path to a PNG file for the provided origin's glyph"; the legacy call says new code should use it. `GetActionOriginFromXboxOrigin` read through the summary only.
-- Built behind the interface: `PlatformBackend.Hardware` gains `STEAM_DECK` (`STEAM_HARDWARE` is now a Machine or a Frame); `DeviceProfile.auto_pick` asks `Platform.hardware()` first; `SteamBackend.hardware_of()` maps the raw type (unit-tested); `Platform.action_glyph_path()` is the glyph stub, "" = the drawn set. Each is one call to fill in `steam_backend.gd` (DECISION `handheld/steam-hardware`). **Not run against Steam: there is no Steam app here.** `action_glyph_path` has no caller yet: PadGlyphArt joins when a real path can come back.
+- Built behind the interface: `PlatformBackend.Hardware` gains `STEAM_DECK` (`STEAM_HARDWARE` is now a Machine or a Frame); `DeviceProfile.auto_pick` asks `Platform.hardware()` first; `SteamBackend.hardware_of()` maps the raw type (unit-tested); `Platform.action_glyph_path()` is the glyph stub, "" = the drawn set. Each is one call to fill in `steam_backend.gd` (DECISION `handheld/steam-hardware`). **Not run against Steam: there is no Steam app here.** `action_glyph_path` has its caller since it5: `SteamGlyphs.texture(label)` in `PadGlyphArt.runs`, a Texture2D run drawn and measured like an atlas cell, so filling in the backend's one line is the whole swap (`test_steam_glyphs`, a fake backend returning a real PNG). The RichTextLabel card (`bbcode`) keeps the drawn set: an `[img]` tag names a res:// file, and Steam's glyph is a runtime image; so a remapped pad would show Steam's glyph in the prompts and the drawn one on that card.
+
+### E22 (n10 it5): the rows after the merge of `n10-world` aadc7430 (half-height walls, whole storeys); PC simulator, CONTENDED
+Windowed on the 2-CU iGPU, `tools/handheld/sim.mjs --scene=city_combo --ticks=1800`, one run each, under `bench.lock`, while this lane's own four headless reels and the other lanes' runs were going. One run each is a sanity check of the rows on the new walls, **not** a cost measurement: there is no pre-merge arm in the same conditions, so the walls' cost is unmeasured.
+
+| row | other Godot runs | frames | p50 ms | p99 ms | over 33 ms (settled) | render GPU p50 ms | GPU shared max MB |
+|---|---|---|---|---|---|---|---|
+| `deck` | 7 | 1750 | 16.66 | 23.42 | 13 | 8.0 | 600 |
+| `deck40` | 7 | 1080 | 26.57 | 57.08 | 162 | 8.6 | 600 |
+| `handheld_1080` | 9 | 991 | 27.02 | 86.68 | 287 | 9.3 | 612 |
+| `switch_handheld` (30 cap) | 1 | 897 | 33.22 | 37.95 | 511 (the cap itself sits at 33.3 ms, so this column says nothing on this row) | 9.09 | 626 |
+
+The Deck row holds its 16.7 ms lock with render GPU 8.0 ms (E20b: 7.7). **`handheld_1080` did not hold 60 here** (p50 27 ms, about 33 fps in the run) where E9 measured a 60 hold at 9.9 ms GPU; its render GPU is 9.3 ms, so the miss is on the CPU side or the machine, and the run had 9 other Godot processes against the row's below-normal priority. Not attributed: it wants a re-run on a quiet machine, against a pre-merge arm, before it is called anything.
+
+### The freeze A/B on the rows (n10 it1, read at it5; PC simulator)
+Quest 1 windowed on D3D12, `deck` (`vsync: enabled`) vs the study row `deck_mailbox`, interleaved rounds of 2 runs, 4 rounds of the 5 planned (`evidence/n10h/it1/ab-vsync.txt`, the low-CPU runs' logs and thread readings in `evidence/n10h/it1/hunt/`):
+
+| arm | runs | ok | low CPU, still pumping | low CPU, not yet started | frozen |
+|---|---|---|---|---|---|
+| `deck` (enabled) | 8 | 5 | 3 | 0 | **0** |
+| `deck_mailbox` | 8 | 6 | 0 | 2 | **0** |
+
+A low-CPU run is not a freeze by this harness's definition: its message loop answers, the log says quest 1 started, and the one thread reading looked at (`freeze-deck_r2-1.json`) has the main thread live at 0.054 cores; the row's focus-out pause on a hidden window fits, not proven. The per-round `frozen` counters in the file count low CPU too and are not used. 0 frozen of 8 bounds nothing tight (perf saw 5 / 20 in the editor binary and 0 / 20 in release and debug exports). **The rows keep `vsync: enabled`**: perf's freeze is the editor binary's, the Deck's path is Vulkan, and no run here shows the rows need mailbox.
+
+### The research loop: stopped (n10 it5)
+1. **Windows display scaling at 125-200 %.** The simulator cannot change the scale of a machine three other lanes are using, and a per-process scale would test a different path. Nothing measurable.
+2. **The controller-first shell (launch and play with no mouse).** What it depends on is the handheld maker's launcher (the vendor's shell, Steam's Big Picture); the simulator has neither. Nothing measurable.
+
+Two in a row with nothing the simulator can measure, so the loop stops by the brief's rule. Both stay in the port readiness table as owed.

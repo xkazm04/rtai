@@ -204,7 +204,17 @@
         "Loki Zero",
         "ONE XPLAYER",
         "RC72LA",
+        "ROG Ally RC71L",
         "Win600"
+      ],
+      "models_exact": [
+        "83E1",
+        "83L3",
+        "83N0",
+        "83N1",
+        "83N6",
+        "83Q2",
+        "83Q3"
       ],
       "note": "Windows handheld class (Ryzen Z1/Z2 or Lunar Lake class APUs, 7 to 8.8-inch 1920x1080 panels): runs the Windows build; stretch_mode viewport draws at the 1280x800 base and scales up",
       "rumble": 1,

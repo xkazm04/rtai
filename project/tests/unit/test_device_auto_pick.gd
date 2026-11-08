@@ -36,6 +36,22 @@ func test_a_windows_handheld_picks_its_row_by_its_firmware_model() -> void:
 	assert_eq(DeviceProfile.auto_pick("0", fhd, "G1618-03"), "", "SteamDeck=0 opts out here too")
 
 
+func test_the_rog_ally_and_the_legion_go_family_pick_their_row() -> void:
+	# n10 it5: the ROG Ally's product name from a DMI dump and HandyGCCS; Lenovo's type numbers
+	# from InputPlumber's DMI matches (LEDGER section 9)
+	var fhd: Vector2i = Vector2i(1920, 1080)
+	assert_eq(DeviceProfile.auto_pick("", fhd, "ROG Ally RC71L_RC71L"), "handheld_1080")
+	assert_eq(DeviceProfile.auto_pick("", fhd, "ROG Ally RC71L"), "handheld_1080")
+	assert_eq(DeviceProfile.auto_pick("", Vector2i(2560, 1600), "83E1"), "handheld_1080")
+	assert_eq(DeviceProfile.auto_pick("", Vector2i(1920, 1200), "83L3"), "handheld_1080", "Go S")
+	assert_eq(DeviceProfile.auto_pick("", Vector2i(1920, 1200), "83N1"), "handheld_1080", "Go 2")
+
+
+func test_a_type_number_only_matches_the_whole_name() -> void:
+	for model: String in ["83E1ABCDEF", "X83E1", "83e1", "83E"]:
+		assert_eq(DeviceProfile.model_row(model), "", model)
+
+
 func test_a_deck_running_windows_is_the_deck_row_only_on_its_panel() -> void:
 	var panel: Vector2i = DeviceProfile.DECK_PANEL
 	assert_eq(DeviceProfile.auto_pick("", panel, "Jupiter"), "deck")
@@ -55,12 +71,12 @@ func test_every_listed_model_picks_a_handheld_row() -> void:
 	var data: Dictionary = table.data
 	var seen: int = 0
 	for row: Dictionary in data["devices"]:
-		for model: Variant in row.get("models", []):
+		for model: Variant in row.get("models", []) + row.get("models_exact", []):
 			seen += 1
 			assert_true(
 				DeviceProfile.of(DeviceProfile.model_row(str(model))).is_handheld(), str(model)
 			)
-	assert_gt(seen, 10, "the models lists are read")
+	assert_gt(seen, 16, "both models lists are read")
 
 
 func test_the_backend_is_up_before_launch_args_ask_it() -> void:

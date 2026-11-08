@@ -63,7 +63,7 @@ func rich_presence(_key: String, _value: String) -> bool:
 
 ## n10-handheld: the one call when GodotSteam is vendored (SDK 1.65 removed the Deck check,
 ## LEDGER section 9): `return hardware_of(Steam.isRunningOnSteamHardware())`. The method name is
-## GodotSteam's and unconfirmed.
+## read from GodotSteam 4.24's source; not run, there is no Steam app here.
 func hardware() -> Hardware:
 	return hardware_of(HARDWARE_NONE)
 
@@ -77,7 +77,7 @@ static func hardware_of(steam_hardware_type: int) -> Hardware:
 
 ## n10-handheld: the one call when GodotSteam is vendored, for the first pad's handle:
 ## `var origin: int = Steam.getActionOriginFromXboxOrigin(handle, XBOX[label])`, then
-## `return Steam.getGlyphPNGForActionOrigin(origin, size, 0)`. Names unconfirmed, as above.
+## `return Steam.getGlyphPNGForActionOrigin(origin, size, 0)`. Names read from 4.24's source too.
 func action_glyph_path(_xbox_label: String) -> String:
 	return ""
 
