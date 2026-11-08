@@ -84,6 +84,8 @@ The research loop since:
 
 Gates (it7): at 2d6a14a7 (the boss-cam band, the last shipped-code change before the `deck30` data row) full unit 1847/0 and
 the director reel 19/19 fully down, 0 SCRIPT ERROR in top, tilt70 and combo (`evidence/n9h/it7/gates/`).
+At 32f498d8 the evidence run `--no-bench` all PASS (lint, unit 1848/0, scenarios 54, parity (mutation caught at 629),
+look goldens 11/11, release-compile 619/0, `evidence/n9h/it7/gates/evidence-run-32f498d8.txt`).
 Gates (it6): at 4870776c the evidence run `--no-bench` all PASS (lint, unit 1845/0, scenarios 54, parity
 (mutation caught at 629), selftest look goldens 11/11, release-compile 619/0,
 `evidence/n9h/it6/gates/evidence-run-4870776c.txt`); the director reel 19/19 chapters fully down, 0 SCRIPT ERROR in top,

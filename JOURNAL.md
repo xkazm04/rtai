@@ -432,3 +432,4 @@ NEXT (iteration 7):
   handheld. NOTE to perf (FYI, no work asked): E21 (LEDGER s4) shows a 40 fps cap steps the 60 Hz sim 1, 2, 1, 2 ticks a
   frame (pans judder 1:2); 30 and 60 are even. If the pause card's pacing row ("efficient") ever pairs with a frame cap,
   30 or 60, not 40, keeps motion even until the views interpolate between ticks.
+- 06:48 GATE evidence run `--no-bench` at 32f498d8: lint, unit 1848/0, scenarios 54, parity (629), look goldens 11/11, release-compile 619/0: all PASS (`evidence/n9h/it7/gates/evidence-run-32f498d8.txt`).
