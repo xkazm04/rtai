@@ -49,6 +49,9 @@ var _named: StringName = &""
 
 ## Fills the plain values from the state machine (call once per frame).
 func sync(g: GhostForms) -> void:
+	if PadGlyphArt.active() and enter_hint == "Q":  # n9-handheld: the pad's buttons, once
+		enter_hint = PadGlyphArt.action_hint(&"power_hauler", enter_hint)
+		next_hint = PadGlyphArt.action_hint(&"power_gearbox", next_hint)
 	order = g.table.order
 	current = g.current() if g.settled() else g.to_id
 	selected = g.selected
@@ -157,6 +160,10 @@ func _chevron(c: Vector2, r: float, font: Font) -> void:
 		INK
 	)
 	var ts: int = layout.text_size
+	if PadGlyphArt.active():  # n9-handheld: the pad button's drawn glyph
+		var gw: float = PadGlyphArt.line_size(key_hint, ts).x
+		PadGlyphArt.draw_line(self, Vector2(c.x - gw * 0.5, y + 6.0 + float(ts)), key_hint, ts, INK)
+		return
 	var kw: float = font.get_string_size(key_hint, HORIZONTAL_ALIGNMENT_LEFT, -1, ts).x
 	var at: Vector2 = Vector2(c.x - kw * 0.5, y + 6.0 + float(ts))
 	draw_string(font, at, key_hint, HORIZONTAL_ALIGNMENT_LEFT, -1, ts, INK)

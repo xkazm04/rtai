@@ -44,6 +44,12 @@ const CELL: Dictionary[String, String] = {
 	"R-stick": "aim_stick_r",
 }
 
+## Godot's JoyButton numbers -> the Xbox-layout names the prompts use (ObjectiveHint.PAD_BUTTONS'
+## twin: features cannot name boot).
+const PAD_BUTTONS: Dictionary[int, String] = {
+	0: "A", 1: "B", 2: "X", 3: "Y", 4: "Back", 6: "Start", 7: "L3", 8: "R3", 9: "LB", 10: "RB"
+}
+
 static var _cells: Dictionary = {}
 static var _tex: Texture2D = null
 
@@ -51,6 +57,17 @@ static var _tex: Texture2D = null
 ## True when this run draws the glyphs (a handheld row): the desktop keeps the bracketed text.
 static func active() -> bool:
 	return DeviceProfile.shared().is_handheld()
+
+
+## "[LB]" for `action`'s first bound pad button (relabelled for the pad's family), else `fallback`.
+static func action_hint(action: StringName, fallback: String) -> String:
+	if not InputMap.has_action(action):
+		return fallback
+	for ev: InputEvent in InputMap.action_get_events(action):
+		var b: InputEventJoypadButton = ev as InputEventJoypadButton
+		if b != null and PAD_BUTTONS.has(b.button_index):
+			return "[%s]" % PadGlyphs.label(PAD_BUTTONS[b.button_index])
+	return fallback
 
 
 ## The atlas region of a pad label ("A", "RT", "L-stick"); an empty Rect2 when it has none.

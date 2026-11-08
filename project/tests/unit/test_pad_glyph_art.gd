@@ -29,3 +29,9 @@ func test_desktop_draws_no_glyphs() -> void:
 
 func test_the_atlas_loads() -> void:
 	assert_not_null(PadGlyphArt.texture())
+
+
+func test_action_hint_names_the_bound_pad_button() -> void:
+	PlayerActions.shipped().install()
+	assert_eq(PadGlyphArt.action_hint(&"power_hauler", "Q"), "[LB]")
+	assert_eq(PadGlyphArt.action_hint(&"no_such_action", "Q"), "Q")
