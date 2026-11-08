@@ -24,7 +24,8 @@
         "2026-11-07: handheld E14: dev/save_cross.gd (+_run), the Windows<->Linux save round trip tool; dev-only, not exported (dev_loc 18801 -> 18888)",
         "2026-11-07: d9 merge: perf + handheld bench growth combined (each accepted on its lane) (dev_loc 19123 -> 19147)",
         "2026-11-08: handheld n9: the Deck Verified legibility probe + walk (dev/handheld, owed since d9 LEDGER section 6); dev only, never shipped (dev_loc 19147 -> 19388)",
-        "2026-11-08: handheld n9 it2: the legibility walk scales the draw_string sizes by the window stretch (+3 dev lines; the Switch-class 720p row) (dev_loc 19388 -> 19391)"
+        "2026-11-08: handheld n9 it2: the legibility walk scales the draw_string sizes by the window stretch (+3 dev lines; the Switch-class 720p row) (dev_loc 19388 -> 19391)",
+        "2026-11-08: handheld it5: the legibility walker reads the boss count's device-dependent size (BossBar.count_px) instead of a fixed 16, so its probe matches what the compact rows draw (+3 dev lines) (dev_loc 19391 -> 19394)"
       ],
       "files": {
         "project/dev/arena": 708,
@@ -37,7 +38,7 @@
         "project/dev/ghost-forms": 616,
         "project/dev/ghost-powers": 1137,
         "project/dev/gunplay": 674,
-        "project/dev/handheld": 244,
+        "project/dev/handheld": 247,
         "project/dev/held": 103,
         "project/dev/human_react": 412,
         "project/dev/noir": 1220,
@@ -56,7 +57,7 @@
         "project/dev/view": 195,
         "project/dev/weapon_art": 506
       },
-      "total": 19391
+      "total": 19394
     },
     "direct_cmdline_reads": {
       "accepted": [

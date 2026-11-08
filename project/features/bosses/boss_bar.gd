@@ -21,6 +21,11 @@ const CREST_GAP: float = 14.0
 const PAPER: bool = true
 const PAPER_GROW: Vector3 = Vector3(26.0, 44.0, 30.0)
 const PAPER_TOP: float = -40.0
+## n9-handheld: the phase count's font px: the desktop's 16, and COUNT_PX_COMPACT on the compact-HUD
+## (handheld) rows, where 16 px put its x-height at Valve's 9 px floor at 1280x800 and below it at
+## 720p (LEDGER section 6). The count's right end stays put as it grows.
+const COUNT_PX: int = 16
+const COUNT_PX_COMPACT: int = 18
 
 var fight: BossFight = null
 ## n8-hud: the boss's face for the crest (BossView.attach fills it from PortraitBook); null = none.
@@ -28,6 +33,7 @@ var crest: Texture2D = null
 ## The pale trail (lost hp); below 0 until the first frame sets it to the fight's hp (a
 ## --phase=N start never falls from a full bar).
 var _trail: float = -1.0
+var _count_px: int = count_px(DeviceProfile.shared())
 
 
 func _ready() -> void:
@@ -66,7 +72,13 @@ func _draw() -> void:
 	var title: String = tr(String(fight.spec.id).to_upper())
 	_word(r.position + Vector2(0, -8), title, 20, 6)
 	var mark: String = "%d / %d" % [fight.phase + 1, fight.spec.phases.size()]
-	_word(r.position + Vector2(w - 40.0, -8), mark, 16, 5)
+	var shift: float = 2.0 * float(_count_px - COUNT_PX)
+	_word(r.position + Vector2(w - 40.0 - shift, -8), mark, _count_px, 5)
+
+
+## The phase count's font px under `profile` (the compact HUD = the handheld rows).
+static func count_px(profile: DeviceProfile) -> int:
+	return COUNT_PX_COMPACT if profile.hud == &"compact" else COUNT_PX
 
 
 ## n8-hud: the paper round bar `r` (the name's line above it, the count at its right end).

@@ -8,9 +8,9 @@ extends Node
 ## Run through legibility_walk.gd (a SceneTree script cannot name the autoloads at compile time).
 
 ## The font sizes the draw_string sites pass (authored px at the 1280x800 base, scaled to the
-## window).
+## window). 0 = the size depends on the device row (read at the walk).
 const DRAW_SIZES: Dictionary[String, int] = {
-	"boss bar count (BossBar 16)": 16,
+	"boss bar count (BossBar.count_px: 16, compact 18)": 0,
 	"ghost card name / key hint (GhostFormLayout 18)": 18,
 	"boss taunt smallest fit (BossTaunt 18)": 18,
 	"boss bar name (BossBar 20)": 20,
@@ -73,9 +73,12 @@ func _walk() -> void:
 func _draw_sizes(stretch: float) -> Array[Dictionary]:
 	var rows: Array[Dictionary] = []
 	for site: String in DRAW_SIZES:
-		var row: Dictionary = TextProbe.size_row(ThemeDB.fallback_font, DRAW_SIZES[site] * stretch)
+		var px: int = DRAW_SIZES[site]
+		if px == 0:
+			px = BossBar.count_px(DeviceProfile.shared())
+		var row: Dictionary = TextProbe.size_row(ThemeDB.fallback_font, px * stretch)
 		row["site"] = site
-		row["authored_px"] = DRAW_SIZES[site]
+		row["authored_px"] = px
 		rows.append(row)
 	return rows
 
