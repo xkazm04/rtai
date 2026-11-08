@@ -38,12 +38,12 @@ Defect hunt on Rivet at combo. Every performance number here is CONTENDED. Evide
 ## Gates (it13, on `0dae4c8b`; every timing CONTENDED)
 
 - `node tools/evidence/run.mjs --no-bench`: PASS. Lint 15/15, unit 1970 passed 0 failed, scenarios 55 passed, parity bit for bit (planted mutation caught at step 629), selftest (look goldens 11/11, block goldens 5/5), release-compile 630 loaded 0 failed.
-- Director reel: top 19 chapters down, tilt70 19 down, 0 SCRIPT ERROR. Combo: see the JOURNAL's last entry (it was still running when this was committed).
+- Director reel: top 19 chapters down, tilt70 19 down, 0 SCRIPT ERROR. Top and tilt70 exited 0; combo exit 0 00:58:09 errors 0 chapters 19.
 - The new tests were run against the old strips: `test_rivet_cell_scale` failed on all seven strips and the foot line, green on the new.
 
 ## Not verified
 
-- `mutate.mjs` scores: see the JOURNAL's last entry; it was started on `rivet_strips.gd` only, so `ghost_apparition.gd`, `arena_rigs.gd` and `shot_lift.gd` have no score.
+- `mutate.mjs` on `rivet_strips.gd` (`--max=10`, tests `test_rivet_cell_scale`, `test_rivet_frames`): 55.6 % = 5 killed / 9, 1 invalid, a sample of 10 of 118 mutants. Only one sampled line (135, `hides_held`) is in the code this iteration changed, and it was killed; the four survivors (lines 87, 97, 169, 172) are older diagonal and cone code those two tests do not target. `LEFT_NO_SWING` and `FOOT_PX` themselves were not sampled, so the score says little about them; `ghost_apparition.gd`, `arena_rigs.gd` and `shot_lift.gd` have no score.
 - Vehicles: entry was seen once in the free-roam city (`dev/showcase/vehicle_frame.tscn`, 0 SCRIPT ERROR, frames in `gtai-n10/tmp/rivet/veh1`, not in the masters): he disappears into the car and nothing is left standing. That scene ignored `--view=combo`, so it is not the combo view, and its route never gets out of the car, so **leaving a vehicle was not exercised**.
 - Knock-down during a reload was read in code only (`RivetKnock.path_or` wins over the reload path in `RivetFrames.step`); no film with a gun up.
 - The gatling's fire cell was not filmed (the tour's burst is all spin-up); its re-measured facing point and whirl were.

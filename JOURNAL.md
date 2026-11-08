@@ -58,7 +58,7 @@ DECISION dev/tour-kept: `dev/rivet_motion/rivet_tour*` and `rivet_trans_bot` sta
 GATES (00:50, on 0dae4c8b, CONTENDED): evidence --no-bench PASS (lint 15/15, unit 1970/0, scenarios 55, parity, selftest, release-compile 630/0). Reel top 19 down, tilt70 19 down, 0 SCRIPT ERROR; combo running at this commit.
 FINDING (00:52) vehicles: the car button is a stub in quest 1 and the arena; the free-roam city enters through VehicleService. `vehicle_frame.tscn` shows the entry at the city's own view, no Rivet left behind, 0 SCRIPT ERROR; `--view=combo` was not honoured there and the route never exits, so leaving a car is unchecked.
 NEXT (it14, in order):
-1. Read this journal's end for the combo reel and the rivet_strips mutation score; if absent, re-run them (`reel_combo.log` and `mutate_strips.log` under gtai-n10/logs/rivet).
+1. (done, see REPORT Gates and Not verified: reel combo exit 0 00:58:09 errors 0 chapters 19; rivet_strips mutation sample 55.6 %, 5/9 of 10 sampled, my changed lines mostly unsampled.)
 2. Leaving a vehicle at combo: a route with a second USE press in `vehicle_frame_setup.gd` (a local edit: the debt ratchet counts dev lines) and a working `--view`.
 3. A knock-down with a gun up in a reload: needs a stage with cars and a pilot (`CollectCallStage` has both).
 4. The gatling's fire cell on film (temporary LEN edit in RivetTourBot, not committed).
