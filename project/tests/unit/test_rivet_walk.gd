@@ -5,6 +5,7 @@ extends GutTest
 func after_each() -> void:
 	RivetWalk.enabled = true
 	RivetWalk.frames = 8
+	RivetWalk.armed = true
 
 
 func test_the_frame_follows_the_octant_row_and_the_stride_phase() -> void:
@@ -16,10 +17,8 @@ func test_the_frame_follows_the_octant_row_and_the_stride_phase() -> void:
 	assert_eq(RivetWalk.frame_of(4, -0.1, 4), oct[4] * 4 + 3, "negative phase wraps")
 
 
-func test_no_grid_with_a_weapon_out_standing_or_with_the_bob_flag() -> void:
+func test_no_grid_standing_or_with_the_bob_flag() -> void:
 	var rig: CutRig = add_child_autofree(CutRig.new())
-	rig.speed_now = RivetFrames.MOVING + 10.0
-	assert_eq(RivetWalk.path_of(rig, "p70", &"pistol"), "", "a weapon out keeps its strip")
 	rig.speed_now = 0.0
 	assert_eq(RivetWalk.path_of(rig, "p70", &""), "", "standing keeps the facing")
 	rig.speed_now = RivetFrames.MOVING + 10.0
@@ -66,3 +65,29 @@ func test_the_eight_frame_walk_steps_by_the_ground_walked() -> void:
 	rig.phase = 0.4
 	RivetWalk.frames = 4
 	assert_almost_eq(RivetWalk.phase_of(rig, "p70", 0.5), 0.4, 0.0001, "d9 grid: gait phase")
+
+
+func test_a_weapon_out_walks_its_drawn_armed_grid_until_it_fires() -> void:
+	# n9 it4: the library's armed walks, one per weapon each draws; 4 frames x 8 rows
+	var rig: CutRig = add_child_autofree(CutRig.new())
+	rig.speed_now = RivetFrames.MOVING + 10.0
+	for art: String in ["p70", "p55"]:
+		for w: StringName in [&"pistol", &"plasma_rifle", &"katana", &"gatling", &"flamethrower"]:
+			var path: String = RivetStrips.DIR + art + "/" + RivetWalk.ARMED + String(w) + ".png"
+			assert_eq(RivetWalk.path_of(rig, art, w), path, "%s %s walks drawn" % [art, w])
+			assert_eq(RivetWalk.cols_of(path), 4, "%s %s: 4 frames" % [art, w])
+			var tex: Texture2D = load(path) as Texture2D
+			assert_eq(tex.get_width() % 4 + tex.get_height() % RivetWalk.ROWS, 0, "whole cells")
+	assert_eq(RivetWalk.path_of(rig, "p70", &"chainsaw"), "", "no drawn walk: the facing card")
+	rig.set_meta(RivetFrames.FIRE, true)
+	assert_eq(RivetWalk.path_of(rig, "p70", &"pistol"), "", "a shot latches the fire cell")
+	rig.set_meta(RivetFrames.FIRE, false)
+	RivetWalk.armed = false
+	assert_eq(RivetWalk.path_of(rig, "p70", &"pistol"), "", "--rivet-walk-armed=off")
+
+
+func test_the_grid_columns_by_strip_name() -> void:
+	assert_eq(RivetWalk.cols_of(RivetStrips.DIR + "p70/" + RivetWalk.STRIP), 8)
+	assert_eq(RivetWalk.cols_of(RivetStrips.DIR + "p70/" + RivetWalk.STRIP4), 4)
+	assert_eq(RivetWalk.cols_of(RivetStrips.DIR + "p70/rivet_eq_pistol.png"), 0)
+	assert_eq(RivetWalk.cols_of(RivetStrips.DIR + "p70/" + RivetStrips.BASE), 0)

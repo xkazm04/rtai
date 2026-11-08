@@ -65,6 +65,12 @@ static func hides_held(rig: CutRig) -> bool:
 	return not no_arc.has(RivetFrames.weapon_of(rig))
 
 
+## True while a shot or a strike latches the fire cell (the recoil, the FIRE latch, a strike).
+static func fire_latched(rig: CutRig) -> bool:
+	var fired: bool = absf(rig.clips.recoil) > RivetFrames.FIRE_RECOIL
+	return fired or rig.get_meta(RivetFrames.FIRE, false) == true or rig.clips.strike_t >= 0.0
+
+
 ## Whether the rig's equipped strip draws its fire cell this frame (`firing`: a shot or a strike
 ## is up); a cone burst that went off its drawn flame stays on the facing cell to its end.
 static func draws_fire(rig: CutRig, weapon: StringName, o: int, firing: bool) -> bool:

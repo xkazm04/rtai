@@ -85,6 +85,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	# d9-rivet: --rivet-walk=bob keeps the facing card with the built bob (Call 2's before);
 	# n9-rivet: --rivet-walk=4 plays d9's 4-frame grid by the gait phase (the 8-frame walk's before)
 	"--rivet-walk",
+	# n9-rivet: --rivet-walk-armed=off keeps the equipped facing card while a weapon is out
+	"--rivet-walk-armed",
 	# n9-rivet: --rivet-flame=cone brings back d9's flamer (the drawn flame on 3 octants only)
 	"--rivet-flame",
 	# d9-perf: --perf-hud draws the frame-budget overlay (dev/perf/perf_hud.gd), read only

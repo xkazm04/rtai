@@ -1,0 +1,18 @@
+{
+ "cell": [
+  130,
+  127
+ ],
+ "cols": 4,
+ "fig_h": 110.0,
+ "pad": 2,
+ "rows": 8,
+ "scales": [
+  0.625,
+  0.4151
+ ],
+ "src": [
+  "C:/Users/kazda/kiro/gtai-art/library/keyed/rivet/rivet_walk_armed_heavy_70_v2_cells",
+  "C:/Users/kazda/kiro/gtai-art/library/keyed/rivet/rivet_walk_armed_heavy_70_left_v3_cells"
+ ]
+}

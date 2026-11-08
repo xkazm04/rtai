@@ -11,6 +11,8 @@ left rows matched on their own median height); each cell's anchor is its helmet'
 centre of its top quarter) on the cell's centre column and its lowest alpha row PAD px above the
 cell's bottom. Premultiplied resampling. Deterministic. n9: --cols=8 packs the library's 8-frame
 walk (columns contact, down, passing, up, contact (other foot), down, passing, up).
+n9 it4: <left_cells_dir> = "mirror" builds the left rows from right rows 2-4 mirrored (a two-handed
+hold without drawn left views: the heavy and flamer armed walks; the equipped strips mirror those too).
 """
 
 import json
@@ -39,12 +41,26 @@ def _rows(folder: str, n: int, cols: int) -> list:
     return [[_cell(f"{folder}/{r}_{c}.png") for c in range(1, cols + 1)] for r in range(1, n + 1)]
 
 
+def _mirrored(rows: list) -> list:
+    out = []
+    for r in rows[1:4]:
+        row = []
+        for c in r:
+            im = c["im"].transpose(Image.FLIP_LEFT_RIGHT)
+            x0, y0, x1, y1 = c["box"]
+            w = im.width
+            row.append({"im": im, "box": (w - x1, y0, w - x0, y1), "ax": w - c["ax"], "h": c["h"]})
+        out.append(row)
+    return out
+
+
 def main() -> None:
     opts = {a.split("=")[0][2:]: a.split("=", 1)[1] for a in sys.argv[1:] if a.startswith("--")}
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     fig_h = float(opts.get("fig_h", 110))
     cols = int(opts.get("cols", COLS))
-    rows, left = _rows(args[0], 5, cols), _rows(args[1], 3, cols)
+    rows = _rows(args[0], 5, cols)
+    left = _mirrored(rows) if args[1] == "mirror" else _rows(args[1], 3, cols)
     k = fig_h / float(np.median([c["h"] for r in rows for c in r]))
     kl = fig_h / float(np.median([c["h"] for r in left for c in r]))
     items = [(c, k) for r in rows for c in r] + [(c, kl) for r in left for c in r]
