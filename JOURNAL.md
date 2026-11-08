@@ -399,3 +399,23 @@ NEXT (iteration 7):
 3. Freeze 10:30: export `build/export/windows/RTAI.exe` (`"$GODOT_BIN" --headless --path project --export-release
    windows-showcase ../build/export/windows/RTAI.exe`), final gates on the head (reel x3 + evidence run, log outside
    the tree), REPORT final (gates line, exe line, Calls 1-5, frames.json 15 entries all present).
+
+## Iteration 7 (06:07 - 07:07), BUILD
+
+- 06:08 READ: JOURNAL NEXT, git log; rivet / world / perf journals: no REQUEST to handheld; the asset library: no new
+  delivery naming handheld (latest: rivet armed runs it128-it132). Registry rules applied: motion-quality-gating (judge
+  the camera by the image shift per frame, phase correlation, not by a luma difference the grain dominates; the same
+  frames compared before/after), on-device-verification-harness ("on the simulator" on every number),
+  adaptive-fidelity-tiers (the fix sits in BossCam: the handheld rows and the dev `--boss-cam` only, the desktop
+  follow cam untouched).
+- 06:12 PROVEN the snap's cause: a temporary Log line in BossCam._process (not committed), King, deck row, 300 frames:
+  frame 154 d = 19.82 m, focus y -76.4 px in one frame as `at` switched Rivet -> lerp 0.45 (x held by the boss margin).
+- 06:15 MILESTONE 2d6a14a7: `BossCam.aim`, the lean fades on smoothstep(14 m, 28 m); 2 tests (unit --select 10/0);
+  focus log over 2700 frames: worst 11.3 px (King), 14.7 px (Servo's charges); lint green; DECISION handheld/boss-cam-band.
+- 06:17 Re-filmed the King (sim.mjs, deck, iGPU, 2700 ticks, CONTENDED: 3 other Godot): 0 SCRIPT ERROR; the ticks
+  advance 1 a frame except two 6-frame hit-stops. FRICTION (~8 min): the luma frame-difference median was 12.6 vs it6's
+  2.1 (unclear why; the grain under any pan dominates it), so it could not judge; wrote `pancorr.py` (phase correlation
+  on a windowed half-res crop): before frame 155 = 62 px, after: gone; left: 24 px (1265) and 20 px (707) in BOTH clips,
+  starts from rest, suspected FeelCam's hit kick. Clip to masters `deck-king-40ppm-bosscam-band-1280x800-igpu.mp4`,
+  frames.json entry 14 (replaces the follow-cam King clip; 15 entries, all present).
+- 06:24 GATE at 2d6a14a7: director reel 19/19 fully down in top / tilt70 / combo, 0 SCRIPT ERROR (`evidence/n9h/it7/gates/`).

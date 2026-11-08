@@ -288,6 +288,17 @@ stick, 2/3 right stick, 4 LT, 5 RT.
   (`motion/king-snap-frames-152-157.png`). Rivet is ~16 m from the King there, near BossCam's FAR_M 20 m switch
   (follow Rivet alone vs 0.45 of the way to the boss), the suspected cause (not yet proven). It is in BossCam itself,
   so the dev `--boss-cam` clips share it. Fix owed (it7): a damped focus, or a blended FAR_M band instead of a switch.
+  **Fixed n9 it7 (2d6a14a7, DECISION handheld/boss-cam-band).** Proven first: a per-frame focus log (a temporary Log line,
+  not committed) shows frame 154 at d = 19.82 m, where the focus y stepped 76 px as `at` switched from Rivet to 0.45 of
+  the way to the King (the x was already held by the boss margin, so only y jumped). Now `BossCam.aim` fades the lean on a
+  smoothstep between NEAR_M 14 m and FAR_M 28 m (within 14 m the framing is exactly as before); unit test: the boss closing
+  0.25 m a tick from 30 to 10 m moves the focus < 0.4 m a tick. The focus log over 2700 frames: worst move 11.3 px (King),
+  14.7 px (Servo's charges). Re-filmed (`deck-king-40ppm-bosscam-band-1280x800-igpu.mp4`, sim.mjs, iGPU, 0 SCRIPT ERROR) and
+  read by **phase correlation** per frame (`evidence/n9h/it7/bosscam/pancorr.py`, the image shift itself, not a luma
+  difference, which the ground's grain dominates under any pan): the 62 px jump at frame 155 is gone; the largest one-frame
+  moves left are 24 px (frame 1265) and 20 px (707), identical in both clips, each a start from rest that then runs at
+  6-10 px; the focus log moves <= 11.3 px a frame, so a second camera input adds the rest: suspected the hit
+  feel's directional kick (FeelCam, on Rivet's hits, the desktop's too), not proven.
 
 ## 6. Text legibility at 1280x800
 
