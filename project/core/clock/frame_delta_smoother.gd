@@ -17,10 +17,10 @@ var _interval: float = 0.0
 var _carry: float = 0.0
 
 
-## Whether World arms it: on by default (L16) under mailbox vsync in a real-time window;
-## `--delta-smooth=off` is the before. Enabled vsync is smoothed by the engine itself.
+## Whether World arms it: `--delta-smooth=on` under mailbox vsync in a real-time window. Off by
+## default: three A/Bs left it inside the noise (LEDGER "L16"). Enabled vsync: the engine smooths.
 static func wanted(flag: String, realtime: bool, vsync_mode: int, hz: float) -> bool:
-	return flag != "off" and realtime and vsync_mode == DisplayServer.VSYNC_MAILBOX and hz > 0.0
+	return flag == "on" and realtime and vsync_mode == DisplayServer.VSYNC_MAILBOX and hz > 0.0
 
 
 ## A window running on the wall clock: not headless, not filming, not `--fixed-fps` (a fixed

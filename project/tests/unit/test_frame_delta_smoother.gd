@@ -58,20 +58,18 @@ func test_carry_keeps_the_long_run_time() -> void:
 	assert_almost_eq(smoothed, raw, HZ60, "within one interval of wall time")
 
 
-func test_wanted_by_default_under_mailbox_in_real_time() -> void:
-	assert_true(FrameDeltaSmoother.wanted("", true, DisplayServer.VSYNC_MAILBOX, 59.94))
+func test_wanted_only_when_asked_under_mailbox_in_real_time() -> void:
+	assert_true(FrameDeltaSmoother.wanted("on", true, DisplayServer.VSYNC_MAILBOX, 59.94))
 	assert_false(
-		FrameDeltaSmoother.wanted("off", true, DisplayServer.VSYNC_MAILBOX, 59.94), "the before"
+		FrameDeltaSmoother.wanted("", true, DisplayServer.VSYNC_MAILBOX, 59.94), "default off"
 	)
 	assert_false(
-		FrameDeltaSmoother.wanted("", false, DisplayServer.VSYNC_MAILBOX, 59.94), "fixed / headless"
+		FrameDeltaSmoother.wanted("on", false, DisplayServer.VSYNC_MAILBOX, 59.94), "fixed"
 	)
 	assert_false(
-		FrameDeltaSmoother.wanted("", true, DisplayServer.VSYNC_ENABLED, 59.94), "engine smooths"
+		FrameDeltaSmoother.wanted("on", true, DisplayServer.VSYNC_ENABLED, 59.94), "engine"
 	)
-	assert_false(
-		FrameDeltaSmoother.wanted("", true, DisplayServer.VSYNC_MAILBOX, 0.0), "no refresh rate"
-	)
+	assert_false(FrameDeltaSmoother.wanted("on", true, DisplayServer.VSYNC_MAILBOX, 0.0), "no rate")
 
 
 func test_fixed_fps_is_never_real_time() -> void:

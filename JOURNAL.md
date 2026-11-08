@@ -214,3 +214,24 @@ NEXT (it4):
   59.94 Hz, so a snapped frame is 16.683 ms vs the 16.667 ms tick: one extra double-tick frame per ~1000 frames is
   the floor (Enabled shows multiTick 1-2 per 30 s too). Unit (smoother, sim_clock, launch_args) 15 / 0.
 NEXT it4 item 1 updated: the Log line is in (this commit); go straight to the 6-pair A/B.
+
+## it4 (2026-11-08 03:40-04:40) BUILD
+- READ: JOURNAL it3 NEXT, git log, world (it10: no new REQUEST to perf), rivet / handheld (none to perf).
+  Registry rules applied: measurement-honesty (a win must clear the measured spread; CONTENDED labels kept),
+  perf-regression-gating (the default flips only with the gates green: unit, evidence --no-bench, reel x3).
+- 03:43 L16 A/B 2 started: drive60 + riot60, arms enab / mbox / smooth, 4 pairs (3 arms x 2 scenes x 4 = 24 runs),
+  `evidence/perf/n9-dsmooth2/`; bench.lock held by handheld (E16b 03:39), ab.mjs waits up to 10 min for it.
+- 03:59 L16 A/B 2 done (`evidence/perf/n9-dsmooth2/`, drive60 + riot60, 4 pairs, bench.lock, CONTENDED 2-4 / 4):
+  no-tick frames pooled Enabled 4, mailbox 57, smoothing 11 (-81 %); smoothing wins 5 pairs, loses 1, ties 2; CPU and
+  p99 WASH. Per-round spread overlaps (ab.mjs: WASH). LEDGER "L16" A/B 2.
+- 04:02 FOUND before the flip: World armed the smoother in any windowed mailbox run, incl. `--fixed-fps` (the selftest's
+  look goldens): a fixed 16.667 ms delta snapped to 16.683 ms adds a tick every ~1000 frames. Guarded:
+  `LaunchArgs.engine_fixed_fps()` -> `FrameDeltaSmoother.realtime_window()`; `wanted()` pure + tested.
+- FRICTION (04:03): the debt ratchet failed on a new `OS.get_cmdline_args()` read in world.gd (direct_cmdline_reads
+  157 -> 158); moved into LaunchArgs (the allowlisted reader). Lint 15 / 15.
+- 04:05 MILESTONE commit 7852a8d4: L16 ON by default under real-time mailbox (`--delta-smooth=off` = the before);
+  confirmation A/B (`n9-dsmooth3`, off vs on, drive60 + riot60, 4 pairs) running 04:06.
+- 04:16 L16 confirmation A/B 3 (`n9-dsmooth3`, on 7852a8d4, off vs on, 4 pairs, CONTENDED 2-4 / 4): no-tick drive
+  off 7/0/0/2 vs on 37/0/2/0 (a 122 ms stall round), riot 1/0/0/1 vs 0/0/0/0. Over 3 A/Bs (19 pairs) smoothing wins
+  10, loses 3, ties 6 (sign test p ~0.09): INSIDE THE NOISE. **DROPPED as a default**, back to `--delta-smooth=on`
+  (the arm); the fixed-fps guard kept. DECISION perf/mailbox-delta-smoothing rewritten; LEDGER "L16" verdict.

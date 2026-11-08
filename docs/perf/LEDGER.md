@@ -195,6 +195,37 @@ p99 23.6 vs 24.7 (WASH). **Direction right, inside the noise (medians 3 vs 1, sp
 proven armed in the bench (no log line). Next: a Log line when armed, then 6+ pairs on a quieter machine, riot60 too;
 keep if no-tick frames reach Enabled's level, then default on (still pixel-free: only which frame a tick lands on).
 
+**A/B 2 (it4, `evidence/perf/n9-dsmooth2/`):** drive60 + riot60, arms `enab:--vsync=enabled`, `mbox:--vsync=mailbox`,
+`smooth:--vsync=mailbox --delta-smooth=on`, 4 pairs (ABC interleaved), bench.lock held by ab.mjs, 03:44-03:59, CONTENDED
+in 2-4 of 4 rounds per arm, 0 errors. Frames that carried no tick, per round:
+
+| scene | Enabled | mailbox | mailbox + smoothing |
+|---|---|---|---|
+| drive60 | 0 / 0 / 0 / 0 | 17 / 12 / 1 / 0 | 2 / 2 / 3 / 0 |
+| riot60 | 1 / 1 / 2 / 0 | 11 / 13 / 3 / 0 | 4 / 0 / 0 / 0 |
+| pooled (8 rounds) | **4** | **57** | **11** (-81 % vs mailbox) |
+| CPU, median (spread) | drive 0.30 (0.04), riot 0.44 (0.05) | 0.27 (0.01), 0.46 (0.04) | 0.35 (0.08), 0.45 (0.03): WASH |
+| p99 ms, median (spread) | 24.5 (3.7), 24.1 (2.0) | 26.6 (4.8), 27.2 (4.7) | 25.9 (4.1), 26.7 (3.8): WASH |
+
+Smoothing beats plain mailbox in 5 pairs, loses 1 (drive r2: 3 vs 1), ties 2 (both 0); with it3's 3 pairs, 7 / 1 / 3.
+Per-round spreads overlap (mailbox's own spread is 6-9 frames, it swings with the contention), so ab.mjs calls it WASH;
+the pooled count and the pair signs agree, and the mechanism is the engine's own rule for Enabled. Not past the noise
+on the per-round median; flipped to the default (7852a8d4) on the pooled count (pixel-free: only which frame a tick lands on),
+with the confirmation A/B (`n9-dsmooth3`, off vs the default, on the commit) as the keep-or-drop.
+**Confirmation A/B 3 (`evidence/perf/n9-dsmooth3/`, on 7852a8d4, `off:--vsync=mailbox --delta-smooth=off` vs `on:--vsync=mailbox`,
+drive60 + riot60, 4 pairs, bench.lock, 04:06-04:16, CONTENDED in 2-4 of 4 rounds per arm, 0 errors):** no-tick frames
+drive off 7 / 0 / 0 / 2 vs on **37** / 0 / 2 / 0 (the 37 is a round with a 122 ms stall and 1661 frames: under heavy
+contention the deltas leave the tolerance and pass raw), riot off 1 / 0 / 0 / 1 vs on 0 / 0 / 0 / 0; CPU 0.31 vs 0.30,
+0.42 vs 0.41 (WASH); riot p99 20.9 vs 19.9 (spreads 1.1 / 0.3, a hint only).
+**Verdict over the three A/Bs (19 pairs mailbox vs smoothing): smoothing fewer no-tick frames in 10, more in 3, tied in 6;
+pooled 79 vs 53.** A sign test of 10 / 3 is p ~0.09: inside the noise. **DROPPED as a default** (back to `--delta-smooth=on`
+as the arm, the commit after 7852a8d4); the `--fixed-fps` guard stays (it keeps the arm out of the goldens). Lesson:
+this machine's contention swings mailbox's no-tick count from 0 to 17 per round; a pacing lever needs a quiet machine
+or 10+ pairs, not 4.
+Caught before the flip: World armed it in ANY windowed mailbox run, including `--fixed-fps` ones (the selftest's look
+goldens): a fixed 16.667 ms delta snapped to the 59.94 Hz interval (16.683) would add a sim tick every ~1000 frames.
+7852a8d4 arms it only in a real-time window (`LaunchArgs.engine_fixed_fps()`), `test_fixed_fps_is_never_real_time`.
+
 ### Item 2 (it2): the traffic-sheet split is moot under BC7
 n9-world 3e02d3b8 imports the p70 traffic sheet as BC7: `traffic_cards.png-313d05e5...bptc.ctex` = **18,063,412 B**
 (4032 x 4480 x 1 B), one upload into a **32 MB** pow2 staging buffer (L9's mechanism), against 128 MB lossless. The
