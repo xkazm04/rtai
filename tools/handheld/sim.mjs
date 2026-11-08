@@ -6,7 +6,7 @@
 // arena's --frames=<json>, FightFrames) and samples CPU %, RAM and GPU memory from outside
 // (sample.ps1). Writes one gtai.handheld-sim/1 JSON per run. Every number is "on the simulator".
 //
-// Usage: node tools/handheld/sim.mjs --device=deck [--scene=reel|city|king|servo] [--ticks=1800]
+// Usage: node tools/handheld/sim.mjs --device=deck [--scene=reel|city|city_combo|king|servo] [--ticks=1800]
 //   [--gpu=igpu|dgpu|<index>] [--threads=<n>] [--priority=belownormal|normal] [--label=<name>]
 //   [--out=<dir>] [--no-device] [--movie=<abs .avi>] [--renderer=forward_plus|mobile|compat]
 //   [--bin=<gui exe>] [--suspend=<after s>:<for s>] [--project=<dir>] [-- <extra user args for the arena>]
@@ -26,6 +26,8 @@ const ROOT = resolve(HERE, '..', '..');
 export const SCENES = {
   reel: ['--rigs', '--bot=reel', '--reel=director', '--view=tilt70'],
   city: ['--arena=city', '--bot=course', '--seed=2', '--rigs', '--view=tilt70'],
+  // the city as main plays it after world's combo switch (the boss view's pitch ease in the open city)
+  city_combo: ['--arena=city', '--bot=course', '--seed=2', '--rigs', '--view=combo'],
   king: ['--rigs', '--boss=king', '--bot=boss', '--view=combo'],
   servo: ['--rigs', '--boss=servo', '--bot=boss', '--view=combo'],
 };
