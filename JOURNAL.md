@@ -732,3 +732,19 @@ is view only: the shot origin and the reload timing do not move).
   `gtai-masters/n9/rivet/rivet_reload_pistol_before_after_king_combo_48ppm_x2_seed1_f333_572.png`; frames.json 15
   (dropped the pistol p55 run still: entry 3 covers the pistol run, entry 8 the p55 runs).
   Finding for Call 18: in the bot scenes the drawn reload is a 7-frame flash; a player who stops to reload sees it in full.
+- SEEN in the reload before (top row f338 / 341): the gun's side fire cell shows at ANY aim (`fires_drawn` returned
+  true for a weapon without FLAME_DEG). Filmed the pistol fired up at the King (combo 48 px/m and tilt70 32 px/m,
+  seed 1, f302-309; before `--rivet-flame=all`): f305 the game flash bursts beside him at the side cell's measured
+  muzzle while the tracer leaves his head (**two shot origins**), f306-309 the drawn gun and its yellow flash point
+  screen right under an up tracer.
+- MILESTONE `5c77021f` **a gun's drawn fire cell only along the aim**: the side (0 / 180) or camera (90) fire cell while
+  the aim is within `RivetStrips.GUN_TOL` 45 deg of the gun as drawn, else the facing cell (the back view firing up;
+  no measured gun muzzle there, so the flash falls back to the held part's, on the tracer's line). Strikes keep their
+  cell (aim NAN while strike_t >= 0). `--rivet-flame=all` = any aim. DECISION rivet/gun-fire-along-aim. Tests: the
+  it10 "a gun: any aim" assertion and test line 79 (pistol at octant 4 aimed 124 deg) flipped on purpose; rivet
+  select 62/0; lint 15/15. Looked at both pairs: after, one origin and the back view at 32 and 48 px/m.
+  `gtai-masters/n9/rivet/rivet_gun_fire_up_one_origin_before_after_king_32ppm_tilt70_48ppm_combo_seed1_f302_309.png`;
+  frames.json 15 (it goes in at 4; dropped the it9 every-direction still, superseded by the flame-along-aim entry).
+- Gates on 5c77021f: director reel `reel-director-it12b-<v>.log` 19/19 fully down in top, tilt70, combo, 0 SCRIPT
+  ERROR, exit 0 (08:38-08:41).
+- REPORT.md drafted (08:45): what works 1-7 with stills, what does not, blocks, Call 19; the freeze pass finishes it.
