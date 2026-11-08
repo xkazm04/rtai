@@ -44,3 +44,19 @@ func test_a_shoulder_bar_draws_wider_not_shorter() -> void:
 	assert_almost_eq(face.y, g, 0.5)
 	assert_almost_eq(bar.x, g * PadGlyphArt.WIDE_K, 0.5)
 	assert_gt(bar.y, g * 0.75)  # was 0.48 g inside the square cell
+
+
+## n9 it4: the marks the atlas lacks stay text, never another family's mark (Deck Verified).
+func test_a_mark_the_atlas_lacks_stays_text() -> void:
+	for pad_label: String in GlyphCells.STAND_INS:
+		assert_false(PadGlyphArt.region(pad_label, GlyphCells.PAD).has_area(), pad_label)
+	var r: Array = PadGlyphArt.runs("Pause: [+]")
+	assert_eq(r.size(), 1)
+	assert_eq(str(r[0]), "Pause: [+]")
+	assert_true(PadGlyphArt.region("Options", GlyphCells.PAD).has_area(), "Options draws its own")
+
+
+func test_the_stand_ins_point_at_cells_the_atlas_has() -> void:
+	for pad_label: String in GlyphCells.STAND_INS:
+		var cell: String = GlyphCells.STAND_INS[pad_label]
+		assert_true(GlyphCells.PAD_CELL.values().has(cell), "%s -> %s" % [pad_label, cell])

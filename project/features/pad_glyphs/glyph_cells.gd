@@ -38,16 +38,19 @@ const PAD_CELL: Dictionary[String, String] = {
 	"ZL": "zl",
 	"ZR": "zr",
 	"Back": "select",
-	"Create": "select",
-	"-": "select",
 	"Start": "start",
 	"Options": "start",
-	"+": "start",
 	"L3": "stick_l3",
 	"R3": "stick_r3",
 	"L-stick": "move_stick_l",
 	"R-stick": "aim_stick_r",
 }
+## Labels whose own mark ui_pad_glyphs_v1 lacks (the PlayStation Create, the Nintendo-layout "-"
+## and "+"; REQUEST to assets, n9 it3) -> the cell at the same button position, which draws another
+## family's mark (Xbox View / Menu). Off: they stay bracketed text ("[+]"), because a glyph must
+## match the input in hand (Deck Verified); STAND_INS_ON true draws the stand-ins.
+const STAND_INS: Dictionary[String, String] = {"Create": "select", "-": "select", "+": "start"}
+const STAND_INS_ON: bool = false
 ## The prompt's key label (ObjectiveHint.key_name: OS.get_keycode_string, LMB / RMB; with_keys'
 ## "W A S D" and "mouse") -> its cell.
 const KB_CELL: Dictionary[String, String] = {
@@ -84,4 +87,10 @@ const KB_CELL: Dictionary[String, String] = {
 
 
 static func cell_map(glyph_set: StringName) -> Dictionary[String, String]:
-	return KB_CELL if glyph_set == KB else PAD_CELL
+	if glyph_set == KB:
+		return KB_CELL
+	if not STAND_INS_ON:
+		return PAD_CELL
+	var map: Dictionary[String, String] = PAD_CELL.duplicate()
+	map.merge(STAND_INS)
+	return map
