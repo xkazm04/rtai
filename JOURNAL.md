@@ -113,3 +113,18 @@ NEXT (iteration 3):
 3. Re-take E16 (BC7) under the bench lock once world's commit is on main; the combo framing at 1280x800 on main.
 4. REPORT.md at the freeze: Calls (kb glyphs on the desktop? a larger handheld text scale? the 40 Hz battery row as
    the Deck default?), the exe line, frames.json check.
+- 02:20 FRICTION (fixed): `sim.mjs --grab` found my process but copied the screen rectangle, so another lane's quest 1
+  window lying over mine was saved as "the King on switch_handheld" (caught by looking: keyboard prompts, wrong scene).
+  `grab_window.ps1` now reads the window itself with PrintWindow (PW_CLIENTONLY | PW_RENDERFULLCONTENT), the screen
+  copy only as the fallback; re-grabbed: the right window. The it1 / it2 deck stills were checked: they show the
+  compact card (this branch only), so they are mine. Commit 128c925e.
+- 02:21 The Switch-class 720p boss count judged on the re-grabbed still: "1 / 3" reads at ~10 px digits: no change.
+- 02:23 Gates this iteration: lint 15/15, full unit 1829/0, tools/handheld node tests 6/6. No shipped code changed in
+  it2 (dev probe, a test, the grab script, docs), so the reel / evidence gates of it1 (b345645c, 956b8dea) still stand.
+
+NEXT (iteration 3), refined for item 1 (the keyboard twin): the desktop labels come from `ObjectiveHint.key_name`
+(`OS.get_keycode_string`, "LMB" / "RMB") and `with_keys(..., false)` ("[W A S D]", "[mouse]"); the kb cell map:
+"W A S D" -> move_keys, "Up Left Down Right" -> move_arrows, "mouse" -> aim_mouse, LMB / RMB -> mouse_left / _right,
+E F Q R G P -> key_*, Escape -> key_esc, Space / Shift / Ctrl / Tab -> key_*, 1-4 -> key_1..4. The title card would
+use `with_keys(CONTROLS_PAD, false)` when the kb glyphs are on. Gate it off by default (a devices.json field on a
+desktop study row, or a launch flag in KNOWN_FLAGS); the desktop default must not move.
