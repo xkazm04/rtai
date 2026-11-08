@@ -403,3 +403,59 @@ NEXT (it8):
    turned, or wait for world's real-city clip on main.
 4. (it7: full unit on 4b912de0 = **1834/0**, 05:25-05:27.) The evidence run --no-bench on the it7 head.
 5. Size films owed: Servo combo 48 at 1.95 m, the roll ball and the death sprawl at size, beside a car.
+
+## it8 (05:28-06:28)
+
+Read: JOURNAL it7 NEXT, git log, the other journals (world it16: no REQUEST to rivet, it reads RivetKnock as specified;
+perf / handheld: none to rivet; handheld notes Rivet ~35 px at 40 px/m on main, his 1.65 m is on this branch), the asset
+lane (it131: DELIVERED the blade and heavy armed runs at 70, 7 A / 1 B each; the 55s in rounds 0605-0620). Registry rules
+applied: sprite-and-atlas (one scale per figure: the armed runs packed at run8 70's --k, never re-measured per row; a
+re-delivered row checked against the shipped one before re-packing), motion-quality (judged frame by frame at 64 px/m on
+the real reel chapter, before/after from the same build with the toggle off).
+
+- MILESTONE `4b06fbdf` **the drawn katana run at 70** (the library's blade run, rows 1-5 A, L2 v2 / L3 v2 A, L1 v2 B):
+  `rivet_run8_eq_katana.png` (rivet_walk.py --cols=8 --k=0.6433,0.6471 --tone=rivet_eq_katana.png); the unit test now
+  runs pistol, rifle and katana drawn, the flamer falls back to its armed walk. Select 29/29, lint 15/15.
+  Film: the reel's katana chapter (`arena.tscn -- --bot=reel --reel=director --chapter=katana --loadout=pistol --rigs
+  --view=tilt70 --ppm=64`, 200 frames, 0 SCRIPT ERROR; before `--rivet-walk=walk8`): the run-in to the cop f50-58,
+  before = the armed walk's short steps sliding, after = open run strides, fist on the hilt, claw free.
+  `gtai-masters/n9/rivet/rivet_armed_run_katana_before_after_reel_katana_tilt70_64ppm_f46_62.png` + both half-speed mp4s;
+  frames.json 15. Seen: the run figure reads a touch warmer than the armed walk cell before it (tone ref = the equipped
+  strip, not the walk).
+- FOUND: the library re-delivered blade L1 as **v3** after my pack (its cells at 05:32+): packed, row 6 comes out at
+  ~0.6x the other rows (the raised free fist beside the dome widened the dome band the library scales by, as its heavy
+  row 2). Kept the shipped v2 row (B: the tip near the free forearm). REQUEST below.
+- Packed the heavy (gatling) run (`gtai-n9/tmp/rivet/it8/rivet_run8_eq_gatling.png`, looked at all 64 cells: coherent,
+  the pack shows, the back row hides the gun); L2 v2 is B (stride -0.55/-0.52 vs run8's 0.60: ~12 % slide on the left
+  profile only on one cycle). Installed after the evidence run (the tree is held still for it).
+
+REQUEST to assets: rivet_run8_armed_blade_70_left_row1_v3 (pitch 70): the assembled `rivet_run8_armed_blade_70_left_cells`
+row 1 (v3) is scaled ~0.6x the other rows (the raised free fist beside the dome widens the dome band, as heavy row 2);
+please re-assemble it with a hand scale like heavy row 2's `--scale2` (row 2's or row 3's dome ratio), so the figure
+matches L2/L3. Until then rivet ships v2. And heavy L2 v3 (pitch 70) if a run lands at 0.60 x H stride (you offered it):
+the left profile slides ~12 % on the grid's one cycle.
+REQUEST to assets: rivet_run8_armed_flamer_70 then _55 (pitch 70 / 55), after the queued 55 runs: the 8-frame RUN with the
+flamethrower out, the run8 layout (5 right rows + 3 drawn left rows x 8, run8 order), LEGS by example from the run8 picks,
+ARMS + flamer + tank from the flamer armed walk rows (`rivet_walk_eq_flamethrower.png` at 70: its lefts are mirrored, so draw
+the lefts with the nozzle still in the claw's hand as the right rows; the tank on the back in the away rows); profile travel
+0.60-0.63 x H like run8 so one cycle fits. Why: the flamer is the last 70 weapon with a drawn walk that still glides at the
+6.75 m/s run (pistol, rifle, katana, gatling now run drawn).
+- Gates on 4b06fbdf (the katana run): director reel `reel-director-it8-<v>.log` 19/19 fully down in top, tilt70, combo, 0
+  SCRIPT ERROR, exit 0 (commit 0d39f360). Evidence run --no-bench on 4b06fbdf (05:42-05:50): lint PASS, unit **1834/0**
+  but flagged FAIL "tree changed during run" (my JOURNAL edit + the combo reel log landing mid-run: my error, the tests
+  themselves all passed), scenarios 54 PASS, parity PASS, selftest PASS (look goldens 11/11 worst 0.27, block 5/5 worst
+  0.22: nothing moved), release-compile 615/0.
+- Size film owed since it6 (it7 NEXT 5, part): **Servo combo at 48 px/m, p55 1.3 -> 1.95 m** (`--boss=servo --bot=boss
+  --view=combo --ppm=48 --seed=1 --loadout=pistol --rigs`, before `--rivet-height=1.1`, f150/f250, 0 SCRIPT ERROR both):
+  at 1.95 m he stands about two crates tall, sorts in front of the crate stack by his feet, the shadow lengthens with him,
+  the van and Servo stay in frame: no framing Call. `gtai-masters/n9/rivet/rivet_size_before_after_p55_1p3_1p95_servo_combo_48ppm_x1.5_seed1_f150_250.png`.
+- MILESTONE `1f067f92` **the drawn gatling run at 70** (the library's heavy run, 7 A / 1 B) + `RivetWalk.RUN_ROW_K`
+  ("<art>/<weapon>/<octant>"): a drawn run row with a shorter stride steps on a shorter cycle. Unit test (row_k: left
+  profile only, the bare run 1). Select 34/34, lint 15/15. Film (arena gunplay gatling seed 3, tilt70 64 px/m, 0 SCRIPT
+  ERROR; before `--rivet-walk=walk8`): before the legs barely move while he covers ground, after the toward row strides
+  (`rivet_armed_run_gatling_before_after_arena_gunplay_tilt70_64ppm_seed3_f40_72.png` + half-speed mp4s; it replaces the
+  it6 gatling/flamer still in frames.json, 15).
+- MEASURED (tmp `it8/travel_grid.py`, the library's cells_travel maths on my packed grids, absolute cell px at one scale):
+  left profile (row 6) run8 -62/-64, pistol -62/-64, rifle -62/-62, katana -63/-64, **gatling -60/-58**; 3/4 rows equal
+  within 4 px. So the gatling L2 is 59/63 = **0.94** of run8, not the 0.88 I took from the library's x H ratios (the heavy
+  figure with the pack is taller: H 110 vs 104, so its x H travel reads short). Fix: RUN_ROW_K 0.94.
