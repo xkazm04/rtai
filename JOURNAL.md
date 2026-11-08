@@ -470,8 +470,8 @@ the lefts with the nozzle still in the claw's hand as the right rows; the tank o
   pistol forward and the claw pumping vs the armed walk's steps
   (`rivet_armed_run_pistol_p55_before_after_king_combo_48ppm_x1.5_seed1_f20_52.png` + half-speed mp4; replaces the it6
   p55 armed-walk King still; frames.json 15).
-- Reels on 83e90179 (`reel-director-it8c-<v>.log`): top 19/19 fully down, 0 SCRIPT ERROR, exit 0; tilt70 and combo were
-  still running at the session stop (see NEXT 1).
+- Reels on 83e90179 (`reel-director-it8c-<v>.log`, 06:12-06:20): 19/19 fully down in top, tilt70, combo, 0 SCRIPT
+  ERROR, exit 0: every view has a green reel on the it8 code head.
 - FRICTION (~2 min): `python -I -c` with a `/c/...` path fails on Windows Python (FileNotFoundError): use `C:/...`.
 - FRICTION: `node tools/godot/check.mjs` fails on rivet_walk.gd AND on unchanged rivet_frames.gd ("Failed to compile
   depended scripts" via human_react.gd): a check-only artifact on this branch; GUT compiles and runs both.
@@ -485,8 +485,7 @@ the lefts with the nozzle still in the claw's hand as the right rows; the tank o
     empty table = every row on run8's cycle.
 
 NEXT (it9):
-1. Read `evidence/n9/reel-director-it8c-{tilt70,combo}.log` (they ran past the it8 stop on 83e90179): commit them if
-   19/19 fully down and 0 SCRIPT ERROR; else re-run `gtai-n9/tmp/rivet/scripts/reels.sh it9`.
+1. (done in it8: the reels are green on 83e90179 in all three views.)
 2. The library's 55 runs as they land (two-hand 55 round 0610, blade 55 0615, heavy 55 0620): pack each like 83e90179
    (`--k=0.6111,0.6197`, `--tone=p55/rivet_eq_<weapon>.png`), measure each row with `gtai-n9/tmp/rivet/it8/travel_grid.py`
    against p55 rivet_run8 and add RUN_ROW_K for any row > 5 % off; extend the unit test's p55 list.
