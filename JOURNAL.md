@@ -389,3 +389,16 @@ NEXT (it11):
   ped_punk A) and no open REQUEST to assets.
 - Plan: item 2 follow-up first (wire the 5 walker sheets: the riot's "straight old frame" fault (a) from it4), then
   item 4's arena props into the sim cells if time remains.
+Registry rules applied: `sprite-and-atlas-production` (one scale per sheet, the same 384 px cell / 269 px longest
+pose as the eight, packed with no resample by the same tool; BC7 params copied from the eight's .import, verified
+identical), `generative-artifact-gating` (every cell looked at on a contact sheet before wiring: 25 poses, the
+it124 grades kept: elder B (pose B face alive at ~4 px at 64), hat B (E the weakest fold)), `motion-quality-gating`
+(judged in motion on the riot at 32 and 64, before/after from the same seed and tick).
+- MILESTONE (04:29) item 2 follow-up at 2f258eeb: the 5 walker rows (ped/head_cap, head_bald -> ped_elder,
+  head_hat, head_jogger, head_punk) lie in plan poses (`tools/art/dead_plan.py --only=`, 5 provenance lines). New
+  unit test: every row in StreetWalkerCards.ROWS has a plan strip; the far crowd's plan_cell now serves the jogger.
+  Unit (dead_plan, crowd_corpse, walker_fall) 20/0, lint 15/15. Selftest at 2f258eeb: look goldens 11/11 + block
+  5/5 worst 0.00 (none moved; `evidence/n9-world/it13/selftest.log`). Riot before (06c64742, scratch worktree
+  `before` moved to it) | after, city_bench riot tilt70 t 22 s at 32 and 64: before the cap walkers lie as straight
+  planks, after twisted sprawls, neighbours in different poses (`gtai-masters/n9/world/dead_plan_walkers_riot_*`,
+  3 frames.json entries; frames.json pruned to 15).
