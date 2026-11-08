@@ -607,3 +607,15 @@ budget, the one site to lift on a 720p row is that count (16 -> 18 px authored, 
   `gtai-masters/n9/handheld/kbglyphs-desktop-title-after.png` vs `kbglyphs-desktop-title-before.png` (the shipped text),
   `kbglyphs-desktop-title-prompt-crop-x2.png`. Valve's rule "prompts do not flip to keyboard glyphs unless the mouse is
   really used" is about the handheld rows (they stay pad); this row is a desktop look. Owner Call: ship it on the desktop?
+- **Pad-first on the handheld rows (n9 it9, 2f842523, DECISION `handheld/pad-first`).** Found on film: quest 1 pad-only
+  on the Deck row (the pad walker: A on the title, no stick) showed the first prompt as "Walk [W A S D] to the dumpster,
+  hide: [E]" for the ~6 s until the stick moved, because `LiveInput.pad_last` started false in every session and the
+  title card consumed the pad's press. Valve's Deck Verified input rule (section 1): the default glyphs match the Deck's
+  controls. Now `LiveInput._init` seeds `pad_last = is_handheld()` and `mouse_aims = not pad_last`; a key or the mouse
+  still hands the prompts back. Before/after still `gtai-masters/n9/handheld/padfirst-deck-quest1-first-prompt-before-after-crop-x2.png`.
+  Re-check: a docked Deck with a keyboard (the first device used should then win).
+- **The Deck set at combo (n9 it9, iGPU, movie mode, CONTENDED):** the city (`deck-city-combo-40ppm-1280x800-igpu.mp4`)
+  and quest 1 Dock 9 (`deck-quest1-dock9-combo-40ppm-1280x800-igpu.mp4`, scratch walker `evidence/n9h/it9/q1film/`).
+  Looked at: at Dock 9 the top-right money + weapon cards (~340x220 px, 27 % x 27 % of 1280x800) sit over the crate row
+  while the objective is the rifle; HudSee fades that corner once the crates are the goal (n8-hud), so no change. Rivet
+  reads small beside the contractors on this branch (1.1 m; rivet's lane brings 1.65 m).

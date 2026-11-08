@@ -13,7 +13,7 @@ The owner's picks of 2026-11-07, in the brief's order:
    `handheld/zoom-40`, test `test_every_handheld_row_draws_at_40_ppm`). The King arena's boss cam honours it (Rivet
    ~42 px tall at 40 px/m: he is 1.1 m on this branch; rivet's 1.65 m lands on its own branch, ~66 px then).
    Re-filmed on the iGPU at 1280x800: `deck-king-40ppm-compact-1280x800-igpu.mp4`, `deck-city-40ppm-compact-1280x800-igpu.mp4`,
-   `deck-quest1-40ppm-glyphs-1280x800-igpu.mp4`, the set clip `n9-handheld-set-deck-40ppm.mp4` (64 s).
+   `deck-quest1-40ppm-glyphs-padfirst-1280x800-igpu.mp4`, the set clip `n9-handheld-set-deck-40ppm.mp4` (63 s, re-cut in it9).
 2. **A compact ghost-form card on handhelds (h-3 B).** `hud: compact` on the handheld rows (`DeviceProfile.hud`,
    `GhostFormLayout`; 6ca6d359, DECISION `handheld/compact-ghost-panel`). At 1280x800 the card goes from ~386x208 px
    (30 % x 26 % of the panel) to ~250x170 px (20 % x 21 %), about half the area; text stays 18 px. Legibility measured
@@ -76,6 +76,18 @@ The research loop since:
   margin), a brief faster catch-up (peak 17-21 px a tick). Clips: `deck-king-40ppm-bosscam-ease-before-after-halfspeed.mp4`,
   `deck-king-40ppm-bosscam-ease-1280x800-igpu.mp4`, `deck-servo-40ppm-bosscam-ease-1280x800-igpu.mp4` (the Radeon iGPU
   on its engine log, 0 SCRIPT ERROR).
+- **The first prompt names the pad on a handheld** (it9, 2f842523, DECISION `handheld/pad-first`): filming quest 1
+  pad-only on the Deck row showed the first prompt as "Walk [W A S D] to the dumpster, hide: [E]" until the stick moved
+  (the title card takes the pad's A before the session's input exists), against Valve's rule that the default glyphs
+  match the Deck. A handheld row's live input now starts pad-first until a key or the mouse is used; the desktop starts
+  on the keys as before. Still `padfirst-deck-quest1-first-prompt-before-after-crop-x2.png`, clip
+  `deck-quest1-40ppm-glyphs-padfirst-1280x800-igpu.mp4` (iGPU, 0 SCRIPT ERROR); 4 tests.
+- **The Deck set filmed at combo, the view main plays** (it9, the Radeon iGPU, each run in its own app data, the adapter
+  and 0 SCRIPT ERROR on its engine log, movie mode, CONTENDED): the city (`deck-city-combo-40ppm-1280x800-igpu.mp4`,
+  20 s: the course bot's hub waypoints walk into a roof in the city block at ~12 s, so it is cut there) and quest 1 Dock 9
+  into the Quartermaster (`deck-quest1-dock9-combo-40ppm-1280x800-igpu.mp4`, 45 s: the pad glyphs in the fight prompts,
+  the compact card and the dialogue cards clear of each other). The set clip `n9-handheld-set-deck-40ppm.mp4` re-cut
+  (63 s, captions) from the eased boss takes, these two and the pad-first quest 1.
 - **E21, the 40 Hz cadence** (it7, 7a6681e2): filmed at each row's own rate, `deck40` steps 1, 2, 1, 2 ticks a frame and
   73 % of its pan steps go 1:2; a new `deck30` row pans as evenly as 60. Battery proxy (bench lock, 3 rounds): GPU busy
   per second 36 % -> 27 % (-25 %) from 40 to 30; CPU the same (the sim ticks 60 Hz either way).

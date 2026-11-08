@@ -514,3 +514,28 @@ NEXT (iteration 9) (2a done at 07:39: both boss clips on the iGPU with the ease 
    windows-showcase ../build/export/windows/RTAI.exe`), final gates on the head (reel x3 + evidence run with the log
    outside the tree), REPORT final (gates line, exe line, Calls 1-5, frames.json 15 entries all present: check every
    file exists; masters has 31 files, the superseded bc7 still and band clip are still referenced by LEDGER/REPORT).
+
+## Iteration 9 (orchestrator it11, 07:41 - 08:41), BUILD
+
+- 07:42 READ: JOURNAL it8 NEXT, git log; rivet (it10) / world (it23) / perf (it8) journals: no REQUEST to handheld; the
+  asset library's latest deliveries (it137 rivet reload claw): none names handheld. Registry rules applied:
+  motion-quality-gating (judge motion by static-ground phase correlation, same ticks before/after),
+  on-device-verification-harness ("on the simulator", CONTENDED labels, the adapter line on each engine log),
+  adaptive-fidelity-tiers (nothing the desktop sees moves). Plan: (1) the city DRIVE on the Deck row at combo on the
+  iGPU (entry 12 is the on-foot course at tilt70; main plays combo); (2) the ease on deck40 at 40 fps, ground-band
+  pancorr; (3) re-cut the combined clip (entry 11) with the eased boss takes.
+- 07:43 Filmed the city at combo on the Deck row (sim.mjs city_combo, own APPDATA `appdata/handheld-city`: Radeon on the
+  engine log, 0 SCRIPT ERROR, CONTENDED 2). Looked: the course bot stands at a roof edge from ~12 s (its hub waypoints
+  in the city block), cut to 20 s -> masters `deck-city-combo-40ppm-1280x800-igpu.mp4` (frames.json, replaces the tilt70 city).
+- 07:44 FRICTION (~4 min): a scratch SceneTree script that fails to parse leaves Godot running and writing blank movie
+  frames into the same .avi; two strays of mine killed by PID (taskkill /T), re-run under a fresh name. Rule: a new
+  movie file name per launch; check the first 20 s of the log before walking away.
+- 07:48 Quest 1 at combo on the Deck row (scratch walker `evidence/n9h/it9/q1film/`, CollectCallInputDriver to tick
+  13000, 2700 ticks, iGPU, 0 SCRIPT ERROR): Dock 9 into the Quartermaster; tick 5800 is the Toner Room dialogue, not
+  Dock 9 (perf's preset comment is stale). Masters `deck-quest1-dock9-combo-40ppm-1280x800-igpu.mp4` + t18 still.
+  Checked the top-right cards over the crate row: HudSee already fades it when the crates are the goal; no change.
+- 07:56 FINDING on the set sheet: quest 1's first prompt on the Deck row named the keys until the stick moved.
+  MILESTONE 2f842523 pad-first (LiveInput seeds pad_last / mouse_aims from is_handheld()); tests 4; unit --changed
+  1843/0; lint 15/15; DECISION handheld/pad-first; before/after still on the iGPU (HEAD~ live_input.gd vs the fix).
+- 07:58 Re-filmed quest 1 pad-only (iGPU, 0 SCRIPT ERROR): `deck-quest1-40ppm-glyphs-padfirst-1280x800-igpu.mp4`
+  replaces the it1 clip (deleted; REPORT/LEDGER refs updated). Set clip re-cut, 63 s with captions. frames.json 15, all present.
