@@ -186,11 +186,8 @@ func _locate(id: int) -> Vector2:
 
 ## The dead hostiles: id -> where they lie (px).
 func _dead_px() -> Dictionary[int, Vector2]:
-	var out: Dictionary[int, Vector2] = {}
-	for h: Fighter in _stage.arena.hostiles:
-		if not h.alive():
-			out[h.id] = h.pos * SimConst.PX_PER_M
-	return out
+	var cast: bool = not cast_view.fighters_on_rigs or QuestGuardCast.ON  # CastView draws the dead
+	return StreetQuestDeadPlan.dead_px(_stage.arena, cast, Ink.PX_PER_M)
 
 
 ## features/souls: a Hauler stomp landing shakes the camera and holds the clock (hit-stop), on

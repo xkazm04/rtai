@@ -59,6 +59,30 @@ static func draw(canvas: CanvasItem, at_px: Vector2, h: Fighter, px_per_m: float
 	return true
 
 
+## it22: where the dead guard `h` lies in metres at the arena tick `now` (its drawn pelvis), so what
+## is laid on the body (CorpseStains' soaks) lies on it; h.pos when the plan pose does not draw.
+## `px_per_m` is the draw's (CastView's Ink.PX_PER_M): the pick and the push are kept in its px.
+static func lying_m(h: Fighter, now: int, px_per_m: float) -> Vector2:
+	if not ENABLED or not ViewMode.shared().cards or _strip() == null:
+		return h.pos
+	var at: Vector2 = h.pos * px_per_m
+	return transform_of(at, h, px_per_m, now - h.hurt_tick).origin / px_per_m
+
+
+## CorpseStains' dead for quest 1 (CollectCallView): id -> where each dead hostile lies in sim px,
+## on the plan corpse when `cast` (CastView draws the dead; else the rigs do: his spot).
+static func dead_px(arena: CombatArena, cast: bool, px_per_m: float) -> Dictionary[int, Vector2]:
+	var out: Dictionary[int, Vector2] = {}
+	for h: Fighter in arena.hostiles:
+		if h.alive():
+			continue
+		var m: Vector2 = h.pos
+		if cast and h.kind != Fighter.Kind.BOSS:
+			m = lying_m(h, arena.tick, px_per_m)
+		out[h.id] = m * SimConst.PX_PER_M
+	return out
+
+
 ## The corpse's colour from StreetQuestCorpses' decay tint: OPAQUE lifts the cast view's alpha to 1.
 static func ground_tint(tint: Color) -> Color:
 	var c: Color = tint

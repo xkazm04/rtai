@@ -94,3 +94,20 @@ func test_a_later_body_is_pushed_off_one_already_lying_and_the_first_stays() -> 
 	assert_eq(StreetQuestDeadPlan.transform_of(b, second, PPM), t2, "the push is fixed")
 	var far: Vector2 = a + Vector2(5.0 * PPM, 0)
 	assert_eq(StreetQuestDeadPlan.push_of(StreetQuestDeadPlan.ID_BASE - 3, far, PPM), Vector2.ZERO)
+
+
+func test_the_soak_spot_is_the_drawn_pelvis_when_the_plan_draws() -> void:
+	var h: Fighter = _guard(4, Vector2.RIGHT)
+	h.pos = Vector2(12.0, 30.0)
+	h.hurt_tick = 0
+	var got: Vector2 = StreetQuestDeadPlan.lying_m(h, 1000, PPM)
+	if not ViewMode.shared().cards or not ResourceLoader.exists(StreetQuestDeadPlan.PATH):
+		assert_eq(got, h.pos, "no plan pose: his own spot")
+		return
+	var t: Transform2D = StreetQuestDeadPlan.transform_of(h.pos * PPM, h, PPM, 1000)
+	assert_almost_eq(got.x, t.origin.x / PPM, 0.0001)
+	assert_almost_eq(got.y, t.origin.y / PPM, 0.0001)
+	var off: float = got.distance_to(h.pos)
+	assert_almost_eq(
+		off, StreetDeadPlan.PELVIS_K * StreetQuestCards.body_m(), 0.01, "along the blow"
+	)
