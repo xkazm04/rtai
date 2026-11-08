@@ -124,6 +124,8 @@ func _smoothed(delta: float) -> float:
 		on = on and DisplayServer.window_get_vsync_mode() == DisplayServer.VSYNC_MAILBOX
 		hz = minf(hz, Engine.max_fps) if Engine.max_fps > 0 else hz
 		_smooth = FrameDeltaSmoother.new(1.0 / hz if on else 0.0)
+		if on:
+			Log.info("world", "delta smoothing on: %.2f Hz interval (mailbox)" % hz)
 	return _smooth.smooth(delta)
 
 

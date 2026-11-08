@@ -209,3 +209,8 @@ NEXT (it4):
    grows with the next clips (a combined clip of the set, 30-90 s).
 5. Then the research loop: the combo card cost is structural (LEDGER "World's REQUEST, part 2"); next candidates:
    city_view _process (F6, 2.2 ms mean in the riot), the occlusion pass, the crowd atlas bake time at boot.
+- 03:40 L16 proven armed in the bench: a 4 s windowed city_bench with `--vsync=mailbox --delta-smooth=on` logs
+  "world: delta smoothing on: 59.94 Hz interval (mailbox)" (so the 03:30 A/B arm was on). Note: the panel reports
+  59.94 Hz, so a snapped frame is 16.683 ms vs the 16.667 ms tick: one extra double-tick frame per ~1000 frames is
+  the floor (Enabled shows multiTick 1-2 per 30 s too). Unit (smoother, sim_clock, launch_args) 15 / 0.
+NEXT it4 item 1 updated: the Log line is in (this commit); go straight to the 6-pair A/B.
