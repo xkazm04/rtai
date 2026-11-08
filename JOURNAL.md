@@ -419,3 +419,12 @@ NEXT (iteration 7):
   starts from rest, suspected FeelCam's hit kick. Clip to masters `deck-king-40ppm-bosscam-band-1280x800-igpu.mp4`,
   frames.json entry 14 (replaces the follow-cam King clip; 15 entries, all present).
 - 06:24 GATE at 2d6a14a7: director reel 19/19 fully down in top / tilt70 / combo, 0 SCRIPT ERROR (`evidence/n9h/it7/gates/`).
+- 06:27 GATE full unit 1847/0 at 2d6a14a7 (`evidence/n9h/it7/gates/unit-full.txt`).
+- 06:28 E21 FINDING: the King filmed on `deck40` at its own 40 fps (`sim.mjs --movie-fps=40`, new flag + node test):
+  ticks per frame 1, 2, 1, 2 (899 / 900); pans step 10, 20, 10, 20 px. A `deck30` row (2 ticks every frame) filmed at
+  30: even. Pan-step unevenness median 0.50 (deck40) vs 0.00 (deck, deck30). MILESTONE 7a6681e2 (row + test +
+  DECISION handheld/deck30-row).
+- 06:37 E21b bench lock 06:33-06:37 (taken noclobber by hand, deleted after), city_combo, 3 rounds (5/6 CONTENDED):
+  deck40 -> deck30 GPU busy per second 359 -> 270 ms (-25 %), pinned CPU 4.71 -> 4.32 % (noise). LEDGER E21, REPORT
+  (it7 items, Call 4 rewritten: 40 or 30, with the two clips in masters). FRICTION: ab.mjs ignores `--out`, writes
+  under `evidence/sim/<name>/` (moved the ab.json by hand).

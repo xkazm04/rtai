@@ -64,6 +64,14 @@ The research loop since:
   the tested clip camera (BossCam) that frames Rivet and the boss together on the fight's floor. On the Deck row at
   40 px/m the follow camera showed half the screen as paper past Servo's yard; now the yard fills it with both
   fighters in. The desktop is untouched. Still: `bosscam-deck-servo-before-after-40ppm-1280x800-t900.png`.
+- **The boss cam's snap fixed** (it7, 2d6a14a7, DECISION `handheld/boss-cam-band`): proven by a focus log (frame 154,
+  Rivet 19.8 m from the King, the focus jumped 76 px as the 20 m switch flipped); the lean now fades on a smoothstep
+  between 14 and 28 m (unchanged within 14 m). Over 2700 frames the worst focus move is 11.3 px (King), 14.7 px
+  (Servo's charges); the re-filmed King clip (`deck-king-40ppm-bosscam-band-1280x800-igpu.mp4`, iGPU, 0 SCRIPT ERROR)
+  has no jump at frame 155 by phase correlation (62 px before).
+- **E21, the 40 Hz cadence** (it7, 7a6681e2): filmed at each row's own rate, `deck40` steps 1, 2, 1, 2 ticks a frame and
+  73 % of its pan steps go 1:2; a new `deck30` row pans as evenly as 60. Battery proxy (bench lock, 3 rounds): GPU busy
+  per second 36 % -> 27 % (-25 %) from 40 to 30; CPU the same (the sim ticks 60 Hz either way).
 - **The zoom before/after** (it6): `zoom-deck-king-32-vs-40ppm-1280x800-t900.png`,
   `zoom-deck-city-combo-32-vs-40ppm-1280x800-t600.png` (tick-exact, same tick both sides).
 - **Legibility on the other rows:** `handheld_1080` every x-height >= 12 px; `switch_handheld` (720p) the boss count's
@@ -74,15 +82,19 @@ The research loop since:
   determinism note narrowed (the CitySim is already strict-FP, NAT-07; the engine's own math on an arm64 build is the
   open part, LEDGER section 1).
 
-Gates (latest, it6): at 4870776c the evidence run `--no-bench` all PASS (lint, unit 1845/0, scenarios 54, parity
+Gates (it7): at 2d6a14a7 (the boss-cam band, the last shipped-code change before the `deck30` data row) full unit 1847/0 and
+the director reel 19/19 fully down, 0 SCRIPT ERROR in top, tilt70 and combo (`evidence/n9h/it7/gates/`).
+Gates (it6): at 4870776c the evidence run `--no-bench` all PASS (lint, unit 1845/0, scenarios 54, parity
 (mutation caught at 629), selftest look goldens 11/11, release-compile 619/0,
 `evidence/n9h/it6/gates/evidence-run-4870776c.txt`); the director reel 19/19 chapters fully down, 0 SCRIPT ERROR in top,
 tilt70 and combo at 98cacb86, the last shipped-code change (`evidence/n9h/it6/gates/`). (Freeze: re-run on the final head.)
 
 ## What does not work yet
 
-- The boss cam (handheld rows and the dev `--boss-cam` clips) snaps ~60 px in one frame once in the King clip
-  (frame 155 of `deck-king-40ppm-bosscam-1280x800-igpu.mp4`; the FAR_M 20 m switch suspected): fix owed (it7).
+- The 40 Hz row judders: the 60 Hz tick over 25 ms frames steps 1, 2, 1, 2 ticks a frame, so pans and sprites move
+  10, 20, 10, 20 px (E21). The cure (every view drawn between two ticks) is owed; 30 and 60 are even (Call 4).
+- The two 20-24 px one-frame camera starts left in the King clip (frames 707, 1265, the same before and after the
+  boss-cam fix) are not BossCam (its focus moves <= 11.3 px a frame); suspected the hit feel's kick (FeelCam), unproven.
 - Steam Input origin glyphs (a remapped pad) need the Steam backend: owed with the Steam port.
 - Nothing here is proven on a Deck: watts, battery hours, Zen 2 single-thread frame times (E18:
   ~0.55-0.92 of one Deck core at 60 Hz, an estimate the simulator cannot pin down), the shader cache's first run, suspend on SteamOS, the Linux build under real Vulkan.
@@ -104,8 +116,12 @@ tilt70 and combo at 98cacb86, the last shipped-code change (`evidence/n9h/it6/ga
    sat at the floor (the boss count) draws at 18 px on handheld rows, so the smallest is now x-height 10 / cap 13 (the
    pause card's -, + and Toggle). a) keep (built); b) a row-level text scale for every handheld text (owed work, ~half
    a day; re-lays the cards). Still: `count-deck-16-vs-18-crop-x4.png`.
-4. **The 40 Hz row as the Deck default?** E17: GPU busy -30 %, pinned CPU -24 % (a battery proxy). a) 60 with the
-   player's 30 / 40 / 60 cap in the pause card (built); b) 40 by default.
+4. **The Deck's battery mode: 40 or 30?** E17: 40 cuts GPU busy -30 %, pinned CPU -24 % against 60; but E21: at 40 the
+   60 Hz sim steps 1, 2, 1, 2 ticks a frame and pans judder (73 % of steps uneven), while 30 is even and cuts GPU busy
+   a further -25 %. a) 60 by default with the player's 30 / 40 / 60 cap in the pause card (built); b) 30 as the
+   recommended battery mode (drop 40 from the cap list until views interpolate); c) 40 by default and build view
+   interpolation (owed, days). Clips (each at its own rate, the iGPU): `deck40-king-40ppm-bosscam-40fps-igpu.mp4` vs
+   `deck30-king-40ppm-bosscam-30fps-igpu.mp4`. Try: `RTAI.exe -- --boss=king --device=deck40` vs `--device=deck30`.
 
 5. **The boss cam on the desktop too?** The follow camera shows the same paper past Servo's yard on the desktop at
    1280x800 (`evidence/n9h/it6/zoom/servo-desktop-t900.png`). a) handheld rows only (built); b) every row (`boss_cam`

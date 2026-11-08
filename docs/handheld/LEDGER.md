@@ -512,6 +512,29 @@ budget, the one site to lift on a 720p row is that count (16 -> 18 px authored, 
   The combo view keeps the 40 Hz saving (E17 tilt70: -30 % / -24 %; E5 d9: -31 % / -26 %): three views and two zooms
   agree, so the battery-mode call (REPORT Call 4) does not depend on the view. JSONs: `evidence/n9h/it6/e17c/`.
 
+- **E21 (n9 it7), the 40 Hz cadence and a 30 fps row.** Filmed at each row's own rate (`sim.mjs --movie-fps=<n>`, the
+  movie maker hands Godot exactly 1/n s a frame, as a locked panel would): the King, the boss cam, the iGPU, 45 s of sim,
+  the image shift per frame by phase correlation (`evidence/n9h/it7/bosscam/pancorr.py`). The 60 Hz tick over 25 ms
+  frames runs **1, 2, 1, 2 ticks a frame** on `deck40` (899 / 900 frames), so a steady camera pan steps 10, 20, 10, 20 px:
+  over consecutive panning frame pairs (both >= 6 px) the step unevenness |a-b|/max(a,b) has median **0.50** on `deck40`
+  (73 % of pairs >= 0.4) against **0.00** on `deck` (60) and on the new **`deck30`** row (30 fps, 2 ticks every frame;
+  2 % / 5 % of pairs >= 0.4) (`evidence/n9h/it7/cadence/cadence.txt`). The sprites step the same way (the whole view
+  is drawn from the last tick). The cure for 40 Hz is drawing every view at an interpolated alpha between two sim
+  states (owed, not small); 30 is the even battery mode the game can already offer (the pause card's cap has 30).
+  The battery proxy (E17c recipe: `city_combo`, 1200 ticks, iGPU, 8 pinned threads, 3 interleaved rounds, bench lock
+  06:33-06:37, 5 / 6 runs CONTENDED):
+
+  | metric (median of 3, +- spread) | deck40 (40) | deck30 (30) | change |
+  |---|---|---|---|
+  | frame p50 | 25.07 +-0.15 ms | 33.28 +-0.09 ms | locked at the cap both |
+  | render GPU per frame p50 | 8.98 +-0.29 ms | 9.01 +-0.24 ms | the same work per frame |
+  | **GPU busy per second** (fps x render GPU) | ~359 ms (36 %) | ~270 ms (27 %) | **-25 %** (-48 % vs 60, E17c's 524 ms) |
+  | pinned CPU p50 | 4.71 +-0.15 % | 4.32 +-0.40 % | -8 %, at the noise: the sim still ticks 60 Hz |
+  | private RAM / GPU shared max | 1492 / 1118 MB | 1427 / 1054 MB | inside the +-64 MB spread |
+
+  `over33_settled` 357 on `deck30` is the cap itself (every frame 33.3 ms), not a hitch. JSON: `evidence/n9h/it7/e21b/`.
+  Kept: the `deck30` row (7a6681e2, DECISION handheld/deck30-row); the default stays `deck` (60); the pick is Call 4.
+
 - **E20 (n9 it6), the Deck row re-based on what main will be:** a scratch worktree (`gtai-n9/tmp/handheld/mergewt`) =
   this branch at eff2388f merged with n9-world at d5006d22 (combo boot, sim bikes 6 %, BC7, the plan-pose dead, cars
   knock Rivet down, bodies stop at walls), world's native DLLs, world's `.godot` copied then `--import` (23 s, 0 errors).
