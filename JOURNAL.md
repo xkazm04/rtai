@@ -257,3 +257,9 @@ NEXT (it5):
    --arms=main:^--path <prof3>/project,head:` + an A-vs-A (F12).
 5. Scratch worktrees still up: `gtai-n9/tmp/perf/prof3` (main), `world3` (n9-world 746c2856): keep prof3 for item 4,
    remove world3 (`git worktree remove --force`) once world's final BC7 table is not needed.
+- 04:33 GATE `node tools/evidence/run.mjs --no-bench` on 10a2348a: lint 15 / 15, unit 1831 / 0, scenarios 54 / 54,
+  parity bit-exact (mutation caught at 629), selftest PASS (look goldens 11 / 11; `evidence/perf/n9-gates/
+  selftest-it4-10a2348a.json`), release-compile 616 / 0. The branch is green; the reel x3 last ran on 54de9b41 (since
+  then only the inert-by-default smoother arm and LaunchArgs.engine_fixed_fps changed: no reel re-run needed unless a
+  game file changes in it5).
+- it4 ends 04:35. NEXT (it5) as written above; item 2 (the evidence gate) is DONE on 10a2348a.
