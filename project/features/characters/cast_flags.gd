@@ -41,3 +41,5 @@ static func apply(args: PackedStringArray = OS.get_cmdline_user_args()) -> void:
 			RivetWalk.run = false
 		elif arg == "--rivet-walk-armed=off":
 			RivetWalk.armed = false
+		elif arg == "--rivet-knock=off":
+			RivetKnock.enabled = false

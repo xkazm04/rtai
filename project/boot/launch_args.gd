@@ -88,6 +88,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--rivet-walk",
 	# n9-rivet: --rivet-walk-armed=off keeps the equipped facing card while a weapon is out
 	"--rivet-walk-armed",
+	# n9-rivet: --rivet-knock=off keeps the death sprawl while a car's knock lies him down
+	"--rivet-knock",
 	# n9-rivet: --rivet-flame=cone brings back d9's flamer (the drawn flame on 3 octants only);
 	# --rivet-flame=side fires the side cell on the diagonals too (no drawn diagonal flame)
 	"--rivet-flame",

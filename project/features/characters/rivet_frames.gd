@@ -1,9 +1,8 @@
 class_name RivetFrames
 extends RefCounted
-## Lane d9 rivet: under a card-art view (p70 play, p55 boss) Rivet is one whole drawn figure, the
-## parts hidden. Strips (RivetStrips): BASE (5 facings, 3 left, walk, sprint, roll, claw, hit,
-## death), EQ per weapon (5 facings, fire side, fire at camera, rest), LEFT (a one-handed hold's
-## 3 drawn left views). The art key's change swaps the strip (the combo's hard swap).
+## Lane d9 rivet: under a card-art view (p70 play, p55 boss) Rivet is one drawn figure, the parts
+## hidden. Strips (RivetStrips): BASE, EQ per weapon, LEFT (one-handed holds); grids: RivetWalk,
+## RivetKnock (n9). The art key's change swaps the strip (the combo's hard swap).
 enum Cell { WALK = 8, SPRINT = 9, ROLL = 10, CLAW = 11, HIT = 12, DEATH = 13 }
 enum Eq { FIRE_SIDE = 5, FIRE_CAM = 6, REST = 7 }
 
@@ -18,13 +17,11 @@ const LEFT: PackedByteArray = [0, 0, 0, 1, 1, 1, 0, 0]
 ## The facings' median figure height in the strips (rivet_frames.json fig_h) and the feet's pad.
 const FIG_PX: float = 110.0
 const PAD_PX: float = 2.0
-## Rivet's standing height on screen (m). n9: the owner's +50 % (1.1 -> 1.65 m, ~53 px at
-## 32 px/m); p55 in proportion (1.3 -> 1.95: the 55 drawings, a smaller helmet over longer legs).
+## His standing height on screen (m). n9: the owner's +50 % (1.1 -> 1.65 m); p55 in proportion.
 const HEIGHT_M: float = 1.65
 const HEIGHT_BY_ART: Dictionary[String, float] = {"p55": 1.95}
 const ROLL_SHADOW: float = 0.45  # the roll ball's cast-shadow height, in standing heights
-## The fire cell: a recoil (RigClips.recoil, 0.4-1.6) above FIRE_RECOIL, or a shot left within
-## FIRE_TICKS (streams and autos: RivetHeldView publishes it from the trigger's cooldown).
+## The fire cell: a recoil (RigClips.recoil) above FIRE_RECOIL, or a shot within FIRE_TICKS.
 const FIRE_RECOIL: float = 0.25
 const FIRE_TICKS: int = 7
 ## The gait without drawn stride frames: a lift per step (px at full walk) and a sway (rad).
@@ -53,6 +50,7 @@ static func step(rig: CutRig) -> void:
 	if path != "" and LEFT[oct_of(rig)] == 1 and RivetStrips.ONE_HAND.has(weapon):
 		path = RivetStrips.left_of(art, weapon)
 	path = walk if walk != "" else RivetStrips.diag_or(rig, art, weapon, path)
+	path = RivetKnock.path_or(rig, art, path)  # n9: a car's knock wins over the DOWN sprawl
 	if not ENABLED or path.is_empty():
 		release(rig)
 		return
@@ -126,6 +124,9 @@ static func place(rig: CutRig, card: Sprite2D) -> void:
 	var art: String = ViewMode.shared().art
 	var h: float = HEIGHT_BY_ART.get(art, HEIGHT_M) * height_k
 	var s: float = h * CharacterRigs.PX_PER_M / FIG_PX
+	if RivetKnock.shows(card):
+		RivetKnock.place(rig, card, s, h * CharacterRigs.PX_PER_M)
+		return
 	var drawn_walk: bool = RivetWalk.is_grid(card)
 	var ph: float = RivetWalk.phase_of(rig, art, s)
 	var c: Vector2i = cell_of(rig, card.hframes, ph if drawn_walk else -1.0)
