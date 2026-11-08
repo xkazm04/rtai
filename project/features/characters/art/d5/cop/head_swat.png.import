@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://l2y54xbl0vee"
-path="res://.godot/imported/head_swat.png-7999aa4a8631fdef44dbd671e854dc49.ctex"
+path.bptc="res://.godot/imported/head_swat.png-7999aa4a8631fdef44dbd671e854dc49.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/characters/art/d5/cop/head_swat.png"
-dest_files=["res://.godot/imported/head_swat.png-7999aa4a8631fdef44dbd671e854dc49.ctex"]
+dest_files=["res://.godot/imported/head_swat.png-7999aa4a8631fdef44dbd671e854dc49.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

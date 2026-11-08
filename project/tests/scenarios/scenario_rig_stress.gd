@@ -1,9 +1,10 @@
 extends Scenario
 ## F-09b exit: the 50- and 200-person rig stress, 10 s each on the fixed tick, headless. Passes
-## when no more than 16 full rigs ever run, play never builds a rig (the pools hold), and the
-## median rig work per tick is inside the STANDARDS section 20 hard limit (1 ms). Tail latency
-## (p99) is logged, not gated: a shared box's stalls would make it flaky. The section 20 p99
-## verdict is the bench on an idle machine (dev/bench/rig_bench.gd -> rig-bench.json).
+## when no more than 16 full rigs ever run (+ RigSelect.CORPSE_PINS fresh dead in a card view),
+## play never builds a rig (the pools hold), and the median rig work per tick is inside the
+## STANDARDS section 20 hard limit (1 ms). Tail latency (p99) is logged, not gated: a shared box's
+## stalls would make it flaky. The section 20 p99 verdict is the bench on an idle machine
+## (dev/bench/rig_bench.gd -> rig-bench.json).
 
 const TICKS: int = 600
 const SIZES: Array[int] = [50, 200]
@@ -34,8 +35,10 @@ func _one(tree: SceneTree, people: int) -> String:
 	rigs.queue_free()
 	bus.free()
 	data.free()
-	if m["fullRigsMax"] > CharacterRigs.MAX_FULL:
-		return "%d people: %d full rigs ran (cap 16)" % [people, int(m["fullRigsMax"])]
+	# a card view (the combo default since n9) keeps up to CORPSE_PINS fresh dead rigged past the cap
+	var pins: int = RigSelect.CORPSE_PINS if ViewMode.shared().cards else 0
+	if m["fullRigsMax"] > CharacterRigs.MAX_FULL + pins:
+		return "%d people: %d full rigs ran (cap %d)" % [people, int(m["fullRigsMax"]), 16 + pins]
 	if m["poolGrown"] > 0.0:
 		return "%d people: the pools grew in play" % people
 	return _p50_verdict(people, m["rigMsP50"])

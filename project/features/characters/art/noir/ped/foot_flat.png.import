@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://4dgsqgnf07cj"
-path="res://.godot/imported/foot_flat.png-6c4c8b09c417c4a2207b5efa673c7b7c.ctex"
+path.bptc="res://.godot/imported/foot_flat.png-6c4c8b09c417c4a2207b5efa673c7b7c.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/characters/art/noir/ped/foot_flat.png"
-dest_files=["res://.godot/imported/foot_flat.png-6c4c8b09c417c4a2207b5efa673c7b7c.ctex"]
+dest_files=["res://.godot/imported/foot_flat.png-6c4c8b09c417c4a2207b5efa673c7b7c.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

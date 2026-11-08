@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dtdurqy0tbsj2"
-path="res://.godot/imported/head_bald.png-958f69fac7ac10c5c96374f985563f2b.ctex"
+path.bptc="res://.godot/imported/head_bald.png-958f69fac7ac10c5c96374f985563f2b.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/characters/art/ped/head_bald.png"
-dest_files=["res://.godot/imported/head_bald.png-958f69fac7ac10c5c96374f985563f2b.ctex"]
+dest_files=["res://.godot/imported/head_bald.png-958f69fac7ac10c5c96374f985563f2b.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

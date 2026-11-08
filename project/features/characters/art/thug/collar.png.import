@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://du1bf0t8evegx"
-path="res://.godot/imported/collar.png-d99d8a06c449485ace9ce35876a32004.ctex"
+path.bptc="res://.godot/imported/collar.png-d99d8a06c449485ace9ce35876a32004.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/characters/art/thug/collar.png"
-dest_files=["res://.godot/imported/collar.png-d99d8a06c449485ace9ce35876a32004.ctex"]
+dest_files=["res://.godot/imported/collar.png-d99d8a06c449485ace9ce35876a32004.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cmbpucuwmfwk6"
-path="res://.godot/imported/claw_open.png-6683e64f6e323bda4e1c0e0d2e594c02.ctex"
+path.bptc="res://.godot/imported/claw_open.png-6683e64f6e323bda4e1c0e0d2e594c02.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/characters/art/rivet/claw_open.png"
-dest_files=["res://.godot/imported/claw_open.png-6683e64f6e323bda4e1c0e0d2e594c02.ctex"]
+dest_files=["res://.godot/imported/claw_open.png-6683e64f6e323bda4e1c0e0d2e594c02.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

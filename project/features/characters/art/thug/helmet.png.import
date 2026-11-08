@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://46cjub5ytd5e"
-path="res://.godot/imported/helmet.png-1bd7cf17c1fdca0cb5d48f208fa3e172.ctex"
+path.bptc="res://.godot/imported/helmet.png-1bd7cf17c1fdca0cb5d48f208fa3e172.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/characters/art/thug/helmet.png"
-dest_files=["res://.godot/imported/helmet.png-1bd7cf17c1fdca0cb5d48f208fa3e172.ctex"]
+dest_files=["res://.godot/imported/helmet.png-1bd7cf17c1fdca0cb5d48f208fa3e172.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

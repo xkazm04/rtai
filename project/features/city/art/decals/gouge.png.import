@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dutlfbwkt0kvr"
-path="res://.godot/imported/gouge.png-d2ce05c6c4405aadbb7f1689ab63fe14.ctex"
+path.bptc="res://.godot/imported/gouge.png-d2ce05c6c4405aadbb7f1689ab63fe14.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/city/art/decals/gouge.png"
-dest_files=["res://.godot/imported/gouge.png-d2ce05c6c4405aadbb7f1689ab63fe14.ctex"]
+dest_files=["res://.godot/imported/gouge.png-d2ce05c6c4405aadbb7f1689ab63fe14.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

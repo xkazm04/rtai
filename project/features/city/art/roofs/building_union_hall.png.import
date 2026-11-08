@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b5m4371epocsj"
-path="res://.godot/imported/building_union_hall.png-6ade3e7f8b1f2962917d1cec12c30109.ctex"
+path.bptc="res://.godot/imported/building_union_hall.png-6ade3e7f8b1f2962917d1cec12c30109.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/city/art/roofs/building_union_hall.png"
-dest_files=["res://.godot/imported/building_union_hall.png-6ade3e7f8b1f2962917d1cec12c30109.ctex"]
+dest_files=["res://.godot/imported/building_union_hall.png-6ade3e7f8b1f2962917d1cec12c30109.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

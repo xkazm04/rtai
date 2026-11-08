@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cnjhw3ahdx5n3"
-path="res://.godot/imported/road_intersection_tone_cracks.png-d5cb83609a345b04cdb88bcca4eea341.ctex"
+path.bptc="res://.godot/imported/road_intersection_tone_cracks.png-d5cb83609a345b04cdb88bcca4eea341.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/city/art/d5/ground/road_intersection_tone_cracks.png"
-dest_files=["res://.godot/imported/road_intersection_tone_cracks.png-d5cb83609a345b04cdb88bcca4eea341.ctex"]
+dest_files=["res://.godot/imported/road_intersection_tone_cracks.png-d5cb83609a345b04cdb88bcca4eea341.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://byei2q2s1bsu7"
-path="res://.godot/imported/chalk_robot.png-1a8589cf2837c47f96162dfc361739d7.ctex"
+path.bptc="res://.godot/imported/chalk_robot.png-1a8589cf2837c47f96162dfc361739d7.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/city/art/d5/decals/chalk_robot.png"
-dest_files=["res://.godot/imported/chalk_robot.png-1a8589cf2837c47f96162dfc361739d7.ctex"]
+dest_files=["res://.godot/imported/chalk_robot.png-1a8589cf2837c47f96162dfc361739d7.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

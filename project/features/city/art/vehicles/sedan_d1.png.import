@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://di2208j670ot0"
-path="res://.godot/imported/sedan_d1.png-0e463464d7c9f19e5f1c7304c2f2d9a3.ctex"
+path.bptc="res://.godot/imported/sedan_d1.png-0e463464d7c9f19e5f1c7304c2f2d9a3.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/city/art/vehicles/sedan_d1.png"
-dest_files=["res://.godot/imported/sedan_d1.png-0e463464d7c9f19e5f1c7304c2f2d9a3.ctex"]
+dest_files=["res://.godot/imported/sedan_d1.png-0e463464d7c9f19e5f1c7304c2f2d9a3.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

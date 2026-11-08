@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ckjxgn45v3dn6"
-path="res://.godot/imported/prop_traffic_cone.png-d6da76e523aa8dfa84b4d536b4c57429.ctex"
+path.bptc="res://.godot/imported/prop_traffic_cone.png-d6da76e523aa8dfa84b4d536b4c57429.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/city/art/view/p55/prop_traffic_cone.png"
-dest_files=["res://.godot/imported/prop_traffic_cone.png-d6da76e523aa8dfa84b4d536b4c57429.ctex"]
+dest_files=["res://.godot/imported/prop_traffic_cone.png-d6da76e523aa8dfa84b4d536b4c57429.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

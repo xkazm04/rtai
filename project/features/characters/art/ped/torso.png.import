@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dw0oy1go6dexu"
-path="res://.godot/imported/torso.png-fe223a637dbfea5c1d122d0fbf64d4ee.ctex"
+path.bptc="res://.godot/imported/torso.png-fe223a637dbfea5c1d122d0fbf64d4ee.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/characters/art/ped/torso.png"
-dest_files=["res://.godot/imported/torso.png-fe223a637dbfea5c1d122d0fbf64d4ee.ctex"]
+dest_files=["res://.godot/imported/torso.png-fe223a637dbfea5c1d122d0fbf64d4ee.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

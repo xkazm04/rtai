@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dswog1ulf1ds8"
-path="res://.godot/imported/baton.png-31dc7610758c08aaa7bccc9a9c797a74.ctex"
+path.bptc="res://.godot/imported/baton.png-31dc7610758c08aaa7bccc9a9c797a74.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/characters/art/d5/cop/baton.png"
-dest_files=["res://.godot/imported/baton.png-31dc7610758c08aaa7bccc9a9c797a74.ctex"]
+dest_files=["res://.godot/imported/baton.png-31dc7610758c08aaa7bccc9a9c797a74.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

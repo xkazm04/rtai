@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cgu2iyo47akts"
-path="res://.godot/imported/prop_planter.png-208b87b7c2a4dfdb14c897ae55e934dd.ctex"
+path.bptc="res://.godot/imported/prop_planter.png-208b87b7c2a4dfdb14c897ae55e934dd.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/city/art/view/p70/prop_planter.png"
-dest_files=["res://.godot/imported/prop_planter.png-208b87b7c2a4dfdb14c897ae55e934dd.ctex"]
+dest_files=["res://.godot/imported/prop_planter.png-208b87b7c2a4dfdb14c897ae55e934dd.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

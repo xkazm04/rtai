@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cjuoqmwd23iow"
-path="res://.godot/imported/swat_fall.png-009de82f0562e30ef2069675ba759385.ctex"
+path.bptc="res://.godot/imported/swat_fall.png-009de82f0562e30ef2069675ba759385.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/characters/art/view/p55/swat_fall.png"
-dest_files=["res://.godot/imported/swat_fall.png-009de82f0562e30ef2069675ba759385.ctex"]
+dest_files=["res://.godot/imported/swat_fall.png-009de82f0562e30ef2069675ba759385.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

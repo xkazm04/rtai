@@ -1,10 +1,11 @@
 extends GutTest
 ## View lab (features/characters/rig_head_card.gd): the upright facing cards. Only a tilted row
-## with `cards` draws them; the default and the plain tilt rows never do.
+## with `cards` draws them (the combo default does); `top` and the plain tilt rows never do.
 
 
 func test_cards_only_on_card_rows() -> void:
-	assert_false(ViewMode.of("").cards, "the shipped view draws no cards")
+	assert_false(ViewMode.of("top").cards, "the straight-down view draws no cards")
+	assert_true(ViewMode.of("").cards, "the combo default draws the cards")
 	assert_false(ViewMode.of("top_lift").cards)
 	assert_false(ViewMode.of("tilt55").cards, "the plain tilt keeps the top-down head")
 	assert_true(ViewMode.of("tilt55_cards").cards)

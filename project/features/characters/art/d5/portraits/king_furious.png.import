@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://t2qs0bam4el7"
-path="res://.godot/imported/king_furious.png-a35e1fc7da8ed25c19f3ff4689ed05b8.ctex"
+path.bptc="res://.godot/imported/king_furious.png-a35e1fc7da8ed25c19f3ff4689ed05b8.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/characters/art/d5/portraits/king_furious.png"
-dest_files=["res://.godot/imported/king_furious.png-a35e1fc7da8ed25c19f3ff4689ed05b8.ctex"]
+dest_files=["res://.godot/imported/king_furious.png-a35e1fc7da8ed25c19f3ff4689ed05b8.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://d2nt15x2smdft"
-path="res://.godot/imported/rivet_eq_homing_shard.png-ab18013516efd6d8e7354ea3cef970d7.ctex"
+path.bptc="res://.godot/imported/rivet_eq_homing_shard.png-ab18013516efd6d8e7354ea3cef970d7.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/characters/art/view/p70/rivet_eq_homing_shard.png"
-dest_files=["res://.godot/imported/rivet_eq_homing_shard.png-ab18013516efd6d8e7354ea3cef970d7.ctex"]
+dest_files=["res://.godot/imported/rivet_eq_homing_shard.png-ab18013516efd6d8e7354ea3cef970d7.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

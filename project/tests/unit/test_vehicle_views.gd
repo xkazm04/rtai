@@ -28,7 +28,7 @@ func test_a_fine_rest_never_passes_half_a_step_and_noses_agree() -> void:
 
 func test_the_p70_atlas_holds_the_fine_rows_in_betweens() -> void:
 	var path: String = VehicleCards.DIR % "p70"
-	var img: Image = (load(path) as Texture2D).get_image()
+	var img: Image = TestArt.rgba(load(path) as Texture2D)
 	var cell: int = VehicleViews.CELL_PX
 	assert_eq(img.get_width(), cell * VehicleViews.FINE_COLS)
 	var fine: PackedInt32Array = VehicleViews.FINE["p70"]
@@ -75,7 +75,7 @@ func test_both_atlases_hold_the_bike_row_after_the_sims_nine() -> void:
 		var tex: Texture2D = load(VehicleCards.DIR % art) as Texture2D
 		var grid: Vector2i = VehicleViews.grid_of(tex, VehicleCards.ROWS)
 		assert_eq(grid.y, VehicleViews.BIKE_ART + 1, art)
-		var img: Image = tex.get_image()
+		var img: Image = TestArt.rgba(tex)
 		for col: int in VehicleViews.COLS:  # the five drawn views, each a lone bike
 			var r: Rect2i = Rect2i(col * cell, VehicleViews.BIKE_ART * cell, cell, cell)
 			assert_gt(_opaque(img, r), 40, "%s view %d" % [art, col])

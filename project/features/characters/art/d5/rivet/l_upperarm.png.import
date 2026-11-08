@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c210l2mtvwjii"
-path="res://.godot/imported/l_upperarm.png-27f5c0b41aa5a3c91412e3a2762790bf.ctex"
+path.bptc="res://.godot/imported/l_upperarm.png-27f5c0b41aa5a3c91412e3a2762790bf.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/characters/art/d5/rivet/l_upperarm.png"
-dest_files=["res://.godot/imported/l_upperarm.png-27f5c0b41aa5a3c91412e3a2762790bf.ctex"]
+dest_files=["res://.godot/imported/l_upperarm.png-27f5c0b41aa5a3c91412e3a2762790bf.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cmsjkxkcn7lox"
-path="res://.godot/imported/lamp_post.png-3b5fd89458443dc25ffaad94aa3a3a7f.ctex"
+path.bptc="res://.godot/imported/lamp_post.png-3b5fd89458443dc25ffaad94aa3a3a7f.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/city/art/d5/props/lamp_post.png"
-dest_files=["res://.godot/imported/lamp_post.png-3b5fd89458443dc25ffaad94aa3a3a7f.ctex"]
+dest_files=["res://.godot/imported/lamp_post.png-3b5fd89458443dc25ffaad94aa3a3a7f.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

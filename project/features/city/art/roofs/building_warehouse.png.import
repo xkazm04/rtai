@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dqa81e72rg5i3"
-path="res://.godot/imported/building_warehouse.png-d296ad0769cbc1209640cf4c86dbd39d.ctex"
+path.bptc="res://.godot/imported/building_warehouse.png-d296ad0769cbc1209640cf4c86dbd39d.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/city/art/roofs/building_warehouse.png"
-dest_files=["res://.godot/imported/building_warehouse.png-d296ad0769cbc1209640cf4c86dbd39d.ctex"]
+dest_files=["res://.godot/imported/building_warehouse.png-d296ad0769cbc1209640cf4c86dbd39d.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

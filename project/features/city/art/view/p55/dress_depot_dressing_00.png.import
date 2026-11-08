@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ckq8td15vh1d1"
-path="res://.godot/imported/dress_depot_dressing_00.png-5334f9b171d2cd7461038ffbd1752ede.ctex"
+path.bptc="res://.godot/imported/dress_depot_dressing_00.png-5334f9b171d2cd7461038ffbd1752ede.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/city/art/view/p55/dress_depot_dressing_00.png"
-dest_files=["res://.godot/imported/dress_depot_dressing_00.png-5334f9b171d2cd7461038ffbd1752ede.ctex"]
+dest_files=["res://.godot/imported/dress_depot_dressing_00.png-5334f9b171d2cd7461038ffbd1752ede.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

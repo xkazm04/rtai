@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cfqbh0v3bhh8l"
-path="res://.godot/imported/building_long_t1.png-b40b833e349b53b0c7e9bbab1c157aa1.ctex"
+path.bptc="res://.godot/imported/building_long_t1.png-b40b833e349b53b0c7e9bbab1c157aa1.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/city/art/d5/roofs/building_long_t1.png"
-dest_files=["res://.godot/imported/building_long_t1.png-b40b833e349b53b0c7e9bbab1c157aa1.ctex"]
+dest_files=["res://.godot/imported/building_long_t1.png-b40b833e349b53b0c7e9bbab1c157aa1.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
