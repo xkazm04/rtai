@@ -3,8 +3,7 @@ extends Node
 ## logs every frame. Headless (the editor binary with --fixed-fps 60: one tick per frame, CPU
 ## only) or as an exported build (windowed, vsync off, uncapped). Writes gtai.bench/1 JSON.
 ## Usage: <godot|exe> [--headless --fixed-fps 60] [--path project] res://dev/bench/city_bench.tscn
-##        -- --scenario=drive|riot --secs=60 --zoom=0.4 --out=<json path> [--fx-feed=off]
-##        [--blood=noir|ink] [--spans=<json>] (NodeSpans' per-node cost: profile only)
+##        -- --scenario=drive|riot --secs=60 --zoom=0.4 --out=<json> [--fx-feed=off] [--spans=..]
 
 const KNOWN_FLAGS: PackedStringArray = [
 	"--scenario",
@@ -18,6 +17,7 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--blood",
 	"--perf-hud",  # d9-perf: PerfHud; --strip-prefetch=off: L3's before (A/B)
 	"--strip-prefetch",
+	"--delta-smooth",  # n9-perf: read by World (LaunchArgs), the mailbox delta smoothing A/B
 	"--max-fps",  # L10: the frame limiter (0 = none, the default); the engine's own --max-fps is reset
 	"--view"  # read by ViewMode.shared() (the view lab A/B); top = the default
 ]
