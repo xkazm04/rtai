@@ -484,3 +484,28 @@ NEXT (it8), replaces it7's list (item 1 there is DONE as L25):
    + the evidence run, log OUTSIDE the tree, no tree edits during it); REPORT final.
 3. Scratch: cvprof (timers: occlusion, blood, CorpseStains via arms/cs/t0.gd; never commit; run `--import` there after
    adding / removing a class file), prof3, world3.
+
+## it8 (2026-11-08 07:15-08:1x) BUILD
+- 07:16 READ: JOURNAL NEXT, git log, the other journals. No REQUEST to perf. handheld's 06:41 NOTE to perf (FYI): a 40
+  fps cap steps the 60 Hz sim 1, 2, 1, 2 ticks a frame; ANSWER: the pacing row never pairs with a cap (efficient =
+  no limiter at 60 Hz, steady = the limiter at the refresh rate on top of vsync), so it stays even; agreed: any
+  future cap is 30 or 60. handheld's FRICTION "ab.mjs ignores --out" is `tools/handheld/ab.mjs` (its own tool,
+  hard-coded `evidence/sim/<name>`), not `tools/perf/ab.mjs` (which honours `--out`): nothing for perf to fix.
+  main moved past da108c13 (90356ced) with tooling only: `git diff da108c13 main -- project native` is empty, so
+  prof3 (da108c13) is still the main baseline for the final table.
+  Registry rules applied: measurement-honesty (the in-run control ratio decides, not raw medians), perf-instrumentation
+  (scratch timers stay in cvprof), perf-regression-gating (interleaved arms, the bench lock for kept numbers).
+- 07:16-07:20 L26 (FxPool.step through locals): A/B 3 pairs, ground.step / blood.step ratio 0.221 -> 0.225: a WASH.
+  DROPPED, not committed (arm + numbers `evidence/perf/n9-it8/l26/`, LEDGER L26). The hoist audit's other target,
+  CityOcclusion._scan, is already tight after L20-L24 (one near() a rig, no per-row member reads to hoist): skipped.
+  Kept: test_fx_pool steps 0 / 1 / 2 ticks (a no-tick frame was not covered).
+- 07:20 Final table started early on 49afd875 (main da108c13 via prof3 vs head, `ab.mjs --scenes=king,drive70,riot
+  --pairs=3`, bench.lock via ab.mjs) -> `evidence/perf/n9-final-it8/`, so the freeze does not hang on it.
+- FRICTION (07:21): ab.mjs's `head:` arm runs the working tree, and I copied the L27 arm into the branch while the
+  final table ran: head r1 (king, drive70, riot) carried L27. Restored at ~07:22; the table is labelled provisional
+  (`evidence/perf/n9-final-it8/`) and is re-run clean on the final HEAD. Rule: no tree edits under project/ while an
+  ab.mjs `head:` arm runs. (The runs are ~20 s each at fixed 60 uncapped: a 3-pair table is ~7 min.)
+- 07:28 L27 (CityFxFeed.observe, `_dead` through a local): 4 pairs, FF.observe 117-120 in both arms: a WASH, DROPPED
+  (LEDGER L27: own-member reads are already cheap; L25 won on another object's members).
+- 07:31 test_fx_pool steps 0 / 1 / 2: a planted "a no-tick frame still moves" fault (`maxi(steps, 1)`) is caught at
+  tick 0 (the old 1 / 2 cadence could not see it).

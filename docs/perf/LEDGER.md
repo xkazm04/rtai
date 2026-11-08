@@ -454,6 +454,31 @@ Gates on 6ce43cd0 (L23 + L24 + L25): ALL PASS (lint 15 / 15, unit 1843 / 0, scen
 goldens 11 / 11 (worst 0.27), release-compile 619 / 0; `evidence/perf/n9-it7/evidence-6ce43cd0.txt`); the reel x3
 19 / 19 fully down in top, tilt70, combo, 0 SCRIPT ERROR (`evidence/perf/n9-it7/reel-l25/`).
 
+### L26 (it8): FxPool.step moves each particle through locals: DROPPED (a wash)
+Hypothesis: the per-step `pos[i] += vel[i] * dt; vel[i] *= maxf(...)` reads and writes two member packed arrays a
+step, recomputes the drag factor a step and checks `mirror.is_empty()` a particle; moving the step into locals (the
+same float ops in the same order: bit-identical) and hoisting the factor and the check cuts fx.ground.step ~15 %.
+(The read-only arrays `born`, `row_of`, `rot`, `seed_of` can NOT be hoisted: `_swap_out` writes them mid-loop, and a
+write through the member while a local shares the buffer would copy the whole array, then read a stale local.)
+A/B (cvprof, riot tilt70 windowed, fixed 60, 3 interleaved pairs, bench.lock held, CONTENDED 0-8 other Godots,
+`evidence/perf/n9-it8/l26/ab-l26.txt`, arm `l26.diff`), PC.ground.step us a frame / the blood.step control:
+cur 81.1 / 93.9 / 90.5 (ratio 0.221 / 0.218 / 0.227), L26 84.8 / 90.3 / 79.9 (ratio 0.225 / 0.217 / 0.226): **a wash**
+(ratio medians 0.221 vs 0.225). The step's cost is the three MultiMesh instance writes a particle, not the motion.
+Not committed. Kept from it: `test_fx_pool` now steps 0, 1 and 2 ticks (a frame with no tick was not covered).
+Rejected without building: one `multimesh_set_buffer` a frame instead of three instance calls a particle: GDScript
+would write 16 floats a particle into a packed array (16 indexed stores vs 3 validated native calls, ~the same cost),
+and the 2D buffer layout (8-float transform rows) is a new place for a pixel to move.
+
+### L27 (it8): CityFxFeed.observe reads the dead flags through a local: DROPPED (a wash)
+Hypothesis (L25's pattern): observe reads `_dead[i]` a person record (~400 a riot tick, 117-120 us); a local copy
+of the array (written back once, so a copy only on a frame with a flip) cuts the loop ~10 %. A/B (cvprof, riot, 4
+interleaved pairs, bench.lock held, CONTENDED 4-10, `evidence/perf/n9-it8/l27/`), FF.observe us a frame:
+cur 120.5 / 114.5 / 120.3 / 117.1, L27 120.9 / 115.7 / 116.3 / 121.4 (control BR.crowd.observe 116-127 in both):
+**a wash**. Lesson with L25 and L26: a read of the script's OWN member is already a cheap indexed access; L25 won
+because it read members of ANOTHER object (`feed.flags[i]`: a named property get a read). The remaining per-record
+cost is the snapshot reads and the int() conversions themselves: the next step there is native, not GDScript.
+Not committed.
+
 ### Gates (it6)
 On 8990b643 (L20, the clean re-run owed from it5; `evidence/perf/n9-it6/evidence-8990b643.txt`) and on 6b75d795
 (L20b + L20c; `evidence-6b75d795.txt`): ALL PASS: lint 15 / 15, unit 1835 / 0 and 1837 / 0, scenarios 54 / 54, parity

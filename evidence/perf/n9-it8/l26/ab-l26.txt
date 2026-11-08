@@ -1,0 +1,6 @@
+cur r1 godots_before=8 BLOODPROF blood.step 367.2 PC.fx+glow 29.0 PC.ground.step 81.1 PROCESS_TOTAL 2290.2  err=0
+h1 r1 godots_before=2 BLOODPROF blood.step 377.2 PC.fx+glow 30.0 PC.ground.step 84.8 PROCESS_TOTAL 2338.3  err=0
+cur r2 godots_before=4 BLOODPROF blood.step 430.9 PC.fx+glow 35.5 PC.ground.step 93.9 PROCESS_TOTAL 2684.8  err=0
+h1 r2 godots_before=2 BLOODPROF blood.step 417.0 PC.fx+glow 35.0 PC.ground.step 90.3 PROCESS_TOTAL 2576.3  err=0
+cur r3 godots_before=0 BLOODPROF blood.step 399.4 PC.fx+glow 32.6 PC.ground.step 90.5 PROCESS_TOTAL 2493.2  err=0
+h1 r3 godots_before=0 BLOODPROF blood.step 354.1 PC.fx+glow 28.7 PC.ground.step 79.9 PROCESS_TOTAL 2217.2  err=0

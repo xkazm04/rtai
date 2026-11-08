@@ -36,9 +36,9 @@ func test_row_step_writes_the_dictionary_paths_buffer_bit_for_bit() -> void:
 	var mm_ref: MultiMesh = _mm(CAP)
 	var full_writes: int = 0
 	for tick: int in TICKS:
-		for j: int in 3:  # three spawns a tick, every kind, steps of 1 and 2 ticks
+		for j: int in 3:  # three spawns a tick, every kind, steps of 0 (a frame with no tick), 1, 2
 			_spawn(kinds[(tick * 3 + j) % kinds.size()], tick)
-		var steps: int = 1 + tick % 2
+		var steps: int = tick % 3
 		_pool.step(steps, tick, mm)
 		_ref_step(steps, tick, mm_ref)
 		full_writes += _ref.alive
