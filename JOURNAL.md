@@ -513,3 +513,32 @@ NEXT (it8), replaces it7's list (item 1 there is DONE as L25):
   every row WASH by the A-vs-A floor (head vs head2 0.35-1.4 ms at p50 > the ~0.7 ms of kept CPU cuts); drive70 p50
   head under main in 3 / 3 rounds. LEDGER "Final table n9", REPORT item 13. head2 copy at `gtai-n9/tmp/perf/head2`
   (delete after the freeze table).
+- 07:43 GATE evidence --no-bench on efa848cb: ALL PASS (lint 15 / 15, unit 1843 / 0 with FLAKY 1 =
+  test_test_tmp's prune test (shared user:// scratch, load 3; not perf code), scenarios 54 / 54, parity exact (629),
+  look goldens 11 / 11 (worst 0.27), release-compile 619 / 0; `evidence/perf/n9-it8/evidence-efa848cb.txt`). No game
+  code changed since 6ce43cd0 (the reel x3 passed there), so no reel re-run is owed for it8.
+- 07:37-07:44 the release exports for the freeze table: `build/export/windows-bench-main/` (prof3 = main da108c13,
+  pck 217.77 MB), `build/export/windows-bench/` (efa848cb, pck 217.78 MB), `windows-bench-head2/` (byte copy).
+  07:45 the exe table started: `ab.mjs --scenes=riot,drive70,riot60 --pairs=3 --arms=main@exe-windows-bench-main:,
+  head@exe:,head2@exe-windows-bench-head2:` -> `evidence/perf/n9-final-exe-efa848cb/`.
+- 07:53 the exe table (LEDGER "Final table n9, the release build"): WASH everywhere (23 / 27 CONTENDED, up to 10
+  Godots; head vs head2 0.15-1.6 ms p50). Watch (not claimed): steady RAM main bimodal 750 / 820 MB (5 / 9 at ~820),
+  head + head2 751-756 in 18 / 18; riot60 CPU 0.38 -> 0.32 cores (head under main's median 3 / 3, ranges overlap).
+
+NEXT (it9), replaces it8's list:
+1. A quiet re-run of the exe table with `--pairs=5` (`ab.mjs --scenes=riot,drive70,riot60 --arms=main@exe-windows-bench-main:,
+   head@exe:,head2@exe-windows-bench-head2:`), only if `tasklist | grep -ci godot` is low; the exports are built
+   (re-export head + re-copy head2 if HEAD's project/ changes). Question it answers: is the steady-RAM split real?
+   If yes, find which commit (F-19 mailbox, L18 residency cache, L20 occluder caches) by a 2-arm bisect.
+2. Levers left in perf-owned files are below the floor (L26 / L27 washes). The riot's frame is the rigs
+   (BR.step_ticks ~1.4 ms: gait 335, pose 446, street 417, headcard 119, assign 135 us; cvprof RIGPROF), in world's /
+   rivet's files: re-send the numbers as a REQUEST only if a lane asks; do not edit them.
+   One perf-owned candidate: a native `CitySimNative` helper for CityFxFeed.observe's record scan (~120 us a riot
+   tick) - native/ is shared with world tonight (knock, walls): only after world's native work merges. Otherwise
+   spend it9 / it10 on the owner clips (King + drive with the perf HUD, before / after) if frames.json is short.
+3. Freeze 10:30: export `build/export/windows/RTAI.exe` (`"$GODOT_BIN" --headless --path project --export-release
+   windows-showcase ../build/export/windows/RTAI.exe`), name it in REPORT with the command; final gates on HEAD if
+   project/ changed after efa848cb (reel x3 + evidence run, log outside the tree, NO tree edits under project/ while
+   an ab `head:` arm or the gate runs); REPORT final.
+4. Scratch: cvprof (arms fx/, ff/ added), prof3, world3, head2 (`gtai-n9/tmp/perf/head2`, the editor-arm copy:
+   delete after the freeze), build/export/windows-bench-main + -head2 (git-ignored).

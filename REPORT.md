@@ -81,7 +81,10 @@ Numbers, methods and every A/B: `docs/perf/LEDGER.md` section "n9 night". Clips 
    A provisional final table (main vs this branch vs a byte copy of it, 3 pairs, 25 of 27 runs CONTENDED) shows the
    honest limit: the same code in two folders differed by 0.35-1.4 ms at p50, more than the ~0.7 ms of CPU cuts
    kept tonight, so no frame-level win is claimed from them (LEDGER "Final table n9"). The drive's p50 was under
-   main's in every round (2.2-2.7 vs 2.7-3.8 ms). The table is re-run at the freeze on the release exports.
+   main's in every round (2.2-2.7 vs 2.7-3.8 ms). The same table on the release exports (23 of 27 runs CONTENDED)
+   is also WASH everywhere: the shipped build costs what main's does here. Two directions are worth a quiet
+   re-run but are not claimed: main's steady RAM was ~820 MB in 5 of 9 runs and never above 756 MB on this branch
+   (18 runs), and the riot at the 60 fps cap used 0.32 cores vs 0.38.
 
 ## What does not
 - The first L17 test was vacuous. It compared `MultiMesh.buffer`, which a headless run keeps empty. The mutation run

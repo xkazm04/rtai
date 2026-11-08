@@ -624,6 +624,26 @@ An earlier run (`evidence/perf/n9-final-it8/`, 07:20, 2 arms) is VOID for head: 
 uncommitted L27 arm (FRICTION it8). Owed at the freeze: the same table on the final HEAD, on the release exports
 (`@exe` arms, as d9's final table), when the machine is quieter.
 
+## Final table n9, the release build (it8, 07:45-07:53): main da108c13 vs efa848cb vs a byte copy, as shipped
+`node tools/perf/ab.mjs --scenes=riot,drive70,riot60 --pairs=3 --arms=main@exe-windows-bench-main:,head@exe:,head2@exe-windows-bench-head2:`
+(`evidence/perf/n9-final-exe-efa848cb/`). `windows-bench` release exports, the official 4.7.2 template: main from
+prof3 (pck 217.77 MB), head from efa848cb (pck 217.78 MB), head2 a byte copy of head's export dir (F12). 27 runs, 0
+script errors, **CONTENDED in 23 of 27 (up to 10 other Godots)**: riot p50 3.4-7.5 ms against d9's quiet 4.08.
+Median ± half-spread:
+
+| scene | metric | main | head | head2 (A-vs-A) | verdict |
+|---|---|---|---|---|---|
+| riot (fixed 60) | p50 / p99 / p99.9 ms | 3.88 / 8.20 / 12.10 | 5.08 / 11.83 / 19.29 | 3.48 / 8.33 / 12.53 | WASH (head's r0 / r1 ran under 2-3 other Godots: 6.67 / 5.08; r2 3.38 under main's 3.86) |
+| drive70 (fixed 60) | p50 / p99 ms | 2.08 / 4.13 | 1.97 / 4.22 | 1.82 / 3.46 | WASH |
+| riot60 (vsync + 60 cap) | process CPU, cores | 0.38 (0.32-0.40) | 0.32 (0.29-0.34) | 0.30 (0.30-0.38) | WASH by spread (direction: head under main's median in 3 / 3 rounds) |
+| all three | steady RAM MB | 816 / 818 / 755 | 752 / 754 / 753 | 751 / 754 / 753 | WASH by spread; **watch**: main is bimodal (5 of 9 runs at 816-821, the rest 750-755), head and head2 751-756 in 18 of 18 |
+| riot | draws, VRAM | 734, 883 MB | 734, 899 | 734, 883 | identical draws (pixel-free); VRAM inside its 16 MB step |
+
+So tonight's release build costs what main's does on this host, within a floor this loaded machine sets at
+~0.15-1.6 ms p50 (head vs head2). Not claimed, worth a quiet re-run: the steady-RAM split (main's ~820 MB mode never
+appeared on head in 18 runs) and riot60's -0.06 core. Owed at the freeze: this table again if HEAD's project
+changes, preferably at a quieter moment (`--pairs=5`).
+
 ## Final table (it12, 14:39-14:52): this morning's main vs d9-perf HEAD, both as the shipped release build
 `node tools/perf/ab.mjs --scenes=riot,drive70,riot60,drive60 --arms=main@exe-windows-bench-main:,head@exe:,head2@exe-windows-bench-head2: --pairs=3 --out=evidence/perf/final-exe`
 (`evidence/perf/final-exe/ab.json`). `main` = the `windows-bench` export of main 3982af1a (scratch worktree `perf-base`
