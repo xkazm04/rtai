@@ -1,0 +1,14 @@
+[INFO] device: profile deck: window 1280x800, max_fps 60, vsync enabled, stretch canvas_items, zoom_k 1.25, tier handheld, rumble 1.00
+[INFO] bosses: servo phase 1 (depot)
+[INFO] bosses: servo engaged in depot, phase 1
+[INFO] arena: powers pad: 4 cars parked
+[INFO] device: pad aim assist on (weapons.json aim_assist)
+[INFO] arena: arena open: 20 stations
+[INFO] characters: prewarmed 41 rigs in 119.8 ms
+[INFO] arena: cast rigs: true
+[INFO] view: pitch ease 70.0 -> boss at tick 1
+[INFO] view: cards art p55 (pitch 62.1) at tick 32
+[INFO] view: occlusion: 478 body-frames hidden over 2700 frames, frames 32-2626
+[INFO] device: rumble: 70 pulses played { &"boss_engaged": 1, &"boss_hit": 68, &"rivet_hurt": 1 }, 0 rested, shortest gaps (ticks) { &"boss_hit": 21 }
+[INFO] arena: react: 0 wounds (0 on a shield), 0 deaths, 0 ducks
+ERROR: 110 resources still in use at exit (run with --verbose for details).

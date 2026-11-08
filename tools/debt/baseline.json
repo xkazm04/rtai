@@ -26,7 +26,8 @@
         "2026-11-08: n9 world item 3: dev/showcase/car_knock_clip (the car knock-down's filmed evidence on the real city, bodies_clip's pattern) (dev_loc 19147 -> 19325)",
         "2026-11-08: n9 world item 4 evidence clip dev/showcase/dead_wall_clip (dev-only, the car_knock_clip pattern: one cmdline read, ~190 dev lines) (dev_loc 19325 -> 19514)",
         "2026-11-08: dev/frames: quest1_clip --cam=dead (n9 world it22), a capture camera for Dock 9 at 64 px/m (item 2 evidence) (dev_loc 19514 -> 19571)",
-        "2026-11-08: dev/frames: quest_dead_cam heap anchor + ease (n9 world it22), Dock 9 64 px/m capture (dev_loc 19571 -> 19591)"
+        "2026-11-08: dev/frames: quest_dead_cam heap anchor + ease (n9 world it22), Dock 9 64 px/m capture (dev_loc 19571 -> 19591)",
+        "2026-11-08: n9 merge: the combined growth of the four lanes (world, rivet, perf, handheld), each individually under its own baseline (dev_loc 19591 -> 19838)"
       ],
       "files": {
         "project/dev/arena": 708,
@@ -39,6 +40,7 @@
         "project/dev/ghost-forms": 616,
         "project/dev/ghost-powers": 1137,
         "project/dev/gunplay": 674,
+        "project/dev/handheld": 247,
         "project/dev/held": 103,
         "project/dev/human_react": 412,
         "project/dev/noir": 1220,
@@ -57,7 +59,7 @@
         "project/dev/view": 195,
         "project/dev/weapon_art": 506
       },
-      "total": 19591
+      "total": 19838
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -67,7 +69,8 @@
         "2026-11-07: n8 merge: + city growth combined (accepted on its lane) (direct_cmdline_reads 155 -> 156)",
         "2026-11-07: n8 merge: + hud growth combined (accepted on its lane); fold_rigs dropped for view's follow per both lanes' merge notes (direct_cmdline_reads 156 -> 157)",
         "2026-11-08: n9 world item 3: dev/showcase/car_knock_clip (the car knock-down's filmed evidence on the real city, bodies_clip's pattern) (direct_cmdline_reads 157 -> 158)",
-        "2026-11-08: n9 world item 4 evidence clip dev/showcase/dead_wall_clip (dev-only, the car_knock_clip pattern: one cmdline read, ~190 dev lines) (direct_cmdline_reads 158 -> 159)"
+        "2026-11-08: n9 world item 4 evidence clip dev/showcase/dead_wall_clip (dev-only, the car_knock_clip pattern: one cmdline read, ~190 dev lines) (direct_cmdline_reads 158 -> 159)",
+        "2026-11-08: n9 merge: the combined growth of the four lanes (world, rivet, perf, handheld), each individually under its own baseline (direct_cmdline_reads 159 -> 160)"
       ],
       "files": {
         "project/core/render/view_mode.gd": 1,
@@ -100,6 +103,7 @@
         "project/dev/gunplay/range_clip.gd": 1,
         "project/dev/gunplay/range_view.gd": 1,
         "project/dev/gunplay/ttk_bench_run.gd": 1,
+        "project/dev/handheld/legibility_walker.gd": 1,
         "project/dev/held/hold_probe.gd": 1,
         "project/dev/human_react/react_board_run.gd": 1,
         "project/dev/noir/blood_clip.gd": 1,
@@ -213,7 +217,7 @@
         "project/tests/run_scenarios.gd": 1,
         "project/tests/unit/test_launch_args.gd": 1
       },
-      "total": 159
+      "total": 160
     },
     "files_near_cap": {
       "accepted": [

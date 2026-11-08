@@ -7,6 +7,8 @@ extends RefCounted
 ## read tier and zoom_k. Render and window only: a profile never writes to the sim.
 
 const TABLE: String = "res://data/tables/devices.json"
+## The Steam Deck's panel (LCD and OLED alike), what auto_pick() matches.
+const DECK_PANEL: Vector2i = Vector2i(1280, 800)
 const VSYNC: Dictionary[String, DisplayServer.VSyncMode] = {
 	"adaptive": DisplayServer.VSYNC_ADAPTIVE,
 	"disabled": DisplayServer.VSYNC_DISABLED,
@@ -28,6 +30,19 @@ var rumble: float = 0.0
 ## Under viewport stretch, the 2D draw size = the project base x this (1 = the base; E8 study).
 var draw_scale: float = 1.0
 var tier: StringName = &"full"
+## The HUD layout: full (the desktop's) or compact (the handheld card sizes, GhostFormLayout).
+var hud: StringName = &"full"
+## The drawn prompt glyphs on a non-handheld row: "" (the bracketed text) or kb (the keyboard
+## twin, a desktop study row; PadGlyphArt). A handheld row always draws the pad set.
+var glyphs: StringName = &""
+## The pad aim assist (PadAimAssist: weapons.json `aim_assist` bends the right stick's heading).
+var aim_assist: bool = false
+## The boss fight's camera frames Rivet and the boss together (BossCam, the clip cam) instead of
+## following Rivet: the 7-inch panel at 40 px/m keeps the fight on screen (n9 it6).
+var boss_cam: bool = false
+## The row fills the screen instead of opening a panel-sized window: set when the device picked
+## itself (a real Deck, LaunchArgs); `--device=` on the simulator keeps the window (n9 it10).
+var fill_screen: bool = false
 var ids: Array[String] = []
 
 
@@ -48,6 +63,18 @@ static func zoom() -> float:
 static func select(flag_value: String) -> DeviceProfile:
 	_shared = DeviceProfile.of(flag_value.replace("-", "_"))
 	return _shared
+
+
+## The row a run with no `--device=` picks by itself (n9 it10): `deck` when Steam says this is a
+## Deck (it puts SteamDeck=1 in every game's environment on SteamOS; a launch option
+## `SteamDeck=0 %command%` opts out) AND the screen is the Deck's 1280x800 panel (either way up),
+## so a docked Deck on a TV or a SteamOS desktop box keeps the desktop; "" = the table's default.
+static func auto_pick(steam_deck_env: String, screen: Vector2i) -> String:
+	if steam_deck_env.strip_edges() != "1":
+		return ""
+	if screen == DECK_PANEL or screen == Vector2i(DECK_PANEL.y, DECK_PANEL.x):
+		return "deck"
+	return ""
 
 
 ## The device row `want` from the table ("" = the table's default).
@@ -83,6 +110,10 @@ func _read(row: Dictionary) -> void:
 	var ds: float = row.get("draw_scale", 1.0)
 	draw_scale = ds
 	tier = StringName(str(row.get("tier", "full")))
+	hud = StringName(str(row.get("hud", "full")))
+	glyphs = StringName(str(row.get("glyphs", "")))
+	aim_assist = row.get("aim_assist", false) == true
+	boss_cam = row.get("boss_cam", false) == true
 
 
 ## True for the shipped desktop game (a row that changes nothing).
@@ -118,9 +149,16 @@ func apply(window: Window) -> void:
 	elif stretch_mode == "canvas_items":
 		window.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
 	if window_size != Vector2i.ZERO:
-		window.mode = Window.MODE_WINDOWED
-		window.size = window_size
+		window.mode = window_mode()
+		if window.mode == Window.MODE_WINDOWED:
+			window.size = window_size
 	Log.info("device", "profile %s: %s" % [id, describe()])
+
+
+## The window mode apply() sets on a row with a panel size: fullscreen on the device itself (a
+## Deck in desktop mode would put the taskbar over a 1280x800 window), a window on the simulator.
+func window_mode() -> Window.Mode:
+	return Window.MODE_FULLSCREEN if fill_screen else Window.MODE_WINDOWED
 
 
 func describe() -> String:

@@ -2,7 +2,7 @@
 # command line contains -Tag, then -AfterSec seconds later copies its window's client area from the
 # screen to -Out (PNG): what the panel shows, after the engine's stretch (Movie Maker records the
 # project's base size instead, and the arena's --shot grabs the drawn viewport before the scale-up).
-# Read-only on the game. Exit 0 written, 2 no process / window.
+# Read-only on the game. The window is read with PrintWindow (not occluded by others), else the screen. Exit 0 written, 2 no process / window.
 param([string]$Tag, [double]$AfterSec = 12, [string]$Out)
 $ErrorActionPreference = 'Stop'
 Add-Type -AssemblyName System.Drawing
@@ -14,6 +14,7 @@ public static class HhWin {
   [DllImport("user32.dll")] public static extern bool SetProcessDPIAware();
   [DllImport("user32.dll")] public static extern bool GetClientRect(IntPtr h, out RECT r);
   [DllImport("user32.dll")] public static extern bool ClientToScreen(IntPtr h, ref POINT p);
+  [DllImport("user32.dll")] public static extern bool PrintWindow(IntPtr h, IntPtr hdc, uint flags);
 }
 '@
 [void][HhWin]::SetProcessDPIAware()
@@ -35,7 +36,12 @@ $pt = New-Object HhWin+POINT
 $w = $r.R - $r.L; $hh = $r.B - $r.T
 $bmp = New-Object System.Drawing.Bitmap $w, $hh
 $g = [System.Drawing.Graphics]::FromImage($bmp)
-$g.CopyFromScreen($pt.X, $pt.Y, 0, 0, (New-Object System.Drawing.Size $w, $hh))
+# PrintWindow (PW_CLIENTONLY 1 | PW_RENDERFULLCONTENT 2) reads the window itself, so another window
+# lying over it (other lanes' Godot runs share the monitor) is not captured; the screen copy is the fallback.
+$hdc = $g.GetHdc()
+$ok = [HhWin]::PrintWindow($h, $hdc, 3)
+$g.ReleaseHdc($hdc)
+if (-not $ok) { $g.CopyFromScreen($pt.X, $pt.Y, 0, 0, (New-Object System.Drawing.Size $w, $hh)) }
 $bmp.Save($Out, [System.Drawing.Imaging.ImageFormat]::Png)
 $g.Dispose(); $bmp.Dispose()
 Write-Output "grab $($w)x$($hh) at $($pt.X),$($pt.Y) -> $Out"

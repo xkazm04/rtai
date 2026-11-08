@@ -6,13 +6,14 @@
 // arena's --frames=<json>, FightFrames) and samples CPU %, RAM and GPU memory from outside
 // (sample.ps1). Writes one gtai.handheld-sim/1 JSON per run. Every number is "on the simulator".
 //
-// Usage: node tools/handheld/sim.mjs --device=deck [--scene=reel|city|king|servo] [--ticks=1800]
+// Usage: node tools/handheld/sim.mjs --device=deck [--scene=reel|city|city_combo|king|servo] [--ticks=1800]
 //   [--gpu=igpu|dgpu|<index>] [--threads=<n>] [--priority=belownormal|normal] [--label=<name>]
-//   [--out=<dir>] [--no-device] [--movie=<abs .avi>] [--renderer=forward_plus|mobile|compat]
+//   [--out=<dir>] [--no-device] [--movie=<abs .avi>] [--movie-fps=60] [--renderer=forward_plus|mobile|compat]
 //   [--bin=<gui exe>] [--suspend=<after s>:<for s>] [--project=<dir>] [-- <extra user args for the arena>]
 // --project=<dir> runs another checkout's project (an import-settings A/B arm in a scratch worktree).
 // --grab=<after s>:<abs .png> copies the game window's client area from the screen (grab_window.ps1).
 // --no-device runs the same pin/GPU without the --device flag (the desktop row: the A side).
+// --cpu-cap=<pct> caps the game at <pct> % of one logical CPU (cpu_cap.ps1, a job object hard cap): a slower core.
 import { spawn, spawnSync } from 'node:child_process';
 import { mkdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
@@ -25,6 +26,8 @@ const ROOT = resolve(HERE, '..', '..');
 export const SCENES = {
   reel: ['--rigs', '--bot=reel', '--reel=director', '--view=tilt70'],
   city: ['--arena=city', '--bot=course', '--seed=2', '--rigs', '--view=tilt70'],
+  // the city as main plays it after world's combo switch (the boss view's pitch ease in the open city)
+  city_combo: ['--arena=city', '--bot=course', '--seed=2', '--rigs', '--view=combo'],
   king: ['--rigs', '--boss=king', '--bot=boss', '--view=combo'],
   servo: ['--rigs', '--boss=servo', '--bot=boss', '--view=combo'],
 };
@@ -49,6 +52,12 @@ export function deviceRow(id, table = JSON.parse(readFileSync(join(ROOT, 'projec
   const want = id.replaceAll('-', '_');
   return table.devices.find((d) => d.id === want) ?? null;
 }
+
+/** `--cpu-cap=<pct>` as a number in (0, 100], else 0 (no cap). */
+export const cpuCapPct = (a) => { const n = Number(a['cpu-cap']); return n > 0 && n <= 100 ? n : 0; };
+
+/** `--movie-fps=<n>`: the movie maker's fixed frame rate (40 films a 40 Hz row's cadence), else 60. */
+export const movieFps = (a) => { const n = Number(a['movie-fps']); return Number.isInteger(n) && n > 0 ? n : 60; };
 
 /** The Godot project to run: `--project=<dir>` (an A/B arm in a scratch worktree), else this checkout's. */
 export const projectDir = (a) => (a.project ? resolve(a.project) : join(ROOT, 'project'));
@@ -132,7 +141,7 @@ async function main() {
   const framesPath = join(a.out, `${label}.frames.json`).replaceAll('\\', '/');
   const before = contention();
   const godotArgs = [...rendererArgs(a.renderer), ...(gpuIndex == null ? [] : ['--gpu-index', String(gpuIndex)]),
-    '--path', projectDir(a).replaceAll('\\', '/'), ...(a.movie ? ['--write-movie', a.movie, '--fixed-fps', '60'] : []),
+    '--path', projectDir(a).replaceAll('\\', '/'), ...(a.movie ? ['--write-movie', a.movie, '--fixed-fps', String(movieFps(a))] : []),
     'res://dev/arena/arena.tscn', '--', ...SCENES[a.scene], '--clean', `--frames=${framesPath}`,
     `--frames-ticks=${a.ticks}`, ...(a.noDevice ? [] : [`--device=${row.id}`]), ...a.extra];
   const ps = `$p = Start-Process -FilePath '${gui}' -ArgumentList '${godotArgs.join(' ')}' -PassThru; `
@@ -157,6 +166,12 @@ async function main() {
       '-AfterSec', after, '-Out', png], { windowsHide: true });
     gr.stdout.on('data', (d) => { grabbed += d.toString(); });
   }
+  let capped = '';
+  if (cpuCapPct(a) > 0) {
+    const cp = spawn('powershell', ['-NoProfile', '-NonInteractive', '-File', join(HERE, 'cpu_cap.ps1'), '-Tag', framesPath,
+      '-Pct', String(cpuCapPct(a))], { windowsHide: true });
+    cp.stdout.on('data', (d) => { capped += d.toString(); });
+  }
   const timer = setTimeout(() => killTree(game.pid), (a.ticks / 60 + 120 + (forS || 0)) * 1000);
   const code = await new Promise((done) => game.on('close', done));
   clearTimeout(timer);
@@ -170,6 +185,7 @@ async function main() {
     at: new Date().toISOString(), summary: summarize(JSON.parse(readFileSync(framesPath, 'utf8')), samples), samples };
   if (a.project) doc.project = projectDir(a);
   if (grabbed) doc.grab = grabbed.trim();
+  if (capped) doc.cpu_cap = JSON.parse(capped.trim().split(/\r?\n/)[0]);
   if (forS > 0) doc.suspend = { ...JSON.parse(suspended.trim() || '{}'), resume: resumeFrame(JSON.parse(readFileSync(framesPath, 'utf8'))) };
   const outPath = join(a.out, `${label}.json`);
   writeFileSync(outPath, `${JSON.stringify(doc, null, 2)}\n`);

@@ -1,0 +1,32 @@
+round 1/3 variant 0: v0-r0: CONTENDED (1 other Godot runs) {"frames":1182,"low1_fps":35.5489199869891,"over33_settled":3,"over50_settled":0,"p50_ms":16.6439990997314,"p99_ms":21.150
+round 1/3 variant 1: v1-r0: CONTENDED (1 other Godot runs) {"frames":1179,"low1_fps":45.8379171571063,"over33_settled":0,"over50_settled":0,"p50_ms":16.6599998474121,"p99_ms":20.180
+round 2/3 variant 0: v0-r1: quiet {"frames":1184,"low1_fps":48.4556771554372,"over33_settled":0,"over50_settled":0,"p50_ms":16.6529998779297,"p99_ms":19.8640003204346,"ticks":1193,"
+round 2/3 variant 1: v1-r1: CONTENDED (1 other Godot runs) {"frames":1180,"low1_fps":48.7218628403099,"over33_settled":0,"over50_settled":0,"p50_ms":16.6690006256104,"p99_ms":19.642
+round 3/3 variant 0: v0-r2: quiet {"frames":1182,"low1_fps":49.0922026289353,"over33_settled":0,"over50_settled":0,"p50_ms":16.6159992218018,"p99_ms":19.826000213623,"ticks":1193,"w
+round 3/3 variant 1: v1-r2: quiet {"frames":1185,"low1_fps":48.0813533475949,"over33_settled":0,"over50_settled":0,"p50_ms":16.6259994506836,"p99_ms":19.8349990844727,"ticks":1193,"
+
+--device=deck --scene=city --ticks=1200 --label=lossless  (3 runs, 1 contended)
+  p50_ms                    16.64  +-0.04
+  p99_ms                    19.86  +-1.32
+  low1_fps                  48.46  +-13.54
+  over33_settled                0  +-3
+  render_gpu_ms_p50          8.53  +-0.24
+  render_cpu_ms_p50          0.46  +-0.12
+  process_ms_p50             4.72  +-0.97
+  cpu_pinned_pct_p50         6.34  +-1.2
+  private_mb_max           1475.9  +-69.5
+  gpu_shared_mb_max        1086.1  +-64
+  gpu_dedicated_mb_max       66.4  +-0.4
+
+--device=deck --scene=city --ticks=1200 --label=bc7 --project=C:/Users/kazda/kiro/gtai-n9/tmp/handheld/w16/project  (3 runs, 2 contended)
+  p50_ms                    16.66  +-0.04
+  p99_ms                    19.83  +-0.54
+  low1_fps                  48.08  +-2.88
+  over33_settled                0  +-0
+  render_gpu_ms_p50          7.59  +-0.12
+  render_cpu_ms_p50          0.43  +-0.08
+  process_ms_p50              4.6  +-0.64
+  cpu_pinned_pct_p50         5.96  +-0.7
+  private_mb_max            990.5  +-70.4
+  gpu_shared_mb_max         600.1  +-65
+  gpu_dedicated_mb_max       81.2  +-0.2

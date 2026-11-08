@@ -34,3 +34,12 @@ func test_the_banner_paper_clears_the_name_and_the_bar() -> void:
 	assert_gte(paper.end.y - bar.end.y, 28.0, "the torn bottom clears the bar")
 	assert_gte(bar.position.x - paper.position.x, 24.0, "the left end under the crest")
 	assert_gte(paper.end.x - bar.end.x, 40.0, "the right hatch clears the phase count")
+
+
+## n9-handheld: the phase count grows 16 -> 18 px on the compact-HUD (handheld) rows only, its
+## right end kept: the desktop count is unchanged (the look goldens).
+func test_the_phase_count_grows_on_handheld_rows_only() -> void:
+	assert_eq(BossBar.count_px(DeviceProfile.of("desktop")), 16)
+	assert_eq(BossBar.count_px(DeviceProfile.of("deck")), BossBar.COUNT_PX_COMPACT)
+	assert_eq(BossBar.count_px(DeviceProfile.of("switch_handheld")), BossBar.COUNT_PX_COMPACT)
+	assert_gt(BossBar.COUNT_PX_COMPACT, BossBar.COUNT_PX)

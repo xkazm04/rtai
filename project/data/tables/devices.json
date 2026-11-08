@@ -6,6 +6,14 @@
       "note": "the shipped desktop game: nothing is applied"
     },
     {
+      "glyphs": "kb",
+      "id": "desktop_kb_glyphs",
+      "note": "n9 study row (an owner Call): the shipped desktop with the asset lane's drawn keyboard and mouse glyphs (ui_kb_glyphs_v1) in the prompts and the title / pause controls line; nothing else is applied (is_desktop stays true)"
+    },
+    {
+      "aim_assist": true,
+      "boss_cam": true,
+      "hud": "compact",
       "id": "deck",
       "max_fps": 60,
       "note": "Steam Deck class: a 7-inch 1280x800 (16:10) panel at 60 Hz, 4 Zen 2 cores / 8 threads, RDNA2 8 CUs; the project's base size is already 1280x800, so the window is the panel 1:1",
@@ -17,9 +25,12 @@
       "vsync": "enabled",
       "window_h": 800,
       "window_w": 1280,
-      "zoom_k": 1.5
+      "zoom_k": 1.25
     },
     {
+      "aim_assist": true,
+      "boss_cam": true,
+      "hud": "compact",
       "id": "deck40",
       "max_fps": 40,
       "note": "the Deck at its 40 Hz battery mode (the quick access menu's refresh / frame limit 40): 25 ms frames, the sim still ticks at 60 Hz",
@@ -31,9 +42,29 @@
       "vsync": "enabled",
       "window_h": 800,
       "window_w": 1280,
-      "zoom_k": 1.5
+      "zoom_k": 1.25
     },
     {
+      "aim_assist": true,
+      "boss_cam": true,
+      "hud": "compact",
+      "id": "deck30",
+      "max_fps": 30,
+      "note": "the Deck capped at 30 fps (the quick access menu's frame limit 30, the panel at 60 Hz): every frame 2 sim ticks, an even cadence; the 40 Hz row alternates 1 and 2 ticks a frame (n9 it7)",
+      "rumble": 1,
+      "sim_gpu": "integrated",
+      "sim_threads": 8,
+      "stretch_mode": "canvas_items",
+      "tier": "handheld",
+      "vsync": "enabled",
+      "window_h": 800,
+      "window_w": 1280,
+      "zoom_k": 1.25
+    },
+    {
+      "aim_assist": true,
+      "boss_cam": true,
+      "hud": "compact",
       "id": "deck_bench",
       "max_fps": 0,
       "note": "the Deck's profile uncapped (vsync off, max_fps 0): the simulator's headroom measure, never a play mode",
@@ -45,9 +76,12 @@
       "vsync": "disabled",
       "window_h": 800,
       "window_w": 1280,
-      "zoom_k": 1.5
+      "zoom_k": 1.25
     },
     {
+      "aim_assist": true,
+      "boss_cam": true,
+      "hud": "compact",
       "id": "deck_bench_z1",
       "max_fps": 0,
       "note": "study: deck_bench at the desktop's zoom (zoom_k 1.0): the A side of the zoom cost A/B (E6)",
@@ -62,7 +96,10 @@
       "zoom_k": 1
     },
     {
+      "aim_assist": true,
+      "boss_cam": true,
       "draw_scale": 0.75,
+      "hud": "compact",
       "id": "deck_bench_ds75",
       "max_fps": 0,
       "note": "study: deck_bench drawn at 0.75 of the 1280x800 base (960x600) and scaled up to the panel (viewport stretch): the fill-rate lever of E8",
@@ -74,10 +111,13 @@
       "vsync": "disabled",
       "window_h": 800,
       "window_w": 1280,
-      "zoom_k": 1.5
+      "zoom_k": 1.25
     },
     {
+      "aim_assist": true,
+      "boss_cam": true,
       "draw_scale": 0.85,
+      "hud": "compact",
       "id": "deck_bench_ds85",
       "max_fps": 0,
       "note": "study: deck_bench drawn at 0.85 of the 1280x800 base (1088x680) and scaled up to the panel (viewport stretch): the gentler step of E8",
@@ -89,10 +129,30 @@
       "vsync": "disabled",
       "window_h": 800,
       "window_w": 1280,
-      "zoom_k": 1.5
+      "zoom_k": 1.25
     },
     {
+      "aim_assist": true,
+      "boss_cam": true,
+      "hud": "full",
+      "id": "deck_hud_full",
+      "max_fps": 60,
+      "note": "study: the deck row with the desktop's full ghost-form card (hud full): the before side of the compact handheld card (h-3 B), and the owner's one-row way back",
+      "rumble": 1,
+      "sim_gpu": "integrated",
+      "sim_threads": 8,
+      "stretch_mode": "canvas_items",
+      "tier": "handheld",
+      "vsync": "enabled",
+      "window_h": 800,
+      "window_w": 1280,
+      "zoom_k": 1.25
+    },
+    {
+      "aim_assist": true,
+      "boss_cam": true,
       "draw_scale": 0.75,
+      "hud": "compact",
       "id": "deck_ds75",
       "max_fps": 60,
       "note": "the Deck row drawn at 0.75 of the 1280x800 base (960x600) and scaled up to the panel (viewport stretch), the camera px/m x 0.75 so the framing is the deck row's: the E8 fill-rate lever as a play row, for the owner's look call",
@@ -104,9 +164,12 @@
       "vsync": "enabled",
       "window_h": 800,
       "window_w": 1280,
-      "zoom_k": 1.5
+      "zoom_k": 1.25
     },
     {
+      "aim_assist": true,
+      "boss_cam": true,
+      "hud": "compact",
       "id": "handheld_1080",
       "max_fps": 60,
       "note": "Windows handheld class (Ryzen Z1/Z2 or Lunar Lake class APUs, 7 to 8.8-inch 1920x1080 panels): runs the Windows build; stretch_mode viewport draws at the 1280x800 base and scales up",
@@ -118,9 +181,12 @@
       "vsync": "enabled",
       "window_h": 1080,
       "window_w": 1920,
-      "zoom_k": 1.5
+      "zoom_k": 1.25
     },
     {
+      "aim_assist": true,
+      "boss_cam": true,
+      "hud": "compact",
       "id": "handheld_1080_native",
       "max_fps": 60,
       "note": "study: handheld_1080 drawn at the panel's own 1920x1080 (canvas_items, the desktop's mode): the A side of the viewport-stretch A/B",
@@ -132,9 +198,12 @@
       "vsync": "enabled",
       "window_h": 1080,
       "window_w": 1920,
-      "zoom_k": 1.5
+      "zoom_k": 1.25
     },
     {
+      "aim_assist": true,
+      "boss_cam": true,
+      "hud": "compact",
       "id": "switch_handheld",
       "max_fps": 30,
       "note": "a budget only (no SDK, no device): a Switch-class handheld, 1280x720 (16:9) at 30 fps, 3 cores for the game; the simulator pins 3 threads on the integrated Radeon",
@@ -146,9 +215,9 @@
       "vsync": "enabled",
       "window_h": 720,
       "window_w": 1280,
-      "zoom_k": 1.5
+      "zoom_k": 1.25
     }
   ],
-  "doc": "Handheld lane (docs/handheld/LEDGER.md): the device profile per target, picked by the launch flag --device=<id> (a dash in the id reads as an underscore: --device=switch-handheld). The default `desktop` applies nothing: the shipped game is untouched. A row may set window_w/window_h (the window's size in px: the device's panel), max_fps (Engine.max_fps; 0 = uncapped), vsync (enabled, disabled, adaptive, mailbox), stretch_mode (canvas_items = draw at the window's size, the shipped mode; viewport = draw at the project's 1280x800 base and scale the image up: a fill-rate lever for a 1080p panel), zoom_k (the camera's px/m x this: a 7-inch panel at arm's length shows a metre at about half the visual angle of a desktop monitor), rumble (the pad rumble gain 0..1, HandheldRumble on the Events bus; absent = none), tier (full or handheld: the effect tier the views may read). sim_threads and sim_gpu are for the PC simulator only (tools/handheld/sim.mjs): the logical CPUs the process is pinned to and the GPU class it renders on (integrated = the CPU's own Radeon, weaker than a Deck's).",
+  "doc": "Handheld lane (docs/handheld/LEDGER.md): the device profile per target, picked by the launch flag --device=<id> (a dash in the id reads as an underscore: --device=switch-handheld). The default `desktop` applies nothing: the shipped game is untouched. A row may set window_w/window_h (the window's size in px: the device's panel), max_fps (Engine.max_fps; 0 = uncapped), vsync (enabled, disabled, adaptive, mailbox), stretch_mode (canvas_items = draw at the window's size, the shipped mode; viewport = draw at the project's 1280x800 base and scale the image up: a fill-rate lever for a 1080p panel), zoom_k (the camera's px/m x this: a 7-inch panel at arm's length shows a metre at about half the visual angle of a desktop monitor; the handheld rows take 1.25 = 40 px/m, the owner's pick of 2026-11-07), rumble (the pad rumble gain 0..1, HandheldRumble on the Events bus; absent = none), tier (full or handheld: the effect tier the views may read), hud (full or compact: compact = the handheld HUD layout, the small ghost-form card; absent = full, the desktop's). sim_threads and sim_gpu are for the PC simulator only (tools/handheld/sim.mjs): the logical CPUs the process is pinned to and the GPU class it renders on (integrated = the CPU's own Radeon, weaker than a Deck's).",
   "schema": "gtai.devices/1"
 }

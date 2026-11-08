@@ -1,0 +1,106 @@
+{
+  "schema": "gtai.handheld-ab/1",
+  "name": "e17c-combo-60-vs-40",
+  "rounds": 3,
+  "at": "2026-11-08T04:22:30.534Z",
+  "table": [
+    {
+      "variant": "--device=deck --scene=city_combo --ticks=1200",
+      "runs": 3,
+      "contended": 3,
+      "p50_ms": {
+        "median": 16.66,
+        "spread": 0.02
+      },
+      "p99_ms": {
+        "median": 20.13,
+        "spread": 1.64
+      },
+      "low1_fps": {
+        "median": 47.06,
+        "spread": 11.01
+      },
+      "over33_settled": {
+        "median": 0,
+        "spread": 1
+      },
+      "render_gpu_ms_p50": {
+        "median": 8.73,
+        "spread": 0.33
+      },
+      "render_cpu_ms_p50": {
+        "median": 0.57,
+        "spread": 0.33
+      },
+      "process_ms_p50": {
+        "median": 5.25,
+        "spread": 2.71
+      },
+      "cpu_pinned_pct_p50": {
+        "median": 6.34,
+        "spread": 2.71
+      },
+      "private_mb_max": {
+        "median": 1493.8,
+        "spread": 64.9
+      },
+      "gpu_shared_mb_max": {
+        "median": 1118.1,
+        "spread": 65
+      },
+      "gpu_dedicated_mb_max": {
+        "median": 66.4,
+        "spread": 0.8
+      }
+    },
+    {
+      "variant": "--device=deck40 --scene=city_combo --ticks=1200",
+      "runs": 3,
+      "contended": 3,
+      "p50_ms": {
+        "median": 24.94,
+        "spread": 0.28
+      },
+      "p99_ms": {
+        "median": 30.23,
+        "spread": 0.82
+      },
+      "low1_fps": {
+        "median": 32.26,
+        "spread": 0.62
+      },
+      "over33_settled": {
+        "median": 1,
+        "spread": 1
+      },
+      "render_gpu_ms_p50": {
+        "median": 8.96,
+        "spread": 0.12
+      },
+      "render_cpu_ms_p50": {
+        "median": 0.53,
+        "spread": 0.09
+      },
+      "process_ms_p50": {
+        "median": 6.03,
+        "spread": 0.86
+      },
+      "cpu_pinned_pct_p50": {
+        "median": 4.71,
+        "spread": 0.45
+      },
+      "private_mb_max": {
+        "median": 1495.3,
+        "spread": 66.4
+      },
+      "gpu_shared_mb_max": {
+        "median": 1118.1,
+        "spread": 65
+      },
+      "gpu_dedicated_mb_max": {
+        "median": 66.4,
+        "spread": 0.3
+      }
+    }
+  ]
+}

@@ -41,10 +41,17 @@ var next_hint: String = "G"
 ## true while a story line is up (StoryForms: quest 1's subtitle box takes the bottom centre): the
 ## card folds to the one chip that matters, the current form (in base the selected ghost).
 var compact: bool = false
+## The card's sizes: the desktop's full card, or the handheld's compact one (DeviceProfile.hud).
+var layout: GhostFormLayout = GhostFormLayout.for_device(DeviceProfile.shared())
+## The one chip that carries its name when the layout names only one (the selected ghost).
+var _named: StringName = &""
 
 
 ## Fills the plain values from the state machine (call once per frame).
 func sync(g: GhostForms) -> void:
+	if PadGlyphArt.active() and enter_hint == "Q":  # n9-handheld: the pad's buttons, once
+		enter_hint = PadGlyphArt.action_hint(&"power_hauler", enter_hint)
+		next_hint = PadGlyphArt.action_hint(&"power_gearbox", next_hint)
 	order = g.table.order
 	current = g.current() if g.settled() else g.to_id
 	selected = g.selected
@@ -67,17 +74,19 @@ func sync(g: GhostForms) -> void:
 func _draw() -> void:
 	var screen: Vector2 = get_viewport_rect().size
 	var shown: Array[StringName] = shown_chips()
-	var w: float = GAP * float(maxi(shown.size(), 1)) + 24.0
-	var card: Rect2 = Rect2(Vector2(MARGIN, screen.y - MARGIN - 158.0), Vector2(w, 158.0))
+	var l: GhostFormLayout = layout
+	_named = named_chip(shown)
+	var w: float = l.card_w(shown.size())
+	var card: Rect2 = Rect2(Vector2(l.margin, screen.y - l.margin - l.card_h), Vector2(w, l.card_h))
 	if MEMO:
 		HudPaper.draw(self, paper_of(card))
 	else:
 		draw_rect(card.grow(4.0), INK)
 		draw_rect(card, PAPER)
 	for i: int in shown.size():
-		var c: Vector2 = card.position + Vector2(12.0 + GAP * (float(i) + 0.5), 60.0)
+		var c: Vector2 = card.position + Vector2(12.0 + l.gap * (float(i) + 0.5), l.chip_y)
 		_chip(shown[i], c)
-	_madness(Rect2(card.position + Vector2(16.0, 128.0), Vector2(w - 32.0, 14.0)))
+	_madness(Rect2(card.position + Vector2(16.0, l.bar_y), Vector2(w - 32.0, l.bar_h)))
 
 
 ## n8-hud: the memo paper round `card`: the tape above the names, the torn hatch outside the words.
@@ -94,12 +103,19 @@ func shown_chips() -> Array[StringName]:
 	return [selected if order.has(selected) else order[0]]
 
 
+## The chip that carries its name when the layout names one: the selected ghost, else the first.
+func named_chip(shown: Array[StringName]) -> StringName:
+	if shown.is_empty():
+		return &""
+	return selected if shown.has(selected) else shown[0]
+
+
 func _chip(id: StringName, c: Vector2) -> void:
 	if locked.get(id, false):
 		_locked_chip(c)
 		return
 	var on: bool = id == current
-	var r: float = CHIP_R * (1.18 if on else 1.0)
+	var r: float = layout.chip_r * (1.18 if on else 1.0)
 	if on and morph_k < 1.0:
 		r *= 1.0 + 0.12 * sin(morph_k * PI)
 	draw_circle(c, r + 3.0, INK)
@@ -108,29 +124,29 @@ func _chip(id: StringName, c: Vector2) -> void:
 	var cool: float = cooling.get(id, 0.0)
 	if cool > 0.0:
 		_pie(c, r, cool)
-	var label: String = names.get(id, String(id))
 	var font: Font = ThemeDB.fallback_font
-	var tw: float = font.get_string_size(label, HORIZONTAL_ALIGNMENT_LEFT, -1, TEXT_SIZE).x
-	draw_string(
-		font,
-		c + Vector2(-tw * 0.5, -CHIP_R * 1.18 - 6.0),  # one baseline: the grown chip clips none
-		label,
-		HORIZONTAL_ALIGNMENT_LEFT,
-		-1,
-		TEXT_SIZE,
-		INK
-	)
+	if layout.all_names or id == _named:
+		_name(id, c, font)
 	if not face:
-		_glyph(id, c, r * 0.55, PAPER if on else INK)
+		GhostChipGlyph.draw(self, id, c, r * 0.55, PAPER if on else INK)
 	if id == selected and not on:
 		_chevron(c, r, font)
 
 
+## The ghost's name above its chip, on one baseline (the grown chip clips none).
+func _name(id: StringName, c: Vector2, font: Font) -> void:
+	var label: String = names.get(id, String(id))
+	var ts: int = layout.text_size
+	var tw: float = font.get_string_size(label, HORIZONTAL_ALIGNMENT_LEFT, -1, ts).x
+	var at: Vector2 = c + Vector2(-tw * 0.5, -layout.chip_r * 1.18 - 6.0)
+	draw_string(font, at, label, HORIZONTAL_ALIGNMENT_LEFT, -1, ts, INK)
+
+
 ## A locked ghost: a dimmed chip with an ink padlock (shackle arc over a body), no name.
 func _locked_chip(c: Vector2) -> void:
-	draw_circle(c, CHIP_R + 3.0, Color(INK, 0.45))
-	draw_circle(c, CHIP_R, PAPER.darkened(0.18))
-	var s: float = CHIP_R * 0.42
+	draw_circle(c, layout.chip_r + 3.0, Color(INK, 0.45))
+	draw_circle(c, layout.chip_r, PAPER.darkened(0.18))
+	var s: float = layout.chip_r * 0.42
 	draw_arc(c + Vector2(0.0, -s * 0.2), s * 0.62, PI, TAU, 12, INK, 3.0)
 	draw_rect(Rect2(c + Vector2(-s, -s * 0.2), Vector2(s * 2.0, s * 1.5)), INK)
 	draw_circle(c + Vector2(0.0, s * 0.45), s * 0.22, PAPER)
@@ -143,16 +159,14 @@ func _chevron(c: Vector2, r: float, font: Font) -> void:
 		PackedVector2Array([c + Vector2(-8, r + 4), c + Vector2(8, r + 4), Vector2(c.x, y + 6.0)]),
 		INK
 	)
-	var kw: float = font.get_string_size(key_hint, HORIZONTAL_ALIGNMENT_LEFT, -1, TEXT_SIZE).x
-	draw_string(
-		font,
-		Vector2(c.x - kw * 0.5, y + 24.0),
-		key_hint,
-		HORIZONTAL_ALIGNMENT_LEFT,
-		-1,
-		TEXT_SIZE,
-		INK
-	)
+	var ts: int = layout.text_size
+	if PadGlyphArt.active():  # n9-handheld: the pad button's drawn glyph
+		var gw: float = PadGlyphArt.line_size(key_hint, ts).x
+		PadGlyphArt.draw_line(self, Vector2(c.x - gw * 0.5, y + 6.0 + float(ts)), key_hint, ts, INK)
+		return
+	var kw: float = font.get_string_size(key_hint, HORIZONTAL_ALIGNMENT_LEFT, -1, ts).x
+	var at: Vector2 = Vector2(c.x - kw * 0.5, y + 6.0 + float(ts))
+	draw_string(font, at, key_hint, HORIZONTAL_ALIGNMENT_LEFT, -1, ts, INK)
 
 
 ## A pie of ink over the chip: `k` of the circle left to cool.
@@ -163,31 +177,6 @@ func _pie(c: Vector2, r: float, k: float) -> void:
 		@warning_ignore("return_value_discarded")
 		pts.push_back(c + Vector2.from_angle(-PI * 0.5 + TAU * k * float(s) / float(steps)) * r)
 	draw_colored_polygon(pts, Color(INK, 0.55))
-
-
-## Each ghost's mark inside its chip, from the concept's silhouette from above.
-func _glyph(id: StringName, c: Vector2, s: float, col: Color) -> void:
-	match id:
-		&"tonnage":  # the press slab with its four corner feet
-			draw_rect(Rect2(c - Vector2(s, s) * 0.6, Vector2(s, s) * 1.2), col)
-			for d: Vector2 in [Vector2(1, 1), Vector2(1, -1), Vector2(-1, 1), Vector2(-1, -1)]:
-				draw_circle(c + d * s * 0.85, s * 0.28, col)
-		&"dent":  # the crash-test target disc
-			draw_arc(c, s * 0.8, 0.0, TAU, 24, col, 3.0)
-			draw_circle(c, s * 0.3, col)
-		&"kerf":  # the cutting beam's line through the lens
-			draw_line(c - Vector2(s, -s), c + Vector2(s, -s), col, 3.0)
-			draw_circle(c, s * 0.3, col)
-		&"ohm":  # the forked bolt
-			var bolt: PackedVector2Array = PackedVector2Array(
-				[
-					c + Vector2(-s * 0.2, -s),
-					c + Vector2(s * 0.3, -s * 0.1),
-					c + Vector2(-s * 0.3, s * 0.1),
-					c + Vector2(s * 0.2, s)
-				]
-			)
-			draw_polyline(bolt, col, 3.0)
 
 
 func _madness(bar: Rect2) -> void:

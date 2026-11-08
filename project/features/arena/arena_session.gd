@@ -54,7 +54,7 @@ static func open(
 	if ArenaCars.wanted(s.stations):
 		@warning_ignore("return_value_discarded")
 		ArenaCars.attach(s.world, s.stage)
-	s.live = LiveInput.new(s.actions)
+	s.live = PadAimAssist.wired(LiveInput.new(s.actions), s.stage.get.bind(&"arena"))
 	s.tape = InputTape.new(s.live)
 	s.world.loop().set_input(input if input != null else s.tape)
 	Log.info("arena", "arena open: %d stations" % s.stations.stations.size())

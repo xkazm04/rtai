@@ -54,6 +54,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--quest-blade",
 	# n7-melee: --hit-cues=off gives melee and ghost hits no sound of their own (the before)
 	"--hit-cues",
+	# n9-handheld it8: --boss-cam-ease=off = BossCam's framing exactly (no CamFollow; the before)
+	"--boss-cam-ease",
 	# n7-melee: --tell-cues=off gives the ghost attacks' wind-ups and whiffs no sound (the before)
 	"--tell-cues",
 	# n7-melee: --whiff makes the ghost reel's Tonnage slam once onto empty road (dev film)
@@ -108,13 +110,31 @@ const KNOWN_FLAGS: PackedStringArray = [
 
 var _values: Dictionary[String, String] = {}
 var _unknown: Array[String] = []
+## n9-handheld: a device row was picked (`--device=`, or a Steam Deck seen by itself).
+var _device_on: bool = false
 
 
 func _init() -> void:
 	parse(OS.get_cmdline_user_args())
-	if has("--device"):  # d9-handheld: selected here, before the main scene's initializers read it
-		@warning_ignore("return_value_discarded")
-		DeviceProfile.select(value("--device"))
+	# d9-handheld: selected here, before the main scene's initializers read it
+	var want: String = value("--device") if has("--device") else _auto_device()
+	_device_on = has("--device") or want != ""
+	if _device_on:
+		var profile: DeviceProfile = DeviceProfile.select(want)
+		profile.fill_screen = not has("--device")  # picked by itself: the real device's screen
+
+
+## n9-handheld: with no `--device=`, a Steam Deck picks its row (DeviceProfile.auto_pick); the
+## screen is only asked when Steam's SteamDeck variable is set, so the desktop path is unchanged.
+static func _auto_device() -> String:
+	var env: String = OS.get_environment("SteamDeck")
+	if env == "" or DisplayServer.get_name() == "headless":
+		return ""
+	var screen: Vector2i = DisplayServer.screen_get_size()
+	var want: String = DeviceProfile.auto_pick(env, screen)
+	var row: String = want if want != "" else "desktop"
+	Log.info("device", "SteamDeck=%s, a %s screen: the %s row" % [env, screen, row])
+	return want
 
 
 ## d9-handheld: the menu pad buttons (every run); a `--device=` profile sets the window and the
@@ -122,7 +142,7 @@ func _init() -> void:
 func _ready() -> void:
 	@warning_ignore("return_value_discarded")
 	PlayerActions.install_menu_pad()  # every run: a pad presses the cards' buttons (A) too
-	if has("--device"):
+	if _device_on:
 		var profile: DeviceProfile = DeviceProfile.shared()
 		profile.apply(get_window())
 		if profile.is_handheld():

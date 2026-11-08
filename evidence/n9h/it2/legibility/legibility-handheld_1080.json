@@ -1,0 +1,320 @@
+{
+  "device": "handheld_1080",
+  "draw_sizes": [
+    {
+      "authored_px": 16,
+      "cap_px": 16.0,
+      "font_px": 22,
+      "site": "boss bar count (BossBar 16)",
+      "verdict": "ok",
+      "x_mm": 1.41,
+      "x_px": 12.0
+    },
+    {
+      "authored_px": 18,
+      "cap_px": 17.0,
+      "font_px": 24,
+      "site": "ghost card name / key hint (GhostFormLayout 18)",
+      "verdict": "ok",
+      "x_mm": 1.53,
+      "x_px": 13.0
+    },
+    {
+      "authored_px": 18,
+      "cap_px": 17.0,
+      "font_px": 24,
+      "site": "boss taunt smallest fit (BossTaunt 18)",
+      "verdict": "ok",
+      "x_mm": 1.53,
+      "x_px": 13.0
+    },
+    {
+      "authored_px": 20,
+      "cap_px": 19.0,
+      "font_px": 27,
+      "site": "boss bar name (BossBar 20)",
+      "verdict": "ok",
+      "x_mm": 1.77,
+      "x_px": 15.0
+    },
+    {
+      "authored_px": 20,
+      "cap_px": 19.0,
+      "font_px": 27,
+      "site": "dialogue smallest fit (HudDialogue 20)",
+      "verdict": "ok",
+      "x_mm": 1.77,
+      "x_px": 15.0
+    },
+    {
+      "authored_px": 22,
+      "cap_px": 22.0,
+      "font_px": 30,
+      "site": "unarmed label (HudView 22)",
+      "verdict": "ok",
+      "x_mm": 2.0,
+      "x_px": 17.0
+    },
+    {
+      "authored_px": 24,
+      "cap_px": 23.0,
+      "font_px": 32,
+      "site": "objective prompt (ObjectiveView 24)",
+      "verdict": "ok",
+      "x_mm": 2.12,
+      "x_px": 18.0
+    },
+    {
+      "authored_px": 24,
+      "cap_px": 23.0,
+      "font_px": 32,
+      "site": "weapon / heat / notice (HudView 24)",
+      "verdict": "ok",
+      "x_mm": 2.12,
+      "x_px": 18.0
+    },
+    {
+      "authored_px": 26,
+      "cap_px": 25.0,
+      "font_px": 35,
+      "site": "speaker name (HudView.NAME_SIZE 26)",
+      "verdict": "ok",
+      "x_mm": 2.24,
+      "x_px": 19.0
+    },
+    {
+      "authored_px": 30,
+      "cap_px": 30.0,
+      "font_px": 41,
+      "site": "head line (HudView 30)",
+      "verdict": "ok",
+      "x_mm": 2.71,
+      "x_px": 23.0
+    }
+  ],
+  "pause": [
+    {
+      "authored_px": 18,
+      "cap_px": 17.0,
+      "class": "Button",
+      "font_px": 24,
+      "path": "/root/Quest1/@CanvasLayer@5/@PanelContainer@7/@VBoxContainer@6/@VBoxContainer@1237/@HBoxContainer@1241/@Button@1239",
+      "scale": 1.35,
+      "text": "-",
+      "verdict": "ok",
+      "x_mm": 1.53,
+      "x_px": 13.0
+    },
+    {
+      "authored_px": 18,
+      "cap_px": 17.0,
+      "class": "Button",
+      "font_px": 24,
+      "path": "/root/Quest1/@CanvasLayer@5/@PanelContainer@7/@VBoxContainer@6/@VBoxContainer@1237/@HBoxContainer@1241/@Button@1240",
+      "scale": 1.35,
+      "text": "+",
+      "verdict": "ok",
+      "x_mm": 1.53,
+      "x_px": 13.0
+    },
+    {
+      "authored_px": 18,
+      "cap_px": 17.0,
+      "class": "Button",
+      "font_px": 24,
+      "path": "/root/Quest1/@CanvasLayer@5/@PanelContainer@7/@VBoxContainer@6/@VBoxContainer@1237/@HBoxContainer@1244/@Button@1243",
+      "scale": 1.35,
+      "text": "Toggle",
+      "verdict": "ok",
+      "x_mm": 1.53,
+      "x_px": 13.0
+    },
+    {
+      "authored_px": 18,
+      "cap_px": 17.0,
+      "class": "Button",
+      "font_px": 24,
+      "path": "/root/Quest1/@CanvasLayer@5/@PanelContainer@7/@VBoxContainer@6/@VBoxContainer@1237/@HBoxContainer@1247/@Button@1246",
+      "scale": 1.35,
+      "text": "Toggle",
+      "verdict": "ok",
+      "x_mm": 1.53,
+      "x_px": 13.0
+    },
+    {
+      "authored_px": 18,
+      "cap_px": 17.0,
+      "class": "Button",
+      "font_px": 24,
+      "path": "/root/Quest1/@CanvasLayer@5/@PanelContainer@7/@VBoxContainer@6/@VBoxContainer@1237/@HBoxContainer@1250/@Button@1249",
+      "scale": 1.35,
+      "text": "Toggle",
+      "verdict": "ok",
+      "x_mm": 1.53,
+      "x_px": 13.0
+    },
+    {
+      "authored_px": 20,
+      "cap_px": 19.0,
+      "class": "RichTextLabel",
+      "font_px": 27,
+      "path": "/root/Quest1/@CanvasLayer@5/@PanelContainer@7/@VBoxContainer@6/@RichTextLabel@1236",
+      "scale": 1.35,
+      "text": "  move      aims      fires\n : electrosh",
+      "verdict": "ok",
+      "x_mm": 1.77,
+      "x_px": 15.0
+    },
+    {
+      "authored_px": 20,
+      "cap_px": 19.0,
+      "class": "Label",
+      "font_px": 27,
+      "path": "/root/Quest1/@CanvasLayer@5/@PanelContainer@7/@VBoxContainer@6/@VBoxContainer@1237/@HBoxContainer@1241/@Label@1238",
+      "scale": 1.35,
+      "text": "Volume 80%",
+      "verdict": "ok",
+      "x_mm": 1.77,
+      "x_px": 15.0
+    },
+    {
+      "authored_px": 20,
+      "cap_px": 19.0,
+      "class": "Label",
+      "font_px": 27,
+      "path": "/root/Quest1/@CanvasLayer@5/@PanelContainer@7/@VBoxContainer@6/@VBoxContainer@1237/@HBoxContainer@1244/@Label@1242",
+      "scale": 1.35,
+      "text": "Reduced motion: off",
+      "verdict": "ok",
+      "x_mm": 1.77,
+      "x_px": 15.0
+    },
+    {
+      "authored_px": 20,
+      "cap_px": 19.0,
+      "class": "Label",
+      "font_px": 27,
+      "path": "/root/Quest1/@CanvasLayer@5/@PanelContainer@7/@VBoxContainer@6/@VBoxContainer@1237/@HBoxContainer@1247/@Label@1245",
+      "scale": 1.35,
+      "text": "Frame cap: device",
+      "verdict": "ok",
+      "x_mm": 1.77,
+      "x_px": 15.0
+    },
+    {
+      "authored_px": 20,
+      "cap_px": 19.0,
+      "class": "Label",
+      "font_px": 27,
+      "path": "/root/Quest1/@CanvasLayer@5/@PanelContainer@7/@VBoxContainer@6/@VBoxContainer@1237/@HBoxContainer@1250/@Label@1248",
+      "scale": 1.35,
+      "text": "Rumble: full",
+      "verdict": "ok",
+      "x_mm": 1.77,
+      "x_px": 15.0
+    },
+    {
+      "authored_px": 28,
+      "cap_px": 27.0,
+      "class": "Button",
+      "font_px": 38,
+      "path": "/root/Quest1/@CanvasLayer@5/@PanelContainer@7/@VBoxContainer@6/@Button@1251",
+      "scale": 1.35,
+      "text": "Resume",
+      "verdict": "ok",
+      "x_mm": 2.47,
+      "x_px": 21.0
+    },
+    {
+      "authored_px": 28,
+      "cap_px": 27.0,
+      "class": "Button",
+      "font_px": 38,
+      "path": "/root/Quest1/@CanvasLayer@5/@PanelContainer@7/@VBoxContainer@6/@Button@1252",
+      "scale": 1.35,
+      "text": "Quit",
+      "verdict": "ok",
+      "x_mm": 2.47,
+      "x_px": 21.0
+    },
+    {
+      "authored_px": 48,
+      "cap_px": 47.0,
+      "class": "Label",
+      "font_px": 65,
+      "path": "/root/Quest1/@CanvasLayer@5/@PanelContainer@7/@VBoxContainer@6/@Label@1233",
+      "scale": 1.35,
+      "text": "Paused",
+      "verdict": "ok",
+      "x_mm": 4.12,
+      "x_px": 35.0
+    }
+  ],
+  "quest1": [],
+  "title": [
+    {
+      "authored_px": 20,
+      "cap_px": 19.0,
+      "class": "RichTextLabel",
+      "font_px": 27,
+      "path": "/root/Quest1/@CanvasLayer@5/@PanelContainer@7/@VBoxContainer@6/@RichTextLabel@12",
+      "scale": 1.35,
+      "text": "  move      aims      fires\n : electrosh",
+      "verdict": "ok",
+      "x_mm": 1.77,
+      "x_px": 15.0
+    },
+    {
+      "authored_px": 28,
+      "cap_px": 27.0,
+      "class": "Button",
+      "font_px": 38,
+      "path": "/root/Quest1/@CanvasLayer@5/@PanelContainer@7/@VBoxContainer@6/@Button@13",
+      "scale": 1.35,
+      "text": "Start",
+      "verdict": "ok",
+      "x_mm": 2.47,
+      "x_px": 21.0
+    },
+    {
+      "authored_px": 28,
+      "cap_px": 27.0,
+      "class": "Button",
+      "font_px": 38,
+      "path": "/root/Quest1/@CanvasLayer@5/@PanelContainer@7/@VBoxContainer@6/@Button@14",
+      "scale": 1.35,
+      "text": "Quit",
+      "verdict": "ok",
+      "x_mm": 2.47,
+      "x_px": 21.0
+    },
+    {
+      "authored_px": 34,
+      "cap_px": 32.0,
+      "class": "Label",
+      "font_px": 46,
+      "path": "/root/Quest1/@CanvasLayer@5/@PanelContainer@7/@VBoxContainer@6/@Label@9",
+      "scale": 1.35,
+      "text": "Quest 1: Collect Call",
+      "verdict": "ok",
+      "x_mm": 2.95,
+      "x_px": 25.0
+    },
+    {
+      "authored_px": 56,
+      "cap_px": 55.0,
+      "class": "Label",
+      "font_px": 76,
+      "path": "/root/Quest1/@CanvasLayer@5/@PanelContainer@7/@VBoxContainer@6/@Label@8",
+      "scale": 1.35,
+      "text": "RTAI: Uprising",
+      "verdict": "ok",
+      "x_mm": 4.83,
+      "x_px": 41.0
+    }
+  ],
+  "window": [
+    1920,
+    1080
+  ]
+}

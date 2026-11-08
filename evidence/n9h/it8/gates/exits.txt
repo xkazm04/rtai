@@ -1,0 +1,4 @@
+top down=19 scripterr=0
+tilt70 down=19 scripterr=0
+combo down=19 scripterr=0
+at 630f91a7: headless --quit-after 16000 arena -- --rigs --bot=reel --reel=director --view=<v>

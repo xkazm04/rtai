@@ -1,0 +1,5 @@
+BossCam focus per frame, deck row, --view=combo, d3d12 (the RTX, a window), --fixed-fps 60, 2700 frames.
+Probe = a temporary Log line in BossCam._process (not committed). px at 40 px/m.
+BEFORE (FAR_M 20 hard switch), King, frames 150-156: frame 154 d=19.82 m focus dy = -76.4 px in one frame.
+AFTER (smoothstep 14-28 m) king: 2700 frames; top 8 focus moves (px, frame, d m): [(11.3, 1280, 5.4), (11.3, 1337, 5.5), (10.8, 1281, 5.6), (10.7, 1338, 5.8), (10.3, 2059, 2.4), (10.3, 738, 6.8), (10.2, 1282, 5.8), (10.2, 1339, 6.0)]
+AFTER (smoothstep 14-28 m) servo: 2700 frames; top 8 focus moves (px, frame, d m): [(14.7, 2208, 5.2), (14.7, 2205, 4.7), (14.7, 2202, 4.3), (14.7, 2201, 4.3), (14.7, 2210, 5.5), (14.7, 2209, 5.3), (14.7, 2207, 5.0), (14.7, 2204, 4.5)]

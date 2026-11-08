@@ -1,0 +1,3 @@
+combo exit 0
+tilt70 exit 0
+top exit 0

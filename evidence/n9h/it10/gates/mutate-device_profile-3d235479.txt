@@ -1,0 +1,65 @@
+mutate: worktree C:\Users\kazda\kiro\gtai-n9\tmp\handheld\gtai-mutate-820f1344 at 3d235479 (reused)
+mutate: 30/68 mutant(s); baseline run of test_device_profile
+mutate: baseline green in 12.1 s; per-mutant timeout 90 s
+mutate: [1/30] core/platform/device_profile.gd:24 literal  1 -> 0  survived  (11.4 s)
+mutate: [2/30] core/platform/device_profile.gd:29 literal  0.0 -> 1.0  survived  (14.5 s)
+mutate: [3/30] core/platform/device_profile.gd:39 boolean  false -> true  survived  (10.4 s)
+mutate: [4/30] core/platform/device_profile.gd:42 boolean  false -> true  survived  (10.9 s)
+mutate: [5/30] core/platform/device_profile.gd:52 cmp_flip  == -> !=  killed  (12.7 s)
+mutate: [6/30] core/platform/device_profile.gd:75 boolean  or -> and  killed  (10.9 s)
+mutate: [7/30] core/platform/device_profile.gd:84 boolean  or -> and  survived  (11.2 s)
+mutate: [8/30] core/platform/device_profile.gd:84 boolean  not -> (removed)  killed  (11.2 s)
+mutate: [9/30] core/platform/device_profile.gd:90 cmp_flip  == -> !=  killed  (11.2 s)
+mutate: [10/30] core/platform/device_profile.gd:91 delete  p._read(row) -> pass  killed  (13.3 s)
+mutate: [11/30] core/platform/device_profile.gd:92 cmp_flip  != -> ==  survived  (12.3 s)
+mutate: [12/30] core/platform/device_profile.gd:99 literal  0 -> 1  killed  (14.0 s)
+mutate: [13/30] core/platform/device_profile.gd:102 literal  1 -> 0  killed  (13.3 s)
+mutate: [14/30] core/platform/device_profile.gd:110 literal  1.0 -> 0.0  survived  (14.5 s)
+mutate: [15/30] core/platform/device_profile.gd:115 boolean  false -> true  survived  (28.1 s)
+mutate: [16/30] core/platform/device_profile.gd:115 cmp_flip  == -> !=  survived  (26.2 s)
+mutate: [17/30] core/platform/device_profile.gd:115 boolean  true -> false  survived  (24.2 s)
+mutate: [18/30] core/platform/device_profile.gd:116 boolean  false -> true  survived  (27.5 s)
+mutate: [19/30] core/platform/device_profile.gd:116 boolean  true -> false  survived  (21.1 s)
+mutate: [20/30] core/platform/device_profile.gd:121 boolean  and -> or  survived  (23.7 s)
+mutate: [21/30] core/platform/device_profile.gd:121 literal  0 -> 1  survived  (16.7 s)
+mutate: [22/30] core/platform/device_profile.gd:127 cmp_flip  < -> >=  killed  (11.6 s)
+mutate: [23/30] core/platform/device_profile.gd:127 literal  1.0 -> 0.0  killed  (14.2 s)
+mutate: [24/30] core/platform/device_profile.gd:128 arith  * -> /  killed  (14.6 s)
+mutate: [25/30] core/platform/device_profile.gd:138 boundary  >= -> >  survived  (11.8 s)
+mutate: [26/30] core/platform/device_profile.gd:140 boolean  or -> and  survived  (11.7 s)
+mutate: [27/30] core/platform/device_profile.gd:142 cmp_flip  != -> ==  survived  (12.6 s)
+mutate: [28/30] core/platform/device_profile.gd:145 cmp_flip  == -> !=  survived  (11.0 s)
+mutate: [29/30] core/platform/device_profile.gd:147 boundary  < -> <=  survived  (10.9 s)
+mutate: [30/30] core/platform/device_profile.gd:149 cmp_flip  == -> !=  survived  (11.1 s)
+mutate core/platform/device_profile.gd: 30 mutant(s) (sampled from 68), tests: test_device_profile
+  core/platform/device_profile.gd:24 literal  1 -> 0  survived
+  core/platform/device_profile.gd:29 literal  0.0 -> 1.0  survived
+  core/platform/device_profile.gd:39 boolean  false -> true  survived
+  core/platform/device_profile.gd:42 boolean  false -> true  survived
+  core/platform/device_profile.gd:84 boolean  or -> and  survived
+  core/platform/device_profile.gd:92 cmp_flip  != -> ==  survived
+  core/platform/device_profile.gd:110 literal  1.0 -> 0.0  survived
+  core/platform/device_profile.gd:115 boolean  false -> true  survived
+  core/platform/device_profile.gd:115 cmp_flip  == -> !=  survived
+  core/platform/device_profile.gd:115 boolean  true -> false  survived
+  core/platform/device_profile.gd:116 boolean  false -> true  survived
+  core/platform/device_profile.gd:116 boolean  true -> false  survived
+  core/platform/device_profile.gd:121 boolean  and -> or  survived
+  core/platform/device_profile.gd:121 literal  0 -> 1  survived
+  core/platform/device_profile.gd:138 boundary  >= -> >  survived
+  core/platform/device_profile.gd:140 boolean  or -> and  survived
+  core/platform/device_profile.gd:142 cmp_flip  != -> ==  survived
+  core/platform/device_profile.gd:145 cmp_flip  == -> !=  survived
+  core/platform/device_profile.gd:147 boundary  < -> <=  survived
+  core/platform/device_profile.gd:149 cmp_flip  == -> !=  survived
+  core/platform/device_profile.gd:52 cmp_flip  == -> !=  killed
+  core/platform/device_profile.gd:75 boolean  or -> and  killed
+  core/platform/device_profile.gd:84 boolean  not -> (removed)  killed
+  core/platform/device_profile.gd:90 cmp_flip  == -> !=  killed
+  core/platform/device_profile.gd:91 delete  p._read(row) -> pass  killed
+  core/platform/device_profile.gd:99 literal  0 -> 1  killed
+  core/platform/device_profile.gd:102 literal  1 -> 0  killed
+  core/platform/device_profile.gd:127 cmp_flip  < -> >=  killed
+  core/platform/device_profile.gd:127 literal  1.0 -> 0.0  killed
+  core/platform/device_profile.gd:128 arith  * -> /  killed
+score 33.3% = killed 10 / (killed 10 + survived 20); timeout 0, invalid 0; 462 s

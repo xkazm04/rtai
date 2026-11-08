@@ -20,6 +20,14 @@ var mouse_aims: bool = true
 ## true once a pad was used last, false once a key or the mouse was: the prompts name the pad's
 ## buttons or the keys (aim is not affected; that is mouse_aims).
 var pad_last: bool = false
+## n9-handheld: on a handheld row only a click or a key hands the prompts to the keys; mouse motion
+## (a Deck trackpad in Steam's default layout) still aims but leaves them on the pad (Valve's Deck
+## recommendation: switch to mouse/keyboard mode only on a mouse click). The desktop: any mouse use.
+var click_flips: bool = false
+## n9-handheld: the pad aim assist (PadAimAssist.wire, an `aim_assist` device row); null = raw.
+var assist: AimAssist = null
+var aim_origin: Callable = func() -> Vector2: return Vector2.ZERO
+var aim_targets: Callable = func() -> Array[RangeTarget]: return []
 ## rivet-arsenal: a wheel notch presses and releases inside one frame, so polling misses it; the
 ## notch's action bits are latched here and ride the next sampled tick as one press.
 var _latched: int = 0
@@ -27,6 +35,11 @@ var _latched: int = 0
 
 func _init(p_actions: PlayerActions) -> void:
 	actions = p_actions
+	# n9-handheld: a handheld row starts pad-first (its pad is the device): the title card eats the
+	# pad's first press before a session's input exists, so the first prompt named the keys.
+	pad_last = DeviceProfile.shared().is_handheld()
+	mouse_aims = not pad_last
+	click_flips = pad_last
 
 
 func sample(_tick: int) -> TickInput:
@@ -48,7 +61,8 @@ func sample(_tick: int) -> TickInput:
 func note_event(event: InputEvent) -> void:
 	if event is InputEventMouseMotion or event is InputEventMouseButton:
 		mouse_aims = true
-		pad_last = false
+		if not (click_flips and event is InputEventMouseMotion):
+			pad_last = false
 		_latch_wheel(event as InputEventMouseButton)
 	elif event is InputEventKey:
 		pad_last = false
@@ -62,6 +76,10 @@ func note_event(event: InputEvent) -> void:
 func _aim() -> Vector2:
 	var stick: Vector2 = Input.get_vector(&"aim_left", &"aim_right", &"aim_up", &"aim_down")
 	if stick.length() >= actions.stick_deadzone:
+		if assist != null:
+			var targets: Array[RangeTarget] = aim_targets.call()
+			var at: Vector2 = aim_origin.call()
+			return assist.bend(stick.normalized(), at, targets, true).normalized()
 		return stick.normalized()
 	var from: Vector2 = origin_px.call()
 	if not mouse_aims or viewport == null or from == Vector2.INF:

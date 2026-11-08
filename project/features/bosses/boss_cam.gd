@@ -1,21 +1,24 @@
 class_name BossCam
 extends Node
-## Dev `--boss-cam` (clips): the arena camera frames Rivet and the boss together, sitting
-## FRAME_K of the way from Rivet to the boss, so a filmed attack keeps both on screen. View
-## only (SIM-03): it sets CollectCallView.focus, never the sim; without the flag the camera
-## follows Rivet. The centre is clamped so the screen stays on the fight's floor
-## (BossHook.bounds, the arena record's area): no off-area ground at the boulevard's edge. The
-## floor's top edge clears the boss bar: the clamp lets the screen rise HUD_PX (the bar's band,
-## in screen pixels) above the floor, so a boss at the top edge (Servo's bays) is never under it.
-## The boss wins over the floor: after the clamp the view shifts so the boss and BOSS_MARGIN_M
-## round it stay on screen between the bar and the ghost card at the bottom (keep_in): a boss on
-## the floor's bottom edge (Servo at the conveyor) shows a strip of off-floor ground rather than
-## standing under the ghost card or off the screen.
+## Dev `--boss-cam` (clips) and the handheld rows (devices.json `boss_cam`): the arena camera frames
+## Rivet and the boss together, sitting FRAME_K of the way from Rivet to the boss, so a filmed
+## attack keeps both on screen. View only (SIM-03): it sets CollectCallView.focus, never the sim;
+## without the flag or the row the camera follows Rivet. The centre is clamped so the screen stays
+## on the fight's floor (BossHook.bounds, the arena record's area): no off-area ground at the
+## boulevard's edge. The floor's top edge clears the boss bar: the clamp lets the screen rise HUD_PX
+## (the bar's band, in screen pixels) above the floor, so a boss at the top edge (Servo's bays) is
+## never under it. The boss wins over the floor: after the clamp the view shifts so the boss and
+## BOSS_MARGIN_M round it stay on screen between the bar and the ghost card at the bottom (keep_in):
+## a boss on the floor's bottom edge (Servo at the conveyor) shows a strip of off-floor ground
+## rather than standing under the ghost card or off the screen.
 
 const FLAG: String = "--boss-cam"
 const FRAME_K: float = 0.45
 ## Farther apart than this (a respawn, the procession's far end) it follows Rivet alone.
-const FAR_M: float = 20.0
+## Between NEAR_M and FAR_M the lean fades out on a smoothstep: a hard switch at 20 m snapped
+## the King clip 76 px in one frame (n9 it7, the procession closing at ~15 m/s).
+const NEAR_M: float = 14.0
+const FAR_M: float = 28.0
 ## The boss bar's band at the top of the screen (BossBar.TOP + BAR_H + its title), screen px.
 const HUD_PX: float = BossBar.TOP + BossBar.BAR_H + 10.0
 
@@ -39,13 +42,35 @@ const TOP_MARGIN_M: float = 1.0
 ## Rivet is kept on screen with this margin when the boss's own margins leave room (the boss wins;
 ## n8 it7: at 64 px/m the frame held the boss and lost Rivet ~10 m away).
 const RIVET_MARGIN_M: float = 1.5
+## The focus's speed changes by at most this many screen px a tick (CamFollow; n9-handheld it8):
+## a keep-in margin engaging started a pan at 20 px a frame in one frame. `--boss-cam-ease=off`
+## (the before) or 0 = the framing exactly, every frame.
+const ACCEL_PX: float = 3.0
+## A focus jump farther than this (m) cuts instead of easing (a respawn, the first frame).
+const SNAP_M: float = 10.0
+const EASE_OFF: String = "--boss-cam-ease=off"
 
 var view: CollectCallView = null
 var hook: BossHook = null
+var _follow: CamFollow = CamFollow.new()
+var _tick: int = -1
+var _accel_px: float = 0.0 if _has(EASE_OFF) else ACCEL_PX
 
 
+## The dev flag, or a device row with `boss_cam` (the handheld rows: DeviceProfile.boss_cam).
 static func wanted() -> bool:
-	return OS.get_cmdline_user_args().has(FLAG)
+	return _has(FLAG) or DeviceProfile.shared().boss_cam
+
+
+static func _has(flag: String) -> bool:
+	return OS.get_cmdline_user_args().has(flag)
+
+
+## The point the camera leans to: FRAME_K of the way from Rivet `r` to the boss `b` when they
+## are within NEAR_M, Rivet alone past FAR_M, a smoothstep between (no step in the focus).
+static func aim(r: Vector2, b: Vector2) -> Vector2:
+	var k: float = FRAME_K * (1.0 - smoothstep(NEAR_M, FAR_M, r.distance_to(b)))
+	return r.lerp(b, k)
 
 
 ## `focus` moved so a view of `half_m` (half the screen, metres) stays inside `area`; on an
@@ -79,7 +104,7 @@ func _process(_delta: float) -> void:
 		return
 	var r: Vector2 = hook.rivet_pos()
 	var b: Vector2 = hook.fight.body.pos
-	var at: Vector2 = r if r.distance_to(b) > FAR_M else r.lerp(b, FRAME_K)
+	var at: Vector2 = aim(r, b)
 	var half: Vector2 = _half_m()
 	var m_per_px: float = half.y / maxf(view.get_viewport_rect().size.y * 0.5, 1.0)
 	var hud_m: float = HUD_PX * m_per_px
@@ -88,7 +113,11 @@ func _process(_delta: float) -> void:
 	var with_r: Vector2 = keep_in(on_floor, half, r, RIVET_MARGIN_M, bands)
 	var held_x: Vector2 = keep_in(with_r, half, b, BOSS_MARGIN_X_M, bands)
 	var y: float = keep_in(with_r, half, b, BOSS_MARGIN_M, bands).y
-	view.focus = Vector2(held_x.x, hold_top(Vector2(held_x.x, y), half, b, bands))
+	var framed: Vector2 = Vector2(held_x.x, hold_top(Vector2(held_x.x, y), half, b, bands))
+	var now: int = hook.fight.now()
+	var ticks: int = now - _tick if _tick >= 0 and now >= _tick else 1
+	_tick = now
+	view.focus = _follow.advance(framed, ticks, _accel_px * m_per_px, SNAP_M)
 
 
 ## The focus y that keeps the boss's lifted top (BOSS_TOP_M up the screen under a tilt) and
