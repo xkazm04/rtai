@@ -337,3 +337,67 @@ NEXT (it7):
   `gtai-n9/tmp/rivet/scripts/rivet_knock_draft.py` (make it premultiplied like rivet_walk.py before it lands).
   `rivet_frames.gd` is at 199 lines: the knock goes in a new `RivetKnock` class, hooked at the DEATH branch (l.101):
   while the rig has `rivet_knock` meta, the knock strip wins over the DOWN sprawl.
+
+## it7 (04:34-05:34)
+
+Read: JOURNAL it6 NEXT, git log, the other journals (world: no new REQUEST to rivet, its knock field at 0c04d16b is the
+ANSWER I wire; perf / handheld: none to rivet), the asset lane (it128: every knock-down strip A, away 70 v4 the pick;
+run8 55 row 4 v6 / L1 v6 A, re-pack; the armed run onehand 70 rows in progress for my it6 REQUEST, row 1 A, row 3 v2
+and row 2 v2 fixes running; a 12-frame sprint OFFER for Call 8). Registry rules applied: sprite-and-atlas (one scale per
+figure: each knock strip scaled by its down frame's length so its dome matches walk8's, tone-matched to walk8; figures
+split by alpha blob, never by a fixed cut), motion-quality (judged in motion frame by frame at 64 and 32 px/m on the real
+city with a sim car; a pop between states is a defect: found and fixed the sprawl tail), depth-ordered (the lying figure
+centred on his ground point, so it sorts with the car by his body, not by a foot line half a body away).
+
+- MILESTONE `a4656a3e`+`f28589e8` **the drawn knock-down** (it5 NEXT 4): `tools/art/rivet_knock.py` packs the library's
+  8 one-direction sheets into `rivet_knock.png` (4 x 4) at p70 and p55; `RivetKnock` (new class, rivet_frames.gd stays
+  at 200 lines) swaps it in while world's `rivet_knock` meta is set: row by the car heading's dominant screen axis,
+  column by pose time since the hit (impact 0, tumble 6, slide 24, down 54 ticks), lying cells turned onto diagonals.
+  `--rivet-knock=off` keeps the sprawl. Unit test `test_rivet_knock` (7). DECISION rivet/knock.
+- MILESTONE `4e4a0bf3` the down cell holds through the rig's rise tail: the first film showed the upright DEATH sprawl
+  pop in t273-291 (~0.33 s) between lying and standing (rig.dead outlives the knock meta).
+- Film (scratch worktree `gtai-n9/tmp/rivet/knockwt` = 4e4a0bf3 + n9-world merged, world's native DLLs; world's
+  `car_knock_clip.tscn -- --view=tilt70 --zoom=2|1 --every=1`, 0 SCRIPT ERROR, knocks=1 hit=196; before = the same with
+  RivetKnock.enabled false): `gtai-masters/n9/rivet/rivet_knockdown_before_after_city_car_tilt70_{64,32}ppm_t198_294.png`
+  + `rivet_knockdown_city_car_tilt70_64ppm_t150_350.mp4` and its BEFORE mp4. Looked at every row: impact t198 (right
+  row, helmet leading), tumble t204-216, the slide along the car's nose t222-252, down t258-291, standing t294.
+- FRICTION (~4 min): the library catalog ids drop the pitch (`rivet_knockdown_toward` + "pitch": 70); match by `keyed`.
+  The first provenance append wrote 2 lines with empty references: removed before any commit.
+- FRICTION (~2 min): a scratch worktree shares core.hooksPath: its merge commit ran lint and failed on my unfixed line.
+- Re-pack run8 55 (it128: row 4 v6, L1 v6, both A) at the it6 --k scales; looked at both rows before/after.
+- Gates: director reel on 4e4a0bf3's code (`reel-director-it7-<v>.log`): 19/19 fully down in top, tilt70, combo, 0 SCRIPT
+  ERROR, exit 0 (commit adcb725b). Unit select 29/29 (walk, frames, knock); lint 15/15 on every commit.
+- MILESTONE `425ad75d` **the get-up kneel** (the library's rivet_getup_70/_55 kneel column, B: rows toward / away / right
+  profile, the left throw mirrors the right profile; dome-matched to walk8 (k 0.53 / 0.55), feet on his ground point):
+  the knock grid is 5 x 4 now; once the rise passes 0.6 of the sprawl the kneel shows. Film (64 px/m): lying to t276,
+  kneel t279-291, standing t294; masters' knock sheets and the 64 mp4 re-made with it.
+- MILESTONE `4c315b3d` run8 55 re-packed (row 4 v6, L1 v6), looked at both rows; provenance for it + the kneel column.
+- MILESTONE `b31577a4` **the drawn armed run at 70** (my it6 REQUEST, the library delivered one-hand 7 A / 1 B and
+  two-hand 8 A at 05:13): `rivet_run8_eq_pistol.png`, `rivet_run8_eq_plasma_rifle.png` (rivet_walk.py --cols=8 --k =
+  run8 70's, --tone = the equipped strip); `RivetWalk` takes them above RUN_FROM_MPS (`ARMED_RUN`, `is_run`: the run's
+  cycle, the same legs). Unit test (armed runs at p70, katana falls back to its armed walk, the fire latch). Film:
+  arena gunplay pistol seed 3, tilt70 64 px/m, 200 frames each, 0 SCRIPT ERROR: before (`--rivet-walk=walk8`) one pose
+  for many frames, after open running strides, the pistol forward, the claw free
+  (`gtai-masters/n9/rivet/rivet_armed_run_pistol_before_after_arena_gunplay_tilt70_64ppm_seed3_f20_176.png` + mp4).
+  DECISION rivet/armed-run. frames.json 14.
+- Reels it7b (`reel-director-it7b-<v>.log`): top ran on 4c315b3d; tilt70 and combo started after rivet_walk.gd changed
+  (b31577a4's code, before gdformat's whitespace): 19/19 0 SCRIPT ERROR so far (top, tilt70).
+- OWED: the armed-run provenance lines carry no prompt_hash (the rows are not in catalog.json or metrics.jsonl yet at
+  05:14; refs name the cell folders + row ids): fill them when the library's catalog lists them.
+- FRICTION (~3 min): deleted the knock clip frame dirs while cleaning (the masters keep the sheets and both mp4s).
+
+### Calls drafted for REPORT (it7 additions)
+11. **The knock-down** (cars knock him down): built = the drawn knock strip (4 throw axes, diagonals by turning the
+    lying cells) + the get-up kneel; option `--rivet-knock=off` = the d9 DOWN sprawl. Open: the left kneel is the right
+    profile MIRRORED (claw and cable swap sides for ~12 ticks); a drawn left kneel is one REQUEST.
+12. **Knock scale**: each strip's down frame = 1.2 (p70) / 1.45 (p55) standing figures (`--len`), chosen so the dome
+    matches the walk; the lying body reads ~1.3x his standing height at 64 px/m. Option: one value per art key.
+
+NEXT (it8):
+1. Check `reel-director-it7b-combo.log`, then the director reel top on b31577a4 (`reels.sh it7c` or top alone).
+2. Armed runs as the library serves them: twohand/blade/heavy at 70 then 55: pack each like b31577a4 (one grid per
+   weapon name; blade -> katana, heavy -> gatling; check each grid's legs travel = run8's before reusing RUN_CYCLE_CELL).
+3. Film the knock's other rows (toward / away / left): world's clip has one car heading; a scratch drive with the car
+   turned, or wait for world's real-city clip on main.
+4. Full unit run + evidence run --no-bench on the it7 head.
+5. Size films owed: Servo combo 48 at 1.95 m, the roll ball and the death sprawl at size, beside a car.
