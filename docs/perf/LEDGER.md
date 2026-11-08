@@ -25,6 +25,9 @@ frozen when the process uses < 0.05 cores 12-15 s in (`evidence/perf/f19-freeze/
 | novsync60 | `--disable-vsync --max-fps 60` (the same pacing and CPU as the vsync runs: 0.21-0.28 cores) | **0 / 8** | not timing: with vsync off, 0 of 16 froze across both arms, against ~1 in 3 with it on. The hang follows the D3D12 vsync present (`Present(1, 0)`): a present that never completes blocks the queue, and the next frame fence never signals. Candidate workaround (an owner Call: tearing): vsync off + the 60 fps limiter, or the mailbox mode (untested) |
 | mailbox | vsync MAILBOX (`display/window/vsync/vsync_mode=3` via a temporary local override.cfg line, restored after) | **0 / 8** | still vsync-synced (`Present(1, DXGI_PRESENT_RESTART)`, no tearing) and no freeze: **the fix candidate**. Owed: the 40-run acceptance, pacing / CPU A/B vs Enabled, the release export, the real Start click |
 | cdb | WinDbg's cdb attached non-invasively to each frozen run (`stacks-cdb-{2,4,6,8}.txt`) | 4 / 8 | **the same main-thread stack in all 4** (below) |
+| mb40 (it2) | the fix committed: `display/window/vsync/vsync_mode.windows=3` (mailbox) in project.godot, 06c48c1b; 40 runs | **0 parked / 40**, 1 exited | 39 runs drew at 0.15-0.33 cores. Run 16 read 0 CPU but `thread_cpu.ps1` found **no thread at all** 1 s later (every real freeze kept ~30 waiting threads): the process was gone, with no crash output, at 01:58:48 while my unit run (`--import`) was rewriting this worktree's `.godot/`. hunt2 counted it as a freeze; it now records `exited` / `exitCode` / `kind` and only counts a live 0-CPU process |
+| mb40b (it2) | the same commit, hunt2 with exit detection + cdb on any freeze, nothing else run from this worktree | **0 / 40** | 40 / 40 reached quest 1 (`started`), 0.16-0.34 cores, no exit, no freeze (02:09-02:21) |
+| rel20 (it2) | the **release** `windows-slice` export of the same tree (`build/export/slice/RTAI-slice.exe`), a **real Start press** (`hunt2.ps1 -Exe ... -PressStart`: Alt tap + SetForegroundWindow + Enter on the focused Start; no `--autostart`) | **0 / 20** | 20 / 20 reached quest 1 (`started` from the log), 0.13-0.24 cores (`rel20.jsonl`, `rel-start-pressed.jpg`). Not run: a release export on Enabled (the control arm for the release build) |
 
 Frozen main thread (all 4): `ntdll!NtWaitForSingleObject` <- `KERNELBASE!WaitForSingleObjectEx` <- `+0x1389030` <-
 `+0x32e7c60` <- `+0x32e8890` <- `+0x33816e0` <- main loop (offsets from the exe's only export, `NoHotPatch`; the official
@@ -45,6 +48,67 @@ submission waits on, at the first frames after Start when the quest's view, font
 readbacks (`get_image`) hit the same wait first, which is why trace3 caught it there. A game-script fix cannot reach it.
 Owed: confirm the semaphore (cdb on the queue's fences, or a 4.7.2 debug template with symbols), then an engine patch
 or a script workaround that keeps texture uploads out of the first frames.
+
+### F19 fix (it2, 01:52-): mailbox vsync on Windows
+- **Shipped:** `display/window/vsync/vsync_mode.windows=3` (VSYNC_MAILBOX on Windows only; Linux / the Deck keep their
+  rows' own vsync). On D3D12 mailbox is `Present(1, DXGI_PRESENT_RESTART)`: still one present per vblank, no tearing,
+  the same 0.15-0.33 cores in quest 1 as Enabled (mb40). Checked live (a scratch probe, deleted): the window reports
+  mode 3. `test_frame_cap.test_windows_boots_in_mailbox_vsync` pins it (on the old tree the key is absent: -1 != 3).
+- **Counts:** Enabled ~2 in 5 (it1, counted from the jsonl files: 17 of 41 runs at 0 CPU (trace1 4/8, trace3 2/8,
+  fix40 2/4, nobake 1/3, rtsep 3/8, cdb 4/8, hunt 1/2), plus trace4 2/6 from its logs: 19 / 47). Mailbox:
+  **0 parked-fence freezes in 107 valid runs** (it1 8, mb40 39 + 1 exited, mb40b 40, rel20 20): the acceptance
+  (0 in 40 windowed `--autostart` runs) is met twice, plus the release build with a real Start press. Even at 1 in 4,
+  0 / 107 by chance is ~4e-14. CONTENDED throughout (other lanes' Godots up): counts only.
+- **Why mailbox avoids it** (source read, `drivers/d3d12/rendering_device_driver_d3d12.cpp` `swap_chain_resize`):
+  Enabled = `Present(1, 0)`, mailbox = `Present(1, DXGI_PRESENT_RESTART)`; both wait for vblank, the only difference
+  is RESTART dropping any queued present instead of queuing behind it. So the hang needs a queued present: a frame
+  submitted behind a present that the compositor never retires leaves that frame's fence unsignalled and
+  `_begin_frame` waits forever. A hypothesis from the source + the counts, not a driver-level proof.
+- **Release + real Start:** `--autostart` is debug-only (`quest1_card.gd`), so rel20 presses Start for real
+  (`-PressStart`: an Alt tap lets the background shell SetForegroundWindow, then Enter on the focused Start). Two
+  first tries failed: hunt2 hid the exported exe's own window (`-WindowStyle Hidden` only hides the console wrapper
+  of the editor binary). hunt2 now classifies each run `ok` / `idle` (title still up, the press missed) / `frozen`
+  (0 CPU, not responding) / `exited`.
+- **The engine bug stays upstream-worthy:** a frame fence never signalled after a `Present(1, 0)` on this PC (RTX 4090
+  driver, a hybrid AMD iGPU) is a driver or engine bug; mailbox avoids it. Owner Call: keep mailbox (default) or Enabled.
+
+### World's REQUEST (it2): the card rigs under combo
+world (it1): rig_stress p50 at 50 people, combo 1.1-1.4 ms vs top 0.5-0.76 (section 20's provisional 1 ms). Profile
+(scratch timers in `CutRig.drive` / `CharacterRigs.step_ticks` in a throwaway worktree of 06c48c1b, 50 people,
+600 ticks, top / combo / top / combo, CONTENDED; `evidence/perf/n9-rig-combo/prof.txt`, the patch `prof.patch`):
+
+| us per tick | top | combo |
+|---|---|---|
+| rig p50 (ms) | 0.81 / 0.72 | **1.26 / 1.21** |
+| pose steps | 4800 | 5184 (+8 %: the cards' t_alive == 0 re-drive) |
+| clips + springs + hips + gait | 277 / 235 | 325 / 306 |
+| RigPose.step | 422 / 359 | 435 / 416 |
+| RigTilt.lift_upper | - | 20 / 20 |
+| **RigHeadCard.step** | - | **137 / 91** |
+| **StreetView.step** (shield, crowd cards, walker cards, Rivet frames) | - | **347 / 233** |
+| assign + RigDetail.sync | 118 / 85 | 95 / 93 |
+
+So combo's extra ~0.45-0.5 ms a tick is StreetView.step (~0.23-0.35) + RigHeadCard.step (~0.09-0.14) + the extra
+pose steps; the cut rig's own posing is unchanged. And under cards the drawn card shows the figure while the cut rig
+still runs its full pose (clips, springs, gait, RigPose: ~0.7 ms) underneath. Levers for it3 (in characters' files,
+so REQUESTs with these numbers): (a) break StreetView.step down per card kind and cut its per-tick work (dirty
+flags: re-place a card only when its frame or facing changed); (b) skip RigPose for rigs whose parts a card hides
+(if the walk phase comes from RigGait alone).
+
+### Item 2 (it2): the traffic-sheet split is moot under BC7
+n9-world 3e02d3b8 imports the p70 traffic sheet as BC7: `traffic_cards.png-313d05e5...bptc.ctex` = **18,063,412 B**
+(4032 x 4480 x 1 B), one upload into a **32 MB** pow2 staging buffer (L9's mechanism), against 128 MB lossless. The
+-96 MB the split was for comes with BC7 itself; no texture of the sheet is over 32 MB. Not split (DECISION
+perf/traffic-split-under-bc7); `tools/art/split_sheet.py` stays for a lossless build. Owed: the resident-memory A/B
+lossless vs BC7 (world's item 1 job, `ab.mjs --scenes=riot,drive70`), read from world's evidence when it lands.
+
+### Item 3 (it2): the frame-pacing option (Call P-3 C)
+"Frame pacing: efficient / steady" in the pause card's settings (non-handheld rows; a handheld row keeps its 30 / 40 /
+60 cap row), saved as `pacing` in `gtai.player-settings/1`. efficient (default) = the boot cap from FrameCap (none at
+60 Hz, the tick rate above 61 Hz); steady = `FrameCap.pacing_cap`: the tick-rate limiter on top of vsync at 60 Hz too
+(L10 / L11: p99 ~20 -> ~17 ms, +0.06..+0.09 core). No-op headless and when filming. d6e93b92, tests in
+`test_frame_cap`, `test_player_settings`, `test_settings_panel_pad` (the desktop rebind rows moved down one).
+Owed: the steady-vs-efficient A/B on mailbox (L11 measured them on Enabled).
 
 ## Method (applies to every row)
 - **Runner:** `node tools/perf/ab.mjs --scenes=<..> --arms=<name>:<user args>[^<engine args>],... --pairs=N --out=<dir>`.

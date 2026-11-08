@@ -1,0 +1,4 @@
+PROF top p50 0.808 ms | drives 4800 | us/tick: gait+ 277.1 pose 421.6 lift 0.0 headcard 0.0 street 0.0 post 1.4 assign 117.7
+PROF combo p50 1.255 ms | drives 5184 | us/tick: gait+ 324.9 pose 434.6 lift 20.4 headcard 137.2 street 347.2 post 1.1 assign 94.6
+PROF top p50 0.724 ms | drives 4800 | us/tick: gait+ 235.2 pose 359.2 lift 0.0 headcard 0.0 street 0.0 post 1.0 assign 84.7
+PROF combo p50 1.209 ms | drives 5184 | us/tick: gait+ 305.6 pose 416.1 lift 19.7 headcard 90.6 street 232.8 post 1.1 assign 93.1

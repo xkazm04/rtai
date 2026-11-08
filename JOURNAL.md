@@ -73,3 +73,52 @@ NEXT (it2):
   (project.godot `display/window/vsync/vsync_mode=3`, or at boot beside FrameCap, one value away), then the 40-run
   acceptance, the pacing / CPU A/B vs Enabled under bench.lock (ab.mjs), the release export and the real Start click,
   plus a test that pins the mode. Then items 2-4 as above.
+
+## it2 01:52 BUILD
+- Read: JOURNAL it1 NEXT, git log, world / rivet / handheld journals. REQUEST from world (it1): the card rigs under
+  combo cost ~2x top (rig_stress p50 1.1-1.4 vs 0.5-0.76 ms at 50 people). Accepted: profiled in it3 (below).
+- Registry rules applied: runtime-observation-evidence (a 0-CPU run is classified from the live process: threads,
+  exit, Responding, not from the CPU number alone), measurement-honesty (every count with its denominator, the
+  exited run reported, not hidden or counted as a pass).
+- 01:55 F-19 fix built: `display/window/vsync/vsync_mode.windows=3` (mailbox, Windows only; the Deck / Linux rows
+  keep their own). A scratch probe (deleted) read the live window's mode = 3. `test_frame_cap` pins it.
+- 02:01 MILESTONE item 3: the pacing option (efficient / steady) in the pause card's settings, saved in
+  settings.json; FrameCap.pacing_cap / apply_pacing; tests 26 / 0 (frame_cap, player_settings, settings_panel_pad;
+  the desktop rebind rows moved down one). Commit d6e93b92. DECISION perf/frame-pacing-option.
+- FRICTION: mb40 ran from this worktree while I edited `project/` and ran the unit runner (it imports into the same
+  `.godot/`). Run 16 read 0 CPU but its process was already gone (no threads, no crash text): reported as
+  "exited", not as a pass. hunt2 now classifies exited / idle / frozen. Lesson: no Godot from the hunt's worktree.
+- 02:09 MILESTONE F-19: mb40 = 0 parked / 40 (1 exited, above). Committed 06c48c1b. mb40b (exit-aware hunt, cdb on any
+  freeze, nothing else from this tree) running.
+- 02:12 MILESTONE: the real Start press works: Alt tap + SetForegroundWindow + SendKeys Enter on the focused Start
+  (`hunt2.ps1 -PressStart`); the release `windows-slice` export (build/export/slice/RTAI-slice.exe, 02:05) reaches
+  quest 1 with it (`evidence/perf/f19-freeze/rel-start-pressed.jpg`, looked at it: the dumpster beat, Rivet's line).
+  The first -Exe tries failed because hunt2 hid the exe's own window. rel20 (release + real press, 20 runs) running.
+- Item 2 DECIDED moot under BC7: world's import of the p70 traffic sheet is 18.06 MB BC7 (32 MB staging, was 128 MB).
+  DECISION perf/traffic-split-under-bc7; LEDGER "Item 2". The RAM A/B lossless vs BC7 is world's item 1 job.
+- 02:21 MILESTONE F-19 ACCEPTED: mb40b **0 / 40** (exit-aware hunt, 40 / 40 reached quest 1); rel20 **0 / 20** with
+  the release `windows-slice` export and a real Start press. Mailbox total: 0 parked-fence freezes in 107 valid runs,
+  Enabled 19 / 47. Source read: mailbox differs from Enabled only by DXGI_PRESENT_RESTART (no queued present).
+  DECISION perf/f19-mailbox. Owner Call: mailbox as the default (built) vs Enabled.
+- 02:23 world's REQUEST answered (LEDGER "World's REQUEST"): profile of the 50-person rig stress top vs combo in a
+  throwaway worktree (scratch timers, removed): combo's extra ~0.45-0.5 ms a tick = StreetView.step 0.23-0.35 ms +
+  RigHeadCard.step 0.09-0.14 ms + 8 % more pose steps; the cut rig still poses fully (~0.7 ms) under the cards.
+  `evidence/perf/n9-rig-combo/prof.txt` + `prof.patch`.
+NOTE to world: the combo rig cost is StreetView.step (~0.23-0.35 ms/tick: shield, crowd, walker cards, Rivet frames)
+  plus RigHeadCard.step (~0.09-0.14); numbers in docs/perf/LEDGER.md on n9-perf. I break StreetView.step down per card
+  kind in it3 and send the cut as a REQUEST to the owning lane (characters' files are not mine).
+- FRICTION (02:16): the first profile script hung 5 min (a `-s` script that names autoload-dependent classes fails to
+  compile and the tree never quits); the `_initialize` + load() runner pattern (rig_bench.gd) works.
+
+NEXT (it3):
+1. world's REQUEST, part 2: break StreetView.step down (RiotShieldCard / StreetCrowdCards / StreetWalkerCards /
+   RivetFrames) and RigHeadCard.step with the same scratch timers (`evidence/perf/n9-rig-combo/prof.patch`, a throwaway
+   worktree), find the per-tick work that could be dirty-flagged, and test whether RigPose can be skipped for rigs a
+   card hides; REQUEST the cut with numbers to the owner of the file (git log -1 on each).
+2. Pacing A/B on mailbox: efficient vs steady (`--max-fps 60`) riot60 + drive60 under bench.lock (ab.mjs, 3 pairs),
+   and mailbox vs Enabled CPU / p99 to confirm the default costs nothing (L11 said WASH; re-check on d9 main).
+3. Item 4: once world's BC7 A/B lands, re-measure the frame-time / VRAM / RAM table on n9-world (ab.mjs, bench.lock),
+   both the desktop and handheld's deck row.
+4. The full gates on this branch before the freeze: `node tools/tests/run_unit.mjs` (no-arg), `node tools/evidence/run.mjs
+   --no-bench`, the director reel x3 views (`--quit-after 16000`).
+5. Owner clips: the King fight and the city drive with the perf HUD, before/after (gtai-masters/n9/perf, frames.json).

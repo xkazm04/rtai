@@ -6,7 +6,11 @@ param([int]$Runs = 10, [string]$Tag = 'x', [int]$Settle = 12, [string]$Exe = '',
   [switch]$NoAutostart, [string]$Driver = 'd3d12', [string]$EngineExtra = '', [switch]$PressStart)
 # -PressStart (it2): no --autostart; 6 s in, a posted Enter (WM_KEYDOWN / WM_KEYUP VK_RETURN) to the game window presses
 # the focused Start button through the real UI path (the release build ignores --autostart). `started` = the log says so.
-Add-Type -Namespace F19 -Name W -MemberDefinition '[DllImport("user32.dll")] public static extern bool PostMessage(System.IntPtr h, uint m, System.IntPtr w, System.IntPtr l);'
+Add-Type -Namespace F19 -Name W -MemberDefinition @'
+[DllImport("user32.dll")] public static extern bool PostMessage(System.IntPtr h, uint m, System.IntPtr w, System.IntPtr l);
+[DllImport("user32.dll")] public static extern bool SetForegroundWindow(System.IntPtr h);
+[DllImport("user32.dll")] public static extern void keybd_event(byte vk, byte scan, uint flags, System.UIntPtr extra);
+'@
 if ($PressStart) { $NoAutostart = $true }
 $here = Split-Path -Parent $MyInvocation.MyCommand.Path
 $repo = Resolve-Path (Join-Path $here '..\..\..')
@@ -24,7 +28,9 @@ for ($n = 1; $n -le $Runs; $n++) {
   if ($Extra -ne '') { $a += $Extra.Split(' ') }
   $log = Join-Path $tmp "f19-$Tag-$n.log"
   $err = Join-Path $tmp "f19-$Tag-$n.err"
-  $p = Start-Process -FilePath $bin -ArgumentList $a -PassThru -WindowStyle Hidden -RedirectStandardOutput $log -RedirectStandardError $err
+  # an exported exe IS the game window (no console wrapper): hiding it hides the game (it2: -PressStart never reached it)
+  $style = if ($Exe -ne '') { 'Normal' } else { 'Hidden' }
+  $p = Start-Process -FilePath $bin -ArgumentList $a -PassThru -WindowStyle $style -RedirectStandardOutput $log -RedirectStandardError $err
   Start-Sleep -Seconds 3
   $c = Get-CimInstance Win32_Process -Filter "ParentProcessId=$($p.Id)" | Where-Object { $_.Name -like 'Godot*' -or $_.Name -like 'RTAI*' } | Select-Object -First 1
   $gid = if ($c) { [int]$c.ProcessId } else { $p.Id }
@@ -32,7 +38,9 @@ for ($n = 1; $n -le $Runs; $n++) {
   if ($PressStart) {
     Start-Sleep -Seconds 6; $g.Refresh(); $h = $g.MainWindowHandle
     $ws = New-Object -ComObject WScript.Shell
-    $act = $ws.AppActivate($gid)
+    [F19.W]::keybd_event(0x12, 0, 0, [UIntPtr]::Zero)  # an Alt tap lets a background process set the foreground
+    $act = [F19.W]::SetForegroundWindow($h)
+    [F19.W]::keybd_event(0x12, 0, 2, [UIntPtr]::Zero)
     Start-Sleep -Milliseconds 300
     if ($act) { $ws.SendKeys('{ENTER}') } else {
       [void][F19.W]::PostMessage($h, 0x100, [IntPtr]0x0D, [IntPtr]0x001C0001)
@@ -47,8 +55,11 @@ for ($n = 1; $n -le $Runs; $n++) {
   $code = if ($exited) { $g.ExitCode } else { $null }
   $started = [bool](Select-String -Path $log -Pattern 'quest1: started' -SimpleMatch -Quiet)
   $line = [ordered]@{ tag = $Tag; run = $n; cores = $cores; responding = $g.Responding; pid = $gid; exited = $exited; exitCode = $code; started = $started }
-  if ($exited) { $line.kind = 'exited' } elseif ($cores -lt 0.05) { $line.kind = 'frozen' } else { $line.kind = 'ok' }
-  if ($cores -lt 0.05 -and -not $exited) {
+  # a release build logs no INFO, so `started` is unknown there: a 0-CPU window still pumping messages is the idle
+  # title (kind=idle, the press missed), a 0-CPU window that stopped responding is a freeze
+  $idle = $cores -lt 0.05 -and -not $exited -and $g.Responding -and -not $started
+  if ($exited) { $line.kind = 'exited' } elseif ($idle) { $line.kind = 'idle' } elseif ($cores -lt 0.05) { $line.kind = 'frozen' } else { $line.kind = 'ok' }
+  if ($cores -lt 0.05 -and -not $exited -and -not $idle) {
     $frozen++
     $tc = & (Join-Path $repo 'tools\perf\thread_cpu.ps1') -ProcessId $gid -Seconds 2
     $tc | Set-Content -Encoding utf8 (Join-Path $here "freeze-$Tag-$n.json")
