@@ -10,7 +10,7 @@ extends GutTest
 
 const CAP_ROW: int = 2
 const RUMBLE_ROW: int = 3
-const REBIND_ROW: int = 2
+const REBIND_ROW: int = 3  # n9-perf: the desktop row lists the frame pacing above the rebinds
 
 var _fps_before: int = 0
 var _panel: Quest1SettingsPanel = null
@@ -53,7 +53,8 @@ func test_a_pad_button_cancels_a_rebind_wait() -> void:
 	_panel.free()
 	_panel = Quest1SettingsPanel.new(PlayerSettings.new(), "")
 	add_child_autofree(_panel)
-	assert_eq(_panel.get_child_count(), 2 + PlayerSettings.REBINDABLE.size(), "desktop: no cap row")
+	var rows: int = 3 + PlayerSettings.REBINDABLE.size()
+	assert_eq(_panel.get_child_count(), rows, "desktop: the pacing row, no cap row")
 	var rebind: Button = _panel.get_child(REBIND_ROW).get_child(1) as Button
 	rebind.grab_focus()
 	_pad(JOY_BUTTON_A)
@@ -141,3 +142,17 @@ func _pad(button: JoyButton) -> void:
 		ev.button_index = button
 		ev.pressed = down
 		get_viewport().push_input(ev)
+
+
+func test_the_desktop_row_offers_the_frame_pacing() -> void:
+	@warning_ignore("return_value_discarded")
+	DeviceProfile.select("")
+	_panel.free()
+	_panel = Quest1SettingsPanel.new(PlayerSettings.new(), "")
+	add_child_autofree(_panel)
+	var row: Node = _panel.get_child(REBIND_ROW - 1)
+	assert_string_contains((row.get_child(0) as Label).text, "efficient", "the desktop default")
+	(row.get_child(1) as Button).pressed.emit()
+	assert_eq(_panel.settings.pacing, "steady", "Toggle cycles to steady")
+	row = _panel.get_child(REBIND_ROW - 1)
+	assert_string_contains((row.get_child(0) as Label).text, "steady", "the row re-reads")

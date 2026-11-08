@@ -2,8 +2,10 @@ class_name PlayerSettings
 extends RefCounted
 ## The player's settings as versioned JSON (`gtai.player-settings/1`, SAV-10 device side):
 ## master volume (0..1), the reduced-motion flag, key rebinds (action id -> physical key
-## name), a frame cap (0 = the device row's own; the handheld pause card offers 30/40/60) and a
-## rumble level (1 / 0.5 / 0 on the device row's gain). apply() pushes them into the AudioServer,
+## name), a frame cap (0 = the device row's own; the handheld pause card offers 30/40/60), a
+## rumble level (1 / 0.5 / 0 on the device row's gain) and the frame pacing (n9 Call P-3:
+## "efficient" = no limiter at 60 Hz, the default; "steady" = the limiter on top of
+## vsync). apply() pushes them into the AudioServer,
 ## the InputMap, Engine.max_fps and HandheldRumble. Read with the
 ## JSON class only (SEC-02); unknown or bad fields fall back to the defaults.
 
@@ -17,12 +19,15 @@ const REBINDABLE: Array[StringName] = [
 const FRAME_CAPS: Array[int] = [0, 30, 40, 60]
 ## The rumble levels a player may pick (full, half, off), times the device row's gain.
 const RUMBLE_LEVELS: Array[float] = [1.0, 0.5, 0.0]
+## The frame pacings a player may pick; the first is the default.
+const PACINGS: Array[String] = ["efficient", "steady"]
 
 var volume: float = 0.8
 var reduced_motion: bool = false
 var keys: Dictionary[String, String] = {}
 var frame_cap: int = 0
 var rumble: float = 1.0
+var pacing: String = PACINGS[0]
 
 
 static func load_or_default(path: String = PATH) -> PlayerSettings:
@@ -47,6 +52,8 @@ static func load_or_default(path: String = PATH) -> PlayerSettings:
 	var ru: Variant = d.get("rumble")
 	var level: float = ru if ru is float else 1.0
 	s.rumble = level if RUMBLE_LEVELS.has(level) else 1.0
+	var pa: Variant = d.get("pacing")
+	s.pacing = str(pa) if pa is String and PACINGS.has(str(pa)) else PACINGS[0]
 	var k: Variant = d.get("keys")
 	var raw: Dictionary = k if k is Dictionary else {}
 	for action: Variant in raw:
@@ -66,7 +73,8 @@ func save(path: String = PATH) -> Error:
 		"reduced_motion": reduced_motion,
 		"keys": keys,
 		"frame_cap": frame_cap,
-		"rumble": rumble
+		"rumble": rumble,
+		"pacing": pacing
 	}
 	var ok: bool = file.store_string(JSON.stringify(body, "  ", true))
 	file.close()
@@ -83,12 +91,15 @@ func apply() -> void:
 	HandheldRumble.player_gain = rumble
 
 
-## The player's cap, else the device row's (the desktop row has none: -1 leaves the engine's).
+## The player's cap, else the device row's, else (the desktop row has none) the pacing on top of
+## the boot cap (FrameCap).
 func apply_frame_cap() -> void:
 	if frame_cap > 0:
 		Engine.max_fps = frame_cap
 	elif DeviceProfile.shared().max_fps >= 0:
 		Engine.max_fps = DeviceProfile.shared().max_fps
+	else:
+		FrameCap.apply_pacing(pacing == "steady")
 
 
 func rebind(action: StringName, key_name: String) -> void:

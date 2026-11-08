@@ -160,3 +160,16 @@ func test_a_device_row_cap_of_zero_uncaps_the_engine() -> void:
 	assert_eq(Engine.max_fps, 0, "the row's 0 is a cap to set, not 'none'")
 	DeviceProfile._shared = keep
 	Engine.max_fps = before
+
+
+func test_pacing_round_trips_and_bad_values_fall_back_to_efficient() -> void:
+	assert_eq(DirAccess.make_dir_recursive_absolute(_path.get_base_dir()), OK)
+	var s: PlayerSettings = PlayerSettings.new()
+	assert_eq(s.pacing, "efficient", "the desktop default")
+	s.pacing = "steady"
+	assert_eq(s.save(_path), OK)
+	assert_eq(PlayerSettings.load_or_default(_path).pacing, "steady")
+	var f: FileAccess = FileAccess.open(_path, FileAccess.WRITE)
+	assert_true(f.store_string('{"schema": "gtai.player-settings/1", "pacing": "turbo"}'))
+	f.close()
+	assert_eq(PlayerSettings.load_or_default(_path).pacing, "efficient", "turbo is not offered")
