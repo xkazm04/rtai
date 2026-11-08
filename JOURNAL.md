@@ -417,3 +417,20 @@ it124 grades kept: elder B (pose B face alive at ~4 px at 64), hat B (E the weak
 - DECISION world/car-knock-damage-event-only (it10 NEXT 3): the knock damage stays on the Event (no Rivet hp in the
   city; the arena's sim body does not steer Rivet).
 - (04:43) Scenarios 55/55 with the arena solids on (replay unmoved). Director reel not re-run for this change: it plays the dev arena, never the city block (its it10 log has no city / chunk line), so SOLID_TO_SIM cannot reach it.
+- (04:45) Full unit at 8101a2a1: **1834/0** (1830 + test_street_dead_plan's walker test + test_residency_solids 3).
+  Mid-session journal re-read: no new REQUEST to world (rivet it5 wires the claw walks; the knock-down strips are
+  still being redrawn by assets).
+
+NEXT (it14):
+1. Item 2, fault (c) from it4: the corpse stains (`features/fx/corpse_stains.gd`, CorpseStains._soak) sit at the
+   sim point (the feet end) while the plan pose's pelvis lies `StreetDeadPlan.PELVIS_K x STILL_PX x ks` along the
+   blow (minus the bounded pull-back). Offset each soak by the blow toward the pelvis (the bled `dir` is the
+   blow), only for rows with a plan strip (quest 1's CombatArena dead: check which body draws there first); film
+   the riot at 64 px/m before/after.
+2. Item 4: film a thrown sim body stopping at the kerb barrier (needs a death near it: the arena with `--bot=pit`
+   near the city block's barrier, or a riot scene near a facade) at 32 + 64.
+3. Item 3: wire nothing until rivet lands the drawn knock-down on `rivet_knock`; then the real-game clip.
+4. Item 2: Dock 9 (quest 1) and the city block before/after at 32 and 64 (still owed since it4).
+5. Before the freeze: the full gate (`node tools/evidence/run.mjs --no-bench`), the director reel x3 at the head,
+   REPORT.md, the exe. Remove the scratch worktree `gtai-n9/tmp/world/before` (now at 06c64742) once the last
+   before/after is filmed.
