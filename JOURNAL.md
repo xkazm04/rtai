@@ -196,3 +196,6 @@ NEXT (iteration 4):
 4. REPORT.md at the 10:30 freeze, with Calls: (a) the kb glyphs on the shipped desktop (`desktop_kb_glyphs` row,
    stills in gtai-masters); (b) the pad aim assist for a desktop pad too (one value); (c) a larger handheld text scale?
    (d) the 40 Hz row as the Deck default? Plus the exe line and a frames.json check.
+- 03:15 GATE at 33f80d56 (the aim assist): full unit 1841/0; director reel top / tilt70 / combo 19/19, every chapter all
+  down, 0 SCRIPT ERROR (`evidence/n9h/it3/gates2/`). Evidence run (`--no-bench`) started 03:16 on a clean tree, log
+  `C:/Users/kazda/kiro/gtai-n9/tmp/handheld/evidence-it3.log`: NEXT reads its summary first.
