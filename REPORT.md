@@ -110,6 +110,13 @@ Branch `n9-world`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n9\world\` (frame
   - Options: (a) as built; (b) slide_k 0.5; (c) threshold 8 m/s.
   - Each is one bodies.json value.
 
+- **C-6 the pools after the bodies go (quest 1, Dock 9).**
+  - Seen at 32 px/m: once a body has decayed (6 s + 1.2 s fade, corpse_decay.json), its blood pool stays on the
+    crossing with nobody on it; the live fight's table lets stains outlive bodies (12 s + 4 s), and quest 1 keeps
+    blood_fx.json's minutes-long decals (`gtai-n9/tmp/world/pools_outlast_bodies_32ppm_it23.png`).
+  - Options: (a) quest 1 takes the live fight's stain life (patch ready); (b) as (a) plus stains linger 6 s like
+    the bodies; (c) Dock 9's bodies linger 12 s.
+
 ## Next steps
 
 1. Assets' pose D redrawn if the owner asks.
