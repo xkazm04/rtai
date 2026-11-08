@@ -9,9 +9,20 @@ void CityCore::ped(int i, double dt) {
 	int m = mode_[i];
 	if (m == M_DEAD) {
 		double vv = maxf(0.0, v_[i] - 8.0 * dt);
+		double nx = x + hx_[i] * vv * dt, ny = y + hy_[i] * vv * dt;
+		if (vv > 0.0) {  // n9: a thrown body stops at the first wall or prop it meets
+			cx_ = nx;
+			cy_ = ny;
+			solid(0.3);
+			if (cx_ != nx || cy_ != ny) {
+				vv = 0.0;
+				nx = x;
+				ny = y;
+			}
+		}
 		v_[i] = vv;
-		px_[i] = x + hx_[i] * vv * dt;
-		py_[i] = y + hy_[i] * vv * dt;
+		px_[i] = nx;
+		py_[i] = ny;
 		return;
 	}
 	if (m == M_DOWN) {
