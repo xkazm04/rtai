@@ -578,3 +578,11 @@ NEXT (it20+):
   down, 0 SCRIPT ERROR**, exit 0 each (`evidence/n9-world/director-reel-it19*`).
 NEXT amended: item 1's "if the gate is red" is moot (green); the freeze still re-runs the reel x3 + gate only if
 code moves after ce862403.
+- (06:38-06:44) TRIED the wall-overlap fix (SIDE_K 0.5: the probe reaches the jitter-swung hand) and NOT landed:
+  unit 17/0, but `dead_wall_clip --view=tilt70` at 64 px/m, t150, SIDE_K 0 vs 0.5 in the same build: ~5.5k px
+  differ, by eye the same frame (the hand already stops at the blood line in front of the facade in this shot).
+  No visible gain = no change. Kept: `gtai-n9/tmp/world/street_dead_plan_sidek_it19.gd` + `test_sidek_it19.patch`.
+  Code back at ce862403's (the it19 gate + reel stand for the head). Scratch frame dirs deleted (the Dock 9 clips
+  are encoded in gtai-masters).
+NEXT (it20+) amended: drop NEXT 2 (the wall overlap) unless a shot shows a body over a roof edge again; the rest
+stands (Dock 9 at 64 optional, the freeze list).
