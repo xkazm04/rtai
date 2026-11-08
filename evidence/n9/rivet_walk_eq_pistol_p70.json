@@ -1,0 +1,19 @@
+{
+ "cell": [
+  124,
+  127
+ ],
+ "cols": 4,
+ "fig_h": 110.0,
+ "pad": 2,
+ "rows": 8,
+ "scales": [
+  0.6471,
+  0.4348
+ ],
+ "src": [
+  "C:/Users/kazda/kiro/gtai-art/library/keyed/rivet/rivet_walk_armed_onehand_70_claw_cells",
+  "C:/Users/kazda/kiro/gtai-art/library/keyed/rivet/rivet_walk_armed_onehand_70_left_claw_cells"
+ ],
+ "tone": "project/features/characters/art/view/p70/rivet_eq_pistol.png"
+}

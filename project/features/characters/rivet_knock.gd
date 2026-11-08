@@ -1,0 +1,97 @@
+class_name RivetKnock
+extends RefCounted
+## n9 rivet it7 (the owner's "cars knock Rivet down"): while world's car knock is on his rig
+## (KNOCK = CityCharacters.KNOCK_META: Vector3(car heading x, y, the hit's sim tick), set while the
+## body lies, beside RigFeed.Flag.DOWN), the drawn figure plays the library's knock-down strip
+## (`rivet_knock.png`, tools/art/rivet_knock.py: rows toward / away / right / left = the throw in
+## screen space, columns impact / tumble / slide / down) instead of the death sprawl. The column
+## steps on the time since the hit (the slide decelerates over the 1.2 s down); the lying cells turn
+## by the heading's angle off the row's axis (<= 45 deg, the library's rule for the diagonals).
+## The rig stays down ~0.33 s after the knock clears (RigClips' rise): the down cell holds, then
+## (it7b) the get-up's KNEEL cell once the rise passes KNEEL_FROM, so he never pops from lying to
+## standing. --rivet-knock=off: the sprawl.
+enum Row { TOWARD = 0, AWAY = 1, RIGHT = 2, LEFT = 3 }
+
+const STRIP: String = "rivet_knock.png"
+const KNOCK: StringName = &"rivet_knock"
+const T0: StringName = &"rivet_knock_t0"
+const LAST: StringName = &"rivet_knock_last"
+const CELLS: int = 4
+const COLS: int = 5
+const KNEEL: int = 4
+## The rise's share of RigClips.DOWN_SPRAWL below which the kneel shows (down_amt falls to 0.05).
+const KNEEL_FROM: float = 0.6
+## The first tick of each column (impact, tumble, slide, down) since the hit, at 60 Hz.
+const FROM_TICK: PackedInt32Array = [0, 6, 24, 54]
+## The cast shadow's height while thrown, in standing heights (a lying body casts a low one).
+const SHADOW: float = 0.3
+const AXIS: PackedFloat32Array = [PI * 0.5, -PI * 0.5, 0.0, PI]
+static var enabled: bool = true
+
+
+## The knock strip under `art` while the knock is on (and the drawn figure `path` is), else `path`.
+static func path_or(rig: CutRig, art: String, path: String) -> String:
+	if not enabled or path.is_empty():
+		return path
+	var down: bool = rig.dead or (rig.react != null and rig.react.dying)
+	if not rig.has_meta(KNOCK) and not (down and rig.has_meta(LAST)):
+		if rig.has_meta(LAST):
+			rig.remove_meta(LAST)
+		return path
+	var knock: String = RivetStrips.DIR + art + "/" + STRIP
+	return knock if ResourceLoader.exists(knock) else path
+
+
+## True when `card` shows the knock strip.
+static func shows(card: Sprite2D) -> bool:
+	return card != null and str(card.get_meta(RivetFrames.ON, "")).ends_with("/" + STRIP)
+
+
+## The row for car heading `h` (ground, y toward the camera): the dominant screen axis.
+static func row_of(h: Vector2) -> int:
+	if absf(h.x) >= absf(h.y):
+		return Row.RIGHT if h.x >= 0.0 else Row.LEFT
+	return Row.TOWARD if h.y > 0.0 else Row.AWAY
+
+
+## The column `ticks` after the hit.
+static func col_of(ticks: int) -> int:
+	var col: int = 0
+	for i: int in CELLS:
+		col = i if ticks >= FROM_TICK[i] else col
+	return col
+
+
+## The cell while the rig rises after the knock (`amt`: RigClips.down_amt): down, then kneel.
+static func rise_col(amt: float) -> int:
+	return KNEEL if amt < RigClips.DOWN_SPRAWL * KNEEL_FROM else CELLS - 1
+
+
+## The lying cells' turn: the heading's angle off its row's axis (0 upright: impact, kneel).
+static func turn_of(h: Vector2, col: int) -> float:
+	if col == 0 or col == KNEEL or h == Vector2.ZERO:
+		return 0.0
+	return wrapf(h.angle() - AXIS[row_of(h)], -PI, PI)
+
+
+## Poses `card` (scale `s`, the figure's) on the knock strip: the cell centre on his ground point.
+static func place(rig: CutRig, card: Sprite2D, s: float, h_px: float) -> void:
+	var k: Vector3 = rig.get_meta(KNOCK, rig.get_meta(LAST, Vector3.ZERO))
+	rig.set_meta(LAST, k)
+	var t0: Vector2 = rig.get_meta(T0, Vector2(-1.0, 0.0))
+	if t0.x != k.z:  # a new knock: count from this pose step (CutRig.drive runs on the tick)
+		t0 = Vector2(k.z, rig.t_alive)
+		rig.set_meta(T0, t0)
+	var head: Vector2 = Vector2(k.x, k.y)
+	var col: int = col_of(roundi((rig.t_alive - t0.y) / SimClock.TICK_DT))
+	col = col if rig.has_meta(KNOCK) else rise_col(rig.clips.down_amt)
+	card.hframes = COLS
+	card.vframes = CELLS
+	card.frame = row_of(head) * COLS + col
+	card.flip_h = false
+	var w: float = card.texture.get_width() / float(COLS)
+	card.offset = Vector2(-w * 0.5, -w * 0.5)
+	card.global_rotation = turn_of(head, col)
+	card.global_scale = Vector2(s, s)
+	card.global_position = rig.global_position
+	rig.set_meta(RigCastShadows.CAST_HIP, h_px * SHADOW / RigCastShadows.BODY_IN_HIPS)

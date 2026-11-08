@@ -5,6 +5,11 @@ const P70: String = "res://features/characters/art/view/p70/"
 const P55: String = "res://features/characters/art/view/p55/"
 
 
+func after_each() -> void:
+	RivetStrips.cone = []
+	RivetStrips.flame_all = false
+
+
 func test_top_has_no_strip() -> void:
 	assert_eq(RivetStrips.strip_of("", &"pistol"), "")
 
@@ -28,7 +33,43 @@ func test_without_a_left_strip_the_base_figure_draws() -> void:
 	assert_eq(RivetStrips.left_of("p55", &"katana"), P55 + RivetStrips.BASE)
 
 
-func test_the_flamer_fires_its_drawn_flame_only_along_side_and_camera() -> void:
+func test_the_flamer_fires_its_drawn_flame_in_every_direction() -> void:
+	# n9: the owner's r-7 B (cone empty): the drawn flame cell wherever one is drawn along the aim
+	assert_true(RivetStrips.cone.is_empty())
+	for art: String in ["p70", "p55"]:
+		var key: String = art + "/flamethrower"
+		var deg: PackedFloat32Array = RivetStrips.FLAME_DEG.get(key, PackedFloat32Array())
+		assert_eq(deg.size(), 8, key)
+		for o: int in deg.size():
+			var along: float = deg_to_rad(deg[o] + 20.0)
+			assert_true(RivetStrips.fires_drawn(&"flamethrower", o, along, art), "%s %d" % [art, o])
+		assert_true(RivetStrips.fires_drawn(&"flamethrower", 7, deg_to_rad(-40.0), art))
+
+
+func test_a_flame_burst_off_its_drawn_flame_keeps_the_facing_cell() -> void:
+	# n9 it10: aimed straight up (octant 6) the side cell drew its flame sideways under an up jet
+	for art: String in ["p70", "p55"]:
+		assert_false(RivetStrips.fires_drawn(&"flamethrower", 6, deg_to_rad(-85.0), art), art)
+		assert_false(RivetStrips.fires_drawn(&"flamethrower", 7, deg_to_rad(-64.0), art), art)
+		assert_false(
+			RivetStrips.fires_drawn(&"pistol", 6, deg_to_rad(-85.0), art), "a gun aimed up"
+		)
+		assert_true(RivetStrips.fires_drawn(&"pistol", 0, deg_to_rad(-30.0), art), "a gun along")
+		assert_true(
+			RivetStrips.fires_drawn(&"pistol", 2, deg_to_rad(100.0), art), "a gun at the camera"
+		)
+		assert_true(RivetStrips.fires_drawn(&"pistol", 4, deg_to_rad(-150.0), art), "a gun left")
+		assert_false(
+			RivetStrips.fires_drawn(&"pistol", 5, deg_to_rad(-130.0), art), "away diagonal"
+		)
+	RivetStrips.flame_all = true
+	assert_true(RivetStrips.fires_drawn(&"flamethrower", 6, deg_to_rad(-85.0), "p55"), "=all")
+	assert_true(RivetStrips.fires_drawn(&"pistol", 6, deg_to_rad(-85.0), "p55"), "=all: a gun")
+	RivetStrips.flame_all = false
+
+
+func test_the_d9_cone_fires_its_drawn_flame_only_along_side_and_camera() -> void:
+	RivetStrips.cone = RivetStrips.CONE_D9.duplicate()
 	for o: int in 8:
 		assert_eq(RivetStrips.fires_drawn(&"flamethrower", o), o in [0, 2, 4], "octant %d" % o)
 		assert_true(RivetStrips.fires_drawn(&"pistol", o), "pistol octant %d" % o)
@@ -36,11 +77,13 @@ func test_the_flamer_fires_its_drawn_flame_only_along_side_and_camera() -> void:
 
 func test_the_flamer_drawn_flame_needs_the_aim_along_it() -> void:
 	# d9 it16: the head read octant 4 (screen left) while the jet left at ~124 deg (down-left).
+	RivetStrips.cone = RivetStrips.CONE_D9.duplicate()
 	assert_false(RivetStrips.fires_drawn(&"flamethrower", 4, deg_to_rad(124.0)))
 	assert_true(RivetStrips.fires_drawn(&"flamethrower", 4, deg_to_rad(170.0)))
 	assert_true(RivetStrips.fires_drawn(&"flamethrower", 0, deg_to_rad(-15.0)))
 	assert_false(RivetStrips.fires_drawn(&"flamethrower", 2, deg_to_rad(50.0)))
-	assert_true(RivetStrips.fires_drawn(&"pistol", 4, deg_to_rad(124.0)))
+	assert_false(RivetStrips.fires_drawn(&"pistol", 4, deg_to_rad(124.0)), "n9 it12: GUN_TOL")
+	assert_true(RivetStrips.fires_drawn(&"pistol", 4, deg_to_rad(150.0)))
 
 
 func test_the_flamer_facings_carry_the_nozzle_at_both_pitches() -> void:
@@ -53,6 +96,7 @@ func test_the_flamer_facings_carry_the_nozzle_at_both_pitches() -> void:
 func test_a_cone_burst_that_went_off_its_drawn_flame_keeps_the_facing_cell() -> void:
 	# d9 it16: the stream stopped (t367), the fire latch held 3 more frames while the aim swung
 	# into screen left: a drawn flame with no jet. The burst keeps its facing cell to the end.
+	RivetStrips.cone = RivetStrips.CONE_D9.duplicate()
 	var rig: CutRig = add_child_autofree(CutRig.new())
 	rig.aiming = true
 	rig.aim_at = Vector2(-100.0, 150.0)  # ~124 deg: off the left octant's drawn flame

@@ -1,9 +1,8 @@
 class_name RivetFrames
 extends RefCounted
-## Lane d9 rivet: under a card-art view (p70 play, p55 boss) Rivet is one whole drawn figure, the
-## parts hidden. Strips (RivetStrips): BASE (5 facings, 3 left, walk, sprint, roll, claw, hit,
-## death), EQ per weapon (5 facings, fire side, fire at camera, rest), LEFT (a one-handed hold's
-## 3 drawn left views). The art key's change swaps the strip (the combo's hard swap).
+## Lane d9 rivet: under a card-art view (p70 play, p55 boss) Rivet is one drawn figure, the parts
+## hidden. Strips (RivetStrips): BASE, EQ per weapon, LEFT (one-handed holds); grids: RivetWalk,
+## RivetKnock (n9). The art key's change swaps the strip (the combo's hard swap).
 enum Cell { WALK = 8, SPRINT = 9, ROLL = 10, CLAW = 11, HIT = 12, DEATH = 13 }
 enum Eq { FIRE_SIDE = 5, FIRE_CAM = 6, REST = 7 }
 
@@ -18,13 +17,11 @@ const LEFT: PackedByteArray = [0, 0, 0, 1, 1, 1, 0, 0]
 ## The facings' median figure height in the strips (rivet_frames.json fig_h) and the feet's pad.
 const FIG_PX: float = 110.0
 const PAD_PX: float = 2.0
-## Rivet's standing height on screen (m): ~35 px at 32 px/m (the asset lane's mock).
-## p55: the 55 drawings carry a smaller helmet over longer legs (StreetWalkerCards' x1.18 step).
-const HEIGHT_M: float = 1.1
-const HEIGHT_BY_ART: Dictionary[String, float] = {"p55": 1.3}
+## His standing height on screen (m). n9: the owner's +50 % (1.1 -> 1.65 m); p55 in proportion.
+const HEIGHT_M: float = 1.65
+const HEIGHT_BY_ART: Dictionary[String, float] = {"p55": 1.95}
 const ROLL_SHADOW: float = 0.45  # the roll ball's cast-shadow height, in standing heights
-## The fire cell: a recoil (RigClips.recoil, 0.4-1.6) above FIRE_RECOIL, or a shot left within
-## FIRE_TICKS (streams and autos: RivetHeldView publishes it from the trigger's cooldown).
+## The fire cell: a recoil (RigClips.recoil) above FIRE_RECOIL, or a shot within FIRE_TICKS.
 const FIRE_RECOIL: float = 0.25
 const FIRE_TICKS: int = 7
 ## The gait without drawn stride frames: a lift per step (px at full walk) and a sway (rad).
@@ -49,10 +46,11 @@ static func step(rig: CutRig) -> void:
 	var weapon: StringName = weapon_of(rig)
 	var art: String = ViewMode.shared().art
 	var path: String = RivetStrips.strip_of(art, weapon) if rig.head_card != null else ""
-	if path != "" and RivetWalk.path_of(rig, art, weapon) != "":
-		path = RivetWalk.path_of(rig, art, weapon)
+	var walk: String = RivetWalk.path_of(rig, art, weapon) if path != "" else ""
 	if path != "" and LEFT[oct_of(rig)] == 1 and RivetStrips.ONE_HAND.has(weapon):
 		path = RivetStrips.left_of(art, weapon)
+	path = walk if walk != "" else RivetReload.held_or(rig, art, weapon, path)
+	path = RivetKnock.path_or(rig, art, path)  # n9: a car's knock wins over the DOWN sprawl
 	if not ENABLED or path.is_empty():
 		release(rig)
 		return
@@ -87,20 +85,23 @@ static func drawn(rig: CutRig) -> bool:
 ## True while the drawn frame carries the weapon (RivetHeldView hides its held part then).
 static func owns_weapon(rig: CutRig) -> bool:
 	var card: Sprite2D = rig.head_card
-	var bare: bool = card != null and card.hframes in [BASE_CELLS, RivetWalk.FRAMES]
+	var grid: bool = RivetWalk.is_grid(card) and not RivetWalk.is_armed(card)
+	var bare: bool = card != null and (card.hframes == BASE_CELLS or grid)
 	return card != null and not bare and card.has_meta(ON)
 
 
-## The cell and mirror for the rig's state: Vector2i(cell, flip).
-static func cell_of(rig: CutRig, cells: int) -> Vector2i:
+## The cell and mirror for the rig's state: Vector2i(cell, flip). `walk_ph` >= 0: a walk grid.
+static func cell_of(rig: CutRig, cells: int, walk_ph: float = -1.0) -> Vector2i:
 	var o: int = oct_of(rig)
 	var left: int = LEFT[o]
-	if cells == LEFT_CELLS:
-		return Vector2i(clampi(o - 3, 0, 2), 0)
+	if cells < EQ_CELLS and walk_ph < 0.0:  # a drawn left strip, a diagonal fire strip
+		return Vector2i(RivetStrips.small_cell(o, cells), 0)
 	if rig.dead or (rig.react != null and rig.react.dying):
 		return Vector2i(Cell.DEATH, 0)
-	if cells == RivetWalk.FRAMES:
-		return Vector2i(RivetWalk.frame_of(o, rig.phase), 0)
+	if walk_ph >= 0.0:
+		return Vector2i(RivetWalk.frame_of(o, walk_ph, cells), 0)
+	if RivetReload.shows(rig.head_card):
+		return RivetReload.cell_of(rig, o)
 	if cells == BASE_CELLS:
 		if rig.clips.rolling():
 			return Vector2i(Cell.ROLL, 0)
@@ -109,8 +110,7 @@ static func cell_of(rig: CutRig, cells: int) -> Vector2i:
 		if rig.clips.hit_t > 0.0:
 			return Vector2i(Cell.HIT, 0)
 		return Vector2i(BASE_OCT[o], 0)
-	var fired: bool = absf(rig.clips.recoil) > FIRE_RECOIL or rig.get_meta(FIRE, false) == true
-	if RivetStrips.draws_fire(rig, weapon_of(rig), o, fired or rig.clips.strike_t >= 0.0):
+	if RivetStrips.draws_fire(rig, weapon_of(rig), o, RivetStrips.fire_latched(rig)):
 		return Vector2i(Eq.FIRE_CAM if o == 2 else Eq.FIRE_SIDE, left)
 	if not rig.aiming and rig.speed_now <= MOVING and o in [1, 2, 3]:
 		return Vector2i(Eq.REST, 0)
@@ -123,13 +123,18 @@ static func oct_of(rig: CutRig) -> int:
 
 
 static func place(rig: CutRig, card: Sprite2D) -> void:
-	var c: Vector2i = cell_of(rig, card.hframes)
+	var art: String = ViewMode.shared().art
+	var h: float = HEIGHT_BY_ART.get(art, HEIGHT_M) * height_k
+	var s: float = h * CharacterRigs.PX_PER_M / FIG_PX
+	if RivetKnock.shows(card):
+		RivetKnock.place(rig, card, s, h * CharacterRigs.PX_PER_M)
+		return
+	var drawn_walk: bool = RivetWalk.is_grid(card)
+	var ph: float = RivetWalk.phase_of(rig, art, s)
+	var c: Vector2i = cell_of(rig, card.hframes, ph if drawn_walk else -1.0)
 	card.frame = c.x
 	card.flip_h = c.y == 1
-	var h: float = HEIGHT_BY_ART.get(ViewMode.shared().art, HEIGHT_M) * height_k
-	var s: float = h * CharacterRigs.PX_PER_M / FIG_PX
 	var walk: float = clampf(rig.speed_now / WALK_SPEED, 0.0, 1.0)
-	var drawn_walk: bool = card.hframes == RivetWalk.FRAMES
 	walk = walk if c.x != Cell.ROLL and c.x != Cell.DEATH and not drawn_walk else 0.0
 	var stride: float = sin(TAU * rig.phase)
 	card.global_rotation = stride * SWAY * walk + _roll_spin(rig, c.x)
@@ -185,12 +190,11 @@ static func _set_strip(card: Sprite2D, path: String) -> void:
 	card.texture = _tex.get_or_add(path, load(path) as Texture2D)
 	card.frame = 0  # the walk grid's 32 frames vs a strip's 3-14: never out of range mid-swap
 	var left: bool = path.ends_with("_left.png")
-	var grid: bool = path.ends_with(RivetWalk.STRIP)
-	card.hframes = (
-		BASE_CELLS if path.ends_with(RivetStrips.BASE) else (LEFT_CELLS if left else EQ_CELLS)
-	)
-	card.hframes = RivetWalk.FRAMES if grid else card.hframes
-	card.vframes = RivetWalk.ROWS if grid else 1
+	var cols: int = RivetWalk.cols_of(path)
+	card.hframes = RivetStrips.cells_of(path, left)
+	card.hframes = cols if cols > 0 else card.hframes
+	card.vframes = RivetWalk.ROWS if cols > 0 else 1
 	var w: float = card.texture.get_width() / float(card.hframes)
-	card.offset = Vector2(-w * 0.5, PAD_PX - card.texture.get_height() / float(card.vframes))
+	var foot: float = RivetStrips.foot_px(path)
+	card.offset = Vector2(-w * 0.5, foot - card.texture.get_height() / float(card.vframes))
 	card.set_meta(ON, path)
