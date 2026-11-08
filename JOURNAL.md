@@ -459,3 +459,38 @@ the lefts with the nozzle still in the claw's hand as the right rows; the tank o
   left profile (row 6) run8 -62/-64, pistol -62/-64, rifle -62/-62, katana -63/-64, **gatling -60/-58**; 3/4 rows equal
   within 4 px. So the gatling L2 is 59/63 = **0.94** of run8, not the 0.88 I took from the library's x H ratios (the heavy
   figure with the pack is taller: H 110 vs 104, so its x H travel reads short). Fix: RUN_ROW_K 0.94.
+- Gates on 1f067f92 (the gatling run): director reel `reel-director-it8b-<v>.log` 19/19 fully down in top, tilt70, combo,
+  0 SCRIPT ERROR, exit 0; full unit **1835/0** (06:06). Commit 50cc7473 (+ DECISION rivet/run-row-k).
+- MILESTONE `83e90179` **the drawn pistol run at 55** (the library's one-hand 55 run, it132: 7 A / 1 B, row 2 the B):
+  `p55/rivet_run8_eq_pistol.png` at the run8 55 scales (--k 0.6111,0.6197); its profile strides equal run8 55's within
+  2 px (58/56 right, -55/-48 left). RUN_ROW_K now measured in cell px on the packed grids: gatling left profile 0.94
+  (was 0.88 from x H), p55 pistol 3/4 toward right 0.79 (row 2 B: 43 vs 54.5 px; its two strides are also uneven,
+  46/40, which a phase cannot fix), 3/4 toward left 0.89. Unit select 34/34, lint 15/15.
+  Film (King, combo, 48 px/m, seed 1, 0 SCRIPT ERROR; before `--rivet-walk=walk8`): the left-profile run with the
+  pistol forward and the claw pumping vs the armed walk's steps
+  (`rivet_armed_run_pistol_p55_before_after_king_combo_48ppm_x1.5_seed1_f20_52.png` + half-speed mp4; replaces the it6
+  p55 armed-walk King still; frames.json 15).
+- Reels on 83e90179 (`reel-director-it8c-<v>.log`): top 19/19 fully down, 0 SCRIPT ERROR, exit 0; tilt70 and combo were
+  still running at the session stop (see NEXT 1).
+- FRICTION (~2 min): `python -I -c` with a `/c/...` path fails on Windows Python (FileNotFoundError): use `C:/...`.
+- FRICTION: `node tools/godot/check.mjs` fails on rivet_walk.gd AND on unchanged rivet_frames.gd ("Failed to compile
+  depended scripts" via human_react.gd): a check-only artifact on this branch; GUT compiles and runs both.
+
+### Calls drafted for REPORT (it8 additions)
+13. **Armed runs coverage**: drawn armed runs now ship for pistol, plasma rifle, katana, gatling at 70 and the pistol at 55.
+    Every other weapon (and the flamer) keeps its armed walk / equipped card at run speed: one more glide each. Default
+    built: the drawn run where it exists. Option: map each hold family's run to its other weapons (the drawn gun would
+    be the wrong weapon: rejected for now). REQUESTed: the flamer run.
+14. **Row stride correction** (`RUN_ROW_K`): short-stride B rows step on a shorter cycle instead of sliding; option: an
+    empty table = every row on run8's cycle.
+
+NEXT (it9):
+1. Read `evidence/n9/reel-director-it8c-{tilt70,combo}.log` (they ran past the it8 stop on 83e90179): commit them if
+   19/19 fully down and 0 SCRIPT ERROR; else re-run `gtai-n9/tmp/rivet/scripts/reels.sh it9`.
+2. The library's 55 runs as they land (two-hand 55 round 0610, blade 55 0615, heavy 55 0620): pack each like 83e90179
+   (`--k=0.6111,0.6197`, `--tone=p55/rivet_eq_<weapon>.png`), measure each row with `gtai-n9/tmp/rivet/it8/travel_grid.py`
+   against p55 rivet_run8 and add RUN_ROW_K for any row > 5 % off; extend the unit test's p55 list.
+3. Re-pack the katana 70 when the library re-assembles blade L1 v3 at the right scale (REQUEST above); the gatling when
+   heavy L2 v3 lands (then drop its RUN_ROW_K entry).
+4. Film the gatling left profile run (RUN_ROW_K 0.94) frame by frame at 64 px/m; film the knock's other rows.
+5. The evidence run --no-bench on the it8 head with the tree held still (no JOURNAL edits during it).
