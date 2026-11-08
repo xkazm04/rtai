@@ -444,3 +444,9 @@ NEXT (it14):
 NEXT (it14) amended, item 1 first: find which node draws the red clumps on a plan-pose corpse (in the riot at t22,
 hide CityBlood.stains and look; then the rig's wound nodes under HumanReact / BloodMarks), move THAT to
 `StreetDeadPlan.rest_of`, then film the before/after. The rest of it13's NEXT stands.
+
+## it16 (2026-11-08 05:10-06:10) BUILD
+(it14 / it15 left no entries; resuming from it13's amended NEXT.)
+- READ journals: rivet it7 landed the drawn knock-down on `rivet_knock` (RivetKnock, filmed on a scratch merge with
+  this branch: no REQUEST to world; it reads the meta as specified); perf / handheld: no REQUEST to world.
+- Plan: NEXT 1 (which node draws the red clumps on a plan-pose corpse; move it to the rest pelvis), then film.
