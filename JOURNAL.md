@@ -281,3 +281,6 @@ NEXT (iteration 5), supersedes the list above:
    estimate (model knowledge: say so). LEDGER E18 row; a Call if the 40 Hz row is what one Deck core can hold.
 3. Check the asset lane's JOURNAL (grep "handheld") for anything new each iteration.
 4. REPORT.md draft: at the freeze, the gates line, the exe line, Calls, frames.json (15 entries, every file present).
+- 04:24 GATE evidence run (`--no-bench`) at 39df106e (it4's head: aim-assist proof, glyph appendix, cpu_cap tool): lint, unit 1842/0,
+  scenarios 54, parity (mutation caught at 629), selftest (look goldens 11/11), release-compile 619/0: all PASS
+  (`evidence/n9h/it4/gates2/evidence-run-39df106e.txt`). NEXT item 1 DONE; it5 starts at item 2 (E18).
