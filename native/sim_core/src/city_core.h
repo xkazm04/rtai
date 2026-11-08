@@ -18,24 +18,6 @@ namespace gtai::sim {
 void scan_dead_flips(const double *snap, int64_t n, const uint8_t *dead, int64_t dead_n,
 		std::vector<int32_t> &out);
 
-// One RigFeed row of a person record (CityFeedRows, the same rows as its script loop).
-struct FeedRow {
-	int32_t id;
-	uint8_t kind, look, flags;
-	float x, y, vx, vy, face, aim_x, aim_y;
-};
-
-// Single precision where the script's Vector2 is: the rows match its float32 arithmetic.
-struct FeedRowsArgs {
-	float focus_x, focus_y;
-	double r2;  // metres squared, compared as the script does: a float32 distance against a double
-	float aim_x, aim_y, px;
-};
-
-// The view feed's fill, no sim state: one row per ped or cop of a snapshot() within r2 of the focus.
-void fill_feed_rows(const double *snap, int64_t n, const uint8_t *variants, int64_t variants_n,
-		const FeedRowsArgs &a, std::vector<FeedRow> &out);
-
 class CityCore {
 public:
 	CityCore();

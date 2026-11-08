@@ -115,42 +115,6 @@ PackedInt32Array CitySim::scan_dead_flips(const PackedFloat64Array &snap, const 
 	return out;
 }
 
-// RigFeed's columns in adopt_rows' order, then the row count; one zero row follows the people, so
-// Rivet's row is written without growing ten arrays.
-Array CitySim::fill_feed_rows(const PackedFloat64Array &snap, const PackedByteArray &variants,
-		const Vector2 &focus, double r2, const Vector2 &aim, double px) {
-	thread_local std::vector<sim::FeedRow> rows;
-	const sim::FeedRowsArgs args{focus.x, focus.y, r2, aim.x, aim.y, (float)px};
-	sim::fill_feed_rows(snap.ptr(), snap.size(), variants.ptr(), variants.size(), args, rows);
-	const int64_t n = (int64_t)rows.size();
-	PackedInt32Array ids;
-	PackedByteArray kinds, looks, flags, clip;
-	PackedVector2Array pos, vel, aims;
-	PackedFloat32Array face, clip_arg;
-	ids.resize(n + 1), kinds.resize(n + 1), looks.resize(n + 1), flags.resize(n + 1);
-	clip.resize(n + 1), pos.resize(n + 1), vel.resize(n + 1), aims.resize(n + 1);
-	face.resize(n + 1), clip_arg.resize(n + 1);
-	int32_t *w_ids = ids.ptrw();
-	uint8_t *w_kinds = kinds.ptrw(), *w_looks = looks.ptrw(), *w_flags = flags.ptrw();
-	Vector2 *w_pos = pos.ptrw(), *w_vel = vel.ptrw(), *w_aim = aims.ptrw();
-	float *w_face = face.ptrw();
-	for (int64_t i = 0; i < n; i++) {
-		const sim::FeedRow &f = rows[(size_t)i];
-		w_ids[i] = f.id, w_kinds[i] = f.kind, w_looks[i] = f.look, w_flags[i] = f.flags;
-		w_pos[i] = Vector2(f.x, f.y), w_vel[i] = Vector2(f.vx, f.vy);
-		w_aim[i] = Vector2(f.aim_x, f.aim_y), w_face[i] = f.face;
-	}
-	w_ids[n] = 0, w_kinds[n] = 0, w_looks[n] = 0, w_flags[n] = 0, w_face[n] = 0.0f;
-	w_pos[n] = Vector2(), w_vel[n] = Vector2(), w_aim[n] = Vector2();
-	memset(clip.ptrw(), 0, (size_t)n + 1);  // RigClips.Clip.NONE
-	memset(clip_arg.ptrw(), 0, ((size_t)n + 1) * sizeof(float));
-	Array out;
-	out.resize(11);
-	out[0] = ids, out[1] = kinds, out[2] = looks, out[3] = pos, out[4] = vel, out[5] = face;
-	out[6] = aims, out[7] = flags, out[8] = clip, out[9] = clip_arg, out[10] = n;
-	return out;
-}
-
 void CitySim::set_render(const Array &mms, const PackedInt32Array &clips) {
 	if (mms.size() != sim::RL_COUNT || clips.size() < sim::CLIP_VARIANTS * sim::CLIPS * 3) {
 		UtilityFunctions::push_error("CitySim.set_render: needs 5 MultiMesh RIDs and the clip table");
@@ -224,7 +188,6 @@ void CitySim::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_counters"), &CitySim::get_counters);
 	ClassDB::bind_method(D_METHOD("snapshot"), &CitySim::snapshot);
 	ClassDB::bind_static_method("CitySim", D_METHOD("scan_dead_flips", "snap", "dead"), &CitySim::scan_dead_flips);
-	ClassDB::bind_static_method("CitySim", D_METHOD("fill_feed_rows", "snap", "variants", "focus", "r2", "aim", "px"), &CitySim::fill_feed_rows);
 	ClassDB::bind_method(D_METHOD("set_body", "spec"), &CitySim::set_body);
 	ClassDB::bind_method(D_METHOD("body_result"), &CitySim::body_result);
 	ClassDB::bind_method(D_METHOD("set_render", "mms", "clips"), &CitySim::set_render);

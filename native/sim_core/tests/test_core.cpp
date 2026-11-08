@@ -127,34 +127,8 @@ void scan_test() {
 	check(out.size() == 1 && out[0] == 0, "scan: an empty snapshot");
 }
 
-// The feed fill: a ped, a cop aiming, a car, one past the radius, projectile records at the tail.
-void feed_rows_test() {
-	std::vector<double> snap(4 * SNAP_STRIDE + SNAP_PROJ_STRIDE, 0.0);
-	const int cop = SNAP_STRIDE, car = 2 * SNAP_STRIDE, far = 3 * SNAP_STRIDE, proj = 4 * SNAP_STRIDE;
-	snap[0] = 3.0, snap[1] = K_PED, snap[2] = M_FLEE, snap[4] = 1.0, snap[5] = 2.0;
-	snap[6] = 1.0, snap[8] = 2.0;
-	snap[cop] = 30.0, snap[cop + 1] = K_COP, snap[cop + 4] = 3.0, snap[cop + 10] = 0.5;
-	snap[car] = 4.0, snap[car + 1] = K_CAR, snap[car + 4] = 1.0;
-	snap[far] = 5.0, snap[far + 1] = K_PED, snap[far + 4] = 11.0;
-	snap[proj] = (double)SNAP_PROJ_BASE;
-	const std::vector<uint8_t> variants(10, 7);
-	const FeedRowsArgs a{0.0f, 0.0f, 100.0, 64.0f, 96.0f, 32.0f};
-	std::vector<FeedRow> out;
-	fill_feed_rows(snap.data(), (int64_t)snap.size(), variants.data(), (int64_t)variants.size(), a, out);
-	check(out.size() == 2, "feed: the ped and the cop, no car, nobody past the radius");
-	if (out.size() != 2) return;
-	check(out[0].id == 3 && out[0].kind == 2 && out[0].look == 7, "feed: a ped's row");
-	check(out[0].flags == 8 && out[0].x == 32.0f && out[0].vx == 64.0f, "feed: flee flag, px");
-	check(out[0].aim_x == out[0].x, "feed: a ped's aim is its own feet");
-	check(out[1].kind == 1 && out[1].look == 255, "feed: a cop, a slot past the variants");
-	check(out[1].flags == (4 | 2) && out[1].aim_y == 96.0f, "feed: gun out, aiming at the target");
-	fill_feed_rows(snap.data(), 0, variants.data(), (int64_t)variants.size(), a, out);
-	check(out.empty(), "feed: an empty snapshot");
-}
-
 int main() {
 	scan_test();
-	feed_rows_test();
 	Run a = run(4242, 600);
 	Run b = run(4242, 600);
 	Run c = run(4243, 600);
