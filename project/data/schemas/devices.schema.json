@@ -43,6 +43,15 @@
             "minimum": 0,
             "type": "integer"
           },
+          "models": {
+            "items": {
+              "minLength": 6,
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array",
+            "uniqueItems": true
+          },
           "note": {
             "minLength": 1,
             "type": "string"

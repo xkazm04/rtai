@@ -10,13 +10,17 @@ signal overlay_toggled(open: bool)
 var _backend: PlatformBackend
 
 
+## n10-handheld: the backend starts here, not in _ready, and this autoload sits before LaunchArgs:
+## the device row is picked in LaunchArgs._init (before the main scene's initializers read it) and
+## asks hardware() first.
 func _init() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	_start_backend()
 
 
 ## SteamBackend only with the `steam` feature tag and a successful start (STM-02/05);
 ## otherwise NullBackend, with the reason logged.
-func _ready() -> void:
+func _start_backend() -> void:
 	if OS.has_feature("steam"):
 		if use_backend(SteamBackend.new()):
 			return
@@ -98,6 +102,11 @@ func text_input_request(prompt: String, multiline: bool) -> bool:
 
 func glyph_family() -> PlatformBackend.GlyphFamily:
 	return _backend.glyph_family()
+
+
+## The platform's own image for a pad prompt, by its Xbox-layout label; "" = draw our own set.
+func action_glyph_path(xbox_label: String) -> String:
+	return _backend.action_glyph_path(xbox_label)
 
 
 func profile_dir() -> String:
