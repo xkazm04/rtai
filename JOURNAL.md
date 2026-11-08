@@ -157,3 +157,18 @@ desktop study row, or a launch flag in KNOWN_FLAGS); the desktop default must no
   Stills (scratch keyboard-event walker, `evidence/n9h/it3/kbwalk/`): title, quest 1 prompt ("Walk [WASD] to the
   dumpster, hide: [E]", the ghost card's Q keycap), pause; desktop before shot = unchanged text. Looked at all.
   frames.json 15 entries. Tests `test_kb_glyph_set` (8). Commit ca917066. DECISION `handheld/kb-glyphs-study`.
+- 02:44 GATE at ca917066: full unit 1837/0; director reel headless `--quit-after 16000` top 19/19, tilt70 19/19, combo
+  19/19 chapters down, 0 SCRIPT ERROR each (`evidence/n9h/it3/gates/`). Main has no world BC7 yet: E16's bench-lock
+  re-take waits (NEXT).
+- 02:50 The drawn glyphs per pad family, judged on a sheet (scratch `evidence/n9h/it3/families/`, `PadGlyphs.relabel` +
+  `PadGlyphArt.draw_line`, deck row): Xbox / PlayStation / Nintendo-layout names all draw their own face and trigger
+  cells (RT / R2 / ZR, X / Square / Y, A / Cross / B). Gap: Start draws the three-line mark for every family: right for
+  a DualSense's Options, wrong for the Nintendo "+" (and "-" draws the two-rectangle View mark; the DualSense Create is
+  its own mark too). Fallback kept (the same button position, still a glyph); REQUEST below.
+  Still: `gtai-masters/n9/handheld/glyphs-deck-pad-families-controls.png` (frames.json: replaces the it1 title still).
+
+REQUEST to assets: ui_pad_glyphs_v1 appendix (pad_plus, pad_minus, pad_create), flat UI (no pitch), three more cells in
+the it98 pad glyph look (cream fill, brush-ink rim, mustard bevel, 128 px cell, the same atlas or a 1-row appendix):
+a small round button with a "+", the same with a "-" (the Nintendo-layout Start / Back), and the PlayStation Create
+button (a small pill with its three-short-lines-and-dot mark, no brand name or logo). Why: Valve's Deck Verified rule
+"glyphs must match the inputs being used"; on a Nintendo-layout pad the pause prompt shows the Xbox menu mark today.
