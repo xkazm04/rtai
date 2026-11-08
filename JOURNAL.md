@@ -149,3 +149,9 @@ NEXT (it3) FIRST, before everything above:
   Not yet re-run: the full evidence gate on the fix commit (it3 item 0 now = re-run `node tools/evidence/run.mjs
   --no-bench` and confirm 11 / 11 + block 5 / 5; then the director reel x3).
 NEXT (it3) item 0 replaced: re-run the evidence gate on the fix; then items 1-6 above.
+- 02:46 MILESTONE: selftest on 6d365066 (committed tree): **18 / 18 pass, look goldens 11 / 11 (worst 0.27), block
+  goldens 5 / 5 (worst 0.22)**. With it2's unit 1823 / 0, scenarios 54 / 54, parity exact and release-compile 615 / 0
+  (on 40fb2da3; the fix after it touches only the crowd readback default) the gates are green except the director reel
+  x3 (not run this iteration: it3).
+NEXT (it3), in order: 0. director reel 19/19 in top, tilt70, combo (`--quit-after 16000`) on n9-perf HEAD;
+  1-6 as listed above (world's StreetView.step breakdown first, then the mailbox/steady pacing A/B, item 4 on world).
