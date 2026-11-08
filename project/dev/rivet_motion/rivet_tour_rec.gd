@@ -22,6 +22,9 @@ const HEADER: PackedStringArray = [
 	"fire",
 	"fresh",
 	"aimdeg",
+	"held",
+	"hold",
+	"roll",
 ]
 ## [phase, tick inside the phase] for each column.
 const COLUMNS: Array[Vector2i] = [
@@ -43,6 +46,7 @@ var _sheet: Image = null
 var _lines: PackedStringArray = PackedStringArray()
 var _last_tick: int = -1
 var _pending: int = 0
+var _columns: Array[Vector2i] = COLUMNS
 
 
 func _init(game: ArenaGame, bot: RivetTourBot, out: String) -> void:
@@ -50,10 +54,12 @@ func _init(game: ArenaGame, bot: RivetTourBot, out: String) -> void:
 	_bot = bot
 	_out = out
 	process_priority = 30
+	var own: Array[Vector2i] = bot.columns()
+	_columns = own if not own.is_empty() else COLUMNS
 
 
 func _ready() -> void:
-	var w: int = CROP * COLUMNS.size()
+	var w: int = CROP * _columns.size()
 	_sheet = Image.create_empty(w, CROP * RivetTourBot.OCTS, false, Image.FORMAT_RGBA8)
 	_add_line("\t".join(HEADER))
 
@@ -70,8 +76,8 @@ func _process(_delta: float) -> void:
 	if _bot.phase == RivetTourBot.Phase.DONE and _pending == 0:
 		_finish()
 		return
-	for c: int in COLUMNS.size():
-		if COLUMNS[c] == Vector2i(_bot.phase, _bot.in_phase):
+	for c: int in _columns.size():
+		if _columns[c] == Vector2i(_bot.phase, _bot.in_phase):
 			_pending += 1
 			_grab.call_deferred(rig, Vector2i(c, _bot.oct_i))
 
@@ -95,6 +101,9 @@ func _log_row(rig: CutRig, tick: int) -> void:
 		int(RivetStrips.fire_latched(rig)),
 		int(HeldMuzzle.fresh()),
 		"%.1f" % rad_to_deg(RivetStrips.aim_of(rig)),
+		_game.session.stage.pilot.hold.held,
+		_game.session.stage.pilot.hold.state,
+		int(rig.clips.rolling()),
 	]
 	_add_line("\t".join(row.map(func(v: Variant) -> String: return str(v))))
 

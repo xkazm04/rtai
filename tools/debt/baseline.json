@@ -28,7 +28,8 @@
         "2026-11-08: dev/frames: quest1_clip --cam=dead (n9 world it22), a capture camera for Dock 9 at 64 px/m (item 2 evidence) (dev_loc 19514 -> 19571)",
         "2026-11-08: dev/frames: quest_dead_cam heap anchor + ease (n9 world it22), Dock 9 64 px/m capture (dev_loc 19571 -> 19591)",
         "2026-11-08: n9 merge: the combined growth of the four lanes (world, rivet, perf, handheld), each individually under its own baseline (dev_loc 19591 -> 19838)",
-        "2026-11-08: n10 rivet: dev/rivet_motion/rivet_tour* (211 lines, dev only, excluded from release): the 17-weapon tour the night brief's defect hunt runs on; delete with the hunt if it is not kept (dev_loc 19838 -> 20049)"
+        "2026-11-08: n10 rivet: dev/rivet_motion/rivet_tour* (211 lines, dev only, excluded from release): the 17-weapon tour the night brief's defect hunt runs on; delete with the hunt if it is not kept (dev_loc 19838 -> 20049)",
+        "2026-11-08: n10 rivet transitions and bare tours (dev only, RivetTransBot and flags), to delete after the hunt (dev_loc 20049 -> 20151)"
       ],
       "files": {
         "project/dev/arena": 708,
@@ -37,7 +38,7 @@
         "project/dev/bench": 1684,
         "project/dev/bots": 399,
         "project/dev/enemy_ai": 662,
-        "project/dev/frames": 544,
+        "project/dev/frames": 545,
         "project/dev/ghost-forms": 616,
         "project/dev/ghost-powers": 1137,
         "project/dev/gunplay": 674,
@@ -49,7 +50,7 @@
         "project/dev/quest1_city_fit.gd": 18,
         "project/dev/quest1_city_fit_run.gd": 74,
         "project/dev/rivet_arsenal": 255,
-        "project/dev/rivet_motion": 1445,
+        "project/dev/rivet_motion": 1546,
         "project/dev/save_crash_loop.gd": 14,
         "project/dev/save_crash_writer.gd": 18,
         "project/dev/save_cross.gd": 18,
@@ -60,7 +61,7 @@
         "project/dev/view": 195,
         "project/dev/weapon_art": 506
       },
-      "total": 20049
+      "total": 20151
     },
     "direct_cmdline_reads": {
       "accepted": [

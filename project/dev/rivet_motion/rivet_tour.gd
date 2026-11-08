@@ -13,5 +13,11 @@ func _ready() -> void:
 		area = a if a.id == args.text("--start", "pad") else area
 	var home: Vector2 = area.rect.get_center()
 	var bot: RivetTourBot = RivetTourBot.new(session.stage, session.actions, home)
+	if args.text("--tour-kind") == "trans":
+		bot = RivetTransBot.new(session.stage, session.actions, home)
+	if args.text("--tour-kind") == "bare":  # the bare walk and run, 8 octants, nothing else
+		session.stage.arena.gun = null
+		session.stage.arena.rivet.weapon = &""
+		bot.lens = RivetTourBot.LEN_BARE
 	session.world.loop().set_input(bot)
 	add_child(RivetTourRec.new(self, bot, args.text("--tour-out")))

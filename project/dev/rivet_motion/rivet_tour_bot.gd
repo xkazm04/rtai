@@ -7,9 +7,11 @@ enum Phase { WALK, RUN, STAND, FIRE, RELOAD, HOME, DONE }
 
 const WALK_STICK: float = 0.25
 const LEN: PackedInt32Array = [24, 24, 10, 30, 70, 0, 0]
+const LEN_BARE: PackedInt32Array = [40, 40, 0, 0, 0, 0, 0]
 const OCTS: int = 8
 const MAX_HOME: int = 240
 
+var lens: PackedInt32Array = LEN
 var phase: Phase = Phase.WALK
 var oct_i: int = 0
 var in_phase: int = 0
@@ -23,6 +25,11 @@ func _init(p_stage: ArenaStage, p_actions: PlayerActions, p_home: Vector2) -> vo
 	_stage = p_stage
 	_actions = p_actions
 	home = p_home
+
+
+## The recorder's sheet columns ([phase, tick]); empty = its own weapon-tour list.
+func columns() -> Array[Vector2i]:
+	return []
 
 
 func sample(_tick: int) -> TickInput:
@@ -54,7 +61,7 @@ func sample(_tick: int) -> TickInput:
 
 func _advance(move: Vector2) -> void:
 	in_phase += 1
-	var ended: bool = in_phase >= LEN[phase] if phase != Phase.HOME else move == Vector2.ZERO
+	var ended: bool = in_phase >= lens[phase] if phase != Phase.HOME else move == Vector2.ZERO
 	if not ended:
 		return
 	in_phase = 0
