@@ -485,9 +485,30 @@ Why: Dock 9 (quest 1, the most-seen fight) still lays every dead contractor as o
   films d9's slide with no native rebuild). Before: rest x 282.4, he lies on the roof 2.4 m inside the building;
   after: rest x 279.6 at the face (280.0). 64 px/m t66/t74/t150 + clip, 32 px/m t150
   (`gtai-masters/n9/world/dead_wall_*`, 3 frames.json entries; 3 older entries pruned to keep 15).
-  Honest limit: the lying plan pose's arm and head still reach ~0.4 m over the roof edge (the view bound pulls
+  Honest limit (re-judged on a x3 crop at 05:45: feet west, the hood at the parapet, one hand ~0.3 m over it; reads
+  as slumped against the wall, kept): the lying plan pose's arm and head reach over the roof edge (the view bound pulls
   the pose back along the blow only, not by the pose's own sideways extent), and the mid-fall card's arm crosses
   it at t74. FRICTION: debt ratchet (dev_loc, one cmdline read) accepted by name, as for car_knock_clip.
 Registry rules applied this session: `generative-artifact-gating` (a stand-in strip only as a labelled wiring check,
 never shipped or filmed as the result), `rigid-body-simulation-stability` (judged the rest point against the face
 in numbers, not only by eye), `motion-quality-gating` (the before/after from the same seed and tick, in motion).
+- (05:41) Full unit at 76a8af00: **1838/0** (1834 + test_street_quest_dead_plan 4). Mid-session journal re-read:
+  no new REQUEST to world (rivet NEXT 3 wants other knock headings filmed: their scratch drive, not asked of me).
+- (05:44) REPORT.md DRAFT committed (all five items, the Calls C-1/C-3/C-4/C-5, next steps); the freeze session
+  finalises it with the exe and the final gate. Scratch: dock9 before64/before32/after64/probe frame dirs deleted;
+  `gtai-n9/tmp/world/before` is now at 14992d61 with the two dead_wall_clip files copied in (untracked, scratch).
+
+NEXT (it17):
+1. Read the journals; assets: `dead_plan_v1_contractor` (my l.464 REQUEST). When served: add
+   `"contractor": ("street", [<the delivery's catalog ids>])` to `tools/art/dead_plan.py` CLASSES, run
+   `python tools/art/dead_plan.py --only=contractor --provenance`, `--import`, then copy the eight's BC7 `.import`
+   params onto `plan/dead_contractor.png.import` and verify (as it13). `StreetQuestDeadPlan` picks it up with no
+   code change (test_no_strip_keeps_the_drawn_frame then passes as "served"). Film Dock 9 after at 32 + 64:
+   `dev/frames/quest1_clip.gd -- --rigs --view=tilt70 --ppm=32 --stills=13800` (before =
+   `gtai-masters/n9/world/dock9_contractors_dead_before_tilt70_32ppm_t13800*.png`, crop (1280,480)-(1680,700));
+   also look at the moment of death (the standing card -> lying pop: add the plan slide if it pops).
+2. Item 2: the city block (`res://dev/arena/arena.tscn -- --arena=city --rigs --view=tilt70`, with `--bot=pit` for
+   deaths) before/after at 32 + 64 (owed since it4).
+3. Before the freeze (10:30): the full gate (`node tools/evidence/run.mjs --no-bench`), the director reel x3 at the
+   head with `--quit-after 16000`, the exe (`build/export/windows/RTAI.exe`), REPORT.md finalised (remove DRAFT).
+   Remove the scratch worktree `gtai-n9/tmp/world/before` (`git worktree remove --force`) after the last before.

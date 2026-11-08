@@ -53,8 +53,8 @@ Branch `n9-world`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n9\world\` (frame
   `StreetQuestCards`, not the rigs, so the redesign missed them until it16. The code is in (b5c5a28f). The sheet is
   REQUESTed from assets (`dead_plan_v1_contractor`). Before still:
   `dock9_contractors_dead_before_tilt70_32ppm_t13800*.png`.
-- After the wall stop, the lying pose's arm and head still reach about 0.4 m over a roof edge: the view bound pulls
-  the pose back along the blow only.
+- At a wall the lying pose's hood and one hand overlap the building's edge by ~0.3 m (64 px/m close-up: it reads as a
+  body slumped against the wall, feet out). The view bound pulls the pose back along the blow only; left as is.
 - The knock damage is an Event only (the city has no Rivet hp outside the pits).
 - rig cost under combo is above the provisional 1 ms (C-1).
 
@@ -87,6 +87,6 @@ Branch `n9-world`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n9\world\` (frame
 
 1. Pack `dead_plan_v1_contractor` when served (`python tools/art/dead_plan.py --only=contractor`, add it to
    CLASSES). Then film Dock 9 before/after at 32 and 64 px/m.
-2. Bound the lying pose by its own sideways extent at a wall (the 0.4 m roof overlap).
+2. Optional: bound the lying pose by its own sideways extent at a wall (the ~0.3 m hand/hood overlap).
 3. Freeze: the full gate (`node tools/evidence/run.mjs --no-bench`), the director reel x3 at the head, the exe
    (`build/export/windows/RTAI.exe`), this report finalised.
