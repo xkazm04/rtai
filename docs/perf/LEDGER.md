@@ -4,6 +4,44 @@ Branch `d9-perf`, cut from main `3982af1a`. Every number here names its build, s
 instrument. Host: Ryzen 7 7800X3D (8C/16T), RTX 4090 (+ the AMD iGPU), Windows 11, Godot 4.7.2.
 **Host ms are host ms**: nothing here is a Steam Deck or handheld figure (that is the `handheld` lane's).
 
+## n9 night (2026-11-08, branch n9-perf from main da108c13)
+
+### F19 quest-1 freeze: located in the engine (it1, 00:56-01:56)
+Machine: the shared PC (RTX 4090 + an AMD iGPU), 2-4 other lanes' Godot processes up the whole time (CONTENDED: freeze
+counts only, no timing claims). Windowed D3D12, the editor binary, `res://boot/quest1.tscn -- --autostart`, a run is
+frozen when the process uses < 0.05 cores 12-15 s in (`evidence/perf/f19-freeze/hunt2.ps1`; a frozen run also reads
+`Responding = false`). All under `evidence/perf/f19-freeze/`.
+
+| step | what | frozen / runs | finding |
+|---|---|---|---|
+| trace1 | printerr around every main-thread wait in our GDScript (chunk take, save collect, threaded texture gets) + a 30-frame heartbeat (`trace.patch`) | 3 / 7 | every freeze right after Start (frame 0-29), NO traced wait open: not chunk_source / save_worker / load_threaded_get |
+| trace3 | + crowd bake and prewarm traces, a per-frame heartbeat, RS frame_pre/post_draw | 2 / 8 | both stop at `CB> cap`: the main thread inside `CrowdBaker._capture` -> `_vp.get_texture().get_image()` |
+| fix40 | CrowdReadback (async readback, 827aefe3; atlas md5 identical) | 2 / 4 | still freezes: not the fix (stopped early) |
+| trace4 | async readback + traces | 2 / 6 | stops after `HB pf6` / `pf8`, no GDScript wait open: inside the engine's frame |
+| nobake | crowd bake skipped (scratch hook) | 1 / 3 | the bake is not needed for the freeze |
+| vulkan | `--rendering-driver vulkan` | n/a | crashes at boot in `amdxc64.dll` (the iGPU's driver): no Vulkan arm on this PC (`vulkan-boot-crash.log`) |
+| cdb | WinDbg's cdb attached non-invasively to each frozen run (`stacks-cdb-{2,4,6,8}.txt`) | 4 / 8 | **the same main-thread stack in all 4** (below) |
+
+Frozen main thread (all 4): `ntdll!NtWaitForSingleObject` <- `KERNELBASE!WaitForSingleObjectEx` <- `+0x1389030` <-
+`+0x32e7c60` <- `+0x32e8890` <- `+0x33816e0` <- main loop (offsets from the exe's only export, `NoHotPatch`; the official
+build ships no PDB). Named from the static disassembly (`disasm-main-thread.txt`, `cdb -z` on the exe):
+- `+0x1389030` = the D3D12 driver's **fence_wait**: `ID3D12Fence::SetEventOnCompletion` (vtable slot 9, `+0x48`) then
+  `WaitForSingleObjectEx(event, INFINITE, FALSE)`;
+- `+0x32e8890` = **`RenderingDevice::_begin_frame`** (references `Condition "!reset" is true.` / `_begin_frame` /
+  `servers/rendering/rendering_devi...`); `+0x32e7c60`, called from it, is the per-frame stall that waits for the frame
+  slot's fence (`_stall_for_frame`);
+- `+0x33816e0` = `RenderingServerDefault::_draw` (`Prepare Render Frame`).
+
+So the freeze is **`_begin_frame` waiting forever for an earlier frame's GPU fence**: the GPU never finishes that frame.
+Every other thread is idle (16 WorkerThreadPool threads, D3D12Core's 4 background threads and the NVIDIA driver threads
+all in plain waits), so no CPU thread holds it up. The device is not removed (a removed device signals its fences to
+UINT64_MAX and the wait would return). Most likely the frame's submission waits on the GPU queue for a semaphore that is
+never signalled. Prime suspect: the RenderingDevice texture-upload transfer workers, whose semaphores the frame
+submission waits on, at the first frames after Start when the quest's view, fonts and atlases upload. Synchronous
+readbacks (`get_image`) hit the same wait first, which is why trace3 caught it there. A game-script fix cannot reach it.
+Owed: confirm the semaphore (cdb on the queue's fences, or a 4.7.2 debug template with symbols), then an engine patch
+or a script workaround that keeps texture uploads out of the first frames.
+
 ## Method (applies to every row)
 - **Runner:** `node tools/perf/ab.mjs --scenes=<..> --arms=<name>:<user args>[^<engine args>],... --pairs=N --out=<dir>`.
   It runs each scene once per arm per round, alternating the arm order every round (A B / B A ...), so a

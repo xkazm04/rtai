@@ -1,0 +1,15 @@
+
+================================================================
+CrashHandlerException: Program crashed with signal 11
+Engine version: Godot Engine v4.7.2.stable.official (ed1daf0bf001b61586d9930840f2f1394092c079)
+Dumping the backtrace. Please include this when reporting the bug on: https://github.com/godotengine/godot/issues
+Load address: 7ff60cae0000
+
+[1] 7ff750bb4d61 (main+40d4d61) - no debug info in PE/COFF executable
+[2] 7ff9591e4b92 (ntdll.dll+124b92) - no debug info in PE/COFF executable
+[3] 7ff9592264ae (ntdll.dll+1664ae) - no debug info in PE/COFF executable
+[4] 7ff959184064 (ntdll.dll+c4064) - no debug info in PE/COFF executable
+[5] 7ff959225ded (ntdll.dll+165ded) - no debug info in PE/COFF executable
+[6] 7ff851e25e5e (amdxc64.dll+a5e5e) - no debug info in PE/COFF executable
+-- END OF C++ BACKTRACE --
+================================================================

@@ -1,0 +1,180 @@
+﻿Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+D3D12 12_0 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce RTX 4090
+
+[INFO] quest1: city cells: 2 chunks in 13 ms
+[INFO] quest1: street filled in 16 chunk passes
+[INFO] characters: prewarmed 41 rigs in 96.7 ms
+[INFO] quest1: started: Rivet is the player's (seed 20261102)
+WT> ctex res://features/city/art/ground/road_straight_tone_open.png
+WT< ctex
+WT> ctex res://features/city/art/ground/road_straight_tone_b_open.png
+WT< ctex
+WT> ctex res://features/city/art/ground/road_straight_tone_c_open.png
+WT< ctex
+WT> ctex res://features/city/art/ground/road_straight_v_tone_open.png
+WT< ctex
+WT> ctex res://features/city/art/ground/road_straight_v_tone_b_open.png
+WT< ctex
+WT> ctex res://features/city/art/ground/road_straight_v_tone_c_open.png
+WT< ctex
+WT> ctex res://features/city/art/ground/road_intersection_tone.png
+WT< ctex
+WT> ctex res://features/city/art/ground/curb_straight_tone_jt.png
+WT< ctex
+WT> ctex res://features/city/art/ground/curb_straight_tone_b_jt.png
+WT< ctex
+WT> ctex res://features/city/art/ground/curb_straight_tone_c_jt.png
+WT< ctex
+WT> ctex res://features/city/art/ground/curb_corner_tone_jt.png
+WT< ctex
+WT> ctex res://features/city/art/ground/roof_edge_tone.png
+WT< ctex
+WT> ctex res://features/city/art/ground/roof_tone.png
+WT< ctex
+WT> ctex res://features/city/art/ground/sidewalk_tone_jt.png
+WT< ctex
+WT> ctex res://features/city/art/d5/roofs/building_bar.png
+WT< ctex
+WT> ctex res://features/city/art/roofs/building_helipad.png
+WT< ctex
+WT> ctex res://features/city/art/d5/roofs/building_hq.png
+WT< ctex
+WT> ctex res://features/city/art/d5/roofs/building_mural.png
+WT< ctex
+WT> ctex res://features/city/art/d5/roofs/building_osha.png
+WT< ctex
+WT> ctex res://features/city/art/d5/roofs/building_pension_bank.png
+WT< ctex
+WT> ctex res://features/city/art/d5/roofs/building_tall.png
+WT< ctex
+WT> ctex res://features/city/art/d5/roofs/building_union_hall.png
+WT< ctex
+WT> ctex res://features/city/art/roofs/building_long.png
+WT< ctex
+WT> ctex res://features/city/art/roofs/building_warehouse.png
+WT< ctex
+WT> ctex res://features/city/art/d5/props/lamp_post_ink.png
+WT< ctex
+WT> ctex res://features/city/art/props/fire_hydrant.png
+WT< ctex
+WT> ctex res://features/city/art/props/trash_can.png
+WT< ctex
+WT> ctex res://features/city/art/props/mailbox.png
+WT< ctex
+WT> ctex res://features/city/art/props/bench.png
+WT< ctex
+WT> ctex res://features/city/art/props/newsstand.png
+WT< ctex
+WT> ctex res://features/city/art/props/payphone.png
+WT< ctex
+WT> ctex res://features/city/art/props/bus_stop.png
+WT< ctex
+WT> ctex res://features/city/art/props/vending_machine.png
+WT< ctex
+WT> ctex res://features/city/art/props/planter.png
+WT< ctex
+WT> ctex res://features/city/art/props/dumpster.png
+WT< ctex
+WT> ctex res://features/city/art/props/traffic_light.png
+WT< ctex
+WT> ctex res://features/city/art/props/street_sign.png
+WT< ctex
+WT> ctex res://features/city/art/props/bollard.png
+WT< ctex
+WT> ctex res://features/city/art/props/barrel_cluster.png
+WT< ctex
+WT> ctex res://features/city/art/props/crate_stack.png
+WT< ctex
+WT> ctex res://features/city/art/props/fire_escape.png
+WT< ctex
+WT> ctex res://features/city/art/props/traffic_cone.png
+WT< ctex
+WT> ctex res://features/city/art/props/police_barrier.png
+WT< ctex
+WT> ctex res://features/city/art/props/barricade.png
+WT< ctex
+WT> ctex res://features/city/art/vehicles/sedan.png
+WT< ctex
+WT> ctex res://features/city/art/vehicles/sedan_b.png
+WT< ctex
+WT> ctex res://features/city/art/vehicles/sedan_c.png
+WT< ctex
+WT> ctex res://features/city/art/vehicles/taxi.png
+WT< ctex
+WT> ctex res://features/city/art/vehicles/van.png
+WT< ctex
+WT> ctex res://features/city/art/vehicles/pickup.png
+WT< ctex
+WT> ctex res://features/city/art/vehicles/car_wreck.png
+WT< ctex
+WT> ctex res://features/city/art/vehicles/bus.png
+WT< ctex
+WT> ctex res://features/city/art/vehicles/ambulance.png
+WT< ctex
+WT> ctex res://features/city/art/vehicles/police_cruiser.png
+WT< ctex
+WT> ctex res://features/city/art/decals/cracks.png
+WT< ctex
+WT> ctex res://features/city/art/decals/manhole.png
+WT< ctex
+WT> ctex res://features/city/art/decals/oil_stain.png
+WT< ctex
+WT> ctex res://features/city/art/decals/drain_grate.png
+WT< ctex
+WT> ctex res://features/city/art/decals/puddle.png
+WT< ctex
+WT> ctex res://features/city/art/decals/oil_slick.png
+WT< ctex
+WT> ctex res://features/city/art/decals/stop_line.png
+WT< ctex
+WT> ctex res://features/city/art/decals/road_arrow.png
+WT< ctex
+WT> ctex res://features/city/art/decals/skid_marks.png
+WT< ctex
+WT> ctex res://features/city/art/decals/glass_shards.png
+WT< ctex
+WT> ctex res://features/city/art/decals/tank_tracks.png
+WT< ctex
+WT> ctex res://features/city/art/roofs/roof_skylights.png
+WT< ctex
+WT> ctex res://features/city/art/roofs/roof_garden.png
+WT< ctex
+WT> ctex res://features/city/art/roofs/roof_sawtooth.png
+WT< ctex
+WT> ctex res://features/city/art/roofs/roof_solar.png
+WT< ctex
+WT> ctex res://features/city/art/roofs/roof_telecom.png
+WT< ctex
+WT> ctex res://features/city/art/roofs/roof_tank.png
+WT< ctex
+WT> ctex res://features/city/art/roofs/roof_charging.png
+WT< ctex
+WT> ctex res://features/city/art/ground/road_box_plain.png
+WT< ctex
+WT> ctex res://features/city/art/decals/zebra.png
+WT< ctex
+WT> ctex res://features/city/art/decals/dash_eraser.png
+WT< ctex
+WT> ctex res://features/city/art/d5/decals/strike_paint.png
+WT< ctex
+WT> ctex res://features/city/art/d5/decals/union_fist_stencil.png
+WT< ctex
+WT> ctex res://features/city/art/d5/decals/chalk_robot.png
+WT< ctex
+WT> ctex res://features/city/art/d5/roofs/building_block_2x2.png
+WT< ctex
+WT> ctex res://features/city/art/d5/roofs/building_block_2x2_b.png
+WT< ctex
+WT> ctex res://features/city/art/d5/roofs/building_block_2x2_c.png
+WT< ctex
+WT> ctex res://features/city/art/d5/roofs/building_long_t1.png
+WT< ctex
+WT> ctex res://features/city/art/ground/curb12_straight_tone_jt.png
+WT< ctex
+WT> ctex res://features/city/art/ground/curb12_straight_tone_b_jt.png
+WT< ctex
+WT> ctex res://features/city/art/ground/curb12_straight_tone_c_jt.png
+WT< ctex
+WT> ctex res://features/city/art/ground/curb12_corner_tone_jt.png
+WT< ctex
+HB f0

@@ -1,0 +1,21 @@
+﻿{
+    "schema":  "gtai.thread-cpu/1",
+    "pid":  2164,
+    "wallMs":  2045.7,
+    "totalCores":  0.0076,
+    "groups":  [
+                   {
+                       "group":  "_loop",
+                       "threads":  1,
+                       "cores":  0.0076
+                   }
+               ],
+    "threads":  [
+                    {
+                        "tid":  476,
+                        "name":  "_loop",
+                        "module":  "msvcrt.dll",
+                        "cores":  0.0076
+                    }
+                ]
+}

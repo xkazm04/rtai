@@ -1,0 +1,9 @@
+﻿{"tag":"trace1","run":1,"cores":0.224,"responding":true,"pid":1384}
+{"tag":"trace1","run":2,"cores":0.01,"responding":false,"pid":47180}
+{"tag":"trace1","run":3,"cores":0.208,"responding":true,"pid":20592}
+{"tag":"trace1","run":4,"cores":0.01,"responding":false,"pid":58500}
+{"tag":"trace1","run":5,"cores":0.25,"responding":true,"pid":68456}
+{"tag":"trace1","run":6,"cores":0.005,"responding":false,"pid":48564}
+{"tag":"trace1","run":7,"cores":0.214,"responding":true,"pid":48348}
+{"tag":"trace1","run":8,"cores":0.005,"responding":false,"pid":58388}
+{"tag":"trace1","runs":8,"frozen":4}
