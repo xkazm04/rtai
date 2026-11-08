@@ -401,3 +401,6 @@ NEXT (it7):
    bench.lock) + an A-vs-A for the floor (F12); export the exe at 10:30; REPORT final.
 5. cvprof scratch worktree: timers for occlusion, blood (city_blood / combat_blood / blood_fx) and the occluder
    counters are applied (never commit it); `arms/` holds every A/B arm.
+- 06:07 GATE director reel x3 on 6b75d795 (L20c): 19 / 19 chapters fully down in top, tilt70, combo, 0 SCRIPT ERROR
+  (`evidence/perf/n9-it6/reel-l20c/`). NEXT item 1 is DONE. world's branch changes 1 line of boot/city_blood.gd;
+  nobody touches features/fx/noir/blood_fx.gd (L22 is free to take).
