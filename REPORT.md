@@ -9,7 +9,7 @@ Branch `n10-handheld`, cut from main 9bbe6d0a, with `n10-world` aadc7430 merged 
 3. **The Steam checks, as far as they go with no Steam app.** `Platform.hardware()` is the auto-pick's first check, and the prompts now ask `SteamGlyphs.texture()` first, so one backend line is the whole glyph swap (`test_steam_glyphs`: a fake backend returning a real PNG swaps the glyph; no path or a bad path keeps the drawn one). The GodotSteam method names in the comments are now read from 4.24's source. Nothing has run against Steam.
 4. **The research loop and the port readiness table.** Table updated (LEDGER section 7). The loop stopped by the brief's rule: Windows display scaling and the controller-first shell both give nothing this simulator can measure (LEDGER section 9).
 
-Gates so far on this work: mapped unit tests 40 / 0. **The full unit run, scenarios, parity and the evidence run on the merged head are owed** (see Next steps).
+Gates on this work, head 0822e5cc: the lint hook passed on the commit. The director reel in top, tilt70 and combo, `--quit-after 40000`: 19 of 19 chapters fully down, 0 SCRIPT ERROR, **exit 0 observed on all three** (`evidence/n10h/it9/reel/`). Each log carries two engine lines marked ERROR, neither a script error: a shader-compiler condition raised from `kill_char_fx.gd:189` (also in the it5 Deck reel) and "90-91 resources still in use at exit". Lint 15 / 15 and full unit 1971 passed, 0 failed, 371 files (`build/evidence/unit-tests.junit.xml`, this run). Mutation on `steam_glyphs.gd` at 0822e5cc: 4 mutants, 2 killed, 0 survived, **2 undecided** (both on line 26, the unreadable-image guard, timed out at 300 s on the loaded machine). The tool prints 100 %, which counts only the 2 decided. **The evidence run (`node tools/evidence/run.mjs --no-bench`) on 0822e5cc had passed lint and unit and was in its quiet-machine wait after a contended `rig_stress` budget miss when this was written; scenarios, parity and release-compile are not yet read.**
 
 ## What does not work yet
 
@@ -23,7 +23,8 @@ Gates so far on this work: mapped unit tests 40 / 0. **The full unit run, scenar
 ## What blocked, and for how long
 
 - The machine is heavily loaded (7-9 other Godot runs at a time): commits wait minutes on the lint hook, and plain file reads time out.
-- Iteration 1 lost about 25 minutes to my own hunt script (void runs, not counted). This iteration lost one unit run to my own `timeout` wrapper, which killed the runner before it reported.
+- Iteration 1 lost about 25 minutes to my own hunt script (void runs, not counted). Iteration 5 lost one unit run to my own `timeout` wrapper, which killed the runner before it reported.
+- Iteration 9: the pre-merge A/B for E22 was not run. `bench.lock` was held by lane perf when I tried at 23:27, and the run's rule is to skip the bench for that iteration. The scratch arm is ready for a later one.
 
 ## Calls for the owner
 
@@ -31,7 +32,7 @@ Gates so far on this work: mapped unit tests 40 / 0. **The full unit run, scenar
 
 ## Next steps
 
-- Full unit run, scenarios, parity, evidence run and the director reel in top / tilt70 / combo on the merged head, then the exe at the freeze.
-- Re-run `handheld_1080` in the city on a quiet machine, with a pre-merge arm, to settle the 60 Hz miss in E22.
-- Merge `n10-world` again if it lands more wall work.
+- Read the evidence run on 0822e5cc; the exe at the freeze.
+- E22's 60 Hz miss: the interleaved pre-merge A/B on `handheld_1080` in the city (a1c1edfd vs head, scratch worktree ready). It prices `aadc7430`'s storeys only, because `height_k` is already 0.5 at a1c1edfd.
+- Merge `n10-world` again if it lands more wall work (none since aadc7430: pole shadows and corpses).
 - One DMI dump each for the MSI Claw line and the ROG Xbox Ally; the numeric hardware types against the SDK header when GodotSteam is vendored.

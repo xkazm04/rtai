@@ -804,7 +804,7 @@ Windowed on the 2-CU iGPU, `tools/handheld/sim.mjs --scene=city_combo --ticks=18
 | `handheld_1080` | 9 | 991 | 27.02 | 86.68 | 287 | 9.3 | 612 |
 | `switch_handheld` (30 cap) | 1 | 897 | 33.22 | 37.95 | 511 (the cap itself sits at 33.3 ms, so this column says nothing on this row) | 9.09 | 626 |
 
-The Deck row holds its 16.7 ms lock with render GPU 8.0 ms (E20b: 7.7). **`handheld_1080` did not hold 60 here** (p50 27 ms, about 33 fps in the run) where E9 measured a 60 hold at 9.9 ms GPU; its render GPU is 9.3 ms, so the miss is on the CPU side or the machine, and the run had 9 other Godot processes against the row's below-normal priority. Not attributed: it wants a re-run on a quiet machine, against a pre-merge arm, before it is called anything.
+The Deck row holds its 16.7 ms lock with render GPU 8.0 ms (E20b: 7.7). **`handheld_1080` did not hold 60 here** (p50 27 ms, about 33 fps in the run) where E9 measured a 60 hold at 9.9 ms GPU; its render GPU is 9.3 ms, so the miss is on the CPU side or the machine, and the run had 9 other Godot processes against the row's below-normal priority. Not attributed: it wants a re-run on a quiet machine, against a pre-merge arm, before it is called anything. (n10 it9: the interleaved A/B against a1c1edfd was set up and not run, `bench.lock` was held by perf; `height_k` is already 0.5 at a1c1edfd, so that arm would price the storeys only.)
 
 ### The freeze A/B on the rows (n10 it1, read at it5; PC simulator)
 Quest 1 windowed on D3D12, `deck` (`vsync: enabled`) vs the study row `deck_mailbox`, interleaved rounds of 2 runs, 4 rounds of the 5 planned (`evidence/n10h/it1/ab-vsync.txt`, the low-CPU runs' logs and thread readings in `evidence/n10h/it1/hunt/`):
