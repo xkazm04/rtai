@@ -5,6 +5,7 @@ const PPM: float = 32.0
 
 func before_each() -> void:
 	StreetDeadPlan.reset()
+	StreetQuestDeadPlan.reset()
 
 
 func _guard(id: int, facing: Vector2) -> Fighter:
@@ -75,3 +76,21 @@ func test_the_fall_slides_turns_and_lands_into_the_rest() -> void:
 	assert_true(
 		StreetQuestDeadPlan.fall_left(6) < 1.0 - 6.0 / StreetQuestDeadPlan.FALL_TICKS, "eased out"
 	)
+
+
+func test_a_later_body_is_pushed_off_one_already_lying_and_the_first_stays() -> void:
+	var a: Vector2 = Vector2(400, 300)
+	var b: Vector2 = a + Vector2(0, 0.5 * PPM)
+	var first: Fighter = _guard(1, Vector2.RIGHT)
+	var second: Fighter = _guard(2, Vector2.RIGHT)
+	var t1: Transform2D = StreetQuestDeadPlan.transform_of(a, first, PPM)
+	var t2: Transform2D = StreetQuestDeadPlan.transform_of(b, second, PPM)
+	var push: Vector2 = StreetQuestDeadPlan.push_of(StreetQuestDeadPlan.ID_BASE - 2, b, PPM)
+	assert_almost_eq(
+		push.length(), StreetQuestDeadPlan.PUSH_MAX_M * PPM, 0.01, "1.1 m owed, capped"
+	)
+	assert_true(push.normalized().dot(Vector2.DOWN) > 0.999, "away from the first body")
+	assert_eq(StreetQuestDeadPlan.transform_of(a, first, PPM), t1, "the first never moves")
+	assert_eq(StreetQuestDeadPlan.transform_of(b, second, PPM), t2, "the push is fixed")
+	var far: Vector2 = a + Vector2(5.0 * PPM, 0)
+	assert_eq(StreetQuestDeadPlan.push_of(StreetQuestDeadPlan.ID_BASE - 3, far, PPM), Vector2.ZERO)
