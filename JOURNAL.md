@@ -64,6 +64,26 @@ drawn with ONE weapon each (the pistol, the plasma rifle, ...). Taking them for 
 a pistol in his claw while he holds the ray gun. Plan: wire them per weapon for the weapon they draw
 (pistol, plasma rifle, katana, flamer), keep the facing card for the rest, and ask per weapon later.
 
+- 01:20-01:35 evidence (0 SCRIPT ERROR in all 6 films):
+  - size, city block tilt70 32 px/m seed 5 f300, 1.1 vs 1.65: only Rivet's pixels differ; at 1.65 he reads
+    about a kerb pedestrian's height. `gtai-masters/n9/rivet/rivet_size_before_after_1p1_1p65_city_tilt70_32ppm_x1.5_seed5_f300.png`.
+  - size, King combo 48 px/m seed 1 f200/f300, p55 1.3 vs 1.95: the flash prints at the drawn pistol at the
+    new size, the shadow lengthens, the framing holds beside the barge. `..._p55_1p3_1p95_king_combo_48ppm_seed1_f200_300.png`.
+  - flamer, arena gunplay tilt70 64 px/m seed 3 f349-367: a diagonal burst (aim ~120 deg) draws the drawn
+    yellow flame screen-left AND the game's red jet along the aim: **two flames** (as Call 5 of d9 warned).
+    `..._flamer_every_direction_before_after_diagonal_two_flames_..._f349_358_367.png`.
+- FRICTION (~3 min): `--boss=king` is an arena flag: the first King film ran the city block (unknown arg
+  warnings). Boss fights: `res://dev/arena/arena.tscn -- --boss=king --bot=boss --view=combo ...`.
+- Gates it3: unit full 1816/0 (on b06c962f); lint 15/15. Reels and evidence run NOT run yet (owed it4).
+
+REQUEST to assets: rivet_eq_flamethrower_fire_diag_70 and _55, pitch 70 and 55, the flamer's FIRE cells at
+the four diagonals (3/4 toward right, 3/4 away right, and the drawn 3/4 toward left / 3/4 away left, never
+mirrored; the left ones with the nozzle in his right claw as the drawn left views), the flame drawn ALONG
+the diagonal (toward the camera-right / away-right on the ground plane, ~1.6 m long at 70), copied by
+example from rivet_eq_flamethrower_70 A's side fire cell (same tank, hose, nozzle, flame shape and colours),
+because the owner picked the drawn flame in every direction and a diagonal burst now draws the side flame
+beside the game's jet (two flames, still above). One strip of 4 cells per pitch, the house cell size.
+
 NEXT (it4):
 1. Film the size: before (`--rivet-height=1.1`) / after at 32 px/m tilt70 beside a cop, a ped, a car;
    King and Servo in combo at 48 px/m; check the ghost swap back, the roll ball, the death sprawl length.
