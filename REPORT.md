@@ -29,6 +29,9 @@ Branch `n9-world`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n9\world\` (frame
      Dock 9 at 32 px/m, t13800: before three planks side by side, heads one way; after twisted sprawls along
      each blow, neighbours differ (`dock9_contractors_dead_before_after_tilt70_32ppm_t13800_crop3x.png`, a 20 s
      clip `dock9_contractors_dead_after_tilt70_32ppm_t13450-14050.mp4`).
+   - They fall into the pose (db8cdbb8, DECISION world/quest-dead-fall): over 0.4 s from the blow the body lands
+     a touch large near where he stood, slides 0.6 m along the blow and turns into its rest; it popped in one
+     frame before (`dock9_contractor_fall_before_after_tilt70_32ppm_halfspeed.mp4`).
 3. **Cars knock Rivet down** (703c287b, b0f1024e, 0c04d16b; DECISIONs world/car-hits-rivet-sim, -on,
    world/car-knock-damage-event-only).
    - Both twins, bit-exact. Above 5 m/s a car throws him along its heading; below it, the car brakes and stops at
@@ -78,7 +81,9 @@ Branch `n9-world`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n9\world\` (frame
 - **C-3 the dead.**
   - 5 poses per class, picked by the death family.
   - Slide 0.35 m (melee), 0.6 m (bullet), 1.2 m (blast); a ±0.4 rad jitter.
-  - Options: (a) as built; (b) no jitter; (c) a longer shotgun slide.
+  - Quest 1's dock dead: a 0.4 s fall (0.6 m slide, 0.35 rad turn), drawn opaque.
+  - Options: (a) as built; (b) no jitter; (c) a longer shotgun slide; (d) the dock fall at 0.25 s
+    (`StreetQuestDeadPlan.FALL_TICKS` 15).
 - **C-4 the robe at 70.**
   - Options: (a) as built (bust LIFT 0.74 hides most of it); (b) LIFT 0.6 so more robe shows; (c) a shorter
     drawn 70 robe.
