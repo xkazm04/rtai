@@ -39,8 +39,11 @@ const ON: bool = true
 ## by accident since it2: KingArt.dress runs for every court rig); on their own gang_parts legs
 ## they sprawl grey top-down limbs with a pale rim under the upright bust (filmed phase 1, combo,
 ## 32 and 64 px/m). it11: their own steel sheet (assets gang_legs_55/70, the King's layout,
-## hip and sole lines); "king_legs" puts them back on his, drop "gang" for the parts.
-const SHEETS: Dictionary[String, String] = {"king": "king_legs", "gang": "gang_legs"}
+## hip and sole lines); "king_legs" puts them back on his, drop "gang" for the parts. n9 world (the
+## owner's s-1 C): the King walks under his long drawn robe (assets king_robe_55 / _70_v2, the legs'
+## layout cell for cell, packed by tools/art/king_robe.py on the legs' scale and sole line); the
+## hem swings with the stride rows, the boots show at its front. "king_legs" = the bare d9 legs.
+const SHEETS: Dictionary[String, String] = {"king": "king_robe", "gang": "gang_legs"}
 
 static var _tex: Dictionary[String, Texture2D] = {}
 

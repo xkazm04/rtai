@@ -7,6 +7,7 @@ namespace gtai::sim {
 void CityCore::step(double dt, double camx, double camy, double tgx, double tgy) {
 	time_ += dt;
 	knocks_.clear();
+	hit_[0] = hit_[1] = hit_[2] = 0.0;
 	for (int i = 0; i < CAP; i++) {
 		if (alive_[i] == 0) continue;
 		int k = kind_[i];

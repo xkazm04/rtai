@@ -19,6 +19,8 @@ static var _decay: CorpseDecay = null
 ## CastView's card corpse: the dead guard `h` at `at_px`, drawn by StreetQuestCards.draw_down
 ## at its decay tint for the arena tick `now`; false = no card art (CastView draws the sprite).
 static func draw(canvas: CanvasItem, at_px: Vector2, px_per_m: float, h: Fighter, now: int) -> bool:
+	if StreetQuestDeadPlan.draw(canvas, at_px, h, px_per_m, now):  # n9 world: the plan dead
+		return true
 	var tint: Color = tint_of(now - h.hurt_tick, BASE)
 	return StreetQuestCards.draw_down(canvas, at_px, h.facing, px_per_m, tint)
 
@@ -43,3 +45,13 @@ static func _table() -> CorpseDecay:
 	if _decay == null:
 		_decay = CorpseDecay.shipped()
 	return _decay
+
+
+## n9 world it25: quest 1's blood (CollectCallView) takes the live fight's stain life
+## (CorpseFade, corpse_decay.json stains): its pools fade after linger_s instead of
+## blood_fx.json's minutes, which left empty pools on the Dock 9 crossing for minutes.
+static func stain_life(fx: BloodFx) -> void:
+	if not DECAY:
+		return
+	var s: DecayLedger = _table().stains
+	fx.set_decal_life(s.linger_ticks, s.fade_ticks)

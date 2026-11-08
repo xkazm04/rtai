@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dw6j42leaci3m"
-path="res://.godot/imported/foot_toeoff.png-37812b721fbee50fc1e0f7f6a7407839.ctex"
+path.bptc="res://.godot/imported/foot_toeoff.png-37812b721fbee50fc1e0f7f6a7407839.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/characters/art/cop/foot_toeoff.png"
-dest_files=["res://.godot/imported/foot_toeoff.png-37812b721fbee50fc1e0f7f6a7407839.ctex"]
+dest_files=["res://.godot/imported/foot_toeoff.png-37812b721fbee50fc1e0f7f6a7407839.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

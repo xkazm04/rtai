@@ -163,6 +163,7 @@ static func _build(rig: CutRig, card: Sprite2D, path: String) -> void:
 	card.offset = Vector2(-cell.x * 0.5, -cell.y * (0.5 if fall else FOOT_Y))
 	card.set_meta(ON, path)
 	card.remove_meta(StreetWalkerFall.OCT)
+	StreetDeadPlan.drop(card)
 	if rig.body.has_meta(HID):
 		return
 	var hid: Array[CanvasItem] = []

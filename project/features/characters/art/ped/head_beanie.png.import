@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cdwlqr8dyxxux"
-path="res://.godot/imported/head_beanie.png-ccc407336c579e74883db78e004cbf8c.ctex"
+path.bptc="res://.godot/imported/head_beanie.png-ccc407336c579e74883db78e004cbf8c.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/characters/art/ped/head_beanie.png"
-dest_files=["res://.godot/imported/head_beanie.png-ccc407336c579e74883db78e004cbf8c.ctex"]
+dest_files=["res://.godot/imported/head_beanie.png-ccc407336c579e74883db78e004cbf8c.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

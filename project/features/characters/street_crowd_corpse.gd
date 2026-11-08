@@ -29,7 +29,10 @@ static func stamp(image: Image, rigs: Array[CutRig]) -> void:
 		var rig: CutRig = rigs[look]
 		var row: String = RigHeadCard.key_of(rig.plan, rig.variant.head) if rig.variant else ""
 		for f: int in CrowdAtlas.FRAMES[death]:
-			var body: Image = fall_cell(view.art, row, FROM_FALL[mini(f, FROM_FALL.size() - 1)])
+			var fall: int = FROM_FALL[mini(f, FROM_FALL.size() - 1)]
+			var body: Image = plan_cell(view.art, row, look) if fall == 2 else null
+			if body == null:
+				body = fall_cell(view.art, row, fall)
 			if body != null:
 				_blit(image, body, CrowdAtlas.CLIP_FIRST[death] + f, look)
 
@@ -70,6 +73,38 @@ static func fall_cell(art: String, row: String, fall: int) -> Image:
 	)
 	body.resize(size.x, size.y, Image.INTERPOLATE_LANCZOS)
 	body.rotate_90(CLOCKWISE)  # the drawn head (+x) to the bake's (+y)
+	return body
+
+
+## n9 world: a look's plan-view lying pose (StreetDeadPlan, the look's index picks it, so the far
+## dead differ look by look), scaled to atlas px and turned head to the bake's +y; null = none.
+static func plan_cell(art: String, row: String, look: int) -> Image:
+	var path: String = StreetDeadPlan.path_of(row)
+	var tex: Texture2D = load(path) as Texture2D if not path.is_empty() else null
+	if tex == null:
+		return null
+	var strip: Image = tex.get_image()
+	if strip.is_compressed() and strip.decompress() != OK:
+		return null
+	strip.convert(Image.FORMAT_RGBA8)
+	var w: int = strip.get_width() / StreetDeadPlan.POSES
+	var pose: int = posmod(look, StreetDeadPlan.POSES)
+	var cell: Image = strip.get_region(Rect2i(w * pose, 0, w, strip.get_height()))
+	if cell.get_used_rect().size == Vector2i.ZERO:
+		return null
+	var body: Image = cell.get_region(cell.get_used_rect())
+	var h: float = StreetWalkerCards.HEIGHT_BY_ART.get(art, StreetWalkerCards.HEIGHT_M)
+	var k: float = h * CharacterRigs.PX_PER_M / StreetWalkerFall.STILL_PX * CrowdAtlas.BAKE_ZOOM
+	k = minf(k, CrowdAtlas.CELL_PX * FIT / maxf(body.get_width(), body.get_height()))
+	body.resize(
+		maxi(1, roundi(body.get_width() * k)),
+		maxi(1, roundi(body.get_height() * k)),
+		Image.INTERPOLATE_LANCZOS
+	)
+	if StreetDeadPlan.HEAD_ANGLE[pose] < 0.0:
+		body.rotate_180()  # head up (-y) to the bake's +y
+	else:
+		body.rotate_90(CLOCKWISE)  # head right (+x) to +y
 	return body
 
 

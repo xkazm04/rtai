@@ -88,7 +88,7 @@ func set_car_state(i: int, state: int) -> void:
 
 func step(dt: float, camx: float, camy: float, tgx: float, tgy: float) -> void:
 	_s.time += dt
-	_body.knocks.clear()
+	_body.clear_step()
 	_tier(dt, camx, camy)
 	_h.build(camx, camy)
 	_flow.update(tgx, tgy)

@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c8ninjaucyh2w"
-path="res://.godot/imported/r_foot.png-7194db9f61bfac6c55bc29b01091531e.ctex"
+path.bptc="res://.godot/imported/r_foot.png-7194db9f61bfac6c55bc29b01091531e.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/characters/art/king/r_foot.png"
-dest_files=["res://.godot/imported/r_foot.png-7194db9f61bfac6c55bc29b01091531e.ctex"]
+dest_files=["res://.godot/imported/r_foot.png-7194db9f61bfac6c55bc29b01091531e.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

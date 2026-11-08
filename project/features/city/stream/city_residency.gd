@@ -13,6 +13,9 @@ const R_DROP: float = 330.0
 
 var stamped: int = 0
 var dropped: int = 0
+## Extra solid rects (world m) stamped as C_PROP into every chunk adopted: the arena's walls and
+## cover on the city block, so the sim's thrown dead stop at the kerb barrier (n9 item 4).
+var solids: Array[Rect2] = []
 var _source: ChunkSource
 var _sim: CitySimBackend
 var _chunks: int = SimConst.CITY_CHUNKS
@@ -63,7 +66,7 @@ func update(focus: Vector2) -> void:
 func adopt(key: Vector2i, chunk: CityChunk) -> void:
 	if chunk == null:
 		return
-	_sim.stamp_chunk(key.x, key.y, chunk.tiles, chunk.cells)
+	_sim.stamp_chunk(key.x, key.y, chunk.tiles, with_solids(key, chunk.cells, solids))
 	_resident[key] = chunk
 	stamped += 1
 
@@ -113,4 +116,21 @@ static func _sorted(keys: Array) -> Array[Vector2i]:
 	out.sort_custom(
 		func(a: Vector2i, b: Vector2i) -> bool: return a.y < b.y or (a.y == b.y and a.x < b.x)
 	)
+	return out
+
+
+## `cells` of chunk `key` with every rect of `rects` (world m) stamped C_PROP (a copy).
+static func with_solids(
+	key: Vector2i, cells: PackedByteArray, rects: Array[Rect2]
+) -> PackedByteArray:
+	if rects.is_empty():
+		return cells
+	var out: PackedByteArray = cells.duplicate()
+	var n: int = SimConst.CHUNK_CELLS
+	for r: Rect2 in rects:
+		var x0: int = maxi(floori(r.position.x) - key.x * n, 0)
+		var y0: int = maxi(floori(r.position.y) - key.y * n, 0)
+		for y: int in range(y0, mini(ceili(r.end.y) - key.y * n, n)):
+			for x: int in range(x0, mini(ceili(r.end.x) - key.x * n, n)):
+				out[y * n + x] = SimConst.C_PROP
 	return out

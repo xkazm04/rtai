@@ -1,0 +1,6 @@
+riot lossless r0: p50 5.15 p99 10.34 worst 21.1 draws 734 cpu 1.25 cores ws 926 MB steady 921 last 922 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(0)
+riot bc7 r0: p50 4.56 p99 10.14 worst 18.7 draws 734 cpu 1.03 cores ws 801 MB steady 799 last 801 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(2)
+riot bc7 r1: p50 6.16 p99 14.68 worst 24.2 draws 734 cpu 0.99 cores ws 863 MB steady 861 last 863 frames 1681 noTick 0 multiTick 0 errors 0
+riot lossless r1: p50 5.60 p99 13.73 worst 24.3 draws 734 cpu 1.03 cores ws 926 MB steady 924 last 926 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(1)
+riot lossless: p50 5.60±0.23 p99 13.73±1.69 p99.9 22.46±3.75 worst 24.30±1.59 draws 734.16±0.05 renderCpu 0.54±0.04 gpu 0.47±0.07 vram 900.72±1.00 cpu 1.25±0.11 ws 925.70±0.03 wsSteady 924.39±1.50 wsLast 925.70±2.03 frames 1681.00±0.00 noTick 0.00±0.00 multiTick 0.00±0.00 contended 2 errors 0
+riot bc7: p50 6.16±0.80 WASH p99 14.68±2.27 WASH p99.9 23.74±3.26 WASH worst 24.20±2.73 WASH draws 734.17±0.13 WASH renderCpu 0.57±0.06 WASH gpu 0.41±0.04 WASH vram 539.80±4.00 WIN cpu 1.03±0.02 WIN ws 862.87±30.88 WIN wsSteady 861.41±31.25 WIN wsLast 862.87±30.88 WIN frames 1681.00±0.00 WASH noTick 0.00±0.00 WASH multiTick 0.00±0.00 WASH contended 1 errors 0

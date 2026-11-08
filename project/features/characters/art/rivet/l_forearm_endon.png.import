@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bejlcw73b05ak"
-path="res://.godot/imported/l_forearm_endon.png-4417e5523a4b499e111846958071fef9.ctex"
+path.bptc="res://.godot/imported/l_forearm_endon.png-4417e5523a4b499e111846958071fef9.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/characters/art/rivet/l_forearm_endon.png"
-dest_files=["res://.godot/imported/l_forearm_endon.png-4417e5523a4b499e111846958071fef9.ctex"]
+dest_files=["res://.godot/imported/l_forearm_endon.png-4417e5523a4b499e111846958071fef9.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

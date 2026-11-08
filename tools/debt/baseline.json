@@ -22,7 +22,11 @@
         "2026-11-07: d9-perf L10: city_bench --max-fps and BenchStats tick cadence (framesNoTick / framesMultiTick), the instrument that measured the frame cap (dev_loc 18974 -> 18983)",
         "2026-11-07: handheld E10: FightFrames logs Godot's texture and video memory at the end of a run (the OS GPU counter on the iGPU does not see a BC7 import); dev-only tooling (dev_loc 18799 -> 18801)",
         "2026-11-07: handheld E14: dev/save_cross.gd (+_run), the Windows<->Linux save round trip tool; dev-only, not exported (dev_loc 18801 -> 18888)",
-        "2026-11-07: d9 merge: perf + handheld bench growth combined (each accepted on its lane) (dev_loc 19123 -> 19147)"
+        "2026-11-07: d9 merge: perf + handheld bench growth combined (each accepted on its lane) (dev_loc 19123 -> 19147)",
+        "2026-11-08: n9 world item 3: dev/showcase/car_knock_clip (the car knock-down's filmed evidence on the real city, bodies_clip's pattern) (dev_loc 19147 -> 19325)",
+        "2026-11-08: n9 world item 4 evidence clip dev/showcase/dead_wall_clip (dev-only, the car_knock_clip pattern: one cmdline read, ~190 dev lines) (dev_loc 19325 -> 19514)",
+        "2026-11-08: dev/frames: quest1_clip --cam=dead (n9 world it22), a capture camera for Dock 9 at 64 px/m (item 2 evidence) (dev_loc 19514 -> 19571)",
+        "2026-11-08: dev/frames: quest_dead_cam heap anchor + ease (n9 world it22), Dock 9 64 px/m capture (dev_loc 19571 -> 19591)"
       ],
       "files": {
         "project/dev/arena": 708,
@@ -31,7 +35,7 @@
         "project/dev/bench": 1684,
         "project/dev/bots": 399,
         "project/dev/enemy_ai": 662,
-        "project/dev/frames": 467,
+        "project/dev/frames": 544,
         "project/dev/ghost-forms": 616,
         "project/dev/ghost-powers": 1137,
         "project/dev/gunplay": 674,
@@ -49,11 +53,11 @@
         "project/dev/save_cross_run.gd": 69,
         "project/dev/selftest": 1453,
         "project/dev/servo": 434,
-        "project/dev/showcase": 6218,
+        "project/dev/showcase": 6585,
         "project/dev/view": 195,
         "project/dev/weapon_art": 506
       },
-      "total": 19147
+      "total": 19591
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -61,7 +65,9 @@
         "2026-11-07: n8 merge: view + street growth combined (each accepted on its lane; cast_view.gd conflict resolved by keeping both) (direct_cmdline_reads 153 -> 154)",
         "2026-11-07: n8 merge: + vehicles growth combined (accepted on its lane) (direct_cmdline_reads 154 -> 155)",
         "2026-11-07: n8 merge: + city growth combined (accepted on its lane) (direct_cmdline_reads 155 -> 156)",
-        "2026-11-07: n8 merge: + hud growth combined (accepted on its lane); fold_rigs dropped for view's follow per both lanes' merge notes (direct_cmdline_reads 156 -> 157)"
+        "2026-11-07: n8 merge: + hud growth combined (accepted on its lane); fold_rigs dropped for view's follow per both lanes' merge notes (direct_cmdline_reads 156 -> 157)",
+        "2026-11-08: n9 world item 3: dev/showcase/car_knock_clip (the car knock-down's filmed evidence on the real city, bodies_clip's pattern) (direct_cmdline_reads 157 -> 158)",
+        "2026-11-08: n9 world item 4 evidence clip dev/showcase/dead_wall_clip (dev-only, the car_knock_clip pattern: one cmdline read, ~190 dev lines) (direct_cmdline_reads 158 -> 159)"
       ],
       "files": {
         "project/core/render/view_mode.gd": 1,
@@ -125,6 +131,7 @@
         "project/dev/showcase/asset_board.gd": 1,
         "project/dev/showcase/atlas_rim.gd": 1,
         "project/dev/showcase/bodies_clip.gd": 1,
+        "project/dev/showcase/car_knock_clip.gd": 1,
         "project/dev/showcase/cast_lineup.gd": 1,
         "project/dev/showcase/city_fight.gd": 1,
         "project/dev/showcase/city_frame.gd": 1,
@@ -138,6 +145,7 @@
         "project/dev/showcase/d5_showcase.gd": 1,
         "project/dev/showcase/d5_sweep.gd": 1,
         "project/dev/showcase/d5_walk.gd": 1,
+        "project/dev/showcase/dead_wall_clip.gd": 1,
         "project/dev/showcase/dialogue_board.gd": 1,
         "project/dev/showcase/drive_shot.gd": 1,
         "project/dev/showcase/king_showcase.gd": 1,
@@ -205,7 +213,7 @@
         "project/tests/run_scenarios.gd": 1,
         "project/tests/unit/test_launch_args.gd": 1
       },
-      "total": 157
+      "total": 159
     },
     "files_near_cap": {
       "accepted": [
@@ -280,7 +288,7 @@
         "project/features/bosses/servo/servo_swarm.gd": 208,
         "project/features/characters/cut_rig.gd": 265,
         "project/features/city/gen/tile_painter.gd": 243,
-        "project/features/city/sim/sim_people.gd": 208,
+        "project/features/city/sim/sim_people.gd": 205,
         "project/features/city/view/city_view.gd": 259,
         "project/features/combat/ai/enemy_pit.gd": 244,
         "project/features/combat/combat_arena.gd": 300,
@@ -308,13 +316,12 @@
         "project/features/souls/ghost_forms.gd": 219,
         "project/features/souls/kerf_stage.gd": 208,
         "project/features/souls/ohm_rig.gd": 201,
-        "project/tests/parity/city_parity.gd": 204,
         "project/tests/scenarios/scenario_vehicle_drive.gd": 213,
         "project/tests/unit/test_crowd_react.gd": 231,
         "project/tests/unit/test_gun_fx.gd": 213,
         "project/tests/unit/test_weapon_art.gd": 223
       },
-      "total": 67
+      "total": 66
     },
     "lane_named_dev_dirs": {
       "files": {

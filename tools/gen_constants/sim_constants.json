@@ -664,10 +664,16 @@
           "value": 12
         },
         {
+          "doc": "n9: car m/s at or above which a car knocks the body down (0 = off)",
+          "name": "BD_CAR_HIT",
+          "type": "int",
+          "value": 13
+        },
+        {
           "doc": "spec length",
           "name": "BD_LEN",
           "type": "int",
-          "value": 13
+          "value": 14
         },
         {
           "doc": "body_result(): resolved body x",
@@ -688,10 +694,28 @@
           "value": 2
         },
         {
+          "doc": "body_result(): n9 car hit speed m/s this step (0 = none)",
+          "name": "BR_HIT",
+          "type": "int",
+          "value": 3
+        },
+        {
+          "doc": "body_result(): that car's heading x (unit)",
+          "name": "BR_HHX",
+          "type": "int",
+          "value": 4
+        },
+        {
+          "doc": "body_result(): that car's heading y (unit)",
+          "name": "BR_HHY",
+          "type": "int",
+          "value": 5
+        },
+        {
           "doc": "body_result(): first knockdown record",
           "name": "BR_HEAD",
           "type": "int",
-          "value": 3
+          "value": 6
         },
         {
           "doc": "body_result(): floats per knockdown (slot x y)",

@@ -43,5 +43,5 @@ func test_the_bike_maps_to_its_profile() -> void:
 	assert_lt(VehicleProfile.load_all()[&"bike"].mass, VehicleProfile.load_all()[&"sedan"].mass)
 
 
-func test_the_table_share_is_off_until_the_goldens_move() -> void:
-	assert_eq(CitySpawner.table_bike_share(), 0.0, "bikes in traffic move the top look goldens")
+func test_the_table_share_is_six_percent() -> void:
+	assert_eq(CitySpawner.table_bike_share(), 0.06, "n9: bikes on at 6 % (the owner's call s-3)")

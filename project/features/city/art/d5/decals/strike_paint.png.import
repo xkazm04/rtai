@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://qwosyrue8de5"
-path="res://.godot/imported/strike_paint.png-3f6b6364a9ca305f943cc9881ea9892f.ctex"
+path.bptc="res://.godot/imported/strike_paint.png-3f6b6364a9ca305f943cc9881ea9892f.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/city/art/d5/decals/strike_paint.png"
-dest_files=["res://.godot/imported/strike_paint.png-3f6b6364a9ca305f943cc9881ea9892f.ctex"]
+dest_files=["res://.godot/imported/strike_paint.png-3f6b6364a9ca305f943cc9881ea9892f.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

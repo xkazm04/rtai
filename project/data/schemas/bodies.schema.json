@@ -2,6 +2,43 @@
   "$id": "gtai.bodies/1",
   "additionalProperties": false,
   "properties": {
+    "car_hit": {
+      "additionalProperties": false,
+      "properties": {
+        "damage_per_mps": {
+          "maximum": 50,
+          "minimum": 0,
+          "type": "number"
+        },
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "down_s": {
+          "maximum": 10,
+          "minimum": 0,
+          "type": "number"
+        },
+        "slide_k": {
+          "maximum": 3,
+          "minimum": 0,
+          "type": "number"
+        },
+        "speed_mps": {
+          "maximum": 40,
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "damage_per_mps",
+        "doc",
+        "down_s",
+        "slide_k",
+        "speed_mps"
+      ],
+      "type": "object"
+    },
     "classes": {
       "items": {
         "additionalProperties": false,
@@ -119,6 +156,7 @@
     }
   },
   "required": [
+    "car_hit",
     "classes",
     "doc",
     "flee_s",

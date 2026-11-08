@@ -50,6 +50,12 @@ static func shared() -> ViewMode:
 	return _shared
 
 
+## Pins this run's view to `want` (a scene whose reference is one view: the selftest's look
+## goldens draw `top` whatever the table's default is).
+static func select(want: String) -> void:
+	_shared = ViewMode.of(want)
+
+
 ## The view row `want` from the table ("" = the table's default).
 static func of(want: String) -> ViewMode:
 	var v: ViewMode = ViewMode.new()
@@ -74,6 +80,7 @@ static func of(want: String) -> ViewMode:
 			var lead: float = row.get("lead_k", 1.0)
 			v.lead_k = lead
 	if want != "" and not v.ids.has(want):
+		v = ViewMode.of("")
 		Log.warn("view", "unknown --view=%s; drawing %s" % [want, v.id])
 	return v
 

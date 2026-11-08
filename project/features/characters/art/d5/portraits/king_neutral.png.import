@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://df2o2mvet0imy"
-path="res://.godot/imported/king_neutral.png-09b634f6058c3602793cf4a7379a8f0b.ctex"
+path.bptc="res://.godot/imported/king_neutral.png-09b634f6058c3602793cf4a7379a8f0b.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/characters/art/d5/portraits/king_neutral.png"
-dest_files=["res://.godot/imported/king_neutral.png-09b634f6058c3602793cf4a7379a8f0b.ctex"]
+dest_files=["res://.godot/imported/king_neutral.png-09b634f6058c3602793cf4a7379a8f0b.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

@@ -1,9 +1,25 @@
 extends GutTest
-## View lab (core/render/view_mode.gd): the default view is the shipped one, bit-identical.
+## View lab (core/render/view_mode.gd): the default view is combo (n9, the owner's call m-2); `top`
+## stays the bit-identical straight-down view.
 
 
-func test_default_is_top_and_flat() -> void:
+func test_default_is_combo_at_70_on_its_art() -> void:
 	var v: ViewMode = ViewMode.of("")
+	assert_eq(v.id, &"combo")
+	assert_eq(v.pitch_deg, 70.0)
+	assert_eq(v.art, "p70")
+	assert_true(v.cards)
+
+
+func test_select_pins_the_run_view() -> void:
+	var was: ViewMode = ViewMode.shared()
+	ViewMode.select("top")
+	assert_eq(ViewMode.shared().id, &"top")
+	ViewMode._shared = was
+
+
+func test_top_is_flat() -> void:
+	var v: ViewMode = ViewMode.of("top")
 	assert_eq(v.id, &"top")
 	assert_true(v.is_flat())
 	assert_eq(v.zoom_of(1.5), Vector2.ONE * 1.5)
@@ -30,8 +46,8 @@ func test_tilt_foreshortens_the_ground() -> void:
 
 func test_unknown_falls_back_to_the_default() -> void:
 	var v: ViewMode = ViewMode.of("nope")
-	assert_eq(v.id, &"top")
-	assert_true(v.is_flat())
+	assert_eq(v.id, &"combo")
+	assert_false(v.is_flat())
 
 
 func test_top_lift_leans_heights_out_from_the_eye() -> void:

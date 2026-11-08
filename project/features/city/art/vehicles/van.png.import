@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cj0p7enkngd6e"
-path="res://.godot/imported/van.png-5cbfe43167c18c6cb77308ca8709898c.ctex"
+path.bptc="res://.godot/imported/van.png-5cbfe43167c18c6cb77308ca8709898c.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/city/art/vehicles/van.png"
-dest_files=["res://.godot/imported/van.png-5cbfe43167c18c6cb77308ca8709898c.ctex"]
+dest_files=["res://.godot/imported/van.png-5cbfe43167c18c6cb77308ca8709898c.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

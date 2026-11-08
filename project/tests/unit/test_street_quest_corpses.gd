@@ -35,3 +35,16 @@ func test_the_tint_never_rises_with_age() -> void:
 
 func test_the_base_is_cast_views_down_fade() -> void:
 	assert_eq(StreetQuestCorpses.BASE, CastView.DOWN_FADE)
+
+
+func test_quest_blood_takes_the_live_fights_stain_life() -> void:
+	var b: BloodFx = BloodFx.new()
+	StreetQuestCorpses.stain_life(b)
+	var dc: Dictionary = b.p["decal"]
+	var s: DecayLedger = _decay().stains
+	var after: int = dc["fade_after_ticks"]
+	var fade: int = dc["fade_ticks"]
+	assert_eq(after, s.linger_ticks, "pools linger as the stains")
+	assert_eq(fade, s.fade_ticks, "and fade as them")
+	assert_true(s.linger_ticks > _decay().bodies.linger_ticks, "the stains outlive the bodies")
+	b.free()

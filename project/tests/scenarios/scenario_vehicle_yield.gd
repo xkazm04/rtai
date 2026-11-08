@@ -14,6 +14,9 @@ const MASTER_SEED: int = 53
 const TICKS: int = 40 * SimClock.TICK_RATE
 const PARK_AHEAD_M: float = 32.0  # int-day: 24 m left the queue in the junction (decisions.md)
 const MIN_PASSED: int = 2
+## n9: Rivet waits on the far pavement, clear of the cars pulling out round the parked one (at
+## 6 m off, the kerb, the passing cars met his body: s-4 C made him solid to cars).
+const REST_M: float = 9.0
 
 
 ## The three lane cars (cars_near records of 8 floats): ticks one stands within 30 m behind the
@@ -94,7 +97,7 @@ static func _arm(blind: bool) -> Dictionary:
 	svc.world = vw
 	city.residency.update(city.focus)
 	var lane: Vector2 = Drive.call(&"_east_lane", city)
-	vw.set_focus(lane + Vector2(0.0, -6.0), false)
+	vw.set_focus(lane + Vector2(0.0, -REST_M), false)
 	var car: VehicleBody = svc.spawn_parked(
 		&"sedan", lane + Vector2(PARK_AHEAD_M, 0), Vector2.RIGHT
 	)

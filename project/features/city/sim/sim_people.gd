@@ -30,10 +30,7 @@ func ped(i: int, dt: float) -> void:
 	var y: float = _s.py[i]
 	var m: int = _s.mode[i]
 	if m == SimConst.M_DEAD:
-		var vv: float = maxf(0.0, _s.v[i] - 8.0 * dt)
-		_s.v[i] = vv
-		_s.px[i] = x + _s.hx[i] * vv * dt
-		_s.py[i] = y + _s.hy[i] * vv * dt
+		_solid.slide_dead(i, dt)
 		return
 	if m == SimConst.M_DOWN:
 		_body.down(i, dt)

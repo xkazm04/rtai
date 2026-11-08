@@ -1,0 +1,17 @@
+godot: class cache stale (class TestArt (res://tests/support/test_art.gd) is not in the cache): running --import first
+godot: --import done in 10.5 s
+unit-tests: gut exit 1; gut rerun exit 1; 1 failing (1815 passed, 1 failed, 0 skipped)
+  FAIL res://tests/unit/test_view_mode.gd:49 test_unknown_falls_back_to_the_default - [STRING_NAME(top)] expected to equal [STRING_NAME(combo)]:
+10 slowest tests:
+  5.040 s  res://tests/unit/test_save_slots.gd test_a_thousand_alternating_autosaves_leave_exactly_two_slot_files
+  2.248 s  res://tests/unit/test_city_flow_field.gd test_a_cop_routes_through_the_gap
+  1.004 s  res://tests/unit/test_city_sim_pass.gd test_a_car_passes_a_parked_obstacle_and_returns_to_its_lane
+  1.000 s  res://tests/unit/test_city_sim_pass.gd test_a_blocked_oncoming_lane_keeps_it_waiting
+  0.805 s  res://tests/unit/test_city_sim.gd test_a_car_stops_behind_an_obstacle_point
+  0.760 s  res://tests/unit/test_city_sim.gd test_a_cop_shoots_and_a_hit_kills
+  0.547 s  res://tests/unit/test_city_sim.gd test_same_seed_same_world
+  0.542 s  res://tests/unit/test_city_streaming.gd test_residency_follows_the_focus_deterministically
+  0.444 s  res://tests/unit/test_city_flow_field.gd test_the_field_is_deterministic
+  0.361 s  res://tests/unit/test_character_rigs.gd test_without_an_atlas_the_corpse_keeps_its_rig_until_it_leaves_the_feed
+log: build/test-results/unit-tests.log (85.0 s)
+exit 1

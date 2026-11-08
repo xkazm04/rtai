@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cou2i4co1ld0n"
-path="res://.godot/imported/building_pension_bank.png-128805bc942a9c5b5fc909150954ba89.ctex"
+path.bptc="res://.godot/imported/building_pension_bank.png-128805bc942a9c5b5fc909150954ba89.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/city/art/d5/roofs/rule/building_pension_bank.png"
-dest_files=["res://.godot/imported/building_pension_bank.png-128805bc942a9c5b5fc909150954ba89.ctex"]
+dest_files=["res://.godot/imported/building_pension_bank.png-128805bc942a9c5b5fc909150954ba89.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

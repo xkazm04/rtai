@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bb6uv0r62x4wo"
-path="res://.godot/imported/l_foot_toeoff.png-3aebd8f8b2115c2554ac161ff07886e8.ctex"
+path.bptc="res://.godot/imported/l_foot_toeoff.png-3aebd8f8b2115c2554ac161ff07886e8.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/characters/art/gang/l_foot_toeoff.png"
-dest_files=["res://.godot/imported/l_foot_toeoff.png-3aebd8f8b2115c2554ac161ff07886e8.ctex"]
+dest_files=["res://.godot/imported/l_foot_toeoff.png-3aebd8f8b2115c2554ac161ff07886e8.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

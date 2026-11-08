@@ -110,3 +110,13 @@ func test_the_walk_row_follows_the_ground_walked() -> void:
 func test_a_drawn_cycle_is_longer_than_the_kings_gait_cycle_at_55() -> void:
 	# The probe of it10: the King's gait cycle is 64 world px at card scale 0.555 (55).
 	assert_gt(KingLegsCard.CYCLE_CELL[55] * 0.555, 64.0 * 1.5, "stepping by the gait would skate")
+
+
+func test_the_king_walks_under_his_robe_on_the_legs_grid() -> void:
+	assert_eq(KingLegsCard.SHEETS["king"], "king_robe", "the owner's s-1 C: the long drawn robe")
+	for pitch: int in [55, 70]:
+		var robe: Texture2D = KingLegsCard.sheet(pitch, "king_robe")
+		var legs: Texture2D = KingLegsCard.sheet(pitch, "king_legs")
+		assert_not_null(robe, "art/p%d/king_robe.png" % pitch)
+		if robe != null and legs != null:
+			assert_eq(robe.get_size(), legs.get_size(), "cell for cell with the legs at %d" % pitch)

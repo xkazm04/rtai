@@ -1,0 +1,12 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[INFO] characters: prewarmed 41 rigs in 59.5 ms
+[INFO] rig_stress: 50 people: {"bakedLookupMsAvg":0.115024074074074,"fullRigsMax":16.0,"people":50.0,"poolGrown":0.0,"prewarmMs":59.535,"rigMsAvg":0.746864814814815,"rigMsMax":1.181,"rigMsP50":0.76,"rigMsP99":1.055,"rigsBuilt":41.0,"ticks":540.0}
+[INFO] characters: prewarmed 41 rigs in 8.4 ms
+[INFO] rig_stress: 200 people: {"bakedLookupMsAvg":0.535248148148148,"fullRigsMax":16.0,"people":200.0,"poolGrown":0.0,"prewarmMs":8.421,"rigMsAvg":0.729062962962963,"rigMsMax":2.877,"rigMsP50":0.723,"rigMsP99":1.112,"rigsBuilt":41.0,"ticks":540.0}
+[INFO] characters: prewarmed 41 rigs in 8.0 ms
+[INFO] rig_stress: 50 people: {"bakedLookupMsAvg":0.12882962962963,"fullRigsMax":17.0,"people":50.0,"poolGrown":0.0,"prewarmMs":8.005,"rigMsAvg":1.65162222222222,"rigMsMax":35.164,"rigMsP50":1.387,"rigMsP99":5.788,"rigsBuilt":41.0,"ticks":540.0}
+[INFO] rig_stress: COMBO combo 50 people: rig p50 1.387 ms (not gated)
+run_scenarios: 1 ran, 0 failed
+WARNING: 10 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)

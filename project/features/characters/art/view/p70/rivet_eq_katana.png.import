@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bh8t7lft51733"
-path="res://.godot/imported/rivet_eq_katana.png-66e9cb4c2c8ae4838d141ac8f757028b.ctex"
+path.bptc="res://.godot/imported/rivet_eq_katana.png-66e9cb4c2c8ae4838d141ac8f757028b.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/characters/art/view/p70/rivet_eq_katana.png"
-dest_files=["res://.godot/imported/rivet_eq_katana.png-66e9cb4c2c8ae4838d141ac8f757028b.ctex"]
+dest_files=["res://.godot/imported/rivet_eq_katana.png-66e9cb4c2c8ae4838d141ac8f757028b.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

@@ -7,6 +7,9 @@ extends RefCounted
 const MASTER_SEED: int = 20261103
 ## People on the proving block's streets (the course's crowd patch is the city's own crowd).
 const CITY_PEDS: int = 120
+## n9 item 4: the arena's walls and cover are solid to the city sim too (false = the sim walks and
+## throws bodies through them, d9).
+const SOLID_TO_SIM: bool = true
 
 var world: World = World.new()
 var stage: ArenaStage
@@ -73,6 +76,8 @@ func _add_city() -> void:
 	scare = CityScare.new(stage, city)
 	world.add_system(scare)
 	world.add_system(city)
+	if SOLID_TO_SIM:
+		city.residency.solids = stage.walls.boxes
 	city.residency.update(city.focus)
 	city.spawner.targets = CityTargets.street(CITY_PEDS, 0, 0)
 

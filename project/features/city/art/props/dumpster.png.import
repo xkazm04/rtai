@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://1momttmoikk"
-path="res://.godot/imported/dumpster.png-d11433a68c1d2038060f5361b4e7bcb5.ctex"
+path.bptc="res://.godot/imported/dumpster.png-d11433a68c1d2038060f5361b4e7bcb5.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/city/art/props/dumpster.png"
-dest_files=["res://.godot/imported/dumpster.png-d11433a68c1d2038060f5361b4e7bcb5.ctex"]
+dest_files=["res://.godot/imported/dumpster.png-d11433a68c1d2038060f5361b4e7bcb5.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

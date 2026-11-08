@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dei1kw88w3hlu"
-path="res://.godot/imported/ped_punk_full.png-ff8d3c79d3897973046f36397b761b49.ctex"
+path.bptc="res://.godot/imported/ped_punk_full.png-ff8d3c79d3897973046f36397b761b49.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/characters/art/view/p70/ped_punk_full.png"
-dest_files=["res://.godot/imported/ped_punk_full.png-ff8d3c79d3897973046f36397b761b49.ctex"]
+dest_files=["res://.godot/imported/ped_punk_full.png-ff8d3c79d3897973046f36397b761b49.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

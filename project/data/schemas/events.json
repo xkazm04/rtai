@@ -239,6 +239,26 @@
         }
       ],
       "wired": true
+    },
+    {
+      "doc": "n9 (the owner's s-4 C): a car at speed knocked Rivet down on foot. heading is the car's ground heading (unit), speed_mps its speed at the hit, damage the hp it costs him (bodies.json car_hit). The view sets Rivet's rig meta rivet_knock = Vector3(heading.x, heading.y, start tick) for the drawn knock-down.",
+      "emitter": "features/bodies",
+      "name": "rivet_knocked",
+      "params": [
+        {
+          "name": "heading",
+          "type": "Vector2"
+        },
+        {
+          "name": "speed_mps",
+          "type": "float"
+        },
+        {
+          "name": "damage",
+          "type": "float"
+        }
+      ],
+      "wired": true
     }
   ]
 }

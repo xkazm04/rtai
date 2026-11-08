@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cbql02qveyj3o"
-path="res://.godot/imported/r_foot.png-4829ac2f5fa678018ff1fa669170048b.ctex"
+path.bptc="res://.godot/imported/r_foot.png-4829ac2f5fa678018ff1fa669170048b.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/characters/art/dent/r_foot.png"
-dest_files=["res://.godot/imported/r_foot.png-4829ac2f5fa678018ff1fa669170048b.ctex"]
+dest_files=["res://.godot/imported/r_foot.png-4829ac2f5fa678018ff1fa669170048b.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

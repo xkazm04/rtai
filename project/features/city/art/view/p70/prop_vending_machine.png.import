@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://85q27q8vm61e"
-path="res://.godot/imported/prop_vending_machine.png-d06a1ffc82a7806dd0afda68301ca628.ctex"
+path.bptc="res://.godot/imported/prop_vending_machine.png-d06a1ffc82a7806dd0afda68301ca628.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/city/art/view/p70/prop_vending_machine.png"
-dest_files=["res://.godot/imported/prop_vending_machine.png-d06a1ffc82a7806dd0afda68301ca628.ctex"]
+dest_files=["res://.godot/imported/prop_vending_machine.png-d06a1ffc82a7806dd0afda68301ca628.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

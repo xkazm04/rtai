@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c6p0okxdbtwxy"
-path="res://.godot/imported/thigh.png-f98d7d5ffb94b4ff6082837aa36fc0cd.ctex"
+path.bptc="res://.godot/imported/thigh.png-f98d7d5ffb94b4ff6082837aa36fc0cd.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/characters/art/d5/cop/thigh.png"
-dest_files=["res://.godot/imported/thigh.png-f98d7d5ffb94b4ff6082837aa36fc0cd.ctex"]
+dest_files=["res://.godot/imported/thigh.png-f98d7d5ffb94b4ff6082837aa36fc0cd.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

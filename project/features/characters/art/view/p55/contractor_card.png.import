@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ba1j0fqiod5d8"
-path="res://.godot/imported/contractor_card.png-7890fa48ecd05b78322918c57454d6d6.ctex"
+path.bptc="res://.godot/imported/contractor_card.png-7890fa48ecd05b78322918c57454d6d6.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/characters/art/view/p55/contractor_card.png"
-dest_files=["res://.godot/imported/contractor_card.png-7890fa48ecd05b78322918c57454d6d6.ctex"]
+dest_files=["res://.godot/imported/contractor_card.png-7890fa48ecd05b78322918c57454d6d6.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

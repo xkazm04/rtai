@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://wnsnm53rodwq"
-path="res://.godot/imported/fx_fire.png-40a4cf996e8090a027012de9179a780e.ctex"
+path.bptc="res://.godot/imported/fx_fire.png-40a4cf996e8090a027012de9179a780e.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/vehicles/art/p55/fx_fire.png"
-dest_files=["res://.godot/imported/fx_fire.png-40a4cf996e8090a027012de9179a780e.ctex"]
+dest_files=["res://.godot/imported/fx_fire.png-40a4cf996e8090a027012de9179a780e.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

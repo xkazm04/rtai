@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bi451vph2p2dc"
-path="res://.godot/imported/ped_cap_fall.png-835f083bac87e020384d406f22676ca0.ctex"
+path.bptc="res://.godot/imported/ped_cap_fall.png-835f083bac87e020384d406f22676ca0.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/characters/art/view/p70/ped_cap_fall.png"
-dest_files=["res://.godot/imported/ped_cap_fall.png-835f083bac87e020384d406f22676ca0.ctex"]
+dest_files=["res://.godot/imported/ped_cap_fall.png-835f083bac87e020384d406f22676ca0.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

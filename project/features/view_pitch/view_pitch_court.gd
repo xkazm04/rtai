@@ -43,6 +43,7 @@ static func court_row(key: String, art: String) -> Array:
 	var base_k: float = base[2]
 	var court_k: float = court[2]
 	var anchor: float = court[1]
+	anchor *= KingArt.anchor_k(key, path)  # n9 world: the p70 hem sheet keeps the bust's anchor
 	return [path, anchor, base_k * court_k, base[3], base[4]]
 
 

@@ -5,6 +5,7 @@
   ],
   "include_subdirs": true,
   "log_level": 1,
+  "pre_run_script": "res://tests/support/gut_pre_run.gd",
   "prefix": "test_",
   "should_exit": true,
   "suffix": ".gd"

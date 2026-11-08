@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://h25r3n6xdvga"
-path="res://.godot/imported/road_straight_v_tone_c_open.png-388bd1229a1103c1ec68a283e2b6fdd3.ctex"
+path.bptc="res://.godot/imported/road_straight_v_tone_c_open.png-388bd1229a1103c1ec68a283e2b6fdd3.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/city/art/ground/road_straight_v_tone_c_open.png"
-dest_files=["res://.godot/imported/road_straight_v_tone_c_open.png-388bd1229a1103c1ec68a283e2b6fdd3.ctex"]
+dest_files=["res://.godot/imported/road_straight_v_tone_c_open.png-388bd1229a1103c1ec68a283e2b6fdd3.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

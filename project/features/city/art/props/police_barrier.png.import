@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://kbs03olc8rsp"
-path="res://.godot/imported/police_barrier.png-870540f7d72a19480e84bf13fb264aa7.ctex"
+path.bptc="res://.godot/imported/police_barrier.png-870540f7d72a19480e84bf13fb264aa7.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/city/art/props/police_barrier.png"
-dest_files=["res://.godot/imported/police_barrier.png-870540f7d72a19480e84bf13fb264aa7.ctex"]
+dest_files=["res://.godot/imported/police_barrier.png-870540f7d72a19480e84bf13fb264aa7.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

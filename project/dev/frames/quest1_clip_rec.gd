@@ -19,6 +19,8 @@ var save_path: String = ""
 var press_continue: bool = false
 ## rivet-arsenal: the camera leans toward the cop Rivet fights (dev/rivet_arsenal/quest_fight_cam).
 var fight_cam: bool = false
+## n9-world: with fight_cam, lean toward the dead hostiles instead (dev/frames/quest_dead_cam).
+var dead_cam: bool = false
 ## rivet-arsenal: clip only the ticks [x, y] (Vector2i.ZERO = the WINDOWS); the sim runs through
 ## the rest with no frame drawn, so a Dock 9 close-up does not wait on the opening's frames.
 var tick_window: Vector2i = Vector2i.ZERO
@@ -92,7 +94,10 @@ func _attach_fight_cam() -> void:
 	if not fight_cam or _game.view == null or _game.view.city_view == null:
 		return
 	fight_cam = false
-	var cam: Node = (load("res://dev/rivet_arsenal/quest_fight_cam.gd") as GDScript).new()
+	var path: String = "res://dev/rivet_arsenal/quest_fight_cam.gd"
+	if dead_cam:
+		path = "res://dev/frames/quest_dead_cam.gd"
+	var cam: Node = (load(path) as GDScript).new()
 	cam.set("session", _game.session)
 	cam.set("city_view", _game.view.city_view)
 	add_child(cam)

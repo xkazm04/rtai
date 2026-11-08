@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cuqa1fyo23dj4"
-path="res://.godot/imported/r_upperarm_endon.png-57faf92a3da8c0e5991c9e5e72b44066.ctex"
+path.bptc="res://.godot/imported/r_upperarm_endon.png-57faf92a3da8c0e5991c9e5e72b44066.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/characters/art/gang/r_upperarm_endon.png"
-dest_files=["res://.godot/imported/r_upperarm_endon.png-57faf92a3da8c0e5991c9e5e72b44066.ctex"]
+dest_files=["res://.godot/imported/r_upperarm_endon.png-57faf92a3da8c0e5991c9e5e72b44066.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

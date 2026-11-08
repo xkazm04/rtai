@@ -66,7 +66,7 @@ public:
 	std::vector<double> snapshot() const;
 
 	// body.cpp: the player body (BD_LEN doubles, BD_X..BD_FLEE) and the result of the last step
-	// (BR_X, BR_Y, BR_N, then BR_STRIDE doubles per knockdown: slot, x, y).
+	// (BR_X, BR_Y, BR_N, BR_HIT, BR_HHX, BR_HHY, then BR_STRIDE doubles per knockdown: slot, x, y).
 	void set_body(const double *spec);
 	std::vector<double> body_result() const;
 
@@ -113,6 +113,7 @@ private:
 	double cx_ = 0.0, cy_ = 0.0;  // contact scratch position (crowd / solid)
 	double body_[BD_LEN] = {}, bx_ = 0.0, by_ = 0.0;  // the player body (body.cpp)
 	std::vector<double> knocks_;
+	double hit_[3] = {};  // n9: this step's car hit on the body (speed, heading x, heading y)
 	int qbuf_[CAP];
 
 	// Car state carried between the car_* phases of one step (car_route.cpp, car_drive.cpp).
@@ -142,6 +143,7 @@ private:
 	void body_push(int i, double pvx, double pvy);    // body.cpp
 	void down(int i, double dt);                      // body.cpp
 	void body_resolve();                              // body.cpp
+	void body_cars();                                 // body.cpp (n9: cars vs the body)
 	void car(int i, double dt, double tgx, double tgy);  // car_route.cpp
 	void car_plan(Car &c, double tgx, double tgy);    // car_route.cpp
 	int car_pick(const Car &c, double icx, double icy, double tgx, double tgy);

@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bv8tm3hg17a6o"
-path="res://.godot/imported/l_thigh.png-473c5eeb54146fa8bd85b0af30d11412.ctex"
+path.bptc="res://.godot/imported/l_thigh.png-473c5eeb54146fa8bd85b0af30d11412.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/characters/art/gang/l_thigh.png"
-dest_files=["res://.godot/imported/l_thigh.png-473c5eeb54146fa8bd85b0af30d11412.ctex"]
+dest_files=["res://.godot/imported/l_thigh.png-473c5eeb54146fa8bd85b0af30d11412.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

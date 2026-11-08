@@ -47,6 +47,8 @@ var player_px: Callable = Callable()
 ## Callable(pos_px: Vector2) -> bool: true skips a death's blood (a signature kill, lane brutality,
 ## prints its own marks there).
 var veto: Callable = Callable()
+## Optional Callable(id, at_m) -> Vector2 m: a killed human's pool (quest 1: under his corpse).
+var pool_at: Callable = Callable()
 var leak: OilLeak = null
 var _draws: PackedInt32Array = [0, 0]
 var _drop_draws: PackedInt32Array = [0, 0]
@@ -73,8 +75,7 @@ func _init() -> void:
 	if not NoirLook.requested():  # the noir gate prints a body this dark as black
 		var dark: Color = NoirPack.rgb(_game.get("pool_dark", [0.46, 0.0, 0.03]))
 		blood.set_dark(tokens[&"blood_dark"] if tokens.has(&"blood_dark") else dark)
-	var fallback: String = _game.get("default", "noir")
-	mode = requested(fallback)
+	mode = requested(str(_game.get("default", "noir")))
 	oil = BloodFx.new()
 	var player: Dictionary = blood.p.get("player", {})
 	var fluid: String = player.get("fluid", "")
@@ -181,7 +182,8 @@ func _bleed_killed(killer: int, victim: int) -> void:
 			var fx: BloodFx = oil if oil != null else blood
 			fx.splash(at * SimConst.PX_PER_M, dir.normalized(), "robot_hit")
 		_:
-			kill_human(at * SimConst.PX_PER_M, dir)
+			var lie: Vector2 = pool_at.call(victim, at) if pool_at.is_valid() else at
+			kill_human(lie * SimConst.PX_PER_M, dir)
 			bled_body.emit(victim, dir.normalized())
 
 
@@ -203,12 +205,10 @@ func hit_robot(pos_px: Vector2) -> void:
 
 ## The D4/D5 pool's lead (the city's death slide) and its optional size (blood_fx.json game).
 func _pool_from_game() -> void:
-	var lead_m: float = _game.get("pool_lead_m", 0.125)
-	_slide_px = lead_m * SimConst.PX_PER_M
+	_slide_px = _game.get("pool_lead_m", 0.125) * SimConst.PX_PER_M
 	if NoirLook.requested():  # owner 2026-11-03: the D4/D5 game's pool is 16 px, noir keeps 22
 		return
-	var pool_r1: float = _game.get("pool_radius_px", 0.0)
-	blood.pool_r1_px = pool_r1
+	blood.pool_r1_px = _game.get("pool_radius_px", 0.0)
 
 
 ## A human killed at `pos_px` by a blow travelling along `dir` (quest 1's events feed).

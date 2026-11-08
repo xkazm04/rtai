@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b7dm6voqk0ec2"
-path="res://.godot/imported/blood_m.png-a6f3c6e79bf8e7216ac5b62c65989507.ctex"
+path.bptc="res://.godot/imported/blood_m.png-a6f3c6e79bf8e7216ac5b62c65989507.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/city/art/decals/blood_m.png"
-dest_files=["res://.godot/imported/blood_m.png-a6f3c6e79bf8e7216ac5b62c65989507.ctex"]
+dest_files=["res://.godot/imported/blood_m.png-a6f3c6e79bf8e7216ac5b62c65989507.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

@@ -17,7 +17,7 @@ func test_service_atlas_is_five_views_by_two_rows_per_pitch() -> void:
 
 
 func test_truck_and_van_cells_hold_art_inside_the_cell() -> void:
-	var img: Image = (load(DIR % "p70") as Texture2D).get_image()
+	var img: Image = TestArt.rgba(load(DIR % "p70") as Texture2D)
 	var c: int = VehicleViews.CELL_PX
 	for row: int in 2:
 		for col: int in VehicleViews.COLS:

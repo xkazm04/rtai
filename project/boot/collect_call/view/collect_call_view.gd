@@ -107,6 +107,10 @@ func _ready_blood(layer: CanvasLayer) -> void:
 		blood = CombatBlood.new()
 		layer.add_child(blood)
 		blood.listen(_stage.events(), _locate, _stage.arena.rivet.id)
+		StreetQuestCorpses.stain_life(blood.blood)  # n9 world: pools fade like the live fight's
+		blood.pool_at = func(id: int, at: Vector2) -> Vector2:  # n9 world: under the plan corpse
+			var rigs: bool = cast_view.fighters_on_rigs
+			return StreetQuestDeadPlan.pool_m(_stage.arena, id, at, rigs, Ink.PX_PER_M)
 		stains = CorpseStains.new(BODIES, blood.blood.use_splat_mesh().colour, blood.blood.dark())
 		stains.material = blood.print_material()
 		layer.add_child(stains)
@@ -186,11 +190,7 @@ func _locate(id: int) -> Vector2:
 
 ## The dead hostiles: id -> where they lie (px).
 func _dead_px() -> Dictionary[int, Vector2]:
-	var out: Dictionary[int, Vector2] = {}
-	for h: Fighter in _stage.arena.hostiles:
-		if not h.alive():
-			out[h.id] = h.pos * SimConst.PX_PER_M
-	return out
+	return StreetQuestDeadPlan.dead_px(_stage.arena, cast_view.fighters_on_rigs, Ink.PX_PER_M)
 
 
 ## features/souls: a Hauler stomp landing shakes the camera and holds the clock (hit-stop), on

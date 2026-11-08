@@ -22,6 +22,13 @@ const STRIPS: Dictionary[String, Array] = {
 	"king": ["king_bust_card", 0.80, 2.0],  # owner d8: bigger than 1.5 (n8 picked 2.0 over 1.75)
 	"gang": ["gang_head_card", 0.84, 1.25],
 }
+## n9 world it25: at these pitches the King's bust card is the hem sheet (assets
+## king_bust_70_hem_v2, grade A): the shipped card's rows plus `hem` px of fur and cape hanging to
+## an inked hem below its old straight cut, over the robe. [strip, hem px, cell height px]: the
+## anchor keeps the shipped rows (ViewPitchCourt's combo cards too, through anchor_k).
+## HEM false = the cut card.
+const HEM: bool = true
+const HEM_STRIP: Dictionary[int, Array] = {70: ["king_bust_hem_card", 32, 160]}
 const META: StringName = &"court_card"
 ## The pitch a card was dressed for, and the shared strip it wore before (texture, offset): a live
 ## pitch change (view70's combined view eases 70 -> 55 into a boss fight) re-dresses the card.
@@ -49,7 +56,7 @@ static func card_wears_cape() -> bool:
 static func strip_path(art_dir: String, pitch_deg: float) -> String:
 	if not STRIPS.has(art_dir) or pitch_deg >= 90.0:
 		return ""
-	var path: String = DIR % [roundi(pitch_deg), STRIPS[art_dir][0]]
+	var path: String = DIR % [roundi(pitch_deg), _strip_name(art_dir, roundi(pitch_deg))]
 	if not _exists.has(path):  # asked every frame by KingAccents: one lookup per strip
 		_exists[path] = ResourceLoader.exists(path)
 	return path if _exists[path] else ""
@@ -96,10 +103,28 @@ static func _swap(card: Sprite2D, rig: CutRig) -> Vector2:
 	var row: Array = STRIPS[art_dir]
 	var cell: Vector2 = Vector2(tex.get_width() / float(RigHeadCard.FRAMES), tex.get_height())
 	card.texture = tex
-	var anchor_y: float = row[1]
+	var anchor_y: float = row[1] * anchor_k(art_dir, path)
 	card.offset = Vector2(-cell.x * 0.5, -cell.y * anchor_y)
 	var width_k: float = row[2]  # RigHeadCard scales by the cell width: the drawn width holds
 	return Vector2(old_cell_w / cell.x, width_k)
+
+
+static func _strip_name(art_dir: String, pitch: int) -> String:
+	if HEM and art_dir == "king" and HEM_STRIP.has(pitch):
+		return HEM_STRIP[pitch][0]
+	return STRIPS[art_dir][0]
+
+
+## The anchor's factor for the strip at `path`: a hem sheet's cell is taller than the shipped
+## card by its hem, so the same anchor point sits at (cell - hem) / cell of it (1.0 = no hem).
+static func anchor_k(art_dir: String, path: String) -> float:
+	for pitch: int in HEM_STRIP:
+		var row: Array = HEM_STRIP[pitch]
+		if HEM and art_dir == "king" and path == DIR % [pitch, row[0]]:
+			var hem: float = row[1]
+			var cell_h: float = row[2]
+			return (cell_h - hem) / cell_h
+	return 1.0
 
 
 ## The court's limbs: each step (the rig swaps end-on and toe-off textures as it moves), a part with

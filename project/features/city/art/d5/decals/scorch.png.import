@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://db53scmebxvb"
-path="res://.godot/imported/scorch.png-be714566130e758956f7866e53b2b841.ctex"
+path.bptc="res://.godot/imported/scorch.png-be714566130e758956f7866e53b2b841.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/city/art/d5/decals/scorch.png"
-dest_files=["res://.godot/imported/scorch.png-be714566130e758956f7866e53b2b841.ctex"]
+dest_files=["res://.godot/imported/scorch.png-be714566130e758956f7866e53b2b841.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

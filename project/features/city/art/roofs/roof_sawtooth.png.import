@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://rbeuqwcs6ufo"
-path="res://.godot/imported/roof_sawtooth.png-7d0e1aa6b15233d34d9d91b902898c70.ctex"
+path.bptc="res://.godot/imported/roof_sawtooth.png-7d0e1aa6b15233d34d9d91b902898c70.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/city/art/roofs/roof_sawtooth.png"
-dest_files=["res://.godot/imported/roof_sawtooth.png-7d0e1aa6b15233d34d9d91b902898c70.ctex"]
+dest_files=["res://.godot/imported/roof_sawtooth.png-7d0e1aa6b15233d34d9d91b902898c70.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

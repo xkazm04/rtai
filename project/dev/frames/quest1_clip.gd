@@ -8,6 +8,7 @@ extends SceneTree
 ##   [--continue] (with --save: press Continue on the title, save the first frames, quit)
 ##   [--rigs] (rivet-arsenal: the quest drawn on the cast rigs, Quest1Game._dev_rigs)
 ##   [--cam=fight] (rivet-arsenal: the camera leans toward the cop Rivet fights, render only)
+##   [--cam=dead] (n9-world: the camera leans toward the dead hostiles, render only)
 ##   [--ticks=<from>-<to>] (rivet-arsenal: clip only these ticks, e.g. Dock 9's 13600-13840)
 ##   [--quest-guns=off] (n7-ranged: the evening gun path, the before of the table guns)
 ##   [--weapon-fx=shapes] (n7-ranged it16: no weapon-art cells, e.g. the rifle's dashes: the before)
@@ -84,7 +85,9 @@ func _configure(rec: Node, values: Dictionary[String, String]) -> void:
 	rec.set("stills", stills)
 	rec.set("save_path", values.get("--save", ""))
 	rec.set("press_continue", values.has("--continue"))
-	rec.set("fight_cam", values.get("--cam", "") == "fight")
+	var cam: String = values.get("--cam", "")
+	rec.set("fight_cam", cam == "fight" or cam == "dead")
+	rec.set("dead_cam", cam == "dead")
 	var window: String = values.get("--ticks", "")
 	if window.contains("-"):
 		var from: int = window.get_slice("-", 0).to_int()

@@ -1,8 +1,7 @@
 extends Node
-## Render selftest (the `selftest` evidence): the real World + CitySystem + CityView in the D4
-## look at a fixed junction with a crowd, prewarmed, captured after frame_post_draw at 32 px/m
-## (zoom 1.0) and 48 px/m (zoom 1.5). Each frame is sanity-checked (size, not blank, enough
-## distinct colours, actors on screen) and saved as PNG next to a gtai.selftest/1 result JSON.
+## Render selftest: the real World + CitySystem + CityView in the D4 look at a fixed junction with
+## a crowd, prewarmed, captured after frame_post_draw at 32 and 48 px/m (zoom 1.0 / 1.5), each
+## frame sanity-checked (size, not blank, colours, actors), saved as PNG + gtai.selftest/1.
 ## The sim steps one TICK_DT per rendered frame (not wall-clock), so captures land on fixed ticks.
 ## Windowed only (headless renders nothing). Usage:
 ##   godot --path project res://dev/selftest/city_selftest.tscn -- --out=<dir>
@@ -77,6 +76,7 @@ func set_site(id: String) -> bool:
 
 
 func _build() -> void:
+	ViewMode.select("top")  # the look goldens + accent audit are `top` frames (n9 boots combo)
 	_world = World.new()
 	_world.start(Events, Data, MASTER_SEED)
 	add_child(_world)

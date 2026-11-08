@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://xkusjb8w71eu"
-path="res://.godot/imported/dress_king_district_12.png-933b84a4e8084f76367bfe73adcc8f21.ctex"
+path.bptc="res://.godot/imported/dress_king_district_12.png-933b84a4e8084f76367bfe73adcc8f21.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/city/art/view/p55/dress_king_district_12.png"
-dest_files=["res://.godot/imported/dress_king_district_12.png-933b84a4e8084f76367bfe73adcc8f21.ctex"]
+dest_files=["res://.godot/imported/dress_king_district_12.png-933b84a4e8084f76367bfe73adcc8f21.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

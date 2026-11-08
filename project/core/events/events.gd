@@ -33,6 +33,8 @@ signal boss_engaged(boss: StringName)
 signal attack_telegraphed(weapon: StringName)
 ## Rivet took a hit. Rivet only, never every actor (ARC-07).
 signal player_hit(weapon: StringName)
+## n9: a car at speed knocked Rivet down on foot (features/bodies; events.json).
+signal rivet_knocked(heading: Vector2, speed_mps: float, damage: float)
 ## The voices in Rivet's head spiked (madness).
 signal whispers_spiked
 @warning_ignore_restore("unused_signal")

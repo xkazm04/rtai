@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dpf5qistf0aul"
-path="res://.godot/imported/r_forearm.png-23609e837029650c9aab096e7c4e158a.ctex"
+path.bptc="res://.godot/imported/r_forearm.png-23609e837029650c9aab096e7c4e158a.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/characters/art/d5/gang/r_forearm.png"
-dest_files=["res://.godot/imported/r_forearm.png-23609e837029650c9aab096e7c4e158a.ctex"]
+dest_files=["res://.godot/imported/r_forearm.png-23609e837029650c9aab096e7c4e158a.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

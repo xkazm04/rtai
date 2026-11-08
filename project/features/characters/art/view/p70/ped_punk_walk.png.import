@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://capkds8dfis7w"
-path="res://.godot/imported/ped_punk_walk.png-ab044f9634f82db5c725c47b8ca5306f.ctex"
+path.bptc="res://.godot/imported/ped_punk_walk.png-ab044f9634f82db5c725c47b8ca5306f.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/characters/art/view/p70/ped_punk_walk.png"
-dest_files=["res://.godot/imported/ped_punk_walk.png-ab044f9634f82db5c725c47b8ca5306f.ctex"]
+dest_files=["res://.godot/imported/ped_punk_walk.png-ab044f9634f82db5c725c47b8ca5306f.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

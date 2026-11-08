@@ -1,0 +1,32 @@
+{
+  "blind": {
+    "at": [
+      322.561889648438,
+      270.0
+    ],
+    "cars_alive": 40,
+    "first_pass_s": -0.0166666666666667,
+    "horns": 23,
+    "hp_lost": 24.75,
+    "passed": 0,
+    "queued_s": 65.9333333333333,
+    "rear_ends": 1,
+    "ticks_near": 2316
+  },
+  "result": "pass",
+  "ticks": 2400,
+  "yield": {
+    "at": [
+      300.0,
+      270.0
+    ],
+    "cars_alive": 40,
+    "first_pass_s": 11.1833333333333,
+    "horns": 20,
+    "hp_lost": 0.0,
+    "passed": 2,
+    "queued_s": 9.08333333333333,
+    "rear_ends": 0,
+    "ticks_near": 2316
+  }
+}

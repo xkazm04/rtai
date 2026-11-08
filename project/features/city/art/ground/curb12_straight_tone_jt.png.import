@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dobryfriyblom"
-path="res://.godot/imported/curb12_straight_tone_jt.png-23ad2173f6b9cb58939d1c4be040df74.ctex"
+path.bptc="res://.godot/imported/curb12_straight_tone_jt.png-23ad2173f6b9cb58939d1c4be040df74.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://features/city/art/ground/curb12_straight_tone_jt.png"
-dest_files=["res://.godot/imported/curb12_straight_tone_jt.png-23ad2173f6b9cb58939d1c4be040df74.ctex"]
+dest_files=["res://.godot/imported/curb12_straight_tone_jt.png-23ad2173f6b9cb58939d1c4be040df74.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
