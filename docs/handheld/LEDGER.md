@@ -279,6 +279,10 @@ stick, 2/3 right stick, 4 LT, 5 RT.
   past the yard's edge (also on `deck_bench_z1` and the desktop); the boss cam fills it with the yard, Servo and Rivet
   both in (t1800 too). The King's road is narrower than the 20 m-tall screen, so paper below it stays either way.
   Stills: `gtai-masters/n9/handheld/bosscam-deck-servo-before-after-40ppm-1280x800-t900.png`, `evidence/n9h/it6/bosscam/`.
+  In motion (`deck-servo-40ppm-bosscam-1280x800-igpu.mp4`, 45 s, movie maker, the iGPU, 0 SCRIPT ERROR): the
+  frame-to-frame luma difference over 2699 frames has no single-frame jump; its highest runs are ~0.5 s pans while
+  Servo charges (~12 px a frame), continuous (`evidence/n9h/it6/bosscam/motion/`). BossCam sets the focus with no
+  damping; a critically damped follow is the lever if a Deck playtest finds the charges busy (owed, not built).
 
 ## 6. Text legibility at 1280x800
 

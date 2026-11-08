@@ -351,3 +351,25 @@ NEXT (iteration 6):
 - FINDING: in the Servo fight at t900 half the 1280x800 screen is paper beyond the arena edge, on `deck`, `deck_bench_z1`
   and the desktop alike: the shipped arena camera follows Rivet; the frame-the-fight BossCam exists only behind the dev
   `--boss-cam` flag.
+- 05:22-05:28 E20 setup: a scratch worktree `gtai-n9/tmp/handheld/mergewt` = eff2388f + `merge --no-commit n9-world`
+  (d5006d22, hooks off): **only JOURNAL.md and tools/debt/baseline.json conflict, the code merges cleanly**; world's
+  DLLs and `.godot` copied, `--import` 23 s, 0 errors.
+- 05:38 MILESTONE E17c committed (41437658). FRICTION (~4 min): the pre-commit lint runs over the working tree, so my
+  half-edited boss_cam.gd (a doc line > 100) failed the evidence commit three times; re-wrap a doc block with
+  textwrap(97) in one go, not line by line.
+- 05:44 MILESTONE the handheld boss cam (98cacb86, DECISION handheld/boss-cam): devices.json `boss_cam: true` on every
+  handheld row -> `DeviceProfile.boss_cam` -> `BossCam.wanted()`; the desktop untouched. Servo t900 / t1800, King
+  t900 / t1800 on `deck_bench`: looked at all; Servo's yard now fills the screen with both fighters; the King's road is
+  narrower than the screen (paper below stays, the arena's shape). Test `test_handheld_boss_cam` (2); unit --select 22/0.
+- 05:46 MILESTONE E20 (31222638): this branch vs + n9-world, `deck`, city_combo, 3 rounds, bench lock (3/6 quiet):
+  render GPU 8.65 -> 7.69 ms, GPU shared 1055 -> 600 MB, private RAM 1430 -> 991 MB, CPU and pacing the same.
+- 05:48 GATE at 98cacb86: full unit 1845/0; director reel 19/19 fully down in top / tilt70 / combo, 0 SCRIPT ERROR
+  (f49c5b31, `evidence/n9h/it6/gates/`). REPORT: E17c, E20, the boss cam, Call 5 (the boss cam on the desktop?).
+- 05:50 The Servo fight filmed with the boss cam (deck, the iGPU, movie maker, 45 s, 0 SCRIPT ERROR):
+  `gtai-masters/n9/handheld/deck-servo-40ppm-bosscam-1280x800-igpu.mp4`. Motion check (ffmpeg tblend difference per
+  frame): no single-frame jump; ~0.5 s pans during Servo's charges (~12 px/frame). Looked at the contact sheet and the
+  fastest pan's strip. frames.json 15 (all present): + the two zoom pairs, the boss cam pair, the Servo clip; out: the
+  after-only panel still, the quest 1 prompt still, the LB-gap crop, the inkbox crop (each covered by another entry).
+  Raw .avi deleted; the scratch merge worktree removed (recipe above).
+- 05:55 Mid-session READ: rivet 442 l., world 524 l., perf 357 l.: no REQUEST to handheld; the assets lane: nothing new.
+  No other lane touches boss_cam.gd / device_profile.gd / devices.json since da108c13.
