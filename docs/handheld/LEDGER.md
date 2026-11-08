@@ -228,8 +228,13 @@ stick, 2/3 right stick, 4 LT, 5 RT.
   Call (the owner's decision 2 says pad only, not handheld only).
   **Wired n9 it3 (33f80d56)** as designed: `PadAimAssist.wire(live, stage.get.bind("arena"))` in `Quest1Session.open`
   and `ArenaSession`, on every row with `aim_assist: true` (all handheld rows, tested); `test_pad_aim_assist` (the
-  desktop aims raw, the targets are the living hostiles + the boss, a 5 deg offset bends toward the hostile). Not yet
-  shown live (owed: a pad-event walk in the King arena logging the raw vs the packed heading).
+  desktop aims raw, the targets are the living hostiles + the boss, a 5 deg offset bends toward the hostile).
+  **Shown live n9 it4** (simulator, d3d12, `--boss=king`, scratch pad-event walker `evidence/n9h/it4/aimwalk/`: the
+  right stick held 5 deg off the nearest living target, RT held, 24 samples 20 frames apart as Rivet closes in): on
+  `deck` the heading `LiveInput._aim()` returns stays 5.00 deg off while the target is 35-29 m away (outside the 25 m
+  range) and bends to **3.25 deg** from 24.4 m in (35 % of the 5 deg error removed, the cone 8 deg), mean 3.61 over the
+  run; on `desktop` the same walk stays 5.00 deg throughout (assist off). Logs `aim-deck.log` / `aim-desktop.log`.
+  The bend is a fixed share, not a lock: a held stick never snaps onto the target (by design: "light").
 - Menus: **broken on a pad until it11, fixed** (8959a913, 47668922). Godot 4.7.2's default `ui_accept` and `ui_cancel` carry
   **no pad button** (probed on the engine: `ui_accept` = Enter, keypad Enter, Space; `ui_up/down/left/right` = the d-pad
   and the left stick; `ui_select` = Y). The title, pause and paid cards are focus-driven Buttons: a pad moved the focus

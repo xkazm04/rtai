@@ -1,0 +1,46 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+D3D12 12_0 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce RTX 4090
+
+[INFO] device: profile deck: window 1280x800, max_fps 60, vsync enabled, stretch canvas_items, zoom_k 1.25, tier handheld, rumble 1.00
+[INFO] device: profile deck: window 1280x800, max_fps 60, vsync enabled, stretch canvas_items, zoom_k 1.25, tier handheld, rumble 1.00
+[INFO] bosses: king phase 1 (procession)
+[INFO] bosses: king engaged in king_boulevard, phase 1
+[INFO] arena: powers pad: 4 cars parked
+[INFO] device: pad aim assist on (weapons.json aim_assist)
+[INFO] arena: arena open: 20 stations
+[INFO] characters: prewarmed 41 rigs in 100.9 ms
+[INFO] arena: cast rigs: true
+[INFO] aimwalk: device deck assist true
+[INFO] aimwalk: t00 dist 35.4 m  raw off 5.00 deg  bent off 5.00 deg
+[INFO] aimwalk: t01 dist 35.4 m  raw off 5.00 deg  bent off 5.00 deg
+[INFO] aimwalk: t02 dist 35.4 m  raw off 5.00 deg  bent off 5.00 deg
+[INFO] aimwalk: t03 dist 34.4 m  raw off 5.00 deg  bent off 5.00 deg
+[INFO] aimwalk: t04 dist 29.4 m  raw off 5.00 deg  bent off 5.00 deg
+[INFO] aimwalk: t05 dist 24.4 m  raw off 5.00 deg  bent off 3.25 deg
+[INFO] aimwalk: t06 dist 19.4 m  raw off 5.00 deg  bent off 3.25 deg
+[INFO] aimwalk: t07 dist 14.4 m  raw off 5.00 deg  bent off 3.25 deg
+[INFO] aimwalk: t08 dist 14.4 m  raw off 5.00 deg  bent off 3.25 deg
+[INFO] aimwalk: t09 dist 14.4 m  raw off 5.00 deg  bent off 3.25 deg
+[INFO] aimwalk: t10 dist 14.4 m  raw off 5.00 deg  bent off 3.25 deg
+[INFO] aimwalk: t11 dist 14.4 m  raw off 5.00 deg  bent off 3.25 deg
+[INFO] aimwalk: t12 dist 14.1 m  raw off 5.00 deg  bent off 3.25 deg
+[INFO] aimwalk: t13 dist 13.4 m  raw off 5.00 deg  bent off 3.25 deg
+[INFO] aimwalk: t14 dist 12.7 m  raw off 5.00 deg  bent off 3.25 deg
+[INFO] aimwalk: t15 dist 12.0 m  raw off 5.00 deg  bent off 3.25 deg
+[INFO] aimwalk: t16 dist 12.0 m  raw off 5.00 deg  bent off 3.25 deg
+[INFO] aimwalk: t17 dist 12.0 m  raw off 5.00 deg  bent off 3.25 deg
+[INFO] aimwalk: t18 dist 12.0 m  raw off 5.00 deg  bent off 3.25 deg
+[INFO] aimwalk: t19 dist 12.0 m  raw off 5.00 deg  bent off 3.25 deg
+[INFO] aimwalk: t20 dist 12.0 m  raw off 5.00 deg  bent off 3.25 deg
+[INFO] aimwalk: t21 dist 12.0 m  raw off 5.00 deg  bent off 3.25 deg
+[INFO] aimwalk: t22 dist 12.0 m  raw off 5.00 deg  bent off 3.25 deg
+[INFO] aimwalk: t23 dist 12.0 m  raw off 5.00 deg  bent off 3.25 deg
+[INFO] aimwalk: SUMMARY deck n 24 mean raw off 5.00 deg mean bent off 3.61 deg
+[INFO] device: rumble: 18 pulses played { &"boss_engaged": 1, &"boss_hit": 16, &"rivet_hurt": 1 }, 0 rested, shortest gaps (ticks) { &"boss_hit": 17 }
+[INFO] arena: react: 0 wounds (0 on a shield), 0 deaths, 0 ducks
+WARNING: 1 RID of type "CanvasItem" was leaked.
+   at: _free_rids (servers/rendering/renderer_canvas_cull.cpp:2733)
+WARNING: 589 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 93 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
