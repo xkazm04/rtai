@@ -555,3 +555,18 @@ NOTE: use the arena's Z zoom key or a camera flag) is still owed, after NEXT 1 (
 Registry rules applied: `motion-quality-gating` (the pop found and judged in motion, frame by frame, before and
 after from the same seed and ticks; a pixel diff bounds the change to the fall's 0.4 s), `generative-artifact-gating`
 (the served sheet looked at before packing: grade B, pose D a second face-down, noted, shipped).
+- (06:28) Not done, judged: the wall overlap (REPORT next step 2). The hand swings forward of the probe by
+  its sideways offset x sin(jitter) (~0.2 of standing, ~0.3 m: matches it16's x3 crop). Fix sketch: in
+  `StreetDeadPlan._bounded` lengthen `reach` by `SIDE_K (0.5) x STILL_PX x ks x |sin(jitter)|` (pass the jitter in;
+  street_dead_plan.gd is at the 200-line soft cap, compact a comment). Not landed this late: it moves the rigs'
+  dead and needs a re-gate; it16 judged the frame readable (slumped against the wall).
+
+NEXT (it20+):
+1. Read the journals (no REQUEST to world at 06:25). If the gate below is red, fix that first.
+2. Optional quality: the wall overlap fix above, then re-film `dev/showcase/dead_wall_clip.tscn` at 64 (before =
+   db8cdbb8's frames in gtai-masters `dead_wall_*`).
+3. Optional: Dock 9 at 64 px/m needs a camera lead toward the crossing (`quest1_clip.gd` has no free camera;
+   `--cam=fight` follows Rivet's fight, not the dead).
+4. The freeze (10:30): the director reel x3 at the head with `--quit-after 16000` (top, tilt70, combo), the full
+   gate if anything moved since it19's, the exe (`build/export/windows/RTAI.exe`, the REPORT command line),
+   REPORT.md finalised (remove DRAFT), `git worktree remove --force C:/Users/kazda/kiro/gtai-n9/tmp/world/before`.
