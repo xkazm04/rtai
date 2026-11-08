@@ -4,6 +4,36 @@ Branch `d9-perf`, cut from main `3982af1a`. Every number here names its build, s
 instrument. Host: Ryzen 7 7800X3D (8C/16T), RTX 4090 (+ the AMD iGPU), Windows 11, Godot 4.7.2.
 **Host ms are host ms**: nothing here is a Steam Deck or handheld figure (that is the `handheld` lane's).
 
+## n10 night (2026-11-08 21:00 -, branch n10-perf from main 9bbe6d0a)
+
+### Item 1 (it1): the rig cost under combo: a walker's hidden limbs are not posed (d006d70e, a9370647)
+Finding: n9's split (below) counted the walker cards as ~8 of 50 people and so priced "skip RigPose under a card" at ~65 us;
+but at the rig stress's 8-9 pose steps a tick about 7.6 place a whole-figure card, so nearly every pose step posed limbs
+that nothing draws. Change: `CutRig.limbs_cold` (true while a walker's whole-figure card is up: `StreetWalkerCards.hides_parts`);
+`RigGait` skips `_solve_leg` (the planted-foot stepping stays: `foot_w` is what the parts land on), `RigPose` skips the
+arms; `RigPose.warm_limbs` poses them the step the card goes away and before a kill's `GibCut` / `KillSprawlCut` reads the
+parts. The torso, head, gait phase and feet still step: the card reads only those. Also dropped: the head card's double
+`_place` under a walker (`frame_of` kept: the walker's `frame_coords` reads the facing), `hide_all` and the crowd
+card's scale nudge on a cold rig, the per-step `row_of` / strip format (read off the card).
+A/B rig_bench 50 people, `--view=combo`, headless editor binary, interleaved base (the 9bbe6d0a worktree) / head, CONTENDED
+(4-12 Godot processes up): `evidence/perf/n10-rig/ab.sh`, `run1/summary.txt`:
+
+| view combo, p50 ms (50 people) | base | head |
+|---|---|---|
+| r1 | (1.64: an import-cold first run, not counted) | 0.544 |
+| r2 | 1.236 | 0.527 |
+| r3 | 1.159 | 0.659 |
+
+The target (at most 1 ms p50 at 50 people under combo) is met with margin; p99 base ~1.9-2.6 ms, head 1.1-2.0.
+**The pixels:** RigStress at tick 600, combo, windowed d3d12, 1280x720 (`framecmp/_tmp_framecmp*.gd`, the same script
+in both trees): head vs base **0 pixels differ** (`framecmp/base.png`, `head.png`). The first head render differed in 5683
+pixels: the cream rims came back at the walkers' feet, because `_on_view` re-showed them after the card hid the parts and
+`hide_all` no longer runs each step on a cold rig. Fixed (a9370647: on_view keeps a card's parts' rims hidden), a test pins
+it. Tests: `test_rig_limbs_cold` (5): a carded rig poses no limb, the card's inputs (phase, facing, head and torso
+transforms, feet) stay identical to an always-posed rig, warm_limbs lands within 3 part px / 0.08 rad of it, a gone card
+warms on the next step, a kill's cut warms a cold rig, the rims stay hidden. Full unit on d006d70e: exit 0. Owed: the director
+reel x3, the evidence gate, a mutation run on the cold path.
+
 ## n9 night (2026-11-08, branch n9-perf from main da108c13)
 
 ### F19 quest-1 freeze: located in the engine (it1, 00:56-01:56)
