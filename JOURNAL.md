@@ -199,3 +199,6 @@ NEXT (iteration 4):
 - 03:15 GATE at 33f80d56 (the aim assist): full unit 1841/0; director reel top / tilt70 / combo 19/19, every chapter all
   down, 0 SCRIPT ERROR (`evidence/n9h/it3/gates2/`). Evidence run (`--no-bench`) started 03:16 on a clean tree, log
   `C:/Users/kazda/kiro/gtai-n9/tmp/handheld/evidence-it3.log`: NEXT reads its summary first.
+- 03:25 GATE evidence run (`--no-bench`) at 0791db0d (aim assist + kb glyphs): lint, unit 1841/0 (FLAKY 1: a fail-then-pass
+  on re-run, named in the log), scenarios 54, parity (mutation caught at 629), selftest (look goldens 11/11),
+  release-compile 619/0: all PASS (`evidence/n9h/it3/gates2/evidence-run-0791db0d.txt`). Session ends 03:28; NEXT above stands.
