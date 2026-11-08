@@ -624,6 +624,19 @@ An earlier run (`evidence/perf/n9-final-it8/`, 07:20, 2 arms) is VOID for head: 
 uncommitted L27 arm (FRICTION it8). Owed at the freeze: the same table on the final HEAD, on the release exports
 (`@exe` arms, as d9's final table), when the machine is quieter.
 
+## Final table n9, the release riot at a quieter moment (it8, 07:56-08:01): a riot p50 WIN; the RAM split refuted
+The same three exports, riot only, `--pairs=4` (`evidence/perf/n9-ram-exe-it8/`: ab.json + run.txt), 0-2 other
+Godots (CONTENDED(2) in 5 of 12 runs: main 3 of 4, head 1, head2 1; main's two quiet rounds read 3.62 and 4.67), 0
+script errors. Per round, p50 ms: **main 3.88 / 4.29 / 3.62 / 4.67, head 3.38 / 3.19 / 3.53 / 3.17, head2 3.50 /
+3.52 / 3.59 / 3.35**. Both copies of head sit under every main round (head + head2 3.17-3.59 vs main 3.62-4.67), and
+head vs head2 is 0.14 ms (the F12 floor of this run). **riot p50 4.29 -> 3.38 ms (medians, -0.9 ms; by the ranges at
+least -0.03, typically -0.5..-1.0)**: in line with the ~0.7 ms of CPU cuts the in-run timers measured (L17-L25).
+ab.mjs's own spread rule prints WASH (main's half-spread 0.52); the claim rests on the 8-of-8 ordering and the
+small A-vs-A gap, and it is the riot's p50 only: p99 main 8.1-10.8, head 5.8-8.6, head2 6.9-9.2 overlap (not
+claimed). GPU 0.38 -> 0.32 ms reads WIN in ab.mjs but head2 0.34: not claimed.
+**Steady RAM: main 751-754 MB in 4 of 4 quiet runs**, head 751-756, head2 753-755: the 820 MB mode of the contended
+table was the loaded machine, not the code. The RAM watch item is REFUTED.
+
 ## Final table n9, the release build (it8, 07:45-07:53): main da108c13 vs efa848cb vs a byte copy, as shipped
 `node tools/perf/ab.mjs --scenes=riot,drive70,riot60 --pairs=3 --arms=main@exe-windows-bench-main:,head@exe:,head2@exe-windows-bench-head2:`
 (`evidence/perf/n9-final-exe-efa848cb/`). `windows-bench` release exports, the official 4.7.2 template: main from

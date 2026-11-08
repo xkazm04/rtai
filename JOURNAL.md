@@ -542,3 +542,8 @@ NEXT (it9), replaces it8's list:
    an ab `head:` arm or the gate runs); REPORT final.
 4. Scratch: cvprof (arms fx/, ff/ added), prof3, world3, head2 (`gtai-n9/tmp/perf/head2`, the editor-arm copy:
    delete after the freeze), build/export/windows-bench-main + -head2 (git-ignored).
+- 07:56-08:01 MILESTONE the release riot, quieter (0-2 Godots), 4 pairs: riot p50 main 3.62-4.67 vs head 3.17-3.53,
+  head2 3.35-3.59 (8 of 8 head rounds under every main round, head vs head2 0.14): **riot p50 4.29 -> 3.38 ms**, the
+  first frame-level win of tonight's CPU cuts (p99 overlaps: not claimed). The steady-RAM split REFUTED (main 751-754
+  MB quiet). LEDGER "the release riot at a quieter moment", REPORT item 13. NEXT item 1's RAM question is answered;
+  item 1 becomes: the same quiet riot run with `--pairs=5` on the final HEAD at the freeze (confirm), plus drive70.
