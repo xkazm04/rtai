@@ -153,6 +153,8 @@ func test_a_weapon_out_runs_on_its_drawn_armed_run_above_the_run_speed() -> void
 		assert_true(RivetWalk.is_run(path), "steps on the run cycle")
 		var tex: Texture2D = load(path) as Texture2D
 		assert_eq(tex.get_width() % 8 + tex.get_height() % RivetWalk.ROWS, 0, "whole cells")
+	var p55: String = RivetStrips.DIR + "p55/" + RivetWalk.ARMED_RUN + "pistol.png"
+	assert_eq(RivetWalk.path_of(rig, "p55", &"pistol"), p55, "it8: the pistol runs drawn at 55")
 	var flamer: String = RivetWalk.path_of(rig, "p70", &"flamethrower")
 	assert_true(
 		flamer.get_file().begins_with(RivetWalk.ARMED), "no drawn armed run: the armed walk"
@@ -165,7 +167,7 @@ func test_a_weapon_out_runs_on_its_drawn_armed_run_above_the_run_speed() -> void
 
 
 func test_a_short_drawn_run_row_steps_on_its_own_stride() -> void:
-	# n9 it8: the heavy run's left profile travels 0.535 x H, run8's 0.605: its cycle shrinks
+	# n9 it8: the heavy run's left profile travels 59 cell px, run8's 63: its cycle shrinks
 	var rig: CutRig = add_child_autofree(CutRig.new())
 	var head: Node2D = Node2D.new()
 	rig.add_child(head)
@@ -174,7 +176,7 @@ func test_a_short_drawn_run_row_steps_on_its_own_stride() -> void:
 	card.set_meta(RivetFrames.ON, RivetStrips.DIR + "p70/" + RivetWalk.ARMED_RUN + "gatling.png")
 	head.rotation = PI
 	assert_eq(RivetWalk.row_k(card, "p70", rig), RivetWalk.RUN_ROW_K["p70/gatling/4"])
-	assert_between(RivetWalk.row_k(card, "p70", rig), 0.85, 0.9)
+	assert_between(RivetWalk.row_k(card, "p70", rig), 0.9, 0.97)
 	head.rotation = 0.0
 	assert_eq(RivetWalk.row_k(card, "p70", rig), 1.0, "the right profile is run8's stride")
 	card.set_meta(RivetFrames.ON, RivetStrips.DIR + "p70/" + RivetWalk.RUN)

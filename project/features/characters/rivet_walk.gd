@@ -24,7 +24,7 @@ extends RefCounted
 ## the library's run8 legs + the claw armed walk's arms, my it6 REQUEST) where the art key has one,
 ## stepped on RUN_CYCLE_CELL (its legs are run8's, frame by frame); else the armed walk as before.
 ## it8: RUN_ROW_K ("<art>/<weapon>/<octant>"): a drawn run row whose stride is shorter than run8's
-## (the library's travel x H) steps on a cycle shortened by that ratio, so its stance foot plants.
+## (cell px on the packed grid) steps on a cycle shortened by that ratio, so its stance foot plants.
 
 const STRIP: String = "rivet_walk8.png"
 const STRIP4: String = "rivet_walk.png"
@@ -34,8 +34,14 @@ const ARMED_RUN: String = "rivet_run8_eq_"
 const RUN_CYCLE_CELL: Dictionary[String, float] = {"p70": 258.0, "p55": 212.0}
 const RUN_FROM_MPS: float = 2.5
 const MAX_RUN_CYCLES_S: float = 3.5
-## the heavy run's left profile (L2 v2): 0.535 x H of travel against run8 L2's 0.605
-const RUN_ROW_K: Dictionary[String, float] = {"p70/gatling/4": 0.88}
+## measured on the packed grids (cell px of stance travel, the row's vs run8's same row): the
+## heavy left profile 59 / 63; the one-hand 55 3/4 toward right (row 2 B) 43 / 54.5, toward
+## left 49 / 55
+const RUN_ROW_K: Dictionary[String, float] = {
+	"p70/gatling/4": 0.94,
+	"p55/pistol/1": 0.79,
+	"p55/pistol/3": 0.89,
+}
 const ROWS: int = 8
 const CYCLE_CELL: Dictionary[String, float] = {"p70": 60.0, "p55": 60.0}
 const ARMED_CYCLE_CELL: Dictionary[String, float] = {
