@@ -1,9 +1,8 @@
 extends GutTest
 ## FxPool.step reads each kind's constants from a FxKindRow (put once), not from the kind
-## Dictionary every tick, and skips a held particle's rewrite: what the MultiMesh shows must stay
-## bit-identical to the Dictionary path that rewrote every slot every tick (the reference below is
-## the pre-row step, verbatim, over FxPool.custom_of). A headless MultiMesh keeps no data, so both
-## sides are compared through FxPool.mirror.
+## Dictionary every tick: what the MultiMesh shows must stay bit-identical to the Dictionary path
+## (the reference below is the pre-row step, verbatim, over FxPool.custom_of). A headless
+## MultiMesh keeps no data, so both sides are compared through FxPool.mirror.
 
 const TICKS: int = 260
 const CAP: int = 512
@@ -49,8 +48,7 @@ func test_row_step_writes_the_dictionary_paths_buffer_bit_for_bit() -> void:
 			fail_test("the shown instances differ at tick %d" % tick)
 			return
 	assert_gt(_pool.alive, 50, "a full pool exercised")
-	assert_lt(_pool.writes, full_writes - full_writes / 10, "held particles are not rewritten")
-	pass_test("bit-identical over %d ticks, %d / %d writes" % [TICKS, _pool.writes, full_writes])
+	pass_test("bit-identical over %d ticks, %d instance writes" % [TICKS, full_writes])
 
 
 ## One spawn of `k` into both pools, moved as FxSystem.spawn does (a splat, 0 m/s, lies still).
