@@ -146,3 +146,85 @@ NEXT (it2):
    and note it); a before/after still at 32 + a 64 close-up; frames.json to 8+ entries.
 3. Item 3 (cars knock Rivet down), per the scoping above: BD_CAR_HIT in both twins, parity case, `just native`.
 4. Item 4 (bodies stop at walls), then item 2 wiring when the art lands; item 5 when king_robe_* lands.
+
+## it4 (2026-11-08 01:45-02:45) BUILD
+(it2 and it3 left no entries and no commits: the sessions ended before writing; this one resumes from it1's NEXT.)
+Registry rules applied this session: `depth-ordered-layered-art` (the lying pose is a ground-plane layer under the
+fall card, the camera's tilt foreshortens it, never a per-pitch redraw), `motion-quality-gating` (judged in motion
+at 32 and 64 px/m on the riot, before/after from the same seed and tick), `generative-artifact-gating` (every cell
+looked at on the library's card before packing; provenance lines with round + prompt_hash),
+`perf-regression-gating` (the BC7 A/B under bench.lock, CONTENDED runs labelled).
+
+- READ journals: perf (no REQUEST to world; it measures the traffic split on this branch's BC7), handheld (no
+  REQUEST; its BC7 Deck re-measure E16 used 3e02d3b8), rivet: ANSWER to my knock-down REQUEST (assets drawing
+  rivet_knockdown_70/_55 + rivet_getup), asks which field world lands for the knock. Assets: dead_plan_v1
+  DELIVERED (deliveries/dead_plan_v1_it121.md, 9 classes x 5 poses), king_robe_55 / king_robe_70_v2 OFFERED (A).
+- MILESTONE (01:52) item 1 owed: the BC7 riot A/B (`tools/perf/ab.mjs --scenes=riot --pairs=2`, lossless = the
+  scratch main+combo+bikes worktree vs bc7 = this branch, bench.lock taken by ab.mjs): **VRAM 900.7 -> 539.8 MB
+  (-361 MB, -40 %)**, working set 925.7 -> 862.9 MB; frame time a WASH (p50 5.60 vs 6.16 +-0.80, p99 13.7 vs 14.7,
+  2 of 4 runs CONTENDED). `evidence/n9-world/bc7-ab.log`, `evidence/n9-world/bc7-ab/`.
+- MILESTONE (02:04) item 2 wired at 71c0b951: StreetDeadPlan (DECISION world/dead-plan-wired). 8 body-class
+  strips packed from the delivery (`tools/art/dead_plan.py`, no resample, BC7), provenance 8 lines. At the fall
+  grid's lying frame the card swaps to the plan pose on the ground plane along the blow (jitter +-0.4 rad, hashed
+  mirror), pose by the death family then the first no neighbour within 3 m shows, lands 1.05x, slides
+  0.35-1.2 m along the blow INTO the sim rest, rocks back 0.06 rad; the baked far crowd dead take the plan pose by
+  look index. Unit 1824/0 (new test_street_dead_plan 8/8), lint 15/15.
+  Evidence (`gtai-masters/n9/world/`): `dead_plan_riot_before_after_tilt70_32ppm_t22.png` (+ `_crop2x`),
+  `dead_plan_riot_before_after_tilt70_64ppm_t22.png`, the two 17 s before|after mp4s (32 and 64). Seen: the riot
+  cops lie spread on their backs and curled, three neighbours in three poses; suits crumple face-down. Seen faults:
+  (a) the 5 unmapped walker rows (cap, elder, hat, jogger, punk) still lie as the straight drawn frame (REQUEST
+  below); (b) a corpse thrown into the crowd draws over standing people (the d9 fall card did too: depth by y);
+  (c) the wound stamps stay where the old drawn body was (kill_marks), visible on a cop's chest at 64.
+- FRICTION: `tools/godot/check.mjs` on a features script fails with "Identifier not found: Log" (autoloads under
+  --check-only -s), even on untouched rig_head_card.gd; the unit run is the real parse check.
+
+REQUEST to assets: dead_plan_v1 for the 5 walker rows still without a sheet: ped_cap, ped_elder, ped_hat,
+ped_jogger, ped_punk (the p70 still strips `ped_cap`, `ped_elder`, `ped_hat`, `ped_jogger`, `ped_punk` are the
+by-example sources), the same layout and cut as the delivered eight (5 poses A-E, 384 px cells, the 269 px
+longest-pose rule, pelvis at the centre, E tipped over). Why: in the riot these five still lie straight as the
+old drawn frame next to the new poses (`gtai-masters/n9/world/dead_plan_riot_before_after_tilt70_32ppm_t22.png`).
+
+ANSWER to rivet (the knock signal): world will land `Events.rivet_knocked(heading: Vector2, speed_mps: float)`
+from the sim's car hit (item 3), and the view sets the rig meta **`rivet_knock` = Vector3(heading.x, heading.y,
+start tick)** on Rivet's rig in the same frame (heading = the car's ground heading, unit; tick = SimClock's tick
+at the hit). Read it as you proposed; it is cleared when he is up again (rig meta removed). Until item 3 lands,
+nothing sets it. Also OFFER: assets cut Rivet's own plan-view death sprawl (`keyed/rivet/dead_plan_v1_rivet_cells`,
+A-E, his helmet pulls the cell centre ~20 px above the hips); world does not touch rivet_frames, so it is yours to
+wire if you want his death on the ground plane like the cast's (StreetDeadPlan.draw is the pattern).
+- MILESTONE (02:15) item 5 at e8bd8dd7: the King walks under his long drawn robe (DECISION world/king-robe):
+  `KingLegsCard.SHEETS["king"] = "king_robe"`, art/p55 + p70/king_robe.png packed cell for cell into the legs'
+  grid at the legs' scale (k 0.638 / 0.441) and sole line (`tools/art/king_robe.py`), provenance 2 lines. Seen
+  (phase 3, seed 2, t 8.8): at 55 (combo) the plum skirt + vermilion cape hem cover the thin steel shins, the gold
+  boots at the hem's front, the hem swings with the drawn walk rows; at 70 the bust (LIFT 0.74) covers most of the
+  robe, only the hem and boots read. `gtai-masters/n9/world/king_robe_before_after_{combo55,tilt70}_phase3_seed2_t8.8_x2.png`,
+  `king_robe_before_after_combo55_phase3_seed2.mp4`. NOTE: `--ppm=64` did not zoom the arena (frames at 32);
+  the close-ups are 2x crops. Owed: a true 64 px/m capture (find the arena's zoom flag / Z key).
+- Gates: full evidence --no-bench at 71c0b951: lint 15/15, scenarios 54/54, parity bit-exact (planted caught 629),
+  look goldens 11/11 + block 5/5 worst 0.00 (**no golden moved**: the selftests pin top, the plan dead is card-view
+  only), release-compile 615/0; unit 1824/0 (flagged "tree changed during run" by my own reel logs and JOURNAL:
+  re-run standalone at e8bd8dd7 = **1825/0**). Director reel it4 (headless 16000): top / tilt70 / combo 19/19
+  chapters all down, 0 SCRIPT ERROR (`evidence/n9-world/director-reel-it4*.{txt,log}`).
+- Evidence: the director reel under combo, before | after (`dead_plan_director_reel_before_after_combo70_32ppm_x2.png`
+  + 20 s mp4): the patrol cop folds and tips over (pose E) where d9 drew a plank. frames.json: 13 entries, best first.
+
+### Calls for the owner (add to it1's list)
+- C-3 the dead: 5 plan poses per class, picked by weapon class (blast B/D/A, bullet A/D/B/C, melee E/C/A, burn
+  C/E/A, shock C/D/E), the slide 0.35 (melee) / 0.6 (bullet) / 1.2 m (blast) into the sim's rest, a 0.06 rad
+  settle, +-0.4 rad jitter off the blow. Options: (a) as built; (b) no jitter (bodies point exactly along the blow);
+  (c) a longer slide for shotguns (one table row). Still owed: the 5 walker rows without a sheet (REQUESTed).
+- C-4 the robe at 70: the bust hides most of it (LIFT 0.74). Options: (a) as built; (b) LIFT 0.6 at 70 so more
+  robe shows (the bust stands taller; one value); (c) a 70 robe drawn shorter at the top.
+
+NEXT (it5):
+1. Read the journals (rivet: the knock field is answered above; assets: the 5 walker dead sheets).
+2. Item 3 (cars knock Rivet down), per it1's scoping: BD_CAR_HIT in body.cpp + sim_body.gd op for op, a parity case
+   with it on, `just native` debug + release, scenarios (struck at speed; a car creeping); then
+   `Events.rivet_knocked(heading, speed_mps)` and the rig meta `rivet_knock` = Vector3(hx, hy, tick) for rivet.
+3. Item 4 (bodies stop at walls): props' footprints as solids in the thrown slide (both twins) + bound the plan
+   pose's pelvis offset by the first solid along the blow (StreetDeadPlan.PELVIS_K x the free distance).
+   Before/after: the kerb barrier, seed 5 tick 900.
+4. Item 2 follow-ups: wire the 5 walker sheets when served; the wound stamps (kill_marks) follow the plan pose;
+   film quest 1 Dock 9 and the city block (`--arena=city`) before/after.
+5. Item 1: the city with bikes under combo in the real city (city_bench draws flat without --view: find why).
+6. Remove the scratch "before" worktree (`git worktree remove C:/Users/kazda/kiro/gtai-n9/tmp/world/before`)
+   once the last before/after is filmed.
