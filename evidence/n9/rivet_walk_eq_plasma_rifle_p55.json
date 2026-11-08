@@ -12,8 +12,8 @@
   0.3691
  ],
  "src": [
-  "C:/Users/kazda/kiro/gtai-art/library/keyed/rivet/rivet_walk_armed_twohand_55_v2_cells",
-  "C:/Users/kazda/kiro/gtai-art/library/keyed/rivet/rivet_walk_armed_twohand_55_left_v4_cells"
+  "C:/Users/kazda/kiro/gtai-art/library/keyed/rivet/rivet_walk_armed_twohand_55_claw_cells",
+  "C:/Users/kazda/kiro/gtai-art/library/keyed/rivet/rivet_walk_armed_twohand_55_left_claw_cells"
  ],
  "tone": "project/features/characters/art/view/p55/rivet_eq_plasma_rifle.png"
 }

@@ -1,7 +1,7 @@
 {
  "cell": [
   106,
-  123
+  124
  ],
  "cols": 4,
  "fig_h": 110.0,
@@ -12,8 +12,8 @@
   0.3673
  ],
  "src": [
-  "C:/Users/kazda/kiro/gtai-art/library/keyed/rivet/rivet_walk_armed_onehand_55_v2_cells",
-  "C:/Users/kazda/kiro/gtai-art/library/keyed/rivet/rivet_walk_armed_onehand_55_left_cells"
+  "C:/Users/kazda/kiro/gtai-art/library/keyed/rivet/rivet_walk_armed_onehand_55_claw_cells",
+  "C:/Users/kazda/kiro/gtai-art/library/keyed/rivet/rivet_walk_armed_onehand_55_left_claw_cells"
  ],
  "tone": "project/features/characters/art/view/p55/rivet_eq_pistol.png"
 }

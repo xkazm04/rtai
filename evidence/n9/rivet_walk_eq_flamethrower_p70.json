@@ -1,18 +1,18 @@
 {
  "cell": [
-  148,
-  130
+  149,
+  132
  ],
  "cols": 4,
  "fig_h": 110.0,
  "pad": 2,
  "rows": 8,
  "scales": [
-  0.6286,
-  0.6286
+  0.6322,
+  0.6322
  ],
  "src": [
-  "C:/Users/kazda/kiro/gtai-art/library/keyed/rivet/rivet_walk_armed_flamer_70_v2_cells",
+  "C:/Users/kazda/kiro/gtai-art/library/keyed/rivet/rivet_walk_armed_flamer_70_claw_cells",
   "mirror"
  ],
  "tone": "project/features/characters/art/view/p70/rivet_eq_flamethrower.png"

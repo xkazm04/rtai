@@ -1,19 +1,19 @@
 {
  "cell": [
-  130,
-  127
+  132,
+  126
  ],
  "cols": 4,
  "fig_h": 110.0,
  "pad": 2,
  "rows": 8,
  "scales": [
-  0.625,
+  0.6232,
   0.4151
  ],
  "src": [
-  "C:/Users/kazda/kiro/gtai-art/library/keyed/rivet/rivet_walk_armed_heavy_70_v2_cells",
-  "C:/Users/kazda/kiro/gtai-art/library/keyed/rivet/rivet_walk_armed_heavy_70_left_v3_cells"
+  "C:/Users/kazda/kiro/gtai-art/library/keyed/rivet/rivet_walk_armed_heavy_70_claw_cells",
+  "C:/Users/kazda/kiro/gtai-art/library/keyed/rivet/rivet_walk_armed_heavy_70_left_claw_cells"
  ],
  "tone": "project/features/characters/art/view/p70/rivet_eq_gatling.png"
 }

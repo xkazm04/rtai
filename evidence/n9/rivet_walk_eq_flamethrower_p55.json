@@ -8,11 +8,11 @@
  "pad": 2,
  "rows": 8,
  "scales": [
-  0.6027,
+  0.5978,
   0.6044
  ],
  "src": [
-  "C:/Users/kazda/kiro/gtai-art/library/keyed/rivet/rivet_walk_armed_flamer_55_v2_cells",
+  "C:/Users/kazda/kiro/gtai-art/library/keyed/rivet/rivet_walk_armed_flamer_55_claw_cells",
   "mirror"
  ],
  "tone": "project/features/characters/art/view/p55/rivet_eq_flamethrower.png"
