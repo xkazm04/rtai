@@ -373,3 +373,19 @@ NEXT (iteration 6):
   Raw .avi deleted; the scratch merge worktree removed (recipe above).
 - 05:55 Mid-session READ: rivet 442 l., world 524 l., perf 357 l.: no REQUEST to handheld; the assets lane: nothing new.
   No other lane touches boss_cam.gd / device_profile.gd / devices.json since da108c13.
+- 06:00 GATE evidence run `--no-bench` at 4870776c: lint, unit 1845/0, scenarios 54, parity (629), look goldens 11/11,
+  release-compile 619/0: all PASS (`evidence/n9h/it6/gates/evidence-run-4870776c.txt`, the log written outside the
+  tree first). REPORT gates line; LEDGER port readiness (Steam Deck row: E17c, the boss cam, E20).
+
+NEXT (iteration 7):
+1. Read the other journals for REQUESTs at the start AND mid-session; the asset lane's JOURNAL (grep "handheld").
+2. Research loop candidates, best first: (a) a damped BossCam focus on the handheld rows only (a critically damped
+   follow, e.g. `boss_cam_damp` on the row; judge on the Servo clip's frame-difference runs: the ~0.5 s charge pans at
+   ~12 px/frame should soften without lag losing Rivet; desktop and `--boss-cam` clips unchanged; unit test on the
+   damping math; re-film); (b) the King and Servo clips at 1280x800 on `deck40` (the 40 Hz row) with the boss cam, a
+   40 Hz motion read; (c) near the freeze, re-run E20 on world's final head (the recipe: detached worktree at HEAD,
+   `merge --no-commit n9-world` with `-c core.hooksPath=/dev/null`, take ours on JOURNAL + debt baseline, copy world's
+   DLLs + `.godot` + override.cfg, `--import`, `ab.mjs --variant=... --project=<wt>/project`; remove it after).
+3. Freeze 10:30: export `build/export/windows/RTAI.exe` (`"$GODOT_BIN" --headless --path project --export-release
+   windows-showcase ../build/export/windows/RTAI.exe`), final gates on the head (reel x3 + evidence run, log outside
+   the tree), REPORT final (gates line, exe line, Calls 1-5, frames.json 15 entries all present).

@@ -74,10 +74,10 @@ The research loop since:
   determinism note narrowed (the CitySim is already strict-FP, NAT-07; the engine's own math on an arm64 build is the
   open part, LEDGER section 1).
 
-Gates (latest, it5): at 017b8e44 the evidence run `--no-bench` all PASS (lint, unit 1843/0, scenarios 54, parity
+Gates (latest, it6): at 4870776c the evidence run `--no-bench` all PASS (lint, unit 1845/0, scenarios 54, parity
 (mutation caught at 629), selftest look goldens 11/11, release-compile 619/0,
-`evidence/n9h/it5/gates/evidence-run-017b8e44.txt`); the director reel 19/19 chapters fully down, 0 SCRIPT ERROR in top,
-tilt70 and combo at 3778c3ac, the last shipped-code change (`evidence/n9h/it5/gates/`). (Freeze: re-run on the final head.)
+`evidence/n9h/it6/gates/evidence-run-4870776c.txt`); the director reel 19/19 chapters fully down, 0 SCRIPT ERROR in top,
+tilt70 and combo at 98cacb86, the last shipped-code change (`evidence/n9h/it6/gates/`). (Freeze: re-run on the final head.)
 
 ## What does not work yet
 
