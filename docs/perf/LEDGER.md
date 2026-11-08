@@ -635,7 +635,7 @@ evidence run plus the seams lane's), so read the ratios, not the ms; a quiet rer
   `evidence/perf/rel-vs-dbg-screen0/boot.log`): exe 3.95 / 2.55 / 2.41 / 2.69 / 2.58 s, editor 3.98 / 4.29 /
   4.08 / 4.89 / 3.89 s: **median 2.58 s vs 4.08 s**. (The first table's 2.86 vs 4.35 s had the exe on the other screen.)
 
-## Final table n9, quest 1 and the director reel (it10, 09:00-): main da108c13 vs n9-perf dc9ea2fd vs a byte copy
+## Final table n9, quest 1 and the director reel (it10, 09:00-09:07): main da108c13 vs n9-perf dc9ea2fd vs a byte copy
 The two brief scenes missing from tonight's tables. `node tools/perf/ab.mjs --scenes=quest1 --pairs=3
 --arms=main:^--path <gtai-n9/tmp/perf/prof3>/project,head:,head2:^--path <gtai-n9/tmp/perf/head2>/project`
 (`evidence/perf/n9-it10/quest1/` + `quest1.log`), then `--scenes=reel` the same (`reel/` + `reel.log`). Editor binary,
@@ -648,6 +648,12 @@ Quest 1: 9 runs, 3 labelled CONTENDED. Median ± half-spread:
 |---|---|---|---|---|---|
 | quest 1 | p50 / p99 / p99.9 ms | 3.43 ±0.80 / 6.50 / 16.19 | 3.32 ±0.34 / 6.91 / 16.59 | 3.56 ±0.05 / 6.23 / 15.15 | WASH (head vs head2 0.24 ms > head vs main 0.11) |
 | quest 1 | CPU cores, steady RAM | 1.04, 1068 MB (1067-1069) | 1.02, 1069 (1006-1069) | 0.98, 1006 (1004-1007) | WASH; the RAM is the per-run ~60 MB state seen on the release riot (head 1 / 3 runs low, head2 3 / 3): not a saving |
+| reel (director, pistol, tilt70, 3600 ticks) | p50 / p99 / p99.9 ms | 5.89 ±0.74 / 13.45 / 18.39 | 5.63 ±0.27 / 17.20 ±3.83 / 20.65 | 5.71 ±0.19 / 13.31 / 18.03 | WASH (head's p99 spread 3.8 ms; head vs head2 0.08 ms p50) |
+| reel | CPU cores, steady RAM, draws, render CPU / GPU ms | 1.00, 817 MB, 526, 0.45 / 0.44 | 1.00, 817, 526, 0.49 / 0.52 | 1.00, 817, 526, 0.44 / 0.51 | WASH; draws vary 523-528 a run in every arm (the reel's frames are not draw-deterministic run to run), the medians agree |
+
+Reel: 9 runs, 8 labelled CONTENDED (2-6 Godots). Reading: tonight's kept CPU cuts sit in the riot's systems (FX,
+occlusion, stains, blood), which quest 1's dialogue stretch and the reel barely exercise, so a wash is the expected
+result here, and the A-vs-A floor (0.1-0.25 ms p50) leaves no room to claim a ~0.1 ms move. Nothing regressed.
 
 ## Final table n9 (it8, 07:28-07:34, PROVISIONAL): main da108c13 vs n9-perf 1365b7f3 vs a byte copy (A-vs-A)
 `node tools/perf/ab.mjs --scenes=king,drive70,riot --pairs=3 --arms=main:^--path <gtai-n9/tmp/perf/prof3>/project,head:,head2:^--path <gtai-n9/tmp/perf/head2>/project`

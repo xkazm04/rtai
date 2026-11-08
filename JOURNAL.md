@@ -620,3 +620,8 @@ NEXT (it11, the freeze session), replaces it9's list:
 3. REPORT final by 10:40 (draft it10 is current; add the exe line, the final-table rows, the JOURNAL's blocked minutes).
 4. Scratch to delete after the freeze: cvprof, world3, head2, slice-main, slice-main-dbg, probe (all under
    `gtai-n9/tmp/perf/`), build/export/windows-bench-main / -head2 / -merge. Keep prof3 until the table is done.
+- 09:00-09:07 MILESTONE quest 1 + the reel in the final table (editor binary, main / head / head2, 3 pairs each,
+  bench.lock via ab.mjs, 3 / 9 and 8 / 9 CONTENDED): WASH on every metric in both, draws 526 = 526 = 526 on the reel.
+  LEDGER "Final table n9, quest 1 and the director reel", REPORT item 16. NEXT item 2's first half is done: it11 only
+  owes the quiet release riot confirm (if time) and the freeze. Scratch deleted: slice-main, slice-main-dbg, probe,
+  the f19-{relmain,edpress,dbgpress} run logs.

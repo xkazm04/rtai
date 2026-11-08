@@ -112,7 +112,8 @@ Numbers, methods and every A/B: `docs/perf/LEDGER.md` section "n9 night". Clips 
 16. **it10: the F-19 control arms and the quest 1 row.** On main's old code a real Start press freezes the editor
     binary (5 / 20) but neither exported build (release 0 / 20, debug 0 / 20): item 1 and Call P-1. Quest 1 (editor
     binary, 3 pairs, main / head / a byte copy): WASH on every metric (p50 3.43 / 3.32 / 3.56 ms; the head-vs-copy
-    floor is larger than head vs main). LEDGER "Final table n9, quest 1 and the director reel".
+    floor is larger than head vs main); the director reel likewise (p50 5.89 / 5.63 / 5.71 ms, draws 526 in all
+    three). Nothing regressed. LEDGER "Final table n9, quest 1 and the director reel".
 
 ## What does not
 - The first L17 test was vacuous. It compared `MultiMesh.buffer`, which a headless run keeps empty. The mutation run
