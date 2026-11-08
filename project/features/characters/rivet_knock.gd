@@ -22,7 +22,7 @@ const AXIS: PackedFloat32Array = [PI * 0.5, -PI * 0.5, 0.0, PI]
 static var enabled: bool = true
 
 
-## The knock strip under `art` while the knock is on (and `path`, the drawn figure, is), else `path`.
+## The knock strip under `art` while the knock is on (and the drawn figure `path` is), else `path`.
 static func path_or(rig: CutRig, art: String, path: String) -> String:
 	if not enabled or path.is_empty() or not rig.has_meta(KNOCK):
 		return path
