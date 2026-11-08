@@ -48,3 +48,17 @@ func test_shows_reads_the_card_strip() -> void:
 	card.set_meta(RivetFrames.ON, RivetStrips.DIR + "p70/" + RivetReload.PREFIX + "pistol.png")
 	assert_true(RivetReload.shows(card))
 	assert_false(RivetReload.shows(null))
+
+
+func test_the_drawn_reload_ships_for_each_family_at_both_pitches() -> void:
+	var rig: CutRig = _rig()
+	rig.reload_k = 1.5
+	for art: String in ["p70", "p55"]:
+		for weapon: StringName in [&"pistol", &"plasma_rifle", &"gatling"]:
+			var eq: String = RivetStrips.DIR + art + "/rivet_eq_" + String(weapon) + ".png"
+			var got: String = RivetReload.path_or(rig, art, weapon, eq)
+			assert_eq(got.get_file(), RivetReload.PREFIX + String(weapon) + ".png", art)
+			var tex: Texture2D = load(got) as Texture2D
+			var left: Texture2D = load(got.replace(".png", "_left.png")) as Texture2D
+			assert_eq(tex.get_width() % 8, 0, "%s %s: 8 cells" % [art, weapon])
+			assert_eq(left.get_width() % RivetFrames.LEFT_CELLS, 0, "%s %s left" % [art, weapon])
