@@ -748,3 +748,27 @@ is view only: the shot origin and the reload timing do not move).
 - Gates on 5c77021f: director reel `reel-director-it12b-<v>.log` 19/19 fully down in top, tilt70, combo, 0 SCRIPT
   ERROR, exit 0 (08:38-08:41).
 - REPORT.md drafted (08:45): what works 1-7 with stills, what does not, blocks, Call 19; the freeze pass finishes it.
+- Evidence `--no-bench` on 788700a6 (08:42-08:56): **all PASS**, unit 1840/0, scenarios 54 (city_chase's nav budget
+  missed beside other runs, the machine went quiet after 230 s, re-judged alone: **within budget**: it10 NEXT 0 done),
+  parity (mutation caught at 629), selftest (look goldens 11/11 worst 0.27, block 5/5: nothing moved), release-compile
+  616/0, exit 0.
+- REPORT.md: the Calls consolidated to 10 (each with its built default and flag; JOURNAL numbers in brackets), the
+  gates line, the renumbered references (`f12f82b9`).
+- FILMED the city block at 32 px/m tilt70 seed 5 (`--arena=city --bot=rivet`), 1.1 m (`--rivet-height=1.1`) vs 1.65 m,
+  0 SCRIPT ERROR: after, he stands a cop's height in the cop line (before: knee-high).
+- The combined clip `gtai-masters/n9/rivet/rivet_n9_set_combined.mp4` (64.6 s, 1280x720 30 fps): 1 size at 32 px/m,
+  3 the gatling run plants (before | after), 4-6 pistol / katana / flamer runs at 64 px/m, 7-9 the 55 runs in the King
+  fight, 10 the knock-down (before / after), 11 the gun fired up (before | after), 12 the reload (before | after);
+  the short ones play twice or three times. Captions skip "2" (no bare walk8 segment yet). Builder:
+  `gtai-n9/tmp/rivet/it12/clip/seg.sh` + `list.txt` (the segments are kept there for the freeze pass).
+
+NEXT (it13, the freeze at 10:30):
+1. The exe: `export APPDATA=C:/Users/kazda/kiro/gtai-n9/appdata/rivet; "$GODOT_BIN" --headless --path project
+   --export-release windows-showcase ../build/export/windows/RTAI.exe`, check it starts (the windows-showcase preset),
+   name the exact lines in REPORT "Next steps" / an "Exe" line.
+2. Optional, if time: a bare walk8 segment for the clip (64 px/m, the reel's claw chapter or the city `--bot=rivet`
+   before he draws a gun) as segment 2, then re-concat (`list.txt`); delete `gtai-n9/tmp/rivet/it12/*.avi` after.
+3. REPORT.md: remove "DRAFT", re-read it once top to bottom against the JOURNAL, the final gates line (re-run the reel
+   only if code changed after 5c77021f). Clean the masters folder of files neither frames.json, REPORT nor the
+   combined clip names (the half-speed mp4s are the clip's sources: list them in REPORT or delete them).
+4. Read the other journals once more for a REQUEST to rivet (none through 08:30).
