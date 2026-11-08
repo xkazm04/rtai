@@ -571,8 +571,11 @@ held pose that still shows the d9 arm; rivet wires it as the reload cell per fac
   per held cell 572/568/577, 459/458/462, 353/348/350, 239/237/240 (planted +-2-5 px); before (the armed walk, mirrored
   left) 598, 558, 490, 456, 393, 356 (slides 35-68 px a cell). `rivet_armed_run_flamer_before_after_king_tilt70_64ppm_seed1_f36_76.png`
   + half-speed mp4; frames.json 15.
-- SEEN (not fixed): the BARE run8 rows (`rivet_run8.png`, the bare-claw run at 70) still draw the old cable arm with the
-  spike tip as the free arm (looked at L1-L3 at x2), where every armed run and the claw walks draw the plated claw. NEXT.
+- SEEN, then checked: the BARE walk8 and run8 draw the free arm as the cable with the spike tip, every weapon-out pose
+  as the plated claw. Not a defect: the owner-judged base strip (`rivet_frames.png`, d9) draws the bare arm the same way
+  (cable + spike), and the claw is the equipped strips' arm. Two arm designs by state, both approved sheets: a Call (16).
+- Gates on a1fff33e (the flamer run): director reel `reel-director-it9c-<v>.log` 19/19 fully down in top, tilt70, combo,
+  0 SCRIPT ERROR, exit 0 (07:02-07:10): every view is green on the it9 code head.
 
 ### Calls drafted for REPORT (it9 additions)
 13 (update). **Armed runs coverage**: drawn armed runs now ship for pistol, plasma rifle, katana and gatling at BOTH
@@ -581,15 +584,19 @@ held pose that still shows the d9 arm; rivet wires it as the reload cell per fac
     built: RUN_ROW_K steps it on a shorter cycle (planted, but a slightly quicker cadence on that one facing). Option: a
     v2 row per weapon by legs-by-example (the library offered; it did not land for the one-hand at 0645).
 
+16. **One arm or two**: bare Rivet's free arm is the cable with the spike (the approved base strip, walk8, run8); with
+    a weapon out it is the plated claw (the approved equipped strips and every armed walk / run). Default built: as
+    drawn (the arm changes when he draws a weapon). Option: a claw bare set (base + walk8 + run8 at 70 / 55) by example,
+    one detail per row; about 40 library jobs.
+
 NEXT (it10):
 1. (done in it9: the reels on b43824fd `reel-director-it9b-<v>.log` are 19/19 fully down in top, tilt70, combo, 0
-   SCRIPT ERROR, exit 0, 06:50-06:58: every view is green on the it9 code head.)
-2. (70 done in it9, a1fff33e; reels `reel-director-it9c-<v>.log` started 07:02: commit them if 19/19 x3, 0 SCRIPT ERROR.)
+   SCRIPT ERROR, exit 0, 06:50-06:58.)
+2. (70 done in it9, a1fff33e; its reels green, committed.) A full unit run + evidence --no-bench on the it9 head.
    The flamer run at 55 (library round 0705): pack like a1fff33e with --k 0.6111,0.6197
    --tone=p55/rivet_eq_flamethrower.png, measure with `gtai-n9/tmp/rivet/it8/travel_grid.py` vs p55 run8, RUN_ROW_K for
    > 5 % off, add it to the unit test's p55 asserts, film (King combo 48 px/m `--loadout=flamethrower`, footlock9).
-2b. The bare run8's free arm (cable + spike, see SEEN above): check whether the library has a claw run8 (bare); if not,
-   REQUEST it by example from run8 (one detail: the free arm as the claw walk's plated claw, nothing else).
+2b. (checked in it9: the bare arm is the approved base design; Call 16, nothing to build unless the owner picks one arm.)
 3. The reload: when the claw REQUEST above lands, cut it with the equipped cutter and wire reload_k >= 0 -> the reload
    cell per facing; check its dome against the walk cell at 64 px/m before wiring.
 4. Freeze prep (10:30): the exe (`--export-release windows-showcase ../build/export/windows/RTAI.exe`), REPORT.md with
