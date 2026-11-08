@@ -146,6 +146,29 @@ the cadence (multiTick 0-3, best p99) for +0.08 core. So the F-19 trade is now: 
 (the freeze is worse than a hitch); added to Call P-1 (mailbox default) for the owner, with "steady by default on
 Windows" as the one-value alternative (`PlayerSettings` default pacing).
 
+### Item 4 (it3): the desktop table on world's BC7 (main da108c13 vs n9-world 746c2856)
+world's 3e02d3b8 (BC7 for the drawn art, combo default, bikes 6 %) + its it2-it7 commits, vs main. Scratch worktrees
+(`gtai-n9/tmp/perf/prof3` = main, `world3` = world's committed tree with its `.godot` imports copied, main's native DLLs:
+world's bin DLL carries its uncommitted knock sim). `node tools/perf/ab.mjs --scenes=king,drive70,riot --pairs=3
+--arms=main:^--path <prof3>/project,world:^--path <world3>/project` (editor binary, windowed D3D12 1920x1080,
+`--fixed-fps 60 --disable-vsync`: one tick a frame, as fast as it can; bench.lock held; 03:06-03:11; CONTENDED 1-2 of
+3 per arm; 0 errors). `evidence/perf/n9-bc7-table/`. Median of 3 (spread):
+
+| scene | metric | main (lossless) | world (BC7) | verdict |
+|---|---|---|---|---|
+| King under combo | p50 / p99 / p99.9 ms | 4.51 / 9.44 / 12.31 | 4.74 / 9.15 / 11.86 | WASH (spread 0.6 / 1.4 / 1.5) |
+| King | process CPU, working set | 1.03 cores, 801 MB (±49) | 1.01, **733 MB (±4)** | RAM -68 MB (WASH by the spread rule: main's spread 49) |
+| drive70 (drive_dense, 48 px/m) | p50 / p99 / p99.9 ms | 3.04 / 5.58 / 8.38 | 2.62 / **5.14** / 7.41 | p99 WIN -8 % (spreads 0.03 / 0.07), the rest WASH |
+| drive70 | GPU ms, VRAM, working set | 0.24, **900 MB**, 839 MB | 0.21, **548 MB**, 840 MB | **VRAM -352 MB (-39 %)**, GPU -0.03 ms WIN, RAM WASH |
+| riot (400 actors, 32 px/m) | p50 / p99 / p99.9 ms | 4.91 / 10.85 / 19.69 | 4.72 / 10.52 / 16.67 | WASH |
+| riot | VRAM, working set (steady / last) | **899 MB**, 911 / 911 MB | **536 MB**, 835 / 789 MB | **VRAM -362 MB (-40 %)** (world's own A/B: -361), RAM WASH by spread |
+| riot | draws | 734 | 736 (+2: the bikes) | not a cost |
+
+(The King's VRAM reads NaN: the arena's FightFrames log has no VRAM field; its working set carries the signal.)
+So BC7 is what L4 predicted: VRAM -350..-360 MB on the city scenes with no frame-time cost; the 128 MB traffic-sheet
+upload buffer is a 32 MB one (Item 2). Resident RAM moves less than the estimated -96 MB on the desktop (the
+working set includes the driver's mapped copy; within the spread). handheld's E16 owns the Deck row.
+
 ### Item 2 (it2): the traffic-sheet split is moot under BC7
 n9-world 3e02d3b8 imports the p70 traffic sheet as BC7: `traffic_cards.png-313d05e5...bptc.ctex` = **18,063,412 B**
 (4032 x 4480 x 1 B), one upload into a **32 MB** pow2 staging buffer (L9's mechanism), against 128 MB lossless. The
