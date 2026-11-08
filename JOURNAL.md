@@ -466,7 +466,8 @@ REQUEST to assets: dead_plan_contractor (pitch "plan", straight down, flat on th
 hat with the taped flashlight, moustache, vermilion hi-vis vest with cream bands, violet-black fatigues) in the
 same 5 lying poses and cut as the delivered dead_plan_v1 sheets (A face-down crumple, B on the back spread and
 broken, C side curl, D twisted sprawl, E legs folded under, torso fallen sideways; 384 px cells, the 269 px
-longest-pose rule, pelvis at the cell centre, head toward the top, transparent ground, no blood, NO rifle in the
-hands: the game drops the rifle as its own pickup). The pudgy build stays pudgy (do not slim him to the walkers).
+longest-pose rule, pelvis at the cell centre, head toward the top, transparent ground, no blood; his rifle (the one in
+contractor_70) lies flat on the ground a hand's width from the nearer hand, inside the cell: the corpse is drawn as
+one cell, the game has no separate dropped-rifle sprite for him). The pudgy build stays pudgy (do not slim him to the walkers).
 Why: Dock 9 (quest 1, the most-seen fight) still lays every dead contractor as one straight frame, heads one way
 (`gtai-masters/n9/world/` dock9 still to come); the owner's verdict "they lay down like in the bed now".
