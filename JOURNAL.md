@@ -701,3 +701,34 @@ NEXT (it11):
    FLAME_DEG, re-film the King seed 2 burst (f250-302).
 4. Freeze prep (10:30): the exe (`--export-release windows-showcase ../build/export/windows/RTAI.exe`), REPORT.md with
    Calls 1-18, the combined 30-90 s clip of the set.
+
+## it11 (08:10-08:20)
+
+(Written in it12 from the commit and docs/decisions.md: the it11 session committed and stopped before its JOURNAL entry;
+it left an uncommitted `Log.info("probe", ...)` in RivetFrames._set_strip, reverted in it12.)
+- MILESTONE `a4026117` **the drawn claw reload ships** (it10 NEXT 1, the library's it137 picks): `p70|p55/rivet_reload_
+  {pistol,plasma_rifle,gatling}.png` (cells 0-4 the reload pose per facing, 5-7 magazine out / in / ready at 3/4
+  toward right) + `_left.png` (3 drawn left views), cut by `tools/art/rivet_frames.py --manifest` (new: per-row fig_h,
+  `--only=`). DECISION rivet/reload-pack: fig_h = 110 x sqrt(equipped dome / reload dome) where the dome width is > 5 %
+  off (p70 pistol 116.4, p55 pistol 102.5, p55 plasma rifle 97.5, p55 gatling left 105.4; the rest 110); the 3-frame
+  band height-matched to cell 1. Provenance 12 lines. Test: every family ships at both pitches. Not filmed in it11.
+
+## it12 (08:26-09:26)
+
+Read: JOURNAL it10 NEXT (it11 wrote none), git log, the other journals (world it24 / perf it9 / handheld 08:25: no
+REQUEST to rivet), the asset lane (it141-143: past its own freeze, my up-flame REQUEST queued, not served; it offers a
+flamer reload `rivet_reload_flamer_70_claw_v2` B, not keyed). Registry rules applied: motion-quality-gating (judge the
+reload in motion, per held frame, before/after from one build with the toggle), realtime-combat-semantics (the reload
+is view only: the shot origin and the reload timing do not move).
+- Gates on a4026117 (the reload art): director reel `reel-director-it12-<v>.log` 19/19 fully down in top, tilt70,
+  combo, 0 SCRIPT ERROR, exit 0 (08:27-08:32, three in parallel; tilt70 finished this time).
+- FILMED + SEEN **the drawn reload in motion** (King combo 48 px/m seed 1 `--loadout=pistol`, 900 frames, 0 SCRIPT
+  ERROR; before = `--rivet-reload=off`, the same seed, deterministic: same frames). A temporary strip probe (reverted)
+  found the reload cell at f335, f566, f797, each for only ~7 frames: the boss bot strafes in pulses (eq / walk swap
+  every 7-8 frames) and the walk wins while he moves; the arena gunplay bot (tilt70 64 px/m seed 3) never stood in a
+  reload in 900 frames (0 reload strips). Looked at f333-341 and f564-572 at x2: **before**, the at-rest cell is the
+  side fire cell, its drawn yellow flash pointing right while he reloads aiming up the screen (a false shot);
+  **after**, the claw reload pose on his real facing (the back view), no flash; the tracer is the same in both rows.
+  `gtai-masters/n9/rivet/rivet_reload_pistol_before_after_king_combo_48ppm_x2_seed1_f333_572.png`; frames.json 15
+  (dropped the pistol p55 run still: entry 3 covers the pistol run, entry 8 the p55 runs).
+  Finding for Call 18: in the bot scenes the drawn reload is a 7-frame flash; a player who stops to reload sees it in full.
