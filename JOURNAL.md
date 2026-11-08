@@ -215,13 +215,19 @@ wire if you want his death on the ground plane like the cast's (StreetDeadPlan.d
 - C-4 the robe at 70: the bust hides most of it (LIFT 0.74). Options: (a) as built; (b) LIFT 0.6 at 70 so more
   robe shows (the bust stands taller; one value); (c) a 70 robe drawn shorter at the top.
 
+- MILESTONE (02:26) item 4, the view half, at 42ca18ba (DECISION world/dead-stop-at-walls-view): the plan pose is
+  pulled back along the blow so its head end stops short of the first building / prop cell (`StreetDeadPlan.solid`
+  = the city blood's `_solid`, set in boot/city_blood.gd). Unit 1826/0, lint 15/15; the riot at seed default
+  re-filmed: the same frame at t 22 as 71c0b951's (no wall in reach there, deterministic), 0 SCRIPT ERROR. The sim
+  half (props as solids in the thrown slide, both twins) and the kerb-barrier before/after (seed 5 tick 900) owed.
+
 NEXT (it5):
 1. Read the journals (rivet: the knock field is answered above; assets: the 5 walker dead sheets).
 2. Item 3 (cars knock Rivet down), per it1's scoping: BD_CAR_HIT in body.cpp + sim_body.gd op for op, a parity case
    with it on, `just native` debug + release, scenarios (struck at speed; a car creeping); then
    `Events.rivet_knocked(heading, speed_mps)` and the rig meta `rivet_knock` = Vector3(hx, hy, tick) for rivet.
-3. Item 4 (bodies stop at walls): props' footprints as solids in the thrown slide (both twins) + bound the plan
-   pose's pelvis offset by the first solid along the blow (StreetDeadPlan.PELVIS_K x the free distance).
+3. Item 4 (bodies stop at walls): the view bound landed (42ca18ba); still owed: props' footprints as solids in the
+   thrown slide (both twins, parity), then film the kerb barrier.
    Before/after: the kerb barrier, seed 5 tick 900.
 4. Item 2 follow-ups: wire the 5 walker sheets when served; the wound stamps (kill_marks) follow the plan pose;
    film quest 1 Dock 9 and the city block (`--arena=city`) before/after.
