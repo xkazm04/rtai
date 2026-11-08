@@ -139,6 +139,20 @@ func test_two_bodies_on_one_spot_still_part() -> void:
 	assert_almost_eq(push.length(), StreetQuestDeadPush.SPACE_M * PPM, 0.01, "parted to SPACE_M")
 
 
+func test_a_crowd_on_one_spot_ends_with_nobody_on_anybody() -> void:
+	var r: float = StreetQuestDeadPush.SPACE_M * PPM
+	var c: Vector2 = Vector2(400, 300)
+	var drawn: Array[Vector2] = []
+	for i: int in 5:
+		var id: int = -1000041 - i
+		var at: Vector2 = c + Vector2(float(i), float(-i)) * 2.0
+		assert_gte(StreetDeadPlan.pick(id, &"", at), 0, "lying")
+		drawn.append(at + StreetQuestDeadPush.push_of(id, at, PPM))
+	for i: int in drawn.size():
+		for j: int in i:
+			assert_gt(drawn[i].distance_to(drawn[j]), r * 0.99, "%d clear of %d" % [i, j])
+
+
 func test_the_soak_spot_is_the_drawn_pelvis_when_the_plan_draws() -> void:
 	var h: Fighter = _guard(4, Vector2.RIGHT)
 	h.pos = Vector2(12.0, 30.0)

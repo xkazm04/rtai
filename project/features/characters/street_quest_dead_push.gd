@@ -5,11 +5,15 @@ extends RefCounted
 ## neighbours on two sides do not cancel, capped at PUSH_MAX_M, and fixed at first sight so the
 ## earlier dead never move. Dock 9's crossing heaped five into one blob at 64 px/m. View only.
 
-## Drawn bodies are about 2 m across at 64 px/m. Filmed at Dock 9's crossing: 1.9 / 2.2 leaves one
-## touching pair and no stack; 2.1 / 3.0 and 2.3 / 2.4 stack two bodies. 0 = no push.
-const SPACE_M: float = 1.9
-const PUSH_MAX_M: float = 2.2
+## Drawn bodies are about 2 m across at 64 px/m. Judged on Dock 9 settled (t13900; a body under
+## FALL_TICKS old is still sliding into its push, and reads as a stack): 1.9 / 2.2 leaves a hand
+## touching, 2.3 / 3.0 throws a body 3 m off its blood. 0 = no push.
+const SPACE_M: float = 2.1
+const PUSH_MAX_M: float = 2.4
 const PUSH_PASSES: int = 8
+## The search for a clear spot when relaxation leaves an overlap: RINGS circles out to PUSH_MAX_M.
+const RINGS: int = 8
+const RING_STEPS: int = 16
 
 static var _pushed: Dictionary[int, Vector2] = {}
 ## Each corpse's cell centre before its push (px): a body is drawn a pelvis along its head from his
@@ -28,6 +32,8 @@ static func push_of(actor: int, centre: Vector2, px_per_m: float) -> Vector2:
 		for o: Vector2 in others:
 			push += _shove(centre + push - o, SPACE_M * px_per_m, actor)
 	push = push.limit_length(PUSH_MAX_M * px_per_m)
+	if not _is_clear(centre + push, others, SPACE_M * px_per_m):
+		push = _nearest_clear(centre, others, px_per_m, actor)
 	if _pushed.size() >= StreetDeadPlan.MEMORY:
 		reset()
 	_pushed[actor] = push
@@ -49,6 +55,43 @@ static func _others_of(actor: int) -> Array[Vector2]:
 			var v: Vector3 = StreetDeadPlan._lying[key]
 			out.append(_centres.get(key, Vector2(v.x, v.y)) + _pushed.get(key, Vector2.ZERO))
 	return out
+
+
+## n10: relaxation in a crowd can end on a spot that still overlaps a neighbour (the last shove
+## undoes the first), so that body takes the nearest clear spot on growing rings, each body starting
+## its rings at its own angle; none clear within PUSH_MAX_M = the spot that clears the nearest most.
+static func _nearest_clear(
+	centre: Vector2, others: Array[Vector2], px_per_m: float, actor: int
+) -> Vector2:
+	var r: float = SPACE_M * px_per_m
+	var cap: float = PUSH_MAX_M * px_per_m
+	var best: Vector2 = Vector2.ZERO
+	var best_gap: float = -1.0
+	for ring: int in range(1, RINGS + 1):
+		var offset: float = float(actor) * 2.399
+		for step_i: int in RING_STEPS:
+			var p: Vector2 = (
+				Vector2.from_angle(offset + TAU * step_i / RING_STEPS) * cap * ring / RINGS
+			)
+			var gap: float = _nearest_gap(centre + p, others)
+			if gap >= r:
+				return p
+			if gap > best_gap:
+				best_gap = gap
+				best = p
+	return best
+
+
+static func _is_clear(at: Vector2, others: Array[Vector2], r: float) -> bool:
+	return _nearest_gap(at, others) >= r
+
+
+## The distance from `at` to the nearest other body (INF with none).
+static func _nearest_gap(at: Vector2, others: Array[Vector2]) -> float:
+	var gap: float = INF
+	for o: Vector2 in others:
+		gap = minf(gap, at.distance_to(o))
+	return gap
 
 
 ## The shove owed to a body `off` from a neighbour, to `r` (px); bodies on one spot part along a
