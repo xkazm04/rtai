@@ -21,12 +21,15 @@ whose muzzle could be measured -> [x, y] px from the cell's top-left (unmirrored
 - A swing with no drawn arc (STRIKE_TIP): its side strike cell's (5) tip, the smear's reach.
 - A one-handed hold's drawn left strip (cells 0-2): the gun points left, so the muzzle is the
   leftmost opaque pixel in the arm band (ARM_BAND of the figure height, below the helmet).
+- n9: a stream's diagonal fire strip (rivet_eq_<weapon>_diag, 4 cells): the drawn flame's root.
 
 --check exits 1 when the table on disk differs from a fresh measure. --sheet writes a contact
 sheet with every measured point marked (a red cross) to judge by eye. Deterministic.
 """
 
+import glob
 import json
+import os
 import sys
 
 import numpy as np
@@ -43,6 +46,7 @@ FACE_WEAPONS = ("flamethrower",)
 FACE_BAND = (0.38, 0.86)
 EQ_CELLS = 8
 LEFT_CELLS = 3
+DIAG_CELLS = 4
 MIN_FLASH = 6
 ARM_BAND = (0.38, 0.72)
 VISOR_BAND = 0.58
@@ -165,8 +169,32 @@ def measure(out_dir, strips):
                     cells[str(c)] = p
             if cells:
                 rows[name] = {"cells": cells}
+        rows.update(measure_diag(out_dir, art))
         table[art] = rows
     return table
+
+
+def measure_diag(out_dir, art):
+    """n9: a stream's diagonal fire strip (tools/art/rivet_flame_diag.py, DIAG_CELLS cells): each
+    cell's flame root, as a fire cell toward the camera measures it (no back-blast side)."""
+    rows = {}
+    for path in sorted(glob.glob(f"{out_dir}/{art}/rivet_eq_*_diag.png")):
+        name = os.path.basename(path)[:-4]
+        im = np.asarray(Image.open(path).convert("RGBA"))
+        w = im.shape[1] // DIAG_CELLS
+        cells = {}
+        for c in range(DIAG_CELLS):
+            p = fire_point(im[:, c * w : (c + 1) * w], 6)
+            if p is not None:
+                cells[str(c)] = p
+        rows[name] = {"cells": cells}
+    return rows
+
+
+def n_cells(name):
+    if name.endswith("_diag"):
+        return DIAG_CELLS
+    return LEFT_CELLS if name.endswith("_left") else EQ_CELLS
 
 
 def contact(out_dir, table, path):
@@ -174,8 +202,7 @@ def contact(out_dir, table, path):
     for art in table:
         for name, row in table[art].items():
             im = Image.open(f"{out_dir}/{art}/{name}.png").convert("RGBA")
-            n = LEFT_CELLS if name.endswith("_left") else EQ_CELLS
-            w = im.width // n
+            w = im.width // n_cells(name)
             for c, (x, y) in row["cells"].items():
                 t = Image.new("RGBA", (w, im.height), (120, 120, 120, 255))
                 t.alpha_composite(im.crop((int(c) * w, 0, (int(c) + 1) * w, im.height)))

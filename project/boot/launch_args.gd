@@ -88,7 +88,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--rivet-walk",
 	# n9-rivet: --rivet-walk-armed=off keeps the equipped facing card while a weapon is out
 	"--rivet-walk-armed",
-	# n9-rivet: --rivet-flame=cone brings back d9's flamer (the drawn flame on 3 octants only)
+	# n9-rivet: --rivet-flame=cone brings back d9's flamer (the drawn flame on 3 octants only);
+	# --rivet-flame=side fires the side cell on the diagonals too (no drawn diagonal flame)
 	"--rivet-flame",
 	# d9-perf: --perf-hud draws the frame-budget overlay (dev/perf/perf_hud.gd), read only
 	"--perf-hud",

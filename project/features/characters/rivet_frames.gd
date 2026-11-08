@@ -52,7 +52,7 @@ static func step(rig: CutRig) -> void:
 	var walk: String = RivetWalk.path_of(rig, art, weapon) if path != "" else ""
 	if path != "" and LEFT[oct_of(rig)] == 1 and RivetStrips.ONE_HAND.has(weapon):
 		path = RivetStrips.left_of(art, weapon)
-	path = walk if walk != "" else path
+	path = walk if walk != "" else RivetStrips.diag_or(rig, art, weapon, path)
 	if not ENABLED or path.is_empty():
 		release(rig)
 		return
@@ -96,8 +96,8 @@ static func owns_weapon(rig: CutRig) -> bool:
 static func cell_of(rig: CutRig, cells: int, walk_ph: float = -1.0) -> Vector2i:
 	var o: int = oct_of(rig)
 	var left: int = LEFT[o]
-	if cells == LEFT_CELLS:
-		return Vector2i(clampi(o - 3, 0, 2), 0)
+	if cells < EQ_CELLS and walk_ph < 0.0:  # a drawn left strip, a diagonal fire strip
+		return Vector2i(RivetStrips.small_cell(o, cells), 0)
 	if rig.dead or (rig.react != null and rig.react.dying):
 		return Vector2i(Cell.DEATH, 0)
 	if walk_ph >= 0.0:
@@ -189,10 +189,11 @@ static func _set_strip(card: Sprite2D, path: String) -> void:
 	var left: bool = path.ends_with("_left.png")
 	var cols: int = RivetWalk.cols_of(path)
 	card.hframes = (
-		BASE_CELLS if path.ends_with(RivetStrips.BASE) else (LEFT_CELLS if left else EQ_CELLS)
+		BASE_CELLS if path.ends_with(RivetStrips.BASE) else RivetStrips.cells_of(path, left)
 	)
 	card.hframes = cols if cols > 0 else card.hframes
 	card.vframes = RivetWalk.ROWS if cols > 0 else 1
 	var w: float = card.texture.get_width() / float(card.hframes)
-	card.offset = Vector2(-w * 0.5, PAD_PX - card.texture.get_height() / float(card.vframes))
+	var foot: float = RivetStrips.foot_px(path)
+	card.offset = Vector2(-w * 0.5, foot - card.texture.get_height() / float(card.vframes))
 	card.set_meta(ON, path)

@@ -31,7 +31,17 @@ const CONE_OFF: StringName = &"rivet_cone_off"
 ## keeps posing the hidden held part so the game's smear (MeleeSmearView) still sweeps the cut.
 ## The katana, chainsaw and plasma sword sheets draw their own arc (no game smear over it).
 const NO_ARC: Dictionary[String, Array] = {"p55": [&"electro_baton"]}
+## n9 it5: a stream's drawn DIAGONAL fire cells (tools/art/rivet_flame_diag.py: the library's
+## fire_diag cells, the left ones drawn): rivet_eq_<weapon>_diag.png, 4 cells (3/4 toward right,
+## 3/4 away right, 3/4 toward left, 3/4 away left) by octant. A toward flame reaches below his
+## feet, so the strip's foot line sits DIAG_FOOT_PX above the cell bottom (the tool prints it).
+## --rivet-flame=side fires the side cell on the diagonals too (it3's two flames).
+const DIAG: String = "_diag.png"
+const DIAG_CELLS: int = 4
+const DIAG_CELL: PackedInt32Array = [-1, 0, -1, 2, -1, 3, -1, 1]
+const DIAG_FOOT_PX: Dictionary[String, float] = {"p70": 35.0, "p55": 15.0}
 static var cone: Array[StringName] = []
+static var diag: bool = true
 static var _logged: Dictionary[StringName, bool] = {}
 
 
@@ -43,6 +53,29 @@ static func strip_of(art: String, weapon: StringName) -> String:
 		return ""
 	var eq: String = DIR + art + "/rivet_eq_" + String(weapon) + ".png"
 	return eq if weapon != &"" and ResourceLoader.exists(eq) else base
+
+
+## `path`, or the weapon's drawn diagonal fire strip while a shot latches at a diagonal octant.
+static func diag_or(rig: CutRig, art: String, weapon: StringName, path: String) -> String:
+	if not diag or weapon == &"" or cone.has(weapon) or DIAG_CELL[RivetFrames.oct_of(rig)] < 0:
+		return path
+	var d: String = DIR + art + "/rivet_eq_" + String(weapon) + DIAG
+	return d if fire_latched(rig) and ResourceLoader.exists(d) else path
+
+
+## A short strip's cell for octant `o`: a drawn left strip (3) or a diagonal fire strip (4).
+static func small_cell(o: int, cells: int) -> int:
+	return maxi(DIAG_CELL[o], 0) if cells == DIAG_CELLS else clampi(o - 3, 0, 2)
+
+
+## The cell count of a non-grid strip, and its feet's pad above the cell bottom (px).
+static func cells_of(path: String, left: bool) -> int:
+	return DIAG_CELLS if path.ends_with(DIAG) else (RivetFrames.LEFT_CELLS if left else 8)
+
+
+static func foot_px(path: String) -> float:
+	var art: String = path.get_base_dir().get_file()
+	return DIAG_FOOT_PX.get(art, 0.0) if path.ends_with(DIAG) else RivetFrames.PAD_PX
 
 
 ## A one-handed hold turned left: its drawn left strip, else the base (the fallback, logged once).
