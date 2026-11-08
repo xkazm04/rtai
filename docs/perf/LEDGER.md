@@ -394,6 +394,51 @@ map; a planted x / y swap caught); gate on 1d5a65c1 ALL PASS (unit 1838 / 0, sce
 goldens 11 / 11, release-compile 618 / 0), the reel 19 / 19 in top, tilt70, combo, 0 SCRIPT ERROR. The bigger cut is a per-cell solid cache in CityBlood invalidated
 by the sim's chunk stamp / clear (exact; est. most of the 210 us).
 
+### L22b (it7): a per-cell solid memo for the wall checks: DROPPED (a wash)
+Hypothesis: a drop moves a few px a tick and a sim cell is 32 px, so a per-frame `Dictionary[int, bool]` of the cells
+already asked (cleared after each blood.step; exact while the map holds still) skips most native `cell_at` calls:
+est. -100 us of step_ticks. Built (`evidence/perf/n9-it7/l22b/l22b.diff`: CitySolidMemo + CityBlood, a test that the
+memo == the direct answer over a sweep, off the map, and forgets a cleared chunk). A/B (cvprof, riot, 6 interleaved
+pairs, CONTENDED 2-9; `ab-l22b.txt`): step_ticks old 343 / 294 / 310 / 333 / 401 / 276, new 265 / 255 / 301 / 386 /
+254 / 265 (raw medians 322 -> 265, 5 of 6 pairs better). But the unchanged CorpseStains.step in the same runs swings
+with the machine (129-190 us), and **step_ticks / stains** is old 2.01-2.12 (median 2.06) vs new 1.95-2.04 (median 1.97):
+~-4 %, ~-13 us, ranges overlapping. The raw -17 % was machine load. The memo's floori + Dictionary.get + the Callable
+into `_solid` cost about what L22a's direct `Object.call` costs. **Dropped**; not committed. The remaining wall-check
+cost is the GDScript per-drop work itself (a C++ drop step is the lever, not worth it at ~0.2 ms).
+Lesson (measurement-honesty): an in-run control (an unchanged system timed in the same frames) is what separates a
+lever from the machine; raw medians of 3 pairs on a shared box were not enough here.
+
+### L23 (it7): the corpse soaks measure only the walkers near them: KEPT (4bc6d82c)
+Split first (cvprof timers in CorpseStains, riot; `evidence/perf/n9-it7/l23/split-t0.txt`): step 138 us = the feed
+scan 39 + `_match` 10.5 + the soak loop 84.5, of which **`_uncovered` 69.5**: 14.8 live soaks x 263 feed rows, every
+walker measured for every soak. Hypothesis: sort the walkers by x once a step (native `PackedVector2Array.sort`) and
+`bsearch` each soak's CLEAR_M x-window (+1 px for the float32 edge); the same distance test on what is left, and minf is
+order-free, so the alpha is bit-identical. Est. -50 us. Change: `StainCover.cover(at, by_x)` (new file: the debt ratchet
+keeps corpse_stains.gd at <= 245 lines; it is 244), `CorpseStains._by_x` sorted in `step_bodies`. Test
+`test_corpse_stains_cover`: cover == the old full scan over 60 hashed scenes of 0-300 walkers (ties in x every third
+scene), at the window's edges (+-0.001 px), with none; the host's `walkers` keep their order.
+A/B (cvprof, riot, 4 interleaved pairs, CONTENDED 0-2; `ab-l23.txt`): CorpseStains.step old **141 / 133 / 144 / 135**
+vs new **103 / 102 / 106 / 107 us** (median 138 -> 104, **-25 %, -34 us a riot frame**, ranges apart); the control
+blood.step 370-406 in both arms. **KEPT**: the new baseline. Mutation (`mutate-l23.txt`, stain_cover.gd at 4bc6d82c):
+9 killed / 5 survived (64.3 %); all 5 survivors are equivalent mutants (the two +1 px window margins -> 0, the break's
+`>` -> `>=`, and on clear2 `<` -> `<=` and pow 2 -> 3: smoothstep is already 1 at and past CLEAR_M), so every
+non-equivalent fault is caught. Reel x3 on 4bc6d82c: 19 / 19 fully down in top, tilt70, combo, 0 SCRIPT ERROR
+(`evidence/perf/n9-it7/reel-l23/`).
+
+### L24 (it7): CityOccluders.near without its key Dictionary: KEPT (509580ac)
+The it6 counts: the riot's near() finds 0 candidates in 33 chunk calls a frame, so its ~130 us is per-call overhead.
+Hypothesis: the 4-element array literal and the `Dictionary[Vector2i, bool]` of corner keys (built, then iterated) plus
+`is_resident` + `chunk_at` (two lookups) are most of it; two `range` loops over the corners' chunk span (32 x 32 m < a
+128 m chunk: 1-2 a side) give the same keys in the same order (lo / hi are the same float32 corner sums), and
+`chunk_at` alone returns null off the residency. Est. -40 us riot. Test (`test_city_occluders`): near == the old
+Dictionary walk over 400 queries around the chunk seams with one chunk missing, with and without a body box; a swapped
+loop order and a dropped seam row are both caught.
+A/B (cvprof, 3 interleaved pairs, CONTENDED 2-6, `evidence/perf/n9-it7/l24/ab-l24.txt`), near us a frame: riot old
+**139 / 132 / 156** vs new **97 / 101 / 102** (median -38 us, -27 %, ranges apart; near / crowd+lift, an unchanged
+timer in the same frames: 1.28-1.34 vs 1.05-1.06); drive old 206 / 217 / 219 vs new 180 / 210 / 161 (near / crowd+lift
+1.72-1.74 vs 1.54-1.56: -10 %). Hidden body-frames and crowd patches identical (riot 0 / 11669, drive 3432 / 5154).
+**KEPT**.
+
 ### Gates (it6)
 On 8990b643 (L20, the clean re-run owed from it5; `evidence/perf/n9-it6/evidence-8990b643.txt`) and on 6b75d795
 (L20b + L20c; `evidence-6b75d795.txt`): ALL PASS: lint 15 / 15, unit 1835 / 0 and 1837 / 0, scenarios 54 / 54, parity
