@@ -35,3 +35,32 @@
   measurement-honesty (each count with its denominator; fix40 reported as the failure it is; all CONTENDED).
 - DECISION perf/crowd readback: async readback kept (no main-thread stall, same bytes), recorded in docs/decisions.md;
   explicitly not claimed as the F-19 fix.
+- 01:38 READ journals: world NOTE (01:36) item 1 landed at 3e02d3b8 (combo default, bikes 6 %, BC7 on 772 imports,
+  goldens re-blessed). No REQUEST to perf from world / rivet / handheld. Consequence for item 2: under BC7 the p70
+  traffic sheet is 4032 x 4480 x 1 B = ~18 MB (one upload, a 32 MB pow2 staging buffer), already under the 32 MB line;
+  the split only pays where the sheet stays lossless. Check on world's branch before wiring it in.
+- 01:37 rtsep (`--render-thread separate`): 3 / 8 frozen: no workaround.
+- 01:40 MILESTONE novsync (`--disable-vsync`): **0 / 8 frozen** (every vsync arm ~1 in 3). The hang is tied to the vsync
+  present path (a present that never completes would block the queue, and the frame fence after it never signals) or
+  to vsync's timing. settings.apply() at Start sets no vsync mode (checked). FIRST in it2: `--disable-vsync --max-fps 60`
+  (vsync off, same pacing) and the mailbox mode, 10 runs each; if vsync-off-capped holds at 0 / 40 it is the fix candidate
+  (a frame-pacing call: tearing; the owner's pacing option, item 3, could carry it).
+
+NEXT (it2):
+1. F-19 is an ENGINE hang (RenderingDevice::_begin_frame -> fence_wait INFINITE on a frame fence; LEDGER n9 F19).
+   a. Read servers/rendering/rendering_device.cpp (4.7 branch, raw github, ~450 KB: WebFetch with offset 100000,
+      200000, ...) for `_stall_for_frame`, `_end_frame`/`_execute_frame`, `_submit_transfer_workers`: list the
+      semaphores the frame submission waits on and how one can be left unsignalled.
+   b. Confirm on a live frozen run with cdb (`hunt2.ps1`, F19_CDB=1 + extra commands): the frame fence's
+      `GetCompletedValue` vs the waited value, and what the queue is blocked on.
+   c. Workaround candidates (each one hunt2 round of 8-10; acceptance is 0 / 40): preload/upload every quest texture
+      on the title card before Start (no uploads in the first frames); `rendering/rendering_device/vsync/
+      frame_queue_size`; delay the first quest frames' uploads; check the release export and the real Start click
+      (no --autostart: `hunt2.ps1 -NoAutostart` + a click, or `-Exe build/export/windows/RTAI.exe`).
+   d. If it needs an engine patch: a 4.7.2 template build with the fix (tools/perf/template/strip.py has the MSVC
+      recipe) = an owner Call (custom engine), with the counts.
+2. Traffic split (item 2): BC7 landed on world (3e02d3b8). Measure the p70 traffic sheet's import size there; if
+   <= 32 MB the split is moot under BC7 (DECISION + LEDGER), else wire tools/art/split_sheet.py bands into
+   VehicleCards (one MultiMesh, the shader picks the band: draw order unchanged) + frame diff + ab.mjs under bench.lock.
+3. Pacing option (item 3): PlayerSettings `pacing` efficient / steady in the pause card (desktop default efficient).
+4. Re-measure the frame-time / VRAM / RAM table on world's branch (its NOTE says BC7 landed).

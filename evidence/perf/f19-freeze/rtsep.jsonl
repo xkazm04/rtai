@@ -1,0 +1,9 @@
+﻿{"tag":"rtsep","run":1,"cores":0.177,"responding":true,"pid":47052}
+{"tag":"rtsep","run":2,"cores":0.141,"responding":true,"pid":56396}
+{"tag":"rtsep","run":3,"cores":0.01,"responding":false,"pid":58868}
+{"tag":"rtsep","run":4,"cores":0.26,"responding":true,"pid":47952}
+{"tag":"rtsep","run":5,"cores":0.016,"responding":false,"pid":20368}
+{"tag":"rtsep","run":6,"cores":0.24,"responding":true,"pid":39812}
+{"tag":"rtsep","run":7,"cores":0.214,"responding":true,"pid":7624}
+{"tag":"rtsep","run":8,"cores":0,"responding":false,"pid":23608}
+{"tag":"rtsep","runs":8,"frozen":3}

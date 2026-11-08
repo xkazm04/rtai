@@ -20,6 +20,8 @@ frozen when the process uses < 0.05 cores 12-15 s in (`evidence/perf/f19-freeze/
 | trace4 | async readback + traces | 2 / 6 | stops after `HB pf6` / `pf8`, no GDScript wait open: inside the engine's frame |
 | nobake | crowd bake skipped (scratch hook) | 1 / 3 | the bake is not needed for the freeze |
 | vulkan | `--rendering-driver vulkan` | n/a | crashes at boot in `amdxc64.dll` (the iGPU's driver): no Vulkan arm on this PC (`vulkan-boot-crash.log`) |
+| rtsep | `--render-thread separate` | 3 / 8 | not a workaround |
+| novsync | `--disable-vsync` (uncapped, ~1 core) | **0 / 8** | the first arm without a freeze (vsync arms ~1 in 3 over ~40 runs; 0 / 8 at p = 1/3 is ~4 % by chance): the freeze is tied to the vsync present path, or to its timing. Next: `--disable-vsync --max-fps 60` and the mailbox mode, to tell the two apart |
 | cdb | WinDbg's cdb attached non-invasively to each frozen run (`stacks-cdb-{2,4,6,8}.txt`) | 4 / 8 | **the same main-thread stack in all 4** (below) |
 
 Frozen main thread (all 4): `ntdll!NtWaitForSingleObject` <- `KERNELBASE!WaitForSingleObjectEx` <- `+0x1389030` <-

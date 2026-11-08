@@ -2,7 +2,7 @@
 # After -Settle s, 3 s of process CPU; a run under 0.05 cores is a freeze: its log is copied as freeze-<tag>-<n>.log.
 # -Exe <path> runs an exported exe instead (no --path). One JSON line per run.
 param([int]$Runs = 10, [string]$Tag = 'x', [int]$Settle = 12, [string]$Exe = '', [string]$Extra = '',
-  [switch]$NoAutostart, [string]$Driver = 'd3d12')
+  [switch]$NoAutostart, [string]$Driver = 'd3d12', [string]$EngineExtra = '')
 $here = Split-Path -Parent $MyInvocation.MyCommand.Path
 $repo = Resolve-Path (Join-Path $here '..\..\..')
 $godot = 'C:\Users\kazda\kiro\gtai-spike\tools\godot\Godot_v4.7.2-stable_win64_console.exe'
@@ -11,6 +11,7 @@ $tmp = 'C:\Users\kazda\kiro\gtai-n9\tmp\perf'
 $frozen = 0
 for ($n = 1; $n -le $Runs; $n++) {
   $a = @('--rendering-driver', $Driver, '--resolution', '1920x1080')
+  if ($EngineExtra -ne '') { $a += $EngineExtra.Split(' ') }
   $bin = $godot
   if ($Exe -ne '') { $bin = $Exe } else { $a = @('--path', "$repo\project") + $a + @('res://boot/quest1.tscn') }
   $a += @('--')
