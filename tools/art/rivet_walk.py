@@ -13,6 +13,9 @@ cell's bottom. Premultiplied resampling. Deterministic. n9: --cols=8 packs the l
 walk (columns contact, down, passing, up, contact (other foot), down, passing, up).
 n9 it4: <left_cells_dir> = "mirror" builds the left rows from right rows 2-4 mirrored (a two-handed
 hold without drawn left views: the heavy and flamer armed walks; the equipped strips mirror those too).
+--tone=<ref.png> matches the grid's per-channel mean and spread (opaque pixels, straight RGB, alpha
+untouched) to the reference strip's, so the walk does not change tone when the strip swaps (the armed
+walks against the weapon's equipped strip: the library sheets read ~10-20 levels lighter).
 """
 
 import json
@@ -54,6 +57,17 @@ def _mirrored(rows: list) -> list:
     return out
 
 
+def _tone(out: Image.Image, ref_path: str) -> Image.Image:
+    a = np.asarray(out).astype(np.float64)
+    r = np.asarray(Image.open(ref_path).convert("RGBA")).astype(np.float64)
+    m, rm = a[:, :, 3] > 200, r[:, :, 3] > 200
+    rgb = a[:, :, :3]
+    mu, sd = rgb[m].mean(0), rgb[m].std(0)
+    rmu, rsd = r[:, :, :3][rm].mean(0), r[:, :, :3][rm].std(0)
+    a[:, :, :3] = np.clip((rgb - mu) * (rsd / sd) + rmu, 0, 255)
+    return Image.fromarray(np.round(a).astype(np.uint8), "RGBA")
+
+
 def main() -> None:
     opts = {a.split("=")[0][2:]: a.split("=", 1)[1] for a in sys.argv[1:] if a.startswith("--")}
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
@@ -75,9 +89,12 @@ def main() -> None:
         fig = fig.resize(size, Image.LANCZOS).convert("RGBA")
         col, row = i % cols, i // cols
         out.alpha_composite(fig, (col * cw + round(cw / 2 - (c["ax"] - x0) * s), (row + 1) * ch - PAD - size[1]))
+    if "tone" in opts:
+        out = _tone(out, opts["tone"])
     out.save(args[2], optimize=True)
     meta = {"cell": [cw, ch], "cols": cols, "rows": 8, "fig_h": fig_h, "pad": PAD, "scales": [round(k, 4), round(kl, 4)]}
     meta["src"] = [args[0], args[1]]
+    meta["tone"] = opts.get("tone", "")
     if "json" in opts:
         with open(opts["json"], "w", encoding="utf-8") as fh:
             json.dump(meta, fh, indent=1, sort_keys=True)

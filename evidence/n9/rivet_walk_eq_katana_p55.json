@@ -14,5 +14,6 @@
  "src": [
   "C:/Users/kazda/kiro/gtai-art/library/keyed/rivet/rivet_walk_armed_blade_55_v3_cells",
   "C:/Users/kazda/kiro/gtai-art/library/keyed/rivet/rivet_walk_armed_blade_55_left_v4_cells"
- ]
+ ],
+ "tone": "project/features/characters/art/view/p55/rivet_eq_katana.png"
 }

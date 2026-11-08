@@ -14,5 +14,6 @@
  "src": [
   "C:/Users/kazda/kiro/gtai-art/library/keyed/rivet/rivet_walk_armed_heavy_55_v2_v2_cells",
   "mirror"
- ]
+ ],
+ "tone": "project/features/characters/art/view/p55/rivet_eq_gatling.png"
 }

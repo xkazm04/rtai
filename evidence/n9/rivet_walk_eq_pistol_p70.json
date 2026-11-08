@@ -14,5 +14,6 @@
  "src": [
   "C:/Users/kazda/kiro/gtai-art/library/keyed/rivet/rivet_walk_armed_onehand_70_v2_cells",
   "C:/Users/kazda/kiro/gtai-art/library/keyed/rivet/rivet_walk_armed_onehand_70_left_v5_cells"
- ]
+ ],
+ "tone": "project/features/characters/art/view/p70/rivet_eq_pistol.png"
 }
