@@ -570,3 +570,11 @@ NEXT (it20+):
 4. The freeze (10:30): the director reel x3 at the head with `--quit-after 16000` (top, tilt70, combo), the full
    gate if anything moved since it19's, the exe (`build/export/windows/RTAI.exe`, the REPORT command line),
    REPORT.md finalised (remove DRAFT), `git worktree remove --force C:/Users/kazda/kiro/gtai-n9/tmp/world/before`.
+- (06:36) GATE at 39e3e9e5 (code = db8cdbb8; later commits are JOURNAL / REPORT only), `node tools/evidence/run.mjs
+  --no-bench`, rc 0: lint 15/15, unit **1840/0**, scenarios 55 ran (rig_stress p50 1.092 > 1.000 CONTENDED: my
+  own reel ran beside it; it is Call C-1's band anyway), parity bit-exact (planted 629), look goldens 11/11 +
+  block 5/5 worst 0.00, release-compile 617/0. `evidence/n9-world/gate-it19.log`.
+- (06:37) Director reel at ce862403 (`evidence/n9-world/reel3.sh it19`): top / tilt70 / combo **19/19 chapters
+  down, 0 SCRIPT ERROR**, exit 0 each (`evidence/n9-world/director-reel-it19*`).
+NEXT amended: item 1's "if the gate is red" is moot (green); the freeze still re-runs the reel x3 + gate only if
+code moves after ce862403.
