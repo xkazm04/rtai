@@ -682,7 +682,13 @@ Why: firing up the screen (the King fight) the game jet goes straight up; with n
 facing cell with the jet alone (b7c515cc). With (a) and (b) he draws one drawn flame along the jet there too.
 
 NEXT (it11):
-1. The reload art: when the library delivers round 0725 (`rivet_reload_{onehand,twohand,heavy}_{70,55}_claw` + lefts),
+0. (07:33 the library DELIVERED the claw reload: `deliveries/rivet_reload_claw_it137.md`, 12 picks A 3 / B 9, every pick
+   one pincer claw + the weapon in a fist; the picks are `_build` / `_v2` / `_claw` per row of its table, and where
+   dome/h is > 5 % off the claw walk it says "pack by DOME WIDTH" (one-hand 70 -8 %, heavy 70 +11 %, two-hand 55 +9 %,
+   one-hand 70 left +8 %, two-hand 70 left +8 %, heavy 70 left +6 %, heavy 55 +6 %). Not cut in it10 (no time).
+   The evidence run --no-bench on 491e206f started 07:56; at 08:05 it waited for a quiet machine (city_chase
+   CONTENDED): read `gtai-n9/tmp/rivet/it10/evidence.log` first.)
+1. The reload art: the round 0725 picks above (`rivet_reload_{onehand,twohand,heavy}_{70,55}_claw` + lefts),
    cut it with the equipped cutter (`tools/art/rivet_frames.py` manifest) into `p70|p55/rivet_reload_{pistol,
    plasma_rifle,gatling}.png` (8 cells) + `_left.png` (3 cells) at the equipped strip's FIG_PX; check the dome
    against the walk cell at 64 px/m; RivetMuzzle needs no reload point (no shot while reloading); film a standing
