@@ -372,6 +372,14 @@ budget, the one site to lift on a 720p row is that count (16 -> 18 px authored, 
 
   Kept (world's change, the owner's p-1 B): on a 16 GB shared-memory Deck the city fits in about half the GPU memory
   and the iGPU has ~1 ms more headroom. JSONs: `evidence/n9h/it1/bc7/`. Re-take under the bench lock once main has it.
+- **E18 tooling (n9 it4), a slower core on this PC:** `tools/handheld/cpu_cap.ps1` puts the game in a Windows job
+  object with a CPU-rate **hard cap** of N % of one logical CPU (`sim.mjs --cpu-cap=<pct>`; the JSON records
+  `cpu_cap`). Checked on a busy loop: cap 50 % -> 51 % measured, 25 % -> 27 %. Smoke on the game (`deck`, city,
+  600 ticks, cap 55 %, CONTENDED by 4 other Godot runs, no bench lock: indicative only): the job took the process,
+  frame p50 16.68 ms (60 holds), p99 27.6 ms, 2 settled frames > 33 ms, the game used ~0.545 of a CPU (= the cap; E15's
+  uncapped demand is ~0.53, so 55 % barely binds). Owed (E18): 45 / 35 / 25 % under the bench lock, interleaved, to
+  find where 60 Hz and the 40 Hz row break. Caveat: a rate cap throttles in slices, so it models a slower core's
+  throughput, not its latency (`evidence/n9h/it4/e18-smoke/`).
 - **E16b (n9 it4), the re-take under the bench lock**, on world's later head b0f1024e (BC7 since 746c2856, plus the
   dead redesign and the car knock-down) in my own detached worktree (`gtai-n9/tmp/handheld/w16`, its `.godot` copied
   from perf's world3 at 746c2856 and re-imported, 0 SCRIPT ERROR; `devices.json` `zoom_k` 1.25 locally) vs this branch

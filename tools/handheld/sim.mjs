@@ -13,6 +13,7 @@
 // --project=<dir> runs another checkout's project (an import-settings A/B arm in a scratch worktree).
 // --grab=<after s>:<abs .png> copies the game window's client area from the screen (grab_window.ps1).
 // --no-device runs the same pin/GPU without the --device flag (the desktop row: the A side).
+// --cpu-cap=<pct> caps the game at <pct> % of one logical CPU (cpu_cap.ps1, a job object hard cap): a slower core.
 import { spawn, spawnSync } from 'node:child_process';
 import { mkdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
@@ -49,6 +50,9 @@ export function deviceRow(id, table = JSON.parse(readFileSync(join(ROOT, 'projec
   const want = id.replaceAll('-', '_');
   return table.devices.find((d) => d.id === want) ?? null;
 }
+
+/** `--cpu-cap=<pct>` as a number in (0, 100], else 0 (no cap). */
+export const cpuCapPct = (a) => { const n = Number(a['cpu-cap']); return n > 0 && n <= 100 ? n : 0; };
 
 /** The Godot project to run: `--project=<dir>` (an A/B arm in a scratch worktree), else this checkout's. */
 export const projectDir = (a) => (a.project ? resolve(a.project) : join(ROOT, 'project'));
@@ -157,6 +161,12 @@ async function main() {
       '-AfterSec', after, '-Out', png], { windowsHide: true });
     gr.stdout.on('data', (d) => { grabbed += d.toString(); });
   }
+  let capped = '';
+  if (cpuCapPct(a) > 0) {
+    const cp = spawn('powershell', ['-NoProfile', '-NonInteractive', '-File', join(HERE, 'cpu_cap.ps1'), '-Tag', framesPath,
+      '-Pct', String(cpuCapPct(a))], { windowsHide: true });
+    cp.stdout.on('data', (d) => { capped += d.toString(); });
+  }
   const timer = setTimeout(() => killTree(game.pid), (a.ticks / 60 + 120 + (forS || 0)) * 1000);
   const code = await new Promise((done) => game.on('close', done));
   clearTimeout(timer);
@@ -170,6 +180,7 @@ async function main() {
     at: new Date().toISOString(), summary: summarize(JSON.parse(readFileSync(framesPath, 'utf8')), samples), samples };
   if (a.project) doc.project = projectDir(a);
   if (grabbed) doc.grab = grabbed.trim();
+  if (capped) doc.cpu_cap = JSON.parse(capped.trim().split(/\r?\n/)[0]);
   if (forS > 0) doc.suspend = { ...JSON.parse(suspended.trim() || '{}'), resume: resumeFrame(JSON.parse(readFileSync(framesPath, 'utf8'))) };
   const outPath = join(a.out, `${label}.json`);
   writeFileSync(outPath, `${JSON.stringify(doc, null, 2)}\n`);
