@@ -20,11 +20,15 @@ extends RefCounted
 ## it6: each armed grid has its own cycle (ARMED_CYCLE_CELL, "<art>/<weapon>"): the profile
 ## rows' stance boot from contact to the next contact (two of the 4 frame steps) x 2, mean of
 ## the right and left rows (evidence/n9/rivet_walk_armed_cycle.md); the flamer shuffles: CYCLE_CELL.
+## it7: above RUN_FROM_MPS a weapon out runs on its drawn armed run (`rivet_run8_eq_<weapon>.png`,
+## the library's run8 legs + the claw armed walk's arms, my it6 REQUEST) where the art key has one,
+## stepped on RUN_CYCLE_CELL (its legs are run8's, frame by frame); else the armed walk as before.
 
 const STRIP: String = "rivet_walk8.png"
 const STRIP4: String = "rivet_walk.png"
 const ARMED: String = "rivet_walk_eq_"
 const RUN: String = "rivet_run8.png"
+const ARMED_RUN: String = "rivet_run8_eq_"
 const RUN_CYCLE_CELL: Dictionary[String, float] = {"p70": 258.0, "p55": 212.0}
 const RUN_FROM_MPS: float = 2.5
 const MAX_RUN_CYCLES_S: float = 3.5
@@ -65,6 +69,9 @@ static func path_of(rig: CutRig, art: String, weapon: StringName) -> String:
 		if not armed or RivetStrips.fire_latched(rig):
 			return ""
 		name = ARMED + String(weapon) + ".png"
+		var armed_run: String = ARMED_RUN + String(weapon) + ".png"
+		var drawn_run: bool = ResourceLoader.exists(RivetStrips.DIR + art + "/" + armed_run)
+		name = armed_run if run and frames == 8 and fast and drawn_run else name
 	var path: String = RivetStrips.DIR + art + "/" + name
 	return path if ResourceLoader.exists(path) else ""
 
@@ -76,14 +83,20 @@ static func is_grid(card: Sprite2D) -> bool:
 
 ## True when `card` shows an armed walk grid (the drawn figure carries the weapon).
 static func is_armed(card: Sprite2D) -> bool:
-	return is_grid(card) and str(card.get_meta(RivetFrames.ON, "")).get_file().begins_with(ARMED)
+	var file: String = str(card.get_meta(RivetFrames.ON, "")).get_file() if card != null else ""
+	return is_grid(card) and (file.begins_with(ARMED) or file.begins_with(ARMED_RUN))
 
 
 ## The columns of walk grid `path`, 0 when it is not one.
 static func cols_of(path: String) -> int:
-	if path.ends_with("/" + STRIP) or path.ends_with("/" + RUN):
+	if path.ends_with("/" + STRIP) or path.ends_with("/" + RUN) or is_run(path):
 		return 8
 	return 4 if path.ends_with("/" + STRIP4) or path.get_file().begins_with(ARMED) else 0
+
+
+## True for a run grid, bare or armed (both step on RUN_CYCLE_CELL: the same drawn legs).
+static func is_run(path: String) -> bool:
+	return path.ends_with("/" + RUN) or path.get_file().begins_with(ARMED_RUN)
 
 
 ## The grid frame for octant `o` at stride phase `phase` (one cycle = a full stride, two steps).
@@ -98,7 +111,7 @@ static func phase_of(rig: CutRig, art: String, scale: float) -> float:
 	var at: Vector2 = rig.get_meta(META_AT, rig.global_position)
 	rig.set_meta(META_AT, rig.global_position)
 	var card: Sprite2D = rig.head_card
-	var running: bool = card != null and str(card.get_meta(RivetFrames.ON, "")).ends_with("/" + RUN)
+	var running: bool = card != null and is_run(str(card.get_meta(RivetFrames.ON, "")))
 	var cycle: float = cycle_cell(card, art, running) * scale
 	if (frames != 8 and not is_armed(rig.head_card)) or cycle <= 0.0:
 		return rig.phase

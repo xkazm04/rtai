@@ -139,3 +139,25 @@ func test_an_armed_grid_steps_on_its_own_measured_cycle() -> void:
 	card.set_meta(RivetFrames.ON, RivetStrips.DIR + "p70/" + RivetWalk.STRIP)
 	assert_eq(RivetWalk.cycle_cell(card, "p70", false), RivetWalk.CYCLE_CELL["p70"], "bare claw")
 	assert_eq(RivetWalk.cycle_cell(card, "p55", true), RivetWalk.RUN_CYCLE_CELL["p55"], "the run")
+
+
+func test_a_weapon_out_runs_on_its_drawn_armed_run_above_the_run_speed() -> void:
+	# n9 it7: the library's armed runs (one-hand pistol, two-hand rifle at p70): run8's legs
+	var rig: CutRig = add_child_autofree(CutRig.new())
+	rig.speed_now = RivetWalk.RUN_FROM_MPS * CharacterRigs.PX_PER_M + 10.0
+	for w: StringName in [&"pistol", &"plasma_rifle"]:
+		var path: String = RivetStrips.DIR + "p70/" + RivetWalk.ARMED_RUN + String(w) + ".png"
+		assert_eq(RivetWalk.path_of(rig, "p70", w), path, "%s runs drawn" % w)
+		assert_eq(RivetWalk.cols_of(path), 8)
+		assert_true(RivetWalk.is_run(path), "steps on the run cycle")
+		var tex: Texture2D = load(path) as Texture2D
+		assert_eq(tex.get_width() % 8 + tex.get_height() % RivetWalk.ROWS, 0, "whole cells")
+	var katana: String = RivetWalk.path_of(rig, "p70", &"katana")
+	assert_true(
+		katana.get_file().begins_with(RivetWalk.ARMED), "no drawn armed run: the armed walk"
+	)
+	RivetWalk.run = false
+	assert_true(RivetWalk.path_of(rig, "p70", &"pistol").get_file().begins_with(RivetWalk.ARMED))
+	rig.set_meta(RivetFrames.FIRE, true)
+	RivetWalk.run = true
+	assert_eq(RivetWalk.path_of(rig, "p70", &"pistol"), "", "a shot latches the fire cell")
