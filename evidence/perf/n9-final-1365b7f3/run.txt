@@ -1,0 +1,36 @@
+king main r0: p50 5.19 p99 10.94 worst 30.5 draws 561 cpu 1.02 cores ws 791 MB steady 790 last 790 frames - noTick - multiTick - errors 0
+king head r0: p50 5.10 p99 10.19 worst 23.4 draws 559 cpu 1.02 cores ws 791 MB steady 790 last 791 frames - noTick - multiTick - errors 0
+king head2 r0: p50 4.58 p99 13.01 worst 17.1 draws 557 cpu 1.01 cores ws 790 MB steady 790 last 790 frames - noTick - multiTick - errors 0
+drive70 main r0: p50 3.54 p99 6.98 worst 29.6 draws 293 cpu 1.06 cores ws 843 MB steady 838 last 843 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(0)
+drive70 head r0: p50 2.72 p99 5.79 worst 9.9 draws 293 cpu 1.05 cores ws 863 MB steady 858 last 863 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(2)
+drive70 head2 r0: p50 2.59 p99 5.92 worst 19.4 draws 293 cpu 1.06 cores ws 924 MB steady 919 last 924 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(8)
+riot main r0: p50 5.94 p99 12.54 worst 21.1 draws 734 cpu 1.03 cores ws 854 MB steady 854 last 854 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(6)
+riot head r0: p50 4.26 p99 13.05 worst 27.0 draws 734 cpu 0.98 cores ws 862 MB steady 860 last 470 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(8)
+riot head2 r0: p50 4.29 p99 10.66 worst 20.4 draws 734 cpu 0.99 cores ws 857 MB steady 856 last 857 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(8)
+king head2 r1: p50 4.03 p99 8.62 worst 11.9 draws 559 cpu 1.01 cores ws 748 MB steady 745 last 403 frames - noTick - multiTick - errors 0 CONTENDED(8)
+king head r1: p50 5.93 p99 18.98 worst 26.7 draws 554 cpu 0.91 cores ws 812 MB steady 811 last 812 frames - noTick - multiTick - errors 0 CONTENDED(8)
+king main r1: p50 4.51 p99 10.31 worst 19.0 draws 559 cpu 0.99 cores ws 749 MB steady 746 last 403 frames - noTick - multiTick - errors 0 CONTENDED(8)
+drive70 head2 r1: p50 2.70 p99 6.44 worst 20.3 draws 293 cpu 1.08 cores ws 923 MB steady 921 last 923 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(8)
+drive70 head r1: p50 2.24 p99 4.30 worst 25.3 draws 293 cpu 1.06 cores ws 926 MB steady 922 last 926 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(8)
+drive70 main r1: p50 2.67 p99 5.54 worst 9.5 draws 293 cpu 1.15 cores ws 862 MB steady 859 last 862 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(2)
+riot head2 r1: p50 5.67 p99 12.63 worst 24.1 draws 734 cpu 0.93 cores ws 862 MB steady 861 last 862 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(2)
+riot head r1: p50 3.93 p99 9.27 worst 16.6 draws 734 cpu 1.02 cores ws 924 MB steady 924 last 924 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(2)
+riot main r1: p50 4.84 p99 11.32 worst 20.4 draws 734 cpu 1.04 cores ws 865 MB steady 859 last 859 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(2)
+king main r2: p50 4.10 p99 8.27 worst 11.4 draws 558 cpu 1.00 cores ws 745 MB steady 743 last 745 frames - noTick - multiTick - errors 0 CONTENDED(2)
+king head r2: p50 4.30 p99 9.60 worst 12.2 draws 562 cpu 1.01 cores ws 751 MB steady 750 last 750 frames - noTick - multiTick - errors 0 CONTENDED(2)
+king head2 r2: p50 4.14 p99 9.03 worst 14.5 draws 560 cpu 1.03 cores ws 810 MB steady 810 last 810 frames - noTick - multiTick - errors 0 CONTENDED(2)
+drive70 main r2: p50 3.79 p99 8.29 worst 48.4 draws 293 cpu 0.94 cores ws 925 MB steady 922 last 593 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(2)
+drive70 head r2: p50 2.19 p99 4.66 worst 10.9 draws 293 cpu 1.06 cores ws 927 MB steady 921 last 927 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(2)
+drive70 head2 r2: p50 2.55 p99 8.76 worst 35.9 draws 293 cpu 1.05 cores ws 863 MB steady 859 last 863 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(0)
+riot main r2: p50 4.79 p99 10.40 worst 19.8 draws 734 cpu 0.99 cores ws 862 MB steady 860 last 862 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(2)
+riot head r2: p50 4.60 p99 11.31 worst 22.1 draws 734 cpu 1.01 cores ws 865 MB steady 864 last 865 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(1)
+riot head2 r2: p50 6.47 p99 15.48 worst 57.3 draws 734 cpu 0.94 cores ws 928 MB steady 927 last 908 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(1)
+king main: p50 4.51±0.55 p99 10.31±1.34 p99.9 14.64±2.57 worst 19.01±9.57 draws 559.09±1.21 renderCpu 0.42±0.05 gpu 0.34±0.07 vram NaN±NaN cpu 1.00±0.01 ws 749.42±22.67 wsSteady 746.24±23.77 wsLast 745.50±193.60 frames NaN±NaN noTick NaN±NaN multiTick NaN±NaN contended 2 errors 0
+king head: p50 5.10±0.82 WASH p99 10.19±4.69 WASH p99.9 13.28±6.45 WASH worst 23.39±7.21 WASH draws 559.23±3.62 WASH renderCpu 0.43±0.10 WASH gpu 0.35±0.23 WASH vram NaN±NaN WASH cpu 1.01±0.06 WASH ws 791.25±30.60 WASH wsSteady 790.26±30.23 WASH wsLast 791.25±30.95 WASH frames NaN±NaN WASH noTick NaN±NaN WASH multiTick NaN±NaN WASH contended 2 errors 0
+king head2: p50 4.14±0.28 WASH p99 9.03±2.20 WASH p99.9 12.67±1.43 WASH worst 14.52±2.61 WASH draws 558.82±1.40 WASH renderCpu 0.37±0.03 WASH gpu 0.29±0.01 WASH vram NaN±NaN WASH cpu 1.01±0.01 WASH ws 790.41±31.05 WASH wsSteady 789.62±32.26 WASH wsLast 790.37±203.42 WASH frames NaN±NaN WASH noTick NaN±NaN WASH multiTick NaN±NaN WASH contended 2 errors 0
+drive70 main: p50 3.54±0.56 p99 6.98±1.38 p99.9 14.58±4.29 worst 29.56±19.43 draws 292.78±0.00 renderCpu 0.30±0.06 gpu 0.25±0.02 vram 915.91±0.00 cpu 1.06±0.11 ws 862.14±40.96 wsSteady 859.09±41.92 wsLast 842.81±134.72 frames 1681.00±0.00 noTick 0.00±0.00 multiTick 0.00±0.00 contended 3 errors 0
+drive70 head: p50 2.24±0.27 WIN p99 4.66±0.74 WASH p99.9 9.58±0.85 WASH worst 10.86±7.73 WASH draws 292.78±0.00 WASH renderCpu 0.23±0.03 WASH gpu 0.23±0.01 WASH vram 931.91±16.00 WASH cpu 1.06±0.01 WASH ws 925.51±31.96 WASH wsSteady 920.92±31.75 WASH wsLast 925.51±31.96 WASH frames 1681.00±0.00 WASH noTick 0.00±0.00 WASH multiTick 0.00±0.00 WASH contended 3 errors 0
+drive70 head2: p50 2.59±0.08 WASH p99 6.44±1.42 WASH p99.9 12.27±7.14 WASH worst 20.31±8.27 WASH draws 292.78±0.00 WASH renderCpu 0.26±0.01 WASH gpu 0.22±0.01 WASH vram 915.91±0.00 WASH cpu 1.06±0.01 WASH ws 922.87±30.34 WASH wsSteady 918.78±30.69 WASH wsLast 922.87±30.34 WASH frames 1681.00±0.00 WASH noTick 0.00±0.00 WASH multiTick 0.00±0.00 WASH contended 3 errors 0
+riot main: p50 4.84±0.57 p99 11.32±1.07 p99.9 17.73±2.52 worst 20.45±0.69 draws 734.14±0.08 renderCpu 0.46±0.07 gpu 0.45±0.05 vram 898.72±16.00 cpu 1.03±0.03 ws 861.75±5.29 wsSteady 858.73±3.36 wsLast 859.02±3.87 frames 1681.00±0.00 noTick 0.00±0.00 multiTick 0.00±0.00 contended 3 errors 0
+riot head: p50 4.26±0.33 WASH p99 11.31±1.89 WASH p99.9 19.32±5.34 WASH worst 22.06±5.18 WASH draws 734.10±0.06 WASH renderCpu 0.48±0.04 WASH gpu 0.36±0.08 WASH vram 882.72±8.00 WASH cpu 1.01±0.02 WASH ws 865.49±31.28 WASH wsSteady 864.21±32.10 WASH wsLast 865.49±227.08 WASH frames 1681.00±0.00 WASH noTick 0.00±0.00 WASH multiTick 0.00±0.00 WASH contended 3 errors 0
+riot head2: p50 5.67±1.09 WASH p99 12.63±2.41 WASH p99.9 23.20±4.26 WASH worst 24.11±18.42 WASH draws 733.95±0.16 WASH renderCpu 0.66±0.13 WASH gpu 0.53±0.10 WASH vram 898.72±10.00 WASH cpu 0.94±0.03 WIN ws 861.69±35.25 WASH wsSteady 861.14±35.48 WASH wsLast 861.69±25.11 WASH frames 1681.00±0.00 WASH noTick 0.00±0.00 WASH multiTick 0.00±0.00 WASH contended 3 errors 0

@@ -72,6 +72,17 @@ Numbers, methods and every A/B: `docs/perf/LEDGER.md` section "n9 night". Clips 
    Gates on 6fed0aad: ALL PASS (unit 1842 / 0, scenarios 54 / 54, parity exact, look goldens 11 / 11,
    release-compile 619 / 0); the reel 19 / 19 in top, tilt70, combo, 0 SCRIPT ERROR.
 
+13. **The research loop, it8: two honest washes and a stronger test.** L26 (the FX particles moved through locals)
+   and L27 (the feed's dead flags through a local) both measured inside the noise against an unchanged timer in
+   the same frames, so neither was kept. Together with L25 they show where GDScript's cost actually is here: reading
+   another object's arrays costs a lot, and reading the script's own arrays is already cheap. The remaining feed
+   cost is the snapshot reads themselves, and the next step there is native code. `test_fx_pool` now also covers a
+   frame with no sim tick (a planted fault is caught).
+   A provisional final table (main vs this branch vs a byte copy of it, 3 pairs, 25 of 27 runs CONTENDED) shows the
+   honest limit: the same code in two folders differed by 0.35-1.4 ms at p50, more than the ~0.7 ms of CPU cuts
+   kept tonight, so no frame-level win is claimed from them (LEDGER "Final table n9"). The drive's p50 was under
+   main's in every round (2.2-2.7 vs 2.7-3.8 ms). The table is re-run at the freeze on the release exports.
+
 ## What does not
 - The first L17 test was vacuous. It compared `MultiMesh.buffer`, which a headless run keeps empty. The mutation run
   caught it (27 %); the test now compares through `FxPool.mirror` (90.9 %).

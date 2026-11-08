@@ -509,3 +509,7 @@ NEXT (it8), replaces it7's list (item 1 there is DONE as L25):
   (LEDGER L27: own-member reads are already cheap; L25 won on another object's members).
 - 07:31 test_fx_pool steps 0 / 1 / 2: a planted "a no-tick frame still moves" fault (`maxi(steps, 1)`) is caught at
   tick 0 (the old 1 / 2 cadence could not see it).
+- 07:28-07:34 Final table PROVISIONAL on 1365b7f3 (main / head / head2 byte copy, 3 pairs, 25 / 27 CONTENDED 1-8):
+  every row WASH by the A-vs-A floor (head vs head2 0.35-1.4 ms at p50 > the ~0.7 ms of kept CPU cuts); drive70 p50
+  head under main in 3 / 3 rounds. LEDGER "Final table n9", REPORT item 13. head2 copy at `gtai-n9/tmp/perf/head2`
+  (delete after the freeze table).

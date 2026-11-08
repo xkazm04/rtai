@@ -598,6 +598,32 @@ evidence run plus the seams lane's), so read the ratios, not the ms; a quiet rer
   `evidence/perf/rel-vs-dbg-screen0/boot.log`): exe 3.95 / 2.55 / 2.41 / 2.69 / 2.58 s, editor 3.98 / 4.29 /
   4.08 / 4.89 / 3.89 s: **median 2.58 s vs 4.08 s**. (The first table's 2.86 vs 4.35 s had the exe on the other screen.)
 
+## Final table n9 (it8, 07:28-07:34, PROVISIONAL): main da108c13 vs n9-perf 1365b7f3 vs a byte copy (A-vs-A)
+`node tools/perf/ab.mjs --scenes=king,drive70,riot --pairs=3 --arms=main:^--path <gtai-n9/tmp/perf/prof3>/project,head:,head2:^--path <gtai-n9/tmp/perf/head2>/project`
+(`evidence/perf/n9-final-1365b7f3/`: ab.json + run.txt). Editor binary (debug), windowed D3D12 1920x1080, fixed 60
+uncapped (vsync off: the cost of one gameplay frame), bench.lock held by ab.mjs, arm order rotating, 0 script errors
+in 27 runs, **CONTENDED in 25 of 27 runs (1-8 other Godots: the other lanes' gates and reels)**. `head2` = a byte
+copy of head's project (its `.godot`, DLLs) in another dir: a head-vs-main move counts only beyond head-vs-head2 (F12).
+main = da108c13 = main's project today (`git diff da108c13 main -- project native` is empty). Median ± half-spread:
+
+| scene | metric | main | head | head2 (A-vs-A) | verdict |
+|---|---|---|---|---|---|
+| King under combo | p50 / p99 / p99.9 ms | 4.51 / 10.31 / 14.64 | 5.10 / 10.19 / 13.28 | 4.14 / 9.03 / 12.67 | WASH (head vs head2 0.96 ms at p50) |
+| King | CPU cores, steady RAM | 1.00, 746 MB | 1.01, 790 | 1.01, 790 | WASH (spread 24-32 MB) |
+| drive70 | p50 / p99 / p99.9 ms | 3.54 / 6.98 / 14.58 | **2.24 / 4.66 / 9.58** | 2.59 / 6.44 / 12.27 | p50 -1.3 ms vs main but head vs head2 = 0.35: **WASH by F12** (direction: head under main in 3 / 3 rounds, 2.19-2.72 vs 2.67-3.79) |
+| drive70 | render CPU / GPU ms, VRAM | 0.30 / 0.25, 916 MB | 0.23 / 0.23, 932 | 0.26 / 0.22, 916 | WASH |
+| riot (400 actors) | p50 / p99 / p99.9 ms | 4.84 / 11.32 / 17.73 | 4.26 / 11.31 / 19.32 | 5.67 / 12.63 / 23.20 | WASH (head vs head2 1.4 ms at p50) |
+| riot | CPU cores, steady RAM, draws | 1.03, 859 MB, 734 | 1.01, 864, 734 | 0.94, 861, 734 | WASH; draws identical (pixel-free levers) |
+
+Reading: on this contended machine the A-vs-A floor (0.35-1.4 ms at p50) is larger than every CPU lever kept tonight
+(L17-L25 sum to ~0.7 ms a riot frame by their own in-run timers: FxPool -40 us, the occlusion query 705 -> ~100 us,
+CorpseStains 138 -> 87 us, the blood wall checks -55 us, residency -7 % of chunks.update). So the frame table claims
+NO frame-level win; the wins are the mechanism numbers in each L row (in-run controls, ranges apart). The night's
+frame-level results stand where they were measured: F-19 (0 / 40 freezes), BC7 VRAM -352 / -362 MB (Item 4).
+An earlier run (`evidence/perf/n9-final-it8/`, 07:20, 2 arms) is VOID for head: its r1 head runs carried the
+uncommitted L27 arm (FRICTION it8). Owed at the freeze: the same table on the final HEAD, on the release exports
+(`@exe` arms, as d9's final table), when the machine is quieter.
+
 ## Final table (it12, 14:39-14:52): this morning's main vs d9-perf HEAD, both as the shipped release build
 `node tools/perf/ab.mjs --scenes=riot,drive70,riot60,drive60 --arms=main@exe-windows-bench-main:,head@exe:,head2@exe-windows-bench-head2: --pairs=3 --out=evidence/perf/final-exe`
 (`evidence/perf/final-exe/ab.json`). `main` = the `windows-bench` export of main 3982af1a (scratch worktree `perf-base`
