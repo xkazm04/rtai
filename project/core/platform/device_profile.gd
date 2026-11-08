@@ -30,6 +30,9 @@ var draw_scale: float = 1.0
 var tier: StringName = &"full"
 ## The HUD layout: full (the desktop's) or compact (the handheld card sizes, GhostFormLayout).
 var hud: StringName = &"full"
+## The drawn prompt glyphs on a non-handheld row: "" (the bracketed text) or kb (the keyboard
+## twin, a desktop study row; PadGlyphArt). A handheld row always draws the pad set.
+var glyphs: StringName = &""
 var ids: Array[String] = []
 
 
@@ -86,6 +89,7 @@ func _read(row: Dictionary) -> void:
 	draw_scale = ds
 	tier = StringName(str(row.get("tier", "full")))
 	hud = StringName(str(row.get("hud", "full")))
+	glyphs = StringName(str(row.get("glyphs", "")))
 
 
 ## True for the shipped desktop game (a row that changes nothing).

@@ -15,6 +15,12 @@
             "minimum": 0.25,
             "type": "number"
           },
+          "glyphs": {
+            "enum": [
+              "kb"
+            ],
+            "type": "string"
+          },
           "hud": {
             "enum": [
               "compact",

@@ -6,6 +6,11 @@
       "note": "the shipped desktop game: nothing is applied"
     },
     {
+      "glyphs": "kb",
+      "id": "desktop_kb_glyphs",
+      "note": "n9 study row (an owner Call): the shipped desktop with the asset lane's drawn keyboard and mouse glyphs (ui_kb_glyphs_v1) in the prompts and the title / pause controls line; nothing else is applied (is_desktop stays true)"
+    },
+    {
       "hud": "compact",
       "id": "deck",
       "max_fps": 60,

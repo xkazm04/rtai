@@ -165,6 +165,8 @@ func _button(text: String, pressed: Signal) -> Button:
 func controls_text() -> String:
 	if DeviceProfile.shared().is_handheld():
 		return ObjectiveHint.with_keys(_t(&"SLICE__CONTROLS_PAD", CONTROLS_PAD), true)
+	if PadGlyphArt.active():  # n9-handheld: the keyboard glyphs (a glyphs: kb study row)
+		return ObjectiveHint.with_keys(_t(&"SLICE__CONTROLS_PAD", CONTROLS_PAD), false)
 	return _t(&"SLICE__CONTROLS", CONTROLS)
 
 
