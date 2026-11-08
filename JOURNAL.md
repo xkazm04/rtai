@@ -543,3 +543,15 @@ NOTE: use the arena's Z zoom key or a camera flag) is still owed, after NEXT 1 (
   pools grow under them in the 20 s clip (t13450-14050). frames.json entry 2 (the wall's 32 px/m still dropped,
   still on disk). 64 px/m: NOT filmed: the dock fight lies off-frame at 64 (tried `--cam=fight`, and a 4K window:
   the canvas stretches, same world area). 0 SCRIPT ERROR in all four runs.
+- MILESTONE (06:20) db8cdbb8 item 2: the dock dead FALL into the pose (DECISION world/quest-dead-fall). Seen in
+  the 918cbe58 clip frame by frame: a contractor popped from the standing card to the lying plan pose at its rest
+  in one frame. Now over 24 ticks from the blow the body lands a touch large (LAND_SCALE) near where he stood,
+  slides 0.6 m along the blow and turns 0.35 rad into the rest, eased out; stateless (the arena tick
+  difference). Same seed/ticks re-filmed: every death differs from the before for exactly 12 clip frames (pixel
+  diff), then the frames are identical. `gtai-masters/n9/world/dock9_contractor_fall_before_after_*` (crop
+  strip + a half-speed side-by-side clip; frames.json entry 3, the wall's 64 px/m clip dropped from it, on disk).
+  Unit --changed 1824/0 (the fast suite), lint 15/15. FRICTION: a gate started at 290dce08 was stopped after
+  1 min to land this first (one gate at the final head).
+Registry rules applied: `motion-quality-gating` (the pop found and judged in motion, frame by frame, before and
+after from the same seed and ticks; a pixel diff bounds the change to the fall's 0.4 s), `generative-artifact-gating`
+(the served sheet looked at before packing: grade B, pose D a second face-down, noted, shipped).
