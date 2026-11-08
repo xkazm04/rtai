@@ -31,7 +31,7 @@ Evidence: `C:\Users\kazda\kiro\gtai-masters\n10\world\` (`frames.json`). Every p
 - `node tools/tests/run_unit.mjs --select=test_street_dead_heading,test_street_dead_plan,test_street_quest_dead_plan,test_street_crowd_corpse`: 32 passed, 0 failed before the shader tests; `--select=test_street_dead_heading,test_street_crowd_corpse`: 15 passed, 0 failed with them.
 - Eight film runs (Dock 9 and riot, 32 and 64 px/m, before and after): 0 SCRIPT ERROR each.
 - `node tools/tests/run_unit.mjs` (full) at `4558d018`: 1968 passed, 0 failed, 0 skipped.
-- **`tools/evidence/run.mjs --no-bench`, started 23:27 on `4558d018`: no result.** Its log was still empty at 00:05, so pass or fail is unknown, and scenarios and parity are unconfirmed.
+- **`tools/evidence/run.mjs --no-bench` on `4558d018`: NOT green.** Lint, unit (1968 / 0), parity (1200 steps, planted mutation caught), selftest (look goldens 11/11) and export-audit (release-compile 632 / 0) PASS. **scenario-tests FAIL: timed out after 1594 s, with 0 scenarios reported**, while my film and other lanes were loading the machine. So no scenario has a result on this branch, and that includes the replay.
 - **Not run yet:** the director reel in top, tilt70 and combo.
 - Not exported yet.
 
