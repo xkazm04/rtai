@@ -4,7 +4,7 @@
     "doc": "n9 (the owner's s-4 C): a car at or above speed_mps hitting Rivet on foot knocks him down along the car's heading: he slides at slide_k x the car's speed (the sim's 8 m/s^2 slide), lies down_s, and loses damage_per_mps x (speed - speed_mps / 2) hp. A slower car stops dead at contact (the sim, both twins). Data value 0 for speed_mps = cars ignore him (the d9 behaviour).",
     "down_s": 1.2,
     "slide_k": 0.8,
-    "speed_mps": 0
+    "speed_mps": 5
   },
   "classes": [
     {
