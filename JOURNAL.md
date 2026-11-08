@@ -1,0 +1,12 @@
+# JOURNAL: lane handheld, night n10 (2026-11-08 21:00 to 2026-11-09 09:00)
+
+Branch `n10-handheld`, cut from main 9bbe6d0a. Every number is the PC simulator (this PC under a device profile), never a device.
+Order: 1 keep the rows green on the new main (+ world's walls when they land), 2 Windows handheld model strings, 3 Steam backend checks, 4 the LEDGER's research loop and the port readiness table.
+
+## it1 (21:02, BUILD)
+Read: n9 REPORT, LEDGER, journals of the other lanes (no REQUEST -> handheld yet).
+FRICTION 21:20: my copy of perf's F19 hunt (`evidence/n10h/it1/hunt/hunt_rows.ps1`) was wrong twice before a game ever launched: a sed ate the backslashes of `$tmp`, then the copy sits one level deeper than the original so `$repo` was `evidence/` ("Invalid project path"). The 6 runs it logged, including 2 "frozen", are VOID (`responding: null`, no Godot started) and are not counted anywhere.
+MILESTONE 21:30: items 2 and 3 coded (models on the rows, Hardware.STEAM_DECK, action_glyph_path stub, Platform before LaunchArgs); LEDGER section 9, two DECISION lines. Found: SDK 1.65 removed the Deck check the brief names. Tests pending.
+FRICTION 21:35: (a) the first unit run exited 0 with "15 passed" while test_device_profile did not parse (PackedStringArray.append returns a value): the triage block says so, the exit code does not; none of the new tests had run. (b) The Deck-row freeze hunt on `vsync enabled` (20 runs) is INCONCLUSIVE, not 5 / 20: every "cores 0" run measured the console wrapper (the child not found within 3 s under this load), and the started low-CPU runs still pump messages (a hidden window: the row's focus pause). Only run 1 reads like a freeze (0.016 cores, not responding, never started), and a slow load cannot be ruled out. Harness fixed (waits for the child, void/lowcpu kinds).
+MILESTONE 21:35: the director reel under deck, deck40, handheld_1080, switch-handheld (combo, headless): 19 chapter lines each, 0 SCRIPT ERROR at the last look; waiting on the runs' own exit.
+MILESTONE 21:42: lint 15 / 15; mapped unit tests 47 / 0 (the new file ran, named in the junit); windowed boot with and without SteamDeck=1: exit 0, 0 SCRIPT ERROR, the Platform-first autoload order boots. Both logs carry "94 resources still in use at exit", the same in both, not compared against main. The reel job hit the 30-minute limit: 19 / 19 chapters down, 0 SCRIPT ERROR on all four rows, no exit code observed; four leftover runs of mine stopped by PID (matched on the 21:07 start).

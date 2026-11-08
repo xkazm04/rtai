@@ -751,3 +751,40 @@ for middleware plus kits under NDA.
 - **Mutation on `device_profile.gd` (n9 it10, at 3d235479, 30 sampled mutants, test_device_profile):** 33.3 % (10 / 30).
   The sampled mutants on the new auto-pick lines were killed; the survivors are in `_read`'s fallback defaults (every
   row sets those keys) and `apply()` (window calls, unreachable headless). `evidence/n9h/it10/gates/`.
+
+## 9. Night n10 (2026-11-08/09): readiness without a device (every number on the simulator)
+
+### Windows handheld model strings (`models` on the device rows, researched 2026-11-08)
+What the game reads: Godot's `OS.get_model_name()` on Windows is the registry's `HKLM\Hardware\Description\System\BIOS`
+`SystemProductName`, then `BaseBoardProduct` when the first is empty or a placeholder
+([os_windows.cpp, 4.5-stable](https://raw.githubusercontent.com/godotengine/godot/4.5-stable/platform/windows/os_windows.cpp)).
+It gives no vendor, so a string has to be unmistakable alone. The product name is what Linux calls `DMI_PRODUCT_NAME` (the
+same SMBIOS field), so the kernel's tables are the public record of it.
+
+Shipped, each from a `DMI_PRODUCT_NAME` entry; a match is `contains`, case-sensitive:
+
+| row | string | device | source |
+|---|---|---|---|
+| `deck` | `Jupiter`, `Galileo` | Steam Deck LCD / OLED running Windows (no `SteamDeck` variable there); only on the 1280x800 panel | [drm_panel_orientation_quirks.c](https://raw.githubusercontent.com/torvalds/linux/master/drivers/gpu/drm/drm_panel_orientation_quirks.c) |
+| `handheld_1080` | `AYANEO 2` (2 and 2S), `AYA NEO Founder`, `AYA NEO 2021` | AYANEO | same file |
+| `handheld_1080` | `Loki Max`, `Loki Zero` | AYN | same file |
+| `handheld_1080` | `Win600` | Anbernic | same file |
+| `handheld_1080` | `G1619-01`, `G1618-03`, `G1617-01` | GPD Win Max, Win 3, Win Mini | same file |
+| `handheld_1080` | `ONE XPLAYER` | OneXPlayer (and the Mini Intel: the same string) | same file |
+| `handheld_1080` | `RC72LA` | ROG Ally X | the AMD PMF quirk patch, `DMI_MATCH(DMI_PRODUCT_NAME, "RC72LA")` ([LKML](https://lkml.iu.edu/hypermail/linux/kernel/2407.3/04376.html)), seen in the search index; `pmf-quirks.c` itself 404s at that path on master, so not re-read |
+
+Left out, with why:
+- **ROG Ally (RC71L):** the kernel matches it on the *board* name; its product string is not confirmed by a source read here.
+- **Legion Go:** the kernel matches `DMI_PRODUCT_VERSION` "Legion Go 8APU1", a field Godot does not read; `83E1` is a retail SKU in what was read.
+- **MSI Claw:** no `Claw` string in the DRM, oxpec or msi-wmi-platform tables.
+- **AYANEO `AIR`, `FLIP`, `GEEK`, `SLIDE`, `KUN`, `NEXT`:** real entries, but paired with a vendor (or a board) in the kernel and too plain alone. **GPD `WIN2`** and **`NEO-01` (OrangePi)** the same (the schema asks 6 characters at least).
+- **OneXPlayer X1 / F1 / G1, AOKZOE:** `oxpec.c` lists them by *board* name, which Godot only returns when the product name is a placeholder.
+
+So the three best-selling Windows handhelds are the ones still unconfirmed. One device each (or a DMI dump) fills those in; no guessed string ships.
+Docked: a listed model on a screen past `MAX_PANEL_SIDE` (2560) keeps the desktop; a docked handheld on a 1080p TV cannot be told from its own panel and takes the row (`--device=desktop` opts out).
+
+### Steam checks: the API moved under the brief (researched 2026-11-08)
+- **Steamworks SDK 1.65 (July 2026) removed the dedicated Deck check**: "Removed ISteamUtils::IsRunningOnSteamDeck(). Please use other feature specific methods below"; added `IsRunningOnSteamHardware()` returning `ESteamHardwareType`, "for analytics, support or diagnostic purposes. For functional decisions, see other SDK calls", `GetSteamHardwareDefaultConfig()` "to help choose default game settings", and `IsRunningUnderProton()` (Valve's changelog as quoted by [GamingOnLinux](https://www.gamingonlinux.com/2026/07/valves-steamworks-sdk-v1-65-brings-changes-for-steam-machine-steam-frame-and-steam-deck/)). Valve's [ISteamUtils page](https://partner.steamgames.com/doc/api/ISteamUtils) reads as *deprecated* where the changelog says *removed*; that page, and the enum values (None 0, SteamDeck 1, SteamMachine 2, SteamFrame 3), were read through a summarising fetch, not verbatim: check them against the SDK header when GodotSteam is vendored.
+- GodotSteam's latest is 4.24 on Steamworks 1.65; its GitHub repository was archived 2026-11-08 and the release notes point to Codeberg ([releases](https://github.com/GodotSteam/GodotSteam/releases)). STM-01 pins `v4.23.2-gde` or newer. godotsteam.com refused the fetch (403), so **the GodotSteam method names in `steam_backend.gd`'s comments are unconfirmed**.
+- Glyph calls, verbatim from [ISteamInput](https://partner.steamgames.com/doc/api/isteaminput): `GetGlyphPNGForActionOrigin(eOrigin, eSize, unFlags)` "Get a local path to a PNG file for the provided origin's glyph"; the legacy call says new code should use it. `GetActionOriginFromXboxOrigin` read through the summary only.
+- Built behind the interface: `PlatformBackend.Hardware` gains `STEAM_DECK` (`STEAM_HARDWARE` is now a Machine or a Frame); `DeviceProfile.auto_pick` asks `Platform.hardware()` first; `SteamBackend.hardware_of()` maps the raw type (unit-tested); `Platform.action_glyph_path()` is the glyph stub, "" = the drawn set. Each is one call to fill in `steam_backend.gd` (DECISION `handheld/steam-hardware`). **Not run against Steam: there is no Steam app here.** `action_glyph_path` has no caller yet: PadGlyphArt joins when a real path can come back.
