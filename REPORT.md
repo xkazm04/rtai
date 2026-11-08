@@ -74,7 +74,8 @@ The research loop since:
   a tick in one tick (King; 14.6 Servo) when a keep-in margin engaged; `CamFollow` caps the change at 3 px a tick,
   brakes without overshoot and matches steady pans. In game: 0 jolts left, the worst lag 28 px (0.7 m, inside every
   margin), a brief faster catch-up (peak 17-21 px a tick). Clips: `deck-king-40ppm-bosscam-ease-before-after-halfspeed.mp4`,
-  `deck-king-40ppm-bosscam-ease-1280x800-igpu.mp4`.
+  `deck-king-40ppm-bosscam-ease-1280x800-igpu.mp4`, `deck-servo-40ppm-bosscam-ease-1280x800-igpu.mp4` (the Radeon iGPU
+  on its engine log, 0 SCRIPT ERROR).
 - **E21, the 40 Hz cadence** (it7, 7a6681e2): filmed at each row's own rate, `deck40` steps 1, 2, 1, 2 ticks a frame and
   73 % of its pan steps go 1:2; a new `deck30` row pans as evenly as 60. Battery proxy (bench lock, 3 rounds): GPU busy
   per second 36 % -> 27 % (-25 %) from 40 to 30; CPU the same (the sim ticks 60 Hz either way).

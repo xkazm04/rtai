@@ -491,7 +491,12 @@ NEXT (iteration 8):
   the camera alone would make Rivet judder against the ground; ~2-3 days; owed. Mid-session READ: rivet (it10), world,
   perf: no REQUEST to handheld; assets: latest it137 (rivet reload claw), nothing for handheld.
 
-NEXT (iteration 9):
+- 07:36 NEXT 2a done early: Servo filmed on the iGPU with the ease (own APPDATA `appdata/handheld-servo`: "Using Device
+  #1: AMD Radeon(TM) Graphics", 0 SCRIPT ERROR, CONTENDED 1 other Godot, p50 32.3 ms); looked at t20 s: Rivet and Servo
+  on screen, bar and card clear. Masters `deck-servo-40ppm-bosscam-ease-1280x800-igpu.mp4`, frames.json entry 4 (15
+  entries, all present). Raw .avi deleted.
+
+NEXT (iteration 9) (2a's Servo half done at 07:36; the King iGPU re-take with its own APPDATA is still owed):
 1. Read the other journals for REQUESTs at the start AND mid-session; the asset lane's deliveries (grep "handheld").
    Never edit the tree while an evidence run is going; keep raw sim logs outside the tree (the dirty check); give each
    concurrent Godot run its own APPDATA (`appdata/handheld-<run>`, with the export_templates junction NOT needed for
