@@ -678,3 +678,33 @@ Registry rules applied: `depth-ordered-layered-art` (blood under the body it cam
 working", not as "no visible change"), `realtime-combat-semantics` (one blood per kill: the signature veto kept on
 the victim's spot).
 - (07:52) Full gate started at e3c54005 (`evidence/n9-world/gate-it23.log`); the reel x3 after it.
+- MILESTONE (07:55) item 5 evidence owed since it4: the King's robe at a TRUE 64 px/m. it4's NOTE ("--ppm=64 did
+  not zoom the arena") does not hold for `res://dev/arena/arena.tscn -- --boss=king --phase=3 --ppm=64`: the zoom
+  works; the King was only off-frame (the camera holds Rivet). `--bot=fight` walks Rivet into him: at t1400 both
+  are in frame. Pair from one build (before = `KingLegsCard.SHEETS` king -> king_legs, a local edit, restored):
+  combo (55): the hem covers the thin steel shins, the gold boots at its front; tilt70: the bust covers the robe's
+  top. `gtai-masters/n9/world/king_robe_before_after_combo55_tilt70_64ppm_phase3_seed2_t1400.png` (frames.json:
+  replaces the tilt70 32 px/m x2 crop, on disk). 0 SCRIPT ERROR in all five runs.
+- FOUND (07:56) at 70 / 64 px/m, in BOTH arms: the King's bust card (p70) ends on a hard horizontal cut (the fur
+  and cape sliced straight) above the legs card; at 32 px/m it was too small to read. Pre-existing (d9 bust art),
+  not the robe. Options added to Call C-4: draw the 70 robe card over the bust's bottom edge (z) so the hem's top
+  hides the cut, or an assets redraw of the 70 bust's bottom. Boss fights run in combo (55), where it does not show.
+- FRICTION (07:53-07:55): the before's local edit of king_legs_card.gd ran while the it23 gate was in its
+  scenarios (unit was done; the goldens pin `top` and the King's legs are card-view only). Restored before the
+  goldens; noted so the gate is read with it. Lesson: no project/ edits during a gate.
+- (07:58) TRIED option (d) of C-4 in a scratch worktree (never in this tree: the gate runs): the 70 robe card
+  in front of the bust (z +1, `ROBE_FRONT {70: true}`). NOT landed: the robe sheet's inked top edge sits on the
+  same line as the bust's cut, so the cut stays; and the robe hides the King's sword arm. Frame (before | robe |
+  robe in front): `gtai-n9/tmp/world/robe_front_tried_it23.png`. The 70 cut needs art: a 70 bust whose cape hangs
+  past its bottom edge (REQUEST below), C-4 (d) reworded.
+REQUEST to assets: king_bust_70_hem, pitch 70: the King's approved p70 bust card with its fur cape and vermilion
+cape continued ~15 % of the cell height below today's bottom edge, hanging loose with an irregular inked hem (no
+straight cut), same columns/facings and scale as the shipped p70 bust sheet, copied by example from it and from
+king_robe_70_v2 (the skirt the cape now falls onto). Why: at 70 / 64 px/m the bust ends on a hard horizontal cut
+above the robe (frame: gtai-masters/n9/world/king_robe_before_after_combo55_tilt70_64ppm_phase3_seed2_t1400.png,
+bottom row). Low priority: boss fights run in combo (55), where the cut does not show.
+- (08:02) GATE at 912ddff2 (code = e3c54005), `node tools/evidence/run.mjs --no-bench`, rc 1 ONLY from unit's clean-tree
+  check (my REPORT.md edit during the run: FRICTION, same lesson): unit **1845/0**; lint 15/15, scenarios 55
+  (rig_stress p50 1.284 CONTENDED: 5 other runs, the machine never went quiet; Call C-1's band), parity bit-exact
+  (planted 629), look goldens 11/11 + block 5/5 worst 0.00, release-compile 617/0. `evidence/n9-world/gate-it23.log`.
+  Unit re-run standalone on a clean tree + the reel x3 started 08:03.

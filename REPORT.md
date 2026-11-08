@@ -39,6 +39,11 @@ Branch `n9-world`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n9\world\` (frame
      clip `dock9_dead_spread_before_after_tilt70_64ppm_t13560-13860_halfspeed.mp4`, the 32 px/m crop x3).
    - The blood soaked into each body lies on the drawn corpse (19d43e8d, DECISION world/quest-soak-on-plan-corpse),
      not beside it at his standing spot (`dock9_soak_on_body_before_after_tilt70_64ppm_t13800.png`).
+   - Each kill's blood pool grows from under the drawn corpse (e3c54005, DECISION
+     world/quest-pool-under-plan-corpse); the signature-kill check still asks at his spot, so a signature kill
+     never gets a second blood. Clip pair from one build at 64 px/m: before, the pools spread beside the bodies
+     and the lowest body had none under him (`dock9_pool_under_corpse_before_after_tilt70_64ppm_t13760_crop.png`,
+     the half-speed clip `..._t13560-13860_halfspeed.mp4`).
 3. **Cars knock Rivet down** (703c287b, b0f1024e, 0c04d16b; DECISIONs world/car-hits-rivet-sim, -on,
    world/car-knock-damage-event-only).
    - Both twins, bit-exact. Above 5 m/s a car throws him along its heading; below it, the car brakes and stops at
@@ -60,6 +65,8 @@ Branch `n9-world`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n9\world\` (frame
    - The King walks under the long drawn robe (assets king_robe_55 / _70).
    - At 55 the hem covers the steel shins, the gold boots show at its front, and it swings with the stride.
    - At 70 the bust covers most of it (Call C-4).
+   - Filmed at 32 px/m (it4, 2x crops) and at a true 64 px/m (it23, combo and tilt70, before | after from one
+     build: `king_robe_before_after_combo55_tilt70_64ppm_phase3_seed2_t1400.png`).
 
 ## What does not (yet)
 
@@ -67,8 +74,8 @@ Branch `n9-world`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n9\world\` (frame
   limbs still touch. The contractor sheet's pose D reads as a second face-down (assets graded it B).
 - At a wall the lying pose's hood and one hand overlap the building's edge by ~0.3 m (64 px/m close-up: it reads as a
   body slumped against the wall, feet out). The view bound pulls the pose back along the blow only; left as is.
-- At Dock 9 the ink-outlined blood pools (laid at each death spot) draw over a neighbouring plan corpse as the
-  dead decay (64 px/m, t13860); the plan pose's pelvis offset and the push moved the bodies off their pools.
+- At Dock 9 the blood pools outlast the bodies: once a corpse has decayed, its pool stays on the crossing with
+  nobody on it (64 px/m, t13860). By design (the blood persists and fades), but it reads as empty pools.
 - The knock damage is an Event only (the city has no Rivet hp outside the pits).
 - rig cost under combo is above the provisional 1 ms (C-1).
 
@@ -92,8 +99,12 @@ Branch `n9-world`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n9\world\` (frame
   - Options: (a) as built; (b) no jitter; (c) a longer shotgun slide; (d) the dock fall at 0.25 s
     (`StreetQuestDeadPlan.FALL_TICKS` 15).
 - **C-4 the robe at 70.**
-  - Options: (a) as built (bust LIFT 0.74 hides most of it); (b) LIFT 0.6 so more robe shows; (c) a shorter
-    drawn 70 robe.
+  - At 64 px/m the 70 bust card ends on a hard horizontal cut (the fur and cape sliced straight) above the legs.
+    This was there before the robe too (d9 bust art); boss fights run in combo (55), where it does not show.
+  - Options: (a) as built (bust LIFT 0.74 hides most of the robe); (b) LIFT 0.6 so more robe shows; (c) a shorter
+    drawn 70 robe; (d) an assets redraw of the 70 bust with the cape hanging past its bottom edge (REQUESTed
+    as king_bust_70_hem). Drawing the robe in front of the bust was tried and does not help: the robe's top edge
+    sits on the same line, and it hides his sword arm (`gtai-n9/tmp/world/robe_front_tried_it23.png`).
 - **C-5 the car knock-down.**
   - Built: threshold 5 m/s, slide 0.8 x the car's speed, 1.2 s down, damage 2.5 x (speed - 2.5).
   - Options: (a) as built; (b) slide_k 0.5; (c) threshold 8 m/s.
