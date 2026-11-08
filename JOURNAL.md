@@ -202,3 +202,33 @@ NEXT (iteration 4):
 - 03:25 GATE evidence run (`--no-bench`) at 0791db0d (aim assist + kb glyphs): lint, unit 1841/0 (FLAKY 1: a fail-then-pass
   on re-run, named in the log), scenarios 54, parity (mutation caught at 629), selftest (look goldens 11/11),
   release-compile 619/0: all PASS (`evidence/n9h/it3/gates2/evidence-run-0791db0d.txt`). Session ends 03:28; NEXT above stands.
+
+## Iteration 4 (BUILD), 03:26-04:26
+
+- 03:27 READ: JOURNAL NEXT, git log, the other journals: no REQUEST to handheld (rivet / world / perf). world's head
+  b0f1024e (BC7 since 746c2856, cars knock Rivet down); perf measured its desktop BC7 table on 746c2856 and left the
+  Deck row to me (E16). Assets: no delivery for my glyph appendix REQUEST yet (newest: rivet_walk_armed_claw_it124).
+  Registry rules applied: on-device-verification-harness (every number "on the simulator"), perf-regression-gating
+  (interleaved arms, medians + spread, the bench lock held, CONTENDED labelled), controller-latency-instrumentation
+  (the assist measured at the input boundary: the heading LiveInput packs, not the drawn sprite).
+- 03:36 MILESTONE (NEXT item 1): the pad aim assist shown live. Scratch walker `evidence/n9h/it4/aimwalk/` (copied to
+  `project/dev/` only for the run, then deleted): `--boss=king`, the right stick held 5 deg off the nearest living
+  target, RT held. `deck`: 5.00 deg while the target is 35-29 m off (beyond the 25 m range), **3.25 deg from 24.4 m in**
+  (35 % of the error taken out), mean 3.61 over 24 samples; `desktop`: 5.00 throughout. Commit 7c993d29 (LEDGER s5).
+  FRICTION: the first walker parse-failed on two warnings-as-errors (a Variant cast, a dropped save_png Error) and
+  `timeout` left the run at 124 with no output: run `tools/godot/check.mjs` on a scratch script before launching it.
+- 03:40 E16b set up: my own detached worktree `gtai-n9/tmp/handheld/w16` at world's b0f1024e, its `.godot` copied from
+  perf's world3 (746c2856, read only), the native DLLs copied, `devices.json` `zoom_k` 1.5 -> 1.25 locally (both arms
+  frame at 40 px/m); `--import` 19 s, 0 SCRIPT ERROR. `ab.mjs --rounds=3`, the city scene, the deck row, bench.lock held.
+- 03:44 MILESTONE E16b (NEXT item 3, LEDGER section 8): the Deck row on world's b0f1024e (BC7) vs this branch, 3 rounds,
+  bench.lock held (3 of 6 runs saw 1 other Godot: CONTENDED per run): GPU shared 1086 -> 600 MB (-45 %), private RAM
+  1476 -> 991 MB (-33 %, now clear of the 70 MB spread; E16 had it "wide"), render GPU p50 8.53 -> 7.59 ms (-11 %),
+  frame p50 16.6 locked both. Commit a7b9c6b6. Same commit: the LEDGER's ARM determinism line narrowed (NAT-07 already
+  builds the CitySim with strict FP; the open part is the engine's own Vector2 math on an arm64 engine, clang's default
+  `-ffp-contract=on`: a console engine build wants `-ffp-contract=off`, then SIM-05 / NAT-06 on the device).
+- Checked perf's pacing option (n9-perf d6e93b92) against my handheld frame cap: no clash (`apply_frame_cap` keeps the
+  player cap, then the device row's cap, and only a capless desktop row reaches `FrameCap.apply_pacing`; the pacing row
+  shows on non-handheld rows only). Shared files on both branches: only docs/decisions.md and JOURNAL.md (append-only).
+- 03:50 BC7 look on the Deck row at 40 px/m (`sim.mjs --grab=12`, both arms, the iGPU): indistinguishable at a 2x crop
+  (ink line, grain, hatching, the ambulance art). `gtai-masters/n9/handheld/bc7-deck-city-40ppm-lossless-vs-bc7-crop-x2.png`
+  replaces the weakest frames.json entry (the t12 city still); still 15 entries. Looked at both frames and the crop.
