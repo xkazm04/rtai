@@ -373,3 +373,10 @@ NEXT (it11):
 4. Item 2 follow-ups (walker sheets when served; kill_marks follow the plan pose; Dock 9 + city block film).
 5. Remove scratch worktrees `gtai-n9/tmp/world/before` and `gtai-n9/tmp/world/gate` when the last before/after is
    filmed (gate's `build/evidence` already copied).
+- (04:09) Scoping for NEXT 2 (read only): the arena on the city (`features/arena/arena_session.gd _add_city`, l.61)
+  builds its own CitySystem; its walls / barriers (`plan.areas`, ArenaFloorStatic.barrier runs) and props are
+  solid only to the arena's own collision. To make the sim see them: after `city.residency.update`, stamp their
+  footprints as `SimConst.C_PROP` into the resident chunks' cells, and again whenever residency re-stamps a chunk
+  (a cell-override hook in CityResidency / ChunkSource, the way kerb_dresser.gd:152 stamps C_PROP at generation).
+  Both twins read the same cells, so parity needs no new code; the arena's scenarios (arena-*-telemetry) and the
+  replay must be re-checked (a dead cop then stops at the barrier).
