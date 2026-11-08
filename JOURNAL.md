@@ -602,3 +602,94 @@ NEXT (it10):
    cell per facing; check its dome against the walk cell at 64 px/m before wiring.
 4. Freeze prep (10:30): the exe (`--export-release windows-showcase ../build/export/windows/RTAI.exe`), REPORT.md with
    Calls 1-15, the combined 30-90 s clip of the set.
+
+## it10 (07:16-08:15)
+
+Read: JOURNAL it9 NEXT, git log, the other journals (world / perf / handheld: no REQUEST to rivet), the asset lane
+(it137: DELIVERED the flamer 55 run 07:10, 7 A / 1 B, row 2 short; round 0725 = my reload-claw REQUEST, 9 of 12 drawn
+at 07:20, not graded). Registry rules applied: sprite-and-atlas (one scale per figure: packed at run8 55's fixed --k;
+a row's warmth checked against run8 55's same row before calling it a fault), motion-quality (stride in cell px vs
+run8's row before wiring; the foot judged per held cell against the asphalt, before/after from one build with the
+toggle), realtime-combat-semantics (the reload is view-only: the shot origin and the reload timing do not move).
+
+- MILESTONE `4594b19d` **the drawn flamer run at 55** (library flamer 55, it137). `p55/rivet_run8_eq_flamethrower.png`
+  (rivet_walk.py --cols=8 --k=0.6111,0.6197 --tone=p55/rivet_eq_flamethrower.png). Looked at all 64 cells: coherent,
+  the wand in the claw, tanks + hose; row 4 (3/4 away right) reads warmer (mean R 123 vs ~108), but run8 55's own
+  row 4 is warmer by the same margin (139 vs ~118): inherited, kept. Cell px vs run8 55: 3/4 toward right 37 / 54.5
+  -> RUN_ROW_K **0.68** (the 55 row-2 shortfall, the shortest yet), right profile =, 3/4 toward left 51 / 55 -> 0.93,
+  left profile 50 / 50 (none). Unit test: one loop over all five p55 runs. Select 12/12, lint 15/15.
+  **Every weapon the library drew a run for (pistol, plasma rifle, katana, gatling, flamer) runs drawn at 70 and 55.**
+  Film + measure (King combo 48 px/m seed 1 `--loadout=flamethrower`, 0 SCRIPT ERROR both; before `--rivet-walk=walk8`):
+  footlock9 on the left-profile run f30-70: after, the stance boot per held cell 589 / 582 / 590, then 503 / 496 / 497
+  px (planted +-4 px = 8 cm); before, ~25 px of slide every held cell. `gtai-masters/n9/rivet/rivet_armed_run_flamer_p55_before_after_king_combo_48ppm_x1.5_seed1_f16_56.png`
+  + half-speed mp4s (after / before); frames.json 15 (dropped the it5 diagonal-cells still, superseded by the
+  every-direction entry; its png deleted). The 0.68 row is not in this clip (NEXT).
+- Gates on 4594b19d: director reel `reel-director-it10-<v>.log` 19/19 fully down in top, tilt70, combo, 0 SCRIPT
+  ERROR, exit 0 (07:21-07:24; launched before the reload edits below, so on 4594b19d's scripts).
+- MILESTONE `76175aaa` **the drawn reload wiring, ahead of the art** (it9 NEXT 3). `RivetReload`: while reload_k >= 0
+  and he stands, `rivet_reload_<weapon>[_left].png` under the art key replaces the at-rest cell: the equipped layout
+  (the library's it102 layout, kept by round 0725), cells 0-4 the reload pose per facing, 5-7 the 3-frame reload at
+  3/4 toward right by reload_k's phase (0 out, 1 in, 2 ready); the lefts a 3-cell drawn strip. A walk / run grid wins
+  while he moves. `--rivet-reload=off`. No strip ships yet: nothing moves. RivetStrips.cells_of now answers the base
+  strip (rivet_frames.gd back to 200: the debt ratchet caught 203). test_rivet_reload 3 tests; rivet select 67/0.
+  Peeked at round 0725's one-hand 70 and two-hand 70 left drafts: the free arm is the walk's C pincer (matches
+  `rivet_walk_armed_onehand_70_claw`), five facings on top, the 3-frame reload below; the library grades them.
+- DECISION rivet/reload-vs-walk (docs/decisions.md): reload cell only standing; only the family's drawn weapon (pistol,
+  plasma rifle, gatling) gets a strip (on another gun the drawn weapon would swap mid-reload).
+- Gates on 76175aaa (the reload wiring): director reel `reel-director-it10b-<v>.log` 19/19 fully down in top, tilt70,
+  combo, 0 SCRIPT ERROR, exit 0.
+- SEEN (looking for the flamer 55's 0.68 row on a longer King fight, seed 2, and the Servo fight, seed 1, combo 48
+  px/m, 480 frames each): on the King fight Rivet fires UP the screen and the figure drew **two flames**: f250-274 the
+  3/4-away-right diagonal cell's drawn flame (yellow, ~20 deg up) under a jet going ~65 deg up; f290-302 (octant 6,
+  straight up) the SIDE fire cell, its flame pointing screen-right under a jet going straight up. Servo's bursts
+  (right, down) were coherent. Probe (a temporary Log in RivetFrames.step, reverted): the head follows the aim within
+  ~5 deg (f254 head -66 aim -73), so the facing is right; the gap is the drawn angle. Measured each drawn flame's
+  screen angle (the yellow's long axis): p70 diag 40 / -26 / 140 / -151, p55 35 / -20 / 144 / -159: the away
+  diagonals are drawn only 20-26 deg up, and there is no drawn flame for straight up.
+- MILESTONE `b7c515cc` **the flamer's drawn flame only along the aim (one flame)**: `RivetStrips.FLAME_DEG` per art
+  key and octant (side 0 / 180, camera 90, the measured diagonals); the fire cell (and diag_or's diagonal strip) shows
+  while the aim is within FLAME_TOL 30 deg of it, else the facing cell + the jet; the burst latch (CONE_OFF) holds the
+  choice to the burst's end (no flicker). `--rivet-flame=all` = it9. Re-filmed the same burst: the back view with the
+  jet from the nozzle, one flame, in all five frames. `gtai-masters/n9/rivet/rivet_flamer_up_burst_one_flame_before_after_king_combo_48ppm_x1.5_seed2_f250_302.png`
+  (looked at it); frames.json 15 (it replaces the gatling gunplay still: the gatling foot-lock entry covers it).
+  DECISION rivet/flame-along-aim. Rivet select 66/0, lint 15/15.
+- FRICTION (~6 min): in test_rivet_frames, `var deg: PackedFloat32Array = RivetStrips.FLAME_DEG[art + "/flamethrower"]`
+  inside a typed `for art: String in [...]` read all zeros (the same lookup in a throwaway test, and production's
+  `.get(key, [])`, read right). `.get(key, PackedFloat32Array())` with the key in its own var works. Not chased further.
+
+### Calls drafted for REPORT (it10 additions)
+17. **The flamer fired up the screen**: built: the drawn flame cell only when its drawn flame lies within 30 deg of the
+    aim; straight up (and steep away diagonals) show the facing cell with the game jet alone. Option A
+    (`--rivet-flame=all`): it9's fire cell at any aim (two flames when firing up). Option B: an asset ask for a drawn
+    flame toward the top of the screen (an away fire cell, the flame rising past his helmet) and steeper away
+    diagonals, then FLAME_DEG takes their angles. Still: `rivet_flamer_up_burst_one_flame_before_after_king_combo_48ppm_x1.5_seed2_f250_302.png`.
+18. **The drawn reload** (wired, art in the library's round 0725): it shows only standing; while he moves the walk
+    wins (no glide). Option: the reload cell over the walk (one second of standing legs carried across the ground).
+- Gates on b7c515cc (the flame along the aim): director reel `reel-director-it10c-<v>.log`: top 19/19, combo 19/19
+  fully down, 0 SCRIPT ERROR, exit 0; tilt70 (run beside the other two) 18/18: chapter 19 (electro_chain) started at
+  tick 6570, as in every run, and the 16000-frame quit came first (headless, no fixed fps: fewer ticks per frame under
+  load). Re-run alone `reel-director-it10c2-tilt70.log`: **19/19 fully down**, 0 SCRIPT ERROR, exit 0 (07:51-07:54).
+  FRICTION: the three-in-parallel reel can starve tilt70's last chapter; run it alone when a view comes up short.
+
+REQUEST to assets: rivet_flamer_fire_up_{70,55} (+ rivet_flamer_fire_diag_away_v2_{70,55}) (pitch 70 / 55): the flamer
+FIRING TOWARD THE TOP OF THE SCREEN, copy by example of your approved flamer fire cells (`rivet_eq_flamethrower` fire
+side / fire cam, and the it124 `rivet_flamer_diag` away cells): (a) one AWAY fire cell: Rivet seen from behind (the twin
+tanks and hose on his back, as the away facing cell), the wand forward and hidden in front, the drawn yellow flame
+rising straight up the screen from past his helmet (the nozzle above his right shoulder); (b) the two away diagonals
+re-drawn with the flame at 45 deg up the screen (today's are drawn 20-26 deg up: measured on the yellow's long axis),
+right and left drawn, not mirrored, the plated claw on the wand. Same figure scale as the facing cells at that pitch.
+Why: firing up the screen (the King fight) the game jet goes straight up; with no drawn up-flame Rivet now shows the
+facing cell with the jet alone (b7c515cc). With (a) and (b) he draws one drawn flame along the jet there too.
+
+NEXT (it11):
+1. The reload art: when the library delivers round 0725 (`rivet_reload_{onehand,twohand,heavy}_{70,55}_claw` + lefts),
+   cut it with the equipped cutter (`tools/art/rivet_frames.py` manifest) into `p70|p55/rivet_reload_{pistol,
+   plasma_rifle,gatling}.png` (8 cells) + `_left.png` (3 cells) at the equipped strip's FIG_PX; check the dome
+   against the walk cell at 64 px/m; RivetMuzzle needs no reload point (no shot while reloading); film a standing
+   reload (King combo 48 px/m and arena tilt70 64 px/m, `--rivet-reload=off` as the before).
+2. The flamer 55's 3/4 toward-right run row (RUN_ROW_K 0.68): film it (it did not show on King seeds 1-2 or Servo 1);
+   if the quicker cadence reads wrong, a REQUEST for a v2 row 2 by example.
+3. If the library serves the up-flame REQUEST: cut the away fire cell + v2 away diagonals, put their angles in
+   FLAME_DEG, re-film the King seed 2 burst (f250-302).
+4. Freeze prep (10:30): the exe (`--export-release windows-showcase ../build/export/windows/RTAI.exe`), REPORT.md with
+   Calls 1-18, the combined 30-90 s clip of the set.
