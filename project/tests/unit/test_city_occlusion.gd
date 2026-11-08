@@ -112,3 +112,31 @@ func test_extra_occluders_merge_only_when_their_drawn_area_meets_the_view() -> v
 	CityOcclusion.merge_extra(near, [inside, outside] as Array[CityOccluders.Bld], view)
 	assert_eq(near.size(), 1)
 	assert_same(near[0], inside)
+
+
+func test_collect_matches_the_reach_rule_over_every_building_in_order() -> void:
+	var o: CityOccluders = _occ()
+	var rows: Array[Vector3] = []
+	for i: int in 300:  # a dense chunk: buildings on a jittered grid over its 128 m
+		rows.append(Vector3(1 + i % 2, fmod(i * 7.31, 128.0), fmod(i * 3.77, 128.0)))
+	var c: CityChunk = _chunk(rows)
+	var reach: float = CityOccluders.REACH_M * SimConst.PX_PER_M
+	for q: int in 40:
+		var near_px: Vector2 = Vector2(fmod(q * 397.0, 4500.0), fmod(q * 211.0, 4500.0))
+		var got: Array[CityOccluders.Bld] = []
+		o.collect(c, near_px, got)
+		var want: Array[CityOccluders.Bld] = []
+		for b: CityOccluders.Bld in o.of_chunk(c):
+			if absf(b.at.x - near_px.x) <= reach and absf(b.at.y - near_px.y) <= reach:
+				want.append(b)
+		assert_eq(got, want, "query %d: the same buildings, in list order" % q)
+
+
+func test_collect_survives_the_cache_reset() -> void:
+	var o: CityOccluders = _occ()
+	var counts: Array[int] = []
+	for k: int in CityOccluders.CACHE_MAX + 3:  # past CACHE_MAX the cache (and the positions) clear
+		var out: Array[CityOccluders.Bld] = []
+		o.collect(_chunk([Vector3(1, 10, 10), Vector3(2, 12 + k % 3, 10)]), Vector2(320, 320), out)
+		counts.append(out.size())
+	assert_eq(counts.count(2), counts.size(), "every chunk, before and after the reset")

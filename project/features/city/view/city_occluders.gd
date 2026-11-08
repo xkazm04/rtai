@@ -15,6 +15,9 @@ const RECT_SLACK_M: float = 8.0
 var _lift: ChunkLift = null
 var _res: CityResidency = null
 var _cache: Dictionary[int, Array] = {}
+## Each cached list's building positions (px), in list order: near() scans these packed values and
+## touches a Bld only on a hit (reading b.at off ~300 objects a rig was ~50 us a rig a frame).
+var _ats: Dictionary[int, PackedVector2Array] = {}
 var _rect_at: Rect2 = Rect2()
 var _rect_list: Array[Bld] = []
 var _rect_rev: int = -1
@@ -51,17 +54,15 @@ func near(at_m: Vector2) -> Array[Bld]:
 ## Appends chunk's buildings within REACH_M of near_px, their drawn areas at today's lift.
 func collect(chunk: CityChunk, near_px: Vector2, out: Array[Bld]) -> void:
 	var reach: float = REACH_M * SimConst.PX_PER_M
-	for b: Bld in of_chunk(chunk):
-		if absf(b.at.x - near_px.x) > reach or absf(b.at.y - near_px.y) > reach:
+	var list: Array[Bld] = of_chunk(chunk)
+	var ats: PackedVector2Array = _ats[chunk.get_instance_id()]
+	for k: int in ats.size():
+		var at: Vector2 = ats[k]
+		if absf(at.x - near_px.x) > reach or absf(at.y - near_px.y) > reach:
 			continue
-		out.append(_with_area(b))
+		out.append(_with_area(list[k]))
 
 
-## The buildings whose drawn areas meet a screen rect (px), for the baked crowd (one query a frame,
-## CityCrowdOcclusion). The candidates (the resident chunks' buildings under the rect grown by
-## RECT_SLACK_M, and up to REACH_M south of it: a roof lifts north into view) are listed once and
-## kept until the rect leaves the grown one or a chunk streams; each frame only their areas are
-## taken at today's lift.
 func in_rect(view_px: Rect2) -> Array[Bld]:
 	var rev: int = _res.stamped + _res.dropped  # a chunk streamed in or out: list again
 	if rev != _rect_rev or not _rect_at.encloses(view_px):
@@ -104,8 +105,10 @@ func of_chunk(chunk: CityChunk) -> Array[Bld]:
 		return _cache[id]
 	if _cache.size() >= CACHE_MAX:
 		_cache.clear()
+		_ats.clear()
 		_rect_at = Rect2()  # the candidates came from the dropped lists: list them again
 	var list: Array[Bld] = []
+	var ats: PackedVector2Array = PackedVector2Array()
 	for k: int in chunk.command_count():
 		var t: int = chunk.tex[k]
 		var o: int = k * CityChunk.XF_STRIDE
@@ -118,7 +121,10 @@ func of_chunk(chunk: CityChunk) -> Array[Bld]:
 		var ext: Vector2 = _lift.extent(t, b.rot)
 		b.r = Rect2(b.at - ext * 0.5, ext)
 		list.append(b)
+		@warning_ignore("return_value_discarded")
+		ats.append(b.at)
 	_cache[id] = list
+	_ats[id] = ats
 	return list
 
 
