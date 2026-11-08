@@ -6,12 +6,12 @@ func after_each() -> void:
 	RivetKnock.enabled = true
 
 
-func test_each_art_key_has_a_square_four_by_four_knock_grid() -> void:
+func test_each_art_key_has_a_five_by_four_knock_grid_of_square_cells() -> void:
 	for art: String in ["p70", "p55"]:
 		var tex: Texture2D = load(RivetStrips.DIR + art + "/" + RivetKnock.STRIP) as Texture2D
 		assert_not_null(tex, art)
-		assert_eq(tex.get_width(), tex.get_height(), art)
-		assert_eq(tex.get_width() % RivetKnock.CELLS, 0, art)
+		assert_eq(tex.get_width() / RivetKnock.COLS, tex.get_height() / RivetKnock.CELLS, art)
+		assert_eq(tex.get_width() % RivetKnock.COLS, 0, art)
 
 
 func test_the_row_is_the_throw_in_screen_space() -> void:
@@ -60,8 +60,8 @@ func test_place_centres_the_cell_on_his_ground_point() -> void:
 	rig.set_meta(RivetKnock.KNOCK, Vector3(-1.0, 0.0, 10.0))
 	assert_true(RivetKnock.shows(card))
 	RivetKnock.place(rig, card, 0.5, 52.8)
-	var w: float = card.texture.get_width() / 4.0
-	assert_eq(card.frame, RivetKnock.Row.LEFT * RivetKnock.CELLS)
+	var w: float = card.texture.get_width() / float(RivetKnock.COLS)
+	assert_eq(card.frame, RivetKnock.Row.LEFT * RivetKnock.COLS)
 	assert_eq(card.offset, Vector2(-w * 0.5, -w * 0.5))
 	assert_eq(card.global_position, rig.global_position)
 	assert_true(rig.has_meta(RigCastShadows.CAST_HIP))
@@ -77,12 +77,17 @@ func test_the_down_cell_holds_while_the_rig_is_still_down_after_the_knock_clears
 	card.set_meta(RivetFrames.ON, knock)
 	rig.set_meta(RivetKnock.KNOCK, Vector3(0.0, 1.0, 50.0))
 	RivetKnock.place(rig, card, 0.5, 52.8)
-	assert_eq(card.frame, RivetKnock.Row.TOWARD * RivetKnock.CELLS, "impact")
+	assert_eq(card.frame, RivetKnock.Row.TOWARD * RivetKnock.COLS, "impact")
 	rig.remove_meta(RivetKnock.KNOCK)
 	rig.dead = true
 	assert_eq(RivetKnock.path_or(rig, "p70", base), knock, "still down: the knock strip holds")
+	rig.clips.down_amt = RigClips.DOWN_SPRAWL
 	RivetKnock.place(rig, card, 0.5, 52.8)
-	assert_eq(card.frame, RivetKnock.Row.TOWARD * RivetKnock.CELLS + 3, "the down cell")
+	assert_eq(card.frame, RivetKnock.Row.TOWARD * RivetKnock.COLS + 3, "the down cell")
+	rig.clips.down_amt = 0.3  # the rise past KNEEL_FROM
+	RivetKnock.place(rig, card, 0.5, 52.8)
+	assert_eq(card.frame, RivetKnock.Row.TOWARD * RivetKnock.COLS + RivetKnock.KNEEL, "kneel")
+	assert_eq(card.global_rotation, 0.0, "the kneel stands upright")
 	rig.dead = false
 	assert_eq(RivetKnock.path_or(rig, "p70", base), base, "up: the figure is back")
 	rig.dead = true

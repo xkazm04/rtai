@@ -7,8 +7,9 @@ extends RefCounted
 ## screen space, columns impact / tumble / slide / down) instead of the death sprawl. The column
 ## steps on the time since the hit (the slide decelerates over the 1.2 s down); the lying cells turn
 ## by the heading's angle off the row's axis (<= 45 deg, the library's rule for the diagonals).
-## The rig stays down a few ticks after the knock clears (its rise): the down cell holds until
-## then (it7 film: the upright sprawl popped in for ~0.33 s). --rivet-knock=off: the sprawl.
+## The rig stays down ~0.33 s after the knock clears (RigClips' rise): the down cell holds, then
+## (it7b) the get-up's KNEEL cell once the rise passes KNEEL_FROM, so he never pops from lying to
+## standing. --rivet-knock=off: the sprawl.
 enum Row { TOWARD = 0, AWAY = 1, RIGHT = 2, LEFT = 3 }
 
 const STRIP: String = "rivet_knock.png"
@@ -16,6 +17,10 @@ const KNOCK: StringName = &"rivet_knock"
 const T0: StringName = &"rivet_knock_t0"
 const LAST: StringName = &"rivet_knock_last"
 const CELLS: int = 4
+const COLS: int = 5
+const KNEEL: int = 4
+## The rise's share of RigClips.DOWN_SPRAWL below which the kneel shows (down_amt falls to 0.05).
+const KNEEL_FROM: float = 0.6
 ## The first tick of each column (impact, tumble, slide, down) since the hit, at 60 Hz.
 const FROM_TICK: PackedInt32Array = [0, 6, 24, 54]
 ## The cast shadow's height while thrown, in standing heights (a lying body casts a low one).
@@ -57,9 +62,14 @@ static func col_of(ticks: int) -> int:
 	return col
 
 
-## The lying cells' turn: the heading's angle off its row's axis (0 on the impact cell).
+## The cell while the rig rises after the knock (`amt`: RigClips.down_amt): down, then kneel.
+static func rise_col(amt: float) -> int:
+	return KNEEL if amt < RigClips.DOWN_SPRAWL * KNEEL_FROM else CELLS - 1
+
+
+## The lying cells' turn: the heading's angle off its row's axis (0 upright: impact, kneel).
 static func turn_of(h: Vector2, col: int) -> float:
-	if col == 0 or h == Vector2.ZERO:
+	if col == 0 or col == KNEEL or h == Vector2.ZERO:
 		return 0.0
 	return wrapf(h.angle() - AXIS[row_of(h)], -PI, PI)
 
@@ -74,12 +84,12 @@ static func place(rig: CutRig, card: Sprite2D, s: float, h_px: float) -> void:
 		rig.set_meta(T0, t0)
 	var head: Vector2 = Vector2(k.x, k.y)
 	var col: int = col_of(roundi((rig.t_alive - t0.y) / SimClock.TICK_DT))
-	col = col if rig.has_meta(KNOCK) else CELLS - 1  # the rise's tail: still lying
-	card.hframes = CELLS
+	col = col if rig.has_meta(KNOCK) else rise_col(rig.clips.down_amt)
+	card.hframes = COLS
 	card.vframes = CELLS
-	card.frame = row_of(head) * CELLS + col
+	card.frame = row_of(head) * COLS + col
 	card.flip_h = false
-	var w: float = card.texture.get_width() / float(CELLS)
+	var w: float = card.texture.get_width() / float(COLS)
 	card.offset = Vector2(-w * 0.5, -w * 0.5)
 	card.global_rotation = turn_of(head, col)
 	card.global_scale = Vector2(s, s)

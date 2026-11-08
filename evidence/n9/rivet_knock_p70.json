@@ -1,7 +1,19 @@
 {
  "art": "p70",
- "cell": 178,
+ "cell": 198,
  "impact_drop": 0.25,
+ "kneel": {
+  "drop": 0.04,
+  "k": 0.53,
+  "left": "mirrored",
+  "rows": [
+   0,
+   4,
+   2,
+   2
+  ],
+  "src": "rivet_getup_70"
+ },
  "len_x_fig": 1.2,
  "scales": [
   0.2953,
