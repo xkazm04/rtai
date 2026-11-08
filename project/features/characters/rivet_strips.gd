@@ -31,6 +31,12 @@ const CONE_OFF: StringName = &"rivet_cone_off"
 ## keeps posing the hidden held part so the game's smear (MeleeSmearView) still sweeps the cut.
 ## The katana, chainsaw and plasma sword sheets draw their own arc (no game smear over it).
 const NO_ARC: Dictionary[String, Array] = {"p55": [&"electro_baton"]}
+## n10: one-handed melee holds. A drawn left strip has only its three facings, no strike cell, so
+## under it the smear has to keep running from the hidden held part or a left swing draws nothing.
+const LEFT_NO_SWING: Array[StringName] = [&"electro_baton"]
+## n10: a strip whose weapon hangs below his feet is cut with its feet this far above the cell
+## bottom (tools/art/rivet_frames.py body_band prints it), keyed "<art key>/<file>".
+const FOOT_PX: Dictionary[String, float] = {"p70/rivet_eq_electro_baton_left.png": 35.0}
 ## n9 it5: a stream's drawn DIAGONAL fire cells (tools/art/rivet_flame_diag.py: the library's
 ## fire_diag cells, the left ones drawn): rivet_eq_<weapon>_diag.png, 4 cells (3/4 toward right,
 ## 3/4 away right, 3/4 toward left, 3/4 away left) by octant. A toward flame reaches below his
@@ -100,7 +106,9 @@ static func cells_of(path: String, left: bool) -> int:
 
 static func foot_px(path: String) -> float:
 	var art: String = path.get_base_dir().get_file()
-	return DIAG_FOOT_PX.get(art, 0.0) if path.ends_with(DIAG) else RivetFrames.PAD_PX
+	if path.ends_with(DIAG):
+		return DIAG_FOOT_PX.get(art, 0.0)
+	return FOOT_PX.get(art + "/" + path.get_file(), RivetFrames.PAD_PX)
 
 
 ## A one-handed hold turned left: its drawn left strip, else the base (the fallback, logged once).
@@ -119,8 +127,12 @@ static func left_of(art: String, weapon: StringName) -> String:
 static func hides_held(rig: CutRig) -> bool:
 	if not RivetFrames.owns_weapon(rig):
 		return false
+	var weapon: StringName = RivetFrames.weapon_of(rig)
+	var on: String = str(rig.head_card.get_meta(RivetFrames.ON, ""))
+	if LEFT_NO_SWING.has(weapon) and on.ends_with("_left.png"):
+		return false
 	var no_arc: Array = NO_ARC.get(ViewMode.shared().art, [])
-	return not no_arc.has(RivetFrames.weapon_of(rig))
+	return not no_arc.has(weapon)
 
 
 ## True while a shot or a strike latches the fire cell (the recoil, the FIRE latch, a strike).

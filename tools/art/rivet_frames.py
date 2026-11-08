@@ -18,7 +18,9 @@ Each band's figures are the <count> column clusters of its alpha (cut at the cou
 a spark or a slash trail stays with its figure). Each figure's anchor is its helmet's centre (the
 alpha centre of its top quarter) and its lowest alpha row (the feet). A band is scaled so its
 median helmet width matches the first band's (the action rows are drawn larger), then everything
-so the first band's median figure height is fig_h px. One common cell over all figures, the anchor
+so the first band's median figure height is fig_h px. A row's feet_up (one fraction per first-band figure:
+the part of its alpha height below its feet) stands a figure whose weapon hangs below them on
+the feet: the printed pad is then the feet's height above the cell bottom (RivetStrips.FOOT_PX). One common cell over all figures, the anchor
 on the cell's centre column and PAD px above its bottom. Raw art, premultiplied resampling.
 Deterministic.
 """
@@ -136,6 +138,14 @@ def _sheet(path: str, counts: list, cc: tuple = ()) -> tuple:
     return rgba, [_figures(solid, b[0], b[1], n, i in cc) for i, (b, n) in enumerate(zip(bands, counts))]
 
 
+def _feet_up(figs: list, fracs: list) -> None:
+    """A figure whose weapon hangs below its feet: `h` becomes helmet top to feet, fracs[i] of the
+    figure's alpha height (measured on the strip) being the part below them; `feet_h` keeps it."""
+    for f, up in zip(figs, fracs):
+        f["feet_h"] = round((f["box"][3] - f["box"][1]) * (1.0 - up))
+        f["h"] = f["feet_h"]
+
+
 def _manifest(path: str, only: str = "") -> None:
     with open(path, encoding="utf-8") as fh:
         man = json.load(fh)
@@ -149,6 +159,8 @@ def _manifest(path: str, only: str = "") -> None:
                 argv.append(f"--cc={row['cc']}")
             if "act_k" in row:
                 argv.append(f"--act_k={row['act_k']}")
+            if "feet_up" in row:
+                argv.append(f"--feet_up={row['feet_up']}")
             if "left" in row:
                 argv.append(f"--left={lib}/{row['left']}")
             sys.argv = [sys.argv[0]] + argv + [f"--fig_h={row.get('fig_h', man['fig_h'])}"]
@@ -166,6 +178,8 @@ def main() -> None:
     fig_h = float(opts.get("fig_h", 110))
     cc = tuple(int(c) for c in opts["cc"].split(",")) if "cc" in opts else ()
     rgba, bands = _sheet(args[0], counts, cc)
+    if "feet_up" in opts:
+        _feet_up(bands[0], [float(v) for v in opts["feet_up"].split(",")])
     ref_w = float(np.median([f["head_w"] for f in bands[0]]))
     k0 = fig_h / float(np.median([f["h"] for f in bands[0]]))
     items = [(rgba, f, k0) for f in bands[0]]
@@ -181,8 +195,10 @@ def main() -> None:
             bk = float(opts.get("act_k", ACT_K))
         items += [(rgba, f, k0 * bk) for f in band]
     half = max(max(f["ax"] - f["box"][0], f["box"][2] - f["ax"]) * k for _, f, k in items)
-    up = max((f["box"][3] - f["box"][1]) * k for _, f, k in items)
-    cw, ch = int(np.ceil(2 * half)) + 4, int(np.ceil(up)) + PAD + 2
+    up = max(f.get("feet_h", f["box"][3] - f["box"][1]) * k for _, f, k in items)
+    below = max((f["box"][3] - f["box"][1] - f.get("feet_h", f["box"][3] - f["box"][1])) * k for _, f, k in items)
+    below = int(np.ceil(below))
+    cw, ch = int(np.ceil(2 * half)) + 4, int(np.ceil(up)) + PAD + 2 + below
     out = Image.new("RGBA", (cw * len(items), ch), (0, 0, 0, 0))
     for i, (src, f, k) in enumerate(items):
         x0, y0, x1, y1 = f["box"]
@@ -194,10 +210,10 @@ def main() -> None:
         size = (max(1, round((x1 - x0) * k)), max(1, round((y1 - y0) * k)))
         fig = fig.resize(size, Image.LANCZOS).convert("RGBA")
         px = i * cw + round(cw / 2 - (f["ax"] - x0) * k)
-        py = ch - PAD - size[1]
+        py = ch - PAD - below - round(f.get("feet_h", y1 - y0) * k)
         out.alpha_composite(fig, (px, py))
     out.save(args[1], optimize=True)
-    meta = {"cells": len(items), "cell": [cw, ch], "fig_h": fig_h, "pad": PAD, "src": args[0]}
+    meta = {"cells": len(items), "cell": [cw, ch], "fig_h": fig_h, "pad": PAD + below, "src": args[0]}
     meta["scales"] = [round(k, 4) for _, _, k in items]
     if "json" in opts:
         with open(opts["json"], "w", encoding="utf-8") as fh:

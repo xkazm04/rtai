@@ -45,3 +45,8 @@ NEXT (it13, in order):
 3. Item 1 rest: read the 12 unread contact sheets (tmp/rivet/tour/c64b + c64c); the 48 px/m tour for the other 12 weapons (`tmp/rivet/tour_all.sh combo 48 <out> <weapons>`; five are done in tmp/rivet/tour/c48); knock-down and get-up need the city sim (`--arena=city` and a car, as n9 filmed `rivet_knockdown_city_car`).
 4. Item 3 rest: `--tour-kind=trans` with a heavy pair and melee (rocket_launcher,katana; molotov,flamethrower); knock-down during a reload on the city.
 5. Delete `dev/rivet_motion/rivet_tour*` and `rivet_trans_bot` at the end of the hunt if not worth keeping, and let the debt baseline tighten.
+
+## it13 (00:07-)
+FINDING (00:15, the 12 unread contact sheets at c64b plus a strip-by-strip paste) a shot shrinks him: gloria, plasma rifle, mini-nuke, flamer (p70 and p55), machine pistol and electro gun (p55) draw the fire band 11-29 % small against their own facings, the plasma sword's strike 21-26 % big. `rivet_frames.py` scales the action band by a helmet ratio its `_measure` gets wrong, and only the blades had a hand `act_k`. Also p70 baton left: the figure was cut on the baton tip, so he stood 25 px up and small on octants 3-5, and those three cells have no strike, so a left swing draws nothing at all (no arc, no smear).
+MILESTONE fixed in the cut (act_k per row, `feet_up` for the baton left, FOOT_PX, LEFT_NO_SWING); muzzle table re-measured. `test_rivet_cell_scale.gd` 3 tests: red on the old strips (all 7 strips, the foot line), green on the new.
+FRICTION (00:21) `git show` of a PNG returns the LFS pointer here: use `git cat-file --filters HEAD:<path>` for the old pixels. The evidence run was killed at 00:15 (mine, PID 11040, the others' are not) so one gate covers the final commit.
