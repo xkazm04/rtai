@@ -573,3 +573,11 @@ NEXT (it9), replaces the list above:
   6e36e936, never pushed): only JOURNAL.md / REPORT.md conflict (lane docs); project.godot, city_residency.gd and
   docs/decisions.md auto-merge; lint 15 / 15 on the merge. NOTE for the Director: n9-perf merges onto world's head
   without code conflicts.
+- 08:14 MILESTONE the release build, 8 pairs (main vs head exports): head under main in 8 / 8 rounds on drive70 and
+  riot (median paired p50 -0.34 / -0.75 ms; 12 / 12 each with it8). RAM: the ~815 MB state on both (main 8 / 33,
+  head 1 / 50, Fisher p 0.002): closed as a per-run state, not a saving. Commit 87dda0f0.
+- 08:14-08:22 MILESTONE what ships: the trial merge exported (`build/export/windows-bench-merge/`), A/B 4 pairs vs
+  main: VRAM 884 -> 528 / 899 -> 549 MB WIN, frames WASH, 0 errors. FINDING: the merged pck is 411.7 MB (main
+  217.8): 343.9 MB of raw `.bptc.ctex`. Download estimate (new `tools/perf/pck_download.py`, 1 MB chunks): 213 -> 155
+  MB LZMA, 216 -> 168 zlib. NOTE to world (FYI, no work asked): BC7 costs +194 MB install, saves ~45-60 MB download
+  and ~350 MB VRAM (LEDGER "What ships"); the owner's Call P-1 trade, now measured on both sides.

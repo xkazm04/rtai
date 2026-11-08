@@ -1,0 +1,8 @@
+n9 it9 08:20, pck sizes of the windows-bench release exports (official 4.7.2 template)
+main  = prof3 (da108c13), lossless WebP .ctex
+merge = scratch world3 6e36e936 = n9-world b888fe20 + n9-perf c18385e4 (world's BC7 + combo + bikes, perf's head)
+whole-file xz -6 -T4:  main 217769176 -> 210176120 B   merge 411676584 -> 145744868 B
+1 MB chunks (python tools/perf/pck_download.py, lzma preset 6 / zlib 6 per chunk, the SteamPipe-like case):
+windows-bench-main raw 217.8 MB  lzma/1MB 213.4 MB  zlib/1MB 216.0 MB
+windows-bench-merge raw 411.7 MB  lzma/1MB 154.9 MB  zlib/1MB 168.1 MB
+pck contents (merge): 343.9 MB of .bptc.ctex (BC7 blocks, stored raw); main: lossless .ctex are WebP (already entropy-coded)

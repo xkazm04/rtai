@@ -1,0 +1,25 @@
+drive70 main@exe-windows-bench-main r0: p50 2.18 p99 4.51 worst 9.4 draws 293 cpu 1.04 cores ws 755 MB steady 754 last 755 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(0)
+drive70 merge@exe-windows-bench-merge r0: p50 1.91 p99 3.86 worst 12.6 draws 293 cpu 1.10 cores ws 755 MB steady 753 last 755 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(2)
+riot main@exe-windows-bench-main r0: p50 4.50 p99 9.11 worst 16.3 draws 734 cpu 1.02 cores ws 758 MB steady 758 last 758 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(0)
+riot merge@exe-windows-bench-merge r0: p50 3.99 p99 9.07 worst 14.1 draws 739 cpu 0.99 cores ws 755 MB steady 754 last 755 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(2)
+drive70 merge@exe-windows-bench-merge r1: p50 2.09 p99 3.97 worst 16.8 draws 293 cpu 1.05 cores ws 693 MB steady 692 last 693 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(2)
+drive70 main@exe-windows-bench-main r1: p50 2.36 p99 4.67 worst 9.9 draws 293 cpu 1.04 cores ws 753 MB steady 752 last 753 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(2)
+riot merge@exe-windows-bench-merge r1: p50 4.37 p99 8.95 worst 19.2 draws 739 cpu 1.01 cores ws 756 MB steady 756 last 756 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(2)
+riot main@exe-windows-bench-main r1: p50 4.68 p99 8.54 worst 16.4 draws 734 cpu 1.01 cores ws 755 MB steady 755 last 755 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(2)
+drive70 main@exe-windows-bench-main r2: p50 2.24 p99 4.02 worst 5.0 draws 293 cpu 1.04 cores ws 754 MB steady 752 last 754 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(2)
+drive70 merge@exe-windows-bench-merge r2: p50 2.28 p99 5.35 worst 8.2 draws 293 cpu 1.04 cores ws 689 MB steady 688 last 689 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(2)
+riot main@exe-windows-bench-main r2: p50 4.20 p99 8.42 worst 14.6 draws 734 cpu 1.00 cores ws 764 MB steady 754 last 754 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(2)
+riot merge@exe-windows-bench-merge r2: p50 3.35 p99 7.41 worst 13.9 draws 739 cpu 1.00 cores ws 691 MB steady 691 last 691 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(2)
+ab: drive70/merge@exe-windows-bench-merge: no log (exit 3221225477, 3.8 s) Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+D3D12 12_0 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce RTX 4090
+
+[INFO] characters: prewarmed 41 rigs in 33.7 ms
+city_bench: prewarm 8.7 ms
+
+drive70 main@exe-windows-bench-main r3: p50 2.18 p99 3.99 worst 4.8 draws 293 cpu 1.06 cores ws 820 MB steady 819 last 480 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(2)
+riot merge@exe-windows-bench-merge r3: p50 4.77 p99 9.32 worst 19.6 draws 739 cpu 0.97 cores ws 693 MB steady 692 last 693 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(2)
+riot main@exe-windows-bench-main r3: p50 4.14 p99 8.09 worst 15.3 draws 734 cpu 1.01 cores ws 819 MB steady 817 last 819 frames 1681 noTick 0 multiTick 0 errors 0 CONTENDED(8)
+drive70 main@exe-windows-bench-main: p50 2.24±0.09 p99 4.51±0.34 p99.9 6.91±1.67 worst 9.43±2.53 draws 292.78±0.00 renderCpu 0.23±0.01 gpu 0.21±0.00 vram 884.10±16.09 cpu 1.04±0.01 ws 755.27±33.54 wsSteady 754.27±33.49 wsLast 754.03±137.77 frames 1681.00±0.00 noTick 0.00±0.00 multiTick 0.00±0.00 contended 4 errors 0
+drive70 merge@exe-windows-bench-merge: p50 2.09±0.18 WASH p99 3.97±0.75 WASH p99.9 7.13±2.44 WASH worst 12.61±4.30 WASH draws 292.67±0.00 WIN renderCpu 0.24±0.03 WASH gpu 0.21±0.01 WASH vram 527.67±8.00 WIN cpu 1.05±0.03 WASH ws 692.78±32.79 WASH wsSteady 691.83±32.59 WASH wsLast 692.78±32.79 WASH frames 1681.00±0.00 WASH noTick 0.00±0.00 WASH multiTick 0.00±0.00 WASH contended 3 errors 0
+riot main@exe-windows-bench-main: p50 4.50±0.27 p99 8.54±0.51 p99.9 14.25±0.65 worst 16.27±0.88 draws 734.21±0.06 renderCpu 0.47±0.02 gpu 0.37±0.03 vram 898.72±24.00 cpu 1.01±0.01 ws 764.05±31.86 wsSteady 757.93±31.72 wsLast 758.27±32.30 frames 1681.00±0.00 noTick 0.00±0.00 multiTick 0.00±0.00 contended 4 errors 0
+riot merge@exe-windows-bench-merge: p50 4.37±0.71 WASH p99 9.07±0.95 WASH p99.9 14.65±2.79 WASH worst 19.20±2.86 WASH draws 739.30±0.09 LOSS renderCpu 0.54±0.13 WASH gpu 0.33±0.10 WASH vram 549.17±26.00 WIN cpu 1.00±0.02 WASH ws 755.43±32.61 WASH wsSteady 754.43±32.51 WASH wsLast 755.43±32.61 WASH frames 1681.00±0.00 WASH noTick 0.00±0.00 WASH multiTick 0.00±0.00 WASH contended 4 errors 0

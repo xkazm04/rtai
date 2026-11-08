@@ -97,6 +97,13 @@ Numbers, methods and every A/B: `docs/perf/LEDGER.md` section "n9 night". Clips 
    (no pixel moved). The RAM question is answered: the ~815 MB state appears on both builds (main 8 of 33 runs
    tonight, this branch 1 of 50), so it is a per-run state that this branch hits less often, not a saving to claim
    (LEDGER "the release build, 8 pairs").
+15. **it9: what ships, measured.** A scratch trial merge of world's head with this branch merges with no code
+   conflict (only the lane docs) and passes lint. As a release build against main: **VRAM 884 -> 528 MB on the
+   drive and 899 -> 549 MB on the riot (-40 %)**, frame times WASH (the merge under main in 3 of 4 rounds on each),
+   0 errors. **The pck with BC7: the install grows and the download shrinks.** On disk 218 -> 412 MB, because BC7
+   blocks are stored raw while lossless textures are WebP. Compressed in 1 MB chunks, the way a store's depot
+   does it, it is 213 -> 155 MB (LZMA) or 216 -> 168 MB (zlib): **about 45-60 MB less to download, about 194 MB more
+   on disk, about 350 MB less on the GPU** (LEDGER "What ships", `tools/perf/pck_download.py`).
 
 ## What does not
 - The first L17 test was vacuous. It compared `MultiMesh.buffer`, which a headless run keeps empty. The mutation run

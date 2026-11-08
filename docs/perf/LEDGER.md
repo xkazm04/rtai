@@ -625,6 +625,37 @@ An earlier run (`evidence/perf/n9-final-it8/`, 07:20, 2 arms) is VOID for head: 
 uncommitted L27 arm (FRICTION it8). Owed at the freeze: the same table on the final HEAD, on the release exports
 (`@exe` arms, as d9's final table), when the machine is quieter.
 
+## What ships (it9, 08:14-08:22): main vs a trial merge of world's head + this branch, release exports
+The Director merges four lanes; world carries BC7 + combo + bikes, this branch the CPU cuts + mailbox. A scratch
+trial merge (`gtai-n9/tmp/perf/world3`, commit 6e36e936 = n9-world b888fe20 + n9-perf c18385e4, never pushed: only
+JOURNAL.md / REPORT.md conflict, the code auto-merges, lint 15 / 15; world's DLLs copied) exported as `windows-bench`
+to `build/export/windows-bench-merge/`. `node tools/perf/ab.mjs --scenes=drive70,riot --pairs=4
+--arms=main@exe-windows-bench-main:,merge@exe-windows-bench-merge:` (`evidence/perf/n9-it9/ship-merge/` + `.log`),
+16 runs, 0 errors, bench.lock via ab.mjs, CONTENDED(2-8) in 7 of 8 rounds. Median ± half-spread:
+
+| scene | metric | main da108c13 | merge | verdict |
+|---|---|---|---|---|
+| drive70 | p50 / p99 ms | 2.24 / 4.51 | 2.09 / 3.97 | WASH (merge under main in 3 of 4 rounds) |
+| drive70 | VRAM MB | 884 | **528 (-356, -40 %)** | **WIN** (spread 8-16) |
+| drive70 | steady RAM MB | 754 | 692 (688-753) | WASH by spread (3 of 4 merge runs at ~690) |
+| riot | p50 / p99 ms | 4.50 / 8.54 | 4.37 / 9.07 | WASH (merge under main in 3 of 4 rounds; world adds rig cost, see draws) |
+| riot | VRAM MB | 899 | **549 (-350, -39 %)** | **WIN** |
+| riot | draws | 734 | 739 | +5 (world's content: bikes / robe; not a perf regression to chase) |
+
+**The pck: install up, download down.** BC7 blocks are stored raw in the pck (343.9 of 411.7 MB are `.bptc.ctex`),
+while a lossless `.ctex` is WebP, already entropy-coded. So the install grows and the download shrinks
+(`evidence/perf/n9-it9/pck-size.txt`, `python -I tools/perf/pck_download.py <pck>...`: every 1 MB chunk compressed
+alone, the way a chunked depot store works):
+
+| build | pck on disk | LZMA, 1 MB chunks | zlib, 1 MB chunks | xz -6, whole file |
+|---|---|---|---|---|
+| main (lossless) | 217.8 MB | 213.4 MB | 216.0 MB | 210.2 MB |
+| merge (BC7) | 411.7 MB (+194) | **154.9 MB (-27 %)** | 168.1 MB (-22 %) | 145.7 MB |
+
+L4 (d9) recorded the install side (+160 MB then) and guessed that depot compression shrinks the download; this
+measures it: **a player downloads ~45-60 MB less, installs ~194 MB more, and the GPU holds ~350 MB less.** Which
+codec the store uses is not measured here (the two codecs bracket it). NOTE to world (FYI, no work asked).
+
 ## Final table n9, the release build, 8 pairs (it9, 08:06-08:14): head under main in 16 of 16 paired rounds; the RAM mode on both
 `node tools/perf/ab.mjs --scenes=drive70,riot --pairs=8 --arms=main@exe-windows-bench-main:,head@exe:`
 (`evidence/perf/n9-it9/ram-mode/` + `ram-mode.log`). The same exports as it8 (main da108c13 from prof3, head efa848cb;
@@ -786,6 +817,10 @@ CONTENDED(2-8) in 14 of 36 runs (the other lanes' Godots), 0 script errors in 36
   engine's main thread lands on `[Godot*.exe]` / `[RTAI*.exe]`, Godot's own threads on `[msvcrt.dll]` (std threads),
   the GPU driver's on its DLL (`nvwgf2umx.dll` ...). Read-only (query rights). It answers "which thread pays" when
   `ab.mjs`'s process CPU moves (L11).
+- n9 it9: `python -I tools/perf/pck_download.py <a.pck> [<b.pck>...]`: the download size of an exported pck as a
+  chunked depot store sees it (every 1 MB chunk compressed alone, LZMA preset 6 and zlib 6: the band). Install and
+  download move apart once textures are BC7 (section "What ships"). A trial-merge arm: merge the lanes in a scratch
+  worktree, export `windows-bench` into `build/export/<dir>/`, and A/B it as `name@exe-<dir>:`.
 - Existing instruments reused: `FightFrames` (`--frames=<json>`: per-frame wall, process, flush, draw,
   pump, physics, render CPU/GPU, draw calls, pipeline compiles), `NodeSpans` (`--spans=<json>`: per-node
   `_process` and `_draw` cost: the per-system report), `city_bench.tscn` (`gtai.bench/1`).
