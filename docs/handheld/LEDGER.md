@@ -246,7 +246,33 @@ stick, 2/3 right stick, 4 LT, 5 RT.
 The project's base viewport is 1280x800 (`canvas_items` stretch), the Deck's panel exactly: the HUD draws 1:1 at its
 authored sizes. Static read: `HudView` TEXT 30 / NAME 26 / WEAPON 24 px, `ObjectiveView` 24, `GhostFormHud` 18, theme
 default 16 (the settings panel): the smallest em is 16 px, a cap height of about 11 px, **above Valve's 9 px minimum and
-near its 12 px recommendation** (static read only; owed: a runtime probe over every Label and draw_string, and the stills).
+near its 12 px recommendation** (static read, d9).
+
+**Runtime probe (n9 it2):** `TextProbe` (`dev/handheld/text_probe.gd`, tested in `test_text_probe`) walks every
+visible text Control (Label, Button, RichTextLabel, LineEdit), scales its font size to window px (canvas transform x
+the viewport stretch) and measures the **ink height of "H" (cap) and "x" (x-height)** from the TextServer's glyph
+cache at that size. `dev/handheld/legibility_walk.gd` boots quest 1 under a device row, walks it on pad events (title
+-> A -> stick -> Start) and probes each stop; the HUD's custom `draw_string` sites are not Controls, so their 10
+authored sizes are measured the same way from a reviewed table (each site read in the code: HudView 22-30, the
+dialogue fit 20-30, the boss bar 16 / 20, the taunt fit 18-22, the ghost card 18, the prompt 24). Valve's wording is
+"the smallest on-screen font character should never fall below 9 pixels in height": the strict reading is the
+x-height (a lowercase letter), the usual one the cap. Result, `--device=deck`, 1280x800, the iGPU
+(`evidence/n9h/it2/legibility/legibility-deck.json`, still `gtai-masters/n9/handheld/legibility-deck-pause-1280x800.png`):
+
+| text | font px | cap px | x-height px | verdict (x-height vs 9 / 12) |
+|---|---|---|---|---|
+| boss bar round count "1 / 3" (digits: cap height) | 16 | 12 | 9 | at the floor (digits read at 12) |
+| ghost card name, key hint; boss taunt smallest fit; pause card -, +, Toggle | 18 | 13 | 10 | above 9 |
+| boss bar name; dialogue smallest fit; title / pause controls line; settings rows | 20 | 14 | 11 | above 9 |
+| unarmed label | 22 | 16 | 12 | 12 |
+| objective prompt; weapon / heat / notice | 24 | 17 | 13 | 12+ |
+| speaker name; head line; Start / Resume / Quit; titles | 26-56 | 18-40 | 14-30 | 12+ |
+
+**No text on the Deck row falls below 9 px under either reading; every cap height is at or above Valve's 12 px
+recommendation; the x-height is 9-11 px on 13 of the 28 probed items** (the 16-20 px fonts). Cross-checked on pixels
+(the King still, `it2-king-card`): "Tonnage" x-height 10 px, "1 / 3" 12 px, "KING" 14 px: the probe's numbers. On the
+7-inch panel 10 px = 1.2 mm. A larger handheld text scale (e.g. 1.15x on the 16-20 px fonts, behind the rows) is a
+Call, not built: the cap reading passes everywhere, and the cards are laid out around these sizes.
 
 ## 7. Port readiness (filled as the loop goes)
 

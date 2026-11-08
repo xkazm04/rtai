@@ -22,7 +22,8 @@
         "2026-11-07: d9-perf L10: city_bench --max-fps and BenchStats tick cadence (framesNoTick / framesMultiTick), the instrument that measured the frame cap (dev_loc 18974 -> 18983)",
         "2026-11-07: handheld E10: FightFrames logs Godot's texture and video memory at the end of a run (the OS GPU counter on the iGPU does not see a BC7 import); dev-only tooling (dev_loc 18799 -> 18801)",
         "2026-11-07: handheld E14: dev/save_cross.gd (+_run), the Windows<->Linux save round trip tool; dev-only, not exported (dev_loc 18801 -> 18888)",
-        "2026-11-07: d9 merge: perf + handheld bench growth combined (each accepted on its lane) (dev_loc 19123 -> 19147)"
+        "2026-11-07: d9 merge: perf + handheld bench growth combined (each accepted on its lane) (dev_loc 19123 -> 19147)",
+        "2026-11-08: handheld n9: the Deck Verified legibility probe + walk (dev/handheld, owed since d9 LEDGER section 6); dev only, never shipped (dev_loc 19147 -> 19388)"
       ],
       "files": {
         "project/dev/arena": 708,
@@ -35,6 +36,7 @@
         "project/dev/ghost-forms": 616,
         "project/dev/ghost-powers": 1137,
         "project/dev/gunplay": 674,
+        "project/dev/handheld": 241,
         "project/dev/held": 103,
         "project/dev/human_react": 412,
         "project/dev/noir": 1220,
@@ -53,7 +55,7 @@
         "project/dev/view": 195,
         "project/dev/weapon_art": 506
       },
-      "total": 19147
+      "total": 19388
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -61,7 +63,8 @@
         "2026-11-07: n8 merge: view + street growth combined (each accepted on its lane; cast_view.gd conflict resolved by keeping both) (direct_cmdline_reads 153 -> 154)",
         "2026-11-07: n8 merge: + vehicles growth combined (accepted on its lane) (direct_cmdline_reads 154 -> 155)",
         "2026-11-07: n8 merge: + city growth combined (accepted on its lane) (direct_cmdline_reads 155 -> 156)",
-        "2026-11-07: n8 merge: + hud growth combined (accepted on its lane); fold_rigs dropped for view's follow per both lanes' merge notes (direct_cmdline_reads 156 -> 157)"
+        "2026-11-07: n8 merge: + hud growth combined (accepted on its lane); fold_rigs dropped for view's follow per both lanes' merge notes (direct_cmdline_reads 156 -> 157)",
+        "2026-11-08: handheld n9: the Deck Verified legibility probe + walk (dev/handheld, owed since d9 LEDGER section 6); dev only, never shipped (direct_cmdline_reads 157 -> 158)"
       ],
       "files": {
         "project/core/render/view_mode.gd": 1,
@@ -94,6 +97,7 @@
         "project/dev/gunplay/range_clip.gd": 1,
         "project/dev/gunplay/range_view.gd": 1,
         "project/dev/gunplay/ttk_bench_run.gd": 1,
+        "project/dev/handheld/legibility_walker.gd": 1,
         "project/dev/held/hold_probe.gd": 1,
         "project/dev/human_react/react_board_run.gd": 1,
         "project/dev/noir/blood_clip.gd": 1,
@@ -205,7 +209,7 @@
         "project/tests/run_scenarios.gd": 1,
         "project/tests/unit/test_launch_args.gd": 1
       },
-      "total": 157
+      "total": 158
     },
     "files_near_cap": {
       "accepted": [

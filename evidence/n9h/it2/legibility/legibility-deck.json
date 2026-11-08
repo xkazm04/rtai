@@ -1,0 +1,310 @@
+{
+  "device": "deck",
+  "draw_sizes": [
+    {
+      "cap_px": 12.0,
+      "font_px": 16,
+      "site": "boss bar count (BossBar 16)",
+      "verdict": "above_9",
+      "x_mm": 1.06,
+      "x_px": 9.0
+    },
+    {
+      "cap_px": 13.0,
+      "font_px": 18,
+      "site": "ghost card name / key hint (GhostFormLayout 18)",
+      "verdict": "above_9",
+      "x_mm": 1.18,
+      "x_px": 10.0
+    },
+    {
+      "cap_px": 13.0,
+      "font_px": 18,
+      "site": "boss taunt smallest fit (BossTaunt 18)",
+      "verdict": "above_9",
+      "x_mm": 1.18,
+      "x_px": 10.0
+    },
+    {
+      "cap_px": 14.0,
+      "font_px": 20,
+      "site": "boss bar name (BossBar 20)",
+      "verdict": "above_9",
+      "x_mm": 1.3,
+      "x_px": 11.0
+    },
+    {
+      "cap_px": 14.0,
+      "font_px": 20,
+      "site": "dialogue smallest fit (HudDialogue 20)",
+      "verdict": "above_9",
+      "x_mm": 1.3,
+      "x_px": 11.0
+    },
+    {
+      "cap_px": 16.0,
+      "font_px": 22,
+      "site": "unarmed label (HudView 22)",
+      "verdict": "ok",
+      "x_mm": 1.41,
+      "x_px": 12.0
+    },
+    {
+      "cap_px": 17.0,
+      "font_px": 24,
+      "site": "objective prompt (ObjectiveView 24)",
+      "verdict": "ok",
+      "x_mm": 1.53,
+      "x_px": 13.0
+    },
+    {
+      "cap_px": 17.0,
+      "font_px": 24,
+      "site": "weapon / heat / notice (HudView 24)",
+      "verdict": "ok",
+      "x_mm": 1.53,
+      "x_px": 13.0
+    },
+    {
+      "cap_px": 18.0,
+      "font_px": 26,
+      "site": "speaker name (HudView.NAME_SIZE 26)",
+      "verdict": "ok",
+      "x_mm": 1.65,
+      "x_px": 14.0
+    },
+    {
+      "cap_px": 22.0,
+      "font_px": 30,
+      "site": "head line (HudView 30)",
+      "verdict": "ok",
+      "x_mm": 2.0,
+      "x_px": 17.0
+    }
+  ],
+  "pause": [
+    {
+      "authored_px": 18,
+      "cap_px": 13.0,
+      "class": "Button",
+      "font_px": 18,
+      "path": "/root/Quest1/@CanvasLayer@5/@PanelContainer@7/@VBoxContainer@6/@VBoxContainer@1237/@HBoxContainer@1241/@Button@1239",
+      "scale": 1.0,
+      "text": "-",
+      "verdict": "above_9",
+      "x_mm": 1.18,
+      "x_px": 10.0
+    },
+    {
+      "authored_px": 18,
+      "cap_px": 13.0,
+      "class": "Button",
+      "font_px": 18,
+      "path": "/root/Quest1/@CanvasLayer@5/@PanelContainer@7/@VBoxContainer@6/@VBoxContainer@1237/@HBoxContainer@1241/@Button@1240",
+      "scale": 1.0,
+      "text": "+",
+      "verdict": "above_9",
+      "x_mm": 1.18,
+      "x_px": 10.0
+    },
+    {
+      "authored_px": 18,
+      "cap_px": 13.0,
+      "class": "Button",
+      "font_px": 18,
+      "path": "/root/Quest1/@CanvasLayer@5/@PanelContainer@7/@VBoxContainer@6/@VBoxContainer@1237/@HBoxContainer@1244/@Button@1243",
+      "scale": 1.0,
+      "text": "Toggle",
+      "verdict": "above_9",
+      "x_mm": 1.18,
+      "x_px": 10.0
+    },
+    {
+      "authored_px": 18,
+      "cap_px": 13.0,
+      "class": "Button",
+      "font_px": 18,
+      "path": "/root/Quest1/@CanvasLayer@5/@PanelContainer@7/@VBoxContainer@6/@VBoxContainer@1237/@HBoxContainer@1247/@Button@1246",
+      "scale": 1.0,
+      "text": "Toggle",
+      "verdict": "above_9",
+      "x_mm": 1.18,
+      "x_px": 10.0
+    },
+    {
+      "authored_px": 18,
+      "cap_px": 13.0,
+      "class": "Button",
+      "font_px": 18,
+      "path": "/root/Quest1/@CanvasLayer@5/@PanelContainer@7/@VBoxContainer@6/@VBoxContainer@1237/@HBoxContainer@1250/@Button@1249",
+      "scale": 1.0,
+      "text": "Toggle",
+      "verdict": "above_9",
+      "x_mm": 1.18,
+      "x_px": 10.0
+    },
+    {
+      "authored_px": 20,
+      "cap_px": 14.0,
+      "class": "RichTextLabel",
+      "font_px": 20,
+      "path": "/root/Quest1/@CanvasLayer@5/@PanelContainer@7/@VBoxContainer@6/@RichTextLabel@1236",
+      "scale": 1.0,
+      "text": "  move      aims      fires\n : electrosh",
+      "verdict": "above_9",
+      "x_mm": 1.3,
+      "x_px": 11.0
+    },
+    {
+      "authored_px": 20,
+      "cap_px": 14.0,
+      "class": "Label",
+      "font_px": 20,
+      "path": "/root/Quest1/@CanvasLayer@5/@PanelContainer@7/@VBoxContainer@6/@VBoxContainer@1237/@HBoxContainer@1241/@Label@1238",
+      "scale": 1.0,
+      "text": "Volume 80%",
+      "verdict": "above_9",
+      "x_mm": 1.3,
+      "x_px": 11.0
+    },
+    {
+      "authored_px": 20,
+      "cap_px": 14.0,
+      "class": "Label",
+      "font_px": 20,
+      "path": "/root/Quest1/@CanvasLayer@5/@PanelContainer@7/@VBoxContainer@6/@VBoxContainer@1237/@HBoxContainer@1244/@Label@1242",
+      "scale": 1.0,
+      "text": "Reduced motion: off",
+      "verdict": "above_9",
+      "x_mm": 1.3,
+      "x_px": 11.0
+    },
+    {
+      "authored_px": 20,
+      "cap_px": 14.0,
+      "class": "Label",
+      "font_px": 20,
+      "path": "/root/Quest1/@CanvasLayer@5/@PanelContainer@7/@VBoxContainer@6/@VBoxContainer@1237/@HBoxContainer@1247/@Label@1245",
+      "scale": 1.0,
+      "text": "Frame cap: device",
+      "verdict": "above_9",
+      "x_mm": 1.3,
+      "x_px": 11.0
+    },
+    {
+      "authored_px": 20,
+      "cap_px": 14.0,
+      "class": "Label",
+      "font_px": 20,
+      "path": "/root/Quest1/@CanvasLayer@5/@PanelContainer@7/@VBoxContainer@6/@VBoxContainer@1237/@HBoxContainer@1250/@Label@1248",
+      "scale": 1.0,
+      "text": "Rumble: full",
+      "verdict": "above_9",
+      "x_mm": 1.3,
+      "x_px": 11.0
+    },
+    {
+      "authored_px": 28,
+      "cap_px": 21.0,
+      "class": "Button",
+      "font_px": 28,
+      "path": "/root/Quest1/@CanvasLayer@5/@PanelContainer@7/@VBoxContainer@6/@Button@1251",
+      "scale": 1.0,
+      "text": "Resume",
+      "verdict": "ok",
+      "x_mm": 1.88,
+      "x_px": 16.0
+    },
+    {
+      "authored_px": 28,
+      "cap_px": 21.0,
+      "class": "Button",
+      "font_px": 28,
+      "path": "/root/Quest1/@CanvasLayer@5/@PanelContainer@7/@VBoxContainer@6/@Button@1252",
+      "scale": 1.0,
+      "text": "Quit",
+      "verdict": "ok",
+      "x_mm": 1.88,
+      "x_px": 16.0
+    },
+    {
+      "authored_px": 48,
+      "cap_px": 35.0,
+      "class": "Label",
+      "font_px": 48,
+      "path": "/root/Quest1/@CanvasLayer@5/@PanelContainer@7/@VBoxContainer@6/@Label@1233",
+      "scale": 1.0,
+      "text": "Paused",
+      "verdict": "ok",
+      "x_mm": 3.18,
+      "x_px": 27.0
+    }
+  ],
+  "quest1": [],
+  "title": [
+    {
+      "authored_px": 20,
+      "cap_px": 14.0,
+      "class": "RichTextLabel",
+      "font_px": 20,
+      "path": "/root/Quest1/@CanvasLayer@5/@PanelContainer@7/@VBoxContainer@6/@RichTextLabel@12",
+      "scale": 1.0,
+      "text": "  move      aims      fires\n : electrosh",
+      "verdict": "above_9",
+      "x_mm": 1.3,
+      "x_px": 11.0
+    },
+    {
+      "authored_px": 28,
+      "cap_px": 21.0,
+      "class": "Button",
+      "font_px": 28,
+      "path": "/root/Quest1/@CanvasLayer@5/@PanelContainer@7/@VBoxContainer@6/@Button@13",
+      "scale": 1.0,
+      "text": "Start",
+      "verdict": "ok",
+      "x_mm": 1.88,
+      "x_px": 16.0
+    },
+    {
+      "authored_px": 28,
+      "cap_px": 21.0,
+      "class": "Button",
+      "font_px": 28,
+      "path": "/root/Quest1/@CanvasLayer@5/@PanelContainer@7/@VBoxContainer@6/@Button@14",
+      "scale": 1.0,
+      "text": "Quit",
+      "verdict": "ok",
+      "x_mm": 1.88,
+      "x_px": 16.0
+    },
+    {
+      "authored_px": 34,
+      "cap_px": 25.0,
+      "class": "Label",
+      "font_px": 34,
+      "path": "/root/Quest1/@CanvasLayer@5/@PanelContainer@7/@VBoxContainer@6/@Label@9",
+      "scale": 1.0,
+      "text": "Quest 1: Collect Call",
+      "verdict": "ok",
+      "x_mm": 2.24,
+      "x_px": 19.0
+    },
+    {
+      "authored_px": 56,
+      "cap_px": 40.0,
+      "class": "Label",
+      "font_px": 56,
+      "path": "/root/Quest1/@CanvasLayer@5/@PanelContainer@7/@VBoxContainer@6/@Label@8",
+      "scale": 1.0,
+      "text": "RTAI: Uprising",
+      "verdict": "ok",
+      "x_mm": 3.53,
+      "x_px": 30.0
+    }
+  ],
+  "window": [
+    1280,
+    800
+  ]
+}
