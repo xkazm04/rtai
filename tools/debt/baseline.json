@@ -27,7 +27,9 @@
         "2026-11-08: n9 world item 4 evidence clip dev/showcase/dead_wall_clip (dev-only, the car_knock_clip pattern: one cmdline read, ~190 dev lines) (dev_loc 19325 -> 19514)",
         "2026-11-08: dev/frames: quest1_clip --cam=dead (n9 world it22), a capture camera for Dock 9 at 64 px/m (item 2 evidence) (dev_loc 19514 -> 19571)",
         "2026-11-08: dev/frames: quest_dead_cam heap anchor + ease (n9 world it22), Dock 9 64 px/m capture (dev_loc 19571 -> 19591)",
-        "2026-11-08: n9 merge: the combined growth of the four lanes (world, rivet, perf, handheld), each individually under its own baseline (dev_loc 19591 -> 19838)"
+        "2026-11-08: n9 merge: the combined growth of the four lanes (world, rivet, perf, handheld), each individually under its own baseline (dev_loc 19591 -> 19838)",
+        "2026-11-08: block70 test branch: the dev still scene for the true-70 city block (dev_loc 19838 -> 19960)",
+        "2026-11-08: n10 world: block70_still --focus (one still per wall style, the walls' evidence) + its arg reader split (dev_loc 19960 -> 19971) (dev_loc 19960 -> 19971)"
       ],
       "files": {
         "project/dev/arena": 708,
@@ -55,11 +57,11 @@
         "project/dev/save_cross_run.gd": 69,
         "project/dev/selftest": 1453,
         "project/dev/servo": 434,
-        "project/dev/showcase": 6585,
+        "project/dev/showcase": 6718,
         "project/dev/view": 195,
         "project/dev/weapon_art": 506
       },
-      "total": 19838
+      "total": 19971
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -70,7 +72,8 @@
         "2026-11-07: n8 merge: + hud growth combined (accepted on its lane); fold_rigs dropped for view's follow per both lanes' merge notes (direct_cmdline_reads 156 -> 157)",
         "2026-11-08: n9 world item 3: dev/showcase/car_knock_clip (the car knock-down's filmed evidence on the real city, bodies_clip's pattern) (direct_cmdline_reads 157 -> 158)",
         "2026-11-08: n9 world item 4 evidence clip dev/showcase/dead_wall_clip (dev-only, the car_knock_clip pattern: one cmdline read, ~190 dev lines) (direct_cmdline_reads 158 -> 159)",
-        "2026-11-08: n9 merge: the combined growth of the four lanes (world, rivet, perf, handheld), each individually under its own baseline (direct_cmdline_reads 159 -> 160)"
+        "2026-11-08: n9 merge: the combined growth of the four lanes (world, rivet, perf, handheld), each individually under its own baseline (direct_cmdline_reads 159 -> 160)",
+        "2026-11-08: block70 test branch: the dev still scene for the true-70 city block (direct_cmdline_reads 160 -> 161)"
       ],
       "files": {
         "project/core/render/view_mode.gd": 1,
@@ -134,6 +137,7 @@
         "project/dev/servo/servo_fight_run.gd": 1,
         "project/dev/showcase/asset_board.gd": 1,
         "project/dev/showcase/atlas_rim.gd": 1,
+        "project/dev/showcase/block70_still.gd": 1,
         "project/dev/showcase/bodies_clip.gd": 1,
         "project/dev/showcase/car_knock_clip.gd": 1,
         "project/dev/showcase/cast_lineup.gd": 1,
@@ -217,7 +221,7 @@
         "project/tests/run_scenarios.gd": 1,
         "project/tests/unit/test_launch_args.gd": 1
       },
-      "total": 160
+      "total": 161
     },
     "files_near_cap": {
       "accepted": [
