@@ -1,0 +1,2 @@
+08:59 editor binary, scratch main + 'window/vsync/vsync_mode.editor=3' under [display]: PROBE editor=true template=false setting=1 window=3
+09:02 the same project exported --export-debug windows-slice, run with -s res://vsync_probe_tmp.gd: no PROBE line in 60 s (the export did not run the -s script; killed by timeout): the export side is not run-verified

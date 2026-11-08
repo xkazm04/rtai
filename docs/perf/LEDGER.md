@@ -104,7 +104,9 @@ E20b bench held bench.lock; counts only, no timing claims). `evidence/perf/f19-f
   player for a hang seen in the editor binary. Kept as built (DECISION perf/f19-mailbox-scope): a fatal hang that a
   20-run sample cannot exclude outweighs a rare skipped image, and steady pacing removes that for +0.08 core. The
   alternative goes to the owner (Call P-1): mailbox in editor runs only (`vsync_mode.editor=3` instead of
-  `vsync_mode.windows=3`, untested: verify the feature-tag override in a run before switching) and Enabled for players.
+  `vsync_mode.windows=3`; probed at 08:59 in the editor binary: `editor=true`, the window boots in mode 3; the export
+  side rests on the docs, as templates carry no `editor` tag; a `-s` probe in a debug export printed nothing, so it is
+  not run-verified: `evidence/perf/f19-freeze/scope-probe/`) and Enabled for players.
 
 ### World's REQUEST (it2): the card rigs under combo
 world (it1): rig_stress p50 at 50 people, combo 1.1-1.4 ms vs top 0.5-0.76 (section 20's provisional 1 ms). Profile

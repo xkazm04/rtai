@@ -602,3 +602,21 @@ NEXT (it9), replaces the list above:
   (the middle option: mailbox in editor runs only, `vsync_mode.editor=3`, untested), DECISION perf/f19-mailbox-scope
   (keep mailbox for every Windows run: 0 / 40 bounds the player rate under ~7 %, not at 0).
 - Scratch added: `gtai-n9/tmp/perf/slice-main`, `slice-main-dbg` (main's exports; delete after the freeze).
+- 08:59-09:03 the editor-only scope probed in scratch prof3 (project.godot edited and restored, `git status` clean):
+  `window/vsync/vsync_mode.editor=3` -> the editor binary reports `editor=true`, window vsync 3 (mailbox). The export
+  side: a `-s` probe in a debug export printed nothing in 60 s (killed, no process left), so it rests on the docs
+  (templates carry no `editor` tag). `evidence/perf/f19-freeze/scope-probe/`. REPORT Call P-1 / LEDGER / DECISION say so.
+
+NEXT (it11, the freeze session), replaces it9's list:
+1. Freeze 10:30: `bash evidence/perf/n9-freeze/export.sh` (exports `build/export/windows/RTAI.exe` from windows-showcase,
+   writes commit / size / sha256 to `evidence/perf/n9-freeze/commit.txt`); name it in REPORT with the command
+   (`"$GODOT_BIN" --headless --path project --export-release windows-showcase ../build/export/windows/RTAI.exe`).
+   project/ has not changed since efa848cb's gates except the comment-only quest1_frames.gd (c18385e4): no gate re-run
+   owed unless project/ changes. No tree edits under project/ while an ab `head:` arm runs.
+2. If time before the freeze: the quest 1 row for the final table (editor binary, `ab.mjs --scenes=quest1,reel
+   --pairs=3 --arms=main:^--path <gtai-n9/tmp/perf/prof3>/project,head:,head2:^--path <gtai-n9/tmp/perf/head2>/project`;
+   head2's quest1_frames.gd synced at 08:33); then the quiet release riot confirm (`--scenes=riot --pairs=5
+   --arms=main@exe-windows-bench-main:,head@exe:`).
+3. REPORT final by 10:40 (draft it10 is current; add the exe line, the final-table rows, the JOURNAL's blocked minutes).
+4. Scratch to delete after the freeze: cvprof, world3, head2, slice-main, slice-main-dbg, probe (all under
+   `gtai-n9/tmp/perf/`), build/export/windows-bench-main / -head2 / -merge. Keep prof3 until the table is done.

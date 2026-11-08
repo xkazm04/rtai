@@ -129,7 +129,8 @@ Numbers, methods and every A/B: `docs/perf/LEDGER.md` section "n9 night". Clips 
   occasional skipped tick image under load. The alternative is one value away: `display/window/vsync/vsync_mode.windows`
   back to 1 (Enabled), which brings the freeze back. **New (it10):** on the old code the freeze hit the editor binary
   (5 / 20) and neither exported build (0 / 40). So a middle option exists: mailbox only in editor runs
-  (`vsync_mode.editor=3` instead of `.windows=3`; untested, verify the feature-tag override in a run first) and
+  (`vsync_mode.editor=3` instead of `.windows=3`: checked in the editor binary, whose window then boots in mailbox; the
+  export side rests on the docs (templates carry no `editor` tag), a probe in the export did not run) and
   Enabled for players, who then keep every tick image. Built default: mailbox for everyone (a fatal hang that 40 runs
   cannot exclude outweighs a rare skipped image).
 - **P-3 Pacing default (built: efficient).** "steady" by default on Windows removes the skipped tick images for +0.08
