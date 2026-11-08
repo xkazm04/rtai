@@ -493,3 +493,22 @@ NEXT (it9):
    heavy L2 v3 lands (then drop its RUN_ROW_K entry).
 4. Film the gatling left profile run (RUN_ROW_K 0.94) frame by frame at 64 px/m; film the knock's other rows.
 5. The evidence run --no-bench on the it8 head with the tree held still (no JOURNAL edits during it).
+
+## it9 (06:22-07:22)
+
+Read: JOURNAL it8 NEXT, git log, the other journals (world / perf / handheld: no REQUEST to rivet), the asset lane (it134:
+DELIVERED the two-hand 55 run 06:16, 7 A / 1 B, row 2 short stride; blade 55 round 0615 running). Registry rules applied:
+sprite-and-atlas (one scale per figure: packed at run8 55's fixed --k, the helmet checked equal to the walk cell's in the
+film), motion-quality (stride measured in cell px against run8's same row before wiring; judged frame by frame on the
+real King fight, before/after from one build with the toggle off).
+
+- MILESTONE `6e47f4a1` **the drawn rifle run at 55** (the library's two-hand 55 run): `p55/rivet_run8_eq_plasma_rifle.png`
+  (rivet_walk.py --cols=8 --k=0.6111,0.6197 --tone=p55/rivet_eq_plasma_rifle.png). Looked at all 64 cells beside the
+  pistol 55 grid: coherent, the rifle hidden in front in the away row; row 4 (3/4 away right) reads a touch paler, as the
+  pistol 55's. travel_grid.py vs p55 run8: profiles 56/57 vs 58/56 and -55/-47 vs -54/-46 (= run8); 3/4 toward right
+  45/38 vs 57/52 -> RUN_ROW_K 0.76; 3/4 toward left -50/-48 vs -56/-54 -> 0.89 (the pistol 55 pattern again). Unit
+  test asserts the p55 rifle path. --changed 1819/0, lint 15/15 (the hook caught one 101-char test line first).
+  Film (King, combo, 48 px/m, seed 1, --loadout=plasma_rifle, 0 SCRIPT ERROR both; before `--rivet-walk=walk8`): the
+  left-profile run vs the armed walk's short steps; helmet the same size in both, the run's rifle drawn a little shorter.
+  `gtai-masters/n9/rivet/rivet_armed_run_rifle_p55_before_after_king_combo_48ppm_x1.5_seed1_f16_56.png` + half-speed
+  mp4s; frames.json 15 (dropped the it5 flamer diagonal-cells 32 px/m still: superseded by the every-direction entry).
