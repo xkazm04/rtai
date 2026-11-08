@@ -708,3 +708,20 @@ bottom row). Low priority: boss fights run in combo (55), where the cut does not
   (rig_stress p50 1.284 CONTENDED: 5 other runs, the machine never went quiet; Call C-1's band), parity bit-exact
   (planted 629), look goldens 11/11 + block 5/5 worst 0.00, release-compile 617/0. `evidence/n9-world/gate-it23.log`.
   Unit re-run standalone on a clean tree + the reel x3 started 08:03.
+- (08:04) Unit re-run standalone at b888fe20 (code = e3c54005), clean tree: **1845/0** (`gtai-n9/tmp/world/unit23.log`).
+  With the 08:02 gate's other stages green, the it23 head is fully gated.
+- (08:06) Director reel x3 at b888fe20 (logs written outside the tree while unit ran, then copied in): top / tilt70 /
+  combo **19/19 chapters fully down, 0 SCRIPT ERROR**, exit 0 each (`evidence/n9-world/director-reel-it23*`).
+- (08:05) Judged at 32 px/m (Dock 9, `--stills=13860,14600`): the dead read; the pools can't be judged from stills
+  (stills mode skips CombatBlood's growth), so NEXT 2 stays a clip-only check.
+
+NEXT (it24+):
+1. Read the journals (assets: an answer to REQUEST king_bust_70_hem; wire it as `art/p70` bust if served, film
+   `arena.tscn -- --boss=king --phase=3 --view=tilt70 --rigs --seed=2 --ppm=64 --bot=fight --shot-tick=1400`).
+2. Optional quality, item 2: the Dock 9 pools outlast their decayed bodies (REPORT "does not"); only if a clip shows
+   it reads wrong at 32 px/m (the shipped zoom). CombatBlood is combat's shared fx: a quest-only fade keyed to
+   StreetQuestCorpses' decay would go through `pool_at`'s caller, not BloodFx.
+3. The freeze (10:30): the full gate with NO edits in the tree while it runs (`node tools/evidence/run.mjs
+   --no-bench`), the director reel x3 (`evidence/n9-world/reel3.sh it24`), the exe (`build/export/windows/RTAI.exe`,
+   the REPORT command line), REPORT.md finalised (remove DRAFT; it23's items are in it),
+   `git worktree remove --force C:/Users/kazda/kiro/gtai-n9/tmp/world/before`.
