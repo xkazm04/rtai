@@ -433,3 +433,39 @@ NEXT (it7), replaces the lists above:
    + the evidence run with its log OUTSIDE the tree); REPORT final.
 4. Scratch: `gtai-n9/tmp/perf/cvprof` (timers for occlusion + blood + counters, never commit; arms in `arms/`),
    `prof3` (main) for item 3, `world3` (keep until the freeze).
+
+## it7 (2026-11-08 06:24-07:2x) BUILD
+- 06:25 READ: JOURNAL NEXT, git log, the other journals: no new REQUEST to perf (world's line 129 is it1's, answered in
+  it3); world's branch edits boot/city_blood.gd (1 line), city_residency.gd (L18's file: a merge to watch), not
+  corpse_stains.gd / city_occluders.gd. Registry rules applied: measurement-honesty (an in-run control timer for every
+  A/B: L22b's raw -17 % was machine load, ratio -4 % = a wash), perf-instrumentation (timers only in cvprof), the
+  exactness-by-test rule for every kept lever (old algorithm inline in the test, planted faults caught).
+- 06:27-06:31 L22b (a per-cell solid memo for the blood wall checks): built + tested, A/B 6 pairs CONTENDED 2-9:
+  step_ticks raw medians 322 -> 265, but step_ticks / stains (the unchanged CorpseStains in the same frames) 2.06 ->
+  1.97: a wash. DROPPED, not committed (arm in `evidence/perf/n9-it7/l22b/`).
+- 06:33 split CorpseStains.step (138 us riot): feed scan 39, _match 10.5, soak loop 84.5 of which _uncovered 69.5
+  (14.8 soaks x 263 rows).
+- 06:40 MILESTONE L23 kept 4bc6d82c: StainCover.cover (walkers sorted by x, a bsearch window): CorpseStains.step
+  141 / 133 / 144 / 135 -> 103 / 102 / 106 / 107 us (4 pairs, ranges apart, control flat). Mutation 9 killed / 5
+  survived, the 5 equivalent. Reel x3 on it: 19 / 19, 0 SCRIPT ERROR.
+- FRICTION (06:35): Windows python's text mode wrote CRLF into a .gd file (git warned); write with newline='' or
+  strip CR after an edit. gdformat on Windows also writes CRLF: strip after it.
+- 06:48 MILESTONE L24 kept 509580ac: CityOccluders.near without the key Dictionary: riot near 139 / 132 / 156 ->
+  97 / 101 / 102 us (3 pairs, ranges apart, also normalised), drive -10 % normalised; hidden / patches identical.
+- 06:55 GATE reel x3 on 6fed0aad (L23 + L24): 19 / 19 chapters fully down in top, tilt70, combo, 0 SCRIPT ERROR
+  (`evidence/perf/n9-it7/reel-l24/`).
+
+NEXT (it8):
+1. L25 (armed, not measured): CorpseStains.step hoists feed.flags / pos / ids into locals (the feed scan is 39 us a
+   riot frame, ~3 member lookups a row x 263 rows). Arms `gtai-n9/tmp/perf/cvprof/arms/cs/l23.gd` vs `l25.gd`; run
+   `ROUNDS="1 2 3" ARMS="l23 l25" ./arms/run_cs.sh` under bench.lock (cvprof's city_blood prints BLOODPROF stains;
+   blood.step is the in-run control). Keep only if ranges apart vs the control; port + a test that the dead map and
+   walkers equal the old loop's.
+2. The same hoist audit over the other per-row riot loops in files no lane edits tonight (CrowdReact._observe is
+   already hoisted; check FxPool.step, CityOcclusion's per-rig loop, StreetView: world edits street_walker_cards).
+3. Freeze 10:30: the final table (main da108c13 via `gtai-n9/tmp/perf/prof3` vs HEAD, `ab.mjs --scenes=king,drive70,riot`,
+   bench.lock) + an A-vs-A for the floor (F12); export `build/export/windows/RTAI.exe`; final gates on the head (reel x3
+   + the evidence run, log OUTSIDE the tree, no tree edits during it); REPORT final (item 12 is in).
+4. Scratch: cvprof (timers: occlusion, blood, CorpseStains CSP via arms/cs/t0.gd; never commit), prof3, world3.
+- 06:58 GATE evidence --no-bench on 6fed0aad (L23 + L24): ALL PASS: lint 15 / 15, unit 1842 / 0, scenarios 54 / 54,
+  parity exact (629), look goldens 11 / 11 (worst 0.27), release-compile 619 / 0 (`evidence/perf/n9-it7/evidence-6fed0aad.txt`).

@@ -60,6 +60,16 @@ Numbers, methods and every A/B: `docs/perf/LEDGER.md` section "n9 night". Clips 
    Gates on 6b75d795: ALL PASS (unit 1837 / 0, scenarios 54 / 54, parity exact, look goldens 11 / 11,
    release-compile 618 / 0); the reel 19 / 19 in top, tilt70, combo on L20b.
 
+12. **The research loop, it7: two more exact cuts, one honest wash.** L23: the corpse soaks measure only the
+   walkers within reach in x (sorted once a step, a binary search per soak): CorpseStains.step 138 -> 104 us a riot
+   frame (-25 %, 4 pairs, ranges apart). L24: the occlusion query finds its 1-2 chunks without building a Dictionary
+   a call: 139 -> 101 us a riot frame (-27 %), the drive -10 %. Both are proven exact by tests that run the old
+   code inline and catch planted faults; hidden bodies and crowd patches are identical. L22b (a per-cell cache for
+   the blood's wall checks) looked like -17 % in raw medians but only -4 % against an unchanged timer in the same
+   frames, so it was dropped: the shared machine moved, not the code.
+   Gates on 6fed0aad: ALL PASS (unit 1842 / 0, scenarios 54 / 54, parity exact, look goldens 11 / 11,
+   release-compile 619 / 0); the reel 19 / 19 in top, tilt70, combo, 0 SCRIPT ERROR.
+
 ## What does not
 - The first L17 test was vacuous. It compared `MultiMesh.buffer`, which a headless run keeps empty. The mutation run
   caught it (27 %); the test now compares through `FxPool.mirror` (90.9 %).

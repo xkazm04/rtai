@@ -437,7 +437,9 @@ A/B (cvprof, 3 interleaved pairs, CONTENDED 2-6, `evidence/perf/n9-it7/l24/ab-l2
 **139 / 132 / 156** vs new **97 / 101 / 102** (median -38 us, -27 %, ranges apart; near / crowd+lift, an unchanged
 timer in the same frames: 1.28-1.34 vs 1.05-1.06); drive old 206 / 217 / 219 vs new 180 / 210 / 161 (near / crowd+lift
 1.72-1.74 vs 1.54-1.56: -10 %). Hidden body-frames and crowd patches identical (riot 0 / 11669, drive 3432 / 5154).
-**KEPT**.
+**KEPT**. Gates on 6fed0aad (L23 + L24): ALL PASS (lint 15 / 15, unit 1842 / 0, scenarios 54 / 54, parity exact, look
+goldens 11 / 11, release-compile 619 / 0; `evidence/perf/n9-it7/evidence-6fed0aad.txt`); the reel x3 19 / 19, 0 SCRIPT
+ERROR (`evidence/perf/n9-it7/reel-l24/`).
 
 ### Gates (it6)
 On 8990b643 (L20, the clean re-run owed from it5; `evidence/perf/n9-it6/evidence-8990b643.txt`) and on 6b75d795
