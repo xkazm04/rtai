@@ -28,7 +28,8 @@
         "2026-11-08: dev/frames: quest1_clip --cam=dead (n9 world it22), a capture camera for Dock 9 at 64 px/m (item 2 evidence) (dev_loc 19514 -> 19571)",
         "2026-11-08: dev/frames: quest_dead_cam heap anchor + ease (n9 world it22), Dock 9 64 px/m capture (dev_loc 19571 -> 19591)",
         "2026-11-08: n9 merge: the combined growth of the four lanes (world, rivet, perf, handheld), each individually under its own baseline (dev_loc 19591 -> 19838)",
-        "2026-11-08: block70 test branch: the dev still scene for the true-70 city block (dev_loc 19838 -> 19960)"
+        "2026-11-08: block70 test branch: the dev still scene for the true-70 city block (dev_loc 19838 -> 19960)",
+        "2026-11-08: n10 world: block70_still --focus (one still per wall style, the walls' evidence) + its arg reader split (dev_loc 19960 -> 19971) (dev_loc 19960 -> 19971)"
       ],
       "files": {
         "project/dev/arena": 708,
@@ -56,11 +57,11 @@
         "project/dev/save_cross_run.gd": 69,
         "project/dev/selftest": 1453,
         "project/dev/servo": 434,
-        "project/dev/showcase": 6707,
+        "project/dev/showcase": 6718,
         "project/dev/view": 195,
         "project/dev/weapon_art": 506
       },
-      "total": 19960
+      "total": 19971
     },
     "direct_cmdline_reads": {
       "accepted": [

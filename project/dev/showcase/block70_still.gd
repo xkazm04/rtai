@@ -8,22 +8,20 @@ const SHOOT_TICKS: Array[int] = [30, 90, 200]
 var _out: String = "user://block70"
 var _tag: String = "x"
 var _zoom: float = 1.0
+## where to search for a south wall from (default: the city's own focus)
+var _focus: Vector2 = Vector2(-1, -1)
 
 
 func _ready() -> void:
-	for arg: String in OS.get_cmdline_user_args():
-		if arg.begins_with("--out="):
-			_out = arg.substr(6)
-		elif arg.begins_with("--tag="):
-			_tag = arg.substr(6)
-		elif arg.begins_with("--zoom="):
-			_zoom = arg.substr(7).to_float()
+	_read_args()
 	var world: World = World.new()
 	world.start(Events, Data, 53)
 	add_child(world)
 	var city: CitySystem = CitySystem.new(true)
 	world.add_system(city)
 	city.steer_by_input = false
+	if _focus.x >= 0.0:
+		city.focus = _focus
 	city.spawner.targets = CityTargets.street(30, 4, 0)
 	var drive: Block70Drive = Block70Drive.new(city)
 	world.add_system(drive)
@@ -47,3 +45,16 @@ func _ready() -> void:
 			img.save_png(_out.path_join("%s_t%d.png" % [_tag, world.context().clock.tick()]))
 	printerr("block70: spot=%s" % drive.spot)
 	get_tree().quit(0)
+
+
+func _read_args() -> void:
+	for arg: String in OS.get_cmdline_user_args():
+		if arg.begins_with("--out="):
+			_out = arg.substr(6)
+		elif arg.begins_with("--tag="):
+			_tag = arg.substr(6)
+		elif arg.begins_with("--zoom="):
+			_zoom = arg.substr(7).to_float()
+		elif arg.begins_with("--focus="):
+			var parts: PackedStringArray = arg.substr(8).split(",")
+			_focus = Vector2(parts[0].to_float(), parts[1].to_float())

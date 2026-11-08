@@ -154,6 +154,37 @@
           "bays": {
             "minimum": 1,
             "type": "integer"
+          },
+          "storeys": {
+            "additionalProperties": {
+              "additionalProperties": false,
+              "properties": {
+                "art": {
+                  "type": "string"
+                },
+                "bay_m": {
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "ground_h": {
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "upper_h": {
+                  "minimum": 0,
+                  "type": "number"
+                }
+              },
+              "required": [
+                "art",
+                "bay_m",
+                "ground_h",
+                "upper_h"
+              ],
+              "type": "object"
+            },
+            "description": "FacadeStoreys: the wall stacked from whole storeys by art key (n10 world), the single stretched strip for an art key without a row",
+            "type": "object"
           }
         },
         "required": [
