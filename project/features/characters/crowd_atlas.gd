@@ -75,4 +75,7 @@ func crowd_material() -> ShaderMaterial:
 	m.shader = load(SHADER_PATH) as Shader
 	m.set_shader_parameter("cols", cols())
 	m.set_shader_parameter("rows", rows())
+	m.set_shader_parameter("snap_dead", StreetDeadHeading.ENABLED and ViewMode.shared().cards)
+	m.set_shader_parameter("head_even", StreetDeadHeading.HEAD_DEG)
+	m.set_shader_parameter("head_odd", StreetDeadHeading.HEAD_DEG_ODD)
 	return m

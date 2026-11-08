@@ -78,3 +78,21 @@ func test_the_shadow_sits_under_the_body_and_leaves_with_it() -> void:
 	assert_lt(sh.get_index(), plan.get_index(), "drawn before the body")
 	StreetDeadHeading.unshade(card)
 	assert_null(card.get_node_or_null(StreetDeadHeading.SHADOW_NODE))
+
+
+func test_the_far_crowd_shader_snaps_only_the_drawn_corpse_cells() -> void:
+	var code: String = (load(CrowdAtlas.SHADER_PATH) as Shader).code
+	var first: int = CrowdAtlas.CLIP_FIRST[CrowdAtlas.Clip.DEATH]
+	var last: int = first + CrowdAtlas.FRAMES[CrowdAtlas.Clip.DEATH] - 1
+	assert_true(code.contains("DEAD_FROM = %d.0" % (first + 1)), "past the mid-fall cell")
+	assert_true(code.contains("DEAD_TO = %d.0" % last), "up to the held last cell")
+	assert_true(code.contains("POSES = %d.0" % StreetDeadPlan.POSES))
+	assert_true(code.contains("uniform bool snap_dead = false"), "off for the traffic atlas")
+
+
+func test_the_far_crowd_material_carries_the_near_dead_tables() -> void:
+	var m: ShaderMaterial = CrowdAtlas.new().crowd_material()
+	var even: PackedFloat32Array = m.get_shader_parameter("head_even")
+	var odd: PackedFloat32Array = m.get_shader_parameter("head_odd")
+	assert_eq(even, StreetDeadHeading.HEAD_DEG)
+	assert_eq(odd, StreetDeadHeading.HEAD_DEG_ODD)
