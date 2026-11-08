@@ -539,3 +539,13 @@ NEXT (iteration 9) (2a done at 07:39: both boss clips on the iGPU with the ease 
   1843/0; lint 15/15; DECISION handheld/pad-first; before/after still on the iGPU (HEAD~ live_input.gd vs the fix).
 - 07:58 Re-filmed quest 1 pad-only (iGPU, 0 SCRIPT ERROR): `deck-quest1-40ppm-glyphs-padfirst-1280x800-igpu.mp4`
   replaces the it1 clip (deleted; REPORT/LEDGER refs updated). Set clip re-cut, 63 s with captions. frames.json 15, all present.
+- 08:02 GATE at 2f842523: director reel 19/19 fully down in top / tilt70 / combo, 0 SCRIPT ERROR, exit 0 (each its own
+  APPDATA; `evidence/n9h/it9/gates/`).
+- 08:03 Quest 1's Mertz fight into the hot walk on the Deck row at combo (iGPU, ticks 15400-18400; looked, not kept):
+  two leads closed with no change: (1) from Patch's call on, the prompts read "[E]": the scripted driver presses
+  `interact` through its bound KEY (collect_call_input_driver.gd:113-119), so the prompts rightly follow the last
+  device; a pad player keeps the glyphs; (2) Patch's "press one / press two" is a joke line in payphone_router.json, no
+  number-key input behind it. The Quartermaster beat opens with Mertz past the right edge (a marker) under the dialogue
+  card; he comes into frame within seconds: no handheld change.
+- 08:04 MUTATION `live_input.gd` started at 5224bd98 (68 mutants, tests: aim_reach, live_input_pad_first,
+  pad_aim_assist, player_input, prompt_device).
