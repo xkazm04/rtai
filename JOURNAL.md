@@ -778,3 +778,14 @@ NEXT (it13, the freeze at 10:30):
 - MILESTONE (early fallback) **the exe** exported 09:03 on fe8f95a0 (`--export-release windows-showcase
   ../build/export/windows/RTAI.exe`, 14 s, 347 MB + the release sim DLL); smoke `--quit-after 600 --log-file`: boots,
   exit 0, 0 errors. Lines in REPORT "Next steps". Re-export at the freeze only if code changes.
+- Tried it10 NEXT 2 again (the flamer 55's 3/4-toward-right run row, RUN_ROW_K 0.68): King combo 48 px/m seeds 3 and 4
+  `--loadout=flamethrower`, 600 frames, a temporary octant-1 probe (reverted): only 6 octant-1 walk / run frames in
+  both, all on the bare p70 strips before the engage; the row never ran. Still unfilmed: stays in REPORT "does not
+  work" (Call 5). 0 SCRIPT ERROR; .avi deleted.
+
+NEXT (it13, amended 09:07): items 1 and 4 of the it12 NEXT above are DONE early (the exe exported and smoke-tested on
+fe8f95a0; journals read 09:05: no REQUEST to rivet). Left for the freeze: (a) if any code commit lands after 5c77021f:
+the reel x3 + re-export the exe; else nothing to re-gate. (b) REPORT.md: drop "DRAFT", read it once against the
+JOURNAL. (c) Clean `gtai-masters/n9/rivet/` of files neither frames.json, REPORT nor the combined clip names (the
+half-speed mp4s are the clip's sources: name them in REPORT as the clip's sources or delete them). (d) Read the other
+journals once more for a REQUEST.
