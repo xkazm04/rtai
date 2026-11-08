@@ -1,0 +1,17 @@
+[INFO] device: profile deck: window 1280x800, max_fps 60, vsync enabled, stretch canvas_items, zoom_k 1.25, tier handheld, rumble 1.00
+[INFO] bosses: king phase 1 (procession)
+[INFO] bosses: king engaged in king_boulevard, phase 1
+[INFO] arena: powers pad: 4 cars parked
+[INFO] device: pad aim assist on (weapons.json aim_assist)
+[INFO] arena: arena open: 20 stations
+[INFO] characters: prewarmed 41 rigs in 112.9 ms
+[INFO] arena: cast rigs: true
+[INFO] view: pitch ease 70.0 -> boss at tick 1
+[INFO] view: cards art p55 (pitch 62.1) at tick 32
+[INFO] bosses: king phase 2 (court)
+[INFO] bosses: king: 4 king_gang
+[INFO] bosses: king: 4 king_gang
+[INFO] view: occlusion: 929 body-frames hidden over 2700 frames, frames 275-2700
+[INFO] device: rumble: 62 pulses played { &"boss_engaged": 1, &"boss_hit": 58, &"rivet_hurt": 3 }, 0 rested, shortest gaps (ticks) { &"boss_hit": 16, &"rivet_hurt": 189 }
+[INFO] arena: react: 0 wounds (0 on a shield), 0 deaths, 0 ducks
+ERROR: 102 resources still in use at exit (run with --verbose for details).

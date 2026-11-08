@@ -283,6 +283,11 @@ stick, 2/3 right stick, 4 LT, 5 RT.
   frame-to-frame luma difference over 2699 frames has no single-frame jump; its highest runs are ~0.5 s pans while
   Servo charges (~12 px a frame), continuous (`evidence/n9h/it6/bosscam/motion/`). BossCam sets the focus with no
   damping; a critically damped follow is the lever if a Deck playtest finds the charges busy (owed, not built).
+  **The King clip finds a snap** (`deck-king-40ppm-bosscam-1280x800-igpu.mp4`, 45 s, 0 SCRIPT ERROR): one isolated
+  frame-difference spike (20.0 at frame 155, every other frame <= 12.3) is a one-frame camera jump of ~60 px vertical
+  (`motion/king-snap-frames-152-157.png`). Rivet is ~16 m from the King there, near BossCam's FAR_M 20 m switch
+  (follow Rivet alone vs 0.45 of the way to the boss), the suspected cause (not yet proven). It is in BossCam itself,
+  so the dev `--boss-cam` clips share it. Fix owed (it7): a damped focus, or a blended FAR_M band instead of a switch.
 
 ## 6. Text legibility at 1280x800
 

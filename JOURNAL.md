@@ -377,9 +377,19 @@ NEXT (iteration 6):
   release-compile 619/0: all PASS (`evidence/n9h/it6/gates/evidence-run-4870776c.txt`, the log written outside the
   tree first). REPORT gates line; LEDGER port readiness (Steam Deck row: E17c, the boss cam, E20).
 
+- 06:04 The King fight filmed with the boss cam (deck, the iGPU, 45 s, 0 SCRIPT ERROR):
+  `gtai-masters/n9/handheld/deck-king-40ppm-bosscam-1280x800-igpu.mp4` (not in frames.json: it shows the snap). FINDING:
+  one isolated frame-diff spike (20.0, frame 155) = a one-frame camera jump ~60 px vertical (looked at frames 152-157);
+  Rivet ~16 m from the King, near FAR_M 20 m: suspected the follow-alone / lerp switch. In BossCam, so `--boss-cam`
+  clips share it. LEDGER noted. This becomes NEXT item 2a, first.
+
 NEXT (iteration 7):
 1. Read the other journals for REQUESTs at the start AND mid-session; the asset lane's JOURNAL (grep "handheld").
-2. Research loop candidates, best first: (a) a damped BossCam focus on the handheld rows only (a critically damped
+2. FIRST: the BossCam snap (frame 155 of the King clip, `evidence/n9h/it6/bosscam/motion/`): log the focus per frame
+   around tick ~155 to confirm the FAR_M switch, then fix it (a blended band, e.g. lerp weight falling from FRAME_K
+   to 0 between 16 and 24 m, or damping); re-film the King and Servo, re-run the frame-diff check (no isolated spike).
+   It touches BossCam itself (the desktop `--boss-cam` clips too, not the shipped desktop): unit test + reel x3.
+   Then the research loop candidates, best first: (a) a damped BossCam focus on the handheld rows only (a critically damped
    follow, e.g. `boss_cam_damp` on the row; judge on the Servo clip's frame-difference runs: the ~0.5 s charge pans at
    ~12 px/frame should soften without lag losing Rivet; desktop and `--boss-cam` clips unchanged; unit test on the
    damping math; re-film); (b) the King and Servo clips at 1280x800 on `deck40` (the 40 Hz row) with the boss cam, a
