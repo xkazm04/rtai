@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { affinityMask, cpuCapPct, deviceRow, gpuIndexFrom, parseArgs, projectDir } from './sim.mjs';
+import { affinityMask, cpuCapPct, movieFps, deviceRow, gpuIndexFrom, parseArgs, projectDir } from './sim.mjs';
 
 test('affinity mask covers the first n logical CPUs', () => {
   assert.equal(affinityMask(8), '255');
@@ -33,4 +33,11 @@ test('--cpu-cap is a share of one logical CPU in (0, 100], else no cap', () => {
   assert.equal(cpuCapPct(parseArgs(['--cpu-cap=0'])), 0);
   assert.equal(cpuCapPct(parseArgs(['--cpu-cap=150'])), 0);
   assert.equal(cpuCapPct(parseArgs(['--cpu-cap=abc'])), 0);
+});
+
+test('--movie-fps films at a whole frame rate, else 60', () => {
+  assert.equal(movieFps({ 'movie-fps': '40' }), 40);
+  assert.equal(movieFps({}), 60);
+  assert.equal(movieFps({ 'movie-fps': '0' }), 60);
+  assert.equal(movieFps({ 'movie-fps': '37.5' }), 60);
 });

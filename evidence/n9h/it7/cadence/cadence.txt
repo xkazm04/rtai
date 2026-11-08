@@ -1,0 +1,14 @@
+King, Deck rows, iGPU, movie maker at the row's rate. Per-frame image shift (phase correlation, 2 px steps).
+Window: sim ticks 150-180 (the boss cam's first pan). 'step' = |shift| per frame; judder = how uneven equal-time motion is:
+  CV = stdev/mean of |shift| per frame over frames whose shift is > 0; also px per tick = |shift| / ticks that frame.
+60 fps (deck): frames 31, |shift| px [2, 2, 2, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 4, 4, 4, 14, 3, 10, 12, 10, 10, 10, 8, 8, 8, 8, 8]
+   ticks/frame [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]  CV 0.37
+40 fps (deck40): frames 20, |shift| px [6, 2, 11, 10, 20, 10, 20, 10, 20, 10, 20, 4, 8, 22, 3, 22, 2, 20, 6, 18]
+   ticks/frame [2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1]  CV 0.58
+30 fps (deck30): frames 15, |shift| px [4, 4, 11, 20, 20, 20, 20, 20, 20, 8, 6, 3, 3, 2, 16]
+   ticks/frame [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]  CV 0.64
+Whole clip (45 s of sim): the step-to-step unevenness of the screen's motion while it pans:
+  over consecutive frame pairs both moving >= 6 px: median and mean of |a-b|/max(a,b) (0 = an even pan, 0.5 = 1:2 alternation)
+60 fps (deck): pairs 142, median 0.00, mean 0.04, share >= 0.4: 0.02
+40 fps (deck40): pairs 70, median 0.50, mean 0.43, share >= 0.4: 0.73
+30 fps (deck30): pairs 188, median 0.00, mean 0.10, share >= 0.4: 0.05

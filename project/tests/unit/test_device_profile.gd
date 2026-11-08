@@ -24,6 +24,12 @@ func test_deck40_caps_at_40() -> void:
 	assert_eq(DeviceProfile.of("deck40").max_fps, 40)
 
 
+func test_deck30_caps_at_30_an_even_tick_cadence() -> void:
+	var row: DeviceProfile = DeviceProfile.of("deck30")
+	assert_eq(row.max_fps, 30)
+	assert_eq(SimClock.TICK_RATE % row.max_fps, 0, "a whole number of 60 Hz ticks every frame")
+
+
 func test_select_reads_a_dash_as_underscore() -> void:
 	var saved: DeviceProfile = DeviceProfile._shared
 	assert_eq(DeviceProfile.select("switch-handheld").window_size, Vector2i(1280, 720))
