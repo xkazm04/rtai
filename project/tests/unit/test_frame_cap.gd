@@ -38,3 +38,12 @@ func test_headless_pacing_leaves_the_limiter_alone() -> void:
 	FrameCap.apply("")
 	FrameCap.apply_pacing(true)
 	assert_eq(Engine.max_fps, before)
+
+
+## F-19 (n9): with D3D12 vsync Enabled quest 1 froze ~1 in 3 windowed starts (the main thread in
+## RenderingDevice::_begin_frame's fence wait); mailbox (still synced, no tearing) froze 0 / 48.
+func test_windows_boots_in_mailbox_vsync() -> void:
+	var key: String = "display/window/vsync/vsync_mode.windows"
+	var raw: Variant = ProjectSettings.get_setting(key, -1)
+	var mode: int = raw if raw is int else -1
+	assert_eq(mode, DisplayServer.VSYNC_MAILBOX, "Windows (D3D12) boots in mailbox")

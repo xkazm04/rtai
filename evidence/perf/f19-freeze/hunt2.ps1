@@ -1,8 +1,13 @@
 # F19 hunt v2 (n9): quest 1 under --autostart, windowed D3D12, the editor binary; stdout+stderr kept per run.
-# After -Settle s, 3 s of process CPU; a run under 0.05 cores is a freeze: its log is copied as freeze-<tag>-<n>.log.
+# After -Settle s, 3 s of process CPU; a live run under 0.05 cores is a freeze (kind=frozen), a process gone by then is
+# kind=exited (its exit code kept; it2: an exited run looked like a freeze); either log is copied as freeze-<tag>-<n>.log.
 # -Exe <path> runs an exported exe instead (no --path). One JSON line per run.
 param([int]$Runs = 10, [string]$Tag = 'x', [int]$Settle = 12, [string]$Exe = '', [string]$Extra = '',
-  [switch]$NoAutostart, [string]$Driver = 'd3d12', [string]$EngineExtra = '')
+  [switch]$NoAutostart, [string]$Driver = 'd3d12', [string]$EngineExtra = '', [switch]$PressStart)
+# -PressStart (it2): no --autostart; 6 s in, a posted Enter (WM_KEYDOWN / WM_KEYUP VK_RETURN) to the game window presses
+# the focused Start button through the real UI path (the release build ignores --autostart). `started` = the log says so.
+Add-Type -Namespace F19 -Name W -MemberDefinition '[DllImport("user32.dll")] public static extern bool PostMessage(System.IntPtr h, uint m, System.IntPtr w, System.IntPtr l);'
+if ($PressStart) { $NoAutostart = $true }
 $here = Split-Path -Parent $MyInvocation.MyCommand.Path
 $repo = Resolve-Path (Join-Path $here '..\..\..')
 $godot = 'C:\Users\kazda\kiro\gtai-spike\tools\godot\Godot_v4.7.2-stable_win64_console.exe'
@@ -24,11 +29,26 @@ for ($n = 1; $n -le $Runs; $n++) {
   $c = Get-CimInstance Win32_Process -Filter "ParentProcessId=$($p.Id)" | Where-Object { $_.Name -like 'Godot*' -or $_.Name -like 'RTAI*' } | Select-Object -First 1
   $gid = if ($c) { [int]$c.ProcessId } else { $p.Id }
   $g = Get-Process -Id $gid
+  if ($PressStart) {
+    Start-Sleep -Seconds 6; $g.Refresh(); $h = $g.MainWindowHandle
+    $ws = New-Object -ComObject WScript.Shell
+    $act = $ws.AppActivate($gid)
+    Start-Sleep -Milliseconds 300
+    if ($act) { $ws.SendKeys('{ENTER}') } else {
+      [void][F19.W]::PostMessage($h, 0x100, [IntPtr]0x0D, [IntPtr]0x001C0001)
+      Start-Sleep -Milliseconds 80
+      [void][F19.W]::PostMessage($h, 0x101, [IntPtr]0x0D, [IntPtr]0xC01C0001)
+    }
+  }
   Start-Sleep -Seconds $Settle
   $g.Refresh(); $c0 = $g.TotalProcessorTime.TotalSeconds; Start-Sleep -Seconds 3; $g.Refresh()
   $cores = [math]::Round(($g.TotalProcessorTime.TotalSeconds - $c0) / 3, 3)
-  $line = [ordered]@{ tag = $Tag; run = $n; cores = $cores; responding = $g.Responding; pid = $gid }
-  if ($cores -lt 0.05) {
+  $exited = $g.HasExited
+  $code = if ($exited) { $g.ExitCode } else { $null }
+  $started = [bool](Select-String -Path $log -Pattern 'quest1: started' -SimpleMatch -Quiet)
+  $line = [ordered]@{ tag = $Tag; run = $n; cores = $cores; responding = $g.Responding; pid = $gid; exited = $exited; exitCode = $code; started = $started }
+  if ($exited) { $line.kind = 'exited' } elseif ($cores -lt 0.05) { $line.kind = 'frozen' } else { $line.kind = 'ok' }
+  if ($cores -lt 0.05 -and -not $exited) {
     $frozen++
     $tc = & (Join-Path $repo 'tools\perf\thread_cpu.ps1') -ProcessId $gid -Seconds 2
     $tc | Set-Content -Encoding utf8 (Join-Path $here "freeze-$Tag-$n.json")
