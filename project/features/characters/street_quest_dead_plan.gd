@@ -69,18 +69,41 @@ static func lying_m(h: Fighter, now: int, px_per_m: float) -> Vector2:
 	return transform_of(at, h, px_per_m, now - h.hurt_tick).origin / px_per_m
 
 
-## CorpseStains' dead for quest 1 (CollectCallView): id -> where each dead hostile lies in sim px,
-## on the plan corpse when `cast` (CastView draws the dead; else the rigs do: his spot).
-static func dead_px(arena: CombatArena, cast: bool, px_per_m: float) -> Dictionary[int, Vector2]:
+## CorpseStains' dead for quest 1 (CollectCallView): id -> where each dead hostile lies in sim px
+## (spot_m at the arena tick). `on_rigs`: CastView.fighters_on_rigs.
+static func dead_px(arena: CombatArena, on_rigs: bool, px_per_m: float) -> Dictionary[int, Vector2]:
 	var out: Dictionary[int, Vector2] = {}
 	for h: Fighter in arena.hostiles:
-		if h.alive():
-			continue
-		var m: Vector2 = h.pos
-		if cast and h.kind != Fighter.Kind.BOSS:
-			m = lying_m(h, arena.tick, px_per_m)
-		out[h.id] = m * SimConst.PX_PER_M
+		if not h.alive():
+			out[h.id] = spot_m(h, arena.tick, on_rigs, px_per_m) * SimConst.PX_PER_M
 	return out
+
+
+## it23: CombatBlood.pool_at for quest 1: where the killed hostile `id` comes to rest (metres, the
+## settled plan pelvis), so the kill's pool lies under the drawn corpse, not beside it; `at` (his
+## spot) when `id` is no hostile. The signature-kill veto still asks at his spot (CombatBlood).
+static func pool_m(
+	arena: CombatArena, id: int, at: Vector2, on_rigs: bool, px_per_m: float
+) -> Vector2:
+	for h: Fighter in arena.hostiles:
+		if h.id == id:  # actor_killed fires before his hp drops: no alive() test here
+			return _laid_m(h, h.hurt_tick + SETTLED, on_rigs, px_per_m)
+	return at
+
+
+## Where `h` is in metres at `now` for what is laid on or under him: his own spot alive, else
+## _laid_m.
+static func spot_m(h: Fighter, now: int, on_rigs: bool, px_per_m: float) -> Vector2:
+	return h.pos if h.alive() else _laid_m(h, now, on_rigs, px_per_m)
+
+
+## A dead `h`'s spot: his own for a boss or when the rigs draw the dead (on_rigs without
+## QuestGuardCast); else the plan pelvis (lying_m).
+static func _laid_m(h: Fighter, now: int, on_rigs: bool, px_per_m: float) -> Vector2:
+	var cast: bool = not on_rigs or QuestGuardCast.ON
+	if not cast or h.kind == Fighter.Kind.BOSS:
+		return h.pos
+	return lying_m(h, now, px_per_m)
 
 
 ## The corpse's colour from StreetQuestCorpses' decay tint: OPAQUE lifts the cast view's alpha to 1.

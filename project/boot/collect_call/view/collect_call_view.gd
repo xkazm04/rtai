@@ -107,6 +107,9 @@ func _ready_blood(layer: CanvasLayer) -> void:
 		blood = CombatBlood.new()
 		layer.add_child(blood)
 		blood.listen(_stage.events(), _locate, _stage.arena.rivet.id)
+		blood.pool_at = func(id: int, at: Vector2) -> Vector2:  # n9 world: under the plan corpse
+			var rigs: bool = cast_view.fighters_on_rigs
+			return StreetQuestDeadPlan.pool_m(_stage.arena, id, at, rigs, Ink.PX_PER_M)
 		stains = CorpseStains.new(BODIES, blood.blood.use_splat_mesh().colour, blood.blood.dark())
 		stains.material = blood.print_material()
 		layer.add_child(stains)
@@ -186,8 +189,7 @@ func _locate(id: int) -> Vector2:
 
 ## The dead hostiles: id -> where they lie (px).
 func _dead_px() -> Dictionary[int, Vector2]:
-	var cast: bool = not cast_view.fighters_on_rigs or QuestGuardCast.ON  # CastView draws the dead
-	return StreetQuestDeadPlan.dead_px(_stage.arena, cast, Ink.PX_PER_M)
+	return StreetQuestDeadPlan.dead_px(_stage.arena, cast_view.fighters_on_rigs, Ink.PX_PER_M)
 
 
 ## features/souls: a Hauler stomp landing shakes the camera and holds the clock (hit-stop), on

@@ -111,3 +111,25 @@ func test_the_soak_spot_is_the_drawn_pelvis_when_the_plan_draws() -> void:
 	assert_almost_eq(
 		off, StreetDeadPlan.PELVIS_K * StreetQuestCards.body_m(), 0.01, "along the blow"
 	)
+
+
+func test_the_kill_pool_lies_under_the_settled_corpse() -> void:
+	var saved: ViewMode = ViewMode._shared
+	ViewMode._shared = ViewMode.of("tilt70")
+	var reg: RngRegistry = RngRegistry.new(5)
+	var bus: EventBus = autofree(EventBus.new())
+	var arena: CombatArena = CombatArena.new(CombatTuning.shipped(), bus, reg.stream(&"combat"))
+	var h: Fighter = _guard(6, Vector2.LEFT)
+	h.pos = Vector2(20.0, 8.0)
+	h.hurt_tick = 50
+	arena.hostiles.append(h)  # alive: actor_killed fires before his hp drops
+	var got: Vector2 = StreetQuestDeadPlan.pool_m(arena, 6, h.pos, false, PPM)
+	assert_eq(got, StreetQuestDeadPlan.lying_m(h, 50 + StreetQuestDeadPlan.SETTLED, PPM))
+	if ResourceLoader.exists(StreetQuestDeadPlan.PATH):
+		assert_gt(got.distance_to(h.pos), 0.2, "the plan pelvis, not his standing spot")
+	var spot: Vector2 = Vector2(1, 2)
+	assert_eq(StreetQuestDeadPlan.pool_m(arena, 99, spot, false, PPM), spot, "no hostile: his spot")
+	var on_rigs: Vector2 = StreetQuestDeadPlan.pool_m(arena, 6, h.pos, true, PPM)
+	if not QuestGuardCast.ON:
+		assert_eq(on_rigs, h.pos, "the rigs draw the dead: his own spot")
+	ViewMode._shared = saved
