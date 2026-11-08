@@ -22,14 +22,18 @@ func test_the_blow_points_away_from_the_way_he_faced() -> void:
 		assert_true(blow.dot(Vector2.LEFT) >= cos(StreetQuestCards.SPREAD) - 0.0001, "at %s" % at)
 
 
-func test_the_pelvis_lies_along_the_blow_at_pelvis_k_of_standing() -> void:
+func test_the_pelvis_lies_along_the_head_at_pelvis_k_of_standing() -> void:
 	var at: Vector2 = Vector2(100, 200)
 	var h: Fighter = _guard(7, Vector2.UP)
 	var t: Transform2D = StreetQuestDeadPlan.transform_of(at, h, PPM)
 	var blow: Vector2 = StreetQuestDeadPlan.blow_of(at, h.facing)
+	var actor: int = StreetQuestDeadPlan.ID_BASE - h.id
+	var pose: int = StreetDeadPlan.pick(actor, &"", at)
+	var flip: bool = (StreetDeadPlan._hash(actor) & 1) == 1
+	var head: Vector2 = StreetDeadHeading.head_of(blow, pose, flip)
 	var want: float = StreetDeadPlan.PELVIS_K * StreetQuestCards.body_m() * PPM
 	assert_almost_eq((t.origin - at).length(), want, 0.01)
-	assert_true((t.origin - at).normalized().dot(blow) > 0.999)
+	assert_true((t.origin - at).normalized().dot(head) > 0.999)
 	var s: float = StreetQuestCards.body_m() * PPM / StreetWalkerFall.STILL_PX
 	assert_almost_eq(t.get_scale().y, s, 0.0001, "the still strip's px per metre")
 
@@ -87,7 +91,7 @@ func test_a_later_body_is_pushed_off_one_already_lying_and_the_first_stays() -> 
 	var t2: Transform2D = StreetQuestDeadPlan.transform_of(b, second, PPM)
 	var push: Vector2 = StreetQuestDeadPlan.push_of(StreetQuestDeadPlan.ID_BASE - 2, b, PPM)
 	assert_almost_eq(
-		push.length(), StreetQuestDeadPlan.PUSH_MAX_M * PPM, 0.01, "1.1 m owed, capped"
+		push.length(), StreetQuestDeadPlan.PUSH_MAX_M * PPM, 0.01, "1.4 m owed, at the cap"
 	)
 	assert_true(push.normalized().dot(Vector2.DOWN) > 0.999, "away from the first body")
 	assert_eq(StreetQuestDeadPlan.transform_of(a, first, PPM), t1, "the first never moves")
@@ -109,7 +113,7 @@ func test_the_soak_spot_is_the_drawn_pelvis_when_the_plan_draws() -> void:
 	assert_almost_eq(got.y, t.origin.y / PPM, 0.0001)
 	var off: float = got.distance_to(h.pos)
 	assert_almost_eq(
-		off, StreetDeadPlan.PELVIS_K * StreetQuestCards.body_m(), 0.01, "along the blow"
+		off, StreetDeadPlan.PELVIS_K * StreetQuestCards.body_m(), 0.01, "along the head"
 	)
 
 
