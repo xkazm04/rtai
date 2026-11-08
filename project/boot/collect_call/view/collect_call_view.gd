@@ -107,6 +107,7 @@ func _ready_blood(layer: CanvasLayer) -> void:
 		blood = CombatBlood.new()
 		layer.add_child(blood)
 		blood.listen(_stage.events(), _locate, _stage.arena.rivet.id)
+		StreetQuestCorpses.stain_life(blood.blood)  # n9 world: pools fade like the live fight's
 		blood.pool_at = func(id: int, at: Vector2) -> Vector2:  # n9 world: under the plan corpse
 			var rigs: bool = cast_view.fighters_on_rigs
 			return StreetQuestDeadPlan.pool_m(_stage.arena, id, at, rigs, Ink.PX_PER_M)

@@ -45,3 +45,13 @@ static func _table() -> CorpseDecay:
 	if _decay == null:
 		_decay = CorpseDecay.shipped()
 	return _decay
+
+
+## n9 world it25: quest 1's blood (CollectCallView) takes the live fight's stain life
+## (CorpseFade, corpse_decay.json stains): its pools fade after linger_s instead of
+## blood_fx.json's minutes, which left empty pools on the Dock 9 crossing for minutes.
+static func stain_life(fx: BloodFx) -> void:
+	if not DECAY:
+		return
+	var s: DecayLedger = _table().stains
+	fx.set_decal_life(s.linger_ticks, s.fade_ticks)

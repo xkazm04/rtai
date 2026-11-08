@@ -44,6 +44,9 @@ Branch `n9-world`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n9\world\` (frame
      never gets a second blood. Clip pair from one build at 64 px/m: before, the pools spread beside the bodies
      and the lowest body had none under him (`dock9_pool_under_corpse_before_after_tilt70_64ppm_t13760_crop.png`,
      the half-speed clip `..._t13560-13860_halfspeed.mp4`).
+   - The pools fade like the live fight's stains (12 s + 4 s; it25, DECISION world/quest-pool-stain-life), no
+     longer lying on the crossing for minutes after their bodies went
+     (`dock9_pools_fade_stain_life_before_after_tilt70_32ppm_t14000-16000.mp4`, 32 px/m).
 3. **Cars knock Rivet down** (703c287b, b0f1024e, 0c04d16b; DECISIONs world/car-hits-rivet-sim, -on,
    world/car-knock-damage-event-only).
    - Both twins, bit-exact. Above 5 m/s a car throws him along its heading; below it, the car brakes and stops at
@@ -74,8 +77,9 @@ Branch `n9-world`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n9\world\` (frame
   limbs still touch. The contractor sheet's pose D reads as a second face-down (assets graded it B).
 - At a wall the lying pose's hood and one hand overlap the building's edge by ~0.3 m (64 px/m close-up: it reads as a
   body slumped against the wall, feet out). The view bound pulls the pose back along the blow only; left as is.
-- At Dock 9 the blood pools outlast the bodies: once a corpse has decayed, its pool stays on the crossing with
-  nobody on it (64 px/m, t13860). By design (the blood persists and fades), but it reads as empty pools.
+- At Dock 9 a blood pool still outlasts its body by ~6 s (the decay table's law: stains linger 12 s, bodies 6 s),
+  so for a few seconds after a corpse decays its pool lies with nobody on it (Call C-6). Until it25 this lasted
+  minutes; quest 1's blood now takes the live fight's stain life (see item 2).
 - The knock damage is an Event only (the city has no Rivet hp outside the pits).
 - rig cost under combo is above the provisional 1 ms (C-1).
 
@@ -114,8 +118,12 @@ Branch `n9-world`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n9\world\` (frame
   - Seen at 32 px/m: once a body has decayed (6 s + 1.2 s fade, corpse_decay.json), its blood pool stays on the
     crossing with nobody on it; the live fight's table lets stains outlive bodies (12 s + 4 s), and quest 1 keeps
     blood_fx.json's minutes-long decals (`gtai-n9/tmp/world/pools_outlast_bodies_32ppm_it23.png`).
-  - Options: (a) quest 1 takes the live fight's stain life (patch ready); (b) as (a) plus stains linger 6 s like
-    the bodies; (c) Dock 9's bodies linger 12 s.
+  - Built (it25, DECISION world/quest-pool-stain-life): (a) quest 1 takes the live fight's stain life (12 s +
+    4 s), so the pools go ~6-10 s after their bodies instead of minutes. Clip pair from one head, 32 px/m,
+    t14000-16000: `gtai-masters/n9/world/dock9_pools_fade_stain_life_before_after_tilt70_32ppm_t14000-16000.mp4`
+    and the t15400 / t16000 still.
+  - Options still open: (b) as (a) plus stains linger 6 s like the bodies (one corpse_decay.json value, which
+    also changes the live fight); (c) Dock 9's bodies linger 12 s.
 
 ## Next steps
 
