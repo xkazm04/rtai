@@ -1,4 +1,4 @@
-# REPORT: lane handheld (n9, 2026-11-08), DRAFT at 03:55 (to be finished at the 10:30 freeze)
+# REPORT: lane handheld (n9, 2026-11-08), DRAFT at 05:06 (to be finished at the 10:30 freeze)
 
 Branch `n9-handheld`, cut from main at da108c13 (d9 merged). Clips and stills:
 `C:\Users\kazda\kiro\gtai-masters\n9\handheld\` (`frames.json`, 15 entries, best first). Research, profiles, every
@@ -52,6 +52,9 @@ The research loop since:
   25 % of one core, bench lock, 3 rounds) freezes it for 0.2-3.5 s instead of stretching frames, so it cannot find
   where 60 Hz breaks. Kept: E15's 0.53 core is an upper bound (much of it is pacing wait); with the sourced 1.84x
   single-thread ratio the city needs ~0.55-0.92 of one Deck core at 60 Hz (LEDGER E18, 95f119f6).
+- **E19, the combo switch on the Deck row costs nothing measurable** (world's branch boots combo): the city in combo vs
+  tilt70, uncapped Deck profile, the iGPU, 3 rounds, bench lock (CONTENDED): frame p50 9.21 vs 9.40 ms, render GPU 8.39
+  vs 8.38 ms, every delta inside the spread; ~7 ms headroom under 60 Hz. Still: `evidence/n9h/it5/combo/deck-city-combo-t14.png`.
 - **The 40 Hz row at 40 px/m** (E17, bench lock, 3 rounds, CONTENDED): GPU busy per second -30 %, pinned CPU -24 %.
 - **Legibility on the other rows:** `handheld_1080` every x-height >= 12 px; `switch_handheld` (720p) the boss count's
   digits at cap 10 px, judged legible on a still, everything else >= 9.
