@@ -19,8 +19,10 @@ const ONE_HAND: Array[StringName] = [
 	&"ray_gun",
 	&"homing_shard",
 ]
-## Streams drawn as a long flame in the fire cells (fires_drawn).
-const CONE: Array[StringName] = [&"flamethrower"]
+## Streams whose drawn flame cell fires only along the side and camera octants (fires_drawn).
+## n9: the owner's r-7 B, the drawn flame in every direction (`cone` empty); --rivet-flame=cone
+## brings back d9's CONE_D9 (the facing cell + the game jet off those octants).
+const CONE_D9: Array[StringName] = [&"flamethrower"]
 const CONE_TOL: float = PI / 8.0
 ## A cone burst that went off its drawn flame (rig meta): it keeps the facing cell until the fire
 ## latch clears, which outlives the stream by RivetFrames.FIRE_TICKS while the aim swings.
@@ -29,6 +31,7 @@ const CONE_OFF: StringName = &"rivet_cone_off"
 ## keeps posing the hidden held part so the game's smear (MeleeSmearView) still sweeps the cut.
 ## The katana, chainsaw and plasma sword sheets draw their own arc (no game smear over it).
 const NO_ARC: Dictionary[String, Array] = {"p55": [&"electro_baton"]}
+static var cone: Array[StringName] = []
 static var _logged: Dictionary[StringName, bool] = {}
 
 
@@ -74,7 +77,7 @@ static func draws_fire(rig: CutRig, weapon: StringName, o: int, firing: bool) ->
 ## The cone (the flamer) fires its drawn flame along the side and camera octants while the aim
 ## (NAN = the head's) is within CONE_TOL of it; else the facing cell fires (not two flames).
 static func fires_drawn(weapon: StringName, o: int, aim: float = NAN) -> bool:
-	if not CONE.has(weapon):
+	if not cone.has(weapon):
 		return true
 	var off: float = 0.0 if is_nan(aim) else absf(angle_difference(aim, o * PI * 0.25))
 	return o in [0, 2, 4] and off <= CONE_TOL
