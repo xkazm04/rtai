@@ -153,17 +153,12 @@ func test_a_weapon_out_runs_on_its_drawn_armed_run_above_the_run_speed() -> void
 		assert_true(RivetWalk.is_run(path), "steps on the run cycle")
 		var tex: Texture2D = load(path) as Texture2D
 		assert_eq(tex.get_width() % 8 + tex.get_height() % RivetWalk.ROWS, 0, "whole cells")
-	var p55: String = RivetStrips.DIR + "p55/" + RivetWalk.ARMED_RUN + "pistol.png"
-	assert_eq(RivetWalk.path_of(rig, "p55", &"pistol"), p55, "it8: the pistol runs drawn at 55")
-	var rifle55: String = RivetStrips.DIR + "p55/" + RivetWalk.ARMED_RUN + "plasma_rifle.png"
-	var rifle_run: String = RivetWalk.path_of(rig, "p55", &"plasma_rifle")
-	assert_eq(rifle_run, rifle55, "it9: the rifle runs drawn at 55")
-	var katana55: String = RivetStrips.DIR + "p55/" + RivetWalk.ARMED_RUN + "katana.png"
-	var katana_run: String = RivetWalk.path_of(rig, "p55", &"katana")
-	assert_eq(katana_run, katana55, "it9: the katana runs drawn at 55")
-	var gatling55: String = RivetStrips.DIR + "p55/" + RivetWalk.ARMED_RUN + "gatling.png"
-	var gatling_run: String = RivetWalk.path_of(rig, "p55", &"gatling")
-	assert_eq(gatling_run, gatling55, "it9: the gatling runs drawn at 55")
+	# it8-it10: every library 55 armed run (pistol it8; rifle, katana, gatling it9; flamer it10)
+	for w: StringName in [&"pistol", &"plasma_rifle", &"katana", &"gatling", &"flamethrower"]:
+		var p55: String = RivetStrips.DIR + "p55/" + RivetWalk.ARMED_RUN + String(w) + ".png"
+		assert_eq(RivetWalk.path_of(rig, "p55", w), p55, "%s runs drawn at 55" % w)
+		var tex55: Texture2D = load(p55) as Texture2D
+		assert_eq(tex55.get_width() % 8 + tex55.get_height() % RivetWalk.ROWS, 0, "whole cells")
 	var cannon: String = RivetWalk.path_of(rig, "p70", &"hand_cannon")
 	assert_false(cannon.get_file().begins_with(RivetWalk.ARMED_RUN), "no drawn armed run")
 	RivetWalk.run = false
