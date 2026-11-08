@@ -28,6 +28,8 @@ var rumble: float = 0.0
 ## Under viewport stretch, the 2D draw size = the project base x this (1 = the base; E8 study).
 var draw_scale: float = 1.0
 var tier: StringName = &"full"
+## The HUD layout: full (the desktop's) or compact (the handheld card sizes, GhostFormLayout).
+var hud: StringName = &"full"
 var ids: Array[String] = []
 
 
@@ -83,6 +85,7 @@ func _read(row: Dictionary) -> void:
 	var ds: float = row.get("draw_scale", 1.0)
 	draw_scale = ds
 	tier = StringName(str(row.get("tier", "full")))
+	hud = StringName(str(row.get("hud", "full")))
 
 
 ## True for the shipped desktop game (a row that changes nothing).
