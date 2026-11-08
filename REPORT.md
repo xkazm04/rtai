@@ -81,6 +81,8 @@ tilt70 and combo at 98cacb86, the last shipped-code change (`evidence/n9h/it6/ga
 
 ## What does not work yet
 
+- The boss cam (handheld rows and the dev `--boss-cam` clips) snaps ~60 px in one frame once in the King clip
+  (frame 155 of `deck-king-40ppm-bosscam-1280x800-igpu.mp4`; the FAR_M 20 m switch suspected): fix owed (it7).
 - Steam Input origin glyphs (a remapped pad) need the Steam backend: owed with the Steam port.
 - Nothing here is proven on a Deck: watts, battery hours, Zen 2 single-thread frame times (E18:
   ~0.55-0.92 of one Deck core at 60 Hz, an estimate the simulator cannot pin down), the shader cache's first run, suspend on SteamOS, the Linux build under real Vulkan.
