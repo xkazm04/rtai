@@ -739,3 +739,15 @@ for middleware plus kits under NDA.
   substring list on the `handheld_1080` row of `devices.json`, matched in `DeviceProfile.auto_pick` after the Deck
   check, fullscreen like the Deck. Owed: the strings, and the same check on a Deck's Linux DMI (`board_vendor`
   "Valve") for a launch outside Steam, unverified here.
+- **E21c (n9 it10), does the boss-cam ease fix the 40 Hz cadence? No (as expected; closes it8 NEXT 2b).** The King
+  on `deck40`, filmed at its own 40 fps (`sim.mjs --movie-fps=40`, 1500 ticks, the iGPU, movie mode: frame-exact,
+  CONTENDED does not matter), ease on vs `--boss-cam-ease=off`. The motion read correlates a ground band only (y
+  420-620 of 1280x800, `evidence/n9h/it10/e21c/pancorr_band.py`, it7's lesson: the King's car and the telegraph
+  carried the whole-frame read). Pan-step unevenness over frame pairs both moving >= 6 px: ease on median **0.50**
+  (mean 0.43, 72 % of pairs >= 0.4, 36 pairs), ease off median **0.50** (mean 0.45, 80 %, 35 pairs). CamFollow steps on
+  sim ticks, so a 40 fps frame still shows 1 or 2 ticks of pan: only drawing between ticks fixes it (the scoping note
+  under E21, ~2-3 days); `deck30` (even) stays the battery answer (Call 4). Still looked at: t15 s, the King and Rivet
+  on the road, the compact card. 0 SCRIPT ERROR in both runs.
+- **Mutation on `device_profile.gd` (n9 it10, at 3d235479, 30 sampled mutants, test_device_profile):** 33.3 % (10 / 30).
+  The sampled mutants on the new auto-pick lines were killed; the survivors are in `_read`'s fallback defaults (every
+  row sets those keys) and `apply()` (window calls, unreachable headless). `evidence/n9h/it10/gates/`.

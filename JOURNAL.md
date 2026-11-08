@@ -593,3 +593,11 @@ near-final head); freeze steps as in it9 NEXT 3.
 - 08:51 MILESTONE 3d235479 an auto-picked Deck opens fullscreen (`fill_screen`; SteamOS desktop mode's taskbar would
   cover a 1280x800 window); `--device=` keeps the window (live `--device=deck`: window 1280x800); test; unit --select
   24/0; lint 15/15; DECISION handheld/deck-fills-screen. Mutation on device_profile.gd started at 3d235479.
+- 08:53 RESEARCH Windows handhelds picking their own row: `OS.get_model_name()` returns the system model on Windows
+  (probed: "X670 AORUS ELITE AX" = WMI); screen DPI is effective, not physical; the handhelds' firmware strings are
+  unconfirmed (retail SKUs only), so nothing guessed is shipped; design + owed in the LEDGER.
+- 09:02 MUTATION device_profile.gd at 3d235479: 33.3 % (10/30); survivors in `_read` defaults and `apply()`; the
+  sampled auto-pick mutants killed. FRICTION (~10 min lost): my own wait loop's condition never closed (a bad
+  tasklist test); stopped it. Use the task notification, not a hand-rolled until on a process list.
+- 09:05 E21c (closes it8 NEXT 2b): the King on deck40 at 40 fps, ease on vs off, ground-band phase correlation:
+  median unevenness 0.50 both: the ease cannot fix the 1:2 cadence (it steps on ticks). Looked at t15. Raw .avi deleted.
