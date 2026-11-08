@@ -557,6 +557,10 @@ held pose that still shows the d9 arm; rivet wires it as the reload cell per fac
   `rivet_armed_runs_p55_rifle_katana_gatling_before_after_king_combo_48ppm_x1.5_seed1_f16_56.png` + the gatling 55
   half-speed mp4; frames.json 14 (the combined entry replaces the separate rifle / katana entries).
 
+- Item 5c (measured muzzles for the remaining facing cells): no visible gap. Every gun shot latches its fire cell (5/6,
+  measured for all 13 guns at both pitches in `rivet_muzzle.json`), the one-hand lefts carry cells 0-2, the flamer its
+  facing cells 0-4 and the diagonal cells; a gun's facing cell (0-4) never shows during a shot. Not built.
+
 ### Calls drafted for REPORT (it9 additions)
 13 (update). **Armed runs coverage**: drawn armed runs now ship for pistol, plasma rifle, katana and gatling at BOTH
     pitches. The flamer (library rounds 0700 / 0705 running) and the other 13 weapons keep the armed walk at run speed.
@@ -565,8 +569,8 @@ held pose that still shows the d9 arm; rivet wires it as the reload cell per fac
     v2 row per weapon by legs-by-example (the library offered; it did not land for the one-hand at 0645).
 
 NEXT (it10):
-1. The reels on b43824fd (`reel-director-it9b-<v>.log`): commit them if 19/19 x3 with 0 SCRIPT ERROR, else bisect
-   4dcacec3 / b43824fd.
+1. (done in it9: the reels on b43824fd `reel-director-it9b-<v>.log` are 19/19 fully down in top, tilt70, combo, 0
+   SCRIPT ERROR, exit 0, 06:50-06:58: every view is green on the it9 code head.)
 2. The flamer run at 70 then 55 (library rounds 0700 / 0705, my it8 REQUEST c): pack like b43824fd (70: --k
    0.6433,0.6471 --tone=p70/rivet_eq_flamethrower.png; 55: --k 0.6111,0.6197), measure every row with
    `gtai-n9/tmp/rivet/it8/travel_grid.py` vs run8 at that pitch, RUN_ROW_K for > 5 % off, flip the unit test's
