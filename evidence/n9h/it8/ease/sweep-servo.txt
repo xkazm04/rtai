@@ -1,0 +1,7 @@
+accel 0.0 px/tick^2: worst accel 14.6, worst speed 14.7 px/tick, worst lag 0.0 px, ticks with accel > 4: 19
+accel 1.0 px/tick^2: worst accel 1.0, worst speed 16.0 px/tick, worst lag 94.0 px, ticks with accel > 4: 0
+accel 1.5 px/tick^2: worst accel 1.5, worst speed 18.0 px/tick, worst lag 59.9 px, ticks with accel > 4: 0
+accel 2.0 px/tick^2: worst accel 2.0, worst speed 22.0 px/tick, worst lag 86.0 px, ticks with accel > 4: 0
+accel 3.0 px/tick^2: worst accel 3.0, worst speed 21.1 px/tick, worst lag 28.5 px, ticks with accel > 4: 0
+accel 4.0 px/tick^2: worst accel 4.0, worst speed 20.8 px/tick, worst lag 37.1 px, ticks with accel > 4: 31
+accel 6.0 px/tick^2: worst accel 6.0, worst speed 21.8 px/tick, worst lag 11.3 px, ticks with accel > 4: 39

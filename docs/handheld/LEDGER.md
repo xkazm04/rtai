@@ -303,6 +303,33 @@ stick, 2/3 right stick, 4 LT, 5 RT.
   at 1280 -3.6 -> +11.2 (the boss or Rivet reaching a keep-in margin, after which the camera moves at their speed). The
   image shift reads ~2x the focus log's px (24 vs 11.2; the log converts at 40 px/m, unexplained, owed). The cure is an
   acceleration limit on the focus (a speed that ramps over a few frames), not a lagging damper: owed (it8).
+  **Corrected in it8:** those two moves are **not the camera**. With the ease below on, frames 707 and 1265 read the same
+  24 / 20 px; phase correlation on the ground band alone (y 420-620 of 800, no telegraph, no boss) reads -1..+1 px a
+  frame through both, while the top band (the King's car and the red telegraph wedge) carries the 20 / 8 px: a large
+  moving object won the whole-frame correlation. it7's tie to the focus log was a mis-mapping (its two offsets, 31 and
+  15 frames, disagreed; video frame n = tick n+2). Lesson for the tool: correlate a band of static ground, not the frame.
+- **The boss cam ease (n9 it8, 630f91a7, DECISION `handheld/boss-cam-ease`).** The framing itself does jolt: the focus
+  log (a temporary Log line, the Deck row, 40 px/m, 2700 ticks each) shows its speed changing up to 15.4 px a tick in
+  one tick (King: ticks 149, 162, 737, 1279, 1336; 15 ticks over 4 px/tick^2) and 14.6 (Servo, 19 ticks). `CamFollow`
+  keeps a velocity, changes it by at most `ACCEL_PX` screen px a sim tick, brakes on the discrete square-root law and
+  matches the framing's speed (no lag in a steady pan); past 10 m it cuts. It steps on the sim tick (`BossFight.now()`),
+  so `deck40`'s 2-tick frames and the hit-stops move as at 60. The limit chosen by replaying the recorded framing
+  through the same law (`evidence/n9h/it8/ease/sweep.py`; it reproduces the in-game 2.0 run exactly, lag 42.4 px, peak
+  15.9):
+
+  | ACCEL_PX | King: worst accel / peak speed / worst lag / ticks > 4 | Servo: the same |
+  |---|---|---|
+  | 0 (the framing) | 15.4 / 11.3 / 0 / 15 | 14.6 / 14.7 / 0 / 19 |
+  | 2.0 | 2.0 / 15.9 / 42 / 0 | 2.0 / 22.0 / **86** (past Rivet's 1.5 m margin) / 0 |
+  | **3.0 (kept)** | **3.0 / 17.3 / 28 / 0** | **3.0 / 21.1 / 28.5 / 0** |
+  | 4.0 | 4.0 / 16.5 / 21 / 20 | 4.0 / 20.8 / 37 / 31 |
+
+  In game at 3.0 (both fights, the RTX, 0 SCRIPT ERROR): King 3.1 / 17.3 / 28.3 px / 0, Servo 3.0 / 21.1 / 28.5 px / 0.
+  The worst lag (0.7 m) sits inside Rivet's 1.5 m and the boss's 3 m margins, so neither leaves the screen. The cost:
+  a brief catch-up after a jolt runs faster than the framing's own peak (11.3 -> 17.3 px/tick King). Hit-stops still
+  stop the camera dead (the sim holds; the same with or without). Clips: `deck-king-40ppm-bosscam-ease-before-after-halfspeed.mp4`
+  (the two worst jolts, half speed), `deck-king-40ppm-bosscam-ease-1280x800-igpu.mp4` (45 s). Mutation score on
+  `cam_follow.gd`: see JOURNAL it8. KEPT (handheld rows and `--boss-cam` only; `--boss-cam-ease=off` is the before).
 
 ## 6. Text legibility at 1280x800
 

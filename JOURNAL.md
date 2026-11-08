@@ -455,3 +455,27 @@ NEXT (iteration 8):
 3. Freeze 10:30: export `build/export/windows/RTAI.exe` (`"$GODOT_BIN" --headless --path project --export-release
    windows-showcase ../build/export/windows/RTAI.exe`), final gates on the head (reel x3 + evidence run with the log
    outside the tree), REPORT final (gates line, exe line, Calls 1-5, frames.json 15 entries all present).
+
+## Iteration 8 (06:52 - 07:52), BUILD
+
+- 06:53 READ: JOURNAL NEXT, git log; rivet / world / perf journals: no REQUEST to handheld; the asset library's latest
+  deliveries (rivet armed runs it129-it134, dead_plan_v1): none names handheld. Registry rules applied:
+  motion-quality-gating (judge the camera by its own motion: the focus per tick and the image shift of static ground,
+  same ticks before/after), on-device-verification-harness ("on the simulator", CONTENDED labels),
+  adaptive-fidelity-tiers (the ease sits in BossCam: handheld rows + dev `--boss-cam`; the desktop camera untouched).
+- 07:00 BUILT `CamFollow` (features/bosses/cam_follow.gd): velocity kept, change <= accel a tick, discrete square-root
+  braking, target-speed matching, cut past 10 m, steps on `BossFight.now()` ticks. Tests 6 (two caught real faults
+  first: the continuous sqrt law overshot at tick steps; the lag measured after the target's move led a pan by a tick).
+  `--boss-cam-ease=off` (KNOWN_FLAGS) = the before. FRICTION: debt-ratchet direct_cmdline_reads +1 -> one `_has()`.
+- 07:02 FINDING (it7 corrected): King no-ease vs ease (RTX, same ticks): the 24 / 20 px "starts" at video frames 1265 /
+  707 are identical in both -> not BossCam. Ground band alone reads -1..+1 px a frame there; the top band (the King's
+  car, the red telegraph wedge) carries them. Not a camera problem at all; it7's frame mapping was off (frame n = tick n+2).
+- 07:05 The framing's real jolts (focus log, temp Log line): King up to 15.4 px/tick^2 (15 ticks > 4), Servo 14.6 (19).
+  Offline replay (`sweep.py`, reproduces the in-game 2.0 run exactly): 2.0 lags Servo 86 px (past Rivet's margin);
+  3.0 = 0 jolts, worst lag 28 px both. In game at 3.0: King 3.1 / peak 17.3 / lag 28.3, Servo 3.0 / 21.1 / 28.5,
+  0 SCRIPT ERROR. MILESTONE 630f91a7 (code + tests + DECISION handheld/boss-cam-ease); unit --changed 1838/0, lint 15/15.
+- 07:14 Clips to masters: `deck-king-40ppm-bosscam-ease-before-after-halfspeed.mp4` (frames.json 9, replaces the BC7
+  still: BC7 is world's now) and `deck-king-40ppm-bosscam-ease-1280x800-igpu.mp4` (entry 14, replaces the band clip).
+  FRICTION (~3 min): concurrent runs share APPDATA, so the iGPU King run's engine log rotated away (adapter "unknown",
+  its SCRIPT ERROR count lost; labelled so in frames.json). Next time: one APPDATA per concurrent run.
+- 07:15 LEDGER (it7 correction + the ease table), REPORT (works: the ease; the "starts" item removed from not-working).
