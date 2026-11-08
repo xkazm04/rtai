@@ -496,7 +496,10 @@ NEXT (iteration 8):
   on screen, bar and card clear. Masters `deck-servo-40ppm-bosscam-ease-1280x800-igpu.mp4`, frames.json entry 4 (15
   entries, all present). Raw .avi deleted.
 
-NEXT (iteration 9) (2a's Servo half done at 07:36; the King iGPU re-take with its own APPDATA is still owed):
+- 07:39 The King re-taken the same way (own APPDATA: the Radeon on the engine log, 0 SCRIPT ERROR, CONTENDED 2 others,
+  p50 32.7 ms); looked at t30 s: Rivet, the King and his gang on screen, bar and card clear. frames.json entry 14 updated.
+
+NEXT (iteration 9) (2a done at 07:39: both boss clips on the iGPU with the ease and their own engine logs; start at 2b):
 1. Read the other journals for REQUESTs at the start AND mid-session; the asset lane's deliveries (grep "handheld").
    Never edit the tree while an evidence run is going; keep raw sim logs outside the tree (the dirty check); give each
    concurrent Godot run its own APPDATA (`appdata/handheld-<run>`, with the export_templates junction NOT needed for
