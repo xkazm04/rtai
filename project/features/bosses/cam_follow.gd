@@ -38,7 +38,8 @@ func cut(target: Vector2) -> Vector2:
 	return pos
 
 
-## `ticks` steps toward a target that holds still over them (a frame that took 2 ticks at 40 Hz).
+## `ticks` steps toward `target`, the target spread evenly over them (a 2-tick frame at 40 Hz lands
+## where two 60 Hz frames land); 0 ticks (a hit-stop) holds, or cuts on the very first frame.
 func advance(target: Vector2, ticks: int, accel_m: float, snap_m: float) -> Vector2:
 	if ticks <= 0:
 		return pos if pos != Vector2.INF else cut(target)

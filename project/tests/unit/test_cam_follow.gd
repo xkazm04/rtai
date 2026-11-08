@@ -71,3 +71,9 @@ func test_two_tick_frame_moves_as_two_ticks() -> void:
 		b.step(Vector2(0.2 * (2 * i + 2), 0), A, SNAP)
 	assert_almost_eq(a.pos.x, b.pos.x, 1e-4)
 	assert_eq(a.advance(Vector2(99, 0), 0, A, SNAP), a.pos, "a hit-stop frame holds")
+
+
+func test_first_frame_in_a_hit_stop_cuts() -> void:
+	var f: CamFollow = CamFollow.new()
+	var got: Vector2 = f.advance(Vector2(5, 6), 0, A, SNAP)
+	assert_eq(got, Vector2(5, 6), "no INF focus on a 0-tick first frame")
