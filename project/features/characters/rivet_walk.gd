@@ -38,9 +38,12 @@ const MAX_RUN_CYCLES_S: float = 3.5
 ## heavy left profile 59 / 63; the one-hand 55 3/4 toward right (row 2 B) 43 / 54.5, toward
 ## left 49 / 55; the two-hand 55 3/4 toward right (row 2 B) 41.5 / 54.5, toward left 49 / 55;
 ## the blade 55 3/4 toward right (row 2 B) 46 / 54.5 (its toward left 53 / 55: within 5 %, none);
-## the heavy 55 3/4 toward right 42 / 54.5, 3/4 toward left 45.5 / 55, left profile (L2 B) 46 / 50
+## the heavy 55 3/4 toward right 42 / 54.5, 3/4 toward left 45.5 / 55, left profile (L2 B) 46 / 50;
+## the flamer 70 3/4 toward left 42 / 46, left profile (L2 B) 58 / 63
 const RUN_ROW_K: Dictionary[String, float] = {
 	"p70/gatling/4": 0.94,
+	"p70/flamethrower/3": 0.91,
+	"p70/flamethrower/4": 0.92,
 	"p55/pistol/1": 0.79,
 	"p55/pistol/3": 0.89,
 	"p55/plasma_rifle/1": 0.76,

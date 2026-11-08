@@ -146,7 +146,7 @@ func test_a_weapon_out_runs_on_its_drawn_armed_run_above_the_run_speed() -> void
 	# it8: the blade run (the katana), the heavy run (the gatling)
 	var rig: CutRig = add_child_autofree(CutRig.new())
 	rig.speed_now = RivetWalk.RUN_FROM_MPS * CharacterRigs.PX_PER_M + 10.0
-	for w: StringName in [&"pistol", &"plasma_rifle", &"katana", &"gatling"]:
+	for w: StringName in [&"pistol", &"plasma_rifle", &"katana", &"gatling", &"flamethrower"]:
 		var path: String = RivetStrips.DIR + "p70/" + RivetWalk.ARMED_RUN + String(w) + ".png"
 		assert_eq(RivetWalk.path_of(rig, "p70", w), path, "%s runs drawn" % w)
 		assert_eq(RivetWalk.cols_of(path), 8)
@@ -164,10 +164,8 @@ func test_a_weapon_out_runs_on_its_drawn_armed_run_above_the_run_speed() -> void
 	var gatling55: String = RivetStrips.DIR + "p55/" + RivetWalk.ARMED_RUN + "gatling.png"
 	var gatling_run: String = RivetWalk.path_of(rig, "p55", &"gatling")
 	assert_eq(gatling_run, gatling55, "it9: the gatling runs drawn at 55")
-	var flamer: String = RivetWalk.path_of(rig, "p70", &"flamethrower")
-	assert_true(
-		flamer.get_file().begins_with(RivetWalk.ARMED), "no drawn armed run: the armed walk"
-	)
+	var cannon: String = RivetWalk.path_of(rig, "p70", &"hand_cannon")
+	assert_false(cannon.get_file().begins_with(RivetWalk.ARMED_RUN), "no drawn armed run")
 	RivetWalk.run = false
 	assert_true(RivetWalk.path_of(rig, "p70", &"pistol").get_file().begins_with(RivetWalk.ARMED))
 	rig.set_meta(RivetFrames.FIRE, true)
