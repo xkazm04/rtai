@@ -82,7 +82,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--pickup-crate",
 	# d9-rivet: --rivet-height=<m> sets Rivet's drawn standing height under a card view (Call 1)
 	"--rivet-height",
-	# d9-rivet: --rivet-walk=bob keeps the facing card with the built bob (Call 2's before)
+	# d9-rivet: --rivet-walk=bob keeps the facing card with the built bob (Call 2's before);
+	# n9-rivet: --rivet-walk=4 plays d9's 4-frame grid by the gait phase (the 8-frame walk's before)
 	"--rivet-walk",
 	# n9-rivet: --rivet-flame=cone brings back d9's flamer (the drawn flame on 3 octants only)
 	"--rivet-flame",

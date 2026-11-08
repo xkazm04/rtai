@@ -6,7 +6,8 @@ extends RefCounted
 ## --rivet-form=<RivetPlan form id> (wide = the 1.2x n5-cast size), --rivet-visor (the ink visor
 ## slot), --rivet-tan=<0..1> (1 = the full tan), --gun-grey (look-8: held guns in the old grey
 ## print, not the tan inks); d9: --rivet-height=<m> (his drawn standing height at play; n9 builds
-## 1.65, p55 in proportion); n9: --rivet-flame=cone (d9's flamer). Read once, before the first
+## 1.65, p55 in proportion); n9: --rivet-flame=cone (d9's flamer),
+## --rivet-walk=4 (d9's 4-frame walk by the gait phase). Read once, before the first
 ## plan or material.
 
 static var _read: bool = false
@@ -32,3 +33,5 @@ static func apply(args: PackedStringArray = OS.get_cmdline_user_args()) -> void:
 			RivetStrips.cone = RivetStrips.CONE_D9.duplicate()
 		elif arg == "--rivet-walk=bob":
 			RivetWalk.enabled = false
+		elif arg == "--rivet-walk=4":
+			RivetWalk.frames = 4

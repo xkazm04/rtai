@@ -1,14 +1,23 @@
 class_name RivetWalk
 extends RefCounted
-## d9 rivet (Call 2): bare-claw Rivet's drawn 4-frame stride, when the art key has one
-## (`rivet_walk.png`, tools/art/rivet_walk.py: 4 frames x 8 rows in RivetFrames' base cell order).
-## Picked by the stride phase while he walks with no weapon out; a drawn stride carries no built
-## bob or sway. --rivet-walk=bob keeps the facing card with the bob (the before).
+## d9 rivet (Call 2): bare-claw Rivet's drawn stride, when the art key has one. n9: the library's
+## 8-frame walk (`rivet_walk8.png`, tools/art/rivet_walk.py --cols=8: contact, down, passing, up,
+## contact (other foot), down, passing, up; 8 rows in RivetFrames' base cell order), stepped by the
+## ground walked: one drawn cycle = CYCLE_CELL cell px x the card's scale, the stance foot's drawn
+## travel over a stride (measured on the profile rows, evidence/n9/rivet_walk8_measure.md), so a
+## planted foot stays put; above MAX_CYCLES_S the cadence holds there (his 6.75 m/s walk would
+## need ~7.5 cycles a second: a drawn walk cannot plant at a run's speed, see the run REQUEST).
+## --rivet-walk=4 plays d9's 4-frame grid by the gait phase, --rivet-walk=bob the facing card.
 
-const STRIP: String = "rivet_walk.png"
-const FRAMES: int = 4
+const STRIP: String = "rivet_walk8.png"
+const STRIP4: String = "rivet_walk.png"
 const ROWS: int = 8
+const CYCLE_CELL: Dictionary[String, float] = {"p70": 60.0, "p55": 60.0}
+const MAX_CYCLES_S: float = 2.0
+const META_PH: StringName = &"rivet_walk_phase"
+const META_AT: StringName = &"rivet_walk_at"
 static var enabled: bool = true
+static var frames: int = 8
 
 
 ## The walk grid under `art`, "" when it is off, the art has none, or he is not walking bare-claw.
@@ -19,11 +28,31 @@ static func path_of(rig: CutRig, art: String, weapon: StringName) -> String:
 		return ""
 	if rig.clips.active() == RigClips.Clip.PUNCH:
 		return ""
-	var path: String = RivetStrips.DIR + art + "/" + STRIP
+	var path: String = RivetStrips.DIR + art + "/" + (STRIP if frames == 8 else STRIP4)
 	return path if ResourceLoader.exists(path) else ""
 
 
+## True when `card` shows a walk grid (8 rows; every other strip is one row).
+static func is_grid(card: Sprite2D) -> bool:
+	return card != null and card.vframes == ROWS
+
+
 ## The grid frame for octant `o` at stride phase `phase` (one cycle = a full stride, two steps).
-static func frame_of(o: int, phase: float) -> int:
-	var col: int = mini(int(fposmod(phase, 1.0) * FRAMES), FRAMES - 1)
-	return RivetFrames.BASE_OCT[o] * FRAMES + col
+static func frame_of(o: int, phase: float, n: int = frames) -> int:
+	var col: int = mini(int(fposmod(phase, 1.0) * n), n - 1)
+	return RivetFrames.BASE_OCT[o] * n + col
+
+
+## The drawn stride phase: by the ground walked since the last call (`scale`: the card's), the
+## 4-frame grid by the gait phase. Called every pose step (the phase carries between grids).
+static func phase_of(rig: CutRig, art: String, scale: float) -> float:
+	var at: Vector2 = rig.get_meta(META_AT, rig.global_position)
+	rig.set_meta(META_AT, rig.global_position)
+	var cycle: float = CYCLE_CELL.get(art, 0.0) * scale
+	if frames != 8 or cycle <= 0.0:
+		return rig.phase
+	cycle = maxf(cycle, rig.speed_now / MAX_CYCLES_S)
+	var was: float = rig.get_meta(META_PH, 0.0)
+	var ph: float = fposmod(was + rig.global_position.distance_to(at) / cycle, 1.0)
+	rig.set_meta(META_PH, ph)
+	return ph
