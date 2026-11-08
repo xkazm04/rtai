@@ -55,7 +55,17 @@ The research loop since:
 - **E19, the combo switch on the Deck row costs nothing measurable** (world's branch boots combo): the city in combo vs
   tilt70, uncapped Deck profile, the iGPU, 3 rounds, bench lock (CONTENDED): frame p50 9.21 vs 9.40 ms, render GPU 8.39
   vs 8.38 ms, every delta inside the spread; ~7 ms headroom under 60 Hz. Still: `evidence/n9h/it5/combo/deck-city-combo-t14.png`.
-- **The 40 Hz row at 40 px/m** (E17, bench lock, 3 rounds, CONTENDED): GPU busy per second -30 %, pinned CPU -24 %.
+- **The 40 Hz row at 40 px/m** (E17, bench lock, 3 rounds, CONTENDED): GPU busy per second -30 %, pinned CPU -24 %;
+  on combo, the view main will play (E17c, it6): -32 % and -26 %. Three views and two zooms agree.
+- **E20, the Deck row on what main will be** (this branch + n9-world in a scratch merge; the code merges cleanly, only
+  JOURNAL and the debt baseline conflict): `deck`, city combo, the iGPU, 3 rounds, bench lock: vsync-locked 60 both,
+  render GPU 8.65 -> 7.69 ms, GPU shared 1055 -> 600 MB, private RAM 1430 -> 991 MB, CPU the same (31222638).
+- **The handheld boss cam** (it6, 98cacb86, DECISION `handheld/boss-cam`): on every handheld row the boss fights use
+  the tested clip camera (BossCam) that frames Rivet and the boss together on the fight's floor. On the Deck row at
+  40 px/m the follow camera showed half the screen as paper past Servo's yard; now the yard fills it with both
+  fighters in. The desktop is untouched. Still: `bosscam-deck-servo-before-after-40ppm-1280x800-t900.png`.
+- **The zoom before/after** (it6): `zoom-deck-king-32-vs-40ppm-1280x800-t900.png`,
+  `zoom-deck-city-combo-32-vs-40ppm-1280x800-t600.png` (tick-exact, same tick both sides).
 - **Legibility on the other rows:** `handheld_1080` every x-height >= 12 px; `switch_handheld` (720p) the boss count's
   digits at cap 10 px, judged legible on a still, everything else >= 9.
 - **Simulator tooling:** `grab_window.ps1` reads the game window itself (another lane's window over it was captured
@@ -94,6 +104,11 @@ tilt70 and combo at 3778c3ac, the last shipped-code change (`evidence/n9h/it5/ga
    a day; re-lays the cards). Still: `count-deck-16-vs-18-crop-x4.png`.
 4. **The 40 Hz row as the Deck default?** E17: GPU busy -30 %, pinned CPU -24 % (a battery proxy). a) 60 with the
    player's 30 / 40 / 60 cap in the pause card (built); b) 40 by default.
+
+5. **The boss cam on the desktop too?** The follow camera shows the same paper past Servo's yard on the desktop at
+   1280x800 (`evidence/n9h/it6/zoom/servo-desktop-t900.png`). a) handheld rows only (built); b) every row (`boss_cam`
+   on `desktop`, or make BossCam the default; moves the shipped boss look, so a world/look-golden question).
+   Try: `RTAI.exe -- --boss=servo --device=deck` vs `RTAI.exe -- --boss=servo`.
 
 ## Next steps
 
