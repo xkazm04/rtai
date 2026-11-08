@@ -371,8 +371,8 @@ NEXT (it11):
 3. Item 3: the knock damage into the active pit (`EnemyPit._hurt_rivet`) where one runs (quest 1) or record
    "Event only" as the DECISION; a real-game clip (`--arena=city` with a car) once rivet wires the drawn knock.
 4. Item 2 follow-ups (walker sheets when served; kill_marks follow the plan pose; Dock 9 + city block film).
-5. Remove scratch worktrees `gtai-n9/tmp/world/before` and `gtai-n9/tmp/world/gate` when the last before/after is
-   filmed (gate's `build/evidence` already copied).
+5. Remove the scratch worktree `gtai-n9/tmp/world/before` when the last before/after is filmed (`gate` removed
+   it10 04:11, its evidence copied).
 - (04:09) Scoping for NEXT 2 (read only): the arena on the city (`features/arena/arena_session.gd _add_city`, l.61)
   builds its own CitySystem; its walls / barriers (`plan.areas`, ArenaFloorStatic.barrier runs) and props are
   solid only to the arena's own collision. To make the sim see them: after `city.residency.update`, stamp their
