@@ -184,3 +184,15 @@ button (a small pill with its three-short-lines-and-dot mark, no brand name or l
   `handheld/pad-aim-assist` (desktop pad = an owner Call).
 - FRICTION: gdformat on Windows rewrote two new files with CRLF, and a later Python text replace silently missed
   (matched nothing). Normalize with `sed -i 's/\r$//'` after gdformat; assert the match in replace scripts.
+
+NEXT (iteration 4):
+1. Show the pad aim assist live: a scratch pad-event walker in the King arena (`--boss=king`, `--device=deck`) that
+   holds the right stick ~5 deg off the boss and logs `session.live.sample()`'s packed heading vs the raw stick (and
+   the same on `desktop`: raw); then a short clip of Rivet firing at a guard on the pad. Re-run the reel x3 + full unit
+   if anything changes (it3's gates on 33f80d56 are in `evidence/n9h/it3/gates2/`).
+2. Check the asset lane for the REQUEST `ui_pad_glyphs_v1` appendix (pad_plus, pad_minus, pad_create); wire them into
+   `GlyphCells.PAD_CELL` ("+", "-", "Create") with the ink-box trim (`tools/handheld/glyph_inkbox.py`) and a provenance line.
+3. E16 (BC7 on the Deck row) under the bench lock once world's commit is on main (not yet at 02:44).
+4. REPORT.md at the 10:30 freeze, with Calls: (a) the kb glyphs on the shipped desktop (`desktop_kb_glyphs` row,
+   stills in gtai-masters); (b) the pad aim assist for a desktop pad too (one value); (c) a larger handheld text scale?
+   (d) the 40 Hz row as the Deck default? Plus the exe line and a frames.json check.
