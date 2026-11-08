@@ -232,3 +232,34 @@ NEXT (iteration 4):
 - 03:50 BC7 look on the Deck row at 40 px/m (`sim.mjs --grab=12`, both arms, the iGPU): indistinguishable at a 2x crop
   (ink line, grain, hatching, the ambulance art). `gtai-masters/n9/handheld/bc7-deck-city-40ppm-lossless-vs-bc7-crop-x2.png`
   replaces the weakest frames.json entry (the t12 city still); still 15 entries. Looked at both frames and the crop.
+- 03:56 MILESTONE: a pad mark the atlas lacked (PlayStation Create, Nintendo-layout + / -) drew the Xbox View / Menu
+  cell; made it stay bracketed text, the stand-ins one const away (8024b1c7, DECISION handheld/glyph-missing-marks).
+  Gates at 8024b1c7: full unit 1843/0, the director reel 19/19 in top / tilt70 / combo, 0 SCRIPT ERROR (296d5b8c,
+  `evidence/n9h/it4/gates/`).
+- 03:58 The asset lane had already served my REQUEST (it127, 03:26, `deliveries/handheld_ui_pad_glyphs_it98.md`:
+  pad_plus, pad_minus, pad_create at row 5 of the same 1024x640 atlas, grade A). I missed it at 03:27 because I listed
+  the deliveries folder by mtime and the appendix went into the existing it98 note: grep the library JOURNAL for
+  "handheld" instead. Wired: the atlas copied as delivered (PIL diff: only the new cells' box differs), the json
+  re-trimmed by `glyph_inkbox.py` (the 36 earlier boxes unchanged), `PAD_CELL` "+" / "-" / "Create" -> their cells, the
+  text-fallback switch removed (superseded the same night: DECISION handheld/pad-menu-marks), test, provenance line
+  (round 20261108-0330, prompt_hash 214b0febe1d2). Looked at the cells at 128 and 32 px and the family sheet (the
+  Nintendo row's "+: pause" draws its own round key). Commit 6e62c562; full unit 1842/0; masters sheet replaced.
+- REPORT.md draft (cde1fca3) updated for the appendix.
+- 04:05 Scratch worktree `gtai-n9/tmp/handheld/w16` removed (E16b done). Reel gate on 6e62c562 running into
+  `evidence/n9h/it4/gates2/` (result below if it lands before 04:26; else NEXT item 1 reads the logs).
+
+NEXT (iteration 5):
+1. Read `evidence/n9h/it4/gates2/reel-{top,tilt70,combo}.log` (6e62c562): each needs 19 "director chapter ...: n/n
+   down" lines and 0 SCRIPT ERROR; commit the logs. Then an evidence run `node tools/evidence/run.mjs --no-bench` on a
+   clean tree (shipped code + the atlas changed since 0791db0d's run).
+2. Research loop E18, the Deck's single-core risk (E15 estimates one Zen 2 core at 0.85-1.05 of the 60 Hz budget):
+   simulate a slower core on this PC by a Windows job object CPU-rate hard cap on the game pinned to 1 core + SMT
+   (`JOBOBJECT_CPU_RATE_CONTROL_INFORMATION`, HARD_CAP, CpuRate in 1/100 % of the whole machine: one logical CPU of 16 =
+   625), stepped 100 / 70 / 55 / 45 % of a core on `deck` (city, 1200 ticks, the iGPU, bench lock): where does 60 Hz
+   break, and does the 40 Hz row hold below that? Caveat to state: a rate cap throttles in slices (stutter), not a
+   uniformly slower core: read p50 and the settled > 33 ms count, not just the mean. A PowerShell helper next to
+   `sample.ps1` (`tools/handheld/cpu_cap.ps1`) + a `sim.mjs --cpu-cap=<pct>` flag, node test for the arg.
+3. Check the asset lane's JOURNAL (grep "handheld") each iteration, not the deliveries folder's mtime order.
+4. REPORT.md is drafted (cde1fca3 + it4 edits): at the 10:30 freeze update the gates line, the exe line
+   (`"$GODOT_BIN" --headless --path project --export-release windows-showcase ../build/export/windows/RTAI.exe`),
+   the Calls, and check frames.json (15 entries, every file present).

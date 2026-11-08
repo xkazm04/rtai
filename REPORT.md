@@ -26,7 +26,8 @@ The owner's picks of 2026-11-07, in the brief's order:
    DECISION `handheld/drawn-pad-glyphs`, provenance line in `steam/ai-provenance/2026-11.jsonl`). Each cell draws by its
    trimmed ink box (`tools/handheld/glyph_inkbox.py` reproduces the shipped json byte for byte), so LB / RB / Start read
    as tall as the face buttons. The glyphs follow the pad family (Xbox / PlayStation / Nintendo-layout names each draw
-   their own face and trigger cells): `glyphs-deck-pad-families-controls.png`. Stills of the title, pause and a quest 1
+   their own face, trigger and menu cells; the Nintendo-layout "+" / "-" and the PlayStation Create came as the asset
+   lane's appendix on my REQUEST and are wired, 6e62c562): `glyphs-deck-pad-families-controls.png`. Stills of the title, pause and a quest 1
    prompt: `glyphs-deck-title-and-prompt-crop-x2.png`, `glyphs-deck-quest1-prompt-40ppm-1280x800.png`,
    `legibility-deck-pause-1280x800.png`.
    The keyboard twin `ui_kb_glyphs_v1` is wired too, behind the desktop study row `desktop_kb_glyphs` only
@@ -60,9 +61,6 @@ and combo at 33f80d56. Commits since are docs and evidence only. (Freeze: re-run
 
 ## What does not work yet
 
-- The Nintendo-layout "+" / "-" and the PlayStation Create button draw the Xbox menu / view marks (the same button
-  position, still a glyph): the cells are not in `ui_pad_glyphs_v1`; REQUEST to assets (JOURNAL it3), not delivered
-  by 03:55.
 - Steam Input origin glyphs (a remapped pad) need the Steam backend: owed with the Steam port.
 - Nothing here is proven on a Deck: watts, battery hours, Zen 2 single-thread frame times (E15 estimates 60 Hz is
   tight on one Deck core), the shader cache's first run, suspend on SteamOS, the Linux build under real Vulkan.
@@ -87,7 +85,6 @@ and combo at 33f80d56. Commits since are docs and evidence only. (Freeze: re-run
 
 ## Next steps
 
-- Wire the "+", "-" and Create cells when the asset lane delivers them (`GlyphCells.PAD_CELL`, ink-box trim, provenance).
 - The freeze: the final gates, the exe (`build/export/windows/RTAI.exe`, the export line here), this report final.
 - A real port: see the LEDGER's port readiness table (Steam Deck: Linux build + Proton check 2-3 days, Verified
   polish 3-5 days; Switch-class: the platform holder's program, an engine port, 3-6 months).
