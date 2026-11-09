@@ -100,6 +100,20 @@ Item 3's claim (6 of 6, median -1.14 ms frame p50; rig p50 1.665 -> 0.957) is la
 ### Item 4 stops (it8): one wash, the next idea below this bench's floor
 The stop rule (two washes in a row) was not reached: idea 1 was a wash and idea 2 was not built. The crowd occlusion scan is about 100 us in a debug build; the A/A above shows six contended pairs cannot see that. In the release riot at combo (`evidence/perf/n10-riotc/riotc-head@exe-2.json`, one CONTENDED run, avg frame 3.78 ms) the named shares are rig 0.85 ms per tick, blood 0.51 ms a frame, render CPU 0.48, render GPU 0.28, sim step 0.12. At least about 1.5 ms of the frame has no timer of its own in this bench (more if the render GPU time does not add to the CPU frame). Re-check on a quiet machine.
 
+### Item 3 again (it10): CPU seconds, an instrument this machine's load barely moves
+Wall-clock frame times swing with whoever else runs; the CPU seconds a process consumed do far less. `evidence/perf/n10-cputime/cpu_ab.ps1` runs the `riotc` release riot (combo, 400 actors, `--secs=30`, `--fixed-fps 60`, 1681 frames measured, about 8 s of wall time) and reads `GetProcessTimes` after exit, under `gtai-n10/bench.lock`, three arms in a rotating order: main 9bbe6d0a (`windows-bench-main`), head (`windows-bench`, export 00:47, code 40fab8c7), twin (`windows-bench-it6`, export 23:26, the same project and native code as the head: the A/A control). `analyse.py` gives paired medians, a 95 % bootstrap interval and a sign test. `r30/` = 30 rounds, 90 runs, 02:12-02:24, exit 0, 0 SCRIPT ERROR. **Not a quiet run:** other godot/RTAI processes before a run 0-8, median 2 (0 in only 12 of 90 runs; a reel counts as 2 processes), and my own 11 s scons and 15 s export ran during rounds 0-3.
+
+| 30 rounds | main | head | twin | head - main (CI95), lower in | head - twin, the A/A (CI95) |
+|---|---|---|---|---|---|
+| CPU total s | 8.656 | 7.672 | 7.695 | **-0.914 (-1.062, -0.781), 30 of 30** | +0.031 (-0.102, +0.219), 13 of 30 |
+| CPU user s | 7.344 | 6.344 | 6.445 | -0.883 (-1.008, -0.781), 30 of 30 | -0.086 (-0.227, +0.109), 18 of 30 |
+| CPU kernel s | 1.430 | 1.422 | 1.398 | -0.039 (-0.086, +0.047), 18 of 30 | +0.102 (-0.023, +0.195), 11 of 30 |
+| frame p50 ms | 3.079 | 2.620 | 2.623 | **-0.485 (-0.538, -0.427), 30 of 30** | +0.004 (-0.026, +0.027), 14 of 30 |
+
+**Items 1 and 2 together cut the release riot at combo by 0.485 ms of frame p50 (-15.8 %) and 0.91 s of a run's CPU (-10.6 %), 30 of 30 rounds.** The A/A is inside its own interval on every metric, and the twin beats main by the same amount (p50 -0.444, 30 of 30), so an export's age is not what is being read. Sign test p = 2e-9. The CPU figure includes boot and load.
+**This replaces item 3's -1.14 ms** (6 contended wall-clock pairs): the effect is real and less than half that size. The only rounds with no other process up for all three arms are 12 and 13 (`quiet_subset.py r30 0`): p50 -0.463 ms, CPU -0.96 s, lower in 2 of 2, too few to call a quiet A/B but the same size.
+What the instrument resolves: the A/A's CI half-width is about 0.03 ms of frame p50 and 0.15 s of CPU at 30 rounds, ten times finer than six wall-clock pairs (about 0.3 ms). What it cannot do: p99 or worst frames (CPU seconds are a sum; the p50 is still a wall-clock statistic that merely stopped swinging at this load), and SMT or cache pressure from other processes still reaches a process's CPU time. The 6-round set beside it (`n10-cputime/riotc-*`, 02:06-02:09, others 6-10) read head - main -0.57 s, p50 -0.41 ms, 6 of 6.
+
 ### The riot on film (it9): what the cut changes on screen, with an A/A control
 `evidence/perf/n10-film/`: `film.sh` (main 9bbe6d0a vs this head, city riot, `--view=combo`, 1200 frames at `--fixed-fps 60`, 1280x800, d3d12, debug editor binary, no HUD), `aa.sh` (the same code twice at 32 px/m), `cmp_frames.py`, `psnr*.log`, `ab_only_frames.json`. Instrument: ffmpeg psnr between the two MJPEG captures (a `mse_avg` of exactly 0 means every sample matched); both arms ran side by side, CONTENDED. Masters: `gtai-masters/n10/perf/`.
 
