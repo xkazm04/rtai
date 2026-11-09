@@ -189,7 +189,9 @@ export function defaultRun(cwd, logDir, timeoutMin, say = () => {}) {
   return (name, cmd, args, opts = {}) => {
     mkdirSync(logDir, { recursive: true });
     const log = join(logDir, `${name}.log`);
-    const shell = process.platform === 'win32' && !['node'].includes(cmd);
+    // Only scons needs cmd.exe; a shell for anything else re-parses its arguments and turns a missing
+    // command into exit 1 instead of a spawn error (Codex's tester, n11t-break-mrun).
+    const shell = process.platform === 'win32' && cmd === 'scons';
     const minutes = Math.max(timeoutMin, STEP_FLOOR_MIN[name] ?? 0);
     say(`morning: ${name}: log ${log} (tail it; limit ${minutes} min)`);
     const fd = openSync(log, 'w');
@@ -197,9 +199,8 @@ export function defaultRun(cwd, logDir, timeoutMin, say = () => {}) {
     try {
       r = spawnSync(cmd, args, { cwd: opts.cwd ?? cwd, windowsHide: true, timeout: minutes * 60000, shell, stdio: ['ignore', fd, fd] });
     } finally { closeSync(fd); }
-    const out = readFileSync(log, 'utf8');
     if (r.error) appendFileSync(log, `\nmorning: ${name}: ${r.error.code === 'ETIMEDOUT' ? `timed out after ${minutes} min` : r.error.message}\n`);
-    return { status: r.status ?? -1, out, log };
+    return { status: r.status ?? -1, out: readFileSync(log, 'utf8'), log };
   };
 }
 
