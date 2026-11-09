@@ -25,7 +25,7 @@ const realGit = (cwd, ...args) => {
 /** How many chunks the tree's golden list expects, or null when it has no list. */
 function chunksExpected(tree) {
   const list = join(tree, 'project/data/generated/city_chunks.sha256');
-  return existsSync(list) ? readFileSync(list, 'utf8').split('\n').filter((l) => l && !l.startsWith('#')).length : null;
+  return existsSync(list) ? readFileSync(list, 'utf8').split('\n').map((l) => l.trim()).filter((l) => l && !l.startsWith('#')).length : null;
 }
 
 const chunksIn = (dir) => (existsSync(dir) ? readdirSync(dir).filter((n) => /\.(gtch|bin|chunk)$/i.test(n) || !n.includes('.')).length : 0);
@@ -98,9 +98,10 @@ export function main(argv, { out = console.log, err = console.error, git = realG
   if (parsed.flags.dryRun) return entries.some((e) => e.state === 'missing') ? EXIT.unverifiable : EXIT.pass;
   apply(tree, entries, { copy });
   if (git(tree, 'config', 'core.hooksPath') !== '.githooks') { git(tree, 'config', 'core.hooksPath', '.githooks'); out('wt_init: set core.hooksPath to .githooks'); }
-  const missing = entries.filter((e) => e.state === 'missing');
-  out(`wt_init: ${missing.length ? `UNVERIFIABLE: nothing to copy for ${missing.map((e) => e.id).join(', ')}` : 'ready'}`);
-  return missing.length ? EXIT.unverifiable : EXIT.pass;
+  // Judged on the tree after the copy: a donor's bake can be whole for its own list and short for this one.
+  const unready = entries.filter((e) => !e.has(tree));
+  out(`wt_init: ${unready.length ? `UNVERIFIABLE: still not usable: ${unready.map((e) => e.id).join(', ')}` : 'ready'}`);
+  return unready.length ? EXIT.unverifiable : EXIT.pass;
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {

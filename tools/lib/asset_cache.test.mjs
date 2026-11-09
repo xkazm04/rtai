@@ -1,10 +1,10 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { mkdirSync, mkdtempSync, rmSync, utimesSync, writeFileSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, rmSync, statSync, utimesSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import test from 'node:test';
-import { staleAssets } from './asset_cache.mjs';
+import { staleAssets, touchStale } from './asset_cache.mjs';
 
 const OLD = new Date('2026-01-01T00:00:00Z');
 const NEW = new Date('2026-06-01T00:00:00Z');
@@ -89,4 +89,23 @@ test('only five are named however many changed', (t) => {
   const r = staleAssets(root);
   assert.equal(r.count, 9);
   assert.equal(r.sample.length, 5);
+});
+
+test('touchStale dates only the stale source, so Godot, which trusts the date, re-imports it', (t) => {
+  const root = project(t);
+  const changed = imported(root, 'a', 'new bytes', { recorded: 'old bytes' });
+  const same = imported(root, 'b', 'same');
+  const before = statSync(same).mtimeMs;
+  touchStale(root);
+  assert.ok(statSync(changed).mtimeMs > OLD.getTime() + 1000, 'the changed source got a new date');
+  assert.equal(statSync(same).mtimeMs, before, 'a source that matches keeps its date');
+});
+
+test('a second scan does not hash a source that is unchanged, and a changed one is hashed again', (t) => {
+  const root = project(t);
+  const src = imported(root, 'a', 'same');
+  assert.equal(staleAssets(root).count, 0);
+  writeFileSync(src, 'bytes of the same size is not the point: this is longer');
+  utimesSync(src, OLD, OLD);
+  assert.equal(staleAssets(root).count, 1, 'size differs from the stamp, so the hash is taken again');
 });
