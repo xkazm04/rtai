@@ -131,3 +131,10 @@ FINDING no defect from the two lanes together. Trial merge (`git merge-tree`, th
 Limits: one weapon; the tour walks along its aim, so only HOME exercises a turned row; lint, scenarios, parity, reels and the other 16 weapons not run on the merged tree; world's `08e2f56b` (test lines only) came after the copy. No code changed on this branch and no frame added to `frames.json`. REPORT has the note for the Director.
 QUEUE EMPTY: stands as of it16; the merge check above found nothing to fix. Blocked: nothing.
 NEXT (freeze session): the exe (`--export-release windows-showcase ../build/export/windows/RTAI.exe`, not built yet), REPORT final. If the journal still says QUEUE EMPTY and neither this branch nor a lane's Rivet files have changed, end at once; check `git diff --name-only 63e685d3 n10-world -- project/features/characters` first (`08e2f56b` is tests only).
+
+## it25 (03:24-)
+Checked first: tree clean, HEAD f9f6c8e0; `git diff --name-only 63e685d3 n10-world -- project/features/characters` empty, no Rivet file moved on perf or handheld, no `REQUEST -> rivet`. QUEUE EMPTY stands, so no defect hunting.
+MILESTONE the exe, built now because the freeze session may never come: `build/export/windows/RTAI.exe` (git-ignored, 543 MB), code as of b8ae1064, `--export-release windows-showcase`, exit 0, tree still clean. Boot check `RTAI.exe --headless --quit-after 300`: exit 0, 0 SCRIPT ERROR, reached the arena hub. Headless boot only: not windowed, not played.
+FINDING (not investigated) the boot log has one `ERROR: Condition "!actions.custom_samplers.has(...)"` from `shader_compiler.cpp:1329`, before the rigs prewarm, plus leak lines at the forced exit. Unknown whether it appears outside the headless renderer, or on main. In REPORT Gates.
+QUEUE EMPTY: as of it16, with the exe now built. Blocked: nothing.
+NEXT (freeze session): rebuild the exe only if code on this branch changed after b8ae1064 (`git log b8ae1064..HEAD -- project tools`), REPORT final. If the journal still says QUEUE EMPTY and neither this branch nor a lane's Rivet files have changed, end at once.
