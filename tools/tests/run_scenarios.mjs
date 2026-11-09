@@ -6,13 +6,13 @@
 // envelope plus its metrics (quest*, collectCall*).
 //   node tools/tests/run_scenarios.mjs [--quiet-wait=<minutes, default 5>] [--only=<name>[,<name>]]
 //
-// CONTENDED: ~15 lanes share one machine, so the two wall-clock budget scenarios (city_chase nav
+// CONTENDED: ~15 lanes share one machine, so the wall-clock budget scenarios (corpse_horde's step, city_chase nav
 // 2 ms, rig_stress p50 1 ms) cannot be judged while others run. The runner tells Godot how many other
 // runs are active (GTAI_CONTENTION at launch + a live GTAI_CONTENTION_FILE, see run_ledger.mjs); a
 // budget miss then logs `CONTENDED: <metric> ...` and passes. Afterwards those scenarios alone are
 // re-run ONCE when the machine is quiet (waits up to --quiet-wait) and judged strictly; a machine
 // that never quiets leaves the summary saying CONTENDED (neither PASS nor FAIL, exit unchanged).
-// Test-only: GTAI_BUDGET_SCALE=0.001 forces a budget miss in those two scenarios.
+// Test-only: GTAI_BUDGET_SCALE=0.001 forces a budget miss in those scenarios.
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join, resolve, sep } from 'node:path';
 import { pathToFileURL } from 'node:url';

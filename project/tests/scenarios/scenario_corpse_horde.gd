@@ -48,9 +48,40 @@ func _judge(r: Dictionary) -> String:
 		return "the fight's list kept growing: %s" % r
 	if r["forced_alpha"] > MAX_FORCED_ALPHA:
 		return "a body popped out while still opaque: %s" % r
-	if r["last_us"] > 2.0 * r["first_us"] + 500.0:
-		return "the step grew with the dead (%d -> %d us): %s" % [r["first_us"], r["last_us"], r]
-	return ""
+	return _step_verdict(r)
+
+
+## Wall clock, so a miss while other runs fill the machine is CONTENDED and re-judged alone.
+## Test-only: GTAI_BUDGET_SCALE multiplies the budget (0.001 forces a miss).
+func _step_verdict(r: Dictionary) -> String:
+	var first_us: float = r["first_us"]
+	var last_us: float = r["last_us"]
+	var scale_text: String = OS.get_environment("GTAI_BUDGET_SCALE")
+	var budget: float = (
+		(2.0 * first_us + 500.0) * (scale_text.to_float() if scale_text != "" else 1.0)
+	)
+	if last_us <= budget:
+		return ""
+	var others: int = _contention()
+	if others > 0:
+		Log.warn(
+			"scenario",
+			(
+				"CONTENDED: corpse_horde.step_last_us %d > %d (%d other runs)"
+				% [last_us, budget, others]
+			)
+		)
+		return ""
+	return "the step grew with the dead (%d -> %d us): %s" % [first_us, last_us, r]
+
+
+## Other machine runs: the launch count, raised by the runner's live file while it runs.
+func _contention() -> int:
+	var others: int = OS.get_environment("GTAI_CONTENTION").to_int()
+	var path: String = OS.get_environment("GTAI_CONTENTION_FILE")
+	if path != "" and FileAccess.file_exists(path):
+		others = maxi(others, FileAccess.get_file_as_string(path).strip_edges().to_int())
+	return others
 
 
 static func _open(bus: EventBus, data: DataStore) -> ArenaSession:

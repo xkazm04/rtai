@@ -62,3 +62,5 @@ NEXT, replacing the earlier NEXT items 1, 3 and 6:
   - `morning.mjs` (2): --resume skipped the dirty-tree check; a damaged state file silently became "nothing done yet". Both refuse now, as does a --resume with no state.
   - REAL PROOF on a scratch worktree: no state, damaged state, and dirty tree each `refused`, exit 2, naming the problem; clean state, dry run exit 0. Scratch removed.
   - Left alone: Codex asked whether `--date=2026-02-30` should be refused. It is a folder label.
+
+- 21:47 `scenario_corpse_horde` joined the CONTENDED mechanism: its "step grew with the dead" is wall clock, like city_chase and rig_stress. Real runs, forcing the miss with GTAI_BUDGET_SCALE=0.001: with `GTAI_CONTENTION=1` it logs `CONTENDED: corpse_horde.step_last_us 1616 > 3` and passes; with 0 it FAILS naming the numbers. The runner re-judges `corpse_horde` alone by name. I did not judge the budget itself tonight: this lane takes no performance measurements, and the question of whether 975 -> 2646 us was contention is left to the first quiet run. AGENTS.md's line still says "two wall-clock budgets": a proposal for the Director in REPORT.
