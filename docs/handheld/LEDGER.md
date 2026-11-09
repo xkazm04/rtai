@@ -455,7 +455,7 @@ Only the hardware: the Z1 / Z2 / Lunar Lake drivers, VRR, TDP presets, the 1.35x
 
 ### Switch-class (a budget, no SDK touched)
 
-Works as a budget: `switch_handheld` (1280x720, 30 cap, 3 threads, the iGPU) holds its 30 cap in the reel and the city;
+Works as a budget: `switch_handheld` (1280x720, 30 cap, 3 threads, the iGPU) holds its 30 cap in the reel, the city and the King (E23);
 ~2.3 GB RAM + GPU memory lossless (E7), the city 1.38 GB and the reel 1.13 GB with BC7 (E11), so the 2017 console's
 ~3.2 GB is reachable on memory and the 2025 successor's ~9 GB is not a concern. The 40 px/m zoom and the compact card
 apply; at 720p the boss count "1 / 3" draws cap 10 px (legible on a still, section 8); the Nintendo-layout names have
@@ -818,6 +818,19 @@ The interleaved A/B E22 asked for: `tools/handheld/sim.mjs --device=handheld_108
 | `head` | 4 | 16.68 (16.66-16.70) | 19.95 | 2 | 8.84 (8.69-9.05) | 7.01 (4.85-8.13) | 1777 | 623 |
 
 Medians over the arm's runs. **Both arms hold 60**, so E22's miss (p50 27 ms) does not reproduce and is not the storeys: it was one run with 9 other Godot processes, and contention fits, but that is not proven (no run here went past 6 others). Render GPU is **+0.19 ms on the head** and every head run is above every pre run: small, and in the direction the extra storey art would give, with 4 runs per arm and draws unchanged at 623. That is about 1 % of the 16.7 ms frame, on this iGPU, not a device. Process time differs by more than that, but its ranges overlap and it swings by nearly 2x inside an arm: noise. Run 1 (`ab1_pre`, the first run of the scratch worktree) has p99 44.9 ms and 31 frames over 33 ms where every other run is at most 20.6 and 5; it is in the medians and moves them little.
+
+### E23 (n10 it15): `deck40` and `switch_handheld` on this head, on the iGPU; PC simulator
+The runs the lock blocked at it14: `tools/handheld/sim.mjs --device=<row> --scene=<scene> --ticks=1800 --grab=25:<png>`, windowed on the iGPU under `bench.lock`, one run per cell, on bc26203a's code (`evidence/n10h/it15/sim/`, script `evidence/n10h/it15/rows.sh`). One run each, so no spread: a look at the rows, not an A/B.
+
+| row | scene | machine | p50 ms | p99 ms | render GPU p50 ms | process p50 ms | draws p50 | worst ms (settled) |
+|---|---|---|---|---|---|---|---|---|
+| `deck40` | king | CONTENDED (2) | 24.97 | 29.03 | 7.14 | 4.11 | 556 | 205 (73) |
+| `deck40` | city_combo | CONTENDED (2) | 24.98 | 30.50 | 8.39 | 8.99 | 622 | 1338 (710) |
+| `switch_handheld` | king | quiet | 33.32 | 36.05 | 7.87 | 7.30 | 556 | 166 (114) |
+| `switch_handheld` | city_combo | CONTENDED (1) | 33.31 | 35.37 | 8.90 | 5.70 | 623 | 473 (37) |
+
+**Both rows hold their caps** (40 and 30). `over33_settled` means nothing on the 30 row (648 and 707 frames, because the cap itself is 33.3 ms), so it is left out. The city's long frames are not a render or sim cost: `deck40`'s 1338 ms and 710 ms are its frames 18 and 24, with `pump_ms` 1316 and 684, 0 pipelines and about 2 ms of draw; `switch_handheld`'s 473 ms is frame 24 with `pump_ms` 457. All are in the first 3 s of a windowed run. E22b's 8 city runs have the same shape (worst 424-3469 ms, two with a settled spike over 700 ms), and neither King run has it. Not attributed: the grab tool runs beside the game and was not separated, and these frame logs were deleted after reading (the per-run JSON stays).
+The drawn frame on `switch_handheld` is 1422x800 scaled to the 1280x720 panel: 1.23x the panel's pixels. Whether a Switch-class budget should draw at panel size is unmeasured here.
 
 ### The freeze A/B on the rows (n10 it1, read at it5; PC simulator)
 Quest 1 windowed on D3D12, `deck` (`vsync: enabled`) vs the study row `deck_mailbox`, interleaved rounds of 2 runs, 4 rounds of the 5 planned (`evidence/n10h/it1/ab-vsync.txt`, the low-CPU runs' logs and thread readings in `evidence/n10h/it1/hunt/`):

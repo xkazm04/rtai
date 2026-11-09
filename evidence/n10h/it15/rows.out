@@ -1,0 +1,17 @@
+=== 00:57:50 deck40 king
+deck40_king: CONTENDED (2 other Godot runs) {"frames":1194,"low1_fps":27.7596569170972,"over33_settled":4,"over50_settled":1,"p50_ms":24.9659996032715,"p99_ms":29.0300006866455,"ticks":1793,"worst_ms":205.132995605469,"worst_settled_ms":73.3659973144531,"render_gpu_ms_p50":7.14,"render_gpu_ms_p95":7.44,"render_cpu_ms_p50":0.42,"render_cpu_ms_p95":0.67,"process_ms_p50":4.11,"process_ms_p95":6.36,"loop_ms_p50":0.78,"loop_ms_p95":1.29,"draw_calls_p50":556,"draw_calls_p95":632,"affinity_seen":[255,0],"cpu_machine_pct_p50":1.84,"cpu_pinned_pct_p50":3.68,"ws_mb_max":927.8,"private_mb_max":928.7,"gpu_dedicated_mb_max":80.6,"gpu_shared_mb_max":549.1}
+-> C:\Users\kazda\kiro\gtai-wt\n10-handheld\evidence\n10h\it15\sim\deck40_king.json
+exit 0 (deck40 king)
+=== 00:58:35 deck40 city_combo
+deck40_city_combo: CONTENDED (2 other Godot runs) {"frames":1182,"low1_fps":10.9934002652357,"over33_settled":6,"over50_settled":1,"p50_ms":24.9759998321533,"p99_ms":30.503999710083,"ticks":1793,"worst_ms":1337.75903320313,"worst_settled_ms":710.216003417969,"render_gpu_ms_p50":8.39,"render_gpu_ms_p95":8.79,"render_cpu_ms_p50":0.85,"render_cpu_ms_p95":0.99,"process_ms_p50":8.99,"process_ms_p95":12.39,"loop_ms_p50":1.83,"loop_ms_p95":3.09,"draw_calls_p50":622,"draw_calls_p95":635,"affinity_seen":[255,0],"cpu_machine_pct_p50":3,"cpu_pinned_pct_p50":6,"ws_mb_max":977,"private_mb_max":994.1,"gpu_dedicated_mb_max":80.9,"gpu_shared_mb_max":600.1}
+-> C:\Users\kazda\kiro\gtai-wt\n10-handheld\evidence\n10h\it15\sim\deck40_city_combo.json
+exit 0 (deck40 city_combo)
+=== 00:59:26 switch_handheld king
+switch_handheld_king: quiet {"frames":898,"low1_fps":20.2955939165555,"over33_settled":648,"over50_settled":1,"p50_ms":33.318000793457,"p99_ms":36.0530014038086,"ticks":1794,"worst_ms":165.582992553711,"worst_settled_ms":113.644996643066,"render_gpu_ms_p50":7.87,"render_gpu_ms_p95":8.37,"render_cpu_ms_p50":0.71,"render_cpu_ms_p95":0.88,"process_ms_p50":7.3,"process_ms_p95":8.9,"loop_ms_p50":1.42,"loop_ms_p95":1.85,"draw_calls_p50":556,"draw_calls_p95":638,"affinity_seen":[7,0],"cpu_machine_pct_p50":2.44,"cpu_pinned_pct_p50":13.02,"ws_mb_max":907.9,"private_mb_max":921.5,"gpu_dedicated_mb_max":80.3,"gpu_shared_mb_max":479.1}
+-> C:\Users\kazda\kiro\gtai-wt\n10-handheld\evidence\n10h\it15\sim\switch_handheld_king.json
+exit 0 (switch_handheld king)
+=== 01:00:32 switch_handheld city_combo
+switch_handheld_city_combo: CONTENDED (1 other Godot runs) {"frames":899,"low1_fps":27.7915016358176,"over33_settled":707,"over50_settled":0,"p50_ms":33.3129997253418,"p99_ms":35.3740005493164,"ticks":1794,"worst_ms":472.544006347656,"worst_settled_ms":36.8300018310547,"render_gpu_ms_p50":8.9,"render_gpu_ms_p95":9.22,"render_cpu_ms_p50":0.36,"render_cpu_ms_p95":0.48,"process_ms_p50":5.7,"process_ms_p95":7.12,"loop_ms_p50":1.63,"loop_ms_p95":2,"draw_calls_p50":623,"draw_calls_p95":638,"affinity_seen":[7,0],"cpu_machine_pct_p50":1.54,"cpu_pinned_pct_p50":8.21,"ws_mb_max":1054.1,"private_mb_max":1075.9,"gpu_dedicated_mb_max":81.4,"gpu_shared_mb_max":658.1}
+-> C:\Users\kazda\kiro\gtai-wt\n10-handheld\evidence\n10h\it15\sim\switch_handheld_city_combo.json
+exit 0 (switch_handheld city_combo)
+DONE 01:01:17

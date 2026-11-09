@@ -13,6 +13,8 @@ Gates on the head of the code, **bc26203a** (it13): `node tools/evidence/run.mjs
 
 **The rows in images (it14).** `deck40`, `switch_handheld` and `handheld_1080` in the King fight on this head, and the 1.65 m Rivet on the Deck row at 32 px/m (before / after against n9's 1.1 m frame) and 48 px/m, all in `gtai-masters/n10/handheld/` (`frames.json`, 11 entries, looked at). Five `--shot` runs exit 0, 0 SCRIPT ERROR, on the discrete GPU for the look only: `bench.lock` was held by perf, so no iGPU row was run and no frame time is read from them. `switch_handheld` and `handheld_1080` give byte-identical stills (same md5): both draw 1422x800 and `--shot` saves that frame, so they are one image, and it does not show either panel's upscale. The 32 px/m pair is not a pixel pair: the road sits about 52 px lower on the new side, not attributed.
 
+**The two rows on the iGPU (it15, LEDGER E23).** `deck40` and `switch_handheld` in the King fight and the city on this head, windowed on the integrated Radeon, one run per cell (`evidence/n10h/it15/sim/`): both hold their caps (p50 24.97 / 24.98 ms and 33.32 / 33.31 ms), render GPU 7.1-8.9 ms. Three of the four runs are CONTENDED; `switch_handheld` in the King fight is labelled quiet. One run each, so no spread. Four window grabs filed and looked at (`frames.json`, now 15 entries); `switch_handheld_king_igpu_grab.png` is the first image of that row's real 1280x720 output.
+
 ## What does not work yet
 
 - **E22's `handheld_1080` miss in the city (p50 27 ms, one run, 9 other Godot processes) did not reproduce.** The interleaved A/B (E22b, 4 runs per arm, 1 to 6 other Godot runs, `evidence/n10h/it13/sim/`): pre-merge a1c1edfd and head both hold 60 (p50 16.68 ms each). Contention fits the old miss but is not proven: no run here went past 6 others.
@@ -36,6 +38,8 @@ Gates on the head of the code, **bc26203a** (it13): `node tools/evidence/run.mjs
 ## Next steps
 
 - The exe at the freeze.
+- `switch_handheld` draws 1422x800 for a 1280x720 panel (1.23x the pixels, 40 px/m drawn, 36 on the panel): whether a Switch-class budget should draw at panel size is unmeasured.
+- The first-seconds pump spikes in windowed city runs (up to 3469 ms, LEDGER E23 and E22b): not attributed, and the grab tool was not separated from them.
 - The shadow polygon in `rig_cast_shadows.gd:48`: guard or fix the degenerate figure, in whichever lane owns the cast shadow.
 - Merge `n10-world` again if it lands more wall work (none since aadc7430: pole shadows and corpses).
 - One DMI dump for the MSI Claw line; the numeric hardware types against the SDK header itself when GodotSteam is vendored.
