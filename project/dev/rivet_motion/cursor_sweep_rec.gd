@@ -53,7 +53,7 @@ func _process(_delta: float) -> void:
 	var step: int = CursorSweepBot.LEG_TICKS / COLS
 	var melee: bool = _bot.leg == CursorSweepBot.Leg.MELEE
 	var every: int = CursorSweepBot.MELEE_EVERY if melee else step
-	if _bot.in_leg % every == (28 if melee else 0):
+	if _bot.in_leg % every == (27 if melee else 0):
 		_pending += 1
 		_grab.call_deferred(rig, Vector2i(_bot.in_leg / every, int(_bot.leg)))
 

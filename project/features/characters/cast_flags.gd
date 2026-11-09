@@ -36,21 +36,36 @@ static func apply(args: PackedStringArray = OS.get_cmdline_user_args()) -> void:
 			RivetStrips.diag = false
 		elif arg == "--rivet-flame=all":
 			RivetStrips.flame_all = true
-		elif arg == "--rivet-walk=bob":
-			RivetWalk.enabled = false
-		elif arg == "--rivet-bob=drawn":  # n11: the drawn helmet travel left alone (the before)
-			RivetBob.enabled = false
-		elif arg == "--rivet-walk=4":
-			RivetWalk.frames = 4
-		elif arg == "--rivet-walk=walk8":
-			RivetWalk.run = false
-		elif arg == "--rivet-walk-armed=off":
-			RivetWalk.armed = false
-		elif arg == "--rivet-stride=off":
-			RivetStride.enabled = false
+		elif (
+			arg.begins_with("--rivet-walk=")
+			or arg.begins_with("--rivet-swipe")
+			or arg.begins_with("--rivet-bob")
+		):
+			_walk(arg)
 		elif arg == "--rivet-knock=off":
 			RivetKnock.enabled = false
 		elif arg == "--rivet-reload=off":
 			RivetReload.enabled = false
 		elif arg == "--ghost-voice=facing":  # n10: the voice at his facing's own left, on his head
 			GhostApparition.clear_figure = false
+
+
+## --rivet-walk=<mode>; n11: --rivet-swipe=off (one drawn strike cell), --rivet-bob=drawn (no damp).
+static func _walk(arg: String) -> void:
+	match arg:
+		"--rivet-walk=bob":
+			RivetWalk.enabled = false
+		"--rivet-walk=4":
+			RivetWalk.frames = 4
+		"--rivet-walk=walk8":
+			RivetWalk.run = false
+		"--rivet-walk-armed=off":
+			RivetWalk.armed = false
+		"--rivet-stride=off":
+			RivetStride.enabled = false
+		"--rivet-swipe=off":
+			RivetSwipe.enabled = false
+		"--rivet-bob=drawn":
+			RivetBob.enabled = false
+		_:
+			pass

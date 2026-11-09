@@ -4,8 +4,7 @@ extends Node2D
 ## CharacterRigs posed him, the held part (weapon-art's WeaponArt.make_held: origin on the grip,
 ## +x along the barrel) sits on the gun claw's closing point along the claw, and the claw cell
 ## switches from the drawn-in pistol to the closed claw. Hidden while the gun is away (a claw
-## hit, a roll, a stow past halfway; a thrown bottle from its release until the next one comes
-## up at reload phase 1). Reads StagePilot.hold; writes nothing to the sim.
+## hit, a roll, a stow past halfway; a thrown bottle until the next is up). Reads StagePilot.hold.
 
 ## A melee weapon's blade sweeps either side of the aim line during a swing by the hit's own arc
 ## (acos of its cone_dot: the katana's slash 1.27 rad, its thrust 0.72, the plasma spin a full
@@ -51,6 +50,7 @@ var _smear: MeleeSmearView = null
 
 func _ready() -> void:
 	process_priority = 10  # after CharacterRigs poses this frame
+	add_child(RivetSwipeView.make(rigs, pilot, rivet_id))  # n11: the swing goes where he aims
 	warm()
 
 

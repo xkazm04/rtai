@@ -159,6 +159,7 @@ static func draws_fire(rig: CutRig, weapon: StringName, o: int, firing: bool) ->
 	var slack: float = FIRE_HOLD if drew else 0.0
 	var art: String = ViewMode.shared().art
 	var off: bool = firing and (was_off or not fires_drawn(weapon, o, aim, art, slack))
+	off = off or (firing and rig.clips.strike_t >= 0.0 and not RivetSwipe.blade_drawn(o))
 	rig.set_meta(CONE_OFF, off)
 	rig.set_meta(DREW, firing and not off)
 	RivetFireCam.step(rig, weapon, o, aim, firing and not off, drew)

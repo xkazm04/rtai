@@ -108,7 +108,7 @@ static func cell_of(rig: CutRig, cells: int, walk_ph: float = -1.0) -> Vector2i:
 		if rig.clips.rolling():
 			return Vector2i(Cell.ROLL, 0)
 		if rig.clips.active() == RigClips.Clip.PUNCH or rig.clips.strike_t >= 0.0:
-			return Vector2i(Cell.CLAW, left)
+			return RivetSwipe.claw_cell(o, left)
 		if rig.clips.hit_t > 0.0:
 			return Vector2i(Cell.HIT, 0)
 		return Vector2i(BASE_OCT[o], 0)
