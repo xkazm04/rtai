@@ -54,3 +54,35 @@ func test_warm_still_loads_the_carried_guns_art() -> void:
 	var id: StringName = ArsenalTable.shipped().art_id(&"pistol")
 	assert_true(art.has(id), "the pistol has weapon art")
 	assert_same(art.held_texture(id), art.held_texture(id), "cached by the warm")
+
+
+func after_each() -> void:
+	LaunchArgs.parse(PackedStringArray())  # a unit run carries no user args
+	ViewMode.select("")
+
+
+func _warm(view: String, weapon: StringName) -> void:
+	ViewMode.select(view)
+	var slots: Array[StringName] = [weapon, &"", &"", &""]
+	RivetStripWarm.warm(slots, ArsenalTable.shipped(), WeaponArt.new())
+
+
+func test_warm_asks_a_worker_for_every_strip_of_the_carried_gun() -> void:
+	LaunchArgs.parse(PackedStringArray())
+	_warm("combo", &"gatling")
+	var paths: PackedStringArray = RivetStripWarm.paths("p70", [&"gatling"] as Array[StringName])
+	assert_true(paths.has(DIR + "rivet_reload_gatling_left.png"))
+	for p: String in paths:
+		assert_true(StreetStrips.known(p), p)
+
+
+func test_a_flat_view_fetches_no_strip() -> void:
+	LaunchArgs.parse(PackedStringArray())
+	_warm("top", &"hand_cannon")
+	assert_false(StreetStrips.known(DIR + "rivet_eq_hand_cannon_left.png"), "no cards, no strips")
+
+
+func test_strip_prefetch_off_fetches_no_strip() -> void:
+	LaunchArgs.parse(PackedStringArray(["--strip-prefetch=off"]))
+	_warm("combo", &"machine_pistol")
+	assert_false(StreetStrips.known(DIR + "rivet_eq_machine_pistol_left.png"), "the before")

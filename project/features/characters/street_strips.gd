@@ -34,6 +34,11 @@ static func get_tex(path: String) -> Texture2D:
 	return t
 
 
+## True once `path` is decoded here or asked of a worker (n12: what RivetStripWarm fetched).
+static func known(path: String) -> bool:
+	return _tex.has(path) or _asked.has(path)
+
+
 ## Starts a worker-thread decode of `path` unless it is loaded, asked for, or prefetch is off.
 static func prefetch(path: String) -> void:
 	if path.is_empty() or _tex.has(path) or _asked.has(path) or not enabled():
