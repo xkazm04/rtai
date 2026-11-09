@@ -27,7 +27,7 @@ static func step(rig: CutRig) -> void:
 ## corpse drew upright, it8). Alive, with no fall grid or straight down (no card), nothing.
 static func post(rig: CutRig) -> void:
 	var card: Sprite2D = rig.head_card
-	if card != null and card.vframes == StreetWalkerFall.FALL_FRAMES and card.visible:
+	if card != null and StreetFallBetween.is_fall_card(card) and card.visible:
 		StreetWalkerCards.place(rig, card)
 
 

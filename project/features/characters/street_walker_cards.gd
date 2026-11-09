@@ -132,7 +132,7 @@ static func _build(rig: CutRig, card: Sprite2D, path: String) -> void:
 	card.texture = StreetStrips.get_tex(path)
 	var fall: bool = path.ends_with("_fall.png")
 	var walk: bool = path.ends_with("_walk.png")
-	card.vframes = StreetWalkerFall.FALL_FRAMES if fall else (STRIDE_FRAMES if walk else 1)
+	card.vframes = StreetFallBetween.rows_of(path) if fall else (STRIDE_FRAMES if walk else 1)
 	var cell: Vector2 = Vector2(
 		card.texture.get_width() / float(RigHeadCard.FRAMES),
 		card.texture.get_height() / float(card.vframes)
@@ -155,7 +155,7 @@ static func _build(rig: CutRig, card: Sprite2D, path: String) -> void:
 
 static func place(rig: CutRig, card: Sprite2D) -> void:
 	var k: float = 1.0 + StreetCrowdCards.SCALE_VAR * StreetCrowdCards.vary(rig.actor_id, 3)
-	if card.vframes == StreetWalkerFall.FALL_FRAMES:
+	if StreetFallBetween.is_fall_card(card):
 		StreetWalkerFall.draw(rig, card, k)
 		return
 	var h: float = HEIGHT_BY_ART.get(ViewMode.shared().art, HEIGHT_M)

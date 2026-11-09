@@ -102,7 +102,9 @@ static func path_of(art: String, row: String) -> String:
 	var own: Dictionary = table().get(art, {})
 	var from: String = art if own.has(row) else FALLBACK
 	var rows: Dictionary = table().get(from, {})
-	return from + "/" + str(rows[row]) if rows.has(row) else ""
+	if not rows.has(row):
+		return ""
+	return StreetFallBetween.swap(from + "/" + str(rows[row]))
 
 
 ## The fall grids drawn now: LONG_FALLS, or FALLS with LONG off.
@@ -115,11 +117,14 @@ static func down(rig: CutRig) -> bool:
 	return rig.dead or (rig.react != null and rig.react.dying)
 
 
-## The fall frame for a death progress (the last frame once the family is over).
-static func fall_frame(progress: float) -> int:
+## The fall frame for a death progress (the last frame once the family is over), of `rows`.
+static func fall_frame(progress: float, rows: int = FALL_FRAMES) -> int:
+	var at: PackedFloat32Array = FALL_AT
+	if rows == StreetFallBetween.FRAMES:
+		at = StreetFallBetween.AT
 	var f: int = 0
-	for i: int in FALL_AT.size():
-		if progress >= FALL_AT[i]:
+	for i: int in at.size():
+		if progress >= at[i]:
 			f = i
 	return f
 
@@ -136,7 +141,7 @@ static func draw(rig: CutRig, card: Sprite2D, k: float) -> void:
 		card.set_meta(OCT, RigHeadCard.frame_of(blow.angle()))
 	var f: Vector2i = card.get_meta(OCT)
 	var p: float = r.progress() if r != null and r.dying else 1.0
-	card.frame_coords = Vector2i(f.x, fall_frame(p))
+	card.frame_coords = Vector2i(f.x, fall_frame(p, card.vframes))
 	card.flip_h = f.y == 1
 	var ks: float = s * sink_of(rig)
 	card.global_rotation = 0.0
