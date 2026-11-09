@@ -4,7 +4,7 @@ import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { runGodot } from '../lib/godot.mjs';
-import { parseReel } from './check_reel.mjs';
+import { RESULT, parseReel } from './check_reel.mjs';
 
 const DEFAULT_VIEWS = ['top', 'tilt70', 'combo'];
 const USAGE = 'usage: node tools/reel/run_reels.mjs --out=<dir> '
@@ -18,8 +18,12 @@ export function reelArgs(view, loadout = 'pistol') {
 
 const REEL_TIMEOUT_MS = 20 * 60 * 1000;
 
-/** A completed chapter line, as check_reel.mjs counts it. */
-export const CHAPTER = /showcase: director chapter (.+?): (\d+)\/(\d+) down/;
+/** A completed chapter line: check_reel.mjs's own pattern, so live progress counts what the judge
+ *  counts (Codex's tester, n11t-break-reels: an unanchored copy reported quoted lines). */
+export const CHAPTER = RESULT;
+
+/** A progress printer that throws must not stop a gate or change its verdict. */
+const guarded = (progress) => (line) => { try { progress(line); } catch { /* viewer's fault only */ } };
 
 /** Every line lands in the log as it arrives (a killed wrapper keeps the partial log, combat n11
  *  line 132), and each finished chapter is reported live; the whole output replaces it at the end. */
@@ -41,7 +45,8 @@ async function runReel(view, logPath, progress = () => {}) {
 }
 
 /** Each view is independent, including launch failures and absent/unreadable logs. */
-export async function runReels({ views = DEFAULT_VIEWS, expect = 19, outDir, run = runReel, progress = () => {} }) {
+export async function runReels({ views = DEFAULT_VIEWS, expect = 19, outDir, run = runReel, progress: raw = () => {} }) {
+  const progress = guarded(raw);
   // Validate once, before launching any views.
   parseReel('', { expect });
   const directory = resolve(outDir);
