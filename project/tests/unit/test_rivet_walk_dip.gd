@@ -37,6 +37,7 @@ func test_the_unaimed_rest_cell_waits_out_the_dip() -> void:
 	rig.add_child(head)
 	rig.head = head
 	rig.head.rotation = PI * 0.25  # octant 1, one of the three the rest cell draws
+	rig.face_to = PI * 0.25
 	rig.gun_out = true
 	rig.set_meta(RivetFrames.WEAPON, &"pistol")
 	rig.speed_now = RivetFrames.MOVING + 10.0

@@ -15,6 +15,7 @@ func _rig(octant: int, firing: bool) -> CutRig:
 	rig.add_child(head)
 	rig.head = head
 	head.rotation = octant * PI * 0.25
+	rig.face_to = octant * PI * 0.25
 	rig.set_meta(RivetFrames.FIRE, firing)
 	return rig
 

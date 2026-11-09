@@ -6,6 +6,9 @@
       "minLength": 1,
       "type": "string"
     },
+    "face_aim": {
+      "type": "boolean"
+    },
     "roll": {
       "additionalProperties": false,
       "properties": {

@@ -121,7 +121,7 @@ static func cell_of(rig: CutRig, cells: int, walk_ph: float = -1.0) -> Vector2i:
 
 ## The screen octant of the look (0 = screen right, +1 = 45 deg toward the camera).
 static func oct_of(rig: CutRig) -> int:
-	return posmod(roundi(rig.head.global_rotation / (PI * 0.25)), 8)
+	return RivetStride.oct_of(rig)
 
 
 static func place(rig: CutRig, card: Sprite2D) -> void:

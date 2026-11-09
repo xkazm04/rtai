@@ -176,11 +176,14 @@ func test_a_short_drawn_run_row_steps_on_its_own_stride() -> void:
 	rig.head = head
 	var card: Sprite2D = autofree(Sprite2D.new())
 	card.set_meta(RivetFrames.ON, RivetStrips.DIR + "p70/" + RivetWalk.ARMED_RUN + "gatling.png")
+	rig.face_to = PI
 	head.rotation = PI
 	assert_eq(RivetWalk.row_k(card, "p70", rig), RivetWalk.RUN_ROW_K["p70/gatling/4"])
 	assert_between(RivetWalk.row_k(card, "p70", rig), 0.9, 0.97)
+	rig.face_to = 0.0
 	head.rotation = 0.0
 	assert_eq(RivetWalk.row_k(card, "p70", rig), 1.0, "the right profile is run8's stride")
 	card.set_meta(RivetFrames.ON, RivetStrips.DIR + "p70/" + RivetWalk.RUN)
+	rig.face_to = PI
 	head.rotation = PI
 	assert_eq(RivetWalk.row_k(card, "p70", rig), 1.0, "the bare run")

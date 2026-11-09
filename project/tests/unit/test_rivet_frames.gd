@@ -22,6 +22,7 @@ func _drawn_rig(o: int) -> CutRig:
 	rig.head.add_child(card)
 	rig.head_card = card
 	rig.head.rotation = o * PI * 0.25
+	rig.face_to = o * PI * 0.25
 	rig.gun_out = true
 	rig.aiming = true
 	rig.aim_at = rig.global_position + Vector2.from_angle(o * PI * 0.25) * 128.0

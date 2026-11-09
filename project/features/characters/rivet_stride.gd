@@ -18,7 +18,23 @@ const DWELL_S: float = 0.1
 const META_ROW: StringName = &"rivet_stride_row"
 const META_AT: StringName = &"rivet_stride_at"
 const META_BACK: StringName = &"rivet_stride_back"
+## n11: how far past an octant's half-width the look must go before the drawn octant changes (a
+## cursor resting on a boundary flipped the card every frame), and the octant last drawn.
+const OCT_HOLD_RAD: float = deg_to_rad(4.0)
+const OCT_AT: StringName = &"rivet_oct_at"
 static var enabled: bool = true
+
+
+## The drawn octant of the look (0 = screen right, +1 = 45 deg toward the camera): the aim the feed
+## hands the rig, not the head (the facing spring lags it), held at the boundary.
+static func oct_of(rig: CutRig) -> int:
+	var a: float = rig.face_to
+	var last: int = rig.get_meta(OCT_AT, -1)
+	if last >= 0 and absf(angle_difference(a, last * OCT_RAD)) <= PI / 8.0 + OCT_HOLD_RAD:
+		return last
+	var o: int = posmod(roundi(a / OCT_RAD), 8)
+	rig.set_meta(OCT_AT, o)
+	return o
 
 
 ## The octant of the grid row drawn for a figure aiming along octant `o`. Below the hips' walking
