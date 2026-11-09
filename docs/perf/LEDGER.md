@@ -110,9 +110,34 @@ Wall-clock frame times swing with whoever else runs; the CPU seconds a process c
 | CPU kernel s | 1.430 | 1.422 | 1.398 | -0.039 (-0.086, +0.047), 18 of 30 | +0.102 (-0.023, +0.195), 11 of 30 |
 | frame p50 ms | 3.079 | 2.620 | 2.623 | **-0.485 (-0.538, -0.427), 30 of 30** | +0.004 (-0.026, +0.027), 14 of 30 |
 
+The release's own per-system timers, same 30 rounds (medians; each run's log, paired):
+
+| timer | main | head | twin | head - main, lower in | head - twin, lower in |
+|---|---|---|---|---|---|
+| rig p50 ms | 0.969 | 0.586 | 0.583 | -0.391, 30 of 30 | +0.002, 14 of 30 |
+| rig ms a tick | 1.004 | 0.621 | 0.621 | -0.389, 30 of 30 | +0.003, 14 of 30 |
+| blood us a frame | 364.6 | 360.3 | 361.9 | -7.1, 19 of 30 | +1.0, 15 of 30 |
+| sim step ms a tick | 0.102 | 0.101 | 0.101 | -0.001, 18 of 30 | 0.000, 15 of 30 |
+| render CPU ms | 0.359 | 0.358 | 0.359 | -0.003, 17 of 30 | -0.001, 16 of 30 |
+| p99 CPU ms | 5.79 | 5.11 | 4.97 | -0.587, 28 of 30 | +0.079, 9 of 30 |
+
+So the rig timer (-0.391) carries most of the frame p50 gain (-0.485); the systems the change does not touch are flat, which is the sanity check the wall-clock runs could not give. **The brief's rig target holds in the shipped build at the riot's 400 actors: rig p50 0.586 ms, at most 1 ms.** main sits at 0.969, so main was already under 1 ms in release: the 1.1-1.4 ms the brief quoted is the debug rig bench at 50 people, a different instrument. The p99 CPU row is not a p99 claim (its A/A is +0.08 with 9 of 30 lower).
+
 **Items 1 and 2 together cut the release riot at combo by 0.485 ms of frame p50 (-15.8 %) and 0.91 s of a run's CPU (-10.6 %), 30 of 30 rounds.** The A/A is inside its own interval on every metric, and the twin beats main by the same amount (p50 -0.444, 30 of 30), so an export's age is not what is being read. Sign test p = 2e-9. The CPU figure includes boot and load.
 **This replaces item 3's -1.14 ms** (6 contended wall-clock pairs): the effect is real and less than half that size. The only rounds with no other process up for all three arms are 12 and 13 (`quiet_subset.py r30 0`): p50 -0.463 ms, CPU -0.96 s, lower in 2 of 2, too few to call a quiet A/B but the same size.
 What the instrument resolves: the A/A's CI half-width is about 0.03 ms of frame p50 and 0.15 s of CPU at 30 rounds, ten times finer than six wall-clock pairs (about 0.3 ms). What it cannot do: p99 or worst frames (CPU seconds are a sum; the p50 is still a wall-clock statistic that merely stopped swinging at this load), and SMT or cache pressure from other processes still reaches a process's CPU time. The 6-round set beside it (`n10-cputime/riotc-*`, 02:06-02:09, others 6-10) read head - main -0.57 s, p50 -0.41 ms, 6 of 6.
+
+### Item 4, idea 1 again (it10): the C++ feed fill, measured in CPU seconds: KEPT as the new baseline (ef31d9d4)
+`4f153362` was reverted at it7 because six wall-clock pairs could not resolve it. The same code, re-applied and exported (`windows-bench-fill`), `cpu_ab.ps1 -ArmSpec head=windows-bench,fill=windows-bench-fill,twin=windows-bench-it6`, 24 rounds, 72 runs, 02:24-02:34, exit 0, 0 SCRIPT ERROR, `evidence/perf/n10-cputime/fill/`. head = the pre-fill export, twin = its A/A. **Not quiet:** others 4-14, median 7, more loaded than r30.
+
+| 24 rounds | head | fill | twin | fill - head (CI95), lower in | twin - head, the A/A (CI95), lower in |
+|---|---|---|---|---|---|
+| CPU total s | 8.062 | 7.625 | 8.102 | **-0.633 (-0.734, -0.312), 22 of 24** | +0.086 (-0.062, +0.266), 11 of 24 |
+| CPU user s | 6.570 | 6.109 | 6.578 | -0.477 (-0.672, -0.141), 18 of 24 | +0.008 (-0.195, +0.281), 12 of 24 |
+| frame p50 ms | 2.724 | 2.537 | 2.762 | **-0.235 (-0.302, -0.174), 21 of 24** | +0.044 (+0.011, +0.087), 6 of 24 |
+
+**A real gain: frame p50 -0.235 ms (-8.6 %), CPU -0.63 s.** fill - twin agrees (p50 -0.239 ms, 22 of 24). The A/A is not perfectly flat this time (twin - head p50 +0.044, its interval excludes 0, 6 of 24 lower); the fill's effect is about five times that. The riot was the same in every arm (actors 399.79, visible 288.51) and rig p50 (0.610 / 0.615 / 0.617), sim step and render CPU do not move, so what fell is outside those timers, where the fill sits. Draw calls moved by a hair (739.385 vs 739.355: about 50 draws over 1681 frames), a possible rounding difference in the facing; film compare below.
+So the micro's direction was right (about 350 us debug) and its size is about 235 us at the release frame, and **the it7 revert was a limit of the instrument, not the idea.** The script loop stays as the no-DLL fallback. Tests carried with the commit: `test_city_feed_rows` (native rows equal the script's); the gates on this head are recorded below when they finish. New baseline: every later idea compares against this export, `windows-bench-fill`.
 
 ### The riot on film (it9): what the cut changes on screen, with an A/A control
 `evidence/perf/n10-film/`: `film.sh` (main 9bbe6d0a vs this head, city riot, `--view=combo`, 1200 frames at `--fixed-fps 60`, 1280x800, d3d12, debug editor binary, no HUD), `aa.sh` (the same code twice at 32 px/m), `cmp_frames.py`, `psnr*.log`, `ab_only_frames.json`. Instrument: ffmpeg psnr between the two MJPEG captures (a `mse_avg` of exactly 0 means every sample matched); both arms ran side by side, CONTENDED. Masters: `gtai-masters/n10/perf/`.
