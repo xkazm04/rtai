@@ -129,3 +129,5 @@ NEXT:
 4. Check ASSETS-REPLIES for the Tonnage stamping walk8, Dent run8 and the 55 walk rows; wire on arrival (`ghost_pack.py`, measure the cycle the same way).
 5. Gates owed: `tools/evidence/run.mjs`, the reel gate (`--views=top,tilt70,combo`), an exe once before the freeze.
 6. Raised bars in LEVEL.md: anticipation on every attack, no octant snap on a slow sweep. And Rivet's x15 cells (arena 64 ppm softness): a per-grid resolution factor in `RivetFrames.place` (scale s / res, cell-px tables unchanged) is the smallest path.
+- GATES 23:00: **scenarios on 57bf1dd3 (+ the three cycle constants): 55 ran, 0 failed, exit 0, 0 SCRIPT ERROR** (`gtai-n11/tmp/hero/scen_it10.log`).
+- 23:04 Dent filmed on the 163 cycle (`dent_walk_cycle163_64ppm.png`, walk right and toward, every 4th tick; his form ends at the toward leg's 13th frame and Rivet is back): every frame a different stride pose, no repeated legs, reads as a walk. Stills only, so planted feet are NOT judged; the clip is NEXT 3.
