@@ -1,0 +1,7 @@
+PASS lint: lint: all 15 checks pass over 1300 GDScript files [inert: 2 docs/evidence paths uncommitted]
+PASS unit-tests: unit-tests: 1966 passed, 0 failed, 0 skipped (GUT, headless) [inert: 2 docs/evidence paths uncommitted]
+PASS scenario-tests: scenario-tests: 55 passed (headless) [inert: 2 docs/evidence paths uncommitted]
+PASS parity: parity: native == GDScript reference bit for bit over 1200 steps (40 snapshot checks, 3504 floats); planted mutation caught at step 629 [inert: 2 docs/evidence paths uncommitted]
+PASS selftest: selftest: D4 city frames rendered (32 px/m ok, 100 actors, 127 colours; 48 px/m ok, 89 actors, 133 colours); 86 art textures, 0 placeholders, prewarm 10 ms; look goldens 11/11 within me
+PASS export-audit: release-compile: 632 loaded, 0 failed [inert: 2 docs/evidence paths uncommitted]
+evidence: commit c32c1b5a5e6e56fbf8cfc81b402987fad2d1ffc3, godot 4.7.2.stable.official.ed1daf0bf

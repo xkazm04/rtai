@@ -152,6 +152,11 @@ Hypothesis: `CityCrowdOcclusion.patches` walks every snapshot record in GDScript
 **A small real gain: frame p50 between -0.044 and -0.078 ms depending on which export of the baseline it is measured against, CPU about -0.19 s.** It is the size the release timer predicted. The six rounds with no other Godot up for any arm (2, 19-23; `quiet_subset.py occ 0 fill,occ,twin`) read p50 -0.073 and -0.060 ms, lower in 6 of 6, CPU -0.195 and -0.266 s, 5 of 6. Workloads identical (actors 399.79, visible 288.51, draws 739.385 in all three arms); rig, sim step and render CPU unmoved.
 Draw calls: 739.385 in every export carrying the C++ fill, 739.355 in every pre-fill export, so the fill's 0.03 draws a frame is deterministic rather than run-to-run; not traced further, its likeliest cause is the facing's last-bit `atan2` difference the fill already documents.
 
+**The pixels:** the two release exports (fill vs occ) side by side, 1200 frames at combo (`evidence/perf/n10-cputime/film_occ/`): **1190 of 1200 bit-identical at 32 px/m, 1200 of 1200 at 48**; the logged occlusion patches match (7778 in both). The 10 others are frames 30, 32-39 and 391; at the pixel level they are strips at the screen's top and left edges and, in frame 30, lamp posts and a road shadow (viewed, side by side). None shows the crowd changing. An A/A of the baseline at 32 px/m differs in 1 frame (1111). The same frames did not differ in that A/A, but the opening streaming window varies from run to run: the earlier A/As differed in 34, 36, 391, 1111 and in 30-42, 391, 1111.
+The occlusion timer in the game's log reads 68 -> 40 us a frame at 32 px/m (one contended pair).
+
+**Gates on c32c1b5a** (`evidence/perf/n10-cputime/gates_occ/`): evidence --no-bench PASS (lint 15/15, unit 1966/0, scenarios 55/0, parity, selftest 11/11, release-compile 632/0); reels top, tilt70, combo exit 0, 19/19, 0 SCRIPT ERROR, exit lines 593 / 90 (top) and 604 / 91 (tilt70, combo).
+
 **The research loop has not stopped:** two ideas, two measured gains (0.235 and about 0.06 ms of frame p50), no wash in a row. In the same riot the largest named costs left are the rig (0.58 ms p50), blood (0.35 ms a frame) and render CPU (0.35 ms).
 
 ### The riot on film (it9): what the cut changes on screen, with an A/A control
