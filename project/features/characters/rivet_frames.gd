@@ -145,7 +145,7 @@ static func place(rig: CutRig, card: Sprite2D) -> void:
 	rig.set_meta(
 		RigCastShadows.CAST_HIP, h * CharacterRigs.PX_PER_M * k / RigCastShadows.BODY_IN_HIPS
 	)
-	card.global_position = rig.global_position - Vector2(0.0, absf(stride) * BOB_PX * walk)
+	card.global_position = rig.global_position - RivetBob.up(card, s, absf(stride) * BOB_PX * walk)
 
 
 ## The roll ball turns once over the roll, toward the travel side.
