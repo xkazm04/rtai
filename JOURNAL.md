@@ -191,3 +191,30 @@ Raw `.avi` films deleted.
 MILESTONE [02:52] Mutation on `street_dead_70.gd` at 8063688b, all 29 mutants, `--tests=test_street_dead_70`: 92.6 % (25 killed / 27, 2 invalid). The first sampled run was 75 % (9/12) and its survivors were real gaps (a diagonal right-side head mirrored, the row-0 family, a sheet swap, then `place` untested); four tests closed them. The two left are on line 45: the snap literal 0.001 -> 1.001 and `<` -> `<=`, both equivalent at the headings the tables can give (x is 0, +-0.707 or +-1, and 0 never reaches that branch). Test-only commits after cbdbc318, so the evidence and reels on cbdbc318 still cover the game code; the new tests ran by `--select=test_street_dead_70` 11/0, not in a full suite.
 
 NEXT: Code state: cbdbc318 is the last game-code commit, evidence and reels x3 green on it; 136cbbcf and 8063688b only add tests. In order: (1) Check `library/rounds/` as well as `library/deliveries/` each session: REQUEST 3 is the rest of the classes on the corpse recipe. When a sheet arrives: add the class to `StreetDead70.CLASSES` and `tools/art/dead_70.py` (`CLASSES`, then `--provenance --only=<id>`), film it. (2) Dock 9's contractors and the far crowd have no drawn cells: wiring them is the next code step once `contractor` exists; do not do the far crowd's shader before the art is there. (3) Mid-fall crossing (24 ticks) still unjudged. (4) Item 4 stays Call w-3. (5) Freeze is 07:30 (older notes in this file say 08:30, wrong): export the exe with the REPORT's exact command and name it in REPORT, then `node tools/evidence/cites.mjs REPORT.md`. If nothing has been delivered and (3) is judged, write QUEUE EMPTY rather than invent work.
+
+---- session 02:53 (iteration 19, BUILD) ----
+Read at open: no new delivery or round since 17:54 on 11-08, no `REQUEST -> world`. The queue's movable weak spot is item 4: "feet drift" had only code reasoning and a pixel tracker that failed.
+
+MILESTONE [03:08] Item 4, a defect found: 63e685d3. The drawn walk's row is `rig.head.global_rotation`, the aim, not the travel. The plan rig already folds a backpedal and twists its hips (`RigHips`), but the drawn grids since n9 always stepped forward. Temporary uncommitted log per tick in `RivetWalk.phase_of`, the pit bot (`res://dev/arena/arena.tscn --rigs --bot=pit --view=combo --loadout=pistol`, 3200 ticks, headless):
+| 1808 ticks on a walk grid | off (`--rivet-stride=off`) | on |
+|---|---|---|
+| mean stance-foot mismatch / walking speed | 1.18 | 0.61 |
+| ticks with the row within 22.5 deg of the walk | 14.2 % | not the same bin once a backpedal is folded |
+| ticks stepping backward | 0 | 167 |
+| drawn row changes per second | 2.59 | 4.45 |
+| rows held 2 ticks or fewer | 9 | 20 |
+Mismatch = `|walk - sign x row|` in units of the walking speed: it is the geometry of the stance foot against the ground (a row 90 deg off = 1.41), computed from the row and the walk, not tracked in pixels. The pit bot strafes every 45 ticks while aiming at guards, so it is a worst case, not a share of real play.
+`RivetStride`: past RigHips' 105 deg the walk folds and the grid plays backwards; the row turns one octant (TWIST_ROWS) toward the walk. Flicker guards: HOLD_ROWS 0.25, FOLD latch 90-120 deg, DWELL_S 0.1. I first had no latch on the fold, and the row jumped two rows at 105 deg (row changes 5.77/s before the latch). 19 of the 20 remaining short rows have the aim's own octant changing at the same tick; the off run has 9 of its own for the same reason, so these are aim dither, left alone.
+FRICTION: `int(rig.get_meta(...))` and `float(rig.get_meta(...))` are Variant casts, a parse error under warnings-as-errors, twice. `var x: int = rig.get_meta(...)` is what the codebase does.
+Film: `move_stride_turn_64.png`, `move_stride_turn_32.png` (ticks 676-726 every 5th, top = off, bottom = on): the legs now stride along his path. 0 SCRIPT ERROR in all four films. DECISION world/rivet-stride.
+
+Item 3, mid-fall crossing (NEXT 3 of last session), judged from a contact sheet of the 64 px/m clip (`quest1_clip`, ticks 13780-13830), NOT at play speed: four bodies knot together for a few frames while falling and are clear by the last frames; it reads as an impact, no change. No number.
+
+Mutation on `rivet_stride.gd` at 63e685d3, all 30 mutants: 73.3 % (22 of 30). Real gaps closed by tests in 08e2f56b (the default on, the held row against a non-zero aim, a stale row dropped, a stop's wrap at row 7); see the re-run below.
+Mutation re-run on 08e2f56b, all 30 mutants, `--tests=test_rivet_stride`: 90.0 % (27 killed / 30). The three survivors are `>`/`<` boundaries at lines 38, 50, 68: they differ only when a float angle lands exactly on the limit.
+
+MILESTONE [03:40] On 08e2f56b: `tools/evidence/run.mjs --no-bench` all PASS: lint 15/15, unit 2013/0, scenarios 55/0, parity (planted mutation caught at step 629), selftest (goldens 11/11), export-audit 636/0. Bench not run. Director reel x3 (the brief's command): top, tilt70, combo each 19 chapters, 19 fully down, 0 SCRIPT ERROR, `no carry` 19 each (Call w-4). Raw films deleted.
+
+QUEUE EMPTY: items 1, 2 and 4 are done or reported as Calls (w-2 roofs, w-3 the 1.8-2.5 m/s walk slide, w-6 how far the row turns). Item 3 is done for what code can reach; blocked on art: REQUEST 3 (the other 11 street classes and the contractor, drawn for 70). No delivery and no new round since 17:54 on 11-08. Unmeasured: foot drift of cops and peds; a human player's share of strafing.
+
+NEXT: 08e2f56b is the last game or test commit, every gate is green on it. If a sheet has arrived in `library/rounds/` or `library/deliveries/`: add the class to `StreetDead70.CLASSES` and `tools/art/dead_70.py`, film it. Otherwise end at once, except the freeze job at 07:30: export the exe with `"$GODOT_BIN" --headless --path project --export-release windows-showcase ../build/export/windows/RTAI.exe`, name it in REPORT, run `node tools/evidence/cites.mjs REPORT.md`. Merging n10-rivet: `rivet_walk.gd` changes do not overlap (`path_of`/`moving` there, `phase_of`/`row_k` here).
