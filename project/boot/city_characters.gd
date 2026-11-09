@@ -85,6 +85,8 @@ func _before_render(focus: Vector2) -> void:
 	for i: int in rigs.feed.count:
 		if rigs.full_row(i) and rigs.feed.ids[i] != RIVET_ID:
 			_slots.append(rigs.feed.ids[i])
+	for actor: int in rigs.rest.ids():  # n10: a kept corpse's atlas cell stays undrawn
+		_slots.append(actor)
 	_city.sim.set_rig_slots(PackedInt32Array(_slots))
 
 
