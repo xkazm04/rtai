@@ -34,3 +34,21 @@ func test_a_still_frame_keeps_a_floor() -> void:
 	for i: int in 400:
 		seen[GhostStride.col_of(i / 400.0, steps)] = true
 	assert_eq(seen.size(), 8, "every drawn frame shows")
+
+
+func test_tables_are_keyed_by_ghost_and_art() -> void:
+	assert_eq(GhostStride.table_of("tonnage", "p70").size(), GhostDrawn.COLS)
+	assert_eq(GhostStride.table_of("ohm", "p70").size(), GhostDrawn.COLS)
+	assert_eq(GhostStride.table_of("ohm", "p55").size(), 0, "a pitch without a table walks even")
+	assert_eq(GhostStride.table_of("nobody", "p70").size(), 0)
+
+
+func test_every_table_is_one_drawn_cycle_and_shows_every_frame() -> void:
+	for key: String in GhostStride.TABLES:
+		var row: Array = GhostStride.TABLES[key]
+		var steps: PackedFloat32Array = PackedFloat32Array(row)
+		assert_eq(steps.size(), GhostDrawn.COLS, key)
+		var seen: Dictionary[int, bool] = {}
+		for i: int in 800:
+			seen[GhostStride.col_of(i / 800.0, steps)] = true
+		assert_eq(seen.size(), GhostDrawn.COLS, "%s: every drawn frame shows" % key)

@@ -7,6 +7,18 @@ extends RefCounted
 ## the mean so a near-still pair of frames still shows. No table: the even cycle.
 
 const MIN_SHARE: float = 0.4
+## Each drawn walk's measured stride, "<name>/<art>": the profile row's stance travel a frame
+## (contact centres, tools foot_travel.py; a foot switch takes the mean). No entry: the even cycle.
+const TABLES: Dictionary[String, Array] = {
+	"ohm/p70": [0.0, 47.7, 6.8, 17.2, 29.0, 12.5, 7.0, 17.2],
+	"tonnage/p70": [47.0, 14.0, 58.5, 29.4, 25.0, 31.5, 29.4, 0.5],
+}
+
+
+## The table of `name`'s walk under the art key `art`, empty for the even cycle.
+static func table_of(name: String, art: String) -> PackedFloat32Array:
+	var row: Array = TABLES.get(name + "/" + art, [])
+	return PackedFloat32Array(row)
 
 
 ## The column at `phase` (0..1 of a cycle).

@@ -38,8 +38,6 @@ var card_name: String = ""
 var height_m: float = 1.75
 ## One drawn stride cycle's ground in cell px (the stance foot's travel over a cycle, measured).
 var cycle_cell: float = 150.0
-## The walk's measured per-frame stride (GhostStride), empty = even frames.
-var steps: PackedFloat32Array = PackedFloat32Array()
 ## The run grid's stride cycle in cell px (0 = this ghost has no run grid).
 var run_cell: float = 0.0
 ## The figure's median height in the grid, cell px (ghost_pack prints it).
@@ -48,6 +46,8 @@ var fig_px: float = 180.0
 var still: bool = false
 var _spr: Sprite2D = null
 var _art: String = "?"
+## This art's measured per-frame stride (GhostStride.TABLES), empty = even frames.
+var _steps: PackedFloat32Array = PackedFloat32Array()
 var _phase: float = 0.0
 var _last: Vector2 = Vector2.INF
 var _col: int = STAND_COL
@@ -160,7 +160,7 @@ func _column(host: Node2D, s: float) -> int:
 	var look: float = host.global_rotation if is_nan(_look) else _look
 	var back: bool = moved.normalized().dot(Vector2.from_angle(look)) < BACKPEDAL_DOT
 	_phase = fposmod(_phase + px / cycle * (-1.0 if back else 1.0), 1.0)
-	_col = GhostStride.col_of(_phase, PackedFloat32Array() if _running else steps)
+	_col = GhostStride.col_of(_phase, PackedFloat32Array() if _running else _steps)
 	return _col
 
 
@@ -180,6 +180,7 @@ func _rebuild(host: Node2D, parts: Array[Sprite2D], vm: ViewMode) -> void:
 		_spr.queue_free()
 		_spr = null
 	_art = vm.art
+	_steps = GhostStride.table_of(card_name, _art)
 	var path: String = path_of(_art, card_name)
 	if vm.cards and _art != "" and ResourceLoader.exists(path):
 		_spr = Sprite2D.new()
