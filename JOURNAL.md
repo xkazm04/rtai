@@ -138,3 +138,8 @@ MILESTONE the exe, built now because the freeze session may never come: `build/e
 FINDING (not investigated) the boot log has one `ERROR: Condition "!actions.custom_samplers.has(...)"` from `shader_compiler.cpp:1329`, before the rigs prewarm, plus leak lines at the forced exit. Unknown whether it appears outside the headless renderer, or on main. In REPORT Gates.
 QUEUE EMPTY: as of it16, with the exe now built. Blocked: nothing.
 NEXT (freeze session): rebuild the exe only if code on this branch changed after b8ae1064 (`git log b8ae1064..HEAD -- project tools`), REPORT final. If the journal still says QUEUE EMPTY and neither this branch nor a lane's Rivet files have changed, end at once.
+
+## it26 (03:26-)
+Checked only: tree clean, HEAD 9564d6d3. `git diff --name-only 63e685d3 n10-world -- project/features/characters` empty; in the last 45 minutes the only commit on world, perf or handheld touching `project/features/characters` or a rivet-named path is `63e685d3`, already tried on a merge in it24. No `REQUEST -> rivet` in the three journals. `git log b8ae1064..HEAD -- project tools` empty, so the exe of 03:25 still matches this branch's code. No Godot run, no new gate, frame or number. Ended by the common rule (journal says QUEUE EMPTY, nothing changed), over the phase's "do not end early".
+QUEUE EMPTY: stands as of it16, the exe built in it25. Blocked: nothing.
+NEXT (freeze session): rebuild the exe only if `git log b8ae1064..HEAD -- project tools` is non-empty, REPORT final. If the journal still says QUEUE EMPTY and neither this branch nor a lane's Rivet files have changed (same check as above), end at once.
