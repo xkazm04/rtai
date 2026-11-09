@@ -18,6 +18,7 @@ export function rows(events) {
   for (const e of events) {
     const row = byId.get(e.id) ?? { id: e.id, started: null, task: null, review: null };
     if (e.type === 'started') row.started = e;
+    else if (e.type === 'control') row.control = e;
     else if (e.type === 'task') row.task = e;
     else if (e.type === 'review') row.review = e;
     byId.set(e.id, row);
@@ -65,6 +66,9 @@ export function totals(allRows, state = null) {
       note: 'one session reviews many tasks, so a task\'s share of it is an even split, not a measurement; and a session also builds other things, so the figure is an upper bound on the review\'s cost',
       review_usd_per_task: reviewUsd !== null && reviewed.length ? reviewUsd / reviewed.length : null,
     },
-    unmeasured: ['the Claude cost of writing the same tests without Codex: there is no control run, so no saving can be stated as measured'],
+    controls: allRows.filter((r) => r.control).map((r) => r.control),
+    unmeasured: allRows.some((r) => r.control)
+      ? ['dollars of a control run: a subagent reports tokens and seconds, not dollars, so a saving is stated in tokens and seconds per module that has a control, never extrapolated to the rest']
+      : ['the Claude cost of writing the same tests without Codex: there is no control run, so no saving can be stated as measured'],
   };
 }

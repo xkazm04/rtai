@@ -149,6 +149,18 @@ test('a run killed from outside still shows: started and never finished, and a l
   } finally { done(); }
 });
 
+test('a control run (Claude alone on the same module) is kept apart from tasks and named as measured in tokens, not dollars', () => {
+  const { file, done } = ledgerFile();
+  try {
+    append(file, passed('n11t-fac-a'));
+    append(file, { type: 'control', id: 'control-a', unit: 'a', claude_tokens: 50000, secs: 300 });
+    const t = totals(rows(read(file)));
+    assert.equal(t.measured.tasks, 1, 'a control is not a Codex task');
+    assert.deepEqual(t.controls.map((c) => c.unit), ['a']);
+    assert.match(t.unmeasured[0], /tokens and seconds/);
+  } finally { done(); }
+});
+
 test('totals: a review session with no cost on record is null, not zero', () => {
   const r = [{ id: 'a', task: passed('a'), review: { verdict: 'accepted', iteration: 9 } }];
   assert.equal(totals(r, { iterations: [] }).measured.review_sessions_usd, null);
