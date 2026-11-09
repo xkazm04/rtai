@@ -185,3 +185,41 @@ node_spans' +35 dev lines accepted (`--accept-regression`, in cf7443dc0).
 ## Group A closed (23:35). Head 8517b4e9c. NEXT: wait for the Director's Group B dispatch.
 The REPORT for Group A was returned to the Director as text (the harness refused a REPORT.md
 written by this builder); it can be committed from that text.
+
+## Group A report
+
+Head `14320ad7f` (accepted by the Director). Commits: `8006ad33e` brief; `cf7443dc0` fight frame gate
+(A2) + NodeSpans worst_frames; `25a72efe6` Rivet's drawn strips + weapon fx cells load behind the
+load (A1); `0c6c36ff8`, `b4bc7a5d4` the warms' tests made to bite; `8517b4e9c` my test restores the
+flat default view; `14320ad7f` journal.
+
+Packages:
+- A1 partly existed (11-04 perf-city explained the dead time and the load-tracking stalls), the rest
+  shipped: the deterministic worst frames were first-use loads: Rivet's rig, one pose step at
+  7.8-14.2 ms (ticks 6-8, 258, 1513, 1533: a drawn strip loaded the first time his pose named it)
+  and FxView's draw at 11-16 ms (ticks 2019-2034: the rocket's first blast cells). Gate, 6 rounds,
+  before = `--strip-prefetch=off` on one build: tick 1513 -5.4..-15.6 ms and ticks 6-7 -6.6..-17.0 ms
+  in 6 of 6 rounds, tick 2032 5 of 6 (median about -8 ms); settled worst median 19.7 -> 12.6 ms; film
+  2132 of 2132 frames identical (A/B and A/A). Still `gtai-masters/n12/visual/a1-city-fight-frames-off-aa-warm.png`.
+- A2 shipped: `node tools/perf/fight_gate.mjs` (city + horde at combo, release; p50 / p99 / worst /
+  over 25 ms / CPU s / other processes' cores; A/A twin; paired CI95; `--quiet`). AGENTS.md row,
+  decision `perf/fight-gate`. A dev command, not an evidence kind.
+
+Gates at the head: lint 15/15; unit 2211/0; scenarios 55/55 (at b4bc7a5d4); parity bit-exact
+(mutation caught at 629); debt ok (+35 dev lines accepted for the probe). Mutation: rivet_strip_warm
+92.3 %, weapon_fx_warm 71.4 % (survivors = the log line's counter), weapon_fx_cells 47.1 % (5 survivors
+in older code, 4 equivalent on the shipped table). On arrival: lint, scenarios 55/55, parity green;
+unit red only from stale DLLs in the worktree (replaced with int-day's build of the same source);
+`test_quest_blade` fails alone, passes in the suite (inherited).
+
+Perf: baseline (contended, 6 rounds): city p50 5.36 / 6.38 ms (A/A), p99 11.4 / 12.2, A/A p50 CI
+[-0.67, +4.88]; horde p50 5.51 / 5.50, p99 9.8 / 10.5, A/A CI [-0.24, +0.88]. The fix's p50 +0.21
+and CPU +0.48 s sit inside the A/A floor (+0.23 / +0.79; CPU includes boot).
+
+Calls for the owner: none (no picture or tuning changed).
+
+Unsure / brief corrections: "p99 8.79 ms / 424 ms" were the r19 city-bench aggregate, not the
+fight's log. The city fight at combo read p99 8.6-12.2 ms contended (not judged against 7 ms).
+Left as listed items: GhostFormHud redraws every frame (0.21 ms), ViewPitchEase re-dresses every card
+(0.29 ms), ~70 triangulation errors at exit, a 0.5-0.65 s OS stall about 4 s after launch, the p55
+strips load on a boss swap, `check.mjs` false-fails on scripts that reach the Log autoload.
