@@ -1,0 +1,12 @@
+     -> C:\Users\kazda\kiro\gtai-wt\n10-perf\build\evidence\lint.json
+PASS unit-tests: unit-tests: 1968 passed, 0 failed, 0 skipped (GUT, headless) [inert: 2 docs/evidence paths uncommitted]
+     -> C:\Users\kazda\kiro\gtai-wt\n10-perf\build\evidence\unit-tests.json
+PASS scenario-tests: scenario-tests: 55 passed (headless) [inert: 2 docs/evidence paths uncommitted]
+     -> C:\Users\kazda\kiro\gtai-wt\n10-perf\build\evidence\scenario-tests.json
+PASS parity: parity: native == GDScript reference bit for bit over 1200 steps (40 snapshot checks, 3504 floats); planted mutation caught at step 629 [inert: 2 docs/evidence paths uncommitted]
+     -> C:\Users\kazda\kiro\gtai-wt\n10-perf\build\evidence\parity.json
+PASS selftest: selftest: D4 city frames rendered (32 px/m ok, 100 actors, 127 colours; 48 px/m ok, 89 actors, 133 colours); 86 art textures, 0 placeholders, prewarm 9 ms; look goldens 11/11 within mea
+     -> C:\Users\kazda\kiro\gtai-wt\n10-perf\build\evidence\selftest.json
+PASS export-audit: release-compile: 633 loaded, 0 failed [inert: 2 docs/evidence paths uncommitted]
+     -> C:\Users\kazda\kiro\gtai-wt\n10-perf\build\evidence\export-audit.json
+evidence: commit ab23feafaa9912722741a49a55071ce14b8fd170, godot 4.7.2.stable.official.ed1daf0bf
