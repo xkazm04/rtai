@@ -86,3 +86,10 @@ func test_a_burst_on_the_edge_keeps_its_cell() -> void:
 	_aim(rig, 38.0)
 	assert_true(RivetStrips.draws_fire(rig, &"pistol", 1, true))
 	assert_false(RivetFireCam.drawn(rig), "past the hold back: the side cell")
+
+
+func test_the_cell_is_released_when_the_burst_ends() -> void:
+	var rig: CutRig = _firing(60.0, &"pistol")
+	assert_true(RivetFireCam.drawn(rig), "the burst draws the camera cell")
+	assert_false(RivetStrips.draws_fire(rig, &"pistol", 1, false), "no fire")
+	assert_false(RivetFireCam.drawn(rig), "released, so the next burst picks its cell afresh")
