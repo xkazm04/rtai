@@ -7,6 +7,19 @@ and **unverifiable**. Unverifiable means it ran but could not observe the thing,
 Run these from the root of your worktree. Exit codes are shared: `0` pass, `1` fail, `2` usage
 (nothing launched), `3` unverifiable.
 
+| When you want to | Run |
+|---|---|
+| film or still a named shot (arena, street, quest 1, a chapter, a weapon) | `node tools/film/film.mjs <shot>` |
+| show before and after at the same tick | `node tools/film/compare.mjs <shot> --a=<commit> --b=<commit>` |
+| one sheet of a film's stills, labelled | `node tools/film/sheet.mjs <film dir> --out=<file.png>` |
+| read head, feet, facing or body size per tick | `node tools/film/numbers.mjs <film dir>` |
+| catch the lint you keep tripping, before the commit | `node tools/gate/quick.mjs` |
+| run every gate while you keep editing | `node tools/gate/run.mjs` |
+| run a dev scene with its flags checked | `node tools/dev/run.mjs <entry>` |
+| make a new worktree able to run the game | `node tools/dev/wt_init.mjs <worktree>` |
+| have Codex write tests for an untested module | `node tools/codex/factory.mjs pick`, then `run --stems=<stem>` |
+| do the morning merge | `node tools/merge/morning.mjs --worktree=<integration> --lanes=<a,b> --date=<yyyy-mm-dd>` |
+
 ## tools/film/film.mjs: one film or still of the real game
 
 ```
