@@ -1,4 +1,4 @@
-# REPORT: lane handheld (n10, 2026-11-08/09), IN PROGRESS
+# REPORT: lane handheld (n10, 2026-11-08/09), complete as of it22 (02:34, code 6a7d0627, queue empty)
 
 Branch `n10-handheld`, cut from main 9bbe6d0a, with `n10-world` merged up to 579ef0f4 (half-height walls, the delivered shop strip, the parapet core off under a lift; merges b3ab484e, 7bff8ade, 78746a1a). Every number is **on the simulator** (this PC under a device profile), never on a device, and every one is CONTENDED unless it says otherwise. Research and tables: `docs/handheld/LEDGER.md` section 9. Stills: `C:\Users\kazda\kiro\gtai-masters\n10\handheld\frames.json` (15 entries).
 
