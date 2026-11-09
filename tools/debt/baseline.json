@@ -33,7 +33,8 @@
         "2026-11-09: n10 merge: the lanes combined dev tooling growth (dev_loc 19971 -> 20284)",
         "2026-11-09: n11-tools: tools/film needs a dev-only probe (FilmProbe, FilmCard) and its one-line hook; no shipped code grew (dev_loc 20284 -> 20513)",
         "2026-11-09: n11-tools: the film kit's at:<tick> camera lock (dev-only) (dev_loc 20513 -> 20516)",
-        "2026-11-09: n11-tools: tools/film picks frames by event (FilmTrigger, dev-only), combat's REQUEST; no shipped code grew (dev_loc 20516 -> 20593)"
+        "2026-11-09: n11-tools: tools/film picks frames by event (FilmTrigger, dev-only), combat's REQUEST; no shipped code grew (dev_loc 20516 -> 20593)",
+        "2026-11-09: n11-tools: tools/film head_y for the numbers reader (dev-only), hero's REQUEST; no shipped code grew (dev_loc 20593 -> 20606)"
       ],
       "files": {
         "project/dev/arena": 709,
@@ -42,7 +43,7 @@
         "project/dev/bench": 1684,
         "project/dev/bots": 399,
         "project/dev/enemy_ai": 662,
-        "project/dev/frames": 853,
+        "project/dev/frames": 866,
         "project/dev/ghost-forms": 616,
         "project/dev/ghost-powers": 1137,
         "project/dev/gunplay": 674,
@@ -65,7 +66,7 @@
         "project/dev/view": 195,
         "project/dev/weapon_art": 506
       },
-      "total": 20593
+      "total": 20606
     },
     "direct_cmdline_reads": {
       "accepted": [

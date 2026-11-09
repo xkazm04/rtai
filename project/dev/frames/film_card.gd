@@ -27,8 +27,17 @@ static func _measure(s: Sprite2D) -> Rect2i:
 
 ## The screen y of the cell's lowest opaque row (a card may or may not be centred).
 static func feet_y(s: Sprite2D, used: Rect2i) -> float:
+	return _row_y(s, used, used.end.y)
+
+
+## The screen y of the cell's top opaque row.
+static func head_y(s: Sprite2D, used: Rect2i) -> float:
+	return _row_y(s, used, used.position.y)
+
+
+static func _row_y(s: Sprite2D, used: Rect2i, row: int) -> float:
 	var cell: Vector2 = s.texture.get_size() / Vector2(maxi(s.hframes, 1), maxi(s.vframes, 1))
-	var local: Vector2 = s.offset + Vector2(used.get_center().x, used.end.y)
+	var local: Vector2 = s.offset + Vector2(used.get_center().x, row)
 	if s.centered:
 		local -= cell / 2.0
 	return (s.get_global_transform_with_canvas() * local).y

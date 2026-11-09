@@ -13,7 +13,8 @@ extends Node
 ##                        "trigger": until the first frame --film-on saves, then stays
 ## Rows: tick, frame (the movie frame), cam (camera world px), then one row per fighter with
 ## pos (m), screen (px), on_screen, draw (px, the opaque size of the drawn card), feet_y (px, the
-## drawn card's lowest opaque row on screen, -1 = no card), facing_off (deg, drawn against sim).
+## drawn card's lowest opaque row on screen, -1 = no card), head_y (its top opaque row), facing_off
+## (deg, drawn against sim).
 
 const SCHEMA: String = "gtai.film-probe/1"
 const PRIORITY: int = 60
@@ -130,11 +131,13 @@ func _fighter(f: Fighter, role: String) -> Dictionary:
 	var sprite: Sprite2D = FilmCard.drawn(game, f)
 	var size: Vector2 = Vector2(NO_DRAW, NO_DRAW)
 	var feet: float = NO_DRAW
+	var head: float = NO_DRAW
 	var screen: Vector2 = _screen_of(f, sprite)
 	var used: Rect2i = FilmCard.used_rect(sprite, _used)
 	if used.size != Vector2i.ZERO:
 		size = Vector2(used.size) * sprite.global_scale.abs()
 		feet = FilmCard.feet_y(sprite, used)
+		head = FilmCard.head_y(sprite, used)
 	var rect: Rect2 = get_viewport().get_visible_rect()
 	return {
 		"id": f.id,
@@ -146,6 +149,7 @@ func _fighter(f: Fighter, role: String) -> Dictionary:
 		"on_screen": rect.has_point(screen),
 		"draw": [size.x, size.y],
 		"feet_y": feet,
+		"head_y": head,
 		"facing_off": _facing_off(f),
 	}
 

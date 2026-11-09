@@ -57,6 +57,34 @@ asked for, a subject (`--subject=rivet|hostile|dead|id:<n>`) off screen at a sti
 that never happened (`--on fire:3 never happened: 1 fire event(s) in 900 ticks`).
 Quest 1 has no numbers and no locked camera; a still that exists is all it can claim.
 
+## tools/film/sheet.mjs: one labelled contact sheet of a film's stills
+
+```
+node tools/film/sheet.mjs build/film/pistol --out=build/film/pistol/sheet.png --crop=540,290,260,170 --cols=4
+```
+
+Stops the hand-built PIL frame sheet: every cell has its tick written above it (the frame itself is
+never covered) and the same input always makes the same file. `--ticks=<a,b-c>` picks frames,
+`--shrink=<n>` keeps every nth pixel. Written by Codex (`n11t-exec-sheet`) against a contract and
+hidden tests.
+
+**Refuses (exit 2):** an `--out` that is not a `.png` or that names one of the film's own frames (it
+deletes `--out` first), a bad flag, a crop outside the frame, a sheet over 16384 px a side.
+**Unverifiable (exit 3), and it still writes what it could read:** no frames, a requested tick with
+no file, a damaged PNG, frames of different sizes (nothing is written then), every frame identical
+("nothing moved"), or a `film.json` that is not a pass.
+
+## tools/film/numbers.mjs: read a film's numbers without pasting Python
+
+```
+node tools/film/numbers.mjs build/film/arena --ticks=60-200 --subject=rivet
+```
+
+Prints min, max and range of `feet_y`, `head_y`, `draw_h`, `draw_w`, `screen_x`, `screen_y` and
+`facing_off` over the window (`--json` for the same numbers). `-1` (no card that tick) and `999` (no
+rig) are excluded and counted, never measured. **Unverifiable (exit 3):** no readable `probe.json`,
+no ticks in that window, no such subject, or no card drawn at all.
+
 ## tools/film/compare.mjs: before/after at the same tick
 
 ```
