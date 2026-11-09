@@ -192,6 +192,19 @@ Others up before a run: 0 to 2, median 0; in 22 of the 24 rounds no other Godot 
 **A slip in the run.** My retarget of the A/B script missed the backslash form of the output path, so these runs were first written over it11's `drops/` files. The 49 overwritten paths were restored from git and the new results moved here (JOURNAL it12).
 **What the split says next:** corpses. 6.5 fall-card draws a frame at about 10 us each (`StreetDeadPlan.draw` 6.5 of it). `CutRig.drive` places a fall card twice a step: in `StreetView.step`, then again in `StreetView.post` after the react's pose.
 
+### Item 4, idea 5 (it12): a corpse's card placed once a pose step: REVERTED, a wash
+**The idea.** `CutRig.drive` places a fall card twice a step (`StreetView.step`, then `StreetView.post` after the react's pose), and the path of a corpse's grid is rebuilt from strings every step. The change: `StreetView.placed_by_post` skips the first placement when the post will run, `StreetWalkerFall.path_of` remembers its answer per art and row, `StreetDeadPlan.NODE` a NodePath, and a walker's size step stops computing the cop fill it then ignores. 70 unit tests of the street cards and 6 new ones passed. Never committed.
+| 24 rounds, release riot at combo, `evidence/perf/n10-cputime/fall/` | median | CI95 | lower |
+|---|---|---|---|
+| frame p50, fall - exists | +0.023 ms | +0.002, +0.060 | 7 of 24 |
+| frame p50, fall - twin | +0.000 ms | -0.018, +0.017 | 11 of 24 |
+| frame p50, A/A twin - exists | +0.024 ms | +0.005, +0.057 | 6 of 24 |
+| total CPU, fall - exists | +0.188 s | +0.094, +0.328 | 5 of 24 |
+| total CPU, fall - twin | +0.148 s | +0.047, +0.312 | 5 of 24 |
+| total CPU, A/A twin - exists | +0.016 s | -0.094, +0.125 | 9 of 24 |
+Others up before a run: 0 to 2, median 0; 17 of the 24 rounds had none before any arm's run, and those read +0.000 to +0.017 ms. **No gain, so it is reverted under the rule.** The scratch split gave it about 30-60 us, whose upper end is at the 0.03 ms floor, so it was a marginal bet. **The total-CPU rise is not explained and not claimed as a regression:** idea 4's run read an A/A of +0.109 s on the same measure, the same size as this. This is one wash; the loop stops at two in a row.
+**Other file probes:** the remaining `ResourceLoader.exists` sites read at it12 (`held_pitch_art`, `weapon_fx_cells`, `weapon_art`, `rig_head_card`) are behind a memo or run once when a part is built, so idea 4's pattern has no second site of note. That is a read of the code, not a measurement.
+
 ### The riot on film (it9): what the cut changes on screen, with an A/A control
 `evidence/perf/n10-film/`: `film.sh` (main 9bbe6d0a vs this head, city riot, `--view=combo`, 1200 frames at `--fixed-fps 60`, 1280x800, d3d12, debug editor binary, no HUD), `aa.sh` (the same code twice at 32 px/m), `cmp_frames.py`, `psnr*.log`, `ab_only_frames.json`. Instrument: ffmpeg psnr between the two MJPEG captures (a `mse_avg` of exactly 0 means every sample matched); both arms ran side by side, CONTENDED. Masters: `gtai-masters/n10/perf/`.
 
