@@ -37,3 +37,20 @@ func test_sweep_of_a_box_is_its_footprint_and_top() -> void:
 	assert_eq(hull.size(), 6)  # a diagonal sweep drops the two hidden corners
 	assert_true(hull.has(Vector2(15, 15)))
 	assert_true(hull.has(Vector2(0, 0)))
+
+
+## n11 (owner note "no long cast shadows"): the play views draw a contact shadow under the feet.
+func test_the_play_views_cast_short_and_contact() -> void:
+	for id: String in ["combo", "tilt70"]:
+		assert_lt(ViewMode.of(id).cast_k, RigCastShadows.CONTACT_BELOW_K, id)
+
+
+func test_a_contact_shadow_lies_flat_round_the_feet() -> void:
+	var at: Vector2 = Vector2(10.0, 20.0)
+	var e: PackedVector2Array = RigCastShadows.contact_ellipse(at, 10.0)
+	assert_eq(e.size(), RigCastShadows.CONTACT_POINTS)
+	var box: Rect2 = Rect2(e[0], Vector2.ZERO)
+	for p: Vector2 in e:
+		box = box.expand(p)
+	assert_almost_eq(box.get_center().x, at.x, 0.01, "centred")
+	assert_lt(box.size.y, box.size.x, "flattened on the ground")

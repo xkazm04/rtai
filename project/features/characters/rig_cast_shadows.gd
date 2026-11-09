@@ -21,6 +21,16 @@ const HEAD_K: float = 0.5
 ## Where the shoulders and the head's centre fall along the shadow (0 feet, 1 the top).
 const SHOULDER_AT: float = 0.72
 const HEAD_AT: float = 0.9
+## n11 (owner note "no long cast shadows"): a view row below this cast_k draws a soft contact shadow
+## under the feet instead of a figure along the ground.
+const CONTACT_BELOW_K: float = 0.6
+## The contact ellipse: radius in hip heights, flattened on the ground, slid along the cast.
+const CONTACT_R_HIPS: float = 0.5
+const CONTACT_FLAT: float = 0.62
+const CONTACT_SLIDE_HIPS: float = 0.05
+const CONTACT_POINTS: int = 20
+## The soft edge: nested ellipses (radius share, alpha), printed over one another.
+const CONTACT_RINGS: Array[Vector2] = [Vector2(1.0, 0.22), Vector2(0.78, 0.24), Vector2(0.55, 0.3)]
 
 var _layer: Node = null
 
@@ -42,10 +52,32 @@ func _process(_delta: float) -> void:
 
 func _draw() -> void:
 	var view: ViewMode = ViewMode.shared()
+	var contact: bool = view.cast_k < CONTACT_BELOW_K
 	for rig: CutRig in _rigs():
 		var hip: float = hip_px(rig)
 		var feet: Vector2 = to_local(rig.global_position)
-		draw_colored_polygon(figure(feet, view.cast_dir(), hip * view.cast_k), SHADOW)
+		if not contact:
+			draw_colored_polygon(figure(feet, view.cast_dir(), hip * view.cast_k), SHADOW)
+		elif not rig.dead:  # a body has its own contact shadow on the card (StreetDeadRest)
+			_contact(feet + view.cast_dir() * hip * CONTACT_SLIDE_HIPS, hip)
+
+
+## The soft ink ellipse under a standing body with hip height `hip`, centred at `at`.
+func _contact(at: Vector2, hip: float) -> void:
+	for ring: Vector2 in CONTACT_RINGS:
+		draw_colored_polygon(
+			contact_ellipse(at, hip * CONTACT_R_HIPS * ring.x), Color(SHADOW, ring.y)
+		)
+
+
+## The outline of a contact shadow of radius `r` px, flattened to lie on the ground.
+static func contact_ellipse(at: Vector2, r: float) -> PackedVector2Array:
+	var out: PackedVector2Array = PackedVector2Array()
+	for i: int in CONTACT_POINTS:
+		var a: float = TAU * float(i) / float(CONTACT_POINTS)
+		@warning_ignore("return_value_discarded")
+		out.append(at + Vector2(cos(a), sin(a) * CONTACT_FLAT) * r)
+	return out
 
 
 ## The rig's hip height in global px: the drawn card's (CAST_HIP), else its plan's.
