@@ -5,6 +5,8 @@ extends Node2D
 ## that rolls and yaws per stride (DentLurch), over the breathing teal soul pool (GhostAura).
 ## Render-only.
 
+const DRAWN_PARTS: Array[Sprite2D] = []
+
 ## false (dev `--no-lurch`): Dent as iteration 2 built him (Rivet's plain cycle, linear filter, no
 ## soul glow): the A/B before.
 var lurch_on: bool = true
@@ -15,6 +17,9 @@ var reduced_motion: bool = false
 var riding: bool = false
 var strikes: int = 0
 var blasts: int = 0
+## n11: the drawn walk (dent_walk8.png, tools/art/ghost_pack.py), feet on his point; the rig under
+## a view without it. CYCLE_CELL: the contact row's feet apart, less the boot, twice over.
+var _drawn: GhostDrawn = GhostDrawn.new("dent", 1.8, 128.0, 176.5)
 var _rig: CutRig = CutRig.new()
 var _lurch: DentLurch = DentLurch.new()
 var _aura: GhostAura = GhostAura.new()
@@ -62,6 +67,8 @@ func step(show: bool, at: Vector2, facing: float, steps: int, tick: int) -> void
 	for i: int in steps:
 		_rig.drive(SimClock.TICK_DT)
 	GhostRim.sync_keyline(_rig)
+	_drawn.still = riding
+	_rig.visible = not _drawn.step(self, DRAWN_PARTS, SimConst.PX_PER_M, 1.0, facing)
 	_aura.sync(tick, clampf(_rig.vel_in.length() / SimConst.PX_PER_M / 7.0, 0.0, 1.0))
 
 

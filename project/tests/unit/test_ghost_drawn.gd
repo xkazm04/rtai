@@ -64,3 +64,31 @@ func test_a_look_resting_on_a_boundary_holds_its_octant() -> void:
 	assert_eq(d.octant(PI / 8.0 + deg_to_rad(2.0)), 0, "inside the hold")
 	assert_eq(d.octant(PI / 8.0 + deg_to_rad(6.0)), 1, "past the hold")
 	assert_eq(d.octant(PI / 8.0 - deg_to_rad(2.0)), 1, "and it holds coming back")
+
+
+func test_every_shipped_ghost_grid_divides_into_its_cells() -> void:
+	for ghost: String in ["kerf", "dent", "tonnage"]:
+		var tex: Texture2D = load(GhostDrawn.path_of(P70, ghost)) as Texture2D
+		assert_not_null(tex, ghost)
+		assert_eq(tex.get_width() % GhostDrawn.COLS, 0, ghost)
+		assert_eq(tex.get_height() % GhostDrawn.ROWS, 0, ghost)
+
+
+func test_a_form_carried_by_something_else_stands() -> void:
+	var d: GhostDrawn = _drawn()
+	d.still = true
+	var host: Node2D = add_child_autofree(Node2D.new())
+	for i: int in 6:
+		host.global_position.x += 10.0
+		assert_eq(d._column(host, 0.5), GhostDrawn.STAND_COL, "tick %d" % i)
+
+
+func test_a_given_look_turns_the_backpedal_test_not_the_host() -> void:
+	var d: GhostDrawn = _drawn()
+	d._look = PI  # the look points back along the travel; the host itself has rotation 0
+	var host: Node2D = add_child_autofree(Node2D.new())
+	@warning_ignore("return_value_discarded")
+	d._column(host, 0.5)
+	host.global_position.x += 10.0
+	var first: int = d._column(host, 0.5)
+	assert_eq(first, GhostDrawn.COLS - 1, "a backpedal steps the cycle backward from 0")

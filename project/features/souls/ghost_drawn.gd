@@ -25,6 +25,8 @@ var height_m: float = 1.75
 var cycle_cell: float = 150.0
 ## The figure's median height in the grid, cell px (ghost_pack prints it).
 var fig_px: float = 180.0
+## True while something else carries the form (Dent braced on a car roof): stands, feet still.
+var still: bool = false
 var _spr: Sprite2D = null
 var _art: String = "?"
 var _phase: float = 0.0
@@ -32,6 +34,7 @@ var _last: Vector2 = Vector2.INF
 var _col: int = STAND_COL
 var _still: int = 0
 var _oct: int = -1
+var _look: float = NAN
 
 
 func _init(p_name: String, p_height_m: float, p_cycle_cell: float, p_fig_px: float) -> void:
@@ -43,14 +46,17 @@ func _init(p_name: String, p_height_m: float, p_cycle_cell: float, p_fig_px: flo
 
 ## Each pose: builds the sprite on a view change, faces and steps it. Returns true while it draws
 ## (the caller then skips its card); `parts` hide with it. `size_k`: the rig's unfold.
-func step(host: Node2D, parts: Array[Sprite2D], px_per_m: float, size_k: float) -> bool:
+func step(
+	host: Node2D, parts: Array[Sprite2D], px_per_m: float, size_k: float, look: float = NAN
+) -> bool:
 	var vm: ViewMode = ViewMode.shared()
 	if vm.art != _art:
 		_rebuild(host, parts, vm)
 	if _spr == null:
 		return false
 	var s: float = height_m * size_k * px_per_m * absf(host.global_scale.x) / fig_px
-	var o: int = octant(host.global_rotation)
+	_look = host.global_rotation if is_nan(look) else look
+	var o: int = octant(_look)
 	_spr.frame = RigHeadCard.OCT_FRAME[o] * COLS + _column(host, s)
 	_spr.flip_h = RigHeadCard.OCT_FLIP[o] == 1
 	_spr.global_rotation = 0.0
@@ -76,18 +82,20 @@ func _column(host: Node2D, s: float) -> int:
 	var moved: Vector2 = Vector2.ZERO if _last == Vector2.INF else at - _last
 	_last = at
 	var px: float = moved.length()
-	if px / SimClock.TICK_DT < WALK_FROM_MPS * SimConst.PX_PER_M:
+	if still or px / SimClock.TICK_DT < WALK_FROM_MPS * SimConst.PX_PER_M:
 		_still += 1  # a frame with no sim step (a hit-stop, a fast display) keeps the stride
 		_col = STAND_COL if _still > STILL_FRAMES else _col
 		return _col
 	_still = 0
 	var cycle: float = maxf(cycle_cell * s, px / SimClock.TICK_DT / MAX_CYCLES_S)
-	var back: bool = (
-		moved.normalized().dot(Vector2.from_angle(host.global_rotation)) < BACKPEDAL_DOT
-	)
+	var back: bool = moved.normalized().dot(Vector2.from_angle(_facing(host))) < BACKPEDAL_DOT
 	_phase = fposmod(_phase + px / cycle * (-1.0 if back else 1.0), 1.0)
 	_col = mini(int(_phase * COLS), COLS - 1)
 	return _col
+
+
+func _facing(host: Node2D) -> float:
+	return host.global_rotation if is_nan(_look) else _look
 
 
 func _rebuild(host: Node2D, parts: Array[Sprite2D], vm: ViewMode) -> void:
