@@ -136,3 +136,7 @@ NEXT: nothing is owed. If a session starts here and no code has landed since 8fd
 ## it19 (05:38-) BUILD
 Checked only: QUEUE EMPTY from it13 stands. HEAD cdd8a1a6, tree clean, `git log 8fd5e634..HEAD -- project native tools` empty, `build/export/windows/RTAI.exe` still the 04:40 export, no request to perf in the handheld, rivet or world journals (grepped each file directly), no `bench.lock`, main still 9bbe6d0a. No Godot run, no new gate, frame or number. Ended by the common rule, over the phase's "do not end early", as in it13-it18.
 NEXT: nothing is owed. If a session starts here and no code has landed since 8fd5e634, end at once; do not re-export. If code lands, re-export with the command in REPORT "The export". The merge must rebuild both DLLs (four native entries, REPORT Merge note).
+
+## it20 (06:04-) BUILD
+Checked only: QUEUE EMPTY from it13 stands. HEAD 7f029013, tree clean, `git log 8fd5e634..HEAD -- project native tools` empty, `build/export/windows/RTAI.exe` still the 04:40 export, no request to perf in the handheld, rivet or world journals, no `bench.lock`, main still 9bbe6d0a. No Godot run, no new gate, frame or number. Ended by the common rule, over the phase's "do not end early", as in it13-it19.
+NEXT: nothing is owed. If a session starts here and no code has landed since 8fd5e634, end at once; do not re-export. If code lands, re-export with the command in REPORT "The export". The merge must rebuild both DLLs (four native entries, REPORT Merge note).
