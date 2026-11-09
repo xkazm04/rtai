@@ -39,3 +39,21 @@ test('a timed-out step keeps what it printed before the kill and says it timed o
   assert.match(log, /before the hang/);
   assert.match(log, /morning: debt-check: timed out after 0\.03 min/);
 });
+
+const alive = (pid) => { try { process.kill(pid, 0); return true; } catch (e) { return e.code === 'EPERM'; } };
+
+test('a timed-out step leaves no grandchild running (the engine is a grandchild of the gate runners)', { timeout: 60_000 }, async () => {
+  const d = dir();
+  const pidFile = join(d, 'grandchild.pid');
+  const grand = `require('fs').writeFileSync(${JSON.stringify(pidFile)}, String(process.pid)); setTimeout(() => {}, 60000)`;
+  // The middle process must not be node: node's children sit in its kill-on-close job and die with
+  // it, which hid the bug. Godot's console exe has no such job, so a shell stands in for it.
+  const mid = process.platform === 'win32' ? ['cmd.exe', ['/d', '/c', process.execPath, '-e', grand]] : ['sh', ['-c', `"${process.execPath}" -e '${grand}'`]];
+  const parent = `require('child_process').spawn(${JSON.stringify(mid[0])}, ${JSON.stringify(mid[1])}, { stdio: 'inherit' }); setTimeout(() => {}, 60000)`;
+  const r = defaultRun(process.cwd(), d, 0.05)('gates-like', process.execPath, ['-e', parent]);
+  assert.equal(r.status, -1);
+  assert.match(readFileSync(r.log, 'utf8'), /timed out after 0\.05 min \(the process tree was killed\)/);
+  const pid = Number(readFileSync(pidFile, 'utf8'));
+  for (let i = 0; i < 20 && alive(pid); i++) await new Promise((ok) => setTimeout(ok, 250));
+  assert.equal(alive(pid), false, `grandchild ${pid} still running after the step timed out`);
+});

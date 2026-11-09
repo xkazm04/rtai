@@ -11,7 +11,8 @@
 import { execFileSync, spawnSync } from 'node:child_process';
 import { appendFileSync, closeSync, existsSync, mkdirSync, openSync, readFileSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
-import { pathToFileURL } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import { GUARD_EXIT } from './step_guard.mjs';
 
 export const STEPS = ['merge', 'debt', 'native', 'bake', 'gates', 'reels', 'export'];
 const SAFE_VERBS = new Set(['status', 'rev-parse', 'symbolic-ref', 'merge', 'add', 'commit', 'mv', 'log', 'worktree', 'show', 'show-ref', 'diff']);
@@ -185,6 +186,9 @@ export const STEP_FLOOR_MIN = { reels: 65, gates: 90 };
 
 /** The output goes straight to `<logDir>/<name>.log` as it is written, so a builder can tail a long
  *  step and a killed merge keeps the partial log (combat n11 line 132, one level up). */
+const GUARD = fileURLToPath(new URL('./step_guard.mjs', import.meta.url));
+const GUARD_BACKSTOP_MS = 2 * 60000;
+
 export function defaultRun(cwd, logDir, timeoutMin, say = () => {}) {
   return (name, cmd, args, opts = {}) => {
     mkdirSync(logDir, { recursive: true });
@@ -196,11 +200,16 @@ export function defaultRun(cwd, logDir, timeoutMin, say = () => {}) {
     say(`morning: ${name}: log ${log} (tail it; limit ${minutes} min)`);
     const fd = openSync(log, 'w');
     let r;
+    // The guard owns the timeout and kills the whole tree (Godot is a grandchild of the reel and gate
+    // runners); spawnSync's own limit is only a backstop for a guard that hangs.
+    const guarded = [GUARD, name, String(minutes * 60000), shell ? '1' : '0', '--', cmd, ...args];
     try {
-      r = spawnSync(cmd, args, { cwd: opts.cwd ?? cwd, windowsHide: true, timeout: minutes * 60000, shell, stdio: ['ignore', fd, fd] });
+      r = spawnSync(process.execPath, guarded, { cwd: opts.cwd ?? cwd, windowsHide: true,
+        timeout: minutes * 60000 + GUARD_BACKSTOP_MS, stdio: ['ignore', fd, fd] });
     } finally { closeSync(fd); }
     if (r.error) appendFileSync(log, `\nmorning: ${name}: ${r.error.code === 'ETIMEDOUT' ? `timed out after ${minutes} min` : r.error.message}\n`);
-    return { status: r.status ?? -1, out: readFileSync(log, 'utf8'), log };
+    const status = r.status === GUARD_EXIT || r.status === null ? -1 : r.status;
+    return { status, out: readFileSync(log, 'utf8'), log };
   };
 }
 

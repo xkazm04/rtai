@@ -213,6 +213,10 @@ merge in progress; a lane that does not exist. **It cannot push:** every git cal
 list of verbs, and `push`, `checkout`, `reset` and `branch` throw before git is called.
 A conflict only on a lane's `JOURNAL.md` or `REPORT.md` takes the lane's copy; any other conflict stops.
 
+Each step's output goes to `build/merge/logs/<step>.log` while it runs (tail it). A step past its limit
+(`--timeout`, at least 65 min for reels and 90 for gates) has its whole process tree killed by
+`step_guard.mjs`, Godot included, and its log ends `morning: <step>: timed out after N min`.
+
 ## tools/dev/wt_init.mjs: make a fresh worktree able to run the game
 
 ```
