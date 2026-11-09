@@ -18,6 +18,12 @@ namespace gtai::sim {
 void scan_dead_flips(const double *snap, int64_t n, const uint8_t *dead, int64_t dead_n,
 		std::vector<int32_t> &out);
 
+// The crowd occlusion's scan (CityCrowdOcclusion.candidates), no sim state: the offset of every
+// person record whose feet (metres * px) lie in the half-open rect [x0, x1) x [y0, y1), in float32
+// like the script's Vector2 and Rect2.has_point, so both pick the same records.
+void scan_crowd_in_rect(const double *snap, int64_t n, float px, float x0, float y0, float x1,
+		float y1, std::vector<int32_t> &out);
+
 // One RigFeed row of a person record (CityFeedRows, the same rows as its script loop).
 struct FeedRow {
 	int32_t id;

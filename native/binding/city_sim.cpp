@@ -115,6 +115,16 @@ PackedInt32Array CitySim::scan_dead_flips(const PackedFloat64Array &snap, const 
 	return out;
 }
 
+PackedInt32Array CitySim::scan_crowd_in_rect(const PackedFloat64Array &snap, const Rect2 &rect, double px) {
+	thread_local std::vector<int32_t> hits;
+	const Vector2 end = rect.position + rect.size;
+	sim::scan_crowd_in_rect(snap.ptr(), snap.size(), (float)px, rect.position.x, rect.position.y, end.x, end.y, hits);
+	PackedInt32Array out;
+	out.resize((int64_t)hits.size());
+	if (!hits.empty()) memcpy(out.ptrw(), hits.data(), hits.size() * sizeof(int32_t));
+	return out;
+}
+
 // RigFeed's columns in adopt_rows' order, then the row count; one zero row follows the people, so
 // Rivet's row is written without growing ten arrays.
 Array CitySim::fill_feed_rows(const PackedFloat64Array &snap, const PackedByteArray &variants,
@@ -224,6 +234,7 @@ void CitySim::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_counters"), &CitySim::get_counters);
 	ClassDB::bind_method(D_METHOD("snapshot"), &CitySim::snapshot);
 	ClassDB::bind_static_method("CitySim", D_METHOD("scan_dead_flips", "snap", "dead"), &CitySim::scan_dead_flips);
+	ClassDB::bind_static_method("CitySim", D_METHOD("scan_crowd_in_rect", "snap", "rect", "px"), &CitySim::scan_crowd_in_rect);
 	ClassDB::bind_static_method("CitySim", D_METHOD("fill_feed_rows", "snap", "variants", "focus", "r2", "aim", "px"), &CitySim::fill_feed_rows);
 	ClassDB::bind_method(D_METHOD("set_body", "spec"), &CitySim::set_body);
 	ClassDB::bind_method(D_METHOD("body_result"), &CitySim::body_result);

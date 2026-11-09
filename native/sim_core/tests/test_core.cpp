@@ -127,6 +127,27 @@ void scan_test() {
 	check(out.size() == 1 && out[0] == 0, "scan: an empty snapshot");
 }
 
+// The occlusion scan: people inside the half-open rect only, cars and projectile records skipped.
+void crowd_rect_test() {
+	std::vector<double> snap(5 * SNAP_STRIDE + SNAP_PROJ_STRIDE, 0.0);
+	const auto put = [&](int rec, int kind, double x, double y) {
+		const int r = rec * SNAP_STRIDE;
+		snap[r] = (double)rec, snap[r + 1] = (double)kind, snap[r + 4] = x, snap[r + 5] = y;
+	};
+	put(0, K_PED, 1.0, 1.0);  // inside
+	put(1, K_CAR, 1.0, 1.0);  // not a person
+	put(2, K_COP, 2.0, 1.0);  // on the right edge: out (x1 is exclusive)
+	put(3, K_COP, 0.5, 0.5);  // on the top-left corner: in
+	put(4, K_PED, 9.0, 1.0);  // far outside
+	snap[5 * SNAP_STRIDE] = (double)SNAP_PROJ_BASE;
+	std::vector<int32_t> out;
+	scan_crowd_in_rect(snap.data(), (int64_t)snap.size(), 32.0f, 16.0f, 16.0f, 64.0f, 64.0f, out);
+	check(out.size() == 2, "crowd rect: two people inside");
+	check(out[0] == 0 && out[1] == 3 * SNAP_STRIDE, "crowd rect: record order, edges half-open");
+	scan_crowd_in_rect(snap.data(), 0, 32.0f, 16.0f, 16.0f, 64.0f, 64.0f, out);
+	check(out.empty(), "crowd rect: an empty snapshot");
+}
+
 // The feed fill: a ped, a cop aiming, a car, one past the radius, projectile records at the tail.
 void feed_rows_test() {
 	std::vector<double> snap(4 * SNAP_STRIDE + SNAP_PROJ_STRIDE, 0.0);
@@ -154,6 +175,7 @@ void feed_rows_test() {
 
 int main() {
 	scan_test();
+	crowd_rect_test();
 	feed_rows_test();
 	Run a = run(4242, 600);
 	Run b = run(4242, 600);

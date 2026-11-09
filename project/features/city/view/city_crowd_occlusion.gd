@@ -10,6 +10,12 @@ extends RefCounted
 const LYING_HALF_M: float = 0.9
 ## Off-screen margin (m): a body whose feet are just below the screen still shows its head.
 const MARGIN_M: float = 2.0
+const NATIVE_CLASS: StringName = &"CitySim"
+const NATIVE_SCAN: StringName = &"scan_crowd_in_rect"
+
+static var _native_scan: bool = (
+	ClassDB.class_exists(NATIVE_CLASS) and ClassDB.class_has_method(NATIVE_CLASS, NATIVE_SCAN)
+)
 
 
 ## Appends to `out` the patch of every crowd body behind a building in `blds`; returns the drawn
@@ -26,13 +32,8 @@ static func patches(
 	var hit: Dictionary[CityOccluders.Bld, bool] = {}
 	if not union.has_area():
 		return []
-	for r: int in range(0, snap.size() - SimConst.SNAP_STRIDE + 1, SimConst.SNAP_STRIDE):
-		if snap[r] >= SimConst.SNAP_PROJ_BASE:
-			break  # projectile records follow every actor
-		var kind: int = int(snap[r + 1])
+	for r: int in candidates(snap, union):
 		var feet: Vector2 = Vector2(snap[r + 4], snap[r + 5]) * SimConst.PX_PER_M
-		if (kind != SimConst.K_PED and kind != SimConst.K_COP) or not union.has_point(feet):
-			continue
 		var box: Rect2 = body_box(feet, int(snap[r + 2]))
 		for i: int in blds.size():
 			if zone[i].has_point(feet):
@@ -44,6 +45,32 @@ static func patches(
 	for b: CityOccluders.Bld in hit:
 		areas.append(b.area)
 	return areas
+
+
+## The snapshot offsets of the people whose feet are in `union` (px), in record order.
+## CitySim.scan_crowd_in_rect does it in C++; a DLL built before that entry keeps the script loop.
+static func candidates(snap: PackedFloat64Array, union: Rect2) -> PackedInt32Array:
+	if _native_scan:
+		var v: Variant = ClassDB.class_call_static(
+			NATIVE_CLASS, NATIVE_SCAN, snap, union, SimConst.PX_PER_M
+		)
+		return v
+	return candidates_script(snap, union)
+
+
+## The native scan in GDScript: the fallback, and what the unit test holds the C++ to.
+static func candidates_script(snap: PackedFloat64Array, union: Rect2) -> PackedInt32Array:
+	var out: PackedInt32Array = PackedInt32Array()
+	for r: int in range(0, snap.size() - SimConst.SNAP_STRIDE + 1, SimConst.SNAP_STRIDE):
+		if snap[r] >= SimConst.SNAP_PROJ_BASE:
+			break  # projectile records follow every actor
+		var kind: int = int(snap[r + 1])
+		if kind != SimConst.K_PED and kind != SimConst.K_COP:
+			continue
+		if union.has_point(Vector2(snap[r + 4], snap[r + 5]) * SimConst.PX_PER_M):
+			@warning_ignore("return_value_discarded")
+			out.append(r)
+	return out
 
 
 ## Where a body's feet put it behind b (px): under its drawn area grown by half a body (a standing

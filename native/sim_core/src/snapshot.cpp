@@ -40,6 +40,18 @@ void scan_dead_flips(const double *snap, int64_t n, const uint8_t *dead, int64_t
 	out[0] = (int32_t)r;
 }
 
+void scan_crowd_in_rect(const double *snap, int64_t n, float px, float x0, float y0, float x1,
+		float y1, std::vector<int32_t> &out) {
+	out.clear();
+	for (int64_t r = 0; r + SNAP_STRIDE <= n && snap[r] < SNAP_PROJ_BASE; r += SNAP_STRIDE) {
+		const int kind = (int)snap[r + 1];
+		if (kind != K_PED && kind != K_COP) continue;
+		const float x = (float)snap[r + 4] * px;
+		const float y = (float)snap[r + 5] * px;
+		if (x >= x0 && y >= y0 && x < x1 && y < y1) out.push_back((int32_t)r);
+	}
+}
+
 namespace {
 // The script's enums, by value: BodyPlan.Kind, RigFeed.Flag, RigFeed.LOOK_AUTO.
 constexpr uint8_t BODY_COP = 1, BODY_PED = 2;
