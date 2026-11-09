@@ -63,7 +63,6 @@ static var solid: Callable = Callable()
 
 ## actor id -> Vector3(x, y, pose): the poses lying now, so neighbours differ (view-side only).
 static var _lying: Dictionary[int, Vector3] = {}
-static var _tex: Dictionary[String, Texture2D] = {}
 
 
 ## The plan strip for a card row ("" = none: the row keeps the drawn lying frame).
@@ -96,6 +95,7 @@ static func pick(actor: int, kind: StringName, at: Vector2) -> int:
 
 ## Draws the plan pose under `card` (the fall grid card) once the fall reaches its lying frame;
 ## the card's own frame is hidden while it shows (not lying yet, or no strip for the row: dropped).
+## A class drawn for this camera takes StreetDead70's cell, unturned and unsquashed by the ground.
 static func draw(rig: CutRig, card: Sprite2D, row: String, ks: float, p: float) -> void:
 	var path: String = path_of(row)
 	if path.is_empty() or p < StreetWalkerFall.FALL_AT[StreetWalkerFall.FALL_FRAMES - 1]:
@@ -104,25 +104,32 @@ static func draw(rig: CutRig, card: Sprite2D, row: String, ks: float, p: float) 
 	var r: HumanReact = rig.react
 	var blow: Vector2 = r.dir.rotated(rig.facing).normalized() if r != null else Vector2.DOWN
 	var kind: StringName = r.kind if r != null else &""
-	var plan: Sprite2D = _node(card, path)
+	var drawn: String = StreetDead70.path_of(row)
+	var plan: Sprite2D = (
+		StreetDead70.sprite(card, path, POSES, 1)
+		if drawn.is_empty()
+		else StreetDead70.sprite(card, drawn, StreetDead70.COLS, StreetDead70.ROWS)
+	)
 	var pose: int = pick(rig.actor_id, kind, rig.global_position)
 	var h: int = _hash(rig.actor_id)
 	var m: Vector2 = motion(kind, p)
-	var head: Vector2 = StreetDeadHeading.head_of(blow, pose, (h & 1) == 1)
+	var odd: bool = (h & 1) == 1
+	var head: Vector2 = StreetDeadHeading.head_of(blow, pose, odd)
 	var pelvis: float = _bounded(card, rig.global_position, head, ks)
 	var left: float = StreetDeadHeading.fall_left(p)
 	var centre: Vector2 = rig.global_position + head * pelvis
 	var at: Vector2 = (
 		StreetDeadHeading.resting(rig.actor_id, centre, left) - blow * m.x * CharacterRigs.PX_PER_M
 	)
-	plan.frame = pose
-	plan.flip_h = StreetDeadHeading.flipped(head, pose, (h & 1) == 1)
-	var turn: float = StreetDeadHeading.angle_of(head, pose, plan.flip_h)
+	var lay: Vector2 = StreetDead70.place(plan, head, pose, odd, not drawn.is_empty())
 	var s: float = ks * m.y
 	plan.global_transform = Transform2D(
-		turn + StreetDeadHeading.jitter(h) + StreetDeadHeading.settle(p), Vector2(s, s), 0.0, at
+		lay.x + StreetDeadHeading.jitter(h) + StreetDeadHeading.settle(p),
+		Vector2(s, s / lay.y),
+		0.0,
+		at
 	)
-	StreetDeadHeading.shade(card, plan)
+	StreetDeadHeading.shade(card, plan, drawn.is_empty())
 	card.self_modulate.a = 0.0
 
 
@@ -175,20 +182,6 @@ static func _taken(pose: int, at: Vector2, near: float) -> bool:
 		if int(v.z) == pose and Vector2(v.x, v.y).distance_to(at) < near:
 			return true
 	return false
-
-
-static func _node(card: Sprite2D, path: String) -> Sprite2D:
-	var plan: Sprite2D = card.get_node_or_null(NODE) as Sprite2D
-	if plan == null:
-		plan = Sprite2D.new()
-		plan.name = NODE
-		plan.hframes = POSES
-		card.add_child(plan)
-	if plan.texture == null or plan.texture.resource_path != path:
-		if not _tex.has(path):
-			_tex[path] = load(path) as Texture2D
-		plan.texture = _tex[path]
-	return plan
 
 
 ## A stable, well-mixed hash of the actor id (never the global rng).

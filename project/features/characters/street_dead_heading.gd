@@ -95,13 +95,16 @@ static func side_off(px_per_m: float) -> Vector2:
 	return world * px_per_m / SimConst.PX_PER_M if ENABLED else Vector2.ZERO
 
 
-## Lays the pose's silhouette under `plan` (`card`'s lying sprite): the shadow, then the near side.
-static func shade(card: Sprite2D, plan: Sprite2D) -> void:
+## Lays the pose's silhouette under `plan` (`card`'s lying sprite): the shadow, then the near side
+## (`with_side` false: art drawn for this camera has its own).
+static func shade(card: Sprite2D, plan: Sprite2D, with_side: bool = true) -> void:
 	if not ENABLED:
 		return
 	_under(card, plan, SHADOW_NODE, SHADOW).global_transform = _moved(
 		plan, shadow_off(CharacterRigs.PX_PER_M)
 	)
+	if not with_side:
+		return
 	_under(card, plan, SIDE_NODE, SIDE_TINT).global_transform = _moved(
 		plan, side_off(CharacterRigs.PX_PER_M)
 	)
@@ -128,10 +131,12 @@ static func _under(card: Sprite2D, plan: Sprite2D, node_name: String, tint: Colo
 	if sh == null:
 		sh = Sprite2D.new()
 		sh.name = node_name
-		sh.hframes = plan.hframes
 		sh.modulate = tint
 		card.add_child(sh)
 		card.move_child(sh, plan.get_index())
+	sh.frame = 0
+	sh.hframes = plan.hframes
+	sh.vframes = plan.vframes
 	sh.texture = plan.texture
 	sh.frame = plan.frame
 	sh.flip_h = plan.flip_h
