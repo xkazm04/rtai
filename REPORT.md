@@ -52,6 +52,15 @@ World's `63e685d3` (`RivetStride`, the walk's row follows the travel) edits `riv
 - One real run, the pistol tour on the merged tree (`--view=combo --ppm=64 --seed=3`, exit 0, 0 SCRIPT ERROR): 66 strip runs, none of 2 ticks or fewer; 64 fire rows, every FIRE-phase shot with a fresh muzzle. Contact sheet looked at: the flash sits on the drawn gun in all 8 octants. The tour walks along its aim, so only its HOME walks exercise a turned row. A shot leaves the walk grid for the aim's own strip (`rivet_walk.gd`, `path_of`), so the turned row does not reach a muzzle point.
 - Not run on the merged tree: lint (the baseline conflict), scenarios, parity, the three reels, and the other 16 weapons. A strafing shot changes row between the walk and the fire strip by design of `RivetStride` (TWIST_ROWS); not filmed.
 
+## Merging with n10-perf (it29, for the Director)
+
+Perf's `40e719fd` (`RivetStrips.has_file` memoizes `ResourceLoader.exists`) edits `rivet_strips.gd` and `rivet_walk.gd`, two files this branch also edits. Checked by cherry-picking that one commit onto a throwaway copy of this branch; nothing was merged here, and the rest of n10-perf (its native code) was not in the copy.
+
+- Text: auto-merges. Only `JOURNAL.md` and `REPORT.md` conflict against n10-perf. This branch with the commit, merged with n10-world, also auto-merges `rivet_walk.gd` and `rivet_frames.gd`; `tools/debt/baseline.json` conflicts there as in the n10-world section above. Text checks only: the three lanes were not run together.
+- Unit: 1984 passed, 2 failed on the copy. Both failures read `steam/ai-provenance`, which the copy lacked; with `steam/` added, those two files plus perf's new `test_rivet_strips_has_file` passed (22/0). The full suite was not re-run after adding it.
+- Tours at combo, 64 px/m, seed 3, pistol and rocket launcher, with and without the commit: exit 0, 0 SCRIPT ERROR, 1631-row logs and contact sheets byte-identical (`cmp`). The sheets were compared, not looked at.
+- Not exercised by those tours: the knock strip (0 knock rows in the pistol log), so `rivet_knock.gd`'s one changed line has only the unit suite behind it. Not run on the copy: lint, scenarios, parity, the three reels, the other 15 weapons.
+
 ## Gates (it16; docs only on top of it15's gates)
 
 - Red run for defect 8, in a throwaway copy of the head with only `LEFT_NO_SWING` set to the old empty list: `test_a_left_baton_keeps_the_game_smear_running` fails at `test_rivet_cell_scale.gd:131` ("the left strip has no strike cell"). The same copy unchanged: 3 passed, 0 failed. No game code changed in it16, so the gates below still describe the head.
