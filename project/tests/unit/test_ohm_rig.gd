@@ -76,12 +76,14 @@ func test_under_tilt_ohm_draws_its_card_over_the_shell_and_keeps_the_arms() -> v
 	var rig: OhmRig = OhmRig.new()
 	add_child_autofree(rig)
 	rig.pose()
-	var want: bool = ResourceLoader.exists(GhostCard.path_of(ViewMode.of("tilt").art, "ohm"))
-	assert_eq(rig._card.is_drawn(), want, "a card iff the view's strip exists")
+	var art: String = ViewMode.of("tilt").art
+	var grid: bool = ResourceLoader.exists(GhostDrawn.path_of(art, "ohm"))
+	var want: bool = ResourceLoader.exists(GhostCard.path_of(art, "ohm")) and not grid
+	assert_eq(rig._card.is_drawn(), want, "a card iff the view's strip exists and no drawn grid")
 	for p: Sprite2D in rig._hide:
-		assert_eq(p.visible, not want, "shell, beard and hose hide under the card")
+		assert_eq(p.visible, not (want or grid), "shell, beard and hose hide under a card or grid")
 	for a: Sprite2D in rig._arms:
-		assert_true(a.visible, "the cane and guard arms stay rig parts")
+		assert_eq(a.visible, not grid, "the arms stay rig parts unless the drawn figure has them")
 	ViewMode._shared = ViewMode.of("top")
 	rig.pose()
 	assert_false(rig._card.is_drawn(), "straight down: no card")

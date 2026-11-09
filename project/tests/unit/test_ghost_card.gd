@@ -32,10 +32,12 @@ func test_straight_down_no_card_and_every_part_shows() -> void:
 
 func test_under_tilt_the_card_draws_when_its_strip_exists() -> void:
 	var rig: TonnageRig = _rig("tilt")
-	var want: bool = ResourceLoader.exists(GhostCard.path_of(ViewMode.of("tilt").art, "tonnage"))
-	assert_eq(rig._card.is_drawn(), want, "a card iff the view's strip exists")
-	assert_eq(rig._crown.visible, not want, "the crown hides under the card")
-	assert_eq(rig._hoses.visible, not want)
+	var art: String = ViewMode.of("tilt").art
+	var grid: bool = ResourceLoader.exists(GhostDrawn.path_of(art, "tonnage"))
+	var want: bool = ResourceLoader.exists(GhostCard.path_of(art, "tonnage")) and not grid
+	assert_eq(rig._card.is_drawn(), want, "a card iff the view's strip exists and no drawn grid")
+	assert_eq(rig._crown.visible, not (want or grid), "the crown hides under a card or grid")
+	assert_eq(rig._hoses.visible, not (want or grid))
 
 
 func test_a_view_without_the_strip_draws_no_card() -> void:
@@ -84,11 +86,13 @@ func test_kerf_under_tilt_swaps_the_whole_hover_body_for_the_v2_card() -> void:
 	var rig: KerfRig = KerfRig.new()
 	add_child_autofree(rig)
 	rig.pose()
-	var want: bool = ResourceLoader.exists(GhostCard.path_of(ViewMode.of("tilt").art, "kerf"))
-	assert_eq(rig._card.is_drawn(), want, "a card iff the view's strip exists")
+	var art: String = ViewMode.of("tilt").art
+	var grid: bool = ResourceLoader.exists(GhostDrawn.path_of(art, "kerf"))
+	var want: bool = ResourceLoader.exists(GhostCard.path_of(art, "kerf")) and not grid
+	assert_eq(rig._card.is_drawn(), want, "a card iff the view's strip exists and no drawn grid")
 	assert_eq(rig._hide.size(), 10, "hull, cables and the eight limb sprites")
 	for p: Sprite2D in rig._hide:
-		assert_eq(p.visible, not want, "the hover body hides under the v2 card")
+		assert_eq(p.visible, not (want or grid), "the hover body hides under the card or grid")
 	ViewMode._shared = ViewMode.of("top")
 	rig.pose()
 	assert_false(rig._card.is_drawn(), "straight down: the hover rig")
