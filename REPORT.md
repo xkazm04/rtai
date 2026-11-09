@@ -1,4 +1,4 @@
-# REPORT: n11 lane hero (Rivet and the ghosts), DRAFT written it11 23:25
+# REPORT: n11 lane hero (Rivet and the ghosts), DRAFT written it11 23:25, refreshed it12 00:40
 
 DRAFT: a later session refreshes this at 07:40. Evidence is under `C:\Users\kazda\kiro\gtai-masters\n11\hero\` (`frames.json`, best first); the working log is `JOURNAL.md`, and the per-character levels are in `LEVEL.md`.
 
@@ -10,13 +10,14 @@ DRAFT: a later session refreshes this at 07:40. Evidence is under `C:\Users\kazd
 | "Melee attack follows always only one direction" | The sim direction and hit area were already right; the art was stuck on one cell. Rivet's bare claw plays a drawn 8-direction strike (6f591976); blades use the baked cell only where it points the cursor's way and a game arc along the aim elsewhere (c8d71e34). Each ghost has drawn act cells by facing (6d2e643e, 5af9ba1d). | `melee_8dir_drawn_strike_64ppm.png`, `melee_8dir_before_after_claw_blade_64ppm.png`, `ghost_melee_8dir_64ppm.png` |
 | "Rivet jumps too much" | The drawn helmet travel in the walk/run grids now comes back as a height stretch from the feet, so the feet stay planted; only the run's flight frames lift (6e10aa7a, 4b80f997). Sprint head line range 10 -> 2 px. | `bob_film_right_before_after_64ppm.png`, `bob_before_sprint.gif` / `bob_after_sprint.gif` |
 | "Increase size ... to 150%" | One data value, `data/tables/player_scale.json` `k` 1.5, render only (61d5d9eb). Walk and run grids repacked at x1.5 resolution so moving Rivet is not an upscale (568d26f9). | `size_150_before_after_walk_64ppm.png`, `size_150_ghost_forms_64ppm.png`, `rivet_x15_grids_before_after_64ppm.png` |
-| "Ghosts ... need animations and polish Rivet received" | `GhostDrawn`: each form is one drawn figure on Rivet's strip format, with an 8-frame walk, a run grid (Kerf), act cells (wind-up/strike/follow/hit), feet stepped by the ground walked on a stride measured off the drawn stance foot. Kerf and Ohm also at the 55 boss pitch (it11). | `kerf_drawn_run8_64ppm.png`, `ghost_acts_seen_64ppm.png`, `ohm_drawn_p55_before_after_64ppm.png`, `kerf_run8_p55_before_after_64ppm.png`; levels in `LEVEL.md` |
+| "Ghosts ... need animations and polish Rivet received" | `GhostDrawn`: each form is one drawn figure on Rivet's strip format, with an 8-frame walk, a run grid (Kerf), act cells (wind-up/strike/follow/hit), feet stepped by the ground walked on a stride measured off the drawn stance foot. Kerf and Ohm also at the 55 boss pitch (it11), Dent too (it12, 7c07851d). Tonnage walks on a drawn stamping stride whose frames are timed by the measured foot travel (`GhostStride`, it12: 57cff1e4, 542ecf4d). | `kerf_drawn_run8_64ppm.png`, `ghost_acts_seen_64ppm.png`, `ohm_drawn_p55_before_after_64ppm.png`, `kerf_run8_p55_before_after_64ppm.png`, `dent_drawn_p55_before_after_64ppm.png`, `tonnage_stamp_walk_before_after_64ppm.png`, `tonnage_world_feet_even_vs_steps_64ppm.png`; levels in `LEVEL.md` |
 
-## What does not work yet (as of it11)
+## What does not work yet (as of it12)
 
 - Rivet's walk and run grids are native at x1.5 since it11 (568d26f9); his one-row strips (facing, fire, knock, strike) are still 110 px upscaled, softer when he stops or shoots.
-- Tonnage's drawn walk is a rocking shuffle whose feet never travel, so his feet slide at 4.2 m/s; a stamping walk8 is being drawn.
-- Dent, Tonnage at the 55 boss pitch keep the old card (no 55 walk grid yet).
+- Tonnage's stamping walk has no net slide, but with 8 frames over a long cycle his feet still ride with the body inside each frame (a ±18-36 px sawtooth at 64 px/m); a 12-frame walk is requested. Dent, Ohm and Kerf have measured stride tables in JOURNAL but are not yet timed by them.
+- Tonnage at the 55 boss pitch keeps his card: the delivered 55 set was tried and set aside (a taller tower silhouette, attack cells 25 % larger than the walk: `tonnage_p55_trial_not_shipped_64ppm.png`); a redo is requested.
+- Dent's run8 is not wired: 4 of 5 facings gallop (the same leg leads twice). His walk plants at his 7 m/s.
 - No ghost attack has anticipation except Tonnage's wind-up (the sim counts a strike only when it lands).
 - Doors, alleys, vehicles and quest scenes at x1.5 not checked; 32 px/m not looked at.
 - Gates: see the latest GATES line in JOURNAL. The reel gate, bench and an export were not run as of it11.
