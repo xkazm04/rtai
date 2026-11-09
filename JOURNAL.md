@@ -36,3 +36,13 @@ NOT DONE on item 1 (do not close):
 - Gates: only selected unit suites and lint so far; full unit run started 20:12; scenarios, evidence, reel not run.
 
 NEXT: (1) read the full-unit result in `build/test-results/`. (2) Item 1: collision on the city and in quest 1, with the knocked-down lead; probe the far crowd (read the feed's DEAD rows); clip of the hop before/after; run the scenarios (decay and replay touch these paths). (3) Commit `test_dead_bodies_walkable.gd` with the collision work. (4) Item 2: ground pickups x2 in `features/player/pickups_view.gd` (`DISC_M`, the span in `_rebuild`, `HOVER_M`), crates `LONG_M`, then check spacing of the arena's pickup row. (5) Items 3 to 6 in brief order. Seen in passing for item 5: dumpsters and crates cast long dark shadows in the arena at combo, against the standing owner note (`dead_size_before.png`).
+
+## Iteration 1, last entries (20:17)
+
+- 20:14 Scenarios `corpse_horde, brutality_kills, arena_pit, crowd_react, city_replay`: 5 passed (selected only, not the full suite).
+- 20:17 MILESTONE item 2, ground pickups only: `GROUND_K` 2.0 on span and disc (`c7450890`); the pickup reach is unchanged. Before/after at tick 170, 48 px/m: `pickups_ground_before.png`, `pickups_ground_after.png`. The Gatling is now about 150 px, wider than Rivet.
+- CRITIQUE item 2: only one pickup was in frame, so spacing between pickups is unjudged; not checked on the city or at 32 px/m. At x2 a long gun out-spans the person who picks it up; the hero lane's 150 % Rivet will close part of that.
+- OPEN item 2: the owner's "weapon showcase avatars/icons" may mean the hub's weapon wall (`WeaponRackView`). It is unchanged: x2 needs a new layout (the board is 17 guns wide at `GAP_M` 1.0). Do it next.
+- `test_dead_bodies_walkable` committed as a regression guard for the dev arena only. It does not close the collision note.
+
+NEXT (replaces the list above): (1) item 1 collision on the city and in quest 1, starting from the knocked-down lead; probe the far crowd's corpses; quest 1 probe; a before/after clip of the hop. (2) Item 2 hub wall x2, pickup spacing, city, 32 px/m. (3) Full gates: scenarios (whole suite), `tools/evidence/run.mjs`, reels, none run on the whole branch yet; check `release_compile.mjs` given the `check.mjs` oddity. (4) Items 3 to 6 in brief order.
