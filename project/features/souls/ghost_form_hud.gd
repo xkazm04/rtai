@@ -1,12 +1,10 @@
 class_name GhostFormHud
 extends Control
-## The ghost HUD (bottom left), n11: no card, only the ghosts' avatars on the open ground, docked in
-## the corner, in cycle order (GhostChipFace). Ink rims and paper-on-ink marks hold on bright and
-## dark ground alike: the current form has a teal rim and stands larger; the selected (next) ghost
-## has a chevron and the key hint; a cooling ghost is dimmed with a teal arc for the time left; a
-## locked ghost (GhostLocks) is an ink silhouette under a padlock, with no name, and G passes it by.
-## Under them the Madness bar with the selected ghost's cost a notch. Plain values only (sync()
-## fills them from GhostForms); words come translated by the caller.
+## The ghost HUD (bottom left), n11: no card, only the ghosts' avatars docked in the corner, in
+## cycle order (GhostChipFace). Ink rims and paper-on-ink marks hold on any ground: the current form
+## has a teal rim and stands larger; the selected ghost has a chevron and key hint; a cooling one
+## is dimmed with a teal arc; a locked one (GhostLocks) is an ink silhouette under a padlock. Under
+## them the Madness bar, the selected ghost's cost a notch. Plain values only (sync() fills them).
 
 const PAPER: Color = Color("e9dcc3")
 const INK: Color = Color("17131b")
@@ -48,14 +46,14 @@ var next_hint: String = "G"
 ## true while a story line is up (StoryForms: quest 1's subtitle box takes the bottom centre): the
 ## strip folds to the one avatar that matters, the current form (in base the selected ghost).
 var compact: bool = false
-## The strip's sizes: the desktop's, or the handheld's (DeviceProfile.hud).
 var layout: GhostFormLayout = GhostFormLayout.for_device(DeviceProfile.shared())
 ## The one avatar that carries its name when the layout names only one (the selected ghost).
 var _named: StringName = &""
+var _cursor: WeaponCursor = WeaponCursor.new()
 
 
-## Fills the plain values from the state machine (call once per frame).
-func sync(g: GhostForms) -> void:
+## Fills the plain values from the state machine (once per frame); the cursor follows `weapon`.
+func sync(g: GhostForms, weapon: StringName = &"") -> void:
 	if PadGlyphArt.active() and enter_hint == "Q":  # n9-handheld: the pad's buttons, once
 		enter_hint = PadGlyphArt.action_hint(&"power_hauler", enter_hint)
 		next_hint = PadGlyphArt.action_hint(&"power_gearbox", next_hint)
@@ -75,7 +73,13 @@ func sync(g: GhostForms) -> void:
 	var sel: GhostFormDef = g.table.form(selected)
 	var row: PowerDef = g.powers.table.row(sel.power) if sel != null else null
 	cost_k = row.madness_cost / g.powers.table.madness_max if row != null else 0.0
+	_cursor.show_for(weapon, current)
 	queue_redraw()
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_PAUSED or what == NOTIFICATION_EXIT_TREE:
+		_cursor.clear()  # the menus keep the system arrow
 
 
 func _draw() -> void:
