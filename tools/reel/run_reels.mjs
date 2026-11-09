@@ -1,4 +1,5 @@
 // Run and judge director reels. Uses Node builtins only.
+import { appendFileSync } from 'node:fs';
 import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -17,15 +18,30 @@ export function reelArgs(view, loadout = 'pistol') {
 
 const REEL_TIMEOUT_MS = 20 * 60 * 1000;
 
-async function runReel(view, logPath) {
+/** A completed chapter line, as check_reel.mjs counts it. */
+export const CHAPTER = /showcase: director chapter (.+?): (\d+)\/(\d+) down/;
+
+/** Every line lands in the log as it arrives (a killed wrapper keeps the partial log, combat n11
+ *  line 132), and each finished chapter is reported live; the whole output replaces it at the end. */
+export function lineSink(view, logPath, progress) {
+  let chapters = 0;
+  return (line) => {
+    appendFileSync(logPath, `${line}\n`);
+    const m = CHAPTER.exec(line);
+    if (m) progress(`run_reels: ${view} chapter ${++chapters} ${m[1]} ${m[2]}/${m[3]} down`);
+  };
+}
+
+async function runReel(view, logPath, progress = () => {}) {
+  const onLine = lineSink(view, logPath, progress);
   // The launcher adds its own headless and path prefix.
-  const result = await runGodot(reelArgs(view).slice(3), { name: 'reel', timeoutMs: REEL_TIMEOUT_MS });
+  const result = await runGodot(reelArgs(view).slice(3), { name: 'reel', timeoutMs: REEL_TIMEOUT_MS, onLine });
   await writeFile(logPath, result.out);
   return result.status;
 }
 
 /** Each view is independent, including launch failures and absent/unreadable logs. */
-export async function runReels({ views = DEFAULT_VIEWS, expect = 19, outDir, run = runReel }) {
+export async function runReels({ views = DEFAULT_VIEWS, expect = 19, outDir, run = runReel, progress = () => {} }) {
   // Validate once, before launching any views.
   parseReel('', { expect });
   const directory = resolve(outDir);
@@ -34,12 +50,13 @@ export async function runReels({ views = DEFAULT_VIEWS, expect = 19, outDir, run
     const name = String(view).replace(/[^a-zA-Z0-9_-]/g, '_');
     const log = join(directory, `${index + 1}-${name}.log`);
     const problems = [];
+    const started = Date.now();
     let code = null;
     try {
       await mkdir(directory, { recursive: true });
       // Never judge a previous run's log when this run fails to produce one.
       await rm(log, { force: true });
-      code = await run(view, log);
+      code = await run(view, log, progress);
       if (code !== 0) problems.push(`run exited with code ${code}`);
     } catch (error) {
       problems.push(`run failed: ${error.message}`);
@@ -51,6 +68,8 @@ export async function runReels({ views = DEFAULT_VIEWS, expect = 19, outDir, run
       problems.push(`cannot read log ${log}: ${error.message}`);
     }
     results.push({ view, code, ok: problems.length === 0, problems, log });
+    const secs = ((Date.now() - started) / 1000).toFixed(0);
+    progress(`run_reels: [${index + 1}/${views.length}] ${view} ${problems.length ? 'FAIL' : 'OK'}, ${secs} s; log ${log}`);
   }
   return { ok: results.length > 0 && results.every((result) => result.ok), views: results };
 }
@@ -77,7 +96,7 @@ async function main(argv) {
     console.error(`run_reels: provide an output directory, view names and a nonnegative safe integer expectation\n${USAGE}`);
     return 2;
   }
-  const result = await runReels({ views, expect, outDir: options.out });
+  const result = await runReels({ views, expect, outDir: options.out, progress: (line) => console.error(line) });
   for (const view of result.views) {
     console.log(`${view.view}: ${view.ok ? 'OK' : 'FAIL'}; code ${view.code}; log ${view.log}`);
     for (const problem of view.problems) console.log(`  ${problem}`);

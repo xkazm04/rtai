@@ -257,3 +257,18 @@ The suite prints one line per scenario as it finishes, live through the tools ru
 when you run Godot directly, so a ten-minute run on a shared machine shows where it is. Send the run
 to a file rather than through `tail`: the verdict is the last `run_scenarios: N ran, M failed` line.
 `--only` takes exact names; an unknown name exits 2 before anything runs.
+
+## Reel progress (`tools/reel/run_reels.mjs`)
+
+```
+node tools/reel/run_reels.mjs --out=build/reels --views=top
+# run_reels: top chapter 1 <name> 3/3 down        (one per finished chapter, on stderr)
+# run_reels: [1/1] top OK, 640 s; log build/reels/1-top.log
+# top: OK; code 0; log build/reels/1-top.log
+```
+
+Each view's verdict prints the moment that view ends, and its log is written line by line as Godot
+runs, so a wrapper killed at a tool's background limit still leaves the partial log of the view it
+was in and the verdicts of the views before it. Three views take 30 min or more on a shared
+machine: run one `--views=<view>` per command when your shell has a shorter limit. It refuses an
+unknown view name or a non-integer `--expect` (exit 2) before anything launches.
