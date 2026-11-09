@@ -121,7 +121,7 @@ static func draw(rig: CutRig, card: Sprite2D, row: String, ks: float, p: float) 
 	var head: Vector2 = StreetDeadHeading.head_of(blow, pose, odd)
 	var lying: float = StreetWalkerFall.rest_scale(ks, sink) * LYING_K
 	var pelvis: float = _bounded(card, rig.global_position, head, lying)
-	var left: float = StreetDeadHeading.fall_left(p)
+	var left: float = StreetDeadHeading.push_left(p)
 	var centre: Vector2 = rig.global_position + head * pelvis
 	var at: Vector2 = (
 		StreetDeadHeading.resting(rig.actor_id, centre, left) - blow * m.x * CharacterRigs.PX_PER_M

@@ -7,9 +7,10 @@ extends RefCounted
 
 ## Drawn bodies are about 2 m across at 64 px/m. Judged on Dock 9 settled (t13900; a body under
 ## FALL_TICKS old is still sliding into its push, and reads as a stack): 1.9 / 2.2 leaves a hand
-## touching, 2.3 / 3.0 throws a body 3 m off its blood. 0 = no push.
-const SPACE_M: float = 2.1
-const PUSH_MAX_M: float = 2.4
+## touching, 2.3 / 3.0 throws a body 3 m off its blood. 0 = no push. n11: the bodies drawn at
+## StreetDeadPlan.LYING_K need less room, and a 2.4 m push read as a body gliding across the floor.
+const SPACE_M: float = 1.5
+const PUSH_MAX_M: float = 1.8
 const PUSH_PASSES: int = 8
 ## The search for a clear spot when relaxation leaves an overlap: RINGS circles out to PUSH_MAX_M.
 const RINGS: int = 8
