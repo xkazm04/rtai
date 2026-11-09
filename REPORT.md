@@ -1,10 +1,10 @@
-# REPORT: night n10, lane world (draft, updated 2026-11-09 01:14)
+# REPORT: night n10, lane world (draft, updated 2026-11-09 01:33)
 
 Evidence: `C:\Users\kazda\kiro\gtai-masters\n10\world\` (`frames.json`). Every performance number is unmeasured so far.
 
 ## What works, with evidence
 
-1. **Half-height walls read as real shorter walls** (`aadc7430`). Each style is cut into whole storey rows at the flat elevation's own proportions and stacked from the ground up: tenement two storeys, tall block ground plus uppers, shop one storey with its sign band and awning. 32 px/m: `wall_tenement_32_after.png`. 48 px/m: `wall_tenement_48_after.png`. Grey print look and `height_k` 0.5 unchanged.
+1. **Half-height walls read as real shorter walls** (`aadc7430`). Each style is cut into whole storey rows at the flat elevation's own proportions and stacked from the ground up: tenement two storeys, tall block ground plus uppers, shop one storey with its sign band and awning. 48 px/m: `wall_tenement_48_after.png`. Grey print look and `height_k` 0.5 unchanged.
    - **The shop wall now takes the asset lane's half-height strip** (`35de190a`): 4.1 m bays, a drawn door, solid piers. A modest gain over my recut, filmed on the same frame: `wall_shop_delivered_32.png`, `wall_shop_delivered_48.png` (left = recut). The delivered dark-trim shop read as a heavy grey band, and the delivered tenement printed as flat grey panels (`wall_tenement_delivered_rejected_48.png`), so those stay out. The delivered tall strip was tried but no tall building was in frame, so it is unjudged; tall keeps the recut.
 2. **Lamp posts no longer lie flat** (`20c868c6`). The "fallen lamp" was the game's own pole shadow stroke with a globe at its end, not the test scene. It is now a short contact dash. `lamp_cast_32_after.png`.
 3. **The black bar at every wall's foot is gone** (`3cf3ffdc`). It was the flat city's raised-roof cue (a solid ink copy of the building's silhouette on the ground, 0.22 m down-right), still drawn under the tilt, where a wall stands on that edge. It read as a 7 px black band at 32 px/m. Now the wall ends on its own ink line and the hatched shadow; flat views keep the band. `wall_foot_core_32.png`, `wall_foot_core_48.png`, same seed and tick. My first audit had missed it.
@@ -14,12 +14,13 @@ Evidence: `C:\Users\kazda\kiro\gtai-masters\n10\world\` (`frames.json`). Every p
    - Each near body has a contact shadow (its own silhouette, down the sun).
    - Each body now shows a sliver of its near side, a shaded copy of its silhouette 0.16 m of height below the pose (`579ef0f4`), on both draw paths. Subtle: the lower edge is heavier and the body sits on the road. 0.32 m doubled the fingers and boots. `dead_side_dock9_64.png`.
    - Dock 9's dead no longer touch once settled. The push measures between the drawn bodies, relaxes over 8 passes, and a body a crowd still defeats takes the nearest clear spot (`SPACE_M` 2.1, cap 2.4). `dead_dock9_centres_64.png` and `dead_dock9_centres_32.png`, same tick t13900: before, three bodies chain together; after, four lie clear.
-   - Same seed and tick, before = `StreetDeadHeading.ENABLED` false: `dead_dock9_before_after_64.png`, `dead_riot_before_after_64.png`, `dead_riot_before_after_32.png`.
+   - Same seed and tick, before = `StreetDeadHeading.ENABLED` false: `dead_riot_before_after_64.png`, `dead_riot_before_after_32.png`.
+   - **The riot's near bodies are pushed off each other too** (`fdc80496`), with the city's solid test so a push cannot end in a wall. The two corpses that lay on top of the standing cops are off them. `dead_riot_push_64.png`, `dead_riot_push_32.png`, same seed and tick. Dock 9's frame is byte-identical to before this change.
 
 ## What does not work yet
 
 - **The art is still the n9 plan poses.** This is the code half of the owner's note: the poses are placed on drawn headings but are not yet drawn for this camera. REQUEST 2 in JOURNAL asks for them.
-- **The riot's near bodies are not pushed apart.** Only Dock 9 has the push. Street near rigs get n9's different-pose rule only, so bodies in a dense riot melee still overlap (`dead_riot_before_after_64.png`, centre). Extending the push there would need a wall check and could pop a body up to 2.4 m when a rig is swapped for the baked crowd.
+- **The riot's pile is only partly solved.** The push moves corpses, but only near rigs: the baked far crowd's bodies are not pushed, and the living melee stays dense. One pushed body now lies among the crowd's legs (`dead_riot_push_64.png`, top). A pushed body also sits up to 2.4 m from its blood, and can jump that far when a rig is swapped for the baked crowd; that swap was not filmed.
 - **While a body is still falling, it can pass over a neighbour.** Its push eases in over 24 ticks, so for that moment it can overlap one already lying (`DRAWDBG`: t13800, age 9). Settled frames are clear; the mid-fall crossing is not fixed.
 - **The far crowd has no contact shadow** (near rigs and Dock 9 only).
 - **The lamp post card stays as drawn.** I had called it a stub and asked for a lamp three times a person's height (REQUEST 1), then measured it: 65 px against Rivet's 53 px at 32 px/m, and the half-height walls are 49-121 px, so a taller lamp would stand over the walls. REQUEST 1 is withdrawn; the art is the library's `lamp_70_v4`, drawn for this camera.
@@ -31,7 +32,8 @@ Evidence: `C:\Users\kazda\kiro\gtai-masters\n10\world\` (`frames.json`). Every p
 
 ## Gates so far
 
-- **`node tools/evidence/run.mjs --no-bench` on `579ef0f4`: all PASS.** Lint 15/15, unit 1975 / 0, scenarios 55 / 0, parity 1200 steps with the planted mutation caught, selftest (look goldens 11/11, worst 0.00), export-audit 633 / 0. This replaces every older result below.
+- **`node tools/evidence/run.mjs --no-bench` on `fdc80496`: all PASS.** Lint 15/15, unit 1979 / 0, scenarios 55 / 0, parity 1200 steps with the planted mutation caught, selftest, export-audit 633 / 0. This replaces every older result below. The bench was not run.
+- Director reel, the brief's exact command, on `ed952be6`, one commit before the riot push: top, tilt70, combo each 19 chapters, 19 fully down, 0 SCRIPT ERROR, `no carry` in all 19 (Call w-4). The run on `fdc80496` is logged in JOURNAL.
 
 - `node tools/lint/lint.mjs`: 15 of 15 in the pre-commit hook on `071e3780`.
 - `node tools/tests/run_unit.mjs --select=test_street_dead_heading,test_street_dead_plan,test_street_quest_dead_plan,test_street_crowd_corpse`: 32 passed, 0 failed before the shader tests; `--select=test_street_dead_heading,test_street_crowd_corpse`: 15 passed, 0 failed with them.

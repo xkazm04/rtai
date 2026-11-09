@@ -149,3 +149,10 @@ Item 3, the near side (579ef0f4): a shaded silhouette `SIDE_M` 0.16 below the po
 Evidence run started 01:12 on 579ef0f4 (`gtai-n10/tmp/world/evidence_0111.log`).
 
 MILESTONE [01:19] Evidence on 579ef0f4, all PASS: lint 15/15, unit 1975/0, scenarios 55/0, parity, selftest (goldens 11/11), export-audit 633/0. The first evidence run on this branch with no failed gate. Bench not run (`--no-bench`).
+
+MILESTONE [01:31] Item 3, the riot's near bodies pushed off each other: fdc80496. `StreetDeadHeading.resting` calls `StreetQuestDeadPush.push_of` with the city's `solid`, so a push ending on a wall takes the nearest free spot and a lone body never moves. `StreetDeadPlan.reset` now also clears pushes and runs at city setup (before this it was only ever called by tests, so a reused actor id would have inherited an old push). Unit select 44/0. Riot film 32 and 64 px/m, same seed and tick, before = ed952be6: the two corpses on top of the standing cops are off them. A numeric diff shows Dock 9 byte-identical to before this change. Not filmed: the rig-to-baked-crowd swap, where a pushed body can jump up to 2.4 m. DECISION world/riot-near-push.
+
+Director reel x3 on ed952be6 (the brief's command): top, tilt70, combo each 19 chapters, 19 fully down, 0 SCRIPT ERROR, `no carry` 19 each (Call w-4). That head predates fdc80496.
+FRICTION [01:28] A long bash heredoc with embedded Python failed to parse ("unexpected EOF while looking for matching `'`"); nothing was applied. Wrote the patch to a file and ran that.
+
+MILESTONE [01:38] Evidence on fdc80496, all PASS: lint 15/15, unit 1979/0, scenarios 55/0, parity, selftest, export-audit 633/0. Bench not run.
