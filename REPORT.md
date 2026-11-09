@@ -62,7 +62,7 @@ Evidence: `C:\Users\kazda\kiro\gtai-masters\n10\world\` (`frames.json`). Every p
 ## What blocked me
 
 - The machine is badly contended: a commit's lint hook passed 10 minutes once and was killed, and a plain `--import` passed 200 s earlier. Neither lost work.
-- REQUEST 2 and 3 (poses drawn for this camera) have had no producer tonight: the asset lane's runner log ends 17:55 on 2026-11-08, before this run began. The near-side sliver is a code stand-in for the classes still on plan poses.
+- REQUEST 2 and 3 (poses drawn for this camera) have had no producer tonight: the asset lane's runner log ends 17:55 on 2026-11-08, before this run began. Its last lines are `loop.sh: fork: retry: Resource temporarily unavailable` and a child death with exit code 0xC000026B, so the loop appears to have stopped on process creation failing rather than by finishing its queue; the log does not say why. Round `20261108-1800` (the riot cop, first in REQUEST 3) was queued and holds no art: its `out/` is empty. Restarting that loop and re-running the round is what would unblock this; still blocked at 04:17 on 2026-11-09. The near-side sliver is a code stand-in for the classes still on plan poses.
 - This lane opened with no `JOURNAL.md` and no commits past `c394af55`, although the runner called it iteration 4.
 
 ## Calls for the owner
