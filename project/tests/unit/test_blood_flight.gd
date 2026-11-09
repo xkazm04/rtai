@@ -92,3 +92,17 @@ func test_a_blood_fx_reads_the_same_with_the_native_flight() -> void:
 		assert_eq(a.live_decals(), b.live_decals(), "decals after hit %d" % k)
 		assert_eq(a.wall_hits, b.wall_hits, "wall hits after hit %d" % k)
 	assert_gt(a.wall_hits, 0, "the run reached a wall")
+
+
+## The slot ring: a drop with one tick left still flies, the cursor moves past a slot just used, and
+## a full pool reports -1 (the spawn then draws no scatter).
+func test_free_slot_walks_the_ring_and_reports_a_full_pool() -> void:
+	var f: BloodFlight = BloodFlight.new(3)
+	assert_eq(f.free_slot(), 0, "an empty pool starts at slot 0")
+	f.put(1, Vector2.ZERO, Vector2.ZERO, 1.0, 5)
+	f.life[1] = 0
+	assert_eq(f.free_slot(), 2, "the cursor moved past the slot just used, even when it died")
+	f.put(0, Vector2.ZERO, Vector2.ZERO, 1.0, 1)
+	f.put(1, Vector2.ZERO, Vector2.ZERO, 1.0, 5)
+	f.put(2, Vector2.ZERO, Vector2.ZERO, 1.0, 5)
+	assert_eq(f.free_slot(), -1, "every drop flies, the one with a single tick left too")
