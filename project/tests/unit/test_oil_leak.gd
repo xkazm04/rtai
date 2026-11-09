@@ -117,7 +117,7 @@ func test_bleeding_includes_the_last_tick_then_stops() -> void:
 	var last: Vector2 = ORIGIN + Vector2(EVERY_PX, 0.0)
 	_leak.step(1, last, _fx)
 	assert_eq(_leak.left, 0)
-	assert_eq(_fx.positions.back(), last, "the final active tick can still leave a drop")
+	assert_eq(_fx.positions[-1], last, "the final active tick can still leave a drop")
 	var count: int = _fx.positions.size()
 	_leak.step(STILL_TICKS, last + Vector2(EVERY_PX, 0.0), _fx)
 	assert_eq(_leak.left, 0)
