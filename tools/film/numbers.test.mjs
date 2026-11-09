@@ -59,3 +59,8 @@ test('a real probe prints its ranges, and --json holds the same numbers', (t) =>
   assert.equal(main([dir], { out: (s) => lines.push(s) }), EXIT.pass);
   assert.ok(lines.some((l) => /feet_y\s+400 \.\. 410\s+range 10/.test(l)));
 });
+
+test('a screen position of -1 or 999 is a position, not a sentinel', () => {
+  const row = (x) => ({ tick: 1, fighters: [{ role: 'rivet', feet_y: 400, screen: [x, 400] }] });
+  assert.equal(summarize([row(-1), row(999)], 'rivet').stats.measures.screen_x.range, 1000);
+});

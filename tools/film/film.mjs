@@ -69,6 +69,10 @@ export function plan(flags, shotText, extra) {
   if (!shot.shot.script && !existsSync(join(tree, 'project/dev/frames/film_probe.gd'))) {
     return { error: `film: ${tree} has no dev/frames/film_probe.gd (older than the kit): film a commit with tools/film/compare.mjs, which injects it` };
   }
+  if (flags.subject !== undefined && !/^(rivet|hostile|dead|id:\d+)$/.test(flags.subject)) return { error: `film: --subject must be rivet, hostile, dead or id:<n>, got ${flags.subject}` };
+  for (const key of ['timeout', 'ppm']) {
+    if (flags[key] !== undefined && !(Number(flags[key]) > 0)) return { error: `film: --${key} must be a positive number, got ${flags[key]}` };
+  }
   const dir = resolve(flags.out);
   // A movie costs real time (combat measured about 1.5 fps with Godots running beside it), so stills skip it unless asked.
   const wantMovie = flags.movie === true || (!stills.length && !on.length && !flags['no-movie']);

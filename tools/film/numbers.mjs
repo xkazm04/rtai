@@ -13,8 +13,13 @@ export const NO_DRAW = -1;
 const USAGE = 'usage: node tools/film/numbers.mjs <film-dir> [--subject=rivet|hostile|dead|id:<n>] [--ticks=<a-b>] [--json]';
 const VALUE = new Set(['subject', 'ticks']);
 const SWITCH = new Set(['json']);
+const NO_RIG = 999;
+// A -1 means "no card" only for a card's measures, and 999 "no rig" only for the facing: a screen
+// position can really be -1 or 999.
+const CARD = new Set(['feet_y', 'head_y', 'draw_h', 'draw_w']);
 const MEASURES = [['feet_y', (f) => f.feet_y], ['head_y', (f) => f.head_y], ['draw_h', (f) => f.draw?.[1]], ['draw_w', (f) => f.draw?.[0]],
   ['screen_x', (f) => f.screen?.[0]], ['screen_y', (f) => f.screen?.[1]], ['facing_off', (f) => f.facing_off]];
+const real = (name, v) => Number.isFinite(v) && !(CARD.has(name) && v === NO_DRAW) && !(name === 'facing_off' && v === NO_RIG);
 
 /** {dir, flags} or {error}. */
 export function parseArgv(argv) {
@@ -36,18 +41,19 @@ export function parseArgv(argv) {
 /** {reasons, stats}. A value of -1 (no card that tick) is counted, never measured as a height. */
 export function summarize(rows, subject, ticks) {
   const [from, to] = ticks ? ticks.split('-').map(Number) : [0, Infinity];
-  const window = rows.filter((r) => r.tick >= from && r.tick <= to);
+  const window = rows.filter((r) => Number.isFinite(r?.tick) && r.tick >= from && r.tick <= to);
   if (!window.length) return { reasons: [`no ticks ${ticks ?? ''} in probe.json`.replace('  ', ' ')], stats: null };
   const seen = window.map((r) => ({ tick: r.tick, f: subjectRow(r, subject) })).filter((x) => x.f);
-  if (!seen.length) return { reasons: [`no ${subject} in the numbers over ${window[0].tick}-${window.at(-1).tick}`], stats: null };
+  if (!seen.length) return { reasons: [`no ${subject} in the numbers over ${Math.min(...window.map((r) => r.tick))}-${Math.max(...window.map((r) => r.tick))}`], stats: null };
   const measures = {};
   for (const [name, read] of MEASURES) {
-    const values = seen.map((x) => read(x.f)).filter((v) => Number.isFinite(v) && v !== NO_DRAW && v !== 999);
+    const values = seen.map((x) => read(x.f)).filter((v) => real(name, v));
     if (values.length) measures[name] = { min: Math.min(...values), max: Math.max(...values), range: Math.max(...values) - Math.min(...values) };
   }
-  const reasons = Object.keys(measures).length ? [] : [`no card was drawn for ${subject} in those ticks`];
+  const reasons = Object.keys(measures).some((name) => CARD.has(name)) ? [] : [`no card was drawn for ${subject} in those ticks`];
   const noCard = seen.filter((x) => x.f.feet_y === NO_DRAW || x.f.feet_y === undefined).length;
-  return { reasons, stats: { from: seen[0].tick, to: seen.at(-1).tick, ticks: seen.length, no_card_ticks: noCard, measures } };
+  const ticksSeen = seen.map((x) => x.tick);
+  return { reasons, stats: { from: Math.min(...ticksSeen), to: Math.max(...ticksSeen), ticks: seen.length, no_card_ticks: noCard, measures } };
 }
 
 const fmt = (v) => (Number.isInteger(v) ? String(v) : v.toFixed(1));

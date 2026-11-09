@@ -106,10 +106,13 @@ const MAX_STILLS = 240;
 /** `300,310-315` -> ticks, or {error}. A reversed or huge range is refused, never reordered. */
 export function parseStills(text) {
   const ticks = [];
-  for (const part of String(text ?? '').split(',').filter(Boolean)) {
+  for (const raw of (text ? String(text).split(',') : [])) {
+    const part = raw.trim();
+    if (!part) return { error: `--stills has an empty entry in ${text}` };
     const span = /^(\d+)-(\d+)$/.exec(part);
     if (!span) { ticks.push(Number(part)); continue; }
     const [from, to] = [Number(span[1]), Number(span[2])];
+    if (!Number.isSafeInteger(from) || !Number.isSafeInteger(to)) return { error: `--stills range ${part} is not a tick` };
     if (to < from) return { error: `--stills range ${part} runs backwards` };
     if (to - from >= MAX_STILLS) return { error: `--stills range ${part} is over ${MAX_STILLS} frames` };
     for (let t = from; t <= to; t += 1) ticks.push(t);
@@ -120,7 +123,7 @@ export function parseStills(text) {
 /** `fire:3+4,kill:1` -> [{kind, nth, after}], or {error}. */
 export function parseOn(text) {
   const rules = [];
-  for (const part of String(text ?? '').split(',').filter(Boolean)) {
+  for (const part of (text ? String(text).split(',') : [])) {
     const m = /^(fire|kill):([1-9]\d*)(?:\+(\d+))?$/.exec(part);
     if (!m) return { error: `--on takes fire:<n>[+<frames after>] or kill:<n>[+<frames after>], got ${part}` };
     const after = Number(m[3] ?? 0);
@@ -140,6 +143,7 @@ export function triggeredTicks(rules, events, runTicks) {
     if (!Array.isArray(happened)) { reasons.push(`--on ${name}: this probe records no ${kind} events`); continue; }
     if (happened.length < nth) { reasons.push(`--on ${name} never happened: ${happened.length} ${kind} event(s) in ${runTicks} ticks`); continue; }
     const at = happened[nth - 1];
+    if (!Number.isInteger(at) || at < 0) { reasons.push(`--on ${name} at tick ${at}: not a tick of this run`); continue; }
     if (at + after >= runTicks) reasons.push(`--on ${name} at tick ${at}: its last frame ${at + after} is past the end of the run (${runTicks} ticks)`);
     for (let t = at; t <= Math.min(at + after, runTicks - 1); t += 1) ticks.push(t);
   }

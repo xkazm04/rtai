@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Deterministic, dependency-free contact sheets for film stills.
-import { mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { basename, dirname, join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { deflateSync } from 'node:zlib';
@@ -36,7 +36,7 @@ export function parseArgv(argv) {
   }
   if (!dir || !flags.out) return { error: 'film directory and --out are required' };
   if (!/\.png$/i.test(flags.out)) return { error: '--out must name a .png file (it is deleted first, so it cannot be anything else)' };
-  if (resolve(dirname(flags.out)) === resolve(dir) && /^t\d+\.png$/i.test(basename(flags.out))) return { error: `--out ${flags.out} would replace one of the film's own frames` };
+  if (resolve(dirname(flags.out)).toLowerCase() === resolve(dir).toLowerCase() && /^t\d+\.png$/i.test(basename(flags.out))) return { error: `--out ${flags.out} would replace one of the film's own frames` };
   for (const key of ['cols', 'shrink']) {
     if (flags[key] === undefined) continue;
     if (!/^\d+$/.test(String(flags[key])) || !Number.isSafeInteger(Number(flags[key])) || Number(flags[key]) < 1) {
@@ -193,6 +193,7 @@ export async function main(argv, { out = console.log, err = console.error } = {}
   const { dir, flags } = parsed;
   const usage = (message) => { err(`sheet: ${message}\n${USAGE}`); return EXIT.usage; };
   try {
+    if (existsSync(flags.out) && statSync(flags.out).isDirectory()) return usage(`--out is a directory: ${flags.out}`);
     rmSync(flags.out, { force: true });
     try {
       if (!statSync(dir).isDirectory()) return usage(`not a directory: ${dir}`);
