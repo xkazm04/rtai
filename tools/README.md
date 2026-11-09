@@ -179,3 +179,18 @@ checked export. It stops at the first red and prints what to do; `--resume` carr
 merge in progress; a lane that does not exist. **It cannot push:** every git call goes through a short
 list of verbs, and `push`, `checkout`, `reset` and `branch` throw before git is called.
 A conflict only on a lane's `JOURNAL.md` or `REPORT.md` takes the lane's copy; any other conflict stops.
+
+## tools/dev/wt_init.mjs: make a fresh worktree able to run the game
+
+```
+git worktree add ../gtai-wt/my-lane -b my-lane main
+node tools/dev/wt_init.mjs ../gtai-wt/my-lane
+```
+
+Copies what a checkout lacks (native DLLs, the baked city, `.godot`, `native/godot-cpp`) from a sibling
+worktree and sets `core.hooksPath`, in about 16 s. `--dry-run` shows the plan, `--donor=<worktree>`
+picks where from. It never overwrites anything, and it says when a DLL or bake came from different
+code than your branch, by comparing the git objects: a stale DLL does not look like yours.
+
+**Refuses (exit 2):** a path that is not a checkout of this game, a donor that does not exist, an
+unknown flag. **Unverifiable (exit 3):** no donor has something it needs.
