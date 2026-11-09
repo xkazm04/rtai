@@ -29,7 +29,8 @@
         "2026-11-08: dev/frames: quest_dead_cam heap anchor + ease (n9 world it22), Dock 9 64 px/m capture (dev_loc 19571 -> 19591)",
         "2026-11-08: n9 merge: the combined growth of the four lanes (world, rivet, perf, handheld), each individually under its own baseline (dev_loc 19591 -> 19838)",
         "2026-11-08: block70 test branch: the dev still scene for the true-70 city block (dev_loc 19838 -> 19960)",
-        "2026-11-08: n10 world: block70_still --focus (one still per wall style, the walls' evidence) + its arg reader split (dev_loc 19960 -> 19971) (dev_loc 19960 -> 19971)"
+        "2026-11-08: n10 world: block70_still --focus (one still per wall style, the walls' evidence) + its arg reader split (dev_loc 19960 -> 19971) (dev_loc 19960 -> 19971)",
+        "2026-11-09: n10 merge: the lanes combined dev tooling growth (dev_loc 19971 -> 20284)"
       ],
       "files": {
         "project/dev/arena": 708,
@@ -38,7 +39,7 @@
         "project/dev/bench": 1684,
         "project/dev/bots": 399,
         "project/dev/enemy_ai": 662,
-        "project/dev/frames": 544,
+        "project/dev/frames": 545,
         "project/dev/ghost-forms": 616,
         "project/dev/ghost-powers": 1137,
         "project/dev/gunplay": 674,
@@ -50,7 +51,7 @@
         "project/dev/quest1_city_fit.gd": 18,
         "project/dev/quest1_city_fit_run.gd": 74,
         "project/dev/rivet_arsenal": 255,
-        "project/dev/rivet_motion": 1234,
+        "project/dev/rivet_motion": 1546,
         "project/dev/save_crash_loop.gd": 14,
         "project/dev/save_crash_writer.gd": 18,
         "project/dev/save_cross.gd": 18,
@@ -61,7 +62,7 @@
         "project/dev/view": 195,
         "project/dev/weapon_art": 506
       },
-      "total": 19971
+      "total": 20284
     },
     "direct_cmdline_reads": {
       "accepted": [

@@ -50,3 +50,5 @@ static func apply(args: PackedStringArray = OS.get_cmdline_user_args()) -> void:
 			RivetKnock.enabled = false
 		elif arg == "--rivet-reload=off":
 			RivetReload.enabled = false
+		elif arg == "--ghost-voice=facing":  # n10: the voice at his facing's own left, on his head
+			GhostApparition.clear_figure = false

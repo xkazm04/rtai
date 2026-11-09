@@ -240,7 +240,7 @@ static func fired(before: Vector2i, now: Vector2i) -> bool:
 
 
 ## rivet-arsenal: the live pilot's claw strikes and dodge rolls on Rivet's rig (row 0). While a
-## claw hit plays the gun is put away, so the strike reads on both arms.
+## claw hit or the roll (n10: not its recovery) plays the gun is put away, so the strike reads.
 func _rivet_clips(f: RigFeed) -> void:
 	var pilot: StagePilot = stage.pilot
 	if pilot == null or not stage.arena.rivet.alive():
@@ -276,7 +276,7 @@ func _rivet_clips(f: RigFeed) -> void:
 			f.clip_arg[0] = RigInput.pack_strike(THROW.x, THROW.y, THROW.z, BodyPlan.L)
 	_shots_seen = gun.shots_fired if gun != null else 0
 	var claws: bool = (pilot.melee.busy() and not pilot.wielding()) or pilot.shock.busy()
-	if claws or pilot.motion.phase != PlayerMotion.Phase.FREE or not _gun_shown(pilot):
+	if claws or pilot.motion.phase == PlayerMotion.Phase.ROLL or not _gun_shown(pilot):
 		f.flags[0] = 0
 
 

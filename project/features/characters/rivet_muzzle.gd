@@ -5,7 +5,8 @@ extends RefCounted
 ## spin whirl fell back to the GUN_SIDE_M spot on the ground beside him. Each drawn cell with a
 ## measured muzzle (data/tables/rivet_muzzle.json, tools/art/rivet_muzzle.py: a fire cell's drawn
 ## flash root, a left strip's gun tip) publishes it instead, mirrored with the cell. A cell without
-## a point (a facing, the base strip) keeps the caller's fallback. View only: writes no sim.
+## a point (the base strip, a facing whose gun does not point the shot's way) keeps the caller's
+## fallback. n10: a gun's facings 1/3/4 fired off the fire cell have one. View only: writes no sim.
 
 const TABLE: String = "res://data/tables/rivet_muzzle.json"
 const SCHEMA: String = "gtai.rivet-muzzle/1"

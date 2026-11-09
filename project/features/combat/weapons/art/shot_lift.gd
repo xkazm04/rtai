@@ -48,7 +48,17 @@ static func round_at(ci: CanvasItem, s: Shot, at: Vector2, flown: float) -> Vect
 	if s.spec.kind == WeaponSpec.Kind.THROWN or s.spec.kind == WeaponSpec.Kind.CONE:
 		return at
 	var dir: Vector2 = s.vel.normalized()
-	return at + line(ci, at - dir * clampf(flown, 0.0, 1.0), at)
+	var up: Vector2 = line(ci, at - dir * clampf(flown, 0.0, 1.0), at)
+	return at + up if up == Vector2.ZERO else at + up + to_muzzle(ci, s, flown, up)
+
+
+## n10: the pull that starts a lifted round on the drawn tip (HeldMuzzle; ZERO when none is
+## published), let go by WeaponFxArt.CONVERGE_M: the sim line starts at his middle, and a facing
+## fired up the screen draws the gun a head's width off it (flash on the gun, tracer on the helmet).
+static func to_muzzle(ci: CanvasItem, s: Shot, flown: float, up: Vector2) -> Vector2:
+	var line0: Vector2 = s.origin + s.vel.normalized().orthogonal() * WeaponFxArt.GUN_SIDE_M + up
+	var pull: float = clampf(1.0 - flown / WeaponFxArt.CONVERGE_M, 0.0, 1.0)
+	return (HeldMuzzle.at_m(ci, line0) - line0) * pull
 
 
 ## Rivet's flame jet `s`, `went` m out: its tongues at gun height. Near the nozzle they are pulled

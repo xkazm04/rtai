@@ -1,12 +1,12 @@
 {
- "doc": "d9 rivet: the owner-judged Rivet sheets (n8 verdict page, 2026-11-07) cut into game strips by rivet_frames.py --manifest. base = five facings + three drawn left facings + walk, sprint, roll, claw strike, hit, death; eq_<weapon> = five facings + fire/swing right, toward camera, at rest. Swap a sheet here and re-run (the plasma sword redraw is one line). rivet_eq_<weapon>_left = three drawn left facings holding a one-handed weapon in his right claw (the asset lane's answer to the d9 REQUEST), its own strip so the equipped cells never move. A _left row cuts by component (cc 0): the three left figures stand close and a gun or a spark of one crossed into its neighbour's column cut (a floating bell or flame beside him); p55 electro_baton_left keeps the column cut (its figures split into several large components). rivet_reload_<weapon>[_left] (n9 it11) = the library's claw reload (it137): five facings in the reload pose + the 3-frame reload at 3/4 toward right; fig_h per row = 110 x sqrt(eq dome / reload dome) where the facing cells' dome width is > 5 % off the equipped strip's (half the dome pop, half the height pop: DECISION rivet/reload-pack); act_k height-matches the 3 frames to cell 1 (the same view).",
+ "doc": "d9 rivet: the owner-judged Rivet sheets (n8 verdict page, 2026-11-07) cut into game strips by rivet_frames.py --manifest. base = five facings + three drawn left facings + walk, sprint, roll, claw strike, hit, death; eq_<weapon> = five facings + fire/swing right, toward camera, at rest. Swap a sheet here and re-run (the plasma sword redraw is one line). rivet_eq_<weapon>_left = three drawn left facings holding a one-handed weapon in his right claw (the asset lane's answer to the d9 REQUEST), its own strip so the equipped cells never move. A _left row cuts by component (cc 0): the three left figures stand close and a gun or a spark of one crossed into its neighbour's column cut (a floating bell or flame beside him); p55 electro_baton_left keeps the column cut (its figures split into several large components). rivet_reload_<weapon>[_left] (n9 it11) = the library's claw reload (it137): five facings in the reload pose + the 3-frame reload at 3/4 toward right; fig_h per row = 110 x sqrt(eq dome / reload dome) where the facing cells' dome width is > 5 % off the equipped strip's (half the dome pop, half the height pop: DECISION rivet/reload-pack); act_k height-matches the 3 frames to cell 1 (the same view). n10: the fire or swing band scales by its helmet match to the facings; where the measured ratio left the action figure >7 % off them (a shot shrank him) the row carries act_k set by eye from the strip (DECISION rivet/fire-cell-scale); p70 electro_baton_left carries feet_up so its feet, not the baton tip, stand on the cell floor (FOOT_PX).",
  "fig_h": 110,
  "library": "C:/Users/kazda/kiro/gtai-art/library/keyed/rivet",
  "out": "project/features/characters/art/view",
  "strips": {
   "p55": {
    "rivet_eq_chainsaw": {
-    "act_k": 1.0,
+    "act_k": 0.9,
     "counts": "5,3",
     "sheet": "rivet_eq_chainsaw_55_v3.png"
    },
@@ -20,6 +20,7 @@
     "sheet": "rivet_eq_electro_baton_55_left_v3.png"
    },
    "rivet_eq_electro_gun": {
+    "act_k": 0.8,
     "counts": "5,3",
     "sheet": "rivet_eq_electro_gun_55_v3.png"
    },
@@ -29,6 +30,7 @@
     "sheet": "rivet_eq_electro_gun_55_left.png"
    },
    "rivet_eq_flamethrower": {
+    "act_k": 0.84,
     "counts": "5,3",
     "sheet": "rivet_eq_flamethrower_55.png"
    },
@@ -37,6 +39,7 @@
     "sheet": "rivet_eq_gatling_55.png"
    },
    "rivet_eq_gloria": {
+    "act_k": 0.86,
     "counts": "5,3",
     "sheet": "rivet_eq_gloria_55.png"
    },
@@ -64,6 +67,7 @@
     "sheet": "rivet_eq_katana_55.png"
    },
    "rivet_eq_machine_pistol": {
+    "act_k": 0.82,
     "counts": "5,3",
     "sheet": "rivet_eq_machine_pistol_55.png"
    },
@@ -73,6 +77,7 @@
     "sheet": "rivet_eq_machine_pistol_55_left.png"
    },
    "rivet_eq_mini_nuke": {
+    "act_k": 0.92,
     "counts": "5,3",
     "sheet": "rivet_eq_mini_nuke_55.png"
    },
@@ -95,6 +100,7 @@
     "sheet": "rivet_eq_pistol_55_left.png"
    },
    "rivet_eq_plasma_rifle": {
+    "act_k": 0.85,
     "counts": "5,3",
     "sheet": "rivet_eq_plasma_rifle_55_v2.png"
    },
@@ -168,6 +174,7 @@
    "rivet_eq_electro_baton_left": {
     "cc": "0",
     "counts": "3",
+    "feet_up": "0.229,0.218,0.227",
     "sheet": "rivet_eq_electro_baton_70_left_v3.png"
    },
    "rivet_eq_electro_gun": {
@@ -180,6 +187,7 @@
     "sheet": "rivet_eq_electro_gun_70_left_v2.png"
    },
    "rivet_eq_flamethrower": {
+    "act_k": 0.9,
     "counts": "5,3",
     "sheet": "rivet_eq_flamethrower_70.png"
    },
@@ -188,6 +196,7 @@
     "sheet": "rivet_eq_gatling_70_v2.png"
    },
    "rivet_eq_gloria": {
+    "act_k": 0.88,
     "counts": "5,3",
     "sheet": "rivet_eq_gloria_70.png"
    },
@@ -224,6 +233,7 @@
     "sheet": "rivet_eq_machine_pistol_70_left.png"
    },
    "rivet_eq_mini_nuke": {
+    "act_k": 0.77,
     "counts": "5,3",
     "sheet": "rivet_eq_mini_nuke_70_v2.png"
    },
@@ -246,11 +256,12 @@
     "sheet": "rivet_eq_pistol_70_left.png"
    },
    "rivet_eq_plasma_rifle": {
+    "act_k": 0.83,
     "counts": "5,3",
     "sheet": "rivet_eq_plasma_rifle_70.png"
    },
    "rivet_eq_plasma_sword": {
-    "act_k": 0.95,
+    "act_k": 0.82,
     "counts": "5,3",
     "sheet": "rivet_eq_plasma_sword_70_v2.png"
    },

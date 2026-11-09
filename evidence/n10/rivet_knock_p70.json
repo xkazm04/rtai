@@ -1,0 +1,34 @@
+{
+ "art": "p70",
+ "cell": 198,
+ "cell_tone": {
+  "3,3": "3,2"
+ },
+ "impact_drop": 0.25,
+ "kneel": {
+  "drop": 0.04,
+  "k": 0.53,
+  "left": "mirrored",
+  "rows": [
+   0,
+   4,
+   2,
+   2
+  ],
+  "src": "rivet_getup_70"
+ },
+ "len_x_fig": 1.2,
+ "scales": [
+  0.2953,
+  0.2454,
+  0.3034,
+  0.2901
+ ],
+ "src": [
+  "rivet_knockdown_toward_70",
+  "rivet_knockdown_away_70_v4",
+  "rivet_knockdown_right_70_v2",
+  "rivet_knockdown_left_70_v2"
+ ],
+ "tone": "project/features/characters/art/view/p70/rivet_walk8.png"
+}

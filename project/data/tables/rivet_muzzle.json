@@ -1,5 +1,5 @@
 {
-  "doc": "d9 rivet: the muzzle point of Rivet's drawn strip cells, measured by tools/art/rivet_muzzle.py (px from the cell's top-left, unmirrored). The flamer's facing cells 0-4: the wand's nozzle; fire cells 5/6: the drawn flash's root; a one-handed left strip's cells 0-2: the gun's left tip. RivetMuzzle publishes it as HeldMuzzle while the drawn figure carries the weapon; a cell without a point keeps the caller's fallback spot.",
+  "doc": "d9 rivet: the muzzle point of Rivet's drawn strip cells, measured by tools/art/rivet_muzzle.py (px from the cell's top-left, unmirrored). The flamer's facing cells 0-4: the wand's nozzle; a gun's facing cells 1/3/4: its right tip; fire cells 5/6: the drawn flash's root; a one-handed left strip's cells 0-2: the gun's left tip. RivetMuzzle publishes it as HeldMuzzle while the drawn figure carries the weapon; a cell without a point keeps the caller's fallback spot.",
   "schema": "gtai.rivet-muzzle/1",
   "strips": {
     "p55": {
@@ -13,13 +13,25 @@
       },
       "rivet_eq_electro_gun": {
         "cells": {
+          "1": [
+            105,
+            55
+          ],
+          "3": [
+            104,
+            46
+          ],
+          "4": [
+            109,
+            50
+          ],
           "5": [
-            101,
-            65
+            118,
+            66
           ],
           "6": [
-            83,
-            87
+            95,
+            73
           ]
         }
       },
@@ -42,32 +54,32 @@
       "rivet_eq_flamethrower": {
         "cells": {
           "0": [
-            164,
-            94
+            177,
+            109
           ],
           "1": [
-            159,
-            87
+            172,
+            102
           ],
           "2": [
-            160,
-            67
+            173,
+            82
           ],
           "3": [
-            155,
-            62
+            168,
+            77
           ],
           "4": [
-            156,
-            60
+            169,
+            75
           ],
           "5": [
-            159,
-            94
+            178,
+            105
           ],
           "6": [
-            111,
-            62
+            124,
+            70
           ]
         }
       },
@@ -93,6 +105,18 @@
       },
       "rivet_eq_gatling": {
         "cells": {
+          "1": [
+            138,
+            80
+          ],
+          "2": [
+            139,
+            54
+          ],
+          "3": [
+            139,
+            51
+          ],
           "5": [
             144,
             73
@@ -105,18 +129,38 @@
       },
       "rivet_eq_gloria": {
         "cells": {
+          "1": [
+            111,
+            53
+          ],
+          "3": [
+            107,
+            49
+          ],
+          "4": [
+            110,
+            51
+          ],
           "5": [
-            100,
-            59
+            122,
+            49
           ],
           "6": [
-            62,
-            88
+            72,
+            82
           ]
         }
       },
       "rivet_eq_hand_cannon": {
         "cells": {
+          "3": [
+            107,
+            49
+          ],
+          "4": [
+            123,
+            48
+          ],
           "5": [
             128,
             42
@@ -145,6 +189,14 @@
       },
       "rivet_eq_homing_shard": {
         "cells": {
+          "3": [
+            107,
+            47
+          ],
+          "4": [
+            110,
+            48
+          ],
           "5": [
             137,
             56
@@ -173,13 +225,21 @@
       },
       "rivet_eq_machine_pistol": {
         "cells": {
+          "3": [
+            104,
+            46
+          ],
+          "4": [
+            102,
+            52
+          ],
           "5": [
-            105,
-            58
+            115,
+            53
           ],
           "6": [
-            63,
-            85
+            66,
+            80
           ]
         }
       },
@@ -201,18 +261,38 @@
       },
       "rivet_eq_mini_nuke": {
         "cells": {
+          "1": [
+            117,
+            68
+          ],
+          "3": [
+            127,
+            54
+          ],
+          "4": [
+            126,
+            61
+          ],
           "5": [
-            98,
-            73
+            128,
+            58
           ],
           "6": [
-            73,
-            75
+            98,
+            63
           ]
         }
       },
       "rivet_eq_pistol": {
         "cells": {
+          "3": [
+            95,
+            51
+          ],
+          "4": [
+            106,
+            54
+          ],
           "5": [
             116,
             51
@@ -241,18 +321,38 @@
       },
       "rivet_eq_plasma_rifle": {
         "cells": {
+          "1": [
+            132,
+            53
+          ],
+          "3": [
+            127,
+            51
+          ],
+          "4": [
+            130,
+            54
+          ],
           "5": [
-            117,
-            71
+            157,
+            57
           ],
           "6": [
-            68,
-            98
+            89,
+            92
           ]
         }
       },
       "rivet_eq_ray_gun": {
         "cells": {
+          "3": [
+            98,
+            54
+          ],
+          "4": [
+            103,
+            49
+          ],
           "5": [
             117,
             51
@@ -281,6 +381,18 @@
       },
       "rivet_eq_rocket_launcher": {
         "cells": {
+          "1": [
+            84,
+            62
+          ],
+          "3": [
+            98,
+            44
+          ],
+          "4": [
+            89,
+            45
+          ],
           "5": [
             90,
             64
@@ -303,6 +415,18 @@
       },
       "rivet_eq_electro_gun": {
         "cells": {
+          "1": [
+            125,
+            80
+          ],
+          "3": [
+            124,
+            64
+          ],
+          "4": [
+            127,
+            67
+          ],
           "5": [
             132,
             91
@@ -332,32 +456,32 @@
       "rivet_eq_flamethrower": {
         "cells": {
           "0": [
-            188,
-            130
+            215,
+            161
           ],
           "1": [
-            202,
-            128
+            229,
+            159
           ],
           "2": [
-            197,
-            103
-          ],
-          "3": [
-            195,
-            93
-          ],
-          "4": [
-            199,
-            91
-          ],
-          "5": [
-            195,
+            224,
             134
           ],
+          "3": [
+            222,
+            124
+          ],
+          "4": [
+            226,
+            122
+          ],
+          "5": [
+            234,
+            161
+          ],
           "6": [
-            141,
-            80
+            169,
+            97
           ]
         }
       },
@@ -383,6 +507,18 @@
       },
       "rivet_eq_gatling": {
         "cells": {
+          "1": [
+            138,
+            90
+          ],
+          "2": [
+            159,
+            76
+          ],
+          "3": [
+            152,
+            65
+          ],
           "5": [
             169,
             102
@@ -395,18 +531,38 @@
       },
       "rivet_eq_gloria": {
         "cells": {
+          "1": [
+            157,
+            93
+          ],
+          "3": [
+            157,
+            74
+          ],
+          "4": [
+            153,
+            80
+          ],
           "5": [
-            143,
-            85
+            184,
+            97
           ],
           "6": [
-            82,
-            83
+            105,
+            103
           ]
         }
       },
       "rivet_eq_hand_cannon": {
         "cells": {
+          "3": [
+            139,
+            59
+          ],
+          "4": [
+            152,
+            62
+          ],
           "5": [
             161,
             75
@@ -435,6 +591,14 @@
       },
       "rivet_eq_homing_shard": {
         "cells": {
+          "3": [
+            144,
+            75
+          ],
+          "4": [
+            146,
+            78
+          ],
           "5": [
             160,
             90
@@ -463,6 +627,14 @@
       },
       "rivet_eq_machine_pistol": {
         "cells": {
+          "3": [
+            127,
+            55
+          ],
+          "4": [
+            133,
+            64
+          ],
           "5": [
             157,
             69
@@ -491,18 +663,38 @@
       },
       "rivet_eq_mini_nuke": {
         "cells": {
+          "1": [
+            142,
+            102
+          ],
+          "3": [
+            137,
+            78
+          ],
+          "4": [
+            143,
+            94
+          ],
           "5": [
-            116,
-            95
+            149,
+            110
           ],
           "6": [
-            73,
-            90
+            94,
+            105
           ]
         }
       },
       "rivet_eq_pistol": {
         "cells": {
+          "3": [
+            153,
+            62
+          ],
+          "4": [
+            159,
+            64
+          ],
           "5": [
             169,
             75
@@ -531,18 +723,38 @@
       },
       "rivet_eq_plasma_rifle": {
         "cells": {
+          "1": [
+            167,
+            95
+          ],
+          "3": [
+            170,
+            84
+          ],
+          "4": [
+            167,
+            95
+          ],
           "5": [
-            150,
-            81
+            186,
+            100
           ],
           "6": [
-            90,
-            87
+            111,
+            108
           ]
         }
       },
       "rivet_eq_ray_gun": {
         "cells": {
+          "3": [
+            185,
+            100
+          ],
+          "4": [
+            191,
+            90
+          ],
           "5": [
             216,
             114
@@ -571,6 +783,18 @@
       },
       "rivet_eq_rocket_launcher": {
         "cells": {
+          "1": [
+            140,
+            71
+          ],
+          "3": [
+            143,
+            48
+          ],
+          "4": [
+            135,
+            50
+          ],
           "5": [
             130,
             72

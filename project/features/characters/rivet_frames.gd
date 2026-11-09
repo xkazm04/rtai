@@ -1,8 +1,7 @@
 class_name RivetFrames
 extends RefCounted
 ## Lane d9 rivet: under a card-art view (p70 play, p55 boss) Rivet is one drawn figure, the parts
-## hidden. Strips (RivetStrips): BASE, EQ per weapon, LEFT (one-handed holds); grids: RivetWalk,
-## RivetKnock (n9). The art key's change swaps the strip (the combo's hard swap).
+## hidden. Strips: RivetStrips; grids: RivetWalk, RivetKnock; the art key's change swaps the strip.
 enum Cell { WALK = 8, SPRINT = 9, ROLL = 10, CLAW = 11, HIT = 12, DEATH = 13 }
 enum Eq { FIRE_SIDE = 5, FIRE_CAM = 6, REST = 7 }
 
@@ -72,12 +71,15 @@ static func weapon_of(rig: CutRig) -> StringName:
 static func publish(rig: CutRig, held: StringName, gun: GunHand) -> void:
 	rig.set_meta(WEAPON, held)
 	var t: Trigger = gun.trigger if gun != null and gun.trigger.spec.id == held else null
-	rig.set_meta(FIRE, t != null and t.cooldown > maxi(0, t.spec.interval_ticks - FIRE_TICKS))
+	var fire: bool = t != null and t.cooldown > maxi(0, t.spec.interval_ticks - FIRE_TICKS)
+	var rose: bool = fire and rig.get_meta(FIRE, false) != true
+	rig.set_meta(FIRE, fire)
+	if rose:  # n10: the pose ran before the latch; the shot's own frame takes its fire cell
+		step(rig)
 	RivetMuzzle.publish(rig)  # the drawn cell's muzzle (the held part is hidden then)
 
 
-## True while Rivet is one drawn figure: RivetHeldView feeds no magazine part then (no bottle or
-## tank has one either); a part beside a drawn figure floats off it (it6: at his helmet on reload).
+## True while Rivet is one drawn figure: RivetHeldView feeds no magazine part then (no bottle/tank).
 static func drawn(rig: CutRig) -> bool:
 	return rig.head_card != null and rig.head_card.has_meta(ON)
 
@@ -111,8 +113,8 @@ static func cell_of(rig: CutRig, cells: int, walk_ph: float = -1.0) -> Vector2i:
 			return Vector2i(Cell.HIT, 0)
 		return Vector2i(BASE_OCT[o], 0)
 	if RivetStrips.draws_fire(rig, weapon_of(rig), o, RivetStrips.fire_latched(rig)):
-		return Vector2i(Eq.FIRE_CAM if o == 2 else Eq.FIRE_SIDE, left)
-	if not rig.aiming and rig.speed_now <= MOVING and o in [1, 2, 3]:
+		return Vector2i(Eq.FIRE_CAM if o == 2 or RivetFireCam.drawn(rig) else Eq.FIRE_SIDE, left)
+	if not rig.aiming and not RivetWalk.moving(rig) and o in [1, 2, 3]:
 		return Vector2i(Eq.REST, 0)
 	return Vector2i(EQ_OCT[o], left)
 
@@ -189,10 +191,8 @@ static func _set_strip(card: Sprite2D, path: String) -> void:
 		return
 	card.texture = _tex.get_or_add(path, load(path) as Texture2D)
 	card.frame = 0  # the walk grid's 32 frames vs a strip's 3-14: never out of range mid-swap
-	var left: bool = path.ends_with("_left.png")
 	var cols: int = RivetWalk.cols_of(path)
-	card.hframes = RivetStrips.cells_of(path, left)
-	card.hframes = cols if cols > 0 else card.hframes
+	card.hframes = cols if cols > 0 else RivetStrips.cells_of(path, path.ends_with("_left.png"))
 	card.vframes = RivetWalk.ROWS if cols > 0 else 1
 	var w: float = card.texture.get_width() / float(card.hframes)
 	var foot: float = RivetStrips.foot_px(path)

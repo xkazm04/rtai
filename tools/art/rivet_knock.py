@@ -37,6 +37,9 @@ FIG_H = 110.0
 IMPACT_DROP = 0.25
 KNEEL_DROP = 0.04  # the kneel's feet on his ground point, where the stand puts them
 MIN_BLOB = 40
+## n10: a cell a tone off its own row, matched per channel to a neighbour after the strip's tone: p70 left's down cell
+## (rivet_knockdown_left_70_v2 frame 4) drew L 93 beside the row's 80-82, a pale flash for all of his lying time.
+CELL_TONE = {"p70": {(3, 3): (3, 2)}}
 
 
 def _cells(name: str) -> list:
@@ -95,6 +98,21 @@ def _tone(out: Image.Image, ref_path: str) -> Image.Image:
     return Image.fromarray(np.round(a).astype(np.uint8), "RGBA")
 
 
+def _match_cell(out: Image.Image, cell: int, dst: tuple, ref: tuple) -> Image.Image:
+    """Cell `dst` (row, col) takes the opaque mean and spread per channel of cell `ref`; alpha untouched."""
+    a = np.asarray(out).astype(np.float64)
+    def _box(rc: tuple) -> tuple:
+        return (rc[0] * cell, (rc[0] + 1) * cell, rc[1] * cell, (rc[1] + 1) * cell)
+    y0, y1, x0, x1 = _box(dst)
+    ry0, ry1, rx0, rx1 = _box(ref)
+    d, r = a[y0:y1, x0:x1], a[ry0:ry1, rx0:rx1]
+    m, rm = d[:, :, 3] > 200, r[:, :, 3] > 200
+    mu, sd = d[:, :, :3][m].mean(0), d[:, :, :3][m].std(0)
+    rmu, rsd = r[:, :, :3][rm].mean(0), r[:, :, :3][rm].std(0)
+    d[:, :, :3] = np.clip((d[:, :, :3] - mu) * (rsd / sd) + rmu, 0, 255)
+    return Image.fromarray(np.round(a).astype(np.uint8), "RGBA")
+
+
 def main() -> None:
     opts = {a.split("=")[0][2:]: a.split("=", 1)[1] for a in sys.argv[1:] if a.startswith("--")}
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
@@ -132,11 +150,14 @@ def main() -> None:
             out.alpha_composite(c, (x, y))
     if "tone" in opts:
         out = _tone(out, opts["tone"])
+    for d, r in CELL_TONE.get(art, {}).items():
+        out = _match_cell(out, cell, d, r)
     out.save(dst, optimize=True)
     meta = {"art": art, "cell": cell, "len_x_fig": float(opts.get("len", 1.45)), "scales": ks}
     meta["src"] = ["rivet_knockdown_" + n for n in PICKS[art]]
     meta["tone"] = opts.get("tone", "")
     meta["impact_drop"] = IMPACT_DROP
+    meta["cell_tone"] = {f"{d[0]},{d[1]}": f"{r[0]},{r[1]}" for d, r in CELL_TONE.get(art, {}).items()}
     meta["kneel"] = {"src": GETUP[art], "rows": KNEEL_ROW, "k": KNEEL_K[art], "left": "mirrored", "drop": KNEEL_DROP}
     if "json" in opts:
         with open(opts["json"], "w", encoding="utf-8") as fh:

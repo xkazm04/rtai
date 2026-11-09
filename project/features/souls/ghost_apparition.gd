@@ -20,6 +20,9 @@ const TURN_IN: float = deg_to_rad(20.0)
 ## Tonnage's apparition is a voice, not the 3x body: drawn at this scale, a little further out.
 const BIG_K: float = 0.6
 const BIG_SIDE_M: float = 2.1
+## A side direction with y under this points up the screen, onto his drawn figure (side_of).
+const UP_SCREEN: float = -0.7
+static var clear_figure: bool = true
 
 var reduced_motion: bool = false
 ## > 0 (dev `--apparition`): a ghost speaks every this many ticks, the four in table order.
@@ -93,6 +96,14 @@ func speaking() -> bool:
 	return _age >= 0
 
 
+## n10: the ground direction of the side spot. Under a tilt, a left that points up the screen
+## lands on Rivet's own 1.65 m figure (the voice covered his head while he faced right), so it takes
+## the screen's left instead. `--ghost-voice=facing` (CastFlags) keeps the facing's own left.
+static func side_of(fwd: Vector2, tilted: bool) -> Vector2:
+	var side: Vector2 = fwd.orthogonal()
+	return Vector2.LEFT if clear_figure and tilted and side.y < UP_SCREEN else side
+
+
 ## Alpha 0..1 at `age` ticks into a voice held `hold` ticks (in, hold, out; 0 when done).
 static func envelope(age: int, hold: int) -> float:
 	if age < 0:
@@ -125,9 +136,8 @@ func _pose(at: Vector2, facing: float, steps: int, tick: int) -> void:
 	var fwd: Vector2 = Vector2.from_angle(facing)
 	var side_m: float = BIG_SIDE_M if big else SIDE_M
 	var drift: float = 0.0 if reduced_motion else sin(_age * 0.045) * 0.08
-	var spot: Vector2 = (
-		at + (fwd.orthogonal() * (side_m + drift) - fwd * BACK_M) * SimConst.PX_PER_M
-	)
+	var side: Vector2 = side_of(fwd, not ViewMode.shared().art.is_empty())
+	var spot: Vector2 = at + (side * (side_m + drift) - fwd * BACK_M) * SimConst.PX_PER_M
 	var pop: float = 1.0 if reduced_motion else lerpf(0.88, 1.0, minf(1.0, _age / float(FADE_IN)))
 	var rig: Node2D = _rigs[id]
 	if rig == _dent:

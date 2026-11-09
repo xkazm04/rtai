@@ -95,6 +95,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--rivet-stride",
 	# n9-rivet: --rivet-knock=off keeps the death sprawl while a car's knock lies him down
 	"--rivet-knock",
+	# n10-rivet: --ghost-voice=facing keeps a speaking ghost at his facing's own left (on his head)
+	"--ghost-voice",
 	# n9-rivet: --rivet-flame=cone brings back d9's flamer (the drawn flame on 3 octants only);
 	# --rivet-flame=side fires the side cell on the diagonals too (no drawn diagonal flame);
 	# --rivet-flame=all draws the fire cell at any aim (it9: the side flame under an up jet)
