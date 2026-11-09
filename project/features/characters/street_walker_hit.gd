@@ -18,6 +18,14 @@ const GRIDS: Dictionary[String, String] = {
 	"ped/head_hair": "p70/ped_suit_hit.png",
 	"ped/head_worker": "p70/ped_worker_hit.png",
 }
+## it14: a kind with drawn wound sites (the asset lane's shoulder clutch and gut fold, street_hit.py
+## SITES) draws them on a LIVING wound: a flinch clutches the shoulder, a stagger folds over the
+## gut; the thrown-back cell stays the death's opening. SITES false = every wound the thrown cell.
+const SITES: bool = true
+const SITE_GRIDS: Dictionary[String, Dictionary] = {
+	"cop/head_cap":
+	{&"flinch": "p70/cop_patrol_shoulder_hit.png", &"stagger": "p70/cop_patrol_gut_hit.png"},
+}
 ## Family -> seconds the drawn cell holds from the blow (the rest of the family is the shoved walk).
 const HOLD_S: Dictionary[StringName, float] = {&"flinch": 0.2, &"stagger": 0.34}
 ## A death of these kinds opens on the same thrown-back cell over the fall grid's buckle (a body
@@ -38,7 +46,10 @@ static func grid_of(rig: CutRig, row: String) -> String:
 	if r.dying:
 		var open: bool = DEATH_KINDS.has(r.kind) and r.progress() < StreetWalkerFall.FALL_AT[1]
 		return GRIDS[row] if open else ""
-	return GRIDS[row] if HOLD_S.has(r.kind) and r.t < float(HOLD_S[r.kind]) else ""
+	if not HOLD_S.has(r.kind) or r.t >= float(HOLD_S[r.kind]):
+		return ""
+	var sites: Dictionary = SITE_GRIDS.get(row, {}) if SITES else {}
+	return str(sites[r.kind]) if sites.has(r.kind) else GRIDS[row]
 
 
 ## True when `path` is one of the hit grids (StreetWalkerCards drops it when the hold ends).

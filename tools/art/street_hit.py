@@ -32,6 +32,9 @@ SHEETS = {
     "ped_suit": ("ped_suit_hit.png", None, False),
     "ped_worker": ("ped_worker_hit.png", None, False),
 }
+# it14: the per-site flinch cells drawn for a kind (<site>_<col>.png, the right-hand facings 1..5;
+# the left ones mirror as the grid does), each to <kind>_<site>_hit.png on the same layout.
+SITES = {"cop_patrol": ["shoulder", "gut"]}
 
 
 def foot_x(alpha: np.ndarray) -> float:
@@ -64,11 +67,13 @@ def cell(path: Path, out: Image.Image, col: int) -> None:
     out.alpha_composite(im, (x, y))
 
 
-def build(lib: Path, name: str, spec: tuple, tmp: Path) -> None:
+def build(lib: Path, name: str, spec: tuple, tmp: Path, site: str = "1") -> None:
     file, ref, band = spec
+    if site != "1":
+        file = file.replace("_hit.png", f"_{site}_hit.png")
     sheet = Image.new("RGBA", (CELL_W * 5, CELL_H), (0, 0, 0, 0))
     for col in range(5):
-        cell(lib / f"{name}_hit_70_cells/1_{col + 1}.png", sheet, col)
+        cell(lib / f"{name}_hit_70_cells/{site}_{col + 1}.png", sheet, col)
     here = tmp / file
     sheet.save(here)
     tools = Path(__file__).parent
@@ -88,6 +93,8 @@ def main() -> None:
     with tempfile.TemporaryDirectory() as t:
         for name, spec in SHEETS.items():
             build(lib, name, spec, Path(t))
+            for site in SITES.get(name, []):
+                build(lib, name, spec, Path(t), site)
 
 
 if __name__ == "__main__":

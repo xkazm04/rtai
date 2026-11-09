@@ -94,3 +94,32 @@ func test_no_wound_moves_nothing() -> void:
 func test_a_hit_grid_is_dropped_when_its_hold_ends() -> void:
 	assert_true(StreetWalkerHit.is_grid(StreetWalkerCards.DIR + "p70/cop_patrol_hit.png"))
 	assert_false(StreetWalkerHit.is_grid(StreetWalkerCards.DIR + "p70/cop_patrol_armed_walk.png"))
+
+
+func test_a_living_wound_draws_its_site_and_a_death_the_thrown_cell() -> void:
+	var row: String = "cop/head_cap"
+	assert_eq(
+		StreetWalkerHit.grid_of(_cop(&"flinch", 0.05), row), "p70/cop_patrol_shoulder_hit.png"
+	)
+	assert_eq(StreetWalkerHit.grid_of(_cop(&"stagger", 0.05), row), "p70/cop_patrol_gut_hit.png")
+	var dying: CutRig = _cop(&"death_bullet", 0.0)
+	dying.react.dying = true
+	dying.react.length = 1.0
+	assert_eq(StreetWalkerHit.grid_of(dying, row), StreetWalkerHit.GRIDS[row], "death: thrown back")
+	assert_eq(
+		StreetWalkerHit.grid_of(_cop(&"flinch", 0.05), "cop/head_helmet"),
+		StreetWalkerHit.GRIDS["cop/head_helmet"],
+		"a kind with no sites keeps the thrown cell"
+	)
+
+
+func test_every_site_grid_loads_as_five_facings() -> void:
+	for row: String in StreetWalkerHit.SITE_GRIDS:
+		var sites: Dictionary = StreetWalkerHit.SITE_GRIDS[row]
+		for kind: StringName in sites:
+			var path: String = StreetWalkerCards.DIR + str(sites[kind])
+			assert_true(StreetWalkerHit.is_grid(path), path)
+			var tex: Texture2D = load(path) as Texture2D
+			assert_not_null(tex, path)
+			if tex != null:
+				assert_eq(tex.get_width() % RigHeadCard.FRAMES, 0, "%s whole facings" % path)
