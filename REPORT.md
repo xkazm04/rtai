@@ -1,4 +1,4 @@
-# REPORT: night n10, lane world (draft, updated 2026-11-09 01:44)
+# REPORT: night n10, lane world (draft, updated 2026-11-09 02:00)
 
 Evidence: `C:\Users\kazda\kiro\gtai-masters\n10\world\` (`frames.json`). Every performance number is unmeasured so far.
 
@@ -14,13 +14,14 @@ Evidence: `C:\Users\kazda\kiro\gtai-masters\n10\world\` (`frames.json`). Every p
    - Each near body has a contact shadow (its own silhouette, down the sun).
    - Each body now shows a sliver of its near side, a shaded copy of its silhouette 0.16 m of height below the pose (`579ef0f4`), on both draw paths. Subtle: the lower edge is heavier and the body sits on the road. 0.32 m doubled the fingers and boots. `dead_side_dock9_64.png`.
    - Dock 9's dead no longer touch once settled. The push measures between the drawn bodies, relaxes over 8 passes, and a body a crowd still defeats takes the nearest clear spot (`SPACE_M` 2.1, cap 2.4). `dead_dock9_centres_64.png` and `dead_dock9_centres_32.png`, same tick t13900: before, three bodies chain together; after, four lie clear.
+   - **A near corpse no longer jumps 1.5 s after it dies** (`39f4e53c`). After its 90-tick hold a body used to go back to the baked crowd: measured over a riot film, 18 hand-overs in 23 s, each jumping 0.6-3.1 m (median 2.1 m), losing its shadow and near side. `StreetDeadRest` keeps its drawn pose, shadow and near side where it lay until the body leaves the feed. Pairs either side of a hand-over: `dead_swap_kept_64.png` (top, before: the pink body vanishes, and the atlas draws it at its sim point about 2 m away, here under other bodies; bottom, after: it stays and the living draw over it) and `dead_swap_kept_32.png`.
    - Same seed and tick, before = `StreetDeadHeading.ENABLED` false: `dead_riot_before_after_64.png`, `dead_riot_before_after_32.png`.
    - **The riot's near bodies are pushed off each other too** (`fdc80496`), with the city's solid test so a push cannot end in a wall. The two corpses that lay on top of the standing cops are off them. `dead_riot_push_64.png`, `dead_riot_push_32.png`, same seed and tick. Dock 9's frame is byte-identical to before this change.
 
 ## What does not work yet
 
 - **The art is still the n9 plan poses.** This is the code half of the owner's note: the poses are placed on drawn headings but are not yet drawn for this camera. REQUEST 2 in JOURNAL asks for them.
-- **The riot's pile is only partly solved.** The push moves corpses, but only near rigs: the baked far crowd's bodies are not pushed, and the living melee stays dense. One pushed body now lies among the crowd's legs (`dead_riot_push_64.png`, top). A pushed body also sits up to 2.4 m from its blood, and can jump that far when a rig is swapped for the baked crowd; that swap was not filmed.
+- **The riot's pile is only partly solved.** The push moves corpses, but only near rigs: the baked far crowd's bodies are not pushed, and the living melee stays dense. One pushed body now lies among the crowd's legs (`dead_riot_push_64.png`, top). A pushed body also sits up to 2.4 m from its blood. Bodies the rigs never drew (those falling far from Rivet) still draw from the atlas, at their sim point, without shadow or near side. A kept body gives way when it passes the feed radius (18 m from Rivet), so at the far edge of the view a body can still pop to the atlas.
 - **While a body is still falling, it can pass over a neighbour.** Its push eases in over 24 ticks, so for that moment it can overlap one already lying (`DRAWDBG`: t13800, age 9). Settled frames are clear; the mid-fall crossing is not fixed.
 - **The far crowd has no contact shadow** (near rigs and Dock 9 only).
 - **The lamp post card stays as drawn.** I had called it a stub and asked for a lamp three times a person's height (REQUEST 1), then measured it: 65 px against Rivet's 53 px at 32 px/m, and the half-height walls are 49-121 px, so a taller lamp would stand over the walls. REQUEST 1 is withdrawn; the art is the library's `lamp_70_v4`, drawn for this camera.
