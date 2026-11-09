@@ -323,3 +323,17 @@ Freeze checks, no Godot run and no game code touched: `git diff --name-only 08e2
 QUEUE EMPTY: Items 1, 2 and 4 done or reported as Calls (w-2, w-3, w-6); item 3 done for what code can reach, blocked on REQUEST 3 art (11 of 13 street classes, Dock 9's contractors and the far crowd stay on plan poses). Performance unmeasured, no bench was run.
 
 NEXT: The Director merges `n10-world`. The art needs the asset loop restarted and round `20261108-1800` re-run; then add each class to `StreetDead70.CLASSES` and `tools/art/dead_70.py`, film it, and re-run evidence, reels x3, bake and export.
+
+
+---- session 07:40 (iteration 32, REPORT) ----
+Read at open: tree clean at 9fb27658. No game code touched, no Godot run. No art newer than 18:00 on 11-08 in `library/deliveries/` or `library/rounds/` (0 files); round `20261108-1800`'s `out/` is empty; no `REQUEST -> world` in the rivet, perf or handheld journals.
+
+Checked: all 21 frames REPORT names are on disk, all commits it names exist, `build/evidence/` five kinds stamped `08e2f56b` and pass, exe sha256 starts `8aa18f48808f55e6`, `git diff --name-only 08e2f56b HEAD` is journal, report and decisions only.
+
+FOUND: `frames.json` named `lamp_cast_32_before.png` as the lamp's before, and that file is gone, kept nowhere. The entry's note also still called the post a stub, and REQUEST 1 was withdrawn at 23:34. `wall_tenement_48_after.png` had no before. Both now point at `d10/block70/h05_32.png`, marked as a different block, and REPORT lists the two subjects as short of the brief's before/after rather than filming anything new.
+
+REPORT made final: a summary, how long each blocker held, the evidence gap, the idle sessions since 03:40.
+
+QUEUE EMPTY: Items 1, 2 and 4 done or reported as Calls (w-2, w-3, w-6); item 3 done for what code can reach, blocked on REQUEST 3 art (11 of 13 street classes, Dock 9's contractors and the far crowd stay on plan poses). Performance unmeasured, no bench was run.
+
+NEXT: The Director merges `n10-world`. The art needs the asset loop restarted and round `20261108-1800` re-run; then add each class to `StreetDead70.CLASSES` and `tools/art/dead_70.py`, film it, and re-run evidence, reels x3, bake and export.
