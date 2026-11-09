@@ -53,6 +53,6 @@ func _draw() -> void:
 	if _arena == null:
 		return
 	for d: Vector2 in _arena.rifle_drops:
-		draw_line(Ink.px(d + Vector2(-0.4, 0.1)), Ink.px(d + Vector2(0.4, -0.1)), Ink.INK, 5.0)
+		GroundRifle.draw(self, d, _arena.rivet.pos)
 	if _fx != null:
 		_fx.scorch.draw(self, _tick)
