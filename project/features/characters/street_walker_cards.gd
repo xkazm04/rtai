@@ -66,8 +66,12 @@ static func strip_of(rig: CutRig) -> String:
 	if not ENABLED or rig.head_card == null:
 		return ""
 	var ped: bool = rig.plan.art_dir == "ped"
+	var hit: String = StreetWalkerHit.grid_of(rig, row_of(rig))
+	if not hit.is_empty():
+		return DIR + hit
 	var on: String = rig.head_card.get_meta(ON, "")
-	if not on.is_empty() and not StreetWalkerFall.down(rig) and not on.ends_with("_fall.png"):
+	var stale: bool = on.ends_with("_fall.png") or StreetWalkerHit.is_grid(on)
+	if not on.is_empty() and not StreetWalkerFall.down(rig) and not stale:
 		if ped or (rig.strike_arm < 0 and rig.throw_t < 0.0 and rig.reload_k < 0.0):
 			return on  # a living walker's strip: unchanged until a card or art change drops it
 	var art: String = ViewMode.shared().art
@@ -167,7 +171,13 @@ static func place(rig: CutRig, card: Sprite2D) -> void:
 		)
 		walk = 0.0
 	var stride: float = sin(TAU * rig.phase)
-	var fall: Vector2 = StreetWalkerFall.pose(rig, card)
-	card.global_rotation = stride * SWAY * walk + fall.x
+	var hit: bool = StreetWalkerHit.is_grid(str(card.get_meta(ON, "")))
+	var fall: Vector2 = Vector2(0.0, 1.0) if hit else StreetWalkerFall.pose(rig, card)
+	var wound: Vector3 = StreetWalkerHit.shove(rig)
+	card.global_rotation = stride * SWAY * walk + fall.x + wound.z
 	card.global_scale = Vector2(s, s * fall.y)
-	card.global_position = rig.global_position - Vector2(0.0, absf(stride) * BOB_PX * walk)
+	card.global_position = (
+		rig.global_position - Vector2(0.0, absf(stride) * BOB_PX * walk) + Vector2(wound.x, wound.y)
+	)
+	if hit:
+		StreetWalkerHit.face(card, rig.react.dir.rotated(rig.facing))

@@ -54,6 +54,8 @@ static func prefetch_fall(rig: CutRig, art: String, row: String) -> void:
 		var walks: Dictionary = StreetWalkerCards.WALKS.get(art, {})
 		for key: String in walks:
 			prefetch(StreetWalkerCards.DIR + art + "/" + str(walks[key]))
+		for key: String in StreetWalkerHit.GRIDS:
+			prefetch(StreetWalkerCards.DIR + str(StreetWalkerHit.GRIDS[key]))
 	var grid: String = StreetWalkerFall.path_of(art, row)
 	if not grid.is_empty():
 		prefetch(StreetWalkerCards.DIR + grid)
