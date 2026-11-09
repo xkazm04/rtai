@@ -52,6 +52,11 @@ the view has already read it. `--lock=at:<tick>` has no such frame.
 
 A film whose assets changed since the last import runs `--import` first and says which: Godot does
 not re-import on its own, so a film after a PNG swap drew the old pixels and looked like a result.
+The check is the source's MD5 against the one recorded at import, not its date: a Windows or `cp -p`
+copy keeps an old date, and Godot's own `--import` trusts the date and skips it. So film gives every
+stale source a new date before importing, checks again afterwards, and calls the film
+**unverifiable** if anything still does not match. The first film in a tree hashes every asset once
+(it says so; under a minute), later ones only what changed.
 
 To compare the frame something happened on, learn the tick once with `--on`, then compare it:
 `node tools/film/compare.mjs ... --at=333`. The tick is the same on both sides as long as the change
@@ -163,9 +168,16 @@ and leaves a review queue. **It never lands a file:** the score can only reject,
 means "Claude should read this", nothing more. After your review, copy the test from the task's worktree
 yourself and `discard` the task.
 
+Every run writes a `started` line first, so a run killed from outside (a timeout of yours shorter than
+the factory's own, a session that ended) shows in `queue` as STARTED AND NEVER FINISHED instead of
+vanishing from the count. Running a discarded task again gets a new id (`-r2`), because the dispatcher
+keeps the old run's record and refuses that id. Give the factory no outer timeout shorter than about
+45 min: Codex, then the unit run, then mutation.
+
 The ledger keeps measured and estimated apart. Measured: Codex seconds, machine results, verdicts,
 lines review changed, the dollars of the sessions that reviewed. Estimated, and labelled so: one
-session's cost split across the tasks it reviewed. Unmeasured until a control run exists: the Claude
+session's cost split across the tasks it reviewed, which is an upper bound, since a session also
+builds other things. Unmeasured until a control run exists: the Claude
 cost of writing the same tests without Codex.
 
 **Refuses to pick:** generators, tuned tables, drawing code, anything touching a scene or the disk,
@@ -201,4 +213,6 @@ picks where from. It never overwrites anything, and it says when a DLL or bake c
 code than your branch, by comparing the git objects: a stale DLL does not look like yours.
 
 **Refuses (exit 2):** a path that is not a checkout of this game, a donor that does not exist, an
-unknown flag. **Unverifiable (exit 3):** no donor has something it needs.
+unknown flag. **Unverifiable (exit 3):** no donor has something it needs, or the tree still is not
+usable after the copy (judged on your tree afterwards: a donor's bake can be whole for its own chunk
+list and short for yours).
