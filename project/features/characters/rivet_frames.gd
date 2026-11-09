@@ -49,7 +49,7 @@ static func step(rig: CutRig) -> void:
 	if path != "" and LEFT[oct_of(rig)] == 1 and RivetStrips.ONE_HAND.has(weapon):
 		path = RivetStrips.left_of(art, weapon)
 	path = walk if walk != "" else RivetReload.held_or(rig, art, weapon, path)
-	path = RivetKnock.path_or(rig, art, path)  # n9: a car's knock wins over the DOWN sprawl
+	path = RivetKnock.path_or(rig, art, RivetStrike.path_or(rig, art, weapon, path))
 	if not ENABLED or path.is_empty():
 		release(rig)
 		return
@@ -128,8 +128,7 @@ static func place(rig: CutRig, card: Sprite2D) -> void:
 	var art: String = ViewMode.shared().art
 	var h: float = HEIGHT_BY_ART.get(art, HEIGHT_M) * height_k * PlayerScale.k()
 	var s: float = h * CharacterRigs.PX_PER_M / FIG_PX
-	if RivetKnock.shows(card):
-		RivetKnock.place(rig, card, s, h * CharacterRigs.PX_PER_M)
+	if RivetStrike.placed(rig, card, s, h * CharacterRigs.PX_PER_M):
 		return
 	var drawn_walk: bool = RivetWalk.is_grid(card)
 	var ph: float = RivetWalk.phase_of(rig, art, s)

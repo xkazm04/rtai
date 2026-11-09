@@ -36,5 +36,5 @@ static func needs_arc(rig: CutRig, o: int) -> bool:
 		return false
 	var weapon: StringName = RivetFrames.weapon_of(rig)
 	if weapon == &"":
-		return not claw_drawn(o)
+		return RivetStrike.shows(rig.head_card) or not claw_drawn(o)
 	return RivetStrips.hides_held(rig) and not blade_drawn(o)
