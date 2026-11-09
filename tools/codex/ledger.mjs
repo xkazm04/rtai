@@ -36,7 +36,9 @@ export function totals(allRows, state = null) {
   const reviewed = allRows.filter((r) => r.review);
   const sessions = new Set(reviewed.map((r) => r.review.iteration).filter((n) => n !== null && n !== undefined));
   const known = [...sessions].map((n) => usdOf(state, n));
-  const reviewUsd = known.some((u) => u === null) ? null : known.reduce((a, b) => a + b, 0);
+  // A review no session paid for is an unknown cost, never a free one.
+  const unattributed = reviewed.filter((r) => r.review.iteration === null || r.review.iteration === undefined).length;
+  const reviewUsd = unattributed || known.some((u) => u === null) ? null : known.reduce((a, b) => a + b, 0);
   const counts = (v) => reviewed.filter((r) => r.review.verdict === v).length;
   return {
     measured: {
@@ -51,6 +53,7 @@ export function totals(allRows, state = null) {
       rejected: counts('rejected'),
       review_lines_changed: reviewed.reduce((a, r) => a + (r.review.changed_lines ?? 0), 0),
       review_sessions: sessions.size,
+      reviews_without_a_session: unattributed,
       review_sessions_usd: reviewUsd,
     },
     estimated: {

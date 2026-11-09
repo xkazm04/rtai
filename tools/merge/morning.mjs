@@ -190,9 +190,15 @@ function defaultRun(cwd, logDir, timeoutMin) {
   };
 }
 
+/** {state} or {error}: a damaged or missing record must not quietly become "nothing was done yet". */
 function loadState(cwd) {
   const f = join(cwd, STATE);
-  try { return JSON.parse(readFileSync(f, 'utf8')); } catch { return { done: [] }; }
+  if (!existsSync(f)) return { error: `nothing to resume: no ${STATE} in ${cwd}; run without --resume` };
+  try {
+    const state = JSON.parse(readFileSync(f, 'utf8'));
+    if (Array.isArray(state?.done)) return { state };
+  } catch { /* falls through to the refusal */ }
+  return { error: `${f} is damaged: read what it says, repair or delete it, and start again knowing what already ran` };
 }
 
 /** The whole run. {code}. `spawnGit`, `run` and `steps` are injected by tests. */
@@ -207,10 +213,12 @@ export function main(argv, { out = console.log, err = console.error, spawnGit = 
   const known = g(['show-ref', '--heads']).stdout.split('\n').map((l) => l.split(' refs/heads/')[1]).filter(Boolean);
   const merging = g(['rev-parse', '-q', '--verify', 'MERGE_HEAD']).ok;
   const dirty = g(['status', '--porcelain']).stdout;
-  const why = refusal({ branch, dirty: o.resume ? '' : dirty, merging: o.resume ? false : merging, lanes: o.lanes, known });
-  if (why) { err(`morning: refused: ${why}`); return { code: 2 }; }
   if (o.resume && merging) { err('morning: a merge is still in progress: resolve it and commit, then --resume'); return { code: 2 }; }
-  const state = o.resume ? loadState(cwd) : { done: [] };
+  const why = refusal({ branch, dirty, merging, lanes: o.lanes, known });
+  if (why) { err(`morning: refused: ${why}`); return { code: 2 }; }
+  const loaded = o.resume ? loadState(cwd) : { state: { done: [] } };
+  if (loaded.error) { err(`morning: refused: ${loaded.error}`); return { code: 2 }; }
+  const { state } = loaded;
   const save = () => { mkdirSync(join(cwd, 'build'), { recursive: true }); writeFileSync(join(cwd, STATE), JSON.stringify(state, null, 1)); };
   if (o.dryRun) { for (const s of o.steps) out(`morning: would run ${s}${s === 'merge' ? ` (${o.lanes.join(' -> ')})` : ''}`); return { code: 0 }; }
   const ctx = { cwd, git: g, lanes: o.lanes, date: o.date, debtReason: o.debtReason, out, done: state.done,

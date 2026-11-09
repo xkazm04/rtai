@@ -2,22 +2,37 @@
 // record (pof research/codex-engine-plan.md) is the rule: pure logic with clear rules scored well, a
 // generator with tuned tables scored 86.7 % by copying its constants and was rejected. Every module
 // this refuses gets the reason, because a heuristic you cannot question is one you stop believing.
-const SCENE = /\b(get_tree|get_node|add_child|Engine\.|OS\.|FileAccess|DirAccess|ResourceLoader|RenderingServer|Texture2D|Sprite2D|Image\.|Node2D|CanvasLayer|SceneTree)\b|\b(load|preload)\(/;
+const SCENE = /\b(get_tree|get_node|add_child|Engine\.|OS\.|FileAccess|DirAccess|ResourceLoader|RenderingServer|Texture2D|Sprite2D|Image\.|Node2D|CanvasLayer|SceneTree)\b|\b(load|preload)\s*\(/;
 const GENERATOR = /RandomNumberGenerator|\.stream\(|\bctx\.rng\b/;
-const DRAWING = /\bdraw_[a-z_]+\(|\bColor\(|Polygon2D|Line2D|\bArrayMesh\b/;
-const NUMERIC_CONST = /^const\s+\w+\s*(?::[^=]+)?=\s*-?\d/gm;
+const DRAWING = /\bdraw_[a-z_]+\s*\(|\bColor\s*\(|Polygon2D|Line2D|\bArrayMesh\b/;
+const NUMERIC_CONST = /^const\s+\w+\s*(?::[^=]*)?=\s*-?\d/gm;
 /** More numeric constants than this reads as a tuned table, not a rule. */
 export const MAX_TUNED_CONSTS = 8;
 export const MIN_LINES = 30;
 export const MAX_LINES = 200;
 
-const code = (text) => text.split('\n').map((l) => l.replace(/#.*$/, '')).join('\n');
+/** The file without comments or string contents: only what these checks may call code. A `#` in a
+ *  string is not a comment and a `draw_line()` in a string is not a call. */
+export function codeOnly(text) {
+  let out = '';
+  for (let i = 0; i < text.length;) {
+    const c = text[i];
+    if (c === '#') { while (i < text.length && text[i] !== '\n') i += 1; continue; }
+    if (c !== '"' && c !== "'") { out += c; i += 1; continue; }
+    const quote = text.startsWith(c.repeat(3), i) ? c.repeat(3) : c;
+    i += quote.length;
+    while (i < text.length && !text.startsWith(quote, i) && (quote.length > 1 || text[i] !== '\n')) i += text[i] === '\\' ? 2 : 1;
+    if (text.startsWith(quote, i)) i += quote.length;
+    out += '""';
+  }
+  return out;
+}
 
 /** Why `path` must not go to Codex, or null when it may. text: the file; tests: test file texts. */
 export function refusal(path, text, tests) {
   if (!/^project\/(features|core)\//.test(path)) return 'only features/ and core/ are in scope';
   if (/\/(gen|generated)\/|generator|_tables?\.gd$/.test(path)) return 'a generator or table: tests pin its numbers (keep with Claude)';
-  const body = code(text);
+  const body = codeOnly(text);
   const lines = text.split('\n').length;
   if (lines < MIN_LINES) return `too small (${lines} lines)`;
   if (lines > MAX_LINES) return `too big (${lines} lines)`;
