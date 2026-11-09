@@ -184,3 +184,35 @@ scratch audit folder: `<w>-off.avi`, `sheets/<w>-off-k2.png`.
 - The it6 note ("the body does not answer the beam") was a misread: the kill is the approved
   brutality signature `ray_gun_dissolve` and its lock-up is the design (48 px/m sheet, JOURNAL
   FINDING 23:27). A per-weapon standard death would only change `--gore=reduced`.
+
+## n12-visual Group B (2026-11-09/10): victim sync measured, the shock camera gap filled
+
+**The instrument.** `dev/bench/sync_probe.gd` (`-- --sync=<json>` in the dev arena with `--rigs`):
+for every landed hit (struck, kill_landed, wounded) the tick of the hit and the tick the victim's
+rig first draws 1 screen px of reaction (or dies, or a kill cut takes it), with the throw's cosine
+against the hit. Headless at fixed fps, every gun `--bot=gunplay --lone --reach=5` and
+`--armored=3`, the melee by the director chapters with and without `--riot-victims`
+(`build/n12/sync/run.sh`, `melee.sh`, `table.py`; JOURNAL Group B).
+
+| weapon | case | gap before (ticks) | gap after | along the hit |
+|---|---|---|---|---|
+| pistol, gloria | hit / kill | not measured / 2 | 2 / 2 | yes (cos 1.0) |
+| machine pistol, gatling | hit / kill | 2 / 1 | 1-2 / 1 | yes |
+| hand cannon, rocket, mini-nuke, shard, ray gun, plasma | kill (cut) | 1 | 1 | the cut |
+| electro gun | hit (stun) / kill | 2 / 1 | 1-2 / 1 | 0.78-0.88 |
+| ray gun, homing shard | hit | not measured (armour runs invalid) | 1-2 | yes |
+| plasma rifle | hit (stagger) | 3 | **2** | yes (2.0 -> 5.2 px first frame) |
+| flamethrower, molotov, fire | hit (burn) | 1-3 | 1-3 | none by design (fire catches) |
+
+Victim sync cells: no ranged weapon changes score (every V cell was already 2 or 3 at 0-2 ticks
+and the shard's late reaction of 11-04 was already fixed by KillShardJolt: the star lands on the
+kill tick and the body is thrown pale by the next, `build/n12/sync/film/homing_shard-kill-338-352.png`).
+Plasma rifle V stays 3; its wound is on the frame now, but the cream impact disc covers the body
+through the held frames (`plasma_wound_snap-ab-32ppm.mp4`).
+
+**Impact, ray gun (B2, `b2e1b9a42`).** It rode the shock class (the electro gun's single bolt): a
+4-tick stop and a shake on each of its 10 hits a second. On armour the stream froze every 18 ticks
+and the cooldown swallowed the kill's stop (filmed: stops 332, 350, none on the 361 kill). A
+`ray_gun` row like the Gatling's: no freeze, the kill star holds 6 frames. I stays 3 (now on the
+kill too). `ray_gun_stream_kill_stop-ab-32ppm.mp4`. No zoom punch: no Impact cell is below 2 for
+want of it.
