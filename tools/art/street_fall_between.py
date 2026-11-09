@@ -9,6 +9,12 @@ the cell centre; fall2 as a lying frame: the end away from the column's fall dir
 it18: fall1, fall2 and the lying row are scaled down (proportions kept) to at most CAP of the still
 strip's STILL_PX on their longest side: delivered at 1.1, 1.9 and 2.2 x standing, the owner's "the
 size gets increased" (StreetFallBetween.LIE_IN_GRID lies the body in that row, at the card's scale).
+it19: that length cap shrank the arms-forward fall2 and lying rows to about 0.6 x the knees frame's
+drawing scale (the head and torso visibly smaller as the body landed). Those two rows are now
+scaled to the knees frame's body THICKNESS (the 95th percentile of the figure's distance to its
+outline, a pose-independent proxy for the drawing scale), times THICK, and only then held under
+LONG_CAP x STILL_PX on their longest side (the arms reach past the head, so a lying body at the
+standing scale is longer than the standing figure is tall).
 
     PYTHONDONTWRITEBYTECODE=1 python tools/art/street_fall_between.py [--lib=<library>/keyed/street]
 """
@@ -19,6 +25,7 @@ from pathlib import Path
 
 import numpy as np
 from PIL import Image
+from scipy import ndimage
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import street_fall as sf  # noqa: E402
@@ -37,23 +44,45 @@ COLS = 5
 # kinds whose long fall grid draws a warm arm band: greyed by street_armband.py (colour law)
 BAND = {"cop_riot", "swat"}
 STILL_PX = 192.0  # StreetWalkerFall.STILL_PX
-# row -> the longest side's cap, of STILL_PX (fall1, fall2, lying)
-CAP = {2: 1.06, 3: 1.06, 4: 1.06}
+# the knees frame (fall1): its longest side's cap, of STILL_PX
+CAP = 1.06
+# fall2 and lying: their body thickness, of the knees frame's in the same column
+THICK = 0.95
+# fall2 and lying: their longest side's ceiling, of STILL_PX (the delivered 1.9 and 2.2 x giants)
+LONG_CAP = 1.5
 
 
-def capped(cell: Image.Image, row: int) -> Image.Image:
-    """`cell` scaled down so its figure's longest side is at most CAP[row] x STILL_PX."""
+def longest(cell: Image.Image) -> int:
+    ys, xs = np.nonzero(np.asarray(cell)[:, :, 3] > 128)
+    return max(xs.max() - xs.min() + 1, ys.max() - ys.min() + 1)
+
+
+def thickness(cell: Image.Image) -> float:
+    """The drawing scale's proxy: the 95th percentile of the figure's distance to its outline."""
+    mask = ndimage.binary_fill_holes(np.asarray(cell)[:, :, 3] > 128)
+    return float(np.percentile(ndimage.distance_transform_edt(mask)[mask], 95))
+
+
+def scaled(cell: Image.Image, k: float) -> Image.Image:
+    return cell.resize((round(cell.width * k), round(cell.height * k)), Image.LANCZOS)
+
+
+def capped(cell: Image.Image) -> Image.Image:
+    """The knees frame scaled down so its longest side is at most CAP x STILL_PX."""
     rgba = cell.convert("RGBA")
-    ys, xs = np.nonzero(np.asarray(rgba)[:, :, 3] > 128)
-    longest = max(xs.max() - xs.min() + 1, ys.max() - ys.min() + 1)
-    k = min(1.0, CAP[row] * STILL_PX / longest)
-    if k >= 1.0:
-        return rgba
-    return rgba.resize((round(rgba.width * k), round(rgba.height * k)), Image.LANCZOS)
+    k = min(1.0, CAP * STILL_PX / longest(rgba))
+    return rgba if k >= 1.0 else scaled(rgba, k)
+
+
+def matched(cell: Image.Image, knees: Image.Image) -> Image.Image:
+    """A fall2 or lying cell scaled to THICK x the knees frame's thickness, then under LONG_CAP."""
+    rgba = cell.convert("RGBA")
+    k = THICK * thickness(knees) / thickness(rgba)
+    return scaled(rgba, min(k, LONG_CAP * STILL_PX / longest(rgba)))
 
 
 def place(sheet: Image.Image, cell: Image.Image, col: int, row: int, cw: int, ch: int, frame: int):
-    rgba = np.asarray(capped(cell, row))
+    rgba = np.asarray(cell)
     mask = rgba[:, :, 3] > 128
     ys, xs = np.nonzero(mask)
     crop = Image.fromarray(rgba[ys.min() : ys.max() + 1, xs.min() : xs.max() + 1])
@@ -70,9 +99,11 @@ def build(kind: str, lib: Path) -> None:
         sheet.alpha_composite(grid.crop((0, r * ch, grid.width, (r + 1) * ch)), (0, r * ch))
     cells = lib / f"{kind}_hit_70_cells"
     for c in range(COLS):
-        place(sheet, grid.crop((c * cw, 2 * ch, (c + 1) * cw, 3 * ch)), c, 4, cw, ch, 2)
-        place(sheet, Image.open(cells / f"fall1_{c + 1}.png"), c, 2, cw, ch, 1)
-        place(sheet, Image.open(cells / f"fall2_{c + 1}.png"), c, 3, cw, ch, 2)
+        knees = capped(Image.open(cells / f"fall1_{c + 1}.png"))
+        lying = grid.crop((c * cw, 2 * ch, (c + 1) * cw, 3 * ch))
+        place(sheet, matched(lying, knees), c, 4, cw, ch, 2)
+        place(sheet, knees, c, 2, cw, ch, 1)
+        place(sheet, matched(Image.open(cells / f"fall2_{c + 1}.png"), knees), c, 3, cw, ch, 2)
     sheet.save(P70 / out, optimize=True)
     if kind in BAND:
         band = Path(__file__).resolve().parent / "street_armband.py"
