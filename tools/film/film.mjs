@@ -4,7 +4,7 @@
 // per-tick numbers from dev/frames/film_probe.gd; one verdict: pass, fail or unverifiable.
 //   node tools/film/film.mjs <shot> --out=<dir> [--ticks=<n>] [--stills=<t,t-t>] [--on=fire:3+4,kill:1+6] [--view=combo]
 //     [--ppm=48] [--lock=auto|spawn|trigger|at:<tick>|<x,y>|off] [--seed=<n>] [--res=1280x800] [--movie] [--no-movie] [--tree=<dir>]
-//     [--timeout=<s>] [--dry-run] [-- <extra game flags>]
+//     [--timeout=<s>] [--keep-going] [--dry-run] [-- <extra game flags>]
 // Exit: 0 pass, 1 fail (the run broke), 2 usage (nothing launched), 3 unverifiable (it ran, but the
 // numbers or stills it was asked for do not exist).
 import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, rmSync, statSync, writeFileSync } from 'node:fs';
@@ -13,16 +13,16 @@ import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { ROOT } from '../lib/repo.mjs';
 import { staleAssets, touchStale } from '../lib/asset_cache.mjs';
-import { describe, runGodot } from '../lib/godot.mjs';
+import { describe, runGodot, SCRIPT_ERROR } from '../lib/godot.mjs';
 import { verdict } from '../lib/dev_verdict.mjs';
 import { autoLock, checkFlags, checkId, godotArgs, parseOn, parseShot, parseStills, shotLabel, triggeredTicks } from './shots.mjs';
 import { subjectRow } from './subject.mjs';
 
 export const EXIT = { pass: 0, fail: 1, usage: 2, unverifiable: 3 };
 const USAGE = 'usage: node tools/film/film.mjs <shot> --out=<dir> [--ticks=<n>] [--stills=<t,t-t>] [--on=fire:3+4,kill:1+6] [--view=combo] '
-  + '[--ppm=48] [--lock=auto|spawn|trigger|at:<tick>|<x,y>|off] [--seed=<n>] [--res=1280x800] [--movie] [--no-movie] [--tree=<dir>] [--timeout=<s>] [--dry-run] [-- flags]';
+  + '[--ppm=48] [--lock=auto|spawn|trigger|at:<tick>|<x,y>|off] [--seed=<n>] [--res=1280x800] [--movie] [--no-movie] [--tree=<dir>] [--timeout=<s>] [--keep-going] [--dry-run] [-- flags]';
 const VALUE = new Set(['out', 'ticks', 'stills', 'on', 'view', 'ppm', 'lock', 'seed', 'res', 'tree', 'timeout', 'subject']);
-const SWITCH = new Set(['movie', 'no-movie', 'dry-run']);
+const SWITCH = new Set(['movie', 'no-movie', 'dry-run', 'keep-going']);
 const DEFAULTS = { subject: 'rivet', view: 'combo', ppm: '48', lock: 'auto', seed: '20261109', res: '1280x800', timeout: '900' };
 
 /** {shotText, flags, extra} or {error}. */
@@ -80,7 +80,7 @@ export function plan(flags, shotText, extra) {
   const movie = wantMovie && !shot.shot.script ? join(dir, `${shotLabel(shot)}.avi`) : null;
   return { shot, opts: { tree, dir, ticks, stills, on, onText: flags.on ?? '', movie, extra, view: flags.view, ppm: flags.ppm, lock,
     subject: flags.subject ?? 'rivet', seed: flags.seed, res: flags.res, timeoutMs: Number(flags.timeout) * 1000, label: shotLabel(shot),
-    noProbe: Boolean(shot.shot.script) } };
+    noProbe: Boolean(shot.shot.script), keepGoing: flags['keep-going'] === true } };
 }
 
 const gitHead = (tree) => {
@@ -159,7 +159,8 @@ export async function filmOne({ shot, opts }, { runner = runGodot } = {}) {
   }
   const args = godotArgs(shot, opts);
   const startedAt = Date.now();
-  const res = await runner(args, { headless: false, timeoutMs: opts.timeoutMs, name: `film-${opts.label}`, cwd: opts.tree });
+  const res = await runner(args, { headless: false, timeoutMs: opts.timeoutMs, name: `film-${opts.label}`, cwd: opts.tree,
+    stopOn: opts.keepGoing ? null : SCRIPT_ERROR });
   writeFileSync(join(opts.dir, 'film.log'), `# ${args.join(' ')}\n# ${describe(res)}\n${res.out}`);
   const judged = judge(res, opts, startedAt);
   const mp4 = opts.movie && judged.outcome !== 'fail' ? encode(opts.movie) : null;

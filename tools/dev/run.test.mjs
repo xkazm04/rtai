@@ -71,3 +71,15 @@ test('--dry-run prints the godot args and spawns nothing', async () => {
   assert.equal(h.calls.length, 0);
   assert.match(h.lines.out.join('\n'), /res:\/\/dev\/arena\/arena.tscn -- --bot=pit/);
 });
+
+test('the run stops at its first SCRIPT ERROR unless --keep-going, and a stopped run reads FAIL, not "never ran"', async () => {
+  const { SCRIPT_ERROR } = await import('../lib/godot.mjs');
+  const h = harness({ status: -1, out: 'SCRIPT ERROR: Parse Error\n   at: (res://reel.gd:3)\n', timedOut: false,
+    stopped: 'SCRIPT ERROR: Parse Error', durationMs: 2100 });
+  assert.equal(await main(['reel.gd'], { ...h.opts, projectDir: FIX }), 1);
+  assert.equal(h.calls[0].o.stopOn, SCRIPT_ERROR);
+  assert.match(h.lines.out.at(-1), /^FAIL stopped at the first script error after 2.1 s \(--keep-going to wait it out\); SCRIPT ERROR 1/);
+  await main(['reel.gd', '--keep-going'], { ...h.opts, projectDir: FIX });
+  assert.equal(h.calls[1].o.stopOn, null);
+  assert.ok(!h.calls[1].args.includes('--keep-going'));
+});

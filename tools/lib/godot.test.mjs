@@ -140,3 +140,37 @@ test('ensureImport skips a fresh class cache and answers once per project dir', 
     rmdirSync(dir);
   }
 });
+
+test('stopOn: the first SCRIPT ERROR ends a run that would idle to its timeout, and the lines under it are kept', async () => {
+  const { SCRIPT_ERROR } = await import('./godot.mjs');
+  const idle = 'console.log("boot");setTimeout(()=>console.log("SCRIPT ERROR: Parse Error: x"),100);'
+    + 'setTimeout(()=>console.log("   at: GDScript::reload (res://dev/broken.gd:3)"),300);setInterval(()=>{},1000)';
+  const r = await runProcess(process.execPath, ['-e', idle], { timeoutMs: 20000, stopOn: SCRIPT_ERROR, stopGraceMs: 800 });
+  assert.equal(r.timedOut, false);
+  assert.equal(r.status, -1);
+  assert.equal(r.stopped, 'SCRIPT ERROR: Parse Error: x');
+  assert.ok(r.durationMs < 10000, `took ${r.durationMs} ms`);
+  assert.match(r.out, /res:\/\/dev\/broken.gd:3/);
+  assert.match(r.out, /\[stopped: killed the process tree/);
+  assert.match(describe(r), /^STOPPED at the first script error/);
+});
+
+test('stopOn: a match split across two chunks is still seen; no match leaves the run alone', async () => {
+  const { SCRIPT_ERROR } = await import('./godot.mjs');
+  const split = 'process.stdout.write("SCRIPT ER");setTimeout(()=>process.stdout.write("ROR: boom\\n"),150);setInterval(()=>{},1000)';
+  const r = await runProcess(process.execPath, ['-e', split], { timeoutMs: 20000, stopOn: SCRIPT_ERROR, stopGraceMs: 100 });
+  assert.equal(r.stopped, 'SCRIPT ERROR: boom');
+  const clean = await runProcess(process.execPath, ['-e', 'console.log("ERROR: not a script error");process.exit(0)'],
+    { stopOn: SCRIPT_ERROR, stopGraceMs: 100 });
+  assert.equal(clean.status, 0);
+  assert.equal(clean.stopped, null);
+});
+
+test('stopOn: a run that exits by itself inside the grace keeps its own status and is not "stopped"', async () => {
+  const { SCRIPT_ERROR } = await import('./godot.mjs');
+  const r = await runProcess(process.execPath, ['-e', 'console.log("SCRIPT ERROR: late");process.exit(1)'],
+    { stopOn: SCRIPT_ERROR, stopGraceMs: 3000 });
+  assert.equal(r.status, 1);
+  assert.equal(r.stopped, null);
+  assert.match(r.out, /SCRIPT ERROR: late/);
+});

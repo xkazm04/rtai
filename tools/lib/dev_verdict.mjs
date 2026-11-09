@@ -37,6 +37,7 @@ export function resultState(file, startedAt = 0) {
 
 function head(res, ok) {
   if (res.timedOut) return `FAIL timeout after ${Math.round((res.durationMs ?? 0) / 1000)} s`;
+  if (res.stopped) return `FAIL stopped at the first script error after ${((res.durationMs ?? 0) / 1000).toFixed(1)} s (--keep-going to wait it out)`;
   const label = LABELS[res.status];
   return `${ok ? 'ok' : 'FAIL'} exit ${res.status}${label ? ` (${label})` : ''}`;
 }

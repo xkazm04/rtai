@@ -222,3 +222,17 @@ code than your branch, by comparing the git objects: a stale DLL does not look l
 unknown flag. **Unverifiable (exit 3):** no donor has something it needs, or the tree still is not
 usable after the copy (judged on your tree afterwards: a donor's bake can be whole for its own chunk
 list and short for yours).
+
+## Stop at the first script error (`tools/dev/run.mjs`, `tools/film/film.mjs`)
+
+```
+node tools/dev/run.mjs res://dev/my_scene.tscn --timeout=150
+# FAIL stopped at the first script error after 4.5 s (--keep-going to wait it out); SCRIPT ERROR 3 (first res://dev/my_scene.gd:5); ...
+```
+
+A dev scene whose script does not parse used to leave the engine idling until the timeout: the
+verdict was FAIL anyway, but only after 150 s. Both front doors now kill the run 1.5 s after the first
+`SCRIPT ERROR`, `Parse Error`, `Compile Error` or `Failed to load script` line, keeping the lines under
+it so the verdict still names the file and line. `--keep-going` waits for the entry to end or time out
+(for a run whose later errors you want in the log). Built on `runProcess`'s `stopOn` option in
+`tools/lib/godot.mjs`; the gates do not use it, they report every error.

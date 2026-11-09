@@ -4,24 +4,26 @@
 // through runGodot (ledger, import preflight, tree-kill timeout) and ends with ONE verdict line
 // (tools/lib/dev_verdict.mjs) a lane can paste into its REPORT. The full log goes to build/dev/.
 //   node tools/dev/run.mjs <entry> [--windowed] [--timeout=<s>] [--result=<file>] [--dry-run]
-//     [--quit-after=<n>] [--fixed-fps=<n>] [entry flags...] [-- verbatim entry flags...]
+//     [--quit-after=<n>] [--fixed-fps=<n>] [--keep-going] [entry flags...] [-- verbatim entry flags...]
+// The run is cut short 1.5 s after its first SCRIPT ERROR (the verdict is FAIL either way);
+// --keep-going waits for the entry to end or time out instead.
 // <entry>: a bare name searched in project/dev (arena, stations_check), a res:// path or a file path.
 // Exit: 0 verdict ok, 1 the run failed, 2 usage (unknown entry or a refused flag, or the entry's own 2).
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join, resolve as resolvePath } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { ROOT } from '../lib/repo.mjs';
-import { describe, HEADLESS_TIMEOUT_MS, runGodot } from '../lib/godot.mjs';
+import { describe, HEADLESS_TIMEOUT_MS, runGodot, SCRIPT_ERROR } from '../lib/godot.mjs';
 import { verdict } from '../lib/dev_verdict.mjs';
 import { resolve } from './entries.mjs';
 
 const USAGE = 'usage: node tools/dev/run.mjs <entry> [--windowed] [--timeout=<s>] [--result=<file>] [--dry-run] '
-  + '[--quit-after=<n>] [--fixed-fps=<n>] [entry flags] [-- entry flags]';
-const RUNNER = /^--(windowed|dry-run|timeout|result)(?:=(.*))?$/;
+  + '[--quit-after=<n>] [--fixed-fps=<n>] [--keep-going] [entry flags] [-- entry flags]';
+const RUNNER = /^--(windowed|dry-run|keep-going|timeout|result)(?:=(.*))?$/;
 
-/** {entry, rest, opts: {windowed, dryRun, timeoutMs, result}}; runner options only before a `--`. */
+/** {entry, rest, opts: {windowed, dryRun, keepGoing, timeoutMs, result}}; runner options only before a `--`. */
 export function parseArgv(argv) {
-  const opts = { windowed: false, dryRun: false, timeoutMs: HEADLESS_TIMEOUT_MS, result: null };
+  const opts = { windowed: false, dryRun: false, keepGoing: false, timeoutMs: HEADLESS_TIMEOUT_MS, result: null };
   const rest = [];
   let entry = null;
   for (let i = 0; i < argv.length; i++) {
@@ -30,6 +32,7 @@ export function parseArgv(argv) {
     const m = RUNNER.exec(a);
     if (m?.[1] === 'windowed') opts.windowed = true;
     else if (m?.[1] === 'dry-run') opts.dryRun = true;
+    else if (m?.[1] === 'keep-going') opts.keepGoing = true;
     else if (m?.[1] === 'timeout') opts.timeoutMs = Number(m[2]) * 1000;
     else if (m?.[1] === 'result') opts.result = resolvePath(m[2] ?? '');
     else if (entry === null && !a.startsWith('-')) entry = a;
@@ -61,7 +64,8 @@ export async function main(argv, { runner = runGodot, out = console.log, err = c
   if (opts.dryRun) { out(`run: dry run, nothing launched; ${r.specNote}`); return 0; }
   const startedAt = now();
   const name = `dev-${entry.split(/[\\/]/).pop().replace(/\.(gd|tscn)$/, '')}`;
-  const res = await runner(r.godotArgs, { headless: !opts.windowed, timeoutMs: opts.timeoutMs, name });
+  const res = await runner(r.godotArgs, { headless: !opts.windowed, timeoutMs: opts.timeoutMs, name,
+    stopOn: opts.keepGoing ? null : SCRIPT_ERROR });
   if (res.notFound) err(`run: ${res.out}`);
   mkdirSync(logDir, { recursive: true });
   const log = join(logDir, `${name.slice(4)}-${stamp(startedAt)}.log`);

@@ -322,3 +322,21 @@ describe('film: frames picked by range or by event (combat REQUEST, n11)', () =>
     assert.match(plan({ ...parseArgv([]).flags, out: 'x', lock: 'trigger' }, 'arena', []).error, /needs --on/);
   });
 });
+
+test('a film stops at its first SCRIPT ERROR unless --keep-going; the verdict is a fail either way', async () => {
+  const { filmOne } = await import('./film.mjs');
+  const { SCRIPT_ERROR } = await import('../lib/godot.mjs');
+  const root = tree();
+  const seen = [];
+  const runner = async (args, o) => { seen.push(o); return { status: -1, out: 'SCRIPT ERROR: Parse Error: x\n', timedOut: false, stopped: 'SCRIPT ERROR: Parse Error: x', durationMs: 1600 }; };
+  for (const extra of [[], ['--keep-going']]) {
+    const p = parseArgv(['weapon:pistol', `--out=${join(root, 'o')}`, `--tree=${root}`, '--stills=10', ...extra]);
+    assert.equal(p.error, undefined);
+    const r = await filmOne(plan(p.flags, p.shotText, p.extra), { runner });
+    assert.equal(r.outcome, 'fail');
+    assert.match(r.reasons[0], /^FAIL stopped at the first script error/);
+  }
+  assert.equal(seen[0].stopOn, SCRIPT_ERROR);
+  assert.equal(seen[1].stopOn, null);
+  rmSync(root, { recursive: true, force: true });
+});
