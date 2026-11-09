@@ -1,6 +1,6 @@
 # LEVEL: player's characters, measures against the owner's notes (n11)
 
-Updated every session (last: it11, 2026-11-09 23:40). Levels: 0 absent, 1 placeholder, 2 usable, 3 Rivet-grade (the current best), 4 raised bar (past today's Rivet). Evidence paths are under `gtai-masters/n11/hero/`. "Reached" dates are absolute.
+Updated every session (last: it11, 2026-11-09 23:55). Levels: 0 absent, 1 placeholder, 2 usable, 3 Rivet-grade (the current best), 4 raised bar (past today's Rivet). Evidence paths are under `gtai-masters/n11/hero/`. "Reached" dates are absolute.
 
 | Measure | Rivet | Tonnage | Dent | Kerf | Ohm |
 |---|---|---|---|---|---|
@@ -10,7 +10,7 @@ Updated every session (last: it11, 2026-11-09 23:40). Levels: 0 absent, 1 placeh
 | Planted feet | 3, stretch from the feet + flight lift, `bob_film_right_before_after_64ppm.png` | 1, the drawn shuffle never moves its feet: slides at 4.2 m/s whatever the cycle; stamping walk8 requested | 2, cycle measured off the stance foot (163), plants below the cap at 7 m/s; no clip yet | 2, walk 139 (toe), run measured 400; not judged in a clip | 2, cycle measured (126); no clip yet |
 | Attack cells + directions | 3, drawn claw in all 8, `melee_8dir_drawn_strike_64ppm.png` | 3, wind-up + stomp + follow, 8 dirs seen (`ghost_melee_8dir_64ppm.png`, mean 2.7 deg); reached 2026-11-09 | 3, seize + follow seen (`ghost_acts_seen_64ppm.png`), on fire; a melee press without a car shows nothing; reached 2026-11-09 | 3, cut + follow in 8 dirs, mean 5.4 deg; reached 2026-11-09 | 3, cast + follow in 8 dirs, mean 2.8; reached 2026-11-09 |
 | Hit and death cells | 3, HIT, DEATH, knock grid | 2, hit column wired, not filmed | 2, hit column wired, not filmed; library death (A) unused | 3 hit seen (`ghost_acts_seen_64ppm.png`); a form does not die (Rivet does) | 2, hit column wired, not filmed |
-| Ink and detail | 3 at 110 px cell; soft at 64 ppm after x1.5 (x15 cells delivered, not packed; 32 ppm city view is a downscale) | 3, heavy printed card | 3, drawn walk8 + act (A) | 3 | 3 (B walk) |
+| Ink and detail | 3; walk and run grids native at x1.5 since it11 (`rivet_x15_grids_before_after_64ppm.png`); facing, fire, knock and strike strips still 110 px upscaled (soft when he stops or shoots) | 3, heavy printed card | 3, drawn walk8 + act (A) | 3 | 3 (B walk) |
 | Combat feel (swing/hit read) | 3, drawn strike in all 8 | 2, wind-up reads mostly through the ring | 2 | 2, sighting line + cut + flinch | 2, bolt carries the direction, the body barely |
 | Size (x1.5 of the owner's note) | done 2026-11-09, `size_150_before_after_walk_64ppm.png` | done 2026-11-09; 4.95 m drawn fills a 300 px crop at 64 ppm (owner call) | done 2026-11-09 | done 2026-11-09 | done 2026-11-09 |
 
