@@ -47,3 +47,11 @@ func test_a_burst_into_a_crowd_is_capped() -> void:
 	for i: int in 30:
 		WeaponFxTrail.add(trails, ORIGIN, WOUND + Vector2(float(i), 0.0), &"machine_pistol", 100)
 	assert_eq(trails.size(), WeaponFxTrail.MAX_TRAILS, "30 hits in one tick hold the cap")
+
+
+## n11: the path is a streak, not a uniform line: a hair at the gun, full width at the wound.
+func test_the_streak_is_narrow_at_the_gun_and_wide_at_the_wound() -> void:
+	var w: PackedVector2Array = WeaponFxTrail.wedge(Vector2.ZERO, Vector2(100.0, 0.0), 2.0, 10.0)
+	assert_eq(w.size(), 4)
+	assert_almost_eq(w[0].distance_to(w[3]), 2.0, 0.001, "tail")
+	assert_almost_eq(w[1].distance_to(w[2]), 10.0, 0.001, "head")

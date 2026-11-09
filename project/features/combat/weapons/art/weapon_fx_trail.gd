@@ -12,9 +12,13 @@ extends RefCounted
 ## (WeaponFxArt.CLEAR_M, GUN_SIDE_M), so the trail starts where the tracer started.
 const CLEAR_M: float = 1.1
 const GUN_SIDE_M: float = 0.35
-## Ink casing and cream core widths at birth (world px at Ink.PX_PER_M); both thin as it fades.
-const INK_PX: float = 6.0
-const CORE_PX: float = 2.5
+## Ink casing and cream core widths at the wound, at birth (world px at Ink.PX_PER_M); both thin as
+## it fades. n11: a streak, a hair at the gun and full width at the wound, not a uniform laser line.
+const INK_PX: float = 10.0
+const CORE_PX: float = 5.0
+const TAIL_PX: float = 1.5
+## The core starts this share of the way along, so the streak's tail is ink only.
+const CORE_FROM: float = 0.35
 ## The tail closes this share of the way to the wound over the trail's life.
 const DRAW_IN: float = 0.6
 ## At most this many trails at once (a machine pistol burst into a crowd).
@@ -78,8 +82,19 @@ static func draw(ci: CanvasItem, trails: Array[Trail], tick: int) -> void:
 			continue
 		var to: Vector2 = t.to
 		var from: Vector2 = t.from.lerp(to, DRAW_IN * (1.0 - k))
-		ci.draw_line(Ink.px(from), Ink.px(to), Color(Ink.INK, 0.85 * k), INK_PX * (0.4 + 0.6 * k))
-		ci.draw_line(Ink.px(from), Ink.px(to), Color(Ink.CREAM, k), CORE_PX * (0.5 + 0.5 * k))
+		var a: Vector2 = Ink.px(from)
+		var c: Vector2 = Ink.px(to)
+		var wide: float = 0.4 + 0.6 * k
+		ci.draw_colored_polygon(wedge(a, c, TAIL_PX, INK_PX * wide), Color(Ink.INK, 0.85 * k))
+		ci.draw_colored_polygon(
+			wedge(a.lerp(c, CORE_FROM), c, TAIL_PX * 0.5, CORE_PX * wide), Color(Ink.CREAM, k)
+		)
+
+
+## A tapered streak from `a` (`tail` px wide) to `b` (`head` px wide).
+static func wedge(a: Vector2, b: Vector2, tail: float, head: float) -> PackedVector2Array:
+	var side: Vector2 = (b - a).normalized().orthogonal() * 0.5
+	return PackedVector2Array([a - side * tail, b - side * head, b + side * head, a + side * tail])
 
 
 ## 1 on the hit tick, falling to 0 at the end of `life` (0 before birth or after).

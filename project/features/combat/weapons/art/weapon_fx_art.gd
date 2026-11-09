@@ -120,7 +120,7 @@ static func muzzle(ci: CanvasItem, r: Fighter, gun: GunHand, tick: int) -> bool:
 	var reach: float = r.radius_m + FLASH_AHEAD_M + art().muzzle_m(spec.id).x * 0.5
 	var at: Vector2 = HeldMuzzle.at_m(ci, r.pos + aim * reach + aim.orthogonal() * GUN_SIDE_M)
 	# the flame cell is the jet's full tongue: at the nozzle only a small lick
-	var k: float = NOZZLE_K if fx == &"flame" else WeaponFxIgnite.muzzle_k(spec.id)
+	var k: float = NOZZLE_K if fx == &"flame" else WeaponFxIgnite.flash_k(spec.id)
 	k = WeaponFxIgnite.lick_k(spec.id, tick - age, tick, k)  # the flamer flares as it lights
 	_cell(ci, fx, age, at, aim.angle(), k, 1.0)
 	return true
