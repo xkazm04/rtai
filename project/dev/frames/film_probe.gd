@@ -6,7 +6,8 @@ extends Node
 ##   --film-dir=<dir>     writes probe.json there (and the stills)
 ##   --film-stills=<t,t>  saves <dir>/t<tick>.png after that tick's draw
 ##   --film-ticks=<a-b>   only these ticks go in probe.json (default: all)
-##   --cam-lock=<x,y>     holds the camera on a world point (m), or "spawn": Rivet's first tick
+##   --cam-lock=<x,y>     holds the camera on a world point (m); "spawn": Rivet's first tick;
+##                        "at:<tick>": it follows Rivet until that tick, then stays
 ## Rows: tick, frame (the movie frame), cam (camera world px), then one row per fighter with
 ## pos (m), screen (px), on_screen, draw (px, the opaque size of the drawn card), feet_y (px, the
 ## drawn card's lowest opaque row on screen, -1 = no card), facing_off (deg, drawn against sim).
@@ -20,7 +21,7 @@ var out_dir: String = ""
 var stills: Array[int] = []
 var window: Vector2i = Vector2i(0, 2147483647)
 var lock: Vector2 = Vector2.INF
-var lock_spawn: bool = false
+var lock_at: int = -1
 var _rows: Array[Dictionary] = []
 var _saved: Array[int] = []
 var _last_tick: int = -1
@@ -43,7 +44,9 @@ static func attach(parent: ArenaGame, args: ArenaArgs) -> void:
 		p.window = Vector2i(span.get_slice("-", 0).to_int(), span.get_slice("-", 1).to_int())
 	var cam: String = args.text("--cam-lock")
 	if cam == "spawn":
-		p.lock_spawn = true
+		p.lock_at = 0
+	elif cam.begins_with("at:"):
+		p.lock_at = cam.trim_prefix("at:").to_int()
 	elif cam.contains(","):
 		p.lock = Vector2(cam.get_slice(",", 0).to_float(), cam.get_slice(",", 1).to_float())
 	parent.add_child(p)
@@ -75,7 +78,7 @@ func _process(_delta: float) -> void:
 ## stays on Rivet and the camera leans by the difference (CollectCallView.city_lean_m).
 func _hold_camera() -> void:
 	var rivet: Fighter = game.session.stage.arena.rivet
-	if lock_spawn and lock == Vector2.INF:
+	if lock_at >= 0 and lock == Vector2.INF and game.session.tick() >= lock_at:
 		lock = rivet.pos
 	if lock == Vector2.INF:
 		return

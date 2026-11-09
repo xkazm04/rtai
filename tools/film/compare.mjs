@@ -4,7 +4,7 @@
 // not passes, because a builder cannot tell them from a change that worked.
 //   node tools/film/compare.mjs <shot> --a=<rev|worktree> --b=<rev|worktree> --at=<t,t> --out=<dir>
 //     [--clip=<from-to>] [--subject=rivet|hostile|dead|id:<n>] [--label-a=<s>] [--label-b=<s>]
-//     [--view=combo] [--ppm=48] [--lock=spawn|<x,y>|off] [--seed=<n>] [--res=1280x800] [-- flags]
+//     [--view=combo] [--ppm=48] [--lock=auto|spawn|at:<tick>|<x,y>|off] [--seed=<n>] [--res=1280x800] [-- flags]
 // A commit gets a throwaway snapshot (tools/lib/snapshot.mjs) with the probe injected when it is
 // older than the kit; a worktree is filmed where it stands and must already have the probe.
 // Exit: 0 pass, 1 fail, 2 usage, 3 unverifiable.
@@ -15,13 +15,16 @@ import { pathToFileURL } from 'node:url';
 import { ROOT } from '../lib/repo.mjs';
 import { ensureSnapshot, revParse } from '../lib/snapshot.mjs';
 import { EXIT, filmOne, plan } from './film.mjs';
+import { subjectRow } from './subject.mjs';
+
+export { subjectRow };
 import { diffImages, readPng } from './png.mjs';
 
 const USAGE = 'usage: node tools/film/compare.mjs <shot> --a=<rev|worktree> --b=<rev|worktree> --at=<t,t> --out=<dir> '
   + '[--clip=<from-to>] [--subject=rivet|hostile|dead|id:<n>] [--label-a=<s>] [--label-b=<s>] [--view=combo] [--ppm=48] '
-  + '[--lock=spawn|<x,y>|off] [--seed=<n>] [--res=1280x800] [--timeout=<s>] [-- flags]';
+  + '[--lock=auto|spawn|at:<tick>|<x,y>|off] [--seed=<n>] [--res=1280x800] [--timeout=<s>] [-- flags]';
 const VALUE = new Set(['a', 'b', 'at', 'out', 'clip', 'subject', 'label-a', 'label-b', 'view', 'ppm', 'lock', 'seed', 'res', 'timeout']);
-const DEFAULTS = { view: 'combo', ppm: '48', lock: 'spawn', seed: '20261109', res: '1280x800', timeout: '900', subject: 'rivet' };
+const DEFAULTS = { view: 'combo', ppm: '48', lock: 'auto', seed: '20261109', res: '1280x800', timeout: '900', subject: 'rivet' };
 /** Below this share of changed pixels the two sides are the same picture. */
 export const IDENTICAL_FRACTION = 0.00005;
 /** Rivet further apart than this (m) at a tick: the two sides are no longer the same moment. */
@@ -50,23 +53,13 @@ export function parseArgv(argv) {
   return { shotText, flags, extra };
 }
 
-/** The subject's probe row at a tick, or null when the probe has no such fighter. */
-export function subjectRow(row, subject) {
-  const list = row?.fighters ?? [];
-  if (subject === 'rivet') return list.find((f) => f.role === 'rivet') ?? null;
-  if (subject === 'hostile') return list.find((f) => f.role === 'hostile' && f.alive && f.on_screen) ?? list.find((f) => f.role === 'hostile' && f.alive) ?? null;
-  if (subject === 'dead') return list.find((f) => f.role === 'hostile' && !f.alive && f.on_screen) ?? list.find((f) => f.role === 'hostile' && !f.alive) ?? null;
-  const id = Number(subject.slice(3));
-  return list.find((f) => f.id === id) ?? null;
-}
-
 /** Pure judgement of one tick. {outcome, reasons, notes}. */
 export function judgeTick({ diff, subjectA, subjectB, subject }) {
   const reasons = [];
   const notes = [];
   if (diff.fraction <= IDENTICAL_FRACTION) reasons.push(`the two sides are identical (${diff.changed} of ${diff.total} pixels differ)`);
   for (const [side, row] of [['A', subjectA], ['B', subjectB]]) {
-    if (!row) reasons.push(`side ${side} has no ${subject} at this tick`);
+    if (!row) reasons.push(`side ${side} has no ${subject} in its numbers at this tick (shots without the probe, such as quest1, cannot prove the subject is in frame)`);
     else if (!row.on_screen) reasons.push(`side ${side}: ${subject} is off screen at (${row.screen.map((n) => Math.round(n)).join(', ')})`);
   }
   if (subjectA && subjectB) {
@@ -134,7 +127,7 @@ function clip(dir, a, b, labels, from, to) {
 
 function filmFlags(parsed, side, tick) {
   const f = parsed.flags;
-  return { out: join(resolve(f.out), side.name), tree: side.tree, stills: tick, view: f.view, ppm: f.ppm, lock: f.lock,
+  return { out: join(resolve(f.out), side.name), tree: side.tree, stills: tick, view: f.view, ppm: f.ppm, lock: f.lock, subject: f.subject,
     seed: f.seed, res: f.res, timeout: f.timeout, ...(f.clip ? { ticks: String(Number(f.clip.split('-')[1]) + 60) } : {}),
     ...(f.clip ? {} : { 'no-movie': true }) };
 }

@@ -43,6 +43,19 @@ test('the reel shots always carry the loadout (the omission that broke iteration
   }
 });
 
+test('quest1 goes through its own recorder and needs even stills', () => {
+  const args = godotArgs(parseShot('quest1'), { res: 'a', movie: null, ticks: 9, stills: [10], seed: '1', view: 'combo', ppm: '48', lock: 'off', dir: 'D', extra: [] });
+  assert.equal(args[args.indexOf('-s') + 1], 'res://dev/frames/quest1_clip.gd');
+  assert.ok(args.includes('--out=D') && args.includes('--stills=10') && !args.includes('--seed=1'));
+  const t = tree();
+  try {
+    const base = { ...parseArgv([]).flags, out: 'o', tree: t };
+    assert.match(plan({ ...base }, 'quest1', []).error, /even ticks/);
+    assert.match(plan({ ...base, stills: '11' }, 'quest1', []).error, /even ticks/);
+    assert.equal(plan({ ...base, stills: '10' }, 'quest1', []).opts.noProbe, true);
+  } finally { rmSync(t, { recursive: true, force: true }); }
+});
+
 test('locking the camera also turns the camera feel off, since a shake would move the frame', () => {
   const on = godotArgs(parseShot('arena'), { res: 'a', movie: null, ticks: 9, stills: [], seed: '1', view: 'v', ppm: '1', lock: 'spawn', dir: 'D', extra: [] });
   const off = godotArgs(parseShot('arena'), { res: 'a', movie: null, ticks: 9, stills: [], seed: '1', view: 'v', ppm: '1', lock: 'off', dir: 'D', extra: [] });
@@ -96,9 +109,10 @@ function judged(probe, { stills = [], res = { status: 0, out: '', timedOut: fals
   if (probe) writeFileSync(join(dir, 'probe.json'), JSON.stringify(probe));
   if (stale) utimesSync(join(dir, 'probe.json'), new Date(startedAt - 60000), new Date(startedAt - 60000));
   for (const t of stills) writeFileSync(join(dir, `t${t}.png`), 'x');
-  try { return judge(res, { dir, stills: [100], res: '10x10' }, startedAt); } finally { rmSync(dir, { recursive: true, force: true }); }
+  try { return judge(res, { dir, stills: [100], res: '10x10', subject: 'rivet' }, startedAt); } finally { rmSync(dir, { recursive: true, force: true }); }
 }
-const goodProbe = { rows: [{ tick: 1 }], stills: [100], view: [10, 10] };
+const onScreen = { role: 'rivet', on_screen: true, screen: [1, 1] };
+const goodProbe = { rows: [{ tick: 100, fighters: [onScreen] }], stills: [100], view: [10, 10] };
 
 test('judge passes only on a fresh probe with the stills it was asked for', () => {
   assert.equal(judged(goodProbe, { stills: [100] }).outcome, 'pass');
@@ -109,6 +123,26 @@ test('judge: a broken run is a fail, never unverifiable', () => {
   assert.equal(r.outcome, 'fail');
   assert.equal(judged(goodProbe, { res: { status: 1, out: '', timedOut: false, durationMs: 1 } }).outcome, 'fail');
   assert.equal(judged(goodProbe, { res: { status: -1, out: '', timedOut: true, durationMs: 1 } }).outcome, 'fail');
+});
+
+test('judge: a still whose subject is not in frame is unverifiable', () => {
+  const off = { ...goodProbe, rows: [{ tick: 100, fighters: [{ ...onScreen, on_screen: false, screen: [5000, 1] }] }] };
+  const r = judged(off, { stills: [100] });
+  assert.equal(r.outcome, 'unverifiable');
+  assert.match(r.reasons[0], /rivet is off screen at tick 100/);
+  assert.equal(judged({ ...goodProbe, rows: [{ tick: 100, fighters: [] }] }, { stills: [100] }).outcome, 'unverifiable');
+});
+
+test('a street shot locks at the first tick that matters, the rest at the spawn', () => {
+  const planned = (shot, extra) => {
+    const t = tree();
+    try { return plan({ ...parseArgv([]).flags, out: 'o', tree: t, ...extra }, shot, []); } finally { rmSync(t, { recursive: true, force: true }); }
+  };
+  assert.equal(planned('weapon:gatling', { stills: '300,250' }).opts.lock, 'at:250');
+  assert.equal(planned('weapon:gatling', {}).opts.lock, 'off', 'no tick to freeze at');
+  assert.equal(planned('arena', { stills: '300' }).opts.lock, 'spawn');
+  assert.equal(planned('arena', { lock: 'at:9' }).opts.lock, 'at:9');
+  assert.match(planned('arena', { lock: 'at:x' }).error, /--lock/);
 });
 
 test('judge: what it could not observe is unverifiable, never pass', () => {

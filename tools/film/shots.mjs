@@ -12,11 +12,14 @@ const REEL = ['--bot=reel', '--loadout=pistol'];
 export const SHOTS = {
   arena: { doc: 'the arena fight (showcase reel, pistol)', ticks: 1800, flags: () => REEL },
   city: { doc: 'a city street fight with a crowd', ticks: 1200,
-    flags: () => ['--arena=city', '--crowd=120', '--bot=gunplay', '--weapon=pistol', '--reach=6'] },
+    travels: true, flags: () => ['--arena=city', '--crowd=120', '--bot=gunplay', '--weapon=pistol', '--reach=6'] },
   chapter: { doc: 'one director chapter: chapter:<id>', ticks: 600, needs: 'chapter',
     flags: (id) => [...REEL, '--reel=director', `--chapter=${id}`] },
   weapon: { doc: 'one lone kill with a table weapon: weapon:<id>', ticks: 900, needs: 'weapon',
-    flags: (id) => ['--arena=city', `--weapon=${id}`, '--bot=gunplay', '--lone', '--reach=6'] },
+    travels: true, flags: (id) => ['--arena=city', `--weapon=${id}`, '--bot=gunplay', '--lone', '--reach=6'] },
+  // Quest 1 runs through its own recorder: --stills (even ticks) only, no numbers, no locked camera.
+  quest1: { doc: 'quest 1 through its scripted pad: --stills required (even ticks)', ticks: 0, script: 'res://dev/frames/quest1_clip.gd',
+    flags: () => ['--rigs'] },
 };
 
 const read = (tree, rel) => JSON.parse(readFileSync(join(tree, 'project', rel), 'utf8'));
@@ -73,6 +76,10 @@ export function parseShot(text) {
 
 /** The Godot args (after --path project) of one fixed-seed, fixed-step film. Pure. */
 export function godotArgs({ arg, shot }, o) {
+  if (shot.script) {
+    return ['--rendering-driver', 'd3d12', '--resolution', o.res, '-s', shot.script, '--', ...shot.flags(arg),
+      `--out=${o.dir}`, `--view=${o.view}`, `--ppm=${o.ppm}`, `--stills=${o.stills.join(',')}`, ...o.extra];
+  }
   const head = ['--rendering-driver', 'd3d12', '--resolution', o.res, '--fixed-fps', '60',
     ...(o.movie ? ['--write-movie', o.movie] : []), '--quit-after', String(o.ticks), ARENA, '--'];
   const stills = o.stills.length ? [`--film-stills=${o.stills.join(',')}`] : [];
@@ -80,6 +87,13 @@ export function godotArgs({ arg, shot }, o) {
   const feel = o.lock === 'off' ? [] : ['--feel=off'];
   return [...head, ...shot.flags(arg), `--seed=${o.seed}`, `--view=${o.view}`, `--ppm=${o.ppm}`,
     '--rigs', '--clean', '--silent', `--film-dir=${o.dir}`, ...stills, ...lock, ...feel, ...o.extra];
+}
+
+/** The camera lock a shot gets when none is asked for. Rivet walks far in the street shots, so the
+ *  camera follows him and freezes at the first tick that matters; `from` is that tick, or null. */
+export function autoLock(shot, from) {
+  if (!shot.travels) return 'spawn';
+  return from === null ? 'off' : `at:${from}`;
 }
 
 export const shotLabel = (s) => (s.arg ? `${s.name}-${s.arg}` : s.name);
