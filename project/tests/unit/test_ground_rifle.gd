@@ -26,3 +26,18 @@ func test_the_mesh_is_as_long_as_the_gun() -> void:
 	var box: AABB = GroundRifle.mesh().get_aabb()
 	var want: float = GroundRifle.LENGTH_M * Ink.PX_PER_M
 	assert_almost_eq(box.size.x, want, GroundRifle.INK_PX * 2.0 + 0.5, "butt to muzzle")
+
+
+func test_the_drawn_heading_is_the_nearest_of_eight() -> void:
+	assert_eq(GroundRifle.heading(0.0), 0)
+	assert_eq(GroundRifle.heading(PI * 0.5), 2, "muzzle down the screen")
+	assert_eq(GroundRifle.heading(PI), 4)
+	assert_eq(GroundRifle.heading(TAU - 0.1), 0, "just short of a full turn wraps to 0")
+	assert_eq(GroundRifle.heading(-PI * 0.25), 7)
+
+
+func test_the_drawn_sheet_has_eight_square_cells() -> void:
+	var tex: Texture2D = GroundRifle.sheet()
+	assert_not_null(tex, "the drawn rifle ships")
+	if tex != null:
+		assert_eq(tex.get_width(), tex.get_height() * GroundRifle.HEADINGS)

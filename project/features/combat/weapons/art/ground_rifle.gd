@@ -3,6 +3,14 @@ extends RefCounted
 ## n11: a dead guard's rifle on the ground (CombatArena.rifle_drops, a pickup) was a 0.8 m ink line
 ## at one fixed angle: beside every body it read as a black bar, not a gun. Now an inked side-view
 ## rifle, turned by where it lies, with a soft shadow. One mesh, built once. View only.
+## it14: DRAWN, the asset lane's rifle drawn lying at 70 degrees in 8 headings (ground_rifle_70.png,
+## tools/art/ground_rifle_sheet.py): the heading nearest the turn, its screen y un-squashed for the
+## tilt as the showcase guns are. DRAWN false (or no sheet) = the inked mesh.
+const DRAWN: bool = true
+const SHEET: String = "res://features/combat/weapons/art/ground_rifle_70.png"
+const HEADINGS: int = 8
+## The drawn gun's butt-to-muzzle px in the heading-0 cell (the sheet's one scale).
+const DRAWN_LEN_PX: float = 256.0
 
 ## The gun's length on the ground (m): a pickup reads larger than life, as PickupsView's do.
 const LENGTH_M: float = 1.05
@@ -43,11 +51,15 @@ const SHINE: PackedVector2Array = [
 const RIM_DIRS: int = 8
 
 static var _mesh: ArrayMesh = null
+static var _sheet: Texture2D = null
 
 
 ## Draws the rifle lying at `at` (m), unless it is too far from `focus` (m) to be seen.
 static func draw(ci: CanvasItem, at: Vector2, focus: Vector2) -> void:
 	if not visible_from(at, focus):
+		return
+	if DRAWN and sheet() != null:
+		_draw_cell(ci, at, ViewMode.shared().ground_k())
 		return
 	var xf: Transform2D = Transform2D(turn(at), Ink.px(lies_at(at)))
 	ci.draw_set_transform_matrix(Transform2D(0.0, SHADOW_OFF) * xf)
@@ -55,6 +67,32 @@ static func draw(ci: CanvasItem, at: Vector2, focus: Vector2) -> void:
 	ci.draw_set_transform_matrix(xf)
 	ci.draw_mesh(mesh(), null)
 	ci.draw_set_transform_matrix(Transform2D.IDENTITY)
+
+
+## The drawn heading for a drop at `at`, its shadow first; `gk` the view's ground squash.
+static func _draw_cell(ci: CanvasItem, at: Vector2, gk: float) -> void:
+	var tex: Texture2D = sheet()
+	var cell: float = float(tex.get_height())
+	var src: Rect2 = Rect2(cell * heading(turn(at)), 0.0, cell, cell)
+	var k: float = LENGTH_M * Ink.PX_PER_M / DRAWN_LEN_PX
+	var size: Vector2 = Vector2(cell * k, cell * k / maxf(gk, 0.1))
+	var rect: Rect2 = Rect2(Ink.px(lies_at(at)) - size * 0.5, size)
+	ci.draw_texture_rect_region(
+		tex, Rect2(rect.position + SHADOW_OFF, size), src, Color(0.0, 0.0, 0.0, SHADOW.a)
+	)
+	ci.draw_texture_rect_region(tex, rect, src)
+
+
+## The drawn sheet (null when DRAWN is off or the sheet is missing).
+static func sheet() -> Texture2D:
+	if _sheet == null and DRAWN and ResourceLoader.exists(SHEET):
+		_sheet = load(SHEET) as Texture2D
+	return _sheet
+
+
+## The sheet's cell for a turn (rad, clockwise on screen from muzzle right): the nearest heading.
+static func heading(rad: float) -> int:
+	return posmod(roundi(fposmod(rad, TAU) / (TAU / HEADINGS)), HEADINGS)
 
 
 static func visible_from(at: Vector2, focus: Vector2) -> bool:
