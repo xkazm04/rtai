@@ -243,3 +243,17 @@ verdict was FAIL anyway, but only after 150 s. Both front doors now kill the run
 it so the verdict still names the file and line. `--keep-going` waits for the entry to end or time out
 (for a run whose later errors you want in the log). Built on `runProcess`'s `stopOn` option in
 `tools/lib/godot.mjs`; the gates do not use it, they report every error.
+
+## Scenario progress (`run_scenarios.gd`, `tools/tests/run_scenarios.mjs`)
+
+```
+node tools/tests/run_scenarios.mjs --only=autosave_input,arena_range
+# run_scenarios: [1/2] arena_range ok, 3.5 s
+# run_scenarios: [2/2] autosave_input ok, 10.8 s
+# scenario-tests: 2 passed (headless)
+```
+
+The suite prints one line per scenario as it finishes, live through the tools runner and on stderr
+when you run Godot directly, so a ten-minute run on a shared machine shows where it is. Send the run
+to a file rather than through `tail`: the verdict is the last `run_scenarios: N ran, M failed` line.
+`--only` takes exact names; an unknown name exits 2 before anything runs.
