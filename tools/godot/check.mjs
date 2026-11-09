@@ -50,7 +50,9 @@ export function errorLines(out, autoloads = autoloadNames()) {
     }
     kept.push(lines[i]);
   }
-  const real = kept.filter((l) => !isAt(l) && !/Failed to load script/.test(l));
+  // The autoload noise above cascades: every script that depends on it reports "Failed to compile depended
+  // scripts" although nothing is wrong. A real error in a dependency is its own Parse Error line and stays.
+  const real = kept.filter((l) => !isAt(l) && !/Failed to load script|Failed to compile depended scripts/.test(l));
   return real.length ? kept : [];
 }
 
