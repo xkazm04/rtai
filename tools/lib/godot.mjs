@@ -118,16 +118,17 @@ export const STOP_GRACE_MS = 1500;
  *  the first line matching it instead of waiting out the timeout: a dev scene whose script does not
  *  parse leaves the engine idling until the timeout (hero n11: four forms, about 8 minutes lost).
  *  Resolves {status, out, timedOut, stopped, durationMs}: status -1 = never ran, timed out or
- *  stopped; `stopped` is the matching line when the run was cut short for it, else null. */
+ *  stopped; `stopped` is the matching line when the run was cut short for it, else null.
+ *  `onLine(line)` sees each whole output line as it arrives (live progress for long runs). */
 export function runProcess(cmd, args, { cwd = ROOT, timeoutMs = HEADLESS_TIMEOUT_MS, env, onSpawn, stopOn = null,
-  stopGraceMs = STOP_GRACE_MS } = {}) {
+  stopGraceMs = STOP_GRACE_MS, onLine = null } = {}) {
   return new Promise((done) => {
     const t0 = Date.now();
     let out = '';
     let timedOut = false;
     let seen = null; // the first stopOn line
     let killedForStop = false;
-    let pending = ''; // a partial line between chunks
+    const pending = {}; // a partial line between chunks, per stream
     let finished = false;
     const finish = (status) => {
       if (finished) return;
@@ -141,13 +142,8 @@ export function runProcess(cmd, args, { cwd = ROOT, timeoutMs = HEADLESS_TIMEOUT
     const child = spawn(cmd, args, { cwd, env, windowsHide: true, stdio: ['ignore', 'pipe', 'pipe'],
       detached: process.platform !== 'win32' });
     if (onSpawn && child.pid) onSpawn(child.pid);
-    const watch = (text) => {
-      if (!stopOn || seen !== null) return;
-      const lines = (pending + text).split(/\r?\n/);
-      pending = lines.pop();
-      const hit = lines.map((l) => l.replace(ANSI, '')).find((l) => stopOn.test(l));
-      if (hit === undefined) return;
-      seen = hit.trim();
+    const stopSoon = (line) => {
+      seen = line.trim();
       setTimeout(() => {
         if (finished) return;
         killedForStop = true;
@@ -155,9 +151,18 @@ export function runProcess(cmd, args, { cwd = ROOT, timeoutMs = HEADLESS_TIMEOUT
         setTimeout(() => finish(-1), KILL_SETTLE_MS).unref();
       }, stopGraceMs);
     };
-    const take = (d) => { const text = d.toString('utf8'); out += text; watch(text); };
-    child.stdout.on('data', take);
-    child.stderr.on('data', take);
+    const watch = (stream, text) => { // whole lines only, each stream on its own
+      if (!stopOn && !onLine) return;
+      const lines = ((pending[stream] ?? '') + text).split(/\r?\n/);
+      pending[stream] = lines.pop();
+      for (const line of lines.map((l) => l.replace(ANSI, ''))) {
+        if (onLine) onLine(line);
+        if (stopOn && seen === null && stopOn.test(line)) stopSoon(line);
+      }
+    };
+    const take = (stream) => (d) => { const text = d.toString('utf8'); out += text; watch(stream, text); };
+    child.stdout.on('data', take('out'));
+    child.stderr.on('data', take('err'));
     child.on('error', (e) => { out += String(e); finish(-1); });
     child.on('close', (code) => finish(timedOut || killedForStop ? -1 : code));
     const timer = setTimeout(() => {
@@ -201,14 +206,14 @@ const kindOf = (args) => {
  *  inherit). `ensure` (default: on unless the args contain --import) first refreshes a stale class
  *  cache once per process via ensureImport. */
 export async function runGodot(args, { timeoutMs = HEADLESS_TIMEOUT_MS, cwd = ROOT, name, headless = true, env,
-  ensure = !args.includes('--import'), stopOn = null } = {}) {
+  ensure = !args.includes('--import'), stopOn = null, onLine = null } = {}) {
   const g = resolveGodot();
   if (!g.ok) return { status: -1, out: g.message, timedOut: false, durationMs: 0, notFound: true, name };
   if (ensure) await ensureImport({ projectDir: join(cwd, 'project') });
   const full = [...(headless ? ['--headless'] : []), '--path', 'project', ...args];
   const entry = register({ kind: name ?? kindOf(args), root: cwd }); // machine-wide run ledger (run_ledger.mjs)
   try {
-    return { ...(await runProcess(g.bin, full, { cwd, timeoutMs, env, stopOn, onSpawn: (pid) => entry.setChild(pid) })), name };
+    return { ...(await runProcess(g.bin, full, { cwd, timeoutMs, env, stopOn, onLine, onSpawn: (pid) => entry.setChild(pid) })), name };
   } finally {
     entry.release(); // also on timeout/kill: runProcess resolves after the tree kill
   }

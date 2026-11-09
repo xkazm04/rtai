@@ -50,6 +50,11 @@ function questMetrics(file, prefix) {
 const CONTENTION_POLL_MS = 10000;
 const NL = String.fromCharCode(10);
 
+/** Live progress to stderr, one line per scenario and per failure, so a ten-minute run shows where
+ *  it is (combat n11). The verdict still comes from the whole log afterwards. */
+export const PROGRESS = /^(run_scenarios: \[\d+\/\d+\]|FAIL scenario_)/;
+const progress = (line) => { if (PROGRESS.test(line)) console.error(line); };
+
 /** One Godot scenario pass. The live contention file is refreshed while it runs, so a lane that
  *  starts mid-suite still turns a later budget miss into CONTENDED. `only` re-runs named scenarios. */
 async function godotPass(outDir, { only = null, strict = false, name = 'scenarios' } = {}) {
@@ -64,7 +69,7 @@ async function godotPass(outDir, { only = null, strict = false, name = 'scenario
   const args = ['-s', 'res://tests/run_scenarios.gd', '--', evidenceDir, ...(only ? [`--only=${only.join(',')}`] : [])];
   const env = { ...process.env, GTAI_CONTENTION: String(initial), GTAI_CONTENTION_FILE: file.split(sep).join('/') };
   try {
-    return { ...(await runGodot(args, { name, timeoutMs: SCENARIOS_TIMEOUT_MS, env })), initial };
+    return { ...(await runGodot(args, { name, timeoutMs: SCENARIOS_TIMEOUT_MS, env, onLine: progress })), initial };
   } finally {
     clearInterval(timer);
     removeStale(file);

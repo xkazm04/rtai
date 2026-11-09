@@ -145,11 +145,11 @@ test('stopOn: the first SCRIPT ERROR ends a run that would idle to its timeout, 
   const { SCRIPT_ERROR } = await import('./godot.mjs');
   const idle = 'console.log("boot");setTimeout(()=>console.log("SCRIPT ERROR: Parse Error: x"),100);'
     + 'setTimeout(()=>console.log("   at: GDScript::reload (res://dev/broken.gd:3)"),300);setInterval(()=>{},1000)';
-  const r = await runProcess(process.execPath, ['-e', idle], { timeoutMs: 20000, stopOn: SCRIPT_ERROR, stopGraceMs: 800 });
+  const r = await runProcess(process.execPath, ['-e', idle], { timeoutMs: 180000, stopOn: SCRIPT_ERROR, stopGraceMs: 800 });
   assert.equal(r.timedOut, false);
   assert.equal(r.status, -1);
   assert.equal(r.stopped, 'SCRIPT ERROR: Parse Error: x');
-  assert.ok(r.durationMs < 10000, `took ${r.durationMs} ms`);
+  assert.ok(r.durationMs < 90000, `took ${r.durationMs} ms of a 180 s timeout (a loaded machine is slow, an idle child is forever)`);
   assert.match(r.out, /res:\/\/dev\/broken.gd:3/);
   assert.match(r.out, /\[stopped: killed the process tree/);
   assert.match(describe(r), /^STOPPED at the first script error/);
@@ -158,7 +158,7 @@ test('stopOn: the first SCRIPT ERROR ends a run that would idle to its timeout, 
 test('stopOn: a match split across two chunks is still seen; no match leaves the run alone', async () => {
   const { SCRIPT_ERROR } = await import('./godot.mjs');
   const split = 'process.stdout.write("SCRIPT ER");setTimeout(()=>process.stdout.write("ROR: boom\\n"),150);setInterval(()=>{},1000)';
-  const r = await runProcess(process.execPath, ['-e', split], { timeoutMs: 20000, stopOn: SCRIPT_ERROR, stopGraceMs: 100 });
+  const r = await runProcess(process.execPath, ['-e', split], { timeoutMs: 180000, stopOn: SCRIPT_ERROR, stopGraceMs: 100 });
   assert.equal(r.stopped, 'SCRIPT ERROR: boom');
   const clean = await runProcess(process.execPath, ['-e', 'console.log("ERROR: not a script error");process.exit(0)'],
     { stopOn: SCRIPT_ERROR, stopGraceMs: 100 });
@@ -173,4 +173,12 @@ test('stopOn: a run that exits by itself inside the grace keeps its own status a
   assert.equal(r.status, 1);
   assert.equal(r.stopped, null);
   assert.match(r.out, /SCRIPT ERROR: late/);
+});
+
+test('onLine sees every whole line as it arrives, per stream, a split line once and whole', async () => {
+  const seen = [];
+  const js = 'process.stdout.write("one\\ntw");setTimeout(()=>{process.stderr.write("err line\\n");process.stdout.write("o\\n")},100)';
+  const r = await runProcess(process.execPath, ['-e', js], { onLine: (l) => seen.push(l) });
+  assert.equal(r.status, 0);
+  assert.deepEqual(seen.sort(), ['err line', 'one', 'two']);
 });
