@@ -28,9 +28,9 @@ const BOSS_MARGIN_M: float = 3.0
 ## spine gap reaches 3.1 m from his centre, his defeat spill more) stays whole at the floor's
 ## side edge. 3.0 = the same margin on both axes (it11).
 const BOSS_MARGIN_X_M: float = 5.5
-## The ghost card's band at the bottom of the screen (GhostFormHud: MARGIN + its 158 px card +
-## the rim), screen px; kept clear of the boss across the whole width.
-const FOOT_PX: float = GhostFormHud.MARGIN + 162.0
+## The band at the bottom of the screen kept clear of the boss across the whole width, screen px.
+## The ghost card's old height (n11 removed the card; 198 keeps the boss framing as approved).
+const FOOT_PX: float = 198.0
 
 ## Under a tilt the boss draws up the screen from his ground point: the King's 2.0x bust on the
 ## throne-car reaches ~4 m. The top margin is kept round that lifted top (n8 it7: at 64 px/m the

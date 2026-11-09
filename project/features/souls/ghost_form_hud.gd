@@ -1,22 +1,29 @@
 class_name GhostFormHud
 extends Control
-## The ghost-form HUD (bottom left): a paper card, one chip per ghost in the cycle order (its face:
-## GhostChipFace). The current form's chip is soul teal and larger; the selected (next) ghost has
-## an ink chevron and the key hint; a cooling ghost is swept in ink (a shrinking pie). Under the
-## chips the Madness bar, the selected ghost's cost a notch. A locked ghost (GhostLocks) shows a
-## padlock in a dimmed chip and no name; G passes it by. Plain values only (sync() fills them from
-## GhostForms); words come translated by the caller.
+## The ghost HUD (bottom left), n11: no card, only the ghosts' avatars on the open ground, docked in
+## the corner, in cycle order (GhostChipFace). Ink rims and paper-on-ink marks hold on bright and
+## dark ground alike: the current form has a teal rim and stands larger; the selected (next) ghost
+## has a chevron and the key hint; a cooling ghost is dimmed with a teal arc for the time left; a
+## locked ghost (GhostLocks) is an ink silhouette under a padlock, with no name, and G passes it by.
+## Under them the Madness bar with the selected ghost's cost a notch. Plain values only (sync()
+## fills them from GhostForms); words come translated by the caller.
 
 const PAPER: Color = Color("e9dcc3")
 const INK: Color = Color("17131b")
 const TEAL: Color = Color(0.18, 0.77, 0.71)
 const CHIP_R: float = 26.0
-const GAP: float = 84.0
-const MARGIN: float = 36.0
+const GAP: float = 58.0
+const MARGIN: float = 18.0
 const TEXT_SIZE: int = 18
-## n8-hud: the card on the HUD's torn memo paper (HudArt's 9-slice, the dialogue box's paper);
-## false = the flat D5 card with its ink rim.
-const MEMO: bool = true
+## The rim round an avatar, px: its ink and, on the current form, the teal outside it.
+const RIM_PX: float = 2.0
+const CURRENT_RIM_PX: float = 2.5
+const COOL_DIM: Color = Color(0.42, 0.42, 0.47, 1.0)
+const LOCKED_INK: Color = Color(INK, 0.82)
+const TEXT_OUTLINE_PX: int = 5
+## The cooldown arc's radius (x the avatar's) and width.
+const COOL_ARC_K: float = 1.12
+const COOL_ARC_PX: float = 4.0
 
 var order: Array[StringName] = []
 ## Translated display names by form id (the caller resolves ghost.<id>.name).
@@ -30,20 +37,20 @@ var locked: Dictionary[StringName, bool] = {}
 var madness_k: float = 0.0
 ## The selected ghost's Madness cost as a fraction of the meter.
 var cost_k: float = 0.0
-## 0..1 through a running transformation (the current chip pulses while it plays).
+## 0..1 through a running transformation (the current avatar pulses while it plays).
 var morph_k: float = 1.0
-## The key hint under the selected chip ("Q"); the caller passes the bound key's label.
+## The key hint under the selected avatar ("Q"); the caller passes the bound key's label.
 var key_hint: String = "Q"
 ## The hint under the chevron in base (Q enters it) and in a form (G switches to it); the caller
 ## may replace them with the bound keys' glyphs.
 var enter_hint: String = "Q"
 var next_hint: String = "G"
 ## true while a story line is up (StoryForms: quest 1's subtitle box takes the bottom centre): the
-## card folds to the one chip that matters, the current form (in base the selected ghost).
+## strip folds to the one avatar that matters, the current form (in base the selected ghost).
 var compact: bool = false
-## The card's sizes: the desktop's full card, or the handheld's compact one (DeviceProfile.hud).
+## The strip's sizes: the desktop's, or the handheld's (DeviceProfile.hud).
 var layout: GhostFormLayout = GhostFormLayout.for_device(DeviceProfile.shared())
-## The one chip that carries its name when the layout names only one (the selected ghost).
+## The one avatar that carries its name when the layout names only one (the selected ghost).
 var _named: StringName = &""
 
 
@@ -72,29 +79,17 @@ func sync(g: GhostForms) -> void:
 
 
 func _draw() -> void:
-	var screen: Vector2 = get_viewport_rect().size
 	var shown: Array[StringName] = shown_chips()
 	var l: GhostFormLayout = layout
 	_named = named_chip(shown)
 	var w: float = l.card_w(shown.size())
-	var card: Rect2 = Rect2(Vector2(l.margin, screen.y - l.margin - l.card_h), Vector2(w, l.card_h))
-	if MEMO:
-		HudPaper.draw(self, paper_of(card))
-	else:
-		draw_rect(card.grow(4.0), INK)
-		draw_rect(card, PAPER)
+	var top: Vector2 = Vector2(l.margin, get_viewport_rect().size.y - l.margin - l.card_h)
 	for i: int in shown.size():
-		var c: Vector2 = card.position + Vector2(12.0 + l.gap * (float(i) + 0.5), l.chip_y)
-		_chip(shown[i], c)
-	_madness(Rect2(card.position + Vector2(16.0, l.bar_y), Vector2(w - 32.0, l.bar_h)))
+		_chip(shown[i], top + Vector2(l.gap * (float(i) + 0.5), l.chip_y))
+	_madness(Rect2(top + Vector2(4.0, l.bar_y), Vector2(w - 12.0, l.bar_h)))
 
 
-## n8-hud: the memo paper round `card`: the tape above the names, the torn hatch outside the words.
-static func paper_of(card: Rect2) -> Rect2:
-	return card.grow_individual(16.0, 34.0, 10.0, 16.0) if MEMO else card.grow(4.0)
-
-
-## The chips the card draws: every ghost, or folded (compact) the current form or the selected one.
+## The avatars the strip draws: every ghost, or folded (compact) the current form or the selected.
 func shown_chips() -> Array[StringName]:
 	if not compact or order.is_empty():
 		return order
@@ -103,7 +98,7 @@ func shown_chips() -> Array[StringName]:
 	return [selected if order.has(selected) else order[0]]
 
 
-## The chip that carries its name when the layout names one: the selected ghost, else the first.
+## The avatar that carries its name when the layout names one: the selected ghost, else the first.
 func named_chip(shown: Array[StringName]) -> StringName:
 	if shown.is_empty():
 		return &""
@@ -111,72 +106,84 @@ func named_chip(shown: Array[StringName]) -> StringName:
 
 
 func _chip(id: StringName, c: Vector2) -> void:
+	var font: Font = ThemeDB.fallback_font
 	if locked.get(id, false):
-		_locked_chip(c)
+		_locked_chip(id, c)
 		return
 	var on: bool = id == current
 	var r: float = layout.chip_r * (1.18 if on else 1.0)
 	if on and morph_k < 1.0:
 		r *= 1.0 + 0.12 * sin(morph_k * PI)
-	draw_circle(c, r + 3.0, INK)
-	draw_circle(c, r, TEAL if on else PAPER)
-	var face: bool = GhostChipFace.draw(self, id, c, r)  # n8-hud: the ghost's face, else the glyph
 	var cool: float = cooling.get(id, 0.0)
+	GhostChipFace.rim(self, id, c, r, [INK, RIM_PX + (CURRENT_RIM_PX if on else 0.0)])
+	if on:
+		GhostChipFace.rim(self, id, c, r, [TEAL, CURRENT_RIM_PX])
+	var dim: Color = COOL_DIM if cool > 0.0 and not on else Color.WHITE
+	if not GhostChipFace.draw(self, id, c, r, dim):
+		GhostChipGlyph.draw(self, id, c, r * 0.55, PAPER if on else INK)
 	if cool > 0.0:
-		_pie(c, r, cool)
-	var font: Font = ThemeDB.fallback_font
+		_cool_arc(c, r, cool)
 	if layout.all_names or id == _named:
 		_name(id, c, font)
-	if not face:
-		GhostChipGlyph.draw(self, id, c, r * 0.55, PAPER if on else INK)
 	if id == selected and not on:
 		_chevron(c, r, font)
 
 
-## The ghost's name above its chip, on one baseline (the grown chip clips none).
+## The ghost's name above its avatar, ink on a paper outline (the grown avatar clips none).
 func _name(id: StringName, c: Vector2, font: Font) -> void:
 	var label: String = names.get(id, String(id))
 	var ts: int = layout.text_size
 	var tw: float = font.get_string_size(label, HORIZONTAL_ALIGNMENT_LEFT, -1, ts).x
-	var at: Vector2 = c + Vector2(-tw * 0.5, -layout.chip_r * 1.18 - 6.0)
+	_text(font, c + Vector2(-tw * 0.5, -layout.chip_r * 1.18 - 6.0), label)
+
+
+## Ink on a paper outline: reads on bright ground by the ink and on dark ground by the paper.
+func _text(font: Font, at: Vector2, label: String) -> void:
+	var ts: int = layout.text_size
+	var s: int = TEXT_OUTLINE_PX
+	draw_string_outline(font, at, label, HORIZONTAL_ALIGNMENT_LEFT, -1, ts, s, PAPER)
 	draw_string(font, at, label, HORIZONTAL_ALIGNMENT_LEFT, -1, ts, INK)
 
 
-## A locked ghost: a dimmed chip with an ink padlock (shackle arc over a body), no name.
-func _locked_chip(c: Vector2) -> void:
-	draw_circle(c, layout.chip_r + 3.0, Color(INK, 0.45))
-	draw_circle(c, layout.chip_r, PAPER.darkened(0.18))
-	var s: float = layout.chip_r * 0.42
-	draw_arc(c + Vector2(0.0, -s * 0.2), s * 0.62, PI, TAU, 12, INK, 3.0)
-	draw_rect(Rect2(c + Vector2(-s, -s * 0.2), Vector2(s * 2.0, s * 1.5)), INK)
-	draw_circle(c + Vector2(0.0, s * 0.45), s * 0.22, PAPER)
+## A locked ghost: an ink silhouette (no spoiler of its colours) under a padlock of paper and ink.
+func _locked_chip(id: StringName, c: Vector2) -> void:
+	var r: float = layout.chip_r
+	if not GhostChipFace.draw(self, id, c, r, LOCKED_INK):
+		draw_circle(c, r, LOCKED_INK)
+	var s: float = r * 0.42
+	var shackle: Vector2 = c + Vector2(0.0, -s * 0.2)
+	draw_arc(shackle, s * 0.62, PI, TAU, 12, INK, 6.0)
+	draw_arc(shackle, s * 0.62, PI, TAU, 12, PAPER, 3.0)
+	var body: Rect2 = Rect2(c + Vector2(-s, -s * 0.2), Vector2(s * 2.0, s * 1.5))
+	draw_rect(body.grow(1.5), INK)
+	draw_rect(body, PAPER)
+	draw_circle(c + Vector2(0.0, s * 0.45), s * 0.22, INK)
 
 
-## The ink chevron and the key hint under the selected (next) ghost.
+## The chevron and the key hint under the selected (next) ghost, paper on an ink edge.
 func _chevron(c: Vector2, r: float, font: Font) -> void:
 	var y: float = c.y + r + 8.0
-	draw_colored_polygon(
-		PackedVector2Array([c + Vector2(-8, r + 4), c + Vector2(8, r + 4), Vector2(c.x, y + 6.0)]),
-		INK
-	)
+	var tip: Vector2 = Vector2(c.x, y + 6.0)
+	var a: Vector2 = c + Vector2(-8, r + 4)
+	var b: Vector2 = c + Vector2(8, r + 4)
+	draw_colored_polygon(PackedVector2Array([a, b, tip]), PAPER)
+	draw_polyline(PackedVector2Array([a, b, tip, a]), INK, 2.0, true)
 	var ts: int = layout.text_size
 	if PadGlyphArt.active():  # n9-handheld: the pad button's drawn glyph
 		var gw: float = PadGlyphArt.line_size(key_hint, ts).x
 		PadGlyphArt.draw_line(self, Vector2(c.x - gw * 0.5, y + 6.0 + float(ts)), key_hint, ts, INK)
 		return
 	var kw: float = font.get_string_size(key_hint, HORIZONTAL_ALIGNMENT_LEFT, -1, ts).x
-	var at: Vector2 = Vector2(c.x - kw * 0.5, y + 6.0 + float(ts))
-	draw_string(font, at, key_hint, HORIZONTAL_ALIGNMENT_LEFT, -1, ts, INK)
+	_text(font, Vector2(c.x - kw * 0.5, y + 6.0 + float(ts)), key_hint)
 
 
-## A pie of ink over the chip: `k` of the circle left to cool.
-func _pie(c: Vector2, r: float, k: float) -> void:
-	var pts: PackedVector2Array = PackedVector2Array([c])
-	var steps: int = maxi(2, ceili(24.0 * k))
-	for s: int in steps + 1:
-		@warning_ignore("return_value_discarded")
-		pts.push_back(c + Vector2.from_angle(-PI * 0.5 + TAU * k * float(s) / float(steps)) * r)
-	draw_colored_polygon(pts, Color(INK, 0.55))
+## The time left to cool: a teal arc on an ink arc round the dimmed avatar, `k` of the circle.
+func _cool_arc(c: Vector2, r: float, k: float) -> void:
+	var a: float = -PI * 0.5
+	var at: float = r * COOL_ARC_K
+	var steps: int = maxi(4, ceili(32.0 * k))
+	draw_arc(c, at, a, a + TAU * k, steps, INK, COOL_ARC_PX + 3.0, true)
+	draw_arc(c, at, a, a + TAU * k, steps, TEAL, COOL_ARC_PX, true)
 
 
 func _madness(bar: Rect2) -> void:
