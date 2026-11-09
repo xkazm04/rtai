@@ -104,6 +104,7 @@ export async function runScenarios(outDir, { quietWaitMs = 5 * 60 * 1000, pollMs
   const ok = res.status === 0 && !res.timedOut && first.ran > 0 && failed === 0 && settled.state !== 'failed';
   let summary = ok
     ? `scenario-tests: ${first.ran} passed (headless)`
+    : res.notFound ? `scenario-tests: ${res.out}`
     : `scenario-tests: ${describe(res)},${failed} of ${first.ran} failed${fails.length ? ` (${fails.join(', ')})` : ''}`;
   if (settled.state === 'passed') summary += `; ${contended.map((c) => c.scenario).join(', ')} missed under contention, re-judged alone: within budget`;
   if (settled.state === 'failed') summary += `; budget re-judged alone on a quiet machine: FAIL (${rejudgeFails.join(', ') || 'see log'})`;

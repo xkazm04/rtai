@@ -18,6 +18,7 @@ export async function runParity(outDir, steps = 1200) {
   const res = await runGodot(['-s', 'res://tests/parity/run_parity.gd', '--', `--steps=${steps}`, `--out=${out}`],
     { name: 'parity' });
   writeFileSync(join(outDir, LOG_NAME), `===== parity (${describe(res)})\n${res.out}`, 'utf8');
+  if (res.notFound) return { ok: false, summary: `parity: ${res.out}`, artifacts: [LOG_NAME] };
   if (res.timedOut) return { ok: false, summary: `parity: ${describe(res)}`, artifacts: [LOG_NAME] };
   if (res.status === 2 || !existsSync(out)) {
     return { ok: false, summary: 'parity: native CitySim not loaded (build native/ and --import first)', artifacts: [LOG_NAME] };
