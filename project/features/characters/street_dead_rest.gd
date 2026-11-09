@@ -10,12 +10,18 @@ extends Node2D
 const ENABLED: bool = true
 ## The kept bodies at most: past it the oldest goes back to the atlas.
 const CAP: int = 48
+## Under the actors band's rigs and baked crowd (relative z): the living walk over the dead.
+const UNDER_ACTORS: int = -1
 ## The sprites a lying body is made of, under its card, bottom first.
 const PARTS: Array[String] = [
 	StreetDeadHeading.SHADOW_NODE, StreetDeadHeading.SIDE_NODE, StreetDeadPlan.NODE
 ]
 
 var _kept: Dictionary[int, Array] = {}
+
+
+func _init() -> void:
+	z_index = UNDER_ACTORS
 
 
 ## Keeps `rig`'s plan pose as it comes off its rig, settled at the end of its fall. Nothing for a

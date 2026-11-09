@@ -45,6 +45,12 @@ func test_keep_moves_the_lying_sprites_where_they_lie_and_restores_the_card() ->
 	assert_eq(_rest.ids(), PackedInt32Array([7]))
 
 
+func test_the_kept_dead_lie_under_the_living() -> void:
+	assert_lt(_rest.z_index, 0, "under the rigs and the baked crowd of its band")
+	assert_true(_rest.z_as_relative, "stays inside the actors band")
+	assert_gt(_rest.z_index, -RenderLayers.BAND_SPAN)
+
+
 func test_the_shadow_stays_under_the_pose() -> void:
 	var card: Sprite2D = _lying_card()
 	_rest.keep(7, card)
