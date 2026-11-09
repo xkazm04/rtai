@@ -1,9 +1,19 @@
 extends GutTest
 ## n10 world item 4: the drawn walk's row and its play direction follow the walk, not only the aim.
 
+var _on_by_default: bool = false
+
+
+func before_all() -> void:
+	_on_by_default = RivetStride.enabled
+
 
 func after_each() -> void:
 	RivetStride.enabled = true
+
+
+func test_the_stride_is_on_by_default() -> void:
+	assert_true(_on_by_default, "--rivet-stride=off is the before, not the default")
 
 
 func _rig(deg: float, speed: float = 120.0) -> CutRig:
@@ -50,9 +60,17 @@ func test_a_reversal_cannot_flash_a_row_inside_the_dwell() -> void:
 
 
 func test_a_stale_row_more_than_a_turn_off_the_aim_is_dropped() -> void:
-	var rig: CutRig = _rig(0.0)
+	var rig: CutRig = _rig(20.0)
 	rig.set_meta(RivetStride.META_ROW, 3)
 	assert_eq(RivetStride.row(rig, 0), 0, "the held row is three off this aim")
+
+
+func test_the_held_row_is_measured_against_this_aim() -> void:
+	var rig: CutRig = _rig(135.0)
+	assert_eq(RivetStride.row(rig, 2), 3, "aim down, walk down-left: one row")
+	rig.t_alive += RivetStride.DWELL_S
+	rig.vel_in = Vector2.from_angle(deg_to_rad(110.0)) * 120.0
+	assert_eq(RivetStride.row(rig, 2), 3, "inside the hold, the turned row stays")
 
 
 func test_the_row_wraps_round_the_compass() -> void:
@@ -84,6 +102,13 @@ func test_a_stop_holds_the_last_turn() -> void:
 	rig.vel_in = Vector2.ZERO
 	assert_eq(RivetStride.row(rig, 0), 1, "the reversal's one still tick keeps the row")
 	assert_eq(RivetStride.direction(rig, 0), 1.0, "and steps forward")
+
+
+func test_a_stop_wraps_the_held_row_round_the_compass() -> void:
+	var rig: CutRig = _rig(0.0)
+	assert_eq(RivetStride.row(rig, 7), 0, "row 7 turned + wraps to 0")
+	rig.vel_in = Vector2.ZERO
+	assert_eq(RivetStride.row(rig, 7), 0, "held through the stop, still wrapped")
 
 
 func test_off_is_the_aims_row_forward() -> void:
