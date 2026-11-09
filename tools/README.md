@@ -75,3 +75,63 @@ check, and `--files=<a,b>` names the files yourself.
 **Refuses:** a file that does not exist, an unknown flag.
 **Unverifiable (exit 3):** gdformat, gdlint or Godot could not run. A checker that failed without
 naming a file counts as not run, so a missing tool can never read as "ok".
+
+## tools/gate/run.mjs: the gates on a snapshot, so you can keep editing
+
+```
+export APPDATA=<your lane's appdata>
+node tools/gate/run.mjs --rev=HEAD
+```
+
+A detached checkout of that commit goes in the temp dir with the DLLs, the baked city and the import
+cache copied in, and that commit's own `tools/evidence/run.mjs` runs there. You can keep editing and
+no log lands in your tree. Results are in `build/gate/<sha>/` (`gate.json` plus one file per kind).
+`--reels` adds the reel gate, `--bench` the bench, `--no-parity` and `--no-selftest` skip those;
+`--clean` removes the snapshot afterwards.
+
+**Refuses:** a revision git does not know, an unknown flag.
+**Unverifiable:** a kind wrote no result, or wrote a result naming another commit.
+A wall-clock scenario can go red because other lanes are filming; read the failing line first.
+
+## tools/codex/factory.mjs: Codex writes tests, a machine grades them, Claude decides
+
+```
+node tools/codex/factory.mjs pick                                 # what may go, and why
+node tools/codex/factory.mjs pick --explain=features/combat/fighter.gd
+node tools/codex/factory.mjs run --stems=oil_leak --ledger=<file>
+node tools/codex/factory.mjs queue --ledger=<file>                # what is waiting for review
+node tools/codex/factory.mjs review n11t-fac-oil-leak --verdict=accepted-after-revision --changed=4 --iteration=7 --ledger=<file>
+node tools/codex/factory.mjs ledger --state=<lane logs/state.json> --ledger=<file>
+```
+
+It picks pure RefCounted rule modules with no test yet, writes the task with the laws that forbid
+pinning accidental behaviour, dispatches through PoF's `scripts/codex/dispatch.ts`, then grades:
+tests green on the real code, inside the scope, lint clean, mutation score. It allows one repair round
+and leaves a review queue. **It never lands a file:** the score can only reject, and at or above the bar it
+means "Claude should read this", nothing more. After your review, copy the test from the task's worktree
+yourself and `discard` the task.
+
+The ledger keeps measured and estimated apart. Measured: Codex seconds, machine results, verdicts,
+lines review changed, the dollars of the sessions that reviewed. Estimated, and labelled so: one
+session's cost split across the tasks it reviewed. Unmeasured until a control run exists: the Claude
+cost of writing the same tests without Codex.
+
+**Refuses to pick:** generators, tuned tables, drawing code, anything touching a scene or the disk,
+anything already tested (ask `--explain` for the reason).
+**Exit 3:** the weekly meter refused the dispatch; nothing was built, and the meter is never worked around.
+
+## tools/merge/morning.mjs: the morning merge in one command
+
+```
+node tools/merge/morning.mjs --worktree=../gtai-wt/int-day --lanes=n11-tools,n11-hero,n11-combat --date=2026-11-10 --debt-reason="n11: film kit and combat polish"
+```
+
+Lanes merge in the order given, each lane's `JOURNAL.md` and `REPORT.md` go to `docs/day/<date>/<lane>/`,
+then the debt ratchet with your reason, both DLLs, the bake, the gates, the three reel views, the
+checked export. It stops at the first red and prints what to do; `--resume` carries on from there.
+`--steps=merge,debt` runs a part, `--dry-run` only lists them.
+
+**Refuses:** a worktree on `main`, `master`, a lane being merged or a detached head; a dirty tree; a
+merge in progress; a lane that does not exist. **It cannot push:** every git call goes through a short
+list of verbs, and `push`, `checkout`, `reset` and `branch` throw before git is called.
+A conflict only on a lane's `JOURNAL.md` or `REPORT.md` takes the lane's copy; any other conflict stops.
