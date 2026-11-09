@@ -45,6 +45,11 @@ func _process(_delta: float) -> void:
 	_last = tick
 	_mark.position = _bot.cursor
 	var rig: CutRig = _game.cast.rigs.rig_for(_game.session.stage.arena.rivet.id)
+	if _bot.waiting():
+		return
+	var pilot: StagePilot = _game.session.stage.pilot
+	if pilot != null and pilot.ghosts != null and pilot.ghosts.powers.active != &"":
+		pilot.ghosts.powers.active_left = 600  # dev: hold the form through the legs
 	if rig == null or rig.head_card == null or _bot.leg == CursorSweepBot.Leg.DONE:
 		if _bot.leg == CursorSweepBot.Leg.DONE and _pending == 0:
 			_finish()
@@ -63,7 +68,7 @@ func _row(rig: CutRig, tick: int) -> void:
 	var d: Vector2 = _bot.cursor - at
 	var ppm: float = _game.px_per_m
 	var g: Vector2 = ViewMode.shared().ground_of(d - LiveInput.aim_lift_px(ppm))
-	var o: int = RivetFrames.oct_of(rig)
+	var o: int = _oct(rig)
 	var drawn: float = o * 45.0
 	var err: float = absf(rad_to_deg(angle_difference(deg_to_rad(drawn), g.angle())))
 	var i: int = int(_bot.leg)
@@ -82,11 +87,38 @@ func _row(rig: CutRig, tick: int) -> void:
 		"%.1f" % err,
 		card.frame,
 		int(card.flip_h),
-		str(card.get_meta(RivetFrames.ON, "")).get_file().get_basename(),
+		_ghost().name if _ghost() != null else str(card.get_meta(RivetFrames.ON, "")).get_file(),
 		"%.1f" % rad_to_deg(_game.session.stage.arena.rivet.facing.angle()),
 	]
 	@warning_ignore("return_value_discarded")
 	_lines.append("\t".join(row.map(func(v: Variant) -> String: return str(v))))
+
+
+## The drawn octant: a ghost's drawn figure while one shows (GhostDrawn), else Rivet's.
+func _oct(rig: CutRig) -> int:
+	var g: Sprite2D = _ghost()
+	if g == null:
+		return RivetFrames.oct_of(rig)
+	var row: int = g.frame / g.hframes
+	for o: int in 8:
+		if RigHeadCard.OCT_FRAME[o] == row and RigHeadCard.OCT_FLIP[o] == int(g.flip_h):
+			return o
+	return -1
+
+
+## The visible drawn ghost nearest Rivet's spot (Kerf's afterimages carry copies along the blink).
+func _ghost() -> Sprite2D:
+	var at: Vector2 = _game.cast.rigs.rig_for(_game.session.stage.arena.rivet.id).global_position
+	var best: Sprite2D = null
+	for n: Node in _game.find_children("ghost_drawn", "Sprite2D", true, false):
+		var g: Sprite2D = n as Sprite2D
+		var far: bool = (
+			best != null
+			and best.global_position.distance_to(at) < g.global_position.distance_to(at)
+		)
+		if g.is_visible_in_tree() and not far:
+			best = g
+	return best
 
 
 func _grab(rig: CutRig, cell: Vector2i) -> void:

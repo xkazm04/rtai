@@ -35,7 +35,8 @@
         "2026-11-09: n11 hero: the stride film is the dev tool the owner's bounce note is judged with (dev_loc 20477 -> 20598)",
         "2026-11-09: n11 hero: filming a form through the stride film (dev_loc 20598 -> 20617)",
         "2026-11-09: n11 hero: GhostFormView feeds GhostActs (drawn ghost attack cells), the stride film melee press flag for evidence (dev only) (dev_loc 20617 -> 20623)",
-        "2026-11-09: n11 hero: stride_film gains --film-fire/--film-hurt/--film-crop, the dev film that proves each ghost's act and hit cells in the arena (dev_loc 20623 -> 20637)"
+        "2026-11-09: n11 hero: stride_film gains --film-fire/--film-hurt/--film-crop, the dev film that proves each ghost's act and hit cells in the arena (dev_loc 20623 -> 20637)",
+        "2026-11-09: n11 hero: cursor_sweep --sweep-form, the scripted cursor through each ghost form (item 1 and 2 evidence) (dev_loc 20637 -> 20698)"
       ],
       "files": {
         "project/dev/arena": 708,
@@ -56,7 +57,7 @@
         "project/dev/quest1_city_fit.gd": 18,
         "project/dev/quest1_city_fit_run.gd": 74,
         "project/dev/rivet_arsenal": 255,
-        "project/dev/rivet_motion": 1899,
+        "project/dev/rivet_motion": 1960,
         "project/dev/save_crash_loop.gd": 14,
         "project/dev/save_crash_writer.gd": 18,
         "project/dev/save_cross.gd": 18,
@@ -67,7 +68,7 @@
         "project/dev/view": 195,
         "project/dev/weapon_art": 506
       },
-      "total": 20637
+      "total": 20698
     },
     "direct_cmdline_reads": {
       "accepted": [

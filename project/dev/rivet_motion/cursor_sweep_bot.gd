@@ -20,6 +20,9 @@ var cursor: Vector2 = Vector2.ZERO
 var _live: LiveInput
 var _actions: PlayerActions
 var _centre: Callable
+var _presses: Array[Vector2i] = []
+var _at: int = 0
+var _wait: int = 0
 
 
 func _init(live: LiveInput, actions: PlayerActions, centre: Callable) -> void:
@@ -29,8 +32,29 @@ func _init(live: LiveInput, actions: PlayerActions, centre: Callable) -> void:
 	_live.cursor_px = func() -> Vector2: return cursor
 
 
+## `--sweep-form`: select form `gears` steps along the order and transform before the legs.
+func form_presses(gears: int) -> void:
+	for g: int in gears:
+		_presses.append(Vector2i(40 + g * 3, 0))
+	_presses.append(Vector2i(40 + gears * 3, 1))
+	_wait = 40 + gears * 3 + 150
+
+
+## True until the form presses have played out (the legs and the log start after).
+func waiting() -> bool:
+	return _at <= _wait
+
+
 func sample(tick: int) -> TickInput:
 	var c: Vector2 = _centre.call()
+	_at += 1
+	if _at <= _wait:
+		cursor = c + Vector2.RIGHT * RADIUS_PX
+		for p: Vector2i in _presses:
+			if p.x == _at:
+				var act: StringName = &"power_hauler" if p.y == 1 else &"power_gearbox"
+				return TickInput.new(1 << _actions.bit(act), 0, 0)
+		return TickInput.new(_live.sample(tick).buttons, 0, 0)
 	var turns: float = float(in_leg) / float(REV_TICKS)
 	if leg == Leg.MELEE:
 		turns = float(int(float(in_leg) / MELEE_EVERY)) / 8.0  # one held octant per swing
