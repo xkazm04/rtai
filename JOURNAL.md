@@ -112,3 +112,7 @@ NEXT (freeze session): the exe (`--export-release windows-showcase ../build/expo
 ## it17 (02:43-)
 Checked only: QUEUE EMPTY from it16 stands, HEAD 473f02c4, tree clean, no `REQUEST -> rivet` in the handheld, perf or world journals. No Godot run, no new gate, frame or number. Ended at once by the run's rule and the brief's last line, over the phase's "do not end early": the brief's list is walked, and what is open is art, a Call, or the once-seen `rig_stress` engine error, which has not returned.
 NEXT (freeze session): the exe (`--export-release windows-showcase ../build/export/windows/RTAI.exe`), `node tools/evidence/cites.mjs REPORT.md`, REPORT final. If the journal still says QUEUE EMPTY and nothing has changed, end at once.
+
+## it18 (02:44-)
+Checked only: QUEUE EMPTY from it16 stands. HEAD 510d97c8, tree clean, the only change since it16 is it17's journal lines; no `REQUEST -> rivet` in the handheld, perf or world journals. Brief item 4 re-checked on disk: `rivet_n10_set_combined.mp4` is there and REPORT line 27 places the bare-walk segment at 64.6 s (the file's date only; the clip was not reopened this session). No Godot run, no new gate, frame or number. Ended by the same rule as it17, over the phase's "do not end early". Not done and still owed: the freeze session's exe, `cites.mjs` and final REPORT.
+NEXT (freeze session): the exe (`--export-release windows-showcase ../build/export/windows/RTAI.exe`), `node tools/evidence/cites.mjs REPORT.md`, REPORT final. If the journal still says QUEUE EMPTY and nothing has changed, end at once.
