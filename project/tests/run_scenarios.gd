@@ -33,11 +33,35 @@ func _initialize() -> void:
 	quit(_run_all(filter, only))
 
 
+## Prints one progress line per scenario to stderr ("run_scenarios: [3/55] city_chase ok, 4.2 s"),
+## so a run that takes ten minutes on a shared machine shows where it is.
 func _run_all(filter: String, only: PackedStringArray) -> int:
+	var files: PackedStringArray = _selected(filter, only)
 	var failed: int = 0
-	var ran: int = 0
 	var errors: ErrorCounter = ErrorCounter.new()
 	OS.add_logger(errors)
+	for i: int in files.size():
+		var file: String = files[i]
+		errors.reset()
+		var started_ms: int = Time.get_ticks_msec()
+		var reason: String = _run_one(SCENARIO_DIR.path_join(file))
+		if reason == "" and errors.count() > 0:
+			reason = "%d engine/script error(s), first: %s" % [errors.count(), errors.first()]
+		if reason != "":
+			failed += 1
+			printerr("FAIL %s: %s" % [file, reason])
+		var secs: float = (Time.get_ticks_msec() - started_ms) / 1000.0
+		var mark: String = "ok" if reason == "" else "FAIL"
+		var where: String = "[%d/%d] %s" % [i + 1, files.size(), _short_name(file)]
+		printerr("run_scenarios: %s %s, %.1f s" % [where, mark, secs])
+	OS.remove_logger(errors)
+	printerr("run_scenarios: %d ran, %d failed" % [files.size(), failed])
+	return 1 if failed > 0 else 0
+
+
+## The scenario files to run, in directory order, after --filter and --only.
+func _selected(filter: String, only: PackedStringArray) -> PackedStringArray:
+	var files: PackedStringArray = PackedStringArray()
 	for file: String in DirAccess.get_files_at(SCENARIO_DIR):
 		if not file.begins_with("scenario_") or not file.ends_with(".gd"):
 			continue
@@ -45,17 +69,9 @@ func _run_all(filter: String, only: PackedStringArray) -> int:
 			continue
 		if not only.is_empty() and not only.has(_short_name(file)):
 			continue
-		ran += 1
-		errors.reset()
-		var reason: String = _run_one(SCENARIO_DIR.path_join(file))
-		if reason == "" and errors.count() > 0:
-			reason = "%d engine/script error(s), first: %s" % [errors.count(), errors.first()]
-		if reason != "":
-			failed += 1
-			printerr("FAIL %s: %s" % [file, reason])
-	OS.remove_logger(errors)
-	printerr("run_scenarios: %d ran, %d failed" % [ran, failed])
-	return 1 if failed > 0 else 0
+		@warning_ignore("return_value_discarded")
+		files.append(file)
+	return files
 
 
 ## "scenario_city_chase.gd" -> "city_chase".
