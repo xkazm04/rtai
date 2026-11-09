@@ -64,3 +64,16 @@ func test_a_walked_over_body_does_not_move() -> void:
 	var body: Fighter = over["body"]
 	var rest: Vector2 = over["rest"]
 	assert_eq(body.pos, rest, "Rivet pushed the body")
+
+
+## Quest 1's Rivet-against-hostiles pass (`ArenaBodies`), called with him standing on a dead guard.
+func test_quest_bodies_pass_has_no_contact_with_the_dead() -> void:
+	var s: ArenaSession = _open(Idle.new())
+	var arena: CombatArena = s.stage.arena
+	var guard: Fighter = arena.spawn_guard(arena.rivet.pos + Vector2(0.1, 0.0))
+	arena.damage(guard, 1000.0, arena.rivet.id, &"pistol")
+	var at: Vector2 = arena.rivet.pos
+	var rest: Vector2 = guard.pos
+	assert_eq(ArenaBodies.resolve(arena, Vector2(6.0, 0.0)), 0, "no contact with a corpse")
+	assert_eq(arena.rivet.pos, at, "Rivet not moved")
+	assert_eq(guard.pos, rest, "the body not moved")
