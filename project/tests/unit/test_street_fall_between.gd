@@ -39,3 +39,87 @@ func test_a_body_that_fell_through_the_in_betweens_lies_face_down() -> void:
 		var pose: int = StreetDeadPlan.pick(90000 + actor, &"death_bullet", at, true)
 		assert_has(StreetFallBetween.FACE_DOWN, pose, "actor %d" % actor)
 	StreetDeadPlan.reset()
+
+
+func _fallen(col: int, flip: bool) -> Sprite2D:
+	var card: Sprite2D = Sprite2D.new()
+	card.texture = load(StreetWalkerCards.DIR + "p70/cop_patrol_between_fall.png") as Texture2D
+	card.hframes = 5
+	card.vframes = StreetFallBetween.FRAMES
+	card.frame_coords = Vector2i(col, StreetFallBetween.FRAMES - 1)
+	card.flip_h = flip
+	autofree(card)
+	return card
+
+
+func test_the_corpse_lies_along_the_column_it_fell_in() -> void:
+	# it14 critique: the chest-down cell lay head right, then the corpse head up-left (a 120 deg turn)
+	var want: PackedInt32Array = [0, 1, 2, 3, 3]
+	for col: int in range(5):
+		for flip: bool in [false, true]:
+			var head: Vector2 = StreetFallBetween.head_of(_fallen(col, flip))
+			assert_eq(StreetDead70.cell(head, 0, false), want[col], "col %d" % col)
+			assert_eq(StreetDead70.mirrored(head, flip), flip, "col %d flip %s" % [col, flip])
+
+
+func test_the_fall_heading_mirrors_with_the_card() -> void:
+	var right: Vector2 = StreetFallBetween.head_of(_fallen(2, false))
+	var left: Vector2 = StreetFallBetween.head_of(_fallen(2, true))
+	assert_almost_eq(right.x, 1.0, 0.001)
+	assert_almost_eq(left.x, -1.0, 0.001)
+
+
+func test_the_drawn_corpse_takes_the_fall_card_heading_not_the_blow() -> void:
+	StreetDeadPlan.reset()
+	var card: Sprite2D = _fallen(2, false)  # chest down, head right
+	add_child(card)
+	var rig: CutRig = autofree(CutRig.new())
+	rig.actor_id = 4242
+	rig.react = HumanReact.new()
+	rig.react.kind = &"death_bullet"
+	rig.react.dir = Vector2(-1.0, -1.0).normalized()  # a blow up-left: StreetDeadHeading lays it so
+	StreetDeadPlan.draw(rig, card, "cop/head_cap", 1.0, 0.9)
+	var plan: Sprite2D = card.get_node(StreetDeadPlan.NODE) as Sprite2D
+	assert_eq(plan.texture, card.texture, "its own grid, not a dead70 cell on another angle")
+	assert_eq(plan.frame_coords, Vector2i(2, StreetFallBetween.FRAMES - 1), "the column it fell in")
+	assert_false(plan.flip_h, "not mirrored to the left")
+	assert_eq(card.self_modulate.a, 0.0, "the card itself is hidden: one body")
+	remove_child(card)
+	StreetDeadPlan.reset()
+
+
+func test_a_corpse_fallen_head_down_mirrors_with_its_card() -> void:
+	StreetDeadPlan.reset()
+	for flip: bool in [false, true]:
+		var card: Sprite2D = _fallen(0, flip)
+		add_child(card)
+		var rig: CutRig = autofree(CutRig.new())
+		rig.actor_id = 4243
+		rig.react = HumanReact.new()
+		rig.react.kind = &"death_bullet"
+		StreetDeadPlan.draw(rig, card, "cop/head_cap", 1.0, 0.9)
+		var plan: Sprite2D = card.get_node(StreetDeadPlan.NODE) as Sprite2D
+		assert_eq(plan.frame_coords, Vector2i(0, StreetFallBetween.FRAMES - 1), "head down")
+		assert_eq(plan.flip_h, flip, "the side the card fell on")
+		remove_child(card)
+	StreetDeadPlan.reset()
+
+
+func test_the_grid_corpse_lies_where_the_card_stands_and_its_size() -> void:
+	StreetDeadPlan.reset()
+	var card: Sprite2D = _fallen(2, false)
+	add_child(card)
+	card.global_position = Vector2(5000.0, 7000.0)
+	card.global_scale = Vector2(0.6, 0.6)
+	var rig: CutRig = autofree(CutRig.new())
+	rig.actor_id = 4244
+	rig.global_position = card.global_position
+	rig.react = HumanReact.new()
+	rig.react.kind = &"death_bullet"
+	StreetDeadPlan.draw(rig, card, "cop/head_cap", 0.6, 0.9)
+	var plan: Sprite2D = card.get_node(StreetDeadPlan.NODE) as Sprite2D
+	assert_almost_eq(plan.global_scale.x, 0.6, 0.001, "the size the fall card drew it")
+	assert_almost_eq(plan.global_scale.y, 0.6, 0.001, "not squashed by the ground")
+	assert_lt(plan.global_position.distance_to(card.global_position), 1.0, "where it fell")
+	remove_child(card)
+	StreetDeadPlan.reset()

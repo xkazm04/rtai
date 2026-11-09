@@ -19,6 +19,18 @@ const AT: PackedFloat32Array = [0.0, 0.18, 0.26, 0.33, 0.4]
 ## and D): a back pose after them flipped the body over in one frame (it14 film).
 const FACE_DOWN: PackedInt32Array = [0, 3]
 
+## The head's screen heading (deg, y down) of each column's chest-down and lying rows, as drawn:
+## down, down-right, right, up-right, and the away column lies up-right too.
+const HEAD_DEG: PackedFloat32Array = [90.0, 45.0, 0.0, -45.0, -45.0]
+## KEEP_HEADING false = the corpse takes StreetDeadHeading's heading off the blow (it14: it turned
+## about 120 degrees from the chest-down cell in one frame).
+const KEEP_HEADING: bool = true
+## it18: the dead70 face-down diagonals are drawn at about 55 degrees on screen, this grid's
+## chest-down and lying rows at about 22, so any dead70 cell still turned at the hand-over. Such a
+## body lies as its own grid's lying row (drawn face down for this camera, at this column's angle).
+## LIE_IN_GRID false = the dead70 cell nearest the column's heading.
+const LIE_IN_GRID: bool = true
+
 
 ## The grid drawn for a fall grid path: its in-between grid when it has one.
 static func swap(path: String) -> String:
@@ -38,3 +50,27 @@ static func is_fall_card(card: Sprite2D) -> bool:
 ## True when the card fell through the drawn in-betweens (so it lies face down).
 static func lands_face_down(card: Sprite2D) -> bool:
 	return card.texture != null and card.texture.resource_path.ends_with("_between_fall.png")
+
+
+## The unit screen direction the head lies in on a fall card's column (mirrored with the card).
+static func head_of(card: Sprite2D) -> Vector2:
+	var h: Vector2 = Vector2.from_angle(deg_to_rad(HEAD_DEG[clampi(card.frame_coords.x, 0, 4)]))
+	return Vector2(-h.x, h.y) if card.flip_h else h
+
+
+## `card`'s lying sprite (StreetDeadPlan.NODE, so the rest layer keeps it): its own grid
+## (`grid`), else the drawn sheet `drawn`, else the plan poses at `path`.
+static func lying_sprite(card: Sprite2D, path: String, drawn: String, grid: bool) -> Sprite2D:
+	if grid:
+		return StreetDead70.sprite(card, card.texture.resource_path, card.hframes, card.vframes)
+	if drawn.is_empty():
+		return StreetDead70.sprite(card, path, StreetDeadPlan.POSES, 1)
+	return StreetDead70.sprite(card, drawn, StreetDead70.COLS, StreetDead70.ROWS)
+
+
+## Shows the lying row of `card`'s column on `plan`, where the card stands, moved by `shift` (px:
+## the push off the neighbours, the pull back from a wall) and rocked by `turn` (rad).
+static func lie(card: Sprite2D, plan: Sprite2D, shift: Vector2, turn: float) -> void:
+	plan.frame_coords = Vector2i(card.frame_coords.x, FRAMES - 1)
+	plan.flip_h = card.flip_h
+	plan.global_transform = Transform2D(turn, card.global_scale, 0.0, card.global_position + shift)

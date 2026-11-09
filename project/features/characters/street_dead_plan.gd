@@ -108,32 +108,32 @@ static func draw(rig: CutRig, card: Sprite2D, row: String, ks: float, p: float) 
 	var blow: Vector2 = r.dir.rotated(rig.facing).normalized() if r != null else Vector2.DOWN
 	var kind: StringName = r.kind if r != null else &""
 	var drawn: String = StreetDead70.path_of(row)
-	var plan: Sprite2D = (
-		StreetDead70.sprite(card, path, POSES, 1)
-		if drawn.is_empty()
-		else StreetDead70.sprite(card, drawn, StreetDead70.COLS, StreetDead70.ROWS)
-	)
 	var down: bool = StreetFallBetween.lands_face_down(card)
+	var keep: bool = down and StreetFallBetween.KEEP_HEADING  # lie as the chest-down cell lay
+	var grid: bool = keep and StreetFallBetween.LIE_IN_GRID
+	var plan: Sprite2D = StreetFallBetween.lying_sprite(card, path, drawn, grid)
 	var pose: int = pick(rig.actor_id, kind, rig.global_position, down)
 	var h: int = _hash(rig.actor_id)
 	var m: Vector2 = motion(kind, p)
-	var odd: bool = (h & 1) == 1
-	var head: Vector2 = StreetDeadHeading.head_of(blow, pose, odd)
+	var odd: bool = card.flip_h if keep else (h & 1) == 1
+	var head: Vector2 = (
+		StreetFallBetween.head_of(card) if keep else StreetDeadHeading.head_of(blow, pose, odd)
+	)
 	var lying: float = StreetWalkerFall.rest_scale(ks, StreetWalkerFall.sink_of(rig)) * LYING_K
 	var pelvis: float = _bounded(card, rig.global_position, head, lying)
-	var left: float = StreetDeadHeading.push_left(p)
 	var centre: Vector2 = rig.global_position + head * pelvis
-	var at: Vector2 = (
-		StreetDeadHeading.resting(rig.actor_id, centre, left) - blow * m.x * CharacterRigs.PX_PER_M
+	var push: Vector2 = (
+		StreetDeadHeading.resting(rig.actor_id, centre, StreetDeadHeading.push_left(p)) - centre
 	)
-	var lay: Vector2 = StreetDead70.place(plan, head, pose, odd, not drawn.is_empty())
-	var s: float = ks * LYING_K * m.y
-	plan.global_transform = Transform2D(
-		lay.x + StreetDeadHeading.jitter(h) + StreetDeadHeading.settle(p),
-		Vector2(s, s / lay.y),
-		0.0,
-		at
-	)
+	if grid:  # no slide, no landing scale: the card's own lying row where its feet stood
+		var wall: Vector2 = head * (pelvis - PELVIS_K * StreetWalkerFall.STILL_PX * lying)
+		StreetFallBetween.lie(card, plan, push + wall, StreetDeadHeading.settle(p))
+	else:
+		var lay: Vector2 = StreetDead70.place(plan, head, pose, odd, not drawn.is_empty())
+		var s: float = ks * LYING_K * m.y
+		var at: Vector2 = centre + push - blow * m.x * CharacterRigs.PX_PER_M
+		var turn: float = lay.x + StreetDeadHeading.jitter(h) + StreetDeadHeading.settle(p)
+		plan.global_transform = Transform2D(turn, Vector2(s, s / lay.y), 0.0, at)
 	StreetDeadHeading.shade(card, plan, drawn.is_empty())
 	card.self_modulate.a = 0.0
 
