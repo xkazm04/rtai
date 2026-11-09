@@ -30,10 +30,12 @@ const ORDER: Array[StringName] = [
 ]
 ## The first item's spot (hub-relative metres) and the grid: rows of PER_ROW, STEP_M apart (twice
 ## the pickup reach, so one step along a row never stands over two guns).
+## n11: the guns are drawn x2 on the floor (PickupsView.GROUND_K), up to 2.6 m long, so a step is
+## longer than the longest gun and four rows fill the hub to its south wall.
 const FIRST_M: Vector2 = Vector2(1.5, -1.2)
-const STEP_M: float = 1.8
-const ROW_M: float = 1.5  # rows y -1.2 and 0.3: 1.2 m clear of the melee line and react_line
-const PER_ROW: int = 8
+const STEP_M: float = 3.15
+const ROW_M: float = 1.8
+const PER_ROW: int = 5
 
 var laid: int = 0
 

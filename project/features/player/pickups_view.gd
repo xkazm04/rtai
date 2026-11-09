@@ -11,6 +11,10 @@ const DISC_M: float = 0.55
 ## n11 (the owner: "two times large to be recognizable"): the gun and its disc are drawn this many
 ## times their size. Render only: the pickup reach (WeaponPickups.REACH_M) stays as it is.
 const GROUND_K: float = 2.0
+## n11: the longest guns stop here, or the Gatling at x2 outspans its neighbours in the armory.
+const MAX_SPAN_M: float = 2.6
+## n11: the ring grows less than the gun (a 2.2 m disc under each gun fused the armory's rows).
+const DISC_K: float = 1.3
 const RING_PX: float = 2.0
 const TURN_RAD_S: float = 0.6
 const DASHES: int = 14
@@ -89,7 +93,7 @@ func _stand(s: Sprite2D, i: int) -> void:
 ## How long a gun of `length_m` is drawn on the ground (r2_w8: at least `min_span_m`, to fill the
 ## ring), GROUND_K times over.
 static func ground_span_m(length_m: float, min_span_m: float) -> float:
-	return maxf(length_m, min_span_m) * GROUND_K
+	return minf(maxf(length_m, min_span_m) * GROUND_K, MAX_SPAN_M)
 
 
 ## The gun's height over its disc at view time `t` (s) for item `i` (render only, no RNG).
@@ -100,7 +104,7 @@ static func hover_m(t: float, i: int) -> float:
 func _draw() -> void:
 	if carry == null:
 		return
-	var r: float = DISC_M * GROUND_K * SimConst.PX_PER_M
+	var r: float = DISC_M * DISC_K * SimConst.PX_PER_M
 	var items: Array[WeaponPickups.Item] = carry.ground.items
 	for i: int in items.size():
 		var at: Vector2 = items[i].pos * SimConst.PX_PER_M

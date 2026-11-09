@@ -56,3 +56,6 @@ func test_outline_width_is_data() -> void:
 func test_a_ground_gun_is_drawn_twice_its_span() -> void:
 	assert_almost_eq(PickupsView.ground_span_m(1.0, 0.5), 2.0, 0.0001, "the gun's own length x2")
 	assert_almost_eq(PickupsView.ground_span_m(0.3, 1.05), 2.1, 0.0001, "the ring's minimum x2")
+	assert_almost_eq(
+		PickupsView.ground_span_m(2.3, 0.5), PickupsView.MAX_SPAN_M, 0.0001, "a long gun is capped"
+	)
