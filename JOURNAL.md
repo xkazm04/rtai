@@ -257,3 +257,11 @@ FINDING: the last lines of `gtai-assets/logs/run.log` (17:55) are `loop.sh: fork
 QUEUE EMPTY: unchanged from 03:40. Items 1, 2 and 4 done or reported as Calls (w-2, w-3, w-6); item 3 done for what code can reach, blocked on REQUEST 3 art. No game code touched, no Godot run, no new gate, frame or number this session. Ended by the run's rule, over the phase's "do not end early".
 
 NEXT: As iteration 20. If a sheet has arrived in `library/rounds/` (round 1800's `out/` first) or `library/deliveries/`: add the class to `StreetDead70.CLASSES` and `tools/art/dead_70.py`, film it, then re-run evidence, reels x3, bake and export. Otherwise end at once; nothing is owed at the freeze unless `git log 10ed4f51..HEAD -- project native tools` is non-empty.
+
+
+---- session 04:17 (iteration 24, BUILD) ----
+Read at open: tree clean at faf8dd62. No file in `library/deliveries/` or `library/rounds/` newer than 17:56 on 11-08 (`find -newermt`); round `20261108-1800`'s `out/` is still empty and `gtai-assets/logs/run.log` has not grown since 17:55. No `REQUEST -> world` in the other lanes. `git log 10ed4f51..HEAD -- project native tools` is empty, so the exe from iteration 20 is still the current code.
+
+QUEUE EMPTY: unchanged from 03:40. Items 1, 2 and 4 done or reported as Calls (w-2, w-3, w-6); item 3 done for what code can reach, blocked on REQUEST 3 art. No game code touched, no Godot run, no new gate, frame or number this session. Ended by the run's rule, over the phase's "do not end early".
+
+NEXT: As iteration 20. If a sheet has arrived in `library/rounds/` (round 1800's `out/` first) or `library/deliveries/`: add the class to `StreetDead70.CLASSES` and `tools/art/dead_70.py`, film it, then re-run evidence, reels x3, bake and export. Otherwise end at once; nothing is owed at the freeze unless `git log 10ed4f51..HEAD -- project native tools` is non-empty.
