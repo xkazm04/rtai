@@ -55,6 +55,22 @@ func test_the_rog_xbox_ally_family_picks_its_row() -> void:
 	assert_eq(DeviceProfile.auto_pick("", fhd, "ROG XBOX Ally X RC74XA RC74XA"), "handheld_1080")
 
 
+func test_the_msi_claw_line_picks_its_row_by_product_name() -> void:
+	# n10 it17: product_name matches in steamos-manager and Playtron (LEDGER section 9)
+	var wuxga: Vector2i = Vector2i(1920, 1200)
+	assert_eq(DeviceProfile.auto_pick("", Vector2i(1920, 1080), "Claw A1M"), "handheld_1080")
+	assert_eq(DeviceProfile.auto_pick("", wuxga, "Claw 7 AI+ A2VM"), "handheld_1080")
+	assert_eq(DeviceProfile.auto_pick("", wuxga, "Claw 8 AI+ A2VM"), "handheld_1080")
+
+
+func test_a_claw_colour_name_only_matches_with_the_model_whole() -> void:
+	# MSI varies the product name by colour: text after the model still matches, and a
+	# name that breaks the model stays on the desktop row, where it is today
+	assert_eq(DeviceProfile.model_row("Claw 8 AI+ A2VM Sandstorm"), "handheld_1080")
+	for model: String in ["Claw 8 AI+ Sandstorm A2VM", "Claw", "claw a1m", "Claw 8 AI+"]:
+		assert_eq(DeviceProfile.model_row(model), "", model)
+
+
 func test_a_type_number_only_matches_the_whole_name() -> void:
 	for model: String in ["83E1ABCDEF", "X83E1", "83e1", "83E"]:
 		assert_eq(DeviceProfile.model_row(model), "", model)
