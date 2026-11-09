@@ -32,6 +32,9 @@ const ARMED: String = "rivet_walk_eq_"
 const RUN: String = "rivet_run8.png"
 const ARMED_RUN: String = "rivet_run8_eq_"
 const RUN_CYCLE_CELL: Dictionary[String, float] = {"p70": 258.0, "p55": 212.0}
+## How long a speed dip keeps the walk grid (0 = the old one-tick stand in a reversal).
+const DIP_TICKS: int = 3
+const MOVED: StringName = &"rivet_walk_moved"
 const RUN_FROM_MPS: float = 2.5
 const MAX_RUN_CYCLES_S: float = 3.5
 ## measured on the packed grids (cell px of stance travel, the row's vs run8's same row): the
@@ -77,9 +80,21 @@ static var armed: bool = true
 static var run: bool = true
 
 
+## True while he walks, or a reversal carried his speed through zero within DIP_TICKS (n10: that
+## tick drew the standing or reload cell inside the walk). A real stop stands DIP_TICKS later.
+## The age is checked both ways: CutRig.reset restarts t_alive and the meta survives the pool.
+static func moving(rig: CutRig) -> bool:
+	if rig.speed_now > RivetFrames.MOVING:
+		rig.set_meta(MOVED, rig.t_alive)
+		return true
+	var moved: float = rig.get_meta(MOVED, -INF)
+	var age: float = rig.t_alive - moved
+	return age >= 0.0 and age <= DIP_TICKS * SimClock.TICK_DT
+
+
 ## The walk grid under `art`, "" when it is off, the art has none, or he is not walking bare-claw.
 static func path_of(rig: CutRig, art: String, weapon: StringName) -> String:
-	if not enabled or rig.speed_now <= RivetFrames.MOVING:
+	if not enabled or not moving(rig):
 		return ""
 	if rig.dead or rig.clips.rolling() or rig.clips.hit_t > 0.0 or rig.clips.strike_t >= 0.0:
 		return ""

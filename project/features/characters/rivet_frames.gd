@@ -114,7 +114,7 @@ static func cell_of(rig: CutRig, cells: int, walk_ph: float = -1.0) -> Vector2i:
 		return Vector2i(BASE_OCT[o], 0)
 	if RivetStrips.draws_fire(rig, weapon_of(rig), o, RivetStrips.fire_latched(rig)):
 		return Vector2i(Eq.FIRE_CAM if o == 2 else Eq.FIRE_SIDE, left)
-	if not rig.aiming and rig.speed_now <= MOVING and o in [1, 2, 3]:
+	if not rig.aiming and not RivetWalk.moving(rig) and o in [1, 2, 3]:
 		return Vector2i(Eq.REST, 0)
 	return Vector2i(EQ_OCT[o], left)
 
