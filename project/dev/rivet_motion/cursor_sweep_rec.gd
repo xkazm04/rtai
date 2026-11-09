@@ -1,8 +1,7 @@
 class_name CursorSweepRec
 extends Node2D
-## n11 hero (dev): logs, per tick, the screen angle from Rivet's drawn feet to the scripted cursor
-## against the octant his drawn frame shows (`<out>.tsv`), and pastes crops into `<out>.png`, one
-## row per leg (the cursor drawn in). View only.
+## n11 hero (dev): logs each tick's drawn octant against the scripted cursor (`<out>.tsv`), and
+## pastes crops into `<out>.png`, one row per leg (the cursor drawn in). View only.
 
 const CROP: int = 300
 const COLS: int = 12
@@ -52,9 +51,11 @@ func _process(_delta: float) -> void:
 		return
 	_row(rig, tick)
 	var step: int = CursorSweepBot.LEG_TICKS / COLS
-	if _bot.in_leg % step == 0:
+	var melee: bool = _bot.leg == CursorSweepBot.Leg.MELEE
+	var every: int = CursorSweepBot.MELEE_EVERY if melee else step
+	if _bot.in_leg % every == (28 if melee else 0):
 		_pending += 1
-		_grab.call_deferred(rig, Vector2i(_bot.in_leg / step, int(_bot.leg)))
+		_grab.call_deferred(rig, Vector2i(_bot.in_leg / every, int(_bot.leg)))
 
 
 func _row(rig: CutRig, tick: int) -> void:
