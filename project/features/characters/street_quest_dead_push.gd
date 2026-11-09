@@ -22,8 +22,11 @@ static var _centres: Dictionary[int, Vector2] = {}
 
 
 ## The push of `actor` (cell centre `centre`) off every other body in StreetDeadPlan's memory; a
-## body with a stored centre is measured from it, plus its own push.
-static func push_of(actor: int, centre: Vector2, px_per_m: float) -> Vector2:
+## body with a stored centre is measured from it, plus its own push. `blocked` (px -> bool, the
+## city's solid test; unset = open ground): a pushed body never ends on one.
+static func push_of(
+	actor: int, centre: Vector2, px_per_m: float, blocked: Callable = Callable()
+) -> Vector2:
 	if _pushed.has(actor):
 		return _pushed[actor]
 	var push: Vector2 = Vector2.ZERO
@@ -32,8 +35,9 @@ static func push_of(actor: int, centre: Vector2, px_per_m: float) -> Vector2:
 		for o: Vector2 in others:
 			push += _shove(centre + push - o, SPACE_M * px_per_m, actor)
 	push = push.limit_length(PUSH_MAX_M * px_per_m)
-	if not _is_clear(centre + push, others, SPACE_M * px_per_m):
-		push = _nearest_clear(centre, others, px_per_m, actor)
+	var walled: bool = push != Vector2.ZERO and blocked.is_valid() and blocked.call(centre + push)
+	if walled or not _is_clear(centre + push, others, SPACE_M * px_per_m):
+		push = _nearest_clear(centre, others, px_per_m, actor, blocked)
 	if _pushed.size() >= StreetDeadPlan.MEMORY:
 		reset()
 	_pushed[actor] = push
@@ -59,9 +63,10 @@ static func _others_of(actor: int) -> Array[Vector2]:
 
 ## n10: relaxation in a crowd can end on a spot that still overlaps a neighbour (the last shove
 ## undoes the first), so that body takes the nearest clear spot on growing rings, each body starting
-## its rings at its own angle; none clear within PUSH_MAX_M = the spot that clears the nearest most.
+## its rings at its own angle; none clear within PUSH_MAX_M = the spot that clears the nearest most
+## (no push at all when every spot is `blocked`).
 static func _nearest_clear(
-	centre: Vector2, others: Array[Vector2], px_per_m: float, actor: int
+	centre: Vector2, others: Array[Vector2], px_per_m: float, actor: int, blocked: Callable
 ) -> Vector2:
 	var r: float = SPACE_M * px_per_m
 	var cap: float = PUSH_MAX_M * px_per_m
@@ -73,6 +78,8 @@ static func _nearest_clear(
 			var p: Vector2 = (
 				Vector2.from_angle(offset + TAU * step_i / RING_STEPS) * cap * ring / RINGS
 			)
+			if blocked.is_valid() and blocked.call(centre + p):
+				continue
 			var gap: float = _nearest_gap(centre + p, others)
 			if gap >= r:
 				return p

@@ -61,6 +61,29 @@ static func jitter(actor_hash: int) -> float:
 	return JITTER_RAD * (float(posmod(actor_hash >> 4, 1001)) / 500.0 - 1.0)
 
 
+## The share of the slide still to go at the death family's progress p (1 at the lying frame).
+static func fall_left(p: float) -> float:
+	var t0: float = StreetWalkerFall.FALL_AT[StreetWalkerFall.FALL_FRAMES - 1]
+	var t: float = clampf((p - t0) / maxf(StreetDeadPlan.SLIDE_END - t0, 0.001), 0.0, 1.0)
+	return (1.0 - t) * (1.0 - t)
+
+
+## The landing's rock back (rad) at progress p.
+static func settle(p: float) -> float:
+	var a: float = StreetDeadPlan.SLIDE_END
+	var u: float = clampf((p - a) / (StreetDeadPlan.SETTLE_END - a), 0.0, 1.0)
+	return StreetDeadPlan.SETTLE_RAD * sin(PI * u) * (1.0 - u)
+
+
+## Where the body drawn at `centre` lies with `left` of its fall to go: eased off its neighbours
+## (StreetQuestDeadPush, n10: the riot's near bodies as Dock 9's), never into a wall.
+static func resting(actor: int, centre: Vector2, left: float) -> Vector2:
+	var push: Vector2 = StreetQuestDeadPush.push_of(
+		actor, centre, CharacterRigs.PX_PER_M, StreetDeadPlan.solid
+	)
+	return centre + push * (1.0 - left)
+
+
 ## How far the contact shadow lies from the body (px, down the sun's ground direction).
 static func shadow_off(px_per_m: float) -> Vector2:
 	return ViewMode.shared().cast_dir() * SHADOW_M * px_per_m if ENABLED else Vector2.ZERO

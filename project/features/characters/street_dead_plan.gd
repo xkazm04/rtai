@@ -110,13 +110,17 @@ static func draw(rig: CutRig, card: Sprite2D, row: String, ks: float, p: float) 
 	var m: Vector2 = motion(kind, p)
 	var head: Vector2 = StreetDeadHeading.head_of(blow, pose, (h & 1) == 1)
 	var pelvis: float = _bounded(card, rig.global_position, head, ks)
-	var at: Vector2 = rig.global_position + head * pelvis - blow * m.x * CharacterRigs.PX_PER_M
+	var left: float = StreetDeadHeading.fall_left(p)
+	var centre: Vector2 = rig.global_position + head * pelvis
+	var at: Vector2 = (
+		StreetDeadHeading.resting(rig.actor_id, centre, left) - blow * m.x * CharacterRigs.PX_PER_M
+	)
 	plan.frame = pose
 	plan.flip_h = StreetDeadHeading.flipped(head, pose, (h & 1) == 1)
 	var turn: float = StreetDeadHeading.angle_of(head, pose, plan.flip_h)
 	var s: float = ks * m.y
 	plan.global_transform = Transform2D(
-		turn + StreetDeadHeading.jitter(h) + _settle(p), Vector2(s, s), 0.0, at
+		turn + StreetDeadHeading.jitter(h) + StreetDeadHeading.settle(p), Vector2(s, s), 0.0, at
 	)
 	StreetDeadHeading.shade(card, plan)
 	card.self_modulate.a = 0.0
@@ -124,9 +128,7 @@ static func draw(rig: CutRig, card: Sprite2D, row: String, ks: float, p: float) 
 
 ## (the slide still to go in metres, the landing scale) at progress p.
 static func motion(kind: StringName, p: float) -> Vector2:
-	var t0: float = StreetWalkerFall.FALL_AT[StreetWalkerFall.FALL_FRAMES - 1]
-	var t: float = clampf((p - t0) / maxf(SLIDE_END - t0, 0.001), 0.0, 1.0)
-	var left: float = (1.0 - t) * (1.0 - t)
+	var left: float = StreetDeadHeading.fall_left(p)
 	var slide: float = SLIDE_M[kind] if SLIDE_M.has(kind) else SLIDE_DEFAULT_M
 	return Vector2(slide * left, lerpf(1.0, LAND_SCALE, left))
 
@@ -142,9 +144,10 @@ static func drop(card: Sprite2D) -> void:
 	card.self_modulate.a = 1.0
 
 
-## Forgets the poses lying now.
+## Forgets the poses lying now and their pushes (a new city starts from no dead).
 static func reset() -> void:
 	_lying.clear()
+	StreetQuestDeadPush.reset()
 
 
 ## The pelvis offset along the head (px), pulled back short of the first solid; once per card.
@@ -165,11 +168,6 @@ static func free_px(at: Vector2, dir: Vector2, reach: float) -> float:
 		if solid.call(at + dir * (reach * k / FREE_STEPS)):
 			return reach * (k - 1) / FREE_STEPS
 	return reach
-
-
-static func _settle(p: float) -> float:
-	var u: float = clampf((p - SLIDE_END) / (SETTLE_END - SLIDE_END), 0.0, 1.0)
-	return SETTLE_RAD * sin(PI * u) * (1.0 - u)
 
 
 static func _taken(pose: int, at: Vector2, near: float) -> bool:

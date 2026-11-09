@@ -27,6 +27,7 @@ static func attach(city: CitySystem, view: CityView) -> CityBlood:
 	glue.blood.attach(view.fx_triggers)
 	glue.blood.solid = glue._solid
 	StreetDeadPlan.solid = glue._solid  # n9 item 4: a lying body stops short of the first wall
+	StreetDeadPlan.reset()  # n10: a reused actor id must not inherit an old city's push
 	glue.blood.player_px = func() -> Vector2: return city.target * SimConst.PX_PER_M
 	view.add_child(glue)
 	var game: Dictionary = glue.blood.blood.p.get("game", {})
