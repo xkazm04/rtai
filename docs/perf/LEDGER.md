@@ -205,6 +205,16 @@ Others up before a run: 0 to 2, median 0; in 22 of the 24 rounds no other Godot 
 Others up before a run: 0 to 2, median 0; 17 of the 24 rounds had none before any arm's run, and those read +0.000 to +0.017 ms. **No gain, so it is reverted under the rule.** The scratch split gave it about 30-60 us, whose upper end is at the 0.03 ms floor, so it was a marginal bet. **The total-CPU rise is not explained and not claimed as a regression:** idea 4's run read an A/A of +0.109 s on the same measure, the same size as this. This is one wash; the loop stops at two in a row.
 **Other file probes:** the remaining `ResourceLoader.exists` sites read at it12 (`held_pitch_art`, `weapon_fx_cells`, `weapon_art`, `rig_head_card`) are behind a memo or run once when a part is built, so idea 4's pattern has no second site of note. That is a read of the code, not a measurement.
 
+### Item 4, idea 6 (it12): the rig's nearest-N selection in C++: REVERTED, a wash; the research loop stops
+`CitySim.nearest_rows`, `RigSelect.nearest_script` as the fallback, bit-equal to it over crowds with exact ties, pins, Rivet at any row and a feed shorter than its arrays (83 unit tests and the core tests passed). Selection cost 162 us every 4th call by the scratch split, so about 40 us a frame at stake, close to the 0.03 ms floor. Never committed; both DLLs were rebuilt from the committed source afterwards.
+| 24 rounds, release riot at combo, `evidence/perf/n10-cputime/sel/` | median | CI95 | lower |
+|---|---|---|---|
+| frame p50, sel - exists | +0.010 ms | -0.003, +0.035 | 8 of 24 |
+| frame p50, sel - twin | -0.017 ms | -0.024, +0.004 | 16 of 24 |
+| frame p50, A/A twin - exists | +0.031 ms | +0.010, +0.051 | 6 of 24 |
+| total CPU, sel - exists | +0.016 s | -0.109, +0.141 | 11 of 24 |
+22 of the 24 rounds had no other Godot up before any arm's run. **Two washes in a row (ideas 5 and 6): the loop stops, as the brief sets.** Four kept gains came before them (0.235, about 0.06, 0.16 and 0.10 ms). The A/A itself read +0.024 and +0.031 ms on the last two runs, so 0.03 ms is about where this instrument stops telling ideas apart; what is left on the list measured by split is at or under that per idea.
+
 ### The riot on film (it9): what the cut changes on screen, with an A/A control
 `evidence/perf/n10-film/`: `film.sh` (main 9bbe6d0a vs this head, city riot, `--view=combo`, 1200 frames at `--fixed-fps 60`, 1280x800, d3d12, debug editor binary, no HUD), `aa.sh` (the same code twice at 32 px/m), `cmp_frames.py`, `psnr*.log`, `ab_only_frames.json`. Instrument: ffmpeg psnr between the two MJPEG captures (a `mse_avg` of exactly 0 means every sample matched); both arms ran side by side, CONTENDED. Masters: `gtai-masters/n10/perf/`.
 
