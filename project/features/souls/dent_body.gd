@@ -71,7 +71,7 @@ func _place(at: Vector2, facing: float) -> void:
 	position = at + side * _lurch.sway_m() * SimConst.PX_PER_M
 	var k: float = 0.5 if reduced_motion else 1.0
 	rotation = _lurch.yaw() + sin(_buck * PI * 2.0) * 0.3 * _buck * k
-	scale = Vector2.ONE * (1.0 + (0.1 * _buck + 0.35 * sin(_jump * PI)) * k)
+	scale = Vector2.ONE * PlayerScale.k() * (1.0 + (0.1 * _buck + 0.35 * sin(_jump * PI)) * k)
 	_rig.position = Vector2.ZERO
 
 

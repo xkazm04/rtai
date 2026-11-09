@@ -126,7 +126,7 @@ static func oct_of(rig: CutRig) -> int:
 
 static func place(rig: CutRig, card: Sprite2D) -> void:
 	var art: String = ViewMode.shared().art
-	var h: float = HEIGHT_BY_ART.get(art, HEIGHT_M) * height_k
+	var h: float = HEIGHT_BY_ART.get(art, HEIGHT_M) * height_k * PlayerScale.k()
 	var s: float = h * CharacterRigs.PX_PER_M / FIG_PX
 	if RivetKnock.shows(card):
 		RivetKnock.place(rig, card, s, h * CharacterRigs.PX_PER_M)

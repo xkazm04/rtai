@@ -10,8 +10,8 @@ extends ArenaGame
 const FRAMES: int = 16
 const LEG_TICKS: int = 130
 const FILM_FROM: int = 50
-const CROP: int = 170
-const FEET_ROW: int = 140
+const CROP: int = 260
+const FEET_ROW: int = 215
 const EVERY: Array[int] = [4, 4, 2, 2]
 const DIRS: Array[Vector2] = [Vector2.RIGHT, Vector2.DOWN, Vector2.RIGHT, Vector2.DOWN]
 
@@ -27,6 +27,10 @@ func _ready() -> void:
 	var args: ArenaArgs = ArenaArgs.parse()
 	_out = args.text("--film-out")
 	_bot = Bot.new(session.live, session.actions, get_viewport())
+	var form: StringName = StringName(args.text("--film-form"))
+	if form != &"":
+		var order: Array[StringName] = session.stage.pilot.ghosts.forms.table.order
+		_bot.form_presses(maxi(0, order.find(form)))
 	session.world.loop().set_input(_bot)
 	_sheet = Image.create_empty(CROP * FRAMES, CROP * DIRS.size(), false, Image.FORMAT_RGBA8)
 	add_child(Rec.new(self))
@@ -80,6 +84,9 @@ class Bot:
 
 	var leg: int = 0
 	var in_leg: int = 0
+	var _presses: Array[Vector2i] = []
+	var _at: int = 0
+	var _wait: int = 0
 	var _live: LiveInput
 	var _actions: PlayerActions
 	var _vp: Viewport
@@ -91,9 +98,21 @@ class Bot:
 		_vp = vp
 		_live.cursor_px = func() -> Vector2: return _cursor
 
+	## Selects form `gears` steps along the order and transforms: gearbox presses, then hauler.
+	func form_presses(gears: int) -> void:
+		for g: int in gears:
+			_presses.append(Vector2i(40 + g * 3, 0))
+		_presses.append(Vector2i(40 + gears * 3, 1))
+		_wait = 40 + gears * 3 + 150
+
 	func sample(tick: int) -> TickInput:
-		if leg >= StrideFilm.DIRS.size():
-			return TickInput.new(0, 0, 0)
+		_at += 1
+		for p: Vector2i in _presses:
+			if p.x == _at:
+				var act: StringName = &"power_hauler" if p.y == 1 else &"power_gearbox"
+				return TickInput.new(1 << _actions.bit(act), 0, 0)
+		if _at < _wait or leg >= StrideFilm.DIRS.size():
+			return TickInput.new(_live.sample(tick).buttons, 0, 0)
 		var dir: Vector2 = StrideFilm.DIRS[leg]
 		_cursor = _vp.get_visible_rect().size / 2.0 + dir * 280.0
 		var input: TickInput = _live.sample(tick)
