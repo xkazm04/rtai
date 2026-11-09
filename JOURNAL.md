@@ -46,3 +46,21 @@ NEXT: (1) read the full-unit result in `build/test-results/`. (2) Item 1: collis
 - `test_dead_bodies_walkable` committed as a regression guard for the dev arena only. It does not close the collision note.
 
 NEXT (replaces the list above): (1) item 1 collision on the city and in quest 1, starting from the knocked-down lead; probe the far crowd's corpses; quest 1 probe; a before/after clip of the hop. (2) Item 2 hub wall x2, pickup spacing, city, 32 px/m. (3) Full gates: scenarios (whole suite), `tools/evidence/run.mjs`, reels, none run on the whole branch yet; check `release_compile.mjs` given the `check.mjs` oddity. (4) Items 3 to 6 in brief order.
+
+## Iteration 2 (2026-11-09, from 20:20)
+
+- 20:26 Full unit from it1: 2211 tests, 0 failures (junit read).
+- 20:29 CAUSE (collision, knocked down): `test_downed_person_walkable` red first: Rivet's sprint path bent 0.232 m by a downed person, and walking over them shoved them. `M_DOWN` no longer blocks and is no longer shoved, in `sim_body.gd` and `body.cpp` (`50b47690`). Both DLLs rebuilt. Parity exact, `city_replay` identical.
+- 20:33 CAUSE (bodies jump in a long fight): `StreetQuestDeadPush` wiped every push at 256 entries, so each body still lying re-solved; red first, one test moved 64 px, 84 px. Now the oldest push only (`0965bc3a`).
+- 20:35 Guards (`6539dc94`): the city's dead keep their row exactly while Rivet crosses the heap (`test_sim_corpse_rests`, 240 ticks, 12 bodies); quest 1's `ArenaBodies` skips the dead.
+- 20:40 MILESTONE item 3 (`80b8c621`): no paper; 4 avatars on their own silhouettes, ink rim, teal rim for the current form, teal arc while cooling, ink silhouette and padlock when locked. 244 x 128 px against 360 x 158. Judged: state sheet on bright and dark ground (`hud_ghost_states_after.png`, compact too) and the arena (`hud_ghosts_before.png`, `hud_ghosts_after.png`). The sheet script is out of the repo (debt ratchet): `gtai-n11/tmp/combat/ghost_hud_sheet.gd`.
+- 20:49 MILESTONE item 4 (`d25fafb1`): hardware cursor per weapon class and per ghost form, drawn in code (`tools/art/cursor_draw.py`). Sheet: `cursors_sheet.png` (flame, melee and kerf were redrawn after the first sheet). NOT seen in a live window: a capture does not include the mouse. Only the mapping tests and a live run with no error.
+- 20:51 MILESTONE item 5 shadows, first pass (`4007f09b`): `cast_k` 0.35 on combo and tilt70, soft contact ellipse under standing figures. Before/after at tick 260, 64 px/m: `shadow_city_before.png`, `shadow_city_after.png`, crop `shadow_city_ab_crop.png`; arena `shadow_arena_after.png` (before is `hud_ghosts_before.png`).
+- DECISION item 2: the arena hub's weapon wall (`WeaponRackView`) is not "on ground": left as is. Floor pickups and crates are the x2 (`c7450890`). If the owner meant the wall too, it needs a new layout.
+
+CRITIQUE (items 3, 4, 5 so far):
+- Rivet's contact ellipse sits a few px below his drawn feet; cops look anchored. Depends on his size change in the hero lane, so re-check after that merges.
+- Vehicles and the city's building casts not looked at under the new `cast_k`.
+- Body contact shadows vs the new standing ones not compared side by side.
+- The cursor has never been seen on a real mouse. 48 px may be small at 1440p and up.
+- HUD name "Tonnage" starts 9 px from the screen edge. Acceptable, tight.
