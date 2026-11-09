@@ -115,6 +115,11 @@ A note, not a verdict: if the subject has moved more than 5 cm between sides, th
 **Refuses:** a side that is neither a worktree nor a commit git knows; a worktree with no probe
 (it says to film a commit instead).
 
+**A before of an art change:** commit the new sheet, then compare that commit with its parent
+(`--a=HEAD~1 --b=HEAD`). Do not move the sheet aside by hand: its `.import` stays, `ResourceLoader`
+still finds the cached texture, and the "before" is the after (hero n11, `JOURNAL.md` line 170). If you
+did, compare says UNVERIFIABLE (the same picture) rather than letting it pass as a before.
+
 ## tools/gate/quick.mjs: the lint rules you keep tripping, on your changed files, before the commit
 
 ```
