@@ -14,28 +14,40 @@ import { killTree } from '../lib/godot.mjs';
 export const GUARD_EXIT = 222;
 const SETTLE_MS = 3000; // after the kill, a grandchild still holding the log must not hang the guard
 
+// The separator is positional (argv[3]), so a step may itself be named `--`.
 export function parseGuardArgs(argv) {
-  const sep = argv.indexOf('--');
-  const [step, ms, shell] = argv.slice(0, sep);
+  const [step, ms, shell, sep, cmd] = argv;
   const timeoutMs = Number(ms);
-  if (sep !== 3 || !step || !(timeoutMs > 0) || !['0', '1'].includes(shell) || sep + 1 >= argv.length) return null;
-  return { step, timeoutMs, shell: shell === '1', cmd: argv[sep + 1], args: argv.slice(sep + 2) };
+  if (!step || sep !== '--' || !cmd || !Number.isFinite(timeoutMs) || !(timeoutMs > 0) || !['0', '1'].includes(shell)) return null;
+  return { step, timeoutMs, shell: shell === '1', cmd, args: argv.slice(5) };
+}
+
+// Node fires a timer over 2^31-1 ms at once (TimeoutOverflowWarning): a long limit is armed in parts.
+const MAX_TIMER_MS = 2 ** 31 - 1;
+function after(ms, fn) {
+  const t = { id: null };
+  const arm = (left) => { t.id = setTimeout(() => (left > MAX_TIMER_MS ? arm(left - MAX_TIMER_MS) : fn()), Math.min(left, MAX_TIMER_MS)); };
+  arm(ms);
+  return () => clearTimeout(t.id);
 }
 
 const say = (line) => { try { writeSync(1, `\n${line}\n`); } catch { /* the log is gone: the exit code still says it */ } };
 
 export function guard({ step, timeoutMs, shell, cmd, args }, exit = process.exit) {
   let over = false;
-  const child = spawn(cmd, args, { stdio: 'inherit', windowsHide: true, shell, detached: process.platform !== 'win32' });
-  const timer = setTimeout(() => {
+  let child;
+  try {
+    child = spawn(cmd, args, { stdio: 'inherit', windowsHide: true, shell, detached: process.platform !== 'win32' });
+  } catch (e) { say(`morning: ${step}: ${e.message}`); return exit(GUARD_EXIT); }
+  const cancel = after(timeoutMs, () => {
     over = true;
     killTree(child.pid);
     say(`morning: ${step}: timed out after ${+(timeoutMs / 60000).toFixed(4)} min (the process tree was killed)`);
     setTimeout(() => exit(GUARD_EXIT), SETTLE_MS).unref();
-  }, timeoutMs);
-  child.on('error', (e) => { clearTimeout(timer); say(`morning: ${step}: ${e.message}`); exit(GUARD_EXIT); });
+  });
+  child.on('error', (e) => { cancel(); say(`morning: ${step}: ${e.message}`); exit(GUARD_EXIT); });
   child.on('exit', (code, signal) => {
-    clearTimeout(timer);
+    cancel();
     if (over) return exit(GUARD_EXIT);
     if (code === null) say(`morning: ${step}: ended by ${signal}`);
     exit(code ?? GUARD_EXIT);
