@@ -43,6 +43,15 @@ Defect hunt on Rivet at combo. Every performance number here is CONTENDED. Evide
 - p70's left down cell (defect 11) now matches in tone, but its helmet is still drawn a little differently from the slide cell before it (the art, off the list).
 - At the Toner Room the scripted pad stops with his head over Brass's name card, so the name reads `B..s` through the briefing (`still_8040_64`). Where a real player stops was not measured: the marker's radius is 7 m, so most will stop short of it.
 
+## Merging with n10-world (it24, for the Director)
+
+World's `63e685d3` (`RivetStride`, the walk's row follows the travel) edits `rivet_walk.gd` and `rivet_frames.gd`, the two files defect 10 lives in. Checked on a throwaway copy of the trial merge of this branch with `63e685d3`; nothing was merged here. World's later `08e2f56b` only adds to `test_rivet_stride.gd`.
+
+- Text: the code auto-merges. Conflicts are `JOURNAL.md`, `REPORT.md` and `tools/debt/baseline.json` only (for the baseline: take either side, then `node tools/debt/debt.mjs --update`).
+- Unit: 2041 passed, 0 failed on the merged tree, with `test_rivet_walk_dip` and `test_rivet_stride` both in it. Not green-gated beyond that.
+- One real run, the pistol tour on the merged tree (`--view=combo --ppm=64 --seed=3`, exit 0, 0 SCRIPT ERROR): 66 strip runs, none of 2 ticks or fewer; 64 fire rows, every FIRE-phase shot with a fresh muzzle. Contact sheet looked at: the flash sits on the drawn gun in all 8 octants. The tour walks along its aim, so only its HOME walks exercise a turned row. A shot leaves the walk grid for the aim's own strip (`rivet_walk.gd`, `path_of`), so the turned row does not reach a muzzle point.
+- Not run on the merged tree: lint (the baseline conflict), scenarios, parity, the three reels, and the other 16 weapons. A strafing shot changes row between the walk and the fire strip by design of `RivetStride` (TWIST_ROWS); not filmed.
+
 ## Gates (it16; docs only on top of it15's gates)
 
 - Red run for defect 8, in a throwaway copy of the head with only `LEFT_NO_SWING` set to the old empty list: `test_a_left_baton_keeps_the_game_smear_running` fails at `test_rivet_cell_scale.gd:131` ("the left strip has no strike cell"). The same copy unchanged: 3 passed, 0 failed. No game code changed in it16, so the gates below still describe the head.
