@@ -133,6 +133,17 @@ test('judge: a still whose subject is not in frame is unverifiable', () => {
   assert.equal(judged({ ...goodProbe, rows: [{ tick: 100, fighters: [] }] }, { stills: [100] }).outcome, 'unverifiable');
 });
 
+test('a movie is only filmed when asked for or when there is no still to take', () => {
+  const planned = (extra) => {
+    const t = tree();
+    try { return plan({ ...parseArgv([]).flags, out: 'o', tree: t, ...extra }, 'arena', []).opts.movie; } finally { rmSync(t, { recursive: true, force: true }); }
+  };
+  assert.equal(planned({ stills: '10' }), null);
+  assert.match(planned({ stills: '10', movie: true }), /arena\.avi$/);
+  assert.match(planned({}), /arena\.avi$/);
+  assert.equal(planned({ 'no-movie': true }), null);
+});
+
 test('a street shot locks at the first tick that matters, the rest at the spawn', () => {
   const planned = (shot, extra) => {
     const t = tree();

@@ -24,7 +24,8 @@ node tools/film/film.mjs weapon:gatling --out=build/film/gatling --stills=300,50
 
 It always passes the scene, the bot, the loadout, a fixed seed and a fixed 60 Hz step. You get
 `t<tick>.png` (lossless, saved after that tick's own draw), `probe.json` (numbers for every tick and
-every fighter), `film.json`, `film.log` and, without `--no-movie`, an mp4.
+every fighter), `film.json` and `film.log`. An mp4 only comes when you give `--movie` or ask for no
+stills, because `--write-movie` is slow (about 1.5 fps with other lanes running).
 
 The camera: `--lock=auto` (the default) holds it at Rivet's spawn, except on the street shots, where
 it follows him and freezes at your first still. `--lock=at:<tick>`, `--lock=<x,y>` and `--lock=off`

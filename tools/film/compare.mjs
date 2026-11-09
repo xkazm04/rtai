@@ -129,7 +129,7 @@ function filmFlags(parsed, side, tick) {
   const f = parsed.flags;
   return { out: join(resolve(f.out), side.name), tree: side.tree, stills: tick, view: f.view, ppm: f.ppm, lock: f.lock, subject: f.subject,
     seed: f.seed, res: f.res, timeout: f.timeout, ...(f.clip ? { ticks: String(Number(f.clip.split('-')[1]) + 60) } : {}),
-    ...(f.clip ? {} : { 'no-movie': true }) };
+    ...(f.clip ? { movie: true } : { 'no-movie': true }) };
 }
 
 function judgeTicks(ticks, shots, flags, labels, dir) {

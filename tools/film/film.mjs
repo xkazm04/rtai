@@ -3,7 +3,7 @@
 // step; ids and flags checked against the tree before anything launches; tick-exact stills and
 // per-tick numbers from dev/frames/film_probe.gd; one verdict: pass, fail or unverifiable.
 //   node tools/film/film.mjs <shot> --out=<dir> [--ticks=<n>] [--stills=<t,t>] [--view=combo]
-//     [--ppm=48] [--lock=auto|spawn|at:<tick>|<x,y>|off] [--seed=<n>] [--res=1280x800] [--no-movie] [--tree=<dir>]
+//     [--ppm=48] [--lock=auto|spawn|at:<tick>|<x,y>|off] [--seed=<n>] [--res=1280x800] [--movie] [--no-movie] [--tree=<dir>]
 //     [--timeout=<s>] [--dry-run] [-- <extra game flags>]
 // Exit: 0 pass, 1 fail (the run broke), 2 usage (nothing launched), 3 unverifiable (it ran, but the
 // numbers or stills it was asked for do not exist).
@@ -19,9 +19,9 @@ import { subjectRow } from './subject.mjs';
 
 export const EXIT = { pass: 0, fail: 1, usage: 2, unverifiable: 3 };
 const USAGE = 'usage: node tools/film/film.mjs <shot> --out=<dir> [--ticks=<n>] [--stills=<t,t>] [--view=combo] '
-  + '[--ppm=48] [--lock=auto|spawn|at:<tick>|<x,y>|off] [--seed=<n>] [--res=1280x800] [--no-movie] [--tree=<dir>] [--timeout=<s>] [--dry-run] [-- flags]';
+  + '[--ppm=48] [--lock=auto|spawn|at:<tick>|<x,y>|off] [--seed=<n>] [--res=1280x800] [--movie] [--no-movie] [--tree=<dir>] [--timeout=<s>] [--dry-run] [-- flags]';
 const VALUE = new Set(['out', 'ticks', 'stills', 'view', 'ppm', 'lock', 'seed', 'res', 'tree', 'timeout', 'subject']);
-const SWITCH = new Set(['no-movie', 'dry-run']);
+const SWITCH = new Set(['movie', 'no-movie', 'dry-run']);
 const DEFAULTS = { subject: 'rivet', view: 'combo', ppm: '48', lock: 'auto', seed: '20261109', res: '1280x800', timeout: '900' };
 
 /** {shotText, flags, extra} or {error}. */
@@ -65,7 +65,9 @@ export function plan(flags, shotText, extra) {
     return { error: `film: ${tree} has no dev/frames/film_probe.gd (older than the kit): film a commit with tools/film/compare.mjs, which injects it` };
   }
   const dir = resolve(flags.out);
-  const movie = flags['no-movie'] || shot.shot.script ? null : join(dir, `${shotLabel(shot)}.avi`);
+  // A movie costs real time (combat measured about 1.5 fps with Godots running beside it), so stills skip it unless asked.
+  const wantMovie = flags.movie === true || (!stills.length && !flags['no-movie']);
+  const movie = wantMovie && !shot.shot.script ? join(dir, `${shotLabel(shot)}.avi`) : null;
   return { shot, opts: { tree, dir, ticks, stills, movie, extra, view: flags.view, ppm: flags.ppm, lock,
     subject: flags.subject ?? 'rivet', seed: flags.seed, res: flags.res, timeoutMs: Number(flags.timeout) * 1000, label: shotLabel(shot),
     noProbe: Boolean(shot.shot.script) } };
