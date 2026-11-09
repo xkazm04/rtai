@@ -3,8 +3,8 @@ extends RefCounted
 ## n9 world: the dead redesigned ("they lay down like in the bed now"). At impact a card view
 ## swaps the fall grid's lying frame for one of five PLAN poses (art/view/plan/dead_<class>.png:
 ## A face-down crumple, B back spread, C side curl, D twisted sprawl, E folded on the side) on
-## the ground plane, head along the blow, picked by death family, then the first no neighbour
-## within NEAR_M shows; it slides into the sim rest and rocks back. ENABLED false = d9's frame.
+## the ground plane, head on a drawn heading (StreetDeadHeading), picked by family, then the first
+## no neighbour within NEAR_M shows; it slides into the sim rest and rocks back. ENABLED false = d9.
 const ENABLED: bool = true
 const DIR: String = "res://features/characters/art/view/plan/dead_"
 const POSES: int = 5
@@ -48,8 +48,6 @@ const LAND_SCALE: float = 1.05
 ## The pelvis (the cell centre) lies this share of the standing height along the blow from the
 ## sim point (the feet stay near where the person stood).
 const PELVIS_K: float = 0.45
-## Each body turns off the blow by up to this much (rad, the person's own hash), and mirrors by it.
-const JITTER_RAD: float = 0.4
 const NEAR_M: float = 3.0
 const MEMORY: int = 256
 const NODE: String = "DeadPlan"
@@ -65,7 +63,6 @@ static var solid: Callable = Callable()
 
 ## actor id -> Vector3(x, y, pose): the poses lying now, so neighbours differ (view-side only).
 static var _lying: Dictionary[int, Vector3] = {}
-static var _tex: Dictionary[String, Texture2D] = {}
 
 
 ## The plan strip for a card row ("" = none: the row keeps the drawn lying frame).
@@ -98,6 +95,7 @@ static func pick(actor: int, kind: StringName, at: Vector2) -> int:
 
 ## Draws the plan pose under `card` (the fall grid card) once the fall reaches its lying frame;
 ## the card's own frame is hidden while it shows (not lying yet, or no strip for the row: dropped).
+## A class drawn for this camera takes StreetDead70's cell, unturned and unsquashed by the ground.
 static func draw(rig: CutRig, card: Sprite2D, row: String, ks: float, p: float) -> void:
 	var path: String = path_of(row)
 	if path.is_empty() or p < StreetWalkerFall.FALL_AT[StreetWalkerFall.FALL_FRAMES - 1]:
@@ -106,28 +104,38 @@ static func draw(rig: CutRig, card: Sprite2D, row: String, ks: float, p: float) 
 	var r: HumanReact = rig.react
 	var blow: Vector2 = r.dir.rotated(rig.facing).normalized() if r != null else Vector2.DOWN
 	var kind: StringName = r.kind if r != null else &""
-	var plan: Sprite2D = _node(card, path)
+	var drawn: String = StreetDead70.path_of(row)
+	var plan: Sprite2D = (
+		StreetDead70.sprite(card, path, POSES, 1)
+		if drawn.is_empty()
+		else StreetDead70.sprite(card, drawn, StreetDead70.COLS, StreetDead70.ROWS)
+	)
 	var pose: int = pick(rig.actor_id, kind, rig.global_position)
 	var h: int = _hash(rig.actor_id)
-	var jitter: float = JITTER_RAD * (float(posmod(h >> 4, 1001)) / 500.0 - 1.0)
 	var m: Vector2 = motion(kind, p)
-	var pelvis: float = _bounded(card, rig.global_position, blow, ks)
-	var at: Vector2 = rig.global_position + blow * (pelvis - m.x * CharacterRigs.PX_PER_M)
-	plan.frame = pose
-	plan.flip_h = (h & 1) == 1
-	var head: float = HEAD_ANGLE[pose] if not plan.flip_h else PI - HEAD_ANGLE[pose]
+	var odd: bool = (h & 1) == 1
+	var head: Vector2 = StreetDeadHeading.head_of(blow, pose, odd)
+	var pelvis: float = _bounded(card, rig.global_position, head, ks)
+	var left: float = StreetDeadHeading.fall_left(p)
+	var centre: Vector2 = rig.global_position + head * pelvis
+	var at: Vector2 = (
+		StreetDeadHeading.resting(rig.actor_id, centre, left) - blow * m.x * CharacterRigs.PX_PER_M
+	)
+	var lay: Vector2 = StreetDead70.place(plan, head, pose, odd, not drawn.is_empty())
 	var s: float = ks * m.y
 	plan.global_transform = Transform2D(
-		blow.angle() - head + jitter + _settle(p), Vector2(s, s), 0.0, at
+		lay.x + StreetDeadHeading.jitter(h) + StreetDeadHeading.settle(p),
+		Vector2(s, s / lay.y),
+		0.0,
+		at
 	)
+	StreetDeadHeading.shade(card, plan, drawn.is_empty())
 	card.self_modulate.a = 0.0
 
 
 ## (the slide still to go in metres, the landing scale) at progress p.
 static func motion(kind: StringName, p: float) -> Vector2:
-	var t0: float = StreetWalkerFall.FALL_AT[StreetWalkerFall.FALL_FRAMES - 1]
-	var t: float = clampf((p - t0) / maxf(SLIDE_END - t0, 0.001), 0.0, 1.0)
-	var left: float = (1.0 - t) * (1.0 - t)
+	var left: float = StreetDeadHeading.fall_left(p)
 	var slide: float = SLIDE_M[kind] if SLIDE_M.has(kind) else SLIDE_DEFAULT_M
 	return Vector2(slide * left, lerpf(1.0, LAND_SCALE, left))
 
@@ -138,21 +146,23 @@ static func drop(card: Sprite2D) -> void:
 	if plan != null:
 		card.remove_child(plan)
 		plan.queue_free()
+	StreetDeadHeading.unshade(card)
 	card.remove_meta(FREE)
 	card.self_modulate.a = 1.0
 
 
-## Forgets the poses lying now.
+## Forgets the poses lying now and their pushes (a new city starts from no dead).
 static func reset() -> void:
 	_lying.clear()
+	StreetQuestDeadPush.reset()
 
 
-## The pelvis offset along the blow (px), pulled back short of the first solid; once per card.
-static func _bounded(card: Sprite2D, at: Vector2, blow: Vector2, ks: float) -> float:
+## The pelvis offset along the head (px), pulled back short of the first solid; once per card.
+static func _bounded(card: Sprite2D, at: Vector2, head: Vector2, ks: float) -> float:
 	var pelvis: float = PELVIS_K * StreetWalkerFall.STILL_PX * ks
 	var reach: float = pelvis + HEAD_K * StreetWalkerFall.STILL_PX * ks
 	if not card.has_meta(FREE):
-		card.set_meta(FREE, free_px(at, blow, reach))
+		card.set_meta(FREE, free_px(at, head, reach))
 	var free: float = card.get_meta(FREE)
 	return pelvis - (reach - free)
 
@@ -167,30 +177,11 @@ static func free_px(at: Vector2, dir: Vector2, reach: float) -> float:
 	return reach
 
 
-static func _settle(p: float) -> float:
-	var u: float = clampf((p - SLIDE_END) / (SETTLE_END - SLIDE_END), 0.0, 1.0)
-	return SETTLE_RAD * sin(PI * u) * (1.0 - u)
-
-
 static func _taken(pose: int, at: Vector2, near: float) -> bool:
 	for v: Vector3 in _lying.values():
 		if int(v.z) == pose and Vector2(v.x, v.y).distance_to(at) < near:
 			return true
 	return false
-
-
-static func _node(card: Sprite2D, path: String) -> Sprite2D:
-	var plan: Sprite2D = card.get_node_or_null(NODE) as Sprite2D
-	if plan == null:
-		plan = Sprite2D.new()
-		plan.name = NODE
-		plan.hframes = POSES
-		card.add_child(plan)
-	if plan.texture == null or plan.texture.resource_path != path:
-		if not _tex.has(path):
-			_tex[path] = load(path) as Texture2D
-		plan.texture = _tex[path]
-	return plan
 
 
 ## A stable, well-mixed hash of the actor id (never the global rng).

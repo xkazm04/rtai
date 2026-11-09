@@ -4,19 +4,16 @@ extends Node2D
 ## focus (LOD 0), the baked crowd atlas for everyone else (LOD 1, drawn by the city's MultiMesh
 ## people layer). Render-side: it reads the 60 Hz tick from ctx.clock and steps each full rig
 ## once per sim tick with TICK_DT (never a frame delta), draws no RNG stream, writes no state.
-## Integration (lane A): setup(ctx) once at load (prewarms the pools), fill `feed` every tick,
-## set `focus` (world px) and `zoom`, give the people layer `atlas` + CrowdAtlas.clip_table(),
-## and draw rows where full_row(i) is false from the atlas (cell: baked_cell(i, t)).
+## Integration: setup(ctx) at load, fill `feed` every tick, set `focus` and `zoom`, give the people
+## layer `atlas` + CrowdAtlas.clip_table(); rows not full_row(i) draw from it (baked_cell(i, t)).
 
 const MAX_FULL: int = 16
-## LOD 0b: past the nearest FULL_RATE rigs, a rig poses on alternate ticks with twice the step
-## (the spike's half-rate crowd LOD: the gait phase and planted feet stay true); past HALF_RATE,
-## every 4th tick with four times the step (LOD 0c, RigSprings sub-steps the springs). The rig
-## still moves to its sim position every frame; only the limbs pose at 30 / 15 Hz.
+## LOD 0b: past the nearest FULL_RATE rigs, a rig poses on alternate ticks with twice the step (the
+## gait phase and planted feet stay true); past HALF_RATE, every 4th tick with four times the step
+## (LOD 0c). The rig still moves to its sim position every frame; only the limbs pose at 30 / 15 Hz.
 const FULL_RATE: int = 4
 const HALF_RATE: int = 8
-## At arena zoom (64 px/m, zoom 2) the rigs are twice the size and nearly all on screen, while an
-## arena holds few people: no quarter tier there (ranks past HALF_RATE pose at half rate).
+## At arena zoom (64 px/m) the rigs are large and few: no quarter tier (past HALF_RATE: half rate).
 const ARENA_ZOOM: float = 1.9
 const RADIUS_M: float = 14.0
 ## The nearest-N selection (a GDScript scan of the whole feed, ~0.1 ms in a riot) runs every
@@ -42,6 +39,7 @@ var ticks_stepped: int = 0
 ## How long a fresh corpse keeps its rig past the living MAX_FULL (RigSelect.fresh_dead): until it
 ## leaves the feed by default; a host with a crowd atlas (the city) sets CORPSE_HOLD_TICKS.
 var corpse_hold_ticks: int = RigSelect.HOLD_NO_ATLAS
+var rest: StreetDeadRest = StreetDeadRest.new()
 
 var _clock: SimClock = null
 var _last_tick: int = 0
@@ -56,6 +54,7 @@ var _died_at: Dictionary[int, int] = {}
 func setup(ctx: WorldContext) -> void:
 	_clock = ctx.clock
 	_last_tick = _clock.tick()
+	add_child(rest)
 	add_child(_pool)
 	for kind: int in PREWARM:
 		prewarm_ms += _pool.prewarm(kind as BodyPlan.Kind, PREWARM[kind])
@@ -147,8 +146,8 @@ func _assign() -> void:
 	)
 	if not ViewMode.shared().cards:  # top's atlas corpse is a drawn body: flat views stay as they were
 		pins.clear()
-	var chosen: PackedInt32Array = RigSelect.nearest(
-		feed, focus, RADIUS_M * PX_PER_M, MAX_FULL, pins
+	var chosen: PackedInt32Array = rest.free_of(
+		RigSelect.nearest(feed, focus, RADIUS_M * PX_PER_M, MAX_FULL, pins), feed
 	)
 	@warning_ignore("return_value_discarded")
 	_full.resize(feed.count)
@@ -162,9 +161,11 @@ func _assign() -> void:
 		_full[i] = 1
 	for actor: int in _by_actor.keys():
 		if not keep.has(actor):
+			rest.adopt(_by_actor[actor], feed)
 			_pool.release(_by_actor[actor])
 			@warning_ignore("return_value_discarded")
 			_by_actor.erase(actor)
+	rest.sync(feed)
 	for actor: int in keep:
 		var i: int = keep[actor]
 		if not _by_actor.has(actor):

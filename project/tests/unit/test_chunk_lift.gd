@@ -101,7 +101,7 @@ func test_only_a_pole_prop_takes_its_shadow_command() -> void:
 	assert_true(lift.takes(1, false) and lift.takes(2, false), "roofs and cards stand")
 
 
-func test_a_lamp_cast_ends_in_its_globe_blob() -> void:
+func test_a_lamp_cast_is_a_short_dash_with_no_globe() -> void:
 	var tex: CityTextures = CityTextures.new({"textures": []})
 	tex.names.assign(["street_sign", "lamp_post"])
 	tex.size_px.assign([Vector2(40, 40), Vector2(40, 40)])
@@ -110,5 +110,5 @@ func test_a_lamp_cast_ends_in_its_globe_blob() -> void:
 	var lift: ChunkLift = ChunkLift.new()
 	lift._setup(d, tex, built, "p70")
 	assert_eq(lift._cast_px[0].y, 0.0, "the street sign: a bare stroke")
-	assert_gt(lift._cast_px[1].y, 0.0, "the lamp: a globe blob")
-	assert_lt(lift._cast_px[1].y, lift._cast_px[1].x * 0.25, "the blob stays small beside the pole")
+	assert_eq(lift._cast_px[1].y, 0.0, "the lamp: no globe (it read as a fallen post)")
+	assert_lt(lift._cast_px[1].x, 1.0 * SimConst.PX_PER_M, "a contact dash, not the pole's length")

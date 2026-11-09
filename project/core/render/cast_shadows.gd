@@ -7,6 +7,9 @@ extends RefCounted
 
 const TABLE: String = "res://data/tables/cast_shadows.json"
 const SCHEMA: String = "gtai.cast-shadows/1"
+## n10 world: the parapet core is a flat city's height cue. Under a tilt a wall stands on that edge
+## and the band lay at its foot as a black bar. true = draw it there as before.
+const CORE_UNDER_LIFT: bool = false
 
 var shader_path: String = ""
 var uniforms: Dictionary = {}
@@ -48,6 +51,11 @@ static func load_table() -> CastShadows:
 ## The offset the chunk data bakes into a `cls` shadow command (m).
 func baked_m(cls: StringName) -> float:
 	return _baked_m.get(String(cls), 0.0)
+
+
+## Whether ChunkView draws the parapet core, in a city `lifted` by a tilt or a flat one.
+func core_drawn(lifted: bool) -> bool:
+	return parapet_core_m > 0.0 and (CORE_UNDER_LIFT or not lifted)
 
 
 ## The shared shadow material (null when no shader loads: the band keeps its flat tint).

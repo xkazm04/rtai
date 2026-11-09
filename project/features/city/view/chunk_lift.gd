@@ -56,12 +56,10 @@ func _setup(d: Dictionary, tex: CityTextures, is_building: Array[bool], art: Str
 	var names: Array[String] = []
 	var styles: Dictionary = d["styles"]
 	for style: String in styles:
-		var row: Dictionary = styles[style]
 		names.append(style)
-		var fallback: Dictionary = d["art_fallback"]
-		var bays: int = row["bays"]
-		var bay_m: float = row["bay_m"]
-		_faces.add(PropCards.art_texture(str(row["art"]), art, fallback), bays, bay_m)
+		var row: Dictionary = styles[style]
+		var fb_styles: Dictionary = d["art_fallback"]
+		_faces.add_style(row, art, fb_styles)
 	occlude = d.get("occlude", true)
 	var props: Dictionary = d.get("props", {})
 	var fb: Dictionary = d["art_fallback"]

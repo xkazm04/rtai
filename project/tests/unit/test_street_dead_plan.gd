@@ -72,6 +72,37 @@ func test_the_crowd_atlas_gets_a_plan_pose_turned_to_the_bake() -> void:
 	assert_null(StreetCrowdCorpse.plan_cell("p70", "boss/king", 0))
 
 
+func test_two_bodies_on_one_spot_end_a_body_apart() -> void:
+	var at: Vector2 = Vector2(100.0, 100.0)
+	assert_ne(StreetDeadPlan.pick(1, &"", at), StreetDeadPlan.pick(2, &"", at), "poses differ")
+	var a: Vector2 = StreetDeadHeading.resting(1, at, 0.0)
+	var b: Vector2 = StreetDeadHeading.resting(2, at, 0.0)
+	var space: float = StreetQuestDeadPush.SPACE_M * CharacterRigs.PX_PER_M
+	assert_gte(a.distance_to(b), space - 0.5)
+
+
+func test_the_push_is_nothing_at_the_blow_and_whole_once_settled() -> void:
+	var at: Vector2 = Vector2(100.0, 100.0)
+	assert_gte(StreetDeadPlan.pick(1, &"", at), 0)
+	assert_gte(StreetDeadPlan.pick(2, &"", at), 0)
+	assert_eq(StreetDeadHeading.resting(1, at, 1.0), at, "not moved at the blow")
+	assert_ne(StreetDeadHeading.resting(1, at, 0.0), at, "pushed once settled")
+
+
+func test_a_push_into_a_wall_takes_a_free_spot_instead() -> void:
+	StreetDeadPlan._lying[7] = Vector3(0.0, 0.0, 0.0)
+	var wall: Callable = func(px: Vector2) -> bool: return px.x > 10.0
+	var push: Vector2 = StreetQuestDeadPush.push_of(8, Vector2.ZERO, 32.0, wall)
+	var hit: bool = wall.call(push)
+	assert_false(hit, "not in the wall")
+	assert_gte(push.length(), StreetQuestDeadPush.SPACE_M * 32.0 - 0.5, "clear of the body")
+
+
+func test_a_body_with_no_neighbour_stays_though_its_spot_is_solid() -> void:
+	var wall: Callable = func(_px: Vector2) -> bool: return true
+	assert_eq(StreetQuestDeadPush.push_of(9, Vector2.ZERO, 32.0, wall), Vector2.ZERO)
+
+
 func test_a_lying_body_stops_short_of_the_first_wall() -> void:
 	var wall_x: float = 40.0
 	StreetDeadPlan.solid = func(px: Vector2) -> bool: return px.x >= wall_x

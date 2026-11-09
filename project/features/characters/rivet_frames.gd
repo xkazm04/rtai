@@ -99,7 +99,7 @@ static func cell_of(rig: CutRig, cells: int, walk_ph: float = -1.0) -> Vector2i:
 	if rig.dead or (rig.react != null and rig.react.dying):
 		return Vector2i(Cell.DEATH, 0)
 	if walk_ph >= 0.0:
-		return Vector2i(RivetWalk.frame_of(o, walk_ph, cells), 0)
+		return Vector2i(RivetWalk.frame_of(RivetStride.row(rig, o), walk_ph, cells), 0)
 	if RivetReload.shows(rig.head_card):
 		return RivetReload.cell_of(rig, o)
 	if cells == BASE_CELLS:
