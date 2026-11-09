@@ -16,7 +16,7 @@ import { copyFileSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSyn
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { ROOT, ownGdFiles, rel, walk } from '../lib/repo.mjs';
-import { killTree } from '../lib/godot.mjs';
+import { killTree, resolveGodot } from '../lib/godot.mjs';
 import { append, queue, read, rows, totals, vanished } from './ledger.mjs';
 import { pick, refusal } from './pick.mjs';
 
@@ -194,7 +194,11 @@ async function cmdRun(o, out, err) {
   }
   if (!units.length) { err('factory: nothing to run: pass --stems= or --take=<n>'); return 2; }
   const env = { ...process.env };
-  if (!env.GODOT_BIN) { err('factory: set GODOT_BIN (the grader needs it)'); return 2; }
+  if (!env.GODOT_BIN) { // the one resolver every runner uses (tools/lib/godot.mjs), so the factory finds what film and unit find
+    const g = resolveGodot();
+    if (!g.ok) { err(`factory: ${g.message} (the grader needs it)`); return 2; }
+    env.GODOT_BIN = g.bin;
+  }
   const ledger = o.ledger ?? LEDGER;
   const repo = 'C:/Users/kazda/kiro/gtai';
   const base = spawnSync('git', ['-C', repo, 'rev-parse', 'main'], { encoding: 'utf8', windowsHide: true }).stdout.trim();
