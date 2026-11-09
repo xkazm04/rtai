@@ -10,6 +10,10 @@ const BLOOD_DARK: Color = Color("#540005")
 const SOOT: Color = Color(0.09, 0.075, 0.105, 0.55)
 ## A drag smear thins from the landing over this much slide (metres).
 const SMEAR_TAPER_M: float = 1.6
+## The blot's outline points, how far it runs out along the blow (of its radius), its fingers.
+const BLOT_PTS: int = 28
+const RUN: float = 0.55
+const FINGERS: int = 3
 
 
 static func scorch(ci: CanvasItem, m: KillMarks.Mark, ppm: float) -> void:
@@ -39,23 +43,37 @@ static func spray(ci: CanvasItem, m: KillMarks.Mark, ppm: float) -> void:
 		if r > 0.12 * ppm:  # a big drop throws a satellite further out along the fan
 			ci.draw_circle(p + m.dir * r * 1.9, r * 0.35, BLOOD)
 	if not m.drops.is_empty():  # a bloodless kill (fire) leaves no splat
-		blot(ci, c + m.dir * 0.75 * ppm, 0.5 * ppm, m.at.y)
+		blot(ci, c + m.dir * 0.75 * ppm, 0.5 * ppm, m.at.y, m.dir.normalized())
 
 
-## A lobed blood blot (the splash where the body was), lobes set by `phase`.
-static func blot(ci: CanvasItem, c: Vector2, r: float, phase: float) -> void:
+## A blood blot (the splash where the body was): an uneven round body run out along `dir` (the
+## blow), in a dark rim, with a few fingers thrown on along it, lobes set by `phase`. n11: the old
+## 16-point outline with every third point spiked read as a stamped four-point star.
+static func blot(
+	ci: CanvasItem, c: Vector2, r: float, phase: float, dir: Vector2 = Vector2.ZERO
+) -> void:
 	var pts: PackedVector2Array = PackedVector2Array()
-	for k: int in 16:
-		var a: float = TAU * float(k) / 16.0
-		var lobe: float = 0.72 + 0.28 * sin(a * 4.0 + phase) + (0.18 if k % 3 == 0 else 0.0)
+	for k: int in BLOT_PTS:
+		var a: float = TAU * float(k) / float(BLOT_PTS)
+		var u: Vector2 = Vector2.from_angle(a)
+		var lobe: float = 0.8 + 0.12 * sin(a * 3.0 + phase) + 0.08 * sin(a * 5.0 + phase * 1.7)
+		lobe += 0.05 * sin(a * 11.0 + phase * 3.1)
+		var along: float = maxf(u.dot(dir), 0.0)
 		@warning_ignore("return_value_discarded")
-		pts.append(c + Vector2.from_angle(a) * r * lobe)
+		pts.append(c + u * r * lobe * (1.0 + RUN * along * along))
 	KillPoly.fill(ci, pts, BLOOD_DARK)
 	var inner: PackedVector2Array = PackedVector2Array()
 	for p: Vector2 in pts:
 		@warning_ignore("return_value_discarded")
-		inner.append(c + (p - c) * 0.82)
+		inner.append(c + (p - c) * 0.84)
 	KillPoly.fill(ci, inner, BLOOD)
+	if dir == Vector2.ZERO:
+		return
+	for i: int in FINGERS:
+		var f: Vector2 = dir.rotated((float(i) - 1.0) * 0.38 + 0.12 * sin(phase * 2.0 + float(i)))
+		var tip: Vector2 = c + f * r * (1.35 + 0.35 * absf(sin(phase + float(i) * 1.9)))
+		ci.draw_line(c + f * r * 0.7, tip, BLOOD, maxf(1.0, r * 0.14), true)
+		ci.draw_circle(tip, maxf(1.0, r * 0.11), BLOOD)
 
 
 ## One blot of a drag smear (point `k` of the slide, `run_px` from where the part landed),
