@@ -118,7 +118,7 @@ func test_a_hit_flinches_but_a_strike_wins() -> void:
 
 func test_every_ghost_act_grid_divides_into_its_cells() -> void:
 	for ghost: String in ["kerf", "dent", "tonnage", "ohm"]:
-		var tex: Texture2D = load(GhostDrawn.act_path_of(P70, ghost)) as Texture2D
+		var tex: Texture2D = load(GhostDrawn.path_of(P70, ghost, "act")) as Texture2D
 		assert_not_null(tex, ghost)
 		assert_eq(tex.get_width() % GhostDrawn.ACT_COLS, 0, ghost)
 		assert_eq(tex.get_height() % GhostDrawn.ROWS, 0, ghost)

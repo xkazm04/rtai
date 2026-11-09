@@ -18,6 +18,8 @@ const MAX_CYCLES_S: float = 3.0
 const RUN_FROM_MPS: float = 5.0
 const MAX_RUN_CYCLES_S: float = 3.5
 const BACKPEDAL_DOT: float = -0.25
+## A pitch's drawn stride against the p70 cycle ("<name>/<art>"), measured off its stance foot.
+const STRIDE_K: Dictionary[String, float] = {"dent/p55": 0.8}
 ## Frames without ground walked before the figure stands.
 const STILL_FRAMES: int = 3
 const OCT_HOLD_RAD: float = deg_to_rad(4.0)
@@ -99,16 +101,9 @@ func step(
 	return true
 
 
-static func path_of(art: String, name: String) -> String:
-	return ART_DIR.path_join(art).path_join(name + "_walk8.png")
-
-
-static func act_path_of(art: String, name: String) -> String:
-	return ART_DIR.path_join(art).path_join(name + "_act.png")
-
-
-static func run_path_of(art: String, name: String) -> String:
-	return ART_DIR.path_join(art).path_join(name + "_run8.png")
+## A sheet of this ghost under an art key: "walk8", "act" or "run8".
+static func path_of(art: String, name: String, sheet: String = "walk8") -> String:
+	return ART_DIR.path_join(art).path_join("%s_%s.png" % [name, sheet])
 
 
 ## Each frame (GhostActs): `seq` a counter that rises on a strike, `hurt` the tick of the last hit,
@@ -156,7 +151,8 @@ func _column(host: Node2D, s: float) -> int:
 		return _col
 	_still = 0
 	_running = run_cell > 0.0 and speed > RUN_FROM_MPS * SimConst.PX_PER_M
-	var cell: float = run_cell if _running else cycle_cell
+	var k: float = STRIDE_K.get(card_name + "/" + _art, 1.0)
+	var cell: float = (run_cell if _running else cycle_cell) * k
 	var cap: float = MAX_RUN_CYCLES_S if _running else MAX_CYCLES_S
 	var cycle: float = maxf(cell * s, speed / cap)
 	var look: float = host.global_rotation if is_nan(_look) else _look
@@ -187,9 +183,9 @@ func _rebuild(host: Node2D, parts: Array[Sprite2D], vm: ViewMode) -> void:
 		_spr = Sprite2D.new()
 		_spr.name = &"ghost_drawn"
 		_walk_tex = load(path) as Texture2D
-		var act: String = act_path_of(_art, card_name)
+		var act: String = path_of(_art, card_name, "act")
 		_act_tex = load(act) as Texture2D if ResourceLoader.exists(act) else null
-		var run: String = run_path_of(_art, card_name)
+		var run: String = path_of(_art, card_name, "run8")
 		_run_tex = load(run) as Texture2D if ResourceLoader.exists(run) else null
 		_spr.centered = false
 		_show(_walk_tex, COLS)
