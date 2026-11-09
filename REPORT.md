@@ -2,6 +2,8 @@
 
 Branch `n10-handheld`, cut from main 9bbe6d0a, with `n10-world` merged up to 579ef0f4 (half-height walls, the delivered shop strip, the parapet core off under a lift; merges b3ab484e, 7bff8ade, 78746a1a). Every number is **on the simulator** (this PC under a device profile), never on a device, and every one is CONTENDED unless it says otherwise. Research and tables: `docs/handheld/LEDGER.md` section 9. Stills: `C:\Users\kazda\kiro\gtai-masters\n10\handheld\frames.json` (15 entries).
 
+**Freeze check (it40, 07:30).** `git diff 6a7d0627 HEAD -- project native` is empty, so the gates and the exe below describe the frozen build. The exe was not rebuilt and no gate, reel or frame was re-run at the freeze. `build/export/windows/RTAI.exe` re-hashed: 552,650,224 bytes, sha256 `de1909f161768b8937101110d104ebfe8e7c08246aa70fbe894fe4b48fad24d1`. `tools/evidence/cites.mjs` on this report: 14 paths, 14 ok. All 15 files `frames.json` names exist, and no other file sits beside them.
+
 ## What works (with evidence)
 
 1. **The rows on the new main, with lane world's walls.** The director reel in combo, headless, under `--device=deck`, `deck40`, `handheld_1080`, `switch_handheld`, on 78746a1a (after the last wall merge), with and without a weapon: 19 of 19 chapters fully down on every row, 0 SCRIPT ERROR, exit 0 (`evidence/n10h/it16/reel/`, `evidence/n10h/it17/reel/`; the gate paragraphs below say what each run covers). Windowed city in combo on the iGPU on all four rows, exit 0 (LEDGER E24). The first pass at it5 (`evidence/n10h/it5/reel/`, LEDGER E22) had no observed exit code; these replace it. The walls read as two whole storeys with the grey print kept, at 32, 40 and 64 px/m on the Deck row and at 40 on `handheld_1080` (stills looked at; `frames.json`).
