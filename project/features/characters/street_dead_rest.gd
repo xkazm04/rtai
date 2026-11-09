@@ -33,6 +33,7 @@ func adopt(rig: CutRig, feed: RigFeed) -> void:
 	var i: int = feed.ids.find(rig.actor_id)
 	if i < 0 or i >= feed.count or not feed.has_flag(i, RigFeed.Flag.DEAD):
 		return
+	RigCarry.keep(rig)  # RigInput just put the rig on its sim point: the body lies past it
 	StreetDeadPlan.draw(rig, card, StreetWalkerCards.row_of(rig), card.global_scale.x, 1.0)
 	keep(rig.actor_id, card)
 
@@ -86,6 +87,15 @@ func drop(actor: int) -> void:
 		part.queue_free()
 	@warning_ignore("return_value_discarded")
 	_kept.erase(actor)
+
+
+## The top sprite of `actor`'s kept body (its pose, drawn last); null = not kept.
+func top_sprite(actor: int) -> Sprite2D:
+	var parts: Array = _kept.get(actor, [])
+	if parts.is_empty():
+		return null
+	var top: Node2D = parts[parts.size() - 1]
+	return top as Sprite2D
 
 
 ## The kept bodies' actor ids (the city's rig slots: their atlas cells stay undrawn).

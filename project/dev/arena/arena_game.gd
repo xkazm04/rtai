@@ -205,6 +205,7 @@ func _add_view() -> void:
 		PropOcclusion.for_view(view)  # view lab: tall props over the bodies behind them
 		if ArenaArgs.parse().has("--fire-stills"):  # d9 rivet: his drawn fire cells (FireStills)
 			add_child(FireStills.new(cast, session, ArenaArgs.parse().text("--fire-stills"), 1500))
+	DeadBodyProbe.attach(self, ArenaArgs.parse(), session.stage, cast)  # n11: --body-probe=<json>
 	if session.city != null:
 		_characters = CityCharacters.new(session.city, view.city_view, session.world.context())
 		if cast != null:  # human-reactions: the street trips over the fight's dead

@@ -28,6 +28,9 @@ var slide: Vector2 = Vector2.ZERO
 ## Scales the carry: 1 where the sim does not move the body (the board), lower where the host's
 ## knockback already slides it (HitLink), so the two do not add up.
 var carry: float = 1.0
+## n11: what the last pose step added to the rig's position (world px): CharacterRigs puts it back
+## on a tick that does not pose this rig, so a corpse does not hop back to its sim point.
+var last_carry: Vector2 = Vector2.ZERO
 ## What post() draws: body offset (part px), body turn, body scale, head turn/offset/scale.
 var off: Vector2 = Vector2.ZERO
 var rot: float = 0.0
@@ -83,6 +86,7 @@ func clear() -> void:
 	kind = &""
 	dying = false
 	t = 0.0
+	last_carry = Vector2.ZERO
 	_rest()
 
 
@@ -100,8 +104,8 @@ func pre(rig: CutRig, dt: float) -> void:
 		DeathPose.pre(self, rig)
 	else:
 		ReactPose.pre(self, rig)
-	if slide != Vector2.ZERO:
-		rig.position += rig.transform.basis_xform(slide * carry)
+	last_carry = rig.transform.basis_xform(slide * carry) if slide != Vector2.ZERO else Vector2.ZERO
+	rig.position += last_carry
 
 
 func post(rig: CutRig) -> void:
