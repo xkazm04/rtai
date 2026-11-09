@@ -94,6 +94,40 @@ func test_a_gone_card_warms_the_rig_on_the_next_step() -> void:
 	assert_false(rig.limbs_cold, "no walker card: the limbs pose again")
 
 
+## A real walker card under tilt70: built in the first step's StreetView.step, cold from the next.
+func _walker() -> CutRig:
+	ViewMode.select("tilt70")
+	var rig: CutRig = _rig()
+	_drive(rig, 3)
+	assert_true(StreetWalkerCards.hides_parts(rig), "a real walker card is up")
+	assert_true(rig.limbs_cold, "and the limbs are cold")
+	return rig
+
+
+func test_a_card_released_mid_step_poses_the_limbs_in_that_step() -> void:
+	var rig: CutRig = _walker()
+	var before: Transform2D = rig.sides[BodyPlan.L].thigh.transform
+	rig.head_card.set_meta(&"street_row", "no_such_row")  # no fall grid: the parts take the fall
+	rig.clips.die(false)  # RigClips.sample recomputes rig.dead each step
+	_drive(rig, 1)
+	assert_false(StreetWalkerCards.hides_parts(rig), "the card was released in this step")
+	assert_false(rig.limbs_cold, "the parts draw now, so they were posed")
+	assert_ne(rig.sides[BodyPlan.L].thigh.transform, before, "the leg solve ran this step")
+	assert_true(rig.sides[BodyPlan.L].thigh.visible, "the release gave the parts back")
+
+
+func test_the_step_that_builds_a_card_hides_the_warm_parts() -> void:
+	ViewMode.select("tilt70")
+	var rig: CutRig = _rig()
+	_drive(rig, 1)
+	assert_true(StreetWalkerCards.hides_parts(rig), "built in the first step")
+	assert_false(rig.limbs_cold, "the limbs were posed before the card existed")
+	var hid: Array[CanvasItem] = rig.body.get_meta(StreetWalkerCards.HID)
+	assert_false(hid.is_empty())
+	for item: CanvasItem in hid:
+		assert_false(item.visible, "%s is under the card" % item.name)
+
+
 func test_a_kill_cut_warms_a_cold_rig() -> void:
 	var rig: CutRig = _rig()
 	_card(rig)
