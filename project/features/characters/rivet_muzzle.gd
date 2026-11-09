@@ -51,9 +51,10 @@ static func feed_smear(
 	if drawn:
 		var tex: Texture2D = load(eq) as Texture2D
 		var card: Sprite2D = rig.head_card
-		root = card.to_global(Vector2(0.0, RivetFrames.PAD_PX - tex.get_height() + tip.y))
+		var res: float = RivetWalk.res_of(card)
+		root = card.to_global(Vector2(0.0, RivetFrames.PAD_PX - tex.get_height() + tip.y) * res)
 		var half: float = tex.get_width() / float(RivetFrames.EQ_CELLS) * 0.5
-		len_px = (tip.x - half) * absf(card.global_scale.x)
+		len_px = (tip.x - half) * absf(card.global_scale.x) * res
 	smear.feed(root, held.global_rotation, len_px, on)
 
 

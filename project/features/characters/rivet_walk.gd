@@ -60,6 +60,9 @@ const RUN_ROW_K: Dictionary[String, float] = {
 	"p55/flamethrower/3": 0.93,
 }
 const ROWS: int = 8
+## n11: the grids (not d9's STRIP4) are packed at RES x the 110 px figure, so the x1.5 player size
+## draws them near 1:1; cell-px tables stay in 110 px space, only the card's scale divides by it.
+const RES: float = 1.5
 const CYCLE_CELL: Dictionary[String, float] = {"p70": 60.0, "p55": 60.0}
 const ARMED_CYCLE_CELL: Dictionary[String, float] = {
 	"p70/pistol": 76.0,
@@ -118,6 +121,13 @@ static func path_of(rig: CutRig, art: String, weapon: StringName) -> String:
 ## True when `card` shows a walk grid (8 rows; every other strip is one row).
 static func is_grid(card: Sprite2D) -> bool:
 	return card != null and card.vframes == ROWS
+
+
+## Texture px per 110-space cell px of the strip `card` shows (RES on a packed grid, else 1).
+static func res_of(card: Sprite2D) -> float:
+	if not is_grid(card) or str(card.get_meta(RivetFrames.ON, "")).ends_with("/" + STRIP4):
+		return 1.0
+	return RES
 
 
 ## True when `card` shows an armed walk grid (the drawn figure carries the weapon).
