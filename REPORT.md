@@ -68,6 +68,7 @@ Defect hunt on Rivet at combo. Every performance number here is CONTENDED. Evide
 - `--autostart` was a log smoke with no frames; the frame-by-frame look at quest 1 is the scripted route at 48 px/m (stills every 4 s, item 2).
 - A knock with a weapon out was never seen on screen, since no world reaches it.
 - Defect 12 was filmed at one aim in the steep band (56 degrees, +11 on the tour's octant 1) and at exactly 45, not across the band; the rule is tested at 60, 52, 45.3, 44.9, 44, 38 and 30.
+- Defect 8's `LEFT_NO_SWING` has no red run and was not sampled by mutation; its evidence is the before/after frame.
 - The plasma sword's strike has no 32 px/m before/after (the before needs the old strips and a re-import).
 
 ## Calls for the owner
