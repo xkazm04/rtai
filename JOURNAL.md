@@ -64,3 +64,21 @@ CRITIQUE (items 3, 4, 5 so far):
 - Body contact shadows vs the new standing ones not compared side by side.
 - The cursor has never been seen on a real mouse. 48 px may be small at 1440p and up.
 - HUD name "Tonnage" starts 9 px from the screen edge. Acceptable, tight.
+- 20:56 Gates on `4007f09b`: unit 2224/2224; scenarios 55/55. `evidence/run.mjs` and the reels have NOT been run on this branch.
+- 21:01 CORRECTION to the item 2 decision above: the on-ground showcase is `ArenaArmory` (hub floor), drawn by `PickupsView`, so the x2 did reach it, and piled it into one heap (`armory_x2_before_spacing.png`). Grid 3.15 x 1.8 m, 5 per row, long guns capped at 2.6 m, ring `DISC_K` 1.3 (`88d07829`, `armory_x2_after.png`). The hanging wall (`WeaponRackView`) is unchanged and goes to Calls for the owner.
+- 21:03 MILESTONE item 5 projectiles, first change only (`shot_trail_ab_crop.png`): the hit streak tapers, flash x1.45.
+
+CRITIQUE (projectiles, reactions; hostile pass at 1:1 from `tmp/combat/fight/`, one still per weapon):
+- Only the machine pistol has been judged at a firing frame. The pistol, rocket and plasma stills caught no round in flight (tick 420 is between shots; `--bot=range` does not fire by tick 214). Rockets and plasma are unjudged.
+- The plasma bolt is a small paper-white teardrop; reads weakly against the concrete.
+- The flash cell's hot core is orange-red: check against the colour law (red is blood only; those cells are from an approved night, so unchanged).
+- Casings on the floor are flat cream chips that do not look like brass.
+- The flame puffs read well, but in the one still they are detached from the nozzle: a gap between the gun and the fire.
+- Reactions: NOT looked at this session. Melee hits do reach the reaction layer now (`CombatArena.wounded`, `ReactLink`), so the 2026-11-04 "open" note on `struck` is stale.
+
+NOT DONE: reel gate; evidence run; before/after clips (only stills so far); quest 1 probe for corpses (quest paths are covered by unit guards only, not a frame); far-crowd baked corpses not measured in a live run; a firing-frame capture method is still missing (next line).
+FRICTION: `--shot-tick` needs a tick where something fires, and nothing says when that is. Each guess costs one Godot start. `--write-movie` runs at about 1.5 fps.
+REQUEST tools: a way to capture N consecutive ticks from one run (`--shot-range=A:B`, or `--shot-on-fire=<n>`: save the frame on Rivet's nth shot and the k frames after it), and the same for kills, so a firing or dying frame takes one run.
+- 21:12 Gates on the tree just before the last move of `FLASH_K` (no behaviour change): unit 2225/2225, scenarios 55/55, `release_compile` 643 loaded, 0 failed. So the `check.mjs` FAIL noted in iteration 1 is not a release problem. After the move: lint 15/15, `test_muzzle_k` and the trail tests 12/12. Shot streak commit `86267667`.
+
+NEXT: (1) Gates still owed on this branch: `tools/evidence/run.mjs` and the reels (`--views=top,tilt70,combo`), neither run yet; the combo `cast_k` and the HUD will likely move look goldens, so re-bless deliberately with a dated line. Rebuild both DLLs after any merge (they are untracked; `body.cpp` changed). (2) Item 5, in order: get firing frames (see the `REQUEST tools:` line, or guess ticks with `--bot=gunplay` around tick 420); judge rocket, plasma, electro, flame and impacts by surface; then reactions (hit direction, flinch, deaths) against the 2026-11-04 reports. (3) Shadows: vehicles and buildings under `cast_k` 0.35; Rivet's contact ellipse sits a few px low, re-check after the hero lane's 150 % size. (4) Item 1 still owes a live quest 1 frame and the far crowd's baked corpses in a real run, and a hop before/after clip: only stills and probe numbers exist. (5) Cursor: look at it on a real mouse, consider scaling above 1080p. (6) Item 6 loop. No clips exist yet for anything that moves. Calls for the owner so far: the hanging weapon wall at x2 (needs a longer board than the 18 m hub); the Madness bar kept under the avatars.
