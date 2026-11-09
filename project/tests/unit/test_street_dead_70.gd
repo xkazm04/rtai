@@ -41,6 +41,7 @@ func test_poses_sharing_a_heading_lie_in_different_rows() -> void:
 
 func test_the_second_row_starts_after_a_full_row() -> void:
 	assert_eq(_cell_of(0.0, 1), StreetDead70.COLS + 2, "pose B on the back")
+	assert_eq(_cell_of(0.0, 0, true), 2, "pose A is face down whoever he is")
 	assert_eq(_cell_of(0.0, 4, false), 2, "the across pose by the person: face down")
 	assert_eq(_cell_of(0.0, 4, true), StreetDead70.COLS + 2, "the across pose by the person: back")
 
@@ -48,6 +49,8 @@ func test_the_second_row_starts_after_a_full_row() -> void:
 func test_only_a_head_lying_left_draws_mirrored() -> void:
 	assert_true(StreetDead70.mirrored(Vector2.LEFT, false))
 	assert_false(StreetDead70.mirrored(Vector2.RIGHT, true))
+	assert_false(StreetDead70.mirrored(Vector2(0.707, -0.707), false), "up-right is not mirrored")
+	assert_true(StreetDead70.mirrored(Vector2(-0.707, -0.707), false), "up-left is")
 	assert_true(StreetDead70.mirrored(Vector2.UP, true), "straight up: by the person")
 	assert_false(StreetDead70.mirrored(Vector2.UP, false), "straight up: by the person")
 
@@ -70,3 +73,12 @@ func test_sprite_takes_the_sheets_grid() -> void:
 	assert_eq(plan.vframes, StreetDead70.ROWS)
 	assert_eq(plan.texture.resource_path, path)
 	assert_same(StreetDead70.sprite(card, path, StreetDead70.COLS, StreetDead70.ROWS), plan)
+
+
+func test_sprite_swaps_to_another_sheet() -> void:
+	var card: Sprite2D = autofree(Sprite2D.new())
+	var first: String = StreetDead70.DIR + "cop_patrol.png"
+	var second: String = StreetDead70.DIR + "ped_suit.png"
+	var plan: Sprite2D = StreetDead70.sprite(card, first, StreetDead70.COLS, StreetDead70.ROWS)
+	assert_same(StreetDead70.sprite(card, second, StreetDead70.COLS, StreetDead70.ROWS), plan)
+	assert_eq(plan.texture.resource_path, second)
