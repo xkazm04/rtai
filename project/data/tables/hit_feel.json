@@ -85,6 +85,7 @@
       "doc": "One claw swipe.",
       "flash_ticks": 6,
       "hitstop": "melee_hit",
+      "hold_delay_ticks": 2,
       "id": "melee",
       "kick_px": 2.5,
       "kick_ticks": 7,

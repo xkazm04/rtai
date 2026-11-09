@@ -37,9 +37,9 @@ static func pre(r: HumanReact, rig: CutRig) -> void:
 			_fold(r, rig, snap(k, 0.25))
 		&"stun":
 			convulse(r, rig, 1.0 - smoothstep(0.85, 1.0, k))
-			_hit_snap(r, rig, r.t)
 		&"burn":
 			flail(r, rig, 1.0 - smoothstep(0.9, 1.0, k))
+	_hit_snap(r, rig, r.t)  # any family whose row sets snap_m (n12: the melee wounds too)
 
 
 ## Head and torso snap away from the hit, an arm comes up; `amt` scales it (cover = half).

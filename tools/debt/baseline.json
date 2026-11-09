@@ -31,13 +31,14 @@
         "2026-11-08: block70 test branch: the dev still scene for the true-70 city block (dev_loc 19838 -> 19960)",
         "2026-11-08: n10 world: block70_still --focus (one still per wall style, the walls' evidence) + its arg reader split (dev_loc 19960 -> 19971) (dev_loc 19960 -> 19971)",
         "2026-11-09: n10 merge: the lanes combined dev tooling growth (dev_loc 19971 -> 20284)",
-        "2026-11-09: n12 A2: NodeSpans names a spike's node (worst_frames), a dev instrument (dev_loc 20284 -> 20319)"
+        "2026-11-09: n12 A2: NodeSpans names a spike's node (worst_frames), a dev instrument (dev_loc 20284 -> 20319)",
+        "2026-11-09: n12 B1: SyncProbe, the victim-sync instrument (dev arena --sync), and its one attach line (dev_loc 20319 -> 20487)"
       ],
       "files": {
-        "project/dev/arena": 708,
+        "project/dev/arena": 709,
         "project/dev/audio": 367,
         "project/dev/bake_city.gd": 32,
-        "project/dev/bench": 1719,
+        "project/dev/bench": 1886,
         "project/dev/bots": 399,
         "project/dev/enemy_ai": 662,
         "project/dev/frames": 545,
@@ -63,7 +64,7 @@
         "project/dev/view": 195,
         "project/dev/weapon_art": 506
       },
-      "total": 20319
+      "total": 20487
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -229,12 +230,13 @@
       "accepted": [
         "2026-11-06: n8-view it7: ArenaRigs + ArenaRobotRigs moved dev/arena -> features/arena (quest 1 ships the rig cast under a card view; decision 2026-11-04 re-check); quest1_game +3 lines (files_near_cap 15 -> 16)",
         "2026-11-07: quest1_game.gd +2: the one call that attaches ViewPitchQuest (quest 1 under combo eases at Mertz); the logic lives in features/view_pitch (files_near_cap 16 -> 16)",
-        "2026-11-07: d9-rivet FireStills: a dev-only capture of Rivet's drawn fire cell per weapon (the every-weapon-at-each-pitch evidence); 2 lines in arena_game.gd hook it under --fire-stills (files_near_cap 16 -> 16)"
+        "2026-11-07: d9-rivet FireStills: a dev-only capture of Rivet's drawn fire cell per weapon (the every-weapon-at-each-pitch evidence); 2 lines in arena_game.gd hook it under --fire-stills (files_near_cap 16 -> 16)",
+        "2026-11-09: n12 B1: SyncProbe, the victim-sync instrument (dev arena --sync), and its one attach line (files_near_cap 16 -> 16)"
       ],
       "files": {
         "project/boot/collect_call/view/fx_view.gd": 271,
         "project/boot/quest1_game.gd": 272,
-        "project/dev/arena/arena_game.gd": 296,
+        "project/dev/arena/arena_game.gd": 297,
         "project/dev/showcase/city_fight.gd": 300,
         "project/features/arena/arena_rigs.gd": 291,
         "project/features/bosses/boss_hook.gd": 281,
@@ -262,7 +264,8 @@
         "2026-11-07: n8 merge: + city growth combined (accepted on its lane) (files_past_soft_cap 67 -> 67)",
         "2026-11-07: d9-rivet FireStills: a dev-only capture of Rivet's drawn fire cell per weapon (the every-weapon-at-each-pitch evidence); 2 lines in arena_game.gd hook it under --fire-stills (files_past_soft_cap 67 -> 67)",
         "2026-11-07: handheld E10: FightFrames logs Godot's texture and video memory at the end of a run (the OS GPU counter on the iGPU does not see a BC7 import); dev-only tooling (files_past_soft_cap 67 -> 67)",
-        "2026-11-09: n12 A2: NodeSpans names a spike's node (worst_frames), a dev instrument (files_past_soft_cap 66 -> 66)"
+        "2026-11-09: n12 A2: NodeSpans names a spike's node (worst_frames), a dev instrument (files_past_soft_cap 66 -> 66)",
+        "2026-11-09: n12 B1: SyncProbe, the victim-sync instrument (dev arena --sync), and its one attach line (files_past_soft_cap 66 -> 66)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 262,
@@ -271,7 +274,7 @@
         "project/boot/collect_call/view/fx_view.gd": 271,
         "project/boot/collect_call/view/stage_view.gd": 219,
         "project/boot/quest1_game.gd": 272,
-        "project/dev/arena/arena_game.gd": 296,
+        "project/dev/arena/arena_game.gd": 297,
         "project/dev/audio/audio_riot.gd": 201,
         "project/dev/bench/fight_frames.gd": 246,
         "project/dev/bench/node_spans.gd": 263,

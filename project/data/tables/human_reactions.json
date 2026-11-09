@@ -34,6 +34,7 @@
       "doc": "Heavy round: steps back along the hit, the weapon arm drops.",
       "id": "stagger",
       "len_s": 0.55,
+      "snap_m": 0.2,
       "travel_m": 0.45
     },
     {
@@ -52,12 +53,14 @@
       "doc": "Melee from the side: a half spin away from the blow.",
       "id": "spin",
       "len_s": 0.45,
+      "snap_m": 0.15,
       "travel_m": 0.2
     },
     {
       "doc": "Melee from the front: folds over the blow.",
       "id": "fold",
       "len_s": 0.5,
+      "snap_m": 0.15,
       "travel_m": 0.2
     },
     {

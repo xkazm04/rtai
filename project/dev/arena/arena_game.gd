@@ -203,6 +203,7 @@ func _add_view() -> void:
 			"arena", "cast rigs: %s" % cast.attach(session.stage, view, session.world.context())
 		)
 		PropOcclusion.for_view(view)  # view lab: tall props over the bodies behind them
+		SyncProbe.attach(self, ArenaArgs.parse(), session.stage.arena, cast, session.world)  # n12
 		if ArenaArgs.parse().has("--fire-stills"):  # d9 rivet: his drawn fire cells (FireStills)
 			add_child(FireStills.new(cast, session, ArenaArgs.parse().text("--fire-stills"), 1500))
 	if session.city != null:
