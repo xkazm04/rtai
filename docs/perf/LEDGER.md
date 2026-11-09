@@ -100,6 +100,20 @@ Item 3's claim (6 of 6, median -1.14 ms frame p50; rig p50 1.665 -> 0.957) is la
 ### Item 4 stops (it8): one wash, the next idea below this bench's floor
 The stop rule (two washes in a row) was not reached: idea 1 was a wash and idea 2 was not built. The crowd occlusion scan is about 100 us in a debug build; the A/A above shows six contended pairs cannot see that. In the release riot at combo (`evidence/perf/n10-riotc/riotc-head@exe-2.json`, one CONTENDED run, avg frame 3.78 ms) the named shares are rig 0.85 ms per tick, blood 0.51 ms a frame, render CPU 0.48, render GPU 0.28, sim step 0.12. At least about 1.5 ms of the frame has no timer of its own in this bench (more if the render GPU time does not add to the CPU frame). Re-check on a quiet machine.
 
+### The riot on film (it9): what the cut changes on screen, with an A/A control
+`evidence/perf/n10-film/`: `film.sh` (main 9bbe6d0a vs this head, city riot, `--view=combo`, 1200 frames at `--fixed-fps 60`, 1280x800, d3d12, debug editor binary, no HUD), `aa.sh` (the same code twice at 32 px/m), `cmp_frames.py`, `psnr*.log`, `ab_only_frames.json`. Instrument: ffmpeg psnr between the two MJPEG captures (a `mse_avg` of exactly 0 means every sample matched); both arms ran side by side, CONTENDED. Masters: `gtai-masters/n10/perf/`.
+
+| 1200 frames | frames that differ | notes |
+|---|---|---|
+| A/B main vs head, 32 px/m | 48 | chunk pop-in plus the patch below |
+| A/B main vs head, 48 px/m | 48 | not split by cause, no A/A at 48 |
+| A/A head vs head, 32 px/m | 13 | frames 30-42, 391, 1111 (chunk pop-in) |
+| A/A main vs main, 32 px/m | 2 | frames 391, 392 |
+
+Most frames are bit-identical, so the riot at combo draws the same picture with the limbs cold. Of the 48 A/B frames at 32 px/m, 34 appear in neither A/A. 5 of those 34 show nothing a viewer could see (no pixel off by more than 24 in a channel, MSE at most 0.02). 3 are large patches (frames 34, 571, 572, below). **The other 26 are small patches on a figure, at most 40 x 31 px and 295 changed pixels: in 25 of them at least half the changed pixels are cream on main and at most 2 are cream on the head**, for 1-4 consecutive frames; the 26th (frame 137) is 7 non-cream pixels. Example crops: `blob-crop-frame605` and `frame473` in the masters. It is the cream "sticker rim" halo (`RigBuild`): on main the rig draws it under a whole-figure card with no limb over it; `a9370647` hides halos while `StreetWalkerCards.hides_parts`. Frames 34, 571 and 572 (571 is a band across the top edge, 25197 px; 34 spreads over 286 x 455 px) look like chunk streaming, but they were not seen in the A/A runs, so that reading rests on the patch's shape alone. The earlier "0 pixels differ" (`evidence/perf/n10-rig/framecmp`) is true of that one rig-stress frame and does not extend to the riot.
+
+Instrument note: psnr's stats count `n` from 1 and ffmpeg's `select` from 0; a first pass here was off by one and read several real differences as identical.
+
 ## n9 night (2026-11-08, branch n9-perf from main da108c13)
 
 ### F19 quest-1 freeze: located in the engine (it1, 00:56-01:56)
