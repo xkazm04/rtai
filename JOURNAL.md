@@ -313,3 +313,13 @@ Read at open: tree clean at 4aac6b8c. No art file in `library/deliveries/` or `l
 QUEUE EMPTY: unchanged from 03:40. Items 1, 2 and 4 done or reported as Calls (w-2, w-3, w-6); item 3 done for what code can reach, blocked on REQUEST 3 art. No game code touched, no Godot run, no new gate, frame or number this session. Ended by the run's rule, over the phase's "do not end early".
 
 NEXT: As iteration 20. If a sheet has arrived in `library/rounds/` (round 1800's `out/` first) or `library/deliveries/`: add the class to `StreetDead70.CLASSES` and `tools/art/dead_70.py`, film it, then re-run evidence, reels x3, bake and export. Otherwise end at once; nothing is owed at the freeze unless `git log 10ed4f51..HEAD -- project native tools` is non-empty.
+
+
+---- session 07:30 (iteration 31, STABILIZE) ----
+Read at open: tree clean at 13541cdb. No art file in `library/deliveries/` or `library/rounds/` newer than 18:00 on 11-08 (`find -newermt`, logs and `run.out` excluded, 0 files); the only `corpse_*_70` sheets are still cop_patrol and ped_suit, both wired; round `20261108-1800`'s `out/` is empty and `gtai-assets/logs/run.log` still ends 17:55. No `REQUEST -> world` in the rivet, perf or handheld journals.
+
+Freeze checks, no Godot run and no game code touched: `git diff --name-only 08e2f56b HEAD` holds only journal and report paths; `build/evidence/` lint, unit-tests, scenario-tests, parity and export-audit are stamped `08e2f56b`, status pass; `build/export/windows/RTAI.exe` (03:42) sha256 starts `8aa18f48808f55e6`, as REPORT says, so no re-export was owed. `frames.json` has 15 entries, all on disk; the 6 frames outside it are all cited in REPORT, so they are not scratch and were kept. REPORT's 21 frame names and 3 cited paths resolve. REPORT marked final, its blocker re-dated to the freeze.
+
+QUEUE EMPTY: Items 1, 2 and 4 done or reported as Calls (w-2, w-3, w-6); item 3 done for what code can reach, blocked on REQUEST 3 art (11 of 13 street classes, Dock 9's contractors and the far crowd stay on plan poses). Performance unmeasured, no bench was run.
+
+NEXT: The Director merges `n10-world`. The art needs the asset loop restarted and round `20261108-1800` re-run; then add each class to `StreetDead70.CLASSES` and `tools/art/dead_70.py`, film it, and re-run evidence, reels x3, bake and export.

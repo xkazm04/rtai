@@ -1,6 +1,8 @@
-# REPORT: night n10, lane world (draft, updated 2026-11-09 03:45)
+# REPORT: night n10, lane world (final, 2026-11-09 07:30 freeze)
 
-Evidence: `C:\Users\kazda\kiro\gtai-masters\n10\world\` (`frames.json`). Every performance number is unmeasured so far.
+Evidence: `C:\Users\kazda\kiro\gtai-masters\n10\world\` (`frames.json`). Every performance number is unmeasured: this lane never ran the bench.
+
+**State at the freeze.** The last code commit is `08e2f56b`. Everything after it is journal and report only (`git diff --name-only 08e2f56b HEAD` shows only those). The gates and the exe below were made on that code, so they match the current build; none was re-run in this session. `build/evidence/` (lint, unit-tests, scenario-tests, parity, export-audit) is stamped `08e2f56b`, all pass. The exe's sha256 was re-read at the freeze and still starts `8aa18f48808f55e6`. `frames.json` has 15 entries, the cap; six more frames in the folder are cited in this report and were kept.
 
 ## What works, with evidence
 
@@ -34,7 +36,7 @@ Evidence: `C:\Users\kazda\kiro\gtai-masters\n10\world\` (`frames.json`). Every p
   - Cars: no wheels are drawn, and the drawn nose stays within 1.29 degrees of the path on screen at 70 (4.32 at 55). This is arithmetic from `VehicleCards`, assuming the turntable art was drawn at the true pitch; it was not filmed.
   - Between 1.8 and 2.5 m/s the walk slides by up to 28 % (`MAX_CYCLES_S`, from the code). See Call w-3.
 
-## Gates so far
+## Gates (newest first)
 
 - **`node tools/evidence/run.mjs --no-bench` on `08e2f56b`: all PASS.** Lint 15/15, unit 2013 / 0, scenarios 55 / 0, parity 1200 steps with the planted mutation caught, selftest with look goldens 11/11, export-audit 636 / 0. The bench was not run. This replaces every older result below.
 - Director reel, the brief's exact command, on `08e2f56b`: top, tilt70, combo each 19 chapters, 19 fully down, 0 SCRIPT ERROR, `no carry` in all 19 (Call w-4).
@@ -62,7 +64,7 @@ Evidence: `C:\Users\kazda\kiro\gtai-masters\n10\world\` (`frames.json`). Every p
 ## What blocked me
 
 - The machine is badly contended: a commit's lint hook passed 10 minutes once and was killed, and a plain `--import` passed 200 s earlier. Neither lost work.
-- REQUEST 2 and 3 (poses drawn for this camera) have had no producer tonight: the asset lane's runner log ends 17:55 on 2026-11-08, before this run began. Its last lines are `loop.sh: fork: retry: Resource temporarily unavailable` and a child death with exit code 0xC000026B, so the loop appears to have stopped on process creation failing rather than by finishing its queue; the log does not say why. Round `20261108-1800` (the riot cop, first in REQUEST 3) was queued and holds no art: its `out/` is empty. Restarting that loop and re-running the round is what would unblock this; still blocked at 04:17 on 2026-11-09. The near-side sliver is a code stand-in for the classes still on plan poses.
+- REQUEST 2 and 3 (poses drawn for this camera) have had no producer tonight: the asset lane's runner log ends 17:55 on 2026-11-08, before this run began. Its last lines are `loop.sh: fork: retry: Resource temporarily unavailable` and a child death with exit code 0xC000026B, so the loop appears to have stopped on process creation failing rather than by finishing its queue; the log does not say why. Round `20261108-1800` (the riot cop, first in REQUEST 3) was queued and holds no art: its `out/` is empty. Restarting that loop and re-running the round is what would unblock this; still blocked at the 07:30 freeze on 2026-11-09, with no new art in the library since 18:00 on 2026-11-08 and the runner log unchanged since 17:55. The near-side sliver is a code stand-in for the classes still on plan poses.
 - This lane opened with no `JOURNAL.md` and no commits past `c394af55`, although the runner called it iteration 4.
 
 ## Calls for the owner
