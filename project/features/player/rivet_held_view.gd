@@ -58,15 +58,9 @@ func _ready() -> void:
 ## texture from disk on its first use, so the first draw of a gun mid-fight cost an 8-19 ms
 ## frame. The same calls as _swap and the reload views make, so the sprites and pixels are the same.
 func warm() -> void:
-	if pilot == null or pilot.carry == null:
-		return
-	for weapon: StringName in pilot.carry.slots:
-		var id: StringName = arsenal.art_id(weapon) if weapon != &"" else &""
-		if art.has(id):
-			art.make_held(id).free()
-			for part: String in ["mag", "tank"]:
-				@warning_ignore("return_value_discarded")
-				art.part_texture(id, part)
+	WeaponFxWarm.warm()  # n12: every weapon fx cell, not on its first draw
+	if pilot != null and pilot.carry != null:
+		RivetStripWarm.warm(pilot.carry.slots, arsenal, art)  # + n12: his drawn strips
 
 
 func _process(_delta: float) -> void:
