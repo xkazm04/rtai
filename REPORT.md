@@ -18,7 +18,7 @@ Method and every number: `docs/perf/LEDGER.md` section "n10 night". Every number
 - **Item 4 stopped short of its stop rule.** The brief says stop after two washes in a row; there was one (the feed fill) and no second idea was built. The next candidate, the crowd occlusion scan, is about 100 us in a debug build, and the machine was never quiet (18 Godot processes up at 01:24), so a bench could not have judged it. A quiet machine is what would reopen this.
 
 ## What blocked me, and for how long
-- **A quiet machine: the whole run so far (21:00 to at least 01:30).** Every poll this lane took showed other lanes' Godots up (0-10 during item 3, 6-18 in it8, 8 at 01:27). This blocks a quiet release riot (item 3 as the brief worded it) and any item 4 idea smaller than about 0.3 ms of frame p50.
+- **A quiet machine: the whole run so far (21:00 to at least 02:03).** Other lanes' Godots were up at nearly every check (0-10 during item 3, 6-18 in it8). A dedicated waiter polled every 20 s from 01:27 to 02:03 (105 polls, `gtai-n10/tmp/perf/quiet_it9.log`) and never saw 0 processes: the lowest was 1 (3 polls), and `bench.lock` was held in 18. It needed 4 clean polls in a row, so the quiet A/B did not run. Two of those polls' process counts include this lane's own film at 01:28-01:33. This blocks a quiet release riot (item 3 as the brief worded it) and any item 4 idea smaller than about 0.3 ms of frame p50.
 - **The release DLL build:** it5's 25 min tool limit stopped it at about a third of godot-cpp; built in it6 (about 30 min lost).
 - **bench.lock** was held by handheld at 00:08 for one iteration's check (no time lost, the machine was busy anyway).
 
