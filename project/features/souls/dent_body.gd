@@ -18,8 +18,8 @@ var riding: bool = false
 var strikes: int = 0
 var blasts: int = 0
 ## n11: the drawn walk (dent_walk8.png, tools/art/ghost_pack.py), feet on his point; the rig under
-## a view without it. CYCLE_CELL: the contact row's feet apart, less the boot, twice over.
-var drawn: GhostDrawn = GhostDrawn.new("dent", 1.8, 128.0, 176.5)
+## a view without it. The cycle (163 cell px): the profile row's stance foot, 20.4 px a frame.
+var drawn: GhostDrawn = GhostDrawn.new("dent", 1.8, 163.0, 176.5)
 var _rig: CutRig = CutRig.new()
 var _lurch: DentLurch = DentLurch.new()
 var _aura: GhostAura = GhostAura.new()

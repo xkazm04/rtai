@@ -57,7 +57,7 @@ const KICK_TWIST: float = deg_to_rad(16.0)
 const CARD_M: float = 1.2
 const CARD_ANCHOR: float = 0.8
 const CARD_HALO_A: float = 0.45
-const CYCLE_CELL: float = 120.0  # the contact row's feet apart less a boot, twice over
+const CYCLE_CELL: float = 126.0  # n11 it10: the profile row's stance foot, 15.7 cell px a frame
 
 var unfold: float = 1.0
 ## OhmStage.bolts, fed by the host: a rise kicks the guard arm (the first sight only arms it).

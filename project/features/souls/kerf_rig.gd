@@ -50,8 +50,8 @@ const CARD_LEAN: float = deg_to_rad(12.0)
 ## n11: the drawn walk's stride: the profile row's stance foot goes from x 115 to 63 over the three
 ## frame steps from contact to toe-off: 17.3 cell px a step, 8 steps a cycle.
 const CYCLE_CELL: float = 139.0
-## The run grid's cycle in cell px: Rivet's run/figure ratio (258 / 110) on Kerf's 165 px figure.
-const RUN_CYCLE_CELL: float = 388.0
+## The run grid's cycle in cell px: the profile row's stance foot moves 50 px a frame (n11 it10).
+const RUN_CYCLE_CELL: float = 400.0
 
 var unfold: float = 1.0
 ## Ground speed (m/s), fed by the host each tick.
