@@ -46,6 +46,15 @@ func test_a_named_prop_casts_its_hero_scene_length() -> void:
 	assert_almost_eq(px[2].x, (0.4 - 0.18) * 32.0, 0.001)
 
 
+func test_the_parapet_core_only_draws_on_a_flat_city() -> void:
+	var casts: CastShadows = CastShadows.new()
+	casts.parapet_core_m = 0.22
+	assert_true(casts.core_drawn(false), "flat: the band is the height cue")
+	assert_false(casts.core_drawn(true), "tilted: a wall stands on that edge")
+	casts.parapet_core_m = 0.0
+	assert_false(casts.core_drawn(false), "0 m is off")
+
+
 func test_the_parapet_core_sits_inside_the_hatched_shadow() -> void:
 	# the ink core (0.22 m) must stay shorter than the building cast (0.45 m, n5-look; was 1.1)
 	assert_gt(_casts.parapet_core_m, 0.0)
