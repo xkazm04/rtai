@@ -1,8 +1,10 @@
-# n10 rivet REPORT (final, freeze session it49, 2026-11-09 07:30)
+# n10 rivet REPORT (final, freeze session it49, 2026-11-09 07:30; paths checked it50, 07:40)
 
 Status at the freeze: the brief's list is done (below) and the queue has been empty since it16. No code has changed since the exe was built at 03:25 (`git log b8ae1064..HEAD -- project tools native` is empty), so the exe and the gates below still describe this branch. They were not re-run at the freeze: it49 ran no Godot. What works is under Fixed and Brief status, what does not is under Known and left and Not verified.
 
-Defect hunt on Rivet at combo. Every performance number here is CONTENDED. Evidence: `C:\Users\kazda\kiro\gtai-masters\n10\rivet\` (`frames.json`, 15 entries, best first).
+Defect hunt on Rivet at combo. Every performance number here is CONTENDED. Evidence: `C:\Users\kazda\kiro\gtai-masters\n10\rivet\` (`frames.json`, 15 entries, best first), where the common brief puts clips and stills. A bare `.png` or `.mp4` name below is in that folder. The only file this lane committed under `evidence/` is `evidence/n10/rivet_knock_p70.json`; the frames were not copied into the tree.
+
+Path check (it50): every path, frame, commit and test this report cites was resolved on disk or in git, and all 15 `frames.json` entries exist. One citation led nowhere: the frame for the Brass name card survived only in the lane's temp folder, so it was looked at and copied to the masters folder under the name now cited. `test_rivet_stride.gd` and `test_rivet_strips_has_file` are on `n10-world` and `n10-perf`, as the merge sections say, not on this branch. This checked that the evidence exists, not what it shows; it50 ran no Godot and no gate, and that frame is the only image opened this iteration.
 
 ## Fixed
 
@@ -43,7 +45,7 @@ Defect hunt on Rivet at combo. Every performance number here is CONTENDED. Evide
 - After a roll there is still one tick with the bare run frame before the gun shows (tick 36 in the tour log).
 - One walk tick between the gatling's fire cell and the run at the run threshold (tick 409 in the mini-nuke + gatling tour): a legitimate frame of the speed-up, left.
 - p70's left down cell (defect 11) now matches in tone, but its helmet is still drawn a little differently from the slide cell before it (the art, off the list).
-- At the Toner Room the scripted pad stops with his head over Brass's name card, so the name reads `B..s` through the briefing (`still_8040_64`). Where a real player stops was not measured: the marker's radius is 7 m, so most will stop short of it.
+- At the Toner Room the scripted pad stops with his head over Brass's name card, so the name reads `B..s` through the briefing (`rivet_toner_room_brass_name_combo_64ppm_t8040.png`, 64 px/m, tick 8040). Where a real player stops was not measured: the marker's radius is 7 m, so most will stop short of it.
 
 ## Merging with n10-world (it24, for the Director)
 
