@@ -142,7 +142,7 @@ export function runLint() {
   return { ok: !failed.length, checks, summary, fileCount: gd.length };
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const result = runLint();
   if (process.argv.includes('--json')) {
     console.log(JSON.stringify(result, null, 2));
