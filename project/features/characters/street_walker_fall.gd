@@ -147,6 +147,8 @@ static func draw(rig: CutRig, card: Sprite2D, k: float) -> void:
 
 ## The corpse decay's sink (CorpseFade shrinks the rig): 1 while it lies, down to 1 - sink.
 static func sink_of(rig: CutRig) -> float:
+	if rig.plan == null:  # a bare test rig, never decayed
+		return 1.0
 	return minf(absf(rig.scale.x) / maxf(CutRig.SC * rig.plan.size_k, 0.0001), 1.0)
 
 

@@ -104,7 +104,11 @@ func pre(rig: CutRig, dt: float) -> void:
 		DeathPose.pre(self, rig)
 	else:
 		ReactPose.pre(self, rig)
-	last_carry = rig.transform.basis_xform(slide * carry) if slide != Vector2.ZERO else Vector2.ZERO
+	last_carry = (
+		rig.transform.basis_xform(slide * carry) / StreetWalkerFall.sink_of(rig)
+		if slide != Vector2.ZERO
+		else Vector2.ZERO
+	)
 	rig.position += last_carry
 
 

@@ -78,6 +78,17 @@ func test_a_frame_with_no_tick_keeps_the_corpse_where_it_lies() -> void:
 	assert_almost_eq(_spread(rig, 0), 0.0, 0.01, "a frame with no tick dropped the slide")
 
 
+func test_a_sinking_corpse_keeps_its_slide() -> void:
+	var rig: CutRig = _die(&"death_bullet")
+	_rigs.step_ticks(1)
+	var whole: Vector2 = rig.react.last_carry
+	assert_gt(whole.length(), 1.0, "the corpse has a slide to keep")
+	rig.scale *= 0.25  # CorpseFade's sink
+	for t: int in 4:
+		_rigs.step_ticks(1)
+	assert_almost_eq(rig.react.last_carry.distance_to(whole), 0.0, 0.01, "the sink moved the body")
+
+
 func test_the_slide_still_carries_the_body_off_its_sim_point() -> void:
 	var rig: CutRig = _die(&"death_bullet")
 	_rigs.step_ticks(1)
