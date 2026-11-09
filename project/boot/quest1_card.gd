@@ -66,7 +66,7 @@ func show_title(can_continue: bool = false) -> void:
 	start_button = _button(_t(&"SLICE__START", "Start"), start_pressed)
 	@warning_ignore("return_value_discarded")
 	_button(_t(&"SLICE__QUIT", "Quit"), quit_pressed)
-	(first if first != null else start_button).grab_focus.call_deferred()
+	_focus_later.call_deferred(first if first != null else start_button)
 	if LaunchArgs.has("--autostart") and OS.is_debug_build():  # n8-hud: film the opening
 		start_pressed.emit.call_deferred()
 
@@ -82,7 +82,7 @@ func show_pause(settings_panel: Control = null) -> void:
 	var resume: Button = _button(_t(&"SLICE__RESUME", "Resume"), resume_pressed)
 	@warning_ignore("return_value_discarded")
 	_button(_t(&"SLICE__QUIT", "Quit"), quit_pressed)
-	resume.grab_focus.call_deferred()
+	_focus_later.call_deferred(resume)
 
 
 func show_paid(cash: int) -> void:
@@ -90,7 +90,7 @@ func show_paid(cash: int) -> void:
 	_label(_t(&"SLICE__PAID", "Paid."), 56, Ink.INK)
 	_label(_t(&"SLICE__PAYOUT", "+$%d. Patch keeps the line open.") % cash, 28, Ink.INK)
 	var quit: Button = _button(_t(&"SLICE__QUIT", "Quit"), quit_pressed)
-	quit.grab_focus.call_deferred()
+	_focus_later.call_deferred(quit)
 
 
 ## The contract failed: retry from the last beat checkpoint (when there is one) or quit.
@@ -101,7 +101,7 @@ func show_failed(can_continue: bool) -> void:
 	if can_continue:
 		first = _button(_t(&"SLICE__RETRY", "Retry from the last checkpoint"), continue_pressed)
 	var quit: Button = _button(_t(&"SLICE__QUIT", "Quit"), quit_pressed)
-	(first if first != null else quit).grab_focus.call_deferred()
+	_focus_later.call_deferred(first if first != null else quit)
 
 
 func hide_all() -> void:
@@ -185,3 +185,9 @@ static func mark_focus(b: Button) -> void:
 
 func _t(key: StringName, source: String) -> String:
 	return _text.resolve(key, source)
+
+
+## Deferred focus: the card can leave the tree before the call runs (a scenario that tears it down).
+func _focus_later(button: Control) -> void:
+	if button.is_inside_tree():
+		button.grab_focus()
