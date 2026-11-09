@@ -12,6 +12,7 @@ import { spawnSync, execFileSync } from 'node:child_process';
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { ROOT } from '../lib/repo.mjs';
+import { staleAssets } from '../lib/asset_cache.mjs';
 import { describe, runGodot } from '../lib/godot.mjs';
 import { verdict } from '../lib/dev_verdict.mjs';
 import { autoLock, checkFlags, checkId, godotArgs, parseOn, parseShot, parseStills, shotLabel, triggeredTicks } from './shots.mjs';
@@ -146,6 +147,12 @@ export async function filmOne({ shot, opts }, { runner = runGodot } = {}) {
   mkdirSync(opts.dir, { recursive: true });
   for (const name of readdirSync(opts.dir)) if (/^t\d+\.png$/.test(name)) rmSync(join(opts.dir, name), { force: true });
   rmSync(join(opts.dir, 'probe.json'), { force: true });
+  const stale = staleAssets(join(opts.tree, 'project'));
+  if (stale.count) {
+    console.error(`film: ${stale.count} asset(s) changed since the last import (${stale.sample.join(', ')}): running --import, or the film draws the old pixels`);
+    const imported = await runner(['--import'], { timeoutMs: opts.timeoutMs, name: 'import', cwd: opts.tree, ensure: false });
+    if (imported.status !== 0 || imported.timedOut) return { outcome: 'fail', reasons: [`--import failed: ${describe(imported)}`], probe: null, mp4: null, manifest: null };
+  }
   const args = godotArgs(shot, opts);
   const startedAt = Date.now();
   const res = await runner(args, { headless: false, timeoutMs: opts.timeoutMs, name: `film-${opts.label}`, cwd: opts.tree });

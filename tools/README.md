@@ -50,6 +50,14 @@ deaths are not kills here: only `hostiles`. On the street shots the lock becomes
 freezes on the first frame `--on` saves, and that first frame is still following (a few px), because
 the view has already read it. `--lock=at:<tick>` has no such frame.
 
+A film whose assets changed since the last import runs `--import` first and says which: Godot does
+not re-import on its own, so a film after a PNG swap drew the old pixels and looked like a result.
+
+To compare the frame something happened on, learn the tick once with `--on`, then compare it:
+`node tools/film/compare.mjs ... --at=333`. The tick is the same on both sides as long as the change
+under test is visual, because the sim is deterministic; if the shot moved, the verdict's numbers show
+a different subject position.
+
 **Refuses, launching nothing:** an unknown shot; a weapon, chapter or view id that tree does not have
 (with a did-you-mean); a game flag no script in that tree reads; stills past the end.
 **Unverifiable:** no fresh `probe.json`, a still that was not saved, a drawn size other than the one
