@@ -23,6 +23,9 @@ Method and every number: `docs/perf/LEDGER.md` section "n10 night". Every number
 - **bench.lock** was held by handheld at 00:08 for one iteration's check (no time lost, the machine was busy anyway).
 
 ## Gates
+**On ef31d9d4 (the fill as the baseline; `evidence/perf/n10-cputime/gates/`):** `node tools/evidence/run.mjs --no-bench` PASS: lint 15/15, unit 1964/0, scenarios 55/0, parity bit for bit over 1200 steps with the planted mutation caught, selftest look goldens 11/11, release-compile 632/0. Director reels top, tilt70, combo (`--quit-after 40000`): exit 0, 19/19 chapters fully down (14 x 1/1, 2 x 2/2, 3 x 4/4), 0 SCRIPT ERROR. Exit-time lines: tilt70 and combo 91 resources / 604 ObjectDB, the same as their earlier runs; top 94 / 601 against 90 / 593 on 0899bc4c and base, not traced. Mutation on `boot/city_feed_rows.gd` against `test_city_feed_rows`, capped at 15 mutants: 86.7 % (13 of 15), the survivors are the native-detection lines 14 and 19. Mutation covers GDScript only: the C++ side is held by the native-versus-script row comparison.
+
+Earlier gates, before the fill came back:
 `node tools/evidence/run.mjs --no-bench` on d0569d17 (items 1 to 3, before the item 4 work): lint 15/15, unit 1958/0, scenarios 55/0, parity bit for bit over 1200 steps with the planted mutation caught, selftest look goldens 11/11, release-compile 631/0. Full `top` reel on cfdb53e4: exit 0, 19/19, 0 SCRIPT ERROR. Director reels `tilt70` and `combo` on 40fab8c7 (code identical to d0569d17, `--quit-after 40000`): exit 0, 19/19 chapters fully down, 0 SCRIPT ERROR in both (logs in `gtai-n10/tmp/perf/reel_{tilt70,combo}_it7.log`, outside the tree). Top reel on 0899bc4c and on base 9bbe6d0a both end with the same engine lines at exit (2 `ERROR:` lines: the `custom_samplers` shader message and "90 resources still in use", plus 593 ObjectDB leaked), so neither comes from this lane.
 
 ## Merge note

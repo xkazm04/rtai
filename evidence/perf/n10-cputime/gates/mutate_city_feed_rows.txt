@@ -1,0 +1,5 @@
+mutate: [1/15] boot/city_feed_rows.gd:14 boolean  false -> true  survived  (11.4 s)
+mutate: [2/15] boot/city_feed_rows.gd:19 boolean  and -> or  survived  (10.8 s)
+  boot/city_feed_rows.gd:14 boolean  false -> true  survived
+  boot/city_feed_rows.gd:19 boolean  and -> or  survived
+score 86.7% = killed 13 / (killed 13 + survived 2); timeout 0, invalid 0; 190 s
