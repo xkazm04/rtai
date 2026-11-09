@@ -48,3 +48,18 @@ func test_quest_contractors_lie_at_about_the_standing_height() -> void:
 func test_poses_drawn_for_the_camera_lie_at_about_the_standing_height() -> void:
 	for cls: String in StreetDead70.CLASSES:
 		_assert_row(StreetDead70.DIR + cls + ".png", StreetDead70.COLS, StreetDead70.ROWS)
+
+
+func test_the_in_between_grids_land_and_lie_at_about_the_standing_height() -> void:
+	# n11 it18: the patrol cop's chest-down cell was drawn 1.9 x standing, its lying row 2.2 x, and
+	# a body that fell through them lies in that row at the card's own scale (no LYING_K).
+	for src: String in StreetFallBetween.GRIDS:
+		var img: Image = _strip(StreetWalkerCards.DIR + StreetFallBetween.GRIDS[src])
+		var cw: int = img.get_width() / 5
+		var ch: int = img.get_height() / StreetFallBetween.FRAMES
+		for r: int in [2, 3, 4]:
+			for c: int in 5:
+				var k: float = (
+					_longest_px(img, Rect2i(c * cw, r * ch, cw, ch)) / StreetWalkerFall.STILL_PX
+				)
+				assert_true(k >= MIN_K and k <= MAX_K, "(%d,%d) lies %.2f x standing" % [c, r, k])
