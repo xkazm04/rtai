@@ -8,6 +8,9 @@ extends Node2D
 ## opaque paper disc is the default again; `--pickup-disc=off` = the dashed ring.
 
 const DISC_M: float = 0.55
+## n11 (the owner: "two times large to be recognizable"): the gun and its disc are drawn this many
+## times their size. Render only: the pickup reach (WeaponPickups.REACH_M) stays as it is.
+const GROUND_K: float = 2.0
 const RING_PX: float = 2.0
 const TURN_RAD_S: float = 0.6
 const DASHES: int = 14
@@ -83,6 +86,12 @@ func _stand(s: Sprite2D, i: int) -> void:
 	s.scale.y = s.scale.x / v.ground_k()
 
 
+## How long a gun of `length_m` is drawn on the ground (r2_w8: at least `min_span_m`, to fill the
+## ring), GROUND_K times over.
+static func ground_span_m(length_m: float, min_span_m: float) -> float:
+	return maxf(length_m, min_span_m) * GROUND_K
+
+
 ## The gun's height over its disc at view time `t` (s) for item `i` (render only, no RNG).
 static func hover_m(t: float, i: int) -> float:
 	return HOVER_M + BOB_M * sin(t * BOB_RAD_S + float(i) * 1.7)
@@ -91,7 +100,7 @@ static func hover_m(t: float, i: int) -> float:
 func _draw() -> void:
 	if carry == null:
 		return
-	var r: float = DISC_M * SimConst.PX_PER_M
+	var r: float = DISC_M * GROUND_K * SimConst.PX_PER_M
 	var items: Array[WeaponPickups.Item] = carry.ground.items
 	for i: int in items.size():
 		var at: Vector2 = items[i].pos * SimConst.PX_PER_M
@@ -142,7 +151,7 @@ func _rebuild(ids: Array[StringName]) -> void:
 		var standing: bool = _drawn[-1] and s.texture.get_height() > w
 		if standing:  # n8-hud: a drawing may stand (the molotov bottle): span its longer side
 			w = s.texture.get_height()
-		var span_m: float = maxf(art.length_m(id), art.pickup_min_span_m)  # r2_w8: fills the ring
+		var span_m: float = ground_span_m(art.length_m(id), art.pickup_min_span_m)
 		_crates.append(_crate_for(_drawn[-1]))
 		if _crates[-1] != null:
 			span_m = ShowcaseCrate.fill_m(span_m, standing)

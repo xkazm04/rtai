@@ -51,3 +51,8 @@ func test_outline_width_is_data() -> void:
 	var art: WeaponArt = WeaponArt.new()
 	assert_gt(art.pickup_outline_px, 0.0)
 	assert_eq(PickupLook.outline_px(1.5), 1.5, "no --pickup-outline: the JSON value")
+
+
+func test_a_ground_gun_is_drawn_twice_its_span() -> void:
+	assert_almost_eq(PickupsView.ground_span_m(1.0, 0.5), 2.0, 0.0001, "the gun's own length x2")
+	assert_almost_eq(PickupsView.ground_span_m(0.3, 1.05), 2.1, 0.0001, "the ring's minimum x2")

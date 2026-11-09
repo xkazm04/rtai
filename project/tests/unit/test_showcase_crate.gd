@@ -12,9 +12,9 @@ func test_one_crate_cut_per_pitch_and_none_straight_down() -> void:
 
 
 func test_the_weapon_never_outgrows_the_straw() -> void:
-	assert_eq(ShowcaseCrate.fill_m(1.7), ShowcaseCrate.FILL_M, "the Gatling is cut to the straw")
-	assert_eq(ShowcaseCrate.fill_m(1.05), 1.05, "a short gun keeps its span")
-	assert_eq(ShowcaseCrate.fill_m(1.05, true), ShowcaseCrate.STAND_M, "the standing bottle")
+	assert_eq(ShowcaseCrate.fill_m(3.4), ShowcaseCrate.FILL_M, "the Gatling is cut to the straw")
+	assert_eq(ShowcaseCrate.fill_m(2.1), 2.1, "a short gun keeps its span")
+	assert_eq(ShowcaseCrate.fill_m(2.1, true), ShowcaseCrate.STAND_M, "the standing bottle")
 	assert_lt(ShowcaseCrate.FILL_M, ShowcaseCrate.LONG_M, "the gun fits inside the crate")
 
 
