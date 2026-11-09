@@ -4,11 +4,12 @@
 // editing. Used by the film compare and the gate snapshot. The ONLY removal is `git worktree remove`
 // on an exact path that sits in the temp dir and carries this module's marker.
 import { execFileSync } from 'node:child_process';
-import { cpSync, existsSync, mkdirSync, readdirSync, realpathSync, writeFileSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, readdirSync, realpathSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, relative, resolve } from 'node:path';
 
-export const MARKER = '.gtai-snapshot';
+/** The marker sits beside the checkout, never in it: an untracked file would make the tree dirty. */
+export const markerOf = (path) => `${path}.gtai-snapshot`;
 const git = (cwd, ...args) => execFileSync('git', ['-C', cwd, ...args], { encoding: 'utf8', windowsHide: true, stdio: ['ignore', 'pipe', 'pipe'] }).trim();
 
 /** The full hash of `rev`, or null when git does not know it. */
@@ -23,7 +24,7 @@ export const snapshotPath = (kind, sha, base = tmpdir()) => join(base, `gtai-${k
 export function assertRemovable(path, base = tmpdir()) {
   const inside = relative(realpathSync(base), realpathSync(path));
   if (!inside || inside.startsWith('..') || resolve(inside) === inside) throw new Error(`snapshot refuses ${path}: not inside ${base}`);
-  if (!existsSync(join(path, MARKER))) throw new Error(`snapshot refuses ${path}: no ${MARKER} marker`);
+  if (!existsSync(markerOf(path))) throw new Error(`snapshot refuses ${path}: no marker`);
 }
 
 const RUNTIME = ['project/native/bin', 'project/data/generated/city', 'project/.godot'];
@@ -56,10 +57,10 @@ export function ensureSnapshot({ root, rev, kind, donor = root, base = tmpdir() 
   if (!existsSync(path)) {
     git(root, 'worktree', 'prune');
     git(root, 'worktree', 'add', '--quiet', '--detach', path, sha);
-    writeFileSync(join(path, MARKER), `${sha}\n`);
+    writeFileSync(markerOf(path), `${sha}\n`);
     created = true;
   }
-  if (!existsSync(join(path, MARKER))) throw new Error(`snapshot: ${path} exists without the ${MARKER} marker`);
+  if (!existsSync(markerOf(path))) throw new Error(`snapshot: ${path} exists without its marker`);
   return { path, sha, created, copied: copyRuntime(donor, path) };
 }
 
@@ -68,10 +69,11 @@ export function removeSnapshot(root, path, base = tmpdir()) {
   assertRemovable(path, base);
   git(root, 'worktree', 'remove', '--force', path);
   git(root, 'worktree', 'prune');
+  rmSync(markerOf(path), { force: true });
 }
 
 /** Paths of every snapshot of `kind` under the temp dir. */
 export function listSnapshots(kind, base = tmpdir()) {
-  return readdirSync(base).filter((n) => n.startsWith(`gtai-${kind}-`)).map((n) => join(base, n))
-    .filter((p) => existsSync(join(p, MARKER)));
+  return readdirSync(base).filter((n) => n.startsWith(`gtai-${kind}-`) && !n.endsWith('.gtai-snapshot')).map((n) => join(base, n))
+    .filter((p) => existsSync(markerOf(p)));
 }
