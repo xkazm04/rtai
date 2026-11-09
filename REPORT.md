@@ -34,7 +34,8 @@ Evidence: `C:\Users\kazda\kiro\gtai-masters\n10\world\` (`frames.json`). Every p
 
 ## Gates so far
 
-- **`node tools/evidence/run.mjs --no-bench` on `cbdbc318`: all PASS.** Lint 15/15, unit 1994 / 0, scenarios 55 / 0, parity 1200 steps with the planted mutation caught, selftest with look goldens 11/11, export-audit 635 / 0. The bench was not run. This replaces every older result below.
+- **`node tools/evidence/run.mjs --no-bench` on `cbdbc318`: all PASS.** Lint 15/15, unit 1994 / 0, scenarios 55 / 0, parity 1200 steps with the planted mutation caught, selftest with look goldens 11/11, export-audit 635 / 0. The bench was not run. This replaces every older result below. Two test-only commits follow it (`136cbbcf`, `8063688b`).
+- `node tools/mutate/mutate.mjs --file=features/characters/street_dead_70.gd --tests=test_street_dead_70 --max=29` on `8063688b`: 92.6 % (25 killed / 27, 2 invalid); the 2 survivors are equivalent at the headings the tables give. Its first run was 75 % and found real gaps, closed by four tests.
 - Director reel, the brief's exact command, on `cbdbc318`: top, tilt70, combo each 19 chapters, 19 fully down, 0 SCRIPT ERROR, `no carry` in all 19 (Call w-4).
 
 - **`node tools/evidence/run.mjs --no-bench` on `fdc80496`: all PASS.** Lint 15/15, unit 1979 / 0, scenarios 55 / 0, parity 1200 steps with the planted mutation caught, selftest, export-audit 633 / 0. This replaces every older result below. The bench was not run.
