@@ -133,7 +133,8 @@ export const STEP_RUNNERS = {
     const check = ctx.run('debt-check', 'node', ['tools/debt/debt.mjs', '--check']);
     if (check.status === 0 && !/tighten/.test(check.out)) return { ok: true };
     if (check.status === 0) {
-      ctx.run('debt-update', 'node', ['tools/debt/debt.mjs', '--update']);
+      const tight = ctx.run('debt-update', 'node', ['tools/debt/debt.mjs', '--update']);
+      if (tight.status !== 0) return { ok: false, advice: [`STOPPED: debt --update failed: ${tight.out.slice(-400)}`, 'Fix it and run again with --resume.'] };
     } else {
       if (!ctx.debtReason) return { ok: false, advice: [`STOPPED: the debt ratchet is over the baseline:\n${check.out.trim().slice(-900)}`, 'Shrink what it names, or run again with --debt-reason="<why this is deliberate>" and --resume.'] };
       const u = ctx.run('debt-accept', 'node', ['tools/debt/debt.mjs', '--update', `--accept-regression=${ctx.debtReason}`]);

@@ -216,6 +216,16 @@ test('debt step: over the baseline with no reason stops and asks for one, with a
   assert.deepEqual(gitCalls, ['add', 'commit'], 'through the injected git, never the real one');
 });
 
+test('debt step: a failed tighten stops instead of committing a baseline nobody wrote', () => {
+  const gitCalls = [];
+  const ctx = { cwd: 'NOT-A-REAL-TREE', git: (a) => { gitCalls.push(a[0]); return { ok: true, out: '', stdout: '' }; }, date: '2026-11-10', debtReason: null, out: () => {}, done: [],
+    run: (n) => (n === 'debt-check' ? { status: 0, out: 'tighten: files_near_cap', log: 'x' } : { status: 1, out: 'refused', log: 'x' }) };
+  const r = STEP_RUNNERS.debt(ctx);
+  assert.equal(r.ok, false);
+  assert.match(r.advice[0], /--update failed/);
+  assert.deepEqual(gitCalls, []);
+});
+
 test('the export and gate steps stop on a red and give the next command', () => {
   const ctx = { cwd: 'NOT-A-REAL-TREE', git: () => ({ ok: true, out: '', stdout: '' }), run: () => ({ status: 1, out: '', log: 'log' }), out: () => {} };
   for (const s of ['gates', 'reels', 'export', 'bake']) {
