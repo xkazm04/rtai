@@ -171,3 +171,9 @@ Checked only: tree clean, HEAD eea2824f. `git log b8ae1064..HEAD -- project tool
 FRICTION a `cd` in this session's first check left the shell outside the worktree again, against it29's note; the checks above ran with `git -C` on the lane path.
 QUEUE EMPTY: stands as of it16, the exe built in it25. Blocked: nothing.
 NEXT (freeze session): rebuild the exe only if `git log b8ae1064..HEAD -- project tools` is non-empty, REPORT final. If the journal still says QUEUE EMPTY and neither this branch nor a lane's Rivet files have changed since `40e719fd` (`git log --since` on perf/world/handheld for `project/features/characters`), end at once.
+
+## it34 (04:07-)
+Checked only: tree clean, HEAD 63f92fed. `git log b8ae1064..HEAD -- project tools` empty, so the exe of 03:25 still matches this branch's code. `git diff --name-only 63e685d3 n10-world -- project/features/characters` and `git diff --name-only 40e719fd n10-perf -- project/features/characters` both empty. Since 03:50 the only perf, world or handheld commit on `project/features/characters` or a rivet-named path is `40e719fd`, already tried in it29; perf's head `c9b223a5` was looked at by its file list's tail only (evidence files). No `REQUEST -> rivet` in the three journals. No Godot run, no new gate, frame or number. Ended by the common rule (journal says QUEUE EMPTY, nothing changed), over the phase's "do not end early".
+FRICTION a `cd` in the first check left the shell outside the worktree a third time; the rest ran with `git -C` on the lane path.
+QUEUE EMPTY: stands as of it16, the exe built in it25. Blocked: nothing.
+NEXT (freeze session): rebuild the exe only if `git log b8ae1064..HEAD -- project tools` is non-empty, REPORT final. If the journal still says QUEUE EMPTY and neither this branch nor a lane's Rivet files have changed since `40e719fd` (`git log --since` on perf/world/handheld for `project/features/characters`), end at once.
