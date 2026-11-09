@@ -1,6 +1,6 @@
-# n10 rivet REPORT (draft, it13, 00:35; the freeze session replaces this)
+# n10 rivet REPORT (draft, it14, 01:20; the freeze session replaces this)
 
-Defect hunt on Rivet at combo. Every performance number here is CONTENDED. Evidence: `C:\Users\kazda\kiro\gtai-masters\n10\rivet\` (`frames.json`, 7 entries, best first).
+Defect hunt on Rivet at combo. Every performance number here is CONTENDED. Evidence: `C:\Users\kazda\kiro\gtai-masters\n10\rivet\` (`frames.json`, 15 entries, best first).
 
 ## Fixed
 
@@ -15,12 +15,13 @@ Defect hunt on Rivet at combo. Every performance number here is CONTENDED. Evide
 | 7 | With the baton on the left (octants 3-5, p70) he stood 25 px up and about 15 % small | The strip was cut on the baton's tip, which hangs below his feet | `feet_up` per figure in the cut, `RivetStrips.FOOT_PX` 35 | same test, foot line | `rivet_baton_left_before_after_combo_64ppm.png` |
 | 8 | A left swing of the baton at p70 drew nothing at all (no strike cell, no arc, no smear) | The three-cell left strip has no strike and `hides_held` kept the smear off | `LEFT_NO_SWING`: under a left strip the game smear runs, as p55's `NO_ARC` already does | same test | same frame (the crescent is a Call below) |
 | 9 | The gatling's barrel whirl, the only thing it shows for its spin-up, sat on the ground beside the gun | Its side facing (cell 2) had no muzzle point, so `WeaponFxSpin` used the fallback spot | Cell 2 measured for the gatling (`GUN_FACE_SPIN`) | `test_the_barrels_spin_up_on_the_drawn_gun` | tour log and `gat_pts` strip check (not a before/after) |
+| 10 | Reversing direction flashed the standing (or reload) cell into the walk for one frame: the whole figure jumped, gun out | The reversal takes his speed through zero for one tick and the walk grid gated on `speed_now` alone | `RivetWalk.moving` holds the grid for `DIP_TICKS` 3 after he last moved; the unaimed rest cell uses the same gate; a real stop stands 3 ticks later; `DIP_TICKS` 0 = the old pop | `test_rivet_walk_dip.gd` (2; red on the old gate at the dip tick) | `rivet_reversal_dip_pistol_before_after_combo_{64,32}ppm.png` |
 
 ## Brief status
 
-1. **Walk all 17 weapons:** done for walk, run, stand, fire, reload and 8 octants. The tour ran for all 17 at 64 px/m and at 48 px/m (arena, combo, 0 SCRIPT ERROR, logs clean of mirrored one-handers and base strips, the only `fire no muzzle` rows are blades, the molotov and the one-handers' octant 1, which are Known). All 17 contact sheets were read by eye (the 12 left over this iteration found defects 6, 7, 8). Knock-down and get-up are not in the tour: the n9 knock film stands, and the strip wins over the reload in `RivetFrames.step`, read in code, not filmed with a gun up.
-2. **Quest 1 start to end at 1.65 m:** done once at 48 px/m through the scripted pad (`dev/frames/quest1_clip.gd --rigs --view=combo`, 84 stills every 240 ticks to the end at tick 18996, 0 SCRIPT ERROR). That is stills every 4 s, read as contact sheets plus three full-size crops, so a clip shorter than 4 s can have been missed. Nothing clipped a door or prop in those stills; defect 1 came from this pass. Dialogue framing was checked only in those stills. The `--autostart` boot itself was not run.
-3. **State transitions:** the transitions tour ran for three pairs (pistol + plasma rifle, rocket launcher + katana, molotov + flamethrower: swap while running, roll out of a burst, roll in a reload, roll into a shot, swap in a reload, melee in a burst; 0 SCRIPT ERROR). Defect 2 came from it; the heavy pairs found no new one. The other 11 weapons did not run through it. **Entering and leaving vehicles:** in quest 1 and the arena the car button is a logged stub (`StagePilot`, "stub until the vehicles lane's API lands"), so nothing to check there; the free-roam city world does enter and exit through `VehicleService` (`CityVehicleWorld.set_focus` turns `rivet_on_foot` off and on), see below. Knock-down during a reload: see item 1.
+1. **Walk all 17 weapons:** done for walk, run, stand, fire, reload and 8 octants. The tour ran for all 17 at 64 px/m and at 48 px/m (arena, combo, 0 SCRIPT ERROR, logs clean of mirrored one-handers and base strips, the only `fire no muzzle` rows are blades, the molotov and the one-handers' octant 1, which are Known). All 17 contact sheets were read by eye (the 12 left over this iteration found defects 6, 7, 8). Knock-down and get-up are not in the tour, because a knock with a weapon out cannot happen in the game: see item 3.
+2. **Quest 1 start to end at 1.65 m:** done once at 48 px/m through the scripted pad (`dev/frames/quest1_clip.gd --rigs --view=combo`, 84 stills every 240 ticks to the end at tick 18996, 0 SCRIPT ERROR). That is stills every 4 s, read as contact sheets plus three full-size crops, so a clip shorter than 4 s can have been missed. Nothing clipped a door or prop in those stills; defect 1 came from this pass. Dialogue framing was checked only in those stills. The real boot was smoked separately: `res://boot/quest1.tscn -- --autostart`, 3600 ticks, `quest1: started`, cast rigs on, exit 0, 0 SCRIPT ERROR (log only, no frames).
+3. **State transitions:** the transitions tour ran for three pairs (pistol + plasma rifle, rocket launcher + katana, molotov + flamethrower: swap while running, roll out of a burst, roll in a reload, roll into a shot, swap in a reload, melee in a burst; 0 SCRIPT ERROR). Defect 2 came from it. The other 11 weapons ran through it in it14 (6 more pairs incl. the three melee, 0 SCRIPT ERROR, no strip of another weapon in any row), which found defect 10; all 17 are now covered. **Entering and leaving vehicles:** in quest 1 and the arena the car button is a logged stub (`StagePilot`, "stub until the vehicles lane's API lands"), so nothing to check there; the free-roam city world does enter and exit through `VehicleService` (`CityVehicleWorld.set_focus` turns `rivet_on_foot` off and on), and getting out was filmed at combo in it14: he stands on the driver's side clear of the door, nothing is left in the car, the camera eases from 48 to 32 px/m and he walks off (`rivet_vehicle_exit_combo_48to32ppm_sheet.png`; a local route edit, not committed; his first drawn frame is one tick after the exit). **Knock-down during a reload cannot happen today:** the knock is written only by `CityCharacters._mark_knock` with `rivet_on_foot`; quest 1 sets that false and runs no traffic (`CityTargets.street(CITY_PEDS, 0, 0)`), and the free-roam city's Rivet carries no gun. A test on the real `RivetFrames.step` (`test_a_knock_during_a_reload_takes_the_strip_and_gives_the_reload_back`, `c07ed616`) locks the pose for whoever joins them: knock strip, held gun hidden, reload back on its own grid. It guards; it never failed, as there was no old defect.
 4. **Bare-walk segment in the combined clip:** done. `rivet_n10_set_combined.mp4`, 83.6 s; segment 12 starts at 64.6 s. It is appended rather than slotted in as "2" so the n9 captions stay in order, and cops from the pad walk through the shot.
 
 ## Closed without a change
@@ -32,22 +33,25 @@ Defect hunt on Rivet at combo. Every performance number here is CONTENDED. Evide
 - The one-handers' cell 1 (pistol, machine pistol, hand cannon, and ray gun and homing shard, which also got no cell 1 point) keeps the fallback spot for shots at 45-67 degrees. Cell 1 was read on pistol, machine pistol and hand cannon, where it draws the gun at image left, so a tip there would send the tracer across his body. Ray gun and homing shard cell 1 were never read clearly.
 - The gatling's back view hides the gun, so that cell keeps the fallback.
 - The molotov's left strip has three cells and no throw, so a left throw shows no wind-up. Fixing it needs art or a mirrored hand; neither is on the list.
-- Gatling: the tour's 30-tick burst is all spin-up, so its fire cell was not exercised on film (the strip was re-cut and is read by eye; a longer burst needs the dev bot edit I dropped to keep the debt ratchet green).
+- The gatling at its fire cell was filmed in it14 (a 150-tick burst by a local edit, all 8 octants, `rivet_gatling_burst_8oct_combo_64ppm_ticks40_75_120.png`): after the 30-tick spin-up one drawn cell holds for the rest of the burst. Straight up the back view keeps the fallback spot, the line above.
 - After a roll there is still one tick with the bare run frame before the gun shows (tick 36 in the tour log).
+- One walk tick between the gatling's fire cell and the run at the run threshold (tick 409 in the mini-nuke + gatling tour): a legitimate frame of the speed-up, left.
 
-## Gates (it13, on `0dae4c8b`; every timing CONTENDED)
+## Gates (it14, on `9b527fe5`; every timing CONTENDED)
 
-- `node tools/evidence/run.mjs --no-bench`: PASS. Lint 15/15, unit 1970 passed 0 failed, scenarios 55 passed, parity bit for bit (planted mutation caught at step 629), selftest (look goldens 11/11, block goldens 5/5), release-compile 630 loaded 0 failed.
-- Director reel: top 19 chapters down, tilt70 19 down, 0 SCRIPT ERROR. Top and tilt70 exited 0; combo exit 0 00:58:09 errors 0 chapters 19.
-- The new tests were run against the old strips: `test_rivet_cell_scale` failed on all seven strips and the foot line, green on the new.
+- `node tools/evidence/run.mjs --no-bench`, first run (01:18-01:29, with three reels and the mutation runs beside it): **FAIL on one scenario.** Lint 15/15, unit 1973 passed 0 failed, parity bit for bit (planted mutation caught at step 629), selftest, release-compile 630 loaded 0 failed all passed; `scenario_rig_stress` failed on one engine error, `Parameter "t" is null` from `texture_2d_initialize` in the dummy renderer, during its not-gated combo pass.
+- The error did not come back: 4 isolated re-runs of that scenario (no such error; one missed the 1 ms budget at 1.034 ms under a reel's load) and 2 full `run_scenarios.mjs` runs, 55 passed each. **Cause not found.** The log places it at `RivetFrames.place` line 142, which sets a rotation and creates no texture, so I read that as where a queued render command was flushed, not the source. I could not show that this commit is or is not involved.
+- Director reel at combo, top, tilt70: 19 chapters fully down each, 0 SCRIPT ERROR, exit 0.
+- `boot/quest1.tscn -- --autostart`, 3600 ticks: started, exit 0, 0 SCRIPT ERROR.
+- The defect 10 test was run on the old gate first: red at the dip tick, green with the fix.
+- `test_rivet_knock`'s new test passes; it locks a state the game cannot reach, so it has no red run.
 
 ## Not verified
 
-- `mutate.mjs` on `rivet_strips.gd` (`--max=10`, tests `test_rivet_cell_scale`, `test_rivet_frames`): 55.6 % = 5 killed / 9, 1 invalid, a sample of 10 of 118 mutants. Only one sampled line (135, `hides_held`) is in the code this iteration changed, and it was killed; the four survivors (lines 87, 97, 169, 172) are older diagonal and cone code those two tests do not target. `LEFT_NO_SWING` and `FOOT_PX` themselves were not sampled, so the score says little about them; `ghost_apparition.gd`, `arena_rigs.gd` and `shot_lift.gd` have no score.
-- Vehicles: entry was seen once in the free-roam city (`dev/showcase/vehicle_frame.tscn`, 0 SCRIPT ERROR, frames in `gtai-n10/tmp/rivet/veh1`, not in the masters): he disappears into the car and nothing is left standing. That scene ignored `--view=combo`, so it is not the combo view, and its route never gets out of the car, so **leaving a vehicle was not exercised**.
-- Knock-down during a reload was read in code only (`RivetKnock.path_or` wins over the reload path in `RivetFrames.step`); no film with a gun up.
-- The gatling's fire cell was not filmed (the tour's burst is all spin-up); its re-measured facing point and whirl were.
-- The transitions tour ran three pairs, not all 17 weapons.
+- Mutation, per file with its named test (`mutate.mjs`, HEAD `b8dcc5f5`, before the reversal fix). Random samples of 8 say little: ghost 0/8, arena_rigs 0/8, shot_lift 4/8, and they hit almost none of the changed lines. Targeted `--ops=cmp_flip,boundary`: ghost_apparition 1/34, arena_rigs 5/60, shot_lift 2/12. The fixed lines were killed: `ghost_apparition.gd:104` (flip; its `<=` twin at the exact -0.7 survives), `arena_rigs.gd:279`, `shot_lift.gd:87`. The low totals are survivors in code those tests do not aim at. `rivet_strips.gd`: see it13's sample of 10, `LEFT_NO_SWING` and `FOOT_PX` unsampled. `RivetWalk.moving` (defect 10) has no mutation score, only the red-then-green test.
+- The defect 10 before/after is one reversal on the pistol at 64 and 32 px/m. The gatling reload pop (t734) and the rest-cell gate were not filmed after the fix; the rest cell has no test of its own.
+- `--autostart` was a log smoke with no frames; the frame-by-frame look at quest 1 is the scripted route at 48 px/m (stills every 4 s, item 2).
+- A knock with a weapon out was never seen on screen, since no world reaches it.
 
 ## Calls for the owner
 
@@ -57,4 +61,6 @@ Defect hunt on Rivet at combo. Every performance number here is CONTENDED. Evide
 
 ## Next steps
 
-See the last NEXT in `JOURNAL.md`.
+- Find what raised `Parameter "t" is null` in `scenario_rig_stress` (once in 3 full-suite runs here): run the suite in a loop with `--verbose` and look for a texture queued and freed before its init.
+- The gatling's one walk tick between fire and run (Known) if it reads as a flicker in play.
+- See the last NEXT in `JOURNAL.md`.
