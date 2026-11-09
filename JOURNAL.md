@@ -128,3 +128,24 @@ MILESTONE [00:53] On 6ea62a9e: full unit suite 1972 passed, 0 failed, 0 skipped 
 Scratch renders under `gtai-n10/tmp/world/dock_fix` deleted (nothing in frames.json points there).
 
 NEXT (supersedes the 00:45 list's 1 and 2): (1) `tools/evidence/run.mjs --no-bench` on a quiet machine so `build/evidence/scenario-tests.json` stops saying TIMED OUT (the scenario suite itself is green on 016cd98f, unit full green on 6ea62a9e). (2) Mid-fall bodies can cross a neighbour for up to 24 ticks: judge at play speed before changing anything. (3) REQUEST 2 still has no delivery. (4) `facade_half_it180` strips not filmed against the recut. (5) Freeze 08:30: export the exe with the REPORT's exact command.
+
+---- session 00:56 (iteration 14) ----
+Read at open: no new delivery; the asset lane's runner log ends 17:55 on 11-08, before this night began, so nothing is producing REQUEST 2 (poses drawn for 70).
+
+MILESTONE [01:03] Item 2's real biggest gap at street level, found while asking why shop walls read as a black band: the parapet ink core (`ChunkView._core`, `cast_shadows.json` `parapet_core_m` 0.22) is the flat city's raised-roof cue, the silhouette again in solid ink down-right on the ground. Under a tilt a wall stands on that edge, so it lay at every wall's foot as a 7 px black bar (and a detached strip on open east sides). 3cf3ffdc: not drawn when the city is lifted; flat views keep it (`CastShadows.CORE_UNDER_LIFT` true restores it). `test_cast_shadows` 6/0, lint 15/15 in the hook. Pair: `wall_foot_core_32.png`, `_48.png`, same seed and tick. I looked at both: the wall now ends on its own ink line and the hatch. My 22:10 audit had missed this.
+
+Item 1 alternative filmed (`facade_half_it180`, NEXT 4), same frames, 32 and 48 px/m:
+| style | delivered strip | result |
+|---|---|---|
+| shop, dark trim (the delivery's own recommendation) | `facade_half_shop_dark_70_strip_p70` | a heavy grey band, worse than the recut |
+| shop, pale | `facade_half_shop_70_strip_p70` | adopted (35de190a): 4.1 m bays, drawn door, solid piers. A modest gain over the recut |
+| tenement bold | `facade_half_tenement_bold_70_strip_p70` | rejected: flat grey panels, squat windows, the brick is lost under the print |
+| tall bold | `facade_half_tall_bold_70_strip_p70` | not adopted; no tall building was in the test frame, so unjudged by eye |
+`wall_tenement_delivered_rejected_48.png`, `wall_shop_delivered_32.png`, `_48.png`. Provenance line added for the shop strip.
+
+Checked, no gap: the plan pose sits on the world canvas, which is already squashed by `ground_k` (only cards counter-scale), so a corpse's footprint foreshortens with the ground.
+
+Item 3, the near side (579ef0f4): a shaded silhouette `SIDE_M` 0.16 below the pose. FRICTION: my first two films of this looked heavier by eye, but a numeric frame diff said the frames were byte-identical: Dock 9 draws through `StreetQuestDeadPlan`, which my first edit never reached. I had been reading a difference that was not there. Diff before judging a subtle change. Dock 9 pair: `dead_side_dock9_64.png`. The riot film was not re-run for this change: only a block still at 64 px/m exercised the near-rig path (0 SCRIPT ERROR, the corpse looks seated).
+Evidence run started 01:12 on 579ef0f4 (`gtai-n10/tmp/world/evidence_0111.log`).
+
+MILESTONE [01:19] Evidence on 579ef0f4, all PASS: lint 15/15, unit 1975/0, scenarios 55/0, parity, selftest (goldens 11/11), export-audit 633/0. The first evidence run on this branch with no failed gate. Bench not run (`--no-bench`).
