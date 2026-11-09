@@ -62,7 +62,7 @@ export function totals(allRows, state = null) {
       review_sessions_usd: reviewUsd,
     },
     estimated: {
-      note: 'one session reviews many tasks, so a task\'s share of it is an even split, not a measurement',
+      note: 'one session reviews many tasks, so a task\'s share of it is an even split, not a measurement; and a session also builds other things, so the figure is an upper bound on the review\'s cost',
       review_usd_per_task: reviewUsd !== null && reviewed.length ? reviewUsd / reviewed.length : null,
     },
     unmeasured: ['the Claude cost of writing the same tests without Codex: there is no control run, so no saving can be stated as measured'],
