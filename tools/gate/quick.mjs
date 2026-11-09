@@ -21,10 +21,17 @@ const LINE_LENGTH = ['--line-length', '100'];
 const norm = (p) => p.split(sep).join('/');
 const isGame = (p) => p.endsWith('.gd') && p.startsWith('project/') && !p.startsWith('project/addons/');
 
-/** Project-relative .gd paths from `git status --porcelain` output (renames count as the new name). */
-export function changedFromPorcelain(text) {
-  return text.split('\n').filter(Boolean).filter((l) => l.slice(0, 2) !== ' D' && l.slice(0, 2) !== 'D ')
-    .map((l) => l.slice(3).replace(/^"|"$/g, '').split(' -> ').pop()).filter(isGame).sort();
+/** Project-relative .gd paths from `git status --porcelain -z`. NUL-separated, so a path is never
+ *  quoted or escaped; a rename or copy is followed by one extra record, the old path. */
+export function changedFromPorcelain(z) {
+  const paths = [];
+  const records = z.split('\0').filter(Boolean);
+  for (let i = 0; i < records.length; i++) {
+    const status = records[i].slice(0, 2);
+    if (/[RC]/.test(status)) i += 1;
+    if (!/D/.test(status)) paths.push(records[i - (/[RC]/.test(status) ? 1 : 0)].slice(3));
+  }
+  return paths.filter(isGame).sort();
 }
 
 export const hasCrlf = (buffer) => buffer.includes('\r\n');
@@ -118,7 +125,7 @@ export function main(argv, { root = ROOT, out = console.log, err = console.error
     if (missing.length) { err(`quick: no such file: ${missing.join(', ')}`); return 2; }
   } else {
     const status = spawnSync('git', ['-C', root, 'status', '--porcelain', '-z'], { encoding: 'utf8', windowsHide: true });
-    paths = changedFromPorcelain(status.stdout.split('\0').join('\n')).filter((p) => existsSync(join(root, p)));
+    paths = changedFromPorcelain(status.stdout).filter((p) => existsSync(join(root, p)));
   }
   if (!paths.length) { out('quick: no changed .gd files, nothing checked'); return 0; }
   if (opts.fix) {

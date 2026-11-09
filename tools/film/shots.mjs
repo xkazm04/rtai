@@ -5,6 +5,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { didYouMean } from '../dev/entries.mjs';
 import { walk } from '../lib/repo.mjs';
+import { stripComment } from '../style/check_gd.mjs';
 
 const ARENA = 'res://dev/arena/arena.tscn';
 const REEL = ['--bot=reel', '--loadout=pistol'];
@@ -46,7 +47,9 @@ export function knownFlags(tree) {
   const flags = new Set();
   for (const f of walk(join(tree, 'project'), (n) => n.endsWith('.gd'))) {
     if (/[\\/](addons|\.godot)[\\/]/.test(f)) continue;
-    for (const m of readFileSync(f, 'utf8').matchAll(/"(--[a-z][a-z0-9-]*)/g)) flags.add(m[1]);
+    for (const line of readFileSync(f, 'utf8').split('\n')) {
+      for (const m of stripComment(line).matchAll(/"(--[a-z][a-z0-9-]*)/g)) flags.add(m[1]);
+    }
   }
   return flags;
 }
@@ -64,8 +67,9 @@ export function checkFlags(extra, tree) {
 
 /** {name, arg, shot} from `chapter:pistol`, or {error}. */
 export function parseShot(text) {
-  const [name, arg] = String(text ?? '').split(':');
-  const shot = SHOTS[name];
+  const [name, arg, stray] = String(text ?? '').split(':');
+  const shot = Object.hasOwn(SHOTS, name) ? SHOTS[name] : null;
+  if (stray !== undefined) return { error: `shot ${text} has more than one id` };
   if (!shot) {
     return { error: `unknown shot ${name}: ${Object.entries(SHOTS).map(([k, s]) => `${k} (${s.doc})`).join(', ')}` };
   }

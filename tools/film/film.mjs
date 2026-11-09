@@ -56,7 +56,7 @@ export function plan(flags, shotText, extra) {
   if (!Number.isInteger(ticks) || ticks <= 0) return { error: `film: --ticks must be a positive integer, got ${flags.ticks}` };
   if (stills.some((t) => !Number.isInteger(t) || t < 0 || t >= ticks)) return { error: `film: --stills must be ticks below ${ticks}` };
   if (!/^\d+x\d+$/.test(flags.res)) return { error: `film: --res must be WxH, got ${flags.res}` };
-  if (!/^(auto|spawn|off|at:\d+|-?[\d.]+,-?[\d.]+)$/.test(flags.lock)) return { error: `film: --lock must be auto, spawn, off, at:<tick> or x,y, got ${flags.lock}` };
+  if (!/^(auto|spawn|off|at:\d+|-?\d+(\.\d+)?,-?\d+(\.\d+)?)$/.test(flags.lock)) return { error: `film: --lock must be auto, spawn, off, at:<tick> or x,y, got ${flags.lock}` };
   const lock = flags.lock === 'auto' ? autoLock(shot.shot, stills.length ? Math.min(...stills) : null) : flags.lock;
   const bad = [...(shot.shot.needs ? [checkId(shot.shot.needs, shot.arg, tree)] : []), checkId('view', flags.view, tree),
     ...checkFlags(extra, tree)].filter(Boolean);
@@ -109,9 +109,11 @@ export function judge(res, opts, startedAt) {
   if (!existsSync(file) || statSync(file).mtimeMs + 2 < startedAt) {
     return { outcome: 'unverifiable', reasons: ['the probe wrote no probe.json in this run'], probe: null };
   }
-  const probe = JSON.parse(readFileSync(file, 'utf8'));
+  let probe = null;
+  try { probe = JSON.parse(readFileSync(file, 'utf8')); } catch { /* a run killed mid-write leaves half a file */ }
+  if (!probe || !Array.isArray(probe.rows)) return { outcome: 'unverifiable', reasons: ['probe.json is damaged or empty'], probe: null };
   const reasons = [];
-  if (!probe.rows?.length) reasons.push('probe.json has no ticks');
+  if (!probe.rows.length) reasons.push('probe.json has no ticks');
   const [w, h] = opts.res.split('x').map(Number);
   if (probe.view?.[0] !== w || probe.view?.[1] !== h) reasons.push(`the run drew ${probe.view?.join('x')}, not the asked ${opts.res}`);
   const seen = new Set(probe.stills ?? []);
@@ -120,7 +122,7 @@ export function judge(res, opts, startedAt) {
     if (!seen.has(t) || !existsSync(png) || statSync(png).mtimeMs + 2 < startedAt) { reasons.push(`no still at tick ${t}`); continue; }
     const who = subjectRow(probe.rows.find((r) => r.tick === t), opts.subject);
     if (!who) reasons.push(`no ${opts.subject} in the numbers at tick ${t}`);
-    else if (!who.on_screen) reasons.push(`${opts.subject} is off screen at tick ${t} (${who.screen.map((n) => Math.round(n)).join(', ')})`);
+    else if (!who.on_screen) reasons.push(`${opts.subject} is off screen at tick ${t} (${(who.screen ?? []).map((n) => Math.round(n)).join(', ')})`);
   }
   return { outcome: reasons.length ? 'unverifiable' : 'pass', reasons, probe };
 }

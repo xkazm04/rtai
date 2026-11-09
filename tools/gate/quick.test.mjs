@@ -6,8 +6,8 @@ import test from 'node:test';
 import { changedFromPorcelain, checkFiles, hasCrlf, lineCount, main, softCapIssues, verdictOf } from './quick.mjs';
 
 test('the changed list is game .gd files only, with renames as the new name and deletions dropped', () => {
-  const text = ' M project/a.gd\n?? project/dev/b.gd\nR  project/old.gd -> project/new.gd\n D project/gone.gd\nD  project/gone2.gd\n M tools/x.mjs\n M project/addons/gut/y.gd\n M project/z.tscn\n';
-  assert.deepEqual(changedFromPorcelain(text), ['project/a.gd', 'project/dev/b.gd', 'project/new.gd']);
+  const text = [' M project/a.gd', '?? project/dev/b c.gd', 'R  project/new.gd', 'project/old.gd', ' D project/gone.gd', 'D  project/gone2.gd', ' M tools/x.mjs', ' M project/addons/gut/y.gd', ' M project/z.tscn', ''].join('\0');
+  assert.deepEqual(changedFromPorcelain(text), ['project/a.gd', 'project/dev/b c.gd', 'project/new.gd']);
 });
 
 test('CRLF is seen in the bytes', () => {

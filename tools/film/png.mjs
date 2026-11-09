@@ -14,27 +14,48 @@ const paeth = (a, b, c) => {
   return pb <= pc ? b : c;
 };
 
+const CRC_TABLE = Array.from({ length: 256 }, (_, n) => {
+  let c = n;
+  for (let k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1;
+  return c >>> 0;
+});
+
+function crc32(buffer) {
+  let c = 0xffffffff;
+  for (const b of buffer) c = CRC_TABLE[(c ^ b) & 255] ^ (c >>> 8);
+  return (c ^ 0xffffffff) >>> 0;
+}
+
+/** Walks the chunks; a truncated file or a bad CRC throws, so damaged evidence cannot be read. */
+function chunks(buffer) {
+  const found = [];
+  let pos = 8;
+  for (;;) {
+    if (pos + 12 > buffer.length) throw new Error('truncated PNG: no IEND');
+    const size = buffer.readUInt32BE(pos);
+    const end = pos + 8 + size;
+    if (end + 4 > buffer.length) throw new Error('truncated PNG chunk');
+    const type = buffer.toString('latin1', pos + 4, pos + 8);
+    if (crc32(buffer.subarray(pos + 4, end)) !== buffer.readUInt32BE(end)) throw new Error(`bad CRC on ${type}`);
+    found.push({ type, body: buffer.subarray(pos + 8, end) });
+    if (type === 'IEND') return found;
+    pos = end + 4;
+  }
+}
+
 /** {width, height, channels, data: Buffer of raw rows}. Throws on anything it cannot read exactly. */
 export function decodePng(buffer) {
   if (!buffer.subarray(0, 8).equals(SIGNATURE)) throw new Error('not a PNG');
-  let pos = 8;
-  let header = null;
-  const idat = [];
-  while (pos < buffer.length) {
-    const size = buffer.readUInt32BE(pos);
-    const type = buffer.toString('latin1', pos + 4, pos + 8);
-    const body = buffer.subarray(pos + 8, pos + 8 + size);
-    if (type === 'IHDR') header = body;
-    else if (type === 'IDAT') idat.push(body);
-    else if (type === 'IEND') break;
-    pos += 12 + size;
-  }
+  const all = chunks(buffer);
+  const header = all.find((c) => c.type === 'IHDR')?.body;
+  const idat = all.filter((c) => c.type === 'IDAT').map((c) => c.body);
   if (!header) throw new Error('no IHDR');
-  const [depth, colour, , , interlace] = [header[8], header[9], header[10], header[11], header[12]];
+  const [depth, colour, compression, filterMethod, interlace] = [header[8], header[9], header[10], header[11], header[12]];
   const channels = { 2: 3, 6: 4 }[colour];
-  if (depth !== 8 || !channels || interlace !== 0) throw new Error(`unsupported PNG: depth ${depth}, colour ${colour}, interlace ${interlace}`);
+  if (depth !== 8 || !channels || compression !== 0 || filterMethod !== 0 || interlace !== 0) throw new Error(`unsupported PNG: depth ${depth}, colour ${colour}, compression ${compression}, interlace ${interlace}`);
   const width = header.readUInt32BE(0);
   const height = header.readUInt32BE(4);
+  if (!width || !height) throw new Error(`empty PNG: ${width}x${height}`);
   const raw = inflateSync(Buffer.concat(idat));
   const stride = width * channels;
   if (raw.length !== (stride + 1) * height) throw new Error(`PNG data is ${raw.length} bytes, expected ${(stride + 1) * height}`);

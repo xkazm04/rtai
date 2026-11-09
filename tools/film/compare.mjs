@@ -57,10 +57,10 @@ export function parseArgv(argv) {
 export function judgeTick({ diff, subjectA, subjectB, subject }) {
   const reasons = [];
   const notes = [];
-  if (diff.fraction <= IDENTICAL_FRACTION) reasons.push(`the two sides are identical (${diff.changed} of ${diff.total} pixels differ)`);
+  if (!(diff.fraction > IDENTICAL_FRACTION)) reasons.push(`the two sides are identical (${diff.changed} of ${diff.total} pixels differ)`);
   for (const [side, row] of [['A', subjectA], ['B', subjectB]]) {
     if (!row) reasons.push(`side ${side} has no ${subject} in its numbers at this tick (shots without the probe, such as quest1, cannot prove the subject is in frame)`);
-    else if (!row.on_screen) reasons.push(`side ${side}: ${subject} is off screen at (${row.screen.map((n) => Math.round(n)).join(', ')})`);
+    else if (!row.on_screen) reasons.push(`side ${side}: ${subject} is off screen at (${(row.screen ?? []).map((n) => Math.round(n)).join(', ')})`);
   }
   if (subjectA && subjectB) {
     const d = Math.hypot(subjectA.pos[0] - subjectB.pos[0], subjectA.pos[1] - subjectB.pos[1]);
