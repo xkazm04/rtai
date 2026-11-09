@@ -1,4 +1,6 @@
-# n10 rivet REPORT (draft, it15 second session; the freeze session replaces this)
+# n10 rivet REPORT (final, freeze session it49, 2026-11-09 07:30)
+
+Status at the freeze: the brief's list is done (below) and the queue has been empty since it16. No code has changed since the exe was built at 03:25 (`git log b8ae1064..HEAD -- project tools native` is empty), so the exe and the gates below still describe this branch. They were not re-run at the freeze: it49 ran no Godot. What works is under Fixed and Brief status, what does not is under Known and left and Not verified.
 
 Defect hunt on Rivet at combo. Every performance number here is CONTENDED. Evidence: `C:\Users\kazda\kiro\gtai-masters\n10\rivet\` (`frames.json`, 15 entries, best first).
 
@@ -93,6 +95,10 @@ Perf's `40e719fd` (`RivetStrips.has_file` memoizes `ResourceLoader.exists`) edit
 - A knock with a weapon out was never seen on screen, since no world reaches it.
 - Defect 12 was filmed at one aim in the steep band (56 degrees, +11 on the tour's octant 1) and at exactly 45, not across the band; the rule is tested at 60, 52, 45.3, 44.9, 44, 38 and 30.
 - Defect 8's `LEFT_NO_SWING` was not sampled by mutation; it has a red run (Gates, it16) and a before/after frame.
+
+## Blocked
+
+Nothing blocked this lane: the journal has no BLOCKED entry, and no asset or other lane was waited on. Time lost to friction, from the journal's own timings: about 30 minutes on the harness at 21:10-21:40 (a 9-minute first import on the contended machine, a crop bug, overlapping batches), then commit-hook runs of 6 to 8 minutes under load from 22:30 to 23:54, two of them rejected for formatting and re-run. After QUEUE EMPTY at it16 no code changed. The later iterations were the merge trials for the Director (it24, it29), the exe (it25) and checks.
 
 ## Calls for the owner
 

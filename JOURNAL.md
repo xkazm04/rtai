@@ -223,3 +223,9 @@ Checked only: tree clean, HEAD 48852175. `git log b8ae1064..HEAD -- project tool
 FRICTION a `cd` in the first check left the shell outside the worktree again, against it35's note; the rest ran with `git -C` on the lane path.
 QUEUE EMPTY: stands as of it16, the exe built in it25. Blocked: nothing.
 NEXT (freeze session): rebuild the exe only if `git log b8ae1064..HEAD -- project tools native` is non-empty, REPORT final. If the journal still says QUEUE EMPTY and neither this branch nor a lane's Rivet files have changed since `40e719fd` (`git log --since` on perf/world/handheld for `project/features/characters`), end at once. Use `git -C` from the first command, no `cd`; the lanes are world, perf, handheld.
+
+## it49 (07:30-, freeze session)
+Checked only, then finalized REPORT. Tree clean, HEAD 181f8f3d. `git log b8ae1064..HEAD -- project tools native` empty, so the exe of 03:25 still matches this branch's code (file present, 543 MB) and it was not rebuilt. `git diff --name-only 63e685d3 n10-world -- project/features/characters` and `git diff --name-only 40e719fd` against n10-perf and n10-handheld are empty. Heads world 13541cdb, perf 97cc1aa8, handheld 74a77426: no commit on any of the three touches `project`, `native` or `tools` since 06:58. No `REQUEST -> rivet` in the three journals (0 each). Item 4's clip and `frames.json` are on disk.
+REPORT.md still called itself a draft and had no section on what blocked the lane, which the freeze asks for: header now final with the status at the freeze, `## Blocked` added (nothing blocked, the friction with the journal's timings). No Godot run, no new gate, frame or number; REPORT's gates are the ones run on the same code.
+QUEUE EMPTY: brief items 1-4 done as REPORT's Brief status words them, the exe built in it25, REPORT final. Blocked: nothing.
+NEXT: none for this lane; the Director merges `n10-rivet` (merge notes in REPORT, "Merging with n10-world" and "Merging with n10-perf").
