@@ -20,12 +20,12 @@ run/main_scene.showcase="res://dev/arena/arena.tscn"
 [autoload]
 
 Log="*res://core/log/log.gd"
+Platform="*res://core/platform/platform.gd"
 LaunchArgs="*res://boot/launch_args.gd"
 Events="*res://core/events/events.gd"
 Game="*res://boot/game.gd"
 Data="*res://core/data/data.gd"
 Save="*res://core/save/save.gd"
-Platform="*res://core/platform/platform.gd"
 
 [debug]
 

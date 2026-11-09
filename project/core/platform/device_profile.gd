@@ -9,6 +9,8 @@ extends RefCounted
 const TABLE: String = "res://data/tables/devices.json"
 ## The Steam Deck's panel (LCD and OLED alike), what auto_pick() matches.
 const DECK_PANEL: Vector2i = Vector2i(1280, 800)
+## The longest side of a handheld panel on sale (8.8-inch 2560x1600, LEDGER section 1).
+const MAX_PANEL_SIDE: int = 2560
 const VSYNC: Dictionary[String, DisplayServer.VSyncMode] = {
 	"adaptive": DisplayServer.VSYNC_ADAPTIVE,
 	"disabled": DisplayServer.VSYNC_DISABLED,
@@ -65,15 +67,49 @@ static func select(flag_value: String) -> DeviceProfile:
 	return _shared
 
 
-## The row a run with no `--device=` picks by itself (n9 it10): `deck` when Steam says this is a
-## Deck (it puts SteamDeck=1 in every game's environment on SteamOS; a launch option
-## `SteamDeck=0 %command%` opts out) AND the screen is the Deck's 1280x800 panel (either way up),
-## so a docked Deck on a TV or a SteamOS desktop box keeps the desktop; "" = the table's default.
-static func auto_pick(steam_deck_env: String, screen: Vector2i) -> String:
-	if steam_deck_env.strip_edges() != "1":
+## The row a run with no `--device=` picks by itself; "" = the table's default. In order (n10):
+## `SteamDeck=0` opts out; Steam's own answer (`hardware`, Platform.hardware()): a Deck is the
+## Deck, other Steam hardware (a Machine, a Frame) keeps the desktop; Steam's SteamDeck=1 (n9 it10,
+## every game's environment on SteamOS); the firmware model against the rows' `models`. A Deck
+## only on the Deck's 1280x800 panel (docked on a TV it keeps the desktop); a Windows handheld
+## only up to MAX_PANEL_SIDE (past that it is docked on a large screen).
+static func auto_pick(
+	steam_deck_env: String,
+	screen: Vector2i,
+	model: String = "",
+	hardware: PlatformBackend.Hardware = PlatformBackend.Hardware.DESKTOP
+) -> String:
+	var env: String = steam_deck_env.strip_edges()
+	if env == "0" or hardware == PlatformBackend.Hardware.STEAM_HARDWARE:
 		return ""
-	if screen == DECK_PANEL or screen == Vector2i(DECK_PANEL.y, DECK_PANEL.x):
-		return "deck"
+	var row: String = "deck" if env == "1" else ""
+	if hardware == PlatformBackend.Hardware.STEAM_DECK:
+		row = "deck"
+	if row == "":
+		row = model_row(model)
+	if row == "deck":
+		var sideways: Vector2i = Vector2i(DECK_PANEL.y, DECK_PANEL.x)
+		return row if screen == DECK_PANEL or screen == sideways else ""
+	return row if maxi(screen.x, screen.y) <= MAX_PANEL_SIDE else ""
+
+
+## The row whose `models` names this firmware model (OS.get_model_name: on Windows the SMBIOS
+## System Product Name, else the board's); "" when none does. Case-sensitive, as firmware is.
+## `models` match inside the name; `models_exact` (Lenovo's 4-character type numbers, too short to
+## be unmistakable inside a longer name) only as the whole name.
+static func model_row(model: String) -> String:
+	if model == "":
+		return ""
+	var parser: JSON = JSON.new()
+	if parser.parse(FileAccess.get_file_as_string(TABLE)) != OK or not parser.data is Dictionary:
+		return ""
+	var d: Dictionary = parser.data
+	for row: Dictionary in d["devices"]:
+		if model in row.get("models_exact", []):
+			return str(row["id"])
+		for known: Variant in row.get("models", []):
+			if model.contains(str(known)):
+				return str(row["id"])
 	return ""
 
 
@@ -99,16 +135,12 @@ func _read(row: Dictionary) -> void:
 	var w: int = row.get("window_w", 0)
 	var h: int = row.get("window_h", 0)
 	window_size = Vector2i(w, h)
-	var fps: int = row.get("max_fps", -1)
-	max_fps = fps
+	max_fps = row.get("max_fps", -1)
 	vsync = str(row.get("vsync", ""))
 	stretch_mode = str(row.get("stretch_mode", ""))
-	var k: float = row.get("zoom_k", 1.0)
-	zoom_k = k
-	var r: float = row.get("rumble", 0.0)
-	rumble = r
-	var ds: float = row.get("draw_scale", 1.0)
-	draw_scale = ds
+	zoom_k = row.get("zoom_k", 1.0)
+	rumble = row.get("rumble", 0.0)
+	draw_scale = row.get("draw_scale", 1.0)
 	tier = StringName(str(row.get("tier", "full")))
 	hud = StringName(str(row.get("hud", "full")))
 	glyphs = StringName(str(row.get("glyphs", "")))

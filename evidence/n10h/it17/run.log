@@ -1,0 +1,21 @@
+lock taken 01:51:23
+=== 01:51:23 deck_grab_r1
+deck_grab_r1: CONTENDED (1 other Godot runs) {"frames":1772,"low1_fps":27.6589887217419,"over33_settled":9,"over50_settled":6,"p50_ms":16.6800003051758,"p99_ms":19.0030002593994,"ticks":1793,"worst_ms":403.571990966797,"worst_settled_ms":71.8000030517578,"render_gpu_ms_p50":7.66,"render_gpu_ms_p95":7.98,"render_cpu_ms_p50":0.32,"render_cpu_ms_p95":0.38,"process_ms_p50":4.25,"process_ms_p95":4.87,"loop_ms_p50":0.95,"loop_ms_p95":1.07,"draw_calls_p50":574,"draw_calls_p95":589,"affinity_seen":[255,0],"cpu_machine_pct_p50":2.18,"cpu_pinned_pct_p50":4.36,"ws_mb_max":847.6,"private_mb_max":865,"gpu_dedicated_mb_max":80.7,"gpu_shared_mb_max":473.1}
+-> C:\Users\kazda\kiro\gtai-n10\tmp\handheld\it17\deck_grab_r1.json
+exit 0 (deck_grab_r1)
+=== 01:52:08 deck_none_r2
+deck_none_r2: CONTENDED (1 other Godot runs) {"frames":1766,"low1_fps":20.8065305013204,"over33_settled":16,"over50_settled":7,"p50_ms":16.673999786377,"p99_ms":27.8239994049072,"ticks":1793,"worst_ms":398.342987060547,"worst_settled_ms":71.5279998779297,"render_gpu_ms_p50":7.69,"render_gpu_ms_p95":8.07,"render_cpu_ms_p50":0.32,"render_cpu_ms_p95":0.39,"process_ms_p50":4.24,"process_ms_p95":5,"loop_ms_p50":0.94,"loop_ms_p95":1.05,"draw_calls_p50":574,"draw_calls_p95":588,"affinity_seen":[255,0],"cpu_machine_pct_p50":2.21,"cpu_pinned_pct_p50":4.43,"ws_mb_max":910.4,"private_mb_max":929.5,"gpu_dedicated_mb_max":80.9,"gpu_shared_mb_max":537.1}
+-> C:\Users\kazda\kiro\gtai-n10\tmp\handheld\it17\deck_none_r2.json
+exit 0 (deck_none_r2)
+=== 01:52:52 deck_none_r3
+deck_none_r3: CONTENDED (1 other Godot runs) {"frames":1781,"low1_fps":40.4093922151113,"over33_settled":3,"over50_settled":0,"p50_ms":16.6870002746582,"p99_ms":18.9340000152588,"ticks":1793,"worst_ms":414.816986083984,"worst_settled_ms":49.4910011291504,"render_gpu_ms_p50":7.67,"render_gpu_ms_p95":7.82,"render_cpu_ms_p50":0.33,"render_cpu_ms_p95":0.49,"process_ms_p50":4.3,"process_ms_p95":5.47,"loop_ms_p50":0.95,"loop_ms_p95":1.23,"draw_calls_p50":574,"draw_calls_p95":589,"affinity_seen":[255,0],"cpu_machine_pct_p50":2.31,"cpu_pinned_pct_p50":4.61,"ws_mb_max":911.3,"private_mb_max":928.7,"gpu_dedicated_mb_max":80.9,"gpu_shared_mb_max":537.1}
+-> C:\Users\kazda\kiro\gtai-n10\tmp\handheld\it17\deck_none_r3.json
+exit 0 (deck_none_r3)
+=== 01:53:36 deck_grab_r4
+deck_grab_r4: quiet {"frames":1785,"low1_fps":50.2572897264706,"over33_settled":0,"over50_settled":0,"p50_ms":16.6760005950928,"p99_ms":19.4069995880127,"ticks":1793,"worst_ms":415.401000976563,"worst_settled_ms":21.0550003051758,"render_gpu_ms_p50":7.67,"render_gpu_ms_p95":7.82,"render_cpu_ms_p50":0.33,"render_cpu_ms_p95":0.47,"process_ms_p50":4.28,"process_ms_p95":5.59,"loop_ms_p50":0.96,"loop_ms_p95":1.23,"draw_calls_p50":574,"draw_calls_p95":589,"affinity_seen":[255,0],"cpu_machine_pct_p50":2.17,"cpu_pinned_pct_p50":4.34,"ws_mb_max":842.4,"private_mb_max":860.5,"gpu_dedicated_mb_max":80.7,"gpu_shared_mb_max":472.1}
+-> C:\Users\kazda\kiro\gtai-n10\tmp\handheld\it17\deck_grab_r4.json
+exit 0 (deck_grab_r4)
+lock released 01:54:21
+reel deck40 exit 0 02:11:05
+reel switch_handheld exit 0 02:16:40
+DONE 02:16:40

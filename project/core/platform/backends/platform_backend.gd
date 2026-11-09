@@ -9,7 +9,9 @@ signal achievement_confirmed(id: StringName)
 signal store_failed(reason: String)
 signal overlay_toggled(open: bool)
 
-enum Hardware { DESKTOP, STEAM_HARDWARE }
+## STEAM_DECK: a Deck (DeviceProfile.auto_pick's first check). STEAM_HARDWARE: other Steam hardware
+## (a Machine, a Frame), which plays the desktop game.
+enum Hardware { DESKTOP, STEAM_HARDWARE, STEAM_DECK }
 enum GlyphFamily { KBM, XBOX, PLAYSTATION, SWITCH, DECK }
 
 @abstract func backend_name() -> StringName
@@ -47,6 +49,13 @@ enum GlyphFamily { KBM, XBOX, PLAYSTATION, SWITCH, DECK }
 @abstract func text_input_request(prompt: String, multiline: bool) -> bool
 
 @abstract func glyph_family() -> GlyphFamily
+
+
+## n10-handheld: a local image path for a pad prompt (its Xbox-layout label: "A", "RT"), for a pad
+## remapped or unknown to our drawn set. "" (every backend but Steam) = PadGlyphArt's drawn set.
+func action_glyph_path(_xbox_label: String) -> String:
+	return ""
+
 
 ## Root of the synced profile (SAV-06). Includes the SteamID when Steam is up.
 @abstract func profile_dir() -> String

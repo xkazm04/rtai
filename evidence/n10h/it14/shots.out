@@ -1,0 +1,9 @@
+=== 00:48:23 sw_king
+exit 0 (sw_king) SCRIPT_ERROR=0 [INFO] arena: frame C:/Users/kazda/kiro/gtai-n10/tmp/handheld/it14/sw_king.png at tick 901 (OK)
+=== 00:48:45 d40_king
+exit 0 (d40_king) SCRIPT_ERROR=0 [INFO] arena: frame C:/Users/kazda/kiro/gtai-n10/tmp/handheld/it14/d40_king.png at tick 901 (OK)
+=== 00:49:07 h1080_king
+exit 0 (h1080_king) SCRIPT_ERROR=0 [INFO] arena: frame C:/Users/kazda/kiro/gtai-n10/tmp/handheld/it14/h1080_king.png at tick 901 (OK)
+=== 00:49:29 deck_king_48
+exit 0 (deck_king_48) SCRIPT_ERROR=0 [INFO] arena: frame C:/Users/kazda/kiro/gtai-n10/tmp/handheld/it14/deck_king_48.png at tick 901 (OK)
+DONE

@@ -1,0 +1,287 @@
+{
+  "schema": "gtai.handheld-sim/1",
+  "label": "switch_handheld_king",
+  "device": "switch_handheld",
+  "scene": "king",
+  "scene_args": [
+    "--rigs",
+    "--boss=king",
+    "--bot=boss",
+    "--view=combo"
+  ],
+  "extra": [],
+  "renderer": "forward_plus",
+  "gpu": "igpu",
+  "gpu_index": 1,
+  "threads": 3,
+  "priority": "belownormal",
+  "ticks": 1800,
+  "exit": 0,
+  "adapter": "D3D12 12_0 - Forward+ - Using Device #1: AMD - AMD Radeon(TM) Graphics",
+  "contended": "quiet",
+  "at": "2026-11-09T00:00:29.299Z",
+  "summary": {
+    "frames": 898,
+    "low1_fps": 20.2955939165555,
+    "over33_settled": 648,
+    "over50_settled": 1,
+    "p50_ms": 33.318000793457,
+    "p99_ms": 36.0530014038086,
+    "ticks": 1794,
+    "worst_ms": 165.582992553711,
+    "worst_settled_ms": 113.644996643066,
+    "render_gpu_ms_p50": 7.87,
+    "render_gpu_ms_p95": 8.37,
+    "render_cpu_ms_p50": 0.71,
+    "render_cpu_ms_p95": 0.88,
+    "process_ms_p50": 7.3,
+    "process_ms_p95": 8.9,
+    "loop_ms_p50": 1.42,
+    "loop_ms_p95": 1.85,
+    "draw_calls_p50": 556,
+    "draw_calls_p95": 638,
+    "affinity_seen": [
+      7,
+      0
+    ],
+    "cpu_machine_pct_p50": 2.44,
+    "cpu_pinned_pct_p50": 13.02,
+    "ws_mb_max": 907.9,
+    "private_mb_max": 921.5,
+    "gpu_dedicated_mb_max": 80.3,
+    "gpu_shared_mb_max": 479.1
+  },
+  "samples": [
+    {
+      "t_ms": 1264,
+      "cpu_machine_pct": 0.19,
+      "cpu_pinned_pct": 1,
+      "ws_mb": 13.5,
+      "private_mb": 6,
+      "gpu_dedicated_mb": 0.2,
+      "gpu_shared_mb": 0.8,
+      "affinity": 7
+    },
+    {
+      "t_ms": 3671,
+      "cpu_machine_pct": 0.77,
+      "cpu_pinned_pct": 4.11,
+      "ws_mb": 123.6,
+      "private_mb": 95,
+      "gpu_dedicated_mb": 6.3,
+      "gpu_shared_mb": 19,
+      "affinity": 7
+    },
+    {
+      "t_ms": 5690,
+      "cpu_machine_pct": 0.15,
+      "cpu_pinned_pct": 0.77,
+      "ws_mb": 124.8,
+      "private_mb": 95.4,
+      "gpu_dedicated_mb": 6.3,
+      "gpu_shared_mb": 19,
+      "affinity": 7
+    },
+    {
+      "t_ms": 7723,
+      "cpu_machine_pct": 0.43,
+      "cpu_pinned_pct": 2.31,
+      "ws_mb": 125.5,
+      "private_mb": 96.2,
+      "gpu_dedicated_mb": 6.3,
+      "gpu_shared_mb": 19,
+      "affinity": 7
+    },
+    {
+      "t_ms": 9748,
+      "cpu_machine_pct": 0.58,
+      "cpu_pinned_pct": 3.09,
+      "ws_mb": 160.9,
+      "private_mb": 140.5,
+      "gpu_dedicated_mb": 15.7,
+      "gpu_shared_mb": 42.8,
+      "affinity": 7
+    },
+    {
+      "t_ms": 11779,
+      "cpu_machine_pct": 5.58,
+      "cpu_pinned_pct": 29.74,
+      "ws_mb": 309.3,
+      "private_mb": 268,
+      "gpu_dedicated_mb": 15.7,
+      "gpu_shared_mb": 42.8,
+      "affinity": 7
+    },
+    {
+      "t_ms": 13804,
+      "cpu_machine_pct": 5.74,
+      "cpu_pinned_pct": 30.61,
+      "ws_mb": 375.1,
+      "private_mb": 350.4,
+      "gpu_dedicated_mb": 31.9,
+      "gpu_shared_mb": 74.8,
+      "affinity": 7
+    },
+    {
+      "t_ms": 15828,
+      "cpu_machine_pct": 5.6,
+      "cpu_pinned_pct": 29.85,
+      "ws_mb": 594.9,
+      "private_mb": 609.8,
+      "gpu_dedicated_mb": 80.3,
+      "gpu_shared_mb": 479.1,
+      "affinity": 7
+    },
+    {
+      "t_ms": 17851,
+      "cpu_machine_pct": 4.1,
+      "cpu_pinned_pct": 21.88,
+      "ws_mb": 841.8,
+      "private_mb": 859.7,
+      "gpu_dedicated_mb": 80.3,
+      "gpu_shared_mb": 479.1,
+      "affinity": 7
+    },
+    {
+      "t_ms": 19887,
+      "cpu_machine_pct": 2.59,
+      "cpu_pinned_pct": 13.81,
+      "ws_mb": 842,
+      "private_mb": 856,
+      "gpu_dedicated_mb": 80.3,
+      "gpu_shared_mb": 479.1,
+      "affinity": 7
+    },
+    {
+      "t_ms": 21909,
+      "cpu_machine_pct": 2.46,
+      "cpu_pinned_pct": 13.14,
+      "ws_mb": 842.3,
+      "private_mb": 856.2,
+      "gpu_dedicated_mb": 80.3,
+      "gpu_shared_mb": 479.1,
+      "affinity": 7
+    },
+    {
+      "t_ms": 23950,
+      "cpu_machine_pct": 2.44,
+      "cpu_pinned_pct": 13.02,
+      "ws_mb": 842.3,
+      "private_mb": 856.2,
+      "gpu_dedicated_mb": 80.3,
+      "gpu_shared_mb": 479.1,
+      "affinity": 7
+    },
+    {
+      "t_ms": 25982,
+      "cpu_machine_pct": 2.59,
+      "cpu_pinned_pct": 13.84,
+      "ws_mb": 842.8,
+      "private_mb": 856.5,
+      "gpu_dedicated_mb": 80.3,
+      "gpu_shared_mb": 479.1,
+      "affinity": 7
+    },
+    {
+      "t_ms": 28010,
+      "cpu_machine_pct": 2.46,
+      "cpu_pinned_pct": 13.09,
+      "ws_mb": 842.9,
+      "private_mb": 856.5,
+      "gpu_dedicated_mb": 80.3,
+      "gpu_shared_mb": 479.1,
+      "affinity": 7
+    },
+    {
+      "t_ms": 30046,
+      "cpu_machine_pct": 2.4,
+      "cpu_pinned_pct": 12.79,
+      "ws_mb": 842.9,
+      "private_mb": 856.5,
+      "gpu_dedicated_mb": 80.3,
+      "gpu_shared_mb": 479.1,
+      "affinity": 7
+    },
+    {
+      "t_ms": 32067,
+      "cpu_machine_pct": 2.32,
+      "cpu_pinned_pct": 12.37,
+      "ws_mb": 842.9,
+      "private_mb": 856.5,
+      "gpu_dedicated_mb": 80.3,
+      "gpu_shared_mb": 479.1,
+      "affinity": 7
+    },
+    {
+      "t_ms": 34107,
+      "cpu_machine_pct": 2.78,
+      "cpu_pinned_pct": 14.81,
+      "ws_mb": 842.9,
+      "private_mb": 856.5,
+      "gpu_dedicated_mb": 80.3,
+      "gpu_shared_mb": 479.1,
+      "affinity": 7
+    },
+    {
+      "t_ms": 36142,
+      "cpu_machine_pct": 2.49,
+      "cpu_pinned_pct": 13.3,
+      "ws_mb": 842.9,
+      "private_mb": 856.5,
+      "gpu_dedicated_mb": 80.3,
+      "gpu_shared_mb": 479.1,
+      "affinity": 7
+    },
+    {
+      "t_ms": 38173,
+      "cpu_machine_pct": 1.73,
+      "cpu_pinned_pct": 9.23,
+      "ws_mb": 843.7,
+      "private_mb": 857.3,
+      "gpu_dedicated_mb": 80.3,
+      "gpu_shared_mb": 479.1,
+      "affinity": 7
+    },
+    {
+      "t_ms": 40198,
+      "cpu_machine_pct": 1.59,
+      "cpu_pinned_pct": 8.49,
+      "ws_mb": 843.7,
+      "private_mb": 857.3,
+      "gpu_dedicated_mb": 80.3,
+      "gpu_shared_mb": 479.1,
+      "affinity": 7
+    },
+    {
+      "t_ms": 42225,
+      "cpu_machine_pct": 1.35,
+      "cpu_pinned_pct": 7.19,
+      "ws_mb": 843.7,
+      "private_mb": 857.3,
+      "gpu_dedicated_mb": 80.3,
+      "gpu_shared_mb": 479.1,
+      "affinity": 7
+    },
+    {
+      "t_ms": 44240,
+      "cpu_machine_pct": 1.5,
+      "cpu_pinned_pct": 8.01,
+      "ws_mb": 843.8,
+      "private_mb": 857.5,
+      "gpu_dedicated_mb": 80.3,
+      "gpu_shared_mb": 479.1,
+      "affinity": 7
+    },
+    {
+      "t_ms": 46271,
+      "cpu_machine_pct": 1.54,
+      "cpu_pinned_pct": 8.21,
+      "ws_mb": 907.9,
+      "private_mb": 921.5,
+      "gpu_dedicated_mb": 0,
+      "gpu_shared_mb": 0,
+      "affinity": 0
+    }
+  ],
+  "grab": "grab 1280x720 at 320,1556 -> C:/Users/kazda/kiro/gtai-n10/tmp/handheld/it15/switch_handheld_king.png"
+}

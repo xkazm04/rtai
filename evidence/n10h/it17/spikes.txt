@@ -1,0 +1,33 @@
+== deck_grab_r1 frames 1772, over 40 ms: 8, over 100 ms past frame 60: 0
+  f    0 wall=101.5 pump=0.1 process=19.9 physics=0.0 draw=69.0 flush=12.6 render_gpu=0.0 pipelines=13.0 tick=7.0
+  f   24 wall=403.6 pump=389.6 process=12.6 physics=0.0 draw=0.7 flush=0.6 render_gpu=0.0 pipelines=0.0 tick=40.0
+  f 1255 wall=52.2 pump=0.1 process=6.3 physics=0.0 draw=45.2 flush=0.5 render_gpu=7.7 pipelines=0.0 tick=1272.0
+  f 1310 wall=70.1 pump=0.0 process=7.3 physics=0.0 draw=62.3 flush=0.5 render_gpu=7.7 pipelines=0.0 tick=1329.0
+  f 1430 wall=51.5 pump=0.0 process=5.7 physics=0.0 draw=45.3 flush=0.5 render_gpu=7.9 pipelines=0.0 tick=1450.0
+  f 1602 wall=71.8 pump=0.2 process=8.8 physics=0.0 draw=62.2 flush=0.6 render_gpu=7.9 pipelines=0.0 tick=1625.0
+  f 1650 wall=50.3 pump=0.1 process=5.7 physics=0.0 draw=44.0 flush=0.6 render_gpu=7.7 pipelines=0.0 tick=1676.0
+  f 1701 wall=52.5 pump=0.0 process=6.8 physics=0.0 draw=45.1 flush=0.5 render_gpu=8.4 pipelines=0.0 tick=1729.0
+== deck_none_r2 frames 1766, over 40 ms: 13, over 100 ms past frame 60: 0
+  f    0 wall=96.7 pump=0.1 process=20.7 physics=0.0 draw=64.1 flush=11.8 render_gpu=0.0 pipelines=13.0 tick=7.0
+  f   24 wall=398.3 pump=384.7 process=12.3 physics=0.0 draw=0.6 flush=0.6 render_gpu=0.0 pipelines=0.0 tick=38.0
+  f  260 wall=66.2 pump=0.1 process=9.6 physics=0.0 draw=56.0 flush=0.5 render_gpu=7.2 pipelines=0.0 tick=275.0
+  f  309 wall=48.8 pump=0.1 process=4.1 physics=0.0 draw=44.3 flush=0.4 render_gpu=6.9 pipelines=0.0 tick=325.0
+  f  362 wall=70.1 pump=0.1 process=7.2 physics=0.0 draw=62.4 flush=0.4 render_gpu=6.9 pipelines=0.0 tick=380.0
+  f  480 wall=49.9 pump=0.0 process=4.0 physics=0.0 draw=45.3 flush=0.5 render_gpu=7.0 pipelines=0.0 tick=499.0
+  f  887 wall=70.0 pump=0.1 process=8.7 physics=0.0 draw=60.4 flush=0.8 render_gpu=9.1 pipelines=0.0 tick=909.0
+  f  927 wall=40.5 pump=0.0 process=5.6 physics=0.0 draw=7.6 flush=27.3 render_gpu=38.3 pipelines=0.0 tick=950.0
+  f  936 wall=43.3 pump=0.0 process=4.6 physics=0.0 draw=38.2 flush=0.5 render_gpu=7.7 pipelines=0.0 tick=959.0
+  f  987 wall=71.5 pump=0.1 process=8.9 physics=0.0 draw=62.1 flush=0.4 render_gpu=7.7 pipelines=0.0 tick=1014.0
+  f 1109 wall=51.4 pump=0.0 process=5.9 physics=0.0 draw=44.9 flush=0.5 render_gpu=7.6 pipelines=0.0 tick=1137.0
+  f 1634 wall=51.5 pump=0.0 process=5.7 physics=0.0 draw=45.3 flush=0.5 render_gpu=7.7 pipelines=0.0 tick=1667.0
+  f 1687 wall=70.1 pump=0.0 process=7.4 physics=0.0 draw=62.1 flush=0.5 render_gpu=7.7 pipelines=0.0 tick=1722.0
+== deck_none_r3 frames 1781, over 40 ms: 5, over 100 ms past frame 60: 0
+  f    0 wall=95.5 pump=0.1 process=19.6 physics=0.0 draw=63.9 flush=11.9 render_gpu=0.0 pipelines=13.0 tick=7.0
+  f    8 wall=40.9 pump=32.2 process=7.0 physics=0.0 draw=0.8 flush=0.8 render_gpu=0.0 pipelines=0.0 tick=18.0
+  f   24 wall=414.8 pump=400.8 process=12.7 physics=0.0 draw=0.7 flush=0.7 render_gpu=0.0 pipelines=0.0 tick=40.0
+  f  119 wall=49.5 pump=0.1 process=6.4 physics=0.1 draw=42.2 flush=0.8 render_gpu=7.3 pipelines=0.0 tick=135.0
+  f 1759 wall=49.3 pump=0.1 process=6.7 physics=0.0 draw=41.9 flush=0.6 render_gpu=7.9 pipelines=0.0 tick=1779.0
+== deck_grab_r4 frames 1785, over 40 ms: 3, over 100 ms past frame 60: 0
+  f    0 wall=99.6 pump=0.2 process=20.5 physics=0.0 draw=66.6 flush=12.3 render_gpu=0.0 pipelines=13.0 tick=7.0
+  f    8 wall=40.2 pump=32.4 process=6.3 physics=0.0 draw=0.7 flush=0.7 render_gpu=0.0 pipelines=0.0 tick=18.0
+  f   24 wall=415.4 pump=401.0 process=12.9 physics=0.0 draw=0.8 flush=0.7 render_gpu=0.0 pipelines=0.0 tick=40.0

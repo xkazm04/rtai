@@ -6,6 +6,10 @@ extends PlatformBackend
 ## degrades to NullBackend and logs why (STM-05).
 
 const NOT_READY: String = "GodotSteam not vendored yet"
+## ESteamHardwareType's values (k_ESteamHardwareTypeNone, ...SteamDeck), read from Steamworks.NET's
+## enums generated from the SDK headers (LEDGER section 9); not run against Steam.
+const HARDWARE_NONE: int = 0
+const HARDWARE_DECK: int = 1
 
 
 func backend_name() -> StringName:
@@ -57,8 +61,25 @@ func rich_presence(_key: String, _value: String) -> bool:
 	return false
 
 
+## n10-handheld: the one call when GodotSteam is vendored (SDK 1.65 removed the Deck check,
+## LEDGER section 9): `return hardware_of(Steam.isRunningOnSteamHardware())`. The method name is
+## read from GodotSteam 4.24's source; not run, there is no Steam app here.
 func hardware() -> Hardware:
-	return Hardware.DESKTOP
+	return hardware_of(HARDWARE_NONE)
+
+
+## ESteamHardwareType (SDK 1.65) as this game reads it: a Deck, other Steam hardware, or neither.
+static func hardware_of(steam_hardware_type: int) -> Hardware:
+	if steam_hardware_type == HARDWARE_NONE:
+		return Hardware.DESKTOP
+	return Hardware.STEAM_DECK if steam_hardware_type == HARDWARE_DECK else Hardware.STEAM_HARDWARE
+
+
+## n10-handheld: the one call when GodotSteam is vendored, for the first pad's handle:
+## `var origin: int = Steam.getActionOriginFromXboxOrigin(handle, XBOX[label])`, then
+## `return Steam.getGlyphPNGForActionOrigin(origin, size, 0)`. Names read from 4.24's source too.
+func action_glyph_path(_xbox_label: String) -> String:
+	return ""
 
 
 func text_input_request(_prompt: String, _multiline: bool) -> bool:

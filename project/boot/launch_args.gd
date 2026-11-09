@@ -128,16 +128,31 @@ func _init() -> void:
 		profile.fill_screen = not has("--device")  # picked by itself: the real device's screen
 
 
-## n9-handheld: with no `--device=`, a Steam Deck picks its row (DeviceProfile.auto_pick); the
-## screen is only asked when Steam's SteamDeck variable is set, so the desktop path is unchanged.
+## n9/n10-handheld: with no `--device=`, a handheld picks its row (DeviceProfile.auto_pick). The
+## screen is only asked once Steam or the firmware model names a handheld, so an ordinary desktop
+## path stops here. Platform is the autoload before this one: its backend is already up.
 static func _auto_device() -> String:
+	if DisplayServer.get_name() == "headless":
+		return ""
 	var env: String = OS.get_environment("SteamDeck")
-	if env == "" or DisplayServer.get_name() == "headless":
+	var model: String = OS.get_model_name()
+	var hw: PlatformBackend.Hardware = Platform.hardware()
+	if (
+		env == ""
+		and hw == PlatformBackend.Hardware.DESKTOP
+		and DeviceProfile.model_row(model) == ""
+	):
 		return ""
 	var screen: Vector2i = DisplayServer.screen_get_size()
-	var want: String = DeviceProfile.auto_pick(env, screen)
+	var want: String = DeviceProfile.auto_pick(env, screen, model, hw)
 	var row: String = want if want != "" else "desktop"
-	Log.info("device", "SteamDeck=%s, a %s screen: the %s row" % [env, screen, row])
+	Log.info(
+		"device",
+		(
+			"SteamDeck=%s, hardware %d, model %s, a %s screen: the %s row"
+			% [env, hw, model, screen, row]
+		)
+	)
 	return want
 
 

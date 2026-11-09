@@ -1,0 +1,23 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+D3D12 12_0 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce RTX 4090
+
+[INFO] device: profile switch_handheld: window 1280x720, max_fps 30, vsync enabled, stretch viewport, zoom_k 1.25, tier handheld, rumble 1.00
+[INFO] bosses: king phase 1 (procession)
+[INFO] bosses: king engaged in king_boulevard, phase 1
+[INFO] arena: powers pad: 4 cars parked
+[INFO] device: pad aim assist on (weapons.json aim_assist)
+[INFO] arena: arena open: 20 stations
+[INFO] characters: prewarmed 41 rigs in 219.5 ms
+[INFO] arena: cast rigs: true
+[INFO] view: pitch ease 70.0 -> boss at tick 1
+[INFO] view: cards art p55 (pitch 62.1) at tick 32
+[INFO] arena: frame C:/Users/kazda/kiro/gtai-n10/tmp/handheld/it14/sw_king.png at tick 901 (OK)
+[INFO] view: occlusion: 177 body-frames hidden over 902 frames, frames 275-761
+[INFO] device: rumble: 27 pulses played { &"boss_engaged": 1, &"boss_hit": 26 }, 0 rested, shortest gaps (ticks) { &"boss_hit": 16 }
+[INFO] arena: react: 0 wounds (0 on a shield), 0 deaths, 0 ducks
+WARNING: 1 RID of type "CanvasItem" was leaked.
+   at: _free_rids (servers/rendering/renderer_canvas_cull.cpp:2733)
+WARNING: 600 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 94 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
