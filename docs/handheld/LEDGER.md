@@ -846,6 +846,22 @@ All four hold their caps. Past the start, only `deck` has frames over 100 ms: th
 
 The grabs do not show the delivered strip: this city frame has no shop facade. The strip was checked separately, look-only on the discrete GPU, with `res://dev/showcase/block70_still.tscn -- --device=deck --zoom=1.0|1.5 --view=combo`, t200: wide windows, solid piers, hatching at the wall's foot and no ink bar, the same frame as world's `wall_shop_delivered_32.png` right panel (`gtai-masters/n10/handheld/wall_shop_delivered_deck_{32,48}.png`). The per-frame dumps were deleted after reading, by the rule of E22b and E23, so the frame numbers above live here only.
 
+### E25 (n10 it17): E24's Deck spikes re-run, and the grab tool separated from frame 24's pump spike; PC simulator
+`deck`, windowed on the iGPU, `tools/handheld/sim.mjs --scene=city_combo --ticks=1800`, four runs on the code of 78746a1a in the order grab, none, none, grab, under `bench.lock` (01:51:23 to 01:54:21), with no reel of this lane running. The frame dumps stayed out of tree and were deleted after reading; every frame over 40 ms with its split is kept in `evidence/n10h/it17/spikes.txt`, the per-run JSON in `evidence/n10h/it17/sim/`. All exit 0.
+
+| run | other Godot runs | frames | p50 ms | p99 ms | over 33 ms (settled) | worst settled ms | process max, settled ms | frame 24 pump ms |
+|---|---|---|---|---|---|---|---|---|
+| grab r1 | 1 | 1772 | 16.68 | 19.00 | 9 | 71.8 | 13.2 | 389.6 |
+| none r2 | 1 | 1766 | 16.67 | 27.82 | 16 | 71.5 | 9.6 | 384.7 |
+| none r3 | 1 | 1781 | 16.69 | 18.93 | 3 | 49.5 | 8.0 | 400.8 |
+| grab r4 | 0 | 1785 | 16.68 | 19.41 | 0 | 21.1 | 8.4 | 401.0 |
+
+- **E24's three process spikes (182, 184, 249 ms) did not come back:** no settled frame over 100 ms in four runs, and the settled `process_ms` maximum is 13.2 ms. E24 ran beside this lane's own headless reels, with 2 others counted; these ran with 0 or 1. That fits contention and does not prove it: no run here reproduced the load. E24's spikes stay unattributed, but the merged code does not show them in four runs.
+- **Frame 24's pump spike is not the grab tool:** 385 to 401 ms in all four runs, the same in both arms (390 and 401 with it, 385 and 401 without). The grab fires 25 s in; this frame is about 0.4 s after the first frame. Separated on the Deck row only. Its cause is still not attributed; frame index 24 in every run on every row (E24) reads like something at a fixed point of the start, not like load.
+- **What the settled long frames are now:** 45 to 72 ms, in `draw_ms` (38 to 62 ms) with render GPU at 7 to 9 ms and 0 pipelines, except one frame in r2 (f927: `flush_ms` 27.3, render GPU 38.3). 6, 10, 2 and 0 frames over 35 ms of draw in the four runs: the one quiet run has none, the grab arm has 6 and 0, so the grab does not explain them. Not attributed. A stall in the draw phase with the GPU idle is consistent with waiting on the machine, not measured as that.
+
+Four runs of one row on the iGPU. The row holds 60 in all of them.
+
 ### The freeze A/B on the rows (n10 it1, read at it5; PC simulator)
 Quest 1 windowed on D3D12, `deck` (`vsync: enabled`) vs the study row `deck_mailbox`, interleaved rounds of 2 runs, 4 rounds of the 5 planned (`evidence/n10h/it1/ab-vsync.txt`, the low-CPU runs' logs and thread readings in `evidence/n10h/it1/hunt/`):
 
