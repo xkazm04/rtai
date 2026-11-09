@@ -92,3 +92,34 @@ func test_the_down_cell_holds_while_the_rig_is_still_down_after_the_knock_clears
 	assert_eq(RivetKnock.path_or(rig, "p70", base), base, "up: the figure is back")
 	rig.dead = true
 	assert_eq(RivetKnock.path_or(rig, "p70", base), base, "a later death is the sprawl")
+
+
+func test_a_knock_during_a_reload_takes_the_strip_and_gives_the_reload_back() -> void:
+	# n10: the combination no world reaches yet (the city's Rivet has no gun, quest 1 has no cars),
+	# so the first lane that wires one gets the pose this asserts: lying, no floating gun.
+	var was: ViewMode = ViewMode._shared
+	ViewMode._shared = ViewMode.of("tilt70")
+	var rig: CutRig = add_child_autofree(CutRig.new())
+	rig.plan = RivetPlan.build()
+	for n: StringName in [&"head", &"body"]:
+		var node: Node2D = Node2D.new()
+		rig.add_child(node)
+		rig.set(n, node)
+	var card: Sprite2D = Sprite2D.new()
+	rig.head.add_child(card)
+	rig.head_card = card
+	rig.gun_out = true
+	rig.reload_k = 0.5
+	rig.set_meta(RivetFrames.WEAPON, &"pistol")
+	RivetFrames.step(rig)
+	assert_true(RivetReload.shows(card), "the drawn reload, standing")
+	rig.set_meta(RivetKnock.KNOCK, Vector3(1.0, 0.0, 120.0))
+	RivetFrames.step(rig)
+	assert_true(RivetKnock.shows(card), "the knock wins over the reload")
+	assert_eq(card.vframes, RivetKnock.CELLS, "the knock grid")
+	assert_true(RivetFrames.owns_weapon(rig), "the held gun part stays hidden while he lies")
+	rig.remove_meta(RivetKnock.KNOCK)
+	RivetFrames.step(rig)
+	assert_true(RivetReload.shows(card), "the reload is back, on its own grid")
+	assert_eq(card.vframes, 1, "no knock grid left behind")
+	ViewMode._shared = was
