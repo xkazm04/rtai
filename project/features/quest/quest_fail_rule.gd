@@ -27,12 +27,14 @@ static func from_row(row: Variant) -> QuestFailRule:
 
 
 func matches(text: String) -> bool:
+	if groups.is_empty():  # a rule with no keywords says nothing about any text
+		return false
 	var words: String = " %s " % " ".join(PackedStringArray(words_of(text)))
 	for group: Variant in groups:
 		var keywords: Array[String] = group
 		var hit: bool = false
 		for keyword: String in keywords:
-			if words.contains(" %s " % keyword):
+			if keyword != "" and words.contains(" %s " % keyword):
 				hit = true
 				break
 		if not hit:

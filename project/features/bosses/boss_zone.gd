@@ -4,6 +4,9 @@ extends RefCounted
 ## (range_m long, width_m wide), a cone (range_m, arc_deg), a circle (radius_m round the origin).
 ## The telegraph draws exactly this zone, so what the player reads is what hits (no hidden reach).
 
+## A point exactly on a cone's edge is inside: angle_to can land a float step past it.
+const CONE_EDGE_EPS: float = 0.00001
+
 
 ## True when a body of radius `r` at `p` is inside attack `a` fired from `origin` along `dir`.
 static func hits(a: BossAttack, origin: Vector2, dir: Vector2, p: Vector2, r: float) -> bool:
@@ -40,4 +43,4 @@ static func _in_cone(a: BossAttack, o: Vector2, dir: Vector2, p: Vector2, r: flo
 	if dist <= r:
 		return true
 	var slack: float = asin(clampf(r / dist, 0.0, 1.0))  # a body grazing the edge is in
-	return absf(dir.angle_to(d)) <= half + slack
+	return absf(dir.angle_to(d)) <= half + slack + CONE_EDGE_EPS

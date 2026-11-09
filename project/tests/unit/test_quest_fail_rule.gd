@@ -129,3 +129,16 @@ func test_words_of_separates_punctuation_whitespace_and_non_ascii_characters() -
 	)
 	assert_eq(QuestFailRule.words_of(""), [] as Array[String])
 	assert_eq(QuestFailRule.words_of(" \t\n_!?é雪"), [] as Array[String])
+
+
+func test_a_rule_with_no_groups_matches_nothing() -> void:
+	var rule: QuestFailRule = QuestFailRule.new()
+	assert_false(rule.matches(""))
+	assert_false(rule.matches("anything"))
+
+
+func test_an_empty_keyword_never_matches() -> void:
+	var rule: QuestFailRule = QuestFailRule.from_row({"id": "empty", "groups": [[""]]})
+	assert_false(rule.matches(""))
+	assert_false(rule.matches("!? "))
+	assert_false(rule.matches("car"))

@@ -61,6 +61,16 @@ func test_cone_range_includes_target_radius_but_rejects_just_beyond_it() -> void
 	assert_false(BossZone.hits(attack, origin, Vector2.DOWN, origin + Vector2(0, 8.01), 0.0))
 
 
+func test_a_point_exactly_on_a_cone_edge_is_inside() -> void:
+	var attack: BossAttack = _attack(BossAttack.Shape.CONE)
+	attack.arc_deg = 180.0
+	for side: float in [-1.0, 1.0]:
+		var edge: Vector2 = Vector2(0, side * 4.0)
+		assert_true(BossZone.hits(attack, Vector2.ZERO, Vector2.RIGHT, edge, 0.0), "on the edge")
+		var past: Vector2 = Vector2(-0.01, side * 4.0)
+		assert_false(BossZone.hits(attack, Vector2.ZERO, Vector2.RIGHT, past, 0.0), "past it")
+
+
 func test_cone_uses_half_the_arc_on_both_sides_of_the_aim() -> void:
 	var attack: BossAttack = _attack(BossAttack.Shape.CONE)
 	attack.arc_deg = 60.0
