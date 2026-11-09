@@ -146,11 +146,13 @@ static func fire_latched(rig: CutRig) -> bool:
 static func draws_fire(rig: CutRig, weapon: StringName, o: int, firing: bool) -> bool:
 	var was_off: bool = rig.get_meta(CONE_OFF, false) == true
 	var aim: float = NAN if rig.clips.strike_t >= 0.0 else aim_of(rig)
-	var slack: float = FIRE_HOLD if rig.get_meta(DREW, false) == true else 0.0
+	var drew: bool = rig.get_meta(DREW, false) == true
+	var slack: float = FIRE_HOLD if drew else 0.0
 	var art: String = ViewMode.shared().art
 	var off: bool = firing and (was_off or not fires_drawn(weapon, o, aim, art, slack))
 	rig.set_meta(CONE_OFF, off)
 	rig.set_meta(DREW, firing and not off)
+	RivetFireCam.step(rig, weapon, o, aim, firing and not off, drew)
 	return firing and not off
 
 
@@ -165,6 +167,8 @@ static func fires_drawn(
 			return true
 		if deg.is_empty():
 			var gun: float = 90.0 if o == 2 else 180.0 * RivetFrames.LEFT[o]
+			if RivetFireCam.covers(weapon, o, aim, art, slack):
+				return true
 			return absf(angle_difference(aim, deg_to_rad(gun))) <= GUN_TOL + slack
 		var drawn: float = deg[o] if diag or DIAG_CELL[o] < 0 else 180.0 * RivetFrames.LEFT[o]
 		return absf(angle_difference(aim, deg_to_rad(drawn))) <= FLAME_TOL + slack
