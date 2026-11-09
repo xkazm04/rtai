@@ -41,6 +41,7 @@ Defect hunt on Rivet at combo. Every performance number here is CONTENDED. Evide
 
 - `node tools/evidence/run.mjs --no-bench`, first run (01:18-01:29, with three reels and the mutation runs beside it): **FAIL on one scenario.** Lint 15/15, unit 1973 passed 0 failed, parity bit for bit (planted mutation caught at step 629), selftest, release-compile 630 loaded 0 failed all passed; `scenario_rig_stress` failed on one engine error, `Parameter "t" is null` from `texture_2d_initialize` in the dummy renderer, during its not-gated combo pass.
 - The error did not come back: 4 isolated re-runs of that scenario (no such error; one missed the 1 ms budget at 1.034 ms under a reel's load) and 2 full `run_scenarios.mjs` runs, 55 passed each. **Cause not found.** The log places it at `RivetFrames.place` line 142, which sets a rotation and creates no texture, so I read that as where a queued render command was flushed, not the source. I could not show that this commit is or is not involved.
+- `node tools/evidence/run.mjs --no-bench`, second run (01:47-01:53, same commit, with nothing else of mine running): **PASS.** Lint 15/15, unit 1973/0, scenarios 55, parity, selftest, release-compile 630/0. That is the state `build/evidence` holds. The first run's failure stands as an intermittent, 1 of 4 full-suite passes here.
 - Director reel at combo, top, tilt70: 19 chapters fully down each, 0 SCRIPT ERROR, exit 0.
 - `boot/quest1.tscn -- --autostart`, 3600 ticks: started, exit 0, 0 SCRIPT ERROR.
 - The defect 10 test was run on the old gate first: red at the dip tick, green with the fix.
@@ -61,6 +62,6 @@ Defect hunt on Rivet at combo. Every performance number here is CONTENDED. Evide
 
 ## Next steps
 
-- Find what raised `Parameter "t" is null` in `scenario_rig_stress` (once in 3 full-suite runs here): run the suite in a loop with `--verbose` and look for a texture queued and freed before its init.
+- Find what raised `Parameter "t" is null` in `scenario_rig_stress` (once in 4 full-suite runs here): run the suite in a loop with `--verbose` and look for a texture queued and freed before its init.
 - The gatling's one walk tick between fire and run (Known) if it reads as a flicker in play.
 - See the last NEXT in `JOURNAL.md`.
