@@ -177,6 +177,21 @@ Hypothesis: `BloodFx.step_ticks` is the largest GDScript loop left inside `blood
 
 **The research loop has not stopped:** three ideas, three measured gains (0.235, about 0.06 and about 0.16 ms of frame p50), no wash in a row. In the same riot the largest named costs left are the rig (0.57 ms p50) and render CPU (0.35 ms); blood is now 0.22 ms a frame.
 
+### Item 4, idea 4 (it12): Rivet's strip choice probes each file once: KEPT as the new baseline (40e719fd)
+**The split that found it** (scratch timers in a throwaway release export, 2 runs, CONTENDED, not committed; riot, combo, 1500 frames). `CharacterRigs.step_ticks` per frame: the drive loop 533 us, `_assign` 78 (selection 162 us every 4th call, remap about 50), the hidden-rig cards pass 20, `set_view` 4, RigDetail 4. 10.6 drives a frame, 90 % of them cold. Per drive: `StreetView.step` about 25 us, against gait 8.4, pose 8.5, head card 2.3, springs and hips 2.9, tilt 1.9, clips 1.4, lift 1.2. Inside `StreetView.step`, by frame: **`RivetFrames.step` 119 us on Rivet's one rig**, walkers 122, shield and crowd about 19.
+**Cause.** Each Rivet pose step called `ResourceLoader.exists` three times (walking bare-claw) to seven (the worst branch; the commit message's "up to six" undercounts) (`RivetStrips.strip_of` twice, `diag_or`, `left_of`, `RivetWalk.path_of` up to three, `RivetReload.path_or`, `RivetKnock.path_or`) on files that ship in the pck and cannot change. Which branch runs depends on the weapon and the speed, so a frame's count varies.
+**The change.** `RivetStrips.has_file` remembers the answer per path. Nothing else changes, so the same paths are chosen.
+| 24 rounds, release riot at combo, `evidence/perf/n10-cputime/exists/` | median | CI95 | lower |
+|---|---|---|---|
+| frame p50, exists - drops | **-0.104 ms** (2.151 -> 2.051) | -0.112, -0.084 | 24 of 24 |
+| frame p50, exists - twin (the same baseline, a second export) | -0.110 ms | -0.119, -0.101 | 23 of 24 |
+| frame p50, A/A twin - drops | +0.002 ms | -0.017, +0.026 | 10 of 24 |
+| total CPU, exists - drops | -0.180 s | -0.289, -0.031 | 17 of 24 |
+| total CPU, A/A twin - drops | +0.109 s | +0.031, +0.172 | 6 of 24 |
+Others up before a run: 0 to 2, median 0; in 22 of the 24 rounds no other Godot was up before any arm's run, and those read -0.104 ms (22 of 22). That count is taken once before each run, so it is not a claim that the machine stayed quiet throughout. **The total-CPU reading is not claimed:** this A/A's interval excludes zero, at a size close to the effect. The p50 is the verdict. After the change the scratch split reads `RivetFrames.step` at about 45 us a frame (place 12.3, hide_all 4.0 over 31 parts, the strip-path pieces about 8; its 19.6 us `build` bucket is a mean over 1200 calls and I attribute it to first loads of the strips, not timed apart).
+**A slip in the run.** My retarget of the A/B script missed the backslash form of the output path, so these runs were first written over it11's `drops/` files. The 49 overwritten paths were restored from git and the new results moved here (JOURNAL it12).
+**What the split says next:** corpses. 6.5 fall-card draws a frame at about 10 us each (`StreetDeadPlan.draw` 6.5 of it). `CutRig.drive` places a fall card twice a step: in `StreetView.step`, then again in `StreetView.post` after the react's pose.
+
 ### The riot on film (it9): what the cut changes on screen, with an A/A control
 `evidence/perf/n10-film/`: `film.sh` (main 9bbe6d0a vs this head, city riot, `--view=combo`, 1200 frames at `--fixed-fps 60`, 1280x800, d3d12, debug editor binary, no HUD), `aa.sh` (the same code twice at 32 px/m), `cmp_frames.py`, `psnr*.log`, `ab_only_frames.json`. Instrument: ffmpeg psnr between the two MJPEG captures (a `mse_avg` of exactly 0 means every sample matched); both arms ran side by side, CONTENDED. Masters: `gtai-masters/n10/perf/`.
 
