@@ -19,6 +19,8 @@ const RESCAN_FRAMES: int = 30
 const SEQ_FRAME: int = 900
 const NEW_LABEL: String = "(new since last scan)"
 const FLUSH_HEAD: String = "flush: before the first queued call (engine work)"
+const WORST_FRAMES: int = 12
+const WORST_LABELS: int = 6
 
 var out_path: String = ""
 var _marks: Array[SpanMark] = []
@@ -186,7 +188,11 @@ func write() -> void:
 		rows.append(_row(label, _series[label]))
 	rows.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return a["mean_ms"] > b["mean_ms"])
 	var doc: Dictionary = {
-		"schema": "gtai.node-spans/1", "frames": _frames, "rows": rows, "flush_order": _seq
+		"schema": "gtai.node-spans/1",
+		"frames": _frames,
+		"rows": rows,
+		"flush_order": _seq,
+		"worst_frames": _worst(WORST_FRAMES, WORST_LABELS),
 	}
 	@warning_ignore("return_value_discarded")
 	DirAccess.make_dir_recursive_absolute(out_path.get_base_dir())
@@ -198,6 +204,35 @@ func write() -> void:
 	f.store_string(JSON.stringify(doc, "  "))
 	f.close()
 	Log.info("bench", "node spans -> %s (%d frames, %d rows)" % [out_path, _frames, rows.size()])
+
+
+## n12: the `count` frames with the most span time in all, each with its `top` labels, so a
+## spike names its node (frame = the span series' index, about FightFrames' frame index).
+func _worst(count: int, top: int) -> Array[Dictionary]:
+	var sums: PackedFloat32Array = PackedFloat32Array()
+	@warning_ignore("return_value_discarded")
+	sums.resize(_frames)
+	for label: String in _series:
+		var s: PackedFloat32Array = _series[label]
+		for i: int in mini(s.size(), _frames):
+			sums[i] += s[i]
+	var order: Array[int] = []
+	for i: int in _frames:
+		order.append(i)
+	order.sort_custom(func(a: int, b: int) -> bool: return sums[a] > sums[b])
+	var out: Array[Dictionary] = []
+	for i: int in order.slice(0, count):
+		var at: Dictionary[String, float] = {}
+		for label: String in _series:
+			if i < _series[label].size() and _series[label][i] > 0.0:
+				at[label] = _series[label][i]
+		var labels: Array[String] = at.keys()
+		labels.sort_custom(func(a: String, b: String) -> bool: return at[a] > at[b])
+		var named: Dictionary[String, float] = {}
+		for label: String in labels.slice(0, top):
+			named[label] = snappedf(at[label], 0.001)
+		out.append({"frame": i, "sum_ms": snappedf(sums[i], 0.001), "top": named})
+	return out
 
 
 func _row(label: String, s: PackedFloat32Array) -> Dictionary:
