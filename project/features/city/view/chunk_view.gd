@@ -63,9 +63,9 @@ func _init(parent: RID, textures: CityTextures) -> void:
 	var casts: CastShadows = CastShadows.load_table()
 	_shadow_mat = casts.material()
 	_shadow_extra = casts.extra_px(textures.classes, SimConst.PX_PER_M, textures.names)
-	_core_on = casts.parapet_core_m > 0.0
 	_core_px = Vector2.ONE * (casts.parapet_core_m - casts.baked_m(&"building")) * SimConst.PX_PER_M
 	lift = ChunkLift.make(textures, _is_building)
+	_core_on = casts.core_drawn(lift != null)
 	_band_of = lift.cards.bands(_band_of) if lift != null else _band_of
 
 

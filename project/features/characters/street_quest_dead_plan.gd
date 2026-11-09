@@ -21,11 +21,6 @@ const OPAQUE: bool = true
 const FALL_TICKS: int = 24
 const SLIDE_M: float = 0.6
 const TWIST_RAD: float = 0.35
-## it22: a body falling within SPACE_M of one already lying is pushed off it (up to PUSH_MAX_M),
-## fixed at first sight so the earlier dead never move; Dock 9's crossing heaped five into one
-## blob at 64 px/m. SPACE_M 0 = no push (it19).
-const SPACE_M: float = 1.6
-const PUSH_MAX_M: float = 0.9
 ## An age past the fall (a settled corpse).
 const SETTLED: int = 1 << 20
 const PATH: String = "res://features/characters/art/view/plan/dead_contractor.png"
@@ -34,7 +29,6 @@ const ID_BASE: int = -1000000
 
 static var _tex: Texture2D = null
 static var _looked: bool = false
-static var _pushed: Dictionary[int, Vector2] = {}
 
 
 ## Draws the dead guard `h` at `at_px` in a plan pose at the arena tick `now`; false = no strip or
@@ -51,10 +45,16 @@ static func draw(canvas: CanvasItem, at_px: Vector2, h: Fighter, px_per_m: float
 	var hgt: float = float(_tex.get_height())
 	var pose: int = StreetDeadPlan.pick(ID_BASE - h.id, &"", at_px)
 	var c: Color = ground_tint(tint)
+	var cell: Rect2 = Rect2(-w * 0.5, -hgt * 0.5, w, hgt)
+	var src: Rect2 = Rect2(w * pose, 0.0, w, hgt)
+	var off: Vector2 = StreetDeadHeading.shadow_off(px_per_m)
+	if off != Vector2.ZERO:
+		var under: Color = StreetDeadHeading.SHADOW
+		under.a *= c.a
+		canvas.draw_set_transform_matrix(t.translated(off))
+		canvas.draw_texture_rect_region(_tex, cell, src, under)
 	canvas.draw_set_transform_matrix(t)
-	canvas.draw_texture_rect_region(
-		_tex, Rect2(-w * 0.5, -hgt * 0.5, w, hgt), Rect2(w * pose, 0.0, w, hgt), c
-	)
+	canvas.draw_texture_rect_region(_tex, cell, src, c)
 	canvas.draw_set_transform(Vector2.ZERO)
 	return true
 
@@ -122,46 +122,24 @@ static func transform_of(
 	var blow: Vector2 = blow_of(at_px, h.facing)
 	var pose: int = StreetDeadPlan.pick(ID_BASE - h.id, &"", at_px)
 	var hv: int = StreetDeadPlan._hash(ID_BASE - h.id)
-	var flip: bool = (hv & 1) == 1
-	var head: float = StreetDeadPlan.HEAD_ANGLE[pose]
-	if flip:
-		head = PI - head
-	var jitter: float = StreetDeadPlan.JITTER_RAD * (float(posmod(hv >> 4, 1001)) / 500.0 - 1.0)
+	var head: Vector2 = StreetDeadHeading.head_of(blow, pose, (hv & 1) == 1)
+	var flip: bool = StreetDeadHeading.flipped(head, pose, (hv & 1) == 1)
 	var s: float = StreetQuestCards.body_m() * px_per_m / StreetWalkerFall.STILL_PX
 	var left: float = fall_left(age)
 	var pelvis: float = StreetDeadPlan.PELVIS_K * StreetWalkerFall.STILL_PX * s
-	var at: Vector2 = at_px + blow * (pelvis - SLIDE_M * px_per_m * left)
-	at += push_of(ID_BASE - h.id, at_px, px_per_m) * (1.0 - left)
+	var centre: Vector2 = at_px + head * pelvis
+	var at: Vector2 = centre - blow * SLIDE_M * px_per_m * left
+	at += StreetQuestDeadPush.push_of(ID_BASE - h.id, centre, px_per_m) * (1.0 - left)
 	var turn: float = TWIST_RAD * left * (-1.0 if flip else 1.0)
 	var k: float = s * lerpf(1.0, StreetDeadPlan.LAND_SCALE, left)
-	var angle: float = blow.angle() - head + jitter + turn
+	var angle: float = StreetDeadHeading.angle_of(head, pose, flip)
+	angle += StreetDeadHeading.jitter(hv) + turn
 	return Transform2D(angle, Vector2(-k if flip else k, k), 0.0, at)
-
-
-## The push off the dead already lying within SPACE_M of `at_px` (StreetDeadPlan's memory, each
-## with its own push), capped at PUSH_MAX_M; fixed for `actor` at its first sight.
-static func push_of(actor: int, at_px: Vector2, px_per_m: float) -> Vector2:
-	if _pushed.has(actor):
-		return _pushed[actor]
-	var push: Vector2 = Vector2.ZERO
-	var r: float = SPACE_M * px_per_m
-	for key: int in StreetDeadPlan._lying:
-		var v: Vector3 = StreetDeadPlan._lying[key]
-		var own: Vector2 = _pushed.get(key, Vector2.ZERO)
-		var o: Vector2 = Vector2(v.x, v.y) + own
-		var d: float = at_px.distance_to(o)
-		if key != actor and d < r and d > 0.001:
-			push += (at_px - o) / d * (r - d)
-	push = push.limit_length(PUSH_MAX_M * px_per_m)
-	if _pushed.size() >= StreetDeadPlan.MEMORY:
-		_pushed.clear()
-	_pushed[actor] = push
-	return push
 
 
 ## Forgets every push (tests; a new scene starts from no dead).
 static func reset() -> void:
-	_pushed.clear()
+	StreetQuestDeadPush.reset()
 
 
 ## The share of the fall still to go `age` ticks after the blow (1 at the blow, 0 settled).

@@ -3,8 +3,8 @@ extends RefCounted
 ## n9 world: the dead redesigned ("they lay down like in the bed now"). At impact a card view
 ## swaps the fall grid's lying frame for one of five PLAN poses (art/view/plan/dead_<class>.png:
 ## A face-down crumple, B back spread, C side curl, D twisted sprawl, E folded on the side) on
-## the ground plane, head along the blow, picked by death family, then the first no neighbour
-## within NEAR_M shows; it slides into the sim rest and rocks back. ENABLED false = d9's frame.
+## the ground plane, head on a drawn heading (StreetDeadHeading), picked by family, then the first
+## no neighbour within NEAR_M shows; it slides into the sim rest and rocks back. ENABLED false = d9.
 const ENABLED: bool = true
 const DIR: String = "res://features/characters/art/view/plan/dead_"
 const POSES: int = 5
@@ -48,8 +48,6 @@ const LAND_SCALE: float = 1.05
 ## The pelvis (the cell centre) lies this share of the standing height along the blow from the
 ## sim point (the feet stay near where the person stood).
 const PELVIS_K: float = 0.45
-## Each body turns off the blow by up to this much (rad, the person's own hash), and mirrors by it.
-const JITTER_RAD: float = 0.4
 const NEAR_M: float = 3.0
 const MEMORY: int = 256
 const NODE: String = "DeadPlan"
@@ -109,17 +107,18 @@ static func draw(rig: CutRig, card: Sprite2D, row: String, ks: float, p: float) 
 	var plan: Sprite2D = _node(card, path)
 	var pose: int = pick(rig.actor_id, kind, rig.global_position)
 	var h: int = _hash(rig.actor_id)
-	var jitter: float = JITTER_RAD * (float(posmod(h >> 4, 1001)) / 500.0 - 1.0)
 	var m: Vector2 = motion(kind, p)
-	var pelvis: float = _bounded(card, rig.global_position, blow, ks)
-	var at: Vector2 = rig.global_position + blow * (pelvis - m.x * CharacterRigs.PX_PER_M)
+	var head: Vector2 = StreetDeadHeading.head_of(blow, pose, (h & 1) == 1)
+	var pelvis: float = _bounded(card, rig.global_position, head, ks)
+	var at: Vector2 = rig.global_position + head * pelvis - blow * m.x * CharacterRigs.PX_PER_M
 	plan.frame = pose
-	plan.flip_h = (h & 1) == 1
-	var head: float = HEAD_ANGLE[pose] if not plan.flip_h else PI - HEAD_ANGLE[pose]
+	plan.flip_h = StreetDeadHeading.flipped(head, pose, (h & 1) == 1)
+	var turn: float = StreetDeadHeading.angle_of(head, pose, plan.flip_h)
 	var s: float = ks * m.y
 	plan.global_transform = Transform2D(
-		blow.angle() - head + jitter + _settle(p), Vector2(s, s), 0.0, at
+		turn + StreetDeadHeading.jitter(h) + _settle(p), Vector2(s, s), 0.0, at
 	)
+	StreetDeadHeading.shade(card, plan)
 	card.self_modulate.a = 0.0
 
 
@@ -138,6 +137,7 @@ static func drop(card: Sprite2D) -> void:
 	if plan != null:
 		card.remove_child(plan)
 		plan.queue_free()
+	StreetDeadHeading.unshade(card)
 	card.remove_meta(FREE)
 	card.self_modulate.a = 1.0
 
@@ -147,12 +147,12 @@ static func reset() -> void:
 	_lying.clear()
 
 
-## The pelvis offset along the blow (px), pulled back short of the first solid; once per card.
-static func _bounded(card: Sprite2D, at: Vector2, blow: Vector2, ks: float) -> float:
+## The pelvis offset along the head (px), pulled back short of the first solid; once per card.
+static func _bounded(card: Sprite2D, at: Vector2, head: Vector2, ks: float) -> float:
 	var pelvis: float = PELVIS_K * StreetWalkerFall.STILL_PX * ks
 	var reach: float = pelvis + HEAD_K * StreetWalkerFall.STILL_PX * ks
 	if not card.has_meta(FREE):
-		card.set_meta(FREE, free_px(at, blow, reach))
+		card.set_meta(FREE, free_px(at, head, reach))
 	var free: float = card.get_meta(FREE)
 	return pelvis - (reach - free)
 
