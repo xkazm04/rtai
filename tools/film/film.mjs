@@ -2,25 +2,25 @@
 // One command for a game film: a named shot, always with its scene, loadout, fixed seed and fixed
 // step; ids and flags checked against the tree before anything launches; tick-exact stills and
 // per-tick numbers from dev/frames/film_probe.gd; one verdict: pass, fail or unverifiable.
-//   node tools/film/film.mjs <shot> --out=<dir> [--ticks=<n>] [--stills=<t,t>] [--view=combo]
-//     [--ppm=48] [--lock=auto|spawn|at:<tick>|<x,y>|off] [--seed=<n>] [--res=1280x800] [--movie] [--no-movie] [--tree=<dir>]
+//   node tools/film/film.mjs <shot> --out=<dir> [--ticks=<n>] [--stills=<t,t-t>] [--on=fire:3+4,kill:1+6] [--view=combo]
+//     [--ppm=48] [--lock=auto|spawn|trigger|at:<tick>|<x,y>|off] [--seed=<n>] [--res=1280x800] [--movie] [--no-movie] [--tree=<dir>]
 //     [--timeout=<s>] [--dry-run] [-- <extra game flags>]
 // Exit: 0 pass, 1 fail (the run broke), 2 usage (nothing launched), 3 unverifiable (it ran, but the
 // numbers or stills it was asked for do not exist).
-import { existsSync, mkdirSync, readFileSync, renameSync, rmSync, statSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { spawnSync, execFileSync } from 'node:child_process';
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { ROOT } from '../lib/repo.mjs';
 import { describe, runGodot } from '../lib/godot.mjs';
 import { verdict } from '../lib/dev_verdict.mjs';
-import { autoLock, checkFlags, checkId, godotArgs, parseShot, shotLabel } from './shots.mjs';
+import { autoLock, checkFlags, checkId, godotArgs, parseOn, parseShot, parseStills, shotLabel, triggeredTicks } from './shots.mjs';
 import { subjectRow } from './subject.mjs';
 
 export const EXIT = { pass: 0, fail: 1, usage: 2, unverifiable: 3 };
-const USAGE = 'usage: node tools/film/film.mjs <shot> --out=<dir> [--ticks=<n>] [--stills=<t,t>] [--view=combo] '
-  + '[--ppm=48] [--lock=auto|spawn|at:<tick>|<x,y>|off] [--seed=<n>] [--res=1280x800] [--movie] [--no-movie] [--tree=<dir>] [--timeout=<s>] [--dry-run] [-- flags]';
-const VALUE = new Set(['out', 'ticks', 'stills', 'view', 'ppm', 'lock', 'seed', 'res', 'tree', 'timeout', 'subject']);
+const USAGE = 'usage: node tools/film/film.mjs <shot> --out=<dir> [--ticks=<n>] [--stills=<t,t-t>] [--on=fire:3+4,kill:1+6] [--view=combo] '
+  + '[--ppm=48] [--lock=auto|spawn|trigger|at:<tick>|<x,y>|off] [--seed=<n>] [--res=1280x800] [--movie] [--no-movie] [--tree=<dir>] [--timeout=<s>] [--dry-run] [-- flags]';
+const VALUE = new Set(['out', 'ticks', 'stills', 'on', 'view', 'ppm', 'lock', 'seed', 'res', 'tree', 'timeout', 'subject']);
 const SWITCH = new Set(['movie', 'no-movie', 'dry-run']);
 const DEFAULTS = { subject: 'rivet', view: 'combo', ppm: '48', lock: 'auto', seed: '20261109', res: '1280x800', timeout: '900' };
 
@@ -47,7 +47,12 @@ export function plan(flags, shotText, extra) {
   if (shot.error) return { error: `film: ${shot.error}` };
   const tree = resolve(flags.tree ?? ROOT);
   if (!existsSync(join(tree, 'project', 'project.godot'))) return { error: `film: ${tree} has no project/project.godot` };
-  const stills = (flags.stills ?? '').split(',').filter(Boolean).map(Number);
+  const stills = parseStills(flags.stills);
+  if (stills.error) return { error: `film: ${stills.error}` };
+  const on = parseOn(flags.on);
+  if (on.error) return { error: `film: ${on.error}` };
+  if (shot.shot.script && on.length) return { error: 'film: quest1 has no probe, so --on cannot see its shots' };
+  if (flags.lock === 'trigger' && !on.length) return { error: 'film: --lock=trigger needs --on=<what to wait for>' };
   if (shot.shot.script && (!stills.length || stills.some((t) => t % 2 !== 0))) {
     return { error: 'film: quest1 needs --stills=<even ticks> (its recorder saves on even ticks only)' };
   }
@@ -56,8 +61,8 @@ export function plan(flags, shotText, extra) {
   if (!Number.isInteger(ticks) || ticks <= 0) return { error: `film: --ticks must be a positive integer, got ${flags.ticks}` };
   if (stills.some((t) => !Number.isInteger(t) || t < 0 || t >= ticks)) return { error: `film: --stills must be ticks below ${ticks}` };
   if (!/^\d+x\d+$/.test(flags.res)) return { error: `film: --res must be WxH, got ${flags.res}` };
-  if (!/^(auto|spawn|off|at:\d+|-?\d+(\.\d+)?,-?\d+(\.\d+)?)$/.test(flags.lock)) return { error: `film: --lock must be auto, spawn, off, at:<tick> or x,y, got ${flags.lock}` };
-  const lock = flags.lock === 'auto' ? autoLock(shot.shot, stills.length ? Math.min(...stills) : null) : flags.lock;
+  if (!/^(auto|spawn|trigger|off|at:\d+|-?\d+(\.\d+)?,-?\d+(\.\d+)?)$/.test(flags.lock)) return { error: `film: --lock must be auto, spawn, trigger, off, at:<tick> or x,y, got ${flags.lock}` };
+  const lock = flags.lock === 'auto' ? autoLock(shot.shot, stills.length ? Math.min(...stills) : null, on.length > 0) : flags.lock;
   const bad = [...(shot.shot.needs ? [checkId(shot.shot.needs, shot.arg, tree)] : []), checkId('view', flags.view, tree),
     ...checkFlags(extra, tree)].filter(Boolean);
   if (bad.length) return { error: bad.map((b) => `film: ${b}`).join('\n') };
@@ -66,9 +71,9 @@ export function plan(flags, shotText, extra) {
   }
   const dir = resolve(flags.out);
   // A movie costs real time (combat measured about 1.5 fps with Godots running beside it), so stills skip it unless asked.
-  const wantMovie = flags.movie === true || (!stills.length && !flags['no-movie']);
+  const wantMovie = flags.movie === true || (!stills.length && !on.length && !flags['no-movie']);
   const movie = wantMovie && !shot.shot.script ? join(dir, `${shotLabel(shot)}.avi`) : null;
-  return { shot, opts: { tree, dir, ticks, stills, movie, extra, view: flags.view, ppm: flags.ppm, lock,
+  return { shot, opts: { tree, dir, ticks, stills, on, onText: flags.on ?? '', movie, extra, view: flags.view, ppm: flags.ppm, lock,
     subject: flags.subject ?? 'rivet', seed: flags.seed, res: flags.res, timeoutMs: Number(flags.timeout) * 1000, label: shotLabel(shot),
     noProbe: Boolean(shot.shot.script) } };
 }
@@ -118,21 +123,24 @@ export function judge(res, opts, startedAt) {
   if (!probe.rows.length) reasons.push('probe.json has no ticks');
   const [w, h] = opts.res.split('x').map(Number);
   if (probe.view?.[0] !== w || probe.view?.[1] !== h) reasons.push(`the run drew ${probe.view?.join('x')}, not the asked ${opts.res}`);
+  const fired = triggeredTicks(opts.on ?? [], probe.events, opts.ticks);
+  reasons.push(...fired.reasons);
   const seen = new Set(probe.stills ?? []);
-  for (const t of opts.stills) {
+  const wanted = [...new Set([...opts.stills, ...fired.ticks])].sort((a, b) => a - b);
+  for (const t of wanted) {
     const png = join(opts.dir, `t${t}.png`);
     if (!seen.has(t) || !existsSync(png) || statSync(png).mtimeMs + 2 < startedAt) { reasons.push(`no still at tick ${t}`); continue; }
     const who = subjectRow(probe.rows.find((r) => r.tick === t), opts.subject);
     if (!who) reasons.push(`no ${opts.subject} in the numbers at tick ${t}`);
     else if (!who.on_screen) reasons.push(`${opts.subject} is off screen at tick ${t} (${(who.screen ?? []).map((n) => Math.round(n)).join(', ')})`);
   }
-  return { outcome: reasons.length ? 'unverifiable' : 'pass', reasons, probe };
+  return { outcome: reasons.length ? 'unverifiable' : 'pass', reasons, probe, stills: wanted };
 }
 
 /** Films one shot. {outcome, reasons, probe, mp4, manifest}; `runner` is for tests. */
 export async function filmOne({ shot, opts }, { runner = runGodot } = {}) {
   mkdirSync(opts.dir, { recursive: true });
-  for (const t of opts.stills) rmSync(join(opts.dir, `t${t}.png`), { force: true });
+  for (const name of readdirSync(opts.dir)) if (/^t\d+\.png$/.test(name)) rmSync(join(opts.dir, name), { force: true });
   rmSync(join(opts.dir, 'probe.json'), { force: true });
   const args = godotArgs(shot, opts);
   const startedAt = Date.now();
@@ -145,10 +153,17 @@ export async function filmOne({ shot, opts }, { runner = runGodot } = {}) {
     judged.reasons.push('the movie did not encode');
   }
   const manifest = { schema: 'gtai.film/1', shot: opts.label, outcome: judged.outcome, reasons: judged.reasons, ...gitHead(opts.tree),
-    tree: opts.tree, ticks: opts.ticks, stills: opts.stills, view: opts.view, ppm: opts.ppm, lock: opts.lock, seed: opts.seed,
+    tree: opts.tree, ticks: opts.ticks, stills: judged.stills ?? opts.stills, on: opts.onText, events: judged.probe?.events ?? null, view: opts.view, ppm: opts.ppm, lock: opts.lock, seed: opts.seed,
     res: opts.res, mp4, ran: describe(res), args };
   writeFileSync(join(opts.dir, 'film.json'), `${JSON.stringify(manifest, null, 1)}\n`);
   return { ...judged, mp4, manifest };
+}
+
+/** "fire at 214 230 ... (31); kill at 402": what a builder otherwise guesses one launch at a time. */
+export function eventLine(events) {
+  if (!events) return '';
+  const list = (name, ts) => `${name} at ${ts.length ? ts.slice(0, 12).join(' ') : 'no tick'}${ts.length > 12 ? ` ... (${ts.length})` : ''}`;
+  return [list('fire', events.fire ?? []), list('kill', events.kill ?? [])].join('; ');
 }
 
 export async function main(argv, { out = console.log, err = console.error, runner } = {}) {
@@ -159,6 +174,8 @@ export async function main(argv, { out = console.log, err = console.error, runne
   out(`film: godot --path project ${godotArgs(planned.shot, planned.opts).join(' ')}`);
   if (parsed.flags['dry-run']) { out('film: dry run, nothing launched'); return EXIT.pass; }
   const r = await filmOne(planned, { runner });
+  const happened = eventLine(r.probe?.events);
+  if (happened) out(`film: ${happened}`);
   out(`film: ${r.outcome.toUpperCase()}${r.reasons.length ? `: ${r.reasons.join('; ')}` : ''}; ${join(planned.opts.dir, 'film.json')}`);
   return EXIT[r.outcome];
 }

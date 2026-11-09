@@ -86,7 +86,7 @@ export function godotArgs({ arg, shot }, o) {
   }
   const head = ['--rendering-driver', 'd3d12', '--resolution', o.res, '--fixed-fps', '60',
     ...(o.movie ? ['--write-movie', o.movie] : []), '--quit-after', String(o.ticks), ARENA, '--'];
-  const stills = o.stills.length ? [`--film-stills=${o.stills.join(',')}`] : [];
+  const stills = [...(o.stills.length ? [`--film-stills=${o.stills.join(',')}`] : []), ...(o.onText ? [`--film-on=${o.onText}`] : [])];
   const lock = o.lock === 'off' ? [] : [`--cam-lock=${o.lock}`];
   const feel = o.lock === 'off' ? [] : ['--feel=off'];
   return [...head, ...shot.flags(arg), `--seed=${o.seed}`, `--view=${o.view}`, `--ppm=${o.ppm}`,
@@ -94,10 +94,56 @@ export function godotArgs({ arg, shot }, o) {
 }
 
 /** The camera lock a shot gets when none is asked for. Rivet walks far in the street shots, so the
- *  camera follows him and freezes at the first tick that matters; `from` is that tick, or null. */
-export function autoLock(shot, from) {
+ *  camera follows him and freezes at the first tick that matters: `from`, or the --on event. */
+export function autoLock(shot, from, onEvent = false) {
   if (!shot.travels) return 'spawn';
-  return from === null ? 'off' : `at:${from}`;
+  if (from !== null) return `at:${from}`;
+  return onEvent ? 'trigger' : 'off';
+}
+
+const MAX_STILLS = 240;
+
+/** `300,310-315` -> ticks, or {error}. A reversed or huge range is refused, never reordered. */
+export function parseStills(text) {
+  const ticks = [];
+  for (const part of String(text ?? '').split(',').filter(Boolean)) {
+    const span = /^(\d+)-(\d+)$/.exec(part);
+    if (!span) { ticks.push(Number(part)); continue; }
+    const [from, to] = [Number(span[1]), Number(span[2])];
+    if (to < from) return { error: `--stills range ${part} runs backwards` };
+    if (to - from >= MAX_STILLS) return { error: `--stills range ${part} is over ${MAX_STILLS} frames` };
+    for (let t = from; t <= to; t += 1) ticks.push(t);
+  }
+  return ticks.length > MAX_STILLS ? { error: `--stills asks for ${ticks.length} frames, over ${MAX_STILLS}` } : ticks;
+}
+
+/** `fire:3+4,kill:1` -> [{kind, nth, after}], or {error}. */
+export function parseOn(text) {
+  const rules = [];
+  for (const part of String(text ?? '').split(',').filter(Boolean)) {
+    const m = /^(fire|kill):([1-9]\d*)(?:\+(\d+))?$/.exec(part);
+    if (!m) return { error: `--on takes fire:<n>[+<frames after>] or kill:<n>[+<frames after>], got ${part}` };
+    const after = Number(m[3] ?? 0);
+    if (after >= MAX_STILLS) return { error: `--on ${part} is over ${MAX_STILLS} frames` };
+    rules.push({ kind: m[1], nth: Number(m[2]), after });
+  }
+  return rules;
+}
+
+/** The ticks --on resolved to in this run. What never happened is a reason, never an empty pass. */
+export function triggeredTicks(rules, events, runTicks) {
+  const ticks = [];
+  const reasons = [];
+  for (const { kind, nth, after } of rules) {
+    const happened = events?.[kind];
+    const name = `${kind}:${nth}`;
+    if (!Array.isArray(happened)) { reasons.push(`--on ${name}: this probe records no ${kind} events`); continue; }
+    if (happened.length < nth) { reasons.push(`--on ${name} never happened: ${happened.length} ${kind} event(s) in ${runTicks} ticks`); continue; }
+    const at = happened[nth - 1];
+    if (at + after >= runTicks) reasons.push(`--on ${name} at tick ${at}: its last frame ${at + after} is past the end of the run (${runTicks} ticks)`);
+    for (let t = at; t <= Math.min(at + after, runTicks - 1); t += 1) ticks.push(t);
+  }
+  return { ticks, reasons };
 }
 
 export const shotLabel = (s) => (s.arg ? `${s.name}-${s.arg}` : s.name);

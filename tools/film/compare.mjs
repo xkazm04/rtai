@@ -30,7 +30,7 @@ export const IDENTICAL_FRACTION = 0.00005;
 /** Rivet further apart than this (m) at a tick: the two sides are no longer the same moment. */
 export const TIMELINE_DELTA_M = 0.05;
 const PROBE = 'project/dev/frames/film_probe.gd';
-const PROBE_FILES = [PROBE, 'project/dev/frames/film_card.gd'];
+const PROBE_FILES = [PROBE, 'project/dev/frames/film_card.gd', 'project/dev/frames/film_trigger.gd'];
 const INJECTED = '.gtai-film-injected';
 const HOOK = /^(\s*)FightFrames\.attach\(self, args, session\.world\).*$/m;
 

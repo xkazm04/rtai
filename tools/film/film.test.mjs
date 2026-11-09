@@ -2,13 +2,13 @@ import assert from 'node:assert/strict';
 import { mkdirSync, mkdtempSync, readFileSync, rmSync, utimesSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import test from 'node:test';
+import test, { describe } from 'node:test';
 import { deflateSync } from 'node:zlib';
 import { IDENTICAL_FRACTION, judgeTick, parseArgv as parseCompare, subjectRow, worst } from './compare.mjs';
 import { judge, parseArgv, plan } from './film.mjs';
 import { decodePng, diffImages } from './png.mjs';
 import { copyRuntime } from '../lib/snapshot.mjs';
-import { checkFlags, checkId, godotArgs, parseShot, shotLabel } from './shots.mjs';
+import { autoLock, checkFlags, checkId, godotArgs, parseOn, parseShot, parseStills, shotLabel, triggeredTicks } from './shots.mjs';
 
 function tree(files = {}) {
   const root = mkdtempSync(join(tmpdir(), 'gtai-film-test-'));
@@ -283,4 +283,42 @@ test('compare needs both sides, ticks, an output and a real subject', () => {
   assert.match(parseCompare(['arena', '--a=x', '--b=y', '--at=soon', '--out=o']).error, /--at/);
   assert.match(parseCompare(['arena', '--a=x', '--b=y', '--at=1', '--out=o', '--subject=boss']).error, /--subject/);
   assert.equal(parseCompare(['arena', '--a=x', '--b=y', '--at=1,2', '--out=o']).shotText, 'arena');
+});
+
+describe('film: frames picked by range or by event (combat REQUEST, n11)', () => {
+  test('a range expands, and a backwards or huge range is refused', () => {
+    assert.deepEqual(parseStills('300,310-312'), [300, 310, 311, 312]);
+    assert.match(parseStills('20-10').error, /backwards/);
+    assert.match(parseStills('0-5000').error, /over 240/);
+  });
+  test('--on rules: nth is 1-based, frames after are optional, anything else is refused', () => {
+    assert.deepEqual(parseOn('fire:3+4,kill:1'), [{ kind: 'fire', nth: 3, after: 4 }, { kind: 'kill', nth: 1, after: 0 }]);
+    for (const bad of ['fire:0', 'fire', 'shot:1', 'fire:1+x', 'fire:-1']) assert.ok(parseOn(bad).error, bad);
+  });
+  test('an event that never happened is a reason, not an empty pass', () => {
+    const r = triggeredTicks([{ kind: 'kill', nth: 2, after: 3 }], { fire: [10], kill: [50] }, 900);
+    assert.deepEqual(r.ticks, []);
+    assert.match(r.reasons[0], /kill:2 never happened: 1 kill event/);
+  });
+  test('a probe without events (an older kit) cannot answer --on', () => {
+    assert.match(triggeredTicks([{ kind: 'fire', nth: 1, after: 0 }], undefined, 900).reasons[0], /records no fire events/);
+  });
+  test('frames past the end of the run are named', () => {
+    const r = triggeredTicks([{ kind: 'fire', nth: 1, after: 5 }], { fire: [598], kill: [] }, 600);
+    assert.deepEqual(r.ticks, [598, 599]);
+    assert.match(r.reasons[0], /last frame 603 is past the end/);
+  });
+  test('a street shot with an event locks on the trigger; the arena keeps its spawn lock', () => {
+    assert.equal(autoLock({ travels: true }, null, true), 'trigger');
+    assert.equal(autoLock({ travels: true }, 300, true), 'at:300');
+    assert.equal(autoLock({}, null, true), 'spawn');
+  });
+  test('the event flags reach the game, and quest1 cannot take them', () => {
+    const planned = plan({ ...parseArgv(['--out=x']).flags, out: 'x', on: 'fire:1+2' }, 'arena', []);
+    assert.equal(planned.error, undefined);
+    assert.ok(godotArgs(planned.shot, planned.opts).includes('--film-on=fire:1+2'));
+    assert.equal(planned.opts.movie, null);
+    assert.match(plan({ ...parseArgv([]).flags, out: 'x', on: 'fire:1', stills: '300' }, 'quest1', []).error, /no probe/);
+    assert.match(plan({ ...parseArgv([]).flags, out: 'x', lock: 'trigger' }, 'arena', []).error, /needs --on/);
+  });
 });

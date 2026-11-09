@@ -32,3 +32,28 @@ static func feet_y(s: Sprite2D, used: Rect2i) -> float:
 	if s.centered:
 		local -= cell / 2.0
 	return (s.get_global_transform_with_canvas() * local).y
+
+
+static func rig(game: ArenaGame, f: Fighter) -> CutRig:
+	return null if game.cast == null else game.cast.rigs.rig_for(f.id)
+
+
+## The card drawing `f` now: the lying sprite kept for the dead, else the upright head card.
+static func drawn(game: ArenaGame, f: Fighter) -> Sprite2D:
+	var r: CutRig = rig(game, f)
+	if r != null and r.head_card != null:
+		var lying: Sprite2D = r.head_card.get_node_or_null(StreetDeadPlan.NODE) as Sprite2D
+		if lying != null:
+			return lying
+		if r.head_card.visible:
+			return r.head_card
+	return _kept(game, f.id)
+
+
+## The lying sprite StreetDeadRest kept once the corpse's rig is back in the pool (its last part).
+static func _kept(game: ArenaGame, id: int) -> Sprite2D:
+	if game.cast == null or not game.cast.rigs.rest._kept.has(id):
+		return null
+	var parts: Array = game.cast.rigs.rest._kept[id]
+	var last: Variant = parts.back() if not parts.is_empty() else null
+	return last if last is Sprite2D else null

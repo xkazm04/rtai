@@ -6,8 +6,11 @@ extends Node
 ##   --film-dir=<dir>     writes probe.json there (and the stills)
 ##   --film-stills=<t,t>  saves <dir>/t<tick>.png after that tick's draw
 ##   --film-ticks=<a-b>   only these ticks go in probe.json (default: all)
+##   --film-on=fire:3+4,kill:1+6   also saves the frame of Rivet's 3rd round and the 4 after it,
+##                        of the first kill and the 6 after it; "trigger" below locks on it
 ##   --cam-lock=<x,y>     holds the camera on a world point (m); "spawn": Rivet's first tick;
-##                        "at:<tick>": it follows Rivet until that tick, then stays
+##                        "at:<tick>": it follows Rivet until that tick, then stays;
+##                        "trigger": until the first frame --film-on saves, then stays
 ## Rows: tick, frame (the movie frame), cam (camera world px), then one row per fighter with
 ## pos (m), screen (px), on_screen, draw (px, the opaque size of the drawn card), feet_y (px, the
 ## drawn card's lowest opaque row on screen, -1 = no card), facing_off (deg, drawn against sim).
@@ -22,6 +25,8 @@ var stills: Array[int] = []
 var window: Vector2i = Vector2i(0, 2147483647)
 var lock: Vector2 = Vector2.INF
 var lock_at: int = -1
+var lock_on_trigger: bool = false
+var trigger: FilmTrigger = FilmTrigger.new()
 var _rows: Array[Dictionary] = []
 var _saved: Array[int] = []
 var _last_tick: int = -1
@@ -42,8 +47,11 @@ static func attach(parent: ArenaGame, args: ArenaArgs) -> void:
 	var span: String = args.text("--film-ticks")
 	if span.contains("-"):
 		p.window = Vector2i(span.get_slice("-", 0).to_int(), span.get_slice("-", 1).to_int())
+	p.trigger = FilmTrigger.parse(args.text("--film-on"))
 	var cam: String = args.text("--cam-lock")
-	if cam == "spawn":
+	if cam == "trigger":
+		p.lock_on_trigger = true
+	elif cam == "spawn":
 		p.lock_at = 0
 	elif cam.begins_with("at:"):
 		p.lock_at = cam.trim_prefix("at:").to_int()
@@ -62,23 +70,29 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if game == null or game.session == null:
 		return
-	_hold_camera()
-	_view = get_viewport().get_visible_rect().size
 	var tick: int = game.session.tick()
-	if tick != _last_tick and out_dir != "":
+	var fresh: bool = tick != _last_tick
+	if fresh:
+		trigger.watch(tick, game.session.stage.arena)
+	_hold_camera(tick)
+	_view = get_viewport().get_visible_rect().size
+	if fresh and out_dir != "":
 		_last_tick = tick
 		if tick >= window.x and tick <= window.y:
 			_rows.append(_row(tick))
-		if stills.has(tick) and not _saved.has(tick) and not _saving:
+		var wanted: bool = stills.has(tick) or trigger.wants(tick)
+		if wanted and not _saved.has(tick) and not _saving:
 			_saving = true
 			_grab.call_deferred(tick)
 
 
 ## Locks the view on a world point. The arena camera takes `focus`; on the city the streaming focus
 ## stays on Rivet and the camera leans by the difference (CollectCallView.city_lean_m).
-func _hold_camera() -> void:
+func _hold_camera(tick: int) -> void:
 	var rivet: Fighter = game.session.stage.arena.rivet
-	if lock_at >= 0 and lock == Vector2.INF and game.session.tick() >= lock_at:
+	# The view read this frame's focus already: one tick early, so tick `lock_at` itself is held.
+	var due: bool = lock_at >= 0 and tick >= lock_at - 1
+	if lock == Vector2.INF and (due or (lock_on_trigger and trigger.wants(tick))):
 		lock = rivet.pos
 	if lock == Vector2.INF:
 		return
@@ -113,7 +127,7 @@ func _row(tick: int) -> Dictionary:
 
 
 func _fighter(f: Fighter, role: String) -> Dictionary:
-	var sprite: Sprite2D = _drawn(f)
+	var sprite: Sprite2D = FilmCard.drawn(game, f)
 	var size: Vector2 = Vector2(NO_DRAW, NO_DRAW)
 	var feet: float = NO_DRAW
 	var screen: Vector2 = _screen_of(f, sprite)
@@ -136,31 +150,6 @@ func _fighter(f: Fighter, role: String) -> Dictionary:
 	}
 
 
-func _rig(f: Fighter) -> CutRig:
-	return null if game.cast == null else game.cast.rigs.rig_for(f.id)
-
-
-## The card drawing `f` now: the lying sprite kept for the dead, else the upright head card.
-func _drawn(f: Fighter) -> Sprite2D:
-	var rig: CutRig = _rig(f)
-	if rig != null and rig.head_card != null:
-		var lying: Sprite2D = rig.head_card.get_node_or_null(StreetDeadPlan.NODE) as Sprite2D
-		if lying != null:
-			return lying
-		if rig.head_card.visible:
-			return rig.head_card
-	return _kept(f.id)
-
-
-## The lying sprite StreetDeadRest kept once the corpse's rig is back in the pool (its last part).
-func _kept(id: int) -> Sprite2D:
-	if game.cast == null or not game.cast.rigs.rest._kept.has(id):
-		return null
-	var parts: Array = game.cast.rigs.rest._kept[id]
-	var last: Variant = parts.back() if not parts.is_empty() else null
-	return last if last is Sprite2D else null
-
-
 ## On-screen px: from the drawn card when there is one, else the sim point through the camera.
 func _screen_of(f: Fighter, sprite: Sprite2D) -> Vector2:
 	if sprite != null:
@@ -170,7 +159,7 @@ func _screen_of(f: Fighter, sprite: Sprite2D) -> Vector2:
 
 ## Drawn facing against the sim's aim (deg, 0 = he looks where he aims; 999 = no rig).
 func _facing_off(f: Fighter) -> float:
-	var rig: CutRig = _rig(f)
+	var rig: CutRig = FilmCard.rig(game, f)
 	if rig == null or f.facing == Vector2.ZERO:
 		return 999.0
 	return rad_to_deg(absf(angle_difference(rig.facing, f.facing.angle())))
@@ -186,7 +175,11 @@ func _write() -> void:
 		return
 	_written = true
 	var out: Dictionary = {
-		"schema": SCHEMA, "stills": _saved, "rows": _rows, "view": [_view.x, _view.y]
+		"schema": SCHEMA,
+		"stills": _saved,
+		"rows": _rows,
+		"view": [_view.x, _view.y],
+		"events": trigger.events()
 	}
 	var f: FileAccess = FileAccess.open(out_dir.path_join("probe.json"), FileAccess.WRITE)
 	if f == null:

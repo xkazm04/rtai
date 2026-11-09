@@ -36,10 +36,25 @@ difference means the world changed.
 `-1` means no card), `feet_y` (the screen row of the lowest opaque pixel), `facing_off` (degrees
 between the drawn facing and the sim's aim; `999` means no rig), `alive`, `hp`.
 
+Frames by range or by what happened, in one run (no guessing a tick and relaunching):
+
+```
+node tools/film/film.mjs weapon:pistol --out=build/film/pistol --stills=330-340
+node tools/film/film.mjs weapon:pistol --out=build/film/pistol --on=fire:1+4,kill:1+3
+```
+
+`fire:<n>[+<k>]` saves the frame of Rivet's nth firing tick (1 is the first) and the k frames after
+it; `kill:<n>[+<k>]` does the same for the nth hostile death. Every film also prints and records
+`fire at 333; kill at 337` (`events` in `probe.json`), so one run says when things happened. Crowd
+deaths are not kills here: only `hostiles`. On the street shots the lock becomes `--lock=trigger`: it
+freezes on the first frame `--on` saves, and that first frame is still following (a few px), because
+the view has already read it. `--lock=at:<tick>` has no such frame.
+
 **Refuses, launching nothing:** an unknown shot; a weapon, chapter or view id that tree does not have
 (with a did-you-mean); a game flag no script in that tree reads; stills past the end.
 **Unverifiable:** no fresh `probe.json`, a still that was not saved, a drawn size other than the one
-asked for, or a subject (`--subject=rivet|hostile|dead|id:<n>`) off screen at a still.
+asked for, a subject (`--subject=rivet|hostile|dead|id:<n>`) off screen at a still, or an `--on` event
+that never happened (`--on fire:3 never happened: 1 fire event(s) in 900 ticks`).
 Quest 1 has no numbers and no locked camera; a still that exists is all it can claim.
 
 ## tools/film/compare.mjs: before/after at the same tick
