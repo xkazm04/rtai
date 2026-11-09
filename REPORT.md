@@ -1,4 +1,4 @@
-# REPORT: night n10, lane world (draft, updated 2026-11-09 03:20)
+# REPORT: night n10, lane world (draft, updated 2026-11-09 03:45)
 
 Evidence: `C:\Users\kazda\kiro\gtai-masters\n10\world\` (`frames.json`). Every performance number is unmeasured so far.
 
@@ -57,7 +57,7 @@ Evidence: `C:\Users\kazda\kiro\gtai-masters\n10\world\` (`frames.json`). Every p
 - Director reel on `016cd98f`, the brief's exact command, top / tilt70 / combo: 19 chapters each, all fully down, 0 SCRIPT ERROR, but all 19 chapters log `no carry`, so no weapon is given (Call w-4). Once with `--loadout=pistol` at combo on `6ea62a9e`: 19 chapters, all down, 0 `no carry`, 0 SCRIPT ERROR.
 - `node tools/tests/run_unit.mjs` (full) on `6ea62a9e`: **1972 passed, 0 failed, 0 skipped.**
 - The scenario and reel runs above predate `6525a2e3` (the ring search, a view-only change to quest 1's corpses).
-- Not exported yet.
+- **Exe, built early in case the freeze session never comes:** `build/export/windows/RTAI.exe` in this worktree (git-ignored), 553,426,960 bytes, sha256 starts `8aa18f48808f55e6`, with `gtai_sim.windows.template_release.x86_64.dll` beside it. Code = `08e2f56b` (only docs since). From the worktree root, the city bake first because the worktree had no chunks: `"$GODOT_BIN" --headless --path project -s res://dev/bake_city.gd` (256 chunks), then `"$GODOT_BIN" --headless --path project --export-release windows-showcase ../build/export/windows/RTAI.exe`, both exit 0. Boot check only: `RTAI.exe --headless --quit-after 300` exit 0, 0 SCRIPT ERROR, reached the arena hub (20 stations, 41 rigs prewarmed). It was not run windowed or played. The log has one shader error, `custom_samplers.has(...tex_builtin)` (`kill_char.gdshader:37` passes `TEXTURE` to a function); this branch never changed that shader, and the Rivet lane's exe logs the same error. I did not check whether the burn-char rim draws wrong because of it.
 
 ## What blocked me
 

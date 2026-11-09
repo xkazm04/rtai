@@ -218,3 +218,14 @@ MILESTONE [03:40] On 08e2f56b: `tools/evidence/run.mjs --no-bench` all PASS: lin
 QUEUE EMPTY: items 1, 2 and 4 are done or reported as Calls (w-2 roofs, w-3 the 1.8-2.5 m/s walk slide, w-6 how far the row turns). Item 3 is done for what code can reach; blocked on art: REQUEST 3 (the other 11 street classes and the contractor, drawn for 70). No delivery and no new round since 17:54 on 11-08. Unmeasured: foot drift of cops and peds; a human player's share of strafing.
 
 NEXT: 08e2f56b is the last game or test commit, every gate is green on it. If a sheet has arrived in `library/rounds/` or `library/deliveries/`: add the class to `StreetDead70.CLASSES` and `tools/art/dead_70.py`, film it. Otherwise end at once, except the freeze job at 07:30: export the exe with `"$GODOT_BIN" --headless --path project --export-release windows-showcase ../build/export/windows/RTAI.exe`, name it in REPORT, run `node tools/evidence/cites.mjs REPORT.md`. Merging n10-rivet: `rivet_walk.gd` changes do not overlap (`path_of`/`moving` there, `phase_of`/`row_k` here).
+
+---- session 03:41 (iteration 20, BUILD) ----
+Read at open: no new delivery or round since 17:54 on 11-08, no `REQUEST -> world`. Tree clean at 10ed4f51.
+
+MILESTONE [03:45] Exe built ahead of the freeze, the one job left on the list (the other lanes did theirs early too): `build/export/windows/RTAI.exe`, 553,426,960 bytes, sha256 starts 8aa18f48808f55e6, code = 08e2f56b. The worktree had no city chunks, so `bake_city.gd` ran first (256 chunks, git status stayed clean). Boot check only: `--headless --quit-after 300` exit 0, 0 SCRIPT ERROR, reached the arena hub; not run windowed or played. One engine shader error in the log (`kill_char.gdshader:37` passes TEXTURE to a function): not this branch's shader, the Rivet lane's exe logs it too. Effect on the burn char's rim not checked. Logs: `gtai-n10/tmp/world/{bake,export,exe_boot}_it20.log`.
+
+No other work this session, by the common rule: the journal said QUEUE EMPTY and nothing had changed. The phase's "raise the weakest item" has nothing code can reach: the weakest item is the plan-pose art for 11 street classes and the contractor (REQUEST 3), and image generation is not this lane's to run.
+
+QUEUE EMPTY: as at 03:40. Items 1, 2 and 4 done or reported as Calls (w-2, w-3, w-6); item 3 done for what code can reach, blocked on REQUEST 3 art. Exe built on the current code.
+
+NEXT: If a sheet has arrived in `library/rounds/` or `library/deliveries/`: add the class to `StreetDead70.CLASSES` and `tools/art/dead_70.py`, film it, then re-run evidence, reels x3 and the export. Otherwise end at once. At the freeze rebuild the exe only if `git log 10ed4f51..HEAD -- project native tools` is non-empty (bake, then the export command in REPORT), and run `node tools/evidence/cites.mjs REPORT.md`.
