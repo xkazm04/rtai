@@ -138,6 +138,23 @@ test('main: --dry-run touches nothing', () => {
   } finally { done(); }
 });
 
+test('main: --resume reaches a lane added after an earlier merge finished', () => {
+  const { dir, done } = workspace();
+  const merged = [];
+  const merge = (ctx) => { for (const l of ctx.lanes) { if (!ctx.done.includes(`merge:${l}`)) { merged.push(l); ctx.mark(`merge:${l}`); } } return { ok: true }; };
+  const quiet = () => ({ ok: true });
+  const list = { merge, debt: quiet, native: quiet, bake: quiet, gates: quiet, reels: quiet, export: quiet };
+  const opts = { out: () => {}, err: () => {}, runners: list, spawnGit: fakeGit() };
+  const known = fakeGit({ 'show-ref': () => ({ status: 0, stdout: 'x refs/heads/a\ny refs/heads/b\nz refs/heads/c', stderr: '' }) });
+  try {
+    main([`--worktree=${dir}`, '--lanes=a,b', '--date=2026-11-10', '--steps=merge'], opts);
+    assert.deepEqual(merged, ['a', 'b']);
+    const res = main([`--worktree=${dir}`, '--lanes=a,b,c', '--date=2026-11-10', '--steps=merge', '--resume'], { ...opts, spawnGit: known });
+    assert.equal(res.code, 0);
+    assert.deepEqual(merged, ['a', 'b', 'c'], 'c is merged, a and b are not merged twice');
+  } finally { done(); }
+});
+
 test('main: a --resume cannot run over an unfinished merge', () => {
   const { dir, done } = workspace();
   const r = runners(STEPS);

@@ -216,7 +216,8 @@ export function main(argv, { out = console.log, err = console.error, spawnGit = 
     mark: (k) => { state.done.push(k); save(); },
     run: runner ?? defaultRun(cwd, join(cwd, 'build', 'merge', 'logs'), o.timeoutMin) };
   for (const step of o.steps) {
-    if (state.done.includes(step)) { out(`morning: ${step}: done earlier, skipped`); continue; }
+    // Merge progress is per lane: a resumed run with a lane added has to reach it.
+    if (step !== 'merge' && state.done.includes(step)) { out(`morning: ${step}: done earlier, skipped`); continue; }
     out(`morning: ${step}: running`);
     const r = runners[step](ctx);
     if (!r.ok) { for (const l of r.advice) out(l); save(); return { code: 1, stoppedAt: step }; }
