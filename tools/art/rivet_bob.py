@@ -44,16 +44,17 @@ def main() -> None:
             if f.name.startswith(GRIDS) and not f.name.endswith((".import",)):
                 grids[f"{art}/{f.name}"] = tops_of(f)
     doc = {
-        "damp_run": 0.7,
-        "damp_walk": 0.55,
+        "damp_run": 0.75,
+        "damp_walk": 0.7,
         "doc": "How much of the drawn helmet bounce in Rivet's walk and run grids RivetBob removes "
         "(tools/art/rivet_bob.py measures grids: art key/file -> rows of helmet-top px per column, "
-        "as packed bottom-aligned; each frame is lifted by (top - the row's highest top) x damp, "
-        "so the head rides steadier and the feet may leave the line on the frames where the drawn "
-        "body is low). The owner's n11 note: Rivet jumps too much during the movement. 0 = the drawn "
-        "bob as before; damp_run is higher because the run's flight frames travel about twice as far.",
+        "as packed bottom-aligned; each frame takes back (top - the row's highest top) x damp, the first "
+        "stretch_cell px of it as a height stretch from the feet, which stay planted, and only the "
+        "rest as a lift: the run's flight frames). The owner's n11 note: Rivet jumps too much during "
+        "the movement. damp 0 = the drawn bob as before, stretch_cell 0 = the whole take-back lifts.",
         "grids": grids,
         "schema": "gtai.rivet-bob/1",
+        "stretch_cell": 9,
     }
     table.write_text(json.dumps(doc, indent=2, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
     print("wrote", table, len(grids), "grids")

@@ -38,6 +38,8 @@ static func apply(args: PackedStringArray = OS.get_cmdline_user_args()) -> void:
 			RivetStrips.flame_all = true
 		elif arg == "--rivet-walk=bob":
 			RivetWalk.enabled = false
+		elif arg == "--rivet-bob=drawn":  # n11: the drawn helmet travel left alone (the before)
+			RivetBob.enabled = false
 		elif arg == "--rivet-walk=4":
 			RivetWalk.frames = 4
 		elif arg == "--rivet-walk=walk8":

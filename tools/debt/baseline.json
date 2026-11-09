@@ -31,7 +31,8 @@
         "2026-11-08: block70 test branch: the dev still scene for the true-70 city block (dev_loc 19838 -> 19960)",
         "2026-11-08: n10 world: block70_still --focus (one still per wall style, the walls' evidence) + its arg reader split (dev_loc 19960 -> 19971) (dev_loc 19960 -> 19971)",
         "2026-11-09: n10 merge: the lanes combined dev tooling growth (dev_loc 19971 -> 20284)",
-        "2026-11-09: n11 hero: the scripted cursor sweep rig, the proof tool for the owner's aim note (dev_loc 20284 -> 20477)"
+        "2026-11-09: n11 hero: the scripted cursor sweep rig, the proof tool for the owner's aim note (dev_loc 20284 -> 20477)",
+        "2026-11-09: n11 hero: the stride film is the dev tool the owner's bounce note is judged with (dev_loc 20477 -> 20598)"
       ],
       "files": {
         "project/dev/arena": 708,
@@ -52,7 +53,7 @@
         "project/dev/quest1_city_fit.gd": 18,
         "project/dev/quest1_city_fit_run.gd": 74,
         "project/dev/rivet_arsenal": 255,
-        "project/dev/rivet_motion": 1739,
+        "project/dev/rivet_motion": 1860,
         "project/dev/save_crash_loop.gd": 14,
         "project/dev/save_crash_writer.gd": 18,
         "project/dev/save_cross.gd": 18,
@@ -63,7 +64,7 @@
         "project/dev/view": 195,
         "project/dev/weapon_art": 506
       },
-      "total": 20477
+      "total": 20598
     },
     "direct_cmdline_reads": {
       "accepted": [

@@ -32,6 +32,10 @@
     "schema": {
       "const": "gtai.rivet-bob/1",
       "type": "string"
+    },
+    "stretch_cell": {
+      "minimum": 0,
+      "type": "number"
     }
   },
   "required": [
@@ -39,7 +43,8 @@
     "damp_walk",
     "doc",
     "grids",
-    "schema"
+    "schema",
+    "stretch_cell"
   ],
   "type": "object"
 }
