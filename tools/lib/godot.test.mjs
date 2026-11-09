@@ -182,3 +182,11 @@ test('onLine sees every whole line as it arrives, per stream, a split line once 
   assert.equal(r.status, 0);
   assert.deepEqual(seen.sort(), ['err line', 'one', 'two']);
 });
+
+test('an onLine that throws changes neither the run nor its stop (n11t-break-stopon)', async () => {
+  const { SCRIPT_ERROR } = await import('./godot.mjs');
+  const js = 'console.log("one");console.log("SCRIPT ERROR: after a bad viewer");setInterval(()=>{},1000)';
+  const r = await runProcess(process.execPath, ['-e', js], { timeoutMs: 180000, stopOn: SCRIPT_ERROR, stopGraceMs: 100,
+    onLine: (l) => { if (l === 'one') throw new Error('hostile viewer'); } });
+  assert.equal(r.stopped, 'SCRIPT ERROR: after a bad viewer');
+});

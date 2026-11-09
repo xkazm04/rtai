@@ -129,13 +129,16 @@ export function runProcess(cmd, args, { cwd = ROOT, timeoutMs = HEADLESS_TIMEOUT
     let seen = null; // the first stopOn line
     let killedForStop = false;
     const pending = {}; // a partial line between chunks, per stream
+    // a caller's /g or /y RegExp keeps lastIndex between test() calls and between runs: test a stateless copy
+    const stopRe = stopOn ? new RegExp(stopOn.source, stopOn.flags.replace(/[gy]/g, '')) : null;
     let finished = false;
     const finish = (status) => {
       if (finished) return;
       finished = true;
       clearTimeout(timer);
       const tail = timedOut ? `\n[timeout: killed the process tree after ${timeoutMs} ms]\n`
-        : killedForStop ? `\n[stopped: killed the process tree ${stopGraceMs} ms after: ${seen}]\n` : '';
+        // never repeat the matched line here: a verdict would count it as one more script error
+        : killedForStop ? `\n[stopped: killed the process tree ${stopGraceMs} ms after its first matching line]\n` : '';
       done({ status: status ?? -1, out: out.replace(ANSI, '') + tail, timedOut, stopped: killedForStop ? seen : null,
         durationMs: Date.now() - t0 });
     };
@@ -152,12 +155,12 @@ export function runProcess(cmd, args, { cwd = ROOT, timeoutMs = HEADLESS_TIMEOUT
       }, stopGraceMs);
     };
     const watch = (stream, text) => { // whole lines only, each stream on its own
-      if (!stopOn && !onLine) return;
+      if (!stopRe && !onLine) return;
       const lines = ((pending[stream] ?? '') + text).split(/\r?\n/);
       pending[stream] = lines.pop();
       for (const line of lines.map((l) => l.replace(ANSI, ''))) {
-        if (onLine) onLine(line);
-        if (stopOn && seen === null && stopOn.test(line)) stopSoon(line);
+        if (onLine) try { onLine(line); } catch { /* a viewer's fault must not change the run or its stop */ }
+        if (stopRe && seen === null && stopRe.test(line)) stopSoon(line);
       }
     };
     const take = (stream) => (d) => { const text = d.toString('utf8'); out += text; watch(stream, text); };

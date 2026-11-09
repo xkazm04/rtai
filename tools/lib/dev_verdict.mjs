@@ -48,7 +48,7 @@ export function verdict(res, { resultFile = null, startedAt = 0, notes = [] } = 
   const errors = scriptErrors(res.out);
   const unknown = unknownArgs(res.out);
   const result = resultFile ? resultState(resultFile, startedAt) : null;
-  const ok = !res.timedOut && res.status === 0 && !errors.length && !unknown.length && (!result || result === 'fresh');
+  const ok = !res.timedOut && !res.stopped && res.status === 0 && !errors.length && !unknown.length && (!result || result === 'fresh');
   const first = errors[0];
   const parts = [
     head(res, ok),
