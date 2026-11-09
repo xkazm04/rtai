@@ -1,4 +1,4 @@
-# REPORT: night n10, lane world (draft, updated 2026-11-09 02:00)
+# REPORT: night n10, lane world (draft, updated 2026-11-09 02:30)
 
 Evidence: `C:\Users\kazda\kiro\gtai-masters\n10\world\` (`frames.json`). Every performance number is unmeasured so far.
 
@@ -15,12 +15,13 @@ Evidence: `C:\Users\kazda\kiro\gtai-masters\n10\world\` (`frames.json`). Every p
    - Each body now shows a sliver of its near side, a shaded copy of its silhouette 0.16 m of height below the pose (`579ef0f4`), on both draw paths. Subtle: the lower edge is heavier and the body sits on the road. 0.32 m doubled the fingers and boots. `dead_side_dock9_64.png`.
    - Dock 9's dead no longer touch once settled. The push measures between the drawn bodies, relaxes over 8 passes, and a body a crowd still defeats takes the nearest clear spot (`SPACE_M` 2.1, cap 2.4). `dead_dock9_centres_64.png` and `dead_dock9_centres_32.png`, same tick t13900: before, three bodies chain together; after, four lie clear.
    - **A near corpse no longer jumps 1.5 s after it dies** (`39f4e53c`). After its 90-tick hold a body used to go back to the baked crowd: measured over a riot film, 18 hand-overs in 23 s, each jumping 0.6-3.1 m (median 2.1 m), losing its shadow and near side. `StreetDeadRest` keeps its drawn pose, shadow and near side where it lay until the body leaves the feed. Pairs either side of a hand-over: `dead_swap_kept_64.png` (top, before: the pink body vanishes, and the atlas draws it at its sim point about 2 m away, here under other bodies; bottom, after: it stays and the living draw over it) and `dead_swap_kept_32.png`.
+   - **Two classes now lie in poses drawn for this camera** (`eb2611c3`, `cbdbc318`). The patrol cop and the suit take a cell of a sheet drawn at 70 degrees (library round `20261108-1750`, never delivered; I found it in the rounds folder), picked by the head's screen heading and the pose's family, mirrored for the left, never turned. A head straight up is left out because it read as a man standing. It is a modest gain and a small share of the bodies: over the 23 s riot film at most 2 bodies on screen at once differ from the plan poses, and none at all in some seconds (`dead_drawn70_64.png`). Inside the pile at 32 px/m the two are hard to tell apart (`dead_drawn70_32.png`). Dock 9's contractors and the baked far crowd are not on this art.
    - Same seed and tick, before = `StreetDeadHeading.ENABLED` false: `dead_riot_before_after_64.png`, `dead_riot_before_after_32.png`.
    - **The riot's near bodies are pushed off each other too** (`fdc80496`), with the city's solid test so a push cannot end in a wall. The two corpses that lay on top of the standing cops are off them. `dead_riot_push_64.png`, `dead_riot_push_32.png`, same seed and tick. Dock 9's frame is byte-identical to before this change.
 
 ## What does not work yet
 
-- **The art is still the n9 plan poses.** This is the code half of the owner's note: the poses are placed on drawn headings but are not yet drawn for this camera. REQUEST 2 in JOURNAL asks for them.
+- **The art is still the n9 plan poses for 11 of the 13 street classes and for Dock 9's contractors.** The poses are placed on drawn headings but are not drawn for this camera. Only `cop_patrol` and `ped_suit` have sheets; `corpse_thug_70` failed in the library's round and the rest were never run. REQUEST 3 in JOURNAL asks for them. The far crowd's baked corpses stay on plan poses for every class, the two drawn ones included.
 - **The riot's pile is only partly solved.** The push moves corpses, but only near rigs: the baked far crowd's bodies are not pushed, and the living melee stays dense. One pushed body now lies among the crowd's legs (`dead_riot_push_64.png`, top). A pushed body also sits up to 2.4 m from its blood. Bodies the rigs never drew (those falling far from Rivet) still draw from the atlas, at their sim point, without shadow or near side. A kept body gives way when it passes the feed radius (18 m from Rivet), so at the far edge of the view a body can still pop to the atlas.
 - **While a body is still falling, it can pass over a neighbour.** Its push eases in over 24 ticks, so for that moment it can overlap one already lying (`DRAWDBG`: t13800, age 9). Settled frames are clear; the mid-fall crossing is not fixed.
 - **The far crowd has no contact shadow** (near rigs and Dock 9 only).
@@ -32,6 +33,9 @@ Evidence: `C:\Users\kazda\kiro\gtai-masters\n10\world\` (`frames.json`). Every p
   - From the code only: facings are 8 octants, so a run between octants strides up to 22.5 degrees off its path, and the walk slides by up to 28 % between 1.8 and 2.5 m/s (`MAX_CYCLES_S`). See Call w-3.
 
 ## Gates so far
+
+- **`node tools/evidence/run.mjs --no-bench` on `cbdbc318`: all PASS.** Lint 15/15, unit 1994 / 0, scenarios 55 / 0, parity 1200 steps with the planted mutation caught, selftest with look goldens 11/11, export-audit 635 / 0. The bench was not run. This replaces every older result below.
+- Director reel, the brief's exact command, on `cbdbc318`: top, tilt70, combo each 19 chapters, 19 fully down, 0 SCRIPT ERROR, `no carry` in all 19 (Call w-4).
 
 - **`node tools/evidence/run.mjs --no-bench` on `fdc80496`: all PASS.** Lint 15/15, unit 1979 / 0, scenarios 55 / 0, parity 1200 steps with the planted mutation caught, selftest, export-audit 633 / 0. This replaces every older result below. The bench was not run.
 - Director reel, the brief's exact command, on `fdc80496`: top, tilt70, combo each 19 chapters, 19 fully down, 0 SCRIPT ERROR, `no carry` in all 19 (Call w-4).
@@ -50,7 +54,7 @@ Evidence: `C:\Users\kazda\kiro\gtai-masters\n10\world\` (`frames.json`). Every p
 ## What blocked me
 
 - The machine is badly contended: a commit's lint hook passed 10 minutes once and was killed, and a plain `--import` passed 200 s earlier. Neither lost work.
-- REQUEST 2 (poses drawn for this camera) has had no producer tonight: the asset lane's runner log ends 17:55 on 2026-11-08, before this run began. The near-side sliver is a code stand-in, not the same thing.
+- REQUEST 2 and 3 (poses drawn for this camera) have had no producer tonight: the asset lane's runner log ends 17:55 on 2026-11-08, before this run began. The near-side sliver is a code stand-in for the classes still on plan poses.
 - This lane opened with no `JOURNAL.md` and no commits past `c394af55`, although the runner called it iteration 4.
 
 ## Calls for the owner
@@ -58,8 +62,9 @@ Evidence: `C:\Users\kazda\kiro\gtai-masters\n10\world\` (`frames.json`). Every p
 - **w-1, the set of headings.** Five headings, heads never toward the camera. A blow toward the camera turns the body away, so it no longer falls that way. Frame: `dead_riot_before_after_64.png`. The tables are `StreetDeadHeading.HEAD_DEG` and `HEAD_DEG_ODD`; `ENABLED` false restores n9.
 - **w-3, a walk that slides between 1.8 and 2.5 m/s.** From the code, Rivet's walk holds its cadence at 2 cycles a second above 1.8 m/s, so a stick walk at 2.5 m/s slides about 28 % until the run takes over. Raising `RivetWalk.MAX_CYCLES_S` to about 2.8 would plant it but makes the walk's legs churn faster. Left as built; it is the Rivet lane's tuning. Frame: `move_oblique_walk_64_sheet.png`, which shows why it is unread: the boots are hidden in the toward and 3/4 rows.
 - **w-4, the director reel gate gives no weapons.** The briefed command has no `--loadout=pistol`, so `stage.pilot` has no carry and all 19 chapters log `no carry ... skipped` (`reel_director.gd:155`) and go down without the chapter's weapon. Run once with the flag at combo on `6ea62a9e`: 19 chapters, all down, 0 `no carry`, 0 SCRIPT ERROR. Suggest adding the flag to the gate; I did not change the gate. top and tilt70 with the flag were not run.
+- **w-5, two art styles of corpse in one riot.** Patrol cops and suits lie in drawn-for-70 poses, the other classes in plan poses on the same headings. I kept the two classes on because a drawn body reads better and the rest can follow the same recipe. `StreetDead70.ENABLED` false puts every class back on plan poses; `StreetDead70.LAST_COL` 4 allows the head-straight-up cells I left out. Frame: `dead_drawn70_64.png`.
 - **w-2, roofs.** Roofs are drawn straight down and are the largest plan-view area left under the 70 camera. Fixing that is a new art round for every roof type, not code. Frame: `wall_foot_core_32.png` (roofs above the wall).
 
 ## Next steps
 
-Film a rig being swapped for the baked crowd, to see how far a pushed body jumps. Film Rivet's feet on a diagonal with a dedicated bot and a leg-visible row, and wire the drawn-for-70 poses when REQUEST 2 has a producer. Roof art for this camera is the largest plan-view area left and needs its own art round.
+Run the remaining classes through the library's corpse recipe (REQUEST 3) and add each to `StreetDead70.CLASSES` and `tools/art/dead_70.py`; give Dock 9 and the far crowd the same art. Film Rivet's feet on a diagonal with a dedicated bot and a leg-visible row. Roof art for this camera is the largest plan-view area left and needs its own art round.
