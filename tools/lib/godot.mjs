@@ -42,11 +42,20 @@ function defaultProbe(bin) {
   return res.stdout.trim().split('\n').pop().trim();
 }
 
-/** Plausible install spots next to the repo (also reached from a worktree under ../gtai-wt/x):
- *  no disk crawl, only these folders, console binaries only. */
-function knownPaths(fs, root) {
+/** The main checkout a worktree belongs to (the parent of git's common dir), or null. A worktree
+ *  anywhere on disk (e.g. a scratch one under gtai-n11t/wt/) then finds what the main checkout finds. */
+export function mainCheckout(root = ROOT) {
+  const r = spawnSync('git', ['rev-parse', '--path-format=absolute', '--git-common-dir'],
+    { cwd: root, encoding: 'utf8', windowsHide: true });
+  return r.status === 0 && r.stdout.trim() ? resolve(r.stdout.trim(), '..') : null;
+}
+
+/** Plausible install spots next to the repo and next to its main checkout (a worktree under
+ *  ../gtai-wt/x, or anywhere else): no disk crawl, only these folders, console binaries only. */
+function knownPaths(fs, root, main) {
   const out = [];
-  for (const base of [root, join(root, '..'), join(root, '..', '..')]) {
+  const near = (r) => [r, join(r, '..'), join(r, '..', '..')];
+  for (const base of [...near(root), ...(main ? near(main) : [])]) {
     for (const sub of ['tools/godot', 'gtai-spike/tools/godot']) {
       const dir = join(base, sub);
       for (const f of fs.list(dir).sort().reverse()) {
@@ -59,7 +68,7 @@ function knownPaths(fs, root) {
 
 /** Ordered candidates: GODOT_BIN, POF_GODOT_BIN, tools/local.json {"godot"}, known paths, PATH.
  *  `explicit` ones fail loudly when unusable instead of silently falling through. */
-export function candidates({ env = process.env, fs = realFs, root = ROOT } = {}) {
+export function candidates({ env = process.env, fs = realFs, root = ROOT, main } = {}) {
   const list = [];
   if (env.GODOT_BIN) list.push({ bin: env.GODOT_BIN, source: 'GODOT_BIN', explicit: true });
   if (env.POF_GODOT_BIN) list.push({ bin: env.POF_GODOT_BIN, source: 'POF_GODOT_BIN', explicit: true });
@@ -70,7 +79,8 @@ export function candidates({ env = process.env, fs = realFs, root = ROOT } = {})
       if (g) list.push({ bin: g, source: 'tools/local.json', explicit: true });
     } catch { /* unreadable local file: ignore, the message below still names the way out */ }
   }
-  for (const bin of knownPaths(fs, root)) list.push({ bin, source: 'known path', explicit: false });
+  const mainRoot = main === undefined ? (fs === realFs ? mainCheckout(root) : null) : main;
+  for (const bin of knownPaths(fs, root, mainRoot)) list.push({ bin, source: 'known path', explicit: false });
   list.push({ bin: 'godot', source: 'PATH', explicit: false });
   return list;
 }

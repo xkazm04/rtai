@@ -2,7 +2,9 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { join } from 'node:path';
-import { candidates, describe, pinnedVersion, resolveGodot, runProcess, versionMatches } from './godot.mjs';
+import { existsSync } from 'node:fs';
+import { ROOT as REPO } from './repo.mjs';
+import { candidates, describe, mainCheckout, pinnedVersion, resolveGodot, runProcess, versionMatches } from './godot.mjs';
 
 const ROOT = '/repo';
 const TOML = '[godot]\nversion = "4.7.2-stable"\nwindows_url = "x"\n\n[gdtoolkit]\nversion = "4.5.0"\n';
@@ -42,6 +44,23 @@ test('order: GODOT_BIN > POF_GODOT_BIN > tools/local.json > known path > PATH', 
   assert.equal(resolveGodot({ env: {}, fs: fakeFs(toml, { [known]: ['Godot_v4.7.2-stable_win64_console.exe'] }),
     root: ROOT, probe: good(knownBin, 'godot') }).source, 'known path');
   assert.equal(resolveGodot({ env: {}, fs: fakeFs(toml), root: ROOT, probe: good('godot') }).source, 'PATH');
+});
+
+test('a worktree far from the install finds the binary beside its main checkout (n11 control-qbv)', () => {
+  const wt = join(ROOT, 'x', 'y', 'z', 'wt');
+  const main = join(ROOT, 'main');
+  const near = join(main, '..', 'gtai-spike', 'tools', 'godot');
+  const fs = fakeFs(toml, { [near]: ['Godot_v4.7.2-stable_win64_console.exe'] });
+  const bin = join(near, 'Godot_v4.7.2-stable_win64_console.exe');
+  assert.equal(resolveGodot({ env: {}, fs, root: wt, main: null, pin: '4.7.2-stable', probe: good(bin) }).ok, false);
+  const r = resolveGodot({ env: {}, fs, root: wt, main, pin: '4.7.2-stable', probe: good(bin) });
+  assert.equal(r.source, 'known path');
+  assert.equal(r.bin, bin);
+});
+
+test('mainCheckout names the repo whose .git this worktree shares', () => {
+  const m = mainCheckout(REPO);
+  assert.ok(m && existsSync(join(m, '.git')), `main checkout ${m}`);
 });
 
 test('an unusable explicit GODOT_BIN fails with one actionable line (no silent fallthrough)', () => {
