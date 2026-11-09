@@ -123,7 +123,8 @@ test('main: --resume skips what is done and continues from the red step', () => 
     const second = runners(STEPS);
     const res = main([`--worktree=${dir}`, '--lanes=a', '--date=2026-11-10', '--resume'], { out: () => {}, err: () => {}, runners: second.out, spawnGit: fakeGit() });
     assert.equal(res.code, 0);
-    assert.deepEqual(second.seen, ['bake', 'gates', 'reels', 'export']);
+    // merge is re-entered on purpose: its progress is per lane (each lane's own mark skips it inside).
+    assert.deepEqual(second.seen, ['merge', 'bake', 'gates', 'reels', 'export']);
   } finally { done(); }
 });
 

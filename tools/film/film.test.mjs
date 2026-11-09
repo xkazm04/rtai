@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { mkdirSync, mkdtempSync, rmSync, utimesSync, writeFileSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, utimesSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import test from 'node:test';
@@ -7,6 +7,7 @@ import { deflateSync } from 'node:zlib';
 import { IDENTICAL_FRACTION, judgeTick, parseArgv as parseCompare, subjectRow, worst } from './compare.mjs';
 import { judge, parseArgv, plan } from './film.mjs';
 import { decodePng, diffImages } from './png.mjs';
+import { copyRuntime } from '../lib/snapshot.mjs';
 import { checkFlags, checkId, godotArgs, parseShot, shotLabel } from './shots.mjs';
 
 function tree(files = {}) {
@@ -258,6 +259,23 @@ test('worst keeps the outcome that matters', () => {
   assert.equal(worst(['pass', 'unverifiable']), 'unverifiable');
   assert.equal(worst(['unverifiable', 'fail', 'pass']), 'fail');
   assert.equal(worst(['pass', 'pass']), 'pass');
+});
+
+test('copyRuntime takes each ignored dir from the first donor that has it and never overwrites', () => {
+  const [a, b, to] = ['a', 'b', 'c'].map(() => mkdtempSync(join(tmpdir(), 'gtai-film-donor-')));
+  try {
+    mkdirSync(join(a, 'project/native/bin'), { recursive: true });
+    writeFileSync(join(a, 'project/native/bin/x.dll'), 'a');
+    mkdirSync(join(b, 'project/native/bin'), { recursive: true });
+    writeFileSync(join(b, 'project/native/bin/x.dll'), 'b');
+    mkdirSync(join(b, 'project/data/generated/city'), { recursive: true });
+    writeFileSync(join(b, 'project/data/generated/city/c.gtch'), 'city');
+    const copied = copyRuntime([a, b], to);
+    assert.deepEqual(copied.sort(), ['project/data/generated/city', 'project/native/bin']);
+    assert.equal(readFileSync(join(to, 'project/native/bin/x.dll'), 'utf8'), 'a', 'the first donor wins');
+    assert.equal(readFileSync(join(to, 'project/data/generated/city/c.gtch'), 'utf8'), 'city', 'from the sibling');
+    assert.deepEqual(copyRuntime([a, b], to), [], 'already there');
+  } finally { for (const d of [a, b, to]) rmSync(d, { recursive: true, force: true }); }
 });
 
 test('compare needs both sides, ticks, an output and a real subject', () => {

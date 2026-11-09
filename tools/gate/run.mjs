@@ -7,7 +7,7 @@
 // Results: build/gate/<sha>/ in your tree (git-ignored).
 // Exit: 0 pass, 1 fail, 2 usage, 3 unverifiable (the run produced no judgeable result).
 import { execFileSync, spawn } from 'node:child_process';
-import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { ROOT } from '../lib/repo.mjs';
@@ -54,11 +54,6 @@ export function judgeEvidence(kinds, read, sha) {
   return { outcome, lines };
 }
 
-/** The worktrees git knows, for finding a donor of git-ignored files. */
-export function worktrees(text) {
-  return text.split('\n').filter((l) => l.startsWith('worktree ')).map((l) => l.slice(9).trim());
-}
-
 /** Spawns one process to a log file with a tree-kill timeout. Resolves its exit code (-1 = timed out). */
 function runLogged(cmd, args, { cwd, log, timeoutMs }) {
   return new Promise((done) => {
@@ -79,20 +74,6 @@ const readEnv = (dir) => (kind) => {
   try { return JSON.parse(readFileSync(f, 'utf8')); } catch { return null; }
 };
 
-function donorFor(rel) {
-  const text = execFileSync('git', ['-C', ROOT, 'worktree', 'list', '--porcelain'], { encoding: 'utf8', windowsHide: true });
-  return [ROOT, ...worktrees(text)].find((t) => existsSync(join(t, rel))) ?? ROOT;
-}
-
-function copyFromAnyDonor(path, rel) {
-  const dst = join(path, rel);
-  const src = join(donorFor(rel), rel);
-  if (existsSync(dst) || !existsSync(src)) return false;
-  mkdirSync(dst, { recursive: true });
-  for (const n of readdirSync(src)) copyFileSync(join(src, n), join(dst, n));
-  return true;
-}
-
 export async function main(argv, { out = console.log, err = console.error } = {}) {
   const o = parseArgs(argv);
   if (o.error) { err(`${o.error}\n${USAGE}`); return 2; }
@@ -101,8 +82,7 @@ export async function main(argv, { out = console.log, err = console.error } = {}
   const dirty = execFileSync('git', ['-C', ROOT, 'status', '--porcelain'], { encoding: 'utf8', windowsHide: true }).trim();
   out(`gate: ${sha.slice(0, 8)}${dirty ? ' (your uncommitted changes are NOT in this run)' : ''}`);
   const snap = ensureSnapshot({ root: ROOT, rev: sha, kind: 'gate' });
-  const baked = copyFromAnyDonor(snap.path, 'project/data/generated/city');
-  out(`gate: snapshot ${snap.path} (${snap.created ? 'new' : 'reused'}${snap.copied.length ? `, copied ${snap.copied.join(', ')}` : ''}${baked ? ', baked city from a sibling' : ''})`);
+  out(`gate: snapshot ${snap.path} (${snap.created ? 'new' : 'reused'}${snap.copied.length ? `, copied ${snap.copied.join(', ')}` : ''})`);
   const results = join(ROOT, 'build', 'gate', sha.slice(0, 12));
   mkdirSync(results, { recursive: true });
   const flags = ['tools/evidence/run.mjs', ...(o.bench ? [] : ['--no-bench']), ...(o.parity ? [] : ['--no-parity']), ...(o.selftest ? [] : ['--no-selftest'])];

@@ -29,17 +29,26 @@ export function assertRemovable(path, base = tmpdir()) {
 
 const RUNTIME = ['project/native/bin', 'project/data/generated/city', 'project/.godot'];
 
-/** Copies each git-ignored runtime dir the snapshot lacks from `donor`; returns what it copied. */
-export function copyRuntime(donor, path) {
+/** The worktrees git lists for `root`, `root` first: where a git-ignored dir may be found. */
+export function donorsOf(root) {
+  const text = git(root, 'worktree', 'list', '--porcelain');
+  return [root, ...text.split('\n').filter((l) => l.startsWith('worktree ')).map((l) => l.slice(9).trim())];
+}
+
+/** Copies each git-ignored runtime dir the snapshot lacks from the first donor that has it. The bake
+ *  is only in some worktrees, so `donor` first, then its siblings. Returns what it copied. */
+export function copyRuntime(donors, path) {
   const copied = [];
+  const list = Array.isArray(donors) ? donors : [donors];
   for (const rel of RUNTIME) {
-    const from = join(donor, rel);
     const to = join(path, rel);
-    if (!existsSync(from) || existsSync(to)) continue;
+    if (existsSync(to)) continue;
+    const from = list.map((d) => join(d, rel)).find((p) => existsSync(p));
+    if (!from) continue;
     cpSync(from, to, { recursive: true });
     copied.push(rel);
   }
-  const cfg = join(donor, 'project/override.cfg');
+  const cfg = join(list[0], 'project/override.cfg');
   if (existsSync(cfg) && !existsSync(join(path, 'project/override.cfg'))) {
     cpSync(cfg, join(path, 'project/override.cfg'));
     copied.push('project/override.cfg');
@@ -48,7 +57,7 @@ export function copyRuntime(donor, path) {
 }
 
 /** Creates (or reuses) the snapshot of `rev`: {path, sha, created, copied}. Never touches `root`'s files. */
-export function ensureSnapshot({ root, rev, kind, donor = root, base = tmpdir() }) {
+export function ensureSnapshot({ root, rev, kind, donor = null, base = tmpdir() }) {
   const sha = revParse(root, rev);
   if (!sha) throw new Error(`snapshot: git does not know ${rev}`);
   mkdirSync(base, { recursive: true });
@@ -61,7 +70,7 @@ export function ensureSnapshot({ root, rev, kind, donor = root, base = tmpdir() 
     created = true;
   }
   if (!existsSync(markerOf(path))) throw new Error(`snapshot: ${path} exists without its marker`);
-  return { path, sha, created, copied: copyRuntime(donor, path) };
+  return { path, sha, created, copied: copyRuntime(donor ? [donor] : donorsOf(root), path) };
 }
 
 /** Removes one snapshot. Refuses anything that is not ours. */

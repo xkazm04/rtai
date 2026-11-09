@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { judgeEvidence, kindsFor, parseArgs, worktrees } from './run.mjs';
+import { judgeEvidence, kindsFor, parseArgs } from './run.mjs';
 
 const SHA = 'a'.repeat(40);
 const env = (status, commit = SHA, summary = 'ran') => ({ status, commit, summary });
@@ -46,8 +46,4 @@ test('arguments: an unknown flag is an error, the defaults are the full gate', (
   const o = parseArgs([]);
   assert.deepEqual([o.rev, o.parity, o.bench, o.reels], ['HEAD', true, false, false]);
   assert.equal(parseArgs(['--rev=abc']).rev, 'abc');
-});
-
-test('worktrees reads git\'s porcelain list', () => {
-  assert.deepEqual(worktrees('worktree C:/a\nHEAD x\nbranch y\n\nworktree C:/b c\nHEAD z\n'), ['C:/a', 'C:/b c']);
 });
