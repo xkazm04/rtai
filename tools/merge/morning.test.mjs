@@ -151,6 +151,34 @@ test('main: a --resume cannot run over an unfinished merge', () => {
   } finally { done(); }
 });
 
+test('a conflict only on the lane docs is resolved with the lane\'s copy and the lane keeps going', () => {
+  const { dir, done } = workspace();
+  const calls = [];
+  const g = (args) => {
+    calls.push(args.join(' '));
+    if (args[0] === 'merge') return { ok: false, out: 'conflict', stdout: '' };
+    if (args[0] === 'status') return { ok: true, out: '', stdout: 'DU JOURNAL.md\nAA REPORT.md' };
+    if (args[0] === 'show') return { ok: true, out: 'their text', stdout: 'their text' };
+    return { ok: true, out: '', stdout: '' };
+  };
+  const seen = [];
+  try {
+    const r = STEP_RUNNERS.merge({ git: g, cwd: dir, lanes: ['lane-x'], date: '2026-11-10', out: (l) => seen.push(l), done: [], mark: () => {} });
+    assert.equal(r.ok, true);
+    assert.ok(calls.includes('show MERGE_HEAD:JOURNAL.md'));
+    assert.ok(calls.includes('add JOURNAL.md'));
+    assert.ok(calls.includes('commit --no-edit'));
+    assert.match(seen[0], /merged lane-x/);
+  } finally { done(); }
+});
+
+test('a conflict on anything else still stops for a person, even beside a doc conflict', () => {
+  const g = (args) => (args[0] === 'merge' ? { ok: false, out: '', stdout: '' } : { ok: true, out: '', stdout: 'UU JOURNAL.md\nUU project/a.gd' });
+  const r = STEP_RUNNERS.merge({ git: g, cwd: 'NOT-A-REAL-TREE', lanes: ['lane-x'], date: '2026-11-10', out: () => {}, done: [], mark: () => {} });
+  assert.equal(r.ok, false);
+  assert.match(r.advice[0], /conflicted on 2/);
+});
+
 function runRecorder(outputs) {
   const calls = [];
   return { calls, run: (name, cmd, args) => { calls.push({ name, cmd, args }); return { status: outputs[name] ?? 0, out: '', log: `${name}.log` }; } };

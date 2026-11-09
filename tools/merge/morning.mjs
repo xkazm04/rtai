@@ -14,7 +14,7 @@ import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 export const STEPS = ['merge', 'debt', 'native', 'bake', 'gates', 'reels', 'export'];
-const SAFE_VERBS = new Set(['status', 'rev-parse', 'symbolic-ref', 'merge', 'add', 'commit', 'mv', 'log', 'worktree', 'show-ref', 'diff']);
+const SAFE_VERBS = new Set(['status', 'rev-parse', 'symbolic-ref', 'merge', 'add', 'commit', 'mv', 'log', 'worktree', 'show', 'show-ref', 'diff']);
 const DOCS = ['JOURNAL.md', 'REPORT.md'];
 const STATE = 'build/merge-state.json';
 const USAGE = 'usage: node tools/merge/morning.mjs --worktree=<dir> --lanes=<a,b,c> --date=<yyyy-mm-dd> [--debt-reason="<why>"] [--steps=<list>] [--resume] [--dry-run] [--timeout=<min>]';
@@ -78,13 +78,28 @@ export function conflictAdvice(lane, files) {
 
 const conflicted = (porcelain) => porcelain.split('\n').filter((l) => /^(UU|AA|DD|AU|UA|DU|UD) /.test(l)).map((l) => l.slice(3));
 
+/** Every lane writes a root JOURNAL and REPORT, so a conflict on only those is no decision for a person:
+ *  the lane's own copy is the one that goes under its folder. Returns a red result, or null when done. */
+function takeTheirDocs(g, cwd, lane, files) {
+  for (const f of files) {
+    const theirs = g(['show', `MERGE_HEAD:${f}`]);
+    if (!theirs.ok) return { ok: false, advice: [`STOPPED: cannot read ${f} from ${lane}: ${theirs.out.trim().slice(0, 300)}`] };
+    writeFileSync(join(cwd, f), theirs.stdout);
+    g(['add', f]);
+  }
+  const c = g(['commit', '--no-edit']);
+  return c.ok ? null : { ok: false, advice: [`STOPPED: committing ${lane}'s merge failed (often the lint hook): ${c.out.trim().slice(0, 400)}`, 'Fix it, commit, and run again with --resume.'] };
+}
+
 function mergeLane(g, cwd, lane, date) {
   const subject = g(['log', '-1', '--format=%s', lane]).stdout.slice(0, 110);
   const merged = g(['merge', '--no-ff', '--no-edit', '-m', `merge ${lane}: ${subject}`, lane]);
   if (!merged.ok) {
     const files = conflicted(g(['status', '--porcelain']).stdout);
-    if (files.length) return { ok: false, advice: conflictAdvice(lane, files) };
-    return { ok: false, advice: [`STOPPED: git merge ${lane} failed: ${merged.out.trim().slice(0, 400)}`, 'Fix it and run again with --resume.'] };
+    if (!files.length) return { ok: false, advice: [`STOPPED: git merge ${lane} failed: ${merged.out.trim().slice(0, 400)}`, 'Fix it and run again with --resume.'] };
+    if (!files.every((f) => DOCS.includes(f))) return { ok: false, advice: conflictAdvice(lane, files) };
+    const taken = takeTheirDocs(g, cwd, lane, files);
+    if (taken) return taken;
   }
   const moved = [];
   const dir = laneDocsDir(date, lane);
