@@ -4,7 +4,7 @@ Updated every session (last: it10, 2026-11-09 22:45). Levels: 0 absent, 1 placeh
 
 | Measure | Rivet | Tonnage | Dent | Kerf | Ohm |
 |---|---|---|---|---|---|
-| Facing cards (8-way, combo) | 3, 8 cells p70+p55 | 3, drawn 5 facings mirrored, p70 only; reached 2026-11-09 at p70 | 3, p70 only; reached 2026-11-09 at p70 | 3, p70; p55 grid packed it10, NOT yet seen in game | 3, p70 only; reached 2026-11-09 at p70 |
+| Facing cards (8-way, combo) | 3, 8 cells p70+p55 | 3, drawn 5 facings mirrored, p70 only; reached 2026-11-09 at p70 | 3, p70 only; reached 2026-11-09 at p70 | 3, p70 + p55 (seen under `--view=tilt`, `kerf_drawn_p55_tilt.png`); reached Rivet 2026-11-09 at both pitches | 3, p70 only; reached 2026-11-09 at p70 |
 | Faces the cursor (sweep, mean/worst deg walking) | 3, 11.6/26.7 walk, 11.5/26.2 sprint, `aim_sweep_before_after_sprint_64ppm.png` | 3, 11.4/24.9, `ghost_aim_sweep_walk_64ppm.png`; reached 2026-11-09 | 3, 11.4/25.1; reached 2026-11-09 | 3, 11.4/24.7; reached 2026-11-09 | 3, 11.5/25.4; reached 2026-11-09 |
 | Walk and sprint strips | 3, 8x8 walk8 + run8 grids (armed) | 2, drawn walk8 p70 (B, rocking); needs no run (4.2 m/s) | 2, walk8 p70; **run8 requested** (7 m/s, walk slides ~16 %) | 3, walk8 + **run8 at 12 m/s** p70 (`kerf_drawn_run8_64ppm.png`); reached 2026-11-09 at p70 | 2, walk8 p70 (B, stubby); needs no run (4.5 m/s) |
 | Planted feet | 3, stretch from the feet + flight lift, `bob_film_right_before_after_64ppm.png` | 1, cycle by eye (160 cell) | 1, cycle by eye (128) | 2, walk measured (139), run cycle from Rivet's ratio (388), not measured | 1, cycle by eye (120) |
