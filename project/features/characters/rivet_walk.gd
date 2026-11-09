@@ -141,9 +141,15 @@ static func phase_of(rig: CutRig, art: String, scale: float) -> float:
 		return rig.phase
 	cycle = maxf(cycle, rig.speed_now / (MAX_RUN_CYCLES_S if running else MAX_CYCLES_S))
 	var was: float = rig.get_meta(META_PH, 0.0)
-	var ph: float = fposmod(was + rig.global_position.distance_to(at) / cycle, 1.0)
+	var step: float = rig.global_position.distance_to(at) / cycle
+	var ph: float = fposmod(was + step * _direction(rig), 1.0)
 	rig.set_meta(META_PH, ph)
 	return ph
+
+
+## +1 steps the grid forward, -1 backward on a backpedal (no head yet: forward).
+static func _direction(rig: CutRig) -> float:
+	return RivetStride.direction(rig, RivetFrames.oct_of(rig)) if rig.head != null else 1.0
 
 
 ## The drawn cycle in cell px of the grid `card` shows under `art` (it6: per armed grid).
@@ -162,5 +168,6 @@ static func row_k(card: Sprite2D, art: String, rig: CutRig) -> float:
 	if not file.begins_with(ARMED_RUN):
 		return 1.0
 	var weapon: String = file.trim_prefix(ARMED_RUN).get_basename()
-	var key: String = "%s/%s/%d" % [art, weapon, RivetFrames.oct_of(rig)]
+	var row: int = RivetStride.row(rig, RivetFrames.oct_of(rig))
+	var key: String = "%s/%s/%d" % [art, weapon, row]
 	return RUN_ROW_K.get(key, 1.0)
