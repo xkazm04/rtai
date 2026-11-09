@@ -120,6 +120,18 @@ static func _end(out: PackedVector3Array, i: int, p: Vector2, width: float) -> v
 	out[i] = Vector3(p.x, p.y, width)
 
 
+## n11 (critique: the spray read as beads of one size): a drop of hit row `h` whose `roll` falls
+## inside the row's `fine` share [share, size x, speed x] is a fine one: (size x, speed x), else 1.
+static func fine_k(h: Dictionary, roll: float) -> Vector2:
+	var fine: Array = h.get("fine", [])
+	if fine.size() < 3:
+		return Vector2.ONE
+	var share: float = fine[0]
+	var size_k: float = fine[1]
+	var speed_k: float = fine[2]
+	return Vector2(size_k, speed_k) if roll < share else Vector2.ONE
+
+
 static func _fan_of(n: int) -> PackedInt32Array:
 	if _fan.size() == n * 3:
 		return _fan

@@ -54,11 +54,10 @@ var _drops_drawn: bool = false
 func _init() -> void:
 	p = NoirLook.read_params(PARAMS)
 	var budget: Dictionary = p["budget"]
-	var max_drops: int = budget["max_drops"]
-	var max_decals: int = budget["max_decals"]
+	decals = budget["max_decals"]
 	var max_pools: int = budget["max_pools"]
-	decals = max_decals
-	_ring = BloodDecals.new(max_decals, max_pools)
+	var max_drops: int = budget["max_drops"]
+	_ring = BloodDecals.new(decals, max_pools)
 	_flight = BloodFlight.new(max_drops)
 	var colour: Dictionary = p["colour"]
 	_fluid = NoirFluid.from(colour)
@@ -221,9 +220,9 @@ func _spawn_drop(at: Vector2, v: Vector2, h: Dictionary) -> void:
 	var i: int = _flight.free_slot()
 	if i < 0:
 		return
-	var lt: Array = p["physics"]["life_ticks"]
 	var size_px: float = _range(h["drop_px"])
-	_flight.put(i, at, v, size_px, roundi(_range(lt)))
+	var f: Vector2 = BloodBatch.fine_k(h, _rand()) if h.has("fine") else Vector2.ONE
+	_flight.put(i, at, v * f.y, size_px * f.x, roundi(_range(p["physics"]["life_ticks"])))
 	drops += 1
 
 
