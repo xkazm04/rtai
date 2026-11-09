@@ -97,6 +97,9 @@ Same code in both arms: the export of cfdb53e4's code from 23:26 against a fresh
 Identical code differs by up to +0.87 / -0.30 ms frame p50 in a single pair, and the median leans the same way the feed A/B did (rig p50 +0.075 here, +0.065 there). **So idea 1's result is inside the bench's floor at this load: not a measured gain and not a measured regression.** The revert stands because no gain was shown, not because the fill was shown slower. Six pairs under CONTENDED(0-10) cannot resolve a frame-p50 effect of about 0.3 ms or smaller; idea 2 below is smaller than that.
 Item 3's claim (6 of 6, median -1.14 ms frame p50; rig p50 1.665 -> 0.957) is larger than any single A/A pair's difference (0.87 ms), so the A/A does not undo it, but item 3 was run before this control existed and it is still CONTENDED.
 
+### Item 4 stops (it8): one wash, the next idea below this bench's floor
+The stop rule (two washes in a row) was not reached: idea 1 was a wash and idea 2 was not built. The crowd occlusion scan is about 100 us in a debug build; the A/A above shows six contended pairs cannot see that. In the release riot at combo (`evidence/perf/n10-riotc/riotc-head@exe-2.json`, one CONTENDED run, avg frame 3.78 ms) the named shares are rig 0.85 ms per tick, blood 0.51 ms a frame, render CPU 0.48, render GPU 0.28, sim step 0.12. At least about 1.5 ms of the frame has no timer of its own in this bench (more if the render GPU time does not add to the CPU frame). Re-check on a quiet machine.
+
 ## n9 night (2026-11-08, branch n9-perf from main da108c13)
 
 ### F19 quest-1 freeze: located in the engine (it1, 00:56-01:56)
