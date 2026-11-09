@@ -150,3 +150,10 @@ FINDING one commit the earlier windows had not looked at: perf's `ef31d9d4` (02:
 No Godot run, no new gate, frame or number. Ended by the common rule (journal says QUEUE EMPTY, nothing changed), over the phase's "do not end early".
 QUEUE EMPTY: stands as of it16, the exe built in it25. Blocked: nothing.
 NEXT (freeze session): rebuild the exe only if `git log b8ae1064..HEAD -- project tools` is non-empty, REPORT final. If the journal still says QUEUE EMPTY and neither this branch nor a lane's Rivet files have changed (same check, and `git log --since` on perf/world/handheld for `project/features/characters`), end at once.
+
+## it28 (03:44-)
+Checked only: tree clean, HEAD 82902052. `git diff --name-only 63e685d3 n10-world -- project/features/characters` empty; `git log b8ae1064..HEAD -- project tools` empty, so the exe of 03:25 still matches this branch's code. No `REQUEST -> rivet` in the world, perf or handheld journals.
+FINDING new lane commits since it27, none on a Rivet path: world's 10ed4f51 and f55f54b6, perf's 0868bbd2, c425731c and 040d0515 (blood drops in C++). Between merge base and heads, this branch shares no `project/` file with perf. It shares one with handheld, `project/boot/launch_args.gd`, which it27 did not check: `git merge-tree` against n10-handheld auto-merges it (this branch adds the `--ghost-voice` flag, handheld edits the auto-pick in the same file); the only conflicts are JOURNAL, REPORT and `tools/debt/baseline.json`, the same three as world's. Path and merge-tree checks only: nothing merged here, not run on a merged tree, no Rivet frame filmed against it.
+No Godot run, no new gate, frame or number. Ended by the common rule (journal says QUEUE EMPTY, nothing changed), over the phase's "do not end early".
+QUEUE EMPTY: stands as of it16, the exe built in it25. Blocked: nothing.
+NEXT (freeze session): rebuild the exe only if `git log b8ae1064..HEAD -- project tools` is non-empty, REPORT final. If the journal still says QUEUE EMPTY and neither this branch nor a lane's Rivet files have changed (same checks as it27), end at once.
