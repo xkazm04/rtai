@@ -54,16 +54,20 @@ static func dress(card: Sprite2D, other: String, other_a: float) -> void:
 	if o != null and str(o.get_meta(&"art", "")) != other:
 		o.free()
 		o = null
-	if o == null and other_a > 0.0:
+	# n11: a lying body is its plan pose (StreetDeadPlan hid this fall frame): showing it drew two
+	var lying: bool = card.has_node(NodePath(StreetDeadPlan.NODE))
+	if o == null and other_a > 0.0 and not lying:
 		o = _build(card, other)
 	if o == null:
-		card.self_modulate.a = 1.0
+		if not lying:
+			card.self_modulate.a = 1.0
 		return
 	o.frame = card.frame
 	o.flip_h = card.flip_h
 	o.modulate.a = other_a
-	o.visible = other_a > 0.0
-	card.self_modulate.a = 1.0 - other_a
+	o.visible = other_a > 0.0 and not lying
+	if not lying:
+		card.self_modulate.a = 1.0 - other_a
 
 
 ## The art folder a card was built under: RigHeadCard's meta, else its strip's folder (GhostCard).
