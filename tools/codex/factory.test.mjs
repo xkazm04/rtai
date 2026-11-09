@@ -132,6 +132,17 @@ test('totals: machine results are measured, a session split is labelled an estim
   } finally { done(); }
 });
 
+test('a run killed from outside still shows: started and never finished, and a later result clears it', () => {
+  const { file, done } = ledgerFile();
+  try {
+    append(file, { type: 'started', id: 'a', at: 'x' });
+    assert.deepEqual(totals(rows(read(file))).measured.started_and_never_finished, ['a']);
+    assert.deepEqual(queue(rows(read(file))), [], 'a dead run is not reviewable');
+    append(file, passed('a'));
+    assert.deepEqual(totals(rows(read(file))).measured.started_and_never_finished, []);
+  } finally { done(); }
+});
+
 test('totals: a review session with no cost on record is null, not zero', () => {
   const r = [{ id: 'a', task: passed('a'), review: { verdict: 'accepted', iteration: 9 } }];
   assert.equal(totals(r, { iterations: [] }).measured.review_sessions_usd, null);

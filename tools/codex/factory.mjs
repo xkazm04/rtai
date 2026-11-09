@@ -15,7 +15,7 @@ import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { ROOT, ownGdFiles, rel, walk } from '../lib/repo.mjs';
 import { killTree } from '../lib/godot.mjs';
-import { append, queue, read, rows, totals } from './ledger.mjs';
+import { append, queue, read, rows, totals, vanished } from './ledger.mjs';
 import { pick, refusal } from './pick.mjs';
 
 export const LEDGER = join(ROOT, 'build', 'codex', 'ledger.jsonl');
@@ -113,6 +113,7 @@ async function runOne(unit, ctx) {
   const file = join(outDir, `${id}.json`);
   writeFileSync(file, JSON.stringify(task, null, 1));
   const t0 = Date.now();
+  append(ledger, { type: 'started', id, unit: unit.stem, path: unit.path, at: new Date().toISOString() });
   const log = (s) => { writeFileSync(join(outDir, `${id}.log`), `${s}\n`, { flag: 'a' }); };
   const d = await shell(`npx tsx scripts/codex/dispatch.ts run "${file}" --timeout-min ${timeoutMin}`, POF, env, timeoutMin + 5);
   log(`dispatch exit ${d.code}\n${d.out}`);
@@ -201,8 +202,10 @@ async function cmdRun(o, out, err) {
 }
 
 function cmdQueue(o, out) {
-  const q = queue(rows(read(o.ledger ?? LEDGER)));
+  const all = rows(read(o.ledger ?? LEDGER));
+  const q = queue(all);
   for (const r of q) out(`${r.id}: ${r.task.machine.why}\n   worktree: ${r.task.wt}\n   test: ${r.task.test}`);
+  for (const r of vanished(all)) out(`${r.id}: STARTED ${r.started.at} AND NEVER FINISHED: its run died; check \`dispatch.ts list\`, discard it and run it again`);
   out(`factory: ${q.length} awaiting Claude's review; nothing has landed`);
   return 0;
 }

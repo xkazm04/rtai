@@ -16,8 +16,9 @@ export const read = (file) => (existsSync(file) ? readFileSync(file, 'utf8').spl
 export function rows(events) {
   const byId = new Map();
   for (const e of events) {
-    const row = byId.get(e.id) ?? { id: e.id, task: null, review: null };
-    if (e.type === 'task') row.task = e;
+    const row = byId.get(e.id) ?? { id: e.id, started: null, task: null, review: null };
+    if (e.type === 'started') row.started = e;
+    else if (e.type === 'task') row.task = e;
     else if (e.type === 'review') row.review = e;
     byId.set(e.id, row);
   }
@@ -28,6 +29,9 @@ export function rows(events) {
 export const queue = (allRows) => allRows.filter((r) => r.task?.machine?.pass && !r.review);
 
 const usdOf = (state, n) => state?.iterations?.find((i) => i.n === n)?.costUsd ?? null;
+
+/** Started and never recorded a result: the run died from outside, so its Codex time is unknown. */
+export const vanished = (allRows) => allRows.filter((r) => r.started && !r.task);
 
 /** Totals for the report. `state` is a runner state.json. reviewUsd is measured per session; the
  *  share per task divides a session by the tasks it reviewed, which is an estimate. */
@@ -43,6 +47,7 @@ export function totals(allRows, state = null) {
   return {
     measured: {
       tasks: tasks.length,
+      started_and_never_finished: vanished(allRows).map((r) => r.id),
       refused_by_meter: tasks.filter((r) => r.task.refused).length,
       machine_pass: tasks.filter((r) => r.task.machine?.pass).length,
       machine_fail: tasks.filter((r) => r.task.machine && !r.task.machine.pass && !r.task.refused).length,
