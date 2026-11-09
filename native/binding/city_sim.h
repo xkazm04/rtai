@@ -41,6 +41,8 @@ public:
 	PackedInt32Array get_counters() const;
 	PackedFloat64Array snapshot() const;
 	static PackedInt32Array scan_dead_flips(const PackedFloat64Array &snap, const PackedByteArray &dead);
+	static Array fill_feed_rows(const PackedFloat64Array &snap, const PackedByteArray &variants,
+			const Vector2 &focus, double r2, const Vector2 &aim, double px);
 	void set_body(const PackedFloat64Array &spec);
 	PackedFloat64Array body_result() const;
 	void set_render(const Array &mms, const PackedInt32Array &clips);
