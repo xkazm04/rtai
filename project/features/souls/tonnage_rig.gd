@@ -42,6 +42,8 @@ const CARD_ANCHOR: float = 0.42
 ## The card's soul halo alpha (GhostCard.halo; 0 = the bare card).
 const CARD_HALO_A: float = 0.35
 const CYCLE_CELL: float = 235.0
+## it12: the profile row's stance travel a frame (f8 -> f1 barely moves; switches take the mean).
+const STEPS: PackedFloat32Array = [47.0, 14.0, 58.5, 29.4, 25.0, 31.5, 29.4, 0.5]
 
 ## The shared part print (PartMaterials) on Tonnage's parts. Off by default: at 32 px/m its
 ## flat-sticker LOD prints the gunmetal crown as one ink mass and hides the teal seams (JOURNAL
@@ -71,6 +73,7 @@ func _ready() -> void:
 	_glow = GhostRim.soft_glow(TEAL, 0.38, 64.0)
 	add_child(_glow)
 	_card.halo = Color(TEAL, CARD_HALO_A)
+	drawn.steps = STEPS
 	for i: int in 4:
 		_feet.append(_part("foot", FOOT_M, false))
 	for i: int in 4:

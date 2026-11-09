@@ -38,6 +38,8 @@ var card_name: String = ""
 var height_m: float = 1.75
 ## One drawn stride cycle's ground in cell px (the stance foot's travel over a cycle, measured).
 var cycle_cell: float = 150.0
+## The walk's measured per-frame stride (GhostStride), empty = even frames.
+var steps: PackedFloat32Array = PackedFloat32Array()
 ## The run grid's stride cycle in cell px (0 = this ghost has no run grid).
 var run_cell: float = 0.0
 ## The figure's median height in the grid, cell px (ghost_pack prints it).
@@ -158,7 +160,7 @@ func _column(host: Node2D, s: float) -> int:
 	var look: float = host.global_rotation if is_nan(_look) else _look
 	var back: bool = moved.normalized().dot(Vector2.from_angle(look)) < BACKPEDAL_DOT
 	_phase = fposmod(_phase + px / cycle * (-1.0 if back else 1.0), 1.0)
-	_col = mini(int(_phase * COLS), COLS - 1)
+	_col = GhostStride.col_of(_phase, PackedFloat32Array() if _running else steps)
 	return _col
 
 
