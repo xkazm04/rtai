@@ -3,7 +3,7 @@ import { mkdtempSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import test from 'node:test';
-import { LAWS, buildTask, gradeFrom, main, refusedByMeter, scoreOf, taskId } from './factory.mjs';
+import { LAWS, buildTask, freshId, gradeFrom, main, refusedByMeter, scoreOf, taskId } from './factory.mjs';
 import { append, queue, read, rows, totals } from './ledger.mjs';
 import { MAX_TUNED_CONSTS, pick, refusal } from './pick.mjs';
 
@@ -68,6 +68,12 @@ test('the task carries the laws against pinning accident and the n11t- id', () =
   assert.match(t.goal, /Do not change BossZone/);
   assert.equal(t.repo, 'R');
   assert.equal(t.base, 'B');
+});
+
+test('a re-run of a discarded task gets a new id: the dispatcher refuses one with a run record', () => {
+  assert.equal(freshId('oil_leak', () => false), 'n11t-fac-oil-leak');
+  const taken = new Set(['n11t-fac-oil-leak', 'n11t-fac-oil-leak-r2']);
+  assert.equal(freshId('oil_leak', (x) => taken.has(x)), 'n11t-fac-oil-leak-r3');
 });
 
 test('a machine grade can only reject or hand over; there is no accept', () => {

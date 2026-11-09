@@ -36,14 +36,20 @@ export const LAWS = [
 ];
 
 export const taskId = (stem) => `${PREFIX}${stem.replace(/_/g, '-')}`;
+/** A discarded task keeps its run record, and the dispatcher refuses an id that has one: a re-run needs a new one. */
+export function freshId(stem, taken) {
+  let id = taskId(stem);
+  for (let n = 2; taken(id); n += 1) id = `${taskId(stem)}-r${n}`;
+  return id;
+}
 export const testPath = (stem) => `project/tests/unit/test_${stem}.gd`;
 
 /** The dispatcher's task JSON for one unit. Pure. */
-export function buildTask(unit, { repo, base, from, godot }) {
+export function buildTask(unit, { repo, base, from, godot, id = taskId(unit.stem) }) {
   const test = testPath(unit.stem);
   const local = unit.path.replace(/^project\//, '');
   return {
-    id: taskId(unit.stem), tier: 'bulk', access: 'write-verified', model: MODEL, repo, base, laws: LAWS,
+    id, tier: 'bulk', access: 'write-verified', model: MODEL, repo, base, laws: LAWS,
     copyIgnored: { from, paths: ['project/.godot', 'project/native/bin'] },
     title: `GUT tests for ${unit.cls}`,
     goal: `${unit.cls} (${unit.path}) has no tests. Write ${test}: GUT tests that pin what this class is FOR, including its boundaries and failure paths, so that a change to a comparison, a constant or a branch in that file makes a test fail. Do not change ${unit.cls}.`,
@@ -107,8 +113,8 @@ async function grade(wt, unit, env, log) {
 
 async function runOne(unit, ctx) {
   const { ledger, env, base, outDir, timeoutMin } = ctx;
-  const id = taskId(unit.stem);
-  const task = buildTask(unit, { repo: ctx.repo, base, from: ROOT, godot: env.GODOT_BIN });
+  const id = freshId(unit.stem, (x) => existsSync(join(HOME, 'runs', x)));
+  const task = buildTask(unit, { repo: ctx.repo, base, from: ROOT, godot: env.GODOT_BIN, id });
   mkdirSync(outDir, { recursive: true });
   const file = join(outDir, `${id}.json`);
   writeFileSync(file, JSON.stringify(task, null, 1));
