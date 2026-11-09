@@ -4,6 +4,8 @@ extends GutTest
 
 const DIR: String = RivetStrips.DIR + "p70/"
 
+var _view: ViewMode = null
+
 
 func test_paths_list_the_base_strips_and_each_carried_weapons_own() -> void:
 	var weapons: Array[StringName] = [&"pistol", &"", &"rocket_launcher"]
@@ -56,9 +58,13 @@ func test_warm_still_loads_the_carried_guns_art() -> void:
 	assert_same(art.held_texture(id), art.held_texture(id), "cached by the warm")
 
 
+func before_each() -> void:
+	_view = ViewMode._shared  # the suite runs under the flat default: hand it back untouched
+
+
 func after_each() -> void:
 	LaunchArgs.parse(PackedStringArray())  # a unit run carries no user args
-	ViewMode.select("")
+	ViewMode._shared = _view
 
 
 func _warm(view: String, weapon: StringName) -> void:
