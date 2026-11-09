@@ -67,7 +67,7 @@ func test_a_look_resting_on_a_boundary_holds_its_octant() -> void:
 
 
 func test_every_shipped_ghost_grid_divides_into_its_cells() -> void:
-	for ghost: String in ["kerf", "dent", "tonnage"]:
+	for ghost: String in ["kerf", "dent", "tonnage", "ohm"]:
 		var tex: Texture2D = load(GhostDrawn.path_of(P70, ghost)) as Texture2D
 		assert_not_null(tex, ghost)
 		assert_eq(tex.get_width() % GhostDrawn.COLS, 0, ghost)

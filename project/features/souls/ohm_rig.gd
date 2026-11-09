@@ -57,6 +57,7 @@ const KICK_TWIST: float = deg_to_rad(16.0)
 const CARD_M: float = 1.2
 const CARD_ANCHOR: float = 0.8
 const CARD_HALO_A: float = 0.45
+const CYCLE_CELL: float = 120.0  # the contact row's feet apart less a boot, twice over
 
 var unfold: float = 1.0
 ## OhmStage.bolts, fed by the host: a rise kicks the guard arm (the first sight only arms it).
@@ -74,6 +75,8 @@ var _feet: Array[Sprite2D] = []
 var _arms: Array[Sprite2D] = []  # [upper_r, fore_r, upper_l, fore_l]
 var _hide: Array[Sprite2D] = []
 var _card: GhostCard = GhostCard.new("ohm", CARD_M, CARD_ANCHOR)
+var _drawn: GhostDrawn = GhostDrawn.new("ohm", 1.55, CYCLE_CELL, 180.0)  # n11: ohm_walk8.png
+var _all: Array[Sprite2D] = []
 
 
 func _ready() -> void:
@@ -97,6 +100,7 @@ func _ready() -> void:
 	GhostRim.body(shell)
 	shell.add_child(OhmSeams.new())  # the soul seams and lenses, bold enough for 32 px/m
 	_hide = [shell, beard, hose]
+	_all.assign(_hide + _feet + _arms)
 	_card.halo = Color(TEAL, CARD_HALO_A)
 	pose()
 
@@ -153,8 +157,11 @@ func pose() -> void:
 	var sh_l: Vector2 = Vector2(SHOULDER.x, -SHOULDER.y)
 	var guard: Vector2 = GUARD_HAND + Vector2(kick_m() + RECOIL_M * kick, 0.0)
 	_arm(2, sh_l, sh_l.lerp(guard, u), -1.0)
-	_card.size_k = _body.scale.x
-	_card.step(self, _hide, _body.position, PX_PER_M)
+	var drawn: bool = _drawn.step(self, _all, PX_PER_M, _body.scale.x)
+	_card.set_shown(not drawn)
+	if not drawn:
+		_card.size_k = _body.scale.x
+		_card.step(self, _hide, _body.position, PX_PER_M)
 
 
 ## Two-bone arm from `a` to the hand `b` (body frame, metres), the elbow bent outward.
@@ -169,14 +176,7 @@ func _arm(i: int, a: Vector2, b: Vector2, m: float) -> void:
 
 
 func _place(s: Sprite2D, a: Vector2, b: Vector2) -> void:
-	var d: Vector2 = b - a
-	s.position = a * PX_PER_M
-	s.rotation = d.angle()
-	var len_px: float = maxf(d.length(), 0.05) * PX_PER_M
-	s.scale = Vector2(
-		len_px / float(s.texture.get_width()),
-		ARM_THICK_M * PX_PER_M / float(s.texture.get_height())
-	)
+	GhostRim.place_limb(s, a * PX_PER_M, b * PX_PER_M, ARM_THICK_M * PX_PER_M)
 
 
 func _limb(name: String) -> Sprite2D:
