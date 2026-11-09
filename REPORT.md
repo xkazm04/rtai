@@ -1,4 +1,4 @@
-# REPORT: night n10, lane world (draft, updated 2026-11-09 01:33)
+# REPORT: night n10, lane world (draft, updated 2026-11-09 01:44)
 
 Evidence: `C:\Users\kazda\kiro\gtai-masters\n10\world\` (`frames.json`). Every performance number is unmeasured so far.
 
@@ -33,7 +33,7 @@ Evidence: `C:\Users\kazda\kiro\gtai-masters\n10\world\` (`frames.json`). Every p
 ## Gates so far
 
 - **`node tools/evidence/run.mjs --no-bench` on `fdc80496`: all PASS.** Lint 15/15, unit 1979 / 0, scenarios 55 / 0, parity 1200 steps with the planted mutation caught, selftest, export-audit 633 / 0. This replaces every older result below. The bench was not run.
-- Director reel, the brief's exact command, on `ed952be6`, one commit before the riot push: top, tilt70, combo each 19 chapters, 19 fully down, 0 SCRIPT ERROR, `no carry` in all 19 (Call w-4). The run on `fdc80496` is logged in JOURNAL.
+- Director reel, the brief's exact command, on `fdc80496`: top, tilt70, combo each 19 chapters, 19 fully down, 0 SCRIPT ERROR, `no carry` in all 19 (Call w-4).
 
 - `node tools/lint/lint.mjs`: 15 of 15 in the pre-commit hook on `071e3780`.
 - `node tools/tests/run_unit.mjs --select=test_street_dead_heading,test_street_dead_plan,test_street_quest_dead_plan,test_street_crowd_corpse`: 32 passed, 0 failed before the shader tests; `--select=test_street_dead_heading,test_street_crowd_corpse`: 15 passed, 0 failed with them.
@@ -61,4 +61,4 @@ Evidence: `C:\Users\kazda\kiro\gtai-masters\n10\world\` (`frames.json`). Every p
 
 ## Next steps
 
-Film Rivet's feet on a diagonal with a dedicated bot and a leg-visible row, and wire the drawn-for-70 poses when REQUEST 2 has a producer. Roof art for this camera is the largest plan-view area left and needs its own art round.
+Film a rig being swapped for the baked crowd, to see how far a pushed body jumps. Film Rivet's feet on a diagonal with a dedicated bot and a leg-visible row, and wire the drawn-for-70 poses when REQUEST 2 has a producer. Roof art for this camera is the largest plan-view area left and needs its own art round.
