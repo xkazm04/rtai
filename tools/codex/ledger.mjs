@@ -34,6 +34,20 @@ const usdOf = (state, n) => state?.iterations?.find((i) => i.n === n)?.costUsd ?
 /** Started and never recorded a result: the run died from outside, so its Codex time is unknown. */
 export const vanished = (allRows) => allRows.filter((r) => r.started && !r.task);
 
+/** Per module with both a control and a Codex task whose review was done by a measured subagent: the
+ *  Claude tokens of each path, measured both sides. Codex's own time is beside it, not converted. */
+export function paired(allRows) {
+  const out = [];
+  for (const c of allRows.filter((r) => r.control).map((r) => r.control)) {
+    const t = allRows.find((r) => r.task?.unit === c.unit && Number.isInteger(r.review?.review_tokens));
+    if (!t) continue;
+    out.push({ unit: c.unit, claude_alone_tokens: c.claude_tokens, claude_alone_secs: c.secs, codex_secs: t.task.codex_secs ?? null,
+      review_tokens: t.review.review_tokens, review_secs: t.review.review_secs, claude_tokens_saved: c.claude_tokens - t.review.review_tokens,
+      review_changed_lines: t.review.changed_lines, control_review_changed_lines: c.review_changed });
+  }
+  return out;
+}
+
 /** Totals for the report. `state` is a runner state.json. reviewUsd is measured per session; the
  *  share per task divides a session by the tasks it reviewed, which is an estimate. */
 export function totals(allRows, state = null) {
@@ -67,6 +81,7 @@ export function totals(allRows, state = null) {
       review_usd_per_task: reviewUsd !== null && reviewed.length ? reviewUsd / reviewed.length : null,
     },
     controls: allRows.filter((r) => r.control).map((r) => r.control),
+    paired: paired(allRows),
     unmeasured: allRows.some((r) => r.control)
       ? ['dollars of a control run: a subagent reports tokens and seconds, not dollars, so a saving is stated in tokens and seconds per module that has a control, never extrapolated to the rest']
       : ['the Claude cost of writing the same tests without Codex: there is no control run, so no saving can be stated as measured'],

@@ -6,7 +6,8 @@
 //   node tools/codex/factory.mjs run --stems=<a,b> | --take=<n> [--ledger=<file>] [--timeout-min=25]
 //   node tools/codex/factory.mjs queue [--ledger=<file>]
 //   node tools/codex/factory.mjs review <id> --verdict=accepted|accepted-after-revision|rejected
-//     [--changed=<lines>] [--notes=<text>] [--iteration=<n>] [--ledger=<file>]
+//     [--changed=<lines>] [--notes=<text>] [--iteration=<n>] [--review-tokens=<n> --review-secs=<n>] [--ledger=<file>]
+//     (--review-tokens/--review-secs: the review was done by a subagent and these are the harness's numbers)
 //   node tools/codex/factory.mjs ledger [--state=<lane state.json>] [--ledger=<file>]
 //   node tools/codex/factory.mjs control <stem> --tokens=<n> --secs=<n> --tests=<n> --killed=<n> --mutants=<n>
 //     --changed=<review lines> [--model=<id>] [--notes=<text>] [--ledger=<file>]
@@ -230,7 +231,13 @@ function cmdReview(id, o, out, err) {
   if (!row?.task) { err(`factory: no task ${id} in ${ledger}`); return 2; }
   if (row.review) { err(`factory: ${id} was already reviewed (${row.review.verdict})`); return 2; }
   const iteration = o.iteration === undefined ? null : Number(o.iteration);
-  append(ledger, { type: 'review', id, verdict: o.verdict, changed_lines: Number(o.changed ?? 0), notes: o.notes ?? '', iteration, at: new Date().toISOString() });
+  const given = ['review-tokens', 'review-secs'].filter((k) => o[k] !== undefined);
+  if (given.length === 1 || given.some((k) => !/^\d+$/.test(String(o[k])))) {
+    err('factory: --review-tokens and --review-secs go together, as whole numbers the harness reported for the review subagent (never estimate them)');
+    return 2;
+  }
+  const measured = given.length ? { review_tokens: Number(o['review-tokens']), review_secs: Number(o['review-secs']) } : {};
+  append(ledger, { type: 'review', id, verdict: o.verdict, changed_lines: Number(o.changed ?? 0), notes: o.notes ?? '', iteration, ...measured, at: new Date().toISOString() });
   out(`factory: ${id} ${o.verdict}`);
   return 0;
 }

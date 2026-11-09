@@ -199,3 +199,32 @@ test('control: records measured numbers only, refuses a missing or made-up-looki
     assert.equal(t.measured.tasks, 0);
   } finally { done(); }
 });
+
+test('a review done by a subagent records its measured tokens, and a module with a control is paired in tokens both sides', async () => {
+  const { file, done } = ledgerFile();
+  const err = [];
+  const opts = { out: () => {}, err: (l) => err.push(l) };
+  try {
+    append(file, passed('a'));
+    assert.equal(await main(['review', 'a', '--verdict=accepted', '--review-tokens=12000', `--ledger=${file}`], opts), 2, 'tokens without seconds');
+    assert.equal(await main(['review', 'a', '--verdict=accepted', '--review-tokens=about12k', '--review-secs=90', `--ledger=${file}`], opts), 2);
+    assert.match(err.at(-1), /never estimate/);
+    assert.equal(read(file).filter((e) => e.type === 'review').length, 0, 'a refused review writes nothing');
+    assert.equal(totals(rows(read(file))).paired.length, 0);
+    assert.equal(await main(['review', 'a', '--verdict=accepted-after-revision', '--changed=3', '--review-tokens=12000', '--review-secs=90', `--ledger=${file}`], opts), 0);
+    assert.deepEqual(totals(rows(read(file))).paired, [], 'no control yet: nothing to pair');
+    append(file, { type: 'control', id: 'control-a', unit: 'a', claude_tokens: 50000, secs: 300, review_changed: 0 });
+    const [p] = totals(rows(read(file))).paired;
+    assert.equal(p.claude_alone_tokens, 50000);
+    assert.equal(p.review_tokens, 12000);
+    assert.equal(p.claude_tokens_saved, 38000);
+    assert.equal(p.codex_secs, 100);
+    assert.equal(p.review_changed_lines, 3);
+  } finally { done(); }
+});
+
+test('a review without measured tokens is never paired, even beside a control', () => {
+  const r = [{ id: 'a', task: passed('a'), review: { verdict: 'accepted', iteration: 4 } },
+    { id: 'control-a', control: { unit: 'a', claude_tokens: 50000, secs: 300 } }];
+  assert.deepEqual(totals(r).paired, []);
+});

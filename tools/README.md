@@ -186,6 +186,13 @@ file order). Record what the harness reported, never an estimate:
 `node tools/codex/factory.mjs control oil_leak --tokens=50249 --secs=309 --tests=12 --killed=<n> --mutants=15 --changed=0 --ledger=<file>`.
 A control is never counted as a Codex task, and its saving holds for that module only.
 
+To measure the other side, have a **subagent** do the review (it reads every line of Codex's test
+against the laws and returns its edits; you check its diff) and record what the harness reported:
+`factory review <id> --verdict=... --changed=<n> --review-tokens=<n> --review-secs=<n>`. A module with
+both a control and a measured review shows in `ledger`'s `paired`: Claude tokens alone against Claude
+tokens with Codex, measured both sides, Codex's seconds beside them. Your own check of the subagent's
+diff is not in that number; say so when you quote it.
+
 **Refuses to pick:** generators, tuned tables, drawing code, anything touching a scene or the disk,
 anything already tested (ask `--explain` for the reason).
 **Exit 3:** the weekly meter refused the dispatch; nothing was built, and the meter is never worked around.
