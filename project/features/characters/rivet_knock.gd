@@ -39,7 +39,7 @@ static func path_or(rig: CutRig, art: String, path: String) -> String:
 			rig.remove_meta(LAST)
 		return path
 	var knock: String = RivetStrips.DIR + art + "/" + STRIP
-	return knock if ResourceLoader.exists(knock) else path
+	return knock if RivetStrips.has_file(knock) else path
 
 
 ## True when `card` shows the knock strip.
