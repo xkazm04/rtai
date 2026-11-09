@@ -1,0 +1,142 @@
+#!/usr/bin/env node
+// One command for a game film: a named shot, always with its scene, loadout, fixed seed and fixed
+// step; ids and flags checked against the tree before anything launches; tick-exact stills and
+// per-tick numbers from dev/frames/film_probe.gd; one verdict: pass, fail or unverifiable.
+//   node tools/film/film.mjs <shot> --out=<dir> [--ticks=<n>] [--stills=<t,t>] [--view=combo]
+//     [--ppm=48] [--lock=spawn|<x,y>|off] [--seed=<n>] [--res=1280x800] [--no-movie] [--tree=<dir>]
+//     [--timeout=<s>] [--dry-run] [-- <extra game flags>]
+// Exit: 0 pass, 1 fail (the run broke), 2 usage (nothing launched), 3 unverifiable (it ran, but the
+// numbers or stills it was asked for do not exist).
+import { existsSync, mkdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
+import { spawnSync, execFileSync } from 'node:child_process';
+import { join, resolve } from 'node:path';
+import { pathToFileURL } from 'node:url';
+import { ROOT } from '../lib/repo.mjs';
+import { describe, runGodot } from '../lib/godot.mjs';
+import { verdict } from '../lib/dev_verdict.mjs';
+import { checkFlags, checkId, godotArgs, parseShot, shotLabel } from './shots.mjs';
+
+export const EXIT = { pass: 0, fail: 1, usage: 2, unverifiable: 3 };
+const USAGE = 'usage: node tools/film/film.mjs <shot> --out=<dir> [--ticks=<n>] [--stills=<t,t>] [--view=combo] '
+  + '[--ppm=48] [--lock=spawn|<x,y>|off] [--seed=<n>] [--res=1280x800] [--no-movie] [--tree=<dir>] [--timeout=<s>] [--dry-run] [-- flags]';
+const VALUE = new Set(['out', 'ticks', 'stills', 'view', 'ppm', 'lock', 'seed', 'res', 'tree', 'timeout']);
+const SWITCH = new Set(['no-movie', 'dry-run']);
+const DEFAULTS = { view: 'combo', ppm: '48', lock: 'spawn', seed: '20261109', res: '1280x800', timeout: '900' };
+
+/** {shotText, flags, extra} or {error}. */
+export function parseArgv(argv) {
+  const flags = { ...DEFAULTS };
+  let shotText = null;
+  const dash = argv.indexOf('--');
+  const extra = dash >= 0 ? argv.slice(dash + 1) : [];
+  for (const a of dash >= 0 ? argv.slice(0, dash) : argv) {
+    const m = /^--([a-z-]+)(?:=(.*))?$/.exec(a);
+    if (m && SWITCH.has(m[1]) && m[2] === undefined) flags[m[1]] = true;
+    else if (m && VALUE.has(m[1]) && m[2]) flags[m[1]] = m[2];
+    else if (!a.startsWith('-') && shotText === null) shotText = a;
+    else return { error: `film: bad argument ${a}` };
+  }
+  return { shotText, flags, extra };
+}
+
+/** Everything checkable before a launch: {shot, opts} or {error}. */
+export function plan(flags, shotText, extra) {
+  if (!flags.out) return { error: 'film: --out=<dir> is required' };
+  const shot = parseShot(shotText);
+  if (shot.error) return { error: `film: ${shot.error}` };
+  const tree = resolve(flags.tree ?? ROOT);
+  if (!existsSync(join(tree, 'project', 'project.godot'))) return { error: `film: ${tree} has no project/project.godot` };
+  const stills = (flags.stills ?? '').split(',').filter(Boolean).map(Number);
+  const ticks = Number(flags.ticks ?? Math.max(shot.shot.ticks, Math.max(0, ...stills) + 120));
+  if (!Number.isInteger(ticks) || ticks <= 0) return { error: `film: --ticks must be a positive integer, got ${flags.ticks}` };
+  if (stills.some((t) => !Number.isInteger(t) || t < 0 || t >= ticks)) return { error: `film: --stills must be ticks below ${ticks}` };
+  if (!/^\d+x\d+$/.test(flags.res)) return { error: `film: --res must be WxH, got ${flags.res}` };
+  if (!/^(spawn|off|-?[\d.]+,-?[\d.]+)$/.test(flags.lock)) return { error: `film: --lock must be spawn, off or x,y, got ${flags.lock}` };
+  const bad = [...(shot.shot.needs ? [checkId(shot.shot.needs, shot.arg, tree)] : []), checkId('view', flags.view, tree),
+    ...checkFlags(extra, tree)].filter(Boolean);
+  if (bad.length) return { error: bad.map((b) => `film: ${b}`).join('\n') };
+  if (!existsSync(join(tree, 'project/dev/frames/film_probe.gd'))) {
+    return { error: `film: ${tree} has no dev/frames/film_probe.gd (older than the kit): film a commit with tools/film/compare.mjs, which injects it` };
+  }
+  const dir = resolve(flags.out);
+  const movie = flags['no-movie'] ? null : join(dir, `${shotLabel(shot)}.avi`);
+  return { shot, opts: { tree, dir, ticks, stills, movie, extra, view: flags.view, ppm: flags.ppm, lock: flags.lock,
+    seed: flags.seed, res: flags.res, timeoutMs: Number(flags.timeout) * 1000, label: shotLabel(shot) } };
+}
+
+const gitHead = (tree) => {
+  try {
+    const head = execFileSync('git', ['-C', tree, 'rev-parse', 'HEAD'], { encoding: 'utf8', windowsHide: true }).trim();
+    const dirty = execFileSync('git', ['-C', tree, 'status', '--porcelain', '--', 'project'], { encoding: 'utf8', windowsHide: true }).trim();
+    return { head, dirty: dirty.length > 0 };
+  } catch { return { head: null, dirty: null }; }
+};
+
+/** ffmpeg AVI -> mp4 beside it; the AVI goes after a good encode. Returns the mp4, or null. */
+function encode(avi) {
+  if (!existsSync(avi)) return null;
+  const mp4 = avi.replace(/\.avi$/, '.mp4');
+  const r = spawnSync('ffmpeg', ['-y', '-loglevel', 'error', '-i', avi, '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '18', mp4], { windowsHide: true });
+  if (r.status !== 0) return null;
+  rmSync(avi, { force: true });
+  return mp4;
+}
+
+/** Reads what the run wrote: what is missing is a reason, never a default. */
+export function judge(res, opts, startedAt) {
+  const v = verdict(res, {});
+  if (!v.ok) return { outcome: 'fail', reasons: [v.line], probe: null };
+  const file = join(opts.dir, 'probe.json');
+  if (!existsSync(file) || statSync(file).mtimeMs + 2 < startedAt) {
+    return { outcome: 'unverifiable', reasons: ['the probe wrote no probe.json in this run'], probe: null };
+  }
+  const probe = JSON.parse(readFileSync(file, 'utf8'));
+  const reasons = [];
+  if (!probe.rows?.length) reasons.push('probe.json has no ticks');
+  const [w, h] = opts.res.split('x').map(Number);
+  if (probe.view?.[0] !== w || probe.view?.[1] !== h) reasons.push(`the run drew ${probe.view?.join('x')}, not the asked ${opts.res}`);
+  const seen = new Set(probe.stills ?? []);
+  for (const t of opts.stills) {
+    const png = join(opts.dir, `t${t}.png`);
+    if (!seen.has(t) || !existsSync(png) || statSync(png).mtimeMs + 2 < startedAt) reasons.push(`no still at tick ${t}`);
+  }
+  return { outcome: reasons.length ? 'unverifiable' : 'pass', reasons, probe };
+}
+
+/** Films one shot. {outcome, reasons, probe, mp4, manifest}; `runner` is for tests. */
+export async function filmOne({ shot, opts }, { runner = runGodot } = {}) {
+  mkdirSync(opts.dir, { recursive: true });
+  for (const t of opts.stills) rmSync(join(opts.dir, `t${t}.png`), { force: true });
+  rmSync(join(opts.dir, 'probe.json'), { force: true });
+  const args = godotArgs(shot, opts);
+  const startedAt = Date.now();
+  const res = await runner(args, { headless: false, timeoutMs: opts.timeoutMs, name: `film-${opts.label}`, cwd: opts.tree });
+  writeFileSync(join(opts.dir, 'film.log'), `# ${args.join(' ')}\n# ${describe(res)}\n${res.out}`);
+  const judged = judge(res, opts, startedAt);
+  const mp4 = opts.movie && judged.outcome !== 'fail' ? encode(opts.movie) : null;
+  if (opts.movie && !mp4 && judged.outcome === 'pass') {
+    judged.outcome = 'unverifiable';
+    judged.reasons.push('the movie did not encode');
+  }
+  const manifest = { schema: 'gtai.film/1', shot: opts.label, outcome: judged.outcome, reasons: judged.reasons, ...gitHead(opts.tree),
+    tree: opts.tree, ticks: opts.ticks, stills: opts.stills, view: opts.view, ppm: opts.ppm, lock: opts.lock, seed: opts.seed,
+    res: opts.res, mp4, ran: describe(res), args };
+  writeFileSync(join(opts.dir, 'film.json'), `${JSON.stringify(manifest, null, 1)}\n`);
+  return { ...judged, mp4, manifest };
+}
+
+export async function main(argv, { out = console.log, err = console.error, runner } = {}) {
+  const parsed = parseArgv(argv);
+  if (parsed.error) { err(`${parsed.error}\n${USAGE}`); return EXIT.usage; }
+  const planned = plan(parsed.flags, parsed.shotText, parsed.extra);
+  if (planned.error) { err(`${planned.error}\n${USAGE}`); return EXIT.usage; }
+  out(`film: godot --path project ${godotArgs(planned.shot, planned.opts).join(' ')}`);
+  if (parsed.flags['dry-run']) { out('film: dry run, nothing launched'); return EXIT.pass; }
+  const r = await filmOne(planned, { runner });
+  out(`film: ${r.outcome.toUpperCase()}${r.reasons.length ? `: ${r.reasons.join('; ')}` : ''}; ${join(planned.opts.dir, 'film.json')}`);
+  return EXIT[r.outcome];
+}
+
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  process.exit(await main(process.argv.slice(2)));
+}

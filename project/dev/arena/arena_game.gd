@@ -69,6 +69,7 @@ func _ready() -> void:
 	if args.has("--horde"):  # corpse decay: the bodies on the floor against the cap
 		HordeOverlay.attach(layer, session.stage)
 	FightFrames.attach(self, args, session.world)  # perf-city: --frames=<json> frame log
+	FilmProbe.attach(self, args)  # n11 tools: tools/film probes, stills, locked camera
 	_audio_and_hud(args)
 	tuning = ArenaTuning.new(session.actions, session.stage.arena.tuning)
 	tuning.hooks = session.stage.hooks
