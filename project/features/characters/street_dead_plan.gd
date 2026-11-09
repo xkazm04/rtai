@@ -101,6 +101,7 @@ static func draw(rig: CutRig, card: Sprite2D, row: String, ks: float, p: float) 
 	if path.is_empty() or p < StreetWalkerFall.FALL_AT[StreetWalkerFall.FALL_FRAMES - 1]:
 		drop(card)
 		return
+	var sink: float = StreetWalkerFall.sink_of(rig)
 	var r: HumanReact = rig.react
 	var blow: Vector2 = r.dir.rotated(rig.facing).normalized() if r != null else Vector2.DOWN
 	var kind: StringName = r.kind if r != null else &""
@@ -115,7 +116,7 @@ static func draw(rig: CutRig, card: Sprite2D, row: String, ks: float, p: float) 
 	var m: Vector2 = motion(kind, p)
 	var odd: bool = (h & 1) == 1
 	var head: Vector2 = StreetDeadHeading.head_of(blow, pose, odd)
-	var pelvis: float = _bounded(card, rig.global_position, head, ks)
+	var pelvis: float = _bounded(card, rig.global_position, head, rest_scale(ks, sink))
 	var left: float = StreetDeadHeading.fall_left(p)
 	var centre: Vector2 = rig.global_position + head * pelvis
 	var at: Vector2 = (
@@ -155,6 +156,11 @@ static func drop(card: Sprite2D) -> void:
 static func reset() -> void:
 	_lying.clear()
 	StreetQuestDeadPush.reset()
+
+
+## `ks` with the decay's sink taken out: the pelvis lies where it lay, the body sinks on the spot.
+static func rest_scale(ks: float, sink: float) -> float:
+	return ks / maxf(sink, 0.0001)
 
 
 ## The pelvis offset along the head (px), pulled back short of the first solid; once per card.

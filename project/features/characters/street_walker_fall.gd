@@ -138,12 +138,16 @@ static func draw(rig: CutRig, card: Sprite2D, k: float) -> void:
 	var p: float = r.progress() if r != null and r.dying else 1.0
 	card.frame_coords = Vector2i(f.x, fall_frame(p))
 	card.flip_h = f.y == 1
-	var sink: float = absf(rig.scale.x) / maxf(CutRig.SC * rig.plan.size_k, 0.0001)
-	var ks: float = s * minf(sink, 1.0)
+	var ks: float = s * sink_of(rig)
 	card.global_rotation = 0.0
 	card.global_scale = Vector2(ks, ks)
 	card.global_position = rig.global_position
 	StreetDeadPlan.draw(rig, card, StreetWalkerCards.row_of(rig), ks, p)  # n9: the plan-view dead
+
+
+## The corpse decay's sink (CorpseFade shrinks the rig): 1 while it lies, down to 1 - sink.
+static func sink_of(rig: CutRig) -> float:
+	return minf(absf(rig.scale.x) / maxf(CutRig.SC * rig.plan.size_k, 0.0001), 1.0)
 
 
 ## (rotation rad, the figure's length factor) for the rig now; (0, 1) when not dying in the hold.
