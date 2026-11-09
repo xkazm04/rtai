@@ -129,6 +129,7 @@ static func transform_of(
 	var head: Vector2 = StreetDeadHeading.head_of(blow, pose, (hv & 1) == 1)
 	var flip: bool = StreetDeadHeading.flipped(head, pose, (hv & 1) == 1)
 	var s: float = StreetQuestCards.body_m() * px_per_m / StreetWalkerFall.STILL_PX
+	s *= StreetDeadPlan.LYING_K
 	var left: float = fall_left(age)
 	var pelvis: float = StreetDeadPlan.PELVIS_K * StreetWalkerFall.STILL_PX * s
 	var centre: Vector2 = at_px + head * pelvis

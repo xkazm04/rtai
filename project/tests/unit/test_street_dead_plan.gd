@@ -39,9 +39,9 @@ func test_far_apart_bodies_may_share_a_pose() -> void:
 
 
 func test_a_sinking_body_keeps_its_pelvis_where_it_lay() -> void:
-	var whole: float = StreetDeadPlan.rest_scale(0.3, 1.0)
-	assert_almost_eq(StreetDeadPlan.rest_scale(0.15, 0.5), whole, 0.0001)
-	assert_almost_eq(StreetDeadPlan.rest_scale(0.03, 0.1), whole, 0.0001)
+	var whole: float = StreetWalkerFall.rest_scale(0.3, 1.0)
+	assert_almost_eq(StreetWalkerFall.rest_scale(0.15, 0.5), whole, 0.0001)
+	assert_almost_eq(StreetWalkerFall.rest_scale(0.03, 0.1), whole, 0.0001)
 
 
 func test_a_redrawn_corpse_keeps_its_pose() -> void:

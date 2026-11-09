@@ -48,6 +48,9 @@ const LAND_SCALE: float = 1.05
 ## The pelvis (the cell centre) lies this share of the standing height along the blow from the
 ## sim point (the feet stay near where the person stood).
 const PELVIS_K: float = 0.45
+## n11 (the owner on corpse size): a flat pose is 1.0-1.41 x the standing card and read 1.8 x the
+## person alive; every lying pose (near rigs, far crowd, quest 1) draws at this share. 1.0 = before.
+const LYING_K: float = 0.72
 const NEAR_M: float = 3.0
 const MEMORY: int = 256
 const NODE: String = "DeadPlan"
@@ -116,14 +119,15 @@ static func draw(rig: CutRig, card: Sprite2D, row: String, ks: float, p: float) 
 	var m: Vector2 = motion(kind, p)
 	var odd: bool = (h & 1) == 1
 	var head: Vector2 = StreetDeadHeading.head_of(blow, pose, odd)
-	var pelvis: float = _bounded(card, rig.global_position, head, rest_scale(ks, sink))
+	var lying: float = StreetWalkerFall.rest_scale(ks, sink) * LYING_K
+	var pelvis: float = _bounded(card, rig.global_position, head, lying)
 	var left: float = StreetDeadHeading.fall_left(p)
 	var centre: Vector2 = rig.global_position + head * pelvis
 	var at: Vector2 = (
 		StreetDeadHeading.resting(rig.actor_id, centre, left) - blow * m.x * CharacterRigs.PX_PER_M
 	)
 	var lay: Vector2 = StreetDead70.place(plan, head, pose, odd, not drawn.is_empty())
-	var s: float = ks * m.y
+	var s: float = ks * LYING_K * m.y
 	plan.global_transform = Transform2D(
 		lay.x + StreetDeadHeading.jitter(h) + StreetDeadHeading.settle(p),
 		Vector2(s, s / lay.y),
@@ -156,11 +160,6 @@ static func drop(card: Sprite2D) -> void:
 static func reset() -> void:
 	_lying.clear()
 	StreetQuestDeadPush.reset()
-
-
-## `ks` with the decay's sink taken out: the pelvis lies where it lay, the body sinks on the spot.
-static func rest_scale(ks: float, sink: float) -> float:
-	return ks / maxf(sink, 0.0001)
 
 
 ## The pelvis offset along the head (px), pulled back short of the first solid; once per card.

@@ -150,6 +150,11 @@ static func sink_of(rig: CutRig) -> float:
 	return minf(absf(rig.scale.x) / maxf(CutRig.SC * rig.plan.size_k, 0.0001), 1.0)
 
 
+## `ks` with the decay's sink taken out: the pelvis lies where it lay, the body sinks on the spot.
+static func rest_scale(ks: float, sink: float) -> float:
+	return ks / maxf(sink, 0.0001)
+
+
 ## (rotation rad, the figure's length factor) for the rig now; (0, 1) when not dying in the hold.
 static func pose(rig: CutRig, card: Sprite2D) -> Vector2:
 	var r: HumanReact = rig.react

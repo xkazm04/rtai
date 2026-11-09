@@ -95,7 +95,10 @@ static func plan_cell(art: String, row: String, look: int) -> Image:
 	var body: Image = cell.get_region(cell.get_used_rect())
 	var h: float = StreetWalkerCards.HEIGHT_BY_ART.get(art, StreetWalkerCards.HEIGHT_M)
 	var k: float = h * CharacterRigs.PX_PER_M / StreetWalkerFall.STILL_PX * CrowdAtlas.BAKE_ZOOM
-	k = minf(k, CrowdAtlas.CELL_PX * FIT / maxf(body.get_width(), body.get_height()))
+	k = minf(
+		k * StreetDeadPlan.LYING_K,
+		CrowdAtlas.CELL_PX * FIT / maxf(body.get_width(), body.get_height())
+	)
 	body.resize(
 		maxi(1, roundi(body.get_width() * k)),
 		maxi(1, roundi(body.get_height() * k)),
