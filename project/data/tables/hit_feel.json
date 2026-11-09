@@ -309,6 +309,13 @@
       "kick_px": 3,
       "kick_ticks": 8,
       "shake": ""
+    },
+    {
+      "doc": "n12 B2: a 10 Hz stream on the shock class (the electro gun's single-bolt grammar): every hit asked a 4-tick stop and a shake, so a stream on armour froze every 18 ticks and the stop cooldown ate the kill's own stop (filmed: stops at 332 and 350, none on the 361 kill). Like the Gatling: no per-hit stop or shake, a 1 px kick; a kill still takes kill_hitstop. Remove the row for the before.",
+      "hitstop": "",
+      "id": "ray_gun",
+      "kick_px": 1,
+      "shake": ""
     }
   ]
 }
