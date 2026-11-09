@@ -188,7 +188,7 @@ static func _build(rig: CutRig, card: Sprite2D, path: String) -> void:
 static func _set_strip(card: Sprite2D, path: String) -> void:
 	if str(card.get_meta(ON, "")) == path:
 		return
-	card.texture = _tex.get_or_add(path, load(path) as Texture2D)
+	card.texture = _tex[path] if _tex.has(path) else _tex.get_or_add(path, load(path) as Texture2D)
 	card.frame = 0  # the walk grid's 32 frames vs a strip's 3-14: never out of range mid-swap
 	var cols: int = RivetWalk.cols_of(path)
 	card.hframes = cols if cols > 0 else RivetStrips.cells_of(path, path.ends_with("_left.png"))
