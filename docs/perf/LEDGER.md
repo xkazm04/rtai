@@ -218,6 +218,18 @@ Others up before a run: 0 to 2, median 0; 17 of the 24 rounds had none before an
 ### The whole branch against main, last (it12, 04:24-04:32): release riot at combo, 24 rounds
 Exports `windows-bench-main` (9bbe6d0a) and `windows-bench-exists` + `-exists2` (40e719fd; the head since then changes only docs and evidence), `evidence/perf/n10-cputime/final/`. frame p50 2.971 -> 2.050 ms, **-0.908 ms** (-30.6 %, CI95 -0.944 to -0.895, lower in 24 of 24), and -0.888 ms for the twin export of the same code; the two exports of the head differ by -0.023 ms (CI95 -0.047 to -0.015, 20 of 24), which is this run's A/A and is not zero. Total CPU 8.203 -> 6.469 s, -1.73 s (24 of 24; the twin -1.59 s). The game's rig timer: p50 0.939 -> 0.474 ms, p99 1.52 -> 0.91 ms, medians over 24 runs. **No other Godot or RTAI process was up before any of the 72 runs** (others 0, 24 of 24 rounds). That count is taken once before each run and sees only those process names, so this is the closest the night came to item 3's quiet A/B, not a proof the machine was idle; no p99 or worst-frame claim for the frame, and no RAM. Item 1's target holds in release: the rig timer's p50 is under 1 ms on main as well (0.939) and about half that on the head.
 
+### The quiet release riot (it13, 04:36-04:39): item 3 as the brief worded it, QUIET
+The other lanes had gone idle (0 Godots at 04:33). `gtai-n10/tmp/perf/it13_quiet.sh`: 4 clean polls 20 s apart, `bench.lock` held by the script, `tools/perf/ab.mjs --no-lock --scenes=riotc --pairs=8`, wall-clock frame times, exports `windows-bench-main` (9bbe6d0a), `windows-bench-exists` (40e719fd) and its twin `windows-bench-exists2`; `evidence/perf/n10-riotc-quiet/`. The tool flagged 0 of 24 runs contended; a 3 s side poller (`during.log` there, 56 polls) saw only the bench's own one process (50 polls) or nothing (6). Other program names were not counted. 1681 frames a run, 0 script errors, 0 no-tick and 0 multi-tick frames. `ab.json` says `locked: false` because the script took the lock, not the tool.
+
+| metric (ms) | main | head | twin | head - main, paired median | twin - main | head - twin | the tool's verdict (head, twin) |
+|---|---|---|---|---|---|---|---|
+| frame p50 | 3.00 | 2.08 | 2.14 | -0.920 (8 of 8 lower) | -0.845 (8 of 8) | -0.078 (8 of 8) | WIN, WIN |
+| p99 | 4.96 | 3.98 | 4.31 | -1.016 (8 of 8) | -0.675 (8 of 8) | -0.167 (5 of 8) | WASH, WASH |
+| p99.9 | 7.20 | 6.12 | 6.13 | -1.082 (8 of 8) | -1.015 (6 of 8) | -0.109 (7 of 8) | WIN, WASH |
+| worst | 7.83 | 7.00 | 7.30 | -0.987 (7 of 8) | -0.764 (5 of 8) | -0.221 (6 of 8) | WASH, WASH |
+
+Columns main/head/twin are the tool's medians. The A/A (head - twin) is not zero at p50, and the head always ran in the middle slot of three (ab.mjs reverses the order each round, it does not rotate it), so read the gain as -0.85 to -0.92 ms, which agrees with the CPU-seconds run's -0.888 to -0.908. The p99 gain's direction is claimed, its size is not: one head round read p99 5.04 ms against main's 5.18 in the same round. RAM: both modes (about 692 and about 760 MB) appear in every arm with no pattern; no claim.
+
 ### The riot on film (it9): what the cut changes on screen, with an A/A control
 `evidence/perf/n10-film/`: `film.sh` (main 9bbe6d0a vs this head, city riot, `--view=combo`, 1200 frames at `--fixed-fps 60`, 1280x800, d3d12, debug editor binary, no HUD), `aa.sh` (the same code twice at 32 px/m), `cmp_frames.py`, `psnr*.log`, `ab_only_frames.json`. Instrument: ffmpeg psnr between the two MJPEG captures (a `mse_avg` of exactly 0 means every sample matched); both arms ran side by side, CONTENDED. Masters: `gtai-masters/n10/perf/`.
 
