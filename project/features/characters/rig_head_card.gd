@@ -48,7 +48,11 @@ static func step(rig: CutRig) -> void:
 		if not ViewMode.shared().cards or _key(rig).is_empty():
 			return
 		_build(rig)
-	if not rig.head_card.has_meta(RivetFrames.ON):  # d9: Rivet's whole figure places itself
+	if rig.head_card.has_meta(StreetWalkerCards.ON):  # n10: the walker places itself, wants the frame
+		var f: Vector2i = frame_of(rig.head.global_rotation)
+		rig.head_card.frame = f.x
+		rig.head_card.flip_h = f.y == 1
+	elif not rig.head_card.has_meta(RivetFrames.ON):  # d9: Rivet's whole figure places itself
 		_place(rig)
 
 

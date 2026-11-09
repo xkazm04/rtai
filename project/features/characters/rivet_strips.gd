@@ -68,16 +68,25 @@ static var flame_all: bool = false
 static var cone: Array[StringName] = []
 static var diag: bool = true
 static var _logged: Dictionary[StringName, bool] = {}
+static var _exists: Dictionary[String, bool] = {}
+
+
+## ResourceLoader.exists once per path: Rivet's pose step asks it several times a frame for shipped
+## files that cannot change while the game runs, and each ask is a file probe (n10 perf).
+static func has_file(path: String) -> bool:
+	if not _exists.has(path):
+		_exists[path] = ResourceLoader.exists(path)
+	return _exists[path]
 
 
 ## The strip under view art `art` for the weapon out ("" = bare claw): the weapon's own strip if
 ## cut, else the base; "" when the art has no strips (top, or an art key without Rivet frames).
 static func strip_of(art: String, weapon: StringName) -> String:
 	var base: String = DIR + art + "/" + BASE
-	if art.is_empty() or not ResourceLoader.exists(base):
+	if art.is_empty() or not has_file(base):
 		return ""
 	var eq: String = DIR + art + "/rivet_eq_" + String(weapon) + ".png"
-	return eq if weapon != &"" and ResourceLoader.exists(eq) else base
+	return eq if weapon != &"" and has_file(eq) else base
 
 
 ## `path`, or the weapon's drawn diagonal fire strip while a shot latches at a diagonal octant
@@ -87,7 +96,7 @@ static func diag_or(rig: CutRig, art: String, weapon: StringName, path: String) 
 	if not diag or weapon == &"" or cone.has(weapon) or DIAG_CELL[o] < 0:
 		return path
 	var d: String = DIR + art + "/rivet_eq_" + String(weapon) + DIAG
-	if not fire_latched(rig) or not ResourceLoader.exists(d):
+	if not fire_latched(rig) or not has_file(d):
 		return path
 	return d if draws_fire(rig, weapon, o, true) else path
 
@@ -114,7 +123,7 @@ static func foot_px(path: String) -> float:
 ## A one-handed hold turned left: its drawn left strip, else the base (the fallback, logged once).
 static func left_of(art: String, weapon: StringName) -> String:
 	var path: String = DIR + art + "/rivet_eq_" + String(weapon) + "_left.png"
-	if ResourceLoader.exists(path):
+	if has_file(path):
 		return path
 	if not _logged.has(weapon):
 		_logged[weapon] = true

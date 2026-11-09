@@ -12,6 +12,36 @@
 
 namespace gtai::sim {
 
+// The view feed's scan (CityFxFeed.observe), no sim state: walks the actor records of a snapshot()
+// and writes out[0] = the offset the projectile records start at, out[1..] = the offset of every
+// person record (ped or cop) whose dead flag differs from dead[slot]. dead_n = dead's length.
+void scan_dead_flips(const double *snap, int64_t n, const uint8_t *dead, int64_t dead_n,
+		std::vector<int32_t> &out);
+
+// The crowd occlusion's scan (CityCrowdOcclusion.candidates), no sim state: the offset of every
+// person record whose feet (metres * px) lie in the half-open rect [x0, x1) x [y0, y1), in float32
+// like the script's Vector2 and Rect2.has_point, so both pick the same records.
+void scan_crowd_in_rect(const double *snap, int64_t n, float px, float x0, float y0, float x1,
+		float y1, std::vector<int32_t> &out);
+
+// One RigFeed row of a person record (CityFeedRows, the same rows as its script loop).
+struct FeedRow {
+	int32_t id;
+	uint8_t kind, look, flags;
+	float x, y, vx, vy, face, aim_x, aim_y;
+};
+
+// Single precision where the script's Vector2 is: the rows match its float32 arithmetic.
+struct FeedRowsArgs {
+	float focus_x, focus_y;
+	double r2;  // metres squared, compared as the script does: a float32 distance against a double
+	float aim_x, aim_y, px;
+};
+
+// The view feed's fill, no sim state: one row per ped or cop of a snapshot() within r2 of the focus.
+void fill_feed_rows(const double *snap, int64_t n, const uint8_t *variants, int64_t variants_n,
+		const FeedRowsArgs &a, std::vector<FeedRow> &out);
+
 class CityCore {
 public:
 	CityCore();
@@ -23,6 +53,11 @@ public:
 	void clear_chunk(int cx, int cy);
 	int cell_at(double x, double y) const;
 	int tile_at(double x, double y) const;
+	// One tick of the flying blood drops (BloodFlight, view only: cells are read, nothing is written).
+	// pos and vel are interleaved x, y in float32 like the script's Vector2; `out` gets
+	// slot * 2 + (0 wall, 1 land) in slot order, the drop's life set to 0 in both cases.
+	void step_blood_drops(float *pos, float *vel, int32_t *life, int64_t n, float drag, double land,
+			double px, std::vector<int32_t> &out) const;
 
 	// spawn.cpp. spec: SP_LEN doubles laid out by SP_KIND..SP_DIR.
 	int spawn(const double *spec);

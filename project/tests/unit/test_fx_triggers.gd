@@ -112,3 +112,30 @@ func test_ends_fire_in_slot_order_and_only_for_the_unseen() -> void:
 	assert_eq(ends.size(), 3, "2 ends once, later")
 	f.observe(PackedFloat64Array(), 6)
 	assert_eq(ends.size(), 3)
+
+
+## The native scan and the script's loop: the same events in the same order, over a run of flips.
+func test_the_native_scan_fires_what_the_script_loop_fires() -> void:
+	var probe: CityFxFeed = _feed()
+	if not probe.native_scan:
+		pending("no CitySim library with scan_dead_flips built")
+		return
+	var a: CityFxFeed = _feed()
+	var b: CityFxFeed = _feed()
+	b.native_scan = false
+	var car: PackedFloat64Array = _person(2, SimConst.M_DEAD, Vector2(9, 9))
+	car[1] = SimConst.K_CAR
+	var log_a: Array[String] = []
+	var log_b: Array[String] = []
+	for tick: int in 12:
+		var snap: PackedFloat64Array = car.duplicate()
+		for s: int in [4, 7, 9]:
+			var dead: bool = tick >= s
+			snap.append_array(_person(s, SimConst.M_DEAD if dead else 0, Vector2(s, tick)))
+		snap.append_array(_proj(tick % 3, Vector2(tick, 1)))
+		a.observe(snap, tick)
+		b.observe(snap, tick)
+		log_a.append(str(a.triggers.fired))
+		log_b.append(str(b.triggers.fired))
+	assert_eq(log_a, log_b)
+	assert_eq(a.triggers.fired[&"death"], 3, "the three people, not the car")

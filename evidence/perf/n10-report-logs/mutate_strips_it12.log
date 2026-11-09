@@ -1,0 +1,45 @@
+mutate: worktree C:\Users\kazda\kiro\gtai-n10\tmp\perf\gtai-mutate-c17e1f40 at 837fb68e (reused)
+mutate: 20/107 mutant(s); baseline run of test_rivet_strips_has_file, test_rivet_flame_diag, test_rivet_frames, test_rivet_walk
+mutate: baseline green in 11.9 s; per-mutant timeout 90 s
+mutate: [1/20] features/characters/rivet_strips.gd:59 boolean  true -> false  survived  (9.7 s)
+mutate: [2/20] features/characters/rivet_strips.gd:75 arith  + -> -  invalid  (10.3 s)
+mutate: [3/20] features/characters/rivet_strips.gd:75 arith  + -> -  invalid  (10.2 s)
+mutate: [4/20] features/characters/rivet_strips.gd:86 boolean  or -> and  killed  (10.4 s)
+mutate: [5/20] features/characters/rivet_strips.gd:89 boolean  not -> (removed)  killed  (10.2 s)
+mutate: [6/20] features/characters/rivet_strips.gd:113 arith  + -> -  invalid  (10.2 s)
+mutate: [7/20] features/characters/rivet_strips.gd:116 boolean  not -> (removed)  survived  (9.4 s)
+mutate: [8/20] features/characters/rivet_strips.gd:125 boolean  not -> (removed)  killed  (10.4 s)
+mutate: [9/20] features/characters/rivet_strips.gd:128 boolean  not -> (removed)  killed  (10.5 s)
+mutate: [10/20] features/characters/rivet_strips.gd:133 cmp_flip  > -> <=  killed  (10.6 s)
+mutate: [11/20] features/characters/rivet_strips.gd:134 boolean  false -> true  killed  (11.4 s)
+mutate: [12/20] features/characters/rivet_strips.gd:140 boolean  true -> false  killed  (12.1 s)
+mutate: [13/20] features/characters/rivet_strips.gd:142 boolean  or -> and  killed  (11.2 s)
+mutate: [14/20] features/characters/rivet_strips.gd:153 boolean  true -> false  killed  (10.8 s)
+mutate: [15/20] features/characters/rivet_strips.gd:155 cmp_flip  == -> !=  killed  (12.6 s)
+mutate: [16/20] features/characters/rivet_strips.gd:157 literal  0 -> 1  survived  (10.9 s)
+mutate: [17/20] features/characters/rivet_strips.gd:157 arith  * -> /  survived  (10.4 s)
+mutate: [18/20] features/characters/rivet_strips.gd:158 boundary  <= -> <  survived  (10.9 s)
+mutate: [19/20] features/characters/rivet_strips.gd:159 literal  0.0 -> 1.0  killed  (11.4 s)
+mutate: [20/20] features/characters/rivet_strips.gd:166 cmp_flip  > -> <=  killed  (11.5 s)
+mutate features/characters/rivet_strips.gd: 20 mutant(s) (sampled from 107), tests: test_rivet_strips_has_file, test_rivet_flame_diag, test_rivet_frames, test_rivet_walk
+  features/characters/rivet_strips.gd:59 boolean  true -> false  survived
+  features/characters/rivet_strips.gd:116 boolean  not -> (removed)  survived
+  features/characters/rivet_strips.gd:157 literal  0 -> 1  survived
+  features/characters/rivet_strips.gd:157 arith  * -> /  survived
+  features/characters/rivet_strips.gd:158 boundary  <= -> <  survived
+  features/characters/rivet_strips.gd:75 arith  + -> -  invalid
+  features/characters/rivet_strips.gd:75 arith  + -> -  invalid
+  features/characters/rivet_strips.gd:113 arith  + -> -  invalid
+  features/characters/rivet_strips.gd:86 boolean  or -> and  killed
+  features/characters/rivet_strips.gd:89 boolean  not -> (removed)  killed
+  features/characters/rivet_strips.gd:125 boolean  not -> (removed)  killed
+  features/characters/rivet_strips.gd:128 boolean  not -> (removed)  killed
+  features/characters/rivet_strips.gd:133 cmp_flip  > -> <=  killed
+  features/characters/rivet_strips.gd:134 boolean  false -> true  killed
+  features/characters/rivet_strips.gd:140 boolean  true -> false  killed
+  features/characters/rivet_strips.gd:142 boolean  or -> and  killed
+  features/characters/rivet_strips.gd:153 boolean  true -> false  killed
+  features/characters/rivet_strips.gd:155 cmp_flip  == -> !=  killed
+  features/characters/rivet_strips.gd:159 literal  0.0 -> 1.0  killed
+  features/characters/rivet_strips.gd:166 cmp_flip  > -> <=  killed
+score 70.6% = killed 12 / (killed 12 + survived 5); timeout 0, invalid 3; 229 s

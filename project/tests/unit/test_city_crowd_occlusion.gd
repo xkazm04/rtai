@@ -73,3 +73,28 @@ func test_a_kerb_barrier_shaped_occluder_hides_a_lying_body_behind_it() -> void:
 	assert_eq(out.size(), 1)
 	assert_eq(areas.size(), 1)
 	assert_true(wall.area.encloses(out[0]))
+
+
+func test_the_native_scan_picks_the_same_records_as_the_script() -> void:
+	if not CityCrowdOcclusion._native_scan:
+		pending("no DLL with scan_crowd_in_rect")
+		return
+	var snap: PackedFloat64Array = PackedFloat64Array()
+	var kinds: Array[int] = [SimConst.K_PED, SimConst.K_COP, SimConst.K_CAR]
+	for i: int in 200:
+		var at: Vector2 = Vector2(fmod(i * 7.3, 36.0) - 8.0, fmod(i * 11.9, 36.0) - 8.0)
+		snap.append_array(_row(i, kinds[i % 3], 0, at))
+	snap.append_array(_row(150, SimConst.K_PED, 0, Vector2(4.0, 4.0)))  # exactly on the corner: in
+	snap.append_array(_row(151, SimConst.K_COP, 0, Vector2(20.0, 8.0)))  # on the far edge: out
+	var proj: PackedFloat64Array = PackedFloat64Array([SimConst.SNAP_PROJ_BASE, 1.0, 1.0])
+	snap.append_array(proj)
+	var rect: Rect2 = Rect2(Vector2(4.0, 4.0) * PX, Vector2(16.0, 16.0) * PX)
+	var want: PackedInt32Array = CityCrowdOcclusion.candidates_script(snap, rect)
+	assert_gt(want.size(), 10, "the fixture has people inside")
+	assert_eq(CityCrowdOcclusion.candidates(snap, rect), want)
+
+
+func test_no_person_in_the_rect_is_an_empty_scan() -> void:
+	var snap: PackedFloat64Array = _row(1, SimConst.K_PED, 0, Vector2(100.0, 100.0))
+	var rect: Rect2 = Rect2(Vector2.ZERO, Vector2(10.0, 10.0))
+	assert_eq(CityCrowdOcclusion.candidates(snap, rect).size(), 0)

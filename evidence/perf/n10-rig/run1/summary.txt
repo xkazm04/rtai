@@ -1,0 +1,12 @@
+base combo r1 people=50 p50=1.636 p99=2612.861 avg=76.720 godots=12
+base combo r1 people=200 p50=1.322 p99=11.936 avg=1.818 godots=12
+head combo r1 people=50 p50=0.544 p99=1.123 avg=0.607 godots=10
+head combo r1 people=200 p50=0.505 p99=1.322 avg=0.593 godots=10
+head combo r2 people=50 p50=0.527 p99=1.137 avg=0.591 godots=10
+head combo r2 people=200 p50=0.671 p99=1.617 avg=0.738 godots=10
+base combo r2 people=50 p50=1.236 p99=2.645 avg=1.323 godots=12
+base combo r2 people=200 p50=1.186 p99=2.252 avg=1.215 godots=12
+base combo r3 people=50 p50=1.159 p99=1.961 avg=1.207 godots=12
+base combo r3 people=200 p50=1.451 p99=4.337 avg=1.540 godots=12
+head combo r3 people=50 p50=0.659 p99=2.020 avg=0.717 godots=12
+head combo r3 people=200 p50=0.626 p99=1.509 avg=0.687 godots=12

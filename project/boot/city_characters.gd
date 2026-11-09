@@ -8,7 +8,6 @@ extends RefCounted
 ## writes none (parity and replay are untouched).
 
 const RIVET_ID: int = 1 << 20
-const FEED_RADIUS_M: float = CharacterRigs.RADIUS_M + 4.0
 ## n9 (the owner's s-4 C): on Rivet's rig while a car's knock-down lasts, removed when he is up:
 ## Vector3(the car's ground heading x, y, SimClock tick at the hit). Lane rivet reads it for the
 ## drawn knock-down; until then his row carries RigFeed.Flag.DOWN (the tackle sprawl and rise).
@@ -30,6 +29,7 @@ var _clock: SimClock
 var _last_tick: int = 0
 var _rivet_prev: Vector2 = Vector2.ZERO
 var _slots: Array[int] = []
+var _rows: CityFeedRows = CityFeedRows.new()
 
 
 func _init(city: CitySystem, view: CityView, ctx: WorldContext) -> void:
@@ -95,21 +95,8 @@ func _fill_feed(focus: Vector2) -> void:
 	var snap: PackedFloat64Array = _city.sim.snapshot()
 	if _view.fx_feed != null:
 		_view.fx_feed.observe(snap, _clock.tick())
-	var variants: PackedByteArray = _city.sim.get_variants()
 	var feed: RigFeed = rigs.feed
-	feed.count = 0
-	var r2: float = FEED_RADIUS_M * FEED_RADIUS_M
-	var aim: Vector2 = _city.target * SimConst.PX_PER_M
-	for r: int in range(0, snap.size() - SimConst.SNAP_STRIDE + 1, SimConst.SNAP_STRIDE):
-		if snap[r] >= SimConst.SNAP_PROJ_BASE:
-			break  # projectile records (stride 3) follow every actor: not people
-		var kind: int = int(snap[r + 1])
-		if kind != SimConst.K_PED and kind != SimConst.K_COP:
-			continue
-		var p: Vector2 = Vector2(snap[r + 4], snap[r + 5])
-		if p.distance_squared_to(focus) > r2:
-			continue
-		_put_person(feed, snap, r, variants, aim)  # by offset: no slice allocated a person
+	_rows.fill(feed, snap, _city.sim.get_variants(), focus, _city.target * SimConst.PX_PER_M)
 	if rivet_on_foot:
 		var at: Vector2 = _city.target * SimConst.PX_PER_M
 		var vel: Vector2 = (at - _rivet_prev) / SimClock.TICK_DT
@@ -131,33 +118,3 @@ func _mark_knock() -> void:
 			rig.set_meta(KNOCK_META, Vector3(h.x, h.y, float(_clock.tick())))
 	elif rig.has_meta(KNOCK_META):
 		rig.remove_meta(KNOCK_META)
-
-
-## The actor record at offset `r` of `a` (a snapshot) as one feed row.
-static func _put_person(
-	feed: RigFeed, a: PackedFloat64Array, r: int, variants: PackedByteArray, aim: Vector2
-) -> void:
-	var slot: int = int(a[r])
-	var cop: bool = int(a[r + 1]) == SimConst.K_COP
-	var mode: int = int(a[r + 2])
-	var head: Vector2 = Vector2(a[r + 6], a[r + 7])
-	var px: float = SimConst.PX_PER_M
-	var kind: BodyPlan.Kind = BodyPlan.Kind.COP if cop else BodyPlan.Kind.PED
-	var i: int = feed.put(
-		feed.count, slot, kind, Vector2(a[r + 4], a[r + 5]) * px, head * a[r + 8] * px
-	)
-	feed.looks[i] = variants[slot] if slot < variants.size() else RigFeed.LOOK_AUTO
-	feed.face[i] = head.angle()
-	var fl: int = 0
-	if mode == SimConst.M_DEAD:
-		fl |= RigFeed.Flag.DEAD
-	elif mode == SimConst.M_DOWN:
-		fl |= RigFeed.Flag.DOWN
-	elif mode == SimConst.M_FLEE or mode == SimConst.M_RIOT:
-		fl |= RigFeed.Flag.FLEE
-	if cop and mode != SimConst.M_DEAD and mode != SimConst.M_DOWN:
-		fl |= RigFeed.Flag.GUN_OUT
-		feed.aim[i] = aim
-		if a[r + 10] > 0.0:
-			fl |= RigFeed.Flag.AIMING
-	feed.flags[i] = fl

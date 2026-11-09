@@ -101,7 +101,103 @@ Chase chase() {
 
 }  // namespace
 
+// The feed scan: finds exactly the person records whose dead flag flipped, ignores cars, stops at
+// the projectile records.
+void scan_test() {
+	std::vector<double> snap(3 * SNAP_STRIDE + SNAP_PROJ_STRIDE, 0.0);
+	snap[0] = 1.0, snap[1] = K_PED, snap[2] = M_DEAD;  // flipped: was alive
+	const int car = SNAP_STRIDE;
+	snap[car] = 2.0, snap[car + 1] = K_CAR, snap[car + 2] = M_DEAD;  // a car: not a person
+	const int cop = 2 * SNAP_STRIDE;
+	snap[cop] = 3.0, snap[cop + 1] = K_COP, snap[cop + 2] = 0.0;  // was dead: back up
+	const int proj = 3 * SNAP_STRIDE;
+	snap[proj] = (double)SNAP_PROJ_BASE;
+	std::vector<uint8_t> dead(CAP, 0);
+	dead[3] = 1;
+	std::vector<int32_t> out;
+	scan_dead_flips(snap.data(), (int64_t)snap.size(), dead.data(), (int64_t)dead.size(), out);
+	check(out.size() == 3, "scan: two person flips");
+	check(out[0] == proj, "scan: stops at the first projectile record");
+	check(out[1] == 0 && out[2] == cop, "scan: flips in record order, the car skipped");
+	dead[1] = 1;
+	dead[3] = 0;
+	scan_dead_flips(snap.data(), (int64_t)snap.size(), dead.data(), (int64_t)dead.size(), out);
+	check(out.size() == 1, "scan: nothing changed, only the offset");
+	scan_dead_flips(snap.data(), 0, dead.data(), (int64_t)dead.size(), out);
+	check(out.size() == 1 && out[0] == 0, "scan: an empty snapshot");
+}
+
+// The occlusion scan: people inside the half-open rect only, cars and projectile records skipped.
+void crowd_rect_test() {
+	std::vector<double> snap(5 * SNAP_STRIDE + SNAP_PROJ_STRIDE, 0.0);
+	const auto put = [&](int rec, int kind, double x, double y) {
+		const int r = rec * SNAP_STRIDE;
+		snap[r] = (double)rec, snap[r + 1] = (double)kind, snap[r + 4] = x, snap[r + 5] = y;
+	};
+	put(0, K_PED, 1.0, 1.0);  // inside
+	put(1, K_CAR, 1.0, 1.0);  // not a person
+	put(2, K_COP, 2.0, 1.0);  // on the right edge: out (x1 is exclusive)
+	put(3, K_COP, 0.5, 0.5);  // on the top-left corner: in
+	put(4, K_PED, 9.0, 1.0);  // far outside
+	snap[5 * SNAP_STRIDE] = (double)SNAP_PROJ_BASE;
+	std::vector<int32_t> out;
+	scan_crowd_in_rect(snap.data(), (int64_t)snap.size(), 32.0f, 16.0f, 16.0f, 64.0f, 64.0f, out);
+	check(out.size() == 2, "crowd rect: two people inside");
+	check(out[0] == 0 && out[1] == 3 * SNAP_STRIDE, "crowd rect: record order, edges half-open");
+	scan_crowd_in_rect(snap.data(), 0, 32.0f, 16.0f, 16.0f, 64.0f, 64.0f, out);
+	check(out.empty(), "crowd rect: an empty snapshot");
+}
+
+// The blood drops' flight: one flies free, one lands, one hits the wall column, one is dead.
+void blood_drops_test() {
+	CityCore core;
+	core.init(1);
+	std::vector<uint8_t> tiles(CHUNK_TILES * CHUNK_TILES, 0), cells(CHUNK_CELLS * CHUNK_CELLS, C_WALK);
+	for (int y = 0; y < CHUNK_CELLS; y++) cells[(size_t)y * CHUNK_CELLS + 4] = C_BUILD;
+	core.stamp_chunk(0, 0, tiles.data(), cells.data());
+	std::vector<float> pos = {32.0f, 32.0f, 64.0f, 64.0f, 120.0f, 64.0f, 8.0f, 8.0f, 96.0f, 96.0f};
+	std::vector<float> vel = {8.0f, 0.0f, 1.0f, 0.0f, 16.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
+	std::vector<int32_t> life = {10, 10, 10, 0, 5}, out;
+	core.step_blood_drops(pos.data(), vel.data(), life.data(), 5, 0.5f, 0.75, 32.0, out);
+	check(out.size() == 3, "blood drops: a landing, a wall and a stopped drop reported");
+	check(out[0] == 1 * 2 + 1, "blood drops: slot 1 landed");
+	check(out[1] == 2 * 2 + 0, "blood drops: slot 2 hit the wall");
+	check(out[2] == 4 * 2 + 1, "blood drops: slot 4 had no speed and landed");
+	check(pos[0] == 40.0f && vel[0] == 4.0f && life[0] == 9, "blood drops: free drop moved and slowed");
+	check(pos[4] == 120.0f && life[2] == 0, "blood drops: the wall drop stays put, life 0");
+	check(life[1] == 0 && life[3] == 0, "blood drops: landed and dead drops stay at 0");
+}
+
+// The feed fill: a ped, a cop aiming, a car, one past the radius, projectile records at the tail.
+void feed_rows_test() {
+	std::vector<double> snap(4 * SNAP_STRIDE + SNAP_PROJ_STRIDE, 0.0);
+	const int cop = SNAP_STRIDE, car = 2 * SNAP_STRIDE, far = 3 * SNAP_STRIDE, proj = 4 * SNAP_STRIDE;
+	snap[0] = 3.0, snap[1] = K_PED, snap[2] = M_FLEE, snap[4] = 1.0, snap[5] = 2.0;
+	snap[6] = 1.0, snap[8] = 2.0;
+	snap[cop] = 30.0, snap[cop + 1] = K_COP, snap[cop + 4] = 3.0, snap[cop + 10] = 0.5;
+	snap[car] = 4.0, snap[car + 1] = K_CAR, snap[car + 4] = 1.0;
+	snap[far] = 5.0, snap[far + 1] = K_PED, snap[far + 4] = 11.0;
+	snap[proj] = (double)SNAP_PROJ_BASE;
+	const std::vector<uint8_t> variants(10, 7);
+	const FeedRowsArgs a{0.0f, 0.0f, 100.0, 64.0f, 96.0f, 32.0f};
+	std::vector<FeedRow> out;
+	fill_feed_rows(snap.data(), (int64_t)snap.size(), variants.data(), (int64_t)variants.size(), a, out);
+	check(out.size() == 2, "feed: the ped and the cop, no car, nobody past the radius");
+	if (out.size() != 2) return;
+	check(out[0].id == 3 && out[0].kind == 2 && out[0].look == 7, "feed: a ped's row");
+	check(out[0].flags == 8 && out[0].x == 32.0f && out[0].vx == 64.0f, "feed: flee flag, px");
+	check(out[0].aim_x == out[0].x, "feed: a ped's aim is its own feet");
+	check(out[1].kind == 1 && out[1].look == 255, "feed: a cop, a slot past the variants");
+	check(out[1].flags == (4 | 2) && out[1].aim_y == 96.0f, "feed: gun out, aiming at the target");
+	fill_feed_rows(snap.data(), 0, variants.data(), (int64_t)variants.size(), a, out);
+	check(out.empty(), "feed: an empty snapshot");
+}
+
 int main() {
+	scan_test();
+	crowd_rect_test();
+	blood_drops_test();
+	feed_rows_test();
 	Run a = run(4242, 600);
 	Run b = run(4242, 600);
 	Run c = run(4243, 600);

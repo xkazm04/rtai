@@ -4,6 +4,246 @@ Branch `d9-perf`, cut from main `3982af1a`. Every number here names its build, s
 instrument. Host: Ryzen 7 7800X3D (8C/16T), RTX 4090 (+ the AMD iGPU), Windows 11, Godot 4.7.2.
 **Host ms are host ms**: nothing here is a Steam Deck or handheld figure (that is the `handheld` lane's).
 
+## n10 night (2026-11-08 21:00 -, branch n10-perf from main 9bbe6d0a)
+
+### Item 1 (it1): the rig cost under combo: a walker's hidden limbs are not posed (d006d70e, a9370647)
+Finding: n9's split (below) counted the walker cards as ~8 of 50 people and so priced "skip RigPose under a card" at ~65 us;
+but at the rig stress's 8-9 pose steps a tick about 7.6 place a whole-figure card, so nearly every pose step posed limbs
+that nothing draws. Change: `CutRig.limbs_cold` (true while a walker's whole-figure card is up: `StreetWalkerCards.hides_parts`);
+`RigGait` skips `_solve_leg` (the planted-foot stepping stays: `foot_w` is what the parts land on), `RigPose` skips the
+arms; `RigPose.warm_limbs` poses them the step the card goes away and before a kill's `GibCut` / `KillSprawlCut` reads the
+parts. The torso, head, gait phase and feet still step: the card reads only those. Also dropped: the head card's double
+`_place` under a walker (`frame_of` kept: the walker's `frame_coords` reads the facing), `hide_all` and the crowd
+card's scale nudge on a cold rig, the per-step `row_of` / strip format (read off the card).
+A/B rig_bench 50 people, `--view=combo`, headless editor binary, interleaved base (the 9bbe6d0a worktree) / head, CONTENDED
+(4-12 Godot processes up): `evidence/perf/n10-rig/ab.sh`, `run1/summary.txt`:
+
+| view combo, p50 ms (50 people) | base | head |
+|---|---|---|
+| r1 | (1.64: an import-cold first run, not counted) | 0.544 |
+| r2 | 1.236 | 0.527 |
+| r3 | 1.159 | 0.659 |
+
+The target (at most 1 ms p50 at 50 people under combo) is met with margin; p99 base ~1.9-2.6 ms, head 1.1-2.0.
+**The pixels:** RigStress at tick 600, combo, windowed d3d12, 1280x720 (`framecmp/_tmp_framecmp*.gd`, the same script
+in both trees): head vs base **0 pixels differ** (`framecmp/base.png`, `head.png`). The first head render differed in 5683
+pixels: the cream rims came back at the walkers' feet, because `_on_view` re-showed them after the card hid the parts and
+`hide_all` no longer runs each step on a cold rig. Fixed (a9370647: on_view keeps a card's parts' rims hidden), a test pins
+it. Tests: `test_rig_limbs_cold` (5): a carded rig poses no limb, the card's inputs (phase, facing, head and torso
+transforms, feet) stay identical to an always-posed rig, warm_limbs lands within 3 part px / 0.08 rad of it, a gone card
+warms on the next step, a kill's cut warms a cold rig, the rims stay hidden. Full unit on d006d70e: exit 0. Owed: the director
+reel x3, the evidence gate, a mutation run on the cold path.
+
+### Item 2 (it5): the feed's dead-flip scan runs in C++ (cfdb53e4)
+`CitySim.scan_dead_flips` (static, `native/sim_core/src/snapshot.cpp`) finds the rare death flip in the snapshot; `CityFxFeed.native_scan`
+picks it when the library has the method, the GDScript loop stays as the no-DLL fallback. Tests: `test_fx_triggers` (the native
+scan fires what the script loop fires), `scons tests` 0 failed.
+Micro only so far, `evidence/perf/n10-scan/` (debug editor binary, a synthetic 400 people, about 10 Godots up, CONTENDED):
+observe ~22 us native (one block 52.6) against 115-423 us script. The SCRIPT ERROR lines at the top of `micro.out.txt` are the scratch `-s`
+script compiling before the autoloads exist; none falls inside the timing blocks. **Not a bench number**: the release riot A/B is item 3.
+The DLLs are git-ignored: until a merge rebuilds `template_release` with scons, the export silently keeps the script loop.
+
+### Item 3 (it6): the riot release A/B against main 9bbe6d0a: head wins at combo, NOT a quiet run
+`node tools/perf/ab.mjs --no-lock --scenes=riotc --pairs=6 --arms=main@exe-windows-bench-main:,head@exe: --out=evidence/perf/n10-riotc`
+(`--no-lock` because ab.mjs's own lock is the old n5 path: `gtai-n10/bench.lock` was held by hand around it). Release `windows-bench`
+exports (each log `debug_build: false`), main from the 9bbe6d0a worktree with its own DLL (no `scan_dead_flips` in it), head cfdb53e4 with
+the new release DLL (the symbol is in it), the same 256 baked chunks (hash lists compared). `riotc` = the new preset: `riot` at `--view=combo`,
+the view main boots; the logs say `view: combo`. 400-actor riot, 30 s, 1920x1080, fixed 60 uncapped, arm order alternating, 0 errors, 739 draws on both.
+**CONTENDED throughout**: 0-10 other Godots up (`CONTENDED(n)` in the runner's rows), the machine never went quiet this iteration.
+
+| round | frame p50 ms main / head | rigMsP50 main / head |
+|---|---|---|
+| 0 | 6.15 / 4.78 | 1.740 / 0.983 |
+| 1 | 5.60 / 4.70 | 1.678 / 0.950 |
+| 2 | 5.72 / 3.59 | 1.652 / 0.753 |
+| 3 | 6.75 / 4.86 | 1.648 / 0.932 |
+| 4 | 7.01 / 6.35 | 1.750 / 1.060 |
+| 5 | 5.32 / 4.66 | 1.587 / 0.964 |
+
+Head is lower in **6 of 6** rounds on both columns: frame p50 median paired delta **-1.14 ms**, rig p50 median 1.665 -> 0.957 ms (-0.72; at most 1 ms in 5 of 6 head rounds, 1.060 in round 4).
+**ab.mjs's range rule still prints WASH** (half-spreads 0.85 and 1.38 ms: the contention swings both arms); the claim rests on the paired ordering (sign test two-sided p = 0.03), not on that rule. p99 and worst: no claim.
+The two head cuts are not separated: this is items 1 and 2 together.
+At the older `riot` preset (`--view=tilt70`), 4 + 6 pairs (`evidence/perf/n10-riot-b1`, `n10-riot-b2`, same exports, CONTENDED): frame p50 head lower in 7 of 10, median -0.56 ms, WASH, not claimed; rig p50 head lower in 10 of 10, median -0.54 ms.
+Slip recorded: batch b2 was run as "combo" with `--view=combo` appended to the arms; the preset's own `--view=tilt70` comes first and wins, so b2 is tilt70 (its logs say so) and was renamed. Use the `riotc` preset.
+Process CPU and RAM columns: several rounds read NaN (the sampler under load), so no CPU or RAM claim from these runs.
+
+### Item 4, idea 1: the rig feed's fill in C++ (it7): built, measured, reverted, NOT the baseline
+Hypothesis: `_fill_feed`'s loop is a dense GDScript scan (n9 table above: 387 us a riot tick, debug); `CitySim.fill_feed_rows` writes RigFeed's ten columns, matching the script's float32 arithmetic. Commit 4f153362, reverted by 409ec9d3 (the code stays in git; `evidence/perf/n10-feed/`). `test_city_feed_rows` compared the native rows with the script's on synthetic and live-sim snapshots.
+Micro (`evidence/perf/n10-feed/micro_debug_editor.log`, debug editor binary, synthetic 400 people / 262 rows, about 20 Godot processes up, CONTENDED): ~10 us native vs ~350 us script.
+Bench (release `windows-bench`, `riotc` = combo, 400 actors, 6 interleaved pairs, against the export of the previous head, under gtai-n10/bench.lock, CONTENDED 0-6; my own mutation runs were also up; `evidence/perf/n10-feed/riotc/`). Workloads identical (actors 399.79, visible 288.51, full rigs 20, draws 739):
+
+| round | frame p50 before / head ms | rig p50 before / head ms |
+|---|---|---|
+| 0 | 4.68 / 5.50 | 0.949 / 0.994 |
+| 1 | 4.75 / 4.30 | 0.961 / 0.965 |
+| 2 | 4.75 / 5.20 | 0.962 / 1.007 |
+| 3 | 3.88 / 4.29 | 0.807 / 0.967 |
+| 4 | 3.61 / 3.77 | 0.777 / 0.862 |
+| 5 | 3.36 / 3.89 | 0.712 / 0.917 |
+
+Frame p50 head lower in 1 of 6; rig p50 head higher in 6 of 6 (median +0.065 ms). **WASH at best: no gain measured, so it is not the baseline.** What this does NOT show: that the fill caused the rise. The rig timer does not contain the fill, and render CPU (0.72 -> 0.79 ms in round 0, higher in 6 of 6) and the C++ sim step (higher in 5 of 6) also rose, and the change cannot touch either. So the whole head process read slower; the A/A control below shows the bench does that with no code change.
+The microbench's ~340 us saving did not appear at the bench. It was the debug binary on a synthetic snapshot; the release GDScript loop was never timed, so the micro does not say what the release saves.
+
+### The A/A control (it7): what this bench reads with no change at all
+Same code in both arms: the export of cfdb53e4's code from 23:26 against a fresh export at 40fab8c7 (409ec9d3 put the code back, `git diff d0569d17 HEAD -- project native` empty). `riotc`, 6 interleaved pairs, CONTENDED(8-10), my two reels up too (`evidence/perf/n10-feed/aa/`).
+
+| metric | old (per round) | new (per round) | median new - old | new lower in |
+|---|---|---|---|---|
+| frame p50 ms | 3.94 2.93 2.87 3.70 3.38 3.60 | 3.64 3.44 3.74 3.59 3.63 4.03 | +0.34 | 2 of 6 |
+| rig p50 ms | 0.831 0.627 0.614 0.782 0.710 0.766 | 0.756 0.714 0.786 0.753 0.772 0.866 | +0.075 | 2 of 6 |
+| sim step ms/tick | 0.135 0.108 0.108 0.126 0.122 0.124 | 0.124 0.119 0.126 0.123 0.124 0.133 | +0.006 | 2 of 6 |
+| render CPU ms | 0.584 0.394 0.398 0.516 0.484 0.485 | 0.527 0.451 0.500 0.476 0.506 0.576 | +0.04 | 2 of 6 |
+
+Identical code differs by up to +0.87 / -0.30 ms frame p50 in a single pair, and the median leans the same way the feed A/B did (rig p50 +0.075 here, +0.065 there). **So idea 1's result is inside the bench's floor at this load: not a measured gain and not a measured regression.** The revert stands because no gain was shown, not because the fill was shown slower. Six pairs under CONTENDED(0-10) cannot resolve a frame-p50 effect of about 0.3 ms or smaller; idea 2 below is smaller than that.
+Item 3's claim (6 of 6, median -1.14 ms frame p50; rig p50 1.665 -> 0.957) is larger than any single A/A pair's difference (0.87 ms), so the A/A does not undo it, but item 3 was run before this control existed and it is still CONTENDED.
+
+### Item 4 stops (it8): one wash, the next idea below this bench's floor
+The stop rule (two washes in a row) was not reached: idea 1 was a wash and idea 2 was not built. The crowd occlusion scan is about 100 us in a debug build; the A/A above shows six contended pairs cannot see that. In the release riot at combo (`evidence/perf/n10-riotc/riotc-head@exe-2.json`, one CONTENDED run, avg frame 3.78 ms) the named shares are rig 0.85 ms per tick, blood 0.51 ms a frame, render CPU 0.48, render GPU 0.28, sim step 0.12. At least about 1.5 ms of the frame has no timer of its own in this bench (more if the render GPU time does not add to the CPU frame). Re-check on a quiet machine.
+
+### Item 3 again (it10): CPU seconds, an instrument this machine's load barely moves
+Wall-clock frame times swing with whoever else runs; the CPU seconds a process consumed do far less. `evidence/perf/n10-cputime/cpu_ab.ps1` runs the `riotc` release riot (combo, 400 actors, `--secs=30`, `--fixed-fps 60`, 1681 frames measured, about 8 s of wall time) and reads `GetProcessTimes` after exit, under `gtai-n10/bench.lock`, three arms in a rotating order: main 9bbe6d0a (`windows-bench-main`), head (`windows-bench`, export 00:47, code 40fab8c7), twin (`windows-bench-it6`, export 23:26, the same project and native code as the head: the A/A control). `analyse.py` gives paired medians, a 95 % bootstrap interval and a sign test. `r30/` = 30 rounds, 90 runs, 02:12-02:24, exit 0, 0 SCRIPT ERROR. **Not a quiet run:** other godot/RTAI processes before a run 0-8, median 2 (0 in only 12 of 90 runs; a reel counts as 2 processes), and my own 11 s scons and 15 s export ran during rounds 0-3.
+
+| 30 rounds | main | head | twin | head - main (CI95), lower in | head - twin, the A/A (CI95) |
+|---|---|---|---|---|---|
+| CPU total s | 8.656 | 7.672 | 7.695 | **-0.914 (-1.062, -0.781), 30 of 30** | +0.031 (-0.102, +0.219), 13 of 30 |
+| CPU user s | 7.344 | 6.344 | 6.445 | -0.883 (-1.008, -0.781), 30 of 30 | -0.086 (-0.227, +0.109), 18 of 30 |
+| CPU kernel s | 1.430 | 1.422 | 1.398 | -0.039 (-0.086, +0.047), 18 of 30 | +0.102 (-0.023, +0.195), 11 of 30 |
+| frame p50 ms | 3.079 | 2.620 | 2.623 | **-0.485 (-0.538, -0.427), 30 of 30** | +0.004 (-0.026, +0.027), 14 of 30 |
+
+The release's own per-system timers, same 30 rounds (medians; each run's log, paired):
+
+| timer | main | head | twin | head - main, lower in | head - twin, lower in |
+|---|---|---|---|---|---|
+| rig p50 ms | 0.969 | 0.586 | 0.583 | -0.391, 30 of 30 | +0.002, 14 of 30 |
+| rig ms a tick | 1.004 | 0.621 | 0.621 | -0.389, 30 of 30 | +0.003, 14 of 30 |
+| blood us a frame | 364.6 | 360.3 | 361.9 | -7.1, 19 of 30 | +1.0, 15 of 30 |
+| sim step ms a tick | 0.102 | 0.101 | 0.101 | -0.001, 18 of 30 | 0.000, 15 of 30 |
+| render CPU ms | 0.359 | 0.358 | 0.359 | -0.003, 17 of 30 | -0.001, 16 of 30 |
+| p99 CPU ms | 5.79 | 5.11 | 4.97 | -0.587, 28 of 30 | +0.079, 9 of 30 |
+
+So the rig timer (-0.391) carries most of the frame p50 gain (-0.485); the systems the change does not touch are flat, which is the sanity check the wall-clock runs could not give. **The brief's rig target holds in the shipped build at the riot's 400 actors: rig p50 0.586 ms, at most 1 ms.** main sits at 0.969, so main was already under 1 ms in release: the 1.1-1.4 ms the brief quoted is the debug rig bench at 50 people, a different instrument. The p99 CPU row is not a p99 claim (its A/A is +0.08 with 9 of 30 lower).
+
+**Items 1 and 2 together cut the release riot at combo by 0.485 ms of frame p50 (-15.8 %) and 0.91 s of a run's CPU (-10.6 %), 30 of 30 rounds.** The A/A is inside its own interval on every metric, and the twin beats main by the same amount (p50 -0.444, 30 of 30), so an export's age is not what is being read. Sign test p = 2e-9. The CPU figure includes boot and load.
+**This replaces item 3's -1.14 ms** (6 contended wall-clock pairs): the effect is real and less than half that size. The only rounds with no other process up for all three arms are 12 and 13 (`quiet_subset.py r30 0`): p50 -0.463 ms, CPU -0.96 s, lower in 2 of 2, too few to call a quiet A/B but the same size.
+What the instrument resolves: the A/A's CI half-width is about 0.03 ms of frame p50 and 0.15 s of CPU at 30 rounds, ten times finer than six wall-clock pairs (about 0.3 ms). What it cannot do: p99 or worst frames (CPU seconds are a sum; the p50 is still a wall-clock statistic that merely stopped swinging at this load), and SMT or cache pressure from other processes still reaches a process's CPU time. The 6-round set beside it (`n10-cputime/riotc-*`, 02:06-02:09, others 6-10) read head - main -0.57 s, p50 -0.41 ms, 6 of 6.
+
+### Item 4, idea 1 again (it10): the C++ feed fill, measured in CPU seconds: KEPT as the new baseline (ef31d9d4)
+`4f153362` was reverted at it7 because six wall-clock pairs could not resolve it. The same code, re-applied and exported (`windows-bench-fill`), `cpu_ab.ps1 -ArmSpec head=windows-bench,fill=windows-bench-fill,twin=windows-bench-it6`, 24 rounds, 72 runs, 02:24-02:34, exit 0, 0 SCRIPT ERROR, `evidence/perf/n10-cputime/fill/`. head = the pre-fill export, twin = its A/A. **Not quiet:** others 4-14, median 7, more loaded than r30.
+
+| 24 rounds | head | fill | twin | fill - head (CI95), lower in | twin - head, the A/A (CI95), lower in |
+|---|---|---|---|---|---|
+| CPU total s | 8.062 | 7.625 | 8.102 | **-0.633 (-0.734, -0.312), 22 of 24** | +0.086 (-0.062, +0.266), 11 of 24 |
+| CPU user s | 6.570 | 6.109 | 6.578 | -0.477 (-0.672, -0.141), 18 of 24 | +0.008 (-0.195, +0.281), 12 of 24 |
+| frame p50 ms | 2.724 | 2.537 | 2.762 | **-0.235 (-0.302, -0.174), 21 of 24** | +0.044 (+0.011, +0.087), 6 of 24 |
+
+**A real gain: frame p50 -0.235 ms (-8.6 %), CPU -0.63 s.** fill - twin agrees (p50 -0.239 ms, 22 of 24). The A/A is not perfectly flat this time (twin - head p50 +0.044, its interval excludes 0, 6 of 24 lower); the fill's effect is about five times that. The riot was the same in every arm (actors 399.79, visible 288.51) and rig p50 (0.610 / 0.615 / 0.617), sim step and render CPU do not move, so what fell is outside those timers, where the fill sits. Draw calls moved by a hair (739.385 vs 739.355: about 50 draws over 1681 frames), a possible rounding difference in the facing; film compare below.
+**The pixels:** the two release exports filmed side by side, 1200 frames at combo (`gtai-n10/tmp/perf/it10_film.sh`, logs and psnr in `evidence/perf/n10-cputime/film/`), ffmpeg psnr: **1192 of 1200 bit-identical at 32 px/m, 1199 of 1200 at 48**. The A/A of the same code differs in 4 frames at 32 (34, 36, 391, 1111). The A/B-only frames (32, 33, 35, 38, 39 at 32 px/m) lie in the opening frames' chunk streaming; four of them differ only in a strip at the screen's top or left edge, and frame 35, looked at (`gtai-masters/n10/perf/frame35-chunk-popin-before-vs-after.png`), has a chunk one arm has not drawn yet, the crowd unchanged. The 0.03 draws-a-frame difference is not attributed to anything measured.
+So the micro's direction was right (about 350 us debug) and its size is about 235 us at the release frame, and **the it7 revert was a limit of the instrument, not the idea.** The script loop stays as the no-DLL fallback. Tests carried with the commit: `test_city_feed_rows` (native rows equal the script's); the gates on this head are recorded below when they finish. New baseline: every later idea compares against this export, `windows-bench-fill`.
+
+### Item 4, idea 2 (it10): the crowd occlusion's person scan in C++: KEPT as the new baseline (c32c1b5a)
+Hypothesis: `CityCrowdOcclusion.patches` walks every snapshot record in GDScript each frame to find the few people inside the buildings' zones; the release timer the game itself logs reads the whole crowd step at 77-92 us a frame at 32 px/m (27 at 48; `n10-cputime/film/before32.log` and `fill32.log` read 92 and 77, `before48.log` 27). `CitySim.scan_crowd_in_rect` returns the offsets of the people inside the zones' union in C++, float32 like the script's `Vector2` / `Rect2.has_point` so both pick the same records; the script loop (`candidates_script`) stays as the no-DLL fallback. Tests: `test_city_crowd_occlusion` (native against script on a 200-record lattice plus the corner, far-edge and projectile records; no person in the rect), core test `crowd_rect_test`.
+`cpu_ab.ps1 -ArmSpec fill=windows-bench-fill,occ=windows-bench-occ,twin=windows-bench-fill2`, 24 rounds, 72 runs, 02:45-02:54, exit 0, 0 SCRIPT ERROR, `evidence/perf/n10-cputime/occ/`. fill = the baseline (ef31d9d4 export 02:13), twin = a second export of the same code (02:43). Others 0-4, median 2.
+
+| 24 rounds | fill | occ | twin | occ - fill (CI95), lower in | occ - twin, lower in | twin - fill, the A/A (CI95) |
+|---|---|---|---|---|---|---|
+| CPU total s | 7.219 | 7.062 | 7.172 | **-0.195 (-0.250, -0.094), 19 of 24** | -0.188, 18 of 24 | +0.016 (-0.078, +0.094), 10 of 24 |
+| frame p50 ms | 2.391 | 2.330 | 2.370 | **-0.078 (-0.102, -0.038), 22 of 24** | -0.044, 22 of 24 | +0.000 (-0.028, +0.027), 12 of 24 |
+
+**A small real gain: frame p50 between -0.044 and -0.078 ms depending on which export of the baseline it is measured against, CPU about -0.19 s.** It is the size the release timer predicted. The six rounds with no other Godot up for any arm (2, 19-23; `quiet_subset.py occ 0 fill,occ,twin`) read p50 -0.073 and -0.060 ms, lower in 6 of 6, CPU -0.195 and -0.266 s, 5 of 6. Workloads identical (actors 399.79, visible 288.51, draws 739.385 in all three arms); rig, sim step and render CPU unmoved.
+Draw calls: 739.385 in every export carrying the C++ fill, 739.355 in every pre-fill export, so the fill's 0.03 draws a frame is deterministic rather than run-to-run; not traced further, its likeliest cause is the facing's last-bit `atan2` difference the fill already documents.
+
+**The pixels:** the two release exports (fill vs occ) side by side, 1200 frames at combo (`evidence/perf/n10-cputime/film_occ/`): **1190 of 1200 bit-identical at 32 px/m, 1200 of 1200 at 48**; the logged occlusion patches match (7778 in both). The 10 others are frames 30, 32-39 and 391; at the pixel level they are strips at the screen's top and left edges and, in frame 30, lamp posts and a road shadow (viewed, side by side). None shows the crowd changing. An A/A of the baseline at 32 px/m differs in 1 frame (1111). The same frames did not differ in that A/A, but the opening streaming window varies from run to run: the earlier A/As differed in 34, 36, 391, 1111 and in 30-42, 391, 1111.
+The occlusion timer in the game's log reads 68 -> 40 us a frame at 32 px/m (one contended pair).
+
+**Gates on c32c1b5a** (`evidence/perf/n10-cputime/gates_occ/`): evidence --no-bench PASS (lint 15/15, unit 1966/0, scenarios 55/0, parity, selftest 11/11, release-compile 632/0); reels top, tilt70, combo exit 0, 19/19, 0 SCRIPT ERROR, exit lines 593 / 90 (top) and 604 / 91 (tilt70, combo).
+
+### Item 4, idea 3 (it11): the blood drops' flight in C++: KEPT as the new baseline (ab23feaf)
+Hypothesis: `BloodFx.step_ticks` is the largest GDScript loop left inside `blood` (n9's split: 283-294 us a riot frame after L22a, 2 BloodFx, 320 slots each, about 82 live drops a tick). n9 wrote "a C++ drop step is the lever, not worth it at ~0.2 ms" before the CPU-seconds instrument existed. Change: `CitySim.step_blood_drops` (`native/sim_core/src/world.cpp`, reads cells only) advances every free drop in float32 like the script's `Vector2`, and reports the drops that stopped as `slot * 2 + (0 wall, 1 land)` in slot order, so `_rand()`'s counter hash gets its calls in the old order and the decals land in the old sequence. A drop with zero velocity is never a wall hit (`BloodMarks.wall_normal` returns zero there). `BloodFlight` is split out of `blood_fx.gd` (275 -> 270 lines, the file was at the debt ratchet's ceiling); `step_script` is the no-DLL fallback and what the test holds the C++ to. `drops > 0` also skips the 320-slot walk of an idle BloodFx. Tests: `test_blood_flight` (native vs script bit for bit over 30 ticks of a walled spray, both event kinds reached; a whole BloodFx with and without the native step), core test `blood_drops_test`.
+`cpu_ab.ps1 -ArmSpec occ=windows-bench-occ,drops=windows-bench-drops,twin=windows-bench-occ2`, 24 rounds, 72 runs, 03:11-03:20, exit 0, 0 SCRIPT ERROR, `evidence/perf/n10-cputime/drops/`. occ = the baseline (c32c1b5a), twin = a second export of the same code. Others 0-4, median 2.
+
+| 24 rounds | occ | drops | twin | drops - occ (CI95), lower in | drops - twin, lower in | twin - occ, the A/A (CI95), lower in |
+|---|---|---|---|---|---|---|
+| CPU total s | 7.164 | 6.875 | 7.039 | **-0.258 (-0.328, -0.141), 20 of 24** | -0.266, 19 of 24 | -0.031 (-0.188, +0.078), 12 of 24 |
+| frame p50 ms | 2.329 | 2.171 | 2.334 | **-0.163 (-0.187, -0.129), 24 of 24** | -0.155, 24 of 24 | +0.006 (-0.024, +0.024), 11 of 24 |
+
+**A real gain: frame p50 -0.155 to -0.163 ms (-6.9 %), CPU about -0.26 s.** The game's own blood timer agrees: 347.4 -> 220.1 us a frame (twin 346.3). The four rounds with no other Godot up for any arm (17, 19, 20, 21; `quiet_subset.py drops 0 occ,drops,twin`) read p50 -0.154 and -0.183 ms, lower in 4 of 4, too few to call alone but the same size. Rig p50 (0.573 / 0.571 / 0.573) and draw calls (739.385 in all three) do not move.
+
+**The pixels:** the two release exports (occ vs drops) side by side, 1200 frames at combo (`gtai-n10/tmp/perf/it11_film_drops.sh`, psnr in `evidence/perf/n10-cputime/film_drops/`): **1191 of 1200 bit-identical at 32 px/m, 1200 of 1200 at 48**. The 9 others are frames 31, 32, 34-38, 390, 1110; the A/A of the baseline at 32 px/m differs in 33, 36, 390. Frames 390 and 1110 differ only in the bottom-left 288 x 96 px and frame 31 only in the top 48 px; frame 1110 looked at (`evidence/perf/n10-cputime/film_drops/frame1110-streaming-strip-before-vs-after.png`): a chunk one arm has not drawn yet, the same streaming seen in every earlier A/A. Frame 600 at 32 px/m is identical. So blood draws as before; the opening streaming window varies from run to run.
+
+**Gates on ab23feaf** (`evidence/perf/n10-cputime/gates_drops/`): evidence --no-bench PASS (lint 15/15, unit 1968/0, scenarios 55/0, parity bit for bit with the planted mutation caught, selftest 11/11, release-compile 633/0); reels top, tilt70, combo exit 0, 19/19, 0 SCRIPT ERROR. Exit lines: tilt70 and combo 604 / 91 as before; top 601 ObjectDB / 94 resources, the pair seen on ef31d9d4 and not on c32c1b5a (593 / 90), so it moves between runs and is not this change's.
+**Mutation** on `features/fx/noir/blood_flight.gd` (`--max=20`, `test_blood_flight` + `test_blood_fx`, logs `evidence/perf/n10-cputime/gates_drops/mutate_flight_*.log`): 70.0 % (14 of 20) on ab23feaf; four of the six survivors were real gaps on the spawn path (`free_slot`'s threshold, its -1 twice, `put`'s cursor), closed by a test in 6da5a0cc: **90.0 % (18 of 20) on that commit.** The two left: line 65's `+ WALL` is `- 0` too (WALL is 0, an equivalent mutant) and line 70's `<` to `<=` differs only when a drop's speed exactly equals `land_speed_px`.
+
+**Where the frame goes after idea 3** (one release run, CONTENDED, `--spans` plus a scratch timer split of `city_view._process` in a throwaway export, 2 runs, 1500 frames, never committed; `gtai-n10/tmp/perf/spans_it11.json`): `city_view.gd` 1.19 ms mean a frame = `before_render` (the rig step, the feed, the triggers) 847-870 us, `_place_camera` 117-123 us (of it the `fx.ground` FxPool 65-68, `fx.step` 19-20, `lights.step` 10, `fx.glow` 4), `chunks.update` 58-59, `write_render` 13-15. `city_blood.gd` 0.21 ms, `world.gd` 0.16, `city_occlusion.gd` 0.15, the blood draw 0.09. Not split further: inside `before_render`, the rig timer is 0.66-0.72 ms in these runs, so the feed fill, triggers and fx feed share about 0.15-0.2 ms. A second scratch split of `_before_render` (throwaway export, 2 runs, 1500 frames, CONTENDED, never committed; the two runs agree within 8 %): `rigs.step_ticks` 621-623 us a frame, `crowd.observe` 91 us, `_fill_feed` (snapshot, fx feed, the native fill) 75 us, the rig-slots loop 31-35 us, `set_rig_slots` 2.5 us. So the non-rig share is `crowd.observe` and `_fill_feed` (about 0.17 ms together), and the rig step itself is 72 % of before_render.
+
+**The research loop has not stopped:** three ideas, three measured gains (0.235, about 0.06 and about 0.16 ms of frame p50), no wash in a row. In the same riot the largest named costs left are the rig (0.57 ms p50) and render CPU (0.35 ms); blood is now 0.22 ms a frame.
+
+### Item 4, idea 4 (it12): Rivet's strip choice probes each file once: KEPT as the new baseline (40e719fd)
+**The split that found it** (scratch timers in a throwaway release export, 2 runs, CONTENDED, not committed; riot, combo, 1500 frames). `CharacterRigs.step_ticks` per frame: the drive loop 533 us, `_assign` 78 (selection 162 us every 4th call, remap about 50), the hidden-rig cards pass 20, `set_view` 4, RigDetail 4. 10.6 drives a frame, 90 % of them cold. Per drive: `StreetView.step` about 25 us, against gait 8.4, pose 8.5, head card 2.3, springs and hips 2.9, tilt 1.9, clips 1.4, lift 1.2. Inside `StreetView.step`, by frame: **`RivetFrames.step` 119 us on Rivet's one rig**, walkers 122, shield and crowd about 19.
+**Cause.** Each Rivet pose step called `ResourceLoader.exists` three times (walking bare-claw) to seven (the worst branch; the commit message's "up to six" undercounts) (`RivetStrips.strip_of` twice, `diag_or`, `left_of`, `RivetWalk.path_of` up to three, `RivetReload.path_or`, `RivetKnock.path_or`) on files that ship in the pck and cannot change. Which branch runs depends on the weapon and the speed, so a frame's count varies.
+**The change.** `RivetStrips.has_file` remembers the answer per path. Nothing else changes, so the same paths are chosen.
+| 24 rounds, release riot at combo, `evidence/perf/n10-cputime/exists/` | median | CI95 | lower |
+|---|---|---|---|
+| frame p50, exists - drops | **-0.104 ms** (2.151 -> 2.051) | -0.112, -0.084 | 24 of 24 |
+| frame p50, exists - twin (the same baseline, a second export) | -0.110 ms | -0.119, -0.101 | 23 of 24 |
+| frame p50, A/A twin - drops | +0.002 ms | -0.017, +0.026 | 10 of 24 |
+| total CPU, exists - drops | -0.180 s | -0.289, -0.031 | 17 of 24 |
+| total CPU, A/A twin - drops | +0.109 s | +0.031, +0.172 | 6 of 24 |
+Others up before a run: 0 to 2, median 0; in 22 of the 24 rounds no other Godot was up before any arm's run, and those read -0.104 ms (22 of 22). That count is taken once before each run, so it is not a claim that the machine stayed quiet throughout. **The total-CPU reading is not claimed:** this A/A's interval excludes zero, at a size close to the effect. The p50 is the verdict. After the change the scratch split reads `RivetFrames.step` at about 45 us a frame (place 12.3, hide_all 4.0 over 31 parts, the strip-path pieces about 8; its 19.6 us `build` bucket is a mean over 1200 calls and I attribute it to first loads of the strips, not timed apart).
+**A slip in the run.** My retarget of the A/B script missed the backslash form of the output path, so these runs were first written over it11's `drops/` files. The 49 overwritten paths were restored from git and the new results moved here (JOURNAL it12).
+**What the split says next:** corpses. 6.5 fall-card draws a frame at about 10 us each (`StreetDeadPlan.draw` 6.5 of it). `CutRig.drive` places a fall card twice a step: in `StreetView.step`, then again in `StreetView.post` after the react's pose.
+
+### Item 4, idea 5 (it12): a corpse's card placed once a pose step: REVERTED, a wash
+**The idea.** `CutRig.drive` places a fall card twice a step (`StreetView.step`, then `StreetView.post` after the react's pose), and the path of a corpse's grid is rebuilt from strings every step. The change: `StreetView.placed_by_post` skips the first placement when the post will run, `StreetWalkerFall.path_of` remembers its answer per art and row, `StreetDeadPlan.NODE` a NodePath, and a walker's size step stops computing the cop fill it then ignores. 70 unit tests of the street cards and 6 new ones passed. Never committed.
+| 24 rounds, release riot at combo, `evidence/perf/n10-cputime/fall/` | median | CI95 | lower |
+|---|---|---|---|
+| frame p50, fall - exists | +0.023 ms | +0.002, +0.060 | 7 of 24 |
+| frame p50, fall - twin | +0.000 ms | -0.018, +0.017 | 11 of 24 |
+| frame p50, A/A twin - exists | +0.024 ms | +0.005, +0.057 | 6 of 24 |
+| total CPU, fall - exists | +0.188 s | +0.094, +0.328 | 5 of 24 |
+| total CPU, fall - twin | +0.148 s | +0.047, +0.312 | 5 of 24 |
+| total CPU, A/A twin - exists | +0.016 s | -0.094, +0.125 | 9 of 24 |
+Others up before a run: 0 to 2, median 0; 17 of the 24 rounds had none before any arm's run, and those read +0.000 to +0.017 ms. **No gain, so it is reverted under the rule.** The scratch split gave it about 30-60 us, whose upper end is at the 0.03 ms floor, so it was a marginal bet. **The total-CPU rise is not explained and not claimed as a regression:** idea 4's run read an A/A of +0.109 s on the same measure, the same size as this. This is one wash; the loop stops at two in a row.
+**Other file probes:** the remaining `ResourceLoader.exists` sites read at it12 (`held_pitch_art`, `weapon_fx_cells`, `weapon_art`, `rig_head_card`) are behind a memo or run once when a part is built, so idea 4's pattern has no second site of note. That is a read of the code, not a measurement.
+
+### Item 4, idea 6 (it12): the rig's nearest-N selection in C++: REVERTED, a wash; the research loop stops
+`CitySim.nearest_rows`, `RigSelect.nearest_script` as the fallback, bit-equal to it over crowds with exact ties, pins, Rivet at any row and a feed shorter than its arrays (83 unit tests and the core tests passed). Selection cost 162 us every 4th call by the scratch split, so about 40 us a frame at stake, close to the 0.03 ms floor. Never committed; both DLLs were rebuilt from the committed source afterwards.
+| 24 rounds, release riot at combo, `evidence/perf/n10-cputime/sel/` | median | CI95 | lower |
+|---|---|---|---|
+| frame p50, sel - exists | +0.010 ms | -0.003, +0.035 | 8 of 24 |
+| frame p50, sel - twin | -0.017 ms | -0.024, +0.004 | 16 of 24 |
+| frame p50, A/A twin - exists | +0.031 ms | +0.010, +0.051 | 6 of 24 |
+| total CPU, sel - exists | +0.016 s | -0.109, +0.141 | 11 of 24 |
+22 of the 24 rounds had no other Godot up before any arm's run. **Two washes in a row (ideas 5 and 6): the loop stops, as the brief sets.** Four kept gains came before them (0.235, about 0.06, 0.16 and 0.10 ms). The A/A itself read +0.024 and +0.031 ms on the last two runs, so 0.03 ms is about where this instrument stops telling ideas apart; what is left on the list measured by split is at or under that per idea.
+
+### The whole branch against main, last (it12, 04:24-04:32): release riot at combo, 24 rounds
+Exports `windows-bench-main` (9bbe6d0a) and `windows-bench-exists` + `-exists2` (40e719fd; the head since then changes only docs and evidence), `evidence/perf/n10-cputime/final/`. frame p50 2.971 -> 2.050 ms, **-0.908 ms** (-30.6 %, CI95 -0.944 to -0.895, lower in 24 of 24), and -0.888 ms for the twin export of the same code; the two exports of the head differ by -0.023 ms (CI95 -0.047 to -0.015, 20 of 24), which is this run's A/A and is not zero. Total CPU 8.203 -> 6.469 s, -1.73 s (24 of 24; the twin -1.59 s). The game's rig timer: p50 0.939 -> 0.474 ms, p99 1.52 -> 0.91 ms, medians over 24 runs. **No other Godot or RTAI process was up before any of the 72 runs** (others 0, 24 of 24 rounds). That count is taken once before each run and sees only those process names, so this is the closest the night came to item 3's quiet A/B, not a proof the machine was idle; no p99 or worst-frame claim for the frame, and no RAM. Item 1's target holds in release: the rig timer's p50 is under 1 ms on main as well (0.939) and about half that on the head.
+
+### The quiet release riot (it13, 04:36-04:39): item 3 as the brief worded it, QUIET
+The other lanes had gone idle (0 Godots at 04:33). `gtai-n10/tmp/perf/it13_quiet.sh`: 4 clean polls 20 s apart, `bench.lock` held by the script, `tools/perf/ab.mjs --no-lock --scenes=riotc --pairs=8`, wall-clock frame times, exports `windows-bench-main` (9bbe6d0a), `windows-bench-exists` (40e719fd) and its twin `windows-bench-exists2`; `evidence/perf/n10-riotc-quiet/`. The tool flagged 0 of 24 runs contended; a 3 s side poller (`during.log` there, 56 polls) saw only the bench's own one process (50 polls) or nothing (6). Other program names were not counted. 1681 frames a run, 0 script errors, 0 no-tick and 0 multi-tick frames. `ab.json` says `locked: false` because the script took the lock, not the tool.
+
+| metric (ms) | main | head | twin | head - main, paired median | twin - main | head - twin | the tool's verdict (head, twin) |
+|---|---|---|---|---|---|---|---|
+| frame p50 | 3.00 | 2.08 | 2.14 | -0.920 (8 of 8 lower) | -0.845 (8 of 8) | -0.078 (8 of 8) | WIN, WIN |
+| p99 | 4.96 | 3.98 | 4.31 | -1.016 (8 of 8) | -0.675 (8 of 8) | -0.167 (5 of 8) | WASH, WASH |
+| p99.9 | 7.20 | 6.12 | 6.13 | -1.082 (8 of 8) | -1.015 (6 of 8) | -0.109 (7 of 8) | WIN, WASH |
+| worst | 7.83 | 7.00 | 7.30 | -0.987 (7 of 8) | -0.764 (5 of 8) | -0.221 (6 of 8) | WASH, WASH |
+
+Columns main/head/twin are the tool's medians. The A/A (head - twin) is not zero at p50, and the head always ran in the middle slot of three (ab.mjs reverses the order each round, it does not rotate it), so read the gain as -0.85 to -0.92 ms, which agrees with the CPU-seconds run's -0.888 to -0.908. The p99 gain's direction is claimed, its size is not: one head round read p99 5.04 ms against main's 5.18 in the same round. RAM: both modes (about 692 and about 760 MB) appear in every arm with no pattern; no claim.
+
+### The riot on film (it9): what the cut changes on screen, with an A/A control
+`evidence/perf/n10-film/`: `film.sh` (main 9bbe6d0a vs this head, city riot, `--view=combo`, 1200 frames at `--fixed-fps 60`, 1280x800, d3d12, debug editor binary, no HUD), `aa.sh` (the same code twice at 32 px/m), `cmp_frames.py`, `psnr*.log`, `ab_only_frames.json`. Instrument: ffmpeg psnr between the two MJPEG captures (a `mse_avg` of exactly 0 means every sample matched); both arms ran side by side, CONTENDED. Masters: `gtai-masters/n10/perf/`.
+
+| 1200 frames | frames that differ | notes |
+|---|---|---|
+| A/B main vs head, 32 px/m | 48 | chunk pop-in plus the patch below |
+| A/B main vs head, 48 px/m | 48 | not split by cause, no A/A at 48 |
+| A/A head vs head, 32 px/m | 13 | frames 30-42, 391, 1111 (chunk pop-in) |
+| A/A main vs main, 32 px/m | 2 | frames 391, 392 |
+
+Most frames are bit-identical, so the riot at combo draws the same picture with the limbs cold. Of the 48 A/B frames at 32 px/m, 34 appear in neither A/A. 5 of those 34 show nothing a viewer could see (no pixel off by more than 24 in a channel, MSE at most 0.02). 3 are large patches (frames 34, 571, 572, below). **The other 26 are small patches on a figure, at most 40 x 31 px and 295 changed pixels: in 25 of them at least half the changed pixels are cream on main and at most 2 are cream on the head**, for 1-4 consecutive frames; the 26th (frame 137) is 7 non-cream pixels. Example crops: `blob-crop-frame605` and `frame473` in the masters. It is the cream "sticker rim" halo (`RigBuild`): on main the rig draws it under a whole-figure card with no limb over it; `a9370647` hides halos while `StreetWalkerCards.hides_parts`. Frames 34, 571 and 572 (571 is a band across the top edge, 25197 px; 34 spreads over 286 x 455 px) look like chunk streaming, but they were not seen in the A/A runs, so that reading rests on the patch's shape alone. The earlier "0 pixels differ" (`evidence/perf/n10-rig/framecmp`) is true of that one rig-stress frame and does not extend to the riot.
+
+Instrument note: psnr's stats count `n` from 1 and ffmpeg's `select` from 0; a first pass here was off by one and read several real differences as identical.
+
 ## n9 night (2026-11-08, branch n9-perf from main da108c13)
 
 ### F19 quest-1 freeze: located in the engine (it1, 00:56-01:56)

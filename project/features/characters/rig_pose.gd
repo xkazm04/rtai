@@ -28,6 +28,23 @@ static func step(rig: CutRig) -> void:
 	rig.pelvis.rotation = -0.55 * tw_amp * sin(ph) + rig.twist * 0.4 + rig.hip_yaw
 	_body(rig, walk01, ph)
 	_head(rig, p)
+	if not rig.limbs_cold:
+		solve_arms(rig)
+
+
+## Poses the legs and arms now (a cold rig's parts about to be read or shown: a kill's cut, the
+## walker card's release).
+static func warm_limbs(rig: CutRig) -> void:
+	rig.limbs_cold = false
+	RigGait.solve_legs(rig)
+	solve_arms(rig)
+
+
+## Both arms, from the phase and walk the torso turned on.
+static func solve_arms(rig: CutRig) -> void:
+	var walk01: float = clampf(rig.speed_now / CutRig.WALK_SPEED, 0.0, 1.0)
+	walk01 *= (0.0 if rig.dead else 1.0) * (1.0 - rig.c_tuck)
+	var ph: float = TAU * rig.phase
 	for s: int in 2:
 		RigArm.solve(rig, s, ph, walk01)
 

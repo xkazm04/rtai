@@ -43,7 +43,14 @@ static func step(rig: CutRig, dt: float) -> void:
 		else:
 			_stand(rig, side, rig.sides[1 - s], hw + foot_fwd, dt)
 		_clip_feet(rig, side, s, hw, dt)
-		_solve_leg(rig, side, s, hl)
+		if not rig.limbs_cold:
+			_solve_leg(rig, side, s, hl)
+
+
+## Poses both legs from the feet RigGait keeps (the walker card's release, CutRig.warm_limbs).
+static func solve_legs(rig: CutRig) -> void:
+	for s: int in 2:
+		_solve_leg(rig, rig.sides[s], s, rig.hip_local(s))
 
 
 ## rivet-arsenal: a twin-stick plan (hip_follow > 0) walking away from its aim shuffles: the

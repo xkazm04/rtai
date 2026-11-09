@@ -88,6 +88,9 @@ var xf_inv: Transform2D = Transform2D.IDENTITY
 var tilt_up: Vector2 = Vector2.ZERO
 ## View lab: the upright facing card over the head under a tilted --view with cards (RigHeadCard).
 var head_card: Sprite2D = null
+## True while a whole-figure card hides the parts (StreetWalkerCards): the leg and arm solves are
+## skipped this pose step (the cards' cost, n10 perf); warm_limbs() poses them on demand.
+var limbs_cold: bool = false
 
 var body: Node2D = null
 var torso: Node2D = null
@@ -173,12 +176,15 @@ func drive(dt: float) -> void:
 	RigHips.step(self, dt)
 	rotation = facing
 	RigTilt.aim_up(self)
+	limbs_cold = StreetWalkerCards.hides_parts(self)
 	RigGait.step(self, dt)
 	RigPose.step(self)
 	if tilt_up != Vector2.ZERO:
 		RigTilt.lift_upper(self)
 		RigHeadCard.step(self)
 		StreetView.step(self)
+		if limbs_cold and not StreetWalkerCards.hides_parts(self):
+			RigPose.warm_limbs(self)  # the card went away this step: the parts draw now
 	if react != null:
 		react.post(self)
 		StreetView.post(self)
@@ -223,6 +229,8 @@ func snap_facing(a: float) -> void:
 func muzzle_local() -> Vector2:
 	if plan.gun_arm < 0:
 		return Vector2.ZERO
+	if limbs_cold:
+		RigPose.warm_limbs(self)
 	var side: RigLimbs = sides[plan.gun_arm]
 	var spr: Sprite2D = side.hand if side.hand != null else side.fore
 	var ts: Vector2 = spr.texture.get_size()
@@ -252,14 +260,4 @@ func set_part_tex(spr: Sprite2D, part: String) -> void:
 
 func _on_view(px: float) -> void:
 	_last_px = px
-	var hk: float = 1.0 - smoothstep(0.12, 0.3, px)
-	if collar_spr != null:
-		collar_spr.scale = Vector2.ONE * (1.0 + COLLAR_K * (1.0 - smoothstep(0.11, 0.14, px)))
-	for i: int in halos.size():
-		halos[i].visible = hk > 0.01
-		if halo_limb[i] == RigBuild.HALO_LEG:
-			halos[i].scale = Vector2(1.0 + 0.04 * RIM_K * hk, 1.0 + LEG_RIM_W * hk)
-		elif halo_limb[i] == RigBuild.HALO_ARM:
-			halos[i].scale = Vector2(1.0 + 0.04 * RIM_K * hk, 1.0 + 0.45 * RIM_K * hk)
-		else:
-			halos[i].scale = Vector2.ONE * (1.0 + 0.22 * RIM_K * hk)
+	RigBuild.on_view(self, px)

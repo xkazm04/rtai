@@ -1,0 +1,52 @@
+{
+  "budget": {
+    "rigHardMs": 1.0,
+    "rigTargetMs": 0.3
+  },
+  "cpu": "AMD Ryzen 7 7800X3D 8-Core Processor",
+  "debug_build": true,
+  "fullRateRigs": 4,
+  "halfRateRigs": 8,
+  "maxFullRigs": 16,
+  "mode": "headless",
+  "radiusM": 14.0,
+  "runs": [
+    {
+      "metrics": {
+        "bakedLookupMsAvg": 0.981442592592593,
+        "fullRigsMax": 17.0,
+        "people": 50.0,
+        "poolGrown": 0.0,
+        "prewarmMs": 652.416,
+        "rigMsAvg": 3.41695925925926,
+        "rigMsMax": 337.528,
+        "rigMsP50": 0.906,
+        "rigMsP99": 49.678,
+        "rigsBuilt": 41.0,
+        "ticks": 540.0
+      },
+      "people": 50,
+      "withinHardLimit": false
+    },
+    {
+      "metrics": {
+        "bakedLookupMsAvg": 25.1097907407407,
+        "fullRigsMax": 16.0,
+        "people": 200.0,
+        "poolGrown": 0.0,
+        "prewarmMs": 8.959,
+        "rigMsAvg": 7.56978703703704,
+        "rigMsMax": 2689.343,
+        "rigMsP50": 1.183,
+        "rigMsP99": 44.964,
+        "rigsBuilt": 41.0,
+        "ticks": 540.0
+      },
+      "people": 200,
+      "withinHardLimit": false
+    }
+  ],
+  "scenario": "rig-stress",
+  "schema": "gtai.bench/1",
+  "ticks": 600
+}

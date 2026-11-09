@@ -15,6 +15,11 @@ var decals: int = 0
 ## Optional Callable(px: Vector2) -> bool, true inside a wall/building: a droplet that flies into
 ## one stops at the wall and smears along it (a wall splat) instead of landing beyond it.
 var solid: Callable = Callable()
+## Optional C++ step of the flight (BloodFlight.bulk), given when `solid` is the city's own map.
+var bulk_step: Callable = Callable():
+	set(c):
+		bulk_step = c
+		_flight.bulk = c
 var wall_hits: int = 0
 ## Microseconds the last _draw took (the riot budget, lane d5-combat).
 var draw_us: int = 0
@@ -34,12 +39,8 @@ var pool_lead_px: float = 4.0
 var pool_r1_px: float = 0.0
 var _busy_until: int = 0
 var _drawn_at: int = -1
-var _pos: PackedVector2Array = PackedVector2Array()
-var _vel: PackedVector2Array = PackedVector2Array()
-var _size: PackedFloat32Array = PackedFloat32Array()
-var _life: PackedInt32Array = PackedInt32Array()
+var _flight: BloodFlight = null
 var _ring: BloodDecals = null
-var _n: int = 0
 var _k: int = 0
 ## What is drawn: blood, or another fluid (use_fluid).
 var _fluid: NoirFluid = null
@@ -58,10 +59,7 @@ func _init() -> void:
 	var max_pools: int = budget["max_pools"]
 	decals = max_decals
 	_ring = BloodDecals.new(max_decals, max_pools)
-	_pos = NoirPack.vec2s(max_drops)
-	_vel = NoirPack.vec2s(max_drops)
-	_size = NoirPack.floats(max_drops)
-	_life = NoirPack.ints(max_drops)
+	_flight = BloodFlight.new(max_drops)
 	var colour: Dictionary = p["colour"]
 	_fluid = NoirFluid.from(colour)
 	_drops_view.use_parent_material = true
@@ -181,17 +179,8 @@ func step_ticks(n: int) -> void:
 	var land: float = ph["land_speed_px"]
 	for _t: int in n:
 		tick += 1
-		for i: int in _pos.size():
-			if _life[i] <= 0 or (solid.is_valid() and _hit_wall(i)):
-				continue
-			_pos[i] += _vel[i]
-			_vel[i] *= drag
-			_life[i] -= 1
-			if _life[i] <= 0 or _vel[i].length() < land:
-				_life[i] = 0
-				drops -= 1
-				var d: int = _add_decal(_pos[i], _size[i] * (1.2 + _rand()), 0)
-				_ring.set_dir(d, _vel[i].normalized() * clampf(_vel[i].length() / 1.5, 0.3, 1.0))
+		if drops > 0:
+			_resolve(_flight.step(solid, drag, land))
 	# with the splat mesh a landing splat needs no redraw: only drops, pools and the fade do
 	var busy: bool = tick <= _busy_until and _ring.mesh == null
 	if drops > 0 or _drops_drawn:
@@ -201,35 +190,41 @@ func step_ticks(n: int) -> void:
 		queue_redraw()
 
 
+## One tick's flight events, in slot order (the scatter hash is a counter): the decals they leave.
+func _resolve(events: PackedInt32Array) -> void:
+	for e: int in events:
+		drops -= 1
+		var i: int = e >> 1
+		if e & 1 == BloodFlight.WALL:
+			_hit_wall(i)
+			continue
+		var v: Vector2 = _flight.vel[i]
+		var d: int = _add_decal(_flight.pos[i], _flight.size[i] * (1.2 + _rand()), 0)
+		_ring.set_dir(d, v.normalized() * clampf(v.length() / 1.5, 0.3, 1.0))
+
+
 ## A droplet into a wall: two splats at the contact smeared both ways along the wall, sized
-## by the impact speed. False when the droplet flies free this tick.
-func _hit_wall(i: int) -> bool:
-	var nrm: Vector2 = BloodMarks.wall_normal(solid, _pos[i], _vel[i])
-	if nrm == Vector2.ZERO:
-		return false
-	var at: Vector2 = BloodMarks.contact(solid, _pos[i], _vel[i])
-	var r: float = _size[i] * (2.2 + _vel[i].length() / 2.5)
+## by the impact speed.
+func _hit_wall(i: int) -> void:
+	var from: Vector2 = _flight.pos[i]
+	var v: Vector2 = _flight.vel[i]
+	var nrm: Vector2 = BloodMarks.wall_normal(solid, from, v)
+	var at: Vector2 = BloodMarks.contact(solid, from, v)
+	var r: float = _flight.size[i] * (2.2 + v.length() / 2.5)
 	for sgn: float in [1.0, -1.0]:
 		var d: int = _add_decal(at + nrm * r * 0.3, r, 0)
 		_ring.set_dir(d, nrm.orthogonal() * sgn)
-	_life[i] = 0
-	drops -= 1
 	wall_hits += 1
-	return true
 
 
 func _spawn_drop(at: Vector2, v: Vector2, h: Dictionary) -> void:
+	var i: int = _flight.free_slot()
+	if i < 0:
+		return
 	var lt: Array = p["physics"]["life_ticks"]
-	for k: int in _pos.size():
-		var i: int = (_n + k) % _pos.size()
-		if _life[i] <= 0:
-			_pos[i] = at
-			_vel[i] = v
-			_size[i] = _range(h["drop_px"])
-			_life[i] = roundi(_range(lt))
-			_n = i + 1
-			drops += 1
-			return
+	var size_px: float = _range(h["drop_px"])
+	_flight.put(i, at, v, size_px, roundi(_range(lt)))
+	drops += 1
 
 
 ## A decal of radius r1 (grows from r0 over `grow` ticks after `delay`), in BloodDecals' rings.
@@ -255,7 +250,7 @@ func _draw_drops() -> void:
 	_drops_drawn = drops > 0
 	if drops > 0:
 		var trail: float = _fluid.trail if _fluid.trail >= 0.0 else p["physics"]["trail"]
-		var fx: Array = [_pos, _vel, _size, _life]
+		var fx: Array = [_flight.pos, _flight.vel, _flight.size, _flight.life]
 		if _fluid.case_px > 0.0:
 			BloodBatch.drops(_drops_view, fx, trail, Color.BLACK, _fluid.case_px * 2.0)
 		BloodBatch.drops(_drops_view, fx, trail, _fluid.flight, 0.0)

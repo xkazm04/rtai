@@ -172,3 +172,24 @@ static func _halo(rig: CutRig, src: Sprite2D, z: int, mode: int) -> void:
 	rig.halos.append(h)
 	@warning_ignore("return_value_discarded")
 	rig.halo_limb.append(mode)
+
+
+## The sticker rim and collar for the view's px scale (CutRig._on_view, on a change only).
+static func on_view(rig: CutRig, px: float) -> void:
+	var hk: float = 1.0 - smoothstep(0.12, 0.3, px)
+	if rig.collar_spr != null:
+		rig.collar_spr.scale = (
+			Vector2.ONE * (1.0 + CutRig.COLLAR_K * (1.0 - smoothstep(0.11, 0.14, px)))
+		)
+	for i: int in rig.halos.size():
+		rig.halos[i].visible = hk > 0.01 and not StreetWalkerCards.hides_parts(rig)
+		if rig.halo_limb[i] == HALO_LEG:
+			rig.halos[i].scale = Vector2(
+				1.0 + 0.04 * CutRig.RIM_K * hk, 1.0 + CutRig.LEG_RIM_W * hk
+			)
+		elif rig.halo_limb[i] == HALO_ARM:
+			rig.halos[i].scale = Vector2(
+				1.0 + 0.04 * CutRig.RIM_K * hk, 1.0 + 0.45 * CutRig.RIM_K * hk
+			)
+		else:
+			rig.halos[i].scale = Vector2.ONE * (1.0 + 0.22 * CutRig.RIM_K * hk)

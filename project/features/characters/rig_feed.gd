@@ -61,6 +61,22 @@ func put(i: int, id: int, kind: BodyPlan.Kind, at: Vector2, velocity: Vector2) -
 	return i
 
 
+## Takes the columns CitySim.fill_feed_rows built, in its order, then the row count; the columns
+## replace this feed's (one spare row after `count`, so the next put does not grow them).
+func adopt_rows(rows: Array) -> void:
+	ids = rows[0]
+	kinds = rows[1]
+	looks = rows[2]
+	pos = rows[3]
+	vel = rows[4]
+	face = rows[5]
+	aim = rows[6]
+	flags = rows[7]
+	clip = rows[8]
+	clip_arg = rows[9]
+	count = rows[10]
+
+
 func has_flag(i: int, f: Flag) -> bool:
 	return (flags[i] & f) != 0
 

@@ -1,0 +1,9 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[INFO] characters: prewarmed 41 rigs in 61.7 ms
+rig_bench: 50 people {"bakedLookupMsAvg":0.1197,"fullRigsMax":17.0,"people":50.0,"poolGrown":0.0,"prewarmMs":61.706,"rigMsAvg":1.32252037037037,"rigMsMax":23.431,"rigMsP50":1.236,"rigMsP99":2.645,"rigsBuilt":41.0,"ticks":540.0}
+[INFO] characters: prewarmed 41 rigs in 7.7 ms
+rig_bench: 200 people {"bakedLookupMsAvg":0.589144444444444,"fullRigsMax":16.0,"people":200.0,"poolGrown":0.0,"prewarmMs":7.733,"rigMsAvg":1.21451851851852,"rigMsMax":3.042,"rigMsP50":1.186,"rigMsP99":2.252,"rigsBuilt":41.0,"ticks":540.0}
+rig_bench: -> C:/Users/kazda/kiro/gtai-wt/n10-perf/evidence/perf/n10-rig/run1/base-combo-2.json
+WARNING: 10 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)

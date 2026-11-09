@@ -1,0 +1,93 @@
+mutate: worktree C:\Users\kazda\kiro\gtai-n10\tmp\perf\gtai-mutate-c17e1f40 at 0899bc4c (reused)
+mutate: 44/44 mutant(s); baseline run of test_rig_limbs_cold, test_street_walker_cards
+mutate: baseline green in 12.2 s; per-mutant timeout 90 s
+mutate: [1/44] features/characters/street_walker_cards.gd:44 boolean  and -> or  survived  (12.2 s)
+mutate: [2/44] features/characters/street_walker_cards.gd:44 boolean  not -> (removed)  survived  (12.6 s)
+mutate: [3/44] features/characters/street_walker_cards.gd:45 delete  StreetStrips.prefetch_fall(rig, ViewMode.shared().art, row_of(rig)) -> pass  survived  (13.6 s)
+mutate: [4/44] features/characters/street_walker_cards.gd:48 delete  release(rig) -> pass  killed  (13.9 s)
+mutate: [5/44] features/characters/street_walker_cards.gd:52 delete  _build(rig, card, path) -> pass  killed  (14.5 s)
+mutate: [6/44] features/characters/street_walker_cards.gd:53 boolean  not -> (removed)  killed  (15.0 s)
+mutate: [7/44] features/characters/street_walker_cards.gd:55 delete  StreetView.hide_all(hid) -> pass  invalid  (13.5 s)
+mutate: [8/44] features/characters/street_walker_cards.gd:56 delete  place(rig, card) -> pass  survived  (13.5 s)
+mutate: [9/44] features/characters/street_walker_cards.gd:61 boolean  and -> or  killed  (13.5 s)
+mutate: [10/44] features/characters/street_walker_cards.gd:66 boolean  not -> (removed)  killed  (14.6 s)
+mutate: [11/44] features/characters/street_walker_cards.gd:66 boolean  or -> and  killed  (13.6 s)
+mutate: [12/44] features/characters/street_walker_cards.gd:70 boolean  not -> (removed)  killed  (13.2 s)
+mutate: [13/44] features/characters/street_walker_cards.gd:70 boolean  and -> or  killed  (12.9 s)
+mutate: [14/44] features/characters/street_walker_cards.gd:70 boolean  not -> (removed)  killed  (13.0 s)
+mutate: [15/44] features/characters/street_walker_cards.gd:70 boolean  and -> or  killed  (13.6 s)
+mutate: [16/44] features/characters/street_walker_cards.gd:70 boolean  not -> (removed)  survived  (13.7 s)
+mutate: [17/44] features/characters/street_walker_cards.gd:71 boolean  or -> and  survived  (13.2 s)
+mutate: [18/44] features/characters/street_walker_cards.gd:71 boolean  and -> or  survived  (14.0 s)
+mutate: [19/44] features/characters/street_walker_cards.gd:71 boolean  and -> or  survived  (16.8 s)
+mutate: [20/44] features/characters/street_walker_cards.gd:75 boolean  not -> (removed)  killed  (14.4 s)
+mutate: [21/44] features/characters/street_walker_cards.gd:75 boolean  and -> or  killed  (13.6 s)
+mutate: [22/44] features/characters/street_walker_cards.gd:75 boolean  not -> (removed)  survived  (12.7 s)
+mutate: [23/44] features/characters/street_walker_cards.gd:78 boolean  not -> (removed)  killed  (13.4 s)
+mutate: [24/44] features/characters/street_walker_cards.gd:80 boolean  not -> (removed)  killed  (13.0 s)
+mutate: [25/44] features/characters/street_walker_cards.gd:80 boolean  or -> and  survived  (12.9 s)
+mutate: [26/44] features/characters/street_walker_cards.gd:99 boolean  and -> or  killed  (13.8 s)
+mutate: [27/44] features/characters/street_walker_cards.gd:114 boolean  or -> and  killed  (13.4 s)
+mutate: [28/44] features/characters/street_walker_cards.gd:114 boolean  not -> (removed)  killed  (13.2 s)
+mutate: [29/44] features/characters/street_walker_cards.gd:121 delete  rig.body.remove_meta(HID) -> pass  survived  (12.8 s)
+mutate: [30/44] features/characters/street_walker_cards.gd:122 delete  rig.body.remove_meta(WAS) -> pass  survived  (13.9 s)
+mutate: [31/44] features/characters/street_walker_cards.gd:123 boolean  and -> or  survived  (13.5 s)
+mutate: [32/44] features/characters/street_walker_cards.gd:124 delete  RigHeadCard.drop(rig) -> pass  killed  (13.0 s)
+mutate: [33/44] features/characters/street_walker_cards.gd:137 delete  card.set_meta(ON, path) -> pass  killed  (12.7 s)
+mutate: [34/44] features/characters/street_walker_cards.gd:138 delete  card.remove_meta(StreetWalkerFall.OCT) -> pass  survived  (12.1 s)
+mutate: [35/44] features/characters/street_walker_cards.gd:139 delete  StreetDeadPlan.drop(card) -> pass  survived  (11.9 s)
+mutate: [36/44] features/characters/street_walker_cards.gd:144 boolean  true -> false  survived  (12.0 s)
+mutate: [37/44] features/characters/street_walker_cards.gd:144 boolean  false -> true  killed  (33.8 s)
+mutate: [38/44] features/characters/street_walker_cards.gd:145 boolean  and -> or  survived  (15.1 s)
+mutate: [39/44] features/characters/street_walker_cards.gd:145 boolean  not -> (removed)  survived  (12.2 s)
+mutate: [40/44] features/characters/street_walker_cards.gd:146 delete  hid.append(n as CanvasItem) -> pass  killed  (13.0 s)
+mutate: [41/44] features/characters/street_walker_cards.gd:147 delete  was.append((n as CanvasItem).visible) -> pass  killed  (12.4 s)
+mutate: [42/44] features/characters/street_walker_cards.gd:148 delete  rig.body.set_meta(HID, hid) -> pass  killed  (12.8 s)
+mutate: [43/44] features/characters/street_walker_cards.gd:149 delete  rig.body.set_meta(WAS, was) -> pass  killed  (13.0 s)
+mutate: [44/44] features/characters/street_walker_cards.gd:155 delete  StreetWalkerFall.draw(rig, card, k) -> pass  survived  (12.7 s)
+mutate features/characters/street_walker_cards.gd: 44 mutant(s), tests: test_rig_limbs_cold, test_street_walker_cards
+  features/characters/street_walker_cards.gd:44 boolean  and -> or  survived
+  features/characters/street_walker_cards.gd:44 boolean  not -> (removed)  survived
+  features/characters/street_walker_cards.gd:45 delete  StreetStrips.prefetch_fall(rig, ViewMode.shared().art, row_of(rig)) -> pass  survived
+  features/characters/street_walker_cards.gd:56 delete  place(rig, card) -> pass  survived
+  features/characters/street_walker_cards.gd:70 boolean  not -> (removed)  survived
+  features/characters/street_walker_cards.gd:71 boolean  or -> and  survived
+  features/characters/street_walker_cards.gd:71 boolean  and -> or  survived
+  features/characters/street_walker_cards.gd:71 boolean  and -> or  survived
+  features/characters/street_walker_cards.gd:75 boolean  not -> (removed)  survived
+  features/characters/street_walker_cards.gd:80 boolean  or -> and  survived
+  features/characters/street_walker_cards.gd:121 delete  rig.body.remove_meta(HID) -> pass  survived
+  features/characters/street_walker_cards.gd:122 delete  rig.body.remove_meta(WAS) -> pass  survived
+  features/characters/street_walker_cards.gd:123 boolean  and -> or  survived
+  features/characters/street_walker_cards.gd:138 delete  card.remove_meta(StreetWalkerFall.OCT) -> pass  survived
+  features/characters/street_walker_cards.gd:139 delete  StreetDeadPlan.drop(card) -> pass  survived
+  features/characters/street_walker_cards.gd:144 boolean  true -> false  survived
+  features/characters/street_walker_cards.gd:145 boolean  and -> or  survived
+  features/characters/street_walker_cards.gd:145 boolean  not -> (removed)  survived
+  features/characters/street_walker_cards.gd:155 delete  StreetWalkerFall.draw(rig, card, k) -> pass  survived
+  features/characters/street_walker_cards.gd:55 delete  StreetView.hide_all(hid) -> pass  invalid
+  features/characters/street_walker_cards.gd:48 delete  release(rig) -> pass  killed
+  features/characters/street_walker_cards.gd:52 delete  _build(rig, card, path) -> pass  killed
+  features/characters/street_walker_cards.gd:53 boolean  not -> (removed)  killed
+  features/characters/street_walker_cards.gd:61 boolean  and -> or  killed
+  features/characters/street_walker_cards.gd:66 boolean  not -> (removed)  killed
+  features/characters/street_walker_cards.gd:66 boolean  or -> and  killed
+  features/characters/street_walker_cards.gd:70 boolean  not -> (removed)  killed
+  features/characters/street_walker_cards.gd:70 boolean  and -> or  killed
+  features/characters/street_walker_cards.gd:70 boolean  not -> (removed)  killed
+  features/characters/street_walker_cards.gd:70 boolean  and -> or  killed
+  features/characters/street_walker_cards.gd:75 boolean  not -> (removed)  killed
+  features/characters/street_walker_cards.gd:75 boolean  and -> or  killed
+  features/characters/street_walker_cards.gd:78 boolean  not -> (removed)  killed
+  features/characters/street_walker_cards.gd:80 boolean  not -> (removed)  killed
+  features/characters/street_walker_cards.gd:99 boolean  and -> or  killed
+  features/characters/street_walker_cards.gd:114 boolean  or -> and  killed
+  features/characters/street_walker_cards.gd:114 boolean  not -> (removed)  killed
+  features/characters/street_walker_cards.gd:124 delete  RigHeadCard.drop(rig) -> pass  killed
+  features/characters/street_walker_cards.gd:137 delete  card.set_meta(ON, path) -> pass  killed
+  features/characters/street_walker_cards.gd:144 boolean  false -> true  killed
+  features/characters/street_walker_cards.gd:146 delete  hid.append(n as CanvasItem) -> pass  killed
+  features/characters/street_walker_cards.gd:147 delete  was.append((n as CanvasItem).visible) -> pass  killed
+  features/characters/street_walker_cards.gd:148 delete  rig.body.set_meta(HID, hid) -> pass  killed
+  features/characters/street_walker_cards.gd:149 delete  rig.body.set_meta(WAS, was) -> pass  killed
+score 55.8% = killed 24 / (killed 24 + survived 19); timeout 0, invalid 1; 621 s

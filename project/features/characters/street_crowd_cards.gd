@@ -36,6 +36,8 @@ static func step(rig: CutRig) -> void:
 			var v: float = 1.0 + VALUE_VAR * vary(rig.actor_id, 17)
 			card.self_modulate = Color(v, v, v)
 		card.set_meta(K, k_swap)
+	if card.has_meta(StreetWalkerCards.ON):  # the whole figure sets its own scale (place)
+		return
 	var k: float = card.get_meta(K)
 	if k != 1.0:
 		card.global_scale = card.global_scale * k

@@ -1,0 +1,123 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+SCRIPT ERROR: Compile Error: Identifier not found: Log
+   at: GDScript::reload (res://features/characters/part_library.gd:60)
+SCRIPT ERROR: Compile Error: Identifier not found: Log
+   at: GDScript::reload (res://features/combat/react/react_table.gd:49)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://features/combat/react/human_react.gd:0)
+SCRIPT ERROR: Compile Error: Identifier not found: Log
+   at: GDScript::reload (res://features/characters/character_rigs.gd:62)
+SCRIPT ERROR: Compile Error: Identifier not found: Log
+   at: GDScript::reload (res://boot/collect_call/stage_pilot.gd:81)
+SCRIPT ERROR: Compile Error: Identifier not found: Log
+   at: GDScript::reload (res://features/combat/combat_tuning.gd:42)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://features/combat/shot.gd:0)
+SCRIPT ERROR: Compile Error: Identifier not found: Log
+   at: GDScript::reload (res://features/combat/weapons/weapon_table.gd:59)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://features/combat/weapons/gun_hand.gd:0)
+SCRIPT ERROR: Compile Error: Identifier not found: Log
+   at: GDScript::reload (res://core/events/event_log.gd:27)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://core/events/events.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://features/combat/combat_arena.gd:0)
+SCRIPT ERROR: Compile Error: Identifier not found: Log
+   at: GDScript::reload (res://features/combat/weapons/art/weapon_art.gd:77)
+SCRIPT ERROR: Compile Error: Identifier not found: LaunchArgs
+   at: GDScript::reload (res://features/combat/weapons/art/held_pitch_art.gd:53)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://features/player/rivet_carry_angle.gd:0)
+SCRIPT ERROR: Compile Error: Identifier not found: LaunchArgs
+   at: GDScript::reload (res://features/combat/weapons/art/shot_lift.gd:21)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://features/player/melee_smear_view.gd:0)
+SCRIPT ERROR: Compile Error: Identifier not found: Log
+   at: GDScript::reload (res://core/render/view_mode.gd:84)
+SCRIPT ERROR: Compile Error: Identifier not found: Log
+   at: GDScript::reload (res://features/characters/rivet_strips.gd:109)
+SCRIPT ERROR: Compile Error: Identifier not found: Log
+   at: GDScript::reload (res://features/bosses/boss_moves.gd:111)
+SCRIPT ERROR: Compile Error: Identifier not found: Log
+   at: GDScript::reload (res://features/bosses/boss_spec.gd:90)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://features/bosses/boss_fight.gd:0)
+SCRIPT ERROR: Compile Error: Identifier not found: Log
+   at: GDScript::reload (res://features/bosses/boss_view.gd:64)
+SCRIPT ERROR: Compile Error: Identifier not found: Log
+   at: GDScript::reload (res://features/characters/rig_card_sets.gd:95)
+SCRIPT ERROR: Compile Error: Identifier not found: LaunchArgs
+   at: GDScript::reload (res://features/characters/street_strips.gd:19)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://features/characters/street_walker_cards.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://features/characters/rig_head_card.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://features/bosses/king/king_art.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://features/bosses/king/king_accents.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://features/bosses/king/gang_shades.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://features/bosses/king/king_rigs.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://features/bosses/king/king_body_view.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://features/bosses/king/king_car_trim.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://features/bosses/king/king_car_walls.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://features/bosses/king/king_car_stack.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://features/characters/rig_depth_sort.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://features/characters/rig_cast_shadows.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://features/characters/rivet_knock.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://features/characters/rivet_frames.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://features/player/rivet_held_view.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://features/characters/rig_off_claw.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://features/characters/rivet_plan.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://features/characters/cast_flags.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://features/characters/part_materials.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://features/characters/rig_build.gd:0)
+SCRIPT ERROR: Compile Error: Identifier not found: Log
+   at: GDScript::reload (res://features/combat/react/strike_depth.gd:58)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://features/characters/rig_arm.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://features/characters/rig_pose.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://features/characters/cut_rig.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://features/characters/rig_clips.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://features/characters/rig_feed.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://boot/city_feed_rows.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (C:/Users/kazda/kiro/gtai-n10/tmp/perf/it7_draft/feed_micro.gd:0)
+ERROR: Failed to load script "C:/Users/kazda/kiro/gtai-n10/tmp/perf/it7_draft/feed_micro.gd" with error "Compilation failed".
+   at: load (modules/gdscript/gdscript_resource_format.cpp:46)
+native available: true
+block 0 native 9.4 us, script 331.3 us
+block 1 native 12.0 us, script 307.8 us
+block 2 native 9.0 us, script 286.7 us
+block 3 native 9.9 us, script 324.5 us
+block 4 native 10.6 us, script 363.7 us
+block 5 native 13.3 us, script 399.7 us
+block 6 native 11.1 us, script 401.3 us
+block 7 native 11.8 us, script 349.2 us
+SCRIPT ERROR: Invalid call. Nonexistent function 'new' in base 'GDScript'.
+   at: EventBus._ready (res://core/events/events.gd:49)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://core/events/events.gd:49)

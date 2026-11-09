@@ -28,6 +28,8 @@ public:
 	void stamp_chunk(int cx, int cy, const PackedByteArray &tiles, const PackedByteArray &cells);
 	void clear_chunk(int cx, int cy);
 	int cell_at(double x, double y) const;
+	Array step_blood_drops(const PackedVector2Array &pos, const PackedVector2Array &vel,
+			const PackedInt32Array &life, double drag, double land, double px) const;
 	int tile_at(double x, double y) const;
 	int spawn(const PackedFloat64Array &spec);
 	void set_riot_centre(int i, double x, double y);
@@ -40,6 +42,10 @@ public:
 	void step(double dt, double camx, double camy, double tgx, double tgy);
 	PackedInt32Array get_counters() const;
 	PackedFloat64Array snapshot() const;
+	static PackedInt32Array scan_dead_flips(const PackedFloat64Array &snap, const PackedByteArray &dead);
+	static PackedInt32Array scan_crowd_in_rect(const PackedFloat64Array &snap, const Rect2 &rect, double px);
+	static Array fill_feed_rows(const PackedFloat64Array &snap, const PackedByteArray &variants,
+			const Vector2 &focus, double r2, const Vector2 &aim, double px);
 	void set_body(const PackedFloat64Array &spec);
 	PackedFloat64Array body_result() const;
 	void set_render(const Array &mms, const PackedInt32Array &clips);

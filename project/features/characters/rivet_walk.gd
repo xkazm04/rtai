@@ -102,17 +102,17 @@ static func path_of(rig: CutRig, art: String, weapon: StringName) -> String:
 		return ""
 	var name: String = STRIP if frames == 8 else STRIP4
 	var fast: bool = rig.speed_now > RUN_FROM_MPS * CharacterRigs.PX_PER_M
-	if run and frames == 8 and fast and ResourceLoader.exists(RivetStrips.DIR + art + "/" + RUN):
+	if run and frames == 8 and fast and RivetStrips.has_file(RivetStrips.DIR + art + "/" + RUN):
 		name = RUN
 	if weapon != &"":
 		if not armed or RivetStrips.fire_latched(rig):
 			return ""
 		name = ARMED + String(weapon) + ".png"
 		var armed_run: String = ARMED_RUN + String(weapon) + ".png"
-		var drawn_run: bool = ResourceLoader.exists(RivetStrips.DIR + art + "/" + armed_run)
+		var drawn_run: bool = RivetStrips.has_file(RivetStrips.DIR + art + "/" + armed_run)
 		name = armed_run if run and frames == 8 and fast and drawn_run else name
 	var path: String = RivetStrips.DIR + art + "/" + name
-	return path if ResourceLoader.exists(path) else ""
+	return path if RivetStrips.has_file(path) else ""
 
 
 ## True when `card` shows a walk grid (8 rows; every other strip is one row).

@@ -1,0 +1,60 @@
+extends SceneTree
+## CityFeedRows.fill, native vs the script loop, one process, interleaved blocks.
+## Synthetic riot snapshot: 400 person records (262 inside the radius), 30 projectiles.
+const PEOPLE: int = 400
+const INSIDE: int = 262
+const PROJ: int = 30
+const BLOCKS: int = 8
+const CALLS: int = 300
+const FOCUS: Vector2 = Vector2(50.0, 50.0)
+const AIM: Vector2 = Vector2(1600.0, 1600.0)
+
+
+func _snap() -> PackedFloat64Array:
+	var s: PackedFloat64Array = PackedFloat64Array()
+	@warning_ignore("return_value_discarded")
+	s.resize(PEOPLE * SimConst.SNAP_STRIDE + PROJ * SimConst.SNAP_PROJ_STRIDE)
+	s.fill(0.0)
+	for p: int in PEOPLE:
+		var r: int = p * SimConst.SNAP_STRIDE
+		var off: float = 4.0 + float(p % 30) * 0.3 if p < INSIDE else 400.0 + float(p)
+		s[r] = p
+		s[r + 1] = SimConst.K_COP if p % 5 == 0 else SimConst.K_PED
+		s[r + 2] = SimConst.M_FLEE if p % 7 == 0 else 0
+		s[r + 4] = FOCUS.x + off
+		s[r + 5] = FOCUS.y - off * 0.5
+		s[r + 6] = 0.6
+		s[r + 7] = 0.8
+		s[r + 8] = 1.5
+	for k: int in PROJ:
+		var r: int = PEOPLE * SimConst.SNAP_STRIDE + k * SimConst.SNAP_PROJ_STRIDE
+		s[r] = SimConst.SNAP_PROJ_BASE + k
+	return s
+
+
+func _block(native: bool, snap: PackedFloat64Array, variants: PackedByteArray) -> float:
+	var rows: CityFeedRows = CityFeedRows.new()
+	rows.native = native
+	var feed: RigFeed = RigFeed.new(512)
+	var t0: int = Time.get_ticks_usec()
+	for c: int in CALLS:
+		rows.fill(feed, snap, variants, FOCUS, AIM)
+	var us: float = float(Time.get_ticks_usec() - t0) / CALLS
+	if feed.count != INSIDE:
+		printerr("rows ", feed.count)
+	return us
+
+
+func _init() -> void:
+	var snap: PackedFloat64Array = _snap()
+	var variants: PackedByteArray = PackedByteArray()
+	@warning_ignore("return_value_discarded")
+	variants.resize(SimConst.CAP)
+	var probe: CityFeedRows = CityFeedRows.new()
+	print("native available: ", probe.native)
+	for b: int in BLOCKS:
+		var first: bool = b % 2 == 0
+		var a: float = _block(first, snap, variants)
+		var c: float = _block(not first, snap, variants)
+		print("block %d native %.1f us, script %.1f us" % [b, a if first else c, c if first else a])
+	quit(0)

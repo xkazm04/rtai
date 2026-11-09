@@ -43,6 +43,9 @@ export const SCENES = {
     user: ['--scenario=drive_dense', '--zoom=1.5', '--view=tilt70', '--secs=30', '--out=OUT'] },
   riot: { engine: WIN, scene: 'res://dev/bench/city_bench.tscn', kind: 'bench',
     user: ['--scenario=riot', '--zoom=1.0', '--view=tilt70', '--secs=30', '--out=OUT'] },
+  // The view main boots (n9): `riot` stays tilt70 so the older tables keep comparing.
+  riotc: { engine: WIN, scene: 'res://dev/bench/city_bench.tscn', kind: 'bench',
+    user: ['--scenario=riot', '--zoom=1.0', '--view=combo', '--secs=30', '--out=OUT'] },
   king60: { engine: CAP60, scene: 'res://dev/arena/arena.tscn', kind: 'fight',
     user: ['--boss=king', '--bot=boss', '--seed=2', '--rigs', '--view=combo', '--frames=OUT', '--frames-ticks=1500'] },
   drive60: { engine: CAP60, scene: 'res://dev/bench/city_bench.tscn', kind: 'bench',

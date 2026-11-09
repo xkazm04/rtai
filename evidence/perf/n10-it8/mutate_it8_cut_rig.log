@@ -1,0 +1,94 @@
+mutate: worktree C:\Users\kazda\kiro\gtai-n10\tmp\perf\gtai-mutate-c17e1f40 at 0899bc4c (reused)
+mutate: REPAIRED a crashed run: restored C:\Users\kazda\kiro\gtai-n10\tmp\perf\gtai-mutate-c17e1f40\project\features\characters\street_walker_cards.gd from its sidecar
+mutate: 44/44 mutant(s); baseline run of test_rig_limbs_cold, test_street_walker_cards
+mutate: baseline green in 10.9 s; per-mutant timeout 90 s
+mutate: [1/44] features/characters/cut_rig.gd:34 boolean  false -> true  survived  (10.8 s)
+mutate: [2/44] features/characters/cut_rig.gd:36 boolean  false -> true  survived  (10.9 s)
+mutate: [3/44] features/characters/cut_rig.gd:51 boolean  false -> true  killed  (12.7 s)
+mutate: [4/44] features/characters/cut_rig.gd:93 boolean  false -> true  survived  (11.7 s)
+mutate: [5/44] features/characters/cut_rig.gd:113 boolean  false -> true  survived  (11.8 s)
+mutate: [6/44] features/characters/cut_rig.gd:123 delete  RigBuild.build(self) -> pass  killed  (12.0 s)
+mutate: [7/44] features/characters/cut_rig.gd:124 delete  apply_variant(p_variant) -> pass  survived  (11.4 s)
+mutate: [8/44] features/characters/cut_rig.gd:125 delete  reset_state(0.0) -> pass  survived  (11.5 s)
+mutate: [9/44] features/characters/cut_rig.gd:131 delete  RigHeadCard.drop(self) -> pass  survived  (12.1 s)
+mutate: [10/44] features/characters/cut_rig.gd:133 delete  set_part_tex(head_spr, v.head) -> pass  killed  (13.8 s)
+mutate: [11/44] features/characters/cut_rig.gd:135 delete  set_part_tex(torso_spr, v.torso) -> pass  survived  (12.1 s)
+mutate: [12/44] features/characters/cut_rig.gd:142 boolean  false -> true  survived  (12.1 s)
+mutate: [13/44] features/characters/cut_rig.gd:143 boolean  false -> true  survived  (13.5 s)
+mutate: [14/44] features/characters/cut_rig.gd:144 boolean  false -> true  survived  (13.9 s)
+mutate: [15/44] features/characters/cut_rig.gd:149 delete  clips.reset() -> pass  survived  (12.8 s)
+mutate: [16/44] features/characters/cut_rig.gd:151 delete  react.clear() -> pass  survived  (12.8 s)
+mutate: [17/44] features/characters/cut_rig.gd:159 delete  hose_pts.clear() -> pass  survived  (12.8 s)
+mutate: [18/44] features/characters/cut_rig.gd:160 delete  set_tint(false) -> pass  survived  (14.1 s)
+mutate: [19/44] features/characters/cut_rig.gd:160 boolean  false -> true  killed  (13.2 s)
+mutate: [20/44] features/characters/cut_rig.gd:161 delete  snap_facing(at_facing) -> pass  survived  (12.1 s)
+mutate: [21/44] features/characters/cut_rig.gd:172 delete  clips.sample(self, dt) -> pass  killed  (12.7 s)
+mutate: [22/44] features/characters/cut_rig.gd:173 delete  RigSprings.step(self, dt) -> pass  survived  (12.5 s)
+mutate: [23/44] features/characters/cut_rig.gd:175 delete  react.pre(self, dt) -> pass  survived  (12.2 s)
+mutate: [24/44] features/characters/cut_rig.gd:176 delete  RigHips.step(self, dt) -> pass  survived  (12.1 s)
+mutate: [25/44] features/characters/cut_rig.gd:178 delete  RigTilt.aim_up(self) -> pass  killed  (12.1 s)
+mutate: [26/44] features/characters/cut_rig.gd:180 delete  RigGait.step(self, dt) -> pass  killed  (12.4 s)
+mutate: [27/44] features/characters/cut_rig.gd:181 delete  RigPose.step(self) -> pass  killed  (12.7 s)
+mutate: [28/44] features/characters/cut_rig.gd:183 delete  RigTilt.lift_upper(self) -> pass  survived  (12.7 s)
+mutate: [29/44] features/characters/cut_rig.gd:184 delete  RigHeadCard.step(self) -> pass  killed  (13.0 s)
+mutate: [30/44] features/characters/cut_rig.gd:185 delete  StreetView.step(self) -> pass  killed  (13.3 s)
+mutate: [31/44] features/characters/cut_rig.gd:186 boolean  and -> or  killed  (12.7 s)
+mutate: [32/44] features/characters/cut_rig.gd:186 boolean  not -> (removed)  killed  (12.7 s)
+mutate: [33/44] features/characters/cut_rig.gd:187 delete  RigPose.warm_limbs(self)  # the card went away this step: the parts draw now -> pass  killed  (12.8 s)
+mutate: [34/44] features/characters/cut_rig.gd:189 delete  react.post(self) -> pass  survived  (12.3 s)
+mutate: [35/44] features/characters/cut_rig.gd:190 delete  StreetView.post(self) -> pass  survived  (11.9 s)
+mutate: [36/44] features/characters/cut_rig.gd:192 delete  RigHose.step(self, dt) -> pass  survived  (12.3 s)
+mutate: [37/44] features/characters/cut_rig.gd:194 delete  _on_view(PartMaterials.view_px) -> pass  survived  (11.4 s)
+mutate: [38/44] features/characters/cut_rig.gd:211 boolean  and -> or  survived  (11.7 s)
+mutate: [39/44] features/characters/cut_rig.gd:211 boolean  not -> (removed)  killed  (12.4 s)
+mutate: [40/44] features/characters/cut_rig.gd:212 delete  RigDetail.on_tint(self, on) -> pass  survived  (11.6 s)
+mutate: [41/44] features/characters/cut_rig.gd:213 delete  RigHeadCard.on_tint(self, on) -> pass  survived  (12.8 s)
+mutate: [42/44] features/characters/cut_rig.gd:233 delete  RigPose.warm_limbs(self) -> pass  survived  (12.8 s)
+mutate: [43/44] features/characters/cut_rig.gd:258 delete  RigBuild.set_tex(self, spr, part) -> pass  invalid  (12.9 s)
+mutate: [44/44] features/characters/cut_rig.gd:263 delete  RigBuild.on_view(self, px) -> pass  survived  (13.0 s)
+mutate features/characters/cut_rig.gd: 44 mutant(s), tests: test_rig_limbs_cold, test_street_walker_cards
+  features/characters/cut_rig.gd:34 boolean  false -> true  survived
+  features/characters/cut_rig.gd:36 boolean  false -> true  survived
+  features/characters/cut_rig.gd:93 boolean  false -> true  survived
+  features/characters/cut_rig.gd:113 boolean  false -> true  survived
+  features/characters/cut_rig.gd:124 delete  apply_variant(p_variant) -> pass  survived
+  features/characters/cut_rig.gd:125 delete  reset_state(0.0) -> pass  survived
+  features/characters/cut_rig.gd:131 delete  RigHeadCard.drop(self) -> pass  survived
+  features/characters/cut_rig.gd:135 delete  set_part_tex(torso_spr, v.torso) -> pass  survived
+  features/characters/cut_rig.gd:142 boolean  false -> true  survived
+  features/characters/cut_rig.gd:143 boolean  false -> true  survived
+  features/characters/cut_rig.gd:144 boolean  false -> true  survived
+  features/characters/cut_rig.gd:149 delete  clips.reset() -> pass  survived
+  features/characters/cut_rig.gd:151 delete  react.clear() -> pass  survived
+  features/characters/cut_rig.gd:159 delete  hose_pts.clear() -> pass  survived
+  features/characters/cut_rig.gd:160 delete  set_tint(false) -> pass  survived
+  features/characters/cut_rig.gd:161 delete  snap_facing(at_facing) -> pass  survived
+  features/characters/cut_rig.gd:173 delete  RigSprings.step(self, dt) -> pass  survived
+  features/characters/cut_rig.gd:175 delete  react.pre(self, dt) -> pass  survived
+  features/characters/cut_rig.gd:176 delete  RigHips.step(self, dt) -> pass  survived
+  features/characters/cut_rig.gd:183 delete  RigTilt.lift_upper(self) -> pass  survived
+  features/characters/cut_rig.gd:189 delete  react.post(self) -> pass  survived
+  features/characters/cut_rig.gd:190 delete  StreetView.post(self) -> pass  survived
+  features/characters/cut_rig.gd:192 delete  RigHose.step(self, dt) -> pass  survived
+  features/characters/cut_rig.gd:194 delete  _on_view(PartMaterials.view_px) -> pass  survived
+  features/characters/cut_rig.gd:211 boolean  and -> or  survived
+  features/characters/cut_rig.gd:212 delete  RigDetail.on_tint(self, on) -> pass  survived
+  features/characters/cut_rig.gd:213 delete  RigHeadCard.on_tint(self, on) -> pass  survived
+  features/characters/cut_rig.gd:233 delete  RigPose.warm_limbs(self) -> pass  survived
+  features/characters/cut_rig.gd:263 delete  RigBuild.on_view(self, px) -> pass  survived
+  features/characters/cut_rig.gd:258 delete  RigBuild.set_tex(self, spr, part) -> pass  invalid
+  features/characters/cut_rig.gd:51 boolean  false -> true  killed
+  features/characters/cut_rig.gd:123 delete  RigBuild.build(self) -> pass  killed
+  features/characters/cut_rig.gd:133 delete  set_part_tex(head_spr, v.head) -> pass  killed
+  features/characters/cut_rig.gd:160 boolean  false -> true  killed
+  features/characters/cut_rig.gd:172 delete  clips.sample(self, dt) -> pass  killed
+  features/characters/cut_rig.gd:178 delete  RigTilt.aim_up(self) -> pass  killed
+  features/characters/cut_rig.gd:180 delete  RigGait.step(self, dt) -> pass  killed
+  features/characters/cut_rig.gd:181 delete  RigPose.step(self) -> pass  killed
+  features/characters/cut_rig.gd:184 delete  RigHeadCard.step(self) -> pass  killed
+  features/characters/cut_rig.gd:185 delete  StreetView.step(self) -> pass  killed
+  features/characters/cut_rig.gd:186 boolean  and -> or  killed
+  features/characters/cut_rig.gd:186 boolean  not -> (removed)  killed
+  features/characters/cut_rig.gd:187 delete  RigPose.warm_limbs(self)  # the card went away this step: the parts draw now -> pass  killed
+  features/characters/cut_rig.gd:211 boolean  not -> (removed)  killed
+score 32.6% = killed 14 / (killed 14 + survived 29); timeout 0, invalid 1; 559 s

@@ -1,0 +1,25 @@
+mutate: worktree C:\Users\kazda\kiro\gtai-n10\tmp\perf\gtai-mutate-c17e1f40 at d0569d17 (created)
+mutate: 10/107 mutant(s); baseline run of test_fx_triggers
+mutate: baseline green in 98.3 s; per-mutant timeout 297 s
+mutate: [1/10] features/city/view/city_fx_feed.gd:61 boundary  >= -> >  survived  (13.3 s)
+mutate: [2/10] features/city/view/city_fx_feed.gd:61 literal  0 -> 1  survived  (12.4 s)
+mutate: [3/10] features/city/view/city_fx_feed.gd:62 arith  + -> -  killed  (13.2 s)
+mutate: [4/10] features/city/view/city_fx_feed.gd:62 literal  2 -> 3  killed  (12.8 s)
+mutate: [5/10] features/city/view/city_fx_feed.gd:74 boolean  and -> or  survived  (50.5 s)
+mutate: [6/10] features/city/view/city_fx_feed.gd:80 arith  += -> -=  killed  (53.3 s)
+mutate: [7/10] features/city/view/city_fx_feed.gd:112 literal  1 -> 0  killed  (13.1 s)
+mutate: [8/10] features/city/view/city_fx_feed.gd:121 delete  _active.append(k) -> pass  killed  (11.6 s)
+mutate: [9/10] features/city/view/city_fx_feed.gd:125 arith  - -> +  killed  (11.8 s)
+mutate: [10/10] features/city/view/city_fx_feed.gd:134 delete  triggers.fire(&"shot", _q[k] * SimConst.PX_PER_M, _heading[k], tick) -> pass  killed  (12.0 s)
+mutate features/city/view/city_fx_feed.gd: 10 mutant(s) (sampled from 107), tests: test_fx_triggers
+  features/city/view/city_fx_feed.gd:61 boundary  >= -> >  survived
+  features/city/view/city_fx_feed.gd:61 literal  0 -> 1  survived
+  features/city/view/city_fx_feed.gd:74 boolean  and -> or  survived
+  features/city/view/city_fx_feed.gd:62 arith  + -> -  killed
+  features/city/view/city_fx_feed.gd:62 literal  2 -> 3  killed
+  features/city/view/city_fx_feed.gd:80 arith  += -> -=  killed
+  features/city/view/city_fx_feed.gd:112 literal  1 -> 0  killed
+  features/city/view/city_fx_feed.gd:121 delete  _active.append(k) -> pass  killed
+  features/city/view/city_fx_feed.gd:125 arith  - -> +  killed
+  features/city/view/city_fx_feed.gd:134 delete  triggers.fire(&"shot", _q[k] * SimConst.PX_PER_M, _heading[k], tick) -> pass  killed
+score 70.0% = killed 7 / (killed 7 + survived 3); timeout 0, invalid 0; 317 s

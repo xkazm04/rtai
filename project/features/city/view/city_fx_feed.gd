@@ -11,12 +11,17 @@ extends RefCounted
 const REBIRTH_M: float = 4.0
 const PENDING: int = 1
 const FLYING: int = 2
+const NATIVE_CLASS: StringName = &"CitySim"
+const NATIVE_SCAN: StringName = &"scan_dead_flips"
 
 ## The last snapshot observed (CityOcclusion's crowd reads it instead of taking a second one).
 var last_snap: PackedFloat64Array = PackedFloat64Array()
 var triggers: FxTriggers
 ## The car lights (night), fed the same snapshot; null = none.
 var headlights: CityHeadlights = null
+## CitySim.scan_dead_flips finds the rare death flip (the GDScript loop was ~100 us a riot tick); a
+## DLL built before the entry, or no DLL at all, keeps the script's loop. Same events either way.
+var native_scan: bool = false
 var _q: PackedVector2Array = PackedVector2Array()
 var _heading: PackedFloat32Array = PackedFloat32Array()
 var _state: PackedByteArray = PackedByteArray()
@@ -29,6 +34,9 @@ var _primed: bool = false
 
 func _init(t: FxTriggers) -> void:
 	triggers = t
+	native_scan = (
+		ClassDB.class_exists(NATIVE_CLASS) and ClassDB.class_has_method(NATIVE_CLASS, NATIVE_SCAN)
+	)
 	@warning_ignore("return_value_discarded")
 	_q.resize(SimConst.PCAP)
 	@warning_ignore("return_value_discarded")
@@ -47,14 +55,7 @@ func observe(snap: PackedFloat64Array, tick: int) -> void:
 	last_snap = snap
 	_seen.fill(0)
 	var n: int = snap.size()
-	var r: int = 0
-	while r + SimConst.SNAP_STRIDE <= n and snap[r] < SimConst.SNAP_PROJ_BASE:
-		var i: int = int(snap[r])
-		var kind: int = int(snap[r + 1])
-		if i >= 0 and i < SimConst.CAP and (kind == SimConst.K_PED or kind == SimConst.K_COP):
-			if (int(snap[r + 2]) == SimConst.M_DEAD) != (_dead[i] != 0):
-				_person(snap, r, i, tick)  # only on a change: the call is the cost per person
-		r += SimConst.SNAP_STRIDE
+	var r: int = _people_native(snap, tick) if native_scan else _people(snap, tick)
 	while r + SimConst.SNAP_PROJ_STRIDE <= n:
 		var k: int = int(snap[r]) - SimConst.SNAP_PROJ_BASE
 		if k >= 0 and k < SimConst.PCAP:
@@ -64,6 +65,30 @@ func observe(snap: PackedFloat64Array, tick: int) -> void:
 	_primed = true
 	if headlights != null:
 		headlights.observe(snap, triggers.focus_px / SimConst.PX_PER_M, tick)
+
+
+## Fires the person records whose dead flag flipped; returns where the projectile records start.
+func _people(snap: PackedFloat64Array, tick: int) -> int:
+	var n: int = snap.size()
+	var r: int = 0
+	while r + SimConst.SNAP_STRIDE <= n and snap[r] < SimConst.SNAP_PROJ_BASE:
+		var i: int = int(snap[r])
+		var kind: int = int(snap[r + 1])
+		if i >= 0 and i < SimConst.CAP and (kind == SimConst.K_PED or kind == SimConst.K_COP):
+			if (int(snap[r + 2]) == SimConst.M_DEAD) != (_dead[i] != 0):
+				_person(snap, r, i, tick)  # only on a change: the call is the cost per person
+		r += SimConst.SNAP_STRIDE
+	return r
+
+
+## `_people` in C++: out[0] is the projectile offset, out[1..] the records that flipped.
+func _people_native(snap: PackedFloat64Array, tick: int) -> int:
+	var v: Variant = ClassDB.class_call_static(NATIVE_CLASS, NATIVE_SCAN, snap, _dead)
+	var hits: PackedInt32Array = v
+	for j: int in range(1, hits.size()):
+		var r: int = hits[j]
+		_person(snap, r, int(snap[r]), tick)
+	return hits[0]
 
 
 ## Person `i` (record at `r`) turned dead or back: a death fires once, after the first observe.

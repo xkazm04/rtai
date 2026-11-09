@@ -245,7 +245,7 @@
         "project/features/combat/weapons/art/weapon_fx_art.gd": 290,
         "project/features/combat/weapons/fight_areas_art.gd": 278,
         "project/features/fx/combat_blood.gd": 297,
-        "project/features/fx/noir/blood_fx.gd": 275,
+        "project/features/fx/noir/blood_fx.gd": 270,
         "project/features/player/rivet_held_view.gd": 287
       },
       "total": 16
@@ -295,7 +295,7 @@
         "project/features/bosses/servo/servo_moves.gd": 223,
         "project/features/bosses/servo/servo_rig.gd": 287,
         "project/features/bosses/servo/servo_swarm.gd": 208,
-        "project/features/characters/cut_rig.gd": 265,
+        "project/features/characters/cut_rig.gd": 263,
         "project/features/city/gen/tile_painter.gd": 243,
         "project/features/city/sim/sim_people.gd": 205,
         "project/features/city/view/city_view.gd": 259,
@@ -316,7 +316,7 @@
         "project/features/combat/weapons/gun_fx_art.gd": 232,
         "project/features/fx/combat_blood.gd": 297,
         "project/features/fx/corpse_stains.gd": 245,
-        "project/features/fx/noir/blood_fx.gd": 275,
+        "project/features/fx/noir/blood_fx.gd": 270,
         "project/features/player/rivet_held_view.gd": 287,
         "project/features/quest/quest_objective.gd": 206,
         "project/features/quest/quest_runner.gd": 228,

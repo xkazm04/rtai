@@ -26,6 +26,8 @@ static func attach(city: CitySystem, view: CityView) -> CityBlood:
 	view.actor_layer().add_child(glue.blood)
 	glue.blood.attach(view.fx_triggers)
 	glue.blood.solid = glue._solid
+	if city.sim is CitySimNative:  # the same map _solid reads, in C++ (n10 item 4, idea 3)
+		glue.blood.blood.bulk_step = (city.sim as CitySimNative).blood_step()
 	StreetDeadPlan.solid = glue._solid  # n9 item 4: a lying body stops short of the first wall
 	StreetDeadPlan.reset()  # n10: a reused actor id must not inherit an old city's push
 	glue.blood.player_px = func() -> Vector2: return city.target * SimConst.PX_PER_M

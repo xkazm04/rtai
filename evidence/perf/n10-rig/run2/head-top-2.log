@@ -1,0 +1,7 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[INFO] characters: prewarmed 41 rigs in 168.5 ms
+rig_bench: 50 people {"bakedLookupMsAvg":0.0955981481481482,"fullRigsMax":16.0,"people":50.0,"poolGrown":0.0,"prewarmMs":168.512,"rigMsAvg":0.593681481481481,"rigMsMax":1.654,"rigMsP50":0.552,"rigMsP99":1.054,"rigsBuilt":41.0,"ticks":540.0}
+[INFO] characters: prewarmed 41 rigs in 5.2 ms
+rig_bench: 200 people {"bakedLookupMsAvg":0.494512962962963,"fullRigsMax":16.0,"people":200.0,"poolGrown":0.0,"prewarmMs":5.191,"rigMsAvg":0.630201851851852,"rigMsMax":3.148,"rigMsP50":0.583,"rigMsP99":1.211,"rigsBuilt":41.0,"ticks":540.0}
+rig_bench: -> C:/Users/kazda/kiro/gtai-wt/n10-perf/evidence/perf/n10-rig/run2/head-top-2.json

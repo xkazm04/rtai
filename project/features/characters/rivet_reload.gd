@@ -26,7 +26,7 @@ static func path_or(rig: CutRig, art: String, weapon: StringName, path: String) 
 		return path
 	var left: String = "_left" if RivetFrames.LEFT[RivetFrames.oct_of(rig)] == 1 else ""
 	var file: String = RivetStrips.DIR + art + "/" + PREFIX + String(weapon) + left + ".png"
-	return file if ResourceLoader.exists(file) else path
+	return file if RivetStrips.has_file(file) else path
 
 
 ## True while a reload plays and the drawn reload is on.

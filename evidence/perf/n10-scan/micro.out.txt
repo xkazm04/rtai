@@ -1,0 +1,36 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+SCRIPT ERROR: Compile Error: Identifier not found: Log
+   at: GDScript::reload (res://core/render/light_layer.gd:162)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://core/render/fx_system.gd:0)
+SCRIPT ERROR: Compile Error: Identifier not found: Log
+   at: GDScript::reload (res://core/events/event_log.gd:27)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://core/events/events.gd:0)
+SCRIPT ERROR: Compile Error: Identifier not found: Log
+   at: GDScript::reload (res://core/render/view_mode.gd:84)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://core/render/camera_rig.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://core/render/fx_triggers.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://features/city/view/city_fx_feed.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (C:/Users/kazda/kiro/gtai-n10/tmp/perf/scan_micro.gd:0)
+ERROR: Failed to load script "C:/Users/kazda/kiro/gtai-n10/tmp/perf/scan_micro.gd" with error "Compilation failed".
+   at: load (modules/gdscript/gdscript_resource_format.cpp:46)
+native available: true
+block 0 native 21.0 us, script 115.9 us
+block 1 native 22.3 us, script 129.5 us
+block 2 native 52.6 us, script 215.2 us
+block 3 native 23.7 us, script 423.1 us
+block 4 native 22.7 us, script 167.7 us
+block 5 native 20.9 us, script 151.4 us
+block 6 native 21.6 us, script 156.5 us
+block 7 native 23.5 us, script 167.6 us
+SCRIPT ERROR: Invalid call. Nonexistent function 'new' in base 'GDScript'.
+   at: EventBus._ready (res://core/events/events.gd:49)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://core/events/events.gd:49)
+micro exit 0
