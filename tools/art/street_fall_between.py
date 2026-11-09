@@ -39,6 +39,8 @@ KINDS = {
     "cop_riot": ("cop_riot_long_fall.png", "cop_riot_between_fall.png"),
     "swat": ("swat_long_fall.png", "swat_between_fall.png"),
     "ped_suit": ("ped_suit_long_fall.png", "ped_suit_between_fall.png"),
+    "thug": ("thug_long_fall.png", "thug_between_fall.png"),
+    "ped_worker": ("ped_worker_long_fall.png", "ped_worker_between_fall.png"),
 }
 COLS = 5
 # kinds whose long fall grid draws a warm arm band: greyed by street_armband.py (colour law)

@@ -14,6 +14,8 @@ const GRIDS: Dictionary[String, String] = {
 	"p70/cop_riot_long_fall.png": "p70/cop_riot_between_fall.png",
 	"p70/swat_long_fall.png": "p70/swat_between_fall.png",
 	"p70/ped_suit_long_fall.png": "p70/ped_suit_between_fall.png",
+	"p70/thug_long_fall.png": "p70/thug_between_fall.png",
+	"p70/ped_worker_long_fall.png": "p70/ped_worker_between_fall.png",
 }
 const FRAMES: int = 5
 ## Each row's start, of the death family's progress: buckle, mid-fall, fall1, fall2, lying.

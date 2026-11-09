@@ -9,7 +9,7 @@ func test_the_patrol_cop_falls_through_the_drawn_in_betweens() -> void:
 
 
 func test_a_kind_without_in_betweens_keeps_its_three_rows() -> void:
-	var path: String = StreetWalkerFall.path_of("p70", "thug")
+	var path: String = StreetWalkerFall.path_of("p70", "ped/head_cap")
 	assert_eq(StreetFallBetween.rows_of(path), StreetWalkerFall.FALL_FRAMES)
 
 
@@ -36,7 +36,14 @@ func test_the_in_betweens_play_in_order_between_mid_fall_and_lying() -> void:
 
 
 func test_a_grid_with_no_in_betweens_is_kept() -> void:
-	assert_eq(StreetFallBetween.swap("p70/thug_long_fall.png"), "p70/thug_long_fall.png")
+	assert_eq(StreetFallBetween.swap("p70/ped_cap_long_fall.png"), "p70/ped_cap_long_fall.png")
+
+
+func test_the_thug_and_the_worker_fall_through_the_in_betweens() -> void:
+	# n11 it19: the commonest armed enemy after the cops, and a worker ped, now have them drawn.
+	for kind: String in ["thug", "ped_worker"]:
+		var grid: String = "p70/%s_long_fall.png" % kind
+		assert_eq(StreetFallBetween.swap(grid), "p70/%s_between_fall.png" % kind)
 
 
 func test_a_body_that_fell_through_the_in_betweens_lies_face_down() -> void:
