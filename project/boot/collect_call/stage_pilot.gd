@@ -173,7 +173,10 @@ func _attack_held(c: PlayerCommand) -> bool:
 
 ## A held fire shoots along the aim; the flamer's hose sways the line (ArsenalTable.Grip.sway).
 func _fire(stage: CollectCallStage, c: PlayerCommand) -> void:
-	var armed: bool = hold.can_fire() and not melee.busy() and not shock.busy() and not wielding()
+	var rolling: bool = motion.phase == PlayerMotion.Phase.ROLL  # n10 r-2: no gun is drawn in the ball
+	var armed: bool = (
+		hold.can_fire() and not melee.busy() and not shock.busy() and not wielding() and not rolling
+	)
 	var grip: ArsenalTable.Grip = hold.table.grip_of(hold.held)
 	var firing: bool = c.is_held(actions, &"fire") and c.aim != Vector2.ZERO and armed
 	if grip != null and grip.windup_ticks > 0:  # the molotov: wind up, then the bottle leaves
