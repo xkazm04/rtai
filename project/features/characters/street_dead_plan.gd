@@ -104,7 +104,6 @@ static func draw(rig: CutRig, card: Sprite2D, row: String, ks: float, p: float) 
 	if path.is_empty() or p < StreetWalkerFall.FALL_AT[StreetWalkerFall.FALL_FRAMES - 1]:
 		drop(card)
 		return
-	var sink: float = StreetWalkerFall.sink_of(rig)
 	var r: HumanReact = rig.react
 	var blow: Vector2 = r.dir.rotated(rig.facing).normalized() if r != null else Vector2.DOWN
 	var kind: StringName = r.kind if r != null else &""
@@ -120,7 +119,7 @@ static func draw(rig: CutRig, card: Sprite2D, row: String, ks: float, p: float) 
 	var m: Vector2 = motion(kind, p)
 	var odd: bool = (h & 1) == 1
 	var head: Vector2 = StreetDeadHeading.head_of(blow, pose, odd)
-	var lying: float = StreetWalkerFall.rest_scale(ks, sink) * LYING_K
+	var lying: float = StreetWalkerFall.rest_scale(ks, StreetWalkerFall.sink_of(rig)) * LYING_K
 	var pelvis: float = _bounded(card, rig.global_position, head, lying)
 	var left: float = StreetDeadHeading.push_left(p)
 	var centre: Vector2 = rig.global_position + head * pelvis
