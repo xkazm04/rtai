@@ -18,6 +18,15 @@ static func frames_of(id: StringName) -> Array:
 	return _frames[id]
 
 
+## How many fx ids are loaded now; reset() empties the cache (tests).
+static func loaded() -> int:
+	return _frames.size()
+
+
+static func reset() -> void:
+	_frames.clear()
+
+
 ## Loads every fx id's frames (nothing when off or the cells are not drawn).
 static func warm() -> void:
 	if not StreetStrips.enabled() or not WeaponFxArt.enabled:
