@@ -96,10 +96,11 @@ export function gradeFrom({ unit, lint, score, extra }) {
   return { pass: true, score, why: `mutation score ${score} %: at the bar, which proves nothing yet, Claude reviews` };
 }
 
-async function grade(wt, unit, env, log) {
+async function grade(wt, unit, env, log, say = () => {}) {
   const test = testPath(unit.stem);
   const extraFiles = git(wt, 'status', '--porcelain', '--untracked-files=all').stdout.split('\n').filter(Boolean).map((l) => l.slice(3))
     .filter((f) => f !== test && !f.endsWith('.uid') && !f.endsWith('.import'));
+  say(`factory: ${unit.stem}: grading: unit tests in ${wt}`);
   const u = await shell(`node tools/tests/run_unit.mjs --select=test_${unit.stem} --no-rerun`, wt, env, 25);
   log(`unit exit ${u.code}\n${u.out}`);
   const unitOk = u.code === 0;
@@ -108,6 +109,7 @@ async function grade(wt, unit, env, log) {
   const c = git(wt, 'commit', '-q', '-m', `factory grade ${unit.stem}`);
   const lintOk = c.status === 0 || /nothing to commit/.test(`${c.stdout}${c.stderr}`);
   if (!lintOk) return { ...gradeFrom({ unit: true, lint: false, score: null, extra: [] }), detail: `${c.stdout}\n${c.stderr}`.slice(-1400) };
+  say(`factory: ${unit.stem}: unit green, lint ok; mutation grade running (15 mutants, up to 45 min)`);
   const m = await shell(`node tools/mutate/mutate.mjs --file=${unit.path.replace(/^project\//, '')} --tests=test_${unit.stem} --max=15 --remove-worktree`, wt, env, 45);
   log(`mutate exit ${m.code}\n${m.out}`);
   const score = m.code === 0 ? scoreOf(m.out) : null;
@@ -135,14 +137,17 @@ async function runOne(unit, ctx) {
     append(ledger, { type: 'task', id, unit: unit.stem, path: unit.path, machine: { pass: false, why: `dispatch produced no worktree: ${d.out.slice(-160)}` }, at: new Date().toISOString() });
     return { id, pass: false, why: 'dispatch failed' };
   }
-  let g = await grade(wt, unit, env, log);
+  const say = ctx.say ?? (() => {});
+  say(`factory: ${unit.stem}: Codex round done in ${Math.round((Date.now() - t0) / 1000)} s (dispatch exit ${d.code}; log ${join(outDir, `${id}.log`)})`);
+  let g = await grade(wt, unit, env, log, say);
   let repaired = false;
   if (!g.pass) {
     repaired = true;
+    say(`factory: ${unit.stem}: the machine rejected it (${g.why}); Codex repair round`);
     const why = `${g.why}. Output: ${g.detail}`.replace(/\r?\n/g, ' | ').replace(/["%^&<>]/g, ' ').slice(0, 1400);
     const r = await shell(`npx tsx scripts/codex/dispatch.ts resume ${id} "The machine grader rejected this: ${why}. Fix it."`, POF, env, timeoutMin + 5);
     log(`resume exit ${r.code}\n${r.out}`);
-    g = await grade(wt, unit, env, log);
+    g = await grade(wt, unit, env, log, say);
   }
   const state = JSON.parse(readFileSync(join(HOME, 'runs', id, 'state.json'), 'utf8'));
   append(ledger, { type: 'task', id, unit: unit.stem, path: unit.path, test: testPath(unit.stem), model: state.model, codex_secs: state.secs, codex_rounds: state.rounds,
@@ -203,7 +208,7 @@ async function cmdRun(o, out, err) {
   const ledger = o.ledger ?? LEDGER;
   const repo = 'C:/Users/kazda/kiro/gtai';
   const base = spawnSync('git', ['-C', repo, 'rev-parse', 'main'], { encoding: 'utf8', windowsHide: true }).stdout.trim();
-  const ctx = { ledger, env, base, repo, outDir: join(ROOT, 'build', 'codex', 'tasks'), timeoutMin: Number(o['timeout-min'] ?? 25) };
+  const ctx = { ledger, env, base, repo, outDir: join(ROOT, 'build', 'codex', 'tasks'), timeoutMin: Number(o['timeout-min'] ?? 25), say: out };
   let refused = false;
   for (const unit of units) {
     out(`factory: ${unit.stem}: dispatching`);
