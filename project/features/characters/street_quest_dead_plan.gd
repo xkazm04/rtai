@@ -47,12 +47,16 @@ static func draw(canvas: CanvasItem, at_px: Vector2, h: Fighter, px_per_m: float
 	var c: Color = ground_tint(tint)
 	var cell: Rect2 = Rect2(-w * 0.5, -hgt * 0.5, w, hgt)
 	var src: Rect2 = Rect2(w * pose, 0.0, w, hgt)
-	var off: Vector2 = StreetDeadHeading.shadow_off(px_per_m)
-	if off != Vector2.ZERO:
-		var under: Color = StreetDeadHeading.SHADOW
-		under.a *= c.a
-		canvas.draw_set_transform_matrix(t.translated(off))
-		canvas.draw_texture_rect_region(_tex, cell, src, under)
+	var under: Color = StreetDeadHeading.SHADOW
+	under.a *= c.a
+	var offs: PackedVector2Array = [
+		StreetDeadHeading.shadow_off(px_per_m), StreetDeadHeading.side_off(px_per_m)
+	]
+	var tints: PackedColorArray = [under, StreetDeadHeading.SIDE_TINT * c]
+	for i: int in offs.size():
+		if offs[i] != Vector2.ZERO:
+			canvas.draw_set_transform_matrix(t.translated(offs[i]))
+			canvas.draw_texture_rect_region(_tex, cell, src, tints[i])
 	canvas.draw_set_transform_matrix(t)
 	canvas.draw_texture_rect_region(_tex, cell, src, c)
 	canvas.draw_set_transform(Vector2.ZERO)

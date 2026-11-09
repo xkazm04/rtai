@@ -18,6 +18,11 @@ const JITTER_RAD: float = 0.4
 const SHADOW_NODE: String = "DeadShadow"
 const SHADOW_M: float = 0.12
 const SHADOW: Color = Color(0.09, 0.075, 0.106, 0.45)  # ChunkView.SHADOW
+## The body's near side, the height of it a 70-degree camera sees below the drawn pose (m), as the
+## same silhouette in shade; 0 = none. A plan pose has no side of its own to show.
+const SIDE_NODE: String = "DeadSide"
+const SIDE_M: float = 0.16
+const SIDE_TINT: Color = Color(0.36, 0.32, 0.36, 1.0)
 
 
 ## The blow's octant on the screen (the ground squashed by the view's pitch).
@@ -61,29 +66,50 @@ static func shadow_off(px_per_m: float) -> Vector2:
 	return ViewMode.shared().cast_dir() * SHADOW_M * px_per_m if ENABLED else Vector2.ZERO
 
 
-## Lays the pose's silhouette under `plan` (`card`'s lying sprite), shifted by shadow_off.
+## The near side's offset below the pose (px): the pose's height on the ground, as the view lifts.
+static func side_off(px_per_m: float) -> Vector2:
+	var world: Vector2 = -ViewMode.shared().lift_px(SIDE_M)
+	return world * px_per_m / SimConst.PX_PER_M if ENABLED else Vector2.ZERO
+
+
+## Lays the pose's silhouette under `plan` (`card`'s lying sprite): the shadow, then the near side.
 static func shade(card: Sprite2D, plan: Sprite2D) -> void:
 	if not ENABLED:
 		return
-	var sh: Sprite2D = card.get_node_or_null(SHADOW_NODE) as Sprite2D
+	_under(card, plan, SHADOW_NODE, SHADOW).global_transform = _moved(
+		plan, shadow_off(CharacterRigs.PX_PER_M)
+	)
+	_under(card, plan, SIDE_NODE, SIDE_TINT).global_transform = _moved(
+		plan, side_off(CharacterRigs.PX_PER_M)
+	)
+
+
+## The contact shadow and the near side off `card`.
+static func unshade(card: Sprite2D) -> void:
+	for node: String in [SHADOW_NODE, SIDE_NODE]:
+		var sh: Node = card.get_node_or_null(node)
+		if sh != null:
+			card.remove_child(sh)
+			sh.queue_free()
+
+
+static func _moved(plan: Sprite2D, by: Vector2) -> Transform2D:
+	var t: Transform2D = plan.global_transform
+	t.origin += by
+	return t
+
+
+## `card`'s child `node_name`, drawn just under `plan` in `tint`, showing plan's cell.
+static func _under(card: Sprite2D, plan: Sprite2D, node_name: String, tint: Color) -> Sprite2D:
+	var sh: Sprite2D = card.get_node_or_null(node_name) as Sprite2D
 	if sh == null:
 		sh = Sprite2D.new()
-		sh.name = SHADOW_NODE
+		sh.name = node_name
 		sh.hframes = plan.hframes
-		sh.modulate = SHADOW
+		sh.modulate = tint
 		card.add_child(sh)
 		card.move_child(sh, plan.get_index())
 	sh.texture = plan.texture
 	sh.frame = plan.frame
 	sh.flip_h = plan.flip_h
-	var t: Transform2D = plan.global_transform
-	t.origin += shadow_off(CharacterRigs.PX_PER_M)
-	sh.global_transform = t
-
-
-## Removes the contact shadow from `card`.
-static func unshade(card: Sprite2D) -> void:
-	var sh: Node = card.get_node_or_null(SHADOW_NODE)
-	if sh != null:
-		card.remove_child(sh)
-		sh.queue_free()
+	return sh

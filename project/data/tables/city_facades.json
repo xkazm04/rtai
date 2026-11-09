@@ -168,9 +168,9 @@
       "bays": 3,
       "storeys": {
         "p70": {
-          "art": "res://features/city/art/view/p70/facade_shop_storeys.png",
-          "bay_m": 2.4,
-          "ground_h": 204,
+          "art": "res://features/city/art/view/p70/facade_shop_half.png",
+          "bay_m": 4.1,
+          "ground_h": 98,
           "upper_h": 0
         }
       }

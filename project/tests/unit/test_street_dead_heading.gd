@@ -80,6 +80,33 @@ func test_the_shadow_sits_under_the_body_and_leaves_with_it() -> void:
 	assert_null(card.get_node_or_null(StreetDeadHeading.SHADOW_NODE))
 
 
+func test_the_near_side_shows_only_below_the_body_under_a_tilt() -> void:
+	var saved: ViewMode = ViewMode._shared
+	ViewMode._shared = ViewMode.of("tilt70")
+	var off: Vector2 = StreetDeadHeading.side_off(32.0)
+	ViewMode._shared = ViewMode.of("top")
+	var flat: Vector2 = StreetDeadHeading.side_off(32.0)
+	ViewMode._shared = saved
+	assert_eq(off.x, 0.0, "straight down the screen")
+	assert_gt(off.y, 0.0, "below the pose")
+	assert_lt(off.y, 8.0, "a sliver, not a second body")
+	assert_eq(flat, Vector2.ZERO, "a plan view sees no side")
+
+
+func test_the_near_side_lies_between_the_shadow_and_the_body() -> void:
+	var card: Sprite2D = autofree(Sprite2D.new())
+	var plan: Sprite2D = Sprite2D.new()
+	plan.hframes = StreetDeadPlan.POSES
+	card.add_child(plan)
+	StreetDeadHeading.shade(card, plan)
+	var sh: Node = card.get_node(StreetDeadHeading.SHADOW_NODE)
+	var side: Node = card.get_node(StreetDeadHeading.SIDE_NODE)
+	assert_lt(sh.get_index(), side.get_index(), "over the shadow")
+	assert_lt(side.get_index(), plan.get_index(), "under the body")
+	StreetDeadHeading.unshade(card)
+	assert_null(card.get_node_or_null(StreetDeadHeading.SIDE_NODE))
+
+
 func test_the_far_crowd_shader_snaps_only_the_drawn_corpse_cells() -> void:
 	var code: String = (load(CrowdAtlas.SHADER_PATH) as Shader).code
 	var first: int = CrowdAtlas.CLIP_FIRST[CrowdAtlas.Clip.DEATH]
