@@ -28,6 +28,8 @@ public:
 	void stamp_chunk(int cx, int cy, const PackedByteArray &tiles, const PackedByteArray &cells);
 	void clear_chunk(int cx, int cy);
 	int cell_at(double x, double y) const;
+	Array step_blood_drops(const PackedVector2Array &pos, const PackedVector2Array &vel,
+			const PackedInt32Array &life, double drag, double land, double px) const;
 	int tile_at(double x, double y) const;
 	int spawn(const PackedFloat64Array &spec);
 	void set_riot_centre(int i, double x, double y);

@@ -38,6 +38,23 @@ void CitySim::clear_chunk(int cx, int cy) {
 
 int CitySim::cell_at(double x, double y) const { return core_->cell_at(x, y); }
 
+// New pos, vel and life columns (copies: a packed argument is the script's own buffer) and the events.
+Array CitySim::step_blood_drops(const PackedVector2Array &pos, const PackedVector2Array &vel,
+		const PackedInt32Array &life, double drag, double land, double px) const {
+	PackedVector2Array p2 = pos, v2 = vel;
+	PackedInt32Array l2 = life;
+	thread_local std::vector<int32_t> events;
+	core_->step_blood_drops(reinterpret_cast<float *>(p2.ptrw()), reinterpret_cast<float *>(v2.ptrw()),
+			l2.ptrw(), l2.size(), (float)drag, land, px, events);
+	PackedInt32Array ev;
+	ev.resize((int64_t)events.size());
+	if (!events.empty()) memcpy(ev.ptrw(), events.data(), events.size() * sizeof(int32_t));
+	Array out;
+	out.resize(4);
+	out[0] = p2, out[1] = v2, out[2] = l2, out[3] = ev;
+	return out;
+}
+
 int CitySim::tile_at(double x, double y) const { return core_->tile_at(x, y); }
 
 int CitySim::spawn(const PackedFloat64Array &spec) {
@@ -221,6 +238,7 @@ void CitySim::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("stamp_chunk", "cx", "cy", "tiles", "cells"), &CitySim::stamp_chunk);
 	ClassDB::bind_method(D_METHOD("clear_chunk", "cx", "cy"), &CitySim::clear_chunk);
 	ClassDB::bind_method(D_METHOD("cell_at", "x", "y"), &CitySim::cell_at);
+	ClassDB::bind_method(D_METHOD("step_blood_drops", "pos", "vel", "life", "drag", "land", "px"), &CitySim::step_blood_drops);
 	ClassDB::bind_method(D_METHOD("tile_at", "x", "y"), &CitySim::tile_at);
 	ClassDB::bind_method(D_METHOD("spawn", "spec"), &CitySim::spawn);
 	ClassDB::bind_method(D_METHOD("set_riot_centre", "i", "x", "y"), &CitySim::set_riot_centre);

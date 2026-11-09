@@ -1,4 +1,5 @@
 // World maps, init and the LCG (NAT-07: the same 32-bit LCG in both runtimes).
+#include <cmath>
 #include <cstring>
 
 #include "city_core.h"
@@ -82,6 +83,33 @@ int CityCore::cell_at(double x, double y) const {
 	int ix = floori(x), iy = floori(y);
 	if (ix < 0 || iy < 0 || ix >= W || iy >= W) return 0;
 	return cells_[(size_t)iy * W + ix];
+}
+
+// BloodFlight.step_script in C++, float32 like the script's Vector2: a wall ahead keeps the drop
+// where it is and reports it (a drop with no velocity never hits one: BloodMarks.wall_normal is
+// zero then); a free drop moves, slows, ages, and reports a landing.
+void CityCore::step_blood_drops(float *pos, float *vel, int32_t *life, int64_t n, float drag,
+		double land, double px, std::vector<int32_t> &out) const {
+	out.clear();
+	for (int64_t i = 0; i < n; i++) {
+		if (life[i] <= 0) continue;
+		const float vx = vel[2 * i], vy = vel[2 * i + 1];
+		const float qx = pos[2 * i] + vx, qy = pos[2 * i + 1] + vy;
+		const int c = cell_at((double)qx / px, (double)qy / px);
+		if ((c == C_BUILD || c == C_PROP) && (vx != 0.0f || vy != 0.0f)) {
+			life[i] = 0;
+			out.push_back((int32_t)(i * 2));
+			continue;
+		}
+		const float nx = vx * drag, ny = vy * drag;
+		pos[2 * i] = qx, pos[2 * i + 1] = qy;
+		vel[2 * i] = nx, vel[2 * i + 1] = ny;
+		life[i] -= 1;
+		if (life[i] <= 0 || (double)std::sqrt(nx * nx + ny * ny) < land) {
+			life[i] = 0;
+			out.push_back((int32_t)(i * 2 + 1));
+		}
+	}
 }
 
 int CityCore::tile_at(double x, double y) const {

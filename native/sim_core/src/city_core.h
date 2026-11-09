@@ -53,6 +53,11 @@ public:
 	void clear_chunk(int cx, int cy);
 	int cell_at(double x, double y) const;
 	int tile_at(double x, double y) const;
+	// One tick of the flying blood drops (BloodFlight, view only: cells are read, nothing is written).
+	// pos and vel are interleaved x, y in float32 like the script's Vector2; `out` gets
+	// slot * 2 + (0 wall, 1 land) in slot order, the drop's life set to 0 in both cases.
+	void step_blood_drops(float *pos, float *vel, int32_t *life, int64_t n, float drag, double land,
+			double px, std::vector<int32_t> &out) const;
 
 	// spawn.cpp. spec: SP_LEN doubles laid out by SP_KIND..SP_DIR.
 	int spawn(const double *spec);

@@ -148,6 +148,26 @@ void crowd_rect_test() {
 	check(out.empty(), "crowd rect: an empty snapshot");
 }
 
+// The blood drops' flight: one flies free, one lands, one hits the wall column, one is dead.
+void blood_drops_test() {
+	CityCore core;
+	core.init(1);
+	std::vector<uint8_t> tiles(CHUNK_TILES * CHUNK_TILES, 0), cells(CHUNK_CELLS * CHUNK_CELLS, C_WALK);
+	for (int y = 0; y < CHUNK_CELLS; y++) cells[(size_t)y * CHUNK_CELLS + 4] = C_BUILD;
+	core.stamp_chunk(0, 0, tiles.data(), cells.data());
+	std::vector<float> pos = {32.0f, 32.0f, 64.0f, 64.0f, 120.0f, 64.0f, 8.0f, 8.0f, 96.0f, 96.0f};
+	std::vector<float> vel = {8.0f, 0.0f, 1.0f, 0.0f, 16.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
+	std::vector<int32_t> life = {10, 10, 10, 0, 5}, out;
+	core.step_blood_drops(pos.data(), vel.data(), life.data(), 5, 0.5f, 0.75, 32.0, out);
+	check(out.size() == 3, "blood drops: a landing, a wall and a stopped drop reported");
+	check(out[0] == 1 * 2 + 1, "blood drops: slot 1 landed");
+	check(out[1] == 2 * 2 + 0, "blood drops: slot 2 hit the wall");
+	check(out[2] == 4 * 2 + 1, "blood drops: slot 4 had no speed and landed");
+	check(pos[0] == 40.0f && vel[0] == 4.0f && life[0] == 9, "blood drops: free drop moved and slowed");
+	check(pos[4] == 120.0f && life[2] == 0, "blood drops: the wall drop stays put, life 0");
+	check(life[1] == 0 && life[3] == 0, "blood drops: landed and dead drops stay at 0");
+}
+
 // The feed fill: a ped, a cop aiming, a car, one past the radius, projectile records at the tail.
 void feed_rows_test() {
 	std::vector<double> snap(4 * SNAP_STRIDE + SNAP_PROJ_STRIDE, 0.0);
@@ -176,6 +196,7 @@ void feed_rows_test() {
 int main() {
 	scan_test();
 	crowd_rect_test();
+	blood_drops_test();
 	feed_rows_test();
 	Run a = run(4242, 600);
 	Run b = run(4242, 600);

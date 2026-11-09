@@ -50,6 +50,21 @@ func cell_at(x: float, y: float) -> int:
 	return c if c is int else 0
 
 
+## One tick of the blood drops' flight in C++ (view only), or an empty Callable on an older DLL.
+func blood_step() -> Callable:
+	return blood_step_call if _o != null and _o.has_method(&"step_blood_drops") else Callable()
+
+
+func blood_step_call(
+	pos: PackedVector2Array,
+	vel: PackedVector2Array,
+	life: PackedInt32Array,
+	drag: float,
+	land: float
+) -> Array:
+	return _o.call(&"step_blood_drops", pos, vel, life, drag, land, SimConst.PX_PER_M)
+
+
 func tile_at(x: float, y: float) -> int:
 	var t: Variant = _call(&"tile_at", [x, y])
 	return t if t is int else 0
