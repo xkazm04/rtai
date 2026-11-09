@@ -272,3 +272,19 @@ runs, so a wrapper killed at a tool's background limit still leaves the partial 
 was in and the verdicts of the views before it. Three views take 30 min or more on a shared
 machine: run one `--views=<view>` per command when your shell has a shorter limit. It refuses an
 unknown view name or a non-integer `--expect` (exit 2) before anything launches.
+
+## The night runner's live control (PoF `games/gtai/night/night.mjs`, branch `n11-runner`)
+
+```
+node games/gtai/night/night.mjs stop --root C:/Users/kazda/kiro/gtai-n11 --lane hero --now
+node games/gtai/night/night.mjs schedule --root C:/Users/kazda/kiro/gtai-n11 --until 07:00 --freeze 06:30 --report-at 06:40
+node games/gtai/night/night.mjs status --root C:/Users/kazda/kiro/gtai-n11 --siblings C:/Users/kazda/kiro/gtai-n11t
+```
+
+Run from the PoF checkout. A running night re-reads `<root>/control.json` at each lane's next step:
+`stop` ends the night or the named lanes (the session in flight ends first; `--now` kills only those
+lanes' sessions), `schedule` moves the times and checks the change against the running night's own
+`<root>/times.json`, `status --siblings` flags a loop gone silent or a launch that never started.
+`--reserve-min 90` on `run` keeps the last open billing path for the freeze and report sessions.
+**Refuses:** a bad time, freeze after report-at, report-at not before until, a time already passed,
+and an earlier `--until` alone when it would move the freeze or report into the past (name all three).
