@@ -119,3 +119,13 @@ NEXT 0 (22:12, read first): if HEAD is still a0ca5906, the act-cell work above i
 - The three cycle constants were edited while the scenario run on 57bf1dd3 was in progress (render-only constants in `dent_body.gd`, `ohm_rig.gd`, `kerf_rig.gd`); that run's verdict covers them only if those scripts loaded after the edit. Stated, not hidden.
 - REQUEST assets: **Tonnage walk8 at 70, a stamping stride instead of the rocking shuffle**: the press walks on its four stubby feet so that a planted foot moves backward under the body through the stance frames (about 20 cell px a frame in the profile row, so a cycle near 160 cell px), the lifted pair swings forward; same 8 x 5 layout and scale as `tonnage_walk8_70_cells` (`keyed/ghosts/tonnage_walk8_70_cells_v2/`), the grey steel, hazard band and teal seams from `tonnage_card.png`, heavy and slow (4.2 m/s, about 1.5 steps a second). Left facings mirrored.
 - REQUEST assets (priority note): Dent's run8 above drops behind the Tonnage stride and the 55 walk rows: with the measured cycle his walk plants at 7 m/s.
+- GATES it10: unit full on 6d2e643e exit 0; `test_ghost_drawn` 16/0 on 5af9ba1d; lint 15/15 on every commit (hook). Scenarios started 22:44 on 57bf1dd3 (log `gtai-n11/tmp/hero/scen_it10.log`); verdict line below if it lands before the session ends. NOT run: `tools/evidence/run.mjs`, the reel gate, bench, export. No replay or parity golden moved or re-blessed (render-only changes).
+- FRICTION: under tonight's contention a plain `grep` of the scenario log and a 10-line numpy script each took over 2 min; `run_unit --select` of one file took 5 min once (timed out at 300 s) and 53 s the next time.
+
+NEXT:
+1. Read the scenario verdict in `gtai-n11/tmp/hero/scen_it10.log` (`scenarios exit`); if absent, re-run to a file first.
+2. **Untracked, not committed**: `project/features/souls/art/view/p55/kerf_{walk8,act}.png` (+ .import), packed from `kerf_walk8_55_cells` / `kerf_act_55_cells --match=188`, same head width as p70 so `fig_px` 173 holds. Film Kerf at the 55 boss pitch before committing them (nothing seen yet).
+3. Film Dent's walk at 7 m/s with the new 163 cycle (clip, the ground against his stance foot), and Ohm's at 126; a same-tick before/after pair.
+4. Check ASSETS-REPLIES for the Tonnage stamping walk8, Dent run8 and the 55 walk rows; wire on arrival (`ghost_pack.py`, measure the cycle the same way).
+5. Gates owed: `tools/evidence/run.mjs`, the reel gate (`--views=top,tilt70,combo`), an exe once before the freeze.
+6. Raised bars in LEVEL.md: anticipation on every attack, no octant snap on a slow sweep. And Rivet's x15 cells (arena 64 ppm softness): a per-grid resolution factor in `RivetFrames.place` (scale s / res, cell-px tables unchanged) is the smallest path.
