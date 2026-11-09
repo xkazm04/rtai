@@ -113,8 +113,7 @@ func down(i: int, dt: float) -> void:
 	_s.v[i] = vv
 	x = _s.px[i] + _s.hx[i] * vv * dt
 	y = _s.py[i] + _s.hy[i] * vv * dt
-	if _s.tier[i] == 0:
-		push(i, 0.0, 0.0)
+	if _s.tier[i] == 0:  # n11: lying on the ground, Rivet walks over them (no body push)
 		_solid.x = x
 		_solid.y = y
 		_solid.push_out(0.3)
@@ -133,7 +132,8 @@ func down(i: int, dt: float) -> void:
 	_s.t1[i] = spec[SimConst.BD_FLEE]
 
 
-## The body out of every live tier-A person it still overlaps (twice), then out of solid cells.
+## The body out of every standing tier-A person it still overlaps (twice), then out of solid cells.
+## Nobody on the ground blocks it: the dead and the knocked-down are walked over (n11).
 func resolve() -> void:
 	if spec[SimConst.BD_ON] == 0.0:
 		return
@@ -145,7 +145,7 @@ func resolve() -> void:
 			var kj: int = _s.kind[j]
 			if _s.alive[j] == 0 or (kj != SimConst.K_PED and kj != SimConst.K_COP):
 				continue
-			if _s.mode[j] == SimConst.M_DEAD:
+			if _s.mode[j] == SimConst.M_DEAD or _s.mode[j] == SimConst.M_DOWN:
 				continue
 			var ddx: float = bx - _s.px[j]
 			var ddy: float = by - _s.py[j]
