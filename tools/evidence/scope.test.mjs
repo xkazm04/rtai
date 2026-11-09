@@ -13,6 +13,13 @@ test('docs, evidence and root JOURNAL/REPORT lines are inert', () => {
   assert.equal(c.code, 0);
 });
 
+test("the assets lane's root ASSETS-REPLIES.md is inert, a nested one is code (hero REQUEST, n11)", () => {
+  assert.equal(classify(['?? ASSETS-REPLIES.md']).inert, 1);
+  assert.equal(isInert('project/ASSETS-REPLIES.md'), false);
+  const sources = [{ file: 'f.mjs', text: "const r = readFileSync('ASSETS-REPLIES.md', 'utf8');" }];
+  assert.deepEqual(readersOfInert(sources), ['f.mjs']);
+});
+
 test('guard: AGENTS.md, justfile, project docs, the debt baseline and .uid files are code', () => {
   const lines = [' M AGENTS.md', ' M justfile', ' M project/core/README.md', ' M tools/debt/baseline.json', ' M project/core/a.gd.uid'];
   const c = classify(lines);
