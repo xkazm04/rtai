@@ -1,0 +1,45 @@
+mutate: worktree C:\Users\kazda\kiro\gtai-n10\tmp\perf\gtai-mutate-c17e1f40 at 6da5a0cc (reused)
+mutate: 20/38 mutant(s); baseline run of test_blood_flight, test_blood_fx
+mutate: baseline green in 12.0 s; per-mutant timeout 90 s
+mutate: [1/20] features/fx/noir/blood_flight.gd:31 cmp_flip  <= -> >  killed  (10.6 s)
+mutate: [2/20] features/fx/noir/blood_flight.gd:31 literal  0 -> 1  killed  (10.7 s)
+mutate: [3/20] features/fx/noir/blood_flight.gd:33 arith  - -> +  killed  (10.6 s)
+mutate: [4/20] features/fx/noir/blood_flight.gd:33 literal  1 -> 0  killed  (10.7 s)
+mutate: [5/20] features/fx/noir/blood_flight.gd:41 arith  + -> -  killed  (10.7 s)
+mutate: [6/20] features/fx/noir/blood_flight.gd:41 literal  1 -> 0  killed  (10.8 s)
+mutate: [7/20] features/fx/noir/blood_flight.gd:50 literal  1 -> 0  killed  (11.1 s)
+mutate: [8/20] features/fx/noir/blood_flight.gd:52 literal  3 -> 4  killed  (10.8 s)
+mutate: [9/20] features/fx/noir/blood_flight.gd:62 boolean  and -> or  killed  (14.9 s)
+mutate: [10/20] features/fx/noir/blood_flight.gd:63 literal  0 -> 1  killed  (11.0 s)
+mutate: [11/20] features/fx/noir/blood_flight.gd:65 arith  * -> /  killed  (10.9 s)
+mutate: [12/20] features/fx/noir/blood_flight.gd:65 arith  + -> -  survived  (10.4 s)
+mutate: [13/20] features/fx/noir/blood_flight.gd:67 arith  += -> -=  killed  (11.0 s)
+mutate: [14/20] features/fx/noir/blood_flight.gd:70 boundary  <= -> <  killed  (12.6 s)
+mutate: [15/20] features/fx/noir/blood_flight.gd:70 boolean  or -> and  killed  (11.3 s)
+mutate: [16/20] features/fx/noir/blood_flight.gd:70 boundary  < -> <=  survived  (10.2 s)
+mutate: [17/20] features/fx/noir/blood_flight.gd:71 literal  0 -> 1  killed  (11.0 s)
+mutate: [18/20] features/fx/noir/blood_flight.gd:73 delete  out.append(i * 2 + LAND) -> pass  killed  (10.4 s)
+mutate: [19/20] features/fx/noir/blood_flight.gd:73 arith  * -> /  killed  (10.3 s)
+mutate: [20/20] features/fx/noir/blood_flight.gd:73 arith  + -> -  killed  (10.2 s)
+mutate features/fx/noir/blood_flight.gd: 20 mutant(s) (sampled from 38), tests: test_blood_flight, test_blood_fx
+  features/fx/noir/blood_flight.gd:65 arith  + -> -  survived
+  features/fx/noir/blood_flight.gd:70 boundary  < -> <=  survived
+  features/fx/noir/blood_flight.gd:31 cmp_flip  <= -> >  killed
+  features/fx/noir/blood_flight.gd:31 literal  0 -> 1  killed
+  features/fx/noir/blood_flight.gd:33 arith  - -> +  killed
+  features/fx/noir/blood_flight.gd:33 literal  1 -> 0  killed
+  features/fx/noir/blood_flight.gd:41 arith  + -> -  killed
+  features/fx/noir/blood_flight.gd:41 literal  1 -> 0  killed
+  features/fx/noir/blood_flight.gd:50 literal  1 -> 0  killed
+  features/fx/noir/blood_flight.gd:52 literal  3 -> 4  killed
+  features/fx/noir/blood_flight.gd:62 boolean  and -> or  killed
+  features/fx/noir/blood_flight.gd:63 literal  0 -> 1  killed
+  features/fx/noir/blood_flight.gd:65 arith  * -> /  killed
+  features/fx/noir/blood_flight.gd:67 arith  += -> -=  killed
+  features/fx/noir/blood_flight.gd:70 boundary  <= -> <  killed
+  features/fx/noir/blood_flight.gd:70 boolean  or -> and  killed
+  features/fx/noir/blood_flight.gd:71 literal  0 -> 1  killed
+  features/fx/noir/blood_flight.gd:73 delete  out.append(i * 2 + LAND) -> pass  killed
+  features/fx/noir/blood_flight.gd:73 arith  * -> /  killed
+  features/fx/noir/blood_flight.gd:73 arith  + -> -  killed
+score 90.0% = killed 18 / (killed 18 + survived 2); timeout 0, invalid 0; 234 s
