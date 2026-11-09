@@ -61,7 +61,10 @@ export function apply(tree, entries, { copy = cpSync } = {}) {
     const to = join(tree, e.rel);
     if (existsSync(to) && readdirSync(to).length) throw new Error(`${e.rel} is not empty in ${tree}: it would be overwritten`);
     mkdirSync(dirname(to), { recursive: true });
-    copy(join(e.from, e.rel), to, { recursive: true });
+    // A submodule's `.git` is a file naming a gitdir relative to its own checkout; copied, it points
+    // nowhere and every `git add` in the new worktree dies with "not a git repository".
+    const from = join(e.from, e.rel);
+    copy(from, to, { recursive: true, filter: (p) => resolve(p) !== resolve(from, '.git') });
   }
 }
 

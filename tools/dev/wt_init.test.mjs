@@ -50,6 +50,15 @@ test('a fresh worktree gets everything it lacks from the donor, and is then read
   assert.match(log.lines.at(-1), /ready/);
 });
 
+test('a copied submodule leaves its .git behind: it names a gitdir relative to the donor and broke git add', (t) => {
+  const fresh = tree(t, FRESH);
+  const donor = tree(t, allFiles, 'donor');
+  writeFileSync(join(donor, 'native/godot-cpp/.git'), 'gitdir: ../../.git/modules/native/godot-cpp');
+  assert.equal(main([fresh, `--donor=${donor}`], { ...logger(), git: fakeGit() }), EXIT.pass);
+  assert.ok(existsSync(join(fresh, 'native/godot-cpp/SConstruct')));
+  assert.equal(existsSync(join(fresh, 'native/godot-cpp/.git')), false);
+});
+
 test('it never touches what is already there, and a complete tree needs no donor', (t) => {
   const complete = tree(t, allFiles);
   const donor = tree(t, allFiles, 'donor');
