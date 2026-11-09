@@ -82,3 +82,27 @@ func test_sprite_swaps_to_another_sheet() -> void:
 	var plan: Sprite2D = StreetDead70.sprite(card, first, StreetDead70.COLS, StreetDead70.ROWS)
 	assert_same(StreetDead70.sprite(card, second, StreetDead70.COLS, StreetDead70.ROWS), plan)
 	assert_eq(plan.texture.resource_path, second)
+
+
+func _place(for_camera: bool) -> Sprite2D:
+	var plan: Sprite2D = autofree(Sprite2D.new())
+	plan.hframes = StreetDead70.COLS
+	plan.vframes = StreetDead70.ROWS
+	var head: Vector2 = Vector2.from_angle(deg_to_rad(-45.0))
+	var lay: Vector2 = StreetDead70.place(plan, head, 1, false, for_camera)
+	if for_camera:
+		assert_almost_eq(lay.x, 0.0, 0.0001, "art drawn for the camera is not turned")
+		assert_almost_eq(lay.y, ViewMode.shared().ground_k(), 0.0001, "its squash is undone")
+	else:
+		var turn: float = StreetDeadHeading.angle_of(head, 1, plan.flip_h)
+		assert_almost_eq(lay.x, turn, 0.0001, "a plan pose is turned onto its heading")
+		assert_almost_eq(lay.y, 1.0, 0.0001, "and lies on the ground's squash")
+	return plan
+
+
+func test_place_draws_the_cameras_cell_unturned() -> void:
+	assert_eq(_place(true).frame, StreetDead70.COLS + 3)
+
+
+func test_place_keeps_a_plan_pose_on_its_own_cell() -> void:
+	assert_eq(_place(false).frame, 1)
