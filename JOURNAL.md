@@ -229,3 +229,11 @@ No other work this session, by the common rule: the journal said QUEUE EMPTY and
 QUEUE EMPTY: as at 03:40. Items 1, 2 and 4 done or reported as Calls (w-2, w-3, w-6); item 3 done for what code can reach, blocked on REQUEST 3 art. Exe built on the current code.
 
 NEXT: If a sheet has arrived in `library/rounds/` or `library/deliveries/`: add the class to `StreetDead70.CLASSES` and `tools/art/dead_70.py`, film it, then re-run evidence, reels x3 and the export. Otherwise end at once. At the freeze rebuild the exe only if `git log 10ed4f51..HEAD -- project native tools` is non-empty (bake, then the export command in REPORT), and run `node tools/evidence/cites.mjs REPORT.md`.
+
+
+---- session 03:44 (iteration 21, BUILD) ----
+Read at open: tree clean at f55f54b6. No new file in `library/deliveries/` or `library/rounds/` since 17:54 on 11-08 (`find -newermt`); the only `corpse_*_70` sheets are still cop_patrol and ped_suit, both wired. No `REQUEST -> world` in the other lanes. No project, native or tools commit since 10ed4f51, so the exe from iteration 20 is still the current code. The freeze's citation check run early: `node tools/evidence/cites.mjs REPORT.md` 3 paths, 3 ok, exit 0.
+
+QUEUE EMPTY: unchanged from 03:40. Items 1, 2 and 4 done or reported as Calls (w-2, w-3, w-6); item 3 done for what code can reach, blocked on REQUEST 3 art. No game code touched this session.
+
+NEXT: As iteration 20. If a sheet has arrived in `library/rounds/` or `library/deliveries/`: add the class to `StreetDead70.CLASSES` and `tools/art/dead_70.py`, film it, then re-run evidence, reels x3, bake and export. Otherwise end at once; nothing is owed at the freeze unless `git log 10ed4f51..HEAD -- project native tools` is non-empty.
