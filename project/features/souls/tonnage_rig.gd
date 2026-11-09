@@ -52,6 +52,9 @@ static var print_parts: bool = false
 var unfold: float = 1.0
 ## Ground speed (m/s), fed by the host each frame; the gait phase advances with distance.
 var speed_mps: float = 0.0
+## n11: the drawn walk (tonnage_walk8.png), the card and parts under a view without it. He rocks on
+## diagonal foot pairs: a long cycle, a slow cadence.
+var drawn: GhostDrawn = GhostDrawn.new("tonnage", 3.3, CYCLE_CELL, 190.5)
 var _phase: float = 0.0
 var _feet: Array[Sprite2D] = []
 var _legs: Array[Sprite2D] = []
@@ -61,9 +64,6 @@ var _hoses: Sprite2D = null
 var _glow: Sprite2D = null
 var _down: Array[bool] = [true, true]
 var _card: GhostCard = GhostCard.new("tonnage", CARD_M, CARD_ANCHOR)
-## n11: the drawn walk (tonnage_walk8.png), the card and parts under a view without it. He rocks on
-## diagonal foot pairs: a long cycle, a slow cadence.
-var _drawn: GhostDrawn = GhostDrawn.new("tonnage", 3.3, CYCLE_CELL, 190.5)
 var _all: Array[Sprite2D] = []
 
 
@@ -117,7 +117,7 @@ func pose() -> void:
 	_hoses.position = (Vector2(-0.55 * u, 0.0) + up * HOSES_H_M) * PX_PER_M
 	_hoses.scale = Vector2.ONE * _k(_hoses, HOSES_M) * lerpf(0.4, 1.0, u)
 	_glow.scale = Vector2.ONE * (CROWN_M * 1.9 * PX_PER_M / 64.0) * lerpf(0.5, 1.0, u)
-	var shown: bool = not _drawn.step(self, _all, PX_PER_M, lerpf(0.62, 1.0, u))
+	var shown: bool = not drawn.step(self, _all, PX_PER_M, lerpf(0.62, 1.0, u))
 	_card.set_shown(shown)
 	if shown:
 		_card.size_k = lerpf(0.62, 1.0, u)

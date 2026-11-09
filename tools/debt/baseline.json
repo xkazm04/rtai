@@ -33,7 +33,8 @@
         "2026-11-09: n10 merge: the lanes combined dev tooling growth (dev_loc 19971 -> 20284)",
         "2026-11-09: n11 hero: the scripted cursor sweep rig, the proof tool for the owner's aim note (dev_loc 20284 -> 20477)",
         "2026-11-09: n11 hero: the stride film is the dev tool the owner's bounce note is judged with (dev_loc 20477 -> 20598)",
-        "2026-11-09: n11 hero: filming a form through the stride film (dev_loc 20598 -> 20617)"
+        "2026-11-09: n11 hero: filming a form through the stride film (dev_loc 20598 -> 20617)",
+        "2026-11-09: n11 hero: GhostFormView feeds GhostActs (drawn ghost attack cells), the stride film melee press flag for evidence (dev only) (dev_loc 20617 -> 20623)"
       ],
       "files": {
         "project/dev/arena": 708,
@@ -54,7 +55,7 @@
         "project/dev/quest1_city_fit.gd": 18,
         "project/dev/quest1_city_fit_run.gd": 74,
         "project/dev/rivet_arsenal": 255,
-        "project/dev/rivet_motion": 1879,
+        "project/dev/rivet_motion": 1885,
         "project/dev/save_crash_loop.gd": 14,
         "project/dev/save_crash_writer.gd": 18,
         "project/dev/save_cross.gd": 18,
@@ -65,7 +66,7 @@
         "project/dev/view": 195,
         "project/dev/weapon_art": 506
       },
-      "total": 20617
+      "total": 20623
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -263,7 +264,8 @@
         "2026-11-07: n8 merge: + vehicles growth combined (accepted on its lane) (files_past_soft_cap 67 -> 67)",
         "2026-11-07: n8 merge: + city growth combined (accepted on its lane) (files_past_soft_cap 67 -> 67)",
         "2026-11-07: d9-rivet FireStills: a dev-only capture of Rivet's drawn fire cell per weapon (the every-weapon-at-each-pitch evidence); 2 lines in arena_game.gd hook it under --fire-stills (files_past_soft_cap 67 -> 67)",
-        "2026-11-07: handheld E10: FightFrames logs Godot's texture and video memory at the end of a run (the OS GPU counter on the iGPU does not see a BC7 import); dev-only tooling (files_past_soft_cap 67 -> 67)"
+        "2026-11-07: handheld E10: FightFrames logs Godot's texture and video memory at the end of a run (the OS GPU counter on the iGPU does not see a BC7 import); dev-only tooling (files_past_soft_cap 67 -> 67)",
+        "2026-11-09: n11 hero: GhostFormView feeds GhostActs (drawn ghost attack cells, 208 lines), the stride film melee press flag for evidence (dev only) (files_past_soft_cap 65 -> 66)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 262,
@@ -324,7 +326,7 @@
         "project/features/quest/quest_objective.gd": 206,
         "project/features/quest/quest_runner.gd": 228,
         "project/features/souls/dent_stage.gd": 257,
-        "project/features/souls/ghost_form_view.gd": 206,
+        "project/features/souls/ghost_form_view.gd": 208,
         "project/features/souls/ghost_forms.gd": 219,
         "project/features/souls/kerf_stage.gd": 208,
         "project/features/souls/ohm_rig.gd": 201,

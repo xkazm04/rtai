@@ -54,6 +54,8 @@ const CYCLE_CELL: float = 139.0
 var unfold: float = 1.0
 ## Ground speed (m/s), fed by the host each tick.
 var speed_mps: float = 0.0
+## n11: the drawn walk (kerf_walk8.png), feet on the rig's point; the card under a view without it.
+var drawn: GhostDrawn = GhostDrawn.new("kerf", 1.8, CYCLE_CELL, 173.0)
 var _t: float = 0.0
 var _swept: float = 0.0
 var _body: Node2D = Node2D.new()
@@ -63,8 +65,6 @@ var _cables: Sprite2D = null
 var _limbs: Array[Sprite2D] = []
 var _hide: Array[Sprite2D] = []
 var _card: GhostCard = GhostCard.new("kerf", CARD_M, CARD_ANCHOR)
-## n11: the drawn walk (kerf_walk8.png), feet on the rig's point; the card under a view without it.
-var _drawn: GhostDrawn = GhostDrawn.new("kerf", 1.8, CYCLE_CELL, 173.0)
 
 
 func _ready() -> void:
@@ -119,7 +119,7 @@ func pose() -> void:
 		var tip: Vector2 = knee + Vector2.from_angle(lerp_angle(PI, l_lo, u)) * LEG_LO_M * u
 		_place(_limbs[i + 2], hip, knee, LEG_THICK_M)
 		_place(_limbs[i + 3], knee, tip, LEG_THICK_M)
-	if _drawn.step(self, _hide, PX_PER_M, lerpf(0.75, 1.0, u)):
+	if drawn.step(self, _hide, PX_PER_M, lerpf(0.75, 1.0, u)):
 		_card.set_shown(false)
 		return
 	_card.set_shown(true)

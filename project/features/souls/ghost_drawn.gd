@@ -18,6 +18,15 @@ const BACKPEDAL_DOT: float = -0.25
 ## Frames without ground walked before the figure stands.
 const STILL_FRAMES: int = 3
 const OCT_HOLD_RAD: float = deg_to_rad(4.0)
+## The act grid (`<name>_act.png`): 4 columns, the phases: wind-up (unused: the sim counts a strike
+## only as it lands), cut, follow-through, hit; ticks each phase shows for.
+const ACT_COLS: int = 4
+const CUT_COL: int = 1
+const FOLLOW_COL: int = 2
+const HIT_COL: int = 3
+const CUT_TICKS: int = 5
+const FOLLOW_TICKS: int = 10
+const HIT_TICKS: int = 10
 
 var card_name: String = ""
 var height_m: float = 1.75
@@ -35,6 +44,13 @@ var _col: int = STAND_COL
 var _still: int = 0
 var _oct: int = -1
 var _look: float = NAN
+var _walk_tex: Texture2D = null
+var _act_tex: Texture2D = null
+var _seq: int = 0
+var _fed: bool = false
+var _act_from: int = -1
+var _hurt: int = -1
+var _tick: int = 0
 
 
 func _init(p_name: String, p_height_m: float, p_cycle_cell: float, p_fig_px: float) -> void:
@@ -57,7 +73,13 @@ func step(
 	var s: float = height_m * size_k * px_per_m * absf(host.global_scale.x) / fig_px
 	_look = host.global_rotation if is_nan(look) else look
 	var o: int = octant(_look)
-	_spr.frame = RigHeadCard.OCT_FRAME[o] * COLS + _column(host, s)
+	var walk: int = _column(host, s)
+	var act: int = act_col() if _act_tex != null else -1
+	_show(act >= 0)
+	_spr.frame = (
+		RigHeadCard.OCT_FRAME[o] * (ACT_COLS if act >= 0 else COLS)
+		+ maxi(act, walk if act < 0 else 0)
+	)
 	_spr.flip_h = RigHeadCard.OCT_FLIP[o] == 1
 	_spr.global_rotation = 0.0
 	_spr.global_scale = Vector2(s, s / vm.ground_k())
@@ -66,6 +88,28 @@ func step(
 
 static func path_of(art: String, name: String) -> String:
 	return ART_DIR.path_join(art).path_join(name + "_walk8.png")
+
+
+static func act_path_of(art: String, name: String) -> String:
+	return ART_DIR.path_join(art).path_join(name + "_act.png")
+
+
+## Each frame (GhostActs): `seq` a counter that rises on a strike, `hurt` the tick of the last hit.
+func feed(seq: int, hurt: int, tick: int) -> void:
+	if _fed and seq > _seq:
+		_act_from = tick
+	_fed = true
+	_seq = seq
+	_hurt = hurt
+	_tick = tick
+
+
+## The act column to show now, -1 for the walk. A strike wins over a hit.
+func act_col() -> int:
+	var since: int = _tick - _act_from
+	if _act_from >= 0 and since < CUT_TICKS + FOLLOW_TICKS:
+		return CUT_COL if since < CUT_TICKS else FOLLOW_COL
+	return HIT_COL if _hurt >= 0 and _tick - _hurt < HIT_TICKS else -1
 
 
 ## The drawn octant of `look`, held OCT_HOLD_RAD past the boundary (as Rivet's RivetStride.oct_of).
@@ -94,6 +138,19 @@ func _column(host: Node2D, s: float) -> int:
 	return _col
 
 
+func _show(act: bool) -> void:
+	var tex: Texture2D = _act_tex if act else _walk_tex
+	if _spr.texture == tex:
+		return
+	var cols: int = ACT_COLS if act else COLS
+	_spr.frame = 0  # the two grids differ in size: never out of range mid-swap
+	_spr.texture = tex
+	_spr.hframes = cols
+	_spr.vframes = ROWS
+	var cell: Vector2 = tex.get_size() / Vector2(cols, ROWS)
+	_spr.offset = Vector2(-cell.x * 0.5, PAD_PX - cell.y)
+
+
 func _facing(host: Node2D) -> float:
 	return host.global_rotation if is_nan(_look) else _look
 
@@ -107,14 +164,11 @@ func _rebuild(host: Node2D, parts: Array[Sprite2D], vm: ViewMode) -> void:
 	if vm.cards and _art != "" and ResourceLoader.exists(path):
 		_spr = Sprite2D.new()
 		_spr.name = &"ghost_drawn"
-		_spr.texture = load(path) as Texture2D
-		_spr.hframes = COLS
-		_spr.vframes = ROWS
+		_walk_tex = load(path) as Texture2D
+		var act: String = act_path_of(_art, card_name)
+		_act_tex = load(act) as Texture2D if ResourceLoader.exists(act) else null
 		_spr.centered = false
-		var cell: Vector2 = Vector2(
-			_spr.texture.get_width() / float(COLS), _spr.texture.get_height() / float(ROWS)
-		)
-		_spr.offset = Vector2(-cell.x * 0.5, PAD_PX - cell.y)
+		_show(false)
 		_spr.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 		host.add_child(_spr)
 	for p: Sprite2D in parts:

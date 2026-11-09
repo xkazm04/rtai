@@ -67,6 +67,7 @@ var reduced_motion: bool = false
 var speed_mps: float = 0.0
 ## 0..1 through the cane cycle (advances with ground covered, not time).
 var phase: float = 0.0
+var drawn: GhostDrawn = GhostDrawn.new("ohm", 1.55, CYCLE_CELL, 180.0)  # n11: ohm_walk8.png
 var _t: float = 0.0
 var _seen_bolts: int = -1
 var _kick: float = 0.0  # 1 at the bolt, falling to 0 over KICK_S
@@ -75,7 +76,6 @@ var _feet: Array[Sprite2D] = []
 var _arms: Array[Sprite2D] = []  # [upper_r, fore_r, upper_l, fore_l]
 var _hide: Array[Sprite2D] = []
 var _card: GhostCard = GhostCard.new("ohm", CARD_M, CARD_ANCHOR)
-var _drawn: GhostDrawn = GhostDrawn.new("ohm", 1.55, CYCLE_CELL, 180.0)  # n11: ohm_walk8.png
 var _all: Array[Sprite2D] = []
 
 
@@ -157,9 +157,9 @@ func pose() -> void:
 	var sh_l: Vector2 = Vector2(SHOULDER.x, -SHOULDER.y)
 	var guard: Vector2 = GUARD_HAND + Vector2(kick_m() + RECOIL_M * kick, 0.0)
 	_arm(2, sh_l, sh_l.lerp(guard, u), -1.0)
-	var drawn: bool = _drawn.step(self, _all, PX_PER_M, _body.scale.x)
-	_card.set_shown(not drawn)
-	if not drawn:
+	var carded: bool = not drawn.step(self, _all, PX_PER_M, _body.scale.x)
+	_card.set_shown(carded)
+	if carded:
 		_card.size_k = _body.scale.x
 		_card.step(self, _hide, _body.position, PX_PER_M)
 

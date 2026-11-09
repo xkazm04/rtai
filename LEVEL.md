@@ -4,11 +4,11 @@ Updated every session. Levels: 0 absent, 1 placeholder, 2 usable, 3 Rivet-grade 
 
 | Measure | Rivet | Tonnage | Dent | Kerf | Ohm |
 |---|---|---|---|---|---|
-| Facing cards (8-way, combo) | 3, 8 cells p70+p55 | 1, card 5 facings mirrored, GhostCard | 2, bust card over cutout; library A art ready | 1, card 5 facings mirrored | 1, card 5 facings mirrored |
+| Facing cards (8-way, combo) | 3, 8 cells p70+p55 | 3, drawn 5 facings mirrored (walk grid), p70 only; reached Rivet 2026-11-09 at p70 | 3, drawn 5 facings mirrored, p70 only; reached 2026-11-09 at p70 | 3, drawn, p70 only; reached 2026-11-09 at p70 | 3, drawn, p70 only; reached 2026-11-09 at p70 |
 | Faces the cursor | 3, `aim_sweep_before_after_sprint_64ppm.png` (sprint error 55.6 -> 11.5 deg) | 2, rotation is the aim; no octant hold in `GhostCard`, `size_150_ghost_forms_64ppm.png` | 2, as Tonnage | 2 | 2 |
-| Walk and sprint strips | 3, 8x8 walk8 + run8 grids (armed) | 0, cutout legs | 1, Rivet's cycle (lurch); 4-frame library art ready, walk8 pending assets | 2, drawn walk8 at p70 (`kerf_drawn_walk8_64ppm.png`); no run grid, no p55 | 0, cutout legs |
+| Walk and sprint strips | 3, 8x8 walk8 + run8 grids (armed) | 2, drawn walk8 at p70, B, rocking; no run grid, no p55 | 2, drawn walk8 at p70 (`drawn_dent` film); no run grid, no p55 | 2, drawn walk8 at p70; run8 delivered, not wired; no p55 | 2, drawn walk8 at p70, B, stubby stride; no run grid, no p55 |
 | Planted feet | 3, stretch from the feet + flight lift, `bob_film_right_before_after_64ppm.png` | 1 | 1 | 2, stepped on a measured cycle (139 cell px), at the cadence cap at full speed, not judged at speed | 1 |
-| Attack cells + directions | 2, claw toward + game arc in all 8 (`melee_8dir_before_after_claw_blade_64ppm.png`); drawn claw strike art requested | 1, press/stomp FX | 1, wrench swing in library not wired | 1, library 2 poses | 1 |
+| Attack cells + directions | 3, drawn claw in all 8 (`melee_8dir_drawn_strike_64ppm.png`), wind-up/strike/follow + arc; reached 2026-11-09 | 2, stomp act cells wired (GhostDrawn cut + follow), NOT yet seen in the game | 2, seize act cells wired, NOT yet seen | 2, cut act cells wired, NOT yet seen | 2, cast act cells wired, NOT yet seen |
 | Hit and death cells | 3, HIT, DEATH, knock grid | 0 | 1, library hit (B), death (A) not wired | 0 | 0 |
 | Ink and detail | 3 at 110 px cell; the x1.5 upscale is soft at 64 ppm (x1.5 cells requested) | 3, heavy printed card | 2 | 2 | 2 |
 | Combat feel (swing/hit read) | 2, arcs fall back on a facing cell off-axis | 1 | 1 | 1 | 1 |

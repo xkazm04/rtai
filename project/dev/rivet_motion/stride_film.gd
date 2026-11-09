@@ -14,6 +14,8 @@ const CROP: int = 260
 const FEET_ROW: int = 215
 const EVERY: Array[int] = [4, 4, 2, 2]
 const DIRS: Array[Vector2] = [Vector2.RIGHT, Vector2.DOWN, Vector2.RIGHT, Vector2.DOWN]
+## `--film-attack`: a melee press every ATTACK_EVERY ticks, to see a form's drawn strike.
+const ATTACK_EVERY: int = 24
 
 var _out: String = ""
 var _bot: Bot
@@ -27,6 +29,7 @@ func _ready() -> void:
 	var args: ArenaArgs = ArenaArgs.parse()
 	_out = args.text("--film-out")
 	_bot = Bot.new(session.live, session.actions, get_viewport())
+	_bot.attack = args.has("--film-attack")
 	var form: StringName = StringName(args.text("--film-form"))
 	if form != &"":
 		var order: Array[StringName] = session.stage.pilot.ghosts.forms.table.order
@@ -84,6 +87,7 @@ class Bot:
 
 	var leg: int = 0
 	var in_leg: int = 0
+	var attack: bool = false
 	var _presses: Array[Vector2i] = []
 	var _at: int = 0
 	var _wait: int = 0
@@ -117,6 +121,8 @@ class Bot:
 		_cursor = _vp.get_visible_rect().size / 2.0 + dir * 280.0
 		var input: TickInput = _live.sample(tick)
 		var buttons: int = input.buttons
+		if attack and in_leg % StrideFilm.ATTACK_EVERY == 0:
+			buttons |= 1 << _actions.bit(&"melee")
 		if leg >= 2:
 			buttons |= 1 << _actions.bit(&"sprint")
 		var m: Vector2 = dir * TickInput.AXIS_MAX

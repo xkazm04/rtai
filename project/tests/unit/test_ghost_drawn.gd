@@ -92,3 +92,40 @@ func test_a_given_look_turns_the_backpedal_test_not_the_host() -> void:
 	host.global_position.x += 10.0
 	var first: int = d._column(host, 0.5)
 	assert_eq(first, GhostDrawn.COLS - 1, "a backpedal steps the cycle backward from 0")
+
+
+func test_a_strike_plays_cut_then_follow_through_then_ends() -> void:
+	var d: GhostDrawn = _drawn()
+	d.feed(3, -1, 100)
+	assert_eq(d.act_col(), -1, "first sight of the counter only arms it")
+	d.feed(4, -1, 110)
+	assert_eq(d.act_col(), GhostDrawn.CUT_COL)
+	d.feed(4, -1, 110 + GhostDrawn.CUT_TICKS)
+	assert_eq(d.act_col(), GhostDrawn.FOLLOW_COL)
+	d.feed(4, -1, 110 + GhostDrawn.CUT_TICKS + GhostDrawn.FOLLOW_TICKS)
+	assert_eq(d.act_col(), -1)
+
+
+func test_a_hit_flinches_but_a_strike_wins() -> void:
+	var d: GhostDrawn = _drawn()
+	d.feed(0, 200, 200)
+	assert_eq(d.act_col(), GhostDrawn.HIT_COL)
+	d.feed(1, 201, 201)
+	assert_eq(d.act_col(), GhostDrawn.CUT_COL, "strike wins over the flinch")
+	d.feed(1, 201, 201 + GhostDrawn.CUT_TICKS + GhostDrawn.FOLLOW_TICKS + GhostDrawn.HIT_TICKS)
+	assert_eq(d.act_col(), -1)
+
+
+func test_every_ghost_act_grid_divides_into_its_cells() -> void:
+	for ghost: String in ["kerf", "dent", "tonnage", "ohm"]:
+		var tex: Texture2D = load(GhostDrawn.act_path_of(P70, ghost)) as Texture2D
+		assert_not_null(tex, ghost)
+		assert_eq(tex.get_width() % GhostDrawn.ACT_COLS, 0, ghost)
+		assert_eq(tex.get_height() % GhostDrawn.ROWS, 0, ghost)
+
+
+func test_a_counter_that_starts_at_minus_one_still_plays_its_first_strike() -> void:
+	var d: GhostDrawn = _drawn()
+	d.feed(-1, -1, 10)
+	d.feed(50, -1, 50)
+	assert_eq(d.act_col(), GhostDrawn.CUT_COL, "Tonnage's stomp_tick starts at -1")
