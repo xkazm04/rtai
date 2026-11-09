@@ -25,7 +25,7 @@ func test_a_class_without_a_sheet_keeps_the_plan_pose() -> void:
 func test_the_column_is_the_heads_screen_heading() -> void:
 	assert_eq(_cell_of(0.0), 2, "right")
 	assert_eq(_cell_of(-45.0), 3, "up-right")
-	assert_eq(_cell_of(-90.0), 4, "up")
+	assert_eq(_cell_of(-90.0), StreetDead70.LAST_COL, "up: never the cell that reads as standing")
 	assert_eq(_cell_of(180.0), 2, "left draws the right column")
 	assert_eq(_cell_of(-135.0), 3, "up-left draws the up-right column")
 	assert_eq(_cell_of(90.0), 0, "down")

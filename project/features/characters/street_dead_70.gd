@@ -10,6 +10,10 @@ const ENABLED: bool = true
 const DIR: String = "res://features/characters/art/view/p70/dead70_"
 const COLS: int = 5
 const ROWS: int = 2
+## The last column drawn: a body with its head straight up reads as a man standing, so bodies lie
+## across the view or on a diagonal and an up heading takes the up-right cell, mirrored by the
+## person. COLS - 1 = the straight-up cells too.
+const LAST_COL: int = 3
 const CLASSES: Array[String] = ["cop_patrol", "ped_suit"]
 ## The degrees between two columns' headings, and the head's screen heading of column 0.
 const COL_STEP_DEG: float = 45.0
@@ -31,7 +35,7 @@ static func path_of(row: String) -> String:
 ## The cell that draws a head lying along `head` (right-side headings; see mirrored()).
 static func cell(head: Vector2, pose: int, odd: bool) -> int:
 	var deg: float = rad_to_deg(Vector2(absf(head.x), head.y).angle())
-	var col: int = clampi(roundi((COL_0_DEG - deg) / COL_STEP_DEG), 0, COLS - 1)
+	var col: int = clampi(roundi((COL_0_DEG - deg) / COL_STEP_DEG), 0, LAST_COL)
 	var row: int = FAMILY[pose] if FAMILY[pose] >= 0 else (1 if odd else 0)
 	return row * COLS + col
 
