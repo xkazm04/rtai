@@ -8,6 +8,8 @@
 //   node tools/codex/factory.mjs review <id> --verdict=accepted|accepted-after-revision|rejected
 //     [--changed=<lines>] [--notes=<text>] [--iteration=<n>] [--ledger=<file>]
 //   node tools/codex/factory.mjs ledger [--state=<lane state.json>] [--ledger=<file>]
+//   node tools/codex/factory.mjs control <stem> --tokens=<n> --secs=<n> --tests=<n> --killed=<n> --mutants=<n>
+//     --changed=<review lines> [--model=<id>] [--notes=<text>] [--ledger=<file>]
 // Exit: 0 ok, 1 a run went wrong, 2 usage, 3 refused by the weekly meter (nothing was built).
 import { spawn, spawnSync } from 'node:child_process';
 import { copyFileSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
@@ -229,6 +231,20 @@ function cmdReview(id, o, out, err) {
   return 0;
 }
 
+/** Records a control run: Claude alone wrote the same module's tests, so the saving can be measured. */
+function cmdControl(stem, o, out, err) {
+  const need = ['tokens', 'secs', 'tests', 'killed', 'mutants', 'changed'];
+  const bad = need.filter((k) => !/^\d+$/.test(String(o[k] ?? '')));
+  if (bad.length) { err(`factory: control needs whole numbers for --${bad.join(', --')} (the harness reports tokens and seconds; never estimate them)`); return 2; }
+  const n = (k) => Number(o[k]);
+  if (n('killed') > n('mutants')) { err('factory: --killed cannot exceed --mutants'); return 2; }
+  const ledger = o.ledger ?? LEDGER;
+  append(ledger, { type: 'control', id: `control-${stem.replace(/_/g, '-')}`, unit: stem, model: o.model ?? null, claude_tokens: n('tokens'), secs: n('secs'),
+    tests: n('tests'), mutation: { killed: n('killed'), of: n('mutants') }, review_changed: n('changed'), notes: o.notes ?? '', at: new Date().toISOString() });
+  out(`factory: control for ${stem} recorded`);
+  return 0;
+}
+
 function cmdLedger(o, out) {
   const state = o.state ? JSON.parse(readFileSync(o.state, 'utf8')) : null;
   out(JSON.stringify(totals(rows(read(o.ledger ?? LEDGER)), state), null, 1));
@@ -243,6 +259,7 @@ export async function main(argv, { out = console.log, err = console.error } = {}
   if (cmd === 'queue') return cmdQueue(o, out);
   if (cmd === 'review' && pos[0]) return cmdReview(pos[0], o, out, err);
   if (cmd === 'ledger') return cmdLedger(o, out);
+  if (cmd === 'control' && pos[0]) return cmdControl(pos[0], o, out, err);
   return usage(err);
 }
 

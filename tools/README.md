@@ -177,8 +177,14 @@ keeps the old run's record and refuses that id. Give the factory no outer timeou
 The ledger keeps measured and estimated apart. Measured: Codex seconds, machine results, verdicts,
 lines review changed, the dollars of the sessions that reviewed. Estimated, and labelled so: one
 session's cost split across the tasks it reviewed, which is an upper bound, since a session also
-builds other things. Unmeasured until a control run exists: the Claude
-cost of writing the same tests without Codex.
+builds other things.
+
+**A control run** is how the saving gets measured: a Claude subagent writes the same module's tests
+from the factory's own goal and laws, in a scratch worktree cut from the same base (so the landed test
+is not visible), and is graded the same way (commit, lint, the same 15 mutants, which are picked in
+file order). Record what the harness reported, never an estimate:
+`node tools/codex/factory.mjs control oil_leak --tokens=50249 --secs=309 --tests=12 --killed=<n> --mutants=15 --changed=0 --ledger=<file>`.
+A control is never counted as a Codex task, and its saving holds for that module only.
 
 **Refuses to pick:** generators, tuned tables, drawing code, anything touching a scene or the disk,
 anything already tested (ask `--explain` for the reason).

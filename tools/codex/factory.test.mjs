@@ -181,3 +181,21 @@ test('review: unknown task and double review are refused, an unknown verdict is 
     assert.equal(read(file).filter((e) => e.type === 'review').length, 1);
   } finally { done(); }
 });
+
+test('control: records measured numbers only, refuses a missing or made-up-looking one', async () => {
+  const { file, done } = ledgerFile();
+  const err = [];
+  const opts = { out: () => {}, err: (l) => err.push(l) };
+  const ok = ['--tokens=50249', '--secs=309', '--tests=12', '--killed=12', '--mutants=15', '--changed=0', `--ledger=${file}`];
+  try {
+    assert.equal(await main(['control', 'oil_leak', ...ok.filter((a) => !a.startsWith('--tokens'))], opts), 2);
+    assert.match(err[0], /--tokens/);
+    assert.equal(await main(['control', 'oil_leak', '--tokens=about 50k', ...ok.slice(1)], opts), 2);
+    assert.equal(await main(['control', 'oil_leak', ...ok.slice(0, 3), '--killed=16', ...ok.slice(4)], opts), 2);
+    assert.equal(read(file).length, 0, 'nothing written on a refusal');
+    assert.equal(await main(['control', 'oil_leak', ...ok], opts), 0);
+    const t = totals(rows(read(file)));
+    assert.deepEqual(t.controls[0].mutation, { killed: 12, of: 15 });
+    assert.equal(t.measured.tasks, 0);
+  } finally { done(); }
+});
