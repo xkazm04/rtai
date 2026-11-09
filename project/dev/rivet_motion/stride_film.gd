@@ -10,18 +10,23 @@ extends ArenaGame
 const FRAMES: int = 16
 const LEG_TICKS: int = 130
 const FILM_FROM: int = 50
-const CROP: int = 260
-const FEET_ROW: int = 215
+const CROP_PX: int = 260
+const FEET_PX: int = 215
 const EVERY: Array[int] = [4, 4, 2, 2]
 const DIRS: Array[Vector2] = [Vector2.RIGHT, Vector2.DOWN, Vector2.RIGHT, Vector2.DOWN]
 ## `--film-attack`: a melee press every ATTACK_EVERY ticks, to see a form's drawn strike.
+## `--film-fire`: the fire press with it (Dent's seize). `--film-hurt`: a hit every HURT_EVERY.
 const ATTACK_EVERY: int = 24
+const HURT_EVERY: int = 32
 
 var _out: String = ""
 var _bot: Bot
 var _sheet: Image
 var _last: int = -1
 var _pending: int = 0
+var _hurt: bool = false
+var _crop: int = CROP_PX
+var _feet: int = FEET_PX
 
 
 func _ready() -> void:
@@ -30,12 +35,16 @@ func _ready() -> void:
 	_out = args.text("--film-out")
 	_bot = Bot.new(session.live, session.actions, get_viewport())
 	_bot.attack = args.has("--film-attack")
+	_bot.fire = args.has("--film-fire")
+	_hurt = args.has("--film-hurt")
+	_crop = maxi(CROP_PX, args.number("--film-crop", CROP_PX) as int)
+	_feet = _crop * FEET_PX / CROP_PX
 	var form: StringName = StringName(args.text("--film-form"))
 	if form != &"":
 		var order: Array[StringName] = session.stage.pilot.ghosts.forms.table.order
 		_bot.form_presses(maxi(0, order.find(form)))
 	session.world.loop().set_input(_bot)
-	_sheet = Image.create_empty(CROP * FRAMES, CROP * DIRS.size(), false, Image.FORMAT_RGBA8)
+	_sheet = Image.create_empty(_crop * FRAMES, _crop * DIRS.size(), false, Image.FORMAT_RGBA8)
 	add_child(Rec.new(self))
 
 
@@ -48,6 +57,8 @@ func on_frame() -> void:
 		if _pending == 0:
 			_finish()
 		return
+	if _hurt and tick % HURT_EVERY == 0:
+		session.stage.arena.rivet.hurt_tick = tick
 	var f: int = _bot.in_leg - FILM_FROM
 	var e: int = EVERY[_bot.leg]
 	if f >= 0 and f < FRAMES * e and f % e == 0:
@@ -62,15 +73,15 @@ func _grab(cell: Vector2i) -> void:
 	img.convert(Image.FORMAT_RGBA8)
 	var k: Vector2 = Vector2(img.get_size()) / get_viewport().get_visible_rect().size
 	var feet: Vector2 = rig.get_global_transform_with_canvas().origin * k
-	var at: Vector2i = Vector2i(feet) - Vector2i(CROP >> 1, FEET_ROW)
-	var crop: Image = Image.create_empty(CROP, CROP, false, Image.FORMAT_RGBA8)
-	crop.blit_rect(img, Rect2i(at, Vector2i.ONE * CROP), Vector2i.ZERO)
+	var at: Vector2i = Vector2i(feet) - Vector2i(_crop >> 1, _feet)
+	var crop: Image = Image.create_empty(_crop, _crop, false, Image.FORMAT_RGBA8)
+	crop.blit_rect(img, Rect2i(at, Vector2i.ONE * _crop), Vector2i.ZERO)
 	# the ground line: the row of his feet
-	var row: int = FEET_ROW
+	var row: int = _feet
 	for x: int in 12:
 		crop.set_pixel(x, row, Color(1.0, 0.1, 0.5))
-		crop.set_pixel(CROP - 1 - x, row, Color(1.0, 0.1, 0.5))
-	_sheet.blit_rect(crop, Rect2i(Vector2i.ZERO, Vector2i.ONE * CROP), cell * CROP)
+		crop.set_pixel(_crop - 1 - x, row, Color(1.0, 0.1, 0.5))
+	_sheet.blit_rect(crop, Rect2i(Vector2i.ZERO, Vector2i.ONE * _crop), cell * _crop)
 	@warning_ignore("return_value_discarded")
 	crop.save_png("%s_%d_%02d.png" % [_out, cell.y, cell.x])
 	_pending -= 1
@@ -88,6 +99,7 @@ class Bot:
 	var leg: int = 0
 	var in_leg: int = 0
 	var attack: bool = false
+	var fire: bool = false
 	var _presses: Array[Vector2i] = []
 	var _at: int = 0
 	var _wait: int = 0
@@ -123,6 +135,8 @@ class Bot:
 		var buttons: int = input.buttons
 		if attack and in_leg % StrideFilm.ATTACK_EVERY == 0:
 			buttons |= 1 << _actions.bit(&"melee")
+		if fire and in_leg % StrideFilm.ATTACK_EVERY == 0:
+			buttons |= 1 << _actions.bit(&"fire")
 		if leg >= 2:
 			buttons |= 1 << _actions.bit(&"sprint")
 		var m: Vector2 = dir * TickInput.AXIS_MAX

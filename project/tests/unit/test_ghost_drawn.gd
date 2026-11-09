@@ -129,3 +129,38 @@ func test_a_counter_that_starts_at_minus_one_still_plays_its_first_strike() -> v
 	d.feed(-1, -1, 10)
 	d.feed(50, -1, 50)
 	assert_eq(d.act_col(), GhostDrawn.CUT_COL, "Tonnage's stomp_tick starts at -1")
+
+
+func test_a_wind_up_shows_the_wind_up_cell_before_the_strike() -> void:
+	var d: GhostDrawn = _drawn()
+	d.feed(0, -1, 10, true)
+	assert_eq(d.act_col(), GhostDrawn.WINDUP_COL)
+	d.feed(1, -1, 40, false)
+	assert_eq(d.act_col(), GhostDrawn.CUT_COL, "the strike takes over when the wind-up lands")
+
+
+func test_a_run_grid_takes_over_above_the_run_speed_and_steps_on_its_longer_cycle() -> void:
+	var d: GhostDrawn = GhostDrawn.new("kerf", 1.8, 139.0, 173.0, 388.0)
+	var host: Node2D = autofree(Node2D.new())
+	host.global_position = Vector2.ZERO
+	assert_true(d._column(host, 1.0) >= 0)
+	var walk_px: float = 1.0 * SimConst.PX_PER_M * SimClock.TICK_DT
+	host.global_position += Vector2.RIGHT * walk_px
+	assert_true(d._column(host, 1.0) >= 0)
+	assert_false(d._running, "1 m/s is a walk")
+	var run_px: float = 12.0 * SimConst.PX_PER_M * SimClock.TICK_DT
+	var before: float = d._phase
+	host.global_position += Vector2.RIGHT * run_px
+	assert_true(d._column(host, 1.0) >= 0)
+	assert_true(d._running, "12 m/s is a run")
+	assert_almost_eq(d._phase - before, run_px / maxf(388.0, 12.0 * SimConst.PX_PER_M / 3.5), 1e-4)
+
+
+func test_a_ghost_without_a_run_grid_keeps_walking_at_speed() -> void:
+	var d: GhostDrawn = _drawn()
+	var host: Node2D = autofree(Node2D.new())
+	host.global_position = Vector2.ZERO
+	assert_true(d._column(host, 1.0) >= 0)
+	host.global_position += Vector2.RIGHT * 12.0 * SimConst.PX_PER_M * SimClock.TICK_DT
+	assert_true(d._column(host, 1.0) >= 0)
+	assert_false(d._running)
