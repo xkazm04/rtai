@@ -57,3 +57,21 @@ is missing or off screen on either side. The composite is still written, with UN
 A note, not a verdict: if the subject has moved more than 5 cm between sides, the timelines differ.
 **Refuses:** a side that is neither a worktree nor a commit git knows; a worktree with no probe
 (it says to film a commit instead).
+
+## tools/gate/quick.mjs: the lint rules you keep tripping, on your changed files, before the commit
+
+```
+node tools/gate/quick.mjs          # every changed, staged or untracked .gd
+node tools/gate/quick.mjs --fix    # gdformat and strip CRLF first, then check
+```
+
+CRLF (gdformat on Windows and Python text-mode writes), gdformat, line length and the other gdlint
+rules, the 40-line function and 300-line file caps, banned APIs, and the engine's own parse check,
+which is the only one that sees a warning-as-error such as `float(Variant)`. A file crossing 200
+lines fails here because the debt ratchet stops the commit for it. Seconds, against about 40 s for
+the full lint in the commit hook, and it shows every problem at once. `--no-godot` skips the parse
+check, and `--files=<a,b>` names the files yourself.
+
+**Refuses:** a file that does not exist, an unknown flag.
+**Unverifiable (exit 3):** gdformat, gdlint or Godot could not run. A checker that failed without
+naming a file counts as not run, so a missing tool can never read as "ok".
