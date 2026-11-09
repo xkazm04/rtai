@@ -9,7 +9,7 @@
 //     [--steps=merge,debt,native,bake,gates,reels,export] [--resume] [--dry-run] [--timeout=<min per step>]
 // Exit: 0 done, 1 stopped at a red step, 2 refused (nothing changed).
 import { execFileSync, spawnSync } from 'node:child_process';
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { appendFileSync, closeSync, existsSync, mkdirSync, openSync, readFileSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
@@ -178,14 +178,27 @@ export const STEP_RUNNERS = {
   },
 };
 
-function defaultRun(cwd, logDir, timeoutMin) {
+/** A step's floor in minutes, above its own inner limits: three reel views at 20 min each, and the
+ *  gates' unit + scenario passes (35 min for reels on 2026-11-09's shared machine; the old flat 45
+ *  could cut the reel gate mid-view). */
+export const STEP_FLOOR_MIN = { reels: 65, gates: 90 };
+
+/** The output goes straight to `<logDir>/<name>.log` as it is written, so a builder can tail a long
+ *  step and a killed merge keeps the partial log (combat n11 line 132, one level up). */
+export function defaultRun(cwd, logDir, timeoutMin, say = () => {}) {
   return (name, cmd, args, opts = {}) => {
     mkdirSync(logDir, { recursive: true });
     const log = join(logDir, `${name}.log`);
     const shell = process.platform === 'win32' && !['node'].includes(cmd);
-    const r = spawnSync(cmd, args, { cwd: opts.cwd ?? cwd, encoding: 'utf8', windowsHide: true, maxBuffer: 1 << 28, timeout: timeoutMin * 60000, shell });
-    const out = `${r.stdout ?? ''}${r.stderr ?? ''}`;
-    writeFileSync(log, out);
+    const minutes = Math.max(timeoutMin, STEP_FLOOR_MIN[name] ?? 0);
+    say(`morning: ${name}: log ${log} (tail it; limit ${minutes} min)`);
+    const fd = openSync(log, 'w');
+    let r;
+    try {
+      r = spawnSync(cmd, args, { cwd: opts.cwd ?? cwd, windowsHide: true, timeout: minutes * 60000, shell, stdio: ['ignore', fd, fd] });
+    } finally { closeSync(fd); }
+    const out = readFileSync(log, 'utf8');
+    if (r.error) appendFileSync(log, `\nmorning: ${name}: ${r.error.code === 'ETIMEDOUT' ? `timed out after ${minutes} min` : r.error.message}\n`);
     return { status: r.status ?? -1, out, log };
   };
 }
@@ -223,7 +236,7 @@ export function main(argv, { out = console.log, err = console.error, spawnGit = 
   if (o.dryRun) { for (const s of o.steps) out(`morning: would run ${s}${s === 'merge' ? ` (${o.lanes.join(' -> ')})` : ''}`); return { code: 0 }; }
   const ctx = { cwd, git: g, lanes: o.lanes, date: o.date, debtReason: o.debtReason, out, done: state.done,
     mark: (k) => { state.done.push(k); save(); },
-    run: runner ?? defaultRun(cwd, join(cwd, 'build', 'merge', 'logs'), o.timeoutMin) };
+    run: runner ?? defaultRun(cwd, join(cwd, 'build', 'merge', 'logs'), o.timeoutMin, out) };
   for (const step of o.steps) {
     // Merge progress is per lane: a resumed run with a lane added has to reach it.
     if (step !== 'merge' && state.done.includes(step)) { out(`morning: ${step}: done earlier, skipped`); continue; }
