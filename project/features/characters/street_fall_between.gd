@@ -15,6 +15,9 @@ const GRIDS: Dictionary[String, String] = {
 const FRAMES: int = 5
 ## Each row's start, of the death family's progress: buckle, mid-fall, fall1, fall2, lying.
 const AT: PackedFloat32Array = [0.0, 0.18, 0.26, 0.33, 0.4]
+## The in-betweens land face down, so the body then lies in a face-down pose (StreetDeadPlan's A
+## and D): a back pose after them flipped the body over in one frame (it14 film).
+const FACE_DOWN: PackedInt32Array = [0, 3]
 
 
 ## The grid drawn for a fall grid path: its in-between grid when it has one.
@@ -30,3 +33,8 @@ static func rows_of(path: String) -> int:
 ## True when the card draws a fall grid (either row count).
 static func is_fall_card(card: Sprite2D) -> bool:
 	return card.vframes == StreetWalkerFall.FALL_FRAMES or card.vframes == FRAMES
+
+
+## True when the card fell through the drawn in-betweens (so it lies face down).
+static func lands_face_down(card: Sprite2D) -> bool:
+	return card.texture != null and card.texture.resource_path.ends_with("_between_fall.png")

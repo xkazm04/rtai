@@ -30,3 +30,12 @@ func test_the_in_betweens_play_in_order_between_mid_fall_and_lying() -> void:
 
 func test_a_grid_with_no_in_betweens_is_kept() -> void:
 	assert_eq(StreetFallBetween.swap("p70/ped_suit_long_fall.png"), "p70/ped_suit_long_fall.png")
+
+
+func test_a_body_that_fell_through_the_in_betweens_lies_face_down() -> void:
+	StreetDeadPlan.reset()
+	for actor: int in range(40):
+		var at: Vector2 = Vector2(actor * 500.0, 0.0)
+		var pose: int = StreetDeadPlan.pick(90000 + actor, &"death_bullet", at, true)
+		assert_has(StreetFallBetween.FACE_DOWN, pose, "actor %d" % actor)
+	StreetDeadPlan.reset()

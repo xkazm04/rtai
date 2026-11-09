@@ -2,7 +2,9 @@
 ground_rifle_70/muzzle_<deg>.png, 8 headings drawn, clockwise on screen from muzzle right) packed
 as one 8 x 1 sheet for GroundRifle. Each cell is CELL px square with the GUN's own centre (the
 opaque pixels that are not the olive sling) on the cell centre, so the gun, not the sling's
-bounding box, lies on the drop point. One scale for all eight, as delivered. Deterministic.
+bounding box, lies on the drop point. One scale for all eight, as delivered. The sling is cut
+out (its olive fill, then its ink outline: strokes thinner than THIN px, removed by an opening):
+in the game at 48 px/m it drew as a green ring round the body's feet (it14 film). Deterministic.
 
     PYTHONDONTWRITEBYTECODE=1 python tools/art/ground_rifle_sheet.py [--lib=<library>]
 """
@@ -18,6 +20,27 @@ OUT = ROOT / "project/features/combat/weapons/art/ground_rifle_70.png"
 LIB = Path("C:/Users/kazda/kiro/gtai-art/library")
 HEADINGS = ["000", "045", "090", "135", "180", "225", "270", "315"]
 CELL = 288
+THIN = 3
+## Then any loose piece under SPECK of the gun's own area (the sling's knots and swivels).
+SPECK = 0.03
+
+
+def no_sling(im: Image.Image) -> Image.Image:
+    """The drawing without its olive sling and the sling's leftover outline strokes."""
+    from scipy import ndimage
+
+    a = np.asarray(im).copy()
+    r, g, b, al = (a[..., i].astype(np.int32) for i in range(4))
+    sling = ndimage.binary_dilation((g > r + 4) & (g > b + 20) & (al > 0), iterations=1)
+    a[sling, 3] = 0
+    solid = a[..., 3] > 40
+    body = ndimage.binary_opening(solid, iterations=THIN)
+    keep = ndimage.binary_dilation(body, iterations=THIN + 1) & solid
+    lab, n = ndimage.label(keep)
+    sizes = ndimage.sum(keep, lab, range(1, n + 1))
+    keep &= np.isin(lab, [i + 1 for i, v in enumerate(sizes) if v >= sizes.max() * SPECK])
+    a[~keep, 3] = 0
+    return Image.fromarray(a)
 
 
 def gun_centre(im: Image.Image) -> tuple[float, float]:
@@ -39,6 +62,7 @@ def main() -> int:
     for i, deg in enumerate(HEADINGS):
         im = Image.open(src / f"muzzle_{deg}.png").convert("RGBA")
         cx, cy = gun_centre(im)
+        im = no_sling(im)
         sheet.alpha_composite(im, (round(CELL * i + CELL / 2.0 - cx), round(CELL / 2.0 - cy)))
     sheet.save(OUT, optimize=True)
     print(f"ground_rifle_sheet: {OUT.relative_to(ROOT).as_posix()} {sheet.size}")

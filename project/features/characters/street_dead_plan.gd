@@ -77,10 +77,10 @@ static func path_of(row: String) -> String:
 
 ## The pose for a death of family `kind` at `at` (world px): the family's candidates from the
 ## person's hash, the first no neighbour within NEAR_M shows (all taken: the hashed one).
-static func pick(actor: int, kind: StringName, at: Vector2) -> int:
+static func pick(actor: int, kind: StringName, at: Vector2, down: bool = false) -> int:
 	if _lying.has(actor):
 		return int(_lying[actor].z)
-	var cands: PackedInt32Array = BY_KIND.get(kind, ANY)
+	var cands: PackedInt32Array = StreetFallBetween.FACE_DOWN if down else BY_KIND.get(kind, ANY)
 	var start: int = posmod(_hash(actor), cands.size())
 	var pose: int = cands[start]
 	var near: float = NEAR_M * CharacterRigs.PX_PER_M
@@ -114,7 +114,8 @@ static func draw(rig: CutRig, card: Sprite2D, row: String, ks: float, p: float) 
 		if drawn.is_empty()
 		else StreetDead70.sprite(card, drawn, StreetDead70.COLS, StreetDead70.ROWS)
 	)
-	var pose: int = pick(rig.actor_id, kind, rig.global_position)
+	var down: bool = StreetFallBetween.lands_face_down(card)
+	var pose: int = pick(rig.actor_id, kind, rig.global_position, down)
 	var h: int = _hash(rig.actor_id)
 	var m: Vector2 = motion(kind, p)
 	var odd: bool = (h & 1) == 1
