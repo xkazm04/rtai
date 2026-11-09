@@ -223,3 +223,112 @@ fight's log. The city fight at combo read p99 8.6-12.2 ms contended (not judged 
 Left as listed items: GhostFormHud redraws every frame (0.21 ms), ViewPitchEase re-dresses every card
 (0.29 ms), ~70 triangulation errors at exit, a 0.5-0.65 s OS stall about 4 s after launch, the p55
 strips load on a boss swap, `check.mjs` false-fails on scripts that reach the Log autoload.
+
+## Group B (00:00-)
+
+Director amendments (23:40): judge cost by span time of touched nodes, CPU s and frames over 25 ms
+against the A/A, never the contended p50 alone; anything that loads art is warmed; keep each
+group's report in this JOURNAL; inherited items stay listed.
+
+### B1 victim sync: measure first
+- Instrument `dev/bench/sync_probe.gd` (`--sync=<json>`, attached in arena_game after the cast rigs):
+  a row per landed hit (struck, kill_landed, wounded: melee lands no struck), closed on the first
+  tick the victim's rig draws >= 1 screen px of reaction (offsets through the rig's global
+  transform), starts dying, or is taken by a kill cut; peak px, families and a 16-tick trace.
+  Mistakes on the way: thresholds first in part px (wrong scale, 10 part px is not 1 screen px
+  here); `--armored` without a value zeroes Rivet's hp (Rivet died every 60 ticks: those runs
+  were invalid; `--armored=3`); melee had no rows until kill_landed / wounded were heard.
+- Runs: `build/n12/sync/run.sh` (13 guns x `--lone` / `--lone --armored=3`, headless fixed fps 900
+  ticks), `melee.sh` (5 chapters x patrol / `--riot-victims`), `table.py` -> tables in
+  docs/polish/ranged.md (n12 section). Before: guns and kill cuts 1-2 ticks; the fire catch 1-3
+  (no direction); **claw wound on a riot cop 20-34**, **katana wound 12**, plasma wound 3.
+- Looked at (32 px/m films, `build/n12/sync/film/`): shard kill 342 (star on 343, thrown pale by
+  344: the 11-04 late reaction was already fixed by KillShardJolt), plasma kill 335 (in sync; the
+  body becomes a cream disc then a gold ring: the human vanishes, art not timing), electro kill 399
+  (in sync, convulsing before), claw riot wound (stop froze an unmoved cop, he moved after).
+- Cause: `fold` (melee from the front) eases in over 0.25 of 0.5 s: 0.3 px at hit + 3, peak under
+  1 px... in screen px 1.1 at hit + 4, peak about hit + 9; and the 4-tick melee stop froze the
+  frame before it. stagger the same shape (plasma wound 3 ticks, 2.0 px first frame).
+- Fix (723d86db6): ReactPose applies the existing hit-frame snap (n7's electro throw, SNAP_IN 2
+  ticks) to any family with `snap_m`; fold / spin 0.15 m, stagger 0.2 m; hit_feel.json melee
+  `hold_delay_ticks` 2. Before = `--react-snap=off --wound-hold=off`. After: claw wound 1-2 ticks
+  (3.5 px at hit + 2, was 0.3), katana 2, plasma wound 2 (5.2 px, was 2.0). Film A/B
+  `claw_riot_wound_snap-ab-32ppm.mp4`: the held frame now shows the thrown cop. Plasma: on film the
+  impact disc hides most of the throw (modest).
+- Tests: test_react_snap +2 (fold / spin / stagger thrown by the second tick; melee hold delay 2).
+
+### B2 per-weapon camera grammar
+- Audit (hit_feel.json `weapons` vs weapons.json hit_class): light, heavy, blast, burn each have
+  their odd gun overridden; medium's plasma rifle rides the approved row (I 3, left); shock: the
+  ray gun (10 Hz auto) rode the electro gun's single-bolt row (4-tick stop + shake per hit).
+- Measured (films, frames whose tick does not advance, target `--armored=6`): ray gun stops at 332
+  and 350 mid-stream, none on the 361 kill (the cooldown ate it); Gatling 0; electro 4 stops.
+- Fix (b2e1b9a42): `ray_gun` row (hitstop "", shake "", kick 1): no freeze in the stream, the kill
+  star holds 6 frames (362). Test test_feel_cam +1 (fails without the row: 8 held ticks).
+- Zoom punch: not built (no Impact cell below 2 at 32 px/m for want of it).
+- Docs: polish ranged.md / melee.md n12 sections (af66b8713). Masters: 3 clips + 3 stills.
+- Gates: unit 2214 / 0, parity bit-exact (00:45).
+- Gate (build/n12/gate-b, fresh export of b2e1b9a42 + docs, 3 rounds, before = `--react-snap=off
+  --wound-hold=off`), CONTENDED (7 / 9 city, 4 / 9 horde runs; others 4.8-6.8 cores): every paired
+  verdict WASH, frames over 25 ms 0 in every arm. City p50 4.71 / 4.67 (on) / 4.67 (A/A), A/A CI
+  [-0.53, +0.07]; horde p50 4.94 / 5.03 / 4.79, A/A CI [-0.27, +0.22]. Horde CPU on - off +0.30 s
+  [+0.14, +0.66] with the A/A flat: the on arm rendered more frames for the same 1800 ticks
+  (1664 / 1634 / 1621 vs 1598 / 1615 / 1613: the stops held later and longer), per frame 7.6-7.7
+  ms CPU on vs 7.3-7.6 in the off arms: held stop frames, not per-frame work. Span cost: one
+  early-returning call per reacting rig per step; no art loaded, so nothing to warm.
+- Mutation react_pose.gd (`--max=20`, tests react_snap, human_react, plasma_wound, melee_wound,
+  react_link): 5 % (1 / 20): the sample fell on the file's older pose constants (flinch, cower,
+  convulse numbers no test pins) and missed my line; planted by hand (the `_hit_snap` call
+  removed): 2 tests fail (electro throw, melee throw). Not a claim for the whole file.
+- Scenarios at af66b8713: 55 / 55.
+
+## Group B report
+
+Commits: `05dca662e` Group A report kept in this JOURNAL; `723d86db6` B1 melee / heavy wounds
+answer on the hit frame (+ SyncProbe); `b2e1b9a42` B2 the ray gun's camera row; `af66b8713` polish
+docs (sync table, cells); this journal commit.
+
+Packages:
+- B1 victim sync: partly existed, partly shipped. Measured first, every Rivet weapon lethal and
+  non-lethal (SyncProbe, headless fixed fps): guns and kill cuts 1-2 ticks; the homing shard's
+  11-04 late reaction was already fixed (KillShardJolt: star on the kill tick, body thrown by the
+  next); electro and plasma kills are in sync. Over 2: the melee wounds on armoured victims (claw on
+  a riot cop 20-34 ticks: the fold drew 0.3 px at hit + 3 and the stop froze the unmoved body;
+  katana 12) and the plasma rifle's wound (3). Shipped: fold / spin / stagger take the existing
+  hit-frame snap (0.15 / 0.15 / 0.2 m) and the melee stop starts 2 ticks after the hit, so it holds
+  the thrown frame: claw wound 1-2 ticks (3.5 px at hit + 2), katana 2, plasma wound 2 (5.2 px, was
+  2.0). The fire catch stays 1-3 ticks (no direction by design). Before `--react-snap=off
+  --wound-hold=off`. Melee claw-wound Victim sync 2 -> 4 (melee.md 1-5 scale);
+  `claw_riot_wound_snap-ab-32ppm.mp4`, `plasma_wound_snap-ab-32ppm.mp4`.
+- B2 per-weapon camera grammar: mostly existed (per-class rows and per-weapon overrides). The one
+  gap: the ray gun (10 Hz stream) rode the electro gun's shock row, so its stream froze every 18
+  ticks and the stop cooldown ate its kill's stop. Shipped a ray_gun row like the Gatling's: no
+  freeze, the kill star holds 6 frames (was 1); `ray_gun_stream_kill_stop-ab-32ppm.mp4`. Zoom punch
+  not built: no Impact cell below 2 at 32 px/m for want of it.
+
+Gates at the head: lint 15/15 (every commit); unit 2214 / 0; scenarios 55 / 55; parity bit-exact
+(mutation caught at 629); debt ok (SyncProbe's dev lines accepted). Mutation: react_pose.gd 5 % on a
+20-mutant sample of its older pose constants; my changed line planted by hand is caught by 2 tests;
+the ray gun row's test fails without the row. Inherited, still listed: test_quest_blade (fails
+alone), check.mjs autoload false-fail.
+
+Perf (gate, 3 rounds, CONTENDED, others 4.8-6.8 cores): all paired verdicts WASH; frames over 25 ms
+0 in every arm; city p50 4.71 off / 4.67 on (A/A 4.67, CI [-0.53, +0.07]); horde 4.94 / 5.03 (A/A
+4.79, CI [-0.27, +0.22]); horde CPU +0.30 s = the extra held stop frames (per-frame CPU inside the
+A/A). No new per-frame work beyond an early-returning call; no art loaded.
+
+Calls for the owner:
+1. Melee wound throw: fold / spin 0.15 m and stagger 0.2 m snaps (built) vs none
+   (`--react-snap=off` or the human_reactions.json snap_m keys removed). It also adds the throw to a
+   hand cannon wound on armour.
+2. The melee stop freezes 2 ticks after the hit (built, the light guns' rule) vs on the hit tick
+   (`--wound-hold=off`, which also reverts the light guns' and the Gatling's; or hit_feel.json
+   melee `hold_delay_ticks` removed).
+3. The ray gun's stream without per-round stops (built) vs the shock class's stop and shake on
+   every round (remove hit_feel.json's ray_gun row).
+
+Unsure / brief corrections: the brief's "known late" homing shard was already fixed on main
+(KillShardJolt), and the electro / plasma complaints are not timing: the plasma kill and wound
+draw a cream disc that covers the human at 32 px/m (an art read of backlog item 1, not touched).
+The katana wound was measured by the probe but not filmed. The non-lethal gun rows before the fix
+were not measured (the first `--armored` runs zeroed Rivet's hp).
