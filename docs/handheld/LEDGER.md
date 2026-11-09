@@ -832,6 +832,20 @@ The runs the lock blocked at it14: `tools/handheld/sim.mjs --device=<row> --scen
 **Both rows hold their caps** (40 and 30). `over33_settled` means nothing on the 30 row (648 and 707 frames, because the cap itself is 33.3 ms), so it is left out. The city's long frames are not a render or sim cost: `deck40`'s 1338 ms and 710 ms are its frames 18 and 24, with `pump_ms` 1316 and 684, 0 pipelines and about 2 ms of draw; `switch_handheld`'s 473 ms is frame 24 with `pump_ms` 457. All are in the first 3 s of a windowed run. E22b's 8 city runs have the same shape (worst 424-3469 ms, two with a settled spike over 700 ms), and neither King run has it. Not attributed: the grab tool runs beside the game and was not separated, and these frame logs were deleted after reading (the per-run JSON stays).
 The drawn frame on `switch_handheld` is 1422x800 scaled to the 1280x720 panel: 1.23x the panel's pixels. Whether a Switch-class budget should draw at panel size is unmeasured here.
 
+### E24 (n10 it16): the rows after the merge of `n10-world` 579ef0f4 (the delivered shop strip, the parapet core off under a lift); PC simulator, CONTENDED
+Windowed on the 2-CU iGPU, `tools/handheld/sim.mjs --scene=city_combo --ticks=1800`, one run each, head 78746a1a, under `bench.lock`, while this lane's own headless reels and the other lanes' runs were going (`evidence/n10h/it16/sim/`). One run each is a sanity check that the rows still hold on the new head, **not** a cost measurement: there is no pre-merge arm. All exit 0.
+
+| row | other Godot runs | frames | p50 ms | p99 ms | over 33 ms (settled) | render GPU p50 ms | GPU shared max MB |
+|---|---|---|---|---|---|---|---|
+| `deck` | 2 | 1771 | 16.66 | 20.80 | 11 | 7.81 | 472 |
+| `deck40` | 3 | 1196 | 24.96 | 29.73 | 0 | 8.02 | 473 |
+| `handheld_1080` | 3 | 1784 | 16.67 | 18.92 | 2 | 8.43 | 485 |
+| `switch_handheld` (30 cap) | 3 | 899 | 33.31 | 36.72 | 620 (the cap itself sits at 33.3 ms, so this column says nothing on this row) | 8.77 | 466 |
+
+All four hold their caps. Past the start, only `deck` has frames over 100 ms: three at frames 73, 118 and 437 (182, 184, 249 ms), all in `process_ms` (170, 172, 236 ms), not render (GPU about 7 ms, 0 pipelines). The other three rows run the same scene and seed with none at those ticks, which argues against a fixed cost in the merged code but does not prove it: one run, and the cause is not attributed. Frame 24 has a 400 to 430 ms pump spike in all four runs at the same frame index (the first-seconds spike of E22b and E23), still not attributed.
+
+The grabs do not show the delivered strip: this city frame has no shop facade. The strip was checked separately, look-only on the discrete GPU, with `res://dev/showcase/block70_still.tscn -- --device=deck --zoom=1.0|1.5 --view=combo`, t200: wide windows, solid piers, hatching at the wall's foot and no ink bar, the same frame as world's `wall_shop_delivered_32.png` right panel (`gtai-masters/n10/handheld/wall_shop_delivered_deck_{32,48}.png`). The per-frame dumps were deleted after reading, by the rule of E22b and E23, so the frame numbers above live here only.
+
 ### The freeze A/B on the rows (n10 it1, read at it5; PC simulator)
 Quest 1 windowed on D3D12, `deck` (`vsync: enabled`) vs the study row `deck_mailbox`, interleaved rounds of 2 runs, 4 rounds of the 5 planned (`evidence/n10h/it1/ab-vsync.txt`, the low-CPU runs' logs and thread readings in `evidence/n10h/it1/hunt/`):
 
