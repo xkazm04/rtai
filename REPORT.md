@@ -3,7 +3,7 @@
 Method and every number: `docs/perf/LEDGER.md` section "n10 night". Every number is CONTENDED (other lanes' Godots up) unless it says otherwise.
 
 ## What works, with its evidence
-1. **Rig cost under combo (item 1) cut under the 1 ms target.** rig_bench 50 people, `--view=combo`, headless, interleaved against main 9bbe6d0a: p50 ~1.2 ms -> ~0.6 ms (`evidence/perf/n10-rig/`). The walkers' whole-figure cards hid the cut rig's parts, yet every pose step still solved both legs and both arms: now the limbs are skipped while the card is up (`CutRig.limbs_cold`), posed on the card's release and before a kill's cut reads them. Pixels: a frame-compare of the rig stress at combo differs by 0 pixels against main (`evidence/perf/n10-rig/framecmp/`). Commits d006d70e, a9370647; tests `test_rig_limbs_cold` (5); full unit exit 0 on d006d70e.
+1. **Rig cost under combo (item 1) cut under the 1 ms target.** rig_bench 50 people, `--view=combo`, headless, interleaved against main 9bbe6d0a: p50 ~1.2 ms -> ~0.6 ms (`evidence/perf/n10-rig/`). The walkers' whole-figure cards hid the cut rig's parts, yet every pose step still solved both legs and both arms: now the limbs are skipped while the card is up (`CutRig.limbs_cold`), posed on the card's release and before a kill's cut reads them. Pixels: a frame-compare of the rig stress at combo differs by 0 pixels against main (`evidence/perf/n10-rig/framecmp/`). Commits d006d70e, a9370647; tests `test_rig_limbs_cold` (7 on the head, 7/0); full unit exit 0 on d006d70e.
 2. **The feed's dead-flip scan runs in C++ (item 2).** `CitySim.scan_dead_flips`, cfdb53e4, the script loop kept as the no-DLL fallback. Micro only, debug editor binary, synthetic 400 people: ~22 us against 115-423 us (`evidence/perf/n10-scan/`). Its own share is not separated at the bench.
 3. **The release riot at combo (item 3), both cuts together, against main 9bbe6d0a:** frame p50 lower in 6 of 6 interleaved rounds, median paired delta -1.14 ms; rig p50 median 1.665 -> 0.957 ms (`evidence/perf/n10-riotc/`, table in LEDGER). Release exports, 400 actors, 0 errors, equal draws. A later A/A control of identical code differed by at most 0.87 ms in a single pair, smaller than this median, but that control ran after item 3 and the run is still CONTENDED.
 
@@ -17,6 +17,11 @@ Method and every number: `docs/perf/LEDGER.md` section "n10 night". Every number
 - **What this bench can resolve:** six interleaved pairs at this load cannot see a frame p50 effect of about 0.3 ms or smaller. The candidate left in my list (the crowd occlusion scan, about 100 us debug) is below that, so a CONTENDED run could not judge it.
 - **Item 4 stopped short of its stop rule.** The brief says stop after two washes in a row; there was one (the feed fill) and no second idea was built. The next candidate, the crowd occlusion scan, is about 100 us in a debug build, and the machine was never quiet (18 Godot processes up at 01:24), so a bench could not have judged it. A quiet machine is what would reopen this.
 
+## What blocked me, and for how long
+- **A quiet machine: the whole run so far (21:00 to at least 01:30).** Every poll this lane took showed other lanes' Godots up (0-10 during item 3, 6-18 in it8, 8 at 01:27). This blocks a quiet release riot (item 3 as the brief worded it) and any item 4 idea smaller than about 0.3 ms of frame p50.
+- **The release DLL build:** it5's 25 min tool limit stopped it at about a third of godot-cpp; built in it6 (about 30 min lost).
+- **bench.lock** was held by handheld at 00:08 for one iteration's check (no time lost, the machine was busy anyway).
+
 ## Gates
 `node tools/evidence/run.mjs --no-bench` on d0569d17 (items 1 to 3, before the item 4 work): lint 15/15, unit 1958/0, scenarios 55/0, parity bit for bit over 1200 steps with the planted mutation caught, selftest look goldens 11/11, release-compile 631/0. Full `top` reel on cfdb53e4: exit 0, 19/19, 0 SCRIPT ERROR. Director reels `tilt70` and `combo` on 40fab8c7 (code identical to d0569d17, `--quit-after 40000`): exit 0, 19/19 chapters fully down, 0 SCRIPT ERROR in both (logs in `gtai-n10/tmp/perf/reel_{tilt70,combo}_it7.log`, outside the tree). Top reel on 0899bc4c and on base 9bbe6d0a both end with the same engine lines at exit (2 `ERROR:` lines: the `custom_samplers` shader message and "90 resources still in use", plus 593 ObjectDB leaked), so neither comes from this lane.
 
@@ -24,7 +29,10 @@ Method and every number: `docs/perf/LEDGER.md` section "n10 night". Every number
 The release DLL is git-ignored. A merge must run `scons platform=windows arch=x86_64 target=template_release` or the shipped game silently keeps the script loop (the rig cut is GDScript and is not affected).
 
 ## Calls for the owner
-(none yet)
+None so far: the rig cut changes no drawn pixel in the frame compare, so this lane has no look fork to judge.
 
 ## Next steps
-See JOURNAL `NEXT:`.
+1. At the freeze: `"$GODOT_BIN" --headless --path project --export-release windows-showcase ../build/export/windows/RTAI.exe`, then name it here.
+2. If the machine is ever really quiet: re-run the riotc A/B (exports `build/export/windows-bench{,-main}`, script `gtai-n10/tmp/perf/it9_quiet.sh`), then the crowd occlusion scan in `CityCrowdOcclusion.patches` as the next research idea.
+3. The merge must rebuild the release DLL (see Merge note).
+4. If the rig budget tightens: item 1 already took the limbs and the head card's placement off walkers under a card; what still steps is the torso, head, gait phase and feet. The per-system split after the cut was not measured.
