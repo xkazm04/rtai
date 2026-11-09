@@ -56,3 +56,11 @@ func test_a_frame_without_a_sim_step_keeps_the_stride_then_he_stands() -> void:
 		@warning_ignore("return_value_discarded")
 		d._column(host, 0.5)
 	assert_eq(d._column(host, 0.5), GhostDrawn.STAND_COL)
+
+
+func test_a_look_resting_on_a_boundary_holds_its_octant() -> void:
+	var d: GhostDrawn = _drawn()
+	assert_eq(d.octant(0.0), 0)
+	assert_eq(d.octant(PI / 8.0 + deg_to_rad(2.0)), 0, "inside the hold")
+	assert_eq(d.octant(PI / 8.0 + deg_to_rad(6.0)), 1, "past the hold")
+	assert_eq(d.octant(PI / 8.0 - deg_to_rad(2.0)), 1, "and it holds coming back")

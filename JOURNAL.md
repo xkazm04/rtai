@@ -70,8 +70,10 @@ NEXT (supersedes the ghost order in the DECISION above): since Dent is the only 
 - REQUEST tools: a `dev/run` entry that films one form or gait (`stride_film` is the local version: `--film-form=<id> --loadout=<id>`, `<out>.png`, one row per leg) and prints the head-line and foot-line range per leg, so bounce can be read without pasting Python.
 
 NEXT:
-1. Kerf: octant hold in `GhostDrawn` (reuse the `RivetStride.oct_of` idea), wire `kerf_act_70_cells` as the strike and hit cells by facing, get the halo back on the drawn figure, then judge at real speed in a clip; a run grid via `REQUEST assets:` if the cadence churns.
+1. Kerf: wire `kerf_act_70_cells` as the strike and hit cells by facing, get the halo back on the drawn figure, then judge at real speed in a clip; a run grid via `REQUEST assets:` if the cadence churns.
 2. Bring Ohm, Dent and Tonnage onto `GhostDrawn` from their 4-frame grids (`COLS` must become per-ghost) while their walk8 is drawn; each gets its own measured `CYCLE_CELL` and `fig_px`.
 3. Item 4 checks: an alley, a door, a vehicle entry and a quest scene at x1.5, the p55 boss framing, Tonnage's clearance. Then the Calls in REPORT (x1.5 render-only, Tonnage's size).
 4. Item 1 and 2 on ghost forms: the cursor sweep through each form; each ghost's attack direction.
 5. Run `tools/evidence/run.mjs` and the reel gate, neither has been run on this branch tonight.
+
+- MILESTONE 21:14 the octant hold from the Kerf critique, (d), is in `GhostDrawn.octant` (4 degrees, as Rivet): unit `test_ghost_drawn` 6/0, lint 15/15, one film of Kerf with 0 SCRIPT ERROR. The full unit and scenario runs above are from the commit before it, not re-run on this one; the hold has not been looked at with a cursor resting on a boundary.

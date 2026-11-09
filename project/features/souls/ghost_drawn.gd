@@ -17,6 +17,7 @@ const MAX_CYCLES_S: float = 3.0
 const BACKPEDAL_DOT: float = -0.25
 ## Frames without ground walked before the figure stands.
 const STILL_FRAMES: int = 3
+const OCT_HOLD_RAD: float = deg_to_rad(4.0)
 
 var card_name: String = ""
 var height_m: float = 1.75
@@ -30,6 +31,7 @@ var _phase: float = 0.0
 var _last: Vector2 = Vector2.INF
 var _col: int = STAND_COL
 var _still: int = 0
+var _oct: int = -1
 
 
 func _init(p_name: String, p_height_m: float, p_cycle_cell: float, p_fig_px: float) -> void:
@@ -48,9 +50,9 @@ func step(host: Node2D, parts: Array[Sprite2D], px_per_m: float, size_k: float) 
 	if _spr == null:
 		return false
 	var s: float = height_m * size_k * px_per_m * absf(host.global_scale.x) / fig_px
-	var f: Vector2i = RigHeadCard.frame_of(host.global_rotation)
-	_spr.frame = f.x * COLS + _column(host, s)
-	_spr.flip_h = f.y == 1
+	var o: int = octant(host.global_rotation)
+	_spr.frame = RigHeadCard.OCT_FRAME[o] * COLS + _column(host, s)
+	_spr.flip_h = RigHeadCard.OCT_FLIP[o] == 1
 	_spr.global_rotation = 0.0
 	_spr.global_scale = Vector2(s, s / vm.ground_k())
 	return true
@@ -58,6 +60,14 @@ func step(host: Node2D, parts: Array[Sprite2D], px_per_m: float, size_k: float) 
 
 static func path_of(art: String, name: String) -> String:
 	return ART_DIR.path_join(art).path_join(name + "_walk8.png")
+
+
+## The drawn octant of `look`, held OCT_HOLD_RAD past the boundary (as Rivet's RivetStride.oct_of).
+func octant(look: float) -> int:
+	if _oct >= 0 and absf(angle_difference(look, _oct * PI * 0.25)) <= PI / 8.0 + OCT_HOLD_RAD:
+		return _oct
+	_oct = posmod(roundi(look / (PI * 0.25)), 8)
+	return _oct
 
 
 ## The grid column by the ground walked; the standing cell below the walk's speed.
