@@ -113,6 +113,9 @@ function autoloadBudget() {
   return { name: 'autoload-budget', ok, issues };
 }
 
+/** The Node tools no other gate runs: about 300 tests in a second, so they cannot rot unseen. */
+const TOOL_TEST_GLOBS = ['tools/film/*.test.mjs', 'tools/merge/*.test.mjs', 'tools/codex/*.test.mjs', 'tools/gate/*.test.mjs'];
+
 export function runLint() {
   const gd = ownGdFiles().map(rel);
   const node = process.execPath;
@@ -130,6 +133,7 @@ export function runLint() {
     debtCheck(),
     tool('achievements-validate', node, [gen, 'validate']),
     tool('achievements-drift', node, [gen, '--check']),
+    tool('tool-tests', node, ['--test', ...TOOL_TEST_GLOBS]),
   ];
   const failed = checks.filter((c) => !c.ok);
   const summary = failed.length
