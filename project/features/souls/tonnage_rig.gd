@@ -41,7 +41,7 @@ const CARD_M: float = 3.1
 const CARD_ANCHOR: float = 0.42
 ## The card's soul halo alpha (GhostCard.halo; 0 = the bare card).
 const CARD_HALO_A: float = 0.35
-const CYCLE_CELL: float = 160.0
+const CYCLE_CELL: float = 235.0
 
 ## The shared part print (PartMaterials) on Tonnage's parts. Off by default: at 32 px/m its
 ## flat-sticker LOD prints the gunmetal crown as one ink mass and hides the teal seams (JOURNAL
@@ -52,8 +52,8 @@ static var print_parts: bool = false
 var unfold: float = 1.0
 ## Ground speed (m/s), fed by the host each frame; the gait phase advances with distance.
 var speed_mps: float = 0.0
-## n11: the drawn walk (tonnage_walk8.png), the card and parts under a view without it. He rocks on
-## diagonal foot pairs: a long cycle, a slow cadence.
+## n11: the drawn walk (tonnage_walk8.png), the card and parts under a view without it. it12: the
+## stamping v2 walk: the stance foot moves 29.4 cell px a frame (profile row, mean), so 235 a cycle.
 var drawn: GhostDrawn = GhostDrawn.new("tonnage", 3.3, CYCLE_CELL, 190.5)
 var _phase: float = 0.0
 var _feet: Array[Sprite2D] = []
