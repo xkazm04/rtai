@@ -11,6 +11,9 @@ const ON: bool = true
 ## The 3-row grid -> its 5-row grid with the in-betweens (both "<art>/<file>").
 const GRIDS: Dictionary[String, String] = {
 	"p70/cop_patrol_long_fall.png": "p70/cop_patrol_between_fall.png",
+	"p70/cop_riot_long_fall.png": "p70/cop_riot_between_fall.png",
+	"p70/swat_long_fall.png": "p70/swat_between_fall.png",
+	"p70/ped_suit_long_fall.png": "p70/ped_suit_between_fall.png",
 }
 const FRAMES: int = 5
 ## Each row's start, of the death family's progress: buckle, mid-fall, fall1, fall2, lying.

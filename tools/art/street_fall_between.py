@@ -13,6 +13,7 @@ size gets increased" (StreetFallBetween.LIE_IN_GRID lies the body in that row, a
     PYTHONDONTWRITEBYTECODE=1 python tools/art/street_fall_between.py [--lib=<library>/keyed/street]
 """
 
+import subprocess
 import sys
 from pathlib import Path
 
@@ -26,8 +27,15 @@ ROOT = Path(__file__).resolve().parents[2]
 P70 = ROOT / "project/features/characters/art/view/p70"
 LIB = Path("C:/Users/kazda/kiro/gtai-art/library/keyed/street")
 # kind -> (the 3-row long fall grid, the 5-row grid written)
-KINDS = {"cop_patrol": ("cop_patrol_long_fall.png", "cop_patrol_between_fall.png")}
+KINDS = {
+    "cop_patrol": ("cop_patrol_long_fall.png", "cop_patrol_between_fall.png"),
+    "cop_riot": ("cop_riot_long_fall.png", "cop_riot_between_fall.png"),
+    "swat": ("swat_long_fall.png", "swat_between_fall.png"),
+    "ped_suit": ("ped_suit_long_fall.png", "ped_suit_between_fall.png"),
+}
 COLS = 5
+# kinds whose long fall grid draws a warm arm band: greyed by street_armband.py (colour law)
+BAND = {"cop_riot", "swat"}
 STILL_PX = 192.0  # StreetWalkerFall.STILL_PX
 # row -> the longest side's cap, of STILL_PX (fall1, fall2, lying)
 CAP = {2: 1.06, 3: 1.06, 4: 1.06}
@@ -66,6 +74,10 @@ def build(kind: str, lib: Path) -> None:
         place(sheet, Image.open(cells / f"fall1_{c + 1}.png"), c, 2, cw, ch, 1)
         place(sheet, Image.open(cells / f"fall2_{c + 1}.png"), c, 3, cw, ch, 2)
     sheet.save(P70 / out, optimize=True)
+    if kind in BAND:
+        band = Path(__file__).resolve().parent / "street_armband.py"
+        subprocess.run([sys.executable, "-I", str(band), str(P70 / out), str(P70 / out)], check=True)
+        Image.open(P70 / out).save(P70 / out, optimize=True)
     print(f"street_fall_between: {out} {sheet.size}, cell {cw}x{ch}")
 
 

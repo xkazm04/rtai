@@ -134,7 +134,7 @@ static func draw(rig: CutRig, card: Sprite2D, row: String, ks: float, p: float) 
 		var at: Vector2 = centre + push - blow * m.x * CharacterRigs.PX_PER_M
 		var turn: float = lay.x + StreetDeadHeading.jitter(h) + StreetDeadHeading.settle(p)
 		plan.global_transform = Transform2D(turn, Vector2(s, s / lay.y), 0.0, at)
-	StreetDeadHeading.shade(card, plan, drawn.is_empty())
+	StreetDeadHeading.shade(card, plan, drawn.is_empty() and not grid)  # drawn art has its side
 	card.self_modulate.a = 0.0
 
 
