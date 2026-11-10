@@ -246,3 +246,84 @@ known path `gtai-spike/tools/godot/Godot_v4.7.2-stable_win64_console.exe`; every
   prompt hashes; laid by the script, no new generation). test_weapon_art 41/41 with the windup tests.
 - Tests: test_rivet_windup +1 (the three p70 strips ship, wide and tall enough, warmed);
   test_dropped_gun_cell +2 asserts (a rightward drop past a full turn: kills the `wrapf` survivor).
+- Commit `2346da4a9`.
+
+## Report
+
+Branch `n13-weapon-art`, from main `0e5e1e19d`. Nothing merged or pushed. Masters (stills, films,
+`frames.json`, 24 entries): `C:\Users\kazda\kiro\gtai-masters\n13\weapon-art\`.
+
+| Item | State | Commits | Before |
+|---|---|---|---|
+| 1 plasma sword, treatment B | ON (p70 + p55, all 8 cells) | `7c2626947` | `rivet_frames.py --manifest ... --only=rivet_eq_plasma_sword --no-ink-rim` (or the `ink_rim` keys removed): the shipped strips byte for byte |
+| 2 dropped pistol, drawn cell | ON | `39d372ffd` | `--dropped-gun=polygon` (0 of 330 film frames differ from the pre-change build) |
+| 3 plasma impact burst | ON, small (ring-only tried, dropped) | `b1514f8e4` | the four `pop_*` keys removed from gun_fx.json's plasma_rifle row (0 of 130 frames differ) |
+| 4a composed wind-up | not shipped (failed on film) | `0d05ca907` (slot + trial tool) | - |
+| 4 drawn wind-ups (asset lane) | ON at p70: sword, katana, baton | `2346da4a9` | `--rivet-windup=off`, or the weapon's row removed from rivet_windup_cells.json |
+| 4b commission | written, then answered; doc updated | `0d05ca907`, `2346da4a9` | - |
+
+Director commits on the branch: `c8a199266` (journal + ASSETS-REPLIES.md), `f10b8bc50` (provenance
+for the dropped cell and the re-cut sword strips, debt baseline tightened), `7ba90131c` (the asset
+lane's 15:15 additions).
+
+Wind-up anticipation (melee.md 1-5, 32 px/m, same build off / on): plasma sword 2 -> 4, katana 4 -> 5,
+electro baton 2 -> 4; no pop, no arc flicker. The composed trial (4a) stayed at 2 (a 2-frame
+bent-sword cell, a lunge-stand-lunge pop on the chain).
+
+Key stills / films: `i1_plasma_sword_B-game-scale-x3.png`, `i1_plasma_sword_B-ab-32ppm.mp4`;
+`i2_dropped_gun_cell-ab-32ppm-frames70-85-130.png`, `.mp4`; `i3_plasma_pop_small-ab-32ppm-ticks58-66.png`,
+`i3_plasma_pop_candidates-shipped-small-ring-32ppm.png`, `.mp4`; `i4_<weapon>_windup_drawn-ab-32ppm*.png/.mp4`,
+`i4_plasma_sword_windup_trial-dropped-ab-32ppm.png`.
+
+### Gates (final head, 2346da4a9 + docs)
+Lint 15/15; debt ratchet ok; unit 2270 / 0 (full run, no FLAKY); scenarios 55 / 55
+(run_scenarios.mjs); parity bit for bit over 1200 steps (40 snapshots, 3504 floats), planted mutation
+caught at 629; look goldens 11/11 and block 5/5 worst 0.00, world lock 0.00 %.
+
+### Perf (fight_gate.mjs, release export, before = `--dropped-gun=polygon --rivet-windup=off`)
+- Run 1 (3 rounds, items 1-3 + slot): city all WASH (on - off p50 -0.016 [-0.174, +0.048], A/A
+  -0.603), 0 frames over 25 ms; horde showed one `on` run with 260-1612 ms `draw` stalls (process
+  normal, another Godot up) -> re-run with `--quiet=8`, 4 rounds, 0 of 12 CONTENDED: every horde
+  verdict WASH (p50 4.60 off / 4.56 on / 4.67 A/A; p99 6.97 / 5.97 / 7.46; 0 over 25 ms).
+- Run 2 at the head (with the drawn wind-ups): city `on` stalled in 3 of 3 rounds, horde `off` in one.
+  Re-run city 4 rounds `--quiet=6`: the same 780-800 ms `draw` stalls hit off (r1, r3), the A/A twin
+  (r0, r2) and on (r1, r2): the machine (GPU submission blocked by another process), not the arm.
+  Every paired verdict WASH (p50 on - off +0.109 [-0.174, +0.237], A/A -0.347). Clean runs: off
+  4.66 / 8.86 / 21.9 ms (p50 / p99 / worst), on 5.07 / 11.16 / 16.0, 0 over 25 ms. Horde at the head
+  WASH (p50 +0.382 [-0.062, +1.018]).
+- The gate's scenes draw no blade and no stun, so they bound only the per-frame cost of the new code
+  (RivetWindup's early return per pose step, the pop sizing). The new art's warm: RivetStripWarm lists
+  `rivet_eq_<weapon>_windup.png` for every carried weapon (tested); in the director reel the blade is
+  handed over after the load (its equipped strip is not warmed either, as before): first wind-up
+  frame +2-5 ms `process` there; with the blades carried from the load (katana chapter, two pairs)
+  8.8 / 5.5 ms on vs 6.6 / 3.6 off against neighbours of 3.5-8 ms: inside the editor films' noise, no
+  frame near 25 ms from it. The dropped cell (64x52) loads in ShockArcsView._ready.
+
+### Mutation
+- rivet_windup.gd: 100 % (16 / 16, 4 invalid; 20 sampled of 23).
+- shock_arcs_view.gd: sampled 10 % (2 / 20): the sample fell on older code (the toss, the polygon).
+  Planted by hand on the n13 lines: 7 / 9 killed; survivors `a - PI` -> `a + PI` (equivalent under
+  wrapf) and `wrapf` removed (killed by the assertion added in `2346da4a9`, not re-run).
+- gun_fx_marks.gd: sampled 15 % (3 / 20, older code: scuffs, sparks, scorch). Planted on pop_shape:
+  6 / 6 killed of those run (the run was stopped by the Director before the last 3 and gun_fx_art's 1).
+- Earlier n12 rule kept: no planted-fault re-run on gun_fx_marks (unchanged since).
+
+### Owner calls
+1. Wind-ups at p55 (boss view): delivered, not wired (each cell needs its own scale and anchor and a
+   boss-view film). Wire them?
+2. The baton's drawn left wind-up (delivered): needs a second slot in RivetWindup (one line + a
+   manifest row). Wire it?
+3. Offers from the asset lane, not built: chainsaw wind-ups (p70 / p55), the sword's spin-coil cell.
+4. The dropped pistol is Rivet's own salvaged pistol re-toned pale (the only drawn pistol cell);
+   the cop's own gun is navy in his forearm cell. Keep, or commission a cop pistol lying cell?
+5. The plasma burst: small shipped; ring-only was dropped because it uncovers the generic body-hit
+   ink burst. A smaller body-hit burst for every gun would be a separate call.
+6. Inherited defect found (not fixed, not this lane): in the plain dev arena every gun's first shot
+   leaves n12 E1's muzzle_flash light on for good (PrintStage has no clock there, lights are stepped
+   at tick 0 while added at arena.tick). Dev films only; the city block fight is clean.
+
+### Brief corrections
+- Item 3's n12 shot (gunplay `--lone --armored=3`, ticks 333-341) no longer plays the same fight on
+  this main; re-shot on the `plasma_armored` chapter.
+- The view learns of a melee strike 2-3 ticks into its wind-up (RigInput's late start), so a wind-up
+  cell shows 2-3 frames (7 on the baton's crack).
