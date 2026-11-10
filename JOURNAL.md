@@ -364,3 +364,9 @@ NEXT (07:07, the whole list; replaces the 06:26 NEXT):
 
 NEXT (07:15, replaces the 07:07 NEXT): items 1-4 of the 07:07 NEXT stand. REPORT now also has hero it18 served and its merge note; at 07:40 run `node tools/evidence/cites.mjs REPORT.md` again.
 - 07:16 Final check before the freeze: whole Node tooling suite (15 globs) 1033/1033 on b0f4c466; tree clean; nothing of mine running (no Godot, no Codex task open; only `n11t-fac-city-spawn-plan` kept on purpose for Calls item 2). Stopping new code here; the report session follows NEXT 07:15.
+
+## Iteration 48 (07:16-07:18)
+
+- 07:17 Re-read siblings (hero 333 lines, combat 371): no `REQUEST tools:` or FRICTION after the ones served (hero 279, 286, 317 served at e9abf625, b083b075, 22f5eb9a/a1f4b778; combat 309 at c26ab875; combat 225 waits on their "add the hook" reply, NOTE at line 222). `node tools/evidence/cites.mjs REPORT.md` -> `cites: 15 paths, 15 ok`. Tree clean, nothing of mine running. No new code: 13 min to the freeze is too short for a tested, real-run-proven change.
+
+NEXT (07:18): the 07:15 NEXT stands (items 1-4 of the 07:07 NEXT). The report session: re-run the ledger with `--state`, drop "(DRAFT ...)" from REPORT's title, re-run `cites.mjs REPORT.md`.
