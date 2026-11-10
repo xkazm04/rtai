@@ -3,7 +3,7 @@
 // step; ids and flags checked against the tree before anything launches; tick-exact stills and
 // per-tick numbers from dev/frames/film_probe.gd; one verdict: pass, fail or unverifiable.
 //   node tools/film/film.mjs <shot> --out=<dir> [--ticks=<n>] [--stills=<t,t-t>] [--on=fire:3+4,kill:1+6] [--view=combo]
-//     [--ppm=48] [--lock=auto|spawn|trigger|at:<tick>|<x,y>|off] [--seed=<n>] [--res=1280x800] [--movie] [--no-movie] [--tree=<dir>] [--victim=<kind>]
+//     [--ppm=48] [--lock=auto|spawn|trigger|at:<tick>|<x,y>|off] [--seed=<n>] [--res=1280x800] [--movie] [--no-movie] [--tree=<dir>] [--victim=<kind>] [--feel=auto|on|off]
 //     [--timeout=<s>] [--keep-going] [--dry-run] [-- <extra game flags>]
 // Exit: 0 pass, 1 fail (the run broke), 2 usage (nothing launched), 3 unverifiable (it ran, but the
 // numbers or stills it was asked for do not exist).
@@ -24,10 +24,10 @@ export const FRESH_SLACK_MS = 1000;
 
 export const EXIT = { pass: 0, fail: 1, usage: 2, unverifiable: 3 };
 const USAGE = 'usage: node tools/film/film.mjs <shot> --out=<dir> [--ticks=<n>] [--stills=<t,t-t>] [--on=fire:3+4,kill:1+6] [--view=combo] '
-  + '[--ppm=48] [--lock=auto|spawn|trigger|at:<tick>|<x,y>|off] [--seed=<n>] [--res=1280x800] [--movie] [--no-movie] [--tree=<dir>] [--victim=<kind>] [--timeout=<s>] [--keep-going] [--dry-run] [-- flags]';
-const VALUE = new Set(['out', 'ticks', 'stills', 'on', 'view', 'ppm', 'lock', 'seed', 'res', 'tree', 'timeout', 'subject', 'victim']);
+  + '[--ppm=48] [--lock=auto|spawn|trigger|at:<tick>|<x,y>|off] [--seed=<n>] [--res=1280x800] [--movie] [--no-movie] [--tree=<dir>] [--victim=<kind>] [--feel=auto|on|off] [--timeout=<s>] [--keep-going] [--dry-run] [-- flags]';
+const VALUE = new Set(['out', 'ticks', 'stills', 'on', 'view', 'ppm', 'lock', 'seed', 'res', 'tree', 'timeout', 'subject', 'victim', 'feel']);
 const SWITCH = new Set(['movie', 'no-movie', 'dry-run', 'keep-going']);
-const DEFAULTS = { subject: 'rivet', view: 'combo', ppm: '48', lock: 'auto', seed: '20261109', res: '1280x800', timeout: '900' };
+const DEFAULTS = { subject: 'rivet', view: 'combo', ppm: '48', lock: 'auto', seed: '20261109', res: '1280x800', timeout: '900', feel: 'auto' };
 
 /** {shotText, flags, extra} or {error}. */
 export function parseArgv(argv) {
@@ -69,6 +69,8 @@ export function plan(flags, shotText, extra) {
   if (!/^(auto|spawn|trigger|off|at:\d+|-?\d+(\.\d+)?,-?\d+(\.\d+)?)$/.test(flags.lock)) return { error: `film: --lock must be auto, spawn, trigger, off, at:<tick> or x,y, got ${flags.lock}` };
   const lock = flags.lock === 'auto' ? autoLock(shot.shot, stills.length ? Math.min(...stills) : null, on.length > 0) : flags.lock;
   if (extra.some((a) => a.split('=')[0] === '--victim')) return { error: 'film: give --victim=<kind> before the --, so the film checks the kind and the run' };
+  if (!/^(auto|on|off)$/.test(flags.feel)) return { error: `film: --feel must be auto, on or off, got ${flags.feel}` };
+  if (extra.some((a) => a.split('=')[0] === '--feel')) return { error: 'film: give --feel=on|off before the --: the game reads the FIRST --feel=, and a locked film already passed --feel=off' };
   const victim = flags.victim ?? null;
   const game = victim === null ? extra : [...extra, `--victim=${victim}`];
   const bad = [...(shot.shot.needs ? [checkId(shot.shot.needs, shot.arg, tree)] : []), checkId('view', flags.view, tree),
@@ -85,7 +87,7 @@ export function plan(flags, shotText, extra) {
   // A movie costs real time (combat measured about 1.5 fps with Godots running beside it), so stills skip it unless asked.
   const wantMovie = flags.movie === true || (!stills.length && !on.length && !flags['no-movie']);
   const movie = wantMovie && !shot.shot.script ? join(dir, `${shotLabel(shot)}.avi`) : null;
-  return { shot, opts: { tree, dir, ticks, stills, on, onText: flags.on ?? '', movie, extra: game, victim, view: flags.view, ppm: flags.ppm, lock,
+  return { shot, opts: { tree, dir, ticks, stills, on, onText: flags.on ?? '', movie, extra: game, victim, view: flags.view, ppm: flags.ppm, lock, feel: flags.feel,
     subject: flags.subject ?? 'rivet', seed: flags.seed, res: flags.res, timeoutMs: Number(flags.timeout) * 1000, label: shotLabel(shot),
     noProbe: Boolean(shot.shot.script), keepGoing: flags['keep-going'] === true } };
 }

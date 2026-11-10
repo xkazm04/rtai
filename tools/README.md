@@ -85,6 +85,16 @@ The kind is the game's choice, so it needs a dev-only hook in `gunplay_hook.gd` 
 `--victim` and logs `gunplay: lone victim <kind>`. Until a tree has it, film refuses and says so;
 with it, a run that never logs the line, or logs another kind, is **unverifiable**, never a pass.
 
+The director's run-by-name extras are chapters too (combat n15 REQUEST): `chapter:electro_baton_left`,
+`chapter:katana_cam` and the rest of `ReelChapters.extras()`, read from the loop that builds them.
+Camera feel (combat n15 REQUEST): `--feel=auto` (default: off whenever the camera is locked, since a
+shake moves the frame), `--feel=on` or `--feel=off` outright; `compare.mjs` passes it to both sides.
+Give it before the `--`: the game reads the FIRST `--feel=`, so a trailing one is refused.
+
+```
+node tools/film/film.mjs chapter:electro_baton_left --feel=on --stills=60-70 --out=build/film/baton
+```
+
 To compare the frame something happened on, learn the tick once with `--on`, then compare it:
 `node tools/film/compare.mjs ... --at=333`. The tick is the same on both sides as long as the change
 under test is visual, because the sim is deterministic; if the shot moved, the verdict's numbers show

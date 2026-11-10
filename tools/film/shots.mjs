@@ -30,9 +30,31 @@ const ids = {
   view: (tree) => read(tree, 'data/tables/view.json').views.map((v) => v.id),
   chapter: (tree) => {
     const file = join(tree, 'project/dev/showcase/reel_chapters.gd');
-    return existsSync(file) ? [...readFileSync(file, 'utf8').matchAll(/Chapter\.new\(\s*&"([a-z0-9_]+)"/g)].map((m) => m[1]) : [];
+    return existsSync(file) ? chapterIds(readFileSync(file, 'utf8')) : [];
   },
 };
+
+/** Every chapter id reel_chapters.gd builds: the literal `Chapter.new(&"<id>"` ones, plus the run-by-name
+ *  extras a loop builds as `StringName(<var> + "_left")` over `for <var>... in [&"a", &"b"]` (combat n15
+ *  REQUEST: `chapter:electro_baton_left` was refused although the director runs it). Comments are dropped. */
+export function chapterIds(source) {
+  const code = String(source).split('\n').map(stripComment).join('\n');
+  const ids = [...code.matchAll(/Chapter\.new\(\s*&"([a-z0-9_]+)"/g)].map((m) => m[1]);
+  for (const loop of code.matchAll(/for\s+([a-z_]\w*)\s*(?::\s*\w+)?\s+in\s+\[([^\]]*)\]\s*:/g)) {
+    const names = [...loop[2].matchAll(/&?"([a-z0-9_]+)"/g)].map((m) => m[1]);
+    const built = new RegExp(String.raw`Chapter\.new\(\s*StringName\(\s*${loop[1]}\s*\+\s*"([a-z0-9_]+)"\s*\)`, 'g');
+    for (const suffix of [...code.matchAll(built)].map((m) => m[1])) ids.push(...names.map((n) => n + suffix));
+  }
+  return [...new Set(ids)];
+}
+
+/** The `--feel=` a film passes: `auto` turns the camera feel off whenever the camera is locked (a shake
+ *  would move the frame), `on`/`off` say it outright (combat n15 REQUEST: a feel-on film with a locked
+ *  camera; HitFeel.feel_flag reads the FIRST `--feel=`, so a trailing `-- --feel=on` never worked). */
+export function feelArgs(feel, lock) {
+  if (feel === 'on' || feel === 'off') return [`--feel=${feel}`];
+  return lock === 'off' ? [] : ['--feel=off'];
+}
 
 /** Checks `value` against the tree's real ids: null, or one line naming the nearest. */
 export function checkId(kind, value, tree) {
@@ -88,7 +110,7 @@ export function godotArgs({ arg, shot }, o) {
     ...(o.movie ? ['--write-movie', o.movie] : []), '--quit-after', String(o.ticks), ARENA, '--'];
   const stills = [...(o.stills.length ? [`--film-stills=${o.stills.join(',')}`] : []), ...(o.onText ? [`--film-on=${o.onText}`] : [])];
   const lock = o.lock === 'off' ? [] : [`--cam-lock=${o.lock}`];
-  const feel = o.lock === 'off' ? [] : ['--feel=off'];
+  const feel = feelArgs(o.feel ?? 'auto', o.lock);
   return [...head, ...shot.flags(arg), `--seed=${o.seed}`, `--view=${o.view}`, `--ppm=${o.ppm}`,
     '--rigs', '--clean', '--silent', `--film-dir=${o.dir}`, ...stills, ...lock, ...feel, ...o.extra];
 }
