@@ -1,0 +1,8 @@
+cop_patrol   hit 1.37 burn_measured 1.24
+cop_riot     hit 1.20 burn_measured 0.93
+swat         hit 1.31 burn_measured 1.23
+thug         hit 1.17 burn_measured 1.22
+ped_hood     hit 1.35 burn_measured 1.64
+ped_cap      hit 1.39 burn_measured 1.17
+ped_punk     hit 1.25 burn_measured 1.13
+ped_jogger   hit 1.29 burn_measured 1.22

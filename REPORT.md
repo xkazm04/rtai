@@ -59,7 +59,10 @@ Frames: `C:\Users\kazda\kiro\gtai-masters\n11\combat\frames.json` (15 entries, b
      his claws, the riot cop holds his baton up in flames: `burning_kinds_strip.png` (masters; also
      `evidence/n11-combat/it34/`). No same-tick before for these kinds (the before is the left
      panel of `burning_flail_ab.png`); their size is borrowed from the patrol cop's ratio, not
-     measured (the thug looks about 10% small).
+     measured (the thug looks about 10% small). A rough offline measure after the freeze-window
+     cut-off (`evidence/n11-combat/it35/burn_fill_measure.txt`; the same method gives the committed
+     hit sizes exactly) puts the burning thug at about 1.22 against the 0.97 he is drawn at. That
+     is not applied: no frame checks it, and the flame mask is crude.
 
 ## What does not work, or is not shown
 
