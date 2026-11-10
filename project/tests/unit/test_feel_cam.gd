@@ -131,3 +131,17 @@ func test_the_mini_nuke_launch_kicks_harder_than_the_rocket() -> void:
 	assert_gt(n, r, "against an upward aim, and one notch over the rocket")
 	var cap_px: float = nuke.feel.cap["kick_px_max"]
 	assert_lte(n, cap_px, "inside the kick cap")
+
+
+## n12 B2: the ray gun streams 10 rounds a second on the shock class; like the Gatling it stops
+## nothing per round (the stops ate its kill's stop), while the electro gun's single bolt keeps it.
+func test_a_ray_gun_stream_holds_only_its_kill() -> void:
+	var cam: FeelCam = _cam(SimClock.new())
+	var held: int = 0
+	for t: int in 30:
+		if t % 6 == 0:  # 10 rounds a second
+			held += cam.hit(&"ray_gun", &"shock", Vector2.RIGHT, false, 3000 + t)
+	assert_eq(held, 0, "no stop per round")
+	assert_gt(cam.hit(&"ray_gun", &"shock", Vector2.RIGHT, true, 3040), 0, "the kill stops")
+	var bolt: StringName = cam.feel.camera_row(&"electro_gun", &"shock", false)["hitstop"]
+	assert_ne(bolt, &"", "the electro gun keeps the shock class's stop")

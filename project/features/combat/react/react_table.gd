@@ -82,6 +82,15 @@ static func stun_crowd(path: String = TABLE) -> Vector4i:
 	)
 
 
+## crowd_ripple (n12 E3, CrowdRipple): (mps, max_ticks); zero with no row or under --feel=off.
+static func crowd_ripple(path: String = TABLE) -> Vector2:
+	var t: DataTable = DataTable.open(path, SCHEMA)
+	if not t.raw.has("crowd_ripple") or HitFeel.feel_flag() == "off":
+		return Vector2.ZERO
+	var c: Dictionary = t.object(t.raw, "crowd_ripple")
+	return Vector2(t.num(c, "mps"), t.num(c, "max_ticks"))
+
+
 static func snap_on() -> bool:
 	return not OS.get_cmdline_user_args().has("--react-snap=off")
 

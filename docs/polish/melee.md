@@ -257,3 +257,21 @@ jolt held through a 7-frame stop, the shake settling by frame 130; before 0 px.
    Looked at: the robot's torso reads inside the ring at both scales; in the tier-1 mass arc the
    cops' rings are faint under the stun stars (no gain there, no clutter added). Impact 3 -> 3 (a
    small gain, not a step), read 3 -> 3+. `M/ohm_bolt_rim_ab_32ppm_48slow.mp4`.
+
+## n12-visual Group B (2026-11-09/10): melee victim sync measured
+
+Measured with `dev/bench/sync_probe.gd` (see `ranged.md`'s n12 section): every melee kill drew its
+reaction 1 tick after the hit (claw death_melee, katana / sword / chainsaw cuts). The non-lethal
+wounds on armoured victims were late: a claw jab on a riot cop played `fold`, which drew 0.3 px at
+hit + 3 and under 1 px at its peak (hit + 9), and the 4-tick melee stop froze the unmoved body
+(gap 20-34 ticks to the next drawn change); the katana's wound 12. `723d86db6`: fold / spin take a
+0.15 m hit-frame snap (stagger 0.2) and the melee stop starts 2 ticks after the hit
+(`hold_delay_ticks` 2), so the held frame shows the throw: claw wound 1-2 ticks, katana 2.
+
+| Attack | Victim sync before | after | film |
+|---|---|---|---|
+| Claw combo (a wound on armour) | 2 (moves after the stop, ~5 frames) | 4 (thrown on the frame after the hit, held) | `claw_riot_wound_snap-ab-32ppm.mp4` |
+| Katana (a wound on armour) | ? (not filmed; probe 12 ticks) | ? (probe 2 ticks; not filmed) | - |
+| Claw / katana / chainsaw / baton / sword kills | as scored above | unchanged (1 tick) | - |
+
+Before: `--react-snap=off --wound-hold=off`.

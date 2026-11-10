@@ -62,6 +62,12 @@
             "pattern": "^[a-z][a-z0-9_]*$",
             "type": "string"
           },
+          "ink_edge_px": {
+            "description": "n12 C1: the struck figure's ink line while its hit flash lasts, screen px (InkHit, quantised to 0.5); 0 = the line as before",
+            "maximum": 4,
+            "minimum": 0,
+            "type": "number"
+          },
           "kick_px": {
             "minimum": 0,
             "type": "number"
@@ -73,6 +79,18 @@
           "knockback_scale": {
             "minimum": 0,
             "type": "number"
+          },
+          "plate_shock_px": {
+            "description": "n12 C2: the print plates (the D5 overlay ink_mis, verm_mis, plate_mis) knocked this many screen px along the hit, settling back over plate_shock_ticks; 0 = none. One in flight (PlateShock)",
+            "maximum": 6,
+            "minimum": 0,
+            "type": "number"
+          },
+          "plate_shock_ticks": {
+            "description": "n12 C2: how long the plate shock takes to settle, sim ticks",
+            "maximum": 30,
+            "minimum": 0,
+            "type": "integer"
           },
           "reaction": {
             "enum": [
@@ -95,9 +113,12 @@
           "flash_ticks",
           "hitstop",
           "id",
+          "ink_edge_px",
           "kick_px",
           "kick_ticks",
           "knockback_scale",
+          "plate_shock_px",
+          "plate_shock_ticks",
           "reaction",
           "shake",
           "stagger_ticks"

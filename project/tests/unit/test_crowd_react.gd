@@ -100,6 +100,7 @@ func test_a_fleeing_person_trips_over_a_body_once() -> void:
 
 func test_a_fleeing_person_trips_over_the_fights_dead_drawn_elsewhere() -> void:
 	var c: CrowdReact = CrowdReact.make()
+	c.ripple = CrowdRipple.new()  # the same-tick startle (n12 E3 off; test_crowd_ripple)
 	var rigs: CharacterRigs = autofree(CharacterRigs.new())
 	var rig: CutRig = autofree(CutRig.new())
 	rigs._by_actor[42] = rig
@@ -165,6 +166,7 @@ func _pair(dead: bool, gap_px: float) -> RigFeed:
 
 func test_a_death_startles_the_neighbours_away_from_the_body() -> void:
 	var c: CrowdReact = CrowdReact.make()
+	c.ripple = CrowdRipple.new()  # the same-tick startle (n12 E3 off; test_crowd_ripple)
 	var rigs: CharacterRigs = autofree(CharacterRigs.new())
 	var rig: CutRig = autofree(CutRig.new())
 	rigs._by_actor[42] = rig
@@ -210,6 +212,7 @@ func test_a_busy_body_trips_once_its_cower_ends() -> void:
 
 func test_a_fight_death_drawn_elsewhere_startles_the_street_once() -> void:
 	var c: CrowdReact = CrowdReact.make()
+	c.ripple = CrowdRipple.new()  # the same-tick startle (n12 E3 off; test_crowd_ripple)
 	var rigs: CharacterRigs = autofree(CharacterRigs.new())
 	var rig: CutRig = autofree(CutRig.new())
 	rigs._by_actor[42] = rig

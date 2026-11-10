@@ -16,12 +16,29 @@ const TOSS_SIDE_M: float = 0.3
 const TOSS_SPIN: float = 0.55
 const GUN_LONG_M: float = 0.24
 const GUN_WIDE_M: float = 0.06
+## n12 D1: the dropped pistol lies on the ground band, under every body (it drew over Rivet's arm
+## as a cream bracket floating at his shoulder); the arcs stay above. false = the before.
+const GUN_ON_FLOOR: bool = true
 
 var arena: CombatArena = null
 var rigs: CharacterRigs = null
 var host: RigHost = null
 ## Fighter id -> [from px, to px, the stun's first tick, rest angle, px per metre].
 var _drops: Dictionary[int, Array] = {}
+## The pistols to draw this frame on the floor: [toss, fighter id].
+var _lying: Array[Array] = []
+var _floor: Node2D = null
+
+
+func _ready() -> void:
+	if not GUN_ON_FLOOR:
+		return
+	_floor = Node2D.new()
+	_floor.z_as_relative = false  # just over the bodies' cast shadows, under every body
+	_floor.z_index = RenderLayers.z(&"actors") - 1 + RigDepthSort.ground_dz()
+	add_child(_floor)
+	@warning_ignore("return_value_discarded")
+	_floor.draw.connect(_draw_floor)
 
 
 func _process(_delta: float) -> void:
@@ -29,6 +46,9 @@ func _process(_delta: float) -> void:
 
 
 func _draw() -> void:
+	_lying.clear()
+	if _floor != null:
+		_floor.queue_redraw()
 	if arena == null or arena.areas == null or rigs == null:
 		return
 	var light: Dictionary[int, bool] = StunCrowd.light_of(arena)  # n7-melee: the crowd cap
@@ -39,7 +59,7 @@ func _draw() -> void:
 				@warning_ignore("return_value_discarded")
 				_drops.erase(h.id)
 			else:
-				_gun(_drops[h.id], h.id)
+				_lay(_drops[h.id], h.id)
 			continue
 		var e: FighterFx = arena.areas.effect(h)
 		var stunned: bool = e != null and h.alive() and e.stun_ticks > 0
@@ -55,7 +75,7 @@ func _draw() -> void:
 			@warning_ignore("return_value_discarded")
 			_drops.erase(h.id)
 		if _drops.has(h.id):
-			_gun(_drops[h.id], h.id)
+			_lay(_drops[h.id], h.id)
 
 
 func _toss(c: Vector2, ppm: float, facing: float, id: int) -> Array:
@@ -65,8 +85,22 @@ func _toss(c: Vector2, ppm: float, facing: float, id: int) -> Array:
 	return [c + fwd * 0.2 * ppm, to, arena.tick, facing + 0.9 * float(id % 3 - 1), ppm]
 
 
-## The pistol in flight (a little hop, spinning) or lying where it landed.
-func _gun(d: Array, id: int) -> void:
+func _lay(d: Array, id: int) -> void:
+	if _floor == null:
+		_gun(self, d, id)
+	else:
+		_lying.append([d, id])
+
+
+func _draw_floor() -> void:
+	for g: Array in _lying:
+		var d: Array = g[0]
+		var id: int = g[1]
+		_gun(_floor, d, id)
+
+
+## The pistol in flight (a little hop, spinning) or lying where it landed, drawn on `ci`.
+func _gun(ci: CanvasItem, d: Array, id: int) -> void:
 	var decay: CorpseDecay = host.decay if host != null else null
 	if host != null and host.gone.has(id):
 		return
@@ -92,9 +126,9 @@ func _gun(d: Array, id: int) -> void:
 		at - fwd * l * 0.5 + nrm * w * 0.5,
 	]
 	if not Geometry2D.triangulate_polygon(body).is_empty():  # a degenerate one logs an error
-		draw_colored_polygon(body, Ink.INK)
+		ci.draw_colored_polygon(body, Ink.INK)
 	var rim: PackedVector2Array = body.duplicate()
 	@warning_ignore("return_value_discarded")
 	rim.append(body[0])
 	var ink: float = decay.ink_of(id) if decay != null else 0.0
-	draw_polyline(rim, Ink.CREAM.lerp(Ink.INK, ink), 1.5, true)
+	ci.draw_polyline(rim, Ink.CREAM.lerp(Ink.INK, ink), 1.5, true)

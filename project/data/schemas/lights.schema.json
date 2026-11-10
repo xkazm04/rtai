@@ -57,6 +57,35 @@
       ],
       "type": "object"
     },
+    "combat_lights": {
+      "additionalProperties": false,
+      "properties": {
+        "blast": {
+          "type": "boolean"
+        },
+        "doc": {
+          "type": "string"
+        },
+        "muzzle": {
+          "type": "boolean"
+        },
+        "on": {
+          "type": "boolean"
+        },
+        "radius_m": {
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "doc",
+        "on",
+        "muzzle",
+        "blast",
+        "radius_m"
+      ],
+      "type": "object"
+    },
     "doc": {
       "minLength": 1,
       "type": "string"

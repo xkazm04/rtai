@@ -47,6 +47,7 @@ static func shipped(rig: CameraRig = null, path: String = TABLE) -> HitFeel:
 			"kick_px": t.num(r, "kick_px"),
 			"kick_ticks": t.integer(r, "kick_ticks"),
 			"hold_delay": t.integer(r, "hold_delay_ticks") if r.has("hold_delay_ticks") else 0,
+			"plate_shock": Vector2(t.num(r, "plate_shock_px"), t.integer(r, "plate_shock_ticks")),
 		}
 	hf.kill_kick_scale = t.num(t.raw, "kill_kick_scale")
 	hf.cap = t.object(t.raw, "cap")
@@ -133,6 +134,7 @@ func camera_row(weapon: StringName, hit_class: StringName, lethal: bool) -> Dict
 		"kick_px": row.get("kick_px", 0.0),
 		"kick_ticks": row.get("kick_ticks", 1),
 		"hold_delay": row.get("hold_delay", 0) if wound_hold() else 0,
+		"plate_shock": row.get("plate_shock", Vector2.ZERO),
 	}
 	var over: Dictionary = _weapons.get(weapon, {})
 	for key: String in ["hitstop", "shake"]:

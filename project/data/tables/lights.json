@@ -21,6 +21,13 @@
       0
     ]
   },
+  "combat_lights": {
+    "blast": true,
+    "doc": "n12 E1 (ArenaCombatLights): the arena and city block fight light their own shots (muzzle_flash at the muzzle along the flight) and blasts (explosion) within radius_m of Rivet, through this LightLayer (its max_lights pool and oldest-timed eviction) and the shared photosensitivity budget (FlashBudget.spend_light: about one light a second, a kill beat always still fits). Off under reduced motion and --feel=off; on false = the before.",
+    "muzzle": true,
+    "on": true,
+    "radius_m": 20
+  },
   "doc": "The 2D light model (core/render/README.md). A light is a pooled additive quad on the `light` canvas whose radial falloff is cut into `steps` flat bands with world-locked 45-degree hatching at each band edge, so it prints as paper (or an accent ink) over the charcoal streets, never as a soft 3D glow. token / alt_token are palette.json ids (alt: the strobe alternates on flicker_hz). cone_deg 0 = radial, else a cone along the light rotation. life_ticks 0 = held until removed (headlights, fire, sirens), else fades out over that many 60 Hz sim ticks. grades re-print the screen before the lights add (grade_ink.gdshader: luminance -> paper_level * l^gamma, hue kept, accent pixels keep accent_keep of their value; day = identity, the rect is hidden). max_lights is the per-frame budget: beyond it the oldest timed light is dropped. max_flash_hz: the photosensitivity cap (WCAG 2.3.1 / Harding: at most 3 flashes a second); a kind alternating token / alt_token flashes flicker_hz times a second, and the loader clamps flicker_hz to it.",
   "grades": [
     {

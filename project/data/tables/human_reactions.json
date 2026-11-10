@@ -1,4 +1,9 @@
 {
+  "crowd_ripple": {
+    "doc": "n12 E3 (CrowdRipple): a cower waits for the news of its bang to reach the person, distance / mps at 60 ticks a second, at most max_ticks, so a crowd ducks outward from the bang (a flight from the fight's rounds and blasts; a startle from a death). View only: the sim's flight is untouched. mps 0 (shipped: n12's film showed a delayed duck reading as a lost one), no row or --feel=off = the before (every cower on one tick); mps 12 = the n12 trial.",
+    "max_ticks": 45,
+    "mps": 0
+  },
   "death_map": {
     "blast": "death_blast",
     "burn": "death_burn",
@@ -34,6 +39,7 @@
       "doc": "Heavy round: steps back along the hit, the weapon arm drops.",
       "id": "stagger",
       "len_s": 0.55,
+      "snap_m": 0.2,
       "travel_m": 0.45
     },
     {
@@ -52,12 +58,14 @@
       "doc": "Melee from the side: a half spin away from the blow.",
       "id": "spin",
       "len_s": 0.45,
+      "snap_m": 0.15,
       "travel_m": 0.2
     },
     {
       "doc": "Melee from the front: folds over the blow.",
       "id": "fold",
       "len_s": 0.5,
+      "snap_m": 0.15,
       "travel_m": 0.2
     },
     {

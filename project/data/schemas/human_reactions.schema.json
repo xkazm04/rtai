@@ -2,6 +2,31 @@
   "$id": "gtai.human_reactions/1",
   "additionalProperties": false,
   "properties": {
+    "crowd_ripple": {
+      "additionalProperties": false,
+      "properties": {
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "max_ticks": {
+          "maximum": 120,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "mps": {
+          "maximum": 340,
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "doc",
+        "max_ticks",
+        "mps"
+      ],
+      "type": "object"
+    },
     "death_map": {
       "additionalProperties": false,
       "properties": {

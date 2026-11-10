@@ -106,6 +106,8 @@ func _add_hand_views(layer: CanvasLayer, p_stage: CollectCallStage) -> void:
 	arcs.host = self
 	arcs.z_index = held.z_index
 	layer.add_child(arcs)
+	var lit: LightLayer = _print.lights if _print != null else _city.lights  # n12 E1
+	ArenaCombatLights.attach(layer, p_stage.arena, lit, _print.rig if _print else _city.rig)
 	var scorch: PlasmaScorchView = PlasmaScorchView.new()  # combat-notes: a plasma wound's burn
 	scorch.arena = p_stage.arena
 	scorch.rigs = rigs
@@ -158,6 +160,7 @@ func _process(_delta: float) -> void:
 	if react != null:
 		react.apply(rigs)
 	if crowd != null:
+		crowd.ripple.bangs = CrowdRipple.bangs_of(stage.arena)  # n12 E3
 		crowd.extra_bodies.clear()
 		for h: Fighter in stage.arena.hostiles:
 			if not h.alive() and not gone.has(h.id):

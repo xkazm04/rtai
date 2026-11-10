@@ -38,6 +38,20 @@ func frame_paths(id: StringName) -> Array[String]:
 	return out
 
 
+## Every fx id once, a frame set by its base (`blast` for `blast_0..3`), in the table's order.
+func ids() -> Array[StringName]:
+	var out: Array[StringName] = []
+	for key: StringName in _art:
+		var base: String = String(key)
+		var cut: int = base.rfind("_")
+		var framed: bool = cut > 0 and base.substr(cut + 1).is_valid_int()
+		if framed and _art.has(StringName(base.left(cut) + "_0")):
+			base = base.left(cut)
+		if not out.has(StringName(base)):
+			out.append(StringName(base))
+	return out
+
+
 ## The point of an fx cell that sits on the muzzle (a flash) or is the head (a projectile).
 func anchor(id: StringName) -> Vector2:
 	var key: StringName = id if _anchor.has(id) else StringName("%s_0" % id)

@@ -10,6 +10,9 @@ extends Node2D
 
 static var enabled: bool = true
 
+## n12 E2: the scuffs that outlived their 4 s, kept in a bounded ring behind the fresh marks.
+var residue: BattleResidue = BattleResidue.new()
+
 var _arena: CombatArena = null
 var _fx: GunFx = null
 var _tick: int = 0
@@ -20,6 +23,7 @@ var _marks: Dictionary[Vector4, FxGroundMark] = {}
 func _init() -> void:
 	show_behind_parent = true
 	use_parent_material = true
+	add_child(residue)
 
 
 ## Called from FxView._draw each frame after GunFx.step (`fx` null = no gun: rifle drops only).
@@ -27,6 +31,7 @@ func sync(arena: CombatArena, fx: GunFx, tick: int) -> void:
 	_arena = arena
 	_fx = fx
 	_tick = tick
+	residue.sync(fx)
 	queue_redraw()
 	var live: Dictionary[Vector4, bool] = {}
 	if fx != null:

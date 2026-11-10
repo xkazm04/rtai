@@ -49,7 +49,6 @@ static var blast_beads: bool = OS.get_cmdline_user_args().has("--blast-beads=on"
 ## n5-look: while set (FxView's draw), every cell prints in colour on this canvas (WeaponFxColour).
 static var colour: WeaponFxColour = null
 static var _art: WeaponArt = null
-static var _frames: Dictionary[StringName, Array] = {}
 
 
 static func art() -> WeaponArt:
@@ -274,9 +273,7 @@ static func draw_cell(
 static func _cell_v(
 	ci: CanvasItem, id: StringName, frame: int, at: Vector2, angle: float, scale: Vector2, a: float
 ) -> void:
-	if not _frames.has(id):
-		_frames[id] = art().fx_frames(id)
-	var frames: Array = _frames[id]
+	var frames: Array = WeaponFxWarm.frames_of(id)  # n12: loaded at the load (WeaponFxWarm)
 	if frames.is_empty():
 		return
 	var key: StringName = StringName("%s_%d" % [id, frame]) if frames.size() > 1 else id

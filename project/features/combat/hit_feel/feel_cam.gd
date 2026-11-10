@@ -65,6 +65,9 @@ func hit(weapon: StringName, hit_class: StringName, dir: Vector2, lethal: bool, 
 	var shake: StringName = row["shake"]
 	if shake != &"" and budget.take_shake(tick):
 		_rig.kick(shake, tick)
+	var shock: Vector2 = row["plate_shock"]  # n12 C2: (px, ticks); one in flight (PlateShock)
+	@warning_ignore("return_value_discarded")
+	PlateShock.kick(shock.x, roundi(shock.y), dir, tick)
 	var stop: StringName = row["hitstop"]
 	var kill_stop: StringName = row["kill_hitstop"]
 	if _rig.hitstop_ticks(kill_stop) > _rig.hitstop_ticks(stop):
@@ -95,6 +98,7 @@ func _release_hold(tick: int) -> void:
 func offset_px(tick: int, zoom: float) -> Vector2:
 	_watch_fire(tick)
 	_release_hold(tick)
+	PlateShock.advance(tick)
 	_rig.step(tick, Vector2.ZERO)
 	var sum: Vector2 = Vector2.ZERO
 	for i: int in range(_kicks.size() - 1, -1, -1):
