@@ -78,3 +78,9 @@ Branch `n15-tools`, cut from main `5c5c03611`. APPDATA=C:/Users/kazda/kiro/gtai-
   way: `defaultRun` passed `minutes * 60000` raw to spawnSync, so a limit that is not whole ms (1000.5 ms)
   threw ERR_OUT_OF_RANGE; now `Math.ceil`; its test fails on the old file, passes on the new.
   NOT YET: the 3 step_guard.break tests (same cause; their late-write check needs its delay to scale too).
+- 22:47 SERVED combat REQUEST (n15-combat JOURNAL line 24-27): `node tools/film/compare.mjs <shot> --a=.. --b=..
+  --at=.. --out=.. --victim=<kind>` now passes `--victim` to both sides' film plan, which checks the kind in each
+  tree. Proof (planning, no Godot while my gates hold the lane's one Godot): both sides plan with
+  `game args: --victim=cop/head_swat`; `--victim=cop/nope` -> `film: unknown victim cop/nope in ... known: ...`.
+  Test in `tools/film/victim.test.mjs` (6/6). A real compare film with a victim is still owed (after the gates).
+  For combat: merge n15-tools for it, or cherry-pick the compare.mjs commit (pure Node, no sim change).

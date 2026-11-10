@@ -4,7 +4,8 @@
 // not passes, because a builder cannot tell them from a change that worked.
 //   node tools/film/compare.mjs <shot> --a=<rev|worktree> --b=<rev|worktree> --at=<t,t> --out=<dir>
 //     [--clip=<from-to>] [--subject=rivet|hostile|dead|id:<n>] [--label-a=<s>] [--label-b=<s>]
-//     [--view=combo] [--ppm=48] [--lock=auto|spawn|at:<tick>|<x,y>|off] [--seed=<n>] [--res=1280x800] [--clean] [-- flags]
+//     [--view=combo] [--ppm=48] [--lock=auto|spawn|at:<tick>|<x,y>|off] [--seed=<n>] [--res=1280x800] [--victim=<kind>] [--clean] [-- flags]
+// --victim goes to both sides' film.mjs, which checks the kind exists in each tree (combat n15 REQUEST).
 // A commit gets a throwaway snapshot (tools/lib/snapshot.mjs) with the probe injected when it is
 // older than the kit; a worktree is filmed where it stands and must already have the probe. The
 // snapshot is kept for the next compare of that commit and named at the end; --clean removes it.
@@ -23,8 +24,8 @@ import { diffImages, readPng } from './png.mjs';
 
 const USAGE = 'usage: node tools/film/compare.mjs <shot> --a=<rev|worktree> --b=<rev|worktree> --at=<t,t> --out=<dir> '
   + '[--clip=<from-to>] [--subject=rivet|hostile|dead|id:<n>] [--label-a=<s>] [--label-b=<s>] [--view=combo] [--ppm=48] '
-  + '[--lock=auto|spawn|at:<tick>|<x,y>|off] [--seed=<n>] [--res=1280x800] [--timeout=<s>] [--clean] [-- flags]';
-const VALUE = new Set(['a', 'b', 'at', 'out', 'clip', 'subject', 'label-a', 'label-b', 'view', 'ppm', 'lock', 'seed', 'res', 'timeout']);
+  + '[--lock=auto|spawn|at:<tick>|<x,y>|off] [--seed=<n>] [--res=1280x800] [--victim=<kind>] [--timeout=<s>] [--clean] [-- flags]';
+const VALUE = new Set(['a', 'b', 'at', 'out', 'clip', 'subject', 'label-a', 'label-b', 'view', 'ppm', 'lock', 'seed', 'res', 'timeout', 'victim']);
 const DEFAULTS = { view: 'combo', ppm: '48', lock: 'auto', seed: '20261109', res: '1280x800', timeout: '900', subject: 'rivet' };
 /** Below this share of changed pixels the two sides are the same picture. */
 export const IDENTICAL_FRACTION = 0.00005;
@@ -127,10 +128,10 @@ function clip(dir, a, b, labels, from, to) {
   return ffmpeg(['-i', a.mp4, '-i', b.mp4, '-filter_complex', graph, '-an', '-c:v', 'libx264', '-crf', '18', `compare-${from}-${to}.mp4`], dir);
 }
 
-function filmFlags(parsed, side, tick) {
+export function filmFlags(parsed, side, tick) {
   const f = parsed.flags;
   return { out: join(resolve(f.out), side.name), tree: side.tree, stills: tick, view: f.view, ppm: f.ppm, lock: f.lock, subject: f.subject,
-    seed: f.seed, res: f.res, timeout: f.timeout, ...(f.clip ? { ticks: String(Number(f.clip.split('-')[1]) + 60) } : {}),
+    seed: f.seed, res: f.res, timeout: f.timeout, ...(f.victim ? { victim: f.victim } : {}), ...(f.clip ? { ticks: String(Number(f.clip.split('-')[1]) + 60) } : {}),
     ...(f.clip ? { movie: true } : { 'no-movie': true }) };
 }
 

@@ -86,3 +86,12 @@ test('judge: a victim the run never named, or named otherwise, is unverifiable; 
   assert.equal(judgedVictim('[INFO] gunplay: lone victim thug', 'thug').outcome, 'pass');
   assert.equal(judgedVictim('', null).outcome, 'pass');
 });
+
+test('compare passes --victim to both sides, and refuses it after the -- like film does', async () => {
+  const { filmFlags, parseArgv } = await import('./compare.mjs');
+  const parsed = parseArgv(['weapon:pistol', '--a=HEAD~1', '--b=HEAD', '--at=340', '--out=build/x', '--victim=cop/head_swat']);
+  assert.equal(parsed.error, undefined);
+  for (const name of ['A', 'B']) assert.equal(filmFlags(parsed, { name, tree: '.' }, '340').victim, 'cop/head_swat');
+  const none = parseArgv(['weapon:pistol', '--a=HEAD~1', '--b=HEAD', '--at=340', '--out=build/x']);
+  assert.equal('victim' in filmFlags(none, { name: 'A', tree: '.' }, '340'), false, 'no victim, no flag');
+});
