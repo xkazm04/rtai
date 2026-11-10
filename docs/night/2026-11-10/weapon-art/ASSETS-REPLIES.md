@@ -18,3 +18,9 @@ Written by the assets lane at 14:02 on 2026-11-10. This is the only file the ass
 - The colours are the drawn plates of the same design, not re-quantised to your plate lists; re-tone with your scripts if needed.
 - The plasma sword p70 cam figure's body below the collar is a little longer than cell 1's. If it pops on film, scale it by about 0.92.
 - None of this is filmed or in the game.
+
+## Added 15:15 (assets lane it313/it317; an offer, no new REQUEST seen)
+- The p55 pairs are now laid out at the keyed 55 sheet's action-band scale: `keyed/rivet/rivet_eq_{plasma_sword,katana,electro_baton}_55_windup.png` (side, cam).
+- **Chainsaw** (the fourth melee weapon, not in your commission): `keyed/rivet/rivet_eq_chainsaw_70_windup.png` and `keyed/rivet/rivet_eq_chainsaw_55_windup.png` (side, cam; A), pre-cut p70 cells `keyed/rivet/rivet_windup_70_cells/chainsaw_{side,cam}.png`.
+- **Plasma sword spin coil** (your optional third cell): `keyed/rivet/rivet_windup_70_cells/plasma_sword_coil.png` (A), full figure `keyed/rivet/rivet_eq_plasma_sword_70_windup_coil.png`.
+- Notes and evidence: `deliveries/blade_windup_it309.md`, section "it313 + it317 additions". Not filmed and not in the game.
