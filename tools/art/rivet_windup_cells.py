@@ -1,19 +1,24 @@
 """n13 weapon art: the asset lane's drawn wind-up cells laid into Rivet's wind-up strips.
 
 usage: python -I tools/art/rivet_windup_cells.py [--manifest=tools/art/rivet_windup_cells.json]
-       [--only=<weapon>] [--sim=<preview.png>]
+       [--only=<row>] [--art=<p70|p55>] [--sim=<preview.png>]
 
-For each weapon and art key in the manifest: the library's side and camera wind-up figures (keyed,
-already at the shipped strip's scale: gtai-art/library/keyed/rivet/rivet_windup_70_cells/, asset
-lane it309) are laid on a two-cell strip `rivet_eq_<weapon>_windup.png` beside the equipped strip
-(0 = side, 1 = camera: RivetWindup's slot). Each cell is as wide as the equipped strip's cell (wider
-if a figure needs it) and tall enough for the raised weapon; the figure's feet (its lowest opaque
-row) stand on the equipped strip's pad (PAD px above the cell bottom, RivetStrips.foot_px), and its
-body's centre (the alpha centroid of the figure's lower BODY_FRAC rows, where a raised weapon never
-is) sits on the cell's centre column, where RivetFrames puts the rig. Per cell `k` scales the figure
-(premultiplied Lanczos; the sword's camera figure is drawn about 8 % long: k 0.92) and `dx` shifts
-it (px, set by eye on film). A row's `ink_rim` runs blade_ink_rim.py over the strip (the sword's B
-rim). No new colour: whole drawn figures, resampled only where k != 1. Deterministic.
+For each row (an equipped strip's name after `rivet_eq_`) and art key in the manifest: the library's
+drawn wind-up figures are laid on a strip `rivet_eq_<row>_windup.png` beside the equipped strip
+(RivetWindup's slot: 0 = side, 1 = camera; a `_left` row has one cell, the drawn left side wind-up).
+A cell's figure is a keyed file (`file`: the it309 pre-cut p70 cells, already at the strip's scale,
+or a full keyed figure) or figure `fig` (0 = left, 1 = right) of a row's two-figure `sheet` (the
+it313 / it317 p55 and chainsaw pairs, drawn at the keyed sheet's action-band scale: the row's
+`sheet_k` is the cutter's action scale for that equipped row, rivet_frames.py's printed `scales`).
+Each cell is as wide as the equipped strip's cell (wider if a figure needs it; in the wind-up strip's
+own px: n14, the equipped strip may be cut at x1.5, RivetRes.X15, read from its rivet_frames.json
+fig_h; a row's `res` is the wind-up strip's own, 1.0 = 110 space; `min_cell` pins a cell measured
+before such a re-cut) and tall enough for the raised weapon; the figure's feet (its lowest opaque row)
+stand on the pad (PAD px above the cell bottom, RivetStrips.foot_px), and its body's centre (the
+alpha centroid of its lower BODY_FRAC rows, where a raised weapon never is) sits on the cell's
+centre column, where RivetFrames puts the rig. Per cell `k` scales the figure (premultiplied
+Lanczos) and `dx` shifts it (px), both set by eye against the facings and strikes. A row's `ink_rim`
+runs blade_ink_rim.py over the strip (the sword's B rim). No new colour. Deterministic.
 """
 
 import json
@@ -22,21 +27,44 @@ from pathlib import Path
 
 import numpy as np
 from PIL import Image
+from scipy import ndimage
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 PAD = 2
 BODY_FRAC = 0.45
+SLOTS = ("side", "cam", "left")
 
 
-def _fig(path: Path, k: float) -> Image.Image:
-    im = Image.open(path).convert("RGBA")
+def _scale(im: Image.Image, k: float) -> Image.Image:
     if k != 1.0:
         size = (max(1, round(im.width * k)), max(1, round(im.height * k)))
         im = im.convert("RGBa").resize(size, Image.Resampling.LANCZOS).convert("RGBA")
     a = np.asarray(im)[..., 3]
     rows, cols = np.where(a.any(axis=1))[0], np.where(a.any(axis=0))[0]
     return im.crop((cols[0], rows[0], cols[-1] + 1, rows[-1] + 1))
+
+
+def sheet_fig(path: Path, i: int) -> Image.Image:
+    """Figure `i` (by x) of a two-figure keyed sheet: the two largest alpha components are the
+    figures; every other piece (a spark, a loose cable end) joins the one nearest in x."""
+    im = Image.open(path).convert("RGBA")
+    a = np.asarray(im)[..., 3]
+    lab, n = ndimage.label(a > 0)
+    sizes = ndimage.sum(np.ones_like(lab), lab, range(1, n + 1))
+    cx = [c[1] for c in ndimage.center_of_mass(np.ones_like(lab), lab, range(1, n + 1))]
+    seeds = sorted(np.argsort(sizes)[::-1][:2], key=lambda j: cx[j])
+    mine = [j + 1 for j in range(n) if min((0, 1), key=lambda s: abs(cx[j] - cx[seeds[s]])) == i]
+    rgba = np.asarray(im).copy()
+    rgba[..., 3] = np.where(np.isin(lab, mine), rgba[..., 3], 0)
+    return Image.fromarray(rgba, "RGBA")
+
+
+def _fig(lib: Path, row: dict, c: dict) -> Image.Image:
+    if "fig" in c:
+        src = sheet_fig(lib / row["sheet"], int(c["fig"]))
+        return _scale(src, float(row["sheet_k"]) * float(c.get("k", 1.0)))
+    return _scale(Image.open(lib / c["file"]).convert("RGBA"), float(c.get("k", 1.0)))
 
 
 def _anchor(im: Image.Image) -> tuple:
@@ -49,35 +77,50 @@ def _anchor(im: Image.Image) -> tuple:
     return float(xs.mean()), feet
 
 
-def strip(lib: Path, eq: Path, cells: dict) -> Image.Image:
-    eq_im = Image.open(eq)
-    cw, ch = eq_im.width // 8, eq_im.height
+def eq_cell(eq: Path, row: dict, eq_res: float) -> tuple:
+    """The equipped strip's cell in the wind-up strip's px (its res over the equipped strip's)."""
+    if "min_cell" in row:
+        return tuple(int(v) for v in row["min_cell"])
+    im = Image.open(eq)
+    k = float(row.get("res", 1.0)) / eq_res
+    return int(im.width // int(row.get("eq_cells", 8)) * k), int(im.height * k)
+
+
+def strip(lib: Path, eq: Path, row: dict, eq_res: float = 1.0) -> Image.Image:
+    cw, ch = eq_cell(eq, row, eq_res)
     figs = []
-    for slot in ("side", "cam"):
-        c = cells[slot]
-        im = _fig(lib / c["file"], float(c.get("k", 1.0)))
+    for slot in [s for s in SLOTS if s in row["cells"]]:
+        c = row["cells"][slot]
+        im = _fig(lib, row, c)
         ax, feet = _anchor(im)
         figs.append((im, ax + float(c.get("dx", 0.0)), feet))
     half = max(max(ax, im.width - ax) for im, ax, _ in figs)
     w = max(cw, int(np.ceil(2 * half)) + 4)
     h = max(ch, max(feet for _, _, feet in figs) + 1 + PAD + 2)
-    out = Image.new("RGBA", (w * 2, h), (0, 0, 0, 0))
+    out = Image.new("RGBA", (w * len(figs), h), (0, 0, 0, 0))
     for i, (im, ax, feet) in enumerate(figs):
         out.alpha_composite(im, (i * w + round(w / 2 - ax), h - PAD - 1 - feet))
     return out
 
 
-def run(manifest: str, only: str = "", sim: str = "") -> None:
+def eq_res_of(art: str, name: str) -> float:
+    """The equipped strip's px per 110-space px: its rivet_frames.json fig_h over the manifest's."""
+    man = json.loads((HERE / "rivet_frames.json").read_text(encoding="utf-8"))
+    row = man["strips"].get(art, {}).get(f"rivet_eq_{name}", {})
+    return float(row.get("fig_h", man["fig_h"])) / float(man["fig_h"])
+
+
+def run(manifest: str, only: str = "", sim: str = "", only_art: str = "") -> None:
     man = json.loads(Path(manifest).read_text(encoding="utf-8"))
     lib, out = Path(man["library"]), ROOT / man["out"]
     tiles = []
     for art, rows in man["strips"].items():
-        for weapon, row in rows.items():
-            if only and weapon != only:
+        for name, row in rows.items():
+            if (only and name != only) or (only_art and art != only_art):
                 continue
-            eq = out / art / f"rivet_eq_{weapon}.png"
-            img = strip(lib / row.get("dir", ""), eq, row["cells"])
-            dst = out / art / f"rivet_eq_{weapon}_windup.png"
+            eq = out / art / f"rivet_eq_{name}.png"
+            img = strip(lib / row.get("dir", ""), eq, row, eq_res_of(art, name))
+            dst = out / art / f"rivet_eq_{name}_windup.png"
             if sim:
                 tiles.append(img)
                 continue
@@ -87,8 +130,8 @@ def run(manifest: str, only: str = "", sim: str = "") -> None:
                 from blade_ink_rim import ink_rim  # noqa: E402
 
                 ink_rim(str(dst), str(dst), float(row["ink_rim"]["px"]),
-                        float(row["ink_rim"]["reach"]), 2)
-            print(f"{art} {weapon}: {img.size} -> {dst}")
+                        float(row["ink_rim"]["reach"]), len(row["cells"]))
+            print(f"{art} {name}: {img.size} -> {dst}")
     if sim:
         sheet = Image.new("RGBA", (max(t.width for t in tiles), sum(t.height for t in tiles)),
                           (110, 100, 100, 255))
@@ -102,7 +145,7 @@ def run(manifest: str, only: str = "", sim: str = "") -> None:
 def main() -> None:
     opts = {a.split("=")[0][2:]: a.split("=", 1)[-1] for a in sys.argv[1:] if a.startswith("--")}
     run(opts.get("manifest", str(HERE / "rivet_windup_cells.json")), opts.get("only", ""),
-        opts.get("sim", ""))
+        opts.get("sim", ""), opts.get("art", ""))
 
 
 if __name__ == "__main__":

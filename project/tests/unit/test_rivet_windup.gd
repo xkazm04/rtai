@@ -88,3 +88,16 @@ func test_the_cells_by_octant() -> void:
 func test_the_warm_lists_it() -> void:
 	var paths: PackedStringArray = RivetStripWarm.paths("p70", [&"plasma_sword"])
 	assert_true(paths.has(WU))
+
+
+func test_the_n14_strips_ship_and_are_warmed() -> void:
+	var ship: Dictionary[String, Array] = {"p55": ["plasma_sword", "katana", "electro_baton"]}
+	for art: String in ship:
+		for w: String in ship[art]:
+			var dir: String = RivetStrips.DIR + art + "/rivet_eq_" + w
+			var eq: Texture2D = load(dir + ".png") as Texture2D
+			var wu: Texture2D = load(dir + RivetWindup.FILE) as Texture2D
+			assert_not_null(wu, art + " " + w)
+			var k: float = RivetRes.of(dir + ".png") / RivetRes.of(dir + RivetWindup.FILE)
+			assert_gte(wu.get_width() / float(RivetWindup.CELLS), eq.get_width() / 8.0 / k, w)
+			assert_true(RivetStripWarm.paths(art, [StringName(w)]).has(dir + RivetWindup.FILE))

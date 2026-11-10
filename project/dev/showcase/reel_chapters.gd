@@ -96,6 +96,13 @@ static func _armored() -> Chapter:
 
 
 ## Chapters outside the cut, run only by name (`--chapter=<id>`): n7-melee's plasma sword combo
-## on a lone cop (the deflect chapter never cuts a body; the asset film needs the swing).
+## on a lone cop (the deflect chapter never cuts a body; the asset film needs the swing). n14
+## wind-up films: each blade's cop behind him (`<blade>_left`) and below him (`<blade>_cam`).
 static func extras() -> Array[Chapter]:
-	return [Chapter.new(&"plasma_sword", &"plasma_sword", &"blade", 330, [Vector2(2.6, 0.0)])]
+	var out: Array[Chapter] = [
+		Chapter.new(&"plasma_sword", &"plasma_sword", &"blade", 330, [Vector2(2.6, 0.0)])
+	]
+	for w: StringName in [&"plasma_sword", &"katana", &"electro_baton", &"chainsaw"]:
+		out.append(Chapter.new(StringName(w + "_left"), w, &"blade", 330, [Vector2(-2.4, 0.0)]))
+		out.append(Chapter.new(StringName(w + "_cam"), w, &"blade", 330, [Vector2(0.0, 2.4)]))
+	return out

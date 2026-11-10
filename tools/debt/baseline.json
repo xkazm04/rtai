@@ -35,7 +35,8 @@
         "2026-11-09: n12 B1: SyncProbe, the victim-sync instrument (dev arena --sync), and its one attach line (dev_loc 20319 -> 20487)",
         "2026-11-10: n11 merge: n11-tools dev tooling (film probe, film triggers) on top of n12 (dev_loc 20487 -> 20809)",
         "2026-11-10: n11 merge: n11-hero dev films and ghost tooling on top of n12+tools (dev_loc 20809 -> 21227)",
-        "2026-11-10: n11 merge: n11-combat dev films and body probes on top of n12+tools+hero (dev_loc 21227 -> 21419)"
+        "2026-11-10: n11 merge: n11-combat dev films and body probes on top of n12+tools+hero (dev_loc 21227 -> 21419)",
+        "2026-11-10: n14 windup-more: dev film chapters (<blade>_left / _cam: the cop behind or below Rivet) for the wind-up before/after films (dev_loc 21419 -> 21426)"
       ],
       "files": {
         "project/dev/arena": 711,
@@ -63,11 +64,11 @@
         "project/dev/save_cross_run.gd": 69,
         "project/dev/selftest": 1453,
         "project/dev/servo": 434,
-        "project/dev/showcase": 6718,
+        "project/dev/showcase": 6725,
         "project/dev/view": 195,
         "project/dev/weapon_art": 506
       },
-      "total": 21419
+      "total": 21426
     },
     "direct_cmdline_reads": {
       "accepted": [
