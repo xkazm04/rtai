@@ -43,7 +43,9 @@ export function stripComment(line) {
   return line;
 }
 
-/** Top-level functions longer than FUNC_MAX_LINES (signature to last non-blank body line). */
+/** Top-level functions longer than FUNC_MAX_LINES (signature to last non-blank body line). A comment at column
+ *  0 is never body: it is the NEXT function's doc comment (combat n15 FRICTION: a third doc line on `_windup`
+ *  pushed the function above it from 40 to 41). */
 export function longFunctions(lines) {
   const out = [];
   let start = -1;
@@ -60,7 +62,7 @@ export function longFunctions(lines) {
     } else if (start >= 0 && line.trim() && !/^\s/.test(line) && !line.startsWith('#')) {
       close();
       start = -1;
-    } else if (start >= 0 && line.trim()) {
+    } else if (start >= 0 && line.trim() && !line.startsWith('#')) {
       last = i;
     }
   });
