@@ -169,3 +169,15 @@ seeded there). (3) item 4b part 2: `morning.mjs --worktree=C:/Users/kazda/kiro/g
   --feel=on --dry-run` plans `--chapter=electro_baton_left ... --cam-lock=spawn --feel=on`; `chapter:electro_baton_lft`
   -> `did you mean electro_baton_left?`. Tests `tools/film/feel_chapter.test.mjs` 8/8, film suite 180/180, lint 16/16.
   A real film with these flags is owed (Godot slot held by the reels).
+- 23:22 Codex testers dispatched (meter 36 %, read from ~/.codex/sessions): `npx tsx scripts/codex/dispatch.ts run
+  gtai-n15/codex/<id>.json` for n15t-break-car-route (t-4), n15t-break-hash-window (t-5), n15t-break-spawn-plan
+  (t-1), base ed8ac8cc9. Law added: never launch Godot (my reels hold the lane's one slot); I run their tests.
+  FRICTION (mine): first launch died on `copyIgnored.from` written with backslashes inside a JS heredoc
+  (`C:Userskazdakirogtai-wt\n15-tools`); `discard` cannot clean a run with no state.json, so I removed the 3
+  worktrees + `codex/n15t-*` branches by hand (`git worktree remove --force`, `git branch -D`) and relaunched.
+  hash-window: 7 tests, 5021 tokens out; spawn-plan: done; car-route: running.
+- 23:24 item 7 prep: scratch tree gtai-n15/scratch-tools-before on throwaway branch `n15t-control-sim-hash`
+  (f4d4acab5 = 812a0b061 + the control test + a scratch-only debt accept: the hook refused the 211-line file).
+- 23:26 item 6 loop under load (reels running): `gtai-n15/flake/loop_load.sh` = lint's tool-test globs +
+  tools/lib, 9-10 s a run, runs 1-3 fail=0.
+- 23:26 reel gate: `[1/3] top OK, 280 s`.
