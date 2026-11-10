@@ -6,6 +6,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import test from 'node:test';
 import { filmFlags, parseArgv as parseCompare } from './compare.mjs';
+// filmFlags + plan: the compare path that broke on the first real run (feel undefined, 23:43).
 import { parseArgv, plan } from './film.mjs';
 import { chapterIds, feelArgs, godotArgs, parseShot } from './shots.mjs';
 
@@ -91,4 +92,14 @@ test('compare passes --feel to both sides, and nothing when it was not given', (
   assert.equal(filmFlags(p, { name: 'a', tree: 't' }, '10').feel, 'on');
   const q = parseCompare(['arena', '--a=HEAD~1', '--b=HEAD', '--at=10', '--out=o']);
   assert.equal(filmFlags(q, { name: 'a', tree: 't' }, '10').feel, undefined);
+});
+
+test('compare side flags plan without a --feel (film defaults are not in them): auto', () => {
+  const t = tree();
+  try {
+    const p = parseCompare(['arena', `--a=${t}`, `--b=${t}`, '--at=10', '--out=o']);
+    const planned = plan(filmFlags(p, { name: 'a', tree: t }, '10'), p.shotText, p.extra);
+    assert.equal(planned.error, undefined);
+    assert.equal(planned.opts.feel, 'auto');
+  } finally { rmSync(t, { recursive: true, force: true }); }
 });

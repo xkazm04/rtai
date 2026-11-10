@@ -69,7 +69,8 @@ export function plan(flags, shotText, extra) {
   if (!/^(auto|spawn|trigger|off|at:\d+|-?\d+(\.\d+)?,-?\d+(\.\d+)?)$/.test(flags.lock)) return { error: `film: --lock must be auto, spawn, trigger, off, at:<tick> or x,y, got ${flags.lock}` };
   const lock = flags.lock === 'auto' ? autoLock(shot.shot, stills.length ? Math.min(...stills) : null, on.length > 0) : flags.lock;
   if (extra.some((a) => a.split('=')[0] === '--victim')) return { error: 'film: give --victim=<kind> before the --, so the film checks the kind and the run' };
-  if (!/^(auto|on|off)$/.test(flags.feel)) return { error: `film: --feel must be auto, on or off, got ${flags.feel}` };
+  const feel = flags.feel ?? 'auto'; // compare.mjs plans each side with its own flags, not film's DEFAULTS
+  if (!/^(auto|on|off)$/.test(feel)) return { error: `film: --feel must be auto, on or off, got ${feel}` };
   if (extra.some((a) => a.split('=')[0] === '--feel')) return { error: 'film: give --feel=on|off before the --: the game reads the FIRST --feel=, and a locked film already passed --feel=off' };
   const victim = flags.victim ?? null;
   const game = victim === null ? extra : [...extra, `--victim=${victim}`];
@@ -87,7 +88,7 @@ export function plan(flags, shotText, extra) {
   // A movie costs real time (combat measured about 1.5 fps with Godots running beside it), so stills skip it unless asked.
   const wantMovie = flags.movie === true || (!stills.length && !on.length && !flags['no-movie']);
   const movie = wantMovie && !shot.shot.script ? join(dir, `${shotLabel(shot)}.avi`) : null;
-  return { shot, opts: { tree, dir, ticks, stills, on, onText: flags.on ?? '', movie, extra: game, victim, view: flags.view, ppm: flags.ppm, lock, feel: flags.feel,
+  return { shot, opts: { tree, dir, ticks, stills, on, onText: flags.on ?? '', movie, extra: game, victim, view: flags.view, ppm: flags.ppm, lock, feel,
     subject: flags.subject ?? 'rivet', seed: flags.seed, res: flags.res, timeoutMs: Number(flags.timeout) * 1000, label: shotLabel(shot),
     noProbe: Boolean(shot.shot.script), keepGoing: flags['keep-going'] === true } };
 }
