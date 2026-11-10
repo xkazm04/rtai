@@ -120,3 +120,10 @@ until 01:45). Repaired by hand within minutes; no lane commit got the wrong iden
 - The staged-snapshot hook (d13b9849, 1e5fa267, 3ee0c085, 4d6d8232) changes what every commit's lint reads. It also ends combat's FRICTION 117: their `probe.sh` marks `arena_game.gd` `--skip-worktree` and copies untracked probe files in; the hook lints the index, so a commit no longer needs `probe.sh off` first. That held only from 4d6d8232 (05:02): before it, `checkout-index` refused the skip-worktree entry and the hook failed. Proven 05:04 on a scratch worktree with the probe's shape (skip-worktree `arena_game.gd` + an untracked .gd, both over the line cap): `quick.mjs` on the tree FAIL 4 issues, the commit through the hook `lint: all 16 checks pass`, 56 s.
 - Combat's `probe.sh` toggles `dev/frames/film_card.gd` in and out of their tree, which re-imports
   the class cache on every film (about 8 s each); it ends when the film probe lands on main.
+- f666915d changes every `dev/run.mjs` launch: when any asset's source no longer matches its import it runs
+  `--import` first (the first run in a tree hashes every source once, up to a minute), and exits 3 if it
+  still does not match. `const FIXED_FPS: int = <n>` in an entry is new and opt-in.
+- c23c7d84, 3ba6d4d2, dd5a1bb7 make the morning merge's bake and export steps stricter: the export is ok
+  only when this run wrote a non-empty exe, and the bake step checks the chunks against the hash list.
+- ec83154e, 6583b6fc: `tools/godot/check.mjs` (and `quick.mjs` through it) now FAILs a dependency cascade
+  with no autoload noise behind it, and a real error that quotes a cascade phrase.
