@@ -65,7 +65,10 @@ Frames: `C:\Users\kazda\kiro\gtai-masters\n11\combat\frames.json` (15 entries, b
 3. **The hanging weapon wall in the hub** stays at x1: the note said "on ground". It needs a longer
    wall to go x2.
 4. **An accent colour for energy rounds** (open since 2026-11-04, weapon-art-3): colour law leaves
-   plasma a charcoal needle like a bullet.
+   plasma a charcoal needle like a bullet. The alternative already exists as a flag:
+   `--fx-colour=on` (the round 2 colour sheet) draws an amber comet that reads as energy.
+   Side by side at the same ticks: `plasma_accent_ab.png` (top shipped ink, bottom colour sheet).
+   Picking it for plasma only would be one cell path in `data/tables/weapon_art.json` (`plasma_bolt`).
 5. **The dropped rifle's distance from the body** (`GroundRifle.TOWARD_M` 0.5 or 0.35):
    `rifle_land_ab.png` shows 0.5; the 0.35 pair is not filmed yet.
 
