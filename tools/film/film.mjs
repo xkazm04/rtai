@@ -12,7 +12,7 @@ import { spawnSync, execFileSync } from 'node:child_process';
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { ROOT } from '../lib/repo.mjs';
-import { staleAssets, touchStale } from '../lib/asset_cache.mjs';
+import { importErrors, staleAssets, touchStale } from '../lib/asset_cache.mjs';
 import { describe, runGodot, SCRIPT_ERROR } from '../lib/godot.mjs';
 import { verdict } from '../lib/dev_verdict.mjs';
 import { autoLock, checkFlags, checkId, checkVictim, godotArgs, parseOn, parseShot, parseStills, shotLabel, triggeredTicks, victimSaid } from './shots.mjs';
@@ -157,11 +157,14 @@ export async function filmOne({ shot, opts }, { runner = runGodot } = {}) {
   rmSync(join(opts.dir, 'probe.json'), { force: true });
   const project = join(opts.tree, 'project');
   const stale = staleAssets(project, { onFirstScan: () => console.error('film: first asset check in this tree, hashing every source once (up to a minute beside other lanes)') });
+  if (stale.pointers?.length) return { outcome: 'fail', reasons: [`${stale.pointers.length} asset(s) are Git LFS pointers, not images (${stale.pointers.slice(0, 5).join(', ')}): restore with \`git checkout -- <png> <png>.import\`; nothing imported or filmed`], probe: null, mp4: null, manifest: null };
   if (stale.count) {
     console.error(`film: ${stale.count} asset(s) changed since the last import (${stale.sample.join(', ')}): running --import, or the film draws the old pixels`);
     touchStale(project);
     const imported = await runner(['--import'], { timeoutMs: opts.timeoutMs, name: 'import', cwd: opts.tree, ensure: false });
     if (imported.status !== 0 || imported.timedOut) return { outcome: 'fail', reasons: [`--import failed: ${describe(imported)}`], probe: null, mp4: null, manifest: null };
+    const bad = importErrors(imported.out);
+    if (bad.length) return { outcome: 'fail', reasons: [`--import exited 0 but an asset did not import: ${bad.slice(0, 3).map((l) => l.trim()).join(' | ')}`], probe: null, mp4: null, manifest: null };
     const still = staleAssets(project);
     if (still.count) return { outcome: 'unverifiable', reasons: [`${still.count} asset(s) still do not match their import after --import (${still.sample.join(', ')}): this film would draw the old pixels`], probe: null, mp4: null, manifest: null };
   }

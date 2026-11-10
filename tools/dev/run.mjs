@@ -18,7 +18,7 @@ import { pathToFileURL } from 'node:url';
 import { ROOT } from '../lib/repo.mjs';
 import { describe, HEADLESS_TIMEOUT_MS, runGodot, SCRIPT_ERROR } from '../lib/godot.mjs';
 import { verdict } from '../lib/dev_verdict.mjs';
-import { staleAssets, touchStale } from '../lib/asset_cache.mjs';
+import { importErrors, staleAssets, touchStale } from '../lib/asset_cache.mjs';
 import { resolve } from './entries.mjs';
 
 const USAGE = 'usage: node tools/dev/run.mjs <entry> [--windowed] [--timeout=<s>] [--result=<file>] [--dry-run] '
@@ -56,8 +56,7 @@ function refuse(r, err) {
   return 2;
 }
 
-/** The lines of an --import run that say an asset did not import (Godot still exits 0 on them). */
-export const importErrors = (out) => String(out ?? '').split(/\r?\n/).filter((l) => /ERR_FILE_CORRUPT|Error importing/.test(l));
+export { importErrors };
 
 /** 0 when every asset matches its import (re-importing once if not), 1 an LFS pointer or a failed import, 3 still stale. */
 async function freshAssets(project, { runner, err, assets, touch, timeoutMs }) {

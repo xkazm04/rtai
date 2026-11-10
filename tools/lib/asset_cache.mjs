@@ -57,6 +57,9 @@ function isStale(project, importText, known, seen) {
 
 const LFS_POINTER = 'version https://git-lfs';
 
+/** The lines of an --import run that say an asset did not import (Godot still exits 0 on them). */
+export const importErrors = (out) => String(out ?? '').split(/\r?\n/).filter((l) => /ERR_FILE_CORRUPT|Error importing/.test(l));
+
 /** True when `file` starts with a Git LFS pointer header (`git show HEAD:<png> > <png>` writes one). */
 export function isLfsPointer(file) {
   try {
