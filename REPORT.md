@@ -1,4 +1,4 @@
-# REPORT n15-tools (draft, session 2, 00:20; later sessions extend it)
+# REPORT n15-tools (draft, session 2, 00:28; later sessions extend it)
 
 Branch `n15-tools` from main `5c5c03611`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n15\tools\` (`frames.json`),
 `evidence/` in this tree, JOURNAL.md for every command and its output.
@@ -44,8 +44,9 @@ crowd: look goldens re-blessed with a decisions line). t-4 and t-5 move nothing 
   Linux flake). Item 6 found three timing-shaped causes in all: cold node starts, the Linux mtime tick, the zombie.
 - `tests/parity/city_parity.gd`: `final_sha_a/b` in the parity result.
 
-Gates on eb65c8b05 (`node tools/gate/run.mjs`): PASS - lint 16/16, unit 2507/0, scenarios 55, parity exact,
-selftest 11/11 + 5/5, release-compile 667/0. Reel gate on ad2f0a5c1: top, tilt70, combo OK (280-286 s each).
+Gates on 52dc72d4 (`node tools/gate/run.mjs`): PASS - lint 16/16, unit 2530/0, scenarios 55, parity exact,
+selftest look 11/11 worst 0.00, release-compile 667/0. Reel gate on ad2f0a5c1: top, tilt70, combo OK (280-286 s each).
+Commits after 52dc72d4 are Node tools, their tests and docs (linted by the hook); the final commit gets a full gate + reels.
 
 ## Codex (n15)
 
