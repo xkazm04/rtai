@@ -32,9 +32,11 @@ const CUT_COL: int = 1
 const FOLLOW_COL: int = 2
 const HIT_COL: int = 3
 ## n15 h-4: Dent's arm jab draws in act columns 4-6 (wind-up, jab, recoil) where his act sheet
-## has them (JAB_COLS columns); a sheet without them plays the jab on the act phases.
+## has them (JAB_COLS columns); a sheet without them plays the jab on the act phases. The left
+## sheets in JAB_LEFT_COLS draw it too; an absent key mirrors the right jab in the left octants.
 const JAB_SHIFT: int = 4
 const JAB_COLS: Dictionary[String, int] = {"dent/p70": 7}
+const JAB_LEFT_COLS: Dictionary[String, int] = {"dent/p70": 7}
 const CUT_TICKS: int = 5
 const FOLLOW_TICKS: int = 10
 const HIT_TICKS: int = 10
@@ -186,8 +188,7 @@ func _rebuild(host: Node2D, parts: Array[Sprite2D], vm: ViewMode) -> void:
 		_spr = Sprite2D.new()
 		_spr.name = &"ghost_drawn"
 		_walk = GhostSheet.of(path, GhostStride.cols_of(_steps))
-		var acts: int = JAB_COLS.get(card_name + "/" + _art, ACT_COLS)
-		_act = GhostSheet.of(path_of(_art, card_name, "act"), acts, ACT_COLS)
+		_act = GhostSheet.act_of(path_of(_art, card_name, "act"), card_name + "/" + _art)
 		_run = GhostSheet.of(path_of(_art, card_name, "run8"), COLS)
 		_spr.centered = false
 		_walk.show(_spr, 2, STAND_COL)

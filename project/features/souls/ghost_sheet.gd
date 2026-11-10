@@ -38,6 +38,14 @@ static func of(path: String, p_cols: int, p_left_cols: int = -1) -> GhostSheet:
 	)
 
 
+## An act grid (`key` "<name>/<pitch>"): its columns and its left sheet's, with Dent's jab columns
+## where GhostDrawn.JAB_COLS / JAB_LEFT_COLS name the key.
+static func act_of(path: String, key: String) -> GhostSheet:
+	var acts: int = GhostDrawn.JAB_COLS.get(key, GhostDrawn.ACT_COLS)
+	var lefts: int = GhostDrawn.JAB_LEFT_COLS.get(key, GhostDrawn.ACT_COLS)
+	return of(path, acts, lefts)
+
+
 ## True when octant `oct` at column `col` draws from the left sheet.
 func drawn_left(oct: int, col: int) -> bool:
 	return LEFT and left != null and LEFT_ROW[oct] >= 0 and col < left_cols

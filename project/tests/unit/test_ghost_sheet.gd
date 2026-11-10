@@ -13,7 +13,9 @@ const SHIPPED_LEFT: Array[String] = [
 	"ohm_act",
 	"kerf_walk8",
 	"kerf_run8",
-	"kerf_act"
+	"kerf_act",
+	"tonnage_walk8",
+	"tonnage_act"
 ]
 
 
@@ -90,7 +92,10 @@ func _check_left(key: String) -> void:
 	assert_not_null(tex, key)
 	if tex == null:
 		return
-	var cols: int = GhostDrawn.ACT_COLS if key.ends_with("_act") else GhostDrawn.COLS
+	var cols: int = GhostDrawn.COLS
+	if key.ends_with("_act"):
+		var ghost: String = key.trim_suffix("_act") + "/" + P70
+		cols = GhostDrawn.JAB_LEFT_COLS.get(ghost, GhostDrawn.ACT_COLS)
 	assert_eq(tex.get_width() % cols, 0, key)
 	assert_eq(tex.get_height() % GhostSheet.LEFT_ROWS, 0, key)
 

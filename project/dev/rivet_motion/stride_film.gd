@@ -15,7 +15,8 @@ const FEET_PX: int = 215
 const EVERY: Array[int] = [4, 4, 2, 2]
 const DIRS: Array[Vector2] = [Vector2.RIGHT, Vector2.DOWN, Vector2.RIGHT, Vector2.DOWN]
 ## `--film-diag`: every leg turned 45 deg up the screen (right -> up-right, toward -> down-right),
-## so the 3/4 away and 3/4 toward rows are filmed.
+## so the 3/4 away and 3/4 toward rows are filmed. `--film-turn=<deg>` (n15) any turn: 135 films the
+## left diagonals (right -> down-left, toward -> up-left), 180 the left profile and away.
 ## `--film-attack`: a melee press every ATTACK_EVERY ticks, to see a form's drawn strike.
 ## `--film-fire`: the fire press with it (Dent's seize). `--film-hurt`: a hit every HURT_EVERY.
 ## `--film-blow=<deg>` (n15): each such hit travels along that screen angle (0 = to the right).
@@ -39,7 +40,7 @@ func _ready() -> void:
 	_out = args.text("--film-out")
 	_bot = Bot.new(session.live, session.actions, get_viewport())
 	_bot.attack = args.has("--film-attack")
-	_bot.turn = -PI / 4.0 if args.has("--film-diag") else 0.0
+	_bot.turn = deg_to_rad(args.number("--film-turn", -45.0 if args.has("--film-diag") else 0.0))
 	_bot.fire = args.has("--film-fire")
 	_hurt = args.has("--film-hurt")
 	if args.has("--film-blow"):
