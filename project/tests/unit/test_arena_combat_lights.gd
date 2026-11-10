@@ -73,3 +73,48 @@ func test_a_far_round_and_the_off_switches_light_nothing() -> void:
 	off.focus_px = quiet.focus_px
 	off.step(1)
 	assert_eq(off.started, 0, "the before")
+
+
+## On its own frame: it follows Rivet, and the budget refills with the arena's ticks (a volley a
+## second later lights again).
+func test_each_new_tick_follows_rivet_and_refills_the_budget() -> void:
+	var arena: CombatArena = _arena()
+	var cl: ArenaCombatLights = _cl(arena)
+	arena.rivet.pos = Vector2(3.0, 4.0)
+	@warning_ignore("return_value_discarded")
+	_shot(arena, arena.rivet.pos)
+	arena.tick = 5
+	cl._process(0.0)
+	assert_eq(cl.focus_px, Vector2(3.0, 4.0) * SimConst.PX_PER_M)
+	assert_eq(cl.started, 1)
+	cl._process(0.0)
+	assert_eq(cl.started, 1, "the same tick twice steps once")
+	for k: int in 2:
+		arena.shots.clear()
+		@warning_ignore("return_value_discarded")
+		_shot(arena, arena.rivet.pos)
+		arena.tick += FlashBudget.WINDOW + 1
+		cl._process(0.0)
+	assert_eq(cl.started, 3, "each a window later: room again")
+
+
+func test_a_round_on_the_radius_edge_lights_and_the_row_switches_hold() -> void:
+	var arena: CombatArena = _arena()
+	var cl: ArenaCombatLights = _cl(arena)
+	cl.focus_px = Vector2.ZERO
+	@warning_ignore("return_value_discarded")
+	_shot(arena, Vector2(20.0, 0.0))
+	cl.step(1)
+	assert_eq(cl.started, 1, "exactly radius_m away still lights")
+	var path: String = TestTmp.dir("n12_lights").path_join("lights.json")
+	var f: FileAccess = FileAccess.open(path, FileAccess.WRITE)
+	@warning_ignore("return_value_discarded")
+	f.store_string(
+		'{"combat_lights": {"on": true, "muzzle": false, "blast": false, "radius_m": 5}}'
+	)
+	f.close()
+	var row: ArenaCombatLights = ArenaCombatLights.make(arena, _lights)
+	row.read(path)
+	assert_false(row.muzzle)
+	assert_false(row.blast)
+	assert_eq(row.radius_px, 5.0 * SimConst.PX_PER_M)
