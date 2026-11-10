@@ -292,3 +292,4 @@ NEXT (05:29, the whole list; replaces the 02:08 NEXT):
 2. If hero answers the 05:10 NOTE (exact ground shift for `world_feet.py`) with a `REQUEST tools:` line, serve it ahead of everything.
 3. Not done: the merge's native, gates and reels steps on a real tree (needs a quiet machine; 2-3 other Godot processes all night).
 4. After the merge (shared gates): `mutate.mjs` could mark initialiser survivors itself; the `step_guard.break` binary-bytes test is load-flaky (05:27).
+- 05:29 `n11t-break-proof` dispatched (Codex tester on `export_checked` `exportChecked`/`written` and the morning bake step + `bakedIn`, base 3ba6d4d2, Node only, no git, no Godot). (The `gtai-n11t/wt/swproof2` folder the 05:04 entry left is gone: `ls` empty at 05:29.)
