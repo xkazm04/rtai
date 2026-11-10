@@ -208,3 +208,21 @@ seeded there). (3) item 4b part 2: `morning.mjs --worktree=C:/Users/kazda/kiro/g
 - 23:44 t-4 film started: `compare.mjs city --a=gtai-n15/scratch-tools-before (detached d720e22da = t-1 only,
   the hero lane's pre-t-4 DLL, md5 42f81158) --b=HEAD (DLL 1dec60a1) --at=300,600,900 --clip=300-900 --ppm=32`.
   A rev snapshot would have been a false before: snapshots copy THIS tree's (post-t-4) DLLs.
+- 23:46 MILESTONE t-4 film (real run, compare above): `side A pass`, `side B pass`, `t300/t600/t900 UNVERIFIABLE:
+  the two sides are identical (0 of 1024000 pixels differ)`, clip 300-900 (10 s, 32 px/m). Looked at t600:
+  plaza, two cars on the road, cops blue, blood red; same picture both sides. Identical is the claim here
+  (the old rules never fire in the generated city, `test_city_lane_grid`); compare's UNVERIFIABLE is its
+  rule for an unchanged pair. Masters: `t4-city-street-32ppm-before-after-t{600.png,300-900.mp4}` +
+  frames.json rows. No 64 px/m close-up: nothing differs to close up on. Removed my 2 temp film checkouts
+  (gtai-film-4576f2b08848 from the failed 23:43 run, gtai-film-d60ff5894fb0); the other 5 are other lanes'.
+- 23:47 tool fix (70ebf0634): `compare.mjs` refuses a commit side whose `native/` differs from this tree's HEAD
+  (`git diff --quiet <sha> HEAD -- native` exit 1), before making the 1.7 GB snapshot; `--native=donor` for a
+  view-only change. Real: `compare.mjs city --a=d720e22da --b=HEAD ...` -> exit 2, `compare: native/ at
+  d720e22da (d720e22d) differs from this tree's HEAD, but its snapshot would run this tree's DLLs ...`,
+  nothing launched. Tests `tools/film/native_side.test.mjs` 4/4, film suite 185/185.
+- 23:48 item 6 parallel loop under load (4 copies x 5 runs of the lint tool-test globs + tools/lib, while
+  reels/films/other lanes ran): 20 of 20 runs `fail=0` (14-29 s each). With session 1's slow-start runs on
+  Windows and Linux, no flake reproduces after the node-start budgets (1af97f018, 5830ee44a, 8b209a8a1).
+- 23:48 item 4b part 2 started for real: `morning.mjs --worktree=gtai-n15/scratch-integ --lanes=n15-tools,
+  n15-hero,n15-combat --date=2026-11-11 --steps=gates,reels --timeout=90` (dry run first: `would run gates`,
+  `would run reels`), log gtai-n15/flake/morning_4b_part2.log, on 76ed5809e (merge of the 23:08 lane tips).
