@@ -86,6 +86,23 @@ export function scoreOf(out) {
   return all.length ? all.at(-1) : null;
 }
 
+/** Survivor lines of the mutated file that are member initialisers `_init` always reassigns:
+ *  equivalent by construction (no test can see them), so a reviewer should not count them against
+ *  the tests. The bar still rejects; this only names them (city_spawn_plan, n11: 5 of 6 survivors). */
+export function equivalentInitialisers(mutateOut, source) {
+  const lines = String(source).split(/\r?\n/);
+  const start = lines.findIndex((l) => /^func _init\(/.test(l));
+  if (start < 0) return [];
+  let end = start + 1;
+  while (end < lines.length && (lines[end] === '' || /^\s/.test(lines[end]))) end++;
+  const body = lines.slice(start + 1, end).filter((l) => /^\t[^\t]/.test(l)); // top level of _init only
+  const survived = [...String(mutateOut).matchAll(/\.gd:(\d+) .*\bsurvived\b/g)].map((m) => Number(m[1]));
+  return [...new Set(survived)].filter((n) => {
+    const name = /^var (\w+)\b[^=]*=/.exec(lines[n - 1] ?? '')?.[1];
+    return !!name && body.some((l) => new RegExp(`^\\t${name}\\s*=[^=]`).test(l));
+  }).sort((a, b) => a - b);
+}
+
 /** What the machine may conclude. A score only rejects: at or over the bar means Claude reads it. */
 export function gradeFrom({ unit, lint, score, extra }) {
   if (extra.length) return { pass: false, why: `outside scope: ${extra.join(', ')}` };
@@ -113,7 +130,10 @@ async function grade(wt, unit, env, log, say = () => {}) {
   const m = await shell(`node tools/mutate/mutate.mjs --file=${unit.path.replace(/^project\//, '')} --tests=test_${unit.stem} --max=15 --remove-worktree`, wt, env, 45);
   log(`mutate exit ${m.code}\n${m.out}`);
   const score = m.code === 0 ? scoreOf(m.out) : null;
-  return { ...gradeFrom({ unit: true, lint: true, score, extra: [] }), detail: m.out.slice(-1800) };
+  const g = gradeFrom({ unit: true, lint: true, score, extra: [] });
+  const eq = equivalentInitialisers(m.out, readFileSync(join(wt, unit.path), 'utf8'));
+  const why = eq.length ? `${g.why}; likely equivalent survivors, member initialisers _init reassigns: line ${eq.join(', ')}` : g.why;
+  return { ...g, why, equivalent: eq, detail: m.out.slice(-1800) };
 }
 
 async function runOne(unit, ctx) {

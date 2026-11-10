@@ -1,11 +1,12 @@
 import assert from 'node:assert/strict';
-import { mkdtempSync, rmSync } from 'node:fs';
+import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import test from 'node:test';
-import { LAWS, buildTask, freshId, gradeFrom, main, refusedByMeter, scoreOf, taskId } from './factory.mjs';
+import { LAWS, buildTask, equivalentInitialisers, freshId, gradeFrom, main, refusedByMeter, scoreOf, taskId } from './factory.mjs';
 import { append, queue, read, rows, totals } from './ledger.mjs';
 import { MAX_TUNED_CONSTS, pick, refusal } from './pick.mjs';
+import { ROOT } from '../lib/repo.mjs';
 
 const padded = (body, n = 40) => `${body}\n${Array(n).fill('').join('\n')}`;
 const module = (name = 'Boss', extra = '') => padded(`class_name ${name}\nextends RefCounted\n\nfunc a() -> int:\n\treturn 1\n${extra}`);
@@ -227,4 +228,15 @@ test('a review without measured tokens is never paired, even beside a control', 
   const r = [{ id: 'a', task: passed('a'), review: { verdict: 'accepted', iteration: 4 } },
     { id: 'control-a', control: { unit: 'a', claude_tokens: 50000, secs: 300 } }];
   assert.deepEqual(totals(r).paired, []);
+});
+
+test('survivors on member initialisers that _init reassigns are named as likely equivalent, nothing else', () => {
+  const src = readFileSync(join(ROOT, 'project/features/city/city_spawn_plan.gd'), 'utf8');
+  const out = readFileSync(join(ROOT, 'tools/codex/fixtures/city_spawn_plan.mutate.txt'), 'utf8');
+  assert.deepEqual(equivalentInitialisers(out, src), [10, 11]);
+  const gd = 'var a: int = 0\nvar b: int = 0\nvar c: int = 0\n\n\nfunc _init() -> void:\n\ta = 3\n\tif c > 0:\n\t\tb = 2\n';
+  const surv = (n) => `  x.gd:${n} literal  0 -> 1  survived\n`;
+  assert.deepEqual(equivalentInitialisers(surv(1) + surv(2) + surv(3), gd), [1], 'b is reassigned only under an if');
+  assert.deepEqual(equivalentInitialisers(surv(1).replace('survived', 'killed'), gd), []);
+  assert.deepEqual(equivalentInitialisers(surv(1), 'var a: int = 0\n'), [], 'no _init, nothing is equivalent');
 });
