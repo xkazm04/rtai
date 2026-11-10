@@ -446,3 +446,78 @@ Off: window 3.2 / 3.4 / 5.0, neighbours median 2.8-3.5, max 4.1-5.7. No frame ne
 frame sits inside its neighbours' range: C1 adds no spike. Two pipeline compiles still land in the
 window with C1 on (0 off), cheap (at most about 1.5 ms over the median). The 149 ms seen before was
 the editor binary under Movie Maker.
+
+## Group D (02:05-)
+
+### D1 occlusion and depth
+- Filmed: the city block fight (pit reel on `--arena=city`, 1500 ticks) in `top` and `combo`, and the
+  city riot (city_bench riot, 400 actors, 900 ticks) in both, 32 px/m (`build/n12/sync/film/d1-*`,
+  masters `d1_*`). The block fight runs on an open plaza beside low props and barriers: nobody is
+  hidden in either view; combo draws long cast shadows and the prop occlusion silhouettes.
+- One open read, not proven a defect: in the city riot under combo the walking crowd shows no visible
+  ground shadow where top view shows a blob under everyone (`d1_city_riot_combo_vs_top_shadows`).
+  RigCastShadows is attached only by ArenaRigs; the city's people-shadow MultiMesh is written in
+  every view, and on the dark road a 30 % ink blob may simply not read. Not built (no defect shown).
+- A depth defect found in D2's films and fixed (250344a18): a stunned cop's dropped pistol
+  (ShockArcsView, drawn with the arcs above the rigs) drew over Rivet's arm and baton. Found by
+  bisecting every visible canvas item (hide half, `--shot` at tick 130, count cream px: 125 items,
+  8 runs). The lying gun now draws on a floor child at the bodies' cast-shadow band + 1. Small on
+  film; the bracket read is the gun's placeholder polygon (art).
+
+### D2 melee holds, swings, the plasma sword
+- Audit (32 px/m, director chapters at combo, strips `d2_audit_*`; melee.md 1-5 scale):
+  plasma sword A2 I2 R2 V3 (no wind-up, faint arc); electro baton A2 I3 R3 V4; katana A4 I3 R3 V5;
+  chainsaw A3 I3 R2 V4 (as n7). The drawn strips (p70) have 8 cells: 5 facings, the side and camera
+  strike cells (each with its own drawn arc) and rest; no wind-up cell for any blade.
+- Corrections to my own first reading: the low cream crescent is the strike cell's drawn arc, not a
+  misplaced game smear; the white crossed bars over a blade victim are the cut line (intended).
+- Tried and dropped (never committed): the plasma sword's wind-up ticks show the camera strike cell
+  (blade overhead). On film (`d2_plasma_sword_windup_trial-dropped-32ppm.png`) it is the blade
+  pointing down at the camera with its own arc, and the body pops as the cell swaps: a flicker of a
+  second swing, not an anticipation. A real wind-up needs a drawn cell (art; not producible offline).
+- Plasma sword asset: the pipeline only fits and cuts generated art (tools/art/plasma_blade_fit.py,
+  "a Codex top-down plasma sword part"); no offline generator. Shipped asset kept; three treatments
+  from the shipped strip as stills (`plasma_sword_treatments-candidates-3x.png`, game scale x3):
+  A cream hot core, B heavier ink rim, C both. A call for the owner.
+
+### Gates at 250344a18
+- Unit 2233 / 0; parity bit-exact (629).
+- Scenarios 55 / 55; look goldens 11/11 and block 5/5 worst 0.00 (02:36).
+
+## Group D report
+
+Commits: `250344a18` a stunned cop's dropped pistol lies under the bodies (D1 depth, found in D2's
+films); the C1 first-hit answer and this journal (docs).
+
+Packages:
+- D1 occlusion and depth: no hidden fighter found. Films of the city block fight and the city riot
+  in top and combo (32 px/m). One depth defect fixed: the dropped pistol drew over Rivet (bisected to
+  ShockArcsView, now on the floor band; `GUN_ON_FLOOR` false = the before; small on film,
+  `d1_dropped_gun_on_floor-ab-32ppm-frame85-zoom.png`). One open read listed, not built: the city
+  crowd's ground shadow under combo on the dark road (not shown missing). roof_occluders stays
+  reserved; n10's native occlusion scan untouched.
+- D2 melee: audit done (cells above). The weakest (plasma sword, anticipation 2) has no drawn
+  wind-up cell to show; the only offline trial (show the camera strike cell during the wind-up)
+  read as a flicker and was dropped. No swing smear was added: every p70 strike cell draws its own
+  arc, and the game smear (MeleeSmearView) already feeds the baton's p55 strip. The plasma sword
+  asset: no offline generator; three candidate treatments as stills, a call.
+
+Gates at 250344a18: lint 15/15; unit 2233 / 0; scenarios 55 / 55; parity bit-exact (629); goldens
+11/11 and 5/5 at 0.00; debt ok. Inherited and still listed: test_quest_blade alone, check.mjs.
+
+Perf: the C1 first-hit answer (release, `--feel=off` control, 3 + 3 runs): the first struck card's
+window peaks at 4.0-4.2 ms against neighbours of 2.7-2.8 median, 3.5-4.5 max; no added spike, no
+frame near 25 ms; two pipeline compiles remain in the window with C1 on (cheap). D's change adds
+one Node2D with a _draw per arena; no art, nothing to warm.
+
+Calls for the owner:
+1. Plasma sword treatment: shipped (as is), A cream hot core, B heavier ink rim, C both
+   (`plasma_sword_treatments-candidates-3x.png`); any of them is a re-cut of the shipped strip.
+2. A drawn wind-up cell for the blades (plasma sword, katana, baton) is what their anticipation
+   needs; art for the weapon lane.
+3. The dropped pistol's look (a cream-rimmed polygon that reads as a bracket at 32 px/m): a drawn
+   gun cell, or no dropped gun.
+
+Unsure / corrections: my first read of the strips took the drawn arcs for a misplaced smear and the
+cut line for a stray blade; both are intended. The "stray piece" was a depth bug, not a hold bug.
+The brief's "swing smear if missing": it is not missing at p70.
