@@ -27,6 +27,19 @@ with one example and what it refuses. Every evidence tool reports pass, fail or 
 | `export_checked.mjs` makes its output folder (hero request) | `node tools/export/export_checked.mjs` | 01:23 (fresh worktree, RTAI.exe 555 MB) |
 | PoF night runner: `stop`, live `schedule`, `--reserve-min`, `status --siblings` | `node games/gtai/night/night.mjs stop --root <night> --lane hero` | 20:48, 00:22 (scratch roots) |
 
+## Builders' requests and FRICTION served tonight (lane JOURNAL line -> commit)
+
+- hero 70 (bounce numbers without Python): probe `head_y` + `numbers.mjs` ranges; per-leg rows stay in hero's `stride_film`.
+- hero 95 (stop a dev run at the first SCRIPT ERROR): 8f6f079f. hero 143 (`ASSETS-REPLIES.md` inert): b083b075.
+  hero 170 (README: an art change's before film from the parent commit): 674addc9. hero 219 (export output folder): c26ab875.
+- hero and combat (`check.mjs` false FAILs on autoload names): c01afd2a.
+- combat iteration 2 (film on fire/kill events): 21:17. combat 116 (scenario progress lines): f22446ed, 4ab7e28c.
+  combat 132 (reel progress, partial log): 09b30ff8. combat 225 (`--victim=<kind>`): c548fc94 + their 1183a323, PASS in their tree.
+- combat 117 (probe by hand, then the ratchet fails the commit): served by the staged-snapshot hook, working
+  with their skip-worktree probe only from 4d6d8232; reaches their tree at the merge.
+- Not served: combat 226 (about 8 s re-import per film because `probe.sh` adds and removes `film_card.gd`):
+  ends when the film probe is on main, i.e. at this merge.
+
 ## Time saved
 
 Unmeasured, except where a run timed it: a journal or report commit 0.6 s instead of 51 s idle (up to 8 min
@@ -36,11 +49,15 @@ parse error now stops at 1.5 s instead of the 150 s timeout (hero lost about 8 m
 
 ## Codex ledger (`factory ledger --state=C:/Users/kazda/kiro/gtai-n11t/logs/tools/state.json --ledger=C:/Users/kazda/kiro/gtai-masters/n11/tools/codex-ledger.jsonl`; RE-RUN at report time)
 
-At 02:01: 17 tasks, 4,785 s of Codex, 15 machine pass, 2 machine fail, 8 accepted, 8 accepted after
-revision, 0 rejected, 67 lines changed by review, 0 refused by the meter. Dollars: $54.20 measured over
-the 6 review sessions to iteration 21 (per task $3.87, an ESTIMATE and an upper bound); the total
-prints null until iteration 25's cost is in state.json (one unknown session makes it unknown, by design).
-Codex as tester: every failing test it wrote tonight was a real defect, 82 of them, 0 thrown away.
+At 05:15 (re-run with `--state`): 18 tasks, 4,991 s of Codex, 16 machine pass, 2 machine fail, 8 accepted,
+9 accepted after revision, 0 rejected, 78 lines changed by review, 0 refused by the meter. Dollars: $68.10
+measured over the 8 review sessions (per task $4.01, an ESTIMATE and an upper bound: a session also builds
+other things). The report session re-runs it once more for iterations 39 onward.
+Codex as tester (11 tasks, counted from the ledger's per-task lines at 05:18): 100 failing tests, 90 real
+defects fixed with the tests kept, 10 thrown away with their reason: 9 in `n11t-break-tools` (a table that
+assumed plain porcelain, obsolete once quick read `--porcelain -z`, which never quotes a path; JOURNAL 20:5x)
+and 1 in `n11t-break-staged` (it asked the staged export to ignore the commit's eol attributes, JOURNAL 02:24).
+The journal's running count ("82 real, 0 thrown away" at 01:52) had dropped the first task's 9; corrected 05:18.
 
 **Paired measurement of the Claude saving** (both sides harness-measured, same goal and laws, same 15
 mutants; the Director's own check is outside both sides):
@@ -73,6 +90,12 @@ until 01:45). Repaired by hand within minutes; no lane commit got the wrong iden
    Overriding a machine reject is a rule change, so it is yours.
 3. QuestBeatValidator suspects: `str()` coercion, a `1e999` INF duration passes, an unknown line id is
    marked used, an invalid beat's encounter still counts at "".
+4. CitySimCarRoute suspects (the parity reference sim: a change here moves the native sim too, NAT-06),
+   found by the review and the control, read again on main at 05:20: `sim_car_route.gd:37` U-turns before
+   any tile that is not road (kerb, building, plaza) where its comment says "city edge or unloaded";
+   `:90` and `:118` accept `T_ROAD_H` and `T_ROAD_V` in any direction, so road orientation is ignored;
+   the tuned numbers 18 m (`:27`), 2.5 m (`:53`), 13 m (`:62`) and 16 m (`:89`) are inline literals tests
+   cannot read, so the landed test states relations instead of pinning them.
 
 ## Proposals for the Director (not applied to the rules builders read)
 
