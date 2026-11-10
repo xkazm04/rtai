@@ -35,6 +35,16 @@ test('wanted keeps text code and drops inert paths and binaries', () => {
   assert.equal(wanted('docs/x.gd'), false);
 });
 
+test('every LFS pattern in .gitattributes stays out of the export, so the hook never runs an LFS smudge', () => {
+  const attrs = readFileSync(new URL('../../.gitattributes', import.meta.url), 'utf8');
+  const lfs = attrs.split('\n').filter((l) => /\bfilter=lfs\b/.test(l)).map((l) => l.split(/\s+/)[0]);
+  assert.ok(lfs.length > 5, 'the repo keeps its art in LFS');
+  for (const pattern of lfs) {
+    assert.match(pattern, /^\*\.\w+$/, `${pattern}: only *.ext patterns are understood here`);
+    assert.equal(wanted(`project/art/x${pattern.slice(1)}`), false, `${pattern} would be smudged`);
+  }
+});
+
 test('a tree equal to the index has no drift and lints in place (real git)', () => {
   const { dir } = repo();
   try {

@@ -16,8 +16,9 @@ import { isInert } from '../evidence/scope.mjs';
 export const PREFIX = 'gtai-precommit-';
 const NUL = String.fromCharCode(0);
 
-/** Binary and log files lint never reads (measured: 25 MB and about 2 s for the rest, 315 MB with). */
-const SKIP_EXT = /\.(png|jpe?g|webp|exr|hdr|wav|ogg|mp3|glb|gltf|blend|ttf|otf|dll|so|dylib|exe|pck|zip|mp4|log)$/i;
+/** Binary and log files lint never reads, every .gitattributes LFS pattern among them, so no LFS smudge
+ *  runs (measured: 25 MB and about 2 s for the rest, 315 MB with). */
+const SKIP_EXT = /\.(png|jpe?g|webp|psd|exr|hdr|wav|ogg|mp3|glb|gltf|fbx|blend|ttf|otf|dll|so|dylib|exe|pck|zip|mp4|log)$/i;
 
 /** True when the staged snapshot carries `path`: inert paths and binaries stay out. */
 export const wanted = (path) => !isInert(path) && !SKIP_EXT.test(path);
