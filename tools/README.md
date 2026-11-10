@@ -14,6 +14,7 @@ Run these from the root of your worktree. Exit codes are shared: `0` pass, `1` f
 | one sheet of a film's stills, labelled | `node tools/film/sheet.mjs <film dir> --out=<file.png>` |
 | read head, feet, facing or body size per tick | `node tools/film/numbers.mjs <film dir>` |
 | catch the lint you keep tripping, before the commit | `node tools/gate/quick.mjs` |
+| commit a journal without waiting for lint | (automatic: the hook skips lint when only inert paths are staged) |
 | run every gate while you keep editing | `node tools/gate/run.mjs` |
 | run a dev scene with its flags checked | `node tools/dev/run.mjs <entry>` |
 | make a new worktree able to run the game | `node tools/dev/wt_init.mjs <worktree>` |
@@ -144,6 +145,16 @@ A note, not a verdict: if the subject has moved more than 5 cm between sides, th
 (`--a=HEAD~1 --b=HEAD`). Do not move the sheet aside by hand: its `.import` stays, `ResourceLoader`
 still finds the cached texture, and the "before" is the after (hero n11, `JOURNAL.md` line 170). If you
 did, compare says UNVERIFIABLE (the same picture) rather than letting it pass as a before.
+
+## tools/gate/precommit.mjs: the hook skips lint for a journal-only commit
+
+Nothing to run: `.githooks/pre-commit` calls it. A commit that stages only inert paths (`docs/**`,
+`evidence/**`, root `JOURNAL.md`, `REPORT.md`, `ASSETS-REPLIES.md`, the set in
+`tools/evidence/scope.mjs`) prints `pre-commit: 1 staged path(s), all inert ...: lint skipped` and
+lands in under a second (measured 0.6 s, against 51 s for a full-lint commit on an idle machine and up
+to 8 min contended). **Never skips** a commit with any other path, root `AGENTS.md` included, or one
+where git cannot list what is staged. Lint's tool tests run with every `GIT_*` variable stripped:
+inside a hook git points `GIT_DIR` at your repo, and a test's `git -C <tmp>` once committed into it.
 
 ## tools/gate/quick.mjs: the lint rules you keep tripping, on your changed files, before the commit
 
