@@ -221,7 +221,8 @@
    "rivet_eq_katana": {
     "act_k": 1.0,
     "counts": "5,3",
-    "sheet": "rivet_eq_katana_70.png"
+    "sheet": "rivet_eq_katana_70.png",
+    "fig_h": 165
    },
    "rivet_eq_machine_pistol": {
     "counts": "5,3",

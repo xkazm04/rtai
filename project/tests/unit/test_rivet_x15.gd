@@ -22,3 +22,10 @@ func test_a_card_on_an_x15_strip_divides_its_scale_by_res() -> void:
 	assert_eq(RivetWalk.res_of(card), RivetWalk.RES)
 	card.set_meta(RivetFrames.ON, RivetStrips.DIR + "p70/" + RivetStrips.BASE)
 	assert_eq(RivetWalk.res_of(card), 1.0, "a strip outside X15 stays 1:1")
+
+
+func test_the_katana_strip_is_its_110_cut_times_res() -> void:
+	var path: String = RivetStrips.DIR + "p70/rivet_eq_katana.png"
+	assert_eq(RivetRes.of(path), RivetWalk.RES)
+	var tex: Texture2D = load(path) as Texture2D
+	assert_almost_eq(tex.get_height() / RivetWalk.RES, 172.0, 2.0, "the 110 cut's cell was 172 px")
