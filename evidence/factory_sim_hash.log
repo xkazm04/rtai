@@ -1,0 +1,6 @@
+factory: sim_hash: dispatching
+factory: sim_hash: Codex round done in 173 s (dispatch exit 0; log C:\Users\kazda\kiro\gtai-wt\n11-tools\build\codex\tasks\n11t-fac-sim-hash.log)
+factory: sim_hash: grading: unit tests in C:\Users\kazda\kiro\pof-codex\wt\n11t-fac-sim-hash
+factory: sim_hash: unit green, lint ok; mutation grade running (15 mutants, up to 45 min)
+factory: sim_hash: QUEUED FOR REVIEW: mutation score 86.7 %: at the bar, which proves nothing yet, Claude reviews
+exit 0
