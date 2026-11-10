@@ -202,3 +202,22 @@ test_quest_blade registers its own input actions (fails under --select).
   set is at his size); (b) the rocket gib's paper-cut pieces vs drawn gib pieces per kind (asset lane); (c) the t308
   between-swings frame is likely the equipped strip's REST cell (o 1-3, not aiming): hold the facing instead?
   NEXT stands as written above.
+
+## Session 4 (iteration 4, 00:35-02:05)
+
+- 00:36 read JOURNAL, DEFECTS, git log, replies (no new section since it350), tools JOURNAL (all combat REQUESTs served on n15-tools; not merged here: the Director merges).
+- 00:40 p55 katana right wind-up/strike pop: measured the cut strips (visor and helmet crops, `build/k55/heads.png`): the
+  strip cells are within ~1.1-1.3x of the facings by eye, not a clean number; n13/n14 are kept as built, so NOT changed:
+  stays a Call for the owner (a) with the session-3 film `evidence/n15-combat/boss_blade_katana_p55_64ppm_t306-326.png`.
+- MILESTONE `302a0d670` item 2 contractor (quest 1): `StreetQuestHit` draws the it321 hit stagger v2 (A) for 20 ticks
+  after a living blow and the first 10 ticks of a death (then the plan dead's lying pose). Packed by street_hit.py
+  (`contractor` SHEETS + VERSIONS v2), sized off the standing card (CELL_K 1.063 from the two 70 sheets' one scale).
+  Film quest1 combo 48 px/m, before `--quest-hit=off`, same build, t13708-13726:
+  `evidence/n15-combat/contractor_hit_stagger_ab_48ppm_x2_t13708-13726.png` (card -> thrown back, at the card's size,
+  no pop -> lying). In t13600-13838 every hit was a kill (10-tick diffs only), so the living hold is unfilmed.
+  Not taken: gut/shoulder flinches (no wound-site signal on the cast view), 5 death poses (the plan dead draw 5 already),
+  burn cells (no burn on the dock contractors' path). Cultist: no fighter in the game. DECISION combat/contractor-stagger.
+- FRICTION: `street_hit.py` repacks every kind; 4 burn grids (hood, punk, swat, thug) come out different bytes from HEAD
+  (restored with git checkout). The packer is not byte-stable against the committed burn sheets.
+- FRICTION: two quest1 films of the same build differ by ~250k px at t13708 when the stills list starts at a different
+  tick (13600 vs 13708): the camera's state depends on the first still. A/B pairs must use the same --stills list.
