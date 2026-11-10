@@ -21,6 +21,28 @@
     "sheet": "rivet_eq_chainsaw_55_windup.png",
     "sheet_k": 0.2463
    },
+   "chainsaw_left": {
+    "cells": {
+     "left": {
+      "file": "rivet_eq_chainsaw_55_left_windup.png",
+      "k": 0.0952
+     }
+    },
+    "dir": "..",
+    "eq_cells": 3
+   },
+   "chainsaw_left_strike": {
+    "cells": {
+     "left": {
+      "file": "rivet_eq_chainsaw_55_left_strike.png",
+      "k": 0.0952
+     }
+    },
+    "dir": "..",
+    "eq": "chainsaw_left",
+    "eq_cells": 3,
+    "name": "chainsaw_left_strike"
+   },
    "electro_baton": {
     "cells": {
      "cam": {
@@ -74,6 +96,28 @@
     "sheet": "rivet_eq_katana_55_windup.png",
     "sheet_k": 0.2847
    },
+   "katana_left": {
+    "cells": {
+     "left": {
+      "file": "rivet_eq_katana_55_left_windup.png",
+      "k": 0.1112
+     }
+    },
+    "dir": "..",
+    "eq_cells": 3
+   },
+   "katana_left_strike": {
+    "cells": {
+     "left": {
+      "file": "rivet_eq_katana_55_left_strike.png",
+      "k": 0.1112
+     }
+    },
+    "dir": "..",
+    "eq": "katana_left",
+    "eq_cells": 3,
+    "name": "katana_left_strike"
+   },
    "plasma_sword": {
     "cells": {
      "cam": {
@@ -93,6 +137,28 @@
     },
     "sheet": "rivet_eq_plasma_sword_55_windup.png",
     "sheet_k": 0.2664
+   },
+   "plasma_sword_left": {
+    "cells": {
+     "left": {
+      "file": "rivet_eq_plasma_sword_55_left_windup.png",
+      "k": 0.1037
+     }
+    },
+    "dir": "..",
+    "eq_cells": 3
+   },
+   "plasma_sword_left_strike": {
+    "cells": {
+     "left": {
+      "file": "rivet_eq_plasma_sword_55_left_strike.png",
+      "k": 0.1037
+     }
+    },
+    "dir": "..",
+    "eq": "plasma_sword_left",
+    "eq_cells": 3,
+    "name": "plasma_sword_left_strike"
    }
   },
   "p70": {
@@ -107,6 +173,30 @@
       "k": 0.92
      }
     },
+    "res": 1.5
+   },
+   "chainsaw_left": {
+    "cells": {
+     "left": {
+      "file": "rivet_eq_chainsaw_70_left_windup.png",
+      "k": 0.1578
+     }
+    },
+    "dir": "..",
+    "eq_cells": 3,
+    "res": 1.5
+   },
+   "chainsaw_left_strike": {
+    "cells": {
+     "left": {
+      "file": "rivet_eq_chainsaw_70_left_strike.png",
+      "k": 0.1578
+     }
+    },
+    "dir": "..",
+    "eq": "chainsaw_left",
+    "eq_cells": 3,
+    "name": "chainsaw_left_strike",
     "res": 1.5
    },
    "electro_baton": {
@@ -162,6 +252,30 @@
      172
     ]
    },
+   "katana_left": {
+    "cells": {
+     "left": {
+      "file": "rivet_eq_katana_70_left_windup.png",
+      "k": 0.1942
+     }
+    },
+    "dir": "..",
+    "eq_cells": 3,
+    "res": 1.5
+   },
+   "katana_left_strike": {
+    "cells": {
+     "left": {
+      "file": "rivet_eq_katana_70_left_strike.png",
+      "k": 0.1942
+     }
+    },
+    "dir": "..",
+    "eq": "katana_left",
+    "eq_cells": 3,
+    "name": "katana_left_strike",
+    "res": 1.5
+   },
    "plasma_sword": {
     "cells": {
      "cam": {
@@ -177,6 +291,28 @@
      "px": 0.5,
      "reach": 6
     }
+   },
+   "plasma_sword_left": {
+    "cells": {
+     "left": {
+      "file": "rivet_eq_plasma_sword_70_left_windup.png",
+      "k": 0.1302
+     }
+    },
+    "dir": "..",
+    "eq_cells": 3
+   },
+   "plasma_sword_left_strike": {
+    "cells": {
+     "left": {
+      "file": "rivet_eq_plasma_sword_70_left_strike.png",
+      "k": 0.1302
+     }
+    },
+    "dir": "..",
+    "eq": "plasma_sword_left",
+    "eq_cells": 3,
+    "name": "plasma_sword_left_strike"
    }
   }
  }

@@ -86,7 +86,7 @@ func test_every_one_handed_hold_has_a_drawn_left_strip_at_both_pitches() -> void
 
 
 func test_without_a_left_strip_the_base_figure_draws() -> void:
-	assert_eq(RivetStrips.left_of("p55", &"katana"), P55 + RivetStrips.BASE)
+	assert_eq(RivetStrips.left_of("p55", &"gatling"), P55 + RivetStrips.BASE)
 
 
 func test_the_flamer_fires_its_drawn_flame_in_every_direction() -> void:

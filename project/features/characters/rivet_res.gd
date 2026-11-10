@@ -11,6 +11,13 @@ const X15: PackedStringArray = [
 	"p70/rivet_eq_katana.png",
 	"p70/rivet_eq_chainsaw.png",
 	"p70/rivet_eq_chainsaw_windup.png",  # n14: the asset lane drew its cells at the x1.5 strip's scale
+	# n15: the blades' drawn left sets, cut at their equipped strip's x1.5
+	"p70/rivet_eq_katana_left.png",
+	"p70/rivet_eq_katana_left_windup.png",
+	"p70/rivet_eq_katana_left_strike.png",
+	"p70/rivet_eq_chainsaw_left.png",
+	"p70/rivet_eq_chainsaw_left_windup.png",
+	"p70/rivet_eq_chainsaw_left_strike.png",
 ]
 
 
