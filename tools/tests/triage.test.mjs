@@ -3,7 +3,7 @@
 import assert from 'node:assert/strict';
 import { existsSync, mkdtempSync, readFileSync, rmSync, rmdirSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
 import { test } from 'node:test';
 import { buildReach } from './reach_index.mjs';
 import { TRIAGE_NAME, blockLines, logSlice, parseEntries, rerunCommand, triage, verdictOf, writeTriage } from './triage.mjs';
@@ -124,7 +124,7 @@ test('flake history: 2 ledger entries -> "flaked 2x before (last <ts>, <lanes>)"
     assert.ok(blockLines(e).some((l) => l.trim() === 'flaked 2x before (last 2026-11-06T11:00:00.000Z, lane/look, lane/vehicles)'));
   } finally {
     if (prev === undefined) delete process.env.GTAI_FLAKES_FILE; else process.env.GTAI_FLAKES_FILE = prev;
-    rmSync(ledgerFile, { force: true });
+    rmSync(dirname(ledgerFile), { recursive: true, force: true });
   }
 });
 

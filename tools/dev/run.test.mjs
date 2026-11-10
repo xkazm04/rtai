@@ -1,18 +1,21 @@
 // node --test "tools/dev/*.test.mjs"
 import assert from 'node:assert/strict';
-import { mkdtempSync, readdirSync } from 'node:fs';
+import { mkdtempSync, readdirSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { test } from 'node:test';
+import { after, test } from 'node:test';
 import { fileURLToPath } from 'node:url';
 import { main } from './run.mjs';
 
 const FIX = fileURLToPath(new URL('./fixtures', import.meta.url));
+const made = [];
+after(() => { for (const d of made) rmSync(d, { recursive: true, force: true }); });
 
 function harness(result = { status: 0, out: '', timedOut: false, durationMs: 5 }) {
   const calls = [];
   const lines = { out: [], err: [] };
   const logDir = mkdtempSync(join(tmpdir(), 'gtai-dev-run-'));
+  made.push(logDir);
   const opts = {
     runner: async (args, o) => { calls.push({ args, o }); return result; },
     out: (l) => lines.out.push(l), err: (l) => lines.err.push(l), logDir,

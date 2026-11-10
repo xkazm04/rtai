@@ -1,12 +1,14 @@
-import { test } from 'node:test';
+import { after, test } from 'node:test';
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
-import { mkdtempSync, readFileSync, appendFileSync } from 'node:fs';
+import { mkdtempSync, readFileSync, appendFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { classifyRerun, ledgerPath, quarantineCandidates, readLedger, recordFlake, reportText } from './flakes.mjs';
 
-const tmp = () => join(mkdtempSync(join(tmpdir(), 'gtai-flakes-')), 'sub', 'flakes.jsonl');
+const made = [];
+after(() => { for (const d of made) rmSync(d, { recursive: true, force: true }); });
+const tmp = () => { const d = mkdtempSync(join(tmpdir(), 'gtai-flakes-')); made.push(d); return join(d, 'sub', 'flakes.jsonl'); };
 
 test('ledgerPath honours GTAI_FLAKES_FILE, else LOCALAPPDATA', () => {
   assert.equal(ledgerPath({ GTAI_FLAKES_FILE: 'x/y.jsonl' }), 'x/y.jsonl');
