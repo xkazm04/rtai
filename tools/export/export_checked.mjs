@@ -1,5 +1,6 @@
 // Refuse release exports until the baked city passes its manifest check.
-import { join, resolve } from 'node:path';
+import { mkdirSync } from 'node:fs';
+import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { ROOT } from '../lib/repo.mjs';
 import { runGodot } from '../lib/godot.mjs';
@@ -36,8 +37,12 @@ function bakeReason(result) {
     : `missing or invalid baked city: ${LIST} or ${CITY}; run the city bake`;
 }
 
-/** Check first, so a missing or invalid bake can never launch an export. */
-export async function exportChecked({ out = DEFAULT_OUT, check = defaultCheck, run = defaultRun } = {}) {
+/** Where Godot writes `out`: it resolves a relative path against project/. */
+export const outPath = (out, root = ROOT) => resolve(root, 'project', out);
+
+/** Check first, so a missing or invalid bake can never launch an export. The output's folder is made
+ *  only after the check passes: a fresh worktree has no build/export (hero n11 line 219). */
+export async function exportChecked({ out = DEFAULT_OUT, check = defaultCheck, run = defaultRun, root = ROOT } = {}) {
   let result;
   try {
     result = await check();
@@ -45,6 +50,7 @@ export async function exportChecked({ out = DEFAULT_OUT, check = defaultCheck, r
     return { ok: false, reason: `cannot verify baked city (${LIST}, ${CITY}): ${error?.message ?? String(error)}` };
   }
   if (result?.ok !== true) return { ok: false, reason: bakeReason(result) };
+  mkdirSync(dirname(outPath(out, root)), { recursive: true });
   const code = await run(exportArgs(out));
   return { ok: code === 0, code };
 }
