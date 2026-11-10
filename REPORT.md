@@ -84,6 +84,10 @@ Frames: `C:\Users\kazda\kiro\gtai-masters\n11\combat\frames.json` (15 entries, b
 it21 draft: the last full green is `8cc57abe` (01:51). Gates on `78f79a8f` are running at the time
 of writing. Bench not run under the lock this night (see above).
 
+Exe: `build/export/windows/RTAI.exe` built on `0a903df1` (it32, `bake_city` then
+`tools/export/export_checked.mjs`, exit 0); headless boot smoke 300 frames, exit 0, 0 SCRIPT ERROR.
+Not played in a window.
+
 ## Merge notes
 
 - Native: `body.cpp` changed (`50b47690`); rebuild both DLL targets after the merge.
