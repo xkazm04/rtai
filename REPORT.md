@@ -96,7 +96,9 @@ until 01:45). Repaired by hand within minutes; no lane commit got the wrong iden
    review and the control independently; likely fix `_turn += q + 1`.
 2. Land `test_city_spawn_plan.gd` or not: machine-rejected at 60 % on 6 survivors that both writers left
    (initialisers `_init` reassigns, and a rioter branch never reached), review accepts it unchanged.
-   Overriding a machine reject is a rule change, so it is yours.
+   Overriding a machine reject is a rule change, so it is yours. The file waits, not landed, in the Codex
+   worktree `C:/Users/kazda/kiro/pof-codex/wt/n11t-fac-city-spawn-plan/project/tests/unit/test_city_spawn_plan.gd`
+   (kept on purpose for this call; `dispatch.ts discard n11t-fac-city-spawn-plan` removes it).
 3. QuestBeatValidator suspects: `str()` coercion, a `1e999` INF duration passes, an unknown line id is
    marked used, an invalid beat's encounter still counts at "".
 4. CitySimCarRoute suspects (the parity reference sim: a change here moves the native sim too, NAT-06),
