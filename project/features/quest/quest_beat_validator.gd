@@ -3,6 +3,9 @@ extends RefCounted
 ## gtai.quest/1 beat checks: a known objective verb, its target and location resolved in the
 ## world's places (and the place's encounter for fight/sabotage), a positive durationS where
 ## present, and lineIds that exist in the package. Sums the encounters the beats will run.
+## n11 call t-3 (owner, 2026-11-10): verb and location must be strings (no str() coercion), an
+## infinite durationS fails, only known line ids count as used, and a beat with any error adds no
+## encounter to the sums.
 
 var used_line_ids: Dictionary[String, bool] = {}
 var encounter_enemies: int = 0
@@ -30,47 +33,62 @@ func _beat(raw: Variant, at: String, line_ids: Dictionary[String, bool]) -> void
 		_report.error(at, "not an object")
 		return
 	var b: Dictionary = raw
+	var before: int = _report.errors.size()
+	var fight: QuestPlaces.Encounter = null
 	if not QuestJson.is_text(b.get("id")) or not QuestJson.is_text(b.get("title")):
 		_report.error(at, "needs string id and title")
 	var o: Variant = b.get("objective")
 	if o is Dictionary:
 		var objective: Dictionary = o
-		_objective(objective, at + ".objective")
+		fight = _objective(objective, at + ".objective")
 	else:
 		_report.error(at + ".objective", "missing or not an object")
 	if not b.get("lineIds") is Array:
 		_report.error(at + ".lineIds", "missing or not an array")
 		return
 	for line_id: String in QuestJson.strings(b["lineIds"]):
-		if not line_ids.has(line_id):
+		if line_ids.has(line_id):
+			used_line_ids[line_id] = true
+		else:
 			_report.error(at + ".lineIds", "'%s' is not in lines" % line_id)
-		used_line_ids[line_id] = true
+	if fight != null and _report.errors.size() == before:
+		encounter_enemies += fight.enemies
+		encounter_waves += fight.waves
 
 
-func _objective(o: Dictionary, at: String) -> void:
-	var verb_name: String = str(o.get("verb", ""))
+## Checks one objective; returns the encounter it would run (null: none, or not resolvable).
+func _objective(o: Dictionary, at: String) -> QuestPlaces.Encounter:
+	var verb_name: String = _text(o.get("verb"))
 	if not _rules.verbs.has(verb_name):
 		var known: PackedStringArray = PackedStringArray(_rules.verbs.keys())
 		_report.error(
 			at + ".verb", "unknown verb '%s' (handled: %s)" % [verb_name, ", ".join(known)]
 		)
-		return
+		return null
 	var verb: QuestVerb = _rules.verbs[verb_name]
 	if verb.needs_target:
 		_target(o.get("target"), verb, at + ".target")
-	var location: String = str(o.get("location", ""))
+	var location: String = _text(o.get("location"))
 	if verb.needs_location and not _places.markers.has(location):
 		_report.error(at + ".location", "'%s' is not a marker" % location)
+	var fight: QuestPlaces.Encounter = null
 	if verb.needs_encounter:
 		if _places.encounters.has(location):
-			encounter_enemies += _places.encounters[location].enemies
-			encounter_waves += _places.encounters[location].waves
+			fight = _places.encounters[location]
 		else:
 			_report.error(
 				at + ".location", "'%s' holds no encounter for '%s'" % [location, verb.id]
 			)
-	if o.has("durationS") and QuestJson.num(o["durationS"], 0.0) <= 0.0:
-		_report.error(at + ".durationS", "must be a number > 0 (omit it for untimed verbs)")
+	if o.has("durationS"):
+		var d: float = QuestJson.num(o["durationS"], 0.0)
+		if not (is_finite(d) and d > 0.0):
+			_report.error(at + ".durationS", "must be a number > 0 (omit it for untimed verbs)")
+	return fight
+
+
+## A string field's text, or "" for anything that is not a string (a number is not coerced).
+static func _text(raw: Variant) -> String:
+	return str(raw) if raw is String else ""
 
 
 func _target(raw: Variant, verb: QuestVerb, at: String) -> void:

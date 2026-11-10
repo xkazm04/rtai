@@ -7,6 +7,14 @@ extends RefCounted
 ## Render only. LEAN_DEG 0 turns it off.
 
 const LEAN_DEG: float = 12.0
+## Per form, where the drawn HIT cell already tips: Tonnage's tips about 20 deg, and the full lean
+## stacked with it to about 30 (owner call h-5, 2026-11-10: keep the lean, lower Tonnage only).
+const LEAN_BY_FORM: Dictionary[String, float] = {"tonnage": 4.0}
+
+
+## The lean in degrees for a form's card name.
+static func lean_of(form: String) -> float:
+	return float(LEAN_BY_FORM.get(form, LEAN_DEG))
 
 
 ## The sprite's screen rotation (rad) `since` ticks after a hit (-1 = never hit), facing `look`.
