@@ -71,6 +71,18 @@ stale source a new date before importing, checks again afterwards, and calls the
 **unverifiable** if anything still does not match. The first film in a tree hashes every asset once
 (it says so; under a minute), later ones only what changed.
 
+A chosen victim on the weapon shot (combat n11 REQUEST line 225), so a thug's or a SWAT's fall is
+filmed rather than judged from a packed sheet:
+
+```
+node tools/film/film.mjs weapon:machine_pistol --victim=cop/head_swat --out=build/film/swat --on=kill:1+30
+```
+
+The kinds are the card rows of the filmed tree's `StreetDeadPlan.CLASS_OF` (did-you-mean on a typo).
+The kind is the game's choice, so it needs a dev-only hook in `gunplay_hook.gd` `lone()` that reads
+`--victim` and logs `gunplay: lone victim <kind>`. Until a tree has it, film refuses and says so;
+with it, a run that never logs the line, or logs another kind, is **unverifiable**, never a pass.
+
 To compare the frame something happened on, learn the tick once with `--on`, then compare it:
 `node tools/film/compare.mjs ... --at=333`. The tick is the same on both sides as long as the change
 under test is visual, because the sim is deterministic; if the shot moved, the verdict's numbers show

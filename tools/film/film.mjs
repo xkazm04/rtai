@@ -3,7 +3,7 @@
 // step; ids and flags checked against the tree before anything launches; tick-exact stills and
 // per-tick numbers from dev/frames/film_probe.gd; one verdict: pass, fail or unverifiable.
 //   node tools/film/film.mjs <shot> --out=<dir> [--ticks=<n>] [--stills=<t,t-t>] [--on=fire:3+4,kill:1+6] [--view=combo]
-//     [--ppm=48] [--lock=auto|spawn|trigger|at:<tick>|<x,y>|off] [--seed=<n>] [--res=1280x800] [--movie] [--no-movie] [--tree=<dir>]
+//     [--ppm=48] [--lock=auto|spawn|trigger|at:<tick>|<x,y>|off] [--seed=<n>] [--res=1280x800] [--movie] [--no-movie] [--tree=<dir>] [--victim=<kind>]
 //     [--timeout=<s>] [--keep-going] [--dry-run] [-- <extra game flags>]
 // Exit: 0 pass, 1 fail (the run broke), 2 usage (nothing launched), 3 unverifiable (it ran, but the
 // numbers or stills it was asked for do not exist).
@@ -15,13 +15,13 @@ import { ROOT } from '../lib/repo.mjs';
 import { staleAssets, touchStale } from '../lib/asset_cache.mjs';
 import { describe, runGodot, SCRIPT_ERROR } from '../lib/godot.mjs';
 import { verdict } from '../lib/dev_verdict.mjs';
-import { autoLock, checkFlags, checkId, godotArgs, parseOn, parseShot, parseStills, shotLabel, triggeredTicks } from './shots.mjs';
+import { autoLock, checkFlags, checkId, checkVictim, godotArgs, parseOn, parseShot, parseStills, shotLabel, triggeredTicks, victimSaid } from './shots.mjs';
 import { subjectRow } from './subject.mjs';
 
 export const EXIT = { pass: 0, fail: 1, usage: 2, unverifiable: 3 };
 const USAGE = 'usage: node tools/film/film.mjs <shot> --out=<dir> [--ticks=<n>] [--stills=<t,t-t>] [--on=fire:3+4,kill:1+6] [--view=combo] '
-  + '[--ppm=48] [--lock=auto|spawn|trigger|at:<tick>|<x,y>|off] [--seed=<n>] [--res=1280x800] [--movie] [--no-movie] [--tree=<dir>] [--timeout=<s>] [--keep-going] [--dry-run] [-- flags]';
-const VALUE = new Set(['out', 'ticks', 'stills', 'on', 'view', 'ppm', 'lock', 'seed', 'res', 'tree', 'timeout', 'subject']);
+  + '[--ppm=48] [--lock=auto|spawn|trigger|at:<tick>|<x,y>|off] [--seed=<n>] [--res=1280x800] [--movie] [--no-movie] [--tree=<dir>] [--victim=<kind>] [--timeout=<s>] [--keep-going] [--dry-run] [-- flags]';
+const VALUE = new Set(['out', 'ticks', 'stills', 'on', 'view', 'ppm', 'lock', 'seed', 'res', 'tree', 'timeout', 'subject', 'victim']);
 const SWITCH = new Set(['movie', 'no-movie', 'dry-run', 'keep-going']);
 const DEFAULTS = { subject: 'rivet', view: 'combo', ppm: '48', lock: 'auto', seed: '20261109', res: '1280x800', timeout: '900' };
 
@@ -64,8 +64,11 @@ export function plan(flags, shotText, extra) {
   if (!/^\d+x\d+$/.test(flags.res)) return { error: `film: --res must be WxH, got ${flags.res}` };
   if (!/^(auto|spawn|trigger|off|at:\d+|-?\d+(\.\d+)?,-?\d+(\.\d+)?)$/.test(flags.lock)) return { error: `film: --lock must be auto, spawn, trigger, off, at:<tick> or x,y, got ${flags.lock}` };
   const lock = flags.lock === 'auto' ? autoLock(shot.shot, stills.length ? Math.min(...stills) : null, on.length > 0) : flags.lock;
+  if (extra.some((a) => a.split('=')[0] === '--victim')) return { error: 'film: give --victim=<kind> before the --, so the film checks the kind and the run' };
+  const victim = flags.victim ?? null;
+  const game = victim === null ? extra : [...extra, `--victim=${victim}`];
   const bad = [...(shot.shot.needs ? [checkId(shot.shot.needs, shot.arg, tree)] : []), checkId('view', flags.view, tree),
-    ...checkFlags(extra, tree)].filter(Boolean);
+    ...(victim === null ? [] : [checkVictim(victim, shot, tree)]), ...checkFlags(extra, tree)].filter(Boolean);
   if (bad.length) return { error: bad.map((b) => `film: ${b}`).join('\n') };
   if (!shot.shot.script && !existsSync(join(tree, 'project/dev/frames/film_probe.gd'))) {
     return { error: `film: ${tree} has no dev/frames/film_probe.gd (older than the kit): film a commit with tools/film/compare.mjs, which injects it` };
@@ -78,7 +81,7 @@ export function plan(flags, shotText, extra) {
   // A movie costs real time (combat measured about 1.5 fps with Godots running beside it), so stills skip it unless asked.
   const wantMovie = flags.movie === true || (!stills.length && !on.length && !flags['no-movie']);
   const movie = wantMovie && !shot.shot.script ? join(dir, `${shotLabel(shot)}.avi`) : null;
-  return { shot, opts: { tree, dir, ticks, stills, on, onText: flags.on ?? '', movie, extra, view: flags.view, ppm: flags.ppm, lock,
+  return { shot, opts: { tree, dir, ticks, stills, on, onText: flags.on ?? '', movie, extra: game, victim, view: flags.view, ppm: flags.ppm, lock,
     subject: flags.subject ?? 'rivet', seed: flags.seed, res: flags.res, timeoutMs: Number(flags.timeout) * 1000, label: shotLabel(shot),
     noProbe: Boolean(shot.shot.script), keepGoing: flags['keep-going'] === true } };
 }
@@ -139,6 +142,11 @@ export function judge(res, opts, startedAt) {
     if (!who) reasons.push(`no ${opts.subject} in the numbers at tick ${t}`);
     else if (!who.on_screen) reasons.push(`${opts.subject} is off screen at tick ${t} (${(who.screen ?? []).map((n) => Math.round(n)).join(', ')})`);
   }
+  if (opts.victim) {
+    const said = victimSaid(res.out);
+    if (said === null) reasons.push(`the run never said its victim (no "gunplay: lone victim <kind>" line), so ${opts.victim} is not seen`);
+    else if (said !== opts.victim) reasons.push(`the run's victim was ${said}, not the asked ${opts.victim}`);
+  }
   return { outcome: reasons.length ? 'unverifiable' : 'pass', reasons, probe, stills: wanted };
 }
 
@@ -169,7 +177,7 @@ export async function filmOne({ shot, opts }, { runner = runGodot } = {}) {
     judged.reasons.push('the movie did not encode');
   }
   const manifest = { schema: 'gtai.film/1', shot: opts.label, outcome: judged.outcome, reasons: judged.reasons, ...gitHead(opts.tree),
-    tree: opts.tree, ticks: opts.ticks, stills: judged.stills ?? opts.stills, on: opts.onText, events: judged.probe?.events ?? null, view: opts.view, ppm: opts.ppm, lock: opts.lock, seed: opts.seed,
+    tree: opts.tree, ticks: opts.ticks, stills: judged.stills ?? opts.stills, on: opts.onText, victim: opts.victim ?? null, events: judged.probe?.events ?? null, view: opts.view, ppm: opts.ppm, lock: opts.lock, seed: opts.seed,
     res: opts.res, mp4, ran: describe(res), args };
   writeFileSync(join(opts.dir, 'film.json'), `${JSON.stringify(manifest, null, 1)}\n`);
   return { ...judged, mp4, manifest };

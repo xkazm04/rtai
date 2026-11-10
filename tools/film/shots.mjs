@@ -151,3 +151,36 @@ export function triggeredTicks(rules, events, runTicks) {
 }
 
 export const shotLabel = (s) => (s.arg ? `${s.name}-${s.arg}` : s.name);
+
+// --victim=<kind> (combat n11 REQUEST line 225): the weapon shot's lone guard drawn as another kind.
+// The kinds are the card rows StreetDeadPlan.CLASS_OF knows in the filmed tree; the game must read
+// --victim (checkFlags refuses it otherwise) and say `gunplay: lone victim <kind>`, or the film
+// cannot tell a thug's fall from the patrol cop's and is unverifiable, never a pass.
+const DEAD_PLAN = 'project/features/characters/street_dead_plan.gd';
+
+/** The victim kinds the tree draws: CLASS_OF's keys, in file order ([] when the table is absent). */
+export function victimKinds(tree) {
+  const file = join(tree, DEAD_PLAN);
+  if (!existsSync(file)) return [];
+  const body = /const CLASS_OF[^{]*\{([^}]*)\}/.exec(readFileSync(file, 'utf8'));
+  return body ? [...body[1].matchAll(/^\s*"([^"]+)"\s*:/gm)].map((m) => m[1]) : [];
+}
+
+/** null, or why `--victim=<kind>` cannot be filmed with this shot in this tree. */
+export function checkVictim(kind, shot, tree) {
+  if (shot.name !== 'weapon') return `--victim is for the weapon shot only, not ${shot.name}`;
+  const known = victimKinds(tree);
+  if (!known.length) return `${tree} has no ${DEAD_PLAN} CLASS_OF table to check --victim=${kind} against`;
+  if (known.includes(kind)) {
+    if (knownFlags(tree).has('--victim')) return null;
+    return `no script in ${tree} reads --victim: the lone guard's kind is the game's choice (gunplay_hook.gd lone()), and that hook must read --victim and log "gunplay: lone victim <kind>"`;
+  }
+  const near = didYouMean(kind, known);
+  return `unknown victim ${kind} in ${tree}: ${near ? `did you mean ${near}?` : `known: ${known.join(' ')}`}`;
+}
+
+/** What the run said its victim was: null (it never said), or the kind. */
+export function victimSaid(out) {
+  const m = /\bgunplay: lone victim (\S+)/.exec(String(out ?? ''));
+  return m ? m[1] : null;
+}
