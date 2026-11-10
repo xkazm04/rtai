@@ -91,3 +91,107 @@ last 2-3 wind-up ticks of a sword / katana / baton swing (RigInput's late start)
   as blobs; each commit's tree lints clean through the hook).
 - DLLs: the Director's fresh build copied in at 17:57 (debug 601103df, release 6b017cd9), after all
   films; unit 2488 / 0 with them (test_downed_person_walkable passes).
+
+## Gates (head `3ceede12d`, the Director's DLLs)
+- Lint 16/16 (every commit through the hook); debt ratchet ok (dev_loc +7 accepted at `7de9a7c86`
+  with its reason).
+- Unit 2488 / 0 (2 skipped; full run before the item commits); test_rivet_windup 13 and
+  test_rivet_cell_scale after.
+- Scenarios 55 / 55 (`node tools/tests/run_scenarios.mjs`).
+- Parity: native == GDScript bit for bit over 1200 steps (40 snapshots, 3510 floats); planted
+  mutation caught at step 629.
+- Selftest: look goldens 11/11 worst 0.00; block goldens 5/5 within mean 4, worst 0.69 (n13: 0.00);
+  world lock 0.00 %. The block goldens are city frames without Rivet's drawn wind-up (no path this lane
+  touched renders there); the move came with the base, most likely the DLL swap (main's body.cpp
+  50b476905: the downed are walked over, so crowd bodies move), not re-blessed; the Director's
+  merge-check run is the comparison.
+- Hand plant: `hides_held` without the LEFT_FILE match fails test_rivet_cell_scale (restored, clean).
+
+## Perf: fight_gate.mjs (release export, off = `--rivet-windup=off`, on = the head, A/A = off's twin)
+- Run 1 (city + horde, 4 rounds, `build/n14/gate/gate.json`): the machine contended (8 of 11 city
+  runs, 8 of 12 horde runs CONTENDED; another lane's gate and reel up): 800 ms `draw` stalls hit off,
+  on and the A/A twin alike. Every paired verdict WASH. City p50 on - off +0.059 [-0.451, +0.118]
+  (A/A +0.430 [+0.107, +2.996]); horde p50 -0.235 [-3.330, +0.158] (A/A -0.052), p99 +0.096
+  [-2.506, +1.693], worst -1.3, over-25 -0.5. Exit 1 only because city off r2 timed out under the
+  contention (11 of 12 city runs). Cleanest runs: city off r0 5.11 / 12.80 / 17.8 ms (p50 / p99 /
+  worst), on r3 5.03 / 11.12; horde on r0 4.86 / 7.13 / 16.2, off r0 5.19 / 9.64 / 17.0.
+- The gate's scenes draw no blade, so they bound only the per-frame cost of the new code (RivetWindup's
+  early return per pose step; one more `ends_with` in hides_held). The new strips' warm is the n13
+  path (RivetStripWarm lists both wind-up files per carried weapon, tested); first use in the editor
+  films +1.5-3 ms process, worst frame 8.9 ms.
+
+## Planted faults
+- `rivet_windup.gd`: `mutate.mjs --tests=test_rivet_windup,test_rivet_cell_scale,test_rivet_frames`,
+  all 30 mutants of the file: 100 % (24 killed / 24, 6 invalid: `+ -> -` on string joins), 507 s.
+- `rivet_strips.gd` (one line, the hides_held LEFT_FILE match): hand plant killed by
+  test_rivet_cell_scale ("the left wind-up keeps the smear").
+- `rivet_strip_warm.gd` (the LEFT_FILE line removed): killed ("p70 left warmed").
+- `rivet_res.gd` (the chainsaw wind-up's X15 line removed): killed (1.0 expected 1.5).
+- `rivet_windup_cells.py`: the re-run of the whole manifest reproduces n13's three p70 strips byte
+  for byte (the cell-in-own-px change and min_cell checked by that).
+- Every hand plant restored by path (`git status` clean). The mutate tool keeps its own temp
+  worktree (`%TEMP%/gtai-mutate-15e719e6` at `3ceede12d`), outside this checkout.
+- Run 2 (city only, `--quiet=6 --no-export`, 4 rounds, `build/n14/gate-city/gate.json`): 4 of 12
+  CONTENDED, exit 0. off 4.78 / 10.23 / 15.4 ms (p50 / p99 / worst), on 4.83 / 8.62 / 15.7, A/A
+  4.76 / 7.14 / 10.9; 0 frames over 25 ms in every arm. on - off p50 +0.002 [-0.097, +0.361]
+  (A/A -0.014 [-0.204, +0.115]), p99 +0.525 [-4.986, +3.193], worst +3.4 [-41.7, +35.6], cpu +0.48 s
+  [-0.25, +0.84]: all WASH.
+
+## Report
+
+Branch `n14-windup-more`, from main `63088ade9` (+ the Director's `bc1682b84` cherry-picked as
+`355fd1c04`). Nothing merged or pushed. Masters (stills, films, `frames.json`, 28 entries):
+`C:\Users\kazda\kiro\gtai-masters\n14\windup-more\`.
+
+| Item, view | State | Anticipation (melee.md, 32 px/m, off -> on) | Commit |
+|---|---|---|---|
+| 1 plasma sword p55 side / cam | ON | 2 -> 4 / 2 -> 4 | `7de9a7c86` |
+| 1 katana p55 side / cam | ON | 4 -> 5 / 3 -> 4 | `7de9a7c86` |
+| 1 electro baton p55 side / cam | ON | 2 -> 4 / 2 -> 4 | `7de9a7c86` |
+| 2 electro baton left, p70 / p55 | ON (second slot) | 2 -> 3 / 2 -> 3 | `e42469841`, test `3ceede12d` |
+| 3 chainsaw p70 side / cam | ON (x1.5, RivetRes.X15) | 3 -> 4 / 3 -> 4 | `1277d2bf7` |
+| 3 chainsaw p55 side / cam | ON | 3 -> 4 / 3 -> 4 | `1277d2bf7` |
+
+No pop or flicker in any (no arcs in the cells, helmet column and feet line hold). Before switch:
+`--rivet-windup=off` (all wind-ups, the film before), or one weapon's row removed from
+`tools/art/rivet_windup_cells.json` with its PNG (no file = off for that weapon and art key; the
+left wind-up is its own row, `electro_baton_left`).
+
+Key stills / films (all `-ab-32ppm`, top / left = off): `i1_<blade>_windup_p55-{side,cam}`,
+`i2_electro_baton_left_windup_{p70,p55}`, `i3_chainsaw_windup_{p70,p55}-{side,cam}` (`.mp4` and
+`-frames....png`); fit sheets `i1_windup_p55_fit-facing-windup-strike-3x.png`,
+`i2_baton_left_windup_fit-p70-p55-3x.png`, `i3_chainsaw_p70_fit-2x.png`; the first p70 left take
+that lost the smear `i2_electro_baton_left_p70-trial1-smear-lost.png`.
+
+Gates (head `3ceede12d`, the Director's DLLs): lint 16/16; debt ok (+7 dev_loc accepted, the film
+chapters); unit 2488 / 0 (2 skipped); scenarios 55 / 55; parity bit for bit over 1200 steps (40
+snapshots, 3510 floats), mutation caught at 629; look goldens 11/11 worst 0.00, block goldens 5/5
+worst 0.69 (base, not this lane: see Gates), world lock 0.00 %.
+
+Perf: fight gate run 1 (contended) all WASH; city re-run quiet: p50 on - off +0.002 [-0.097, +0.361]
+vs A/A -0.014, 0 frames over 25 ms, all WASH. Films: first wind-up frame +1.5-3 ms process (editor).
+
+Planted faults: rivet_windup.gd 100 % (24 / 24, 6 invalid, all 30 mutants); hand plants on the
+one-line changes in rivet_strips.gd, rivet_strip_warm.gd, rivet_res.gd: 3 / 3 killed; checkout clean.
+
+### Owner calls
+1. The boss view was filmed as the 55-degree view (`--view=tilt`: pitch 55, p55 art) on the director
+   chapters, not inside a boss fight: BossBot fights with guns from 8 m, so no blade swings there.
+   combo's boss state differs only in the shadow length (cast_k 0.35 vs 1.2). Enough, or a blade boss
+   bot for a real boss-fight film?
+2. The p55 electro baton's equipped strip draws its strike cells about 0.72 of its facings (the cutter
+   fell back to act_k 0.75); the wind-ups are fitted to the strikes, so the size step stays where it was
+   (facing -> swing). Re-cut the p55 baton's action band?
+3. The left baton swing still has no drawn strike: wind-up (drawn) -> left facing + game smear. 2 -> 3
+   only. Commission a left strike cell (the left strip has 3 facings, no action)?
+4. The camera wind-ups (sword, katana, chainsaw) sink the helmet between the raised arms (a squash
+   before the downward cut). I read it as anticipation, not a pop; the owner's eye on
+   `i1_plasma_sword_windup_p55-cam-ab-32ppm.mp4` decides.
+5. Block goldens worst 0.69 (n13 0.00) arrived with the base (the DLLs with main's body.cpp); not
+   re-blessed here.
+
+### Brief corrections / found
+- main after the n13 merge failed test_rivet_windup (317 >= 473 on the katana): the Director's fix
+  cherry-picked. n13's katana wind-up was cut against the 110 cell before n11's x1.5 re-cut; the tool
+  now reads the equipped cell in the wind-up strip's own px and pins that cell (`min_cell`).
+- `rivet_frames.gd` untouched (200 lines); the left slot lives in RivetWindup.
