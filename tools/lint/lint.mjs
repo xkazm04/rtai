@@ -15,13 +15,13 @@ import { check as debtCheck } from '../debt/debt.mjs';
 // Windows caps a command line at 32767 chars and the gdtoolkit launchers fail silently past it
 // (exit 1, no output: 810 files were 32633 chars), so file lists go in batches of FILE_BATCH.
 const FILE_BATCH = 200;
-const tool = (name, cmd, flags, files = null) => {
+const tool = (name, cmd, flags, files = null, env = null) => {
   const batches = [];
   for (let i = 0; files && i < files.length; i += FILE_BATCH) batches.push(files.slice(i, i + FILE_BATCH));
   const issues = [];
   let ok = true;
   for (const batch of files ? batches : [[]]) {
-    const res = run(cmd, [...flags, ...batch], { cwd: ROOT });
+    const res = run(cmd, [...flags, ...batch], { cwd: ROOT, ...(env ? { env } : {}) });
     if (res.status === 0) continue;
     ok = false;
     const out = res.out.split('\n').filter((l) => l.trim());
@@ -113,6 +113,14 @@ function autoloadBudget() {
   return { name: 'autoload-budget', ok, issues };
 }
 
+/** The Node tools no other gate runs: about 300 tests in a second, so they cannot rot unseen. */
+/** The environment without git's own variables. Inside the pre-commit hook git sets GIT_DIR and
+ *  GIT_INDEX_FILE, so a tool test running `git -C <tmp>` would commit into THIS repo and re-init its
+ *  shared config (it did, n11 tools 01:39: core.bare=true broke the main checkout). */
+export const withoutGitEnv = (env = process.env) => Object.fromEntries(Object.entries(env).filter(([k]) => !/^GIT_/i.test(k)));
+
+const TOOL_TEST_GLOBS = ['tools/film/*.test.mjs', 'tools/merge/*.test.mjs', 'tools/codex/*.test.mjs', 'tools/gate/*.test.mjs'];
+
 export function runLint() {
   const gd = ownGdFiles().map(rel);
   const node = process.execPath;
@@ -130,6 +138,7 @@ export function runLint() {
     debtCheck(),
     tool('achievements-validate', node, [gen, 'validate']),
     tool('achievements-drift', node, [gen, '--check']),
+    tool('tool-tests', node, ['--test', ...TOOL_TEST_GLOBS], null, withoutGitEnv()),
   ];
   const failed = checks.filter((c) => !c.ok);
   const summary = failed.length
@@ -138,7 +147,7 @@ export function runLint() {
   return { ok: !failed.length, checks, summary, fileCount: gd.length };
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const result = runLint();
   if (process.argv.includes('--json')) {
     console.log(JSON.stringify(result, null, 2));

@@ -1,0 +1,126 @@
+{
+ "measured": {
+  "tasks": 24,
+  "started_and_never_finished": [],
+  "refused_by_meter": 0,
+  "machine_pass": 22,
+  "machine_fail": 2,
+  "codex_secs": 5816,
+  "awaiting_review": 0,
+  "accepted": 11,
+  "accepted_after_revision": 12,
+  "rejected": 0,
+  "review_lines_changed": 167,
+  "review_sessions": 11,
+  "reviews_without_a_session": 0,
+  "review_sessions_usd": 90.96387599999998
+ },
+ "estimated": {
+  "note": "one session reviews many tasks, so a task's share of it is an even split, not a measurement; and a session also builds other things, so the figure is an upper bound on the review's cost",
+  "review_usd_per_task": 3.954951130434782
+ },
+ "controls": [
+  {
+   "type": "control",
+   "id": "control-oil-leak",
+   "unit": "oil_leak",
+   "model": "claude-opus-5-5",
+   "claude_tokens": 50249,
+   "secs": 309,
+   "tests": 12,
+   "mutation": {
+    "killed": 9,
+    "of": 14
+   },
+   "review_changed": 0,
+   "notes": "main 812a0b06 scratch worktree; 1 more mutant (line 39 drip deleted) TIMED OUT at 307 s under load and is excluded (Codex's run killed it); the extra survivor vs Codex is line 8 left=0->1 (an unhit robot stepping once); defaults 9.0/45 and maxf 1.0 survive in both",
+   "at": "2026-11-09T21:58:33.046Z"
+  },
+  {
+   "type": "control",
+   "id": "control-quest-beat-validator",
+   "unit": "quest_beat_validator",
+   "model": "claude-opus-5-5",
+   "claude_tokens": 67154,
+   "secs": 674,
+   "tests": 15,
+   "mutation": {
+    "killed": 11,
+    "of": 11
+   },
+   "review_changed": 0,
+   "notes": "Opus subagent in a scratch worktree at main 812a0b06, same goal/laws/context/acceptance as the factory task; 15 tests green first run; my review changed 0 lines; same 15 mutants as Codex's grade, 4 invalid",
+   "at": "2026-11-09T23:09:03.315Z"
+  },
+  {
+   "type": "control",
+   "id": "control-city-spawn-plan",
+   "unit": "city_spawn_plan",
+   "model": "claude-opus-5-5",
+   "claude_tokens": 49655,
+   "secs": 210,
+   "tests": 13,
+   "mutation": {
+    "killed": 9,
+    "of": 15
+   },
+   "review_changed": 0,
+   "notes": "same 15 mutants, the same 6 survivors as Codex's (equivalent: lines 10-11 initialisers, line 21 rioter slot); the bar would reject this file too",
+   "at": "2026-11-10T00:18:41.014Z"
+  },
+  {
+   "type": "control",
+   "id": "control-sim-car-route",
+   "unit": "sim_car_route",
+   "model": "claude-opus-5-5",
+   "claude_tokens": 99000,
+   "secs": 524,
+   "tests": 8,
+   "mutation": {
+    "killed": 12,
+    "of": 15
+   },
+   "review_changed": 10,
+   "notes": "main 812a0b06 scratch worktree; same 15 mutants, 80% both sides; survivors control 30(+->-),53,112 vs Codex 35(==->!=),53,112; my check would change 10 lines (pins the private 2.5 m turn lead and 13 m release the review removed from Codex's file), graded as written; scratch commit skipped the hook (lint run by hand, 15/15)",
+   "at": "2026-11-10T01:07:31.616Z"
+  }
+ ],
+ "paired": [
+  {
+   "unit": "quest_beat_validator",
+   "claude_alone_tokens": 67154,
+   "claude_alone_secs": 674,
+   "codex_secs": 436,
+   "review_tokens": 61665,
+   "review_secs": 114,
+   "claude_tokens_saved": 5489,
+   "review_changed_lines": 12,
+   "control_review_changed_lines": 0
+  },
+  {
+   "unit": "city_spawn_plan",
+   "claude_alone_tokens": 49655,
+   "claude_alone_secs": 210,
+   "codex_secs": 224,
+   "review_tokens": 48638,
+   "review_secs": 69,
+   "claude_tokens_saved": 1017,
+   "review_changed_lines": 0,
+   "control_review_changed_lines": 0
+  },
+  {
+   "unit": "sim_car_route",
+   "claude_alone_tokens": 99000,
+   "claude_alone_secs": 524,
+   "codex_secs": 617,
+   "review_tokens": 69496,
+   "review_secs": 216,
+   "claude_tokens_saved": 29504,
+   "review_changed_lines": 24,
+   "control_review_changed_lines": 10
+  }
+ ],
+ "unmeasured": [
+  "dollars of a control run: a subagent reports tokens and seconds, not dollars, so a saving is stated in tokens and seconds per module that has a control, never extrapolated to the rest"
+ ]
+}

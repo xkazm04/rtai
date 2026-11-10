@@ -4,7 +4,8 @@
 // .gd  -> `--headless --path project --check-only -s <script>` (Godot parses it and quits).
 // .tscn/.tres -> no check-only exists for resources, so a throwaway SceneTree script (written to
 //   the OS temp dir, deleted after) load()s each one; a broken dependent script shows up as a parse error.
-// Prints `ok <path>` or the error lines (file:line); exit 0 all ok, 1 some failed, 2 usage/no Godot.
+// Prints `ok <path>` or the error lines (file:line); exit 0 all ok, 1 some failed, 2 usage/no Godot,
+// 3 unverifiable: Godot printed only dependency cascades and no cause (none failed outright).
 // Each file gets a 60 s budget with a process-tree kill. A stale class cache is refreshed first
 // (runGodot does that once per process), so a script using a brand new class_name is not a false alarm.
 import { existsSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
@@ -23,7 +24,7 @@ export function toRes(arg) {
   if (arg.startsWith('res://')) return arg;
   const abs = isAbsolute(arg) ? arg : (existsSync(resolve(arg)) ? resolve(arg) : join(PROJECT, arg));
   const r = relative(PROJECT, abs).split(sep).join('/');
-  return r.startsWith('..') || isAbsolute(r) ? null : `res://${r}`;
+  return r === '..' || r.startsWith('../') || isAbsolute(r) ? null : `res://${r}`; // `..hidden/` is inside
 }
 
 /** Autoload singleton names from project.godot: --check-only does not register them, so a script that
@@ -36,28 +37,46 @@ const autoloadNames = () => {
 };
 
 const isAt = (l) => /^\s+at: /.test(l ?? '');
+/** Godot's own cascade lines, whole: a real error that merely quotes the words is not one. */
+const CASCADE = /^(SCRIPT ERROR: Compile Error: Failed to compile depended scripts\.?|ERROR: Failed to load script "[^"]*" with error "Compilation failed"\.?)$/;
 
 /** The error lines of a run minus autoload-identifier false positives (and their `at:` lines). When
- *  nothing else was reported the script is fine, so the generic "Failed to load script" trailer goes too. */
+ *  nothing else was reported the script is fine, so the generic "Failed to load script" trailer goes too.
+ *  A cascade with no autoload noise behind it is kept: its cause was not seen, so it is not a pass. */
 export function errorLines(out, autoloads = autoloadNames()) {
   const lines = out.split('\n').filter((l) => ERROR_LINE.test(l)).map((l) => l.trimEnd());
   const kept = [];
+  let noise = false;
   for (let i = 0; i < lines.length; i += 1) {
-    const m = /Identifier not found: (\w+)/.exec(lines[i]);
+    const m = /Identifier not found: ([\p{L}\p{N}_]+)/u.exec(lines[i]); // the whole name: `Logé` is not `Log`
     if (m && autoloads.has(m[1])) {
+      noise = true;
       while (isAt(lines[i + 1])) i += 1;
       continue;
     }
     kept.push(lines[i]);
   }
-  const real = kept.filter((l) => !isAt(l) && !/Failed to load script/.test(l));
-  return real.length ? kept : [];
+  // The autoload noise above cascades: every script that depends on it reports "Failed to compile depended
+  // scripts" although nothing is wrong. A real error in a dependency is its own Parse Error line and stays.
+  const real = kept.filter((l) => !isAt(l) && !CASCADE.test(l));
+  return real.length || !noise ? kept : [];
+}
+
+/** Only Godot's cascade lines (and `at:` lines) were kept: the cause was never printed, so this run
+ *  cannot say whether the script is broken (hero n11 line 279: an unchanged file, its unit tests pass). */
+export const causeUnseen = (bad) => bad.length > 0 && bad.every((l) => isAt(l) || CASCADE.test(l));
+
+/** Up to `n` lines of the raw output that are neither cascades nor blank: what Godot did print. */
+export function otherLines(out, n = 6) {
+  if (!(n > 0)) return []; // slice(-0) would return every line
+  return out.split('\n').map((l) => l.trimEnd()).filter((l) => l.trim() && !CASCADE.test(l) && !isAt(l)).slice(-n);
 }
 
 /** ok when nothing but autoload false positives was reported (Godot still exits 1 for those). */
 const judge = (r, bad) => ({
   ...r,
   ok: !r.timedOut && bad.length === 0 && (r.status === 0 || ERROR_LINE.test(r.out)),
+  unseen: !r.timedOut && causeUnseen(bad),
   lines: bad,
 });
 
@@ -88,10 +107,25 @@ export async function checkAll(targets) {
     if (!existsSync(join(PROJECT, res.slice(6)))) { results.push({ target: res, ok: false, lines: ['no such file'], note: 'usage' }); continue; }
     const r = /\.gd$/.test(res) ? await checkScript(res) : await checkResource(res);
     if (r.notFound) return { results: [{ target: res, ok: false, lines: [r.out], note: 'nogodot' }], code: 2 };
+    if (r.unseen) {
+      const said = otherLines(r.out);
+      results.push({ target: res, ok: false, note: 'unverifiable', lines: [...r.lines,
+        'no cause in Godot\'s output, only dependency cascades: this run cannot say whether the script is broken',
+        ...(said.length ? ['what Godot did print:', ...said.map((l) => `  ${l}`)] : ['Godot printed nothing else']),
+        'check its dependencies one by one, or run the unit tests that load it'] });
+      continue;
+    }
     const lines = r.timedOut ? [`timed out after ${CHECK_TIMEOUT_MS / 1000} s (killed)`, ...r.lines] : r.lines;
     results.push({ target: res, ok: r.ok, lines: lines.length || r.ok ? lines : [`exit ${r.status}`, ...r.out.split('\n').slice(-5)] });
   }
-  return { results, code: results.some((x) => x.note === 'usage') ? 2 : results.every((x) => x.ok) ? 0 : 1 };
+  return { results, code: verdictCode(results) };
+}
+
+/** 2 usage, else 1 when any FAILED, else 3 when any is unverifiable, else 0. */
+export function verdictCode(results) {
+  if (results.some((x) => x.note === 'usage')) return 2;
+  if (results.some((x) => !x.ok && x.note !== 'unverifiable')) return 1;
+  return results.some((x) => x.note === 'unverifiable') ? 3 : 0;
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
@@ -103,7 +137,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   const { results, code } = await checkAll(targets);
   for (const r of results) {
     if (r.ok) console.log(`ok ${r.target}`);
-    else console.log(`FAIL ${r.target}\n${r.lines.map((l) => `  ${l}`).join('\n')}`);
+    else console.log(`${r.note === 'unverifiable' ? 'UNVERIFIABLE' : 'FAIL'} ${r.target}\n${r.lines.map((l) => `  ${l}`).join('\n')}`);
   }
   process.exit(code);
 }

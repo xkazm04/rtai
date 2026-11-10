@@ -1,0 +1,197 @@
+# n11 tools lane: REPORT (final, 07:40, iteration 52)
+
+Branch `n11-tools`, cut from main `812a0b06`. Every tool below has a section in `tools/README.md`
+with one example and what it refuses. Every evidence tool reports pass, fail or **unverifiable**
+(it ran but could not observe the thing; never a pass). Proofs are real runs, named in `JOURNAL.md`.
+
+## Tools built, one example each
+
+| Tool | Example | Proven on a real run (JOURNAL) |
+|---|---|---|
+| `tools/film/film.mjs` named shots, fixed seed/step, locked camera, probe numbers | `node tools/film/film.mjs weapon:pistol --out=build/film/pistol --on=fire:1+4,kill:1+3` | 20:15 (arena PASS 11 s; a street shot walking out of frame is now unverifiable) |
+| `--victim=<kind>` on the weapon shot (combat request) | `node tools/film/film.mjs weapon:machine_pistol --victim=cop/head_swat --out=build/film/swat --on=kill:1+30` | 01:32 refusals; combat's hook 1183a323 landed 02:00 and combat filmed `thug`, `cop/head_helmet`, `cop/head_swat`, `ped/head_hood`: all PASS (their JOURNAL line 270) |
+| `tools/film/compare.mjs` before/after at the same tick, two commits or worktrees | `node tools/film/compare.mjs chapter:pistol --a=main --b=n11-combat --at=240,330 --subject=dead --out=build/film/cmp` | 20:15 (PASS on a real corpse change; same commit both sides -> UNVERIFIABLE, 0 px differ) |
+| compare an UNCOMMITTED art change against HEAD (combat 201, README); `--clean` removes the 1.7 GB temp checkout, else the run names it | `node tools/film/compare.mjs weapon:pistol --a=HEAD --b=. --at=60,120 --out=build/film/cmp --clean` | 06:05 (inverted crate strips: PASS, HEAD side real LFS pixels; an inverted texture the view never draws: UNVERIFIABLE twice, 0 px differ) |
+| `tools/film/sheet.mjs` labelled contact sheet | `node tools/film/sheet.mjs build/film/pistol --out=build/film/pistol/sheet.png --cols=4` | iteration 7-8 |
+| `tools/film/numbers.mjs` per-tick draw size, feet, rest, facing vs aim | `node tools/film/numbers.mjs build/film/arena --ticks=60-200 --subject=rivet` | iteration 7-8 |
+| film runs `--import` when an asset really changed (MD5, not date) | (automatic) | 22:15 (found that Godot's own scan trusted the date and drew old pixels) |
+| `tools/gate/quick.mjs` the lint rules builders trip, changed files only | `node tools/gate/quick.mjs` | 20:36 (planted file: CRLF, gdformat, print, float(Variant) in 7.0 s) |
+| `tools/gate/precommit.mjs` the hook skips lint when only inert paths are staged | (automatic, from `.githooks/pre-commit`) | 01:44 (JOURNAL-only commit 0.6 s; the full-lint commit before it 51 s) |
+| the hook lints the STAGED SNAPSHOT when the tree differs (`tools/gate/staged_tree.mjs`) | (automatic) | 02:14 (an untracked over-long .gd: lint on the tree 3 of 16 FAIL; the commit through the hook linted the index, 16/16, 64 s; nothing left in Temp) |
+| `tools/godot/check.mjs`: autoload names are not false FAILs (c01afd2a); a cascade with no cause seen is not a pass (ec83154e) | `node tools/godot/check.mjs res://features/combat/react/human_react.gd` | 20:53 (`human_react.gd` FAIL -> ok, a planted float(Variant) still FAILs); 05:11 (planted missing-script .tscn, extends- and preload-broken deps all FAIL with their cause; `human_react.gd` still ok) |
+| `check.mjs`: only dependency cascades, no cause -> UNVERIFIABLE exit 3 with Godot's other lines (hero 279, e9abf625) | `node tools/godot/check.mjs res://features/characters/rivet_walk.gd` | 06:19 (no regression: unchanged file ok, planted broken dependency FAIL exit 1); the unverifiable branch by unit test only, Godot never printed a bare cascade here |
+| skip-worktree entries in the staged snapshot (4d6d8232) | (automatic) | 05:04 (combat's probe shape: tree `quick.mjs` FAIL 4 issues, commit through the hook 16/16) |
+| `tools/gate/run.mjs` the gates on a snapshot of the commit | `node tools/gate/run.mjs` | 20:46 (8m35, tree edited throughout, no log landed in it) |
+| stale-count honesty with Godot absent | `GODOT_BIN=/nonexistent node tools/tests/run_unit.mjs` | 20:33 (reproduced first; parity/scenarios messages fixed, eaf17694) |
+| stop at the first script error (`dev/run.mjs`, `film.mjs`) | `node tools/dev/run.mjs res://dev/my_scene.tscn --timeout=150` | 23:07 |
+| `dev/run.mjs` re-imports changed assets first; `const FIXED_FPS: int = 60` fixes a film entry's step (hero 256, f666915d) | `node tools/dev/run.mjs stride_film -- --rigs --film-out=<prefix>` | 05:34 (a PNG with bytes appended: `1 asset(s) changed ... running --import first`, ok exit 0, 12 s; restored and re-imported; a third run did not import; dry run of a FIXED_FPS entry shows `--fixed-fps 60`) |
+| `run_unit --select` with an unmatched name: the rest run, nearest stem named, exit 3 unverifiable (hero 268, 1921662c) | `node tools/tests/run_unit.mjs --select=test_sim_clock,test_sim_clok` | 05:48 (exit 3 with `did you mean test_sim_clock?`, 5 passed in the rest; the right name alone exit 0; only the typo exit 2) |
+| scenario and reel progress lines, logs written as they go | `node tools/reel/run_reels.mjs --out=build/reels --views=top` | 00:16 (19 chapter lines live, partial log on disk mid-run) |
+| `tools/dev/wt_init.mjs` a fresh worktree that can run the game | `node tools/dev/wt_init.mjs ../gtai-wt/my-lane` | 21:44 (16 s) |
+| `tools/codex/factory.mjs` Codex test factory with a review queue and a ledger | `node tools/codex/factory.mjs pick`, then `run --stems=<stem>` | 21:01 onward, 3 paired modules |
+| `tools/merge/morning.mjs` one-command morning merge on a named integration worktree | `node tools/merge/morning.mjs --worktree=../gtai-wt/int-day --lanes=n11-tools,n11-hero,n11-combat --date=2026-11-10 --debt-reason="..."` | 20:45, 00:26, 00:45 (scratch branches; a timed-out step's whole tree killed, Godot included); 02:21 REAL bake (256 chunks, 89 s) and export (555 MB exe, 14 s) on a scratch worktree, and a tampered chunk STOPPED the export with the right advice. 05:27 the bake step checks the chunks itself (a tampered copy STOPS at the bake, naming c_03_07.bin). Never run for real: native, gates, reels |
+| `export_checked.mjs` makes its output folder (hero request); ok only when this run wrote the exe (c23c7d84) | `node tools/export/export_checked.mjs` | 01:23 (fresh worktree, RTAI.exe 555 MB); 05:22 (real export accepted, 553,948,392 bytes; the same file judged against a later start says `did not rewrite`) |
+| PoF night runner: `stop`, live `schedule`, `--reserve-min`, `status --siblings` | `node games/gtai/night/night.mjs stop --root <night> --lane hero` | 20:48, 00:22 (scratch roots) |
+
+## Builders' requests and FRICTION served tonight (lane JOURNAL line -> commit)
+
+- hero 70 (bounce numbers without Python): probe `head_y` + `numbers.mjs` ranges; per-leg rows stay in hero's `stride_film`.
+- hero 95 (stop a dev run at the first SCRIPT ERROR): 8f6f079f. hero 143 (`ASSETS-REPLIES.md` inert): b083b075.
+  hero 170 (README: an art change's before film from the parent commit): 674addc9. hero 219 (export output folder): c26ab875.
+- hero and combat (`check.mjs` false FAILs on autoload names): c01afd2a.
+- combat iteration 2 (film on fire/kill events): 21:17. combat 116 (scenario progress lines): f22446ed, 4ab7e28c.
+  combat 132 (reel progress, partial log): 09b30ff8. combat 225 (`--victim=<kind>`): c548fc94 + their 1183a323, PASS in their tree.
+- combat 117 (probe by hand, then the ratchet fails the commit): served by the staged-snapshot hook, working
+  with their skip-worktree probe only from 4d6d8232; reaches their tree at the merge.
+- hero 256 (a film after a repack drew the old sheet; contention dropped grabs): f666915d, `dev/run.mjs` re-imports
+  changed assets first and an entry declaring `const FIXED_FPS: int = 60` gets `--fixed-fps 60` (real run 05:34).
+  hero's `stride_film.gd` needs the one `FIXED_FPS` line (their file).
+- hero 268 (a `--select` with one wrong name ran nothing): 1921662c, the rest run, `did you mean`, exit 3 unverifiable
+  (real run 05:48). combat 309 (export out dir): the same fix as hero 219, c26ab875, reaches them at the merge.
+- combat 201 (`git show HEAD:<png>` gave an LFS pointer for a before): `compare.mjs --a=HEAD --b=.` (README, real run 06:05).
+- hero 279 (`check.mjs` FAIL on an unchanged file, cascades only): e9abf625, UNVERIFIABLE exit 3 with what Godot printed.
+  hero 286 (`ASSETS-REPLIES.md` inert): the same as their 143, b083b075, at the merge.
+- hero it18 06:50 (an LFS pointer PNG imported `ERR_FILE_CORRUPT`, Godot exit 0, the film drew without the
+  sheet): 22f5eb9a + a1f4b778, `dev/run.mjs` and `film.mjs` refuse a pointer before import and fail an import
+  that printed an error (real runs 07:10-07:13; film's import-error branch by unit test only).
+- Seen, not served (waits on an asset): combat it35 FRICTION (their JOURNAL line 376, "the burn fill has no tool"):
+  a fill measure for flame needs the flame layer kept apart, which combat routed as `REQUEST assets:`. Candidate
+  for a later tools night: a fill probe that takes an optional mask PNG beside each cell.
+- Not served: combat 226 (about 8 s re-import per film because `probe.sh` adds and removes `film_card.gd`):
+  ends when the film probe is on main, i.e. at this merge.
+
+## Time saved
+
+Unmeasured, except where a run timed it: a journal or report commit 0.6 s instead of 51 s idle (up to 8 min
+contended, per past FRICTION lines; this lane alone made about 40 such commits tonight); quick.mjs 7.0 s against about 40 s for the hook's full lint
+(one problem at a time there); wt_init 16 s against the hand copy builders journal; a dev scene's
+parse error now stops at 1.5 s instead of the 150 s timeout (hero lost about 8 min to it on four forms).
+
+## Codex ledger (`node tools/codex/factory.mjs ledger --state=C:/Users/kazda/kiro/gtai-n11t/logs/tools/state.json --ledger=C:/Users/kazda/kiro/gtai-masters/n11/tools/codex-ledger.jsonl`)
+
+Final, re-run 07:40 with `--state` (output kept: `evidence/codex_ledger_final_0740.json`, also in
+`gtai-masters/n11/tools/`): 24 tasks, 5,816 s of Codex, 22 machine pass, 2 machine fail, 0 awaiting review,
+11 accepted, 12 accepted after revision, 0 rejected, 167 lines changed by review, 0 refused by the meter.
+Dollars MEASURED: $90.96 over the 11 review sessions (every session's cost is now in state.json, 0 reviews
+without a session). Per task $3.95 is an ESTIMATE and an upper bound: one session reviews several tasks (even
+split) and also builds other things.
+Codex as tester (16 tasks, counted from the ledger's per-task lines): 127 failing tests, 113 real defects fixed
+with the tests kept, 14 thrown away with their reason: 9 in `n11t-break-tools` (a table that assumed plain
+porcelain, obsolete once quick read `--porcelain -z`, which never quotes a path; JOURNAL 20:5x), 1 in
+`n11t-break-staged` (it asked the staged export to ignore the commit's eol attributes, JOURNAL 02:24), 3 in
+`n11t-break-check` (where a detached `at:` context line goes; such a line never decides the verdict, 05:19),
+1 in `n11t-break-proof` (a function carrying `ok: true` as a check result; my task's wording overreached, 05:37).
+The journal's running count ("82 real, 0 thrown away" at 01:52) had dropped the first task's 9; corrected 05:07.
+
+**Paired measurement of the Claude saving** (both sides harness-measured, same goal and laws, same 15
+mutants; the Director's own check is outside both sides):
+
+| Module | Claude alone | Claude reviewing Codex | Review changed | Mutation |
+|---|---|---|---|---|
+| quest_beat_validator | 67,154 tok / 674 s | 61,665 tok / 114 s + 436 s Codex | 12 lines | 11/11 both |
+| city_spawn_plan (49 lines) | 49,655 tok / 210 s | 48,638 tok / 69 s + 224 s Codex | 0 | 9/15 both |
+| sim_car_route (136 lines) | 99,000 tok / 524 s | 69,496 tok / 216 s + 617 s Codex | 24 lines (control: 10 by the same standard) | 12/15 both (80 %) |
+
+Reading: on the two small modules the review cost about what writing cost (2-8 % fewer tokens). On the
+module three times their size, reviewing Codex's tests took 30 % fewer Claude tokens than writing them
+(29,504 fewer), and the control pinned the same private literals (2.5 m, 13 m) that the review removed
+from Codex's file. Three modules is still not a rate, and wall time with Codex is longer, not shorter.
+
+Unpaired, 06:44-06:55: `sim_hash` (`CitySimHash`, 67 lines): Codex 173 s, 9 tests, mutation 86.7 % on
+its version; the review (subagent, measured: 64,833 tokens, 178 s) rewrote 2 tests that pinned implementation
+choices (66 lines) and found a suspect (Calls item 5). No control: its grade alone took 23 min under load
+at 22:58, more than the time left before the freeze. Landed c52cceb1 (mutation 93.3 %, 14/15); the one
+survivor (`hcount.fill(0)` deleted) was real, so I added a rebuild-at-full-capacity test (5af34a16, 13 lines,
+planted fault caught by hand): 100 %, 15/15, 279 s.
+
+## What does not work, or is not proven
+
+- `tools/merge/morning.mjs`: the native, gates and reels steps were never run for real (fakes in unit tests only);
+  bake and export were (02:21, 05:27). Run them once on a quiet machine before the Director relies on them.
+- `check.mjs` UNVERIFIABLE (exit 3, cascades only) is proven by unit test only: Godot never printed a bare
+  cascade here. film's import-error refusal is proven through the shared function's `dev/run` real run only.
+- `film --victim` needs combat's hook (1183a323 on n11-combat); on main alone it refuses, by design.
+- The Claude saving is three paired modules, not a rate (table above); time saved elsewhere is unmeasured.
+- One flake seen and not reproduced (06:38, check_baked + morning_run, timing-shaped; 11 reruns green).
+
+## Blocked, and for how long
+
+No BLOCKED entries tonight. Slowed, not blocked: Godot contention (2 to 4 Godot processes of the other lanes
+up most of the night) kept me to one Godot run at a time and deferred the merge's native/gates/reels proof;
+`sim_hash` had no control run because its grade took 23 min under load (22:58), more than was left.
+The 01:39 incident below cost about 6 minutes (01:39-01:45).
+
+## Next steps
+
+1. Run `morning.mjs` native, gates and reels steps for real on a scratch integration worktree, quiet machine.
+2. Owner calls 1-5 below; then `dispatch.ts discard n11t-fac-city-spawn-plan` (kept for call 2).
+3. A control run for `sim_hash` makes it the fourth paired module (grade about 5 min when quiet).
+4. Hero: if they paste the raw `--check-only` output for `rivet_walk.gd`, check whether `ERROR_LINE` filters the cause.
+5. Combat's burn-fill probe once flame-only layers exist (above).
+
+## Incident (mine, repaired)
+
+At 01:39 a tool test of mine ran inside the pre-commit hook, where git sets `GIT_DIR`, and its
+`git -C <tmp>` acted on the real repo: a stray commit on `n11-tools`, `user.email=t@t` and
+`core.bare=true` in the shared `gtai/.git/config` (the main checkout said `must be run in a work tree`
+until 01:45). Repaired by hand within minutes; no lane commit got the wrong identity. Fixed for good in
+607f4171: lint's tool tests run with every `GIT_*` variable stripped (reproduced on a scratch repo).
+
+## Calls for the owner
+
+1. `CitySpawnPlan.next()` uneven turns (`city_spawn_plan.gd:41`, `_turn += 1`): found by Codex, the
+   review and the control independently; likely fix `_turn += q + 1`.
+2. Land `test_city_spawn_plan.gd` or not: machine-rejected at 60 % on 6 survivors that both writers left
+   (initialisers `_init` reassigns, and a rioter branch never reached), review accepts it unchanged.
+   Overriding a machine reject is a rule change, so it is yours. The file waits, not landed, in the Codex
+   worktree `C:/Users/kazda/kiro/pof-codex/wt/n11t-fac-city-spawn-plan/project/tests/unit/test_city_spawn_plan.gd`
+   (kept on purpose for this call; `dispatch.ts discard n11t-fac-city-spawn-plan` removes it).
+3. QuestBeatValidator suspects: `str()` coercion, a `1e999` INF duration passes, an unknown line id is
+   marked used, an invalid beat's encounter still counts at "".
+4. CitySimCarRoute suspects (the parity reference sim: a change here moves the native sim too, NAT-06),
+   found by the review and the control, read again on main at 05:08: `sim_car_route.gd:37` U-turns before
+   any tile that is not road (kerb, building, plaza) where its comment says "city edge or unloaded";
+   `:90` and `:118` accept `T_ROAD_H` and `T_ROAD_V` in any direction, so road orientation is ignored;
+   the tuned numbers 18 m (`:27`), 2.5 m (`:53`), 13 m (`:62`) and 16 m (`:89`) are inline literals tests
+   cannot read, so the landed test states relations instead of pinning them.
+5. CitySimHash window vs promoted actors (parity reference sim, NAT-06; found by the sim_hash review, read
+   by me): promoted actors stay tier A out to `rb * 1.6` (`city_sim_ref.gd:175`, `d2 > rb2 * 2.56`; with
+   the default rb 160 m, `sim_state.gd:47`, that is 256 m), but the
+   hash window is `HW * HC` = 320 m wide around the camera (`sim_constants.gd:13-14`), so a promoted actor
+   past 160 m on an axis is never returned by `query()`: no neighbour or collision checks. Fix the window
+   or the promotion radius; untested on purpose until you choose.
+
+## Proposals for the Director (not applied to the rules builders read)
+
+- quick.mjs before commit and in the hook; wt_init after every `git worktree add`; film first in lane briefs.
+- AGENTS.md says "two wall-clock budgets": there are three.
+- Use PoF `n11-runner` before anyone runs `stop --lane --now` or an earlier `--until` (bugs fixed there).
+
+## Merge notes
+
+- PoF runner commits on `n11-runner`, not pushed: 32da7878, 410c035d, b4294c1b (and any later).
+- This branch's step guard (b2fc4d7d, c4533f7d) changes how the morning merge runs every step.
+- `film --victim` works with combat's hook (1183a323 on n11-combat): merge both.
+- The staged-snapshot hook (d13b9849, 1e5fa267, 3ee0c085, 4d6d8232) changes what every commit's lint reads. It also ends combat's FRICTION 117: their `probe.sh` marks `arena_game.gd` `--skip-worktree` and copies untracked probe files in; the hook lints the index, so a commit no longer needs `probe.sh off` first. That held only from 4d6d8232 (05:02): before it, `checkout-index` refused the skip-worktree entry and the hook failed. Proven 05:04 on a scratch worktree with the probe's shape (skip-worktree `arena_game.gd` + an untracked .gd, both over the line cap): `quick.mjs` on the tree FAIL 4 issues, the commit through the hook `lint: all 16 checks pass`, 56 s.
+- Combat's `probe.sh` toggles `dev/frames/film_card.gd` in and out of their tree, which re-imports
+  the class cache on every film (about 8 s each); it ends when the film probe lands on main.
+- f666915d changes every `dev/run.mjs` launch: when any asset's source no longer matches its import it runs
+  `--import` first (the first run in a tree hashes every source once, up to a minute), and exits 3 if it
+  still does not match. `const FIXED_FPS: int = <n>` in an entry is new and opt-in.
+- c23c7d84, 3ba6d4d2, dd5a1bb7 make the morning merge's bake and export steps stricter: the export is ok
+  only when this run wrote a non-empty exe, and the bake step checks the chunks against the hash list.
+- ec83154e, 6583b6fc: `tools/godot/check.mjs` (and `quick.mjs` through it) now FAILs a dependency cascade
+  with no autoload noise behind it, and a real error that quotes a cascade phrase.
+- 1921662c, 3dccc7e1: `run_unit.mjs` has a new exit code. `--select` with a name that matches no file
+  runs the rest and exits 3 (UNVERIFIABLE) when they pass; `--test=<fn>` now needs the whole function
+  name (it used to plan files that only define a longer name). No-arg runs and the evidence are unchanged.
+- 9c7039eb: `compare.mjs` prints where each commit side's temp checkout was kept (about 1.7 GB each);
+  `--clean` removes it. Nothing else changes for callers.
+- e9abf625: `check.mjs` has exit 3 (only dependency cascades, no cause); `quick.mjs` shows it as unverifiable.
+- 22f5eb9a, a1f4b778: `dev/run.mjs` and `film.mjs` exit 1 on a changed asset that is an LFS pointer, and on
+  an `--import` that printed `Error importing`/`ERR_FILE_CORRUPT` (before, both ran on and drew without it).
+- e1e478c1, 75ac86d4, 063e9fad (temp folders removed by the tests that make them) and the new
+  `tools/gate/temp_hygiene.test.mjs`: eight tool test files no longer leave `gtai-*`, `baked-*`,
+  `morning-run-*` and `reels-*` folders in `%TEMP%` (280 had piled up since 11-07; 18 + 11 per run).
+  The guard runs in the hook's tool-tests: a new test that calls `mkdtemp` and never removes anything
+  fails the commit. A lane that adds such a test on its branch fails the merge's lint until it does.

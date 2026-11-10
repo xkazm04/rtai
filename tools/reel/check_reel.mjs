@@ -4,7 +4,7 @@ import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const USAGE = 'usage: node tools/reel/check_reel.mjs <log> [--expect=19]';
-const RESULT = /^\[INFO\] showcase: director chapter (.+?): (\d+)\/(\d+) down\s*$/;
+export const RESULT = /^\[INFO\] showcase: director chapter (.+?): (\d+)\/(\d+) down\s*$/;
 const validExpect = (expect) => Number.isSafeInteger(expect) && expect >= 0;
 
 /** Counts are per result/error line. `fullyDown` counts positive N/N results. */

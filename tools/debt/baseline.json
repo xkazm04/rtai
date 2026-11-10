@@ -32,16 +32,17 @@
         "2026-11-08: n10 world: block70_still --focus (one still per wall style, the walls' evidence) + its arg reader split (dev_loc 19960 -> 19971) (dev_loc 19960 -> 19971)",
         "2026-11-09: n10 merge: the lanes combined dev tooling growth (dev_loc 19971 -> 20284)",
         "2026-11-09: n12 A2: NodeSpans names a spike's node (worst_frames), a dev instrument (dev_loc 20284 -> 20319)",
-        "2026-11-09: n12 B1: SyncProbe, the victim-sync instrument (dev arena --sync), and its one attach line (dev_loc 20319 -> 20487)"
+        "2026-11-09: n12 B1: SyncProbe, the victim-sync instrument (dev arena --sync), and its one attach line (dev_loc 20319 -> 20487)",
+        "2026-11-10: n11 merge: n11-tools dev tooling (film probe, film triggers) on top of n12 (dev_loc 20487 -> 20809)"
       ],
       "files": {
-        "project/dev/arena": 709,
+        "project/dev/arena": 710,
         "project/dev/audio": 367,
         "project/dev/bake_city.gd": 32,
         "project/dev/bench": 1886,
         "project/dev/bots": 399,
         "project/dev/enemy_ai": 662,
-        "project/dev/frames": 545,
+        "project/dev/frames": 866,
         "project/dev/ghost-forms": 616,
         "project/dev/ghost-powers": 1137,
         "project/dev/gunplay": 674,
@@ -64,7 +65,7 @@
         "project/dev/view": 195,
         "project/dev/weapon_art": 506
       },
-      "total": 20487
+      "total": 20809
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -235,12 +236,13 @@
         "2026-11-10: n12 C1: ReactLink's two InkHit lines (hit per landed hit, step once a frame) (files_near_cap 16 -> 16)",
         "2026-11-10: n12 C1: RivetHeldView.warm compiles the ink line shader at the load (files_near_cap 16 -> 16)",
         "2026-11-10: n12 E1: ArenaRigs attaches the combat lights (two lines) (files_near_cap 16 -> 16)",
-        "2026-11-10: n12 E3 crowd ripple: CrowdReact's delayed startle + its one host line in ArenaRigs (files_near_cap 16 -> 16)"
+        "2026-11-10: n12 E3 crowd ripple: CrowdReact's delayed startle + its one host line in ArenaRigs (files_near_cap 16 -> 16)",
+        "2026-11-10: n11 merge: n11-tools dev tooling (film probe, film triggers) on top of n12 (files_near_cap 16 -> 16)"
       ],
       "files": {
         "project/boot/collect_call/view/fx_view.gd": 271,
         "project/boot/quest1_game.gd": 272,
-        "project/dev/arena/arena_game.gd": 297,
+        "project/dev/arena/arena_game.gd": 298,
         "project/dev/showcase/city_fight.gd": 300,
         "project/features/arena/arena_rigs.gd": 294,
         "project/features/bosses/boss_hook.gd": 281,
@@ -275,7 +277,8 @@
         "2026-11-10: n12 C1: RivetHeldView.warm compiles the ink line shader at the load (files_past_soft_cap 66 -> 66)",
         "2026-11-10: n12 E1: ArenaRigs attaches the combat lights (two lines) (files_past_soft_cap 66 -> 66)",
         "2026-11-10: n12 E3 crowd ripple: CrowdReact's delayed startle + its one host line in ArenaRigs (files_past_soft_cap 66 -> 66)",
-        "2026-11-10: n12 E3 crowd ripple: CrowdReact's delayed cower (+_cower_due) and three tests pinned to the same-tick startle (files_past_soft_cap 66 -> 66)"
+        "2026-11-10: n12 E3 crowd ripple: CrowdReact's delayed cower (+_cower_due) and three tests pinned to the same-tick startle (files_past_soft_cap 66 -> 66)",
+        "2026-11-10: n11 merge: n11-tools dev tooling (film probe, film triggers) on top of n12 (files_past_soft_cap 66 -> 66)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 262,
@@ -284,7 +287,7 @@
         "project/boot/collect_call/view/fx_view.gd": 271,
         "project/boot/collect_call/view/stage_view.gd": 219,
         "project/boot/quest1_game.gd": 272,
-        "project/dev/arena/arena_game.gd": 297,
+        "project/dev/arena/arena_game.gd": 298,
         "project/dev/audio/audio_riot.gd": 201,
         "project/dev/bench/fight_frames.gd": 246,
         "project/dev/bench/node_spans.gd": 263,
@@ -351,13 +354,12 @@
       "files": {
         "project/dev/audio": 1,
         "project/dev/cheats": 1,
-        "project/dev/frames": 1,
         "project/dev/gunplay": 1,
         "project/dev/held": 1,
         "project/dev/overlays": 1,
         "project/dev/weapon_art": 1
       },
-      "total": 7
+      "total": 6
     },
     "unused_class_names": {
       "files": {

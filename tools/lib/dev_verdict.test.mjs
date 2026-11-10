@@ -1,12 +1,13 @@
 // node --test "tools/lib/*.test.mjs"
 import assert from 'node:assert/strict';
-import { mkdtempSync, utimesSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, rmSync, utimesSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { test } from 'node:test';
+import { after, test } from 'node:test';
 import { verdict } from './dev_verdict.mjs';
 
 const tmp = mkdtempSync(join(tmpdir(), 'gtai-verdict-'));
+after(() => rmSync(tmp, { recursive: true, force: true }));
 
 test('a SCRIPT ERROR fails an exit 0 and names the first location', () => {
   const v = verdict({ status: 0, out: 'SCRIPT ERROR: Invalid call\n   at: _tick (res://dev/x.gd:41)' });

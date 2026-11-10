@@ -42,11 +42,20 @@ function defaultProbe(bin) {
   return res.stdout.trim().split('\n').pop().trim();
 }
 
-/** Plausible install spots next to the repo (also reached from a worktree under ../gtai-wt/x):
- *  no disk crawl, only these folders, console binaries only. */
-function knownPaths(fs, root) {
+/** The main checkout a worktree belongs to (the parent of git's common dir), or null. A worktree
+ *  anywhere on disk (e.g. a scratch one under gtai-n11t/wt/) then finds what the main checkout finds. */
+export function mainCheckout(root = ROOT) {
+  const r = spawnSync('git', ['rev-parse', '--path-format=absolute', '--git-common-dir'],
+    { cwd: root, encoding: 'utf8', windowsHide: true });
+  return r.status === 0 && r.stdout.trim() ? resolve(r.stdout.trim(), '..') : null;
+}
+
+/** Plausible install spots next to the repo and next to its main checkout (a worktree under
+ *  ../gtai-wt/x, or anywhere else): no disk crawl, only these folders, console binaries only. */
+function knownPaths(fs, root, main) {
   const out = [];
-  for (const base of [root, join(root, '..'), join(root, '..', '..')]) {
+  const near = (r) => [r, join(r, '..'), join(r, '..', '..')];
+  for (const base of [...near(root), ...(main ? near(main) : [])]) {
     for (const sub of ['tools/godot', 'gtai-spike/tools/godot']) {
       const dir = join(base, sub);
       for (const f of fs.list(dir).sort().reverse()) {
@@ -59,7 +68,7 @@ function knownPaths(fs, root) {
 
 /** Ordered candidates: GODOT_BIN, POF_GODOT_BIN, tools/local.json {"godot"}, known paths, PATH.
  *  `explicit` ones fail loudly when unusable instead of silently falling through. */
-export function candidates({ env = process.env, fs = realFs, root = ROOT } = {}) {
+export function candidates({ env = process.env, fs = realFs, root = ROOT, main } = {}) {
   const list = [];
   if (env.GODOT_BIN) list.push({ bin: env.GODOT_BIN, source: 'GODOT_BIN', explicit: true });
   if (env.POF_GODOT_BIN) list.push({ bin: env.POF_GODOT_BIN, source: 'POF_GODOT_BIN', explicit: true });
@@ -70,7 +79,8 @@ export function candidates({ env = process.env, fs = realFs, root = ROOT } = {})
       if (g) list.push({ bin: g, source: 'tools/local.json', explicit: true });
     } catch { /* unreadable local file: ignore, the message below still names the way out */ }
   }
-  for (const bin of knownPaths(fs, root)) list.push({ bin, source: 'known path', explicit: false });
+  const mainRoot = main === undefined ? (fs === realFs ? mainCheckout(root) : null) : main;
+  for (const bin of knownPaths(fs, root, mainRoot)) list.push({ bin, source: 'known path', explicit: false });
   list.push({ bin: 'godot', source: 'PATH', explicit: false });
   return list;
 }
@@ -110,29 +120,64 @@ export function killTree(pid) {
   try { process.kill(-pid, 'SIGKILL'); } catch { try { process.kill(pid, 'SIGKILL'); } catch { /* gone */ } }
 }
 
+/** Grace after the first `stopOn` line, so the "at: res://..." lines under it are kept. */
+export const STOP_GRACE_MS = 1500;
+
 /** Async spawn with merged stdout+stderr (ANSI stripped). On timeout the tree is killed and the
- *  partial output is kept. Resolves {status, out, timedOut, durationMs}; status -1 = never ran. */
-export function runProcess(cmd, args, { cwd = ROOT, timeoutMs = HEADLESS_TIMEOUT_MS, env, onSpawn } = {}) {
+ *  partial output is kept. `stopOn` (a RegExp, e.g. SCRIPT_ERROR) kills the tree `stopGraceMs` after
+ *  the first line matching it instead of waiting out the timeout: a dev scene whose script does not
+ *  parse leaves the engine idling until the timeout (hero n11: four forms, about 8 minutes lost).
+ *  Resolves {status, out, timedOut, stopped, durationMs}: status -1 = never ran, timed out or
+ *  stopped; `stopped` is the matching line when the run was cut short for it, else null.
+ *  `onLine(line)` sees each whole output line as it arrives (live progress for long runs). */
+export function runProcess(cmd, args, { cwd = ROOT, timeoutMs = HEADLESS_TIMEOUT_MS, env, onSpawn, stopOn = null,
+  stopGraceMs = STOP_GRACE_MS, onLine = null } = {}) {
   return new Promise((done) => {
     const t0 = Date.now();
     let out = '';
     let timedOut = false;
+    let seen = null; // the first stopOn line
+    let killedForStop = false;
+    const pending = {}; // a partial line between chunks, per stream
+    // a caller's /g or /y RegExp keeps lastIndex between test() calls and between runs: test a stateless copy
+    const stopRe = stopOn ? new RegExp(stopOn.source, stopOn.flags.replace(/[gy]/g, '')) : null;
     let finished = false;
     const finish = (status) => {
       if (finished) return;
       finished = true;
       clearTimeout(timer);
-      const text = out.replace(ANSI, '') + (timedOut ? `\n[timeout: killed the process tree after ${timeoutMs} ms]\n` : '');
-      done({ status: status ?? -1, out: text, timedOut, durationMs: Date.now() - t0 });
+      const tail = timedOut ? `\n[timeout: killed the process tree after ${timeoutMs} ms]\n`
+        // never repeat the matched line here: a verdict would count it as one more script error
+        : killedForStop ? `\n[stopped: killed the process tree ${stopGraceMs} ms after its first matching line]\n` : '';
+      done({ status: status ?? -1, out: out.replace(ANSI, '') + tail, timedOut, stopped: killedForStop ? seen : null,
+        durationMs: Date.now() - t0 });
     };
     const child = spawn(cmd, args, { cwd, env, windowsHide: true, stdio: ['ignore', 'pipe', 'pipe'],
       detached: process.platform !== 'win32' });
     if (onSpawn && child.pid) onSpawn(child.pid);
-    const take = (d) => { out += d.toString('utf8'); };
-    child.stdout.on('data', take);
-    child.stderr.on('data', take);
+    const stopSoon = (line) => {
+      seen = line.trim();
+      setTimeout(() => {
+        if (finished) return;
+        killedForStop = true;
+        killTree(child.pid);
+        setTimeout(() => finish(-1), KILL_SETTLE_MS).unref();
+      }, stopGraceMs);
+    };
+    const watch = (stream, text) => { // whole lines only, each stream on its own
+      if (!stopRe && !onLine) return;
+      const lines = ((pending[stream] ?? '') + text).split(/\r?\n/);
+      pending[stream] = lines.pop();
+      for (const line of lines.map((l) => l.replace(ANSI, ''))) {
+        if (onLine) try { onLine(line); } catch { /* a viewer's fault must not change the run or its stop */ }
+        if (stopRe && seen === null && stopRe.test(line)) stopSoon(line);
+      }
+    };
+    const take = (stream) => (d) => { const text = d.toString('utf8'); out += text; watch(stream, text); };
+    child.stdout.on('data', take('out'));
+    child.stderr.on('data', take('err'));
     child.on('error', (e) => { out += String(e); finish(-1); });
-    child.on('close', (code) => finish(timedOut ? -1 : code));
+    child.on('close', (code) => finish(timedOut || killedForStop ? -1 : code));
     const timer = setTimeout(() => {
       timedOut = true;
       killTree(child.pid);
@@ -174,14 +219,14 @@ const kindOf = (args) => {
  *  inherit). `ensure` (default: on unless the args contain --import) first refreshes a stale class
  *  cache once per process via ensureImport. */
 export async function runGodot(args, { timeoutMs = HEADLESS_TIMEOUT_MS, cwd = ROOT, name, headless = true, env,
-  ensure = !args.includes('--import') } = {}) {
+  ensure = !args.includes('--import'), stopOn = null, onLine = null } = {}) {
   const g = resolveGodot();
   if (!g.ok) return { status: -1, out: g.message, timedOut: false, durationMs: 0, notFound: true, name };
   if (ensure) await ensureImport({ projectDir: join(cwd, 'project') });
   const full = [...(headless ? ['--headless'] : []), '--path', 'project', ...args];
   const entry = register({ kind: name ?? kindOf(args), root: cwd }); // machine-wide run ledger (run_ledger.mjs)
   try {
-    return { ...(await runProcess(g.bin, full, { cwd, timeoutMs, env, onSpawn: (pid) => entry.setChild(pid) })), name };
+    return { ...(await runProcess(g.bin, full, { cwd, timeoutMs, env, stopOn, onLine, onSpawn: (pid) => entry.setChild(pid) })), name };
   } finally {
     entry.release(); // also on timeout/kill: runProcess resolves after the tree kill
   }
@@ -206,4 +251,5 @@ export function removeStale(...files) {
 
 /** "exit 0, 12.3 s" / "TIMED OUT after 600 s" for log headers and summaries. */
 export const describe = (r) => (r.timedOut ? `TIMED OUT after ${Math.round(r.durationMs / 1000)} s`
+  : r.stopped ? `STOPPED at the first script error, ${(r.durationMs / 1000).toFixed(1)} s`
   : `exit ${r.status}, ${(r.durationMs / 1000).toFixed(1)} s`);

@@ -1,4 +1,4 @@
-import { test } from 'node:test';
+import { after, test } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -6,9 +6,12 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { checkBaked } from './check_baked.mjs';
 
+const made = [];
+after(() => { for (const d of made) fs.rmSync(d, { recursive: true, force: true }); });
 const sha = (b) => crypto.createHash('sha256').update(b).digest('hex');
 function tree(chunks, listed = chunks) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'baked-'));
+  made.push(root);
   const city = path.join(root, 'city');
   fs.mkdirSync(city);
   for (const [n, b] of Object.entries(chunks)) fs.writeFileSync(path.join(city, n), b);

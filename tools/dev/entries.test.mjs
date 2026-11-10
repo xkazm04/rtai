@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
-import { didYouMean, readRunTicks, readSpec, resolve } from './entries.mjs';
+import { didYouMean, readFixedFps, readRunTicks, readSpec, resolve } from './entries.mjs';
 
 const FIX = fileURLToPath(new URL('./fixtures', import.meta.url));
 
@@ -78,4 +78,28 @@ test('readRunTicks: an int literal only', () => {
 test('didYouMean: nearest within two edits, else null', () => {
   assert.equal(didYouMean('--bto', ['--bot', '--out']), '--bot');
   assert.equal(didYouMean('--zzzzzz', ['--bot']), null);
+});
+
+test('a declared FIXED_FPS adds --fixed-fps alone; the caller can still override it', () => {
+  const r = resolve('film_scene.gd', [], { projectDir: FIX });
+  assert.ok(r.ok, r.error);
+  const s = r.godotArgs.join(' ');
+  assert.ok(s.includes('--fixed-fps 30'), s);
+  assert.ok(!s.includes('--quit-after'), s);
+  const o = resolve('film_scene.gd', ['--fixed-fps=60'], { projectDir: FIX }).godotArgs.join(' ');
+  assert.ok(o.includes('--fixed-fps 60') && !o.includes('--fixed-fps 30'), o);
+});
+
+test('FIXED_FPS is read only as a positive literal', () => {
+  assert.equal(readFixedFps('const FIXED_FPS: int = 60  # films every tick\n'), '60');
+  assert.equal(readFixedFps('const FIXED_FPS: int = 0\n'), null);
+  assert.equal(readFixedFps('const FIXED_FPS: int = SimClock.TICK_RATE\n'), null);
+  assert.equal(readFixedFps('# const FIXED_FPS: int = 60\n'), null);
+});
+
+test('readRunTicks: one line only, as readFixedFps (a declaration split over lines is not read)', () => {
+  assert.equal(readRunTicks('const RUN_TICKS:\nint = 900\n'), null);
+  assert.equal(readRunTicks('const RUN_TICKS: int =\n900\n'), null);
+  assert.equal(readRunTicks('const RUN_TICKS: int = 900  # ten seconds and a bit\n'), 900);
+  assert.equal(readRunTicks('extends Node\r\nconst RUN_TICKS: int = 900\r\n'), 900, 'CRLF still reads');
 });

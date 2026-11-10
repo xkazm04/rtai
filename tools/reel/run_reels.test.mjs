@@ -1,11 +1,13 @@
-import { test } from 'node:test';
+import { after, test } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { reelArgs, runReels } from './run_reels.mjs';
+import { lineSink, reelArgs, runReels } from './run_reels.mjs';
 
-const dir = () => fs.mkdtempSync(path.join(os.tmpdir(), 'reels-'));
+const made = [];
+after(() => { for (const d of made) fs.rmSync(d, { recursive: true, force: true }); });
+const dir = () => { const d = fs.mkdtempSync(path.join(os.tmpdir(), 'reels-')); made.push(d); return d; };
 const good = (n = 2) => Array.from({ length: n }, (_, i) => `[INFO] showcase: director chapter c${i}: 2/2 down`).join('\n');
 
 test('reelArgs is the gate command with a weapon', () => {
@@ -50,4 +52,31 @@ test('a missing log fails rather than throwing', async () => {
 
 test('no views is not ok: nothing was checked', async () => {
   assert.equal((await runReels({ views: [], expect: 2, outDir: dir(), run: async () => 0 })).ok, false);
+});
+
+test('each view reports its verdict the moment it ends, in order, with its log (combat n11 line 132)', async () => {
+  const out = dir();
+  const lines = [];
+  const run = async (view, log, progress) => {
+    progress(`inner ${view}`);
+    fs.writeFileSync(log, view === 'top' ? good() : 'SCRIPT ERROR: x');
+    return 0;
+  };
+  await runReels({ views: ['top', 'combo'], expect: 2, outDir: out, run, progress: (l) => lines.push(l) });
+  assert.equal(lines.length, 4);
+  assert.equal(lines[0], 'inner top');
+  assert.match(lines[1], /^run_reels: \[1\/2\] top OK, \d+ s; log .*1-top\.log$/);
+  assert.equal(lines[2], 'inner combo');
+  assert.match(lines[3], /^run_reels: \[2\/2\] combo FAIL, \d+ s; log .*2-combo\.log$/);
+});
+
+test('the line sink writes every line to the log as it arrives and counts finished chapters only', () => {
+  const log = path.join(dir(), 'top.log');
+  const seen = [];
+  const sink = lineSink('top', log, (l) => seen.push(l));
+  sink('[INFO] showcase: director chapter start pistol');
+  sink('[INFO] showcase: director chapter pistol: 3/3 down');
+  assert.equal(fs.readFileSync(log, 'utf8').split('\n').length, 3, 'two lines on disk before the run ends');
+  sink('[INFO] showcase: director chapter rocket: 1/4 down');
+  assert.deepEqual(seen, ['run_reels: top chapter 1 pistol 3/3 down', 'run_reels: top chapter 2 rocket 1/4 down']);
 });

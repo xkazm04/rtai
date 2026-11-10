@@ -37,6 +37,7 @@ export function resultState(file, startedAt = 0) {
 
 function head(res, ok) {
   if (res.timedOut) return `FAIL timeout after ${Math.round((res.durationMs ?? 0) / 1000)} s`;
+  if (res.stopped) return `FAIL stopped at the first script error after ${((res.durationMs ?? 0) / 1000).toFixed(1)} s (--keep-going to wait it out)`;
   const label = LABELS[res.status];
   return `${ok ? 'ok' : 'FAIL'} exit ${res.status}${label ? ` (${label})` : ''}`;
 }
@@ -47,7 +48,7 @@ export function verdict(res, { resultFile = null, startedAt = 0, notes = [] } = 
   const errors = scriptErrors(res.out);
   const unknown = unknownArgs(res.out);
   const result = resultFile ? resultState(resultFile, startedAt) : null;
-  const ok = !res.timedOut && res.status === 0 && !errors.length && !unknown.length && (!result || result === 'fresh');
+  const ok = !res.timedOut && !res.stopped && res.status === 0 && !errors.length && !unknown.length && (!result || result === 'fresh');
   const first = errors[0];
   const parts = [
     head(res, ok),

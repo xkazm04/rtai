@@ -1,6 +1,8 @@
 // Resolves a dev entry (a scene or an -s script under project/dev) into the Godot args that run it:
 // the scene path (or `-s <script>`) before `--`, the entry's own flags after it, and --fixed-fps 60
-// --quit-after <n> when the entry declares `const RUN_TICKS: int = <n>` and the caller gave none.
+// --quit-after <n> when the entry declares `const RUN_TICKS: int = <n>` and the caller gave none, and
+// --fixed-fps <n> alone when it declares `const FIXED_FPS: int = <n>` (a film scene that must grab every
+// tick: under contention real-time frames skip ticks, hero n11 line 255).
 // Flags are checked only against a list the entry's script ALREADY declares (`const KNOWN_FLAGS` or
 // `const KNOWN`: PackedStringArray), read statically at call time. There is no central flag list:
 // an entry that declares none is launched unchecked and says so ("flags unchecked: no declared spec").
@@ -10,10 +12,17 @@ import { PROJECT, walk } from '../lib/repo.mjs';
 
 export const NO_SPEC = 'flags unchecked: no declared spec';
 const SPEC = /^const\s+(KNOWN_FLAGS|KNOWN)\s*:\s*PackedStringArray\s*=\s*\[([\s\S]*?)\]/m;
-const RUN_TICKS = /^const\s+RUN_TICKS\s*:\s*int\s*=\s*(\d+)\s*(?:#.*)?$/m;
+const RUN_TICKS = /^const[ \t]+RUN_TICKS[ \t]*:[ \t]*int[ \t]*=[ \t]*(\d+)[ \t]*(?:#.*)?$/m; // one line only
 /** Engine options the runner places before the scene; everything else is the entry's. */
 const ENGINE = /^--(quit-after|fixed-fps)(?:=(.*))?$/;
 const RUN_FPS = '60';
+const FIXED_FPS = /^const[ \t]+FIXED_FPS[ \t]*:[ \t]*int[ \t]*=[ \t]*(\d+)[ \t]*(?:#.*)?$/m; // one line only
+
+/** The declared `const FIXED_FPS: int = <literal>` as a string, or null. */
+export function readFixedFps(text) {
+  const m = FIXED_FPS.exec(text);
+  return m && Number(m[1]) > 0 ? m[1] : null;
+}
 
 /** {name, flags} from the script's own declared list, or null when it declares none. */
 export function readSpec(text) {
@@ -104,8 +113,8 @@ function classify(abs, projectDir) {
   return { error: `${toRes(abs, projectDir)} is neither a scene nor an -s script (extends SceneTree/MainLoop)` };
 }
 
-function engineArgs(engine, runTicks) {
-  const fps = engine.fixedFps ?? (runTicks ? RUN_FPS : null);
+function engineArgs(engine, runTicks, declaredFps = null) {
+  const fps = engine.fixedFps ?? declaredFps ?? (runTicks ? RUN_FPS : null);
   const quit = engine.quitAfter ?? (runTicks ? String(runTicks) : null);
   return [...(fps ? ['--fixed-fps', fps] : []), ...(quit ? ['--quit-after', quit] : [])];
 }
@@ -121,6 +130,7 @@ export function resolve(entry, args = [], { projectDir = PROJECT } = {}) {
   const text = c.script && existsSync(c.script) ? readFileSync(c.script, 'utf8') : '';
   const declared = readSpec(text);
   const runTicks = readRunTicks(text);
+  const fixedFps = readFixedFps(text);
   const { engine, user } = splitArgs(args);
   const flags = user.filter((a) => a.startsWith('--'));
   const problems = !declared ? [] : flags.map((arg) => ({ arg, flag: arg.split('=')[0] }))
@@ -129,8 +139,8 @@ export function resolve(entry, args = [], { projectDir = PROJECT } = {}) {
   const path = toRes(c.file, projectDir);
   const target = c.kind === 'scene' ? [path] : ['-s', path];
   const tail = user.length ? ['--', ...user] : [];
-  const godotArgs = c.kind === 'scene' ? [...engineArgs(engine, runTicks), ...target, ...tail]
-    : [...target, ...engineArgs(engine, runTicks), ...tail];
+  const godotArgs = c.kind === 'scene' ? [...engineArgs(engine, runTicks, fixedFps), ...target, ...tail]
+    : [...target, ...engineArgs(engine, runTicks, fixedFps), ...tail];
   const specNote = declared
     ? `flags checked: ${flags.length} against ${declared.name} (${c.script ? toRes(c.script, projectDir) : path})`
     : NO_SPEC;

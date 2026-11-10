@@ -1,13 +1,15 @@
 // node --test "tools/selftest/*.test.mjs"
 import assert from 'node:assert/strict';
-import { mkdtempSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { test } from 'node:test';
+import { after, test } from 'node:test';
 import { runAccentAudit, runWorldLock } from './run.mjs';
 
 const lockJson = JSON.stringify({ ok: true, max_share: 0.01, frames: [{ ppm: 32, differing_share: 0 }] });
-const fresh = () => mkdtempSync(join(tmpdir(), 'gtai-selftest-'));
+const made = [];
+after(() => { for (const d of made) rmSync(d, { recursive: true, force: true }); });
+const fresh = () => { const d = mkdtempSync(join(tmpdir(), 'gtai-selftest-')); made.push(d); return d; };
 
 /** A stub windowed runner: writes `name` into `dir` (after removeStale) and exits `status`. */
 const stub = (dir, name, text, status, out = '') => async () => {

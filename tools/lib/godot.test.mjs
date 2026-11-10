@@ -2,7 +2,9 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { join } from 'node:path';
-import { candidates, describe, pinnedVersion, resolveGodot, runProcess, versionMatches } from './godot.mjs';
+import { existsSync } from 'node:fs';
+import { ROOT as REPO } from './repo.mjs';
+import { candidates, describe, mainCheckout, pinnedVersion, resolveGodot, runProcess, versionMatches } from './godot.mjs';
 
 const ROOT = '/repo';
 const TOML = '[godot]\nversion = "4.7.2-stable"\nwindows_url = "x"\n\n[gdtoolkit]\nversion = "4.5.0"\n';
@@ -42,6 +44,23 @@ test('order: GODOT_BIN > POF_GODOT_BIN > tools/local.json > known path > PATH', 
   assert.equal(resolveGodot({ env: {}, fs: fakeFs(toml, { [known]: ['Godot_v4.7.2-stable_win64_console.exe'] }),
     root: ROOT, probe: good(knownBin, 'godot') }).source, 'known path');
   assert.equal(resolveGodot({ env: {}, fs: fakeFs(toml), root: ROOT, probe: good('godot') }).source, 'PATH');
+});
+
+test('a worktree far from the install finds the binary beside its main checkout (n11 control-qbv)', () => {
+  const wt = join(ROOT, 'x', 'y', 'z', 'wt');
+  const main = join(ROOT, 'main');
+  const near = join(main, '..', 'gtai-spike', 'tools', 'godot');
+  const fs = fakeFs(toml, { [near]: ['Godot_v4.7.2-stable_win64_console.exe'] });
+  const bin = join(near, 'Godot_v4.7.2-stable_win64_console.exe');
+  assert.equal(resolveGodot({ env: {}, fs, root: wt, main: null, pin: '4.7.2-stable', probe: good(bin) }).ok, false);
+  const r = resolveGodot({ env: {}, fs, root: wt, main, pin: '4.7.2-stable', probe: good(bin) });
+  assert.equal(r.source, 'known path');
+  assert.equal(r.bin, bin);
+});
+
+test('mainCheckout names the repo whose .git this worktree shares', () => {
+  const m = mainCheckout(REPO);
+  assert.ok(m && existsSync(join(m, '.git')), `main checkout ${m}`);
 });
 
 test('an unusable explicit GODOT_BIN fails with one actionable line (no silent fallthrough)', () => {
@@ -139,4 +158,54 @@ test('ensureImport skips a fresh class cache and answers once per project dir', 
     rmdirSync(join(dir, '.godot'));
     rmdirSync(dir);
   }
+});
+
+test('stopOn: the first SCRIPT ERROR ends a run that would idle to its timeout, and the lines under it are kept', async () => {
+  const { SCRIPT_ERROR } = await import('./godot.mjs');
+  const idle = 'console.log("boot");setTimeout(()=>console.log("SCRIPT ERROR: Parse Error: x"),100);'
+    + 'setTimeout(()=>console.log("   at: GDScript::reload (res://dev/broken.gd:3)"),300);setInterval(()=>{},1000)';
+  const r = await runProcess(process.execPath, ['-e', idle], { timeoutMs: 180000, stopOn: SCRIPT_ERROR, stopGraceMs: 800 });
+  assert.equal(r.timedOut, false);
+  assert.equal(r.status, -1);
+  assert.equal(r.stopped, 'SCRIPT ERROR: Parse Error: x');
+  assert.ok(r.durationMs < 90000, `took ${r.durationMs} ms of a 180 s timeout (a loaded machine is slow, an idle child is forever)`);
+  assert.match(r.out, /res:\/\/dev\/broken.gd:3/);
+  assert.match(r.out, /\[stopped: killed the process tree/);
+  assert.match(describe(r), /^STOPPED at the first script error/);
+});
+
+test('stopOn: a match split across two chunks is still seen; no match leaves the run alone', async () => {
+  const { SCRIPT_ERROR } = await import('./godot.mjs');
+  const split = 'process.stdout.write("SCRIPT ER");setTimeout(()=>process.stdout.write("ROR: boom\\n"),150);setInterval(()=>{},1000)';
+  const r = await runProcess(process.execPath, ['-e', split], { timeoutMs: 180000, stopOn: SCRIPT_ERROR, stopGraceMs: 100 });
+  assert.equal(r.stopped, 'SCRIPT ERROR: boom');
+  const clean = await runProcess(process.execPath, ['-e', 'console.log("ERROR: not a script error");process.exit(0)'],
+    { stopOn: SCRIPT_ERROR, stopGraceMs: 100 });
+  assert.equal(clean.status, 0);
+  assert.equal(clean.stopped, null);
+});
+
+test('stopOn: a run that exits by itself inside the grace keeps its own status and is not "stopped"', async () => {
+  const { SCRIPT_ERROR } = await import('./godot.mjs');
+  const r = await runProcess(process.execPath, ['-e', 'console.log("SCRIPT ERROR: late");process.exit(1)'],
+    { stopOn: SCRIPT_ERROR, stopGraceMs: 3000 });
+  assert.equal(r.status, 1);
+  assert.equal(r.stopped, null);
+  assert.match(r.out, /SCRIPT ERROR: late/);
+});
+
+test('onLine sees every whole line as it arrives, per stream, a split line once and whole', async () => {
+  const seen = [];
+  const js = 'process.stdout.write("one\\ntw");setTimeout(()=>{process.stderr.write("err line\\n");process.stdout.write("o\\n")},100)';
+  const r = await runProcess(process.execPath, ['-e', js], { onLine: (l) => seen.push(l) });
+  assert.equal(r.status, 0);
+  assert.deepEqual(seen.sort(), ['err line', 'one', 'two']);
+});
+
+test('an onLine that throws changes neither the run nor its stop (n11t-break-stopon)', async () => {
+  const { SCRIPT_ERROR } = await import('./godot.mjs');
+  const js = 'console.log("one");console.log("SCRIPT ERROR: after a bad viewer");setInterval(()=>{},1000)';
+  const r = await runProcess(process.execPath, ['-e', js], { timeoutMs: 180000, stopOn: SCRIPT_ERROR, stopGraceMs: 100,
+    onLine: (l) => { if (l === 'one') throw new Error('hostile viewer'); } });
+  assert.equal(r.stopped, 'SCRIPT ERROR: after a bad viewer');
 });

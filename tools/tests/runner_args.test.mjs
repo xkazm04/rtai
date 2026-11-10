@@ -60,3 +60,21 @@ test('run_unit --failed: re-runs exactly the files that failed in the previous j
   assert.throws(() => buildPlan(unitArgs(['--failed']), index, [], null, null),
     (e) => e instanceof UsageError && /no previous unit run to re-run/.test(e.message));
 });
+
+test('run_unit --select: an unmatched name is said with the nearest stem, the rest run, and the plan carries it (hero n11 REQUEST)', async () => {
+  const { UsageError, buildPlan, parseArgs: unitArgs, selectMiss } = await import('./run_unit.mjs');
+  const tests = { 'tests/unit/test_rivet_x15.gd': '', 'tests/unit/test_ghost_stride.gd': '', 'tests/unit/test_ghost_drawn.gd': '' };
+  const index = { tests, classNames: () => [] };
+  const plan = buildPlan(unitArgs(['--select=test_rivet_x15,test_ghost_strid']), index, []);
+  assert.deepEqual(plan.files, ['tests/unit/test_rivet_x15.gd']);
+  assert.deepEqual(plan.unmatched, ['test_ghost_strid']);
+  assert.match(plan.notes.join('\n'), /--select=test_ghost_strid matches no test file \(did you mean test_ghost_stride\?\): the other 1 file\(s\) run, and this run cannot pass/);
+  assert.deepEqual(buildPlan(unitArgs(['--select=test_ghost_*']), index, []).unmatched, [], 'a matching glob leaves nothing unmatched');
+  assert.throws(() => buildPlan(unitArgs(['--select=nope_at_all,ghost_strid']), index, []),
+    (e) => e instanceof UsageError && /nope_at_all matches no test file;/.test(e.message) && /did you mean test_ghost_stride/.test(e.message),
+    'nothing matched: still a usage error, now with the suggestion');
+  const all = Object.keys(tests);
+  assert.equal(selectMiss('rivet', all), '--select=rivet matches no test file (did you mean test_rivet_x15?)', 'a substring of a stem');
+  assert.equal(selectMiss('zzzz_unrelated', all), '--select=zzzz_unrelated matches no test file', 'nothing near: no guess');
+  assert.equal(selectMiss('ghost_*x', all), '--select=ghost_*x matches no test file', 'a glob gets no substring guess');
+});
