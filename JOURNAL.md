@@ -138,3 +138,6 @@ session, remove the worktree and branch after. (5) a real `compare.mjs --victim`
   gtai-n15/flake/morning_4b.log. The baseline auto-resolve did not fire (no baseline conflict tonight); it is
   proven on the throwaway-repo test only. Part 2 (gates, reels: needs Godot ~2.5 h) next session with
   `--steps=gates,reels`; then remove worktree + branch.
+- 23:14 FRICTION (mine): the control agent's "no gtai-gate- process" check matched its own polling shells (their
+  command lines contain the pattern), so it waited past my gate's end; told it to proceed. Next time: match on
+  Godot process names plus the snapshot path, never on a bare substring a poller repeats.
