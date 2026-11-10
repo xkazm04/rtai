@@ -285,3 +285,8 @@ blood_flicker_cop_block_64, blood_flicker_vehicles_48, blood_flicker_vehicles_64
 find whose table, ask before deleting another lane's rows). (4) Before freeze: reel gate on the final commit if any
 project/ change lands; REPORT.md final (draft is current to 00:20). (5) End of night: `git worktree remove --force
 C:/Users/kazda/kiro/gtai-n15/scratch-tools-before` and `git branch -D n15t-control-sim-hash` (the control branch).
+- 00:20 the integrated selftest's "debt rows no longer seen (delete them)" names 5 rows of
+  project/data/tables/accent_debt.json, all owner d5-city, all the blood-splat gate-boundary FLICKER class whose own
+  docs say it "moves between zooms and layers from run to run" (incl. my blood_flicker_vehicles_64, 22:57). One quiet
+  run is not proof: KEPT. Each row's doc already names its real exit (an audit that compares same-frame captures).
+  NEXT item (3)'s "stale accent rows" is therefore closed: do not delete them.
