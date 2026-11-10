@@ -1,11 +1,13 @@
-import { test } from 'node:test';
+import { after, test } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { lineSink, reelArgs, runReels } from './run_reels.mjs';
 
-const dir = () => fs.mkdtempSync(path.join(os.tmpdir(), 'reels-'));
+const made = [];
+after(() => { for (const d of made) fs.rmSync(d, { recursive: true, force: true }); });
+const dir = () => { const d = fs.mkdtempSync(path.join(os.tmpdir(), 'reels-')); made.push(d); return d; };
 const good = (n = 2) => Array.from({ length: n }, (_, i) => `[INFO] showcase: director chapter c${i}: 2/2 down`).join('\n');
 
 test('reelArgs is the gate command with a weapon', () => {
