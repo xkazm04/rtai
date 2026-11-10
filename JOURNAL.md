@@ -349,3 +349,28 @@ stay (00:20).
 NEXT (session 3; the 00:26 NEXT stands, with these changes): item (3) Linux sweep DONE (00:31, 825/823/0 on a real
 clone). The final commit needs a full gate (`node tools/gate/run.mjs --rev=HEAD --reels`): project/dev/selftest
 changed at 5cda754c0 (selftest passed on it at 00:35, unit/scenarios/reels not re-run since 52dc72d4).
+
+## Session 3 (iteration 3, 00:36-02:06)
+
+- 00:37 read JOURNAL, git log, hero/combat journals. Combat: no new REQUEST tools since 00:13 (all served). Hero has
+  three unserved FRICTION lines: (a) 00:29 "each commit took ~1.5 min (the hook copies a 5336-file snapshot)", which
+  stopped its five-commit loop at the session end; (b) 00:08 the hook ran a full lint on each of ten EMPTY commits;
+  (c) 23:30 `evidence/run.mjs`'s selftest read its live, mid-edit tree (INVALID run); (d) 22:44 `stride_film
+  --film-fire` never draws a one-row strip (worked around with cursor_sweep). Serving (a)-(c) ahead of the list.
+- 00:40 measured the hook's cost: it is lint, not the snapshot. `node tools/lint/lint.mjs` 88 s on 1428 .gd
+  (tool-tests alone 35 s; gdformat + gdlint about 50 s in 200-file batches); the export is about 2 s.
+- 01:00 SERVED hero (a)+(b), c5ac2442a: `tools/lint/scope.mjs` + `lint.mjs --scope=<file>`; the hook passes the staged
+  list. A commit whose non-inert staged paths are all under project/ runs gdformat + gdlint over its staged .gd only
+  (per-file tools) and the tool tests only when it stages a file a tool test reads (`join(ROOT, '<path>')` literals:
+  today only factory.test's city_spawn_plan.gd); every whole-tree check runs; anything outside project/ = full lint;
+  gates always full. Empty commit: skipped only when `git write-tree` = `HEAD^{tree}` (the break tests' "an empty
+  list is never a reason to skip" stands: it still runs lint). Tests: scope.test 6, precommit.test +2, staged_tree
+  break test relaxed to "only --scope added"; gate+lint tests 166/0.
+  PROVEN on real commits in a scratch detached worktree (gtai-n15/scratch-hook, removed after; probe commits
+  unreachable): `lint: all 15 checks pass over 1 staged of 1428 GDScript files` real 4.3 s (forms_lineup.gd comment
+  edit); `--allow-empty`: `pre-commit: nothing staged, the index tree is the HEAD tree: lint skipped` 1.9 s. Earlier
+  probes failed for real reasons, which shows the narrowed hook still bites: a line added to a dev file -> FAIL
+  debt-ratchet (dev_loc); an over-long comment -> FAIL gdlint; a line inserted in city_spawn_plan.gd -> tool-tests
+  ran (an input) and factory.test's fixture line numbers failed. The commit of this change itself (tools/ staged)
+  ran the full lint: 2m09s contended.
+  TELL hero: after the Director merges n15-tools, a commit of strips/manifest/.gd under project/ takes ~4 s, not ~90 s.
