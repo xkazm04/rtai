@@ -322,7 +322,8 @@ Each step's output goes to `build/merge/logs/<step>.log` while it runs (tail it)
 (`--timeout`, at least 65 min for reels and 90 for gates) has its whole process tree killed by
 `step_guard.mjs`, Godot included, and its log ends `morning: <step>: timed out after N min`.
 After the gates (green or red) it prints one line per evidence kind of that run (`tools/merge/gate_lines.mjs`),
-and names any kind written for another commit STALE. Real run, n15 scratch integration of three lanes:
+and names any kind written for another commit STALE. Its lines for the n15 scratch integration's real evidence
+(read after that run; the run itself predates this print):
 
 ```
 morning: gates: lint pass: lint: all 16 checks pass over 1428 GDScript files
