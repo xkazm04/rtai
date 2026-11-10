@@ -2,8 +2,9 @@ class_name RivetWindup
 extends RefCounted
 ## n13 weapon art (item 4): a blade's wind-up cell. The drawn equipped strips have no wind-up, so
 ## the strike cell (the swing already through, its arc drawn) showed from the first wind-up tick.
-## Where a weapon has a wind-up strip (rivet_eq_<weapon>_windup.png, tools/art/blade_windup.py: 0 =
-## the side wind-up, 1 = the camera wind-up, drawn facing right), RivetFrames draws it while the
+## Where a weapon has a wind-up strip (rivet_eq_<weapon>_windup.png: 0 = the side wind-up, 1 = the
+## camera wind-up, drawn facing right; the asset lane's drawn cells laid by
+## tools/art/rivet_windup_cells.py: p70 plasma sword, katana, baton), RivetFrames draws it while the
 ## view's strike clip is inside its wind-up (RigClips.strike_t < strike_ph.x); the active and
 ## recovery ticks keep the strike cell. View only: the sim's timings are untouched.
 ## `--rivet-windup=off` (CastFlags) = the strike cell through the wind-up (the before).

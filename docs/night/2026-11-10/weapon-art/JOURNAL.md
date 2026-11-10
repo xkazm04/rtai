@@ -209,3 +209,40 @@ known path `gtai-spike/tools/godot/Godot_v4.7.2-stable_win64_console.exe`; every
   `counts "2"` on the delivered sheet, written to `rivet_eq_<weapon>_windup.png` (cell 0 side, 1 cam;
   set `fig_h` by eye, the asset note says the sword's cam body is ~8 % long), `--import`, film with
   and without `--rivet-windup=off`. The baton's left wind-up needs the second slot (one line).
+
+### 15:20-15:45: the drawn wind-ups fitted and filmed (Director dispatch)
+- Director (on the branch, not redone): stopped my planted-fault run mid gun_fx_marks (+2.0 -> +3.0
+  left in the checkout, restored by them), committed this journal and ASSETS-REPLIES.md (c8a199266),
+  fixed test_weapon_art's provenance for pistol/dropped.png and the re-cut sword strips (f10b8bc50),
+  committed the asset lane's 15:15 additions (7ba90131c). Gates at c8a199266 (theirs): unit 2268/1
+  (that provenance test), scenarios 54/55 (city_chase nav budget, contended; passed alone), parity
+  bit-exact, debt ok, lint 15/15.
+- `tools/art/rivet_windup_cells.py` + `rivet_windup_cells.json` (new): the library's pre-cut p70
+  cells (`rivet_windup_70_cells/`, the picked takes `..._side`, `..._cam_b` (sword), `..._side`,
+  `..._cam`) laid on a two-cell strip: cell width = the equipped cell's (wider if needed), height
+  room for the raised weapon, feet on the 2 px pad, the body's centre (alpha centroid of the lower
+  45 % of rows; the cutter's helmet anchor fails when a raised blade is the topmost pixel) on the
+  cell centre; per cell k and dx; the sword row runs the B ink rim.
+- Fitting, by 4x head crops against the strips (`i4_windup_drawn-p70-cells-vs-facings-strikes-heads.png`):
+  as delivered the side wind-ups stood ~13 px right of the helmet line and several helmets drew larger
+  than the facings' (katana cam ~1.3x, baton ~1.2x, sword cam ~1.15x even at the suggested 0.92; the
+  asset lane matched domes to the strike cells, which the n10 cut draws larger). Shipped: sword side
+  dx 13, cam k 0.86; katana side k 0.9 dx 12, cam k 0.78; baton k 0.82 both. No re-tone: the takes
+  are the same drawn plates as the strips (checked by eye at 3x and 1x).
+- Films, same build, `--rivet-windup=off` vs on (`wu-<w>-off|on`): differing frames sword 4 (59, 60,
+  74, 75), katana 6 (59-61, 76-78), baton 11 (57-58, 70-71, 79-85: the overhead crack's longer
+  wind-up held 7 frames where the off build held the finished jab cell). The view sees the last 2-3
+  wind-up ticks of each swing (RigInput's late start), so each coil shows 2-3 frames (7 for the crack).
+- Anticipation (melee.md, absolute, 32 px/m, "nothing pops = 2"): plasma sword 2 -> 4 (the bright
+  blade cocks up and back for 2 frames before each slash; helmet and feet hold their line);
+  katana 4 -> 5 (a 3-frame coil, blade over the shoulder; the drawn arc now lands on the contact frame
+  instead of 3 frames early); electro baton 2 -> 4 (a backswing before each jab, a 7-frame raise before
+  the crack). No pop or flicker: no arcs in the cells (unlike n12's trial), no lateral jump, the coil
+  body sits between the facing and strike sizes. All three ON.
+- Not built: p55 (the deliveries are sheets at the 55 band's scale: each cell needs its own scale,
+  anchor and a boss-view film, more than one manifest row), the baton's left wind-up (needs the left
+  slot), chainsaw, the sword's spin coil: owner offers.
+- Provenance: three lines in steam/ai-provenance/2026-11.jsonl (the library takes, round 20261110-1320,
+  prompt hashes; laid by the script, no new generation). test_weapon_art 41/41 with the windup tests.
+- Tests: test_rivet_windup +1 (the three p70 strips ship, wide and tall enough, warmed);
+  test_dropped_gun_cell +2 asserts (a rightward drop past a full turn: kills the `wrapf` survivor).

@@ -27,6 +27,9 @@ func test_a_rightward_drop_keeps_its_side_with_half_the_tilt() -> void:
 	assert_eq(lie.y, 1.0)
 	assert_almost_eq(ShockArcsView.lie_of(-1.2).x, -1.2 * ShockArcsView.CELL_TILT_K, 1e-5)
 	assert_eq(ShockArcsView.lie_of(PI * 0.5).y, 1.0, "straight down stays unmirrored")
+	var wrapped: Vector2 = ShockArcsView.lie_of(0.3 + TAU)  # a rightward drop past a full turn
+	assert_eq(wrapped.y, 1.0)
+	assert_almost_eq(wrapped.x, 0.3 * ShockArcsView.CELL_TILT_K, 1e-5)
 
 
 func test_a_leftward_drop_is_mirrored_never_upside_down() -> void:

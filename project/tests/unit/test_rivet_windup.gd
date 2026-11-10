@@ -1,7 +1,7 @@
 extends GutTest
 ## n13 item 4: a blade with a wind-up strip draws it through the strike's wind-up ticks (view only).
-## No wind-up strip ships yet (the composed trial failed on film; cells are commissioned): the
-## strip's presence is stubbed through RivetStrips' file cache.
+## The p70 strips ship for the plasma sword, katana and baton (the asset lane's drawn cells,
+## tools/art/rivet_windup_cells.py); the path tests stub the file cache, not depending on them.
 
 const EQ: String = "res://features/characters/art/view/p70/rivet_eq_plasma_sword.png"
 const WU: String = "res://features/characters/art/view/p70/rivet_eq_plasma_sword_windup.png"
@@ -60,6 +60,17 @@ func test_without_a_cut_nothing_changes() -> void:
 	RivetStrips._exists[WU] = false
 	assert_eq(RivetWindup.path_or(_rig(0.0), "p70", &"plasma_sword", EQ), EQ)
 	assert_false(RivetStripWarm.paths("p70", [&"plasma_sword"]).has(WU), "nothing to warm")
+
+
+func test_the_three_blades_ship_a_p70_strip_wide_and_tall_enough() -> void:
+	for w: String in ["plasma_sword", "katana", "electro_baton"]:
+		var dir: String = RivetStrips.DIR + "p70/rivet_eq_" + w
+		var eq: Texture2D = load(dir + ".png") as Texture2D
+		var wu: Texture2D = load(dir + RivetWindup.FILE) as Texture2D
+		assert_not_null(wu, w)
+		assert_gte(wu.get_width() / RivetWindup.CELLS, eq.get_width() / 8, w + ": the cell width")
+		assert_gte(wu.get_height(), eq.get_height(), w + ": room for the raised weapon")
+		assert_true(RivetStripWarm.paths("p70", [StringName(w)]).has(dir + RivetWindup.FILE))
 
 
 func test_the_cells_by_octant() -> void:

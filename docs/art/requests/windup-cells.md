@@ -1,9 +1,33 @@
 # REQUEST: wind-up cells for Rivet's blades (plasma sword, katana, electro baton)
 
-Lane n13-weapon-art, 2026-11-10. For an artist or an image generator. None of the three ships an
-interim cell: the composed trial (below) failed the bar for all of them.
+Lane n13-weapon-art, 2026-11-10. For an artist or an image generator. No composed interim cell
+shipped: the trial (below) failed the bar for all three.
 
-## Why
+## Status (15:40): delivered and shipped at p70
+
+The asset lane answered the same day (`docs/night/2026-11-10/weapon-art/ASSETS-REPLIES.md`; notes
+`gtai-art/library/deliveries/blade_windup_it309.md`): side and camera wind-ups for all three blades
+at p70 and p55, the baton's left wind-up, plus offers not asked for (chainsaw p70 / p55, the plasma
+sword's spin coil). All graded A by that lane.
+
+| Weapon | p70 side + cam | Anticipation (melee.md, 32 px/m) | State | p55 | left |
+|---|---|---|---|---|---|
+| plasma sword | shipped ON | 2 -> 4 | `rivet_eq_plasma_sword_windup.png` | delivered, not wired | - |
+| katana | shipped ON | 4 -> 5 | `rivet_eq_katana_windup.png` | delivered, not wired | - |
+| electro baton | shipped ON | 2 -> 4 | `rivet_eq_electro_baton_windup.png` | delivered, not wired | delivered, slot not wired |
+| chainsaw (offer) | delivered | - | not built | delivered | - |
+| sword spin coil (offer) | delivered | - | not built | - | - |
+
+Laid by `tools/art/rivet_windup_cells.py` (manifest `tools/art/rivet_windup_cells.json`) from
+`gtai-art/library/keyed/rivet/rivet_windup_70_cells/`: feet on the strip's pad, body on the cell
+centre, scaled by eye to the facings (sword cam 0.86, katana 0.9 / 0.78, baton 0.82 / 0.82; the
+sword's side shifted 13 px, the katana's 12, so the helmet holds its line), the sword's B ink rim.
+Films: `gtai-masters/n13/weapon-art/i4_<weapon>_windup_drawn-ab-32ppm.mp4`. Before:
+`--rivet-windup=off`, or the weapon's row removed from the manifest (no file = off). p55 is not
+wired: its deliveries are sheets at the 55 action band's scale, so each cell needs its own scale and
+anchor by eye and a boss-view film (more than one manifest row each).
+
+## Why (the original request)
 
 Rivet's drawn equipped strips (`project/features/characters/art/view/<art>/rivet_eq_<weapon>.png`,
 cut by `tools/art/rivet_frames.py` from the library sheets) have 8 cells: five facings, the side
