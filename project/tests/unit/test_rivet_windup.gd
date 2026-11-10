@@ -68,8 +68,11 @@ func test_the_three_blades_ship_a_p70_strip_wide_and_tall_enough() -> void:
 		var eq: Texture2D = load(dir + ".png") as Texture2D
 		var wu: Texture2D = load(dir + RivetWindup.FILE) as Texture2D
 		assert_not_null(wu, w)
-		assert_gte(wu.get_width() / RivetWindup.CELLS, eq.get_width() / 8, w + ": the cell width")
-		assert_gte(wu.get_height(), eq.get_height(), w + ": room for the raised weapon")
+		# compared in 110 space: n11 re-cut some equipped strips at x1.5 (RivetRes.X15)
+		var k: float = RivetRes.of(dir + ".png") / RivetRes.of(dir + RivetWindup.FILE)
+		var eq_w: float = eq.get_width() / 8.0 / k
+		assert_gte(wu.get_width() / float(RivetWindup.CELLS), eq_w, w + ": the cell width")
+		assert_gte(float(wu.get_height()), eq.get_height() / k, w + ": room for the raised weapon")
 		assert_true(RivetStripWarm.paths("p70", [StringName(w)]).has(dir + RivetWindup.FILE))
 
 
