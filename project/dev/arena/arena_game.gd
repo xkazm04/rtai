@@ -139,7 +139,7 @@ func _boss_bot(args: ArenaArgs) -> InputSource:
 	var ghost: String = args.text("--servo-ghost")
 	if ghost == "dent":  # Dent seizes the depot's van and drives it into Servo
 		return ServoDentBot.wrap(bot)
-	return ServoGhostBot.wrap(bot, ghost) if ghost != "" else bot
+	return ServoGhostBot.wrap(bot, ghost) if ghost != "" else BossBladeBot.wrap(bot, args)
 
 
 ## lane gunplay: the pit bot at the --weapon's own reach (--lone films the burn death).

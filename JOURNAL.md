@@ -111,3 +111,7 @@ NEXT (session 3):
     drop the brown rifle.
 (7) Perf: RivetStripWarm now also warms the baton left strike (2 small PNGs); judge with tools/perf/fight_gate.mjs vs its A/A.
 REQUEST tools (open): compare.mjs passes --victim through; film/compare list ReelChapters.extras() chapters; a film flag for feel ON.
+- PASS reels on 5bdad7a0c: the whole gate passes (`build/gate/5bdad7a0c26d/gate.json`).
+- MILESTONE 23:29 the blade boss bot committed (see the commit after this line): parse ok, filmed King + katana in tilt, swings
+  from t300; debt baseline raised with --accept-regression (dev_loc +55). NEXT item (2) is now: film 64 px/m close-ups of
+  the p55 katana/plasma sword/baton/chainsaw wind-ups inside it (`--boss-blade=<w>`; --lock=off follows Rivet).
