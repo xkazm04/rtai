@@ -181,3 +181,30 @@ seeded there). (3) item 4b part 2: `morning.mjs --worktree=C:/Users/kazda/kiro/g
 - 23:26 item 6 loop under load (reels running): `gtai-n15/flake/loop_load.sh` = lint's tool-test globs +
   tools/lib, 9-10 s a run, runs 1-3 fail=0.
 - 23:26 reel gate: `[1/3] top OK, 280 s`.
+- 23:32 MILESTONE reel gate on ad2f0a5c1 (`node tools/reel/run_reels.mjs --out=build/reels`): `top: OK; code 0`
+  (280 s), `tilt70: OK; code 0` (284 s), `combo: OK; code 0` (286 s). Every chapter `N/N down`.
+- 23:33 Codex testers (t-1/t-4/t-5) run by me: `run_unit --select=<3 files> --no-rerun` -> `23 passed, 0 failed`.
+  No tester found a defect. Bite check by hand (planted, restored with cp/checkout, tree clean after):
+  old t-4 rules + HW 80 -> `5 failing (12 passed, 5 failed)` (4 car-route, 1 hash window);
+  `_turn += 1` -> `4 failing (2 passed, 4 failed)` in the spawn-plan tester. Review changes: split the
+  300-line car-route file and the 233-line hash file in two each (tests unchanged; the 300 was at the
+  hard stop and both raised the debt ratchet); spawn-plan landed unchanged. Codex caught a wording error
+  in MY brief: the turn fires CAR_TURN_LEAD BEFORE the new lane, not past it (it followed the code: right).
+  Thrown away: nothing. Commit 4576f2b08. Dispatcher ledger: car-route accepted-after-revision (181 s, 6736
+  tokens out), hash-window accepted-after-revision (140 s, 5021), spawn-plan accepted (98 s, 3859); all
+  three discarded.
+- 23:40 MILESTONE item 7: mutate of sim_hash.gd with the control test alone (scratch branch
+  n15t-control-sim-hash f4d4acab5 at 812a0b061, `--max=15 --tests=test_sim_hash`, the same 15-of-91
+  sample Codex's runs used): `score 93.3% = killed 14 / (killed 14 + survived 1)`, 332 s; survivor
+  `sim_hash.gd:22 delete hcount.fill(0)` (no control test builds twice; Codex's reviewed test had the same
+  survivor at c52cceb1 until 5af34a16 killed it). Recorded: `factory control sim_hash --tokens=46819
+  --secs=730 --tests=14 --killed=14 --mutants=15 --changed=0` in gtai-masters/n15/tools/codex-ledger.jsonl,
+  notes say the 730 s are INFLATED (my wait bug). Ledger pair: Codex 162 s + review 64833 tokens / 178 s
+  vs control 46819 tokens: `claude_tokens_saved: -18014` (Codex cost Claude MORE on sim_hash). Log
+  gtai-n15/control/mutate_control_15.log.
+- 23:43 FRICTION (mine, a bug I shipped in ba6f38838): every `compare.mjs` refused `film: --feel must be
+  auto, on or off, got undefined` (compare plans each side with flags that lack film's DEFAULTS). Fixed
+  d60ff5894 + a test through `filmFlags` -> `plan`. My 8 tests never planned through compare.
+- 23:44 t-4 film started: `compare.mjs city --a=gtai-n15/scratch-tools-before (detached d720e22da = t-1 only,
+  the hero lane's pre-t-4 DLL, md5 42f81158) --b=HEAD (DLL 1dec60a1) --at=300,600,900 --clip=300-900 --ppm=32`.
+  A rev snapshot would have been a false before: snapshots copy THIS tree's (post-t-4) DLLs.
