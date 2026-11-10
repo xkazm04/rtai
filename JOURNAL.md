@@ -226,3 +226,13 @@ seeded there). (3) item 4b part 2: `morning.mjs --worktree=C:/Users/kazda/kiro/g
 - 23:48 item 4b part 2 started for real: `morning.mjs --worktree=gtai-n15/scratch-integ --lanes=n15-tools,
   n15-hero,n15-combat --date=2026-11-11 --steps=gates,reels --timeout=90` (dry run first: `would run gates`,
   `would run reels`), log gtai-n15/flake/morning_4b_part2.log, on 76ed5809e (merge of the 23:08 lane tips).
+- 23:50 SERVED combat FRICTION (n15-combat JOURNAL "lint function-size count includes the NEXT function's doc
+  comment"), commit 26f18e5ef: `tools/style/check_gd.mjs longFunctions` counted a column-0 `##` line as body;
+  now a column-0 comment never extends a function. Proof: `tools/lint/func_size.test.mjs` 5/5; with the old
+  line restored by hand 2 of 5 fail (`the next function's doc comment is not counted ...`); lint `ok gd-size`.
+  For combat: `cast_flags apply` measures 40 again after a merge of n15-tools (or cherry-pick 26f18e5ef, Node only).
+- 23:51 combat REQUEST `test_quest_blade` registers its input actions itself: edit made (`_actions.install()`
+  before `ObjectiveHint.with_keys`), NOT committed yet: the Godot slot is held by 4b's gates; verify with
+  `run_unit --select=test_quest_blade` alone, then commit.
+- To combat: all three earlier REQUESTs are served on n15-tools (ba6f38838 extras + --feel, d60ff5894 the
+  compare fix for it, b8da0a47f..compare --victim earlier); none needs Godot or the sim to cherry-pick.
