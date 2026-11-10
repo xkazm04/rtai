@@ -55,7 +55,15 @@ func test_every_table_is_one_drawn_cycle_and_shows_every_frame() -> void:
 
 
 func test_a_galloping_run_row_walks_instead() -> void:
-	assert_false(GhostStride.runs("dent", "p70", 3), "Dent's 3/4 away run gallops")
-	assert_true(GhostStride.runs("dent", "p70", 2), "his profile run alternates legs")
-	assert_true(GhostStride.runs("dent", "p55", 3), "a pitch without an entry runs on every row")
-	assert_true(GhostStride.runs("kerf", "p70", 3))
+	var off: Dictionary = {"dent/p70": [3]}
+	assert_false(GhostStride.runs("dent", "p70", 3, off), "a listed row walks")
+	assert_true(GhostStride.runs("dent", "p70", 2, off), "the other rows run")
+	assert_true(
+		GhostStride.runs("dent", "p55", 3, off), "a pitch without an entry runs on every row"
+	)
+	assert_true(GhostStride.runs("kerf", "p70", 3, off))
+
+
+func test_dent_runs_on_every_facing_since_his_fourth_take() -> void:
+	for row: int in 5:
+		assert_true(GhostStride.runs("dent", "p70", row), "row %d" % row)

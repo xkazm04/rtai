@@ -15,13 +15,14 @@ const TABLES: Dictionary[String, Array] = {
 }
 
 ## Run rows ("<name>/<art>", 0 = toward) drawn as a gallop (both halves lead with one leg): that
-## facing walks at the cadence cap instead. Dent's 3/4 away run row failed three redraws (it13).
-const RUN_ROWS_OFF: Dictionary[String, Array] = {"dent/p70": [3]}
+## facing walks at the cadence cap instead. Empty since it14: Dent's 3/4 away row (off at it13
+## after three galloping redraws) alternates legs in its fourth take.
+const RUN_ROWS_OFF: Dictionary[String, Array] = {}
 
 
-## True when `name`'s run grid under `art` may show on the drawn row `row`.
-static func runs(name: String, art: String, row: int) -> bool:
-	var off: Array = RUN_ROWS_OFF.get(name + "/" + art, [])
+## True when `name`'s run grid under `art` may show on the drawn row `row` (`off_rows`: the table).
+static func runs(name: String, art: String, row: int, off_rows: Dictionary = RUN_ROWS_OFF) -> bool:
+	var off: Array = off_rows.get(name + "/" + art, [])
 	return not off.has(row)
 
 

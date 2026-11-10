@@ -182,4 +182,4 @@ func test_a_run_needs_its_sheet_at_this_pitch_and_a_run_row() -> void:
 	assert_true(d._running, "7 m/s runs on the profile row")
 	host.global_position += Vector2.RIGHT * run_px
 	assert_true(d._column(host, 1.0, 3) >= 0)
-	assert_false(d._running, "the galloping 3/4 away row walks at the cap")
+	assert_true(d._running, "the 3/4 away row runs since its fourth take (it14)")

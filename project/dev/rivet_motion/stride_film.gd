@@ -14,6 +14,8 @@ const CROP_PX: int = 260
 const FEET_PX: int = 215
 const EVERY: Array[int] = [4, 4, 2, 2]
 const DIRS: Array[Vector2] = [Vector2.RIGHT, Vector2.DOWN, Vector2.RIGHT, Vector2.DOWN]
+## `--film-diag`: every leg turned 45 deg up the screen (right -> up-right, toward -> down-right),
+## so the 3/4 away and 3/4 toward rows are filmed.
 ## `--film-attack`: a melee press every ATTACK_EVERY ticks, to see a form's drawn strike.
 ## `--film-fire`: the fire press with it (Dent's seize). `--film-hurt`: a hit every HURT_EVERY.
 const ATTACK_EVERY: int = 24
@@ -35,6 +37,7 @@ func _ready() -> void:
 	_out = args.text("--film-out")
 	_bot = Bot.new(session.live, session.actions, get_viewport())
 	_bot.attack = args.has("--film-attack")
+	_bot.turn = -PI / 4.0 if args.has("--film-diag") else 0.0
 	_bot.fire = args.has("--film-fire")
 	_hurt = args.has("--film-hurt")
 	_crop = maxi(CROP_PX, args.number("--film-crop", CROP_PX) as int)
@@ -100,6 +103,7 @@ class Bot:
 	var in_leg: int = 0
 	var attack: bool = false
 	var fire: bool = false
+	var turn: float = 0.0
 	var _presses: Array[Vector2i] = []
 	var _at: int = 0
 	var _wait: int = 0
@@ -129,7 +133,7 @@ class Bot:
 				return TickInput.new(1 << _actions.bit(act), 0, 0)
 		if _at < _wait or leg >= StrideFilm.DIRS.size():
 			return TickInput.new(_live.sample(tick).buttons, 0, 0)
-		var dir: Vector2 = StrideFilm.DIRS[leg]
+		var dir: Vector2 = StrideFilm.DIRS[leg].rotated(turn)
 		_cursor = _vp.get_visible_rect().size / 2.0 + dir * 280.0
 		var input: TickInput = _live.sample(tick)
 		var buttons: int = input.buttons
