@@ -248,3 +248,10 @@ seeded there). (3) item 4b part 2: `morning.mjs --worktree=C:/Users/kazda/kiro/g
   `5/5 (worst 0.00)`, `release-compile: 668 loaded, 0 failed`. So the t-1 re-blessed goldens hold with the other
   two lanes merged on top (as of 23:08); the selftest also lists stale accent debt rows to delete
   (blood_flicker_cop_48, ..._vehicles_vermilion_48), not a failure. `morning: reels: running` next.
+- 00:01 item 4 tool add (725845086): `morning.mjs` gates step prints one `morning: gates: <kind> <status>: <summary>`
+  line per pof.godot-evidence/1 kind after the run (green or red), STALE for a kind written for another commit
+  (`tools/merge/gate_lines.mjs`). Proven read-only on scratch-integ's real build/evidence (76ed5809e): 6 kinds,
+  e.g. `morning: gates: unit-tests pass: unit-tests: 2529 passed, 0 failed, 2 skipped (GUT, headless)`. The 4b run
+  in flight started before it, so no real morning run has printed it yet. Tests 5/5 Windows + WSL; merge 89/89.
+  (FRICTION, mine: a `[\/]` regex in a test fake lost a backslash on the way through my shell; used basename.)
+- 00:01 4b part 2 reels: `top` view at chapter 19/19.
