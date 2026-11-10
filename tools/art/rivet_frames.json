@@ -114,7 +114,8 @@
    "rivet_eq_plasma_rifle": {
     "act_k": 0.85,
     "counts": "5,3",
-    "sheet": "rivet_eq_plasma_rifle_55_v2.png"
+    "sheet": "rivet_eq_plasma_rifle_55_v2.png",
+    "fig_h": 165
    },
    "rivet_eq_plasma_sword": {
     "act_k": 0.85,
