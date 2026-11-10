@@ -82,3 +82,45 @@ func test_the_warm_draws_the_line_material_once_behind_the_load() -> void:
 		s.material, InkHit.material(1), "the line's own material, so its shader compiles now"
 	)
 	assert_lt(s.modulate.a, 0.05, "and nobody sees it")
+
+
+func test_levels_and_px_follow_the_table_exactly() -> void:
+	assert_eq(
+		InkHit.row_of(&"light"), Vector2i(2, 4), "1 px over 4 ticks: level 2 at 0.5 px a level"
+	)
+	assert_eq(InkHit.row_of(&"blast").x, 5, "2.5 px")
+	assert_eq(InkHit.px_of(2), 1.0)
+	assert_eq(InkHit.px_of(99), InkHit.px_of(InkHit.MAX_LEVEL), "capped")
+	assert_eq(InkHit.px_of(-3), 0.0)
+
+
+func test_a_restored_card_keeps_no_trace_and_reset_forgets_the_pulses() -> void:
+	InkHit.hit(_rig, &"light", 10)
+	InkHit.step(10)
+	assert_true(_card.has_meta(InkHit.META))
+	InkHit.step(14)
+	assert_false(_card.has_meta(InkHit.META), "no leftover meta")
+	InkHit.hit(_rig, &"light", 20)
+	assert_eq(InkHit.live(), 1)
+	InkHit.reset()
+	assert_eq(InkHit.live(), 0)
+	assert_eq(InkHit.row_of(&"light").x, 2, "the table re-reads after a reset")
+
+
+func test_no_pulse_for_a_missing_rig() -> void:
+	InkHit.hit(null, &"blast", 10)
+	assert_eq(InkHit.live(), 0)
+
+
+func test_the_warm_needs_a_parent_in_the_tree_and_cleans_up() -> void:
+	InkHit.warm(null)
+	var loose: Node2D = Node2D.new()
+	InkHit.warm(loose)
+	assert_eq(loose.get_child_count(), 0, "not in the tree: nothing")
+	loose.free()
+	var parent: Node2D = Node2D.new()
+	add_child_autofree(parent)
+	InkHit.warm(parent)
+	assert_eq(parent.get_child_count(), 1)
+	await wait_seconds(0.3)
+	assert_eq(parent.get_child_count(), 0, "the warm sprite is gone after its tenth of a second")

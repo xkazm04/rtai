@@ -53,3 +53,25 @@ func test_a_feel_cam_blast_kicks_the_plates_when_the_row_asks() -> void:
 	@warning_ignore("return_value_discarded")
 	cam.hit(&"rocket_launcher", &"blast", Vector2.UP, false, 200)
 	assert_eq(PlateShock.offset_at(200), Vector2.ZERO, "off under reduced motion")
+
+
+func test_the_guards_at_their_edges() -> void:
+	assert_false(PlateShock.kick(3.0, 0, Vector2.RIGHT, 5), "no length, no shock")
+	assert_false(PlateShock.kick(3.0, 10, Vector2.ZERO, 5), "no direction, no shock")
+	assert_true(PlateShock.kick(0.5, 1, Vector2.RIGHT, 5), "half a px for one tick is still one")
+	assert_almost_eq(PlateShock.offset_at(5).x, 0.5, 0.001)
+	var free_at: int = 5 + 1 + PlateShock.COOLDOWN_TICKS
+	assert_false(PlateShock.kick(3.0, 10, Vector2.RIGHT, free_at - 1), "the cooldown's last tick")
+	assert_true(PlateShock.kick(3.0, 10, Vector2.RIGHT, free_at))
+
+
+func test_reset_and_advance() -> void:
+	assert_true(PlateShock.kick(4.0, 10, Vector2.DOWN, 30))
+	PlateShock.advance(31)
+	assert_gt(PlateShock.offset().length(), 0.0, "advance moves offset() along")
+	PlateShock.advance(40)
+	assert_eq(PlateShock.offset(), Vector2.ZERO)
+	PlateShock.advance(31)
+	PlateShock.reset()
+	assert_eq(PlateShock.offset(), Vector2.ZERO, "reset leaves nothing in flight")
+	assert_true(PlateShock.kick(4.0, 10, Vector2.DOWN, 0), "and nothing cooling down")
