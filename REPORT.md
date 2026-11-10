@@ -85,6 +85,6 @@ until 01:45). Repaired by hand within minutes; no lane commit got the wrong iden
 - PoF runner commits on `n11-runner`, not pushed: 32da7878, 410c035d, b4294c1b (and any later).
 - This branch's step guard (b2fc4d7d, c4533f7d) changes how the morning merge runs every step.
 - `film --victim` works with combat's hook (1183a323 on n11-combat): merge both.
-- The staged-snapshot hook (d13b9849, 1e5fa267, 3ee0c085) changes what every commit's lint reads. It also ends combat's FRICTION 117: their `probe.sh` marks `arena_game.gd` `--skip-worktree` and copies untracked probe files in; the new hook lints the index, so a commit no longer needs `probe.sh off` first.
+- The staged-snapshot hook (d13b9849, 1e5fa267, 3ee0c085, 4d6d8232) changes what every commit's lint reads. It also ends combat's FRICTION 117: their `probe.sh` marks `arena_game.gd` `--skip-worktree` and copies untracked probe files in; the hook lints the index, so a commit no longer needs `probe.sh off` first. That held only from 4d6d8232 (05:05): before it, `checkout-index` refused the skip-worktree entry and the hook failed. Proven 05:08 on a scratch worktree with the probe's shape (skip-worktree `arena_game.gd` + an untracked .gd, both over the line cap): `quick.mjs` on the tree FAIL 4 issues, the commit through the hook `lint: all 16 checks pass`, 56 s.
 - Combat's `probe.sh` toggles `dev/frames/film_card.gd` in and out of their tree, which re-imports
   the class cache on every film (about 8 s each); it ends when the film probe lands on main.
