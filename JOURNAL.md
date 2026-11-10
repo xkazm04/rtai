@@ -329,3 +329,7 @@ works; /tmp is wiped) to clear the 3 git-link artifacts. (4) Before freeze: full
 REPORT.md final (draft current to 00:28). (5) End of night: `git worktree remove --force
 C:/Users/kazda/kiro/gtai-n15/scratch-tools-before`, `git branch -D n15t-control-sim-hash`. The accent flicker rows
 stay (00:20).
+- 00:31 MILESTONE item 6 on a REAL Linux clone (WSL Ubuntu, Node 24, `git clone --no-local --branch n15-tools` into
+  ~/n15t_clone at 9db143ecc; hooks off for the clone only): the whole Node tool list (AGENTS list + film, merge,
+  codex, gate) `tests 825, pass 823, fail 0` (2 skipped). So the 3 failures of the 00:24 /mnt/c run were the
+  worktree's Windows .git link, not code. Clone removed. NEXT item (3) is done.
