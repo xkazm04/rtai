@@ -4,10 +4,10 @@
     {
       "bounce": 0.35,
       "cone_deg": 75,
-      "doc": "Rocket launcher: the body blown apart along the blast into its six rig parts (head with the hat, torso, both arms, both legs) that spin, bounce and slide, a red spray fan and ink splat, a scorch mark at the burst.",
+      "doc": "Rocket launcher: the body blown apart along the blast into its six rig parts (head with the hat, torso, both arms, both legs) that spin, bounce and slide, a red spray fan and ink splat, a scorch mark at the burst. n11 combat it32: hitstop_ticks 0 (was 4): the body leaves on the first tick, because the held parts stood the victim upright in his living pose inside the fireball for 4 ticks after the camera's kill hit-stop (wall time only), the hit-stop is the hold.",
       "flash_ticks": 3,
       "ground_drag": 6,
-      "hitstop_ticks": 4,
+      "hitstop_ticks": 0,
       "id": "rocket_gib",
       "launch_mps": [
         5,
@@ -439,10 +439,10 @@
     {
       "bounce": 0.35,
       "cone_deg": 75,
-      "doc": "Dent's overloaded car bomb (lane ghost-powers, weapon dent_blast): the rocket's gib, thrown out of the car's blast: the body blown into its six rig parts with a red spray fan, ink splat and a scorch mark.",
+      "doc": "Dent's overloaded car bomb (lane ghost-powers, weapon dent_blast): the rocket's gib, thrown out of the car's blast: the body blown into its six rig parts with a red spray fan, ink splat and a scorch mark. hitstop_ticks 0 like the rocket (n11 combat it32): no upright victim in the fireball.",
       "flash_ticks": 3,
       "ground_drag": 6,
-      "hitstop_ticks": 4,
+      "hitstop_ticks": 0,
       "id": "dent_blast_gib",
       "launch_mps": [
         5,
