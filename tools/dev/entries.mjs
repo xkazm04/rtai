@@ -32,6 +32,19 @@ export function readSpec(text) {
   return { name: m[1], flags: [...body.matchAll(/"([^"]*)"/g)].map((x) => x[1]) };
 }
 
+const NEEDS_WINDOW = /^const[ \t]+NEEDS_WINDOW[ \t]*:[ \t]*bool[ \t]*=[ \t]*true(?![\w])/m;
+const EXTENDS_DEV = /^extends[ \t]+"res:\/\/([^"]+\.gd)"/m;
+
+/** True when the script, or the res:// script it extends (one hop: a const cannot be redeclared in a
+ *  child), declares `const NEEDS_WINDOW: bool = true`: it renders frames, and headless draws nothing
+ *  (combat n15 FRICTION: the look goldens run headless gave a frame of nothing). */
+export function readNeedsWindow(text, projectDir = PROJECT) {
+  if (NEEDS_WINDOW.test(text)) return true;
+  const m = EXTENDS_DEV.exec(text);
+  const parent = m ? join(projectDir, ...m[1].split('/')) : null;
+  return Boolean(parent && existsSync(parent) && NEEDS_WINDOW.test(readFileSync(parent, 'utf8')));
+}
+
 /** The declared `const RUN_TICKS: int = <literal>`, or null (absent or an expression). */
 export function readRunTicks(text) {
   const m = RUN_TICKS.exec(text);
@@ -145,5 +158,6 @@ export function resolve(entry, args = [], { projectDir = PROJECT } = {}) {
     ? `flags checked: ${flags.length} against ${declared.name} (${c.script ? toRes(c.script, projectDir) : path})`
     : NO_SPEC;
   return { ok: true, kind: c.kind, path, script: c.script ? toRes(c.script, projectDir) : null,
-    spec: declared?.flags ?? null, specNote, runTicks, userArgs: user, problems, godotArgs };
+    spec: declared?.flags ?? null, specNote, runTicks, userArgs: user, problems, godotArgs,
+    needsWindow: readNeedsWindow(text, projectDir) };
 }

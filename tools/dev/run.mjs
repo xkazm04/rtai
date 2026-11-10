@@ -91,6 +91,10 @@ export async function main(argv, { runner = runGodot, out = console.log, err = c
   const r = resolve(entry, rest, projectDir ? { projectDir } : {});
   if (!r.ok) { err(`run: ${r.error}`); return 2; }
   if (r.problems.length) return refuse(r, err);
+  if (r.needsWindow && !opts.windowed) {
+    err(`run: ${r.path} renders frames (const NEEDS_WINDOW) and headless draws nothing: add --windowed (the look goldens' evidence path is node tools/selftest/run.mjs); nothing launched`);
+    return 2;
+  }
   out(`run: godot ${opts.windowed ? '' : '--headless '}--path project ${r.godotArgs.join(' ')}`);
   if (opts.dryRun) { out(`run: dry run, nothing launched; ${r.specNote}`); return 0; }
   const fresh = await freshAssets(projectDir ?? join(ROOT, 'project'), { runner, err, assets, touch, timeoutMs: opts.timeoutMs });

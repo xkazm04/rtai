@@ -36,7 +36,8 @@
         "2026-11-10: n11 merge: n11-tools dev tooling (film probe, film triggers) on top of n12 (dev_loc 20487 -> 20809)",
         "2026-11-10: n11 merge: n11-hero dev films and ghost tooling on top of n12+tools (dev_loc 20809 -> 21227)",
         "2026-11-10: n11 merge: n11-combat dev films and body probes on top of n12+tools+hero (dev_loc 21227 -> 21419)",
-        "2026-11-10: n14 windup-more: dev film chapters (<blade>_left / _cam: the cop behind or below Rivet) for the wind-up before/after films (dev_loc 21419 -> 21426)"
+        "2026-11-10: n14 windup-more: dev film chapters (<blade>_left / _cam: the cop behind or below Rivet) for the wind-up before/after films (dev_loc 21419 -> 21426)",
+        "2026-11-10: n15 tools: the selftest scenes declare NEEDS_WINDOW (+1 dev line) so tools/dev/run.mjs refuses them headless (combat FRICTION) (dev_loc 21426 -> 21427)"
       ],
       "files": {
         "project/dev/arena": 711,
@@ -62,13 +63,13 @@
         "project/dev/save_crash_writer.gd": 18,
         "project/dev/save_cross.gd": 18,
         "project/dev/save_cross_run.gd": 69,
-        "project/dev/selftest": 1453,
+        "project/dev/selftest": 1454,
         "project/dev/servo": 434,
         "project/dev/showcase": 6725,
         "project/dev/view": 195,
         "project/dev/weapon_art": 506
       },
-      "total": 21426
+      "total": 21427
     },
     "direct_cmdline_reads": {
       "accepted": [

@@ -103,3 +103,35 @@ test('readRunTicks: one line only, as readFixedFps (a declaration split over lin
   assert.equal(readRunTicks('const RUN_TICKS: int = 900  # ten seconds and a bit\n'), 900);
   assert.equal(readRunTicks('extends Node\r\nconst RUN_TICKS: int = 900\r\n'), 900, 'CRLF still reads');
 });
+
+test('NEEDS_WINDOW: declared in the script or in the res:// script it extends (combat n15 FRICTION)', async () => {
+  const { mkdtempSync, mkdirSync, rmSync, writeFileSync } = await import('node:fs');
+  const { tmpdir } = await import('node:os');
+  const { join } = await import('node:path');
+  const { readNeedsWindow } = await import('./entries.mjs');
+  const dir = mkdtempSync(join(tmpdir(), 'gtai-needs-window-'));
+  try {
+    mkdirSync(join(dir, 'dev', 'selftest'), { recursive: true });
+    writeFileSync(join(dir, 'dev', 'selftest', 'base.gd'), 'extends Node\nconst NEEDS_WINDOW: bool = true\n');
+    writeFileSync(join(dir, 'dev', 'selftest', 'plain.gd'), 'extends Node\n');
+    assert.equal(readNeedsWindow('const NEEDS_WINDOW: bool = true\n', dir), true);
+    assert.equal(readNeedsWindow('extends "res://dev/selftest/base.gd"\n', dir), true, 'one hop up');
+    assert.equal(readNeedsWindow('extends "res://dev/selftest/plain.gd"\n', dir), false);
+    assert.equal(readNeedsWindow('const NEEDS_WINDOW: bool = false\n', dir), false);
+    assert.equal(readNeedsWindow('const NEEDS_WINDOW: bool = trueish\n', dir), false);
+    assert.equal(readNeedsWindow('# const NEEDS_WINDOW: bool = true\n', dir), false, 'a comment declares nothing');
+    assert.equal(readNeedsWindow('extends "res://dev/selftest/missing.gd"\n', dir), false);
+  } finally { rmSync(dir, { recursive: true, force: true }); }
+});
+
+test('run.mjs refuses a NEEDS_WINDOW entry headless and launches nothing; --windowed passes', async () => {
+  const { main } = await import('./run.mjs');
+  const said = [];
+  let launched = 0;
+  const runner = async () => { launched += 1; return { status: 0, out: '' }; };
+  const code = await main(['look_golden'], { runner, out: () => {}, err: (l) => said.push(l) });
+  assert.equal(code, 2);
+  assert.equal(launched, 0);
+  assert.match(said.join('\n'), /renders frames \(const NEEDS_WINDOW\).*--windowed/);
+  assert.equal(await main(['look_golden', '--windowed', '--dry-run'], { runner, out: () => {}, err: () => {} }), 0);
+});
