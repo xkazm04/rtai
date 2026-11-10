@@ -92,11 +92,12 @@ export function buildPlan(o, index = realIndex(), slow = slowTier(), changedList
   const fastOnly = (list) => (o.all ? list : list.filter((f) => !slow.includes(f)));
   const notes = [];
   let files = null;
-  let unmatched = [];
+  const unmatched = [];
   if (o.select.length) {
     files = [...new Set(o.select.flatMap((g) => {
-      const res = globRe(g.replace(/\.gd$/, ''));
-      const hit = all.filter((f) => res.test(stem(f)) || (!g.includes('*') && stem(f) === `test_${g}`));
+      const want = g.replace(/\.gd$/, '');
+      const res = globRe(want);
+      const hit = all.filter((f) => res.test(stem(f)) || (!want.includes('*') && stem(f) === `test_${want}`));
       if (!hit.length) unmatched.push(g);
       return hit;
     }))].sort();
@@ -110,7 +111,8 @@ export function buildPlan(o, index = realIndex(), slow = slowTier(), changedList
     if (!files.length) notes.push('no unit tests needed for this change');
   }
   if (o.test) {
-    const re = new RegExp(`^func ${o.test.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`, 'm');
+    // the whole name: `test_share` must not select a file that only defines `test_shared`
+    const re = new RegExp(`^func ${o.test.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}[ \\t]*\\(`, 'm');
     files = (files ?? fastOnly(all)).filter((f) => re.test(index.tests[f]));
     if (!files.length) throw new UsageError(`--test=${o.test}: no selected test file defines it`);
   }
