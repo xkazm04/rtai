@@ -236,3 +236,8 @@ seeded there). (3) item 4b part 2: `morning.mjs --worktree=C:/Users/kazda/kiro/g
   `run_unit --select=test_quest_blade` alone, then commit.
 - To combat: all three earlier REQUESTs are served on n15-tools (ba6f38838 extras + --feel, d60ff5894 the
   compare fix for it, b8fccb958 compare --victim earlier); none needs Godot or the sim to cherry-pick.
+- 23:53 Linux check of tonight's new Node tests (WSL `-d Ubuntu`, Node v24.14.0; note: the default WSL distro is
+  NVIDIA-Workbench, which has no ~/node24: pass `-d Ubuntu`): 17/18, `resolveSide asks before making a snapshot`
+  failed with `HEAD is neither a worktree nor a commit git knows` (this worktree's .git link is a Windows path).
+  Fixed d1331a320: the test injects the rev lookup. After: WSL 18/18, Windows film suite 185/185.
+- 23:54 4b part 2: gates step at scenarios `[55/55] vehicle_yield ok` (all 55 ok so far), parity/selftest next.
