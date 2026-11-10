@@ -16,6 +16,7 @@ function harness(result = { status: 0, out: '', timedOut: false, durationMs: 5 }
   const opts = {
     runner: async (args, o) => { calls.push({ args, o }); return result; },
     out: (l) => lines.out.push(l), err: (l) => lines.err.push(l), logDir,
+    assets: () => ({ count: 0, sample: [] }), touch: () => {},
   };
   return { calls, lines, opts, logDir };
 }
@@ -82,4 +83,32 @@ test('the run stops at its first SCRIPT ERROR unless --keep-going, and a stopped
   await main(['reel.gd', '--keep-going'], { ...h.opts, projectDir: FIX });
   assert.equal(h.calls[1].o.stopOn, null);
   assert.ok(!h.calls[1].args.includes('--keep-going'));
+});
+
+const staleThen = (...counts) => () => ({ count: counts.length > 1 ? counts.shift() : counts[0], sample: ['res://a.png'] });
+
+test('a changed asset is re-imported before the run, and the run then launches', async () => {
+  const h = harness();
+  let touched = 0;
+  const code = await main(['arena'], { ...h.opts, assets: staleThen(1, 0), touch: () => { touched += 1; } });
+  assert.equal(code, 0, h.lines.err.join('\n'));
+  assert.deepEqual(h.calls.map((c) => c.args[0]), ['--import', h.calls[1].args[0]]);
+  assert.equal(touched, 1);
+  assert.match(h.lines.err.join('\n'), /1 asset\(s\) changed since the last import \(res:\/\/a\.png\)/);
+});
+
+test('an asset still stale after --import is UNVERIFIABLE (exit 3) and nothing is launched', async () => {
+  const h = harness();
+  const code = await main(['arena'], { ...h.opts, assets: staleThen(1) });
+  assert.equal(code, 3);
+  assert.equal(h.calls.length, 1, 'only the import ran');
+  assert.match(h.lines.err.join('\n'), /UNVERIFIABLE/);
+});
+
+test('a failed --import fails the run before launch', async () => {
+  const h = harness({ status: 1, out: 'boom', timedOut: false, durationMs: 5 });
+  const code = await main(['arena'], { ...h.opts, assets: staleThen(1, 0) });
+  assert.equal(code, 1);
+  assert.equal(h.calls.length, 1);
+  assert.match(h.lines.err.join('\n'), /--import failed/);
 });
