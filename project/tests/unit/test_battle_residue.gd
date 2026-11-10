@@ -63,3 +63,22 @@ func test_off_keeps_nothing() -> void:
 	fx.impact_dir.clear()
 	r.sync(fx)
 	assert_eq(r.size(), 0)
+
+
+func test_each_kept_scuff_draws_a_stroke_and_four_dots_fading_with_age() -> void:
+	var r: BattleResidue = _ring(4, 2)
+	for i: int in 4:
+		r.keep(Vector2(i, 0), Vector2.RIGHT, 7 + i)
+	var g: Array = r.geometry()
+	var strokes: PackedVector2Array = g[0]
+	var small: PackedVector2Array = g[2]
+	var large: PackedVector2Array = g[4]
+	assert_eq(strokes.size(), 8, "one stroke (two points) per scuff")
+	assert_eq(small.size() + large.size(), 32, "four dots per scuff")
+	var cols: PackedColorArray = g[1]
+	assert_eq(cols.size(), 4)
+	assert_lt(cols[0].a, cols[3].a, "the oldest is the faintest")
+	assert_almost_eq(cols[3].a, GunFxMarks.SCUFF.a * 0.6, 0.001)
+	var at: Vector2 = Ink.px(Vector2(3, 0))
+	assert_lt(strokes[6].distance_to(at), Ink.px(Vector2(0.3, 0)).x + 1.0, "drawn where it fell")
+	assert_eq(r.geometry(), g, "the same ring draws the same marks")

@@ -9,6 +9,8 @@ extends Node2D
 ## state. data/tables/battle_residue.json; `on` false = the before.
 
 const TABLE: String = "res://data/tables/battle_residue.json"
+## Line widths (px) of the stroke, the small dots and the large dots (GunFxMarks.scuff).
+const WIDTHS: PackedFloat32Array = [6.0, 4.0, 7.0]
 
 var on: bool = false
 var cap: int = 0
@@ -86,29 +88,41 @@ func ink_of(i: int) -> float:
 ## short segment as wide as the dot), rebuilt only when the ring changes. GunFxMarks.scuff's own
 ## geometry and seed, settled: a redraw that drew each mark's circles cost up to 10 ms at 96.
 func _draw() -> void:
-	var strokes: PackedVector2Array = PackedVector2Array()
-	var stroke_c: PackedColorArray = PackedColorArray()
-	var dots: Array[PackedVector2Array] = [PackedVector2Array(), PackedVector2Array()]
-	var dot_c: Array[PackedColorArray] = [PackedColorArray(), PackedColorArray()]
+	var g: Array = geometry()
+	for k: int in 3:
+		var pts: PackedVector2Array = g[2 * k]
+		var cols: PackedColorArray = g[2 * k + 1]
+		if not pts.is_empty():
+			draw_multiline_colors(pts, cols, WIDTHS[k])
+
+
+## The ring's segments and their colours: [strokes, colours, small dots, colours, large dots,
+## colours], two points per segment, one colour per segment; the faded-out marks left out.
+func geometry() -> Array:
+	var out: Array = []
+	for k: int in 3:
+		out.append_array([PackedVector2Array(), PackedColorArray()])
 	for i: int in _at.size():
-		var k: float = ink_of(i)
-		if k <= 0.0:
+		var ink: float = ink_of(i)
+		if ink <= 0.0:
 			continue
-		var c: Color = Color(GunFxMarks.SCUFF, GunFxMarks.SCUFF.a * k)
+		var c: Color = Color(GunFxMarks.SCUFF, GunFxMarks.SCUFF.a * ink)
 		var at: Vector2 = _at[i]
 		var dir: Vector2 = _dir[i]
-		strokes.append_array([Ink.px(at - dir * 0.25), Ink.px(at + dir * 0.1)])
-		@warning_ignore("return_value_discarded")
-		stroke_c.append(c)
+		_seg(out, 0, Ink.px(at - dir * 0.25), Ink.px(at + dir * 0.1), c)
 		for j: int in 4:
 			var h: float = NoirPack.hash01(_seed[i] * 31 + j)
 			var off: Vector2 = dir.rotated(-0.9 + 1.8 * h) * (0.18 + 0.12 * float(j % 2))
 			var p: Vector2 = Ink.px(at + off)
-			dots[j % 2].append_array([p - Vector2(0.5, 0.0), p + Vector2(0.5, 0.0)])
-			@warning_ignore("return_value_discarded")
-			dot_c[j % 2].append(c)
-	if not strokes.is_empty():
-		draw_multiline_colors(strokes, stroke_c, 6.0)
-	for w: int in 2:
-		if not dots[w].is_empty():
-			draw_multiline_colors(dots[w], dot_c[w], 4.0 if w == 0 else 7.0)
+			_seg(out, 1 + j % 2, p - Vector2(0.5, 0.0), p + Vector2(0.5, 0.0), c)
+	return out
+
+
+func _seg(out: Array, k: int, a: Vector2, b: Vector2, c: Color) -> void:
+	var pts: PackedVector2Array = out[2 * k]
+	var cols: PackedColorArray = out[2 * k + 1]
+	pts.append_array([a, b])
+	@warning_ignore("return_value_discarded")
+	cols.append(c)
+	out[2 * k] = pts
+	out[2 * k + 1] = cols

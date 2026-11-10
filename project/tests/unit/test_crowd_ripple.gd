@@ -79,3 +79,26 @@ func _street(dead: bool, m: float) -> RigFeed:
 	@warning_ignore("return_value_discarded")
 	f.put(2, 43, BodyPlan.Kind.PED, Vector2(2.0 * m, 0.0), Vector2.ZERO)
 	return f
+
+
+func test_the_fights_bangs_are_its_muzzles_and_blasts() -> void:
+	var bus: EventBus = autofree(EventBus.new())
+	var arena: CombatArena = CombatArena.new(
+		CombatTuning.shipped(), bus, RngRegistry.new(5).stream(&"combat")
+	)
+	var m: float = SimConst.PX_PER_M
+	var fired: Shot = Shot.new()
+	fired.origin = Vector2(2.0, 3.0)
+	fired.pos = Vector2(9.0, 3.0)
+	var bare: Shot = Shot.new()
+	bare.pos = Vector2(5.0, 1.0)
+	arena.shots.append(fired)
+	arena.shots.append(bare)
+	arena.areas = FightAreas.new()
+	arena.areas.blasts.append(Vector3(7.0, 8.0, 3.0))
+	var b: PackedVector2Array = CrowdRipple.bangs_of(arena)
+	assert_eq(b.size(), 3)
+	assert_eq(b[0], Vector2(2.0, 3.0) * m, "the muzzle, not where the round is")
+	assert_eq(b[1], Vector2(5.0, 1.0) * m, "a round with no origin: where it is")
+	assert_eq(b[2], Vector2(7.0, 8.0) * m, "a blast")
+	assert_eq(CrowdRipple.bangs_of(null).size(), 0)
