@@ -14,6 +14,16 @@ const TABLES: Dictionary[String, Array] = {
 	"tonnage/p70": [47.0, 14.0, 58.5, 29.4, 25.0, 31.5, 29.4, 0.5],
 }
 
+## Run rows ("<name>/<art>", 0 = toward) drawn as a gallop (both halves lead with one leg): that
+## facing walks at the cadence cap instead. Dent's 3/4 away run row failed three redraws (it13).
+const RUN_ROWS_OFF: Dictionary[String, Array] = {"dent/p70": [3]}
+
+
+## True when `name`'s run grid under `art` may show on the drawn row `row`.
+static func runs(name: String, art: String, row: int) -> bool:
+	var off: Array = RUN_ROWS_OFF.get(name + "/" + art, [])
+	return not off.has(row)
+
 
 ## The table of `name`'s walk under the art key `art`, empty for the even cycle.
 static func table_of(name: String, art: String) -> PackedFloat32Array:

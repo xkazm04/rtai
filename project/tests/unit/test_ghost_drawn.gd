@@ -18,17 +18,17 @@ func test_kerfs_grid_ships_and_divides_into_its_cells() -> void:
 func test_standing_still_shows_the_standing_cell() -> void:
 	var d: GhostDrawn = _drawn()
 	var host: Node2D = add_child_autofree(Node2D.new())
-	assert_eq(d._column(host, 0.5), GhostDrawn.STAND_COL)
-	assert_eq(d._column(host, 0.5), GhostDrawn.STAND_COL, "no ground walked")
+	assert_eq(d._column(host, 0.5, 2), GhostDrawn.STAND_COL)
+	assert_eq(d._column(host, 0.5, 2), GhostDrawn.STAND_COL, "no ground walked")
 
 
 func test_the_column_advances_with_the_ground_walked() -> void:
 	var d: GhostDrawn = _drawn()
 	var host: Node2D = add_child_autofree(Node2D.new())
-	assert_eq(d._column(host, 0.5), GhostDrawn.STAND_COL)
+	assert_eq(d._column(host, 0.5, 2), GhostDrawn.STAND_COL)
 	host.position.x += 3.0
 	@warning_ignore("return_value_discarded")
-	d._column(host, 0.5)
+	d._column(host, 0.5, 2)
 	assert_almost_eq(d._phase, 3.0 / 90.0, 0.0001, "one cycle = cycle_cell x the scale")
 
 
@@ -36,10 +36,10 @@ func test_a_backpedal_runs_the_grid_backward() -> void:
 	var d: GhostDrawn = _drawn()
 	var host: Node2D = add_child_autofree(Node2D.new())
 	@warning_ignore("return_value_discarded")
-	d._column(host, 0.5)
+	d._column(host, 0.5, 2)
 	host.position.x -= 3.0  # facing +x
 	@warning_ignore("return_value_discarded")
-	d._column(host, 0.5)
+	d._column(host, 0.5, 2)
 	assert_almost_eq(d._phase, 1.0 - 3.0 / 90.0, 0.0001)
 
 
@@ -47,15 +47,15 @@ func test_a_frame_without_a_sim_step_keeps_the_stride_then_he_stands() -> void:
 	var d: GhostDrawn = _drawn()
 	var host: Node2D = add_child_autofree(Node2D.new())
 	@warning_ignore("return_value_discarded")
-	d._column(host, 0.5)
+	d._column(host, 0.5, 2)
 	host.position.x += 30.0
-	var walking: int = d._column(host, 0.5)
+	var walking: int = d._column(host, 0.5, 2)
 	assert_ne(walking, GhostDrawn.STAND_COL, "30 px is a third of a cycle")
-	assert_eq(d._column(host, 0.5), walking, "one still frame holds it")
+	assert_eq(d._column(host, 0.5, 2), walking, "one still frame holds it")
 	for i: int in GhostDrawn.STILL_FRAMES:
 		@warning_ignore("return_value_discarded")
-		d._column(host, 0.5)
-	assert_eq(d._column(host, 0.5), GhostDrawn.STAND_COL)
+		d._column(host, 0.5, 2)
+	assert_eq(d._column(host, 0.5, 2), GhostDrawn.STAND_COL)
 
 
 func test_a_look_resting_on_a_boundary_holds_its_octant() -> void:
@@ -80,7 +80,7 @@ func test_a_form_carried_by_something_else_stands() -> void:
 	var host: Node2D = add_child_autofree(Node2D.new())
 	for i: int in 6:
 		host.global_position.x += 10.0
-		assert_eq(d._column(host, 0.5), GhostDrawn.STAND_COL, "tick %d" % i)
+		assert_eq(d._column(host, 0.5, 2), GhostDrawn.STAND_COL, "tick %d" % i)
 
 
 func test_a_given_look_turns_the_backpedal_test_not_the_host() -> void:
@@ -88,9 +88,9 @@ func test_a_given_look_turns_the_backpedal_test_not_the_host() -> void:
 	d._look = PI  # the look points back along the travel; the host itself has rotation 0
 	var host: Node2D = add_child_autofree(Node2D.new())
 	@warning_ignore("return_value_discarded")
-	d._column(host, 0.5)
+	d._column(host, 0.5, 2)
 	host.global_position.x += 10.0
-	var first: int = d._column(host, 0.5)
+	var first: int = d._column(host, 0.5, 2)
 	assert_eq(first, GhostDrawn.COLS - 1, "a backpedal steps the cycle backward from 0")
 
 
@@ -141,17 +141,18 @@ func test_a_wind_up_shows_the_wind_up_cell_before_the_strike() -> void:
 
 func test_a_run_grid_takes_over_above_the_run_speed_and_steps_on_its_longer_cycle() -> void:
 	var d: GhostDrawn = GhostDrawn.new("kerf", 1.8, 139.0, 173.0, 388.0)
+	d._run_tex = PlaceholderTexture2D.new()
 	var host: Node2D = autofree(Node2D.new())
 	host.global_position = Vector2.ZERO
-	assert_true(d._column(host, 1.0) >= 0)
+	assert_true(d._column(host, 1.0, 2) >= 0)
 	var walk_px: float = 1.0 * SimConst.PX_PER_M * SimClock.TICK_DT
 	host.global_position += Vector2.RIGHT * walk_px
-	assert_true(d._column(host, 1.0) >= 0)
+	assert_true(d._column(host, 1.0, 2) >= 0)
 	assert_false(d._running, "1 m/s is a walk")
 	var run_px: float = 12.0 * SimConst.PX_PER_M * SimClock.TICK_DT
 	var before: float = d._phase
 	host.global_position += Vector2.RIGHT * run_px
-	assert_true(d._column(host, 1.0) >= 0)
+	assert_true(d._column(host, 1.0, 2) >= 0)
 	assert_true(d._running, "12 m/s is a run")
 	assert_almost_eq(d._phase - before, run_px / maxf(388.0, 12.0 * SimConst.PX_PER_M / 3.5), 1e-4)
 
@@ -160,7 +161,25 @@ func test_a_ghost_without_a_run_grid_keeps_walking_at_speed() -> void:
 	var d: GhostDrawn = _drawn()
 	var host: Node2D = autofree(Node2D.new())
 	host.global_position = Vector2.ZERO
-	assert_true(d._column(host, 1.0) >= 0)
+	assert_true(d._column(host, 1.0, 2) >= 0)
 	host.global_position += Vector2.RIGHT * 12.0 * SimConst.PX_PER_M * SimClock.TICK_DT
-	assert_true(d._column(host, 1.0) >= 0)
+	assert_true(d._column(host, 1.0, 2) >= 0)
 	assert_false(d._running)
+
+
+func test_a_run_needs_its_sheet_at_this_pitch_and_a_run_row() -> void:
+	var d: GhostDrawn = GhostDrawn.new("dent", 1.8, 163.0, 176.5, 330.0)
+	d._art = "p70"
+	var host: Node2D = autofree(Node2D.new())
+	var run_px: float = 7.0 * SimConst.PX_PER_M * SimClock.TICK_DT
+	assert_true(d._column(host, 1.0, 2) >= 0)
+	host.global_position += Vector2.RIGHT * run_px
+	assert_true(d._column(host, 1.0, 2) >= 0)
+	assert_false(d._running, "no run sheet under this art (Dent at 55): he walks")
+	d._run_tex = PlaceholderTexture2D.new()
+	host.global_position += Vector2.RIGHT * run_px
+	assert_true(d._column(host, 1.0, 2) >= 0)
+	assert_true(d._running, "7 m/s runs on the profile row")
+	host.global_position += Vector2.RIGHT * run_px
+	assert_true(d._column(host, 1.0, 3) >= 0)
+	assert_false(d._running, "the galloping 3/4 away row walks at the cap")

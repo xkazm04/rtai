@@ -89,7 +89,7 @@ func step(
 	var s: float = height_m * size_k * px_per_m * absf(host.global_scale.x) / fig_px
 	_look = host.global_rotation if is_nan(look) else look
 	var o: int = octant(_look)
-	var walk: int = _column(host, s)
+	var walk: int = _column(host, s, RigHeadCard.OCT_FRAME[o])
 	var act: int = act_col() if _act_tex != null else -1
 	if act >= 0:
 		_show(_act_tex, ACT_COLS)
@@ -138,8 +138,9 @@ func octant(look: float) -> int:
 	return _oct
 
 
-## The grid column by the ground walked; the standing cell below the walk's speed.
-func _column(host: Node2D, s: float) -> int:
+## The grid column by the ground walked; the standing cell below the walk's speed. `row` the
+## drawn facing: a row GhostStride keeps off the run walks at the cap.
+func _column(host: Node2D, s: float, row: int) -> int:
 	var at: Vector2 = host.global_position
 	var moved: Vector2 = Vector2.ZERO if _last == Vector2.INF else at - _last
 	_last = at
@@ -152,7 +153,8 @@ func _column(host: Node2D, s: float) -> int:
 			_running = false
 		return _col
 	_still = 0
-	_running = run_cell > 0.0 and speed > RUN_FROM_MPS * SimConst.PX_PER_M
+	var fast: bool = speed > RUN_FROM_MPS * SimConst.PX_PER_M and _run_tex != null
+	_running = fast and run_cell > 0.0 and GhostStride.runs(card_name, _art, row)
 	var k: float = STRIDE_K.get(card_name + "/" + _art, 1.0)
 	var cell: float = (run_cell if _running else cycle_cell) * k
 	var cap: float = MAX_RUN_CYCLES_S if _running else MAX_CYCLES_S

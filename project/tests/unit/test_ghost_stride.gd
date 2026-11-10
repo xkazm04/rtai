@@ -52,3 +52,10 @@ func test_every_table_is_one_drawn_cycle_and_shows_every_frame() -> void:
 		for i: int in 800:
 			seen[GhostStride.col_of(i / 800.0, steps)] = true
 		assert_eq(seen.size(), GhostDrawn.COLS, "%s: every drawn frame shows" % key)
+
+
+func test_a_galloping_run_row_walks_instead() -> void:
+	assert_false(GhostStride.runs("dent", "p70", 3), "Dent's 3/4 away run gallops")
+	assert_true(GhostStride.runs("dent", "p70", 2), "his profile run alternates legs")
+	assert_true(GhostStride.runs("dent", "p55", 3), "a pitch without an entry runs on every row")
+	assert_true(GhostStride.runs("kerf", "p70", 3))
