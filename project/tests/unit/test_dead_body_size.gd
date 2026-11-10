@@ -9,6 +9,11 @@ const MAX_K: float = 1.08
 ## it19: a chest-down or lying in-between reaches its arms past the head, so its longest side may
 ## pass the standing height (tools/art/street_fall_between.py LONG_CAP 1.5).
 const MAX_LANDED_K: float = 1.55
+## it20: the riot cop's shield lies past his hands (street_fall_between.py LONG_CAP_OF 1.7).
+const MAX_SHIELD_K: float = 1.75
+## it20: a lying row's drawing scale against the knees cell: the riot side row was 0.55 (its shield
+## hit the length cap); 0.6 is what half a riot cell allows that row.
+const MIN_LYING_THICK: float = 0.6
 ## it19: the drawing scale (body thickness) of the chest-down cell against the knees cell above it.
 const MIN_THICK: float = 0.8
 const MAX_THICK: float = 1.15
@@ -109,6 +114,7 @@ func test_the_in_between_grids_land_and_lie_at_about_the_standing_height() -> vo
 					_longest_px(img, Rect2i(c * cw, r * ch, cw, ch)) / StreetWalkerFall.STILL_PX
 				)
 				var top: float = MAX_K if r == 2 else MAX_LANDED_K
+				top = MAX_SHIELD_K if r > 2 and src.contains("riot") else top
 				assert_true(k >= MIN_K and k <= top, "(%d,%d) lies %.2f x standing" % [c, r, k])
 
 
@@ -126,3 +132,32 @@ func test_the_body_keeps_its_drawing_scale_as_it_lands() -> void:
 			assert_true(
 				k >= MIN_THICK and k <= MAX_THICK, "%s col %d lands at %.2f x" % [path, c, k]
 			)
+
+
+func test_a_body_lies_at_most_a_little_smaller_than_he_knelt() -> void:
+	for src: String in StreetFallBetween.GRIDS:
+		var path: String = StreetFallBetween.GRIDS[src]
+		var img: Image = _strip(StreetWalkerCards.DIR + path)
+		var cw: int = img.get_width() / 5
+		var ch: int = img.get_height() / StreetFallBetween.FRAMES
+		for c: int in 5:
+			var knees: float = _thickness(img, Rect2i(c * cw, 2 * ch, cw, ch))
+			var k: float = _thickness(img, Rect2i(c * cw, 4 * ch, cw, ch)) / knees
+			assert_true(
+				k >= MIN_LYING_THICK and k <= MAX_THICK, "%s col %d lies at %.2f x" % [path, c, k]
+			)
+
+
+func test_no_fall_cell_is_cut_at_its_cell_edge() -> void:
+	# n11 it20: the SWAT's head-to-camera lying row ran 5 px past the sheet's foot (gloves cut flat)
+	for src: String in StreetFallBetween.GRIDS:
+		var path: String = StreetFallBetween.GRIDS[src]
+		var img: Image = _strip(StreetWalkerCards.DIR + path)
+		var cw: int = img.get_width() / 5
+		var ch: int = img.get_height() / StreetFallBetween.FRAMES
+		for r: int in [2, 3, 4]:
+			for c: int in 5:
+				var used: Rect2i = img.get_region(Rect2i(c * cw, r * ch, cw, ch)).get_used_rect()
+				var gap: int = mini(mini(used.position.x, used.position.y), cw - used.end.x)
+				gap = mini(gap, ch - used.end.y)
+				assert_gt(gap, 0, "%s (%d,%d) touches its cell edge" % [path, c, r])

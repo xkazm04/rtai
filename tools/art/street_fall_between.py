@@ -52,6 +52,14 @@ CAP = 1.06
 THICK = 0.95
 # fall2 and lying: their longest side's ceiling, of STILL_PX (the delivered 1.9 and 2.2 x giants)
 LONG_CAP = 1.5
+# n11 it20: kinds whose lying row carries a long prop past the hands get their own ceiling. The
+# riot cop's shield made his side and three-quarter lying rows 1.9-2.6 x STILL_PX long at the knees
+# frame's thickness, so LONG_CAP drew his head and torso at 0.58-0.85 x the knees frame's. The feet
+# sit at the cell centre, so a row reaches at most half a cell (riot 342 px = 1.78 x): 2.0 spilled
+# into the next column (place() would now move it back, its feet off the cell centre).
+LONG_CAP_OF = {"cop_riot": 1.7}
+# px every drawn cell keeps clear of its cell's border (test_dead_body_size checks it)
+EDGE = 2
 
 
 def longest(cell: Image.Image) -> int:
@@ -76,11 +84,11 @@ def capped(cell: Image.Image) -> Image.Image:
     return rgba if k >= 1.0 else scaled(rgba, k)
 
 
-def matched(cell: Image.Image, knees: Image.Image) -> Image.Image:
-    """A fall2 or lying cell scaled to THICK x the knees frame's thickness, then under LONG_CAP."""
+def matched(cell: Image.Image, knees: Image.Image, cap: float = LONG_CAP) -> Image.Image:
+    """A fall2 or lying cell scaled to THICK x the knees frame's thickness, then under `cap`."""
     rgba = cell.convert("RGBA")
     k = THICK * thickness(knees) / thickness(rgba)
-    return scaled(rgba, min(k, LONG_CAP * STILL_PX / longest(rgba)))
+    return scaled(rgba, min(k, cap * STILL_PX / longest(rgba)))
 
 
 def place(sheet: Image.Image, cell: Image.Image, col: int, row: int, cw: int, ch: int, frame: int):
@@ -89,7 +97,14 @@ def place(sheet: Image.Image, cell: Image.Image, col: int, row: int, cw: int, ch
     ys, xs = np.nonzero(mask)
     crop = Image.fromarray(rgba[ys.min() : ys.max() + 1, xs.min() : xs.max() + 1])
     fx, fy = sf._feet(mask[ys.min() : ys.max() + 1, xs.min() : xs.max() + 1], col, frame)
-    sheet.alpha_composite(crop, (round(col * cw + cw / 2 - fx), round(row * ch + ch / 2 - fy)))
+    x, y = round(col * cw + cw / 2 - fx), round(row * ch + ch / 2 - fy)
+    # it20: a cell that would leave its cell (the SWAT's head-to-camera lying row, 5 px past the
+    # sheet's foot, cut his gloves flat) is moved back inside, its feet a few px off the centre
+    fit_x = min(max(x, col * cw + EDGE), (col + 1) * cw - crop.width - EDGE)
+    fit_y = min(max(y, row * ch + EDGE), (row + 1) * ch - crop.height - EDGE)
+    if (fit_x, fit_y) != (x, y):
+        print(f"SHIFT: cell ({col}, {row}) moved {fit_x - x}, {fit_y - y} px into its cell")
+    sheet.alpha_composite(crop, (fit_x, fit_y))
 
 
 def build(kind: str, lib: Path) -> None:
@@ -100,12 +115,14 @@ def build(kind: str, lib: Path) -> None:
     for r in (0, 1):
         sheet.alpha_composite(grid.crop((0, r * ch, grid.width, (r + 1) * ch)), (0, r * ch))
     cells = lib / f"{kind}_hit_70_cells"
+    cap = LONG_CAP_OF.get(kind, LONG_CAP)
     for c in range(COLS):
         knees = capped(Image.open(cells / f"fall1_{c + 1}.png"))
         lying = grid.crop((c * cw, 2 * ch, (c + 1) * cw, 3 * ch))
-        place(sheet, matched(lying, knees), c, 4, cw, ch, 2)
+        place(sheet, matched(lying, knees, cap), c, 4, cw, ch, 2)
         place(sheet, knees, c, 2, cw, ch, 1)
-        place(sheet, matched(Image.open(cells / f"fall2_{c + 1}.png"), knees), c, 3, cw, ch, 2)
+        fall2 = Image.open(cells / f"fall2_{c + 1}.png")
+        place(sheet, matched(fall2, knees, cap), c, 3, cw, ch, 2)
     sheet.save(P70 / out, optimize=True)
     if kind in BAND:
         band = Path(__file__).resolve().parent / "street_armband.py"
