@@ -37,7 +37,8 @@
         "2026-11-10: n11 merge: n11-hero dev films and ghost tooling on top of n12+tools (dev_loc 20809 -> 21227)",
         "2026-11-10: n11 merge: n11-combat dev films and body probes on top of n12+tools+hero (dev_loc 21227 -> 21419)",
         "2026-11-10: n14 windup-more: dev film chapters (<blade>_left / _cam: the cop behind or below Rivet) for the wind-up before/after films (dev_loc 21419 -> 21426)",
-        "2026-11-10: n15 combat: the blade boss bot (n14 owner call), new dev code project/dev/bosses (dev_loc 21426 -> 21481)"
+        "2026-11-10: n15 combat: the blade boss bot (n14 owner call), new dev code project/dev/bosses (dev_loc 21426 -> 21481)",
+        "2026-11-10: n15 item 2: quest1_clip --quest-hit=off (the before of the contractor stagger), dev_loc +2 (dev_loc 21481 -> 21483)"
       ],
       "files": {
         "project/dev/arena": 711,
@@ -47,7 +48,7 @@
         "project/dev/bosses": 55,
         "project/dev/bots": 399,
         "project/dev/enemy_ai": 662,
-        "project/dev/frames": 1057,
+        "project/dev/frames": 1059,
         "project/dev/ghost-forms": 616,
         "project/dev/ghost-powers": 1137,
         "project/dev/gunplay": 674,
@@ -70,7 +71,7 @@
         "project/dev/view": 195,
         "project/dev/weapon_art": 506
       },
-      "total": 21481
+      "total": 21483
     },
     "direct_cmdline_reads": {
       "accepted": [

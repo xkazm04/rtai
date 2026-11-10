@@ -40,6 +40,8 @@ SHEETS = {
     "ped_jogger": ("ped_jogger_hit.png", None, False),
     "ped_punk": ("ped_punk_hit.png", None, False),
     "ped_shopper": ("ped_shopper_hit.png", None, False),
+    # n15 item 2: quest 1's dock contractor (assets it321, hit stagger v2 A; StreetQuestHit draws it)
+    "contractor": ("contractor_hit.png", None, False),
 }
 # it14: the per-site flinch cells drawn for a kind (<site>_<col>.png, the right-hand facings 1..5;
 # the left ones mirror as the grid does), each to <kind>_<site>_hit.png on the same layout.
@@ -68,6 +70,7 @@ VERSIONS = {
     "ped_punk": "v3",
     "ped_hood": "v3",
     "thug": "v4",
+    "contractor": "v2",
 }
 # n15 combat: the burning figure's second flail frame (burn/1b_<col>.png) as <kind>_flail_burn_hit.png on
 # the same layout, each facing at the scale its burn/1 cell takes, so the two frames swap without a pop.
