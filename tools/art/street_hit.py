@@ -55,6 +55,9 @@ BURNS = {k: "burn/1" for k in ("cop_patrol", "cop_riot", "swat", "thug", "ped_ho
 # not the cell's lowest pixel (a cane tip). Height-fitting each cell drew the elder's low flung pose 1.25 x.
 # Removing a line packs that kind's first set as before.
 VERSIONS = {"swat": "v4", "ped_elder": "v3"}
+# n15 combat: the burning figure's second flail frame (burn/1b_<col>.png) as <kind>_flail_burn_hit.png on
+# the same layout, each facing at the scale its burn/1 cell takes, so the two frames swap without a pop.
+FLAILS = "burn/1b"
 
 
 def foot_x(alpha: np.ndarray) -> float:
@@ -90,10 +93,10 @@ def cropped(path: Path) -> Image.Image:
     return im.crop(im.getchannel("A").point(lambda v: 255 if v > 128 else 0).getbbox())
 
 
-def cell(path: Path, out: Image.Image, col: int, k: float = 0.0) -> None:
+def cell(path: Path, out: Image.Image, col: int, k: float = 0.0, boot: bool = True) -> None:
     im = cropped(path)
-    uniform = k > 0.0
-    if not uniform:
+    uniform = k > 0.0 and boot
+    if k <= 0.0:
         k = CELL_H * FILL / im.height
     im = im.resize((round(im.width * k), round(im.height * k)), Image.LANCZOS)
     alpha = np.asarray(im.getchannel("A"))
@@ -111,7 +114,9 @@ def cell(path: Path, out: Image.Image, col: int, k: float = 0.0) -> None:
 
 def build(lib: Path, name: str, spec: tuple, tmp: Path, site: str = "1") -> None:
     file, ref, band = spec
-    if site != "1":
+    if site == FLAILS:
+        file = file.replace("_hit.png", "_flail_burn_hit.png")
+    elif site != "1":
         file = file.replace("_hit.png", f"_{site.split('/')[0]}_hit.png")
     sheet = Image.new("RGBA", (CELL_W * 5, CELL_H), (0, 0, 0, 0))
     paths = [lib / f"{name}_hit_70_cells/{site}_{col + 1}.png" for col in range(5)]
@@ -120,7 +125,9 @@ def build(lib: Path, name: str, spec: tuple, tmp: Path, site: str = "1") -> None
         paths = [p.parent / VERSIONS[name] / p.name for p in paths]
         k = CELL_H * FILL / max(cropped(p).height for p in paths)
     for col in range(5):
-        cell(paths[col], sheet, col, k)
+        if site == FLAILS:  # frame 1's own height-fill scale for this facing
+            k = CELL_H * FILL / cropped(lib / f"{name}_hit_70_cells/{BURNS[name]}_{col + 1}.png").height
+        cell(paths[col], sheet, col, k, boot=site != FLAILS)
     here = tmp / file
     sheet.save(here)
     tools = Path(__file__).parent
@@ -140,7 +147,7 @@ def main() -> None:
     with tempfile.TemporaryDirectory() as t:
         for name, spec in SHEETS.items():
             build(lib, name, spec, Path(t))
-            for site in SITES.get(name, []) + ([BURNS[name]] if name in BURNS else []):
+            for site in SITES.get(name, []) + ([BURNS[name], FLAILS] if name in BURNS else []):
                 build(lib, name, spec, Path(t), site)
 
 

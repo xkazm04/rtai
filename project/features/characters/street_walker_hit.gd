@@ -53,6 +53,9 @@ const BURN_GRIDS: Dictionary[String, String] = {
 }
 const FLAIL_RAD: float = 0.07
 const FLAIL_HZ: float = 3.0
+## n15: the second flail frame (burn/1b, street_hit.py FLAILS, <kind>_flail_burn_hit.png)
+## swaps with the first on every half shake (10 ticks at 3 Hz). Off until filmed against one frame.
+const FLAIL_FRAMES: bool = false
 ## Family -> seconds the drawn cell holds from the blow (the rest of the family is the shoved walk).
 const HOLD_S: Dictionary[StringName, float] = {&"flinch": 0.2, &"stagger": 0.34}
 ## A death of these kinds opens on the same thrown-back cell over the fall grid's buckle (a body
@@ -106,11 +109,18 @@ static func grid_of(rig: CutRig, row: String) -> String:
 		var open: bool = DEATH_KINDS.has(r.kind) and r.progress() < StreetWalkerFall.FALL_AT[1]
 		return GRIDS[row] if open else ""
 	if r.kind == &"burn" and BURN_ON and BURN_GRIDS.has(row):
-		return BURN_GRIDS[row]
+		return flail_frame(BURN_GRIDS[row], r.t)
 	if not HOLD_S.has(r.kind) or r.t >= float(HOLD_S[r.kind]):
 		return ""
 	var sites: Dictionary = SITE_GRIDS.get(row, {}) if SITES else {}
 	return str(sites[r.kind]) if sites.has(r.kind) else GRIDS[row]
+
+
+## The burning figure's grid at `t` s into the family: the second flail frame on odd half shakes.
+static func flail_frame(path: String, t: float) -> String:
+	if not FLAIL_FRAMES or posmod(floori(t * 2.0 * FLAIL_HZ), 2) == 0:
+		return path
+	return path.replace("_burn_hit.png", "_flail_burn_hit.png")
 
 
 ## True when `path` is one of the hit grids (StreetWalkerCards drops it when the hold ends).
@@ -139,7 +149,7 @@ static func flail(rig: CutRig) -> float:
 static func fill_of(path: String) -> float:
 	if not FILL_ON or not is_grid(path):
 		return 1.0
-	return FILL.get(path.get_file(), 1.0)
+	return FILL.get(path.get_file().replace("_flail_burn", "_burn"), 1.0)
 
 
 ## Faces the drawn cell by the blow: the figure faces the shooter and arches away from the shot.
