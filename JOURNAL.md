@@ -141,3 +141,20 @@ session, remove the worktree and branch after. (5) a real `compare.mjs --victim`
 - 23:14 FRICTION (mine): the control agent's "no gtai-gate- process" check matched its own polling shells (their
   command lines contain the pattern), so it waited past my gate's end; told it to proceed. Next time: match on
   Godot process names plus the snapshot path, never on a bare substring a poller repeats.
+- 23:17 item 7 control (Opus subagent, same brief as Codex's n11t-fac-sim-hash, scratch tree at 812a0b061): 14 tests,
+  `unit-tests: 14 passed, 0 failed, 0 skipped`, harness: 46819 tokens, 730634 ms, 12 tool uses. The 730 s are
+  INFLATED by my self-matching wait check (it sat waiting for a gate that had ended): do not record them as the
+  control's cost without saying so. Its file is saved at `C:/Users/kazda/kiro/gtai-n15/control/test_sim_hash_control.gd`
+  (Codex's n11 test is `project/tests/unit/test_sim_hash.gd` on main; the control was never shown it).
+  Suspects it named: none real; `hstart[HW*HW]` sentinel unread (unkillable), window 1 cell lopsided (deliberate).
+  NOT recorded in the ledger yet: `factory control` needs killed/mutants -> mutate sim_hash.gd with the control
+  test alone (in a scratch tree at 812a0b061 with the file committed on a throwaway branch, or copy it into this
+  tree under a temporary name; HW 132 here vs 80 there changes no comparison).
+
+NEXT (session 2, updates the 23:04 NEXT): (1) reel gate on this branch's latest commit. (2) item 7: mutate the
+control test -> `factory control sim_hash --tokens=46819 --secs=<say inflated, or re-measure> ... --ledger=
+gtai-masters/n15/tools/codex-ledger.jsonl` (the 3 n11 sim-hash rows and the 3 city-spawn-plan rows are already
+seeded there). (3) item 4b part 2: `morning.mjs --worktree=C:/Users/kazda/kiro/gtai-n15/scratch-integ ... --steps=gates,reels`
+(merge/debt/native done at 76ed5809), then `git worktree remove --force` it and `git branch -D n15t-scratch-integ`.
+(4) Codex testers for t-1/t-4/t-5 (dispatch.ts, ids n15t-). (5) real `compare --victim` film for combat.
+(6) REPORT.md is a draft: extend it. Scratch trees of mine: gtai-n15/scratch-tools-before (detached), gtai-n15/scratch-integ.
