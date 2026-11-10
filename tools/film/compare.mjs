@@ -110,10 +110,10 @@ export function nativeRefusal(value, sha, differs, native) {
 }
 
 /** Resolves a side to a runnable tree: {tree, label, snapshot, injected} or {error}. */
-export function resolveSide(value, { root = ROOT, ensure = ensureSnapshot, native, differs = nativeDiffers } = {}) {
+export function resolveSide(value, { root = ROOT, ensure = ensureSnapshot, native, differs = nativeDiffers, rev = revParse } = {}) {
   const dir = resolve(value);
   if (existsSync(join(dir, 'project', 'project.godot'))) return { tree: dir, label: basename(dir), snapshot: false, injected: false };
-  const sha = revParse(root, value);
+  const sha = rev(root, value);
   if (!sha) return { error: `compare: ${value} is neither a worktree nor a commit git knows` };
   const refusal = nativeRefusal(value, sha, differs(root, sha), native);
   if (refusal) return { error: refusal };

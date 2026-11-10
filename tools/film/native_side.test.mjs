@@ -24,10 +24,11 @@ test('resolveSide asks before making a snapshot, and never asks for a worktree s
   let made = 0;
   const ensure = () => { made += 1; return fakeEnsure(); };
   const differs = () => { asked += 1; return true; };
-  const r = resolveSide('HEAD', { ensure, differs });
+  const rev = () => SHA; // no real git: CI and WSL see this worktree differently
+  const r = resolveSide('HEAD', { ensure, differs, rev });
   assert.match(r.error, /differs from this tree's HEAD/);
   assert.equal(made, 0, 'no 1.7 GB snapshot for a side that is refused');
-  const here = resolveSide(new URL('../..', import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1'), { ensure, differs });
+  const here = resolveSide(new URL('../..', import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1'), { ensure, differs, rev });
   assert.equal(here.snapshot, false);
   assert.equal(asked, 1, 'a worktree side runs its own DLLs: no question');
 });
