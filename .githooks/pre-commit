@@ -1,4 +1,5 @@
 #!/bin/sh
 # STANDARDS GDS-04: gdformat + gdlint (and the rest of the lint job) before every commit.
+# A commit of only inert paths (docs, evidence, JOURNAL/REPORT/ASSETS-REPLIES) skips it: tools/gate/precommit.mjs.
 # Enable once per clone: git config core.hooksPath .githooks
-exec node tools/lint/lint.mjs
+exec node tools/gate/precommit.mjs
