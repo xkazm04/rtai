@@ -1,13 +1,15 @@
 // Tests for morning.mjs's step runner with real child processes (no Godot, no git).
 // Run: node --test tools/merge/morning_run.test.mjs
-import { test } from 'node:test';
+import { after, test } from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtempSync, readFileSync } from 'node:fs';
+import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { STEP_FLOOR_MIN, defaultRun } from './morning.mjs';
 
-const dir = () => mkdtempSync(join(tmpdir(), 'morning-run-'));
+const made = [];
+after(() => { for (const d of made) rmSync(d, { recursive: true, force: true }); });
+const dir = () => { const d = mkdtempSync(join(tmpdir(), 'morning-run-')); made.push(d); return d; };
 
 test('a step writes its output to its log as it runs, and announces the log and its limit first', () => {
   const said = [];
