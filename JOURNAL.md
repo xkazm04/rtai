@@ -196,3 +196,9 @@ test_quest_blade registers its own input actions (fails under --select).
   --view=combo --zooms=1,2 --foci=0,1,2` (verdict line: ok exit 0; SCRIPT ERROR 0; unknown arg 0): the parked car's
   hatched cast runs down-right with the props'. No defect. `evidence/n15-combat/vehicle_shadows_combo_64_32ppm.png`.
   Call candidate (not changed, n13/n14 kept as built): the p55 katana's right wind-up/strike cells draw ~1.4x his facing.
+- 00:37 session 3 ends. Godot: none of mine running (checked by command line; the rest are third-life and the tools
+  lane's accent audit). Masters `gtai-masters/n15/combat/frames.json` 15 entries, every file referenced, none missing.
+  Calls to carry into REPORT: (a) p55 katana right wind-up/strike ~1.4x his facing (n13/n14 kept as built; the left
+  set is at his size); (b) the rocket gib's paper-cut pieces vs drawn gib pieces per kind (asset lane); (c) the t308
+  between-swings frame is likely the equipped strip's REST cell (o 1-3, not aiming): hold the facing instead?
+  NEXT stands as written above.
