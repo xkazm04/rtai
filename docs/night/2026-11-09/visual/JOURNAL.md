@@ -332,3 +332,108 @@ Unsure / brief corrections: the brief's "known late" homing shard was already fi
 draw a cream disc that covers the human at 32 px/m (an art read of backlog item 1, not touched).
 The katana wound was measured by the probe but not filmed. The non-lethal gun rows before the fix
 were not measured (the first `--armored` runs zeroed Rivet's hp).
+
+## Group C (00:50-)
+
+- 00:52 selftest on arrival (ae253e8bf): look goldens 11/11 worst 0.00, block 5/5 worst 0.00,
+  world lock 0.00 %.
+
+### C1 ink line weight on impact
+- First seam: the hit flash's tinted part material (print_part `hit_edge` on tinted levels, a level
+  stamped by ReactLink). Two findings: (1) an early `return` in print_part's fragment moved EVERY
+  look golden at rest (worst 0.00 -> 1.99 / 2.00, all looks incl. d1) although no material set
+  hit_edge; reverting only the shader restored 0.00; restructured without the return (body in an
+  else): 0.00 again. (2) The seam is dead in the arena and the city fight: with ReactLink on,
+  ArenaRigs feeds no HIT clip, so no rig is tinted there (A/B 0 of 400 frames differed for pistol,
+  plasma, hand cannon; 0 of 200 claw). The tint path was reverted entirely.
+- Shipped seam (41d415a1b): InkHit pulses the struck rig's card (the drawn figure under combo,
+  raw) with ink_line.gdshader: the art as is plus an ink ring of `ink_edge_px` on both sides of
+  the alpha edge, wobbling on a 3-texel lattice of the figure, eased back (quadratic) over the
+  class's flash_ticks, then the card's own material back. First cut inked a stray dash above the
+  head (the next row of the walker grid): the ring is clamped to the card's frame cell (material
+  per level and grid). Data: ink_edge_px per class (light 1, medium / shock / melee / slice 1.5,
+  heavy / melee_heavy / ram 2, blast / slam 2.5, burn / chain 1), required by the schema.
+- Films (data 0 vs shipped, same build; `build/n12/sync/film/ink-*`): differing frames pistol 18
+  (4 a hit), plasma 9, claw 52, hand cannon 0 (its hits are one-shot kills: the kill cut takes the
+  rig). Looked at 4x: claw on a riot cop a heavy wobbling rim through the stop (f75-f80), gone by
+  f81; pistol a darker outline f333-f335. At 1x the claw reads, the 1 px light class is subtle.
+- Cost: InkHit.step 0.22 us a frame at rest, 7.7 us with 4 struck cards, 36 us with 16 (headless
+  debug micro-bench); the shader's 8 taps only on the struck card's pixels. First-use spike found
+  in the films' pipeline log (149 ms at the claw's first hit, tick 76): InkHit.warm (RivetHeldView
+  .warm, 61de78acd) compiles it at the load; after, tick 76 at 43 / 42 ms (the film's pace).
+- The plasma disc (Group B) is not this seam (it is the weapon's impact FX, not the card): no
+  cost estimate for a smaller disc from here.
+
+### C2 plate misregistration shock
+- look_profiles.json's world verm / teal shifts move nothing: every profile's world verm and teal
+  plates are 0 (doctrine). The plates that print off register are the D5 overlay's ink ghost
+  (ink_mis), vermilion pass (verm_mis) and colour plate (plate_mis), live at 32 px/m (amount 0.5).
+- Built (f35a6a874): PlateShock (core/render; one in flight + 20-tick cooldown, quadratic ease),
+  kicked by FeelCam from the class row (`plate_shock_px` / `plate_shock_ticks`), advanced on the
+  sim tick, added by LookOverlay to its plates and written back once at the end.
+- Measured on the rocket's kill (32 px/m, frames 363-376 differ): 3 px -> 21 of 1.02 M px change
+  > 24 levels (mean 0.27); 6 px -> 37 (mean 0.33); 3 px at 64 px/m -> 2129 (mean 0.37), a faint
+  doubled band along a kerb line. Two iterations without a visible gain: shipped OFF
+  (plate_shock_px 0 everywhere, ticks kept). A call for the owner.
+- Goldens after every shader / overlay change: 0.00 / 0.00 (with the shock on in data and off).
+
+### Gates at the head (61de78acd)
+- Goldens 11/11 and 5/5 worst 0.00, world lock 0.00 %; unit 2226 / 0; parity bit-exact (629).
+- Fight gate (build/n12/gate-c, 3 rounds, before `--feel=off`, so it also drops the stops and
+  kicks), CONTENDED (others 6.1-7.8 cores): every verdict WASH, frames over 25 ms 0 in every
+  arm; city p50 5.03 off / 4.71 on (A/A 4.94, CI [-0.08, +0.40]); horde 4.73 / 4.85 (A/A 4.75, CI
+  [-0.36, +1.09]); per-frame CPU on 6.8-8.6 ms vs off 6.8-8.0 and A/A 7.0-9.0.
+- Mutation: ink_hit.gd 44 -> 68 % (17 / 25; survivors: Pulse defaults and guard edges no table
+  row reaches), plate_shock.gd 64 -> 72 % (18 / 25; survivors: static initial / reset values the
+  code overwrites before use), after 81186beed's tests (exact levels and px, reset, meta clean-up,
+  the warm's guards and its sprite freed, the shock's guard edges and cooldown edge).
+- Scenarios at 81186beed: 55 / 55.
+
+## Group C report
+
+Commits: `41d415a1b` C1 the struck figure's ink line (InkHit + ink_line.gdshader, data);
+`f35a6a874` C2 the plate shock, shipped off (PlateShock, data at 0); `61de78acd` the ink line's
+shader compiled behind the load; `81186beed` tests made to bite; this journal commit.
+
+Packages:
+- C1 ink line weight on impact: shipped, default ON. The struck figure's card wears an ink ring
+  of the class's `ink_edge_px` (light 1, medium / shock / melee 1.5, heavy 2, blast 2.5 screen px)
+  on both sides of its outline, wobbling on a 3-texel lattice of the figure, eased back over the
+  class's flash_ticks (4-10). Local to the struck figure: no full-frame flash. The visible gain is
+  the claw on a riot cop (a heavy rim through the stop, `ink_line_claw_riot-ab-32ppm.mp4`, still
+  frames 73-83); the 1 px light class is subtle at 1x (`ink_line_pistol-ab-32ppm.mp4`). Kills
+  taken by a kill cut (hand cannon, rocket, cuts) show none: the rig is gone. Not done: the
+  world-print radius for heavy / blast (time; the struck figure first). Before: ink_edge_px 0
+  (or `--feel=off`).
+- C2 plate misregistration shock: built, shipped OFF. A blast (blast / slam / ram rows) knocks
+  the D5 overlay's existing off-register plates (ink ghost, vermilion pass, colour plate) along
+  the blow and they settle over 10 ticks (ram 8): one in flight, 20-tick cooldown, started from
+  FeelCam (so off under `--feel=off` and reduced motion), no new colour, no luminance change.
+  Peak shift tried: 3 and 6 screen px. On the rocket's kill at 32 px/m nothing reads (21 / 37 px of
+  1.02 M change by more than 24 levels); at 64 px/m a faint doubled band on a kerb line (2129 px).
+  The world print's own vermilion / teal plates are 0 (doctrine), so the shifts look_profiles.json
+  carries move nothing. Data plate_shock_px 0 in every row; the call below turns it on.
+
+Gates at the head: look goldens 11/11 and block 5/5 worst 0.00 (on arrival, and after every
+shader / overlay change once the early-return regression was fixed), world lock 0.00 %; lint
+15/15; unit 2226 / 0 (at 61de78acd; later commits are tests, 18 / 18); scenarios 55 / 55; parity
+bit-exact (629); debt ok (react_link +2, hit_feel +2, rivet_held_view +1 accepted with reasons).
+Inherited, still listed: test_quest_blade alone, check.mjs autoload false-fail.
+
+Perf: InkHit.step 0.22 us a frame at rest, 7.7 us with 4 struck cards, 36 us with 16 (headless
+debug); the ring's 8 taps only on struck cards' pixels. First-use spike found and warmed: 149 ms
+at the first struck card -> 43 ms (the film's pace). Gate (3 rounds, before `--feel=off`, which also
+drops stops and kicks; CONTENDED, others 6.1-7.8 cores): all WASH, frames over 25 ms 0 in every arm,
+city p50 5.03 / 4.71 (A/A 4.94, CI [-0.08, +0.40]), horde 4.73 / 4.85 (A/A 4.75, CI [-0.36, +1.09]),
+per-frame CPU inside the A/A spread. C2 costs nothing while off (no uniform written at rest).
+
+Calls for the owner:
+1. The struck figure's heavier ink line (built ON): the class widths above, or narrower, or none
+   (`ink_edge_px` 0 per class row in hit_feel.json; `--feel=off` drops it with all camera feel).
+2. The plate shock (built OFF): plate_shock_px 3 on blast / slam (2 on ram) turns it on; it only
+   reads at arena zoom and faintly. A stronger read would need the shock to raise the overlay's
+   ghost strength for its ticks (a darkening of the page: closer to a flash), not built.
+
+Unsure / corrections: the brief's seam list did not include the one that works in the arena
+(the drawn card); the hit-flash tint it implies never runs there. look_profiles.json's plate
+shifts carry no plate at world level. The plasma disc is the weapon's impact FX, not this seam.
