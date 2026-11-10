@@ -162,3 +162,33 @@ REQUEST tools (open): compare.mjs passes --victim through; film/compare list Ree
   instead of 1): NOT MEASURED (no fight_gate run; the machine is contended and the gate holds Godot).
 - 00:05 full gates started on 54297457d (`node tools/gate/run.mjs --rev=HEAD --reels`, log build/gate_54297457d.log,
   build/gate/54297457d8d5/).
+- Item 2 scoping (no code): the cultist has no fighter in the game (`grep -ri "cultist\|kronk" project/features
+  project/data/tables` finds nothing), so its it321 cells have no target tonight. The contractor (quest 1, CastView via
+  `StreetQuestCards.draw_guard`) draws a facing card, a walk and a fall/corpse only: its hit stagger (v2 A), flinches
+  and 5 death poses need a new hit state in `draw_guard` (street_quest_cards.gd is at 200 lines: a new
+  `StreetQuestHit` file), packed by street_hit.py like the street kinds.
+- GATES 00:29 on `54297457d` (`node tools/gate/run.mjs --rev=HEAD --reels`, build/gate/54297457d8d5/gate.json): PASS lint 16/16,
+  PASS unit 2512 passed / 0 failed / 2 skipped (test_quest_blade passes in the full run: the --select red was order
+  dependence), PASS scenarios 55, PASS parity bit-exact (mutation caught at 629), PASS selftest (look goldens 11/11 worst
+  0.00; block goldens 5/5 worst 0.69 = the session-1 baseline), PASS export-audit (668 loaded), PASS reels. The commits
+  after it (d4e361a5c, 5b9724927 and the evidence commit below) are docs/evidence only.
+- 00:35 p55 film of the drawn left set in the King fight (before `--rivet-blade-left=off`, same build, t306-326 64 px/m):
+  `evidence/n15-combat/boss_katana_left_set_p55_ab_64ppm_t306-326.png`. He faces King, hose near, at his facing's size;
+  the mirror swapped arms and drew the wind-up/strike ~1.4x his facing. New defect: the p55 katana's RIGHT wind-up and
+  strike cells pop ~1.4x (as the baton did before 42c826289).
+
+NEXT (session 4):
+(1) Item 2 contractor (quest 1): new `StreetQuestHit` for `StreetQuestCards.draw_guard`: the hit stagger v2 (A) on a
+    non-lethal hit, the 5 drawn death poses (contractor_death_70_cells) in place of the fall frame; pack with
+    street_hit.py (a contractor SHEETS row with no blue tone). Film quest1 (`film.mjs quest1 --stills=...`) before/after.
+    Cultist: no fighter in the game, skip.
+(2) DEFECTS: p55 katana right wind-up/strike size pop (re-cut act_k as the baton's, film with --boss-blade=katana);
+    the t308 one upright frame between swings; the body burst stays at the world stop point while the body flies
+    (carry the victim in GunFx.impacts); the flame jet's red starburst column of floor fire.
+(3) Item 4 vehicle shadows: needs a shot with traffic in frame (city shot has none in view): find a dev scene with cars
+    (`node tools/dev/run.mjs` list) or ask tools for a `--lock=at:<x,y>` on a road.
+(4) Perf: the new warmed strips (18 blade-left PNGs) and GibCardCut (6 sprites per gib): fight_gate A/A when the machine
+    is quiet (blade left: `--arms=off:--rivet-blade-left=off,on:` on a blade scene).
+(5) Then loop item 5: film arena + city, rank, fix the top one.
+REQUEST tools (open): compare.mjs --victim; film/compare list ReelChapters.extras(); a film flag for feel ON;
+test_quest_blade registers its own input actions (fails under --select).

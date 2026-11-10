@@ -24,6 +24,11 @@ Ranked within each film; newest film first.
 2. At t62 (katana and plasma sword, before and after alike) a long thin white stick runs from the cop down-left to the floor -> open (likely the cut cop's dropped baton or a cut streak; look at the kill's FX at t62).
 3. The plasma sword's left strike at 64 px/m is a little smaller than its left facing (k shared with the raised wind-up) -> open, minor.
 
+## Boss fight, King + katana, p55 left swings, before --rivet-blade-left=off, 64 px/m t306-326 (session 3, after the gate)
+1. Swinging left at King, the mirror swapped his arms and drew the wind-up and strike about 1.4x his facing -> fixed 15c8abbcc (drawn p55 left set, at the facing's size; `evidence/n15-combat/boss_katana_left_set_p55_ab_64ppm_t306-326.png`).
+2. The p55 katana's RIGHT wind-up and strike cells draw about 1.4x his facing (the size pop the baton had before 42c826289) -> open (re-cut the p55 katana's act_k / wind-up sheet_k as the baton's).
+3. The drawn left strike's swing reads smaller than the mirrored one (it is at his size, the mirror was oversized) -> judge with 2.
+
 ## Boss fight, King + katana (blade boss bot), tilt p55 64 px/m (session 3)
 1. t308: one upright frame (the standing p55 facing) between the follow-through and the next wind-up -> open (the strike clip's recovery ends a tick before the next wind-up starts).
 2. Rivet stands over the throne car's body (drawn on top of the King's car): reach is to the body circle -> open, judge (render order vs the boss).
