@@ -234,14 +234,15 @@
         "2026-11-09: n12 B1: SyncProbe, the victim-sync instrument (dev arena --sync), and its one attach line (files_near_cap 16 -> 16)",
         "2026-11-10: n12 C1: ReactLink's two InkHit lines (hit per landed hit, step once a frame) (files_near_cap 16 -> 16)",
         "2026-11-10: n12 C1: RivetHeldView.warm compiles the ink line shader at the load (files_near_cap 16 -> 16)",
-        "2026-11-10: n12 E1: ArenaRigs attaches the combat lights (two lines) (files_near_cap 16 -> 16)"
+        "2026-11-10: n12 E1: ArenaRigs attaches the combat lights (two lines) (files_near_cap 16 -> 16)",
+        "2026-11-10: n12 E3 crowd ripple: CrowdReact's delayed startle + its one host line in ArenaRigs (files_near_cap 16 -> 16)"
       ],
       "files": {
         "project/boot/collect_call/view/fx_view.gd": 271,
         "project/boot/quest1_game.gd": 272,
         "project/dev/arena/arena_game.gd": 297,
         "project/dev/showcase/city_fight.gd": 300,
-        "project/features/arena/arena_rigs.gd": 293,
+        "project/features/arena/arena_rigs.gd": 294,
         "project/features/bosses/boss_hook.gd": 281,
         "project/features/bosses/servo/servo_rig.gd": 287,
         "project/features/combat/combat_arena.gd": 300,
@@ -272,7 +273,9 @@
         "2026-11-10: n12 C1: ReactLink's two InkHit lines (hit per landed hit, step once a frame) (files_past_soft_cap 66 -> 66)",
         "2026-11-10: n12 C2: HitFeel reads the plate shock's two row keys (files_past_soft_cap 66 -> 66)",
         "2026-11-10: n12 C1: RivetHeldView.warm compiles the ink line shader at the load (files_past_soft_cap 66 -> 66)",
-        "2026-11-10: n12 E1: ArenaRigs attaches the combat lights (two lines) (files_past_soft_cap 66 -> 66)"
+        "2026-11-10: n12 E1: ArenaRigs attaches the combat lights (two lines) (files_past_soft_cap 66 -> 66)",
+        "2026-11-10: n12 E3 crowd ripple: CrowdReact's delayed startle + its one host line in ArenaRigs (files_past_soft_cap 66 -> 66)",
+        "2026-11-10: n12 E3 crowd ripple: CrowdReact's delayed cower (+_cower_due) and three tests pinned to the same-tick startle (files_past_soft_cap 66 -> 66)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 262,
@@ -297,7 +300,7 @@
         "project/dev/showcase/d5_hero_run.gd": 265,
         "project/dev/showcase/reel_director.gd": 209,
         "project/dev/weapon_art/weapon_lineup_run.gd": 210,
-        "project/features/arena/arena_rigs.gd": 293,
+        "project/features/arena/arena_rigs.gd": 294,
         "project/features/arena/prop_occlusion.gd": 202,
         "project/features/bosses/boss_bot.gd": 202,
         "project/features/bosses/boss_fight.gd": 269,
@@ -318,7 +321,7 @@
         "project/features/combat/kills/kill_lab.gd": 213,
         "project/features/combat/kills/kill_split_fx.gd": 225,
         "project/features/combat/kills/kill_view.gd": 286,
-        "project/features/combat/react/crowd_react.gd": 216,
+        "project/features/combat/react/crowd_react.gd": 235,
         "project/features/combat/react/react_link.gd": 288,
         "project/features/combat/weapons/art/weapon_art.gd": 274,
         "project/features/combat/weapons/art/weapon_fx_art.gd": 287,
@@ -338,7 +341,7 @@
         "project/features/souls/kerf_stage.gd": 208,
         "project/features/souls/ohm_rig.gd": 201,
         "project/tests/scenarios/scenario_vehicle_drive.gd": 213,
-        "project/tests/unit/test_crowd_react.gd": 231,
+        "project/tests/unit/test_crowd_react.gd": 234,
         "project/tests/unit/test_gun_fx.gd": 213,
         "project/tests/unit/test_weapon_art.gd": 223
       },

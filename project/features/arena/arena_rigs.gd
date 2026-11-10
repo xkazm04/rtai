@@ -160,6 +160,7 @@ func _process(_delta: float) -> void:
 	if react != null:
 		react.apply(rigs)
 	if crowd != null:
+		crowd.ripple.bangs = CrowdRipple.bangs_of(stage.arena)  # n12 E3
 		crowd.extra_bodies.clear()
 		for h: Fighter in stage.arena.hostiles:
 			if not h.alive() and not gone.has(h.id):

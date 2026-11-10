@@ -13,6 +13,7 @@ extends RefCounted
 ## per body. A death startles the living pedestrians within STARTLE_M: they cower away from the
 ## body (in a riot everyone already flees, so this is the crowd's reaction to each kill). The
 ## fight's dead drawn on another rig set (extra_bodies) startle the street the same way.
+## n12 E3: each cower waits for the news to reach the person (`ripple`, CrowdRipple).
 
 const DELAY_TICKS: int = 3
 const COWER: StringName = &"cower"
@@ -43,6 +44,7 @@ var trip_m: float = TRIP_M
 ## Bodies drawn outside this feed (the fight's dead on another rig set), world px by a key that
 ## no feed id uses (ArenaRigs: -1 - fighter id); the host refills it each frame.
 var extra_bodies: Dictionary[int, Vector2] = {}
+var ripple: CrowdRipple = CrowdRipple.shipped()
 ## The extra bodies already seen (a new key is a fresh death in the fight: it startles too).
 var _extra_seen: Dictionary[int, bool] = {}
 ## Each person's DEAD / FLEE bits at the last observed tick, indexed by actor id (packed: two
@@ -54,6 +56,8 @@ var _stamp: PackedInt32Array = []
 var _calls: int = 1
 ## People who just started fleeing: actor id -> ticks left before the cower plays.
 var _due: Dictionary[int, int] = {}
+## A startled person's cower waiting for the ripple: actor id -> away from the body (px).
+var _away: Dictionary[int, Vector2] = {}
 ## Who already tripped over which body: (person id, body id).
 var _tripped: Dictionary[Vector2i, bool] = {}
 
@@ -104,14 +108,12 @@ func _observe(rigs: CharacterRigs, ticks: int) -> void:
 		if kinds[i] != BodyPlan.Kind.PED:
 			continue
 		if (f & flee_f) != 0 and was >= 0 and (was & flee_f) == 0:
-			_due[id] = DELAY_TICKS
+			_due[id] = DELAY_TICKS + ripple.ticks_to(feed.pos[i])
 			dues = true
 		if dues and _due.has(id):
 			_due[id] -= ticks
 			if _due[id] <= 0:
-				@warning_ignore("return_value_discarded")
-				_due.erase(id)
-				_cower(rigs.rig_for(id), feed.vel[i])
+				_cower_due(rigs.rig_for(id), id, feed.vel[i])
 	_startle_extra(rigs)
 	_trip_over(rigs, bodies)
 
@@ -159,9 +161,26 @@ func _startle(rigs: CharacterRigs, at: Vector2, body: int) -> void:
 			continue
 		var away: Vector2 = feed.pos[j] - at
 		if away.length_squared() < reach * reach:
+			var wait: int = ripple.ticks_from(away.length())
+			var rig_id: int = feed.ids[j]
+			if wait > 0 and not _due.has(rig_id) and rigs.rig_for(rig_id) != null:
+				_due[rig_id] = wait  # a later row is counted down from the next tick
+				_away[rig_id] = away
+				startles += 1
+				continue
 			var before: int = cowers
 			_cower(rigs.rig_for(feed.ids[j]), away)
 			startles += cowers - before
+
+
+## The waiting cower of `id` is due: away from its startle's body, else along its flight `vel`.
+func _cower_due(rig: CutRig, id: int, vel: Vector2) -> void:
+	@warning_ignore("return_value_discarded")
+	_due.erase(id)
+	var away: Vector2 = _away.get(id, vel)
+	_cower(rig, away)
+	@warning_ignore("return_value_discarded")
+	_away.erase(id)
 
 
 ## Plays the cower on `rig` away along `away` (skipped with no full rig, or mid-reaction/dying).
