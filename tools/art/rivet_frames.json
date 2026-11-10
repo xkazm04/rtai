@@ -90,7 +90,8 @@
    "rivet_eq_mini_nuke": {
     "act_k": 0.92,
     "counts": "5,3",
-    "sheet": "rivet_eq_mini_nuke_55.png"
+    "sheet": "rivet_eq_mini_nuke_55.png",
+    "fig_h": 165
    },
    "rivet_eq_molotov": {
     "counts": "5,3",
