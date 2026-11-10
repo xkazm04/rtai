@@ -94,6 +94,22 @@ static func _dress(card: Sprite2D, lvl: int) -> void:
 
 
 ## Level `lvl` for a card of frame grid `grid` (shared by every card of that grid).
+## Compiles the line's shader behind the load (its first struck card cost a 100+ ms frame): a 4 px
+## sprite at 1 % alpha wears the material under `parent` for a tenth of a second, then goes.
+static func warm(parent: Node) -> void:
+	if parent == null or not parent.is_inside_tree() or row_of(&"light").x <= 0:
+		return
+	var img: Image = Image.create(4, 4, false, Image.FORMAT_RGBA8)
+	img.fill(Color.WHITE)
+	var s: Sprite2D = Sprite2D.new()
+	s.texture = ImageTexture.create_from_image(img)
+	s.material = material(1)
+	s.modulate = Color(1.0, 1.0, 1.0, 0.01)
+	parent.add_child(s)
+	@warning_ignore("return_value_discarded")
+	parent.get_tree().create_timer(0.1).timeout.connect(s.queue_free)
+
+
 static func material(lvl: int, grid: Vector2i = Vector2i.ONE) -> ShaderMaterial:
 	var key: int = lvl * 10000 + grid.x * 100 + grid.y
 	if not _mats.has(key):

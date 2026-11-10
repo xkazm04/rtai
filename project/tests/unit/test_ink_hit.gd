@@ -70,3 +70,15 @@ func test_a_class_with_no_line_dresses_nothing() -> void:
 func test_one_shared_material_per_level_and_grid() -> void:
 	assert_same(InkHit.material(3, Vector2i(5, 8)), InkHit.material(3, Vector2i(5, 8)))
 	assert_ne(InkHit.material(3, Vector2i(5, 8)), InkHit.material(3, Vector2i(5, 1)))
+
+
+func test_the_warm_draws_the_line_material_once_behind_the_load() -> void:
+	var parent: Node2D = Node2D.new()
+	add_child_autofree(parent)
+	InkHit.warm(parent)
+	assert_eq(parent.get_child_count(), 1)
+	var s: Sprite2D = parent.get_child(0) as Sprite2D
+	assert_same(
+		s.material, InkHit.material(1), "the line's own material, so its shader compiles now"
+	)
+	assert_lt(s.modulate.a, 0.05, "and nobody sees it")

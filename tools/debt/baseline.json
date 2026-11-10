@@ -232,7 +232,8 @@
         "2026-11-07: quest1_game.gd +2: the one call that attaches ViewPitchQuest (quest 1 under combo eases at Mertz); the logic lives in features/view_pitch (files_near_cap 16 -> 16)",
         "2026-11-07: d9-rivet FireStills: a dev-only capture of Rivet's drawn fire cell per weapon (the every-weapon-at-each-pitch evidence); 2 lines in arena_game.gd hook it under --fire-stills (files_near_cap 16 -> 16)",
         "2026-11-09: n12 B1: SyncProbe, the victim-sync instrument (dev arena --sync), and its one attach line (files_near_cap 16 -> 16)",
-        "2026-11-10: n12 C1: ReactLink's two InkHit lines (hit per landed hit, step once a frame) (files_near_cap 16 -> 16)"
+        "2026-11-10: n12 C1: ReactLink's two InkHit lines (hit per landed hit, step once a frame) (files_near_cap 16 -> 16)",
+        "2026-11-10: n12 C1: RivetHeldView.warm compiles the ink line shader at the load (files_near_cap 16 -> 16)"
       ],
       "files": {
         "project/boot/collect_call/view/fx_view.gd": 271,
@@ -250,7 +251,7 @@
         "project/features/combat/weapons/fight_areas_art.gd": 278,
         "project/features/fx/combat_blood.gd": 297,
         "project/features/fx/noir/blood_fx.gd": 270,
-        "project/features/player/rivet_held_view.gd": 281
+        "project/features/player/rivet_held_view.gd": 282
       },
       "total": 16
     },
@@ -268,7 +269,8 @@
         "2026-11-09: n12 A2: NodeSpans names a spike's node (worst_frames), a dev instrument (files_past_soft_cap 66 -> 66)",
         "2026-11-09: n12 B1: SyncProbe, the victim-sync instrument (dev arena --sync), and its one attach line (files_past_soft_cap 66 -> 66)",
         "2026-11-10: n12 C1: ReactLink's two InkHit lines (hit per landed hit, step once a frame) (files_past_soft_cap 66 -> 66)",
-        "2026-11-10: n12 C2: HitFeel reads the plate shock's two row keys (files_past_soft_cap 66 -> 66)"
+        "2026-11-10: n12 C2: HitFeel reads the plate shock's two row keys (files_past_soft_cap 66 -> 66)",
+        "2026-11-10: n12 C1: RivetHeldView.warm compiles the ink line shader at the load (files_past_soft_cap 66 -> 66)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 262,
@@ -325,7 +327,7 @@
         "project/features/fx/combat_blood.gd": 297,
         "project/features/fx/corpse_stains.gd": 245,
         "project/features/fx/noir/blood_fx.gd": 270,
-        "project/features/player/rivet_held_view.gd": 281,
+        "project/features/player/rivet_held_view.gd": 282,
         "project/features/quest/quest_objective.gd": 206,
         "project/features/quest/quest_runner.gd": 228,
         "project/features/souls/dent_stage.gd": 257,

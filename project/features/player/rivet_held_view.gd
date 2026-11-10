@@ -59,6 +59,7 @@ func _ready() -> void:
 ## frame. The same calls as _swap and the reload views make, so the sprites and pixels are the same.
 func warm() -> void:
 	WeaponFxWarm.warm()  # n12: every weapon fx cell, not on its first draw
+	InkHit.warm(self)  # n12 C1: the struck figure's ink line shader, compiled at the load
 	if pilot != null and pilot.carry != null:
 		RivetStripWarm.warm(pilot.carry.slots, arsenal, art)  # + n12: his drawn strips
 
