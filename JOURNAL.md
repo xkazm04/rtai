@@ -334,3 +334,9 @@ stay (00:20).
   codex, gate) `tests 825, pass 823, fail 0` (2 skipped). So the 3 failures of the 00:24 /mnt/c run were the
   worktree's Windows .git link, not code. Clone removed. NEXT item (3) is done.
 - 00:30 item 4: `gate_lines.test.mjs` now drives `STEP_RUNNERS.gates` itself (fake run, green and red): it prints the lines both ways; 6/6 Windows + WSL.
+- 00:33 SERVED combat FRICTION 22:05 (look goldens through `tools/dev/run.mjs` headless drew nothing), 5cda754c0: an
+  entry (or the res:// script it extends, one hop) may declare `const NEEDS_WINDOW: bool = true`; run.mjs then refuses
+  it headless, exit 2, nothing launched: `run: res://dev/selftest/look_golden.tscn renders frames (const NEEDS_WINDOW)
+  and headless draws nothing: add --windowed ...`. city_selftest.gd declares it (so look_golden, accent_audit,
+  world_lock inherit). Parse check ok on all four; dev tests 113/113; debt dev_loc +1 accepted with that reason.
+  This touches project/dev: the final commit's gate must include it (selftest uses these scenes).
