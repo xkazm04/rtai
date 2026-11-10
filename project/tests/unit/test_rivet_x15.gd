@@ -29,3 +29,10 @@ func test_the_katana_strip_is_its_110_cut_times_res() -> void:
 	assert_eq(RivetRes.of(path), RivetWalk.RES)
 	var tex: Texture2D = load(path) as Texture2D
 	assert_almost_eq(tex.get_height() / RivetWalk.RES, 172.0, 2.0, "the 110 cut's cell was 172 px")
+
+
+func test_the_chainsaw_strip_is_its_110_cut_times_res() -> void:
+	var path: String = RivetStrips.DIR + "p70/rivet_eq_chainsaw.png"
+	assert_eq(RivetRes.of(path), RivetWalk.RES)
+	var tex: Texture2D = load(path) as Texture2D
+	assert_almost_eq(tex.get_height() / RivetWalk.RES, 145.0, 2.0, "the 110 cut's cell was 145 px")
