@@ -386,3 +386,6 @@ changed at 5cda754c0 (selftest passed on it at 00:35, unit/scenarios/reels not r
 - 00:58 combat FRICTION (session 4): quest1 films differ by ~250k px at t13708 when the --stills list starts at a
   different tick. `tools/film/compare.mjs` passes one stills list to both sides by construction, so its pairs are safe;
   only hand-made pairs from two `film.mjs` runs can hit this. Not changed tonight.
+- 01:00 CORRECTION to the 00:58 TO hero: `git cherry-pick c5ac2442a` alone CONFLICTS in tools/lint/lint.mjs on
+  n15-hero (it builds on item 5's lint change). Use `git cherry-pick 39431687d c5ac2442a 3fc7109a9` (checked with
+  `git merge-tree` against the n15-hero and n15-combat tips at 01:00: all three apply clean, in that order, on both).
