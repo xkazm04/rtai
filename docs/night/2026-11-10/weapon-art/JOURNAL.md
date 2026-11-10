@@ -195,3 +195,17 @@ known path `gtai-spike/tools/godot/Godot_v4.7.2-stable_win64_console.exe`; every
   the equipped strip and a weapon with a cut, the flag, cells and pad, no cut changes nothing and
   warms nothing, cells by octant incl. the diag strip unchanged, the warm lists it). Strip presence
   stubbed through RivetStrips' file cache.
+- Commit `0d05ca907`.
+
+### 14:02: the asset lane answered the request (not integrated: an owner call)
+- `ASSETS-REPLIES.md` appeared beside this journal (written by the asset lane, not committed by me):
+  drawn wind-up figures in `gtai-art/library/keyed/rivet/` for all three blades, p70 side + cam (A),
+  pre-cut at the p70 strip's scale in `rivet_windup_70_cells/`, the baton's left side (v2), and the
+  p55 figures (not laid out); overview `gtai-art/library/evidence/it309/windup_70_cells_overview.png`
+  (rest | wind-up side | strike side | wind-up cam | strike cam per blade): the blade cocked back over
+  the shoulder and raised overhead, both claws on the haft, the baton in the right claw.
+- Not wired in this lane: the brief scoped item 4 to the composed trial and the request; new art
+  needs the owner's eye on film. The slot is ready: a manifest row per weapon and art key with
+  `counts "2"` on the delivered sheet, written to `rivet_eq_<weapon>_windup.png` (cell 0 side, 1 cam;
+  set `fig_h` by eye, the asset note says the sword's cam body is ~8 % long), `--import`, film with
+  and without `--rivet-windup=off`. The baton's left wind-up needs the second slot (one line).
