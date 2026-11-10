@@ -107,7 +107,7 @@ func _add_hand_views(layer: CanvasLayer, p_stage: CollectCallStage) -> void:
 	arcs.z_index = held.z_index
 	layer.add_child(arcs)
 	var lit: LightLayer = _print.lights if _print != null else _city.lights  # n12 E1
-	ArenaCombatLights.attach(layer, p_stage.arena, lit, _print.rig if _print else _city.rig)
+	ArenaCombatLights.attach(layer, p_stage.arena, lit, _print.rig if _print else _city.rig, _print)
 	var scorch: PlasmaScorchView = PlasmaScorchView.new()  # combat-notes: a plasma wound's burn
 	scorch.arena = p_stage.arena
 	scorch.rigs = rigs
