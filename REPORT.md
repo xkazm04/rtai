@@ -22,6 +22,7 @@ with one example and what it refuses. Every evidence tool reports pass, fail or 
 | `tools/gate/run.mjs` the gates on a snapshot of the commit | `node tools/gate/run.mjs` | 20:46 (8m35, tree edited throughout, no log landed in it) |
 | stale-count honesty with Godot absent | `GODOT_BIN=/nonexistent node tools/tests/run_unit.mjs` | 20:33 (reproduced first; parity/scenarios messages fixed, eaf17694) |
 | stop at the first script error (`dev/run.mjs`, `film.mjs`) | `node tools/dev/run.mjs res://dev/my_scene.tscn --timeout=150` | 23:07 |
+| `dev/run.mjs` re-imports changed assets first; `const FIXED_FPS: int = 60` fixes a film entry's step (hero 256, f666915d) | `node tools/dev/run.mjs stride_film -- --rigs --film-out=<prefix>` | 05:34 (a PNG with bytes appended: `1 asset(s) changed ... running --import first`, ok exit 0, 12 s; restored and re-imported; a third run did not import; dry run of a FIXED_FPS entry shows `--fixed-fps 60`) |
 | scenario and reel progress lines, logs written as they go | `node tools/reel/run_reels.mjs --out=build/reels --views=top` | 00:16 (19 chapter lines live, partial log on disk mid-run) |
 | `tools/dev/wt_init.mjs` a fresh worktree that can run the game | `node tools/dev/wt_init.mjs ../gtai-wt/my-lane` | 21:44 (16 s) |
 | `tools/codex/factory.mjs` Codex test factory with a review queue and a ledger | `node tools/codex/factory.mjs pick`, then `run --stems=<stem>` | 21:01 onward, 3 paired modules |
@@ -39,6 +40,9 @@ with one example and what it refuses. Every evidence tool reports pass, fail or 
   combat 132 (reel progress, partial log): 09b30ff8. combat 225 (`--victim=<kind>`): c548fc94 + their 1183a323, PASS in their tree.
 - combat 117 (probe by hand, then the ratchet fails the commit): served by the staged-snapshot hook, working
   with their skip-worktree probe only from 4d6d8232; reaches their tree at the merge.
+- hero 256 (a film after a repack drew the old sheet; contention dropped grabs): f666915d, `dev/run.mjs` re-imports
+  changed assets first and an entry declaring `const FIXED_FPS: int = 60` gets `--fixed-fps 60` (real run 05:34).
+  hero's `stride_film.gd` needs the one `FIXED_FPS` line (their file).
 - Not served: combat 226 (about 8 s re-import per film because `probe.sh` adds and removes `film_card.gd`):
   ends when the film probe is on main, i.e. at this merge.
 
@@ -51,16 +55,17 @@ parse error now stops at 1.5 s instead of the 150 s timeout (hero lost about 8 m
 
 ## Codex ledger (`factory ledger --state=C:/Users/kazda/kiro/gtai-n11t/logs/tools/state.json --ledger=C:/Users/kazda/kiro/gtai-masters/n11/tools/codex-ledger.jsonl`; RE-RUN at report time)
 
-At 05:19 (re-run with `--state`): 19 tasks, 5,089 s of Codex, 17 machine pass, 2 machine fail, 8 accepted,
-10 accepted after revision, 0 rejected, 88 lines changed by review, 0 refused by the meter. Dollars: $68.10
+At 05:38 (re-run with `--state`): 20 tasks, 5,296 s of Codex, 18 machine pass, 2 machine fail, 8 accepted,
+11 accepted after revision, 0 rejected, 101 lines changed by review, 0 refused by the meter. Dollars: $68.10
 measured over the 8 review sessions to iteration 26 (per task $4.01, an ESTIMATE and an upper bound: a session
 also builds other things); with iteration 39 counted the total prints null until its cost is in state.json
 (one unknown session makes it unknown, by design). The report session re-runs it.
-Codex as tester (12 tasks, counted from the ledger's per-task lines): 108 failing tests, 95 real defects fixed
-with the tests kept, 13 thrown away with their reason: 9 in `n11t-break-tools` (a table that assumed plain
+Codex as tester (13 tasks, counted from the ledger's per-task lines): 115 failing tests, 101 real defects fixed
+with the tests kept, 14 thrown away with their reason: 9 in `n11t-break-tools` (a table that assumed plain
 porcelain, obsolete once quick read `--porcelain -z`, which never quotes a path; JOURNAL 20:5x), 1 in
 `n11t-break-staged` (it asked the staged export to ignore the commit's eol attributes, JOURNAL 02:24), 3 in
-`n11t-break-check` (where a detached `at:` context line goes; such a line never decides the verdict, 05:19).
+`n11t-break-check` (where a detached `at:` context line goes; such a line never decides the verdict, 05:19),
+1 in `n11t-break-proof` (a function carrying `ok: true` as a check result; my task's wording overreached, 05:37).
 The journal's running count ("82 real, 0 thrown away" at 01:52) had dropped the first task's 9; corrected 05:07.
 
 **Paired measurement of the Claude saving** (both sides harness-measured, same goal and laws, same 15
