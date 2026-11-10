@@ -267,7 +267,8 @@
         "2026-11-07: handheld E10: FightFrames logs Godot's texture and video memory at the end of a run (the OS GPU counter on the iGPU does not see a BC7 import); dev-only tooling (files_past_soft_cap 67 -> 67)",
         "2026-11-09: n12 A2: NodeSpans names a spike's node (worst_frames), a dev instrument (files_past_soft_cap 66 -> 66)",
         "2026-11-09: n12 B1: SyncProbe, the victim-sync instrument (dev arena --sync), and its one attach line (files_past_soft_cap 66 -> 66)",
-        "2026-11-10: n12 C1: ReactLink's two InkHit lines (hit per landed hit, step once a frame) (files_past_soft_cap 66 -> 66)"
+        "2026-11-10: n12 C1: ReactLink's two InkHit lines (hit per landed hit, step once a frame) (files_past_soft_cap 66 -> 66)",
+        "2026-11-10: n12 C2: HitFeel reads the plate shock's two row keys (files_past_soft_cap 66 -> 66)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 262,
@@ -308,7 +309,7 @@
         "project/features/city/view/city_view.gd": 259,
         "project/features/combat/ai/enemy_pit.gd": 244,
         "project/features/combat/combat_arena.gd": 300,
-        "project/features/combat/hit_feel/hit_feel.gd": 218,
+        "project/features/combat/hit_feel/hit_feel.gd": 220,
         "project/features/combat/kills/kill_char_fx.gd": 203,
         "project/features/combat/kills/kill_lab.gd": 213,
         "project/features/combat/kills/kill_split_fx.gd": 225,

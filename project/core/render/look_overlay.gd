@@ -16,6 +16,9 @@ var age: float = 0.0
 var age_floor: float = 0.0
 ## The look id has this overlay (full_looks / zoom_looks), whatever the zoom.
 var active: bool = false
+## n12 C2: the plates' own offsets (params file) that PlateShock moves; empty when none declared.
+var _plates: Dictionary[StringName, Vector2] = {}
+var _shocked: bool = false
 var _mat: ShaderMaterial = ShaderMaterial.new()
 
 
@@ -97,6 +100,17 @@ func update(id: StringName, ppm: float, world_px: Vector2) -> void:
 	if visible:
 		_mat.set_shader_parameter(&"amount", amount)
 		_mat.set_shader_parameter(&"world_px", world_px)
+	_shock(PlateShock.offset())
+
+
+## n12 C2: the off-register plates moved by `s` screen px; back to their own values once, then
+## nothing is written while no shock runs (zero at rest).
+func _shock(s: Vector2) -> void:
+	if s == Vector2.ZERO and not _shocked:
+		return
+	for k: StringName in _plates:
+		_mat.set_shader_parameter(k, _plates[k] + s)
+	_shocked = s != Vector2.ZERO
 
 
 func _apply_params() -> void:
@@ -115,6 +129,9 @@ func _apply_params() -> void:
 			age_floor = u[k]
 			continue
 		_mat.set_shader_parameter(StringName(k), LookParams.uniform_value(u[k]))
+		var v: Variant = LookParams.uniform_value(u[k])
+		if k in ["ink_mis", "verm_mis", "plate_mis"] and v is Vector2:
+			_plates[StringName(k)] = v
 	_mat.set_shader_parameter(&"age", 0.0)
 	_mat.set_shader_parameter(&"age_floor", 0.0)
 
