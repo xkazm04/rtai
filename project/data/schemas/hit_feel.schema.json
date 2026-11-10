@@ -62,6 +62,12 @@
             "pattern": "^[a-z][a-z0-9_]*$",
             "type": "string"
           },
+          "ink_edge_px": {
+            "description": "n12 C1: the struck figure's ink line while its hit flash lasts, screen px (InkHit, quantised to 0.5); 0 = the line as before",
+            "maximum": 4,
+            "minimum": 0,
+            "type": "number"
+          },
           "kick_px": {
             "minimum": 0,
             "type": "number"
@@ -95,6 +101,7 @@
           "flash_ticks",
           "hitstop",
           "id",
+          "ink_edge_px",
           "kick_px",
           "kick_ticks",
           "knockback_scale",

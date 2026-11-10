@@ -103,6 +103,7 @@ func apply(rigs: CharacterRigs) -> void:
 		var cover: bool = h[4]
 		var weapon: StringName = h[5]
 		var r: HumanReact = HumanReact.on(rig)
+		InkHit.hit(rig, hit_class, _arena.tick)  # n12: the struck figure's ink line, by class
 		r.carry = DEATH_CARRY if lethal else WOUND_CARRY
 		if lethal:
 			var kind: StringName = pipe.kill(rig, hit_class, dir, weapon)
@@ -117,6 +118,7 @@ func apply(rigs: CharacterRigs) -> void:
 			_ghost_blow = false
 			_heavy(rig, id, dir, weapon)
 	_pending.clear()
+	InkHit.step(_arena.tick)
 	near.apply(_arena, rigs, pipe)
 	_relay(rigs)
 	_hold_states(rigs)
