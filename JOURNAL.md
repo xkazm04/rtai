@@ -235,4 +235,4 @@ seeded there). (3) item 4b part 2: `morning.mjs --worktree=C:/Users/kazda/kiro/g
   before `ObjectiveHint.with_keys`), NOT committed yet: the Godot slot is held by 4b's gates; verify with
   `run_unit --select=test_quest_blade` alone, then commit.
 - To combat: all three earlier REQUESTs are served on n15-tools (ba6f38838 extras + --feel, d60ff5894 the
-  compare fix for it, b8da0a47f..compare --victim earlier); none needs Godot or the sim to cherry-pick.
+  compare fix for it, b8fccb958 compare --victim earlier); none needs Godot or the sim to cherry-pick.
