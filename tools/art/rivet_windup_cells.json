@@ -19,6 +19,16 @@
     "sheet": "rivet_eq_electro_baton_55_windup.png",
     "sheet_k": 0.1974
    },
+   "electro_baton_left": {
+    "cells": {
+     "left": {
+      "file": "rivet_eq_electro_baton_55_left_windup_v2.png",
+      "k": 0.267
+     }
+    },
+    "dir": "..",
+    "eq_cells": 3
+   },
    "katana": {
     "cells": {
      "cam": {
@@ -69,6 +79,17 @@
       "k": 0.82
      }
     }
+   },
+   "electro_baton_left": {
+    "cells": {
+     "left": {
+      "dx": 3,
+      "file": "rivet_eq_electro_baton_70_left_windup_v2.png",
+      "k": 0.25
+     }
+    },
+    "dir": "..",
+    "eq_cells": 3
    },
    "katana": {
     "cells": {

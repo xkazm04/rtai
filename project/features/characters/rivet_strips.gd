@@ -111,7 +111,7 @@ static func cells_of(path: String, left: bool) -> int:
 	if path.ends_with(BASE):
 		return RivetFrames.BASE_CELLS
 	if path.ends_with(RivetWindup.FILE):
-		return RivetWindup.CELLS
+		return RivetWindup.cells_of(path)
 	return DIAG_CELLS if path.ends_with(DIAG) else (RivetFrames.LEFT_CELLS if left else 8)
 
 
@@ -141,7 +141,8 @@ static func hides_held(rig: CutRig) -> bool:
 		return false
 	var weapon: StringName = RivetFrames.weapon_of(rig)
 	var on: String = str(rig.head_card.get_meta(RivetFrames.ON, ""))
-	if LEFT_NO_SWING.has(weapon) and on.ends_with("_left.png"):
+	var left: bool = on.ends_with("_left.png") or on.ends_with(RivetWindup.LEFT_FILE)  # n14
+	if LEFT_NO_SWING.has(weapon) and left:
 		return false
 	var no_arc: Array = NO_ARC.get(ViewMode.shared().art, [])
 	return not no_arc.has(weapon)
