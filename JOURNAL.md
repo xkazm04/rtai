@@ -279,3 +279,9 @@ NEXT (it17, read first; freeze 07:30, report 07:40):
 - FRICTION: `tools/godot/check.mjs res://features/characters/rivet_walk.gd` (an UNCHANGED file) fails with only `Failed to compile depended scripts` cascades and no root error, so it cannot judge a feature script here; the unit tests that load it pass. REQUEST tools: print the first non-cascade error (or say none was found) so a real parse error is distinguishable from the checker's own limitation.
 - No golden moved or re-blessed this session (all changes render-only; the diagnostic only logs).
 - GATES 05:54 **full scenarios on c6d07c8a: 55 ran, 0 failed, exit 0, 0 SCRIPT ERROR** (`gtai-n11/tmp/hero/scen_it16b.log`); rig_stress passed its COMBO pass; no `loaded empty` line. The 05:45 failure did not reproduce; still not called a flake.
+
+## it17 (session 20, 05:55-)
+
+- 05:56 `node tools/evidence/run.mjs --no-bench` refused: `?? ASSETS-REPLIES.md` (the assets lane's reply file, untracked in the lane root, not mine to commit). Re-run with `--allow-dirty` (`gtai-n11/tmp/hero/evid_it17.txt`).
+- FRICTION: evidence's dirty-tree check counts a root `ASSETS-REPLIES.md` as code dirt, while root JOURNAL.md / REPORT.md are inert. REQUEST tools: add root `ASSETS-REPLIES.md` (another lane's reply drop) to `tools/evidence/scope.mjs`'s inert set.
+- 06:05 REPORT.md refreshed for it14-16 (Tonnage walk16 + 55, Dent run all rows, Rivet x1.5 strips, the rig_stress watch note with the real fallback recipe: the x1.5 strips overwrite the 110 files, so dropping a name from `RivetRes.X15` alone would draw a 165 sheet at 110 scale).
