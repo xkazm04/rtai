@@ -17,6 +17,8 @@ with one example and what it refuses. Every evidence tool reports pass, fail or 
 | `tools/gate/quick.mjs` the lint rules builders trip, changed files only | `node tools/gate/quick.mjs` | 20:36 (planted file: CRLF, gdformat, print, float(Variant) in 7.0 s) |
 | `tools/gate/precommit.mjs` the hook skips lint when only inert paths are staged | (automatic, from `.githooks/pre-commit`) | 01:44 (JOURNAL-only commit 0.6 s; the full-lint commit before it 51 s) |
 | the hook lints the STAGED SNAPSHOT when the tree differs (`tools/gate/staged_tree.mjs`) | (automatic) | 02:14 (an untracked over-long .gd: lint on the tree 3 of 16 FAIL; the commit through the hook linted the index, 16/16, 64 s; nothing left in Temp) |
+| `tools/godot/check.mjs`: autoload names are not false FAILs (c01afd2a); a cascade with no cause seen is not a pass (ec83154e) | `node tools/godot/check.mjs res://features/combat/react/human_react.gd` | 20:53 (`human_react.gd` FAIL -> ok, a planted float(Variant) still FAILs); 05:11 (planted missing-script .tscn, extends- and preload-broken deps all FAIL with their cause; `human_react.gd` still ok) |
+| skip-worktree entries in the staged snapshot (4d6d8232) | (automatic) | 05:04 (combat's probe shape: tree `quick.mjs` FAIL 4 issues, commit through the hook 16/16) |
 | `tools/gate/run.mjs` the gates on a snapshot of the commit | `node tools/gate/run.mjs` | 20:46 (8m35, tree edited throughout, no log landed in it) |
 | stale-count honesty with Godot absent | `GODOT_BIN=/nonexistent node tools/tests/run_unit.mjs` | 20:33 (reproduced first; parity/scenarios messages fixed, eaf17694) |
 | stop at the first script error (`dev/run.mjs`, `film.mjs`) | `node tools/dev/run.mjs res://dev/my_scene.tscn --timeout=150` | 23:07 |
