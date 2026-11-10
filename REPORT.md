@@ -23,6 +23,7 @@ with one example and what it refuses. Every evidence tool reports pass, fail or 
 | stale-count honesty with Godot absent | `GODOT_BIN=/nonexistent node tools/tests/run_unit.mjs` | 20:33 (reproduced first; parity/scenarios messages fixed, eaf17694) |
 | stop at the first script error (`dev/run.mjs`, `film.mjs`) | `node tools/dev/run.mjs res://dev/my_scene.tscn --timeout=150` | 23:07 |
 | `dev/run.mjs` re-imports changed assets first; `const FIXED_FPS: int = 60` fixes a film entry's step (hero 256, f666915d) | `node tools/dev/run.mjs stride_film -- --rigs --film-out=<prefix>` | 05:34 (a PNG with bytes appended: `1 asset(s) changed ... running --import first`, ok exit 0, 12 s; restored and re-imported; a third run did not import; dry run of a FIXED_FPS entry shows `--fixed-fps 60`) |
+| `run_unit --select` with an unmatched name: the rest run, nearest stem named, exit 3 unverifiable (hero 268, 1921662c) | `node tools/tests/run_unit.mjs --select=test_sim_clock,test_sim_clok` | 05:48 (exit 3 with `did you mean test_sim_clock?`, 5 passed in the rest; the right name alone exit 0; only the typo exit 2) |
 | scenario and reel progress lines, logs written as they go | `node tools/reel/run_reels.mjs --out=build/reels --views=top` | 00:16 (19 chapter lines live, partial log on disk mid-run) |
 | `tools/dev/wt_init.mjs` a fresh worktree that can run the game | `node tools/dev/wt_init.mjs ../gtai-wt/my-lane` | 21:44 (16 s) |
 | `tools/codex/factory.mjs` Codex test factory with a review queue and a ledger | `node tools/codex/factory.mjs pick`, then `run --stems=<stem>` | 21:01 onward, 3 paired modules |
@@ -43,6 +44,8 @@ with one example and what it refuses. Every evidence tool reports pass, fail or 
 - hero 256 (a film after a repack drew the old sheet; contention dropped grabs): f666915d, `dev/run.mjs` re-imports
   changed assets first and an entry declaring `const FIXED_FPS: int = 60` gets `--fixed-fps 60` (real run 05:34).
   hero's `stride_film.gd` needs the one `FIXED_FPS` line (their file).
+- hero 268 (a `--select` with one wrong name ran nothing): 1921662c, the rest run, `did you mean`, exit 3 unverifiable
+  (real run 05:48). combat 309 (export out dir): the same fix as hero 219, c26ab875, reaches them at the merge.
 - Not served: combat 226 (about 8 s re-import per film because `probe.sh` adds and removes `film_card.gd`):
   ends when the film probe is on main, i.e. at this merge.
 
