@@ -278,7 +278,8 @@ for (const mode of ['clean', 'drift', 'unknown', 'export throws']) {
             calls += 1;
             const expected = mode === 'drift' ? snapshot : cwd;
             assert.equal(cmd, process.execPath);
-            assert.deepEqual(args, [join(expected, 'tools', 'lint', 'lint.mjs')]);
+            assert.equal(args[0], join(expected, 'tools', 'lint', 'lint.mjs'));
+            assert.ok(args.length <= 2 && args.slice(1).every((a) => a.startsWith('--scope=')), 'only the staged-list scope is added');
             assert.equal(options.cwd, expected);
             if (mode === 'drift') {
               assert.equal(Object.keys(options.env).some((k) => /^GIT_/i.test(k)), false);

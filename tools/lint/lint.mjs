@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // The lint job (TST-04 job 1): every check runs; exit 1 if any fails.
-//   node tools/lint/lint.mjs [--json]
+//   node tools/lint/lint.mjs [--json] [--scope=<file of staged paths>]   (--scope: tools/lint/scope.mjs)
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { basename, dirname, join } from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -11,6 +11,7 @@ import { check as constantsCheck } from '../gen_constants/gen.mjs';
 import { validate } from '../lib/mini_schema.mjs';
 import { check as layersCheck } from './layers.mjs';
 import { check as debtCheck } from '../debt/debt.mjs';
+import { narrow, readScope, toolTestInputs } from './scope.mjs';
 
 // Windows caps a command line at 32767 chars and the gdtoolkit launchers fail silently past it
 // (exit 1, no output: 810 files were 32633 chars), so file lists go in batches of FILE_BATCH.
@@ -159,8 +160,20 @@ export const withoutGitEnv = (env = process.env) => Object.fromEntries(Object.en
 
 const TOOL_TEST_GLOBS = ['tools/film/*.test.mjs', 'tools/merge/*.test.mjs', 'tools/codex/*.test.mjs', 'tools/gate/*.test.mjs'];
 
-export function runLint() {
-  const gd = ownGdFiles().map(rel);
+/** The scope a `--scope=<file>` names (null: the full lint), with a line saying which. */
+export function scopeOf(argv) {
+  const arg = argv.find((a) => a.startsWith('--scope='));
+  if (!arg) return { scope: null, line: null };
+  const staged = readScope(arg.slice('--scope='.length));
+  if (!staged) return { scope: null, line: `lint: scope file ${arg.slice(8)} unreadable: full lint` };
+  const testFiles = TOOL_TEST_GLOBS.map((g) => dirname(g)).flatMap((d) => walk(join(ROOT, d), (n) => n.endsWith('.test.mjs'), []));
+  const scope = narrow(staged, ownGdFiles().map(rel), toolTestInputs(testFiles.map((f) => readFileSync(f, 'utf8'))));
+  return { scope, line: scope ? scope.line : 'lint: the commit stages a path outside project/: full lint' };
+}
+
+export function runLint(scope = null) {
+  const all = ownGdFiles().map(rel);
+  const gd = scope ? scope.gd : all;
   const node = process.execPath;
   const gen = join('tools', 'achievements', 'gen.mjs');
   const checks = [
@@ -176,17 +189,19 @@ export function runLint() {
     debtCheck(),
     tool('achievements-validate', node, [gen, 'validate']),
     tool('achievements-drift', node, [gen, '--check']),
-    tool('tool-tests', node, ['--test', '--test-reporter=spec', ...TOOL_TEST_GLOBS], null, withoutGitEnv()),
+    ...(scope && !scope.toolTests ? [] : [tool('tool-tests', node, ['--test', '--test-reporter=spec', ...TOOL_TEST_GLOBS], null, withoutGitEnv())]),
   ];
   const failed = checks.filter((c) => !c.ok);
   const summary = failed.length
     ? `lint: ${failed.length} of ${checks.length} checks failed (${failed.map((c) => c.name).join(', ')})`
-    : `lint: all ${checks.length} checks pass over ${gd.length} GDScript files`;
+    : `lint: all ${checks.length} checks pass over ${scope ? `${gd.length} staged of ${all.length}` : gd.length} GDScript files`;
   return { ok: !failed.length, checks, summary, fileCount: gd.length };
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  const result = runLint();
+  const { scope, line } = scopeOf(process.argv);
+  if (line) console.log(line);
+  const result = runLint(scope);
   if (process.argv.includes('--json')) {
     console.log(JSON.stringify(result, null, 2));
   } else {

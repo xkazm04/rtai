@@ -194,6 +194,18 @@ because git does not compare it, and is exported with its index bytes (so a film
 lints the working tree and says `linting the WORKING TREE, which is not exactly what you commit`. It
 removes only a `gtai-precommit-*` dir directly in the temp dir.
 
+**A commit wholly under `project/` lints its own `.gd` files** (n15; `tools/lint/scope.mjs`, `lint.mjs
+--scope=<file>`). The hook hands lint the staged list; when every non-inert staged path is under
+`project/`, gdformat and gdlint run over the staged `.gd` only (both are per-file: an unstaged file
+cannot change their verdict on it), and the Node tool tests run only when a staged path is a file a tool
+test reads from the real tree (each `join(ROOT, '<path>')` literal in a lint-run test). Every
+whole-tree check still runs in full. Measured: `lint: all 15 checks pass over 1 staged of 1428 GDScript
+files` in 3.6 s, against 88 s for the full lint on the same tree. Any staged path outside `project/`
+(`tools/`, `gdlintrc`, `gdformatrc`, `versions.toml`, `native/`, `AGENTS.md`) gives the full lint, and
+every gate (`tools/gate/run.mjs`, `tools/evidence/run.mjs`) always lints everything. An empty commit
+skips lint only when git says the index tree is the HEAD tree (`git write-tree` = `HEAD^{tree}`); an
+empty path list alone still runs lint.
+
 ## tools/gate/quick.mjs: the lint rules you keep tripping, on your changed files, before the commit
 
 ```
