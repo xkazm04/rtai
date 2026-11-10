@@ -139,3 +139,26 @@ REQUEST tools (open): compare.mjs passes --victim through; film/compare list Ree
 - FRICTION: the lint function-size count includes the NEXT function's doc comment (cast_flags apply 40 -> 41 from a third
   doc line on `_windup`).
 - 23:44 full gates started on 15c8abbcc: `node tools/gate/run.mjs --rev=HEAD --reels` -> build/gate_15c8abbcc.log.
+- 23:50 stopped the 15c8abbcc gate (it held this lane's one Godot slot for 30+ min and blocked every film); its snapshot
+  removed. Gates run once on the last commit instead (below).
+- MILESTONE `9f966271e` (+ `96206efc4` uid) item 5, DEFECTS top open: the melee smear unwraps its angles, caps the fan at
+  150 deg back from the newest, 6 deg chords. The baton's ~300 deg sweep over 4 kept angles with 5 chords per step drew
+  the flat white hexagon ring. Film: chapter electro_baton_left 32 px/m, before `--melee-smear=n7`: one crescent, no ring.
+  DECISION combat/melee-smear-span.
+- MILESTONE `324927f99` item 4: the rocket gib at combo flies in six pieces cut from the victim's drawn card
+  (`GibCardCut`: head band 0.30, torso between 0.30-wide arm strips to 0.62, leg halves; placed where the card drew
+  them, flip mirrored). Before `--gib-card=whole` = one tumbling body (the card in one group, hidden rig parts empty).
+  Film: weapon:rocket_launcher --victim=cop/head_cap 48 px/m fire 333 kill 347. Straight cut edges (paper-cut); drawn gib
+  pieces per kind would be better: no REQUEST yet (judge first). DECISION combat/gib-card-pieces.
+- Item 4 flame jet FILMED (not changed): chapter flamethrower combo 32 px/m t48-192,
+  `evidence/n15-combat/flame_jet_sustained_combo_32ppm_t48-192.png`. The teardrop chain is the owner's look-14 pick (kept).
+  New defect: the ground fire stacks into a tall red starburst column beside the cop (DEFECTS).
+- Item 4 vehicle shadows: NOT JUDGED. The city shot's only car is cut by the frame edge. Needs a shot with traffic.
+- MILESTONE `54297457d` item 5 city street fight film (`film.mjs city` 32 px/m, 1200 ticks): the range-target rings on
+  the road (empty where down) read as debug; the city draws none now, `--target-rings=on` the before. FRICTION: the
+  same `city` shot with `--ticks=620` frames a different block from `--ticks=1200` (lock auto), so a before/after pair
+  must keep --ticks equal. DECISION arena/city-target-rings.
+- Perf of tonight's new art (blade left sets: 18 small PNGs warmed by RivetStripWarm; GibCardCut: 6 sprites per gib
+  instead of 1): NOT MEASURED (no fight_gate run; the machine is contended and the gate holds Godot).
+- 00:05 full gates started on 54297457d (`node tools/gate/run.mjs --rev=HEAD --reels`, log build/gate_54297457d.log,
+  build/gate/54297457d8d5/).
