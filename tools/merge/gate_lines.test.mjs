@@ -32,3 +32,22 @@ test('a long summary is cut to one line', () => {
   assert.ok(!line.includes('\n'));
   assert.ok(line.endsWith('...') && line.length < SUMMARY_MAX + 60);
 });
+
+test('the morning gates step prints the lines, green or red, from the worktree it ran in', async () => {
+  const { mkdtempSync, mkdirSync, rmSync, writeFileSync } = await import('node:fs');
+  const { tmpdir } = await import('node:os');
+  const { join } = await import('node:path');
+  const { STEP_RUNNERS } = await import('./morning.mjs');
+  const cwd = mkdtempSync(join(tmpdir(), 'gtai-gate-lines-'));
+  try {
+    mkdirSync(join(cwd, 'build', 'evidence'), { recursive: true });
+    writeFileSync(join(cwd, 'build', 'evidence', 'unit-tests.json'), ev('unit-tests', { summary: 'unit-tests: 9 passed' }));
+    for (const status of [0, 1]) {
+      const said = [];
+      const ctx = { cwd, out: (l) => said.push(l), git: () => ({ stdout: HEAD }), run: () => ({ status, log: 'gates.log' }) };
+      const r = STEP_RUNNERS.gates(ctx);
+      assert.equal(r.ok, status === 0);
+      assert.deepEqual(said, ['morning: gates: unit-tests pass: unit-tests: 9 passed']);
+    }
+  } finally { rmSync(cwd, { recursive: true, force: true }); }
+});
