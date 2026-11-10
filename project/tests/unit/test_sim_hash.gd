@@ -135,6 +135,19 @@ func test_a_full_capacity_cell_returns_every_slot_once_in_order() -> void:
 	assert_eq(_query_cell(0, 0, 1), expected, "empty neighbouring cells add nothing")
 
 
+func test_a_rebuild_at_full_capacity_counts_from_zero() -> void:
+	var crowd: Array[int] = []
+	for id: int in SimConst.CAP - 1:
+		_actor(id, 0.25 * SimConst.HC, 0.25 * SimConst.HC)
+		crowd.append(id)
+	var lone: Vector2 = _point(1, 0)
+	_actor(SimConst.CAP - 1, lone.x, lone.y)
+	for build: int in 2:
+		_hash.build(0.0, 0.0)
+		assert_eq(_query_cell(0, 0, 0), crowd, "build %d: the crowded cell" % build)
+		assert_eq(_query_cell(1, 0, 0), [SimConst.CAP - 1], "build %d: its neighbour" % build)
+
+
 func _actor(id: int, x: float, y: float) -> void:
 	_state.alive[id] = 1
 	_state.tier[id] = 0
