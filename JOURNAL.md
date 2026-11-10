@@ -65,3 +65,15 @@ cells (`street_reactions_it321.md`), `dropped_weapons_it325.md`. (4) item 3 bato
   value wins; the log line `director chapter electro_baton_left` proves it). REQUEST tools: film.mjs/compare.mjs
   should list ReelChapters.extras() (`<blade>_left`, `<blade>_cam`) as chapters.
 - DEFECTS.md: session-2 films added; top open = the game melee smear's flat white hexagon slab.
+- MILESTONE 22:49 `1ede2ce03` + `9d564d282` ITEM 1 (c-2): the reply (it350) says the walk-camera redraws were drawn
+  this morning for n11 and never taken. VERSIONS for 9 kinds (patrol, cap, hat, jogger, shopper v2; suit, punk, hood v3;
+  thug v4 B), FILL re-measured (all down, 1.02-1.27), test floor 1.1 -> 1.0. Before = `film.mjs --tree` on compare's
+  kept b8da0a47f checkout (same hit sheets as the parent): patrol, suit, thug, punk at 64 px/m t338-350, the seam gone.
+  Restored the 4 burn sheets the re-run re-packs (hood, punk, swat, thug). DECISION combat/c-2-hit-walk-camera.
+- MILESTONE 22:54 `07bb047cf` item 3: body-hit ink disc 0.12 m (was 0.22), `--body-ink=n7` the before.
+- MILESTONE 23:03 `5bdad7a0c` item 3: dev arena lights age out: `PrintStage.light_tick` (core/render/print_stage.gd,
+  a shared core file: the hero lane does not list it) set by `ArenaCombatLights.attach` for a clockless stage.
+  First cut grew arena_rigs.gd past the debt baseline (294 -> 296): moved the hookup into attach.
+- Films with feel ON: `film.mjs ... --lock=off` (shots.mjs drops `--feel=off` only then; `HitFeel.feel_flag` takes the
+  FIRST `--feel=`, so a trailing `-- --feel=on` does not work). REQUEST tools: a `--feel=on` film flag.
+- 23:04 full gates started on 5bdad7a0c: `node tools/gate/run.mjs --rev=HEAD --reels` -> build/gate/5bdad7a0c*/.

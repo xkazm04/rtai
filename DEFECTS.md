@@ -2,9 +2,12 @@
 
 Ranked within each film; newest film first.
 
+## Dev arena, pistol, feel on (--lock=off), 32 px/m (session 2)
+1. Every shot's muzzle light stayed lit for good: white paper fans piled up beside Rivet -> fixed 5bdad7a0c.
+
 ## Machine pistol lone kills, 9 kinds, combo 64 px/m (session 2, c-2 films)
 1. Thrown-back hit cells drawn from a shallower camera (whole body, upturned face, long legs) between the walk and the fall -> fixed 1ede2ce03 (c-2 redraws, 9 kinds).
-2. The body-hit ink burst read as a black ball as wide as the head -> fixed (body ink 0.12 m, this session).
+2. The body-hit ink burst read as a black ball as wide as the head -> fixed 07bb047cf (body ink 0.12 m).
 3. The body-hit burst lands about 0.5 m in front of the drawn thrown-back card, on the floor -> open.
 4. Every lone victim (suit, punk, thug included) drops the brown rifle at t350, a patrol cop who held a pistol too -> open (the gunplay bot arms the victim; check which gun the drop draws).
 5. The victim walks in at t338 as a blue armed card with the kind's head (the gunplay hostile's body) -> open, likely the dev shot only.
