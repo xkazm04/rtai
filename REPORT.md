@@ -33,19 +33,27 @@ contended, per past FRICTION lines; this lane alone made about 40 such commits t
 (one problem at a time there); wt_init 16 s against the hand copy builders journal; a dev scene's
 parse error now stops at 1.5 s instead of the 150 s timeout (hero lost about 8 min to it on four forms).
 
-## Codex ledger (`factory ledger --state=... --ledger=gtai-masters/n11/tools/codex-ledger.jsonl`, at 01:40)
+## Codex ledger (`factory ledger --state=C:/Users/kazda/kiro/gtai-n11t/logs/tools/state.json --ledger=C:/Users/kazda/kiro/gtai-masters/n11/tools/codex-ledger.jsonl`; RE-RUN at report time)
 
-15 tasks, 4,002 s of Codex, 13 machine pass, 2 machine fail, 7 accepted, 7 accepted after revision,
-0 rejected, 43 lines changed by review, 0 refused by the meter. Review sessions measured $54.20 over
-6 sessions; per task $3.87 is an ESTIMATE and an upper bound (a session also builds other things).
-Codex as tester: every failing test it wrote tonight was a real defect, 78 of them, 0 thrown away.
+At 02:01: 17 tasks, 4,785 s of Codex, 15 machine pass, 2 machine fail, 8 accepted, 8 accepted after
+revision, 0 rejected, 67 lines changed by review, 0 refused by the meter. Dollars: $54.20 measured over
+the 6 review sessions to iteration 21 (per task $3.87, an ESTIMATE and an upper bound); the total
+prints null until iteration 25's cost is in state.json (one unknown session makes it unknown, by design).
+Codex as tester: every failing test it wrote tonight was a real defect, 82 of them, 0 thrown away.
 
 **Paired measurement of the Claude saving** (both sides harness-measured, same goal and laws, same 15
-mutants): quest_beat_validator alone 67,154 tokens / 674 s vs review 61,665 / 114 s + 436 s Codex
-(8 % fewer tokens); city_spawn_plan alone 49,655 / 210 s vs review 48,638 / 69 s + 224 s Codex (2 %).
-Reading: on small pure-rule modules a Claude review of Codex's tests costs about what writing them
-costs, because the review must understand the module either way. A third, larger module
-(sim_car_route, 136 lines) is in flight at 01:40: see JOURNAL.
+mutants; the Director's own check is outside both sides):
+
+| Module | Claude alone | Claude reviewing Codex | Review changed | Mutation |
+|---|---|---|---|---|
+| quest_beat_validator | 67,154 tok / 674 s | 61,665 tok / 114 s + 436 s Codex | 12 lines | 11/11 both |
+| city_spawn_plan (49 lines) | 49,655 tok / 210 s | 48,638 tok / 69 s + 224 s Codex | 0 | 9/15 both |
+| sim_car_route (136 lines) | 99,000 tok / 524 s | 69,496 tok / 216 s + 617 s Codex | 24 lines | Codex 80 %; control: JOURNAL |
+
+Reading: on the two small modules the review cost about what writing cost (2-8 % fewer tokens). On the
+module three times their size, reviewing Codex's tests took 30 % fewer Claude tokens than writing them
+(29,504 fewer), and the control pinned the same private literals (2.5 m, 13 m) that the review removed
+from Codex's file. Three modules is still not a rate, and wall time with Codex is longer, not shorter.
 
 ## Incident (mine, repaired)
 
