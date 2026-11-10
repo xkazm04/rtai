@@ -49,15 +49,15 @@ parse error now stops at 1.5 s instead of the 150 s timeout (hero lost about 8 m
 
 ## Codex ledger (`factory ledger --state=C:/Users/kazda/kiro/gtai-n11t/logs/tools/state.json --ledger=C:/Users/kazda/kiro/gtai-masters/n11/tools/codex-ledger.jsonl`; RE-RUN at report time)
 
-At 05:15 (re-run with `--state`): 18 tasks, 4,991 s of Codex, 16 machine pass, 2 machine fail, 8 accepted,
+At 05:07 (re-run with `--state`): 18 tasks, 4,991 s of Codex, 16 machine pass, 2 machine fail, 8 accepted,
 9 accepted after revision, 0 rejected, 78 lines changed by review, 0 refused by the meter. Dollars: $68.10
 measured over the 8 review sessions (per task $4.01, an ESTIMATE and an upper bound: a session also builds
 other things). The report session re-runs it once more for iterations 39 onward.
-Codex as tester (11 tasks, counted from the ledger's per-task lines at 05:18): 100 failing tests, 90 real
+Codex as tester (11 tasks, counted from the ledger's per-task lines at 05:07): 100 failing tests, 90 real
 defects fixed with the tests kept, 10 thrown away with their reason: 9 in `n11t-break-tools` (a table that
 assumed plain porcelain, obsolete once quick read `--porcelain -z`, which never quotes a path; JOURNAL 20:5x)
 and 1 in `n11t-break-staged` (it asked the staged export to ignore the commit's eol attributes, JOURNAL 02:24).
-The journal's running count ("82 real, 0 thrown away" at 01:52) had dropped the first task's 9; corrected 05:18.
+The journal's running count ("82 real, 0 thrown away" at 01:52) had dropped the first task's 9; corrected 05:07.
 
 **Paired measurement of the Claude saving** (both sides harness-measured, same goal and laws, same 15
 mutants; the Director's own check is outside both sides):
@@ -91,7 +91,7 @@ until 01:45). Repaired by hand within minutes; no lane commit got the wrong iden
 3. QuestBeatValidator suspects: `str()` coercion, a `1e999` INF duration passes, an unknown line id is
    marked used, an invalid beat's encounter still counts at "".
 4. CitySimCarRoute suspects (the parity reference sim: a change here moves the native sim too, NAT-06),
-   found by the review and the control, read again on main at 05:20: `sim_car_route.gd:37` U-turns before
+   found by the review and the control, read again on main at 05:08: `sim_car_route.gd:37` U-turns before
    any tile that is not road (kerb, building, plaza) where its comment says "city edge or unloaded";
    `:90` and `:118` accept `T_ROAD_H` and `T_ROAD_V` in any direction, so road orientation is ignored;
    the tuned numbers 18 m (`:27`), 2.5 m (`:53`), 13 m (`:62`) and 16 m (`:89`) are inline literals tests
@@ -108,6 +108,6 @@ until 01:45). Repaired by hand within minutes; no lane commit got the wrong iden
 - PoF runner commits on `n11-runner`, not pushed: 32da7878, 410c035d, b4294c1b (and any later).
 - This branch's step guard (b2fc4d7d, c4533f7d) changes how the morning merge runs every step.
 - `film --victim` works with combat's hook (1183a323 on n11-combat): merge both.
-- The staged-snapshot hook (d13b9849, 1e5fa267, 3ee0c085, 4d6d8232) changes what every commit's lint reads. It also ends combat's FRICTION 117: their `probe.sh` marks `arena_game.gd` `--skip-worktree` and copies untracked probe files in; the hook lints the index, so a commit no longer needs `probe.sh off` first. That held only from 4d6d8232 (05:05): before it, `checkout-index` refused the skip-worktree entry and the hook failed. Proven 05:08 on a scratch worktree with the probe's shape (skip-worktree `arena_game.gd` + an untracked .gd, both over the line cap): `quick.mjs` on the tree FAIL 4 issues, the commit through the hook `lint: all 16 checks pass`, 56 s.
+- The staged-snapshot hook (d13b9849, 1e5fa267, 3ee0c085, 4d6d8232) changes what every commit's lint reads. It also ends combat's FRICTION 117: their `probe.sh` marks `arena_game.gd` `--skip-worktree` and copies untracked probe files in; the hook lints the index, so a commit no longer needs `probe.sh off` first. That held only from 4d6d8232 (05:02): before it, `checkout-index` refused the skip-worktree entry and the hook failed. Proven 05:04 on a scratch worktree with the probe's shape (skip-worktree `arena_game.gd` + an untracked .gd, both over the line cap): `quick.mjs` on the tree FAIL 4 issues, the commit through the hook `lint: all 16 checks pass`, 56 s.
 - Combat's `probe.sh` toggles `dev/frames/film_card.gd` in and out of their tree, which re-imports
   the class cache on every film (about 8 s each); it ends when the film probe lands on main.
