@@ -60,3 +60,14 @@ func test_a_walker_does_not_flail() -> void:
 	assert_not_null(card)
 	assert_false(StreetWalkerHit.draws_burn(rig))
 	assert_eq(StreetWalkerHit.flail(rig), 0.0)
+
+
+func test_the_burning_figure_stands_on_its_shadow_while_the_parts_flail() -> void:
+	var rig: CutRig = _cop(&"burn", 0.2)
+	var card: Sprite2D = _card(
+		rig, StreetWalkerCards.DIR + StreetWalkerHit.BURN_GRIDS["cop/head_cap"]
+	)
+	rig.react.off = Vector2(9.0, -6.0)  # the burn family's body travel (hidden parts)
+	rig.react.travel = 12.0
+	StreetWalkerCards.place(rig, card)
+	assert_eq(card.global_position, rig.global_position, "boots on the contact shadow's point")

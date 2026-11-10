@@ -130,10 +130,13 @@ static func face(card: Sprite2D, blow: Vector2) -> void:
 	card.flip_h = f.y == 1
 
 
-## The wound's push on the card this step, world px (x, y) and the tip in rad (z).
+## The wound's push on the card this step, world px (x, y) and the tip in rad (z); none on the
+## drawn burning figure.
 static func shove(rig: CutRig) -> Vector3:
 	var r: HumanReact = rig.react
 	if not ON or r == null or r.dying or r.kind == &"" or r.off == Vector2.ZERO:
+		return Vector3.ZERO
+	if draws_burn(rig):  # it33: the drawn burning man stays on his point; flail() shakes him
 		return Vector3.ZERO
 	var world: Vector2 = rig.global_transform.basis_xform(r.off) * SHOVE_GAIN
 	var e: float = clampf(r.off.length() / maxf(r.travel, 1.0), 0.0, 1.0)
