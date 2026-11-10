@@ -39,6 +39,28 @@ const HOLD_S: Dictionary[StringName, float] = {&"flinch": 0.2, &"stagger": 0.34}
 ## A death of these kinds opens on the same thrown-back cell over the fall grid's buckle (a body
 ## wilting on its feet read as no hit at all), until StreetWalkerFall's mid-fall frame takes it.
 const DEATH_KINDS: Array[StringName] = [&"death_bullet", &"death_blast", &"death_melee"]
+## it21: a drawn hit cell fills its cell's height (street_hit.py) but is drawn from a shallower
+## camera than the walk strips and fall grids, so its head and torso drew at about 0.65 x the
+## walking figure's: walk -> shrink -> grow over a death's first frames (film it20). Each
+## thrown-back grid draws at FILL x that (tools/art/street_hit_fill.py: its figure's thickness
+## against the mid-fall row it hands over to), scaled about the planted boot. The site grids
+## (SITE_GRIDS) were drawn at the walk's scale and keep 1. FILL_ON false = the before.
+const FILL_ON: bool = true
+const FILL: Dictionary[String, float] = {
+	"cop_patrol_hit.png": 1.37,
+	"cop_riot_hit.png": 1.20,
+	"ped_cap_hit.png": 1.39,
+	"ped_elder_hit.png": 1.17,
+	"ped_hat_hit.png": 1.34,
+	"ped_hood_hit.png": 1.35,
+	"ped_jogger_hit.png": 1.29,
+	"ped_punk_hit.png": 1.25,
+	"ped_shopper_hit.png": 1.33,
+	"ped_suit_hit.png": 1.40,
+	"ped_worker_hit.png": 1.19,
+	"swat_hit.png": 1.31,
+	"thug_hit.png": 1.17,
+}
 ## The card's tip at the family's peak (rad, away from the blow on screen).
 const LEAN: float = 0.22
 ## How much of the parts' body travel the rigid card takes on.
@@ -63,6 +85,13 @@ static func grid_of(rig: CutRig, row: String) -> String:
 ## True when `path` is one of the hit grids (StreetWalkerCards drops it when the hold ends).
 static func is_grid(path: String) -> bool:
 	return path.ends_with("_hit.png")
+
+
+## The scale a hit grid at `path` draws at, of its cell's height (1 for any other strip).
+static func fill_of(path: String) -> float:
+	if not FILL_ON or not is_grid(path):
+		return 1.0
+	return FILL.get(path.get_file(), 1.0)
 
 
 ## Faces the drawn cell by the blow: the figure faces the shooter and arches away from the shot.

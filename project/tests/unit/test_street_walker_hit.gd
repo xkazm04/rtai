@@ -132,3 +132,31 @@ func test_every_street_kind_that_dies_is_drawn_thrown_back_by_the_round() -> voi
 	# pedestrians wilted on their feet (the asset lane's cells, ASSETS-REPLIES 01:01-01:06)
 	for row: String in StreetDeadPlan.CLASS_OF:
 		assert_true(StreetWalkerHit.GRIDS.has(row), "%s has a drawn hit grid" % row)
+
+
+func test_every_thrown_cell_draws_at_the_walking_figures_scale() -> void:
+	# n11 it21: the cell fitted to its height drew the head and torso at ~0.65 x the walker's
+	for row: String in StreetWalkerHit.GRIDS:
+		var path: String = StreetWalkerCards.DIR + StreetWalkerHit.GRIDS[row]
+		var fill: float = StreetWalkerHit.fill_of(path)
+		assert_between(fill, 1.1, 1.5, "%s drawn up to the walker's scale" % path)
+	for row: String in StreetWalkerHit.SITE_GRIDS:
+		for site: String in StreetWalkerHit.SITE_GRIDS[row].values():
+			var drawn: float = StreetWalkerHit.fill_of(StreetWalkerCards.DIR + site)
+			assert_eq(drawn, 1.0, "%s: drawn at the walk's scale" % site)
+	assert_eq(StreetWalkerHit.fill_of(StreetWalkerCards.DIR + "p70/cop_patrol_armed_walk.png"), 1.0)
+
+
+func test_a_thrown_card_is_placed_at_its_fill_about_the_planted_boot() -> void:
+	var rig: CutRig = _cop(&"flinch", 0.05)
+	var card: Sprite2D = autofree(Sprite2D.new())
+	var path: String = StreetWalkerCards.DIR + StreetWalkerHit.GRIDS["cop/head_helmet"]
+	card.texture = load(path) as Texture2D
+	card.hframes = RigHeadCard.FRAMES
+	card.set_meta(StreetWalkerCards.ON, path)
+	StreetWalkerCards.place(rig, card)
+	var drawn: float = card.global_scale.x
+	assert_eq(card.global_position, rig.global_position, "the boot stays where the rig stands")
+	card.set_meta(StreetWalkerCards.ON, StreetWalkerCards.DIR + "p70/cop_riot_card.png")
+	StreetWalkerCards.place(rig, card)
+	assert_almost_eq(drawn / card.global_scale.x, StreetWalkerHit.FILL["cop_riot_hit.png"], 0.001)

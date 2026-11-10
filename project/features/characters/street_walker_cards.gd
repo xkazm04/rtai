@@ -159,9 +159,12 @@ static func place(rig: CutRig, card: Sprite2D) -> void:
 		StreetWalkerFall.draw(rig, card, k)
 		return
 	var h: float = HEIGHT_BY_ART.get(ViewMode.shared().art, HEIGHT_M)
+	var hit: bool = StreetWalkerHit.is_grid(str(card.get_meta(ON, "")))
 	if card.vframes > 1:
 		var file: String = card.texture.resource_path.get_file()
 		k *= WALK_FILL.get(file, StreetCopWalk.fill_of(card.texture.resource_path))
+	elif hit:
+		k *= StreetWalkerHit.fill_of(str(card.get_meta(ON, "")))
 	var s: float = h * CharacterRigs.PX_PER_M * k * card.vframes / card.texture.get_height()
 	var walk: float = clampf(rig.speed_now / WALK_SPEED, 0.0, 1.0)
 	if card.vframes > 1:
@@ -171,7 +174,6 @@ static func place(rig: CutRig, card: Sprite2D) -> void:
 		)
 		walk = 0.0
 	var stride: float = sin(TAU * rig.phase)
-	var hit: bool = StreetWalkerHit.is_grid(str(card.get_meta(ON, "")))
 	var fall: Vector2 = Vector2(0.0, 1.0) if hit else StreetWalkerFall.pose(rig, card)
 	var wound: Vector3 = StreetWalkerHit.shove(rig)
 	card.global_rotation = stride * SWAY * walk + fall.x + wound.z
