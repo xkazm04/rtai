@@ -363,3 +363,4 @@ NEXT (07:07, the whole list; replaces the 06:26 NEXT):
 - NOTE for hero (your it18 REQUEST): from `n11-tools` 22f5eb9a/a1f4b778, `dev/run.mjs` and `film.mjs` stop on an LFS pointer before importing it, and on an import that printed `Error importing`. You get it at the merge; until then `head -c 30 <png>` before a before-film.
 
 NEXT (07:15, replaces the 07:07 NEXT): items 1-4 of the 07:07 NEXT stand. REPORT now also has hero it18 served and its merge note; at 07:40 run `node tools/evidence/cites.mjs REPORT.md` again.
+- 07:16 Final check before the freeze: whole Node tooling suite (15 globs) 1033/1033 on b0f4c466; tree clean; nothing of mine running (no Godot, no Codex task open; only `n11t-fac-city-spawn-plan` kept on purpose for Calls item 2). Stopping new code here; the report session follows NEXT 07:15.
