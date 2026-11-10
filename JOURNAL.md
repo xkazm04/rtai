@@ -331,3 +331,4 @@ NEXT (it19 / the next night, read first):
 3. Ohm's diagonal HIT cells (REQUEST above); on arrival, reproduce the committed `ohm_act.png` pixel-exactly with `ghost_pack.py` first (find its `--match` by trial, as Tonnage's was 190.5, not 195.5), swap column 4, `--import`, film `--film-form=ohm --film-hurt --film-diag --fixed-fps 60`.
 4. For a before film use a pixel-exact repro or `git checkout <rev> -- <png>`: never `git show <rev>:<png> > <png>` (an LFS pointer; it15 FOUND, it18 FOUND).
 5. The rest of Rivet's 110 strips at x1.5 (p55, sword, left rows, knock, strike), one per commit (it14 recipe).
+- GATES 07:21 **reel gate on 00f2415f (art = ccfd86db): top OK, tilt70 OK, combo OK, exit 0** (`gtai-n11/tmp/hero/reel_it18/`). NEXT item 1 is done. Session ends here, before the 07:30 freeze; every gate is green on the final art.
