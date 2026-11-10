@@ -102,3 +102,20 @@ Branch `n15-tools`, cut from main `5c5c03611`. APPDATA=C:/Users/kazda/kiro/gtai-
   slow start 2.5 s 19/20 -> my own new rounding test had the same flaw (1000.5 ms limit holding a node start);
   fixed with budgetMs; after: Windows slow 1/1, Linux slow 20/20, plain 0 fail; still fails on the old
   morning.mjs (the rounding bug).
+- 23:04 item 7 started: control subagent (Opus, background) writes test_sim_hash.gd from the Codex brief
+  (`pof-codex/runs/n11t-fac-sim-hash/brief.md`) in the scratch tree `C:/Users/kazda/kiro/gtai-n15/scratch-tools-before`
+  checked out at the Codex task's base 812a0b061. Pair it with ledger row n11t-fac-sim-hash (review tokens 64833,
+  178 s, iteration 44). Then: mutate sim_hash.gd in the scratch tree with that test, record
+  `factory control sim_hash --tokens --secs --tests --killed --mutants --changed --ledger=gtai-masters/n15/tools/codex-ledger.jsonl`
+  (seed the n15 ledger with the 3 n11 sim-hash rows first, verbatim).
+- 23:04 gate (no reels) running on eb65c8b05: log build/gate/eb65c8b05648/evidence.log.
+
+NEXT: (1) read the gate result for eb65c8b05 (selftest must pass after the re-bless); run the REEL gate
+(`node tools/reel/run_reels.mjs` or `node tools/gate/run.mjs --rev=HEAD --reels`) on the latest commit.
+(2) Finish item 7 (control result -> mutate -> `factory control`). (3) Codex testers for t-1, t-4, t-5 through
+`npx tsx scripts/codex/dispatch.ts run <task.json>` from C:/Users/kazda/kiro/pof (ids n15t-..., discard after;
+task.json shape: pof-codex/runs/n11t-break-check/state.json `.task`). (4) item 4b: morning.mjs native/gates/reels
+for real on a scratch integration worktree (needs ~2.5 h: gates floor 90 min, reels 65) - start it early in a
+session, remove the worktree and branch after. (5) a real `compare.mjs --victim` film for combat.
+(6) REPORT.md: extend the draft. Scratch tree `C:/Users/kazda/kiro/gtai-n15/scratch-tools-before` is mine
+(detached, wt_init'd from n15-hero); remove with `git worktree remove --force` at the end of the night.
