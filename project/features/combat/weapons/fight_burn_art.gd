@@ -19,6 +19,14 @@ const BURN_FAN_M: float = 0.2
 const BURN_LIFT: bool = true
 const BURN_TIGHT: float = 0.35
 const BURN_UP_M: PackedFloat32Array = [0.55, 0.85, 1.15]
+## it32: the fight's FX layer sits under the rigs, so lifted flames showed only at the figure's
+## edges. OVER: a fighter with a drawn rig burns over it (ShockArcsView, from the torso: the
+## flames at BURN_UP_M less the torso's height, a little behind him), and the FX layer skips
+## him. OVER false = the under-layer flames only (the before).
+const OVER: bool = true
+const TORSO_M: float = 0.45
+## Fighter id -> the sim tick its flames were last drawn over the rig (render only).
+static var over_ids: Dictionary[int, int] = {}
 
 
 ## Where a burning human's flames sit: behind him against his run (`flee`), off the body.
@@ -52,3 +60,22 @@ static func _burning(ci: CanvasItem, flames: PackedVector2Array, tick: int) -> v
 ## Draws the flames of a man at `pos` running along `flee` (metres).
 static func draw(ci: CanvasItem, pos: Vector2, flee: Vector2, tick: int) -> void:
 	_burning(ci, lifted(pos, burn_flames(pos, flee)), tick)
+
+
+## True when fighter `id`'s flames were drawn over its rig on `tick` or the tick before.
+static func drawn_over(id: int, tick: int) -> bool:
+	return OVER and over_ids.get(id, -9) >= tick - 1
+
+
+## The flames over a burning rig whose torso is at `torso` (the canvas's px, `ppm` px a metre),
+## running along `flee`; marks fighter `id` drawn over on `tick`.
+static func over(
+	ci: CanvasItem, torso: Vector2, ppm: float, flee: Vector2, id: int, tick: int
+) -> void:
+	over_ids[id] = tick
+	var drop: float = 0.0 if ViewMode.shared().is_flat() else TORSO_M  # top: the torso is the spot
+	var feet: Vector2 = torso / ppm + Vector2(0.0, drop)
+	var flames: PackedVector2Array = lifted(feet, burn_flames(feet, flee))
+	for k: int in flames.size():
+		flames[k] = flames[k] * ppm / Ink.PX_PER_M
+	_burning(ci, flames, tick + id * 3)

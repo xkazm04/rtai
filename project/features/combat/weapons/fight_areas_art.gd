@@ -34,7 +34,7 @@ static func draw(ci: CanvasItem, arena: CombatArena, tick: int) -> void:
 	for h: Fighter in arena.hostiles:
 		var e: FighterFx = a.effect(h)
 		if e != null and h.alive():
-			if e.burn_ticks > 0:
+			if e.burn_ticks > 0 and not FightBurnArt.drawn_over(h.id, tick):
 				FightBurnArt.draw(ci, h.pos, e.flee, tick + h.id * 3)
 			var n: int = StunCrowd.cap().w if light.has(h.id) else 2
 			if e.stun_ticks > 0 and not WeaponFxElectro.stun(ci, h.pos, tick + h.id, n):

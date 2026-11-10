@@ -68,3 +68,13 @@ func test_a_burning_mans_flames_ride_up_his_body_under_a_tilt() -> void:
 	ViewMode.select("top")
 	assert_eq(FightBurnArt.lifted(Vector2(3.0, 4.0), flames), flames, "straight down nothing moves")
 	ViewMode._shared = was
+
+
+func test_a_rig_burning_over_its_body_is_skipped_on_the_fx_layer() -> void:
+	FightBurnArt.over_ids[901] = 50
+	assert_true(FightBurnArt.drawn_over(901, 50), "drawn over this tick: the fx layer skips him")
+	assert_true(FightBurnArt.drawn_over(901, 51), "or the tick before (draw order)")
+	assert_false(FightBurnArt.drawn_over(901, 52), "no longer drawn over: the fx layer burns him")
+	assert_false(FightBurnArt.drawn_over(902, 50), "a fighter with no rig keeps the fx flames")
+	@warning_ignore("return_value_discarded")
+	FightBurnArt.over_ids.erase(901)
