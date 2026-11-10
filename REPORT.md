@@ -1,6 +1,6 @@
 # REPORT: n11 lane hero (Rivet and the ghosts)
 
-Written it11 23:25, refreshed it13 01:16, it17 (06:05) and it18 (07:05, 2026-11-10). Branch `n11-hero`, cut from main `812a0b06`. Evidence is under `C:\Users\kazda\kiro\gtai-masters\n11\hero\` (`frames.json`, 15 entries, best first); the working log is `JOURNAL.md`; per-character levels with evidence paths are in `LEVEL.md`. All file names below are in that masters folder unless they carry a path.
+Written it11 23:25, refreshed it13 01:16, it17 (06:05), it18 (07:05) and final at it49 (07:40, 2026-11-10, REPORT phase, nothing built). Branch `n11-hero`, cut from main `812a0b06`. Evidence is under `C:\Users\kazda\kiro\gtai-masters\n11\hero\` (`frames.json`, 15 entries, best first); the working log is `JOURNAL.md`; per-character levels with evidence paths are in `LEVEL.md`. All file names below are in that masters folder unless they carry a path. The final gate logs and a copy of `frames.json` are in the lane cwd under `evidence/n11-hero/` (`unit_it18.txt`, `scen_it18.log`, `reel_it18.txt`).
 
 ## What works, with evidence
 
@@ -19,11 +19,29 @@ Owner's correction (track the level, keep raising): `LEVEL.md` holds one row per
 - **Hit cells** were filmed in game at it17 and every ghost now leans back 12 deg off its feet on a hit (`GhostRecoil`, 37c22b27: `ghost_hit_recoil_before_after_64ppm.png`, clip `ghost_hit_recoil_clip_64ppm.gif`). Since it18 Tonnage's HIT column is a drawn recoil on all five facings (23004b45, assets lane v3 A: tipped back, roller lifted, piston up, cables flung, impact star; `tonnage_hit_v3_before_after_64ppm.png`, clip `tonnage_hit_v3_toward_after_clip_64ppm.gif`), so his toward hit no longer reads as his wind-up; on the profile the drawn tip plus the 12 deg lean stack to about 30 deg. Still weak: Ohm's diagonal HIT cell differs little from his walk, and the lean ignores where the blow came from. Combat feel for the ghosts is level 2 (Tonnage's wind-up reads through the floor ring more than his body; Ohm's bolt carries the direction, his body barely).
 - **Planted feet on the ghosts** are level 2: measured on the sheets (Tonnage's stance pad slide per stance 32 -> 21 and 58 -> 40 cell px), not yet in world space on the dark arena floor. Tonnage's m34 timing gain (3091a7be) is measured on the sheet, not seen in a film (the every-4th-tick film never lands on that frame).
 - Rivet's strips other than p70 pistol, plasma rifle, katana and chainsaw (other weapons, every p55 strip, reload, knock, strike) are still 110 px upscaled; switching weapon or a boss fight softens him.
-- Ohm's walk is B art (stubby); Dent's 3/4 away run slot 7 lifts the far hand above the helmet for one frame (redraw requested).
+- Ohm's walk is B art (stubby). (Dent's 3/4-away run slot 7 hand wave is fixed since ccfd86db; at run speed that slot shows for about 2 ticks.)
 - Tonnage's drawn figure carries a white-blue spark outline where his old card glowed teal: the soul colour reads less on the drawn ghosts (all four).
 - Doors, alleys, vehicles and quest scenes at x1.5 not checked; 32 px/m not looked at.
 - **Intermittent `scenario_rig_stress` error**: `Parameter "t" is null` under `RivetFrames._set_strip` on its COMBO pass, 2 of about 8 full scenario runs since the x1.5 sheets (it11, it16), never alone. A diagnostic (c6d07c8a) now logs the sheet path when a strip loads empty; it has not fired since. Not called a flake, not fixed: see Merge notes.
 - Bench: one run, CONTENDED (01:33, other lanes running): p99 3.68 ms, 1 % low 224 fps. No quiet-machine number.
+
+## What blocked me, and for how long
+
+Nothing hard-blocked the lane; the losses were friction (each logged as `FRICTION` in JOURNAL, the `tools` lane's work list):
+- Machine contention (three lanes on one box): a single `run_unit --select` once took 5 min (timed out at 300 s), a full scenario run about 2-4 min, bench numbers are CONTENDED only. In total roughly an hour of the night went to waiting on gates (an estimate from the JOURNAL GATES timestamps, not measured).
+- Before/after films that silently showed the wrong sheet: a `.import` left behind (it13), and `git show <rev>:<png> >` writing an LFS pointer that Godot imports as corrupt with exit 0 (it15, it18). About 30 min re-filming (estimate); the recovery recipe is in JOURNAL it18 FOUND.
+- A dev-scene parse error hangs a film to its 150 s timeout (about 8 min, it7); file-size caps at exactly 200 lines on `stage_pilot.gd` / `rivet_frames.gd` forced moves before small additions (several rounds early in the night).
+- `tools/evidence/run.mjs` refuses on the assets lane's untracked `ASSETS-REPLIES.md`; ran with `--allow-dirty` (REQUEST tools logged).
+- Waiting on art: requested cells arrived through the night (Tonnage walk16, Dent run8, Tonnage hit v3); Ohm's diagonal HIT cells were requested at 07:04 and are not in yet.
+
+## Next steps (next night, in order)
+
+1. `GhostRecoil.LEAN_DEG` per form (Tonnage lower: his drawn cell already tips about 20 deg), and a blow-source field on `Fighter` so the recoil goes away from the attacker.
+2. Ohm's diagonal HIT cells on arrival (REQUEST assets in JOURNAL it18): reproduce `ohm_act.png` pixel-exactly with `ghost_pack.py` first, swap column 4, film `--film-form=ohm --film-hurt --film-diag --fixed-fps 60`.
+3. The rest of Rivet's strips at x1.5 (p55, other weapons, left rows, reload, knock, strike), one per commit (it14 recipe), so a weapon switch or a boss fight no longer softens him.
+4. Planted feet on the ghosts measured in world space on the arena floor (level 2 today, sheet-measured only); the soul teal back on the drawn ghosts' outline (colour law).
+5. Doors, alleys, vehicles and quest scenes at x1.5, and a look at 32 px/m; one bench under `bench.lock` on a quiet machine.
+6. Watch `scenario_rig_stress` for the intermittent null texture (Merge notes).
 
 ## Calls for the owner
 
@@ -41,3 +59,4 @@ Owner's correction (track the level, keep raising): `LEVEL.md` holds one row per
 - Watch `scenario_rig_stress` after the merge (the intermittent null texture above). If it fires, the log line `strip <path> loaded empty` names the sheet. To fall that sheet back to 110 px: drop its `fig_h` from `tools/art/rivet_frames.json`, re-cut it (`py -3 -I tools/art/rivet_frames.py --manifest=tools/art/rivet_frames.json --only=<name>`, which reproduced the committed 110 cuts byte-exactly) and remove it from `RivetRes.X15`, in one commit.
 - `ASSETS-REPLIES.md` in the lane root is the assets lane's reply file, not part of the merge.
 - GATES (it17): evidence `--no-bench` green on bba0ca47 (lint, unit 2252/0, scenarios 55/0, parity bit-exact, selftest, release-compile); full unit 2258/0 and scenarios 55/0 on 37c22b27; reel gate top/tilt70/combo OK on 37c22b27; full unit 2259/0 and scenarios 55/0 on e59094f8 (06:44). GATES (it18): full unit 2259/0 and scenarios 55/0 (0 SCRIPT ERROR, no `loaded empty`) on ccfd86db (the last code-or-art commit); exe produced at 07:06 on 898ab184 (bake 256 chunks, `export_checked.mjs` exit 0, `build/export/windows/RTAI.exe`). Reel gate on 00f2415f (art = ccfd86db): top OK, tilt70 OK, combo OK, exit 0 (07:21).
+- Final state (it49, 07:40): no code, art or golden change since ccfd86db; every gate above was taken on that art. HEAD after this commit is docs/evidence only.

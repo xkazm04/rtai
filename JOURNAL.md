@@ -351,3 +351,9 @@ NEXT (the next night): same as it19's NEXT (it18 items 2-5). REPORT.md stands as
 - Opened at 07:30, the freeze. Checked: tree clean apart from the assets lane's untracked `ASSETS-REPLIES.md` (not mine, left alone); HEAD 0126c66c is docs only; the last code-or-art commit is still ccfd86db, on which full unit 2259/0, scenarios 55/0 and reel top/tilt70/combo OK were all taken (it18). Evidence in `gtai-masters/n11/hero/` already matches that build, since no render-affecting commit followed it. I made no code, art or golden change: STABILIZE allows only bug fixes, I found no new bug, and re-running a gate on an unchanged build would not tell us anything new. REPORT.md stands as written at it18/it19.
 
 NEXT (the next night): same as it19's NEXT (it18 items 2-5: per-form `GhostRecoil.LEAN_DEG`, a blow-source field on `Fighter`, Ohm's diagonal HIT cells on arrival, the LFS-pointer before-film trap, the rest of Rivet's strips at x1.5).
+
+## it49 (session 25, 07:40-07:45, REPORT)
+
+- REPORT phase, nothing built. Checked every `.png`/`.gif` REPORT cites against `gtai-masters/n11/hero/` (all present, 58 files) and the gate logs and exe (present). Copied the final gate logs (`unit_it18.txt`, `scen_it18.log`, `reel_it18.txt`) and `frames.json` to `evidence/n11-hero/` in the lane cwd. REPORT now also has "What blocked me, and for how long" and "Next steps", and the stale Dent slot-7 line is corrected (fixed at ccfd86db). No code, art or golden change; last code-or-art commit still ccfd86db.
+
+NEXT (the next night): REPORT's "Next steps" list (= it18 NEXT items 2-5 plus world-space feet, soul teal outline, doors/alleys at x1.5, a quiet bench).
