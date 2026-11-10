@@ -324,3 +324,10 @@ NEXT (it18, read first; freeze 07:30, report 07:40):
 - GATES 07:06 **exe produced on 898ab184**: `bake_city.gd` wrote 256 chunks (exit 0), `export_checked.mjs` exit 0, `build/export/windows/RTAI.exe` 601 MB + `gtai_sim.windows.template_release.x86_64.dll` (`bake_it18.log`, `export_it18.log`).
 - GATES 07:07 reel gate started on HEAD (`gtai-n11/tmp/hero/reel_it18/`, `reel_it18.txt`).
 - No golden moved or re-blessed this session (two art sheets, docs).
+
+NEXT (it19 / the next night, read first):
+1. Read `gtai-n11/tmp/hero/reel_it18.txt` (reel on 00f2415f: top/tilt70/combo). If it is not all OK, write it into REPORT's GATES (it18) line.
+2. Recoil strength per form (CRITIQUE it18 a): `GhostRecoil.LEAN_DEG` as one value per form (Tonnage lower, since his drawn cell already tips about 20 deg), and a recoil away from the attacker needs a source field on `Fighter` (it17 DECISION).
+3. Ohm's diagonal HIT cells (REQUEST above); on arrival, reproduce the committed `ohm_act.png` pixel-exactly with `ghost_pack.py` first (find its `--match` by trial, as Tonnage's was 190.5, not 195.5), swap column 4, `--import`, film `--film-form=ohm --film-hurt --film-diag --fixed-fps 60`.
+4. For a before film use a pixel-exact repro or `git checkout <rev> -- <png>`: never `git show <rev>:<png> > <png>` (an LFS pointer; it15 FOUND, it18 FOUND).
+5. The rest of Rivet's 110 strips at x1.5 (p55, sword, left rows, knock, strike), one per commit (it14 recipe).
