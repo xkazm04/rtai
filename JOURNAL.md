@@ -117,3 +117,25 @@ REQUEST tools (open): compare.mjs passes --victim through; film/compare list Ree
   the p55 katana/plasma sword/baton/chainsaw wind-ups inside it (`--boss-blade=<w>`; --lock=off follows Rivet).
 - 23:31 masters frames.json at 15 (dropped the elder v3 and the SWAT flail still from masters; both stay in evidence/n15-combat/).
   Session 2 ends here; NEXT above stands, with (2) already half done (bot committed b6443d22e, wind-up close-ups to film).
+
+## Session 3 (iteration 3, 23:30-)
+
+- 23:30 read JOURNAL, git log, the replies file (no new section since it350). Gate on 5bdad7a0c was PASS incl. reels.
+- MILESTONE boss-blade film: `film.mjs arena --lock=off --ppm=64 --view=tilt --ticks=420 --stills=300-340 -- --bot=boss
+  --boss=king --boss-blade=katana` (log: "blade bot: katana taken"): the p55 katana wind-ups (t309-311, t319-322) and
+  strikes in a real King fight, `evidence/n15-combat/boss_blade_katana_p55_64ppm_t306-326.png` (masters too, replacing
+  the 32 px/m sheet). Defect: t308, one upright frame between follow-through and the next wind-up (DEFECTS).
+- MILESTONE `15c8abbcc` item 3 (n14 open call): katana, plasma sword and chainsaw turned left take their drawn left set
+  (it338 strip, it346 wind-up, it342/it346 strike) at p70 and p55. `RivetWindup.BLADE_LEFT`/`left_drawn` (moved out of
+  rivet_strips.gd: that file is at the 200-line ratchet). The drawn left strike shows straight left only (blade_drawn);
+  the left diagonals keep the drawn left facing under the game arc. k per blade by the helmet dome (one k for wind-up and
+  strike, p55 x1.3 by eye as it346 asks; p55 chainsaw x1.15 more). Board `evidence/n15-combat/blade_left_set_cells_board.png`.
+  Films 64 px/m, director extra chapters `<blade>_left`, before `--rivet-blade-left=off`, same build, same ticks: all three
+  beat the mirror (he faces the cop, hose arm near; the mirror turned his back). DECISION rivet/blade-left-set.
+  The it346 follow-through cells are not used (the strike cell holds the recovery, as the baton's).
+- FRICTION: `run_unit.mjs --select=test_quest_blade` fails `test_dock_hint_names_the_blade_key_only_with_a_blade`
+  ("[weapon_slot_2]" not "[2]"): the InputMap is empty in a narrowed run (order dependence: another test registers the
+  actions). Not my change; the full run decides. REQUEST tools: make test_quest_blade register the input actions itself.
+- FRICTION: the lint function-size count includes the NEXT function's doc comment (cast_flags apply 40 -> 41 from a third
+  doc line on `_windup`).
+- 23:44 full gates started on 15c8abbcc: `node tools/gate/run.mjs --rev=HEAD --reels` -> build/gate_15c8abbcc.log.
