@@ -64,6 +64,7 @@ const DEATH_KINDS: Array[StringName] = [&"death_bullet", &"death_blast", &"death
 ## thrown-back grid draws at FILL x that (tools/art/street_hit_fill.py: its figure's thickness
 ## against the mid-fall row it hands over to), scaled about the planted boot. The site grids
 ## (SITE_GRIDS) were drawn at the walk's scale and keep 1. FILL_ON false = the before.
+## n15: the SWAT (v4) and elder (v3) grids are re-measured after their redraw (1.31, 1.17 before).
 const FILL_ON: bool = true
 const FILL: Dictionary[String, float] = {
 	"cop_patrol_hit.png": 1.37,
@@ -78,7 +79,7 @@ const FILL: Dictionary[String, float] = {
 	"ped_jogger_burn_hit.png": 1.07,
 	"cop_riot_hit.png": 1.20,
 	"ped_cap_hit.png": 1.39,
-	"ped_elder_hit.png": 1.17,
+	"ped_elder_hit.png": 1.20,
 	"ped_hat_hit.png": 1.34,
 	"ped_hood_hit.png": 1.35,
 	"ped_jogger_hit.png": 1.29,
@@ -86,7 +87,7 @@ const FILL: Dictionary[String, float] = {
 	"ped_shopper_hit.png": 1.33,
 	"ped_suit_hit.png": 1.40,
 	"ped_worker_hit.png": 1.19,
-	"swat_hit.png": 1.31,
+	"swat_hit.png": 1.36,
 	"thug_hit.png": 1.17,
 }
 ## The card's tip at the family's peak (rad, away from the blow on screen).
