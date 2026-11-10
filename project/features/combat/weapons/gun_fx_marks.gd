@@ -73,11 +73,28 @@ static func scorch(ci: CanvasItem, at: Vector2, age: int) -> void:
 	ci.draw_arc(Ink.px(at), 0.36 * Ink.PX_PER_M, 0.0, TAU, 18, Color(Ink.INK, 0.8 * fade), 3.0)
 
 
-## The moment a plasma bolt bursts: a cream ring in ink opening to 0.8 m and a hot core.
-static func pop(ci: CanvasItem, at: Vector2, age: int) -> void:
+## The moment a plasma bolt bursts: a cream ring in ink opening to 0.8 m and a hot core. n13: the
+## gun's gun_fx.json row may size it (absent = the approved n7 burst): pop_core_m the core's radius
+## (0 = none), pop_from_m the ring's first radius, pop_ink_px / pop_cream_px its burst widths.
+static func pop(ci: CanvasItem, at: Vector2, age: int, row: Dictionary = {}) -> void:
+	var sh: Vector4 = pop_shape(age, row)
+	ci.draw_arc(Ink.px(at), sh.x, 0.0, TAU, 24, Ink.INK, sh.y)
+	ci.draw_arc(Ink.px(at), sh.x, 0.0, TAU, 24, Ink.CREAM, sh.z)
+	if sh.w > 0.0:
+		ci.draw_circle(Ink.px(at), sh.w, Ink.CREAM)
+
+
+## The burst at `age` ticks: x = the ring's radius, y / z = its ink / cream widths (Ink px),
+## w = the hot core's radius (0 once it is gone, or for a row without one).
+static func pop_shape(age: int, row: Dictionary = {}) -> Vector4:
 	var k: float = float(age + 1) / float(GunFx.IMPACT_TICKS)
-	var r: float = (0.2 + 0.6 * k) * Ink.PX_PER_M
-	ci.draw_arc(Ink.px(at), r, 0.0, TAU, 24, Ink.INK, 10.0 * (1.0 - k) + 2.0)
-	ci.draw_arc(Ink.px(at), r, 0.0, TAU, 24, Ink.CREAM, 5.0 * (1.0 - k) + 1.0)
-	if age < 4:
-		ci.draw_circle(Ink.px(at), 0.22 * Ink.PX_PER_M, Ink.CREAM)
+	var from_m: float = row.get("pop_from_m", 0.2)
+	var ink: float = row.get("pop_ink_px", 10.0)
+	var cream: float = row.get("pop_cream_px", 5.0)
+	var core_m: float = row.get("pop_core_m", 0.22) if age < 4 else 0.0
+	return Vector4(
+		(from_m + (0.8 - from_m) * k) * Ink.PX_PER_M,
+		ink * (1.0 - k) + 2.0,
+		cream * (1.0 - k) + 1.0,
+		maxf(core_m, 0.0) * Ink.PX_PER_M
+	)

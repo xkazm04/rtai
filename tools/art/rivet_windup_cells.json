@@ -1,0 +1,51 @@
+{
+ "doc": "n13 weapon art: the asset lane's drawn wind-up figures (gtai-art library, it309: keyed/rivet/rivet_windup_70_cells, pre-cut at the shipped p70 strip's scale) laid into rivet_eq_<weapon>_windup.png by tools/art/rivet_windup_cells.py. cells.side / cells.cam: file, k (scale), dx (px, by eye on film). ink_rim = blade_ink_rim.py over the strip (the sword's treatment B). A weapon row removed = no wind-up strip (RivetWindup off for it).",
+ "library": "C:/Users/kazda/kiro/gtai-art/library/keyed/rivet/rivet_windup_70_cells",
+ "out": "project/features/characters/art/view",
+ "strips": {
+  "p70": {
+   "electro_baton": {
+    "cells": {
+     "cam": {
+      "file": "electro_baton_cam.png",
+      "k": 0.82
+     },
+     "side": {
+      "dx": 0,
+      "file": "electro_baton_side.png",
+      "k": 0.82
+     }
+    }
+   },
+   "katana": {
+    "cells": {
+     "cam": {
+      "file": "katana_cam.png",
+      "k": 0.78
+     },
+     "side": {
+      "dx": 12,
+      "file": "katana_side.png",
+      "k": 0.9
+     }
+    }
+   },
+   "plasma_sword": {
+    "cells": {
+     "cam": {
+      "file": "plasma_sword_cam.png",
+      "k": 0.86
+     },
+     "side": {
+      "dx": 13,
+      "file": "plasma_sword_side.png"
+     }
+    },
+    "ink_rim": {
+     "px": 0.5,
+     "reach": 6
+    }
+   }
+  }
+ }
+}

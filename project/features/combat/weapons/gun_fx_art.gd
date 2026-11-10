@@ -56,6 +56,7 @@ static func draw_over(
 		var c: Color = Color(SMOKE, SMOKE.a * (1.0 - age))
 		ci.draw_circle(Ink.px(at), (0.18 + 0.32 * age) * sm.w * Ink.PX_PER_M, c)
 	WeaponFxTrail.draw(ci, fx.trails, tick)
+	var row: Dictionary = fx.look(arena.gun.trigger.spec.id)
 	for i: int in fx.impacts.size():
 		var im: Vector4 = fx.impacts[i]
 		var age: int = tick - int(im.w)
@@ -63,11 +64,9 @@ static func draw_over(
 			var at: Vector2 = ShotLift.hit_at(Vector2(im.x, im.y), int(im.z) % GunFx.SCORCH)
 			GunFxMarks.impact(ci, fx, at, fx.impact_dir[i], int(im.z) % GunFx.SCORCH, age)
 			if int(im.z) >= GunFx.SCORCH:
-				GunFxMarks.pop(ci, at, age)
+				GunFxMarks.pop(ci, at, age, row)
 	for ef: Vector4 in fx.enemy_flashes:
 		_star(ci, ShotLift.star_at(ef), ef.w, 0.45 - 0.1 * float(tick - int(ef.z)), tick)
-	var gun: GunHand = arena.gun
-	var row: Dictionary = fx.look(gun.trigger.spec.id)
 	var flash: int = row.get("muzzle_ticks", 2)
 	if muzzle and tick - fx.fired_tick < flash and fx.fired_count > 0:
 		_muzzle(ci, fx, arena.rivet, row, tick - fx.fired_tick)
