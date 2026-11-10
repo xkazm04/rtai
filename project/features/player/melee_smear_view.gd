@@ -6,11 +6,17 @@ extends Node2D
 ## px/m. While the cut runs (MeleeSwing.cutting) it keeps the last KEEP angles; after it, the
 ## whole fan lingers LINGER frames while it fades, then one old angle drops per frame (a 2-tick
 ## cut read as a flicker at 48 px/m real time when it wiped at once). Render only, no RNG.
+## n15 (DEFECTS: a baton swing drew a flat white hexagon ring round Rivet): the kept angles are
+## unwrapped (a step takes the short way round), the fan spans at most MAX_SPAN back from the
+## newest angle, and each step is cut into chords of at most CHORD_RAD. `--melee-smear=n7` = the
+## before (raw lerps, STEPS chords per step, no cap).
 
 const KEEP: int = 4
 ## Frames the finished cut's fan stays whole (fading) before it wipes; 0 = the iteration-3 wipe.
 const LINGER: int = 4
 const STEPS: int = 5
+const MAX_SPAN: float = deg_to_rad(150.0)
+const CHORD_RAD: float = deg_to_rad(6.0)
 const HILT_U: float = 0.3
 const EDGE_PX: float = 2.0
 ## The ink band's alpha (at the newest step) and the pale core's radial span.
@@ -37,6 +43,7 @@ var _grip: Vector2 = Vector2.ZERO
 var _len: float = 0.0
 var _angles: PackedFloat32Array = PackedFloat32Array()
 var _after: int = 0
+var _n7: int = -1
 
 
 ## This frame's blade: `grip` (global), `rot` (global, +x along the blade), `len_px` long;
@@ -89,11 +96,38 @@ func clear() -> void:
 	queue_redraw()
 
 
+## The fan's angles to draw: n7's raw list, else unwrapped and cut to MAX_SPAN from the newest
+## (the oldest kept step clipped where the span runs out, older ones dropped).
+func fan() -> PackedFloat32Array:
+	if _n7 < 0:
+		_n7 = 1 if ArenaArgs.parse().text("--melee-smear") == "n7" else 0
+	if _n7 == 1 or _angles.size() < 2:
+		return _angles
+	var out: PackedFloat32Array = PackedFloat32Array([_angles[-1]])
+	var span: float = 0.0
+	for i: int in range(_angles.size() - 2, -1, -1):
+		var d: float = angle_difference(_angles[i + 1], _angles[i])
+		var room: float = MAX_SPAN - span
+		if absf(d) >= room:
+			@warning_ignore("return_value_discarded")
+			out.insert(0, out[0] + signf(d) * room)
+			break
+		span += absf(d)
+		@warning_ignore("return_value_discarded")
+		out.insert(0, out[0] + d)
+	return out
+
+
+func _steps(a0: float, a1: float) -> int:
+	return STEPS if _n7 == 1 else maxi(2, ceili(absf(a1 - a0) / CHORD_RAD))
+
+
 func _draw() -> void:
-	var n: int = _angles.size()
+	var fan_a: PackedFloat32Array = fan()
+	var n: int = fan_a.size()
 	for i: int in range(1, n):
-		var a0: float = _angles[i - 1]
-		var a1: float = _angles[i]
+		var a0: float = fan_a[i - 1]
+		var a1: float = fan_a[i]
 		var age: float = float(n - i) / float(KEEP)
 		var a: float = tint.a * (1.0 - 0.5 * age) * fade()
 		if bold:
@@ -105,7 +139,7 @@ func _draw() -> void:
 		_fill(_band(a0, a1, HILT_U, 1.0), Color(Ink.INK, INK_A * a / tint.a))
 		var core: PackedVector2Array = _band(a0, a1, CORE_IN, CORE_OUT)
 		_fill(core, col)
-		draw_polyline(core.slice(0, STEPS + 1), Color(Ink.INK, col.a), EDGE_PX, true)  # the rim
+		draw_polyline(core.slice(0, core.size() / 2), Color(Ink.INK, col.a), EDGE_PX, true)  # the rim
 
 
 ## d8-weapons, the tilt's cut: a crisp pale crescent out at the blade's far half (no grey sector:
@@ -117,7 +151,7 @@ func _crescent(a0: float, a1: float, a: float) -> void:
 	var core: PackedVector2Array = _band(a0, a1, BOLD_IN, BOLD_OUT)
 	_fill(core, Color(tint, minf(1.0, a * BOLD_CORE_K)))
 	var rim: Color = Color(Ink.INK, minf(1.0, BOLD_RIM_A * k))
-	draw_polyline(core.slice(0, STEPS + 1), rim, BOLD_EDGE_PX, true)
+	draw_polyline(core.slice(0, core.size() / 2), rim, BOLD_EDGE_PX, true)
 
 
 ## A band near zero width (a held angle, a sheathed blade) fails to triangulate and logs an
@@ -130,10 +164,11 @@ func _fill(pts: PackedVector2Array, col: Color) -> void:
 ## The sector band between angles a0 and a1 from radius u0 to u1 (shares of the blade's length).
 func _band(a0: float, a1: float, u0: float, u1: float) -> PackedVector2Array:
 	var pts: PackedVector2Array = PackedVector2Array()
-	for s: int in STEPS + 1:
+	var n: int = _steps(a0, a1)
+	for s: int in n + 1:
 		@warning_ignore("return_value_discarded")
-		pts.append(_grip + Vector2.from_angle(lerpf(a0, a1, float(s) / STEPS)) * _len * u1)
-	for s: int in range(STEPS, -1, -1):
+		pts.append(_grip + Vector2.from_angle(lerpf(a0, a1, float(s) / n)) * _len * u1)
+	for s: int in range(n, -1, -1):
 		@warning_ignore("return_value_discarded")
-		pts.append(_grip + Vector2.from_angle(lerpf(a0, a1, float(s) / STEPS)) * _len * u0)
+		pts.append(_grip + Vector2.from_angle(lerpf(a0, a1, float(s) / n)) * _len * u0)
 	return pts
