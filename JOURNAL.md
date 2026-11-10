@@ -370,3 +370,9 @@ NEXT (07:15, replaces the 07:07 NEXT): items 1-4 of the 07:07 NEXT stand. REPORT
 - 07:17 Re-read siblings (hero 333 lines, combat 371): no `REQUEST tools:` or FRICTION after the ones served (hero 279, 286, 317 served at e9abf625, b083b075, 22f5eb9a/a1f4b778; combat 309 at c26ab875; combat 225 waits on their "add the hook" reply, NOTE at line 222). `node tools/evidence/cites.mjs REPORT.md` -> `cites: 15 paths, 15 ok`. Tree clean, nothing of mine running. No new code: 13 min to the freeze is too short for a tested, real-run-proven change.
 
 NEXT (07:18): the 07:15 NEXT stands (items 1-4 of the 07:07 NEXT). The report session: re-run the ledger with `--state`, drop "(DRAFT ...)" from REPORT's title, re-run `cites.mjs REPORT.md`.
+
+## Iteration 49 (07:18-07:20)
+
+- 07:19 Re-read siblings (hero 333 lines, combat 379). One new FRICTION, combat it35 line 376: "the burn fill has no tool" (`street_hit_fill.py` measures hit grids only; a flame mask needs the flame layer kept separate). Not served: combat routed it as `REQUEST assets:` (flame-only layers per burn cell), its offline measure script already exists in their evidence, and the exact measure needs that asset first. Candidate for a later tools night: a `tools/film`-side fill probe that takes an optional mask PNG beside each cell. No `REQUEST tools:` line new since 07:09. Tree clean, nothing of mine running; no code in the last 11 min before the freeze.
+
+NEXT (07:20): the 07:15 NEXT stands (items 1-4 of the 07:07 NEXT). Report session: re-run the ledger with `--state`, drop "(DRAFT ...)" from REPORT's title, add combat it35's burn-fill FRICTION to REPORT as "seen, not served (waits on an asset)", re-run `cites.mjs REPORT.md`.
