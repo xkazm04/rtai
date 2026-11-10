@@ -42,3 +42,26 @@ from the 07:02 cells, decide, record DECISION. (2) check `gtai-assets/replies/n1
 cells (`street_reactions_it321.md`), `dropped_weapons_it325.md`. (4) item 3 baton strike re-cut, etc.
 (5) DEFECTS.md #3 (dark streak across the victim t345-348) and #4. (6) run the full gates
 (`node tools/gate/run.mjs --rev=HEAD --reels`) once there is a batch. Keep REQUEST tools (compare --victim) open.
+
+## Session 2 (iteration 2, 22:13-)
+
+- 22:13 read JOURNAL, git log. (Session 1's clock stamps ran ahead of the wall clock; commits say 22:02-22:12.)
+  Reply file `gtai-assets/replies/n15-combat.md` still empty: no c-2 redraw yet.
+- MILESTONE 22:22 `261669f02` item 2: FLAIL_FRAMES ON. Filmed flamethrower lone kill, cop/head_cap and cop/head_swat,
+  64 px/m t380-420 (fire 341, kill 542; victim is fighter id 1, not the probe's first "hostile"): arms alternate on the
+  odd half shakes (394-398, 414-418), no size seam vs frame 1, also on SWAT (older frame-1 pack). Frame 1 kept as
+  packed. Clip 32 px/m in masters. DECISION combat/burn-flail-2.
+- MILESTONE 22:40 `b8da0a47f` items 2+3: the navy cop pistol (it325 cell 1, `dropped_gun.py --cop`, part
+  `dropped_cop`) drawn by ShockArcsView; `--dropped-gun=pale` the before. Filmed electro_gun stun 64 + 32 px/m.
+  DECISION combat/dropped-cop-pistol. Owner Call (it was an open n14 call).
+- FRICTION: `GODOT_BIN` is not set in a fresh Bash; export it before a raw `--import`.
+- MILESTONE 22:28 `42c826289` + `108ec888c` item 3: p55 baton strike cells re-cut (act_k 1.0; wind-up sheet_k 0.2632).
+  compare HEAD~1 vs HEAD, chapter electro_baton --view=tilt t54-70: no more shrink into the swing. DECISION
+  rivet/baton-p55-strike-size. (Registry not consulted: a size-match fix, no design fork.)
+- MILESTONE 22:42 `a76c26f9a` + `6486e5e59` item 3: the baton's drawn left strike (it334) at p70/p55, one cell past the
+  left wind-up; `--rivet-left-strike=off` the before. First cut hid the held part and a stale RivetSwipe wedge lingered
+  t90-104: fixed by counting the strike as "left" in hides_held. DECISION rivet/baton-left-strike.
+- Films of a director extra chapter: `film.mjs chapter:electro_baton -- --chapter=electro_baton_left` (ArenaArgs: last
+  value wins; the log line `director chapter electro_baton_left` proves it). REQUEST tools: film.mjs/compare.mjs
+  should list ReelChapters.extras() (`<blade>_left`, `<blade>_cam`) as chapters.
+- DEFECTS.md: session-2 films added; top open = the game melee smear's flat white hexagon slab.
