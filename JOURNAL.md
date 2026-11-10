@@ -313,3 +313,19 @@ C:/Users/kazda/kiro/gtai-n15/scratch-tools-before` and `git branch -D n15t-contr
   `process.kill(pid, 0)` succeeds on a zombie. Fixed in the test (7f10f84b2): on Linux `/proc/<pid>/stat` state Z
   counts as dead; no wait (the watchdog grandchild self-exits at 4 s, a wait could fake a pass). After: WSL 8 of 8,
   Windows 17/17. Item 6 tally tonight: three timing-shaped causes fixed (node starts, Linux mtime tick, zombie).
+- 00:26 MILESTONE gate on 52dc72d4 (`node tools/gate/run.mjs --rev=HEAD --timeout=40`): `gate: PASS` - lint 16/16,
+  `unit-tests: 2530 passed, 0 failed, 2 skipped`, `scenario-tests: 55 passed`, parity bit for bit (planted caught at
+  629), selftest look 11/11 worst 0.00, `release-compile: 667 loaded, 0 failed`. Snapshot removed. Commits after it
+  (7abcded29 selftest, 4eae1a978 dev_verdict, 7f10f84b2 test, docs) are Node-tools/tests only, linted by the hook;
+  reels last ran green on ad2f0a5c1 (no project/ game code changed since, except test_quest_blade.gd and the 5 Codex tests).
+
+NEXT (session 3, replaces the 00:16 NEXT): (1) Read hero/combat JOURNALs for new REQUEST tools / FRICTION; combat's
+are all served as of 00:13 (tell them through this JOURNAL: ba6f38838+d60ff5894 extras/--feel, 26f18e5ef lint size,
+5e41c66bc quest_blade). (2) Weakest items: t-5 cost under the bench lock (gtai-n15/bench.lock, noclobber; only when
+nothing heavy runs; else it stays CONTENDED); a real morning gates run printing the new `morning: gates: <kind>` lines
+(fresh scratch integration, `--steps=merge,gates`, ~30 min, then remove worktree + branch). (3) Sweep the remaining
+Node tool tests on WSL for Linux-only failures: run the list from a real Linux clone (`git clone` into WSL ~/ so git
+works; /tmp is wiped) to clear the 3 git-link artifacts. (4) Before freeze: full gate + reel gate on the final commit;
+REPORT.md final (draft current to 00:28). (5) End of night: `git worktree remove --force
+C:/Users/kazda/kiro/gtai-n15/scratch-tools-before`, `git branch -D n15t-control-sim-hash`. The accent flicker rows
+stay (00:20).
