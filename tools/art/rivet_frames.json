@@ -200,7 +200,8 @@
    },
    "rivet_eq_gatling": {
     "counts": "5,3",
-    "sheet": "rivet_eq_gatling_70_v2.png"
+    "sheet": "rivet_eq_gatling_70_v2.png",
+    "fig_h": 165
    },
    "rivet_eq_gloria": {
     "act_k": 0.88,
