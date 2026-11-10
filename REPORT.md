@@ -51,14 +51,16 @@ parse error now stops at 1.5 s instead of the 150 s timeout (hero lost about 8 m
 
 ## Codex ledger (`factory ledger --state=C:/Users/kazda/kiro/gtai-n11t/logs/tools/state.json --ledger=C:/Users/kazda/kiro/gtai-masters/n11/tools/codex-ledger.jsonl`; RE-RUN at report time)
 
-At 05:07 (re-run with `--state`): 18 tasks, 4,991 s of Codex, 16 machine pass, 2 machine fail, 8 accepted,
-9 accepted after revision, 0 rejected, 78 lines changed by review, 0 refused by the meter. Dollars: $68.10
-measured over the 8 review sessions (per task $4.01, an ESTIMATE and an upper bound: a session also builds
-other things). The report session re-runs it once more for iterations 39 onward.
-Codex as tester (11 tasks, counted from the ledger's per-task lines at 05:07): 100 failing tests, 90 real
-defects fixed with the tests kept, 10 thrown away with their reason: 9 in `n11t-break-tools` (a table that
-assumed plain porcelain, obsolete once quick read `--porcelain -z`, which never quotes a path; JOURNAL 20:5x)
-and 1 in `n11t-break-staged` (it asked the staged export to ignore the commit's eol attributes, JOURNAL 02:24).
+At 05:19 (re-run with `--state`): 19 tasks, 5,089 s of Codex, 17 machine pass, 2 machine fail, 8 accepted,
+10 accepted after revision, 0 rejected, 88 lines changed by review, 0 refused by the meter. Dollars: $68.10
+measured over the 8 review sessions to iteration 26 (per task $4.01, an ESTIMATE and an upper bound: a session
+also builds other things); with iteration 39 counted the total prints null until its cost is in state.json
+(one unknown session makes it unknown, by design). The report session re-runs it.
+Codex as tester (12 tasks, counted from the ledger's per-task lines): 108 failing tests, 95 real defects fixed
+with the tests kept, 13 thrown away with their reason: 9 in `n11t-break-tools` (a table that assumed plain
+porcelain, obsolete once quick read `--porcelain -z`, which never quotes a path; JOURNAL 20:5x), 1 in
+`n11t-break-staged` (it asked the staged export to ignore the commit's eol attributes, JOURNAL 02:24), 3 in
+`n11t-break-check` (where a detached `at:` context line goes; such a line never decides the verdict, 05:19).
 The journal's running count ("82 real, 0 thrown away" at 01:52) had dropped the first task's 9; corrected 05:07.
 
 **Paired measurement of the Claude saving** (both sides harness-measured, same goal and laws, same 15
