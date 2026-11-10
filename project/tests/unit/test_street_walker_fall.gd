@@ -57,7 +57,8 @@ func test_only_the_dying_and_the_dead_draw_a_fall_grid() -> void:
 	var row: String = "ped/head_hood"
 	assert_eq(StreetWalkerFall.grid_of(rig, "p70", row), "", "alive: the walk")
 	rig.dead = true
-	var hood: String = "p70/" + str(StreetWalkerFall.table()["p70"][row])
+	# it20: the hood has drawn in-betweens, so his dead grid is the 5-row one
+	var hood: String = StreetFallBetween.swap("p70/" + str(StreetWalkerFall.table()["p70"][row]))
 	assert_eq(StreetWalkerFall.grid_of(rig, "p70", row), hood, "dead: the grid")
 	assert_eq(StreetWalkerFall.grid_of(rig, "p55", row), hood, "55: the 70 grid")
 	assert_eq(StreetWalkerFall.grid_of(rig, "p70", "ped/head_none"), "", "a row with no grid")
