@@ -1,4 +1,4 @@
-# REPORT n15-tools (draft, session 2, 00:28; later sessions extend it)
+# REPORT n15-tools (draft, session 2, 00:36; later sessions extend it)
 
 Branch `n15-tools` from main `5c5c03611`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n15\tools\` (`frames.json`),
 `evidence/` in this tree, JOURNAL.md for every command and its output.
@@ -42,6 +42,8 @@ crowd: look goldens re-blessed with a decisions line). t-4 and t-5 move nothing 
   before `Date.now()`; a selftest tool test failed 3/3 on WSL, 0 after.
 - `tools/lib/godot_stop.break.test.mjs` (7f10f84b2, item 6): on Linux a zombie grandchild counts as dead (was a 1-in-4
   Linux flake). Item 6 found three timing-shaped causes in all: cold node starts, the Linux mtime tick, the zombie.
+- `tools/dev/run.mjs` + `entries.mjs` (5cda754c0): `const NEEDS_WINDOW: bool = true` in an entry or its parent -> refused
+  headless (`run: res://dev/selftest/look_golden.tscn renders frames ... add --windowed`), exit 2, nothing launched.
 - `tests/parity/city_parity.gd`: `final_sha_a/b` in the parity result.
 
 Gates on 52dc72d4 (`node tools/gate/run.mjs`): PASS - lint 16/16, unit 2530/0, scenarios 55, parity exact,
@@ -67,7 +69,8 @@ did not fire (no baseline conflict tonight): proven on its throwaway-repo test o
 ## Served for the builders
 
 combat: `--victim` through compare (b8fccb958), extras as chapters + `--feel` (ba6f38838, d60ff5894), lint function
-size stops at the body (26f18e5ef), `test_quest_blade` no longer depends on test order (5e41c66bc). A real victim
+size stops at the body (26f18e5ef), `test_quest_blade` no longer depends on test order (5e41c66bc), `tools/dev/run.mjs`
+refuses a rendering entry headless (`const NEEDS_WINDOW`, 5cda754c0). A real victim
 film: `film-victim-head-swat-64ppm-t337-367.png`. hero: no REQUEST.
 
 ## Calls for the owner
