@@ -28,6 +28,8 @@ var click_flips: bool = false
 var assist: AimAssist = null
 var aim_origin: Callable = func() -> Vector2: return Vector2.ZERO
 var aim_targets: Callable = func() -> Array[RangeTarget]: return []
+## n11 hero: the cursor in viewport px; a dev sweep scripts it through the same projection.
+var cursor_px: Callable = func() -> Vector2: return viewport.get_mouse_position()
 ## rivet-arsenal: a wheel notch presses and releases inside one frame, so polling misses it; the
 ## notch's action bits are latched here and ride the next sampled tick as one press.
 var _latched: int = 0
@@ -84,7 +86,9 @@ func _aim() -> Vector2:
 	var from: Vector2 = origin_px.call()
 	if not mouse_aims or viewport == null or from == Vector2.INF:
 		return Vector2.ZERO
-	var d: Vector2 = ViewMode.shared().ground_of(viewport.get_mouse_position() - from)
+	var at: Vector2 = cursor_px.call()
+	var ppm: float = px_per_m.call()
+	var d: Vector2 = ViewMode.shared().ground_of(at - from - aim_lift_px(ppm))
 	return d.normalized() if d.length() > 4.0 else Vector2.ZERO
 
 
@@ -111,7 +115,15 @@ func _reach_m() -> float:
 	var ppm: float = px_per_m.call()
 	if not mouse_aims or viewport == null or from == Vector2.INF or ppm <= 0.0:
 		return 0.0
-	return ViewMode.shared().ground_of(viewport.get_mouse_position() - from).length() / ppm
+	var at: Vector2 = cursor_px.call()
+	return ViewMode.shared().ground_of(at - from).length() / ppm
+
+
+## n11: the aim is measured from his gun height, not his feet: under a tilt the gun and the rounds
+## ride GUN_H_M above the ground, so the cursor on a body's chest lies straight along the line.
+static func aim_lift_px(ppm: float) -> Vector2:
+	var view: ViewMode = ViewMode.shared()
+	return Vector2(0.0, -ShotLift.GUN_H_M * ppm * view.lift_k())
 
 
 ## Lane gunplay: a pad throws by how far the right stick is pushed: just past the deadzone lands

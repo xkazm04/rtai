@@ -117,7 +117,8 @@ static func foot_px(path: String) -> float:
 	var art: String = path.get_base_dir().get_file()
 	if path.ends_with(DIAG):
 		return DIAG_FOOT_PX.get(art, 0.0)
-	return FOOT_PX.get(art + "/" + path.get_file(), RivetFrames.PAD_PX)
+	var res: float = RivetRes.of(path)
+	return FOOT_PX.get(art + "/" + path.get_file(), RivetFrames.PAD_PX / res) * res
 
 
 ## A one-handed hold turned left: its drawn left strip, else the base (the fallback, logged once).
@@ -159,6 +160,7 @@ static func draws_fire(rig: CutRig, weapon: StringName, o: int, firing: bool) ->
 	var slack: float = FIRE_HOLD if drew else 0.0
 	var art: String = ViewMode.shared().art
 	var off: bool = firing and (was_off or not fires_drawn(weapon, o, aim, art, slack))
+	off = off or (firing and rig.clips.strike_t >= 0.0 and not RivetSwipe.blade_drawn(o))
 	rig.set_meta(CONE_OFF, off)
 	rig.set_meta(DREW, firing and not off)
 	RivetFireCam.step(rig, weapon, o, aim, firing and not off, drew)

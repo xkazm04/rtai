@@ -48,7 +48,7 @@ static func step(rig: CutRig) -> void:
 	if path != "" and LEFT[oct_of(rig)] == 1 and RivetStrips.ONE_HAND.has(weapon):
 		path = RivetStrips.left_of(art, weapon)
 	path = walk if walk != "" else RivetReload.held_or(rig, art, weapon, path)
-	path = RivetKnock.path_or(rig, art, path)  # n9: a car's knock wins over the DOWN sprawl
+	path = RivetKnock.path_or(rig, art, RivetStrike.path_or(rig, art, weapon, path))
 	if not ENABLED or path.is_empty():
 		release(rig)
 		return
@@ -107,7 +107,7 @@ static func cell_of(rig: CutRig, cells: int, walk_ph: float = -1.0) -> Vector2i:
 		if rig.clips.rolling():
 			return Vector2i(Cell.ROLL, 0)
 		if rig.clips.active() == RigClips.Clip.PUNCH or rig.clips.strike_t >= 0.0:
-			return Vector2i(Cell.CLAW, left)
+			return RivetSwipe.claw_cell(o, left)
 		if rig.clips.hit_t > 0.0:
 			return Vector2i(Cell.HIT, 0)
 		return Vector2i(BASE_OCT[o], 0)
@@ -120,15 +120,14 @@ static func cell_of(rig: CutRig, cells: int, walk_ph: float = -1.0) -> Vector2i:
 
 ## The screen octant of the look (0 = screen right, +1 = 45 deg toward the camera).
 static func oct_of(rig: CutRig) -> int:
-	return posmod(roundi(rig.head.global_rotation / (PI * 0.25)), 8)
+	return RivetStride.oct_of(rig)
 
 
 static func place(rig: CutRig, card: Sprite2D) -> void:
 	var art: String = ViewMode.shared().art
-	var h: float = HEIGHT_BY_ART.get(art, HEIGHT_M) * height_k
+	var h: float = HEIGHT_BY_ART.get(art, HEIGHT_M) * height_k * PlayerScale.k()
 	var s: float = h * CharacterRigs.PX_PER_M / FIG_PX
-	if RivetKnock.shows(card):
-		RivetKnock.place(rig, card, s, h * CharacterRigs.PX_PER_M)
+	if RivetStrike.placed(rig, card, s, h * CharacterRigs.PX_PER_M):
 		return
 	var drawn_walk: bool = RivetWalk.is_grid(card)
 	var ph: float = RivetWalk.phase_of(rig, art, s)
@@ -139,12 +138,12 @@ static func place(rig: CutRig, card: Sprite2D) -> void:
 	walk = walk if c.x != Cell.ROLL and c.x != Cell.DEATH and not drawn_walk else 0.0
 	var stride: float = sin(TAU * rig.phase)
 	card.global_rotation = stride * SWAY * walk + _roll_spin(rig, c.x)
-	card.global_scale = Vector2(s, s)
+	card.global_scale = Vector2(s, s * RivetBob.stretch(card)) / RivetWalk.res_of(card)
 	var k: float = ROLL_SHADOW if c.x == Cell.ROLL else RigTilt.hip_h(rig) / rig.plan.hip_z
 	rig.set_meta(
 		RigCastShadows.CAST_HIP, h * CharacterRigs.PX_PER_M * k / RigCastShadows.BODY_IN_HIPS
 	)
-	card.global_position = rig.global_position - Vector2(0.0, absf(stride) * BOB_PX * walk)
+	card.global_position = rig.global_position - RivetBob.up(card, s, absf(stride) * BOB_PX * walk)
 
 
 ## The roll ball turns once over the roll, toward the travel side.
@@ -188,7 +187,9 @@ static func _build(rig: CutRig, card: Sprite2D, path: String) -> void:
 static func _set_strip(card: Sprite2D, path: String) -> void:
 	if str(card.get_meta(ON, "")) == path:
 		return
-	card.texture = StreetStrips.get_tex(path)  # n12: RivetStripWarm prefetched it at the load
+	card.texture = StreetStrips.get_tex(path)  # n12 RivetStripWarm; hero warns if empty
+	if card.texture == null or card.texture.get_width() == 0:
+		Log.warn("view", "strip %s loaded empty" % path)
 	card.frame = 0  # the walk grid's 32 frames vs a strip's 3-14: never out of range mid-swap
 	var cols: int = RivetWalk.cols_of(path)
 	card.hframes = cols if cols > 0 else RivetStrips.cells_of(path, path.ends_with("_left.png"))

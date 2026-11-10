@@ -33,7 +33,8 @@
         "2026-11-09: n10 merge: the lanes combined dev tooling growth (dev_loc 19971 -> 20284)",
         "2026-11-09: n12 A2: NodeSpans names a spike's node (worst_frames), a dev instrument (dev_loc 20284 -> 20319)",
         "2026-11-09: n12 B1: SyncProbe, the victim-sync instrument (dev arena --sync), and its one attach line (dev_loc 20319 -> 20487)",
-        "2026-11-10: n11 merge: n11-tools dev tooling (film probe, film triggers) on top of n12 (dev_loc 20487 -> 20809)"
+        "2026-11-10: n11 merge: n11-tools dev tooling (film probe, film triggers) on top of n12 (dev_loc 20487 -> 20809)",
+        "2026-11-10: n11 merge: n11-hero dev films and ghost tooling on top of n12+tools (dev_loc 20809 -> 21227)"
       ],
       "files": {
         "project/dev/arena": 710,
@@ -54,7 +55,7 @@
         "project/dev/quest1_city_fit.gd": 18,
         "project/dev/quest1_city_fit_run.gd": 74,
         "project/dev/rivet_arsenal": 255,
-        "project/dev/rivet_motion": 1546,
+        "project/dev/rivet_motion": 1964,
         "project/dev/save_crash_loop.gd": 14,
         "project/dev/save_crash_writer.gd": 18,
         "project/dev/save_cross.gd": 18,
@@ -65,7 +66,7 @@
         "project/dev/view": 195,
         "project/dev/weapon_art": 506
       },
-      "total": 20809
+      "total": 21227
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -278,7 +279,8 @@
         "2026-11-10: n12 E1: ArenaRigs attaches the combat lights (two lines) (files_past_soft_cap 66 -> 66)",
         "2026-11-10: n12 E3 crowd ripple: CrowdReact's delayed startle + its one host line in ArenaRigs (files_past_soft_cap 66 -> 66)",
         "2026-11-10: n12 E3 crowd ripple: CrowdReact's delayed cower (+_cower_due) and three tests pinned to the same-tick startle (files_past_soft_cap 66 -> 66)",
-        "2026-11-10: n11 merge: n11-tools dev tooling (film probe, film triggers) on top of n12 (files_past_soft_cap 66 -> 66)"
+        "2026-11-10: n11 merge: n11-tools dev tooling (film probe, film triggers) on top of n12 (files_past_soft_cap 66 -> 66)",
+        "2026-11-10: n11 merge: n11-hero dev films and ghost tooling on top of n12+tools (files_past_soft_cap 66 -> 66)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 262,
@@ -339,7 +341,7 @@
         "project/features/quest/quest_objective.gd": 206,
         "project/features/quest/quest_runner.gd": 228,
         "project/features/souls/dent_stage.gd": 257,
-        "project/features/souls/ghost_form_view.gd": 206,
+        "project/features/souls/ghost_form_view.gd": 208,
         "project/features/souls/ghost_forms.gd": 219,
         "project/features/souls/kerf_stage.gd": 208,
         "project/features/souls/ohm_rig.gd": 201,

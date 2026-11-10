@@ -27,6 +27,9 @@ var recovery_ticks: int = 10
 var recovery_move_scale: float = 0.35
 var cooldown_ticks: int = 8
 var exit_speed_k: float = 0.5
+## n11 (the owner's "direction of player should follow cursor"; rivet_motion.json face_aim): the
+## look is the aim wherever a device aims, a sprint included; false = the turned, walking facing.
+var face_aim: bool = true
 var errors: Array[String] = []
 var _phase_tick: int = 0
 var _cooldown: int = 0
@@ -55,6 +58,7 @@ static func from_table(t: DataTable) -> PlayerMotion:
 	m.recovery_move_scale = t.num(r, "recovery_move_scale")
 	m.cooldown_ticks = t.integer(r, "cooldown_ticks")
 	m.exit_speed_k = t.num(r, "exit_speed_k")
+	m.face_aim = t.raw.get("face_aim", true) == true
 	m.errors = t.errors()
 	if m.iframe_to >= m.roll_ticks:
 		m.errors.append("rivet_motion.json: roll.iframe_to must be inside roll_ticks")
@@ -90,6 +94,14 @@ func roll_progress() -> float:
 
 
 func facing() -> Vector2:
+	return mover.facing
+
+
+## The look: the aim while a device aims (not during a roll, which faces its roll), else the turned
+## facing. Turning and the sprint's own heading stay in the mover (speed, strafe).
+func heading(aim: Vector2) -> Vector2:
+	if face_aim and aim != Vector2.ZERO and phase != Phase.ROLL:
+		return aim.normalized()
 	return mover.facing
 
 

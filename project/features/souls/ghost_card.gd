@@ -63,6 +63,12 @@ func is_drawn() -> bool:
 	return _spr != null
 
 
+## n11: shows or hides a built card (a drawn walk grid is standing in for it, GhostDrawn).
+func set_shown(on: bool) -> void:
+	if _spr != null:
+		_spr.visible = on
+
+
 static func path_of(art: String, p_name: String) -> String:
 	return ART_DIR.path_join(art).path_join(p_name + "_card.png")
 

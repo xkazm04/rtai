@@ -33,6 +33,7 @@ func test_no_reload_or_no_strip_keeps_the_path() -> void:
 func test_the_three_quarter_toward_right_plays_the_sequence_by_phase() -> void:
 	var rig: CutRig = _rig()
 	rig.head.rotation = PI * 0.25  # octant 1
+	rig.face_to = PI * 0.25
 	var want: Array[int] = [5, 5, 6, 7, 7]
 	var ks: Array[float] = [0.0, 0.9, 1.2, 2.5, 9.0]
 	for i: int in ks.size():

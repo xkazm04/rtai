@@ -33,6 +33,7 @@ func _firing(deg: float, weapon: StringName) -> CutRig:
 	rig.head.add_child(card)
 	rig.head_card = card
 	rig.head.rotation = deg_to_rad(deg)
+	rig.face_to = deg_to_rad(deg)
 	rig.gun_out = true
 	rig.aiming = true
 	rig.aim_at = rig.global_position + Vector2.from_angle(deg_to_rad(deg)) * 128.0

@@ -1,0 +1,4 @@
+top: OK; code 0; log C:\Users\kazda\kiro\gtai-n11\tmp\hero\reel_it18\1-top.log
+tilt70: OK; code 0; log C:\Users\kazda\kiro\gtai-n11\tmp\hero\reel_it18\2-tilt70.log
+combo: OK; code 0; log C:\Users\kazda\kiro\gtai-n11\tmp\hero\reel_it18\3-combo.log
+reel 0

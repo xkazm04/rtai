@@ -1,0 +1,137 @@
+[
+  {
+    "file": "ghost_melee_8dir_64ppm.png",
+    "title": "Items 1-2 on the ghosts: each ghost's attack, eight cursor octants",
+    "source": "game-city",
+    "branch": "n11-hero",
+    "ppm": 64,
+    "before": false,
+    "note": "Arena, combo, x1.5, cursor_sweep --sweep-form, the grab 7 ticks after each melee press. Rows Dent (melee without a car: no attack, facing only), Kerf (cut), Ohm (cast), Tonnage (wind-up). Drawn octant vs cursor mean 2.7-5.4 deg."
+  },
+  {
+    "file": "rivet_x15_grids_before_after_64ppm.png",
+    "title": "Rivet's walk and run grids packed at x1.5: no upscale blur",
+    "source": "dev-scene",
+    "branch": "n11-hero",
+    "ppm": 64,
+    "before": "top row (110 px grids upscaled x1.45)",
+    "note": "stride_film --loadout=pistol / katana, same ticks; same size and foot position, crisper ink"
+  },
+  {
+    "file": "rivet_x15_pistol_strip_before_after_64ppm.png",
+    "title": "Rivet standing and firing the pistol: 110 px strip upscaled -> cut at x1.5",
+    "source": "dev-scene",
+    "branch": "n11-hero",
+    "ppm": 64,
+    "before": "rows 1 and 3 (442ef0e0^ = 4798f27d); after: rows 2 and 4 (8ae5cc25)",
+    "note": "stride_film --loadout=pistol --film-fire, same ticks, walk right then toward. Same size, feet and muzzle flash; the hatch rivets, dome cracks and gun panel lines resolve (zoom: rivet_x15_pistol_strip_zoom_x2_64ppm.png). Other weapons still upscale."
+  },
+  {
+    "file": "tonnage_walk16_all_rows_before_after_64ppm.png",
+    "title": "Tonnage walks on 16 drawn frames on all five facings",
+    "source": "dev-scene",
+    "branch": "n11-hero",
+    "ppm": 64,
+    "before": true,
+    "note": "stride_film --film-form=tonnage (+ --film-diag), --fixed-fps 60, every 4th tick, same ticks. Rows toward, 3/4 toward, 3/4 away; before = 78268732 (only the profile row had halfway frames, the rest held each v2 frame twice), after = halfway frames on every row. Samples with no pose change (pixel diff < 20 %) fall 10 -> 5, 10 -> 5, 9 -> 4 per 16. Clip: tonnage_walk16_toward_before_after_clip_64ppm.gif (pairs before|after, toward and 3/4 toward)."
+  },
+  {
+    "file": "dent_run8_r4_s7_before_after_64ppm.png",
+    "title": "Dent runs up-right: arms alternate with the legs, no wave on slot 7",
+    "source": "dev-scene",
+    "branch": "n11-hero",
+    "ppm": 64,
+    "before": true,
+    "note": "stride_film --film-form=dent --film-diag --fixed-fps 60, every 4th tick, samples 5-9 of the up-right leg, same ticks. Before = 9f11a80b (arm-swapped slots 5-8, slot 7's far hand above the helmet); after = ccfd86db, slot 7 redrawn (A) with the hand at shoulder height. Only that grab differs (15 % of the crop). The arm swap itself: dent_run8_r4_arms_before_after_64ppm.png."
+  },
+  {
+    "file": "ghost_hit_recoil_before_after_64ppm.png",
+    "title": "Ghosts struck: the drawn HIT cell now leans back off the feet",
+    "source": "dev-scene",
+    "branch": "n11-hero",
+    "ppm": 64,
+    "before": "same film on the code of c6d07c8a (HEAD before 37c22b27), rows before/after per ghost",
+    "note": "stride_film --film-form=<g> --film-hurt --film-crop=420 --fixed-fps 60, walk-right leg, same ticks; rows Tonnage, Dent, Ohm (before, after). GhostRecoil 37c22b27: 12 deg at the hit tick, eased out over 10 ticks; frames without a hit are pixel-identical. Clip ghost_hit_recoil_clip_64ppm.gif (Dent before|after, Tonnage before|after)."
+  },
+  {
+    "file": "tonnage_hit_v3_before_after_64ppm.png",
+    "title": "Tonnage recoils when hit (toward, profile, 3/4)",
+    "source": "dev-scene",
+    "branch": "n11-hero",
+    "ppm": 64,
+    "before": true,
+    "note": "stride_film --film-form=tonnage --film-hurt --film-crop=420 --fixed-fps 60, same ticks; top = before (37c22b27 sheet: the toward hit cell is a near-copy of his walk), bottom = after 23004b45 (assets lane recoil v3, A): tipped back, roller lifted, piston up, cables flung, white impact star; plus GhostRecoil's 12 deg lean on the profile. Only the hit grabs differ (18-24 %). Clip: tonnage_hit_v3_toward_after_clip_64ppm.gif."
+  },
+  {
+    "file": "melee_8dir_drawn_strike_64ppm.png",
+    "title": "Rivet's bare claw: drawn strike in all eight cursor octants",
+    "source": "game-city",
+    "branch": "n11-hero",
+    "ppm": 64,
+    "before": "melee_8dir_before_after_claw_blade_64ppm.png top row",
+    "note": "real arena, strike tick per octant; RivetStrike grid registered on his collar"
+  },
+  {
+    "file": "kerf_drawn_run8_64ppm.png",
+    "title": "Item 5: Kerf on his drawn run grid at 12 m/s",
+    "source": "game-city",
+    "branch": "n11-hero",
+    "ppm": 64,
+    "before": false,
+    "note": "Top row the walk leg (his form runs at 12 m/s anyway), every 4th tick; before = kerf_drawn_walk8_64ppm.png (walk grid churning at the 3 cycles/s cap)."
+  },
+  {
+    "file": "tonnage_p55_v3_before_after_64ppm.png",
+    "title": "Tonnage at the 55 boss pitch: floating card -> drawn squat walk and press",
+    "source": "dev-scene",
+    "branch": "n11-hero",
+    "ppm": 64,
+    "before": "rows 1 and 3 (43f0ea59, the v3 sheets set aside); after: rows 2 and 4 (450acaa3)",
+    "note": "--view=tilt --film-form=tonnage --film-attack --film-crop=520, walk right then toward, every 2nd sampled frame, downscaled x0.5. Same silhouette as at 70; press cells at walk size. Clip: tonnage_p55_v3_after_clip_64ppm.gif. (Ohm at 55: ohm_drawn_p55_before_after_64ppm.png, on disk, cited by LEVEL.)"
+  },
+  {
+    "file": "ghost_aim_sweep_walk_64ppm.png",
+    "title": "Item 1 on the ghosts: walking a square while the cursor circles",
+    "source": "game-city",
+    "branch": "n11-hero",
+    "ppm": 64,
+    "before": false,
+    "note": "Rows Dent, Kerf, Ohm, Tonnage; 12 grabs over one cursor revolution. Mean drawn-octant error 11.4-11.5 deg (floor 11.25)."
+  },
+  {
+    "file": "melee_8dir_before_after_claw_blade_64ppm.png",
+    "title": "Item 2: the strike in eight directions: before (one cell), bare claw, katana",
+    "source": "game-city",
+    "branch": "n11-hero",
+    "ppm": 64,
+    "before": true,
+    "note": "Arena, combo, 64 px/m, the strike tick for 8 cursor octants. Top: --rivet-swipe=off (the old single cell). Middle: bare claw. Bottom: katana. Arcs follow the cursor; side, diagonal and away octants are the facing cell + a game arc until the drawn strike cells land."
+  },
+  {
+    "file": "bob_film_right_before_after_64ppm.png",
+    "title": "Item 3: run and sprint, before and after (head line steady, feet planted)",
+    "source": "game-city",
+    "branch": "n11-hero",
+    "ppm": 64,
+    "before": true,
+    "note": "Stride film with the pistol: rows 1/2 walk-speed run before/after, 3/4 sprint before/after. Same ticks, feet on the pink line. Sprint head line 10 -> 2 px measured on the frames."
+  },
+  {
+    "file": "size_150_before_after_walk_64ppm.png",
+    "title": "Item 4: Rivet at x1.5, walking",
+    "source": "game-city",
+    "branch": "n11-hero",
+    "ppm": 64,
+    "before": true,
+    "note": "Top: the old size. Bottom: x1.5, player_scale.json k. Sim hitbox unchanged."
+  },
+  {
+    "file": "aim_sweep_before_after_sprint_64ppm.png",
+    "title": "Item 1: the cursor sweep, sprint leg, before (top) and after (bottom)",
+    "source": "game-city",
+    "branch": "n11-hero",
+    "ppm": 64,
+    "before": true,
+    "note": "Arena, combo, pistol, cursor scripted through LiveInput. Drawn octant vs cursor, mean/worst deg: sprint 55.6/96.4 before, 11.5/26.2 after. The columns are sprint-leg samples 40 ticks apart; the two runs are not tick-identical in stride phase."
+  }
+]

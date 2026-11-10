@@ -103,3 +103,14 @@ static func soft_glow(teal: Color, a: float, across_px: float) -> Sprite2D:
 	s.texture = g
 	s.scale = Vector2.ONE * across_px / 64.0
 	return s
+
+
+## A limb sprite (its art along +x) laid from `a` to `b` (px), `thick_px` across.
+static func place_limb(s: Sprite2D, a: Vector2, b: Vector2, thick_px: float) -> void:
+	var d: Vector2 = b - a
+	s.position = a
+	s.rotation = d.angle()
+	var len_px: float = maxf(d.length(), 1.6)
+	s.scale = Vector2(
+		len_px / float(s.texture.get_width()), thick_px / float(s.texture.get_height())
+	)

@@ -23,17 +23,17 @@ func test_a_strike_bucks_and_a_blast_hops_then_both_settle() -> void:
 	var b: DentBody = _body()
 	b.strikes = 1
 	b.step(true, Vector2.ZERO, 0.0, 1, 1)
-	assert_gt(b.scale.x, 1.0, "the strike pops him")
+	assert_gt(b.scale.x / PlayerScale.k(), 1.0, "the strike pops him")
 	for i: int in 20:
 		b.step(true, Vector2.ZERO, 0.0, 1, 2 + i)
-	assert_almost_eq(b.scale.x, 1.0, 0.001, "the buck settles")
+	assert_almost_eq(b.scale.x, PlayerScale.k(), 0.001, "the buck settles")
 	b.blasts = 1
 	for i: int in 15:
 		b.step(true, Vector2.ZERO, 0.0, 1, 30 + i)
-	assert_gt(b.scale.x, 1.25, "mid-hop he is up near the camera")
+	assert_gt(b.scale.x / PlayerScale.k(), 1.25, "mid-hop he is up near the camera")
 	for i: int in 20:
 		b.step(true, Vector2.ZERO, 0.0, 1, 50 + i)
-	assert_almost_eq(b.scale.x, 1.0, 0.001, "and lands")
+	assert_almost_eq(b.scale.x, PlayerScale.k(), 0.001, "and lands")
 
 
 func test_every_halo_carries_an_ink_keyline_under_every_halo() -> void:

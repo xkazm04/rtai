@@ -164,7 +164,8 @@
    "rivet_eq_chainsaw": {
     "act_k": 0.82,
     "counts": "5,3",
-    "sheet": "rivet_eq_chainsaw_70_v4.png"
+    "sheet": "rivet_eq_chainsaw_70_v4.png",
+    "fig_h": 165
    },
    "rivet_eq_electro_baton": {
     "cc": "0",
@@ -221,7 +222,8 @@
    "rivet_eq_katana": {
     "act_k": 1.0,
     "counts": "5,3",
-    "sheet": "rivet_eq_katana_70.png"
+    "sheet": "rivet_eq_katana_70.png",
+    "fig_h": 165
    },
    "rivet_eq_machine_pistol": {
     "counts": "5,3",
@@ -248,17 +250,20 @@
    },
    "rivet_eq_pistol": {
     "counts": "5,3",
-    "sheet": "rivet_eq_pistol_70.png"
+    "sheet": "rivet_eq_pistol_70.png",
+    "fig_h": 165
    },
    "rivet_eq_pistol_left": {
     "cc": "0",
     "counts": "3",
-    "sheet": "rivet_eq_pistol_70_left.png"
+    "sheet": "rivet_eq_pistol_70_left.png",
+    "fig_h": 165
    },
    "rivet_eq_plasma_rifle": {
     "act_k": 0.83,
     "counts": "5,3",
-    "sheet": "rivet_eq_plasma_rifle_70.png"
+    "sheet": "rivet_eq_plasma_rifle_70.png",
+    "fig_h": 165
    },
    "rivet_eq_plasma_sword": {
     "act_k": 0.82,

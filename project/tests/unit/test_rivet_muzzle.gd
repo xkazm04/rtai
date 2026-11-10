@@ -17,7 +17,7 @@ func test_a_fire_cell_has_its_drawn_flash_root_inside_the_cell() -> void:
 func test_a_left_strip_points_left_and_a_facing_has_no_point() -> void:
 	var left: String = P70 + "rivet_eq_pistol_left.png"
 	var tex: Texture2D = load(left) as Texture2D
-	var w: float = tex.get_width() / float(RivetFrames.LEFT_CELLS)
+	var w: float = tex.get_width() / float(RivetFrames.LEFT_CELLS) / RivetRes.of(left)
 	assert_lt(RivetMuzzle.point(left, 1).x, w * 0.25)
 	assert_eq(RivetMuzzle.point(P70 + "rivet_eq_pistol.png", 0), Vector2(-1.0, -1.0))
 	assert_eq(RivetMuzzle.point(P70 + RivetStrips.BASE, 0), Vector2(-1.0, -1.0))
@@ -28,11 +28,13 @@ func test_a_shot_off_the_fire_cell_leaves_the_drawn_gun() -> void:
 	for art: String in ["p70", "p55"]:
 		var path: String = RivetStrips.DIR + art + "/rivet_eq_pistol.png"
 		var tex: Texture2D = load(path) as Texture2D
-		var w: float = tex.get_width() / float(RivetFrames.EQ_CELLS)
+		var res: float = RivetRes.of(path)  # the table is in 110 space (it14 X15)
+		var w: float = tex.get_width() / float(RivetFrames.EQ_CELLS) / res
+		var h: float = tex.get_height() / res
 		for cell: int in [3, 4]:  # octant 7 and 5 (mirrored), octant 6
 			var p: Vector2 = RivetMuzzle.point(path, cell)
 			assert_gt(p.x, w * 0.6, "%s cell %d: the barrel right of the body" % [art, cell])
-			assert_between(p.y, tex.get_height() * 0.3, tex.get_height() * 0.8, "the arm's height")
+			assert_between(p.y, h * 0.3, h * 0.8, "the arm's height")
 
 
 func test_a_gun_the_drawn_back_hides_has_no_point() -> void:

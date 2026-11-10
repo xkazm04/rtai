@@ -14,8 +14,7 @@ const BEAT_BIG: StringName = &"crash"
 const BEAT_LIGHT: StringName = &"hit"
 ## The HUD card's canvas layer (above the print and the dev HUD's world layers).
 const HUD_LAYER: int = 5
-## Above every rig part (rigs stack their parts' own z offsets; the held gun uses the same 60), so
-## no human's head or arm draws over a ghost body; still inside the actors band (vehicles at +100).
+## Above every rig part (and the held gun's own 60); still inside the actors band (vehicles +100).
 const Z_OVER_RIGS: int = 60
 
 var pilot: StagePilot = null
@@ -83,6 +82,7 @@ static func make(
 func _ready() -> void:
 	process_priority = 20  # after CharacterRigs poses and RivetHeldView feeds the rig
 	_tonnage.visible = false
+	PlayerScale.fit([_tonnage, _kerf, _ohm])  # n11: Dent scales in its own _place (its buck)
 	add_child(_tonnage)
 	for light: Node2D in [_kerf, _ohm]:
 		light.visible = false
@@ -165,6 +165,8 @@ func _process(_delta: float) -> void:
 	var is_ohm: bool = _step_light(_ohm, OhmStage.GHOST, at, r.facing.angle(), steps)
 	appear.step(at, r.facing.angle(), steps, arena.tick)
 	_hide_rivet(is_big or is_dent or is_kerf or is_ohm, r.id)
+	var drawn: Array[GhostDrawn] = [_tonnage.drawn, _dent.drawn, _kerf.drawn, _ohm.drawn]
+	GhostActs.feed(drawn, pilot, r.hurt_tick, arena.tick)
 
 
 ## Kerf's hover rig or Ohm's cane rig at Rivet's pose (snaps with Kerf's blink: no tween),

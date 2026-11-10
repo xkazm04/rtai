@@ -126,7 +126,7 @@ func _move(stage: CollectCallStage, c: PlayerCommand) -> void:
 		c.aim = motion.facing()  # a swing holds the heading it started on
 	stage.intent.move_by = motion.step(c, walk, actions)
 	c.aim = aim
-	rivet.facing = motion.facing()
+	rivet.facing = motion.heading(c.aim)
 	rivet.exposed = not motion.invulnerable()
 
 

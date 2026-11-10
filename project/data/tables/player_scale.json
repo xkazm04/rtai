@@ -1,0 +1,5 @@
+{
+  "doc": "The drawn size of Rivet and the ghost forms, times today's size (the owner's n11 note: 150 %). Render only: hitboxes and collision stay as they are; 1 is the before.",
+  "k": 1.5,
+  "schema": "gtai.player-scale/1"
+}

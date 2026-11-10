@@ -1,0 +1,50 @@
+{
+  "$id": "gtai.rivet-bob/1",
+  "additionalProperties": false,
+  "properties": {
+    "damp_run": {
+      "maximum": 1,
+      "minimum": 0,
+      "type": "number"
+    },
+    "damp_walk": {
+      "maximum": 1,
+      "minimum": 0,
+      "type": "number"
+    },
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "grids": {
+      "additionalProperties": {
+        "items": {
+          "items": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "type": "array"
+        },
+        "type": "array"
+      },
+      "type": "object"
+    },
+    "schema": {
+      "const": "gtai.rivet-bob/1",
+      "type": "string"
+    },
+    "stretch_cell": {
+      "minimum": 0,
+      "type": "number"
+    }
+  },
+  "required": [
+    "damp_run",
+    "damp_walk",
+    "doc",
+    "grids",
+    "schema",
+    "stretch_cell"
+  ],
+  "type": "object"
+}

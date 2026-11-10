@@ -5,7 +5,7 @@ extends RefCounted
 ## (the arena, the city block and quest 1 under --rigs; quest 1's sprite Rivet is a capture):
 ## --rivet-form=<RivetPlan form id> (wide = the 1.2x n5-cast size), --rivet-visor (the ink visor
 ## slot), --rivet-tan=<0..1> (1 = the full tan), --gun-grey (look-8: held guns in the old grey
-## print, not the tan inks); d9: --rivet-height=<m> (his drawn standing height at play; n9 builds
+## print, not the tan inks); d9: --rivet-height=<m> (his height before PlayerScale.k; n9 builds
 ## 1.65, p55 in proportion); n9: --rivet-flame=cone (d9's flamer), =side (no diagonal cells),
 ## =all (the fire cell at any aim),
 ## --rivet-walk=4 (d9's 4-frame walk by the gait phase), --rivet-reload=off (no drawn reload).
@@ -36,19 +36,36 @@ static func apply(args: PackedStringArray = OS.get_cmdline_user_args()) -> void:
 			RivetStrips.diag = false
 		elif arg == "--rivet-flame=all":
 			RivetStrips.flame_all = true
-		elif arg == "--rivet-walk=bob":
-			RivetWalk.enabled = false
-		elif arg == "--rivet-walk=4":
-			RivetWalk.frames = 4
-		elif arg == "--rivet-walk=walk8":
-			RivetWalk.run = false
-		elif arg == "--rivet-walk-armed=off":
-			RivetWalk.armed = false
-		elif arg == "--rivet-stride=off":
-			RivetStride.enabled = false
+		elif (
+			arg.begins_with("--rivet-walk=")
+			or arg.begins_with("--rivet-swipe")
+			or arg.begins_with("--rivet-bob")
+		):
+			_walk(arg)
 		elif arg == "--rivet-knock=off":
 			RivetKnock.enabled = false
 		elif arg == "--rivet-reload=off":
 			RivetReload.enabled = false
 		elif arg == "--ghost-voice=facing":  # n10: the voice at his facing's own left, on his head
 			GhostApparition.clear_figure = false
+
+
+## --rivet-walk=<mode>; n11: --rivet-swipe=off (one drawn strike cell), --rivet-bob=drawn (no damp).
+static func _walk(arg: String) -> void:
+	match arg:
+		"--rivet-walk=bob":
+			RivetWalk.enabled = false
+		"--rivet-walk=4":
+			RivetWalk.frames = 4
+		"--rivet-walk=walk8":
+			RivetWalk.run = false
+		"--rivet-walk-armed=off":
+			RivetWalk.armed = false
+		"--rivet-stride=off":
+			RivetStride.enabled = false
+		"--rivet-swipe=off":
+			RivetSwipe.enabled = false
+		"--rivet-bob=drawn":
+			RivetBob.enabled = false
+		_:
+			pass

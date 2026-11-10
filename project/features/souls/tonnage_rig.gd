@@ -41,6 +41,7 @@ const CARD_M: float = 3.1
 const CARD_ANCHOR: float = 0.42
 ## The card's soul halo alpha (GhostCard.halo; 0 = the bare card).
 const CARD_HALO_A: float = 0.35
+const CYCLE_CELL: float = 235.0
 
 ## The shared part print (PartMaterials) on Tonnage's parts. Off by default: at 32 px/m its
 ## flat-sticker LOD prints the gunmetal crown as one ink mass and hides the teal seams (JOURNAL
@@ -51,6 +52,9 @@ static var print_parts: bool = false
 var unfold: float = 1.0
 ## Ground speed (m/s), fed by the host each frame; the gait phase advances with distance.
 var speed_mps: float = 0.0
+## n11: the drawn walk (tonnage_walk8.png), the card and parts under a view without it. it12: the
+## stamping v2 walk: the stance foot moves 29.4 cell px a frame (profile row, mean), so 235 a cycle.
+var drawn: GhostDrawn = GhostDrawn.new("tonnage", 3.3, CYCLE_CELL, 190.5)
 var _phase: float = 0.0
 var _feet: Array[Sprite2D] = []
 var _legs: Array[Sprite2D] = []
@@ -60,10 +64,12 @@ var _hoses: Sprite2D = null
 var _glow: Sprite2D = null
 var _down: Array[bool] = [true, true]
 var _card: GhostCard = GhostCard.new("tonnage", CARD_M, CARD_ANCHOR)
+var _all: Array[Sprite2D] = []
 
 
 func _ready() -> void:
-	_glow = _soft_glow()
+	_glow = GhostRim.soft_glow(TEAL, 0.38, 64.0)
+	add_child(_glow)
 	_card.halo = Color(TEAL, CARD_HALO_A)
 	for i: int in 4:
 		_feet.append(_part("foot", FOOT_M, false))
@@ -72,6 +78,7 @@ func _ready() -> void:
 	_head = _part("press_head", HEAD_M, false)
 	_crown = _part("crown", CROWN_M, false)
 	_hoses = _part("hoses", HOSES_M, false)
+	_all.assign(_feet + _legs + [_crown, _head, _hoses])
 	pose()
 
 
@@ -110,8 +117,11 @@ func pose() -> void:
 	_hoses.position = (Vector2(-0.55 * u, 0.0) + up * HOSES_H_M) * PX_PER_M
 	_hoses.scale = Vector2.ONE * _k(_hoses, HOSES_M) * lerpf(0.4, 1.0, u)
 	_glow.scale = Vector2.ONE * (CROWN_M * 1.9 * PX_PER_M / 64.0) * lerpf(0.5, 1.0, u)
-	_card.size_k = lerpf(0.62, 1.0, u)
-	_card.step(self, [_crown, _head, _hoses], up * CROWN_H_M * PX_PER_M, PX_PER_M)
+	var shown: bool = not drawn.step(self, _all, PX_PER_M, lerpf(0.62, 1.0, u))
+	_card.set_shown(shown)
+	if shown:
+		_card.size_k = lerpf(0.62, 1.0, u)
+		_card.step(self, [_crown, _head, _hoses], up * CROWN_H_M * PX_PER_M, PX_PER_M)
 	_check_stamps()
 
 
@@ -176,21 +186,3 @@ func _part(name: String, width_m: float, limb: bool) -> Sprite2D:
 
 func _k(s: Sprite2D, width_m: float) -> float:
 	return width_m * PX_PER_M / float(maxi(s.texture.get_width(), s.texture.get_height()))
-
-
-## The soul glow under the press: a soft teal disc on the ground (teal belongs to the souls).
-func _soft_glow() -> Sprite2D:
-	var g: GradientTexture2D = GradientTexture2D.new()
-	g.width = 64
-	g.height = 64
-	g.fill = GradientTexture2D.FILL_RADIAL
-	g.fill_from = Vector2(0.5, 0.5)
-	g.fill_to = Vector2(1.0, 0.5)
-	var grad: Gradient = Gradient.new()
-	grad.set_color(0, Color(TEAL, 0.38))
-	grad.set_color(1, Color(TEAL, 0.0))
-	g.gradient = grad
-	var s: Sprite2D = Sprite2D.new()
-	s.texture = g
-	add_child(s)
-	return s
