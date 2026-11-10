@@ -94,3 +94,53 @@ known path `gtai-spike/tools/godot/Godot_v4.7.2-stable_win64_console.exe`; every
 - Load: one 64x52 texture, loaded in ShockArcsView._ready (the arena's build, behind the load).
 - Tests: `test_dropped_gun_cell.gd` (5: loads at ready, mip filter, lie_of side, mirror, tilt cap);
   test_shock_arcs_floor 1/1.
+- Commit `39d372ffd`.
+
+## Item 3: the plasma impact disc, smaller
+
+### Audit
+- The brief's ticks 333-341 come from n12's B1 film (`--weapon=plasma_rifle --bot=gunplay --lone
+  --armored=3`, on n12's 723d86db6). On this main the same flags play another fight (a pit wave runs;
+  the lone kill lands at tick 304, not 346), so the moment was re-shot on the director's
+  `plasma_armored` chapter (`--chapter=plasma_armored --loadout=pistol`: an armored cop takes a bolt
+  and lives, staggers, the next bolt kills): the wound bolt lands at tick 60 (movie frame 59), the
+  stop holds frames 60-62, frames 63-68 the ring opens. Frame <-> tick from the FightFrames log.
+- The disc is not a cell: `GunFxMarks.pop()` draws a 0.22 m cream core for 4 ticks plus an ink and
+  cream ring opening from 0.2 m with 10 / 5 px widths: at the burst one cream disc about 0.58 m
+  across (19 px at 32 px/m) on the bolt's impact point, the cop's front half under it through the
+  held frames (`i3_...-ticks58-66.png` top row). The ray gun and the homing shard use the same pop.
+- Found on the way (inherited, not this lane's, not fixed): in the plain dev arena every gun's
+  first shot leaves n12 E1's `muzzle_flash` light ON for good (a white paper fan beside Rivet in
+  every film here; gone under `--feel=off`; pistol too). Cause: the arena's PrintStage has no clock
+  (`clock` is only set for the city view, arena_game.gd:192), so `PrintStage.place()` steps the
+  LightLayer at tick 0 while ArenaCombatLights adds lights born at `arena.tick`; they never age out.
+  The city block fight sets the clock (n12's E1 film is clean). A call below.
+
+### Change
+- `GunFxMarks.pop(ci, at, age, row)`: the gun's gun_fx.json row may size the burst: `pop_core_m`
+  (core radius, 0 = none), `pop_from_m` (the ring's first radius), `pop_ink_px` / `pop_cream_px`
+  (widths at the burst); absent keys = the n7 values. The sizing is `pop_shape()` (pure, tested).
+  GunFxArt passes the drawing gun's row (`fx.look(arena.gun...)`, already read once per draw).
+- Tried both on film (`i3_plasma_pop_candidates-shipped-small-ring-32ppm.png`):
+  small (core 0.08, from 0.12, ink 6, cream 3) and ring (core 0, from 0.35, ink 5, cream 3).
+  Picked small. The ring alone uncovers the generic body-hit ink burst (GunFxMarks.impact BODY:
+  an ink disc 0.22 m for 4 ticks, every gun), which the cream core used to hide: an ink blob then
+  sits on the torso through the held frames. Small keeps the burst a hot point in a tight double
+  ring at the impact, and the cop's torso, arm and the 2-tick throw read beside it in every held
+  frame (59-62). The ring still opens to 0.8 m as approved.
+- gun_fx.json plasma_rifle: `pop_core_m 0.08, pop_from_m 0.12, pop_ink_px 6, pop_cream_px 3`.
+
+### Before
+- Remove the four `pop_*` keys from gun_fx.json's plasma_rifle row. With the code change and no keys
+  the film is pixel-identical to the pre-change build (`parm-codebefore` vs `parm-before`, 0 of 130
+  frames differ); the ray gun and homing shard rows carry no keys (test pins them to the n7 burst).
+
+### Measured
+- `i3_plasma_pop_small-ab-32ppm-ticks58-66.png` (frames 59-68, x3, top before), `i3_plasma_pop_small-ab-32ppm.mp4`
+  (3x slow), the kill bolt `i3_plasma_pop_small-ab-32ppm-kill-frames112-120.png` (the kill star still
+  dominates; the core no longer adds a second white disc). Before vs after: frames 59-62, the next
+  bursts, 27 of 300 differ; re-run of the after build identical (0 of 130).
+- No art, no load: four draw calls as before (radius and widths only).
+- Tests: `test_plasma_pop_size.gd` (5: no keys = the n7 burst at every age; ray gun and shard keep
+  it; the shipped plasma row is small; the core ends at age 4 and a 0 / negative core draws none;
+  the ring starts at from_m).
