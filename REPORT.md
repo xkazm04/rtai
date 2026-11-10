@@ -11,6 +11,7 @@ with one example and what it refuses. Every evidence tool reports pass, fail or 
 | `tools/film/film.mjs` named shots, fixed seed/step, locked camera, probe numbers | `node tools/film/film.mjs weapon:pistol --out=build/film/pistol --on=fire:1+4,kill:1+3` | 20:15 (arena PASS 11 s; a street shot walking out of frame is now unverifiable) |
 | `--victim=<kind>` on the weapon shot (combat request) | `node tools/film/film.mjs weapon:machine_pistol --victim=cop/head_swat --out=build/film/swat --on=kill:1+30` | 01:32 refusals; combat's hook 1183a323 landed 02:00 and combat filmed `thug`, `cop/head_helmet`, `cop/head_swat`, `ped/head_hood`: all PASS (their JOURNAL line 270) |
 | `tools/film/compare.mjs` before/after at the same tick, two commits or worktrees | `node tools/film/compare.mjs chapter:pistol --a=main --b=n11-combat --at=240,330 --subject=dead --out=build/film/cmp` | 20:15 (PASS on a real corpse change; same commit both sides -> UNVERIFIABLE, 0 px differ) |
+| compare an UNCOMMITTED art change against HEAD (combat 201, README); `--clean` removes the 1.7 GB temp checkout, else the run names it | `node tools/film/compare.mjs weapon:pistol --a=HEAD --b=. --at=60,120 --out=build/film/cmp --clean` | 06:05 (inverted crate strips: PASS, HEAD side real LFS pixels; an inverted texture the view never draws: UNVERIFIABLE twice, 0 px differ) |
 | `tools/film/sheet.mjs` labelled contact sheet | `node tools/film/sheet.mjs build/film/pistol --out=build/film/pistol/sheet.png --cols=4` | iteration 7-8 |
 | `tools/film/numbers.mjs` per-tick draw size, feet, rest, facing vs aim | `node tools/film/numbers.mjs build/film/arena --ticks=60-200 --subject=rivet` | iteration 7-8 |
 | film runs `--import` when an asset really changed (MD5, not date) | (automatic) | 22:15 (found that Godot's own scan trusted the date and drew old pixels) |
@@ -46,6 +47,7 @@ with one example and what it refuses. Every evidence tool reports pass, fail or 
   hero's `stride_film.gd` needs the one `FIXED_FPS` line (their file).
 - hero 268 (a `--select` with one wrong name ran nothing): 1921662c, the rest run, `did you mean`, exit 3 unverifiable
   (real run 05:48). combat 309 (export out dir): the same fix as hero 219, c26ab875, reaches them at the merge.
+- combat 201 (`git show HEAD:<png>` gave an LFS pointer for a before): `compare.mjs --a=HEAD --b=.` (README, real run 06:05).
 - Not served: combat 226 (about 8 s re-import per film because `probe.sh` adds and removes `film_card.gd`):
   ends when the film probe is on main, i.e. at this merge.
 
@@ -58,12 +60,12 @@ parse error now stops at 1.5 s instead of the 150 s timeout (hero lost about 8 m
 
 ## Codex ledger (`factory ledger --state=C:/Users/kazda/kiro/gtai-n11t/logs/tools/state.json --ledger=C:/Users/kazda/kiro/gtai-masters/n11/tools/codex-ledger.jsonl`; RE-RUN at report time)
 
-At 05:45 (re-run with `--state`): 21 tasks, 5,437 s of Codex, 19 machine pass, 2 machine fail, 9 accepted,
+At 05:57 (re-run with `--state`): 22 tasks, 5,570 s of Codex, 20 machine pass, 2 machine fail, 10 accepted,
 11 accepted after revision, 0 rejected, 101 lines changed by review, 0 refused by the meter. Dollars: $68.10
 measured over the 8 review sessions to iteration 26 (per task $4.01, an ESTIMATE and an upper bound: a session
-also builds other things); with iteration 39 counted the total prints null until its cost is in state.json
+also builds other things); with iterations 39 and 43 counted the total prints null until its cost is in state.json
 (one unknown session makes it unknown, by design). The report session re-runs it.
-Codex as tester (14 tasks, counted from the ledger's per-task lines): 120 failing tests, 106 real defects fixed
+Codex as tester (15 tasks, counted from the ledger's per-task lines): 123 failing tests, 109 real defects fixed
 with the tests kept, 14 thrown away with their reason: 9 in `n11t-break-tools` (a table that assumed plain
 porcelain, obsolete once quick read `--porcelain -z`, which never quotes a path; JOURNAL 20:5x), 1 in
 `n11t-break-staged` (it asked the staged export to ignore the commit's eol attributes, JOURNAL 02:24), 3 in
