@@ -15,6 +15,7 @@ with one example and what it refuses. Every evidence tool reports pass, fail or 
 | `tools/film/numbers.mjs` per-tick draw size, feet, rest, facing vs aim | `node tools/film/numbers.mjs build/film/arena --ticks=60-200 --subject=rivet` | iteration 7-8 |
 | film runs `--import` when an asset really changed (MD5, not date) | (automatic) | 22:15 (found that Godot's own scan trusted the date and drew old pixels) |
 | `tools/gate/quick.mjs` the lint rules builders trip, changed files only | `node tools/gate/quick.mjs` | 20:36 (planted file: CRLF, gdformat, print, float(Variant) in 7.0 s) |
+| `tools/gate/precommit.mjs` the hook skips lint when only inert paths are staged | (automatic, from `.githooks/pre-commit`) | 01:44 (JOURNAL-only commit 0.6 s; the full-lint commit before it 51 s) |
 | `tools/gate/run.mjs` the gates on a snapshot of the commit | `node tools/gate/run.mjs` | 20:46 (8m35, tree edited throughout, no log landed in it) |
 | stale-count honesty with Godot absent | `GODOT_BIN=/nonexistent node tools/tests/run_unit.mjs` | 20:33 (reproduced first; parity/scenarios messages fixed, eaf17694) |
 | stop at the first script error (`dev/run.mjs`, `film.mjs`) | `node tools/dev/run.mjs res://dev/my_scene.tscn --timeout=150` | 23:07 |
@@ -27,7 +28,8 @@ with one example and what it refuses. Every evidence tool reports pass, fail or 
 
 ## Time saved
 
-Unmeasured, except where a run timed it: quick.mjs 7.0 s against about 40 s for the hook's full lint
+Unmeasured, except where a run timed it: a journal or report commit 0.6 s instead of 51 s idle (up to 8 min
+contended, per past FRICTION lines; this lane alone made about 40 such commits tonight); quick.mjs 7.0 s against about 40 s for the hook's full lint
 (one problem at a time there); wt_init 16 s against the hand copy builders journal; a dev scene's
 parse error now stops at 1.5 s instead of the 150 s timeout (hero lost about 8 min to it on four forms).
 
@@ -44,6 +46,14 @@ mutants): quest_beat_validator alone 67,154 tokens / 674 s vs review 61,665 / 11
 Reading: on small pure-rule modules a Claude review of Codex's tests costs about what writing them
 costs, because the review must understand the module either way. A third, larger module
 (sim_car_route, 136 lines) is in flight at 01:40: see JOURNAL.
+
+## Incident (mine, repaired)
+
+At 01:39 a tool test of mine ran inside the pre-commit hook, where git sets `GIT_DIR`, and its
+`git -C <tmp>` acted on the real repo: a stray commit on `n11-tools`, `user.email=t@t` and
+`core.bare=true` in the shared `gtai/.git/config` (the main checkout said `must be run in a work tree`
+until 01:45). Repaired by hand within minutes; no lane commit got the wrong identity. Fixed for good in
+607f4171: lint's tool tests run with every `GIT_*` variable stripped (reproduced on a scratch repo).
 
 ## Calls for the owner
 
