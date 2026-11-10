@@ -17,6 +17,23 @@ func test_it_lies_beside_the_body_not_under_it() -> void:
 	assert_almost_eq(GroundRifle.lies_at(at).distance_to(at), GroundRifle.BESIDE_M, 0.001)
 
 
+func test_it_lies_on_the_shooters_side_of_the_feet_not_under_the_legs() -> void:
+	# n11 it19: the body falls away from the shot, so the gun beside its feet lay under its legs.
+	GroundRifle.forget()
+	var at: Vector2 = Vector2(6.0, 2.0)
+	var p: Vector2 = GroundRifle.lies_at_from(at, Vector2(0.0, 2.0))
+	assert_lt(p.x - at.x, -0.3, "toward the shooter on the left, the body lies to the right")
+	GroundRifle.forget()
+
+
+func test_it_keeps_its_place_when_rivet_walks_round_it() -> void:
+	GroundRifle.forget()
+	var at: Vector2 = Vector2(-3.0, 8.0)
+	var first: Vector2 = GroundRifle.lies_at_from(at, Vector2(-3.0, 0.0))
+	assert_eq(GroundRifle.lies_at_from(at, Vector2(-3.0, 16.0)), first)
+	GroundRifle.forget()
+
+
 func test_a_drop_far_off_screen_is_not_drawn() -> void:
 	assert_true(GroundRifle.visible_from(Vector2(5.0, 0.0), Vector2.ZERO))
 	assert_false(GroundRifle.visible_from(Vector2(GroundRifle.DRAW_M + 1.0, 0.0), Vector2.ZERO))

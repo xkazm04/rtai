@@ -16,6 +16,14 @@ const DRAWN_LEN_PX: float = 256.0
 const LENGTH_M: float = 1.05
 ## It lies this far to the side of where its owner fell (m): beside the body, not under the boots.
 const BESIDE_M: float = 0.55
+## it19: the body falls away from the shot and lies from its feet along that line, so a gun beside
+## the feet lay under the legs (every film). It lies TOWARD_M back toward the shooter (Rivet where
+## the drop was first drawn, remembered per drop) and SIDE_M to one side. AWAY false = BESIDE_M.
+const AWAY: bool = true
+const TOWARD_M: float = 0.5
+const SIDE_M: float = 0.25
+## Drops remembered at most (a cleared memory only re-reads the side from where Rivet is).
+const MEMO: int = 64
 ## Past this far from Rivet (m) a drop is off screen at every play zoom: not drawn.
 const DRAW_M: float = 24.0
 const INK_PX: float = 1.6
@@ -52,6 +60,7 @@ const RIM_DIRS: int = 8
 
 static var _mesh: ArrayMesh = null
 static var _sheet: Texture2D = null
+static var _away: Dictionary[Vector2, Vector2] = {}
 
 
 ## Draws the rifle lying at `at` (m), unless it is too far from `focus` (m) to be seen.
@@ -59,9 +68,9 @@ static func draw(ci: CanvasItem, at: Vector2, focus: Vector2) -> void:
 	if not visible_from(at, focus):
 		return
 	if DRAWN and sheet() != null:
-		_draw_cell(ci, at, ViewMode.shared().ground_k())
+		_draw_cell(ci, at, lies_at_from(at, focus), ViewMode.shared().ground_k())
 		return
-	var xf: Transform2D = Transform2D(turn(at), Ink.px(lies_at(at)))
+	var xf: Transform2D = Transform2D(turn(at), Ink.px(lies_at_from(at, focus)))
 	ci.draw_set_transform_matrix(Transform2D(0.0, SHADOW_OFF) * xf)
 	ci.draw_mesh(mesh(), null, Transform2D.IDENTITY, Color(0.0, 0.0, 0.0, SHADOW.a))
 	ci.draw_set_transform_matrix(xf)
@@ -69,14 +78,15 @@ static func draw(ci: CanvasItem, at: Vector2, focus: Vector2) -> void:
 	ci.draw_set_transform_matrix(Transform2D.IDENTITY)
 
 
-## The drawn heading for a drop at `at`, its shadow first; `gk` the view's ground squash.
-static func _draw_cell(ci: CanvasItem, at: Vector2, gk: float) -> void:
+## The drawn heading for a drop at `at` lying at `lies` (m), its shadow first; `gk` the view's
+## ground squash.
+static func _draw_cell(ci: CanvasItem, at: Vector2, lies: Vector2, gk: float) -> void:
 	var tex: Texture2D = sheet()
 	var cell: float = float(tex.get_height())
 	var src: Rect2 = Rect2(cell * heading(turn(at)), 0.0, cell, cell)
 	var k: float = LENGTH_M * Ink.PX_PER_M / DRAWN_LEN_PX
 	var size: Vector2 = Vector2(cell * k, cell * k / maxf(gk, 0.1))
-	var rect: Rect2 = Rect2(Ink.px(lies_at(at)) - size * 0.5, size)
+	var rect: Rect2 = Rect2(Ink.px(lies) - size * 0.5, size)
 	ci.draw_texture_rect_region(
 		tex, Rect2(rect.position + SHADOW_OFF, size), src, Color(0.0, 0.0, 0.0, SHADOW.a)
 	)
@@ -102,6 +112,26 @@ static func visible_from(at: Vector2, focus: Vector2) -> bool:
 ## Where the gun is drawn for a drop at `at` (m): to the side of the point its owner fell on.
 static func lies_at(at: Vector2) -> Vector2:
 	return at + Vector2.from_angle(turn(at) + PI * 0.5) * BESIDE_M
+
+
+## Where the gun is drawn for a drop at `at` (m) with Rivet at `focus`: by the feet on the side the
+## shot came from, that side fixed the first time the drop is asked about.
+static func lies_at_from(at: Vector2, focus: Vector2) -> Vector2:
+	if not AWAY:
+		return lies_at(at)
+	var away: Vector2 = _away.get(at, Vector2.ZERO)
+	if away == Vector2.ZERO:
+		if _away.size() >= MEMO:
+			_away.clear()
+		away = (at - focus).normalized()
+		away = Vector2.RIGHT if away == Vector2.ZERO else away
+		_away[at] = away
+	return at - away * TOWARD_M + away.orthogonal() * SIDE_M
+
+
+## Forgets every drop's side (a new fight, a test).
+static func forget() -> void:
+	_away.clear()
 
 
 ## How the gun lies (rad): from where it fell, so drops do not all point one way.
