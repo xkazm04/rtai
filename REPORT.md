@@ -46,9 +46,9 @@ Frames: `C:\Users\kazda\kiro\gtai-masters\n11\combat\frames.json` (15 entries, b
      he stood upright in his living pose inside the fireball for 4 ticks (the gib row's own hold,
      run after the camera's hit-stop). Same ticks before and after:
      `rocket_onset_ab.png` (also `evidence/n11-combat/it32/`).
-   - A man on fire (it32, `8dba1173`): at combo his flames sat on the pavement up to a metre off
-     his boots, a calm man beside a floor fire; now they burn on his hip, chest and shoulder
-     (`burning_lift_ab.png`). They still draw under the figure, so only their edges show.
+   - A man on fire (it32, `8dba1173`, `464314c8`): at combo his flames sat on the pavement up to a
+     metre off his boots, a calm man beside a floor fire; now they burn over his waist, chest and
+     head (`burning_over_ab.png`). He still aims calmly while he burns (see below).
 
 ## What does not work, or is not shown
 
