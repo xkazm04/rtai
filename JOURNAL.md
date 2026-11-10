@@ -269,3 +269,4 @@ seeded there). (3) item 4b part 2: `morning.mjs --worktree=C:/Users/kazda/kiro/g
   --on=kill:1+30 --ppm=64` -> `film: fire at 333; kill at 337`, `film: PASS` (film.json victim cop/head_swat; the log
   holds `lone victim cop/head_swat` once). Sheet t337-367 looked at: the SWAT, blue, falls and lies in red blood,
   rifle beside him. Masters `film-victim-head-swat-64ppm-t337-367.png` + frames.json row (5 rows now).
+- 00:18 DECISION tools/compare-native written to docs/decisions.md (refuse by default, --native=donor, worktree for a true before).
