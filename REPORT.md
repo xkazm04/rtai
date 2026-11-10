@@ -1,4 +1,4 @@
-# n11 tools lane: REPORT (DRAFT, written 01:40 in iteration 25; the report session finalizes it)
+# n11 tools lane: REPORT (final, 07:40, iteration 52)
 
 Branch `n11-tools`, cut from main `812a0b06`. Every tool below has a section in `tools/README.md`
 with one example and what it refuses. Every evidence tool reports pass, fail or **unverifiable**
@@ -54,6 +54,9 @@ with one example and what it refuses. Every evidence tool reports pass, fail or 
 - hero it18 06:50 (an LFS pointer PNG imported `ERR_FILE_CORRUPT`, Godot exit 0, the film drew without the
   sheet): 22f5eb9a + a1f4b778, `dev/run.mjs` and `film.mjs` refuse a pointer before import and fail an import
   that printed an error (real runs 07:10-07:13; film's import-error branch by unit test only).
+- Seen, not served (waits on an asset): combat it35 FRICTION (their JOURNAL line 376, "the burn fill has no tool"):
+  a fill measure for flame needs the flame layer kept apart, which combat routed as `REQUEST assets:`. Candidate
+  for a later tools night: a fill probe that takes an optional mask PNG beside each cell.
 - Not served: combat 226 (about 8 s re-import per film because `probe.sh` adds and removes `film_card.gd`):
   ends when the film probe is on main, i.e. at this merge.
 
@@ -64,13 +67,14 @@ contended, per past FRICTION lines; this lane alone made about 40 such commits t
 (one problem at a time there); wt_init 16 s against the hand copy builders journal; a dev scene's
 parse error now stops at 1.5 s instead of the 150 s timeout (hero lost about 8 min to it on four forms).
 
-## Codex ledger (`factory ledger --state=C:/Users/kazda/kiro/gtai-n11t/logs/tools/state.json --ledger=C:/Users/kazda/kiro/gtai-masters/n11/tools/codex-ledger.jsonl`; RE-RUN at report time)
+## Codex ledger (`node tools/codex/factory.mjs ledger --state=C:/Users/kazda/kiro/gtai-n11t/logs/tools/state.json --ledger=C:/Users/kazda/kiro/gtai-masters/n11/tools/codex-ledger.jsonl`)
 
-At 07:02 (re-run with `--state`): 24 tasks, 5,816 s of Codex, 22 machine pass, 2 machine fail, 11 accepted,
-12 accepted after revision, 0 rejected, 167 lines changed by review, 0 refused by the meter. Dollars: $68.10
-measured over the 8 review sessions to iteration 26 (per task $4.01, an ESTIMATE and an upper bound: a session
-also builds other things); with iterations 39, 43 and 44 counted the total prints null until its cost is in state.json
-(one unknown session makes it unknown, by design). The report session re-runs it.
+Final, re-run 07:40 with `--state` (output kept: `evidence/codex_ledger_final_0740.json`, also in
+`gtai-masters/n11/tools/`): 24 tasks, 5,816 s of Codex, 22 machine pass, 2 machine fail, 0 awaiting review,
+11 accepted, 12 accepted after revision, 0 rejected, 167 lines changed by review, 0 refused by the meter.
+Dollars MEASURED: $90.96 over the 11 review sessions (every session's cost is now in state.json, 0 reviews
+without a session). Per task $3.95 is an ESTIMATE and an upper bound: one session reviews several tasks (even
+split) and also builds other things.
 Codex as tester (16 tasks, counted from the ledger's per-task lines): 127 failing tests, 113 real defects fixed
 with the tests kept, 14 thrown away with their reason: 9 in `n11t-break-tools` (a table that assumed plain
 porcelain, obsolete once quick read `--porcelain -z`, which never quotes a path; JOURNAL 20:5x), 1 in
@@ -99,6 +103,31 @@ choices (66 lines) and found a suspect (Calls item 5). No control: its grade alo
 at 22:58, more than the time left before the freeze. Landed c52cceb1 (mutation 93.3 %, 14/15); the one
 survivor (`hcount.fill(0)` deleted) was real, so I added a rebuild-at-full-capacity test (5af34a16, 13 lines,
 planted fault caught by hand): 100 %, 15/15, 279 s.
+
+## What does not work, or is not proven
+
+- `tools/merge/morning.mjs`: the native, gates and reels steps were never run for real (fakes in unit tests only);
+  bake and export were (02:21, 05:27). Run them once on a quiet machine before the Director relies on them.
+- `check.mjs` UNVERIFIABLE (exit 3, cascades only) is proven by unit test only: Godot never printed a bare
+  cascade here. film's import-error refusal is proven through the shared function's `dev/run` real run only.
+- `film --victim` needs combat's hook (1183a323 on n11-combat); on main alone it refuses, by design.
+- The Claude saving is three paired modules, not a rate (table above); time saved elsewhere is unmeasured.
+- One flake seen and not reproduced (06:38, check_baked + morning_run, timing-shaped; 11 reruns green).
+
+## Blocked, and for how long
+
+No BLOCKED entries tonight. Slowed, not blocked: Godot contention (2 to 4 Godot processes of the other lanes
+up most of the night) kept me to one Godot run at a time and deferred the merge's native/gates/reels proof;
+`sim_hash` had no control run because its grade took 23 min under load (22:58), more than was left.
+The 01:39 incident below cost about 6 minutes (01:39-01:45).
+
+## Next steps
+
+1. Run `morning.mjs` native, gates and reels steps for real on a scratch integration worktree, quiet machine.
+2. Owner calls 1-5 below; then `dispatch.ts discard n11t-fac-city-spawn-plan` (kept for call 2).
+3. A control run for `sim_hash` makes it the fourth paired module (grade about 5 min when quiet).
+4. Hero: if they paste the raw `--check-only` output for `rivet_walk.gd`, check whether `ERROR_LINE` filters the cause.
+5. Combat's burn-fill probe once flame-only layers exist (above).
 
 ## Incident (mine, repaired)
 

@@ -388,3 +388,9 @@ NEXT (07:26): the 07:20 NEXT stands. Report session: re-run the ledger with `--s
 - 07:31 Re-read siblings (hero 347 lines, combat 392): no new `REQUEST tools:` or FRICTION since iteration 49. Node tooling suite, 11 globs (lib, lint, tests, debt, evidence, dev, selftest, film, gate, merge, codex): 786/786 pass on 8149d7ee. Tree clean, nothing of mine running. No code changes: past the freeze, nothing red to fix.
 
 NEXT (07:33): the 07:20 NEXT stands. Report session: re-run the ledger with `--state`, drop "(DRAFT ...)" from REPORT's title, add combat it35's burn-fill FRICTION as "seen, not served (waits on an asset)", re-run `node tools/evidence/cites.mjs REPORT.md`.
+
+## Iteration 52 (07:40-, REPORT)
+
+- 07:40 Ledger re-run with `--state` -> `evidence/codex_ledger_final_0740.json` (also in `gtai-masters/n11/tools/`): 24 tasks, 5,816 s Codex, 22/2 machine, 11 + 12 accepted, 0 rejected, 167 review lines, 0 refused by the meter; dollars now MEASURED, $90.96 over 11 review sessions (all in state.json), $3.95 per task an estimate. REPORT finalized: title, ledger, combat it35 burn-fill FRICTION as seen-not-served, new sections "What does not work, or is not proven", "Blocked", "Next steps". `node tools/evidence/cites.mjs REPORT.md` -> 17 paths, 16 ok, 1 untracked (the new ledger file, committed with this entry).
+
+NEXT (07:45, for the Director / a later tools night): REPORT "Next steps" 1-5. First: the morning merge's native, gates and reels steps on a scratch integration worktree when the machine is quiet.
