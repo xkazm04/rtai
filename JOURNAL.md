@@ -158,3 +158,14 @@ seeded there). (3) item 4b part 2: `morning.mjs --worktree=C:/Users/kazda/kiro/g
 (merge/debt/native done at 76ed5809), then `git worktree remove --force` it and `git branch -D n15t-scratch-integ`.
 (4) Codex testers for t-1/t-4/t-5 (dispatch.ts, ids n15t-). (5) real `compare --victim` film for combat.
 (6) REPORT.md is a draft: extend it. Scratch trees of mine: gtai-n15/scratch-tools-before (detached), gtai-n15/scratch-integ.
+
+## Session 2 (23:17 - 00:47)
+- 23:18 reel gate started on ad2f0a5c1 (`node tools/reel/run_reels.mjs --out=build/reels`, log gtai-n15/flake/reels_s2.log;
+  the lane's one Godot slot).
+- 23:30 SERVED combat REQUESTs (n15-combat JOURNAL lines 65 and 78), commit ba6f38838: `film.mjs`/`compare.mjs`
+  name the director's extras (`chapter:electro_baton_left`, `chapter:katana_cam`, ...: `chapterIds` reads the
+  loop in `ReelChapters.extras()`), and `--feel=auto|on|off` (auto = the old rule; compare passes it to both
+  sides; a `-- --feel=` is refused, the game reads the first one). Proof: `film.mjs chapter:electro_baton_left
+  --feel=on --dry-run` plans `--chapter=electro_baton_left ... --cam-lock=spawn --feel=on`; `chapter:electro_baton_lft`
+  -> `did you mean electro_baton_left?`. Tests `tools/film/feel_chapter.test.mjs` 8/8, film suite 180/180, lint 16/16.
+  A real film with these flags is owed (Godot slot held by the reels).
