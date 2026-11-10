@@ -18,6 +18,7 @@ const DIRS: Array[Vector2] = [Vector2.RIGHT, Vector2.DOWN, Vector2.RIGHT, Vector
 ## so the 3/4 away and 3/4 toward rows are filmed.
 ## `--film-attack`: a melee press every ATTACK_EVERY ticks, to see a form's drawn strike.
 ## `--film-fire`: the fire press with it (Dent's seize). `--film-hurt`: a hit every HURT_EVERY.
+## `--film-blow=<deg>` (n15): each such hit travels along that screen angle (0 = to the right).
 const ATTACK_EVERY: int = 24
 const HURT_EVERY: int = 32
 
@@ -27,6 +28,7 @@ var _sheet: Image
 var _last: int = -1
 var _pending: int = 0
 var _hurt: bool = false
+var _blow: Vector2 = Vector2.ZERO
 var _crop: int = CROP_PX
 var _feet: int = FEET_PX
 
@@ -40,6 +42,8 @@ func _ready() -> void:
 	_bot.turn = -PI / 4.0 if args.has("--film-diag") else 0.0
 	_bot.fire = args.has("--film-fire")
 	_hurt = args.has("--film-hurt")
+	if args.has("--film-blow"):
+		_blow = Vector2.from_angle(deg_to_rad(args.number("--film-blow", 0.0)))
 	_crop = maxi(CROP_PX, args.number("--film-crop", CROP_PX) as int)
 	_feet = _crop * FEET_PX / CROP_PX
 	var form: StringName = StringName(args.text("--film-form"))
@@ -62,6 +66,7 @@ func on_frame() -> void:
 		return
 	if _hurt and tick % HURT_EVERY == 0:
 		session.stage.arena.rivet.hurt_tick = tick
+		session.stage.arena.rivet.hurt_dir = _blow
 	var f: int = _bot.in_leg - FILM_FROM
 	var e: int = EVERY[_bot.leg]
 	if f >= 0 and f < FRAMES * e and f % e == 0:

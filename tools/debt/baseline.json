@@ -36,7 +36,8 @@
         "2026-11-10: n11 merge: n11-tools dev tooling (film probe, film triggers) on top of n12 (dev_loc 20487 -> 20809)",
         "2026-11-10: n11 merge: n11-hero dev films and ghost tooling on top of n12+tools (dev_loc 20809 -> 21227)",
         "2026-11-10: n11 merge: n11-combat dev films and body probes on top of n12+tools+hero (dev_loc 21227 -> 21419)",
-        "2026-11-10: n14 windup-more: dev film chapters (<blade>_left / _cam: the cop behind or below Rivet) for the wind-up before/after films (dev_loc 21419 -> 21426)"
+        "2026-11-10: n14 windup-more: dev film chapters (<blade>_left / _cam: the cop behind or below Rivet) for the wind-up before/after films (dev_loc 21419 -> 21426)",
+        "2026-11-10: n15 hero: stride_film --film-blow=<deg> films the ghost recoil along the blow (+5 dev lines) (dev_loc 21426 -> 21431)"
       ],
       "files": {
         "project/dev/arena": 711,
@@ -57,7 +58,7 @@
         "project/dev/quest1_city_fit.gd": 18,
         "project/dev/quest1_city_fit_run.gd": 74,
         "project/dev/rivet_arsenal": 255,
-        "project/dev/rivet_motion": 1964,
+        "project/dev/rivet_motion": 1969,
         "project/dev/save_crash_loop.gd": 14,
         "project/dev/save_crash_writer.gd": 18,
         "project/dev/save_cross.gd": 18,
@@ -68,7 +69,7 @@
         "project/dev/view": 195,
         "project/dev/weapon_art": 506
       },
-      "total": 21426
+      "total": 21431
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -251,7 +252,7 @@
         "project/features/arena/arena_rigs.gd": 294,
         "project/features/bosses/boss_hook.gd": 281,
         "project/features/bosses/servo/servo_rig.gd": 287,
-        "project/features/combat/combat_arena.gd": 300,
+        "project/features/combat/combat_arena.gd": 299,
         "project/features/combat/kills/kill_view.gd": 286,
         "project/features/combat/react/react_link.gd": 288,
         "project/features/combat/weapons/art/weapon_art.gd": 274,
@@ -322,7 +323,7 @@
         "project/features/city/sim/sim_people.gd": 205,
         "project/features/city/view/city_view.gd": 259,
         "project/features/combat/ai/enemy_pit.gd": 244,
-        "project/features/combat/combat_arena.gd": 300,
+        "project/features/combat/combat_arena.gd": 299,
         "project/features/combat/hit_feel/hit_feel.gd": 220,
         "project/features/combat/kills/kill_char_fx.gd": 203,
         "project/features/combat/kills/kill_lab.gd": 213,

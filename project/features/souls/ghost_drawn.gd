@@ -44,10 +44,10 @@ var run_cell: float = 0.0
 var fig_px: float = 180.0
 ## True while something else carries the form (Dent braced on a car roof): stands, feet still.
 var still: bool = false
+var blow: Vector2 = Vector2.ZERO  # the last hit's line (GhostActs, Fighter.hurt_dir; ZERO = none)
 var _spr: Sprite2D = null
 var _art: String = "?"
-## This art's measured per-frame stride (GhostStride.TABLES), empty = even frames.
-var _steps: PackedFloat32Array = PackedFloat32Array()
+var _steps: PackedFloat32Array = PackedFloat32Array()  # measured stride per frame; empty = even
 var _phase: float = 0.0
 var _last: Vector2 = Vector2.INF
 var _col: int = STAND_COL
@@ -98,7 +98,7 @@ func step(
 	_spr.frame = RigHeadCard.OCT_FRAME[o] * cols + (act if act >= 0 else walk)
 	_spr.flip_h = RigHeadCard.OCT_FLIP[o] == 1
 	var hurt: int = _tick - _hurt if act == HIT_COL else -1
-	_spr.global_rotation = GhostRecoil.tilt(hurt, _look, GhostRecoil.lean_of(card_name))
+	_spr.global_rotation = GhostRecoil.tilt(hurt, _look, GhostRecoil.lean_of(card_name), blow)
 	_spr.global_scale = Vector2(s, s / vm.ground_k())
 	return true
 

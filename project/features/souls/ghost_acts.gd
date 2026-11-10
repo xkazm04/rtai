@@ -7,8 +7,8 @@ extends RefCounted
 ## Rivet's hurt tick (the forms take his hits). Render only.
 
 
-## `drawn`: Tonnage, Dent, Kerf, Ohm.
-static func feed(drawn: Array[GhostDrawn], pilot: StagePilot, hurt_tick: int, tick: int) -> void:
+## `drawn`: Tonnage, Dent, Kerf, Ohm; `rivet` the body the forms wear (its last hit and blow).
+static func feed(drawn: Array[GhostDrawn], pilot: StagePilot, rivet: Fighter, tick: int) -> void:
 	var seqs: PackedInt32Array = [
 		pilot.hauler.stomp_tick,
 		(
@@ -24,4 +24,5 @@ static func feed(drawn: Array[GhostDrawn], pilot: StagePilot, hurt_tick: int, ti
 		pilot.hauler.form.windup_k() > 0.0, pilot.ghosts.jab.winding(), false, false
 	]
 	for i: int in drawn.size():
-		drawn[i].feed(seqs[i], hurt_tick, tick, windups[i])
+		drawn[i].feed(seqs[i], rivet.hurt_tick, tick, windups[i])
+		drawn[i].blow = rivet.hurt_dir
