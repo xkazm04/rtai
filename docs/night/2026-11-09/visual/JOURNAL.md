@@ -437,3 +437,12 @@ Calls for the owner:
 Unsure / corrections: the brief's seam list did not include the one that works in the arena
 (the drawn card); the hit-flash tint it implies never runs there. look_profiles.json's plate
 shifts carry no plate at world level. The plasma disc is the weapon's impact FX, not this seam.
+
+## Before D: the C1 first-hit question (02:10)
+Release export of b0306d120, claw_combo `--riot-victims` at combo, vsync off, fixed 60, 3 runs on
+and 3 with `--feel=off` (`build/n12/c1spike/`; others 3.6-7.4 cores). First struck card = ticks
+74-78. On: window max 4.2 / 4.0 / 4.1 ms, neighbours (ticks 60-100) median 2.7-2.8, max 3.5-4.5.
+Off: window 3.2 / 3.4 / 5.0, neighbours median 2.8-3.5, max 4.1-5.7. No frame near 25 ms; the hit
+frame sits inside its neighbours' range: C1 adds no spike. Two pipeline compiles still land in the
+window with C1 on (0 off), cheap (at most about 1.5 ms over the median). The 149 ms seen before was
+the editor binary under Movie Maker.
