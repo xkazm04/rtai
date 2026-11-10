@@ -1,6 +1,7 @@
 // Node children only. Every real runner/test timeout is >=60 s; child watchdogs
 // exit normally after 4 s so missed stopOn matches fail without a minute's wait.
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import { describe, killTree, runProcess, SCRIPT_ERROR } from './godot.mjs';
 import { verdict } from './dev_verdict.mjs';
@@ -125,7 +126,14 @@ test('onLine delivers empty whole lines once without inventing a line after the 
   assert.equal(r.out, '\n\r\nlast\n');
 });
 
-const alive = (pid) => { try { process.kill(pid, 0); return true; } catch { return false; } };
+// A SIGKILLed orphan stays a zombie until init reaps it, and kill(pid, 0) succeeds on a zombie: on Linux the
+// timeout test read a killed grandchild as alive 1 run in 4 (n15, WSL Ubuntu). A zombie runs no code: dead.
+// No wait instead: the watchdog grandchild exits by itself after 4 s, which a wait could mistake for a kill.
+const zombie = (pid) => {
+  if (process.platform !== 'linux') return false;
+  try { return /^\d+ \(.*\) Z/.test(readFileSync(`/proc/${pid}/stat`, 'utf8')); } catch { return false; }
+};
+const alive = (pid) => { try { process.kill(pid, 0); } catch { return false; } return !zombie(pid); };
 
 test('stopOn kills a running grandchild as well as the matching parent', OPTIONS, async () => {
   let descendant;
