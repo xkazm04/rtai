@@ -166,9 +166,11 @@ export const STEP_RUNNERS = {
     if (dirty) return { ok: false, advice: [`STOPPED: the bake changed tracked files:\n${dirty}`, 'Review them, commit them deliberately (AST-12 hash list), and run again with --resume.'] };
     // Exit 0 is not the evidence: the chunks must match the list, or the export step would refuse later.
     const b = (ctx.checkBaked ?? bakedIn)(ctx.cwd);
-    if (!b.ok) {
-      const bad = [...b.missing, ...b.mismatched];
-      return { ok: false, advice: [`STOPPED: the bake exited 0 but its chunks do not match the list: ${b.missing.length} missing, ${b.mismatched.length} mismatched of ${b.expected}${bad.length ? ` (first: ${bad[0]})` : ''}; log ${r.log}`, 'Read the bake log, fix it, and run again with --resume.'] };
+    if (b?.ok !== true) {
+      const missing = b?.missing ?? [];
+      const mismatched = b?.mismatched ?? [];
+      const bad = [...missing, ...mismatched];
+      return { ok: false, advice: [`STOPPED: the bake exited 0 but its chunks do not match the list: ${missing.length} missing, ${mismatched.length} mismatched of ${b?.expected ?? '?'}${bad.length ? ` (first: ${bad[0]})` : ''}; log ${r.log}`, 'Read the bake log, fix it, and run again with --resume.'] };
     }
     return { ok: true };
   },

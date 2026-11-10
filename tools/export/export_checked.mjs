@@ -53,7 +53,8 @@ export async function exportChecked({ out = DEFAULT_OUT, check = defaultCheck, r
   const file = outPath(out, root);
   mkdirSync(dirname(file), { recursive: true });
   const started = Date.now();
-  const code = await run(exportArgs(out));
+  let code;
+  try { code = await run(exportArgs(out)); } catch (error) { return { ok: false, reason: `the export could not run: ${error?.message ?? String(error)}` }; }
   if (code !== 0) return { ok: false, code };
   return { ...written(file, started), code };
 }
