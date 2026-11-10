@@ -339,3 +339,9 @@ NEXT (it19 / the next night, read first):
 - The final state for the Director: HEAD = this commit (docs only); last code-or-art commit ccfd86db; on it full unit 2259/0, scenarios 55/0, reel top/tilt70/combo OK; exe from 898ab184.
 
 NEXT (the next night, read first): it18's NEXT items 2-5 stand unchanged (per-form `GhostRecoil.LEAN_DEG`, a blow-source field on `Fighter`, Ohm's diagonal HIT cells on arrival, the LFS-pointer before-film trap, the rest of Rivet's strips at x1.5). REPORT.md needs no change at 07:40.
+
+## it20 (session 23, 07:24-07:26)
+
+- Opened at 07:24, 6 min before the freeze. I left the state it19 confirmed alone: the tree is clean apart from the assets lane's untracked `ASSETS-REPLIES.md`, and the last code-or-art commit is ccfd86db (unit 2259/0, scenarios 55/0, reel top/tilt70/combo OK). I started no change, because one more gate would not finish before 07:30. No golden moved.
+
+NEXT (the next night): same as it19's NEXT (it18 items 2-5). REPORT.md stands as written.
