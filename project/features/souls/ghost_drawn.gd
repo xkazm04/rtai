@@ -97,7 +97,7 @@ func step(
 	_show(tex, cols)
 	_spr.frame = RigHeadCard.OCT_FRAME[o] * cols + (act if act >= 0 else walk)
 	_spr.flip_h = RigHeadCard.OCT_FLIP[o] == 1
-	_spr.global_rotation = 0.0
+	_spr.global_rotation = GhostRecoil.tilt(_tick - _hurt if act == HIT_COL else -1, _look)
 	_spr.global_scale = Vector2(s, s / vm.ground_k())
 	return true
 
