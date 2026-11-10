@@ -29,7 +29,9 @@ func test_a_flinch_draws_the_cell_only_inside_its_hold() -> void:
 
 
 func test_a_kind_with_no_drawn_cell_keeps_its_figure() -> void:
-	assert_eq(StreetWalkerHit.grid_of(_cop(&"flinch", 0.05), "ped/head_punk"), "")
+	# it20: every street kind that dies has a grid now (the punk was this example): a row without one
+	assert_false(StreetWalkerHit.GRIDS.has("ped/head_none"))
+	assert_eq(StreetWalkerHit.grid_of(_cop(&"flinch", 0.05), "ped/head_none"), "")
 
 
 func test_a_shot_death_opens_on_the_thrown_cell_then_falls() -> void:
@@ -123,3 +125,10 @@ func test_every_site_grid_loads_as_five_facings() -> void:
 			assert_not_null(tex, path)
 			if tex != null:
 				assert_eq(tex.get_width() % RigHeadCard.FRAMES, 0, "%s whole facings" % path)
+
+
+func test_every_street_kind_that_dies_is_drawn_thrown_back_by_the_round() -> void:
+	# n11 it20: only the cops, the suit and the worker had a drawn hit grid; the thug and seven
+	# pedestrians wilted on their feet (the asset lane's cells, ASSETS-REPLIES 01:01-01:06)
+	for row: String in StreetDeadPlan.CLASS_OF:
+		assert_true(StreetWalkerHit.GRIDS.has(row), "%s has a drawn hit grid" % row)

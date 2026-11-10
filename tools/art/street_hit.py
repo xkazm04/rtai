@@ -31,6 +31,15 @@ SHEETS = {
     "swat": ("swat_hit.png", "swat_armed_walk.png", True),
     "ped_suit": ("ped_suit_hit.png", None, False),
     "ped_worker": ("ped_worker_hit.png", None, False),
+    # it20: the asset lane's thrown-back cells for the thug and the other seven pedestrians
+    "thug": ("thug_hit.png", None, False),
+    "ped_hood": ("ped_hood_hit.png", None, False),
+    "ped_cap": ("ped_cap_hit.png", None, False),
+    "ped_elder": ("ped_elder_hit.png", None, False),
+    "ped_hat": ("ped_hat_hit.png", None, False),
+    "ped_jogger": ("ped_jogger_hit.png", None, False),
+    "ped_punk": ("ped_punk_hit.png", None, False),
+    "ped_shopper": ("ped_shopper_hit.png", None, False),
 }
 # it14: the per-site flinch cells drawn for a kind (<site>_<col>.png, the right-hand facings 1..5;
 # the left ones mirror as the grid does), each to <kind>_<site>_hit.png on the same layout.

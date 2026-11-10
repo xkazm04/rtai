@@ -17,6 +17,14 @@ const GRIDS: Dictionary[String, String] = {
 	"cop/head_swat": "p70/swat_hit.png",
 	"ped/head_hair": "p70/ped_suit_hit.png",
 	"ped/head_worker": "p70/ped_worker_hit.png",
+	"thug": "p70/thug_hit.png",
+	"ped/head_hood": "p70/ped_hood_hit.png",
+	"ped/head_cap": "p70/ped_cap_hit.png",
+	"ped/head_bald": "p70/ped_elder_hit.png",
+	"ped/head_hat": "p70/ped_hat_hit.png",
+	"ped/head_jogger": "p70/ped_jogger_hit.png",
+	"ped/head_punk": "p70/ped_punk_hit.png",
+	"ped/head_shopper": "p70/ped_shopper_hit.png",
 }
 ## it14: a kind with drawn wound sites (the asset lane's shoulder clutch and gut fold, street_hit.py
 ## SITES) draws them on a LIVING wound: a flinch clutches the shoulder, a stagger folds over the
