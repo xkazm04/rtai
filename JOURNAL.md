@@ -374,3 +374,15 @@ changed at 5cda754c0 (selftest passed on it at 00:35, unit/scenarios/reels not r
   ran (an input) and factory.test's fixture line numbers failed. The commit of this change itself (tools/ staged)
   ran the full lint: 2m09s contended.
   TELL hero: after the Director merges n15-tools, a commit of strips/manifest/.gd under project/ takes ~4 s, not ~90 s.
+- 00:58 TO hero (FRICTION 00:29 "each commit took ~1.5 min"): served on n15-tools c5ac2442a, Node-only (tools/lint,
+  tools/gate, tools/README; no project/ file): `git cherry-pick c5ac2442a` in n15-hero makes each strip commit
+  (PNG + manifest .json + .gd under project/) lint in ~4 s instead of ~90 s, and an empty commit skip lint. The
+  Director's merge brings it anyway. Also 3fc7109a9 (Node-only): `evidence/run.mjs` now marks a kind INVALID, naming
+  the paths, when the tree changed while it ran (hero 23:30); `tools/gate/run.mjs --rev=HEAD` runs the same kinds on a
+  snapshot so you can keep editing.
+- 00:58 hero FRICTION 22:44 (`stride_film --film-fire` never draws a one-row strip): NOT served: it is hero's own dev
+  scene (project/dev/rivet_motion) and the walk legs draw the eq grids by design; hero's cursor_sweep STAND-leg
+  workaround is the right film for single-row strips.
+- 00:58 combat FRICTION (session 4): quest1 films differ by ~250k px at t13708 when the --stills list starts at a
+  different tick. `tools/film/compare.mjs` passes one stills list to both sides by construction, so its pairs are safe;
+  only hand-made pairs from two `film.mjs` runs can hit this. Not changed tonight.
