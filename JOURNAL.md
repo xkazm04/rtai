@@ -270,3 +270,18 @@ seeded there). (3) item 4b part 2: `morning.mjs --worktree=C:/Users/kazda/kiro/g
   holds `lone victim cop/head_swat` once). Sheet t337-367 looked at: the SWAT, blue, falls and lies in red blood,
   rifle beside him. Masters `film-victim-head-swat-64ppm-t337-367.png` + frames.json row (5 rows now).
 - 00:18 DECISION tools/compare-native written to docs/decisions.md (refuse by default, --native=donor, worktree for a true before).
+- 00:16 gate started on 52dc72d4 (`node tools/gate/run.mjs --rev=HEAD --timeout=40`, no reels: reels were green on
+  ad2f0a5c1 and every commit since is tools-, test- or docs-only), log gtai-n15/flake/gate_s2_head.log, results
+  build/gate/52dc72d4173f/. Scratch renders deleted (build/film/t4_city, victim; copies in masters).
+
+NEXT (session 3): (1) read build/gate/52dc72d4173f/gate.json (lint, unit, scenarios, parity, selftest,
+release-compile); if the session cut it, re-run `node tools/gate/run.mjs --rev=HEAD --timeout=40` and remove the
+snapshot after (`--clean`, or `git worktree remove --force <TEMP>/gtai-gate-52dc72d4173f`). (2) Read hero/combat
+JOURNALs for new REQUEST tools / FRICTION (combat's are all served as of 00:13; hero has none). (3) Raise the weakest
+items: t-5 cost under the bench lock (gtai-n15/bench.lock, noclobber; only when nothing heavy runs; else stays
+CONTENDED); a real morning run that prints the new `morning: gates: <kind>` lines (on a fresh scratch integration,
+gates step only, ~25 min; then remove it); the stale accent debt rows the selftest names (blood_flicker_cop_48,
+blood_flicker_cop_block_64, blood_flicker_vehicles_48, blood_flicker_vehicles_64, blood_flicker_vehicles_vermilion_48:
+find whose table, ask before deleting another lane's rows). (4) Before freeze: reel gate on the final commit if any
+project/ change lands; REPORT.md final (draft is current to 00:20). (5) End of night: `git worktree remove --force
+C:/Users/kazda/kiro/gtai-n15/scratch-tools-before` and `git branch -D n15t-control-sim-hash` (the control branch).
