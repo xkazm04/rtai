@@ -333,3 +333,4 @@ stay (00:20).
   ~/n15t_clone at 9db143ecc; hooks off for the clone only): the whole Node tool list (AGENTS list + film, merge,
   codex, gate) `tests 825, pass 823, fail 0` (2 skipped). So the 3 failures of the 00:24 /mnt/c run were the
   worktree's Windows .git link, not code. Clone removed. NEXT item (3) is done.
+- 00:30 item 4: `gate_lines.test.mjs` now drives `STEP_RUNNERS.gates` itself (fake run, green and red): it prints the lines both ways; 6/6 Windows + WSL.
