@@ -5,7 +5,16 @@ extends GutTest
 
 const P70: String = "p70"
 ## The p70 left sheets shipped (h-3), one ghost per commit.
-const SHIPPED_LEFT: Array[String] = ["dent_walk8", "dent_run8", "dent_act", "ohm_walk8", "ohm_act"]
+const SHIPPED_LEFT: Array[String] = [
+	"dent_walk8",
+	"dent_run8",
+	"dent_act",
+	"ohm_walk8",
+	"ohm_act",
+	"kerf_walk8",
+	"kerf_run8",
+	"kerf_act"
+]
 
 
 func _sheet(cols: int, left_cols: int) -> GhostSheet:
