@@ -433,3 +433,19 @@ lanes' sessions), `schedule` moves the times and checks the change against the r
 `--reserve-min 90` on `run` keeps the last open billing path for the freeze and report sessions.
 **Refuses:** a bad time, freeze after report-at, report-at not before until, a time already passed,
 and an earlier `--until` alone when it would move the freeze or report into the past (name all three).
+
+## A test that kills a child on a timer (`tools/lib/node_start.mjs`)
+
+```
+import { budgetMs } from '../lib/node_start.mjs';
+const limit = budgetMs(1800, 1); // what you mean (1.8 s) + one cold node start, measured now
+```
+
+The timer starts before the child's first line runs, and a cold `node` start is 0.1 s on a quiet machine
+and seconds beside two Godot runs. A fixed budget that holds a node start is a flake (n15: morning_run and
+step_guard.break). `budgetMs(base, starts)` adds 3x the measured start per start. Prove a timer test with
+every node start delayed: `SLOW_MS=2500 NODE_OPTIONS="--require <a file with
+Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, Number(process.env.SLOW_MS))>" node --test <file>`.
+
+`node tools/lint/lint.mjs` names every failing tool test (`FAILED <file:line:col> <name>`); a check's issue
+lines past 40 go to `build/lint/<check>.txt`, and the last line printed says where and how many.
