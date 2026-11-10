@@ -7,7 +7,12 @@
 //   node tools/codex/factory.mjs queue [--ledger=<file>]
 //   node tools/codex/factory.mjs review <id> --verdict=accepted|accepted-after-revision|rejected
 //     [--changed=<lines>] [--notes=<text>] [--iteration=<n>] [--review-tokens=<n> --review-secs=<n>] [--ledger=<file>]
+//     [--overrule=<reason>]
 //     (--review-tokens/--review-secs: the review was done by a subagent and these are the harness's numbers)
+//     (--overrule: the owner's t-2 rule. Accepting a test the machine rejected overrules the machine, so it
+//      needs the written reason, e.g. which survivors no test can kill; the reason goes in the ledger)
+//   node tools/codex/factory.mjs overrule <id> --reason=<text> [--ledger=<file>]
+//     (a task already accepted by review but rejected by the machine, before t-2 existed: record why it lands)
 //   node tools/codex/factory.mjs ledger [--state=<lane state.json>] [--ledger=<file>]
 //   node tools/codex/factory.mjs control <stem> --tokens=<n> --secs=<n> --tests=<n> --killed=<n> --mutants=<n>
 //     --changed=<review lines> [--model=<id>] [--notes=<text>] [--ledger=<file>]
@@ -181,7 +186,7 @@ export function collectFiles(root = ROOT) {
   return { files, tests };
 }
 
-function usage(err) { err('usage: node tools/codex/factory.mjs pick|run|queue|review|ledger (see the file header)'); return 2; }
+function usage(err) { err('usage: node tools/codex/factory.mjs pick|run|queue|review|overrule|ledger|control (see the file header)'); return 2; }
 
 function flags(argv) {
   const o = {};
@@ -262,8 +267,43 @@ function cmdReview(id, o, out, err) {
     return 2;
   }
   const measured = given.length ? { review_tokens: Number(o['review-tokens']), review_secs: Number(o['review-secs']) } : {};
-  append(ledger, { type: 'review', id, verdict: o.verdict, changed_lines: Number(o.changed ?? 0), notes: o.notes ?? '', iteration, ...measured, at: new Date().toISOString() });
+  const over = overruleOf(row, o.verdict, o.overrule, err);
+  if (over === false) return 2;
+  append(ledger, { type: 'review', id, verdict: o.verdict, changed_lines: Number(o.changed ?? 0), notes: o.notes ?? '', iteration, ...measured, ...over, at: new Date().toISOString() });
   out(`factory: ${id} ${o.verdict}`);
+  return 0;
+}
+
+const MIN_REASON = 20;
+
+/** t-2: a review may overrule a machine reject, with the reason written. {} when there is nothing to
+ *  overrule, { overrule } when it is given and needed, false (after saying why) otherwise. */
+export function overruleOf(row, verdict, reason, err) {
+  const rejectedByMachine = row.task.machine && !row.task.machine.pass && !row.task.refused;
+  const accepting = verdict !== 'rejected';
+  if (!(rejectedByMachine && accepting)) {
+    if (reason === undefined) return {};
+    err(`factory: --overrule only applies to accepting a test the machine rejected (${row.id}: ${rejectedByMachine ? 'verdict rejected' : 'the machine passed it'})`);
+    return false;
+  }
+  if (typeof reason !== 'string' || reason.trim().length < MIN_REASON) {
+    err(`factory: the machine rejected ${row.id} (${row.task.machine.why}); accepting it overrules that and needs --overrule="<reason>" (at least ${MIN_REASON} characters: which survivors no test can kill, and why)`);
+    return false;
+  }
+  return { overrule: { machine_why: row.task.machine.why ?? null, reason: reason.trim() } };
+}
+
+function cmdOverrule(id, o, out, err) {
+  const ledger = o.ledger ?? LEDGER;
+  const row = rows(read(ledger)).find((r) => r.id === id);
+  if (!row?.task) { err(`factory: no task ${id} in ${ledger}`); return 2; }
+  if (row.overrule || row.review?.overrule) { err(`factory: ${id} is already overruled`); return 2; }
+  if (!row.review || row.review.verdict === 'rejected') { err(`factory: ${id} has no accepting review to land on; review it with --overrule instead`); return 2; }
+  const over = overruleOf(row, row.review.verdict, o.reason, err);
+  if (over === false) return 2;
+  if (!over.overrule) { err(`factory: ${id} was not rejected by the machine; nothing to overrule`); return 2; }
+  append(ledger, { type: 'overrule', id, ...over.overrule, at: new Date().toISOString() });
+  out(`factory: ${id} overrules the machine (${over.overrule.machine_why}): ${over.overrule.reason}`);
   return 0;
 }
 
@@ -295,6 +335,7 @@ export async function main(argv, { out = console.log, err = console.error } = {}
   if (cmd === 'queue') return cmdQueue(o, out);
   if (cmd === 'review' && pos[0]) return cmdReview(pos[0], o, out, err);
   if (cmd === 'ledger') return cmdLedger(o, out);
+  if (cmd === 'overrule' && pos[0]) return cmdOverrule(pos[0], o, out, err);
   if (cmd === 'control' && pos[0]) return cmdControl(pos[0], o, out, err);
   return usage(err);
 }

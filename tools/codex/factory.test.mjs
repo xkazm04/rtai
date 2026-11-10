@@ -240,3 +240,51 @@ test('survivors on member initialisers that _init reassigns are named as likely 
   assert.deepEqual(equivalentInitialisers(surv(1).replace('survived', 'killed'), gd), []);
   assert.deepEqual(equivalentInitialisers(surv(1), 'var a: int = 0\n'), [], 'no _init, nothing is equivalent');
 });
+
+test('t-2: accepting a machine-rejected test needs a written --overrule, and the ledger keeps the reason', async () => {
+  const { file, done } = ledgerFile();
+  const err = [];
+  const opts = { out: () => {}, err: (l) => err.push(l) };
+  const reason = 'survivors 10-11 are initialisers _init reassigns; 21 fills a slot never in _cats';
+  try {
+    append(file, { type: 'task', id: 'r', unit: 'r', machine: { pass: false, score: 60, why: 'mutation score 60 % under 70 %' } });
+    assert.equal(await main(['review', 'r', '--verdict=accepted', `--ledger=${file}`], opts), 2, 'no reason');
+    assert.match(err.at(-1), /--overrule/);
+    assert.equal(await main(['review', 'r', '--verdict=accepted', '--overrule', `--ledger=${file}`], opts), 2, 'a bare flag is no reason');
+    assert.equal(await main(['review', 'r', '--verdict=accepted', '--overrule=fine', `--ledger=${file}`], opts), 2, 'too short to say why');
+    assert.equal(read(file).filter((e) => e.type === 'review').length, 0, 'a refused review writes nothing');
+    assert.equal(await main(['review', 'r', '--verdict=accepted', `--overrule=${reason}`, `--ledger=${file}`], opts), 0);
+    const t = totals(rows(read(file)));
+    assert.deepEqual(t.measured.overruled_machine_rejects, [{ id: 'r', reason }]);
+    assert.equal(rows(read(file))[0].review.overrule.machine_why, 'mutation score 60 % under 70 %');
+  } finally { done(); }
+});
+
+test('t-2: --overrule is refused where there is nothing to overrule, and a reject needs none', async () => {
+  const { file, done } = ledgerFile();
+  const opts = { out: () => {}, err: () => {} };
+  try {
+    append(file, passed('p'));
+    append(file, { type: 'task', id: 'r', unit: 'r', machine: { pass: false, why: 'red' } });
+    assert.equal(await main(['review', 'p', '--verdict=accepted', '--overrule=the machine passed this one anyway', `--ledger=${file}`], opts), 2);
+    assert.equal(await main(['review', 'r', '--verdict=rejected', `--ledger=${file}`], opts), 0, 'agreeing with the machine needs no reason');
+  } finally { done(); }
+});
+
+test('t-2: overrule <id> records the reason on a task accepted before the rule, once', async () => {
+  const { file, done } = ledgerFile();
+  const opts = { out: () => {}, err: () => {} };
+  const reason = 'all 6 survivors are equivalent mutants, named in docs/decisions.md';
+  try {
+    append(file, { type: 'task', id: 'old', unit: 'old', machine: { pass: false, why: 'mutation score 60 % under 70 %' } });
+    assert.equal(await main(['overrule', 'old', `--reason=${reason}`, `--ledger=${file}`], opts), 2, 'not reviewed yet');
+    append(file, { type: 'review', id: 'old', verdict: 'accepted', changed_lines: 0, iteration: 21 });
+    assert.equal(await main(['overrule', 'old', '--reason=short', `--ledger=${file}`], opts), 2);
+    assert.equal(await main(['overrule', 'old', `--reason=${reason}`, `--ledger=${file}`], opts), 0);
+    assert.equal(await main(['overrule', 'old', `--reason=${reason}`, `--ledger=${file}`], opts), 2, 'once');
+    append(file, passed('p'));
+    append(file, { type: 'review', id: 'p', verdict: 'accepted', changed_lines: 0, iteration: 21 });
+    assert.equal(await main(['overrule', 'p', `--reason=${reason}`, `--ledger=${file}`], opts), 2, 'the machine passed it');
+    assert.deepEqual(totals(rows(read(file))).measured.overruled_machine_rejects, [{ id: 'old', reason }]);
+  } finally { done(); }
+});
