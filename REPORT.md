@@ -57,6 +57,9 @@ selftest 11/11 + 5/5, release-compile 667/0. Reel gate on ad2f0a5c1: top, tilt70
 ## Merge notes (draft)
 
 - Merge n15-tools FIRST. It changes the sim (t-1 spawn order, t-4, t-5 HW) and both DLLs (rebuild them: `just native`).
-- Hero and combat need no replay re-bless (no replay golden is committed), but any look golden they re-blessed
-  on main's spawn order will be off after this merges: re-bless the look/block goldens once on the integrated
-  tree (`look_golden.tscn --bless`, both sites) with one decisions line.
+- Hero and combat need NO replay re-bless: no replay golden is committed (`git ls-files` holds only the 17 look
+  goldens; the replay scenario records and replays inside one run). Look goldens: the integrated tree of all three
+  lanes at 23:08 (morning.mjs on a scratch worktree) passed look 11/11 and block 5/5 at worst 0.00 on this lane's
+  re-blessed goldens. If hero or combat re-bless a look golden after 23:08 on main's spawn order, re-bless that one
+  once on the integrated tree (`look_golden.tscn --bless`) with one decisions line.
+- Order: n15-tools first (sim + DLLs), then hero and combat in either order (no code conflict among the three at 23:08).

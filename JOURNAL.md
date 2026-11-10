@@ -241,3 +241,10 @@ seeded there). (3) item 4b part 2: `morning.mjs --worktree=C:/Users/kazda/kiro/g
   failed with `HEAD is neither a worktree nor a commit git knows` (this worktree's .git link is a Windows path).
   Fixed d1331a320: the test injects the rev lookup. After: WSL 18/18, Windows film suite 185/185.
 - 23:54 4b part 2: gates step at scenarios `[55/55] vehicle_yield ok` (all 55 ok so far), parity/selftest next.
+- 23:55 MILESTONE item 4b part 2, gates step for real: `morning: gates: green` on gtai-n15/scratch-integ 76ed5809e
+  (n15-tools + n15-hero + n15-combat at their 23:08 tips). Its build/evidence: lint `all 16 checks pass over 1428
+  GDScript files`, `unit-tests: 2529 passed, 0 failed, 2 skipped`, `scenario-tests: 55 passed`, parity `bit for bit
+  over 1200 steps ... planted mutation caught at step 629`, selftest look goldens `11/11 ... (worst 0.00)` and block
+  `5/5 (worst 0.00)`, `release-compile: 668 loaded, 0 failed`. So the t-1 re-blessed goldens hold with the other
+  two lanes merged on top (as of 23:08); the selftest also lists stale accent debt rows to delete
+  (blood_flicker_cop_48, ..._vehicles_vermilion_48), not a failure. `morning: reels: running` next.
