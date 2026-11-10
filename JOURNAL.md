@@ -302,3 +302,4 @@ NEXT (05:40, the whole list; replaces the 05:29 NEXT):
 2. Hero: if they answer the 05:10 NOTE (exact ground shift for `world_feet.py`) or the 05:35 NOTE (FIXED_FPS line in stride_film) with a `REQUEST tools:` line, serve it first.
 3. Not done: the merge's native, gates and reels steps on a real tree (needs a quiet machine; 2-3 other Godot processes all night).
 4. After the merge (shared gates): `mutate.mjs` could mark initialiser survivors itself; `step_guard.break` binary-bytes test is load-flaky (05:27).
+- 05:41 The merge notes NEXT item 1 lists are now in REPORT.md (d9d951ca); the report session only re-runs the ledger, drops DRAFT from the title and re-runs cites.
