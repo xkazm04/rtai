@@ -142,6 +142,7 @@ static func hides_held(rig: CutRig) -> bool:
 	var weapon: StringName = RivetFrames.weapon_of(rig)
 	var on: String = str(rig.head_card.get_meta(RivetFrames.ON, ""))
 	var left: bool = on.ends_with("_left.png") or on.ends_with(RivetWindup.LEFT_FILE)  # n14
+	left = left or on.ends_with(RivetWindup.LEFT_STRIKE_FILE)  # n15: its smear runs as before
 	if LEFT_NO_SWING.has(weapon) and left:
 		return false
 	var no_arc: Array = NO_ARC.get(ViewMode.shared().art, [])
