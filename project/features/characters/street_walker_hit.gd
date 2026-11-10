@@ -55,7 +55,7 @@ const FLAIL_RAD: float = 0.07
 const FLAIL_HZ: float = 3.0
 ## n15: the second flail frame (burn/1b, street_hit.py FLAILS, <kind>_flail_burn_hit.png)
 ## swaps with the first on every half shake (10 ticks at 3 Hz). Off until filmed against one frame.
-const FLAIL_FRAMES: bool = false
+const FLAIL_FRAMES: bool = true
 ## Family -> seconds the drawn cell holds from the blow (the rest of the family is the shoved walk).
 const HOLD_S: Dictionary[StringName, float] = {&"flinch": 0.2, &"stagger": 0.34}
 ## A death of these kinds opens on the same thrown-back cell over the fall grid's buckle (a body
