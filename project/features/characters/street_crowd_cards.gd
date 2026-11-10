@@ -21,6 +21,8 @@ const POOLS: Dictionary[String, PackedStringArray] = {
 const K: StringName = &"street_card_k"
 const SCALE_VAR: float = 0.16  # owner 2026-11-07: strong variety (was 0.08)
 const VALUE_VAR: float = 0.14  # owner 2026-11-07: strong variety (was 0.07)
+## Dev capture (GunplayHook.victim, `--lone --victim=<row>`): every cop rig draws as this row.
+static var victim: String = ""
 static var _tex: Dictionary[String, Texture2D] = {}
 
 
@@ -44,6 +46,11 @@ static func step(rig: CutRig) -> void:
 
 
 ## The card row an actor of a look draws ("" = the look's own head).
+## The row a rig of `art_dir` draws: the capture's victim for a cop, else pick's.
+static func key_for(tag: String, actor_id: int, art_dir: String) -> String:
+	return victim if not victim.is_empty() and art_dir == "cop" else pick(tag, actor_id)
+
+
 static func pick(tag: String, actor_id: int) -> String:
 	var pool: PackedStringArray = POOLS.get(tag, PackedStringArray())
 	if pool.is_empty():
@@ -59,7 +66,7 @@ static func vary(actor_id: int, salt: int) -> float:
 
 
 static func _swap(rig: CutRig, card: Sprite2D) -> float:
-	var key: String = pick(rig.variant.tag, rig.actor_id)
+	var key: String = key_for(rig.variant.tag, rig.actor_id, rig.plan.art_dir)
 	var rows: Dictionary[String, Array] = RigHeadCard.rows()
 	var base: String = RigHeadCard.key_of(rig.plan, rig.variant.head)
 	if key.is_empty() or key == base or not rows.has(key) or not rows.has(base):

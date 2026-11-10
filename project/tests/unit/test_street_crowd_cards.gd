@@ -63,3 +63,15 @@ func test_the_variety_is_stable_bounded_and_spread() -> void:
 	assert_between(lo, -1.0, -0.8, "reaches the small end")
 	assert_between(hi, 0.8, 1.0, "reaches the big end")
 	assert_ne(StreetCrowdCards.vary(5, 3), StreetCrowdCards.vary(5, 17), "scale and value differ")
+
+
+func test_the_lone_victim_capture_draws_every_cop_as_the_asked_row() -> void:
+	GunplayHook.victim("thug")
+	assert_eq(StreetCrowdCards.key_for("", 7, "cop"), "thug", "the lone guard is drawn as a thug")
+	assert_eq(
+		StreetCrowdCards.key_for("jacket-hair", 7, "ped"),
+		StreetCrowdCards.pick("jacket-hair", 7),
+		"a passer-by keeps his own row"
+	)
+	GunplayHook.victim("")
+	assert_eq(StreetCrowdCards.key_for("", 7, "cop"), "", "no capture: the cop's own card")
