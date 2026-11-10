@@ -130,3 +130,11 @@ session, remove the worktree and branch after. (5) a real `compare.mjs --victim`
   n15-combat --date=2026-11-11 --steps=merge,debt,native --debt-reason=...` (log gtai-n15/flake/morning_4b.log).
   gates and reels steps on the same worktree next session (`--steps=gates,reels --resume`?), then remove the
   worktree and the branch (`git worktree remove --force`, `git branch -D n15t-scratch-integ`).
+- 23:12 MILESTONE item 4b, part 1 (real, not fakes): `morning.mjs --worktree=C:/Users/kazda/kiro/gtai-n15/scratch-integ
+  --lanes=n15-tools,n15-hero,n15-combat --date=2026-11-11 --steps=merge,debt,native` -> `merge: green` (each lane
+  merged, JOURNAL/REPORT moved under docs/day/2026-11-11/<lane>/, no code conflict between the three lane tips
+  at 23:08), `debt: green`, `native: green` (scons debug + release in that worktree; NATIVE REBUILD #3 is the
+  scratch one, not this tree), `DONE at 76ed5809 on n15t-scratch-integ. Nothing was pushed`. Log
+  gtai-n15/flake/morning_4b.log. The baseline auto-resolve did not fire (no baseline conflict tonight); it is
+  proven on the throwaway-repo test only. Part 2 (gates, reels: needs Godot ~2.5 h) next session with
+  `--steps=gates,reels`; then remove worktree + branch.
