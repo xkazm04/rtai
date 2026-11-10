@@ -34,10 +34,10 @@
           "value": 256
         },
         {
-          "doc": "spatial hash window, cells per side",
+          "doc": "spatial hash window, cells per side (t-5: covers promoted actors to rb*1.6)",
           "name": "HW",
           "type": "int",
-          "value": 80
+          "value": 132
         },
         {
           "doc": "spatial hash cell, metres",
