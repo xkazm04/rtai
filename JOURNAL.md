@@ -265,3 +265,7 @@ seeded there). (3) item 4b part 2: `morning.mjs --worktree=C:/Users/kazda/kiro/g
 - 00:13 SERVED combat REQUEST `test_quest_blade` (5e41c66bc): `run_unit --select=test_quest_blade`: without the fix
   `1 failing (4 passed, 1 failed)` `[weapon_slot_2] ... to contain '[2]'` (combat's exact symptom), with it
   `5 passed, 0 failed` (re-run after a line-length fix). Test-only change.
+- 00:17 MILESTONE a real `--victim` film (owed since 22:47): `film.mjs weapon:pistol --victim=cop/head_swat
+  --on=kill:1+30 --ppm=64` -> `film: fire at 333; kill at 337`, `film: PASS` (film.json victim cop/head_swat; the log
+  holds `lone victim cop/head_swat` once). Sheet t337-367 looked at: the SWAT, blue, falls and lies in red blood,
+  rifle beside him. Masters `film-victim-head-swat-64ppm-t337-367.png` + frames.json row (5 rows now).
