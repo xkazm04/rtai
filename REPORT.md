@@ -51,6 +51,9 @@ with one example and what it refuses. Every evidence tool reports pass, fail or 
 - combat 201 (`git show HEAD:<png>` gave an LFS pointer for a before): `compare.mjs --a=HEAD --b=.` (README, real run 06:05).
 - hero 279 (`check.mjs` FAIL on an unchanged file, cascades only): e9abf625, UNVERIFIABLE exit 3 with what Godot printed.
   hero 286 (`ASSETS-REPLIES.md` inert): the same as their 143, b083b075, at the merge.
+- hero it18 06:50 (an LFS pointer PNG imported `ERR_FILE_CORRUPT`, Godot exit 0, the film drew without the
+  sheet): 22f5eb9a + a1f4b778, `dev/run.mjs` and `film.mjs` refuse a pointer before import and fail an import
+  that printed an error (real runs 07:10-07:13; film's import-error branch by unit test only).
 - Not served: combat 226 (about 8 s re-import per film because `probe.sh` adds and removes `film_card.gd`):
   ends when the film probe is on main, i.e. at this merge.
 
@@ -156,6 +159,8 @@ until 01:45). Repaired by hand within minutes; no lane commit got the wrong iden
 - 9c7039eb: `compare.mjs` prints where each commit side's temp checkout was kept (about 1.7 GB each);
   `--clean` removes it. Nothing else changes for callers.
 - e9abf625: `check.mjs` has exit 3 (only dependency cascades, no cause); `quick.mjs` shows it as unverifiable.
+- 22f5eb9a, a1f4b778: `dev/run.mjs` and `film.mjs` exit 1 on a changed asset that is an LFS pointer, and on
+  an `--import` that printed `Error importing`/`ERR_FILE_CORRUPT` (before, both ran on and drew without it).
 - e1e478c1, 75ac86d4, 063e9fad (temp folders removed by the tests that make them) and the new
   `tools/gate/temp_hygiene.test.mjs`: eight tool test files no longer leave `gtai-*`, `baked-*`,
   `morning-run-*` and `reels-*` folders in `%TEMP%` (280 had piled up since 11-07; 18 + 11 per run).
