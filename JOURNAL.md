@@ -26,3 +26,19 @@ APPDATA for every Godot run: `C:/Users/kazda/kiro/gtai-n15/appdata/combat`.
   compare. I filmed the before by putting the parent's sheet (via `git lfs smudge`) and FILL back for one film, then
   `git checkout --`. REQUEST tools: compare.mjs passes `--victim` through to both sides.
 - Registry: no design fork taken yet beyond "ship only what reads better" (brief); judged on film.
+- MILESTONE 23:18 `709321330` item 2 (burn flail): `street_hit.py FLAILS` packs `burn/1b` for the 8 BURNS kinds as
+  `p70/<kind>_flail_burn_hit.png` (each facing at its `burn/1` cell's scale); `StreetWalkerHit.flail_frame` swaps
+  on odd half shakes when `FLAIL_FRAMES` is true. Shipped OFF: not filmed yet. Unit test_street_walker_burn +
+  test_street_walker_hit 22/22. CAVEAT: the shipped frame-1 burn sheets for hood, punk, swat and thug were packed
+  from the pre-07:02 library cells; the 1b frames are scaled to the 07:02 frame-1 cells. Film both (and the
+  repacked frame 1, `python tools/art/street_hit.py` re-makes them) before turning the flag on.
+- Gates this session: quick + pre-commit lint on every commit; unit select only. Full unit / scenarios / evidence /
+  reels NOT run yet on this branch.
+
+NEXT: (1) film a burning patrol cop and SWAT with FLAIL_FRAMES true vs false (flamethrower or molotov victim,
+`film.mjs weapon:flamethrower --victim=...`, 32 + 64 px/m, a 10-40 s clip); keep frame 1 as shipped or repack it
+from the 07:02 cells, decide, record DECISION. (2) check `gtai-assets/replies/n15-combat.md` for the c-2 redraw
+(item 1, first priority when it lands). (3) item 2 rest: drawn charred cells for a fire death, contractor/cultist
+cells (`street_reactions_it321.md`), `dropped_weapons_it325.md`. (4) item 3 baton strike re-cut, etc.
+(5) DEFECTS.md #3 (dark streak across the victim t345-348) and #4. (6) run the full gates
+(`node tools/gate/run.mjs --rev=HEAD --reels`) once there is a batch. Keep REQUEST tools (compare --victim) open.
