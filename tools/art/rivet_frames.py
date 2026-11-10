@@ -15,6 +15,7 @@ manifest names (the owner-judged picks) into project/features/characters/art/vie
 --only=<name prefix> as a second argument cuts only those rows; a row's fig_h overrides the manifest's.
 n13: a row's "ink_rim" ({"px", "reach"}) then cuts treatment B (a heavier ink rim round the blade,
 tools/art/blade_ink_rim.py) into the strip; --no-ink-rim (or the key removed) cuts the strip without it.
+A row's "windup" (tools/art/blade_windup.py options) also cuts <name>_windup.png from the cut strip.
 
 Each band's figures are the <count> column clusters of its alpha (cut at the count-1 widest gaps:
 a spark or a slash trail stays with its figure). Each figure's anchor is its helmet's centre (the
@@ -158,6 +159,16 @@ def _ink_rim(path: str, rim: dict) -> None:
     print(f"ink rim px {rim['px']} reach {rim['reach']}: {path}")
 
 
+def _windup(path: str, opts: dict) -> None:
+    """n13: a row's "windup" (blade_windup.py options) cuts <name>_windup.png from the cut strip."""
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from blade_windup import cut  # noqa: E402
+
+    dst = path[: -len(".png")] + "_windup.png"
+    cut(path, 8, {k: str(v) for k, v in opts.items()}).save(dst, optimize=True)
+    print(f"windup {opts}: {dst}")
+
+
 def _manifest(path: str, only: str = "", no_rim: bool = False) -> None:
     with open(path, encoding="utf-8") as fh:
         man = json.load(fh)
@@ -179,6 +190,8 @@ def _manifest(path: str, only: str = "", no_rim: bool = False) -> None:
             main()
             if "ink_rim" in row and not no_rim:
                 _ink_rim(f"{out}/{art}/{name}.png", row["ink_rim"])
+            if "windup" in row:
+                _windup(f"{out}/{art}/{name}.png", row["windup"])
 
 
 def main() -> None:

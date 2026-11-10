@@ -8,7 +8,8 @@ extends RefCounted
 ## print, not the tan inks); d9: --rivet-height=<m> (his drawn standing height at play; n9 builds
 ## 1.65, p55 in proportion); n9: --rivet-flame=cone (d9's flamer), =side (no diagonal cells),
 ## =all (the fire cell at any aim),
-## --rivet-walk=4 (d9's 4-frame walk by the gait phase), --rivet-reload=off (no drawn reload).
+## --rivet-walk=4 (d9's 4-frame walk by the gait phase), --rivet-reload=off (no drawn reload),
+## n13: --rivet-windup=off (no drawn wind-up cell).
 ## Read once, before the first plan or material.
 
 static var _read: bool = false
@@ -50,5 +51,7 @@ static func apply(args: PackedStringArray = OS.get_cmdline_user_args()) -> void:
 			RivetKnock.enabled = false
 		elif arg == "--rivet-reload=off":
 			RivetReload.enabled = false
+		elif arg == "--rivet-windup=off":  # n13: the strike cell through the wind-up (before)
+			RivetWindup.enabled = false
 		elif arg == "--ghost-voice=facing":  # n10: the voice at his facing's own left, on his head
 			GhostApparition.clear_figure = false

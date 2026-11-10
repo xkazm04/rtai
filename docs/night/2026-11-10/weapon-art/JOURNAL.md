@@ -144,3 +144,54 @@ known path `gtai-spike/tools/godot/Godot_v4.7.2-stable_win64_console.exe`; every
 - Tests: `test_plasma_pop_size.gd` (5: no keys = the n7 burst at every age; ray gun and shard keep
   it; the shipped plasma row is small; the core ends at age 4 and a 0 / negative core draws none;
   the ring starts at from_m).
+- Commit `b1514f8e4`.
+
+## Item 4: wind-up cells (plasma sword, katana, electro baton)
+
+### Audit
+- `RigClips.strike(windup_s, active_s, recovery_s)` starts `strike_t` at the wind-up; RivetStrips'
+  `fire_latched` counts any `strike_t >= 0`, so the strike cell (swing through, arc drawn) shows from
+  the first wind-up tick the view sees. The view learns of a strike late (`RigInput.strike`'s packed
+  `late`): in the sword combo the strike cell appears 2 ticks into the 4-tick wind-up of plasma_1.
+- Strips: plasma sword (glow blade, two hands), katana (rust-steel blade in the body's own plates),
+  baton (one hand, hangs at his side; a drawn left strip, never mirrored; p55 NO_ARC).
+
+### (a) The composed cell
+- `tools/art/blade_windup.py` (committed, re-runnable; rivet_frames.py runs it for a row carrying
+  `windup`): body = the nearest facing cell (side: cell 1, camera: cell 0); the blade plate (glow core
+  + opaque px within reach 8) lifted out and turned about its base (the hilt end) to `*_deg`, laid
+  over (or `--under`) the body; whole source pixels, no new colour; 48 px headroom.
+- Slot plumbing: `RivetWindup` (new, 44 lines): `path_or` swaps the equipped strip for
+  `rivet_eq_<weapon>_windup.png` while `strike_t < strike_ph.x`; `small_of` picks cell 0 (side,
+  mirrored on the left octants) or 1 (camera, octant 2). RivetFrames +0 lines net (two call sites),
+  RivetStrips.cells_of +2, RivetStripWarm lists the file, CastFlags `--rivet-windup=off`.
+- Stills (`i4_plasma_sword_windup_compositions-p70-2x.png`): raised up-and-back (-125 / -170 deg,
+  under) the blade hides behind the torso (hands at the hip); raised in front (-95, over) it stands
+  upright beside his chest off a still-horizontal hilt (a bent sword at 3x). Shipped to the trial:
+  -95 over, both art keys.
+- Film (`sword-wu` vs `sword-wuoff`, same build): 4 frames differ (59, 60, 74, 75). First swing: two
+  frames of the facing body with the blade raised, then the strike cell: a cock you can see at 1x,
+  but only 2 frames. Second swing (73-76): strike-cell lunge -> standing facing body -> lunge in
+  three frames: a pop. Anticipation (melee.md, "nothing pops = 2"): stays 2 (a raised blade for 33 ms
+  on the opener, a flicker on the chain). Fails the bar (+1 with no pop). Not shipped.
+  `i4_plasma_sword_windup_trial-dropped-ab-32ppm.png` / `.mp4` (top / left = off).
+- Katana and baton: not cut. The katana's blade has no glow plate (rust-steel, the body's own
+  plates: the lift's mask finds the visor), and the baton hangs one-handed at his side (no hilt end
+  in front to turn about, a left strip never mirrored); the same arms-cannot-move limit applies.
+  Strips: `i4_katana_baton_strips-p70-facings-strikes.png`.
+- What stays in the tree: RivetWindup and the slot (no strip ships, so it is off: the sword film with
+  the plumbing and no file is identical to item 1's, 0 of 130 frames differ), `blade_windup.py`
+  (the trial: add `"windup": {"side_deg": -95, "cam_deg": -95}` to a manifest row to re-cut it), the
+  rivet_frames.py hook. The trial's PNGs are not committed.
+- Before: no `rivet_eq_<weapon>_windup.png` (today's state), or `--rivet-windup=off` (verified: the
+  flag-off film is identical to item 1's after film, 0 of 330 frames).
+
+### (b) The commission
+- `docs/art/requests/windup-cells.md`: per weapon the slot, cell sizes (p70 / p55), facing, pose,
+  plates (the p70 strip's 10 plates by share), combo timings, reference stills, how to fit it in.
+  None marked "interim cell shipped" (none passed). The baton's left wind-up needs a second slot
+  (a one-line follow-up in RivetWindup, listed there).
+- Tests: `test_rivet_windup.gd` (8: wind-up ticks swap, no strike / active / no wind-up keep, only
+  the equipped strip and a weapon with a cut, the flag, cells and pad, no cut changes nothing and
+  warms nothing, cells by octant incl. the diag strip unchanged, the warm lists it). Strip presence
+  stubbed through RivetStrips' file cache.

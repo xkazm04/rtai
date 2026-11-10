@@ -48,7 +48,7 @@ static func step(rig: CutRig) -> void:
 	if path != "" and LEFT[oct_of(rig)] == 1 and RivetStrips.ONE_HAND.has(weapon):
 		path = RivetStrips.left_of(art, weapon)
 	path = walk if walk != "" else RivetReload.held_or(rig, art, weapon, path)
-	path = RivetKnock.path_or(rig, art, path)  # n9: a car's knock wins over the DOWN sprawl
+	path = RivetKnock.path_or(rig, art, RivetWindup.path_or(rig, art, weapon, path))  # n9, n13
 	if not ENABLED or path.is_empty():
 		release(rig)
 		return
@@ -96,7 +96,7 @@ static func cell_of(rig: CutRig, cells: int, walk_ph: float = -1.0) -> Vector2i:
 	var o: int = oct_of(rig)
 	var left: int = LEFT[o]
 	if cells < EQ_CELLS and walk_ph < 0.0:  # a drawn left strip, a diagonal fire strip
-		return Vector2i(RivetStrips.small_cell(o, cells), 0)
+		return RivetWindup.small_of(o, cells)  # n13: and the wind-up strip
 	if rig.dead or (rig.react != null and rig.react.dying):
 		return Vector2i(Cell.DEATH, 0)
 	if walk_ph >= 0.0:

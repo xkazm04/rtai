@@ -1,0 +1,76 @@
+extends GutTest
+## n13 item 4: a blade with a wind-up strip draws it through the strike's wind-up ticks (view only).
+## No wind-up strip ships yet (the composed trial failed on film; cells are commissioned): the
+## strip's presence is stubbed through RivetStrips' file cache.
+
+const EQ: String = "res://features/characters/art/view/p70/rivet_eq_plasma_sword.png"
+const WU: String = "res://features/characters/art/view/p70/rivet_eq_plasma_sword_windup.png"
+
+
+func before_each() -> void:
+	RivetStrips._exists[WU] = true
+
+
+func after_each() -> void:
+	RivetWindup.enabled = true
+	@warning_ignore("return_value_discarded")
+	RivetStrips._exists.erase(WU)
+
+
+func _rig(strike_t: float, windup_s: float = 4.0 / 60.0) -> CutRig:
+	var rig: CutRig = CutRig.new()
+	autofree(rig)
+	rig.clips.strike_t = strike_t
+	rig.clips.strike_ph = Vector3(windup_s, 3.0 / 60.0, 8.0 / 60.0)
+	return rig
+
+
+func test_the_wind_up_ticks_draw_the_wind_up_strip() -> void:
+	assert_eq(RivetWindup.path_or(_rig(0.0), "p70", &"plasma_sword", EQ), WU, "first tick")
+	assert_eq(RivetWindup.path_or(_rig(3.0 / 60.0), "p70", &"plasma_sword", EQ), WU)
+
+
+func test_no_strike_and_the_active_ticks_keep_the_strip() -> void:
+	assert_eq(RivetWindup.path_or(_rig(-1.0), "p70", &"plasma_sword", EQ), EQ, "no strike")
+	assert_eq(RivetWindup.path_or(_rig(4.5 / 60.0), "p70", &"plasma_sword", EQ), EQ, "active")
+	assert_eq(RivetWindup.path_or(_rig(0.0, 0.0), "p70", &"plasma_sword", EQ), EQ, "no wind-up")
+
+
+func test_only_the_equipped_strip_and_a_weapon_with_a_cut_swap() -> void:
+	var walk: String = "res://features/characters/art/view/p70/rivet_walk_armed_plasma_sword.png"
+	assert_eq(RivetWindup.path_or(_rig(0.0), "p70", &"plasma_sword", walk), walk, "a walk grid")
+	var pistol: String = "res://features/characters/art/view/p70/rivet_eq_pistol.png"
+	assert_eq(RivetWindup.path_or(_rig(0.0), "p70", &"pistol", pistol), pistol, "no cut")
+	assert_eq(RivetWindup.path_or(_rig(0.0), "p70", &"", EQ), EQ, "no weapon")
+
+
+func test_the_flag_turns_it_off() -> void:
+	RivetWindup.enabled = false
+	assert_eq(RivetWindup.path_or(_rig(0.0), "p70", &"plasma_sword", EQ), EQ)
+
+
+func test_the_strip_is_two_cells_on_the_equipped_pad() -> void:
+	assert_eq(RivetStrips.cells_of(WU, false), RivetWindup.CELLS)
+	assert_eq(RivetStrips.foot_px(WU), RivetStrips.foot_px(EQ))
+
+
+func test_without_a_cut_nothing_changes() -> void:
+	@warning_ignore("return_value_discarded")
+	RivetStrips._exists.erase(WU)
+	RivetStrips._exists[WU] = false
+	assert_eq(RivetWindup.path_or(_rig(0.0), "p70", &"plasma_sword", EQ), EQ)
+	assert_false(RivetStripWarm.paths("p70", [&"plasma_sword"]).has(WU), "nothing to warm")
+
+
+func test_the_cells_by_octant() -> void:
+	assert_eq(RivetWindup.small_of(2, RivetWindup.CELLS), Vector2i(RivetWindup.CAM, 0))
+	for o: int in [0, 1, 7, 6]:
+		assert_eq(RivetWindup.small_of(o, RivetWindup.CELLS), Vector2i(RivetWindup.SIDE, 0))
+	for o: int in [3, 4, 5]:
+		assert_eq(RivetWindup.small_of(o, RivetWindup.CELLS), Vector2i(RivetWindup.SIDE, 1))
+	assert_eq(RivetWindup.small_of(1, RivetStrips.DIAG_CELLS), Vector2i(0, 0), "the diag strip")
+
+
+func test_the_warm_lists_it() -> void:
+	var paths: PackedStringArray = RivetStripWarm.paths("p70", [&"plasma_sword"])
+	assert_true(paths.has(WU))
