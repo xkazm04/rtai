@@ -143,3 +143,8 @@ until 01:45). Repaired by hand within minutes; no lane commit got the wrong iden
 - 9c7039eb: `compare.mjs` prints where each commit side's temp checkout was kept (about 1.7 GB each);
   `--clean` removes it. Nothing else changes for callers.
 - e9abf625: `check.mjs` has exit 3 (only dependency cascades, no cause); `quick.mjs` shows it as unverifiable.
+- e1e478c1, 75ac86d4, 063e9fad (temp folders removed by the tests that make them) and the new
+  `tools/gate/temp_hygiene.test.mjs`: eight tool test files no longer leave `gtai-*`, `baked-*`,
+  `morning-run-*` and `reels-*` folders in `%TEMP%` (280 had piled up since 11-07; 18 + 11 per run).
+  The guard runs in the hook's tool-tests: a new test that calls `mkdtemp` and never removes anything
+  fails the commit. A lane that adds such a test on its branch fails the merge's lint until it does.
