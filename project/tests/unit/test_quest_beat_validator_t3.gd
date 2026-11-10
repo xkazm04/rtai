@@ -61,6 +61,7 @@ func test_an_unknown_line_id_is_not_marked_used() -> void:
 
 func test_a_beat_with_an_error_adds_no_encounter() -> void:
 	var broken: Dictionary = _beat({"verb": "battle", "location": "yard"})
+	@warning_ignore("return_value_discarded")
 	broken.erase("title")
 	_check([broken])
 	assert_false(_report.ok())
