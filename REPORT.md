@@ -134,3 +134,8 @@ until 01:45). Repaired by hand within minutes; no lane commit got the wrong iden
   only when this run wrote a non-empty exe, and the bake step checks the chunks against the hash list.
 - ec83154e, 6583b6fc: `tools/godot/check.mjs` (and `quick.mjs` through it) now FAILs a dependency cascade
   with no autoload noise behind it, and a real error that quotes a cascade phrase.
+- 1921662c, 3dccc7e1: `run_unit.mjs` has a new exit code. `--select` with a name that matches no file
+  runs the rest and exits 3 (UNVERIFIABLE) when they pass; `--test=<fn>` now needs the whole function
+  name (it used to plan files that only define a longer name). No-arg runs and the evidence are unchanged.
+- 9c7039eb: `compare.mjs` prints where each commit side's temp checkout was kept (about 1.7 GB each);
+  `--clean` removes it. Nothing else changes for callers.
