@@ -255,3 +255,13 @@ seeded there). (3) item 4b part 2: `morning.mjs --worktree=C:/Users/kazda/kiro/g
   in flight started before it, so no real morning run has printed it yet. Tests 5/5 Windows + WSL; merge 89/89.
   (FRICTION, mine: a `[\/]` regex in a test fake lost a backslash on the way through my shell; used basename.)
 - 00:01 4b part 2 reels: `top` view at chapter 19/19.
+- 00:10 MILESTONE item 4b DONE (real, never on fakes): `morning.mjs ... --steps=gates,reels --timeout=90` on
+  scratch-integ 76ed5809e -> `morning: gates: green`, `morning: reels: green` (`top OK, 281 s`, `tilt70 OK, 284 s`,
+  `combo OK, 296 s`), `morning: DONE at 76ed5809 on n15t-scratch-integ. Nothing was pushed; main was not touched.`,
+  exit 0 (log gtai-n15/flake/morning_4b_part2.log). With part 1 (23:08-23:12): merge, debt, native, gates, reels
+  all ran for real once. Evidence JSON + reels log kept in gtai-n15/flake/integ_evidence/ (59 files). Then
+  `git worktree remove --force gtai-n15/scratch-integ` and `git branch -D n15t-scratch-integ` (was 76ed5809e): gone.
+  Not run: the bake and export steps (not asked by the brief; bake is a city re-bake, export is a stub step).
+- 00:13 SERVED combat REQUEST `test_quest_blade` (5e41c66bc): `run_unit --select=test_quest_blade`: without the fix
+  `1 failing (4 passed, 1 failed)` `[weapon_slot_2] ... to contain '[2]'` (combat's exact symptom), with it
+  `5 passed, 0 failed` (re-run after a line-length fix). Test-only change.
