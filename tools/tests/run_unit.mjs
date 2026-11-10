@@ -3,8 +3,9 @@
 //   node tools/tests/run_unit.mjs [--select=<name|glob>[,..]]... [--test=<test function>]
 //                                 [--changed[=<git ref>]] [--fast] [--all] [--no-rerun] | --failed
 // No args = EVERYTHING (the gate). --fast skips the slow tier (tools/tests/tiers.json). --select
-// takes test file basenames (test_x, x or a glob). --test runs the files that define that test
-// function. --changed maps the changed files to tests (tools/tests/test_map.mjs), skipping the slow
+// takes test file basenames (test_x, x or a glob); a name that matches nothing is said with the
+// nearest stem, the rest still run, and a green run exits 3 UNVERIFIABLE, never 0 (none matched:
+// exit 2). --test runs the files that define that test function. --changed maps the changed files to tests (tools/tests/test_map.mjs), skipping the slow
 // tier unless it is mapped (--all adds it to a full-suite fallback). Unknown args exit 2.
 // After failures each failing test FILE is re-run once in isolation: fail-then-pass is FLAKY
 // (loud line, one JSON line in the machine-wide ledger, see flakes.mjs; the run stays ok, the
@@ -25,6 +26,7 @@ import { digestLines, parseJunit, slowest } from './junit.mjs';
 import { classifyRerun, flakeEntry, recordFlake } from './flakes.mjs';
 import { changedFiles, mapChanges, realIndex } from './test_map.mjs';
 import { TRIAGE_NAME, blockLines, triage, writeTriage } from './triage.mjs';
+import { didYouMean } from '../dev/entries.mjs';
 
 export const JUNIT_NAME = 'unit-tests.junit.xml';
 export const LOG_NAME = 'unit-tests.log';
@@ -90,13 +92,17 @@ export function buildPlan(o, index = realIndex(), slow = slowTier(), changedList
   const fastOnly = (list) => (o.all ? list : list.filter((f) => !slow.includes(f)));
   const notes = [];
   let files = null;
+  let unmatched = [];
   if (o.select.length) {
     files = [...new Set(o.select.flatMap((g) => {
       const res = globRe(g.replace(/\.gd$/, ''));
       const hit = all.filter((f) => res.test(stem(f)) || (!g.includes('*') && stem(f) === `test_${g}`));
-      if (!hit.length) throw new UsageError(`--select=${g} matches no test file`);
+      if (!hit.length) unmatched.push(g);
       return hit;
     }))].sort();
+    const said = unmatched.map((g) => selectMiss(g, all));
+    if (!files.length) throw new UsageError(said.join('; '));
+    notes.push(...said.map((m) => `${m}: the other ${files.length} file(s) run, and this run cannot pass`));
   } else if (o.changed) {
     const map = mapChanges(changedList ?? changedFiles(o.changed === true ? null : o.changed), index);
     notes.push(...map.notes);
@@ -112,7 +118,16 @@ export function buildPlan(o, index = realIndex(), slow = slowTier(), changedList
   const targeted = Boolean(o.select.length || o.changed || o.test);
   const skipped = files && !targeted ? all.length - files.length : 0;
   if (skipped) notes.push(`slow tier skipped: ${skipped} file(s): ${slow.join(', ')}`);
-  return { files, skipped, notes, targeted, testName: o.test };
+  return { files, skipped, notes, targeted, testName: o.test, unmatched };
+}
+
+/** `--select=<g> matches no test file`, with the nearest test file stem when one is close. */
+export function selectMiss(g, all) {
+  const want = g.replace(/\.gd$/, '');
+  const stems = all.map(stem);
+  const near = stems.filter((s) => !want.includes('*') && s.includes(want)).sort((a, b) => a.length - b.length)[0]
+    ?? didYouMean(want.startsWith('test_') ? want : `test_${want}`, stems);
+  return `--select=${g} matches no test file${near ? ` (did you mean ${near}?)` : ''}`;
 }
 
 /** A temp gutconfig (dirs emptied, tests = the res:// files) under outDir; returns its path. */
@@ -185,15 +200,20 @@ export async function runUnit(outDir, opts = {}) {
   if (counts.passed + counts.failed === 0) problems.push('zero tests ran');
   if (counts.failed > 0) problems.push(`${counts.failed} failing`);
   if (n) problems.push(`FLAKY ${n}`);
-  const ok = problems.every((p) => p.startsWith('FLAKY'));
+  const green = problems.every((p) => p.startsWith('FLAKY'));
+  // a named test file that does not exist never ran: green elsewhere is not a pass (hero n11 REQUEST)
+  const unverifiable = green && plan.unmatched?.length > 0;
+  const ok = green && !unverifiable;
   const tally = `${counts.passed} passed, ${counts.failed} failed, ${counts.skipped} skipped`;
   const scope = (plan.skipped ? `, slow tier skipped (${plan.skipped} file)` : '') + (n ? `, FLAKY ${n}` : '');
-  const summary = ok ? `unit-tests: ${tally} (GUT, headless${scope})` : `unit-tests: ${problems.join('; ')} (${tally})`;
+  const summary = ok ? `unit-tests: ${tally} (GUT, headless${scope})` : unverifiable
+    ? `unit-tests: UNVERIFIABLE: --select=${plan.unmatched.join(',')} matched no test file and never ran (${tally} in the rest)`
+    : `unit-tests: ${problems.join('; ')} (${tally})`;
   const durationMs = steps.reduce((a, [, r]) => a + r.durationMs, 0);
   const errs = steps.flatMap(([, r]) => scriptErrors(r.out));
   const flakyLines = flake.flaky.map((c) => `FLAKY: ${c.file} ${c.name}`);
-  const tri = triageFor(outDir, ok, { failing: flake.failing, gut, steps, o, index });
-  return { ok, counts, summary, durationMs, notes: [...plan.notes, ...flake.notes, ...tri.notes], ran: gut.cases.length,
+  const tri = triageFor(outDir, green, { failing: flake.failing, gut, steps, o, index });
+  return { ok, outcome: ok ? 'pass' : unverifiable ? 'unverifiable' : 'fail', counts, summary, durationMs, notes: [...plan.notes, ...flake.notes, ...tri.notes], ran: gut.cases.length,
     artifacts: [JUNIT_NAME, LOG_NAME, ...(flake.rerun ? [RERUN_JUNIT] : []), ...(tri.written ? [TRIAGE_NAME] : [])],
     ...(n ? { metrics: { flaky: n } } : {}), flaky: flakyLines, digest: [...digestLines(flake.failing), ...errs],
     errors: errs, triage: tri.entries, slowest: slowest(gut.cases) };
@@ -253,5 +273,5 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
     process.exit(2);
   }
   report(result, !opts.select.length && !opts.test && !opts.changed && !opts.failed);
-  process.exit(result.ok ? 0 : 1);
+  process.exit(result.ok ? 0 : result.outcome === 'unverifiable' ? 3 : 1);
 }

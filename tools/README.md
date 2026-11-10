@@ -354,6 +354,20 @@ on the command line still wins.
 
 **Unverifiable (exit 3):** an asset still does not match its import after `--import`; nothing is launched.
 
+## A misspelled `--select` name no longer costs the run (`tools/tests/run_unit.mjs`)
+
+```
+node tools/tests/run_unit.mjs --select=test_sim_clock,test_sim_clok
+# note: --select=test_sim_clok matches no test file (did you mean test_sim_clock?): the other 1 file(s) run, and this run cannot pass
+# unit-tests: UNVERIFIABLE: --select=test_sim_clok matched no test file and never ran (5 passed, 0 failed, 0 skipped in the rest)
+```
+
+One wrong name in a `--select` list used to exit 2 and run nothing, which cost a gate slot on a busy
+machine. Now the names that match run, the one that does not is named with the nearest test file,
+and a green run exits **3 (unverifiable)**, never 0: the file you asked for did not run, so the run
+cannot vouch for it. A failure in the files that ran still exits 1. When no name matches at all it is
+still exit 2 before Godot starts, now with the suggestion. A glob gets no substring guess.
+
 ## Scenario progress (`run_scenarios.gd`, `tools/tests/run_scenarios.mjs`)
 
 ```
