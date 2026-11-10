@@ -332,3 +332,10 @@ NEXT (it19 / the next night, read first):
 4. For a before film use a pixel-exact repro or `git checkout <rev> -- <png>`: never `git show <rev>:<png> > <png>` (an LFS pointer; it15 FOUND, it18 FOUND).
 5. The rest of Rivet's 110 strips at x1.5 (p55, sword, left rows, knock, strike), one per commit (it14 recipe).
 - GATES 07:21 **reel gate on 00f2415f (art = ccfd86db): top OK, tilt70 OK, combo OK, exit 0** (`gtai-n11/tmp/hero/reel_it18/`). NEXT item 1 is done. Session ends here, before the 07:30 freeze; every gate is green on the final art.
+
+## it19 (session 22, 07:22-07:25)
+
+- Opened at 07:22, 8 min before the freeze: too little time for any art or code change plus its gates, so none was started (a half-gated change at freeze would break the "all gates green on the final art" state). Checked: tree clean apart from the assets lane's `ASSETS-REPLIES.md` (not mine, left untracked); REPORT's GATES (it18) line already carries the 07:21 reel result; LEVEL.md is current to it18. No golden moved or re-blessed.
+- The final state for the Director: HEAD = this commit (docs only); last code-or-art commit ccfd86db; on it full unit 2259/0, scenarios 55/0, reel top/tilt70/combo OK; exe from 898ab184.
+
+NEXT (the next night, read first): it18's NEXT items 2-5 stand unchanged (per-form `GhostRecoil.LEAN_DEG`, a blow-source field on `Fighter`, Ohm's diagonal HIT cells on arrival, the LFS-pointer before-film trap, the rest of Rivet's strips at x1.5). REPORT.md needs no change at 07:40.
