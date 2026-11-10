@@ -382,3 +382,9 @@ NEXT (07:20): the 07:15 NEXT stands (items 1-4 of the 07:07 NEXT). Report sessio
 - 07:25 Re-read siblings (hero 341 lines, combat 386): no new `REQUEST tools:` or FRICTION since iteration 49. Tree clean, nothing of mine running. No code: 5 min to the freeze.
 
 NEXT (07:26): the 07:20 NEXT stands. Report session: re-run the ledger with `--state`, drop "(DRAFT ...)" from REPORT's title, add combat it35's burn-fill FRICTION as "seen, not served (waits on an asset)", re-run `node tools/evidence/cites.mjs REPORT.md`.
+
+## Iteration 51 (07:30-07:33, STABILIZE)
+
+- 07:31 Re-read siblings (hero 347 lines, combat 392): no new `REQUEST tools:` or FRICTION since iteration 49. Node tooling suite, 11 globs (lib, lint, tests, debt, evidence, dev, selftest, film, gate, merge, codex): 786/786 pass on 8149d7ee. Tree clean, nothing of mine running. No code changes: past the freeze, nothing red to fix.
+
+NEXT (07:33): the 07:20 NEXT stands. Report session: re-run the ledger with `--state`, drop "(DRAFT ...)" from REPORT's title, add combat it35's burn-fill FRICTION as "seen, not served (waits on an asset)", re-run `node tools/evidence/cites.mjs REPORT.md`.
