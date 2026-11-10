@@ -1,5 +1,5 @@
 {
-  "alpha": 0.6,
+  "alpha": 1,
   "cap": 96,
   "doc": "n12 E2 (BattleResidue, boot/collect_call/view): a round's ground scuff, once its 4 s are over (GunFx.SCUFF_TICKS), is kept where it was in a bounded ring: cap marks at most, the oldest fade_n of a full ring fading out first, each at alpha of its fresh ink (the same GunFxMarks.scuff stroke and seed). One node draws the ring and redraws only when it changes. on false = the before (scuffs vanish after 4 s).",
   "fade_n": 24,
