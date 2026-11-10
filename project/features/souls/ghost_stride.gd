@@ -12,6 +12,7 @@ const MIN_SHARE: float = 0.4
 const TABLES: Dictionary[String, Array] = {
 	"ohm/p70": [0.0, 47.7, 6.8, 17.2, 29.0, 12.5, 7.0, 17.2],
 	"tonnage/p70": [47.0, 14.0, 58.5, 29.4, 25.0, 31.5, 29.4, 0.5],
+	"tonnage/p55": [46.0, 13.5, 51.0, 28.0, 24.5, 32.0, 28.0, 1.0],
 }
 
 ## Run rows ("<name>/<art>", 0 = toward) drawn as a gallop (both halves lead with one leg): that

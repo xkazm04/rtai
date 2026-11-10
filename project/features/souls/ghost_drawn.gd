@@ -19,7 +19,7 @@ const RUN_FROM_MPS: float = 5.0
 const MAX_RUN_CYCLES_S: float = 3.5
 const BACKPEDAL_DOT: float = -0.25
 ## A pitch's drawn stride against the p70 cycle ("<name>/<art>"), measured off its stance foot.
-const STRIDE_K: Dictionary[String, float] = {"dent/p55": 0.8}
+const STRIDE_K: Dictionary[String, float] = {"dent/p55": 0.8, "tonnage/p55": 0.95}
 ## Frames without ground walked before the figure stands.
 const STILL_FRAMES: int = 3
 const OCT_HOLD_RAD: float = deg_to_rad(4.0)
