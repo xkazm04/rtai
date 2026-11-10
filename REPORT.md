@@ -90,6 +90,11 @@ module three times their size, reviewing Codex's tests took 30 % fewer Claude to
 (29,504 fewer), and the control pinned the same private literals (2.5 m, 13 m) that the review removed
 from Codex's file. Three modules is still not a rate, and wall time with Codex is longer, not shorter.
 
+Unpaired, 06:44-06:55: `sim_hash` (`CitySimHash`, 67 lines): Codex 173 s, 9 tests, mutation 86.7 % on
+its version; the review (subagent, measured: 64,833 tokens, 178 s) rewrote 2 tests that pinned implementation
+choices (66 lines) and found a suspect (Calls item 5). No control: its grade alone took 23 min under load
+at 22:58, more than the time left before the freeze. Landed c52cceb1.
+
 ## Incident (mine, repaired)
 
 At 01:39 a tool test of mine ran inside the pre-commit hook, where git sets `GIT_DIR`, and its
@@ -115,6 +120,12 @@ until 01:45). Repaired by hand within minutes; no lane commit got the wrong iden
    `:90` and `:118` accept `T_ROAD_H` and `T_ROAD_V` in any direction, so road orientation is ignored;
    the tuned numbers 18 m (`:27`), 2.5 m (`:53`), 13 m (`:62`) and 16 m (`:89`) are inline literals tests
    cannot read, so the landed test states relations instead of pinning them.
+5. CitySimHash window vs promoted actors (parity reference sim, NAT-06; found by the sim_hash review, read
+   by me): promoted actors stay tier A out to `rb * 1.6` (`city_sim_ref.gd:175`, `d2 > rb2 * 2.56`; with
+   the default rb 160 m, `sim_state.gd:47`, that is 256 m), but the
+   hash window is `HW * HC` = 320 m wide around the camera (`sim_constants.gd:13-14`), so a promoted actor
+   past 160 m on an axis is never returned by `query()`: no neighbour or collision checks. Fix the window
+   or the promotion radius; untested on purpose until you choose.
 
 ## Proposals for the Director (not applied to the rules builders read)
 
