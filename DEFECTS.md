@@ -34,8 +34,8 @@ Ranked within each film; newest film first.
 ## Machine pistol lone kills, 9 kinds, combo 64 px/m (session 2, c-2 films)
 1. Thrown-back hit cells drawn from a shallower camera (whole body, upturned face, long legs) between the walk and the fall -> fixed 1ede2ce03 (c-2 redraws, 9 kinds).
 2. The body-hit ink burst read as a black ball as wide as the head -> fixed 07bb047cf (body ink 0.12 m).
-3. The body-hit burst lands about 0.5 m in front of the drawn thrown-back card, on the floor -> open.
-4. Every lone victim (suit, punk, thug included) drops the brown rifle at t350, a patrol cop who held a pistol too -> open (the gunplay bot arms the victim; check which gun the drop draws).
+3. The body-hit burst lands about 0.5 m in front of the drawn thrown-back card, on the floor -> open. Session 3 reading of `body_ink_disc_ab`: at t338 the burst is on the body; by t339-341 the knock-back has moved the body ~0.5 m along the shot while the burst stays at the world stop point (GunFx.impacts store no victim). Fix path: carry the victim id in the impact and draw the burst at its offset from the moving fighter.
+4. Every lone victim (suit, punk, thug included) drops the brown rifle at t350, a patrol cop who held a pistol too -> open, likely the dev shot only: `CombatArena._drop` leaves a rifle pickup (a gameplay item, the guards' rifle) for every non-boss fighter, and the lone-victim shot dresses a gunplay hostile as a street kind; a per-kind drop would be a sim change (session 3 reading).
 5. The victim walks in at t338 as a blue armed card with the kind's head (the gunplay hostile's body) -> open, likely the dev shot only.
 
 ## Baton left swing, director chapter electro_baton_left, combo + tilt 32 px/m (session 2)
