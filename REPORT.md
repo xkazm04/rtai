@@ -40,6 +40,8 @@ crowd: look goldens re-blessed with a decisions line). t-4 and t-5 move nothing 
   a delete order (the integrated run told us to delete a row its own block run had counted).
 - `tools/lib/dev_verdict.mjs` (4eae1a978, item 6): result-freshness slack 2 ms -> 1 s. Linux stamps files up to 6.66 ms
   before `Date.now()`; a selftest tool test failed 3/3 on WSL, 0 after.
+- `tools/lib/godot_stop.break.test.mjs` (7f10f84b2, item 6): on Linux a zombie grandchild counts as dead (was a 1-in-4
+  Linux flake). Item 6 found three timing-shaped causes in all: cold node starts, the Linux mtime tick, the zombie.
 - `tests/parity/city_parity.gd`: `final_sha_a/b` in the parity result.
 
 Gates on eb65c8b05 (`node tools/gate/run.mjs`): PASS - lint 16/16, unit 2507/0, scenarios 55, parity exact,
