@@ -367,6 +367,11 @@ on the command line still wins.
 
 **Unverifiable (exit 3):** an asset still does not match its import after `--import`; nothing is launched.
 
+**Refuses (exit 1, `film.mjs` too):** a changed asset that is a Git LFS pointer (`git show HEAD:<png> > <png>`
+writes one; restore with `git checkout -- <png> <png>.import`), before anything imports it, so its `.import`
+is not rewritten `valid=false`; and an `--import` that exits 0 but prints `Error importing` or
+`ERR_FILE_CORRUPT`, with those lines. Godot alone would film without the texture and report 0 SCRIPT ERROR.
+
 ## A misspelled `--select` name no longer costs the run (`tools/tests/run_unit.mjs`)
 
 ```
