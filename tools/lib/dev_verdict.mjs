@@ -10,8 +10,12 @@ import { SCRIPT_ERROR } from './godot.mjs';
 const UNKNOWN_ARG = /unknown (?:launch )?arg(?:ument)?\s+(\S+)/i;
 const LOCATION = /(res:\/\/[^\s():]+:\d+)/;
 const LABELS = { 1: 'fail', 2: 'usage', [-1]: 'never ran' };
-/** A result file stamped this long before the launch still counts (coarse filesystem clocks). */
-const MTIME_SLACK_MS = 2;
+/** A result file stamped this long before the launch still counts. Linux stamps files from the kernel's
+ *  coarse clock: on WSL Ubuntu a file written right after `Date.now()` measured up to 6.66 ms EARLIER
+ *  (n15, 2000 writes), so the old 2 ms slack called fresh results stale on Linux, depending on the tick's
+ *  phase (tools/selftest's runWorldLock test failed 3 of 3 there). A stale file is minutes old, never 1 s:
+ *  the same rule as film.mjs FRESH_SLACK_MS. */
+export const MTIME_SLACK_MS = 1000;
 
 /** [{text, at}] for each SCRIPT ERROR line; `at` is the first res:// location on it or the next 3 lines. */
 export function scriptErrors(out) {
