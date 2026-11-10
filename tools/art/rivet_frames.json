@@ -305,7 +305,8 @@
    },
    "rivet_eq_rocket_launcher": {
     "counts": "5,3",
-    "sheet": "rivet_eq_rocket_launcher_70.png"
+    "sheet": "rivet_eq_rocket_launcher_70.png",
+    "fig_h": 165
    },
    "rivet_frames": {
     "act_k": 0.97,
