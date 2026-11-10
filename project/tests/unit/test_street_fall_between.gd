@@ -9,8 +9,15 @@ func test_the_patrol_cop_falls_through_the_drawn_in_betweens() -> void:
 
 
 func test_a_kind_without_in_betweens_keeps_its_three_rows() -> void:
-	var path: String = StreetWalkerFall.path_of("p70", "ped/head_cap")
-	assert_eq(StreetFallBetween.rows_of(path), StreetWalkerFall.FALL_FRAMES)
+	# it20: every p70 kind has them now (ped/head_cap was this example): its 3-row grid itself
+	assert_eq(StreetFallBetween.rows_of("p70/ped_cap_long_fall.png"), StreetWalkerFall.FALL_FRAMES)
+
+
+func test_every_street_kind_falls_through_drawn_in_betweens_at_play_view() -> void:
+	# it20: the pedestrians fell from an oversized mid-fall frame straight to a plan pose
+	for row: String in StreetDeadPlan.CLASS_OF:
+		var path: String = StreetWalkerFall.path_of("p70", row)
+		assert_eq(StreetFallBetween.rows_of(path), StreetFallBetween.FRAMES, row)
 
 
 func test_riot_swat_and_the_suit_fall_through_their_in_betweens_too() -> void:
@@ -36,7 +43,7 @@ func test_the_in_betweens_play_in_order_between_mid_fall_and_lying() -> void:
 
 
 func test_a_grid_with_no_in_betweens_is_kept() -> void:
-	assert_eq(StreetFallBetween.swap("p70/ped_cap_long_fall.png"), "p70/ped_cap_long_fall.png")
+	assert_eq(StreetFallBetween.swap("p70/ped_none_long_fall.png"), "p70/ped_none_long_fall.png")
 
 
 func test_the_thug_and_the_worker_fall_through_the_in_betweens() -> void:

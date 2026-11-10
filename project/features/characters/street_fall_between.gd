@@ -16,6 +16,13 @@ const GRIDS: Dictionary[String, String] = {
 	"p70/ped_suit_long_fall.png": "p70/ped_suit_between_fall.png",
 	"p70/thug_long_fall.png": "p70/thug_between_fall.png",
 	"p70/ped_worker_long_fall.png": "p70/ped_worker_between_fall.png",
+	"p70/ped_hood_long_fall.png": "p70/ped_hood_between_fall.png",
+	"p70/ped_cap_long_fall.png": "p70/ped_cap_between_fall.png",
+	"p70/ped_elder_long_fall.png": "p70/ped_elder_between_fall.png",
+	"p70/ped_hat_long_fall.png": "p70/ped_hat_between_fall.png",
+	"p70/ped_jogger_long_fall.png": "p70/ped_jogger_between_fall.png",
+	"p70/ped_punk_long_fall.png": "p70/ped_punk_between_fall.png",
+	"p70/ped_shopper_long_fall.png": "p70/ped_shopper_between_fall.png",
 }
 const FRAMES: int = 5
 ## Each row's start, of the death family's progress: buckle, mid-fall, fall1, fall2, lying.

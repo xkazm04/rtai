@@ -41,6 +41,13 @@ KINDS = {
     "ped_suit": ("ped_suit_long_fall.png", "ped_suit_between_fall.png"),
     "thug": ("thug_long_fall.png", "thug_between_fall.png"),
     "ped_worker": ("ped_worker_long_fall.png", "ped_worker_between_fall.png"),
+    "ped_hood": ("ped_hood_long_fall.png", "ped_hood_between_fall.png"),
+    "ped_cap": ("ped_cap_long_fall.png", "ped_cap_between_fall.png"),
+    "ped_elder": ("ped_elder_long_fall.png", "ped_elder_between_fall.png"),
+    "ped_hat": ("ped_hat_long_fall.png", "ped_hat_between_fall.png"),
+    "ped_jogger": ("ped_jogger_long_fall.png", "ped_jogger_between_fall.png"),
+    "ped_punk": ("ped_punk_long_fall.png", "ped_punk_between_fall.png"),
+    "ped_shopper": ("ped_shopper_long_fall.png", "ped_shopper_between_fall.png"),
 }
 COLS = 5
 # kinds whose long fall grid draws a warm arm band: greyed by street_armband.py (colour law)
