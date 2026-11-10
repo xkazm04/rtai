@@ -108,6 +108,10 @@
     "act_k": 0.85,
     "cc": "1",
     "counts": "5,3",
+    "ink_rim": {
+     "px": 0.5,
+     "reach": 6
+    },
     "sheet": "rivet_eq_plasma_sword_55_v4.png"
    },
    "rivet_eq_ray_gun": {
@@ -263,6 +267,10 @@
    "rivet_eq_plasma_sword": {
     "act_k": 0.82,
     "counts": "5,3",
+    "ink_rim": {
+     "px": 0.5,
+     "reach": 6
+    },
     "sheet": "rivet_eq_plasma_sword_70_v2.png"
    },
    "rivet_eq_ray_gun": {

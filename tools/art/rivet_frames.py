@@ -13,6 +13,8 @@ drew it width-matched to the turned views, rivet_70_left_v4's notes).
 python -I tools/art/rivet_frames.py --manifest=tools/art/rivet_frames.json cuts every strip the
 manifest names (the owner-judged picks) into project/features/characters/art/view/<art>/;
 --only=<name prefix> as a second argument cuts only those rows; a row's fig_h overrides the manifest's.
+n13: a row's "ink_rim" ({"px", "reach"}) then cuts treatment B (a heavier ink rim round the blade,
+tools/art/blade_ink_rim.py) into the strip; --no-ink-rim (or the key removed) cuts the strip without it.
 
 Each band's figures are the <count> column clusters of its alpha (cut at the count-1 widest gaps:
 a spark or a slash trail stays with its figure). Each figure's anchor is its helmet's centre (the
@@ -27,6 +29,7 @@ Deterministic.
 
 import json
 import sys
+from pathlib import Path
 
 import numpy as np
 from PIL import Image
@@ -146,7 +149,16 @@ def _feet_up(figs: list, fracs: list) -> None:
         f["h"] = f["feet_h"]
 
 
-def _manifest(path: str, only: str = "") -> None:
+def _ink_rim(path: str, rim: dict) -> None:
+    """n13: a row's "ink_rim" ({"px", "reach"}) cuts treatment B into the strip (blade_ink_rim.py)."""
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from blade_ink_rim import ink_rim  # noqa: E402
+
+    ink_rim(path, path, float(rim["px"]), float(rim["reach"]))
+    print(f"ink rim px {rim['px']} reach {rim['reach']}: {path}")
+
+
+def _manifest(path: str, only: str = "", no_rim: bool = False) -> None:
     with open(path, encoding="utf-8") as fh:
         man = json.load(fh)
     lib, out = man["library"], man["out"]
@@ -165,12 +177,15 @@ def _manifest(path: str, only: str = "") -> None:
                 argv.append(f"--left={lib}/{row['left']}")
             sys.argv = [sys.argv[0]] + argv + [f"--fig_h={row.get('fig_h', man['fig_h'])}"]
             main()
+            if "ink_rim" in row and not no_rim:
+                _ink_rim(f"{out}/{art}/{name}.png", row["ink_rim"])
 
 
 def main() -> None:
-    if len(sys.argv) in (2, 3) and sys.argv[1].startswith("--manifest="):
-        only = sys.argv[2].split("=", 1)[1] if len(sys.argv) == 3 else ""
-        _manifest(sys.argv[1].split("=", 1)[1], only)
+    if len(sys.argv) >= 2 and sys.argv[1].startswith("--manifest="):
+        rest = [a for a in sys.argv[2:] if a != "--no-ink-rim"]
+        only = rest[0].split("=", 1)[1] if rest else ""
+        _manifest(sys.argv[1].split("=", 1)[1], only, "--no-ink-rim" in sys.argv)
         return
     opts = {a.split("=")[0][2:]: a.split("=", 1)[1] for a in sys.argv[1:] if a.startswith("--")}
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
