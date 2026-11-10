@@ -1,7 +1,7 @@
 # REPORT: night n11, lane combat (bodies, reactions, shadows, projectiles, pickups, HUD)
 
-DRAFT written at it21 (02:40). The freeze session (07:30) must refresh the gate lines, the HEAD
-and anything after it21. Branch `n11-combat`, cut from main `812a0b06`. Journal: `JOURNAL.md`.
+Refreshed at it33 (06:40) on HEAD `ffad2df0`. Branch `n11-combat`, cut from main `812a0b06`.
+Journal: `JOURNAL.md`.
 Frames: `C:\Users\kazda\kiro\gtai-masters\n11\combat\frames.json` (15 entries, best first).
 
 ## What works, with evidence
@@ -48,14 +48,24 @@ Frames: `C:\Users\kazda\kiro\gtai-masters\n11\combat\frames.json` (15 entries, b
      `rocket_onset_ab.png` (also `evidence/n11-combat/it32/`).
    - A man on fire (it32, `8dba1173`, `464314c8`): at combo his flames sat on the pavement up to a
      metre off his boots, a calm man beside a floor fire; now they burn over his waist, chest and
-     head (`burning_over_ab.png`). He still aims calmly while he burns (see below).
+     head (`burning_over_ab.png`).
+   - A burning patrol cop (it33, `924f54cb`, `00159691`): he no longer aims calmly under the loops.
+     He flails as the asset lane's drawn burning figure (arms up, no gun, flames up his sides),
+     shaken at 3 Hz and standing on his contact shadow. Same ticks before and after:
+     `burning_flail_ab.png`; 60 fps clip `burning_flail_clip.mp4` (both in the masters folder; also
+     `evidence/n11-combat/it33/`). Only the patrol cop has these cells; other kinds keep the loops.
 
 ## What does not work, or is not shown
 
-- Projectiles per weapon class (plasma, flame, rockets, impacts by surface, casings) were barely
-  touched; energy rounds still read as bullets (see Calls).
+- Projectiles per weapon class: the rocket onset and the burning man were fixed late (it32-33), but
+  impacts by surface and casings were not touched; energy rounds still read as bullets (see Calls).
+  A sustained flame jet was not filmed at combo tonight (the lone capture fires only taps).
+- Only the patrol cop burns as a drawn figure. Riot, SWAT, the thug and the pedestrians still
+  burn as calm walkers under the over-the-body loops (cells requested from the asset lane). A fire
+  death is still brutality's charred silhouette; the asset lane's drawn charred cells are not wired.
+- The rocket "gib" flies as one tumbling body at combo, not in pieces.
 - Vehicle shadows were never judged. Every reaction judgement is from stills and 60 fps tick
-  sheets, plus one clip (`film/it19_clip`).
+  sheets, plus two clips (`film/it19_clip`, `burning_flail_clip.mp4`).
 - The cursor has not been seen in a live window.
 - Item 6 (a full arena fight and a city street fight, frame by frame) was not reached as a loop.
 - UNMEASURED: the riot frame cost of tonight's effects under the bench lock.
@@ -81,12 +91,21 @@ Frames: `C:\Users\kazda\kiro\gtai-masters\n11\combat\frames.json` (15 entries, b
 
 ## Gates
 
-it21 draft: the last full green is `8cc57abe` (01:51). Gates on `78f79a8f` are running at the time
-of writing. Bench not run under the lock this night (see above).
+Full gates (`tools/evidence/run.mjs --no-bench`, a frozen worktree copy) on `3610274d` (it32's final
+HEAD): lint 15/15, unit 2287/0, scenarios 55/55, parity PASS (planted mutation caught at 629),
+selftest PASS (look goldens 11/11), export-audit 649/0, exit 0. Then on `00159691`
+(the final code commit, it33): lint 15/15, unit 2292/0, scenarios 55/55, parity PASS (caught at
+629), selftest PASS (look goldens 11/11), export-audit 649/0, exit 0. Only REPORT, JOURNAL and
+evidence changed after it. No replay, parity or look golden moved tonight after the one deliberate
+re-bless.
+Reel gate: last run at it10 (`0c4ae87f`): combo and tilt70 ok, 0 SCRIPT ERROR; the top view never
+finished; not re-run on the final HEAD. Bench: not run under the
+lock this night (UNMEASURED).
 
-Exe: `build/export/windows/RTAI.exe` built on `0a903df1` (it32, `bake_city` then
-`tools/export/export_checked.mjs`, exit 0); headless boot smoke 300 frames, exit 0, 0 SCRIPT ERROR.
-Not played in a window.
+Exe: `build/export/windows/RTAI.exe` (578 MB, embedded pack) + the release sim DLL, rebuilt on
+`00159691` at 06:50 (`bake_city` 256 chunks, then `tools/export/export_checked.mjs`, exit 0);
+headless boot smoke 300 frames, exit 0, 0 SCRIPT ERROR (2 engine errors from the headless dummy
+renderer, as in any headless run). Not played in a window.
 
 ## Merge notes
 
