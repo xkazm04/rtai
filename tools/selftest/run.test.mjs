@@ -42,3 +42,22 @@ test('runAccentAudit: an exit 1 fails a clean audit', async () => {
   const r = await runAccentAudit(dir, dir, 'junction', stub(dir, 'accent-audit.json', audit, 1));
   assert.equal(r.ok, false);
 });
+
+test('a debt row seen by the block site is not reported unseen (n15: the junction alone said delete it)', async () => {
+  const { unseenDebtRows, unseenNote } = await import('./run.mjs');
+  const rows = [{ id: 'blood_flicker_vehicles_64', ppm: 64, accent: 'blood', layer: 'vehicles' },
+    { id: 'blood_flicker_cop_48', ppm: 48, accent: 'vermilion', layer: 'cop' }];
+  const junction = ['32 px/m vermilion on cop: 4 px'];
+  const block = ['64 px/m blood on vehicles: 4 px'];
+  assert.deepEqual(unseenDebtRows(rows, [junction, block]), ['blood_flicker_cop_48']);
+  assert.deepEqual(unseenDebtRows(rows, [junction]), ['blood_flicker_vehicles_64', 'blood_flicker_cop_48']);
+  assert.equal(unseenNote([]), '');
+  assert.doesNotMatch(unseenNote(['x']), /delete/);
+});
+
+test('runAccentAudit no longer judges debt rows unseen from one site', async () => {
+  const dir = fresh();
+  const audit = JSON.stringify({ frames: [{ ppm: 32, frame_share: 0, offenders: [] }] });
+  const r = await runAccentAudit(dir, dir, 'junction', stub(dir, 'accent-audit.json', audit, 0));
+  assert.doesNotMatch(r.summary, /no longer seen|neither site/);
+});

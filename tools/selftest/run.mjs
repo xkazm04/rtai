@@ -62,6 +62,14 @@ export function judgeAccents(offenders, debtRows) {
   return { debt, fresh };
 }
 
+/** The accent_debt rows that NO site's offenders matched this run. Rows carry no site (the block rows were
+ *  measured on the block shot), so judging at the junction alone told the n15 integration to delete a row
+ *  the block run had just counted (blood_flicker_vehicles_64). Pure. */
+export function unseenDebtRows(debtRows, offenderLists) {
+  const all = offenderLists.flat();
+  return debtRows.filter((d) => !all.some((o) => o.startsWith(`${d.ppm} px/m ${d.accent} on ${d.layer}:`))).map((d) => d.id);
+}
+
 /** The colour-doctrine audit (dev/selftest/accent_audit.gd). Gating: an offender not covered by
  *  accent_debt.json (or above its max_px) fails the selftest. { ok, frames, offenders, summary }. */
 export async function runAccentAudit(outDir0, out0, site = 'junction', run = windowed) {
@@ -84,12 +92,9 @@ export async function runAccentAudit(outDir0, out0, site = 'junction', run = win
   const debtRows = JSON.parse(readFileSync(join(ROOT, 'project', 'data', 'tables', 'accent_debt.json'), 'utf8')).rows;
   const { debt, fresh } = judgeAccents(offenders, debtRows);
   const doctrine = fresh.length ? `NEW off-doctrine: ${fresh.join('; ')}` : 'no new off-doctrine accents';
-  // debt rows are measured at the junction: only that site can report one paid off
-  const paid = site !== 'junction' ? [] : debtRows.filter((d) => !offenders.some((o) => o.startsWith(`${d.ppm} px/m ${d.accent} on ${d.layer}:`)))
-    .map((d) => d.id);
   return { ok: v.ok && fresh.length === 0, frames, offenders,
     summary: `${site === 'junction' ? '' : `${site} `}accent pixels ${share}${crowd}; ${doctrine}${debt.length ? `; known debt: ${debt.join('; ')}` : ''}`
-      + (paid.length ? `; debt rows no longer seen (delete them): ${paid.join(', ')}` : '') + (v.ok ? '' : `; ${v.line}`) };
+      + (v.ok ? '' : `; ${v.line}`) };
 }
 
 /** The print pass's world lock (dev/selftest/world_lock.gd): the paused junction panned by a whole
@@ -133,7 +138,8 @@ export async function runSelftest(outDir, run = windowed) {
   const lock = await runWorldLock(outDir, out, run);
   const summary = `selftest: D4 city frames ${cityOk ? 'rendered' : `FAILED: ${v.line}`} (${detail}); ${r.art_loaded} art textures, `
     + `${r.placeholders} placeholders, prewarm ${Math.round(r.prewarm_ms)} ms; ${gold.summary}; ${accents.summary}; `
-    + `${blockGold.summary}; ${blockAccents.summary}; ${lock.summary}`;
+    + `${blockGold.summary}; ${blockAccents.summary}; ${lock.summary}`
+    + unseenNote(unseenDebtRows(debtRowsOf(), [accents.offenders, blockAccents.offenders]));
   const metrics = { lookGoldenFrames: gold.frames.length, lookGoldenOk: gold.ok ? 1 : 0, artLoaded: r.art_loaded,
     placeholders: r.placeholders, prewarmMs: r.prewarm_ms, textureLoadMs: r.texture_load_ms };
   for (const f of frames) metrics[`visibleActors${f.ppm}ppm`] = f.visible_actors;
@@ -152,6 +158,12 @@ export async function runSelftest(outDir, run = windowed) {
       ...(blockGold.frames.length ? [`block/${GOLDEN_NAME}`] : []),
       ...(blockAccents.frames.length ? ['block/accent-audit.json'] : [])] };
 }
+
+const debtRowsOf = () => JSON.parse(readFileSync(join(ROOT, 'project', 'data', 'tables', 'accent_debt.json'), 'utf8')).rows;
+
+/** Not a delete order: most rows are a flicker that moves between zooms from run to run. */
+export const unseenNote = (ids) => (ids.length
+  ? `; debt rows seen at neither site this run (a flicker row goes only after several quiet runs): ${ids.join(', ')}` : '');
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const r = await runSelftest(join(ROOT, 'build', 'selftest'));
