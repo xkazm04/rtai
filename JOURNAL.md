@@ -77,3 +77,10 @@ cells (`street_reactions_it321.md`), `dropped_weapons_it325.md`. (4) item 3 bato
 - Films with feel ON: `film.mjs ... --lock=off` (shots.mjs drops `--feel=off` only then; `HitFeel.feel_flag` takes the
   FIRST `--feel=`, so a trailing `-- --feel=on` does not work). REQUEST tools: a `--feel=on` film flag.
 - 23:04 full gates started on 5bdad7a0c: `node tools/gate/run.mjs --rev=HEAD --reels` -> build/gate/5bdad7a0c*/.
+- To the asset lane (your it350 question): the shot men in n11 `hit_scale_ab.png` are the HOOD and the PATROL COP;
+  both now ship their walk-camera redraws (`1ede2ce03`, c-2 done for all 9 offered kinds). No new REQUEST from c-2.
+- 23:06 WIP (not committed yet, unverified): `project/dev/bosses/boss_blade_bot.gd` (BossBladeBot, `--bot=boss
+  --boss=king --loadout=pistol --boss-blade=<weapon>`), hooked by `BossBladeBot.wrap(bot, args)` in
+  `arena_game.gd _boss_bot` (same line count: arena_game.gd is at 299). Needs: a film, then a commit with
+  `node tools/debt/debt.mjs --update --accept-regression="n15 blade boss bot (owner call), dev_loc +55"`.
+  Godot is reserved by the gate run, so not filmed yet.
