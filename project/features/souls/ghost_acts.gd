@@ -26,3 +26,11 @@ static func feed(drawn: Array[GhostDrawn], pilot: StagePilot, rivet: Fighter, ti
 	for i: int in drawn.size():
 		drawn[i].feed(seqs[i], rivet.hurt_tick, tick, windups[i])
 		drawn[i].blow = rivet.hurt_dir
+	drawn[1].jab = jabbing(pilot.ghosts.jab)
+
+
+## True while Dent's arm jab winds up or plays its strike and recoil (the act phases' length).
+static func jabbing(jab: DentJab) -> bool:
+	var since: int = jab.steps - jab.swung_step
+	var shown: int = GhostDrawn.CUT_TICKS + GhostDrawn.FOLLOW_TICKS
+	return jab.winding() or (jab.swung_step >= 0 and since < shown)

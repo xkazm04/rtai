@@ -18,6 +18,9 @@ var landed: int = 0
 ## The step the pending jab lands on (-1 = none, counted by `steps`): the view's wind-up runs
 ## until then.
 var due_tick: int = -1
+## The step the last jab was thrown on (-1 = none): the view draws the jab cells from it.
+## Not hashed.
+var swung_step: int = -1
 ## Steps taken (one per sim tick the pilot drives; its own clock, so a host that does not advance
 ## stage.tick still times the jab).
 var steps: int = 0
@@ -68,6 +71,7 @@ func cancel() -> void:
 func _land(stage: CollectCallStage) -> void:
 	var arena: CombatArena = stage.arena
 	swings += 1
+	swung_step = steps
 	var at: Vector2 = arena.rivet.pos
 	var reach: float = num(&"jab_reach_m")
 	var hit: bool = false

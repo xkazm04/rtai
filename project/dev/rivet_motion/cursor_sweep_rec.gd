@@ -99,11 +99,7 @@ func _oct(rig: CutRig) -> int:
 	var g: Sprite2D = _ghost()
 	if g == null:
 		return RivetFrames.oct_of(rig)
-	var row: int = g.frame / g.hframes
-	for o: int in 8:
-		if RigHeadCard.OCT_FRAME[o] == row and RigHeadCard.OCT_FLIP[o] == int(g.flip_h):
-			return o
-	return -1
+	return GhostSheet.oct_of(g)
 
 
 ## The visible drawn ghost nearest Rivet's spot (Kerf's afterimages carry copies along the blink).

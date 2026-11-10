@@ -120,7 +120,8 @@ func test_every_ghost_act_grid_divides_into_its_cells() -> void:
 	for ghost: String in ["kerf", "dent", "tonnage", "ohm"]:
 		var tex: Texture2D = load(GhostDrawn.path_of(P70, ghost, "act")) as Texture2D
 		assert_not_null(tex, ghost)
-		assert_eq(tex.get_width() % GhostDrawn.ACT_COLS, 0, ghost)
+		var cols: int = GhostDrawn.JAB_COLS.get(ghost + "/" + P70, GhostDrawn.ACT_COLS)
+		assert_eq(tex.get_width() % cols, 0, ghost)
 		assert_eq(tex.get_height() % GhostDrawn.ROWS, 0, ghost)
 
 
@@ -141,7 +142,7 @@ func test_a_wind_up_shows_the_wind_up_cell_before_the_strike() -> void:
 
 func test_a_run_grid_takes_over_above_the_run_speed_and_steps_on_its_longer_cycle() -> void:
 	var d: GhostDrawn = GhostDrawn.new("kerf", 1.8, 139.0, 173.0, 388.0)
-	d._run_tex = PlaceholderTexture2D.new()
+	d._run = GhostSheet.new(PlaceholderTexture2D.new(), GhostDrawn.COLS)
 	var host: Node2D = autofree(Node2D.new())
 	host.global_position = Vector2.ZERO
 	assert_true(d._column(host, 1.0, 2) >= 0)
@@ -176,7 +177,7 @@ func test_a_run_needs_its_sheet_at_this_pitch_and_a_run_row() -> void:
 	host.global_position += Vector2.RIGHT * run_px
 	assert_true(d._column(host, 1.0, 2) >= 0)
 	assert_false(d._running, "no run sheet under this art (Dent at 55): he walks")
-	d._run_tex = PlaceholderTexture2D.new()
+	d._run = GhostSheet.new(PlaceholderTexture2D.new(), GhostDrawn.COLS)
 	host.global_position += Vector2.RIGHT * run_px
 	assert_true(d._column(host, 1.0, 2) >= 0)
 	assert_true(d._running, "7 m/s runs on the profile row")
