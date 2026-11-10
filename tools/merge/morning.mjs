@@ -234,10 +234,12 @@ export function defaultRun(cwd, logDir, timeoutMin, say = () => {}) {
     let r;
     // The guard owns the timeout and kills the whole tree (Godot is a grandchild of the reel and gate
     // runners); spawnSync's own limit is only a backstop for a guard that hangs.
-    const guarded = [GUARD, name, String(minutes * 60000), shell ? '1' : '0', '--', cmd, ...args];
+    // Whole ms: a fractional --timeout (0.33 min) made spawnSync throw ERR_OUT_OF_RANGE (n15).
+    const ms = Math.ceil(minutes * 60000);
+    const guarded = [GUARD, name, String(ms), shell ? '1' : '0', '--', cmd, ...args];
     try {
       r = spawnSync(process.execPath, guarded, { cwd: opts.cwd ?? cwd, windowsHide: true,
-        timeout: minutes * 60000 + GUARD_BACKSTOP_MS, stdio: ['ignore', fd, fd] });
+        timeout: ms + GUARD_BACKSTOP_MS, stdio: ['ignore', fd, fd] });
     } finally { closeSync(fd); }
     if (r.error) appendFileSync(log, `\nmorning: ${name}: ${r.error.code === 'ETIMEDOUT' ? `timed out after ${minutes} min` : r.error.message}\n`);
     const status = r.status === GUARD_EXIT || r.status === null ? -1 : r.status;
