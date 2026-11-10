@@ -304,3 +304,12 @@ C:/Users/kazda/kiro/gtai-n15/scratch-tools-before` and `git branch -D n15t-contr
   minutes old). After: WSL 3 runs `pass 13 fail 0`; Windows lib/lint/selftest/dev/evidence 255/255. CI runs Linux:
   every dev_verdict user (dev run, selftest stages) could have flaked there. Other mtime checks: export 2 s, film 1 s:
   fine.
+- 00:24 item 6 sweep of the WHOLE Node tool list on WSL Ubuntu (Node 24; AGENTS list + film/merge/codex/gate):
+  `tests 825, pass 819, fail 4`. Three are WSL-only artifacts, not CI: this worktree's .git link is a Windows path
+  (`mainCheckout names the repo...`, `real docs/decisions.md: exactly one MISSING`, `--history=N prints the replay
+  figures`: `fatal: not a git repository: .../C:/Users/kazda/kiro/gtai/.git/worktrees/n15-tools`). The fourth is a
+  real Linux flake: `tools/lib/godot_stop.break.test.mjs:175 timeout must kill the grandchild too`, 1 of 4 alone.
+  Cause: kill(-pid, SIGKILL) works, but the orphaned grandchild stays a ZOMBIE until init reaps it, and
+  `process.kill(pid, 0)` succeeds on a zombie. Fixed in the test (7f10f84b2): on Linux `/proc/<pid>/stat` state Z
+  counts as dead; no wait (the watchdog grandchild self-exits at 4 s, a wait could fake a pass). After: WSL 8 of 8,
+  Windows 17/17. Item 6 tally tonight: three timing-shaped causes fixed (node starts, Linux mtime tick, zombie).
