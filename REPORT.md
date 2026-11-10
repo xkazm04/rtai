@@ -19,6 +19,7 @@ with one example and what it refuses. Every evidence tool reports pass, fail or 
 | `tools/gate/precommit.mjs` the hook skips lint when only inert paths are staged | (automatic, from `.githooks/pre-commit`) | 01:44 (JOURNAL-only commit 0.6 s; the full-lint commit before it 51 s) |
 | the hook lints the STAGED SNAPSHOT when the tree differs (`tools/gate/staged_tree.mjs`) | (automatic) | 02:14 (an untracked over-long .gd: lint on the tree 3 of 16 FAIL; the commit through the hook linted the index, 16/16, 64 s; nothing left in Temp) |
 | `tools/godot/check.mjs`: autoload names are not false FAILs (c01afd2a); a cascade with no cause seen is not a pass (ec83154e) | `node tools/godot/check.mjs res://features/combat/react/human_react.gd` | 20:53 (`human_react.gd` FAIL -> ok, a planted float(Variant) still FAILs); 05:11 (planted missing-script .tscn, extends- and preload-broken deps all FAIL with their cause; `human_react.gd` still ok) |
+| `check.mjs`: only dependency cascades, no cause -> UNVERIFIABLE exit 3 with Godot's other lines (hero 279, e9abf625) | `node tools/godot/check.mjs res://features/characters/rivet_walk.gd` | 06:19 (no regression: unchanged file ok, planted broken dependency FAIL exit 1); the unverifiable branch by unit test only, Godot never printed a bare cascade here |
 | skip-worktree entries in the staged snapshot (4d6d8232) | (automatic) | 05:04 (combat's probe shape: tree `quick.mjs` FAIL 4 issues, commit through the hook 16/16) |
 | `tools/gate/run.mjs` the gates on a snapshot of the commit | `node tools/gate/run.mjs` | 20:46 (8m35, tree edited throughout, no log landed in it) |
 | stale-count honesty with Godot absent | `GODOT_BIN=/nonexistent node tools/tests/run_unit.mjs` | 20:33 (reproduced first; parity/scenarios messages fixed, eaf17694) |
@@ -48,6 +49,8 @@ with one example and what it refuses. Every evidence tool reports pass, fail or 
 - hero 268 (a `--select` with one wrong name ran nothing): 1921662c, the rest run, `did you mean`, exit 3 unverifiable
   (real run 05:48). combat 309 (export out dir): the same fix as hero 219, c26ab875, reaches them at the merge.
 - combat 201 (`git show HEAD:<png>` gave an LFS pointer for a before): `compare.mjs --a=HEAD --b=.` (README, real run 06:05).
+- hero 279 (`check.mjs` FAIL on an unchanged file, cascades only): e9abf625, UNVERIFIABLE exit 3 with what Godot printed.
+  hero 286 (`ASSETS-REPLIES.md` inert): the same as their 143, b083b075, at the merge.
 - Not served: combat 226 (about 8 s re-import per film because `probe.sh` adds and removes `film_card.gd`):
   ends when the film probe is on main, i.e. at this merge.
 
@@ -139,3 +142,4 @@ until 01:45). Repaired by hand within minutes; no lane commit got the wrong iden
   name (it used to plan files that only define a longer name). No-arg runs and the evidence are unchanged.
 - 9c7039eb: `compare.mjs` prints where each commit side's temp checkout was kept (about 1.7 GB each);
   `--clean` removes it. Nothing else changes for callers.
+- e9abf625: `check.mjs` has exit 3 (only dependency cascades, no cause); `quick.mjs` shows it as unverifiable.
