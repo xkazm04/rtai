@@ -38,7 +38,7 @@ const autoloadNames = () => {
 
 const isAt = (l) => /^\s+at: /.test(l ?? '');
 /** Godot's own cascade lines, whole: a real error that merely quotes the words is not one. */
-const CASCADE = /^(SCRIPT ERROR: Compile Error: Failed to compile depended scripts\.?|ERROR: Failed to load script ".*" with error "Compilation failed"\.?)$/;
+const CASCADE = /^(SCRIPT ERROR: Compile Error: Failed to compile depended scripts\.?|ERROR: Failed to load script "[^"]*" with error "Compilation failed"\.?)$/;
 
 /** The error lines of a run minus autoload-identifier false positives (and their `at:` lines). When
  *  nothing else was reported the script is fine, so the generic "Failed to load script" trailer goes too.
@@ -68,6 +68,7 @@ export const causeUnseen = (bad) => bad.length > 0 && bad.every((l) => isAt(l) |
 
 /** Up to `n` lines of the raw output that are neither cascades nor blank: what Godot did print. */
 export function otherLines(out, n = 6) {
+  if (!(n > 0)) return []; // slice(-0) would return every line
   return out.split('\n').map((l) => l.trimEnd()).filter((l) => l.trim() && !CASCADE.test(l) && !isAt(l)).slice(-n);
 }
 
