@@ -50,7 +50,7 @@ test('a timed-out step leaves no grandchild running (the engine is a grandchild 
   const grand = `require('fs').writeFileSync(${JSON.stringify(pidFile)}, String(process.pid)); setTimeout(() => {}, 60000)`;
   // The middle process must not be node: node's children sit in its kill-on-close job and die with
   // it, which hid the bug. Godot's console exe has no such job, so a shell stands in for it.
-  const mid = process.platform === 'win32' ? ['cmd.exe', ['/d', '/c', process.execPath, '-e', grand]] : ['sh', ['-c', `"${process.execPath}" -e '${grand}'`]];
+  const mid = process.platform === 'win32' ? ['cmd.exe', ['/d', '/c', process.execPath, '-e', grand]] : ['sh', ['-c', '"$0" -e "$1"; :', process.execPath, grand]];
   const parent = `require('child_process').spawn(${JSON.stringify(mid[0])}, ${JSON.stringify(mid[1])}, { stdio: 'inherit' }); setTimeout(() => {}, 60000)`;
   const r = defaultRun(process.cwd(), d, 0.05)('gates-like', process.execPath, ['-e', parent]);
   assert.equal(r.status, -1);

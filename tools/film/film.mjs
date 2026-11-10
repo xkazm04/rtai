@@ -18,6 +18,10 @@ import { verdict } from '../lib/dev_verdict.mjs';
 import { autoLock, checkFlags, checkId, checkVictim, godotArgs, parseOn, parseShot, parseStills, shotLabel, triggeredTicks, victimSaid } from './shots.mjs';
 import { subjectRow } from './subject.mjs';
 
+/** A file this run wrote may carry an mtime up to a clock tick before `startedAt`: Linux stamps files from
+ *  the kernel's coarse clock (CI failed 2026-11-10 with 2 ms). A stale file is minutes old, never 1 s. */
+export const FRESH_SLACK_MS = 1000;
+
 export const EXIT = { pass: 0, fail: 1, usage: 2, unverifiable: 3 };
 const USAGE = 'usage: node tools/film/film.mjs <shot> --out=<dir> [--ticks=<n>] [--stills=<t,t-t>] [--on=fire:3+4,kill:1+6] [--view=combo] '
   + '[--ppm=48] [--lock=auto|spawn|trigger|at:<tick>|<x,y>|off] [--seed=<n>] [--res=1280x800] [--movie] [--no-movie] [--tree=<dir>] [--victim=<kind>] [--timeout=<s>] [--keep-going] [--dry-run] [-- flags]';
@@ -109,7 +113,7 @@ function judgeStills(opts, startedAt) {
   const reasons = [];
   for (const t of opts.stills) {
     const from = join(opts.dir, `still_${t}_${opts.ppm}.png`);
-    if (!existsSync(from) || statSync(from).mtimeMs + 2 < startedAt) { reasons.push(`no still at tick ${t}`); continue; }
+    if (!existsSync(from) || statSync(from).mtimeMs + FRESH_SLACK_MS < startedAt) { reasons.push(`no still at tick ${t}`); continue; }
     renameSync(from, join(opts.dir, `t${t}.png`));
   }
   return { outcome: reasons.length ? 'unverifiable' : 'pass', reasons, probe: null };
@@ -121,7 +125,7 @@ export function judge(res, opts, startedAt) {
   if (!v.ok) return { outcome: 'fail', reasons: [v.line], probe: null };
   if (opts.noProbe) return judgeStills(opts, startedAt);
   const file = join(opts.dir, 'probe.json');
-  if (!existsSync(file) || statSync(file).mtimeMs + 2 < startedAt) {
+  if (!existsSync(file) || statSync(file).mtimeMs + FRESH_SLACK_MS < startedAt) {
     return { outcome: 'unverifiable', reasons: ['the probe wrote no probe.json in this run'], probe: null };
   }
   let probe = null;
@@ -137,7 +141,7 @@ export function judge(res, opts, startedAt) {
   const wanted = [...new Set([...opts.stills, ...fired.ticks])].sort((a, b) => a - b);
   for (const t of wanted) {
     const png = join(opts.dir, `t${t}.png`);
-    if (!seen.has(t) || !existsSync(png) || statSync(png).mtimeMs + 2 < startedAt) { reasons.push(`no still at tick ${t}`); continue; }
+    if (!seen.has(t) || !existsSync(png) || statSync(png).mtimeMs + FRESH_SLACK_MS < startedAt) { reasons.push(`no still at tick ${t}`); continue; }
     const who = subjectRow(probe.rows.find((r) => r.tick === t), opts.subject);
     if (!who) reasons.push(`no ${opts.subject} in the numbers at tick ${t}`);
     else if (!who.on_screen) reasons.push(`${opts.subject} is off screen at tick ${t} (${(who.screen ?? []).map((n) => Math.round(n)).join(', ')})`);
