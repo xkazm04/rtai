@@ -23,7 +23,7 @@ export function toRes(arg) {
   if (arg.startsWith('res://')) return arg;
   const abs = isAbsolute(arg) ? arg : (existsSync(resolve(arg)) ? resolve(arg) : join(PROJECT, arg));
   const r = relative(PROJECT, abs).split(sep).join('/');
-  return r.startsWith('..') || isAbsolute(r) ? null : `res://${r}`;
+  return r === '..' || r.startsWith('../') || isAbsolute(r) ? null : `res://${r}`; // `..hidden/` is inside
 }
 
 /** Autoload singleton names from project.godot: --check-only does not register them, so a script that
@@ -36,6 +36,8 @@ const autoloadNames = () => {
 };
 
 const isAt = (l) => /^\s+at: /.test(l ?? '');
+/** Godot's own cascade lines, whole: a real error that merely quotes the words is not one. */
+const CASCADE = /^(SCRIPT ERROR: Compile Error: Failed to compile depended scripts\.?|ERROR: Failed to load script ".*" with error "Compilation failed"\.?)$/;
 
 /** The error lines of a run minus autoload-identifier false positives (and their `at:` lines). When
  *  nothing else was reported the script is fine, so the generic "Failed to load script" trailer goes too.
@@ -45,7 +47,7 @@ export function errorLines(out, autoloads = autoloadNames()) {
   const kept = [];
   let noise = false;
   for (let i = 0; i < lines.length; i += 1) {
-    const m = /Identifier not found: (\w+)/.exec(lines[i]);
+    const m = /Identifier not found: ([\p{L}\p{N}_]+)/u.exec(lines[i]); // the whole name: `Logé` is not `Log`
     if (m && autoloads.has(m[1])) {
       noise = true;
       while (isAt(lines[i + 1])) i += 1;
@@ -55,7 +57,7 @@ export function errorLines(out, autoloads = autoloadNames()) {
   }
   // The autoload noise above cascades: every script that depends on it reports "Failed to compile depended
   // scripts" although nothing is wrong. A real error in a dependency is its own Parse Error line and stays.
-  const real = kept.filter((l) => !isAt(l) && !/Failed to load script|Failed to compile depended scripts/.test(l));
+  const real = kept.filter((l) => !isAt(l) && !CASCADE.test(l));
   return real.length || !noise ? kept : [];
 }
 
