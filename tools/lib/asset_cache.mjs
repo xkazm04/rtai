@@ -5,7 +5,7 @@
 // hash) each source last matched at; anything different is hashed again. "Newer than the import" is
 // not a usable shortcut: a Windows or `cp -p` copy keeps the file's old date with new bytes.
 import { createHash } from 'node:crypto';
-import { existsSync, readFileSync, readdirSync, statSync, utimesSync, writeFileSync } from 'node:fs';
+import { closeSync, existsSync, openSync, readFileSync, readSync, readdirSync, statSync, utimesSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 const ASSET = /\.(png|jpe?g|webp|svg|ogg|wav|mp3|ttf|otf)$/i;
@@ -55,13 +55,25 @@ function isStale(project, importText, known, seen) {
   return false;
 }
 
-/** {count, sample: [up to 5 res:// paths]}: assets whose import no longer matches the source, plus
+const LFS_POINTER = 'version https://git-lfs';
+
+/** True when `file` starts with a Git LFS pointer header (`git show HEAD:<png> > <png>` writes one). */
+export function isLfsPointer(file) {
+  try {
+    const fd = openSync(file, 'r');
+    const b = Buffer.alloc(LFS_POINTER.length);
+    try { readSync(fd, b, 0, b.length, 0); } finally { closeSync(fd); }
+    return b.toString('latin1') === LFS_POINTER;
+  } catch { return false; }
+}
+
+/** {count, sample: [up to 5 res:// paths], pointers: [res:// paths that are LFS pointers]}: assets whose import no longer matches the source, plus
  *  assets with no .import at all. A tree with no import cache is not stale here: that is what
  *  ensureImport's own class-cache check is for. */
 export function staleAssets(project, opts = {}) {
   const stale = staleFiles(project, opts);
   const res = (f) => `res://${f.slice(project.length + 1).split(/[\\/]/).join('/')}`;
-  return { count: stale.length, sample: stale.slice(0, 5).map(res) };
+  return { count: stale.length, sample: stale.slice(0, 5).map(res), pointers: stale.filter(isLfsPointer).map(res) };
 }
 
 /** Gives every stale source a new date. Godot's --import trusts the date, so without this a copy that

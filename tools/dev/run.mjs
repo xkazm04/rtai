@@ -56,14 +56,28 @@ function refuse(r, err) {
   return 2;
 }
 
-/** 0 when every asset matches its import (re-importing once if not), 1 import failed, 3 still stale. */
+/** The lines of an --import run that say an asset did not import (Godot still exits 0 on them). */
+export const importErrors = (out) => String(out ?? '').split(/\r?\n/).filter((l) => /ERR_FILE_CORRUPT|Error importing/.test(l));
+
+/** 0 when every asset matches its import (re-importing once if not), 1 an LFS pointer or a failed import, 3 still stale. */
 async function freshAssets(project, { runner, err, assets, touch, timeoutMs }) {
   const stale = assets(project, { onFirstScan: () => err('run: first asset check in this tree, hashing every source once (up to a minute)') });
   if (!stale.count) return 0;
+  const pointers = stale.pointers ?? [];
+  if (pointers.length) {
+    err(`run: ${pointers.length} asset(s) are Git LFS pointers, not images (${pointers.slice(0, 5).join(', ')}): \`git show HEAD:<png> > <png>\` writes one. Restore with \`git checkout -- <png> <png>.import\` (or pipe through \`git lfs smudge\`); nothing imported or launched`);
+    return 1;
+  }
   err(`run: ${stale.count} asset(s) changed since the last import (${stale.sample.join(', ')}): running --import first, or the run draws the old pixels`);
   touch(project);
   const imported = await runner(['--import'], { timeoutMs, name: 'import', ensure: false });
   if (imported.status !== 0 || imported.timedOut) { err(`run: --import failed: ${describe(imported)}`); return 1; }
+  const bad = importErrors(imported.out);
+  if (bad.length) {
+    err(`run: --import exited 0 but ${bad.length} line(s) say an asset did not import, so the run would draw without it; nothing launched:`);
+    for (const l of bad.slice(0, 6)) err(`  ${l.trim()}`);
+    return 1;
+  }
   const still = assets(project);
   if (!still.count) return 0;
   err(`run: UNVERIFIABLE: ${still.count} asset(s) still do not match their import after --import (${still.sample.join(', ')}); nothing launched`);

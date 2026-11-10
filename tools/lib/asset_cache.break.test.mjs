@@ -50,7 +50,7 @@ function assertStale(root, name) {
 test('a matching import stays fresh despite a new timestamp, spaces, uppercase extension and hex-like name', (t) => {
   const root = project(t);
   imported(root, { name: `art with spaces/dead-beef-${HASH}.PNG`, newline: '\r\n', suffixes: ['bptc.ctex'] });
-  assert.deepEqual(staleAssets(root), { count: 0, sample: [] });
+  assert.deepEqual(staleAssets(root), { count: 0, sample: [], pointers: [] });
 });
 
 test('a changed asset with spaces, uppercase extension and CRLF import is stale and named', (t) => {
@@ -114,5 +114,5 @@ test('a tree with no import cache is not stale despite broken imports and upperc
   write(root, 'art/new.PNG', 'pixels');
   write(root, 'art/broken.png', 'pixels');
   write(root, 'art/broken.png.import', '[deps]\nsource_file="res://art/broken.png"\ndest_files=[]\n');
-  assert.deepEqual(staleAssets(root), { count: 0, sample: [] });
+  assert.deepEqual(staleAssets(root), { count: 0, sample: [], pointers: [] });
 });
