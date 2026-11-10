@@ -28,6 +28,8 @@ const X15: PackedStringArray = [
 	"p70/rivet_eq_gloria.png",
 	"p70/rivet_eq_mini_nuke.png",
 	"p70/rivet_eq_rocket_launcher.png",
+	"p55/rivet_eq_pistol.png",
+	"p55/rivet_eq_pistol_left.png",
 ]
 
 
