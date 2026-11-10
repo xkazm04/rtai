@@ -234,3 +234,19 @@ test('the export and gate steps stop on a red and give the next command', () => 
     assert.match(r.advice.join('\n'), /--resume|Fix/, s);
   }
 });
+
+test('a bake that exits 0 with chunks missing or mismatched stops at the bake, naming them', () => {
+  const clean = () => ({ ok: true, out: '', stdout: '' });
+  const ctx = { cwd: 'NOT-A-REAL-TREE', git: clean, run: () => ({ status: 0, out: '', log: 'bake.log' }), out: () => {},
+    checkBaked: () => ({ ok: false, expected: 256, missing: ['c_00_00.bin'], mismatched: ['c_01_00.bin'] }) };
+  const r = STEP_RUNNERS.bake(ctx);
+  assert.equal(r.ok, false);
+  assert.match(r.advice[0], /1 missing, 1 mismatched of 256/);
+  assert.match(r.advice[0], /c_00_00\.bin/);
+  assert.equal(STEP_RUNNERS.bake({ ...ctx, checkBaked: () => ({ ok: true, expected: 256, missing: [], mismatched: [] }) }).ok, true);
+});
+
+test('with no checker given, the bake step reads the tree itself (an empty dir is never baked)', () => {
+  const ctx = { cwd: 'NOT-A-REAL-TREE', git: () => ({ ok: true, out: '', stdout: '' }), run: () => ({ status: 0, out: '', log: 'l' }), out: () => {} };
+  assert.equal(STEP_RUNNERS.bake(ctx).ok, false);
+});

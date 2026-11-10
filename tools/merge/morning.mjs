@@ -13,6 +13,10 @@ import { appendFileSync, closeSync, existsSync, mkdirSync, openSync, readFileSyn
 import { join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { GUARD_EXIT } from './step_guard.mjs';
+import { checkBaked } from '../export/check_baked.mjs';
+
+/** The tree's chunks against its tracked hash list (the export's own check, run where the bake ran). */
+export const bakedIn = (cwd) => checkBaked({ list: join(cwd, 'project/data/generated/city_chunks.sha256'), city: join(cwd, 'project/data/generated/city') });
 
 export const STEPS = ['merge', 'debt', 'native', 'bake', 'gates', 'reels', 'export'];
 const SAFE_VERBS = new Set(['status', 'rev-parse', 'symbolic-ref', 'merge', 'add', 'commit', 'mv', 'log', 'worktree', 'show', 'show-ref', 'diff']);
@@ -160,6 +164,12 @@ export const STEP_RUNNERS = {
     if (r.status !== 0) return { ok: false, advice: [`STOPPED: the city bake failed; log ${r.log}`, 'Fix it and run again with --resume.'] };
     const dirty = ctx.git(['status', '--porcelain']).stdout;
     if (dirty) return { ok: false, advice: [`STOPPED: the bake changed tracked files:\n${dirty}`, 'Review them, commit them deliberately (AST-12 hash list), and run again with --resume.'] };
+    // Exit 0 is not the evidence: the chunks must match the list, or the export step would refuse later.
+    const b = (ctx.checkBaked ?? bakedIn)(ctx.cwd);
+    if (!b.ok) {
+      const bad = [...b.missing, ...b.mismatched];
+      return { ok: false, advice: [`STOPPED: the bake exited 0 but its chunks do not match the list: ${b.missing.length} missing, ${b.mismatched.length} mismatched of ${b.expected}${bad.length ? ` (first: ${bad[0]})` : ''}; log ${r.log}`, 'Read the bake log, fix it, and run again with --resume.'] };
+    }
     return { ok: true };
   },
   gates: (ctx) => {
