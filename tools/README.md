@@ -310,6 +310,19 @@ unknown flag. **Unverifiable (exit 3):** no donor has something it needs, or the
 usable after the copy (judged on your tree afterwards: a donor's bake can be whole for its own chunk
 list and short for yours).
 
+## tools/export/export_checked.mjs: a release export that proves its exe
+
+```
+node tools/export/export_checked.mjs                       # build/export/windows/RTAI.exe
+node tools/export/export_checked.mjs --out=../build/export/try/RTAI.exe
+```
+
+Checks every baked chunk against `city_chunks.sha256` first, makes the output folder (a fresh worktree
+has none), exports `windows-showcase`. **Refuses:** a missing or mismatched chunk (it names them; run
+the bake, or `node tools/dev/wt_init.mjs .` to copy one), before Godot starts. **Never ok on exit 0
+alone:** the exe must exist, be non-empty and be written by this run, or it says `wrote no`, `empty`
+or `did not rewrite`.
+
 ## Stop at the first script error (`tools/dev/run.mjs`, `tools/film/film.mjs`)
 
 ```
