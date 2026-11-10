@@ -59,6 +59,7 @@ func show(spr: Sprite2D, oct: int, col: int) -> void:
 	var row: int = LEFT_ROW[oct] if on_left else RigHeadCard.OCT_FRAME[oct]
 	spr.frame = row * c + col
 	spr.flip_h = not on_left and RigHeadCard.OCT_FLIP[oct] == 1
+	GhostSoulLine.sync(spr)
 
 
 ## The screen octant a shown cell faces (a drawn left row, or a right row and its mirror).

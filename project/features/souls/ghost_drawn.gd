@@ -192,6 +192,7 @@ func _rebuild(host: Node2D, parts: Array[Sprite2D], vm: ViewMode) -> void:
 		_spr.centered = false
 		_walk.show(_spr, 2, STAND_COL)
 		_spr.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+		GhostSoulLine.attach(_spr)
 		host.add_child(_spr)
 	for p: Sprite2D in parts:
 		p.visible = _spr == null

@@ -9,7 +9,7 @@ extends RefCounted
 ## 1.65, p55 in proportion); n9: --rivet-flame=cone (d9's flamer), =side (no diagonal cells),
 ## =all (the fire cell at any aim),
 ## --rivet-walk=4 (d9's 4-frame walk by the gait phase), --rivet-reload=off (no drawn reload),
-## n13: --rivet-windup=off (no drawn wind-up cell).
+## n13: --rivet-windup=off (no drawn wind-up cell); n15: --ghost-soul-line=off (no teal outline).
 ## Read once, before the first plan or material.
 
 static var _read: bool = false
@@ -49,8 +49,17 @@ static func apply(args: PackedStringArray = OS.get_cmdline_user_args()) -> void:
 			RivetReload.enabled = false
 		elif arg == "--rivet-windup=off":  # n13: the strike cell through the wind-up (before)
 			RivetWindup.enabled = false
-		elif arg == "--ghost-voice=facing":  # n10: the voice at his facing's own left, on his head
-			GhostApparition.clear_figure = false
+		elif arg.begins_with("--ghost-"):
+			_ghost(arg)
+
+
+## n10: --ghost-voice=facing (the voice at his facing's own left, on his head); n15:
+## --ghost-soul-line=off (the drawn ghosts without the teal line).
+static func _ghost(arg: String) -> void:
+	if arg == "--ghost-voice=facing":
+		GhostApparition.clear_figure = false
+	elif arg == "--ghost-soul-line=off":
+		GhostSoulLine.enabled = false
 
 
 ## --rivet-walk=<mode>; n11: --rivet-swipe=off (one drawn strike cell), --rivet-bob=drawn (no damp).
