@@ -42,6 +42,10 @@ Frames: `C:\Users\kazda\kiro\gtai-masters\n11\combat\frames.json` (15 entries, b
    - Reactions: a shot man is thrown back off the planted boot, away from the shot, in a drawn
      cell for all 13 kinds (`death_hit_cell_ab.png`); a living wound draws a shoulder clutch or a
      gut fold for the patrol cop; drawn falls as above.
+   - Rocket kill (it32, `156a8507`): the victim is thrown from the first frame of the blast. Before,
+     he stood upright in his living pose inside the fireball for 4 ticks (the gib row's own hold,
+     run after the camera's hit-stop). Same ticks before and after:
+     `rocket_onset_ab.png` (also `evidence/n11-combat/it32/`).
 
 ## What does not work, or is not shown
 
