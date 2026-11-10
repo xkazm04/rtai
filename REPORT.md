@@ -48,7 +48,7 @@ mutants; the Director's own check is outside both sides):
 |---|---|---|---|---|
 | quest_beat_validator | 67,154 tok / 674 s | 61,665 tok / 114 s + 436 s Codex | 12 lines | 11/11 both |
 | city_spawn_plan (49 lines) | 49,655 tok / 210 s | 48,638 tok / 69 s + 224 s Codex | 0 | 9/15 both |
-| sim_car_route (136 lines) | 99,000 tok / 524 s | 69,496 tok / 216 s + 617 s Codex | 24 lines | Codex 80 %; control: JOURNAL |
+| sim_car_route (136 lines) | 99,000 tok / 524 s | 69,496 tok / 216 s + 617 s Codex | 24 lines (control: 10 by the same standard) | 12/15 both (80 %) |
 
 Reading: on the two small modules the review cost about what writing cost (2-8 % fewer tokens). On the
 module three times their size, reviewing Codex's tests took 30 % fewer Claude tokens than writing them
