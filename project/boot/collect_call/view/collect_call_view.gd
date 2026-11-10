@@ -100,8 +100,7 @@ func _ready() -> void:
 	_ready_blood(print_stage.actor_layer())
 
 
-## The combat blood and corpse stains (d5-combat) on `layer`: the printed path's actor layer, or
-## the CityView's on the city (quest 1 on the generated city, the arena's city block).
+## The combat blood, corpse stains and pools (d5, n11) on `layer` (printed path or CityView's).
 func _ready_blood(layer: CanvasLayer) -> void:
 	if _stage != null and _stage.events() != null:
 		blood = CombatBlood.new()
@@ -116,6 +115,7 @@ func _ready_blood(layer: CanvasLayer) -> void:
 		layer.add_child(stains)
 		@warning_ignore("return_value_discarded")
 		blood.bled_body.connect(stains.on_bled_body)
+		PoolUnderBody.attach(blood)  # n11: the pool under the drawn chest while rigs draw the dead
 
 
 func _ready_on_city() -> void:

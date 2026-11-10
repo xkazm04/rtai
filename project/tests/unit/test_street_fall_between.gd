@@ -99,8 +99,12 @@ func test_the_drawn_corpse_takes_the_fall_card_heading_not_the_blow() -> void:
 	assert_false(plan.flip_h, "not mirrored to the left")
 	assert_eq(card.self_modulate.a, 0.0, "the card itself is hidden: one body")
 	assert_null(card.get_node_or_null(StreetDeadHeading.SIDE_NODE), "drawn art has its own side")
+	var rest: Vector4 = StreetDeadRests.all.get(4242, Vector4.INF)
+	assert_eq(Vector2(rest.x, rest.y), rig.global_position, "the feet where the sim put him")
+	assert_gt(rest.z, plan.global_position.x, "the chest lies from the sprite centre to the head")
 	remove_child(card)
 	StreetDeadPlan.reset()
+	assert_eq(StreetDeadRests.all.size(), 0, "a new city starts with no rests")
 
 
 func test_a_corpse_fallen_head_down_mirrors_with_its_card() -> void:

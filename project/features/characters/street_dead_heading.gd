@@ -150,3 +150,8 @@ static func _under(card: Sprite2D, plan: Sprite2D, node_name: String, tint: Colo
 	sh.frame = plan.frame
 	sh.flip_h = plan.flip_h
 	return sh
+
+
+## The blow that killed `rig`, on the screen (down when he has no reaction).
+static func blow_of(rig: CutRig) -> Vector2:
+	return rig.react.dir.rotated(rig.facing).normalized() if rig.react != null else Vector2.DOWN

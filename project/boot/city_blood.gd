@@ -60,6 +60,7 @@ func follow(feed: RigFeed) -> void:
 	_view.actor_layer().add_child(stains)
 	@warning_ignore("return_value_discarded")
 	blood.bled.connect(stains.on_bled)
+	PoolUnderBody.attach(blood)  # n11: each kill's pool under its body's chest
 
 
 func _process(_delta: float) -> void:
