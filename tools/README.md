@@ -156,6 +156,17 @@ to 8 min contended). **Never skips** a commit with any other path, root `AGENTS.
 where git cannot list what is staged. Lint's tool tests run with every `GIT_*` variable stripped:
 inside a hook git points `GIT_DIR` at your repo, and a test's `git -C <tmp>` once committed into it.
 
+**It lints the commit, not your tree** (`tools/gate/staged_tree.mjs`). When a path lint could read has
+an unstaged edit, or an untracked file sits in the tree, the hook writes the index out to
+`%TEMP%/gtai-precommit-*` (text files only, about 2 s) and lints that, then removes it:
+`pre-commit: 2 path(s) in your tree differ from what you commit (project/x.gd, project/y.gd): linting
+the staged snapshot (5064 files) in ...`. So a half-edited file you did not stage no longer blocks
+the commit, and a broken staged file no longer passes because its fixed copy is unstaged. A clean tree
+lints in place as before. It follows `GIT_INDEX_FILE`, so `git commit -a` and `git commit <paths>`
+lint what they commit. **Refuses** to pretend: if git cannot list the drift or the export fails, it
+lints the working tree and says `linting the WORKING TREE, which is not exactly what you commit`. It
+removes only a `gtai-precommit-*` dir directly in the temp dir.
+
 ## tools/gate/quick.mjs: the lint rules you keep tripping, on your changed files, before the commit
 
 ```
