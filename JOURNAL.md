@@ -319,3 +319,8 @@ NEXT (it18, read first; freeze 07:30, report 07:40):
 - CRITIQUE (Dent slot 7): fixed for the wave; at run speed the slot shows for about 2 ticks, so the gain is small in motion; seen only on the up-right leg.
 - GATES 07:02 started: full unit then full scenarios on ccfd86db (`gtai-n11/tmp/hero/unit_it18.txt`, `scen_it18.log`).
 - GATES 07:04 **full unit on ccfd86db: 2259 passed, 0 failed, 2 skipped, exit 0** (`gtai-n11/tmp/hero/unit_it18.txt`). Scenarios running.
+- REQUEST assets (for the next round, not tonight): **Ohm act HIT cells at 70, rows 2 and 4 (3/4 toward, 3/4 away; `keyed/ghosts/ohm_act_70_cells_hit2/{2,4}_4.png`)**, same heights as `ohm_act_70_cells/{2,4}_4.png`: the body tipped back about 15 deg as one piece, cane flung out of the hand, a small white impact star, so his diagonal hit reads at 64 ppm (today both arms out but the body upright; LEVEL hit row, Ohm = 2). In game: `gtai-masters/n11/hero/ghost_hit_recoil_before_after_64ppm.png`, Ohm rows.
+- GATES 07:06 **full scenarios on ccfd86db: 55 ran, 0 failed, exit 0, 0 SCRIPT ERROR, no `loaded empty`** (`gtai-n11/tmp/hero/scen_it18.log`; rig_stress now 2 failures in about 12 full runs).
+- GATES 07:06 **exe produced on 898ab184**: `bake_city.gd` wrote 256 chunks (exit 0), `export_checked.mjs` exit 0, `build/export/windows/RTAI.exe` 601 MB + `gtai_sim.windows.template_release.x86_64.dll` (`bake_it18.log`, `export_it18.log`).
+- GATES 07:07 reel gate started on HEAD (`gtai-n11/tmp/hero/reel_it18/`, `reel_it18.txt`).
+- No golden moved or re-blessed this session (two art sheets, docs).
