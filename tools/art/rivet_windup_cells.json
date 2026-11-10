@@ -4,6 +4,23 @@
  "out": "project/features/characters/art/view",
  "strips": {
   "p55": {
+   "chainsaw": {
+    "cells": {
+     "cam": {
+      "dx": 10,
+      "fig": 1,
+      "k": 0.93
+     },
+     "side": {
+      "dx": 26,
+      "fig": 0,
+      "k": 0.95
+     }
+    },
+    "dir": "..",
+    "sheet": "rivet_eq_chainsaw_55_windup.png",
+    "sheet_k": 0.2463
+   },
    "electro_baton": {
     "cells": {
      "cam": {
@@ -67,6 +84,19 @@
    }
   },
   "p70": {
+   "chainsaw": {
+    "cells": {
+     "cam": {
+      "file": "chainsaw_cam.png"
+     },
+     "side": {
+      "dx": -10,
+      "file": "chainsaw_side.png",
+      "k": 0.92
+     }
+    },
+    "res": 1.5
+   },
    "electro_baton": {
     "cells": {
      "cam": {

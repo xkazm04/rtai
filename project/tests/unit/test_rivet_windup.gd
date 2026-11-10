@@ -119,7 +119,9 @@ func test_the_left_wind_up_is_one_unmirrored_cell() -> void:
 
 
 func test_the_n14_strips_ship_and_are_warmed() -> void:
-	var ship: Dictionary[String, Array] = {"p55": ["plasma_sword", "katana", "electro_baton"]}
+	var ship: Dictionary[String, Array] = {
+		"p55": ["plasma_sword", "katana", "electro_baton", "chainsaw"], "p70": ["chainsaw"]
+	}
 	for art: String in ship:
 		for w: String in ship[art]:
 			var dir: String = RivetStrips.DIR + art + "/rivet_eq_" + w
@@ -133,3 +135,9 @@ func test_the_n14_strips_ship_and_are_warmed() -> void:
 		var lw: String = RivetStrips.DIR + art + "/rivet_eq_electro_baton" + RivetWindup.LEFT_FILE
 		assert_not_null(load(lw), art + " left")
 		assert_true(RivetStripWarm.paths(art, [&"electro_baton"]).has(lw), art + " left warmed")
+
+
+func test_the_p70_chainsaw_wind_up_is_cut_at_its_strip_res() -> void:
+	var dir: String = RivetStrips.DIR + "p70/rivet_eq_chainsaw"
+	assert_eq(RivetRes.of(dir + RivetWindup.FILE), RivetRes.of(dir + ".png"))
+	assert_eq(RivetRes.of(dir + RivetWindup.FILE), RivetWalk.RES)
