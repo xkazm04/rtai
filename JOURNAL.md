@@ -122,3 +122,11 @@ for real on a scratch integration worktree (needs ~2.5 h: gates floor 90 min, re
 session, remove the worktree and branch after. (5) a real `compare.mjs --victim` film for combat.
 (6) REPORT.md: extend the draft. Scratch tree `C:/Users/kazda/kiro/gtai-n15/scratch-tools-before` is mine
 (detached, wt_init'd from n15-hero); remove with `git worktree remove --force` at the end of the night.
+- 23:07 item 6 sweep: lint's whole tool-test set (`tools/{film,merge,codex,gate}/*.test.mjs`) with every node start
+  delayed 1.5 s: `tests 449, pass 449, fail 0` (74.5 s; log gtai-n15/flake/slow_all.log). No other timing-shaped
+  test found by this method (it does not cover filesystem-clock races; none suspected).
+- 23:08 item 4b started for real: scratch integration worktree `C:/Users/kazda/kiro/gtai-n15/scratch-integ` on
+  new branch `n15t-scratch-integ` at 5c5c03611 (wt_init from this tree), `morning.mjs --lanes=n15-tools,n15-hero,
+  n15-combat --date=2026-11-11 --steps=merge,debt,native --debt-reason=...` (log gtai-n15/flake/morning_4b.log).
+  gates and reels steps on the same worktree next session (`--steps=gates,reels --resume`?), then remove the
+  worktree and the branch (`git worktree remove --force`, `git branch -D n15t-scratch-integ`).
