@@ -162,8 +162,11 @@ const DEAD_PLAN = 'project/features/characters/street_dead_plan.gd';
 export function victimKinds(tree) {
   const file = join(tree, DEAD_PLAN);
   if (!existsSync(file)) return [];
-  const body = /const CLASS_OF[^{]*\{([^}]*)\}/.exec(readFileSync(file, 'utf8'));
-  return body ? [...body[1].matchAll(/^\s*"([^"]+)"\s*:/gm)].map((m) => m[1]) : [];
+  // Comments go first (a commented-out table, a `}` in a row's comment), then the one live
+  // `const CLASS_OF` (not CLASS_OF_OLD) up to its closing brace, every key on each line.
+  const code = readFileSync(file, 'utf8').split('\n').map(stripComment).join('\n');
+  const body = /^const CLASS_OF\b[^{=]*=\s*\{([^}]*)\}/m.exec(code);
+  return body ? [...body[1].matchAll(/"([^"]+)"\s*:/g)].map((m) => m[1]) : [];
 }
 
 /** null, or why `--victim=<kind>` cannot be filmed with this shot in this tree. */
