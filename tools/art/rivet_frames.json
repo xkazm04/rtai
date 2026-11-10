@@ -220,12 +220,14 @@
    },
    "rivet_eq_homing_shard": {
     "counts": "5,3",
-    "sheet": "rivet_eq_homing_shard_70.png"
+    "sheet": "rivet_eq_homing_shard_70.png",
+    "fig_h": 165
    },
    "rivet_eq_homing_shard_left": {
     "cc": "0",
     "counts": "3",
-    "sheet": "rivet_eq_homing_shard_70_left_s.png"
+    "sheet": "rivet_eq_homing_shard_70_left_s.png",
+    "fig_h": 165
    },
    "rivet_eq_katana": {
     "act_k": 1.0,
