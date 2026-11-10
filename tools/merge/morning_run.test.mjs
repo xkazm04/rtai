@@ -65,7 +65,8 @@ test('a timed-out step leaves no grandchild running (the engine is a grandchild 
   assert.equal(alive(pid), false, `grandchild ${pid} still running after the step timed out`);
 });
 
-test('a limit that is not whole ms runs (spawnSync wants whole ms; 1000.5 ms threw ERR_OUT_OF_RANGE)', () => {
-  const r = defaultRun(process.cwd(), dir(), 1000.5 / 60000)('frac', 'node', ['-e', '0']);
+test('a limit that is not whole ms runs (spawnSync wants whole ms; 1000.5 ms threw ERR_OUT_OF_RANGE before n15)', () => {
+  // half a ms over a budget that holds the child's own cold start, so only the rounding is under test
+  const r = defaultRun(process.cwd(), dir(), (Math.floor(budgetMs(1000, 1)) + 0.5) / 60000)('frac', 'node', ['-e', '0']);
   assert.equal(r.status, 0);
 });

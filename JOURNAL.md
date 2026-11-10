@@ -84,9 +84,21 @@ Branch `n15-tools`, cut from main `5c5c03611`. APPDATA=C:/Users/kazda/kiro/gtai-
   `game args: --victim=cop/head_swat`; `--victim=cop/nope` -> `film: unknown victim cop/nope in ... known: ...`.
   Test in `tools/film/victim.test.mjs` (6/6). A real compare film with a victim is still owed (after the gates).
   For combat: merge n15-tools for it, or cherry-pick the compare.mjs commit (pure Node, no sim change).
-- 22:55 item 6 part 2: the 3 step_guard.break tests budget their cold node starts (`budgetMs`, waitFor limit,
+- 22:47 item 6 part 2: the 3 step_guard.break tests budget their cold node starts (`budgetMs`, waitFor limit,
   guard limit, the held-log threshold). One review catch on the way: scaling the grandchild's late write to the
   bare limit made it beat the kill on a QUIET machine (3 of 3 plain runs failed `grandchild executed code after
   the guard timeout`): `taskkill /T` itself takes a few hundred ms, which the old 1 s margin covered; the late
   write is now limit + 1 s. Runs after: plain 15/15 x3; slow start 2.5 s 15/15 (116.7 s; was 3 failing).
   Not yet: a run on Linux (WSL) and a loop under real load; check_baked never failed in any run (7/7 slow).
+- 22:57 t-1 look goldens: the 22:41 gate on 1af97f018 (killed by me by PID 77364 after selftest, to free
+  Godot) had lint PASS, unit `2507 passed, 0 failed, 2 skipped`, scenarios 55 PASS, parity PASS, selftest FAIL
+  (look 0/11 worst 24.20, block 0/5 worst 18.18). Bisect in the scratch tree: main 5c5c03611 11/11 + 5/5;
+  d720e22da (t-1 alone) 0/11 24.20 + 0/5 18.18 = HEAD's numbers -> t-1 moves them, t-4/t-5 do not. Re-blessed
+  16 goldens (look_golden.tscn --bless, both sites), one accent row `blood_flicker_vehicles_64` (4 px flicker,
+  frame looked at: no car near the spray). selftest after: exit 0, 11/11 + 5/5 worst 0.00. Stills:
+  gtai-masters/n15/tools/golden-{d4-48ppm,block-d4-32ppm}-before-after.png (looked at: same scenes, other
+  crowd, cops blue, blood red). Commit eb65c8b05.
+- 23:05 item 6 on Linux (WSL Ubuntu, Node v24.14.0 at ~/node24, script gtai-n15/flake/wsl_run.sh): plain 28/28;
+  slow start 2.5 s 19/20 -> my own new rounding test had the same flaw (1000.5 ms limit holding a node start);
+  fixed with budgetMs; after: Windows slow 1/1, Linux slow 20/20, plain 0 fail; still fails on the old
+  morning.mjs (the rounding bug).
