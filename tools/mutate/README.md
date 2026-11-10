@@ -82,6 +82,10 @@ the worktree. `GODOT_BIN` is passed on from the main checkout's discovery.
 - One run per worktree (`.gtai-mutate-lock`, a pid lock; a dead pid's lock is taken over). Use
   `--worktree=<other path under tmp>` for a second parallel run. `--keep-worktree` is accepted and is
   the default; `--remove-worktree` deletes it at the end.
+- A kept worktree costs disk: about 1.7 GB each (checkout plus its `.godot` cache; `du`, 2026-11-10,
+  both `%TEMP%\gtai-mutate-874f1762` and `-a1e1f612`). There is one per checkout root that ran mutate
+  (the suffix hashes that root), so mutating from several lane worktrees keeps several. Pass
+  `--remove-worktree` on your last run of the night; the run prints the path at its start.
 
 ## How a lane uses it
 
