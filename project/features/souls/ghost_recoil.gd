@@ -14,7 +14,7 @@ const LEAN_BY_FORM: Dictionary[String, float] = {"tonnage": 4.0}
 
 ## The lean in degrees for a form's card name.
 static func lean_of(form: String) -> float:
-	return float(LEAN_BY_FORM.get(form, LEAN_DEG))
+	return LEAN_BY_FORM[form] if LEAN_BY_FORM.has(form) else LEAN_DEG
 
 
 ## The sprite's screen rotation (rad) `since` ticks after a hit (-1 = never hit), facing `look`.
