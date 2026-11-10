@@ -55,7 +55,8 @@ export function exportIndex(cwd, git = spawnSync, base = tmpdir()) {
   const prefix = `${dir.split('\\').join('/')}/`;
   let r;
   try {
-    r = git('git', ['checkout-index', '-z', '--stdin', `--prefix=${prefix}`], { cwd, input: `${keep.join(NUL)}${NUL}`, encoding: 'utf8', windowsHide: true });
+    // Without the flag checkout-index refuses a skip-worktree entry (combat's probe.sh sets one).
+    r = git('git', ['checkout-index', '--ignore-skip-worktree-bits', '-z', '--stdin', `--prefix=${prefix}`], { cwd, input: `${keep.join(NUL)}${NUL}`, encoding: 'utf8', windowsHide: true });
   } catch (e) { r = { status: null, stderr: e.message }; }
   if (r.status !== 0) {
     removeExport(dir, base);

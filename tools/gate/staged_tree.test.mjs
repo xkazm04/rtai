@@ -92,6 +92,19 @@ test('the export follows GIT_INDEX_FILE, as `git commit <paths>` sets it (real g
   } finally { rmSync(dir, { recursive: true, force: true }); }
 });
 
+test('a skip-worktree entry is exported with its index bytes, not refused (real git)', () => {
+  const { dir, git } = repo();
+  try {
+    git('update-index', '--skip-worktree', 'project/a.gd');
+    writeFileSync(join(dir, 'project/a.gd'), 'probe patched in, hidden from git\n');
+    assert.deepEqual(driftPaths(dir, gitWith()), ['project/a.gd']);
+    const { dir: out } = exportIndex(dir, gitWith());
+    try {
+      assert.equal(readFileSync(join(out, 'project/a.gd'), 'utf8'), 'good\n');
+    } finally { removeExport(out); }
+  } finally { rmSync(dir, { recursive: true, force: true }); }
+});
+
 test('removeExport refuses anything but a PREFIX child of the temp dir', () => {
   const other = mkdtempSync(join(tmpdir(), 'gtai-stagedtree-other-'));
   const nested = join(other, `${PREFIX}x`);
