@@ -19,6 +19,9 @@ alpha centroid of its lower BODY_FRAC rows, where a raised weapon never is) sits
 centre column, where RivetFrames puts the rig. Per cell `k` scales the figure (premultiplied
 Lanczos) and `dx` shifts it (px), both set by eye against the facings and strikes. A row's `ink_rim`
 runs blade_ink_rim.py over the strip (the sword's B rim). No new colour. Deterministic.
+n15: a row with `eq` (the equipped strip it sits beside, e.g. `electro_baton_left`) and `name`
+(the file after `rivet_eq_`, e.g. `electro_baton_left_strike`) writes that file instead of
+`<row>_windup.png`: the baton's drawn left strike cell (RivetWindup.LEFT_STRIKE_FILE).
 """
 
 import json
@@ -118,9 +121,10 @@ def run(manifest: str, only: str = "", sim: str = "", only_art: str = "") -> Non
         for name, row in rows.items():
             if (only and name != only) or (only_art and art != only_art):
                 continue
-            eq = out / art / f"rivet_eq_{name}.png"
-            img = strip(lib / row.get("dir", ""), eq, row, eq_res_of(art, name))
-            dst = out / art / f"rivet_eq_{name}_windup.png"
+            base = row.get("eq", name)
+            eq = out / art / f"rivet_eq_{base}.png"
+            img = strip(lib / row.get("dir", ""), eq, row, eq_res_of(art, base))
+            dst = out / art / (f"rivet_eq_{row['name']}.png" if "name" in row else f"rivet_eq_{name}_windup.png")
             if sim:
                 tiles.append(img)
                 continue

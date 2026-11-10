@@ -110,7 +110,7 @@ static func small_cell(o: int, cells: int) -> int:
 static func cells_of(path: String, left: bool) -> int:
 	if path.ends_with(BASE):
 		return RivetFrames.BASE_CELLS
-	if path.ends_with(RivetWindup.FILE):
+	if RivetWindup.owns(path):
 		return RivetWindup.cells_of(path)
 	return DIAG_CELLS if path.ends_with(DIAG) else (RivetFrames.LEFT_CELLS if left else 8)
 

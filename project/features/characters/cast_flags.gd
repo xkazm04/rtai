@@ -47,10 +47,19 @@ static func apply(args: PackedStringArray = OS.get_cmdline_user_args()) -> void:
 			RivetKnock.enabled = false
 		elif arg == "--rivet-reload=off":
 			RivetReload.enabled = false
-		elif arg == "--rivet-windup=off":  # n13: the strike cell through the wind-up (before)
-			RivetWindup.enabled = false
+		elif arg == "--rivet-windup=off" or arg == "--rivet-left-strike=off":
+			_windup(arg)
 		elif arg == "--ghost-voice=facing":  # n10: the voice at his facing's own left, on his head
 			GhostApparition.clear_figure = false
+
+
+## n13 --rivet-windup=off: the strike cell through the wind-up (the before); n15
+## --rivet-left-strike=off: the left facing + the game smear through a left swing (the before).
+static func _windup(arg: String) -> void:
+	if arg == "--rivet-windup=off":
+		RivetWindup.enabled = false
+	else:
+		RivetWindup.left_strike = false
 
 
 ## --rivet-walk=<mode>; n11: --rivet-swipe=off (one drawn strike cell), --rivet-bob=drawn (no damp).

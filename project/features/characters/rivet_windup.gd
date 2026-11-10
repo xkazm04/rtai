@@ -10,25 +10,34 @@ extends RefCounted
 ## is a second slot: rivet_eq_<weapon>_left_windup.png, one cell (the left side wind-up), swapped
 ## for the left strip the same way. View only: the sim's timings are untouched.
 ## `--rivet-windup=off` (CastFlags) = the strike cell through the wind-up (the before).
+## n15: past the wind-up (the strike and its recovery, as the equipped strip's strike cell) a left
+## strip swaps to the drawn left strike, rivet_eq_<weapon>_left_strike.png, one cell
+## (the baton's: it334, laid by rivet_windup_cells.py). `--rivet-left-strike=off` = the left facing
+## and the game smear through the swing (the before).
 
 const FILE: String = "_windup.png"
 const LEFT_FILE: String = "_left_windup.png"
+const LEFT_STRIKE_FILE: String = "_left_strike.png"
 const CELLS: int = 2
 const LEFT_CELLS: int = 1
 const SIDE: int = 0
 const CAM: int = 1
 static var enabled: bool = true
+static var left_strike: bool = true
 
 
 ## The wind-up strip while `rig`'s strike winds up on the weapon's equipped strip or its drawn
 ## left strip (`path`; a walk grid, a reload or a knock keeps its own) and the weapon has one, else
 ## `path`.
 static func path_or(rig: CutRig, art: String, weapon: StringName, path: String) -> String:
-	if not enabled or weapon == &"" or not winding(rig):
+	if not enabled or weapon == &"":
 		return path
 	var eq: String = RivetStrips.DIR + art + "/rivet_eq_" + String(weapon)
 	var w: String = ""
-	if path == eq + ".png":
+	if not winding(rig):
+		if left_strike and path == eq + "_left.png" and struck(rig):
+			w = eq + LEFT_STRIKE_FILE
+	elif path == eq + ".png":
 		w = eq + FILE
 	elif path == eq + "_left.png":
 		w = eq + LEFT_FILE
@@ -41,9 +50,20 @@ static func winding(rig: CutRig) -> bool:
 	return t >= 0.0 and t < rig.clips.strike_ph.x
 
 
-## The cell count of a wind-up strip at `path` (RivetStrips.cells_of).
+## True while the view's strike clip is past its wind-up (the strike and its recovery).
+static func struck(rig: CutRig) -> bool:
+	var t: float = rig.clips.strike_t
+	return t >= 0.0 and t >= rig.clips.strike_ph.x
+
+
+## True for a strip this slot owns (a wind-up strip or the drawn left strike).
+static func owns(path: String) -> bool:
+	return path.ends_with(FILE) or path.ends_with(LEFT_STRIKE_FILE)
+
+
+## The cell count of a wind-up or left strike strip at `path` (RivetStrips.cells_of).
 static func cells_of(path: String) -> int:
-	return LEFT_CELLS if path.ends_with(LEFT_FILE) else CELLS
+	return LEFT_CELLS if path.ends_with(LEFT_FILE) or path.ends_with(LEFT_STRIKE_FILE) else CELLS
 
 
 ## A short strip's cell and mirror for octant `o`: the wind-up strip's camera cell facing the
