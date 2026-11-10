@@ -51,3 +51,10 @@ test('the real tree: a project/ commit of a real file narrows, and the factory t
   assert.deepEqual(s.gd, ['project/features/city/city_spawn_plan.gd']);
   assert.equal(s.toolTests, true);
 });
+
+test('every real-tree file the traced tool tests read runs the tool tests (fs_trace, 2026-11-11)', () => {
+  const traced = ['project/project.godot', 'project/data/tables/view.json', 'project/dev/frames/film_probe.gd',
+    'project/dev/showcase/reel_chapters.gd'];
+  for (const p of traced) assert.equal(narrow([p], ALL).toolTests, true, p);
+  assert.equal(narrow(['project/features/characters/art/x.png', 'project/features/a.gd'], ALL).toolTests, false);
+});

@@ -198,7 +198,10 @@ removes only a `gtai-precommit-*` dir directly in the temp dir.
 --scope=<file>`). The hook hands lint the staged list; when every non-inert staged path is under
 `project/`, gdformat and gdlint run over the staged `.gd` only (both are per-file: an unstaged file
 cannot change their verdict on it), and the Node tool tests run only when a staged path is a file a tool
-test reads from the real tree (each `join(ROOT, '<path>')` literal in a lint-run test). Every
+test reads from the real tree: each `join(ROOT, '<path>')` literal in a lint-run test, and anything under
+`project/dev/`, `project/data/` or `project/project.godot` (what `tools/lint/fs_trace.mjs` saw film,
+native_side and factory tests read through tool code; re-run it when a tool test changes:
+`TRACE_ROOT=$PWD TRACE_OUT=<file> node --import ./tools/lint/fs_trace.mjs --test "tools/film/*.test.mjs" ...`). Every
 whole-tree check still runs in full. Measured: `lint: all 15 checks pass over 1 staged of 1428 GDScript
 files` in 3.6 s, against 88 s for the full lint on the same tree. Any staged path outside `project/`
 (`tools/`, `gdlintrc`, `gdformatrc`, `versions.toml`, `native/`, `AGENTS.md`) gives the full lint, and

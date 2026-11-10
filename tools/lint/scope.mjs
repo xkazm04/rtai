@@ -5,11 +5,20 @@
 // and so does the whole lint in every gate (tools/gate/run.mjs, tools/evidence/run.mjs).
 // FRICTION removed: n15 hero, 00:29: "each commit took ~1.5 min", stopping a five-commit loop; lint
 // measured 88 s on 1428 .gd files: gdformat + gdlint about 50 s, tool tests 35 s.
+// Tool-test inputs: the `join(ROOT, '<path>')` literals, plus INPUT_PREFIXES, which a traced run found
+// read through tool code with the real root as default (2026-11-11: `node --import
+// ./tools/lint/fs_trace.mjs --test <lint's tool-test globs>` with TRACE_ROOT/TRACE_OUT set listed
+// project/project.godot, project/data/tables/view.json, project/dev/frames/film_probe.gd,
+// project/dev/showcase/reel_chapters.gd and city_spawn_plan.gd; re-run it when a tool test changes).
 // A staged path outside project/ (tools/, gdlintrc, gdformatrc, versions.toml, native/, ...) or an
 // unreadable scope file gives the full lint, as before.
 //   node tools/lint/lint.mjs --scope=<file of staged paths, one per line>
 import { readFileSync } from 'node:fs';
 import { isInert } from '../evidence/scope.mjs';
+
+/** Prefixes whose staged paths always run the tool tests (the traced reads above, widened to their
+ *  folders: film reads dev entries and tables, native_side and film read project.godot). */
+export const INPUT_PREFIXES = ['project/project.godot', 'project/data/', 'project/dev/'];
 
 /** Repo paths a tool test reads from the real tree: every `join(ROOT, '<path>')` literal. */
 export function toolTestInputs(sources) {
@@ -39,7 +48,7 @@ export function narrow(staged, allGd, inputs = new Set()) {
   if (!code.length || code.some((p) => !p.startsWith('project/'))) return null;
   const want = new Set(code);
   const gd = allGd.filter((f) => want.has(f));
-  const reads = code.filter((p) => inputs.has(p));
+  const reads = code.filter((p) => inputs.has(p) || INPUT_PREFIXES.some((x) => p.startsWith(x)));
   const toolTests = reads.length > 0;
   const tests = toolTests ? `tool-tests run (a tool test reads ${reads.join(', ')})` : 'tool-tests skipped (no staged path under tools/ or read by a tool test)';
   const line = `lint: scoped to the commit (${code.length} staged path(s), all under project/): gdformat + gdlint over ${gd.length} of ${allGd.length} .gd; ${tests}; every whole-tree check runs; the gates run the full lint`;
