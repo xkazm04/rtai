@@ -345,3 +345,9 @@ NEXT (the next night, read first): it18's NEXT items 2-5 stand unchanged (per-fo
 - Opened at 07:24, 6 min before the freeze. I left the state it19 confirmed alone: the tree is clean apart from the assets lane's untracked `ASSETS-REPLIES.md`, and the last code-or-art commit is ccfd86db (unit 2259/0, scenarios 55/0, reel top/tilt70/combo OK). I started no change, because one more gate would not finish before 07:30. No golden moved.
 
 NEXT (the next night): same as it19's NEXT (it18 items 2-5). REPORT.md stands as written.
+
+## it45 (session 24, 07:30-07:32, STABILIZE, past the freeze)
+
+- Opened at 07:30, the freeze. Checked: tree clean apart from the assets lane's untracked `ASSETS-REPLIES.md` (not mine, left alone); HEAD 0126c66c is docs only; the last code-or-art commit is still ccfd86db, on which full unit 2259/0, scenarios 55/0 and reel top/tilt70/combo OK were all taken (it18). Evidence in `gtai-masters/n11/hero/` already matches that build, since no render-affecting commit followed it. I made no code, art or golden change: STABILIZE allows only bug fixes, I found no new bug, and re-running a gate on an unchanged build would not tell us anything new. REPORT.md stands as written at it18/it19.
+
+NEXT (the next night): same as it19's NEXT (it18 items 2-5: per-form `GhostRecoil.LEAN_DEG`, a blow-source field on `Fighter`, Ohm's diagonal HIT cells on arrival, the LFS-pointer before-film trap, the rest of Rivet's strips at x1.5).
