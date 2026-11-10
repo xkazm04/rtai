@@ -337,6 +337,23 @@ it so the verdict still names the file and line. `--keep-going` waits for the en
 (for a run whose later errors you want in the log). Built on `runProcess`'s `stopOn` option in
 `tools/lib/godot.mjs`; the gates do not use it, they report every error.
 
+## A dev run draws the current pixels at a fixed step (`tools/dev/run.mjs`)
+
+```
+node tools/dev/run.mjs stride_film -- --rigs --ppm=64 --film-out=C:/tmp/walk
+# run: 1 asset(s) changed since the last import (res://.../tonnage_walk8.png): running --import first, ...
+```
+
+A plain `--path project <scene>` run does not re-import a PNG you just repacked, so a before/after can
+be pixel-identical. `dev/run.mjs` now re-imports any asset whose source no longer matches its import
+(as `film.mjs` does) before it launches. An entry that films every tick declares
+`const FIXED_FPS: int = 60` and always gets `--fixed-fps 60`: under contention real-time frames skip
+ticks (hero dropped 28 of 64 grabs). It is not the default, because the arena and the benches quit by
+themselves too, and a fixed step would distort a bench or speed up a windowed scene. `--fixed-fps=<n>`
+on the command line still wins.
+
+**Unverifiable (exit 3):** an asset still does not match its import after `--import`; nothing is launched.
+
 ## Scenario progress (`run_scenarios.gd`, `tools/tests/run_scenarios.mjs`)
 
 ```
