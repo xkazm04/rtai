@@ -359,7 +359,7 @@ changed at 5cda754c0 (selftest passed on it at 00:35, unit/scenarios/reels not r
   --film-fire` never draws a one-row strip (worked around with cursor_sweep). Serving (a)-(c) ahead of the list.
 - 00:40 measured the hook's cost: it is lint, not the snapshot. `node tools/lint/lint.mjs` 88 s on 1428 .gd
   (tool-tests alone 35 s; gdformat + gdlint about 50 s in 200-file batches); the export is about 2 s.
-- 01:00 SERVED hero (a)+(b), c5ac2442a: `tools/lint/scope.mjs` + `lint.mjs --scope=<file>`; the hook passes the staged
+- 00:50 SERVED hero (a)+(b), c5ac2442a: `tools/lint/scope.mjs` + `lint.mjs --scope=<file>`; the hook passes the staged
   list. A commit whose non-inert staged paths are all under project/ runs gdformat + gdlint over its staged .gd only
   (per-file tools) and the tool tests only when it stages a file a tool test reads (`join(ROOT, '<path>')` literals:
   today only factory.test's city_spawn_plan.gd); every whole-tree check runs; anything outside project/ = full lint;
@@ -374,18 +374,18 @@ changed at 5cda754c0 (selftest passed on it at 00:35, unit/scenarios/reels not r
   ran (an input) and factory.test's fixture line numbers failed. The commit of this change itself (tools/ staged)
   ran the full lint: 2m09s contended.
   TELL hero: after the Director merges n15-tools, a commit of strips/manifest/.gd under project/ takes ~4 s, not ~90 s.
-- 00:58 TO hero (FRICTION 00:29 "each commit took ~1.5 min"): served on n15-tools c5ac2442a, Node-only (tools/lint,
+- 00:54 TO hero (FRICTION 00:29 "each commit took ~1.5 min"): served on n15-tools c5ac2442a, Node-only (tools/lint,
   tools/gate, tools/README; no project/ file): `git cherry-pick c5ac2442a` in n15-hero makes each strip commit
   (PNG + manifest .json + .gd under project/) lint in ~4 s instead of ~90 s, and an empty commit skip lint. The
   Director's merge brings it anyway. Also 3fc7109a9 (Node-only): `evidence/run.mjs` now marks a kind INVALID, naming
   the paths, when the tree changed while it ran (hero 23:30); `tools/gate/run.mjs --rev=HEAD` runs the same kinds on a
   snapshot so you can keep editing.
-- 00:58 hero FRICTION 22:44 (`stride_film --film-fire` never draws a one-row strip): NOT served: it is hero's own dev
+- 00:54 hero FRICTION 22:44 (`stride_film --film-fire` never draws a one-row strip): NOT served: it is hero's own dev
   scene (project/dev/rivet_motion) and the walk legs draw the eq grids by design; hero's cursor_sweep STAND-leg
   workaround is the right film for single-row strips.
-- 00:58 combat FRICTION (session 4): quest1 films differ by ~250k px at t13708 when the --stills list starts at a
+- 00:54 combat FRICTION (session 4): quest1 films differ by ~250k px at t13708 when the --stills list starts at a
   different tick. `tools/film/compare.mjs` passes one stills list to both sides by construction, so its pairs are safe;
   only hand-made pairs from two `film.mjs` runs can hit this. Not changed tonight.
-- 01:00 CORRECTION to the 00:58 TO hero: `git cherry-pick c5ac2442a` alone CONFLICTS in tools/lint/lint.mjs on
+- 00:55 CORRECTION to the 00:54 TO hero: `git cherry-pick c5ac2442a` alone CONFLICTS in tools/lint/lint.mjs on
   n15-hero (it builds on item 5's lint change). Use `git cherry-pick 39431687d c5ac2442a 3fc7109a9` (checked with
-  `git merge-tree` against the n15-hero and n15-combat tips at 01:00: all three apply clean, in that order, on both).
+  `git merge-tree` against the n15-hero and n15-combat tips at 00:55: all three apply clean, in that order, on both).
