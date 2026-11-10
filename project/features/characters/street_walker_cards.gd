@@ -176,10 +176,10 @@ static func place(rig: CutRig, card: Sprite2D) -> void:
 	var stride: float = sin(TAU * rig.phase)
 	var fall: Vector2 = Vector2(0.0, 1.0) if hit else StreetWalkerFall.pose(rig, card)
 	var wound: Vector3 = StreetWalkerHit.shove(rig)
-	card.global_rotation = stride * SWAY * walk + fall.x + wound.z
+	card.global_rotation = stride * SWAY * walk + fall.x + wound.z + StreetWalkerHit.flail(rig)
 	card.global_scale = Vector2(s, s * fall.y)
 	card.global_position = (
 		rig.global_position - Vector2(0.0, absf(stride) * BOB_PX * walk) + Vector2(wound.x, wound.y)
 	)
-	if hit:
+	if hit and not StreetWalkerHit.is_burn(str(card.get_meta(ON, ""))):
 		StreetWalkerHit.face(card, rig.react.dir.rotated(rig.facing))

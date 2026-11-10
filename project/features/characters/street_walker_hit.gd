@@ -34,6 +34,15 @@ const SITE_GRIDS: Dictionary[String, Dictionary] = {
 	"cop/head_cap":
 	{&"flinch": "p70/cop_patrol_shoulder_hit.png", &"stagger": "p70/cop_patrol_gut_hit.png"},
 }
+## n11 it33 (owner: "reactions ... poor"; it32 critique: a burning man aimed and walked calmly
+## under his flames): a kind with a drawn burning figure (the asset lane's burn cells, street_hit.py
+## BURNS: arms flailing, flames up his sides) draws it for the whole burn family, faced by his head
+## like the walk, and shakes FLAIL_RAD at FLAIL_HZ. Its drawn flames replace FightBurnArt's loops
+## over the body. BURN_ON false = the walk under the loops (the before).
+const BURN_ON: bool = true
+const BURN_GRIDS: Dictionary[String, String] = {"cop/head_cap": "p70/cop_patrol_burn_hit.png"}
+const FLAIL_RAD: float = 0.07
+const FLAIL_HZ: float = 3.0
 ## Family -> seconds the drawn cell holds from the blow (the rest of the family is the shoved walk).
 const HOLD_S: Dictionary[StringName, float] = {&"flinch": 0.2, &"stagger": 0.34}
 ## A death of these kinds opens on the same thrown-back cell over the fall grid's buckle (a body
@@ -48,6 +57,7 @@ const DEATH_KINDS: Array[StringName] = [&"death_bullet", &"death_blast", &"death
 const FILL_ON: bool = true
 const FILL: Dictionary[String, float] = {
 	"cop_patrol_hit.png": 1.37,
+	"cop_patrol_burn_hit.png": 1.14,
 	"cop_riot_hit.png": 1.20,
 	"ped_cap_hit.png": 1.39,
 	"ped_elder_hit.png": 1.17,
@@ -76,6 +86,8 @@ static func grid_of(rig: CutRig, row: String) -> String:
 	if r.dying:
 		var open: bool = DEATH_KINDS.has(r.kind) and r.progress() < StreetWalkerFall.FALL_AT[1]
 		return GRIDS[row] if open else ""
+	if r.kind == &"burn" and BURN_ON and BURN_GRIDS.has(row):
+		return BURN_GRIDS[row]
 	if not HOLD_S.has(r.kind) or r.t >= float(HOLD_S[r.kind]):
 		return ""
 	var sites: Dictionary = SITE_GRIDS.get(row, {}) if SITES else {}
@@ -85,6 +97,23 @@ static func grid_of(rig: CutRig, row: String) -> String:
 ## True when `path` is one of the hit grids (StreetWalkerCards drops it when the hold ends).
 static func is_grid(path: String) -> bool:
 	return path.ends_with("_hit.png")
+
+
+## True when `path` is a drawn burning figure (faced by the head, its own flames drawn on it).
+static func is_burn(path: String) -> bool:
+	return path.ends_with("_burn_hit.png")
+
+
+## True when this rig draws its drawn burning figure now.
+static func draws_burn(rig: CutRig) -> bool:
+	return rig.head_card != null and is_burn(str(rig.head_card.get_meta(&"street_walker", "")))
+
+
+## The burning man's flail this step (rad): a shake on the drawn figure, by the family's clock.
+static func flail(rig: CutRig) -> float:
+	if rig.react == null or not draws_burn(rig):
+		return 0.0
+	return FLAIL_RAD * sin(TAU * FLAIL_HZ * rig.react.t)
 
 
 ## The scale a hit grid at `path` draws at, of its cell's height (1 for any other strip).

@@ -44,6 +44,9 @@ SHEETS = {
 # it14: the per-site flinch cells drawn for a kind (<site>_<col>.png, the right-hand facings 1..5;
 # the left ones mirror as the grid does), each to <kind>_<site>_hit.png on the same layout.
 SITES = {"cop_patrol": ["shoulder", "gut"]}
+# n11 it33: the asset lane's drawn burning man (<kind>_hit_70_cells/burn/1_<col>.png, arms flailing,
+# flames up his sides), packed as <kind>_burn_hit.png on the same layout for a LIVING burn.
+BURNS = {"cop_patrol": "burn/1"}
 
 
 def foot_x(alpha: np.ndarray) -> float:
@@ -79,7 +82,7 @@ def cell(path: Path, out: Image.Image, col: int) -> None:
 def build(lib: Path, name: str, spec: tuple, tmp: Path, site: str = "1") -> None:
     file, ref, band = spec
     if site != "1":
-        file = file.replace("_hit.png", f"_{site}_hit.png")
+        file = file.replace("_hit.png", f"_{site.split('/')[0]}_hit.png")
     sheet = Image.new("RGBA", (CELL_W * 5, CELL_H), (0, 0, 0, 0))
     for col in range(5):
         cell(lib / f"{name}_hit_70_cells/{site}_{col + 1}.png", sheet, col)
@@ -102,7 +105,7 @@ def main() -> None:
     with tempfile.TemporaryDirectory() as t:
         for name, spec in SHEETS.items():
             build(lib, name, spec, Path(t))
-            for site in SITES.get(name, []):
+            for site in SITES.get(name, []) + ([BURNS[name]] if name in BURNS else []):
                 build(lib, name, spec, Path(t), site)
 
 
