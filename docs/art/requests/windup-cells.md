@@ -12,10 +12,10 @@ sword's spin coil). All graded A by that lane.
 
 | Weapon | p70 side + cam | Anticipation (melee.md, 32 px/m) | State | p55 | left |
 |---|---|---|---|---|---|
-| plasma sword | shipped ON | 2 -> 4 | `rivet_eq_plasma_sword_windup.png` | delivered, not wired | - |
-| katana | shipped ON | 4 -> 5 | `rivet_eq_katana_windup.png` | delivered, not wired | - |
-| electro baton | shipped ON | 2 -> 4 | `rivet_eq_electro_baton_windup.png` | delivered, not wired | delivered, slot not wired |
-| chainsaw (offer) | delivered | - | not built | delivered | - |
+| plasma sword | shipped ON | 2 -> 4 | `rivet_eq_plasma_sword_windup.png` | n14 ON (side 2 -> 4, cam 2 -> 4) | - |
+| katana | shipped ON | 4 -> 5 | `rivet_eq_katana_windup.png` | n14 ON (4 -> 5, 3 -> 4) | - |
+| electro baton | shipped ON | 2 -> 4 | `rivet_eq_electro_baton_windup.png` | n14 ON (2 -> 4, 2 -> 4) | n14 ON p70 + p55 (2 -> 3), `rivet_eq_electro_baton_left_windup.png` |
+| chainsaw (offer) | n14 ON (x1.5), 3 -> 4 | 3 -> 4 | `rivet_eq_chainsaw_windup.png` | n14 ON (3 -> 4, 3 -> 4) | - |
 | sword spin coil (offer) | delivered | - | not built | - | - |
 
 Laid by `tools/art/rivet_windup_cells.py` (manifest `tools/art/rivet_windup_cells.json`) from

@@ -88,3 +88,56 @@ func test_the_cells_by_octant() -> void:
 func test_the_warm_lists_it() -> void:
 	var paths: PackedStringArray = RivetStripWarm.paths("p70", [&"plasma_sword"])
 	assert_true(paths.has(WU))
+
+
+func test_a_left_strip_takes_the_left_wind_up() -> void:
+	var dir: String = RivetStrips.DIR + "p70/rivet_eq_electro_baton"
+	var left: String = dir + "_left.png"
+	var lw: String = dir + RivetWindup.LEFT_FILE
+	RivetStrips._exists[lw] = true
+	assert_eq(RivetWindup.path_or(_rig(0.0), "p70", &"electro_baton", left), lw, "winding")
+	assert_eq(RivetWindup.path_or(_rig(-1.0), "p70", &"electro_baton", left), left, "no strike")
+	assert_eq(RivetWindup.path_or(_rig(4.5 / 60.0), "p70", &"electro_baton", left), left, "active")
+	var other: String = RivetStrips.DIR + "p70/rivet_eq_pistol_left.png"
+	assert_eq(RivetWindup.path_or(_rig(0.0), "p70", &"electro_baton", other), other, "not his")
+	RivetWindup.enabled = false
+	assert_eq(RivetWindup.path_or(_rig(0.0), "p70", &"electro_baton", left), left, "the flag")
+	RivetStrips._exists[lw] = false
+	RivetWindup.enabled = true
+	assert_eq(RivetWindup.path_or(_rig(0.0), "p70", &"electro_baton", left), left, "no cut")
+	@warning_ignore("return_value_discarded")
+	RivetStrips._exists.erase(lw)
+
+
+func test_the_left_wind_up_is_one_unmirrored_cell() -> void:
+	var lw: String = RivetStrips.DIR + "p70/rivet_eq_electro_baton" + RivetWindup.LEFT_FILE
+	assert_eq(RivetStrips.cells_of(lw, false), RivetWindup.LEFT_CELLS)
+	assert_eq(RivetStrips.cells_of(WU, false), RivetWindup.CELLS, "the two-cell strip")
+	for o: int in [3, 4, 5]:
+		assert_eq(RivetWindup.small_of(o, RivetWindup.LEFT_CELLS), Vector2i(RivetWindup.SIDE, 0))
+	assert_eq(RivetStrips.foot_px(lw), RivetFrames.PAD_PX, "the baton is raised: the plain pad")
+
+
+func test_the_n14_strips_ship_and_are_warmed() -> void:
+	var ship: Dictionary[String, Array] = {
+		"p55": ["plasma_sword", "katana", "electro_baton", "chainsaw"], "p70": ["chainsaw"]
+	}
+	for art: String in ship:
+		for w: String in ship[art]:
+			var dir: String = RivetStrips.DIR + art + "/rivet_eq_" + w
+			var eq: Texture2D = load(dir + ".png") as Texture2D
+			var wu: Texture2D = load(dir + RivetWindup.FILE) as Texture2D
+			assert_not_null(wu, art + " " + w)
+			var k: float = RivetRes.of(dir + ".png") / RivetRes.of(dir + RivetWindup.FILE)
+			assert_gte(wu.get_width() / float(RivetWindup.CELLS), eq.get_width() / 8.0 / k, w)
+			assert_true(RivetStripWarm.paths(art, [StringName(w)]).has(dir + RivetWindup.FILE))
+	for art: String in ["p70", "p55"]:
+		var lw: String = RivetStrips.DIR + art + "/rivet_eq_electro_baton" + RivetWindup.LEFT_FILE
+		assert_not_null(load(lw), art + " left")
+		assert_true(RivetStripWarm.paths(art, [&"electro_baton"]).has(lw), art + " left warmed")
+
+
+func test_the_p70_chainsaw_wind_up_is_cut_at_its_strip_res() -> void:
+	var dir: String = RivetStrips.DIR + "p70/rivet_eq_chainsaw"
+	assert_eq(RivetRes.of(dir + RivetWindup.FILE), RivetRes.of(dir + ".png"))
+	assert_eq(RivetRes.of(dir + RivetWindup.FILE), RivetWalk.RES)

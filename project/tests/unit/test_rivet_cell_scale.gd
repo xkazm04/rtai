@@ -129,6 +129,9 @@ func test_a_left_baton_keeps_the_game_smear_running() -> void:
 	var eq: String = RivetStrips.DIR + "p70/rivet_eq_electro_baton.png"
 	rig.head_card.set_meta(RivetFrames.ON, left)
 	assert_false(RivetStrips.hides_held(rig), "the left strip has no strike cell")
+	rig.head_card.hframes = RivetWindup.LEFT_CELLS  # n14: its wind-up neither (the smear runs on)
+	rig.head_card.set_meta(RivetFrames.ON, left.trim_suffix(".png") + "_windup.png")
+	assert_false(RivetStrips.hides_held(rig), "the left wind-up keeps the smear")
 	rig.head_card.hframes = RivetFrames.EQ_CELLS
 	rig.head_card.set_meta(RivetFrames.ON, eq)
 	assert_true(RivetStrips.hides_held(rig), "the right cells draw the swing")
