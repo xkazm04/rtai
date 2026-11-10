@@ -54,7 +54,21 @@ BURNS = {k: "burn/1" for k in ("cop_patrol", "cop_riot", "swat", "thug", "ped_ho
 # so the five cells take ONE scale, the tallest filling FILL, and stand on the planted boot's own bottom,
 # not the cell's lowest pixel (a cane tip). Height-fitting each cell drew the elder's low flung pose 1.25 x.
 # Removing a line packs that kind's first set as before.
-VERSIONS = {"swat": "v4", "ped_elder": "v3"}
+# n15 c-2 (owner call): the thrown-back redraws at the walk camera (assets it268, picks in the it350 reply):
+# head and shoulders the largest shapes, the legs short stubs, never a whole upturned face.
+VERSIONS = {
+    "swat": "v4",
+    "ped_elder": "v3",
+    "cop_patrol": "v2",
+    "ped_cap": "v2",
+    "ped_hat": "v2",
+    "ped_jogger": "v2",
+    "ped_shopper": "v2",
+    "ped_suit": "v3",
+    "ped_punk": "v3",
+    "ped_hood": "v3",
+    "thug": "v4",
+}
 # n15 combat: the burning figure's second flail frame (burn/1b_<col>.png) as <kind>_flail_burn_hit.png on
 # the same layout, each facing at the scale its burn/1 cell takes, so the two frames swap without a pop.
 FLAILS = "burn/1b"

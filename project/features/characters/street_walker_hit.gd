@@ -67,10 +67,12 @@ const DEATH_KINDS: Array[StringName] = [&"death_bullet", &"death_blast", &"death
 ## thrown-back grid draws at FILL x that (tools/art/street_hit_fill.py: its figure's thickness
 ## against the mid-fall row it hands over to), scaled about the planted boot. The site grids
 ## (SITE_GRIDS) were drawn at the walk's scale and keep 1. FILL_ON false = the before.
-## n15: the SWAT (v4) and elder (v3) grids are re-measured after their redraw (1.31, 1.17 before).
+## n15: the SWAT (v4) and elder (v3) grids are re-measured after their redraw (1.31, 1.17 before);
+## c-2, the walk-camera redraws of nine more kinds, re-measured too (before: patrol 1.37, cap 1.39,
+## hat 1.34, hood 1.35, jogger 1.29, punk 1.25, shopper 1.33, suit 1.40, thug 1.17).
 const FILL_ON: bool = true
 const FILL: Dictionary[String, float] = {
-	"cop_patrol_hit.png": 1.37,
+	"cop_patrol_hit.png": 1.21,
 	"cop_patrol_burn_hit.png": 1.14,
 	# it34: the kind's hit FILL x the patrol cop's measured burn/hit ratio (0.83), not per kind.
 	"cop_riot_burn_hit.png": 1.00,
@@ -81,17 +83,17 @@ const FILL: Dictionary[String, float] = {
 	"ped_punk_burn_hit.png": 1.04,
 	"ped_jogger_burn_hit.png": 1.07,
 	"cop_riot_hit.png": 1.20,
-	"ped_cap_hit.png": 1.39,
+	"ped_cap_hit.png": 1.27,
 	"ped_elder_hit.png": 1.20,
-	"ped_hat_hit.png": 1.34,
-	"ped_hood_hit.png": 1.35,
-	"ped_jogger_hit.png": 1.29,
-	"ped_punk_hit.png": 1.25,
-	"ped_shopper_hit.png": 1.33,
-	"ped_suit_hit.png": 1.40,
+	"ped_hat_hit.png": 1.26,
+	"ped_hood_hit.png": 1.25,
+	"ped_jogger_hit.png": 1.19,
+	"ped_punk_hit.png": 1.05,
+	"ped_shopper_hit.png": 1.11,
+	"ped_suit_hit.png": 1.15,
 	"ped_worker_hit.png": 1.19,
 	"swat_hit.png": 1.36,
-	"thug_hit.png": 1.17,
+	"thug_hit.png": 1.02,
 }
 ## The card's tip at the family's peak (rad, away from the blow on screen).
 const LEAN: float = 0.22
