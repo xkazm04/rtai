@@ -321,6 +321,14 @@ debt step re-ratchets it to the merged tree. Any other conflict stops.
 Each step's output goes to `build/merge/logs/<step>.log` while it runs (tail it). A step past its limit
 (`--timeout`, at least 65 min for reels and 90 for gates) has its whole process tree killed by
 `step_guard.mjs`, Godot included, and its log ends `morning: <step>: timed out after N min`.
+After the gates (green or red) it prints one line per evidence kind of that run (`tools/merge/gate_lines.mjs`),
+and names any kind written for another commit STALE. Real run, n15 scratch integration of three lanes:
+
+```
+morning: gates: lint pass: lint: all 16 checks pass over 1428 GDScript files
+morning: gates: unit-tests pass: unit-tests: 2529 passed, 0 failed, 2 skipped (GUT, headless)
+morning: gates: green
+```
 
 ## tools/dev/wt_init.mjs: make a fresh worktree able to run the game
 

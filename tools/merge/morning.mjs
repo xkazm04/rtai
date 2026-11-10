@@ -13,6 +13,7 @@ import { appendFileSync, closeSync, existsSync, mkdirSync, openSync, readFileSyn
 import { join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { GUARD_EXIT } from './step_guard.mjs';
+import { gateLines } from './gate_lines.mjs';
 import { checkBaked } from '../export/check_baked.mjs';
 import { baselineText, mergeBaselines } from '../debt/merge_baseline.mjs';
 
@@ -196,6 +197,7 @@ export const STEP_RUNNERS = {
   },
   gates: (ctx) => {
     const r = ctx.run('gates', 'node', ['tools/evidence/run.mjs', '--no-bench']);
+    for (const l of gateLines(join(ctx.cwd, 'build', 'evidence'), ctx.git(['rev-parse', 'HEAD']).stdout)) ctx.out(l);
     if (r.status !== 0) return { ok: false, advice: [`STOPPED: the gates are red; log ${r.log}`, 'Known flakes: test_noir_shadows and the scenario_city_chase budget: re-run those alone. A real red: fix, commit, run again with --resume.'] };
     return { ok: true };
   },
