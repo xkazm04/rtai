@@ -11,6 +11,7 @@
     "sheet": "rivet_eq_chainsaw_55_v3.png"
    },
    "rivet_eq_electro_baton": {
+    "act_k": 1.0,
     "cc": "0",
     "counts": "5,3",
     "sheet": "rivet_eq_electro_baton_55_v3.png"
