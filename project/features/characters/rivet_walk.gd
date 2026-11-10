@@ -124,10 +124,10 @@ static func is_grid(card: Sprite2D) -> bool:
 
 
 ## Texture px per 110-space cell px of the strip `card` shows (RES on a packed grid, a one-row
-## strip's own RivetStrips.res_of_path off one).
+## strip's own RivetRes.of off one).
 static func res_of(card: Sprite2D) -> float:
 	var on: String = str(card.get_meta(RivetFrames.ON, ""))
-	return RES if is_grid(card) and not on.ends_with("/" + STRIP4) else RivetStrips.res_of_path(on)
+	return RES if is_grid(card) and not on.ends_with("/" + STRIP4) else RivetRes.of(on)
 
 
 ## True when `card` shows an armed walk grid (the drawn figure carries the weapon).

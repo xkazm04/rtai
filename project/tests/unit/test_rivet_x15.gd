@@ -1,12 +1,12 @@
 extends GutTest
-## n11 it14: Rivet's one-row strips cut at RivetWalk.RES x the 110 px figure (RivetStrips.X15).
+## n11 it14: Rivet's one-row strips cut at RivetWalk.RES x the 110 px figure (RivetRes.X15).
 
 const PISTOL: String = RivetStrips.DIR + "p70/rivet_eq_pistol.png"
 
 
 func test_an_x15_strip_reads_its_tables_at_res() -> void:
-	assert_eq(RivetStrips.res_of_path(PISTOL), RivetWalk.RES)
-	assert_eq(RivetStrips.res_of_path(RivetStrips.DIR + "p55/rivet_eq_pistol.png"), 1.0)
+	assert_eq(RivetRes.of(PISTOL), RivetWalk.RES)
+	assert_eq(RivetRes.of(RivetStrips.DIR + "p55/rivet_eq_pistol.png"), 1.0)
 	assert_eq(RivetStrips.foot_px(PISTOL), float(RivetFrames.PAD_PX), "the cut pads PAD px")
 
 

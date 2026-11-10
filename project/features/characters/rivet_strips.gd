@@ -46,8 +46,6 @@ const DIAG: String = "_diag.png"
 const DIAG_CELLS: int = 4
 const DIAG_CELL: PackedInt32Array = [-1, 0, -1, 2, -1, 3, -1, 1]
 const DIAG_FOOT_PX: Dictionary[String, float] = {"p70": 35.0, "p55": 15.0}
-## n11 it14: one-row strips cut at RivetWalk.RES x 110 px; their tables stay 110 (res_of_path).
-const X15: PackedStringArray = ["p70/rivet_eq_pistol.png", "p70/rivet_eq_pistol_left.png"]
 ## n9 it10: the drawn flame's screen angle (deg, y down) in the fire cell each octant shows
 ## (side 0 / 180, camera 90, the diagonal cells as drawn: measured by the yellow's long axis). A
 ## burst whose aim is over FLAME_TOL off it keeps the facing cell and the game jet alone (one
@@ -119,13 +117,8 @@ static func foot_px(path: String) -> float:
 	var art: String = path.get_base_dir().get_file()
 	if path.ends_with(DIAG):
 		return DIAG_FOOT_PX.get(art, 0.0)
-	var res: float = res_of_path(path)
+	var res: float = RivetRes.of(path)
 	return FOOT_PX.get(art + "/" + path.get_file(), RivetFrames.PAD_PX / res) * res
-
-
-## Texture px per 110-space px of the one-row strip at `path` (RivetWalk.RES when in X15).
-static func res_of_path(path: String) -> float:
-	return RivetWalk.RES if X15.has(path.trim_prefix(DIR)) else 1.0
 
 
 ## A one-handed hold turned left: its drawn left strip, else the base (the fallback, logged once).

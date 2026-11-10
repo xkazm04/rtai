@@ -27,7 +27,7 @@ static func publish(rig: CutRig) -> void:
 	if card == null or not card.has_meta(RivetFrames.ON) or card.texture == null:
 		return
 	var on: String = str(card.get_meta(RivetFrames.ON))
-	var p: Vector2 = point(on, card.frame) * RivetStrips.res_of_path(on)
+	var p: Vector2 = point(on, card.frame) * RivetRes.of(on)
 	if p.x < 0.0:
 		return
 	var w: float = card.texture.get_width() / float(card.hframes)
@@ -53,7 +53,7 @@ static func feed_smear(
 		var tex: Texture2D = load(eq) as Texture2D
 		var card: Sprite2D = rig.head_card
 		var res: float = RivetWalk.res_of(card)
-		var eq_res: float = RivetStrips.res_of_path(eq)
+		var eq_res: float = RivetRes.of(eq)
 		root = card.to_global(
 			Vector2(0.0, RivetFrames.PAD_PX - tex.get_height() / eq_res + tip.y) * res
 		)
