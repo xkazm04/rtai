@@ -211,8 +211,11 @@ temp dir. Warnings count as errors, as in the game. `--check-only` does not regi
 same run) is not reported. `quick.mjs` calls this check.
 
 **Refuses (exit 2):** a path outside `project/`, a missing file, no Godot.
-**Never a pass:** a cascade with no autoload noise behind it in the same run, because its cause was
-not seen; a run killed at its 60 s budget.
+**Unverifiable (exit 3):** Godot printed only "Failed to compile depended scripts" cascades and no
+cause. That is neither a pass nor a FAIL: the run says so, shows up to 6 other lines Godot printed,
+and asks you to check the dependencies one by one or run the unit tests that load the file (hero n11,
+an unchanged file the tests load fine). A real FAIL in the same run still exits 1.
+**Never a pass:** that cascade; a run killed at its 60 s budget.
 
 ## tools/gate/run.mjs: the gates on a snapshot, so you can keep editing
 
