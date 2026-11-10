@@ -4,7 +4,7 @@
 // not passes, because a builder cannot tell them from a change that worked.
 //   node tools/film/compare.mjs <shot> --a=<rev|worktree> --b=<rev|worktree> --at=<t,t> --out=<dir>
 //     [--clip=<from-to>] [--subject=rivet|hostile|dead|id:<n>] [--label-a=<s>] [--label-b=<s>]
-//     [--view=combo] [--ppm=48] [--lock=auto|spawn|at:<tick>|<x,y>|off] [--seed=<n>] [--res=1280x800] [--victim=<kind>] [--feel=auto|on|off] [--clean] [-- flags]
+//     [--view=combo] [--ppm=48] [--lock=auto|spawn|at:<tick>|<x,y>|off] [--seed=<n>] [--res=1280x800] [--victim=<kind>] [--feel=auto|on|off] [--native=donor] [--clean] [-- flags]
 // --victim goes to both sides' film.mjs, which checks the kind exists in each tree (combat n15 REQUEST).
 // A commit gets a throwaway snapshot (tools/lib/snapshot.mjs) with the probe injected when it is
 // older than the kit; a worktree is filmed where it stands and must already have the probe. The
@@ -24,8 +24,8 @@ import { diffImages, readPng } from './png.mjs';
 
 const USAGE = 'usage: node tools/film/compare.mjs <shot> --a=<rev|worktree> --b=<rev|worktree> --at=<t,t> --out=<dir> '
   + '[--clip=<from-to>] [--subject=rivet|hostile|dead|id:<n>] [--label-a=<s>] [--label-b=<s>] [--view=combo] [--ppm=48] '
-  + '[--lock=auto|spawn|at:<tick>|<x,y>|off] [--seed=<n>] [--res=1280x800] [--victim=<kind>] [--feel=auto|on|off] [--timeout=<s>] [--clean] [-- flags]';
-const VALUE = new Set(['a', 'b', 'at', 'out', 'clip', 'subject', 'label-a', 'label-b', 'view', 'ppm', 'lock', 'seed', 'res', 'timeout', 'victim', 'feel']);
+  + '[--lock=auto|spawn|at:<tick>|<x,y>|off] [--seed=<n>] [--res=1280x800] [--victim=<kind>] [--feel=auto|on|off] [--native=donor] [--timeout=<s>] [--clean] [-- flags]';
+const VALUE = new Set(['a', 'b', 'at', 'out', 'clip', 'subject', 'label-a', 'label-b', 'view', 'ppm', 'lock', 'seed', 'res', 'timeout', 'victim', 'feel', 'native']);
 const DEFAULTS = { view: 'combo', ppm: '48', lock: 'auto', seed: '20261109', res: '1280x800', timeout: '900', subject: 'rivet' };
 /** Below this share of changed pixels the two sides are the same picture. */
 export const IDENTICAL_FRACTION = 0.00005;
@@ -52,6 +52,7 @@ export function parseArgv(argv) {
   for (const f of ['a', 'b', 'at', 'out']) if (!flags[f]) return { error: `compare: --${f}= is required` };
   if (!/^\d+(,\d+)*$/.test(flags.at)) return { error: `compare: --at must be ticks, got ${flags.at}` };
   if (flags.clip && !/^\d+-\d+$/.test(flags.clip)) return { error: `compare: --clip must be <from>-<to>, got ${flags.clip}` };
+  if (flags.native !== undefined && flags.native !== 'donor') return { error: `compare: --native takes only donor, got ${flags.native}` };
   if (!/^(rivet|hostile|dead|id:\d+)$/.test(flags.subject)) return { error: `compare: --subject must be rivet, hostile, dead or id:<n>, got ${flags.subject}` };
   return { shotText, flags, extra };
 }
@@ -91,12 +92,31 @@ function injectProbe(path) {
   return true;
 }
 
+/** True when `native/` at `sha` is not `native/` at the root's HEAD (git diff exits 1). */
+export function nativeDiffers(root, sha) {
+  const r = spawnSync('git', ['-C', root, 'diff', '--quiet', sha, 'HEAD', '--', 'native'], { encoding: 'utf8', windowsHide: true });
+  return r.status === 1;
+}
+
+/** A commit side runs in a snapshot that gets the DLLs of THIS tree (built from its HEAD's native/), so
+ *  when the sim's C++ differs at that commit the side is not that commit's sim: refused, unless the change
+ *  under test is view-only and the caller says so with --native=donor (n15 t-4 film: the before would
+ *  have run the after's car routing). The fix is a worktree at the commit with its own DLLs as the side. */
+export function nativeRefusal(value, sha, differs, native) {
+  if (!differs || native === 'donor') return null;
+  return `compare: native/ at ${value} (${sha.slice(0, 8)}) differs from this tree's HEAD, but its snapshot would run this tree's DLLs, `
+    + `so it would not be ${value}'s sim. Film a worktree at ${value} that has its own DLLs (tools/dev/wt_init.mjs, then just native) `
+    + 'as that side, or pass --native=donor when the change under test is not in the sim.';
+}
+
 /** Resolves a side to a runnable tree: {tree, label, snapshot, injected} or {error}. */
-export function resolveSide(value, { root = ROOT, ensure = ensureSnapshot } = {}) {
+export function resolveSide(value, { root = ROOT, ensure = ensureSnapshot, native, differs = nativeDiffers } = {}) {
   const dir = resolve(value);
   if (existsSync(join(dir, 'project', 'project.godot'))) return { tree: dir, label: basename(dir), snapshot: false, injected: false };
   const sha = revParse(root, value);
   if (!sha) return { error: `compare: ${value} is neither a worktree nor a commit git knows` };
+  const refusal = nativeRefusal(value, sha, differs(root, sha), native);
+  if (refusal) return { error: refusal };
   const snap = ensure({ root, rev: value, kind: 'film' });
   return { tree: snap.path, label: sha.slice(0, 8), snapshot: true, injected: injectProbe(snap.path) };
 }
@@ -151,7 +171,7 @@ export async function main(argv, { out = console.log, err = console.error, runne
   const parsed = parseArgv(argv);
   if (parsed.error) { err(`${parsed.error}\n${USAGE}`); return EXIT.usage; }
   const f = parsed.flags;
-  const [a, b] = [resolveSide(f.a), resolveSide(f.b)];
+  const [a, b] = [resolveSide(f.a, { native: f.native }), resolveSide(f.b, { native: f.native })];
   for (const s of [a, b]) if (s.error) { err(s.error); return EXIT.usage; }
   a.name = 'A';
   b.name = 'B';

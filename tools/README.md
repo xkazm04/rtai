@@ -151,6 +151,9 @@ is missing or off screen on either side. The composite is still written, with UN
 A note, not a verdict: if the subject has moved more than 5 cm between sides, the timelines differ.
 **Refuses:** a side that is neither a worktree nor a commit git knows; a worktree with no probe
 (it says to film a commit instead).
+A commit whose `native/` differs from this tree's HEAD (n15): its checkout would run THIS tree's DLLs,
+so it would not be that commit's sim. Film a worktree at that commit with its own DLLs as the side, or
+pass `--native=donor` when the change under test is view-only.
 
 **A before of an art change:** commit the new sheet, then compare that commit with its parent
 (`--a=HEAD~1 --b=HEAD`). Do not move the sheet aside by hand: its `.import` stays, `ResourceLoader`
