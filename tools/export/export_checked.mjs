@@ -1,5 +1,5 @@
 // Refuse release exports until the baked city passes its manifest check.
-import { mkdirSync } from 'node:fs';
+import { mkdirSync, statSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { ROOT } from '../lib/repo.mjs';
@@ -50,9 +50,25 @@ export async function exportChecked({ out = DEFAULT_OUT, check = defaultCheck, r
     return { ok: false, reason: `cannot verify baked city (${LIST}, ${CITY}): ${error?.message ?? String(error)}` };
   }
   if (result?.ok !== true) return { ok: false, reason: bakeReason(result) };
-  mkdirSync(dirname(outPath(out, root)), { recursive: true });
+  const file = outPath(out, root);
+  mkdirSync(dirname(file), { recursive: true });
+  const started = Date.now();
   const code = await run(exportArgs(out));
-  return { ok: code === 0, code };
+  if (code !== 0) return { ok: false, code };
+  return { ...written(file, started), code };
+}
+
+/** Exit 0 is not the evidence: the exe must exist, be non-empty and be written by this run
+ *  (mtime from its start, less FS_SLACK_MS for a coarse file clock). */
+export const FS_SLACK_MS = 2000;
+export function written(file, started, stat = statSync) {
+  let st;
+  try { st = stat(file); } catch { return { ok: false, reason: `Godot exited 0 but wrote no ${file}` }; }
+  if (!st.isFile() || st.size === 0) return { ok: false, reason: `Godot exited 0 but ${file} is empty or not a file` };
+  if (st.mtimeMs < started - FS_SLACK_MS) {
+    return { ok: false, reason: `Godot exited 0 but did not rewrite ${file} (last written ${new Date(st.mtimeMs).toISOString()})` };
+  }
+  return { ok: true, bytes: st.size };
 }
 
 async function main(argv) {
