@@ -14,7 +14,7 @@ const GAP_TICKS: int = 12
 ## not on ReactLink: quest 1's slice build loads MeleeFeel, and ReactLink pulls PlasmaScorchView,
 ## which names the dev-only ArenaRigs (dev/ is not in the slice export: quest 1 failed to load).
 const MELEE_IDS: Array[StringName] = [
-	&"claw", &"chainsaw", &"electro_baton", &"katana", &"plasma_sword"
+	&"claw", &"chainsaw", &"electro_baton", &"katana", &"plasma_sword", &"dent_jab"
 ]
 
 ## DECISION n7-melee 2026-11-05: a melee hit that lands damage plays a body wound even on a riot

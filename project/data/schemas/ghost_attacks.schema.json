@@ -49,6 +49,41 @@
           "minLength": 1,
           "type": "string"
         },
+        "jab": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "jab_cone_dot": {
+          "maximum": 1,
+          "minimum": -1,
+          "type": "number"
+        },
+        "jab_damage": {
+          "maximum": 10,
+          "minimum": 0,
+          "type": "number"
+        },
+        "jab_gap_s": {
+          "maximum": 5,
+          "minimum": 0,
+          "type": "number"
+        },
+        "jab_knock_m": {
+          "maximum": 10,
+          "minimum": 0,
+          "type": "number"
+        },
+        "jab_reach_m": {
+          "maximum": 10,
+          "minimum": 0,
+          "type": "number"
+        },
+        "jab_windup_s": {
+          "maximum": 2,
+          "minimum": 0,
+          "type": "number"
+        },
         "overload_s": {
           "maximum": 50,
           "minimum": 0,

@@ -883,6 +883,10 @@
       "id": "dent_car"
     },
     {
+      "cue": "melee_claw",
+      "id": "dent_jab"
+    },
+    {
       "cue": "melee_zap",
       "id": "electro_baton"
     },

@@ -352,6 +352,14 @@
       "id": "ray_gun",
       "kick_px": 1,
       "shake": ""
+    },
+    {
+      "doc": "n15 hero h-4: Dent arm jab with no car seized (DentJab, weapon dent_jab): the claw jab row, the same strength of blow.",
+      "hitstop": "rivet_hit",
+      "id": "dent_jab",
+      "kick_px": 2,
+      "kick_ticks": 6,
+      "shake": ""
     }
   ]
 }
