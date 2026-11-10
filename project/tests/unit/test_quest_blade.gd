@@ -94,4 +94,6 @@ func test_dock_hint_names_the_blade_key_only_with_a_blade() -> void:
 	var h: ObjectiveHint = ObjectiveHint.new()
 	h._dock(stage)
 	assert_string_contains(h.text, "[slot2] for the blade")
+	# with_keys reads the InputMap: never rely on another test filling it (combat n15)
+	_actions.install()
 	assert_string_contains(ObjectiveHint.with_keys(h.text), "[2] for the blade")
