@@ -1,4 +1,4 @@
-# REPORT n15-tools (draft, session 1, 23:05; later sessions extend it)
+# REPORT n15-tools (draft, session 2, 00:20; later sessions extend it)
 
 Branch `n15-tools` from main `5c5c03611`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n15\tools\` (`frames.json`),
 `evidence/` in this tree, JOURNAL.md for every command and its output.
@@ -48,11 +48,32 @@ selftest 11/11 + 5/5, release-compile 667/0. Reel gate on ad2f0a5c1: top, tilt70
   15-of-91 sample; Codex 162 s + Claude review 64833 tokens -> `claude_tokens_saved: -18014` on this module.
   The control's 730 s are inflated by my wait bug (stated in the ledger row).
 
-## Not done yet (session 1)
+## Morning merge, run for real (item 4)
 
-- item 4b part 2 (gates, reels on the scratch integration worktree; merge, debt and native ran for real 23:08-23:12,
-  all green, three lanes merged with no code conflict), item 7 (`sim_hash` control run, in progress),
-  Codex testers for t-1/t-4/t-5, the reel gate on this branch, a real `compare --victim` film.
+`morning.mjs` merge, debt, native (23:08-23:12) and gates, reels (23:48-00:10) on a scratch integration worktree of
+all three lanes' 23:08 tips: every step green, `DONE ... Nothing was pushed`. Integrated: unit 2529/0, scenarios 55,
+parity exact, look 11/11 + block 5/5 worst 0.00, reels 3/3. Worktree and branch removed. The baseline auto-resolve
+did not fire (no baseline conflict tonight): proven on its throwaway-repo test only.
+
+## Served for the builders
+
+combat: `--victim` through compare (b8fccb958), extras as chapters + `--feel` (ba6f38838, d60ff5894), lint function
+size stops at the body (26f18e5ef), `test_quest_blade` no longer depends on test order (5e41c66bc). A real victim
+film: `film-victim-head-swat-64ppm-t337-367.png`. hero: no REQUEST.
+
+## Calls for the owner
+
+- **c-1 Codex as a first-author test writer.** The fourth paired module, sim_hash: Claude's review of Codex's tests cost
+  64833 tokens, an Opus control writing them alone 46819, both at 14/15 on the same mutants (`claude_tokens_saved: -18014`).
+  As adversarial TESTERS tonight Codex cost little review (23 tests, none rewritten, two files split for size) and
+  caught a wording error in my brief. Recommend: Codex for testers of finished fixes, Claude for first-author unit tests.
+  Alternative: keep both (one data value: the factory's `pick`). Evidence: gtai-masters/n15/tools/codex-ledger.jsonl.
+- **c-2 t-4 is invisible in the shipped city** (0 of 1024000 pixels differ; `t4-city-street-32ppm-before-after-*`): the
+  generated grid never puts a kerb or plaza ahead of a lane. Kept as built (owner's Call); it matters for any hand-made map.
+
+## Not done yet
+
+- t-5 cost under the bench lock (CONTENDED only). The `bake` and `export` morning steps were not run for real.
 
 ## Merge notes (draft)
 
