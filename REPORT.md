@@ -55,12 +55,12 @@ parse error now stops at 1.5 s instead of the 150 s timeout (hero lost about 8 m
 
 ## Codex ledger (`factory ledger --state=C:/Users/kazda/kiro/gtai-n11t/logs/tools/state.json --ledger=C:/Users/kazda/kiro/gtai-masters/n11/tools/codex-ledger.jsonl`; RE-RUN at report time)
 
-At 05:38 (re-run with `--state`): 20 tasks, 5,296 s of Codex, 18 machine pass, 2 machine fail, 8 accepted,
+At 05:45 (re-run with `--state`): 21 tasks, 5,437 s of Codex, 19 machine pass, 2 machine fail, 9 accepted,
 11 accepted after revision, 0 rejected, 101 lines changed by review, 0 refused by the meter. Dollars: $68.10
 measured over the 8 review sessions to iteration 26 (per task $4.01, an ESTIMATE and an upper bound: a session
 also builds other things); with iteration 39 counted the total prints null until its cost is in state.json
 (one unknown session makes it unknown, by design). The report session re-runs it.
-Codex as tester (13 tasks, counted from the ledger's per-task lines): 115 failing tests, 101 real defects fixed
+Codex as tester (14 tasks, counted from the ledger's per-task lines): 120 failing tests, 106 real defects fixed
 with the tests kept, 14 thrown away with their reason: 9 in `n11t-break-tools` (a table that assumed plain
 porcelain, obsolete once quick read `--porcelain -z`, which never quotes a path; JOURNAL 20:5x), 1 in
 `n11t-break-staged` (it asked the staged export to ignore the commit's eol attributes, JOURNAL 02:24), 3 in
