@@ -300,7 +300,10 @@ checked export. It stops at the first red and prints what to do; `--resume` carr
 **Refuses:** a worktree on `main`, `master`, a lane being merged or a detached head; a dirty tree; a
 merge in progress; a lane that does not exist. **It cannot push:** every git call goes through a short
 list of verbs, and `push`, `checkout`, `reset` and `branch` throw before git is called.
-A conflict only on a lane's `JOURNAL.md` or `REPORT.md` takes the lane's copy; any other conflict stops.
+A conflict only on a lane's `JOURNAL.md` or `REPORT.md` takes the lane's copy. A conflict on
+`tools/debt/baseline.json` (alone or beside those) takes the looser of both sides per metric and file,
+keeps both sides' accepted reasons (`tools/debt/merge_baseline.mjs`), says so in the output, and the
+debt step re-ratchets it to the merged tree. Any other conflict stops.
 
 Each step's output goes to `build/merge/logs/<step>.log` while it runs (tail it). A step past its limit
 (`--timeout`, at least 65 min for reels and 90 for gates) has its whole process tree killed by

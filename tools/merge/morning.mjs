@@ -14,6 +14,7 @@ import { join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { GUARD_EXIT } from './step_guard.mjs';
 import { checkBaked } from '../export/check_baked.mjs';
+import { baselineText, mergeBaselines } from '../debt/merge_baseline.mjs';
 
 /** The tree's chunks against its tracked hash list (the export's own check, run where the bake ran). */
 export const bakedIn = (cwd) => checkBaked({ list: join(cwd, 'project/data/generated/city_chunks.sha256'), city: join(cwd, 'project/data/generated/city') });
@@ -21,6 +22,7 @@ export const bakedIn = (cwd) => checkBaked({ list: join(cwd, 'project/data/gener
 export const STEPS = ['merge', 'debt', 'native', 'bake', 'gates', 'reels', 'export'];
 const SAFE_VERBS = new Set(['status', 'rev-parse', 'symbolic-ref', 'merge', 'add', 'commit', 'mv', 'log', 'worktree', 'show', 'show-ref', 'diff']);
 const DOCS = ['JOURNAL.md', 'REPORT.md'];
+export const BASELINE = 'tools/debt/baseline.json';
 const STATE = 'build/merge-state.json';
 const USAGE = 'usage: node tools/merge/morning.mjs --worktree=<dir> --lanes=<a,b,c> --date=<yyyy-mm-dd> [--debt-reason="<why>"] [--steps=<list>] [--resume] [--dry-run] [--timeout=<min>]';
 
@@ -28,7 +30,7 @@ const USAGE = 'usage: node tools/merge/morning.mjs --worktree=<dir> --lanes=<a,b
 export function git(cwd, args, spawnGit = spawnSync) {
   if (!SAFE_VERBS.has(args[0])) throw new Error(`morning: refusing git ${args[0]}: not one of the verbs this tool may use`);
   const r = spawnGit('git', ['-C', cwd, ...args], { encoding: 'utf8', windowsHide: true, maxBuffer: 1 << 26 });
-  return { ok: r.status === 0, out: `${r.stdout ?? ''}${r.stderr ?? ''}`, stdout: (r.stdout ?? '').trim() };
+  return { ok: r.status === 0, out: `${r.stdout ?? ''}${r.stderr ?? ''}`, stdout: (r.stdout ?? '').trim(), raw: r.stdout ?? '' };
 }
 
 export function parseArgs(argv) {
@@ -85,25 +87,43 @@ const conflicted = (porcelain) => porcelain.split('\n').filter((l) => /^(UU|AA|D
 
 /** Every lane writes a root JOURNAL and REPORT, so a conflict on only those is no decision for a person:
  *  the lane's own copy is the one that goes under its folder. Returns a red result, or null when done. */
-function takeTheirDocs(g, cwd, lane, files) {
+function takeTheirDocs(g, cwd, lane, files, out = () => {}) {
   for (const f of files) {
+    if (f === BASELINE) {
+      const r = mergeBaselineConflict(g, cwd, lane);
+      if (r) return r;
+      out(`morning: ${BASELINE} conflicted merging ${lane}: took the looser of both sides per metric and file (both sides' accepted reasons kept); the debt step re-ratchets it to the merged tree`);
+      continue;
+    }
     const theirs = g(['show', `MERGE_HEAD:${f}`]);
     if (!theirs.ok) return { ok: false, advice: [`STOPPED: cannot read ${f} from ${lane}: ${theirs.out.trim().slice(0, 300)}`] };
-    writeFileSync(join(cwd, f), theirs.stdout);
+    writeFileSync(join(cwd, f), theirs.raw ?? theirs.stdout);
     g(['add', f]);
   }
   const c = g(['commit', '--no-edit']);
   return c.ok ? null : { ok: false, advice: [`STOPPED: committing ${lane}'s merge failed (often the lint hook): ${c.out.trim().slice(0, 400)}`, 'Fix it, commit, and run again with --resume.'] };
 }
 
-function mergeLane(g, cwd, lane, date) {
+/** The baseline's two sides (index stages 2 and 3) merged by tools/debt/merge_baseline.mjs. */
+function mergeBaselineConflict(g, cwd, lane) {
+  const [ours, theirs] = [g(['show', `:2:${BASELINE}`]), g(['show', `:3:${BASELINE}`])];
+  const stop = (why) => ({ ok: false, advice: [`STOPPED: ${BASELINE} conflicted merging ${lane} and ${why}`, ...conflictAdvice(lane, [BASELINE]).slice(1)] });
+  if (!ours.ok || !theirs.ok) return stop('a side could not be read');
+  try {
+    writeFileSync(join(cwd, BASELINE), baselineText(mergeBaselines(JSON.parse(ours.stdout), JSON.parse(theirs.stdout))));
+  } catch (e) { return stop(`could not be merged: ${e.message}`); }
+  const added = g(['add', BASELINE]);
+  return added.ok ? null : stop(`git add failed: ${added.out.trim().slice(0, 200)}`);
+}
+
+function mergeLane(g, cwd, lane, date, out) {
   const subject = g(['log', '-1', '--format=%s', lane]).stdout.slice(0, 110);
   const merged = g(['merge', '--no-ff', '--no-edit', '-m', `merge ${lane}: ${subject}`, lane]);
   if (!merged.ok) {
     const files = conflicted(g(['status', '--porcelain']).stdout);
     if (!files.length) return { ok: false, advice: [`STOPPED: git merge ${lane} failed: ${merged.out.trim().slice(0, 400)}`, 'Fix it and run again with --resume.'] };
-    if (!files.every((f) => DOCS.includes(f))) return { ok: false, advice: conflictAdvice(lane, files) };
-    const taken = takeTheirDocs(g, cwd, lane, files);
+    if (!files.every((f) => DOCS.includes(f) || f === BASELINE)) return { ok: false, advice: conflictAdvice(lane, files) };
+    const taken = takeTheirDocs(g, cwd, lane, files, out);
     if (taken) return taken;
   }
   const moved = [];
@@ -127,7 +147,7 @@ export const STEP_RUNNERS = {
   merge: (ctx) => {
     for (const lane of ctx.lanes) {
       if (ctx.done.includes(`merge:${lane}`)) continue;
-      const r = mergeLane(ctx.git, ctx.cwd, lane, ctx.date);
+      const r = mergeLane(ctx.git, ctx.cwd, lane, ctx.date, ctx.out);
       if (!r.ok) return r;
       ctx.mark(`merge:${lane}`);
       ctx.out(`morning: ${r.note}`);
