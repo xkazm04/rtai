@@ -290,3 +290,17 @@ C:/Users/kazda/kiro/gtai-n15/scratch-tools-before` and `git branch -D n15t-contr
   docs say it "moves between zooms and layers from run to run" (incl. my blood_flicker_vehicles_64, 22:57). One quiet
   run is not proof: KEPT. Each row's doc already names its real exit (an audit that compares same-frame captures).
   NEXT item (3)'s "stale accent rows" is therefore closed: do not delete them.
+- 00:19 tool fix (7abcded29): the selftest's accent "debt rows no longer seen (delete them)" was judged at the junction
+  alone, but rows carry no site: it named blood_flicker_vehicles_64 while the block run of the same selftest counted
+  it (`64 px/m blood on vehicles: 4 px`). Now `unseenDebtRows` over both sites' offenders, and the note says "seen
+  at neither site this run (a flicker row goes only after several quiet runs)", not "delete them". Test with the
+  integrated run's own offender strings. CORRECTION: that commit message says "6/6 (Windows, WSL)"; WSL was 5/6
+  then (the next entry's bug); 6/6 on both after 4eae1a978.
+- 00:21 MILESTONE item 6, a second timing flake FOUND and fixed at its cause (4eae1a978): `tools/lib/dev_verdict.mjs`
+  called a result stale when its mtime + 2 ms < launch time. Linux (WSL Ubuntu /tmp, 2000 writes) stamps a file up
+  to 6.66 ms BEFORE the `Date.now()` taken ahead of the write (kernel coarse clock), so a fresh result read stale
+  depending on the tick's phase: `tools/selftest/run.test.mjs` "runWorldLock: exit 0, no errors, a fresh ok result
+  holds" failed 3 of 3 on WSL, 0 on Windows. Slack -> 1000 ms (film.mjs FRESH_SLACK_MS's rule; a stale file is
+  minutes old). After: WSL 3 runs `pass 13 fail 0`; Windows lib/lint/selftest/dev/evidence 255/255. CI runs Linux:
+  every dev_verdict user (dev run, selftest stages) could have flaked there. Other mtime checks: export 2 s, film 1 s:
+  fine.
