@@ -2,6 +2,13 @@
 
 Ranked within each film; newest film first.
 
+## Machine pistol lone kills, 9 kinds, combo 64 px/m (session 2, c-2 films)
+1. Thrown-back hit cells drawn from a shallower camera (whole body, upturned face, long legs) between the walk and the fall -> fixed 1ede2ce03 (c-2 redraws, 9 kinds).
+2. The body-hit ink burst read as a black ball as wide as the head -> fixed (body ink 0.12 m, this session).
+3. The body-hit burst lands about 0.5 m in front of the drawn thrown-back card, on the floor -> open.
+4. Every lone victim (suit, punk, thug included) drops the brown rifle at t350, a patrol cop who held a pistol too -> open (the gunplay bot arms the victim; check which gun the drop draws).
+5. The victim walks in at t338 as a blue armed card with the kind's head (the gunplay hostile's body) -> open, likely the dev shot only.
+
 ## Baton left swing, director chapter electro_baton_left, combo + tilt 32 px/m (session 2)
 1. The left swing drew the hanging-baton left facing under a game smear: no swing pose -> fixed a76c26f9a + 6486e5e59 (drawn left strike, it334).
 2. The game melee smear reads as a flat white hexagonal slab (a polygon wedge, no taper or ink) around Rivet at t60-70 and t84; the largest shape on screen in the swing -> open (the top one to fix next in item 5's loop).

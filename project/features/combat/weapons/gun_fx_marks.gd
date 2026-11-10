@@ -6,6 +6,14 @@ extends RefCounted
 ## bolt's scorch ring).
 
 const SCUFF: Color = Color(0.090, 0.075, 0.106, 0.55)
+## The ink burst on a body (every gun): its first radius (m), shrinking by BODY_SHRINK of it per
+## tick for BODY_TICKS. n15 (the n13/n14 owner call): 0.12 m; n7's 0.22 m read as a black ball as
+## wide as the victim's head over the hit cell. `--body-ink=n7` = the before.
+const BODY_INK_M: float = 0.12
+const BODY_INK_N7_M: float = 0.22
+const BODY_SHRINK: float = 0.136
+const BODY_TICKS: int = 4
+static var _body_m: float = -1.0
 
 
 static func bit(ci: CanvasItem, fx: GunFx, i: int) -> void:
@@ -53,8 +61,8 @@ static func impact(
 			)
 		return
 	if kind == GunFx.Hit.BODY:
-		if age < 4:
-			ci.draw_circle(Ink.px(at), (0.22 - 0.03 * float(age)) * Ink.PX_PER_M, Ink.INK)
+		if age < BODY_TICKS:
+			ci.draw_circle(Ink.px(at), body_radius(age) * Ink.PX_PER_M, Ink.INK)
 		return
 	var spark: Color = fx.color("spark")
 	for j: int in 6:
@@ -64,6 +72,14 @@ static func impact(
 		ci.draw_line(Ink.px(at + d * 0.6), Ink.px(tip), spark, 2.5)
 	if age < 3:
 		ci.draw_circle(Ink.px(at), 0.18 * Ink.PX_PER_M, spark)
+
+
+## The body burst's radius (m) `age` ticks after the hit (the flag read once).
+static func body_radius(age: int) -> float:
+	if _body_m < 0.0:
+		var n7: bool = ArenaArgs.parse().text("--body-ink") == "n7"
+		_body_m = BODY_INK_N7_M if n7 else BODY_INK_M
+	return _body_m * (1.0 - BODY_SHRINK * float(age))
 
 
 ## Where a plasma bolt stopped: a burnt ring in the ground that fades over SCUFF_TICKS.
