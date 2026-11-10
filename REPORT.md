@@ -63,10 +63,10 @@ parse error now stops at 1.5 s instead of the 150 s timeout (hero lost about 8 m
 
 ## Codex ledger (`factory ledger --state=C:/Users/kazda/kiro/gtai-n11t/logs/tools/state.json --ledger=C:/Users/kazda/kiro/gtai-masters/n11/tools/codex-ledger.jsonl`; RE-RUN at report time)
 
-At 06:25 (re-run with `--state`): 23 tasks, 5,654 s of Codex, 21 machine pass, 2 machine fail, 11 accepted,
-11 accepted after revision, 0 rejected, 101 lines changed by review, 0 refused by the meter. Dollars: $68.10
+At 07:02 (re-run with `--state`): 24 tasks, 5,816 s of Codex, 22 machine pass, 2 machine fail, 11 accepted,
+12 accepted after revision, 0 rejected, 167 lines changed by review, 0 refused by the meter. Dollars: $68.10
 measured over the 8 review sessions to iteration 26 (per task $4.01, an ESTIMATE and an upper bound: a session
-also builds other things); with iterations 39 and 43 counted the total prints null until its cost is in state.json
+also builds other things); with iterations 39, 43 and 44 counted the total prints null until its cost is in state.json
 (one unknown session makes it unknown, by design). The report session re-runs it.
 Codex as tester (16 tasks, counted from the ledger's per-task lines): 127 failing tests, 113 real defects fixed
 with the tests kept, 14 thrown away with their reason: 9 in `n11t-break-tools` (a table that assumed plain
@@ -93,7 +93,9 @@ from Codex's file. Three modules is still not a rate, and wall time with Codex i
 Unpaired, 06:44-06:55: `sim_hash` (`CitySimHash`, 67 lines): Codex 173 s, 9 tests, mutation 86.7 % on
 its version; the review (subagent, measured: 64,833 tokens, 178 s) rewrote 2 tests that pinned implementation
 choices (66 lines) and found a suspect (Calls item 5). No control: its grade alone took 23 min under load
-at 22:58, more than the time left before the freeze. Landed c52cceb1.
+at 22:58, more than the time left before the freeze. Landed c52cceb1 (mutation 93.3 %, 14/15); the one
+survivor (`hcount.fill(0)` deleted) was real, so I added a rebuild-at-full-capacity test (5af34a16, 13 lines,
+planted fault caught by hand): 100 %, 15/15, 279 s.
 
 ## Incident (mine, repaired)
 
