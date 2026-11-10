@@ -38,13 +38,16 @@ const autoloadNames = () => {
 const isAt = (l) => /^\s+at: /.test(l ?? '');
 
 /** The error lines of a run minus autoload-identifier false positives (and their `at:` lines). When
- *  nothing else was reported the script is fine, so the generic "Failed to load script" trailer goes too. */
+ *  nothing else was reported the script is fine, so the generic "Failed to load script" trailer goes too.
+ *  A cascade with no autoload noise behind it is kept: its cause was not seen, so it is not a pass. */
 export function errorLines(out, autoloads = autoloadNames()) {
   const lines = out.split('\n').filter((l) => ERROR_LINE.test(l)).map((l) => l.trimEnd());
   const kept = [];
+  let noise = false;
   for (let i = 0; i < lines.length; i += 1) {
     const m = /Identifier not found: (\w+)/.exec(lines[i]);
     if (m && autoloads.has(m[1])) {
+      noise = true;
       while (isAt(lines[i + 1])) i += 1;
       continue;
     }
@@ -53,7 +56,7 @@ export function errorLines(out, autoloads = autoloadNames()) {
   // The autoload noise above cascades: every script that depends on it reports "Failed to compile depended
   // scripts" although nothing is wrong. A real error in a dependency is its own Parse Error line and stays.
   const real = kept.filter((l) => !isAt(l) && !/Failed to load script|Failed to compile depended scripts/.test(l));
-  return real.length ? kept : [];
+  return real.length || !noise ? kept : [];
 }
 
 /** ok when nothing but autoload false positives was reported (Godot still exits 1 for those). */
