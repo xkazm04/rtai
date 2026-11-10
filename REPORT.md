@@ -34,6 +34,12 @@ crowd: look goldens re-blessed with a decisions line). t-4 and t-5 move nothing 
   this tree's DLLs); `--native=donor` for view-only changes.
 - `tools/style/check_gd.mjs` (26f18e5ef, combat's FRICTION): the function-size count stops at the body; a column-0
   doc comment of the next function no longer counts (2 of 5 new tests fail on the old rule).
+- `tools/merge/gate_lines.mjs` (725845086): the morning gates step prints one line per evidence kind, STALE when written
+  for another commit. Example (real evidence): `morning: gates: unit-tests pass: unit-tests: 2529 passed, 0 failed, 2 skipped`.
+- `tools/selftest/run.mjs` (7abcded29): an accent debt row is "unseen" only when neither site saw it, and it is no longer
+  a delete order (the integrated run told us to delete a row its own block run had counted).
+- `tools/lib/dev_verdict.mjs` (4eae1a978, item 6): result-freshness slack 2 ms -> 1 s. Linux stamps files up to 6.66 ms
+  before `Date.now()`; a selftest tool test failed 3/3 on WSL, 0 after.
 - `tests/parity/city_parity.gd`: `final_sha_a/b` in the parity result.
 
 Gates on eb65c8b05 (`node tools/gate/run.mjs`): PASS - lint 16/16, unit 2507/0, scenarios 55, parity exact,
