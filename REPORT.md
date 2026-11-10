@@ -101,8 +101,10 @@ Frames: `C:\Users\kazda\kiro\gtai-masters\n11\combat\frames.json` (15 entries, b
 Full gates (`tools/evidence/run.mjs --no-bench`, a frozen worktree copy) on `3610274d` (it32's final
 HEAD): lint 15/15, unit 2287/0, scenarios 55/55, parity PASS (planted mutation caught at 629),
 selftest PASS (look goldens 11/11), export-audit 649/0, exit 0. Then on `00159691`
-(the final code commit, it33): lint 15/15, unit 2292/0, scenarios 55/55, parity PASS (caught at
-629), selftest PASS (look goldens 11/11), export-audit 649/0, exit 0. Only REPORT, JOURNAL and
+(it33): lint 15/15, unit 2292/0, scenarios 55/55, parity PASS (caught at
+629), selftest PASS (look goldens 11/11), export-audit 649/0, exit 0. Then on `902eb3fe`
+(the final code commit, it34): lint 15/15, unit 2293/0, scenarios 55/55, parity PASS (caught at
+629), selftest PASS (look goldens 11/11), export-audit 649/0, exit 0. Only REPORT, JOURNAL, docs and
 evidence changed after it. No replay, parity or look golden moved tonight after the one deliberate
 re-bless.
 Reel gate: last run at it10 (`0c4ae87f`): combo and tilt70 ok, 0 SCRIPT ERROR; the top view never
@@ -110,7 +112,7 @@ finished; not re-run on the final HEAD. Bench: not run under the
 lock this night (UNMEASURED).
 
 Exe: `build/export/windows/RTAI.exe` (578 MB, embedded pack) + the release sim DLL, rebuilt on
-`00159691` at 06:50 (`bake_city` 256 chunks, then `tools/export/export_checked.mjs`, exit 0);
+`902eb3fe` at 07:14 (`bake_city` 256 chunks, then `tools/export/export_checked.mjs`, exit 0);
 headless boot smoke 300 frames, exit 0, 0 SCRIPT ERROR (2 engine errors from the headless dummy
 renderer, as in any headless run). Not played in a window.
 
