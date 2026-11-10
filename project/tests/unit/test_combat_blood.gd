@@ -147,7 +147,7 @@ func test_a_game_pool_size_overrides_the_table() -> void:
 	var b: CombatBlood = _blood("noir")
 	b.blood.pool_r1_px = 12.0
 	b.kill_human(Vector2(320, 320), Vector2.RIGHT)
-	var r1: PackedFloat32Array = b.blood._ring._r1
+	var r1: PackedFloat32Array = b.blood.ring._r1
 	assert_true(r1.has(12.0), "game.pool_radius_px wins over pool.radius_px")
 	assert_false(r1.has(22.0), "the table radius is not used")
 

@@ -98,11 +98,14 @@ func _measure() -> void:
 			break
 		var k: int = int(snap[r + 1])
 		var person_kind: bool = k == SimConst.K_PED or k == SimConst.K_COP
-		if person_kind and int(snap[r + 2]) != SimConst.M_DEAD:
+		var mode: int = int(snap[r + 2])
+		if person_kind and mode != SimConst.M_DEAD:
+			var at: Vector2 = Vector2(snap[r + 4], snap[r + 5])
 			@warning_ignore("return_value_discarded")
-			pts.append(Vector2(snap[r + 4], snap[r + 5]))
+			pts.append(at)
+			if mode != SimConst.M_DOWN:  # n11: Rivet walks over anyone on the ground
+				worst_rivet = maxf(worst_rivet, rr - body.pos.distance_to(at))
 	for i: int in pts.size():
-		worst_rivet = maxf(worst_rivet, rr - body.pos.distance_to(pts[i]))
 		for j: int in range(i + 1, pts.size()):
 			worst_people = maxf(worst_people, rp - pts[i].distance_to(pts[j]))
 

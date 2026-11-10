@@ -38,6 +38,12 @@ func test_far_apart_bodies_may_share_a_pose() -> void:
 	assert_eq(a, b, "the hash alone picks when no neighbour is near")
 
 
+func test_a_sinking_body_keeps_its_pelvis_where_it_lay() -> void:
+	var whole: float = StreetWalkerFall.rest_scale(0.3, 1.0)
+	assert_almost_eq(StreetWalkerFall.rest_scale(0.15, 0.5), whole, 0.0001)
+	assert_almost_eq(StreetWalkerFall.rest_scale(0.03, 0.1), whole, 0.0001)
+
+
 func test_a_redrawn_corpse_keeps_its_pose() -> void:
 	var a: int = StreetDeadPlan.pick(42, &"death_blast", Vector2.ZERO)
 	assert_eq(StreetDeadPlan.pick(42, &"death_blast", Vector2.ZERO), a)

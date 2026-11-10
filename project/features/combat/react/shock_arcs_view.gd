@@ -65,6 +65,11 @@ func _draw() -> void:
 		var stunned: bool = e != null and h.alive() and e.stun_ticks > 0
 		var c: Vector2 = to_local(rig.torso.global_position)
 		var ppm: float = Ink.PX_PER_M * rig.global_transform.get_scale().x / CutRig.SC
+		if e != null and h.alive() and e.burn_ticks > 0 and FightBurnArt.OVER:  # it32: over the body
+			if StreetWalkerHit.draws_burn(rig):  # it33: his drawn flames are on the figure
+				FightBurnArt.over_ids[h.id] = arena.tick
+			else:
+				FightBurnArt.over(self, c, ppm, e.flee, h.id, arena.tick)
 		if stunned:
 			var cap: Vector4i = StunCrowd.cap()
 			var n: Vector2i = Vector2i(cap.y, cap.z) if light.has(h.id) else Vector2i(9, 9)

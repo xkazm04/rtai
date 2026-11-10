@@ -48,10 +48,33 @@ func test_away_points_off_the_strongest_corpse() -> void:
 
 func test_burn_flames_trail_behind_the_run_off_the_body() -> void:
 	var pos: Vector2 = Vector2(3.0, 4.0)
-	var flames: PackedVector2Array = FightAreasArt.burn_flames(pos, Vector2(2.0, 0.0))
-	assert_eq(flames.size(), FightAreasArt.BURN_FLAMES)
+	var flames: PackedVector2Array = FightBurnArt.burn_flames(pos, Vector2(2.0, 0.0))
+	assert_eq(flames.size(), FightBurnArt.BURN_FLAMES)
 	for f: Vector2 in flames:
 		assert_lt(f.x, pos.x, "every flame trails behind a human running +x")
-		assert_gt(f.distance_to(pos), FightAreasArt.BURN_BACK_M - 0.001, "no flame on the body")
-	var still: PackedVector2Array = FightAreasArt.burn_flames(pos, Vector2.ZERO)
+		assert_gt(f.distance_to(pos), FightBurnArt.BURN_BACK_M - 0.001, "no flame on the body")
+	var still: PackedVector2Array = FightBurnArt.burn_flames(pos, Vector2.ZERO)
 	assert_gt(still[1].y, pos.y, "a standing burner trails his flames down-screen")
+
+
+func test_a_burning_mans_flames_ride_up_his_body_under_a_tilt() -> void:
+	var flames: PackedVector2Array = FightBurnArt.burn_flames(Vector2(3.0, 4.0), Vector2.ZERO)
+	var was: ViewMode = ViewMode.shared()
+	ViewMode.select("combo")
+	var up: PackedVector2Array = FightBurnArt.lifted(Vector2(3.0, 4.0), flames)
+	for k: int in flames.size():
+		assert_lt(up[k].y, 4.0 - 0.4, "flame %d is up the body, not on the street" % k)
+	assert_lt(up[2].y, up[0].y, "the last flame burns highest (head)")
+	ViewMode.select("top")
+	assert_eq(FightBurnArt.lifted(Vector2(3.0, 4.0), flames), flames, "straight down nothing moves")
+	ViewMode._shared = was
+
+
+func test_a_rig_burning_over_its_body_is_skipped_on_the_fx_layer() -> void:
+	FightBurnArt.over_ids[901] = 50
+	assert_true(FightBurnArt.drawn_over(901, 50), "drawn over this tick: the fx layer skips him")
+	assert_true(FightBurnArt.drawn_over(901, 51), "or the tick before (draw order)")
+	assert_false(FightBurnArt.drawn_over(901, 52), "no longer drawn over: the fx layer burns him")
+	assert_false(FightBurnArt.drawn_over(902, 50), "a fighter with no rig keeps the fx flames")
+	@warning_ignore("return_value_discarded")
+	FightBurnArt.over_ids.erase(901)

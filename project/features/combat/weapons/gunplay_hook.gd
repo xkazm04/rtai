@@ -23,15 +23,18 @@ var _kills_seen: int = 0
 
 func setup(stage: ArenaStage, ctx: WorldContext) -> void:
 	var bot: bool = false
+	var row: String = ""
 	for arg: String in OS.get_cmdline_user_args():
 		if arg.begins_with("--weapon="):
 			weapon = StringName(arg.substr(9))
+		row = arg.substr(9) if arg.begins_with("--victim=") else row
 		bot = bot or arg.begins_with("--bot=")
 	if weapon == &"":
 		return
 	if "--lone" in OS.get_cmdline_user_args() and stage.pit != null:
 		lone(stage.pit)
 		_lone = true
+		victim(row)
 	var table: WeaponTable = WeaponTable.shipped()
 	if not table.weapons.has(weapon):
 		Log.warn("gunplay", "arena: no weapon %s in weapons.json; the arena keeps Gloria" % weapon)
@@ -45,6 +48,14 @@ func setup(stage: ArenaStage, ctx: WorldContext) -> void:
 	# no rig: the camera side of each hit is the view's FeelCam (CollectCallView), not the sim's
 	link = HitLink.make(_arena, HitFeel.shipped(), table)
 	Log.info("gunplay", "arena: Rivet holds the table %s" % weapon)
+
+
+## n11 it20 (dev capture, film.mjs --victim): the lone guard is drawn as card row `row` (a
+## StreetDeadPlan.CLASS_OF row), so a thug's or a riot cop's fall can be filmed; "" = the cop.
+static func victim(row: String) -> void:
+	StreetCrowdCards.victim = row
+	if not row.is_empty():
+		Log.info("gunplay", "lone victim %s" % row)
 
 
 ## One guard per pit wave, every wave (the lone-victim capture).

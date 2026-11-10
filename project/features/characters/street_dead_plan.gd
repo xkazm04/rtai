@@ -48,6 +48,9 @@ const LAND_SCALE: float = 1.05
 ## The pelvis (the cell centre) lies this share of the standing height along the blow from the
 ## sim point (the feet stay near where the person stood).
 const PELVIS_K: float = 0.45
+## n11 (the owner on corpse size): a flat pose is 1.0-1.41 x the standing card and read 1.8 x the
+## person alive; every lying pose (near rigs, far crowd, quest 1) draws at this share. 1.0 = before.
+const LYING_K: float = 0.72
 const NEAR_M: float = 3.0
 const MEMORY: int = 256
 const NODE: String = "DeadPlan"
@@ -74,10 +77,10 @@ static func path_of(row: String) -> String:
 
 ## The pose for a death of family `kind` at `at` (world px): the family's candidates from the
 ## person's hash, the first no neighbour within NEAR_M shows (all taken: the hashed one).
-static func pick(actor: int, kind: StringName, at: Vector2) -> int:
+static func pick(actor: int, kind: StringName, at: Vector2, down: bool = false) -> int:
 	if _lying.has(actor):
 		return int(_lying[actor].z)
-	var cands: PackedInt32Array = BY_KIND.get(kind, ANY)
+	var cands: PackedInt32Array = StreetFallBetween.FACE_DOWN if down else BY_KIND.get(kind, ANY)
 	var start: int = posmod(_hash(actor), cands.size())
 	var pose: int = cands[start]
 	var near: float = NEAR_M * CharacterRigs.PX_PER_M
@@ -101,36 +104,38 @@ static func draw(rig: CutRig, card: Sprite2D, row: String, ks: float, p: float) 
 	if path.is_empty() or p < StreetWalkerFall.FALL_AT[StreetWalkerFall.FALL_FRAMES - 1]:
 		drop(card)
 		return
-	var r: HumanReact = rig.react
-	var blow: Vector2 = r.dir.rotated(rig.facing).normalized() if r != null else Vector2.DOWN
-	var kind: StringName = r.kind if r != null else &""
+	var blow: Vector2 = StreetDeadHeading.blow_of(rig)
+	var kind: StringName = rig.react.kind if rig.react != null else &""
 	var drawn: String = StreetDead70.path_of(row)
-	var plan: Sprite2D = (
-		StreetDead70.sprite(card, path, POSES, 1)
-		if drawn.is_empty()
-		else StreetDead70.sprite(card, drawn, StreetDead70.COLS, StreetDead70.ROWS)
-	)
-	var pose: int = pick(rig.actor_id, kind, rig.global_position)
+	var down: bool = StreetFallBetween.lands_face_down(card)
+	var keep: bool = down and StreetFallBetween.KEEP_HEADING  # lie as the chest-down cell lay
+	var grid: bool = keep and StreetFallBetween.LIE_IN_GRID
+	var plan: Sprite2D = StreetFallBetween.lying_sprite(card, path, drawn, grid)
+	var pose: int = pick(rig.actor_id, kind, rig.global_position, down)
 	var h: int = _hash(rig.actor_id)
-	var m: Vector2 = motion(kind, p)
-	var odd: bool = (h & 1) == 1
-	var head: Vector2 = StreetDeadHeading.head_of(blow, pose, odd)
-	var pelvis: float = _bounded(card, rig.global_position, head, ks)
-	var left: float = StreetDeadHeading.fall_left(p)
+	var odd: bool = card.flip_h if keep else (h & 1) == 1
+	var head: Vector2 = (
+		StreetFallBetween.head_of(card) if keep else StreetDeadHeading.head_of(blow, pose, odd)
+	)
+	var lying: float = StreetWalkerFall.rest_scale(ks, StreetWalkerFall.sink_of(rig)) * LYING_K
+	var pelvis: float = _bounded(card, rig.global_position, head, lying)
 	var centre: Vector2 = rig.global_position + head * pelvis
-	var at: Vector2 = (
-		StreetDeadHeading.resting(rig.actor_id, centre, left) - blow * m.x * CharacterRigs.PX_PER_M
+	var push: Vector2 = (
+		StreetDeadHeading.resting(rig.actor_id, centre, StreetDeadHeading.push_left(p)) - centre
 	)
-	var lay: Vector2 = StreetDead70.place(plan, head, pose, odd, not drawn.is_empty())
-	var s: float = ks * m.y
-	plan.global_transform = Transform2D(
-		lay.x + StreetDeadHeading.jitter(h) + StreetDeadHeading.settle(p),
-		Vector2(s, s / lay.y),
-		0.0,
-		at
-	)
-	StreetDeadHeading.shade(card, plan, drawn.is_empty())
+	if grid:  # no slide, no landing scale: the card's own lying row where its feet stood
+		var wall: Vector2 = head * (pelvis - PELVIS_K * StreetWalkerFall.STILL_PX * lying)
+		StreetFallBetween.lie(card, plan, push + wall, StreetDeadHeading.settle(p))
+	else:
+		var lay: Vector2 = StreetDead70.place(plan, head, pose, odd, not drawn.is_empty())
+		var m: Vector2 = motion(kind, p)
+		var s: float = ks * LYING_K * m.y
+		var at: Vector2 = centre + push - blow * m.x * CharacterRigs.PX_PER_M
+		var turn: float = lay.x + StreetDeadHeading.jitter(h) + StreetDeadHeading.settle(p)
+		plan.global_transform = Transform2D(turn, Vector2(s, s / lay.y), 0.0, at)
+	StreetDeadHeading.shade(card, plan, drawn.is_empty() and not grid)  # drawn art has its side
 	card.self_modulate.a = 0.0
+	StreetDeadRests.publish(rig.actor_id, rig.global_position, plan, head, grid)
 
 
 ## (the slide still to go in metres, the landing scale) at progress p.
@@ -155,6 +160,7 @@ static func drop(card: Sprite2D) -> void:
 static func reset() -> void:
 	_lying.clear()
 	StreetQuestDeadPush.reset()
+	StreetDeadRests.reset()
 
 
 ## The pelvis offset along the head (px), pulled back short of the first solid; once per card.

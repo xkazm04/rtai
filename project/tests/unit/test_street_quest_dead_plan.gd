@@ -31,11 +31,14 @@ func test_the_pelvis_lies_along_the_head_at_pelvis_k_of_standing() -> void:
 	var pose: int = StreetDeadPlan.pick(actor, &"", at)
 	var flip: bool = (StreetDeadPlan._hash(actor) & 1) == 1
 	var head: Vector2 = StreetDeadHeading.head_of(blow, pose, flip)
-	var want: float = StreetDeadPlan.PELVIS_K * StreetQuestCards.body_m() * PPM
+	var want: float = (
+		StreetDeadPlan.PELVIS_K * StreetDeadPlan.LYING_K * StreetQuestCards.body_m() * PPM
+	)
 	assert_almost_eq((t.origin - at).length(), want, 0.01)
 	assert_true((t.origin - at).normalized().dot(head) > 0.999)
 	var s: float = StreetQuestCards.body_m() * PPM / StreetWalkerFall.STILL_PX
-	assert_almost_eq(t.get_scale().y, s, 0.0001, "the still strip's px per metre")
+	s *= StreetDeadPlan.LYING_K
+	assert_almost_eq(t.get_scale().y, s, 0.0001, "the still strip's px per metre, lying size")
 
 
 func test_neighbouring_corpses_lie_in_different_poses() -> void:

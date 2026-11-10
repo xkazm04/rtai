@@ -24,6 +24,7 @@ func _init() -> void:
 	show_behind_parent = true
 	use_parent_material = true
 	add_child(residue)
+	GroundRifle.forget()  # a new fight: no drop of the last one has landed or has a side
 
 
 ## Called from FxView._draw each frame after GunFx.step (`fx` null = no gun: rifle drops only).
@@ -58,6 +59,6 @@ func _draw() -> void:
 	if _arena == null:
 		return
 	for d: Vector2 in _arena.rifle_drops:
-		draw_line(Ink.px(d + Vector2(-0.4, 0.1)), Ink.px(d + Vector2(0.4, -0.1)), Ink.INK, 5.0)
+		GroundRifle.draw(self, d, _arena.rivet.pos, _tick)
 	if _fx != null:
 		_fx.scorch.draw(self, _tick)

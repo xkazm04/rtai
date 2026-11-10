@@ -49,6 +49,7 @@ var _full: PackedByteArray = PackedByteArray()
 var _rank: Dictionary[int, int] = {}
 var _select_in: int = 0
 var _died_at: Dictionary[int, int] = {}
+var _posed: Dictionary[int, bool] = {}
 
 
 func setup(ctx: WorldContext) -> void:
@@ -86,16 +87,14 @@ func step_ticks(steps: int) -> void:
 	for actor: int in _by_actor:
 		if d5 or RigDetail.is_on(_by_actor[actor]):
 			RigDetail.sync(_by_actor[actor])
+	_posed.clear()
 	for _k: int in steps:
 		ticks_stepped += 1
 		for actor: int in _by_actor:
 			var every: int = rate_of(_rank[actor], zoom)
 			if (ticks_stepped + actor) % every == 0:
-				_by_actor[actor].drive(SimClock.TICK_DT * every)
-	if ViewMode.shared().cards:  # d9-rivet: a rig acquired on a frame that did not pose it (no tick
-		for actor: int in _by_actor:  # due, a half-rate rank) drew its hidden parts: pose it now
-			if _by_actor[actor].t_alive == 0.0:
-				_by_actor[actor].drive(SimClock.TICK_DT)
+				RigCarry.pose(_by_actor[actor], _posed, every)
+	RigCarry.finish(_by_actor, _posed, ViewMode.shared().cards)
 	last_us = Time.get_ticks_usec() - t0
 
 

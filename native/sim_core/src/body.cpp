@@ -64,10 +64,9 @@ void CityCore::down(int i, double dt) {
 	double vv = maxf(0.0, v_[i] - 8.0 * dt);
 	v_[i] = vv;
 	double x = px_[i] + hx_[i] * vv * dt, y = py_[i] + hy_[i] * vv * dt;
-	if (tier_[i] == 0) {
+	if (tier_[i] == 0) {  // n11: lying on the ground, Rivet walks over them (no body_push)
 		cx_ = x;
 		cy_ = y;
-		body_push(i, 0.0, 0.0);
 		solid(0.3);
 		x = cx_;
 		y = cy_;
@@ -85,7 +84,8 @@ void CityCore::down(int i, double dt) {
 	t1_[i] = body_[BD_FLEE];
 }
 
-// The body out of every live tier-A person it still overlaps (twice), then out of solid cells.
+// The body out of every standing tier-A person it still overlaps (twice), then out of solid cells.
+// Nobody on the ground blocks it: the dead and the knocked-down are walked over (n11).
 void CityCore::body_resolve() {
 	if (body_[BD_ON] == 0.0) return;
 	if (body_[BD_CAR_HIT] > 0.0) body_cars();
@@ -95,7 +95,8 @@ void CityCore::body_resolve() {
 		for (int q = 0; q < n; q++) {
 			int j = qbuf_[q];
 			int kj = kind_[j];
-			if (alive_[j] == 0 || (kj != K_PED && kj != K_COP) || mode_[j] == M_DEAD) continue;
+			if (alive_[j] == 0 || (kj != K_PED && kj != K_COP)) continue;
+			if (mode_[j] == M_DEAD || mode_[j] == M_DOWN) continue;
 			double ddx = bx_ - px_[j], ddy = by_ - py_[j];
 			double d2 = ddx * ddx + ddy * ddy;
 			if (d2 >= rs * rs || d2 <= 1e-12) continue;

@@ -2,7 +2,8 @@ extends GutTest
 ## perf L3: the strip cache hands out the very texture a plain load() did (no pixel can move),
 ## a prefetched strip included; the fall grid a row draws is found while the person stands.
 
-const SUIT_FALL: String = "p70/ped_suit_long_fall.png"
+## n11 it18: the suit falls through the drawn in-betweens (StreetFallBetween.swap).
+const SUIT_FALL: String = "p70/ped_suit_between_fall.png"
 const DIR: String = StreetWalkerCards.DIR
 
 

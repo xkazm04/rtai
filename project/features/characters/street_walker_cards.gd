@@ -66,8 +66,12 @@ static func strip_of(rig: CutRig) -> String:
 	if not ENABLED or rig.head_card == null:
 		return ""
 	var ped: bool = rig.plan.art_dir == "ped"
+	var hit: String = StreetWalkerHit.grid_of(rig, row_of(rig))
+	if not hit.is_empty():
+		return DIR + hit
 	var on: String = rig.head_card.get_meta(ON, "")
-	if not on.is_empty() and not StreetWalkerFall.down(rig) and not on.ends_with("_fall.png"):
+	var stale: bool = on.ends_with("_fall.png") or StreetWalkerHit.is_grid(on)
+	if not on.is_empty() and not StreetWalkerFall.down(rig) and not stale:
 		if ped or (rig.strike_arm < 0 and rig.throw_t < 0.0 and rig.reload_k < 0.0):
 			return on  # a living walker's strip: unchanged until a card or art change drops it
 	var art: String = ViewMode.shared().art
@@ -128,7 +132,7 @@ static func _build(rig: CutRig, card: Sprite2D, path: String) -> void:
 	card.texture = StreetStrips.get_tex(path)
 	var fall: bool = path.ends_with("_fall.png")
 	var walk: bool = path.ends_with("_walk.png")
-	card.vframes = StreetWalkerFall.FALL_FRAMES if fall else (STRIDE_FRAMES if walk else 1)
+	card.vframes = StreetFallBetween.rows_of(path) if fall else (STRIDE_FRAMES if walk else 1)
 	var cell: Vector2 = Vector2(
 		card.texture.get_width() / float(RigHeadCard.FRAMES),
 		card.texture.get_height() / float(card.vframes)
@@ -151,13 +155,16 @@ static func _build(rig: CutRig, card: Sprite2D, path: String) -> void:
 
 static func place(rig: CutRig, card: Sprite2D) -> void:
 	var k: float = 1.0 + StreetCrowdCards.SCALE_VAR * StreetCrowdCards.vary(rig.actor_id, 3)
-	if card.vframes == StreetWalkerFall.FALL_FRAMES:
+	if StreetFallBetween.is_fall_card(card):
 		StreetWalkerFall.draw(rig, card, k)
 		return
 	var h: float = HEIGHT_BY_ART.get(ViewMode.shared().art, HEIGHT_M)
+	var hit: bool = StreetWalkerHit.is_grid(str(card.get_meta(ON, "")))
 	if card.vframes > 1:
 		var file: String = card.texture.resource_path.get_file()
 		k *= WALK_FILL.get(file, StreetCopWalk.fill_of(card.texture.resource_path))
+	elif hit:
+		k *= StreetWalkerHit.fill_of(str(card.get_meta(ON, "")))
 	var s: float = h * CharacterRigs.PX_PER_M * k * card.vframes / card.texture.get_height()
 	var walk: float = clampf(rig.speed_now / WALK_SPEED, 0.0, 1.0)
 	if card.vframes > 1:
@@ -167,7 +174,12 @@ static func place(rig: CutRig, card: Sprite2D) -> void:
 		)
 		walk = 0.0
 	var stride: float = sin(TAU * rig.phase)
-	var fall: Vector2 = StreetWalkerFall.pose(rig, card)
-	card.global_rotation = stride * SWAY * walk + fall.x
+	var fall: Vector2 = Vector2(0.0, 1.0) if hit else StreetWalkerFall.pose(rig, card)
+	var wound: Vector3 = StreetWalkerHit.shove(rig)
+	card.global_rotation = stride * SWAY * walk + fall.x + wound.z + StreetWalkerHit.flail(rig)
 	card.global_scale = Vector2(s, s * fall.y)
-	card.global_position = rig.global_position - Vector2(0.0, absf(stride) * BOB_PX * walk)
+	card.global_position = (
+		rig.global_position - Vector2(0.0, absf(stride) * BOB_PX * walk) + Vector2(wound.x, wound.y)
+	)
+	if hit and not StreetWalkerHit.is_burn(str(card.get_meta(ON, ""))):
+		StreetWalkerHit.face(card, rig.react.dir.rotated(rig.facing))

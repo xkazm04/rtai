@@ -12,8 +12,8 @@ const FACE_H: float = 252.0
 const DEVICE_H: float = 214.0
 const RISE_PX: float = 36.0
 ## The box's left and right inset (screen px): its paper (10 px wider than the box) clears the
-## ghost-form card folded beside it while a line is up (GhostFormHud.compact: 36 + 108 + 4 rim =
-## 148 px), with a gap. The old inset (MARGIN * 4 = 144) laid the paper over the card's edge.
+## ghost avatar folded beside it while a line is up (GhostFormHud.compact, n11: well inside the
+## 148 px the old card took), with a gap. The old inset (MARGIN * 4 = 144) laid the paper over it.
 const SIDE_X: float = 166.0
 const BOX_H: float = 236.0
 ## n8-hud it9: the box fits its line: as tall as the words at their fitting size need, from

@@ -23,14 +23,6 @@ const CLEAR_RAMP: int = 18
 const CLEAR_M: float = 2.2
 ## How far a flame over a corpse is pushed out of its way (the fire opens round the body).
 const CLEAR_PUSH_M: float = 1.0
-## A burning human runs trailing small flames off his back (human-reactions NEXT 4: one 2.1 m
-## flame centred on him hid the body): BURN_FLAMES of BURN_SCALE x the fire loop, the nearest
-## BURN_BACK_M behind him, spaced BURN_STEP_M back and fanned BURN_FAN_M to the sides.
-const BURN_FLAMES: int = 3
-const BURN_SCALE: float = 0.3
-const BURN_BACK_M: float = 0.42
-const BURN_STEP_M: float = 0.22
-const BURN_FAN_M: float = 0.2
 
 
 static func draw(ci: CanvasItem, arena: CombatArena, tick: int) -> void:
@@ -42,8 +34,8 @@ static func draw(ci: CanvasItem, arena: CombatArena, tick: int) -> void:
 	for h: Fighter in arena.hostiles:
 		var e: FighterFx = a.effect(h)
 		if e != null and h.alive():
-			if e.burn_ticks > 0:
-				_burning(ci, burn_flames(h.pos, e.flee), tick + h.id * 3)
+			if e.burn_ticks > 0 and not FightBurnArt.drawn_over(h.id, tick):
+				FightBurnArt.draw(ci, h.pos, e.flee, tick + h.id * 3)
 			var n: int = StunCrowd.cap().w if light.has(h.id) else 2
 			if e.stun_ticks > 0 and not WeaponFxElectro.stun(ci, h.pos, tick + h.id, n):
 				_stun(ci, h.pos, tick + h.id)
@@ -61,23 +53,6 @@ static func draw(ci: CanvasItem, arena: CombatArena, tick: int) -> void:
 			_bolt(ci, arc[0], arc[1], tick / 2 + i, 4.5, Ink.CREAM)
 
 
-## Where a burning human's flames sit: behind him against his run (`flee`), off the body.
-static func burn_flames(pos: Vector2, flee: Vector2) -> PackedVector2Array:
-	var back: Vector2 = -flee.normalized() if flee.length_squared() > 0.0 else Vector2.DOWN
-	var side: Vector2 = back.orthogonal()
-	var out: Array[Vector2] = []
-	for k: int in BURN_FLAMES:
-		var fan: float = BURN_FAN_M * float(k - 1)
-		out.append(pos + back * (BURN_BACK_M + BURN_STEP_M * float(k)) + side * fan)
-	return PackedVector2Array(out)
-
-
-static func _burning(ci: CanvasItem, flames: PackedVector2Array, tick: int) -> void:
-	for k: int in flames.size():
-		var size: float = BURN_SCALE * (1.0 - 0.15 * float(k)) + 0.03 * float((tick / 4 + k) % 2)
-		_fire(ci, flames[k], size, tick + k * 7, 1.0 - 0.2 * float(k))
-
-
 ## A table round that is not a plain bullet; false when the kind is drawn as a tracer instead.
 static func shot(ci: CanvasItem, s: Shot, tick: int) -> bool:
 	var dir: Vector2 = s.vel.normalized()
@@ -90,7 +65,7 @@ static func shot(ci: CanvasItem, s: Shot, tick: int) -> bool:
 			_rocket(ci, s.pos, dir, went, tick)
 		WeaponSpec.Kind.CONE:
 			var k: float = clampf(went / maxf(s.spec.range_m, 0.1), 0.0, 1.0)
-			_fire(ci, s.pos, 0.4 + 0.75 * k, tick + int(went * 10.0), 1.0 - k * 0.5)
+			fire(ci, s.pos, 0.4 + 0.75 * k, tick + int(went * 10.0), 1.0 - k * 0.5)
 		WeaponSpec.Kind.BOLT when s.spec.chain_hops == 0:  # a ray: no chain, a straight beam
 			_ray(ci, s.pos - dir * minf(went, s.spec.tracer_len_m), s.pos, tick)
 		WeaponSpec.Kind.BOLT when s.charged:
@@ -121,7 +96,7 @@ static func _rocket(ci: CanvasItem, at: Vector2, dir: Vector2, went: float, tick
 		var c: Color = SMOKE
 		c.a *= 1.0 - float(k) / 9.0
 		ci.draw_circle(Ink.px(at - dir * back + wob), r, c)
-	_fire(ci, head - dir * 0.95, 0.2 + 0.04 * float(tick % 3), tick, 1.0)
+	fire(ci, head - dir * 0.95, 0.2 + 0.04 * float(tick % 3), tick, 1.0)
 	ci.draw_line(Ink.px(head - dir * 0.9), Ink.px(head - dir * 0.05), Ink.INK, 20.0)
 	ci.draw_line(Ink.px(head - dir * 0.8), Ink.px(head - dir * 0.25), Ink.CREAM, 9.0)
 	var fins: PackedVector2Array = PackedVector2Array(
@@ -144,7 +119,7 @@ static func _bottle(ci: CanvasItem, s: Shot, went: float, tick: int) -> void:
 	var spin: Vector2 = Vector2.from_angle(float(tick) * 0.5) * 0.22
 	ci.draw_line(Ink.px(at - spin), Ink.px(at + spin), Ink.INK, 10.0)
 	ci.draw_line(Ink.px(at - spin * 0.6), Ink.px(at + spin * 0.4), Ink.CREAM, 4.0)
-	_fire(ci, at + spin * 1.3, 0.16, tick, 1.0)
+	fire(ci, at + spin * 1.3, 0.16, tick, 1.0)
 
 
 ## A patch of RING_PATCH_M or more (the mini-nuke's) burns only round its rim: ground zero is
@@ -165,7 +140,7 @@ static func _patch(ci: CanvasItem, p: Vector4, left: int, tick: int, dead: Array
 		var thin: float = clear(c + off, dead)
 		var at: Vector2 = c + off + away(c + off, dead) * thin * CLEAR_PUSH_M
 		var size: float = (0.6 + 0.15 * float(i % 3)) * (1.0 - 0.55 * thin)
-		_fire(ci, at, size, tick + i * 5, fade * (1.0 - 0.4 * thin))
+		fire(ci, at, size, tick + i * 5, fade * (1.0 - 0.4 * thin))
 
 
 ## The unit push away from the corpse that thins the flame at `at` most (zero when none).
@@ -243,7 +218,7 @@ static func _stun(ci: CanvasItem, at: Vector2, tick: int) -> void:
 
 ## One frame of quest 1's fire loop (features/fx/art/fx_fire.png, 4 cells of 2.5 m), `scale` x;
 ## in colour (WeaponFxColour.ground_fire) while the FX colour canvas is attached.
-static func _fire(ci: CanvasItem, at: Vector2, scale: float, tick: int, alpha: float) -> void:
+static func fire(ci: CanvasItem, at: Vector2, scale: float, tick: int, alpha: float) -> void:
 	var size: Vector2 = Vector2.ONE * 2.5 * scale * Ink.PX_PER_M
 	var rect: Rect2 = Rect2(Ink.px(at) - size * 0.5, size)
 	var src: Rect2 = Rect2(Vector2(float((tick / 5) % 4), 0.0) * 256.0, Vector2(256.0, 256.0))

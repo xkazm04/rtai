@@ -123,3 +123,14 @@ func test_the_far_crowd_material_carries_the_near_dead_tables() -> void:
 	var odd: PackedFloat32Array = m.get_shader_parameter("head_odd")
 	assert_eq(even, StreetDeadHeading.HEAD_DEG)
 	assert_eq(odd, StreetDeadHeading.HEAD_DEG_ODD)
+
+
+func test_the_push_is_paid_out_slowly_over_the_death() -> void:
+	var t0: float = StreetWalkerFall.FALL_AT[StreetWalkerFall.FALL_FRAMES - 1]
+	assert_almost_eq(StreetDeadHeading.push_left(t0), 1.0, 0.0001, "whole at the lying frame")
+	assert_almost_eq(StreetDeadHeading.push_left(StreetDeadHeading.PUSH_END), 0.0, 0.0001, "paid")
+	var mid: float = (t0 + StreetDeadHeading.PUSH_END) * 0.5
+	assert_almost_eq(StreetDeadHeading.push_left(mid), 0.5, 0.01, "slow in, slow out")
+	var slide_end: float = StreetDeadHeading.fall_left(StreetDeadPlan.SLIDE_END)
+	assert_almost_eq(slide_end, 0.0, 0.0001, "the short slide ends first")
+	assert_gt(StreetDeadHeading.push_left(StreetDeadPlan.SLIDE_END), 0.0, "the push is still going")

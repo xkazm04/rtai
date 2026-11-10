@@ -29,8 +29,8 @@ func test_sync_follows_select_enter_and_cooldown() -> void:
 
 
 ## n8-hud GhostChipFace: every ghost in the cycle has its drawn face (no chip falls back to the
-## glyph), cut at 84 px and masked to a disc (the corners clear, the centre drawn).
-func test_every_ghost_has_a_disc_face() -> void:
+## glyph), cut at 84 px, no background behind it (the top corners clear, the centre drawn).
+func test_every_ghost_has_a_cut_avatar() -> void:
 	var table: GhostFormTable = GhostFormTable.load_default()
 	assert_true(GhostChipFace.FACES)
 	for id: StringName in table.order:
@@ -40,11 +40,11 @@ func test_every_ghost_has_a_disc_face() -> void:
 			continue
 		assert_eq(tex.get_size(), Vector2(84.0, 84.0), "%s cut at 84 px" % id)
 		var img: Image = tex.get_image()
-		assert_lt(img.get_pixel(1, 1).a, 0.05, "%s: the corner is outside the disc" % id)
+		assert_lt(img.get_pixel(1, 1).a, 0.05, "%s: no background behind the figure" % id)
 		assert_gt(img.get_pixel(42, 42).a, 0.5, "%s: the face fills the centre" % id)
 
 
-## A ghost with no cut draws nothing and says so (the card draws its D5 glyph instead).
+## A ghost with no cut draws nothing and says so (the strip draws its D5 glyph instead).
 func test_unknown_ghost_falls_back_to_the_glyph() -> void:
 	var hud: GhostFormHud = autofree(GhostFormHud.new())
 	assert_null(GhostChipFace.face(&"no_such_ghost"))

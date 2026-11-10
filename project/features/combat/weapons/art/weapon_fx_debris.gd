@@ -9,6 +9,10 @@ extends RefCounted
 const TABLE: String = "res://data/tables/blast_debris.json"
 const SCHEMA: String = "gtai.blast-debris/1"
 
+## A slab's outline corners, and how much darker its shaded half is.
+const SIDES: int = 6
+const SHADE: float = 0.38
+
 static var enabled: bool = not OS.get_cmdline_user_args().has("--blast-debris=off")
 static var _rules: WeaponFxDebris = null
 
@@ -79,17 +83,25 @@ static func draw(ci: CanvasItem, b: Vector3, age: int) -> void:
 		ci.draw_circle(Ink.px(at), r.speck_px * (0.6 + 0.8 * hash01(key, j + 160)), ink)
 
 
-## One slab: a lopsided quad of `size` m turned `spin`, flat grey in an ink edge.
+## One slab: a broken chunk of `size` m turned `spin`: a lopsided hexagon, flat grey with a shaded
+## half (n11: a plain four-sided slab read as a paper square), in an ink edge.
 static func _slab(
 	ci: CanvasItem, at: Vector2, size: float, spin: float, key: float, fade: float
 ) -> void:
 	var r: WeaponFxDebris = rules()
 	var pts: Array[Vector2] = []
-	for q: int in 4:
-		var a: float = spin + TAU * float(q) / 4.0 + 0.5 * (hash01(key, q + 200) - 0.5)
-		var reach: float = size * (0.42 + 0.3 * hash01(key, q + 240))
+	for q: int in SIDES:
+		var a: float = (
+			spin + TAU * float(q) / SIDES + 0.8 * (hash01(key, q + 200) - 0.5) / SIDES * TAU
+		)
+		var reach: float = size * (0.3 + 0.42 * hash01(key, q + 240))
 		pts.append(Ink.px(at + Vector2.from_angle(a) * reach))
 	ci.draw_colored_polygon(PackedVector2Array(pts), Color(r.fill, fade))
+	var shaded: PackedVector2Array = [Ink.px(at)]
+	for q: int in range(SIDES / 2, SIDES):
+		@warning_ignore("return_value_discarded")
+		shaded.append(pts[q])
+	ci.draw_colored_polygon(shaded, Color(r.fill.darkened(SHADE), fade))
 	pts.append(pts[0])
 	ci.draw_polyline(PackedVector2Array(pts), Color(Ink.INK, fade), r.edge_px, true)
 

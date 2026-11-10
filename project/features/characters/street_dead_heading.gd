@@ -13,6 +13,8 @@ const HEAD_DEG: PackedFloat32Array = [0.0, 0.0, -90.0, 180.0, 180.0, -135.0, -90
 ## a group shot from one side does not lie in one row. Equal to HEAD_DEG = one heading per blow.
 const HEAD_DEG_ODD: PackedFloat32Array = [-45.0, -45.0, -135.0, -135.0, -135.0, -90.0, -45.0, -90.0]
 const ACROSS_POSE: int = 4
+## Of the death family's progress: the push off the neighbours is paid out by here.
+const PUSH_END: float = 0.95
 ## n9's free turn off the blow (rad, the person's hash), when ENABLED is false.
 const JITTER_RAD: float = 0.4
 const SHADOW_NODE: String = "DeadShadow"
@@ -66,6 +68,13 @@ static func fall_left(p: float) -> float:
 	var t0: float = StreetWalkerFall.FALL_AT[StreetWalkerFall.FALL_FRAMES - 1]
 	var t: float = clampf((p - t0) / maxf(StreetDeadPlan.SLIDE_END - t0, 0.001), 0.0, 1.0)
 	return (1.0 - t) * (1.0 - t)
+
+
+## The share of the push off the neighbours still to go at progress p: paid out slow-in slow-out
+## over the rest of the death (n11: over the slide's few ticks it read as a body shooting away).
+static func push_left(p: float) -> float:
+	var t0: float = StreetWalkerFall.FALL_AT[StreetWalkerFall.FALL_FRAMES - 1]
+	return 1.0 - smoothstep(0.0, 1.0, (p - t0) / maxf(PUSH_END - t0, 0.001))
 
 
 ## The landing's rock back (rad) at progress p.
@@ -141,3 +150,8 @@ static func _under(card: Sprite2D, plan: Sprite2D, node_name: String, tint: Colo
 	sh.frame = plan.frame
 	sh.flip_h = plan.flip_h
 	return sh
+
+
+## The blow that killed `rig`, on the screen (down when he has no reaction).
+static func blow_of(rig: CutRig) -> Vector2:
+	return rig.react.dir.rotated(rig.facing).normalized() if rig.react != null else Vector2.DOWN

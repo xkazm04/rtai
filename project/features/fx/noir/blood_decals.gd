@@ -11,6 +11,8 @@ var ink: Color = Color(0.1, 0.08, 0.08)
 ## Splats go to this MultiMesh (one GPU draw, written once when they land) instead of
 ## draw_circle calls each redraw; null = noir's draw.
 var mesh: BloodSplatMesh = null
+## The slot of the last pool added (PoolUnderBody), -1 before any.
+var last_pool: int = -1
 var _pos: PackedVector2Array = PackedVector2Array()
 var _r0: PackedFloat32Array = PackedFloat32Array()
 var _r1: PackedFloat32Array = PackedFloat32Array()
@@ -47,6 +49,7 @@ func add(at: Vector2, r1: float, grow: int, r0: float, born: int) -> int:
 	if grow > 0:
 		i = splats + _p_next
 		_p_next = (_p_next + 1) % pools
+		last_pool = i
 	else:
 		_next = (_next + 1) % splats
 	_pos[i] = at
@@ -64,6 +67,18 @@ func set_dir(i: int, dir: Vector2) -> void:
 		_unit[i] = BloodBatch.unit_ring(dir, BloodMarks.seed_of(_pos[i]))
 	elif mesh != null:
 		mesh.put(i, _pos[i], _r1[i], dir, _born[i])
+
+
+## Moves pool slot `i` to `at` (px; its outline re-seeded there). n11: under the corpse.
+func move(i: int, at: Vector2) -> void:
+	_pos[i] = at
+	if _grow[i] > 0:
+		_unit[i] = BloodBatch.unit_ring(_dir[i], BloodMarks.seed_of(at))
+
+
+## The tick slot `i` is born (shows) at.
+func born_of(i: int) -> int:
+	return _born[i]
 
 
 ## Decals on the ground now (splats + pools; capped by the budget).

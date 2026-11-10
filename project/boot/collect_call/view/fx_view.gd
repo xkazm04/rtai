@@ -49,7 +49,7 @@ func _draw() -> void:
 	_colour_begin()
 	if _ground == null:
 		for d: Vector2 in arena.rifle_drops:
-			draw_line(Ink.px(d + Vector2(-0.4, 0.1)), Ink.px(d + Vector2(0.4, -0.1)), Ink.INK, 5.0)
+			GroundRifle.draw(self, d, arena.rivet.pos, stage.tick)
 	_under(arena)
 	_shots(arena)
 	if arena.gun != null:

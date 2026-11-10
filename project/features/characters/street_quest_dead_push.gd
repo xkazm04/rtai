@@ -7,9 +7,10 @@ extends RefCounted
 
 ## Drawn bodies are about 2 m across at 64 px/m. Judged on Dock 9 settled (t13900; a body under
 ## FALL_TICKS old is still sliding into its push, and reads as a stack): 1.9 / 2.2 leaves a hand
-## touching, 2.3 / 3.0 throws a body 3 m off its blood. 0 = no push.
-const SPACE_M: float = 2.1
-const PUSH_MAX_M: float = 2.4
+## touching, 2.3 / 3.0 throws a body 3 m off its blood. 0 = no push. n11: the bodies drawn at
+## StreetDeadPlan.LYING_K need less room, and a 2.4 m push read as a body gliding across the floor.
+const SPACE_M: float = 1.5
+const PUSH_MAX_M: float = 1.8
 const PUSH_PASSES: int = 8
 ## The search for a clear spot when relaxation leaves an overlap: RINGS circles out to PUSH_MAX_M.
 const RINGS: int = 8
@@ -39,10 +40,18 @@ static func push_of(
 	if walled or not _is_clear(centre + push, others, SPACE_M * px_per_m):
 		push = _nearest_clear(centre, others, px_per_m, actor, blocked)
 	if _pushed.size() >= StreetDeadPlan.MEMORY:
-		reset()
+		_forget_oldest()
 	_pushed[actor] = push
 	_centres[actor] = centre
 	return push
+
+
+## n11: a full memory drops only the oldest body's push (one that fell first and is gone or
+## nearly), so a long fight never re-solves the bodies still lying.
+static func _forget_oldest() -> void:
+	var oldest: int = _pushed.keys()[0]
+	if not _pushed.erase(oldest) or not _centres.erase(oldest):
+		return
 
 
 ## Forgets every push (tests; a new scene starts from no dead).

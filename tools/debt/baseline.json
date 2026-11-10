@@ -34,16 +34,17 @@
         "2026-11-09: n12 A2: NodeSpans names a spike's node (worst_frames), a dev instrument (dev_loc 20284 -> 20319)",
         "2026-11-09: n12 B1: SyncProbe, the victim-sync instrument (dev arena --sync), and its one attach line (dev_loc 20319 -> 20487)",
         "2026-11-10: n11 merge: n11-tools dev tooling (film probe, film triggers) on top of n12 (dev_loc 20487 -> 20809)",
-        "2026-11-10: n11 merge: n11-hero dev films and ghost tooling on top of n12+tools (dev_loc 20809 -> 21227)"
+        "2026-11-10: n11 merge: n11-hero dev films and ghost tooling on top of n12+tools (dev_loc 20809 -> 21227)",
+        "2026-11-10: n11 merge: n11-combat dev films and body probes on top of n12+tools+hero (dev_loc 21227 -> 21419)"
       ],
       "files": {
-        "project/dev/arena": 710,
+        "project/dev/arena": 711,
         "project/dev/audio": 367,
         "project/dev/bake_city.gd": 32,
         "project/dev/bench": 1886,
         "project/dev/bots": 399,
         "project/dev/enemy_ai": 662,
-        "project/dev/frames": 866,
+        "project/dev/frames": 1057,
         "project/dev/ghost-forms": 616,
         "project/dev/ghost-powers": 1137,
         "project/dev/gunplay": 674,
@@ -66,7 +67,7 @@
         "project/dev/view": 195,
         "project/dev/weapon_art": 506
       },
-      "total": 21227
+      "total": 21419
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -238,12 +239,13 @@
         "2026-11-10: n12 C1: RivetHeldView.warm compiles the ink line shader at the load (files_near_cap 16 -> 16)",
         "2026-11-10: n12 E1: ArenaRigs attaches the combat lights (two lines) (files_near_cap 16 -> 16)",
         "2026-11-10: n12 E3 crowd ripple: CrowdReact's delayed startle + its one host line in ArenaRigs (files_near_cap 16 -> 16)",
-        "2026-11-10: n11 merge: n11-tools dev tooling (film probe, film triggers) on top of n12 (files_near_cap 16 -> 16)"
+        "2026-11-10: n11 merge: n11-tools dev tooling (film probe, film triggers) on top of n12 (files_near_cap 16 -> 16)",
+        "2026-11-10: n11 merge: n11-combat dev films and body probes on top of n12+tools+hero (files_near_cap 16 -> 14)"
       ],
       "files": {
         "project/boot/collect_call/view/fx_view.gd": 271,
         "project/boot/quest1_game.gd": 272,
-        "project/dev/arena/arena_game.gd": 298,
+        "project/dev/arena/arena_game.gd": 299,
         "project/dev/showcase/city_fight.gd": 300,
         "project/features/arena/arena_rigs.gd": 294,
         "project/features/bosses/boss_hook.gd": 281,
@@ -253,12 +255,10 @@
         "project/features/combat/react/react_link.gd": 288,
         "project/features/combat/weapons/art/weapon_art.gd": 274,
         "project/features/combat/weapons/art/weapon_fx_art.gd": 287,
-        "project/features/combat/weapons/fight_areas_art.gd": 278,
         "project/features/fx/combat_blood.gd": 297,
-        "project/features/fx/noir/blood_fx.gd": 270,
         "project/features/player/rivet_held_view.gd": 282
       },
-      "total": 16
+      "total": 14
     },
     "files_past_soft_cap": {
       "accepted": [
@@ -280,7 +280,8 @@
         "2026-11-10: n12 E3 crowd ripple: CrowdReact's delayed startle + its one host line in ArenaRigs (files_past_soft_cap 66 -> 66)",
         "2026-11-10: n12 E3 crowd ripple: CrowdReact's delayed cower (+_cower_due) and three tests pinned to the same-tick startle (files_past_soft_cap 66 -> 66)",
         "2026-11-10: n11 merge: n11-tools dev tooling (film probe, film triggers) on top of n12 (files_past_soft_cap 66 -> 66)",
-        "2026-11-10: n11 merge: n11-hero dev films and ghost tooling on top of n12+tools (files_past_soft_cap 66 -> 66)"
+        "2026-11-10: n11 merge: n11-hero dev films and ghost tooling on top of n12+tools (files_past_soft_cap 66 -> 66)",
+        "2026-11-10: n11 merge: n11-combat dev films and body probes on top of n12+tools+hero (files_past_soft_cap 66 -> 66)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 262,
@@ -289,7 +290,7 @@
         "project/boot/collect_call/view/fx_view.gd": 271,
         "project/boot/collect_call/view/stage_view.gd": 219,
         "project/boot/quest1_game.gd": 272,
-        "project/dev/arena/arena_game.gd": 298,
+        "project/dev/arena/arena_game.gd": 299,
         "project/dev/audio/audio_riot.gd": 201,
         "project/dev/bench/fight_frames.gd": 246,
         "project/dev/bench/node_spans.gd": 263,
@@ -331,12 +332,12 @@
         "project/features/combat/weapons/art/weapon_art.gd": 274,
         "project/features/combat/weapons/art/weapon_fx_art.gd": 287,
         "project/features/combat/weapons/fight_areas.gd": 222,
-        "project/features/combat/weapons/fight_areas_art.gd": 278,
+        "project/features/combat/weapons/fight_areas_art.gd": 253,
         "project/features/combat/weapons/gun_fx.gd": 223,
         "project/features/combat/weapons/gun_fx_art.gd": 232,
         "project/features/fx/combat_blood.gd": 297,
         "project/features/fx/corpse_stains.gd": 245,
-        "project/features/fx/noir/blood_fx.gd": 270,
+        "project/features/fx/noir/blood_fx.gd": 269,
         "project/features/player/rivet_held_view.gd": 282,
         "project/features/quest/quest_objective.gd": 206,
         "project/features/quest/quest_runner.gd": 228,

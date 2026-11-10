@@ -154,7 +154,7 @@ func _process(_delta: float) -> void:
 	var busy: bool = not forms.settled()
 	_fx.show_progress(busy, forms.k(), forms.stage(), forms.phase == GhostForms.SWITCHING)
 	_beat(forms.stage() if busy else 0, with_big)
-	hud.sync(forms)
+	hud.sync(forms, arena.rivet.weapon)
 	var is_dent: bool = big(forms, DentStage.GHOST)
 	_dent.riding = pilot.dent.riding()
 	_dent.strikes = pilot.dent.strikes

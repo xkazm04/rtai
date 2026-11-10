@@ -45,8 +45,9 @@ The bubble sim (GDScript reference `features/city/sim/sim_body.gd` and native
    A person RUNNING into the body (its own closing speed above the human run_mps) follows the
    table's human -> rivet_base run result: `blocked` sets `BD_RUN_IN` to that speed, and the person takes the whole
    overlap (a fleeing ped cannot shove Rivet).
-3. After all actors moved, the body is pushed out of everything it still overlaps (two passes),
-   then out of solid cells. `body_result()` returns the resolved position and the knockdowns
+3. After all actors moved, the body is pushed out of every standing person it still overlaps (two
+   passes), then out of solid cells. Nobody on the ground blocks it or is shoved by it: the dead and
+   the knocked-down are walked over (owner note 2026-11-09). `body_result()` returns the resolved position and the knockdowns
    `(slot, x, y)`; `RivetBody.take` writes Rivet back and emits `Events.actor_knocked_down`.
 
 `RivetBody.on = false` while Rivet drives (no body in a car).

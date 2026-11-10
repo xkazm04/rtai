@@ -5,6 +5,9 @@ extends RefCounted
 ## flare that shrinks back to the stream's lick over hit_feel.json `ignite_flare_ticks`. View only;
 ## a weapon with no `ignite_flare_k` (or `--feel=off`) keeps its plain lick.
 
+## n11: the muzzle flash reads at combo (a flash at 1.0 was a speck beside the gun).
+const FLASH_K: float = 1.45
+
 static var _feel: HitFeel = null
 ## Per weapon id: the last round seen and the round that lit the stream.
 static var _last: Dictionary[StringName, int] = {}
@@ -28,6 +31,11 @@ static func lick_k(weapon: StringName, shot_tick: int, tick: int, base_k: float)
 	if since < 0.0 or since >= flare.y:
 		return base_k
 	return lerpf(flare.x, base_k, since / flare.y)
+
+
+## The drawn scale of `weapon`'s muzzle flash cell.
+static func flash_k(weapon: StringName) -> float:
+	return muzzle_k(weapon) * FLASH_K
 
 
 ## The muzzle cell scale of `weapon` (HitFeel.muzzle_k: Rivet's pistol flash reads at 32 px/m).

@@ -13,11 +13,12 @@ extends RefCounted
 
 const DIR: String = "res://features/combat/weapons/art/showcase/crate/"
 const DEFAULT_ON: bool = false
-## The crate's long side in metres, and the longest a weapon lies in it (the straw's span).
-const LONG_M: float = 1.6
-const FILL_M: float = 1.3
+## The crate's long side in metres, and the longest a weapon lies in it (the straw's span). n11:
+## twice the n8 size, as PickupsView.GROUND_K draws the guns.
+const LONG_M: float = 3.2
+const FILL_M: float = 2.6
 ## A standing drawing (the molotov's bottle) is never taller than this in the straw.
-const STAND_M: float = 0.7
+const STAND_M: float = 1.4
 ## Where the weapon's bottom edge rests, as a fraction of the cut (x, y) from its top-left: the
 ## straw's front edge, under the hollow (measured on the cuts: p55 it5, the v3 p70 it10: hollow
 ## 0.42-0.64, straw front 0.65-0.74). A 55 drawing has depth (drawn lying, seen from the side and
