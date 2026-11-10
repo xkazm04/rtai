@@ -521,3 +521,159 @@ Calls for the owner:
 Unsure / corrections: my first read of the strips took the drawn arcs for a misplaced smear and the
 cut line for a stray blade; both are intended. The "stray piece" was a depth bug, not a hold bug.
 The brief's "swing smear if missing": it is not missing at p70.
+
+## Group E (05:00-)
+
+### Item 7: D's open read (the crowd's ground shadow under combo)
+Hiding RL_PED_SHADOWS in the combo city riot changes 11,090 px of the frame (1,059 by more than 24
+levels): the people-shadow MultiMesh draws under combo, a 30 % ink blob on the dark road that barely
+reads. Present, not missing; nothing built.
+
+### Audit (city block fight, pit reel on `--arena=city --riot`, combo, 32 px/m)
+- Lit: the city riot already lights shots and blasts (FxSystem kinds through CityFxFeed into the
+  LightLayer). The arena and the city block fight lit nothing of their own fight.
+- Left: casings 2.5 s, ground scuffs and scorch rings 240 ticks (GunFx), blood on its decay (12 s +
+  4 s fade), corpse scorch with the body. Nothing of the fight outlived it on the street.
+- Reacting: the sim scares every pedestrian within 9 m of a bang on the same tick (SimShots.scare
+  via CityScare); CrowdReact plays a cower on the full rigs 3 ticks after the FLEE edge and a startle
+  within 2.5 m of a death on the same frame; NearMiss ducks fighters; the baked crowd shows the
+  flight only (RigClips' raised hands).
+
+### E1 light from combat (57d7110cd, ON)
+ArenaCombatLights: a new round within `radius_m` (20) of Rivet starts the `muzzle_flash` light, a
+new blast the `explosion` light, into the stage's LightLayer (pool cap lights.json max_lights,
+oldest timed light evicted, nothing allocated per shot). Every start spends FlashBudget.spend_light;
+off under reduced motion, `--feel=off`, or lights.json `combat_lights.on` false (the before). Film:
+22 frames differ, 11 pulses in 1500 ticks (`e1_combat_light-ab-32ppm.png`/`.mp4`). Span (release, city
+fight): arena_combat_lights 0.004 ms mean, max 0.019 (`build/n12/spans/e1-spans.json`); no settled frame
+over 33 ms. Goldens 0.00.
+
+### E2 battle residue (17854b185, ON)
+BattleResidue (a child of FxGround): a GROUND impact leaving GunFx is kept as a settled scuff (the
+same stroke and seed at alpha 0.6), cap 96, the oldest 24 fading first, deterministic placement
+(the impact's own position, direction, born tick). First draft drew each mark's circles: horde span
+0.176 ms mean, p99 5.24, max 10.24 ms. Batched into three multiline calls: 0.009 / 0.248 / 0.422 ms
+(`build/n12/spans/e2b-spans.json`); city fight 0.003 / 0.119 / 0.208 (`build/n12/spans/e3-spans.json`).
+Film: frames differ from 1147 on; frame 1400 377 px over 24 levels (`e2_battle_residue-ab-32ppm-frame1400.png`,
+crop `e2_battle_residue-ab-32ppm-frame1400-crop2x.png`): faint grey scuffs close to the paper's grime.
+Only scuffs are kept: casings, drag marks and scorch rings are not (partly done).
+
+### E3 crowd panic ripple (8dad15ba3, OFF)
+CrowdRipple: a cower waits distance / `mps` (60 ticks a second, at most `max_ticks`) from the nearest
+bang (the fight's live rounds' muzzles and blasts, one line in ArenaRigs) for a flight onset, and
+from the body for a startle. View only; the sim's FLEE untouched. Trial at mps 12: the city block
+fight changed in one episode in 1500 ticks (ticks 352-402, one pedestrian): before he ducks at
+356-374, with the ripple he runs on upright and the duck is not seen
+(`e3_crowd_ripple_trial-off-ab-32ppm-frames352-402.png`). A lost reaction, not a wave, so it ships with
+mps 0. The wave the brief describes needs the baked crowd to show a flinch (atlas cells and
+crowd_atlas.gdshader), or the sim to stagger FLEE by distance (a sim change): neither built, a call.
+Cost: arena_rigs span 0.174 -> 0.178 ms mean. Three CrowdReact tests pinned to the same-tick startle
+(`c.ripple = CrowdRipple.new()`); test_crowd_ripple covers the order, the cap and off.
+
+### Mutation (E files)
+At 8dad15ba3: battle_residue 18.8 %, crowd_ripple 52.6 %, arena_combat_lights 47.4 % (20 mutants
+each). Tests added from the survivors (b0b917270, 04f551f1d, bcf6d76b2): residue's batched marks
+moved into `geometry()` and tested (shape, eviction, fade); `bangs_of`; the lights' own frame
+(focus, budget refill per window), radius edge, row switches. Re-scored: crowd_ripple 84.2 %
+(survivors: field defaults that `shipped()` overwrites, `max_ticks > 0` vs `> 1`), battle_residue 78.9 % (survivors: the show_behind_parent / use_parent_material flags, an unused fourth slot pair, a draw-only width index, one dot offset),
+arena_combat_lights 68.4 % (survivors: field defaults, attach's reduced-motion read, the row's on/muzzle defaults, the radius edge `>` vs `>=`).
+
+### Gates at the final head (bcf6d76b2, 06:39-06:50)
+- Lint 15/15; debt ratchet ok.
+- Unit 2251 passed, 0 failed (full run, no FLAKY).
+- Scenarios 55 / 55.
+- Parity bit for bit over 1200 steps (40 snapshot checks, 3504 floats); planted mutation caught at step 629.
+- Look goldens 11/11 and block goldens 5/5, worst 0.00.
+
+## Group E report
+
+Commits: `57d7110cd` E1 combat lights; `17854b185` E2 battle residue; `8dad15ba3` E3 crowd ripple
+(shipped off); `b0b917270`, `04f551f1d`, `bcf6d76b2` tests from mutation survivors; this journal.
+
+Packages:
+- E1 light from combat: shipped ON. Audit: the city riot already lit its shots and blasts
+  (FxSystem -> LightLayer); the arena and the city block fight lit nothing. ArenaCombatLights lights
+  a new round within 20 m (`muzzle_flash`, 4 ticks) and a new blast (`explosion`, 36 ticks) into the
+  stage's LightLayer: pool cap and oldest eviction from lights.json, nothing allocated per shot,
+  FlashBudget.spend_light per start, off under reduced motion and `--feel=off`. Film: 22 frames
+  differ, 11 pulses in 1500 ticks (`e1_combat_light-ab-32ppm.png` / `.mp4`). Goldens 0.00.
+- E2 battle residue: shipped ON, partly. Audit: scuffs and scorch rings lived 240 ticks, casings
+  2.5 s, blood on its decay; nothing outlived the fight. BattleResidue keeps each ground scuff that
+  leaves GunFx, settled (alpha 0.6), cap 96, the oldest 24 fading first, one node, three batched draw
+  calls, placement from the impact itself. Film: frame 1400, 377 px differ: faint grey scuffs close
+  to the paper grime (`e2_battle_residue-ab-32ppm-frame1400.png`, `-crop2x.png`, `.mp4`). Casings,
+  drag marks and scorch rings are not kept.
+- E3 crowd panic ripple: built, shipped OFF. CrowdRipple delays each cower by distance / mps from
+  the nearest bang (or the body for a startle); view only. The trial (mps 12) changed one episode
+  in 1500 ticks: one pedestrian's duck was not seen at all (`e3_crowd_ripple_trial-off-ab-32ppm-frames352-402.png`).
+  A lost reaction, not a wave. A real wave needs the baked crowd to flinch (atlas cells) or the sim
+  to stagger FLEE by distance (sim): a call.
+- Item 7 (D's open read): the combo crowd shadow is drawn (11,090 px change when hidden, 1,059 over
+  24 levels), it barely reads on the dark road. No defect.
+
+Gates: at bcf6d76b2 lint 15/15; unit 2251 / 0; scenarios 55 / 55; parity bit-exact (mutation caught at 629); look goldens 11/11 and block 5/5 worst 0.00; debt ok. Inherited and still listed: test_quest_blade fails alone (passes in the suite);
+check.mjs false-fails on scripts that reach the Log autoload (it stopped one of my commit chains
+tonight; lint was clean).
+
+Perf (release export, span probe, vsync off, 1920x1080, fixed 60):
+- E1: arena_combat_lights 0.004 ms mean, p99 0.012, max 0.019 (city fight); no settled frame over
+  33 ms.
+- E2: draw battle_residue at the horde 0.009 ms mean, p99 0.248, max 0.422 (first draft 0.176 /
+  5.24 / 10.24, rejected and batched); city fight 0.003 / 0.119 / 0.208. Horde run: p50 5.67 ms, p99
+  9.22, settled frames over 33 ms 0.
+- E3 (off by data; the code runs): arena_rigs 0.174 -> 0.178 ms mean. City fight at head p50 4.99
+  ms, p99 10.35, settled over 33 ms 0 (E1's run: 5.08 / 9.18 / 0). Single runs, machine contended
+  (others 2.9-5.2 cores): not a verdict, no A/A pair taken for E.
+- Nothing loads art or compiles a shader: nothing to warm.
+
+Calls for the owner (Group E):
+1. Combat lights (ON): keep, or off with lights.json `combat_lights.on` false; `radius_m` 20 and the
+   two kinds (`muzzle`, `blast`) are the knobs.
+2. Battle residue (ON, faint): keep at alpha 0.6, raise it (it reads close to the paper's grime at
+   0.6), or off with battle_residue.json `on` false. Scorch rings and casings could join the ring
+   (not built).
+3. Crowd ripple (OFF): leave off (default), try `crowd_ripple.mps` 12, or commission the real wave:
+   baked-crowd flinch cells (art) or a sim FLEE staggered by distance (a sim change, parity).
+
+Unsure / corrections: I said E2 "1059 px" on the unbatched draft; the shipped batched draw changes
+377 px at frame 1400 (its dots are 1 px segments, not circles). E3's lost duck may be the full
+rig handed to another person before the delay ran out (not traced). The brief's "only how the
+baked crowd shows it" was not reached: CrowdReact poses the full rigs only.
+
+## Night summary
+
+| Idea | Package | State | Reversing flag / data value |
+|---|---|---|---|
+| 1 plate misregistration shock | C2 PlateShock | shipped OFF | hit_feel.json `plate_shock_px` 3 on blast / slam, 2 on ram turns it on |
+| 2 ink line weight on impact | C1 InkHit | shipped ON | `ink_edge_px` 0 per class row, or `--feel=off` |
+| 3 per-weapon camera grammar | B2 | mostly existed; ray gun row shipped ON; zoom punch not done | remove hit_feel.json `ray_gun` weapons row |
+| 4 victim sync | B1 wound snap + melee hold delay | shipped ON | `--react-snap=off --wound-hold=off` (or the snap_m keys / melee hold_delay_ticks removed) |
+| 5 light from combat | E1 ArenaCombatLights | shipped ON | lights.json `combat_lights.on` false |
+| 6 battle residue | E2 BattleResidue (scuffs only) | shipped ON (partly) | battle_residue.json `on` false |
+| 7 occlusion and depth | D1 | already existed (no hidden fighter; crowd shadow present); dropped-gun depth fix shipped ON | ShockArcsView `GUN_ON_FLOOR` false |
+| 8 melee holds, swings, plasma sword | D2 | not done (audit, wind-up trial dropped, sword candidates as stills) | - |
+| 9 crowd panic ripple | E3 CrowdRipple | shipped OFF | human_reactions.json `crowd_ripple.mps` 12 turns it on |
+| 10 headroom | A1 strip + fx warm; A2 fight gate | shipped ON (warm); gate tool shipped | `--strip-prefetch=off` |
+
+All calls for the owner:
+- A: none.
+- B1. Melee wound throw: fold / spin 0.15 m and stagger 0.2 m snaps (built) vs none (`--react-snap=off`
+  or the snap_m keys removed); it also throws a hand cannon wound on armour.
+- B2. The melee stop freezes 2 ticks after the hit (built) vs on the hit tick (`--wound-hold=off`,
+  which also reverts the light guns' and the Gatling's; or melee `hold_delay_ticks` removed).
+- B3. The ray gun's stream without per-round stops (built) vs the shock class's stop and shake on
+  every round (remove the `ray_gun` row).
+- C1. The struck figure's heavier ink line (ON): the class widths, narrower, or none (`ink_edge_px` 0).
+- C2. The plate shock (OFF): `plate_shock_px` 3 / 2 turns it on; a stronger read would darken the
+  page for its ticks (closer to a flash), not built.
+- D1. Plasma sword treatment: as shipped, A cream hot core, B heavier ink rim, C both
+  (`plasma_sword_treatments-candidates-3x.png`).
+- D2. A drawn wind-up cell for the blades (plasma sword, katana, baton): art for the weapon lane.
+- D3. The dropped pistol's look (reads as a bracket at 32 px/m): a drawn gun cell, or no dropped gun.
+- E1. Combat lights ON: keep, or `combat_lights.on` false.
+- E2. Battle residue ON and faint: keep 0.6, raise alpha, or `on` false; scorch and casings not in the ring.
+- E3. Crowd ripple OFF: leave, try `mps` 12, or commission baked-crowd flinch cells or a sim FLEE stagger.
+
+Listed leftovers (not fixed tonight): GhostFormHud redraws every frame (0.21 ms), ViewPitchEase
+re-dresses every card (0.29 ms), ~70 triangulation errors at exit, the p55 strips on a boss swap,
+test_quest_blade alone, check.mjs on autoload scripts.
