@@ -16,7 +16,7 @@ const RUN_TICKS = /^const\s+RUN_TICKS\s*:\s*int\s*=\s*(\d+)\s*(?:#.*)?$/m;
 /** Engine options the runner places before the scene; everything else is the entry's. */
 const ENGINE = /^--(quit-after|fixed-fps)(?:=(.*))?$/;
 const RUN_FPS = '60';
-const FIXED_FPS = /^const\s+FIXED_FPS\s*:\s*int\s*=\s*(\d+)\s*(?:#.*)?$/m;
+const FIXED_FPS = /^const[ \t]+FIXED_FPS[ \t]*:[ \t]*int[ \t]*=[ \t]*(\d+)[ \t]*(?:#.*)?$/m; // one line only
 
 /** The declared `const FIXED_FPS: int = <literal>` as a string, or null. */
 export function readFixedFps(text) {
