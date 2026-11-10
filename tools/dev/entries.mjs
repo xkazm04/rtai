@@ -12,7 +12,7 @@ import { PROJECT, walk } from '../lib/repo.mjs';
 
 export const NO_SPEC = 'flags unchecked: no declared spec';
 const SPEC = /^const\s+(KNOWN_FLAGS|KNOWN)\s*:\s*PackedStringArray\s*=\s*\[([\s\S]*?)\]/m;
-const RUN_TICKS = /^const\s+RUN_TICKS\s*:\s*int\s*=\s*(\d+)\s*(?:#.*)?$/m;
+const RUN_TICKS = /^const[ \t]+RUN_TICKS[ \t]*:[ \t]*int[ \t]*=[ \t]*(\d+)[ \t]*(?:#.*)?$/m; // one line only
 /** Engine options the runner places before the scene; everything else is the entry's. */
 const ENGINE = /^--(quit-after|fixed-fps)(?:=(.*))?$/;
 const RUN_FPS = '60';

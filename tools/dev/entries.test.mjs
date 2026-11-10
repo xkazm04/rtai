@@ -96,3 +96,10 @@ test('FIXED_FPS is read only as a positive literal', () => {
   assert.equal(readFixedFps('const FIXED_FPS: int = SimClock.TICK_RATE\n'), null);
   assert.equal(readFixedFps('# const FIXED_FPS: int = 60\n'), null);
 });
+
+test('readRunTicks: one line only, as readFixedFps (a declaration split over lines is not read)', () => {
+  assert.equal(readRunTicks('const RUN_TICKS:\nint = 900\n'), null);
+  assert.equal(readRunTicks('const RUN_TICKS: int =\n900\n'), null);
+  assert.equal(readRunTicks('const RUN_TICKS: int = 900  # ten seconds and a bit\n'), 900);
+  assert.equal(readRunTicks('extends Node\r\nconst RUN_TICKS: int = 900\r\n'), 900, 'CRLF still reads');
+});
