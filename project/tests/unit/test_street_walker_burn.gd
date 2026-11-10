@@ -28,6 +28,15 @@ func test_every_burn_grid_loads_as_five_facings() -> void:
 		assert_not_null(tex, path)
 		if tex != null:
 			assert_eq(tex.get_width() % RigHeadCard.FRAMES, 0, "%s whole facings" % path)
+		assert_true(StreetWalkerHit.FILL.has(path.get_file()), "%s drawn at the walk's size" % path)
+
+
+func test_the_armed_kinds_and_four_peds_burn_as_drawn_figures() -> void:
+	var rows: Array[String] = ["cop/head_helmet", "cop/head_swat", "thug", "ped/head_hood"]
+	for row: String in rows:
+		var want: String = str(StreetWalkerHit.BURN_GRIDS.get(row, "none"))
+		assert_eq(StreetWalkerHit.grid_of(_cop(&"burn", 0.05), row), want, row)
+		assert_true(StreetWalkerHit.BURN_GRIDS.has(row), row)
 
 
 func test_a_burning_patrol_cop_draws_the_burning_figure_for_the_whole_family() -> void:

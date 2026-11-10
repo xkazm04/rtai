@@ -46,7 +46,9 @@ SHEETS = {
 SITES = {"cop_patrol": ["shoulder", "gut"]}
 # n11 it33: the asset lane's drawn burning man (<kind>_hit_70_cells/burn/1_<col>.png, arms flailing,
 # flames up his sides), packed as <kind>_burn_hit.png on the same layout for a LIVING burn.
-BURNS = {"cop_patrol": "burn/1"}
+# n11 it34: the asset lane's burn cells for six more kinds (06:17-06:37 offers; suit, shopper and
+# elder were drawn singed, not burning, and keep the walk under the loops).
+BURNS = {k: "burn/1" for k in ("cop_patrol", "cop_riot", "swat", "thug", "ped_hood", "ped_cap", "ped_punk", "ped_jogger")}
 
 
 def foot_x(alpha: np.ndarray) -> float:

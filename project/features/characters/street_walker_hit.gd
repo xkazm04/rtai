@@ -40,7 +40,17 @@ const SITE_GRIDS: Dictionary[String, Dictionary] = {
 ## like the walk, and shakes FLAIL_RAD at FLAIL_HZ. Its drawn flames replace FightBurnArt's loops
 ## over the body. BURN_ON false = the walk under the loops (the before).
 const BURN_ON: bool = true
-const BURN_GRIDS: Dictionary[String, String] = {"cop/head_cap": "p70/cop_patrol_burn_hit.png"}
+## it34: six more kinds' burn cells (suit, shopper and elder came singed and keep the loops).
+const BURN_GRIDS: Dictionary[String, String] = {
+	"cop/head_cap": "p70/cop_patrol_burn_hit.png",
+	"cop/head_helmet": "p70/cop_riot_burn_hit.png",
+	"cop/head_swat": "p70/swat_burn_hit.png",
+	"thug": "p70/thug_burn_hit.png",
+	"ped/head_hood": "p70/ped_hood_burn_hit.png",
+	"ped/head_cap": "p70/ped_cap_burn_hit.png",
+	"ped/head_punk": "p70/ped_punk_burn_hit.png",
+	"ped/head_jogger": "p70/ped_jogger_burn_hit.png",
+}
 const FLAIL_RAD: float = 0.07
 const FLAIL_HZ: float = 3.0
 ## Family -> seconds the drawn cell holds from the blow (the rest of the family is the shoved walk).
@@ -58,6 +68,14 @@ const FILL_ON: bool = true
 const FILL: Dictionary[String, float] = {
 	"cop_patrol_hit.png": 1.37,
 	"cop_patrol_burn_hit.png": 1.14,
+	# it34: the kind's hit FILL x the patrol cop's measured burn/hit ratio (0.83), not per kind.
+	"cop_riot_burn_hit.png": 1.00,
+	"swat_burn_hit.png": 1.09,
+	"thug_burn_hit.png": 0.97,
+	"ped_hood_burn_hit.png": 1.12,
+	"ped_cap_burn_hit.png": 1.16,
+	"ped_punk_burn_hit.png": 1.04,
+	"ped_jogger_burn_hit.png": 1.07,
 	"cop_riot_hit.png": 1.20,
 	"ped_cap_hit.png": 1.39,
 	"ped_elder_hit.png": 1.17,
