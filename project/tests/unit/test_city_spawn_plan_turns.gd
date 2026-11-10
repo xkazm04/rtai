@@ -41,3 +41,10 @@ func test_unfilled_kinds_get_equal_turns_whatever_is_full() -> void:
 	for cat: int in [CitySpawnPlan.COPS, CitySpawnPlan.CARS, CitySpawnPlan.PEDS]:
 		var count: int = turns.get(cat, 0)
 		assert_eq(count, 10, "each of three unfilled kinds gets a third of 30 turns")
+
+
+func test_a_riot_of_one_counts_the_ped_already_there() -> void:
+	var counters: PackedInt32Array = _counters()
+	counters[SimConst.CN_PEDS] = 1
+	var plan: CitySpawnPlan = CitySpawnPlan.new(CityTargets.riot(1, 0), counters)
+	assert_eq(plan.next(), -1, "one rioter wanted, one ped present: the riot is full")
