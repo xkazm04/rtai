@@ -147,6 +147,12 @@ A note, not a verdict: if the subject has moved more than 5 cm between sides, th
 still finds the cached texture, and the "before" is the after (hero n11, `JOURNAL.md` line 170). If you
 did, compare says UNVERIFIABLE (the same picture) rather than letting it pass as a before.
 
+**Not committed yet:** `--a=HEAD --b=.` films HEAD in a throwaway checkout (git's LFS filter gives the
+real PNGs there) against your tree as it stands, re-importing what you changed. Never write
+`git show HEAD:<png>` into your tree: that is the LFS pointer, and the broken import outlives it (combat n11,
+line 201). An UNVERIFIABLE "identical" here often means the view does not draw the file you edited:
+city props are drawn from `features/city/art/view/<p55|p70>/prop_*.png` strips, not `art/props/*.png`.
+
 ## tools/gate/precommit.mjs: the hook skips lint for a journal-only commit
 
 Nothing to run: `.githooks/pre-commit` calls it. A commit that stages only inert paths (`docs/**`,
