@@ -164,7 +164,8 @@ the staged snapshot (5064 files) in ...`. So a half-edited file you did not stag
 the commit, and a broken staged file no longer passes because its fixed copy is unstaged. A clean tree
 lints in place as before. It follows `GIT_INDEX_FILE`, so `git commit -a` and `git commit <paths>`
 lint what they commit; an entry marked `--assume-unchanged` or `--skip-worktree` counts as differing,
-because git does not compare it. The export is a checkout of the index, so the commit's
+because git does not compare it, and is exported with its index bytes (so a film probe patched in under
+`--skip-worktree`, as combat's `probe.sh on` does, stays out of what lint reads). The export is a checkout of the index, so the commit's
 `.gitattributes` apply (LF here). **Refuses** to pretend: if git cannot list the drift or the export fails, it
 lints the working tree and says `linting the WORKING TREE, which is not exactly what you commit`. It
 removes only a `gtai-precommit-*` dir directly in the temp dir.
