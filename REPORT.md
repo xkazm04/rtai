@@ -9,20 +9,21 @@ with one example and what it refuses. Every evidence tool reports pass, fail or 
 | Tool | Example | Proven on a real run (JOURNAL) |
 |---|---|---|
 | `tools/film/film.mjs` named shots, fixed seed/step, locked camera, probe numbers | `node tools/film/film.mjs weapon:pistol --out=build/film/pistol --on=fire:1+4,kill:1+3` | 20:15 (arena PASS 11 s; a street shot walking out of frame is now unverifiable) |
-| `--victim=<kind>` on the weapon shot (combat request) | `node tools/film/film.mjs weapon:machine_pistol --victim=cop/head_swat --out=build/film/swat --on=kill:1+30` | 01:32, refusal only: no tree has the game hook yet |
+| `--victim=<kind>` on the weapon shot (combat request) | `node tools/film/film.mjs weapon:machine_pistol --victim=cop/head_swat --out=build/film/swat --on=kill:1+30` | 01:32 refusals; combat's hook 1183a323 landed 02:00 and combat filmed `thug`, `cop/head_helmet`, `cop/head_swat`, `ped/head_hood`: all PASS (their JOURNAL line 270) |
 | `tools/film/compare.mjs` before/after at the same tick, two commits or worktrees | `node tools/film/compare.mjs chapter:pistol --a=main --b=n11-combat --at=240,330 --subject=dead --out=build/film/cmp` | 20:15 (PASS on a real corpse change; same commit both sides -> UNVERIFIABLE, 0 px differ) |
 | `tools/film/sheet.mjs` labelled contact sheet | `node tools/film/sheet.mjs build/film/pistol --out=build/film/pistol/sheet.png --cols=4` | iteration 7-8 |
 | `tools/film/numbers.mjs` per-tick draw size, feet, rest, facing vs aim | `node tools/film/numbers.mjs build/film/arena --ticks=60-200 --subject=rivet` | iteration 7-8 |
 | film runs `--import` when an asset really changed (MD5, not date) | (automatic) | 22:15 (found that Godot's own scan trusted the date and drew old pixels) |
 | `tools/gate/quick.mjs` the lint rules builders trip, changed files only | `node tools/gate/quick.mjs` | 20:36 (planted file: CRLF, gdformat, print, float(Variant) in 7.0 s) |
 | `tools/gate/precommit.mjs` the hook skips lint when only inert paths are staged | (automatic, from `.githooks/pre-commit`) | 01:44 (JOURNAL-only commit 0.6 s; the full-lint commit before it 51 s) |
+| the hook lints the STAGED SNAPSHOT when the tree differs (`tools/gate/staged_tree.mjs`) | (automatic) | 02:14 (an untracked over-long .gd: lint on the tree 3 of 16 FAIL; the commit through the hook linted the index, 16/16, 64 s; nothing left in Temp) |
 | `tools/gate/run.mjs` the gates on a snapshot of the commit | `node tools/gate/run.mjs` | 20:46 (8m35, tree edited throughout, no log landed in it) |
 | stale-count honesty with Godot absent | `GODOT_BIN=/nonexistent node tools/tests/run_unit.mjs` | 20:33 (reproduced first; parity/scenarios messages fixed, eaf17694) |
 | stop at the first script error (`dev/run.mjs`, `film.mjs`) | `node tools/dev/run.mjs res://dev/my_scene.tscn --timeout=150` | 23:07 |
 | scenario and reel progress lines, logs written as they go | `node tools/reel/run_reels.mjs --out=build/reels --views=top` | 00:16 (19 chapter lines live, partial log on disk mid-run) |
 | `tools/dev/wt_init.mjs` a fresh worktree that can run the game | `node tools/dev/wt_init.mjs ../gtai-wt/my-lane` | 21:44 (16 s) |
 | `tools/codex/factory.mjs` Codex test factory with a review queue and a ledger | `node tools/codex/factory.mjs pick`, then `run --stems=<stem>` | 21:01 onward, 3 paired modules |
-| `tools/merge/morning.mjs` one-command morning merge on a named integration worktree | `node tools/merge/morning.mjs --worktree=../gtai-wt/int-day --lanes=n11-tools,n11-hero,n11-combat --date=2026-11-10 --debt-reason="..."` | 20:45, 00:26, 00:45 (scratch branches; a timed-out step's whole tree killed, Godot included) |
+| `tools/merge/morning.mjs` one-command morning merge on a named integration worktree | `node tools/merge/morning.mjs --worktree=../gtai-wt/int-day --lanes=n11-tools,n11-hero,n11-combat --date=2026-11-10 --debt-reason="..."` | 20:45, 00:26, 00:45 (scratch branches; a timed-out step's whole tree killed, Godot included); 02:21 REAL bake (256 chunks, 89 s) and export (555 MB exe, 14 s) on a scratch worktree, and a tampered chunk STOPPED the export with the right advice. Never run for real: native, gates, reels |
 | `export_checked.mjs` makes its output folder (hero request) | `node tools/export/export_checked.mjs` | 01:23 (fresh worktree, RTAI.exe 555 MB) |
 | PoF night runner: `stop`, live `schedule`, `--reserve-min`, `status --siblings` | `node games/gtai/night/night.mjs stop --root <night> --lane hero` | 20:48, 00:22 (scratch roots) |
 
@@ -83,6 +84,7 @@ until 01:45). Repaired by hand within minutes; no lane commit got the wrong iden
 
 - PoF runner commits on `n11-runner`, not pushed: 32da7878, 410c035d, b4294c1b (and any later).
 - This branch's step guard (b2fc4d7d, c4533f7d) changes how the morning merge runs every step.
-- `film --victim` needs combat's dev hook (`gunplay_hook.gd`) to be useful; until then it refuses.
+- `film --victim` works with combat's hook (1183a323 on n11-combat): merge both.
+- The staged-snapshot hook (d13b9849, 1e5fa267, 3ee0c085) changes what every commit's lint reads. It also ends combat's FRICTION 117: their `probe.sh` marks `arena_game.gd` `--skip-worktree` and copies untracked probe files in; the new hook lints the index, so a commit no longer needs `probe.sh off` first.
 - Combat's `probe.sh` toggles `dev/frames/film_card.gd` in and out of their tree, which re-imports
   the class cache on every film (about 8 s each); it ends when the film probe lands on main.
