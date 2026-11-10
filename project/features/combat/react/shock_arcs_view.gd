@@ -9,7 +9,9 @@ extends Node2D
 ## arena's stun state on its tick; render only, no RNG. n13: the gun is the pistol's drawn pickup
 ## cell (the side view lying on the floor) re-toned and cut small (weapon_art.json parts.dropped,
 ## tools/art/dropped_gun.py) inside an ink outline, loaded at _ready (behind the load);
-## `--dropped-gun=polygon` draws the n7 placeholder (the before).
+## `--dropped-gun=polygon` draws the n7 placeholder (the before). n15: the cop drops his own navy
+## service pistol (`parts.dropped_cop`, the asset lane's it325 cell, same lift and cut);
+## `--dropped-gun=pale` draws n13's pale salvaged pistol (the before).
 
 ## The toss: ticks in the air, how far it lands from the torso (m, ahead and to the gun side),
 ## its spin while flying (rad per tick) and the pistol's size (m).
@@ -31,7 +33,8 @@ const CELL_SPAN_M: float = 0.48
 const CELL_TILT_K: float = 0.5
 const CELL_INK_PX: float = 1.5
 const CELL_WEAPON: StringName = &"pistol"
-const CELL_PART: String = "dropped"
+const CELL_PART: String = "dropped_cop"
+const CELL_PART_PALE: String = "dropped"
 
 var arena: CombatArena = null
 var rigs: CharacterRigs = null
@@ -46,8 +49,10 @@ var _floor: Node2D = null
 
 
 func _ready() -> void:
-	if ArenaArgs.parse().text("--dropped-gun") != "polygon":
-		cell = WeaponArt.new().part_texture(CELL_WEAPON, CELL_PART)
+	var look: String = ArenaArgs.parse().text("--dropped-gun")
+	if look != "polygon":
+		var part: String = CELL_PART_PALE if look == "pale" else CELL_PART
+		cell = WeaponArt.new().part_texture(CELL_WEAPON, part)
 	if not GUN_ON_FLOOR:
 		return
 	_floor = Node2D.new()
