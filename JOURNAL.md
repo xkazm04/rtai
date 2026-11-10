@@ -340,3 +340,12 @@ stay (00:20).
   and headless draws nothing: add --windowed ...`. city_selftest.gd declares it (so look_golden, accent_audit,
   world_lock inherit). Parse check ok on all four; dev tests 113/113; debt dev_loc +1 accepted with that reason.
   This touches project/dev: the final commit's gate must include it (selftest uses these scenes).
+- 00:35 selftest on 5cda754c0+ HEAD (after NEEDS_WINDOW; `node tools/selftest/run.mjs`, windowed): exit 0, look goldens 11/11
+  worst 0.00, block 5/5 worst 0.00, world lock holds. First real run of 7abcded29: `seen at neither site this run (a
+  flicker row goes only after several quiet runs): blood_flicker_cop_48, blood_flicker_cop_block_64,
+  blood_flicker_vehicles_48, blood_flicker_vehicles_vermilion_48` (4 rows; blood_flicker_vehicles_64 is no longer
+  named: the block site saw it). Log gtai-n15/flake/selftest_s2.log.
+
+NEXT (session 3; the 00:26 NEXT stands, with these changes): item (3) Linux sweep DONE (00:31, 825/823/0 on a real
+clone). The final commit needs a full gate (`node tools/gate/run.mjs --rev=HEAD --reels`): project/dev/selftest
+changed at 5cda754c0 (selftest passed on it at 00:35, unit/scenarios/reels not re-run since 52dc72d4).
