@@ -84,3 +84,30 @@ cells (`street_reactions_it321.md`), `dropped_weapons_it325.md`. (4) item 3 bato
   `arena_game.gd _boss_bot` (same line count: arena_game.gd is at 299). Needs: a film, then a commit with
   `node tools/debt/debt.mjs --update --accept-regression="n15 blade boss bot (owner call), dev_loc +55"`.
   Godot is reserved by the gate run, so not filmed yet.
+- GATES 23:20 on `5bdad7a0c` (`node tools/gate/run.mjs --rev=HEAD --reels`, log build/gate_5bdad7a0c.log): PASS lint (16/16),
+  PASS unit 2502 passed / 0 failed / 2 skipped, PASS scenarios 55, PASS parity bit-exact (mutation caught at 629),
+  PASS selftest (look goldens 11/11 worst 0.00; block goldens 5/5 worst 0.69 = the session-1 baseline, unchanged),
+  PASS export-audit (667 loaded). Reel gate still running at session end: read build/gate/5bdad7a0c26d/ (reels.log, gate.json).
+  Debt ratchet: ok on 5bdad7a0c (lint's debt-ratchet check passed).
+- Perf of the new warmed art (baton left strike, 2 small PNGs; dropped_cop 64 px): NOT measured (no fight_gate run).
+
+NEXT (session 3):
+(1) Read build/gate/5bdad7a0c26d/gate.json (full gates on 5bdad7a0c incl. reels; see the gate line above). Fix any red first.
+(2) Blade boss bot WIP (uncommitted: project/dev/bosses/boss_blade_bot.gd + the one-line arena_game.gd hook): parse check
+    (`node tools/godot/check.mjs res://dev/bosses/boss_blade_bot.gd`), then film
+    `node tools/film/film.mjs arena --lock=off --ppm=32 --view=tilt --out=build/film/bossblade -- --bot=boss --boss=king --boss-blade=katana`
+    (check the log for "blade bot: katana taken" and that the bot flag wins: ArenaArgs last-wins, the arena shot passes --bot itself);
+    if it swings at King, commit with `node tools/debt/debt.mjs --update --accept-regression="n15 blade boss bot (owner call), dev_loc +55"`,
+    film the p55 wind-ups in that fight; else delete the WIP.
+(3) Item 3 offers: blade LEFT sets (katana, plasma sword, chainsaw): left strips it338 (preview of katana p70 cut looks clean:
+    build/baton/katana_left_preview.png), left strike it342, left wind-up/follow it346. Needs: a LEFT_DRAWN list so two-handed
+    blades take `rivet_eq_<w>_left.png` (today only ONE_HAND), rivet_frames.json `_left` rows (p70 katana/chainsaw fig_h 165 +
+    RivetRes.X15 entries), rivet_windup_cells rows (`_left` wind-up, `_left_strike` as the baton). Ship only if the film beats the mirror.
+(4) Item 2 rest: contractor/cultist hit/burn/death cells (street_reactions_it321.md; contractor is StreetQuestCards: card + DOWN only,
+    so hit/burn need a new path), the drawn charred cells for a fire death.
+(5) Item 4: rocket gib in pieces at combo; impacts by surface + casings; flame jet clip; vehicle shadows.
+(6) DEFECTS top open: the game melee smear's flat white hexagon (MeleeSmearView, a baton swing sweeps ~300 deg in 3-4 ticks
+    so the fan wraps Rivet as a ring); the body-hit burst lands ~0.5 m off the drawn thrown-back card; lone victims of every kind
+    drop the brown rifle.
+(7) Perf: RivetStripWarm now also warms the baton left strike (2 small PNGs); judge with tools/perf/fight_gate.mjs vs its A/A.
+REQUEST tools (open): compare.mjs passes --victim through; film/compare list ReelChapters.extras() chapters; a film flag for feel ON.
