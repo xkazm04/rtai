@@ -29,9 +29,13 @@ crowd: look goldens re-blessed with a decisions line). t-4 and t-5 move nothing 
 - `tools/film/compare.mjs`: `--victim=<kind>` to both sides (combat's REQUEST).
 - `tests/parity/city_parity.gd`: `final_sha_a/b` in the parity result.
 
+Gates on eb65c8b05 (`node tools/gate/run.mjs`): PASS - lint 16/16, unit 2507/0, scenarios 55, parity exact,
+selftest 11/11 + 5/5, release-compile 667/0. Reel gate not yet run on this branch.
+
 ## Not done yet (session 1)
 
-- item 4b (morning merge native/gates/reels for real on a scratch integration worktree), item 7 (`sim_hash` control run),
+- item 4b part 2 (gates, reels on the scratch integration worktree; merge, debt and native ran for real 23:08-23:12,
+  all green, three lanes merged with no code conflict), item 7 (`sim_hash` control run, in progress),
   Codex testers for t-1/t-4/t-5, the reel gate on this branch, a real `compare --victim` film.
 
 ## Merge notes (draft)
