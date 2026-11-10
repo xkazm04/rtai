@@ -115,3 +115,5 @@ REQUEST tools (open): compare.mjs passes --victim through; film/compare list Ree
 - MILESTONE 23:29 the blade boss bot committed (see the commit after this line): parse ok, filmed King + katana in tilt, swings
   from t300; debt baseline raised with --accept-regression (dev_loc +55). NEXT item (2) is now: film 64 px/m close-ups of
   the p55 katana/plasma sword/baton/chainsaw wind-ups inside it (`--boss-blade=<w>`; --lock=off follows Rivet).
+- 23:31 masters frames.json at 15 (dropped the elder v3 and the SWAT flail still from masters; both stay in evidence/n15-combat/).
+  Session 2 ends here; NEXT above stands, with (2) already half done (bot committed b6443d22e, wind-up close-ups to film).
