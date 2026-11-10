@@ -13,6 +13,8 @@ const X15: PackedStringArray = [
 	"p70/rivet_eq_chainsaw_windup.png",  # n14: the asset lane drew its cells at the x1.5 strip's scale
 	"p70/rivet_eq_machine_pistol.png",  # n15 hero
 	"p70/rivet_eq_machine_pistol_left.png",
+	"p70/rivet_eq_electro_gun.png",
+	"p70/rivet_eq_electro_gun_left.png",
 ]
 
 
