@@ -16,7 +16,7 @@ Owner's correction (track the level, keep raising): `LEVEL.md` holds one row per
 
 ## What does not work yet (as of it17)
 
-- **Hit and death cells** of Tonnage, Dent and Ohm are wired but not filmed (level 2): the weakest cells left in `LEVEL.md`. Combat feel for the ghosts is level 2 (Tonnage's wind-up reads through the floor ring more than his body; Ohm's bolt carries the direction, his body barely).
+- **Hit cells** were filmed in game at it17 and every ghost now leans back 12 deg off its feet on a hit (`GhostRecoil`, 37c22b27: `ghost_hit_recoil_before_after_64ppm.png`, clip `ghost_hit_recoil_clip_64ppm.gif`). Still weak: Tonnage's toward HIT cell reads as his wind-up (redraw requested), Ohm's diagonal HIT cell differs little from his walk, and the lean ignores where the blow came from. Combat feel for the ghosts is level 2 (Tonnage's wind-up reads through the floor ring more than his body; Ohm's bolt carries the direction, his body barely).
 - **Planted feet on the ghosts** are level 2: measured on the sheets (Tonnage's stance pad slide per stance 32 -> 21 and 58 -> 40 cell px), not yet in world space on the dark arena floor. Tonnage's m34 timing gain (3091a7be) is measured on the sheet, not seen in a film (the every-4th-tick film never lands on that frame).
 - Rivet's strips other than p70 pistol, plasma rifle and katana (other weapons, every p55 strip, reload, knock, strike) are still 110 px upscaled; switching weapon or a boss fight softens him.
 - Ohm's walk is B art (stubby); Dent's 3/4 away run slot 7 lifts the far hand above the helmet for one frame (redraw requested).
