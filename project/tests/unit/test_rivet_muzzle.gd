@@ -48,10 +48,12 @@ func test_the_barrels_spin_up_on_the_drawn_gun() -> void:
 	for art: String in ["p70", "p55"]:
 		var path: String = RivetStrips.DIR + art + "/rivet_eq_gatling.png"
 		var tex: Texture2D = load(path) as Texture2D
-		var w: float = tex.get_width() / float(RivetFrames.EQ_CELLS)
+		var res: float = RivetRes.of(path)  # the table is in 110 space (n15: the p70 strip at x1.5)
+		var w: float = tex.get_width() / float(RivetFrames.EQ_CELLS) / res
 		var p: Vector2 = RivetMuzzle.point(path, 2)
 		assert_gt(p.x, w * 0.6, "%s side facing: the barrel right of the body" % art)
-		assert_between(p.y, tex.get_height() * 0.3, tex.get_height() * 0.85, "at the arm's height")
+		var h: float = tex.get_height() / res
+		assert_between(p.y, h * 0.3, h * 0.85, "at the arm's height")
 
 
 func test_every_point_names_a_cut_strip() -> void:
