@@ -4,16 +4,17 @@
 // not passes, because a builder cannot tell them from a change that worked.
 //   node tools/film/compare.mjs <shot> --a=<rev|worktree> --b=<rev|worktree> --at=<t,t> --out=<dir>
 //     [--clip=<from-to>] [--subject=rivet|hostile|dead|id:<n>] [--label-a=<s>] [--label-b=<s>]
-//     [--view=combo] [--ppm=48] [--lock=auto|spawn|at:<tick>|<x,y>|off] [--seed=<n>] [--res=1280x800] [-- flags]
+//     [--view=combo] [--ppm=48] [--lock=auto|spawn|at:<tick>|<x,y>|off] [--seed=<n>] [--res=1280x800] [--clean] [-- flags]
 // A commit gets a throwaway snapshot (tools/lib/snapshot.mjs) with the probe injected when it is
-// older than the kit; a worktree is filmed where it stands and must already have the probe.
+// older than the kit; a worktree is filmed where it stands and must already have the probe. The
+// snapshot is kept for the next compare of that commit and named at the end; --clean removes it.
 // Exit: 0 pass, 1 fail, 2 usage, 3 unverifiable.
 import { spawnSync } from 'node:child_process';
 import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { basename, join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { ROOT } from '../lib/repo.mjs';
-import { ensureSnapshot, revParse } from '../lib/snapshot.mjs';
+import { ensureSnapshot, removeSnapshot, revParse } from '../lib/snapshot.mjs';
 import { EXIT, filmOne, plan } from './film.mjs';
 import { subjectRow } from './subject.mjs';
 
@@ -22,7 +23,7 @@ import { diffImages, readPng } from './png.mjs';
 
 const USAGE = 'usage: node tools/film/compare.mjs <shot> --a=<rev|worktree> --b=<rev|worktree> --at=<t,t> --out=<dir> '
   + '[--clip=<from-to>] [--subject=rivet|hostile|dead|id:<n>] [--label-a=<s>] [--label-b=<s>] [--view=combo] [--ppm=48] '
-  + '[--lock=auto|spawn|at:<tick>|<x,y>|off] [--seed=<n>] [--res=1280x800] [--timeout=<s>] [-- flags]';
+  + '[--lock=auto|spawn|at:<tick>|<x,y>|off] [--seed=<n>] [--res=1280x800] [--timeout=<s>] [--clean] [-- flags]';
 const VALUE = new Set(['a', 'b', 'at', 'out', 'clip', 'subject', 'label-a', 'label-b', 'view', 'ppm', 'lock', 'seed', 'res', 'timeout']);
 const DEFAULTS = { view: 'combo', ppm: '48', lock: 'auto', seed: '20261109', res: '1280x800', timeout: '900', subject: 'rivet' };
 /** Below this share of changed pixels the two sides are the same picture. */
@@ -43,6 +44,7 @@ export function parseArgv(argv) {
   for (const a of dash >= 0 ? argv.slice(0, dash) : argv) {
     const m = /^--([a-z-]+)=(.+)$/.exec(a);
     if (m && VALUE.has(m[1])) flags[m[1]] = m[2];
+    else if (a === '--clean') flags.clean = true;
     else if (!a.startsWith('-') && shotText === null) shotText = a;
     else return { error: `compare: bad argument ${a}` };
   }
@@ -184,8 +186,21 @@ export async function main(argv, { out = console.log, err = console.error, runne
   }
   if (report.clip?.file) out(`compare: clip -> ${report.clip.file}`);
   if (report.clip?.error) out(`compare: no clip: ${report.clip.error}`);
+  for (const l of snapshotLines([a, b], f.clean)) out(l);
   out(`compare: ${report.outcome.toUpperCase()}; ${join(dir, 'comparison.json')}`);
   return EXIT[report.outcome];
+}
+
+/** After the run: each commit side's temp checkout is removed (--clean) or named as kept, never left
+ *  unseen (each holds a copied import cache, about 1.7 GB). Returns the lines to print. */
+export function snapshotLines(sides, clean, remove = (path) => removeSnapshot(ROOT, path)) {
+  const lines = [];
+  for (const tree of new Set(sides.filter((s) => s.snapshot).map((s) => s.tree))) {
+    if (!clean) { lines.push(`compare: kept the temp checkout ${tree} for the next compare of that commit (about 1.7 GB; --clean removes it)`); continue; }
+    try { remove(tree); lines.push(`compare: removed the temp checkout ${tree}`); }
+    catch (e) { lines.push(`compare: could not remove the temp checkout ${tree}: ${e.message}`); }
+  }
+  return lines;
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {

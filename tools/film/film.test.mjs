@@ -340,3 +340,22 @@ test('a film stops at its first SCRIPT ERROR unless --keep-going; the verdict is
   assert.equal(seen[1].stopOn, null);
   rmSync(root, { recursive: true, force: true });
 });
+
+test('compare: a commit side\'s temp checkout is named as kept, or removed with --clean, never left unseen', async () => {
+  const { snapshotLines } = await import('./compare.mjs');
+  assert.equal(parseCompare(['arena', '--a=HEAD', '--b=.', '--at=60', '--out=x', '--clean']).flags.clean, true);
+  assert.equal(parseCompare(['arena', '--a=HEAD', '--b=.', '--at=60', '--out=x']).flags.clean, undefined);
+  const snap = { tree: 'T/gtai-film-abc', snapshot: true };
+  const tree = { tree: 'C:/lane', snapshot: false };
+  const removed = [];
+  const kept = snapshotLines([snap, tree], false, (p) => removed.push(p));
+  assert.equal(kept.length, 1);
+  assert.match(kept[0], /kept the temp checkout T\/gtai-film-abc .*--clean removes it/);
+  assert.deepEqual(removed, [], 'without --clean nothing is removed');
+  assert.deepEqual(snapshotLines([tree, tree], true, (p) => removed.push(p)), [], 'a worktree side is never removed');
+  const lines = snapshotLines([snap, { ...snap }], true, (p) => removed.push(p));
+  assert.deepEqual(removed, ['T/gtai-film-abc'], 'both sides on one commit: removed once');
+  assert.match(lines[0], /removed the temp checkout/);
+  const failed = snapshotLines([snap], true, () => { throw new Error('in use'); });
+  assert.match(failed[0], /could not remove the temp checkout T\/gtai-film-abc: in use/, 'a failed removal is said, not thrown');
+});

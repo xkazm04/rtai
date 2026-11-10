@@ -153,6 +153,10 @@ real PNGs there) against your tree as it stands, re-importing what you changed. 
 line 201). An UNVERIFIABLE "identical" here often means the view does not draw the file you edited:
 city props are drawn from `features/city/art/view/<p55|p70>/prop_*.png` strips, not `art/props/*.png`.
 
+**Disk:** each commit side's temp checkout carries a copied import cache (about 1.7 GB). It is kept so
+the next compare of that commit starts at once, and the last lines say where it is; `--clean` removes
+it after the run. Do not `--clean` a commit another lane may be comparing right now (same path).
+
 ## tools/gate/precommit.mjs: the hook skips lint for a journal-only commit
 
 Nothing to run: `.githooks/pre-commit` calls it. A commit that stages only inert paths (`docs/**`,
