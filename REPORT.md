@@ -1,6 +1,6 @@
 # REPORT: night n11, lane combat (bodies, reactions, shadows, projectiles, pickups, HUD)
 
-Refreshed at it33 (06:40) on HEAD `ffad2df0`. Branch `n11-combat`, cut from main `812a0b06`.
+Refreshed at it34 (07:05); final code commit `902eb3fe`. Branch `n11-combat`, cut from main `812a0b06`.
 Journal: `JOURNAL.md`.
 Frames: `C:\Users\kazda\kiro\gtai-masters\n11\combat\frames.json` (15 entries, best first).
 
@@ -53,15 +53,22 @@ Frames: `C:\Users\kazda\kiro\gtai-masters\n11\combat\frames.json` (15 entries, b
      He flails as the asset lane's drawn burning figure (arms up, no gun, flames up his sides),
      shaken at 3 Hz and standing on his contact shadow. Same ticks before and after:
      `burning_flail_ab.png`; 60 fps clip `burning_flail_clip.mp4` (both in the masters folder; also
-     `evidence/n11-combat/it33/`). Only the patrol cop has these cells; other kinds keep the loops.
+     `evidence/n11-combat/it33/`).
+   - Six more kinds burn as drawn figures (it34, `902eb3fe`): riot, SWAT, the thug, and the
+     hooded, capped, punk and jogger pedestrians, from the asset lane's burn cells. The thug flings
+     his claws, the riot cop holds his baton up in flames: `burning_kinds_strip.png` (masters; also
+     `evidence/n11-combat/it34/`). No same-tick before for these kinds (the before is the left
+     panel of `burning_flail_ab.png`); their size is borrowed from the patrol cop's ratio, not
+     measured (the thug looks about 10% small).
 
 ## What does not work, or is not shown
 
 - Projectiles per weapon class: the rocket onset and the burning man were fixed late (it32-33), but
   impacts by surface and casings were not touched; energy rounds still read as bullets (see Calls).
   A sustained flame jet was not filmed at combo tonight (the lone capture fires only taps).
-- Only the patrol cop burns as a drawn figure. Riot, SWAT, the thug and the pedestrians still
-  burn as calm walkers under the over-the-body loops (cells requested from the asset lane). A fire
+- The suit, shopper and elder pedestrians (and the worker and hat) still burn as calm walkers
+  under the over-the-body loops (their cells came singed, not burning; DECISION combat/burn-kinds).
+  The burning figures are one pose per facing; the second flail pose is drawn but not wired. A fire
   death is still brutality's charred silhouette; the asset lane's drawn charred cells are not wired.
 - The rocket "gib" flies as one tumbling body at combo, not in pieces.
 - Vehicle shadows were never judged. Every reaction judgement is from stills and 60 fps tick
