@@ -11,7 +11,8 @@ const MIN_SHARE: float = 0.4
 ## (contact centres, tools foot_travel.py; a foot switch takes the mean). No entry: the even cycle.
 const TABLES: Dictionary[String, Array] = {
 	"ohm/p70": [0.0, 47.7, 6.8, 17.2, 29.0, 12.5, 7.0, 17.2],
-	"tonnage/p70": [47.0, 14.0, 58.5, 29.4, 25.0, 31.5, 29.4, 0.5],
+	"tonnage/p70":
+	[11.0, 35.0, 10.5, 3.5, 29.25, 29.25, 23.9, 5.5, 14.5, 10.0, 15.0, 17.5, 25.9, 3.5, 0.0, 3.0],
 	"tonnage/p55": [46.0, 13.5, 51.0, 28.0, 24.5, 32.0, 28.0, 1.0],
 }
 
@@ -31,6 +32,11 @@ static func runs(name: String, art: String, row: int, off_rows: Dictionary = RUN
 static func table_of(name: String, art: String) -> PackedFloat32Array:
 	var row: Array = TABLES.get(name + "/" + art, [])
 	return PackedFloat32Array(row)
+
+
+## A walk sheet's columns: its table's size (Tonnage's walk16 at it14), else the 8 of a walk8.
+static func cols_of(steps: PackedFloat32Array) -> int:
+	return maxi(8, steps.size())
 
 
 ## The column at `phase` (0..1 of a cycle).

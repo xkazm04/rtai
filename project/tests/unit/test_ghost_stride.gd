@@ -37,7 +37,8 @@ func test_a_still_frame_keeps_a_floor() -> void:
 
 
 func test_tables_are_keyed_by_ghost_and_art() -> void:
-	assert_eq(GhostStride.table_of("tonnage", "p70").size(), GhostDrawn.COLS)
+	assert_eq(GhostStride.table_of("tonnage", "p70").size(), 16, "his walk16 (it14)")
+	assert_eq(GhostStride.table_of("tonnage", "p55").size(), GhostDrawn.COLS)
 	assert_eq(GhostStride.table_of("ohm", "p70").size(), GhostDrawn.COLS)
 	assert_eq(GhostStride.table_of("ohm", "p55").size(), 0, "a pitch without a table walks even")
 	assert_eq(GhostStride.table_of("nobody", "p70").size(), 0)
@@ -47,11 +48,25 @@ func test_every_table_is_one_drawn_cycle_and_shows_every_frame() -> void:
 	for key: String in GhostStride.TABLES:
 		var row: Array = GhostStride.TABLES[key]
 		var steps: PackedFloat32Array = PackedFloat32Array(row)
-		assert_eq(steps.size(), GhostDrawn.COLS, key)
+		var cols: int = GhostStride.cols_of(steps)
+		assert_eq(steps.size(), cols, key)
 		var seen: Dictionary[int, bool] = {}
-		for i: int in 800:
-			seen[GhostStride.col_of(i / 800.0, steps)] = true
-		assert_eq(seen.size(), GhostDrawn.COLS, "%s: every drawn frame shows" % key)
+		for i: int in 1600:
+			seen[GhostStride.col_of(i / 1600.0, steps)] = true
+		assert_eq(seen.size(), cols, "%s: every drawn frame shows" % key)
+		var parts: PackedStringArray = key.split("/")
+		var tex: Texture2D = load(GhostDrawn.path_of(parts[1], parts[0])) as Texture2D
+		assert_not_null(tex, "%s: its sheet exists" % key)
+		assert_eq(int(tex.get_width()) % cols, 0, "%s: the sheet divides into its columns" % key)
+
+
+func test_a_sheet_has_as_many_walk_columns_as_its_table() -> void:
+	assert_eq(GhostStride.cols_of(PackedFloat32Array()), 8, "no table: a walk8")
+	var sixteen: PackedFloat32Array = PackedFloat32Array()
+	@warning_ignore("return_value_discarded")
+	sixteen.resize(16)
+	sixteen.fill(1.0)
+	assert_eq(GhostStride.cols_of(sixteen), 16)
 
 
 func test_a_galloping_run_row_walks_instead() -> void:

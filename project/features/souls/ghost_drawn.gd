@@ -91,11 +91,10 @@ func step(
 	var o: int = octant(_look)
 	var walk: int = _column(host, s, RigHeadCard.OCT_FRAME[o])
 	var act: int = act_col() if _act_tex != null else -1
-	if act >= 0:
-		_show(_act_tex, ACT_COLS)
-	else:
-		_show(_run_tex if _running and _run_tex != null else _walk_tex, COLS)
-	var cols: int = ACT_COLS if act >= 0 else COLS
+	var run: bool = _running and _run_tex != null
+	var tex: Texture2D = _act_tex if act >= 0 else (_run_tex if run else _walk_tex)
+	var cols: int = ACT_COLS if act >= 0 else (COLS if run else GhostStride.cols_of(_steps))
+	_show(tex, cols)
 	_spr.frame = RigHeadCard.OCT_FRAME[o] * cols + (act if act >= 0 else walk)
 	_spr.flip_h = RigHeadCard.OCT_FLIP[o] == 1
 	_spr.global_rotation = 0.0
@@ -149,7 +148,7 @@ func _column(host: Node2D, s: float, row: int) -> int:
 	if still or speed < WALK_FROM_MPS * SimConst.PX_PER_M:
 		_still += 1  # a frame with no sim step (a hit-stop, a fast display) keeps the stride
 		if _still > STILL_FRAMES:
-			_col = STAND_COL
+			_col = roundi(STAND_COL * GhostStride.cols_of(_steps) / float(COLS))
 			_running = false
 		return _col
 	_still = 0
@@ -193,7 +192,7 @@ func _rebuild(host: Node2D, parts: Array[Sprite2D], vm: ViewMode) -> void:
 		var run: String = path_of(_art, card_name, "run8")
 		_run_tex = load(run) as Texture2D if ResourceLoader.exists(run) else null
 		_spr.centered = false
-		_show(_walk_tex, COLS)
+		_show(_walk_tex, GhostStride.cols_of(_steps))
 		_spr.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 		host.add_child(_spr)
 	for p: Sprite2D in parts:
