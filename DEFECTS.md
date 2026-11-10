@@ -64,3 +64,9 @@ Ranked within each film; newest film first.
 2. Elder's thrown-back cell read as a mild stumble -> fixed 13a74d4dd (hit v3).
 3. A long dark tracer/streak sweeps across the victim at t345-348 (the round streak across the body after the kill) -> open, not yet looked into.
 4. The elder's head reads a little larger in the hit cell than in the kneeling fall frame at t347 (card height matches, 53.6 vs 39.5 px drawn) -> open, judge on a clip.
+
+## Vehicle shadows, dev/showcase/city_frame --view=combo, 64 and 32 px/m (session 3, n11 "never judged")
+- JUDGED, no defect ranked: a parked car casts a hatched ink shadow down-right, the same direction and hatch as the
+  planter, bench and bollard beside it, so it stands on the street (`evidence/n15-combat/vehicle_shadows_combo_64_32ppm.png`).
+  Minor: on the dark asphalt the hatch is low contrast; the people's soft contact shadows are another shadow language
+  than the props' and cars' hatched casts (owner-judged in n11 for figures).

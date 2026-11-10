@@ -192,3 +192,7 @@ NEXT (session 4):
 (5) Then loop item 5: film arena + city, rank, fix the top one.
 REQUEST tools (open): compare.mjs --victim; film/compare list ReelChapters.extras(); a film flag for feel ON;
 test_quest_blade registers its own input actions (fails under --select).
+- 00:40 item 4 vehicle shadows JUDGED: `node tools/dev/run.mjs res://dev/showcase/city_frame.tscn --windowed -- --out=<abs>
+  --view=combo --zooms=1,2 --foci=0,1,2` (verdict line: ok exit 0; SCRIPT ERROR 0; unknown arg 0): the parked car's
+  hatched cast runs down-right with the props'. No defect. `evidence/n15-combat/vehicle_shadows_combo_64_32ppm.png`.
+  Call candidate (not changed, n13/n14 kept as built): the p55 katana's right wind-up/strike cells draw ~1.4x his facing.
