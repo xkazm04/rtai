@@ -108,7 +108,10 @@ Branch `n15-tools`, cut from main `5c5c03611`. APPDATA=C:/Users/kazda/kiro/gtai-
   178 s, iteration 44). Then: mutate sim_hash.gd in the scratch tree with that test, record
   `factory control sim_hash --tokens --secs --tests --killed --mutants --changed --ledger=gtai-masters/n15/tools/codex-ledger.jsonl`
   (seed the n15 ledger with the 3 n11 sim-hash rows first, verbatim).
-- 23:04 gate (no reels) running on eb65c8b05: log build/gate/eb65c8b05648/evidence.log.
+- 23:06 MILESTONE gate on eb65c8b05 (`node tools/gate/run.mjs --rev=HEAD --timeout=40`): `gate: PASS` - lint all 16
+  (debt-ratchet included), `unit-tests: 2507 passed, 0 failed, 2 skipped`, `scenario-tests: 55 passed`, parity bit
+  for bit (planted caught at 629), selftest look 11/11 + block 5/5 worst 0.00, `release-compile: 667 loaded, 0
+  failed`. Commits after it (8b209a8a1 test-only, 868e02462 / 13d033439 docs) were linted by the hook. Reels NOT run.
 
 NEXT: (1) read the gate result for eb65c8b05 (selftest must pass after the re-bless); run the REEL gate
 (`node tools/reel/run_reels.mjs` or `node tools/gate/run.mjs --rev=HEAD --reels`) on the latest commit.
