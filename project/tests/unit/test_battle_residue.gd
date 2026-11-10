@@ -82,3 +82,36 @@ func test_each_kept_scuff_draws_a_stroke_and_four_dots_fading_with_age() -> void
 	var at: Vector2 = Ink.px(Vector2(3, 0))
 	assert_lt(strokes[6].distance_to(at), Ink.px(Vector2(0.3, 0)).x + 1.0, "drawn where it fell")
 	assert_eq(r.geometry(), g, "the same ring draws the same marks")
+
+
+## Past the cap the survivors keep their own direction and seed: the ring of the newest two draws
+## what a fresh ring of those two draws.
+func test_eviction_keeps_each_mark_whole() -> void:
+	var r: BattleResidue = _ring(2, 1)
+	r.keep(Vector2(0, 0), Vector2.UP, 1)
+	r.keep(Vector2(4, 0), Vector2.RIGHT, 2)
+	r.keep(Vector2(8, 0), Vector2.DOWN, 3)
+	var fresh: BattleResidue = _ring(2, 1)
+	fresh.keep(Vector2(4, 0), Vector2.RIGHT, 2)
+	fresh.keep(Vector2(8, 0), Vector2.DOWN, 3)
+	assert_eq(r.geometry(), fresh.geometry())
+
+
+## GunFxMarks.scuff's shape: the stroke from 0.25 m behind to 0.1 m ahead along the round, the
+## dots 0.18 / 0.30 m out, each a 1 px segment.
+func test_a_mark_has_the_scuff_shape() -> void:
+	var r: BattleResidue = _ring(1, 1)
+	r.keep(Vector2(2, 2), Vector2.RIGHT, 5)
+	var g: Array = r.geometry()
+	var s: PackedVector2Array = g[0]
+	assert_almost_eq(s[0], Ink.px(Vector2(1.75, 2)), Vector2.ONE * 0.01)
+	assert_almost_eq(s[1], Ink.px(Vector2(2.1, 2)), Vector2.ONE * 0.01)
+	for k: int in [2, 4]:
+		var d: PackedVector2Array = g[k]
+		assert_eq(d.size(), 4, "two dots of each size")
+		var want_m: float = 0.18 if k == 2 else 0.30
+		for i: int in range(0, d.size(), 2):
+			assert_almost_eq(d[i + 1] - d[i], Vector2(1.0, 0.0), Vector2.ONE * 0.001)
+			var mid: Vector2 = (d[i] + d[i + 1]) * 0.5
+			var m: float = mid.distance_to(Ink.px(Vector2(2, 2))) / Ink.px(Vector2.RIGHT).x
+			assert_almost_eq(m, want_m, 0.01)
