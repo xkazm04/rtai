@@ -12,6 +12,8 @@ import { defaultRun } from './morning.mjs';
 
 const GUARD = fileURLToPath(new URL('./step_guard.mjs', import.meta.url));
 const OPTIONS = { timeout: 90_000 };
+// step limit for runs that test bytes and exit codes, not timing: 3 s was killed by load (2 Godot + lint, 05:27)
+const CLEAN_MS = 60_000;
 const alive = (pid) => {
   try { process.kill(pid, 0); return true; }
   catch (e) { if (e.code === 'ESRCH') return false; throw e; }
@@ -56,7 +58,7 @@ function runGuard(f, argv, logName = 'guard.log') {
   const started = performance.now();
   try {
     result = spawnSync(process.execPath, [GUARD, ...argv], {
-      stdio: ['ignore', fd, fd], timeout: 8000, windowsHide: true,
+      stdio: ['ignore', fd, fd], timeout: CLEAN_MS + 10_000, windowsHide: true,
     });
   } finally { closeSync(fd); }
   assert.ifError(result.error);
@@ -106,7 +108,7 @@ test('parseGuardArgs must reject an empty executable instead of letting spawn th
 });
 
 test('a positional step named -- must not consume the actual command separator', OPTIONS, (t) => {
-  const r = runGuard(fixture(t), args('--', 3000, "process.stdout.write('ran'); process.exit(7)"));
+  const r = runGuard(fixture(t), args('--', CLEAN_MS, "process.stdout.write('ran'); process.exit(7)"));
   assert.equal(r.status, 7);
   assert.equal(r.out, 'ran');
 });
@@ -116,7 +118,7 @@ test('shell 0 must forward --, empty strings, spaces and metacharacters byte for
   const injected = join(f.dir, 'injected');
   const values = ['--', '', 'two words', '"quoted"', "'single'", 'a\\b\\',
     `& echo injected > "${injected}"`, '; exit 19', '$(echo injected)', '%PATH%', '!PATH!', '|', '\n'];
-  const r = runGuard(f, args('literal-argv', 3000,
+  const r = runGuard(f, args('literal-argv', CLEAN_MS,
     'process.stdout.write(JSON.stringify(process.argv.slice(1)))', ['--', ...values]));
   assert.equal(r.status, 0);
   assert.deepEqual(JSON.parse(r.out), values);
@@ -131,9 +133,9 @@ test('a clean run must inherit stdout and stderr without adding or losing binary
   const err = openSync(errFile, 'w');
   let r;
   try {
-    r = spawnSync(process.execPath, [GUARD, ...args('binary', 3000,
+    r = spawnSync(process.execPath, [GUARD, ...args('binary', CLEAN_MS,
       "require('fs').writeSync(1, Buffer.from([0,255,13,10])); require('fs').writeSync(2, Buffer.from([128,0,10])); process.exit(23)")],
-    { stdio: ['ignore', out, err], timeout: 5000, windowsHide: true });
+    { stdio: ['ignore', out, err], timeout: CLEAN_MS + 10_000, windowsHide: true });
   } finally { closeSync(out); closeSync(err); }
   assert.ifError(r.error);
   assert.equal(r.status, 23);
@@ -170,7 +172,7 @@ test('a huge finite timeout must not overflow into a 1 ms timeout and kill a cle
 test('defaultRun must preserve logs and map a command returning GUARD_EXIT to status -1', OPTIONS, (t) => {
   const f = fixture(t);
   const source = `process.stdout.write('intentional reserved exit'); process.exit(${GUARD_EXIT})`;
-  const direct = runGuard(f, args('reserved-exit', 3000, source));
+  const direct = runGuard(f, args('reserved-exit', CLEAN_MS, source));
   assert.equal(direct.status, GUARD_EXIT);
   assert.equal(direct.out, 'intentional reserved exit');
   const r = defaultRun(process.cwd(), f.dir, 0.2)('reserved-exit', process.execPath, ['-e', source]);
