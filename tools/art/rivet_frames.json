@@ -286,12 +286,14 @@
    },
    "rivet_eq_ray_gun": {
     "counts": "5,3",
-    "sheet": "rivet_eq_ray_gun_70_v2.png"
+    "sheet": "rivet_eq_ray_gun_70_v2.png",
+    "fig_h": 165
    },
    "rivet_eq_ray_gun_left": {
     "cc": "0",
     "counts": "3",
-    "sheet": "rivet_eq_ray_gun_70_left.png"
+    "sheet": "rivet_eq_ray_gun_70_left.png",
+    "fig_h": 165
    },
    "rivet_eq_rocket_launcher": {
     "counts": "5,3",
