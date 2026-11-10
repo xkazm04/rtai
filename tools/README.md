@@ -186,6 +186,11 @@ and leaves a review queue. **It never lands a file:** the score can only reject,
 means "Claude should read this", nothing more. After your review, copy the test from the task's worktree
 yourself and `discard` the task.
 
+A reject under the bar ends with `likely equivalent survivors, member initialisers _init reassigns:
+line N` when some survivors are initialisers `_init` always overwrites (no test can kill those). Check
+them in the module before you judge the tests; the reject stands either way. Each phase prints a line
+as it starts (Codex round done, unit grading, mutation running, repair round).
+
 Every run writes a `started` line first, so a run killed from outside (a timeout of yours shorter than
 the factory's own, a session that ended) shows in `queue` as STARTED AND NEVER FINISHED instead of
 vanishing from the count. Running a discarded task again gets a new id (`-r2`), because the dispatcher
