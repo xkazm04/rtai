@@ -38,7 +38,7 @@ func next() -> int:
 	for q: int in n:
 		var cat: int = _cats[(_turn + q) % n]
 		if _have[cat] < _want[cat]:
-			_turn += 1
+			_turn += q + 1
 			return cat
 	return -1
 
