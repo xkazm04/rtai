@@ -1,11 +1,8 @@
 class_name GroundRifle
 extends RefCounted
-## n11: a dead guard's rifle on the ground (CombatArena.rifle_drops, a pickup) was a 0.8 m ink line
-## at one fixed angle: beside every body it read as a black bar, not a gun. Now an inked side-view
-## rifle, turned by where it lies, with a soft shadow. One mesh, built once. View only.
-## it14: DRAWN, the asset lane's rifle drawn lying at 70 degrees in 8 headings (ground_rifle_70.png,
-## tools/art/ground_rifle_sheet.py): the heading nearest the turn, its screen y un-squashed for the
-## tilt as the showcase guns are. DRAWN false (or no sheet) = the inked mesh.
+## n11: a dead guard's rifle on the ground (CombatArena.rifle_drops, a pickup), view only: an
+## inked side-view rifle mesh turned by where it lies, or (it14, DRAWN) the asset lane's rifle
+## drawn lying at 70 degrees in 8 headings (ground_rifle_70.png), y un-squashed for the tilt.
 const DRAWN: bool = true
 const SHEET: String = "res://features/combat/weapons/art/ground_rifle_70.png"
 const HEADINGS: int = 8
@@ -24,6 +21,8 @@ const TOWARD_M: float = 0.5
 const SIDE_M: float = 0.25
 ## Drops remembered at most (a cleared memory only re-reads the side from where Rivet is).
 const MEMO: int = 64
+## it20: a drop shows LAND_TICKS after first drawn, as its owner lands (chest down, +8). 0 = now.
+const LAND_TICKS: int = 8
 ## Past this far from Rivet (m) a drop is off screen at every play zoom: not drawn.
 const DRAW_M: float = 24.0
 const INK_PX: float = 1.6
@@ -61,11 +60,13 @@ const RIM_DIRS: int = 8
 static var _mesh: ArrayMesh = null
 static var _sheet: Texture2D = null
 static var _away: Dictionary[Vector2, Vector2] = {}
+static var _seen: Dictionary[Vector2, int] = {}
 
 
-## Draws the rifle lying at `at` (m), unless it is too far from `focus` (m) to be seen.
-static func draw(ci: CanvasItem, at: Vector2, focus: Vector2) -> void:
-	if not visible_from(at, focus):
+## Draws the rifle lying at `at` (m), unless it is too far from `focus` (m) to be seen or, at sim
+## tick `tick` (-1 = any), not landed yet.
+static func draw(ci: CanvasItem, at: Vector2, focus: Vector2, tick: int = -1) -> void:
+	if not visible_from(at, focus) or (tick >= 0 and not landed(at, tick)):
 		return
 	if DRAWN and sheet() != null:
 		_draw_cell(ci, at, lies_at_from(at, focus), ViewMode.shared().ground_k())
@@ -129,9 +130,19 @@ static func lies_at_from(at: Vector2, focus: Vector2) -> Vector2:
 	return at - away * TOWARD_M + away.orthogonal() * SIDE_M
 
 
-## Forgets every drop's side (a new fight, a test).
+## True once the drop at `at` has lain LAND_TICKS since it was first asked about at `tick`.
+static func landed(at: Vector2, tick: int) -> bool:
+	if not _seen.has(at):
+		if _seen.size() >= MEMO:
+			_seen.clear()
+		_seen[at] = tick
+	return tick - _seen[at] >= LAND_TICKS
+
+
+## Forgets every drop's side and landing (a new fight, a test).
 static func forget() -> void:
 	_away.clear()
+	_seen.clear()
 
 
 ## How the gun lies (rad): from where it fell, so drops do not all point one way.

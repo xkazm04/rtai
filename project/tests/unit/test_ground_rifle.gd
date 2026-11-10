@@ -58,3 +58,14 @@ func test_the_drawn_sheet_has_eight_square_cells() -> void:
 	assert_not_null(tex, "the drawn rifle ships")
 	if tex != null:
 		assert_eq(tex.get_width(), tex.get_height() * GroundRifle.HEADINGS)
+
+
+func test_a_drop_lands_with_the_body_not_while_he_holds_the_gun() -> void:
+	GroundRifle.forget()
+	var at: Vector2 = Vector2(4.0, 7.0)
+	assert_false(GroundRifle.landed(at, 100), "the kill tick: still in his hands")
+	assert_false(GroundRifle.landed(at, 100 + GroundRifle.LAND_TICKS - 1), "falling")
+	assert_true(GroundRifle.landed(at, 100 + GroundRifle.LAND_TICKS), "down with the body")
+	assert_true(GroundRifle.landed(at, 900), "and it stays")
+	GroundRifle.forget()
+	assert_false(GroundRifle.landed(at, 900), "a new fight starts the drop again")

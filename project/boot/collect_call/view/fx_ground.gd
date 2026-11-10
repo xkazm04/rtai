@@ -20,6 +20,7 @@ var _marks: Dictionary[Vector4, FxGroundMark] = {}
 func _init() -> void:
 	show_behind_parent = true
 	use_parent_material = true
+	GroundRifle.forget()  # a new fight: no drop of the last one has landed or has a side
 
 
 ## Called from FxView._draw each frame after GunFx.step (`fx` null = no gun: rifle drops only).
@@ -53,6 +54,6 @@ func _draw() -> void:
 	if _arena == null:
 		return
 	for d: Vector2 in _arena.rifle_drops:
-		GroundRifle.draw(self, d, _arena.rivet.pos)
+		GroundRifle.draw(self, d, _arena.rivet.pos, _tick)
 	if _fx != null:
 		_fx.scorch.draw(self, _tick)
