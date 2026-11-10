@@ -396,3 +396,9 @@ NEXT: (1) REPORT stays final for `902eb3fe`; this session added only the journal
 - 07:32 REPORT: header marked checked at it38; "does not work" now lists the burn art that is waiting (frame 1 and second flail frame for all 13 kinds, worker and gang not packed, elder one frame), none of it seen in game.
 
 NEXT: (1) REPORT is final for `902eb3fe`; the night is over for this lane. (2) The next session (after the merge): wire the two-frame thrash for all burning kinds except the elder (`street_hit.py` second row, `vframes` 2, frame from `rig.react.t` at about 5 Hz, a test that it alternates on one shadow point, a 60 fps combo clip vs it33's `flail_clip`); add worker and gang to `BURNS` / `BURN_GRIDS`; the thug burn FILL about 1.2 checked on a frame; `fx/burning_body_*` behind the figure; the charred cells into `burn_char`; the riot frame cost under the bench lock; vehicle shadows. Then re-run the gates and rebuild the exe. The probe is OFF; the tree is clean except `ASSETS-REPLIES.md` (theirs).
+
+## it42 (07:40-07:43, REPORT; deadline 08:00)
+- 07:40 Session opened in the REPORT phase. Checked: no code change since `902eb3fe` (`git diff --name-only 902eb3fe HEAD`: JOURNAL, REPORT, docs/decisions.md, it34/it35 evidence only), so it34's gates and the 07:14 exe still match. `node tools/evidence/cites.mjs REPORT.md`: 10 paths, 9 ok, 1 UNTRACKED (`project/override.cfg`, git-excluded on purpose). `gtai-masters/n11/combat/frames.json` has 15 entries; `build/export/windows/RTAI.exe` present. No Godot run.
+- 07:41 REPORT header marked checked at it42; content unchanged.
+
+NEXT: unchanged from it38 NEXT (2): after the merge, wire the two-frame thrash (all kinds but the elder), pack worker and gang, thug burn FILL about 1.2 checked on a frame, `fx/burning_body_*` behind the figure, charred cells into `burn_char`, the riot frame cost under the bench lock, vehicle shadows; then gates and exe. The tree is clean except `ASSETS-REPLIES.md` (theirs).

@@ -1,6 +1,6 @@
 # REPORT: night n11, lane combat (bodies, reactions, shadows, projectiles, pickups, HUD)
 
-Refreshed at it34 (07:05), checked at it38 (07:32); final code commit `902eb3fe` (it35-it38 added only
+Refreshed at it34 (07:05), checked at it38 (07:32) and it42 (07:41); final code commit `902eb3fe` (it35-it42 added only
 JOURNAL, REPORT and evidence). Branch `n11-combat`, cut from main `812a0b06`.
 Journal: `JOURNAL.md`.
 Frames: `C:\Users\kazda\kiro\gtai-masters\n11\combat\frames.json` (15 entries, best first).
