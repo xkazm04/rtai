@@ -15,6 +15,7 @@ Run these from the root of your worktree. Exit codes are shared: `0` pass, `1` f
 | read head, feet, facing or body size per tick | `node tools/film/numbers.mjs <film dir>` |
 | catch the lint you keep tripping, before the commit | `node tools/gate/quick.mjs` |
 | commit a journal without waiting for lint | (automatic: the hook skips lint when only inert paths are staged) |
+| check one script or scene parses, in seconds | `node tools/godot/check.mjs <res://path>` |
 | run every gate while you keep editing | `node tools/gate/run.mjs` |
 | run a dev scene with its flags checked | `node tools/dev/run.mjs <entry>` |
 | make a new worktree able to run the game | `node tools/dev/wt_init.mjs <worktree>` |
@@ -187,6 +188,21 @@ check, and `--files=<a,b>` names the files yourself.
 **Refuses:** a file that does not exist, an unknown flag.
 **Unverifiable (exit 3):** gdformat, gdlint or Godot could not run. A checker that failed without
 naming a file counts as not run, so a missing tool can never read as "ok".
+
+## tools/godot/check.mjs: does this script or scene parse, in about 3 s
+
+```
+node tools/godot/check.mjs res://features/combat/react/human_react.gd project/dev/my_scene.tscn
+```
+
+A `.gd` gets Godot's `--check-only`; a `.tscn`/`.tres` is `load()`ed by a throwaway script in the OS
+temp dir. Warnings count as errors, as in the game. `--check-only` does not register autoloads, so
+`Identifier not found: Log` (and the "Failed to compile depended scripts" cascade it causes in the
+same run) is not reported. `quick.mjs` calls this check.
+
+**Refuses (exit 2):** a path outside `project/`, a missing file, no Godot.
+**Never a pass:** a cascade with no autoload noise behind it in the same run, because its cause was
+not seen; a run killed at its 60 s budget.
 
 ## tools/gate/run.mjs: the gates on a snapshot, so you can keep editing
 
