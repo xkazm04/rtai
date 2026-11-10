@@ -30,12 +30,14 @@ crowd: look goldens re-blessed with a decisions line). t-4 and t-5 move nothing 
 - `tools/film/shots.mjs` + `film.mjs`/`compare.mjs` (combat's REQUESTs, ba6f38838): the director's extras are
   chapters (`chapter:electro_baton_left`, `chapter:katana_cam`), and `--feel=auto|on|off` before the `--`.
   Example: `film.mjs chapter:electro_baton_lft --dry-run` -> `did you mean electro_baton_left?`.
+- `tools/film/compare.mjs` (70ebf0634): refuses a commit side whose `native/` differs from HEAD (its snapshot would run
+  this tree's DLLs); `--native=donor` for view-only changes.
+- `tools/style/check_gd.mjs` (26f18e5ef, combat's FRICTION): the function-size count stops at the body; a column-0
+  doc comment of the next function no longer counts (2 of 5 new tests fail on the old rule).
 - `tests/parity/city_parity.gd`: `final_sha_a/b` in the parity result.
 
 Gates on eb65c8b05 (`node tools/gate/run.mjs`): PASS - lint 16/16, unit 2507/0, scenarios 55, parity exact,
 selftest 11/11 + 5/5, release-compile 667/0. Reel gate on ad2f0a5c1: top, tilt70, combo OK (280-286 s each).
-- `tools/film/compare.mjs` (70ebf0634): refuses a commit side whose `native/` differs from HEAD (its snapshot would run
-  this tree's DLLs); `--native=donor` for view-only changes.
 
 ## Codex (n15)
 
