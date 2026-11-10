@@ -91,6 +91,7 @@ export function checkFiles(paths, { root = ROOT, godot = true, run = tool } = {}
   if (godot) {
     const check = run('node', ['tools/godot/check.mjs', ...paths], root);
     if (check.missing || check.status === 2) unverifiable.push(`the Godot parse check could not run${check.out ? `: ${check.out.split('\n')[0]}` : ''}`);
+    else if (check.status === 3) unverifiable.push(`the Godot parse check saw only dependency cascades, no cause (${check.out.split('\n').filter((l) => l.startsWith('UNVERIFIABLE ')).map((l) => l.slice(13)).join(', ')}): node tools/godot/check.mjs <file> prints what Godot did say`);
     else if (!check.ok) issues.push(...check.out.split('\n').map((l) => l.trim()).filter((l) => l && !l.startsWith('ok ')));
   }
   return { issues, unverifiable };

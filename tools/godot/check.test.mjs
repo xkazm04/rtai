@@ -57,3 +57,20 @@ test('a resource whose script file is missing keeps every line (real Godot 4.7.2
   );
   assert.equal(errorLines(out, autoloads).filter((l) => !/^\s+at: /.test(l)).length, 3);
 });
+
+test('a run with only dependency cascades is UNVERIFIABLE (exit 3), never ok, and a real FAIL still wins (hero n11 line 279)', async () => {
+  const { causeUnseen, otherLines, verdictCode } = await import('./check.mjs');
+  const cascade = 'SCRIPT ERROR: Compile Error: Failed to compile depended scripts.';
+  const load = 'ERROR: Failed to load script "res://features/characters/rivet_walk.gd" with error "Compilation failed".';
+  assert.equal(causeUnseen([cascade, '   at: GDScript::reload (res://features/characters/rivet_walk.gd:0)', load]), true);
+  assert.equal(causeUnseen([]), false, 'nothing reported is not unseen');
+  assert.equal(causeUnseen([cascade, 'SCRIPT ERROR: Parse Error: Identifier "X" not declared.']), false, 'a cause was seen');
+  const out = `Godot Engine v4.7.2\n\n${cascade}\n   at: x (res://a.gd:0)\nWARNING: something odd\n${load}\n`;
+  assert.deepEqual(otherLines(out), ['Godot Engine v4.7.2', 'WARNING: something odd']);
+  const u = { target: 'a', ok: false, note: 'unverifiable', lines: [] };
+  assert.equal(verdictCode([u]), 3);
+  assert.equal(verdictCode([u, { target: 'b', ok: true, lines: [] }]), 3);
+  assert.equal(verdictCode([u, { target: 'c', ok: false, lines: ['Parse Error'] }]), 1, 'a real failure wins');
+  assert.equal(verdictCode([u, { target: 'd', ok: false, note: 'usage', lines: [] }]), 2);
+  assert.equal(verdictCode([{ target: 'b', ok: true, lines: [] }]), 0);
+});
