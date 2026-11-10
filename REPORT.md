@@ -1,6 +1,7 @@
 # REPORT: night n11, lane combat (bodies, reactions, shadows, projectiles, pickups, HUD)
 
-Refreshed at it34 (07:05); final code commit `902eb3fe`. Branch `n11-combat`, cut from main `812a0b06`.
+Refreshed at it34 (07:05), checked at it38 (07:32); final code commit `902eb3fe` (it35-it38 added only
+JOURNAL, REPORT and evidence). Branch `n11-combat`, cut from main `812a0b06`.
 Journal: `JOURNAL.md`.
 Frames: `C:\Users\kazda\kiro\gtai-masters\n11\combat\frames.json` (15 entries, best first).
 
@@ -73,6 +74,10 @@ Frames: `C:\Users\kazda\kiro\gtai-masters\n11\combat\frames.json` (15 entries, b
   under the over-the-body loops (their cells came singed, not burning; DECISION combat/burn-kinds).
   The burning figures are one pose per facing; the second flail pose is drawn but not wired. A fire
   death is still brutality's charred silhouette; the asset lane's drawn charred cells are not wired.
+  Art waiting to be wired, as of 07:20 (`ASSETS-REPLIES.md`, `gtai-art/library/keyed/street/<kind>_hit_70_cells/burn/`):
+  frame 1 and a second flail frame (`1b_*`, `2b_*`) for all 13 street kinds (the shopper's second
+  frame was redrawn and fixed; the elder's is weak and should keep one frame); the worker and gang
+  cells are drawn but not packed. None of it has been seen in game.
 - The rocket "gib" flies as one tumbling body at combo, not in pieces.
 - Vehicle shadows were never judged. Every reaction judgement is from stills and 60 fps tick
   sheets, plus two clips (`film/it19_clip`, `burning_flail_clip.mp4`).
