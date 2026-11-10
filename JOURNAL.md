@@ -84,3 +84,9 @@ Branch `n15-tools`, cut from main `5c5c03611`. APPDATA=C:/Users/kazda/kiro/gtai-
   `game args: --victim=cop/head_swat`; `--victim=cop/nope` -> `film: unknown victim cop/nope in ... known: ...`.
   Test in `tools/film/victim.test.mjs` (6/6). A real compare film with a victim is still owed (after the gates).
   For combat: merge n15-tools for it, or cherry-pick the compare.mjs commit (pure Node, no sim change).
+- 22:55 item 6 part 2: the 3 step_guard.break tests budget their cold node starts (`budgetMs`, waitFor limit,
+  guard limit, the held-log threshold). One review catch on the way: scaling the grandchild's late write to the
+  bare limit made it beat the kill on a QUIET machine (3 of 3 plain runs failed `grandchild executed code after
+  the guard timeout`): `taskkill /T` itself takes a few hundred ms, which the old 1 s margin covered; the late
+  write is now limit + 1 s. Runs after: plain 15/15 x3; slow start 2.5 s 15/15 (116.7 s; was 3 failing).
+  Not yet: a run on Linux (WSL) and a loop under real load; check_baked never failed in any run (7/7 slow).
