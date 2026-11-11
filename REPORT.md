@@ -77,6 +77,23 @@ PASS with reels on `f128a280e` and `ac7991f58` (session 7). Mutation: `rig_depth
   group's BEFORE reading higher on p50 +0.17 and cpu +0.56 under 4.9 busy cores). Not measured: the load-time cost of the
   warmed strips (these scenes do not draw them).
 
+## What blocked, and for how long
+
+Nothing blocked the lane outright; the asset lane delivered every combat REQUEST by 04:23 (it371). Friction, from JOURNAL
+(durations are estimates where JOURNAL logged no end time):
+- Look-goldens baseline (22:05): `tools/dev/run.mjs` headless renders nothing; re-ran windowed via
+  `tools/selftest/run.mjs`. About 10 min lost.
+- `tools/film/compare.mjs` refuses `--victim=<kind>`: lone-victim before/afters were filmed by smudging the parent's sheet
+  back (`git lfs smudge`) for one film, then restoring. A few minutes per pair, all night. REQUEST tools served on
+  `n15-tools` (not merged into this branch).
+- `git show HEAD:<png>` gives the LFS pointer and breaks the `.import`; restored and re-imported (~10 min, once).
+- `run_unit.mjs --select=test_quest_blade` fails alone (InputMap order dependence, not this lane); the full run decides.
+- `LaunchArgs.value()` drops flags not in KNOWN_FLAGS: the first impact before/after was byte-identical and was re-filmed
+  through `ArenaArgs` (~20 min, once).
+- The machine was contended all night: most perf runs report CONTENDED, so perf verdicts are paired deltas against the
+  A/A twin, never absolute numbers.
+- The full gate with reels takes ~21 min per code commit, so no code landed after `61a2d3baa` (06:00).
+
 ## Calls for the owner
 
 (a) p55 katana right wind-up/strike size: re-cut as the baton's (42c826289) or keep? Still: `evidence/n15-combat/boss_blade_katana_p55_64ppm_t306-326.png`.

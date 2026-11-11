@@ -603,3 +603,9 @@ NEXT (morning / Director): merge `n15-combat` per REPORT "Merge notes" (shared f
   empty (no code after the gated commit; build/gate/61a2d3baac58/gate.json outcome pass); `cites.mjs REPORT.md --tracked`
   38 paths, 37 ok, 1 pattern; no Godot of mine running; bench.lock absent; replies n15-combat.md unchanged since 04:22.
   Nothing to fix. NEXT unchanged (morning / Director: merge per REPORT "Merge notes"; Calls (a)-(d)).
+- 07:40 (iteration 17, REPORT phase) no code. REPORT gained "## What blocked, and for how long" (friction from this
+  JOURNAL, nothing blocked outright). `cites.mjs REPORT.md --tracked`: 41 paths, 40 ok, 1 pattern. Code diff
+  `61a2d3baa..HEAD -- project tools native` still empty; build/gate/61a2d3baac58/gate.json outcome pass. No Godot of
+  mine running, bench.lock absent, replies n15-combat.md unchanged since 04:22.
+NEXT (morning / Director): merge `n15-combat` per REPORT "Merge notes"; the owner's Calls (a)-(d) with stills in REPORT;
+lane next steps in REPORT "Next steps".
