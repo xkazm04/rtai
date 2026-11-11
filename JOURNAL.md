@@ -569,3 +569,22 @@ early); otherwise caccc825d's full-reel PASS + 09b23b523's PASS stand. (3) REPOR
 list already drafted; add the last session's work, final Codex ledger; check `node tools/evidence/cites.mjs REPORT.md`).
 (4) Weakest remaining: the reel's aftermath LIFETIME is from data (KillMarks ring), not measured; a `--after=600`
 film with later kills could prove the recycle. Logs go to C:\Users\kazda\kiro\gtai-n16\scratch-tools\logs\.
+
+## Session 6 (17:20-18:50, BUILD)
+- 17:21 read JOURNAL, git log, both kill journals. New since s5: kills-polish FRICTION (17:2x, their :361) "the
+  pre-commit full lint runs ~2 min when a commit stages a path outside project/ (provenance, tools/art)"; their last
+  40 commits staged steam/ai-provenance/2026-11.jsonl 9x, tools/art/*.py 8x, root KILLS.md 7x / DEFECTS.md 6x
+  (`git -C ../n16-kills-polish log --name-only -40`). kills-new: nothing new for tools (their check.mjs-beside-reel
+  FRICTION is theirs, as s5 said).
+- MILESTONE ed4a13db0: tools/lint/scope.mjs `isLintNeutral`: steam/ai-provenance/**, tools/art/*.py (top level,
+  python only) and root KILLS.md / DEFECTS.md ride along with a project/ commit instead of forcing the full lint;
+  whole-tree checks (json-canonical over steam/*.json too) still run on every commit. Evidence that nothing reads
+  them: `grep -rln "tools/art|'art'|ai-provenance|KILLS.md|DEFECTS.md" tools --include=*.mjs` -> only
+  tools/art/canon_json.mjs (its own usage comment). A guard test greps every tools/**/*.mjs for them; PLANTED
+  (tools/gate/zz_plant.mjs naming the provenance file) -> the guard failed naming it; removed. scope tests 9/0.
+  PROOF real run: `node tools/lint/lint.mjs --scope=<kill_lab.gd + .uid + provenance + gib_pieces.py + KILLS.md>`
+  -> `scoped to the commit (2 staged path(s), all under project/ + 3 lint-neutral ...) gdformat + gdlint over 1 of
+  1469 .gd`, all 18 pass, 3 s; the full lint it replaces: 106 s here (19/19). Logs in gtai-n16\scratch-tools\logs.
+- SERVED (kills-polish FRICTION :361): ed4a13db0. Touches only tools/lint/scope{,.test}.mjs: `git cherry-pick
+  ed4a13db0` in your lane and an art commit (PNG + provenance + tools/art script) lints in seconds; until then it
+  still runs the full lint (your hook runs your tree's scope.mjs).
