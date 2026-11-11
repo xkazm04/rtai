@@ -43,7 +43,8 @@ crowd: look goldens re-blessed with a decisions line). t-4 and t-5 move nothing 
   `n15-` prefix; `GTAI_MERGE_LANES=<a,b>|off`). It runs merge-tree twice per lane, about 0.4 s, and writes objects only.
   Example (a temp index staging an edit of combat's `--rivet-windup=off` line): `merge-clash: WARNING this commit makes
   project/features/characters/cast_flags.gd conflict with n15-combat ...`. A lane without it runs
-  `node <n15-tools>/tools/merge/clash.mjs --repo=.` on a temp copy of its own index.
+  `node <n15-tools>/tools/merge/clash.mjs --repo=.` on a temp copy of its own index. `tools/gate/quick.mjs` prints the
+  same line for the working tree, unstaged edits included (6d77d2204; `--no-clash` skips it).
 - lint check `flag-routes` (f29db6c9b, session 7; lint has 19 checks): a `"--x"` literal that a dispatch helper (`CastFlags._walk(arg)`)
   matches must be routed there by its caller's guard. On main, hero and combat it names the two dead walk befores
   (`cast_flags.gd:65: "--rivet-walk-armed=off" is matched in _walk() but no caller routes it there ...`); this
@@ -300,3 +301,6 @@ merge + gate + lint tests 593/591/0 on 9b7b14088) and docs. Session 6's final ga
   before hero, and the resolver still gives the union on the real morning order: `python
   evidence/merge/resolve_hero_x_combat.py` exits 0 on both files of `main + n15-tools + n15-hero` x `n15-combat`, with
   gdformat and gdlint clean. The merged `apply()` keeps all three routings (walk/stride, `WINDUP_FLAGS`, `--ghost-`).
+  The new lint check `flag-routes` comes with this branch. In any merge order the integrated tree holds both the check and
+  the fix (my lines are the guard lines, which neither hero nor combat touched), so it passes. It fails only if a lane
+  later adds a `_walk`/`_ghost`/`_windup` flag without routing it, which is the point of the check.
