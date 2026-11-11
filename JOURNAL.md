@@ -216,3 +216,63 @@ NEXT (iteration 4):
 4. A3 p55 X-ray sets when delivered (KillXray.ART by view); jogger/elder/etc map to ped_generic today.
 5. Owed: the ghosts' four films (tonnage, dent, kerf, ohm), burn_char's flame column, p55 peek card still, fight_gate
    under the bench lock (new preloads: 8 X-ray strips ~244x120, plasma 384x128, chunks 480x48).
+
+## Iteration 4 (2026-11-11 15:23, BUILD)
+
+- 15:23 read JOURNAL, git log. The ray gun hat fix (verified at 15:13, test 2/2) was staged: committed 06deed4b5.
+- Registry rules applied (motion-quality-gating): same-tick before/after at 64 and 32 px/m on game frames; the
+  dissolve's read judged on the held beat k+10..k+40, where the ranking film said it fails.
+- 15:45 ray gun mask: KillDissolveMask (split out of KillDissolveFx, size ratchet) fits an ellipse to the body's
+  sprites (FIT 1.12 of the half extent); rings/motes/glow on the same ellipse via draw_set_transform. Test
+  test_kill_dissolve_fit 3/3. Committed 999ec13db. Before = rg64_b (06deed4b5's tree), after = rg64_c (--rev=HEAD).
+- 15:50 asset replies: A3 p55 X-ray for all 8 kinds DELIVERED 15:01 (`library/keyed/street/xray_<kind>_55_cells/1_{1,2}.png`);
+  the asset lane has nothing open for me and asks for the next request. Sent A6 and A7:
+- REQUEST assets: (A6) the hand cannon exit wound, beat = the blowback's aftermath: the body lies face-down ~3 m off
+  along the shot, and its back is blown open where the round left. One drawn wound per frame, seen from above at 70 deg,
+  laid OVER the lying body's back: a ragged torn hole in the jacket (cloth flaps curled out), red-and-ink meat inside,
+  two or three cream rib ends and the spine's knuckles showing, a short red spatter tongue fanning out on ONE side (the
+  shot direction = +x of the cell). 2 frames: 1 fresh (wet red, bright cream bone), 2 dried (darker red, matte).
+  160 x 160 cells, the hole ~90 px across, transparent outside. One set serves every kind (the cloth flap colour is a
+  neutral grey that reads on navy, grey and brown jackets); a cop-navy variant as frame 3 if cheap. p70, plus a p55
+  set squashed ~0.8 vertically. Name `fx/exit_wound_70_cells/1_{1,2,3}.png` and `fx/exit_wound_55_cells/...`.
+- REQUEST assets: (A7) the ray gun remains, beat = the dissolve's aftermath: the body is eaten to dust by the hot ring
+  and what stays on the street is a low grey-cream ash heap with a drawn SKULL half sunk in it, two or three rib arcs
+  and a forearm bone poking out, the empty uniform crumpled beside it (cop navy for frame set 1, neutral grey cloth for
+  set 2), still glowing amber in the ash's cracks on frame 1, cooled on frame 2. 256 x 160 cells (the heap is wider
+  than tall, ~220 px wide), transparent outside, ink-and-cream riso, no red (the ray cauterises). p70, plus p55.
+  Name `fx/ray_remains_70_cells/<set>_{1,2}.png` (set 1 navy, set 2 grey) and `fx/ray_remains_55_cells/...`.
+- MILESTONE 999ec13db ray gun ellipse mask: films rg64_b/rg64_c and rg32_b/rg32_c (06deed4b5 vs 999ec13db, chapter
+  ray_gun, combo, kill at t49): before = legs in a disc; after = the whole cop lit in the glow (t50-80), then eaten
+  inward by the hot ring onto the dust pile (t82-109), at 64 and 32 px/m.
+  `evidence/n16-kills-polish/ray_gun_ellipse_mask_ab_{64ppm_t50-89,64ppm_t82-109,32ppm_x2_t50-109}.png`. KILLS 11 -> 14.
+- 15:55 FOUND (burn ranking film t130-170 + code): KillCharFx's embers, smoke and flakes sit on the body group's origin
+  (the walker card's feet), the ray gun's bug again; at 64 px/m the standing char cop shows no embers on him. Fixed in
+  the tree with a shared `KillFigure` (the body's own sprite box; KillDissolveMask.fit now uses it). Plasma hole: a
+  16-tick cream bloom under the drawn ring (BLOOM_TICKS; the 32 px/m pop Call). p55 X-ray: ART_55 (8 kinds, packed by
+  `tools/art/xray_cells.py --pitch=55`), chosen when ViewMode.shared().art == "p55".
+- REQUEST assets: (A8) the burn death's collapse, beat = after the charred man stands smoking (~55 ticks), he
+  crumbles where he stands instead of only fading: 3 frames per kind, same cell format and scale as the it272/it359/
+  it363 char cells (`p70/<kind>_char_hit.png`: 5 facings x 344 x 256, feet on the cell's FOOT_Y line), facing 1
+  (towards the camera) is enough for a first pass: (1) knees buckle, the char body sagging, a shoulder breaking off,
+  ember cracks wide and bright amber; (2) slumped on its knees, half the torso caved into ash, the SKULL showing
+  through the burnt face, rib arcs through the chest; (3) a low ash heap with the skull and a forearm bone on top, the
+  cap/helmet/hood (the kind's gear) charred on the heap. Ink and cream, ember amber, char grey; no red. Kinds first:
+  cop_patrol, thug, ped_hood, cop_riot (the four most burnt in the reels), then swat, ped_cap, ped_punk, ped_jogger.
+  Name `street/<kind>_char_collapse_70_cells/1_{1,2,3}.png`.
+- MILESTONE ab2de6592 + 6c52eaa7d plasma bloom under the drawn ring: film ph32_c vs ph32_d (a56501ee5 vs 051802ce0,
+  32 px/m, kill t55): the 16-tick 0.55 bloom was only a faint halo for ~5 ticks -> 6c52eaa7d alpha up to 0.83, held ~8
+  of 20 ticks (re-filming ph32_e / ph64_e).
+- MILESTONE 051802ce0 + b2c4051c2 burn embers/smoke on the figure: film burn64_a vs burn64_b (chapter flamethrower,
+  kill t130): before, the "embers" were a hot scrap on the street at his feet and the smoke rose from his boots; after,
+  the smoke rises off his shoulders and head, the embers at mid-body, but at 0.5 of the box's half-width they floated
+  beside him (a card cell is ~2x the man's width) -> b2c4051c2 0.2 x 0.5 (re-filming burn64_c, burn32).
+- 16:10 commits 4329ed869 p55 X-ray (A3 it426), unit 17/17 on the it4 tests (test_kill_figure 4, dissolve_fit 3,
+  shock_xray +1, gib_cut_figure_hat 2).
+- 16:20 films: ph32_e/ph64_e (6c52eaa7d): the bloom now pops t55-66 and is gone by t70 at both zooms
+  (`evidence/n16-kills-polish/plasma_hole_bloom_ab_{32ppm_x2_t55-80,64ppm_t55-70}.png`). burn64_c (b2c4051c2): the
+  embers on the figure were HIDDEN under his card (KillCharFx z 4, his parts reach +30) -> 6963740ef z 40; burn64_d:
+  ember cracks glow on his shoulders and chest, smoke rises off his head
+  (`evidence/n16-kills-polish/burn_embers_on_figure_ab_64ppm_x2_t150-250.png`). x55_a/x55_b (tilt = p55, electro,
+  kill t116): the p55 set reads as the p55 cop (face under the cap, legs to the feet) but stood ~80% of the 2.0 m p55
+  card -> KillXray.view_scale() (2.0/1.7 at p55; uncommitted, unit queued)
+  (`evidence/n16-kills-polish/electro_xray_p55_set_ab_tilt64ppm_x2_t119-146.png`).

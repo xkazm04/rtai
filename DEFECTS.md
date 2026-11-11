@@ -1,5 +1,17 @@
 # DEFECTS (n16 kills-polish, newest first; n15 combat's list below): found -> fixed (commit) / open
 
+## Burn, plasma, p55 X-ray, iteration 4 (15:55-16:10), combo 64/32 px/m and tilt 64 px/m
+1. Burn (ranking film t130-170): the embers were a hot scrap on the street at his feet and the smoke rose from his boots
+   (KillCharFx on the body group's origin = the walker card's feet) -> fixed 051802ce0 (KillFigure); then the embers
+   floated beside him (box ~2x his width) -> b2c4051c2 (spread 0.2 x 0.5); then hidden under his card (z 4 < his parts'
+   +30) -> 6963740ef (z 40). `evidence/n16-kills-polish/burn_embers_on_figure_ab_{64ppm_x2_t150-250,32ppm_x2_t150-285}.png`.
+2. Burn: the stand still reads as a dark cop, not a burnt man, and he only fades (no collapse) -> open (A8 requested:
+   the drawn collapse with the skull).
+3. Plasma hole: the drawn ring lost the impact pop at 32 px/m -> fixed ab2de6592 + 6c52eaa7d (20-tick bloom under it).
+   `evidence/n16-kills-polish/plasma_hole_bloom_ab_{32ppm_x2_t55-80,64ppm_t55-70}.png`.
+4. Electro in the p55 view flashed the p70 set (wide, squat, face hidden) -> fixed 4329ed869 (A3 p55 set); it stood ~80%
+   of the 2.0 m p55 card -> 16748e860 (view_scale). `evidence/n16-kills-polish/electro_xray_p55_set_ab_tilt64ppm_x2_t119-146.png`.
+
 ## Drawn death art in game, electro / plasma rifle / chainsaw chapters, 64 and 32 px/m (iteration 3, 13:55-14:35)
 1. Electro: every kind flashed one plain skeleton -> fixed b037d283f (A3 per kind). At 32 px/m on dark asphalt the drawn
    set (ink silhouette, frame 1) is darker and busier than the plain cream sticker -> open, owner Call.
