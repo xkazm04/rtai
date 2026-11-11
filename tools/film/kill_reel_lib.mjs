@@ -3,6 +3,7 @@
 import { readFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { ROOT } from '../lib/repo.mjs';
+import { labWeapons } from './shots.mjs';
 
 /** The burn death is the fire's, not a gun's: these weapons set a man ablaze. */
 export const BURN_WEAPONS = ['flamethrower', 'molotov'];
@@ -21,7 +22,7 @@ const rowWeapons = (row) => [row.weapon, ...(row.also_weapons ?? []), ...(row.we
 /** The weapons Rivet can carry into the lab that have a signature death in `tree`. */
 export function reelWeapons(tree = ROOT) {
   const armed = new Set([...table(tree, 'data/tables/weapons.json').weapons.map((w) => w.id),
-    ...Object.keys(table(tree, 'data/tables/melee_weapons.json').weapons)]);
+    ...Object.keys(table(tree, 'data/tables/melee_weapons.json').weapons), ...labWeapons(tree)]);
   const rows = table(tree, 'data/tables/signature_kills.json').kills;
   return [...new Set(rows.flatMap(rowWeapons).filter((w) => armed.has(w)))];
 }

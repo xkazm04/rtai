@@ -23,7 +23,7 @@ export const SHOTS = {
   // --sig-dir degrees, killed by the weapon's signature death (n16 tools: tools/film/kill_reel.mjs).
   // Rivet stands 10 m west of his start: at the start the 19 station dummies and the street cops take
   // all 16 full rigs (RigSelect), and a lab guard ranked past them was drawn by nothing (n16 s2).
-  kill: { doc: 'one signature kill in the kill lab on the city block: kill:<weapon> (gun or blade)', ticks: 420, needs: 'sigweapon',
+  kill: { doc: 'one signature kill in the kill lab on the city block: kill:<weapon> (gun, blade or claw_shock)', ticks: 420, needs: 'sigweapon',
     flags: (id) => ['--arena=city', '--sig-lab', `--sig-gun=${id}`, '--sig-solo=start:-10,0'] },
   // Quest 1 runs through its own recorder: --stills (even ticks) only, no numbers, no locked camera.
   quest1: { doc: 'quest 1 through its scripted pad: --stills required (even ticks)', ticks: 0, script: 'res://dev/frames/quest1_clip.gd',
@@ -32,9 +32,18 @@ export const SHOTS = {
 
 const read = (tree, rel) => JSON.parse(readFileSync(join(tree, 'project', rel), 'utf8'));
 
+/** Lab weapons no table lists (kills-new REQUEST 16:28): Rivet's charged bare claw, `PlayerShock.WEAPON`
+ *  (`--sig-gun=claw_shock`), read from the filmed tree's player_shock.gd; [] when that tree has none. */
+export function labWeapons(tree) {
+  const file = join(tree, 'project/features/player/player_shock.gd');
+  if (!existsSync(file)) return [];
+  const m = /^const WEAPON: StringName = &"(\w+)"/m.exec(readFileSync(file, 'utf8'));
+  return m ? [m[1]] : [];
+}
+
 const ids = {
   weapon: (tree) => read(tree, 'data/tables/weapons.json').weapons.map((w) => w.id),
-  sigweapon: (tree) => [...ids.weapon(tree), ...Object.keys(read(tree, 'data/tables/melee_weapons.json').weapons)],
+  sigweapon: (tree) => [...ids.weapon(tree), ...Object.keys(read(tree, 'data/tables/melee_weapons.json').weapons), ...labWeapons(tree)],
   view: (tree) => read(tree, 'data/tables/view.json').views.map((v) => v.id),
   chapter: (tree) => {
     const file = join(tree, 'project/dev/showcase/reel_chapters.gd');

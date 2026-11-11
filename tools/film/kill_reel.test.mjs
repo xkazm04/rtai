@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { mkdtempSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
@@ -259,5 +259,24 @@ test("a fire weapon with its own row takes it over the burn row listed first (ki
     assert.equal(rows.molotov.id, 'molotov_torch');
     assert.equal(rows.flamethrower.id, 'burn_char', 'no row of its own: the burn fallback');
     assert.deepEqual(reelWeapons(root), ['flamethrower', 'molotov'], 'each fire weapon filmed once');
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
+test('the charged claw (PlayerShock.WEAPON, no table lists it) is a lab weapon: kill:claw_shock plans, all films it on its own row (kills-new REQUEST 16:28)', async () => {
+  const { checkId, labWeapons } = await import('./shots.mjs');
+  const root = tree();
+  try {
+    assert.match(checkId('sigweapon', 'claw_shock', root) ?? '', /unknown sigweapon claw_shock/, 'a tree without player_shock.gd has no claw');
+    mkdirSync(join(root, 'project/features/player'), { recursive: true });
+    writeFileSync(join(root, 'project/features/player/player_shock.gd'), 'class_name PlayerShock\nextends RefCounted\n\nconst WEAPON: StringName = &"claw_shock"\n');
+    assert.deepEqual(labWeapons(root), ['claw_shock']);
+    assert.equal(checkId('sigweapon', 'claw_shock', root), null, 'kill:claw_shock is a known lab weapon');
+    assert.deepEqual(reelWeapons(root), ['rocket_launcher', 'katana', 'flamethrower', 'pistol'], 'no row names the claw yet: not filmed by all');
+    const file = join(root, 'project/data/tables/signature_kills.json');
+    const t = JSON.parse(readFileSync(file, 'utf8'));
+    t.kills.push({ id: 'claw_throw', weapon: 'claw_shock', style: 'throw', hitstop_ticks: 4 });
+    writeFileSync(file, JSON.stringify(t));
+    assert.ok(reelWeapons(root).includes('claw_shock'));
+    assert.equal(tableRows(root, ['claw_shock']).claw_shock.id, 'claw_throw');
   } finally { rmSync(root, { recursive: true, force: true }); }
 });
