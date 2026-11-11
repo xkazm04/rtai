@@ -54,3 +54,15 @@ NEXT (session 3, in order): (1) [done 22:11, see the REELS line below]; (2) [don
 - MUTATE 22:18 `tools/mutate/mutate.mjs --file=features/characters/rivet_thrust.gd --max=10 --tests=test_rivet_thrust`: 37.5 % on 231ea8218 (place()'s cell choice untested) -> test added d4c9156f6 -> 75.0 % (killed 6 / 8, invalid 2). Survivors: :44 `t < 0` -> `<=` (only differs if a lunge filled the whole wind-up) and :56 the match tolerance 0.5 -> 1.5 ticks (the katana's wind-ups differ by 2): equivalent on today's data. Checkout clean after. rivet_no_flash.gd not mutated yet (NEXT).
 - MUTATE 22:25 `rivet_no_flash.gd` (--max=10, test_rivet_no_flash): 66.7 % on 7c5e5d303 (publish untested, and it now drives the fire latch) -> test added 7d0064bca -> 77.8 % (7/9, invalid 1). Survivors: :37 the empty-path guard (defensive), :62 the missing-row default (MIN_TICKS overrides it): equivalent. Checkout clean.
 - Session 2 ends 22:26. NEXT stands as written above, item (2) done.
+
+## Session 3 (iteration 9, 2026-11-11 22:24-), BUILD
+
+- Read: JOURNAL, git log, asset replies (it458: katana thrust recovery p70/p55 22:20; pistol diagonal fire p70 22:24).
+- Registry applied: realtime-combat-semantics (the shot's visible gun points where the round goes; the effects leave the drawn muzzle), motion-quality-gating (pops measured per tick in px: figure top, helmet x on the handover), sprite-and-atlas-production (cells seated on their drawn boots / helmet, never the canvas edge; the delivery's boot rows checked by eye: the camera ones were the blade tip again).
+- MILESTONE 77b991075 DEFECTS #16 fixed: RivetThrust draws the it458 thrust recovery cell after the contact (through the hold); `--rivet-thrust-recover=off` = before. Films chapter:katana_thrust 64 + 32, _cam 32. Camera cell seated on its boots (p70 row 188; delivery said 249 = blade tip).
+- FOUND (open, #13 family): the katana's x1.5 camera cells (strike, recovery) hand over to the walk grid with an ~8 px figure-top pop at 32 px/m (helmet ~11 % wider than the walk row's).
+- MILESTONE 67f4343a6 DEFECTS #11b fixed: RivetGunDiag (p70 pistol): a diagonal shot draws the drawn diagonal fire cell (gun -25 deg up-right, flash on its muzzle, flashless past the flare), seated on his helmet (the away cells draw the body 47 px off the canvas centre: a 20 px sideways pop at 64 px/m before the seat); `--rivet-gun-diag=off` = before. Film: arena (pistol) t1412-1477 at 64/32 px/m, --lock=off (the arena's default lock puts him at the top edge).
+- The n17 strips (noflash twins, diag, thrust, thrust recover) now join RivetStripWarm (first-use loads were in the pose step).
+- FRICTION: Godot 4.7.2 quirk: `DEG[key][c]` on a `const Dictionary[String, PackedFloat32Array]` built from array literals reads 0.0 while `DEG.get(key, [])[c]` reads the value (cost 20 min; commented in rivet_gun_diag.gd). FLAME_DEG reads through .get and is fine.
+- FRICTION: rivet_muzzle.py --check is STALE on HEAD before tonight (the table predates re-cuts); the pistol diag row is pinned in the tool (DIAG_PINNED) so a rerun keeps it.
+- #17 (flamer diag off centre) was a measuring artifact: retracted after looking at the cells at 2x.
