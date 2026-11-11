@@ -63,22 +63,24 @@ def heights(path: Path, rows: int, fill: float) -> list:
     return out
 
 
-CLASS_WALKS = {"cop_patrol": "cop_patrol_armed_walk.png", "cop_riot": "cop_riot_armed_walk.png", "swat": "swat_armed_walk.png"}
-
-
-def classes(walk_fill: dict) -> int:
-    """The class grids against the walk; the count of kinds whose jab is off by TOL or a class over it."""
+def classes(walk_fill: dict, hit_fill: dict) -> int:
+    """The class grids (StreetHitClass.FILL) against the kind's walk (the thug: his thrown cell, he walks
+    as parts); the count of kinds whose jab is off by TOL or whose other class stands TOL over it."""
     fill = table("street_hit_class.gd", "FILL")
     bad = 0
-    for kind, walk in CLASS_WALKS.items():
-        w = float(np.mean(heights(P70 / walk, 4, walk_fill.get(walk, 1.0))))
-        for cls in ("jab", "heavy", "shock"):
-            file = f"{kind}_{cls}_hit.png"
-            hs = heights(P70 / file, 1, fill[file])
-            off = float(np.mean(hs)) / w - 1.0
-            bad += abs(off) > TOL if cls == "jab" else off > TOL
-            cells = " ".join(f"{h:.2f}" for h in hs)
-            print(f"{file:24s} walk {w:.3f} m  cells {cells}  {off:+.1%}  FILL {fill[file]:.2f}")
+    for file in fill:
+        kind, cls = file.rsplit("_", 2)[0], file.rsplit("_", 2)[1]
+        thrown = f"{kind}_hit.png"
+        if thrown in WALKS:
+            walk = WALKS[thrown]
+            w = float(np.mean(heights(P70 / walk, 4, walk_fill.get(walk, 1.0))))
+        else:
+            w = float(np.mean(heights(P70 / thrown, 1, hit_fill[thrown])))
+        hs = heights(P70 / file, 1, fill[file])
+        off = float(np.mean(hs)) / w - 1.0
+        bad += abs(off) > TOL if cls == "jab" else off > TOL
+        cells = " ".join(f"{h:.2f}" for h in hs)
+        print(f"{file:24s} walk {w:.3f} m  cells {cells}  {off:+.1%}  FILL {fill[file]:.2f}")
     return bad
 
 
@@ -93,7 +95,7 @@ def main() -> int:
         bad += abs(off) > TOL
         want = hit_fill[hit] * w / h
         print(f"{hit:24s} walk {w:.3f} m  hit {h:.3f} m  {off:+.1%}  FILL {hit_fill[hit]:.2f} -> {want:.2f}")
-    bad += classes(walk_fill)
+    bad += classes(walk_fill, hit_fill)
     if "--check" in sys.argv[1:]:
         print(f"street_hit_size: {'FAIL' if bad else 'PASS'} ({bad} kind(s) past {TOL:.0%})")
         return 1 if bad else 0

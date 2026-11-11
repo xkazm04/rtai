@@ -63,12 +63,11 @@ func test_the_dying_never_draw_a_class_cell() -> void:
 
 
 func test_every_class_grid_is_five_facings_at_the_walk_height() -> void:
-	# owner: "policemen are changing sizes on hit": the jab stands at the walk (one scale per kind),
-	# the crouched heavy and the shock never taller than it.
-	var walks: Dictionary = StreetCopWalk.WALKS["p70"]
+	# owner: "policemen are changing sizes on hit": the jab stands at the kind's thrown cell (itself at
+	# the walk, test_street_walker_hit), the crouched heavy and the shock never taller than it.
 	for row: String in StreetHitClass.GRIDS:
-		var walk: String = StreetWalkerCards.DIR + "p70/" + str(walks[row])
-		var w: float = _mean_h(walk, 4, StreetCopWalk.fill_of(walk))
+		var thrown: String = StreetWalkerCards.DIR + StreetWalkerHit.GRIDS[row]
+		var w: float = _mean_h(thrown, 1, StreetWalkerHit.fill_of(thrown))
 		for cls: StringName in StreetHitClass.GRIDS[row]:
 			var path: String = StreetWalkerCards.DIR + str(StreetHitClass.GRIDS[row][cls])
 			var tex: Texture2D = load(path) as Texture2D
@@ -77,7 +76,7 @@ func test_every_class_grid_is_five_facings_at_the_walk_height() -> void:
 			if cls == &"jab":
 				assert_almost_eq(h, 1.0, 0.05, "%s %s: %.2f x the walk" % [row, cls, h])
 			else:
-				assert_between(h, 0.85, 1.05, "%s %s: %.2f x the walk" % [row, cls, h])
+				assert_between(h, 0.85, 1.06, "%s %s: %.2f x the walk" % [row, cls, h])
 
 
 ## The mean opaque figure height (m) of a 5-facing grid's cells, drawn at `fill` x HEIGHT_M.

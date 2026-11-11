@@ -25,7 +25,8 @@ const FAMILIES: Array[StringName] = [&"flinch", &"stagger", &"spin", &"fold", &"
 ## Seconds the class cell holds from the blow: a jab as long as a flinch's cell (a combo lands
 ## 3-4 jabs a second), a heavy blow as a stagger's, a shock through half the stun's convulsion.
 const HOLD_S: Dictionary[StringName, float] = {&"jab": 0.2, &"heavy": 0.34, &"shock": 0.5}
-## card row -> class -> grid (street_hit.py --only=classes); a row or class absent = no cell.
+## card row -> class -> grid (street_hit.py --only=classes); a row or class absent = no cell (a
+## pedestrian's shock keeps the stun's shoved walk, as before).
 const GRIDS: Dictionary[String, Dictionary] = {
 	"cop/head_cap":
 	{
@@ -45,6 +46,15 @@ const GRIDS: Dictionary[String, Dictionary] = {
 		&"heavy": "p70/swat_heavy_hit.png",
 		&"shock": "p70/swat_shock_hit.png",
 	},
+	"thug": {&"jab": "p70/thug_jab_hit.png", &"heavy": "p70/thug_heavy_hit.png"},
+	"ped/head_hair": {&"jab": "p70/ped_suit_jab_hit.png", &"heavy": "p70/ped_suit_heavy_hit.png"},
+	"ped/head_hood": {&"jab": "p70/ped_hood_jab_hit.png", &"heavy": "p70/ped_hood_heavy_hit.png"},
+	"ped/head_cap": {&"jab": "p70/ped_cap_jab_hit.png", &"heavy": "p70/ped_cap_heavy_hit.png"},
+	"ped/head_worker":
+	{&"jab": "p70/ped_worker_jab_hit.png", &"heavy": "p70/ped_worker_heavy_hit.png"},
+	"ped/head_jogger":
+	{&"jab": "p70/ped_jogger_jab_hit.png", &"heavy": "p70/ped_jogger_heavy_hit.png"},
+	"ped/head_punk": {&"jab": "p70/ped_punk_jab_hit.png", &"heavy": "p70/ped_punk_heavy_hit.png"},
 }
 ## The class grids' draw scale (StreetWalkerHit.fill_of), ONE per kind so jab, heavy and shock
 ## swap without a pop: the standing jab's mean figure height = the kind's walk
@@ -60,6 +70,24 @@ const FILL: Dictionary[String, float] = {
 	"swat_jab_hit.png": 1.08,
 	"swat_heavy_hit.png": 1.08,
 	"swat_shock_hit.png": 1.08,
+	# assets it454: the thug and six pedestrians (jab and heavy; none drew a shock), the jab at the
+	# walk (the thug's: his thrown cell, he walks as parts); before fill: thug 0.97, suit 0.93,
+	# hood 0.98, cap 0.93, worker 0.90, jogger 0.91, punk 1.00 x (cap, jogger, punk 0.01 under the
+	# jab's: their heavy stood 3.4-3.7 % over the walk).
+	"thug_jab_hit.png": 1.03,
+	"thug_heavy_hit.png": 1.03,
+	"ped_suit_jab_hit.png": 1.07,
+	"ped_suit_heavy_hit.png": 1.07,
+	"ped_hood_jab_hit.png": 1.03,
+	"ped_hood_heavy_hit.png": 1.03,
+	"ped_cap_jab_hit.png": 1.07,
+	"ped_cap_heavy_hit.png": 1.07,
+	"ped_worker_jab_hit.png": 1.11,
+	"ped_worker_heavy_hit.png": 1.11,
+	"ped_jogger_jab_hit.png": 1.09,
+	"ped_jogger_heavy_hit.png": 1.09,
+	"ped_punk_jab_hit.png": 0.99,
+	"ped_punk_heavy_hit.png": 0.99,
 }
 ## --hit-class=off read once: -1 unread, 1 off.
 static var _off: int = -1
