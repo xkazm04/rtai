@@ -620,3 +620,24 @@ kill_reel dirs 0/135/225 at 32+64 on HEAD. (5) the Gatling AFTER reel at 64 for 
 still owed. (6) the final gates before the 19:30 freeze: full unit, scenarios (55/55 on 2c7040a23; the claw flight
 changes after it are data only), `node tools/evidence/run.mjs` (parity + look goldens), `node tools/reel/run_reels.mjs`,
 lint/debt. (7) REPORT final by 19:40 (Calls: one line per death, incl. the claw's rifle-distance Call).
+- 17:09 GATE full unit on `51f023a90` (live tree): 2680 passed, 1 failed, 2 skipped. The failure is mine mid-run:
+  test_kill_death_cells `test_every_named_grid_exists_with_a_row_per_frame` read the claw cells I had added to the
+  JSON while the run was going, before Godot imported the PNGs. Re-run after the import: 38/38 over the 4 kill files.
+  Lesson: do not edit project/ data during a full live-tree unit run.
+- 17:10 the asset lane had ALREADY delivered claw_throw p70 for all four kinds (it434, 16:44-16:56). Suit molotov:
+  only frames 3-4 in `ped_suit_molotov_torch_70_cells` (the packer says "no cells"; frames 1-2 still refused).
+- 17:11 MILESTONE `0bbc3f265` the drawn claw cells (cells.at [0,4,20,40], 4 kinds). Filmed at 64 dir 0 + 32 dirs
+  0/135: PASS. Judged (`evidence/n16-kills-new/claw_throw_cells_ab_64ppm_dir0_t127-217.png`): struck stiff with the
+  bolt, +4..+16 flung with his arms reaching back toward Rivet (reads as thrown), lands +20, smoke +60. With
+  cells_turn_from 2 he lay head toward Rivet; A/B `4220dddb7` (no turn) vs that
+  (`claw_throw_cells_turn_vs_noturn_64ppm_dir0.png`): KEPT no turn (`8a15e9314`), on his back head away from Rivet.
+  Unit 25/25. The 32 px/m film of the kept version is owed (the 32 clips are of the turned one).
+
+NEXT (iteration 21) supersedes the list above: (1) film the claw cells at HEAD (`8a15e9314`) at 32 px/m dirs
+0/135/225 + 64 dir 0 (`film.mjs kill:electro_gun ... -- --sig-gun=claw_shock --sig-dir=<d>`, before = `6866642e3`),
+judge the landing jump (the flight frame -> the corpse cell) and the SWAT frame-1 bolt below the feet (asset note:
+~10 px high); evidence + masters. (2) gates on HEAD: full unit (nothing editing project/ during it), scenarios,
+`node tools/evidence/run.mjs`, `node tools/reel/run_reels.mjs`. (3) asset replies: gatling_shred + baton_overload
+p55 (`swat_gatling_shred_55_cells`, `cop_patrol_baton_overload_55_cells`, `swat_baton_overload_55_cells` landed;
+check the rest) -> `kill_cells_pack.py --death=<d> --art=p55`, add p55 grids; the suit molotov kneel; ask for
+claw_throw p55. (4) the molotov in a city street fight at 32 px/m. (5) REPORT final by 19:40.
