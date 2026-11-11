@@ -42,8 +42,7 @@ var height_m: float = 1.75
 var cycle_cell: float = 150.0
 var run_cell: float = 0.0  # the run grid's stride cycle in cell px (0 = no run grid)
 var fig_px: float = 180.0  # the figure's median height in the grid, cell px (ghost_pack prints it)
-## True while something else carries the form (Dent braced on a car roof): stands, feet still.
-var still: bool = false
+var still: bool = false  # something else carries the form (Dent on a car roof): stands still
 var blow: Vector2 = Vector2.ZERO  # the last hit's line (GhostActs, Fighter.hurt_dir; ZERO = none)
 var jab: bool = false  # the strike or wind-up shown is Dent's arm jab (GhostActs)
 var _spr: Sprite2D = null
@@ -103,6 +102,7 @@ func step(
 	var reach: Vector2 = GhostLunge.reach(since, _look, card_name) * SimConst.PX_PER_M * size_k
 	_spr.global_position = host.global_position + reach
 	_spr.global_scale = Vector2(s, s / vm.ground_k())
+	GhostHand.note(card_name, _art, _spr, o, act >= 0 and act != HIT_COL)
 	return true
 
 

@@ -75,7 +75,7 @@ func _draw() -> void:
 		return
 	var fade: float = 1.0 - age / HANG_S
 	var beat: int = 0 if reduced_motion else (stage.tick / 2)
-	var prongs: PackedVector2Array = o.tips(stage.arena.rivet.pos, o.bolt_aim)
+	var prongs: PackedVector2Array = _at_hand(o.tips(stage.arena.rivet.pos, o.bolt_aim))
 	for i: int in o.bolt_path.size() - 1:
 		var src: int = o.bolt_from[i + 1] if o.bolt_from.size() > i + 1 else i
 		var b: Vector2 = o.bolt_path[i + 1] * ppm
@@ -186,3 +186,12 @@ func _reach(at: Vector2, f: Vector2, side: float, k: float, beat: int) -> void:
 	var pts: PackedVector2Array = _jag(at, tip, beat * 5 + int(side * 3.0))
 	draw_polyline(pts, Color(INK, 0.8 * k), 4.0, true)
 	draw_polyline(pts, Color(WHITE, k), 1.8, true)
+
+
+## n15 hero: the prongs moved together so they leave from the drawn hand (GhostHand), metres.
+func _at_hand(prongs: PackedVector2Array) -> PackedVector2Array:
+	var hand: Vector2 = GhostHand.local_to(String(OhmStage.GHOST), self)
+	if hand == Vector2.INF:
+		return prongs
+	var shift: Vector2 = hand / ppm - (prongs[0] + prongs[1]) * 0.5
+	return PackedVector2Array([prongs[0] + shift, prongs[1] + shift])

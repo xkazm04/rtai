@@ -62,6 +62,8 @@ static func _ghost(arg: String) -> void:
 		GhostSoulLine.enabled = false
 	elif arg == "--ghost-lunge=off":  # n15: the drawn ghosts strike upright (before)
 		GhostLunge.enabled = false
+	elif arg == "--ghost-ohm-hand=sim":  # n15: Ohm's bolt from the rig's electrodes (before)
+		GhostHand.enabled = false
 
 
 ## --rivet-walk=<mode>; n11: --rivet-swipe=off (one drawn strike cell), --rivet-bob=drawn (no damp).
