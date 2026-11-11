@@ -215,6 +215,10 @@ Session 6 (from FRICTION lines, no REQUEST open):
 
 ## Merge notes (draft)
 
+- quest1 stills: after this merges, `dev/frames/quest1_clip_rec.gd` draws 120 ticks before each still. A compare
+  of a commit from before the merge against one after it runs each side's own recorder, which mixes the old jump with
+  the lead. Film both sides with `-- --still-lead=0`, or compare two post-merge commits. Arena, city and weapon
+  films are untouched.
 - Merge n15-tools FIRST. It changes the sim (t-1 spawn order, t-4, t-5 HW, the c-2 mask at its t-4 value) and the
   native sources (`car_route.cpp`, `sim_constants.h`): the DLLs are git-ignored, so rebuild both after the merge
   (`just native` debug + release, then `--import`). Hero and combat keep working on their own DLLs until then: their
