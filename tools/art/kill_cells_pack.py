@@ -10,7 +10,7 @@ sit on the cell centre, as the fall grids draw them (KillFallCells: `centered`).
 corpse (the last frame) is the 3/4-away one when BACK_FROM_AWAY names the kind, as the long fall
 grids do (a face-down corpse seen from behind reads as a person standing). Deterministic.
 
-    PYTHONDONTWRITEBYTECODE=1 python tools/art/kill_cells_pack.py --death=pistol_snap [--lib=<dir>]
+    PYTHONDONTWRITEBYTECODE=1 python tools/art/kill_cells_pack.py --death=pistol_snap [--art=p55] [--lib=<dir>]
     PYTHONDONTWRITEBYTECODE=1 python tools/art/kill_cells_pack.py --headgear  (<kind>_headgear_tumble.png)
 """
 
@@ -22,7 +22,8 @@ import numpy as np
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[2]
-P70 = ROOT / "project/features/characters/art/view/p70"
+VIEW = ROOT / "project/features/characters/art/view"
+P70 = VIEW / "p70"
 LIB = Path("C:/Users/kazda/kiro/gtai-art/library/keyed/street")
 KINDS = ("cop_patrol", "cop_riot", "swat", "ped_suit")
 COLS = 5
@@ -47,8 +48,8 @@ def frames_of(src: Path) -> int:
     return n
 
 
-def pack(kind: str, death: str, lib: Path) -> Path | None:
-    src = lib / f"{kind}_{death}_70_cells"
+def pack(kind: str, death: str, lib: Path, art: str = "p70") -> Path | None:
+    src = lib / f"{kind}_{death}_{art[1:]}_cells"
     n = frames_of(src)
     if n == 0:
         return None
@@ -69,7 +70,7 @@ def pack(kind: str, death: str, lib: Path) -> Path | None:
             slot = Image.new("RGBA", (w, h), (0, 0, 0, 0))
             slot.paste(cell, (0, dy_c))  # clipped to its own cell
             out.alpha_composite(slot, ((c - 1) * w, (f - 1) * h))
-    dst = P70 / f"{kind}_{death}.png"
+    dst = VIEW / art / f"{kind}_{death}.png"
     out.save(dst, optimize=True)
     return dst
 
@@ -93,13 +94,14 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--death", default="pistol_snap")
     ap.add_argument("--lib", default=str(LIB))
+    ap.add_argument("--art", default="p70", help="p70 or p55 (the cells' pitch)")
     ap.add_argument("--headgear", action="store_true", help="pack the loose headgear cells instead")
     args = ap.parse_args()
     for kind in KINDS:
         if args.headgear:
             dst = pack_headgear(kind, Path(args.lib))
         else:
-            dst = pack(kind, args.death, Path(args.lib))
+            dst = pack(kind, args.death, Path(args.lib), args.art)
         if dst is None:
             print(f"{kind}: no cells")
             continue

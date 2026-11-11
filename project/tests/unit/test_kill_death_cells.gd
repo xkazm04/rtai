@@ -11,9 +11,10 @@ func test_the_pistol_row_names_a_grid_for_the_four_street_kinds() -> void:
 	assert_eq(KillDeathCells.path_of(e, "p70", "cop/head_helmet"), "p70/cop_riot_pistol_snap.png")
 	assert_eq(KillDeathCells.path_of(e, "p70", "cop/head_swat"), "p70/swat_pistol_snap.png")
 	assert_eq(KillDeathCells.path_of(e, "p70", "ped/head_hair"), "p70/ped_suit_pistol_snap.png")
+	assert_eq(KillDeathCells.path_of(e, "p55", "cop/head_cap"), "p55/cop_patrol_pistol_snap.png")
 	assert_eq(
-		KillDeathCells.path_of(e, "p55", "cop/head_cap"),
-		"p70/cop_patrol_pistol_snap.png",
+		KillDeathCells.path_of(e, "p55", "ped/head_hair"),
+		"p70/ped_suit_pistol_snap.png",
 		"an art without its own cells draws the fallback art's"
 	)
 	assert_eq(KillDeathCells.path_of(e, "p70", "thug"), "", "a kind without cells keeps its fall")

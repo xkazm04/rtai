@@ -542,6 +542,11 @@
           21
         ],
         "grids": {
+          "p55": {
+            "cop/head_cap": "cop_patrol_pistol_snap.png",
+            "cop/head_helmet": "cop_riot_pistol_snap.png",
+            "cop/head_swat": "swat_pistol_snap.png"
+          },
           "p70": {
             "cop/head_cap": "cop_patrol_pistol_snap.png",
             "cop/head_helmet": "cop_riot_pistol_snap.png",
@@ -787,7 +792,7 @@
       "blot_m": 0.35,
       "bounce": 0.1,
       "cone_deg": 16,
-      "doc": "Gatling (lane kills-new, n16): the shred. No hit-stop (the stream never stops). t0-24 the stream holds him upright, shaken back hard every 1-2 ticks (the pose track: leans of 2-12 deg away from the gun), and every 3 ticks a torn scrap of cloth or flesh with a cream bone fleck leaves his figure (hip to neck) with a red spurt and flies up to 1.4 m along the stream to lie on the street (KillShredArt, 8 scraps). From t24 what is left drops: his own drawn fall grid (KillFallCells) over 12 ticks, falling back along the stream. Aftermath: the body among the scattered scraps, a wide spray behind. Alternative (one data change): pieces = the six rig parts + grind_ticks 24 holds the parts and KillShredArt shakes them and drops them in a heap at his feet (wants kills-polish's drawn gib pieces, GibCardPieces.dress_rig, on a card victim). Placeholder until the drawn shred cells land (JOURNAL REQUEST assets).",
+      "doc": "Gatling (lane kills-new, n16): the shred. No hit-stop (the stream never stops). t0-24 the stream holds him upright, shaken back hard every 1-2 ticks (the pose track: leans of 2-12 deg away from the gun), and every 3 ticks a torn scrap of cloth or flesh with a cream bone fleck leaves his figure (hip to neck) with a red spurt and flies up to 1.4 m along the stream to lie on the street (KillShredArt, 8 scraps). From t24 what is left drops: his own drawn fall grid (KillFallCells) over 12 ticks, falling back along the stream. (fx cells_at 0 + fall_at 24 = the buckle frame from the hit: no jump at the drop, but a jump and a hunched figure at the kill; rejected by film 13:05.) Aftermath: the body among the scattered scraps, a wide spray behind. Alternative (one data change): pieces = the six rig parts + grind_ticks 24 holds the parts and KillShredArt shakes them and drops them in a heap at his feet (wants kills-polish's drawn gib pieces, GibCardPieces.dress_rig, on a card victim). Placeholder until the drawn shred cells land (JOURNAL REQUEST assets).",
       "fall": "back",
       "flash_ticks": 0,
       "fx": {

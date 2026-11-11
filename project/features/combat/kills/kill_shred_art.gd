@@ -74,7 +74,7 @@ func add_death(d: KillNewStyles.Death) -> void:
 	s.born = d.born
 	s.dir = d.dir
 	s.extra = d.extra
-	s.hold = roundi(d.extra.num("cells_at", 24.0))
+	s.hold = roundi(d.extra.num("fall_at", d.extra.num("cells_at", 24.0)))
 	s.death = d
 	_shreds.append(s)
 
