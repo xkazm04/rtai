@@ -18,6 +18,15 @@
     "note": "The Deck row of the HUD scale table: the slot clears the subtitle box and the cop."
   },
   {
+    "file": "gun_diag_machine_pistol_64.png",
+    "title": "Machine pistol burst up-right: the drawn diagonal fire cell (64 px/m)",
+    "source": "film.mjs weapon:machine_pistol --ppm=64 --lock=off --stills=333-669 (7b4d3201b), before = -- --rivet-gun-diag=off; cyan = ground line",
+    "branch": "n17-rivet-strike",
+    "ppm": 64,
+    "before": "top row",
+    "note": "t333-341: before, the side cell's arm level while the burst's tracers leave ~30 deg up; after, the gun raised along the burst, flash on its muzzle, flashless between rounds. t669 (down-left) is a near tie between the side and the diagonal."
+  },
+  {
     "file": "gun_diag_pistol_64.png",
     "title": "Pistol shot up-right: the drawn diagonal fire cell, gun along the round (64 px/m)",
     "source": "film.mjs arena --ppm=64 --lock=off --stills=1412-1477 (67f4343a6), before = -- --rivet-gun-diag=off; cyan = ground line",
@@ -124,14 +133,5 @@
     "ppm": 64,
     "before": "left: the gait's bob lifts the strike cell 2.6 px (probe screen y 397.4-399.4, sim y constant)",
     "note": "after: screen y 400.0 every tick t55-71"
-  },
-  {
-    "file": "hud_slot_1280x800_gloria.png",
-    "title": "HUD weapon slot bottom right (1280x800, Deck panel 1:1)",
-    "source": "dev/showcase/dialogue_board.gd --slots over film.mjs city t400",
-    "branch": "n17-rivet-strike",
-    "ppm": 48,
-    "before": "left: --hud-weapon=off, the weapon on the top-right ticket",
-    "note": "showcase ICON, WEAPON__ name, magazine count"
   }
 ]

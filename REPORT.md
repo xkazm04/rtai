@@ -25,14 +25,14 @@ on 48c91e944: top, tilt70, combo OK. Planted faults: `rivet_thrust.gd` 75 % (6/8
 | 4 flash lasts the flare's ticks (flashless cells, 8 guns x 2 pitches) | e9c893e67 | `--rivet-noflash=off` | pistol painted flash t333-338 (6 ticks) -> t333-335 (gun_fx muzzle_ticks 3) | `noflash_pistol_t333_338_64.png` |
 | 4 recoil kicks the body | 8a47c51db | `--rivet-kick=off` | one held pose -> hand cannon 4.8 deg back about the feet (top ~13 px at 64 px/m), pistol 3 deg | `kick_hand_cannon_64.png`, `kick_hand_cannon_32.png` |
 | 3 katana thrust recovery drawn (asset lane it458 cells), no slash arc after a straight thrust | 77b991075 | `--rivet-thrust-recover=off` | slash cell + cream arc 22 ticks, figure top 24 px under the thrust -> blade drawn back level, boots on the line, top 8 px over (64 px/m) | `thrust_recover_t90_119_64.png`, `thrust_recover_cam_t88_118_32.png`, `thrust_recover_t90_119_32.png` |
-| 4 diagonal shot draws a diagonal gun (p70 pistol, it458) | 67f4343a6 | `--rivet-gun-diag=off` | arm level 0 deg vs aim -19 deg, flash star off the gun -> gun -25 deg, star on the drawn muzzle; figure 117 -> 150 px tall (walk 160) at 64 px/m | `gun_diag_pistol_64.png`, `gun_diag_pistol_32.png` |
+| 4 diagonal shot draws a diagonal gun (p70 pistol and machine pistol, it458) | 67f4343a6, 4fc5137dc, 7b4d3201b | `--rivet-gun-diag=off` | arm level 0 deg vs aim -19 deg, flash star off the gun -> gun -25 deg, star on the drawn muzzle; figure 117 -> 150 px tall (walk 160) at 64 px/m | `gun_diag_pistol_64.png`, `gun_diag_pistol_32.png`, `gun_diag_machine_pistol_64.png` |
 | 5 gun camera fire cells on his boots | 9bac727e5 | `--rivet-cell-feet=off` | pistol shot tick: figure top 44 px higher -> the drawn crouch on the line | `camfire_pistol_t60_63_64.png` |
 
 ## What does not work yet (open in DEFECTS.md)
 
 - #2 the claw's lunges still spread evenly (its rows feed the replay golden: a Call).
-- #11 the shot's direction vs the drawn arm: fixed on the diagonals for the p70 pistol (67f4343a6); the other 7 guns and
-  p55 wait for their drawn diagonal cells (asset lane, in order); a side-octant shot 20-30 deg off still draws the
+- #11 the shot's direction vs the drawn arm: fixed on the diagonals for the p70 pistol and machine pistol; the other 6 guns at
+  p70 and all 8 at p55 are delivered and measured, not yet wired; a side-octant shot 20-30 deg off still draws the
   side cell (the facing/aim gap itself is unmeasured over a street fight).
 - #13 also: the katana's x1.5 camera cells hand over to the walk grid with an ~8 px figure-top pop at 32 px/m.
 - #13 size pop at the fire cell -> armed walk handover (placement, not drawing).

@@ -54,8 +54,9 @@
    11b. **A diagonal shot drew the side fire cell** (arena pistol t1412-1477 at 64 px/m, Rivet in octant 7/5): arm
    level at 0 deg, the round and the flash star leaving up-right (aim -19 deg), the star drawn off the gun. -> fixed
    67f4343a6 (RivetGunDiag + the asset lane's it458 pistol diagonal cells: gun at -25 deg, star on the muzzle,
-   seated on his helmet; figure 150 px tall against the walk's 160, the side fire cell's 117). p70 pistol only: open
-   for the other 7 guns and p55 (asset lane drawing them).
+   seated on his helmet; figure 150 px tall against the walk's 160, the side fire cell's 117); the p70 machine pistol
+   7b4d3201b (weapon:machine_pistol t333-341). Open: the other 6 guns at p70 and all 8 at p55 (delivered by the asset
+   lane, it462; measured, JOURNAL session 3).
 12. **No visible recoil kick** on the pistol fire cells t333-338 (the arm and body hold one pose). -> fixed 8a47c51db
     (RivetLean kick: 3 deg per unit of the rig's recoil about his feet; hand cannon 4.8 deg, figure top ~13 px at 64 px/m;
     `kick_hand_cannon_64.png` / `_32.png`). The camera/back octants show no tilt (cannot read there): open, minor.
