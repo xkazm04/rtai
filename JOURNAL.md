@@ -777,3 +777,15 @@ untracked dev/sim/car_route_trails.gd copy is mine) and `git branch -D n15t-cont
   TO combat: commit, then queue `node tools/film/film.mjs <shot> --rev=HEAD ...`; edit freely while it runs.
 - 04:36 CORRECTION: the session-6 times above were first written as guesses; fixed from `git log --date=format:%H:%M:%S`
   (88b42ec2d 04:26:29, 0e67967ef 04:30:29, 3f5f17ccc 04:34:37).
+- 04:36 gate started on e0dc8173 (= launch-flags + film --rev; `node tools/gate/run.mjs --rev=HEAD --reels --timeout=40`,
+  log gtai-n15/flake/gate_s6.log, snapshot gtai-gate-e0dc817315e6).
+- 04:36-04:38 item 6 loop under that load: `gtai-n15/flake/loop_all.sh` = EVERY tools/*/*.test.mjs (wider than the
+  lint set), 2 copies x 5 runs in parallel: 9 of 10 `fail=0` (pass=1128, 13-20 s each); copy 1 run 4 (04:37:21) `fail=1`
+  = `tools\reel\run_reels.test.mjs` at 1:1, a SyntaxError of MY half-written test (the Bash heredoc collapsed `\` to
+  `\`; fixed with Edit at 04:38): an edit in the looped tree, not a flake. No timing flake reproduces.
+- 04:38-04:41 SERVED hero's FRICTION (their :129: "`node tools/reel/run_reels.mjs` with no args exits 2 (usage) ... lost
+  one chained slot"; the night brief itself names the bare command as the reel gate), 2f051cd65: no `--out` = `build/reels`
+  of the tree (`DEFAULT_OUT`, said on stderr); argv checks in an exported `parseMain` (test: bare = 3 views, 19,
+  build/reels; duplicates, `--loadout`, `--expect=-1`, bad view names still exit 2). `node tools/reel/run_reels.mjs
+  --loadout=pistol` -> `invalid argument`, exit 2. Reel tests 39/0. Gate and morning pass --out: unchanged. Real bare run:
+  after the gate (one Godot per lane).
