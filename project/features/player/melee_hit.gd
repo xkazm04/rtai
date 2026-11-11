@@ -16,6 +16,10 @@ var knockback_m: float = 0.0
 var stun_ticks: int = 0
 var chain_hops: int = 0
 var lunge_m: float = 0.0
+## n17 rivet-strike: > 0 = the lunge travels over the lunge_ticks ticks just before the contact
+## tick (the body arrives as the hit lands, the feet planted through the wind-up before it);
+## 0 = the before (lunge_m spread evenly over windup + active).
+var lunge_ticks: int = 0
 var grind_ticks: int = 0
 ## The bite always holds this long, held or not (a tap of the chainsaw still grinds).
 var grind_min_ticks: int = 0

@@ -1,5 +1,5 @@
 {
-  "doc": "Rivet's melee weapons as timing data (rivet-motion, 2026-11-03 eve; the owner's first set, 20:00). Each weapon is a combo in the rivet_melee.json claw shape (ticks are 60 Hz; windup -> active -> recovery, cancel_ticks into the recovery a buffered press chains, combo_window_ticks after a hit a press continues) plus per-hit stun_ticks, chain_hops (arcs to metal targets within the weapon's chain_radius_m) and lunge_m (Rivet travels this far over the hit's windup and active ticks). move_mult scales Rivet's top speed while a hit plays. grind_ticks and grind_min_ticks (optional, the chainsaw): the hit's last active tick holds for grind_min_ticks and on while the attack is held, landing again every grind_ticks. Evening: electro_baton and katana; night (rivet-arsenal): chainsaw and plasma_sword. Placeholder numbers until the owner judges a clip in the D5 look.",
+  "doc": "Rivet's melee weapons as timing data (rivet-motion, 2026-11-03 eve; the owner's first set, 20:00). Each weapon is a combo in the rivet_melee.json claw shape (ticks are 60 Hz; windup -> active -> recovery, cancel_ticks into the recovery a buffered press chains, combo_window_ticks after a hit a press continues) plus per-hit stun_ticks, chain_hops (arcs to metal targets within the weapon's chain_radius_m) and lunge_m (Rivet travels this far over the hit's windup and active ticks). lunge_ticks (optional, n17 rivet-strike): the lunge travels over only that many ticks just before the contact tick (the first active tick), so the body has arrived when the hit lands and the feet stay planted through the wind-up before it; absent = the before (spread over windup + active). move_mult scales Rivet's top speed while a hit plays. grind_ticks and grind_min_ticks (optional, the chainsaw): the hit's last active tick holds for grind_min_ticks and on while the attack is held, landing again every grind_ticks. Evening: electro_baton and katana; night (rivet-arsenal): chainsaw and plasma_sword. Placeholder numbers until the owner judges a clip in the D5 look.",
   "schema": "gtai.melee-weapons/1",
   "weapons": {
     "chainsaw": {
@@ -20,6 +20,7 @@
           "id": "chainsaw_1",
           "knockback_m": 0.05,
           "lunge_m": 0.6,
+          "lunge_ticks": 4,
           "reach_m": 1.6,
           "recovery_ticks": 16,
           "stun_ticks": 16,
@@ -140,6 +141,7 @@
           "id": "katana_3",
           "knockback_m": 1.2,
           "lunge_m": 2.5,
+          "lunge_ticks": 4,
           "reach_m": 2.4,
           "recovery_ticks": 22,
           "stun_ticks": 0,

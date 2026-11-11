@@ -51,6 +51,11 @@
           "minimum": 0,
           "type": "number"
         },
+        "lunge_ticks": {
+          "maximum": 30,
+          "minimum": 0,
+          "type": "integer"
+        },
         "reach_m": {
           "maximum": 6,
           "minimum": 0.3,

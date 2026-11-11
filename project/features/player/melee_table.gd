@@ -104,6 +104,8 @@ static func _read_combo(t: DataTable, combo: Dictionary, m: MeleeTable) -> void:
 			h.chain_hops = t.integer(row, "chain_hops")
 		if row.has("lunge_m"):
 			h.lunge_m = t.num(row, "lunge_m")
+		if row.has("lunge_ticks"):
+			h.lunge_ticks = mini(t.integer(row, "lunge_ticks"), maxi(h.windup - 1, 0))
 		if row.has("grind_ticks"):
 			h.grind_ticks = t.integer(row, "grind_ticks")
 		if row.has("grind_min_ticks"):

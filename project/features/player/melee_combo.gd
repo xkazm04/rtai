@@ -107,10 +107,15 @@ func progress() -> float:
 
 ## Metres Rivet travels along his facing on this tick: a hit's lunge_m spread evenly over its
 ## windup and active ticks (the katana's thrust); 0 in recovery, idle, or for a hit without one.
+## n17 rivet-strike: a hit with lunge_ticks travels only on the lunge_ticks ticks before its
+## contact tick (tick_in windup), so the body has arrived when the hit tests and draws.
 func lunge_step_m() -> float:
 	var h: MeleeHit = current()
 	if h == null or h.lunge_m <= 0.0 or tick_in >= h.windup + h.active or ground > 0:
 		return 0.0
+	if h.lunge_ticks > 0:
+		var on: bool = tick_in >= h.windup - h.lunge_ticks and tick_in < h.windup
+		return h.lunge_m / float(h.lunge_ticks) if on else 0.0
 	return h.lunge_m / float(h.windup + h.active)
 
 

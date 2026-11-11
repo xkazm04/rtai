@@ -52,7 +52,8 @@ func test_katana_reaches_and_lunges() -> void:
 			landed_after = travelled
 		c.step()
 	assert_almost_eq(travelled, katana.hits[2].lunge_m, 1e-4, "the thrust closes lunge_m")
-	assert_lt(landed_after, katana.hits[2].lunge_m, "it lands mid-lunge, not after")
+	# n17 rivet-strike (lunge_ticks): the body has arrived when the thrust lands (before: mid-lunge)
+	assert_almost_eq(landed_after, katana.hits[2].lunge_m, 1e-4, "it lands as the body arrives")
 	assert_eq(c.lunge_step_m(), 0.0, "no drift once the combo ends")
 
 
@@ -101,6 +102,7 @@ func test_planted_fault_lunge_into_recovery_is_caught() -> void:
 	var katana: MeleeTable = MeleeTable.weapon(&"katana")
 	var c: MeleeCombo = _combo_at_hit(katana, 3)
 	var h: MeleeHit = katana.hits[2]
+	h.lunge_ticks = 0  # the even spread (the before): the fault below stretches it
 	for _t: int in h.windup + h.active:
 		c.step()
 	assert_eq(c.lunge_step_m(), 0.0, "recovery does not drift")
