@@ -242,3 +242,24 @@ test_quest_blade registers its own input actions (fails under --select).
   both scenes (the warmed blade-left strips do not appear in these scenes' frames: a load-time cost, not measured).
 - 01:17 full gates started on 896c5c30d (`node tools/gate/run.mjs --rev=HEAD --reels`, log build/gate_896c5c30d.log,
   results build/gate/896c5c30d*/); code since the last PASS: 302a0d670 (contractor stagger), 19e7768ff (impact dust).
+
+NEXT (session 5):
+(1) Read build/gate/896c5c30d*/gate.json (log build/gate_896c5c30d.log; gates on 896c5c30d incl. reels). A moved look
+    golden is most likely quest 1 (the contractor stagger) or a ground impact (the drawn dust): look at the frame,
+    re-bless only that golden with a dated decisions.md line naming the item. Fix any red first.
+(2) Item 2 charred cells (cop patrol only, B: library `cop_patrol_hit_70_cells/char/{1,2}_{c}.png` standing,
+    `char_lying/1_{1..5}.png` lying; faint cyan smoke traces: desaturate them, teal is souls only). Path found: the
+    burn signature kill (`KillStyles.parts` -> GibCut copies the rig's sprites, keeping `head_card` by name, texture,
+    hframes/frame, flip) -> `KillStyles.take` -> `KillCharFx.add` puts the char shader on every sprite. Plan: pack
+    `p70/cop_patrol_char_hit.png` with street_hit.py (a CHARS site like FLAILS, each facing at its burn/1 scale);
+    in `KillStyles.parts` for style burn tag the BODY group with the rig's head row (RigHeadCard key); in
+    `KillCharFx.add` swap that group's `head_card` to the char grid (hframes 5, frame = the card's facing, flip kept,
+    scale so the figure matches StreetWalkerHit's burn FILL) and leave the char shader off it. Flag `--char-cells=off`.
+    Film: weapon:flamethrower --victim=cop/head_cap 64 px/m around the kill (session 2 film ticks), before/after.
+(3) Metal impacts: the it317 metal-spark cell (`fx_impacts_70_cells_rim/1_1.png`) is ready; needs a shot where a round
+    hits metal (dev arena metal range targets: `ArenaTargets.metal_points`), then add it to GunFxImpactCells.FILES
+    and impact_cells.py CELLS.
+(4) DEFECTS: body burst drift (fix path in the 01:08 line), the contractor's living hold film, the t62 white stick in
+    the katana kill (likely the dropped rifle's flight), the flame jet's floor-fire column shape.
+(5) REPORT.md is drafted (commit 896c5c30d): fill the gate line, the perf line (fight_gate WASH, 01:15), new rows.
+REQUEST tools (open, served on n15-tools, not merged here): none new.
