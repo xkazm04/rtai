@@ -32,8 +32,6 @@ class Grind:
 	var ticks: int = 0
 
 
-static var _white: ImageTexture = null
-
 var kills: SignatureKills = null
 var ppm: float = 32.0
 var reduced_motion: bool = false
@@ -46,6 +44,7 @@ var _streak_size: Dictionary[int, Vector2] = {}
 ## serial -> the chainsaw's release burst (at, cut angle, the tick the halves part).
 var _releases: Dictionary[int, Vector4] = {}
 var _grinds: Dictionary[int, Grind] = {}
+var _topples: Dictionary[int, KillSplitHalves.Topple] = {}
 
 
 ## The two halves of `rig` cut along `cut` (unit, world): groups by SignatureKill.PIECE_IDS,
@@ -65,7 +64,7 @@ static func cut(
 		var o: Vector2 = -offs[p] * view_ppm  # the body's centre in the half's space
 		var line: Vector2 = o + lift(row, view_ppm)
 		var side: Vector2 = offs[p].normalized()
-		var mask: Sprite2D = _mask(line, cut_dir, side, view_ppm)
+		var mask: Sprite2D = KillSplitHalves.mask(line, cut_dir, side, view_ppm)
 		root.add_child(mask)
 		var parts: Array[Node2D] = GibCut.cut(rig, true)
 		var body: Node2D = parts[SignatureKill.BODY]
@@ -97,29 +96,14 @@ static func flatten(body: Node2D) -> void:
 		(parts[i] as CanvasItem).z_index = 0
 
 
-## A half-plane (2 m deep) on `side` of the line through `o` along `cut_dir`, clipping its children.
-## (A white sprite stretched over the half-plane: a Polygon2D clipped nothing in the 4.7 print.)
-static func _mask(o: Vector2, cut_dir: Vector2, side: Vector2, view_ppm: float) -> Sprite2D:
-	if _white == null:
-		var img: Image = Image.create(2, 2, false, Image.FORMAT_RGBA8)
-		img.fill(Color.WHITE)
-		_white = ImageTexture.create_from_image(img)
-	var m: Sprite2D = Sprite2D.new()
-	m.texture = _white
-	m.centered = false
-	var l: float = 2.0 * view_ppm
-	var up: float = 1.0 if side.dot(cut_dir.rotated(PI * 0.5)) > 0.0 else -1.0
-	m.rotation = cut_dir.angle()
-	m.scale = Vector2(l, l * 0.5 * up)  # the 2 px texture: 2l along the cut, l deep
-	m.position = o - cut_dir * l
-	m.clip_children = CanvasItem.CLIP_CHILDREN_ONLY
-	return m
-
-
 func add(
 	serial: int, at: Vector2, cut_dir: Vector2, row: SignatureKill, parts: Array[Node2D]
 ) -> void:
 	at += lift(row, 1.0)  # metres: the streak and the saw's bite sit on the raised line
+	var fall: int = kills.tick + row.hitstop_ticks + row.grind_ticks
+	var t: KillSplitHalves.Topple = KillSplitHalves.topple(parts, fall, row.split_topple_deg)
+	if t != null:
+		_topples[serial] = t
 	if row.grind_ticks <= 0:
 		_streaks[serial] = Vector4(at.x, at.y, cut_dir.angle(), kills.tick)
 		_streak_size[serial] = Vector2(row.streak_m, row.streak_w_m)
@@ -148,10 +132,14 @@ func forget(serial: int) -> void:
 	_grinds.erase(serial)
 	@warning_ignore("return_value_discarded")
 	_releases.erase(serial)
+	@warning_ignore("return_value_discarded")
+	_topples.erase(serial)
 
 
-## After KillView placed the halves: a grinding body shakes in one piece.
+## After KillView placed the halves: a grinding body shakes in one piece; cut halves topple.
 func pose() -> void:
+	for t: KillSplitHalves.Topple in _topples.values():
+		t.pose(kills.tick)
 	for serial: int in _grinds.keys():
 		var g: Grind = _grinds[serial]
 		var age: int = kills.tick - g.born

@@ -130,6 +130,11 @@
             "minimum": 0,
             "type": "number"
           },
+          "split_topple_deg": {
+            "maximum": 120,
+            "minimum": 0,
+            "type": "number"
+          },
           "spray": {
             "minimum": 0,
             "type": "integer"
