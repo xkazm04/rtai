@@ -392,3 +392,8 @@ at 19:40: the draft is in the tree; fill Next steps, the gate verdicts, final Co
   A kill on another tick than the scout is UNVERIFIABLE, naming the scout. `--clips` keeps the full window. Tests
   kill_reel 18/18 (scout/film share lock, extra, ticks; every beat still filmed); film tests 254/0; lint 19/19.
   Real-run proof = the queued kills-new gore reel (it loads the kit after the gate: it runs this commit).
+- 15:49 REEL GATE PASS on caccc825d (`node tools/gate/run.mjs --rev=caccc825d --reels`, `gate exit 0`,
+  build/gate/caccc825d4a8/gate.json): lint, unit, scenarios 55, parity bit for bit 1200 steps (planted fault at
+  629), selftest look goldens 11/11 worst 0.00, release-compile 683/0, reels exit 0 (top/tilt70/combo, chapter 19
+  electro_chain 4/4 down last). caccc825d is the last project/ commit on this branch: every gate is green on it.
+- 15:49 gore-check reel started on kills-new 8f7fe6e6e (17 films, scout mode).
