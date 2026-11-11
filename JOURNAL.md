@@ -726,3 +726,12 @@ NEXT (after the run): the Director merges tools FIRST (native changed for c-2). 
 NEXT (after the run): unchanged from s7. The Director merges tools FIRST (native changed for c-2). Open for a later
 tools lane: `gone by` ignores marks inside the victim's standing spot (victim-free twin film); the KillMarks 12-kill
 ring is unfilmed.
+
+## Session 9 (iteration 9, 19:40 REPORT)
+- 19:41 tree clean at fb4fb5e56; `git diff --stat caccc825d HEAD -- project native` empty (caccc825d's full gate
+  stands); `node tools/evidence/cites.mjs REPORT.md` 7 ok + 1 pattern; kill journals: no new REQUEST tools /
+  FRICTION (kills-new 684 was served in c47f8bc2f). Masters dir 16 files. REPORT: s9 Gates line added, else final.
+  No Godot run.
+
+NEXT (after the run): the Director merges tools FIRST (native changed for c-2). Open for a later tools lane:
+`gone by` ignores marks inside the victim's standing spot (victim-free twin film); the KillMarks 12-kill ring is unfilmed.

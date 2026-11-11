@@ -114,6 +114,8 @@ the commit (2 staged path(s), all under project/ + 3 lint-neutral ...)`, 18/18 i
   difference is Rivet's aim or pose. (The `settled` +80/+150 and aftermath 5.8/3.2 % run-to-run spreads came from it.)
 
 ## Gates
+s9 (19:41, tip fb4fb5e56): `git diff --stat caccc825d HEAD -- project native` empty, so caccc825d's full gate
+stands for the tip; `cites.mjs REPORT.md` 7 ok + 1 pattern; both kill journals: no new REQUEST tools / FRICTION.
 s7 (19:33, tip): Node tooling film + gate + lint tests 486/0; `cites.mjs REPORT.md` 7 ok + 1 pattern; masters
 frames.json 15 entries, every file present. No Godot run this session (no project/ change to gate).
 s5: GATE PASS on 09b23b523 (`--reels=combo`, build/gate/09b23b52349b/gate.json): lint 19/19, unit 2645/0/2,
