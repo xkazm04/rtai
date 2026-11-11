@@ -641,3 +641,10 @@ judge the landing jump (the flight frame -> the corpse cell) and the SWAT frame-
 p55 (`swat_gatling_shred_55_cells`, `cop_patrol_baton_overload_55_cells`, `swat_baton_overload_55_cells` landed;
 check the rest) -> `kill_cells_pack.py --death=<d> --art=p55`, add p55 grids; the suit molotov kneel; ask for
 claw_throw p55. (4) the molotov in a city street fight at 32 px/m. (5) REPORT final by 19:40.
+- 17:18 the kept claw cells (`8a15e9314`) at 32 px/m dirs 0/135 vs the placeholder: PASS both
+  (`evidence/n16-kills-new/claw_throw_cells_kept_32ppm_dirs0-135_t127-187.png`, clip
+  `claw_throw_cells_kept_32ppm_dir0.mp4`). Dir 135 reads: flung, lands ~3 m out, head away. DEFECT at dir 0: the
+  drawn corpse cell hangs from the feet back toward Rivet, so his boots land ~1 m from Rivet and the throw reads
+  SHORT (the turned version spans the same 1.3-3 m, only mirrored). FIX for iteration 21 (data first): push the
+  landing out by the body length on own cells (e.g. slide_m 3 -> 4.2, or a fx `cells_slide_m` read in
+  KillThrowArt.slide + the pose slide), film dir 0 at 32 again. This is item (0) of NEXT, before the gates.
