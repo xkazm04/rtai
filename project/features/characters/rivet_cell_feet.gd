@@ -37,6 +37,10 @@ const FEET: Dictionary[String, float] = {
 	"p55/rivet_eq_gatling.png:6": 24.0,
 	"p55/rivet_eq_plasma_rifle.png:6": 10.0,
 	"p55/rivet_eq_gloria.png:6": 11.0,
+	# n17 item 3: the plasma sword's side wind-up stood 7 px under its armed walk's boot line at
+	# 64 px/m (walk -9, wind-up -2 px from his ground point, lean off; the drawn boots on the pad):
+	# a wind-up cell is seated on the WALK's boot line, which the plasma walk grid draws higher.
+	"p70/rivet_eq_plasma_sword_windup.png:0": -1.0,
 }
 
 static var enabled: bool = true
@@ -47,7 +51,7 @@ static func show(card: Sprite2D, cell: int) -> void:
 	card.frame = cell
 	RivetGunDiag.seat(card, cell)  # n17: a gun's diagonal cell on his helmet, not its canvas
 	var path: String = str(card.get_meta(RivetFrames.ON, ""))
-	if card.texture == null or not FEET.has(_key(path, 5)) and not FEET.has(_key(path, 6)):
+	if card.texture == null or not (_listed(path, 0) or _listed(path, 5) or _listed(path, 6)):
 		return
 	card.offset.y = foot_of(path, cell) - card.texture.get_height() / float(card.vframes)
 
@@ -60,3 +64,7 @@ static func foot_of(path: String, cell: int) -> float:
 
 static func _key(path: String, cell: int) -> String:
 	return "%s/%s:%d" % [path.get_base_dir().get_file(), path.get_file(), cell]
+
+
+static func _listed(path: String, cell: int) -> bool:
+	return FEET.has(_key(path, cell))

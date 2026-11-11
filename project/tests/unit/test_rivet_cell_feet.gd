@@ -42,6 +42,10 @@ func test_listed_cells_sit_above_the_pad_inside_the_cell() -> void:
 		var tex: Texture2D = load(RivetStrips.DIR + key.get_slice(":", 0)) as Texture2D
 		assert_not_null(tex, key)
 		var cell: int = key.get_slice(":", 1).to_int()
+		if key.contains(RivetWindup.FILE):  # a wind-up cell, seated on the walk's boot line
+			assert_eq(cell, 0, "%s: the side wind-up" % key)
+			assert_between(RivetCellFeet.FEET[key], -8.0, 8.0, key)
+			continue
 		assert_between(cell, 5, 6, "%s: a strike cell" % key)
 		assert_between(RivetCellFeet.FEET[key], 2.0, tex.get_height() * 0.5, key)
 
@@ -73,3 +77,20 @@ func test_a_gun_camera_fire_cell_stands_on_its_boots_not_its_flash() -> void:
 	assert_almost_eq(card.offset.y, 38.0 - h, 0.01, "the boots on the foot line")
 	RivetCellFeet.show(card, RivetFrames.Eq.FIRE_SIDE)
 	assert_almost_eq(card.offset.y, RivetStrips.foot_px(path) - h, 0.01, "the side cell: the pad")
+
+
+func test_the_plasma_wind_up_stands_on_the_walks_boot_line() -> void:
+	# n17 item 3: the side wind-up stood 4 px under the plasma walk's boot line at 64 px/m
+	var path: String = RivetStrips.DIR + "p70/rivet_eq_plasma_sword" + RivetWindup.FILE
+	var card: Sprite2D = autofree(Sprite2D.new())
+	card.texture = load(path) as Texture2D
+	card.hframes = RivetWindup.cells_of(path)
+	card.set_meta(RivetFrames.ON, path)
+	var h: float = card.texture.get_height()
+	RivetCellFeet.show(card, 0)
+	assert_almost_eq(card.offset.y, -1.0 - h, 0.01, "the side wind-up raised onto the walk line")
+	RivetCellFeet.show(card, 1)
+	assert_almost_eq(card.offset.y, RivetStrips.foot_px(path) - h, 0.01, "the camera one: the pad")
+	RivetCellFeet.enabled = false
+	RivetCellFeet.show(card, 0)
+	assert_almost_eq(card.offset.y, RivetStrips.foot_px(path) - h, 0.01, "off: the before")

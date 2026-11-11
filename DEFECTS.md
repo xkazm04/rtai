@@ -95,3 +95,11 @@
 19. **The p55 rocket launcher's diagonal cells draw no back-blast** (weapon:rocket_launcher --view=tilt t333 at 64 px/m):
     the side fire cell draws the exhaust behind him, the drawn diagonals only the muzzle flame. A lost beat, not a
     misplaced one. -> open (minor; REQUEST assets if the owner wants it).
+
+20. **The plasma sword's side wind-up stands under its walk's boot line** (`chapter:plasma_sword`, wind-up t60-61, contact
+    t62 = the kill tick): boot line (lowest rust pixel from his ground point, `scratch-rs/blade/boots.py`) walk -9 px,
+    wind-up -5 at 64 px/m (lean off -2: the drawn boots sit on the strip's pad, the plasma walk grid draws higher);
+    32 px/m walk -6, wind-up -3. -> fixed (RivetCellFeet row for the wind-up cell 0, -1 strip px): 64 px/m wind-up -9,
+    32 px/m -5 (`plasma_windup_feet_64_32.png`, before = HEAD). Same read: katana walk -4 / wind-up -2..-3 (1-2 px,
+    kept), the strike cells' contact lands on the kill tick for plasma (t62), katana (t63), baton (t69), claw (t75).
+    The strike cell's own 3 px rise at 64 px/m is the lean's 9 deg pivot (lean off: on the line), part of #4.
