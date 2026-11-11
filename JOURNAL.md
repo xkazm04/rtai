@@ -1085,3 +1085,11 @@ Write times from `date` (session 7 needed one correction).
 NEXT: night over. Director: merge n15-tools first (rebuild DLLs debug+release, --import), then hero, then combat with
 `evidence/merge/resolve_hero_x_combat.py` on cast_flags.gd + rivet_res.gd (REPORT "Merge notes"). Next tools lane:
 combat's `--select` InputMap FRICTION first.
+
+## Session 9 (iteration 15, STABILIZE, 07:31 -> 07:40)
+- 07:32 tree clean on ba8e0568d; final gate PASS on 8f8a3dd1b stands (later commits docs only). `cites.mjs REPORT.md`
+  -> 58 paths, 57 ok, 1 unchecked (the quoted message at :113, as before). hero 53f03658d / combat 3c527f55b:
+  no new REQUEST tools (hero :225 stride_film already served, ea02a8898); combat :482 FRICTION already in Next steps.
+  No code change past freeze.
+NEXT: unchanged from session 8: Director merges n15-tools first (rebuild DLLs debug+release, --import), then hero,
+then combat with `evidence/merge/resolve_hero_x_combat.py` (REPORT "Merge notes").
