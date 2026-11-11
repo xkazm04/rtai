@@ -31,6 +31,34 @@
             "minimum": 0,
             "type": "number"
           },
+          "cells": {
+            "additionalProperties": false,
+            "properties": {
+              "at": {
+                "items": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "minItems": 1,
+                "type": "array"
+              },
+              "grids": {
+                "additionalProperties": {
+                  "additionalProperties": {
+                    "pattern": "^[a-z0-9_]+[.]png$",
+                    "type": "string"
+                  },
+                  "type": "object"
+                },
+                "type": "object"
+              }
+            },
+            "required": [
+              "at",
+              "grids"
+            ],
+            "type": "object"
+          },
           "cone_deg": {
             "maximum": 360,
             "minimum": 0,

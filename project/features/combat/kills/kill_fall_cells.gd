@@ -12,11 +12,16 @@ const META: StringName = &"kill_fall_cells"
 
 ## Adds the hidden fall grid to `body` (the BODY group, still at its centroid `body.position`,
 ## in the rig parent's px relative to the rig) facing `toward` (world, unit). Returns it or null.
-static func attach(rig: CutRig, body: Node2D, toward: Vector2) -> Sprite2D:
+## `extra` with drawn cells for his kind (KillDeathCells) carries the death's own grid instead.
+static func attach(
+	rig: CutRig, body: Node2D, toward: Vector2, extra: KillTrackRows.Extra = null
+) -> Sprite2D:
 	if rig == null or body == null or not StreetWalkerCards.hides_parts(rig):
 		return null
 	var art: String = ViewMode.shared().art
-	var path: String = StreetWalkerFall.path_of(art, StreetWalkerCards.row_of(rig))
+	var row: String = StreetWalkerCards.row_of(rig)
+	var own: String = KillDeathCells.path_of(extra, art, row) if extra != null else ""
+	var path: String = own if not own.is_empty() else StreetWalkerFall.path_of(art, row)
 	if path.is_empty():
 		return null
 	var tex: Texture2D = StreetStrips.get_tex(StreetWalkerCards.DIR + path)
@@ -26,7 +31,9 @@ static func attach(rig: CutRig, body: Node2D, toward: Vector2) -> Sprite2D:
 	c.name = "fall_cells"
 	c.texture = tex
 	c.hframes = RigHeadCard.FRAMES
-	c.vframes = StreetFallBetween.rows_of(path)
+	c.vframes = extra.cells_at.size() if not own.is_empty() else StreetFallBetween.rows_of(path)
+	if not own.is_empty():
+		c.set_meta(KillDeathCells.META, true)
 	c.centered = true  # the fall grids draw the feet at the cell centre
 	face(c, toward.angle())
 	c.scale = Vector2.ONE * _scale(rig, path)

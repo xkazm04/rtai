@@ -1,0 +1,58 @@
+extends GutTest
+## Lane kills-new (n16): a death's own drawn cells (KillDeathCells). The row names its grid per view
+## art and card row; every grid it names exists and holds 5 facings across and one row per frame
+## start; frames step on their start ticks; a kind without cells (and a row without any) keeps
+## the fall grid.
+
+
+func test_the_pistol_row_names_a_grid_for_the_four_street_kinds() -> void:
+	var e: KillTrackRows.Extra = KillTrackRows.of(&"pistol_snap")
+	assert_eq(KillDeathCells.path_of(e, "p70", "cop/head_cap"), "p70/cop_patrol_pistol_snap.png")
+	assert_eq(KillDeathCells.path_of(e, "p70", "cop/head_helmet"), "p70/cop_riot_pistol_snap.png")
+	assert_eq(KillDeathCells.path_of(e, "p70", "cop/head_swat"), "p70/swat_pistol_snap.png")
+	assert_eq(KillDeathCells.path_of(e, "p70", "ped/head_hair"), "p70/ped_suit_pistol_snap.png")
+	assert_eq(
+		KillDeathCells.path_of(e, "p55", "cop/head_cap"),
+		"p70/cop_patrol_pistol_snap.png",
+		"an art without its own cells draws the fallback art's"
+	)
+	assert_eq(KillDeathCells.path_of(e, "p70", "thug"), "", "a kind without cells keeps its fall")
+
+
+func test_a_row_without_cells_names_none() -> void:
+	var e: KillTrackRows.Extra = KillTrackRows.of(&"smg_stitch")
+	assert_eq(KillDeathCells.path_of(e, "p70", "cop/head_cap"), "")
+	assert_eq(KillDeathCells.frame_at(e, 50), -1)
+
+
+func test_frames_step_on_their_start_ticks() -> void:
+	var e: KillTrackRows.Extra = KillTrackRows.Extra.new()
+	e.cells_at = PackedInt32Array([0, 8, 14, 21])
+	var got: Array[int] = []
+	for age: int in [0, 7, 8, 13, 14, 20, 21, 400]:
+		got.append(KillDeathCells.frame_at(e, age))
+	assert_eq(got, [0, 0, 1, 1, 2, 2, 3, 3] as Array[int])
+	e.cells_at = PackedInt32Array([4])
+	assert_eq(KillDeathCells.frame_at(e, 3), -1, "nothing drawn before the first frame's tick")
+
+
+func test_every_named_grid_exists_with_a_row_per_frame() -> void:
+	var t: DataTable = DataTable.open(SignatureKillTable.PATH, SignatureKillTable.SCHEMA)
+	assert_true(t.ok())
+	var named: int = 0
+	for v: Variant in t.array(t.raw, "kills"):
+		var d: Dictionary = v
+		var id: StringName = StringName(str(d.get("id", "")))
+		var e: KillTrackRows.Extra = KillTrackRows.of(id)
+		for art: Variant in e.grids:
+			var rows: Dictionary = e.grids[art]
+			for card_row: Variant in rows:
+				var path: String = StreetWalkerCards.DIR + str(art) + "/" + str(rows[card_row])
+				assert_true(ResourceLoader.exists(path), "%s: %s exists" % [id, path])
+				var tex: Texture2D = load(path)
+				var cell: Vector2 = Vector2(tex.get_width() / 5.0, tex.get_height())
+				cell.y /= float(e.cells_at.size())
+				assert_eq(fmod(float(tex.get_height()), float(e.cells_at.size())), 0.0, path)
+				assert_almost_eq(cell.x, roundf(cell.x), 0.001, "%s: 5 whole columns" % path)
+				named += 1
+	assert_gte(named, 4, "the pistol's four kinds at least")

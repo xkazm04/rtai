@@ -17,6 +17,10 @@ class Extra:
 	var slide_m: float = 0.0
 	## Style overlay values (spurts, nails, scraps, glow ...), as the row has them.
 	var fx: Dictionary[String, float] = {}
+	## The death's own drawn cells (row `cells`): each frame's start tick, and art -> card row ->
+	## grid file (KillDeathCells). Empty = the victim's fall grid plays (KillFallCells).
+	var cells_at: PackedInt32Array = PackedInt32Array()
+	var grids: Dictionary = {}
 
 	## The style value `key` (row fx), or `fallback`.
 	func num(key: String, fallback: float) -> float:
@@ -59,7 +63,20 @@ static func from_dict(d: Dictionary) -> Extra:
 		var src: Dictionary = fx
 		for name: Variant in src:
 			e.fx[str(name)] = _f(src[name])
+	_cells(e, d.get("cells", {}))
 	return e
+
+
+static func _cells(e: Extra, v: Variant) -> void:
+	if not v is Dictionary:
+		return
+	var c: Dictionary = v
+	for x: float in _floats(c.get("at", [])):
+		@warning_ignore("return_value_discarded")
+		e.cells_at.append(roundi(x))
+	var g: Variant = c.get("grids", {})
+	if g is Dictionary:
+		e.grids = g
 
 
 static func _f(v: Variant) -> float:

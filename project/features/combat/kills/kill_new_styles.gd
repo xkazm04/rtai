@@ -76,9 +76,9 @@ func parts(
 	if not row.whole_body() or body == null:
 		return
 	var d: Vector2 = dir.normalized() if dir != Vector2.ZERO else Vector2.RIGHT
-	var fall: StringName = KillTrackRows.of(row.id).fall
+	var extra: KillTrackRows.Extra = KillTrackRows.of(row.id)
 	var cells: Sprite2D = KillFallCells.attach(
-		rig, body, KillTrack.fall_vec(d, fall, _side(serial))
+		rig, body, KillTrack.fall_vec(d, extra.fall, _side(serial)), extra
 	)
 	var hat: Node2D = groups[SignatureKill.HAT]
 	if cells != null and hat != null:  # on a card the "cap" copy is the whole drawn figure
@@ -134,7 +134,8 @@ func pose() -> void:
 		if d.row.style == &"pin":
 			slide += KillPinArt.shift(d, age, ppm)
 		if _drawn(d, age):  # the drawn fall takes over the lie: the track keeps only its lean
-			b = KillTrack.basis(d.dir, d.fall, Vector3(p.x, 1.0, 0.0), 1.0)
+			var lean: float = 0.0 if KillDeathCells.owns(d.cells) else p.x  # own cells: drawn
+			b = KillTrack.basis(d.dir, d.fall, Vector3(lean, 1.0, 0.0), 1.0)
 		KillTrack.lay(d.lay, d.feet, b, slide)
 		d.xf = d.root.transform * d.lay.transform
 		d.feet_px = d.xf * d.feet
@@ -146,12 +147,18 @@ func pose() -> void:
 ## from `fall_at` (default cells_at) over `cells_ticks`, and a style may turn its facing (the
 ## stitch's whirl). The copy of his standing card hides.
 func _drawn(d: Death, age: int) -> bool:
-	if d.cells == null or d.wall_m >= 0.0 or not d.extra.fx.has("cells_at"):
+	if d.cells == null or d.wall_m >= 0.0:
+		return false
+	if KillDeathCells.owns(d.cells):  # the death's own drawn frames, from their start ticks
+		var f: int = KillDeathCells.frame_at(d.extra, age)
+		_show_cells(d, f >= 0)
+		d.cells.frame_coords = Vector2i(d.cells.frame_coords.x, maxi(f, 0))
+		return f >= 0
+	if not d.extra.fx.has("cells_at"):
 		return false
 	var at: int = roundi(d.extra.num("cells_at", 0.0))
 	var on: bool = age >= at
-	for ch: Node in d.body.get_children():
-		(ch as CanvasItem).visible = on == (ch == d.cells)
+	_show_cells(d, on)
 	if not on:
 		return false
 	var from: float = d.extra.num("fall_at", float(at))
@@ -160,6 +167,12 @@ func _drawn(d: Death, age: int) -> bool:
 	if d.row.style == &"stitch":
 		KillFallCells.face(d.cells, KillStitchArt.facing(d, age))
 	return true
+
+
+## The grid shows and the copy of his standing card hides (`on`), or the other way round.
+static func _show_cells(d: Death, on: bool) -> void:
+	for ch: Node in d.body.get_children():
+		(ch as CanvasItem).visible = on == (ch == d.cells)
 
 
 func _draw() -> void:

@@ -1,0 +1,89 @@
+"""n16 kills-new: packs a signature death's drawn cells into one grid per kind.
+
+The asset lane draws each n16 death per street kind as cells
+`<lib>/<kind>_<death>_70_cells/<frame>_<column>.png` (frames 1..N down, columns 1..5 in the kind's
+long fall grid order: front, 3/4 front, side, 3/4 away, away; each cell at the fall grid's px per
+metre, the figure's feet registered to the cell's bottom-centre line of the grid). This writes
+`project/features/characters/art/view/p70/<kind>_<death>.png`: 5 columns x N rows, every cell
+shifted so the upright frame's feet (frame 2, the buckle: the lowest opaque row of each column)
+sit on the cell centre, as the fall grids draw them (KillFallCells: `centered`). The away column's
+corpse (the last frame) is the 3/4-away one when BACK_FROM_AWAY names the kind, as the long fall
+grids do (a face-down corpse seen from behind reads as a person standing). Deterministic.
+
+    PYTHONDONTWRITEBYTECODE=1 python tools/art/kill_cells_pack.py --death=pistol_snap [--lib=<dir>]
+"""
+
+import argparse
+import hashlib
+from pathlib import Path
+
+import numpy as np
+from PIL import Image
+
+ROOT = Path(__file__).resolve().parents[2]
+P70 = ROOT / "project/features/characters/art/view/p70"
+LIB = Path("C:/Users/kazda/kiro/gtai-art/library/keyed/street")
+KINDS = ("cop_patrol", "cop_riot", "swat", "ped_suit")
+COLS = 5
+# kind -> the kinds whose delivered away corpse reads standing (use the 3/4-away corpse)
+BACK_FROM_AWAY = {"pistol_snap": ("cop_patrol",)}
+ALPHA_MIN = 40
+UPRIGHT_FRAME = 2
+
+
+def feet_y(cell: Image.Image) -> int:
+    a = np.asarray(cell.getchannel("A")) > ALPHA_MIN
+    rows = np.nonzero(a.any(axis=1))[0]
+    return int(rows[-1]) if rows.size else cell.height // 2
+
+
+def frames_of(src: Path) -> int:
+    n = 0
+    while (src / f"{n + 1}_1.png").exists():
+        n += 1
+    return n
+
+
+def pack(kind: str, death: str, lib: Path) -> Path | None:
+    src = lib / f"{kind}_{death}_70_cells"
+    n = frames_of(src)
+    if n == 0:
+        return None
+    first = Image.open(src / "1_1.png")
+    w, h = first.size
+    out = Image.new("RGBA", (w * COLS, h * n), (0, 0, 0, 0))
+    for c in range(1, COLS + 1):
+        dy = h // 2 - feet_y(Image.open(src / f"{UPRIGHT_FRAME}_{c}.png").convert("RGBA"))
+        for f in range(1, n + 1):
+            col = c
+            if f == n and c == COLS and kind in BACK_FROM_AWAY.get(death, ()):
+                col = COLS - 1
+            cell = Image.open(src / f"{f}_{col}.png").convert("RGBA")
+            if f == n and col != c:  # the 3/4-away corpse keeps its own column's registration
+                dy_c = h // 2 - feet_y(Image.open(src / f"{UPRIGHT_FRAME}_{col}.png").convert("RGBA"))
+            else:
+                dy_c = dy
+            slot = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+            slot.paste(cell, (0, dy_c))  # clipped to its own cell
+            out.alpha_composite(slot, ((c - 1) * w, (f - 1) * h))
+    dst = P70 / f"{kind}_{death}.png"
+    out.save(dst, optimize=True)
+    return dst
+
+
+def main() -> None:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--death", required=True)
+    ap.add_argument("--lib", default=str(LIB))
+    args = ap.parse_args()
+    for kind in KINDS:
+        dst = pack(kind, args.death, Path(args.lib))
+        if dst is None:
+            print(f"{kind}: no cells")
+            continue
+        sha = hashlib.sha256(dst.read_bytes()).hexdigest()
+        print(f"{kind}: {dst.relative_to(ROOT).as_posix()} {Image.open(dst).size} sha256 {sha}")
+
+
+if __name__ == "__main__":
+    main()
