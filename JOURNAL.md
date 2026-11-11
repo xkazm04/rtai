@@ -206,3 +206,26 @@ lanes' journals for REQUEST tools / FRICTION (none at 11:35). Gate on the final 
   C:/Users/kazda/kiro/gtai-n16/scratch-tools/gate_s2.log.
 - 13:31 GATE PASS on 0b5c55fc7 including the REEL gate (`gate exit 0`; reels top / tilt70 / combo OK, ~5 min each;
   build/gate/0b5c55fc7cfd/gate.json). All gates green on the last project/ commit of this branch.
+- 13:35 FOUND: the hit-stop is `SimClock.hold` (it eats frame time; no tick advances while held), and film saves ONE
+  STILL PER TICK, so no still, sheet or clip ever shows the freeze: katana `--feel=on` and `--feel=off` both read
+  "window still 0" (build/kreel/s3feel_on/off). Each probe row records its process `frame`, so a tick held N frames
+  is a gap of N + 1 to the next row. `measureStop` sums those from kill-1 to kill+12 (no game change; works on --rev
+  snapshots and older probes). PROOF build/kreel/s3stop_on vs s3stop_off, katana dir 90 32 px/m: `--feel=on` ->
+  "hit-stop 6 frames" (tick 70 held 6) = the row's hitstop_ticks 6; default -> 0. A probe-side counter
+  (film_probe held_frames) gave the same 6 but grew dev_loc (debt ratchet), so it was dropped for the row gaps.
+- Kill lanes, NOTE: to judge pacing, run the reel with `--feel=on` and read `hit-stop N frames` on each film line;
+  the sheets cannot show a hit-stop (it has no tick of its own). The beat line now also gives the aftermath lifetime.
+- Codex ledger this session: 1 task (n16t-break-film-root, gpt-5.6-sol, 1 round, 119 s, accepted after revision).
+- Item status: (1) kill reel: v1 + --before from any lane tree + --dirs=wall + --gore-check (proven) + beat readout
+  table+measured (hit-stop frames, window still, settled, aftermath share, lifetime from data) + --feel; (2) c-2 done,
+  parity digest unchanged, gate PASS; (3) test_quest_blade: nothing to fix on main (s1); (4) merge-clash: done in n15;
+  (5) served kills-new REQUESTs 1, 2, 3 and kills-polish's step_guard REQUEST.
+
+NEXT: (0) read the sibling journals for new REQUEST tools / FRICTION first. (1) re-run the gate on the final
+project/ commit only if a later commit touches project/ (0b5c55fc7 is gate PASS incl. reels; since then tools/docs
+only). (2) a `--feel=on` sheet still shows no freeze: consider printing the measured hit-stop on the sheet's kill
+column label, and filming the reel's clip from a Godot --write-movie run when --feel=on (frames, not ticks), so the
+freeze is SEEN. (3) kill reel throughput: `--weapons=all` films ~13 weapons x dirs x 2 zooms at 60-150 s each; a
+`--quick` (32 px/m only, dirs 90) for builders' inner loop. (4) Gloria's pin counts cars as walls (Call for owner
+candidate, still at kill-lanes' side). (5) REPORT.md at 19:40 (Calls: kill shot spot moved, reels have the feel off
+by default). (6) the s1 frames.json entry "thug stands as riot cop" is superseded: retire it at REPORT time.
