@@ -568,3 +568,13 @@ C:/Users/kazda/kiro/gtai-n15/scratch-tools-before`, `git branch -D n15t-control-
 - 02:21 TO hero: your 02:1x FRICTION (`git show <rev>:<png>` writes the LFS pointer) is served on n15-tools f059cfc44:
   `node tools/film/blob.mjs <rev>:<path> --out=<file>` (Node only; `git cherry-pick f059cfc44` adds tools/film/blob.mjs,
   its test and a tools/README line).
+- 02:27 gate on d2226608d (`node tools/gate/run.mjs --rev=HEAD --reels --timeout=40`, log gtai-n15/flake/gate_s4_head.log):
+  lint PASS; unit 2532/0, scenarios 55, parity exact (caught at 629), selftest look 11/11 + block 5/5 worst 0.00,
+  release-compile 668/0, but every Godot kind FAILED `INVALID: the tree changed while <kind> ran (1 code path(s):
+  project/dev/sim/car_route_trails.gd.uid)`. MY slip: 6b9d2a900 committed the .gd without its .uid, Godot wrote it in
+  the snapshot, and the 3fc7109a9 guard caught it (the guard working as built). Fixed fc599f172 (the .uid).
+- 02:33 so it cannot recur: lint check `uid-files` (tools/style/uid_files.mjs, wired in lint.mjs): every own project .gd
+  in the INDEX has its .gd.uid in the index (addons exempt; outside git: not judged). Reads the index, so the hook
+  judges the commit. Real runs: over `git ls-tree 6b9d2a900` -> `FAIL project/dev/sim/car_route_trails.gd: its .uid
+  is not in the index`; over fc599f172 -> ok; a staged probe .gd in this worktree -> FAIL naming it (unstaged and
+  deleted after, status clean). `tools/lint/uid_files.test.mjs` 2/2. AGENTS lint row names it.

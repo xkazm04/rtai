@@ -7,6 +7,7 @@ import { pathToFileURL } from 'node:url';
 import { canonicalJson } from '../lib/canonical_json.mjs';
 import { PROJECT, ROOT, ownGdFiles, readJson, rel, run, walk } from '../lib/repo.mjs';
 import { checkAll as styleChecks } from '../style/check_gd.mjs';
+import { uidCheck } from '../style/uid_files.mjs';
 import { check as constantsCheck } from '../gen_constants/gen.mjs';
 import { validate } from '../lib/mini_schema.mjs';
 import { check as layersCheck } from './layers.mjs';
@@ -180,6 +181,7 @@ export function runLint(scope = null) {
     tool('gdformat', 'gdformat', ['--check', '--line-length', '100'], gd),
     tool('gdlint', 'gdlint', [], gd),
     ...styleChecks(),
+    uidCheck(),
     jsonCanonical(),
     eventsRegistry(),
     autoloadBudget(),
