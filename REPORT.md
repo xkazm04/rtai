@@ -13,7 +13,7 @@ on 48c91e944: top, tilt70, combo OK. Planted faults: `rivet_thrust.gd` 75 % (6/8
 
 | Item | Commit | Before flag | Measured before -> after | Evidence |
 |---|---|---|---|---|
-| 1 HUD weapon slot (bottom right: showcase icon, `WEAPON__<id>` name, magazine) | bb09b7574 | `--hud-weapon=off` | none -> slot, cut swap, lifts over a subtitle | `hud_slot_1280x800_gloria.png`, `hud_slot_1280x800_rocket_launcher_line.png` |
+| 1 HUD weapon slot (bottom right: showcase icon, `WEAPON__<id>` name, magazine) | bb09b7574 | `--hud-weapon=off` | none -> slot, cut swap, lifts over a subtitle | in game (quest 1, katana): `hud_slot_ingame_q1_t700_1920x1080.png`, `hud_slot_ingame_q1_t700_1280x800.png`; board: `hud_slot_1280x800_gloria.png`, `hud_slot_1280x800_rocket_launcher_line.png` |
 | 2 lunge on the contact tick (`lunge_ticks`, katana_3 4, chainsaw_1 4) | 3abb72f83 | row without `lunge_ticks` | katana thrust: 1.25 m of 2.5 at contact + 1.04 m slid after -> 2.5 m at contact, 0 after | `test_melee_lunge_contact` |
 | 2 strike lean about the feet (per weapon in `melee_weapons.json`) | 415dc9ad1 | `--rivet-lean=off` | upright -> katana/plasma 5 back / 9 in, baton 4/7, saw 3/6 | `katana_lean_strike_t64_32.png` |
 | 2 strike cell planted (no gait bob on it) | fcd603180 | `--rivet-lean=off` | screen y 397.4-399.4 -> 400.0 every tick t55-71 | `katana_planted_t61_64.png` |
@@ -35,7 +35,7 @@ on 48c91e944: top, tilt70, combo OK. Planted faults: `rivet_thrust.gd` 75 % (6/8
 - #13 also: the katana's x1.5 camera cells hand over to the walk grid with an ~8 px figure-top pop at 32 px/m.
 - #13 size pop at the fire cell -> armed walk handover (placement, not drawing).
 - #15 one tick of his front when he fires toward the camera with his back turned (kill lab).
-- p55 camera strike cells not yet filmed in a boss arena; the armed HUD slot not yet filmed in game.
+- p55 camera strike cells not yet filmed in a boss arena.
 
 ## Calls for the owner (draft)
 

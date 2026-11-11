@@ -21,6 +21,7 @@ extends SceneTree
 ##   [--view=<id>] (n8-view: the view row ViewMode.shared reads, e.g. tilt70; default top)
 ##   [--rivet-walk=bob] [--rivet-height=<m>] (d9-rivet: CastFlags, the walk's before, his size)
 ##   [--quest-hit=off] (n15 combat: no drawn contractor stagger, StreetQuestHit: the before)
+##   [--hud-weapon=off] (n17 rivet-strike: no bottom-right weapon slot, HudWeaponSlot: the before)
 
 const KNOWN_FLAGS: PackedStringArray = [
 	"--out",
@@ -42,6 +43,7 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--rivet-height",
 	"--ghost-voice",
 	"--quest-hit",
+	"--hud-weapon",
 ]
 const RECORDER: String = "res://dev/frames/quest1_clip_rec.gd"
 const COUNTER: String = "res://tests/support/error_counter.gd"

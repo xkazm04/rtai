@@ -1,5 +1,23 @@
 [
   {
+    "file": "hud_slot_ingame_q1_t700_1920x1080.png",
+    "title": "HUD weapon slot in game: quest 1, katana drawn, 1920x1080",
+    "source": "film.mjs quest1 --stills=700 --res=1920x1080 -- --quest-blade=katana --blade=600-900 (HEAD 0d3505090+), before = --hud-weapon=off",
+    "branch": "n17-rivet-strike",
+    "ppm": 48,
+    "before": "left",
+    "note": "before: the weapon ticket top right (name + round icon, the blade small). After: bottom-right slot, the showcase katana and KATANA (WEAPON__katana) under it, lifted above Rivet's subtitle while the line is up; the top-right corner is the cash card only."
+  },
+  {
+    "file": "hud_slot_ingame_q1_t700_1280x800.png",
+    "title": "HUD weapon slot in game at 1280x800 (Deck)",
+    "source": "film.mjs quest1 --stills=700 --res=1280x800 -- --quest-blade=katana --blade=600-900, before = --hud-weapon=off",
+    "branch": "n17-rivet-strike",
+    "ppm": 48,
+    "before": "left",
+    "note": "The Deck row of the HUD scale table: the slot clears the subtitle box and the cop."
+  },
+  {
     "file": "gun_diag_pistol_64.png",
     "title": "Pistol shot up-right: the drawn diagonal fire cell, gun along the round (64 px/m)",
     "source": "film.mjs arena --ppm=64 --lock=off --stills=1412-1477 (67f4343a6), before = -- --rivet-gun-diag=off; cyan = ground line",
@@ -115,23 +133,5 @@
     "ppm": 48,
     "before": "left: --hud-weapon=off, the weapon on the top-right ticket",
     "note": "showcase ICON, WEAPON__ name, magazine count"
-  },
-  {
-    "file": "hud_slot_1280x800_rocket_launcher_line.png",
-    "title": "HUD slot hops above a subtitle (cut, no slide)",
-    "source": "dialogue_board.gd --slots",
-    "branch": "n17-rivet-strike",
-    "ppm": 48,
-    "before": "left: ticket top right",
-    "note": "long name steps down to fit"
-  },
-  {
-    "file": "pistol_turn_noflash_t339_64.png",
-    "title": "After the kill he turns to the camera: no flash without a round",
-    "source": "compare.mjs weapon:pistol --a=da3c12437 --b=6822e1036 --at=339 --ppm=64 (crop x2)",
-    "branch": "n17-rivet-strike",
-    "ppm": 64,
-    "before": "left: the camera fire cell flashing t339-340, 2 ticks after the kill, no round",
-    "note": "RivetFireTurn: the latch holds only in the octant the round left in"
   }
 ]
