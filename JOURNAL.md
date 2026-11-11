@@ -97,3 +97,8 @@ lanes' journals for REQUEST tools / FRICTION (none at 11:35). Gate on the final 
   unit 2642 tests / 0 failures (2640 passing, 2 skipped); scenarios in progress (11/55 ok at 12:08). The later
   commits (c6191736b gore-check, dfccc7f0d subject=kill) touch tools/ only; their node suites pass (film 203/0) and
   the hook's full lint passed on each. Final verdict: the log named above.
+- Lead for kills-new REQUEST (2), NOT tested: the lab already takes `--sig-solo=start:dx,dy`. In
+  build/film/kr_try/t65.png (32 px/m, Rivet at screen 646,354) a grey barrier runs about 186 px = 5.8 m south of
+  Rivet's start, so `film.mjs kill:gloria --ppm=64 --on=kill:1+60 -- --sig-dir=90 --sig-solo=start:0,2` should
+  stand the guard 5 m south with the barrier ~0.8 m behind him along the shot. Needs the afe581336 pick for
+  --sig-dir, and a look whether the barrier is a solid wall in the sim (cells) before relying on it.
