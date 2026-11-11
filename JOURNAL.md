@@ -301,8 +301,8 @@ NEXT (iteration 5):
    burn overlay is now z 40 over the body; the X-ray scale at p55), name the item, show the frame, re-bless only it
    with a dated decisions line.
 2. Godot import, then `node tools/tests/run_unit.mjs --select=test_kill_scorch_line`; commit the test + .uid. Film
-   plasma_sword 64/32 (`film.mjs chapter:plasma_sword --rev=c43cae42d` vs `--rev=702aa4e30^^`... i.e. be2e71080) with
-   stills to kill+120; judge the scorch line under the toppled halves; tune `scorch_line_m` in data if it reads as a
+   plasma_sword 64/32 (`film.mjs chapter:plasma_sword --rev=c43cae42d`, before `--rev=be2e71080`) with stills to
+   kill+120; judge the scorch line under the toppled halves; tune `scorch_line_m` in data if it reads as a
    stripe, not a burn.
 3. Asset replies: A6 (hand cannon exit wound), A7 (ray gun remains with skull), A8 (burn collapse with skull). Wire
    each that lands (one commit each), before/after 64/32.
