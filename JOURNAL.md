@@ -734,3 +734,7 @@ NEXT addendum, item (3) is now concrete: after the gate verdict, if time before 
   film `kill:claw_shock --view=tilt --ppm=32 --victim=cop/head_cap` before/after. The p55 lying cells are full length,
   so check the 4.2 m slide does not overshoot under the 55 view. If there is no time: DELETE the three untracked PNGs
   and list claw p55 under Next steps as delivered, packed by the tool, not wired.
+- 18:26 READY for item (3): `PYTHONDONTWRITEBYTECODE=1 python build/scratch/claw_p55_wire.py` (git-ignored, on disk)
+  adds the claw's grids p55, the 3 provenance lines and a p55 assert in test_kill_throw_art; then
+  `node tools/gate/quick.mjs --fix`, `node tools/tests/run_unit.mjs --select=test_kill_throw_art,test_kill_death_cells`
+  (imports the PNGs), stage the 3 PNGs + .import + json + jsonl + test, commit. Not run (Godot busy).
