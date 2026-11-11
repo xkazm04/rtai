@@ -140,6 +140,16 @@ the right film).
 - t-5 cost on a quiet machine (every number tonight is CONTENDED; the sign is 6/6, the size soft).
 - The hand-made-map trails are tier B (no hull); a tier A car on a plaza meets the hull push-out, not filmed.
 
+## Next steps
+
+- t-5's cost is `CitySimHash.build` clearing and prefix-summing all HW*HW cells every step (17424 now). Counting only the
+  occupied cells (a sort of the live actors by cell, or a touched-cell list cleared after the step) makes it O(actors)
+  and frees the window size; it changes both sims, so it wants its own parity proof.
+- c-2: if the owner picks 65 (or 241), change the one value, regenerate (`node tools/gen_constants/gen.mjs`), `just
+  native`; the route tests follow the value (21/0 at 1, 241 and 65); parity's final digest does not move.
+- Drop `test_noir_shadows` from `morning.mjs`'s known-flake advice after a few clean nights (same race as rig_stress).
+- The exe's two boot ERROR lines: compare with a main export before calling them old.
+
 ## Merge notes (draft)
 
 - Merge n15-tools FIRST. It changes the sim (t-1 spawn order, t-4, t-5 HW, the c-2 mask at its t-4 value) and the
