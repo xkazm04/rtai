@@ -25,8 +25,8 @@ const FAMILIES: Array[StringName] = [&"flinch", &"stagger", &"spin", &"fold", &"
 ## Seconds the class cell holds from the blow: a jab as long as a flinch's cell (a combo lands
 ## 3-4 jabs a second), a heavy blow as a stagger's, a shock through half the stun's convulsion.
 const HOLD_S: Dictionary[StringName, float] = {&"jab": 0.2, &"heavy": 0.34, &"shock": 0.5}
-## card row -> class -> grid (street_hit.py --only=classes); a row or class absent = no cell (a
-## pedestrian's shock keeps the stun's shoved walk, as before).
+## card row -> class -> grid (street_hit.py --only=classes); a row or class absent = no cell (the
+## hat, elder and shopper have no shock drawn: their stun keeps the shoved walk, as before).
 const GRIDS: Dictionary[String, Dictionary] = {
 	"cop/head_cap":
 	{
@@ -46,15 +46,63 @@ const GRIDS: Dictionary[String, Dictionary] = {
 		&"heavy": "p70/swat_heavy_hit.png",
 		&"shock": "p70/swat_shock_hit.png",
 	},
-	"thug": {&"jab": "p70/thug_jab_hit.png", &"heavy": "p70/thug_heavy_hit.png"},
-	"ped/head_hair": {&"jab": "p70/ped_suit_jab_hit.png", &"heavy": "p70/ped_suit_heavy_hit.png"},
-	"ped/head_hood": {&"jab": "p70/ped_hood_jab_hit.png", &"heavy": "p70/ped_hood_heavy_hit.png"},
-	"ped/head_cap": {&"jab": "p70/ped_cap_jab_hit.png", &"heavy": "p70/ped_cap_heavy_hit.png"},
+	"thug":
+	{
+		&"jab": "p70/thug_jab_hit.png",
+		&"heavy": "p70/thug_heavy_hit.png",
+		&"shock": "p70/thug_shock_hit.png",
+	},
+	"ped/head_hair":
+	{
+		&"jab": "p70/ped_suit_jab_hit.png",
+		&"heavy": "p70/ped_suit_heavy_hit.png",
+		&"shock": "p70/ped_suit_shock_hit.png",
+	},
+	"ped/head_hood":
+	{
+		&"jab": "p70/ped_hood_jab_hit.png",
+		&"heavy": "p70/ped_hood_heavy_hit.png",
+		&"shock": "p70/ped_hood_shock_hit.png",
+	},
+	"ped/head_cap":
+	{
+		&"jab": "p70/ped_cap_jab_hit.png",
+		&"heavy": "p70/ped_cap_heavy_hit.png",
+		&"shock": "p70/ped_cap_shock_hit.png",
+	},
 	"ped/head_worker":
-	{&"jab": "p70/ped_worker_jab_hit.png", &"heavy": "p70/ped_worker_heavy_hit.png"},
+	{
+		&"jab": "p70/ped_worker_jab_hit.png",
+		&"heavy": "p70/ped_worker_heavy_hit.png",
+		&"shock": "p70/ped_worker_shock_hit.png",
+	},
 	"ped/head_jogger":
-	{&"jab": "p70/ped_jogger_jab_hit.png", &"heavy": "p70/ped_jogger_heavy_hit.png"},
-	"ped/head_punk": {&"jab": "p70/ped_punk_jab_hit.png", &"heavy": "p70/ped_punk_heavy_hit.png"},
+	{
+		&"jab": "p70/ped_jogger_jab_hit.png",
+		&"heavy": "p70/ped_jogger_heavy_hit.png",
+		&"shock": "p70/ped_jogger_shock_hit.png",
+	},
+	"ped/head_punk":
+	{
+		&"jab": "p70/ped_punk_jab_hit.png",
+		&"heavy": "p70/ped_punk_heavy_hit.png",
+		&"shock": "p70/ped_punk_shock_hit.png",
+	},
+	"ped/head_hat":
+	{
+		&"jab": "p70/ped_hat_jab_hit.png",
+		&"heavy": "p70/ped_hat_heavy_hit.png",
+	},
+	"ped/head_bald":
+	{
+		&"jab": "p70/ped_elder_jab_hit.png",
+		&"heavy": "p70/ped_elder_heavy_hit.png",
+	},
+	"ped/head_shopper":
+	{
+		&"jab": "p70/ped_shopper_jab_hit.png",
+		&"heavy": "p70/ped_shopper_heavy_hit.png",
+	},
 }
 ## The class grids' draw scale (StreetWalkerHit.fill_of), ONE per kind so jab, heavy and shock
 ## swap without a pop: the standing jab's mean figure height = the kind's walk
@@ -88,6 +136,20 @@ const FILL: Dictionary[String, float] = {
 	"ped_jogger_heavy_hit.png": 1.09,
 	"ped_punk_jab_hit.png": 0.99,
 	"ped_punk_heavy_hit.png": 0.99,
+	# assets it458: their shock at the kind's one FILL; the hat, elder and shopper jab and heavy
+	"thug_shock_hit.png": 1.03,
+	"ped_suit_shock_hit.png": 1.07,
+	"ped_hood_shock_hit.png": 1.03,
+	"ped_cap_shock_hit.png": 1.07,
+	"ped_worker_shock_hit.png": 1.11,
+	"ped_jogger_shock_hit.png": 1.05,  # the tossed ponytail and smoke stand 6.7 % over at 1.09
+	"ped_punk_shock_hit.png": 0.99,
+	"ped_hat_jab_hit.png": 1.05,
+	"ped_hat_heavy_hit.png": 1.05,
+	"ped_elder_jab_hit.png": 1.06,
+	"ped_elder_heavy_hit.png": 1.06,
+	"ped_shopper_jab_hit.png": 1.16,
+	"ped_shopper_heavy_hit.png": 1.16,
 }
 ## --hit-class=off read once: -1 unread, 1 off.
 static var _off: int = -1
