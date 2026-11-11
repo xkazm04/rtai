@@ -13,6 +13,9 @@ var px_per_m: float = 32.0
 var every: int = 2
 ## Stills mode: only these ticks (even) are saved, as still_<tick>_<ppm>.png; no clip.
 var stills: Array[int] = []
+## n15: steps drawn before each still, so the look-ahead (CameraRig.follow, per drawn frame) is
+## the walk's, not the whole gap since the previous still (0 = that old jump: --still-lead=0).
+var still_lead: int = 120
 ## Where the game writes its beat checkpoints ("" = none); with press_continue the run presses
 ## Continue on the title and saves continue_f1 .. continue_f6 (the first frames after it).
 var save_path: String = ""
@@ -65,6 +68,8 @@ func _run() -> void:
 		if not stills.is_empty():
 			if stills.has(s.tick()):
 				await _still(s.tick())
+			elif _leading_in(s.tick()):
+				await get_tree().process_frame
 			if s.tick() > stills.max():
 				break
 			continue
@@ -131,6 +136,14 @@ func _still(tick: int) -> void:
 		await _save("pause_%d" % px_per_m)
 		_game.set_paused(false)
 		_game.session.world.set_process(false)
+
+
+## True within still_lead ticks before a still: that step is drawn (see still_lead).
+func _leading_in(tick: int) -> bool:
+	for t: int in stills:
+		if t > tick and t - tick <= still_lead:
+			return true
+	return false
 
 
 ## --ticks: a clip frame only inside the window.
