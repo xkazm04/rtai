@@ -190,7 +190,7 @@ func test_the_shred_and_the_overload_have_their_own_p55_cells_for_the_three_cops
 		var e: KillTrackRows.Extra = KillTrackRows.of(id)
 		for kind: String in rows:
 			var want: String = "p55/%s_%s.png" % [kind, id]
-			assert_eq(KillDeathCells.path_of(e, "p55", rows[kind]), want, want)
+			assert_eq(KillDeathCells.path_of(e, "p55", str(rows[kind])), want, want)
 		var suit: String = KillDeathCells.path_of(e, "p55", "ped/head_hair")
 		assert_eq(suit, "p70/ped_suit_%s.png" % id, "no p55 suit cells: the p70 ones")
 	var scraps: Dictionary = KillTrackRows.of(&"gatling_shred").scraps
