@@ -83,7 +83,7 @@ export function plan(flags, shotText, extra) {
   if (!shot.shot.script && !existsSync(join(tree, 'project/dev/frames/film_probe.gd'))) {
     return { error: `film: ${tree} has no dev/frames/film_probe.gd (older than the kit): film a commit with tools/film/compare.mjs, which injects it` };
   }
-  if (flags.subject !== undefined && !/^(rivet|hostile|dead|id:\d+)$/.test(flags.subject)) return { error: `film: --subject must be rivet, hostile, dead or id:<n>, got ${flags.subject}` };
+  if (flags.subject !== undefined && !/^(rivet|hostile|dead|kill|id:\d+)$/.test(flags.subject)) return { error: `film: --subject must be rivet, hostile, dead, kill or id:<n>, got ${flags.subject}` };
   for (const key of ['timeout', 'ppm']) {
     if (flags[key] !== undefined && !(Number(flags[key]) > 0)) return { error: `film: --${key} must be a positive number, got ${flags[key]}` };
   }
@@ -148,7 +148,7 @@ export function judge(res, opts, startedAt) {
   for (const t of wanted) {
     const png = join(opts.dir, `t${t}.png`);
     if (!seen.has(t) || !existsSync(png) || statSync(png).mtimeMs + FRESH_SLACK_MS < startedAt) { reasons.push(`no still at tick ${t}`); continue; }
-    const who = subjectRow(probe.rows.find((r) => r.tick === t), opts.subject);
+    const who = subjectRow(probe.rows.find((r) => r.tick === t), opts.subject, { probe, ppm: Number(opts.ppm), view: probe.view });
     if (!who) reasons.push(`no ${opts.subject} in the numbers at tick ${t}`);
     else if (!who.on_screen) reasons.push(`${opts.subject} is off screen at tick ${t} (${(who.screen ?? []).map((n) => Math.round(n)).join(', ')})`);
   }

@@ -3,7 +3,7 @@
 // each side and a verdict that can be "unverifiable". Identical sides and a subject off screen are
 // not passes, because a builder cannot tell them from a change that worked.
 //   node tools/film/compare.mjs <shot> --a=<rev|worktree> --b=<rev|worktree> --at=<t,t> --out=<dir>
-//     [--clip=<from-to>] [--subject=rivet|hostile|dead|id:<n>] [--label-a=<s>] [--label-b=<s>]
+//     [--clip=<from-to>] [--subject=rivet|hostile|dead|kill|id:<n>] [--label-a=<s>] [--label-b=<s>]
 //     [--view=combo] [--ppm=48] [--lock=auto|spawn|at:<tick>|<x,y>|off] [--seed=<n>] [--res=1280x800] [--victim=<kind>] [--feel=auto|on|off] [--native=donor] [--clean] [-- flags]
 // --victim goes to both sides' film.mjs, which checks the kind exists in each tree (combat n15 REQUEST).
 // A commit gets a throwaway snapshot (tools/lib/snapshot.mjs) with the probe injected when it is
@@ -26,7 +26,7 @@ export { subjectRow };
 import { diffImages, readPng } from './png.mjs';
 
 const USAGE = 'usage: node tools/film/compare.mjs <shot> --a=<rev|worktree> --b=<rev|worktree> --at=<t,t> --out=<dir> '
-  + '[--clip=<from-to>] [--subject=rivet|hostile|dead|id:<n>] [--label-a=<s>] [--label-b=<s>] [--view=combo] [--ppm=48] '
+  + '[--clip=<from-to>] [--subject=rivet|hostile|dead|kill|id:<n>] [--label-a=<s>] [--label-b=<s>] [--view=combo] [--ppm=48] '
   + '[--lock=auto|spawn|at:<tick>|<x,y>|off] [--seed=<n>] [--res=1280x800] [--victim=<kind>] [--feel=auto|on|off] [--native=donor] [--timeout=<s>] [--clean] [-- flags]';
 const VALUE = new Set(['a', 'b', 'at', 'out', 'clip', 'subject', 'label-a', 'label-b', 'view', 'ppm', 'lock', 'seed', 'res', 'timeout', 'victim', 'feel', 'native']);
 const DEFAULTS = { view: 'combo', ppm: '48', lock: 'auto', seed: '20261109', res: '1280x800', timeout: '900', subject: 'rivet' };
@@ -52,7 +52,7 @@ export function parseArgv(argv) {
   if (!/^\d+(,\d+)*$/.test(flags.at)) return { error: `compare: --at must be ticks, got ${flags.at}` };
   if (flags.clip && !/^\d+-\d+$/.test(flags.clip)) return { error: `compare: --clip must be <from>-<to>, got ${flags.clip}` };
   if (flags.native !== undefined && flags.native !== 'donor') return { error: `compare: --native takes only donor, got ${flags.native}` };
-  if (!/^(rivet|hostile|dead|id:\d+)$/.test(flags.subject)) return { error: `compare: --subject must be rivet, hostile, dead or id:<n>, got ${flags.subject}` };
+  if (!/^(rivet|hostile|dead|kill|id:\d+)$/.test(flags.subject)) return { error: `compare: --subject must be rivet, hostile, dead, kill or id:<n>, got ${flags.subject}` };
   return { shotText, flags, extra };
 }
 
@@ -113,7 +113,8 @@ function judgeTicks(ticks, shots, flags, labels, dir) {
   return ticks.map((tick) => {
     const [a, b] = [join(shots.a.dir, `t${tick}.png`), join(shots.b.dir, `t${tick}.png`)];
     const rowOf = (s) => s.probe?.rows.find((r) => r.tick === tick);
-    const [subjectA, subjectB] = [subjectRow(rowOf(shots.a), flags.subject), subjectRow(rowOf(shots.b), flags.subject)];
+    const ctx = (s) => ({ probe: s.probe, ppm: Number(flags.ppm), view: s.probe?.view });
+    const [subjectA, subjectB] = [subjectRow(rowOf(shots.a), flags.subject, ctx(shots.a)), subjectRow(rowOf(shots.b), flags.subject, ctx(shots.b))];
     const judged = judgeTick({ diff: diffImages(readPng(a), readPng(b)), subjectA, subjectB, subject: flags.subject });
     const err = compose(dir, a, b, labels, tick, judged.reasons[0]);
     if (err) { judged.outcome = 'unverifiable'; judged.reasons.push(`no composite: ${err}`); }

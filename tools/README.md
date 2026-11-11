@@ -107,6 +107,10 @@ Give it before the `--`: the game reads the FIRST `--feel=`, so a trailing one i
 node tools/film/film.mjs chapter:electro_baton_left --feel=on --stills=60-70 --out=build/film/baton
 ```
 
+`--subject=kill` (film and compare, kills-new n16 REQUEST): the first kill's victim. A signature death hides his
+rig, so `dead` read him off screen (or picked an older body); `kill` places him from the sim (Rivet's screen
+point + the metres between them at `--ppm`) once his card is gone.
+
 To compare the frame something happened on, learn the tick once with `--on`, then compare it:
 `node tools/film/compare.mjs ... --at=333`. The tick is the same on both sides as long as the change
 under test is visual, because the sim is deterministic; if the shot moved, the verdict's numbers show
