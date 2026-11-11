@@ -1,0 +1,137 @@
+[
+  {
+    "file": "katana_cam_cell_feet_t66_64.png",
+    "title": "Katana camera strike stands on his ground point",
+    "source": "tools/film/compare.mjs chapter:katana_cam --a=415dc9ad1 --b=7b1f03b7c --at=66 --ppm=64",
+    "branch": "n17-rivet-strike",
+    "ppm": 64,
+    "before": "left: the cell seated on the blade tip, Rivet drawn a body height above his spot (off frame)",
+    "note": "RivetCellFeet: p70 katana cell 6 boots 120 strip px over the pad"
+  },
+  {
+    "file": "pistol_turn_noflash_t339_64.png",
+    "title": "After the kill he turns to the camera: no flash without a round",
+    "source": "compare.mjs weapon:pistol --a=da3c12437 --b=6822e1036 --at=339 --ppm=64 (crop x2)",
+    "branch": "n17-rivet-strike",
+    "ppm": 64,
+    "before": "left: the camera fire cell flashing t339-340, 2 ticks after the kill, no round",
+    "note": "RivetFireTurn: the latch holds only in the octant the round left in"
+  },
+  {
+    "file": "katana_cell_feet_boots_64.png",
+    "title": "Katana side strike: boots back on the walk line",
+    "source": "compare.mjs chapter:katana --a=415dc9ad1 --b=0e01165a3 --at=57,64 --ppm=64 (crops x2, cyan = walk boot line)",
+    "branch": "n17-rivet-strike",
+    "ppm": 64,
+    "before": "middle: strike cell boots ~15 px above the walk line",
+    "note": "after: ~4 px, part of it the lean's lift on the back boot"
+  },
+  {
+    "file": "katana_planted_t61_64.png",
+    "title": "Strike cell stands planted (no walk bob on it)",
+    "source": "compare.mjs chapter:katana --a=6bdb6dd4b --b=fcd603180 --at=61 --ppm=64",
+    "branch": "n17-rivet-strike",
+    "ppm": 64,
+    "before": "left: the gait's bob lifts the strike cell 2.6 px (probe screen y 397.4-399.4, sim y constant)",
+    "note": "after: screen y 400.0 every tick t55-71"
+  },
+  {
+    "file": "hud_slot_1280x800_gloria.png",
+    "title": "HUD weapon slot bottom right (1280x800, Deck panel 1:1)",
+    "source": "dev/showcase/dialogue_board.gd --slots over film.mjs city t400",
+    "branch": "n17-rivet-strike",
+    "ppm": 48,
+    "before": "left: --hud-weapon=off, the weapon on the top-right ticket",
+    "note": "showcase ICON, WEAPON__ name, magazine count"
+  },
+  {
+    "file": "hud_slot_1280x800_rocket_launcher_line.png",
+    "title": "HUD slot hops above a subtitle (cut, no slide)",
+    "source": "dialogue_board.gd --slots",
+    "branch": "n17-rivet-strike",
+    "ppm": 48,
+    "before": "left: ticket top right",
+    "note": "long name steps down to fit"
+  },
+  {
+    "file": "hud_slot_1920x1080_gloria.png",
+    "title": "HUD weapon slot at 1920x1080",
+    "source": "dialogue_board.gd --slots --size=1920x1080",
+    "branch": "n17-rivet-strike",
+    "ppm": 48,
+    "before": "left: --hud-weapon=off",
+    "note": ""
+  },
+  {
+    "file": "katana_lean_strike_t64_64.png",
+    "title": "Katana strike leans in about his feet",
+    "source": "compare.mjs chapter:katana --a=3abb72f83 --b=415dc9ad1 --at=64 --ppm=64",
+    "branch": "n17-rivet-strike",
+    "ppm": 64,
+    "before": "left: upright",
+    "note": "RivetLean 9 deg in"
+  },
+  {
+    "file": "katana_lean_windup_t61_64.png",
+    "title": "Katana wind-up leans back off the cop",
+    "source": "same, t61",
+    "branch": "n17-rivet-strike",
+    "ppm": 64,
+    "before": "left: upright",
+    "note": "5 deg back"
+  },
+  {
+    "file": "baton_left_lean_t64_64.png",
+    "title": "Baton facing left leans into the cop",
+    "source": "compare.mjs chapter:electro_baton_left --a=3abb72f83 --b=415dc9ad1 --at=64 --ppm=64",
+    "branch": "n17-rivet-strike",
+    "ppm": 64,
+    "before": "left: upright",
+    "note": "7 deg in"
+  },
+  {
+    "file": "katana_lean_strike_t64_32.png",
+    "title": "Katana lean at 32 px/m",
+    "source": "compare.mjs chapter:katana --ppm=32 --at=64",
+    "branch": "n17-rivet-strike",
+    "ppm": 32,
+    "before": "left: upright",
+    "note": ""
+  },
+  {
+    "file": "katana_cell_feet_t64_32.png",
+    "title": "Katana side strike cell feet at 32 px/m",
+    "source": "compare.mjs chapter:katana --a=415dc9ad1 --b=0e01165a3 --ppm=32 --at=64",
+    "branch": "n17-rivet-strike",
+    "ppm": 32,
+    "before": "left",
+    "note": ""
+  },
+  {
+    "file": "strike_cells_p55_ruler.png",
+    "title": "p55 strike cells on a ruler (camera cells float 18-46 px)",
+    "source": "art/view/p55/rivet_eq_<blade>.png cells 5,6",
+    "branch": "n17-rivet-strike",
+    "ppm": 0,
+    "before": "",
+    "note": "side cells already on their boots"
+  },
+  {
+    "file": "pistol_flash_strip_t331_342_64.png",
+    "title": "DEFECT: one pistol round, 8 ticks of drawn flash (t333-340), carried into the camera cell",
+    "source": "film.mjs weapon:pistol --ppm=64 --stills=331-342 (HEAD da3c12437)",
+    "branch": "n17-rivet-strike",
+    "ppm": 64,
+    "before": "",
+    "note": "open: the fire cell's painted flash holds FIRE_TICKS 7; REQUEST assets flashless fire cells"
+  },
+  {
+    "file": "pistol_fire_t333_336_64.png",
+    "title": "DEFECT: arm drawn at 0 deg, the round leaves at -29 deg on screen",
+    "source": "film.mjs weapon:pistol --ppm=64 --on=fire:1+3",
+    "branch": "n17-rivet-strike",
+    "ppm": 64,
+    "before": "",
+    "note": "flash and tail do leave the drawn muzzle"
+  }
+]
