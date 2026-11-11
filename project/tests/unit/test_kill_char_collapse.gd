@@ -31,8 +31,13 @@ func test_a_drawn_kind_collapses_and_holds_the_heap() -> void:
 	body.free()
 
 
+func test_every_kind_with_a_char_cell_collapses() -> void:
+	for row: String in KillCharCells.GRIDS:
+		assert_true(KillCharCells.COLLAPSE.has(row), row)
+
+
 func test_a_kind_without_the_drawing_keeps_the_fade() -> void:
-	var body: Node2D = _body("ped/head_punk")
+	var body: Node2D = _body("ped/head_shopper")
 	assert_false(KillCharCells.collapse(body, 0.5))
 	body.free()
 

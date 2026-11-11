@@ -37,10 +37,17 @@ const FILL_OF: Dictionary[String, String] = {
 ## cells' format and scale (tools/art/char_collapse_cells.py): crumbling, slumped on the knees with
 ## the skull and ribs showing, the ash heap with the skull and the kind's charred gear. Over the
 ## row's crumble the burnt man plays them instead of fading; the heap stays as his body.
-## `--char-collapse=off` = the fade (the before). Kinds still being drawn keep the fade.
+## `--char-collapse=off` = the fade (the before). A kind with no drawing keeps the fade.
 const COLLAPSE: Dictionary[String, Texture2D] = {
+	"cop/head_cap": preload("res://features/combat/weapons/art/gore/char_collapse_cop_patrol.png"),
 	"cop/head_helmet": preload("res://features/combat/weapons/art/gore/char_collapse_cop_riot.png"),
+	"thug": preload("res://features/combat/weapons/art/gore/char_collapse_thug.png"),
 	"ped/head_hood": preload("res://features/combat/weapons/art/gore/char_collapse_ped_hood.png"),
+	"cop/head_swat": preload("res://features/combat/weapons/art/gore/char_collapse_swat.png"),
+	"ped/head_cap": preload("res://features/combat/weapons/art/gore/char_collapse_ped_cap.png"),
+	"ped/head_punk": preload("res://features/combat/weapons/art/gore/char_collapse_ped_punk.png"),
+	"ped/head_jogger":
+	preload("res://features/combat/weapons/art/gore/char_collapse_ped_jogger.png"),
 }
 const COLLAPSE_FRAMES: int = 3
 const META: StringName = &"kill_char_row"
