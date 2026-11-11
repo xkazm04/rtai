@@ -48,6 +48,15 @@ on 48c91e944: top, tilt70, combo OK. Planted faults: `rivet_thrust.gd` 75 % (6/8
 - The diagonal fire cells show his back on the away diagonals (the drawn 3/4 away pose) where the side cell showed
   his visor: `gun_diag_pistol_64.png` (before top, after bottom). Alternative: keep the side cell on the away
   diagonals only (one data row in `RivetGunDiag.DEG`).
+- The asset lane's it463 v2/v3 redraws of the gloria, gatling and electro gun diagonals aim steeper (35-45 deg by
+  eye against v1's 20-30) but draw a smaller figure (a bigger pose-height pop at the handover). Shipped: v1
+  (`gun_diag_p70_rifles_64.png`, `gun_diag_p55_64.png`); the alternative is a file copy from `alt_it463/` plus a
+  re-measure of the rows. Boards: `gtai-art/library/evidence/it463/*_diag_*_v2_board.png`.
+- #19: the rocket launcher's diagonal cells draw no back-blast (`gun_diag_p55_64.png`, row 3): ask the asset lane for
+  the exhaust behind him, or keep it as drawn.
+- #20 seats the wind-up / left strike cells on each weapon's armed-walk boot line (that walk line sits 4-12 px over
+  his ground point, by weapon). The alternative, re-seating the walk grids on the ground point, moves every cell
+  tuned to them: not taken (`windup_feet_blades_64.png`).
 
 ## Merge notes
 
