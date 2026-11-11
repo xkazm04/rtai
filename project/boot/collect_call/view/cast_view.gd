@@ -74,7 +74,7 @@ func _draw() -> void:
 			_mertz(h)
 		elif h.alive():
 			var at: Vector2 = h.pos + (hit_link.lean(h) if hit_link != null else Vector2.ZERO)
-			if not StreetQuestCards.draw_guard(self, Ink.px(at), h.facing, Ink.PX_PER_M):  # n8 cards
+			if not StreetQuestHit.or_card(self, Ink.px(at), h, Ink.PX_PER_M, stage.arena.tick):
 				_sprite("dock_guard", at, Vector2(0.9, 0.9) * GUARD_DRAW, h.facing)
 		elif not StreetQuestCorpses.draw(self, Ink.px(h.pos), Ink.PX_PER_M, h, stage.arena.tick):
 			_sprite("guard_down", h.pos, Vector2(1.6, 1.6), h.facing, DOWN_FADE)

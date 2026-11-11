@@ -60,6 +60,13 @@ const X15: PackedStringArray = [
 	"p55/rivet_reload_plasma_rifle_left.png",
 	"p55/rivet_reload_gatling.png",
 	"p55/rivet_reload_gatling_left.png",
+	# n15: the blades' drawn left sets, cut at their equipped strip's x1.5
+	"p70/rivet_eq_katana_left.png",
+	"p70/rivet_eq_katana_left_windup.png",
+	"p70/rivet_eq_katana_left_strike.png",
+	"p70/rivet_eq_chainsaw_left.png",
+	"p70/rivet_eq_chainsaw_left_windup.png",
+	"p70/rivet_eq_chainsaw_left_strike.png",
 ]
 
 

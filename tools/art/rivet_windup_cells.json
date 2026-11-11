@@ -1,5 +1,5 @@
 {
- "doc": "n13 weapon art: the asset lane's drawn wind-up figures laid into rivet_eq_<row>_windup.png by tools/art/rivet_windup_cells.py (rows = the equipped strip's name after rivet_eq_; a _left row = the one-cell left side wind-up, n14). library = it309's pre-cut p70 cells (keyed/rivet/rivet_windup_70_cells, at the shipped strip's scale); dir '..' = keyed/rivet (n14: the it313/it317 two-figure p55 and chainsaw sheets, sheet_k = rivet_frames.py's action-band scale for that equipped row; the v2 left figures by file). cells.side / cam / left: file or fig (0 left, 1 right), k (scale), dx (px, by eye against the facings and strikes). res = the wind-up strip's px per 110-space px (the p70 chainsaw, x1.5 like its equipped strip: RivetRes.X15); min_cell = the katana's equipped cell before n11's x1.5 re-cut (reproduces n13's strip). eq_cells = the equipped strip's cell count. ink_rim = blade_ink_rim.py over the strip (the sword's treatment B). A row removed = no wind-up strip (RivetWindup off for it).",
+ "doc": "n13 weapon art: the asset lane's drawn wind-up figures laid into rivet_eq_<row>_windup.png by tools/art/rivet_windup_cells.py (rows = the equipped strip's name after rivet_eq_; a _left row = the one-cell left side wind-up, n14). library = it309's pre-cut p70 cells (keyed/rivet/rivet_windup_70_cells, at the shipped strip's scale); dir '..' = keyed/rivet (n14: the it313/it317 two-figure p55 and chainsaw sheets, sheet_k = rivet_frames.py's action-band scale for that equipped row; the v2 left figures by file). cells.side / cam / left: file or fig (0 left, 1 right), k (scale), dx (px, by eye against the facings and strikes). res = the wind-up strip's px per 110-space px (the p70 chainsaw, x1.5 like its equipped strip: RivetRes.X15); min_cell = the katana's equipped cell before n11's x1.5 re-cut (reproduces n13's strip). eq_cells = the equipped strip's cell count. ink_rim = blade_ink_rim.py over the strip (the sword's treatment B). A row removed = no wind-up strip (RivetWindup off for it). n15 combat: electro_baton_left_strike rows (eq = the strip it sits beside, name = the file after rivet_eq_) lay the asset lane's it334 drawn left strike (take a at 70, take b at 55) as the one-cell rivet_eq_electro_baton_left_strike.png (RivetWindup.LEFT_STRIKE_FILE), k fitted so the helmet dome matches the left facing and the left wind-up at 2x (p70 0.15, p55 0.115).",
  "library": "C:/Users/kazda/kiro/gtai-art/library/keyed/rivet/rivet_windup_70_cells",
  "out": "project/features/characters/art/view",
  "strips": {
@@ -21,6 +21,28 @@
     "sheet": "rivet_eq_chainsaw_55_windup.png",
     "sheet_k": 0.2463
    },
+   "chainsaw_left": {
+    "cells": {
+     "left": {
+      "file": "rivet_eq_chainsaw_55_left_windup.png",
+      "k": 0.0952
+     }
+    },
+    "dir": "..",
+    "eq_cells": 3
+   },
+   "chainsaw_left_strike": {
+    "cells": {
+     "left": {
+      "file": "rivet_eq_chainsaw_55_left_strike.png",
+      "k": 0.0952
+     }
+    },
+    "dir": "..",
+    "eq": "chainsaw_left",
+    "eq_cells": 3,
+    "name": "chainsaw_left_strike"
+   },
    "electro_baton": {
     "cells": {
      "cam": {
@@ -34,7 +56,7 @@
     },
     "dir": "..",
     "sheet": "rivet_eq_electro_baton_55_windup.png",
-    "sheet_k": 0.1974
+    "sheet_k": 0.2632
    },
    "electro_baton_left": {
     "cells": {
@@ -45,6 +67,18 @@
     },
     "dir": "..",
     "eq_cells": 3
+   },
+   "electro_baton_left_strike": {
+    "cells": {
+     "left": {
+      "file": "rivet_eq_electro_baton_55_left_strike.png",
+      "k": 0.115
+     }
+    },
+    "dir": "..",
+    "eq": "electro_baton_left",
+    "eq_cells": 3,
+    "name": "electro_baton_left_strike"
    },
    "katana": {
     "cells": {
@@ -61,6 +95,28 @@
     "dir": "..",
     "sheet": "rivet_eq_katana_55_windup.png",
     "sheet_k": 0.2847
+   },
+   "katana_left": {
+    "cells": {
+     "left": {
+      "file": "rivet_eq_katana_55_left_windup.png",
+      "k": 0.1112
+     }
+    },
+    "dir": "..",
+    "eq_cells": 3
+   },
+   "katana_left_strike": {
+    "cells": {
+     "left": {
+      "file": "rivet_eq_katana_55_left_strike.png",
+      "k": 0.1112
+     }
+    },
+    "dir": "..",
+    "eq": "katana_left",
+    "eq_cells": 3,
+    "name": "katana_left_strike"
    },
    "plasma_sword": {
     "cells": {
@@ -81,6 +137,28 @@
     },
     "sheet": "rivet_eq_plasma_sword_55_windup.png",
     "sheet_k": 0.2664
+   },
+   "plasma_sword_left": {
+    "cells": {
+     "left": {
+      "file": "rivet_eq_plasma_sword_55_left_windup.png",
+      "k": 0.1037
+     }
+    },
+    "dir": "..",
+    "eq_cells": 3
+   },
+   "plasma_sword_left_strike": {
+    "cells": {
+     "left": {
+      "file": "rivet_eq_plasma_sword_55_left_strike.png",
+      "k": 0.1037
+     }
+    },
+    "dir": "..",
+    "eq": "plasma_sword_left",
+    "eq_cells": 3,
+    "name": "plasma_sword_left_strike"
    }
   },
   "p70": {
@@ -95,6 +173,30 @@
       "k": 0.92
      }
     },
+    "res": 1.5
+   },
+   "chainsaw_left": {
+    "cells": {
+     "left": {
+      "file": "rivet_eq_chainsaw_70_left_windup.png",
+      "k": 0.1578
+     }
+    },
+    "dir": "..",
+    "eq_cells": 3,
+    "res": 1.5
+   },
+   "chainsaw_left_strike": {
+    "cells": {
+     "left": {
+      "file": "rivet_eq_chainsaw_70_left_strike.png",
+      "k": 0.1578
+     }
+    },
+    "dir": "..",
+    "eq": "chainsaw_left",
+    "eq_cells": 3,
+    "name": "chainsaw_left_strike",
     "res": 1.5
    },
    "electro_baton": {
@@ -121,6 +223,18 @@
     "dir": "..",
     "eq_cells": 3
    },
+   "electro_baton_left_strike": {
+    "cells": {
+     "left": {
+      "file": "rivet_eq_electro_baton_70_left_strike.png",
+      "k": 0.15
+     }
+    },
+    "dir": "..",
+    "eq": "electro_baton_left",
+    "eq_cells": 3,
+    "name": "electro_baton_left_strike"
+   },
    "katana": {
     "cells": {
      "cam": {
@@ -138,6 +252,30 @@
      172
     ]
    },
+   "katana_left": {
+    "cells": {
+     "left": {
+      "file": "rivet_eq_katana_70_left_windup.png",
+      "k": 0.1942
+     }
+    },
+    "dir": "..",
+    "eq_cells": 3,
+    "res": 1.5
+   },
+   "katana_left_strike": {
+    "cells": {
+     "left": {
+      "file": "rivet_eq_katana_70_left_strike.png",
+      "k": 0.1942
+     }
+    },
+    "dir": "..",
+    "eq": "katana_left",
+    "eq_cells": 3,
+    "name": "katana_left_strike",
+    "res": 1.5
+   },
    "plasma_sword": {
     "cells": {
      "cam": {
@@ -153,6 +291,28 @@
      "px": 0.5,
      "reach": 6
     }
+   },
+   "plasma_sword_left": {
+    "cells": {
+     "left": {
+      "file": "rivet_eq_plasma_sword_70_left_windup.png",
+      "k": 0.1302
+     }
+    },
+    "dir": "..",
+    "eq_cells": 3
+   },
+   "plasma_sword_left_strike": {
+    "cells": {
+     "left": {
+      "file": "rivet_eq_plasma_sword_70_left_strike.png",
+      "k": 0.1302
+     }
+    },
+    "dir": "..",
+    "eq": "plasma_sword_left",
+    "eq_cells": 3,
+    "name": "plasma_sword_left_strike"
    }
   }
  }

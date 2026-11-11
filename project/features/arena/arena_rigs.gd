@@ -18,8 +18,7 @@ const PATROL_LOOK: int = 5
 const STRIKE_ARMS: Array[int] = [BodyPlan.L, BodyPlan.R, 2]
 ## Hostiles farther than this from Rivet (another station's) do not pull the bubble.
 const FOCUS_REACH_M: float = 20.0
-## The molotov's throw on Rivet's gun claw (rivet_plan: BodyPlan.L) as strike ticks: a 1-tick
-## wind-back, the whip out to full reach, a slow return (view only; the bottle left this tick).
+## The molotov throw on Rivet's gun claw (BodyPlan.L), strike ticks: wind-back, whip, slow return.
 const THROW: Vector3i = Vector3i(1, 6, 18)
 
 var stage: CollectCallStage = null
@@ -74,6 +73,7 @@ func attach(p_stage: CollectCallStage, view: CollectCallView, ctx: WorldContext)
 	view.cast_view.visible = arena_stage == null
 	react = ReactLink.make(p_stage.arena)
 	ShieldSparks.wire(react, p_stage.arena, func() -> CombatBlood: return view.blood)
+	RigCarry.wire(view.fx_view.gun_fx().follow, rigs)  # n15: a body hit's burst rides the body
 	if arena_stage == null:
 		return true
 	_add_robots(layer, p_stage.arena, view.blood)
@@ -107,7 +107,7 @@ func _add_hand_views(layer: CanvasLayer, p_stage: CollectCallStage) -> void:
 	arcs.z_index = held.z_index
 	layer.add_child(arcs)
 	var lit: LightLayer = _print.lights if _print != null else _city.lights  # n12 E1
-	ArenaCombatLights.attach(layer, p_stage.arena, lit, _print.rig if _print else _city.rig)
+	ArenaCombatLights.attach(layer, p_stage.arena, lit, _print.rig if _print else _city.rig, _print)
 	var scorch: PlasmaScorchView = PlasmaScorchView.new()  # combat-notes: a plasma wound's burn
 	scorch.arena = p_stage.arena
 	scorch.rigs = rigs

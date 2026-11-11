@@ -30,6 +30,8 @@ static func cut(rig: CutRig, whole: bool = false) -> Array[Node2D]:
 	for spr: Sprite2D in _sprites(rig):
 		var xf: Transform2D = inv * spr.get_global_transform()
 		xf.origin -= origin
+		if not whole and GibCardCut.placed(rig, groups, spr, xf):  # n15: a card flies in pieces
+			continue
 		var k: int = SignatureKill.BODY if whole else _kind(spr, rig, kind_of)
 		_place(groups[k], spr, xf, _z(spr, rig))
 		if whole and _under(spr, rig.head, rig):
@@ -39,7 +41,7 @@ static func cut(rig: CutRig, whole: bool = false) -> Array[Node2D]:
 				sums[kk] += xf.origin
 				counts[kk] += 1
 	for i: int in groups.size():
-		var c: Vector2 = sums[i] / float(counts[i]) if counts[i] > 0 else Vector2.ZERO
+		var c: Vector2 = GibCardCut.centre(groups[i], sums[i], counts[i])
 		for ch: Node in groups[i].get_children():
 			(ch as Node2D).position -= c
 		groups[i].position = c

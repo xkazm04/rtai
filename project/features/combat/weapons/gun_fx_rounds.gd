@@ -43,6 +43,7 @@ static func _impact(fx: GunFx, arena: CombatArena, last: Array, tick: int) -> vo
 	var hop: Vector2 = last[1]
 	var at: Vector2 = from + hop
 	var kind: GunFx.Hit = GunFx.Hit.GROUND
+	var on: Fighter = null
 	var bodies: Array[Fighter] = [arena.rivet]
 	if last[2]:
 		bodies = arena.hostiles
@@ -50,14 +51,15 @@ static func _impact(fx: GunFx, arena: CombatArena, last: Array, tick: int) -> vo
 		var c: Vector2 = Geometry2D.get_closest_point_to_segment(h.pos, from, from + hop)
 		if c.distance_to(h.pos) <= h.radius_m + 0.3:
 			kind = GunFx.Hit.BODY if last[2] else GunFx.Hit.PLATING
-			at = c
+			at = GunFxFollow.on_body(c, h, hop)
+			on = h
 			if last[2] and _shielded(fx, h, hop):
 				kind = GunFx.Hit.METAL
 			elif last[2] and arena.gun.trigger.spec.homing_rad_per_tick > 0.0:
 				fx.stick(h, c, hop.normalized())
 			if kind == GunFx.Hit.BODY:  # n7-ranged it24: the round's path stays a moment
 				var origin: Vector2 = last[3]
-				WeaponFxTrail.add(fx.trails, origin, c, arena.gun.trigger.spec.id, tick)
+				WeaponFxTrail.add(fx.trails, origin, at, arena.gun.trigger.spec.id, tick)
 			break
 	if kind == GunFx.Hit.GROUND:
 		for m: Vector2 in arena.metal:
@@ -66,7 +68,10 @@ static func _impact(fx: GunFx, arena: CombatArena, last: Array, tick: int) -> vo
 	# a plasma bolt (gun_fx.json scorch) adds SCORCH to the kind: a burn ring and a pop
 	var scorch: bool = last[2] and fx.look(arena.gun.trigger.spec.id).get("scorch", false)
 	var code: int = int(kind) + (GunFx.SCORCH if scorch else 0)
-	fx.impacts.append(Vector4(at.x, at.y, float(code), float(tick)))
+	var im: Vector4 = Vector4(at.x, at.y, float(code), float(tick))
+	fx.impacts.append(im)
+	if on != null:
+		fx.follow.record(im, on)
 	@warning_ignore("return_value_discarded")
 	fx.impact_dir.append(hop.normalized())
 

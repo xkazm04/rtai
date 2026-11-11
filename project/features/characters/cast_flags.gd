@@ -12,6 +12,10 @@ extends RefCounted
 ## n13: --rivet-windup=off (no drawn wind-up cell); n15: --ghost-soul-line=off (no teal outline).
 ## Read once, before the first plan or material.
 
+const WINDUP_FLAGS: PackedStringArray = [
+	"--rivet-windup=off", "--rivet-left-strike=off", "--rivet-blade-left=off"
+]
+
 static var _read: bool = false
 
 
@@ -48,8 +52,8 @@ static func apply(args: PackedStringArray = OS.get_cmdline_user_args()) -> void:
 			RivetKnock.enabled = false
 		elif arg == "--rivet-reload=off":
 			RivetReload.enabled = false
-		elif arg == "--rivet-windup=off":  # n13: the strike cell through the wind-up (before)
-			RivetWindup.enabled = false
+		elif arg in WINDUP_FLAGS:
+			_windup(arg)
 		elif arg.begins_with("--ghost-"):
 			_ghost(arg)
 
@@ -65,6 +69,17 @@ static func _ghost(arg: String) -> void:
 		GhostLunge.enabled = false
 	elif arg == "--ghost-ohm-hand=sim":  # n15: Ohm's bolt from the rig's electrodes (before)
 		GhostHand.enabled = false
+
+
+## The befores: n13 --rivet-windup=off (the strike cell through the wind-up), n15 -left-strike=off
+## (the left facing + game smear), n15 --rivet-blade-left=off (the blades' mirror, turned left).
+static func _windup(arg: String) -> void:
+	if arg == "--rivet-windup=off":
+		RivetWindup.enabled = false
+	elif arg == "--rivet-blade-left=off":
+		RivetWindup.blade_left = false
+	else:
+		RivetWindup.left_strike = false
 
 
 ## --rivet-walk=<mode>; n11: --rivet-swipe=off (one drawn strike cell), --rivet-bob=drawn (no damp).

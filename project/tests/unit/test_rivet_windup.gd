@@ -95,6 +95,7 @@ func test_a_left_strip_takes_the_left_wind_up() -> void:
 	var left: String = dir + "_left.png"
 	var lw: String = dir + RivetWindup.LEFT_FILE
 	RivetStrips._exists[lw] = true
+	RivetStrips._exists[dir + RivetWindup.LEFT_STRIKE_FILE] = false  # n15: test_rivet_left_strike
 	assert_eq(RivetWindup.path_or(_rig(0.0), "p70", &"electro_baton", left), lw, "winding")
 	assert_eq(RivetWindup.path_or(_rig(-1.0), "p70", &"electro_baton", left), left, "no strike")
 	assert_eq(RivetWindup.path_or(_rig(4.5 / 60.0), "p70", &"electro_baton", left), left, "active")
@@ -107,6 +108,8 @@ func test_a_left_strip_takes_the_left_wind_up() -> void:
 	assert_eq(RivetWindup.path_or(_rig(0.0), "p70", &"electro_baton", left), left, "no cut")
 	@warning_ignore("return_value_discarded")
 	RivetStrips._exists.erase(lw)
+	@warning_ignore("return_value_discarded")
+	RivetStrips._exists.erase(dir + RivetWindup.LEFT_STRIKE_FILE)
 
 
 func test_the_left_wind_up_is_one_unmirrored_cell() -> void:

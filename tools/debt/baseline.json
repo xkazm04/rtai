@@ -41,16 +41,20 @@
         "2026-11-11: n15 tools: dev/sim/car_route_trails.gd, the t-4 evidence tool for a hand-made map (Call c-2); a -s SceneTree script reads its own two flags like dev/bake_city.gd (dev_loc 21427 -> 21594)",
         "2026-11-11: n15 tools c-2: car_route_trails --tier=a, the owner's Call c-2 evidence in tier A (hull vs cells, stuck death), dev-only (dev_loc 21594 -> 21623)",
         "2026-11-11: n15 tools: quest1 stills draw the 120 ticks before each still (dev/frames/quest1_clip_rec.gd, --still-lead), so a still's camera no longer depends on the --stills list (combat FRICTION, ~250k px at t13708) (dev_loc 21623 -> 21641)",
-        "2026-11-10: n15 hero: stride_film --film-blow=<deg> films the ghost recoil along the blow (+5 dev lines) (dev_loc 21426 -> 21431)"
+        "2026-11-10: n15 hero: stride_film --film-blow=<deg> films the ghost recoil along the blow (+5 dev lines) (dev_loc 21426 -> 21431)",
+        "2026-11-10: n15 combat: the blade boss bot (n14 owner call), new dev code project/dev/bosses (dev_loc 21426 -> 21481)",
+        "2026-11-10: n15 item 2: quest1_clip --quest-hit=off (the before of the contractor stagger), dev_loc +2 (dev_loc 21481 -> 21483)",
+        "2026-11-11: n15 merge: combat's quest1_clip flag (+2) meets tools' still-lead change in the same file (dev_loc 21698 -> 21700)"
       ],
       "files": {
         "project/dev/arena": 711,
         "project/dev/audio": 367,
         "project/dev/bake_city.gd": 32,
         "project/dev/bench": 1886,
+        "project/dev/bosses": 55,
         "project/dev/bots": 399,
         "project/dev/enemy_ai": 662,
-        "project/dev/frames": 1075,
+        "project/dev/frames": 1077,
         "project/dev/ghost-forms": 616,
         "project/dev/ghost-powers": 1137,
         "project/dev/gunplay": 674,
@@ -74,7 +78,7 @@
         "project/dev/view": 195,
         "project/dev/weapon_art": 506
       },
-      "total": 21643
+      "total": 21700
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -259,7 +263,7 @@
         "project/features/arena/arena_rigs.gd": 294,
         "project/features/bosses/boss_hook.gd": 281,
         "project/features/bosses/servo/servo_rig.gd": 287,
-        "project/features/combat/combat_arena.gd": 300,
+        "project/features/combat/combat_arena.gd": 299,
         "project/features/combat/kills/kill_view.gd": 286,
         "project/features/combat/react/react_link.gd": 288,
         "project/features/combat/weapons/art/weapon_art.gd": 274,
@@ -294,7 +298,7 @@
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 262,
-        "project/boot/collect_call/view/cast_view.gd": 231,
+        "project/boot/collect_call/view/cast_view.gd": 230,
         "project/boot/collect_call/view/collect_call_view.gd": 237,
         "project/boot/collect_call/view/fx_view.gd": 271,
         "project/boot/collect_call/view/stage_view.gd": 219,
@@ -330,7 +334,7 @@
         "project/features/city/sim/sim_people.gd": 205,
         "project/features/city/view/city_view.gd": 259,
         "project/features/combat/ai/enemy_pit.gd": 244,
-        "project/features/combat/combat_arena.gd": 300,
+        "project/features/combat/combat_arena.gd": 299,
         "project/features/combat/hit_feel/hit_feel.gd": 220,
         "project/features/combat/kills/kill_char_fx.gd": 203,
         "project/features/combat/kills/kill_lab.gd": 213,

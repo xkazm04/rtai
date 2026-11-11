@@ -61,7 +61,7 @@ static func draw_over(
 		var im: Vector4 = fx.impacts[i]
 		var age: int = tick - int(im.w)
 		if age < GunFx.IMPACT_TICKS:
-			var at: Vector2 = ShotLift.hit_at(Vector2(im.x, im.y), int(im.z) % GunFx.SCORCH)
+			var at: Vector2 = ShotLift.hit_at(fx.follow.drawn_at(im), int(im.z) % GunFx.SCORCH)
 			GunFxMarks.impact(ci, fx, at, fx.impact_dir[i], int(im.z) % GunFx.SCORCH, age)
 			if int(im.z) >= GunFx.SCORCH:
 				GunFxMarks.pop(ci, at, age, row)

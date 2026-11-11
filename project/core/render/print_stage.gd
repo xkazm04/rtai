@@ -19,6 +19,9 @@ var zoom: float = 1.5
 var look_id: StringName = LookProfiles.shared().default_id
 var rig: CameraRig = null
 var clock: SimClock = null
+## n15: a host with no clock (the dev arena) gives the lights its sim tick here (a Callable
+## returning int), so lights born on that tick age out; the camera and FX keep tick 0 there.
+var light_tick: Callable = Callable()
 ## A one-off camera offset in world px a host adds this frame (a power's shake with no rig,
 ## features/souls/hauler_kick.gd); inside the print lock like the rig's. Zero = bit-identical.
 var kick_px: Vector2 = Vector2.ZERO
@@ -98,11 +101,17 @@ func place(focus_m: Vector2) -> void:
 	for o: LookOverlay in _overlays:
 		o.update(look_id, zoom * SimConst.PX_PER_M, world_px)
 	lights.set_page_age(LookOverlay.page_age_of(_overlays))
-	lights.step(tick, world_px)
+	lights.step(lights_tick(tick, clock, light_tick), world_px)
 	fx.step(tick, world_px)
 	fx.glow.step(tick, world_px)
 	fx.ground.step(tick, world_px)
 	markers.step(tick)
+
+
+## The tick the lights step on: the clock's, else the host's `src`, else `tick`.
+static func lights_tick(tick: int, p_clock: SimClock, src: Callable) -> int:
+	var t: int = src.call() if p_clock == null and src.is_valid() else tick
+	return t
 
 
 func _update_look(focus_m: Vector2) -> void:

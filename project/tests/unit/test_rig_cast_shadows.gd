@@ -54,3 +54,37 @@ func test_a_contact_shadow_lies_flat_round_the_feet() -> void:
 		box = box.expand(p)
 	assert_almost_eq(box.get_center().x, at.x, 0.01, "centred")
 	assert_lt(box.size.y, box.size.x, "flattened on the ground")
+
+
+func _wounded_card_cop(grid: String) -> CutRig:
+	var rig: CutRig = autofree(CutRig.new())
+	rig.plan = HumanPlan.cop()
+	add_child_autofree(rig)
+	var r: HumanReact = HumanReact.on(rig)
+	r.kind = &"flinch"
+	r.t = 0.05
+	r.travel = 80.0
+	r.off = Vector2(80.0, 0.0)
+	rig.scale = Vector2(0.1, 0.1)
+	var card: Sprite2D = Sprite2D.new()
+	card.set_meta(StreetWalkerCards.ON, grid)
+	rig.add_child(card)
+	rig.head_card = card
+	return rig
+
+
+func test_a_pushed_hit_card_takes_its_shadow_along() -> void:
+	var rig: CutRig = _wounded_card_cop("res://x/cop_patrol_hit.png")
+	var shove: Vector3 = StreetWalkerHit.shove(rig)
+	assert_ne(shove, Vector3.ZERO, "the wound pushes the card")
+	assert_eq(RigCastShadows.card_push(rig), Vector2(shove.x, shove.y), "the shadow rides the push")
+
+
+func test_only_a_hit_card_moves_the_shadow() -> void:
+	var walk: CutRig = _wounded_card_cop("res://x/cop_patrol_armed_walk.png")
+	assert_eq(RigCastShadows.card_push(walk), Vector2.ZERO, "a walk card is never pushed")
+	var bare: CutRig = autofree(CutRig.new())
+	assert_eq(RigCastShadows.card_push(bare), Vector2.ZERO, "no card: the feet")
+	var hidden: CutRig = _wounded_card_cop("res://x/cop_patrol_hit.png")
+	hidden.head_card.visible = false
+	assert_eq(RigCastShadows.card_push(hidden), Vector2.ZERO, "a hidden card: the feet")

@@ -10,7 +10,12 @@
     "counts": "5,3",
     "sheet": "rivet_eq_chainsaw_55_v3.png"
    },
+   "rivet_eq_chainsaw_left": {
+    "counts": "3",
+    "sheet": "rivet_eq_chainsaw_55_left.png"
+   },
    "rivet_eq_electro_baton": {
+    "act_k": 1.0,
     "cc": "0",
     "counts": "5,3",
     "sheet": "rivet_eq_electro_baton_55_v3.png"
@@ -75,6 +80,10 @@
     "counts": "5,3",
     "sheet": "rivet_eq_katana_55.png"
    },
+   "rivet_eq_katana_left": {
+    "counts": "3",
+    "sheet": "rivet_eq_katana_55_left.png"
+   },
    "rivet_eq_machine_pistol": {
     "act_k": 0.82,
     "counts": "5,3",
@@ -130,6 +139,14 @@
      "reach": 6
     },
     "sheet": "rivet_eq_plasma_sword_55_v4.png"
+   },
+   "rivet_eq_plasma_sword_left": {
+    "counts": "3",
+    "ink_rim": {
+     "px": 0.5,
+     "reach": 6
+    },
+    "sheet": "rivet_eq_plasma_sword_55_left.png"
    },
    "rivet_eq_ray_gun": {
     "counts": "5,3",
@@ -192,6 +209,11 @@
     "act_k": 0.82,
     "counts": "5,3",
     "sheet": "rivet_eq_chainsaw_70_v4.png",
+    "fig_h": 165
+   },
+   "rivet_eq_chainsaw_left": {
+    "counts": "3",
+    "sheet": "rivet_eq_chainsaw_70_left.png",
     "fig_h": 165
    },
    "rivet_eq_electro_baton": {
@@ -261,6 +283,11 @@
     "sheet": "rivet_eq_katana_70.png",
     "fig_h": 165
    },
+   "rivet_eq_katana_left": {
+    "counts": "3",
+    "sheet": "rivet_eq_katana_70_left.png",
+    "fig_h": 165
+   },
    "rivet_eq_machine_pistol": {
     "counts": "5,3",
     "sheet": "rivet_eq_machine_pistol_70_v2.png",
@@ -314,6 +341,14 @@
      "reach": 6
     },
     "sheet": "rivet_eq_plasma_sword_70_v2.png"
+   },
+   "rivet_eq_plasma_sword_left": {
+    "counts": "3",
+    "ink_rim": {
+     "px": 0.5,
+     "reach": 6
+    },
+    "sheet": "rivet_eq_plasma_sword_70_left.png"
    },
    "rivet_eq_ray_gun": {
     "counts": "5,3",

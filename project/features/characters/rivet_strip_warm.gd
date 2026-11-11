@@ -19,6 +19,7 @@ const WEAPON_FILES: PackedStringArray = [
 	"rivet_eq_%s" + RivetStrips.DIAG,
 	"rivet_eq_%s" + RivetWindup.FILE,
 	"rivet_eq_%s" + RivetWindup.LEFT_FILE,
+	"rivet_eq_%s" + RivetWindup.LEFT_STRIKE_FILE,
 	RivetReload.PREFIX + "%s.png",
 	RivetReload.PREFIX + "%s_left.png",
 	RivetWalk.ARMED + "%s.png",

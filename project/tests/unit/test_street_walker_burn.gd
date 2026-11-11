@@ -80,3 +80,24 @@ func test_the_burning_figure_stands_on_its_shadow_while_the_parts_flail() -> voi
 	rig.react.travel = 12.0
 	StreetWalkerCards.place(rig, card)
 	assert_eq(card.global_position, rig.global_position, "boots on the contact shadow's point")
+
+
+func test_the_second_flail_frame_swaps_on_odd_half_shakes_and_draws_at_frame_one_size() -> void:
+	var path: String = StreetWalkerHit.BURN_GRIDS["cop/head_cap"]
+	var half: float = 0.5 / StreetWalkerHit.FLAIL_HZ
+	assert_eq(StreetWalkerHit.flail_frame(path, half * 0.5), path, "first half shake: frame one")
+	var second: String = StreetWalkerHit.flail_frame(path, half * 1.5)
+	if StreetWalkerHit.FLAIL_FRAMES:
+		assert_eq(second, path.replace("_burn_hit.png", "_flail_burn_hit.png"), "second half shake")
+	else:
+		assert_eq(second, path, "flag off: one frame")
+	for key: String in StreetWalkerHit.BURN_GRIDS:
+		var flail: String = str(StreetWalkerHit.BURN_GRIDS[key]).replace(
+			"_burn_hit", "_flail_burn_hit"
+		)
+		assert_true(ResourceLoader.exists(StreetWalkerCards.DIR + flail), flail)
+		assert_eq(
+			StreetWalkerHit.fill_of(flail),
+			StreetWalkerHit.fill_of(str(StreetWalkerHit.BURN_GRIDS[key])),
+			flail
+		)

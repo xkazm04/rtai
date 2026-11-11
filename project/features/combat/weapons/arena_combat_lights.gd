@@ -38,9 +38,17 @@ static func make(p_arena: CombatArena, p_lights: LightLayer) -> ArenaCombatLight
 
 
 ## Made and added under `parent` for `arena`, lighting into `p_lights`; reduced motion from `rig`.
+## n15: a clockless `stage` (the dev arena's) steps its lights on the arena's tick, the tick they
+## are added on, so they age out (PrintStage.light_tick).
 static func attach(
-	parent: Node, p_arena: CombatArena, p_lights: LightLayer, rig: CameraRig
+	parent: Node,
+	p_arena: CombatArena,
+	p_lights: LightLayer,
+	rig: CameraRig,
+	stage: PrintStage = null
 ) -> void:
+	if stage != null and stage.clock == null:
+		stage.light_tick = func() -> int: return p_arena.tick
 	var c: ArenaCombatLights = make(p_arena, p_lights)
 	c.reduced_motion = rig != null and rig.reduced_motion
 	parent.add_child(c)

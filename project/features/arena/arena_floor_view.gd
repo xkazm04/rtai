@@ -30,6 +30,10 @@ const CONE: Texture2D = preload("res://features/city/art/props/traffic_cone.png"
 const CULL_M: float = 3.0
 
 var _city: bool = false
+## n15 combat (the city street fight film): the range rings under the street's fighters read as
+## debug circles on the road, a row of empty ones where targets are down; the city draws none.
+## `--target-rings=on` = the before.
+var _city_rings: int = -1
 ## perf-city: the floor (dock tiles), props and crowd rings draw once on this child, not every
 ## frame (0.5 ms on the city; it10: the dock arenas too, the King's boulevard and the depot).
 var _static: Node2D = null
@@ -54,7 +58,7 @@ func _draw() -> void:
 	var view: Rect2 = _view_m()
 	for t: ArenaTargets.Target in arena.targets.targets:
 		var up: bool = t.fighter.exposed
-		if view.has_point(t.fighter.pos):
+		if view.has_point(t.fighter.pos) and _rings():
 			_ring(t.fighter.pos, 0.8, Ink.INK if up else Ink.WASH)
 		if t.spawn.motion != "static":
 			_track(t, view)
@@ -155,6 +159,12 @@ func _prop(ci: CanvasItem, at: Vector2, p: ArenaStation.Prop) -> void:
 			return
 	ci.draw_rect(r, fill, true)
 	ci.draw_rect(r, Ink.INK, false, Ink.LINE_PX)
+
+
+func _rings() -> bool:
+	if _city_rings < 0:
+		_city_rings = 1 if ArenaArgs.parse().text("--target-rings") == "on" else 0
+	return not _city or _city_rings == 1
 
 
 func _ring(at: Vector2, radius_m: float, color: Color, ci: CanvasItem = self) -> void:

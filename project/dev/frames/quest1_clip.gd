@@ -20,6 +20,7 @@ extends SceneTree
 ##   swings at the bot's target, puts it away at <to>)
 ##   [--view=<id>] (n8-view: the view row ViewMode.shared reads, e.g. tilt70; default top)
 ##   [--rivet-walk=bob] [--rivet-height=<m>] (d9-rivet: CastFlags, the walk's before, his size)
+##   [--quest-hit=off] (n15 combat: no drawn contractor stagger, StreetQuestHit: the before)
 
 const KNOWN_FLAGS: PackedStringArray = [
 	"--out",
@@ -40,6 +41,7 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--rivet-walk",
 	"--rivet-height",
 	"--ghost-voice",
+	"--quest-hit",
 ]
 const RECORDER: String = "res://dev/frames/quest1_clip_rec.gd"
 const COUNTER: String = "res://tests/support/error_counter.gd"

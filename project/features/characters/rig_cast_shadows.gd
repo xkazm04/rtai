@@ -32,6 +32,9 @@ const CONTACT_POINTS: int = 20
 ## The soft edge: nested ellipses (radius share, alpha), printed over one another.
 const CONTACT_RINGS: Array[Vector2] = [Vector2(1.0, 0.22), Vector2(0.78, 0.24), Vector2(0.55, 0.3)]
 
+## `--shadow-push=off` = the before (n15: the shadow stays on the feet, the hit card pushed off).
+static var _push_off: int = -1
+
 var _layer: Node = null
 
 
@@ -55,7 +58,7 @@ func _draw() -> void:
 	var contact: bool = view.cast_k < CONTACT_BELOW_K
 	for rig: CutRig in _rigs():
 		var hip: float = hip_px(rig)
-		var feet: Vector2 = to_local(rig.global_position)
+		var feet: Vector2 = to_local(rig.global_position + card_push(rig))
 		if not contact:
 			draw_colored_polygon(figure(feet, view.cast_dir(), hip * view.cast_k), SHADOW)
 		elif not rig.dead:  # a body has its own contact shadow on the card (StreetDeadRest)
@@ -146,3 +149,20 @@ static func sweep_hull(corners: PackedVector2Array, off: Vector2) -> PackedVecto
 	if hull.size() > 1:
 		hull.remove_at(hull.size() - 1)  # convex_hull closes the loop
 	return hull
+
+
+## n15 combat (DEFECTS c-2 #3, t339): a living hit pushes the drawn street card off the feet
+## (StreetWalkerHit.shove, up to ~0.5 m); the shadow rides the same push (global px), so the
+## thrown-back man stands on his shadow instead of floating beside it. Zero for any other rig.
+static func card_push(rig: CutRig) -> Vector2:
+	var c: Sprite2D = rig.head_card
+	if (
+		c == null
+		or not c.visible
+		or not StreetWalkerHit.is_grid(str(c.get_meta(StreetWalkerCards.ON, "")))
+	):
+		return Vector2.ZERO
+	if _push_off < 0:
+		_push_off = 1 if ArenaArgs.parse().text("--shadow-push") == "off" else 0
+	var w: Vector3 = StreetWalkerHit.shove(rig) if _push_off == 0 else Vector3.ZERO
+	return Vector2(w.x, w.y)

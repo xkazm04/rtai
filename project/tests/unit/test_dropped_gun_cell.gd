@@ -1,6 +1,7 @@
 extends GutTest
 ## n13 item 2: a stunned cop's dropped pistol is the pistol's drawn cell (weapon_art.json
-## parts.dropped), loaded at _ready, lying muzzle-sideways with its tilt halved.
+## parts.dropped), loaded at _ready, lying muzzle-sideways with its tilt halved. n15: the cop's own
+## navy pistol (parts.dropped_cop) by default.
 
 
 func test_the_cell_loads_at_ready() -> void:
@@ -8,9 +9,15 @@ func test_the_cell_loads_at_ready() -> void:
 	assert_null(v.cell, "nothing loaded before the view enters the tree")
 	add_child_autofree(v)
 	assert_not_null(v.cell, "the drawn cell, loaded behind the load")
-	var want: Texture2D = WeaponArt.new().part_texture(&"pistol", "dropped")
+	var want: Texture2D = WeaponArt.new().part_texture(&"pistol", ShockArcsView.CELL_PART)
 	assert_eq(v.cell.resource_path, want.resource_path)
-	assert_string_ends_with(v.cell.resource_path, "pistol/dropped.png")
+	assert_string_ends_with(v.cell.resource_path, "pistol/dropped_cop.png")
+
+
+func test_the_pale_salvaged_cell_stays_loadable_for_the_before() -> void:
+	var pale: Texture2D = WeaponArt.new().part_texture(&"pistol", ShockArcsView.CELL_PART_PALE)
+	assert_not_null(pale)
+	assert_string_ends_with(pale.resource_path, "pistol/dropped.png")
 
 
 func test_the_floor_samples_the_cell_through_its_mips() -> void:
