@@ -10,6 +10,8 @@ class Mark:
 	var at: Vector2 = Vector2.ZERO
 	var dir: Vector2 = Vector2.RIGHT
 	var scorch_m: float = 0.0
+	## n16: the scorch line's length along `dir` (metres; 0 = none).
+	var line_m: float = 0.0
 	## The ink flash: cream ticks (then a soot tick or two after a blast) and its size.
 	var flash_ticks: int = 0
 	var flash_scale: float = 1.0
@@ -44,6 +46,7 @@ func leave(
 	m.at = at
 	m.dir = dir
 	m.scorch_m = row.scorch_radius_m
+	m.line_m = row.scorch_line_m
 	m.flash_ticks = row.flash_ticks
 	m.flash_scale = 1.0 if row.style == &"gib" else 0.55  # the big star and soot: blasts only
 	m.tick = tick

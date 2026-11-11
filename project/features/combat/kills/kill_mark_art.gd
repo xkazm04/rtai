@@ -8,6 +8,8 @@ extends RefCounted
 const BLOOD: Color = Color("#A30509")
 const BLOOD_DARK: Color = Color("#540005")
 const SOOT: Color = Color(0.09, 0.075, 0.105, 0.55)
+## The plasma sword's scorch line's width at its middle (metres; 0.16 read as a crack, ps64_s).
+const LINE_W_M: float = 0.26
 ## A drag smear thins from the landing over this much slide (metres).
 const SMEAR_TAPER_M: float = 1.6
 ## The blot's outline points, how far it runs out along the blow (of its radius), its fingers.
@@ -17,6 +19,8 @@ const FINGERS: int = 3
 
 
 static func scorch(ci: CanvasItem, m: KillMarks.Mark, ppm: float) -> void:
+	if m.line_m > 0.0:
+		scorch_line(ci, m, ppm)
 	if m.scorch_m <= 0.0:
 		return
 	var c: Vector2 = m.at * ppm
@@ -29,6 +33,32 @@ static func scorch(ci: CanvasItem, m: KillMarks.Mark, ppm: float) -> void:
 		halo.append(c + Vector2.from_angle(a) * m.scorch_m * ppm * jag)
 		@warning_ignore("return_value_discarded")
 		core.append(c + Vector2.from_angle(a) * m.scorch_m * ppm * 0.42 * (0.8 + 0.2 * jag))
+	KillPoly.fill(ci, halo, SOOT)
+	KillPoly.fill(ci, core, Ink.INK)
+
+
+## n16: the hot blade's path burned into the street along the cut: a soot band LINE_W_M wide in
+## the middle, tapering to points, an ink core down it (bloodless: no red).
+static func scorch_line(ci: CanvasItem, m: KillMarks.Mark, ppm: float) -> void:
+	var c: Vector2 = m.at * ppm
+	var u: Vector2 = m.dir.normalized() * m.line_m * 0.5 * ppm
+	var n: Vector2 = u.orthogonal().normalized() * LINE_W_M * 0.5 * ppm
+	var halo: PackedVector2Array = []
+	var core: PackedVector2Array = []
+	for k: int in 13:
+		var t: float = float(k) / 12.0 * 2.0 - 1.0  # -1 .. 1 along the cut, then back
+		var w: float = (1.0 - t * t) * (0.85 + 0.15 * sin(t * 9.0 + m.at.x))
+		@warning_ignore("return_value_discarded")
+		halo.append(c + u * t + n * w)
+		@warning_ignore("return_value_discarded")
+		core.append(c + u * t * 0.9 + n * w * 0.3)
+	for k: int in range(11, 0, -1):  # the tips are shared with the first side
+		var t: float = float(k) / 12.0 * 2.0 - 1.0
+		var w: float = (1.0 - t * t) * (0.85 + 0.15 * sin(t * 7.0 + m.at.y))
+		@warning_ignore("return_value_discarded")
+		halo.append(c + u * t - n * w)
+		@warning_ignore("return_value_discarded")
+		core.append(c + u * t * 0.9 - n * w * 0.3)
 	KillPoly.fill(ci, halo, SOOT)
 	KillPoly.fill(ci, core, Ink.INK)
 

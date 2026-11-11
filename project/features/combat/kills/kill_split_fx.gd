@@ -10,7 +10,6 @@ extends Node2D
 ## the saw's bite, then the halves fall apart; the halves part on a cream release burst (SawMarks).
 
 const STREAK_TICKS: int = 12
-const STREAK_M: float = 1.7
 const EDGE_M: float = 0.34
 const INK: Color = Color(0.07, 0.06, 0.07)
 const CREAM: Color = Color(0.96, 0.92, 0.8)
@@ -31,9 +30,8 @@ class Grind:
 	var dir: Vector2 = Vector2.RIGHT
 	var born: int = 0
 	var ticks: int = 0
+	var chunks: int = 0  # the row's saw_chunks (KillSawChunks)
 
-
-static var _white: ImageTexture = null
 
 var kills: SignatureKills = null
 var ppm: float = 32.0
@@ -42,17 +40,19 @@ var reduced_motion: bool = false
 var saw: SawMarks = null
 ## serial -> Vector4(at.x, at.y, cut angle, kill tick), metres.
 var _streaks: Dictionary[int, Vector4] = {}
+## serial -> the streak's (length, width) in metres, from its row (KillSlashStreak).
+var _streak_size: Dictionary[int, Vector2] = {}
 ## serial -> the chainsaw's release burst (at, cut angle, the tick the halves part).
 var _releases: Dictionary[int, Vector4] = {}
 var _grinds: Dictionary[int, Grind] = {}
+var _topples: Dictionary[int, KillSplitHalves.Topple] = {}
 
 
 ## The two halves of `rig` cut along `cut` (unit, world): groups by SignatureKill.PIECE_IDS,
 ## only HALF_A and HALF_B filled, each centred where its piece starts (SignatureKills offsets).
-## `hot`: a cauterising blade (the plasma sword): the edges glow instead of showing raw red.
-## `soul`: Kerf's beam: the cauterised edge in teal-white.
+## Edges by the row (KillCutEdge.along); the line row.cut_up_m above the ground point (the torso).
 static func cut(
-	rig: CutRig, cut_dir: Vector2, view_ppm: float, hot: bool = false, soul: bool = false
+	rig: CutRig, cut_dir: Vector2, view_ppm: float, row: SignatureKill
 ) -> Array[Node2D]:
 	var out: Array[Node2D] = []
 	@warning_ignore("return_value_discarded")
@@ -62,8 +62,9 @@ static func cut(
 		var root: Node2D = Node2D.new()
 		root.name = SignatureKill.PIECE_IDS[p]
 		var o: Vector2 = -offs[p] * view_ppm  # the body's centre in the half's space
+		var line: Vector2 = o + lift(row, view_ppm)
 		var side: Vector2 = offs[p].normalized()
-		var mask: Sprite2D = _mask(o, cut_dir, side, view_ppm)
+		var mask: Sprite2D = KillSplitHalves.mask(line, cut_dir, side, view_ppm)
 		root.add_child(mask)
 		var parts: Array[Node2D] = GibCut.cut(rig, true)
 		var body: Node2D = parts[SignatureKill.BODY]
@@ -74,16 +75,15 @@ static func cut(
 		body.transform = mask.transform.affine_inverse() * body.transform  # undo the stretch
 		flatten(body)
 		mask.add_child(body)
-		var lip: KillCutEdge = KillCutEdge.new()
-		lip.a = o - cut_dir * EDGE_M * view_ppm
-		lip.b = o + cut_dir * EDGE_M * view_ppm
-		lip.side = side
-		lip.hot = hot
-		lip.soul = soul
-		lip.z_index = 30
-		root.add_child(lip)
+		root.add_child(KillCutEdge.along(line, cut_dir, EDGE_M * view_ppm, side, row))
+		root.set_meta(KillSplitHalves.SHADOW, line + side * KillSplitHalves.SHADOW_IN_M * view_ppm)
 		out[p] = root
 	return out
+
+
+## The cut line's lift off the body's ground point (px; screen up).
+static func lift(row: SignatureKill, view_ppm: float) -> Vector2:
+	return Vector2(0.0, -row.cut_up_m * view_ppm)
 
 
 ## A clip mask only holds children on its own z: the copies' z order becomes tree order.
@@ -97,30 +97,18 @@ static func flatten(body: Node2D) -> void:
 		(parts[i] as CanvasItem).z_index = 0
 
 
-## A half-plane (2 m deep) on `side` of the line through `o` along `cut_dir`, clipping its children.
-## (A white sprite stretched over the half-plane: a Polygon2D clipped nothing in the 4.7 print.)
-static func _mask(o: Vector2, cut_dir: Vector2, side: Vector2, view_ppm: float) -> Sprite2D:
-	if _white == null:
-		var img: Image = Image.create(2, 2, false, Image.FORMAT_RGBA8)
-		img.fill(Color.WHITE)
-		_white = ImageTexture.create_from_image(img)
-	var m: Sprite2D = Sprite2D.new()
-	m.texture = _white
-	m.centered = false
-	var l: float = 2.0 * view_ppm
-	var up: float = 1.0 if side.dot(cut_dir.rotated(PI * 0.5)) > 0.0 else -1.0
-	m.rotation = cut_dir.angle()
-	m.scale = Vector2(l, l * 0.5 * up)  # the 2 px texture: 2l along the cut, l deep
-	m.position = o - cut_dir * l
-	m.clip_children = CanvasItem.CLIP_CHILDREN_ONLY
-	return m
-
-
 func add(
 	serial: int, at: Vector2, cut_dir: Vector2, row: SignatureKill, parts: Array[Node2D]
 ) -> void:
+	at += lift(row, 1.0)  # metres: the streak and the saw's bite sit on the raised line
+	var fall: int = kills.tick + row.hitstop_ticks + row.grind_ticks
+	var deg: float = row.split_topple_deg
+	var t: KillSplitHalves.Topple = KillSplitHalves.topple(parts, fall, deg, cut_dir.x)
+	if t != null:
+		_topples[serial] = t
 	if row.grind_ticks <= 0:
 		_streaks[serial] = Vector4(at.x, at.y, cut_dir.angle(), kills.tick)
+		_streak_size[serial] = Vector2(row.streak_m, row.streak_w_m)
 		return
 	var g: Grind = Grind.new()
 	for p: int in [SignatureKill.HALF_A, SignatureKill.HALF_B]:
@@ -130,6 +118,7 @@ func add(
 	g.dir = cut_dir
 	g.born = kills.tick
 	g.ticks = row.hitstop_ticks + row.grind_ticks
+	g.chunks = row.saw_chunks
 	_grinds[serial] = g
 	if saw == null:
 		saw = SawMarks.shipped()
@@ -138,16 +127,15 @@ func add(
 
 
 func forget(serial: int) -> void:
-	@warning_ignore("return_value_discarded")
-	_streaks.erase(serial)
-	@warning_ignore("return_value_discarded")
-	_grinds.erase(serial)
-	@warning_ignore("return_value_discarded")
-	_releases.erase(serial)
+	for d: Dictionary in [_streaks, _streak_size, _grinds, _releases, _topples]:
+		@warning_ignore("return_value_discarded")
+		d.erase(serial)
 
 
-## After KillView placed the halves: a grinding body shakes in one piece.
+## After KillView placed the halves: a grinding body shakes in one piece; cut halves topple.
 func pose() -> void:
+	for t: KillSplitHalves.Topple in _topples.values():
+		t.pose(kills.tick)
 	for serial: int in _grinds.keys():
 		var g: Grind = _grinds[serial]
 		var age: int = kills.tick - g.born
@@ -167,30 +155,18 @@ func pose() -> void:
 
 func _draw() -> void:
 	for serial: int in _grinds.keys():
-		_draw_grind(serial, _grinds[serial])
+		var g: Grind = _grinds[serial]  # the thrown chunks, then the spurts and sparks
+		var timing: Vector4i = Vector4i(g.born, g.ticks, g.chunks, kills.tick)
+		KillSawChunks.draw(self, serial, (g.at - g.dir * 0.12) * ppm, g.dir.angle(), timing, ppm)
+		_draw_grind(serial, g)
 	for serial: int in _streaks.keys():
-		_draw_streak(_streaks[serial], STREAK_M)
+		KillSlashStreak.draw(self, _streaks[serial], _streak_size[serial], kills.tick, ppm)
 	for serial: int in _releases.keys():
 		var r: Vector4 = _releases[serial]
 		var age: int = kills.tick - int(r.w)
 		if age >= 0 and age < STREAK_TICKS:
 			var t: float = float(age) / float(STREAK_TICKS)
 			SawMarks.burst(self, Vector2(r.x, r.y) * ppm, saw.release_m * 0.5 * ppm, r.z, t)
-
-
-## A cream slash edged in ink along a cut (s: at, angle, tick), thinning over STREAK_TICKS.
-func _draw_streak(s: Vector4, length_m: float) -> void:
-	var age: int = kills.tick - int(s.w)
-	if age < 0 or age > STREAK_TICKS:
-		return
-	var k: float = 1.0 - float(age) / float(STREAK_TICKS)
-	var c: Vector2 = Vector2.from_angle(s.z)
-	var mid: Vector2 = Vector2(s.x, s.y) * ppm
-	var half: float = length_m * 0.5 * ppm
-	var lead: Vector2 = c * half * (0.6 + 0.4 * (1.0 - k))  # the streak runs on with the blade
-	var w: float = 0.11 * ppm * k
-	draw_line(mid - c * half, mid + lead, INK, w + 3.0, true)
-	draw_line(mid - c * half * 0.8, mid + lead * 0.95, CREAM, w, true)
 
 
 ## The saw's bite: blood drops spurting out of the cut (each born on a tick, flying

@@ -1,0 +1,137 @@
+[
+  {
+    "file": "burn_collapse_patrol_ab_64ppm_x2_t590-740.png",
+    "title": "Burn: the patrol cop crumbles onto his drawn skull heap",
+    "source": "film.mjs weapon:flamethrower --victim=cop/head_cap --ppm=64 --on=kill:1+200; before 6140efc62, after 934a815c6",
+    "branch": "n16-kills-polish",
+    "ppm": 64,
+    "before": "top row: he fades to a ghost over the ash mound",
+    "note": "asset lane A8: crumbling, kneeling with skull and ribs, the capped skull heap stays; KILLS burn 14 -> 17"
+  },
+  {
+    "file": "burn_collapse_riot_ab_32ppm_x3_t590-740.png",
+    "title": "Burn at play zoom: the riot cop kneels, then a heap with his helmet",
+    "source": "film.mjs weapon:flamethrower --victim=cop/head_helmet --ppm=32 --on=kill:1+200; before 6140efc62, after cad64412a",
+    "branch": "n16-kills-polish",
+    "ppm": 32,
+    "before": "top row: a fade over the ash mound",
+    "note": "x3 crop; the skull is small at 32, the heap + helmet shape reads"
+  },
+  {
+    "file": "burn_collapse_hood_ab_64ppm_x2_t590-740.png",
+    "title": "Burn: the hooded ped's drawn collapse",
+    "source": "film.mjs weapon:flamethrower --victim=ped/head_hood --ppm=64; before 6140efc62, after b3b03286c",
+    "branch": "n16-kills-polish",
+    "ppm": 64,
+    "before": "top row: a fade",
+    "note": "he turns round at the cut (char cell back, collapse front): A8c requested"
+  },
+  {
+    "file": "hand_cannon_exit_wound_a6b_ab_64ppm_x2_t51-90.png",
+    "title": "Hand cannon: a drawn exit wound torn through the chest",
+    "source": "film.mjs chapter:hand_cannon --ppm=64 --on=kill:1+120; before 370d54d16, after 934a815c6",
+    "branch": "n16-kills-polish",
+    "ppm": 64,
+    "before": "top row: a plain knock-back, nothing torn",
+    "note": "asset lane A6b (the redraw: ragged hole, snapped ribs, spine out of line)"
+  },
+  {
+    "file": "hand_cannon_exit_wound_a6b_ab_32ppm_x3_t51-72.png",
+    "title": "Hand cannon at play zoom: the wound at 0.2 m",
+    "source": "film.mjs chapter:hand_cannon --ppm=32; before 370d54d16, after 80d1c959b",
+    "branch": "n16-kills-polish",
+    "ppm": 32,
+    "before": "top row: no wound",
+    "note": "x3 crop; 0.16 m was a 5 px speck"
+  },
+  {
+    "file": "ray_gun_drawn_remains_ab_64ppm_x2_t110-199.png",
+    "title": "Ray gun: a drawn ash heap with a skull and the empty uniform",
+    "source": "film.mjs chapter:ray_gun --ppm=64 --on=kill:1+150; before 6140efc62, after b3b03286c",
+    "branch": "n16-kills-polish",
+    "ppm": 64,
+    "before": "top row: a cream smear with polka-dot cloth",
+    "note": "asset lane A7; the hanging disc in both rows is the empty cap's shadow, fixed bd9af660f"
+  },
+  {
+    "file": "ray_gun_drawn_remains_ab_32ppm_x3_t110-199.png",
+    "title": "Ray gun remains at play zoom",
+    "source": "film.mjs chapter:ray_gun --ppm=32; before 6140efc62, after 934a815c6",
+    "branch": "n16-kills-polish",
+    "ppm": 32,
+    "before": "top row: the cream smear",
+    "note": "Call: the grey heap is quieter than the cream smear at 32"
+  },
+  {
+    "file": "plasma_sword_half_shadow_ab_64ppm_x15_t90-200.png",
+    "title": "Plasma sword: each half casts its shadow under itself",
+    "source": "film.mjs chapter:plasma_sword --ppm=64 --stills=70,90,120,150,200; before 934a815c6 (ps64_t), after 42cf70c8a (ps64_u)",
+    "branch": "n16-kills-polish",
+    "ppm": 64,
+    "before": "top row: a shadow disc ~1 m beside the toppled top half",
+    "note": "DEFECTS 10 fixed (bbf62f6f3, test 42cf70c8a); same fix covers the katana and chainsaw halves"
+  },
+  {
+    "file": "ray_gun_cap_shadow_ab_64ppm_x2_t150-199.png",
+    "title": "Ray gun: no shadow disc hanging over the remains",
+    "source": "film.mjs chapter:ray_gun --ppm=64; before b3b03286c, after 934a815c6",
+    "branch": "n16-kills-polish",
+    "ppm": 64,
+    "before": "top row: the empty cap's shadow hangs where he stood",
+    "note": "bd9af660f: an empty group casts no shadow"
+  },
+  {
+    "file": "plasma_sword_scorch_line_wider_ab_64ppm_x15_t70-200.png",
+    "title": "Plasma sword: the scorch line along the cut, wider",
+    "source": "film.mjs chapter:plasma_sword --ppm=64; before c43cae42d, after 934a815c6",
+    "branch": "n16-kills-polish",
+    "ppm": 64,
+    "before": "top row: 0.16 m, a crack",
+    "note": "0.26 m (7998ee3fa); a hanging disc by the top half is an open defect"
+  },
+  {
+    "file": "ray_gun_ellipse_mask_ab_64ppm_t82-109.png",
+    "title": "Ray gun: the whole cop eaten inward by the hot ring",
+    "source": "film.mjs chapter:ray_gun --view=combo --ppm=64 --on=kill:1+60; before 06deed4b5, after 999ec13db",
+    "branch": "n16-kills-polish",
+    "ppm": 64,
+    "before": "top row: only his legs inside a disc on his feet",
+    "note": "KillDissolveMask fits an ellipse to the drawn figure; KILLS 11 -> 14"
+  },
+  {
+    "file": "ray_gun_ellipse_mask_ab_32ppm_x2_t50-109.png",
+    "title": "Ray gun dissolve at play zoom (x2)",
+    "source": "same, --ppm=32",
+    "branch": "n16-kills-polish",
+    "ppm": 32,
+    "before": "top row",
+    "note": "the glow holds the whole man t50-80, the ring eats him onto the dust pile t82-109"
+  },
+  {
+    "file": "burn_embers_on_figure_ab_64ppm_x2_t150-250.png",
+    "title": "Burn: embers and smoke on the burnt man, not at his feet",
+    "source": "film.mjs chapter:flamethrower --ppm=64 --stills=130-290; before a56501ee5, after 6963740ef",
+    "branch": "n16-kills-polish",
+    "ppm": 64,
+    "before": "top row: a hot scrap on the street at his boots, smoke from his feet",
+    "note": "KillFigure + KillCharFx z 40; he still only fades: A8 collapse requested"
+  },
+  {
+    "file": "burn_embers_on_figure_ab_32ppm_x2_t150-285.png",
+    "title": "Burn embers at play zoom (x2)",
+    "source": "same, --ppm=32",
+    "branch": "n16-kills-polish",
+    "ppm": 32,
+    "before": "top row",
+    "note": "reads as smouldering on the shoulders"
+  },
+  {
+    "file": "plasma_hole_bloom_ab_32ppm_x2_t55-80.png",
+    "title": "Plasma hole: a 20-tick heat bloom under the drawn ring",
+    "source": "film.mjs chapter:plasma_rifle --ppm=32 --on=kill:1+40; before a56501ee5, after 6c52eaa7d",
+    "branch": "n16-kills-polish",
+    "ppm": 32,
+    "before": "top row: the drawn ring alone (no pop)",
+    "note": "owner Call answered: the impact pop at play zoom"
+  }
+]

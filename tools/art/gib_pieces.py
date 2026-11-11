@@ -25,15 +25,36 @@ PIECES = 6
 BANDS = {"cop_riot_gib.png"}
 # out file -> the armed walk whose uniform blue the pieces take (street_tone, as the hit sheets): drawn lighter than
 # the card's navy, the pieces read as another man's uniform in flight (filmed at 48 px/m, session 5).
-TONES = {"cop_patrol_gib.png": "cop_patrol_armed_walk.png", "cop_riot_gib.png": "cop_riot_armed_walk.png"}
-# library folder (under LIB) -> out file. The patrol takes v2 (head seen from above, the card's slate blue).
-KINDS = {
-    "cop_patrol_gib_70_cells/v2": "cop_patrol_gib.png",
-    "cop_riot_gib_70_cells": "cop_riot_gib.png",
+TONES = {
+    "cop_patrol_gib.png": "cop_patrol_armed_walk.png",
+    "cop_riot_gib.png": "cop_riot_armed_walk.png",
+    "swat_gib.png": "swat_armed_walk.png",
 }
-# Drawn too (it363 A), NOT packed: in the lone rocket shot the thug and the hooded pedestrian are rigs, not cards, so
-# GibCardCut never cuts them and their pieces were never seen. Add them here (and to GibCardPieces.GRIDS) once filmed:
-# "thug_gib_70_cells": "thug_gib.png", "ped_hood_gib_70_cells": "ped_hood_gib.png".
+# library folder (under LIB) -> out file. n16 kills-polish item 3 (gore level: drawn bone): every human kind takes the
+# asset lane's it410 set WITH BONE (copy by example of the no-gore sets: same pieces, places and sizes; the patrol's
+# from its v2). The thug is a robot and keeps its it363 set.
+KINDS = {
+    "cop_patrol_gib_bone_70_cells": "cop_patrol_gib.png",
+    "cop_riot_gib_bone_70_cells": "cop_riot_gib.png",
+    # n16 kills-polish (owner n15 verdict): the thug and the hooded pedestrian (it363 A) fly their drawn pieces
+    # whether they die as rigs (GibCardPieces.dress_rig) or as cards; the cap, suit, worker and SWAT sets of the
+    # same delivery with them.
+    "thug_gib_70_cells": "thug_gib.png",
+    "ped_hood_gib_bone_70_cells": "ped_hood_gib.png",
+    "ped_cap_gib_bone_70_cells": "ped_cap_gib.png",
+    "ped_suit_gib_bone_70_cells": "ped_suit_gib.png",
+    "ped_worker_gib_bone_70_cells": "ped_worker_gib.png",
+    "swat_gib_bone_70_cells": "swat_gib.png",
+    # n16 kills-polish item 3 (gore level: drawn bone): the asset lane's it410 pieces WITH BONE (A; shopper B).
+    "ped_elder_gib_bone_70_cells": "ped_elder_gib.png",
+    "ped_hat_gib_bone_70_cells": "ped_hat_gib.png",
+    "ped_punk_gib_bone_70_cells": "ped_punk_gib.png",
+    "ped_shopper_gib_bone_70_cells": "ped_shopper_gib.png",
+    "ped_jogger_gib_bone_70_cells": "ped_jogger_gib.png",
+}
+# out file -> a factor on the kind's one scale (it410: the shopper's and the jogger's torsos are drawn short; at 1.0
+# the heads and limbs came out 1.25x too big).
+SCALE = {"ped_shopper_gib.png": 0.8, "ped_jogger_gib.png": 0.8}
 
 
 def cropped(path: Path) -> Image.Image:
@@ -43,7 +64,7 @@ def cropped(path: Path) -> Image.Image:
 
 def build(lib: Path, folder: str, out: str) -> None:
     pieces = [cropped(lib / folder / f"1_{k + 1}.png") for k in range(PIECES)]
-    k = TORSO_PX / pieces[1].height
+    k = TORSO_PX / pieces[1].height * SCALE.get(out, 1.0)
     sheet = Image.new("RGBA", (CELL * PIECES, CELL), (0, 0, 0, 0))
     for i, im in enumerate(pieces):
         im = im.resize((round(im.width * k), round(im.height * k)), Image.LANCZOS)

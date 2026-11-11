@@ -28,9 +28,15 @@ const CAM: int = 1
 ## left); on the left diagonals the left facing stands under the game's arc.
 ## --rivet-blade-left=off (CastFlags) = the mirrored right strip (the before).
 const BLADE_LEFT: Array[StringName] = [&"katana", &"plasma_sword", &"chainsaw"]
+## n16 (owner n15 verdict "hold the strike's recovery through short gaps"): a BLADE_LEFT blade's
+## strike cell holds HOLD_TICKS past the recovery, so a next swing within that gap follows on from
+## the strike, not from one upright facing frame (the boss blade film's t308). View only.
+## --rivet-strike-hold=off (CastFlags) = the clip ends with its recovery (the before).
+const HOLD_TICKS: int = 6
 static var enabled: bool = true
 static var left_strike: bool = true
 static var blade_left: bool = true
+static var hold: bool = true
 
 
 ## True when `weapon` turned left draws its drawn left strip (never mirrored): a one-handed hold
@@ -60,6 +66,13 @@ static func path_or(rig: CutRig, art: String, weapon: StringName, path: String) 
 ## n15: a blade's drawn left strike only where its strike is drawn (BLADE_LEFT).
 static func _strikes_left(rig: CutRig, weapon: StringName) -> bool:
 	return not BLADE_LEFT.has(weapon) or RivetSwipe.blade_drawn(RivetFrames.oct_of(rig))
+
+
+## Seconds `rig`'s strike holds past its recovery: HOLD_TICKS for a blade out, else 0.
+static func hold_s(rig: CutRig) -> float:
+	if not hold or not BLADE_LEFT.has(RivetFrames.weapon_of(rig)):
+		return 0.0
+	return float(HOLD_TICKS) * SimClock.TICK_DT
 
 
 ## True while the view's strike clip is inside its wind-up phase.

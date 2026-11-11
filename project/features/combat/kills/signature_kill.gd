@@ -27,6 +27,10 @@ var ground_drag: float = 6.0
 var hitstop_ticks: int = 0
 var flash_ticks: int = 0
 var scorch_radius_m: float = 0.0
+## n16: a scorch line this long (metres) burned into the street along the cut (the plasma sword).
+var scorch_line_m: float = 0.0
+## n16: the hand cannon's drawn exit wound, the hole's width (m; 0 = none; KillExitWound).
+var wound_m: float = 0.0
 var spray: int = 0
 ## The spray fan's width (degrees); 0 = the pieces' cone.
 var spray_cone_deg: float = 0.0
@@ -54,6 +58,18 @@ var blot_m: float = 0.5
 ## A split's cut edge: raw (red), hot (cream, cauterised) or soul (teal-white, Kerf's beam);
 ## empty = by the row's spray (none = hot).
 var edge: StringName = &""
+## The split style's slash streak along the cut: length and width (m) at the kill tick.
+var streak_m: float = KillSlashStreak.LENGTH_M
+var streak_w_m: float = KillSlashStreak.WIDTH_M
+## The split style: metres the cut line (its mask, edges, streak and saw bite) passes above the
+## body's ground point (0 = through it: in the upright view the line then misses the figure).
+var cut_up_m: float = 0.0
+## The split style: degrees each half turns as it falls away from the cut (0 = stays upright).
+var split_topple_deg: float = 0.0
+## The hole style: metres the plasma hole sits above the body group's centre (0 = the centre).
+var hole_up_m: float = 0.0
+## The grind (grind_ticks): drawn chunks the saw's bite throws onto the street (KillSawChunks).
+var saw_chunks: int = 0
 
 
 static func from_dict(t: DataTable, d: Dictionary) -> SignatureKill:
@@ -75,6 +91,8 @@ static func from_dict(t: DataTable, d: Dictionary) -> SignatureKill:
 	k.hitstop_ticks = roundi(_num(t, d, "hitstop_ticks", 0.0))
 	k.flash_ticks = roundi(_num(t, d, "flash_ticks", 0.0))
 	k.scorch_radius_m = _num(t, d, "scorch_radius_m", 0.0)
+	k.scorch_line_m = _num(t, d, "scorch_line_m", 0.0)
+	k.wound_m = _num(t, d, "wound_m", 0.0)
 	k.spray = roundi(_num(t, d, "spray", 0.0))
 	k.spray_cone_deg = _num(t, d, "spray_cone_deg", 0.0)
 	k.stand_ticks = roundi(_num(t, d, "stand_ticks", 0.0))
@@ -86,6 +104,12 @@ static func from_dict(t: DataTable, d: Dictionary) -> SignatureKill:
 	k.hat_kick_mps = _num(t, d, "hat_kick_mps", 0.0)
 	k.blot_m = _num(t, d, "blot_m", 0.5)
 	k.edge = StringName(str(d.get("edge", "")))
+	k.streak_m = _num(t, d, "streak_m", KillSlashStreak.LENGTH_M)
+	k.streak_w_m = _num(t, d, "streak_w_m", KillSlashStreak.WIDTH_M)
+	k.hole_up_m = _num(t, d, "hole_up_m", 0.0)
+	k.cut_up_m = _num(t, d, "cut_up_m", 0.0)
+	k.split_topple_deg = _num(t, d, "split_topple_deg", 0.0)
+	k.saw_chunks = int(_num(t, d, "saw_chunks", 0.0))
 	return k
 
 

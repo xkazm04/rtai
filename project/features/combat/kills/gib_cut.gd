@@ -33,10 +33,8 @@ static func cut(rig: CutRig, whole: bool = false) -> Array[Node2D]:
 		if not whole and GibCardCut.placed(rig, groups, spr, xf):  # n15: a card flies in pieces
 			continue
 		var k: int = SignatureKill.BODY if whole else _kind(spr, rig, kind_of)
-		_place(groups[k], spr, xf, _z(spr, rig))
-		if whole and _under(spr, rig.head, rig):
-			_place(groups[SignatureKill.HAT], spr, xf, _z(spr, rig))
-		for kk: int in [k, SignatureKill.HAT] if whole and _under(spr, rig.head, rig) else [k]:
+		for kk: int in [k, SignatureKill.HAT] if whole and _hat(spr, rig) else [k]:
+			_place(groups[kk], spr, xf, _z(spr, rig))
 			if spr.name != RigBuild.HALO:
 				sums[kk] += xf.origin
 				counts[kk] += 1
@@ -45,6 +43,9 @@ static func cut(rig: CutRig, whole: bool = false) -> Array[Node2D]:
 		for ch: Node in groups[i].get_children():
 			(ch as Node2D).position -= c
 		groups[i].position = c
+	if not whole and not GibCardCut.cuts(rig, rig.head_card):
+		@warning_ignore("return_value_discarded")
+		GibCardPieces.dress_rig(rig, groups)  # n16: a rig victim flies its drawn pieces
 	return groups
 
 
@@ -66,6 +67,14 @@ static func _place(group: Node2D, spr: Sprite2D, xf: Transform2D, z: int) -> voi
 	copy.transform = xf
 	copy.z_index = z
 	group.add_child(copy)
+
+
+## True for a sprite that flies with the cap: under the head, but not a whole-figure walker card
+## (it hangs under the head too, and it is the man: n16 kills-polish, the ray gun's spinning cop).
+static func _hat(spr: Node, rig: CutRig) -> bool:
+	if StreetWalkerCards.hides_parts(rig) and spr == rig.head_card:
+		return false
+	return _under(spr, rig.head, rig)
 
 
 static func _under(spr: Node, holder: Node, rig: CutRig) -> bool:

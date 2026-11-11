@@ -13,7 +13,10 @@ extends RefCounted
 ## Read once, before the first plan or material.
 
 const WINDUP_FLAGS: PackedStringArray = [
-	"--rivet-windup=off", "--rivet-left-strike=off", "--rivet-blade-left=off"
+	"--rivet-windup=off",
+	"--rivet-left-strike=off",
+	"--rivet-blade-left=off",
+	"--rivet-strike-hold=off"
 ]
 
 static var _read: bool = false
@@ -78,6 +81,8 @@ static func _windup(arg: String) -> void:
 		RivetWindup.enabled = false
 	elif arg == "--rivet-blade-left=off":
 		RivetWindup.blade_left = false
+	elif arg == "--rivet-strike-hold=off":  # n16: a blade's clip ends with its recovery
+		RivetWindup.hold = false
 	else:
 		RivetWindup.left_strike = false
 

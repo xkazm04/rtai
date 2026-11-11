@@ -93,6 +93,11 @@
             "minimum": 0,
             "type": "number"
           },
+          "cut_up_m": {
+            "maximum": 2,
+            "minimum": 0,
+            "type": "number"
+          },
           "doc": {
             "minLength": 1,
             "type": "string"
@@ -139,6 +144,11 @@
             "minimum": 0,
             "type": "integer"
           },
+          "hole_up_m": {
+            "maximum": 2,
+            "minimum": 0,
+            "type": "number"
+          },
           "id": {
             "pattern": "^[a-z][a-z0-9_]*$",
             "type": "string"
@@ -174,6 +184,16 @@
             },
             "type": "array"
           },
+          "saw_chunks": {
+            "maximum": 16,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "scorch_line_m": {
+            "maximum": 4,
+            "minimum": 0,
+            "type": "number"
+          },
           "scorch_radius_m": {
             "minimum": 0,
             "type": "number"
@@ -197,6 +217,11 @@
             "minimum": 0,
             "type": "number"
           },
+          "split_topple_deg": {
+            "maximum": 120,
+            "minimum": 0,
+            "type": "number"
+          },
           "spray": {
             "minimum": 0,
             "type": "integer"
@@ -209,6 +234,16 @@
           "stand_ticks": {
             "minimum": 0,
             "type": "integer"
+          },
+          "streak_m": {
+            "maximum": 4,
+            "minimum": 0,
+            "type": "number"
+          },
+          "streak_w_m": {
+            "maximum": 0.5,
+            "minimum": 0,
+            "type": "number"
           },
           "style": {
             "enum": [
@@ -254,6 +289,11 @@
           "weapon": {
             "pattern": "^[a-z][a-z0-9_]*$",
             "type": "string"
+          },
+          "wound_m": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
           }
         },
         "required": [

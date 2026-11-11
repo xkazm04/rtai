@@ -23,13 +23,11 @@ var gib_layer: Node2D = Node2D.new()
 var ground: Node2D = Node2D.new()
 ## The per-style overlays (char, X-ray, blade streak, dissolve, shard burst) and the cut dispatch.
 var styles: KillStyles = KillStyles.new()
-## CPU cost of this view (place, cut, draw; the char and shock overlays' own draws excluded):
-## frames counted, microseconds in total and in the worst frame (telemetry, CONTENDED).
+## CPU cost (place, cut, draw; not the char/shock overlays): frames, total and worst us (CONTENDED).
 var frames: int = 0
 var spent_us: int = 0
 var worst_us: int = 0
-## The sim tick of the worst frame, the ticks the kills landed on, and frames over 2 ms: a spike
-## on a kill tick is this view's; one far from any kill is the machine (CONTENDED).
+## The worst frame's tick, the kill ticks, frames over 2 ms (a spike off any kill: the machine).
 var worst_tick: int = -1
 var kill_ticks: PackedInt32Array = PackedInt32Array()
 var over_2ms: int = 0
@@ -113,9 +111,11 @@ func _draw() -> void:
 	var t0: int = Time.get_ticks_usec()
 	var g: GibSim = kills.gibs
 	for i: int in GibSim.CAPACITY:
-		if g.live(i) and _holders.has(g.kill_of[i]):
-			var r: float = 0.22 * ppm / (1.0 + g.z[i] * 0.6)
-			draw_circle(g.pos[i] * ppm, r * body_sink(g.kill_of[i]), SOOT)
+		var n: Node2D = _node(i)  # n16: an empty group (a card victim's cap) casts no shadow
+		if n != null and n.get_child_count() > 0 and _holders.has(g.kill_of[i]):
+			var r: float = 0.22 * ppm / (1.0 + g.z[i] * 0.6) * body_sink(g.kill_of[i])
+			r *= styles.dissolve_fx.left(g.kill_of[i], g.piece[i])
+			draw_circle(KillSplitHalves.shadow_at(n), r, SOOT)  # n16: under a blade half, not its root
 	for m: KillMarks.Mark in kills.marks.marks:
 		var age: int = kills.tick - m.tick
 		var soot: int = 2 if m.flash_scale >= 1.0 else 0

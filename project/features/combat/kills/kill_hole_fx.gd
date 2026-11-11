@@ -2,9 +2,7 @@ class_name KillHoleFx
 extends Node2D
 ## The plasma kill (lane brutality, style `hole`), render only. punch() wraps the victim's body
 ## copy in a clip mask with a round hole at the torso, so the street shows through the body; a
-## ring sits on the hole's edge: an ink rim, a hot cream glow that cools over GLOW_TICKS to a
-## charred brown, and an inner bright lip. The ring is a child of the body (it falls with it).
-## No RNG.
+## ring on the hole's edge (a child of the body: it falls with it) cools over GLOW_TICKS. No RNG.
 
 const HOLE_M: float = 0.26
 const GLOW_TICKS: int = 150
@@ -14,45 +12,56 @@ const INK: Color = Color(0.07, 0.06, 0.07)
 const HOT: Color = Color(1.0, 0.96, 0.78)
 const COOL: Color = Color(0.3, 0.2, 0.14)
 const EMBER: Color = Color("#E9A23B")
-## The drop (showcase REQUEST 21): the victim stands LOOK_TICKS after the hit-stop, looking at the
-## hole, then falls flat back along the shot over TOPPLE_TICKS (eased in, like a fall). Seen
-## straight down, a fall reads as the body laid out along the shot: it slides back FALL_M, stretches
-## LIE_STRETCH along the fall line (the head going away from the feet), narrows across it and
-## twists a little.
+## The drop (showcase REQUEST 21): the victim stands LOOK_TICKS, then falls flat back along the
+## shot over TOPPLE_TICKS (eased in): it slides back FALL_M, stretches LIE_STRETCH along the fall
+## line, narrows across it and twists a little.
 const LOOK_TICKS: int = 3
 const TOPPLE_TICKS: int = 12
 const FALL_M: float = 0.85
 const LIE_STRETCH: float = 0.55
 const LIE_NARROW: float = 0.12
 const LIE_TWIST: float = 0.35
-## The kick (combat-notes, "thrown back along the bolt"): on the hit tick the body snaps KICK_M back
-## along the shot, stretched KICK_STRETCH (the bolt's shove), and holds it while it looks; the
-## topple then carries it on to FALL_M. Off under --no-plasma-heat.
+## The kick: the hit snaps the body KICK_M back, stretched KICK_STRETCH (off: --no-plasma-heat).
 const KICK_M: float = 0.3
 const KICK_STRETCH: float = 0.14
-## Smoke out of the burned hole (owner note 2026-11-04: "hot and heavy"): SMOKE_PUFFS ash puffs
-## rising out of the ring, each living SMOKE_CYCLE ticks, for SMOKE_TICKS after the hit (0 = none).
+## Smoke out of the hole (owner 2026-11-04 "hot and heavy"): SMOKE_PUFFS puffs, each SMOKE_CYCLE
+## ticks, for SMOKE_TICKS after the hit (0 = none).
 const SMOKE_TICKS: int = 300
 const SMOKE_PUFFS: int = 5
 const SMOKE_CYCLE: int = 48
-const SMOKE: Color = Color(0.84, 0.8, 0.74, 0.9)
+## n16 kills-polish: a warm ink-grey smoke, smaller (SMOKE_R): the n12 cream puffs washed the
+## standing victim pale (rank film, 64 and 32 px/m).
+const SMOKE: Color = Color(0.36, 0.32, 0.3, 0.6)
+const SMOKE_R: Vector2 = Vector2(0.45, 0.8)
 
-## The night's throw (the A/B's before, with no smoke).
+## n16 kills-polish item 3 (asset lane A4, it418): the ring is drawn: charred cloth, cauterised
+## flesh, rib ends and a spine segment round the open hole, cross-fading white-hot -> amber ->
+## cooled char over GLOW_TICKS (tools/art/plasma_hole_cells.py: three cells across, the open
+## radius ART_HOLE_PX, its centre ART_DY_PX below the cell's). `--hole-art=plain` = the before.
+const ART: Texture2D = preload("res://features/combat/weapons/art/gore/plasma_hole.png")
+const ART_HOLE_PX: float = 35.0
+const ART_DY_PX: float = 2.5
+## n16 it4: a cream bloom under the drawn ring for BLOOM_TICKS (its pop at 32 px/m; owner Call).
+const BLOOM_TICKS: int = 20
+
 const OLD_LOOK_TICKS: int = 8
 const OLD_FALL_M: float = 0.45
 
-## False (`--no-plasma-heat`): the night's throw and no wound smoke (the A/B's before).
+## False (`--no-plasma-heat`): the night's throw (OLD_*) and no wound smoke (the A/B's before).
 static var heat: bool = not OS.get_cmdline_user_args().has("--no-plasma-heat")
 static var _holed: ImageTexture = null
+static var _plain: int = -1
 
 var kills: SignatureKills = null
 var tick0: int = 0
 var radius_px: float = 4.0
 
 
-## The body group with a hole punched through its centre (the group's origin is the centroid);
-## its one child is the lay node Topple bends, holding the clipped body and the ring.
-static func punch(body: Node2D, p_kills: SignatureKills, view_ppm: float) -> Node2D:
+## The body group with a hole punched `up_m` (row hole_up_m) above its centre (about the hips) at
+## the chest; its one child is the lay node Topple bends, holding the clipped body and the ring.
+static func punch(
+	body: Node2D, p_kills: SignatureKills, view_ppm: float, up_m: float = 0.0
+) -> Node2D:
 	var root: Node2D = Node2D.new()
 	root.name = body.name
 	var lay: Node2D = Node2D.new()  # the fall's lay-out (Topple), under KillView's placement
@@ -61,6 +70,7 @@ static func punch(body: Node2D, p_kills: SignatureKills, view_ppm: float) -> Nod
 	mask.texture = _mask_texture()
 	mask.scale = Vector2.ONE * MASK_M * view_ppm / MASK_PX
 	mask.clip_children = CanvasItem.CLIP_CHILDREN_ONLY
+	mask.position = Vector2(0.0, -up_m * view_ppm)
 	lay.add_child(mask)
 	body.position = Vector2.ZERO
 	body.transform = mask.transform.affine_inverse()
@@ -71,6 +81,7 @@ static func punch(body: Node2D, p_kills: SignatureKills, view_ppm: float) -> Nod
 	ring.tick0 = p_kills.tick
 	ring.radius_px = HOLE_M * view_ppm
 	ring.z_index = 30
+	ring.position = mask.position
 	lay.add_child(ring)
 	return root
 
@@ -130,16 +141,47 @@ func _process(_delta: float) -> void:
 
 
 func _draw() -> void:
-	var k: float = clampf(float(kills.tick - tick0) / GLOW_TICKS, 0.0, 1.0) if kills else 1.0
+	var age: int = kills.tick - tick0 if kills else GLOW_TICKS
+	var k: float = clampf(float(age) / GLOW_TICKS, 0.0, 1.0)
 	if kills != null:
-		_smoke(kills.tick - tick0)
+		_smoke(age)
+	if not plain():
+		_bloom(1.6 * (1.0 - float(age) / BLOOM_TICKS))  # held near full for 8 ticks
+		_ring_art(k)
+		return
 	var glow: Color = HOT.lerp(COOL, k)
-	var halo: Color = Color(HOT, 0.55 * (1.0 - k))  # the heat bloom reads at 32 px/m, then cools
-	draw_arc(Vector2.ZERO, radius_px * 1.55, 0.0, TAU, 24, halo, radius_px * 0.7, true)
+	_bloom(1.0 - k)  # the heat bloom reads at 32 px/m, then cools
 	draw_arc(Vector2.ZERO, radius_px + 2.0, 0.0, TAU, 24, INK, 3.0, true)
 	draw_arc(Vector2.ZERO, radius_px, 0.0, TAU, 24, glow, maxf(radius_px * 0.3, 2.0), true)
 	# a thin ember lip that never quite goes out, so the hole still reads at 32 px/m once cooled
 	draw_arc(Vector2.ZERO, radius_px * 0.82, 0.0, TAU, 24, Color(EMBER, 0.9 - 0.45 * k), 1.5, true)
+
+
+## The cream heat bloom round the hole at strength `a` (<= 0: none; capped at 1.5).
+func _bloom(a: float) -> void:
+	if a > 0.0:
+		var halo: Color = Color(HOT, 0.55 * minf(a, 1.5))
+		draw_arc(Vector2.ZERO, radius_px * 1.55, 0.0, TAU, 24, halo, radius_px * 0.7, true)
+
+
+## True under `--hole-art=plain` (the procedural rings: the before).
+static func plain() -> bool:
+	if _plain < 0:
+		_plain = 1 if ArenaArgs.parse().text("--hole-art") == "plain" else 0
+	return _plain == 1
+
+
+## The drawn ring at cooling `k` (0 hot .. 1 char): frame f under frame f + 1 fading in.
+func _ring_art(k: float) -> void:
+	var cell: float = ART.get_height()
+	var side: float = cell * radius_px / ART_HOLE_PX
+	var top: Vector2 = Vector2(-side, -side) * 0.5 - Vector2(0.0, ART_DY_PX * side / cell)
+	var at: Rect2 = Rect2(top, Vector2(side, side))
+	var f: float = clampf(k, 0.0, 1.0) * 2.0
+	var seg: int = mini(int(f), 1)
+	draw_texture_rect_region(ART, at, Rect2(cell * seg, 0.0, cell, cell))
+	var fade: Color = Color(1.0, 1.0, 1.0, f - seg)
+	draw_texture_rect_region(ART, at, Rect2(cell * (seg + 1), 0.0, cell, cell), fade)
 
 
 ## The wound smokes: puffs rise out of the hole (the ring's -y), swell and thin, the column
@@ -153,6 +195,6 @@ func _smoke(age: int) -> void:
 		var sway: float = sin(float(age) * 0.07 + float(i) * 2.1) * radius_px * 0.5
 		var at: Vector2 = Vector2(sway, -p * radius_px * 5.0)
 		var a: float = SMOKE.a * (1.0 - p) * fade
-		var r: float = radius_px * (0.6 + 1.3 * p)
+		var r: float = radius_px * (SMOKE_R.x + SMOKE_R.y * p)
 		draw_circle(at, r, Color(SMOKE, a))
 		draw_arc(at, r, 0.0, TAU, 16, Color(INK, a * 0.8), 1.5, true)

@@ -34,7 +34,7 @@ func bind(kills: SignatureKills, ppm: float, reduced_motion: bool) -> void:
 		fx.set(&"kills", kills)
 		fx.set(&"ppm", ppm)
 		fx.set(&"reduced_motion", reduced_motion)
-	char_fx.z_index = 4
+	char_fx.z_index = 40  # n16: the embers on the burnt man, over his parts (they reach +30)
 	add_child(char_fx)
 	shock_fx.z_index = 40  # the X-ray over the living rigs crowding the victim (parts reach +30)
 	add_child(shock_fx)
@@ -80,19 +80,26 @@ func parts(
 ) -> Array[Node2D]:
 	var split: bool = row.style == &"split" and rig != null  # the blade's halves, cut along dir
 	var groups: Array[Node2D] = (
-		KillSplitFx.cut(rig, dir, _ppm, row.spray == 0, row.edge == &"soul")
-		if split
-		else GibCut.parts(rig, row.whole_body(), _ppm)
+		KillSplitFx.cut(rig, dir, _ppm, row) if split else GibCut.parts(rig, row.whole_body(), _ppm)
 	)
+	if row.style == &"blowback":  # n16: the hand cannon's drawn exit wound (A6)
+		var w: KillExitWound = KillExitWound.attach(groups[SignatureKill.BODY], rig, row, dir, _ppm)
+		if w != null:
+			w.kills = _kills
+			w.tick0 = _kills.tick
 	if row.style == &"split":
 		split_fx.add(serial, at, dir, row, groups)
 	elif row.style == &"hole" and rig != null:
-		groups[SignatureKill.BODY] = KillHoleFx.punch(groups[SignatureKill.BODY], _kills, _ppm)
+		groups[SignatureKill.BODY] = KillHoleFx.punch(
+			groups[SignatureKill.BODY], _kills, _ppm, row.hole_up_m
+		)
 	elif row.style == &"dissolve" and rig != null:
-		groups[SignatureKill.BODY] = KillDissolveFx.wrap(groups[SignatureKill.BODY])
+		groups[SignatureKill.BODY] = KillDissolveMask.wrap(groups[SignatureKill.BODY], _ppm)
+		KillXray.tag(groups[SignatureKill.BODY], rig)  # n16: the remains' cloth colour (A7)
 	elif row.style == &"shock" and rig != null and groups[SignatureKill.BODY] != null:
 		var plank: Node2D = KillSprawlCut.cut(rig)
 		groups[SignatureKill.BODY] = KillShockFx.wrap(groups[SignatureKill.BODY], plank)
+		KillXray.tag(groups[SignatureKill.BODY], rig)  # n16: the kind's drawn X-ray
 	elif row.style == &"burn":
 		KillCharCells.tag(groups[SignatureKill.BODY], rig)  # n15: a drawn charred man
 	elif KillNewStyles.owns(row.style):

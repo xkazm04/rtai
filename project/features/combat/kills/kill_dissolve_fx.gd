@@ -1,24 +1,22 @@
 class_name KillDissolveFx
 extends Node2D
-## The ray gun kill (lane brutality, style `dissolve`), render only. wrap() puts the victim's body
-## copy under a round clip mask; the body glows stiff for row.stand_ticks, then the mask shrinks
-## over row.crumble_ticks, so the body is eaten from its outline inward by a hot cream ring while
-## echo rings ripple outward and fade. Glowing motes fall onto a dust pile that is left with the
-## empty uniform (a crumpled blue cloth) and the cap (the row's hat piece) lying by it. Timings
-## against the sim tick, shapes from a hash of the kill serial: no dice, a replay shows the same.
+## The ray gun kill (lane brutality, style `dissolve`), render only. KillDissolveMask.wrap()
+## puts the victim's body copy under an elliptic clip mask; the body glows stiff for
+## row.stand_ticks, then the mask shrinks over row.crumble_ticks, so the body is eaten from its
+## outline inward by a hot cream ring while echo rings ripple outward and fade. Glowing motes fall
+## onto a dust pile that is left with the empty uniform (a crumpled blue cloth) and the cap (the
+## row's hat piece) lying by it. Timings against the sim tick, shapes from a hash of the kill
+## serial: no dice, a replay shows the same.
 
 const INK: Color = Color(0.07, 0.06, 0.07)
 const HOT: Color = Color(1.0, 0.96, 0.78)
 const GOLD: Color = Color("#E9A23B")
-const MASK_PX: int = 64
-## The mask's starting radius (metres): the whole posed body fits inside.
+## The mask's starting radius (metres) for a body with no sprites to measure (a blob).
 const BODY_R_M: float = 0.62
 const ECHOES: int = 3
 ## The stiff lock's glow over the body (the part print ignores modulate tints): a hot cream wash.
 const GLOW_A: float = 0.62
 const MOTES: int = 26
-
-static var _disc: ImageTexture = null
 
 
 class Dissolve:
@@ -37,35 +35,6 @@ var reduced_motion: bool = false
 ## Callable(serial: int) -> float: the kill's body sink (KillView.body_sink): the pile shrinks.
 var fade: Callable = Callable()
 var _all: Array[Dissolve] = []
-
-
-## The body group under a round clip mask (the group's origin is the body's centroid).
-static func wrap(body: Node2D) -> Node2D:
-	var root: Node2D = Node2D.new()
-	root.name = body.name
-	var mask: Sprite2D = Sprite2D.new()
-	mask.texture = _disc_texture()
-	mask.clip_children = CanvasItem.CLIP_CHILDREN_ONLY
-	mask.name = "mask"
-	root.add_child(mask)
-	body.position = Vector2.ZERO
-	KillSplitFx.flatten(body)
-	mask.add_child(body)
-	return root
-
-
-static func _disc_texture() -> ImageTexture:
-	if _disc != null:
-		return _disc
-	var img: Image = Image.create(MASK_PX, MASK_PX, false, Image.FORMAT_RGBA8)
-	img.fill(Color(1.0, 1.0, 1.0, 0.0))
-	var c: Vector2 = Vector2.ONE * (MASK_PX * 0.5 - 0.5)
-	for y: int in MASK_PX:
-		for x: int in MASK_PX:
-			if Vector2(x, y).distance_to(c) < MASK_PX * 0.5 - 0.5:
-				img.set_pixel(x, y, Color.WHITE)
-	_disc = ImageTexture.create_from_image(img)
-	return _disc
 
 
 func add(serial: int, root: Node2D, row: SignatureKill, at: Vector2, dir: Vector2) -> void:
@@ -89,13 +58,28 @@ func pose() -> void:
 		var mask: Sprite2D = d.root.get_node_or_null("mask") as Sprite2D
 		if mask == null:
 			continue
-		var r: float = BODY_R_M * ppm * (1.0 - _eat(d))
-		mask.scale = Vector2.ONE * maxf(r * 2.0, 0.01) / MASK_PX
+		var ell: Rect2 = _ell(d)
+		var k: float = 1.0 - _eat(d)
+		mask.position = ell.position
+		mask.scale = (ell.size * 2.0 * k).max(Vector2.ONE * 0.01) / KillDissolveMask.MASK_PX
 		var body: Node2D = mask.get_child(0) as Node2D
 		body.transform = mask.transform.affine_inverse()
-		mask.visible = r > 0.5
+		mask.visible = ell.size.y * k > 0.5
 	if not _all.is_empty():
 		queue_redraw()
+
+
+func _ell(d: Dissolve) -> Rect2:
+	return KillDissolveMask.ell_of(d.root, BODY_R_M * ppm)
+
+
+## n16: what is left of a kill's `piece` (1 .. 0 as the rings eat the body; 1 for any other piece
+## or kill): its shadow shrinks with it (the eaten man's shadow hung on the street, rg64_w/d).
+func left(serial: int, piece: int) -> float:
+	for d: Dissolve in _all:
+		if d.serial == serial and piece == SignatureKill.BODY:
+			return 1.0 - _eat(d)
+	return 1.0
 
 
 ## 0 while the body stands glowing, rising to 1 as the rings eat it.
@@ -117,16 +101,22 @@ func _glow(d: Dissolve) -> float:
 func _draw() -> void:
 	for d: Dissolve in _all:
 		var e: float = _eat(d)
-		var c: Vector2 = d.root.position
+		var ell: Rect2 = _ell(d)
 		_pile(d, e)
+		# The rings and motes are drawn as circles of radius ell.size.x in the ellipse's own frame.
+		var sx: float = d.root.scale.x
+		var squash: Vector2 = Vector2(sx, sx * ell.size.y / maxf(ell.size.x, 0.01))
+		draw_set_transform(d.root.transform * ell.position, d.root.rotation, squash)
 		if e < 1.0:
-			_rings(d, c, e)
-		_motes(d, c, e)
+			_rings(d, ell.size.x, e)
+		_motes(d, ell.size.x, e)
+		draw_set_transform(Vector2.ZERO)
 
 
 ## The glow on the eating edge plus echo rings rippling outward (none under reduced motion).
-func _rings(d: Dissolve, c: Vector2, e: float) -> void:
-	var r: float = BODY_R_M * ppm * (1.0 - e)
+func _rings(d: Dissolve, r0: float, e: float) -> void:
+	var c: Vector2 = Vector2.ZERO
+	var r: float = r0 * (1.0 - e)
 	var age: int = kills.tick - d.born
 	var pulse: float = 1.0 if reduced_motion else 0.8 + 0.2 * sin(float(age) * 0.7)
 	if e <= 0.0:  # the stiff glow before the rings start: the body lit from inside
@@ -152,14 +142,20 @@ func _pile(d: Dissolve, e: float) -> void:
 	if g <= 0.0:
 		return
 	var glow: float = clampf(1.6 - e * 0.6 - float(kills.tick - d.born) / 900.0, 0.25, 1.0)
+	if not KillRemainsArt.plain():  # n16: the drawn ash heap with the skull (A7)
+		var kind: String = str(d.root.get_meta(KillXray.KIND, ""))
+		var k: Vector3 = Vector3(g, ppm, glow)
+		KillRemainsArt.draw(self, d.at * ppm, d.dir, k, KillRemainsArt.set_of(kind))
+		return
 	KillDustPile.draw(self, d.serial, d.at * ppm, d.dir, g, ppm, glow)
 
 
 ## Glowing motes shed off the eating edge, falling to the pile.
-func _motes(d: Dissolve, c: Vector2, e: float) -> void:
+func _motes(d: Dissolve, r0: float, e: float) -> void:
 	if e <= 0.0 or e >= 1.0 or reduced_motion:
 		return
-	var r: float = BODY_R_M * ppm * (1.0 - e)
+	var c: Vector2 = Vector2.ZERO
+	var r: float = r0 * (1.0 - e)
 	var age: int = kills.tick - d.born
 	for n: int in MOTES:
 		var a: float = _h(d.serial, n + 200) * TAU + float(age) * 0.02

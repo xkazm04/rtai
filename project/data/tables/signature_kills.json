@@ -37,7 +37,7 @@
     {
       "bounce": 0.25,
       "cone_deg": 8,
-      "doc": "Hand cannon: the victim is blown off their feet in one piece, flies back along the shot, lands and slides on a long blood smear while the cap spins off; an exit spray fans out behind the body. No scorch.",
+      "doc": "Hand cannon: the victim is blown off their feet in one piece, flies back along the shot, lands and slides on a long blood smear while the cap spins off; an exit spray fans out behind the body. No scorch. n16 kills-polish: the round leaves a drawn exit wound in the chest (torn cloth flaps, meat, rib arcs, the spine's knuckles; asset lane A6), wound_m wide, that tumbles with the body and dries on it (KillExitWound).",
       "flash_ticks": 2,
       "ground_drag": 5,
       "hitstop_ticks": 3,
@@ -62,7 +62,8 @@
         2.2,
         2.8
       ],
-      "weapon": "hand_cannon"
+      "weapon": "hand_cannon",
+      "wound_m": 0.2
     },
     {
       "ash_m": 0.62,
@@ -158,7 +159,8 @@
       "bounce": 0.1,
       "cone_deg": 10,
       "cut_deg": 55,
-      "doc": "Katana: one clean diagonal slash cuts the body in two along the blade's line (shoulder to hip). Both halves of the real rig slide apart off the cut on red smears, a raw red edge on each, the blood fanning out along the cut in the swing's direction; a cream slash streak marks the blade's path. Under --gore=reduced the victim falls whole.",
+      "cut_up_m": 0.8,
+      "doc": "Katana: one clean diagonal slash cuts the body in two along the blade's line (shoulder to hip). Both halves of the real rig slide apart off the cut on red smears, a raw red edge on each, the blood fanning out along the cut in the swing's direction; a cream slash streak marks the blade's path. Under --gore=reduced the victim falls whole. n16 kills-polish (owner n15 verdict): the slash streak is shorter and thinner (streak_m 1.0, streak_w_m 0.06; was 1.7 / 0.11), so it reads as the blade's path, not a white stick across the cop. n16 kills-polish: the cut line runs cut_up_m 0.8 m above the body's ground point, through the drawn torso (at 0 it passed through the feet: in the upright view one half held the whole standing figure). Each half then topples split_topple_deg 80 away from the other about its ground point (KillSplitHalves), so the cut man drops in two pieces instead of two upright pieces sliding apart.",
       "flash_ticks": 2,
       "ground_drag": 2.6,
       "hitstop_ticks": 6,
@@ -176,8 +178,11 @@
         20,
         70
       ],
+      "split_topple_deg": 80,
       "spray": 16,
       "spray_cone_deg": 26,
+      "streak_m": 1,
+      "streak_w_m": 0.06,
       "style": "split",
       "up_mps": [
         0.4,
@@ -188,10 +193,11 @@
     {
       "bounce": 0.1,
       "cone_deg": 8,
-      "doc": "Plasma rifle: the bolt burns a clean round hole through the torso (the street shows through it), its edge glowing hot cream inside an ink rim and cooling to a charred brown over 1.5 s; the victim drops back along the shot, cauterised: no blood. The bolt flies on (gunplay's projectile).",
+      "doc": "Plasma rifle: the bolt burns a clean round hole through the torso (the street shows through it), its edge glowing hot cream inside an ink rim and cooling to a charred brown over 1.5 s; the victim drops back along the shot, cauterised: no blood. The bolt flies on (gunplay's projectile). n16 kills-polish: the hole sits hole_up_m 0.4 m above the body's centre (it was at the hips), and the wound smoke is a smaller ink-grey (the cream puffs washed the standing victim pale).",
       "flash_ticks": 2,
       "ground_drag": 6,
       "hitstop_ticks": 3,
+      "hole_up_m": 0.4,
       "id": "plasma_hole",
       "launch_mps": [
         1.4,
@@ -217,7 +223,8 @@
       "bounce": 0.1,
       "cone_deg": 10,
       "cut_deg": 55,
-      "doc": "Plasma sword: the katana's diagonal cut with a hot blade: the two halves of the real rig slide apart, their cut edges cauterised (a hot cream band in a heat bloom, no red), no blood and no smears; the cream slash streak marks the blade.",
+      "cut_up_m": 0.8,
+      "doc": "Plasma sword: the katana's diagonal cut with a hot blade: the two halves of the real rig slide apart, their cut edges cauterised (a hot cream band in a heat bloom, no red), no blood and no smears; the cream slash streak marks the blade. n16 kills-polish (owner n15 verdict): the slash streak is shorter and thinner (streak_m 1.0, streak_w_m 0.06; was 1.7 / 0.11), so it reads as the blade's path, not a white stick across the cop. n16 kills-polish: the cut line runs cut_up_m 0.8 m above the body's ground point, through the drawn torso (at 0 it passed through the feet: in the upright view one half held the whole standing figure). Each half then topples split_topple_deg 80 away from the other about its ground point (KillSplitHalves), so the cut man drops in two pieces instead of two upright pieces sliding apart. n16 kills-polish it4: the hot blade's path stays burned into the street, a scorch line scorch_line_m 1.4 m along the cut under the halves (soot band, ink core, no red): the bloodless kill's aftermath.",
       "flash_ticks": 2,
       "ground_drag": 2.6,
       "hitstop_ticks": 6,
@@ -230,13 +237,17 @@
         "half_a",
         "half_b"
       ],
+      "scorch_line_m": 1.4,
       "scorch_radius_m": 0,
       "spin_dps": [
         20,
         70
       ],
+      "split_topple_deg": 80,
       "spray": 0,
       "spray_cone_deg": 0,
+      "streak_m": 1,
+      "streak_w_m": 0.06,
       "style": "split",
       "up_mps": [
         0.4,
@@ -248,7 +259,8 @@
       "bounce": 0.1,
       "cone_deg": 10,
       "cut_deg": 0,
-      "doc": "Chainsaw: the grind. The saw bites into the victim, who stays held on it shaking for most of a second while blood spurts back off the chain in a continuous spray and cream sparks fly off the teeth; then the body falls apart in two halves, cut straight along the saw's push, on red smears with a raw red edge. Under --gore=reduced the victim falls whole.",
+      "cut_up_m": 0.8,
+      "doc": "Chainsaw: the grind. The saw bites into the victim, who stays held on it shaking for most of a second while blood spurts back off the chain in a continuous spray and cream sparks fly off the teeth; then the body falls apart in two halves, cut straight along the saw's push, on red smears with a raw red edge. Under --gore=reduced the victim falls whole. n16 kills-polish: the cut line runs cut_up_m 0.8 m above the body's ground point, through the drawn torso (at 0 it passed through the feet: in the upright view one half held the whole standing figure). Each half then topples split_topple_deg 80 away from the other about its ground point (KillSplitHalves), so the cut man drops in two pieces instead of two upright pieces sliding apart. n16 kills-polish: through the grind the bite throws saw_chunks 8 drawn pieces (meat, bone chips, a rib, a tooth; KillSawChunks) out through the body, away from the saw; they land and lie on the street.",
       "flash_ticks": 0,
       "grind_ticks": 54,
       "ground_drag": 2.8,
@@ -262,12 +274,14 @@
         "half_a",
         "half_b"
       ],
+      "saw_chunks": 8,
       "scorch_radius_m": 0,
       "spin_dps": [
         15,
         50
       ],
       "split_follow": 0.8,
+      "split_topple_deg": 80,
       "spray": 24,
       "spray_cone_deg": 70,
       "style": "split",
@@ -500,7 +514,8 @@
       "bounce": 0.1,
       "cone_deg": 10,
       "cut_deg": 55,
-      "doc": "Kerf's blink-slice (lane ghost-powers, weapon kerf_slice): the plasma sword's diagonal cut done by the soul's cutting beam as Kerf passes through: the two halves of the real rig part slowly off the line, the cut edges cauterised teal-white (a soul-teal bloom round a white-hot band, no red), no blood and no smears; the cream slash streak marks the beam. Under --gore=reduced the victim falls whole.",
+      "cut_up_m": 0.8,
+      "doc": "Kerf's blink-slice (lane ghost-powers, weapon kerf_slice): the plasma sword's diagonal cut done by the soul's cutting beam as Kerf passes through: the two halves of the real rig part slowly off the line, the cut edges cauterised teal-white (a soul-teal bloom round a white-hot band, no red), no blood and no smears; the cream slash streak marks the beam. Under --gore=reduced the victim falls whole. n16 kills-polish: the cut line runs cut_up_m 0.8 m above the body's ground point, through the drawn torso (at 0 it passed through the feet: in the upright view one half held the whole standing figure). Each half then topples split_topple_deg 80 away from the other about its ground point (KillSplitHalves), so the cut man drops in two pieces instead of two upright pieces sliding apart.",
       "edge": "soul",
       "flash_ticks": 2,
       "ground_drag": 2.6,
@@ -519,6 +534,7 @@
         10,
         40
       ],
+      "split_topple_deg": 80,
       "spray": 0,
       "spray_cone_deg": 0,
       "style": "split",

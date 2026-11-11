@@ -14,11 +14,12 @@ const SMOKE: Color = Color(0.09, 0.075, 0.105, 0.62)
 const FLAKES: int = 34
 const WISPS: int = 6
 const SMOKE_TAIL: int = 150
+## n16: the embers' spread on the figure's box (a cell is ~2x the man's width); the smoke's source.
+const EMBER_SPREAD: Vector2 = Vector2(0.2, 0.5)
+const SMOKE_FROM: Vector2 = Vector2(0.0, -0.45)
 const FLAKE_LIFE: float = 70.0
-## A vaporised body's shadow: the char print burnt into the street, the paving showing through.
-const SHADOW_A: float = 0.8
-## The char rim's width in screen px at 64 px/m, scaled with the zoom (0.8 px at 32: a wider rim
-## covers most of a 20 px body and the corpse reads pale instead of charred).
+const SHADOW_A: float = 0.8  # a vaporised body's shadow: the paving shows through the char
+## The char rim (screen px at 64 px/m, scaled with zoom: wider made a 20 px body read pale).
 const RIM_PX_64: float = 1.6
 ## One wind over the whole street (screen right and up a little), so every heap leans the same way.
 const WIND: Vector2 = Vector2(0.94, -0.34)
@@ -47,8 +48,7 @@ var reduced_motion: bool = false
 var _burns: Array[Burn] = []
 
 
-## The char print warmed at load: the first burn or vaporise kill built the material and drew
-## the shader's first sprite on its kill frame (1.6-1.9 ms, CONTENDED). One faint speck, 6 frames.
+## The char print warmed at load (the first burn kill built it on its kill frame: 1.6-1.9 ms).
 func _ready() -> void:
 	var s: Sprite2D = Sprite2D.new()
 	s.texture = ASH_TEX
@@ -86,6 +86,8 @@ func pose() -> void:
 			b.body.modulate.a = SHADOW_A
 			continue
 		var k: float = _crumble(b)
+		if KillCharCells.collapse(b.body, k):  # n16: the drawn collapse (A8) holds the body
+			continue
 		b.body.modulate.a = 1.0 - smoothstep(0.15, 1.0, k)
 		b.body.scale *= 1.0 - 0.18 * k
 	queue_redraw()
@@ -96,15 +98,14 @@ func _draw() -> void:
 		if b.shadow:
 			continue
 		var age: int = kills.tick - b.born
-		var p: Vector2 = b.body.position
 		var k: float = _crumble(b)
-		if k < 0.7:
-			_embers(b, p, age, 1.0 - k / 0.7)
+		if k < 0.7:  # n16: on the drawn figure (KillFigure), not on the group origin (the feet)
+			_embers(b, age, 1.0 - k / 0.7)
 		var tail: float = 1.0 - clampf(float(age - _end(b)) / SMOKE_TAIL, 0.0, 1.0)
 		if tail > 0.0:
-			_smoke(b, p, age, tail * (1.0 - 0.5 * k))
+			_smoke(b, KillFigure.at(b.body, SMOKE_FROM), age, tail * (1.0 - 0.5 * k))
 		if k > 0.0:
-			_flakes(b, p, age)
+			_flakes(b, KillFigure.at(b.body, Vector2.ZERO), age)
 
 
 ## The ash heap of a burn mark (under the bodies): it grows in as the body crumbles.
@@ -129,12 +130,11 @@ func _end(b: Burn) -> int:
 	return b.row.hitstop_ticks + b.row.stand_ticks + b.row.crumble_ticks
 
 
-func _embers(b: Burn, p: Vector2, age: int, strength: float) -> void:
+func _embers(b: Burn, age: int, strength: float) -> void:
 	for n: int in 10:
 		var h1: float = _h(b.serial, n)
 		var h2: float = _h(b.serial, n + 40)
-		var o: Vector2 = Vector2.from_angle(h1 * TAU) * (0.06 + 0.22 * h2) * ppm
-		var c: Vector2 = p + o.rotated(b.body.rotation)
+		var c: Vector2 = KillFigure.at(b.body, (Vector2(h1, h2) * 2.0 - Vector2.ONE) * EMBER_SPREAD)
 		var flick: float = 1.0 if reduced_motion else 0.55 + 0.45 * sin(float(age) * 0.45 + n * 1.9)
 		var a: float = clampf(strength * flick, 0.0, 1.0)
 		var d: Vector2 = Vector2.from_angle(h2 * TAU + b.body.rotation) * 0.1 * ppm

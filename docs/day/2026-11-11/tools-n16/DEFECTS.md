@@ -1,4 +1,117 @@
-# DEFECTS (n15 combat): found -> fixed (commit) / open
+# DEFECTS (n16 kills-polish, newest first; n15 combat's list below): found -> fixed (commit) / open
+
+## Drawn deaths A6-A8 in game, hand cannon / ray gun / flamethrower, 64 and 32 px/m (iteration 8, 16:52-)
+1. Hand cannon: the first exit wound (0.34 m at the head line) sat on his FACE and read as a grinning monster mouth
+   (film hc64_b t51-72) -> fixed 6140efc62 (0.16 m, chest, mirrored not turned) + 944ea5fa9 (lower, CHEST -0.13).
+   `evidence/n16-kills-polish/hand_cannon_exit_wound_ab_64ppm_x2_t51-72.png`.
+2. Hand cannon: the drawing's even row of spine knuckles between two rib arcs still hints at teeth at 64 px/m -> fixed
+   a4a2dcda1 (A6b redraw: ragged hole, snapped ribs, the spine out of line); film hc64_t vs hc64_a:
+   `evidence/n16-kills-polish/hand_cannon_exit_wound_a6b_ab_64ppm_x2_t51-90.png`.
+3. Hand cannon: the blowback body never lies down; it flies back as his upright card (so a "back" wound is seen on an
+   upright torso) -> open, judged: not a defect of the wound; a drawn tumble/landing cell would be the next lift.
+4. Ray gun: the eaten body's flying shadow (a dark disc) hung on the street where he stood from k+100 on, in the before
+   and the after (film rg64_w/d t150-199). cad64412a (the eaten BODY's shadow shrinks with the eating) did NOT remove it
+   (film rg64_t, same ticks): the disc is the kicked CAP's shadow, and since 06deed4b5 a walker-card victim's cap group
+   is empty -> fixed bd9af660f (an empty group casts no shadow; also the hand cannon's cap dot); film rg64_u (934a815c6)
+   same ticks: gone. `evidence/n16-kills-polish/ray_gun_cap_shadow_ab_64ppm_x2_t150-199.png`.
+8. Hand cannon at 32 px/m: the 0.16 m wound was a ~5 px speck (film hc32_t) -> fixed 80d1c959b (wound_m 0.2; film hc32_u):
+   `evidence/n16-kills-polish/hand_cannon_exit_wound_a6b_ab_32ppm_x3_t51-72.png`.
+9. Ray gun at 32 px/m: the drawn grey heap is quieter than the old cream smear and the skull is a few px (film
+   rg32_t/w, `ray_gun_drawn_remains_ab_32ppm_x3_t110-199.png`) -> open, owner Call (WIDE_M 1.7 -> 2.0, or a cream rim).
+10. Plasma sword: a dark shadow disc hangs beside the top half from t90 to t200+, in c43cae42d and 934a815c6 alike (not
+   the empty-cap case bd9af660f fixed). Diagnosis (code, unfilmed): KillView._draw puts each part's shadow at its GibSim
+   position = the half root's origin, but KillSplitFx.cut draws the half at `o` (the body's centre) clipped to one side
+   of the cut line lifted `cut_up_m` 0.8 m, and KillSplitHalves.Topple lays it down: the top half lies ~1 m from its
+   own shadow. Fix idea: a `shadow_at` meta on each half root (line + side * ~0.35 m) read by KillView._draw through
+   the node's transform; katana / chainsaw / Kerf share it -> fixed bbf62f6f3 (test 42cf70c8a); film ps64_u vs ps64_t
+   same ticks: the disc is gone, each half's shadow lies under it
+   (`evidence/n16-kills-polish/plasma_sword_half_shadow_ab_64ppm_x15_t90-200.png`). `evidence/n16-kills-polish/plasma_sword_scorch_line_wider_ab_64ppm_x15_t70-200.png` (t90-200, right).
+11. Plasma sword scorch line 0.16 m read as a crack -> 7998ee3fa (0.26 m), same sheet: wider; it lies mostly under
+   Rivet's feet and the dropped rifle at this chapter's angle.
+5. Burn (hooded ped, 64 px/m, film bc64_hood_w): he only faded to a ghost over the ash heap -> fixed b3b03286c (A8 drawn
+   collapse onto a skull heap that stays). `evidence/n16-kills-polish/burn_collapse_hood_ab_64ppm_x2_t590-740.png`.
+6. Burn collapse: the char cell keeps his facing (here away from the camera) but the collapse is drawn facing the camera
+   only, so he turns round at the cut (t605) -> open (ask the asset lane for the away facing, or flip to the nearest).
+7. Burn collapse: patrol cop and thug still fade (their drawings were rejected by the asset lane) -> open (A8 redraws).
+
+## Burn, plasma, p55 X-ray, iteration 4 (15:55-16:10), combo 64/32 px/m and tilt 64 px/m
+1. Burn (ranking film t130-170): the embers were a hot scrap on the street at his feet and the smoke rose from his boots
+   (KillCharFx on the body group's origin = the walker card's feet) -> fixed 051802ce0 (KillFigure); then the embers
+   floated beside him (box ~2x his width) -> b2c4051c2 (spread 0.2 x 0.5); then hidden under his card (z 4 < his parts'
+   +30) -> 6963740ef (z 40). `evidence/n16-kills-polish/burn_embers_on_figure_ab_{64ppm_x2_t150-250,32ppm_x2_t150-285}.png`.
+2. Burn: the stand still reads as a dark cop, not a burnt man, and he only fades (no collapse) -> open (A8 requested:
+   the drawn collapse with the skull).
+3. Plasma hole: the drawn ring lost the impact pop at 32 px/m -> fixed ab2de6592 + 6c52eaa7d (20-tick bloom under it).
+   `evidence/n16-kills-polish/plasma_hole_bloom_ab_{32ppm_x2_t55-80,64ppm_t55-70}.png`.
+5. Plasma sword: the bloodless kill left nothing on the street but the halves -> fixed c43cae42d (scorch line 1.4 m along
+   the cut; `evidence/n16-kills-polish/plasma_sword_scorch_line_ab_64ppm_x11_t70-200.png`, same ticks vs 16748e860). It is
+   thin (a crack more than a burn) at 64 px/m -> open (LINE_W_M 0.24?); 32 px/m unfilmed.
+4. Electro in the p55 view flashed the p70 set (wide, squat, face hidden) -> fixed 4329ed869 (A3 p55 set); it stood ~80%
+   of the 2.0 m p55 card -> 16748e860 (view_scale). `evidence/n16-kills-polish/electro_xray_p55_set_ab_tilt64ppm_x2_t119-146.png`.
+
+## Drawn death art in game, electro / plasma rifle / chainsaw chapters, 64 and 32 px/m (iteration 3, 13:55-14:35)
+1. Electro: every kind flashed one plain skeleton -> fixed b037d283f (A3 per kind). At 32 px/m on dark asphalt the drawn
+   set (ink silhouette, frame 1) is darker and busier than the plain cream sticker -> open, owner Call.
+2. Plasma hole: the procedural rings read as a bullseye, not a hole -> fixed 0dce9f3b6 (A4 drawn ring). The impact pop at
+   32 px/m is weaker than the old cream bloom -> open, owner Call (not tried: a short bloom under the drawn ring).
+3. Chainsaw: the grind threw only red dots and sparks -> fixed af3f9af1c (A5 drawn chunks). First try at 0.36 m: the meat
+   sank into the blood pool at 64 px/m -> 0.46 m, thrown 1.3-2.6 m (same commit).
+4. Ray gun (ranking #3, rank64 film t50-89): the "falling cop" is the HAT piece: GibCut.cut(whole) copies every sprite
+   under the head into the hat, and the whole-figure walker card hangs under the head, so the kicked, spinning "cap"
+   was the whole man, unclipped, over his own dissolving body -> fixed 06deed4b5 ( the figure stays in the
+   BODY only; test test_gib_cut_figure_hat; `evidence/n16-kills-polish/ray_gun_no_figure_hat_ab_64ppm_t50-89.png`).
+5. Ray gun, after 4: the disc mask holds only the legs from t50 (head and torso clipped at once) -> fixed 999ec13db
+   (KillDissolveMask: an ellipse fitted to the drawn figure; the whole cop glows, then the ring eats him inward;
+   `evidence/n16-kills-polish/ray_gun_ellipse_mask_ab_64ppm_t{50-89,82-109}.png`).
+
+## Reel gate, top pass, rocket chapter (gate d3e25fc4a, iteration 2)
+1. SCRIPT ERROR `has_meta on a null value`: GibCardPieces.dress_rig asked a top-view rig (no head card) for its card row
+   -> fixed 9d3d821f6 (no head card = the rig's own parts; test). Reel gate re-run owed.
+
+## Blade kills, katana / plasma sword / chainsaw chapters, combo 64 and 32 px/m (iteration 2, 13:00)
+1. The split's "halves" were the whole cop, standing and aiming as he slid off (t64-t130), plus his feet: the cut ran
+   through the body's ground point, below the drawn figure -> fixed 7d3ba705a (row cut_up_m 0.8,
+   `evidence/n16-kills-polish/katana_cut_up_ab_*`, `plasma_sword_cut_up_*`, `chainsaw_cut_up_*`).
+2. The halves slide off upright (a head-and-shoulder half floats standing) -> fixed e69fd5359 (split_topple_deg 80,
+   `evidence/n16-kills-polish/katana_topple_ab_*`, `plasma_sword_topple_*`).
+4. Chainsaw, e69fd5359: the level cut stacks the halves, and the torso fell back under Rivet -> fixed 0dcdf95c1
+   (stacked halves fall along the blow, `evidence/n16-kills-polish/chainsaw_cut_face_stacked_fall_ab_*`).
+5. The cut edge was a plain red band (cream for the plasma sword): no ribs, no spine -> fixed 794f27f80 (A2 drawn cut
+   faces). The drawn strip is straight and overhangs a narrow legs half -> open, minor.
+3. The plasma sword leaves nothing on the street (no blood by design, the halves only) -> open (char on the halves' edges?).
+
+## Rocket lone kill, patrol cop, bone pieces, combo 64 and 32 px/m t350-371 (iteration 2)
+1. The torn ends were sooty cloth (no bone) -> fixed fdb3a0d2d (it410 bone sets, 7 kinds; 4 more in 76f023a08).
+2. At 32 px/m the bone does not read: the pieces are ~10-15 px and fly over the smoke ring -> open.
+
+## Ranking films, chapters at 32 and 64 px/m, rev 1b823dbf7 (iteration 1, 11:40-11:47)
+1. Plasma hole: the hole at the hips and cream smoke washing the standing cop pale -> fixed bb9314a83 (hole_up_m 0.4,
+   ink-grey smoke). The hole's cream halo (1.55 x radius, alpha 0.55) is still large at 32 px/m -> open.
+2. Electro shock: the X-ray skeleton is drawn LYING (turned along the shot, `KillShockFx._draw` rotation dir + 90 deg)
+   beside the standing, convulsing card: reads as a sticker, not his X-ray -> fixed 455148cb5 (upright on the body's
+   feet, `evidence/n16-kills-polish/electro_xray_upright_ab_*`; Ohm's shock too); per-kind skeletons (A3) -> open.
+3. Ray gun: at k+10..k+30 the cop falls back over as a plain death while a grey disc stays; the dissolve does not read
+   -> open. Hypothesis (iteration 2, code read, not filmed): as the blades' cut was, KillDissolveFx's disc mask and
+   rings centre on the body's ground point with BODY_R_M 0.62, so the upright figure is not wrapped by the eating disc.
+4. Flamethrower: the jet's floor-fire column covers the death beat (k+0..k+10) -> open (n15 #1 of the flame jet).
+
+## Rocket lone kill, thug / hooded ped as rigs, combo 64 and 32 px/m t347-371 (iteration 1)
+1. Before: a thug or hooded ped gibbed as a rig flew the shared blue cop-suit rig parts (a box head on a blue body,
+   blue legs for the hood) -> fixed 917d75a5e (drawn it363 pieces per kind).
+2. At 32 px/m the drawn pieces are small (torso 0.56 m) and the thug's grey metal reads weakly on the grey smoke ring
+   (t362-371); the old rig parts were bigger -> in part 1b823dbf7 (torso 0.7 m, `evidence/n16-kills-polish/rocket_gib_thug_torso_056_vs_070_32ppm_x2_t349-371.png`); the thug's grey on the grey smoke -> open.
+
+## Blade kills, katana, combo 64 and 32 px/m t61-70 (iteration 1)
+1. The slash streak read as a white stick through the cop -> fixed de9f68f8a (1 m x 0.06 m). It now reads as a short
+   red-lipped line over the cut; the cut's direction still differs from the level drawn swing -> open, minor.
+
+## Boss fight, King + katana, tilt 64 px/m t305-310 (iteration 1)
+1. Two upright back-turned frames (t307-308) between the follow-through and the next wind-up -> fixed e4d81df1b
+   (6-tick strike hold).
+
+---
+
+## n15 combat (kept for reference)
 
 Ranked within each film; newest film first.
 
