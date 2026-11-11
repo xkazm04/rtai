@@ -7,8 +7,9 @@ extends RefCounted
 ## camera strike, the blade reaching down the cell toward the viewer: 118 px, a body height).
 ## FEET names, per "<art key>/<file>:<cell>", the boots' bottom above the cell bottom in strip
 ## px (side cells: the lowest boot pixel per 16 px column band with the arc's cream masked; camera
-## cells: read off a 10 px ruler, +-5 px, the boots sit beside the blade); a cell
-## not listed keeps RivetStrips.foot_px. `--rivet-cell-feet=off` (CastFlags) = before.
+## cells: read off a 10 px ruler, +-5 px, the boots sit beside the blade); a cell not listed
+## keeps RivetStrips.foot_px (the p55 side cells: their boots already on the pad).
+## `--rivet-cell-feet=off` (CastFlags) = before.
 
 const FEET: Dictionary[String, float] = {
 	"p70/rivet_eq_katana.png:5": 31.0,
@@ -19,6 +20,10 @@ const FEET: Dictionary[String, float] = {
 	"p70/rivet_eq_chainsaw.png:6": 75.0,
 	"p70/rivet_eq_electro_baton.png:5": 18.0,
 	"p70/rivet_eq_electro_baton.png:6": 57.0,
+	"p55/rivet_eq_katana.png:6": 46.0,
+	"p55/rivet_eq_plasma_sword.png:6": 34.0,
+	"p55/rivet_eq_chainsaw.png:6": 18.0,
+	"p55/rivet_eq_electro_baton.png:6": 30.0,
 }
 
 static var enabled: bool = true

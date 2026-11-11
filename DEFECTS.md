@@ -21,7 +21,7 @@
 6. **Camera-facing blade strikes drew Rivet a body height above his ground point** (p70 cell 6: the blade reaches
    down the cell, its tip on the foot line; boots 57-120 strip px up: katana 120, plasma 78, saw 75, baton 57).
    `chapter:katana_cam` t66 at 64 px/m: before, only the blade on screen, Rivet off frame above. -> fixed 7b1f03b7c.
-7. **p55 (boss view) strike cells** not yet measured. -> open.
+7. **p55 (boss view) camera strike cells** float too (boots 18-46 strip px up; the side cells stand on their boots). -> fixed (RivetCellFeet p55 rows, band + ruler reads +-6 px); not yet filmed in a boss arena: open.
 5. **During a lunge the drawn figure holds one strike cell** (no stride), so a 2.5 m dash is a whole-figure
    slide. -> open: REQUEST assets for a thrust-lunge cell (front foot forward, back foot pushing) per facing.
 
