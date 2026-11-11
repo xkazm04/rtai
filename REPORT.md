@@ -1,4 +1,4 @@
-# REPORT: n16 kills-polish (DRAFT, iteration 8, 17:35; final at 19:40)
+# REPORT: n16 kills-polish (DRAFT, iteration 8, 17:50; final at 19:40)
 
 Branch `n16-kills-polish`, cut from main `5843f5a28`. Lane brief: make the 13 existing signature deaths brutal and
 beautiful (owner 2026-11-11: inventive, readable at 32 px/m, drawn innards/bone/skulls in riso ink-and-cream, hit-stop
@@ -26,16 +26,18 @@ Item 3, deaths raised (one commit each; asset lane A1-A5 and A3 p55 wired):
 - Burn: embers and smoke on the burnt man, not at his feet, drawn over him (051802ce0, b2c4051c2, 6963740ef).
 - Burn collapse (A8): every kind with a char cell crumbles in three drawn cells, on his knees with the skull and ribs
   showing, onto a skull heap with his charred gear that stays (b3b03286c, 934a815c6);
-  `burn_collapse_{hood_ab_64ppm_x2,riot_ab_32ppm_x3}_t590-740.png`.
+  `burn_collapse_{patrol_ab_64ppm_x2,hood_ab_64ppm_x2,riot_ab_32ppm_x3}_t590-740.png`.
 - Hand cannon exit wound (A6, then the A6b redraw): a drawn wound in the thrown man's chest (512caa62b, 6140efc62,
-  944ea5fa9, a4a2dcda1); `hand_cannon_exit_wound_ab_64ppm_x2_t51-72.png` (the first try read as a grinning mouth).
+  944ea5fa9, a4a2dcda1, 0.2 m 80d1c959b); `hand_cannon_exit_wound_a6b_ab_{64ppm_x2_t51-90,32ppm_x3_t51-72}.png`
+  (the first try read as a grinning mouth: `hand_cannon_exit_wound_ab_64ppm_x2_t51-72.png`).
 - Ray gun remains (A7): the drawn ash heap with a half-sunk skull, ribs, a forearm bone and the empty uniform (84589b1ad);
-  `ray_gun_drawn_remains_ab_64ppm_x2_t110-199.png`.
+  `ray_gun_drawn_remains_ab_{64ppm_x2,32ppm_x3}_t110-199.png`.
 - Plasma sword scorch line along the cut (c43cae42d, test 78dd90f40), wider 7998ee3fa;
-  `plasma_sword_scorch_line_ab_64ppm_x11_t70-200.png`.
+  `plasma_sword_scorch_line_{ab_64ppm_x11,wider_ab_64ppm_x15}_t70-200.png`.
 
 Item 5 (defect loop): a card victim's empty cap group cast a dark shadow disc that hung on the street (ray gun, hand
-cannon) -> bd9af660f.
+cannon) -> bd9af660f (`ray_gun_cap_shadow_ab_64ppm_x2_t150-199.png`). A blade half's shadow lay ~1 m from the
+toppled top half -> bbf62f6f3 (LINT ONLY at 17:50: film and test owed).
 
 ## What does not work / not done
 
@@ -61,8 +63,9 @@ One line per changed death; each with its 64 and 32 px/m before/after (TO FINISH
 - Bone gib: `rocket_gib_bone_patrol_ab_{64ppm_x2_t360-371,32ppm_x2_t352-371}.png`.
 - Burn collapse onto a skull heap (A8; was a fade): `burn_collapse_hood_ab_64ppm_x2_t590-740.png`,
   `burn_collapse_riot_ab_32ppm_x3_t590-740.png`.
-- Hand cannon exit wound (A6b, 0.16 m on the chest): `hand_cannon_exit_wound_ab_64ppm_x2_t51-72.png` (32 px/m TO ADD).
-- Ray gun drawn remains with the skull (A7): `ray_gun_drawn_remains_ab_64ppm_x2_t110-199.png` (32 px/m TO ADD).
+- Hand cannon exit wound (A6b, 0.2 m on the chest): `hand_cannon_exit_wound_a6b_ab_{64ppm_x2_t51-90,32ppm_x3_t51-72}.png`.
+- Ray gun drawn remains with the skull (A7; Call: at 32 px/m the grey heap is quieter than the old cream smear):
+  `ray_gun_drawn_remains_ab_{64ppm_x2,32ppm_x3}_t110-199.png`.
 
 ## Merge notes
 

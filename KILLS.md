@@ -51,6 +51,11 @@ the bloom under the drawn ring being filmed), burn_char (13, H: the embers and s
 tree, filming; the stand still reads as a dark cop, not a burning man), hand_cannon (13: A6 exit wound requested),
 rocket_gib (14: bone at 32 px/m), ray_gun (14: A7 skull in the ash requested), the ghosts' four (owed films).
 
+Work order at 17:50 (iteration 8, after A6/A7/A8): rocket_gib (14: bone at 32 px/m), plasma_sword (12: aftermath, the
+halves' shadows bbf62f6f3 unfilmed), electro (14: the 32 px/m X-ray Call), plasma_hole (13), hand_cannon (15: the body
+never lies down: a drawn landing/lying cell), ray_gun (17: the 32 px/m heap contrast Call), burn (17: A8c back facings),
+chainsaw (17), the ghosts' four (owed films).
+
 ## Aftermath: what stays on the street and for how long (item 4; iteration 4, from data and code, NOT yet film-measured)
 
 The corpse-decay table (`project/data/tables/corpse_decay.json`) sets two ledgers on the 60 Hz tick:
