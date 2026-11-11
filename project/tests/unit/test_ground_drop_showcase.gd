@@ -58,9 +58,9 @@ func test_a_drop_lies_where_it_first_landed_when_his_rest_appears() -> void:
 	# film dr_machine_pistol t190 -> t191: the gun jumped ~1 m when the corpse published its rest.
 	var at: Vector2 = Vector2(31.25, 17.5)
 	var k: float = Ink.PX_PER_M
-	StreetDeadRests.all.erase(9)
+	StreetDeadRests.reset()
 	var first: Vector2 = GroundDropShowcase.lies_at(at, Vector2.RIGHT)
 	StreetDeadRests.all[9] = Vector4(at.x * k, at.y * k, (at.x + 1.0) * k, at.y * k)
 	assert_ne(GroundDropShowcase.place(at, Vector2.RIGHT), first, "the rule now says past his feet")
 	assert_eq(GroundDropShowcase.lies_at(at, Vector2.RIGHT), first, "but the gun stays put")
-	StreetDeadRests.all.erase(9)
+	StreetDeadRests.reset()

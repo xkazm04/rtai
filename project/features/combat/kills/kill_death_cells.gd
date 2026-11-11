@@ -22,11 +22,21 @@ const FIT_K: Dictionary[String, Array] = {
 	"p70/cop_patrol_pistol_snap.png": [0.85, 0.85, 0.92, 1.0],
 	"p70/cop_riot_pistol_snap.png": [0.8, 0.8, 0.9, 1.0],
 	"p70/swat_pistol_snap.png": [0.8, 0.8, 0.9, 1.0],
+	# n17: the machine pistol's stitch stood 1.09-1.41 x the walk by figure area (film
+	# dr_machine_pistol t176 -> t177: 47 -> 58 px); its whirl and collapse at the walk, corpse 1.0
+	"p70/cop_patrol_smg_stitch.png": [0.85, 0.8, 0.8, 0.88, 1.0],
+	"p70/cop_riot_smg_stitch.png": [0.95, 0.93, 0.9, 0.93, 1.0],
+	"p70/swat_smg_stitch.png": [0.86, 0.82, 0.8, 0.87, 1.0],
+	"p70/ped_suit_smg_stitch.png": [0.92, 0.88, 0.88, 0.95, 1.0],
 }
 const FIT_LIFT: Dictionary[String, Array] = {
 	"p70/cop_patrol_pistol_snap.png": [21, 15, 5, 10, 22],
 	"p70/cop_riot_pistol_snap.png": [57, 25, 24, 15, 57],
 	"p70/swat_pistol_snap.png": [17, 11, 5, 15, 18],
+	"p70/cop_patrol_smg_stitch.png": [0, 0, 0, 0, 0],
+	"p70/cop_riot_smg_stitch.png": [0, 0, 0, 0, 0],
+	"p70/swat_smg_stitch.png": [0, 0, 0, 0, 0],
+	"p70/ped_suit_smg_stitch.png": [0, 0, 0, 0, 0],
 }
 const BASE: StringName = &"kill_death_cells_base"
 
