@@ -23,6 +23,15 @@ const DEG: Dictionary[String, PackedFloat32Array] = {
 	"p70/gloria": [35.0, -41.0, 150.0, -138.0],
 	"p70/electro_gun": [24.0, -41.0, 150.0, -139.0],
 	"p70/rocket_launcher": [18.0, -39.0, 161.0, -151.0],
+	# p55 (it458/it462): barrel axes by eye at 2x (pistol, machine pistol: the flash read)
+	"p55/pistol": [37.0, -42.0, 145.0, -138.0],
+	"p55/machine_pistol": [39.0, -40.0, 137.0, -145.0],
+	"p55/plasma_rifle": [27.0, -45.0, 149.0, -139.0],
+	"p55/gatling": [35.0, -37.0, 146.0, -149.0],
+	"p55/hand_cannon": [34.0, -36.0, 146.0, -146.0],
+	"p55/gloria": [32.0, -52.0, 145.0, -146.0],
+	"p55/electro_gun": [27.0, -34.0, 145.0, -145.0],
+	"p55/rocket_launcher": [23.0, -34.0, 159.0, -152.0],
 }
 ## The helmet's centre x per diagonal cell (strip px; the strip's cells centre theirs at ~141 of
 ## 283): the away cells draw his body off centre to give the raised gun room (cell 1 at 93.5, 3 at
@@ -38,6 +47,15 @@ const HELMET_X: Dictionary[String, PackedFloat32Array] = {
 	"p70/gloria": [160.5, 129.8, 160.5, 192.0],
 	"p70/electro_gun": [112.5, 77.0, 111.5, 148.0],
 	"p70/rocket_launcher": [130.0, 90.2, 130.0, 165.5],
+	# p55: the dome's run centre as above
+	"p55/pistol": [97.5, 66.5, 96.5, 126.5],
+	"p55/machine_pistol": [99.5, 65.0, 101.5, 135.0],
+	"p55/plasma_rifle": [133.0, 98.2, 133.0, 169.2],
+	"p55/gatling": [131.2, 100.5, 136.5, 171.5],
+	"p55/hand_cannon": [113.0, 80.0, 116.5, 149.5],
+	"p55/gloria": [114.0, 90.0, 110.5, 135.0],
+	"p55/electro_gun": [96.8, 67.2, 97.0, 126.0],
+	"p55/rocket_launcher": [83.5, 51.5, 88.5, 119.5],
 }
 ## The boots' pad above the cell bottom (strip px), keyed "<art>/<gun>": cell height - 1 - boot row
 ## (the pistol's cells 0/2 at row 177 and 1/3 at 179 of 180). The other guns ship the asset lane's
@@ -52,6 +70,15 @@ const FOOT_PX: Dictionary[String, float] = {
 	"p70/gloria": 62.0,
 	"p70/electro_gun": 61.0,
 	"p70/rocket_launcher": 62.0,
+	# p55: the delivered cells (no tall cut), boots at row 167-171 of 170-172
+	"p55/pistol": 2.0,
+	"p55/machine_pistol": 2.0,
+	"p55/plasma_rifle": 1.0,
+	"p55/gatling": 2.0,
+	"p55/hand_cannon": 1.5,
+	"p55/gloria": 2.0,
+	"p55/electro_gun": 2.0,
+	"p55/rocket_launcher": 2.0,
 }
 
 ## Half an octant: within it the diagonal is the drawn gun nearest the aim.
