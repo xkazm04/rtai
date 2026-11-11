@@ -1,0 +1,123 @@
+commit 686fcb828fdc0f69161f68c654a8cb36a5f49e6b
+Merge: 103b4a22b 56538612a
+Author: xkazm04 <kazdan@seznam.cz>
+Date:   Wed Nov 11 01:08:34 2026 +0100
+
+    merge n15-combat: n15 combat: JOURNAL session 4 (contractor stagger, katana call)
+    
+    # Conflicts:
+    #       project/features/characters/cast_flags.gd
+    #       project/features/characters/rivet_res.gd
+    #       tools/debt/baseline.json
+
+diff --cc project/features/characters/cast_flags.gd
+index ad962a269,ad0945024..3769bda1d
+--- a/project/features/characters/cast_flags.gd
++++ b/project/features/characters/cast_flags.gd
+@@@ -9,9 -9,13 +9,13 @@@ extends RefCounte
+  ## 1.65, p55 in proportion); n9: --rivet-flame=cone (d9's flamer), =side (no diagonal cells),
+  ## =all (the fire cell at any aim),
+  ## --rivet-walk=4 (d9's 4-frame walk by the gait phase), --rivet-reload=off (no drawn reload),
+ -## n13: --rivet-windup=off (no drawn wind-up cell).
+ +## n13: --rivet-windup=off (no drawn wind-up cell); n15: --ghost-soul-line=off (no teal outline).
+  ## Read once, before the first plan or material.
+  
++ const WINDUP_FLAGS: PackedStringArray = [
++ 	"--rivet-windup=off", "--rivet-left-strike=off", "--rivet-blade-left=off"
++ ]
++ 
+  static var _read: bool = false
+  
+  
+@@@ -47,21 -51,23 +51,32 @@@ static func apply(args: PackedStringArr
+  			RivetKnock.enabled = false
+  		elif arg == "--rivet-reload=off":
+  			RivetReload.enabled = false
+- 		elif arg == "--rivet-windup=off":  # n13: the strike cell through the wind-up (before)
+- 			RivetWindup.enabled = false
++ 		elif arg in WINDUP_FLAGS:
++ 			_windup(arg)
+ -		elif arg == "--ghost-voice=facing":  # n10: the voice at his facing's own left, on his head
+ -			GhostApparition.clear_figure = false
+ +		elif arg.begins_with("--ghost-"):
+ +			_ghost(arg)
+ +
+ +
+ +## n10: --ghost-voice=facing (the voice at his facing's own left, on his head); n15:
+ +## --ghost-soul-line=off (the drawn ghosts without the teal line).
+ +static func _ghost(arg: String) -> void:
+ +	if arg == "--ghost-voice=facing":
+ +		GhostApparition.clear_figure = false
+ +	elif arg == "--ghost-soul-line=off":
+ +		GhostSoulLine.enabled = false
+  
+  
++ ## The befores: n13 --rivet-windup=off (the strike cell through the wind-up), n15 -left-strike=off
++ ## (the left facing + game smear), n15 --rivet-blade-left=off (the blades' mirror, turned left).
++ static func _windup(arg: String) -> void:
++ 	if arg == "--rivet-windup=off":
++ 		RivetWindup.enabled = false
++ 	elif arg == "--rivet-blade-left=off":
++ 		RivetWindup.blade_left = false
++ 	else:
++ 		RivetWindup.left_strike = false
++ 
++ 
+  ## --rivet-walk=<mode>; n11: --rivet-swipe=off (one drawn strike cell), --rivet-bob=drawn (no damp).
+  static func _walk(arg: String) -> void:
+  	match arg:
+diff --cc project/features/characters/rivet_res.gd
+index dcaf03010,ec8eef81a..8fc569629
+--- a/project/features/characters/rivet_res.gd
++++ b/project/features/characters/rivet_res.gd
+@@@ -11,43 -11,13 +11,50 @@@ const X15: PackedStringArray = 
+  	"p70/rivet_eq_katana.png",
+  	"p70/rivet_eq_chainsaw.png",
+  	"p70/rivet_eq_chainsaw_windup.png",  # n14: the asset lane drew its cells at the x1.5 strip's scale
+ +	"p70/rivet_eq_machine_pistol.png",  # n15 hero
+ +	"p70/rivet_eq_machine_pistol_left.png",
+ +	"p70/rivet_eq_electro_gun.png",
+ +	"p70/rivet_eq_electro_gun_left.png",
+ +	"p70/rivet_eq_hand_cannon.png",
+ +	"p70/rivet_eq_hand_cannon_left.png",
+ +	"p70/rivet_eq_ray_gun.png",
+ +	"p70/rivet_eq_ray_gun_left.png",
+ +	"p70/rivet_eq_homing_shard.png",
+ +	"p70/rivet_eq_homing_shard_left.png",
+ +	"p70/rivet_eq_molotov.png",
+ +	"p70/rivet_eq_molotov_left.png",
+ +	"p70/rivet_eq_gatling.png",
+ +	"p70/rivet_eq_flamethrower.png",
+ +	"p70/rivet_eq_gloria.png",
+ +	"p70/rivet_eq_mini_nuke.png",
+ +	"p70/rivet_eq_rocket_launcher.png",
+ +	"p55/rivet_eq_pistol.png",
+ +	"p55/rivet_eq_pistol_left.png",
+ +	"p55/rivet_eq_machine_pistol.png",
+ +	"p55/rivet_eq_machine_pistol_left.png",
+ +	"p55/rivet_eq_electro_gun.png",
+ +	"p55/rivet_eq_electro_gun_left.png",
+ +	"p55/rivet_eq_hand_cannon.png",
+ +	"p55/rivet_eq_hand_cannon_left.png",
+ +	"p55/rivet_eq_ray_gun.png",
+ +	"p55/rivet_eq_ray_gun_left.png",
+ +	"p55/rivet_eq_homing_shard.png",
+ +	"p55/rivet_eq_homing_shard_left.png",
+ +	"p55/rivet_eq_molotov.png",
+ +	"p55/rivet_eq_molotov_left.png",
+ +	"p55/rivet_eq_plasma_rifle.png",
+ +	"p55/rivet_eq_gatling.png",
+ +	"p55/rivet_eq_flamethrower.png",
+ +	"p55/rivet_eq_gloria.png",
+ +	"p55/rivet_eq_mini_nuke.png",
+ +	"p55/rivet_eq_rocket_launcher.png",
++ 	# n15: the blades' drawn left sets, cut at their equipped strip's x1.5
++ 	"p70/rivet_eq_katana_left.png",
++ 	"p70/rivet_eq_katana_left_windup.png",
++ 	"p70/rivet_eq_katana_left_strike.png",
++ 	"p70/rivet_eq_chainsaw_left.png",
++ 	"p70/rivet_eq_chainsaw_left_windup.png",
++ 	"p70/rivet_eq_chainsaw_left_strike.png",
+  ]
+  
+  

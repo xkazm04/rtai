@@ -108,4 +108,11 @@ the right film).
   lanes at 23:08 (morning.mjs on a scratch worktree) passed look 11/11 and block 5/5 at worst 0.00 on this lane's
   re-blessed goldens. If hero or combat re-bless a look golden after 23:08 on main's spawn order, re-bless that one
   once on the integrated tree (`look_golden.tscn --bless`) with one decisions line.
-- Order: n15-tools first (sim + DLLs), then hero and combat in either order (no code conflict among the three at 23:08).
+- Order: n15-tools first (sim + DLLs), then n15-hero, then n15-combat. At 23:08 the three merged clean; at 01:03 (a
+  real `morning.mjs` run on a scratch integration) **hero and combat conflict** on two files, both plain unions:
+  `project/features/characters/cast_flags.gd` (hero routes `--ghost-*` to `_ghost()` with `--ghost-soul-line=off`;
+  combat routes `WINDUP_FLAGS` to `_windup()` with `--rivet-left-strike=off`/`--rivet-blade-left=off`: keep both
+  `elif` branches and both helper functions) and `rivet_res.gd` `X15` (hero's 37 p70/p55 strips + combat's 6 blade
+  left sets: keep both lists). The resolution that passed gdformat, gdlint, a Godot parse check and lint 16/16:
+  `evidence/merge_hero_x_combat_686fcb828.diff`. The baseline conflict beside them: `node tools/debt/merge_baseline.mjs`
+  (then commit), not "take either side", which fails the merge commit's ratchet.
