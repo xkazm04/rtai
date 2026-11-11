@@ -112,6 +112,11 @@
             },
             "type": "array"
           },
+          "saw_chunks": {
+            "maximum": 16,
+            "minimum": 0,
+            "type": "integer"
+          },
           "scorch_radius_m": {
             "minimum": 0,
             "type": "number"

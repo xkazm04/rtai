@@ -61,6 +61,8 @@ var cut_up_m: float = 0.0
 var split_topple_deg: float = 0.0
 ## The hole style: metres the plasma hole sits above the body group's centre (0 = the centre).
 var hole_up_m: float = 0.0
+## The grind (grind_ticks): drawn chunks the saw's bite throws onto the street (KillSawChunks).
+var saw_chunks: int = 0
 
 
 static func from_dict(t: DataTable, d: Dictionary) -> SignatureKill:
@@ -97,6 +99,7 @@ static func from_dict(t: DataTable, d: Dictionary) -> SignatureKill:
 	k.hole_up_m = _num(t, d, "hole_up_m", 0.0)
 	k.cut_up_m = _num(t, d, "cut_up_m", 0.0)
 	k.split_topple_deg = _num(t, d, "split_topple_deg", 0.0)
+	k.saw_chunks = int(_num(t, d, "saw_chunks", 0.0))
 	return k
 
 

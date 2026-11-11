@@ -1,5 +1,23 @@
 [
  {
+  "file": "chainsaw_chunks_ab_64ppm_t100-230.png",
+  "title": "Chainsaw grind throws drawn meat, bone chips, a rib and a tooth that lie on the street",
+  "source": "film.mjs chapter:chainsaw --ppm=64 --on=kill:1+150; before -- --saw-chunks=off",
+  "branch": "n16-kills-polish",
+  "ppm": 64,
+  "before": "top row: spurts and sparks only",
+  "note": "asset lane A5 (it418), row saw_chunks 8, 0.46 m cells thrown 1.3-2.6 m past the pool"
+ },
+ {
+  "file": "chainsaw_chunks_ab_32ppm_x2_t100-230.png",
+  "title": "Chainsaw chunks at play zoom (x2)",
+  "source": "same, --ppm=32",
+  "branch": "n16-kills-polish",
+  "ppm": 32,
+  "before": "top row",
+  "note": "the bone chips read as cream flecks, the meat as torn red lumps beside the halves"
+ },
+ {
   "file": "plasma_hole_drawn_ring_ab_64ppm_x15_t56-150.png",
   "title": "Plasma hole: a drawn charred ring with rib ends and spine, the street through it",
   "source": "film.mjs chapter:plasma_rifle --ppm=64 --on=kill:1+200; before -- --hole-art=plain",
@@ -115,23 +133,5 @@
   "ppm": 32,
   "before": "top row",
   "note": "reads as his X-ray at 32 px/m"
- },
- {
-  "file": "chainsaw_cut_up_ab_64ppm_t86-174.png",
-  "title": "Chainsaw: torso off the legs after the grind",
-  "source": "film.mjs chapter:chainsaw --ppm=64 --on=kill:1+90; before 455148cb5, after 7d3ba705a",
-  "branch": "n16-kills-polish",
-  "ppm": 64,
-  "before": "top row: the whole cop stands back up after the grind",
-  "note": "commit 7d3ba705a"
- },
- {
-  "file": "plasma_sword_cut_up_ab_64ppm_t63-102.png",
-  "title": "Plasma sword: a cream-edged half, not two sticks",
-  "source": "film.mjs chapter:plasma_sword --ppm=64; before rank64 1b823dbf7, after 7d3ba705a",
-  "branch": "n16-kills-polish",
-  "ppm": 64,
-  "before": "top row: the cop slides off whole, two cream sticks remain",
-  "note": "commit 7d3ba705a"
  }
 ]

@@ -30,6 +30,7 @@ class Grind:
 	var dir: Vector2 = Vector2.RIGHT
 	var born: int = 0
 	var ticks: int = 0
+	var chunks: int = 0  # the row's saw_chunks (KillSawChunks)
 
 
 var kills: SignatureKills = null
@@ -117,6 +118,7 @@ func add(
 	g.dir = cut_dir
 	g.born = kills.tick
 	g.ticks = row.hitstop_ticks + row.grind_ticks
+	g.chunks = row.saw_chunks
 	_grinds[serial] = g
 	if saw == null:
 		saw = SawMarks.shipped()
@@ -125,16 +127,9 @@ func add(
 
 
 func forget(serial: int) -> void:
-	@warning_ignore("return_value_discarded")
-	_streaks.erase(serial)
-	@warning_ignore("return_value_discarded")
-	_streak_size.erase(serial)
-	@warning_ignore("return_value_discarded")
-	_grinds.erase(serial)
-	@warning_ignore("return_value_discarded")
-	_releases.erase(serial)
-	@warning_ignore("return_value_discarded")
-	_topples.erase(serial)
+	for d: Dictionary in [_streaks, _streak_size, _grinds, _releases, _topples]:
+		@warning_ignore("return_value_discarded")
+		d.erase(serial)
 
 
 ## After KillView placed the halves: a grinding body shakes in one piece; cut halves topple.
@@ -160,7 +155,10 @@ func pose() -> void:
 
 func _draw() -> void:
 	for serial: int in _grinds.keys():
-		_draw_grind(serial, _grinds[serial])
+		var g: Grind = _grinds[serial]  # the thrown chunks, then the spurts and sparks
+		var timing: Vector4i = Vector4i(g.born, g.ticks, g.chunks, kills.tick)
+		KillSawChunks.draw(self, serial, (g.at - g.dir * 0.12) * ppm, g.dir.angle(), timing, ppm)
+		_draw_grind(serial, g)
 	for serial: int in _streaks.keys():
 		KillSlashStreak.draw(self, _streaks[serial], _streak_size[serial], kills.tick, ppm)
 	for serial: int in _releases.keys():
