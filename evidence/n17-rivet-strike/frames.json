@@ -1,5 +1,41 @@
 [
   {
+    "file": "gun_diag_pistol_64.png",
+    "title": "Pistol shot up-right: the drawn diagonal fire cell, gun along the round (64 px/m)",
+    "source": "film.mjs arena --ppm=64 --lock=off --stills=1412-1477 (67f4343a6), before = -- --rivet-gun-diag=off; cyan = ground line",
+    "branch": "n17-rivet-strike",
+    "ppm": 64,
+    "before": "top row",
+    "note": "DEFECTS #11: before, the side fire cell with the arm level (0 deg) while the round and its flash leave up-right (aim -19 deg); after, the it458 diagonal cell (gun -25 deg), the flash star on the drawn muzzle, flashless from t1415, seated on his helmet. Figure 150 px tall (walk 160; the side cell 117)."
+  },
+  {
+    "file": "gun_diag_pistol_32.png",
+    "title": "Pistol diagonal fire cell at 32 px/m (x2)",
+    "source": "film.mjs arena --ppm=32 --lock=off (67f4343a6), before = --rivet-gun-diag=off",
+    "branch": "n17-rivet-strike",
+    "ppm": 32,
+    "before": "top row",
+    "note": "t1413 shot, t1415-1418 the flashless pose, t1428 the next round: the star leaves the raised gun."
+  },
+  {
+    "file": "thrust_recover_t90_119_64.png",
+    "title": "Katana thrust recovery: the drawn recovery cell instead of the slash cell (64 px/m)",
+    "source": "film.mjs chapter:katana_thrust --ppm=64 (77b991075), before = -- --rivet-thrust-recover=off; cyan = his ground line",
+    "branch": "n17-rivet-strike",
+    "ppm": 64,
+    "before": "top row",
+    "note": "t95-119: before, the slash cell's swing arc and cream smear held through 22 recovery ticks after a straight thrust, figure top 24 px lower than the thrust; after, the blade drawn back level, both boots on the line, figure top 253 -> 245 -> 250 (walk)."
+  },
+  {
+    "file": "thrust_recover_cam_t88_118_32.png",
+    "title": "Katana thrust recovery toward the camera (32 px/m, x3)",
+    "source": "film.mjs chapter:katana_thrust_cam --ppm=32 --rev=HEAD (77b991075), before = --rivet-thrust-recover=off",
+    "branch": "n17-rivet-strike",
+    "ppm": 32,
+    "before": "top row",
+    "note": "after: the recovery's camera cell seated on its boots (row 188 of 256 at p70; the delivery's 249 was the blade tip), no arc. Its handover to the walk grid (t118->119) still pops the figure ~8 px at 32 px/m: the eq strip draws ~11 % bigger than the walk grid's camera row (DEFECTS #13, open)."
+  },
+  {
     "file": "kick_hand_cannon_64.png",
     "title": "Hand cannon round: his body kicks back about his feet and settles",
     "source": "film.mjs weapon:hand_cannon --ppm=64 --stills=332-338 (8a47c51db), before = -- --rivet-kick=off; crops x2",
@@ -7,15 +43,6 @@
     "ppm": 64,
     "before": "top: one held fire pose t333-336",
     "note": "after: 4.8 deg back on the round (rig_kick 1.6 x KICK_DEG 3), the flash on the tipped barrel, back upright as the recoil decays"
-  },
-  {
-    "file": "kick_hand_cannon_32.png",
-    "title": "Hand cannon kick at 32 px/m",
-    "source": "film.mjs weapon:hand_cannon --ppm=32 --stills=332-336 (8a47c51db); crops x3",
-    "branch": "n17-rivet-strike",
-    "ppm": 32,
-    "before": "top: --rivet-kick=off",
-    "note": "reads at play zoom as a barrel climb"
   },
   {
     "file": "thrust_katana_t82_92_64.png",
@@ -34,15 +61,6 @@
     "ppm": 32,
     "before": "top: the camera wind-up cell held through the lunge, then the slash cell",
     "note": "after: the drawn thrust t81-89, the blade toward the viewer, boots on the line (CAM_FEET 79)"
-  },
-  {
-    "file": "thrust_katana_t82_92_32.png",
-    "title": "Katana thrust at 32 px/m",
-    "source": "film.mjs chapter:katana_thrust --ppm=32 (f6d9588a5), crops x2",
-    "branch": "n17-rivet-strike",
-    "ppm": 32,
-    "before": "top: --rivet-thrust=off",
-    "note": "reads at play zoom: front foot forward, back foot pushing"
   },
   {
     "file": "noflash_pistol_t333_338_64.png",
@@ -72,22 +90,13 @@
     "note": "RivetCellFeet: p70 katana cell 6 boots 120 strip px over the pad"
   },
   {
-    "file": "pistol_turn_noflash_t339_64.png",
-    "title": "After the kill he turns to the camera: no flash without a round",
-    "source": "compare.mjs weapon:pistol --a=da3c12437 --b=6822e1036 --at=339 --ppm=64 (crop x2)",
+    "file": "katana_lean_strike_t64_32.png",
+    "title": "Katana lean at 32 px/m",
+    "source": "compare.mjs chapter:katana --ppm=32 --at=64",
     "branch": "n17-rivet-strike",
-    "ppm": 64,
-    "before": "left: the camera fire cell flashing t339-340, 2 ticks after the kill, no round",
-    "note": "RivetFireTurn: the latch holds only in the octant the round left in"
-  },
-  {
-    "file": "katana_cell_feet_boots_64.png",
-    "title": "Katana side strike: boots back on the walk line",
-    "source": "compare.mjs chapter:katana --a=415dc9ad1 --b=0e01165a3 --at=57,64 --ppm=64 (crops x2, cyan = walk boot line)",
-    "branch": "n17-rivet-strike",
-    "ppm": 64,
-    "before": "middle: strike cell boots ~15 px above the walk line",
-    "note": "after: ~4 px, part of it the lean's lift on the back boot"
+    "ppm": 32,
+    "before": "left: upright",
+    "note": ""
   },
   {
     "file": "katana_planted_t61_64.png",
@@ -117,21 +126,12 @@
     "note": "long name steps down to fit"
   },
   {
-    "file": "katana_lean_strike_t64_32.png",
-    "title": "Katana lean at 32 px/m",
-    "source": "compare.mjs chapter:katana --ppm=32 --at=64",
+    "file": "pistol_turn_noflash_t339_64.png",
+    "title": "After the kill he turns to the camera: no flash without a round",
+    "source": "compare.mjs weapon:pistol --a=da3c12437 --b=6822e1036 --at=339 --ppm=64 (crop x2)",
     "branch": "n17-rivet-strike",
-    "ppm": 32,
-    "before": "left: upright",
-    "note": ""
-  },
-  {
-    "file": "katana_cell_feet_t64_32.png",
-    "title": "Katana side strike cell feet at 32 px/m",
-    "source": "compare.mjs chapter:katana --a=415dc9ad1 --b=0e01165a3 --ppm=32 --at=64",
-    "branch": "n17-rivet-strike",
-    "ppm": 32,
-    "before": "left",
-    "note": ""
+    "ppm": 64,
+    "before": "left: the camera fire cell flashing t339-340, 2 ticks after the kill, no round",
+    "note": "RivetFireTurn: the latch holds only in the octant the round left in"
   }
 ]

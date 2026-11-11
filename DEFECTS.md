@@ -29,6 +29,10 @@
    delivery's boot row was the blade tip). The view's clip runs 1 tick ahead of the probe's position (strike_sync):
    the cell shows one tick before the body moves and leaves one tick before the contact ends (16 ms, kept).
 
+16. **After the thrust, the recovery showed the slash strike cell** (its swing arc and cream smear for 22 ticks after a
+    straight thrust; figure top 24 px under the thrust at 64 px/m). -> fixed 77b991075 (RivetThrust recovery: the asset
+    lane's it458 cells, blade drawn back level, boots on the line; `--rivet-thrust-recover=off` = before).
+
 ## Ranged
 
 `film.mjs weapon:pistol --ppm=64` (HEAD da3c12437), fire at 333, kill at 337:
@@ -47,6 +51,11 @@
     -29 deg on screen toward the cop (942,224) from (638,395); probe facing_off 2.6 deg says the rig's facing is the
     sim's, so the shot's aim and Rivet's facing differ by ~30 deg at the fire tick (the bot turns him after it
     aims?). -> open: measure aim vs facing per shot over a street fight.
+   11b. **A diagonal shot drew the side fire cell** (arena pistol t1412-1477 at 64 px/m, Rivet in octant 7/5): arm
+   level at 0 deg, the round and the flash star leaving up-right (aim -19 deg), the star drawn off the gun. -> fixed
+   67f4343a6 (RivetGunDiag + the asset lane's it458 pistol diagonal cells: gun at -25 deg, star on the muzzle,
+   seated on his helmet; figure 150 px tall against the walk's 160, the side fire cell's 117). p70 pistol only: open
+   for the other 7 guns and p55 (asset lane drawing them).
 12. **No visible recoil kick** on the pistol fire cells t333-338 (the arm and body hold one pose). -> fixed 8a47c51db
     (RivetLean kick: 3 deg per unit of the rig's recoil about his feet; hand cannon 4.8 deg, figure top ~13 px at 64 px/m;
     `kick_hand_cannon_64.png` / `_32.png`). The camera/back octants show no tilt (cannot read there): open, minor.
@@ -55,6 +64,8 @@
     In the strips (both RivetRes 1.5) the fire cell is not the smaller one: helmet width 45 px under the crown, eq
     cam fire cell 93 px vs walk rows 79-99 (camera row 88); figure height 151-175 vs 156-184. So the pop comes from
     the placement (the walk grid's RivetBob.stretch / lift, or the row shown), not the drawing. -> open (item 5).
+   Also the katana's x1.5 camera cells (strike, thrust recovery) against the walk grid's camera row: helmet ~11 %
+   wider, figure top ~8 px higher at 32 px/m on the t118->119 handover (chapter:katana_thrust_cam). -> open.
 14. **A gun's camera fire cell floats** (`kill:pistol -- --sig-dir=90` at 64 px/m, fire t62): the strip was cut with the
     painted flash (hanging down the cell toward the viewer) on the foot line, so for the shot tick his boots stood
     35-58 strip px above it (p70 pistol 38, plasma 66, gloria 60, gatling 43; p55 gatling 24): the figure's top rose
@@ -66,3 +77,7 @@
     sim facing): 0 through t60, 172 deg at t61 (the sim turns to the guard on the shot), 12 at t62, 17 at t63 while the
     drawn cell is his back again: the drawn octant (RivetStride.oct_of) and the probe's facing disagree after the shot.
     In weapon:pistol (gunplay bot) the facing holds 1-4 deg off through the shot: so far a kill-lab case. -> open.
+17. ~~The flamethrower's diagonal cells sit off his ground point~~: NOT a defect. A column-band read put the helmet at
+    152 / 59.5 of 210 in the away cells, but it caught the flame's dark outline; at 2x with a centre line
+    (`flamer_diag_centre.png`, scratch) all four helmets stand within ~5 px of the cell centre. Only the pistol's
+    diagonal (it458) draws the body off centre, and it is seated (67f4343a6).
