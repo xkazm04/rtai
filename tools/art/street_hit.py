@@ -70,8 +70,14 @@ VERSIONS = {
     "ped_punk": "v3",
     "ped_hood": "v3",
     "thug": "v4",
-    "contractor": "v2",
+    "contractor": "v3",
 }
+# A version whose poses match an earlier set but reach lower (the contractor's v3 carbine hangs below his boots,
+# assets it359 (3)) takes that set's scale, its hat where the old set's hat stood (`like`; never by the cell's height).
+SCALE_FROM = {"contractor": "v2"}
+# px added under such a grid's cells, so the hanging muzzle is not cut flat at the floor (the feet stay CELL_H *
+# FOOT_Y from the top; StreetQuestHit scales its cell and foot line by the texture's height).
+PAD_BELOW = 32
 # n15 combat: the burning figure's second flail frame (burn/1b_<col>.png) as <kind>_flail_burn_hit.png on
 # the same layout, each facing at the scale its burn/1 cell takes, so the two frames swap without a pop.
 FLAILS = "burn/1b"
@@ -134,6 +140,30 @@ def cell(path: Path, out: Image.Image, col: int, k: float = 0.0, boot: bool = Tr
     out.alpha_composite(im, (x, y))
 
 
+def hat_x(alpha: np.ndarray) -> float:
+    """The x centre of the figure's top 15 % (the hat): a register that a hanging gun does not move."""
+    top = alpha[: max(1, int(alpha.shape[0] * 0.15))] > 128
+    xs = np.nonzero(top.any(axis=0))[0]
+    return (xs.min() + xs.max() + 1) / 2.0
+
+
+def like(old: Path, new: Path, out: Image.Image, col: int, k: float) -> None:
+    """`new` at `old`'s scale with its hat where `old`'s hat lands in the cell (SCALE_FROM): the boot finder
+    would take a muzzle hanging past the boots for the planted boot."""
+    a = cropped(old)
+    a = a.resize((round(a.width * k), round(a.height * k)), Image.LANCZOS)
+    alpha = np.asarray(a.getchannel("A"))
+    x0 = min(max(round(CELL_W * col + CELL_W / 2.0 - foot_x(alpha)), CELL_W * col), CELL_W * col + CELL_W - a.width)
+    y0 = round(CELL_H * FOOT_Y) - boot_bottom(alpha)
+    b = cropped(new)
+    b = b.resize((round(b.width * k), round(b.height * k)), Image.LANCZOS)
+    x = round(x0 + hat_x(alpha) - hat_x(np.asarray(b.getchannel("A"))))
+    x = min(max(x, CELL_W * col), CELL_W * col + CELL_W - b.width)
+    if y0 + b.height > out.height:
+        print(f"WARNING {new.parent.name}/{new.name} col {col}: {b.size} clips the cell's floor by {y0 + b.height - out.height} px")
+    out.alpha_composite(b, (x, y0))
+
+
 def grey_cyan(path: Path) -> None:
     """Cyan-teal (hue 165-205 deg) to its own grey value: the char cells' stripped smoke left faint teal traces
     (teal is for souls only)."""
@@ -155,13 +185,18 @@ def build(lib: Path, name: str, spec: tuple, tmp: Path, site: str = "1") -> None
         file = file.replace("_hit.png", "_flail_burn_hit.png")
     elif site != "1":
         file = file.replace("_hit.png", f"_{site.split('/')[0]}_hit.png")
-    sheet = Image.new("RGBA", (CELL_W * 5, CELL_H), (0, 0, 0, 0))
+    pad = PAD_BELOW if site == "1" and name in SCALE_FROM else 0
+    sheet = Image.new("RGBA", (CELL_W * 5, CELL_H + pad), (0, 0, 0, 0))
     paths = [lib / f"{name}_hit_70_cells/{site}_{col + 1}.png" for col in range(5)]
     k = 0.0
     if site == "1" and name in VERSIONS:
         paths = [p.parent / VERSIONS[name] / p.name for p in paths]
-        k = CELL_H * FILL / max(cropped(p).height for p in paths)
+        olds = [p.parent.parent / SCALE_FROM[name] / p.name for p in paths] if name in SCALE_FROM else paths
+        k = CELL_H * FILL / max(cropped(p).height for p in olds)
     for col in range(5):
+        if site == "1" and name in SCALE_FROM:
+            like(olds[col], paths[col], sheet, col, k)
+            continue
         if site in (FLAILS, CHARS.get(name)):  # frame 1's own height-fill scale for this facing
             k = CELL_H * FILL / cropped(lib / f"{name}_hit_70_cells/{BURNS[name]}_{col + 1}.png").height
             if site == CHARS.get(name):  # a char cell taller than its burn cell stays inside the cell (the thug's col 4)

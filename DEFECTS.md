@@ -15,7 +15,7 @@ Ranked within each film; newest film first.
 
 ## Quest 1 Dock 9, combo 48 px/m t13600-13838 (session 4)
 1. A shot contractor stood on as his standing card, then popped to the lying pose -> fixed 302a0d670 (drawn stagger, it321).
-2. The stagger cell holds a short gun while his dropped carbine lies beside him (the it321 cells are drawn with a pistol-length gun) -> open, minor.
+2. The stagger cell holds a short gun while his dropped carbine lies beside him (the it321 cells are drawn with a pistol-length gun) -> fixed in part (session 5, v3: he holds the card's long carbine); on a death the dropped carbine still lies beside the held one for 10 ticks -> open, minor.
 3. Every hit in the window was a kill: the living hold (20 ticks) is not filmed -> open.
 
 ## Sustained flame jet (session 4 reading of the session-3 film)

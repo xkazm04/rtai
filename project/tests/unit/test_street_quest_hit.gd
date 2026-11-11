@@ -52,5 +52,12 @@ func test_the_cell_is_sized_by_the_standing_card() -> void:
 	assert_true(StreetQuestHit.shows(), "the grid loads")
 	var size: Vector2 = StreetQuestHit.size_px(PPM)
 	var card_h: float = StreetQuestCards.body_m() * PPM
-	assert_almost_eq(size.y, card_h * StreetQuestHit.CELL_K, 0.01, "the card's cell x CELL_K")
-	assert_almost_eq(size.x / size.y, 344.0 / 256.0, 0.001, "the cell's own aspect")
+	var tex: Texture2D = load(StreetQuestHit.PATH) as Texture2D
+	var tall: float = tex.get_height() / StreetQuestHit.CELL_PX
+	assert_almost_eq(
+		size.y, card_h * StreetQuestHit.CELL_K * tall, 0.01, "the card's cell x CELL_K"
+	)
+	assert_almost_eq(size.x / size.y, 344.0 / tex.get_height(), 0.001, "the cell's own aspect")
+	# v3's pad under the feet (street_hit.py PAD_BELOW) leaves the feet where a 256 cell put them
+	var foot_px: float = size.y * StreetQuestHit.FOOT_Y * StreetQuestHit.CELL_PX / tex.get_height()
+	assert_almost_eq(foot_px, card_h * StreetQuestHit.CELL_K * StreetQuestHit.FOOT_Y, 0.01, "feet")

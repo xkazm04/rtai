@@ -22,8 +22,11 @@ const OPEN_TICKS: int = 10
 ## tallest figure fills street_hit.py's FILL), the card cell (192 px) = 340 sheet px.
 const CELL_K: float = 1.063
 const FRAMES: int = 5
-## street_hit.py FOOT_Y: the planted boot's bottom in the cell.
+## street_hit.py FOOT_Y: the planted boot's bottom in a CELL_PX cell.
 const FOOT_Y: float = 0.985
+## street_hit.py CELL_H. The v3 grid (it359, the long carbine hanging past his boots) is padded
+## below the feet (PAD_BELOW), so the cell's height and foot line scale from the texture's height.
+const CELL_PX: float = 256.0
 
 static var _tex: Texture2D = null
 static var _off: int = -1
@@ -54,9 +57,9 @@ static func shows() -> bool:
 
 
 ## The cell's drawn size (px) at `ppm` before the ground squash is undone: StreetQuestCards.body_m
-## x CELL_K tall, the cell's own aspect.
+## x CELL_K tall per CELL_PX of the grid's height, the cell's own aspect.
 static func size_px(ppm: float) -> Vector2:
-	var hgt: float = StreetQuestCards.body_m() * CELL_K * ppm
+	var hgt: float = StreetQuestCards.body_m() * CELL_K * ppm * _tex.get_height() / CELL_PX
 	return Vector2(hgt * _tex.get_width() / float(FRAMES) / float(_tex.get_height()), hgt)
 
 
@@ -67,7 +70,8 @@ static func draw(canvas: CanvasItem, at_px: Vector2, h: Fighter, ppm: float) -> 
 	var cell: Vector2 = Vector2(_tex.get_width() / float(FRAMES), float(_tex.get_height()))
 	var f: Vector2i = RigHeadCard.frame_of(h.facing.angle())
 	canvas.draw_set_transform(at_px, 0.0, Vector2(-1.0 if f.y == 1 else 1.0, 1.0))
-	var dst: Rect2 = Rect2(-size.x * 0.5, -size.y * FOOT_Y, size.x, size.y)
+	var foot: float = FOOT_Y * CELL_PX / float(_tex.get_height())
+	var dst: Rect2 = Rect2(-size.x * 0.5, -size.y * foot, size.x, size.y)
 	canvas.draw_texture_rect_region(_tex, dst, Rect2(cell.x * f.x, 0.0, cell.x, cell.y))
 	canvas.draw_set_transform(Vector2.ZERO)
 
