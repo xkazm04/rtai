@@ -14,6 +14,15 @@
    (film rg64_t, same ticks): the disc is the kicked CAP's shadow, and since 06deed4b5 a walker-card victim's cap group
    is empty -> fixed bd9af660f (an empty group casts no shadow; also the hand cannon's cap dot); film rg64_u (934a815c6)
    same ticks: gone. `evidence/n16-kills-polish/ray_gun_cap_shadow_ab_64ppm_x2_t150-199.png`.
+8. Hand cannon at 32 px/m: the 0.16 m wound was a ~5 px speck (film hc32_t) -> fixed 80d1c959b (wound_m 0.2; film hc32_u):
+   `evidence/n16-kills-polish/hand_cannon_exit_wound_a6b_ab_32ppm_x3_t51-72.png`.
+9. Ray gun at 32 px/m: the drawn grey heap is quieter than the old cream smear and the skull is a few px (film
+   rg32_t/w, `ray_gun_drawn_remains_ab_32ppm_x3_t110-199.png`) -> open, owner Call (WIDE_M 1.7 -> 2.0, or a cream rim).
+10. Plasma sword: a dark shadow disc hangs beside the top half from t90 to t200+, in c43cae42d and 934a815c6 alike (not
+   the empty-cap case bd9af660f fixed; likely a half's flying shadow at its group origin, not under the drawn half)
+   -> open. `evidence/n16-kills-polish/plasma_sword_scorch_line_wider_ab_64ppm_x15_t70-200.png` (t90-200, right).
+11. Plasma sword scorch line 0.16 m read as a crack -> 7998ee3fa (0.26 m), same sheet: wider; it lies mostly under
+   Rivet's feet and the dropped rifle at this chapter's angle.
 5. Burn (hooded ped, 64 px/m, film bc64_hood_w): he only faded to a ghost over the ash heap -> fixed b3b03286c (A8 drawn
    collapse onto a skull heap that stays). `evidence/n16-kills-polish/burn_collapse_hood_ab_64ppm_x2_t590-740.png`.
 6. Burn collapse: the char cell keeps his facing (here away from the camera) but the collapse is drawn facing the camera

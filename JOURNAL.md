@@ -396,3 +396,13 @@ still reads as a crack, then evidence + KILLS (plasma_sword After 1 -> 2/3) + DE
 - 17:40 film hc64_t (934a815c6, A6b) vs hc64_a same ticks: a ragged torn chest wound with snapped ribs, no face/teeth
   read (`evidence/n16-kills-polish/hand_cannon_exit_wound_a6b_ab_64ppm_x2_t51-90.png`). Film rg64_u (934a815c6) vs
   rg64_d: the hanging cap-shadow disc is gone at t170/t199 (`ray_gun_cap_shadow_ab_64ppm_x2_t150-199.png`).
+- 17:42 film bc64_patrol_t (934a815c6) vs bc64_patrol_w (lone patrol cop burnt, 64 px/m, kill t542): crumbling t620,
+  on his knees with the skull under the cap and the ribcage t640, the capped skull heap with a forearm bone t660-740+;
+  before = a fade (`evidence/n16-kills-polish/burn_collapse_patrol_ab_64ppm_x2_t590-740.png`). The turn-round at the
+  cut shows here too (char cell back three-quarter, collapse front): A8c.
+- 17:45 films at 32 px/m: hc32_t (A6b 0.16 m) the wound is a ~5 px speck -> 80d1c959b wound_m 0.2, hc32_u: reads on
+  the chest (`hand_cannon_exit_wound_a6b_ab_32ppm_x3_t51-72.png`). rg32_t vs rg32_w: the uniform reads, the grey heap
+  is quieter than the old cream smear, skull a few px (`ray_gun_drawn_remains_ab_32ppm_x3_t110-199.png`; Call).
+  ps64_t (0.26 m line) vs ps64_s: wider, reads as a burn, partly under Rivet and the rifle
+  (`plasma_sword_scorch_line_wider_ab_64ppm_x15_t70-200.png`). FOUND: a dark disc beside the plasma sword's top half
+  t90-200+ in both revs (not the empty cap) -> DEFECTS 10, open.
