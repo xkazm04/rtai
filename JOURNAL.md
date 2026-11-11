@@ -989,3 +989,8 @@ C:/Users/kazda/kiro/gtai-n15/scratch-tools-before`, `git branch -D n15t-control-
 - 05:47 final gate started on 257b2e58c (`node tools/gate/run.mjs --rev=HEAD --reels --timeout=40`, log
   gtai-n15/flake/gate_s7_final.log): code since the 05:11 PASS = flag index, film checkFlags, merge-clash, quick, the
   walk befores (cast_flags.gd + test).
+- 05:47 morning order with my cast_flags.gd fix (merge-tree main+n15-tools -> +n15-hero -> +n15-combat as dangling
+  commits): combat conflicts on JOURNAL, REPORT, cast_flags.gd, rivet_res.gd (as before); `python
+  evidence/merge/resolve_hero_x_combat.py` on both conflicted files -> exit 0 each; output gdformat --check + gdlint
+  clean; the merged apply() keeps my `--rivet-walk`/`--rivet-stride` routing, combat's `arg in WINDUP_FLAGS` and
+  hero's `begins_with("--ghost-")`. REPORT merge notes stand.

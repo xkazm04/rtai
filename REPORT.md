@@ -288,3 +288,7 @@ pre-commit lint, tool tests included; Linux 896/0 on c1e7fb183) and docs.
   <conflicted file> <out>` writes the union (it refuses if a side changed shape); its output on those tips passed
   gdformat, gdlint and the 40-line function check (`evidence/merge/hero_x_combat_resolution.diff`). The baseline conflict beside them: `node tools/debt/merge_baseline.mjs`
   (then commit), not "take either side", which fails the merge commit's ratchet.
+- Session 7: this branch now also changes `cast_flags.gd` (05e519be8, the walk befores' routing). It merges clean
+  before hero, and the resolver still gives the union on the real morning order: `python
+  evidence/merge/resolve_hero_x_combat.py` exits 0 on both files of `main + n15-tools + n15-hero` x `n15-combat`, with
+  gdformat and gdlint clean. The merged `apply()` keeps all three routings (walk/stride, `WINDUP_FLAGS`, `--ghost-`).
