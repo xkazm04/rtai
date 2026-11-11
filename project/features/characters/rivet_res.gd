@@ -9,6 +9,7 @@ const X15: PackedStringArray = [
 	"p70/rivet_eq_pistol_left.png",
 	"p70/rivet_eq_pistol_diag.png",  # n17: drawn on the pistol strip's cells (it458)
 	"p70/rivet_eq_plasma_rifle.png",
+	"p70/rivet_eq_plasma_rifle_diag.png",  # n17: drawn on the strip's cells (it458/it463)
 	"p70/rivet_eq_katana.png",
 	"p70/rivet_eq_chainsaw.png",
 	"p70/rivet_eq_chainsaw_windup.png",  # n14: the asset lane drew its cells at the x1.5 strip's scale
@@ -16,8 +17,10 @@ const X15: PackedStringArray = [
 	"p70/rivet_eq_machine_pistol_diag.png",  # n17: drawn on the strip's cells (it458)
 	"p70/rivet_eq_machine_pistol_left.png",
 	"p70/rivet_eq_electro_gun.png",
+	"p70/rivet_eq_electro_gun_diag.png",  # n17: drawn on the strip's cells (it458/it463)
 	"p70/rivet_eq_electro_gun_left.png",
 	"p70/rivet_eq_hand_cannon.png",
+	"p70/rivet_eq_hand_cannon_diag.png",  # n17: drawn on the strip's cells (it458/it463)
 	"p70/rivet_eq_hand_cannon_left.png",
 	"p70/rivet_eq_ray_gun.png",
 	"p70/rivet_eq_ray_gun_left.png",
@@ -26,10 +29,13 @@ const X15: PackedStringArray = [
 	"p70/rivet_eq_molotov.png",
 	"p70/rivet_eq_molotov_left.png",
 	"p70/rivet_eq_gatling.png",
+	"p70/rivet_eq_gatling_diag.png",  # n17: drawn on the strip's cells (it458/it463)
 	"p70/rivet_eq_flamethrower.png",
 	"p70/rivet_eq_gloria.png",
+	"p70/rivet_eq_gloria_diag.png",  # n17: drawn on the strip's cells (it458/it463)
 	"p70/rivet_eq_mini_nuke.png",
 	"p70/rivet_eq_rocket_launcher.png",
+	"p70/rivet_eq_rocket_launcher_diag.png",  # n17: drawn on the strip's cells (it458/it463)
 	"p55/rivet_eq_pistol.png",
 	"p55/rivet_eq_pistol_left.png",
 	"p55/rivet_eq_machine_pistol.png",

@@ -29,7 +29,7 @@ func _rig(octant: int, aim_deg: float = NAN) -> CutRig:
 func test_a_diagonal_shot_fires_the_drawn_diagonal_strip() -> void:
 	assert_true(RivetGunDiag.draws("p70", &"pistol"))
 	assert_false(RivetGunDiag.draws("p55", &"pistol"), "not drawn at p55 yet")
-	assert_false(RivetGunDiag.draws("p70", &"gatling"))
+	assert_false(RivetGunDiag.draws("p70", &"ray_gun"), "no drawn diagonal")
 	for o: int in [1, 3, 5, 7]:
 		assert_eq(RivetStrips.diag_or(_rig(o), "p70", &"pistol", EQ), DIAG, "octant %d" % o)
 	assert_eq(RivetStrips.diag_or(_rig(0), "p70", &"pistol", EQ), EQ, "the side keeps its cell")

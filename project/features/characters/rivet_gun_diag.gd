@@ -16,6 +16,13 @@ extends RefCounted
 const DEG: Dictionary[String, PackedFloat32Array] = {
 	"p70/pistol": [32.0, -25.0, 146.0, -150.0],
 	"p70/machine_pistol": [40.0, -31.0, 139.0, -149.0],
+	# the barrel's axis by eye at 2x (+-5 deg): these flashes fan off the barrel, the tool misreads
+	"p70/plasma_rifle": [23.0, -45.0, 155.0, -138.0],
+	"p70/gatling": [30.0, -43.0, 150.0, -141.0],
+	"p70/hand_cannon": [38.0, -33.0, 124.0, -149.0],
+	"p70/gloria": [35.0, -41.0, 150.0, -138.0],
+	"p70/electro_gun": [24.0, -41.0, 150.0, -139.0],
+	"p70/rocket_launcher": [18.0, -39.0, 161.0, -151.0],
 }
 ## The helmet's centre x per diagonal cell (strip px; the strip's cells centre theirs at ~141 of
 ## 283): the away cells draw his body off centre to give the raised gun room (cell 1 at 93.5, 3 at
@@ -24,10 +31,28 @@ const DEG: Dictionary[String, PackedFloat32Array] = {
 const HELMET_X: Dictionary[String, PackedFloat32Array] = {
 	"p70/pistol": [140.5, 93.5, 140.5, 191.0],
 	"p70/machine_pistol": [127.5, 89.5, 126.5, 163.5],
+	# the dome's run centre 12-28 px under its top (a raised gun or pack widens the widest run)
+	"p70/plasma_rifle": [172.5, 132.5, 169.5, 209.5],
+	"p70/gatling": [146.8, 110.0, 152.0, 190.0],
+	"p70/hand_cannon": [142.0, 97.0, 141.5, 186.5],
+	"p70/gloria": [160.5, 129.8, 160.5, 192.0],
+	"p70/electro_gun": [112.5, 77.0, 111.5, 148.0],
+	"p70/rocket_launcher": [130.0, 90.2, 130.0, 165.5],
 }
-## The boots' pad above the cell bottom (strip px), keyed "<art>/<gun>" (the pistol's cells 0/2 at
-## row 177 and 1/3 at 179 of 180; the machine pistol's all at 172 of 175).
-const FOOT_PX: Dictionary[String, float] = {"p70/pistol": 1.0, "p70/machine_pistol": 2.0}
+## The boots' pad above the cell bottom (strip px), keyed "<art>/<gun>": cell height - 1 - boot row
+## (the pistol's cells 0/2 at row 177 and 1/3 at 179 of 180). The other guns ship the asset lane's
+## TALL cells (it463: the drawn cell + 60 clear rows, so a down-aimed flash is not cut at the cell
+## floor), so their pads are about 60 px more (the machine pistol's boots at 172 of 235).
+const FOOT_PX: Dictionary[String, float] = {
+	"p70/pistol": 1.0,
+	"p70/machine_pistol": 62.0,
+	"p70/plasma_rifle": 62.0,
+	"p70/gatling": 62.0,
+	"p70/hand_cannon": 61.5,
+	"p70/gloria": 62.0,
+	"p70/electro_gun": 61.0,
+	"p70/rocket_launcher": 62.0,
+}
 
 ## Half an octant: within it the diagonal is the drawn gun nearest the aim.
 const FIT_TOL: float = PI / 8.0

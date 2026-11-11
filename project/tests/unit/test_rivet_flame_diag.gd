@@ -38,7 +38,7 @@ func test_a_diagonal_burst_takes_the_diagonal_strip_at_both_pitches() -> void:
 		assert_eq(RivetStrips.cells_of(path, false), RivetStrips.DIAG_CELLS)
 		assert_eq(RivetStrips.diag_or(_rig(1, false), art, &"flamethrower", eq), eq, "no shot")
 		assert_eq(RivetStrips.diag_or(_rig(0, true), art, &"flamethrower", eq), eq, "the side")
-		assert_eq(RivetStrips.diag_or(_rig(5, true), art, &"gatling", eq), eq, "no drawn diagonal")
+		assert_eq(RivetStrips.diag_or(_rig(5, true), art, &"ray_gun", eq), eq, "no drawn diagonal")
 
 
 func test_the_side_and_cone_flags_keep_the_equipped_strip() -> void:

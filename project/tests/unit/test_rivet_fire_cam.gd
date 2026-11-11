@@ -83,19 +83,19 @@ func test_a_gun_with_a_facing_muzzle_is_untouched() -> void:
 
 func test_a_burst_on_the_edge_keeps_its_cell() -> void:
 	# n17: a gun without a drawn diagonal (the p70 pistol fires its diagonal cell here)
-	var rig: CutRig = _firing(44.9, &"hand_cannon")
+	var rig: CutRig = _firing(44.9, &"ray_gun")
 	assert_false(RivetFireCam.drawn(rig), "starts under 45: the side cell")
 	_aim(rig, 45.3)
-	assert_true(RivetStrips.draws_fire(rig, &"hand_cannon", 1, true))
+	assert_true(RivetStrips.draws_fire(rig, &"ray_gun", 1, true))
 	assert_false(RivetFireCam.drawn(rig), "noise past 45 keeps it")
 	_aim(rig, 52.0)
-	assert_true(RivetStrips.draws_fire(rig, &"hand_cannon", 1, true))
+	assert_true(RivetStrips.draws_fire(rig, &"ray_gun", 1, true))
 	assert_true(RivetFireCam.drawn(rig), "past the hold: the camera cell")
 	_aim(rig, 44.0)
-	assert_true(RivetStrips.draws_fire(rig, &"hand_cannon", 1, true))
+	assert_true(RivetStrips.draws_fire(rig, &"ray_gun", 1, true))
 	assert_true(RivetFireCam.drawn(rig), "back under 45 keeps it inside the hold")
 	_aim(rig, 38.0)
-	assert_true(RivetStrips.draws_fire(rig, &"hand_cannon", 1, true))
+	assert_true(RivetStrips.draws_fire(rig, &"ray_gun", 1, true))
 	assert_false(RivetFireCam.drawn(rig), "past the hold back: the side cell")
 
 
