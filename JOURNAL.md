@@ -397,3 +397,17 @@ at 19:40: the draft is in the tree; fill Next steps, the gate verdicts, final Co
   629), selftest look goldens 11/11 worst 0.00, release-compile 683/0, reels exit 0 (top/tilt70/combo, chapter 19
   electro_chain 4/4 down last). caccc825d is the last project/ commit on this branch: every gate is green on it.
 - 15:49 gore-check reel started on kills-new 8f7fe6e6e (17 films, scout mode).
+- 16:02 PROOF gore check over the WHOLE kills-new table + the scout's real run: from the kills-new worktree,
+  `node ../n16-tools/tools/film/kill_reel.mjs --out=<n16-tools>/build/kreel/s4gore_new --weapons=all --quick
+  --gore-check --rev=8f7fe6e6e` -> `kill_reel: PASS`, `reel exit 0` 15:49:35-16:02:16: 17 films, every one PASS and
+  `whole: true` (rocket 68, hand cannon 63, flamethrower 237, molotov 182, electro gun 129, katana 68, plasma rifle 65,
+  plasma sword 68, chainsaw 68, ray gun 63, homing shard 69, mini nuke 126, pistol 63, machine pistol 174, gloria 64,
+  gatling 95, electro baton 68). Looked at gatling_32.png and katana_32.png: the guard falls and lies whole (no
+  halves, no shred pieces) at every cell from the kill to +150. No film's kill differed from its scout.
+  SCOUT TIME: films now 34-46 s wall each (Godot 17-21 s per run x 2: scout + beat film); s3all took 62-137 s each
+  (hand cannon 130 -> 46 s, flamethrower 137 -> 34 s); 17 films in 12.7 min vs 12 films in ~25 min.
+- Evidence: masters frames.json 15 entries (added the gatling gore-reduced sheet on top); in-tree
+  evidence/n16-tools/kill-reel-gore-reduced-{gatling,katana}-kills-new-32ppm.png + reel_s4gore_new.md.
+- SERVED (kills-new): every one of your 17 signature deaths at 8f7fe6e6e drops whole under `--gore=reduced`
+  (evidence/n16-tools/reel_s4gore_new.md). Reels are ~2-3x faster since 7a16ac85d (scout), same command.
+- 16:02 the same gore check on kills-polish a56501ee5 started (scratch-tools/reel_s4gore_polish.log).
