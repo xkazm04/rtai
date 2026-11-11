@@ -5,9 +5,11 @@ behind its own before flag (CastFlags). No sim change: the replay and parity gol
 Evidence: `evidence/n17-rivet-strike/` (same files and `frames.json` as `gtai-masters/n17/rivet-strike/`).
 Defect log: `DEFECTS.md`.
 
+Gates (session 3, 9175e715e): lint 19/19, scenarios 55/55, parity bit-exact, look goldens 11/11 + block 5/5 (worst 0.00); unit failed 3 there (the pistol diagonal took RivetFireCam's cells) -> fixed 4fc5137dc, full unit 2798 passed 0 failed. A full run on the final commit is owed before the freeze.
+
 Gates (session 2): `node tools/evidence/run.mjs --no-bench --no-release` on 8a47c51db: lint 19/19, unit 2786
 passed 0 failed, scenarios 55/55, parity bit-exact, look goldens 11/11 and block goldens 5/5 (worst 0.00). Reel gate
-on 48c91e944: top, tilt70, combo OK. Planted faults: `rivet_thrust.gd` 75 % (6/8), `rivet_no_flash.gd` 77.8 % (7/9); every survivor equivalent on today's data. Bench not run (CONTENDED machine; render-only lane).
+on 48c91e944: top, tilt70, combo OK. Planted faults: `rivet_thrust.gd` 75 % (6/8), `rivet_no_flash.gd` 77.8 % (7/9), `rivet_gun_diag.gd` 80 % (8/10); every survivor equivalent on today's data. Bench not run (CONTENDED machine; render-only lane).
 
 ## What works, with evidence
 
