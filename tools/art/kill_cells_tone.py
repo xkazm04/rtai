@@ -10,6 +10,12 @@ is toned in place with street_tone.py's rule (blue px only: hue shifted, saturat
 scaled, shading kept); a toned grid then reads equal to its walk, so a second run changes nothing.
 A re-pack (kill_cells_pack.py) restores the delivered blue: run this after it.
 
+Second pass (n17 23:00): the SWAT's helmet and vest are drawn grey-VIOLET in his own cells (hue 250-300 deg,
+saturation 0.06-0.35: 7-18 % of the figure against 1.6 % in his walk, whose helmet is blue-grey, hue ~216).
+A grid whose grey-violet share is over VIOLET_K x its walk's (and over VIOLET_MIN) has those px turned to the
+walk's blue hue, saturation x VIOLET_SAT (value and shading kept); afterwards its share reads ~0, so a second
+run changes nothing.
+
     PYTHONDONTWRITEBYTECODE=1 python tools/art/kill_cells_tone.py [--write]   (no --write = report)
 """
 
@@ -29,6 +35,30 @@ KINDS = {"cop_patrol": "cop_patrol_armed_walk.png", "cop_riot": "cop_riot_armed_
 EXTRA = ("_gatling_shred_scraps.png", "_headgear_tumble.png")
 HUE_TOL = 10.0
 VALUE_TOL = 0.15
+VIOLET_K = 3.0
+VIOLET_MIN = 0.04
+VIOLET_SAT = 1.6
+
+
+def violet(path: Path) -> tuple:
+    """(image, hsv planes, grey-violet mask, its share of the opaque px)."""
+    img = Image.open(path).convert("RGBA")
+    a = np.asarray(img)[..., 3] > 127
+    hsv = np.asarray(img.convert("RGB").convert("HSV")).astype(np.float64) / 255.0
+    h, s, v = hsv[..., 0] * 360.0, hsv[..., 1], hsv[..., 2]
+    m = a & (h > 250.0) & (h < 300.0) & (s > 0.06) & (s < 0.35) & (v > 0.15)
+    return img, (h, s, v), m, float(m.sum()) / max(1, int(a.sum()))
+
+
+def unviolet(path: Path, hue: float) -> None:
+    img, (h, s, v), m, _ = violet(path)
+    h2 = np.where(m, hue, h) / 360.0
+    s2 = np.where(m, np.clip(s * VIOLET_SAT, 0.0, 1.0), s)
+    hsv = (np.stack([h2, s2, v], axis=-1) * 255.0).round().astype(np.uint8)
+    rgb = np.asarray(Image.fromarray(hsv, "HSV").convert("RGB"))
+    out = np.asarray(img).copy()
+    out[..., :3] = np.where(m[..., None], rgb, out[..., :3])
+    Image.fromarray(out, "RGBA").save(path)
 
 
 def blue(path: Path) -> tuple:
@@ -69,6 +99,11 @@ def main() -> int:
                 print(f"{art}/{f:38s} hue {h - rh:+5.1f} value x{v / rv:.2f} {'TONE' if off else 'ok'}")
                 if off and write:
                     subprocess.run([sys.executable, "-I", str(TONE), str(p), str(ref), str(p)], check=True)
+                share, walk_share = violet(p)[3], violet(ref)[3]
+                if share > max(VIOLET_MIN, VIOLET_K * walk_share):
+                    print(f"{art}/{f:38s} grey-violet {share:.3f} vs walk {walk_share:.3f} UNVIOLET")
+                    if write:
+                        unviolet(p, rh)
     return 0
 
 
