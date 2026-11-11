@@ -94,3 +94,15 @@ func test_the_plasma_wind_up_stands_on_the_walks_boot_line() -> void:
 	RivetCellFeet.enabled = false
 	RivetCellFeet.show(card, 0)
 	assert_almost_eq(card.offset.y, RivetStrips.foot_px(path) - h, 0.01, "off: the before")
+
+
+func test_a_strip_listing_only_its_camera_cell_is_seated() -> void:
+	# p55 lists the camera strike (6) alone: its side strike keeps the pad (mutate survivor :61)
+	var path: String = RivetStrips.DIR + "p55/rivet_eq_katana.png"
+	var card: Sprite2D = autofree(Sprite2D.new())
+	card.texture = load(path) as Texture2D
+	card.hframes = RivetFrames.EQ_CELLS
+	card.set_meta(RivetFrames.ON, path)
+	var h: float = card.texture.get_height()
+	RivetCellFeet.show(card, RivetFrames.Eq.FIRE_CAM)
+	assert_almost_eq(card.offset.y, 46.0 - h, 0.01, "the camera strike on its boots")
