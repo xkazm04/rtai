@@ -105,4 +105,15 @@ static func extras() -> Array[Chapter]:
 	for w: StringName in [&"plasma_sword", &"katana", &"electro_baton", &"chainsaw"]:
 		out.append(Chapter.new(StringName(w + "_left"), w, &"blade", 330, [Vector2(-2.4, 0.0)]))
 		out.append(Chapter.new(StringName(w + "_cam"), w, &"blade", 330, [Vector2(0.0, 2.4)]))
+	out.append(_armor(Chapter.new(&"katana_thrust", &"katana", &"blade", 360, [Vector2(2.6, 0)])))
+	out.append(
+		_armor(Chapter.new(&"katana_thrust_cam", &"katana", &"blade", 360, [Vector2(0, 2.4)]))
+	)
 	return out
+
+
+## n17 rivet-strike: the katana's whole combo (two slashes, the lunge thrust) on an armored cop
+## who outlives the slashes, so the thrust's drawn lunge cell is filmed (RivetThrust).
+static func _armor(c: Chapter) -> Chapter:
+	c.armored = true
+	return c

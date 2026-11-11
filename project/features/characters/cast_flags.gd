@@ -21,7 +21,7 @@ const WINDUP_FLAGS: PackedStringArray = [
 
 ## n17 rivet-strike's befores, routed to _walk.
 const N17_RIVET: PackedStringArray = [
-	"--rivet-lean", "--rivet-cell-feet", "--rivet-fire-turn", "--rivet-noflash"
+	"--rivet-lean", "--rivet-cell-feet", "--rivet-fire-turn", "--rivet-noflash", "--rivet-thrust"
 ]
 
 static var _read: bool = false
@@ -119,5 +119,7 @@ static func _walk(arg: String) -> void:
 			RivetFireTurn.enabled = false
 		"--rivet-noflash=off":  # n17 rivet-strike: the fire cell's painted flash held (before)
 			RivetNoFlash.enabled = false
+		"--rivet-thrust=off":  # n17 rivet-strike: the lunge on the wind-up/strike cells (before)
+			RivetThrust.enabled = false
 		_:
 			pass

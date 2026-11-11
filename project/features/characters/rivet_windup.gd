@@ -49,8 +49,9 @@ static func left_drawn(weapon: StringName) -> bool:
 ## left strip (`path`; a walk grid, a reload or a knock keeps its own) and the weapon has one, else
 ## `path`.
 static func path_or(rig: CutRig, art: String, weapon: StringName, path: String) -> String:
-	if not enabled or weapon == &"":
-		return path
+	var thrust: String = RivetThrust.path_or(rig, art, weapon, path)  # n17: a lunge's drawn thrust
+	if not enabled or weapon == &"" or thrust != path:
+		return thrust
 	var eq: String = RivetStrips.DIR + art + "/rivet_eq_" + String(weapon)
 	var w: String = ""
 	if not winding(rig):

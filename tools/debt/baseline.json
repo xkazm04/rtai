@@ -46,7 +46,8 @@
         "2026-11-10: n15 item 2: quest1_clip --quest-hit=off (the before of the contractor stagger), dev_loc +2 (dev_loc 21481 -> 21483)",
         "2026-11-11: n15 merge: combat's quest1_clip flag (+2) meets tools' still-lead change in the same file (dev_loc 21698 -> 21700)",
         "2026-11-11: n16 tools: FilmProbe pins the film cursor (CURSOR_OFF + doc, +2 dev lines): films read the desk mouse, so Rivet's aim differed run to run (s3ab) (dev_loc 21700 -> 21702)",
-        "2026-11-11: 2026-11-11: n17 rivet-strike item 1: dialogue_board --slots, the weapon slot's before/after stills (dev evidence) (dev_loc 21702 -> 21741)"
+        "2026-11-11: 2026-11-11: n17 rivet-strike item 1: dialogue_board --slots, the weapon slot's before/after stills (dev evidence) (dev_loc 21702 -> 21741)",
+        "2026-11-11: n17 rivet-strike: dev chapters katana_thrust/_cam (an armored cop so the katana's whole combo and its drawn thrust are filmed) (dev_loc 21741 -> 21752)"
       ],
       "files": {
         "project/dev/arena": 711,
@@ -75,12 +76,12 @@
         "project/dev/save_cross_run.gd": 69,
         "project/dev/selftest": 1454,
         "project/dev/servo": 434,
-        "project/dev/showcase": 6764,
+        "project/dev/showcase": 6775,
         "project/dev/sim": 196,
         "project/dev/view": 195,
         "project/dev/weapon_art": 506
       },
-      "total": 21741
+      "total": 21752
     },
     "direct_cmdline_reads": {
       "accepted": [

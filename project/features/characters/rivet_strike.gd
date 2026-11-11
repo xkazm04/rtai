@@ -48,6 +48,9 @@ static func placed(rig: CutRig, card: Sprite2D, s: float, h_px: float) -> bool:
 	if RivetKnock.shows(card):
 		RivetKnock.place(rig, card, s, h_px)
 		return true
+	if RivetThrust.shows(card):  # n17: the lunge's drawn thrust
+		RivetThrust.place(rig, card, s, h_px)
+		return true
 	if not shows(card):
 		return false
 	card.hframes = COLS
