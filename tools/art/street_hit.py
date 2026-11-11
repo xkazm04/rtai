@@ -75,6 +75,10 @@ VERSIONS = {
 # n15 combat: the burning figure's second flail frame (burn/1b_<col>.png) as <kind>_flail_burn_hit.png on
 # the same layout, each facing at the scale its burn/1 cell takes, so the two frames swap without a pop.
 FLAILS = "burn/1b"
+# n15 combat: the drawn charred man standing (assets it272, cop patrol only, B; smoke stripped) for a fire death,
+# <kind>_char_hit.png on the same layout, each facing at its burn/1 cell's scale like FLAILS (the burning man
+# turns to char without a size pop). KillCharFx draws it in place of the char-shaded card.
+CHARS = {"cop_patrol": "char/1"}
 
 
 def foot_x(alpha: np.ndarray) -> float:
@@ -129,6 +133,21 @@ def cell(path: Path, out: Image.Image, col: int, k: float = 0.0, boot: bool = Tr
     out.alpha_composite(im, (x, y))
 
 
+def grey_cyan(path: Path) -> None:
+    """Cyan-teal (hue 165-205 deg) to its own grey value: the char cells' stripped smoke left faint teal traces
+    (teal is for souls only)."""
+    px = np.asarray(Image.open(path).convert("RGBA")).astype(np.float32)
+    rgb = px[:, :, :3] / 255.0
+    mx, mn = rgb.max(axis=2), rgb.min(axis=2)
+    sat = np.where(mx > 0, (mx - mn) / np.maximum(mx, 1e-6), 0)
+    r, g, b = rgb[:, :, 0], rgb[:, :, 1], rgb[:, :, 2]
+    hue = np.degrees(np.arctan2(np.sqrt(3) * (g - b), 2 * r - g - b)) % 360
+    mask = (hue >= 165) & (hue <= 205) & (sat > 0.03)
+    grey = rgb @ np.array([0.299, 0.587, 0.114], np.float32)
+    px[mask, :3] = grey[mask, None] * 255.0
+    Image.fromarray(px.round().astype(np.uint8)).save(path)
+
+
 def build(lib: Path, name: str, spec: tuple, tmp: Path, site: str = "1") -> None:
     file, ref, band = spec
     if site == FLAILS:
@@ -142,9 +161,9 @@ def build(lib: Path, name: str, spec: tuple, tmp: Path, site: str = "1") -> None
         paths = [p.parent / VERSIONS[name] / p.name for p in paths]
         k = CELL_H * FILL / max(cropped(p).height for p in paths)
     for col in range(5):
-        if site == FLAILS:  # frame 1's own height-fill scale for this facing
+        if site in (FLAILS, CHARS.get(name)):  # frame 1's own height-fill scale for this facing
             k = CELL_H * FILL / cropped(lib / f"{name}_hit_70_cells/{BURNS[name]}_{col + 1}.png").height
-        cell(paths[col], sheet, col, k, boot=site != FLAILS)
+        cell(paths[col], sheet, col, k, boot=site not in (FLAILS, CHARS.get(name)))
     here = tmp / file
     sheet.save(here)
     tools = Path(__file__).parent
@@ -152,6 +171,8 @@ def build(lib: Path, name: str, spec: tuple, tmp: Path, site: str = "1") -> None
         subprocess.run([sys.executable, "-I", str(tools / "street_tone.py"), str(here), str(P70 / ref), str(here)], check=True)
     if band:
         subprocess.run([sys.executable, "-I", str(tools / "street_armband.py"), str(here), str(here)], check=True)
+    if site == CHARS.get(name):
+        grey_cyan(here)
     Image.open(here).save(P70 / file, optimize=True)
     print(f"{file}: {(P70 / file).stat().st_size} bytes")
 
@@ -164,7 +185,7 @@ def main() -> None:
     with tempfile.TemporaryDirectory() as t:
         for name, spec in SHEETS.items():
             build(lib, name, spec, Path(t))
-            for site in SITES.get(name, []) + ([BURNS[name], FLAILS] if name in BURNS else []):
+            for site in SITES.get(name, []) + ([BURNS[name], FLAILS] if name in BURNS else []) + ([CHARS[name]] if name in CHARS else []):
                 build(lib, name, spec, Path(t), site)
 
 

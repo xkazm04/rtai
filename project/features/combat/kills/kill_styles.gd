@@ -86,6 +86,8 @@ func parts(
 	elif row.style == &"shock" and rig != null and groups[SignatureKill.BODY] != null:
 		var plank: Node2D = KillSprawlCut.cut(rig)
 		groups[SignatureKill.BODY] = KillShockFx.wrap(groups[SignatureKill.BODY], plank)
+	elif row.style == &"burn":
+		KillCharCells.tag(groups[SignatureKill.BODY], rig)  # n15: a drawn charred man
 	return groups
 
 
@@ -93,6 +95,8 @@ func parts(
 func take(serial: int, body: Node2D, row: SignatureKill, at: Vector2, dir: Vector2) -> void:
 	if row.style == &"burn" or row.style == &"vaporise":
 		char_fx.add(serial, body, row)
+		@warning_ignore("return_value_discarded")
+		KillCharCells.swap(body)  # n15: the drawn cell keeps its own colours
 	elif row.style == &"shock":
 		shock_fx.add(serial, body, row, dir)
 	elif row.style == &"crush":
