@@ -46,7 +46,7 @@ test('the lane docs folder drops the night prefix', () => {
 test('conflict advice names every file with what to do', () => {
   const lines = conflictAdvice('n11-hero', ['tools/debt/baseline.json', 'docs/decisions.md', 'a.gd.uid', 'b.gd']);
   assert.match(lines[0], /merging n11-hero conflicted on 4/);
-  assert.match(lines.find((l) => l.includes('baseline.json')), /debt\.mjs --update/);
+  assert.match(lines.find((l) => l.includes('baseline.json')), /merge_baseline\.mjs.*--accept-regression/);
   assert.match(lines.at(-1), /--resume/);
 });
 

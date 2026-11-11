@@ -4,7 +4,7 @@ import { mkdtempSync, rmSync, utimesSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { after, test } from 'node:test';
-import { verdict } from './dev_verdict.mjs';
+import { MTIME_SLACK_MS, verdict } from './dev_verdict.mjs';
 
 const tmp = mkdtempSync(join(tmpdir(), 'gtai-verdict-'));
 after(() => rmSync(tmp, { recursive: true, force: true }));
@@ -56,4 +56,15 @@ test('never ran and timeout are failures with their own label', () => {
 test('notes are appended to the line', () => {
   const v = verdict({ status: 0, out: '' }, { notes: ['flags unchecked: no declared spec'] });
   assert.ok(v.line.endsWith('; flags unchecked: no declared spec'), v.line);
+});
+
+test('a result stamped a coarse clock tick before the launch is fresh (Linux, n15: up to 6.66 ms earlier)', () => {
+  const file = join(tmp, 'tick.json');
+  writeFileSync(file, '{}');
+  const at = Date.now();
+  const early = new Date(at - 10);
+  utimesSync(file, early, early);
+  const v = verdict({ status: 0, out: '' }, { resultFile: file, startedAt: at });
+  assert.ok(v.line.includes('result fresh'), v.line);
+  assert.ok(MTIME_SLACK_MS < 60000 - 1000, 'a minute-old file is still stale (the test above)');
 });

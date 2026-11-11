@@ -34,10 +34,10 @@
           "value": 256
         },
         {
-          "doc": "spatial hash window, cells per side",
+          "doc": "spatial hash window, cells per side (t-5: covers promoted actors to rb*1.6)",
           "name": "HW",
           "type": "int",
-          "value": 80
+          "value": 132
         },
         {
           "doc": "spatial hash cell, metres",
@@ -780,6 +780,42 @@
       ],
       "doc": "d9 sim bike: a K_CAR with art 9, smaller hull, mass 200 vs a 1400 sedan",
       "name": "bike"
+    },
+    {
+      "constants": [
+        {
+          "doc": "m ahead a car with no plan looks for a junction or the edge",
+          "name": "CAR_PLAN_AHEAD",
+          "type": "float",
+          "value": 18.0
+        },
+        {
+          "doc": "m before the new lane's line a turning car swings",
+          "name": "CAR_TURN_LEAD",
+          "type": "float",
+          "value": 2.5
+        },
+        {
+          "doc": "m past the junction centre a car frees it and replans",
+          "name": "CAR_JUNCTION_CLEAR",
+          "type": "float",
+          "value": 13.0
+        },
+        {
+          "doc": "m from the junction centre an exit is probed for its road",
+          "name": "CAR_EXIT_PROBE",
+          "type": "float",
+          "value": 16.0
+        },
+        {
+          "doc": "U-turn tiles, bit per T_*: 1 void (t-4), 241 any non-road",
+          "name": "CAR_DEAD_END_TILES",
+          "type": "int",
+          "value": 1
+        }
+      ],
+      "doc": "t-4 car routing distances (n15): sim_car_route.gd and car_route.cpp",
+      "name": "car_route"
     }
   ],
   "schema": "gtai.sim-constants/1"

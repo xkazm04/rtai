@@ -38,19 +38,28 @@ void CityCore::car(int i, double dt, double tgx, double tgy) {
 	}
 }
 
-// No next direction yet: pick one at the junction 18 m ahead, or U-turn at a dead end.
+// The road tile a car heading d drives on: east-west for 0 and 2, north-south for 1 and 3.
+static int road_of(int d) { return (d == 0 || d == 2) ? T_ROAD_H : T_ROAD_V; }
+
+// True when a car U-turns before tile kind t: its bit is set in CAR_DEAD_END_TILES (a junction
+// never is). Default 1: the city edge or an unloaded tile only (t-4); Call c-2.
+static bool dead_end(int t) { return t != T_INTER && ((CAR_DEAD_END_TILES >> t) & 1) != 0; }
+
+// No next direction yet: pick one at the junction CAR_PLAN_AHEAD m ahead, or U-turn before a
+// dead-end tile (dead_end above).
 void CityCore::car_plan(Car &c, double tgx, double tgy) {
 	int i = c.i;
-	int tc = tile_at(c.x + c.ddx * 18.0, c.y + c.ddy * 18.0);
+	double ax = c.x + c.ddx * CAR_PLAN_AHEAD, ay = c.y + c.ddy * CAR_PLAN_AHEAD;
+	int tc = tile_at(ax, ay);
 	if (tc == T_INTER) {
-		double icx = std::floor((c.x + c.ddx * 18.0) / 8.0) * 8.0 + 4.0;
-		double icy = std::floor((c.y + c.ddy * 18.0) / 8.0) * 8.0 + 4.0;
+		double icx = std::floor(ax / 8.0) * 8.0 + 4.0;
+		double icy = std::floor(ay / 8.0) * 8.0 + 4.0;
 		int pick = car_pick(c, icx, icy, tgx, tgy);
 		ndir_[i] = pick;
 		jx_[i] = icx;
 		jy_[i] = icy;
 		nlane_[i] = ((pick == 0 || pick == 2) ? icy : icx) + LANE_OFF[pick];
-	} else if (tc != T_ROAD_H && tc != T_ROAD_V) {
+	} else if (dead_end(tc)) {
 		double centre = lane_[i] - LANE_OFF[c.d];
 		c.d = (c.d + 2) % 4;
 		dir_[i] = c.d;
@@ -60,7 +69,8 @@ void CityCore::car_plan(Car &c, double tgx, double tgy) {
 	}
 }
 
-// Right, straight or left by weight (police cars: the exit nearest the target); else back.
+// Right, straight or left by weight (police cars: the exit nearest the target); else back. An
+// exit is open only onto a road of its own orientation (t-4).
 int CityCore::car_pick(const Car &c, double icx, double icy, double tgx, double tgy) {
 	int d = c.d;
 	int cand[3] = {(d + 1) % 4, d, (d + 3) % 4};
@@ -68,8 +78,8 @@ int CityCore::car_pick(const Car &c, double icx, double icy, double tgx, double 
 	bool ok[3] = {false, false, false};
 	double sumw = 0.0;
 	for (int k = 0; k < 3; k++) {
-		int t = tile_at(icx + DX[cand[k]] * 16.0, icy + DY[cand[k]] * 16.0);
-		if (t == T_ROAD_H || t == T_ROAD_V) {
+		int t = tile_at(icx + DX[cand[k]] * CAR_EXIT_PROBE, icy + DY[cand[k]] * CAR_EXIT_PROBE);
+		if (t == road_of(cand[k])) {
 			ok[k] = true;
 			sumw += wts[k];
 		}
@@ -97,7 +107,7 @@ int CityCore::car_pursuit_pick(const int *cand, const bool *ok, double icx, doub
 	double best_e2 = 0.0;
 	for (int k = 0; k < 3; k++) {
 		if (!ok[k]) continue;
-		double ex = icx + DX[cand[k]] * 16.0, ey = icy + DY[cand[k]] * 16.0;
+		double ex = icx + DX[cand[k]] * CAR_EXIT_PROBE, ey = icy + DY[cand[k]] * CAR_EXIT_PROBE;
 		int f = flow_dist(ex, ey);
 		double e2 = (ex - tgx) * (ex - tgx) + (ey - tgy) * (ey - tgy);
 		int rank = f >= 0 ? 0 : 1;
@@ -113,7 +123,8 @@ int CityCore::car_pursuit_pick(const int *cand, const bool *ok, double icx, doub
 	return pick;
 }
 
-// Turn onto the next lane once past the turn line; release the junction 13 m after it.
+// Turn onto the next lane once past the turn line; release the junction CAR_JUNCTION_CLEAR m
+// after it.
 void CityCore::car_follow(Car &c) {
 	int i = c.i;
 	double along = c.x * c.ddx + c.y * c.ddy;
@@ -121,8 +132,8 @@ void CityCore::car_follow(Car &c) {
 	if (nd != c.d) {
 		double cross = 0.0;
 		if (nd == (c.d + 2) % 4) cross = jx_[i] * c.ddx + jy_[i] * c.ddy;
-		else if (c.d == 0 || c.d == 2) cross = nlane_[i] * c.ddx - 2.5;
-		else cross = nlane_[i] * c.ddy - 2.5;
+		else if (c.d == 0 || c.d == 2) cross = nlane_[i] * c.ddx - CAR_TURN_LEAD;
+		else cross = nlane_[i] * c.ddy - CAR_TURN_LEAD;
 		if (along >= cross) {
 			c.d = nd;
 			dir_[i] = c.d;
@@ -133,7 +144,7 @@ void CityCore::car_follow(Car &c) {
 		return;
 	}
 	double past = along - (jx_[i] * c.ddx + jy_[i] * c.ddy);
-	if (past > 13.0) {
+	if (past > CAR_JUNCTION_CLEAR) {
 		int r = res_[i];
 		if (r >= 0 && owner_[r] == i + 1) owner_[r] = 0;
 		res_[i] = -1;

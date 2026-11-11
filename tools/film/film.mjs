@@ -3,10 +3,12 @@
 // step; ids and flags checked against the tree before anything launches; tick-exact stills and
 // per-tick numbers from dev/frames/film_probe.gd; one verdict: pass, fail or unverifiable.
 //   node tools/film/film.mjs <shot> --out=<dir> [--ticks=<n>] [--stills=<t,t-t>] [--on=fire:3+4,kill:1+6] [--view=combo]
-//     [--ppm=48] [--lock=auto|spawn|trigger|at:<tick>|<x,y>|off] [--seed=<n>] [--res=1280x800] [--movie] [--no-movie] [--tree=<dir>] [--victim=<kind>]
+//     [--ppm=48] [--lock=auto|spawn|trigger|at:<tick>|<x,y>|off] [--seed=<n>] [--res=1280x800] [--movie] [--no-movie] [--tree=<dir>|--rev=<commit> [--native=donor]] [--victim=<kind>] [--feel=auto|on|off]
 //     [--timeout=<s>] [--keep-going] [--dry-run] [-- <extra game flags>]
 // Exit: 0 pass, 1 fail (the run broke), 2 usage (nothing launched), 3 unverifiable (it ran, but the
 // numbers or stills it was asked for do not exist).
+// --rev films a commit in compare's snapshot (probe injected, same native guard): a queue of films then
+// runs one commit while the tree is edited (n15 combat: an edit mid-queue killed 4 films with SCRIPT ERROR).
 import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { spawnSync, execFileSync } from 'node:child_process';
 import { join, resolve } from 'node:path';
@@ -16,6 +18,7 @@ import { importErrors, staleAssets, touchStale } from '../lib/asset_cache.mjs';
 import { describe, runGodot, SCRIPT_ERROR } from '../lib/godot.mjs';
 import { verdict } from '../lib/dev_verdict.mjs';
 import { autoLock, checkFlags, checkId, checkVictim, godotArgs, parseOn, parseShot, parseStills, shotLabel, triggeredTicks, victimSaid } from './shots.mjs';
+import { resolveSide as sideOf } from './side.mjs';
 import { subjectRow } from './subject.mjs';
 
 /** A file this run wrote may carry an mtime up to a clock tick before `startedAt`: Linux stamps files from
@@ -24,10 +27,10 @@ export const FRESH_SLACK_MS = 1000;
 
 export const EXIT = { pass: 0, fail: 1, usage: 2, unverifiable: 3 };
 const USAGE = 'usage: node tools/film/film.mjs <shot> --out=<dir> [--ticks=<n>] [--stills=<t,t-t>] [--on=fire:3+4,kill:1+6] [--view=combo] '
-  + '[--ppm=48] [--lock=auto|spawn|trigger|at:<tick>|<x,y>|off] [--seed=<n>] [--res=1280x800] [--movie] [--no-movie] [--tree=<dir>] [--victim=<kind>] [--timeout=<s>] [--keep-going] [--dry-run] [-- flags]';
-const VALUE = new Set(['out', 'ticks', 'stills', 'on', 'view', 'ppm', 'lock', 'seed', 'res', 'tree', 'timeout', 'subject', 'victim']);
+  + '[--ppm=48] [--lock=auto|spawn|trigger|at:<tick>|<x,y>|off] [--seed=<n>] [--res=1280x800] [--movie] [--no-movie] [--tree=<dir>|--rev=<commit> [--native=donor]] [--victim=<kind>] [--feel=auto|on|off] [--timeout=<s>] [--keep-going] [--dry-run] [-- flags]';
+const VALUE = new Set(['out', 'ticks', 'stills', 'on', 'view', 'ppm', 'lock', 'seed', 'res', 'tree', 'timeout', 'subject', 'victim', 'feel', 'rev', 'native']);
 const SWITCH = new Set(['movie', 'no-movie', 'dry-run', 'keep-going']);
-const DEFAULTS = { subject: 'rivet', view: 'combo', ppm: '48', lock: 'auto', seed: '20261109', res: '1280x800', timeout: '900' };
+const DEFAULTS = { subject: 'rivet', view: 'combo', ppm: '48', lock: 'auto', seed: '20261109', res: '1280x800', timeout: '900', feel: 'auto' };
 
 /** {shotText, flags, extra} or {error}. */
 export function parseArgv(argv) {
@@ -69,6 +72,9 @@ export function plan(flags, shotText, extra) {
   if (!/^(auto|spawn|trigger|off|at:\d+|-?\d+(\.\d+)?,-?\d+(\.\d+)?)$/.test(flags.lock)) return { error: `film: --lock must be auto, spawn, trigger, off, at:<tick> or x,y, got ${flags.lock}` };
   const lock = flags.lock === 'auto' ? autoLock(shot.shot, stills.length ? Math.min(...stills) : null, on.length > 0) : flags.lock;
   if (extra.some((a) => a.split('=')[0] === '--victim')) return { error: 'film: give --victim=<kind> before the --, so the film checks the kind and the run' };
+  const feel = flags.feel ?? 'auto'; // compare.mjs plans each side with its own flags, not film's DEFAULTS
+  if (!/^(auto|on|off)$/.test(feel)) return { error: `film: --feel must be auto, on or off, got ${feel}` };
+  if (extra.some((a) => a.split('=')[0] === '--feel')) return { error: 'film: give --feel=on|off before the --: the game reads the FIRST --feel=, and a locked film already passed --feel=off' };
   const victim = flags.victim ?? null;
   const game = victim === null ? extra : [...extra, `--victim=${victim}`];
   const bad = [...(shot.shot.needs ? [checkId(shot.shot.needs, shot.arg, tree)] : []), checkId('view', flags.view, tree),
@@ -85,7 +91,7 @@ export function plan(flags, shotText, extra) {
   // A movie costs real time (combat measured about 1.5 fps with Godots running beside it), so stills skip it unless asked.
   const wantMovie = flags.movie === true || (!stills.length && !on.length && !flags['no-movie']);
   const movie = wantMovie && !shot.shot.script ? join(dir, `${shotLabel(shot)}.avi`) : null;
-  return { shot, opts: { tree, dir, ticks, stills, on, onText: flags.on ?? '', movie, extra: game, victim, view: flags.view, ppm: flags.ppm, lock,
+  return { shot, opts: { tree, dir, ticks, stills, on, onText: flags.on ?? '', movie, extra: game, victim, view: flags.view, ppm: flags.ppm, lock, feel,
     subject: flags.subject ?? 'rivet', seed: flags.seed, res: flags.res, timeoutMs: Number(flags.timeout) * 1000, label: shotLabel(shot),
     noProbe: Boolean(shot.shot.script), keepGoing: flags['keep-going'] === true } };
 }
@@ -197,17 +203,50 @@ export function eventLine(events) {
   return [list('fire', events.fire ?? []), list('kill', events.kill ?? [])].join('; ');
 }
 
-export async function main(argv, { out = console.log, err = console.error, runner } = {}) {
+/** `--rev=<commit>`: sets flags.tree to that commit's film snapshot. {} / {line} or {error}. */
+export function pinRev(flags, resolveSide = null) {
+  if (flags.native !== undefined && flags.native !== 'donor') return { error: `film: --native takes only donor, got ${flags.native}` };
+  if (flags.rev === undefined) return flags.native === undefined ? {} : { error: 'film: --native=donor goes with --rev=<commit>' };
+  if (flags.tree !== undefined) return { error: 'film: give --rev=<commit> or --tree=<dir>, not both' };
+  const side = (resolveSide ?? sideOf)(flags.rev, { native: flags.native });
+  if (side.error) return { error: side.error.replace(/^compare:/, 'film:') };
+  flags.tree = side.tree;
+  const where = side.snapshot ? `snapshot ${side.label} at ${side.tree} (kept for the next film of it)` : `the worktree ${side.tree}`;
+  return { line: `film: --rev=${flags.rev} films ${where}` };
+}
+
+/** Uncommitted project/ paths of a tree (git status), [] when clean or not a git tree. */
+export function dirtyPaths(tree) {
+  try {
+    return execFileSync('git', ['-C', tree, 'status', '--porcelain', '--', 'project'], { encoding: 'utf8', windowsHide: true })
+      .split('\n').filter(Boolean).map((l) => l.slice(3));
+  } catch { return []; }
+}
+
+/** The warning a live-tree film prints when its project/ has uncommitted edits, or null. */
+export function dirtyLine(paths) {
+  if (!paths.length) return null;
+  return `film: ${paths.length} uncommitted project/ path(s) (${paths.slice(0, 3).join(', ')}${paths.length > 3 ? ', ...' : ''}): `
+    + 'the run reads them as they stand when Godot loads them; to queue films while you edit, commit and film --rev=HEAD';
+}
+
+export async function main(argv, { out = console.log, err = console.error, runner, resolveSide = null, dirty = dirtyPaths } = {}) {
   const parsed = parseArgv(argv);
   if (parsed.error) { err(`${parsed.error}\n${USAGE}`); return EXIT.usage; }
+  const pinned = pinRev(parsed.flags, resolveSide);
+  if (pinned.error) { err(`${pinned.error}\n${USAGE}`); return EXIT.usage; }
+  if (pinned.line) out(pinned.line);
   const planned = plan(parsed.flags, parsed.shotText, parsed.extra);
   if (planned.error) { err(`${planned.error}\n${USAGE}`); return EXIT.usage; }
   out(`film: godot --path project ${godotArgs(planned.shot, planned.opts).join(' ')}`);
+  const warn = parsed.flags.rev === undefined ? dirtyLine(dirty(planned.opts.tree)) : null;
+  if (warn) out(warn);
   if (parsed.flags['dry-run']) { out('film: dry run, nothing launched'); return EXIT.pass; }
   const r = await filmOne(planned, { runner });
   const happened = eventLine(r.probe?.events);
   if (happened) out(`film: ${happened}`);
   out(`film: ${r.outcome.toUpperCase()}${r.reasons.length ? `: ${r.reasons.join('; ')}` : ''}; ${join(planned.opts.dir, 'film.json')}`);
+  if (warn && r.outcome === 'fail') out('film: this tree had uncommitted project/ edits (above): if one broke a script, commit it and film --rev=HEAD');
   return EXIT[r.outcome];
 }
 

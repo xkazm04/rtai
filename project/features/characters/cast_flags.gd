@@ -38,8 +38,9 @@ static func apply(args: PackedStringArray = OS.get_cmdline_user_args()) -> void:
 		elif arg == "--rivet-flame=all":
 			RivetStrips.flame_all = true
 		elif (
-			arg.begins_with("--rivet-walk=")
+			arg.begins_with("--rivet-walk")
 			or arg.begins_with("--rivet-swipe")
+			or arg.begins_with("--rivet-stride")
 			or arg.begins_with("--rivet-bob")
 		):
 			_walk(arg)

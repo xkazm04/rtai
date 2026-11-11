@@ -11,16 +11,20 @@ Run these from the root of your worktree. Exit codes are shared: `0` pass, `1` f
 |---|---|
 | film or still a named shot (arena, street, quest 1, a chapter, a weapon) | `node tools/film/film.mjs <shot>` |
 | show before and after at the same tick | `node tools/film/compare.mjs <shot> --a=<commit> --b=<commit>` |
+| the old bytes of a file at a commit (LFS assets smudged, not the pointer `git show` writes) | `node tools/film/blob.mjs <rev>:<path> [--out=<file>]` |
 | one sheet of a film's stills, labelled | `node tools/film/sheet.mjs <film dir> --out=<file.png>` |
 | read head, feet, facing or body size per tick | `node tools/film/numbers.mjs <film dir>` |
 | catch the lint you keep tripping, before the commit | `node tools/gate/quick.mjs` |
 | commit a journal without waiting for lint | (automatic: the hook skips lint when only inert paths are staged) |
 | check one script or scene parses, in seconds | `node tools/godot/check.mjs <res://path>` |
 | run every gate while you keep editing | `node tools/gate/run.mjs` |
-| run a dev scene with its flags checked | `node tools/dev/run.mjs <entry>` |
+| run a dev scene with its flags checked (its own KNOWN_FLAGS, else every flag literal in the project) | `node tools/dev/run.mjs <entry>` |
 | make a new worktree able to run the game | `node tools/dev/wt_init.mjs <worktree>` |
 | have Codex write tests for an untested module | `node tools/codex/factory.mjs pick`, then `run --stems=<stem>` |
 | do the morning merge | `node tools/merge/morning.mjs --worktree=<integration> --lanes=<a,b> --date=<yyyy-mm-dd>` |
+| see what the morning merge will meet (no worktree, no ref written; does my change clash with a lane?) | `node tools/merge/preview.mjs --lanes=<a,b,c> [--base=main]` |
+| does MY commit make a new conflict with a sibling lane? | (automatic in the hook and `quick.mjs`; by hand `node tools/merge/clash.mjs [--repo=<worktree>]`) |
+| is a flag matched in a helper (`CastFlags._walk`) actually routed there? | (lint `flag-routes`; by hand `node tools/style/flag_routes.mjs <file.gd>`) |
 
 ## tools/film/film.mjs: one film or still of the real game
 
@@ -41,6 +45,13 @@ It always passes the scene, the bot, the loadout, a fixed seed and a fixed 60 Hz
 `t<tick>.png` (lossless, saved after that tick's own draw), `probe.json` (numbers for every tick and
 every fighter), `film.json` and `film.log`. An mp4 only comes when you give `--movie` or ask for no
 stills, because `--write-movie` is slow (about 1.5 fps with other lanes running).
+
+**Queue films while you edit: `--rev=<commit>`.** A film reads the tree as it stands when Godot loads
+each script, so an edit during a queue breaks the films after it (n15 combat: 4 films died with SCRIPT
+ERROR). `--rev=HEAD` films that commit in compare's snapshot (`%TEMP%/gtai-film-<sha>`, probe injected,
+kept for the next film of it; `--native=donor` as in compare). A live-tree film with uncommitted
+`project/` paths prints them before it runs. Example (a parse error planted in the live tree):
+`film.mjs arena --rev=HEAD --stills=300` PASS, `film.mjs arena --stills=300` FAIL with the warning.
 
 The camera: `--lock=auto` (the default) holds it at Rivet's spawn, except on the street shots, where
 it follows him and freezes at your first still. `--lock=at:<tick>`, `--lock=<x,y>` and `--lock=off`
@@ -84,6 +95,16 @@ The kinds are the card rows of the filmed tree's `StreetDeadPlan.CLASS_OF` (did-
 The kind is the game's choice, so it needs a dev-only hook in `gunplay_hook.gd` `lone()` that reads
 `--victim` and logs `gunplay: lone victim <kind>`. Until a tree has it, film refuses and says so;
 with it, a run that never logs the line, or logs another kind, is **unverifiable**, never a pass.
+
+The director's run-by-name extras are chapters too (combat n15 REQUEST): `chapter:electro_baton_left`,
+`chapter:katana_cam` and the rest of `ReelChapters.extras()`, read from the loop that builds them.
+Camera feel (combat n15 REQUEST): `--feel=auto` (default: off whenever the camera is locked, since a
+shake moves the frame), `--feel=on` or `--feel=off` outright; `compare.mjs` passes it to both sides.
+Give it before the `--`: the game reads the FIRST `--feel=`, so a trailing one is refused.
+
+```
+node tools/film/film.mjs chapter:electro_baton_left --feel=on --stills=60-70 --out=build/film/baton
+```
 
 To compare the frame something happened on, learn the tick once with `--on`, then compare it:
 `node tools/film/compare.mjs ... --at=333`. The tick is the same on both sides as long as the change
@@ -141,6 +162,9 @@ is missing or off screen on either side. The composite is still written, with UN
 A note, not a verdict: if the subject has moved more than 5 cm between sides, the timelines differ.
 **Refuses:** a side that is neither a worktree nor a commit git knows; a worktree with no probe
 (it says to film a commit instead).
+A commit whose `native/` differs from this tree's HEAD (n15): its checkout would run THIS tree's DLLs,
+so it would not be that commit's sim. Film a worktree at that commit with its own DLLs as the side, or
+pass `--native=donor` when the change under test is view-only.
 
 **A before of an art change:** commit the new sheet, then compare that commit with its parent
 (`--a=HEAD~1 --b=HEAD`). Do not move the sheet aside by hand: its `.import` stays, `ResourceLoader`
@@ -181,6 +205,39 @@ because git does not compare it, and is exported with its index bytes (so a film
 lints the working tree and says `linting the WORKING TREE, which is not exactly what you commit`. It
 removes only a `gtai-precommit-*` dir directly in the temp dir.
 
+**A commit wholly under `project/` lints its own `.gd` files** (n15; `tools/lint/scope.mjs`, `lint.mjs
+--scope=<file>`). The hook hands lint the staged list; when every non-inert staged path is under
+`project/`, gdformat and gdlint run over the staged `.gd` only (both are per-file: an unstaged file
+cannot change their verdict on it), and the Node tool tests run only when a staged path is a file a tool
+test reads from the real tree: each `join(ROOT, '<path>')` literal in a lint-run test, and anything under
+`project/dev/`, `project/data/` or `project/project.godot` (what `tools/lint/fs_trace.mjs` saw film,
+native_side and factory tests read through tool code; re-run it when a tool test changes:
+`TRACE_ROOT=$PWD TRACE_OUT=<file> node --import ./tools/lint/fs_trace.mjs --test "tools/film/*.test.mjs" ...`). Every
+whole-tree check still runs in full. Measured: `lint: all 15 checks pass over 1 staged of 1428 GDScript
+files` in 3.6 s, against 88 s for the full lint on the same tree. Any staged path outside `project/`
+(`tools/`, `gdlintrc`, `gdformatrc`, `versions.toml`, `native/`, `AGENTS.md`) gives the full lint, and
+every gate (`tools/gate/run.mjs`, `tools/evidence/run.mjs`) always lints everything. An empty commit
+skips lint only when git says the index tree is the HEAD tree (`git write-tree` = `HEAD^{tree}`); an
+empty path list alone still runs lint.
+
+**It warns when the commit makes a NEW conflict with a sibling lane** (n15; `tools/merge/clash.mjs`).
+Every commit, inert ones too (`docs/decisions.md` stops the morning merge as well), turns the staged
+index into a dangling commit on HEAD and merges each sibling lane with HEAD and with it (`git
+merge-tree --write-tree`, about 0.4 s for two lanes). A conflict on a file `morning.mjs` cannot
+resolve (anything but the root JOURNAL/REPORT and the debt baseline) that only the commit has is named:
+
+```
+merge-clash: WARNING this commit makes project/features/characters/cast_flags.gd conflict with n15-combat (git merge-tree; morning.mjs would stop on it). Move your lines off theirs, or say so in JOURNAL
+merge-clash: no new code conflict with n15-combat, n15-hero (2 known, unchanged)
+```
+
+It never blocks (the other lane's lines are not yours to refuse). Siblings are the branches checked out
+in this repo's worktrees that share your branch's prefix up to its first `-` (`n15-tools` ->
+`n15-hero`, `n15-combat`); `GTAI_MERGE_LANES=<a,b>` names them, `GTAI_MERGE_LANES=off` skips the
+check. It writes git objects only: no ref, index or worktree. By hand: `node tools/merge/clash.mjs`; from a
+lane that does not have it yet: `node <n15-tools>/tools/merge/clash.mjs --repo=.` (on a temp copy of your index:
+`git write-tree` rewrites an index's cache-tree, and the planted test showed it).
+
 ## tools/gate/quick.mjs: the lint rules you keep tripping, on your changed files, before the commit
 
 ```
@@ -194,6 +251,11 @@ which is the only one that sees a warning-as-error such as `float(Variant)`. A f
 lines fails here because the debt ratchet stops the commit for it. Seconds, against about 40 s for
 the full lint in the commit hook, and it shows every problem at once. `--no-godot` skips the parse
 check, and `--files=<a,b>` names the files yourself.
+
+It first prints the merge-clash line for your WORKING TREE (n15, `tools/merge/clash.mjs`, staged or
+not; a temp index takes `git add -u`): `merge-clash: WARNING your changes make
+project/features/characters/cast_flags.gd conflict with n15-combat ...`. A warning only, the exit code
+is lint's. `--no-clash` skips it.
 
 **Refuses:** a file that does not exist, an unknown flag.
 **Unverifiable (exit 3):** gdformat, gdlint or Godot could not run. A checker that failed without
@@ -300,11 +362,23 @@ checked export. It stops at the first red and prints what to do; `--resume` carr
 **Refuses:** a worktree on `main`, `master`, a lane being merged or a detached head; a dirty tree; a
 merge in progress; a lane that does not exist. **It cannot push:** every git call goes through a short
 list of verbs, and `push`, `checkout`, `reset` and `branch` throw before git is called.
-A conflict only on a lane's `JOURNAL.md` or `REPORT.md` takes the lane's copy; any other conflict stops.
+A conflict only on a lane's `JOURNAL.md` or `REPORT.md` takes the lane's copy. A conflict on
+`tools/debt/baseline.json` (alone or beside those) takes the looser of both sides per metric and file,
+keeps both sides' accepted reasons (`tools/debt/merge_baseline.mjs`), says so in the output, and the
+debt step re-ratchets it to the merged tree. Any other conflict stops.
 
 Each step's output goes to `build/merge/logs/<step>.log` while it runs (tail it). A step past its limit
 (`--timeout`, at least 65 min for reels and 90 for gates) has its whole process tree killed by
 `step_guard.mjs`, Godot included, and its log ends `morning: <step>: timed out after N min`.
+After the gates (green or red) it prints one line per evidence kind of that run (`tools/merge/gate_lines.mjs`),
+and names any kind written for another commit STALE. Its lines for the n15 scratch integration's real evidence
+(read after that run; the run itself predates this print):
+
+```
+morning: gates: lint pass: lint: all 16 checks pass over 1428 GDScript files
+morning: gates: unit-tests pass: unit-tests: 2529 passed, 0 failed, 2 skipped (GUT, headless)
+morning: gates: green
+```
 
 ## tools/dev/wt_init.mjs: make a fresh worktree able to run the game
 
@@ -349,6 +423,39 @@ verdict was FAIL anyway, but only after 150 s. Both front doors now kill the run
 it so the verdict still names the file and line. `--keep-going` waits for the entry to end or time out
 (for a run whose later errors you want in the log). Built on `runProcess`'s `stopOn` option in
 `tools/lib/godot.mjs`; the gates do not use it, they report every error.
+
+## A flag nothing reads is refused (`tools/dev/run.mjs`, `tools/dev/flag_index.mjs`)
+
+```
+node tools/dev/run.mjs cursor_sweep --dry-run -- --rigs --rivet-windup=of
+# run: unknown flag --rivet-windup=of for res://dev/rivet_motion/cursor_sweep.tscn (did you mean --rivet-windup=off?)
+# run: refused before launch; flags checked against the project's flag literals (no declared spec): 2 (--any-flag launches it unchecked)
+```
+
+An entry with its own `const KNOWN_FLAGS` is checked against that list, as before. An entry without
+one used to launch "flags unchecked", so hero's `--ohm-hand=sim` (CastFlags reads
+`--ghost-ohm-hand=sim`) ran and gave a 0.0 % before/after. Now every flag is checked against the
+string literals of our GDScript (not unit/integration tests, not addons): the name must be read
+somewhere (`"--x"`, `"--x="` or `"--x=<v>"`), and when it is only read as exact values
+(`arg == "--x=sim"`), the value must be one of them. A family prefix (`begins_with("--ghost-")`)
+does not make a longer name known. The suggestion is the nearest literal (a swap of two letters is
+one edit) or the one known name that ends in the passed one (`--ohm-hand` -> `--ghost-ohm-hand`).
+`--any-flag` skips the check (a flag built at run time; none existed on 2026-11-11) and the verdict
+says `flags unchecked: no declared spec`. `tools/film/film.mjs` checks the game flags after its `--`
+with the same index (it used to check names only, so a wrong value of an exact read passed).
+
+## A flag a helper matches but its caller never routes (lint `flag-routes`, `tools/style/flag_routes.mjs`)
+
+```
+project/features/characters/cast_flags.gd:65: "--rivet-walk-armed=off" is matched in _walk() but no caller routes it there (guard: arg.begins_with("--rivet-walk=") or arg.begins_with("--rivet-swipe") or arg.begins_with("--rivet-bob")): it can never fire
+```
+
+That is main's `cast_flags.gd` from c8d71e34a (2026-11-09) to 05e519be8. A function-size split moved
+`--rivet-walk-armed=off` and `--rivet-stride=off` into `_walk`, but the guard stayed narrow, so both flags did
+nothing for two nights. For every `func _name(<v>: String)`, each `"--..."` literal in its body must pass the
+`if`/`elif` condition above some `_name(<v>)` call in the same file. The condition is made of `<v>.begins_with("P")`,
+`<v> == "L"` and `<v> in CONST` (a same-file string list), joined by `or`. A guard with anything else is not judged.
+It takes 0.1 s over the tree. The flag index above cannot see this, because the literal does exist: it just never fires.
 
 ## A dev run draws the current pixels at a fixed step (`tools/dev/run.mjs`)
 
@@ -430,3 +537,19 @@ lanes' sessions), `schedule` moves the times and checks the change against the r
 `--reserve-min 90` on `run` keeps the last open billing path for the freeze and report sessions.
 **Refuses:** a bad time, freeze after report-at, report-at not before until, a time already passed,
 and an earlier `--until` alone when it would move the freeze or report into the past (name all three).
+
+## A test that kills a child on a timer (`tools/lib/node_start.mjs`)
+
+```
+import { budgetMs } from '../lib/node_start.mjs';
+const limit = budgetMs(1800, 1); // what you mean (1.8 s) + one cold node start, measured now
+```
+
+The timer starts before the child's first line runs, and a cold `node` start is 0.1 s on a quiet machine
+and seconds beside two Godot runs. A fixed budget that holds a node start is a flake (n15: morning_run and
+step_guard.break). `budgetMs(base, starts)` adds 3x the measured start per start. Prove a timer test with
+every node start delayed: `SLOW_MS=2500 NODE_OPTIONS="--require <a file with
+Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, Number(process.env.SLOW_MS))>" node --test <file>`.
+
+`node tools/lint/lint.mjs` names every failing tool test (`FAILED <file:line:col> <name>`); a check's issue
+lines past 40 go to `build/lint/<check>.txt`, and the last line printed says where and how many.

@@ -4,11 +4,13 @@
 // --fixed-fps <n> alone when it declares `const FIXED_FPS: int = <n>` (a film scene that must grab every
 // tick: under contention real-time frames skip ticks, hero n11 line 255).
 // Flags are checked only against a list the entry's script ALREADY declares (`const KNOWN_FLAGS` or
-// `const KNOWN`: PackedStringArray), read statically at call time. There is no central flag list:
-// an entry that declares none is launched unchecked and says so ("flags unchecked: no declared spec").
+// `const KNOWN`: PackedStringArray), read statically at call time. An entry that declares none is
+// checked against the project's flag literals instead (tools/dev/flag_index.mjs: a flag no GDScript
+// string can read is refused); `--any-flag` (runner option) skips that and says "flags unchecked".
 import { existsSync, readFileSync } from 'node:fs';
 import { basename, dirname, extname, isAbsolute, join, relative, resolve as resolvePath, sep } from 'node:path';
 import { PROJECT, walk } from '../lib/repo.mjs';
+import { FLAG_INDEX_NOTE, checkAgainstProject } from './flag_index.mjs';
 
 export const NO_SPEC = 'flags unchecked: no declared spec';
 const SPEC = /^const\s+(KNOWN_FLAGS|KNOWN)\s*:\s*PackedStringArray\s*=\s*\[([\s\S]*?)\]/m;
@@ -32,18 +34,33 @@ export function readSpec(text) {
   return { name: m[1], flags: [...body.matchAll(/"([^"]*)"/g)].map((x) => x[1]) };
 }
 
+const NEEDS_WINDOW = /^const[ \t]+NEEDS_WINDOW[ \t]*:[ \t]*bool[ \t]*=[ \t]*true(?![\w])/m;
+const EXTENDS_DEV = /^extends[ \t]+"res:\/\/([^"]+\.gd)"/m;
+
+/** True when the script, or the res:// script it extends (one hop: a const cannot be redeclared in a
+ *  child), declares `const NEEDS_WINDOW: bool = true`: it renders frames, and headless draws nothing
+ *  (combat n15 FRICTION: the look goldens run headless gave a frame of nothing). */
+export function readNeedsWindow(text, projectDir = PROJECT) {
+  if (NEEDS_WINDOW.test(text)) return true;
+  const m = EXTENDS_DEV.exec(text);
+  const parent = m ? join(projectDir, ...m[1].split('/')) : null;
+  return Boolean(parent && existsSync(parent) && NEEDS_WINDOW.test(readFileSync(parent, 'utf8')));
+}
+
 /** The declared `const RUN_TICKS: int = <literal>`, or null (absent or an expression). */
 export function readRunTicks(text) {
   const m = RUN_TICKS.exec(text);
   return m ? Number(m[1]) : null;
 }
 
+/** Edit distance with a swap of two neighbours as one edit (`--bto` is one from `--bot`). */
 function distance(a, b) {
   const d = Array.from({ length: a.length + 1 }, (_, i) => [i, ...Array(b.length).fill(0)]);
   for (let j = 1; j <= b.length; j++) d[0][j] = j;
   for (let i = 1; i <= a.length; i++) {
     for (let j = 1; j <= b.length; j++) {
       d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+      if (i > 1 && j > 1 && a[i - 1] === b[j - 2] && a[i - 2] === b[j - 1]) d[i][j] = Math.min(d[i][j], d[i - 2][j - 2] + 1);
     }
   }
   return d[a.length][b.length];
@@ -121,8 +138,9 @@ function engineArgs(engine, runTicks, declaredFps = null) {
 
 /** Resolves `entry` (a bare name searched in project/dev, a res:// path or a file path) with the
  *  args after it. {ok, kind, path, script, spec, specNote, runTicks, userArgs, problems, godotArgs}
- *  or {ok: false, error}. `problems` lists each user flag the declared spec does not have. */
-export function resolve(entry, args = [], { projectDir = PROJECT } = {}) {
+ *  or {ok: false, error}. `problems` lists each user flag the declared spec does not have (no spec:
+ *  each flag no project literal reads, unless `literals` is false). */
+export function resolve(entry, args = [], { projectDir = PROJECT, literals = true } = {}) {
   const found = locate(entry, projectDir);
   if (found.error) return { ok: false, error: found.error };
   const c = classify(found.abs, projectDir);
@@ -133,9 +151,10 @@ export function resolve(entry, args = [], { projectDir = PROJECT } = {}) {
   const fixedFps = readFixedFps(text);
   const { engine, user } = splitArgs(args);
   const flags = user.filter((a) => a.startsWith('--'));
-  const problems = !declared ? [] : flags.map((arg) => ({ arg, flag: arg.split('=')[0] }))
-    .filter((p) => !declared.flags.includes(p.flag))
-    .map((p) => ({ ...p, suggestion: didYouMean(p.flag, declared.flags) }));
+  const problems = !declared ? (literals ? checkAgainstProject(flags, { projectDir }) : [])
+    : flags.map((arg) => ({ arg, flag: arg.split('=')[0] }))
+      .filter((p) => !declared.flags.includes(p.flag))
+      .map((p) => ({ ...p, suggestion: didYouMean(p.flag, declared.flags) }));
   const path = toRes(c.file, projectDir);
   const target = c.kind === 'scene' ? [path] : ['-s', path];
   const tail = user.length ? ['--', ...user] : [];
@@ -143,7 +162,8 @@ export function resolve(entry, args = [], { projectDir = PROJECT } = {}) {
     : [...target, ...engineArgs(engine, runTicks, fixedFps), ...tail];
   const specNote = declared
     ? `flags checked: ${flags.length} against ${declared.name} (${c.script ? toRes(c.script, projectDir) : path})`
-    : NO_SPEC;
+    : literals ? `${FLAG_INDEX_NOTE}: ${flags.length}` : NO_SPEC;
   return { ok: true, kind: c.kind, path, script: c.script ? toRes(c.script, projectDir) : null,
-    spec: declared?.flags ?? null, specNote, runTicks, userArgs: user, problems, godotArgs };
+    spec: declared?.flags ?? null, specNote, runTicks, userArgs: user, problems, godotArgs,
+    needsWindow: readNeedsWindow(text, projectDir) };
 }

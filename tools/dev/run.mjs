@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 // One front door for dev entries: resolves the entry (tools/dev/entries.mjs), refuses a flag the
-// entry's own declared list does not have (exit 2, a did-you-mean, nothing spawned), launches it
+// entry's own declared list does not have, or with no list a flag no GDScript literal in the project
+// reads (exit 2, a did-you-mean, nothing spawned; --any-flag skips the literal check), launches it
 // through runGodot (ledger, import preflight, tree-kill timeout) and ends with ONE verdict line
 // (tools/lib/dev_verdict.mjs) a lane can paste into its REPORT. The full log goes to build/dev/.
 //   node tools/dev/run.mjs <entry> [--windowed] [--timeout=<s>] [--result=<file>] [--dry-run]
@@ -22,12 +23,13 @@ import { importErrors, staleAssets, touchStale } from '../lib/asset_cache.mjs';
 import { resolve } from './entries.mjs';
 
 const USAGE = 'usage: node tools/dev/run.mjs <entry> [--windowed] [--timeout=<s>] [--result=<file>] [--dry-run] '
-  + '[--quit-after=<n>] [--fixed-fps=<n>] [--keep-going] [entry flags] [-- entry flags]';
-const RUNNER = /^--(windowed|dry-run|keep-going|timeout|result)(?:=(.*))?$/;
+  + '[--quit-after=<n>] [--fixed-fps=<n>] [--keep-going] [--any-flag] [entry flags] [-- entry flags]';
+const RUNNER = /^--(windowed|dry-run|keep-going|any-flag|timeout|result)(?:=(.*))?$/;
 
 /** {entry, rest, opts: {windowed, dryRun, keepGoing, timeoutMs, result}}; runner options only before a `--`. */
 export function parseArgv(argv) {
-  const opts = { windowed: false, dryRun: false, keepGoing: false, timeoutMs: HEADLESS_TIMEOUT_MS, result: null };
+  const opts = { windowed: false, dryRun: false, keepGoing: false, anyFlag: false, timeoutMs: HEADLESS_TIMEOUT_MS,
+    result: null };
   const rest = [];
   let entry = null;
   for (let i = 0; i < argv.length; i++) {
@@ -37,6 +39,7 @@ export function parseArgv(argv) {
     if (m?.[1] === 'windowed') opts.windowed = true;
     else if (m?.[1] === 'dry-run') opts.dryRun = true;
     else if (m?.[1] === 'keep-going') opts.keepGoing = true;
+    else if (m?.[1] === 'any-flag') opts.anyFlag = true;
     else if (m?.[1] === 'timeout') opts.timeoutMs = Number(m[2]) * 1000;
     else if (m?.[1] === 'result') opts.result = resolvePath(m[2] ?? '');
     else if (entry === null && !a.startsWith('-')) entry = a;
@@ -49,10 +52,11 @@ const stamp = (t) => new Date(t).toISOString().replace(/[:.]/g, '-');
 
 function refuse(r, err) {
   for (const p of r.problems) {
-    const hint = p.suggestion ? `did you mean ${p.suggestion}?` : `declared: ${r.spec.join(' ')}`;
+    const hint = p.suggestion ? `did you mean ${p.suggestion}?`
+      : r.spec ? `declared: ${r.spec.join(' ')}` : 'no GDScript literal reads it';
     err(`run: unknown flag ${p.flag} for ${r.path} (${hint})`);
   }
-  err(`run: refused before launch; ${r.specNote}`);
+  err(`run: refused before launch; ${r.specNote}${r.spec ? '' : ' (--any-flag launches it unchecked)'}`);
   return 2;
 }
 
@@ -88,9 +92,13 @@ export async function main(argv, { runner = runGodot, out = console.log, err = c
   logDir = join(ROOT, 'build', 'dev'), now = Date.now, assets = staleAssets, touch = touchStale } = {}) {
   const { entry, rest, opts } = parseArgv(argv);
   if (!entry || !(opts.timeoutMs > 0)) { err(USAGE); return 2; }
-  const r = resolve(entry, rest, projectDir ? { projectDir } : {});
+  const r = resolve(entry, rest, { ...(projectDir ? { projectDir } : {}), literals: !opts.anyFlag });
   if (!r.ok) { err(`run: ${r.error}`); return 2; }
   if (r.problems.length) return refuse(r, err);
+  if (r.needsWindow && !opts.windowed) {
+    err(`run: ${r.path} renders frames (const NEEDS_WINDOW) and headless draws nothing: add --windowed (the look goldens' evidence path is node tools/selftest/run.mjs); nothing launched`);
+    return 2;
+  }
   out(`run: godot ${opts.windowed ? '' : '--headless '}--path project ${r.godotArgs.join(' ')}`);
   if (opts.dryRun) { out(`run: dry run, nothing launched; ${r.specNote}`); return 0; }
   const fresh = await freshAssets(projectDir ?? join(ROOT, 'project'), { runner, err, assets, touch, timeoutMs: opts.timeoutMs });

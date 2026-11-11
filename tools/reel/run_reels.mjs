@@ -4,10 +4,14 @@ import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { runGodot } from '../lib/godot.mjs';
+import { ROOT } from '../lib/repo.mjs';
 import { RESULT, parseReel } from './check_reel.mjs';
 
 const DEFAULT_VIEWS = ['top', 'tilt70', 'combo'];
-const USAGE = 'usage: node tools/reel/run_reels.mjs --out=<dir> '
+/** Where logs go without --out: every documented call used build/reels, and the night brief names the
+ *  bare command as the reel gate (n15 hero FRICTION: the bare command exited 2 and lost a slot). */
+export const DEFAULT_OUT = join(ROOT, 'build', 'reels');
+const USAGE = 'usage: node tools/reel/run_reels.mjs [--out=<dir>, default build/reels] '
   + '[--views=top,tilt70,combo] [--expect=19]';
 
 export function reelArgs(view, loadout = 'pistol') {
@@ -79,29 +83,37 @@ export async function runReels({ views = DEFAULT_VIEWS, expect = 19, outDir, run
   return { ok: results.length > 0 && results.every((result) => result.ok), views: results };
 }
 
+/** {views, expect, out, defaulted} or {error}: argv checked before any launch. */
+export function parseMain(argv) {
+  const options = {};
+  for (const arg of argv) {
+    const match = /^--(out|views|expect)=(.+)$/.exec(arg);
+    if (!match || Object.hasOwn(options, match[1])) return { error: `run_reels: invalid argument ${arg}` };
+    options[match[1]] = match[2];
+  }
+  const expect = options.expect === undefined ? 19 : Number(options.expect);
+  const views = options.views === undefined ? DEFAULT_VIEWS : options.views.split(',');
+  if ((options.expect !== undefined && !/^\d+$/.test(options.expect))
+    || !Number.isSafeInteger(expect) || expect < 0
+    || views.some((view) => !/^[a-zA-Z0-9_-]+$/.test(view))) {
+    return { error: 'run_reels: provide view names and a nonnegative safe integer expectation' };
+  }
+  return { views, expect, out: options.out ?? DEFAULT_OUT, defaulted: options.out === undefined };
+}
+
 async function main(argv) {
   if (argv.length === 1 && argv[0] === '--help') {
     console.log(USAGE);
     return 0;
   }
-  const options = {};
-  for (const arg of argv) {
-    const match = /^--(out|views|expect)=(.+)$/.exec(arg);
-    if (!match || Object.hasOwn(options, match[1])) {
-      console.error(`run_reels: invalid argument ${arg}\n${USAGE}`);
-      return 2;
-    }
-    options[match[1]] = match[2];
-  }
-  const expect = options.expect === undefined ? 19 : Number(options.expect);
-  const views = options.views === undefined ? DEFAULT_VIEWS : options.views.split(',');
-  if (!options.out || (options.expect !== undefined && !/^\d+$/.test(options.expect))
-    || !Number.isSafeInteger(expect) || expect < 0
-    || views.some((view) => !/^[a-zA-Z0-9_-]+$/.test(view))) {
-    console.error(`run_reels: provide an output directory, view names and a nonnegative safe integer expectation\n${USAGE}`);
+  const parsed = parseMain(argv);
+  if (parsed.error) {
+    console.error(`${parsed.error}\n${USAGE}`);
     return 2;
   }
-  const result = await runReels({ views, expect, outDir: options.out, progress: (line) => console.error(line) });
+  const { views, expect } = parsed;
+  if (parsed.defaulted) console.error(`run_reels: no --out, logs go to ${parsed.out}`);
+  const result = await runReels({ views, expect, outDir: parsed.out, progress: (line) => console.error(line) });
   for (const view of result.views) {
     console.log(`${view.view}: ${view.ok ? 'OK' : 'FAIL'}; code ${view.code}; log ${view.log}`);
     for (const problem of view.problems) console.log(`  ${problem}`);

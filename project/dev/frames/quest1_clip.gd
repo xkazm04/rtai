@@ -4,6 +4,8 @@ extends SceneTree
 ## Needs a window (the headless display has no renderer); dev-only, never shipped.
 ## Usage: godot --path project --resolution 1920x1080 -s res://dev/frames/quest1_clip.gd
 ##   -- --out=<abs dir> [--ppm=32] [--stills=<tick,tick,...>] (stills only: no clip, no title)
+##   [--still-lead=<ticks>] (n15 tools: steps drawn before each still, so the view is current;
+##   default 120; 0 = the old jump: 6.3 % of t13708 hung on the stills list, now 1.1 %)
 ##   [--save=<abs file>] (the game writes its beat checkpoints there) [--view=<id>] (n8 street)
 ##   [--continue] (with --save: press Continue on the title, save the first frames, quit)
 ##   [--rigs] (rivet-arsenal: the quest drawn on the cast rigs, Quest1Game._dev_rigs)
@@ -23,6 +25,7 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--out",
 	"--ppm",
 	"--stills",
+	"--still-lead",
 	"--save",
 	"--continue",
 	"--rigs",
@@ -84,6 +87,8 @@ func _configure(rec: Node, values: Dictionary[String, String]) -> void:
 	for t: String in ticks.split(",", false):
 		stills.append(t.to_int())
 	rec.set("stills", stills)
+	if values.has("--still-lead"):
+		rec.set("still_lead", values["--still-lead"].to_int())
 	rec.set("save_path", values.get("--save", ""))
 	rec.set("press_continue", values.has("--continue"))
 	var cam: String = values.get("--cam", "")

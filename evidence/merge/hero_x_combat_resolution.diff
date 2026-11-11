@@ -1,0 +1,56 @@
+# 03:35 merge preview main 5c5c03611 + n15-tools 0736f3496 + n15-hero 88077fb80 + n15-combat 7778d347a (git merge-tree, in order)
+# conflicts after combat: JOURNAL.md REPORT.md (morning.mjs moves them), tools/debt/baseline.json (morning.mjs merges), cast_flags.gd, rivet_res.gd
+--- conflicted/cast_flags.gd
++++ resolved/cast_flags.gd
+@@ -51,9 +51,8 @@
+ 			RivetKnock.enabled = false
+ 		elif arg == "--rivet-reload=off":
+ 			RivetReload.enabled = false
+-<<<<<<< f6cc44dd6a588c0323c2d2cbb5bfc42a0bb6ed4a
+-		elif arg == "--rivet-windup=off":  # n13: the strike cell through the wind-up (before)
+-			RivetWindup.enabled = false
++		elif arg in WINDUP_FLAGS:
++			_windup(arg)
+ 		elif arg.begins_with("--ghost-"):
+ 			_ghost(arg)
+ 
+@@ -65,12 +64,6 @@
+ 		GhostApparition.clear_figure = false
+ 	elif arg == "--ghost-soul-line=off":
+ 		GhostSoulLine.enabled = false
+-=======
+-		elif arg in WINDUP_FLAGS:
+-			_windup(arg)
+-		elif arg == "--ghost-voice=facing":  # n10: the voice at his facing's own left, on his head
+-			GhostApparition.clear_figure = false
+->>>>>>> n15-combat
+ 
+ 
+ ## The befores: n13 --rivet-windup=off (the strike cell through the wind-up), n15 -left-strike=off
+--- conflicted/rivet_res.gd
++++ resolved/rivet_res.gd
+@@ -11,7 +11,6 @@
+ 	"p70/rivet_eq_katana.png",
+ 	"p70/rivet_eq_chainsaw.png",
+ 	"p70/rivet_eq_chainsaw_windup.png",  # n14: the asset lane drew its cells at the x1.5 strip's scale
+-<<<<<<< f6cc44dd6a588c0323c2d2cbb5bfc42a0bb6ed4a
+ 	"p70/rivet_eq_machine_pistol.png",  # n15 hero
+ 	"p70/rivet_eq_machine_pistol_left.png",
+ 	"p70/rivet_eq_electro_gun.png",
+@@ -49,7 +48,6 @@
+ 	"p55/rivet_eq_gloria.png",
+ 	"p55/rivet_eq_mini_nuke.png",
+ 	"p55/rivet_eq_rocket_launcher.png",
+-=======
+ 	# n15: the blades' drawn left sets, cut at their equipped strip's x1.5
+ 	"p70/rivet_eq_katana_left.png",
+ 	"p70/rivet_eq_katana_left_windup.png",
+@@ -57,7 +55,6 @@
+ 	"p70/rivet_eq_chainsaw_left.png",
+ 	"p70/rivet_eq_chainsaw_left_windup.png",
+ 	"p70/rivet_eq_chainsaw_left_strike.png",
+->>>>>>> n15-combat
+ ]
+ 
+ 
+# gdformat --check: 2 unchanged; gdlint: no problems; check_gd longFunctions: none (apply = 40 max ok); lines 99/73

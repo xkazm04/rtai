@@ -9,6 +9,7 @@ import { fileURLToPath } from 'node:url';
 import { setTimeout as delay } from 'node:timers/promises';
 import { GUARD_EXIT, parseGuardArgs } from './step_guard.mjs';
 import { defaultRun } from './morning.mjs';
+import { budgetMs, nodeStartMs } from '../lib/node_start.mjs';
 
 const GUARD = fileURLToPath(new URL('./step_guard.mjs', import.meta.url));
 const OPTIONS = { timeout: 90_000 };
@@ -244,7 +245,8 @@ test('an externally killed command must make its guard exit promptly with the pl
     child.once('error', reject);
     child.once('exit', (code, signal) => resolve({ code, signal }));
   });
-  await waitFor(() => existsSync(pidFile), 'command must start before the external kill');
+  // the guard and the command are two cold node starts before the pid file can exist (n15 item 6)
+  await waitFor(() => existsSync(pidFile), 'command must start before the external kill', budgetMs(3000, 2));
   process.kill(Number(readFileSync(pidFile, 'utf8')), 'SIGKILL');
   await waitFor(() => child.exitCode !== null || child.signalCode !== null, 'guard must exit within 3 s');
   assert.deepEqual(await exited, { code: baseline.code ?? GUARD_EXIT, signal: null });
@@ -257,11 +259,11 @@ test('an externally killed command must make its guard exit promptly with the pl
   t.diagnostic(`External kill: bare code=${baseline.code}, signal=${baseline.signal}; guard code=${child.exitCode}`);
 });
 
-function treeSource(pidFile, lateFile) {
+function treeSource(pidFile, lateFile, lateMs = 3000) {
   // The grandchild source contains no double quotes, so cmd.exe and sh can quote it safely.
   const grand = "require('fs').writeFileSync(process.env.BREAK_PID, String(process.pid)); " +
     "process.on('SIGTERM', () => {}); " +
-    (lateFile ? "setTimeout(() => { require('fs').writeFileSync(process.env.BREAK_LATE, 'late'); process.stdout.write('LATE'); }, 3000); " : '') +
+    (lateFile ? `setTimeout(() => { require('fs').writeFileSync(process.env.BREAK_LATE, 'late'); process.stdout.write('LATE'); }, ${Math.ceil(lateMs)}); ` : '') +
     'setInterval(() => {}, 1000)';
   const mid = process.platform === 'win32'
     ? ['cmd.exe', ['/d', '/s', '/c', `""${process.execPath}" -e "${grand}""`]]
@@ -276,10 +278,13 @@ test('timeout must kill a grandchild behind a non-Node shell before any post-tim
   const f = fixture(t);
   const pidFile = f.pidFile();
   const lateFile = join(f.dir, 'late');
+  // 2 s meant, plus the parent's and the grandchild's cold node starts (n15 item 6); the grandchild's
+  // late write comes the limit plus 1 s (the tree kill's own time) after its own start, so after the kill.
+  const limit = budgetMs(2000, 2);
   const started = performance.now();
-  const r = defaultRun(process.cwd(), f.dir, 2000 / 60000)('shell-tree', process.execPath,
-    ['-e', treeSource(pidFile, lateFile)]);
-  assert.ok(performance.now() - started < 7000, 'guard must finish before the 2 minute outer backstop');
+  const r = defaultRun(process.cwd(), f.dir, limit / 60000)('shell-tree', process.execPath,
+    ['-e', treeSource(pidFile, lateFile, limit + 1000)]);
+  assert.ok(performance.now() - started < limit + 5000, 'guard must finish before the 2 minute outer backstop');
   assert.equal(r.status, -1);
   assert.ok(existsSync(pidFile), `grandchild must actually have started: ${r.out}`);
   const pid = Number(readFileSync(pidFile, 'utf8'));
@@ -299,10 +304,12 @@ test('a descendant retaining inherited log handles after its parent exits must n
   const source = treeSource(pidFile);
   const parent = source.slice(0, source.lastIndexOf("setInterval(() => {}, 1000)")) +
     `const timer = setInterval(() => { if (require('fs').existsSync(${JSON.stringify(pidFile)})) process.exit(6); }, 20);`;
-  const r = runGuard(f, args('held-log', 6000, parent));
+  // three cold node starts (guard, parent, descendant) sit inside both numbers (n15 item 6)
+  const start = nodeStartMs();
+  const r = runGuard(f, args('held-log', Math.ceil(budgetMs(6000, 3, start)), parent));
   assert.ok(existsSync(pidFile), `descendant must start before parent exits: ${r.out}`);
   assert.ok(alive(Number(readFileSync(pidFile, 'utf8'))), 'descendant must still hold the log after parent death');
   assert.equal(r.status, 6);
-  assert.ok(r.ms < 4000, `guard waited ${r.ms} ms for a descendant's log handle`);
+  assert.ok(r.ms < budgetMs(4000, 3, start), `guard waited ${r.ms} ms for a descendant's log handle`);
   assert.equal(r.out, 'parent-started\n');
 });

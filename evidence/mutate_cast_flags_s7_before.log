@@ -1,0 +1,25 @@
+mutate: worktree C:\Users\kazda\AppData\Local\Temp\gtai-mutate-6bd4df1a at fd503126 (reused)
+mutate: 10/37 mutant(s); baseline run of test_cast_flags
+mutate: baseline green in 15.0 s; per-mutant timeout 90 s
+mutate: [1/10] features/characters/cast_flags.gd:25 cmp_flip  == -> !=  killed  (11.2 s)
+mutate: [2/10] features/characters/cast_flags.gd:30 literal  0.0 -> 1.0  survived  (10.5 s)
+mutate: [3/10] features/characters/cast_flags.gd:32 literal  2.5 -> 3.5  killed  (11.8 s)
+mutate: [4/10] features/characters/cast_flags.gd:36 cmp_flip  == -> !=  killed  (11.0 s)
+mutate: [5/10] features/characters/cast_flags.gd:38 cmp_flip  == -> !=  killed  (10.8 s)
+mutate: [6/10] features/characters/cast_flags.gd:47 cmp_flip  == -> !=  survived  (10.3 s)
+mutate: [7/10] features/characters/cast_flags.gd:49 cmp_flip  == -> !=  survived  (11.0 s)
+mutate: [8/10] features/characters/cast_flags.gd:50 boolean  false -> true  survived  (10.3 s)
+mutate: [9/10] features/characters/cast_flags.gd:61 boolean  false -> true  killed  (10.9 s)
+mutate: [10/10] features/characters/cast_flags.gd:71 boolean  false -> true  killed  (10.8 s)
+mutate features/characters/cast_flags.gd: 10 mutant(s) (sampled from 37), tests: test_cast_flags
+  features/characters/cast_flags.gd:30 literal  0.0 -> 1.0  survived
+  features/characters/cast_flags.gd:47 cmp_flip  == -> !=  survived
+  features/characters/cast_flags.gd:49 cmp_flip  == -> !=  survived
+  features/characters/cast_flags.gd:50 boolean  false -> true  survived
+  features/characters/cast_flags.gd:25 cmp_flip  == -> !=  killed
+  features/characters/cast_flags.gd:32 literal  2.5 -> 3.5  killed
+  features/characters/cast_flags.gd:36 cmp_flip  == -> !=  killed
+  features/characters/cast_flags.gd:38 cmp_flip  == -> !=  killed
+  features/characters/cast_flags.gd:61 boolean  false -> true  killed
+  features/characters/cast_flags.gd:71 boolean  false -> true  killed
+score 60.0% = killed 6 / (killed 6 + survived 4); timeout 0, invalid 0; 125 s

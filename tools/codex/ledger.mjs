@@ -21,6 +21,7 @@ export function rows(events) {
     else if (e.type === 'control') row.control = e;
     else if (e.type === 'task') row.task = e;
     else if (e.type === 'review') row.review = e;
+    else if (e.type === 'overrule') row.overrule = e;
     byId.set(e.id, row);
   }
   return [...byId.values()];
@@ -71,6 +72,7 @@ export function totals(allRows, state = null) {
       accepted: counts('accepted'),
       accepted_after_revision: counts('accepted-after-revision'),
       rejected: counts('rejected'),
+      overruled_machine_rejects: allRows.filter((r) => r.overrule || r.review?.overrule).map((r) => ({ id: r.id, reason: (r.overrule ?? r.review.overrule).reason })),
       review_lines_changed: reviewed.reduce((a, r) => a + (r.review.changed_lines ?? 0), 0),
       review_sessions: sessions.size,
       reviews_without_a_session: unattributed,

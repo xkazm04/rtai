@@ -171,4 +171,17 @@ func _report(
 		"step_ms_a": us[0] / 1000.0 / steps,
 		"step_ms_b": us[1] / 1000.0 / steps,
 		"debug_build": OS.is_debug_build(),
+		"final_sha_a": _sha(a.snapshot()),
+		"final_sha_b": _sha(b.snapshot()),
 	}
+
+
+## A short digest of the last snapshot, so two builds can show their sims ended in the same state
+## (n15 t-4: before/after a sim change) without shipping 1200 steps of floats.
+static func _sha(snap: PackedFloat64Array) -> String:
+	var h: HashingContext = HashingContext.new()
+	@warning_ignore("return_value_discarded")
+	h.start(HashingContext.HASH_SHA256)
+	@warning_ignore("return_value_discarded")
+	h.update(snap.to_byte_array())
+	return h.finish().hex_encode().left(16)

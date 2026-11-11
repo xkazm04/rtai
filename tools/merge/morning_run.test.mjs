@@ -6,6 +6,7 @@ import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { STEP_FLOOR_MIN, defaultRun } from './morning.mjs';
+import { budgetMs } from '../lib/node_start.mjs';
 
 const made = [];
 after(() => { for (const d of made) rmSync(d, { recursive: true, force: true }); });
@@ -33,18 +34,21 @@ test('reels and gates never get less than their floor, whatever --timeout says',
   assert.ok(STEP_FLOOR_MIN.reels > 3 * 20, 'above three reel views at their own 20 min limit');
 });
 
-test('a timed-out step keeps what it printed before the kill and says it timed out', { timeout: 60_000 }, () => {
-  const run = defaultRun(process.cwd(), dir(), 0.03);
-  const r = run('debt-check', 'node', ['-e', "console.log('before the hang'); setTimeout(() => {}, 30000)"]);
+// The step's timer starts before the child's node does (n15 item 6): each limit below is what the test
+// means (1.8 s, 3 s) plus the cold node starts inside it, measured now, not a fixed guess.
+test('a timed-out step keeps what it printed before the kill and says it timed out', { timeout: 120_000 }, () => {
+  const min = budgetMs(1800, 1) / 60000;
+  const run = defaultRun(process.cwd(), dir(), min);
+  const r = run('debt-check', 'node', ['-e', "console.log('before the hang'); setTimeout(() => {}, 300000)"]);
   assert.equal(r.status, -1);
   const log = readFileSync(r.log, 'utf8');
   assert.match(log, /before the hang/);
-  assert.match(log, /morning: debt-check: timed out after 0\.03 min/);
+  assert.match(log, /morning: debt-check: timed out after [\d.]+ min/);
 });
 
 const alive = (pid) => { try { process.kill(pid, 0); return true; } catch (e) { return e.code === 'EPERM'; } };
 
-test('a timed-out step leaves no grandchild running (the engine is a grandchild of the gate runners)', { timeout: 60_000 }, async () => {
+test('a timed-out step leaves no grandchild running (the engine is a grandchild of the gate runners)', { timeout: 120_000 }, async () => {
   const d = dir();
   const pidFile = join(d, 'grandchild.pid');
   const grand = `require('fs').writeFileSync(${JSON.stringify(pidFile)}, String(process.pid)); setTimeout(() => {}, 60000)`;
@@ -52,10 +56,17 @@ test('a timed-out step leaves no grandchild running (the engine is a grandchild 
   // it, which hid the bug. Godot's console exe has no such job, so a shell stands in for it.
   const mid = process.platform === 'win32' ? ['cmd.exe', ['/d', '/c', process.execPath, '-e', grand]] : ['sh', ['-c', '"$0" -e "$1"; :', process.execPath, grand]];
   const parent = `require('child_process').spawn(${JSON.stringify(mid[0])}, ${JSON.stringify(mid[1])}, { stdio: 'inherit' }); setTimeout(() => {}, 60000)`;
-  const r = defaultRun(process.cwd(), d, 0.05)('gates-like', process.execPath, ['-e', parent]);
+  const min = budgetMs(3000, 2) / 60000; // the parent and the grandchild are cold node starts
+  const r = defaultRun(process.cwd(), d, min)('gates-like', process.execPath, ['-e', parent]);
   assert.equal(r.status, -1);
-  assert.match(readFileSync(r.log, 'utf8'), /timed out after 0\.05 min \(the process tree was killed\)/);
+  assert.match(readFileSync(r.log, 'utf8'), /timed out after [\d.]+ min \(the process tree was killed\)/);
   const pid = Number(readFileSync(pidFile, 'utf8'));
   for (let i = 0; i < 20 && alive(pid); i++) await new Promise((ok) => setTimeout(ok, 250));
   assert.equal(alive(pid), false, `grandchild ${pid} still running after the step timed out`);
+});
+
+test('a limit that is not whole ms runs (spawnSync wants whole ms; 1000.5 ms threw ERR_OUT_OF_RANGE before n15)', () => {
+  // half a ms over a budget that holds the child's own cold start, so only the rounding is under test
+  const r = defaultRun(process.cwd(), dir(), (Math.floor(budgetMs(1000, 1)) + 0.5) / 60000)('frac', 'node', ['-e', '0']);
+  assert.equal(r.status, 0);
 });

@@ -1,10 +1,10 @@
 import assert from 'node:assert/strict';
 import { execFileSync, spawnSync } from 'node:child_process';
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import test from 'node:test';
-import { decide, main, stagedPaths } from './precommit.mjs';
+import { decide, main, sameTreeAsHead, stagedPaths } from './precommit.mjs';
 import { withoutGitEnv } from '../lint/lint.mjs';
 
 // Never the hook's GIT_DIR / GIT_INDEX_FILE: with them this test committed into the real repo.
@@ -56,4 +56,42 @@ test('a staged rename from code into docs lists the code side too (real git)', (
 test('withoutGitEnv drops every GIT_ variable and keeps the rest', () => {
   const clean = withoutGitEnv({ GIT_DIR: 'x', GIT_INDEX_FILE: 'y', git_work_tree: 'z', PATH: 'p', GODOT_BIN: 'g' });
   assert.deepEqual(clean, { PATH: 'p', GODOT_BIN: 'g' });
+});
+
+test('an empty commit skips lint only when git says the index tree is the HEAD tree (real git)', () => {
+  const dir = mkdtempSync(join(tmpdir(), 'gtai-precommit-'));
+  const run = (c, a, o) => spawnSync(c, a, { ...o, env });
+  const git = (...a) => execFileSync('git', ['-C', dir, ...a], { encoding: 'utf8', windowsHide: true, env });
+  try {
+    git('init', '-q');
+    mkdirSync(join(dir, 'project'));
+    writeFileSync(join(dir, 'project', 'a.gd'), 'var a: int = 1\n');
+    assert.equal(sameTreeAsHead(dir, run), false, 'no HEAD yet');
+    git('add', 'project/a.gd');
+    git('-c', 'user.email=t@t', '-c', 'user.name=t', 'commit', '-q', '-m', 'x', '--no-verify');
+    assert.equal(sameTreeAsHead(dir, run), true);
+    let linted = 0;
+    const lines = [];
+    assert.equal(main({ cwd: dir, git: run, lint: () => { linted += 1; return { status: 3 }; }, err: (l) => lines.push(l) }), 0);
+    assert.equal(linted, 0);
+    assert.match(lines.at(-1), /nothing staged, the index tree is the HEAD tree: lint skipped/);
+    writeFileSync(join(dir, 'project', 'a.gd'), 'var a: int = 2\n');
+    git('add', 'project/a.gd');
+    assert.equal(sameTreeAsHead(dir, run), false, 'a staged edit is not an empty commit');
+  } finally { rmSync(dir, { recursive: true, force: true }); }
+  assert.equal(sameTreeAsHead('.', () => ({ status: 0, stdout: '' })), false, 'two empty answers are not a match');
+  assert.equal(sameTreeAsHead('.', () => ({ status: 0, stdout: 'abc\n' })), false, 'not a tree id');
+});
+
+test('lint gets the staged list as --scope, and the scope file is gone after', () => {
+  let seen = null;
+  const lint = (exe, args) => {
+    const arg = args.find((a) => a.startsWith('--scope='));
+    seen = { arg, text: readFileSync(arg.slice(8), 'utf8') };
+    return { status: 0 };
+  };
+  const git = (c, a) => (a[0] === 'diff' && a[1] === '--cached' ? { status: 0, stdout: 'project/a.gd\0JOURNAL.md\0' } : { status: 0, stdout: '' });
+  assert.equal(main({ git, lint, err: () => {} }), 0);
+  assert.equal(seen.text, 'project/a.gd\nJOURNAL.md\n');
+  assert.throws(() => readFileSync(seen.arg.slice(8)), /ENOENT/);
 });

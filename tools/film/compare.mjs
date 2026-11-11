@@ -4,36 +4,36 @@
 // not passes, because a builder cannot tell them from a change that worked.
 //   node tools/film/compare.mjs <shot> --a=<rev|worktree> --b=<rev|worktree> --at=<t,t> --out=<dir>
 //     [--clip=<from-to>] [--subject=rivet|hostile|dead|id:<n>] [--label-a=<s>] [--label-b=<s>]
-//     [--view=combo] [--ppm=48] [--lock=auto|spawn|at:<tick>|<x,y>|off] [--seed=<n>] [--res=1280x800] [--clean] [-- flags]
+//     [--view=combo] [--ppm=48] [--lock=auto|spawn|at:<tick>|<x,y>|off] [--seed=<n>] [--res=1280x800] [--victim=<kind>] [--feel=auto|on|off] [--native=donor] [--clean] [-- flags]
+// --victim goes to both sides' film.mjs, which checks the kind exists in each tree (combat n15 REQUEST).
 // A commit gets a throwaway snapshot (tools/lib/snapshot.mjs) with the probe injected when it is
 // older than the kit; a worktree is filmed where it stands and must already have the probe. The
 // snapshot is kept for the next compare of that commit and named at the end; --clean removes it.
 // Exit: 0 pass, 1 fail, 2 usage, 3 unverifiable.
 import { spawnSync } from 'node:child_process';
-import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { basename, join, resolve } from 'node:path';
+import { copyFileSync, existsSync, mkdirSync, writeFileSync } from 'node:fs';
+import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { ROOT } from '../lib/repo.mjs';
-import { ensureSnapshot, removeSnapshot, revParse } from '../lib/snapshot.mjs';
+import { removeSnapshot } from '../lib/snapshot.mjs';
+import { resolveSide } from './side.mjs';
 import { EXIT, filmOne, plan } from './film.mjs';
 import { subjectRow } from './subject.mjs';
+// film.mjs --rev resolves a commit the same way; it lives in side.mjs because compare imports film.
+export { nativeDiffers, nativeRefusal, resolveSide } from './side.mjs';
 
 export { subjectRow };
 import { diffImages, readPng } from './png.mjs';
 
 const USAGE = 'usage: node tools/film/compare.mjs <shot> --a=<rev|worktree> --b=<rev|worktree> --at=<t,t> --out=<dir> '
   + '[--clip=<from-to>] [--subject=rivet|hostile|dead|id:<n>] [--label-a=<s>] [--label-b=<s>] [--view=combo] [--ppm=48] '
-  + '[--lock=auto|spawn|at:<tick>|<x,y>|off] [--seed=<n>] [--res=1280x800] [--timeout=<s>] [--clean] [-- flags]';
-const VALUE = new Set(['a', 'b', 'at', 'out', 'clip', 'subject', 'label-a', 'label-b', 'view', 'ppm', 'lock', 'seed', 'res', 'timeout']);
+  + '[--lock=auto|spawn|at:<tick>|<x,y>|off] [--seed=<n>] [--res=1280x800] [--victim=<kind>] [--feel=auto|on|off] [--native=donor] [--timeout=<s>] [--clean] [-- flags]';
+const VALUE = new Set(['a', 'b', 'at', 'out', 'clip', 'subject', 'label-a', 'label-b', 'view', 'ppm', 'lock', 'seed', 'res', 'timeout', 'victim', 'feel', 'native']);
 const DEFAULTS = { view: 'combo', ppm: '48', lock: 'auto', seed: '20261109', res: '1280x800', timeout: '900', subject: 'rivet' };
 /** Below this share of changed pixels the two sides are the same picture. */
 export const IDENTICAL_FRACTION = 0.00005;
 /** Rivet further apart than this (m) at a tick: the two sides are no longer the same moment. */
 export const TIMELINE_DELTA_M = 0.05;
-const PROBE = 'project/dev/frames/film_probe.gd';
-const PROBE_FILES = [PROBE, 'project/dev/frames/film_card.gd', 'project/dev/frames/film_trigger.gd'];
-const INJECTED = '.gtai-film-injected';
-const HOOK = /^(\s*)FightFrames\.attach\(self, args, session\.world\).*$/m;
 
 /** {shotText, flags, extra} or {error}. */
 export function parseArgv(argv) {
@@ -51,6 +51,7 @@ export function parseArgv(argv) {
   for (const f of ['a', 'b', 'at', 'out']) if (!flags[f]) return { error: `compare: --${f}= is required` };
   if (!/^\d+(,\d+)*$/.test(flags.at)) return { error: `compare: --at must be ticks, got ${flags.at}` };
   if (flags.clip && !/^\d+-\d+$/.test(flags.clip)) return { error: `compare: --clip must be <from>-<to>, got ${flags.clip}` };
+  if (flags.native !== undefined && flags.native !== 'donor') return { error: `compare: --native takes only donor, got ${flags.native}` };
   if (!/^(rivet|hostile|dead|id:\d+)$/.test(flags.subject)) return { error: `compare: --subject must be rivet, hostile, dead or id:<n>, got ${flags.subject}` };
   return { shotText, flags, extra };
 }
@@ -73,32 +74,6 @@ export function judgeTick({ diff, subjectA, subjectB, subject }) {
 
 /** A worse outcome always wins: fail, then unverifiable, then pass. */
 export const worst = (list) => (list.includes('fail') ? 'fail' : list.includes('unverifiable') ? 'unverifiable' : 'pass');
-
-/** Puts this kit's probe in a snapshot older than the kit (a throwaway tree). Every run copies it
- *  again, because a cached snapshot must not film with last week's probe. */
-function injectProbe(path) {
-  const mark = join(path, INJECTED);
-  if (PROBE_FILES.every((rel) => existsSync(join(path, rel))) && !existsSync(mark)) return false;
-  const game = join(path, 'project/dev/arena/arena_game.gd');
-  const text = readFileSync(game, 'utf8');
-  if (!text.includes('FilmProbe.attach')) {
-    if (!HOOK.test(text)) throw new Error(`compare: ${game} has no FightFrames.attach line to hook the probe on`);
-    writeFileSync(game, text.replace(HOOK, (line, indent) => `${line}\n${indent}FilmProbe.attach(self, args)`));
-  }
-  for (const rel of PROBE_FILES) copyFileSync(join(ROOT, rel), join(path, rel));
-  writeFileSync(mark, 'probe injected by tools/film/compare.mjs\n');
-  return true;
-}
-
-/** Resolves a side to a runnable tree: {tree, label, snapshot, injected} or {error}. */
-export function resolveSide(value, { root = ROOT, ensure = ensureSnapshot } = {}) {
-  const dir = resolve(value);
-  if (existsSync(join(dir, 'project', 'project.godot'))) return { tree: dir, label: basename(dir), snapshot: false, injected: false };
-  const sha = revParse(root, value);
-  if (!sha) return { error: `compare: ${value} is neither a worktree nor a commit git knows` };
-  const snap = ensure({ root, rev: value, kind: 'film' });
-  return { tree: snap.path, label: sha.slice(0, 8), snapshot: true, injected: injectProbe(snap.path) };
-}
 
 const escape = (s) => String(s).replace(/[':\\%]/g, ' ');
 const text = (s, y, colour) => `drawtext=fontfile=arialbd.ttf:text='${escape(s)}':x=12:y=${y}:fontsize=20:fontcolor=${colour}:box=1:boxcolor=black@0.7:boxborderw=6`;
@@ -127,10 +102,10 @@ function clip(dir, a, b, labels, from, to) {
   return ffmpeg(['-i', a.mp4, '-i', b.mp4, '-filter_complex', graph, '-an', '-c:v', 'libx264', '-crf', '18', `compare-${from}-${to}.mp4`], dir);
 }
 
-function filmFlags(parsed, side, tick) {
+export function filmFlags(parsed, side, tick) {
   const f = parsed.flags;
   return { out: join(resolve(f.out), side.name), tree: side.tree, stills: tick, view: f.view, ppm: f.ppm, lock: f.lock, subject: f.subject,
-    seed: f.seed, res: f.res, timeout: f.timeout, ...(f.clip ? { ticks: String(Number(f.clip.split('-')[1]) + 60) } : {}),
+    seed: f.seed, res: f.res, timeout: f.timeout, ...(f.victim ? { victim: f.victim } : {}), ...(f.feel ? { feel: f.feel } : {}), ...(f.clip ? { ticks: String(Number(f.clip.split('-')[1]) + 60) } : {}),
     ...(f.clip ? { movie: true } : { 'no-movie': true }) };
 }
 
@@ -150,7 +125,7 @@ export async function main(argv, { out = console.log, err = console.error, runne
   const parsed = parseArgv(argv);
   if (parsed.error) { err(`${parsed.error}\n${USAGE}`); return EXIT.usage; }
   const f = parsed.flags;
-  const [a, b] = [resolveSide(f.a), resolveSide(f.b)];
+  const [a, b] = [resolveSide(f.a, { native: f.native }), resolveSide(f.b, { native: f.native })];
   for (const s of [a, b]) if (s.error) { err(s.error); return EXIT.usage; }
   a.name = 'A';
   b.name = 'B';

@@ -1,0 +1,51 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Initializing already initialized RID
+   at: get_or_null (./core/templates/rid_owner.h:236)
+ERROR: Parameter "t" is null.
+ERROR: Initializing already initialized RID
+ERROR: Attempting to initialize the wrong RID
+   GDScript backtrace (most recent call first):
+       [0] _worker (res://race.gd:34)
+   at: texture_2d_initialize (./servers/rendering/dummy/storage/texture_storage.h:85)
+   at: get_or_null (./core/templates/rid_owner.h:236)
+ERROR: Parameter "mem" is null.
+   at: get_or_null (./core/templates/rid_owner.h:240)
+   GDScript backtrace (most recent call first):
+       [0] _initialize (res://race.gd:22)
+   GDScript backtrace (most recent call first):
+       [0] _worker (res://race.gd:34)
+   at: initialize_rid (./core/templates/rid_owner.h:284)
+ERROR: Parameter "t" is null.
+ERROR: Parameter "mem" is null.
+   GDScript backtrace (most recent call first):
+       [0] _worker (res://race.gd:34)
+   GDScript backtrace (most recent call first):
+       [0] _worker (res://race.gd:34)
+   at: texture_2d_initialize (./servers/rendering/dummy/storage/texture_storage.h:85)
+ERROR: Parameter "mem" is null.
+   GDScript backtrace (most recent call first):
+       [0] _initialize (res://race.gd:22)
+   at: initialize_rid (./core/templates/rid_owner.h:284)
+   at: initialize_rid (./core/templates/rid_owner.h:284)
+   GDScript backtrace (most recent call first):
+       [0] _worker (res://race.gd:34)
+ERROR: Initializing already initialized RID
+   at: get_or_null (./core/templates/rid_owner.h:236)
+ERROR: Initializing already initialized RID
+ERROR: Parameter "t" is null.
+   GDScript backtrace (most recent call first):
+       [0] _worker (res://race.gd:34)
+   GDScript backtrace (most recent call first):
+       [0] _worker (res://race.gd:34)
+   at: get_or_null (./core/templates/rid_owner.h:236)
+   at: texture_2d_initialize (./servers/rendering/dummy/storage/texture_storage.h:85)
+ERROR: Attempting to initialize the wrong RID
+   GDScript backtrace (most recent call first):
+       [0] _initialize (res://race.gd:22)
+   GDScript backtrace (most recent call first):
+       [0] _worker (res://race.gd:34)
+ERROR: Parameter "t" is null.
+ERROR: Parameter "mem" is null.
+ERROR: Parameter "mem" is null.
+   at: texture_2d_initialize (./servers/rendering/dummy/storage/texture_storage.h:85)

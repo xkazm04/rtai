@@ -10,21 +10,27 @@ namespace gtai::sim {
 void CityCore::build_hash(double camx, double camy) {
 	hgx_ = floori(camx / HC) - HW / 2;
 	hgy_ = floori(camy / HC) - HW / 2;
-	const int n = HW * HW;
-	std::memset(hcount_, 0, sizeof(hcount_));
+	// O(actors), not O(HW^2): clear only the cells the last build filled, count, then give starts to
+	// the occupied cells in the order first met. Each cell's ids are contiguous in id order; query
+	// walks cells row-major from each cell's own start, so no sort. An empty cell's start is unread.
+	if (htouched_n_ < 0) std::memset(hcount_, 0, sizeof(hcount_));
+	for (int k = 0; k < htouched_n_; k++) hcount_[htouched_[k]] = 0;
+	htouched_n_ = 0;
 	for (int i = 0; i < CAP; i++) {
 		if (alive_[i] == 0 || tier_[i] != 0) continue;
 		int gx = floori(px_[i] / HC) - hgx_, gy = floori(py_[i] / HC) - hgy_;
 		if (gx < 0 || gy < 0 || gx >= HW || gy >= HW) continue;
-		hcount_[gy * HW + gx] += 1;
+		int c = gy * HW + gx;
+		if (hcount_[c] == 0) htouched_[htouched_n_++] = c;
+		hcount_[c] += 1;
 	}
 	int s = 0;
-	for (int c = 0; c < n; c++) {
+	for (int k = 0; k < htouched_n_; k++) {
+		int c = htouched_[k];
 		hstart_[c] = s;
 		s += hcount_[c];
 		hcount_[c] = 0;
 	}
-	hstart_[n] = s;
 	for (int i = 0; i < CAP; i++) {
 		if (alive_[i] == 0 || tier_[i] != 0) continue;
 		int gx = floori(px_[i] / HC) - hgx_, gy = floori(py_[i] / HC) - hgy_;

@@ -12,6 +12,7 @@ extends Node
 ## two built blocks: roofs, their cast shadows, kerb props).
 
 const KNOWN_FLAGS: PackedStringArray = ["--out", "--grade", "--fx-moment", "--markers", "--site"]
+const NEEDS_WINDOW: bool = true  # renders frames: tools/dev/run.mjs refuses it headless (n15)
 const FX_WAIT_FRAMES: int = 240
 const MASTER_SEED: int = 91
 const JUNCTION: Vector2 = Vector2(64.0 * 8 + 12.0, 64.0 * 8 + 12.0)

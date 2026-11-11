@@ -11,8 +11,11 @@
 // --allow-dirty, which says so in every summary. A run that dirties the tree (import churn)
 // fails the unit-tests evidence. Both checks ignore the inert set (scope.mjs: docs/**, evidence/**,
 // root JOURNAL.md / REPORT.md), which no kind reads; uncommitted inert paths are only named in a
-// summary suffix.
-import { mkdirSync, writeFileSync } from 'node:fs';
+// summary suffix. Every kind reads the live tree, so a code path edited while the run goes (a new
+// porcelain line, or a size/mtime change of a path dirty at the start) fails each kind that finishes
+// after it, naming the paths (n15 hero 23:30: a mid-run edit poisoned the selftest, and it read as a
+// look regression). tools/gate/run.mjs runs the same kinds on a snapshot and lets you keep editing.
+import { mkdirSync, statSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { ROOT, dirtyLines, git, godotBin, godotVersion } from '../lib/repo.mjs';
@@ -52,7 +55,36 @@ export function applyChurn(unit, before, after) {
   return {
     ...unit,
     ok: false,
-    summary: `${unit.summary}; tree changed during run (${churn.length} paths, import churn): ${churn.slice(0, 3).join(', ')}`,
+    summary: `${unit.summary}; tree changed during run (${churn.length} paths, import churn or an edit): ${churn.slice(0, 3).join(', ')}`,
+  };
+}
+
+/** {path: 'size mtime'} for every code path the porcelain lines name ('gone' when it is not on disk). */
+export function stampOf(lines, stat = (p) => statSync(join(ROOT, p))) {
+  const out = new Map();
+  for (const p of classify(lines).codePaths) {
+    try {
+      const st = stat(p);
+      out.set(p, `${st.size} ${st.mtimeMs}`);
+    } catch {
+      out.set(p, 'gone');
+    }
+  }
+  return out;
+}
+
+/** Code paths whose stamp is new or different since `start`, plus those clean again (sorted). */
+export const editedSince = (start, now) => [...new Set([...now.keys(), ...start.keys()])]
+  .filter((p) => start.get(p) !== now.get(p)).sort();
+
+/** Fails one kind's result when the tree changed under it. */
+export function applyEdits(res, kind, edited) {
+  if (!edited.length) return res;
+  const shown = edited.slice(0, 3).join(', ') + (edited.length > 3 ? `, +${edited.length - 3}` : '');
+  return {
+    ...res,
+    ok: false,
+    summary: `${res.summary}; INVALID: the tree changed while ${kind} ran (${edited.length} code path(s): ${shown}), so it read neither HEAD nor a settled edit: re-run on a still tree, or use tools/gate/run.mjs (a snapshot)`,
   };
 }
 
@@ -63,6 +95,8 @@ async function main() {
     return 2;
   }
   const before = dirtyLines();
+  const start = stampOf(before);
+  const settled = (res, kind) => applyEdits(res, kind, editedSince(start, stampOf(dirtyLines())));
   const gate = dirtyGate(before, process.argv.includes('--allow-dirty'));
   for (const m of gate.messages) console.error(m);
   if (gate.exit !== null) return gate.exit;
@@ -72,7 +106,7 @@ async function main() {
   const dirtyNote = gate.note;
   mkdirSync(OUT, { recursive: true });
 
-  const lint = runLint();
+  const lint = settled(runLint(), 'lint');
   const lintCounts = {
     passed: lint.checks.filter((c) => c.ok).length,
     failed: lint.checks.filter((c) => !c.ok).length,
@@ -87,12 +121,12 @@ async function main() {
 
   let unit;
   if (version) {
-    unit = applyChurn(await runUnit(OUT), before, dirtyLines());
+    unit = settled(applyChurn(await runUnit(OUT), before, dirtyLines()), 'unit-tests');
   } else {
     unit = { ok: false, summary: `unit-tests: Godot not found (GODOT_BIN=${godotBin()})` };
   }
   envelopes.push(makeEnvelope({ ...base, kind: 'unit-tests', ...unit, summary: unit.summary + dirtyNote }));
-  for (const [kind, res] of await laterKinds(version)) {
+  for (const [kind, res] of await laterKinds(version, settled)) {
     envelopes.push(makeEnvelope({ ...base, kind, ...res, summary: res.summary + dirtyNote }));
   }
 
@@ -107,15 +141,17 @@ async function main() {
 }
 
 /** scenario-tests, then parity and bench unless skipped. */
-async function laterKinds(version) {
+async function laterKinds(version, settled) {
   const missing = (k) => ({ ok: false, summary: `${k}: Godot not found (GODOT_BIN=${godotBin()})` });
   if (!version) return [['scenario-tests', missing('scenario-tests')], ['parity', missing('parity')]];
-  const out = [['scenario-tests', await runScenarios(OUT)]];
-  if (!process.argv.includes('--no-parity')) out.push(['parity', await runParity(OUT)]);
-  if (!process.argv.includes('--no-selftest')) out.push(['selftest', await runSelftest(OUT)]);
-  if (!process.argv.includes('--no-release')) out.push(['export-audit', await releaseEvidence()]); // release-compile; the PCK audit (EXP-05) joins this kind
+  const out = [];
+  const add = async (kind, run) => out.push([kind, settled(await run(), kind)]);
+  await add('scenario-tests', () => runScenarios(OUT));
+  if (!process.argv.includes('--no-parity')) await add('parity', () => runParity(OUT));
+  if (!process.argv.includes('--no-selftest')) await add('selftest', () => runSelftest(OUT));
+  if (!process.argv.includes('--no-release')) await add('export-audit', releaseEvidence); // release-compile; the PCK audit (EXP-05) joins this kind
   if (!process.argv.includes('--no-bench')) {
-    out.push(['bench', await runBench(OUT, { headless: process.argv.includes('--bench-headless') })]);
+    await add('bench', () => runBench(OUT, { headless: process.argv.includes('--bench-headless') }));
   }
   return out;
 }

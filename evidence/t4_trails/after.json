@@ -1,0 +1,68 @@
+{
+  "cars": [
+    {
+      "car": 0,
+      "start_dir": 0,
+      "uturns": [
+        {
+          "tick": 1551,
+          "x_m": 1054.2,
+          "y_m": 886.0,
+          "tile_ahead": 0
+        },
+        {
+          "tick": 2951,
+          "x_m": 898.0,
+          "y_m": 942.3,
+          "tile_ahead": 0
+        }
+      ],
+      "alive_at_end": true
+    },
+    {
+      "car": 1,
+      "start_dir": 3,
+      "uturns": [
+        {
+          "tick": 1329,
+          "x_m": 1054.3,
+          "y_m": 886.0,
+          "tile_ahead": 0
+        },
+        {
+          "tick": 2816,
+          "x_m": 902.0,
+          "y_m": 801.7,
+          "tile_ahead": 0
+        }
+      ],
+      "alive_at_end": true
+    },
+    {
+      "car": 2,
+      "start_dir": 2,
+      "uturns": [
+        {
+          "tick": 956,
+          "x_m": 898.0,
+          "y_m": 942.3,
+          "tile_ahead": 0
+        },
+        {
+          "tick": 2021,
+          "x_m": 801.7,
+          "y_m": 882.0,
+          "tile_ahead": 0
+        },
+        {
+          "tick": 3585,
+          "x_m": 1054.2,
+          "y_m": 886.0,
+          "tile_ahead": 0
+        }
+      ],
+      "alive_at_end": true
+    }
+  ],
+  "hw": 132
+}

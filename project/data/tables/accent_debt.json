@@ -52,6 +52,16 @@
       "source": "not a source: lit blood-splat pixels on the vermilion/blood gate boundary flip class between the full capture and the layer-hidden capture (the blood_flicker_cop_48 class); no car prints blood or vermilion"
     },
     {
+      "accent": "blood",
+      "doc": "measured 2026-11-10 by n15 tools: the t-1 spawn-order fix (CitySpawnPlan.next, owner Call t-1) changes which actors the selftest crowd spawns, and the block shot at 64 px/m now counts 4 px of blood on the vehicles layer; the frame (build/selftest/block/accent-64ppm.png) shows no car near the spray. Same class as blood_flicker_vehicles_32/48; the row goes with them when the audit compares same-frame captures",
+      "id": "blood_flicker_vehicles_64",
+      "layer": "vehicles",
+      "max_px": 12,
+      "owner": "d5-city",
+      "ppm": 64,
+      "source": "not a source: lit blood pixels on the gate boundary flip class between the full capture and the layer-hidden capture; no car prints blood"
+    },
+    {
       "accent": "vermilion",
       "doc": "measured 2026-11-04 02:04 at the n-showcase merge round 3 (junction 32 px/m: 4 px, reproduced on a second run); suspected, not bisected: gunplay b3b3c92f (new in this round) moved the blood drops onto their own canvas item; the row goes with blood_flicker_cop_48",
       "id": "blood_flicker_vehicles_vermilion_32",

@@ -64,6 +64,7 @@ func before_each() -> void:
 
 func after_each() -> void:
 	LaunchArgs.parse(PackedStringArray())  # a unit run carries no user args
+	TextureThreads.override = -1
 	ViewMode._shared = _view
 
 
@@ -75,6 +76,7 @@ func _warm(view: String, weapon: StringName) -> void:
 
 func test_warm_asks_a_worker_for_every_strip_of_the_carried_gun() -> void:
 	LaunchArgs.parse(PackedStringArray())
+	TextureThreads.override = 1  # a real renderer's path (headless never asks a worker)
 	_warm("combo", &"gatling")
 	var paths: PackedStringArray = RivetStripWarm.paths("p70", [&"gatling"] as Array[StringName])
 	assert_true(paths.has(DIR + "rivet_reload_gatling_left.png"))
@@ -92,3 +94,14 @@ func test_strip_prefetch_off_fetches_no_strip() -> void:
 	LaunchArgs.parse(PackedStringArray(["--strip-prefetch=off"]))
 	_warm("combo", &"machine_pistol")
 	assert_false(StreetStrips.known(DIR + "rivet_eq_machine_pistol_left.png"), "the before")
+
+
+func test_headless_asks_no_worker_and_loads_on_first_use() -> void:
+	LaunchArgs.parse(PackedStringArray())
+	assert_false(
+		TextureThreads.allowed(), "the unit run is headless: its renderer is not thread-safe"
+	)
+	_warm("combo", &"molotov")
+	var path: String = DIR + "rivet_eq_molotov_left.png"
+	assert_false(StreetStrips.known(path), "no worker decode under the dummy renderer")
+	assert_not_null(StreetStrips.get_tex(path), "loaded in place on first use")

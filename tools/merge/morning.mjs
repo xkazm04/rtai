@@ -13,14 +13,17 @@ import { appendFileSync, closeSync, existsSync, mkdirSync, openSync, readFileSyn
 import { join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { GUARD_EXIT } from './step_guard.mjs';
+import { gateLines } from './gate_lines.mjs';
 import { checkBaked } from '../export/check_baked.mjs';
+import { baselineText, mergeBaselines } from '../debt/merge_baseline.mjs';
 
 /** The tree's chunks against its tracked hash list (the export's own check, run where the bake ran). */
 export const bakedIn = (cwd) => checkBaked({ list: join(cwd, 'project/data/generated/city_chunks.sha256'), city: join(cwd, 'project/data/generated/city') });
 
 export const STEPS = ['merge', 'debt', 'native', 'bake', 'gates', 'reels', 'export'];
 const SAFE_VERBS = new Set(['status', 'rev-parse', 'symbolic-ref', 'merge', 'add', 'commit', 'mv', 'log', 'worktree', 'show', 'show-ref', 'diff']);
-const DOCS = ['JOURNAL.md', 'REPORT.md'];
+export const DOCS = ['JOURNAL.md', 'REPORT.md'];
+export const BASELINE = 'tools/debt/baseline.json';
 const STATE = 'build/merge-state.json';
 const USAGE = 'usage: node tools/merge/morning.mjs --worktree=<dir> --lanes=<a,b,c> --date=<yyyy-mm-dd> [--debt-reason="<why>"] [--steps=<list>] [--resume] [--dry-run] [--timeout=<min>]';
 
@@ -28,7 +31,7 @@ const USAGE = 'usage: node tools/merge/morning.mjs --worktree=<dir> --lanes=<a,b
 export function git(cwd, args, spawnGit = spawnSync) {
   if (!SAFE_VERBS.has(args[0])) throw new Error(`morning: refusing git ${args[0]}: not one of the verbs this tool may use`);
   const r = spawnGit('git', ['-C', cwd, ...args], { encoding: 'utf8', windowsHide: true, maxBuffer: 1 << 26 });
-  return { ok: r.status === 0, out: `${r.stdout ?? ''}${r.stderr ?? ''}`, stdout: (r.stdout ?? '').trim() };
+  return { ok: r.status === 0, out: `${r.stdout ?? ''}${r.stderr ?? ''}`, stdout: (r.stdout ?? '').trim(), raw: r.stdout ?? '' };
 }
 
 export function parseArgs(argv) {
@@ -72,7 +75,7 @@ export const laneDocsDir = (date, lane) => `docs/day/${date}/${lane.replace(/^n\
 /** A readable "what to do" for a stopped merge. */
 export function conflictAdvice(lane, files) {
   const hints = files.map((f) => {
-    if (f === 'tools/debt/baseline.json') return `  ${f}: take either side, then node tools/debt/debt.mjs --update (tools/debt/README.md)`;
+    if (f === 'tools/debt/baseline.json') return `  ${f}: node tools/debt/merge_baseline.mjs (the looser of both sides, staged); if the commit's debt ratchet still fails, node tools/debt/debt.mjs --accept-regression="<why>"`;
     if (/decisions\.md$/.test(f)) return `  ${f}: union-merged by .gitattributes; if it still conflicts, keep both sides`;
     if (/\.uid$/.test(f)) return `  ${f}: keep either side, one id per file`;
     return `  ${f}`;
@@ -85,25 +88,43 @@ const conflicted = (porcelain) => porcelain.split('\n').filter((l) => /^(UU|AA|D
 
 /** Every lane writes a root JOURNAL and REPORT, so a conflict on only those is no decision for a person:
  *  the lane's own copy is the one that goes under its folder. Returns a red result, or null when done. */
-function takeTheirDocs(g, cwd, lane, files) {
+function takeTheirDocs(g, cwd, lane, files, out = () => {}) {
   for (const f of files) {
+    if (f === BASELINE) {
+      const r = mergeBaselineConflict(g, cwd, lane);
+      if (r) return r;
+      out(`morning: ${BASELINE} conflicted merging ${lane}: took the looser of both sides per metric and file (both sides' accepted reasons kept); the debt step re-ratchets it to the merged tree`);
+      continue;
+    }
     const theirs = g(['show', `MERGE_HEAD:${f}`]);
     if (!theirs.ok) return { ok: false, advice: [`STOPPED: cannot read ${f} from ${lane}: ${theirs.out.trim().slice(0, 300)}`] };
-    writeFileSync(join(cwd, f), theirs.stdout);
+    writeFileSync(join(cwd, f), theirs.raw ?? theirs.stdout);
     g(['add', f]);
   }
   const c = g(['commit', '--no-edit']);
   return c.ok ? null : { ok: false, advice: [`STOPPED: committing ${lane}'s merge failed (often the lint hook): ${c.out.trim().slice(0, 400)}`, 'Fix it, commit, and run again with --resume.'] };
 }
 
-function mergeLane(g, cwd, lane, date) {
+/** The baseline's two sides (index stages 2 and 3) merged by tools/debt/merge_baseline.mjs. */
+function mergeBaselineConflict(g, cwd, lane) {
+  const [ours, theirs] = [g(['show', `:2:${BASELINE}`]), g(['show', `:3:${BASELINE}`])];
+  const stop = (why) => ({ ok: false, advice: [`STOPPED: ${BASELINE} conflicted merging ${lane} and ${why}`, ...conflictAdvice(lane, [BASELINE]).slice(1)] });
+  if (!ours.ok || !theirs.ok) return stop('a side could not be read');
+  try {
+    writeFileSync(join(cwd, BASELINE), baselineText(mergeBaselines(JSON.parse(ours.stdout), JSON.parse(theirs.stdout))));
+  } catch (e) { return stop(`could not be merged: ${e.message}`); }
+  const added = g(['add', BASELINE]);
+  return added.ok ? null : stop(`git add failed: ${added.out.trim().slice(0, 200)}`);
+}
+
+function mergeLane(g, cwd, lane, date, out) {
   const subject = g(['log', '-1', '--format=%s', lane]).stdout.slice(0, 110);
   const merged = g(['merge', '--no-ff', '--no-edit', '-m', `merge ${lane}: ${subject}`, lane]);
   if (!merged.ok) {
     const files = conflicted(g(['status', '--porcelain']).stdout);
     if (!files.length) return { ok: false, advice: [`STOPPED: git merge ${lane} failed: ${merged.out.trim().slice(0, 400)}`, 'Fix it and run again with --resume.'] };
-    if (!files.every((f) => DOCS.includes(f))) return { ok: false, advice: conflictAdvice(lane, files) };
-    const taken = takeTheirDocs(g, cwd, lane, files);
+    if (!files.every((f) => DOCS.includes(f) || f === BASELINE)) return { ok: false, advice: conflictAdvice(lane, files) };
+    const taken = takeTheirDocs(g, cwd, lane, files, out);
     if (taken) return taken;
   }
   const moved = [];
@@ -127,7 +148,7 @@ export const STEP_RUNNERS = {
   merge: (ctx) => {
     for (const lane of ctx.lanes) {
       if (ctx.done.includes(`merge:${lane}`)) continue;
-      const r = mergeLane(ctx.git, ctx.cwd, lane, ctx.date);
+      const r = mergeLane(ctx.git, ctx.cwd, lane, ctx.date, ctx.out);
       if (!r.ok) return r;
       ctx.mark(`merge:${lane}`);
       ctx.out(`morning: ${r.note}`);
@@ -176,6 +197,7 @@ export const STEP_RUNNERS = {
   },
   gates: (ctx) => {
     const r = ctx.run('gates', 'node', ['tools/evidence/run.mjs', '--no-bench']);
+    for (const l of gateLines(join(ctx.cwd, 'build', 'evidence'), ctx.git(['rev-parse', 'HEAD']).stdout)) ctx.out(l);
     if (r.status !== 0) return { ok: false, advice: [`STOPPED: the gates are red; log ${r.log}`, 'Known flakes: test_noir_shadows and the scenario_city_chase budget: re-run those alone. A real red: fix, commit, run again with --resume.'] };
     return { ok: true };
   },
@@ -214,10 +236,12 @@ export function defaultRun(cwd, logDir, timeoutMin, say = () => {}) {
     let r;
     // The guard owns the timeout and kills the whole tree (Godot is a grandchild of the reel and gate
     // runners); spawnSync's own limit is only a backstop for a guard that hangs.
-    const guarded = [GUARD, name, String(minutes * 60000), shell ? '1' : '0', '--', cmd, ...args];
+    // Whole ms: a fractional --timeout (0.33 min) made spawnSync throw ERR_OUT_OF_RANGE (n15).
+    const ms = Math.ceil(minutes * 60000);
+    const guarded = [GUARD, name, String(ms), shell ? '1' : '0', '--', cmd, ...args];
     try {
       r = spawnSync(process.execPath, guarded, { cwd: opts.cwd ?? cwd, windowsHide: true,
-        timeout: minutes * 60000 + GUARD_BACKSTOP_MS, stdio: ['ignore', fd, fd] });
+        timeout: ms + GUARD_BACKSTOP_MS, stdio: ['ignore', fd, fd] });
     } finally { closeSync(fd); }
     if (r.error) appendFileSync(log, `\nmorning: ${name}: ${r.error.code === 'ETIMEDOUT' ? `timed out after ${minutes} min` : r.error.message}\n`);
     const status = r.status === GUARD_EXIT || r.status === null ? -1 : r.status;
