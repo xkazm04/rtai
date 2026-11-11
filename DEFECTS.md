@@ -81,3 +81,10 @@
     152 / 59.5 of 210 in the away cells, but it caught the flame's dark outline; at 2x with a centre line
     (`flamer_diag_centre.png`, scratch) all four helmets stand within ~5 px of the cell centre. Only the pistol's
     diagonal (it458) draws the body off centre, and it is seated (67f4343a6).
+18. ~~Rivet's drawn cells are not one scale~~: NOT confirmed. A first by-eye read (whole figures side by side) put the
+    katana's strike cell ~11 % over the walk grid and its facing cells ~15 % under; a ruled 3x read of the helmet domes
+    alone (`scratch-rs/katana_helmets.png`, 10 px ruler) gives 72-85 strip px across every cell (facing 72/77, strike
+    85, camera 77, thrust 83/78, recovery 85/78, walk rows 77/83/78), and the spread follows the view: the 3/4 views
+    (strike, walk row 2) read widest. The pistol's strips agree too (~85-90). What the films show at the handovers
+    (#13, the katana camera recovery -> walk ~8 px at 32 px/m) is pose height (a crouch against an upright walk), not a
+    smaller drawing. -> no scale fix; the handover pop stays under #13 (open: would need an in-between pose).
