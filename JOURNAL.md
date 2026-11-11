@@ -364,3 +364,21 @@ shred, overload) and its 32 + 64 px/m stills from `gtai-masters/n16/kills-new/fr
   clips dir 135 at 32 and 64). Judged: kill+0..+4 the wounds climb, the spurts and blood go AWAY from Rivet now (the
   pre-fix A/B `stitch_cells_ab_64ppm_patrol_*` shows the defect: his back toward Rivet); +6 the cap tips off; +10
   the drawn spin; +20 on his side, curled, ~0.5 m down-shot of where he stood (the corpse cell's own centre).
+- 14:05 GATE full unit on `953d2972e` (+ evidence-only de40a1dcd): 2666 passed / 0 failed / 2 skipped (208 s).
+- 14:08 masters `gtai-masters/n16/kills-new/frames.json` now 14 entries: the stitch reel crops (after the facing fix),
+  Gloria wall 64 + 32 crops and street 64 on top; the two superseded entries and their files removed.
+- 14:10 Gatling sideways jump at the drop, read only (no fix): KillFallCells.feet_of takes the hit-card copy's
+  position, but StreetWalkerHit.shove also LEANS the card (z = side * LEAN * e), so the copy's drawn feet are not at
+  its origin; the fall grid's first frame lands on the origin. Fix candidates: rotate the feet by the copy's lean
+  about its pivot, or start the fall grid from the copy's drawn feet. Moot once gatling_shred cells land (requested).
+- 14:13 baton same-tick before/after: kill reel `--weapons=electro_baton --dirs=0 --ppm=32,64 --before=5b5ac0d49`
+  (the last commit before 011bbe3a4) running.
+- 14:23 baton same-tick before/after (kill reel `--before=5b5ac0d49`, dir 0, 32 + 64, all four PASS, kill at 68):
+  `evidence/n16-kills-new/baton_overload_ab_{64,32}ppm_dir0_t66-218.png` (top before, bottom after), the reel's 32 px/m
+  sheet, the before clip. Judged by eye: BEFORE (the standard baton death) knocks him flat by +10 into a large red
+  pool. AFTER: locked upright +1..+40 with the cream glow on his chest and the eyes, down at +45, clean. At 64 the cook
+  reads; at 32 px/m it reads only as a light flare on his chest (veins and steam are lost) and the corpse leaves
+  NOTHING on the street, so the aftermath beat is missing. The eyes at 0.87 sit on the face (+10..+40 at 64).
+- DECISION kills-new/baton-scorch: the overload leaves a 0.3 m ink scorch where he stood (the current earthing
+  through his boots; `scorch_radius_m` 0.3, data only, the existing KillMarks scorch: ink, no red, no RNG), so the
+  aftermath stays on the street. Rejected: blood (the cook has none by design). 0 restores the clean street.
