@@ -33,17 +33,7 @@ static func wrap(body: Node2D, view_ppm: float = 32.0) -> Node2D:
 
 ## Rect2(centre, semi-axes) of the ellipse holding `body`'s sprites (its local pixels).
 static func fit(body: Node2D, view_ppm: float) -> Rect2:
-	var box: Rect2 = Rect2()
-	var any: bool = false
-	for ch: Node in body.get_children():
-		if not ch is Sprite2D or (ch as Sprite2D).texture == null:
-			continue
-		var spr: Sprite2D = ch as Sprite2D
-		var r: Rect2 = spr.transform * spr.get_rect()
-		box = box.merge(r) if any else r
-		any = true
-	if not any:
-		return Rect2(Vector2.ZERO, Vector2.ONE * KillDissolveFx.BODY_R_M * view_ppm)
+	var box: Rect2 = KillFigure.box(body, KillDissolveFx.BODY_R_M * view_ppm / FIT)
 	return Rect2(box.get_center(), box.size * 0.5 * FIT)
 
 
