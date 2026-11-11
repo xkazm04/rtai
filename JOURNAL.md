@@ -942,3 +942,7 @@ C:/Users/kazda/kiro/gtai-n15/scratch-tools-before`, `git branch -D n15t-control-
   cast_flags.gd / rivet_res.gd pair). Tests 6/6.
   TO hero / combat: before committing a shared file, `node C:/Users/kazda/kiro/gtai-wt/n15-tools/tools/merge/clash.mjs
   --repo=.` from your worktree (read-only on your tree; 0.4 s). After the merge your own hook does it on every commit.
+- 05:29 Linux (WSL -d Ubuntu, git 2.43.0, Node v24.14.0, `git clone --no-local --branch n15-tools` at ddbf98840,
+  hooks off for the clone; script gtai-n15/flake/linux_s7.sh): `node --test 'tools/dev/*' 'tools/film/*' 'tools/merge/*'
+  'tools/gate/*'` -> tests 556, pass 554, fail 0, skipped 2; clone removed (`clones left: 0`). REPORT updated
+  (tools changed, served, next steps).
