@@ -50,6 +50,10 @@ func _aim(rig: CutRig, deg: float) -> void:
 func test_a_steep_shot_draws_the_camera_cell_for_every_one_hander() -> void:
 	for w: StringName in ONE_HANDERS:
 		var rig: CutRig = _firing(60.0, w)
+		var on: String = str(rig.head_card.get_meta(RivetFrames.ON, ""))
+		if RivetGunDiag.fits(rig, w, 1, ViewMode.shared().art) and RivetGunDiag.draws("p70", w):
+			assert_true(on.ends_with(RivetStrips.DIAG), "%s: its drawn diagonal is nearer" % w)
+			continue
 		assert_eq(rig.head_card.frame, RivetFrames.Eq.FIRE_CAM, "%s at 60 deg" % w)
 		assert_false(rig.head_card.flip_h, "the camera cell is not mirrored at octant 1")
 		RivetMuzzle.publish(rig)
@@ -79,19 +83,19 @@ func test_a_gun_with_a_facing_muzzle_is_untouched() -> void:
 
 func test_a_burst_on_the_edge_keeps_its_cell() -> void:
 	# n17: a gun without a drawn diagonal (the p70 pistol fires its diagonal cell here)
-	var rig: CutRig = _firing(44.9, &"machine_pistol")
+	var rig: CutRig = _firing(44.9, &"hand_cannon")
 	assert_false(RivetFireCam.drawn(rig), "starts under 45: the side cell")
 	_aim(rig, 45.3)
-	assert_true(RivetStrips.draws_fire(rig, &"machine_pistol", 1, true))
+	assert_true(RivetStrips.draws_fire(rig, &"hand_cannon", 1, true))
 	assert_false(RivetFireCam.drawn(rig), "noise past 45 keeps it")
 	_aim(rig, 52.0)
-	assert_true(RivetStrips.draws_fire(rig, &"machine_pistol", 1, true))
+	assert_true(RivetStrips.draws_fire(rig, &"hand_cannon", 1, true))
 	assert_true(RivetFireCam.drawn(rig), "past the hold: the camera cell")
 	_aim(rig, 44.0)
-	assert_true(RivetStrips.draws_fire(rig, &"machine_pistol", 1, true))
+	assert_true(RivetStrips.draws_fire(rig, &"hand_cannon", 1, true))
 	assert_true(RivetFireCam.drawn(rig), "back under 45 keeps it inside the hold")
 	_aim(rig, 38.0)
-	assert_true(RivetStrips.draws_fire(rig, &"machine_pistol", 1, true))
+	assert_true(RivetStrips.draws_fire(rig, &"hand_cannon", 1, true))
 	assert_false(RivetFireCam.drawn(rig), "past the hold back: the side cell")
 
 

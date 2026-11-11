@@ -15,6 +15,7 @@ extends RefCounted
 ## Screen angle (deg, y down) of the drawn gun per diagonal cell, keyed "<art>/<gun>".
 const DEG: Dictionary[String, PackedFloat32Array] = {
 	"p70/pistol": [32.0, -25.0, 146.0, -150.0],
+	"p70/machine_pistol": [40.0, -31.0, 139.0, -149.0],
 }
 ## The helmet's centre x per diagonal cell (strip px; the strip's cells centre theirs at ~141 of
 ## 283): the away cells draw his body off centre to give the raised gun room (cell 1 at 93.5, 3 at
@@ -22,9 +23,11 @@ const DEG: Dictionary[String, PackedFloat32Array] = {
 ## 64 px/m on the shot tick).
 const HELMET_X: Dictionary[String, PackedFloat32Array] = {
 	"p70/pistol": [140.5, 93.5, 140.5, 191.0],
+	"p70/machine_pistol": [127.5, 89.5, 126.5, 163.5],
 }
-## The boots' pad above the cell bottom (strip px): cells 0/2 at row 177, 1/3 at 179 of 180.
-const FOOT_PX: Dictionary[String, float] = {"p70": 1.0}
+## The boots' pad above the cell bottom (strip px), keyed "<art>/<gun>" (the pistol's cells 0/2 at
+## row 177 and 1/3 at 179 of 180; the machine pistol's all at 172 of 175).
+const FOOT_PX: Dictionary[String, float] = {"p70/pistol": 1.0, "p70/machine_pistol": 2.0}
 
 ## Half an octant: within it the diagonal is the drawn gun nearest the aim.
 const FIT_TOL: float = PI / 8.0
@@ -74,7 +77,8 @@ static func off(path: String) -> bool:
 
 ## The foot pad (strip px) of the diagonal strip at `path`: a gun's own, else `fallback`.
 static func foot_or(path: String, art: String, fallback: float) -> float:
-	return FOOT_PX.get(art, 0.0) if owns(path) else fallback
+	var gun: String = path.get_file().trim_prefix("rivet_eq_").trim_suffix(RivetStrips.DIAG)
+	return FOOT_PX.get(art + "/" + gun, 0.0) if owns(path) else fallback
 
 
 ## The drawn gun's screen angle (rad) at octant `o`: its diagonal cell's where drawn, else the

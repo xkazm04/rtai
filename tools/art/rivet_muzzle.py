@@ -82,7 +82,10 @@ LEFT_PINNED = {("p55", "rivet_eq_homing_shard_left", 2): [43, 78]}
 # tan reads as flash core, so the flash root is pinned in 110 space (strip px / 1.5), read as the
 # biggest hot blob that differs from the flashless twin, its pixel nearest the body centre.
 DIAG_PINNED = {
-    ("p70", "rivet_eq_pistol_diag"): {"0": [160, 101], "1": [127, 35], "2": [27, 100], "3": [59, 37]}
+    ("p70", "rivet_eq_pistol_diag"): {"0": [160, 101], "1": [127, 35], "2": [27, 100], "3": [59, 37]},
+    ("p70", "rivet_eq_machine_pistol_diag"): {
+        "0": [121, 98], "1": [117, 15], "2": [26, 98], "3": [51, 15]
+    },
 }
 
 

@@ -65,7 +65,7 @@ func test_the_strip_has_the_pistols_cells_its_pad_and_a_muzzle_per_cell() -> voi
 	assert_false(RivetGunDiag.owns(RivetStrips.DIR + "p70/rivet_eq_flamethrower_diag.png"))
 	assert_false(RivetGunDiag.owns(EQ), "the equipped strip is not a diagonal")
 	assert_false(RivetGunDiag.owns(DIAG.trim_suffix(".png") + RivetNoFlash.SUFFIX), "the twin")
-	assert_eq(RivetStrips.foot_px(DIAG), RivetGunDiag.FOOT_PX["p70"])
+	assert_eq(RivetStrips.foot_px(DIAG), RivetGunDiag.FOOT_PX["p70/pistol"])
 	var w: float = tex.get_width() / float(RivetStrips.DIAG_CELLS) / RivetRes.of(DIAG)
 	for c: int in RivetStrips.DIAG_CELLS:
 		var p: Vector2 = RivetMuzzle.point(DIAG, c)
@@ -96,3 +96,17 @@ func test_each_diagonal_cell_stands_on_his_helmets_centre() -> void:
 		RivetCellFeet.show(card, c)
 		assert_almost_eq(card.offset.x, -xs[c], 0.01, "cell %d" % c)
 	assert_almost_eq(xs[1], 93.5, 0.01, "the away right cell: his body left of the canvas centre")
+
+
+func test_every_listed_gun_ships_its_strip_twin_and_rows() -> void:
+	for key: String in RivetGunDiag.DEG:
+		var art: String = key.get_slice("/", 0)
+		var gun: StringName = StringName(key.get_slice("/", 1))
+		var path: String = RivetStrips.DIR + art + "/rivet_eq_" + String(gun) + RivetStrips.DIAG
+		assert_true(RivetGunDiag.draws(art, gun), key)
+		assert_true(RivetStrips.has_file(path.trim_suffix(".png") + RivetNoFlash.SUFFIX), key)
+		assert_true(RivetGunDiag.HELMET_X.has(key) and RivetGunDiag.FOOT_PX.has(key), key)
+		var eq: String = RivetStrips.DIR + art + "/rivet_eq_" + String(gun) + ".png"
+		assert_eq(RivetRes.of(path), RivetRes.of(eq), key + ": at its equipped strip's res")
+		for c: int in RivetStrips.DIAG_CELLS:
+			assert_gt(RivetMuzzle.point(path, c).x, 0.0, "%s cell %d: a muzzle" % [key, c])
