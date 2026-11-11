@@ -185,6 +185,15 @@ too far apart to share the 12 x 9 m window with 2 m to spare (the nuke kills ~25
 victim. Proof (n16 s3): `build/kreel/s3all` (`--weapons=all --quick --feel=on`, 12 films, ~25 min beside the
 other lanes): 11 PASS, the nuke UNVERIFIABLE (Rivet off screen; before the subject fix) -> s3nuke.
 
+A reel with no `--rev` films the LIVE tree, and each film's Godot loads project/ as it stands when that film
+starts (a reel is 2.5 min a film): an edit, a commit or a new class not yet imported part-way lands in the films
+after it (kills-new FRICTION 15:15: `after gatling dir 0 64` died on a SCRIPT ERROR mid-edit). Since n16 s4 the reel
+stamps the live tree (HEAD + every uncommitted project/ path with its size and mtime, tools/film/live_tree.mjs)
+before it starts and before each film: uncommitted paths at the start print one line naming them; a film whose tree
+moved prints `the live tree moved since the reel began (HEAD a -> b; N project/ path(s) changed (...))` and its
+reel.json film gets `tree_moved`; a failing film on such a tree says commit and re-run `--rev=HEAD`. To keep
+editing while a reel runs, commit and pass `--rev=HEAD` (a snapshot, it cannot move).
+
 `--gore-check` films every death with `--gore=reduced` and judges each from the probe: the victim must still be
 drawn as one lying card 20 ticks after the kill (a signature death hides the body: FAIL, naming it); a victim
 without a card the tick before is UNVERIFIABLE. Each film in `reel.json` gets `whole: true|false`.

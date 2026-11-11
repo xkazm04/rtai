@@ -19,6 +19,7 @@ import { anchorShifts, boxAt, goreWhole, killWindow, measureBeats, measureHold, 
 import { beatLine, cutMovie, encodeClip, finish, resheet } from './kill_reel_out.mjs';
 import { diffImages, readPng } from './png.mjs';
 import { filmedRoot } from './side.mjs';
+import { dirtyStartLine, movedLine, treeMoves, treeState } from './live_tree.mjs';
 
 const USAGE = 'usage: node tools/film/kill_reel.mjs --out=<dir> [--weapons=all|<id,id>] [--victims=<kind,...>] [--dirs=<deg|wall,...>] '
   + '[--ppm=32,64] [--after=150] [--rev=<commit>] [--before=<commit>] [--native=donor] [--clips] [--keep-frames] [--gore-check] [--feel=on|off|auto] [--quick] [--timeout=<s>] [--dry-run] [-- flags]\n'
@@ -89,7 +90,7 @@ export function parseArgv(argv) {
   return { flags, extra };
 }
 
-export async function main(argv, { out = console.log, err = console.error, runner, resolveSide } = {}) {
+export async function main(argv, { out = console.log, err = console.error, runner, resolveSide, state = treeState } = {}) {
   const parsed = parseArgv(argv);
   if (parsed.error) { err(`${parsed.error}\n${USAGE}`); return EXIT.usage; }
   if (parsed.flags.resheet !== undefined) {
@@ -108,7 +109,7 @@ export async function main(argv, { out = console.log, err = console.error, runne
     const pinned = pinRev(f, resolveSide);
     if (pinned.error) { err(`${pinned.error}\n${USAGE}`); return EXIT.usage; }
     if (pinned.line) out(pinned.line.replace(/^film:/, `kill_reel: ${name}`));
-    sides.push({ name, tree: resolve(f.tree ?? here) });
+    sides.push({ name, tree: resolve(f.tree ?? here), live: !rev });
   }
   const jobs = reel.jobs.flatMap((j) => sides.map((s) => ({ ...j, side: s.name, dir: join(reel.out, j.weapon, `${s.name}_${j.victim || 'guard'}_d${j.dir_deg}_${j.ppm}`) })));
   for (const job of jobs) {
@@ -116,13 +117,23 @@ export async function main(argv, { out = console.log, err = console.error, runne
     if (bad) { err(`kill_reel: ${job.weapon}: ${bad}\n${USAGE}`); return EXIT.usage; }
   }
   out(`kill_reel: ${jobs.length} film(s): ${reel.weapons.join(' ')} x victims [${reel.victims.join(' ') || 'guard'}] x dirs [${reel.dirs.join(' ')}] x ppm [${reel.ppm.join(' ')}] x ${sides.map((s) => s.name).join('/')}`);
+  const live = sides.find((s) => s.live);
+  const began = live ? state(live.tree) : null;
+  const dirtyAtStart = dirtyStartLine(began, jobs.filter((j) => j.side === live?.name).length);
+  if (dirtyAtStart) out(dirtyAtStart);
   if (reel.dryRun) { out('kill_reel: dry run, nothing launched'); return EXIT.pass; }
   mkdirSync(reel.out, { recursive: true });
   const rows = [];
   const kills = new Map();
   for (const job of jobs) {
     const key = [job.side, job.weapon, job.victim, job.dir_deg].join('|');
-    const film = await filmJob(job, sides.find((s) => s.name === job.side), reel, runner, kills.get(key));
+    const side = sides.find((s) => s.name === job.side);
+    const now = side.live ? state(side.tree) : null;
+    const moved = side.live ? movedLine(`${job.side} ${job.weapon} dir ${job.dir_deg} ${job.ppm} px/m`, began, now) : null;
+    if (moved) out(moved);
+    const film = await filmJob(job, side, reel, runner, kills.get(key));
+    if (moved) film.tree_moved = treeMoves(began, now);
+    if (film.outcome === 'fail' && (moved || dirtyAtStart)) out('kill_reel: this film ran on a live tree with uncommitted or moving project/ edits (above): if one broke a script, commit it and re-run with --rev=HEAD');
     if (!kills.has(key) && Number.isInteger(film.kill)) kills.set(key, film.kill);
     rows.push({ job, film });
     out(`kill_reel: ${job.side} ${job.weapon} ${job.victim || 'guard'} dir ${job.dir_deg} ${job.ppm} px/m: ${film.outcome.toUpperCase()}`
