@@ -1,4 +1,4 @@
-# REPORT n15-tools (session 5, 03:19; later sessions extend it)
+# REPORT n15-tools (session 5, 04:02; later sessions extend it)
 
 Branch `n15-tools` from main `5c5c03611`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n15\tools\` (`frames.json`),
 `evidence/` in this tree, JOURNAL.md for every command and its output.
@@ -10,10 +10,10 @@ Branch `n15-tools` from main `5c5c03611`. Evidence: `C:\Users\kazda\kiro\gtai-ma
 | t-1 CitySpawnPlan turns | `_turn += q + 1` (d720e22da) | `test_city_spawn_plan_turns.gd` (`[2,2,3,2] != [2,3,2,3]`, 8 of 30 turns for 10); Codex's n11 test landed unchanged | moves the city sim (parity final digest 9cd5579a -> 94b2865f) and the 16 look/block goldens: re-blessed eb65c8b05, before/after stills in masters |
 | t-2 overrule with a reason | `factory.mjs review --overrule=` / `overrule <id> --reason=` (7ef39b42e) | 3 factory tests | city_spawn_plan: 25/39 killed, all 14 survivors equivalent (named in decisions.md), 25/25 killable; recorded in the n15 ledger |
 | t-4 car routing | U-turn only on T_VOID, exits honour orientation, 18/2.5/13/16 m in `sim_constants.json` group `car_route`, GDScript + C++ (fe5dccda0); the dead-end tiles are one data value `CAR_DEAD_END_TILES` (41505c09f, shipped 1 = t-4) | `test_sim_car_route_t4.gd` 3 of 5 fail on the old rules; `test_city_lane_grid.gd` audits 256 chunks; the route tests pass 21/0 at mask 1, 241 and 65 | parity exact; final digest unchanged: the old rules never fire in the generated city. Film (city street, 32 px/m, t300-900): 0 of 1024000 pixels differ. **On a hand-made map** (`res://dev/sim/car_route_trails.gd`, real reference-sim car code): before 3 U-turns at a plaza and 1 at a kerb, after all 7 at void; a car drives across the plaza into the building behind it (`t4-hand-map-trails-before-after-4ppm.png`): Call c-2 |
-| t-5 hash window | HW 80 -> 132 cells (528 m), both sims (0ba5b1e91) | `test_sim_hash_window.gd` (empty query at 256 m on HW 80) | CONTENDED (8-15 other Godot processes), bench lock held, with an A/A twin: native +9.0 us/step median on 52 us (+17 %), GDScript ref +0.63 ms on 4.43 ms (+14 %), B slower in 6/6 rounds, A/A median -1.8 us / -0.14 ms (`evidence/t5_aab.tsv`). Cause: `CitySimHash.build` walked all HW*HW cells each step (6400 -> 17424); **made O(actors) in both sims (session 4, parity exact, digest unchanged): now B is faster than the old HW 80 build in 6/6 rounds, native -4.0 us/step, ref -0.27 ms (`evidence/t5_aab_build.tsv`)**; mutate on the new build 14/15, the one survivor (`hgx = 0 -> 1`, set by build before any read) equivalent (`evidence/mutate_sim_hash_build_0736f3496.log`) |
+| t-5 hash window | HW 80 -> 132 cells (528 m), both sims (0ba5b1e91) | `test_sim_hash_window.gd` (empty query at 256 m on HW 80) | CONTENDED (8-15 other Godot processes), bench lock held, with an A/A twin: native +9.0 us/step median on 52 us (+17 %), GDScript ref +0.63 ms on 4.43 ms (+14 %), B slower in 6/6 rounds, A/A median -1.8 us / -0.14 ms (`evidence/t5_aab.tsv`). Cause: `CitySimHash.build` walked all HW*HW cells each step (6400 -> 17424); **made O(actors) in both sims (session 4, parity exact, digest unchanged): now B is faster than the old HW 80 build in 6/6 rounds, native -4.0 us/step, ref -0.27 ms (`evidence/t5_aab_build.tsv`)**; session 5: the dead total sentinel and the unobservable cell sort removed (DECISION sim/hash-build-order; the Codex tester's plant showed the sort never shows), a 4th Codex tester file pair (9 tests, the touched-cell clear planted out fails 7), mutate on 4af7cf1fa **15/15** (`evidence/mutate_sim_hash_build_4af7cf1fa.log`; 13/15 and 14/15 before, survivors equivalent) |
 
-Native rebuilt by this lane at 22:09 (t-4), 22:30 (t-5), 02:05 (c-2 mask; comment-only regen after), 02:55 (hash build) and 03:15 (the hash's dead
-total sentinel deleted), debug + release,
+Native rebuilt by this lane at 22:09 (t-4), 22:30 (t-5), 02:05 (c-2 mask; comment-only regen after), 02:55 (hash build), 03:10 (the hash's dead
+total sentinel deleted) and 03:51 (the hash's cell sort removed; again after a comment edit), debug + release,
 `sim_core tests: 0 failed`; parity bit for bit after each, final digest 94b2865f7f17d778.
 
 ## Parity and replay
@@ -24,6 +24,11 @@ crowd: look goldens re-blessed with a decisions line). t-4 and t-5 move nothing 
 
 ## Tools changed
 
+- `res://dev/sim/car_route_trails.gd --tier=a` (6254f741e): the hand-made car map in tier A (cells filled from each tile's
+  kind, hash built each tick, `dead_at_tick` per car). Example: `bash evidence/c2_tier_a/run.sh` -> 4 runs exit 0, tier B
+  default == `evidence/t4_trails/after.json` exactly, mask 1 tier A car 0 `dead_at_tick 3022`.
+- `evidence/merge/resolve_hero_x_combat.py <conflicted> <out>` (f2c75f9a4): writes the union for the two hero x combat
+  conflicts, refuses if a side changed shape. Example on the 03:17 tips: both files pass gdformat, gdlint, the function cap.
 - `tools/style/uid_files.mjs`, lint check `uid-files` (eacf0de3f; lint is now 17 checks): every own `.gd` in the index has
   its `.uid` there. My own 6b9d2a900 shipped a dev script without its `.uid`; Godot wrote it inside the gate's snapshot
   and every kind failed INVALID. Example: over `git ls-tree 6b9d2a900` -> `FAIL project/dev/sim/car_route_trails.gd:
@@ -90,8 +95,8 @@ Commits after 52dc72d4 are Node tools, their tests and docs (linted by the hook)
 
 ## Codex (n15)
 
-Totals: 3 tasks dispatched (all testers, `n15t-break-spawn-plan`, `-car-route`, `-hash-window`; meter 36 % at dispatch),
-0 executor tasks, 23 tests landed, 0 defects found, all three discarded; ledger rows this night: 1 overrule with its
+Totals: 4 tasks dispatched (all testers, `n15t-break-spawn-plan`, `-car-route`, `-hash-window`, `-hash-build`; meter 36 % at
+the first dispatch), 0 executor tasks, 32 tests landed, 0 defects found, all four discarded; ledger rows this night: 1 overrule with its
 written reason (t-2, city_spawn_plan) and 1 control (sim_hash, the fourth paired module). No Codex run for the c-2 mask
 (02:21 JOURNAL: one-line predicate, the break tests now follow it, no slot to run a round before the stop).
 
@@ -101,6 +106,10 @@ written reason (t-2, city_spawn_plan) and 1 control (sim_hash, the fourth paired
 - Item 7, sim_hash control (fourth paired module): Opus alone 46819 tokens, 14 tests, mutate 14/15 on the same
   15-of-91 sample; Codex 162 s + Claude review 64833 tokens -> `claude_tokens_saved: -18014` on this module.
   The control's 730 s are inflated by my wait bug (stated in the ledger row).
+- Tester for the O(actors) hash build (n15t-break-hash-build, session 5, 144 s, 5593 tokens out): 9 tests with a naive
+  oracle and a fresh-hash comparison on every query, 9/0; planted: no touched-cell clear -> 7 fail; no cell sort -> 0
+  fail, which showed the sort is unobservable, so it went (both sims, parity exact). Review split the 240-line file in two
+  plus `tests/support/sim_hash_oracle.gd` (test bodies unchanged). accepted-after-revision (d195c73df).
 
 ## Morning merge, run for real (item 4)
 
@@ -152,11 +161,13 @@ the right film).
   native`): **1** shipped (t-4), **241** the pre-t-4 rule (reproduced tick for tick), **65** void or a building (drive
   over a kerb or plaza, turn before a building). Recommend **65**: a car may cross a plaza but never a building. Kept at
   1 tonight because 1 is your Call. Side by side: `gtai-masters/n15/tools/c2-dead-end-mask-241-1-65-4ppm.png`.
+  **In tier A it is worse** (`car_route_trails.gd --tier=a`: the hull meets solid 1 m cells, 6254f741e): at 1 the two
+  eastbound cars cross the plaza and end pinned on the building, one is killed after 20 s stuck; at 65 they U-turn
+  inside the plaza and nobody dies (`gtai-masters/n15/tools/c2-tier-a-mask-241-1-65-4ppm.png`, `evidence/c2_tier_a/`).
 
 ## Not done yet
 
 - t-5 cost on a quiet machine (every number tonight is CONTENDED; the sign is 6/6, the size soft).
-- The hand-made-map trails are tier B (no hull); a tier A car on a plaza meets the hull push-out, not filmed.
 
 ## Next steps
 
