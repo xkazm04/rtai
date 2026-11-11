@@ -22,7 +22,7 @@ export const bakedIn = (cwd) => checkBaked({ list: join(cwd, 'project/data/gener
 
 export const STEPS = ['merge', 'debt', 'native', 'bake', 'gates', 'reels', 'export'];
 const SAFE_VERBS = new Set(['status', 'rev-parse', 'symbolic-ref', 'merge', 'add', 'commit', 'mv', 'log', 'worktree', 'show', 'show-ref', 'diff']);
-const DOCS = ['JOURNAL.md', 'REPORT.md'];
+export const DOCS = ['JOURNAL.md', 'REPORT.md'];
 export const BASELINE = 'tools/debt/baseline.json';
 const STATE = 'build/merge-state.json';
 const USAGE = 'usage: node tools/merge/morning.mjs --worktree=<dir> --lanes=<a,b,c> --date=<yyyy-mm-dd> [--debt-reason="<why>"] [--steps=<list>] [--resume] [--dry-run] [--timeout=<min>]';

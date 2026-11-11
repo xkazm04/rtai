@@ -22,6 +22,7 @@ Run these from the root of your worktree. Exit codes are shared: `0` pass, `1` f
 | make a new worktree able to run the game | `node tools/dev/wt_init.mjs <worktree>` |
 | have Codex write tests for an untested module | `node tools/codex/factory.mjs pick`, then `run --stems=<stem>` |
 | do the morning merge | `node tools/merge/morning.mjs --worktree=<integration> --lanes=<a,b> --date=<yyyy-mm-dd>` |
+| see what the morning merge will meet (no worktree, no ref written; does my change clash with a lane?) | `node tools/merge/preview.mjs --lanes=<a,b,c> [--base=main]` |
 
 ## tools/film/film.mjs: one film or still of the real game
 
