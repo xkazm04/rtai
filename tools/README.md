@@ -250,6 +250,11 @@ lines fails here because the debt ratchet stops the commit for it. Seconds, agai
 the full lint in the commit hook, and it shows every problem at once. `--no-godot` skips the parse
 check, and `--files=<a,b>` names the files yourself.
 
+It first prints the merge-clash line for your WORKING TREE (n15, `tools/merge/clash.mjs`, staged or
+not; a temp index takes `git add -u`): `merge-clash: WARNING your changes make
+project/features/characters/cast_flags.gd conflict with n15-combat ...`. A warning only, the exit code
+is lint's. `--no-clash` skips it.
+
 **Refuses:** a file that does not exist, an unknown flag.
 **Unverifiable (exit 3):** gdformat, gdlint or Godot could not run. A checker that failed without
 naming a file counts as not run, so a missing tool can never read as "ok".

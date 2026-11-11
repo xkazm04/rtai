@@ -89,6 +89,21 @@ export function copiedIndex(repo, baseEnv = process.env) {
   return { git, done: () => rmSync(dir, { recursive: true, force: true }) };
 }
 
+/** The warning lines for the WORKING TREE of `repo` (tools/gate/quick.mjs: before anything is staged):
+ *  a temp copy of its index takes `git add -u`, so tracked edits count, staged or not (new untracked
+ *  files do not). [] when `repo` is not a git worktree. */
+export function worktreeLines(repo, env = process.env) {
+  let copy;
+  try {
+    copy = copiedIndex(repo, env);
+  } catch { return []; }
+  try {
+    const add = copy.git(['add', '-u']);
+    if (add.status !== 0) return [`merge-clash: not checked (git add -u on a temp index: ${add.stderr.trim().slice(0, 200)})`];
+    return lines(newClashes(copy.git, env)).map((l) => l.replace('this commit makes', 'your changes make'));
+  } finally { copy.done(); }
+}
+
 export function main(argv = [], { git, err = console.error, env = process.env } = {}) {
   const repo = argv.find((a) => a.startsWith('--repo='))?.slice('--repo='.length);
   const bad = argv.find((a) => !/^--repo=.+$/.test(a));

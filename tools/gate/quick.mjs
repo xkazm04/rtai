@@ -3,10 +3,12 @@
 // hook finds them one round trip at a time: CRLF left by gdformat or a text-mode write, gdformat,
 // line length and the other gdlint rules, the size and function caps, the banned APIs, and the
 // engine's own parse check, which is the only thing that sees a warning-as-error such as float(Variant).
-//   node tools/gate/quick.mjs [--files=<a,b>] [--fix] [--no-godot]
+//   node tools/gate/quick.mjs [--files=<a,b>] [--fix] [--no-godot] [--no-clash]
 // With no --files it checks every changed, staged or untracked .gd under project/ (never addons/).
 // --fix runs gdformat and strips CRLF, then checks. A file that grew past the soft cap fails even
 // though the full lint only warns, because the debt ratchet stops the commit for it.
+// It also prints tools/merge/clash.mjs's line for your working tree (a NEW code conflict with a sibling
+// lane is a WARNING; it never changes the exit code). --no-clash skips it.
 // Exit: 0 ok, 1 issues, 2 usage, 3 unverifiable (a checker could not run, so the file is unproven).
 import { spawnSync } from 'node:child_process';
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
@@ -14,8 +16,9 @@ import { join, relative, resolve, sep } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { ROOT } from '../lib/repo.mjs';
 import { FILE_SOFT_LINES, checkAll } from '../style/check_gd.mjs';
+import { worktreeLines } from '../merge/clash.mjs';
 
-const USAGE = 'usage: node tools/gate/quick.mjs [--files=<a,b>] [--fix] [--no-godot]';
+const USAGE = 'usage: node tools/gate/quick.mjs [--files=<a,b>] [--fix] [--no-godot] [--no-clash]';
 const LINE_LENGTH = ['--line-length', '100'];
 
 const norm = (p) => p.split(sep).join('/');
@@ -109,16 +112,18 @@ function fix(paths, root, run) {
 }
 
 /** The CLI as a function. Returns the exit code. */
-export function main(argv, { root = ROOT, out = console.log, err = console.error, run = tool } = {}) {
-  const opts = { files: null, fix: false, godot: true };
+export function main(argv, { root = ROOT, out = console.log, err = console.error, run = tool, clash = worktreeLines } = {}) {
+  const opts = { files: null, fix: false, godot: true, clash: true };
   for (const a of argv) {
     const m = /^--files=(.+)$/.exec(a);
     if (m) opts.files = m[1].split(',').filter(Boolean);
     else if (a === '--fix') opts.fix = true;
     else if (a === '--no-godot') opts.godot = false;
+    else if (a === '--no-clash') opts.clash = false;
     else { err(`quick: bad argument ${a}\n${USAGE}`); return 2; }
   }
   const t0 = Date.now();
+  if (opts.clash) for (const l of clash(root)) out(l);
   let paths;
   if (opts.files) {
     paths = opts.files.map((f) => norm(relative(root, resolve(root, f))));
