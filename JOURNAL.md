@@ -522,3 +522,11 @@ draft is current to 16:12. No project/ commit since caccc825d: the gate PASS sta
   on top (rocket d90 dropped, 15 entries, no unreferenced file).
 - SERVED (kills-new REQUEST 16:28): 8784c592b. `kill_reel.mjs --weapons=claw_shock` (or `all`) films the charged claw
   on its own claw_throw row; drop the `-- --sig-gun=claw_shock` workaround.
+- 16:54 MILESTONE 09b23b523 (both kill lanes' FRICTION: kills-polish 13:12 + 16:3x "one Godot per lane + 40 min gate =
+  the last 40 min of a session can only do non-Godot work"; kills-new the same lesson): the gate keeps `timing`
+  (evidence_s, reels per view from run_reels' progress lines) and `reels` (all / the views / none) in gate.json and
+  prints the newest timed gate.json as an ETA before it starts; `--reels=<top,tilt70,combo>` runs only those views,
+  printed `PASS reels (combo only: not the full reel gate)` (the final commit still needs plain --reels). Measured
+  basis: kills-polish be2e71080 evidence 16:10-16:19, reels top 319 s, tilt70 745 s, combo 310 s. Tests gate 145/0
+  (views parse/order/refusal, reelSecs, ETA newest-timed, an untimed older gate skipped), lint 19/19.
+  Real-run proof running: `node tools/gate/run.mjs --rev=09b23b523 --reels=combo` (scratch-tools/gate_s5.log).

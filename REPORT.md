@@ -63,6 +63,11 @@ paths it reads, 826b4035a). Each with a SERVED line in JOURNAL.
 there is not in the commit`. Proof: real git, TMP pointed at a missing dir, the line named
 `project/data/tables/signature_kills.json`; with TMP intact the same setup linted a 5530-file export, 19/19.
 
+### 7. Gate timing and partial reels (`tools/gate/run.mjs`, 09b23b523)
+gate.json keeps `timing` (evidence and each reel view) and `reels`; the next gate prints the last one as an ETA;
+`--reels=<views>` runs only those views, labelled `not the full reel gate`. (Both kill lanes' FRICTION: the gate holds
+the lane's one Godot for 30-40 min.) Proof: see Gates.
+
 ## Findings for the kill lanes
 - A signature row's `hitstop_ticks` does NOT freeze the screen: SignatureKills.hold makes the pieces wait. The freeze
   is hit_feel.json's `kill_hitstop` (camera.json `kill`, 6) or the class's bigger stop (blast = `boss_hit` 8).
@@ -100,4 +105,12 @@ Merge tools FIRST: native changed (c-2, CAR_DEAD_END_TILES 65; view lanes keep t
 picked the game side of afe581336, bbee28a9c and 0b5c55fc7 with identical content: expect clean merges there.
 
 ## Next steps
-(the 19:40 session fills this)
+- Kill lanes: drop the `-- --sig-gun=claw_shock` workaround (`--weapons=claw_shock` films it on its own row); use
+  `gate --reels=<view>` mid-session and plain `--reels` on the final commit; read the ETA line before starting a gate.
+- The reel's aftermath LIFETIME is read from data (the KillMarks ring of 12 kills, no timer), not measured: a long
+  film (`--after=600`) with 12 later kills would prove the recycle on screen.
+- A kill earlier than the lab's trigger tick (60) would make the trigger column a post-kill frame (no lab kill does:
+  63+); if a lab ever kills sooner, pickBeats should take kill-8 instead of 60.
+- The pre-commit export failure that made kills-polish's 14:20 commit lint the tree was not reproduced (only the
+  fallback is now loud and retried): if it recurs, the line now names the cause (`no staged snapshot (<error>)`).
+- (the 19:40 session completes this list)
