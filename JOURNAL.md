@@ -739,3 +739,19 @@ untracked dev/sim/car_route_trails.gd copy is mine) and `git branch -D n15t-cont
   JOURNAL.md, tools/debt/baseline.json (morning.mjs handles both); +combat the same two code files as before
   (cast_flags.gd, rivet_res.gd) + docs + baseline. `resolve_hero_x_combat.py` still resolves both; output passes
   gdformat --check and gdlint. Unchanged since 03:17: REPORT merge notes stand.
+
+## Session 6 (04:23-05:53)
+
+- 04:23 read JOURNAL, git log, hero + combat JOURNALs. No new REQUEST tools. Combat's FRICTION (their JOURNAL :416)
+  "LaunchArgs.value() returns "" for any flag not in its KNOWN_FLAGS list, so a dev before-flag read through it never
+  fires (my first impact before/after was byte-identical)": servable as a tool, not only "their own".
+- 04:33 SERVED combat, 88b42ec2d: lint check `launch-flags` (`tools/style/launch_flags.mjs`): parses KNOWN_FLAGS out
+  of project/boot/launch_args.gd and names every `LaunchArgs.value|has("--x")` (or a same-file `const NAME = "--x"`)
+  outside tests/ whose flag is not listed, as `file:line`. Real run, planted: appended `const PLANT_FLAG: String =
+  "--impact-follow"` + `LaunchArgs.value(PLANT_FLAG)` to boot/arena_args.gd -> `false ['project/boot/arena_args.gd:30:
+  LaunchArgs.value("--impact-follow") reads a flag not in KNOWN_FLAGS ...']`; `git checkout --`, status clean. Unplanted:
+  `node tools/lint/lint.mjs` -> `ok   launch-flags`, `lint: all 18 checks pass over 1433 GDScript files` (54 s).
+  `git grep` of LaunchArgs reads on n15-hero and n15-combat tips: every flag is in KNOWN_FLAGS (no merge break).
+  `node --test tools/lint/launch_flags.test.mjs` 5/5. AGENTS.md lint row names it.
+- 04:34 machine: bench.lock absent but 2 Godot processes run (`tasklist | grep -i godot`: PIDs 21592, 58828 at 832 MB,
+  not mine): t-5 cost stays CONTENDED (no quiet machine).
