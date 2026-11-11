@@ -196,3 +196,111 @@ HAT piece; judge against the placeholder at the same ticks (compare `--a=027571c
   camera; frame 3 pitches forward with the arms limp; frame 4 the face-down corpse with the back-of-head wound, as long
   as the grid's lying frame. Keep the blood strand (red = blood, it shows the exit). The away facing (column 5) of
   frame 3 still reads standing: watch it at 32 px/m. Verdict: wire all four kinds first thing next session.
+
+## Iteration 8 (2026-11-11 12:13, BUILD)
+
+- 12:13 read JOURNAL, git log, replies (it414: all four kinds' pistol_snap p70 delivered; p55 for the cops running).
+- 12:20 the delivered cells measured (`/tmp/feet.py`: the lowest opaque row per cell): frame 2 (the upright buckle)
+  sits on the fall grids' feet line for patrol/SWAT/suit; the riot cells came at 738x482 (its grid is 684x494) with
+  the feet 7 px low; frame 1 runs lower (blood drips). Patrol `4_5` (the delivered away corpse, = `4_1` turned) reads
+  as a man STANDING seen from behind, so the away column takes the 3/4-away corpse, as the long fall grids do.
+  `tools/art/kill_cells_pack.py --death=pistol_snap` packs 5 facings x 4 frames per kind, each column shifted so its
+  buckle feet sit on the cell centre.
+- DECISION kills-new/death-cells: a row's new `cells` key (`at`: each frame's start tick; `grids`: view art -> card
+  row -> grid file; schema extended, data first) gives a death its OWN drawn grid; `KillDeathCells` looks it up (the
+  art's own, else p70 as the fall grids fall back) and `KillFallCells.attach` carries it instead of the fall grid,
+  faced the row's fall, from t0; the pose track keeps only its slide (no lean on drawn frames). Kinds without cells
+  keep the fall-grid placeholder; dropping the `cells` key restores it everywhere. Rejected: a per-row dict in code.
+- 12:38 MILESTONE `74a345aaf` the drawn pistol cells. Same-tick A/B 64 px/m patrol cop (`compare.mjs weapon:pistol
+  --a=HEAD --b=. --victim=cop/head_cap`): `evidence/n16-kills-new/pistol_cells_ab_64ppm_patrol_t{340,350,356,390}.png`
+  + `_t330-400.mp4`. Judged by eye: t340 the head thrown back with the cap in the air and the red exit strand (the
+  placeholder at that tick: the standing card leaned, cap on); t350 the buckle, cap gone, blood from the head (the
+  placeholder still capped); t356 the pitch, arms limp; t390 face down, head toward Rivet, the back-of-head wound up.
+  Drawn wins on every beat. Unit `test_kill_death_cells.gd` 4/4 + kill_new_styles + signature_kills 26/26.
+- `64be75e2a` took the tools lane's kill-lab turn (afe581336, game side only, identical content) for the kill reel.
+  Its `--before=d6a4fb1a8` refuses (native differs; and that commit has no lab turn), so the reel films the after
+  only; the same-tick before/after is the compare above.
+- 12:45 the cap: the drawn frame 1 throws it, frame 2 has none, so it vanished. `KillLooseArt`: from t8 the asset
+  lane's loose tumble cells (`<kind>_headgear_tumble.png`, packed `--headgear`) arc 1.1 m back along the shot over
+  12 ticks (0.4 m hop, 2 tumble frames every 3 ticks) and stay on the street. Row `cells.loose` + fx `loose_*`.
+- 12:30 kill reel (tools lane's `kill_reel.mjs --weapons=pistol --dirs=0,90,225 --ppm=32,64 --clips`) on `64be75e2a`+:
+  dirs 0 and 225 PASS (kill at 63), dir 90 UNVERIFIABLE (no kill event in 420 ticks). Judged at 64 px/m: t64 the
+  snap with the cap in the air, t73 the buckle with the loose cap arcing back, t83 face down with the head toward
+  Rivet (dir 225: the body lies under Rivet, close in the lab) and the cap behind him on the street.
+  Evidence: `evidence/n16-kills-new/pistol_cells_reel_{32,64}ppm_dirs0-90-225.png`, `_reel_{32,64}ppm_dir{0,225}.mp4`,
+  `_reel_64ppm_dir0_225_t64-83.png`.
+- 12:33 MILESTONE `e4fcf6448` the loose cap/helmet (KillLooseArt; provenance lines for the 3 tumble PNGs).
+- REQUEST tools: (3) the kill reel's lab never kills with `--weapons=gatling` (all dirs: "0 kill event(s) in 420
+  ticks"), nor the pistol at `--dirs=90`. The Gatling was filmed with `film.mjs weapon:gatling` instead.
+- 12:40 Gatling, first build: the six rig parts held by GibSim's grind hold (24 ticks), shaken by the view, then
+  gathered into a heap at his feet. FILMED (`film.mjs weapon:gatling --victim=cop/head_cap --ppm=64`, kill at 369):
+  on a CARD victim on this branch the six GibCardCut bands drew only his legs, the upper bands lost under the splat;
+  a heap of nothing. DECISION kills-new/shred-whole: the shred plays on the whole body copy like the other n16
+  deaths: the pose track shakes him back (2-12 deg every 1-2 ticks, t0-24), KillShredArt tears 8 scraps (cloth or
+  flesh with a bone fleck, 0.16 m, a red spurt) off his figure hip to neck every 3 ticks and flies them up to 1.4 m
+  along the stream to lie on the street, and from t24 his drawn fall grid drops him back along the stream (12
+  ticks). The six-part heap stays in KillShredArt as the data alternative (`pieces` = the six + `grind_ticks` 24)
+  once kills-polish's drawn gib pieces (GibCardPieces.dress_rig) are merged. No hit-stop (the stream never stops).
+- 12:52 MILESTONE `5b5ac0d49` Gatling. Evidence `evidence/n16-kills-new/gatling_shred_after_64ppm_patrol_t369-449.png`
+  (t369-390 held upright, scraps leaving along the stream; t393 the drop; t400+ lying among the scraps).
+  DEFECT open: at t393 the drawn fall's first frame sits ~0.5 m left of the standing copy (the copy is his HIT card,
+  shoved off his feet by the earlier rounds; the stitch had the same and moved to the fall grid from the hit).
+  Owed: a same-tick before (the standard death) and the 32 px/m film.
+- 12:58 asset replies it414: pistol_snap p55 DELIVERED for patrol, riot (bald redraw) and SWAT (suit ped: no p55
+  long_fall, so p55 falls back to the p70 suit cells; answer to them: yes, keep using p70 for the suit at p55, no
+  extra drawing). smg_stitch patrol p70 sheets B, cells next asset session. Packed p55 (`kill_cells_pack.py
+  --art=p55`), board by eye: snap/buckle/pitch/corpse in all 5 columns, the away corpse already the 3/4-away one.
+- 13:00 Gatling same-tick A/B (`compare.mjs weapon:gatling --a=917064b44 --b=HEAD --native=donor`, patrol cop, kill
+  t369) at 64 and 32 px/m: `evidence/n16-kills-new/gatling_shred_ab_{32,64}ppm_patrol_t{381,390,410}.png` + clips
+  t355-460. At 32 px/m in the city block: before = already lying at t390; after = still held up with the scraps
+  flying off along the stream, then down among them. Reads at play zoom. Variant (buckle frame from the hit,
+  `fall_at`) filmed and rejected: `gatling_shred_variant_buckle_from_hit_64ppm_t369-449.png`.
+- 13:05 MILESTONE `011bbe3a4` electro baton `baton_overload` (style `cook`, KillCookArt; beat sheet 5 as written, AS
+  BUILT: hit-stop 3; t3-45 locked, a 1.5 deg buzz every tick (none under --reduced-motion), cream veins from the chest,
+  a glow under the skin, steam puffs off collar/shoulders every 6 ticks, eyes two cream points out at t40; t45 the
+  drawn fall grid back along the blow over 10 ticks; smoke 200 ticks; no blood). Kill reel `--weapons=electro_baton
+  --dirs=0,225 --ppm=32,64`: all four PASS (kill at 68). Judged at 64 (`baton_overload_after_64ppm_dir0_t78-88-108_zoom.png`):
+  glow, veins, eyes and steam read on the dark-blue cop; the eyes sat on the cap brim -> moved to 0.87 of his height
+  (not re-filmed). NOT judged yet at 32 px/m by eye (sheet `baton_overload_reel_32ppm_dirs0-225.png` committed).
+  No same-tick before (the standard baton death) yet: owed.
+- Gates on `9a5ccf426`: full unit 2655 passed / 0 failed / 2 skipped (12:55, on `5b5ac0d49` + the p55 data).
+- 13:08 item 6 scouted (no code): `burn_char` is keyed on weapon `burn` (the fire damage kind), so molotov and
+  flamethrower reach the table as the same id: splitting them needs the kill event to carry the source weapon (or
+  a `burn_molotov` kind at the molotov's fire): read `KillEvent.make` callers and the fire damage path first. The
+  claw: `claw_shock` sits in kills-polish's `electro_shock.also_weapons`; a claw finisher row needs that entry moved
+  (a shared-file edit: announce it in this JOURNAL and in theirs before making it).
+- masters: `gtai-masters/n16/kills-new/` with `frames.json` (12 entries: pistol cells A/B 64, pistol reel, Gatling A/B
+  32 + 64 + sheet, baton zoom, stitch A/B, pin street, 2 clips).
+- 13:11 scenarios on `011bbe3a4`: 54/55 ok, `brutality_kills` FAILED "gatling landed 0 shred kills in 700 ticks":
+  the kill lab tapped the trigger 1 tick, so the Gatling never spun up (the same cause as the reel's REQUEST 3).
+  The tools lane had already served it (`0b5c55fc7`, kill_lab.gd `_held_ticks` holds a spun gun through its spin-up);
+  taken game side only, identical content, in `e5e78bcbb` (+ their `test_kill_lab_held.gd`). Re-run
+  `run_scenarios.gd -- --only=brutality_kills`: ok (44 s), with the Gatling and the baton in KILLS.
+  New unit `test_kill_cook_shred.gd` (cook tremble only while cooking, none under reduced motion; shred tears its
+  count on its ticks, off his figure). Selected units 19/19.
+- 13:15 Gatling kill reel dirs 0/135/225 at 32 + 64 px/m: all six PASS (kill at 95, hit-stop held 0 measured):
+  held up t95-115, down by t135 among the scraps in all three (`gatling_shred_reel_{32,64}ppm_dirs0-135-225.png`).
+- 13:18 FRICTION: `compare.mjs kill:electro_baton` fails at once on this tree ("unknown shot kill": the `kill:` shot
+  is in the tools lane's film tools, not this branch's); my wait loop on its log then burned 10 min. The baton's
+  same-tick before is still owed: run the tools lane's copy (`node ../n16-tools/tools/film/compare.mjs kill:electro_baton
+  --a=917064b44 --b=HEAD --native=donor --at=74,85,100,118,150`) or `kill_reel.mjs --before=` once the base has the lab.
+
+### Asset status (asked, delivered, wired)
+- pistol_snap: p70 patrol/riot/SWAT/suit WIRED (`74a345aaf`), loose cap/helmet WIRED (`e4fcf6448`), p55
+  patrol/riot/SWAT WIRED (`9a5ccf426`; the suit at p55 uses p70, no p55 suit grid: tell the asset lane no extra drawing).
+- smg_stitch: patrol p70 sheets B, cells promised next asset session -> `cop_patrol_smg_stitch_70_cells/`; riot/SWAT/suit
+  and p55 not started. nail_pin, gatling_shred, baton_overload: not started (queued in the asset lane's order).
+
+NEXT (iteration 9, in this order): (1) wire the smg_stitch cells when `gtai-art/library/keyed/street/cop_patrol_smg_stitch_70_cells/`
+lands: `kill_cells_pack.py --death=smg_stitch`, add `cells` to the smg_stitch row (frame ticks from beat sheet 2: hip
+0, belly 3, chest 6, neck 9, spin 10, lying 18), keep the drawn whirl only where the cells lack one; film compare
+`--a=<before wire> --b=HEAD --subject=rivet` at 64 and the reel at 32; provenance lines. (2) the baton's same-tick
+before/after with the tools lane's `compare.mjs kill:electro_baton` (see FRICTION 13:18) and judge it at 32 px/m by
+eye (the eyes now at 0.87: check they sit on the face). (3) the Gatling's sideways jump at the drop (t+24): offset
+the fall grid to the hit card's drawn feet (StreetWalkerHit.shove) rather than the copy's origin, or ask the asset
+lane for the shred cells. (4) Gloria's WALL case: film it (tools REQUEST 2 `--victim-wall` still open). (5) item 6:
+molotov vs flamethrower (both are weapon `burn` in the table: needs the source weapon on the kill event) and the
+claw finisher (`claw_shock` lives in kills-polish's electro_shock row: announce before moving it). (6) the full
+gates on the last code commit: lint, full unit, scenarios (54+1 ok as of 13:11 + brutality re-run ok), the evidence
+run (parity + look goldens), the reel gate; REPORT.md by 19:40 with a Calls line per death (pistol, stitch, pin,
+shred, overload) and its 32 + 64 px/m stills from `gtai-masters/n16/kills-new/frames.json`.
