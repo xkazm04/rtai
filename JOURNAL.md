@@ -716,3 +716,13 @@ Logs: C:\Users\kazda\kiro\gtai-n16\scratch-tools\logs\.
 
 NEXT (after the run): the Director merges tools FIRST (native changed for c-2). Open items for a later tools lane:
 `gone by` ignores marks inside the victim's standing spot (victim-free twin film), the KillMarks 12-kill ring is unfilmed.
+
+## Session 8 (iteration 8, 19:32 STABILIZE, past freeze)
+- 19:32 tree clean at f8d718990; `git diff --stat caccc825d HEAD -- project native` empty, so caccc825d's full gate
+  (all reel views) still stands for the tip. Kill journals: no new REQUEST tools / FRICTION (kills-polish's
+  "pre-commit full lint ~2 min" FRICTION was triaged in s6). Masters dir 16 files, frames.json 15 entries. REPORT.md
+  is final from s7; nothing changed it. No Godot run this session.
+
+NEXT (after the run): unchanged from s7. The Director merges tools FIRST (native changed for c-2). Open for a later
+tools lane: `gone by` ignores marks inside the victim's standing spot (victim-free twin film); the KillMarks 12-kill
+ring is unfilmed.
