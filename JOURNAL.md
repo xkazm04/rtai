@@ -629,3 +629,14 @@ C:/Users/kazda/kiro/gtai-n15/scratch-tools-before` (holds an untracked copy of d
 - 03:08 new test `test_the_window_corners_and_a_rebuild_keep_every_actor_in_its_cell` (window cell 1, the last cell,
   a move then rebuild leaves the old cell empty). Planted by hand: the touched-cell clear removed -> 12 of 20
   sim_hash tests fail (incl. this one's file), restored after (`git status`: only the test file).
+- 03:09 TO hero and combat: n15-tools changed the sim again (hash build O(actors), native rebuild #5); parity's final
+  digest is unchanged and nothing you film reads it: keep your DLLs.
+
+NEXT (session 5; replaces the 02:53 NEXT): (1) Read hero/combat JOURNALs for REQUEST tools / FRICTION (served to
+02:21). (2) FIRST: full gate + reels on HEAD (`node tools/gate/run.mjs --rev=HEAD --reels --timeout=40`, APPDATA
+tools): the last PASS (6f7422812) predates the hash-build sim change 2229fdd98; remove the snapshot after
+(`removeSnapshot` from tools/lib/snapshot.mjs). (3) Delete the dead `hstart[hw * hw]` sentinel (and the +1 sizes) in
+sim_hash.gd + hash.cpp/city_core.h if nothing reads it (`grep -rn "hstart" project native`), native rebuild #6,
+parity, mutate again. (4) REPORT final at 07:40 (Calls c-1, c-2; merge notes: tools first, rebuild DLLs). (5) End of
+night: `git worktree remove --force C:/Users/kazda/kiro/gtai-n15/scratch-tools-before` (an untracked copy of
+dev/sim/car_route_trails.gd there is mine) and `git branch -D n15t-control-sim-hash`.
