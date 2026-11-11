@@ -54,3 +54,19 @@ func test_the_p70_reload_strips_are_their_110_cuts_times_res() -> void:
 		assert_eq(RivetRes.of(path), RivetWalk.RES, name)
 		var tex: Texture2D = load(path) as Texture2D
 		assert_almost_eq(tex.get_height() / RivetWalk.RES, cells[name], 2.5, name)
+
+
+func test_the_p55_reload_strips_are_their_110_cuts_times_res() -> void:
+	var cells: Dictionary[String, float] = {
+		"rivet_reload_pistol": 108.0,
+		"rivet_reload_pistol_left": 116.0,
+		"rivet_reload_plasma_rifle": 103.0,
+		"rivet_reload_plasma_rifle_left": 116.0,
+		"rivet_reload_gatling": 116.0,
+		"rivet_reload_gatling_left": 111.0,
+	}
+	for name: String in cells:
+		var path: String = RivetStrips.DIR + "p55/" + name + ".png"
+		assert_eq(RivetRes.of(path), RivetWalk.RES, name)
+		var tex: Texture2D = load(path) as Texture2D
+		assert_almost_eq(tex.get_height() / RivetWalk.RES, cells[name], 2.5, name)
