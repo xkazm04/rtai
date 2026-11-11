@@ -311,3 +311,6 @@ NEXT (iteration 5):
 5. Owed films: the ghosts' four (tonnage, dent, kerf, ohm), quest 1 p55 peek still, aftermath durations on film
    (stills at kill + 6, 8, 12, 17 s), item 5's full arena + city street fight with every weapon -> DEFECTS loop.
 6. Final gate on the tip before the 19:30 freeze (start it by ~18:40), REPORT at 19:40 (draft in REPORT.md).
+- GATES on be2e71080: PASS lint 19/19, unit 2682/0/2, scenarios 55, parity bit-exact (mutation at 629), selftest look
+  goldens 11/11 worst 0.00 (no golden moved: the burn z and the p55 X-ray scale touch none), export-audit 688/0. Reels
+  running (build/gate/be2e71080275/reels.log). Not covered: c43cae42d (scorch line), committed after.
