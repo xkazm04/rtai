@@ -242,3 +242,7 @@ NEXT (it17, read first):
 - REPORT.md FINAL (07:35): header, Next steps 3-5 (Kerf feet octants, Rivet knock/base x1.5, the untaken offers). `node tools/evidence/cites.mjs REPORT.md`: 55 paths, 48 ok, 7 pattern, 0 missing. Masters `gtai-masters/n15/hero/frames.json` 15 entries, 15 files, all present.
 - No Godot run this session (no code change; the gate on 5f9b18955 stands).
 NEXT (morning / next night): REPORT.md Next steps 1-5 in order; first Tonnage walk16 frames 2 and 6 when the asset lane delivers, then Kerf's feet in the other 5 octants, then Rivet's knock grid at x1.5.
+
+## it24 (07:31, STABILIZE after freeze)
+- CHECK 07:31: tree clean at 48fadb3c1; `git diff --stat 5f9b18955 HEAD -- project tools` empty, so the full gate PASS on 5f9b18955 (lint 16/16, unit 2528/0, scenarios 55/55, parity bit-exact, goldens 11/11, release-compile 674/0, reels PASS) still covers the final commit. `node tools/evidence/cites.mjs REPORT.md`: 55 paths, 48 ok, 7 pattern, 0 missing. Replies file last written 07:17 (already in REPORT Next steps 5). No Godot process of this lane running. No change made.
+NEXT (morning / next night): unchanged from it17: REPORT.md Next steps 1-5 in order (Tonnage walk16 frames 2 and 6 on delivery, Kerf's feet in the other 5 octants, Rivet's knock grid at x1.5).
