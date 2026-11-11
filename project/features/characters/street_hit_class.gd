@@ -6,7 +6,8 @@ extends RefCounted
 ## and an electro tap all read as the same shoved walk. The asset lane's it450 hit-class cells
 ## (street_hit.py CLASSES: a jab snaps the head back, a heavy blow doubles the body over, a shock
 ## throws the arms out, the arcs drawn on) now draw for the blow's class, faced by the blow like
-## the other hit cells, for HOLD_S from the hit. ON false = the before (the shoved walk).
+## the other hit cells, for HOLD_S from the hit. ON false or the launch flag --hit-class=off = the
+## before (the shoved walk), so a film's before and after run one build at the same tick.
 const ON: bool = true
 ## Rivet's melee weapon -> the drawn class of its blow (any other melee weapon: jab).
 const MELEE: Dictionary[StringName, StringName] = {
@@ -60,12 +61,14 @@ const FILL: Dictionary[String, float] = {
 	"swat_heavy_hit.png": 1.08,
 	"swat_shock_hit.png": 1.08,
 }
+## --hit-class=off read once: -1 unread, 1 off.
+static var _off: int = -1
 
 
 ## The drawn class of a wounding blow (&"" = none): by Rivet's melee weapon, else by the hit class;
 ## only for a wound family that draws one.
 static func blow_of(hit_class: StringName, weapon: StringName, family: StringName) -> StringName:
-	if not ON or not FAMILIES.has(family):
+	if not on() or not FAMILIES.has(family):
 		return &""
 	if hit_class == &"melee":
 		return MELEE.get(weapon, &"jab")
@@ -82,3 +85,10 @@ static func grid(r: HumanReact, row: String) -> String:
 	if not g.has(r.blow) or r.t >= hold:
 		return ""
 	return str(g[r.blow])
+
+
+## ON, unless the run was launched with --hit-class=off (read once).
+static func on() -> bool:
+	if _off < 0:
+		_off = 1 if LaunchArgs.value("--hit-class") == "off" else 0
+	return ON and _off == 0

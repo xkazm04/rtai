@@ -65,3 +65,17 @@ func test_from_args_routes_sig_wall_and_sig_dir() -> void:
 	var turned: KillLab = _lab(Vector2(10.0, 10.0))
 	KillLabTurn.from_args(turned, _east_wall, ArenaArgs.parse(PackedStringArray(["--sig-dir=90"])))
 	assert_gt(turned.guards[0].pos.y, 12.0, "--sig-dir still turns")
+
+
+func test_sig_wound_lets_every_guard_live_through_a_blow() -> void:
+	var lab: KillLab = KillLab.new()
+	var g: Fighter = Fighter.new()
+	lab.guards.append(g)
+	lab.spots = PackedVector2Array([Vector2.ZERO])
+	KillLabTurn.from_args(lab, Callable(), ArenaArgs.parse(PackedStringArray(["--sig-wound"])))
+	assert_eq(g.hp, KillLabTurn.WOUND_HP)
+	assert_gt(g.hp - KillLab.BLADE_DAMAGE, 0.0, "the blade's blow wounds")
+	var plain: Fighter = Fighter.new()
+	lab.guards[0] = plain
+	KillLabTurn.from_args(lab, Callable(), ArenaArgs.parse(PackedStringArray([])))
+	assert_eq(plain.hp, 1.0, "without the arg: untouched")

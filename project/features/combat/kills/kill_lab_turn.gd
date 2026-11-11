@@ -5,18 +5,24 @@ extends RefCounted
 ## --sig-wall[=<gap m>] (kills-new REQUEST: Gloria's pin-to-wall case) instead stands the one guard
 ## where a wall (the stage's push_out) is `gap` m behind him along Rivet's shot, the direction
 ## whose guard lies nearest the usual SOLO_OFF distance (ties: the smaller angle).
-## Dev capture only: a lab without either arg, and every run without --sig-lab, is untouched.
+## --sig-wound (n17 npc-react): every guard takes each blow and lives (hp WOUND_HP), so the lab
+## films a wound's reaction (the living hit cells) at the kill's framing instead of a kill.
+## Dev capture only: a lab without these args, and every run without --sig-lab, is untouched.
 
 const WALL_STEP_DEG: int = 5
 const WALL_PROBE_M: float = 0.15
 const WALL_MAX_M: float = 9.0
 ## Never nearer Rivet than this: the shot and the guard must read apart.
 const WALL_MIN_GUARD_M: float = 2.0
+const WOUND_HP: float = 100000.0
 
 
 static func from_args(
 	lab: KillLab, push_out: Callable, args: ArenaArgs = ArenaArgs.parse()
 ) -> void:
+	for g: Fighter in lab.guards if args.has("--sig-wound") else []:
+		g.hp = WOUND_HP
+		g.max_hp = WOUND_HP
 	if not args.has("--sig-wall"):
 		apply(lab, args.number("--sig-dir", 0.0))
 		return

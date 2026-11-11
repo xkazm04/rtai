@@ -32,6 +32,7 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--feel",
 	# n7-ranged: --react-snap=off drops the hit snap of a reaction family (the electro bolt's before)
 	"--react-snap",
+	"--hit-class",  # n17 npc-react: =off, no hit-class cell on a living wound (the before)
 	# n7-ranged: --shard-pop=<ticks> the homing shard victim's freeze before the pop (owner call)
 	"--shard-pop",
 	# n7-ranged: --end-cue=off drops the weapons rows' end_cue (the rocket and nuke blast sound)
@@ -72,8 +73,7 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--kerf-glide",
 	# view lab: the camera projection (data/tables/view.json; default top = the shipped view)
 	"--view",
-	# d8-weapons: --held-pitch=off draws the top-down held weapon under a tilt (the before);
-	# =squash keeps the camera squash on the 55 part
+	# d8-weapons: --held-pitch=off: the top-down held weapon under a tilt; =squash: 55's squash
 	"--held-pitch",
 	# d8-weapons: --shot-lift=off draws rounds and hits on the ground under a tilt (the before)
 	"--shot-lift",
