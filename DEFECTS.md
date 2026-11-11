@@ -62,5 +62,7 @@
     flashless cells at 2x; after: the drawn crouch, top 8 px lower, boots on the line).
 15. **Back -> front -> back flip on a shot toward the camera** (same film, t61-63): he stands showing his back (facing
     up the screen), the shot tick draws the camera fire cell (his front), the next tick his back again: one tick of
-    front. The aim is down, his facing up (kill lab: Rivet does not turn to the guard). -> open: check in a street
-    fight whether the bot's facing lags the aim there too (relates to #11).
+    front. The aim is down, his facing up (kill lab: Rivet does not turn to the guard). Probe `facing_off` (drawn vs
+    sim facing): 0 through t60, 172 deg at t61 (the sim turns to the guard on the shot), 12 at t62, 17 at t63 while the
+    drawn cell is his back again: the drawn octant (RivetStride.oct_of) and the probe's facing disagree after the shot.
+    In weapon:pistol (gunplay bot) the facing holds 1-4 deg off through the shot: so far a kill-lab case. -> open.
