@@ -173,3 +173,12 @@ lanes' journals for REQUEST tools / FRICTION (none at 11:35). Gate on the final 
   row thug, drawn 44x41 at kill, 40x55 at kill+20). Control without --gore=reduced (s2wall katana d90): victim draw -1
   at kill+20, which goreWhole FAILs: the check discriminates. And `--victims=thug` now PASSes the drawn-row check (was
   UNVERIFIABLE in s1: the guard had no rig), so the reel's victim WARNING is gone (README updated).
+- 13:15 kills-new REQUEST (3) (their JOURNAL :233): "the reel's lab never kills with --weapons=gatling, nor the pistol
+  at --dirs=90". Reproduced: `film.mjs kill:gatling -- --sig-dir=90` -> "fire at no tick". Cause: KillLab held the
+  trigger 1 tick per shot and the Gatling's barrels need spin_s (30 ticks) held (Trigger.spin). Fix: `_held_ticks`
+  holds a spun gun through its spin-up + 3 rounds (same line count, debt ratchet). PROOF `kill:gatling --sig-dir=90`
+  -> fire at 90 93, kill at 95. Unit test_kill_lab_held 2/2 (first author; the old code gives 1 < 36, caught).
+  Pistol dir 90: at the new spot (start:-10,0) `kill:pistol --sig-dir=90` -> fire 61, kill 63 (at the start the
+  dummy knot stood south of Rivet; the spot fix cured it, no code).
+- SERVED: kills-new REQUEST (3): cherry-pick the gatling commit (kill_lab.gd + test_kill_lab_held.gd + .uid), and run
+  the reel as before; the pistol dir 90 needs only this tools tree (the shot spot is tool side).

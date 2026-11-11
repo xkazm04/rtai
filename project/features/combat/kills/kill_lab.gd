@@ -175,14 +175,14 @@ func _burning(stage: ArenaStage, g: Fighter) -> bool:
 	return areas != null and areas.fx.has(g.id) and areas.fx[g.id].burn_ticks > 0
 
 
-## Ticks the fire button stays held from each shot: 1 (a tap), or for a charge gun (the electro
-## gun, gunplay 0c0465fd) the tap's plain round, its cooldown and the full charge, so the charged
-## round that kills in one leaves by itself.
+## Ticks fire stays held per shot: 1 (a tap); a charge gun (electro) its round, cooldown, charge;
+## a spun gun (the Gatling: a tap never spun it up, n16) its spin-up and 3 rounds.
 func _held_ticks(stage: ArenaStage) -> int:
 	var gun: GunHand = stage.arena.gun
-	if not blade.is_empty() or gun == null or gun.trigger.spec.charge_ticks <= 0:
+	var s: WeaponSpec = null if gun == null else gun.trigger.spec
+	if not blade.is_empty() or s == null or s.charge_ticks + s.spin_ticks <= 0:
 		return 1
-	return gun.trigger.spec.interval_ticks + gun.trigger.spec.charge_ticks + 3
+	return s.interval_ticks * (3 if s.spin_ticks > 0 else 1) + s.charge_ticks + s.spin_ticks + 3
 
 
 func _target() -> Fighter:
