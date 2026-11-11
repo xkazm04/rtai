@@ -533,7 +533,7 @@ session 7; Calls (a)-(c) stand; update the gate line to the final commit).
   moves ~0.2 m onto his shadow's edge; no new dot at t344. Still a floor dot at his feet front: the burst is a floor
   print and the thrown-back figure leans back off it (the root, left open). DECISION combat/burst-push. Unit 18/0 on
   the touched suites (+2 tests). Lint 16/16.
-- 05:58 GATES started on `61a2d3baa` (`node tools/gate/run.mjs --rev=HEAD --reels`, log build/gate/s8_gate1.log).
+- 05:43 GATES started on `61a2d3baa` (`node tools/gate/run.mjs --rev=HEAD --reels`, log build/gate/s8_gate1.log).
 - DEFECTS blade t62 white stick DIAGNOSED (build/film/kl64_after t58-69): KillSplitFx's designed slash streak (a cream
   bar edged in ink, STREAK_M 1.7 m along the cut, 12 ticks). The cut is the blow rotated by the row's cut_deg 55
   (SignatureKills.on_kill, which also orients the gibs and the ground mark), so it crosses the cop diagonally while
@@ -541,7 +541,7 @@ session 7; Calls (a)-(c) stand; update the gate line to the final commit).
   Still `evidence/n15-combat/katana_slash_streak_64ppm_t58-69.png` (an earlier build's film, not same-build).
 - Call (c) (the upright frame between blade swings) left as a Call: a one-tick blip at 60 Hz, and the latch lives in
   rivet_strips.gd at its 200-line ratchet.
-- GATES on `61a2d3baa` (05:58-06:04, build/gate/61a2d3baac58/gate.json): PASS lint 16/16, unit 2542/0/2, scenarios 55,
+- GATES on `61a2d3baa` (05:43-06:04, build/gate/61a2d3baac58/gate.json): PASS lint 16/16, unit 2542/0/2, scenarios 55,
   parity bit-exact (mutation at 629), look goldens 11/11 worst 0.00, block 5/5 worst 0.69 (= baseline), export-audit
   674, reels top / tilt70 / combo OK. This is the LAST code commit unless a later line says otherwise.
 - Mutation `mutate.mjs --file=features/combat/weapons/gun_fx_follow.gd --max=12`: 66.7 % (8/12); the 4 survivors are
