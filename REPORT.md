@@ -44,6 +44,10 @@ crowd: look goldens re-blessed with a decisions line). t-4 and t-5 move nothing 
   Example (a temp index staging an edit of combat's `--rivet-windup=off` line): `merge-clash: WARNING this commit makes
   project/features/characters/cast_flags.gd conflict with n15-combat ...`. A lane without it runs
   `node <n15-tools>/tools/merge/clash.mjs --repo=.` on a temp copy of its own index.
+- lint check `flag-routes` (f29db6c9b, session 7; lint has 19 checks): a `"--x"` literal that a dispatch helper (`CastFlags._walk(arg)`)
+  matches must be routed there by its caller's guard. On main, hero and combat it names the two dead walk befores
+  (`cast_flags.gd:65: "--rivet-walk-armed=off" is matched in _walk() but no caller routes it there ...`); this
+  branch is clean, since 05e519be8 fixed them. It takes 0.1 s.
 - `tools/dev/flag_index.mjs` (ea02a8898, 89925653b; session 7, hero FRICTION: `--ohm-hand=sim` launched unchecked,
   giving a 0.0 % before/after): `dev/run.mjs` checks an entry with no declared KNOWN_FLAGS against every flag literal
   in our GDScript (name read; for exact reads such as `arg == "--x=sim"`, the value too). `film.mjs` uses the same
