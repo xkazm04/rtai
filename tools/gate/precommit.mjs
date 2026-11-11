@@ -54,14 +54,21 @@ export function stagedPaths(cwd = ROOT, git = spawnSync) {
 export function lintTarget(cwd, { git = spawnSync, exporter = exportIndex, remover = removeExport } = {}) {
   const drift = driftPaths(cwd, git);
   if (drift && !drift.length) return { dir: cwd, line: null, cleanup: () => {} };
-  try {
-    if (!drift) throw new Error('git could not list the unstaged paths');
-    const { dir, count } = exporter(cwd, git);
-    const line = `pre-commit: ${drift.length} path(s) in your tree differ from what you commit (${sample(drift)}): linting the staged snapshot (${count} files) in ${dir}`;
-    return { dir, line, cleanup: () => remover(dir) };
-  } catch (e) {
-    return { dir: cwd, line: `pre-commit: no staged snapshot (${e.message}): linting the WORKING TREE, which is not exactly what you commit`, cleanup: () => {} };
+  const tries = [];
+  if (!drift) tries.push('git could not list the unstaged paths');
+  // n16 s5 (kills-polish FRICTION 14:20: a commit's lint failed on an UNSTAGED schema edit, the retry linted the
+  // snapshot): an export that fails once is tried again before the tree is linted, and the fallback names the
+  // unstaged paths lint then reads, so a failure on one of them is not mistaken for the commit's.
+  for (let i = 0; drift && i < 2; i++) {
+    try {
+      const { dir, count } = exporter(cwd, git);
+      const again = tries.length ? ` (export retried after: ${tries[0]})` : '';
+      const line = `pre-commit: ${drift.length} path(s) in your tree differ from what you commit (${sample(drift)}): linting the staged snapshot (${count} files) in ${dir}${again}`;
+      return { dir, line, cleanup: () => remover(dir) };
+    } catch (e) { tries.push(e.message); }
   }
+  const unstaged = drift ? `; it reads your unstaged ${sample(drift)}: a failure there is not in the commit` : '';
+  return { dir: cwd, line: `pre-commit: no staged snapshot (${tries.at(-1)}): linting the WORKING TREE, which is not exactly what you commit${unstaged}`, cleanup: () => {} };
 }
 
 const TREE = /^[0-9a-f]{40,64}$/;
