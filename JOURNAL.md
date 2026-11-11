@@ -121,3 +121,49 @@ no vermilion, no teal. Gore: "go further, stay riso" - drawn bone/innards allowe
   `test_kill_new_styles.gd` 21/21 with test_signature_kills (`run_unit.mjs --select=...`).
   FRICTION: warnings-as-errors reject `int()/float()` on a Variant and `as Sprite2D` on get_meta; the row extras
   are parsed once into typed containers (`KillTrackRows.Extra.num`). `wrap()` clashes with the global: `wrap_body`.
+- 11:35 MILESTONE pistol `6579e6a2a`. Films (64 px/m lone patrol cop, `compare.mjs weapon:pistol --a=HEAD --b=.`;
+  32 px/m city street fight `compare.mjs city --a=917064b44 --b=6579e6a2a --at=336-380`). Defects by eye, fixed before
+  the commit: (1) on a CARD victim GibCut's HAT group is a copy of the whole drawn card (the card hangs under the
+  head), so a second whole cop flew off and stood there: the hat group is freed when the drawn grid is attached;
+  (2) then the sim cap piece still drew a soot shadow: the pistol row throws the body only (the cap waits for the
+  drawn cap cell). FRICTION: compare's `--subject=dead` is UNVERIFIABLE for every signature kill (the consumed
+  victim's rig is hidden, its probe screen is off-screen): use `--subject=rivet`.
+- 11:47 MILESTONE machine pistol `e7a082c12`. Defects by eye on the way: the hit card (the first, non-lethal round)
+  draws the figure SHOVED off the rig's feet and off-centre in its cell, so holes placed from the rig origin and a
+  mirror-whirl about it missed him by ~1 m. DECISION kills-new/stitch-on-cells: the stitch plays on his drawn fall
+  grid from the hit (feet exactly at the cell centre); the whirl is the grid's drawn facings turning a full circle
+  (`KillStitchArt.facing`), not a mirrored card (a sliver at edge-on).
+- 11:51 `bc3cea26e` blot_m: the framework's fixed 0.5 m splat at the hit read as a pool before the pistol victim fell
+  and hid the spurts (32 px/m sheet). SHARED FILES touched (kills-polish, read me): `signature_kill.gd` (+`blot_m`,
+  one var, one parse line), `kill_marks.gd` (+`Mark.blot_m`, view only, not in write_state), `kill_mark_art.gd` (the
+  blot reads it; 0.5 = every existing row unchanged).
+- Evidence so far (build/, to be copied to gtai-masters at report time): `build/film/cmp_pistol_64/compare-t*.png` +
+  `compare-330-400.mp4` (64), `build/film/cmp_pistol_city32/compare-t*.png` + clip (32, city), sheets
+  `build/pistol_after_64_sheet.png`, `build/smg_after_64_sheet.png`, `build/pistol_city32_{A,B}.png`.
+  Owed: a same-tick compare of the stitch (only the after is filmed), 3 directions each, the 32 px/m stitch.
+- 11:56 full unit on `bc3cea26e`: 2647 passed, 0 failed, 2 skipped (`run_unit.mjs`, 130 s). Scenario `brutality_kills`
+  ok with pistol + machine pistol in KILLS (each >= 2 kills of its own style, replay identical, same seed same gibs).
+- 12:02 MILESTONE Gloria `d6a4fb1a8` (open-street case filmed: `evidence/n16-kills-new/nail_pin_street_after_64ppm_riot_t338-398.png`;
+  nails streak in t339-341, he falls back on his drawn grid, nails at the foot and torso, a slow writhe).
+  NOT filmed: the WALL case (the lone-victim shot has no wall behind him).
+- REQUEST tools: (1) `compare.mjs --subject=dead` is UNVERIFIABLE for every signature kill: the consumed victim's rig
+  is hidden and the probe reports it off screen; please treat a signature-consumed victim as on screen at his
+  `KillView` body (or add `--subject=kill`). (2) a film shot whose lone victim stands with a wall ~1 m behind him
+  along Rivet's shot (`weapon:<id> --victim-wall`), for Gloria's pin-to-wall case.
+- Evidence committed under `evidence/n16-kills-new/` (sheets + clips). Defects open: a 1-frame double figure at the
+  stitch's kill tick (t341: the living rig still drawn the frame the copy appears); the pistol cap (waits for the
+  drawn cap cell); the exit mist is still small at 32 px/m.
+
+- 12:12 same-tick A/B re-filmed from HEAD `d6a4fb1a8` vs `917064b44` (64 px/m): `evidence/n16-kills-new/pistol_snap_ab_64ppm_patrol_t330-400.mp4`
+  (+ t354, t358 stills) and `smg_stitch_ab_64ppm_swat_t335-400.mp4` (+ t348, t365). The 32 px/m city clip
+  `pistol_city32_ab_t320-420.mp4` is of `6579e6a2a` (before blot_m and the bigger mist). Scenario brutality_kills ok
+  with Gloria (12:05).
+
+NEXT (iteration 5): (a) film the pin same-tick A/B (`compare.mjs weapon:machine_pistol|gloria --a=917064b44
+--b=HEAD --subject=rivet`), 32 px/m city fights and 3 directions each (chapter:<weapon> or the city shot); (b) the
+Gatling `gatling_shred` (beat sheet 4: the six rig/card pieces held by a GibSim grind hold while scraps tear off,
+then a heap; style `shred`, a `KillShredArt`); (c) the electro baton `baton_overload` (beat 5, melee: KillLab blade
+path; glow/steam/eyes, no X-ray); (d) check `gtai-assets/replies/n16-kills-new.md` and wire any drawn cells in place
+of the fall grid (KillFallCells is the slot); (e) the kill reel when the tools lane delivers it; (f) copy the best
+frames to `gtai-masters/n16/kills-new/` with `frames.json`; (g) full gates on the last code commit (lint, unit,
+scenarios, evidence run with parity + look goldens, reels).
