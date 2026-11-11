@@ -86,7 +86,10 @@ FLAILS = "burn/1b"
 # turns to char without a size pop). KillCharFx draws it in place of the char-shaded card.
 # assets it359 (A, no smoke): the thug, the hooded pedestrian and the riot cop, the flamethrower's most frequent kills.
 # assets it363 (A; ped_cap B, its strap letters erased): the capped and jogging pedestrians, the punk and the SWAT man.
-CHARS = {k: "char/1" for k in ("cop_patrol", "thug", "ped_hood", "cop_riot", "ped_cap", "ped_jogger", "ped_punk", "swat")}
+# assets it371 (A): the SWAT man's char cells again with empty hands (char_v2): his carbine falls at the kill and
+# lies at his feet, so a charred carbine across his body read as a second gun.
+CHARS = {k: "char/1" for k in ("cop_patrol", "thug", "ped_hood", "cop_riot", "ped_cap", "ped_jogger", "ped_punk")}
+CHARS["swat"] = "char_v2/1"
 
 
 def foot_x(alpha: np.ndarray) -> float:
@@ -185,7 +188,7 @@ def build(lib: Path, name: str, spec: tuple, tmp: Path, site: str = "1") -> None
     if site == FLAILS:
         file = file.replace("_hit.png", "_flail_burn_hit.png")
     elif site != "1":
-        file = file.replace("_hit.png", f"_{site.split('/')[0]}_hit.png")
+        file = file.replace("_hit.png", f"_{site.split('/')[0].split('_v')[0]}_hit.png")  # char_v2/1 -> _char_
     pad = PAD_BELOW if site == "1" and name in SCALE_FROM else 0
     sheet = Image.new("RGBA", (CELL_W * 5, CELL_H + pad), (0, 0, 0, 0))
     paths = [lib / f"{name}_hit_70_cells/{site}_{col + 1}.png" for col in range(5)]
