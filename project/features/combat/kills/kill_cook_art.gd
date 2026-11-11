@@ -31,11 +31,12 @@ static func draw(ci: KillNewStyles, d: KillNewStyles.Death, age: int) -> void:
 		var flick: float = (
 			1.0 if ci.reduced_motion else 0.85 + 0.15 * KillNewStyles.h(d.serial, age)
 		)
-		_glow(ci, d, k * flick)
-		_veins(ci, d, k * flick)
+		if not KillDeathCells.owns(d.cells):  # his own drawn cells carry the glow, veins, eyes
+			_glow(ci, d, k * flick)
+			_veins(ci, d, k * flick)
+			if age < roundi(d.extra.num("eyes_out", 40.0)):
+				_eyes(ci, d, k)
 		_steam(ci, d, age - roundi(from))
-		if age < roundi(d.extra.num("eyes_out", 40.0)):
-			_eyes(ci, d, k)
 	elif age >= roundi(to):
 		_smoke(ci, d, age - roundi(to))
 
