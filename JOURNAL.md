@@ -113,3 +113,7 @@ lanes' journals for REQUEST tools / FRICTION (none at 11:35). Gate on the final 
 - 12:18 gate evidence stage on bc7878960 PASS: lint 19/19, unit 2640 passed / 0 failed / 2 skipped, scenarios 55,
   parity bit for bit 1200 steps (planted fault caught at 629), selftest + look goldens 12/12 ok, release-compile
   683/0. Reels still running (verdict at the end of gtai-n16/scratch-tools/gate_s1.log).
+- 12:26 reel gate still running at session end (tilt70 chapter 19 electro_chain 4/4 down; no failure so far in
+  build/gate/bc7878960400/reels.log). NEXT session: read `gate exit N` at the end of
+  C:/Users/kazda/kiro/gtai-n16/scratch-tools/gate_s1.log before anything else. Godot of mine still running: only
+  the gate's reel runner (it frees itself on exit).
