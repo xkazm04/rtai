@@ -55,3 +55,19 @@ before: one PNG per piece/frame on transparent, keyed, under `library/keyed/stre
   the chain: 10 small drawn chunks, each in its own 96 x 96 cell: 4 red meat chunks with ink, 2 cream bone chips,
   1 rib piece, 2 torn cloth scraps (one cop navy blue, one neutral grey), 1 tooth-sized cream chip. Ink-and-cream riso,
   red blood only. Name `fx/saw_chunks_70_cells/1_{1..10}.png`.
+
+- MILESTONE 11:05 de9f68f8a item 1b streak: row keys streak_m/streak_w_m (schema), katana + plasma sword 1 m x 0.06 m,
+  KillSlashStreak split out (KillSplitFx at its size ratchet). Film: `evidence/n16-kills-polish/katana_streak_ab_64ppm_t61-68.png`,
+  `..._32ppm_x2_t63-70.png` (before = main 5843f5a28). Reads as a short red-lipped line over the cut, not a white stick.
+- MILESTONE e4d81df1b item 1c blade hold: RigClips.strike_hold = 6 ticks for BLADE_LEFT blades (RivetWindup.hold_s),
+  `--rivet-strike-hold=off` = before. Boss blade film (tilt 64 px/m, King + katana): before t307-308 upright back-turned
+  frames, after the strike cell holds into the t309 wind-up (`evidence/n16-kills-polish/boss_katana_strike_hold_ab_64ppm_t305-310.png`).
+- MILESTONE 917d75a5e item 1a gib pieces as rigs: GibCardPieces.dress_rig + 6 new packed sheets (thug, hood, cap, suit,
+  worker, SWAT). Before, a rig-gibbed thug/hood flew blue cop-suit rig parts. Films 64 and 32 px/m in evidence.
+  Open (DEFECTS #2): at 32 px/m the pieces are small and the thug's grey reads weakly on the smoke.
+- FRICTION 11:05-11:22 my first compare chained `--a=HEAD~1 --b=HEAD` and I committed in the middle (HEAD moved), plus
+  `--subject=dead` was off screen: stopped it. Lesson: film explicit SHAs with `film.mjs --rev=` and flag befores
+  (one snapshot import, about 5 min, then cached).
+- Registry rules applied (motion-quality-gating: judge on frames at the play zoom, not packed sheets; combat-pacing:
+  the hold is under the 6-tick hit-stop budget and the fight does not stop): the hold is 6 ticks, view only.
+- Item 1d peek card: no change needed (see above); a quest 1 still is still owed.

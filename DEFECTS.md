@@ -1,4 +1,22 @@
-# DEFECTS (n15 combat): found -> fixed (commit) / open
+# DEFECTS (n16 kills-polish, newest first; n15 combat's list below): found -> fixed (commit) / open
+
+## Rocket lone kill, thug / hooded ped as rigs, combo 64 and 32 px/m t347-371 (iteration 1)
+1. Before: a thug or hooded ped gibbed as a rig flew the shared blue cop-suit rig parts (a box head on a blue body,
+   blue legs for the hood) -> fixed 917d75a5e (drawn it363 pieces per kind).
+2. At 32 px/m the drawn pieces are small (torso 0.56 m) and the thug's grey metal reads weakly on the grey smoke ring
+   (t362-371); the old rig parts were bigger -> open (try RIG_TORSO_M 0.7; the bone pieces of REQUEST A1).
+
+## Blade kills, katana, combo 64 and 32 px/m t61-70 (iteration 1)
+1. The slash streak read as a white stick through the cop -> fixed de9f68f8a (1 m x 0.06 m). It now reads as a short
+   red-lipped line over the cut; the cut's direction still differs from the level drawn swing -> open, minor.
+
+## Boss fight, King + katana, tilt 64 px/m t305-310 (iteration 1)
+1. Two upright back-turned frames (t307-308) between the follow-through and the next wind-up -> fixed e4d81df1b
+   (6-tick strike hold).
+
+---
+
+## n15 combat (kept for reference)
 
 Ranked within each film; newest film first.
 

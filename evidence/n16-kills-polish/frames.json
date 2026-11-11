@@ -1,0 +1,56 @@
+[
+  {
+    "file": "boss_katana_strike_hold_ab_64ppm_t305-310.png",
+    "title": "Blade strike holds through the gap between swings",
+    "source": "film.mjs arena --view=tilt --ppm=64 --lock=off -- --bot=boss --boss=king --boss-blade=katana; before --rivet-strike-hold=off (rev 917d75a5e)",
+    "branch": "n16-kills-polish",
+    "ppm": 64,
+    "before": "top row: two upright back-turned frames t307-308",
+    "note": "owner n15 verdict (c); commit e4d81df1b"
+  },
+  {
+    "file": "katana_streak_ab_64ppm_t61-68.png",
+    "title": "Katana slash streak shorter and thinner",
+    "source": "film.mjs chapter:katana_left --ppm=64 --on=kill:1+10; before rev 5843f5a28 (main), after 917d75a5e",
+    "branch": "n16-kills-polish",
+    "ppm": 64,
+    "before": "top row: 1.7 m x 0.11 m white stick",
+    "note": "owner n15 verdict; streak_m 1 / streak_w_m 0.06; commit de9f68f8a"
+  },
+  {
+    "file": "rocket_gib_thug_drawn_pieces_ab_64ppm_t347-371.png",
+    "title": "Rocket gib: the thug flies his drawn pieces as a rig",
+    "source": "film.mjs weapon:rocket_launcher --victim=thug --ppm=64 --rev=917d75a5e; before --gib-pieces=cut",
+    "branch": "n16-kills-polish",
+    "ppm": 64,
+    "before": "top row: blue cop-suit rig parts under a box head",
+    "note": "owner n15 verdict; commit 917d75a5e"
+  },
+  {
+    "file": "rocket_gib_ped_head_hood_drawn_pieces_ab_64ppm_t347-371.png",
+    "title": "Rocket gib: the hooded ped flies his drawn pieces as a rig",
+    "source": "film.mjs weapon:rocket_launcher --victim=ped/head_hood --ppm=64 --rev=917d75a5e; before --gib-pieces=cut",
+    "branch": "n16-kills-polish",
+    "ppm": 64,
+    "before": "top row: blue rig parts",
+    "note": "owner n15 verdict; commit 917d75a5e"
+  },
+  {
+    "file": "rocket_gib_thug_drawn_pieces_ab_32ppm_x2_t349-371.png",
+    "title": "Rocket gib thug at play zoom (x2)",
+    "source": "film.mjs weapon:rocket_launcher --victim=thug --ppm=32 --rev=917d75a5e; before --gib-pieces=cut",
+    "branch": "n16-kills-polish",
+    "ppm": 32,
+    "before": "top row",
+    "note": "pieces small and grey on the smoke: DEFECTS open #2"
+  },
+  {
+    "file": "katana_streak_ab_32ppm_x2_t63-70.png",
+    "title": "Katana slash streak at play zoom (x2)",
+    "source": "film.mjs chapter:katana --ppm=32 --on=kill:1+10; before 5843f5a28, after 917d75a5e",
+    "branch": "n16-kills-polish",
+    "ppm": 32,
+    "before": "top row",
+    "note": "crop shows the streak; the cop is at the right edge"
+  }
+]
