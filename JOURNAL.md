@@ -310,3 +310,46 @@ charred swap is new code (kill_styles.gd, kill_char_cells.gd); a look golden or 
 (none seen at 64 px/m). (3) Then the session-5 list above from item (3) on: metal impacts, body burst drift,
 contractor living hold, the t62 white stick, flame jet column. (4) REPORT.md draft: add rows for 8eb67bc62 and the
 01:15 fight_gate line; gate lines.
+
+## Session 5 (01:52-03:22)
+- GATES on `968346c90` (`node tools/gate/run.mjs --rev=HEAD --reels`, build/gate/968346c90c49/): PASS lint 16/16, unit 2522
+  / 0 failed / 2 skipped, scenarios 55, parity bit-exact (mutation at 629), selftest (look goldens 11/11 worst 0.00: the
+  charred cop swap moved no golden), export-audit 671. Reels STOPPED by PID at 02:03 (taskkill /T 106608) to free the
+  Godot slot for films; the session's last commit gets the full gate with reels.
+- 01:55-02:02 WIP while the gate ran (no Godot): charred cells for thug / ped_hood / cop_riot (it359 A, packed by
+  `street_hit.py --only=char`, new flag: packs only the CHARS sheets, so the burn grids no longer drift; the thug's
+  3/4-away char cell is capped to the cell height); drawn gib pieces (`tools/art/gib_pieces.py`, it359/it363: patrol v2,
+  thug, hood, riot; one scale per kind, torso 128 px; the riot's orange arm bands greyed by street_armband) wired by
+  `GibCardPieces` in `GibCardCut.placed` (`--gib-pieces=cut` = before); the contractor stagger v3 (long carbine, it359 (3))
+  at v2's scale, registered by the hat (the boot finder takes the hanging muzzle), the grid padded 32 px below the feet
+  (StreetQuestHit scales cell + foot line by the texture height); metal sparks (it317 1_1, pulled half way to cream:
+  amber is plasma's) for GunFx.Hit.METAL (a round on a riot shield or near a metal dummy).
+- MILESTONE `63811e09c` item 2 charred cells for the thug, hooded ped and riot cop (it359 A): film weapon:flamethrower
+  --victim=<kind> --on=kill:1+80 64 px/m, before `--char-cells=off`, same build:
+  `evidence/n15-combat/char_cells_thug_hood_riot_ab_64ppm_t542-620.png`. Each stands as its drawn charred figure (robot
+  plating with ember cracks; the hooded man from behind; the riot cop with his shield) where the black silhouette stood.
+  DECISION combat/char-cells-more. Unit test_kill_char_cells 4/4; lint passed in the hook.
+- Metal sparks NOT shipped (unwired, files kept in build/scratch/metal_wip/): film weapon:machine_pistol
+  --victim=cop/head_helmet 64 px/m t333-349: every round hit his body (ink burst), none his shield, so no METAL impact
+  to judge. Note: a round that hits a metal DUMMY is a BODY hit (the dummies are hostiles), so METAL only fires for a
+  missed round landing within 0.9 m of one, or a shielded hit. Next try: GunFxRounds._impact makes a hit on a metal
+  target METAL (arena.metal holds their positions), then film the arena reel's metal range.
+- Rocket gib drawn pieces, first cut at TORSO_PX 128 (cell 192): at 48 px/m the pieces drew ~5x down without mipmaps
+  and speckled; repacked at 64 (cell 96) like the walking card's ~2.3x downscale. The thug in the lone rocket shot is a
+  rig, not a card (GibCardCut does not cut him), so his drawn pieces never show there: before == after.
+- MILESTONE `11a460e80` item 4 rocket gib drawn pieces (it359/it363) for the patrol cop (v2) and the riot cop: film
+  weapon:rocket_launcher --victim=cop/head_cap|cop/head_helmet 48 px/m t349-368, before `--gib-pieces=cut`, same build:
+  `evidence/n15-combat/rocket_gib_drawn_pieces_ab_48ppm_x2_t349-368.png` (x2 nearest). Cap from above, torso with torn
+  edges, arms with hands, legs fly where paper-cut strips flew (the riot's were mostly grey shield chunks). Small at
+  48 px/m; lighter blue than the card's navy. Thug/hood sets NOT shipped (rigs in the lone shot, unfilmed as cards).
+  DECISION combat/gib-drawn-pieces. Owner Call. Unit test_gib_card_pieces 3/3.
+- MILESTONE `51034570a` item 2 contractor stagger v3 (it359 (3), the long dock carbine): film quest1 48 px/m
+  t13710-13722, before = v2 grid on the same build (swapped in via `git cat-file -p HEAD:<png> | git lfs smudge`,
+  re-imported, restored + re-imported): `evidence/n15-combat/contractor_hit_v3_carbine_ab_48ppm_x3_t13710-13722.png`.
+  DECISION combat/contractor-stagger-v3.
+- FRICTION: `git show HEAD:<png>` gives the LFS pointer; importing it marks the .import `valid=false` and the texture
+  stops loading until the .import is restored (`git checkout -- <png>.import`) and re-imported. Use `git lfs smudge`.
+- FRICTION (mine): my scratch provenance helper appended the contractor's v3 line instead of replacing v2's; the stale
+  v2 line is removed in the next commit. Checked by script: every n15 combat provenance line's sha256 matches its file.
+- Masters (gtai-masters/n15/combat/frames.json): added the drawn gib pieces and the 3-kind charred cells at the top;
+  dropped the superseded paper-cut gib and the arena lights (15 entries, none unreferenced/missing, by script).
