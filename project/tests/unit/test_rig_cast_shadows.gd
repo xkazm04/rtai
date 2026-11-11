@@ -88,3 +88,21 @@ func test_only_a_hit_card_moves_the_shadow() -> void:
 	var hidden: CutRig = _wounded_card_cop("res://x/cop_patrol_hit.png")
 	hidden.head_card.visible = false
 	assert_eq(RigCastShadows.card_push(hidden), Vector2.ZERO, "a hidden card: the feet")
+
+
+func test_a_dying_card_keeps_its_shadow_until_it_lies() -> void:
+	# n17 (DEFECTS 23): the standard death's hit cell and fall rows stood on bare street.
+	var hit: CutRig = _wounded_card_cop("res://x/cop_patrol_hit.png")
+	hit.dead = true
+	assert_true(RigCastShadows.stands_dying(hit), "the thrown-back hit cell stands")
+	var fall: CutRig = _wounded_card_cop("res://x/cop_patrol_between_fall.png")
+	fall.dead = true
+	fall.head_card.texture = PlaceholderTexture2D.new()
+	(fall.head_card.texture as PlaceholderTexture2D).size = Vector2(50.0, 50.0)
+	fall.head_card.vframes = StreetFallBetween.FRAMES
+	fall.head_card.frame_coords = Vector2i(0, 1)
+	assert_true(RigCastShadows.stands_dying(fall), "the mid-fall row stands")
+	fall.head_card.frame_coords = Vector2i(0, StreetFallBetween.FRAMES - 1)
+	assert_false(RigCastShadows.stands_dying(fall), "the lying row: the body's own")
+	var walk: CutRig = _wounded_card_cop("res://x/cop_patrol_armed_walk.png")
+	assert_false(RigCastShadows.stands_dying(walk), "not a dying card")
