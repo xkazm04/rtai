@@ -18,6 +18,7 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[2]
 P70 = ROOT / "project/features/characters/art/view/p70"
+OUT = P70  # --out=<dir>: write the sheets there instead (a look before they land)
 LIB = Path("C:/Users/kazda/kiro/gtai-art/library/keyed/street")
 CELL_W = 344
 CELL_H = 256
@@ -46,6 +47,15 @@ SHEETS = {
 # it14: the per-site flinch cells drawn for a kind (<site>_<col>.png, the right-hand facings 1..5;
 # the left ones mirror as the grid does), each to <kind>_<site>_hit.png on the same layout.
 SITES = {"cop_patrol": ["shoulder", "gut"]}
+# n17 npc-react (owner: "impact on npcs are terrible"; brief item 5, every hit class reads differently): the
+# asset lane's it450 hit-class cells (<class>_<col>.png beside shoulder_*), packed as <kind>_<class>_hit.png
+# at ONE scale per kind, the sibling shoulder cells' (the lane drew them at it: a crouched heavy fitted to
+# the cell's height would draw ~1.1 x), the boot registered on the centre line. `--only=classes` packs these.
+CLASSES = {"cop_patrol": ["jab", "heavy", "shock"], "cop_riot": ["jab", "heavy"], "swat": ["jab", "heavy"]}
+CLASS_SCALE_FROM = "shoulder"
+# kind -> a size step on that scale: the SWAT's class cells were drawn ~8 % taller than his shoulder cells (jab
+# 187-204 px, heavy 190-201 against 180-185, the it450 reply) and overflowed the cell; 0.9 stands them at the walk.
+CLASS_K = {"swat": 0.9}
 # n11 it33: the asset lane's drawn burning man (<kind>_hit_70_cells/burn/1_<col>.png, arms flailing,
 # flames up his sides), packed as <kind>_burn_hit.png on the same layout for a LIVING burn.
 # n11 it34: the asset lane's burn cells for six more kinds (06:17-06:37 offers; suit, shopper and
@@ -193,6 +203,9 @@ def build(lib: Path, name: str, spec: tuple, tmp: Path, site: str = "1") -> None
     sheet = Image.new("RGBA", (CELL_W * 5, CELL_H + pad), (0, 0, 0, 0))
     paths = [lib / f"{name}_hit_70_cells/{site}_{col + 1}.png" for col in range(5)]
     k = 0.0
+    if site in CLASSES.get(name, []):
+        k = CELL_H * FILL / max(cropped(lib / f"{name}_hit_70_cells/{CLASS_SCALE_FROM}_{c + 1}.png").height for c in range(5))
+        k *= CLASS_K.get(name, 1.0)
     if site == "1" and name in VERSIONS:
         paths = [p.parent / VERSIONS[name] / p.name for p in paths]
         olds = [p.parent.parent / SCALE_FROM[name] / p.name for p in paths] if name in SCALE_FROM else paths
@@ -215,8 +228,9 @@ def build(lib: Path, name: str, spec: tuple, tmp: Path, site: str = "1") -> None
         subprocess.run([sys.executable, "-I", str(tools / "street_armband.py"), str(here), str(here)], check=True)
     if site == CHARS.get(name):
         grey_cyan(here)
-    Image.open(here).save(P70 / file, optimize=True)
-    print(f"{file}: {(P70 / file).stat().st_size} bytes")
+    dst = OUT / file
+    Image.open(here).save(dst, optimize=True)
+    print(f"{file}: {dst.stat().st_size} bytes")
 
 
 def main() -> None:
@@ -227,8 +241,15 @@ def main() -> None:
             lib = Path(arg[6:])
         elif arg.startswith("--only="):
             only = arg[7:]
+        elif arg.startswith("--out="):
+            global OUT
+            OUT = Path(arg[6:])
     with tempfile.TemporaryDirectory() as t:
         for name, spec in SHEETS.items():
+            if only == "classes":
+                for site in CLASSES.get(name, []):
+                    build(lib, name, spec, Path(t), site)
+                continue
             if only == "char":
                 if name in CHARS:
                     build(lib, name, spec, Path(t), CHARS[name])
