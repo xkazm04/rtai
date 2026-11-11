@@ -7,13 +7,15 @@
 // --reels=<views> runs only those reel views: a mid-session check, labelled `not the full reel gate` (the
 // final commit needs plain --reels). gate.json keeps `timing` (evidence and each reel view, s); the next gate
 // prints it as an ETA, since the gate holds the lane's one Godot for ~30-40 min (n16 kill lanes' FRICTION).
-// Results: build/gate/<sha>/ in your tree (git-ignored).
+// Results: build/gate/<sha>/ in your tree (git-ignored): the game tree you run it from (cwd or an ancestor), not
+// this kit's, so a lane running `node ../n16-tools/tools/gate/run.mjs` finds them in its own tree, and its snapshot
+// gets ITS DLLs (n16 s6, kills-new REQUEST 17:4x: results and the runtime donor were the tools tree's).
 // Exit: 0 pass, 1 fail, 2 usage, 3 unverifiable (the run produced no judgeable result).
 import { execFileSync, spawn } from 'node:child_process';
 import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { ROOT } from '../lib/repo.mjs';
+import { filmedRoot, nativeDiffers } from '../film/side.mjs';
 import { killTree } from '../lib/godot.mjs';
 import { ensureSnapshot, removeSnapshot, revParse } from '../lib/snapshot.mjs';
 
@@ -112,13 +114,22 @@ const readEnv = (dir) => (kind) => {
   try { return JSON.parse(readFileSync(f, 'utf8')); } catch { return null; }
 };
 
-export async function main(argv, { out = console.log, err = console.error } = {}) {
+/** The warning when the snapshot of `sha` runs `here`'s DLLs built from another native/ (null when they match). */
+export function nativeLine(here, sha, differs = nativeDiffers) {
+  if (!differs(here, sha)) return null;
+  return `gate: WARNING native/ at ${sha.slice(0, 8)} differs from ${here}'s HEAD: the snapshot runs that tree's DLLs, so parity and the sim scenarios are not ${sha.slice(0, 8)}'s native (gate from a worktree at the commit to judge its sim)`;
+}
+
+export async function main(argv, { out = console.log, err = console.error, here = filmedRoot() } = {}) {
   const o = parseArgs(argv);
   if (o.error) { err(`${o.error}\n${USAGE}`); return 2; }
+  const ROOT = here;
   const sha = revParse(ROOT, o.rev);
   if (!sha) { err(`gate: git does not know ${o.rev}`); return 2; }
   const dirty = execFileSync('git', ['-C', ROOT, 'status', '--porcelain'], { encoding: 'utf8', windowsHide: true }).trim();
-  out(`gate: ${sha.slice(0, 8)}${dirty ? ' (your uncommitted changes are NOT in this run)' : ''}`);
+  out(`gate: ${sha.slice(0, 8)} from ${ROOT}${dirty ? ' (your uncommitted changes are NOT in this run)' : ''}`);
+  const native = nativeLine(ROOT, sha);
+  if (native) out(native);
   const snap = ensureSnapshot({ root: ROOT, rev: sha, kind: 'gate' });
   out(`gate: snapshot ${snap.path} (${snap.created ? 'new' : 'reused'}${snap.copied.length ? `, copied ${snap.copied.join(', ')}` : ''})`);
   const eta = etaLine(join(ROOT, 'build', 'gate'));

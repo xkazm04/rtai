@@ -395,7 +395,7 @@ node tools/gate/run.mjs --rev=HEAD
 
 A detached checkout of that commit goes in the temp dir with the DLLs, the baked city and the import
 cache copied in, and that commit's own `tools/evidence/run.mjs` runs there. You can keep editing and
-no log lands in your tree. Results are in `build/gate/<sha>/` (`gate.json` plus one file per kind).
+no log lands in your tree. Results are in `build/gate/<sha>/` (`gate.json` plus one file per kind) of the game tree you run it FROM (cwd or an ancestor; n16 s6: `node ../n16-tools/tools/gate/run.mjs` from a lane writes into the lane), and the snapshot takes that tree's DLLs; gating a commit whose `native/` differs from that tree's HEAD prints `gate: WARNING native/ at <sha> differs ...` (parity and the sim scenarios then run your DLLs).
 `--reels` adds the reel gate, `--bench` the bench, `--no-parity` and `--no-selftest` skip those;
 `--clean` removes the snapshot afterwards.
 
