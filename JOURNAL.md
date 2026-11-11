@@ -676,3 +676,15 @@ put the per-death `gone by` table in REPORT "Findings for the kill lanes", maste
 finish, its log is gtai-n16\scratch-tools\logs\reel_s6all.log. (3) REPORT.md final at 19:40: header (drop DRAFT),
 Next steps; `node tools/evidence/cites.mjs REPORT.md` clean. (4) If any project/ commit lands here, the FULL gate with
 plain `--reels` (~35 min). Logs go to C:\Users\kazda\kiro\gtai-n16\scratch-tools\logs\.
+- 18:15 all-deaths lifetime reel done: `kill_reel --weapons=all --quick --after=600 --rev=b9dba1da8 --native=donor`
+  18:03:14-18:14:53, 13/13 PASS, exit 0. Its table FOUND two flaws in my `gone by`: homing_shard `gone by +20` (a dip
+  to 0.1 % before its blood grew to 2.9 %: the first-dip rule, which Codex's test had pinned) and electro_gun +20 0.1 %
+  (the stand mask hid his body lying IN PLACE: the masked curve under-read). MILESTONE 8a9a91375: the curve is the whole
+  window again; `gone` = the first beat from which the window, outside his standing spot, stays under 0.5 % to the
+  last beat; review flipped Codex's first-dip expectation (null now). Film tests 282/0, lint 19/19.
+  Re-measured on the films' frames (no Godot, scratch remeasure2.mjs): gone by +600 = electro gun, claw, plasma rifle,
+  plasma sword, ray gun; still there at +600 = rocket, hand cannon, flamethrower, molotov, katana, chainsaw, homing
+  shard, mini nuke; rocket --after=1000 gone by +1000. LOOKED at reel_32.png (+600 column): every body gone; blood
+  (hand cannon, katana, chainsaw, homing), scorch (rocket, molotov, nuke), a dark mark (flamethrower); the electro gun's
+  dropped gun only, inside his spot. Matches. Evidence: evidence/n16-tools/reel_s6all_lifetime.md + the sheet at half
+  size (full size in masters, frames.json top, 15, dropped the guard-vs-thug frame). REPORT findings updated.

@@ -27,8 +27,10 @@ One command films every signature death in the KillLab on the city block, for we
   line ("until 12 later kills, no timer") was wrong on the street. `--feel=on`: freezes 6 (claw), 8 (rocket) frames.
   (evidence/n16-tools/kill-reel-aftermath-life-*.png, reel_s6feel.md, reel_s6long.md)
   41bb70e36: the curve leaves out where the victim stood at the trigger frame (his empty spot is not a mark), so
-  `gone by +N` fires: claw `+600 0.0 %, gone by +600`, rocket `gone by +1000` (0.4 %); the mask drawn on the frames:
-  evidence/n16-tools/kill-reel-stand-mask-claw-t60-vs-t727-32ppm.png.
+  `gone by +N` fires (claw by +600, rocket by +1000); the mask drawn on the frames:
+  evidence/n16-tools/kill-reel-stand-mask-claw-t60-vs-t727-32ppm.png. 8a9a91375 (found by the all-deaths reel): `gone`
+  must hold to the last beat (homing shard dipped at +20 before its blood grew), and only `gone` leaves the spot out:
+  the curve is the whole window (a masked curve hid the electro victim lying in place).
 - s3: `--quick` (32 px/m, dir 90), sheet cells labelled (weapon/film, offset, `KILL HS6`), `--clips --feel=on` cut
   from the game's movie so the hit-stop PLAYS (calibrated: movie index = probe frame), the all-weapon overview
   `reel_<ppm>.png` + `reel.md`, `--resheet` (no Godot), the death judged on screen (`--subject=kill`), a far victim
@@ -96,7 +98,12 @@ the commit (2 staged path(s), all under project/ + 3 lint-neutral ...)`, 18/18 i
 
 ## Findings for the kill lanes
 - Measured on the street (s6): a body and its pieces are gone ~7 s after the kill, the scorch and spray ~16 s
-  (corpse_decay.json), the dropped rifle stays past 16.7 s. A death's aftermath that should outlive that needs a
+  (corpse_decay.json), the dropped rifle stays past 16.7 s. Every death, `--weapons=all --quick --after=600` on
+  kills-new b9dba1da8 (13/13 PASS, evidence/n16-tools/reel_s6all_lifetime.md, the sheet
+  kill-reel-lifetime-all-b9dba1da8-32ppm-after600-half.png): at +600 (10 s) every body is gone; blood stays for the hand
+  cannon, katana, chainsaw and homing shard, scorch for the rocket, molotov and nuke; the claw, plasma rifle, plasma
+  sword, ray gun and electro gun leave a clean street (`gone by +600`). Those five deaths leave nothing on the street
+  after ~7 s: if the owner wants each kill to leave a mark, that is a stain per death. A death's aftermath that should outlive that needs a
   corpse_decay change, not a signature row.
 - A signature row's `hitstop_ticks` does NOT freeze the screen: SignatureKills.hold makes the pieces wait. The freeze
   is hit_feel.json's `kill_hitstop` (camera.json `kill`, 6) or the class's bigger stop (blast = `boss_hit` 8).
@@ -143,8 +150,8 @@ picked the game side of afe581336, bbee28a9c and 0b5c55fc7 with identical conten
 ## Next steps
 - Kill lanes: drop the `-- --sig-gun=claw_shock` workaround (`--weapons=claw_shock` films it on its own row); use
   `gate --reels=<view>` mid-session and plain `--reels` on the final commit; read the ETA line before starting a gate.
-- The aftermath curve leaves out the victim's standing rect (41bb70e36), so a mark left exactly where he stood (a pool
-  under a man killed in place, a gun dropped there) is not counted: a victim-free twin film would close that.
+- `gone by` leaves out the victim's standing rect, so a mark left exactly where he stood (a pool under a man killed in
+  place, a gun dropped there) does not hold it back: a victim-free twin film would close that.
 - The KillMarks ring (12 later kills recycle the marks) is still not filmed: it needs a lab with many kills.
 - A kill earlier than the lab's trigger tick (60) would make the trigger column a post-kill frame (no lab kill does:
   63+); if a lab ever kills sooner, pickBeats should take kill-8 instead of 60.
