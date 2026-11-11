@@ -17,10 +17,16 @@ test('arena: the scene goes before -- and the flags after it (lanes left the sce
   assert.ok(a.indexOf('--bot=pit') > sep, a.join(' '));
 });
 
-test('arena on the real tree declares no spec: no flag check, the note says so', () => {
-  const r = resolve('arena', ['--bto=pit']);
+test('arena on the real tree declares no spec: checked against the project literals instead', () => {
+  const r = resolve('arena', ['--bto=pit', '--bot=pit']);
   assert.ok(r.ok, r.error);
   assert.equal(r.spec, null);
+  assert.deepEqual(r.problems, [{ arg: '--bto=pit', flag: '--bto', suggestion: '--bot' }]);
+  assert.match(r.specNote, /project's flag literals \(no declared spec\): 2$/);
+});
+
+test('literals: false (the runner option --any-flag) launches unchecked and says so', () => {
+  const r = resolve('arena', ['--bto=pit'], { literals: false });
   assert.deepEqual(r.problems, []);
   assert.equal(r.specNote, 'flags unchecked: no declared spec');
 });

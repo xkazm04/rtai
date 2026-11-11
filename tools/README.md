@@ -399,6 +399,25 @@ it so the verdict still names the file and line. `--keep-going` waits for the en
 (for a run whose later errors you want in the log). Built on `runProcess`'s `stopOn` option in
 `tools/lib/godot.mjs`; the gates do not use it, they report every error.
 
+## A flag nothing reads is refused (`tools/dev/run.mjs`, `tools/dev/flag_index.mjs`)
+
+```
+node tools/dev/run.mjs cursor_sweep --dry-run -- --rigs --rivet-windup=of
+# run: unknown flag --rivet-windup=of for res://dev/rivet_motion/cursor_sweep.tscn (did you mean --rivet-windup=off?)
+# run: refused before launch; flags checked against the project's flag literals (no declared spec): 2 (--any-flag launches it unchecked)
+```
+
+An entry with its own `const KNOWN_FLAGS` is checked against that list, as before. An entry without
+one used to launch "flags unchecked", so hero's `--ohm-hand=sim` (CastFlags reads
+`--ghost-ohm-hand=sim`) ran and gave a 0.0 % before/after. Now every flag is checked against the
+string literals of our GDScript (not unit/integration tests, not addons): the name must be read
+somewhere (`"--x"`, `"--x="` or `"--x=<v>"`), and when it is only read as exact values
+(`arg == "--x=sim"`), the value must be one of them. A family prefix (`begins_with("--ghost-")`)
+does not make a longer name known. The suggestion is the nearest literal (a swap of two letters is
+one edit) or the one known name that ends in the passed one (`--ohm-hand` -> `--ghost-ohm-hand`).
+`--any-flag` skips the check (a flag built at run time; none existed on 2026-11-11) and the verdict
+says `flags unchecked: no declared spec`.
+
 ## A dev run draws the current pixels at a fixed step (`tools/dev/run.mjs`)
 
 ```

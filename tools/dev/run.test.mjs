@@ -24,7 +24,7 @@ function harness(result = { status: 0, out: '', timedOut: false, durationMs: 5 }
   return { calls, lines, opts, logDir };
 }
 
-test('arena (no declared spec) launches and the verdict says flags unchecked', async () => {
+test('arena (no declared spec) launches; the verdict says its flags met the project literals', async () => {
   const h = harness();
   const code = await main(['arena', '--bot=pit'], h.opts);
   assert.equal(code, 0, h.lines.err.join('\n'));
@@ -33,8 +33,21 @@ test('arena (no declared spec) launches and the verdict says flags unchecked', a
   assert.equal(h.calls[0].o.headless, true);
   const last = h.lines.out.at(-1);
   assert.match(last, /^ok exit 0/);
-  assert.match(last, /flags unchecked: no declared spec/);
+  assert.match(last, /project's flag literals \(no declared spec\): 1/);
   assert.equal(readdirSync(h.logDir).length, 1);
+});
+
+test('no declared spec: a flag no literal reads is refused, nothing spawned; --any-flag launches it', async () => {
+  const h = harness();
+  assert.equal(await main(['arena', '--bto=pit'], h.opts), 2);
+  assert.equal(h.calls.length, 0);
+  const err = h.lines.err.join('\n');
+  assert.match(err, /unknown flag --bto .*did you mean --bot\?/);
+  assert.match(err, /--any-flag launches it unchecked/);
+  const k = harness();
+  assert.equal(await main(['arena', '--any-flag', '--bto=pit'], k.opts), 0, k.lines.err.join('\n'));
+  assert.ok(!k.calls[0].args.includes('--any-flag'));
+  assert.match(k.lines.out.at(-1), /flags unchecked: no declared spec/);
 });
 
 test('a declared spec refuses --bto with exit 2 and a did-you-mean; nothing is spawned', async () => {
