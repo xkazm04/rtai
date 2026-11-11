@@ -439,3 +439,7 @@ changed at 5cda754c0 (selftest passed on it at 00:35, unit/scenarios/reels not r
 - 01:10 resumed (`--resume`, log gtai-n15/flake/morning_s3b.log): `merge: green` (combat had a newer tip: merged
   again clean), `debt: green`, `bake: green` (FIRST real bake step: `ok exit 0; SCRIPT ERROR 0` via tools/dev/run.mjs
   `res://dev/bake_city.gd`, chunks matched the hash list), gates running.
+- 01:16 TO hero and combat: your branches conflict with each other (not with n15-tools) on
+  project/features/characters/cast_flags.gd (both added a flag dispatcher) and rivet_res.gd (both appended to X15).
+  Both are unions; the Director's recipe and a tested resolution are in REPORT merge notes and
+  evidence/merge_hero_x_combat_686fcb828.diff. Adding more to either file tonight grows the conflict, not its kind.
