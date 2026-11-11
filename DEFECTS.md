@@ -1,0 +1,14 @@
+# DEFECTS - n17 npc-react (reactions, falls, corpses, dropped weapons)
+
+Format: `found (where, number) -> fixed (commit) / open`.
+
+1. Thrown-back hit grids drawn 1.05-1.23 x the walk's figure height (patrol 1.16, riot 1.16, SWAT 1.23; p55 the same factor) -> fixed dd0bf749b (FILL by figure height; `tools/art/street_hit_size.py --check` 12 kinds within 0.4 %).
+2. Cops' pistol snap (n16 own cells) first frame 1.99/2.45/2.25 m tall vs walk 1.69, boots 0.12-0.32 m under the point: a ~1.2-1.3 x jump and ~7 px drop at 64 px/m on the kill tick (film b_patrol64 t62 -> t63) -> fixed 48b27b933 + da6a10d9c (per-row FIT_K, row 0 lifted, corpse as drawn).
+3. Riot cop's pistol snap drawn 0.25-2.2 m LEFT of where he stood (cells on a 684 px stride in 738 px cells) -> fixed 5ca55758c (kill_cells_pack.py REGISTER_X re-pack).
+4. Dead guard's dropped gun: a lying-rifle sheet, heading hashed from position, never WeaponShowcase -> fixed 068c2c937 (pickup's showcase drawing, muzzle along the shot).
+5. The showcase drop lay under the snap's corpse (GroundRifle's spot toward the shooter; snap corpse falls toward Rivet) -> 439416663 moved it across the shot; still under a diagonal SWAT corpse at d90 (film drop_4394_swat32) -> fixing (past the feet, away from the body).
+6. Stunned cop's dropped navy pistol lands at a folded, half-tilted angle with a per-id jitter -> fixed 439416663 (LAND_FLAT: flat, muzzle along the shot).
+7. Corpse drift after the death's staged motion (survey 32 px/m dir 90, build/m/drift2.py, street-anchored, last tick >20 changed px): pistol +20, machine_pistol +17, gatling +30, hand_cannon +32, electro_baton +45 (drawn frames), rocket +55, electro_gun +51, gloria +84 (pin writhe, staged), katana +67, chainsaw +110, plasma_rifle smoke wisps only, fire deaths burn to +150 (staged). claw_shock not measured (run stopped at the 10 min limit).
+   a. Rocket gibs keep TURNING after they stop sliding (GibSim spin decays exponentially): changed px +56..+150 127 -> 1 -> fixed 8887337c4 (KillRestSpin, view only).
+   b. Katana and chainsaw halves keep SLIDING for ~60 ticks at falling speed (GibSim linear drag; +38..+67, +90..+110) -> open: sim (row drag / GibSim), no sim change tonight; Call for the owner (a stronger drag on the halves is one data value but moves the replay).
+8. open: the snap's pitch-forward row (t14-21) grows 0.85/0.8 -> 0.92/0.9 -> corpse 1.0; the corpse is still ~1.15-1.25 x the walk's bulk (drawn so; owner n11 "bodies keep their length"): a Call.
