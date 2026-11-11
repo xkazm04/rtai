@@ -698,3 +698,11 @@ dev/sim/car_route_trails.gd there is mine) and `git branch -D n15t-control-sim-h
   sitting behind it; car2 3 x void. 65: car0 (1657 block, 2918 void), car1 (1185 block, 2480 block), car2 (2 void,
   3592 block); nobody dies. SEEN the 3 panels + a crop of mask 1's plaza (both eastbound trails end at the block edge).
   Masters `c2-tier-a-mask-241-1-65-4ppm.png` (frames.json now 9). This strengthens c-2's recommendation (65).
+- 03:52-03:58 the dead sort removed in both sims (`_touched.sort()`, `std::sort` + `<algorithm>`; comments say "first
+  met first"). NATIVE REBUILD #7 (this lane only; once more after a comment-only edit so the DLLs match the source):
+  debug + release + `scons tests` exit 0, `sim_core tests: 0 failed`. `run_parity.mjs` (both builds): bit for bit,
+  planted caught at 629, final_sha_a 94b2865f7f17d778 (unchanged). `run_unit --select=` the six sim_hash files 29/0.
+  DECISION sim/hash-build-order in docs/decisions.md. Codex dispatcher ledger: `record n15t-break-hash-build --verdict
+  accepted-after-revision` (144 s, 5593 tokens out), then `discard`.
+- 03:58 TO hero and combat: n15-tools changed the sim again (hash build, native rebuild #7); parity's final digest is
+  unchanged and nothing you film reads it: keep your DLLs.

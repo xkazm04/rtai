@@ -8,7 +8,7 @@ var hstart: PackedInt32Array = SimArrays.i32(SimConst.HW * SimConst.HW, 0)
 var hitems: PackedInt32Array = SimArrays.i32(SimConst.CAP, 0)
 var hgx: int = 0
 var hgy: int = 0
-var _touched: Array[int] = []  # cells occupied at the last build, ascending
+var _touched: Array[int] = []  # cells occupied at the last build, first met first
 var _s: CitySimState
 
 
@@ -17,9 +17,9 @@ func _init(state: CitySimState) -> void:
 
 
 ## O(actors), not O(HW^2) (t-5 widened the window): clears only the cells the last build filled,
-## counts, then gives starts to the occupied cells in ascending order, so hitems keeps the counting
-## sort's order (cell, then id). An empty cell's start is never read: query loops over its 0 count,
-## and no total sentinel is kept (nothing read it).
+## counts, then gives starts to the occupied cells in the order they were first met. Each cell's
+## items are contiguous in id order; query walks cells row-major and reads each cell's own start, so
+## the cells' order inside hitems never shows (no sort). An empty cell's start is never read.
 func build(camx: float, camy: float) -> void:
 	var hw: int = SimConst.HW
 	hgx = floori(camx / SimConst.HC) - (hw >> 1)
@@ -33,7 +33,6 @@ func build(camx: float, camy: float) -> void:
 			if hcount[c] == 0:
 				_touched.append(c)
 			hcount[c] += 1
-	_touched.sort()
 	var s: int = 0
 	for c: int in _touched:
 		hstart[c] = s
