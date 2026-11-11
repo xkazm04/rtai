@@ -2,14 +2,14 @@ class_name RigDepthSort
 extends Node2D
 ## View lab (docs/view-lab/PLAN.md, registry measured-draw-order): under a tilted --view a body
 ## nearer the camera (larger ground y; the camera sits south) must draw over the body behind it.
-## Each rig's parts carry their own z offsets (0 .. PART_SPAN - 1 over the rig), so two rigs at
-## the same z interleave their parts (a far head over a near torso). Every frame, after the rigs
-## have posed, this collects the actor layer's visible CutRigs, walks them far to near and gives
-## each a depth level: 0 when it overlaps no farther rig on screen, else one more than the highest
-## level among the farther rigs it overlaps. The rig's z is its depth_base (KingCarStack's
-## behind-the-car z) plus level x STEP, so overlapping bodies never share a part band, while the
-## common case (nobody overlapping) stays at level 0. Rivet's held weapon and reload magazine
-## ride his level. Straight down (flat views) this node is never made: bit-identical.
+## Each rig's parts carry their own z offsets (0 .. PART_SPAN - 1 over the rig), so two rigs at the
+## same z interleave their parts (a far head over a near torso). Every frame, after the rigs have
+## posed, this collects the actor layer's visible CutRigs, walks them far to near and gives each a
+## depth level: 0 when it overlaps no farther rig on screen, else one more than the highest level
+## among the farther rigs it overlaps. The rig's z is its depth_base (KingCarStack's behind-the-car
+## z) plus level x STEP, so overlapping bodies never share a part band, while the common case
+## (nobody overlapping) stays at level 0. Rivet's held weapon and reload magazine ride his level.
+## Straight down (flat views) this node is never made: bit-identical.
 
 const STEP: int = 32
 ## Behind-the-car rigs stay under the car (KingCarStack.BEHIND_Z + this many levels at most).
@@ -75,14 +75,16 @@ func _process(_delta: float) -> void:
 func _with_cards(rigs: Array[CutRig], cards: Array[Sprite2D]) -> Dictionary[CutRig, int]:
 	var bodies: Array[Node2D] = []
 	var half: Array[float] = []
+	var tall: Array[float] = []
 	var b: Vector2 = _box()
 	for r: CutRig in rigs:
 		bodies.append(r)
-		half.append(b.x * 0.5)
+		half.append(RigDepthBox.half(r, b.x))
+		tall.append(RigDepthBox.tall(r, b.y))  # n15: Rivet's x1.5 figure, every drawn card's height
 	for c: Sprite2D in cards:
 		bodies.append(c.get_parent() as Node2D)
 		half.append(c.texture.get_width() / float(c.hframes) * absf(c.global_scale.x) * 0.5)
-	var lv: Array[int] = levels_w(bodies, half, b.y)
+	var lv: Array[int] = levels_w(bodies, half, b.y, tall)
 	var out: Dictionary[CutRig, int] = {}
 	for i: int in rigs.size():
 		out[rigs[i]] = lv[i]
@@ -114,12 +116,12 @@ static func levels(rigs: Array[CutRig], box: Vector2) -> Dictionary[CutRig, int]
 	return out
 
 
-## levels() over bodies of their own half widths (px) at ground points (global positions); a pair
-## overlaps when closer across than the two halves and nearer by less than `box_h`.
-static func levels_w(bodies: Array[Node2D], half: Array[float], box_h: float) -> Array[int]:
-	var idx: Array[int] = []
-	for i: int in bodies.size():
-		idx.append(i)
+## levels() over bodies of own half widths and heights (px; box_h past the end of `tall`) at foot
+## points: a pair overlaps when closer across than the halves, nearer by less than the near one's.
+static func levels_w(
+	bodies: Array[Node2D], half: Array[float], box_h: float, tall: Array[float] = []
+) -> Array[int]:
+	var idx: Array[int] = Array(range(bodies.size()), TYPE_INT, &"", null)
 	idx.sort_custom(
 		func(a: int, b: int) -> bool:
 			return bodies[a].global_position.y < bodies[b].global_position.y
@@ -133,7 +135,8 @@ static func levels_w(bodies: Array[Node2D], half: Array[float], box_h: float) ->
 		for m: int in k:
 			var j: int = idx[m]
 			var d: Vector2 = bodies[i].global_position - bodies[j].global_position
-			if absf(d.x) < half[i] + half[j] and d.y < box_h and d.y > 0.0:
+			var h: float = tall[i] if i < tall.size() else box_h  # ghost cards: the plain box
+			if absf(d.x) < half[i] + half[j] and d.y < h and d.y > 0.0:
 				lv = maxi(lv, out[j] + 1)
 		out[i] = lv
 	return out
@@ -148,10 +151,6 @@ static func eff_z(n: CanvasItem) -> int:
 			break
 		at = at.get_parent() as CanvasItem
 	return z
-
-
-static func _foot(rig: CutRig) -> Vector2:
-	return rig.global_position
 
 
 func _box() -> Vector2:

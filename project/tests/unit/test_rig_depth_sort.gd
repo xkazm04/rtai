@@ -58,3 +58,44 @@ func test_the_layer_names_its_sorter_and_forgets_a_freed_one() -> void:
 	assert_eq(RigDepthSort.on(layer), s)
 	s.free()
 	assert_null(RigDepthSort.on(layer), "a freed sorter is never handed out")
+
+
+func test_a_tall_near_body_overlaps_a_body_its_own_height_away() -> void:
+	var near: Node2D = Node2D.new()
+	var far: Node2D = Node2D.new()
+	add_child_autofree(near)
+	add_child_autofree(far)
+	far.global_position = Vector2(0.0, 0.0)
+	near.global_position = Vector2(4.0, 56.0)  # Rivet 1.75 m south of a cop (n15 city film t650)
+	var bodies: Array[Node2D] = [near, far]
+	var half: Array[float] = [14.0, 14.0]
+	assert_eq(
+		RigDepthSort.levels_w(bodies, half, 33.0), [0, 0] as Array[int], "one box: no overlap"
+	)
+	var tall: Array[float] = [62.0, 33.0]
+	assert_eq(
+		RigDepthSort.levels_w(bodies, half, 33.0, tall),
+		[1, 0] as Array[int],
+		"the near body's drawn head reaches over the far one's feet: it climbs over"
+	)
+	tall = [33.0, 62.0]
+	assert_eq(
+		RigDepthSort.levels_w(bodies, half, 33.0, tall),
+		[0, 0] as Array[int],
+		"a tall FAR body does not reach the near one"
+	)
+
+
+func test_card_tall_is_the_drawn_card_above_the_foot() -> void:
+	var rig: CutRig = _rig(Vector2(100.0, 200.0))
+	assert_eq(RigDepthBox.card_tall(rig), 0.0, "no card: 0")
+	var card: Sprite2D = Sprite2D.new()
+	var img: Image = Image.create(10, 40, false, Image.FORMAT_RGBA8)
+	card.texture = ImageTexture.create_from_image(img)
+	card.centered = false
+	card.position = Vector2(-5.0, -40.0)  # bottom edge on the foot
+	rig.add_child(card)
+	rig.head_card = card
+	assert_almost_eq(RigDepthBox.card_tall(rig), 40.0 * rig.scale.y, 0.01)
+	card.visible = false
+	assert_eq(RigDepthBox.card_tall(rig), 0.0, "a hidden card: 0")
