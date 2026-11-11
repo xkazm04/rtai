@@ -42,6 +42,7 @@ class Shock:
 	var row: SignatureKill = null
 	var born: int = 0
 	var dir: Vector2 = Vector2.RIGHT
+	var art: Texture2D = null  # KillXray's drawn per-kind strip, or null: XRAY_TEX
 
 
 var kills: SignatureKills = null
@@ -57,6 +58,7 @@ func add(serial: int, body: Node2D, row: SignatureKill, dir: Vector2) -> void:
 	s.row = row
 	s.born = kills.tick
 	s.dir = dir
+	s.art = KillXray.art_of(body)
 	@warning_ignore("return_value_discarded")
 	_shocks.append(s)
 
@@ -136,16 +138,17 @@ func _draw() -> void:
 			_smoke(s, p - s.dir * 0.2 * ppm, age, 1.0 - float(age - lock) / SMOKE_TICKS)
 
 
-## The X-ray: the zap star behind the held flash, then the skeleton sticker, upright on the
-## body's feet (or, `--shock-xray=lie`, turned along the shot on its centre: the before).
+## The X-ray: the zap star, then KillXray's drawn set or the plain sticker on the body's feet.
 func _skeleton(s: Shock, p: Vector2, age: int) -> void:
-	var h: float = XRAY_M * ppm
-	var size: Vector2 = Vector2(h * 0.53, h)
-	var lie: bool = KillXray.lies()
 	var mid: Vector2 = KillXray.mid(p, XRAY_M, ppm)
-	if age - s.row.hitstop_ticks < XRAY_HOLD:
-		_burst(s, mid, h * 0.62)
-	draw_set_transform(mid, s.dir.angle() + PI * 0.5 if lie else 0.0, Vector2.ONE)
+	var a: int = age - s.row.hitstop_ticks
+	if a < XRAY_HOLD:
+		_burst(s, mid, XRAY_M * ppm * 0.62)
+	if s.art != null and not KillXray.lies():
+		KillXray.draw(self, s.art, p, 0 if a < XRAY_HOLD else ((a - XRAY_HOLD) / STROBE) % 2, ppm)
+		return
+	var size: Vector2 = Vector2(0.53, 1.0) * XRAY_M * ppm
+	draw_set_transform(mid, s.dir.angle() + PI * 0.5 if KillXray.lies() else 0.0, Vector2.ONE)
 	draw_texture_rect(XRAY_TEX, Rect2(-size * 0.5, size), false)
 	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 

@@ -1,5 +1,32 @@
 [
  {
+  "file": "electro_xray_per_kind_ab_64ppm_t118-150.png",
+  "title": "Electro X-ray: the cop flashes HIS skeleton (cap, belt), strobing to the inverse",
+  "source": "film.mjs chapter:electro_gun --ppm=64 --on=kill:1+40, this commit; before -- --xray-art=plain",
+  "branch": "n16-kills-polish",
+  "ppm": 64,
+  "before": "top row: the one plain skeleton",
+  "note": "asset lane A3 (it418/it422), 8 kinds; frame 1 held, frame 2 on alternate strobe pulses"
+ },
+ {
+  "file": "electro_xray_per_kind_ab_32ppm_x15_t118-150.png",
+  "title": "Electro X-ray per kind at play zoom (x1.5)",
+  "source": "same, --ppm=32",
+  "branch": "n16-kills-polish",
+  "ppm": 32,
+  "before": "top row",
+  "note": "reads as the cop's skeleton by the cap; busier and darker than the plain sticker on dark asphalt (owner Call)"
+ },
+ {
+  "file": "electro_xray_kinds_hood_worker_swat_64ppm_t408-428.png",
+  "title": "Electro X-ray: hood, worker, SWAT each their own",
+  "source": "film.mjs weapon:electro_gun --ppm=64 --victim=ped/head_hood|ped/head_worker|cop/head_swat; row 1 -- --xray-art=plain",
+  "branch": "n16-kills-polish",
+  "ppm": 64,
+  "before": "row 1 (hood, plain)",
+  "note": "the lone-victim shot dresses a cop body with the kind's head (dev shot)"
+ },
+ {
   "file": "katana_topple_ab_64ppm_x085_t66-130.png",
   "title": "Katana: the halves topple onto the street",
   "source": "film.mjs chapter:katana --ppm=64; before 7d3ba705a (work tree = same), after e69fd5359 work tree",
@@ -106,32 +133,5 @@
   "ppm": 32,
   "before": "top row",
   "note": "honest: the bone does not read at 32 px/m"
- },
- {
-  "file": "plasma_hole_chest_smoke_ab_64ppm_t55-95.png",
-  "title": "Plasma hole at the chest, ink-grey wound smoke",
-  "source": "film.mjs chapter:plasma_rifle --ppm=64 --on=kill:1+40; before rev 1b823dbf7, after bb9314a83",
-  "branch": "n16-kills-polish",
-  "ppm": 64,
-  "before": "top row: hole at the hips, cream smoke washing the cop pale",
-  "note": "weakest death in the ranking (7/20); commit bb9314a83"
- },
- {
-  "file": "plasma_hole_chest_smoke_ab_32ppm_x2_t55-95.png",
-  "title": "Plasma hole fix at play zoom (x2)",
-  "source": "same, --ppm=32",
-  "branch": "n16-kills-polish",
-  "ppm": 32,
-  "before": "top row",
-  "note": "the cop stays solid navy; the hole's cream halo is still large (next)"
- },
- {
-  "file": "boss_katana_strike_hold_ab_64ppm_t305-310.png",
-  "title": "Blade strike holds through the gap between swings",
-  "source": "film.mjs arena --view=tilt --ppm=64 --lock=off -- --bot=boss --boss=king --boss-blade=katana; before --rivet-strike-hold=off (rev 917d75a5e)",
-  "branch": "n16-kills-polish",
-  "ppm": 64,
-  "before": "top row: two upright back-turned frames t307-308",
-  "note": "owner n15 verdict (c); commit e4d81df1b"
  }
 ]

@@ -86,6 +86,7 @@ func parts(
 	elif row.style == &"shock" and rig != null and groups[SignatureKill.BODY] != null:
 		var plank: Node2D = KillSprawlCut.cut(rig)
 		groups[SignatureKill.BODY] = KillShockFx.wrap(groups[SignatureKill.BODY], plank)
+		KillXray.tag(groups[SignatureKill.BODY], rig)  # n16: the kind's drawn X-ray
 	elif row.style == &"burn":
 		KillCharCells.tag(groups[SignatureKill.BODY], rig)  # n15: a drawn charred man
 	return groups
