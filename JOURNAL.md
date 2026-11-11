@@ -575,3 +575,8 @@ NEXT (session 9 / REPORT phase): (1) `61a2d3baa` is the last code commit and PAS
 (a)-(d), merge notes with shared files, next steps): drop the "(updated ...)" note at 07:40 and re-run
 `node tools/evidence/cites.mjs REPORT.md --tracked`. (3) Asset replies (n15-combat.md): nothing new since it371 04:23.
 (4) If time: the plasma sword's left strike size (film blade:plasma_sword_left 64 px/m before/after).
+- Correction: the clock read 06:16 at the line above, not 06:20; the session went on.
+- Judged, not changed: the plasma sword's left strike size (DEFECTS blades #3): the dome ~80 px in the left facing (t52)
+  vs ~75 px in the left strike (t62-66) at 64 px/m, ~6 %, reads as the crouch:
+  `evidence/n15-combat/plasma_sword_left_strike_size_64ppm_t52-66.png` (build/film/plasma_sword64_after, session 3's
+  film of 15c8abbcc). Kept. NEXT (4) above is done.
