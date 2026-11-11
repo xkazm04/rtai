@@ -28,8 +28,7 @@ var styles: KillStyles = KillStyles.new()
 var frames: int = 0
 var spent_us: int = 0
 var worst_us: int = 0
-## The sim tick of the worst frame, the ticks the kills landed on, and frames over 2 ms: a spike
-## on a kill tick is this view's; one far from any kill is the machine (CONTENDED).
+## The worst frame's tick, the kill ticks, frames over 2 ms (a spike off any kill: the machine).
 var worst_tick: int = -1
 var kill_ticks: PackedInt32Array = PackedInt32Array()
 var over_2ms: int = 0
@@ -113,7 +112,8 @@ func _draw() -> void:
 	var t0: int = Time.get_ticks_usec()
 	var g: GibSim = kills.gibs
 	for i: int in GibSim.CAPACITY:
-		if g.live(i) and _holders.has(g.kill_of[i]):
+		var n: Node2D = _node(i)  # n16: an empty group (a card victim's cap) casts no shadow
+		if n != null and n.get_child_count() > 0 and _holders.has(g.kill_of[i]):
 			var r: float = 0.22 * ppm / (1.0 + g.z[i] * 0.6) * body_sink(g.kill_of[i])
 			draw_circle(g.pos[i] * ppm, r * styles.dissolve_fx.left(g.kill_of[i], g.piece[i]), SOOT)
 	for m: KillMarks.Mark in kills.marks.marks:
