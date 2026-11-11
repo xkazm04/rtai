@@ -1,4 +1,4 @@
-# REPORT n15-tools (draft, session 2, 00:36; later sessions extend it)
+# REPORT n15-tools (draft, session 3, 01:02; later sessions extend it)
 
 Branch `n15-tools` from main `5c5c03611`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n15\tools\` (`frames.json`),
 `evidence/` in this tree, JOURNAL.md for every command and its output.
@@ -45,6 +45,15 @@ crowd: look goldens re-blessed with a decisions line). t-4 and t-5 move nothing 
 - `tools/dev/run.mjs` + `entries.mjs` (5cda754c0): `const NEEDS_WINDOW: bool = true` in an entry or its parent -> refused
   headless (`run: res://dev/selftest/look_golden.tscn renders frames ... add --windowed`), exit 2, nothing launched.
 - `tests/parity/city_parity.gd`: `final_sha_a/b` in the parity result.
+- `tools/gate/precommit.mjs` + `tools/lint/scope.mjs` (c5ac2442a, 112b0a12e; hero's FRICTION "each commit took ~1.5
+  min"): the hook hands lint the staged list; a commit wholly under `project/` runs gdformat + gdlint over its staged
+  `.gd` and the tool tests only when it stages a file they read (`join(ROOT, ...)` literals, plus `project/dev/`,
+  `project/data/`, `project.godot`, found by an fs trace: `tools/lint/fs_trace.mjs`). Example (real commit, scratch
+  worktree): `lint: all 15 checks pass over 1 staged of 1428 GDScript files` in 4.6 s, against 88 s for the full lint.
+  An empty commit skips lint when `git write-tree` = `HEAD^{tree}` (1.9 s). Gates always lint everything.
+- `tools/evidence/run.mjs` (3fc7109a9; hero's FRICTION, a mid-run edit poisoned the selftest): each kind that finishes
+  after a code path changed (new porcelain line, or size/mtime of a path dirty at the start) is failed with
+  `INVALID: the tree changed while <kind> ran (<n> code path(s): ...)` and a pointer to `tools/gate/run.mjs`.
 
 Gates on 52dc72d4 (`node tools/gate/run.mjs`): PASS - lint 16/16, unit 2530/0, scenarios 55, parity exact,
 selftest look 11/11 worst 0.00, release-compile 667/0. Reel gate on ad2f0a5c1: top, tilt70, combo OK (280-286 s each).
@@ -71,7 +80,11 @@ did not fire (no baseline conflict tonight): proven on its throwaway-repo test o
 combat: `--victim` through compare (b8fccb958), extras as chapters + `--feel` (ba6f38838, d60ff5894), lint function
 size stops at the body (26f18e5ef), `test_quest_blade` no longer depends on test order (5e41c66bc), `tools/dev/run.mjs`
 refuses a rendering entry headless (`const NEEDS_WINDOW`, 5cda754c0). A real victim
-film: `film-victim-head-swat-64ppm-t337-367.png`. hero: no REQUEST.
+film: `film-victim-head-swat-64ppm-t337-367.png`. hero (FRICTION lines, no REQUEST): the slow pre-commit hook and lint
+on empty commits (c5ac2442a, 112b0a12e), the evidence run reading a mid-edit tree (3fc7109a9). Builders can take them
+before the merge: `git cherry-pick 39431687d c5ac2442a 3fc7109a9 112b0a12e` (Node only; clean on both tips at 00:59).
+Not served: hero's `stride_film --film-fire` on one-row strips (hero's own dev scene; its cursor_sweep workaround is
+the right film).
 
 ## Calls for the owner
 
