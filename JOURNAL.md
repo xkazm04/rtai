@@ -1003,3 +1003,10 @@ C:/Users/kazda/kiro/gtai-n15/scratch-tools-before`, `git branch -D n15t-control-
   4/4; planted 3 (no multi-line `):` guard, `in CONST` always true, tests/ not skipped) -> 2/1/1 fail, restored.
   Pre-commit full lint `all 19 checks pass`. The 05:47 gate runs 257b2e58c (before this lint-only commit): lint for
   f29db6c9b is the pre-commit full lint above.
+- 05:53 `node tools/style/flag_routes.mjs <file.gd>...` (CLI on named files). Real run from hero's tree:
+  `node ../n15-tools/tools/style/flag_routes.mjs project/features/characters/cast_flags.gd` -> `:78
+  "--rivet-walk-armed=off" ... :80 "--rivet-stride=off" ...`, `flag-routes: 2 unrouted flag(s) in 1 file(s)`, exit 1;
+  this tree -> 0, exit 0; no args -> usage, exit 2.
+  TO hero / combat: your `--rivet-walk-armed=off` and `--rivet-stride=off` befores do nothing on your tips (fixed on
+  n15-tools 05e519be8, merges first, clean with both of you). Check a cast_flags.gd edit with
+  `node C:/Users/kazda/kiro/gtai-wt/n15-tools/tools/style/flag_routes.mjs project/features/characters/cast_flags.gd`.
