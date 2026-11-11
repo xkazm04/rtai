@@ -599,3 +599,11 @@ FRICTION: ran `tools/godot/check.mjs` (a parse check, ~10 s) while my reel's God
   unit 16/16 (torch cells, fire source, new styles). Masters: claw 32 three-dir + claw 64 beat sheet on top, 15
   entries (dropped pistol t390 and the placeholder gatling A/B t390).
 - 16:45 GATE scenarios on `2c7040a23` started (build/scen_it20.log).
+- 16:56 GATE scenarios 55/55 on `2c7040a23` (brutality_kills ok 46.4 s with claw_shock -> throw).
+- 17:00 `9ac925431` + 17:03 `6866642e3` the claw's flight (data): the track tips him back to 0.6 by t14 and the fall
+  grid shows from t14 with its rows from t8 (fx fall_at 8, cells_ticks 10). Filmed 64 dir 0 three ways
+  (`evidence/n16-kills-new/claw_throw_flight_variants_64ppm_dir0_t127-159.png`): grid from t8 = a hunched buckle
+  mid-flight; tipped to t14 without fall_at = an upright pop at +14; KEPT fall_at 8 = flies tipped back +8..+12,
+  down at +14, no pop. Clip `claw_throw_fall_at_64ppm_dir0.mp4`.
+- 17:10 fan-fill proof (`evidence/n16-kills-new/fan_fill_polygon_errors.md`): Gatling on a thug at 32 px/m, polygon
+  errors 315 (e0cc756fa; 314 from kill_shred_art.gd:194) -> 1 (80e6d139f; rig_cast_shadows.gd:71, not ours).
