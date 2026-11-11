@@ -856,3 +856,5 @@ untracked dev/sim/car_route_trails.gd copy is mine) and `git branch -D n15t-cont
   `tests 896, pass 894, fail 0, skipped 2`, so tonight's new tests (launch_flags, film_rev, run_reels parseMain,
   merge preview) pass on Linux too. My first try ran in the default distro (NVIDIA-Workbench: no ~/node24, nothing
   ran); its stray clone removed. Ubuntu clone removed (`ls ~ | grep -c n15t_clone` -> 0).
+- 04:55 merged `quest1_clip.gd` (tree of `git merge-tree --write-tree n15-tools n15-combat`): both `--still-lead` and
+  combat's `--quest-hit` usage lines and KNOWN_FLAGS entries present; gdformat --check + gdlint clean on it.
