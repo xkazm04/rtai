@@ -41,7 +41,7 @@ export function parseArgs(argv) {
       o.reelViews = REEL_VIEWS.every((x) => views.includes(x)) ? null : REEL_VIEWS.filter((x) => views.includes(x));
     }
     else if (t) o.timeoutMin = Number(t[1]);
-    else if (a === '--reels') o.reels = true;
+    else if (a === '--reels') { o.reels = true; o.reelViews = null; } // the last --reels form wins
     else if (a === '--bench') o.bench = true;
     else if (a === '--no-parity') o.parity = false;
     else if (a === '--no-selftest') o.selftest = false;
@@ -84,7 +84,7 @@ function runLogged(cmd, args, { cwd, log, timeoutMs }) {
 /** {view: seconds} from run_reels' progress lines (`run_reels: [2/3] tilt70 OK, 745 s; log ...`). */
 export function reelSecs(text) {
   const out = {};
-  for (const m of String(text ?? '').matchAll(/^run_reels: \[\d+\/\d+\] (\S+) \S+, (\d+) s/gm)) out[m[1]] = Number(m[2]);
+  for (const m of String(text ?? '').matchAll(/^run_reels: \[\d+\/\d+\] (\S+) \S+, (\d+(?:\.\d+)?) s/gm)) out[m[1]] = Number(m[2]);
   return out;
 }
 
