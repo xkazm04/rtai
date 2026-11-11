@@ -28,9 +28,11 @@ Every change has a before flag on the same build and a same-tick before/after fi
 | 5 the melee smear: one crescent, no white hexagon ring | `9f966271e` | `--melee-smear=n7` | `evidence/n15-combat/melee_smear_span_ab_baton_left_32ppm_t58-96.png` |
 | 5 the city street fight draws no range-target rings | `54297457d` | `--target-rings=on` | `evidence/n15-combat/city_target_rings_ab_32ppm_t200_600.png` |
 
-Gates: last full run PASS on `54297457d` (00:29; lint, unit 2512/0/2, scenarios 55, parity bit-exact, look goldens
-11/11 worst 0.00, block goldens worst 0.69 = this worktree's session-1 baseline, export-audit, reels). TO DO: the
-final commit's gate line.
+Gates: full run on `65acf2e8e` (02:35-03:00): PASS lint 16/16, unit 2526/0/2, scenarios 55, parity bit-exact (mutation
+at 629), look goldens 11/11 worst 0.00, block goldens worst 0.69 (= this worktree's session-1 baseline), export-audit
+672; reels FAIL (top: a burn kill under the top view crashed in `KillCharCells.tag`, from `8eb67bc62`) -> fixed in
+`f7baf2dbc`, top reel re-run OK on it (19 chapters, 0 SCRIPT ERROR); tilt70 + combo were OK on `65acf2e8e`. TO DO: one
+full gate with reels on the final commit.
 
 ## What does not work, or is not shown
 

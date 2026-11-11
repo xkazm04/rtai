@@ -353,3 +353,28 @@ contractor living hold, the t62 white stick, flame jet column. (4) REPORT.md dra
   v2 line is removed in the next commit. Checked by script: every n15 combat provenance line's sha256 matches its file.
 - Masters (gtai-masters/n15/combat/frames.json): added the drawn gib pieces and the 3-kind charred cells at the top;
   dropped the superseded paper-cut gib and the arena lights (15 entries, none unreferenced/missing, by script).
+- GATES on `65acf2e8e` (02:35-03:00, build/gate/65acf2e8e046/): PASS lint, unit 2526/0/2, scenarios 55, parity
+  bit-exact, look goldens 11/11 worst 0.00 (block 5/5 worst 0.69 = baseline), export-audit 672; FAIL reels: top reel,
+  `SCRIPT ERROR: Cannot call method 'has_meta' on a null value` at StreetWalkerCards.row_of <- KillCharCells.tag (a burn
+  kill under the top view: a rig with no head card). My bug from `8eb67bc62` (session 4's reels never ran on it).
+- MILESTONE `f7baf2dbc` fix: KillCharCells.tag skips a rig with no head card; regression test
+  test_a_rig_without_a_head_card_is_not_tagged (5/5). Top reel re-run on a clean tree == f7baf2dbc
+  (`node tools/reel/run_reels.mjs --out=build/reel_f7baf2dbc --views=top`): OK, 19 chapters down, 0 SCRIPT ERROR.
+- MILESTONE `df7d5da6a` gib pieces toned to the armed walk's blue (street_tone): untoned vs toned film 48 px/m:
+  `evidence/n15-combat/rocket_gib_pieces_toned_ab_48ppm_x2_t352-364.png`. DECISION combat/gib-pieces-tone.
+- Metal sparks: chapter:riot_cop 64 px/m t46-72 with/without `--impact-fx=shapes`: identical frames, so no shielded
+  (METAL) impact there either. Still unshipped; files in build/scratch/metal_wip/.
+- 03:13 session 5 ends. No Godot or node process of mine running (checked by command line).
+
+NEXT (session 6): (1) Full gates with reels on HEAD (`node tools/gate/run.mjs --rev=HEAD --reels`): code since the last
+full PASS of everything bar reels (65acf2e8e) is f7baf2dbc (the null guard) and df7d5da6a (two PNGs); the reels must
+pass on the final commit. Start it first and do only non-Godot work for ~30 min. (2) Metal sparks (build/scratch/
+metal_wip: impact_cells.py CELLS sparks + CREAM 0.5, FILES/SPAN_M METAL 0.6, the test): find a filmed METAL impact.
+Neither a riot cop's rounds (lone shot or chapter riot_cop) nor a metal dummy (a BODY hit) gives one. Options: make a
+round that hits a metal target METAL in GunFxRounds._impact (arena.metal holds their positions), then film the
+rivet-motion melee line's metal dummies with a gun (combat_reel `melee_line` beat). Or drop it. (3) DEFECTS loop (item
+5): film `city` 32 px/m t100-1150 fresh and rank; known open: the body burst drift (c-2 #3, fix path in session 4's
+01:08 line), the t62 white stick in the katana kill, the flame jet floor-fire column, the contractor's two carbines on
+a death. (4) Gib pieces for the thug and hood (it363, drawn, unpacked): need a shot where they are CARDS (city crowd +
+rocket). (5) Masters: the gib frame shows the untoned pieces (fine; the toned A/B is in evidence/). (6) REPORT: the
+final gate line.
