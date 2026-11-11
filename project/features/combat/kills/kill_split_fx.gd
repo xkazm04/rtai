@@ -101,7 +101,8 @@ func add(
 ) -> void:
 	at += lift(row, 1.0)  # metres: the streak and the saw's bite sit on the raised line
 	var fall: int = kills.tick + row.hitstop_ticks + row.grind_ticks
-	var t: KillSplitHalves.Topple = KillSplitHalves.topple(parts, fall, row.split_topple_deg)
+	var deg: float = row.split_topple_deg
+	var t: KillSplitHalves.Topple = KillSplitHalves.topple(parts, fall, deg, cut_dir.x)
 	if t != null:
 		_topples[serial] = t
 	if row.grind_ticks <= 0:

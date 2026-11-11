@@ -17,21 +17,21 @@ func _parts() -> Array[Node2D]:
 
 
 func test_no_topple_without_a_degree_or_two_halves() -> void:
-	assert_null(KillSplitHalves.topple(_parts(), 0, 0.0))
+	assert_null(KillSplitHalves.topple(_parts(), 0, 0.0, 1.0))
 	var one: Array[Node2D] = _parts()
 	one[SignatureKill.HALF_B] = null
-	assert_null(KillSplitHalves.topple(one, 0, 80.0))
+	assert_null(KillSplitHalves.topple(one, 0, 80.0, 1.0))
 
 
 func test_nothing_turns_before_the_start() -> void:
 	var parts: Array[Node2D] = _parts()
-	KillSplitHalves.topple(parts, 10, 80.0).pose(10)
+	KillSplitHalves.topple(parts, 10, 80.0, 1.0).pose(10)
 	assert_eq(parts[SignatureKill.HALF_A].rotation, 0.0)
 
 
 func test_each_half_falls_away_from_the_other_to_the_row_degree() -> void:
 	var parts: Array[Node2D] = _parts()
-	var t: KillSplitHalves.Topple = KillSplitHalves.topple(parts, 10, 80.0)
+	var t: KillSplitHalves.Topple = KillSplitHalves.topple(parts, 10, 80.0, 1.0)
 	t.pose(10 + KillSplitHalves.TOPPLE_TICKS)
 	assert_almost_eq(parts[SignatureKill.HALF_A].rotation, deg_to_rad(80.0), 0.0001, "right half")
 	assert_almost_eq(parts[SignatureKill.HALF_B].rotation, -deg_to_rad(80.0), 0.0001, "left half")
@@ -39,7 +39,7 @@ func test_each_half_falls_away_from_the_other_to_the_row_degree() -> void:
 
 func test_the_fall_eases_in() -> void:
 	var parts: Array[Node2D] = _parts()
-	KillSplitHalves.topple(parts, 0, 80.0).pose(KillSplitHalves.TOPPLE_TICKS / 2)
+	KillSplitHalves.topple(parts, 0, 80.0, 1.0).pose(KillSplitHalves.TOPPLE_TICKS / 2)
 	assert_almost_eq(parts[SignatureKill.HALF_A].rotation, deg_to_rad(80.0) * 0.25, 0.0001)
 
 
@@ -47,3 +47,12 @@ func test_the_blade_rows_topple() -> void:
 	var table: SignatureKillTable = SignatureKillTable.load_table()
 	for weapon: StringName in [&"katana", &"plasma_sword", &"chainsaw", &"kerf_slice"]:
 		assert_gt(table.for_weapon(weapon).split_topple_deg, 0.0, String(weapon))
+
+
+func test_stacked_halves_both_fall_along_the_blow() -> void:
+	var parts: Array[Node2D] = _parts()
+	parts[SignatureKill.HALF_A].position = Vector2(0.0, -10.0)  # the saw's level cut: torso over legs
+	parts[SignatureKill.HALF_B].position = Vector2(0.0, 10.0)
+	KillSplitHalves.topple(parts, 0, 80.0, -0.7).pose(KillSplitHalves.TOPPLE_TICKS)
+	assert_almost_eq(parts[SignatureKill.HALF_A].rotation, -deg_to_rad(80.0), 0.0001, "to the left")
+	assert_almost_eq(parts[SignatureKill.HALF_B].rotation, -deg_to_rad(80.0), 0.0001, "both")

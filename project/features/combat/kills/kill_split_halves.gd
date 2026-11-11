@@ -17,21 +17,25 @@ class Topple:
 	var halves: Array[Node2D] = []
 	var start: int = 0
 	var rad: float = 0.0
+	## +1 / -1: the blow's screen side (the way a half falls when the halves are stacked).
+	var lean: float = 1.0
 
-	## After KillView placed the halves this frame: each turns away from the other.
+	## After KillView placed the halves this frame: side by side (a diagonal cut), each turns away
+	## from the other; stacked (the saw's level cut), both fall along the blow, off the attacker.
 	func pose(tick: int) -> void:
 		var k: float = clampf(float(tick - start) / TOPPLE_TICKS, 0.0, 1.0)
 		if k <= 0.0 or halves.size() < 2:
 			return
-		var mid: float = (halves[0].position.x + halves[1].position.x) * 0.5
+		var gap: Vector2 = halves[0].position - halves[1].position
 		for i: int in halves.size():
-			var dx: float = halves[i].position.x - mid
-			var away: float = signf(dx) if absf(dx) > 0.01 else (1.0 if i == 0 else -1.0)
+			var away: float = lean
+			if absf(gap.x) > absf(gap.y):
+				away = signf(gap.x) * (1.0 if i == 0 else -1.0)
 			halves[i].rotation += away * rad * k * k
 
 
 ## The topple for `parts`' two halves from tick `start`; null when `deg` is 0 or a half is gone.
-static func topple(parts: Array[Node2D], start: int, deg: float) -> Topple:
+static func topple(parts: Array[Node2D], start: int, deg: float, blow_x: float) -> Topple:
 	var t: Topple = Topple.new()
 	for p: int in [SignatureKill.HALF_A, SignatureKill.HALF_B]:
 		if p < parts.size() and parts[p] != null:
@@ -40,6 +44,7 @@ static func topple(parts: Array[Node2D], start: int, deg: float) -> Topple:
 		return null
 	t.start = start
 	t.rad = deg_to_rad(deg)
+	t.lean = -1.0 if blow_x < 0.0 else 1.0
 	return t
 
 
