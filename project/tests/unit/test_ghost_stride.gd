@@ -84,15 +84,17 @@ func test_dent_runs_on_every_facing_since_his_fourth_take() -> void:
 		assert_true(GhostStride.runs("dent", "p70", row), "row %d" % row)
 
 
-func test_a_run16_grid_shows_its_16_frames_evenly() -> void:
+func test_a_run16_grid_shows_each_of_its_16_frames() -> void:
 	assert_eq(GhostStride.run_table_of("kerf", "p55").size(), 0, "no entry: the run8")
-	for key: String in GhostStride.RUN_COLS:
+	for key: String in GhostStride.RUN_TABLES:
 		var parts: PackedStringArray = key.split("/")
 		var steps: PackedFloat32Array = GhostStride.run_table_of(parts[0], parts[1])
-		var cols: int = GhostStride.RUN_COLS[key]
-		assert_eq(GhostStride.cols_of(steps), cols, key)
-		for c: int in cols:
-			assert_eq(GhostStride.col_of((c + 0.5) / cols, steps), c, "%s: frame %d" % [key, c])
+		var cols: int = GhostStride.cols_of(steps)
+		assert_eq(cols, 16, key)
+		var seen: Dictionary = {}
+		for i: int in 1600:
+			seen[GhostStride.col_of(i / 1600.0, steps)] = true
+		assert_eq(seen.size(), cols, "%s: every drawn frame shows" % key)
 		for side: String in ["", "_left"]:
 			var sheet: String = "run%d%s" % [cols, side]
 			var tex: Texture2D = load(GhostDrawn.path_of(parts[1], parts[0], sheet)) as Texture2D

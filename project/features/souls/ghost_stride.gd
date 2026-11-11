@@ -21,9 +21,49 @@ const TABLES: Dictionary[String, Array] = {
 ## after three galloping redraws) alternates legs in its fourth take.
 const RUN_ROWS_OFF: Dictionary[String, Array] = {}
 ## n15 it14: run grids drawn on 16 columns (`<name>_run16.png`, "<name>/<art>"): the asset lane's
-## halfway frames on the profile row, each run8 frame twice on the rest; even timing. No entry:
-## the 8-column `<name>_run8.png` (the before).
-const RUN_COLS: Dictionary[String, int] = {"dent/p70": 16, "kerf/p70": 16}
+## halfway frames on the profile row, each run8 frame twice on the rest; timed by the profile row's
+## measured stance travel (foot_travel.py), the flight frames sharing the rest of the cycle. No
+## entry: the 8-column `<name>_run8.png` on the even cycle (the before).
+const RUN_TABLES: Dictionary[String, Array] = {
+	"dent/p70":
+	[
+		10.0,
+		17.5,
+		32.0,
+		28.5,
+		20.75,
+		20.75,
+		20.75,
+		20.75,
+		5.5,
+		8.5,
+		45.0,
+		17.0,
+		20.75,
+		20.75,
+		20.75,
+		20.75
+	],
+	"kerf/p70":
+	[
+		14.0,
+		35.0,
+		33.5,
+		18.5,
+		24.9,
+		24.9,
+		24.9,
+		24.9,
+		22.5,
+		29.0,
+		29.0,
+		19.5,
+		24.9,
+		24.9,
+		24.9,
+		24.9,
+	],
+}
 
 
 ## True when `name`'s run grid under `art` may show on the drawn row `row` (`off_rows`: the table).
@@ -38,14 +78,10 @@ static func table_of(name: String, art: String) -> PackedFloat32Array:
 	return PackedFloat32Array(row)
 
 
-## The even table of `name`'s run grid under `art` (16 ones for a run16), empty for a run8.
+## The step table of `name`'s run grid under `art` (16 steps for a run16), empty for a run8.
 static func run_table_of(name: String, art: String) -> PackedFloat32Array:
-	var n: int = RUN_COLS.get(name + "/" + art, 0)
-	var out: PackedFloat32Array = PackedFloat32Array()
-	@warning_ignore("return_value_discarded")
-	out.resize(n)
-	out.fill(1.0)
-	return out
+	var row: Array = RUN_TABLES.get(name + "/" + art, [])
+	return PackedFloat32Array(row)
 
 
 ## A walk sheet's columns: its table's size (Tonnage's walk16 at it14), else the 8 of a walk8.
