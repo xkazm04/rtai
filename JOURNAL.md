@@ -107,3 +107,10 @@ NEXT (iteration 2):
 7. Owed: a quest 1 still of the p55 peek card (item 1d is already wired on main; evidence only); perf: fight_gate under
    the bench lock once drawn cells are added (none warmed yet: gib sheets load on first use).
 8. Contractor bone gib set: judge its orange hi-vis against the contractor card and colour law before packing.
+- GATES on bb9314a83 (12:00-12:25, build/gate/bb9314a83ecb/): PASS lint 19/19, unit 2649/0/2, scenarios 55, parity
+  bit-exact (mutation at 629), selftest look goldens 11/11 worst 0.00, block 5/5, export-audit 683/0. The REEL gate was
+  still running at 12:25 (session stop): read `build/gate/bb9314a83ecb/reels.log` / `gate.json` first next session.
+  Commits after bb9314a83 are docs only (c15db9cc6, 23d4535a5).
+- FRICTION 12:03 a commit with root KILLS.md/DEFECTS.md ran full lint and `tools/merge/step_guard.break.test.mjs:277`
+  (a timeout test) failed while the gates loaded the machine; it passed on the retry a minute later (flaky under load,
+  not my change; the tools lane may want it: REQUEST tools: step_guard timeout test flakes under a running gate).
