@@ -1060,3 +1060,10 @@ Write times from `date` (session 7 needed one correction).
   --short` empty); mutate's own worktree gtai-mutate-6bd4df1a reused (already on the end-of-night list).
 - NEXT amended (06:23): a test landed after 9b7b14088 (test_cast_flags +1), so session 8 runs the FINAL GATE on HEAD
   first (item 3's first branch), and the morning integration only if time is left before 07:30.
+- 06:22:43 FINAL GATE started DETACHED (nohup, so it outlives this session) on 8f8a3dd1b (= every code commit; later
+  commits are docs only): `node tools/gate/run.mjs --rev=8f8a3dd1b --reels --timeout=40`, log
+  `C:/Users/kazda/kiro/gtai-n15/flake/gate_s8_final.log`, which ends with `gate exit <code> at <time>` (expected
+  ~06:50). SESSION 8: read that log FIRST; do not start another gate while it runs (check `git worktree list | grep
+  8f8a3dd1b` and the Godot command lines under gtai-gate-8f8a3dd1b*); when it ends, remove its snapshot
+  (`git worktree remove --force %TEMP%/gtai-gate-8f8a3dd1b...` + its .gtai-snapshot file) and write the result into
+  REPORT "Gates on this branch". Then the morning integration if time is left.
