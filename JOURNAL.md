@@ -382,3 +382,21 @@ shred, overload) and its 32 + 64 px/m stills from `gtai-masters/n16/kills-new/fr
 - DECISION kills-new/baton-scorch: the overload leaves a 0.3 m ink scorch where he stood (the current earthing
   through his boots; `scorch_radius_m` 0.3, data only, the existing KillMarks scorch: ink, no red, no RNG), so the
   aftermath stays on the street. Rejected: blood (the cook has none by design). 0 restores the clean street.
+- 14:28 `227294f8b` baton scorch (scorch_radius_m 0.3); kill reel dir 0 at 32 + 64 on it: NO visible mark where he
+  stood (`evidence/n16-kills-new/baton_overload_scorch_{32,64}ppm_dir0_t69-218.png`). Read: KillMarks' scorch is ink +
+  soot, the victim stood on dark asphalt; `scorch_m` is not in KillMarks.write_state, so replay was never at risk.
+  REVERTED in `d1ab2f3c3`; DECISION kills-new/baton-scorch above is WITHDRAWN. The overload's aftermath still owes a
+  LIGHT mark (cream ash ring / a cream "burnt-out" print, or the drawn smoking cells from the asset lane).
+- FRICTION: a kill reel's "after" side: filmed with the change uncommitted and then committed, the frames were the
+  same; the cause was the dark street, not the root. Not a tools issue.
+
+NEXT (iteration 13, in this order): (1) asset replies: wire nail_pin suit p70 when it lands (`kill_cells_pack.py
+--death=nail_pin`, add `ped/head_hair` to the row's grids, provenance line), then gatling_shred / baton_overload cells
+(add `cells` with frame ticks from beat sheets 4/5; the shred's held-upright frames from t0, the drop at 24; the cook's
+locked frames from t3, eyes out at 40, fall at 45). (2) the baton's aftermath: a light mark that reads on asphalt at
+32 px/m (a cream ash ring in KillCookArt drawn on the street from the fall, data `fx.ash_ring_m`), film dir 0 before/
+after at 32. (3) Gatling drop jump (see 14:10 read: lean the copy's feet by StreetWalkerHit.shove's z). (4) the pin's
+lying cell ~0.4 m off: shift frame 3 per column so its body centre sits on the standing feet (pack-time `--lie-anchor`).
+(5) item 6: molotov vs flamethrower; the claw finisher (announce the kills-polish row edit first). (6) gates on the
+last code commit (`d1ab2f3c3`): full unit (2666/0/2 on 953d2972e), scenarios, `tools/evidence/run.mjs` (parity + look
+goldens), the reel gate `node tools/reel/run_reels.mjs`; REPORT.md is drafted (finalise by 19:40 with the Calls).
