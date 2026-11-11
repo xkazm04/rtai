@@ -40,6 +40,12 @@ crowd: look goldens re-blessed with a decisions line). t-4 and t-5 move nothing 
   a delete order (the integrated run told us to delete a row its own block run had counted).
 - `tools/lib/dev_verdict.mjs` (4eae1a978, item 6): result-freshness slack 2 ms -> 1 s. Linux stamps files up to 6.66 ms
   before `Date.now()`; a selftest tool test failed 3/3 on WSL, 0 after.
+- `project/core/render/texture_threads.gd` (c3f80513d, item 6): **the scenario_rig_stress flake's cause, fixed**. Godot's
+  headless (dummy) renderer keeps textures in a RID owner that is not thread-safe; StreetStrips' prefetch and
+  CityTextures decoded textures on loader threads. Repro (`evidence/dummy_texture_race/`): 4 worker threads, headless:
+  `Initializing already initialized RID`, `Parameter "t" is null`, segfault, 2 of 2 runs; d3d12 or main thread only:
+  0. Headless now loads in place; real renderers keep the worker decode, so no frame moves. Six sightings since 11-03.
+- `tools/debt/merge_baseline.mjs` CLI (e33dcf6a4): the looser-of-both baseline, staged, inside a conflicted merge.
 - `tools/lib/godot_stop.break.test.mjs` (7f10f84b2, item 6): on Linux a zombie grandchild counts as dead (was a 1-in-4
   Linux flake). Item 6 found three timing-shaped causes in all: cold node starts, the Linux mtime tick, the zombie.
 - `tools/dev/run.mjs` + `entries.mjs` (5cda754c0): `const NEEDS_WINDOW: bool = true` in an entry or its parent -> refused
@@ -69,6 +75,15 @@ Commits after 52dc72d4 are Node tools, their tests and docs (linted by the hook)
   The control's 730 s are inflated by my wait bug (stated in the ledger row).
 
 ## Morning merge, run for real (item 4)
+
+Second real run, 01:03-01:22 (fresh scratch integration of the three tips, `--steps=merge,debt,bake,gates,export`):
+the baseline auto-resolve **fired for real** (`tools/debt/baseline.json conflicted merging n15-hero: took the looser
+of both sides ...`), then the merge **stopped on a real hero x combat code conflict** (see Merge notes). Its baseline
+advice failed the merge commit's ratchet, so `node tools/debt/merge_baseline.mjs` now does the looser-of-both merge by
+hand (e33dcf6a4, real run: `debt-ratchet: ok`). Resumed: merge, debt and **bake green (first real bake step)**; the
+gates step printed its per-kind lines for real (`morning: gates: unit-tests pass: unit-tests: 2581 passed, 0 failed,
+2 skipped`, lint, parity, selftest, export-audit pass) and stopped on `scenario-tests fail: ... scenario_rig_stress`,
+the flake fixed below. The export step has still never run for real.
 
 `morning.mjs` merge, debt, native (23:08-23:12) and gates, reels (23:48-00:10) on a scratch integration worktree of
 all three lanes' 23:08 tips: every step green, `DONE ... Nothing was pushed`. Integrated: unit 2529/0, scenarios 55,
