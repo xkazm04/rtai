@@ -52,7 +52,9 @@ func _assert_heading(direction: int, context: String) -> void:
 	assert_eq(Vector2(_route.ddx, _route.ddy), HEADINGS[direction], context)
 
 
-func test_every_nonvoid_nonintersection_tile_preserves_direction_and_lane() -> void:
+## Mask-relative (Call c-2): a tile kind CAR_DEAD_END_TILES names turns the car back on the same
+## road centre; every other one (and a road, always) keeps its direction and lane.
+func test_every_nonvoid_nonintersection_tile_follows_the_dead_end_mask() -> void:
 	var tiles: Array[int] = [
 		SimConst.T_CURB,
 		SimConst.T_CORNER,
@@ -69,8 +71,11 @@ func test_every_nonvoid_nonintersection_tile_preserves_direction_and_lane() -> v
 			_begin(direction)
 			_plan_probe(CENTRE)
 			var context: String = "dir %d tile %d" % [direction, tile]
-			_assert_heading(direction, context)
-			assert_eq(_s.lane[0], _lane(CENTRE, direction), context)
+			var want: int = direction
+			if CitySimCarRoute.dead_end(tile):
+				want = (direction + 2) % 4
+			_assert_heading(want, context)
+			assert_eq(_s.lane[0], _lane(CENTRE, want), context)
 			assert_eq(_s.ndir[0], -1, context)
 
 

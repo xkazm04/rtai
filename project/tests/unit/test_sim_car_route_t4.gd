@@ -36,15 +36,20 @@ func _plan_from(direction: int, dist: float) -> void:
 	_route.plan(0, at.x, at.y, CENTRE.x, CENTRE.y)
 
 
-func test_a_kerb_plaza_or_building_ahead_is_not_a_dead_end() -> void:
+## A kerb, plaza or building ahead turns the car back only when CAR_DEAD_END_TILES names it
+## (shipped 1: none of them, t-4; Call c-2 may name them, and this test follows the value).
+func test_a_kerb_plaza_or_building_ahead_turns_the_car_only_when_the_mask_names_it() -> void:
 	for direction: int in 4:
 		for tile: int in NOT_ROAD:
 			_s.tiles.fill(CitySimCarRoute.road_of(direction))
 			_tile(CENTRE, tile)
 			_begin(direction)
 			_plan_from(direction, SimConst.CAR_PLAN_AHEAD)
-			assert_eq(_s.dir[0], direction, "tile %d ahead: no U-turn" % tile)
-			assert_eq(_s.lane[0], 100.0 + CitySimState.LANE_OFF[direction])
+			var want: int = direction
+			if ((SimConst.CAR_DEAD_END_TILES >> tile) & 1) != 0:
+				want = (direction + 2) % 4
+			assert_eq(_s.dir[0], want, "tile %d ahead" % tile)
+			assert_eq(_s.lane[0], 100.0 + CitySimState.LANE_OFF[want])
 
 
 func test_the_city_edge_and_an_unloaded_tile_still_turn_the_car_back() -> void:
@@ -114,4 +119,3 @@ func test_the_dead_end_mask_keeps_the_edge_and_never_names_a_road() -> void:
 	assert_true(CitySimCarRoute.dead_end(SimConst.T_VOID), "the city edge is always a dead end")
 	for tile: int in [SimConst.T_ROAD_H, SimConst.T_ROAD_V, SimConst.T_INTER]:
 		assert_false(CitySimCarRoute.dead_end(tile), "a road or junction is never a dead end")
-	assert_eq(SimConst.CAR_DEAD_END_TILES, 1, "shipped: t-4 as built (Call c-2 may set 65 or 241)")

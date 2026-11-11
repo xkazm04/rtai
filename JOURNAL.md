@@ -542,3 +542,8 @@ C:/Users/kazda/kiro/gtai-n15/scratch-tools-before`, `git branch -D n15t-control-
   mask 241 U-turns == before.json (the pre-t-4 build) exactly, mask 1 == after.json exactly, mask 65 turns before
   blocks (6) and void only. SEEN `gtai-masters/n15/tools/c2-dead-end-mask-241-1-65-4ppm.png` (3 panels).
   The generated doc string first broke gdlint's 100 columns in sim_constants.gd (quick gate caught it): shortened.
+- 02:33 the t-4 tests hard-coded "a kerb/plaza/block ahead is no dead end", so the owner's flip would have needed test
+  edits: test_sim_car_route_t4 (independent formula `(CAR_DEAD_END_TILES >> tile) & 1`) and the Codex break test
+  (via `dead_end`) now follow the mask. Proof, SimConst edited in place and restored: `run_unit --select=
+  test_sim_car_route_t4,test_sim_car_route_break,test_sim_car_route_break_exits,test_sim_car_route` mask 1: 21/0,
+  mask 241: 21/0, mask 65: 21/0. Dropped my own `CAR_DEAD_END_TILES == 1` pin for the same reason.
