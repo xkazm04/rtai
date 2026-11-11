@@ -706,3 +706,20 @@ FRICTION: `../n16-tools/tools/gate/run.mjs` writes its results to ITS tree (`n16
   before = burn_char's dark standing figure crumbling to ash; after = kneeling burning, face down along the run with the
   flames on him, charred with the bottle neck by +150. The owed street-fight film: DONE. Masters: on top (dropped the
   lab burn_char A/B at 32).
+- 18:24 FINAL GATE started on `ab925914e` (project/ = `b07ca1b3f`'s): `node ../n16-tools/tools/gate/run.mjs --rev=ab925914e
+  --reels`, log C:/Users/kazda/kiro/gtai-n16/scratch-kills-new-gate-final.log (ends with `EXIT <code>`), results in
+  n16-tools/build/gate/ab925914e*/. Expected ~35-40 min (ends ~19:00). It holds this lane's ONE Godot.
+- 18:26 REPORT cites: 2/2 ok (`node tools/evidence/cites.mjs REPORT.md`); masters 15 entries, all referenced.
+
+NEXT (iteration 22: freeze 19:30, REPORT 19:40):
+(1) BEFORE any Godot run: read C:/Users/kazda/kiro/gtai-n16/scratch-kills-new-gate-final.log. If it ends with
+    `EXIT 0` the final gate is green on ab925914e: put it in REPORT's Gates line (replace "Still owed..."). If it has no
+    EXIT line, check whether its Godot still runs (`tasklist | grep -i godot`, the run ledger %LOCALAPPDATA%/gtai/runs)
+    and wait; if it died with the old session, re-run `node ../n16-tools/tools/gate/run.mjs --rev=HEAD --reels` at once
+    (~40 min: it must start by 18:50 to land before the freeze; else run `--reels=top` + evidence and say so).
+    On FAIL: read n16-tools/build/gate/<sha>/reels/*.log and evidence.log, fix, re-gate the failing part.
+(2) No project/ edits while the gate runs if they are to ship; evidence/docs/JOURNAL/REPORT edits are inert.
+(3) Asset replies: claw_throw p55 (REQUEST 17:33) -> `kill_cells_pack.py --death=claw_throw --art=p55`, add the
+    p55 grids, unit, film under --view=tilt; the suit molotov kneel (frames 1-2). Only if before the freeze with gates.
+(4) REPORT final by 19:40: drop "(DRAFT ...)" from the title, Gates line, Calls (one line per death; the claw rifle
+    distance Call now 4.2 m on cells), Next steps (art owed: claw p55 x3, molotov suit p70 frames 1-2 + p55 x4).
