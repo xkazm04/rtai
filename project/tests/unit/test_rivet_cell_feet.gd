@@ -59,3 +59,17 @@ func test_the_boots_measure_is_the_drawn_one() -> void:
 				low = maxi(low, y)
 	var foot: float = RivetCellFeet.FEET["p70/rivet_eq_katana.png:5"]
 	assert_almost_eq(float(img.get_height() - 1 - low), foot, 1.0)
+
+
+func test_a_gun_camera_fire_cell_stands_on_its_boots_not_its_flash() -> void:
+	# n17 DEFECTS #14: the pistol's camera fire cell had its painted flash on the foot line
+	var path: String = RivetStrips.DIR + "p70/rivet_eq_pistol.png"
+	var card: Sprite2D = autofree(Sprite2D.new())
+	card.texture = load(path) as Texture2D
+	card.hframes = RivetFrames.EQ_CELLS
+	card.set_meta(RivetFrames.ON, path)
+	var h: float = card.texture.get_height()
+	RivetCellFeet.show(card, RivetFrames.Eq.FIRE_CAM)
+	assert_almost_eq(card.offset.y, 38.0 - h, 0.01, "the boots on the foot line")
+	RivetCellFeet.show(card, RivetFrames.Eq.FIRE_SIDE)
+	assert_almost_eq(card.offset.y, RivetStrips.foot_px(path) - h, 0.01, "the side cell: the pad")
