@@ -18,10 +18,8 @@ const SMOKE_TAIL: int = 150
 const EMBER_SPREAD: Vector2 = Vector2(0.2, 0.5)
 const SMOKE_FROM: Vector2 = Vector2(0.0, -0.45)
 const FLAKE_LIFE: float = 70.0
-## A vaporised body's shadow: the char print burnt into the street, the paving showing through.
-const SHADOW_A: float = 0.8
-## The char rim's width in screen px at 64 px/m, scaled with the zoom (0.8 px at 32: a wider rim
-## covers most of a 20 px body and the corpse reads pale instead of charred).
+const SHADOW_A: float = 0.8  # a vaporised body's shadow: the paving shows through the char
+## The char rim (screen px at 64 px/m, scaled with zoom: wider made a 20 px body read pale).
 const RIM_PX_64: float = 1.6
 ## One wind over the whole street (screen right and up a little), so every heap leans the same way.
 const WIND: Vector2 = Vector2(0.94, -0.34)
@@ -88,6 +86,8 @@ func pose() -> void:
 			b.body.modulate.a = SHADOW_A
 			continue
 		var k: float = _crumble(b)
+		if KillCharCells.collapse(b.body, k):  # n16: the drawn collapse (A8) holds the body
+			continue
 		b.body.modulate.a = 1.0 - smoothstep(0.15, 1.0, k)
 		b.body.scale *= 1.0 - 0.18 * k
 	queue_redraw()

@@ -33,10 +33,21 @@ const FILL_OF: Dictionary[String, String] = {
 	"ped/head_punk": "ped_punk_burn_hit.png",
 	"ped/head_jogger": "ped_jogger_burn_hit.png",
 }
+## n16 kills-polish item 3 (asset lane A8, it434): the drawn collapse, three cells in the char
+## cells' format and scale (tools/art/char_collapse_cells.py): crumbling, slumped on the knees with
+## the skull and ribs showing, the ash heap with the skull and the kind's charred gear. Over the
+## row's crumble the burnt man plays them instead of fading; the heap stays as his body.
+## `--char-collapse=off` = the fade (the before). Kinds still being drawn keep the fade.
+const COLLAPSE: Dictionary[String, Texture2D] = {
+	"cop/head_helmet": preload("res://features/combat/weapons/art/gore/char_collapse_cop_riot.png"),
+	"ped/head_hood": preload("res://features/combat/weapons/art/gore/char_collapse_ped_hood.png"),
+}
+const COLLAPSE_FRAMES: int = 3
 const META: StringName = &"kill_char_row"
 const CARD: StringName = &"head_card"
 
 static var _off: int = -1
+static var _no_collapse: int = -1
 
 
 ## True unless `--char-cells=off`.
@@ -88,3 +99,33 @@ static func scale_of(row: String, tex_h: int) -> float:
 	)
 	var fill: float = StreetWalkerHit.FILL.get(FILL_OF.get(row, ""), 1.0)
 	return h * CharacterRigs.PX_PER_M * fill / float(tex_h)
+
+
+## True unless `--char-collapse=off`.
+static func collapses() -> bool:
+	if _no_collapse < 0:
+		_no_collapse = 1 if ArenaArgs.parse().text("--char-collapse") == "off" else 0
+	return _no_collapse == 0
+
+
+## The collapse cell for crumble `k` (0..1; 0 = still standing: -1, keep the char cell).
+static func collapse_frame(k: float) -> int:
+	return -1 if k <= 0.0 else mini(int(k * COLLAPSE_FRAMES), COLLAPSE_FRAMES - 1)
+
+
+## Shows the swapped body's collapse cell at crumble `k`; false when its kind has none (fade).
+static func collapse(body: Node2D, k: float) -> bool:
+	if body == null or not body.has_meta(META) or not collapses():
+		return false
+	var row: String = str(body.get_meta(META))
+	var card: Sprite2D = body.get_node_or_null(NodePath(String(CARD))) as Sprite2D
+	if not COLLAPSE.has(row) or card == null:
+		return false
+	var f: int = collapse_frame(k)
+	if f < 0:
+		return true
+	if card.hframes != COLLAPSE_FRAMES:  # same cell size: the offset and scale hold
+		card.texture = COLLAPSE[row]
+		card.hframes = COLLAPSE_FRAMES
+	card.frame = f
+	return true
