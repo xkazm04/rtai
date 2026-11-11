@@ -477,12 +477,12 @@ are current to session 6; Calls (a)-(c) stand).
 - MILESTONE `ac7991f58` item 5 DEFECTS city #2: film city 64 px/m t634-660, before = HEAD's sorter swapped back on the
   same build: `evidence/n15-combat/city_depth_rivet_over_cop_behind_ab_64ppm_t634-660.png`: Rivet and his pistol now
   draw over the cop behind him (t634-638 the cop's hands no longer cover Rivet's gun). Unit test_rig_depth_sort 7/7
-  (+2: a tall near body overlaps; card_tall). DECISION combat/depth-drawn-box. Registry measured-draw-order applied: the
+  (+2: a tall near body overlaps; card_tall). DECISION combat/depth-drawn-box. Registry depth-ordered-layered-art applied ("the order is a measurement", each layer's true shape): the
   draw order is decided from what is drawn (the card), not an assumed man.
 - FRICTION: `test_quest_blade` `test_dock_hint_names_the_blade_key_only_with_a_blade` fails under
   `run_unit.mjs --select` on HEAD too (with my files set aside): [fire], [melee], [slot2] stay unresolved, as if
   InputMap had no actions in that run. It passed in the 04:19 gate. Not mine; the full gate decides.
-- 04:52 GATES started on `ac7991f58` (`node tools/gate/run.mjs --rev=HEAD --reels`, log build/gate/s7_gate1.log).
+- 04:38 GATES started on `ac7991f58` (`node tools/gate/run.mjs --rev=HEAD --reels`, log build/gate/s7_gate1.log).
 - DEFECTS session 1 #3 (dark streak across the victim t345-348) looked at in build/film/s6if64_a: a later round of
   the burst flies on through the fresh corpse (the sim lets rounds pass a dead body), its ink tail across his falling
   body for 2 ticks (t346-347). Minor; left open (a view-only cut at the corpse would orphan the round's later impact).
