@@ -806,6 +806,12 @@
           "name": "CAR_EXIT_PROBE",
           "type": "float",
           "value": 16.0
+        },
+        {
+          "doc": "U-turn tiles, bit per T_*: 1 void (t-4), 241 any non-road",
+          "name": "CAR_DEAD_END_TILES",
+          "type": "int",
+          "value": 1
         }
       ],
       "doc": "t-4 car routing distances (n15): sim_car_route.gd and car_route.cpp",

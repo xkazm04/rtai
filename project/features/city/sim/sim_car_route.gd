@@ -1,10 +1,11 @@
 class_name CitySimCarRoute
 extends RefCounted
 ## Lane routing for the reference sim's cars: pick a turn CAR_PLAN_AHEAD before each junction
-## (weighted random for traffic, nearest-to-target for police), U-turn only at the city edge or an
-## unloaded tile, take the turn once the car reaches the new lane, and reserve the junction tile in
-## tier A. An exit is open only onto a road of its own orientation. d/ddx/ddy are the car's
-## current direction and its unit vector, updated in place. Distances: SimConst car_route (t-4).
+## (weighted random for traffic, nearest-to-target for police), U-turn before a dead-end tile
+## (CAR_DEAD_END_TILES: by default only the city edge or an unloaded tile), take the turn once the
+## car reaches the new lane, and reserve the junction tile in tier A. An exit is open only onto a
+## road of its own orientation. d/ddx/ddy are the car's current direction and its unit vector,
+## updated in place. Distances: SimConst car_route (t-4).
 
 const WEIGHTS: Array[float] = [0.25, 0.5, 0.25]
 
@@ -37,9 +38,9 @@ func plan(i: int, x: float, y: float, tgx: float, tgy: float) -> void:
 		_s.jy[i] = icy
 		var axis: float = icy if pick == 0 or pick == 2 else icx
 		_s.nlane[i] = axis + CitySimState.LANE_OFF[pick]
-	elif tc == SimConst.T_VOID:
-		# dead end (city edge or unloaded): U-turn onto the opposite lane; a kerb, plaza or
-		# building ahead is not one (t-4: the car keeps its lane)
+	elif dead_end(tc):
+		# dead end: U-turn onto the opposite lane (t-4: only the city edge or an unloaded tile
+		# by default; SimConst.CAR_DEAD_END_TILES picks the tile kinds, Call c-2)
 		var centre: float = _s.lane[i] - CitySimState.LANE_OFF[d]
 		_set_dir((d + 2) % 4)
 		_s.dir[i] = d
@@ -131,6 +132,12 @@ func _nearest(cand: Array[int], ok: Array[bool], p: Array[float]) -> int:
 			best_f = f
 			best_e2 = e2
 	return pick
+
+
+## True when a car U-turns before tile kind t: its bit is set in SimConst.CAR_DEAD_END_TILES
+## (a junction never is).
+static func dead_end(t: int) -> bool:
+	return t != SimConst.T_INTER and ((SimConst.CAR_DEAD_END_TILES >> t) & 1) != 0
 
 
 ## The road tile a car heading dir drives on: east-west roads for 0 and 2, north-south for 1 and 3.

@@ -41,8 +41,12 @@ void CityCore::car(int i, double dt, double tgx, double tgy) {
 // The road tile a car heading d drives on: east-west for 0 and 2, north-south for 1 and 3.
 static int road_of(int d) { return (d == 0 || d == 2) ? T_ROAD_H : T_ROAD_V; }
 
-// No next direction yet: pick one at the junction CAR_PLAN_AHEAD m ahead, or U-turn at the city
-// edge or an unloaded tile (t-4: a kerb, plaza or building ahead is not a dead end).
+// True when a car U-turns before tile kind t: its bit is set in CAR_DEAD_END_TILES (a junction
+// never is). Default 1: the city edge or an unloaded tile only (t-4); Call c-2.
+static bool dead_end(int t) { return t != T_INTER && ((CAR_DEAD_END_TILES >> t) & 1) != 0; }
+
+// No next direction yet: pick one at the junction CAR_PLAN_AHEAD m ahead, or U-turn before a
+// dead-end tile (dead_end above).
 void CityCore::car_plan(Car &c, double tgx, double tgy) {
 	int i = c.i;
 	double ax = c.x + c.ddx * CAR_PLAN_AHEAD, ay = c.y + c.ddy * CAR_PLAN_AHEAD;
@@ -55,7 +59,7 @@ void CityCore::car_plan(Car &c, double tgx, double tgy) {
 		jx_[i] = icx;
 		jy_[i] = icy;
 		nlane_[i] = ((pick == 0 || pick == 2) ? icy : icx) + LANE_OFF[pick];
-	} else if (tc == T_VOID) {
+	} else if (dead_end(tc)) {
 		double centre = lane_[i] - LANE_OFF[c.d];
 		c.d = (c.d + 2) % 4;
 		dir_[i] = c.d;

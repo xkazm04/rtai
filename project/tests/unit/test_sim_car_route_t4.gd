@@ -108,3 +108,10 @@ func test_a_turn_swings_the_lead_distance_before_the_new_lane() -> void:
 	assert_eq(_s.dir[0], 0, "not yet at the turn line")
 	_route.turn(0, line, CENTRE.y)
 	assert_eq(_s.dir[0], 1, "turns at the new lane minus the lead")
+
+
+func test_the_dead_end_mask_keeps_the_edge_and_never_names_a_road() -> void:
+	assert_true(CitySimCarRoute.dead_end(SimConst.T_VOID), "the city edge is always a dead end")
+	for tile: int in [SimConst.T_ROAD_H, SimConst.T_ROAD_V, SimConst.T_INTER]:
+		assert_false(CitySimCarRoute.dead_end(tile), "a road or junction is never a dead end")
+	assert_eq(SimConst.CAR_DEAD_END_TILES, 1, "shipped: t-4 as built (Call c-2 may set 65 or 241)")

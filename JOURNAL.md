@@ -532,3 +532,13 @@ C:/Users/kazda/kiro/gtai-n15/scratch-tools-before`, `git branch -D n15t-control-
   the kerb into the block, both turning 18 m before the void. That is the comment's rule taken literally, and it is
   wrong for a dead-end street on a hand-made map. The owner should judge it: c-2 rewritten. Building the alternative as
   one data value next (a tile mask in sim_constants.json car_route; default = t-4 as built, so nothing moves).
+- 02:24 MILESTONE c-2's alternative is ONE data value: `CAR_DEAD_END_TILES` (sim_constants.json car_route, int, a bit per
+  T_* code; gen.mjs -> SimConst + sim_constants.h; `CitySimCarRoute.dead_end(t)` and `dead_end` in car_route.cpp; a
+  junction never is). Shipped 1 = t-4 as built. NATIVE REBUILD #4 (this lane only): scons debug + release exit 0,
+  `scons tests` + `sim_core tests: 0 failed`; `run_parity.mjs`: bit for bit, planted caught at 629, final_sha_a
+  94b2865f7f17d778 (unchanged). `run_unit --select=test_sim_car_route_t4,test_sim_car_route_break,
+  test_sim_car_route_break_exits,test_city_lane_grid` 18/0 (new test: the mask keeps T_VOID, never a road or junction,
+  shipped 1). Proof by the trails tool with the GDScript constant edited in place (restored after; `git diff` clean):
+  mask 241 U-turns == before.json (the pre-t-4 build) exactly, mask 1 == after.json exactly, mask 65 turns before
+  blocks (6) and void only. SEEN `gtai-masters/n15/tools/c2-dead-end-mask-241-1-65-4ppm.png` (3 panels).
+  The generated doc string first broke gdlint's 100 columns in sim_constants.gd (quick gate caught it): shortened.
