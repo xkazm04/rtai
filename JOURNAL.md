@@ -333,3 +333,15 @@ by default). (6) the s1 frames.json entry "thug stands as riot cop" is supersede
   accepted and fixed in code). Day total 2 tasks.
 - 14:50 GATE started on caccc825d (`node tools/gate/run.mjs --rev=caccc825d`, no reels; log
   C:/Users/kazda/kiro/gtai-n16/scratch-tools/gate_s3.log, ends with `gate exit N`).
+- Item status s3: (1) kill reel: + `--quick`, labelled cells, frame-true clips (`--clips --feel=on`), overview +
+  reel.md, `--resheet`, death judged on screen, far-victim window, street-anchored cells, all 12 weapons proven to
+  kill; + the film cursor pin (films were reading the desk mouse). (2) c-2 done (s1). (3)(4) done. (5) no new REQUEST.
+
+NEXT: (0) read `gate exit N` at the end of C:/Users/kazda/kiro/gtai-n16/scratch-tools/gate_s3.log (evidence stage on
+caccc825d, the last project/ commit: dev-only film_probe change); then run the REEL gate on it
+(`node tools/gate/run.mjs --rev=<last project/ commit> --reels`, ~40 min; start it only when no other Godot work of
+mine is due, kills-polish FRICTION). (1) read the sibling journals for REQUEST tools / FRICTION. (2) tell the kill
+lanes in their terms (JOURNAL NOTE is there): pre-caccc825d before/afters may differ in Rivet's aim/pose only. (3)
+optional: the reel's per-film time (~2.5 min at 32 px/m quick); a world-anchored crop for the clip too (the clip
+keeps the screen on purpose: punch); flamethrower/electro read weakly at 32 px/m (kill lanes' call). (4) REPORT.md
+at 19:40: the draft is in the tree; fill Next steps, the gate verdicts, final Codex ledger.
