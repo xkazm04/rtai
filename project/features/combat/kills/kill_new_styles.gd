@@ -130,7 +130,7 @@ func pose() -> void:
 		elif d.row.style == &"cook":
 			p.x += KillCookArt.tremble(d, age, reduced_motion)
 		var b: Transform2D = KillTrack.basis(d.dir, d.fall, p, d.extra.lie_len)
-		var slide: Vector2 = d.dir * d.extra.slide_m * ppm * clampf(p.z, 0.0, 1.0)
+		var slide: Vector2 = d.dir * KillDeathCells.slide_m_of(d) * ppm * clampf(p.z, 0.0, 1.0)
 		if d.row.style == &"pin":
 			slide += KillPinArt.shift(d, age, ppm)
 		elif d.row.style == &"throw":  # the claw's hop off the street

@@ -52,6 +52,14 @@ static func lean_of(d: KillNewStyles.Death) -> float:
 	return d.extra.num("cells_lean", 0.0) if owns(d.cells) else 1.0
 
 
+## The slide (m) his body takes along the blow: row fx `cells_slide_m` while his own drawn cells
+## show (a drawn corpse hangs off its anchor differently from the fall grid), else row `slide_m`.
+static func slide_m_of(d: KillNewStyles.Death) -> float:
+	if owns(d.cells) and d.extra.fx.has("cells_slide_m"):
+		return d.extra.num("cells_slide_m", d.extra.slide_m)
+	return d.extra.slide_m
+
+
 ## The way his own drawn cells look (world rad): at the shooter, back up the shot; from frame
 ## `cells_turn_from` (row fx, -1 = never) along the shot, so the drawn corpse (laid head the way
 ## its figure looked) lies knocked back along the blow.

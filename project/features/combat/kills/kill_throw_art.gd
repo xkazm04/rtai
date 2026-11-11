@@ -27,7 +27,7 @@ static func lift(d: KillNewStyles.Death, age: int, ppm: float) -> Vector2:
 ## Layer px of the slide (the track's tip share of `slide_m` along the blow) at `age`.
 static func slide(d: KillNewStyles.Death, age: int, ppm: float) -> Vector2:
 	var tip: float = clampf(KillTrack.sample(d.extra.track, age).z, 0.0, 1.0)
-	return d.dir * d.extra.slide_m * ppm * tip
+	return d.dir * KillDeathCells.slide_m_of(d) * ppm * tip
 
 
 static func draw(ci: KillNewStyles, d: KillNewStyles.Death, age: int) -> void:

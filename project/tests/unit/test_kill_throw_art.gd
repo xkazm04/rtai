@@ -62,3 +62,16 @@ func test_the_four_street_kinds_play_their_own_drawn_throw() -> void:
 	assert_almost_eq(look, Vector2.LEFT, Vector2.ONE * 0.0001, "flung: at the shooter")
 	look = Vector2.from_angle(KillDeathCells.face_of(d, 2))
 	assert_almost_eq(look, Vector2.LEFT, Vector2.ONE * 0.0001, "on his back, head away from Rivet")
+
+
+func test_his_own_drawn_body_is_thrown_further_than_the_fall_grid() -> void:
+	var d: KillNewStyles.Death = _death()
+	var grid: Vector2 = KillThrowArt.slide(d, 400, PPM)
+	assert_almost_eq(grid.x, d.extra.slide_m * PPM, 0.01, "the fall grid: the row's slide")
+	var own: Sprite2D = Sprite2D.new()
+	own.set_meta(KillDeathCells.META, true)
+	d.cells = own
+	var drawn: Vector2 = KillThrowArt.slide(d, 400, PPM)
+	assert_almost_eq(drawn.x, d.extra.num("cells_slide_m", -1.0) * PPM, 0.01, "own cells: fx")
+	assert_gt(drawn.x, grid.x, "the drawn corpse hangs back off its anchor: it flies further")
+	own.free()
