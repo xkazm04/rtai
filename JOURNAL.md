@@ -1033,3 +1033,7 @@ C:/Users/kazda/kiro/gtai-n15/scratch-tools-before`, `git branch -D n15t-control-
   too).
   TO hero: `git cherry-pick ea02a8898` (Node only: tools/dev/{flag_index,entries,run}.mjs + tests, AGENTS row, README):
   then a mistyped --film-* flag exits 2 with a did-you-mean before launch. `--any-flag` skips the check.
+- 06:16 the morning order on the then tips (hero c4b662590, combat ecc2610b0): merge-tree main+n15-tools ->
+  +n15-hero -> +n15-combat, the resolver on the conflicted cast_flags.gd (exit 0), then `node
+  tools/style/flag_routes.mjs <resolved>` -> `flag-routes: 0 unrouted flag(s) in 1 file(s)`, exit 0: the integrated
+  tree passes the new check (REPORT merge note).
