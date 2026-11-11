@@ -436,3 +436,6 @@ NEXT (iteration 9, from 18:22; freeze 19:30, REPORT 19:40):
   clean). It has no .uid yet: run `node tools/godot/check.mjs res://tests/unit/test_kill_split_shadow.gd` (imports),
   then `run_unit.mjs --select=test_kill_split_shadow`, then commit it with its .uid BEFORE any other commit (the
   whole-tree uid-files lint check would fail on it).
+- 17:55 GATES on 05715ef5f: PASS lint 19/19, unit 2700/0/2, scenarios 55, parity bit-exact (mutation at 629),
+  selftest look goldens 11/11 worst 0.00 (no golden moved by A6/A7/A8 or the shadow fix), export-audit 690/0. Reels
+  running (build/gate/05715ef5f249/reels.log). Not covered: bbf62f6f3 (split half shadows, lint only) and docs.
