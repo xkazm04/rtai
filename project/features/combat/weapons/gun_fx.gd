@@ -44,14 +44,14 @@ var fired_tick: int = -100
 ## Homing shards stuck in a body, per Fighter id: Vector3(offset from the body's pos (m), the
 ## shard's flight angle). Brutality's burst kill reads them (stuck_shards; REQUEST 13).
 var stuck: Dictionary[int, Array] = {}
-## Render-side (fighter: Fighter, dir: Vector2) -> bool: true when a riot shield stopped the
-## round (human-reactions' ReactLink.blocked wires it); such a round sparks as METAL on the shield
-## instead of the body's ink burst. Unset = every body hit is a body hit.
+## Render-side (fighter, dir) -> bool, ReactLink.shield_test: a riot shield stopped the round, so
+## it sparks as METAL. Unset (the game: ShieldSparks throws those) = a body hit stays a body hit.
 var shield_test: Callable = Callable()
 var fired_count: int = 0
-## The aim of Rivet's last shot (GunHand.last_aim): the flash, smoke and shells leave along it, not
-## along a facing the walk turned between shots. ZERO = no shot yet (facing is used).
+## Rivet's last shot's aim (GunHand.last_aim): flash, smoke and shells leave along it; ZERO = none.
 var aim: Vector2 = Vector2.ZERO
+## n15 combat: a body hit's burst drawn on its victim as he is carried (GunFxFollow).
+var follow: GunFxFollow = GunFxFollow.new()
 ## The burnt ground fire patches leave when they go out.
 var scorch: FightScorch = FightScorch.new()
 ## Rounds seen last tick (GunFxRounds): Shot -> [pos, step, from_rivet, origin].
