@@ -17,6 +17,10 @@ const GRIDS: Dictionary[String, String] = {
 	"ped/head_cap": "res://features/characters/art/view/p70/ped_cap_gib.png",
 	"ped/head_hair": "res://features/characters/art/view/p70/ped_suit_gib.png",
 	"ped/head_worker": "res://features/characters/art/view/p70/ped_worker_gib.png",
+	"ped/head_bald": "res://features/characters/art/view/p70/ped_elder_gib.png",
+	"ped/head_hat": "res://features/characters/art/view/p70/ped_hat_gib.png",
+	"ped/head_punk": "res://features/characters/art/view/p70/ped_punk_gib.png",
+	"ped/head_shopper": "res://features/characters/art/view/p70/ped_shopper_gib.png",
 }
 ## tools/art/gib_pieces.py: CELL and TORSO_PX (64: drawn at about the card's own downscale).
 const CELL: float = 96.0

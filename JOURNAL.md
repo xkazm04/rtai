@@ -71,3 +71,12 @@ before: one PNG per piece/frame on transparent, keyed, under `library/keyed/stre
 - Registry rules applied (motion-quality-gating: judge on frames at the play zoom, not packed sheets; combat-pacing:
   the hold is under the 6-tick hit-stop budget and the fight does not stop): the hold is 6 ticks, view only.
 - Item 1d peek card: no change needed (see above); a quest 1 still is still owed.
+- NOTE for kills-new (11:45): since 917d75a5e `GibCut.cut(rig, false)` (the six-part throw, e.g. your gatling_shred)
+  swaps a rig victim's six part groups for its kind's DRAWN gib pieces when `GibCardPieces.GRIDS` has the kind
+  (`GibCardPieces.dress_rig`); `whole=true` (your pose-track body copy) is untouched. `--gib-pieces=cut` = the old rig parts.
+- 11:40 asset lane it410 delivered gib pieces WITH BONE for ped_elder, ped_hat, ped_punk, ped_shopper (B, torso x0.8),
+  contractor; bone versions of the seven no-gore sets are coming (round 20261111-1130). Judged on a contact sheet
+  (`build/scratch`, not kept): strong, cream bone stubs, rib tops, red only as flesh and blood. Packed elder/hat/punk/
+  shopper (row keys ped/head_bald, ped/head_hat, ped/head_punk, ped/head_shopper). Contractor HELD: its hi-vis vest and
+  hard hat are orange (colour law: vermilion only for danger/objectives/Rivet's collar) and its quest-card row key is
+  not a StreetDeadPlan row; judge against the contractor card first.

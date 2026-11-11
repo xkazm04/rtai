@@ -43,7 +43,15 @@ KINDS = {
     "ped_suit_gib_70_cells": "ped_suit_gib.png",
     "ped_worker_gib_70_cells": "ped_worker_gib.png",
     "swat_gib_70_cells": "swat_gib.png",
+    # n16 kills-polish item 3 (gore level: drawn bone): the asset lane's it410 pieces WITH BONE (A; shopper B).
+    "ped_elder_gib_bone_70_cells": "ped_elder_gib.png",
+    "ped_hat_gib_bone_70_cells": "ped_hat_gib.png",
+    "ped_punk_gib_bone_70_cells": "ped_punk_gib.png",
+    "ped_shopper_gib_bone_70_cells": "ped_shopper_gib.png",
 }
+# out file -> a factor on the kind's one scale (it410: the shopper's torso is drawn short; at 1.0 her head and limbs
+# came out 1.25x too big).
+SCALE = {"ped_shopper_gib.png": 0.8}
 
 
 def cropped(path: Path) -> Image.Image:
@@ -53,7 +61,7 @@ def cropped(path: Path) -> Image.Image:
 
 def build(lib: Path, folder: str, out: str) -> None:
     pieces = [cropped(lib / folder / f"1_{k + 1}.png") for k in range(PIECES)]
-    k = TORSO_PX / pieces[1].height
+    k = TORSO_PX / pieces[1].height * SCALE.get(out, 1.0)
     sheet = Image.new("RGBA", (CELL * PIECES, CELL), (0, 0, 0, 0))
     for i, im in enumerate(pieces):
         im = im.resize((round(im.width * k), round(im.height * k)), Image.LANCZOS)
