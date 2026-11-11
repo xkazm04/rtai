@@ -129,17 +129,25 @@ func _draw() -> void:
 		var lock: int = s.row.hitstop_ticks + s.row.stand_ticks
 		var p: Vector2 = s.body.position
 		if age < lock:
-			_arcs(s, p, age)
+			_arcs(s, KillXray.mid(p, XRAY_M, ppm), age)
 			if _xray(s, age):
-				var h: float = XRAY_M * ppm
-				var size: Vector2 = Vector2(h * 0.53, h)
-				if age - s.row.hitstop_ticks < XRAY_HOLD:
-					_burst(s, p, h * 0.62)
-				draw_set_transform(p, s.dir.angle() + PI * 0.5, Vector2.ONE)
-				draw_texture_rect(XRAY_TEX, Rect2(-size * 0.5, size), false)
-				draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+				_skeleton(s, p, age)
 		elif age < lock + SMOKE_TICKS:
 			_smoke(s, p - s.dir * 0.2 * ppm, age, 1.0 - float(age - lock) / SMOKE_TICKS)
+
+
+## The X-ray: the zap star behind the held flash, then the skeleton sticker, upright on the
+## body's feet (or, `--shock-xray=lie`, turned along the shot on its centre: the before).
+func _skeleton(s: Shock, p: Vector2, age: int) -> void:
+	var h: float = XRAY_M * ppm
+	var size: Vector2 = Vector2(h * 0.53, h)
+	var lie: bool = KillXray.lies()
+	var mid: Vector2 = KillXray.mid(p, XRAY_M, ppm)
+	if age - s.row.hitstop_ticks < XRAY_HOLD:
+		_burst(s, mid, h * 0.62)
+	draw_set_transform(mid, s.dir.angle() + PI * 0.5 if lie else 0.0, Vector2.ONE)
+	draw_texture_rect(XRAY_TEX, Rect2(-size * 0.5, size), false)
+	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 
 
 ## The flash: held XRAY_HOLD ticks, then on for 2 of every STROBE ticks (off under reduced motion).
