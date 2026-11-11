@@ -37,7 +37,7 @@ func test_it_lies_past_his_feet_away_from_his_body() -> void:
 	var at: Vector2 = Vector2(10.0, 10.0)
 	var k: float = Ink.PX_PER_M
 	StreetDeadRests.all[7] = Vector4(10.0 * k, 10.0 * k, 10.0 * k, 9.0 * k)  # chest up the screen
-	var lies: Vector2 = GroundDropShowcase.lies_at(at, Vector2.RIGHT)
+	var lies: Vector2 = GroundDropShowcase.place(at, Vector2.RIGHT)
 	var want: Vector2 = at + Vector2(0.0, GroundDropShowcase.PAST_M)
 	assert_almost_eq(lies, want, Vector2.ONE * 1e-4, "below his feet, whatever the shot")
 	StreetDeadRests.reset()
@@ -48,7 +48,19 @@ func test_with_no_rest_it_lies_across_the_shot_on_the_cameras_side() -> void:
 	var at: Vector2 = Vector2(10.0, 10.0)
 	var e: Vector2 = Vector2.ONE * 1e-4
 	var down: Vector2 = at + Vector2(0.0, GroundDropShowcase.SIDE_M)
-	assert_almost_eq(GroundDropShowcase.lies_at(at, Vector2.LEFT), down, e, "shot west: below")
-	assert_almost_eq(GroundDropShowcase.lies_at(at, Vector2.RIGHT), down, e, "shot east: below")
+	assert_almost_eq(GroundDropShowcase.place(at, Vector2.LEFT), down, e, "shot west: below")
+	assert_almost_eq(GroundDropShowcase.place(at, Vector2.RIGHT), down, e, "shot east: below")
 	var right: Vector2 = at + Vector2(GroundDropShowcase.SIDE_M, 0.0)
-	assert_almost_eq(GroundDropShowcase.lies_at(at, Vector2.DOWN), right, e, "shot south: right")
+	assert_almost_eq(GroundDropShowcase.place(at, Vector2.DOWN), right, e, "shot south: right")
+
+
+func test_a_drop_lies_where_it_first_landed_when_his_rest_appears() -> void:
+	# film dr_machine_pistol t190 -> t191: the gun jumped ~1 m when the corpse published its rest.
+	var at: Vector2 = Vector2(31.25, 17.5)
+	var k: float = Ink.PX_PER_M
+	StreetDeadRests.all.erase(9)
+	var first: Vector2 = GroundDropShowcase.lies_at(at, Vector2.RIGHT)
+	StreetDeadRests.all[9] = Vector4(at.x * k, at.y * k, (at.x + 1.0) * k, at.y * k)
+	assert_ne(GroundDropShowcase.place(at, Vector2.RIGHT), first, "the rule now says past his feet")
+	assert_eq(GroundDropShowcase.lies_at(at, Vector2.RIGHT), first, "but the gun stays put")
+	StreetDeadRests.all.erase(9)

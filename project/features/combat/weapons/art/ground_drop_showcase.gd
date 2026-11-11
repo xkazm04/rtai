@@ -23,9 +23,16 @@ const PAST_M: float = 0.75
 const SIDE_M: float = 0.6
 ## A published rest whose feet lie within this (m) of the drop is his.
 const MATCH_M: float = 1.5
+## n17 (film dr_machine_pistol t190 -> t191: the gun jumped ~1 m from across the shot to past his
+## feet when his corpse published its rest at the lying frame): a drop's spot is fixed at its first
+## draw, so a dropped gun never moves. LATCH false = recomputed each draw (the before).
+const LATCH: bool = true
+const LATCH_MAX: int = 256
 
 static var _showcase: WeaponShowcase = null
 static var _art: StringName = &""
+## (drop m, shot) -> where it lies (m), from its first draw.
+static var _lies: Dictionary[Vector4, Vector2] = {}
 
 
 ## The drawing a drop shows at the view's form (null: none, the caller draws its sheet).
@@ -61,6 +68,17 @@ static func draw(ci: CanvasItem, at: Vector2, shot: Vector2, length_m: float) ->
 ## Where the gun lies for a drop at `at` (m) after a shot along `shot`: past his feet, away
 ## from his body; no body: across the shot, screen down (straight down the screen: to the right).
 static func lies_at(at: Vector2, shot: Vector2) -> Vector2:
+	var key: Vector4 = Vector4(at.x, at.y, shot.x, shot.y)
+	if LATCH and _lies.has(key):
+		return _lies[key]
+	if _lies.size() >= LATCH_MAX:  # a long session's old drops (they decay long before)
+		_lies.clear()
+	_lies[key] = place(at, shot)
+	return _lies[key]
+
+
+## lies_at's rule, unlatched.
+static func place(at: Vector2, shot: Vector2) -> Vector2:
 	var body: Vector2 = body_dir(at)
 	if body != Vector2.ZERO:
 		return at - body * PAST_M
