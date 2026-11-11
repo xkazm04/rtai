@@ -455,3 +455,34 @@ draft is current to 16:12. No project/ commit since caccc825d: the gate PASS sta
   scout's tick): kill 68 at both zooms (= main's s3 tick), aftermath 3.2 / 3.1 %. Looked at katana_64.png: every
   beat cell present (flash at 68, streak +1/+2, the halves and blood +20..+150). Remaining NEXT: (1), (3), (4).
 - 16:15 session 4 end: tree clean, no Godot of mine running (every reel and the gate exited).
+
+## Session 5 (16:15-17:45)
+- 16:16 read JOURNAL, git log, both kill journals: no new REQUEST tools since the molotov row (served a7369529f).
+  kills-new FRICTION 16:?? (two Godot for a few s: their parse check beside their reel) is theirs. Plan: (a) film stops
+  early on an error-flooding log (kills-new FRICTION 15:30: the Gatling coded-scrap `Invalid polygon data` flood timed
+  films out at 305 s twice); (b) Codex adversarial tests for the scout (n16t-break-reel-scout); (c) REPORT.
+- 16:25 FOUND (kills-new FRICTION 15:30 re-read against their logs): the error flood was NOT what timed the Gatling
+  films out. ../n16-kills-new/build/reel/gatling_cells/gatling/before_guard_d0_32/film.log: `TIMED OUT after 305 s`
+  with 134 `Invalid polygon data` errors (one per frame, from t100), and the film's last still was t239 of the ~245 it
+  needed (a `--clips` window: stills 54-70 + kill 95..+150); boot + 46 stills took 134 s, then ~1.2 s a still (my gate
+  ran beside it). Films with 314 such errors passed in 45 s (kreel/gatling/after_guard_*). So the fix is the timeout,
+  not a flood stop (that idea dropped: it would have failed films that pass today).
+- MILESTONE b74d9d007: a reel film without `--timeout` is timed by the stills it saves: 120 s + 2.5 s a still, never
+  under 300 (`stillCount`, `filmTimeout`): a full window 540 s, a scout or beat film keeps 300; `--timeout` still wins.
+  Test (the t239 case, scout/beat floor, --timeout wins); film tests 257/0; lint 19/19. Real-run proof queued: the
+  very film that died, `kill_reel --weapons=gatling --dirs=0 --ppm=32 --clips --rev=590902959 --native=donor
+  --out=build/kreel/s5clip` (scratch-tools/reel_s5clip.log), started 16:27.
+- 16:30 Codex n16t-break-reel-scout dispatched (base b74d9d007; scope tools/film/kill_reel_scout.break.test.mjs:
+  filmTicks, planFilm scout/known/clips, stillCount/filmTimeout, main's scout-once-per-combo with a fake runner,
+  olderTreeHint, tableRows own-row). A suspect for it: a first zoom whose beat film kills on another tick than its
+  scout stores THAT tick (kills.set(film.kill)) for the later zooms.
+- 16:21 PROOF b74d9d007 on the very film that died: `kill_reel --out=build/kreel/s5clip --weapons=gatling --dirs=0
+  --ppm=32 --clips --rev=590902959 --native=donor` -> PASS, kill 95, clip.mp4, `exit 0, 52.9 s`, 314 `Invalid polygon`
+  errors in its log (quiet machine: the flood alone does not time a film out).
+- MILESTONE 3ca83cd2a: film.json records `timeout_s` (the run ledger drops a run's entry at its end, so nothing showed
+  the budget a film had). PROOF: same command -> build/kreel/s5clip2: PASS, `"ran": "exit 0, 46.3 s"`,
+  `"timeout_s": 540` (the clip window's 168 stills; was a flat 300). Looked at gatling_32.png: hit at 95, the
+  collapse into the blood fan, the heap lying +40..+150. film tests 257/0, lint 19/19.
+- SERVED (kills-new FRICTION 15:30): a `--clips`/`--before` reel film is no longer killed at a flat 300 s; it gets
+  120 s + 2.5 s a still (540 s for a full window), and film.json says what it got. Your Gatling timeouts were the
+  timeout under contention (t239 of 245), not the polygon flood (one error a frame; 314-error films pass in 45 s).
