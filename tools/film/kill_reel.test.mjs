@@ -3,7 +3,7 @@ import { mkdtempSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
-import { filmTicks, main, planFilm } from './kill_reel.mjs';
+import { FILM_BASE_S, PER_STILL_S, filmTicks, main, planFilm, stillCount } from './kill_reel.mjs';
 import { MOVIE_FRAME_OF_PROCESS_1, anchorShifts, boxAt, cellLabel, killWindow, movieSpan, pickBeats, reelPlan, reelWeapons, tableRows, victimAt } from './kill_reel_lib.mjs';
 
 function tree() {
@@ -101,6 +101,21 @@ test('a later zoom with a known kill tick saves the beat frames and the hold run
   assert.equal(first.opts.feel, 'auto');
   const wall = planFilm({ ...job, dir_deg: 'wall' }, side, reel);
   assert.ok(wall.opts.extra.includes('--sig-wall') && !wall.opts.extra.some((a) => a.startsWith('--sig-dir')), 'dir wall: the lab finds the wall');
+});
+
+test('a film without --timeout is timed by the stills it saves (the clip film that died at t239 of 245 under 300 s)', () => {
+  const side = { tree: process.cwd() };
+  const reel = { after: 150, timeout: null, extra: [], clips: false };
+  const job = { weapon: 'gatling', victim: '', dir_deg: 0, ppm: 32, dir: join(tmpdir(), 'kr') };
+  assert.equal(stillCount({ stills: '54-70', on: 'kill:1+150' }), 17 + 151);
+  assert.equal(stillCount({ stills: '60', on: 'kill:1' }), 2);
+  assert.equal(stillCount({ stills: filmTicks(95, 150).join(',') }), filmTicks(95, 150).length);
+  const full = planFilm(job, side, { ...reel, clips: true });
+  assert.equal(full.opts.timeoutMs, Math.ceil(FILM_BASE_S + PER_STILL_S * 168) * 1000, 'a full window: 120 s + 2.5 s a still');
+  assert.ok(full.opts.timeoutMs > 305 * 1000 * 1.5, 'well past the 305 s that killed the gatling clip film at t239');
+  assert.equal(planFilm(job, side, reel, undefined, true).opts.timeoutMs, 300 * 1000, 'a scout keeps the 300 s floor');
+  assert.equal(planFilm(job, side, reel, 95).opts.timeoutMs, 300 * 1000, 'a beat film (~20 stills) keeps the floor');
+  assert.equal(planFilm(job, side, { ...reel, clips: true, timeout: 200 }).opts.timeoutMs, 200 * 1000, 'an asked --timeout wins');
 });
 
 test('a dry run plans every film against the tree and launches nothing; a bad weapon is usage', async () => {

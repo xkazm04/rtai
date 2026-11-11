@@ -5,6 +5,7 @@
 //   node tools/film/kill_reel.mjs --out=<dir> [--weapons=all|<id,id>] [--victims=<kind,kind>] [--dirs=0,90,180,270]
 //     [--ppm=32,64] [--after=150] [--rev=<commit>] [--before=<commit>] [--native=donor] [--clips] [--keep-frames]
 //     [--gore-check] [--feel=on|off|auto] [--quick] [--timeout=<s>] [--dry-run] [-- <extra game flags>]
+// --timeout: seconds per film; without it each film gets 120 + 2.5 per still it saves (at least 300).
 // --resheet=<reel dir>: rebuild that reel's sheets, overview and reel.md from its reel.json (no Godot).
 // --quick: 32 px/m only, dir 90 unless --dirs/--ppm name others (the inner loop: one film per weapon).
 // Each film is tools/film/film.mjs's `kill:<weapon>` shot (KillLab via BrutalityHook, `--sig-solo=start`),
@@ -35,6 +36,25 @@ export function filmTicks(kill, after) {
   return [...new Set([...pickBeats(kill, after), ...run])].sort((a, b) => a - b);
 }
 
+/** n16 s5 (kills-new FRICTION 15:30): a --before Gatling clip film timed out at 305 s twice at t239 of its ~245, still
+ *  writing a still every ~1.2 s beside a gate (boot + 46 stills took 134 s). A fixed 300 s fits a beat film (~20
+ *  stills), not a full window (~168). Without --timeout a film gets 120 s + 2.5 s per still it saves, never under 300. */
+export const FILM_BASE_S = 120;
+export const PER_STILL_S = 2.5;
+
+/** The stills a film window saves: its listed ticks (`54-70`, `a,b`) plus the kill run of `kill:<n>+<after>`. */
+export function stillCount(window) {
+  const listed = String(window.stills ?? '').split(',').filter(Boolean).reduce((n, part) => {
+    const [a, b] = part.split('-').map(Number);
+    return n + (Number.isInteger(b) ? b - a + 1 : 1);
+  }, 0);
+  const run = /^kill:\d+(?:\+(\d+))?$/.exec(window.on ?? '');
+  return listed + (run ? Number(run[1] ?? 0) + 1 : 0);
+}
+
+/** The film's timeout in seconds: the reel's --timeout when given, else sized to the stills it saves. */
+export const filmTimeout = (reel, window) => String(reel.timeout ?? Math.max(300, Math.ceil(FILM_BASE_S + PER_STILL_S * stillCount(window))));
+
 /** Plans one film of the reel through film.mjs: {shot, opts} or {error}. With the kill tick `known` (from
  *  this combo's first zoom or its scout run: the zoom is view only and the seed fixed, so the sim kills on the
  *  same tick) and no clip wanted, the film saves filmTicks only: a full window is ~165 PNGs, and writing them
@@ -44,7 +64,7 @@ export function planFilm(job, side, reel, known = undefined, scout = false) {
   const full = { stills: '54-70', on: `kill:1+${reel.after}` };
   const window = reel.clips ? full : scout ? { stills: '60', on: 'kill:1' } : known === undefined ? full : { stills: filmTicks(known, reel.after).join(',') };
   const flags = { out: job.dir, ppm: String(job.ppm), ...window, view: 'combo', lock: 'auto',
-    seed: '20261109', res: '1280x800', feel: reel.feel ?? 'auto', subject: 'kill', timeout: String(reel.timeout), tree: side.tree };
+    seed: '20261109', res: '1280x800', feel: reel.feel ?? 'auto', subject: 'kill', timeout: filmTimeout(reel, window), tree: side.tree };
   if (job.victim) flags.victim = job.victim;
   if (reel.clips && reel.feel === 'on') flags.movie = true;
   const turn = job.dir_deg === 'wall' ? ['--sig-wall'] : job.dir_deg ? [`--sig-dir=${job.dir_deg}`] : [];

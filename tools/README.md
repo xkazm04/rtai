@@ -203,7 +203,10 @@ Cost (n16 s4): writing PNGs is most of a film (s3all: ~165 stills took 58-68 s o
 same flags, seed and camera lock) to learn the kill tick, then films only the beats and the hold run kill..kill+12
 (`filmTicks`, ~20 PNGs); later zooms reuse that tick (the zoom is view only). A film whose kill comes on another tick
 than its scout or first zoom is **unverifiable** (the reason names which). `--clips` keeps the full window (about 170
-PNGs: the clip needs every tick) and never scouts. Unpicked frames are deleted
+PNGs: the clip needs every tick) and never scouts. Each film's timeout, unless `--timeout=<s>` is given, is
+120 s + 2.5 s per still it saves, at least 300 s (n16 s5, kills-new FRICTION 15:30: a `--before --clips` Gatling
+film writing a still every ~1.2 s beside a gate died at the flat 300 s on t239 of its ~245; a full window now gets
+540 s, a scout or beat film keeps 300). Unpicked frames are deleted
 unless `--keep-frames`. A tree older than n16 has no `--sig-dir` or lab `--victim`: film refuses the flag
 (nothing launched); cherry-pick the n16-tools kill-reel commit or film `--dirs=0` without `--victims`.
 Since bbee28a9c Rivet stands 10 m west of the station dummies, so the lab guard holds a full rig in every direction

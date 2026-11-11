@@ -76,7 +76,7 @@ export function reelPlan(flags, extra, tree = ROOT) {
   return { out: resolve(flags.out), weapons, victims: victims.filter(Boolean), dirs, ppm, after, jobs, goreCheck: gore, feel: flags.feel ?? 'auto',
     extra: gore ? [...extra, '--gore=reduced'] : extra,
     rev: flags.rev ?? null, before: flags.before ?? null, native: flags.native ?? null, clips: flags.clips === true,
-    keepFrames: flags['keep-frames'] === true, dryRun: flags['dry-run'] === true, timeout: Number(flags.timeout ?? 300) };
+    keepFrames: flags['keep-frames'] === true, dryRun: flags['dry-run'] === true, timeout: flags.timeout === undefined ? null : Number(flags.timeout) };
 }
 
 /** The sheet's columns: the lab's trigger tick, the kill and its first frames, then the held beat and the aftermath. */
