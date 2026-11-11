@@ -16,7 +16,7 @@ the real engine as a child) and keep the partial log. The shell commands below s
 
 | Command | `just` recipe | What it does |
 |---|---|---|
-| `node tools/lint/lint.mjs` | `just lint` | gdformat, gdlint, file/function size, banned-API grep, a `.uid` in the index for every own `.gd` (`uid-files`), `Steam.` grep, canary, achievements validate |
+| `node tools/lint/lint.mjs` | `just lint` | gdformat, gdlint, file/function size, banned-API grep, a `.uid` in the index for every own `.gd` (`uid-files`), every `LaunchArgs.value/has("--x")` names a flag in `KNOWN_FLAGS` (`launch-flags`), `Steam.` grep, canary, achievements validate |
 | `node tools/tests/run_unit.mjs` | `just test` | headless import, then GUT over `tests/unit` + `tests/integration` |
 | `node tools/tests/run_unit.mjs --changed` / `--select=<basenames>` / `--test=<name>` / `--fast` / `--all` | | the inner loop: `--changed` maps your diff to the tests that name its classes (falls back to the fast suite, saying why); `--fast` skips the slow tier (`tools/tests/tiers.json`); every run prints a `file:line test - message` digest per failure and the 10 slowest; a failing file is re-run once alone and a fail-then-pass is reported `FLAKY` and appended to `%LOCALAPPDATA%/gtai/flakes.jsonl` (`node tools/tests/flakes.mjs report` lists repeat offenders). The no-arg run (and evidence) still runs everything |
 | `"$GODOT_BIN" --headless --path project -s res://tests/run_scenarios.gd` | `just scenarios` | scenario suite (incl. the 60 s replay); exits non-zero on failure, any script error, or unknown args |
