@@ -321,3 +321,11 @@ NEXT (iteration 5):
   whole gate is green on be2e71080 (16:10-16:42). The tip adds only c43cae42d (scorch line, lint-only) and docs.
 - 16:43 test_kill_scorch_line 3/3 PASS, committed with its .uid (78dd90f40). The plasma sword films ps64_s/ps64_r
   are running (may be cut by the stop: NEXT 2 re-films them; check build/films_it4h.log for `done`).
+- 16:47 film ps64_s (c43cae42d, chapter plasma_sword 64 px/m, kill t62): the scorch line prints along the cut from the
+  kill point under Rivet's feet (t90-122+): a thin dark diagonal, the ink core reads, the soot band is faint. Judged
+  against ps64_c (an older rev, pre-A2 faces) only: the same-tick before ps64_r (16748e860) was still rendering at the
+  stop. Verdict so far: legible at 64 but thin; try `LINE_W_M` 0.24 and a warmer soot at 32 px/m.
+
+NEXT (iteration 5), updated 16:47: as the NEXT above, with item 2 = finish the plasma sword A/B (ps64_r if
+`build/films_it4h.log` ends with `done`, else re-film `--rev=16748e860`), film 32 px/m too, widen the line if it
+still reads as a crack, then evidence + KILLS (plasma_sword After 1 -> 2/3) + DEFECTS line.
