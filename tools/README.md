@@ -18,11 +18,13 @@ Run these from the root of your worktree. Exit codes are shared: `0` pass, `1` f
 | commit a journal without waiting for lint | (automatic: the hook skips lint when only inert paths are staged) |
 | check one script or scene parses, in seconds | `node tools/godot/check.mjs <res://path>` |
 | run every gate while you keep editing | `node tools/gate/run.mjs` |
-| run a dev scene with its flags checked | `node tools/dev/run.mjs <entry>` |
+| run a dev scene with its flags checked (its own KNOWN_FLAGS, else every flag literal in the project) | `node tools/dev/run.mjs <entry>` |
 | make a new worktree able to run the game | `node tools/dev/wt_init.mjs <worktree>` |
 | have Codex write tests for an untested module | `node tools/codex/factory.mjs pick`, then `run --stems=<stem>` |
 | do the morning merge | `node tools/merge/morning.mjs --worktree=<integration> --lanes=<a,b> --date=<yyyy-mm-dd>` |
 | see what the morning merge will meet (no worktree, no ref written; does my change clash with a lane?) | `node tools/merge/preview.mjs --lanes=<a,b,c> [--base=main]` |
+| does MY commit make a new conflict with a sibling lane? | (automatic in the hook and `quick.mjs`; by hand `node tools/merge/clash.mjs [--repo=<worktree>]`) |
+| is a flag matched in a helper (`CastFlags._walk`) actually routed there? | (lint `flag-routes`; by hand `node tools/style/flag_routes.mjs <file.gd>`) |
 
 ## tools/film/film.mjs: one film or still of the real game
 
