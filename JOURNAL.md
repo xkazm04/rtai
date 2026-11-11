@@ -384,3 +384,11 @@ at 19:40: the draft is in the tree; fill Next steps, the gate verdicts, final Co
   `kill_reel --weapons=all --quick --gore-check --rev=8f7fe6e6e` run FROM the kills-new worktree (their tip, their DLLs
   in the snapshot; out in this tree build/kreel/s4gore_new): 17 films, every kills-new death under `--gore=reduced`
   (the brief's "every death drops whole" over the whole table, not 2 weapons).
+- 15:30 MEASURED where a reel film's time goes (film.json `ran` + file mtimes of build/kreel/s3all): per film ~70 s
+  wall, of it Godot 58-68 s with ~165 stills; 12-still films (64 px/m later zooms in s2wall/t2) ran 15-21 s; the Node
+  side (PNG decode ~0.1 s a frame, diffs) ~5 s. So the PNG writes are ~45 s of each film.
+- MILESTONE 7a16ac85d: without `--clips` the first zoom SCOUTS (same flags, seed, camera lock `spawn`, ticks 420;
+  stills 60 + `kill:1`) to learn the kill tick, then films `filmTicks` = beats + hold run kill..kill+12 (~20 PNGs).
+  A kill on another tick than the scout is UNVERIFIABLE, naming the scout. `--clips` keeps the full window. Tests
+  kill_reel 18/18 (scout/film share lock, extra, ticks; every beat still filmed); film tests 254/0; lint 19/19.
+  Real-run proof = the queued kills-new gore reel (it loads the kit after the gate: it runs this commit).
