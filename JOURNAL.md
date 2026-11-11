@@ -587,7 +587,7 @@ C:/Users/kazda/kiro/gtai-n15/scratch-tools-before`, `git branch -D n15t-control-
   2532 passed, 0 failed, 2 skipped`, `scenario-tests: 55 passed`, parity bit for bit (planted caught at 629), selftest
   look 11/11 worst 0.00, `release-compile: 668 loaded, 0 failed`. Both my gate snapshots removed
   (`removeSnapshot`; `git worktree list` holds neither).
-- 02:56 `node tools/evidence/cites.mjs REPORT.md`: 35 paths, 34 ok, 1 UNCHECKED (the word INVALID in a quoted message).
+- 02:53 `node tools/evidence/cites.mjs REPORT.md`: 35 paths, 34 ok, 1 UNCHECKED (the word INVALID in a quoted message).
   Masters `gtai-masters/n15/tools/frames.json` 8 entries, every file referenced (plus the ledger); scratch trail renders
   in gtai-n15/flake/trails deleted (the JSONs and scripts are in evidence/t4_trails/).
 
@@ -603,3 +603,9 @@ JOURNAL. Mutate sim_hash.gd after (`tools/mutate/mutate.mjs --file=features/city
 snapshot after (`removeSnapshot`). (4) REPORT final at 07:40. (5) End of night: `git worktree remove --force
 C:/Users/kazda/kiro/gtai-n15/scratch-tools-before` (holds an untracked copy of dev/sim/car_route_trails.gd: mine) and
 `git branch -D n15t-control-sim-hash`.
+- 02:55 scoped NEXT (2), read only: `sim_hash.gd` `build` does `hcount.fill(0)` + a prefix loop over all HW*HW cells +
+  two CAP loops; `query` reads `hstart[c]` only through `for k in hcount[c]`, so an empty cell's start is never used.
+  No GDScript outside sim_hash.gd reads hcount/hstart; native twins are `hash.cpp` + `city_core.h` (`hstart_`,
+  `hcount_`). Plan: keep a touched-cell list; zero last step's touched cells (not `fill`); count; sort the touched
+  list ascending (k <= CAP actors); starts over it in that order; fill. hitems comes out in the same (cell asc, id asc)
+  order as the counting sort, so query order and parity hold by construction; `hstart[hw*hw]` = total as now.
