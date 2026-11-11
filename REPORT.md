@@ -33,6 +33,16 @@ Gates (last measured): the gate on `b9dba1da8` (`../n16-tools/tools/gate/run.mjs
   plays the p70 cells. The three packed PNGs were removed from the tree (rebuild with `kill_cells_pack.py --death=claw_throw --art=p55`).
 - The molotov's p55 cells (patrol, riot, SWAT, delivered 18:37-18:46) are not wired either: under the 55-degree view the molotov plays the p70 cells.
 
+## What blocked the lane, and for how long (from JOURNAL's FRICTION lines)
+- One Godot per lane: the two gates held Godot from 17:41 to 18:11 (`b9dba1da8`) and from about 18:15 to 18:48 (`ab925914e`).
+  That is about 65 min with no film or unit run, and it is why the claw and molotov p55 cells (delivered at 18:01 and 18:37-18:46) are not wired.
+- 13:18: this branch's `compare.mjs` has no `kill:` shot. A wait loop on that failed run burned about 10 min, and since then the lane films with the
+  tools lane's kit.
+- 15:30: the Gatling before films timed out twice at 305 s (about 10 min), flooded by polygon errors. Fixed in `80e6d139f`.
+- The suit's molotov kneel was refused 4 times by the image filter (asset lane), so it is still owed.
+- Check of the cited evidence at 19:42: every `.png`/`.mp4`/`.md` named above exists in `evidence/n16-kills-new/`
+  (brace-expanded `ls`). The gore write-up is in the n16-tools worktree. `cites.mjs REPORT.md`: ok.
+
 ## Calls for the owner
 - Pistol `pistol_snap`: keep / change / drop. 64: `pistol_cells_ab_64ppm_patrol_t340.png`; 32: `pistol_city32_after_t339-380.png` vs `_before_`; clip `pistol_cells_ab_64ppm_patrol_t330-400.mp4`.
 - Machine pistol `smg_stitch`: keep / change / drop. 64: `stitch_cells_reel_64ppm_dir135_t174-324.png`; 32: `stitch_cells_reel_32ppm_dirs-wall-135.png`; clips `stitch_cells_reel_{32,64}ppm_dir135.mp4`.

@@ -767,3 +767,10 @@ NEXT: (next run) wire claw_throw p55 (patrol/riot/SWAT), molotov_torch p55 (patr
   to project/; REPORT stands as written in iteration 22.
 NEXT: (next run) as iteration 22's NEXT: wire claw_throw p55 (patrol/riot/SWAT), molotov_torch p55 (patrol/riot/SWAT),
   claw_throw p70 for the 9 street peds, one commit each, film each at 32 under its view, then the full gate with --reels.
+
+## Iteration 24 (19:40, REPORT)
+- 19:42 checked every `.png`/`.mp4`/`.md` the REPORT cites (brace-expanded `ls` in evidence/n16-kills-new): all exist; the gore
+  write-up is in the n16-tools worktree. Added REPORT section "What blocked the lane, and for how long". No project/ change; the
+  final gate PASS on `ab925914e` (18:48) still covers HEAD's code.
+NEXT: (next run) wire claw_throw p55 (patrol/riot/SWAT), molotov_torch p55 (patrol/riot/SWAT), claw_throw p70 for the 9 street
+  peds, one commit each, film each at 32 under its view, then the full gate with --reels.
