@@ -50,10 +50,10 @@ var _grinds: Dictionary[int, Grind] = {}
 
 ## The two halves of `rig` cut along `cut` (unit, world): groups by SignatureKill.PIECE_IDS,
 ## only HALF_A and HALF_B filled, each centred where its piece starts (SignatureKills offsets).
-## `hot`: a cauterising blade (the plasma sword): the edges glow instead of showing raw red.
-## `soul`: Kerf's beam: the cauterised edge in teal-white.
+## The edges by the row (KillCutEdge.along). The line runs row.cut_up_m above the body's ground
+## point (n16 kills-polish: through the drawn torso, shoulder to hip).
 static func cut(
-	rig: CutRig, cut_dir: Vector2, view_ppm: float, hot: bool = false, soul: bool = false
+	rig: CutRig, cut_dir: Vector2, view_ppm: float, row: SignatureKill
 ) -> Array[Node2D]:
 	var out: Array[Node2D] = []
 	@warning_ignore("return_value_discarded")
@@ -63,8 +63,9 @@ static func cut(
 		var root: Node2D = Node2D.new()
 		root.name = SignatureKill.PIECE_IDS[p]
 		var o: Vector2 = -offs[p] * view_ppm  # the body's centre in the half's space
+		var line: Vector2 = o + lift(row, view_ppm)
 		var side: Vector2 = offs[p].normalized()
-		var mask: Sprite2D = _mask(o, cut_dir, side, view_ppm)
+		var mask: Sprite2D = _mask(line, cut_dir, side, view_ppm)
 		root.add_child(mask)
 		var parts: Array[Node2D] = GibCut.cut(rig, true)
 		var body: Node2D = parts[SignatureKill.BODY]
@@ -75,16 +76,14 @@ static func cut(
 		body.transform = mask.transform.affine_inverse() * body.transform  # undo the stretch
 		flatten(body)
 		mask.add_child(body)
-		var lip: KillCutEdge = KillCutEdge.new()
-		lip.a = o - cut_dir * EDGE_M * view_ppm
-		lip.b = o + cut_dir * EDGE_M * view_ppm
-		lip.side = side
-		lip.hot = hot
-		lip.soul = soul
-		lip.z_index = 30
-		root.add_child(lip)
+		root.add_child(KillCutEdge.along(line, cut_dir, EDGE_M * view_ppm, side, row))
 		out[p] = root
 	return out
+
+
+## The cut line's lift off the body's ground point (px; screen up).
+static func lift(row: SignatureKill, view_ppm: float) -> Vector2:
+	return Vector2(0.0, -row.cut_up_m * view_ppm)
 
 
 ## A clip mask only holds children on its own z: the copies' z order becomes tree order.
@@ -120,6 +119,7 @@ static func _mask(o: Vector2, cut_dir: Vector2, side: Vector2, view_ppm: float) 
 func add(
 	serial: int, at: Vector2, cut_dir: Vector2, row: SignatureKill, parts: Array[Node2D]
 ) -> void:
+	at += lift(row, 1.0)  # metres: the streak and the saw's bite sit on the raised line
 	if row.grind_ticks <= 0:
 		_streaks[serial] = Vector4(at.x, at.y, cut_dir.angle(), kills.tick)
 		_streak_size[serial] = Vector2(row.streak_m, row.streak_w_m)

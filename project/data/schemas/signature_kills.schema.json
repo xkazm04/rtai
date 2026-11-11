@@ -40,6 +40,11 @@
             "minimum": 0,
             "type": "number"
           },
+          "cut_up_m": {
+            "maximum": 2,
+            "minimum": 0,
+            "type": "number"
+          },
           "doc": {
             "minLength": 1,
             "type": "string"

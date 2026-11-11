@@ -17,6 +17,21 @@ var hot: bool = false
 var soul: bool = false
 
 
+## The edge of the half on `p_side` of the cut through `mid` along `dir` (px), half `half_px` long,
+## styled by `row`: no spray = cauterised, edge `soul` = Kerf's.
+static func along(
+	mid: Vector2, dir: Vector2, half_px: float, p_side: Vector2, row: SignatureKill
+) -> KillCutEdge:
+	var e: KillCutEdge = KillCutEdge.new()
+	e.a = mid - dir * half_px
+	e.b = mid + dir * half_px
+	e.side = p_side
+	e.hot = row.spray == 0
+	e.soul = row.edge == &"soul"
+	e.z_index = 30
+	return e
+
+
 func _draw() -> void:
 	var w: float = (b - a).length() * 0.13
 	draw_line(a, b, INK, w * 0.55, true)

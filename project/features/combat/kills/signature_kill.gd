@@ -54,6 +54,9 @@ var edge: StringName = &""
 ## The split style's slash streak along the cut: length and width (m) at the kill tick.
 var streak_m: float = KillSlashStreak.LENGTH_M
 var streak_w_m: float = KillSlashStreak.WIDTH_M
+## The split style: metres the cut line (its mask, edges, streak and saw bite) passes above the
+## body's ground point (0 = through it: in the upright view the line then misses the figure).
+var cut_up_m: float = 0.0
 ## The hole style: metres the plasma hole sits above the body group's centre (0 = the centre).
 var hole_up_m: float = 0.0
 
@@ -90,6 +93,7 @@ static func from_dict(t: DataTable, d: Dictionary) -> SignatureKill:
 	k.streak_m = _num(t, d, "streak_m", KillSlashStreak.LENGTH_M)
 	k.streak_w_m = _num(t, d, "streak_w_m", KillSlashStreak.WIDTH_M)
 	k.hole_up_m = _num(t, d, "hole_up_m", 0.0)
+	k.cut_up_m = _num(t, d, "cut_up_m", 0.0)
 	return k
 
 
