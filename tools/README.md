@@ -143,6 +143,11 @@ flash_ticks). `--clips` adds `clip.mp4` per film (60 fps, cropped, trigger windo
 molotov; the ghost rows are not lab weapons). Extra game flags go after `--` (`-- --gore=reduced`); the reel
 refuses `--sig-dir`, `--victim`, `--seed`, `--ppm` there, since it sets them.
 
+Each film line also gives the measured side of the beats, from its beat frames inside the kill window:
+`settled by +N` (the first beat after which the window stops changing; walking people count, so an upper bound)
+and `aftermath X %` (the share of the window at kill+after that still differs from the trigger frame: what stays
+on the street). Example (n16): rocket dir 90 6.3 % at both zooms, settled only by +150; katana 1.7 %, by +80.
+
 `--gore-check` films every death with `--gore=reduced` and judges each from the probe: the victim must still be
 drawn as one lying card 20 ticks after the kill (a signature death hides the body: FAIL, naming it); a victim
 without a card the tick before is UNVERIFIABLE. Each film in `reel.json` gets `whole: true|false`.

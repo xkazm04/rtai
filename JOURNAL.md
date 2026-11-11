@@ -102,3 +102,7 @@ lanes' journals for REQUEST tools / FRICTION (none at 11:35). Gate on the final 
   Rivet's start, so `film.mjs kill:gloria --ppm=64 --on=kill:1+60 -- --sig-dir=90 --sig-solo=start:0,2` should
   stand the guard 5 m south with the barrier ~0.8 m behind him along the shot. Needs the afe581336 pick for
   --sig-dir, and a look whether the barrier is a solid wall in the sim (cells) before relying on it.
+- 12:12 7ec219f13 the measured side of the beat readout: per film `settled by +N` and `aftermath X %` of the kill
+  window (proved on t2/t3 frames: rocket dir 90 6.34 % / 6.36 % at 32 / 64 px/m, settled only by +150; katana dir 90
+  1.71 %, by +80; dir 180 2.84 %, by +80). The table side (hit-stop, held, crumble) prints per weapon. Gate:
+  scenarios 55/55 ok; parity, look goldens, reels still running.
