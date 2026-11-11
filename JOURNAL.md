@@ -422,3 +422,54 @@ cells.at e.g. [0,12,24]; judge vs the shred placeholder at the same ticks (the s
 baton corpse faced back along the blow (above). (3) gates on the final code commit: full unit, scenarios (55/55 on
 d1ab2f3c3), `tools/evidence/run.mjs`, `tools/reel/run_reels.mjs`. (4) the pin/stitch corpse offset; item 6 (molotov
 vs flamethrower, the claw). REPORT.md is drafted: update its table (nail_pin suit, baton cells) and Calls by 19:40.
+
+## Iteration 16 (14:45-16:15)
+- 14:46 asset replies read: baton_overload p70 suit + SWAT re-cut (navy shift) delivered 14:43; gatling_shred p70 all
+  four kinds delivered (patrol 13:51 A, SWAT 14:20 B, riot 14:25 B/A, suit 14:34 B). All wired this session.
+- 14:55 MILESTONE `590902959` baton_overload suit ped cells (the four kinds complete at p70); SWAT re-packed from the
+  navy-shifted re-cut (grid looked at: frames 2-4 now a scorched navy, no slate-teal).
+- Shared-file note: no kills-polish file touched. Edited (all mine since n16): kill_shred_art.gd, kill_loose_art.gd,
+  kill_death_cells.gd, kill_track_rows.gd (one Extra field `scraps`), the schema (`cells.scraps`, additive).
+- 15:20 MILESTONE `040ffb67a` gatling_shred drawn cells for patrol, riot, SWAT, suit: cells.at [0,12,24] (shaken back
+  with spray behind; sagging/kneeling over cream ribs, headgear off; the heap with a torn-off arm), cells_lean 0.6
+  (the stream still shakes the drawn frames), the six drawn scraps per kind (`cells.scraps`, `<kind>_gatling_shred_
+  scraps.png`, scrap_cell_m 0.25, spinning in flight) in place of the coded polygons. Pack tool: FRAMES_BY_DEATH
+  (row 4 = scraps) + the scraps strip. Unit 41/41 (kill files), full lint 19/19.
+- DECISION kills-new/corpse-turn: a death's drawn corpse frame may turn to look ALONG the blow (fx `cells_turn_from`
+  = the frame index; -1/absent = never), because the asset lane lays each column's corpse head the way its figure
+  looked, so a figure faced at the shooter lies head TOWARD Rivet (fell forward). The shred's heap (2) and the
+  baton's last frame (3) turn: both are knocked back. The pistol keeps the face-down fold (its brief). Rejected: a
+  re-draw per kind (owes the asset lane 8 sheets), a pack-time column swap (fixes one pitch only). Restoring the old
+  look = delete the fx key.
+- 15:40 item 6 read (molotov vs flamethrower): the sim emits weapon `burn` for EVERY fire death (FightAreas._burn ->
+  arena.damage(h, .., e.burn_by, &"burn", &"burned")), so the view cannot tell the molotov from the flamethrower.
+  Plan (no replay move): FighterFx gains `burn_src: StringName` (NOT in write_state), set in FightAreas._strike from
+  the shot's spec id and to &"molotov" by a fire patch; BrutalityHook._on_kill_landed asks it when weapon == burn and
+  routes the kill to the `molotov` row when the source is the molotov. Gunplay's files (fighter_fx.gd, fight_areas.gd)
+  are not kills-polish's; a decisions line names the field as view-only. Unit: the field stays out of write_state
+  (hash identical with and without it set). Not started this session.
+- BEAT SHEET 6a molotov_torch (the molotov's own death; burn_char stays the flamethrower's char-and-crumble):
+  the burning man does not stop and char where he stands: the spirit soaked into his clothes keeps burning on him.
+  Anticipation: the sim's burning panic run (already there). Impact t0 (hit-stop 0; the fire killed him, no blow):
+  he drops to his knees mid-stride, arms thrown up, a sheet of drawn flame over his back and shoulders (frame 1,
+  facing ALONG his run, `cells_turn_from` 0). t10 doubled over on his knees, flames taller (frame 2). t20 he folds
+  face down along the run (frame 3, burning). t20-180 the drawn flames keep licking on the body (coded flicker
+  between frames 3 and 4, then frame 4 alone): t180 frame 4, a blackened (ink, not ash) body face down, smouldering,
+  the broken bottle neck and glass ring beside him; smoke for 200 ticks. No blood. Camera: a 2-px shake at t0 only
+  (dropped under --reduced-motion). Reads at 32 px/m as a kneeling bright flame column, then a long burning shape.
+- REQUEST assets: molotov_torch cells (NEW death), patrol cop / riot cop / SWAT / suit ped, p70 (p55 later), the
+  kind's long_fall grid cells, 5 columns in the grid's facing order, column 1 = facing the camera. 4 frames down:
+  (1) dropped to his knees, arms thrown up, a sheet of flame over back and shoulders (amber/cream fire with ink line,
+  no vermilion, no teal) (2) doubled over on his knees, the flames taller (3) face down, still burning, flames along
+  the back and legs (4) the same pose charred black (ink), smouldering, a broken bottle neck and a little glass ring
+  beside him, no blood. Frames 1-2 on the standing feet; frames 3-4 lying FACE DOWN with the head the way the figure
+  looked (as the pistol corpse). Priority after the p55 stitch/pin round.
+- 15:15 item 6 BUILT (placeholder, uncommitted until the reel frees Godot): DECISION kills-new/molotov-torch (in
+  docs/decisions.md). The source plumbing is VIEW side after all (`KillFireSource`: CombatArena.struck records the
+  last fire weapon per fighter; BrutalityHook names a `burn` kill by it; no record = a walk into a ground fire =
+  the molotov's). The FighterFx field was rejected: gunplay's sim file and fight_areas.gd is pinned at 222 lines on
+  the debt ratchet. Row `molotov_torch` (style `torch`, KillTorchArt): squash to the knees t0-6, sag t6-16, the fall
+  grid face down along the run from t16, 6 amber/cream flame tongues (0.32 m) up the figure then along the body to
+  t180 (shrinking from t120), smoke after (KillCookArt.smoke, now public). hit-stop 0. brutality_hook.gd's header
+  doc reflowed (5 lines) to stay at 200 lines.
+FRICTION: the kill reel's after side films the live tree: uncommitted code (a new class not yet imported) broke 'after gatling dir 0 64' with SCRIPT ERROR; stopped by PID 100504 tree. Film from --rev=<commit> while editing.
