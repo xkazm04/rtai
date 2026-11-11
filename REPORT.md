@@ -5,7 +5,7 @@ behind its own before flag (CastFlags). No sim change: the replay and parity gol
 Evidence: `evidence/n17-rivet-strike/` (same files and `frames.json` as `gtai-masters/n17/rivet-strike/`).
 Defect log: `DEFECTS.md`.
 
-Gates (session 3, 9175e715e): lint 19/19, scenarios 55/55, parity bit-exact, look goldens 11/11 + block 5/5 (worst 0.00); unit failed 3 there (the pistol diagonal took RivetFireCam's cells) -> fixed 4fc5137dc, full unit 2798 passed 0 failed. A full run on the final commit is owed before the freeze.
+Gates (session 4, 03b46390d, `evidence/run.mjs --no-bench --no-release`): lint 19/19, unit 2801 passed 0 failed, scenarios 55/55, parity bit-exact (mutation caught at 629), look goldens 11/11 + block 5/5 (worst 0.00): no golden moved.
 
 Gates (session 2): `node tools/evidence/run.mjs --no-bench --no-release` on 8a47c51db: lint 19/19, unit 2786
 passed 0 failed, scenarios 55/55, parity bit-exact, look goldens 11/11 and block goldens 5/5 (worst 0.00). Reel gate
@@ -26,6 +26,7 @@ on 48c91e944: top, tilt70, combo OK. Planted faults: `rivet_thrust.gd` 75 % (6/8
 | 4 recoil kicks the body | 8a47c51db | `--rivet-kick=off` | one held pose -> hand cannon 4.8 deg back about the feet (top ~13 px at 64 px/m), pistol 3 deg | `kick_hand_cannon_64.png`, `kick_hand_cannon_32.png` |
 | 3 katana thrust recovery drawn (asset lane it458 cells), no slash arc after a straight thrust | 77b991075 | `--rivet-thrust-recover=off` | slash cell + cream arc 22 ticks, figure top 24 px under the thrust -> blade drawn back level, boots on the line, top 8 px over (64 px/m) | `thrust_recover_t90_119_64.png`, `thrust_recover_cam_t88_118_32.png`, `thrust_recover_t90_119_32.png` |
 | 4 diagonal shot draws a diagonal gun (all 8 guns at p70 and p55, it458/it462/it463) | 67f4343a6, 4fc5137dc, 7b4d3201b, fc0fa83ad, 9cefa9505 | `--rivet-gun-diag=off` | arm level 0 deg vs aim -19..-35 deg, flash star off the gun -> the drawn barrel along the round (+-5 deg by eye), flash/arc/comet/rocket from the drawn muzzle; pistol figure 117 -> 150 px tall (walk 160) at 64 px/m | `gun_diag_pistol_64.png`, `gun_diag_pistol_32.png`, `gun_diag_p70_rifles_64.png`, `gun_diag_p70_launchers_64.png`, `gun_diag_gatling_64.png`, `gun_diag_p55_64.png` |
+| 3 wind-up / left strike cells on the walk's boot line (plasma, baton, chainsaw, plasma left, baton left) | 991c71bd4, 68193fd42 | `--rivet-cell-feet=off` | boot line vs the walk's at 64 px/m: plasma wind-up 4 px low, baton 7, chainsaw 4, plasma left 4/3, baton left 5/7 -> each within 1 px; 32 px/m plasma 3 -> 1, baton left strike 3 -> 0 | `plasma_windup_feet_64_32.png`, `windup_feet_blades_64.png`, `baton_left_strike_feet_32_x6.png` |
 | 5 gun camera fire cells on his boots | 9bac727e5 | `--rivet-cell-feet=off` | pistol shot tick: figure top 44 px higher -> the drawn crouch on the line | `camfire_pistol_t60_63_64.png` |
 
 ## What does not work yet (open in DEFECTS.md)
@@ -37,7 +38,7 @@ on 48c91e944: top, tilt70, combo OK. Planted faults: `rivet_thrust.gd` 75 % (6/8
 - #13 also: the katana's x1.5 camera cells hand over to the walk grid with an ~8 px figure-top pop at 32 px/m.
 - #13 size pop at the fire cell -> armed walk handover (placement, not drawing).
 - #15 one tick of his front when he fires toward the camera with his back turned (kill lab).
-- p55 camera strike cells not yet filmed in a boss arena.
+- p55 camera strike cells not yet filmed in a boss arena; the camera wind-up / strike cells not yet measured against the walk's boot line (#20 covers the side and left cells).
 
 ## Calls for the owner (draft)
 

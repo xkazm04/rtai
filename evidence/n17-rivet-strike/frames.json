@@ -1,5 +1,23 @@
 [
   {
+    "file": "windup_feet_blades_64.png",
+    "title": "Wind-up and left strike cells stand on the walk's boot line (baton, chainsaw, plasma left, baton left)",
+    "source": "film.mjs chapter:<blade> --ppm=64 --stills=44-72 (68193fd42), before = HEAD 991c71bd4; tools/art/rivet_boot_line.py",
+    "branch": "n17-rivet-strike",
+    "ppm": 64,
+    "before": "top row",
+    "note": "Magenta = that weapon's armed walk boot line. Before: baton wind-up 7 px under it, chainsaw 4, plasma left wind-up 4 / strike 3, baton left wind-up 5 / strike 7 (the boots step down on the handover and back up after). After: each within 1 px."
+  },
+  {
+    "file": "plasma_windup_feet_64_32.png",
+    "title": "Plasma sword wind-up on the walk's boot line, 64 and 32 px/m",
+    "source": "film.mjs chapter:plasma_sword --ppm=64|32 --stills=56-68 (991c71bd4), before = --rev=HEAD a3e1b1299",
+    "branch": "n17-rivet-strike",
+    "ppm": 64,
+    "before": "rows 1 and 3",
+    "note": "t59 walk, t60-61 wind-up, t62 contact (the kill tick). Boot line from his ground point: walk -9, wind-up -5 -> -9 at 64 px/m; -6 / -3 -> -5 at 32."
+  },
+  {
     "file": "gun_diag_p70_rifles_64.png",
     "title": "Plasma rifle, gloria, hand cannon shot up-right: the drawn diagonal fire cells (64 px/m)",
     "source": "film.mjs weapon:<gun> --ppm=64 --lock=off --stills=330-344 (fc0fa83ad), before = -- --rivet-gun-diag=off",
@@ -54,15 +72,6 @@
     "note": "DEFECTS #11: before, the side fire cell with the arm level (0 deg) while the round and its flash leave up-right (aim -19 deg); after, the it458 diagonal cell (gun -25 deg), the flash star on the drawn muzzle, flashless from t1415, seated on his helmet. Figure 150 px tall (walk 160; the side cell 117)."
   },
   {
-    "file": "gun_diag_pistol_32.png",
-    "title": "Pistol diagonal fire cell at 32 px/m (x2)",
-    "source": "film.mjs arena --ppm=32 --lock=off (67f4343a6), before = --rivet-gun-diag=off",
-    "branch": "n17-rivet-strike",
-    "ppm": 32,
-    "before": "top row",
-    "note": "t1413 shot, t1415-1418 the flashless pose, t1428 the next round: the star leaves the raised gun."
-  },
-  {
     "file": "thrust_recover_t90_119_64.png",
     "title": "Katana thrust recovery: the drawn recovery cell instead of the slash cell (64 px/m)",
     "source": "film.mjs chapter:katana_thrust --ppm=64 (77b991075), before = -- --rivet-thrust-recover=off; cyan = his ground line",
@@ -115,15 +124,6 @@
     "ppm": 64,
     "before": "top: the painted flash on the gun t333-t338 (6 ticks; 109 hot px at t336)",
     "note": "after: t333-335 flash (gun_fx pistol muzzle_ticks 3), t336-338 the flashless cell (asset lane it454)"
-  },
-  {
-    "file": "katana_lean_strike_t64_32.png",
-    "title": "Katana lean at 32 px/m",
-    "source": "compare.mjs chapter:katana --ppm=32 --at=64",
-    "branch": "n17-rivet-strike",
-    "ppm": 32,
-    "before": "left: upright",
-    "note": ""
   },
   {
     "file": "katana_planted_t61_64.png",
