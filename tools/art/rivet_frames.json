@@ -166,12 +166,13 @@
    "rivet_reload_pistol": {
     "act_k": 0.814,
     "counts": "5,3",
-    "fig_h": 102.5,
+    "fig_h": 153.75,
     "sheet": "rivet_reload_onehand_55_claw_build.png"
    },
    "rivet_reload_pistol_left": {
     "counts": "3",
-    "sheet": "rivet_reload_onehand_55_left_claw.png"
+    "sheet": "rivet_reload_onehand_55_left_claw.png",
+    "fig_h": 165
    },
    "rivet_reload_plasma_rifle": {
     "act_k": 0.823,
