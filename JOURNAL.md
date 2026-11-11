@@ -439,3 +439,7 @@ NEXT (iteration 9, from 18:22; freeze 19:30, REPORT 19:40):
 - 17:55 GATES on 05715ef5f: PASS lint 19/19, unit 2700/0/2, scenarios 55, parity bit-exact (mutation at 629),
   selftest look goldens 11/11 worst 0.00 (no golden moved by A6/A7/A8 or the shadow fix), export-audit 690/0. Reels
   running (build/gate/05715ef5f249/reels.log). Not covered: bbf62f6f3 (split half shadows, lint only) and docs.
+- 18:10 GATES on 05715ef5f: REELS PASS (top 306 s, tilt70 302 s, combo 300 s): the WHOLE gate is green on 05715ef5f
+  (build/gate/05715ef5f249/gate.json). After it: bbf62f6f3 (split half shadows) + docs.
+- 18:14 test_kill_split_shadow 3/3 PASS, committed with its .uid; `run_unit.mjs --changed` on the tip (full suite: the
+  schema changed) 2687 passed / 0 failed. bbf62f6f3 is tested but still UNFILMED: NEXT 2's film is the first job.
