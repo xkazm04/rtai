@@ -348,3 +348,7 @@ at 19:40: the draft is in the tree; fill Next steps, the gate verdicts, final Co
 - 15:00 GATE on caccc825d so far (snapshot build/evidence): lint 19/19, unit 2647 tests / 0 failures; scenarios
   running. Verdict: `gate exit N` at the end of gtai-n16/scratch-tools/gate_s3.log (if this session stops first,
   read it next session; results also in build/gate/caccc825d4a8/).
+- 15:09 GATE PASS on caccc825d (`gate exit 0`, build/gate/caccc825d4a8/gate.json): lint 19/19, unit 2645 passed / 0
+  failed / 2 skipped, scenarios 55, parity bit for bit 1200 steps (planted fault at 629), selftest look goldens 11/11
+  worst 0.00, release-compile 683/0. The REEL gate on caccc825d is still owed (NEXT 0). Session 3 end: tree clean, no
+  Godot of mine running (gate and reels exited).
