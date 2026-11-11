@@ -33,7 +33,7 @@ export const NEUTRAL_NOTES = ['KILLS.md', 'DEFECTS.md'];
 /** True when a staged repo path cannot change what the scoped lint skips. */
 export function isLintNeutral(path) {
   return NEUTRAL_PREFIXES.some((x) => path.startsWith(x)) || NEUTRAL_NOTES.includes(path)
-    || (path.startsWith('tools/art/') && path.endsWith('.py') && !path.slice('tools/art/'.length).includes('/'));
+    || /^tools\/art\/[^/]+\.py$/.test(path); // a named top-level script (Codex n16t-break-aftermath: not `tools/art/.py`)
 }
 
 /** Repo paths a tool test reads from the real tree: every `join(ROOT, '<path>')` literal. */
@@ -66,7 +66,8 @@ export function narrow(staged, allGd, inputs = new Set()) {
   const neutral = kept.length - code.length;
   const want = new Set(code);
   const gd = allGd.filter((f) => want.has(f));
-  const reads = code.filter((p) => inputs.has(p) || INPUT_PREFIXES.some((x) => p.startsWith(x)));
+  // Every kept path, the neutral ones too: should a tool test ever read one, it runs (review of n16t-break-aftermath).
+  const reads = kept.filter((p) => inputs.has(p) || INPUT_PREFIXES.some((x) => p.startsWith(x)));
   const toolTests = reads.length > 0;
   const tests = toolTests ? `tool-tests run (a tool test reads ${reads.join(', ')})` : 'tool-tests skipped (no staged path under tools/ or read by a tool test)';
   const also = neutral ? ` + ${neutral} lint-neutral (provenance, tools/art/*.py, KILLS/DEFECTS notes)` : '';

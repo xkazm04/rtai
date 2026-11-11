@@ -63,6 +63,14 @@ export function writeSheet(file, rows) {
   return file;
 }
 
+/** The street clock part of a beat line: each corpse_decay lifetime the row carries, none invented (Codex
+ *  n16t-break-aftermath: a stain lifetime without a body one was dropped). */
+function decayText(row) {
+  const parts = [...(row.body_gone_s ? [`the body and its pieces are gone by ${row.body_gone_s} s`] : []),
+    ...(row.stain_gone_s ? [`the scorch and spray by ${row.stain_gone_s} s`] : [])];
+  return parts.length ? `; ${parts.join(', ')} (corpse_decay.json linger + fade)` : '';
+}
+
 /** One weapon's beat timings from its table row (the data side of the readout). The row's hitstop_ticks is NOT the
  *  screen freeze: SignatureKills.hold makes the pieces (gibs, halves, marks) wait that many sim ticks, while the
  *  freeze is FeelCam's (hit_feel.json kill_hitstop `kill` = camera.json 6 ticks, or a class's bigger stop: the
@@ -70,8 +78,8 @@ export function writeSheet(file, rows) {
 export function beatLine(weapon, row) {
   if (!row?.id) return `${weapon}: no signature row (the standard death)`;
   return `${weapon}: ${row.id} (${row.style}) row hit-stop ${row.hitstop_ticks} (the pieces wait; the screen freeze is hit_feel.json's, measured per film), held ${row.held_ticks} (grind ${row.grind_ticks}, stand ${row.stand_ticks}), crumble ${row.crumble_ticks}, flash ${row.flash_ticks} ticks`
-    + (row.body_gone_s ? `; the body and its pieces are gone by ${row.body_gone_s} s, the scorch and spray by ${row.stain_gone_s ?? '?'} s (corpse_decay.json linger + fade)` : '')
-    + (row.leftover_kills ? `${row.body_gone_s ? ', the marks sooner if' : '; its scorch and spray stay until'} ${row.leftover_kills} later kills recycle them (leftover_budget ring)` : '');
+    + decayText(row)
+    + (row.leftover_kills ? `${decayText(row) ? ', the marks sooner if' : '; its scorch and spray stay until'} ${row.leftover_kills} later kills recycle them (leftover_budget ring)` : '');
 }
 
 /** Sheets per weapon and zoom, the overview per zoom (more than one weapon), the beat lines, reel.json and reel.md;
