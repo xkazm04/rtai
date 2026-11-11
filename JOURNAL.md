@@ -233,3 +233,12 @@ test_quest_blade registers its own input actions (fails under --select).
   (HumanReact.slide / last_carry), not the sim; GunFx.shield_test shows the wiring path (a Callable on GunFx set by
   ReactLink), but react_link.gd is at 288 lines and GunFx has no fighter id per impact. Fix path: impact_who +
   GunFx.body_off Callable(id) -> rig carry, drawn in GunFxArt.draw_over.
+- PERF 01:15 `node tools/perf/fight_gate.mjs "--arms=now:,before:--rivet-blade-left=off --rivet-left-strike=off
+  --gib-card=whole --target-rings=on --body-ink=n7 --quest-hit=off" --rounds=4 --out=build/perf/fg_s4` (bench.lock held
+  by this lane, noclobber, deleted after; the export was built from the worktree at ~01:08, 19e7768ff or its parent).
+  city (reel ch 18): before - now p50 -0.46 [-1.88,+1.93] ms, p99 -0.58 [-2.87,+3.31], cpu -0.78 s: all WASH; A/A floor
+  p50 +0.09 [-0.61,+0.97]. horde (Gatling): p50 -0.20 [-0.72,+0.68], p99 +0.71 [-0.38,+2.57], cpu +0.10: all WASH.
+  0 frames over 25 ms in any arm; 21 of 24 runs CONTENDED. Verdict: tonight's befores vs nows are inside the noise on
+  both scenes (the warmed blade-left strips do not appear in these scenes' frames: a load-time cost, not measured).
+- 01:17 full gates started on 896c5c30d (`node tools/gate/run.mjs --rev=HEAD --reels`, log build/gate_896c5c30d.log,
+  results build/gate/896c5c30d*/); code since the last PASS: 302a0d670 (contractor stagger), 19e7768ff (impact dust).
