@@ -1,6 +1,6 @@
 # REPORT: night n15, lane hero (Rivet and the four ghosts)
 
-DRAFT written 04:40 (it15) while the gates ran; the last session before 07:40 brings it current.
+DRAFT, brought current at 05:50 (it16); the last session before 07:40 finalises it.
 Branch `n15-hero`, cut from main `5c5c03611`. Every claim cites a still in this branch's `evidence/`
 (the best 15 are copied to `gtai-masters/n15/hero/` with `frames.json`). Record: `JOURNAL.md`, `LEVEL.md`.
 
@@ -44,8 +44,16 @@ Branch `n15-hero`, cut from main `5c5c03611`. Every claim cites a still in this 
    At 32 px/m tick by tick: `evidence/s15/ghost_lunge_kerf_dent_ticks_before_after_32ppm_x2.png`.
    Ohm's bolt now leaves from his drawn fingertips (`GhostHand`, `--ghost-ohm-hand=sim` = before):
    `evidence/s15/ohm_bolt_hand_8dir_before_after_64ppm.png`, at p55 `evidence/s15/ohm_bolt_hand_p55_8dir_before_after_64ppm.png`.
-   Run16 since: Dent's 3/4 away row (all five right rows on 16) and Kerf's 3/4 toward-left row:
-   `evidence/s15/dent_run16_away_before_after_64ppm.png`, `evidence/s15/kerf_run16_left34_before_after_64ppm.png`.
+5. **Kerf and Dent run on 16 drawn frames in all eight octants** (it15-it16): every right and left row
+   takes the asset lane's halfway frames, plus 9 second takes judged on their boards; keys byte-identical
+   (`evidence/s15/tools/key_shift.py`), left cells padded where a frame was wider (Kerf 145 -> 157,
+   Dent 156 -> 162). `evidence/s15/dent_run16_away_before_after_64ppm.png`,
+   `evidence/s15/kerf_run16_left34_before_after_64ppm.png`, `evidence/s15/kerf_run16_left_rows_before_after_64ppm.png`,
+   `evidence/s15/dent_run16_left_rows_before_after_64ppm.png`, `evidence/s15/dent_run16_alts_before_after_64ppm.png`.
+6. **Planted feet looked at at the play zoom with a measure, not by eye** (it16): `evidence/s15/tools/feet_trace.py`
+   (the ground held still, one row a tick) and `evidence/s15/tools/hold_ride.py` (how far each held frame rides
+   over the ground). Ohm reaches 3; Tonnage's mean ride is 8.3 px@32 but his worst hold rides 16.1 px (two long
+   steps in his walk16, art requested). `evidence/s15/ghost_feet_32ppm_tonnage_ohm.png`.
 
 ## What does not work / not done
 
@@ -53,7 +61,7 @@ Branch `n15-hero`, cut from main `5c5c03611`. Every claim cites a still in this 
 - Ohm's hand spot on the drawn left rows is the right row mirrored (within 3 px at p70; p55 left not checked).
 - Kerf and Ohm have no anticipation: their sim strikes are instant by design (registry
   `realtime-combat-semantics`); a sim wind-up was rejected.
-- Run16: Kerf's 3/4 away-left and Dent's two 3/4 left rows still show each run8 frame twice (art running).
+- Tonnage's walk: two held frames ride 11-16 px over the ground at 32 px/m (table steps 1 and 5); needs two redrawn frames (REQUEST in JOURNAL it16).
 - `scenario_rig_stress`: the n11 intermittent `Parameter "t" is null` fired once (03:25 on dcc583214),
   3/3 alone ok, green on every later full run.
 - The clips are short (a form lasts a few seconds in the film rigs), not the 10-40 s rule.
@@ -80,6 +88,6 @@ Branch `n15-hero`, cut from main `5c5c03611`. Every claim cites a still in this 
 
 ## Next steps
 
-1. Wire the remaining run16 left rows (Kerf 3/4 away-left, Dent both 3/4 left) as they arrive.
+1. Tonnage's walk16 frames 2 and 6 redrawn (REQUEST it16), then re-run `hold_ride.py` (bar: worst hold under 9 px@32).
 2. Combat feel to 3: the owner judges GhostLunge in motion; Kerf's blade and Dent's fist as GhostHand rows if an effect should leave from them.
-3. Planted feet: a world-space frame-diff measure of the stance foot for Ohm and Tonnage's walk clips.
+3. Planted feet: `feet_trace.py` / `hold_ride.py` on Dent's and Kerf's sprints at 32 px/m in every octant.
