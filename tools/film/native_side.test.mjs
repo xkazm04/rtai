@@ -38,3 +38,23 @@ test('--native takes only donor', () => {
   assert.equal(parseArgv([...base, '--native=donor']).flags.native, 'donor');
   assert.match(parseArgv([...base, '--native=yes']).error, /--native takes only donor/);
 });
+
+test('a lane running this kit by path films ITS tree: native/ is compared against the tree it stands in', async () => {
+  const { mkdtempSync, mkdirSync, rmSync, writeFileSync } = await import('node:fs');
+  const { join } = await import('node:path');
+  const { tmpdir } = await import('node:os');
+  const { filmedRoot } = await import('./side.mjs');
+  const { ROOT } = await import('../lib/repo.mjs');
+  const lane = mkdtempSync(join(tmpdir(), 'gtai-lane-'));
+  mkdirSync(join(lane, 'project'));
+  writeFileSync(join(lane, 'project', 'project.godot'), '');
+  assert.equal(filmedRoot(lane), lane);
+  assert.equal(filmedRoot(tmpdir()), ROOT, 'outside a game tree: the kit\'s own');
+  let root = null;
+  const prev = process.cwd();
+  process.chdir(lane);
+  try {
+    resolveSide('HEAD', { differs: (r) => { root = r; return true; }, rev: () => SHA, ensure: fakeEnsure });
+  } finally { process.chdir(prev); rmSync(lane, { recursive: true, force: true }); }
+  assert.equal(root, lane, 'the native guard asked about the lane\'s HEAD, not the kit\'s');
+});

@@ -13,12 +13,11 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, rmSync, s
 import { spawnSync, execFileSync } from 'node:child_process';
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { ROOT } from '../lib/repo.mjs';
 import { importErrors, staleAssets, touchStale } from '../lib/asset_cache.mjs';
 import { describe, runGodot, SCRIPT_ERROR } from '../lib/godot.mjs';
 import { verdict } from '../lib/dev_verdict.mjs';
 import { autoLock, checkFlags, checkId, checkVictim, godotArgs, parseOn, parseShot, parseStills, shotLabel, triggeredTicks, victimDrawn, victimSaid } from './shots.mjs';
-import { resolveSide as sideOf } from './side.mjs';
+import { filmedRoot, resolveSide as sideOf } from './side.mjs';
 import { subjectRow } from './subject.mjs';
 
 /** A file this run wrote may carry an mtime up to a clock tick before `startedAt`: Linux stamps files from
@@ -53,7 +52,7 @@ export function plan(flags, shotText, extra) {
   if (!flags.out) return { error: 'film: --out=<dir> is required' };
   const shot = parseShot(shotText);
   if (shot.error) return { error: `film: ${shot.error}` };
-  const tree = resolve(flags.tree ?? ROOT);
+  const tree = resolve(flags.tree ?? filmedRoot());
   if (!existsSync(join(tree, 'project', 'project.godot'))) return { error: `film: ${tree} has no project/project.godot` };
   const stills = parseStills(flags.stills);
   if (stills.error) return { error: `film: ${stills.error}` };

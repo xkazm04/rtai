@@ -261,7 +261,7 @@ test('worst keeps the outcome that matters', () => {
   assert.equal(worst(['pass', 'pass']), 'pass');
 });
 
-test('copyRuntime takes each ignored dir from the first donor that has it and never overwrites', () => {
+test('copyRuntime takes each ignored dir from the first donor that has it and never overwrites the bake or cache', () => {
   const [a, b, to] = ['a', 'b', 'c'].map(() => mkdtempSync(join(tmpdir(), 'gtai-film-donor-')));
   try {
     mkdirSync(join(a, 'project/native/bin'), { recursive: true });
@@ -275,6 +275,20 @@ test('copyRuntime takes each ignored dir from the first donor that has it and ne
     assert.equal(readFileSync(join(to, 'project/native/bin/x.dll'), 'utf8'), 'a', 'the first donor wins');
     assert.equal(readFileSync(join(to, 'project/data/generated/city/c.gtch'), 'utf8'), 'city', 'from the sibling');
     assert.deepEqual(copyRuntime([a, b], to), [], 'already there');
+  } finally { for (const d of [a, b, to]) rmSync(d, { recursive: true, force: true }); }
+});
+
+test('a cached snapshot holding another donor DLLs gets this donor DLLs again (snapshots are shared by lane)', () => {
+  const [a, b, to] = ['a', 'b', 'c'].map(() => mkdtempSync(join(tmpdir(), 'gtai-film-donor-')));
+  try {
+    for (const [d, text] of [[a, 'tools c-2'], [b, 'main']]) {
+      mkdirSync(join(d, 'project/native/bin'), { recursive: true });
+      writeFileSync(join(d, 'project/native/bin/x.dll'), text);
+    }
+    copyRuntime([a], to);
+    assert.deepEqual(copyRuntime([b], to), ['project/native/bin']);
+    assert.equal(readFileSync(join(to, 'project/native/bin/x.dll'), 'utf8'), 'main', 'the caller donor wins');
+    assert.deepEqual(copyRuntime([b], to), [], 'the same bytes: nothing copied');
   } finally { for (const d of [a, b, to]) rmSync(d, { recursive: true, force: true }); }
 });
 
