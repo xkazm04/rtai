@@ -9,10 +9,9 @@ extends Node2D
 const KERB_ROWS: float = 338.0
 ## Places at least this big (m) get their name stencilled on the city street.
 const STENCIL_MIN_R: float = 5.0
-## The ghost powers' cars (the arena's powers pad, quest 1's ghost_cars) in the city's traffic
-## print: one atlas per VehicleBody.State (intact, d1, d2, the soul-hijacked teal plate, the burnt
-## wreck), cell = the car's art id, nose to +x
-## (CrowdLayers TRAFFIC_CELL_PX on a 3 x 4 grid), the car-shaped ink shadow under it.
+## The ghost powers' cars (arena powers pad, quest 1's ghost_cars) in the city's traffic print: an
+## atlas per VehicleBody.State (intact, d1, d2, the teal hijack plate, the burnt wreck), cell = the
+## car's art id, nose to +x (CrowdLayers TRAFFIC_CELL_PX, 3 x 4), the car's ink shadow under it.
 const CAR_ATLAS: Array[Texture2D] = [
 	preload("res://features/city/art/vehicles/traffic_atlas.png"),
 	preload("res://features/city/art/vehicles/traffic_atlas_d1.png"),
@@ -52,7 +51,8 @@ func _draw() -> void:
 	else:
 		_stencils()
 	for spot: String in stage.layout.hide_at:
-		_sprite("dumpster", stage.layout.hide_at[spot], Vector2(2.4, 1.6))
+		if not HidePeek.draw(self, stage, spot):
+			_sprite("dumpster", stage.layout.hide_at[spot], HidePeek.SIZE_M)
 	for phone: String in stage.layout.phones:
 		_phone(phone, stage.layout.phones[phone])
 	_crates()

@@ -83,7 +83,7 @@ func _draw() -> void:
 
 func _rivet(r: Fighter) -> void:
 	var at: Vector2 = r.pos
-	if stage.hidden_in != "":  # tucked in a hide spot: the peek (under the rigs too: HideTuck)
+	if stage.hidden_in != "" and not HidePeek.stands(stage):  # the token (HideTuck, HidePeek)
 		var peek: String = _lod_art("rivet_peek")
 		_sprite(peek, at + Vector2(0.0, -0.75), _size(StringName(peek)), Vector2.UP)
 		return
