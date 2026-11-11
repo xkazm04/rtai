@@ -741,3 +741,6 @@ NEXT addendum, item (3) is now concrete: after the gate verdict, if time before 
 - 18:32 FINAL GATE evidence on `ab925914e`: lint 19/19 (1492 files), unit 2685/0/2, scenarios 55/55, parity bit for bit
   1200 steps (planted fault caught at 629), look goldens 11/11, release-compile 698/0. Reels (top, tilt70, combo)
   running, ~15 min.
+- 18:42 FINAL GATE reels on `ab925914e`: top OK (314 s, the view that failed at 18:11); tilt70 and combo still running
+  at session end (expected ~18:53). Iteration 22: read the EXIT line of C:/Users/kazda/kiro/gtai-n16/scratch-kills-new-gate-final.log
+  first (item 1 of NEXT), then put the reel verdict into REPORT's Gates line.
