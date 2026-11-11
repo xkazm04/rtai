@@ -486,3 +486,20 @@ are current to session 6; Calls (a)-(c) stand).
 - DEFECTS session 1 #3 (dark streak across the victim t345-348) looked at in build/film/s6if64_a: a later round of
   the burst flies on through the fresh corpse (the sim lets rounds pass a dead body), its ink tail across his falling
   body for 2 ticks (t346-347). Minor; left open (a view-only cut at the corpse would orphan the round's later impact).
+- GATES on `ac7991f58` (04:39-05:02, build/gate/ac7991f5885c/gate.json): PASS lint 16/16, unit 2537/0/2 (test_quest_blade
+  passes in the full run), scenarios 55, parity bit-exact (mutation at 629), look goldens 11/11 worst 0.00, block 5/5
+  worst 0.69 (= baseline), export-audit 674, reels top / tilt70 / combo OK. The depth box moved no golden.
+- DEFECTS city #1 re-read from the still: the four cops are not ON the wall, their feet are at its north foot (road side):
+  blocked from Rivet (sim/AI path) and drawn over the wall's cap (no occlusion). REPORT line rewritten; not this lane.
+- c-2 #3 t339 re-read: the thrown-back card is pushed ~0.5 m by StreetWalkerHit.shove (view) while the contact shadow
+  stayed on the feet (RigCastShadows draws at rig.global_position): the man floated beside his shadow, and the burst dot
+  sat on the shadow. Touches rig_cast_shadows.gd (characters; not in hero's watch list, hero has no commit on it).
+- MILESTONE `b9544422e` item 5: the contact shadow rides the hit card's push (RigCastShadows.card_push: only a visible
+  hit-grid card; deaths unchanged, shove is zero while dying). Before `--shadow-push=off`, same build: weapon:machine_pistol
+  --victim=cop/head_cap, `evidence/n15-combat/hit_shadow_rides_push_ab_64ppm_x2_t338-344.png` and
+  `hit_shadow_rides_push_ab_32ppm_x3_t337-342.png`: at t339-341 he stands on his shadow. The t339 burst dot stays at the
+  round's point (now on bare floor beside him): left open. DECISION combat/hit-shadow-push. Unit 37/0 on the touched
+  suites (+2 tests).
+- Mutation `mutate.mjs --file=features/characters/rig_depth_box.gd --max=8`: 25 % (half() untested) -> tests added in
+  `f128a280e` -> 100 % (8/8). Checkout clean after.
+- 05:11 GATES started on `f128a280e` (`node tools/gate/run.mjs --rev=HEAD --reels`, log build/gate/s7_gate2.log).

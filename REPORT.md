@@ -1,4 +1,4 @@
-# REPORT: night n15, lane combat (DRAFT, updated 05:00 by session 7; the last session finishes it)
+# REPORT: night n15, lane combat (DRAFT, updated 05:15 by session 7; the last session finishes it)
 
 Branch `n15-combat`, worktree `C:\Users\kazda\kiro\gtai-wt\n15-combat`, cut from main `5c5c03611`.
 Every change has a before flag on the same build and a same-tick before/after film under `evidence/n15-combat/`
@@ -31,6 +31,7 @@ Every change has a before flag on the same build and a same-tick before/after fi
 | 5 the city street fight draws no range-target rings | `54297457d` | `--target-rings=on` | `evidence/n15-combat/city_target_rings_ab_32ppm_t200_600.png` |
 | 5 a body hit's ink burst on the body's front, riding the knock-back and the death's carry (no floor dots short of him) | `273bb2232`, `2f1ac74c8` | `--impact-follow=off` | `evidence/n15-combat/body_burst_on_body_ab_64_32ppm_t336-345.png` |
 | 5 at contact Rivet draws over a cop standing behind him (the depth sort's box as tall as each drawn card, Rivet's x1.5 wide: `RigDepthBox`) | `ac7991f58` | (HEAD sorter) | `evidence/n15-combat/city_depth_rivet_over_cop_behind_ab_64ppm_t634-660.png` |
+| 5 a thrown-back street man stands on his shadow (the contact shadow rides the hit card's push) | `b9544422e` | `--shadow-push=off` | `evidence/n15-combat/hit_shadow_rides_push_ab_64ppm_x2_t338-344.png`, `hit_shadow_rides_push_ab_32ppm_x3_t337-342.png` |
 
 Gates: full run with reels on `2f1ac74c8` (session 6, 03:56-04:19, the last code commit; later commits are docs):
 PASS lint 16/16, unit 2535/0/2, scenarios 55, parity bit-exact (mutation at 629), look goldens 11/11 worst 0.00, block
@@ -42,7 +43,8 @@ commit if any code lands after `2f1ac74c8`.
 
 - The p55 katana's RIGHT wind-up and strike cells draw larger than his facing (~1.2-1.4x); n13/n14 kept as built.
 - The body-hit burst (fixed in large part, `273bb2232`): at t339-340 one dot still shows near the cop's old spot while
-  the thrown-back cell draws him ~0.5 m on (the drawing's own offset); on the body the burst draws under his card.
+  the thrown-back cell draws him ~0.5 m on (the card's push, StreetWalkerHit.shove; his shadow now rides it, `b9544422e`); on the body the burst draws
+  under his card.
 - Metal impacts keep the cream strokes. The it317 sparks are packed (pulled half way to cream) but NOT shipped: no round
   on metal was filmed (a round on a metal dummy is a BODY hit; `GunFx.shield_test` is wired only in tests, so a round
   on a riot shield is ShieldSparks' white sparks, never a GunFx METAL). DECISION combat/metal-sparks-later.
