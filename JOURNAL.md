@@ -759,3 +759,11 @@ NEXT addendum, item (3) is now concrete: after the gate verdict, if time before 
 - DECISION kills-new/freeze: nothing wired after the gate; the build at `b07ca1b3f` (gated on `ab925914e`) is what ships.
 NEXT: (next run) wire claw_throw p55 (patrol/riot/SWAT), molotov_torch p55 (patrol/riot/SWAT) and claw_throw p70 for the
   9 street peds, one commit each, film each at 32 under its view, then the full gate with --reels.
+
+## Iteration 23 (19:31, STABILIZE past the freeze)
+- 19:31 checked: `git diff --stat ab925914e HEAD` = JOURNAL.md + REPORT.md only, so the final gate PASS (18:48, every
+  gate incl. all three reels) covers HEAD's code. `git status`: clean (only ignored native/bin, city bake, override.cfg).
+  gtai-masters/n16/kills-new/frames.json: 15 entries, every `file` exists. `cites.mjs REPORT.md`: 2/2 ok. No change made
+  to project/; REPORT stands as written in iteration 22.
+NEXT: (next run) as iteration 22's NEXT: wire claw_throw p55 (patrol/riot/SWAT), molotov_torch p55 (patrol/riot/SWAT),
+  claw_throw p70 for the 9 street peds, one commit each, film each at 32 under its view, then the full gate with --reels.
