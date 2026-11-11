@@ -35,8 +35,8 @@ const HIT_COL: int = 3
 ## has them (JAB_COLS columns); a sheet without them plays the jab on the act phases. The left
 ## sheets in JAB_LEFT_COLS draw it too; an absent key mirrors the right jab in the left octants.
 const JAB_SHIFT: int = 4
-const JAB_COLS: Dictionary[String, int] = {"dent/p70": 7}
-const JAB_LEFT_COLS: Dictionary[String, int] = {"dent/p70": 7}
+const JAB_COLS: Dictionary[String, int] = {"dent/p70": 7, "dent/p55": 7}
+const JAB_LEFT_COLS: Dictionary[String, int] = {"dent/p70": 7, "dent/p55": 7}
 const CUT_TICKS: int = 5
 const FOLLOW_TICKS: int = 10
 const HIT_TICKS: int = 10
