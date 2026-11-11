@@ -578,3 +578,5 @@ C:/Users/kazda/kiro/gtai-n15/scratch-tools-before`, `git branch -D n15t-control-
   judges the commit. Real runs: over `git ls-tree 6b9d2a900` -> `FAIL project/dev/sim/car_route_trails.gd: its .uid
   is not in the index`; over fc599f172 -> ok; a staged probe .gd in this worktree -> FAIL naming it (unstaged and
   deleted after, status clean). `tools/lint/uid_files.test.mjs` 2/2. AGENTS lint row names it.
+- 02:35 uid-files over the other tips (`git ls-tree -r <rev> project` into `uidCheck`): n15-hero 4a6238732 ok,
+  n15-combat 11a460e80 ok, main 5c5c03611 ok. The new check does not turn a merge red tonight.
