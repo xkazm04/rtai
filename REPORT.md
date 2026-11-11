@@ -24,8 +24,8 @@ look goldens), the reel gate.
 - The pin and stitch corpse cells land ~0.4-0.5 m off the standing spot (each corpse cell is centred on the
   grid's corpse).
 - Molotov: in the kill lab he dies inside the molotov's own fire patch, whose flames swamp the coded tongues at
-  32 px/m; a street-fight film (he runs out of the patch first) is owed. The lying-tongue fix (`c9d7a73c4`) awaits
-  its film.
+  32 px/m; a street-fight film (he runs out of the patch first) is owed. The lying tongues follow the drawn corpse since
+  `c9d7a73c4` (`molotov_torch_fix_64ppm_dir0_t182-332.png`) but read as small spikes (flame_m 0.32 wants ~0.5).
 - KillShredArt's coded scraps (kinds without drawn scraps) flood `Invalid polygon data, triangulation failed`.
 - Column 1 of the patrol stitch frame 3 shows a doubled cap for one beat (asset fault, known).
 

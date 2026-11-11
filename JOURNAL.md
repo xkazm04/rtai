@@ -523,3 +523,10 @@ fight (he runs out of the patch) at 32 px/m. (5) asset replies: wire molotov_tor
 smg_stitch / nail_pin p55. (6) the claw finisher (beat sheet 6b): announce the electro_shock also_weapons edit to
 kills-polish first. (7) gates on the final code commit: full unit, scenarios (55/55 on d1ab2f3c3; re-run: the
 molotov now takes a new row and brutality_hook changed), `tools/evidence/run.mjs`, `tools/reel/run_reels.mjs`.
+- 15:52 the torch fix film (`--rev=c9d7a73c4`, dir 0 at 64) PASS (kill 182), judged
+  (`evidence/n16-kills-new/molotov_torch_fix_64ppm_dir0_t182-332.png`, clip `molotov_torch_fix_64ppm_dir0.mp4`):
+  +0..+6 kneeling with tongues up the figure; from +20 the tongues run along his back and legs as he lies face
+  down, dying out by +150. FIXED. Still: the tongues read as small cream spikes; raise fx flame_m 0.32 -> ~0.5 and
+  widen them (data first), then film at 32 in a street fight. Masters: the fix still on top (15 entries; the
+  stitch A/B t348 dropped from masters, kept in evidence/).
+NEXT addendum: item (1) above is DONE except the flame size; start at (2).
