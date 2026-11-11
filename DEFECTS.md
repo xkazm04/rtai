@@ -1,5 +1,23 @@
 # DEFECTS (n16 kills-polish, newest first; n15 combat's list below): found -> fixed (commit) / open
 
+## Drawn deaths A6-A8 in game, hand cannon / ray gun / flamethrower, 64 and 32 px/m (iteration 8, 16:52-)
+1. Hand cannon: the first exit wound (0.34 m at the head line) sat on his FACE and read as a grinning monster mouth
+   (film hc64_b t51-72) -> fixed 6140efc62 (0.16 m, chest, mirrored not turned) + 944ea5fa9 (lower, CHEST -0.13).
+   `evidence/n16-kills-polish/hand_cannon_exit_wound_ab_64ppm_x2_t51-72.png`.
+2. Hand cannon: the drawing's even row of spine knuckles between two rib arcs still hints at teeth at 64 px/m -> open
+   (A6b redraw requested: spine broken, ribs fanned).
+3. Hand cannon: the blowback body never lies down; it flies back as his upright card (so a "back" wound is seen on an
+   upright torso) -> open, judged: not a defect of the wound; a drawn tumble/landing cell would be the next lift.
+4. Ray gun: the eaten body's flying shadow (a dark disc) hung on the street where he stood from k+100 on, in the before
+   and the after (film rg64_w/d t150-199). cad64412a (the eaten BODY's shadow shrinks with the eating) did NOT remove it
+   (film rg64_t, same ticks): the disc is the kicked CAP's shadow, and since 06deed4b5 a walker-card victim's cap group
+   is empty -> fixed bd9af660f (an empty group casts no shadow; also the hand cannon's cap dot); re-film owed.
+5. Burn (hooded ped, 64 px/m, film bc64_hood_w): he only faded to a ghost over the ash heap -> fixed b3b03286c (A8 drawn
+   collapse onto a skull heap that stays). `evidence/n16-kills-polish/burn_collapse_hood_ab_64ppm_x2_t590-740.png`.
+6. Burn collapse: the char cell keeps his facing (here away from the camera) but the collapse is drawn facing the camera
+   only, so he turns round at the cut (t605) -> open (ask the asset lane for the away facing, or flip to the nearest).
+7. Burn collapse: patrol cop and thug still fade (their drawings were rejected by the asset lane) -> open (A8 redraws).
+
 ## Burn, plasma, p55 X-ray, iteration 4 (15:55-16:10), combo 64/32 px/m and tilt 64 px/m
 1. Burn (ranking film t130-170): the embers were a hot scrap on the street at his feet and the smoke rose from his boots
    (KillCharFx on the body group's origin = the walker card's feet) -> fixed 051802ce0 (KillFigure); then the embers

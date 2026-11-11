@@ -1,4 +1,4 @@
-# REPORT: n16 kills-polish (DRAFT, iteration 4, 16:15; final at 19:40)
+# REPORT: n16 kills-polish (DRAFT, iteration 8, 17:35; final at 19:40)
 
 Branch `n16-kills-polish`, cut from main `5843f5a28`. Lane brief: make the 13 existing signature deaths brutal and
 beautiful (owner 2026-11-11: inventive, readable at 32 px/m, drawn innards/bone/skulls in riso ink-and-cream, hit-stop
@@ -24,13 +24,24 @@ Item 3, deaths raised (one commit each; asset lane A1-A5 and A3 p55 wired):
 - Chainsaw throws 8 drawn chunks that lie on the street (af3f9af1c).
 - Ray gun: no spinning whole-cop "cap", the dissolve eats the whole drawn man (06deed4b5, 999ec13db).
 - Burn: embers and smoke on the burnt man, not at his feet, drawn over him (051802ce0, b2c4051c2, 6963740ef).
+- Burn collapse (A8): every kind with a char cell crumbles in three drawn cells, on his knees with the skull and ribs
+  showing, onto a skull heap with his charred gear that stays (b3b03286c, 934a815c6);
+  `burn_collapse_{hood_ab_64ppm_x2,riot_ab_32ppm_x3}_t590-740.png`.
+- Hand cannon exit wound (A6, then the A6b redraw): a drawn wound in the thrown man's chest (512caa62b, 6140efc62,
+  944ea5fa9, a4a2dcda1); `hand_cannon_exit_wound_ab_64ppm_x2_t51-72.png` (the first try read as a grinning mouth).
+- Ray gun remains (A7): the drawn ash heap with a half-sunk skull, ribs, a forearm bone and the empty uniform (84589b1ad);
+  `ray_gun_drawn_remains_ab_64ppm_x2_t110-199.png`.
+- Plasma sword scorch line along the cut (c43cae42d, test 78dd90f40), wider 7998ee3fa;
+  `plasma_sword_scorch_line_ab_64ppm_x11_t70-200.png`.
+
+Item 5 (defect loop): a card victim's empty cap group cast a dark shadow disc that hung on the street (ray gun, hand
+cannon) -> bd9af660f.
 
 ## What does not work / not done
 
-- Plasma sword scorch line (c43cae42d) is committed lint-only: UNFILMED and its unit test is not yet run (the gate held
-  the lane's Godot). Next iteration first.
-- Burn: the char man still only fades; no collapse (A8 requested). Rocket bone does not read at 32 px/m.
-- Hand cannon is a plain knock-back (A6 exit wound requested). Ray gun remains have no skull (A7 requested).
+- Burn collapse is drawn in one facing (towards the camera): a man burnt facing away turns round at the cut (A8c
+  requested). Rocket bone does not read at 32 px/m.
+- Hand cannon: the thrown body never lies down (an upright card flies back); the wound is on an upright torso.
 - The ghosts' four (Tonnage, Dent, Kerf, Ohm) are not filmed (scores provisional).
 - Perf: `tools/perf/fight_gate.mjs` under the bench lock not run yet (new preloads: 16 X-ray strips, plasma ring,
   chunks, cut faces).
@@ -48,11 +59,15 @@ One line per changed death; each with its 64 and 32 px/m before/after (TO FINISH
 - Blade topple 80 deg and cut_up_m 0.8: `katana_topple_ab_*`, `katana_cut_up_ab_*`.
 - Saw chunk size 0.46 m: `chainsaw_chunks_ab_{64ppm,32ppm_x2}_t100-230.png`.
 - Bone gib: `rocket_gib_bone_patrol_ab_{64ppm_x2_t360-371,32ppm_x2_t352-371}.png`.
+- Burn collapse onto a skull heap (A8; was a fade): `burn_collapse_hood_ab_64ppm_x2_t590-740.png`,
+  `burn_collapse_riot_ab_32ppm_x3_t590-740.png`.
+- Hand cannon exit wound (A6b, 0.16 m on the chest): `hand_cannon_exit_wound_ab_64ppm_x2_t51-72.png` (32 px/m TO ADD).
+- Ray gun drawn remains with the skull (A7): `ray_gun_drawn_remains_ab_64ppm_x2_t110-199.png` (32 px/m TO ADD).
 
 ## Merge notes
 
 - Shared files: `signature_kills.json` + schema (new keys: streak_m, streak_w_m, hole_up_m, cut_up_m,
-  split_topple_deg, saw_chunks, scorch_line_m); kills-new adds rows to the same table (merge by row id).
+  split_topple_deg, saw_chunks, scorch_line_m, wound_m; `wound_m` sorts after `weapon`, off kills-new's hunks); kills-new adds rows to the same table (merge by row id).
 - `steam/ai-provenance/2026-11.jsonl` gains lines for every new PNG.
 - No sim, replay or parity change (all view); look goldens unchanged as of the gate on 49c7c0be9.
 

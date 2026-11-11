@@ -331,3 +331,65 @@ NEXT (iteration 5), updated 16:47: as the NEXT above, with item 2 = finish the p
 still reads as a crack, then evidence + KILLS (plasma_sword After 1 -> 2/3) + DEFECTS line.
 - 16:49 ps64_r done: same-tick A/B `evidence/n16-kills-polish/plasma_sword_scorch_line_ab_64ppm_x11_t70-200.png`
   (16748e860 vs c43cae42d): the line stays through t200, thin. KILLS plasma_sword 11 -> 12. Next: 32 px/m, width.
+
+## Iteration 8 (16:52-18:22), BUILD
+
+- 16:52 read: asset replies A6 (exit wound, B, 16:38), A7 (ray remains p70, B, 16:44), A8 riot + hood (17:00; patrol
+  and thug redrawing). kills-new touches `kill_styles.gd` (parts/take) and the schema (edge..fx, style/track): my
+  new key is `wound_m` (sorts after `weapon`, off their hunks) and my parts() line sits at the top of the dispatch
+  (quick gate: "no new code conflict").
+- MILESTONE 512caa62b A6 exit wound wired (KillExitWound, row `wound_m`, `--exit-wound=off`, test 5/5). Film hc64_b
+  (chapter hand_cannon, 64 px/m, kill t50): the blowback body is an UPRIGHT card flying back (it never lies), and the
+  0.34 m wound at CHEST -0.4 sat on his face and read as a grinning monster mouth (the asset lane's own warning).
+  -> wound_m 0.16, CHEST -0.22, mirrored to the shot's side instead of turned (re-filming).
+- REQUEST assets: (A6b) the hand cannon exit wound REDRAW, beat = the blowback: the round leaves through the thrown
+  body's back; in game the body is the victim's UPRIGHT card flying back along the shot (it does not lie), so the
+  wound is seen on an upright torso at 64 px/m ~12 px across. Your offered fix: the spine BROKEN (no even row of
+  knuckles: two or three displaced knuckles), the ribs FANNED and snapped (splayed ends, not two parallel arcs), so
+  nothing reads as teeth or a mouth; more torn cloth, a ragged not round hole, the spatter tongue to +x. Same format:
+  160 x 160, 3 frames (fresh grey flaps, dried, fresh cop-navy), p70 + p55 squashed 0.8.
+  Name `fx/exit_wound_70_cells/2_{1,2,3}.png` (set 2), `fx/exit_wound_55_cells/2_*`.
+- A7 ray remains wired in the tree (KillRemainsArt, the drawn heap with the skull and the empty clothes, navy for
+  cop kinds, grey otherwise; `--ray-remains=plain` = the before; test written), not yet committed/filmed.
+- MILESTONE 6140efc62 + 944ea5fa9 exit wound tuned: film hc64_c (64 px/m, kill t50) vs hc64_b same ticks: 0.16 m on
+  the upper chest reads as a wound, not a face (`evidence/n16-kills-polish/hand_cannon_exit_wound_ab_64ppm_x2_t51-72.png`);
+  it sat on his neck at CHEST -0.22 -> -0.13 (944ea5fa9, unfilmed). The even spine row still hints at teeth: A6b.
+- MILESTONE 84589b1ad A7 ray remains (KillRemainsArt) and b3b03286c A8 burn collapse for riot + hood (KillCharCells
+  .collapse, the heap stays as the body; patrol/thug keep the fade until redrawn); tests 4/4 + 4/4; decisions lines.
+  Films queued (build/queue_it8b.sh -> build/films_it8b.log): rg64/32 d vs w, bc64_hood d vs w, bc32_riot d vs w,
+  hc32 c vs a.
+- FRICTION: the pre-commit full lint runs ~2 min when a commit stages a path outside project/ (provenance, tools/art);
+  a 120 s tool timeout made one commit look done when it was not. Use a 300 s timeout for commits.
+- 17:20 film rg64_d vs rg64_w (b3b03286c vs 6140efc62, chapter ray_gun 64 px/m, kill t49): the drawn heap with the
+  skull and the navy uniform grows in under the eating ring and stays (t130-199); before = a cream smear with polka-dot
+  cloth (`evidence/n16-kills-polish/ray_gun_drawn_remains_ab_64ppm_x2_t110-199.png`). FOUND in both: a dark disc hangs
+  where the eaten body stood from t150 on (the BODY piece's flying shadow, KillView._draw, outlives the eaten body) ->
+  fixed in the tree: KillDissolveFx.left(serial, piece) shrinks the body's shadow with the eating (the cap keeps its).
+- 17:25 film bc64_hood_d vs bc64_hood_w (b3b03286c vs 6140efc62, weapon flamethrower lone hooded ped, 64 px/m, kill
+  t542): the collapse plays t600-675 (crumbling, on his knees with skull and ribs, the skull heap with the charred
+  hood) and the heap stays to t740+; before = a fade to a ghost
+  (`evidence/n16-kills-polish/burn_collapse_hood_ab_64ppm_x2_t590-740.png`). KILLS burn 14 -> 17 (riot/hood).
+  FOUND: he turns round at the cut (the char cell faced away, the collapse faces the camera) -> DEFECTS 6, open.
+- cad64412a the eaten body's shadow fix, test 5/5. Queue it8c (build/films_it8c.log): rg64_t, bc32_riot t/w,
+  hc32 t/a, rg32 t/w, ps64_t (the wider scorch line, 7998ee3fa) at 70-200 vs ps64_s.
+- REQUEST assets: (A8c) the burn collapse, BACK facings, beat = as A8 (crumbling / on his knees with skull and ribs /
+  the skull heap with the charred gear), for the victims burnt while facing away from the camera: in film bc64_hood the
+  char cell stood in facing 3 (back three-quarter: the hood's back) and the collapse, drawn in facing 1, turned him
+  round at the cut. Same format as A8 (344 x 256 cells, feet on the FOOT_Y line, the char_hit cells' scale), facing 3
+  (back three-quarter, turned to screen right) for cop_riot and ped_hood first, then facing 4 (back); in cell 2 the
+  ribs and spine show from BEHIND (shoulder blades, spine knuckles), the skull from behind/side under the gear; cell 3
+  the heap may be the same as facing 1's. Name `street/<kind>_char_collapse_70_cells/3_{1,2,3}.png` (facing 3) and
+  `4_{1,2,3}.png` (facing 4). After the patrol and thug A8 redraws.
+- 17:35 film rg64_t (cad64412a) vs rg64_d same ticks: the dark disc is still there, so it was not the eaten body's
+  shadow: radius 14 px = KillView's part shadow (0.22 m at 64), and it is the kicked CAP's: since 06deed4b5 a
+  walker-card victim's HAT group is empty, but its flying shadow was still drawn -> bd9af660f (an empty group casts
+  no shadow; the hand cannon's spinning-cap dot too). cad64412a kept (correct, tested, harmless). Re-film owed at
+  bd9af660f (queued after it8c).
+- 17:27 asset replies: A8 patrol + thug (redraws, A), SWAT, cap, punk, jogger (B) and A6b (the wound redraw, A) all
+  delivered 17:07-17:22. MILESTONE a4a2dcda1 A6b packed (`exit_wound_cells.py --set=2`, hole centre re-measured) and
+  934a815c6 the collapse for all 8 char kinds (test: every GRIDS row has one).
+- 17:30 film bc32_riot_t vs bc32_riot_w (cad64412a vs 6140efc62, lone riot cop burnt, 32 px/m, kill t542): kneels at
+  t640, then the heap with the helmet on top stays to t740+; before = a fade over the ash mound. The skull is small at
+  32 but the heap + helmet shape reads (`evidence/n16-kills-polish/burn_collapse_riot_ab_32ppm_x3_t590-740.png`).
+- 17:31 queue it8d on 934a815c6 (build/films_it8d.log): hc64_t (A6b), rg64_u (cap shadow fix), bc64_patrol t/w,
+  hc32 t/a, rg32 t/w, ps64_t (wider scorch line).
