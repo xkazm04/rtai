@@ -10,6 +10,24 @@ extends RefCounted
 ## `cells_lean`). A kind with none keeps the fall grid.
 
 const META: StringName = &"kill_death_cells"
+## n17 npc-react (owner: "policemen are changing sizes on hit"): a grid whose first frame was
+## drawn larger than the walk and hanging below the feet (the cops' pistol snap, t0-8: 1.99-2.45 m
+## tall, boots 0.12-0.32 m under the point, film b_patrol64 t62 -> t63) draws that frame at FIT_K
+## of its scale, lifted FIT_LIFT texture px per facing column so the boot stands on the point
+## (measured in JOURNAL n17 20:20). FIT_ON false = every frame as drawn (the before).
+const FIT_ON: bool = true
+const FIT_ROWS: int = 1
+const FIT_K: Dictionary[String, float] = {
+	"cop_patrol_pistol_snap.png": 0.85,
+	"cop_riot_pistol_snap.png": 0.8,
+	"swat_pistol_snap.png": 0.8,
+}
+const FIT_LIFT: Dictionary[String, PackedInt32Array] = {
+	"cop_patrol_pistol_snap.png": [21, 15, 5, 10, 22],
+	"cop_riot_pistol_snap.png": [57, 25, 24, 15, 57],
+	"swat_pistol_snap.png": [17, 11, 5, 15, 18],
+}
+const BASE: StringName = &"kill_death_cells_base"
 
 
 ## The death's grid for a card row in a view art, as "<art>/<file>" (the art's own, else the
@@ -82,4 +100,20 @@ static func step(d: KillNewStyles.Death, age: int) -> bool:
 	if d.row.style == &"stitch":  # at the shooter, then the drawn spin turned a full circle
 		look = KillStitchArt.facing(d, age)
 	KillFallCells.face(d.cells, look)
+	fit(d.cells, f)
 	return f >= 0
+
+
+## Stands frame `f` of a FIT grid at the walk's size on the point (scaled about the feet); any
+## other frame or grid as drawn.
+static func fit(cells: Sprite2D, f: int) -> void:
+	var key: String = cells.texture.resource_path.get_file() if cells.texture != null else ""
+	if not FIT_ON or not FIT_K.has(key):
+		return
+	if not cells.has_meta(BASE):
+		cells.set_meta(BASE, cells.scale)
+	var on: bool = f >= 0 and f < FIT_ROWS
+	var base: Vector2 = cells.get_meta(BASE)
+	cells.scale = base * (FIT_K[key] if on else 1.0)
+	var lift: float = FIT_LIFT[key][cells.frame_coords.x]
+	cells.offset = Vector2(0.0, -lift) if on else Vector2.ZERO
