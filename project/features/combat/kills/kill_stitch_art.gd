@@ -32,8 +32,9 @@ static func draw(ci: KillNewStyles, d: KillNewStyles.Death, age: int) -> void:
 		if t < 0:
 			return
 		var at: Vector2 = d.xf * (d.feet + Vector2(_side(d, n), -d.height * _height(d, n)))
-		ci.draw_circle(at, ci.ppm * 0.045, Ink.INK)
-		ci.draw_circle(at, ci.ppm * 0.025, BLOOD_DARK)
+		if not KillDeathCells.owns(d.cells):  # his own drawn cells carry the wounds
+			ci.draw_circle(at, ci.ppm * 0.045, Ink.INK)
+			ci.draw_circle(at, ci.ppm * 0.025, BLOOD_DARK)
 		if t < SPURT_TICKS:
 			_spurt(ci, d, at, n, float(t + 1) / float(SPURT_TICKS))
 

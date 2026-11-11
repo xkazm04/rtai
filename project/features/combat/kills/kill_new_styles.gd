@@ -136,7 +136,7 @@ func pose() -> void:
 		if d.row.style == &"pin":
 			slide += KillPinArt.shift(d, age, ppm)
 		if _drawn(d, age):  # the drawn fall takes over the lie: the track keeps only its lean
-			var lean: float = 0.0 if KillDeathCells.owns(d.cells) else p.x  # own cells: drawn
+			var lean: float = p.x * KillDeathCells.lean_of(d)  # own cells: drawn, unless fx cells_lean
 			b = KillTrack.basis(d.dir, d.fall, Vector3(lean, 1.0, 0.0), 1.0)
 		KillTrack.lay(d.lay, d.feet, b, slide)
 		d.xf = d.root.transform * d.lay.transform
@@ -155,6 +155,8 @@ func _drawn(d: Death, age: int) -> bool:
 		var f: int = KillDeathCells.frame_at(d.extra, age)
 		_show_cells(d, f >= 0)
 		d.cells.frame_coords = Vector2i(d.cells.frame_coords.x, maxi(f, 0))
+		if d.row.style == &"stitch":  # under the blow, then the drawn spin turned a full circle
+			KillFallCells.face(d.cells, KillStitchArt.facing(d, age))
 		return f >= 0
 	if not d.extra.fx.has("cells_at"):
 		return false

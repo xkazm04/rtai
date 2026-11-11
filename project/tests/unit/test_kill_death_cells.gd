@@ -21,7 +21,7 @@ func test_the_pistol_row_names_a_grid_for_the_four_street_kinds() -> void:
 
 
 func test_a_row_without_cells_names_none() -> void:
-	var e: KillTrackRows.Extra = KillTrackRows.of(&"smg_stitch")
+	var e: KillTrackRows.Extra = KillTrackRows.of(&"gatling_shred")
 	assert_eq(KillDeathCells.path_of(e, "p70", "cop/head_cap"), "")
 	assert_eq(KillDeathCells.frame_at(e, 50), -1)
 
@@ -91,3 +91,25 @@ func test_the_loose_cap_arcs_from_over_his_head_to_the_street_behind_him() -> vo
 	assert_almost_eq(rest.y, d.feet_px.y, 0.01, "it lands on the street")
 	assert_almost_eq(rest.x, d.feet_px.x + d.extra.num("loose_m", 0.0) * 32.0, 0.01, "behind him")
 	assert_eq(KillLooseArt.where(d, lands + 300, 32.0), rest, "and stays there")
+
+
+func test_the_stitch_plays_five_drawn_frames_for_the_four_street_kinds() -> void:
+	var e: KillTrackRows.Extra = KillTrackRows.of(&"smg_stitch")
+	assert_eq(KillDeathCells.path_of(e, "p70", "cop/head_cap"), "p70/cop_patrol_smg_stitch.png")
+	assert_eq(KillDeathCells.path_of(e, "p70", "ped/head_hair"), "p70/ped_suit_smg_stitch.png")
+	assert_eq(KillDeathCells.path_of(e, "p55", "cop/head_swat"), "p70/swat_smg_stitch.png")
+	assert_eq(e.cells_at.size(), 5, "hip, belly, chest, the spin, on his side")
+	var spin: int = roundi(e.num("whirl_from", 0.0))
+	assert_eq(KillDeathCells.frame_at(e, spin), 3, "the drawn spin starts with the whirl")
+
+
+func test_own_cells_keep_the_lean_only_where_the_row_says() -> void:
+	var d: KillNewStyles.Death = KillNewStyles.Death.new()
+	d.extra = KillTrackRows.of(&"smg_stitch")
+	assert_eq(KillDeathCells.lean_of(d), 1.0, "a fall grid (or none) keeps the whole lean")
+	var own: Sprite2D = autofree(Sprite2D.new())
+	own.set_meta(KillDeathCells.META, true)
+	d.cells = own
+	assert_eq(KillDeathCells.lean_of(d), 1.0, "the stitch jerks its drawn frames (cells_lean 1)")
+	d.extra = KillTrackRows.of(&"pistol_snap")
+	assert_eq(KillDeathCells.lean_of(d), 0.0, "the pistol's drawing holds the pose")

@@ -42,3 +42,9 @@ static func frame_at(extra: KillTrackRows.Extra, age: int) -> int:
 ## True when `cells` is a death's own grid (not the victim's fall grid).
 static func owns(cells: Sprite2D) -> bool:
 	return cells != null and cells.has_meta(META)
+
+
+## The share of the pose track's lean a death keeps on its drawn frames: 1 for a fall grid, the
+## row's fx `cells_lean` (default 0: the drawing holds the pose) for its own cells.
+static func lean_of(d: KillNewStyles.Death) -> float:
+	return d.extra.num("cells_lean", 0.0) if owns(d.cells) else 1.0

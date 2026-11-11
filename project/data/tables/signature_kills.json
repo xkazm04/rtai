@@ -638,12 +638,30 @@
     {
       "blot_m": 0,
       "bounce": 0.1,
+      "cells": {
+        "at": [
+          0,
+          4,
+          7,
+          10,
+          18
+        ],
+        "grids": {
+          "p70": {
+            "cop/head_cap": "cop_patrol_smg_stitch.png",
+            "cop/head_helmet": "cop_riot_smg_stitch.png",
+            "cop/head_swat": "swat_smg_stitch.png",
+            "ped/head_hair": "ped_suit_smg_stitch.png"
+          }
+        }
+      },
       "cone_deg": 16,
-      "doc": "Machine pistol (lane kills-new, n16): the stitch. Four rounds walk up the body from the hip to the neck, 3 ticks apart (t1-10): each one an ink hole on him, a red spurt out of his back along the shot (KillStitchArt) and a jerk of the figure (the pose track, alternating 6-9 deg); on the last he whirls once (t10-18: his drawn facings turn a full circle onto the fall side), then drops sideways across the shot (t18-32). The figure is his own drawn fall grid from the hit (KillFallCells: the buckle frame under the blow, then mid-fall and lying, faced across the shot). Aftermath: the body across the shot, a narrow dotted spray along it, the four holes on him. Placeholder until the drawn stitch cells land (JOURNAL REQUEST assets).",
+      "doc": "Machine pistol (lane kills-new, n16): the stitch. Four rounds walk up the body from the hip to the neck, 3 ticks apart (t1-10): each one a red spurt out of his back along the shot (KillStitchArt) and a jerk of the figure (the pose track, alternating 6-9 deg, kept on the drawn frames: fx cells_lean). The patrol cop, riot cop, SWAT and suit ped play their own drawn cells (KillDeathCells, 5 facings x 5 frames, faced under the blow): t0 one wound at the hip, t4 two, t7 three up to the chest and the cap or helmet tipping off, t10-18 the spin (the drawn edge-on frame turned a full circle through his facings onto the fall side), from t18 on his side, curled, across the shot. Any other kind: the ink holes ride him, and his own drawn fall grid (KillFallCells) whirls from t10 and drops sideways across the shot (t18-32). Aftermath: the body across the shot, a narrow dotted spray along it.",
       "fall": "side",
       "flash_ticks": 0,
       "fx": {
         "cells_at": 0,
+        "cells_lean": 1,
         "cells_ticks": 14,
         "fall_at": 18,
         "from_h": 0.35,
