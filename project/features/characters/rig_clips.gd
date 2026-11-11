@@ -43,6 +43,8 @@ var punch_len: float = PUNCH_S
 ## and an eased return. strike_t counts up; < 0 = no strike.
 var strike_t: float = -1.0
 var strike_ph: Vector3 = Vector3.ZERO
+## n16: seconds the recovery's last pose holds past the clip (a blade's next swing follows on).
+var strike_hold: float = 0.0
 var roll_t: float = 0.0
 ## The running roll's length (rivet-motion: PlayerMotion's roll_ticks); the spike's 0.45 s default.
 var roll_len: float = ROLL_S
@@ -78,6 +80,7 @@ func punch(combo: int) -> void:
 func strike(rig: CutRig, windup_s: float, active_s: float, recovery_s: float, arm: int) -> void:
 	strike_t = 0.0
 	strike_ph = Vector3(windup_s, active_s, recovery_s)
+	strike_hold = 0.0
 	rig.strike_arm = arm
 
 
@@ -132,7 +135,7 @@ func sample(rig: CutRig, dt: float) -> void:
 	if strike_t >= 0.0:
 		rig.c_reach = _strike_reach(StrikeDepth.depth(rig.hold))
 		strike_t += dt
-		if strike_t > strike_ph.x + strike_ph.y + strike_ph.z:
+		if strike_t > strike_ph.x + strike_ph.y + strike_ph.z + strike_hold:
 			strike_t = -1.0
 			rig.strike_arm = -1
 	rig.c_lean = maxf(0.6 * rig.c_reach, -THROW_LEAN * recoil)

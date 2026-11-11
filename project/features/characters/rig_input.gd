@@ -64,6 +64,7 @@ static func strike(rig: CutRig, packed: int) -> void:
 	var r: float = float((packed >> 12) & 63) * dt
 	rig.clips.strike(rig, w, a, r, (packed >> 18) & 3)
 	rig.clips.strike_t = float((packed >> 20) & 15) * dt  # n7-melee: in step with the sim's hit
+	rig.clips.strike_hold = RivetWindup.hold_s(rig)
 
 
 ## d9-rivet: Rivet respawns on the same rig (the arena's hub, the stage's Toner Room): his row
