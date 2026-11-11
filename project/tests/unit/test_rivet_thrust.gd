@@ -58,3 +58,20 @@ func test_the_before_flag_routes_through_cast_flags() -> void:
 	CastFlags.apply(PackedStringArray(["--rivet-thrust=off"]))
 	assert_false(RivetThrust.enabled)
 	CastFlags._read = was
+
+
+func test_the_camera_cells_feet_are_its_drawn_boot_not_the_blade() -> void:
+	# p70 cell 1: the planted boot right of the blade (x 256-287), the blade's tip lower (row 251)
+	var img: Image = (
+		(load(RivetStrips.DIR + "p70/rivet_eq_katana_thrust.png") as Texture2D).get_image()
+	)
+	if img.is_compressed():
+		assert_eq(img.decompress(), OK)
+	var cw: int = img.get_width() / RivetThrust.CELLS
+	var low: int = 0
+	for y: int in img.get_height():
+		for x: int in range(256, 288):
+			if img.get_pixel(cw + x, y).a > 0.5:
+				low = maxi(low, y)
+	var foot: float = RivetThrust.CAM_FEET["p70"]
+	assert_almost_eq(float(img.get_height() - 1 - low), foot, 2.0)

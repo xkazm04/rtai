@@ -16,9 +16,10 @@ const CELLS: int = 3
 const SIDE: int = 0
 const CAM: int = 1
 const LEFT: int = 2
-## The camera cell's boots above the cell bottom (strip px): its blade tip reaches the foot line,
-## the boots stand beside it (it454: boot row 250 of 256 at p70, 134 of 141 at p55).
-const CAM_FEET: Dictionary[String, float] = {"p70": 5.0, "p55": 6.0}
+## The camera cell's boots above the cell bottom (strip px): its blade reaches down the cell
+## toward the viewer, below the boots (read at 2x/4x with a 10 px ruler: the planted boot's bottom
+## at row 176 of 256 at p70, 124 of 141 at p55; it454's 250/134 were the blade's tip).
+const CAM_FEET: Dictionary[String, float] = {"p70": 79.0, "p55": 16.0}
 
 static var enabled: bool = true
 static var _hits: Dictionary[StringName, Array] = {}
