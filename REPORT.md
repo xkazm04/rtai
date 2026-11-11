@@ -30,11 +30,11 @@ Every change has a before flag on the same build and a same-tick before/after fi
 | 5 the city street fight draws no range-target rings | `54297457d` | `--target-rings=on` | `evidence/n15-combat/city_target_rings_ab_32ppm_t200_600.png` |
 | 5 a body hit's ink burst on the body's front, riding the knock-back and the death's carry (no floor dots short of him) | `273bb2232`, `2f1ac74c8` | `--impact-follow=off` | `evidence/n15-combat/body_burst_on_body_ab_64_32ppm_t336-345.png` |
 
-Gates: full run on `65acf2e8e` (02:35-03:00): PASS lint 16/16, unit 2526/0/2, scenarios 55, parity bit-exact (mutation
-at 629), look goldens 11/11 worst 0.00, block goldens worst 0.69 (= this worktree's session-1 baseline), export-audit
-672; reels FAIL (top: a burn kill under the top view crashed in `KillCharCells.tag`, from `8eb67bc62`) -> fixed in
-`f7baf2dbc`, top reel re-run OK on it (19 chapters, 0 SCRIPT ERROR); tilt70 + combo were OK on `65acf2e8e`. TO DO: one
-full gate with reels on the final commit.
+Gates: full run with reels on `2f1ac74c8` (session 6, 03:56-04:19, the last code commit; later commits are docs):
+PASS lint 16/16, unit 2535/0/2, scenarios 55, parity bit-exact (mutation at 629), look goldens 11/11 worst 0.00, block
+goldens 5/5 worst 0.69 (= this worktree's session-1 baseline), export-audit 673, reels top / tilt70 / combo OK. Also
+PASS with reels on `7778d347a` (03:13-03:36), confirming the top-reel fix `f7baf2dbc`. TO DO: re-run on the final
+commit if any code lands after `2f1ac74c8`.
 
 ## What does not work, or is not shown
 

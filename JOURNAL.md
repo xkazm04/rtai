@@ -435,3 +435,24 @@ final gate line.
   EMPTY hands: in the game his carbine falls from him at the kill and lies at his feet, so the drawn charred carbine
   across his body reads as a second gun (`evidence/n15-combat/char_cells_swat_cap_punk_jogger_ab_64ppm_t542-620.png`,
   rows 1-2, t560-620). Same layout, same scale, no smoke, no red.
+- GATES on `2f1ac74c8` (03:56-04:19, build/gate/2f1ac74c8c6e/gate.json): PASS lint 16/16, unit 2535/0/2, scenarios 55,
+  parity bit-exact (mutation at 629), look goldens 11/11 worst 0.00, block 5/5 worst 0.69 (= baseline), export-audit
+  673, reels top / tilt70 / combo OK. Every code commit of this session is in it; later commits are JOURNAL/docs only.
+- Tried, NOT shipped: RigCarry.metres + the living wound's card push (StreetWalkerHit.shove), so the t339-340 dot
+  follows the thrown-back card. Film 64 px/m t336-345 (build/scratch/s6/sh64.png, scratch): t339's dot moves onto his
+  leg edge (better) but a new dot shows beside his boots at t344 where the committed build shows none (worse). Mixed;
+  reverted (`git checkout -- rig_carry.gd`, the file was never committed with it).
+- 04:21 city street fight film for the DEFECTS loop (`film.mjs city --ppm=32 --ticks=1200`, stills every 50 ticks,
+  build/film/s6city32).
+- DEFECTS loop (item 5), city 32 px/m film: ranked (1) four cops clumped on top of the sidewalk wall t250-1150, never
+  coming down (likely nav, not looked into), still `evidence/n15-combat/city_fight_cops_on_wall_32ppm_t650.png`;
+  (2) a cop's card over Rivet's head at contact t650. Both open.
+- 04:24 session 6 ends. Godot: none of mine running (every film and gate exited with its verdict line).
+
+NEXT (session 7): (1) If code lands, the full gate with reels on the final commit (`node tools/gate/run.mjs --rev=HEAD
+--reels`); `2f1ac74c8` is the last code commit and PASSES everything. (2) DEFECTS city #2 (a cop's card over Rivet at
+contact): film `city` 64 px/m around t640-660 (`--stills=630-670`) and judge the depth order; #1 (cops on the wall) is
+likely nav: one line to the owner in REPORT, no sim edit. (3) The t339-340 burst dot: the wound-push attempt was mixed
+(JOURNAL 04:20); an alternative is to skip the burst while the thrown-back cell plays (the hit reads by the cell and
+the blood). (4) Asset replies: swat char cells with empty hands (REQUEST 04:10). (5) REPORT: final pass by 07:40 (rows
+are current to session 6; Calls (a)-(c) stand).

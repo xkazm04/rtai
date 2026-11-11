@@ -2,6 +2,10 @@
 
 Ranked within each film; newest film first.
 
+## City street fight (`film.mjs city --ppm=32 --ticks=1200`, stills every 50), combo 32 px/m t100-1150 (session 6, build/film/s6city32)
+1. Four riot/patrol cops stand clumped, cards overlapping, on top of the sidewalk wall from t250 to t1150 and never come down to the fight -> open (likely their path blocked at the wall edge, sim/nav, not this lane's render; not looked into; still `evidence/n15-combat/city_fight_cops_on_wall_32ppm_t650.png`).
+2. At t650 a cop's card draws over Rivet's head where they meet (depth order at contact) -> open, judge on a clip.
+
 ## Flamethrower lone kills, swat / ped_cap / ped_punk / ped_jogger, combo 64 px/m t542-620 (session 6)
 1. Each burned man stood as the black char print -> fixed c11391625 (it363 drawn char cells).
 2. The charred SWAT man holds his charred carbine while the dropped carbine lies at his feet -> open, minor (listed under session 4's flamethrower film #3).
