@@ -35,7 +35,7 @@ Ranked within each film; newest film first.
 
 ## Rocket lone kill, cop/head_cap, combo 48 px/m (session 3)
 1. The gib flew as one whole tumbling body (the card in one group, the hidden rig parts empty) -> fixed 324927f99 (GibCardCut).
-2. The pieces' cut edges are straight across the drawn art (paper-cut look) -> open (drawn gib pieces per kind: an asset-lane request).
+2. The pieces' cut edges are straight across the drawn art (paper-cut look) -> fixed (session 5, drawn pieces it359/it363, patrol + riot cop; owner Call). The pieces are small at 48 px/m and lighter blue than the card's navy -> judge.
 3. Before the fix the whole body vanished under the smoke by t366; the pieces now draw over the smoke ring -> judge (z of the gib layer vs the smoke).
 
 ## Blades turned left, director chapters <blade>_left, combo 64 px/m (session 3)

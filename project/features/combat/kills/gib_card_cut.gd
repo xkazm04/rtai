@@ -61,7 +61,10 @@ static func cuts(rig: CutRig, spr: Sprite2D) -> bool:
 static func placed(rig: CutRig, groups: Array[Node2D], spr: Sprite2D, xf: Transform2D) -> bool:
 	if not cuts(rig, spr):
 		return false
-	for kp: Array in split(spr, xf):
+	var kps: Array = split(spr, xf)
+	@warning_ignore("return_value_discarded")
+	GibCardPieces.dress(StreetWalkerCards.row_of(rig), kps, _cell(spr).y)  # n15: drawn pieces
+	for kp: Array in kps:
 		var piece: Sprite2D = kp[1]
 		piece.z_index = GibCut._z(spr, rig)
 		groups[kp[0]].add_child(piece)
