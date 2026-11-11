@@ -21,6 +21,11 @@
             "minimum": 0,
             "type": "number"
           },
+          "blot_m": {
+            "maximum": 2,
+            "minimum": 0,
+            "type": "number"
+          },
           "bounce": {
             "maximum": 1,
             "minimum": 0,

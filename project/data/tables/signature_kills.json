@@ -532,6 +532,7 @@
       "weapon": "kerf_slice"
     },
     {
+      "blot_m": 0.2,
       "bounce": 0.1,
       "cone_deg": 16,
       "doc": "Pistol (lane kills-new, n16; the most used gun, so short and clean): the head snaps back 22 deg on the hit (t0-2) while a red jet and mist leave the back of the head (KillSnapArt); he hangs (t2-8), the knees buckle (t8-14), then he folds forward onto his face toward the shooter: from t14 the victim's own drawn fall grid (KillFallCells: buckle, mid-fall, lying) plays over 18 ticks facing the shooter. Aftermath: the face-down body lying toward Rivet, the exit fan on the street behind where he stood. Without a drawn grid (a parts rig) the pose track lays the body copy (t14-26). Placeholder until the drawn pistol cells land (JOURNAL REQUEST assets). The cap stays on until the drawn loose cap cell lands (a sim cap piece drew a stray shadow under a card victim, whose cap is part of the drawing).",
@@ -602,6 +603,7 @@
       "weapon": "pistol"
     },
     {
+      "blot_m": 0,
       "bounce": 0.1,
       "cone_deg": 16,
       "doc": "Machine pistol (lane kills-new, n16): the stitch. Four rounds walk up the body from the hip to the neck, 3 ticks apart (t1-10): each one an ink hole on him, a red spurt out of his back along the shot (KillStitchArt) and a jerk of the figure (the pose track, alternating 6-9 deg); on the last he whirls once (t10-18: his drawn facings turn a full circle onto the fall side), then drops sideways across the shot (t18-32). The figure is his own drawn fall grid from the hit (KillFallCells: the buckle frame under the blow, then mid-fall and lying, faced across the shot). Aftermath: the body across the shot, a narrow dotted spray along it, the four holes on him. Placeholder until the drawn stitch cells land (JOURNAL REQUEST assets).",

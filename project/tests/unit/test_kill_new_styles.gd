@@ -110,3 +110,15 @@ func _posed(age: int) -> Transform2D:
 	body.free()
 	fx.free()
 	return out
+
+
+func test_the_blot_is_per_row_and_the_old_rows_keep_theirs() -> void:
+	var table: SignatureKillTable = SignatureKillTable.load_table()
+	assert_eq(table.for_weapon(&"rocket_launcher").blot_m, 0.5, "kills-polish's rows: unchanged")
+	assert_lt(table.for_weapon(&"pistol").blot_m, 0.5, "the pistol: a small splat")
+	assert_eq(table.for_weapon(&"machine_pistol").blot_m, 0.0, "the stitch: the dotted line only")
+	var k: SignatureKills = _kills()
+	@warning_ignore("return_value_discarded")
+	k.on_kill(_ev(&"pistol"))
+	var last: KillMarks.Mark = k.marks.marks[k.marks.marks.size() - 1]
+	assert_eq(last.blot_m, table.for_weapon(&"pistol").blot_m)
