@@ -1,17 +1,16 @@
 class_name StreetKnockdown
 extends RefCounted
 ## n17 npc-react (owner: "impact on npcs are terrible"; brief item 5, a blast lifts; DEFECTS 11): a
-## LIVING knockdown (a blast, Dent's ram, a stomp: human_reactions.json knockdown, "falls along the
-## hit, slides, lies 1.4 s, gets up") drew no fall on a street person: StreetWalkerFall.down() was
-## dying-or-dead only, so the whole figure stood upright under a lean for 2.2 s. Now the person's
-## own fall grid plays it: buckle -> mid-fall -> lying over the first FALL_END of the family, the
-## lying frame until RISE_AT, the frames back up to the buckle by UP_END, then the walk again. No
-## dead-plan (the lying frame is the grid's own), faced along the blow like a death's fall.
-## ON false = the before (the upright lean).
+## LIVING knockdown (a blast, Dent's ram, a stomp: human_reactions.json knockdown, 2.2 s) let the
+## parts draw him lying, then popped from lying straight to standing (film k_0a65_64 t130 -> t150).
+## Now the person's own fall grid plays it: buckle -> mid-fall -> lying over the first FALL_END
+## (about as fast as the parts went down: t72), the lying frame until RISE_AT, the frames back up
+## to the buckle by UP_END, then the walk. No dead-plan, faced along the blow like a death's fall.
+## ON false = the before.
 const ON: bool = true
 const KIND: StringName = &"knockdown"
 ## Of the knockdown's progress: down by FALL_END, lies until RISE_AT, standing again at UP_END.
-const FALL_END: float = 0.12
+const FALL_END: float = 0.04
 const RISE_AT: float = 0.78
 const UP_END: float = 0.92
 
