@@ -40,7 +40,7 @@ test('unit churn: a code line that was first (trimmed) before the run is not new
 test('guard: unit churn on a code path (a .uid) fails unit and names it', () => {
   const unit = applyChurn({ ok: true, summary: 'unit-tests: 3 passed' }, [' M JOURNAL.md'], [' M JOURNAL.md', '?? evidence/a.log', ' M project/core/a.gd.uid']);
   assert.equal(unit.ok, false);
-  assert.match(unit.summary, /tree changed during run \(1 paths, import churn\): {2}M project\/core\/a\.gd\.uid$/);
+  assert.match(unit.summary, /tree changed during run \(1 paths, import churn or an edit\): {2}M project\/core\/a\.gd\.uid$/);
 });
 
 test('a code path edited while a kind ran fails that kind and names the path; inert edits do not', () => {

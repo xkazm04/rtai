@@ -55,7 +55,7 @@ export function applyChurn(unit, before, after) {
   return {
     ...unit,
     ok: false,
-    summary: `${unit.summary}; tree changed during run (${churn.length} paths, import churn): ${churn.slice(0, 3).join(', ')}`,
+    summary: `${unit.summary}; tree changed during run (${churn.length} paths, import churn or an edit): ${churn.slice(0, 3).join(', ')}`,
   };
 }
 
