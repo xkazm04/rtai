@@ -540,3 +540,62 @@ NEXT addendum: item (1) above is DONE except the flame size; start at (2).
   molotov (its row lookup does not know KillFireSource): REQUEST tools: kill_reel's row line should resolve a
   burn death through KillFireSource (the film itself shows the torch).
 NEXT (iteration 17): start at (2) of the iteration-17 list above; the flame size is done.
+
+## Iteration 20 (16:02-17:32)
+- 16:02 read JOURNAL, git log, asset replies (p55 stitch/nail for patrol/riot/SWAT; molotov_torch p70 patrol/riot/SWAT
+  delivered; suit molotov kneel refused by the image filter, retrying), tools JOURNAL: SERVED gore check, all 17
+  kills-new deaths at 8f7fe6e6e drop whole under `--gore=reduced` (n16-tools evidence/n16-tools/reel_s4gore_new.md).
+- 16:12 MILESTONE `8fc189cf6` p55 stitch + pin cells (patrol, riot, SWAT; suit keeps p70). Looked at the packed riot
+  stitch p55 board: usable; the asset lane's flaw (hair in frame 3, bald in 4-5) is visible on the sheet.
+- 16:15 MILESTONE `e0cc756fa` molotov torch cells (patrol, riot, SWAT): cells.at [0,8,16,150], turned along the run
+  (cells_turn_from 0); the coded tongues stay over the drawn flames, lower (fx cells_flame_m 0.3, KillTorchArt.
+  flame_m_of): DECISION in commit; the drawn flames are static, so the coded flicker keeps the fire alive. Suit = the
+  placeholder. Unit test_kill_torch_cells 4/4 + test_kill_death_cells (16 pass). Reel (`--rev=e0cc756fa
+  --before=b9338f64b`, molotov dirs 0/135 at 32/64, clips) started 16:16 -> build/reel/torch_cells.
+- 16:20 (uncommitted) KillShredArt._scrap + KillTorchArt tongues fill through KillPoly.fill (DECISION kills-new/fan-fill).
+- SHARED FILE ANNOUNCE (kills-polish, read me): item 6b removes `also_weapons: ["claw_shock"]` from YOUR row
+  `electro_shock` (only that key; nothing else in the row). The claw takes its own row `claw_throw` (style `throw`).
+  Also edited: test_signature_kills.gd `test_the_charged_claw_shock_takes_its_own_throw` (was ..._the_electro_kill)
+  and scenario_brutality_kills.gd's KILLS claw_shock -> throw. If you edit electro_shock, keep the key out.
+- BEAT SHEET 6b claw_throw, AS BUILT (placeholder: his fall grid + KillThrowArt; DECISION kills-new/claw-throw):
+  anticipation = Rivet's own charge (PlayerShock, the claws crackle). t0 hit-stop 4: a cream bolt with an ink line
+  jumps 0.7 m from the claw into his chest (to t4); the track lifts him onto his toes (squash 1.05) leaning back
+  14-24 deg. t4-20 the throw: back along the blow in a 0.4 m sine hop, his fall grid laying him on his back t8-20,
+  2.4 m out at the landing; t20-32 skid on to 3.0 m. Held beat: a cream spark crawls over the body every 4 ticks to
+  t60 (none under --reduced-motion). Aftermath: the ink skid line from the landing to his boots, smoke 160 ticks,
+  no blood. Hit-stop 4 <= 6; camera punch = the existing hit-stop feel only.
+FRICTION: ran `tools/godot/check.mjs` (a parse check, ~10 s) while my reel's Godot was running: two Godot processes
+  for this lane for a few seconds. Holding further Godot runs until the reel ends.
+- REQUEST assets: claw_throw cells (NEW death: Rivet's charged bare claw THROWS him), patrol cop / riot cop / SWAT /
+  suit ped, p70 (p55 later), the same layout as baton_overload (5 facings across, column 1 facing the camera = facing
+  the shooter, cut to each kind's p70 long_fall grid). 4 frames: (1) STRUCK on his toes, arms snapped out stiff, back
+  arched, a cream-white electric arc (ink outline) striking the middle of his chest, headgear still on; (2) FLUNG
+  backward off his feet, body tilted back ~45 deg, arms and legs trailing toward the shooter, small cream sparks on
+  him; (3) LANDED on his back (lying anchor, the grid's corpse direction, head away from the shooter), limbs splayed,
+  a short grey scuff under him; (4) the same pose, still, thin grey smoke off the chest, three short black claw
+  scorch gouges on the chest. No blood, no red, no vermilion, no teal; cream for the electricity only. Beat: t0 struck
+  (hit-stop 4), t4-20 airborne, t20 lands and skids, held to t60, then still. Priority after the asset lane's queued
+  gatling/baton p55 round.
+- 16:28 MILESTONE `80e6d139f` fan-fill (shred scraps, torch tongues). `474658b8e` claw_throw (style throw,
+  KillThrowArt; unit: test_kill_throw_art 3/3, test_kill_new_styles incl. claw_shock, test_signature_kills claw ->
+  claw_throw; 43 pass over the six kill files). Torch reel PASS 8/8 (`build/reel/torch_cells`), judged: the drawn
+  cells win at 32 and 64 (`evidence/n16-kills-new/molotov_torch_cells_ab_{32,64}ppm_dir0_t182-332.png`, clips
+  `molotov_torch_cells_after_{32,64}ppm_dir0.mp4`); the coded tongue reads as a cream spike over the kneeling
+  frames at 64 (candidate: cells_flame_m 0 while kneeling). Masters: these two on top (15 entries).
+- REQUEST tools: kill_reel/film `kill:claw_shock` refuses (`unknown sigweapon claw_shock`: shots.mjs sigweapon lists
+  weapons.json + melee only). Please add the lab's `claw_shock` (PlayerShock.WEAPON). Workaround in use:
+  `--weapons=electro_gun ... -- --sig-gun=claw_shock` (ArenaArgs keeps the last value); the reel's row line then
+  names electro_shock although the film is the claw.
+- 16:30-16:42 claw films (film.mjs kill:electro_gun -- --sig-gun=claw_shock --sig-dir=0|135|225, 32+64, before
+  `80e6d139f` (the borrowed X-ray) vs after `474658b8e`): 12/12 PASS, kill at 127. Judged by eye: before = the
+  skeleton strobe and a heap at Rivet's feet; after = flung 3 m back along the blow in all three dirs, lying with the
+  skid line and a spark at +32 (`evidence/n16-kills-new/claw_throw_ab_32ppm_dirs0-135-225_t159.png`,
+  `claw_throw_ab_64ppm_dir0_t127-217.png`, `claw_throw_ab_32ppm_dir0_t127-207.png`, clips
+  `claw_throw_{before,after}_{32,64}ppm_dir0.mp4`). Weak: the t0-4 lift onto his toes does not read (PlayerShock's own
+  discharge covers him); at +10 the fall grid shows a hunched frame, not an airborne one (the drawn cells' frame 2
+  fixes it). FINDING: his dropped rifle (sim) stays where he stood, 3 m from the body (the owner's 0.5 m rifle
+  rule): a Call in REPORT (alternative: slide_m 0).
+- 16:44 MILESTONE `2c7040a23` no coded tongue over the molotov's drawn kneel (fx cells_kneel_flame_m, default 0);
+  unit 16/16 (torch cells, fire source, new styles). Masters: claw 32 three-dir + claw 64 beat sheet on top, 15
+  entries (dropped pistol t390 and the placeholder gatling A/B t390).
+- 16:45 GATE scenarios on `2c7040a23` started (build/scen_it20.log).
