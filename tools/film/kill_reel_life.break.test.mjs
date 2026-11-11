@@ -90,7 +90,7 @@ test('pickBeats always starts with tick 60 and adds only aftermath milestones in
   assert.deepEqual(pickBeats(60, 1), [58, 60, 61], 'tick 60 stays first only when it is chronologically first after sorting');
 });
 
-test('measureBeats records every available +20-or-later beat, keeps the first gone point when the share rises, and rounds to four decimals', () => {
+test('measureBeats records every available +20-or-later beat, calls nothing gone when the share rises again, and rounds to four decimals', () => {
   const beats = [60, 120, 140, 160, 180];
   const frames = new Map([[60, image()], [120, image(25)], [140, image(0)], [160, image(3)], [180, image(7)]]);
   const boxes = [];
@@ -99,7 +99,8 @@ test('measureBeats records every available +20-or-later beat, keeps the first go
     return [0, 0, 200, 1];
   }, fraction);
   assert.deepEqual(measured.aftermath_curve, [[20, 0.125], [40, 0], [60, 0.015], [80, 0.035]]);
-  assert.equal(measured.aftermath_gone_after, 40, 'later pixels returning do not move the first gone beat');
+  // Review (n16 s6 all-deaths reel): Codex pinned 40 (the first dip); a street whose marks come back is not gone.
+  assert.equal(measured.aftermath_gone_after, null, 'later pixels returning mean the street was never gone');
   assert.equal(measured.aftermath_share, 0.035);
   assert.ok(boxes.includes(60) && boxes.includes(180), 'a tick-sensitive crop function is used for reference and final frames');
 });
@@ -116,7 +117,7 @@ test('measureBeats treats exactly GONE_SHARE as present, skips missing middle fr
 
 test('curveText and stopText state the measured lifetime and do not call feel-off a zero-frame freeze', () => {
   assert.equal(curveText({ aftermath_curve: [[20, 0.091], [300, 0.004]], aftermath_gone_after: 300 }), '+20 9.1 / +300 0.4 %, gone by +300');
-  assert.equal(curveText({ aftermath_curve: [[20, 0.091], [600, 0.03]], aftermath_gone_after: null }), '+20 9.1 / +600 3.0 %, 3.0 % still at +600');
+  assert.equal(curveText({ aftermath_curve: [[20, 0.091], [600, 0.03]], aftermath_gone_after: null }), '+20 9.1 / +600 3.0 %, still there at +600');
   assert.equal(curveText({}), '-');
   assert.equal(stopText({ feel_off: true, hitstop_frames: 0 }), 'off (feel off under the lock: --feel=on measures it)');
   assert.equal(stopText({ hitstop_frames: 4 }), '4 frames');

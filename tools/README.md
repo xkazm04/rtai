@@ -155,12 +155,13 @@ and `aftermath X %` (the share of the window at kill+after that still differs fr
 on the street). Example (n16): rocket dir 90 6.3 % at both zooms, settled only by +150; katana 1.7 %, by +80.
 The aftermath LIFETIME (n16 s6): `--after` takes up to 1200 ticks without `--clips` (a clip stays inside the lab
 shot's 230), the sheet adds +150 / +300 / +600 columns as they fit, and each line and `reel.md` give the curve,
-`+20 3.5 / +80 1.2 / +300 1.2 / +600 0.0 %, gone by +600` (`gone by +N`: under 0.5 % of the window). The curve
-leaves out where the victim STOOD at the trigger frame (`standMask`: his drawn card from the probe's tick-60 row,
-padded by a quarter of its width; `aftermath_mask` in reel.json), since his empty spot is not a mark: unmasked, a
-rocket's +1000 read 1.6 % after the scorch and spray had gone. Not counted either: anything left inside that spot,
-such as a weapon dropped where he stood (the claw's at +600). `aftermath X %` stays the whole window's. Example:
-rocket `--after=1000` 25.9 / 3.7 / ... / +600 3.4 (gibs gone) / +1000 0.4 %, gone by +1000 (scorch and spray gone). The data
+`+20 4.7 / +80 1.4 / +300 1.4 / +600 1.0 %, gone by +600 (outside his standing spot)` or `still there at +600`. The
+curve is the whole window's share; `gone by +N` is the first beat from which, leaving out where the victim STOOD at the
+trigger frame (`standMask`: his tick-60 card from the probe, padded by a quarter of its width; `aftermath_mask` in
+reel.json), the window stays under 0.5 % to the last beat. Not counted: anything left inside that spot (a gun dropped
+where he stood). n16 s6 `--weapons=all --quick --after=600` on b9dba1da8: electro gun, claw, plasma rifle, plasma
+sword and ray gun gone by +600; every death with blood or scorch still there (stains last 16 s); rocket `--after=1000`
+gone by +1000. The data
 line names the street's clock from `corpse_decay.json`: bodies and their pieces gone by linger + fade (6 + 1.2 s),
 stains by 12 + 4 s. Example: `--weapons=claw_shock,rocket_launcher --after=600`: the thrown cop lies at +300 and is
 gone at +600, the rocket's gibs likewise, its scorch and spray stay. A film run with the feel off (film's

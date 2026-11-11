@@ -190,11 +190,13 @@ export function measureBeats(frames, beats, kill, box, diff, { tolerance = 12, s
   const settled = beats.filter((t) => t > kill && frames.has(t)).find((t) => diff(crop(t), end, tolerance).fraction < still) ?? null;
   const start = crop(60);
   const share = (img) => Number(diff(start, img, tolerance).fraction.toFixed(4));
-  // The curve and `gone` leave out where the victim stood at the trigger frame (`mask`, standMask): his empty spot is
-  // not a mark on the street. aftermath_share stays the whole window's, as every earlier reel reported it.
-  const lived = (img) => (mask ? share(paste(img, start, mask)) : share(img));
-  const curve = beats.filter((t) => t >= kill + 20 && frames.has(t)).map((t) => [t - kill, lived(t === last ? end : crop(t))]);
-  const gone = curve.find(([, v]) => v < GONE_SHARE)?.[0] ?? null;
+  // The curve is the whole window's (as aftermath_share). `gone` leaves out where the victim stood at the trigger
+  // frame (`mask`, standMask: his empty spot is not a mark) and must HOLD to the last beat (n16 s6 all-deaths reel:
+  // homing_shard dipped to 0.1 % at +20 before its marks grew to 2.9 %, and read `gone by +20`).
+  const tail = beats.filter((t) => t >= kill + 20 && frames.has(t));
+  const curve = tail.map((t) => [t - kill, share(t === last ? end : crop(t))]);
+  const clean = mask ? tail.map((t) => [t - kill, share(paste(t === last ? end : crop(t), start, mask))]) : curve;
+  const gone = clean.find(([, v], i) => clean.slice(i).every(([, w]) => w < GONE_SHARE))?.[0] ?? null;
   return { aftermath_share: share(end), settled_by: settled, settled_after_ticks: settled === null ? null : settled - kill,
     aftermath_curve: curve, aftermath_gone_after: gone, ...(mask ? { aftermath_mask: mask } : {}) };
 }
@@ -284,21 +286,22 @@ export function stopText(m, unit = ' frames') {
   return `${m?.hitstop_frames ?? '?'}${unit}`;
 }
 
-/** `+20 9.1 / +300 0.4 %, gone by +300` or `..., 3.0 % still at +600`: the measured aftermath lifetime. Read the
+/** `+20 9.1 / +300 0.4 %, gone by +300` or `..., still there at +600`: the measured aftermath lifetime. Read the
  *  steps: the trigger frame holds the victim standing, so his absence (~1 % of a 32 px/m window) and a dropped weapon
  *  never leave the share; n16 s6 rocket: 5.9 -> 5.5 at +600 (gibs gone), -> 1.6 at +1000 (scorch and spray gone). */
 export function curveText(m) {
   const curve = m?.aftermath_curve ?? [];
   if (!curve.length) return '-';
   const gone = m.aftermath_gone_after;
-  return `${curve.map(([t, v]) => `+${t} ${(v * 100).toFixed(1)}`).join(' / ')} %, ${gone === null || gone === undefined ? `${(curve.at(-1)[1] * 100).toFixed(1)} % still at +${curve.at(-1)[0]}` : `gone by +${gone}`}`;
+  const spot = m.aftermath_mask ? ' (outside his standing spot)' : '';
+  return `${curve.map(([t, v]) => `+${t} ${(v * 100).toFixed(1)}`).join(' / ')} %, ${gone === null || gone === undefined ? `still there at +${curve.at(-1)[0]}${spot}` : `gone by +${gone}${spot}`}`;
 }
 
 /** reel.md: one table row per film, the measured beats beside the row's data, for a REPORT or a JOURNAL. */
 export function reelMarkdown(rows, table, cmd) {
   const cell = (v) => (v === undefined || v === null ? '-' : String(v));
   const lines = [`# kill reel`, '', `\`${cmd}\``, '',
-    '| weapon | side | victim | dir | px/m | outcome | kill | freeze (frames, measured) | pieces wait (row ticks) | settled | aftermath | aftermath curve (measured, his standing spot left out) | whole |',
+    '| weapon | side | victim | dir | px/m | outcome | kill | freeze (frames, measured) | pieces wait (row ticks) | settled | aftermath | aftermath curve (measured) | whole |',
     '|---|---|---|---|---|---|---|---|---|---|---|---|---|'];
   for (const { job, film } of rows) {
     const m = film.measured ?? {};

@@ -315,7 +315,8 @@ test('the charged claw (PlayerShock.WEAPON, no table lists it) is a lab weapon: 
 test('the curve reads as a lifetime: gone by a beat, or stays past the last one', async () => {
   const { curveText } = await import('./kill_reel_lib.mjs');
   assert.equal(curveText({ aftermath_curve: [[20, 0.091], [300, 0.004]], aftermath_gone_after: 300 }), '+20 9.1 / +300 0.4 %, gone by +300');
-  assert.equal(curveText({ aftermath_curve: [[20, 0.091], [600, 0.03]], aftermath_gone_after: null }), '+20 9.1 / +600 3.0 %, 3.0 % still at +600');
+  assert.equal(curveText({ aftermath_curve: [[20, 0.091], [600, 0.03]], aftermath_gone_after: null }), '+20 9.1 / +600 3.0 %, still there at +600');
+  assert.equal(curveText({ aftermath_curve: [[600, 0.01]], aftermath_gone_after: 600, aftermath_mask: [0, 0, 1, 1] }), '+600 1.0 %, gone by +600 (outside his standing spot)');
   assert.equal(curveText({}), '-', 'an old reel.json without a curve');
   assert.equal(curveText(undefined), '-');
 });
@@ -330,7 +331,7 @@ test('a film with the feel off reads its freeze as off, not as 0 frames (n16 s6)
   assert.match(md, /\| 68 \| off \(feel off\) \|/);
 });
 
-test('the curve leaves out where the victim stood at the trigger frame, so an empty street reads gone (n16 s6)', async () => {
+test('gone leaves out where the victim stood at the trigger frame, so an empty street reads gone (n16 s6)', async () => {
   const { measureBeats, standMask } = await import('./kill_reel_lib.mjs');
   const { diffImages } = await import('./png.mjs');
   const probe = { rows: [{ tick: 60, fighters: [{ id: 7, role: 'hostile', alive: true, screen: [110, 60], draw: [8, 16], head_y: 44, feet_y: 60 }] }] };
@@ -344,6 +345,6 @@ test('the curve leaves out where the victim stood at the trigger frame, so an em
   const plain = measureBeats(frames, [60, 213], 63, [0, 0, 10, 10], diffImages);
   assert.deepEqual([plain.aftermath_curve, plain.aftermath_gone_after], [[[150, 0.3]], null]);
   const masked = measureBeats(frames, [60, 213], 63, [0, 0, 10, 10], diffImages, { mask: [0, 0, 3, 10] });
-  assert.deepEqual([masked.aftermath_curve, masked.aftermath_gone_after, masked.aftermath_share], [[[150, 0]], 150, 0.3], 'the share stays the whole window');
+  assert.deepEqual([masked.aftermath_curve, masked.aftermath_gone_after, masked.aftermath_share], [[[150, 0.3]], 150, 0.3], 'the curve and share stay the whole window; gone leaves his spot out');
   assert.deepEqual(masked.aftermath_mask, [0, 0, 3, 10]);
 });
