@@ -607,3 +607,16 @@ FRICTION: ran `tools/godot/check.mjs` (a parse check, ~10 s) while my reel's God
   down at +14, no pop. Clip `claw_throw_fall_at_64ppm_dir0.mp4`.
 - 17:10 fan-fill proof (`evidence/n16-kills-new/fan_fill_polygon_errors.md`): Gatling on a thug at 32 px/m, polygon
   errors 315 (e0cc756fa; 314 from kill_shred_art.gd:194) -> 1 (80e6d139f; rig_cast_shadows.gd:71, not ours).
+- 17:07 unit 49/49 over the eight kill test files on `19ae6b6c4`; full unit started (build/unit_full_it20.log).
+
+NEXT (iteration 21, in this order): (1) read the full-unit verdict from build/unit_full_it20.log (started 17:07 on
+`19ae6b6c4`); if it is missing, re-run `node tools/tests/run_unit.mjs`. (2) asset replies: the suit molotov kneel
+(third wording) -> re-pack `kill_cells_pack.py --death=molotov_torch` and add ped/head_hair to the row's p70 grids;
+gatling_shred + baton_overload p55 (patrol/riot/SWAT, round 20261111-1600) -> `--art=p55`, add the p55 grids, then
+film; claw_throw cells when they land (cells.at e.g. [0,6,20,40], fx cells_turn_from 2, no fall_at; KillThrowArt's
+bolt and sparks stay). (3) film the molotov at 32 px/m in a city street fight (he runs out of the patch), owed since
+iteration 16. (4) watch the tools JOURNAL for the claw_shock shot (REQUEST tools above); then re-film the claw with
+kill_reel dirs 0/135/225 at 32+64 on HEAD. (5) the Gatling AFTER reel at 64 for dirs 135/225 (`--rev=040ffb67a`)
+still owed. (6) the final gates before the 19:30 freeze: full unit, scenarios (55/55 on 2c7040a23; the claw flight
+changes after it are data only), `node tools/evidence/run.mjs` (parity + look goldens), `node tools/reel/run_reels.mjs`,
+lint/debt. (7) REPORT final by 19:40 (Calls: one line per death, incl. the claw's rifle-distance Call).
