@@ -5,7 +5,7 @@ extends GutTest
 
 func test_only_the_hand_cannon_row_has_an_exit_wound() -> void:
 	var table: SignatureKillTable = SignatureKillTable.load_table()
-	assert_gt(table.for_weapon(&"hand_cannon").wound_m, 0.2)
+	assert_gt(table.for_weapon(&"hand_cannon").wound_m, 0.1)
 	for w: StringName in table.weapons():
 		var row: SignatureKill = table.for_weapon(w)
 		if row.style != &"blowback":

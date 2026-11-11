@@ -17,8 +17,9 @@ const FRESH: int = 0
 const DRIED: int = 1
 const FRESH_COP: int = 2
 const DRY_TICKS: int = 240
-## Where on the figure (KillFigure: y -1 head .. 1 feet): the chest.
-const CHEST: Vector2 = Vector2(0.0, -0.4)
+## Where on the figure (KillFigure: y -1 .. 1 over the card's cell, which is about twice the man's
+## height): the chest (at -0.4 it sat on the face and read as a grinning mouth, film hc64_b).
+const CHEST: Vector2 = Vector2(0.0, -0.22)
 ## The p55 view: the drawing squashed (asset lane: the p55 cells are the p70 ones at 0.8 high).
 const P55_SQUASH: float = 0.8
 
@@ -37,8 +38,9 @@ static func off() -> bool:
 	return _off == 1
 
 
-## Puts the row's wound on `body` (a rig's whole-body group) at its chest, the tongue along `dir`
-## (the body turns from this pose on, so the wound turns with it), the hole `wound_m` wide at
+## Puts the row's wound on `body` (a rig's whole-body group) at its chest, the tongue out to the
+## shot's side (the thrown body is an upright card: mirrored, never turned; the body turns from
+## this pose on, so the wound turns with it), the hole `wound_m` wide at
 ## `ppm`. Returns the wound (null: none); the caller sets its `kills` and `tick0`.
 static func attach(
 	body: Node2D, rig: CutRig, row: SignatureKill, dir: Vector2, ppm: float
@@ -46,13 +48,12 @@ static func attach(
 	if body == null or rig == null or row.wound_m <= 0.0 or off():
 		return null
 	var w: KillExitWound = KillExitWound.new()
-	w.cop = StreetWalkerCards.row_of(rig).begins_with("cop/")
+	w.cop = rig.head_card != null and StreetWalkerCards.row_of(rig).begins_with("cop/")
 	w.hole_px = row.wound_m * ppm
 	var b: Rect2 = KillFigure.cached(body, 8.0)
 	w.position = b.get_center() + CHEST * b.size * 0.5
-	w.rotation = dir.angle() if dir != Vector2.ZERO else 0.0
-	if ViewMode.shared().art == "p55":
-		w.scale = Vector2(1.0, P55_SQUASH)
+	var flip: float = -1.0 if dir.x < 0.0 else 1.0
+	w.scale = Vector2(flip, P55_SQUASH if ViewMode.shared().art == "p55" else 1.0)
 	w.z_index = 35  # over the body's own parts (they reach +30)
 	body.add_child(w)
 	return w
