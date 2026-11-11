@@ -280,3 +280,34 @@ NEXT (iteration 4):
   tall as the living p55 cop (`evidence/n16-kills-polish/electro_xray_p55_scale_ab_tilt64ppm_x2_t119-146.png`).
 - 16:15 evidence/frames.json and gtai-masters/n16/kills-polish/frames.json: 15 entries, the six it4 sheets first
   (masters files not referenced removed; all still in the lane's evidence/ and git).
+- 16:17 GATES started on be2e71080 (`node tools/gate/run.mjs --rev=be2e71080 --reels`, log build/gate_be2e.log); the
+  code since the green gate on 49c7c0be9: GibCut hat, KillDissolveMask/KillFigure, KillCharFx z 40, hole bloom,
+  KillXray p55 + view_scale. Watch: a look golden with a burn kill (char z), the reel's ray gun / electro chapters.
+- MILESTONE c43cae42d plasma sword scorch line (item 4): row key `scorch_line_m` (schema 0-4 m; plasma_sword_split
+  1.4), KillMarkArt.scorch_line (tapered soot band + ink core along the cut, under the bodies). LINT ONLY: unfilmed,
+  and its test `project/tests/unit/test_kill_scorch_line.gd` is UNCOMMITTED in the tree (needs a Godot import for its
+  .uid; the gate held the lane's Godot).
+- 16:15 KILLS.md "Aftermath" table (item 4) from corpse_decay.json + code: bodies 7.2 s, stains 16 s; open: the
+  nuke's shadows and a future A8 skull heap sit on the 7.2 s body ledger; electro leaves no stain of its own.
+- 16:15 REPORT.md draft committed (702aa4e30): structure, Calls list, merge notes; finish at 19:40.
+- GATES on be2e71080 (16:10-): lint 19/19 ok, unit 2684/0 failures; scenarios/parity/goldens/reels running
+  (build/gate/be2e71080275/, snapshot %TEMP%/gtai-gate-be2e71080275).
+- FRICTION: one Godot per lane + 40 min gate = the last 40 min of a session can only do non-Godot work; I committed
+  the scorch line lint-only rather than stop the gate. Lesson (again): start the gate earlier or right before a long
+  non-Godot task (REPORT, KILLS), as done here.
+
+NEXT (iteration 5):
+1. Read the gate result on be2e71080 (build/gate/be2e71080275/evidence.log, reels.log). If a look golden moved (the
+   burn overlay is now z 40 over the body; the X-ray scale at p55), name the item, show the frame, re-bless only it
+   with a dated decisions line.
+2. Godot import, then `node tools/tests/run_unit.mjs --select=test_kill_scorch_line`; commit the test + .uid. Film
+   plasma_sword 64/32 (`film.mjs chapter:plasma_sword --rev=c43cae42d` vs `--rev=702aa4e30^^`... i.e. be2e71080) with
+   stills to kill+120; judge the scorch line under the toppled halves; tune `scorch_line_m` in data if it reads as a
+   stripe, not a burn.
+3. Asset replies: A6 (hand cannon exit wound), A7 (ray gun remains with skull), A8 (burn collapse with skull). Wire
+   each that lands (one commit each), before/after 64/32.
+4. Perf: `tools/perf/fight_gate.mjs` under the bench lock (C:\Users\kazda\kiro\gtai-n16\bench.lock, noclobber) for
+   the new preloads (16 X-ray strips, plasma ring, chunks, cut faces).
+5. Owed films: the ghosts' four (tonnage, dent, kerf, ohm), quest 1 p55 peek still, aftermath durations on film
+   (stills at kill + 6, 8, 12, 17 s), item 5's full arena + city street fight with every weapon -> DEFECTS loop.
+6. Final gate on the tip before the 19:30 freeze (start it by ~18:40), REPORT at 19:40 (draft in REPORT.md).
