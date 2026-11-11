@@ -110,3 +110,6 @@ lanes' journals for REQUEST tools / FRICTION (none at 11:35). Gate on the final 
   94b2865f7f17d778 both sides (snapshot `build/evidence/parity-result.json`), look goldens 12/12 `ok: true`, selftest
   frames ok. Reels still running at 12:16: the verdict is the last lines of
   `C:/Users/kazda/kiro/gtai-n16/scratch-tools/gate_s1.log` (`gate exit N`). Session 1 ends here.
+- 12:18 gate evidence stage on bc7878960 PASS: lint 19/19, unit 2640 passed / 0 failed / 2 skipped, scenarios 55,
+  parity bit for bit 1200 steps (planted fault caught at 629), selftest + look goldens 12/12 ok, release-compile
+  683/0. Reels still running (verdict at the end of gtai-n16/scratch-tools/gate_s1.log).
