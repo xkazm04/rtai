@@ -317,3 +317,5 @@ NEXT (iteration 5):
 - 16:37 reels on be2e71080: top OK (319 s), tilt70 all chapters down, combo running. Queued behind the gate (may be cut
   by the session stop; re-run if `build/films_it4h.log` has no `done`): --import, unit test_kill_scorch_line, film
   ps64_s (c43cae42d) and ps64_r (16748e860, before) chapter:plasma_sword 64 px/m stills 62-200.
+- GATES on be2e71080: REELS PASS (top 319 s, tilt70 745 s, combo 310 s; build/gate/be2e71080275/gate.json): the
+  whole gate is green on be2e71080 (16:10-16:42). The tip adds only c43cae42d (scorch line, lint-only) and docs.
