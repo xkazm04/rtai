@@ -304,3 +304,63 @@ claw finisher (`claw_shock` lives in kills-polish's electro_shock row: announce 
 gates on the last code commit: lint, full unit, scenarios (54+1 ok as of 13:11 + brutality re-run ok), the evidence
 run (parity + look goldens), the reel gate; REPORT.md by 19:40 with a Calls line per death (pistol, stitch, pin,
 shred, overload) and its 32 + 64 px/m stills from `gtai-masters/n16/kills-new/frames.json`.
+## Iteration 12 (2026-11-11 13:30, BUILD; iterations 9-11 left no journal or commits)
+
+- 13:30 read JOURNAL, git log, replies: smg_stitch p70 DELIVERED for all four kinds (it418), nail_pin p70 for patrol,
+  riot (13:29) and SWAT (13:33); the steel nail cells `keyed/fx/nail_70_cells/1_{1,2,3}.png` (301 px).
+- 13:33 stitch wired: `kill_cells_pack.py --death=smg_stitch` (5 facings x 5 frames), row `cells.at` [0,4,7,10,18]
+  (hip wound t0, two t4, three + cap tipping t7: the rounds land at 1/4/7/10 after hit-stop 1; the drawn spin t10-18
+  turned a full circle by KillStitchArt.facing; on his side from t18). fx `cells_lean` 1 (new, KillDeathCells.lean_of:
+  the stitch keeps its jerks on drawn frames; the pistol's 0 holds the drawing). The ink holes drop on own cells (the
+  drawing carries the wounds); the coded spurts stay.
+- 13:36 MILESTONE `099b7c514` drawn stitch cells. Same-tick A/B 64 px/m patrol cop (`compare.mjs weapon:machine_pistol
+  --a=HEAD --b=. --victim=cop/head_cap --ppm=64`, all 7 ticks PASS): `evidence/n16-kills-new/stitch_cells_ab_64ppm_patrol_t342-380_zoom.png`
+  + `_t330-400.mp4` + `_t349.png`. Judged by eye: t342-349 the wounds climb, the cap tips off, t353 the spin, t358+ on
+  his side curled; the placeholder at t365 is the long face-down fall grid. Asset fault seen: column 1 frame 3 shows a
+  doubled cap (known, one beat). DEFECT FOUND at 3x zoom (`stitch64/zoomB.png`): the drawn frames show his BACK to
+  Rivet (exit wounds and the drawn spurts toward the shooter): own cells were faced by the fall direction like the
+  fall grids. The long_fall grid is a FORWARD fall (column 1 = the figure facing the camera, lying head toward it),
+  so face(angle) = he looks along angle. The pistol's forward fall faced -dir by luck of its fall; fix below.
+- DECISION kills-new/own-cells-face: a death's own drawn cells face the SHOOTER (-dir) while upright; the drawing
+  carries which way he falls. The stitch whirls from there a full turn onto the fall side. Fall-grid placeholders
+  keep their fall-faced columns.
+
+### Beat sheet 3 AS DRAWN: Gloria nail_pin cells (patrol, riot, SWAT p70; suit next asset session)
+- Frames: 1 pinned upright (a nail through each sleeve top, arms out, head slumped, blood from the sleeves), 2 the
+  same pinned with the knees drawn up (the writhe), 3 on his back on the street, both hands at the nailed boot, the
+  cap/helmet beside him. Packed with frame 1's feet on the cell centre (`UPRIGHT_BY_DEATH`).
+- Wall case (a wall within 1.4 m behind): hit-stop 2; t0 frame 1 (arms flung back as the nails streak in), carried
+  back onto the wall over 6 ticks, lifted 0.12 m; t10-90 the writhe = frame 2 on the writhe's positive peaks (the
+  knees jerk up), frame 1 between; it dies out; hangs on frame 1. No lean on the wall (he is nailed).
+- Street case: t0-8 frame 1 (arms flung as the nails hit), t8 frame 3 on his back clutching the nailed boot, rocking
+  with the writhe at 0.5 of its lean (fx cells_lean). Aftermath: the pinned/lying body, its drawn nails.
+- Hit-stop 2 (unchanged). The coded nail stubs drop on own cells (the drawing carries them); the streaks stay.
+- 13:39 stitch reel started then KILLED by PID (taskkill /T 102096): it was filming the wrong-facing stitch. Dir 0
+  32 px/m had PASSed (kill at 174) before the stop; nothing kept.
+- 13:43 MILESTONE `953d2972e` nail_pin cells (patrol, riot, SWAT p70) + own cells face the shooter (KillDeathCells
+  .face_of/.step; the stitch fix) + the tools lane's `--sig-wall` lab (bbee28a9c game side, identical content:
+  kill_lab_turn.gd, brutality_hook.gd line 67, test_kill_lab_turn.gd). Unit test_kill_death_cells (face, pin frames
+  by case) + kill_lab_turn + kill_new_styles + cook_shred + signature_kills 34/34 + 15/15. FRICTION: debt ratchet
+  (kill_new_styles.gd 205 lines past the soft cap) on the first try: the own-cells step moved to KillDeathCells.step.
+- REPLY to the asset lane (gtai-assets): smg_stitch p55 can WAIT behind nail_pin suit + gatling + baton at p70; the
+  suit pistol at p55 uses p70 (no extra drawing).
+- REQUEST assets: order from here (13:45): (1) nail_pin p70 suit ped (as planned); (2) gatling_shred p70 and (3)
+  baton_overload p70 for patrol, riot, SWAT, suit (beat sheets 4 and 5 above; same cell layout as the stitch, cut to
+  each kind's long_fall grid, figure FACING THE CAMERA in column 1 = facing the shooter); (4) only then smg_stitch and
+  nail_pin at p55. The suit ped's pistol_snap at p55: use p70, no drawing needed. All delivered cells so far wired.
+- 13:50 Gloria kill reel (`../n16-tools/tools/film/kill_reel.mjs --weapons=gloria,machine_pistol --dirs=wall,135
+  --ppm=32,64 --clips`, on `953d2972e`): gloria wall (kill 65; lab: "dir 235, guard 3.95 m, wall 1.00 m behind him",
+  a parked car) and dir 135 (kill 64) PASS at both zooms. Judged by eye:
+  WALL (`evidence/n16-kills-new/nail_pin_cells_reel_64ppm_wall_t63-215.png`, `_32ppm_wall_crops.png`, clips): kill+2
+  the nail streaks and the pinned frame, slammed back against the car; kill+6..+40 the knees jerk up and drop on the
+  writhe's peaks, blood from the sleeves running down; kill+150 hangs pinned. Faces Rivet. Reads at 32 px/m as a
+  spread-eagled figure on the car's flank.
+  STREET (`nail_pin_cells_reel_64ppm_dir135_t62-214.png`): kill+0..+6 the pinned flinch, arms flung (from Rivet's
+  side, above, the camera sees his back: correct for a top-down view of a figure looking up-screen), the streaks at
+  +2; from +10 on his back, feet toward Rivet, both hands at the nailed boot, the cap beside him, blood behind.
+  Defect: the lying cell sits ~0.4 m off the standing spot (the asset lane centred frame 3 on the grid's corpse).
+- 14:02 stitch after the facing fix (same reel, machine_pistol dirs wall + 135, all four PASS, kill at 174/175):
+  `evidence/n16-kills-new/stitch_cells_reel_64ppm_dir135_t174-324.png` (+ 32 px/m sheet `_reel_32ppm_dirs-wall-135.png`,
+  clips dir 135 at 32 and 64). Judged: kill+0..+4 the wounds climb, the spurts and blood go AWAY from Rivet now (the
+  pre-fix A/B `stitch_cells_ab_64ppm_patrol_*` shows the defect: his back toward Rivet); +6 the cap tips off; +10
+  the drawn spin; +20 on his side, curled, ~0.5 m down-shot of where he stood (the corpse cell's own centre).
