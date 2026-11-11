@@ -61,4 +61,4 @@ func test_the_four_street_kinds_play_their_own_drawn_throw() -> void:
 	var look: Vector2 = Vector2.from_angle(KillDeathCells.face_of(d, 1))
 	assert_almost_eq(look, Vector2.LEFT, Vector2.ONE * 0.0001, "flung: at the shooter")
 	look = Vector2.from_angle(KillDeathCells.face_of(d, 2))
-	assert_almost_eq(look, Vector2.RIGHT, Vector2.ONE * 0.0001, "lying along the blow")
+	assert_almost_eq(look, Vector2.LEFT, Vector2.ONE * 0.0001, "on his back, head away from Rivet")
