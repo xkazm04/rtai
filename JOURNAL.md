@@ -644,3 +644,15 @@ film with later kills could prove the recycle. Logs go to C:\Users\kazda\kiro\gt
   Ledger `accepted-after-revision`, discarded. MY SLIP: the first two `record` calls used `--verdict=...` (the
   dispatcher reads `--verdict <v>`) and appended verdict-less lines; I removed exactly those two lines (asserted id +
   no verdict, the file's last line each time) and recorded once correctly: 1 entry for the id. Day total 6 tasks.
+- 18:01 MILESTONE 41bb70e36 (the weakest point of the lifetime readout: `gone by` could never fire, the trigger frame
+  holds the victim standing): `standMask` = his tick-60 card from the probe (screen, draw, head_y, feet_y; padded
+  draw/4) inside the kill window; the curve and gone_after paste the reference into that rect; aftermath_share stays
+  the whole window's. Re-measured on the s6 frames (no Godot, scratch remeasure.mjs): rocket +1000 1.6 -> 0.4 %
+  `gone by +1000`; claw +600 0.9 -> 0.0 % `gone by +600`; rocket +600 3.4 % (stains: still). REAL RUN 17:58:54-17:59:39
+  `kill_reel --weapons=claw_shock --after=600 --rev=76ae91d45 --native=donor` PASS, line ends `+600 0.0 %, gone by
+  +600`, reel.json `aftermath_mask: [189,93,54,62]`. LOOKED (evidence/n16-tools/kill-reel-stand-mask-claw-t60-vs-
+  t727-32ppm.png, mask drawn cyan): the rect covers the guard at 60; at +600 his gun lies INSIDE it, so the masked
+  curve does not count a weapon dropped where he stood (README + decisions line tools/kill-reel-stand-mask say so).
+  Test (standMask clip/null cases, masked vs plain curve), film tests 282/0, lint 19/19.
+- 18:01 sweep: the other kit tools the lanes run by path from their own trees (film.mjs, compare.mjs, kill_reel.mjs per
+  their journals) already take the caller's tree (`filmedRoot`); the gate was the only one on the kit's ROOT.

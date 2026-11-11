@@ -26,6 +26,9 @@ One command films every signature death in the KillLab on the city block, for we
   +600, scorch and spray stay; `--after=1000` rocket 1.6 %: scorch and spray gone, the dropped rifle stays. The old data
   line ("until 12 later kills, no timer") was wrong on the street. `--feel=on`: freezes 6 (claw), 8 (rocket) frames.
   (evidence/n16-tools/kill-reel-aftermath-life-*.png, reel_s6feel.md, reel_s6long.md)
+  41bb70e36: the curve leaves out where the victim stood at the trigger frame (his empty spot is not a mark), so
+  `gone by +N` fires: claw `+600 0.0 %, gone by +600`, rocket `gone by +1000` (0.4 %); the mask drawn on the frames:
+  evidence/n16-tools/kill-reel-stand-mask-claw-t60-vs-t727-32ppm.png.
 - s3: `--quick` (32 px/m, dir 90), sheet cells labelled (weapon/film, offset, `KILL HS6`), `--clips --feel=on` cut
   from the game's movie so the hit-stop PLAYS (calibrated: movie index = probe frame), the all-weapon overview
   `reel_<ppm>.png` + `reel.md`, `--resheet` (no Godot), the death judged on screen (`--subject=kill`), a far victim
@@ -132,8 +135,8 @@ picked the game side of afe581336, bbee28a9c and 0b5c55fc7 with identical conten
 ## Next steps
 - Kill lanes: drop the `-- --sig-gun=claw_shock` workaround (`--weapons=claw_shock` films it on its own row); use
   `gate --reels=<view>` mid-session and plain `--reels` on the final commit; read the ETA line before starting a gate.
-- The aftermath curve diffs against the trigger frame, which holds the victim standing, so `gone by` is rarely
-  reached; a victim-free reference (the lab run without its guard, same seed) would let it say when the street is clean.
+- The aftermath curve leaves out the victim's standing rect (41bb70e36), so a mark left exactly where he stood (a pool
+  under a man killed in place, a gun dropped there) is not counted: a victim-free twin film would close that.
 - The KillMarks ring (12 later kills recycle the marks) is still not filmed: it needs a lab with many kills.
 - A kill earlier than the lab's trigger tick (60) would make the trigger column a post-kill frame (no lab kill does:
   63+); if a lab ever kills sooner, pickBeats should take kill-8 instead of 60.
