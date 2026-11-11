@@ -263,3 +263,11 @@ NEXT (session 5):
     the katana kill (likely the dropped rifle's flight), the flame jet's floor-fire column shape.
 (5) REPORT.md is drafted (commit 896c5c30d): fill the gate line, the perf line (fight_gate WASH, 01:15), new rows.
 REQUEST tools (open, served on n15-tools, not merged here): none new.
+- 01:35 WIP (UNCOMMITTED, on purpose: not wired, not filmed): NEXT (2) started. `tools/art/street_hit.py` gains
+  `CHARS = {"cop_patrol": "char/1"}` (each facing at its burn/1 scale, as FLAILS) and `grey_cyan` (hue 165-205, sat >
+  0.03 -> its grey: the stripped smoke's teal traces); it packs `p70/cop_patrol_char_hit.png` (untracked; no .import
+  yet). Re-running the packer still drifts the 4 burn grids (hood 2 px, punk 428, swat 62, thug 8 px differ > 2/255):
+  restore them with `git checkout -- project/features/characters/art/view/p70/{ped_hood,ped_punk,swat,thug}_burn_hit.png`.
+  Sizing for the swap: StreetWalkerCards.place draws a hit grid at s = HEIGHT_BY_ART * PX_PER_M * k * FILL / tex_h with
+  offset (-cell.x/2, -cell.y*FOOT_Y); use FILL["cop_patrol_burn_hit.png"] (1.14). GibCut copies the card with
+  `transform = xf` (rig-relative), so the swap must rebuild the copy's scale from that, not keep the old card's.
