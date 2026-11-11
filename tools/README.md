@@ -442,6 +442,19 @@ one edit) or the one known name that ends in the passed one (`--ohm-hand` -> `--
 says `flags unchecked: no declared spec`. `tools/film/film.mjs` checks the game flags after its `--`
 with the same index (it used to check names only, so a wrong value of an exact read passed).
 
+## A flag a helper matches but its caller never routes (lint `flag-routes`, `tools/style/flag_routes.mjs`)
+
+```
+project/features/characters/cast_flags.gd:65: "--rivet-walk-armed=off" is matched in _walk() but no caller routes it there (guard: arg.begins_with("--rivet-walk=") or arg.begins_with("--rivet-swipe") or arg.begins_with("--rivet-bob")): it can never fire
+```
+
+That is main's `cast_flags.gd` from c8d71e34a (2026-11-09) to 05e519be8. A function-size split moved
+`--rivet-walk-armed=off` and `--rivet-stride=off` into `_walk`, but the guard stayed narrow, so both flags did
+nothing for two nights. For every `func _name(<v>: String)`, each `"--..."` literal in its body must pass the
+`if`/`elif` condition above some `_name(<v>)` call in the same file. The condition is made of `<v>.begins_with("P")`,
+`<v> == "L"` and `<v> in CONST` (a same-file string list), joined by `or`. A guard with anything else is not judged.
+It takes 0.1 s over the tree. The flag index above cannot see this, because the literal does exist: it just never fires.
+
 ## A dev run draws the current pixels at a fixed step (`tools/dev/run.mjs`)
 
 ```

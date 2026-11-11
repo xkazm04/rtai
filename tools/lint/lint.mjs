@@ -9,6 +9,7 @@ import { PROJECT, ROOT, ownGdFiles, readJson, rel, run, walk } from '../lib/repo
 import { checkAll as styleChecks } from '../style/check_gd.mjs';
 import { uidCheck } from '../style/uid_files.mjs';
 import { launchFlagsCheck } from '../style/launch_flags.mjs';
+import { flagRoutesCheck } from '../style/flag_routes.mjs';
 import { check as constantsCheck } from '../gen_constants/gen.mjs';
 import { validate } from '../lib/mini_schema.mjs';
 import { check as layersCheck } from './layers.mjs';
@@ -184,6 +185,7 @@ export function runLint(scope = null) {
     ...styleChecks(),
     uidCheck(),
     launchFlagsCheck(),
+    flagRoutesCheck(),
     jsonCanonical(),
     eventsRegistry(),
     autoloadBudget(),
