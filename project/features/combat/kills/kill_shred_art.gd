@@ -39,6 +39,8 @@ class Shred:
 	## The whole-body shred (the row throws `body`): the death the track and fall grid lay; the
 	## scraps tear from his figure between feet and head.
 	var death: KillNewStyles.Death = null
+	## The victim kind's drawn scraps (row `cells.scraps`; null: the coded ones).
+	var drawn: Texture2D = null
 
 
 var _shreds: Array[Shred] = []
@@ -76,6 +78,7 @@ func add_death(d: KillNewStyles.Death) -> void:
 	s.extra = d.extra
 	s.hold = roundi(d.extra.num("fall_at", d.extra.num("cells_at", 24.0)))
 	s.death = d
+	s.drawn = KillLooseArt.of(d.body, KillLooseArt.SCRAPS)
 	_shreds.append(s)
 
 
@@ -174,8 +177,13 @@ func _scrap(ci: KillNewStyles, s: Shred, n: int, a: int) -> void:
 	if a < 4:  # the spurt off the tear
 		var r: float = ppm * 0.07 * (1.0 - float(a) / 4.0) + 1.0
 		ci.draw_circle(s.tears[n] + s.dir * ppm * 0.12 * float(a), r, KillMarkArt.BLOOD)
-	var size: float = ppm * s.extra.num("scrap_size_m", 0.1)
-	size *= 0.7 + 0.6 * KillNewStyles.h(s.serial, n + 320)
+	var k: float = 0.7 + 0.6 * KillNewStyles.h(s.serial, n + 320)
+	var size: float = ppm * s.extra.num("scrap_size_m", 0.1) * k
+	if s.drawn != null:  # drawn cell n, `scrap_cell_m` across, spinning until it lands
+		var spin: float = TAU * KillNewStyles.h(s.serial, n + 340) + float(a) * 0.6 * (1.0 - u)
+		var side: float = ppm * s.extra.num("scrap_cell_m", 0.25) * k
+		KillLooseArt.draw_cell(ci, s.drawn, n, Transform2D(spin, at), side)
+		return
 	var pts: PackedVector2Array = PackedVector2Array()
 	for v: int in 5:
 		var ang: float = TAU * float(v) / 5.0 + float(a) * 0.5 * (1.0 - u)

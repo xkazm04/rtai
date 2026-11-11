@@ -11,6 +11,8 @@ corpse (the last frame) is the 3/4-away one when BACK_FROM_AWAY names the kind, 
 grids do (a face-down corpse seen from behind reads as a person standing). Deterministic.
 
     PYTHONDONTWRITEBYTECODE=1 python tools/art/kill_cells_pack.py --death=pistol_snap [--art=p55] [--lib=<dir>]
+A death in SCRAPS_BY_DEATH also packs its loose scrap row as `<kind>_<death>_scraps.png`.
+
     PYTHONDONTWRITEBYTECODE=1 python tools/art/kill_cells_pack.py --headgear  (<kind>_headgear_tumble.png)
 """
 
@@ -32,7 +34,11 @@ BACK_FROM_AWAY = {"pistol_snap": ("cop_patrol",)}
 ALPHA_MIN = 40
 UPRIGHT_FRAME = 2
 # death -> its upright frame when not frame 2 (nail_pin: frame 2 hangs with the knees drawn up)
-UPRIGHT_BY_DEATH = {"nail_pin": 1}
+UPRIGHT_BY_DEATH = {"nail_pin": 1, "gatling_shred": 1}
+# death -> its frame count when the folder holds more rows (gatling_shred: row 4 is the loose scraps)
+FRAMES_BY_DEATH = {"gatling_shred": 3}
+# death -> its row of loose scrap cells, packed as <kind>_<death>_scraps.png (one square cell each)
+SCRAPS_BY_DEATH = {"gatling_shred": 4}
 # kind -> its row of the loose headgear cells (cop_headgear_tumble_70_cells/<row>_<frame>.png)
 HEADGEAR = {"cop_patrol": 1, "cop_riot": 2, "swat": 3}
 
@@ -52,7 +58,7 @@ def frames_of(src: Path) -> int:
 
 def pack(kind: str, death: str, lib: Path, art: str = "p70") -> Path | None:
     src = lib / f"{kind}_{death}_{art[1:]}_cells"
-    n = frames_of(src)
+    n = min(frames_of(src), FRAMES_BY_DEATH.get(death, 99))
     if n == 0:
         return None
     first = Image.open(src / "1_1.png")
@@ -74,6 +80,26 @@ def pack(kind: str, death: str, lib: Path, art: str = "p70") -> Path | None:
             slot.paste(cell, (0, dy_c))  # clipped to its own cell
             out.alpha_composite(slot, ((c - 1) * w, (f - 1) * h))
     dst = VIEW / art / f"{kind}_{death}.png"
+    out.save(dst, optimize=True)
+    return dst
+
+
+def pack_scraps(kind: str, death: str, lib: Path, art: str = "p70") -> Path | None:
+    """The death's loose scraps (row SCRAPS_BY_DEATH): across, each centred in a square cell."""
+    if death not in SCRAPS_BY_DEATH:
+        return None
+    src = lib / f"{kind}_{death}_{art[1:]}_cells"
+    row = SCRAPS_BY_DEATH[death]
+    cells = []
+    while (src / f"{row}_{len(cells) + 1}.png").exists():
+        cells.append(Image.open(src / f"{row}_{len(cells) + 1}.png").convert("RGBA"))
+    if not cells:
+        return None
+    side = max(max(c.size) for c in cells)
+    out = Image.new("RGBA", (side * len(cells), side), (0, 0, 0, 0))
+    for i, c in enumerate(cells):
+        out.alpha_composite(c, (i * side + (side - c.width) // 2, (side - c.height) // 2))
+    dst = VIEW / art / f"{kind}_{death}_scraps.png"
     out.save(dst, optimize=True)
     return dst
 
@@ -108,6 +134,10 @@ def main() -> None:
         if dst is None:
             print(f"{kind}: no cells")
             continue
+        scraps = None if args.headgear else pack_scraps(kind, args.death, Path(args.lib), args.art)
+        if scraps is not None:
+            sha_s = hashlib.sha256(scraps.read_bytes()).hexdigest()
+            print(f"{kind}: {scraps.relative_to(ROOT).as_posix()} {Image.open(scraps).size} sha256 {sha_s}")
         sha = hashlib.sha256(dst.read_bytes()).hexdigest()
         print(f"{kind}: {dst.relative_to(ROOT).as_posix()} {Image.open(dst).size} sha256 {sha}")
 

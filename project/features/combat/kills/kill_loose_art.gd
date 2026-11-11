@@ -8,30 +8,37 @@ extends RefCounted
 ## view art and card row (KillDeathCells.path_in); a kind with none (a bare head) throws nothing.
 
 const META: StringName = &"kill_loose"
+const SCRAPS: StringName = &"kill_scraps"
 ## Ticks per tumble frame in the air.
 const TUMBLE_TICKS: int = 3
 ## Where the drawn snap frame's cap flies, of his standing height above his feet.
 const START_HEIGHT: float = 1.1
 
 
-## Gives the body copy its loose headgear texture (the victim's card row in the view art).
+## Gives the body copy its loose headgear texture and the death's drawn scraps (the victim's card
+## row in the view art; row `cells.loose` and `cells.scraps`).
 static func attach(rig: CutRig, body: Node2D, extra: KillTrackRows.Extra) -> void:
-	if rig == null or body == null or extra == null or extra.loose.is_empty():
+	if rig == null or body == null or extra == null:
 		return
 	var row: String = StreetWalkerCards.row_of(rig)
-	var path: String = KillDeathCells.path_in(extra.loose, ViewMode.shared().art, row)
+	_attach(body, extra.loose, row, META)
+	_attach(body, extra.scraps, row, SCRAPS)
+
+
+static func _attach(body: Node2D, table: Dictionary, row: String, key: StringName) -> void:
+	var path: String = KillDeathCells.path_in(table, ViewMode.shared().art, row)
 	if path.is_empty():
 		return
 	var tex: Texture2D = StreetStrips.get_tex(StreetWalkerCards.DIR + path)
 	if tex != null:
-		body.set_meta(META, tex)
+		body.set_meta(key, tex)
 
 
-## The loose headgear a body copy carries (null = none).
-static func of(body: Node) -> Texture2D:
-	if body == null or not body.has_meta(META):
+## The loose headgear a body copy carries (null = none); `key` SCRAPS: its drawn scraps.
+static func of(body: Node, key: StringName = META) -> Texture2D:
+	if body == null or not body.has_meta(key):
 		return null
-	var t: Variant = body.get_meta(META)
+	var t: Variant = body.get_meta(key)
 	return t if t is Texture2D else null
 
 
@@ -58,3 +65,15 @@ static func draw(ci: KillNewStyles, d: KillNewStyles.Death, age: int) -> void:
 	var c: Vector2 = where(d, age, ci.ppm)
 	var dst: Rect2 = Rect2(c - Vector2(side, side) * 0.5, Vector2(side, side))
 	ci.draw_texture_rect_region(d.loose, dst, Rect2(frame * cell, 0.0, cell, cell))
+
+
+## Cell `n` (wrapping) of a strip of square cells, `side` px across, centred on `xf`'s origin.
+static func draw_cell(
+	ci: CanvasItem, strip: Texture2D, n: int, xf: Transform2D, side: float
+) -> void:
+	var cell: float = float(strip.get_height())
+	var count: int = maxi(1, floori(float(strip.get_width()) / cell))
+	ci.draw_set_transform_matrix(xf)
+	var dst: Rect2 = Rect2(Vector2(side, side) * -0.5, Vector2(side, side))
+	ci.draw_texture_rect_region(strip, dst, Rect2(float(n % count) * cell, 0.0, cell, cell))
+	ci.draw_set_transform_matrix(Transform2D.IDENTITY)

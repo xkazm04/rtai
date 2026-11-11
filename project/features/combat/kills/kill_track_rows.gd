@@ -23,6 +23,8 @@ class Extra:
 	var grids: Dictionary = {}
 	## art -> card row -> the loose headgear's tumble cells (KillLooseArt).
 	var loose: Dictionary = {}
+	## art -> card row -> the death's drawn loose scraps, square cells across (KillShredArt).
+	var scraps: Dictionary = {}
 
 	## The style value `key` (row fx), or `fallback`.
 	func num(key: String, fallback: float) -> float:
@@ -82,6 +84,9 @@ static func _cells(e: Extra, v: Variant) -> void:
 	var l: Variant = c.get("loose", {})
 	if l is Dictionary:
 		e.loose = l
+	var sc: Variant = c.get("scraps", {})
+	if sc is Dictionary:
+		e.scraps = sc
 
 
 static func _f(v: Variant) -> float:

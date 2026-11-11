@@ -825,13 +825,39 @@
     {
       "blot_m": 0.35,
       "bounce": 0.1,
+      "cells": {
+        "at": [
+          0,
+          12,
+          24
+        ],
+        "grids": {
+          "p70": {
+            "cop/head_cap": "cop_patrol_gatling_shred.png",
+            "cop/head_helmet": "cop_riot_gatling_shred.png",
+            "cop/head_swat": "swat_gatling_shred.png",
+            "ped/head_hair": "ped_suit_gatling_shred.png"
+          }
+        },
+        "scraps": {
+          "p70": {
+            "cop/head_cap": "cop_patrol_gatling_shred_scraps.png",
+            "cop/head_helmet": "cop_riot_gatling_shred_scraps.png",
+            "cop/head_swat": "swat_gatling_shred_scraps.png",
+            "ped/head_hair": "ped_suit_gatling_shred_scraps.png"
+          }
+        }
+      },
       "cone_deg": 16,
-      "doc": "Gatling (lane kills-new, n16): the shred. No hit-stop (the stream never stops). t0-24 the stream holds him upright, shaken back hard every 1-2 ticks (the pose track: leans of 2-12 deg away from the gun), and every 3 ticks a torn scrap of cloth or flesh with a cream bone fleck leaves his figure (hip to neck) with a red spurt and flies up to 1.4 m along the stream to lie on the street (KillShredArt, 8 scraps). From t24 what is left drops: his own drawn fall grid (KillFallCells) over 12 ticks, falling back along the stream. (fx cells_at 0 + fall_at 24 = the buckle frame from the hit: no jump at the drop, but a jump and a hunched figure at the kill; rejected by film 13:05.) Aftermath: the body among the scattered scraps, a wide spray behind. Alternative (one data change): pieces = the six rig parts + grind_ticks 24 holds the parts and KillShredArt shakes them and drops them in a heap at his feet (wants kills-polish's drawn gib pieces, GibCardPieces.dress_rig, on a card victim). Placeholder until the drawn shred cells land (JOURNAL REQUEST assets).",
+      "doc": "Gatling (lane kills-new, n16): the shred. No hit-stop (the stream never stops). t0-24 the stream holds him upright, shaken back hard every 1-2 ticks (the pose track: leans of 2-12 deg away from the gun), and every 3 ticks a torn scrap of cloth or flesh with a cream bone fleck leaves his figure (hip to neck) with a red spurt and flies up to 1.4 m along the stream to lie on the street (KillShredArt, 8 scraps). From t24 what is left drops: his own drawn fall grid (KillFallCells) over 12 ticks, falling back along the stream. (fx cells_at 0 + fall_at 24 = the buckle frame from the hit: no jump at the drop, but a jump and a hunched figure at the kill; rejected by film 13:05.) Aftermath: the body among the scattered scraps, a wide spray behind. Alternative (one data change): pieces = the six rig parts + grind_ticks 24 holds the parts and KillShredArt shakes them and drops them in a heap at his feet (wants kills-polish's drawn gib pieces, GibCardPieces.dress_rig, on a card victim). The patrol cop, riot cop, SWAT and suit ped play their own drawn cells (KillDeathCells, 5 facings x 3 frames, facing the shooter; the stream still shakes them at 0.6 of the track, fx cells_lean): t0 shaken back upright, arms flung, ragged red holes, spray leaving behind him; t12 sagging or kneeling, the shirt torn open over cream ribs, shoulder-bone knobs, the cap or helmet knocked off beside him; from t24 the heap on his back, ribs, a spine stub and a torn-off arm, turned to lie along the stream (fx cells_turn_from 2). Their scraps are the drawn ones (cells.scraps: cloth, a pocket, flesh, flesh with bone, a belt or strap piece, a sleeve end; scrap_cell_m 0.25 across), spinning as they fly.",
       "fall": "back",
       "flash_ticks": 0,
       "fx": {
         "cells_at": 24,
+        "cells_lean": 0.6,
         "cells_ticks": 12,
+        "cells_turn_from": 2,
+        "scrap_cell_m": 0.25,
         "scrap_every": 3,
         "scrap_m": 1.4,
         "scrap_size_m": 0.16,
@@ -985,12 +1011,13 @@
         }
       },
       "cone_deg": 16,
-      "doc": "Electro baton (lane kills-new, n16): the overload. Unlike the electro gun's X-ray strobe: no skeleton, no strobe, no arcs; the current cooks him from inside. Hit-stop 3 (the heavy blow). t3-45 he stands locked with a fine tremble (1.5 deg every tick; none under --reduced-motion) while cream veins of light spread from his chest into his limbs, brighter each tick, a cream glow builds under the skin, steam puffs rise off his collar and shoulders every 6 ticks, and his eyes burn as two cream points that go out at t40 (KillCookArt). From t45 his own drawn fall grid (KillFallCells) drops him back along the blow over 10 ticks, and smoke rises off the body for 200 ticks. No blood (spray 0, no blot). The patrol cop, riot cop, SWAT and suit ped play their own drawn cells (KillDeathCells, facing the shooter, 5 facings x 4 frames): t0 locked rigid, cream veins of light; t20 brighter, arcs and steam; t40 sagging, head lolling, smoke; from t45 on his back, smoking, in a grey soot ring. The drawing carries the glow, veins and eyes; the coded steam and smoke stay.",
+      "doc": "Electro baton (lane kills-new, n16): the overload. Unlike the electro gun's X-ray strobe: no skeleton, no strobe, no arcs; the current cooks him from inside. Hit-stop 3 (the heavy blow). t3-45 he stands locked with a fine tremble (1.5 deg every tick; none under --reduced-motion) while cream veins of light spread from his chest into his limbs, brighter each tick, a cream glow builds under the skin, steam puffs rise off his collar and shoulders every 6 ticks, and his eyes burn as two cream points that go out at t40 (KillCookArt). From t45 his own drawn fall grid (KillFallCells) drops him back along the blow over 10 ticks, and smoke rises off the body for 200 ticks. No blood (spray 0, no blot). The patrol cop, riot cop, SWAT and suit ped play their own drawn cells (KillDeathCells, facing the shooter, 5 facings x 4 frames): t0 locked rigid, cream veins of light; t20 brighter, arcs and steam; t40 sagging, head lolling, smoke; from t45 on his back, smoking, in a grey soot ring, turned to lie along the blow (fx cells_turn_from 3). The drawing carries the glow, veins and eyes; the coded steam and smoke stay.",
       "fall": "back",
       "flash_ticks": 0,
       "fx": {
         "cells_at": 45,
         "cells_ticks": 10,
+        "cells_turn_from": 3,
         "cook_from": 3,
         "cook_to": 45,
         "eyes_out": 40,

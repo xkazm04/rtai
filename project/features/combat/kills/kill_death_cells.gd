@@ -52,8 +52,13 @@ static func lean_of(d: KillNewStyles.Death) -> float:
 	return d.extra.num("cells_lean", 0.0) if owns(d.cells) else 1.0
 
 
-## The way his own drawn cells look (world rad): at the shooter, back up the shot.
-static func face_of(d: KillNewStyles.Death) -> float:
+## The way his own drawn cells look (world rad): at the shooter, back up the shot; from frame
+## `cells_turn_from` (row fx, -1 = never) along the shot, so the drawn corpse (laid head the way
+## its figure looked) lies knocked back along the blow.
+static func face_of(d: KillNewStyles.Death, frame: int = -1) -> float:
+	var turn: int = roundi(d.extra.num("cells_turn_from", -1.0))
+	if turn >= 0 and frame >= turn:
+		return d.dir.angle()
 	return (-d.dir).angle()
 
 
@@ -65,7 +70,7 @@ static func step(d: KillNewStyles.Death, age: int) -> bool:
 		f = KillPinArt.frame(d, age)
 	KillNewStyles.show_cells(d, f >= 0)
 	d.cells.frame_coords = Vector2i(d.cells.frame_coords.x, maxi(f, 0))
-	var look: float = face_of(d)
+	var look: float = face_of(d, f)
 	if d.row.style == &"stitch":  # at the shooter, then the drawn spin turned a full circle
 		look = KillStitchArt.facing(d, age)
 	KillFallCells.face(d.cells, look)

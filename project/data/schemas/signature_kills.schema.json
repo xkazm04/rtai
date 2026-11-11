@@ -61,6 +61,16 @@
                   "type": "object"
                 },
                 "type": "object"
+              },
+              "scraps": {
+                "additionalProperties": {
+                  "additionalProperties": {
+                    "pattern": "^[a-z0-9_]+[.]png$",
+                    "type": "string"
+                  },
+                  "type": "object"
+                },
+                "type": "object"
               }
             },
             "required": [

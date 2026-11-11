@@ -21,7 +21,7 @@ func test_the_pistol_row_names_a_grid_for_the_four_street_kinds() -> void:
 
 
 func test_a_row_without_cells_names_none() -> void:
-	var e: KillTrackRows.Extra = KillTrackRows.of(&"gatling_shred")
+	var e: KillTrackRows.Extra = KillTrackRows.of(&"rocket_gib")
 	assert_eq(KillDeathCells.path_of(e, "p70", "cop/head_cap"), "")
 	assert_eq(KillDeathCells.frame_at(e, 50), -1)
 
@@ -145,3 +145,34 @@ func test_the_pin_hangs_writhes_or_lies_by_its_case() -> void:
 	assert_eq(seen.keys().size(), 2, "the wall: pinned, and the knees jerked up on the writhe")
 	assert_eq(KillPinArt.frame(d, 400), 0, "then he hangs")
 	assert_eq(KillPinArt.writhe(d, 30), 0.0, "nailed to the wall his drawn frames do not lean")
+
+
+func test_the_shred_plays_drawn_cells_and_drawn_scraps_for_the_four_street_kinds() -> void:
+	var e: KillTrackRows.Extra = KillTrackRows.of(&"gatling_shred")
+	assert_eq(e.cells_at.size(), 3, "shaken back, sagging, the heap")
+	for row: String in ["cop/head_cap", "cop/head_helmet", "cop/head_swat", "ped/head_hair"]:
+		assert_false(KillDeathCells.path_of(e, "p70", row).is_empty(), row)
+		var strip: String = KillDeathCells.path_in(e.scraps, "p70", row)
+		assert_true(ResourceLoader.exists(StreetWalkerCards.DIR + strip), "%s scraps" % row)
+		var tex: Texture2D = load(StreetWalkerCards.DIR + strip)
+		assert_eq(tex.get_width() % tex.get_height(), 0, "%s: square cells across" % strip)
+		assert_eq(tex.get_width() / tex.get_height(), 6, "%s: the six drawn scraps" % strip)
+
+
+func test_the_drawn_corpse_turns_to_lie_along_the_blow_where_the_row_says() -> void:
+	var d: KillNewStyles.Death = KillNewStyles.Death.new()
+	d.dir = Vector2.RIGHT
+	d.extra = KillTrackRows.of(&"gatling_shred")
+	assert_almost_eq(_look(d, 1), Vector2.LEFT, Vector2.ONE * 0.0001, "sagging: at the shooter")
+	assert_almost_eq(_look(d, 2), Vector2.RIGHT, Vector2.ONE * 0.0001, "the heap: along the stream")
+	d.extra = KillTrackRows.of(&"baton_overload")
+	assert_almost_eq(_look(d, 2), Vector2.LEFT, Vector2.ONE * 0.0001, "the sag: at the shooter")
+	assert_almost_eq(_look(d, 3), Vector2.RIGHT, Vector2.ONE * 0.0001, "on his back along the blow")
+	d.extra = KillTrackRows.of(&"pistol_snap")
+	assert_almost_eq(
+		_look(d, 3), Vector2.LEFT, Vector2.ONE * 0.0001, "the pistol folds onto his face"
+	)
+
+
+func _look(d: KillNewStyles.Death, frame: int) -> Vector2:
+	return Vector2.from_angle(KillDeathCells.face_of(d, frame))
