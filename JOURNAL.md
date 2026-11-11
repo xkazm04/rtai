@@ -131,3 +131,15 @@ NEXT (iteration 2):
 - Scored on films: hand cannon 13, homing shard 13, mini nuke 15, plasma sword 7 -> 10, katana 10 -> 13 (KILLS.md).
 - Registry rules applied: motion-quality-gating (judge on game frames at play zoom, before/after same tick; the 32 px/m
   bone result recorded as a miss, not claimed); combat-pacing (no new holds: all three changes are view placement only).
+- MILESTONE e69fd5359 blade halves topple (`split_topple_deg` 80, KillSplitHalves; key renamed from `topple_deg`
+  because kills-new's `track` sits at the same schema spot: quick.mjs merge-clash caught it). Films katana 64/32,
+  plasma sword 64. The chainsaw's level cut stacks the halves and its torso fell back UNDER Rivet: fixed in the work
+  tree (stacked halves fall along the blow), commit after the gate.
+- 13:08 GATES started on e69fd5359 (`node tools/gate/run.mjs --rev=e69fd5359 --reels`, log build/gate_e69f.log).
+- 13:15 A2 cut faces delivered (it414, `library/keyed/fx/cut_face_70/`): wiring the tile variants into KillCutEdge
+  (`--cut-face=line` = before); needs a Godot import after the gate (no second Godot while it runs).
+- 13:12 stopped my own gate (PID 71904 tree) to keep Godot free for the chainsaw fix and A2; gate re-run on the last
+  commit below.
+- MILESTONE 0dcdf95c1 stacked halves (the saw's level cut) fall along the blow, off Rivet.
+- MILESTONE 794f27f80 A2 drawn cut faces on the blade halves (KillCutEdge.FACES; `--cut-face=line` = before). Films
+  katana 64/32, chainsaw 64, plasma sword 64. Owner Call: the hot face is a charred crust, less glow than the cream bar.

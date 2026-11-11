@@ -4,7 +4,12 @@
 1. The split's "halves" were the whole cop, standing and aiming as he slid off (t64-t130), plus his feet: the cut ran
    through the body's ground point, below the drawn figure -> fixed 7d3ba705a (row cut_up_m 0.8,
    `evidence/n16-kills-polish/katana_cut_up_ab_*`, `plasma_sword_cut_up_*`, `chainsaw_cut_up_*`).
-2. The halves slide off upright (a head-and-shoulder half floats standing) -> open (topple them as they part).
+2. The halves slide off upright (a head-and-shoulder half floats standing) -> fixed e69fd5359 (split_topple_deg 80,
+   `evidence/n16-kills-polish/katana_topple_ab_*`, `plasma_sword_topple_*`).
+4. Chainsaw, e69fd5359: the level cut stacks the halves, and the torso fell back under Rivet -> fixed 0dcdf95c1
+   (stacked halves fall along the blow, `evidence/n16-kills-polish/chainsaw_cut_face_stacked_fall_ab_*`).
+5. The cut edge was a plain red band (cream for the plasma sword): no ribs, no spine -> fixed 794f27f80 (A2 drawn cut
+   faces). The drawn strip is straight and overhangs a narrow legs half -> open, minor.
 3. The plasma sword leaves nothing on the street (no blood by design, the halves only) -> open (char on the halves' edges?).
 
 ## Rocket lone kill, patrol cop, bone pieces, combo 64 and 32 px/m t350-371 (iteration 2)
