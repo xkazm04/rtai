@@ -132,7 +132,7 @@ static func place(rig: CutRig, card: Sprite2D) -> void:
 	var drawn_walk: bool = RivetWalk.is_grid(card)
 	var ph: float = RivetWalk.phase_of(rig, art, s)
 	var c: Vector2i = cell_of(rig, card.hframes, ph if drawn_walk else -1.0)
-	card.frame = c.x
+	RivetCellFeet.show(card, c.x)  # n17: a strike cell on its own boot line
 	card.flip_h = c.y == 1
 	var walk: float = clampf(rig.speed_now / WALK_SPEED, 0.0, 1.0)
 	walk = walk if c.x != Cell.ROLL and c.x != Cell.DEATH and not drawn_walk else 0.0
