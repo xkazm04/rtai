@@ -281,3 +281,17 @@ REQUEST tools (open, served on n15-tools, not merged here): none new.
 - REQUEST assets: the contractor's hit stagger (`contractor_hit_70_cells/v2/1_{1..5}.png`) with the long dock carbine
   his card holds, not the short gun: in quest 1 his carbine drops beside him as the stagger draws a short gun
   (`evidence/n15-combat/contractor_hit_stagger_ab_48ppm_x2_t13708-13726.png`, t13716). Low priority.
+- GATES 01:27 on `896c5c30d` (`node tools/gate/run.mjs --rev=HEAD --reels`, build/gate/896c5c30dce1/): PASS lint 16/16,
+  PASS unit 2519 passed / 0 failed / 2 skipped, PASS scenarios 55, PASS parity bit-exact (mutation caught at 629),
+  PASS selftest (look goldens 11/11 worst 0.00: neither the contractor stagger nor the impact dust moved a golden),
+  PASS export-audit (670 loaded). Reels still running at 01:38 (build/gate/896c5c30dce1/reels.log, gate.json when done).
+  The commits after 896c5c30d are JOURNAL only.
+- 01:38 charred WIP grew (all UNCOMMITTED, not imported, not run): `project/features/combat/kills/kill_char_cells.gd`
+  (KillCharCells: tag in KillStyles.parts for style burn by StreetWalkerCards.row_of, swap in KillStyles.take after
+  char_fx.add: head_card -> the char grid, frame = card.frame % 5, upright, offset feet at FOOT_Y, scale
+  HEIGHT * PX_PER_M * FILL[burn] / tex_h, material null; `--char-cells=off`), the two hooks in
+  `project/features/combat/kills/kill_styles.gd`, `project/tests/unit/test_kill_char_cells.gd`, the packer change and the
+  PNG. Next: `--import`, `node tools/godot/check.mjs` on the two .gd, run_unit --select=test_kill_char_cells,
+  film weapon:flamethrower --victim=cop/head_cap --on=kill:1+90 at 64 and 32 px/m with/without `--char-cells=off`,
+  look whether the HAT group also carries a head_card copy (whole-body cut copies head sprites twice), then provenance
+  (steam/ai-provenance), DECISION, commit. If the film loses to the char print, delete the WIP.
