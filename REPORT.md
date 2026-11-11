@@ -1,4 +1,4 @@
-# REPORT n15-tools (draft, session 3, 01:02; later sessions extend it)
+# REPORT n15-tools (session 4, 02:20; later sessions extend it)
 
 Branch `n15-tools` from main `5c5c03611`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n15\tools\` (`frames.json`),
 `evidence/` in this tree, JOURNAL.md for every command and its output.
@@ -9,10 +9,11 @@ Branch `n15-tools` from main `5c5c03611`. Evidence: `C:\Users\kazda\kiro\gtai-ma
 |---|---|---|---|
 | t-1 CitySpawnPlan turns | `_turn += q + 1` (d720e22da) | `test_city_spawn_plan_turns.gd` (`[2,2,3,2] != [2,3,2,3]`, 8 of 30 turns for 10); Codex's n11 test landed unchanged | moves the city sim (parity final digest 9cd5579a -> 94b2865f) and the 16 look/block goldens: re-blessed eb65c8b05, before/after stills in masters |
 | t-2 overrule with a reason | `factory.mjs review --overrule=` / `overrule <id> --reason=` (7ef39b42e) | 3 factory tests | city_spawn_plan: 25/39 killed, all 14 survivors equivalent (named in decisions.md), 25/25 killable; recorded in the n15 ledger |
-| t-4 car routing | U-turn only on T_VOID, exits honour orientation, 18/2.5/13/16 m in `sim_constants.json` group `car_route`, GDScript + C++ (fe5dccda0) | `test_sim_car_route_t4.gd` 3 of 5 fail on the old rules; `test_city_lane_grid.gd` audits 256 chunks | parity exact; final digest unchanged: the old rules never fire in the generated city. Film (city street, 32 px/m, t300-900): 0 of 1024000 pixels differ at t300/600/900, before = a worktree at d720e22da with the pre-t-4 DLL (`t4-city-street-32ppm-before-after-*` in masters) |
-| t-5 hash window | HW 80 -> 132 cells (528 m), both sims (0ba5b1e91) | `test_sim_hash_window.gd` (empty query at 256 m on HW 80) | CONTENDED, bench lock held: native +5.8 us/step median, GDScript ref +0.34 ms/step (`evidence/t5_ab.tsv`) |
+| t-4 car routing | U-turn only on T_VOID, exits honour orientation, 18/2.5/13/16 m in `sim_constants.json` group `car_route`, GDScript + C++ (fe5dccda0); the dead-end tiles are one data value `CAR_DEAD_END_TILES` (41505c09f, shipped 1 = t-4) | `test_sim_car_route_t4.gd` 3 of 5 fail on the old rules; `test_city_lane_grid.gd` audits 256 chunks; the route tests pass 21/0 at mask 1, 241 and 65 | parity exact; final digest unchanged: the old rules never fire in the generated city. Film (city street, 32 px/m, t300-900): 0 of 1024000 pixels differ. **On a hand-made map** (`res://dev/sim/car_route_trails.gd`, real reference-sim car code): before 3 U-turns at a plaza and 1 at a kerb, after all 7 at void; a car drives across the plaza into the building behind it (`t4-hand-map-trails-before-after-4ppm.png`): Call c-2 |
+| t-5 hash window | HW 80 -> 132 cells (528 m), both sims (0ba5b1e91) | `test_sim_hash_window.gd` (empty query at 256 m on HW 80) | CONTENDED (8-15 other Godot processes), bench lock held, with an A/A twin: native +9.0 us/step median on 52 us (+17 %), GDScript ref +0.63 ms on 4.43 ms (+14 %), B slower in 6/6 rounds, A/A median -1.8 us / -0.14 ms (`evidence/t5_aab.tsv`). Cause: `CitySimHash.build` walks all HW*HW cells each step (6400 -> 17424). Native +9 us is 0.05 % of a 16.7 ms frame |
 
-Native rebuilt twice tonight by this lane (22:09 t-4, 22:30 t-5), debug + release, `sim_core tests: 0 failed`.
+Native rebuilt by this lane at 22:09 (t-4), 22:30 (t-5) and 02:05 (c-2 mask; comment-only regen after), debug + release,
+`sim_core tests: 0 failed`; parity bit for bit after each, final digest 94b2865f7f17d778.
 
 ## Parity and replay
 
@@ -21,6 +22,10 @@ re-bless. Parity stays bit-exact. What moved: t-1 changes the city sim's spawn o
 crowd: look goldens re-blessed with a decisions line). t-4 and t-5 move nothing measurable (same final digest).
 
 ## Tools changed
+
+- `project/dev/sim/car_route_trails.gd` (6b9d2a900, AGENTS.md line): the reference sim's real car code on a hand-made map
+  (roads ending at a plaza, a kerb, void), trails at 4 px/m, each U-turn boxed, `.png` + `.json`. Run it in two worktrees
+  for a routing before/after. Example: `--out=.../before` on d720e22da -> U-turns `tile_ahead` 7, 0, 7 / 7, 4, 0 / 0, 0, 0.
 
 - `tools/lint/lint.mjs`: every failing tool test is named; issues past 40 go to `build/lint/<check>.txt` (path + count printed).
 - `tools/merge/morning.mjs`: a `tools/debt/baseline.json` conflict merges to the looser side per file and says so; limits rounded to whole ms.
@@ -81,6 +86,13 @@ Commits after 52dc72d4 are Node tools, their tests and docs (linted by the hook)
 
 ## Morning merge, run for real (item 4)
 
+**Every step has now run for real.** Third run, 01:50-01:59, on the scratch integration (n15-tools with the flake fix +
+hero + combat + the hero x combat resolution): `morning: gates: scenario-tests pass: scenario-tests: 55 passed`, unit
+2582/0, lint 16/16, parity exact, selftest look 11/11, release-compile 674/0, `morning: gates: green`, then
+`morning: export: green` (RTAI.exe 650 MB + the release DLL; boots headless and quits at tick 300 with exit 0, two engine
+ERROR lines not compared against main), `morning: DONE at 71f0d5b1 ... Nothing was pushed` (`evidence/morning_s4_gates_export.log`).
+Scratch worktree and branch removed.
+
 Second real run, 01:03-01:22 (fresh scratch integration of the three tips, `--steps=merge,debt,bake,gates,export`):
 the baseline auto-resolve **fired for real** (`tools/debt/baseline.json conflicted merging n15-hero: took the looser
 of both sides ...`), then the merge **stopped on a real hero x combat code conflict** (see Merge notes). Its baseline
@@ -113,17 +125,26 @@ the right film).
   As adversarial TESTERS tonight Codex cost little review (23 tests, none rewritten, two files split for size) and
   caught a wording error in my brief. Recommend: Codex for testers of finished fixes, Claude for first-author unit tests.
   Alternative: keep both (one data value: the factory's `pick`). Evidence: gtai-masters/n15/tools/codex-ledger.jsonl.
-- **c-2 t-4 is invisible in the shipped city** (0 of 1024000 pixels differ; `t4-city-street-32ppm-before-after-*`): the
-  generated grid never puts a kerb or plaza ahead of a lane. Kept as built (owner's Call); it matters for any hand-made map.
+- **c-2 what a car does where a road ends at a plaza, a kerb or a building.** t-4 as you chose it (U-turn only at the
+  city edge or an unloaded tile) drives the car across the plaza and into the building behind it, turning 18 m before the
+  void; the old rule turned 18 m short of the plaza. Invisible in the shipped city (0 of 1024000 pixels differ: the
+  generated grid never ends a road there), so it matters for a hand-made map only. Now one data value,
+  `CAR_DEAD_END_TILES` in `tools/gen_constants/sim_constants.json` (then `node tools/gen_constants/gen.mjs` + `just
+  native`): **1** shipped (t-4), **241** the pre-t-4 rule (reproduced tick for tick), **65** void or a building (drive
+  over a kerb or plaza, turn before a building). Recommend **65**: a car may cross a plaza but never a building. Kept at
+  1 tonight because 1 is your Call. Side by side: `gtai-masters/n15/tools/c2-dead-end-mask-241-1-65-4ppm.png`.
 
 ## Not done yet
 
-- t-5 cost under the bench lock (CONTENDED only). The `export` morning step was never run for real (bake: green 01:13).
-- The reel gate on the final commit.
+- t-5 cost on a quiet machine (every number tonight is CONTENDED; the sign is 6/6, the size soft).
+- The hand-made-map trails are tier B (no hull); a tier A car on a plaza meets the hull push-out, not filmed.
 
 ## Merge notes (draft)
 
-- Merge n15-tools FIRST. It changes the sim (t-1 spawn order, t-4, t-5 HW) and both DLLs (rebuild them: `just native`).
+- Merge n15-tools FIRST. It changes the sim (t-1 spawn order, t-4, t-5 HW, the c-2 mask at its t-4 value) and the
+  native sources (`car_route.cpp`, `sim_constants.h`): the DLLs are git-ignored, so rebuild both after the merge
+  (`just native` debug + release, then `--import`). Hero and combat keep working on their own DLLs until then: their
+  view does not read the routing.
 - Hero and combat need NO replay re-bless: no replay golden is committed (`git ls-files` holds only the 17 look
   goldens; the replay scenario records and replays inside one run). Look goldens: the integrated tree of all three
   lanes at 23:08 (morning.mjs on a scratch worktree) passed look 11/11 and block 5/5 at worst 0.00 on this lane's
