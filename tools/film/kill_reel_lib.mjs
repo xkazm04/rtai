@@ -44,11 +44,11 @@ const list = (text, fallback) => (text === undefined || text === true ? fallback
 
 /** Everything the reel needs before a launch, or {error}. Pure apart from reading `tree`'s tables for `all`. */
 export function reelPlan(flags, extra, tree = ROOT) {
-  const known = new Set(['out', 'weapons', 'victims', 'dirs', 'ppm', 'after', 'rev', 'before', 'native', 'clips', 'keep-frames', 'timeout', 'dry-run']);
+  const known = new Set(['out', 'weapons', 'victims', 'dirs', 'ppm', 'after', 'rev', 'before', 'native', 'clips', 'keep-frames', 'timeout', 'dry-run', 'gore-check']);
   const stray = Object.keys(flags).find((k) => !known.has(k));
   if (stray) return { error: `unknown option --${stray}` };
   if (!flags.out || flags.out === true) return { error: '--out=<dir> is required' };
-  for (const k of ['clips', 'keep-frames', 'dry-run']) if (flags[k] !== undefined && flags[k] !== true) return { error: `--${k} takes no value` };
+  for (const k of ['clips', 'keep-frames', 'dry-run', 'gore-check']) if (flags[k] !== undefined && flags[k] !== true) return { error: `--${k} takes no value` };
   const weapons = flags.weapons === undefined || flags.weapons === 'all' ? reelWeapons(tree) : list(flags.weapons, []);
   const dirs = list(flags.dirs, ['0']).map(Number);
   const ppm = list(flags.ppm, ['32', '64']).map(Number);
@@ -60,9 +60,12 @@ export function reelPlan(flags, extra, tree = ROOT) {
   for (const k of ['rev', 'before', 'native', 'timeout']) if (flags[k] === true) return { error: `--${k} needs a value` };
   if (flags.native !== undefined && !flags.rev && !flags.before) return { error: '--native=donor goes with --rev or --before' };
   if (extra.some((a) => /^--(sig-dir|sig-gun|sig-solo|victim|seed|ppm)=/.test(a))) return { error: 'the reel sets --sig-dir, --sig-gun, --sig-solo, --victim, --seed and --ppm itself: use --dirs, --weapons, --victims, --ppm' };
+  if (flags['gore-check'] && extra.some((a) => a.startsWith('--gore='))) return { error: '--gore-check passes --gore=reduced itself' };
   const victims = list(flags.victims, ['']);
   const jobs = weapons.flatMap((weapon) => victims.flatMap((victim) => dirs.flatMap((dir_deg) => ppm.map((p) => ({ weapon, victim, dir_deg, ppm: p })))));
-  return { out: resolve(flags.out), weapons, victims: victims.filter(Boolean), dirs, ppm, after, jobs, extra,
+  const gore = flags['gore-check'] === true;
+  return { out: resolve(flags.out), weapons, victims: victims.filter(Boolean), dirs, ppm, after, jobs, goreCheck: gore,
+    extra: gore ? [...extra, '--gore=reduced'] : extra,
     rev: flags.rev ?? null, before: flags.before ?? null, native: flags.native ?? null, clips: flags.clips === true,
     keepFrames: flags['keep-frames'] === true, dryRun: flags['dry-run'] === true, timeout: Number(flags.timeout ?? 300) };
 }
@@ -103,4 +106,17 @@ export function sheetOf(file, rows, weapon, ppm) {
   const mine = rows.filter((r) => r.job.weapon === weapon && r.job.ppm === ppm && r.film?.box);
   return { file, weapon, ppm, rows: mine.map(({ job, film }) => ({ side: job.side, victim: job.victim || 'guard', dir_deg: job.dir_deg,
     kill: film.kill, beats: film.beats, outcome: film.outcome })) };
+}
+
+/** The --gore-check verdict for one film run with --gore=reduced: null when the victim still lies drawn as ONE
+ *  card `settle` ticks after the kill (the standard death: dropped whole), else why not. A signature death hides
+ *  the victim's rig (consumed), so its card is gone (draw -1) while gibs or halves fly. */
+export function goreWhole(probe, kill, settle = 20) {
+  const died = victimAt(probe, kill);
+  if (!died) return `no victim died on tick ${kill}`;
+  const before = probe.rows.find((r) => r.tick === kill - 1)?.fighters?.find((f) => f.id === died.id);
+  if (!before || before.draw?.[0] < 0) return `the victim (id ${died.id}) had no card the tick before it died, so whole or not is not seen`;
+  const after = probe.rows.find((r) => r.tick === kill + settle)?.fighters?.find((f) => f.id === died.id);
+  if (!after) return `no numbers for the victim ${settle} ticks after the kill`;
+  return after.draw?.[0] > 0 ? null : `the victim (id ${died.id}) is not drawn whole ${settle} ticks after the kill (draw ${after.draw?.join('x')}): a signature death under --gore=reduced`;
 }

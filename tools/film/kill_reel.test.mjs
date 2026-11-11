@@ -102,3 +102,25 @@ test('the beat line names the row and its timings, or says the weapon has the st
   assert.equal(beatLine('chainsaw', { id: 'chainsaw_grind', style: 'split', hitstop_ticks: 2, held_ticks: 56, grind_ticks: 54, stand_ticks: 0, crumble_ticks: 0, flash_ticks: 0 }),
     'chainsaw: chainsaw_grind (split) hit-stop 2, held 56 (grind 54, stand 0), crumble 0, flash 0 ticks');
 });
+
+test('gore check: whole when the victim still lies drawn as a card after the kill; a consumed body is named', async () => {
+  const { goreWhole } = await import('./kill_reel_lib.mjs');
+  const film = (after) => ({ rows: [
+    { tick: 62, fighters: [{ id: 7, role: 'hostile', alive: true, draw: [20, 30] }] },
+    { tick: 63, fighters: [{ id: 7, role: 'hostile', alive: false, draw: [20, 30] }] },
+    { tick: 83, fighters: [{ id: 7, role: 'hostile', alive: false, draw: after }] }] });
+  assert.equal(goreWhole(film([30, 14]), 63), null);
+  assert.match(goreWhole(film([-1, -1]), 63), /not drawn whole 20 ticks after/);
+  const unseen = film([30, 14]);
+  unseen.rows[0].fighters[0].draw = [-1, -1];
+  assert.match(goreWhole(unseen, 63), /had no card the tick before/);
+  assert.match(goreWhole(film([30, 14]), 70), /no victim died/);
+});
+
+test('--gore-check passes --gore=reduced to every film and refuses a second --gore', () => {
+  const p = reelPlan({ out: 'o', weapons: 'katana', 'gore-check': true }, ['--feel=on']);
+  assert.equal(p.goreCheck, true);
+  assert.deepEqual(p.extra, ['--feel=on', '--gore=reduced']);
+  assert.match(reelPlan({ out: 'o', weapons: 'katana', 'gore-check': true }, ['--gore=full']).error, /passes --gore=reduced itself/);
+  assert.equal(reelPlan({ out: 'o', weapons: 'katana' }, []).goreCheck, false);
+});

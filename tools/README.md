@@ -139,6 +139,10 @@ flash_ticks). `--clips` adds `clip.mp4` per film (60 fps, cropped, trigger windo
 molotov; the ghost rows are not lab weapons). Extra game flags go after `--` (`-- --gore=reduced`); the reel
 refuses `--sig-dir`, `--victim`, `--seed`, `--ppm` there, since it sets them.
 
+`--gore-check` films every death with `--gore=reduced` and judges each from the probe: the victim must still be
+drawn as one lying card 20 ticks after the kill (a signature death hides the body: FAIL, naming it); a victim
+without a card the tick before is UNVERIFIABLE. Each film in `reel.json` gets `whole: true|false`.
+
 Cost: the first zoom of each combo saves the trigger window and kill+after (about 170 PNGs, 80 s for a blade, up
 to 150 s for the rocket beside other lanes); later zooms reuse that kill tick and save the 12 beat frames only
 (the zoom is view only; a kill on another tick at another zoom is **unverifiable**). Unpicked frames are deleted

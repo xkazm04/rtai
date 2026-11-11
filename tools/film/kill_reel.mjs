@@ -13,13 +13,13 @@ import { existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from 'node:
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { EXIT, filmOne, pinRev, plan } from './film.mjs';
-import { killWindow, pickBeats, reelPlan, sheetOf, tableRows, victimAt } from './kill_reel_lib.mjs';
+import { goreWhole, killWindow, pickBeats, reelPlan, sheetOf, tableRows, victimAt } from './kill_reel_lib.mjs';
 import { readPng } from './png.mjs';
 import { encodePng, label } from './sheet.mjs';
 import { spawnSync } from 'node:child_process';
 
 const USAGE = 'usage: node tools/film/kill_reel.mjs --out=<dir> [--weapons=all|<id,id>] [--victims=<kind,...>] [--dirs=<deg,...>] '
-  + '[--ppm=32,64] [--after=150] [--rev=<commit>] [--before=<commit>] [--native=donor] [--clips] [--keep-frames] [--timeout=<s>] [--dry-run] [-- flags]';
+  + '[--ppm=32,64] [--after=150] [--rev=<commit>] [--before=<commit>] [--native=donor] [--clips] [--keep-frames] [--gore-check] [--timeout=<s>] [--dry-run] [-- flags]';
 const WORST = ['pass', 'unverifiable', 'fail'];
 /** n16 session 1 (build/kreel/t2 t60, build/film/victim_proof): the lab guard is drawn by no rig the probe finds
  *  (`FilmCard.rig` -> null, draw -1), and at the combo zooms it stood as the riot cop with --victim=thug. Film now
@@ -57,7 +57,10 @@ async function filmJob(job, side, reel, runner, known) {
       if (t && !beats.includes(Number(t[1]))) rmSync(join(job.dir, name), { force: true });
     }
   }
-  return { outcome: r.outcome, reasons: r.reasons, kill: k, beats, box, clip, died: victimAt(r.probe, k) };
+  const gore = reel.goreCheck ? goreWhole(r.probe, k) : null;
+  const outcome = !gore ? r.outcome : /not drawn whole/.test(gore) ? 'fail' : (r.outcome === 'pass' ? 'unverifiable' : r.outcome);
+  return { outcome, reasons: gore ? [...r.reasons, `gore check: ${gore}`] : r.reasons, kill: k, beats, box, clip, died: victimAt(r.probe, k),
+    ...(reel.goreCheck ? { whole: gore === null } : {}) };
 }
 
 /** An mp4 of the contiguous saved run up to the kill's last frame, cropped to the kill window, at 60 fps. */
