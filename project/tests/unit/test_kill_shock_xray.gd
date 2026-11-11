@@ -58,3 +58,23 @@ func test_the_drawn_set_stands_on_the_feet_within_its_height_and_width() -> void
 		assert_almost_eq(r.get_center().x, feet.x, 0.01, kind)
 		assert_lte(r.size.y, KillShockFx.XRAY_M * 32.0 + 0.01, kind)
 		assert_lte(r.size.x, KillXray.WIDE_M * 32.0 + 0.01, kind)
+
+
+func test_the_p55_view_flashes_the_p55_set_of_every_kind() -> void:
+	assert_eq(KillXray.ART_55.keys(), KillXray.ART.keys())
+	for kind: String in KillXray.ART_55:
+		var tex: Texture2D = KillXray.ART_55[kind]
+		assert_not_null(tex, kind)
+		assert_eq(tex.get_width() % 2, 0, kind)
+		assert_ne(tex, KillXray.ART[kind], kind)
+	var view: ViewMode = ViewMode.shared()
+	var was: String = view.art
+	var body: Node2D = autofree(Node2D.new())
+	body.set_meta(KillXray.KIND, "swat")
+	view.art = "p55"
+	var p55: Texture2D = KillXray.art_of(body)
+	view.art = "p70"
+	var p70: Texture2D = KillXray.art_of(body)
+	view.art = was
+	assert_eq(p55, KillXray.ART_55["swat"])
+	assert_eq(p70, KillXray.ART["swat"])

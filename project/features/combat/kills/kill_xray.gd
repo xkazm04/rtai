@@ -23,6 +23,17 @@ const ART: Dictionary[String, Texture2D] = {
 	"ped_suit": preload("res://features/combat/weapons/art/gore/xray_ped_suit.png"),
 	"ped_generic": preload("res://features/combat/weapons/art/gore/xray_ped_generic.png"),
 }
+## n16 it4 (asset lane 15:01): the same kinds redrawn for the p55 view (face under the crown).
+const ART_55: Dictionary[String, Texture2D] = {
+	"cop_patrol": preload("res://features/combat/weapons/art/gore/xray_cop_patrol_55.png"),
+	"cop_riot": preload("res://features/combat/weapons/art/gore/xray_cop_riot_55.png"),
+	"swat": preload("res://features/combat/weapons/art/gore/xray_swat_55.png"),
+	"ped_hood": preload("res://features/combat/weapons/art/gore/xray_ped_hood_55.png"),
+	"ped_cap": preload("res://features/combat/weapons/art/gore/xray_ped_cap_55.png"),
+	"ped_worker": preload("res://features/combat/weapons/art/gore/xray_ped_worker_55.png"),
+	"ped_suit": preload("res://features/combat/weapons/art/gore/xray_ped_suit_55.png"),
+	"ped_generic": preload("res://features/combat/weapons/art/gore/xray_ped_generic_55.png"),
+}
 ## Street row -> drawn set; another cop row is a patrol cop, any other human the generic ped.
 const BY_ROW: Dictionary[String, String] = {
 	"cop/head_cap": "cop_patrol",
@@ -76,7 +87,7 @@ static func art_of(body: Node2D) -> Texture2D:
 	if _plain == 1 or body == null or not body.has_meta(KIND):
 		return null
 	var kind: String = body.get_meta(KIND)
-	return ART.get(kind, null)
+	return (ART_55 if ViewMode.shared().art == "p55" else ART).get(kind, null)
 
 
 ## Where the drawn frame `frame` (0 or 1) of `tex` lands: feet FOOT_M below `feet`, XRAY height
