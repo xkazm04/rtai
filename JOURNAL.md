@@ -747,3 +747,15 @@ NEXT addendum, item (3) is now concrete: after the gate verdict, if time before 
 - 18:48 FINAL GATE PASS on `ab925914e` (EXIT 0): reels top 314 s, tilt70 329 s, combo 296 s, 0 SCRIPT ERROR in all
   three; with the evidence at 18:32 every gate is green. NEXT item (1) is DONE: start iteration 22 at item (3), the
   claw p55 wiring (a project/ change after it needs at least unit + the reels again before the freeze).
+
+## Iteration 22 (19:30-19:40, STABILIZE past the freeze)
+- 19:30 the final gate verdict was already in (PASS on `ab925914e`, 18:48). Claw p55 wiring NOT done: a project/ change
+  after the freeze would need unit + reels again (~40 min). Deleted the three UNTRACKED packed PNGs
+  `project/features/characters/art/view/p55/{cop_patrol,cop_riot,swat}_claw_throw.png` (sha256 16c9f06b, fb1c3f17, 8d538a23;
+  rebuilt by `kill_cells_pack.py --death=claw_throw --art=p55`). Tree clean of code dirt.
+- 19:35 REPORT final: title, "What does not work" (claw p55 + molotov p55 delivered, not wired), Next steps (art per kind,
+  incl. claw p70 for 9 more kinds delivered after 18:55 and the suit's molotov kneel refused 4x), a Call on the suit's
+  kneel. `node tools/evidence/cites.mjs REPORT.md`: 2/2 ok.
+- DECISION kills-new/freeze: nothing wired after the gate; the build at `b07ca1b3f` (gated on `ab925914e`) is what ships.
+NEXT: (next run) wire claw_throw p55 (patrol/riot/SWAT), molotov_torch p55 (patrol/riot/SWAT) and claw_throw p70 for the
+  9 street peds, one commit each, film each at 32 under its view, then the full gate with --reels.

@@ -1,4 +1,4 @@
-# n16 kills-new: REPORT (DRAFT, updated 17:40 in iteration 21; the last session finalises it by 19:40)
+# n16 kills-new: REPORT (final, 19:35, iteration 22; the code at the freeze is `b07ca1b3f`, gated on `ab925914e`)
 
 Lane `n16-kills-new`: a unique death for every weapon that had none. Evidence: `evidence/n16-kills-new/`
 and `gtai-masters/n16/kills-new/frames.json`. The journal is `JOURNAL.md`.
@@ -28,18 +28,23 @@ Gates (last measured): the gate on `b9dba1da8` (`../n16-tools/tools/gate/run.mjs
 - Column 1 of the patrol stitch frame 3 shows a doubled cap for one beat (asset fault, known).
 - Claw throw, SWAT: frame 1's bolt reaches below his boots, so that cell sits ~10 px (of the p70 cell) higher than the
   registered feet for 4 ticks; at 32 px/m that is ~3 screen px and is left as drawn (asset note it434).
-- The claw's p55 cells are owed (REQUEST 17:33): under the 55-degree view the claw plays the p70 cells.
+- The claw's p55 cells were delivered (it438, 18:01) and packed but are NOT wired: Godot was held by the final gate until 18:48,
+  and wiring them after it would have needed unit + reels again before the 19:30 freeze. Under the 55-degree view the claw
+  plays the p70 cells. The three packed PNGs were removed from the tree (rebuild with `kill_cells_pack.py --death=claw_throw --art=p55`).
+- The molotov's p55 cells (patrol, riot, SWAT, delivered 18:37-18:46) are not wired either: under the 55-degree view the molotov plays the p70 cells.
 
 ## Calls for the owner
 - Pistol `pistol_snap`: keep / change / drop. 64: `pistol_cells_ab_64ppm_patrol_t340.png`; 32: `pistol_city32_after_t339-380.png` vs `_before_`; clip `pistol_cells_ab_64ppm_patrol_t330-400.mp4`.
 - Machine pistol `smg_stitch`: keep / change / drop. 64: `stitch_cells_reel_64ppm_dir135_t174-324.png`; 32: `stitch_cells_reel_32ppm_dirs-wall-135.png`; clips `stitch_cells_reel_{32,64}ppm_dir135.mp4`.
 - Gloria `nail_pin`: keep / change / drop. 64: `nail_pin_cells_reel_64ppm_wall_t63-215.png`; 32: `nail_pin_cells_reel_32ppm_wall_crops.png`; clips `nail_pin_cells_reel_{32,64}ppm_wall.mp4`. Parked cars count as walls.
 - Gatling `gatling_shred`: keep / change / drop. A/B 32 + 64: `gatling_shred_ab_{32,64}ppm_patrol_t390.png`, clips `_t355-460.mp4`.
-- Molotov `molotov_torch` (placeholder until its cells land): keep / change / drop; also the split itself (the
+- Molotov `molotov_torch` (the placeholder, still played by the suit ped and every kind without cells): keep / change / drop; also the split itself (the
   flamethrower keeps burn_char). 32: `molotov_torch_ab_32ppm_dir0_t182-332.png`; 64: `molotov_torch_ab_64ppm_dir0_t182-332.png`; clips `molotov_torch_{before,after}_{32,64}ppm_dir0.mp4` (before = burn_char on the same tick).
 - Molotov drawn cells (`e0cc756fa`, `2c7040a23`): keep / change. 32 in a street fight vs burn_char: `molotov_torch_city_ab_32ppm_t505-655.png` (clips `molotov_torch_city_{before,after}_32ppm.mp4`); 32 in the lab: `molotov_torch_cells_ab_32ppm_dir0_t182-332.png`; 64: `molotov_torch_cells_ab_64ppm_dir0_t182-332.png` (top the placeholder, bottom the cells); clips `molotov_torch_cells_after_{32,64}ppm_dir0.mp4`.
 - Rivet's bare claw `claw_throw` (drawn cells since `0bbc3f265`; filmed with cells at 64 dir 0 and at 32 in 3 dirs): keep / change / drop. The claw no longer borrows the electro gun's X-ray shock. 32: `claw_throw_cells_slide_ab_32ppm_dirs0-135-225_t127-187.png` (cells), `claw_throw_ab_32ppm_dirs0-135-225_t159.png` (X-ray before vs placeholder); 64: `claw_throw_ab_64ppm_dir0_t127-217.png`; clips `claw_throw_{before,after}_{32,64}ppm_dir0.mp4`. Also: the body lands 3 m (drawn cells: 4.2 m) from where he stood, so his dropped rifle (sim data) is not 0.5 m from the body, as with the hand cannon's thrown body. If the rifle rule wins, setting `slide_m` 0 (one data value) keeps the arc and sparks on a body that drops where it stood.
 - Electro baton `baton_overload`: keep / change / drop. 64: `baton_overload_after_64ppm_dir0_t78-88-108_zoom.png`; 32: `baton_overload_reel_32ppm_dirs0-225.png`.
+
+- Molotov, the suit ped's kneel (frames 1-2 refused 4 times by the image filter): reuse the patrol cop's drawn frames 1-2 recoloured to the suit, or start the suit's drawn cells at frame 3 (face down). Today he plays the placeholder throughout.
 
 ## Merge notes
 - Shared files touched (announced in JOURNAL): `kill_styles.gd` (hands STYLES to KillNewStyles), the
@@ -52,6 +57,12 @@ Gates (last measured): the gate on `b9dba1da8` (`../n16-tools/tools/gate/run.mjs
 
 ## Next steps (art still owed per kind)
 - smg_stitch and nail_pin at p55: done for patrol, riot, SWAT (`8fc189cf6`); the suit has no p55 grid (it plays p70).
-- molotov_torch: the suit ped's p70 frames 1-2 (kneel refused twice by the image filter; a third wording was rendering at 16:02); p55 for all four.
-- claw_throw: p55 for patrol, riot, SWAT (p70 delivered for all four kinds and wired; REQUEST 17:33).
 - gatling_shred and baton_overload p55: done for patrol, riot, SWAT (`b967042e3`); the suit plays p70.
+- claw_throw p55, patrol/riot/SWAT: DELIVERED (asset reply 18:01, it438), not wired. Next session: pack it, add `cells.grids.p55`
+  (cop/head_cap, cop/head_helmet, cop/head_swat), 3 provenance lines, a p55 assert in `test_kill_throw_art`, unit (imports
+  the PNGs, commit the `.import`), film `kill:claw_shock --view=tilt --ppm=32`, and check the 4.2 m slide under the 55 view.
+- claw_throw p70 for 9 more kinds (hood, cap, punk, jogger, worker, shopper, elder, hat, thug): DELIVERED after the freeze
+  (asset replies 18:55-19:23, it442/it446), not wired; today they play the placeholder. The shopper draws no dropped bag.
+- molotov_torch p55, patrol/riot/SWAT: DELIVERED (18:37-18:46), not wired. The suit: no p55 grid, so not drawn.
+- molotov_torch, the suit ped's p70 frames 1-2: the image filter refused a burning civilian 4 times; the asset lane has
+  stopped. The suit keeps the placeholder. A Call: reuse the patrol's frames 1-2 recoloured, or skip the kneel for the suit.
