@@ -235,3 +235,64 @@ by default). (6) the s1 frames.json entry "thug stands as riot cop" is supersede
 - DECISION tools/kill-reel-feel: the reel's default stays feel OFF (stable sheets and A/B); `--feel=on` for pacing; the
   hit-stop is read as `hit-stop N frames` (probe frame gaps), never from sheets. Line in docs/decisions.md.
 - 13:48 session 2 end: tree clean, no Godot of mine running (the gate and all reels exited). Branch tip below.
+
+## Session 3 (iteration 3, 2026-11-11 13:43, BUILD; stop 15:13)
+- 13:43 read JOURNAL, git log, both sibling journals: no new `REQUEST tools:`. kills-new FRICTION 13:18 (their
+  branch's compare.mjs has no `kill:` shot) is the expected cross-branch gap: run the tools tree's copy
+  (`node ../n16-tools/tools/film/compare.mjs kill:<w> ...`), it films the caller's tree (filmedRoot). kills-new's
+  NEXT (4) says `--victim-wall` is still open: it was served in session 2 as `kill_reel --dirs=wall` / `--sig-wall`.
+- Plan: (a) `kill_reel --quick` for the builders' inner loop; (b) the measured hit-stop on the sheets' kill column;
+  (c) a frame-true clip with --feel=on so the freeze is SEEN; then the weakest item.
+- 13:48 PROOF `kill_reel --out=build/kreel/s3quick --weapons=katana,rocket_launcher --quick --feel=on` -> 2 films (32
+  px/m, dir 90), PASS, ~5 min beside the other lanes: katana kill 68 `hit-stop 6 frames`, settled +80, 3.2 %; rocket
+  kill 68 `hit-stop 8 frames`, settled +40, 4.9 %. Sheet labels looked at (katana_32.png): `60 -8 AFTER GUARD D90
+  32`, `68 KILL HS6`, `69 +1` ... `218 +150`. FOUND: the rocket holds 8 frames though its signature row says
+  hitstop_ticks 0: the hold is FeelCam's (camera.json class/weapon feel), not the signature row. Kill lanes: the
+  row's hit-stop is not the whole hold; read the measured `hit-stop N frames`.
+- 13:52 frame-true clip: `--clips --feel=on` passes film `--movie` and cuts clip.mp4 from the movie at the probe rows'
+  process frames (`movieSpan`), kill-30 to kill+after. CALIBRATED on build/kreel/s3movie (katana, --keep-frames,
+  scratch script gtai-n16/scratch-tools/calib_movie.mjs): movie index = row `frame` (7 ticks: 3.0-3.8 % pixels off at
+  that index, 18-44 % at +-1; x264 loss). PROOF build/kreel/s3movie2: clip.mp4 384x288 60 fps, 187 frames = 181 ticks +
+  6 held; frames 28-39 looked at: t66, t67, the kill flash t68, t69, then t70 (the blade streak + spray) for 7 frames,
+  then t71. The held frames match the kill still: the screen truly freezes (the camera offset is tick-driven).
+- MILESTONE 1e54a3b50 kill_reel `--quick`, labelled sheet cells, `--clips --feel=on` from the movie. Node film tests
+  226/0, lint 19/19, debt ok, quick gate (merge-clash none).
+- SERVED (kill lanes): the inner loop is now
+  `node C:/Users/kazda/kiro/gtai-wt/n16-tools/tools/film/kill_reel.mjs --out=<dir> --weapons=<w> --quick --feel=on`
+  (one 32 px/m film per weapon, ~2.5 min; the kill cell reads `KILL HS<n>`); add `--clips` for a clip that PLAYS the
+  hit-stop and camera punch at game timing (judge pacing there, not on the sheet).
+- 13:53 started `kill_reel --out=build/kreel/s3all --weapons=all --quick --feel=on` (12 weapons): every signature
+  weapon must kill in the lab.
+- FOUND (kill lanes, read this): a signature row's `hitstop_ticks` does NOT freeze the screen. SignatureKills.hold
+  makes the pieces (gibs, halves, marks) wait that many sim ticks; the screen freeze is FeelCam's: a lethal hit takes
+  hit_feel.json `kill_hitstop` (camera.json `kill`, 6 ticks) or its class's bigger stop (rocket = class blast =
+  `boss_hit` 8: measured 8 frames with row hit-stop 0). To change how long the screen holds on a kill, change
+  hit_feel.json (a per-weapon `hitstop` in `weapons`), not the signature row. a505c1c63 words the beat line so.
+- 14:0x fe765cc94 Codex n16t-break-reel-movie (gpt-5.6-sol, 1 round, 188 s): 10 adversarial tests; 3 kept red, all
+  accepted in review and fixed in code: cellLabel `hs` only for a positive integer, sheet `label` = drawText (returns
+  the count), movieSpan refuses from > to. Ledger: accepted (tests verbatim, 3 code fixes); discarded.
+- 14:20 PROOF full coverage: `kill_reel --out=build/kreel/s3all --weapons=all --quick --feel=on` (12 films, ~25 min):
+  11 PASS (rocket, hand cannon, flamethrower, molotov, electro gun, katana, plasma rifle, plasma sword, chainsaw, ray
+  gun, homing shard: every signature weapon kills in the lab); mini nuke UNVERIFIABLE only because Rivet is thrown
+  out of the locked frame (screen y -10..-25 from the kill on). Measured freezes: 8 frames for rocket, electro gun,
+  nuke (class stops), 6 for the rest (hit_feel kill). Looked at the overview: the nuke window (12 x 9 m between Rivet
+  and a victim ~25 m off) showed neither well; at 32 px/m the flamethrower and electro deaths read weakly (a small
+  dark figure), kill lanes' call.
+- Built (uncommitted until the nuke proof): `reel_<ppm>.png` overview (a row per film, every weapon) + `reel.md`
+  (beat table per film), `--resheet=<reel dir>` (rebuild from reel.json, no Godot: run on s3all, overview looked at),
+  output code split to tools/film/kill_reel_out.mjs; the reel judges `--subject=kill`, and killWindow centres on the
+  victim when he and Rivet cannot share the window with 2 m to spare. Unit 239/0. Re-filming nuke + katana: s3nuke.
+- 14:19 MILESTONE a2288fc70 overview + reel.md + --resheet + subject=kill + far-victim window. PROOF build/kreel/s3nuke
+  (`--weapons=mini_nuke,katana --quick --feel=on`): both PASS (nuke kill 127 HS8, katana kill 68 HS6); looked at
+  reel_32.png: the nuke's window now holds the blast on the victim (kill flash to +40). Known limit: with the feel on
+  the nuke's BlastLead drifts the camera, so its t60 and +80/+150 cells show Rivet's street (the window is fixed on
+  screen). NOISE: katana `settled` read +150 here and +80 in s3quick/s3all on the same game commit (city traffic in
+  the window): `settled` is a coarse upper bound, compare it only within one run.
+- DECISION tools/kill-reel-subject: the reel judges the death on screen and gives a far victim the window (line in
+  docs/decisions.md; rejected: a window grown to hold both).
+- Evidence: gtai-masters/n16/tools/frames.json 13 entries (added the all-weapon overview, the frame-true katana clip +
+  its frames 28-39, the nuke window; retired the v0 crop defect, katana d180 and c-2 tier B stills and deleted their
+  files). In-tree: evidence/n16-tools/ (overview and nuke at half size, clip, strip, reel_s3all.{md,json}, reel_s3nuke.md).
+- SERVED (kill lanes): one image of every death: `kill_reel.mjs --out=<dir> --weapons=all --quick --feel=on` writes
+  `reel_32.png` (a row per weapon) + `reel.md` (paste into REPORT); `--resheet=<dir>` relabels an older reel with no
+  Godot. Today's overview of this tree: gtai-masters/n16/tools/kill-reel-overview-all-weapons-quick-feel-on-32ppm.png.
