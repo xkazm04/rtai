@@ -117,3 +117,22 @@ lanes' journals for REQUEST tools / FRICTION (none at 11:35). Gate on the final 
   build/gate/bc7878960400/reels.log). NEXT session: read `gate exit N` at the end of
   C:/Users/kazda/kiro/gtai-n16/scratch-tools/gate_s1.log before anything else. Godot of mine still running: only
   the gate's reel runner (it frees itself on exit).
+
+## Session 2 (iteration 2, BUILD) 12:31-14:01
+
+- 12:31 read: JOURNAL, git log, sibling journals. The s1 gate (`gate_s1.log`) has NO `gate exit` line: its node died
+  with session 1 during the reel stage (reels.log last line 12:26 combo chapter 19 4/4 down, no failure). Evidence
+  stage was PASS on bc7878960. The reel gate is re-run on the final commit.
+- kills-new is already filming with the reel (`kill_reel.mjs --weapons=pistol --dirs=0,90,225 --clips`, pid 40460).
+- FOUND in kills-new JOURNAL :220: "Its `--before=d6a4fb1a8` refuses (native differs)". Cause: `side.mjs`
+  resolveSide defaulted `root` to the KIT's repo (n16-tools, whose HEAD has the c-2 native change), so a lane running
+  the kit by path had its own commits compared against my native/, and its snapshots would have got MY DLLs.
+  Fix beba004e8: `filmedRoot()` = the cwd's game tree, else the kit (film.mjs's default tree too); and since film
+  snapshots are keyed by commit and shared by every lane (`%TEMP%/gtai-film-<sha12>`), `copyRuntime` re-copies
+  `project/native/bin` when its bytes differ from the caller's donor. Checked the 9 cached snapshots first: all hold
+  main's DLL (md5 E80BF89C, = kills-new/kills-polish), none got my c-2 DLL (99329EF1). Tests 2 new, tools suites 445/0.
+  PROOF: from n16-kills-new `node ../n16-tools/tools/film/kill_reel.mjs --out=build/kreel/x --weapons=pistol
+  --before=d6a4fb1a8 --dry-run` -> `before --rev=d6a4fb1a8 films snapshot d6a4fb1a ...`, 4 films planned (was the
+  refusal); from n16-tools `--before=5843f5a28` still refuses (my native differs from main: correct).
+- SERVED: kills-new, `--before=<your sha>` on the kill reel now works from your worktree (beba004e8, tools only, no
+  pick needed: you run the kit by its path). The before commit needs the lab turn for non-zero dirs (yours from 64be75e2a on).
