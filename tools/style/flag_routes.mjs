@@ -8,6 +8,7 @@
 // `<v>.begins_with("P")`, `<v> == "L"` and `<v> in CONST` (a same-file string list) joined by `or`.
 // A guard with anything else (`and`, `not`, a call) is not judged: no false alarm, no claim.
 import { readFileSync } from 'node:fs';
+import { pathToFileURL } from 'node:url';
 import { ownGdFiles, rel } from '../lib/repo.mjs';
 
 export const NAME = 'flag-routes';
@@ -105,4 +106,15 @@ export function unroutedFlags(path, src) {
 export function flagRoutesCheck(read = () => ownGdFiles().map((f) => ({ path: rel(f), src: readFileSync(f, 'utf8') }))) {
   const issues = read().filter((f) => !f.path.startsWith('project/tests/')).flatMap((f) => unroutedFlags(f.path, f.src.replace(/\r\n/g, '\n')));
   return { name: NAME, ok: !issues.length, issues };
+}
+
+// `node tools/style/flag_routes.mjs <file.gd>...`: the same check on the files named (paths as given, so a
+// lane without this check can run this copy on its own tree). Exit 0 clean, 1 issues, 2 usage.
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  const files = process.argv.slice(2);
+  if (!files.length) { console.error('usage: node tools/style/flag_routes.mjs <file.gd>...'); process.exit(2); }
+  const issues = files.flatMap((f) => unroutedFlags(f, readFileSync(f, 'utf8').replace(/\r\n/g, '\n')));
+  for (const i of issues) console.log(i);
+  console.log(`flag-routes: ${issues.length} unrouted flag(s) in ${files.length} file(s)`);
+  process.exit(issues.length ? 1 : 0);
 }
