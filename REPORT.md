@@ -66,7 +66,10 @@ there is not in the commit`. Proof: real git, TMP pointed at a missing dir, the 
 ### 7. Gate timing and partial reels (`tools/gate/run.mjs`, 09b23b523)
 gate.json keeps `timing` (evidence and each reel view) and `reels`; the next gate prints the last one as an ETA;
 `--reels=<views>` runs only those views, labelled `not the full reel gate`. (Both kill lanes' FRICTION: the gate holds
-the lane's one Godot for 30-40 min.) Proof: see Gates.
+the lane's one Godot for 30-40 min.) Proof: the gate on 09b23b523 with `--reels=combo` wrote `"reels":["combo"]`,
+`"timing":{"evidence_s":964,"reels":{"combo":301}}`, said `PASS reels (combo only: not the full reel gate)`, and
+the next gate's ETA reads `took evidence 16.1 min + reels 5.0 min (combo 301 s)`. Codex n16t-break-gate-timing:
+13 tests, 2 fixes (the last `--reels` form wins; decimal seconds).
 
 ## Findings for the kill lanes
 - A signature row's `hitstop_ticks` does NOT freeze the screen: SignatureKills.hold makes the pieces wait. The freeze
@@ -78,6 +81,9 @@ the lane's one Godot for 30-40 min.) Proof: see Gates.
   difference is Rivet's aim or pose. (The `settled` +80/+150 and aftermath 5.8/3.2 % run-to-run spreads came from it.)
 
 ## Gates
+s5: GATE PASS on 09b23b523 (`--reels=combo`, build/gate/09b23b52349b/gate.json): lint 19/19, unit 2645/0/2,
+scenarios 55, parity bit for bit (planted fault at 629), look goldens 11/11 worst 0.00, release-compile 683/0, reels
+combo exit 0. Its project/ tree equals caccc825d's, whose gate ran all three reel views.
 FULL GATE WITH REELS PASS on caccc825d, the last project/ commit (s4, `gate exit 0`, build/gate/caccc825d4a8/gate.json):
 lint, unit 2645/0/2, scenarios 55, parity bit for bit 1200 steps (planted fault at 629), look goldens 11/11 worst
 0.00, release-compile 683/0, reels exit 0. Every later commit is tools/docs/evidence/JOURNAL. Before that: gate PASS on 0b5c55fc7 (lint 19/19, unit 2645/0/2, scenarios 55, parity bit for
@@ -85,12 +91,14 @@ bit, look goldens 11/11, release-compile 683/0, reels top/tilt70/combo OK). Ever
 (lint 19/19 incl. tool-tests in each commit's hook).
 
 ## Codex ledger
-4 tasks, all gpt-5.6-sol, 1 round each, discarded after landing: n16t-break-film-root (119 s, 10 tests, accepted
+5 tasks, all gpt-5.6-sol, 1 round each, discarded after landing: n16t-break-film-root (119 s, 10 tests, accepted
 after revision: the cwd-below-a-tree promise was a weakness, fixed), n16t-break-reel-movie (188 s, 10 tests, 3 kept
 red, all 3 accepted and fixed in code), n16t-break-live-tree (196 s, 8 tests, 1 kept red: CRLF porcelain, accepted and
 fixed; review found a second real defect the tests missed, C-quoted non-ASCII paths, fixed with a first-author test),
 n16t-break-reel-scout (743 s, 9 tests, 1 kept red: rejected as a defect, tick 60 is the lab's trigger column by design
-and my task text was looser than the design; the test exempts it; accepted after revision).
+and my task text was looser than the design; the test exempts it, and 7f9e92c81 makes a kill at or before tick 60
+unverifiable in code; accepted after revision), n16t-break-gate-timing (485 s, 13 tests, 2 kept red, both accepted and
+fixed in run.mjs).
 
 ## Calls for the owner
 - The kill reel's default is feel OFF (stable sheets, clean A/B); pacing is judged with `--feel=on`. Alternative:

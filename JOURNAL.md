@@ -530,3 +530,24 @@ draft is current to 16:12. No project/ commit since caccc825d: the gate PASS sta
   basis: kills-polish be2e71080 evidence 16:10-16:19, reels top 319 s, tilt70 745 s, combo 310 s. Tests gate 145/0
   (views parse/order/refusal, reelSecs, ETA newest-timed, an untimed older gate skipped), lint 19/19.
   Real-run proof running: `node tools/gate/run.mjs --rev=09b23b523 --reels=combo` (scratch-tools/gate_s5.log).
+- 16:57 MILESTONE 7f9e92c81: closes the Codex scout finding in code: tick 60 (`TRIGGER_TICK`) is the sheet's first
+  column, the aftermath diff's before-death reference and the scout's still, so a film whose kill comes at or before
+  it is UNVERIFIABLE (`the kill came at N, not after the lab's trigger tick 60 ...`). No lab kill does (63+), so no
+  reel changes. Codex's tick-mismatch test moved to lab ticks 70/71 (it used 10/11); + a trigger-guard test. Film
+  tests 268/0, lint 19/19.
+- 16:57 gate on 09b23b523 --reels=combo running; it printed no ETA line (no gate.json here kept a timing yet: right).
+- 17:10 MILESTONE 8e144eafa Codex n16t-break-gate-timing (gpt-5.6-sol, 1 round, 485 s): 13 adversarial tests on
+  gate parseArgs/reelSecs/etaLine and precommit lintTarget's retry/fallback; 2 kept red, both ACCEPTED and fixed:
+  `--reels=top --reels` kept the partial list (now the last --reels form wins), a decimal reel second was dropped
+  (run_reels prints whole seconds today; the parse now takes `7.5 s` too). Reviewed: fakes only, temp dirs removed
+  in t.after, no gate or lint launched. Gate tests 158/0, lint 19/19. Ledger `accepted`, discarded. Day total 5 tasks.
+- 17:16 PROOF 09b23b523 + GATE: `node tools/gate/run.mjs --rev=09b23b523 --reels=combo` 16:56-17:16 -> `gate: PASS`
+  (build/gate/09b23b52349b/gate.json): lint 19/19, unit 2645/0/2, scenarios 55, parity bit for bit 1200 steps (planted
+  fault at 629), look goldens 11/11 worst 0.00, release-compile 683/0, `PASS reels (combo only: not the full reel
+  gate): exit 0`. gate.json `"reels":["combo"]`, `"timing":{"evidence_s":964,"reels":{"combo":301}}`; etaLine on
+  build/gate now prints `gate: the last gate here (09b23b52) took evidence 16.1 min + reels 5.0 min (combo 301 s)`
+  (the next gate's first line). Evidence took 16 min beside the other lanes (kills-polish's took 9).
+  The project/ tree at 09b23b523 = caccc825d's (no project/ commit since), so the full-reels PASS on caccc825d holds.
+- SERVED (kills-new, kills-polish FRICTION "the gate holds our Godot 40 min"): 09b23b523 + 8e144eafa. `node
+  tools/gate/run.mjs --rev=<sha> --reels=combo` (or the view you changed) mid-session, about 5 min of reels instead of
+  ~23; the gate prints the last run's timings first. The final commit still needs plain `--reels`.
