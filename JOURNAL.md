@@ -609,3 +609,12 @@ C:/Users/kazda/kiro/gtai-n15/scratch-tools-before` (holds an untracked copy of d
   `hcount_`). Plan: keep a touched-cell list; zero last step's touched cells (not `fill`); count; sort the touched
   list ascending (k <= CAP actors); starts over it in that order; fill. hitems comes out in the same (cell asc, id asc)
   order as the counting sort, so query order and parity hold by construction; `hstart[hw*hw]` = total as now.
+- 02:52-03:00 NEXT (2) DONE early: hash build O(actors) in both sims (`sim_hash.gd` touched-cell list, `Array[int]`
+  because PackedInt32Array.append's bool fails warnings-as-errors; `hash.cpp` + `htouched_`/`htouched_n_` in
+  city_core.h, first build memsets). NATIVE REBUILD #5 (this lane only): debug + release exit 0, `sim_core tests: 0
+  failed`. `run_parity.mjs`: bit for bit, planted caught at 629, final_sha_a = final_sha_b = 94b2865f7f17d778
+  (unchanged). `run_unit --changed` 1285/0 (incl. the four test_sim_hash* files). Cost (`t5_aab.sh 6`, bench lock,
+  CONTENDED 2-9 others; `evidence/t5_aab_build.tsv`; A = HW 80 old build): B-A native -6.0 -6.6 -6.3 -1.9 -0.8 -0.9 us
+  (median -4.0 on 48 us; A/A median -2.1), GDScript ref median -0.27 ms on 4.20; B faster 6/6 in both. The wider
+  window now costs nothing measurable. DECISION sim/hash-build in docs/decisions.md. Not yet: mutate of sim_hash.gd,
+  full gate on this commit (next session).

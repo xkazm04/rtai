@@ -1,5 +1,6 @@
 // Spatial hash over tier-A actors: a HW x HW window of HC-metre cells around the camera,
 // counting sort into hitems_ so queries return ids in a fixed order.
+#include <algorithm>
 #include <cstring>
 
 #include "city_core.h"
@@ -11,15 +12,24 @@ void CityCore::build_hash(double camx, double camy) {
 	hgx_ = floori(camx / HC) - HW / 2;
 	hgy_ = floori(camy / HC) - HW / 2;
 	const int n = HW * HW;
-	std::memset(hcount_, 0, sizeof(hcount_));
+	// O(actors), not O(HW^2): clear only the cells the last build filled, count, then give starts to
+	// the occupied cells in ascending order. hitems_ comes out in the counting sort's order (cell,
+	// then id); an empty cell's start is never read (query loops over its zero count).
+	if (htouched_n_ < 0) std::memset(hcount_, 0, sizeof(hcount_));
+	for (int k = 0; k < htouched_n_; k++) hcount_[htouched_[k]] = 0;
+	htouched_n_ = 0;
 	for (int i = 0; i < CAP; i++) {
 		if (alive_[i] == 0 || tier_[i] != 0) continue;
 		int gx = floori(px_[i] / HC) - hgx_, gy = floori(py_[i] / HC) - hgy_;
 		if (gx < 0 || gy < 0 || gx >= HW || gy >= HW) continue;
-		hcount_[gy * HW + gx] += 1;
+		int c = gy * HW + gx;
+		if (hcount_[c] == 0) htouched_[htouched_n_++] = c;
+		hcount_[c] += 1;
 	}
+	std::sort(htouched_, htouched_ + htouched_n_);
 	int s = 0;
-	for (int c = 0; c < n; c++) {
+	for (int k = 0; k < htouched_n_; k++) {
+		int c = htouched_[k];
 		hstart_[c] = s;
 		s += hcount_[c];
 		hcount_[c] = 0;

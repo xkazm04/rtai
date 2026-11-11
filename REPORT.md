@@ -10,9 +10,9 @@ Branch `n15-tools` from main `5c5c03611`. Evidence: `C:\Users\kazda\kiro\gtai-ma
 | t-1 CitySpawnPlan turns | `_turn += q + 1` (d720e22da) | `test_city_spawn_plan_turns.gd` (`[2,2,3,2] != [2,3,2,3]`, 8 of 30 turns for 10); Codex's n11 test landed unchanged | moves the city sim (parity final digest 9cd5579a -> 94b2865f) and the 16 look/block goldens: re-blessed eb65c8b05, before/after stills in masters |
 | t-2 overrule with a reason | `factory.mjs review --overrule=` / `overrule <id> --reason=` (7ef39b42e) | 3 factory tests | city_spawn_plan: 25/39 killed, all 14 survivors equivalent (named in decisions.md), 25/25 killable; recorded in the n15 ledger |
 | t-4 car routing | U-turn only on T_VOID, exits honour orientation, 18/2.5/13/16 m in `sim_constants.json` group `car_route`, GDScript + C++ (fe5dccda0); the dead-end tiles are one data value `CAR_DEAD_END_TILES` (41505c09f, shipped 1 = t-4) | `test_sim_car_route_t4.gd` 3 of 5 fail on the old rules; `test_city_lane_grid.gd` audits 256 chunks; the route tests pass 21/0 at mask 1, 241 and 65 | parity exact; final digest unchanged: the old rules never fire in the generated city. Film (city street, 32 px/m, t300-900): 0 of 1024000 pixels differ. **On a hand-made map** (`res://dev/sim/car_route_trails.gd`, real reference-sim car code): before 3 U-turns at a plaza and 1 at a kerb, after all 7 at void; a car drives across the plaza into the building behind it (`t4-hand-map-trails-before-after-4ppm.png`): Call c-2 |
-| t-5 hash window | HW 80 -> 132 cells (528 m), both sims (0ba5b1e91) | `test_sim_hash_window.gd` (empty query at 256 m on HW 80) | CONTENDED (8-15 other Godot processes), bench lock held, with an A/A twin: native +9.0 us/step median on 52 us (+17 %), GDScript ref +0.63 ms on 4.43 ms (+14 %), B slower in 6/6 rounds, A/A median -1.8 us / -0.14 ms (`evidence/t5_aab.tsv`). Cause: `CitySimHash.build` walks all HW*HW cells each step (6400 -> 17424). Native +9 us is 0.05 % of a 16.7 ms frame |
+| t-5 hash window | HW 80 -> 132 cells (528 m), both sims (0ba5b1e91) | `test_sim_hash_window.gd` (empty query at 256 m on HW 80) | CONTENDED (8-15 other Godot processes), bench lock held, with an A/A twin: native +9.0 us/step median on 52 us (+17 %), GDScript ref +0.63 ms on 4.43 ms (+14 %), B slower in 6/6 rounds, A/A median -1.8 us / -0.14 ms (`evidence/t5_aab.tsv`). Cause: `CitySimHash.build` walked all HW*HW cells each step (6400 -> 17424); **made O(actors) in both sims (session 4, parity exact, digest unchanged): now B is faster than the old HW 80 build in 6/6 rounds, native -4.0 us/step, ref -0.27 ms (`evidence/t5_aab_build.tsv`)** |
 
-Native rebuilt by this lane at 22:09 (t-4), 22:30 (t-5) and 02:05 (c-2 mask; comment-only regen after), debug + release,
+Native rebuilt by this lane at 22:09 (t-4), 22:30 (t-5), 02:05 (c-2 mask; comment-only regen after) and 02:55 (hash build), debug + release,
 `sim_core tests: 0 failed`; parity bit for bit after each, final digest 94b2865f7f17d778.
 
 ## Parity and replay
@@ -159,9 +159,7 @@ the right film).
 
 ## Next steps
 
-- t-5's cost is `CitySimHash.build` clearing and prefix-summing all HW*HW cells every step (17424 now). Counting only the
-  occupied cells (a sort of the live actors by cell, or a touched-cell list cleared after the step) makes it O(actors)
-  and frees the window size; it changes both sims, so it wants its own parity proof.
+- Mutate `sim_hash.gd` after the O(actors) build (`tools/mutate/mutate.mjs --file=features/city/sim/sim_hash.gd`).
 - c-2: if the owner picks 65 (or 241), change the one value, regenerate (`node tools/gen_constants/gen.mjs`), `just
   native`; the route tests follow the value (21/0 at 1, 241 and 65); parity's final digest does not move.
 - Drop `test_noir_shadows` from `morning.mjs`'s known-flake advice after a few clean nights (same race as rig_stress).
