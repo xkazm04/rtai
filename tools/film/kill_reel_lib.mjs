@@ -182,7 +182,7 @@ export function cropImage(img, [x0, y0, w, h]) {
  *  `still` (the motion is over by then; coarse: beats only). `aftermath_curve` is [ticks after the kill, share] at
  *  every beat from +20 on (what fades and what stays: a long --after films +150/+300/+600), and `aftermath_gone_after`
  *  the first of those under GONE_SHARE, or null: still on the street at the last beat. `frames` maps tick -> image. */
-export function measureBeats(frames, beats, kill, box, diff, { tolerance = 12, still = 0.01 } = {}) {
+export function measureBeats(frames, beats, kill, box, diff, { tolerance = 12, still = 0.01, mask = null } = {}) {
   const last = beats.at(-1);
   if (!frames.has(60) || !frames.has(last) || last <= kill) return null;
   const crop = (t) => cropImage(frames.get(t), typeof box === 'function' ? box(t) : box);
@@ -190,10 +190,35 @@ export function measureBeats(frames, beats, kill, box, diff, { tolerance = 12, s
   const settled = beats.filter((t) => t > kill && frames.has(t)).find((t) => diff(crop(t), end, tolerance).fraction < still) ?? null;
   const start = crop(60);
   const share = (img) => Number(diff(start, img, tolerance).fraction.toFixed(4));
-  const curve = beats.filter((t) => t >= kill + 20 && frames.has(t)).map((t) => [t - kill, t === last ? share(end) : share(crop(t))]);
+  // The curve and `gone` leave out where the victim stood at the trigger frame (`mask`, standMask): his empty spot is
+  // not a mark on the street. aftermath_share stays the whole window's, as every earlier reel reported it.
+  const lived = (img) => (mask ? share(paste(img, start, mask)) : share(img));
+  const curve = beats.filter((t) => t >= kill + 20 && frames.has(t)).map((t) => [t - kill, lived(t === last ? end : crop(t))]);
   const gone = curve.find(([, v]) => v < GONE_SHARE)?.[0] ?? null;
   return { aftermath_share: share(end), settled_by: settled, settled_after_ticks: settled === null ? null : settled - kill,
-    aftermath_curve: curve, aftermath_gone_after: gone };
+    aftermath_curve: curve, aftermath_gone_after: gone, ...(mask ? { aftermath_mask: mask } : {}) };
+}
+
+/** A copy of `img` with the rect [x, y, w, h] taken from `from` (same size): that rect never differs. */
+export function paste(img, from, [x, y, w, h]) {
+  const data = Buffer.from(img.data);
+  for (let row = y; row < y + h; row++) from.data.copy(data, (row * img.width + x) * img.channels, (row * img.width + x) * img.channels, (row * img.width + x + w) * img.channels);
+  return { ...img, data };
+}
+
+/** Where the victim `id` stood at the trigger tick 60, as a rect in the kill window `box60` ([x, y, w, h] of the
+ *  screen), padded by a quarter of his drawn width for the outline and his shadow; null when the probe cannot say.
+ *  n16 s6: a rocket film's +1000 still differed 1.6 % from the trigger frame after the scorch and spray had gone,
+ *  mostly his empty standing spot, so `gone by` could never fire. */
+export function standMask(probe, id, box60) {
+  const f = probe?.rows?.find((r) => r.tick === 60)?.fighters?.find((x) => x.id === id);
+  if (!f?.screen || !f?.draw || !Number.isFinite(f.head_y) || !Number.isFinite(f.feet_y)) return null;
+  const pad = f.draw[0] / 4;
+  const x0 = Math.max(0, Math.floor(f.screen[0] - f.draw[0] / 2 - pad - box60[0]));
+  const y0 = Math.max(0, Math.floor(f.head_y - pad - box60[1]));
+  const x1 = Math.min(box60[2], Math.ceil(f.screen[0] + f.draw[0] / 2 + pad - box60[0]));
+  const y1 = Math.min(box60[3], Math.ceil(f.feet_y + pad - box60[1]));
+  return x1 > x0 && y1 > y0 ? [x0, y0, x1 - x0, y1 - y0] : null;
 }
 
 /** The measured hit-stop: frames the game drew while the sim held a tick (SimClock.hold, FeelCam's hit-stop) from
@@ -273,7 +298,7 @@ export function curveText(m) {
 export function reelMarkdown(rows, table, cmd) {
   const cell = (v) => (v === undefined || v === null ? '-' : String(v));
   const lines = [`# kill reel`, '', `\`${cmd}\``, '',
-    '| weapon | side | victim | dir | px/m | outcome | kill | freeze (frames, measured) | pieces wait (row ticks) | settled | aftermath | aftermath curve (measured) | whole |',
+    '| weapon | side | victim | dir | px/m | outcome | kill | freeze (frames, measured) | pieces wait (row ticks) | settled | aftermath | aftermath curve (measured, his standing spot left out) | whole |',
     '|---|---|---|---|---|---|---|---|---|---|---|---|---|'];
   for (const { job, film } of rows) {
     const m = film.measured ?? {};

@@ -16,7 +16,7 @@ import { mkdirSync, readdirSync, rmSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { EXIT, filmOne, pinRev, plan } from './film.mjs';
-import { anchorShifts, boxAt, curveText, stopText, goreWhole, killWindow, measureBeats, measureHold, measureStop, movieSpan, pickBeats, reelPlan, tableRows, victimAt } from './kill_reel_lib.mjs';
+import { anchorShifts, boxAt, curveText, standMask, stopText, goreWhole, killWindow, measureBeats, measureHold, measureStop, movieSpan, pickBeats, reelPlan, tableRows, victimAt } from './kill_reel_lib.mjs';
 import { beatLine, cutMovie, encodeClip, finish, resheet } from './kill_reel_out.mjs';
 import { diffImages, readPng } from './png.mjs';
 import { filmedRoot } from './side.mjs';
@@ -101,7 +101,8 @@ async function filmJob(job, side, reel, runner, known) {
   const frames = new Map(beats.map((t) => [t, readPng(join(job.dir, `t${t}.png`))]));
   const shifts = anchorShifts(r.probe, k, [...saved]);
   const at = (t) => boxAt(box, shifts[t]);
-  const measured = measureBeats(frames, beats, k, at, diffImages);
+  const died = victimAt(r.probe, k);
+  const measured = measureBeats(frames, beats, k, at, diffImages, { mask: died ? standMask(r.probe, died.id, at(TRIGGER_TICK)) : null });
   const run = Array.from({ length: 13 }, (_, i) => k + i).filter((t) => saved.has(t));
   const held = measureHold(new Map(run.map((t) => [t, frames.get(t) ?? readPng(join(job.dir, `t${t}.png`))])), k, at, diffImages);
   if (measured && held !== null) measured.held_ticks = held;
@@ -115,7 +116,7 @@ async function filmJob(job, side, reel, runner, known) {
   }
   const gore = reel.goreCheck ? goreWhole(r.probe, k) : null;
   const outcome = !gore ? r.outcome : /not drawn whole/.test(gore) ? 'fail' : (r.outcome === 'pass' ? 'unverifiable' : r.outcome);
-  return { outcome, reasons: gore ? [...r.reasons, `gore check: ${gore}`] : r.reasons, kill: k, beats, box, shifts: Object.fromEntries(beats.filter((t) => shifts[t]).map((t) => [t, shifts[t]])), clip, measured, died: victimAt(r.probe, k),
+  return { outcome, reasons: gore ? [...r.reasons, `gore check: ${gore}`] : r.reasons, kill: k, beats, box, shifts: Object.fromEntries(beats.filter((t) => shifts[t]).map((t) => [t, shifts[t]])), clip, measured, died,
     ...(reel.goreCheck ? { whole: gore === null } : {}) };
 }
 

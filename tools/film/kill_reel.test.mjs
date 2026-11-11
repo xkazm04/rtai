@@ -329,3 +329,21 @@ test('a film with the feel off reads its freeze as off, not as 0 frames (n16 s6)
   const md = reelMarkdown([{ job, film: { outcome: 'pass', kill: 68, measured: { hitstop_frames: 0, feel_off: true } } }], {}, 'x');
   assert.match(md, /\| 68 \| off \(feel off\) \|/);
 });
+
+test('the curve leaves out where the victim stood at the trigger frame, so an empty street reads gone (n16 s6)', async () => {
+  const { measureBeats, standMask } = await import('./kill_reel_lib.mjs');
+  const { diffImages } = await import('./png.mjs');
+  const probe = { rows: [{ tick: 60, fighters: [{ id: 7, role: 'hostile', alive: true, screen: [110, 60], draw: [8, 16], head_y: 44, feet_y: 60 }] }] };
+  assert.deepEqual(standMask(probe, 7, [100, 40, 40, 40]), [4, 2, 12, 20], 'x 104-116, y 42-62 (padded by draw/4 = 2), clipped to the window');
+  assert.equal(standMask(probe, 8, [100, 40, 40, 40]), null, 'not in the trigger row');
+  assert.equal(standMask({ rows: [{ tick: 60, fighters: [{ id: 7, screen: [110, 60] }] }] }, 7, [100, 40, 40, 40]), null, 'no drawn size');
+  assert.equal(standMask(probe, 7, [400, 400, 40, 40]), null, 'off the window');
+  // a 10 x 10 window: he stands in the left 3 columns at 60; at +150 only his spot differs (he is gone).
+  const img = (cols) => ({ width: 10, height: 10, channels: 3, data: Buffer.from(Array.from({ length: 300 }, (_, i) => (cols.includes(Math.floor(i / 3) % 10) ? 250 : 100))) });
+  const frames = new Map([[60, img([0, 1, 2])], [213, img([])]]);
+  const plain = measureBeats(frames, [60, 213], 63, [0, 0, 10, 10], diffImages);
+  assert.deepEqual([plain.aftermath_curve, plain.aftermath_gone_after], [[[150, 0.3]], null]);
+  const masked = measureBeats(frames, [60, 213], 63, [0, 0, 10, 10], diffImages, { mask: [0, 0, 3, 10] });
+  assert.deepEqual([masked.aftermath_curve, masked.aftermath_gone_after, masked.aftermath_share], [[[150, 0]], 150, 0.3], 'the share stays the whole window');
+  assert.deepEqual(masked.aftermath_mask, [0, 0, 3, 10]);
+});
