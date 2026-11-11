@@ -232,3 +232,6 @@ by default). (6) the s1 frames.json entry "thug stands as riot cop" is supersede
 - 13:46 evidence: gtai-masters/n16/tools/frames.json 12 entries (retired the s1 "thug stands as riot cop" still and its
   file; the s1 dir-90 sheets are marked as filmed before the spot fix; added guard-vs-thug t60). In-tree copies under
   evidence/n16-tools/ (+ reel_s3stop_on/off.json, the hit-stop proof).
+- DECISION tools/kill-reel-feel: the reel's default stays feel OFF (stable sheets and A/B); `--feel=on` for pacing; the
+  hit-stop is read as `hit-stop N frames` (probe frame gaps), never from sheets. Line in docs/decisions.md.
+- 13:48 session 2 end: tree clean, no Godot of mine running (the gate and all reels exited). Branch tip below.
