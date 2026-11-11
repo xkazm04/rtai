@@ -295,3 +295,18 @@ REQUEST tools (open, served on n15-tools, not merged here): none new.
   film weapon:flamethrower --victim=cop/head_cap --on=kill:1+90 at 64 and 32 px/m with/without `--char-cells=off`,
   look whether the HAT group also carries a head_card copy (whole-body cut copies head sprites twice), then provenance
   (steam/ai-provenance), DECISION, commit. If the film loses to the char print, delete the WIP.
+- GATES PASS incl. reels on `896c5c30d` (01:46, build/gate/896c5c30dce1/gate.json: `gate: PASS`).
+- MILESTONE `8eb67bc62` item 2 charred cells (the 01:38 WIP, finished): import, parse ok, test_kill_char_cells 3/3,
+  film weapon:flamethrower --victim=cop/head_cap --on=kill:1+80 64 px/m, before `--char-cells=off`, same build:
+  `evidence/n15-combat/char_cells_cop_ab_64ppm_x2_t542-620.png`: the drawn charred cop (ember cracks, dull blue cap)
+  stands where the black silhouette stood, same size, crumble unchanged. DECISION combat/char-cells. Lint passed in
+  the pre-commit hook; full unit/gates NOT run on 8eb67bc62 (session time). Masters: added it, dropped the c-2
+  thug/punk sheet (still in evidence/); 15 entries checked by script.
+- 01:52 session 4 ends. Godot: none of mine running (the gate and films exited; their logs say PASS).
+
+NEXT (session 5): (1) full gates on the HEAD after 8eb67bc62 (`node tools/gate/run.mjs --rev=HEAD --reels`): the
+charred swap is new code (kill_styles.gd, kill_char_cells.gd); a look golden or reel with a burn kill could move.
+(2) 32 px/m film of the charred cop (brief: 32 + 64) and a check that the HAT group carries no second head_card copy
+(none seen at 64 px/m). (3) Then the session-5 list above from item (3) on: metal impacts, body burst drift,
+contractor living hold, the t62 white stick, flame jet column. (4) REPORT.md draft: add rows for 8eb67bc62 and the
+01:15 fight_gate line; gate lines.
