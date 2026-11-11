@@ -547,3 +547,12 @@ C:/Users/kazda/kiro/gtai-n15/scratch-tools-before`, `git branch -D n15t-control-
   (via `dead_end`) now follow the mask. Proof, SimConst edited in place and restored: `run_unit --select=
   test_sim_car_route_t4,test_sim_car_route_break,test_sim_car_route_break_exits,test_sim_car_route` mask 1: 21/0,
   mask 241: 21/0, mask 65: 21/0. Dropped my own `CAR_DEAD_END_TILES == 1` pin for the same reason.
+- 02:13-02:17 t-5 cost again, now with an A/A twin (bench lock created noclobber, deleted after; CONTENDED: 8-15 other
+  Godot processes at each run start, column 6). `evidence/t5_aab.sh 6` -> `evidence/t5_aab.tsv`: per round one
+  parity run (1200 steps, both sims) each of A = scratch-tools-before d720e22da (HW 80, pre-t-4), A2 = A again,
+  B = n15-tools aded9845b (HW 132), order rotated. GDScript reference step: B-A 0.639 1.038 0.612 0.489 0.394 0.915 ms
+  (median +0.63 ms on 4.43 ms, +14 %, B slower 6/6), A2-A median -0.14 ms (2/6 positive). Native step: B-A 15.3 12.9
+  5.7 9.5 8.5 5.5 us (median +9.0 us on 52 us, +17 %, 6/6), A2-A median -1.8 us (1/6). Sign test 6/6: p = 0.031.
+  The A/A spread (max |0.41| ms, |9.2| us) overlaps B-A's smallest round, so the size is soft; the sign is not.
+  Cause, read: `CitySimHash.build` walks all HW*HW cells for its prefix sums every step (6400 -> 17424). B-A also
+  holds t-4 (route code, same tile reads). Native +9 us/step is 0.05 % of a 16.7 ms frame.
