@@ -218,6 +218,22 @@ every gate (`tools/gate/run.mjs`, `tools/evidence/run.mjs`) always lints everyth
 skips lint only when git says the index tree is the HEAD tree (`git write-tree` = `HEAD^{tree}`); an
 empty path list alone still runs lint.
 
+**It warns when the commit makes a NEW conflict with a sibling lane** (n15; `tools/merge/clash.mjs`).
+Every commit, inert ones too (`docs/decisions.md` stops the morning merge as well), turns the staged
+index into a dangling commit on HEAD and merges each sibling lane with HEAD and with it (`git
+merge-tree --write-tree`, about 0.4 s for two lanes). A conflict on a file `morning.mjs` cannot
+resolve (anything but the root JOURNAL/REPORT and the debt baseline) that only the commit has is named:
+
+```
+merge-clash: WARNING this commit makes project/features/characters/cast_flags.gd conflict with n15-combat (git merge-tree; morning.mjs would stop on it). Move your lines off theirs, or say so in JOURNAL
+merge-clash: no new code conflict with n15-combat, n15-hero (2 known, unchanged)
+```
+
+It never blocks (the other lane's lines are not yours to refuse). Siblings are the branches checked out
+in this repo's worktrees that share your branch's prefix up to its first `-` (`n15-tools` ->
+`n15-hero`, `n15-combat`); `GTAI_MERGE_LANES=<a,b>` names them, `GTAI_MERGE_LANES=off` skips the
+check. It writes git objects only: no ref, index or worktree. By hand: `node tools/merge/clash.mjs`.
+
 ## tools/gate/quick.mjs: the lint rules you keep tripping, on your changed files, before the commit
 
 ```

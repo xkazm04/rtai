@@ -10,6 +10,8 @@
 // index instead (tools/gate/staged_tree.mjs), so it judges the commit and not your unstaged edits.
 // Lint gets the staged list (--scope): a commit wholly under project/ lints its own .gd files and
 // skips the tool tests unless it stages a file they read (tools/lint/scope.mjs); the gates lint all.
+// Every commit (inert ones too: docs/decisions.md stops the morning merge as well) first asks
+// tools/merge/clash.mjs whether it makes a NEW code conflict with a sibling lane: a warning, never a block.
 // Exit: lint's own code, or 0 when every staged path is inert or nothing is staged.
 import { spawnSync } from 'node:child_process';
 import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
@@ -20,6 +22,16 @@ import { isInert } from '../evidence/scope.mjs';
 import { ROOT } from '../lib/repo.mjs';
 import { withoutGitEnv } from '../lint/lint.mjs';
 import { driftPaths, exportIndex, removeExport, sample } from './staged_tree.mjs';
+import { lines as clashLines, newClashes } from '../merge/clash.mjs';
+
+/** The merge-clash warning lines for the commit being made, through the hook's own git runner. */
+export function clashCheck(cwd, git, env = process.env) {
+  const run = (args) => {
+    const r = git('git', args, { cwd, encoding: 'utf8', windowsHide: true });
+    return { status: r?.status ?? 1, stdout: typeof r?.stdout === 'string' ? r.stdout : '', stderr: String(r?.stderr ?? '') };
+  };
+  try { return clashLines(newClashes(run, env)); } catch (e) { return [`merge-clash: not checked (${e.message})`]; }
+}
 
 /** {skip, line}: skip only when something is staged and every staged path is inert. */
 export function decide(paths) {
@@ -66,7 +78,9 @@ export function sameTreeAsHead(cwd, git = spawnSync) {
   return TREE.test(index) && index === out(['rev-parse', 'HEAD^{tree}']);
 }
 
-export function main({ cwd = ROOT, git = spawnSync, lint = spawnSync, err = console.error, exporter, remover } = {}) {
+export function main({ cwd = ROOT, git = spawnSync, lint = spawnSync, err = console.error, exporter, remover,
+  clash = clashCheck } = {}) {
+  for (const l of clash(cwd, git)) err(l);
   const paths = stagedPaths(cwd, git);
   let d = paths === null ? { skip: false, line: 'pre-commit: git could not list the staged paths, running lint' } : decide(paths);
   if (paths && !paths.length && sameTreeAsHead(cwd, git)) d = { skip: true, line: 'pre-commit: nothing staged, the index tree is the HEAD tree: lint skipped (git refuses the commit unless --allow-empty)' };
