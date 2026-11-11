@@ -80,3 +80,30 @@ before: one PNG per piece/frame on transparent, keyed, under `library/keyed/stre
   shopper (row keys ped/head_bald, ped/head_hat, ped/head_punk, ped/head_shopper). Contractor HELD: its hi-vis vest and
   hard hat are orange (colour law: vermilion only for danger/objectives/Rivet's collar) and its quest-card row key is
   not a StreetDeadPlan row; judge against the contractor card first.
+- MILESTONE 76f023a08 item 3: bone gib pieces (it410) for elder, hat, punk, shopper packed and wired (not yet filmed in
+  game: `film.mjs weapon:rocket_launcher --victim=ped/head_punk` etc. is owed).
+- MILESTONE item 2 ranking films (11:36-11:47, rev 1b823dbf7, `build/film/rank{32,64}_<weapon>`, git-ignored, kept):
+  electro_gun, flamethrower, plasma_rifle, chainsaw, ray_gun, homing_shard, hand_cannon, mini_nuke, plasma_sword filmed;
+  rank32_rocket_launcher cut short (I stopped the queue: rocket and katana were filmed for item 1). Scored in KILLS.md:
+  electro, flamethrower, plasma, chainsaw, ray gun. Beat strips: `python -I build/strip.py <film> auto:520,420 0.6 <out>`
+  (build/strip.py and build/ab.py are my scratch helpers, git-ignored; copy them if build/ is cleaned).
+- MILESTONE bb9314a83 plasma hole (weakest, 7/20): hole at the chest (row hole_up_m 0.4), ink-grey smoke. Before/after
+  64 and 32 px/m in `evidence/n16-kills-polish/plasma_hole_chest_smoke_ab_*`. Now ~9/20.
+- 12:00 GATES started on bb9314a83 (`node tools/gate/run.mjs --rev=bb9314a83 --reels`, log build/gate_bb93.log,
+  results build/gate/bb9314a83*/gate.json).
+
+NEXT (iteration 2):
+1. Read the gate result for bb9314a83 (build/gate/<sha>/gate.json). If red: fix first. Look goldens: none was meant
+   to move; a red look golden means a kill frame is in a golden: name it, judge, re-bless only that one + decisions line.
+2. Score the four filmed but unscored deaths in KILLS.md from build/film/rank{32,64}_{homing_shard,hand_cannon,
+   mini_nuke,plasma_sword}; film the ghosts' kills (tonnage, dent, kerf, ohm) and score them.
+3. Electro X-ray upright on the body (DEFECTS ranking #2): `KillShockFx._draw` draws the sticker turned along the shot
+   at the body group's centre; under a card view draw it upright with its feet on the body's feet (check where p is for
+   a card vs a rig first). Then wire A3 per-kind stickers when they land.
+4. Film the bone gib pieces in game (punk, elder, hat, shopper; 64 + 32), and pack the bone versions of the seven
+   no-bone kinds when the asset lane's round 20261111-1130 lands (same keys: swap the KINDS folder to *_gib_bone_70_cells).
+5. Plasma hole: the cream halo (1.55 x radius, alpha 0.55) is large at 32 px/m; then A4 drawn insides.
+6. Ray gun dissolve does not read at k+10..k+30 (DEFECTS ranking #3).
+7. Owed: a quest 1 still of the p55 peek card (item 1d is already wired on main; evidence only); perf: fight_gate under
+   the bench lock once drawn cells are added (none warmed yet: gib sheets load on first use).
+8. Contractor bone gib set: judge its orange hi-vis against the contractor card and colour law before packing.

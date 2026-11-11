@@ -1,5 +1,23 @@
 [
   {
+    "file": "plasma_hole_chest_smoke_ab_64ppm_t55-95.png",
+    "title": "Plasma hole at the chest, ink-grey wound smoke",
+    "source": "film.mjs chapter:plasma_rifle --ppm=64 --on=kill:1+40; before rev 1b823dbf7, after bb9314a83",
+    "branch": "n16-kills-polish",
+    "ppm": 64,
+    "before": "top row: hole at the hips, cream smoke washing the cop pale",
+    "note": "weakest death in the ranking (7/20); commit bb9314a83"
+  },
+  {
+    "file": "plasma_hole_chest_smoke_ab_32ppm_x2_t55-95.png",
+    "title": "Plasma hole fix at play zoom (x2)",
+    "source": "same, --ppm=32",
+    "branch": "n16-kills-polish",
+    "ppm": 32,
+    "before": "top row",
+    "note": "the cop stays solid navy; the hole's cream halo is still large (next)"
+  },
+  {
     "file": "boss_katana_strike_hold_ab_64ppm_t305-310.png",
     "title": "Blade strike holds through the gap between swings",
     "source": "film.mjs arena --view=tilt --ppm=64 --lock=off -- --bot=boss --boss=king --boss-blade=katana; before --rivet-strike-hold=off (rev 917d75a5e)",
@@ -34,6 +52,15 @@
     "ppm": 64,
     "before": "top row: blue rig parts",
     "note": "owner n15 verdict; commit 917d75a5e"
+  },
+  {
+    "file": "rocket_gib_thug_torso_056_vs_070_32ppm_x2_t349-371.png",
+    "title": "Rig gib pieces at 0.7 m torso vs 0.56 at play zoom",
+    "source": "film.mjs weapon:rocket_launcher --victim=thug --ppm=32, revs 917d75a5e vs 1b823dbf7",
+    "branch": "n16-kills-polish",
+    "ppm": 32,
+    "before": "top row: 0.56 m",
+    "note": "a little bigger; grey metal on grey smoke still weak (DEFECTS #2 open)"
   },
   {
     "file": "rocket_gib_thug_drawn_pieces_ab_32ppm_x2_t349-371.png",
