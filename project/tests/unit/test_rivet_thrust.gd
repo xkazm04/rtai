@@ -75,3 +75,20 @@ func test_the_camera_cells_feet_are_its_drawn_boot_not_the_blade() -> void:
 				low = maxi(low, y)
 	var foot: float = RivetThrust.CAM_FEET["p70"]
 	assert_almost_eq(float(img.get_height() - 1 - low), foot, 2.0)
+
+
+func test_place_takes_the_facings_cell_unmirrored_on_its_boots() -> void:
+	var path: String = RivetStrips.DIR + "p70/rivet_eq_katana_thrust.png"
+	var want: Dictionary[int, int] = {0: RivetThrust.SIDE, 2: RivetThrust.CAM, 4: RivetThrust.LEFT}
+	for o: int in want:
+		var rig: CutRig = autoqfree(CutRig.new())
+		rig.face_to = o * PI * 0.25
+		var card: Sprite2D = autoqfree(Sprite2D.new())
+		card.texture = load(path) as Texture2D
+		card.set_meta(RivetFrames.ON, path)
+		RivetThrust.place(rig, card, 1.0, 100.0)
+		assert_eq(card.frame, want[o], "octant %d" % o)
+		assert_false(card.flip_h, "octant %d: drawn, never mirrored" % o)
+		var h: float = card.texture.get_height()
+		var foot: float = RivetThrust.CAM_FEET["p70"] if o == 2 else RivetStrips.foot_px(path)
+		assert_almost_eq(card.offset.y, foot - h, 0.01, "octant %d on its boots" % o)
