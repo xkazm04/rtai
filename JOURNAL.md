@@ -323,3 +323,7 @@ by default). (6) the s1 frames.json entry "thug stands as riot cop" is supersede
   the aftermath 3.2 % both (unpinned A/A: 5.8 vs 3.2). The cursor read before each run printed nothing (no claim that
   it moved). Kill lanes, NOTE: reels and films before this commit can differ run to run in RIVET'S aim/pose only
   (the sim was identical); re-film a before/after whose difference is Rivet's pose.
+- 14:48 caccc825d (the lambda form, +2 dev lines, debt accepted with the reason) RE-PROVEN on the commit: s3pin3 vs
+  s3pin4 facing equal 414/414 (and equal to s3pin1), frames 0.00 % at t60/68/218, aftermath 3.2 % both.
+- DECISION tools/film-cursor: films pin the cursor (line in docs/decisions.md; rejected: a flag, parking the desk
+  cursor). REPORT draft updated (finding for the kill lanes, gate note).

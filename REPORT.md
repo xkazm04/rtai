@@ -45,10 +45,13 @@ spun gun, 0b5c55fc7); kills-polish's step_guard flake (8cb956f7e). Each with a S
   is hit_feel.json's `kill_hitstop` (camera.json `kill`, 6) or the class's bigger stop (blast = `boss_hit` 8).
 - Default reels have the feel OFF (locked camera); judge pacing on `--feel=on` reels and their clips.
 - At 32 px/m the flamethrower and electro gun deaths read weakly (a small dark figure) in the s3all overview.
-- `settled` is a coarse upper bound and moves run to run (katana +80 / +150 on one commit): compare within one run.
+- Before caccc825d every film read the DESK MOUSE for Rivet's live aim: two films of one commit differed in Rivet's
+  facing and pose (sim identical). Films are now pinned (0.00 % apart run to run); re-film any before/after whose
+  difference is Rivet's aim or pose. (The `settled` +80/+150 and aftermath 5.8/3.2 % run-to-run spreads came from it.)
 
 ## Gates
-Gate PASS on 0b5c55fc7, the last commit touching `project/` (lint 19/19, unit 2645/0/2, scenarios 55, parity bit for
+caccc825d touches `project/dev/frames/film_probe.gd` (dev only, no gate uses it): the full gate must be re-run on it
+or the final project/ commit. Before that: gate PASS on 0b5c55fc7 (lint 19/19, unit 2645/0/2, scenarios 55, parity bit for
 bit, look goldens 11/11, release-compile 683/0, reels top/tilt70/combo OK). Every later commit is tools/docs/evidence
 (lint 19/19 incl. tool-tests in each commit's hook).
 
@@ -62,6 +65,7 @@ red, all 3 accepted and fixed in code).
   feel on by default. (decisions: tools/kill-reel-feel)
 - The kill shot stands Rivet 10 m west of his city start (station dummies took every full rig at the start).
 - The reel judges the death, not Rivet, on screen; a far victim (the nuke) gets the window.
+- A film never reads the desk mouse (FilmProbe pins the cursor; decisions tools/film-cursor). Dev only.
 - Gloria's pin counts parked cars as walls (the lab's nearest "wall" is a car): kill lanes' call, raised here.
 
 ## Merge notes
