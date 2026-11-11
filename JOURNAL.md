@@ -190,3 +190,9 @@ plays frames 1-4 from t0 (snap 0-2, held 2-8, buckle 8-14, pitch 14-21, corpse 2
 HAT piece; judge against the placeholder at the same ticks (compare `--a=027571cc9 --b=HEAD --subject=kill`);
 (2) cherry-pick afe581336 and film every new death with the kill reel at 32 + 64 px/m, 3+ directions;
 (3) the Gatling shred; (4) the electro baton overload; (5) then the items in the earlier NEXT list.
+- 12:16 JUDGED the delivered patrol boards by eye (`gtai-art/library/evidence/it410/patrol_snap_v2_cells_vs_grid.png`,
+  `patrol_drop_cells_vs_grid.png`): frame 1 (head thrown back, the cap up and away, a thin red strand from the exit) is
+  the pistol's identity and reads in all 5 facings; frame 2 buckle (blood running from the head) matches the grid's
+  camera; frame 3 pitches forward with the arms limp; frame 4 the face-down corpse with the back-of-head wound, as long
+  as the grid's lying frame. Keep the blood strand (red = blood, it shows the exit). The away facing (column 5) of
+  frame 3 still reads standing: watch it at 32 px/m. Verdict: wire all four kinds first thing next session.
