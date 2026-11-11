@@ -33,6 +33,12 @@ const FIT_K: Dictionary[String, Array] = {
 	"p70/cop_riot_gatling_shred.png": [0.92, 0.88, 1.0],
 	"p70/swat_gatling_shred.png": [0.84, 0.8, 1.0],
 	"p70/ped_suit_gatling_shred.png": [0.88, 0.84, 1.0],
+	# the baton overload's three standing rows 1.09-1.32 x by area (the arcs read as bulk: one k for
+	# the three, so the jolt does not pump), the lying row as drawn
+	"p70/cop_patrol_baton_overload.png": [0.87, 0.87, 0.87, 1.0],
+	"p70/cop_riot_baton_overload.png": [0.95, 0.95, 0.95, 1.0],
+	"p70/swat_baton_overload.png": [0.87, 0.87, 0.87, 1.0],
+	"p70/ped_suit_baton_overload.png": [0.94, 0.94, 0.94, 1.0],
 }
 const FIT_LIFT: Dictionary[String, Array] = {
 	"p70/cop_patrol_pistol_snap.png": [21, 15, 5, 10, 22],
@@ -46,6 +52,10 @@ const FIT_LIFT: Dictionary[String, Array] = {
 	"p70/cop_riot_gatling_shred.png": [0, 0, 0, 0, 0],
 	"p70/swat_gatling_shred.png": [0, 0, 0, 0, 0],
 	"p70/ped_suit_gatling_shred.png": [0, 0, 0, 0, 0],
+	"p70/cop_patrol_baton_overload.png": [0, 0, 0, 0, 0],
+	"p70/cop_riot_baton_overload.png": [0, 0, 0, 0, 0],
+	"p70/swat_baton_overload.png": [0, 0, 0, 0, 0],
+	"p70/ped_suit_baton_overload.png": [0, 0, 0, 0, 0],
 }
 const BASE: StringName = &"kill_death_cells_base"
 
