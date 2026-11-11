@@ -39,6 +39,14 @@ func test_every_char_grid_is_sized_as_its_burning_man() -> void:
 		assert_true(StreetWalkerHit.FILL.has(fill), row + ": " + fill)
 
 
+func test_a_rig_without_a_head_card_is_not_tagged() -> void:
+	# the top view's reel (gate 65acf2e8e): a burn kill of a rig with no card crashed in row_of
+	var rig: CutRig = autofree(CutRig.new())
+	var body: Node2D = autofree(Node2D.new())
+	KillCharCells.tag(body, rig)
+	assert_false(body.has_meta(KillCharCells.META), "no card, no drawn char cell")
+
+
 func test_an_untagged_body_keeps_its_char_print() -> void:
 	assert_null(KillCharCells.swap(_group(false, 2)), "no drawn cell for this kind")
 	assert_null(KillCharCells.swap(null))

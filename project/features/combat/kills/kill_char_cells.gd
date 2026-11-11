@@ -38,8 +38,9 @@ static func enabled() -> bool:
 
 
 ## Marks `body` (the burn kill's BODY group) with `rig`'s card row when that row has a char grid.
+## A rig with no head card (a non-card view, the top reel) has no card to swap: left as it is.
 static func tag(body: Node2D, rig: CutRig) -> void:
-	if body == null or rig == null or not enabled():
+	if body == null or rig == null or rig.head_card == null or not enabled():
 		return
 	var row: String = StreetWalkerCards.row_of(rig)
 	if GRIDS.has(row) and ResourceLoader.exists(GRIDS[row]):
