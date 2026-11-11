@@ -35,3 +35,10 @@ func test_the_hole_and_its_ring_move_up_and_the_body_stays() -> void:
 func test_no_lift_is_the_before() -> void:
 	var lay: Node2D = _punch(0.0).get_child(0) as Node2D
 	assert_eq((lay.get_child(0) as Node2D).position, Vector2.ZERO)
+
+
+## n16 item 3 (asset lane A4): the ring is the drawn one (three frames hot -> amber -> char).
+func test_the_drawn_ring_is_on_and_three_square_frames_across() -> void:
+	assert_false(KillHoleFx.plain())
+	assert_eq(KillHoleFx.ART.get_width(), KillHoleFx.ART.get_height() * 3)
+	assert_lt(KillHoleFx.ART_HOLE_PX, KillHoleFx.ART.get_height() * 0.5)

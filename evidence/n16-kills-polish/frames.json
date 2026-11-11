@@ -1,5 +1,23 @@
 [
  {
+  "file": "plasma_hole_drawn_ring_ab_64ppm_x15_t56-150.png",
+  "title": "Plasma hole: a drawn charred ring with rib ends and spine, the street through it",
+  "source": "film.mjs chapter:plasma_rifle --ppm=64 --on=kill:1+200; before -- --hole-art=plain",
+  "branch": "n16-kills-polish",
+  "ppm": 64,
+  "before": "top row: the procedural bullseye rings and cream bloom",
+  "note": "asset lane A4 (it418), cross-fades hot -> amber -> char over 150 ticks"
+ },
+ {
+  "file": "plasma_hole_drawn_ring_ab_32ppm_x2_t56-150.png",
+  "title": "Plasma hole drawn ring at play zoom (x2)",
+  "source": "same, --ppm=32",
+  "branch": "n16-kills-polish",
+  "ppm": 32,
+  "before": "top row",
+  "note": "reads as a torn hole, not a target; the impact bloom is weaker than the before (owner Call)"
+ },
+ {
   "file": "electro_xray_per_kind_ab_64ppm_t118-150.png",
   "title": "Electro X-ray: the cop flashes HIS skeleton (cap, belt), strobing to the inverse",
   "source": "film.mjs chapter:electro_gun --ppm=64 --on=kill:1+40, this commit; before -- --xray-art=plain",
@@ -115,23 +133,5 @@
   "ppm": 64,
   "before": "top row: the cop slides off whole, two cream sticks remain",
   "note": "commit 7d3ba705a"
- },
- {
-  "file": "rocket_gib_bone_patrol_ab_64ppm_x2_t360-371.png",
-  "title": "Rocket gib pieces with bone (patrol cop)",
-  "source": "film.mjs weapon:rocket_launcher --victim=cop/head_cap --ppm=64; before a8aa5c394, after fdb3a0d2d",
-  "branch": "n16-kills-polish",
-  "ppm": 64,
-  "before": "top row: sooty torn ends",
-  "note": "bone, rib top and spine stub read at 64 px/m"
- },
- {
-  "file": "rocket_gib_bone_patrol_ab_32ppm_x2_t352-371.png",
-  "title": "Rocket gib with bone at play zoom (x2)",
-  "source": "same, --ppm=32",
-  "branch": "n16-kills-polish",
-  "ppm": 32,
-  "before": "top row",
-  "note": "honest: the bone does not read at 32 px/m"
  }
 ]

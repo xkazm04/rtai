@@ -40,6 +40,14 @@ const SMOKE_CYCLE: int = 48
 const SMOKE: Color = Color(0.36, 0.32, 0.3, 0.6)
 const SMOKE_R: Vector2 = Vector2(0.45, 0.8)
 
+## n16 kills-polish item 3 (asset lane A4, it418): the ring is drawn: charred cloth, cauterised
+## flesh, rib ends and a spine segment round the open hole, cross-fading white-hot -> amber ->
+## cooled char over GLOW_TICKS (tools/art/plasma_hole_cells.py: three cells across, the open
+## radius ART_HOLE_PX, its centre ART_DY_PX below the cell's). `--hole-art=plain` = the before.
+const ART: Texture2D = preload("res://features/combat/weapons/art/gore/plasma_hole.png")
+const ART_HOLE_PX: float = 35.0
+const ART_DY_PX: float = 2.5
+
 ## The night's throw (the A/B's before, with no smoke).
 const OLD_LOOK_TICKS: int = 8
 const OLD_FALL_M: float = 0.45
@@ -47,6 +55,7 @@ const OLD_FALL_M: float = 0.45
 ## False (`--no-plasma-heat`): the night's throw and no wound smoke (the A/B's before).
 static var heat: bool = not OS.get_cmdline_user_args().has("--no-plasma-heat")
 static var _holed: ImageTexture = null
+static var _plain: int = -1
 
 var kills: SignatureKills = null
 var tick0: int = 0
@@ -142,6 +151,9 @@ func _draw() -> void:
 	var k: float = clampf(float(kills.tick - tick0) / GLOW_TICKS, 0.0, 1.0) if kills else 1.0
 	if kills != null:
 		_smoke(kills.tick - tick0)
+	if not plain():
+		_ring_art(k)
+		return
 	var glow: Color = HOT.lerp(COOL, k)
 	var halo: Color = Color(HOT, 0.55 * (1.0 - k))  # the heat bloom reads at 32 px/m, then cools
 	draw_arc(Vector2.ZERO, radius_px * 1.55, 0.0, TAU, 24, halo, radius_px * 0.7, true)
@@ -149,6 +161,26 @@ func _draw() -> void:
 	draw_arc(Vector2.ZERO, radius_px, 0.0, TAU, 24, glow, maxf(radius_px * 0.3, 2.0), true)
 	# a thin ember lip that never quite goes out, so the hole still reads at 32 px/m once cooled
 	draw_arc(Vector2.ZERO, radius_px * 0.82, 0.0, TAU, 24, Color(EMBER, 0.9 - 0.45 * k), 1.5, true)
+
+
+## True under `--hole-art=plain` (the procedural rings: the before).
+static func plain() -> bool:
+	if _plain < 0:
+		_plain = 1 if ArenaArgs.parse().text("--hole-art") == "plain" else 0
+	return _plain == 1
+
+
+## The drawn ring at cooling `k` (0 hot .. 1 char): frame f under frame f + 1 fading in.
+func _ring_art(k: float) -> void:
+	var cell: float = ART.get_height()
+	var side: float = cell * radius_px / ART_HOLE_PX
+	var top: Vector2 = Vector2(-side, -side) * 0.5 - Vector2(0.0, ART_DY_PX * side / cell)
+	var at: Rect2 = Rect2(top, Vector2(side, side))
+	var f: float = clampf(k, 0.0, 1.0) * 2.0
+	var seg: int = mini(int(f), 1)
+	draw_texture_rect_region(ART, at, Rect2(cell * seg, 0.0, cell, cell))
+	var fade: Color = Color(1.0, 1.0, 1.0, f - seg)
+	draw_texture_rect_region(ART, at, Rect2(cell * (seg + 1), 0.0, cell, cell), fade)
 
 
 ## The wound smokes: puffs rise out of the hole (the ring's -y), swell and thin, the column
