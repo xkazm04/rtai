@@ -99,3 +99,19 @@ func test_card_tall_is_the_drawn_card_above_the_foot() -> void:
 	assert_almost_eq(RigDepthBox.card_tall(rig), 40.0 * rig.scale.y, 0.01)
 	card.visible = false
 	assert_eq(RigDepthBox.card_tall(rig), 0.0, "a hidden card: 0")
+
+
+func test_rivets_box_is_wider_and_a_card_below_the_foot_is_no_height() -> void:
+	var rig: CutRig = _rig(Vector2(0.0, 100.0))
+	assert_almost_eq(RigDepthBox.half(rig, 30.0), 15.0, 0.001, "no card: half the body box")
+	var card: Sprite2D = Sprite2D.new()
+	card.texture = ImageTexture.create_from_image(Image.create(10, 40, false, Image.FORMAT_RGBA8))
+	card.centered = false
+	card.position = Vector2(-5.0, 10.0)  # drawn wholly below the foot
+	rig.add_child(card)
+	rig.head_card = card
+	assert_almost_eq(RigDepthBox.half(rig, 30.0), 15.0, 0.001, "a street card: the body box")
+	assert_eq(RigDepthBox.card_tall(rig), 0.0, "nothing drawn above the foot")
+	assert_eq(RigDepthBox.tall(rig, 33.0), 33.0, "never shorter than the body box")
+	card.set_meta(RivetFrames.ON, true)
+	assert_almost_eq(RigDepthBox.half(rig, 30.0), 15.0 * RigDepthBox.RIVET_W_K, 0.001, "Rivet x1.5")
