@@ -18,6 +18,8 @@ var dissolve_fx: KillDissolveFx = KillDissolveFx.new()
 var burst_fx: KillBurstFx = KillBurstFx.new()
 ## Tonnage's press slam (lane ghost-powers): the body flattened where it stood.
 var crush_fx: KillCrushFx = KillCrushFx.new()
+## The n16 deaths (lane kills-new: pistol, machine pistol, nail gun, Gatling, electro baton).
+var new_fx: KillNewStyles = KillNewStyles.new()
 
 ## The plasma kills' bodies (the topple).
 var _holes: Array[KillHoleFx.Topple] = []
@@ -44,6 +46,9 @@ func bind(kills: SignatureKills, ppm: float, reduced_motion: bool) -> void:
 	burst_fx.bind(kills, ppm, reduced_motion)
 	burst_fx.z_index = 40
 	add_child(burst_fx)
+	new_fx.bind(kills, ppm, reduced_motion)
+	new_fx.z_index = 40
+	add_child(new_fx)
 
 
 ## After KillView placed the parts this frame.
@@ -53,6 +58,7 @@ func pose() -> void:
 	split_fx.pose()
 	dissolve_fx.pose()
 	crush_fx.pose()
+	new_fx.pose()
 	for h: KillHoleFx.Topple in _holes:
 		h.pose(_kills.tick, _ppm)
 
@@ -63,6 +69,7 @@ func forget(serial: int) -> void:
 	split_fx.forget(serial)
 	dissolve_fx.forget(serial)
 	crush_fx.forget(serial)
+	new_fx.forget(serial)
 	_holes = _holes.filter(func(h: KillHoleFx.Topple) -> bool: return h.serial != serial)
 
 
@@ -88,6 +95,8 @@ func parts(
 		groups[SignatureKill.BODY] = KillShockFx.wrap(groups[SignatureKill.BODY], plank)
 	elif row.style == &"burn":
 		KillCharCells.tag(groups[SignatureKill.BODY], rig)  # n15: a drawn charred man
+	elif KillNewStyles.owns(row.style):
+		new_fx.parts(rig, serial, row, groups, dir)
 	return groups
 
 
@@ -101,6 +110,8 @@ func take(serial: int, body: Node2D, row: SignatureKill, at: Vector2, dir: Vecto
 		shock_fx.add(serial, body, row, dir)
 	elif row.style == &"crush":
 		crush_fx.add(serial, body)
+	elif KillNewStyles.owns(row.style):
+		new_fx.add(serial, body, row, dir)
 	elif row.style == &"dissolve" and body != null:
 		dissolve_fx.add(serial, body, row, at, dir)
 	elif row.style == &"hole" and body != null:

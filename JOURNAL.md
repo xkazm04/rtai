@@ -28,6 +28,7 @@ Gatling, electro baton; then molotov vs flamethrower, Rivet's bare claw). Branch
   `gatling_shred`, `baton_overload`). `signature_kills.schema.json`: new style enum values + new optional keys,
   alphabetical. Merge = union.
 - `project/tests/scenarios/scenario_brutality_kills.gd`: I add my weapons to `KILLS` (one line each).
+- `project/tests/unit/test_signature_kills.gd` line 83: its "a gun with no row" was `pistol`; now `no_such_gun`.
 
 ### Architecture (DECISION kills-new/pose-track)
 The five deaths share one render-only animator, `KillTrackFx`: the victim's whole-body copy (GibCut / the drawn
@@ -41,16 +42,18 @@ contradicts the standard bullet death's fall back; the drawn cells replace the c
 
 ### Beat sheets (60 Hz ticks; t0 = the lethal hit; gib hold = SignatureKills.hold, the camera's kill punch is hit_feel's, unchanged)
 
-1. **Pistol `pistol_snap`** (the most used gun: short and clean; gib hold 2)
+1. **Pistol `pistol_snap`** (the most used gun: short and clean; gib hold 2). AS BUILT (11:30):
    - Anticipation: none.
-   - Impact t0-2: the head snaps back - the figure leans 14 deg away from the shooter in 2 ticks; exit spray: a
-     narrow red fan (10 drops, 24 deg) behind the head and a red mist puff for 4 ticks; the cap leaves behind him
-     (the HAT piece, 2.5-3.5 m/s, spinning; on a rig; the drawn cap cell for cards is requested).
+   - Impact t0-2: the head snaps back - the standing copy leans 22 deg away from the shooter in 2 ticks; a red jet
+     (9 drops) and a mist puff leave the back of the head along the shot for 7 ticks (`KillSnapArt`, ~0.8 m); the
+     street gets the row's spray (8 drops, 24 deg) and the framework's blot behind him.
    - Held beat t2-8: hangs at the lean.
-   - Knees buckle t8-16: shortens to 0.78, the lean comes back to upright.
-   - Fold t16-26: pitches forward onto his face toward the shooter (tip 0 -> 1, eased in).
-   - Aftermath: face-down body (head toward Rivet), the exit spray on the street behind where he stood, the cap 1-2 m
-     behind. Whole death 26 ticks (0.43 s).
+   - Knees buckle t8-14: shortens to 0.84, back to upright.
+   - Fold t14-32: his own drawn fall grid, faced TOWARD the shooter: buckle t14-17, mid-fall t17-21, face-down lying
+     from t21 (`fx.cells_at` 14, `cells_ticks` 18).
+   - Aftermath: face down, head toward Rivet, the blot and spray behind where he stood. Readable death 21 ticks (0.35 s).
+   - The cap: deferred to the drawn loose cap cell (a sim cap piece on a card victim copied the whole figure, then
+     left a stray shadow).
 2. **Machine pistol `smg_stitch`** (gib hold 1)
    - Impact t0-9: the stitch - four spurts walk up the body (hip, belly, chest, neck: 0.35/0.7/1.05/1.4 m) at t0, 3, 6,
      9; each one a jerk of the figure (alternating 7 deg, 0.05 m back) and a red spurt out of the back plus an ink hole
@@ -78,7 +81,8 @@ contradicts the standard bullet death's fall back; the drawn cells replace the c
      that go out at t40.
    - Fall t45-55: drops back limp, smoke rises for 200 ticks.
    - Under --reduced-motion: no tremble and no flicker.
-   All five: `--gore=reduced` = the standard death (the table lookup misses). `--new-kills=off` (arena arg) = before.
+   All five: `--gore=reduced` = the standard death (the table lookup misses). Before = the base commit
+   (`tools/film/compare.mjs --a=<base> --b=<after>`, same tick), so no before flag is added.
 
 ### REQUEST assets (asset lane: reply to `gtai-assets/replies/n16-kills-new.md`)
 Kinds: the four street humans seen most in play, counted from `enemy_waves.json` (all curves): patrol cop 16,
@@ -104,3 +108,16 @@ no vermilion, no teal. Gore: "go further, stay riso" - drawn bone/innards allowe
 - REQUEST assets: baton_overload cells, same kinds/sizes. 4 frames: (1) locked rigid, a cream glow through the skin
   (veins of light), eyes burning cream (2) brighter, steam from collar and shoulders (3) eyes out, glow fading,
   sagging (4) lying on his back smoking (no blood, a soot ring).
+
+- 11:20 FRICTION: the before film (`film.mjs weapon:pistol --victim=cop/head_cap --ppm=64`) shows the STANDARD pistol death
+  is already a good drawn fall (thrown back, arms flung, the long face-down lying cell). A pose-track transform of the
+  standing card would read worse than that. DECISION kills-new/fall-cells: the n16 deaths play the victim's OWN drawn
+  fall grid (`KillFallCells`: StreetWalkerFall's buckle / mid-fall / lying, the between rows where a kind has them)
+  inside the body copy from the row's `fx.cells_at` tick, faced the row's fall (the pistol: toward the shooter). The
+  pose track drives only the beats before it (the snap, the buckle) and parts-rig victims (no card). Rejected: the
+  transform-only lie (a rotating paper card). When the drawn pistol cells land they replace the grid in the same slot.
+- 11:40 pistol: `kill_track.gd`, `kill_track_rows.gd`, `kill_new_styles.gd`, `kill_snap_art.gd`, `kill_fall_cells.gd`,
+  row `pistol_snap`, schema (style `snap`; keys `fall`, `fx`, `lie_len`, `slide_m`, `track`), unit
+  `test_kill_new_styles.gd` 21/21 with test_signature_kills (`run_unit.mjs --select=...`).
+  FRICTION: warnings-as-errors reject `int()/float()` on a Variant and `as Sprite2D` on get_meta; the row extras
+  are parsed once into typed containers (`KillTrackRows.Extra.num`). `wrap()` clashes with the global: `wrap_body`.

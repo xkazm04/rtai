@@ -530,6 +530,76 @@
         0.5
       ],
       "weapon": "kerf_slice"
+    },
+    {
+      "bounce": 0.1,
+      "cone_deg": 16,
+      "doc": "Pistol (lane kills-new, n16; the most used gun, so short and clean): the head snaps back 22 deg on the hit (t0-2) while a red jet and mist leave the back of the head (KillSnapArt); he hangs (t2-8), the knees buckle (t8-14), then he folds forward onto his face toward the shooter: from t14 the victim's own drawn fall grid (KillFallCells: buckle, mid-fall, lying) plays over 18 ticks facing the shooter. Aftermath: the face-down body lying toward Rivet, the exit fan on the street behind where he stood. Without a drawn grid (a parts rig) the pose track lays the body copy (t14-26). Placeholder until the drawn pistol cells land (JOURNAL REQUEST assets). The cap stays on until the drawn loose cap cell lands (a sim cap piece drew a stray shadow under a card victim, whose cap is part of the drawing).",
+      "fall": "forward",
+      "flash_ticks": 0,
+      "fx": {
+        "cells_at": 14,
+        "cells_ticks": 18,
+        "drops": 9,
+        "mist_m": 0.8,
+        "mist_ticks": 7
+      },
+      "ground_drag": 9,
+      "hitstop_ticks": 2,
+      "id": "pistol_snap",
+      "launch_mps": [
+        0.1,
+        0.2
+      ],
+      "lie_len": 1,
+      "pieces": [
+        "body"
+      ],
+      "scorch_radius_m": 0,
+      "spin_dps": [
+        0,
+        0
+      ],
+      "spray": 8,
+      "spray_cone_deg": 24,
+      "style": "snap",
+      "track": [
+        [
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          2,
+          22,
+          1,
+          0
+        ],
+        [
+          8,
+          20,
+          1,
+          0
+        ],
+        [
+          14,
+          0,
+          0.84,
+          0
+        ],
+        [
+          26,
+          0,
+          0.9,
+          1
+        ]
+      ],
+      "up_mps": [
+        0,
+        0
+      ],
+      "weapon": "pistol"
     }
   ],
   "leftover_budget": 12,

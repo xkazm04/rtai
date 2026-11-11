@@ -80,7 +80,7 @@ func test_reduced_gore_and_robots_take_the_standard_death() -> void:
 	assert_false(k.on_kill(_ev(1, Vector2.ZERO, Vector2.RIGHT, &"rocket_launcher")))
 	var full: SignatureKills = _kills(5)
 	assert_false(full.on_kill(_ev(2, Vector2.ZERO, Vector2.RIGHT, &"rocket_launcher", false)))
-	assert_false(full.on_kill(_ev(3, Vector2.ZERO, Vector2.RIGHT, &"pistol")))
+	assert_false(full.on_kill(_ev(3, Vector2.ZERO, Vector2.RIGHT, &"no_such_gun")))  # no row
 	assert_true(full.on_kill(_ev(4, Vector2.ZERO, Vector2.RIGHT, &"rocket_launcher")))
 	assert_false(full.on_kill(_ev(4, Vector2.ZERO, Vector2.RIGHT, &"rocket_launcher")), "once")
 

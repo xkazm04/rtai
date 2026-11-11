@@ -52,9 +52,23 @@
             ],
             "type": "string"
           },
+          "fall": {
+            "enum": [
+              "forward",
+              "back",
+              "side"
+            ],
+            "type": "string"
+          },
           "flash_ticks": {
             "minimum": 0,
             "type": "integer"
+          },
+          "fx": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "type": "object"
           },
           "grind_ticks": {
             "minimum": 0,
@@ -85,6 +99,11 @@
             "minItems": 2,
             "type": "array"
           },
+          "lie_len": {
+            "maximum": 3,
+            "minimum": 0.2,
+            "type": "number"
+          },
           "pieces": {
             "items": {
               "enum": [
@@ -103,6 +122,11 @@
             "type": "array"
           },
           "scorch_radius_m": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "slide_m": {
+            "maximum": 5,
             "minimum": 0,
             "type": "number"
           },
@@ -144,8 +168,20 @@
               "dissolve",
               "burst",
               "crush",
-              "vaporise"
+              "vaporise",
+              "snap"
             ]
+          },
+          "track": {
+            "items": {
+              "items": {
+                "type": "number"
+              },
+              "maxItems": 4,
+              "minItems": 4,
+              "type": "array"
+            },
+            "type": "array"
           },
           "up_mps": {
             "items": {
