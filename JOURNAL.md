@@ -738,3 +738,6 @@ NEXT addendum, item (3) is now concrete: after the gate verdict, if time before 
   adds the claw's grids p55, the 3 provenance lines and a p55 assert in test_kill_throw_art; then
   `node tools/gate/quick.mjs --fix`, `node tools/tests/run_unit.mjs --select=test_kill_throw_art,test_kill_death_cells`
   (imports the PNGs), stage the 3 PNGs + .import + json + jsonl + test, commit. Not run (Godot busy).
+- 18:32 FINAL GATE evidence on `ab925914e`: lint 19/19 (1492 files), unit 2685/0/2, scenarios 55/55, parity bit for bit
+  1200 steps (planted fault caught at 629), look goldens 11/11, release-compile 698/0. Reels (top, tilt70, combo)
+  running, ~15 min.
