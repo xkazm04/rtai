@@ -43,3 +43,19 @@ func test_a_strike_stands_planted_only_while_it_plays() -> void:
 	RivetLean.enabled = false
 	assert_false(RivetLean.held(rig), "off = the before")
 	RivetLean.enabled = true
+
+
+func test_a_shot_kicks_him_back_about_his_feet_and_settles() -> void:
+	var rig: CutRig = autofree(CutRig.new())
+	var o: int = RivetFrames.oct_of(rig)
+	var side: float = cos(o * PI * 0.25)
+	assert_gt(absf(side), 0.5, "a bare rig faces a side octant (the kick shows)")
+	rig.clips.shoot(1.0)
+	var want: float = deg_to_rad(-RivetLean.KICK_DEG) * side
+	assert_almost_eq(RivetLean.rad(rig), want, 1e-4, "the round's tick: KICK_DEG back")
+	rig.clips.sample(rig, SimClock.TICK_DT * 20.0)
+	assert_almost_eq(RivetLean.rad(rig), 0.0, 1e-4, "settled once the clip decays")
+	rig.clips.shoot(1.0)
+	RivetLean.kick = false
+	assert_almost_eq(RivetLean.rad(rig), 0.0, 1e-4, "--rivet-kick=off: the held pose")
+	RivetLean.kick = true

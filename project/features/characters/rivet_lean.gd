@@ -9,7 +9,14 @@ extends RefCounted
 ## (`lean_back_deg`, `lean_in_deg`; absent = upright, as the claw). Render only.
 ## `--rivet-lean=off` (CastFlags) = before (every strike upright).
 
+## n17 item 4 (DEFECTS #12): a shot's recoil (RigClips.recoil: per weapon from arena.json
+## rig_kick, 0.4-1.6, a throw's negative swing forward; decays with the clip, ~10 ticks) tips the
+## drawn figure back about his feet by KICK_DEG per unit when no strike plays: the fire cell's arm
+## and body kick with the round (before, one held pose). `--rivet-kick=off` (CastFlags) = before.
+const KICK_DEG: float = 3.0
+
 static var enabled: bool = true
+static var kick: bool = true
 ## n17: a strike cell stands planted (no walk bob or sway on it); false = the before (it bobbed
 ## 1.4 world px with the gait while he moved: 2.8 px at 64 px/m). `--rivet-lean=off` clears both.
 static var plant: bool = true
@@ -24,13 +31,13 @@ static func held(rig: CutRig) -> bool:
 
 ## The lean (radians, + = clockwise on screen) of `rig` this frame; 0 outside a weapon strike.
 static func rad(rig: CutRig) -> float:
-	if not enabled or rig.dead or rig.clips.strike_t < 0.0:
-		return 0.0
-	var lean: Vector2 = of(RivetFrames.weapon_of(rig))
-	if lean == Vector2.ZERO:
-		return 0.0
 	var side: float = cos(RivetFrames.oct_of(rig) * PI * 0.25)
-	if absf(side) < 0.01:
+	if rig.dead or absf(side) < 0.01:
+		return 0.0
+	if rig.clips.strike_t < 0.0:
+		return deg_to_rad(-KICK_DEG * rig.clips.recoil) * side if kick else 0.0
+	var lean: Vector2 = of(RivetFrames.weapon_of(rig))
+	if not enabled or lean == Vector2.ZERO:
 		return 0.0
 	return deg_to_rad(deg_at(lean, rig.clips.strike_t, rig.clips.strike_ph)) * side
 
