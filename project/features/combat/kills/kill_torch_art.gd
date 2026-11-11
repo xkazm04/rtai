@@ -7,7 +7,8 @@ extends RefCounted
 ## until `burn_to` (row fx), shrinking from `fade_from`; smoke rises off the body after
 ## (KillCookArt.smoke). Flame tongues: amber with a cream core and an ink line, `tongues` of them
 ## up his figure while he kneels, along the body once he lies. Under --reduced-motion they hold
-## their height (no flicker). No blood. No RNG: shapes from KillNewStyles.h.
+## their height (no flicker). His own drawn cells (KillDeathCells) carry flames; the tongues
+## flicker over them, lower (`cells_flame_m`). No blood. No RNG: shapes from KillNewStyles.h.
 
 const FLAME: Color = Color("#E9A23B")
 const CORE: Color = Color("#F4E3B5")
@@ -30,8 +31,15 @@ static func draw(ci: KillNewStyles, d: KillNewStyles.Death, age: int) -> void:
 		var flick: float = (
 			1.0 if ci.reduced_motion else 0.7 + 0.5 * KillNewStyles.h(d.serial + t, age)
 		)
-		var tall: float = ci.ppm * d.extra.num("flame_m", 0.32) * k * flick
+		var tall: float = ci.ppm * flame_m_of(d) * k * flick
 		_tongue(ci, at, tall, (KillNewStyles.h(d.serial, t + 600) - 0.5) * 0.5)
+
+
+## A tongue's full height (m): fx `flame_m`, or on his own drawn cells (which carry drawn flames
+## that do not flicker) fx `cells_flame_m`.
+static func flame_m_of(d: KillNewStyles.Death) -> float:
+	var m: float = d.extra.num("flame_m", 0.32)
+	return d.extra.num("cells_flame_m", m) if KillDeathCells.owns(d.cells) else m
 
 
 ## Layer px of the lying body's middle: the drawn cell's alpha centroid (KillCellBody), else

@@ -1075,13 +1075,29 @@
     {
       "blot_m": 0,
       "bounce": 0.1,
+      "cells": {
+        "at": [
+          0,
+          8,
+          16,
+          150
+        ],
+        "grids": {
+          "p70": {
+            "cop/head_cap": "cop_patrol_molotov_torch.png",
+            "cop/head_helmet": "cop_riot_molotov_torch.png",
+            "cop/head_swat": "swat_molotov_torch.png"
+          }
+        }
+      },
       "cone_deg": 16,
-      "doc": "Molotov (lane kills-new, n16): the torch. The flamethrower keeps burn_char (he stops and chars where he stands, then crumbles); the molotov's spirit soaked into his clothes keeps burning ON him. The sim names every fire death `burn`; KillFireSource (view side, CombatArena.struck) names the fire weapon that last hit him, and a burn death with no fire hit on record walked into a ground fire, the molotov's. No hit-stop (the fire killed him, not a blow). t0-6 he drops to his knees mid-run (the pose track's squash), t6-16 he sags forward, from t16 his own drawn fall grid (KillFallCells) folds him face down along his run over 10 ticks; amber flame tongues with a cream core lick up his figure and then along the drawn body (KillTorchArt, 6 tongues, 0.5 m) until t180, shrinking from t120; then smoke rises off him for 200 ticks. No blood. Placeholder until the drawn torch cells land (JOURNAL REQUEST assets molotov_torch: kneeling in a sheet of flame, doubled over, face down burning, charred with the bottle neck beside him; fx cells_turn_from 0 faces them along the run).",
+      "doc": "Molotov (lane kills-new, n16): the torch. The flamethrower keeps burn_char (he stops and chars where he stands, then crumbles); the molotov's spirit soaked into his clothes keeps burning ON him. The sim names every fire death `burn`; KillFireSource (view side, CombatArena.struck) names the fire weapon that last hit him, and a burn death with no fire hit on record walked into a ground fire, the molotov's. No hit-stop (the fire killed him, not a blow). t0-6 he drops to his knees mid-run (the pose track's squash), t6-16 he sags forward, from t16 his own drawn fall grid (KillFallCells) folds him face down along his run over 10 ticks; amber flame tongues with a cream core lick up his figure and then along the drawn body (KillTorchArt, 6 tongues, 0.5 m) until t180, shrinking from t120; then smoke rises off him for 200 ticks. No blood. The patrol cop, riot cop and SWAT play their own drawn cells (KillDeathCells, 5 facings x 4 frames, turned along the run by fx cells_turn_from 0): t0 on his knees, arms flailing, flames on the shoulders and back; t8 hunched, beating at the flames; t16 face down, burning along the back and legs; t150 the same pose charred to ink, smouldering, the bottle neck and glass beside him. On them the coded tongues stay (the drawn flames do not flicker) at fx cells_flame_m 0.3 m. The suit ped keeps the placeholder (his kneeling frames were refused by the image filter).",
       "fall": "back",
       "flash_ticks": 0,
       "fx": {
         "burn_to": 180,
         "cells_at": 16,
+        "cells_flame_m": 0.3,
         "cells_ticks": 10,
         "cells_turn_from": 0,
         "fade_from": 120,
