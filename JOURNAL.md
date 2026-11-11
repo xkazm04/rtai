@@ -1037,3 +1037,18 @@ C:/Users/kazda/kiro/gtai-n15/scratch-tools-before`, `git branch -D n15t-control-
   +n15-hero -> +n15-combat, the resolver on the conflicted cast_flags.gd (exit 0), then `node
   tools/style/flag_routes.mjs <resolved>` -> `flag-routes: 0 unrouted flag(s) in 1 file(s)`, exit 0: the integrated
   tree passes the new check (REPORT merge note).
+
+NEXT (session 8, 06:43 -> freeze 07:30, REPORT 07:40): (1) Read hero/combat JOURNALs for REQUEST tools / FRICTION
+(served to 06:16: hero's --ohm-hand FRICTION + stride_film REQUEST = ea02a8898, cherry-pick clean on both tips; dead
+walk befores = 05e519be8; merge-clash = 392d0ec85..6d77d2204; TO lines written). (2) `node tools/merge/preview.mjs
+--lanes=n15-tools,n15-hero,n15-combat`; if a NEW code clash shows, check it (resolver for cast_flags.gd/rivet_res.gd;
+then `node tools/style/flag_routes.mjs <resolved cast_flags.gd>`). (3) Godot slot, pick ONE (each ~25-30 min): if any
+code lands after 9b7b14088, the final gate on HEAD (`node tools/gate/run.mjs --rev=HEAD --reels --timeout=40`, then
+remove its snapshot); else a fresh morning integration on a scratch worktree (`tools/merge/morning.mjs`, steps
+merge,debt,gates) of the three tips for the Director, removed afterwards (worktree + branch). The 257b2e58c gate PASS
+covers all game code; after it only Node lint/tools (pre-commit full lint 19/19, Linux 593/0). (4) REPORT final by
+07:40 (header time, Calls c-1/c-2 unchanged, merge notes from the preview). (5) End of night, mine only:
+`git worktree remove --force C:/Users/kazda/kiro/gtai-n15/scratch-tools-before` (t-5's A arm; done with it),
+`git branch -D n15t-control-sim-hash`, `git worktree remove --force %TEMP%/gtai-mutate-6bd4df1a`. NOT mine (leave):
+gtai-film-5c5c036112cb (main, 22:04, no lane journal names it), every gtai-gate-*/gtai-mutate-* on hero/combat commits.
+Write times from `date` (session 7 needed one correction).
