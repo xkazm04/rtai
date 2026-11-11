@@ -1,6 +1,6 @@
 # REPORT: night n15, lane hero (Rivet and the four ghosts)
 
-DRAFT, brought current at 05:50 (it16); the last session before 07:40 finalises it.
+DRAFT, current at 06:45 (it16). Last full gate: `node tools/gate/run.mjs --rev=HEAD --reels` on 5f9b18955 PASS (lint 16/16, unit 2528/0, scenarios 55/55, parity bit-exact, look goldens 11/11, release-compile 674/0, reels exit 0); later commits are docs/evidence only. No golden moved.
 Branch `n15-hero`, cut from main `5c5c03611`. Every claim cites a still in this branch's `evidence/`
 (the best 15 are copied to `gtai-masters/n15/hero/` with `frames.json`). Record: `JOURNAL.md`, `LEVEL.md`.
 
