@@ -30,9 +30,9 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--gun-off-claw",
 	# n7-ranged: --feel=off turns the shared hit feel's camera effects off (before clips)
 	"--feel",
-	# n7-ranged: --react-snap=off drops the hit snap of a reaction family (the electro bolt's before)
-	"--react-snap",
+	"--react-snap",  # n7-ranged: =off drops a reaction family's hit snap (electro bolt's before)
 	"--hit-class",  # n17 npc-react: =off, no hit-class cell on a living wound (the before)
+	"--rig-order",  # n17 npc-react: =before, the cast rigs read the frame's sim before it ticks
 	# n7-ranged: --shard-pop=<ticks> the homing shard victim's freeze before the pop (owner call)
 	"--shard-pop",
 	# n7-ranged: --end-cue=off drops the weapons rows' end_cue (the rocket and nuke blast sound)
