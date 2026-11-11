@@ -393,3 +393,6 @@ still reads as a crack, then evidence + KILLS (plasma_sword After 1 -> 2/3) + DE
   32 but the heap + helmet shape reads (`evidence/n16-kills-polish/burn_collapse_riot_ab_32ppm_x3_t590-740.png`).
 - 17:31 queue it8d on 934a815c6 (build/films_it8d.log): hc64_t (A6b), rg64_u (cap shadow fix), bc64_patrol t/w,
   hc32 t/a, rg32 t/w, ps64_t (wider scorch line).
+- 17:40 film hc64_t (934a815c6, A6b) vs hc64_a same ticks: a ragged torn chest wound with snapped ribs, no face/teeth
+  read (`evidence/n16-kills-polish/hand_cannon_exit_wound_a6b_ab_64ppm_x2_t51-90.png`). Film rg64_u (934a815c6) vs
+  rg64_d: the hanging cap-shadow disc is gone at t170/t199 (`ray_gun_cap_shadow_ab_64ppm_x2_t150-199.png`).

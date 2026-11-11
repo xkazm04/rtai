@@ -4,14 +4,16 @@
 1. Hand cannon: the first exit wound (0.34 m at the head line) sat on his FACE and read as a grinning monster mouth
    (film hc64_b t51-72) -> fixed 6140efc62 (0.16 m, chest, mirrored not turned) + 944ea5fa9 (lower, CHEST -0.13).
    `evidence/n16-kills-polish/hand_cannon_exit_wound_ab_64ppm_x2_t51-72.png`.
-2. Hand cannon: the drawing's even row of spine knuckles between two rib arcs still hints at teeth at 64 px/m -> open
-   (A6b redraw requested: spine broken, ribs fanned).
+2. Hand cannon: the drawing's even row of spine knuckles between two rib arcs still hints at teeth at 64 px/m -> fixed
+   a4a2dcda1 (A6b redraw: ragged hole, snapped ribs, the spine out of line); film hc64_t vs hc64_a:
+   `evidence/n16-kills-polish/hand_cannon_exit_wound_a6b_ab_64ppm_x2_t51-90.png`.
 3. Hand cannon: the blowback body never lies down; it flies back as his upright card (so a "back" wound is seen on an
    upright torso) -> open, judged: not a defect of the wound; a drawn tumble/landing cell would be the next lift.
 4. Ray gun: the eaten body's flying shadow (a dark disc) hung on the street where he stood from k+100 on, in the before
    and the after (film rg64_w/d t150-199). cad64412a (the eaten BODY's shadow shrinks with the eating) did NOT remove it
    (film rg64_t, same ticks): the disc is the kicked CAP's shadow, and since 06deed4b5 a walker-card victim's cap group
-   is empty -> fixed bd9af660f (an empty group casts no shadow; also the hand cannon's cap dot); re-film owed.
+   is empty -> fixed bd9af660f (an empty group casts no shadow; also the hand cannon's cap dot); film rg64_u (934a815c6)
+   same ticks: gone. `evidence/n16-kills-polish/ray_gun_cap_shadow_ab_64ppm_x2_t150-199.png`.
 5. Burn (hooded ped, 64 px/m, film bc64_hood_w): he only faded to a ghost over the ash heap -> fixed b3b03286c (A8 drawn
    collapse onto a skull heap that stays). `evidence/n16-kills-polish/burn_collapse_hood_ab_64ppm_x2_t590-740.png`.
 6. Burn collapse: the char cell keeps his facing (here away from the camera) but the collapse is drawn facing the camera
