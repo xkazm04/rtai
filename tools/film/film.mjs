@@ -17,7 +17,7 @@ import { ROOT } from '../lib/repo.mjs';
 import { importErrors, staleAssets, touchStale } from '../lib/asset_cache.mjs';
 import { describe, runGodot, SCRIPT_ERROR } from '../lib/godot.mjs';
 import { verdict } from '../lib/dev_verdict.mjs';
-import { autoLock, checkFlags, checkId, checkVictim, godotArgs, parseOn, parseShot, parseStills, shotLabel, triggeredTicks, victimSaid } from './shots.mjs';
+import { autoLock, checkFlags, checkId, checkVictim, godotArgs, parseOn, parseShot, parseStills, shotLabel, triggeredTicks, victimDrawn, victimSaid } from './shots.mjs';
 import { resolveSide as sideOf } from './side.mjs';
 import { subjectRow } from './subject.mjs';
 
@@ -156,6 +156,7 @@ export function judge(res, opts, startedAt) {
     const said = victimSaid(res.out);
     if (said === null) reasons.push(`the run never said its victim (no "gunplay: lone victim <kind>" line), so ${opts.victim} is not seen`);
     else if (said !== opts.victim) reasons.push(`the run's victim was ${said}, not the asked ${opts.victim}`);
+    else if (probe.events?.kill?.length) { const drawn = victimDrawn(probe, opts.victim); if (drawn) reasons.push(drawn); }
   }
   return { outcome: reasons.length ? 'unverifiable' : 'pass', reasons, probe, stills: wanted };
 }

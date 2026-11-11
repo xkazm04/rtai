@@ -212,3 +212,19 @@ export function victimSaid(out) {
   const m = /\bgunplay: lone victim (\S+)/.exec(String(out ?? ''));
   return m ? m[1] : null;
 }
+
+/** Why the victim drawn in a film is not `kind` (null = it is): the card row the probe saw on the first
+ *  hostile to die, the tick before it died. The log line only says the game was asked (n16: a lab guard
+ *  asked for `thug` stood as the riot cop), so the drawn row decides. */
+export function victimDrawn(probe, kind) {
+  const kill = probe?.events?.kill?.[0];
+  if (!Number.isInteger(kill)) return `no kill, so the drawn victim is not seen (asked ${kind})`;
+  const at = (t) => probe.rows?.find((r) => r.tick === t)?.fighters ?? [];
+  const alive = new Map(at(kill - 1).filter((f) => f.role === 'hostile' && f.alive).map((f) => [f.id, f]));
+  const died = at(kill).find((f) => f.role === 'hostile' && !f.alive && alive.has(f.id));
+  if (!died) return `no hostile died on tick ${kill} in the numbers (asked ${kind})`;
+  const row = alive.get(died.id).row;
+  if (row === undefined) return `this probe records no card rows, so the drawn victim is not seen (asked ${kind})`;
+  if (row === '') return `the victim (id ${died.id}) had no card the tick before it died (asked ${kind})`;
+  return row === kind ? null : `the victim (id ${died.id}) was drawn as ${row}, not the asked ${kind}`;
+}
