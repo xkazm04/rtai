@@ -838,3 +838,14 @@ untracked dev/sim/car_route_trails.gd copy is mine) and `git branch -D n15t-cont
   TO combat: `git cherry-pick 5e41c66bc` (2 lines in tests/unit/test_quest_blade.gd; `git merge-tree --write-tree
   --merge-base 5e41c66bc^ n15-combat 5e41c66bc` exit 0 = applies clean on 92aa6b8f3; on hero da4cb6b22 too). The merge
   brings it anyway (tools first).
+- 04:53-04:58 NEW tool (built by me, not Codex: a dispatcher round trip + review would not fit before 05:53; logged
+  as such) `tools/merge/preview.mjs --lanes=<a,b,c> [--base=main]` (7bda4d18c): replays the morning order with `git
+  merge-tree --write-tree` (each step a dangling commit-tree, no ref/index/worktree touched), splits each lane's
+  conflicts into what morning.mjs resolves (root JOURNAL/REPORT, the debt baseline: `DOCS` now exported) and the code
+  it STOPs on, then lists every lane pair's code clashes. Real runs: `--lanes=n15-tools,n15-hero,n15-combat` ->
+  `+ n15-tools: clean`, `+ n15-hero: morning resolves JOURNAL.md, REPORT.md, tools/debt/baseline.json`, `+ n15-combat:
+  STOP on .../cast_flags.gd, .../rivet_res.gd`, `n15-hero x n15-combat conflict on code: ...`, exit 1 (= my hand
+  previews). `--lanes=20c1dafb1,n15-combat` -> `STOP on project/dev/frames/quest1_clip.gd` (the clash I found by hand at
+  04:48). `--lanes=nope-lane` -> `no such commit: nope-lane`, exit 2. Tests 4/4 (throwaway repo, empty global config,
+  no GIT_* vars; refs/index/worktree asserted untouched); planted `code: m.files` (every conflict counted as code) ->
+  1 fails, restored. Pre-commit full lint 18/18 incl. tool-tests.
