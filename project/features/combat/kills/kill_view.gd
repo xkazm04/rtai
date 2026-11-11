@@ -83,7 +83,7 @@ func _process(_delta: float) -> void:
 		if node == null:
 			continue
 		node.position = g.pos[i] * ppm
-		node.rotation = g.ang[i] - _ang0[i]
+		node.rotation = g.ang[i] - _ang0[i] + KillRestSpin.left(g, i)  # n17: no creep once down
 		node.scale = Vector2.ONE * (1.0 + g.z[i] * LIFT_SCALE) * body_sink(g.kill_of[i])
 		if g.wait[i] > 0:  # a held body flinches as each homing shard lands (KillShardJolt)
 			var j: Vector3 = styles.burst_fx.jolt(g.kill_of[i], g.piece[i])
