@@ -1,4 +1,4 @@
-# n16 lane tools: REPORT (DRAFT, updated 17:50 in session 6; the 19:40 session finalises it)
+# n16 lane tools: REPORT (final, 2026-11-11 19:40, tip of `n16-tools`)
 
 Branch `n16-tools` from main `5843f5a28`. Memory: `JOURNAL.md`. Evidence: `gtai-masters/n16/tools/frames.json`
 (15 entries) and `evidence/n16-tools/`.
@@ -114,6 +114,8 @@ the commit (2 staged path(s), all under project/ + 3 lint-neutral ...)`, 18/18 i
   difference is Rivet's aim or pose. (The `settled` +80/+150 and aftermath 5.8/3.2 % run-to-run spreads came from it.)
 
 ## Gates
+s7 (19:33, tip): Node tooling film + gate + lint tests 486/0; `cites.mjs REPORT.md` 7 ok + 1 pattern; masters
+frames.json 15 entries, every file present. No Godot run this session (no project/ change to gate).
 s5: GATE PASS on 09b23b523 (`--reels=combo`, build/gate/09b23b52349b/gate.json): lint 19/19, unit 2645/0/2,
 scenarios 55, parity bit for bit (planted fault at 629), look goldens 11/11 worst 0.00, release-compile 683/0, reels
 combo exit 0. Its project/ tree equals caccc825d's, whose gate ran all three reel views.
@@ -151,6 +153,10 @@ revision). Total 6 tasks, 1 round each.
 ## Merge notes
 Merge tools FIRST: native changed (c-2, CAR_DEAD_END_TILES 65; view lanes keep their DLLs). The kill lanes cherry-
 picked the game side of afe581336, bbee28a9c and 0b5c55fc7 with identical content: expect clean merges there.
+No project/ or native/ commit after caccc825d (`git diff --stat caccc825d HEAD -- project native` is empty at 19:32),
+so that commit's full gate with all three reel views stands for the tip. The kill lanes use this lane's kit from
+`../n16-tools/tools/...` today; after the merge the same commands run from main's `tools/`.
+104 commits on `5843f5a28..n16-tools`, one author (`git log --format=%ae 5843f5a28..HEAD | sort | uniq -c`).
 
 ## Next steps
 - Kill lanes: drop the `-- --sig-gun=claw_shock` workaround (`--weapons=claw_shock` films it on its own row); use
@@ -162,4 +168,8 @@ picked the game side of afe581336, bbee28a9c and 0b5c55fc7 with identical conten
   63+); if a lab ever kills sooner, pickBeats should take kill-8 instead of 60.
 - The pre-commit export failure that made kills-polish's 14:20 commit lint the tree was not reproduced (only the
   fallback is now loud and retried): if it recurs, the line now names the cause (`no staged snapshot (<error>)`).
-- (the 19:40 session completes this list)
+- Kill lanes' REQUEST/FRICTION lines (re-read 19:30): each is SERVED or triaged in JOURNAL; none open. Triaged, not
+  tools: kills-new's parse check beside its own reel (two Godot for seconds) and `film.mjs` without the `kill:` shot on
+  its branch (it arrives with this merge); the one-Godot-vs-40-min-gate cost is eased by `--reels=<view>` and the ETA.
+- The flamethrower and electro gun deaths read weakly at 32 px/m (Findings): the kill lanes' next pass, filmed with
+  `--quick --feel=on` before and after.

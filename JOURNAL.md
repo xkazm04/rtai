@@ -703,3 +703,16 @@ final at 19:40: drop DRAFT from the header, check each item's proof line, final 
 here, the FULL gate with plain `--reels` (~35 min, start before 18:55). (4) Weakest remaining: `gone by` ignores marks
 inside the victim's standing spot (a victim-free twin film would fix it); the KillMarks 12-kill ring is unfilmed.
 Logs: C:\Users\kazda\kiro\gtai-n16\scratch-tools\logs\.
+
+## Session 7 (19:30 freeze, STABILIZE)
+- 19:30 read both kill journals: no new REQUEST tools / FRICTION since s6 (the 17:4x gate-results REQUEST was served
+  in c47f8bc2f); the rest are SERVED or triaged (their parse check beside their reel; the `kill:` shot missing on
+  their branch arrives with the merge).
+- 19:33 Node film + gate + lint tests 486/0 (log gtai-n16\scratch-tools\logs\s7_nodetests.log). `git diff --stat
+  caccc825d HEAD -- project native` empty: caccc825d's full gate with all reel views stands for the tip. No Godot of
+  mine this session (the two Godot running at 19:33 are other lanes'). Masters frames.json 15, all present.
+- 19:35 REPORT final: header without DRAFT, Gates s7 line, merge notes (no project/native after caccc825d, one
+  author), Next steps completed; cites 7 ok + 1 pattern.
+
+NEXT (after the run): the Director merges tools FIRST (native changed for c-2). Open items for a later tools lane:
+`gone by` ignores marks inside the victim's standing spot (victim-free twin film), the KillMarks 12-kill ring is unfilmed.
