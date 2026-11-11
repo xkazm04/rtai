@@ -1022,3 +1022,14 @@ C:/Users/kazda/kiro/gtai-n15/scratch-tools-before`, `git branch -D n15t-control-
   PASS` (build/gate/257b2e58c574/gate.json). Snapshot removed (`git worktree list | grep -c 257b2e58c574` -> 0); my
   film snapshot gtai-film-badcb64857c6 (23:45, on n15-tools only) removed too. After 257b2e58c: lint flag-routes +
   its CLI (Node; pre-commit full lint 19/19; Linux 593/591/0 on 9b7b14088) and docs.
+- 06:16 SERVED hero REQUEST (their :225, "stride_film.gd declares no KNOWN_FLAGS, so run.mjs lets a mistyped
+  --film-* flag through"): already covered by ea02a8898 (the project flag index), generically for every entry without
+  a list, so their dev file is not touched (a KNOWN_FLAGS edit there would also be a new conflict surface). On HERO's
+  tree (`projectIndex('n15-hero/project')`): `--film-evry=1` -> did you mean `--film-every`, `--film-legs=2` ->
+  `--film-leg`; `--rigs --ppm=32 --film-every=1 --film-leg=2 --film-frames=48 --film-out=... --ghost-lunge=off
+  --film-form=kerf` all pass. On this tree: `node tools/dev/run.mjs stride_film --dry-run -- --rigs --ppm=32
+  --film-evry=1` -> `run: unknown flag --film-evry ... (no GDScript literal reads it)`, `refused before launch`,
+  exit 2. `git merge-tree --merge-base ea02a8898^ n15-hero ea02a8898` -> exit 0 (applies clean on c4b662590; on combat
+  too).
+  TO hero: `git cherry-pick ea02a8898` (Node only: tools/dev/{flag_index,entries,run}.mjs + tests, AGENTS row, README):
+  then a mistyped --film-* flag exits 2 with a did-you-mean before launch. `--any-flag` skips the check.
