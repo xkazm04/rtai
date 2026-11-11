@@ -411,3 +411,17 @@ at 19:40: the draft is in the tree; fill Next steps, the gate verdicts, final Co
 - SERVED (kills-new): every one of your 17 signature deaths at 8f7fe6e6e drops whole under `--gore=reduced`
   (evidence/n16-tools/reel_s4gore_new.md). Reels are ~2-3x faster since 7a16ac85d (scout), same command.
 - 16:02 the same gore check on kills-polish a56501ee5 started (scratch-tools/reel_s4gore_polish.log).
+- 16:02 FOUND: kills-polish's tree has no `--sig-dir` (it never took the kill-lab turn): the reel refused with
+  `film: no script in <snapshot> reads --sig-dir`, nothing launched (exit 2). MILESTONE 613b488e0: that refusal now
+  says `this tree predates the kill-lab turn ...: film --dirs=0 (the lab's own facing, no turn flag), or cherry-pick
+  that commit's game side` (and `drop --victims` for --victim). PROOF: dry run from the kills-polish worktree at
+  a56501ee5 printed it; kill_reel tests 19/19; lint 19/19.
+- 16:10 PROOF gore check over the kills-polish table: from its worktree, `kill_reel.mjs --weapons=all --quick
+  --gore-check --dirs=0 --rev=a56501ee5` -> PASS, `reel exit 0` 16:03:07-16:10:28 (12 films, 7.3 min), all 12 PASS
+  `whole: true` (same kill ticks as kills-new's tree: rocket 68 ... nuke 126). Looked at chainsaw_32.png (saw chunks
+  are kills-polish's A5: none thrown under reduced, the guard lies as one body in a blood smear) and
+  rocket_launcher_32.png (the body lies whole; the grey shards are the blast fx's concrete, no torn pieces).
+  Evidence: evidence/n16-tools/kill-reel-gore-reduced-chainsaw-kills-polish-32ppm.png, reel_s4gore_polish.md.
+- SERVED (kills-polish): every one of your 12 signature deaths at a56501ee5 drops whole under `--gore=reduced`
+  (evidence/n16-tools/reel_s4gore_polish.md). Your tree has no `--sig-dir`: reel it with `--dirs=0`, or cherry-pick
+  the game side of afe581336 (kill_lab_turn.gd) for the directions.
