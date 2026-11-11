@@ -70,7 +70,7 @@ static func weapon_of(rig: CutRig) -> StringName:
 static func publish(rig: CutRig, held: StringName, gun: GunHand) -> void:
 	rig.set_meta(WEAPON, held)
 	var t: Trigger = gun.trigger if gun != null and gun.trigger.spec.id == held else null
-	var fire: bool = t != null and t.cooldown > maxi(0, t.spec.interval_ticks - FIRE_TICKS)
+	var fire: bool = RivetNoFlash.publish(rig, t) < FIRE_TICKS  # n17: the round's age
 	var rose: bool = fire and rig.get_meta(FIRE, false) != true
 	rig.set_meta(FIRE, fire)
 	if rose:  # n10: the pose ran before the latch; the shot's own frame takes its fire cell
@@ -132,7 +132,7 @@ static func place(rig: CutRig, card: Sprite2D) -> void:
 	var drawn_walk: bool = RivetWalk.is_grid(card)
 	var ph: float = RivetWalk.phase_of(rig, art, s)
 	var c: Vector2i = cell_of(rig, card.hframes, ph if drawn_walk else -1.0)
-	RivetCellFeet.show(card, c.x)  # n17: a strike cell on its own boot line
+	RivetNoFlash.show(rig, card, c.x)  # n17: the cell on its own boots, flashless past the flare
 	card.flip_h = c.y == 1
 	var walk: float = clampf(rig.speed_now / WALK_SPEED, 0.0, 1.0)
 	walk = 0.0 if c.x in [Cell.ROLL, Cell.DEATH] or drawn_walk or RivetLean.held(rig) else walk

@@ -19,6 +19,11 @@ const WINDUP_FLAGS: PackedStringArray = [
 	"--rivet-strike-hold=off"
 ]
 
+## n17 rivet-strike's befores, routed to _walk.
+const N17_RIVET: PackedStringArray = [
+	"--rivet-lean", "--rivet-cell-feet", "--rivet-fire-turn", "--rivet-noflash"
+]
+
 static var _read: bool = false
 
 
@@ -49,9 +54,7 @@ static func apply(args: PackedStringArray = OS.get_cmdline_user_args()) -> void:
 			or arg.begins_with("--rivet-swipe")
 			or arg.begins_with("--rivet-stride")
 			or arg.begins_with("--rivet-bob")
-			or arg.begins_with("--rivet-lean")
-			or arg.begins_with("--rivet-cell-feet")
-			or arg.begins_with("--rivet-fire-turn")
+			or arg.get_slice("=", 0) in N17_RIVET
 		):
 			_walk(arg)
 		elif arg == "--rivet-knock=off":
@@ -91,7 +94,7 @@ static func _windup(arg: String) -> void:
 
 
 ## --rivet-walk=<mode>; n11: --rivet-swipe=off (one drawn strike cell), --rivet-bob=drawn (no damp);
-## n17: --rivet-lean=off, --rivet-cell-feet=off, --rivet-fire-turn=keep.
+## n17: --rivet-lean=off, --rivet-cell-feet=off, --rivet-fire-turn=keep, --rivet-noflash=off.
 static func _walk(arg: String) -> void:
 	match arg:
 		"--rivet-walk=bob":
@@ -114,5 +117,7 @@ static func _walk(arg: String) -> void:
 			RivetCellFeet.enabled = false
 		"--rivet-fire-turn=keep":  # n17 rivet-strike: the fire latch survives a turn (before)
 			RivetFireTurn.enabled = false
+		"--rivet-noflash=off":  # n17 rivet-strike: the fire cell's painted flash held (before)
+			RivetNoFlash.enabled = false
 		_:
 			pass
