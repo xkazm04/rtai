@@ -17,7 +17,8 @@
    a 1.9 px drop while his sim y is constant. Cause: the strike cell's swing arc hangs below his boots and the
    strip is cut with its lowest pixel (the arc) on the foot line: boots 31 strip px up (~15 px at 64 px/m).
    -> fixed 0e01165a3 (RivetCellFeet, katana side cell; after ~4 px, part of it the lean). The rig's own screen
-   point also rises 1.5-2.6 px through the strike (probe `screen` y, sim y constant): -> open.
+   point also rose 1.5-2.6 px through the strike (probe `screen` y, sim y constant): the gait's bob (1.4 world px)
+   ran on the strike cell while he moved. -> fixed fcd603180 (RivetLean.held: screen y 400.0 every tick t55-71).
 6. **Camera-facing blade strikes drew Rivet a body height above his ground point** (p70 cell 6: the blade reaches
    down the cell, its tip on the foot line; boots 57-120 strip px up: katana 120, plasma 78, saw 75, baton 57).
    `chapter:katana_cam` t66 at 64 px/m: before, only the blade on screen, Rivet off frame above. -> fixed 7b1f03b7c.
