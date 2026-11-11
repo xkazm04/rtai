@@ -19,6 +19,8 @@ extends Node
 const SCHEMA: String = "gtai.film-probe/1"
 const PRIORITY: int = 60
 const NO_DRAW: float = -1.0
+## A film aims at the view's centre + this, never the desk's mouse (n16 s3: it moved Rivet's aim).
+const CURSOR_OFF: Vector2 = Vector2(0.0, -280.0)
 
 var game: ArenaGame = null
 var out_dir: String = ""
@@ -68,6 +70,7 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if game == null or game.session == null:
 		return
+	game.session.live.cursor_px = func() -> Vector2: return _view / 2.0 + CURSOR_OFF
 	var tick: int = game.session.tick()
 	var fresh: bool = tick != _last_tick
 	if fresh:

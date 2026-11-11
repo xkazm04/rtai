@@ -307,3 +307,19 @@ by default). (6) the s1 frames.json entry "thug stands as riot cop" is supersede
   `shifts`. PROOF: `kill_reel.mjs --resheet=build/kreel/s3all` -> shifts per film (katana/plasma sword/chainsaw kick
   the view 48-51 px on the kill tick, rocket/electro 15, nuke 273); overview looked at: the blade rows no longer
   jump at the kill. Unit 241/0. Masters overview replaced with the anchored one.
+- 14:38 PROOF before/after: `kill_reel --out=build/kreel/s3ab --weapons=katana,ray_gun --quick --feel=on
+  --before=8723ec8b4` (the same project/ as HEAD): 4 PASS, labels `KATANA BEFORE GUARD D90 32` fit. A/A floor: the
+  sim is bit-identical across the two runs (every fighter, every tick, kills 68/63, fires; probe frames equal) and the
+  frames differ 0.00-0.29 %, BUT the katana's measured aftermath read 5.8 % vs 3.2 %. Diffed t218 (looked at
+  build/kreel/s3ab/diff218.png): only RIVET'S POSE differs (strike held vs at rest), and his drawn facing differs from
+  tick 1 (facing_off 94 vs 103 deg). CAUSE: the arena's LiveInput aims at the desk mouse
+  (`viewport.get_mouse_position()`), so every film depended on where the cursor sat (also the `settled` +80/+150 noise).
+- FIX (game side, dev only): FilmProbe pins `session.live.cursor_px` to the view centre + (0, -280) while filming
+  (stride_film.gd's idiom), so a film never reads the desk mouse. dev/frames 193 -> 200 lines (debt ok). Only the film
+  tools attach the probe (`--film-dir`/`--cam-lock`; no gate, reel or test uses them). Proof running: two pinned runs
+  (build/kreel/s3pin1, s3pin2) with the desk cursor position logged before each (read, never moved).
+- 14:43 PROOF the pin: build/kreel/s3pin1 vs s3pin2 (katana --quick --feel=on, back to back): Rivet's facing_off equal on
+  414/414 ticks (81.56 at tick 1; unpinned runs read 94 and 103), frames 0.00 % apart at t60, the kill and +150, and
+  the aftermath 3.2 % both (unpinned A/A: 5.8 vs 3.2). The cursor read before each run printed nothing (no claim that
+  it moved). Kill lanes, NOTE: reels and films before this commit can differ run to run in RIVET'S aim/pose only
+  (the sim was identical); re-film a before/after whose difference is Rivet's pose.
