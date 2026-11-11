@@ -1066,7 +1066,7 @@
       "blot_m": 0,
       "bounce": 0.1,
       "cone_deg": 16,
-      "doc": "Molotov (lane kills-new, n16): the torch. The flamethrower keeps burn_char (he stops and chars where he stands, then crumbles); the molotov's spirit soaked into his clothes keeps burning ON him. The sim names every fire death `burn`; KillFireSource (view side, CombatArena.struck) names the fire weapon that last hit him, and a burn death with no fire hit on record walked into a ground fire, the molotov's. No hit-stop (the fire killed him, not a blow). t0-6 he drops to his knees mid-run (the pose track's squash), t6-16 he sags forward, from t16 his own drawn fall grid (KillFallCells) folds him face down along his run over 10 ticks; amber flame tongues with a cream core lick up his figure and then along the body (KillTorchArt, 6 tongues, 0.32 m) until t180, shrinking from t120; then smoke rises off him for 200 ticks. No blood. Placeholder until the drawn torch cells land (JOURNAL REQUEST assets molotov_torch: kneeling in a sheet of flame, doubled over, face down burning, charred with the bottle neck beside him; fx cells_turn_from 0 faces them along the run).",
+      "doc": "Molotov (lane kills-new, n16): the torch. The flamethrower keeps burn_char (he stops and chars where he stands, then crumbles); the molotov's spirit soaked into his clothes keeps burning ON him. The sim names every fire death `burn`; KillFireSource (view side, CombatArena.struck) names the fire weapon that last hit him, and a burn death with no fire hit on record walked into a ground fire, the molotov's. No hit-stop (the fire killed him, not a blow). t0-6 he drops to his knees mid-run (the pose track's squash), t6-16 he sags forward, from t16 his own drawn fall grid (KillFallCells) folds him face down along his run over 10 ticks; amber flame tongues with a cream core lick up his figure and then along the drawn body (KillTorchArt, 6 tongues, 0.5 m) until t180, shrinking from t120; then smoke rises off him for 200 ticks. No blood. Placeholder until the drawn torch cells land (JOURNAL REQUEST assets molotov_torch: kneeling in a sheet of flame, doubled over, face down burning, charred with the bottle neck beside him; fx cells_turn_from 0 faces them along the run).",
       "fall": "back",
       "flash_ticks": 0,
       "fx": {
@@ -1075,7 +1075,7 @@
         "cells_ticks": 10,
         "cells_turn_from": 0,
         "fade_from": 120,
-        "flame_m": 0.32,
+        "flame_m": 0.5,
         "smoke_ticks": 200,
         "tongues": 6
       },
