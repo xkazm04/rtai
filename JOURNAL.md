@@ -473,3 +473,53 @@ vs flamethrower, the claw). REPORT.md is drafted: update its table (nail_pin sui
   t180 (shrinking from t120), smoke after (KillCookArt.smoke, now public). hit-stop 0. brutality_hook.gd's header
   doc reflowed (5 lines) to stay at 200 lines.
 FRICTION: the kill reel's after side films the live tree: uncommitted code (a new class not yet imported) broke 'after gatling dir 0 64' with SCRIPT ERROR; stopped by PID 100504 tree. Film from --rev=<commit> while editing.
+- 15:28 item 6b read (Rivet's bare claw): `claw_shock` (PlayerShock, the charged claw discharge; a full charge kills
+  the first body it strikes) rides electro_shock's `also_weapons` (a kills-polish row). A claw row of its own =
+  remove `claw_shock` from that list (ANNOUNCE before: one line in kills-polish's row) + a new row `claw_throw`.
+- BEAT SHEET 6b claw_throw (design, not built): the one death that is Rivet's body, not a gun: close, physical,
+  thrown. Anticipation: the charge (Rivet holds the button; the claws crackle, PlayerShock). t0 hit-stop 4: the claws
+  close on his chest, a cream arc jumps INTO him (no X-ray, no strobe, no veins: the baton cooks, the gun strobes,
+  the claw THROWS). t0-4 he is lifted onto his toes, arms snapped out. t4-20 the discharge throws him back 2.5 m
+  along the blow in a low arc (up 0.4 m), spinning a quarter turn, the cap blown off on a smoke puff; t20 he slams
+  down on his back and skids 0.6 m, a cream spark crawling over him every 4 ticks till t60; a scorched claw print
+  (three ink gouges) stays on his chest in the corpse. Aftermath: the long skid line (ink scuff) and the body at its
+  end. Camera: 3-px punch at t0 (none under --reduced-motion). Reads at 32 px/m as a body flung across the street.
+  Placeholder: the pose track + the fall grid + a skid (slide_m 2.5, tip) + KillCookArt.smoke; drawn cells later.
+- 15:30 FRICTION: Gatling before films (`--before=590902959`, the coded-scrap placeholder) time out at 305 s twice
+  (dir 0 at 32 and 64); their film.log floods `Invalid polygon data, triangulation failed` from
+  KillShredArt._scrap's draw_colored_polygon. The drawn-scrap path skips it for the four street kinds, but every
+  other kind (thug, hooded ...) still draws the coded scraps: BUG to fix next (guard the polygon: skip when its
+  area is under 1 px^2, or draw it as a fan with draw_polygon). Stopped the chain by PID (39092 tree); re-running
+  molotov (before = burn_char at 040ffb67a, dirs 0+135) then the Gatling AFTER side only (dirs 0/135/225); the
+  placeholder's before frames exist from iteration 8 (`gatling_shred_ab_*`, `gatling_shred_reel_*`).
+- 15:31 the Gatling after film dir 0 at 32 px/m (on `040ffb67a`) PASS (kill 95), looked at: kill+0 the drawn frame 1
+  with the spray behind him, +10 sagging, +20 the heap starting, +40 the heap lies ALONG the stream (head away from
+  Rivet, the corpse turn) in the blood fan. Reads at 32.
+- 15:37 molotov kill reel (`kill_reel.mjs --weapons=molotov --dirs=0,135 --ppm=32,64 --clips --rev=76e85f1d1
+  --before=040ffb67a`), dir 0 at 32 and 64: all four PASS (kill 182). Judged by eye
+  (`evidence/n16-kills-new/molotov_torch_ab_{32,64}ppm_dir0_t182-332.png`, clips `molotov_torch_{before,after}_*`):
+  BEFORE (burn_char) he stands charred in the fire patch to +80 and is an ash heap by +150. AFTER (torch) +0..+10
+  on his knees, cream/amber tongues up the figure (reads at 64; at 32 the lab's own molotov patch flames swamp them),
+  +20 face down along the run, +150 the burnt body still lies there with the flames dying. The split reads.
+  DEFECT: lying, the tongues stack in one upright column at his feet, not along the body (the drawn corpse does not
+  lie along d.fall on screen: 5 drawn facings + foreshortening). FIX written (uncommitted, Godot busy): KillCellBody
+  measures the drawn cell's alpha centroid (1/8 copy, cached per texture+cell) and the lying tongues run from the
+  feet past it. Also note: in the lab he dies INSIDE the patch; in a street fight he runs out first, so the 32 px/m
+  read wants a city-fight film (next).
+- 15:50 MILESTONE `c9d7a73c4` KillCellBody (the drawn cell's alpha centroid) + the torch's lying tongues follow it;
+  unit test_kill_cell_body 3/3 (standing cell over its feet, the side heap off-centre, flip mirrors). Film of the fix
+  (molotov dir 0 at 64, `--rev=c9d7a73c4`) started 15:51.
+- 15:52 masters frames.json: molotov A/B 64 + 32 and the Gatling cells at 32 on top (15 entries); the two dropped
+  entries' files removed from masters (copies stay in evidence/). REPORT updated (molotov row, Gatling cells, the
+  owed street film, the polygon bug).
+
+NEXT (iteration 17, in this order): (1) judge the torch fix film (`build/reel/molotov_fix/`, 64 dir 0; if missing
+re-run `kill_reel.mjs --weapons=molotov --dirs=0,135 --ppm=32,64 --clips --rev=<HEAD>`), keep evidence + masters.
+(2) the Gatling cells AFTER reel at 64 and dirs 135/225 (`--rev=040ffb67a`, no --before: the placeholder's before
+films time out on the polygon flood); judge kill+0 at 32 (a doubled head?) and the grey scrap lying toward Rivet at
++40. (3) fix KillShredArt._scrap's polygon flood for kinds without drawn scraps. (4) a molotov film in a city street
+fight (he runs out of the patch) at 32 px/m. (5) asset replies: wire molotov_torch cells (cells.at e.g.
+[0,10,20,180], fx cells_turn_from 0; KillTorchArt's tongues should step aside on own cells like KillCookArt's glow),
+smg_stitch / nail_pin p55. (6) the claw finisher (beat sheet 6b): announce the electro_shock also_weapons edit to
+kills-polish first. (7) gates on the final code commit: full unit, scenarios (55/55 on d1ab2f3c3; re-run: the
+molotov now takes a new row and brutality_hook changed), `tools/evidence/run.mjs`, `tools/reel/run_reels.mjs`.
